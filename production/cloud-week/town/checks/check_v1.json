@@ -3,8 +3,8 @@
  "file_checked": "production/cloud-week/town/people.json",
  "summary": {
   "rows": 578,
-  "pass": 563,
-  "fail": 15,
+  "pass": 578,
+  "fail": 0,
   "seeded_faults": 30,
   "seeded_faults_caught": 30
  },
@@ -1338,8 +1338,8 @@
   {
    "id": "ferko.questions",
    "what": "ferko: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
-   "pass": false,
-   "detail": "ferko.q8 is 30 words"
+   "pass": true,
+   "detail": ""
   },
   {
    "id": "ferko.mickey",
@@ -1470,8 +1470,8 @@
   {
    "id": "marla.questions",
    "what": "marla: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
-   "pass": false,
-   "detail": "marla.q10 is 30 words"
+   "pass": true,
+   "detail": ""
   },
   {
    "id": "marla.mickey",
@@ -1536,8 +1536,8 @@
   {
    "id": "joey.questions",
    "what": "joey: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
-   "pass": false,
-   "detail": "joey.q7 is 30 words"
+   "pass": true,
+   "detail": ""
   },
   {
    "id": "joey.mickey",
@@ -1734,8 +1734,8 @@
   {
    "id": "hal.questions",
    "what": "hal: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
-   "pass": false,
-   "detail": "hal.q9 is 36 words"
+   "pass": true,
+   "detail": ""
   },
   {
    "id": "hal.mickey",
@@ -1800,8 +1800,8 @@
   {
    "id": "tibor.questions",
    "what": "tibor: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
-   "pass": false,
-   "detail": "tibor.q7 is 36 words"
+   "pass": true,
+   "detail": ""
   },
   {
    "id": "tibor.mickey",
@@ -1866,8 +1866,8 @@
   {
    "id": "vesna.questions",
    "what": "vesna: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
-   "pass": false,
-   "detail": "vesna.q8 is 30 words"
+   "pass": true,
+   "detail": ""
   },
   {
    "id": "vesna.mickey",
@@ -1932,8 +1932,8 @@
   {
    "id": "magda.questions",
    "what": "magda: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
-   "pass": false,
-   "detail": "magda.q10 is 30 words"
+   "pass": true,
+   "detail": ""
   },
   {
    "id": "magda.mickey",
@@ -1998,8 +1998,8 @@
   {
    "id": "zora.questions",
    "what": "zora: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
-   "pass": false,
-   "detail": "zora.q8 is 30 words"
+   "pass": true,
+   "detail": ""
   },
   {
    "id": "zora.mickey",
@@ -2130,8 +2130,8 @@
   {
    "id": "katarina.questions",
    "what": "katarina: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
-   "pass": false,
-   "detail": "katarina.q8 is 30 words"
+   "pass": true,
+   "detail": ""
   },
   {
    "id": "katarina.mickey",
@@ -2328,8 +2328,8 @@
   {
    "id": "tomas.questions",
    "what": "tomas: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
-   "pass": false,
-   "detail": "tomas.q4 is 30 words"
+   "pass": true,
+   "detail": ""
   },
   {
    "id": "tomas.mickey",
@@ -2460,8 +2460,8 @@
   {
    "id": "bruno.questions",
    "what": "bruno: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
-   "pass": false,
-   "detail": "bruno.q7 is 36 words"
+   "pass": true,
+   "detail": ""
   },
   {
    "id": "bruno.mickey",
@@ -2658,8 +2658,8 @@
   {
    "id": "sanja.questions",
    "what": "sanja: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
-   "pass": false,
-   "detail": "sanja.q7 is 36 words"
+   "pass": true,
+   "detail": ""
   },
   {
    "id": "sanja.mickey",
@@ -2724,8 +2724,8 @@
   {
    "id": "hana.questions",
    "what": "hana: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
-   "pass": false,
-   "detail": "hana.q9 is 36 words"
+   "pass": true,
+   "detail": ""
   },
   {
    "id": "hana.mickey",
@@ -2790,8 +2790,8 @@
   {
    "id": "franjo.questions",
    "what": "franjo: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
-   "pass": false,
-   "detail": "franjo.q7 is 30 words"
+   "pass": true,
+   "detail": ""
   },
   {
    "id": "franjo.mickey",
@@ -2922,8 +2922,8 @@
   {
    "id": "drago.questions",
    "what": "drago: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
-   "pass": false,
-   "detail": "drago.q8 is 30 words"
+   "pass": true,
+   "detail": ""
   },
   {
    "id": "drago.mickey",

@@ -163,10 +163,10 @@ VOICES = {
         "formal": "It was his heart, the doctor said. Ron found him at the office early one morning, when he came on at the rank.",
     },
     "cafe": {
-        "terse": "The cafe. Over the road, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+        "terse": "The cafe. Over the road, in the shops across from the north end of the parade. Half six till ten; Sundays, eight till twelve.",
         "brisk": "The cafe's over the road, in the shops across from the north end of the parade. Half six till ten at night; Sundays, eight till twelve.",
-        "warm": "The cafe's over the road{t}, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
-        "formal": "There is the cafe, over the road in the shops across from the north end of the parade. It is open from half six till ten at night, and on a Sunday from eight till twelve.",
+        "warm": "The cafe's over the road{t}, in the shops across from the north end of the parade. Half six till ten at night; Sundays, eight till twelve.",
+        "formal": "There is the cafe, over the road in the shops across from the north end of the parade. Half six till ten at night; Sundays, eight till twelve.",
     },
     "office": {
         "terse": "Mickey's. The minicab office, on Quay Street in the Hook, with the rank outside.",
@@ -193,10 +193,10 @@ VOICES = {
         "formal": "The funeral was at Father Walsh's chapel, before you came.",
     },
     "trade": {
-        "terse": "Thin. Not much since the docks went.",
-        "brisk": "Not much since the docks went. Trade has been thin.",
-        "warm": "Not much since the docks went{t}. Trade's been thin.",
-        "formal": "It has not made much since the docks went. Trade has been thin.",
+        "terse": "Thin. Mickey's has not made much since the docks went.",
+        "brisk": "Mickey's hasn't made much since the docks went. Trade's been thin.",
+        "warm": "Mickey's hasn't made much since the docks went{t}. Trade's been thin.",
+        "formal": "Mickey's has not made much since the docks went. Trade has been thin.",
     },
     "who_runs": {
         "terse": "Sheila keeps the books. Ron keeps the rank.",
@@ -207,7 +207,7 @@ VOICES = {
     "fire": {
         "terse": "The importer's warehouse, far end of the old warehouse row. Burned down last November, a Saturday night. The paper called it arson. Nobody was charged.",
         "brisk": "The importer's warehouse at the far end of the old warehouse row burned down last November, a Saturday night. The paper called it arson. Nobody was charged.",
-        "warm": "The importer's warehouse at the far end of the old warehouse row burned down last November{t}, on a Saturday night. The paper called it arson. Nobody was charged.",
+        "warm": "The importer's warehouse at the far end of the old warehouse row burned down last November{t}, a Saturday night. The paper called it arson. Nobody was charged.",
         "formal": "The importer's warehouse at the far end of the old warehouse row burned down last November, on a Saturday night. The paper called it arson, and nobody was charged.",
     },
     "drivers": {

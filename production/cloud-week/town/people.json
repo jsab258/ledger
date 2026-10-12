@@ -12495,7 +12495,7 @@
      "id": "zlata.q9",
      "q": "Is it always this quiet?",
      "kind": "answers",
-     "a": "Not much since the docks went. Trade has been thin.",
+     "a": "Mickey's hasn't made much since the docks went. Trade's been thin.",
      "uses": [
       "zlata.k11"
      ],
@@ -13184,7 +13184,7 @@
      "id": "ferko.q8",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe's over the road, mate, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "The cafe's over the road, mate, in the shops across from the north end of the parade. Half six till ten at night; Sundays, eight till twelve.",
      "uses": [
       "ferko.k12"
      ],
@@ -13195,7 +13195,7 @@
      "id": "ferko.q9",
      "q": "Is it always this quiet?",
      "kind": "answers",
-     "a": "Not much since the docks went, mate. Trade's been thin.",
+     "a": "Mickey's hasn't made much since the docks went, mate. Trade's been thin.",
      "uses": [
       "ferko.k11"
      ],
@@ -14514,7 +14514,7 @@
      "id": "marla.q9",
      "q": "Is it always this quiet?",
      "kind": "answers",
-     "a": "Not much since the docks went, love. Trade's been thin.",
+     "a": "Mickey's hasn't made much since the docks went, love. Trade's been thin.",
      "uses": [
       "marla.k11"
      ],
@@ -14525,7 +14525,7 @@
      "id": "marla.q10",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe's over the road, love, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "The cafe's over the road, love, in the shops across from the north end of the parade. Half six till ten at night; Sundays, eight till twelve.",
      "uses": [
       "marla.k12"
      ],
@@ -15259,7 +15259,7 @@
      "id": "joey.q7",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe's over the road, mate, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "The cafe's over the road, mate, in the shops across from the north end of the parade. Half six till ten at night; Sundays, eight till twelve.",
      "uses": [
       "joey.k12"
      ],
@@ -15270,7 +15270,7 @@
      "id": "joey.q8",
      "q": "Is it always this quiet?",
      "kind": "answers",
-     "a": "Not much since the docks went, mate. Trade's been thin.",
+     "a": "Mickey's hasn't made much since the docks went, mate. Trade's been thin.",
      "uses": [
       "joey.k11"
      ],
@@ -16058,7 +16058,7 @@
      "id": "rita.q9",
      "q": "Is there any money in the business?",
      "kind": "answers",
-     "a": "It has not made much since the docks went. Trade has been thin.",
+     "a": "Mickey's has not made much since the docks went. Trade has been thin.",
      "uses": [
       "rita.k11"
      ],
@@ -17487,7 +17487,7 @@
      "id": "hal.q9",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "There is the cafe, over the road in the shops across from the north end of the parade. It is open from half six till ten at night, and on a Sunday from eight till twelve.",
+     "a": "There is the cafe, over the road in the shops across from the north end of the parade. Half six till ten at night; Sundays, eight till twelve.",
      "uses": [
       "hal.k12"
      ],
@@ -17498,7 +17498,7 @@
      "id": "hal.q10",
      "q": "Is there any money in the business?",
      "kind": "answers",
-     "a": "It has not made much since the docks went. Trade has been thin.",
+     "a": "Mickey's has not made much since the docks went. Trade has been thin.",
      "uses": [
       "hal.k11"
      ],
@@ -18078,7 +18078,7 @@
      "id": "tibor.q7",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "There is the cafe, over the road in the shops across from the north end of the parade. It is open from half six till ten at night, and on a Sunday from eight till twelve.",
+     "a": "There is the cafe, over the road in the shops across from the north end of the parade. Half six till ten at night; Sundays, eight till twelve.",
      "uses": [
       "tibor.k12"
      ],
@@ -18811,7 +18811,7 @@
      "id": "vesna.q8",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe's over the road, dear, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "The cafe's over the road, dear, in the shops across from the north end of the parade. Half six till ten at night; Sundays, eight till twelve.",
      "uses": [
       "vesna.k12"
      ],
@@ -19453,7 +19453,7 @@
      "id": "magda.q10",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe's over the road, dear, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "The cafe's over the road, dear, in the shops across from the north end of the parade. Half six till ten at night; Sundays, eight till twelve.",
      "uses": [
       "magda.k12"
      ],
@@ -20085,7 +20085,7 @@
      "id": "zora.q8",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe's over the road, love, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "The cafe's over the road, love, in the shops across from the north end of the parade. Half six till ten at night; Sundays, eight till twelve.",
      "uses": [
       "zora.k12"
      ],
@@ -20107,7 +20107,7 @@
      "id": "zora.q10",
      "q": "Is it always this quiet?",
      "kind": "answers",
-     "a": "Not much since the docks went, love. Trade's been thin.",
+     "a": "Mickey's hasn't made much since the docks went, love. Trade's been thin.",
      "uses": [
       "zora.k11"
      ],
@@ -20661,7 +20661,7 @@
      "id": "tanja.q8",
      "q": "Is it always this quiet?",
      "kind": "answers",
-     "a": "Not much since the docks went. Trade has been thin.",
+     "a": "Mickey's hasn't made much since the docks went. Trade's been thin.",
      "uses": [
       "tanja.k11"
      ],
@@ -21330,7 +21330,7 @@
      "id": "katarina.q8",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe's over the road, love, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "The cafe's over the road, love, in the shops across from the north end of the parade. Half six till ten at night; Sundays, eight till twelve.",
      "uses": [
       "katarina.k12"
      ],
@@ -21897,7 +21897,7 @@
      "id": "stipe.q7",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe. Over the road, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "The cafe. Over the road, in the shops across from the north end of the parade. Half six till ten; Sundays, eight till twelve.",
      "uses": [
       "stipe.k12"
      ],
@@ -21908,7 +21908,7 @@
      "id": "stipe.q8",
      "q": "Is it always this quiet?",
      "kind": "answers",
-     "a": "Thin. Not much since the docks went.",
+     "a": "Thin. Mickey's has not made much since the docks went.",
      "uses": [
       "stipe.k11"
      ],
@@ -22562,7 +22562,7 @@
      "id": "fabjan.q7",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe. Over the road, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "The cafe. Over the road, in the shops across from the north end of the parade. Half six till ten; Sundays, eight till twelve.",
      "uses": [
       "fabjan.k12"
      ],
@@ -22573,7 +22573,7 @@
      "id": "fabjan.q8",
      "q": "Is it always this quiet?",
      "kind": "answers",
-     "a": "Thin. Not much since the docks went.",
+     "a": "Thin. Mickey's has not made much since the docks went.",
      "uses": [
       "fabjan.k11"
      ],
@@ -23208,7 +23208,7 @@
      "id": "tomas.q4",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe's over the road, mate, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "The cafe's over the road, mate, in the shops across from the north end of the parade. Half six till ten at night; Sundays, eight till twelve.",
      "uses": [
       "tomas.k12"
      ],
@@ -23241,7 +23241,7 @@
      "id": "tomas.q7",
      "q": "Is it always this quiet?",
      "kind": "answers",
-     "a": "Not much since the docks went, mate. Trade's been thin.",
+     "a": "Mickey's hasn't made much since the docks went, mate. Trade's been thin.",
      "uses": [
       "tomas.k11"
      ],
@@ -23820,7 +23820,7 @@
      "id": "luka.q7",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe. Over the road, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "The cafe. Over the road, in the shops across from the north end of the parade. Half six till ten; Sundays, eight till twelve.",
      "uses": [
       "luka.k12"
      ],
@@ -23831,7 +23831,7 @@
      "id": "luka.q8",
      "q": "Is it always this quiet?",
      "kind": "answers",
-     "a": "Thin. Not much since the docks went.",
+     "a": "Thin. Mickey's has not made much since the docks went.",
      "uses": [
       "luka.k11"
      ],
@@ -24370,7 +24370,7 @@
      "id": "bruno.q7",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "There is the cafe, over the road in the shops across from the north end of the parade. It is open from half six till ten at night, and on a Sunday from eight till twelve.",
+     "a": "There is the cafe, over the road in the shops across from the north end of the parade. Half six till ten at night; Sundays, eight till twelve.",
      "uses": [
       "bruno.k12"
      ],
@@ -24381,7 +24381,7 @@
      "id": "bruno.q8",
      "q": "Is it always this quiet?",
      "kind": "answers",
-     "a": "It has not made much since the docks went. Trade has been thin.",
+     "a": "Mickey's has not made much since the docks went. Trade has been thin.",
      "uses": [
       "bruno.k11"
      ],
@@ -25033,7 +25033,7 @@
      "id": "petra.q8",
      "q": "Is it always this quiet?",
      "kind": "answers",
-     "a": "Not much since the docks went. Trade has been thin.",
+     "a": "Mickey's hasn't made much since the docks went. Trade's been thin.",
      "uses": [
       "petra.k11"
      ],
@@ -25619,7 +25619,7 @@
      "id": "dario.q7",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe. Over the road, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "The cafe. Over the road, in the shops across from the north end of the parade. Half six till ten; Sundays, eight till twelve.",
      "uses": [
       "dario.k12"
      ],
@@ -25630,7 +25630,7 @@
      "id": "dario.q8",
      "q": "Is it always this quiet?",
      "kind": "answers",
-     "a": "Thin. Not much since the docks went.",
+     "a": "Thin. Mickey's has not made much since the docks went.",
      "uses": [
       "dario.k11"
      ],
@@ -26268,7 +26268,7 @@
      "id": "sanja.q7",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "There is the cafe, over the road in the shops across from the north end of the parade. It is open from half six till ten at night, and on a Sunday from eight till twelve.",
+     "a": "There is the cafe, over the road in the shops across from the north end of the parade. Half six till ten at night; Sundays, eight till twelve.",
      "uses": [
       "sanja.k12"
      ],
@@ -26279,7 +26279,7 @@
      "id": "sanja.q8",
      "q": "Is it always this quiet?",
      "kind": "answers",
-     "a": "It has not made much since the docks went. Trade has been thin.",
+     "a": "Mickey's has not made much since the docks went. Trade has been thin.",
      "uses": [
       "sanja.k11"
      ],
@@ -27012,7 +27012,7 @@
      "id": "hana.q9",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "There is the cafe, over the road in the shops across from the north end of the parade. It is open from half six till ten at night, and on a Sunday from eight till twelve.",
+     "a": "There is the cafe, over the road in the shops across from the north end of the parade. Half six till ten at night; Sundays, eight till twelve.",
      "uses": [
       "hana.k12"
      ],
@@ -27678,7 +27678,7 @@
      "id": "franjo.q7",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe's over the road, mate, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "The cafe's over the road, mate, in the shops across from the north end of the parade. Half six till ten at night; Sundays, eight till twelve.",
      "uses": [
       "franjo.k12"
      ],
@@ -27689,7 +27689,7 @@
      "id": "franjo.q8",
      "q": "Is it always this quiet?",
      "kind": "answers",
-     "a": "Not much since the docks went, mate. Trade's been thin.",
+     "a": "Mickey's hasn't made much since the docks went, mate. Trade's been thin.",
      "uses": [
       "franjo.k11"
      ],
@@ -28432,7 +28432,7 @@
      "id": "danica.q8",
      "q": "Is it always this quiet?",
      "kind": "answers",
-     "a": "Not much since the docks went. Trade has been thin.",
+     "a": "Mickey's hasn't made much since the docks went. Trade's been thin.",
      "uses": [
       "danica.k11"
      ],
@@ -29023,7 +29023,7 @@
      "id": "drago.q4",
      "q": "What happened at the warehouse fire?",
      "kind": "answers",
-     "a": "The importer's warehouse at the far end of the old warehouse row burned down last November, mate, on a Saturday night. The paper called it arson. Nobody was charged.",
+     "a": "The importer's warehouse at the far end of the old warehouse row burned down last November, mate, a Saturday night. The paper called it arson. Nobody was charged.",
      "uses": [
       "drago.k03"
      ],
@@ -29069,7 +29069,7 @@
      "id": "drago.q8",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe's over the road, mate, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "The cafe's over the road, mate, in the shops across from the north end of the parade. Half six till ten at night; Sundays, eight till twelve.",
      "uses": [
       "drago.k12"
      ],
@@ -29080,7 +29080,7 @@
      "id": "drago.q9",
      "q": "Is it always this quiet?",
      "kind": "answers",
-     "a": "Not much since the docks went, mate. Trade's been thin.",
+     "a": "Mickey's hasn't made much since the docks went, mate. Trade's been thin.",
      "uses": [
       "drago.k11"
      ],
@@ -29677,7 +29677,7 @@
      "id": "filip.q8",
      "q": "Is it always this quiet?",
      "kind": "answers",
-     "a": "Thin. Not much since the docks went.",
+     "a": "Thin. Mickey's has not made much since the docks went.",
      "uses": [
       "filip.k11"
      ],
@@ -31004,7 +31004,7 @@
      "id": "takeaway_m.q8",
      "q": "Is it always this quiet?",
      "kind": "answers",
-     "a": "It has not made much since the docks went. Trade has been thin.",
+     "a": "Mickey's has not made much since the docks went. Trade has been thin.",
      "uses": [
       "takeaway_m.k11"
      ],
@@ -31613,7 +31613,7 @@
      "id": "takeaway_f.q8",
      "q": "Is it always this quiet?",
      "kind": "answers",
-     "a": "Not much since the docks went. Trade has been thin.",
+     "a": "Mickey's hasn't made much since the docks went. Trade's been thin.",
      "uses": [
       "takeaway_f.k11"
      ],
