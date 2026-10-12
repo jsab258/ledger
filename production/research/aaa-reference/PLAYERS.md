@@ -4,7 +4,7 @@
 
 ## In plain words
 
-Players of both games spend most of their words on the story, the look and a world that feels alive. What they punish most is a short, slow or repeating game, bugs that stop play, a save system that costs hours (KCD2) and an empty map (Mafia). Most of it lands on risks LEDGER already holds (R3, R5, R6) and on the twenty basics. Four things have no home yet, or a thin one: price and length, players' anger at a studio's use of AI (the AI notice is ruled but not yet built), an empty map (CATALOGUE disagreement 4) and the absence of children. Jafar should read the last section and answer the one question in it.
+Players of both games talk most about story, looks and a world that feels alive. They punish a short, slow or repeating game, bugs that stop play, KCD2's costly saves and Mafia's empty map. Most of this lands on risks LEDGER already holds (R3, R5, R6) and on the twenty basics. Four things have no home yet: price and length, anger at a studio's use of AI, an empty map, and the absence of children. Jafar should answer the one question at the end of the section 'What this changes for LEDGER'.
 
 ## What was read, and how far to trust the counts
 
