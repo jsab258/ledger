@@ -36,7 +36,9 @@ import sndlib as sl
 import stepcut
 from sndlib import RATE
 
-LOOP_S = 75.0     # every loop is this long (the brief asks for at least 60 s)
+NIGHT_WIND_LP = 1000   # Hz: the night wind is darker than the day wind (2500 Hz); the first build's 1800 Hz was brighter
+LOOP_S = 75.0     # a loop's length unless its source is too short for it (the brief allows 60 to 75 s)
+SHORT_LOOP_S = 60.0   # loops whose source holds only about 67 s: 60 s plus the 4 s crossfade, with no part of the source played twice
 XF_S = 4.0        # equal-power crossfade that closes a bed's loop
 
 # --- loudness targets: BRIEF.md's targets-json block is the one home; nothing is copied here ---
@@ -125,8 +127,8 @@ def spliced_bed(parts, xfade_s=3.0, need_s=LOOP_S + XF_S):
     return x
 
 
-def bed_loop(x):
-    return sl.make_loop(x, LOOP_S, XF_S)
+def bed_loop(x, loop_s=LOOP_S):
+    return sl.make_loop(x, loop_s, XF_S)
 
 
 def circ_filter(x, kind, freq, order=4):
@@ -141,6 +143,54 @@ def apply_chain(x, chain):
     for kind, f, order in chain:
         x = sl.sos_filter(x, kind, f, order)
     return x
+
+
+def find_lines(x, min_db=20.0, fmin=45.0, fmax=11000.0, block_hz=2.0, max_width_hz=0.5):
+    """Steady tones in one channel of a source cut: lines far narrower than any real sound, found at the cut's own frequency
+    resolution (about 0.01 Hz). A bin is a line when it stands min_db over the median of the bins about it (2 Hz blocks, the
+    median of the 41 blocks round it) and it is under max_width_hz wide at 10 dB down. Returns [(Hz, dB over, width Hz)].
+    The check measures tones another way (1 Hz bins, median over time), so this finder cannot pass its own check."""
+    from scipy import ndimage
+    n = len(x)
+    X = np.abs(np.fft.rfft(x * np.hanning(n))) ** 2
+    f = np.fft.rfftfreq(n, 1.0 / RATE)
+    df = f[1]
+    bpb = max(3, int(round(block_hz / df)))
+    nb = len(X) // bpb
+    blocks = np.median(X[:nb * bpb].reshape(nb, bpb), axis=1)
+    floor_b = ndimage.median_filter(blocks, size=41, mode="nearest")
+    floor = np.concatenate([np.repeat(floor_b, bpb), np.full(len(X) - nb * bpb, floor_b[-1])])
+    ratio = X / (floor + 1e-30)
+    cand = np.flatnonzero((ratio > 10 ** (min_db / 10)) & (f >= fmin) & (f <= fmax))
+    out, i = [], 0
+    while i < len(cand):
+        j = i
+        while j + 1 < len(cand) and cand[j + 1] - cand[j] <= int(0.3 / df):
+            j += 1
+        seg = cand[i:j + 1]
+        k = seg[np.argmax(X[seg])]
+        near = np.flatnonzero(X[max(k - int(2 / df), 0):k + int(2 / df)] > X[k] / 10)
+        width = (near[-1] - near[0] + 1) * df if len(near) else 0.0
+        if width <= max_width_hz:
+            out.append((float(f[k]), float(10 * np.log10(ratio[k])), float(width)))
+        i = j + 1
+    return out
+
+
+def detone(x, q=60.0):
+    """Take the steady tones (mains hum, a recorder's whine) out of a source cut: a narrow notch on each line found by
+    find_lines, zero-phase, on each channel separately. Returns (cleaned cut, {channel: [Hz, ...]})."""
+    from scipy import signal as sg
+    y = np.array(x, dtype=float)
+    cols = [y] if y.ndim == 1 else [y[:, c] for c in range(y.shape[1])]
+    found = {}
+    for c, col in enumerate(cols):
+        hz = [round(l[0], 2) for l in find_lines(col)]
+        found[c] = hz
+        for f0 in hz:
+            b, a = sg.iirnotch(f0, q, fs=RATE)
+            col[:] = sg.sosfiltfilt(sg.tf2sos(b, a), col)
+    return (y if y.ndim == 1 else np.stack(cols, axis=1)), {str(k): v for k, v in found.items() if v}
 
 
 # ---------------------------------------------------------------------------------------------- gull calls
@@ -249,25 +299,43 @@ def build_radio(version):
 
 
 # -------------------------------------------------------------------------------------------------- beds
+def cut_clean(sid, a, b, tones):
+    """A source cut with its steady tones notched out (find_lines/detone); what was found is added to tones."""
+    x, found = detone(cut_src(sid, a, b))
+    if found:
+        tones.setdefault(sid, {}).update(found)
+    return x
+
+
+def tones_meta(meta, tones):
+    if tones:
+        meta["notched_tones_hz"] = tones          # {source: {channel: [Hz, ...]}}
+    return meta
+
+
 def build_traffic(version):
+    tones = {}
     if version == "day":
-        x = cut_src("fs_503456", 140.0, 224.0)
+        x = cut_clean("fs_503456", 140.0, 224.0, tones)
         x = apply_chain(x, [("hp", 70.0, 2), ("lp", 1800.0, 4)])
         x = leveller(x, 0.6)
         meta = {"cuts": [["fs_503456", 140.0, 224.0]], "chain": "highpass 70 Hz, lowpass 1800 Hz (distance), leveller 0.6"}
-    elif version == "night":
-        x = cut_src("fs_395686", 20.0, 104.0)
+        return bed_loop(x), tones_meta(meta, tones)
+    if version == "night":
+        x = cut_clean("fs_395686", 20.0, 104.0, tones)
         x = apply_chain(x, [("hp", 70.0, 2), ("lp", 1500.0, 4)])
         x = leveller(x, 0.35)
         meta = {"cuts": [["fs_395686", 20.0, 104.0]], "chain": "highpass 70 Hz, lowpass 1500 Hz, leveller 0.35"}
-    else:
-        x = spliced_bed([cut_src("bsb_621", 0.0, 46.0), cut_src("bsb_621", 24.0, 68.0)])
-        x = apply_chain(x, [("hp", 80.0, 2)])
-        x = x + 2.0 * sl.sos_filter(x, "hp", 1500.0, 2)      # tyre hiss on wet tarmac: about 8 dB more above 1.5 kHz
-        x = apply_chain(x, [("lp", 6000.0, 4)])
-        x = leveller(x, 0.3)
-        meta = {"cuts": [["bsb_621", 0.0, 46.0], ["bsb_621", 24.0, 68.0]], "chain": "highpass 80 Hz, +8 dB above 1.5 kHz (wet-road hiss), lowpass 6000 Hz, leveller 0.3; two excerpts crossfaded 3 s"}
-    return bed_loop(x), meta
+        return bed_loop(x), tones_meta(meta, tones)
+    # rain: one 64 s cut of a 67 s recording, a 60 s loop: no part of the road is heard twice (the 12 October first build
+    # spliced two cuts of it and played 22 s of it twice)
+    x = cut_clean("bsb_621", 0.0, SHORT_LOOP_S + XF_S, tones)    # its right channel carries a 1281 Hz whine, notched out here
+    x = apply_chain(x, [("hp", 80.0, 2)])
+    x = x + 2.0 * sl.sos_filter(x, "hp", 1500.0, 2)      # tyre hiss on wet tarmac: about 8 dB more above 1.5 kHz
+    x = apply_chain(x, [("lp", 6000.0, 4)])
+    x = leveller(x, 0.3)
+    meta = {"cuts": [["bsb_621", 0.0, SHORT_LOOP_S + XF_S]], "chain": "steady tones notched, highpass 80 Hz, +8 dB above 1.5 kHz (wet-road hiss), lowpass 6000 Hz, leveller 0.3; a 60 s loop of one uninterrupted cut"}
+    return bed_loop(x, SHORT_LOOP_S), tones_meta(meta, tones)
 
 
 def far_engine(a, b, lp=700.0, fade_s=8.0):
@@ -277,9 +345,10 @@ def far_engine(a, b, lp=700.0, fade_s=8.0):
 
 
 def build_harbour(version):
+    tones = {}
     if version == "day":
-        water = apply_chain(cut_src("fs_182611", 12.0, 96.0), [("hp", 100.0, 2), ("lp", 6000.0, 2)])
-        rig = apply_chain(cut_src("fs_360633", 4.0, 88.0), [("hp", 250.0, 2), ("lp", 5000.0, 2)])
+        water = apply_chain(cut_clean("fs_182611", 12.0, 96.0, tones), [("hp", 100.0, 2), ("lp", 6000.0, 2)])
+        rig = apply_chain(cut_clean("fs_360633", 4.0, 88.0, tones), [("hp", 250.0, 2), ("lp", 5000.0, 2)])
         mix = water + rig * 10 ** (-8 / 20)
         loop = bed_loop(mix)
         eng = far_engine(150.0, 186.0)
@@ -287,53 +356,67 @@ def build_harbour(version):
         add_circular(loop, eng_m * 10 ** (-12 / 20) * np.std(water) / (np.std(eng) + 1e-12), int(22 * RATE))
         meta = {"cuts": [["fs_182611", 12.0, 96.0], ["fs_360633", 4.0, 88.0], ["fs_559821", 150.0, 186.0]],
                 "chain": "water: highpass 100, lowpass 6000; rigging -8 dB from highpass 250; a far boat engine (lowpass 700, 8 s fades) at 22 s, -12 dB re the water"}
-        return loop, meta
+        return loop, tones_meta(meta, tones)
     if version == "night":
-        water = apply_chain(cut_src("fs_182610", 14.0, 98.0), [("hp", 100.0, 2), ("lp", 3500.0, 4)])
-        rig = apply_chain(cut_src("fs_360633", 20.0, 104.0 if False else 100.0), [("hp", 250.0, 2), ("lp", 3000.0, 4)])
+        water = apply_chain(cut_clean("fs_182610", 14.0, 98.0, tones), [("hp", 100.0, 2), ("lp", 3500.0, 4)])
+        rig = apply_chain(cut_clean("fs_360633", 20.0, 100.0, tones), [("hp", 250.0, 2), ("lp", 3000.0, 4)])
         n = min(len(water), len(rig))
         mix = water[:n] + rig[:n] * 10 ** (-14 / 20)
-        return bed_loop(mix), {"cuts": [["fs_182610", 14.0, 98.0], ["fs_360633", 20.0, 100.0]],
-                               "chain": "water highpass 100, lowpass 3500; rigging -14 dB, lowpass 3000"}
-    water = apply_chain(cut_src("fs_182612", 12.0, 96.0), [("hp", 100.0, 2), ("lp", 4500.0, 4)])
-    whistle = apply_chain(cut_src("fs_463373", 0.0, 72.0), [("hp", 400.0, 2), ("lp", 4000.0, 2)])
-    whistle = sl.spliced([whistle, whistle[int(10 * RATE):]], 3.0)[:len(water)]
+        return bed_loop(mix), tones_meta({"cuts": [["fs_182610", 14.0, 98.0], ["fs_360633", 20.0, 100.0]],
+                                          "chain": "water highpass 100, lowpass 3500; rigging -14 dB, lowpass 3000"}, tones)
+    # rain: a 60 s loop. The Dorset take 182612 carries a steady engine-like drone (73 to 193 Hz) the whole way, so its water is
+    # high-passed at 200 Hz; the whistle is 64 s of one 72 s take, so it is not repeated inside the loop
+    water = apply_chain(cut_clean("fs_182612", 12.0, 12.0 + SHORT_LOOP_S + XF_S, tones), [("hp", 200.0, 4), ("lp", 4500.0, 4)])
+    whistle = apply_chain(cut_clean("fs_463373", 0.0, SHORT_LOOP_S + XF_S, tones), [("hp", 400.0, 2), ("lp", 4000.0, 2)])
     n = min(len(water), len(whistle))
     mix = water[:n] + whistle[:n] * 10 ** (-12 / 20)
-    return bed_loop(mix), {"cuts": [["fs_182612", 12.0, 96.0], ["fs_463373", 0.0, 72.0]],
-                           "chain": "water highpass 100, lowpass 4500; rigging whistle -12 dB from highpass 400; whistle excerpt repeated from 10 s"}
+    return bed_loop(mix, SHORT_LOOP_S), tones_meta(
+        {"cuts": [["fs_182612", 12.0, 12.0 + SHORT_LOOP_S + XF_S], ["fs_463373", 0.0, SHORT_LOOP_S + XF_S]],
+         "chain": "water highpass 200 (order 4: the take's drone lies at 73 to 193 Hz), lowpass 4500; rigging whistle -12 dB from highpass 400; a 60 s loop of one uninterrupted cut of each"}, tones)
 
 
 def build_wind(version):
+    tones = {}
     if version == "day":
-        x = spliced_bed([cut_src("fs_454374", 0.0, 50.0), cut_src("fs_454374", 8.0, 44.0), cut_src("fs_454374", 20.0, 66.0)])
+        # one 64 s cut of the 66.5 s recording, a 60 s loop (the first build spliced three cuts and played 28 s of it twice)
+        x = cut_clean("fs_454374", 0.0, SHORT_LOOP_S + XF_S, tones)
         x = apply_chain(x, [("hp", 60.0, 2), ("lp", 2500.0, 2)])
-        meta = {"cuts": [["fs_454374", 0.0, 50.0], ["fs_454374", 8.0, 44.0], ["fs_454374", 20.0, 66.0]], "chain": "highpass 60, lowpass 2500; three excerpts crossfaded 3 s"}
-    elif version == "night":
-        x = cut_src("fs_554845", 20.0, 104.0)
-        x = apply_chain(x, [("hp", 90.0, 2), ("lp", 1800.0, 4)])
-        meta = {"cuts": [["fs_554845", 20.0, 104.0]], "chain": "highpass 90, lowpass 1800"}
-    else:
-        x = spliced_bed([cut_src("bsb_625", 0.0, 50.0), cut_src("bsb_625", 38.0, 91.0)])
-        x = apply_chain(x, [("hp", 90.0, 2), ("lp", 3500.0, 4)])
-        meta = {"cuts": [["bsb_625", 0.0, 50.0], ["bsb_625", 38.0, 91.0]], "chain": "highpass 90, lowpass 3500; two excerpts crossfaded 3 s"}
-    return bed_loop(x), meta
+        meta = {"cuts": [["fs_454374", 0.0, SHORT_LOOP_S + XF_S]], "chain": "highpass 60, lowpass 2500; a 60 s loop of one uninterrupted cut"}
+        return bed_loop(x, SHORT_LOOP_S), tones_meta(meta, tones)
+    if version == "night":
+        x = cut_clean("fs_554845", 20.0, 104.0, tones)
+        x = apply_chain(x, [("hp", 90.0, 2), ("lp", NIGHT_WIND_LP, 4)])
+        meta = {"cuts": [["fs_554845", 20.0, 104.0]], "chain": "highpass 90, lowpass %d (darker than the day wind: the brief's 'lower, darker')" % NIGHT_WIND_LP}
+        return bed_loop(x), tones_meta(meta, tones)
+    # rain: one 79.5 s cut of the 90.75 s recording (the first build spliced two cuts and played its seconds 41 to 50 twice, back to back)
+    x = cut_clean("bsb_625", 0.0, 79.5, tones)
+    x = apply_chain(x, [("hp", 90.0, 2), ("lp", 3500.0, 4)])
+    meta = {"cuts": [["bsb_625", 0.0, 79.5]], "chain": "highpass 90, lowpass 3500; one uninterrupted cut"}
+    return bed_loop(x), tones_meta(meta, tones)
 
 
 def build_rain(kind):
+    tones = {}
     if kind == "rain_pavement":
-        x = cut_src("bsb_1289", 0.0, LOOP_S + XF_S + 0.5, channels=1)
+        x = cut_clean_mono("bsb_1289", 0.0, LOOP_S + XF_S + 0.5, tones)
         x = sl.sos_filter(x, "hp", 120.0, 2)
         meta = {"cuts": [["bsb_1289", 0.0, LOOP_S + XF_S + 0.5]], "chain": "highpass 120 (mono source)"}
     elif kind == "rain_awning":
-        x = cut_src("fs_454130", 0.0, 81.5)
+        x = cut_clean("fs_454130", 0.0, 81.5, tones)
         x = sl.sos_filter(x, "hp", 150.0, 2)
-        meta = {"cuts": [["fs_454130", 0.0, 81.5]], "chain": "highpass 150"}
+        meta = {"cuts": [["fs_454130", 0.0, 81.5]], "chain": "steady tones notched (117 and 120 Hz hum), highpass 150"}
     else:
-        x = cut_src("fs_846446", 8.0, 92.0)
+        x = cut_clean("fs_846446", 8.0, 92.0, tones)
         x = sl.sos_filter(x, "hp", 250.0, 2)
         meta = {"cuts": [["fs_846446", 8.0, 92.0]], "chain": "highpass 250"}
-    return bed_loop(x), meta
+    return bed_loop(x), tones_meta(meta, tones)
+
+
+def cut_clean_mono(sid, a, b, tones):
+    x, found = detone(sl.seg(S(sid, channels=1), a, b))
+    if found:
+        tones.setdefault(sid, {}).update(found)
+    return x
 
 
 # ----------------------------------------------------------------------------------------- loop registry
