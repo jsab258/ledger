@@ -180,7 +180,7 @@
    "page_title": "Herring Gull passing over roof by genghisattenborough",
    "licence": "Creative Commons 0",
    "licence_url": "http://creativecommons.org/publicdomain/zero/1.0/",
-   "uploaded": null,
+   "uploaded": "July 4th, 2024",
    "description_on_page": "Soundscapes > Nature Animal Effects Unattended recording during a Nocturnal flight call recording session of a Herring Gull passing close over the rooftop",
    "original_duration": "0:13.507",
    "original_sample_rate": "44.1 kHz",
@@ -191,7 +191,8 @@
    "file": "fs_744592.mp3",
    "md5": "86dc6e732e5a911e3b9b48a597a0c5bd",
    "bytes": 313684,
-   "date_read": "2026-10-12"
+   "date_read": "2026-10-12",
+   "uploaded_note": "read from the page by the fresh reviewer on 12 October 2026 (REVIEW-v1.md, point 12: 4 July 2024); the first fetch's date pattern missed it, and every Freesound page has answered 403 to this session since, so it could not be read again"
   },
   {
    "id": "fs_182610",

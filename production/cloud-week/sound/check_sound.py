@@ -553,7 +553,10 @@ def main():
 
 
 def negative_controls():
-    """Break six outputs on purpose in a scratch copy and require the check to fail each one by name. Run: check_sound.py --negative-controls"""
+    """Break eleven outputs on purpose in a scratch copy and require the check to fail each one by name, and show the two grain tests on
+    records made up here. Run: check_sound.py --negative-controls
+    The first six are the first build's; the next five (a repeat put in, a tone put in, a footstep cut off, a night wind brighter than
+    the day's, a radio that is only voices) and the two grain records are the tests added after the review."""
     import shutil
     tmp = tempfile.mkdtemp(prefix="soundneg_")
     for f in os.listdir(OUT_DIR):
@@ -567,7 +570,7 @@ def negative_controls():
         with wave.open(os.path.join(tmp, name + ".wav"), "wb") as w:
             w.setnchannels(ch); w.setsampwidth(2); w.setframerate(sr); w.writeframes(pcm.tobytes())
 
-    os.remove(os.path.join(tmp, "amb_wind_day.wav"))                                       # 1 an output missing
+    os.remove(os.path.join(tmp, "amb_traffic_rain.wav"))                                   # 1 an output missing
     broken("amb_traffic_day", lambda x: x * 2.0)                                           # 2 +6 dB: off its loudness target
     def click(x):                                                                           # 3 a step at the loop's seam
         x[len(x) // 2:] += 0.25 if x.ndim == 1 else 0.25
@@ -576,18 +579,59 @@ def negative_controls():
     os.remove(os.path.join(tmp, "step_paving_02.wav"))                                      # 4 two variants the same
     shutil.copy(os.path.join(OUT_DIR, "step_paving_01.wav"), os.path.join(tmp, "step_paving_02.wav"))
     broken("door_shop_latch_01", lambda x: x[int(0.012 * RATE) + 2000:] * 8.0)             # 5 a hard start and too loud
-    broken("amb_wind_night", lambda x: x * 40.0)                                           # 6 clipped
+    broken("amb_voices_night", lambda x: x * 40.0)                                         # 6 clipped
+
+    def repeat(x):                                                                          # 7 9 s of the loop played again 30 s later (the review's wind fault)
+        x[int(40 * RATE):int(49 * RATE)] = x[int(10 * RATE):int(19 * RATE)]
+        return x
+    broken("amb_harbour_night", repeat)
+
+    def tone(x):                                                                            # 8 a faint steady 1234.5 Hz whine in the right channel, 36 dB under its power
+        t = np.arange(len(x)) / RATE
+        x[:, 1] += np.sqrt(np.mean(x[:, 1] ** 2)) * 10 ** (-36 / 20) * np.sqrt(2) * np.sin(2 * np.pi * 1234.5 * t)
+        return x
+    broken("amb_traffic_night", tone)
+
+    def cut_off(x):                                                                         # 9 a step cut off while still sounding, then faded as the cutter does
+        e = rms_env(x, 5.0)
+        k = int(np.argmax(e))
+        end = k + int(np.argmax(e[k:] < e.max() * 10 ** (-8 / 20)))
+        y = x[:end].copy()
+        n = min(len(y), int(0.015 * RATE))
+        y[-n:] *= np.linspace(1.0, 0.0, n)
+        return y
+    broken("step_paving_03", cut_off)
+
+    def brighter(x):                                                                        # 10 the night wind made brighter than the day wind
+        return x + 10.0 * np.gradient(x, axis=0)
+    broken("amb_wind_night", brighter)
+    voices, _, _, _, _ = read_wav(os.path.join(OUT_DIR, "amb_voices_day.wav"))
+    broken("amb_radio_day", lambda x: voices.copy())                                       # 11 a radio that is only voices (same loudness class, no gaps, no midrange)
     env = dict(os.environ, SOUND_OUT=tmp)
     r = subprocess.run([sys.executable, os.path.abspath(__file__), "--out", "negative"], capture_output=True, text=True, env=env)
     out = r.stdout
-    expect = [("an output missing", "MISSING amb_wind_day.wav"), ("loop off its target", "FAIL case 4: amb_traffic_day.wav"),
+    expect = [("an output missing", "MISSING amb_traffic_rain.wav"), ("loop off its target", "FAIL case 4: amb_traffic_day.wav"),
               ("a step across the loop's seam", "FAIL case 6: amb_gulls_day.wav"), ("two identical footsteps", "FAIL case 9: step_paving_*"),
-              ("a click at a one-shot's start", "FAIL case 8: door_shop_latch_01.wav"), ("clipping", "FAIL case 5: amb_wind_night.wav")]
+              ("a click at a one-shot's start", "FAIL case 8: door_shop_latch_01.wav"), ("clipping", "FAIL case 5: amb_voices_night.wav"),
+              ("a repeat put into a loop", "FAIL case 22: amb_harbour_night.wav"), ("a steady tone put in", "FAIL case 23: amb_traffic_night.wav"),
+              ("a footstep cut off while sounding", "FAIL case 24: step_paving_03.wav"), ("a night wind brighter than the day's", "FAIL case 11: -: night wind is darker"),
+              ("a radio that is only voices", "FAIL case 25: amb_radio_day.wav")]
     caught = 0
     for what, needle in expect:
         ok = needle in out
         caught += ok
-        print("%-34s %s" % (what, "caught" if ok else "NOT CAUGHT (%s)" % needle))
+        print("%-40s %s" % (what, "caught" if ok else "NOT CAUGHT (%s)" % needle))
+    # the grain record is read from manifest.json, so its two tests are shown on records made up here
+    T = json.loads(open(os.path.join(HERE, "BRIEF.md"), encoding="utf8").read().split("```targets-json")[1].split("```")[0])
+    run_plan = {"plan": {"src": [0, 0, 0], "start_ms": [1000, 1110, 5000], "len_ms": [120, 120, 120], "pos_ms": [0, 60, 40000]}}   # grain 2 takes up where grain 1 stops
+    reuse_plan = {"plan": {"src": [0, 0], "start_ms": [2000, 2050], "len_ms": [120, 120], "pos_ms": [0, 5000]}}                     # the same place again 5 s later
+    _, run, _ = grain_runs(run_plan, 75000)
+    _, _, reuse = grain_runs(reuse_plan, 75000)
+    for what, ok in (("a grain that continues another (a run of %d ms)" % run, run > T["grain_ms_max"]),
+                     ("a moment of a recording back after %.0f s" % reuse, reuse < min(T["grain_reuse_min_s"].values()))):
+        expect.append((what, ""))
+        caught += ok
+        print("%-40s %s" % (what, "caught" if ok else "NOT CAUGHT"))
     print("negative controls: %d of %d caught" % (caught, len(expect)))
     for f in os.listdir(tmp):
         os.remove(os.path.join(tmp, f))

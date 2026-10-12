@@ -279,6 +279,14 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
     co_.location = Vector(eye)
     co_.rotation_euler = (Vector(aim) - Vector(eye)).to_track_quat("-Z", "Y").to_euler()
     sc.camera = co_
+    bpy.context.view_layer.update()
+    fwd = co_.matrix_world.to_quaternion() @ Vector((0.0, 0.0, -1.0))
+    to_aim = (Vector(aim) - Vector(eye)).normalized()
+    cam_rec = {"camera": cam_name, "state": state, "eye_street_m": [BAY_MID_X - co_.location.x, co_.location.y + Y_WALL, co_.location.z + FOOT],
+               "defined_eye_street_m": list(cam_def["eye_street_m"]), "aim_street_m": list(cam_def["aim_street_m"]),
+               "aim_error_deg": round(math.degrees(fwd.angle(to_aim)), 4), "vfov_deg": round(math.degrees(cam.angle_y), 4), "defined_vfov_deg": VFOV[cam_name],
+               "resolution": list(RES)}
+    json.dump(cam_rec, open(os.path.splitext(out_png)[0] + ".camera.json", "w"), indent=1)
     # --- light: day = an overcast sky; night = sodium lamps (linear 1.0, 0.25, 0.0) and the display's spill (a rect light in the window head, tipped 62 degrees down)
     w = bpy.data.worlds.new("w")
     sc.world = w

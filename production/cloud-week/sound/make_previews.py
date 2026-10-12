@@ -7,7 +7,7 @@
   spec_<layer>.jpg          a spectrogram of each layer, its day, night and rain versions stacked (spec_rain.jpg: the three rains)
   spec_steps_<surface>.jpg  the eight variants of each footstep surface in a row
   spec_doors_*.jpg, spec_bell.jpg, spec_phonebox.jpg   the door, bell and phone-box one-shots in a row
-  clip_mix_{day,night,rain}.ogg   (audio is not committed: .gitignore lists *.ogg; make_clips) 20 s of each bed: its layers summed at their own levels (mono layers centred), one gain for all three
+  clip_mix_{day,night,rain}.ogg   (audio is not committed: the root .gitignore lists them; make_clips) 20 s of each bed: its layers summed at their own levels (mono layers centred), one gain for all three
   clip_steps_<surface>.ogg        the eight variants of a surface, walked
   clip_doors.ogg                  shop door, bell, house door, phone box
 
@@ -121,7 +121,7 @@ def encode_ogg(x, out, quality, tmp, limit=False, gain_db=0.0, max_kb=290):
 
 def make_clips():
     """The nine listening clips. Audio does not go into git (the size guard refuses it): they are written beside the JPEGs in
-    production/previews/cloud-week/sound/ (kept out of git by the .gitignore there: `*.ogg`) and copied to SOUND_OUT/clips/, and make_sound.py makes them
+    production/previews/cloud-week/sound/ (kept out of git by a line in the repository's root .gitignore) and copied to SOUND_OUT/clips/, and make_sound.py makes them
     at the end of a full run, so one command rebuilds the WAVs and the clips."""
     os.makedirs(PREV, exist_ok=True)
     tmp = tempfile.mkdtemp(prefix="soundclips_")

@@ -90,11 +90,20 @@ def build_display(work, out_dir, log=print):
             ty = ext[2] - 0.012
             cell = r.rnd.randrange(96)
             cu, cv = (cell % 12) / 12.0, (cell // 12) / 8.0
+            # a ticket 3 mm thick (a price card: DSP-02 allows a card only if it is 3 mm), leaning back a little, the front face from the atlas
+            t = 0.003
+            x_a, x_b = tx - tw / 2, tx + tw / 2
+            lean = 0.004
+            V = [(x_a, ty, w0 + 0.001), (x_b, ty, w0 + 0.001), (x_b, ty - lean, w0 + 0.019), (x_a, ty - lean, w0 + 0.019),
+                 (x_a, ty + t, w0 + 0.001), (x_b, ty + t, w0 + 0.001), (x_b, ty + t - lean, w0 + 0.019), (x_a, ty + t - lean, w0 + 0.019)]
             me = bpy.data.meshes.new("ticket")
-            me.from_pydata([(tx - tw / 2, ty, w0 + 0.001), (tx + tw / 2, ty, w0 + 0.001), (tx + tw / 2, ty - 0.004, w0 + 0.019), (tx - tw / 2, ty - 0.004, w0 + 0.019)], [], [(0, 1, 2, 3)])
+            me.from_pydata(V, [], [(0, 1, 2, 3), (5, 4, 7, 6), (0, 4, 5, 1), (1, 5, 6, 2), (2, 6, 7, 3), (3, 7, 4, 0)])
             uv = me.uv_layers.new(name="UVMap")
-            for loop, (a, b) in zip(me.loops, ((0, 0), (1, 0), (1, 1), (0, 1))):
-                uv.data[loop.index].uv = (cu + a / 12.0, cv + b / 8.0)
+            for loop in me.loops:
+                vx, vz = V[loop.vertex_index][0], V[loop.vertex_index][2]
+                a_ = (vx - x_a) / max(x_b - x_a, 1e-6)
+                b_ = (vz - (w0 + 0.001)) / 0.018
+                uv.data[loop.index].uv = (cu + a_ / 12.0, cv + b_ / 8.0)
             tob = bpy.data.objects.new("ticket", me)
             r.sc.collection.objects.link(tob)
             tob.data.materials.append(paper)

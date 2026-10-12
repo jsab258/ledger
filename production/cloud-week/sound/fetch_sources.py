@@ -92,7 +92,11 @@ def read_freesound(src):
     if lic_text != "Creative Commons 0" or CC0_URL not in lic_url:
         raise SystemExit("fetch_sources: %s: the page says %r (%s), not CC0; not used" % (src["id"], lic_text, lic_url))
     mp3 = re.search(r'data-mp3="([^"]+)"', h).group(1)
-    date = re.search(re.escape(author) + r" ([A-Z][a-z]+ \d+(?:st|nd|rd|th), \d{4}) Follow", t)
+    # the date follows the author's name, usually "AUTHOR July 4th, 2024 Follow"; the first build's pattern needed " Follow" straight
+    # after it and missed one page (fs_744592), so take the first date within 60 characters of the name
+    date = re.search(re.escape(author) + r"\W{0,3}.{0,60}?([A-Z][a-z]+ \d+(?:st|nd|rd|th), \d{4})", t)
+    if not date:
+        print("fetch_sources: %s: the page gives no upload date after the author's name; uploaded is left empty (check_sound.py fails a Freesound source without one)" % src["id"])
     follow = t.find(" Follow ")
     info = {}
     for key, pat in (("original_duration", r"Duration (\d+:\d+(?:\.\d+)?)"), ("original_sample_rate", r"Sample rate ([\d.]+ kHz)"),

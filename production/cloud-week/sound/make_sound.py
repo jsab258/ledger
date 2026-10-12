@@ -12,16 +12,18 @@ Everything is deterministic: fixed cut points, seeded random numbers (gull calls
 seeded dither. A second run gives byte-identical WAVs (the manifest holds each file's sha256).
 
 What it makes (BRIEF.md says why, and what each must sound like):
-  21 ambience loops, 75 s, 48 kHz 16 bit WAV: traffic, gulls, harbour, wind, voices through a window and a radio
+  21 ambience loops, 60 to 75 s, 48 kHz 16 bit WAV: traffic, gulls, harbour, wind, voices through a window and a radio
      through a window, each in day, night and rain versions; the rain itself on pavement, on an awning and in
      a gutter (rain version only). Beds are stereo; point sources (gulls, voices, radio) and the mono pavement rain are mono.
+     A loop is 75 s unless its recording is too short for that without playing part of it twice: the rain traffic, the day wind
+     and the rain harbour are 60 s. Steady tones (mains hum, a recorder's whine) are notched out of every bed's source cuts.
   footsteps: 8 variants on each of paving, setts, asphalt, wet, wood (mono one-shots)
   one-shots: shop door (open, close, latch), house door (open, close, latch), the shop bell, the phone box (door creak,
      door shut, a telephone ringing)
 
 Loops are seamless by construction: a bed's tail is crossfaded (equal power, 4 s) into its head, so the sample after
 its last is the one that followed it in the source; point-source layers are mixed round a circle, so an event that
-runs past the end continues at the start. Levels are set by measured gain (BS.1770-4 integrated loudness for loops,
+runs past the end continues at the start (the voices and the radio, being circles, start where the level changes least). Levels are set by measured gain (BS.1770-4 integrated loudness for loops,
 the highest 400 ms momentary loudness for one-shots), never by a limiter.
 """
 import hashlib

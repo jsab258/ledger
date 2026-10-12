@@ -513,7 +513,7 @@ class Room:
                 d = self.dims(asset, (0, 0, turn))
                 # the stock was crammed and sized to its shelf (the approved room's pool sizes: a cassette player 0.3, a camera 0.15 against 0.24 and 0.26 as modelled):
                 # scaled to fill the clearance, at most 1.45 times its modelled size, never deeper than the shelf
-                s = min(1.45, (gap - BOARD_T - 0.015) / d.z, (depth_max - 0.02) / d.y)
+                s = min(1.45, (gap - BOARD_T - 0.015) / d.z, (depth_max - 0.035) / d.y)
                 if best is None or s > best[0] + 1e-9 or (abs(s - best[0]) < 1e-9 and d.y < best[2].y):
                     best = (s, turn, d)
             return best
@@ -533,7 +533,7 @@ class Room:
         for p, x in zip(boxes_door, xs):
             s = 0.3 / max(self.dims("cardboard_box_01"))
             d = self.dims("cardboard_box_01", (0, 0, 0.0))
-            self.place("cardboard_box_01", (x, D - 0.01, 2.05), rot=(0, 0, rnd.uniform(-0.12, 0.12)), scale=s, fixture="R-back-door-boxes", anchor=("c", "max", "min"))
+            self.place("cardboard_box_01", (x, D - 0.005, 2.05), rot=(0, 0, math.pi / 2 + rnd.uniform(-0.06, 0.06)), scale=s, fixture="R-back-door-boxes", anchor=("c", "max", "min"))
         # the four television sets on the two TV tiers (1.35 and 1.70), x -1.9 to 0.9: scaled to 0.75 so each stands clear of the tier above (the target gives 0.35 depth; at 0.75 they are 0.26)
         tv_x = {1.35: [-1.55, -0.25], 1.7: [-1.1, 0.25]}
         k = 0
@@ -544,68 +544,94 @@ class Room:
                 self.tickets_for(x, D - 0.30 + 0.0, z)
                 k += 1
         self.tv_spans = tv_x
-        # fill the tiers shoulder to shoulder from the rest of the pool, bottom up, skipping what the TVs hold
-        def occupied(z):
-            return [(x - 0.2, x + 0.2) for x in tv_x.get(z, [])]
-        leftovers = []
+        # fill the tiers shoulder to shoulder from the rest of the pool, bottom up: in each free stretch of a tier (the TVs' places taken out) the widest piece that still fits
         queue = rest[:]
+        self.fill_log = []
+
+        def free_stretches(z, a, b):
+            obst = sorted([(x - 0.17, x + 0.17) for x in tv_x.get(z, []) if a - 0.2 <= x <= b + 0.2])
+            out, cur = [], a
+            for (o0, o1) in obst:
+                if o0 > cur:
+                    out.append((cur, min(o0, b)))
+                cur = max(cur, o1)
+            if cur < b:
+                out.append((cur, b))
+            return out
         for td in self.tier_defs:
             z, gap = td["z"], td["gap"]
             if z == 2.05:
                 continue
             for (a, b) in td["ranges"]:
-                x = a + 0.05
-                guard = 0
                 n_in = 0
-                while queue and guard < 60:
-                    guard += 1
-                    # the next piece that fits this clearance without shrinking below 55 per cent
-                    pick = None
-                    for i, p in enumerate(queue):
-                        s, turn, d = fit(p["model"], gap, td["depth"], long_side=p["size"])
-                        if s >= 0.30:
-                            pick = (i, p, s, turn, d)
+                for (fa, fb) in free_stretches(z, a, b):
+                    x = fa + 0.03
+                    while queue:
+                        cands = []
+                        for i, p in enumerate(queue):
+                            s, turn, d = fit(p["model"], gap, td["depth"], long_side=p["size"])
+                            if s < 0.30:
+                                continue
+                            w = d.x * s
+                            if x + w <= fb - 0.015:
+                                cands.append((w, i, s, turn, d))
+                        if not cands:
                             break
-                    if pick is None:
-                        break
-                    i, p, s, turn, d = pick
-                    wdt = d.x * s
-                    # keep clear of the TVs standing on this tier
-                    clash = [oc for oc in occupied(z) if x < oc[1] and x + wdt > oc[0]]
-                    if clash:
-                        x = max(oc[1] for oc in clash) + 0.01
-                    if x + wdt > b - 0.02:
-                        # try a smaller piece in the rest of the span
-                        small = [(j, q) for j, q in enumerate(queue) if self.dims(q["model"], (0, 0, 0)).x * fit(q["model"], gap, td["depth"], q["size"])[0] < b - x - 0.03 and fit(q["model"], gap, td["depth"], q["size"])[0] >= 0.30]
-                        if not small:
-                            break
-                        i, p = small[0]
-                        s, turn, d = fit(p["model"], gap, td["depth"], long_side=p["size"])
-                        wdt = d.x * s
-                        clash = [oc for oc in occupied(z) if x < oc[1] and x + wdt > oc[0]]
-                        if clash:
-                            x = max(oc[1] for oc in clash) + 0.01
-                        if x + wdt > b - 0.02:
-                            break
-                    ext = self.place(p["model"], (x + wdt / 2, D - 0.02, z), rot=(0, 0, turn + rnd.uniform(-0.08, 0.08)), scale=s, fixture="R-back-stock", anchor=("c", "max", "min"))
-                    self.tickets_for(x + wdt / 2, D - 0.30 + 0.0, z)
-                    queue.pop(i)
-                    n_in += 1
-                    x += wdt + rnd.uniform(0.0, 0.03)
-                self.fill_log = getattr(self, "fill_log", []) + [(z, round(a, 2), round(b, 2), round(x, 2), n_in)]
+                        w, i, s, turn, d = max(cands, key=lambda c: c[0])
+                        p = queue[i]
+                        self.place(p["model"], (x + w / 2, D - 0.005, z), rot=(0, 0, turn + rnd.uniform(-0.06, 0.06)), scale=s, fixture="R-back-stock", anchor=("c", "max", "min"))
+                        self.tickets_for(x + w / 2, D - 0.30, z)
+                        queue.pop(i)
+                        n_in += 1
+                        x += w + rnd.uniform(0.0, 0.02)
+                self.fill_log.append((z, round(a, 2), round(b, 2), n_in))
         leftovers = queue
-        # the top tier (z 2.05): the cardboard boxes of stock and whatever is left, spread across the whole wall
-        top = [p for p in boxes_top] + leftovers
-        n = len(top)
-        xs = np.linspace(-2.45, 1.2, n)
-        for p, x in zip(top, xs):
-            if p["model"] == "cardboard_box_01":
-                s = 0.3 / max(self.dims("cardboard_box_01"))
-                self.place("cardboard_box_01", (x, D - 0.02, 2.05), rot=(0, 0, rnd.uniform(-0.15, 0.15)), scale=s, fixture="R-back-stock", anchor=("c", "max", "min"))
-            else:
-                s, turn, d = fit(p["model"], 0.35, 0.30, long_side=p["size"])
-                self.place(p["model"], (x, D - 0.02, 2.05), rot=(0, 0, turn), scale=s, fixture="R-back-stock", anchor=("c", "max", "min"))
-            self.tickets_for(x, D - 0.30, 2.05)
+        # the top tier (z 2.05), the whole wall: the cardboard boxes of stock first (0.30 largest side), then what is left, each in the widest stretch left; pieces that do not fit
+        # at 0.25 of their size are reported (leftover_count) and not placed
+        top_a, top_b = -2.6, 1.35
+        x = top_a + 0.03
+        top_items = [("box", p) for p in boxes_top] + [("good", p) for p in leftovers]
+        unplaced = []
+        spare = (top_b - top_a - 0.06) - sum(0.30 for k, _ in top_items if k == "box")
+        rest_items = [p for k, p in top_items if k == "good"]
+        # a uniform shrink so the left-overs fit the room that the boxes leave: scale each to its clearance, then all by one factor if the row is too long
+        sizes = []
+        for p in rest_items:
+            s_, turn_, d_ = fit(p["model"], 0.35, 0.30, long_side=p["size"])
+            sizes.append((p, s_, turn_, d_))
+        total_w = sum(d_.x * s_ for (_, s_, _, d_) in sizes) + 0.01 * len(sizes)
+        k_shrink = min(1.0, spare / total_w) if total_w > 0 else 1.0
+        placed_top = []
+        for kind, p in top_items:
+            if kind == "box":
+                sc_ = 0.3 / max(self.dims("cardboard_box_01"))
+                w = 0.3                    # turned a quarter so the 0.30 side runs along the shelf and the box is 0.225 deep
+                placed_top.append(("box", p, sc_, math.pi / 2, w))
+        for (p, s_, turn_, d_) in sizes:
+            s2 = s_ * k_shrink
+            if s2 < 0.25:
+                unplaced.append(p)
+                continue
+            placed_top.append(("good", p, s2, turn_, d_.x * s2))
+        # interleave: boxes and goods alternate along the wall so the row reads as stock, not as two blocks
+        boxes_l = [t for t in placed_top if t[0] == "box"]
+        goods_l = [t for t in placed_top if t[0] == "good"]
+        order = []
+        while boxes_l or goods_l:
+            if goods_l:
+                order.append(goods_l.pop(0))
+            if goods_l:
+                order.append(goods_l.pop(0))
+            if boxes_l:
+                order.append(boxes_l.pop(0))
+        tot = sum(t[4] for t in order)
+        gapw = max(0.0, (top_b - top_a - 0.06 - tot) / max(1, len(order) - 1))
+        x = top_a + 0.03
+        for kind, p, s_, turn_, w in order:
+            self.place(p["model"], (x + w / 2, D - 0.005, 2.05), rot=(0, 0, turn_ + rnd.uniform(-0.06, 0.06)), scale=s_, fixture="R-back-stock", anchor=("c", "max", "min"))
+            self.tickets_for(x + w / 2, D - 0.30, 2.05)
+            x += w + min(gapw, 0.03)
+        leftovers = unplaced
         self.leftover_count = len(leftovers)
 
     def tickets_for(self, x, y_front, z):

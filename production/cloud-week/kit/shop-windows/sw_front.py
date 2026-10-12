@@ -230,9 +230,10 @@ class Front:
         # the bell (target 4.2): a spring strip 20 x 3, 220 long, on the INSIDE of the top rail, 90 from the hanging stile; the bell hung 80 below
         bd = D["bell"]
         ub = lu1 - 90.0
-        R_arc = 140.0
-        cen = (20.0, 2050.0 - R_arc)
-        arc = [(cen[0] + R_arc * math.cos(t), cen[1] + R_arc * math.sin(t)) for t in np.linspace(math.pi / 2, math.pi, 12)]
+        # the strip spans z 1950 to 2050 and is 220 long (target 4.2): a quarter ellipse, 171 into the room and 100 down (arc length 220)
+        a_h, b_v = 171.0, 100.0
+        cen = (20.0, 2050.0 - b_v)
+        arc = [(cen[0] + a_h * math.cos(t), cen[1] + b_v * math.sin(t)) for t in np.linspace(math.pi / 2, math.pi, 14)]
         self.add("bell_spring_strip", polyline_strip(arc, ub - 10.0, ub + 10.0, 3.0), "steel", bev=None)
         end = arc[-1]
         bz = end[1] - 80.0
@@ -630,9 +631,15 @@ def build_front(out_dir, work_dir, fasc_dir, paper_dir, log=print):
     F.grille_fixed()
     F.side_door()
     obs = F.finish()
-    members = {ob.name: dict(bbox_mm(ob), material=ob.data.materials[0].name if ob.data.materials else None) for ob in obs}
+    def srgb_of(ob):
+        if not ob.data.materials or ob.data.materials[0] is None:
+            return None
+        bc = ob.data.materials[0].node_tree.nodes["Principled BSDF"].inputs["Base Color"].default_value
+        f = lambda v: 12.92 * v if v <= 0.0031308 else 1.055 * v ** (1 / 2.4) - 0.055
+        return [int(round(255 * f(bc[i]))) for i in range(3)]
+    members = {ob.name: dict(bbox_mm(ob), material=ob.data.materials[0].name if ob.data.materials else None, base_srgb=srgb_of(ob)) for ob in obs}
     for ob in F.extra:
-        members[ob.name] = dict(bbox_mm(ob), material=None, group="side_door_F1")
+        members[ob.name] = dict(bbox_mm(ob), material=ob.data.materials[0].name if ob.data.materials else None, base_srgb=srgb_of(ob), group="side_door_F1")
     # the 4.1 fascia board on the board's face
     fb = F.B.get("fas_board")
     set_fascia_uvs(fb)
@@ -708,6 +715,8 @@ def build_front(out_dir, work_dir, fasc_dir, paper_dir, log=print):
     to_metres(lat, F.mats["black"])
     members["grille_lattice"] = dict(bbox_mm(lat), material="powder_black", group="grille_night", rivets=nrivets)
     day_objs = [o for o in bpy.data.objects if o.type == "MESH" and o is not lat]
+    # FRN-07: the elevation drawn from the built meshes (u 350 to 5650, z 0 to 2850, 1 mm a pixel): every triangle of every part of the front, seen from the street
+    elevation_mask(day_objs, os.path.join(work_dir, "front_elevation_mask.png"))
     # export: the front (day state) and the lattice (night)
     front_glb = os.path.join(out_dir, "ritas_front.glb")
     grille_glb = os.path.join(out_dir, "ritas_grille_night.glb")
@@ -721,6 +730,31 @@ def build_front(out_dir, work_dir, fasc_dir, paper_dir, log=print):
     json.dump({"members": members, "info": info}, open(os.path.join(work_dir, "front_members.json"), "w"), indent=1)
     log("front: %d objects, %d triangles, %d bytes; grille %d triangles, %d bytes" % (info["objects"], info["front_triangles"], info["front_bytes"], info["grille_triangles"], info["grille_bytes"]))
     return info
+
+
+def elevation_mask(objs, path, u0=350.0, u1=5650.0, z0=0.0, z1=2850.0):
+    """Draw every triangle of the front's parts (not the lettering planes, the sign or the hanging sign) on a 1 mm raster of the elevation; white = a part is there."""
+    from PIL import Image, ImageDraw
+    w, h = int(u1 - u0), int(z1 - z0)
+    im = Image.new("L", (w, h), 0)
+    dr = ImageDraw.Draw(im)
+    skip = ("glass_row", "door_sign", "sign_", "grille_lattice")
+    for ob in objs:
+        if ob.name.startswith(skip):
+            continue
+        me = ob.data
+        me.calc_loop_triangles()
+        n = len(me.vertices)
+        co = np.empty(n * 3)
+        me.vertices.foreach_get("co", co)
+        co = co.reshape(-1, 3)
+        U = co[:, 0] * 1000.0 + BAY_MID - u0
+        Z = (z1 - co[:, 2] * 1000.0)
+        for t in me.loop_triangles:
+            a, b, c = t.vertices
+            dr.polygon([(U[a], Z[a]), (U[b], Z[b]), (U[c], Z[c])], fill=255, outline=255)
+    im.save(path)
+    return path
 
 
 def _export(objs, path):
