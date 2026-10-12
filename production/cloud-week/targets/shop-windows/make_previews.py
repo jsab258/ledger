@@ -4,7 +4,10 @@
     /home/user/.bpyenv/bin/python make_previews.py [--photos DIR] [--work DIR] [--previews DIR]
 
   P1..P6-<place>-<what>.jpg          the six Geograph photographs, cropped to the craft (shop fronts and windows only), anything with a person, a real
-                                     firm's name, a number or a drink merchant's sign masked or cropped away; credits in TARGET.md
+                                     firm's name, a number or a drink merchant's sign masked or cropped away; credits in TARGET.md.
+                                     The crops and EVERY mask are the list extras.PREVIEW_PHOTOS (original pixels, flat grey 120): they are drawn on each
+                                     rebuild and then READ BACK from the written JPEG (flat grey inside each mask, or the run stops); self_check.py
+                                     reads the committed JPEGs against the same list (PRV-01 to PRV-03).
   P1-worcester-fish-front-target-on-photo.jpg   the target's door, stallriser, glass lines laid on P1 at the scale fitted on the leaf's height
   D1-ritas-front.jpg                 Rita's bay in millimetres from target.json
   D2-ten-fronts-sheet.jpg            the ten fronts
@@ -25,17 +28,11 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import sw_common as S  # noqa: E402
 import target_drawing as TD  # noqa: E402
+import extras as X  # noqa: E402
 
 UA = "Mozilla/5.0 (X11; Linux x86_64; rv:120.0) Gecko/20100101 Firefox/120.0 LedgerShopWindowsTarget/1.0"
-# id: (direct image url, crop box in the original's pixels, masks (grey rectangles) in the original's pixels, preview name)
-PHOTOS = {
-    "2192169": ("https://s0.geograph.org.uk/geophotos/02/19/21/2192169_36cb6ecc.jpg", (0, 108, 640, 480), [(383, 108, 436, 146), (557, 94, 611, 134)], "P1-worcester-fish-front-below-fascia"),
-    "2184467": ("https://s0.geograph.org.uk/geophotos/02/18/44/2184467_941cf948.jpg", (30, 388, 192, 582), [], "P2-bath-grocer-window-stock"),
-    "5945841": ("https://s1.geograph.org.uk/geophotos/05/94/58/5945841_dc1c2255_1024x1024.jpg", (300, 326, 690, 520), [], "P3-pinner-hardware-newsagent-windows"),
-    "3378991": ("https://s3.geograph.org.uk/geophotos/03/37/89/3378991_95b1bbed_1024x1024.jpg", (225, 548, 600, 990), [(405, 655, 478, 748), (300, 580, 350, 645)], "P4-hull-chandler-front-mesh"),
-    "1633924": ("https://s0.geograph.org.uk/geophotos/01/63/39/1633924_c4220c3e.jpg", (0, 262, 330, 425), [], "P5-launderette-front-type-2009"),
-    "27024": ("https://s0.geograph.org.uk/photos/02/70/027024_2285cb8f.jpg", (0, 262, 417, 420), [], "P6-kames-unlet-shop-1995"),
-}
+PHOTOS = {p["gid"]: p for p in X.PREVIEW_PHOTOS}
+PHOTO_PREVIEW = {p["id"]: p for p in X.PREVIEW_PHOTOS}
 
 
 def save_jpg(im, path, limit=295_000):
@@ -69,30 +66,38 @@ def main():
     ap.add_argument("--photos", default="/tmp/shop_windows_photos")
     ap.add_argument("--previews", default=os.path.join(HERE, "..", "..", "..", "previews", "cloud-week", "refs", "shop-windows"))
     ap.add_argument("--work", default="/tmp/shop_windows_previews")
+    ap.add_argument("--only", choices=["photos", "all"], default="all", help="photos: only the six photograph previews (no drawings)")
     a = ap.parse_args()
     os.makedirs(a.photos, exist_ok=True)
     os.makedirs(a.previews, exist_ok=True)
     os.makedirs(a.work, exist_ok=True)
     t = json.load(open(os.path.join(HERE, "target.json")))
     crops = {}
-    for gid, (url, box, masks, name) in PHOTOS.items():
+    for gid, ph in PHOTOS.items():
         p = os.path.join(a.photos, gid + ".jpg")
-        fetch(url, p)
+        fetch(ph["url"], p)
         im = Image.open(p).convert("RGB")
-        dr = ImageDraw.Draw(im)
-        for m in masks:
-            dr.rectangle(m, fill=(120, 120, 120))
-        c = im.crop(box)
+        S.draw_masks(im, ph["masks"], X.MASK_GREY)          # the masks are drawn on every rebuild, on the ORIGINAL, before the crop
+        c = im.crop(tuple(ph["crop"]))
         crops[gid] = c
-        save_jpg(c, os.path.join(a.previews, name + ".jpg"))
+        out = os.path.join(a.previews, ph["name"] + ".jpg")
+        save_jpg(c, out)
+        rep = S.preview_mask_report(out, ph, X.MASK_GREY)    # and read back from the JPEG that was written
+        bad = [r for r in rep if not r["ok"]]
+        print("  %s: %d masks, %d with pixels in the crop, flat grey: %s" % (ph["id"], len(rep), sum(1 for r in rep if r["pixels"]), "yes" if not bad else "NO " + str(bad)))
+        if bad:
+            raise SystemExit("mask not flat grey in " + out)
+    if a.only == "photos":
+        return
     # the overlay on P1
     rows = {r["what"]: r for r in t["photographs"]["rows"]}
-    top = rows["door leaf top (underside of the transom's board)"]["y_px"] - 108
-    bot = rows["door leaf bottom / threshold"]["y_px"] - 108
+    crop_top = PHOTO_PREVIEW["P1"]["crop"][1]
+    top = rows["door leaf top (underside of the transom's board)"]["y_px"] - crop_top
+    bot = rows["door leaf bottom / threshold"]["y_px"] - crop_top
     cx = (rows["leaf left edge"]["x_px"] + rows["leaf right edge"]["x_px"]) / 2
     fish = next(s for s in t["shops"] if s["id"] == "ritas")   # a T1 (timber) door: the photograph shows a timber door
     tmp = os.path.join(a.work, "p1_overlay.jpg")
-    lines, k = TD.overlay(os.path.join(a.previews, PHOTOS["2192169"][3] + ".jpg"), {"leaf_top_y": top, "leaf_bottom_y": bot, "leaf_centre_x": cx}, fish, tmp)
+    lines, k = TD.overlay(os.path.join(a.previews, PHOTO_PREVIEW["P1"]["name"] + ".jpg"), {"leaf_top_y": top, "leaf_bottom_y": bot, "leaf_centre_x": cx}, fish, tmp)
     save_jpg(Image.open(tmp), os.path.join(a.previews, "P1-worcester-fish-front-target-on-photo.jpg"))
     # drawings
     ritas = next(s for s in t["shops"] if s["id"] == "ritas")

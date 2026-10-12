@@ -27,6 +27,7 @@ P22 = os.path.join(ROOT, "production", "cloud-week", "targets", "shopfronts", "t
 P41 = os.path.join(ROOT, "production", "cloud-week", "targets", "fascia-signs", "target.json")
 SPEC = os.path.join(ROOT, "production", "specs", "shop-interiors.json")
 CAST = os.path.join(ROOT, "production", "specs", "hook-cast.json")
+LOOK = os.path.join(ROOT, "production", "specs", "unreal-look.json")
 PIECES = os.path.join(ROOT, "production", "specs", "vignette-pieces.json")
 PHCACHE = os.path.join(HERE, "polyhaven_checked.json")
 DATE = "2026-10-12"
@@ -44,8 +45,44 @@ HAL_NOTE = ("hook-cast.json places 'Hals_shop' (keeper hal, hours 10 to 18, Wed 
 KIT_BUILT = {"pilaster": ["panel"], "console": ["scroll"], "cornice": ["timber"], "stallriser": ["panel"], "window_frame": ["T1"], "sill": ["timber"],
              "fascia_board": ["plain"], "door_F1": ["F1"]}
 
+# the toplights per light (3.2 kit departure D6: each mullion carried up as a bar, each light's toplight split equally by 28 wide bars); the lights' own count is the 2.2 pattern's
+PER_LIGHT = {"mickeys": 1, "fish_market": 1, "ritas": 3, "empty_unit": 3, "steam_laundry": 1, "grocer": 2, "chandler": 1, "tea_rooms": 2, "ironmonger": 3, "newsagent": 3}
+# the 2.2 target.json this target takes the nine other fronts from, at its commit (git log -1 -- production/cloud-week/targets/shopfronts/target.json)
+P22_COMMIT = "dd706f6"
+P22_FILE = "production/cloud-week/targets/shopfronts/target.json"
+_PIL_PROFILE = {"panel": ["shaft_panel_plan", "plinth_panel_side_through_stile", "plinth_panel_side_through_field", "panel_bead"], "flute": ["shaft_flute_plan", "plinth_stepped_side"],
+                "render": ["shaft_render_plan", "plinth_cap_side"], "clad": ["clad_plan", "plinth_cap_side"]}
+_WIN_PROFILE = {"T1": ["mullion_t1_plan", "jamb_t1_plan", "transom_t1", "toplight_bar_plan", "glazing_bead_ovolo", "head_section"],
+                "T2": ["mullion_t2_plan", "jamb_t1_plan", "transom_t1 (2.2 gives no T2 transom)", "toplight_bar_plan", "glazing_putty", "head_section"],
+                "M1": ["mullion_m1_plan", "jamb_m1_plan", "transom_m1", "glazing_bead_gasket", "head_section"],
+                "M2": ["bar_m2_plan", "transom_m1 (the only metal transom in 2.2: Judgement)", "glazing_bead_gasket", "head_section"]}
+
+
+def build_from(f):
+    """The exact keys of 2.2's target.json (at P22_COMMIT) a script reads to build every part of one front that the 3.2 kit lacks."""
+    v = f["glazing"]["window_frame"]
+    k = ["parts.pilaster.variants.%s with parts.pilaster.profiles %s and base_ogee, capital_side" % (f["pilaster"], _PIL_PROFILE[f["pilaster"]]),
+         "parts.console.variants.%s" % f["console"], "parts.stallriser.variants.%s (and profiles.panel_bead for panel)" % f["stallriser"]["variant"],
+         "parts.window_frame.dims, .variants.%s, .profiles %s" % (v, _WIN_PROFILE[v]),
+         "parts.shop_door.dims, .variants, .profiles threshold_section, leaf_stile_plan, frame_jamb_plan, raised_field_edge, glazing_bead (door %s)" % f["shop_door"]]
+    if f["side_door"]:
+        k.append("parts.side_door_slot (dims, mapping_from_F1, bay_parts_around_it)")
+    if f["lobby"]["kind"] != "flush":
+        k.append("parts.lobby.dims.%s and parts.lobby.profiles.%s; alterations.recessed_lobby.numbers.%s" % ("grocer" if f["lobby"]["depth"] == 600 else "steam_laundry", "plan_grocer" if f["lobby"]["depth"] == 600 else "plan_laundry", "grocer" if f["lobby"]["depth"] == 600 else "steam_laundry"))
+    for a_ in f["alterations"]:
+        k.append("alterations.%s" % a_)
+    return {"file": P22_FILE, "commit": P22_COMMIT, "keys": k,
+            "rule": "a script builds this front from this target.json and that one versioned input (2.2's target.json at the commit named): no Markdown section is a source"}
+
+
+LETTER_PLATE = {
+    "T1": {"z": 678.0, "note": "T1: Photo, the plate sits 0.32 of the leaf up in a lock rail that runs 549 to 871 above the footway (520 to 843 above the leaf's foot); 2.2 had 545 in a lock rail 490 to 600"},
+    "M1": {"z": 113.0, "note": "M1 (aluminium, glazed from 198): the plate is centred in the 170 high bottom rail (z 28 to 198), outside the glass; 2.2's 545 stood inside the glass (narrow point 7 of the review)"},
+    "M2": {"z": 545.0, "note": "M2 (bronze, glazed from 600): the plate sits in the bronze kick panel (z 28 to 600), centred at 545 as 2.2, below the glass"},
+}
+
 BLINDS = {
-    "ritas": "a closed lattice grille outside the glass at night (4.3 of TARGET.md); none by day",
+    "ritas": "a closed lattice grille outside the glass at night (4.3 of TARGET.md); by day the lattice is lifted out and stored inside, and the 40 x 40 top rail (at the transom) and the bottom channel stay, powder black",
     "fish_market": "a retractable awning's arms and blind rail across the front at the transom, canvas stowed or absent (Photo, P1: two diagonal arms and a black rail at about z 2080, +-40; the arms and the 40 mm rail are Judgement); no grille",
     "tea_rooms": "a half-height cafe curtain on a brass rod at z 1500 above the footway over the two outer lights (2.2's glazing note; the research)",
     "newsagent": "the roller shutter of 2.2 (hood 300 x 210 deep, rails, 77 mm slats): up by day, down in the shut-up variant",
@@ -53,10 +90,13 @@ BLINDS = {
     "empty_unit": "every pane whitewashed from inside (4.1)",
     "mickeys": "none", "steam_laundry": "none (its lit box sign and hanging box are 4.1's)", "grocer": "none", "ironmonger": "none",
 }
-BRAND_BLOCKLIST = ["casio", "sony", "braun", "zippo", "leica", "vtech", "kentucky", "snap-on", "stanley", "wd-40", "ph 40", "galler", "philips", "panasonic", "sanyo", "ncr",
+BRAND_BLOCKLIST = ["dixons", "currys", "comet", "rumbelows",           # the review's retailers (Dixons was on cassette_player's map)
+                   "titch banks", "titch co", "leitz", "wetzlar", "summilux", "lanstey", "polyluft", "polyclean", "kolo", "steelbox", "lorex", "avventura", "sirius",
+                   "solidus", "sdq", "q-tech", "jnl", "micky", "polyplast", "urban quartz", "nova presents",      # makers and look-alikes read off the 1k maps (inventory.polyhaven[id].marks)
+                   "casio", "sony", "braun", "zippo", "leica", "vtech", "kentucky", "snap-on", "stanley", "wd-40", "ph 40", "galler", "philips", "panasonic", "sanyo", "ncr",
                    "coca", "pepsi", "heinz", "kellogg", "lipton", "tesco", "woolworth", "w h smith", "wh smith", "marlboro", "benson", "silk cut", "embassy", "players", "rizla", "post office", "royal mail", "bt "]
 CONTENT_BLOCKLIST = {"alcohol": ["beer", "lager", "wine", "whisky", "whiskey", "vodka", "gin ", "brandy", "cider", "ale ", "pub ", "off-licence", "off licence", "spirits", "champagne", "bottle bank"],
-                     "gambling": ["pools", "coupon", "lottery", "bet ", "bets", "betting", "odds", "bookmaker", "scratchcard", "scratch card", "casino", "gamble", "jackpot", "bingo"],
+                     "gambling": ["las vegas", "pools", "coupon", "lottery", "bet ", "bets", "betting", "odds", "bookmaker", "scratchcard", "scratch card", "casino", "gamble", "jackpot", "bingo"],
                      "children": ["child", "children", "kid", "kids", "toy", "toys", "baby", "pram", "school", "boy ", "girl "],
                      "people": ["person", "man_", "woman", "figure", "mannequin", "human", "armature", "head_", "character"]}
 
@@ -163,6 +203,7 @@ def build():
     t41 = json.load(open(P41))
     spec = json.load(open(SPEC))
     cast = json.load(open(CAST))
+    look = json.load(open(LOOK))
     pieces = json.load(open(PIECES))
     ph = polyhaven_checked(a.refresh)
     lit_names = pieces["window_practicals"]["lit_names"]
@@ -186,24 +227,51 @@ def build():
         D = sh.get("room_D")
         card_out = {"x0": card["x0"], "x1": card["x1"], "bottom": card["bottom"], "top": card["top"], "z": card["z"],
                     "rule": "terrace-front.py 2405-2417: x from bay start + 0.35 to bay end - 0.35, z 0.65 to 3.05, y %+.3f; the empty unit has none (bay 3 of 6 is skipped)" % card["z"]}
+        gl0, lay0 = f["glazing"], f["glazing_layout"]
+        wv = gl0["window_frame"]
+        per = PER_LIGHT[sid]
+        n_lights = len(lay0["mullion_centres"]) + 1
+        tl = S.toplight_layout(f["window_length"], lay0["jamb_face"], lay0["mullion_centres"], lay0["mullion_face"], per, S.BAR_FACE[wv])
+        glz = dict(gl0)
+        glz["pattern"] = "%dL-%dT" % (n_lights, tl["toplights"]) + ("-aligned" if per == 1 else "") + ("-sunrise" if sid == "grocer" else "")
+        glz["toplights"] = tl["toplights"]
+        glz["toplight_aligned"] = True
+        glz["from_2_2"] = {"pattern": gl0["pattern"], "toplights": gl0["toplights"], "toplight_aligned": gl0["toplight_aligned"],
+                           "why_changed": "3.2 street review fault 1 and kit departure D6: each mullion is carried up through the toplight row as a bar of its own width and each light's toplight is split equally by bars; "
+                                          "2.2's unaligned table (bars on a fixed pitch, slivers beside the mullions) is replaced on every front"}
+        if sid == "grocer":
+            glz["glazing"] = ("plate glass in bronze-plated bars; each light's toplights are etched with one sunrise of 5 rays, across its two toplights (the 28 bar hides 28 mm of the middle ray): "
+                              "Judgement, because 2.2's '5 toplights of a sunrise' cannot stay with aligned bars")
+        if sid == "steam_laundry":
+            glz["glazing"] = ("gasket, snap-in bead, 6 mm plate; the mullion is carried up: two toplights of 1600, one over each light (P5, the type photograph, shows the upper lights divided on the lower lights' lines; "
+                              "2.2 had one long pane: disagreement D11)")
+        lay = dict(lay0)
+        lay.update({"lights": tl["lights"], "toplights_per_light": per, "toplight_bar_face": S.BAR_FACE[wv], "toplight_bars": tl["toplight_bars"],
+                    "toplight_bar_centres": [b["centre"] for b in tl["toplight_bars"] if b["kind"] == "toplight_bar"],
+                    "toplight_panes": tl["toplight_panes"], "toplight_width": tl["toplight_width"], "toplights": tl["toplights"], "mullion_carried_up": True,
+                    "rule": "u from the window frame's left edge (mm). toplight_bar_centres are the %g mm bars BETWEEN a light's toplights; every mullion line also carries a bar of the mullion's own face "
+                            "(toplight_bars lists both, kind mullion_carried_up and toplight_bar); each light's toplight is split equally; no toplight is narrower than 250" % S.BAR_FACE[wv],
+                    "from_2_2": {"toplight_bar_centres": lay0["toplight_bar_centres"], "toplight_width": lay0["toplight_width"], "toplights": lay0["toplights"]}})
         front = {
             "bay_mm": 6000, "pilaster_slot_mm": 350, "opening_mm": 5300, "zones_u_mm": f["zones_u"], "window_length_mm": f["window_length"],
             "door_end_viewer": f["door_end_viewer"], "door_end_street": f["door_end_street"], "centres_street_x_m": f["centres_street_x_m"],
             "variants": {"pilaster": f["pilaster"], "console": f["console"], "cornice": f["cornice"], "stallriser": f["stallriser"]["variant"],
                          "window_frame": f["glazing"]["window_frame"], "shop_door": f["shop_door"], "side_door": f["side_door_variant"]},
-            "glazing": f["glazing"], "glazing_layout": f.get("glazing_layout"), "lobby": f["lobby"], "paints": f["paints"], "paint_srgb": f.get("paint_srgb"), "paint_names": f.get("paint_names"),
+            "glazing": glz, "glazing_layout": lay, "lobby": f["lobby"], "paints": f["paints"], "paint_srgb": f.get("paint_srgb"), "paint_names": f.get("paint_names"),
             "alterations": f["alterations"], "console_absent_viewer": f.get("console_absent_viewer"),
             "built_by_3_2": {"pilaster": f["pilaster"] in KIT_BUILT["pilaster"], "console": f["console"] in KIT_BUILT["console"], "cornice": True,
-                             "stallriser": (f["stallriser"]["variant"] == "panel" and f["stallriser"].get("panels") == 3), "window_frame": (f["glazing"]["window_frame"] == "T1" and f["glazing"]["pattern"] == "3L-8T"),
+                             "stallriser": (f["stallriser"]["variant"] == "panel" and f["stallriser"].get("panels") == 3), "window_frame": (wv == "T1" and n_lights == 3 and per == 3 and f["window_length"] == 3350.0),
                              "shop_door": False, "side_door_F1": True, "lobby": f["lobby"]["kind"] == "flush"},
         }
-        front["toplights_as_built"] = 9 if sid == "ritas" else f["glazing"]["toplights"]
+        front["toplights_as_built"] = tl["toplights"]
+        front["build_from"] = build_from(f)
         front["missing_from_3_2"] = [k for k, v in front["built_by_3_2"].items() if not v and not (k == "lobby" and f["lobby"]["kind"] == "flush")]
         # the assembly order: bottom to top, left (viewer's) to right, as the builder places them
         order_parts = ["pilaster (two, mirrored; plinth 600, shaft 290 x 140 proud)", "stallriser (%s, z 0 to 600, window zone)" % f["stallriser"]["variant"], "sill (75 thick, nose 150, window zone)",
-                       "window_frame (%s %s, %.0f mm long, z 600 to 2850)" % (f["glazing"]["window_frame"], f["glazing"]["pattern"] if sid != "ritas" else "3L-9T as built (3.2 D6; the 2.2 table says 8T)", f["window_length"]),
+                       "window_frame (%s %s, %.0f mm long, z 600 to 2850)" % (wv, glz["pattern"] + ((" (3.2 kit departure D6; the 2.2 table said %s)" % gl0["pattern"]) if gl0["pattern"] != glz["pattern"] else ""), f["window_length"]),
                        "shop door (%s, slot 1006, hinge on the %s)" % (f["shop_door"], {"L": "viewer's left", "R": "viewer's right"}[f["shop_door_hinge_viewer"]]),
                        ("side door F1 from 3.1 (slot 944, hinge on the %s)" % {"L": "viewer's left", "R": "viewer's right"}[f["side_door_hinge_viewer"]]) if f["side_door"] else "no side door (the flat is reached from the rear yard)",
+                       "the band above the doors: transom (z 2400 to 2480) across the door slots, the fanlight under it, three toplights over the shop door, %s, the head (z 2790 to 2850): `door.fanlight`, `.transom`, `.toplights_over_shop_door`, `.panel_over_side_door`, `.head`" % ("a raised-and-fielded panel over the side door" if f["side_door"] else "no side door, so no panel"),
                        "console (%s, two; %s)" % (f["console"], ("the %s one is absent" % {"L": "viewer's left", "R": "viewer's right"}[f["console_absent_viewer"]]) if f.get("console_absent_viewer") else "both present"),
                        "fascia_board (5410 x 550 x 120 proud, bed mould 40) carrying the 4.1 board %s_basecolour/height/orm/wear.png" % sid,
                        "cornice (5892 x 150 x 215 deep, broken forward 85 over each console; 12 Oct ruling: 150 mm as built)"]
@@ -214,11 +282,14 @@ def build():
         front["assembly_order"] = order_parts
         door = {
             "variant": f["shop_door"], "slot_mm": 1006, "leaf_mm": [900, 2040], "hinge_viewer": f["shop_door_hinge_viewer"], "lever_viewer": f["shop_door_lever_viewer"],
-            "paint": f["paints"]["shop_door"], "from": "targets/shopfronts/TARGET.md section 10 (T1, M1, M2 specified in numbers; not built by 3.2); this target changes and adds what the photographs show",
+            "paint": f["paints"]["shop_door"],
+            "from": "%s at commit %s: parts.shop_door (dims, furniture, handing, variants T1 / M1 / M2 and its profiles), parts.side_door_slot, parts.window_frame (the transom, head and toplight bars) and, for the lobby fronts, parts.lobby: "
+                    "numbers read from that JSON, not from its Markdown; this target changes and adds what the photographs show (D1, D12) and puts the band above the doors in (`fanlight`, `transom`, `toplights_over_shop_door`, `panel_over_side_door`, `head`)" % (P22_FILE, P22_COMMIT),
             "glass_foot_z_mm": 871.0 if f["shop_door"] == "T1" else f["shop_door_glass_foot_z"],
             "glass_foot_note": ("T1: 871 +-30 above the footway (843 above the leaf's foot) by Photo (Geograph 2192169, a fish shop's unaltered timber front, read 12 Oct: glass foot 0.413 of the leaf), SUPERSEDING 2.2's 600 (Leadenhall 2019, a heritage restoration); see disagreement D1"
                                 if f["shop_door"] == "T1" else "as 2.2 (aluminium and bronze doors are glass from the bottom rail)"),
-            "letter_plate": {"size_mm": [250, 40], "z_mm": 678.0 if f["shop_door"] == "T1" else 545.0, "centre": True, "note": "T1: Photo, the plate sits 0.32 of the leaf up in a lock rail that runs 520 to 843 (2.2 had 545 in a lock rail 490 to 600)"},
+            "letter_plate": {"size_mm": [250, 40], "z_mm": LETTER_PLATE[f["shop_door"]]["z"], "centre": True, "note": LETTER_PLATE[f["shop_door"]]["note"], "outside_glass": True},
+            "glass_z_mm": {"T1": [871.0, 1973.0], "M1": [198.0, 1968.0], "M2": [600.0, 1968.0]}[f["shop_door"]],
             "t1_rails_mm": ({"bottom_rail": [28, 228], "lower_panel_field": [241, 549], "lock_rail": [549, 871], "glass": [871, 1973], "glazing_bar": {"z": 1423, "width": 28, "note": "one horizontal bar dividing the glass into two panes of about 540 (Photo)"}, "top_rail": [1973, 2068], "kind": "Photo, heights above the footway (the leaf stands at 28), scale from the leaf height 2040 (one dimension), error +-30"} if f["shop_door"] == "T1" else None),
             "threshold": "terrazzo 25 high at the leaf falling to 12, nose out to d 130 (flush) or at the lobby's floor level (recessed): 2.2 section 10",
             "furniture": {"T1": "brass lever on a 240 x 40 backplate at 1000, rim latch and escutcheon at 950, brass kick plate 770 x 170, three 100 x 75 butts",
@@ -228,8 +299,17 @@ def build():
                      "size_mm": {"strip": [220, 20, 3], "bell_diameter": 70, "drop": 80}, "material": "steel (60, 60, 62) rough 0.5 metal 0.7; brass (160, 120, 55) rough 0.38 metal 1.0"},
             "sign": "the plastic OPEN / CLOSED sign from 4.2 (the paper unit) on the inside of the door's glass at z 1500, hung by a suction cup: closed when the shop is shut; the hours plate (4.1) on the glass beside it",
         }
-        glass = {"panes": "single 6 mm plate per light, no astragal bars; lights = n_mullions + 1 over the lower row; toplights as the glazing layout; the door glazed in one pane (T1: one pane above the foot with a mid bar at 1.38 m only on the photographs' older doors: not adopted)",
-                 "lights": f["glazing"]["n_mullions"] + 1, "toplights": f["glazing"]["toplights"], "thickness_mm": 6, "d_mm": 30, "glass_y_street_m": [S.GLASS_Y_FRONT, S.GLASS_Y_BACK],
+        door.update(S.band_above_doors(f["zones_u"], f["door_end_viewer"], wv, f["shop_door"], f["paint_srgb"]["window_frame"], f["paint_srgb"]["shop_door"],
+                                       newsagent_hood=("roller_shutter" in f["alterations"]), recessed=(f["lobby"]["kind"] != "flush")))
+        door["fanlight"]["street_number"] = {
+            "text": fas.get("street_number"), "cap_mm": 110, "x_street_m": f["centres_street_x_m"]["shop_door"], "baseline_z_above_footway_mm": 2200.0,
+            "from_4_1": "glass_lettering, surface 'side-door fanlight', z_m 2.18, x_street_m %s (the side door's centre)" % next((g["x_street_m"] for g in t41["glass_lettering"] if g["shop"] == sid and "fanlight" in g["surface"]), None),
+            "frame_of_z": ("4.1's z 2.18 is in the street frame, metres above the road crown: 2.18 above the crown is 2080 above the footway (crown + 0.10 = footway), which is BELOW this fanlight (z 2131 to 2400 above the footway). "
+                           "The number is therefore set in the fanlight: baseline 2200 above the footway, cap 110 (2200 to 2310, centred in the pane) = 2.30 above the crown: Judgement, 0.12 m above 4.1's z"),
+            "where": ("on the SHOP door's fanlight, as the review reads it, at the shop door's centre (street x %s), not at 4.1's x (the side door's centre): a move of 4.1's x recorded for its owner; "
+                      "the side door's fanlight carries no number here" % f["centres_street_x_m"]["shop_door"])}
+        glass = {"panes": "single 6 mm plate per light, no astragal bars; lights = n_mullions + 1 over the lower row; toplights as the glazing layout (glazing_layout.toplight_panes); the door glazed in two panes with the bar at 1423 (T1: Photo, D1) or one pane (M1, M2)",
+                 "lights": f["glazing"]["n_mullions"] + 1, "toplights": tl["toplights"], "thickness_mm": 6, "d_mm": 30, "glass_y_street_m": [S.GLASS_Y_FRONT, S.GLASS_Y_BACK],
                  "reflectance": "the game's (M_LedgerGlass, thin translucent; night 0.2 of day: look file): not set here", "lettering": glass_rows.get(sid, [])}
         fascia = {"board": "fascias/%s/%s_basecolour.png, _height.png, _orm.png, _wear.png (5410 x 550 at 1 px/mm)" % (fas["id"], fas["id"]) + (", _emissive.png" if fas.get("lit") else ""),
                   "made_by": "python production/cloud-week/2d/fascias/make_fascias.py OUTDIR --seed-base 1", "street_number": fas.get("street_number"),
@@ -252,10 +332,18 @@ def build():
         if sid == "newsagent":
             e["conflict"] = HAL_NOTE
         if sh["needs_room"]:
-            lights = sh["lights"]
+            lights = dict(sh["lights"])
+            lights["night_dark_wash_linear_rgb"] = look["lantern_linear_rgb"]
+            lights["night_dark_wash_source"] = "production/specs/unreal-look.json lantern_linear_rgb: the game's scene colour for sodium (the scene file's (1, 0.7055, 0) is stale: QUEUE.md 9 Oct 12:10)"
+            fixtures_out = []
+            for fxx in sh["fixtures"]:
+                fxx = dict(fxx)
+                if fxx["id"].endswith("-ceiling-tubes"):
+                    fxx["x"], fxx["y"], fxx["z"] = S.tube_box(lights)       # the battens' own box, from lights.tubes
+                fixtures_out.append(fxx)
             room = {"w": S.W, "h": S.H, "d": D, "camera_d": S.CAMERA_D, "floor": sh["floor"], "walls": sh["walls"], "ceiling": sh["ceiling"], "box_floor_above_crown": S.CARD_BOTTOM,
                     "box_ceiling_above_crown": S.CARD_TOP, "frame": "room frame of sw_shops.py (x 0 at the card's centre, +x the picture's right; y back; z up from the box floor)",
-                    "fixtures": sh["fixtures"], "goods": sh["goods"], "lights": lights}
+                    "fixtures": fixtures_out, "goods": sh["goods"], "lights": lights}
             e["room"] = room
             e["display"] = sh["display"]
             e["pictures"] = {"pixels": [4096, int(round(4096 * S.H / S.W))], "states": {"day": "%s_day.png" % sh["spec_id"], "night_lit": "%s_night_lit.png" % sh["spec_id"], "night_dark": "%s_night_dark.png" % sh["spec_id"]},
@@ -270,7 +358,7 @@ def build():
                 u0 = f["zones_u"]["window"][0]
                 spec_entries.append({
                     "id": sh["spec_id"], "block": f["block"], "bay": f["bay"], "trade": f["trade"] + ", per production/cloud-week/targets/shop-windows/TARGET.md", "room": {"w": S.W, "h": S.H, "d": D},
-                    "card": {"x0": card["x0"], "x1": card["x1"], "bottom": card["bottom"], "top": card["top"], "z": card["z"]}, "decal": "production/art/shop-rooms/%s_day" % sh["spec_id"],
+                    "card": {"x0": card["x0"], "x1": card["x1"], "bottom": card["bottom"], "top": card["top"], "z": card["z"]}, "decal": "production/art/shop-rooms/%s_day" % sh["spec_id"], "decal_in_the_spec_today": next((x_.get("decal") for x_ in spec["shops"] if x_["id"] == sh["spec_id"]), None),
                     "pictures": "production/art/shop-rooms/%s" % sh["spec_id"], "side": side, "camera_d": S.CAMERA_D, "pixels_wide": 4096, "lit_at_night": sh["lit_at_night"],
                     "brightness_day": 0.15, "brightness_night": 0.7, "spill_lumens": 350 if sh["lit_at_night"] else 0,
                     "display": {"glb": "%s-display" % sh["spec_id"], "x0": None, "x1": None, "front": round(side * S.DISPLAY_FRONT_FROM_GLASS + side * S.GLASS_Y_BACK, 3),
@@ -295,7 +383,7 @@ def build():
 
     def pick(tab, keys):
         return round(min(tab[k]["budget_m"] for k in keys), 3)
-    budget = {"reads_true_20px": {"back_wall": pick(tab20, ["back wall, left third", "back wall, middle", "back wall, right third"]),
+    budget = {"reads_true_20px": {"back_wall": pick(tab20, ["back wall, left third", "back wall, middle", "back wall, right third"]), "back_wall_middle": pick(tab20, ["back wall, middle"]),
                                    "side_walls": pick(tab20, [k for k in tab20 if "wall," in k and "back" not in k]), "floor_and_ceiling": pick(tab20, ["floor, near", "floor, middle", "floor, far"])},
               "tolerated_40px": {"back_wall": pick(tab40, ["back wall, left third", "back wall, middle", "back wall, right third"]),
                                  "side_walls": pick(tab40, [k for k in tab40 if "wall," in k and "back" not in k]), "floor_and_ceiling": pick(tab40, ["floor, near", "floor, middle", "floor, far"])},
@@ -305,6 +393,9 @@ def build():
               "tables": {"20px": tab20, "40px": tab40}}
     # the integer rules the target writes (rounded down to 5 mm): back wall shelving and goods; counters at the back wall; side walls; floor and ceiling
     rules = {"shelf_goods_on_back_wall_m": 0.30, "furniture_at_back_wall_m": 0.60, "side_wall_relief_m": 0.10, "side_wall_flat_m": 0.05, "floor_and_ceiling_m": 0.025, "floor_ceiling_tolerated_m": 0.05}
+    rules["shelf_named_exceptions"] = [{"fixture": "R-back-tv-tiers", "depth_m": 0.35,
+                                        "limit": "at most method.standoff_budget.reads_true_20px.back_wall_middle (the 20 px budget at the card's middle; the review's own measure: about 0.36)",
+                                        "why": "television_02 is 0.35 deep at its size; the two tiers above the counter carry them (mid height), where 0.35 stays under 20 px; every other back-wall shelf unit is 0.30 or less"}]
     rules["derivation"] = ("true (20 px): back wall %.2f, sides %.2f, floor/ceiling %.2f; tolerated (40 px): back wall %.2f, sides %.2f, floor/ceiling %.2f; the rules are those figures rounded down to 5 mm and "
                            "to the nearest builder-friendly depth: a shelf (0.30) is true, a counter or machine against the back wall (0.60) is tolerated, a side wall carries only boards and 0.10 "
                            "racks, the floor only flat things" % (budget["reads_true_20px"]["back_wall"], budget["reads_true_20px"]["side_walls"], budget["reads_true_20px"]["floor_and_ceiling"],

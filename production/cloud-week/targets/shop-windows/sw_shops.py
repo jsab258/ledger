@@ -47,8 +47,9 @@ SHOPS["ritas"] = {
     "keeps": "the room's box and finishes (old brown lino, cream plaster over a 1.0 m brown dado, three T12 battens), the stocked back wall, the "
              "ticketed goods, the notices, the three approved pictures' look, the display glb and its 23 Poly Haven models",
     "changes": "the glass counter 2.4 m out in the room goes to the back wall (it stood 2.1 m off it and smeared); the units down BOTH side walls "
-               "(0.40 deep, goods 0.4 off the wall) become flat boards (pegboards and framed notices); the grandfather clock and the vintage cabinet "
-               "(0.8 and 0.67 deep) go; the doormat stays flat; pictures 4096 wide; the maker-marked models are blanked or dropped",
+               "(0.40 deep, goods 0.4 off the wall) become flat boards (pegboards, clocks, framed pictures and notices over most of each wall); the stock wall is 0.30 deep "
+               "(the four television sets on 0.35 boards above the counter) and stands clear of the back door; the grandfather clock and the vintage cabinet "
+               "(0.8 and 0.67 deep) go; the doormat stays flat; pictures 4096 wide; every model that carries a maker's mark is blanked as its inventory entry says (`marks`)",
     "floor": {"material": "Poly Haven old_linoleum_flooring_01, tint (0.62, 0.55, 0.50), 1.2 m tile, worn path darker by hand-painted mask", "base": (76, 64, 48)},
     "walls": {"above": "Poly Haven painted_plaster_wall tint (0.95, 0.86, 0.66), 1.5 m tile", "dado": "same plaster tint (0.42, 0.27, 0.17) to z 1.0 m"},
     "ceiling": "plaster off-white (180, 173, 158)",
@@ -56,8 +57,8 @@ SHOPS["ritas"] = {
         "day": "daylight through the front opening (overcast sky area light 5.3 x 2.4 m on the card plane, 6500 K) PLUS the three battens on: the shop is open "
                "(Mon, Tue, Thu to Sat 9 to 17:30, Wed 9 to 13)",
         "night_lit": "the three T12 battens only (cool white 4000 K, 5 ft, 38 mm), no sky: the window is lit all night (RULINGS 1 Oct)",
-        "night_dark": "a faint sodium wash through the front (linear colour (1.0, 0.7055, 0.0), 6 per cent of night_lit's energy) and one back-room night "
-                      "light through the ajar back door (2700 K, 0.3 m wide strip); rendered although Rita's is lit, so the spec has all three states",
+        "night_dark": "a faint sodium wash through the front (linear colour (1.0, 0.25, 0.0): the game's lantern_linear_rgb, production/specs/unreal-look.json; 6 per cent of night_lit's energy) and one "
+                      "back-room night light through the ajar back door (2700 K, 0.3 m wide strip, at x 1.45 to 2.35: the door stands clear of the stock wall); rendered although Rita's is lit, so the spec has all three states",
         "tubes": [{"x": 0.0, "y": 1.0, "z_below_ceiling": 0.045}, {"x": 0.0, "y": 2.0, "z_below_ceiling": 0.045}, {"x": 0.0, "y": 3.0, "z_below_ceiling": 0.045}],
         "tube_length_m": 1.5, "tube_diameter_m": 0.038, "mean_luma_target": {"day": 119.5, "night_lit": 79.8, "night_dark": 17.7},
         "mean_luma_note": "the three approved pictures' own means (measured 12 October on production/art/shop-rooms/pawnbroker_*.png): the new pictures keep to "
@@ -66,32 +67,39 @@ SHOPS["ritas"] = {
     "lit_at_night": True, "lit_why": "RULINGS 1 Oct (the pawnbroker's window lit at night); vignette-pieces lit_names east_parade_interior2",
     "hours": {"mon": [9, 17.5], "tue": [9, 17.5], "wed": [9, 13], "thu": [9, 17.5], "fri": [9, 17.5], "sat": [9, 17.5]}, "hours_source": "hook-cast.json areas.ritas",
     "fixtures": [
-        fx("R-back-stock", "back", "the stock wall: five tiers of 25 mm boards 0.40 deep (the television sets are 0.35 deep), filled shoulder to shoulder, a ticket on every piece; the lowest two tiers only at the "
-           "ends, the counter standing in front of the middle", 0.40, x=(-2.60, 2.60), z=(0.50, 2.25), tiers=[0.50, 0.85, 1.35, 1.70, 2.05], kind="shelf_unit"),
+        fx("R-back-stock", "back", "the stock wall: five tiers of 25 mm boards 0.30 deep, filled shoulder to shoulder from the left wall to x 1.35, a ticket on every piece; the lowest two tiers only at the "
+           "ends, the counter standing in front of the middle; the wall from x 1.35 to the back door's frame (1.45) is plain, and the strip right of the door (x 2.35 to 2.6) is plain wall", 0.30,
+           x=(-2.60, 1.35), z=(0.50, 2.25), tiers=[0.50, 0.85, 1.35, 1.70, 2.05], kind="shelf_unit"),
+        fx("R-back-tv-tiers", "back", "the two tiers above the counter (z 1.35 and 1.70, x -1.90 to 0.90) are 0.35 deep boards for the four television sets (television_02 is 0.35 deep at its size; 0.35 "
+           "stays inside the 20 px budget at the card's middle): a named exception to the 0.30 shelf rule", 0.35, x=(-1.90, 0.90), z=(1.35, 2.05), tiers=[1.35, 1.70], kind="shelf_unit_deep"),
+        fx("R-back-door-boxes", "back", "one tier of boxes of stock over the back door only, at z 2.05 to 2.25 (x 1.45 to 2.35), 0.30 deep, a ticket on each", 0.30, x=(1.45, 2.35), z=(2.05, 2.25), tiers=[2.05], kind="shelf_unit"),
         fx("R-back-counter", "back", "the staff counter, glass-topped case on a velvet bed, against the wall (0.6 deep, 1.05 high), 2.8 m long; notices on its front",
            0.60, x=(-1.90, 0.90), z=(0.0, 1.05), kind="counter"),
-        fx("R-back-door", "back", "a half-glazed painted door to the back room, ajar 0.15 m, 2.0 m high (flat: leaf 40 mm)", 0.04, x=(1.45, 2.35), z=(0.0, 2.0), kind="door"),
-        fx("R-left-board", "left", "pledge board: a pegboard 1.8 x 1.2 m, 20 mm, hung with ticketed small goods flat to it", 0.08, y=(0.9, 2.7), z=(0.6, 1.8), kind="flat_board"),
-        fx("R-left-notices", "left", "the licence card and a handwritten UNREDEEMED PLEDGES FOR SALE card (paper, 3 mm)", 0.005, y=(3.0, 3.8), z=(1.5, 1.9), kind="notice"),
-        fx("R-right-board", "right", "tools hung flat on a pegboard 2.2 x 1.0 m", 0.08, y=(1.4, 3.6), z=(0.8, 1.8), kind="flat_board"),
-        fx("R-right-hung", "right", "two ukuleles hung by their heads and an ornate mirror, flat to the wall", 0.07, y=(0.4, 1.2), z=(1.2, 2.0), kind="flat_hung"),
+        fx("R-back-door", "back", "a half-glazed painted door to the back room, ajar 0.15 m, 2.0 m high (flat: leaf 40 mm); nothing stands across it below z 2.05", 0.04, x=(1.45, 2.35), z=(0.0, 2.0), kind="door"),
+        fx("R-left-board", "left", "pledge board: pegboard panels and hung boards over the whole left wall (0.3 to 4.2 back, 0.45 to 2.15 up), 0.08 deep: ticketed small goods flat to it, wall clocks and framed "
+           "pictures; the notices hang on it", 0.08, y=(0.3, 4.2), z=(0.45, 2.15), kind="flat_board"),
+        fx("R-left-notices", "left", "the licence card and a handwritten UNREDEEMED PLEDGES FOR SALE card (paper, 3 mm), hung on R-left-board", 0.005, y=(3.0, 3.8), z=(1.5, 1.9), kind="notice", on="R-left-board"),
+        fx("R-right-board", "right", "tools hung flat on pegboard panels over the right wall's far part (1.3 to 4.2 back, 0.45 to 2.15 up), 0.08 deep", 0.08, y=(1.3, 4.2), z=(0.45, 2.15), kind="flat_board"),
+        fx("R-right-hung", "right", "two ukuleles hung by their heads and an ornate mirror, flat to the wall, at the near end (0.4 to 1.2 back)", 0.07, y=(0.4, 1.2), z=(1.2, 2.0), kind="flat_hung"),
         fx("R-floor-mat", "floor", "a worn door mat (flat) and the lino's own worn path", 0.012, x=(-2.45, -1.55), y=(0.15, 0.85), z=(0.0, 0.012), kind="floor_flat"),
         fx("R-ceiling-tubes", "ceiling", "three T12 battens in slim fittings", 0.045, x=(-0.75, 0.75), kind="light"),
     ],
     "goods": [
-        gd("television_02", 4, "R-back-stock", note="CRT sets on the two upper-middle tiers; none on the lowest"),
-        gd("boombox", 3, "R-back-stock"), gd("cassette_player", 3, "R-back-stock"), gd("portable_cassette_player", 4, "R-back-stock", note="maker's name painted out"),
+        gd("television_02", 4, "R-back-tv-tiers", note="CRT sets on the two tiers above the counter; none elsewhere"),
+        gd("boombox", 3, "R-back-stock"), gd("cassette_player", 3, "R-back-stock", note="maker's name painted out"), gd("portable_cassette_player", 4, "R-back-stock", note="maker's name painted out"),
         gd("Camera_01", 3, "R-back-stock", note="lens-ring lettering painted out"), gd("vintage_video_camera", 2, "R-back-stock"),
         gd("vintage_binocular", 2, "R-back-stock"), gd("binoculars", 1, "R-back-stock"), gd("mantel_clock_01", 2, "R-back-stock"), gd("alarm_clock_01", 3, "R-back-stock"),
         gd("brass_vase_01", 2, "R-back-stock"), gd("brass_vase_02", 1, "R-back-stock"), gd("brass_vase_03", 2, "R-back-stock"), gd("filmstrip_projector_8mm", 2, "R-back-stock"),
-        gd("metal_toolbox", 2, "R-back-stock"), gd("hand_plane_no4", 1, "R-back-stock"), gd("cardboard_box_01", 9, "R-back-stock", size=0.36, note="the top tier: boxes of stock, a ticket each"),
+        gd("metal_toolbox", 2, "R-back-stock"), gd("hand_plane_no4", 1, "R-back-stock"), gd("cardboard_box_01", 6, "R-back-stock", size=0.30, note="the top tier: boxes of stock, a ticket each"), gd("cardboard_box_01", 3, "R-back-door-boxes", size=0.30, note="the one tier over the back door"),
         gd("CashRegister_01", 1, "R-back-counter", size=0.42, note="the till at the counter's right end, on the glass"),
         gd("script:counter_jewellery", 1, "R-back-counter", why="rings, chains and watches on velvet in the case: Rita's approved scripted jewellery (tori, discs, links), kept as approved"),
         gd("pocket_watch", 3, "R-back-counter", size=0.06), gd("vintage_pocket_watch", 3, "R-back-counter", size=0.06),
-        gd("pipe_wrench", 1, "R-right-board"), gd("cross_pein_hammer", 1, "R-right-board"), gd("handsaw_wood", 1, "R-right-board"), gd("hand_plane_no4", 1, "R-right-board"),
+        gd("pipe_wrench", 1, "R-right-board"), gd("cross_pein_hammer", 2, "R-right-board"), gd("handsaw_wood", 2, "R-right-board"), gd("hand_plane_no4", 1, "R-right-board"),
+        gd("adjustable_wrench", 2, "R-right-board"), gd("pliers", 3, "R-right-board"), gd("combination_wrench", 3, "R-right-board"),
         gd("Ukulele_01", 2, "R-right-hung", size=0.62), gd("ornate_mirror_01", 1, "R-right-hung", size=0.42),
         gd("wall_clock", 1, "R-back-stock", size=0.30, note="its dial's maker mark painted out (a 60 x 14 px patch under the 12)"),
-        gd("script:pledge_tickets", 40, "R-left-board", why="paper tickets 25 x 12 mm with handwritten numbers: texture-printed cards, no model exists"),
+        gd("script:pledge_tickets", 90, "R-left-board", why="paper tickets 25 x 12 mm with handwritten numbers: texture-printed cards, no model exists"),
+        gd("wall_clock", 2, "R-left-board", size=0.30, note="hung flat; dial maker mark painted out"), gd("hanging_picture_frame_02", 2, "R-left-board", note="framed pictures hung flat; the picture replaced with the project's own invented print"),
     ],
     "display": {
         "keeps": "production/assets/shop-displays/pawnbroker-display.glb as built (23 Poly Haven models on a stepped velvet bed, a ticket on each), 3.35 m long, 0.55 deep",
@@ -116,8 +124,9 @@ SHOPS["ritas"] = {
             di("measuring_tape_01", 1, [1.5, 1.7, 0.05, 0.20, 0.12, 0.19], note="its label blanked"),
         ],
         "night": "an external lattice grille closed over the window zone from dusk to dawn: flat bars 20 x 4 mm at 45 degrees, the diamond 120 mm across, "
-                 "rivets at every crossing, a 40 x 40 box top rail under the fascia at z 2.50 and a bottom channel at z 0.70 above the crown, the plane 100 mm in front of "
-                 "the glass front (street y 5.145), powder black (37, 35, 34) rough 0.45; the window behind it stays lit",
+                 "rivets at every crossing, a 40 x 40 box top rail at the transom (z 2.50 above the crown, 2400 above the footway) and a bottom channel at z 0.70 above the crown (600 above the footway), the plane 100 mm in front of "
+                 "the glass front (street y 5.145), powder black (37, 35, 34) rough 0.45; the window behind it stays lit. By day the lattice is lifted out and stored inside; the 40 x 40 top rail and the bottom channel stay, "
+                 "powder black, with their fixing plates on the pilaster shafts",
     },
 }
 
@@ -143,7 +152,7 @@ SHOPS["fish_market"] = {
     "lights": {
         "day": "daylight through the front opening (overcast area light) plus two 5 ft battens on (open Mon to Sat 7:30 to 14:00, Wed to 13:00)",
         "night_lit": "not used: the shop is shut after 14:00 and the street file leaves it dark (rendered for completeness: two battens on)",
-        "night_dark": "a faint sodium wash through the front (6 per cent) and the chiller's small glow lamp (2700 K) at the counter",
+        "night_dark": "a faint sodium wash (linear (1.0, 0.25, 0.0): the game's lantern_linear_rgb, unreal-look.json) through the front (6 per cent) and the chiller's small glow lamp (2700 K) at the counter",
         "tubes": [{"x": -0.6, "y": 1.6, "z_below_ceiling": 0.045}, {"x": 0.6, "y": 3.2, "z_below_ceiling": 0.045}], "tube_length_m": 1.5, "tube_diameter_m": 0.038,
         "mean_luma_target": {"day": 119.5, "night_lit": 79.8, "night_dark": 17.7}, "mean_luma_note": "Rita's approved means, within 15 per cent",
     },
@@ -204,7 +213,7 @@ SHOPS["steam_laundry"] = {
     "lights": {
         "day": "daylight through the front opening plus three battens on (open Mon to Sat 8 to 17:30)",
         "night_lit": "not used by the street file (dark); rendered with the three battens on",
-        "night_dark": "a faint sodium wash and the dryers' two orange 'running' lamps (small, 2000 K, 0.01 m) so the room is not black",
+        "night_dark": "a faint sodium wash (linear (1.0, 0.25, 0.0): the game's lantern_linear_rgb, unreal-look.json) and the dryers' two orange 'running' lamps (small, 2000 K, 0.01 m) so the room is not black",
         "tubes": [{"x": 0.0, "y": 1.0, "z_below_ceiling": 0.045}, {"x": 0.0, "y": 2.2, "z_below_ceiling": 0.045}, {"x": 0.0, "y": 3.4, "z_below_ceiling": 0.045}],
         "tube_length_m": 1.5, "tube_diameter_m": 0.038, "mean_luma_target": {"day": 119.5, "night_lit": 79.8, "night_dark": 17.7}, "mean_luma_note": "Rita's approved means, within 15 per cent",
     },
@@ -252,7 +261,7 @@ SHOPS["grocer"] = {
     "lights": {
         "day": "daylight through the front opening plus three battens on (hours not found: settled as Mon to Sat 8 to 17:30, early closing Wed 13:00, Shops Act)",
         "night_lit": "the three battens on and a pendant opal globe in the lobby (2700 K, 60 W): the street file lights this unit (east_parade_interior5)",
-        "night_dark": "a faint sodium wash and the till's glow lamp",
+        "night_dark": "a faint sodium wash (linear (1.0, 0.25, 0.0): the game's lantern_linear_rgb, unreal-look.json) and the till's glow lamp",
         "tubes": [{"x": -0.6, "y": 1.2, "z_below_ceiling": 0.045}, {"x": 0.6, "y": 2.4, "z_below_ceiling": 0.045}, {"x": -0.6, "y": 3.6, "z_below_ceiling": 0.045}],
         "tube_length_m": 1.5, "tube_diameter_m": 0.038, "mean_luma_target": {"day": 119.5, "night_lit": 79.8, "night_dark": 17.7}, "mean_luma_note": "Rita's approved means, within 15 per cent",
     },
@@ -279,11 +288,11 @@ SHOPS["grocer"] = {
         gd("wall_clock", 1, "G-back-gantry", size=0.30, note="above the gantry's top tier; dial maker mark painted out"),
     ],
     "display": {
-        "keeps": "the 1930s refit's deep lobby; the research's crate-and-stand dressing; Holyoake's photograph (Geograph 2184467, 1999) for density",
+        "keeps": "the 1930s refit's deep lobby; the research's crate-and-stand dressing; the Bath grocer's photograph P2 (Geograph 2184467, 1999) for density",
         "changes": "produce is scanned (Poly Haven apple, banana, lemon, onion; Sketchfab ffishAsia CC0 cabbage, potato, satsuma, pear by his login); tins and jars carry atlas labels",
         "u_range": [0.0, 4.294], "depth": 0.55, "height_max_w": 1.45,
         "items": [
-            di("script:tiered_stand", 1, [0.0, 4.294, 0.0, 0.55, 0.0, 0.50], why="a three-tier timber display stand 0.18 high a step (Holyoake's photograph), made from dimensions"),
+            di("script:tiered_stand", 1, [0.0, 4.294, 0.0, 0.55, 0.0, 0.50], why="a three-tier timber display stand 0.18 high a step (the Bath grocer's photograph, P2), made from dimensions"),
             di("plastic_crate_02", 3, [0.2, 1.7, 0.05, 0.50, 0.0, 0.25], note="produce crates"), di("plastic_crate_03", 2, [1.8, 2.6, 0.10, 0.36, 0.0, 0.27]),
             di("food_apple_01", 40, [0.2, 1.7, 0.05, 0.50, 0.20, 0.34], note="three sizes of scale 0.9 to 1.1, a per-instance tint"),
             di("lemon", 12, [1.8, 2.6, 0.10, 0.36, 0.22, 0.32]), di("yellow_onion", 15, [2.7, 3.4, 0.10, 0.45, 0.0, 0.14]), di("bananas", 3, [3.5, 4.2, 0.10, 0.40, 0.16, 0.30]),
@@ -305,12 +314,12 @@ SHOPS["chandler"] = {
     "changes": "NO explosives-marked drum (Barrel_01 is out); the buoy stands flat against the back wall at a scaled height; nothing hangs from the ceiling; rope is twisted by "
                "script with ambientCG Rope textures (no CC0 model): coils stand on shelves",
     "floor": {"material": "oiled boards (Poly Haven old_wooden_floor_02)", "base": (72, 52, 34)},
-    "walls": {"above": "cream emulsion (214, 204, 178) with a dark green dado 1.0 m (the E.E. Sharp photograph's green)", "dado": "(30, 62, 44) to z 1.0"},
+    "walls": {"above": "cream emulsion (214, 204, 178) with a dark green dado 1.0 m (the Hull chandler photograph's (P4) green)", "dado": "(30, 62, 44) to z 1.0"},
     "ceiling": "painted board (192, 186, 168)",
     "lights": {
         "day": "daylight through the front opening plus two battens on (hours not found: settled as Mon to Sat 8 to 17, Wed to 13:00, Shops Act)",
         "night_lit": "two battens on and a hurricane lamp (Lantern_01, 2200 K, lit) on the counter: the street file lights this unit (east_chandler_interior0)",
-        "night_dark": "a faint sodium wash",
+        "night_dark": "a faint sodium wash (linear (1.0, 0.25, 0.0): the game's lantern_linear_rgb, unreal-look.json)",
         "tubes": [{"x": -0.7, "y": 1.6, "z_below_ceiling": 0.045}, {"x": 0.7, "y": 3.0, "z_below_ceiling": 0.045}], "tube_length_m": 1.5, "tube_diameter_m": 0.038,
         "mean_luma_target": {"day": 119.5, "night_lit": 79.8, "night_dark": 17.7}, "mean_luma_note": "Rita's approved means, within 15 per cent",
     },
@@ -337,7 +346,7 @@ SHOPS["chandler"] = {
         gd("ocean_buoy", 1, "C-floor-buoy", size=1.5, note="the model is 2.66 m tall: scaled to 1.5 m as a marker buoy (flagged); its lamp unlit"),
     ],
     "display": {
-        "keeps": "the trade list; E.E. Sharp's window (Geograph 3378991, 1983): a chandler's lower lights were screened inside with woven galvanised mesh when shut",
+        "keeps": "the trade list; the Hull chandler's window P4 (Geograph 3378991, 1983): a chandler's lower lights were screened inside with woven galvanised mesh when shut",
         "changes": "real ropes, lifebuoy, lanterns, boots and tins in the near metre; no ship model, no explosives drum",
         "u_range": [0.0, 3.35], "depth": 0.55, "height_max_w": 1.55,
         "items": [
@@ -349,7 +358,7 @@ SHOPS["chandler"] = {
             di("brass_blowtorch", 1, [0.4, 0.7, 0.30, 0.50, 0.0, 0.21]),
         ],
         "night": "woven galvanised mesh screens (wire 2 mm, 12 mm mesh) inside the lower lights (z 0.70 to 1.55 above the crown), three panels, in place when the shop is shut; "
-                 "the lit night view has them out of the lit lights' way (the E.E. Sharp photograph shows them over the lower lights only)",
+                 "the lit night view has them out of the lit lights' way (the Hull chandler photograph (P4) shows them over the lower lights only)",
     },
 }
 
@@ -365,7 +374,7 @@ SHOPS["tea_rooms"] = {
     "lights": {
         "day": "daylight through the front opening plus three battens on (open Mon to Sat 6:30 to 22:00, Sun 8 to 12)",
         "night_lit": "three battens on, the steam-warm window: the street file lights this unit (west_north_interior2); open to 22:00",
-        "night_dark": "a faint sodium wash and the counter's pilot lamp",
+        "night_dark": "a faint sodium wash (linear (1.0, 0.25, 0.0): the game's lantern_linear_rgb, unreal-look.json) and the counter's pilot lamp",
         "tubes": [{"x": 0.0, "y": 1.0, "z_below_ceiling": 0.045}, {"x": 0.0, "y": 2.2, "z_below_ceiling": 0.045}, {"x": 0.0, "y": 3.4, "z_below_ceiling": 0.045}],
         "tube_length_m": 1.5, "tube_diameter_m": 0.038, "mean_luma_target": {"day": 119.5, "night_lit": 79.8, "night_dark": 17.7}, "mean_luma_note": "Rita's approved means, within 15 per cent",
     },
@@ -418,7 +427,7 @@ SHOPS["ironmonger"] = {
     "lights": {
         "day": "daylight through the front opening plus two battens on (hours not found: settled as Mon to Sat 8:30 to 17:30, Wed to 13:00, Shops Act)",
         "night_lit": "not used by the street file (dark): two battens on if rendered",
-        "night_dark": "a faint sodium wash only",
+        "night_dark": "a faint sodium wash (linear (1.0, 0.25, 0.0): the game's lantern_linear_rgb, unreal-look.json) only",
         "tubes": [{"x": -0.6, "y": 1.6, "z_below_ceiling": 0.045}, {"x": 0.6, "y": 3.0, "z_below_ceiling": 0.045}], "tube_length_m": 1.5, "tube_diameter_m": 0.038,
         "mean_luma_target": {"day": 119.5, "night_lit": 79.8, "night_dark": 17.7}, "mean_luma_note": "Rita's approved means, within 15 per cent",
     },
@@ -477,7 +486,7 @@ SHOPS["newsagent"] = {
     "lights": {
         "day": "daylight through the front opening plus three battens on (open Mon to Sat 6 to 17:30, Sun 7 to 12)",
         "night_lit": "three battens on, the whole shop bright: the street file lights this unit (west_north_interior0); the roller shutter is up",
-        "night_dark": "a faint sodium wash through the front; the shutter is down in the shut-up variant (4.1's shutter_down)",
+        "night_dark": "a faint sodium wash (linear (1.0, 0.25, 0.0): the game's lantern_linear_rgb, unreal-look.json) through the front; the shutter is down in the shut-up variant (4.1's shutter_down)",
         "tubes": [{"x": 0.0, "y": 1.0, "z_below_ceiling": 0.045}, {"x": 0.0, "y": 2.2, "z_below_ceiling": 0.045}, {"x": 0.0, "y": 3.4, "z_below_ceiling": 0.045}],
         "tube_length_m": 1.5, "tube_diameter_m": 0.038, "mean_luma_target": {"day": 119.5, "night_lit": 79.8, "night_dark": 17.7}, "mean_luma_note": "Rita's approved means, within 15 per cent",
     },

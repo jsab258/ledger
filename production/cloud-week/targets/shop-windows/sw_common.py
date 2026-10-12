@@ -342,3 +342,175 @@ def texel_stats(distance_to_glass, angle_deg, pic_w_px, D, vfov_deg=60.0, res=(1
     ppt = 1.0 / np.maximum(tpp, 1e-6) * (game_h / float(res[1]))
     return {"median": round(float(np.median(ppt)), 2), "p95": round(float(np.percentile(ppt, 95)), 2), "soft_fraction_over_2": round(float((ppt > 2).mean()), 3),
             "glass_fraction_of_frame": round(idx.size / float(dirs.shape[0]), 3)}
+
+
+# ---- the photographs' previews: read the masks back from the JPEG ----------------------------------------------------------------
+def draw_masks(im, masks, grey):
+    """Draw every mask of a preview's list (original pixels) flat grey on a PIL image (the original photograph)."""
+    from PIL import ImageDraw
+    dr = ImageDraw.Draw(im)
+    for m in masks:
+        if m["shape"] == "rect":
+            b = m["box"]
+            dr.rectangle([b[0], b[1], b[2] - 1, b[3] - 1], fill=tuple(grey))
+        else:
+            dr.polygon([tuple(p) for p in m["poly"]], fill=tuple(grey))
+
+
+def preview_mask_report(jpg_path, photo, grey=(120, 120, 120)):
+    """For each mask of `photo` (extras.PREVIEW_PHOTOS entry), the written JPEG's pixels inside it (eroded by 2 px against JPEG ringing):
+    returns [{what, pixels, mean, std, ok}]. A mask wholly outside the crop has no pixels and is ok (it was cropped away)."""
+    from PIL import Image, ImageDraw
+    im = np.asarray(Image.open(jpg_path).convert("RGB")).astype(float)
+    h, w = im.shape[:2]
+    x0, y0 = photo["crop"][0], photo["crop"][1]
+    out = []
+    for m in photo["masks"]:
+        mk = Image.new("L", (w, h), 0)
+        dr = ImageDraw.Draw(mk)
+        if m["shape"] == "rect":
+            b = m["box"]
+            dr.rectangle([b[0] - x0, b[1] - y0, b[2] - x0 - 1, b[3] - y0 - 1], fill=255)
+        else:
+            dr.polygon([(px - x0, py - y0) for px, py in m["poly"]], fill=255)
+        a = np.asarray(mk) > 0
+        for _ in range(2):
+            a = a & np.roll(a, 1, 0) & np.roll(a, -1, 0) & np.roll(a, 1, 1) & np.roll(a, -1, 1)
+        n = int(a.sum())
+        if n == 0:
+            out.append({"what": m["what"], "pixels": 0, "mean": None, "std": None, "ok": True})
+            continue
+        px = im[a]
+        mean = px.mean(0)
+        std = float(px.std(0).max())
+        ok = bool(np.abs(mean - np.array(grey)).max() <= 6 and std <= 4.0)
+        out.append({"what": m["what"], "pixels": n, "mean": [round(float(v), 1) for v in mean], "std": round(std, 2), "ok": ok})
+    return out
+
+
+# ---- the front: the glazing's toplights and the band above the doors (2.2's numbers, resolved per shop) ---------------------------------
+BAR_FACE = {"T1": 28.0, "T2": 28.0, "M1": 50.0, "M2": 28.0}     # a toplight bar between two toplights of one light (the mullion lines carry up at the mullion's own face)
+DOOR_JAMB = 50.0                                                 # 2.2 parts.shop_door.dims.frame_jamb_face
+SIDE_FILLER = 24.4                                               # 2.2 parts.side_door_slot.dims.filler_each_side
+OVER_DOOR_PANES = 3                                              # the kit's "toplight with 2 bars" over the shop door (2.2 parts.shop_door.dims.above_transom)
+Z = {"fanlight": (2131.0, 2400.0), "transom": (2400.0, 2480.0), "toplights": (2480.0, 2790.0), "head": (2790.0, 2850.0), "leaf_top": 2068.0, "leaf_foot": 28.0}
+PILASTER_INNER = (350.0, 5650.0)                                 # the pilasters' inner edges across the bay (u, mm)
+
+
+def toplight_layout(frame_len, jamb, mullion_centres, mullion_face, per_light, bar_face):
+    """D6's rule (3.2 kit departure D6): each mullion carried up through the toplight row as a bar of its own width, and each light's toplight split
+    equally by (per_light - 1) bars of bar_face. All u from the frame's left edge (mm). Returns the lights, the toplight panes and every bar."""
+    edges = [jamb] + [x for c in mullion_centres for x in (c - mullion_face / 2.0, c + mullion_face / 2.0)] + [frame_len - jamb]
+    lights = [(edges[2 * i], edges[2 * i + 1]) for i in range(len(mullion_centres) + 1)]
+    panes, bars = [], []
+    for c in mullion_centres:
+        bars.append({"centre": round(c, 2), "face": mullion_face, "kind": "mullion_carried_up"})
+    for (a, b) in lights:
+        w = (b - a - (per_light - 1) * bar_face) / float(per_light)
+        for k in range(per_light):
+            x0 = a + k * (w + bar_face)
+            panes.append([round(x0, 2), round(x0 + w, 2)])
+            if k < per_light - 1:
+                bars.append({"centre": round(x0 + w + bar_face / 2.0, 2), "face": bar_face, "kind": "toplight_bar"})
+    bars.sort(key=lambda b: b["centre"])
+    return {"lights": [[round(a, 2), round(b, 2)] for a, b in lights], "toplight_panes": panes, "toplight_bars": bars,
+            "toplight_width": round(panes[0][1] - panes[0][0], 2), "toplights": len(panes)}
+
+
+def band_above_doors(zones, door_end, window_variant, door_variant, paint_window_frame, paint_shop_door, newsagent_hood=False, recessed=None):
+    """What stands above the doors, from the transom line (z 2400) to the fascia (z 2850): copied from 2.2 (targets/shopfronts/target.json
+    parts.shop_door.dims fanlight / transom / above_transom / head and parts.side_door_slot.dims.above), numbers resolved from the zones (u, mm,
+    the 2.2 bay frame, from the viewer's left). door_end 'L' (the door slots at the viewer's left: Rita's) or 'R' (mirrored)."""
+    s0, s1 = zones["shop_door"]
+    side = zones.get("side_door")
+    w0, w1 = zones["window"]
+    bar = BAR_FACE[window_variant]
+    jamb = DOOR_JAMB
+    g0, g1 = s0 + jamb, s1 - jamb                                  # between the door frame's jambs
+    pane = (g1 - g0 - (OVER_DOOR_PANES - 1) * bar) / float(OVER_DOOR_PANES)
+    panes = [[round(g0 + i * (pane + bar), 2), round(g0 + i * (pane + bar) + pane, 2)] for i in range(OVER_DOOR_PANES)]
+    bars = [{"centre": round(g0 + pane + bar / 2.0 + i * (pane + bar), 2), "face": bar} for i in range(OVER_DOOR_PANES - 1)]
+    # the door slots' run: from the pilaster to the window frame's jamb (viewer's left) or from the window frame's jamb to the pilaster (right)
+    run = [PILASTER_INNER[0], w0] if door_end == "L" else [w1, PILASTER_INNER[1]]
+    transom_section = "transom_m1" if window_variant in ("M1", "M2") else "transom_t1"
+    out = {
+        "fanlight": {"u_mm": [g0, g1], "z_mm": list(Z["fanlight"]), "panes": 1, "glass_mm": 6,
+                     "bead": "timber ovolo 14 x 11 (profile glazing_bead_ovolo)" if door_variant == "T1" else "snap-in bead on a black gasket (profile glazing_bead_gasket)",
+                     "between": "the shop door frame's jambs (50 face each side of the %g slot)" % (s1 - s0), "paint": paint_shop_door,
+                     "source": "2.2 parts.shop_door.dims.fanlight (z_range 2131 to 2400, one pane)"},
+        "transom": {"u_mm": run, "z_mm": list(Z["transom"]), "section": transom_section + " (2.2 parts.window_frame.profiles)", "paint": paint_window_frame,
+                    "runs": "across both door slots (shop door and side door) from the pilaster to the window frame's jamb; the window's own transom continues it" if side else
+                            "across the shop door's slot from the pilaster to the window frame's jamb; the window's own transom continues it",
+                    "source": "2.2 parts.window_frame.dims.transom / bay.z.transom (2400 to 2480)",
+                    "metal_note": ("Judgement: 2.2 gives metal fronts only transom_m1 (a 50 high box, 75 deep); the elevation keeps 2.2's 80 high band (2400 to 2480), "
+                                   "the box carrying a 30 mm snap-on cover plate on its top") if window_variant in ("M1", "M2") else None},
+        "toplights_over_shop_door": {"u_mm": [g0, g1], "z_mm": list(Z["toplights"]), "panes": panes, "pane_width_mm": round(pane, 2), "bars": bars, "bar_profile": "toplight_bar_plan (T1, T2)" if window_variant in ("T1", "T2") else ("bar_m2_plan (M2)" if window_variant == "M2" else "an aluminium bar 50 wide (the M1 mullion carried up; 2.2 gives no thinner M1 bar)"),
+                                     "glass_and_beads": "as the window's toplights", "source": "2.2 parts.shop_door.dims.above_transom ('toplight with 2 bars (as the kit)')"},
+        "panel_over_side_door": None,
+        "head": {"u_mm": list(run), "z_mm": list(Z["head"]), "section": "head_section (95 x 60, 2.2 parts.window_frame.profiles)", "paint": paint_window_frame,
+                 "source": "2.2 parts.window_frame.dims.head (2790 to 2850)"},
+    }
+    if side:
+        a0, a1 = side
+        out["panel_over_side_door"] = {"u_mm": [a0, a1], "field_u_mm": [a0 + 50.0, a1 - 50.0], "field_width_mm": (a1 - a0) - 100.0, "z_mm": list(Z["toplights"]), "kind": "one raised-and-fielded panel (profile raised_field_edge)",
+                                       "paint": paint_window_frame, "source": "2.2 parts.side_door_slot.dims.above (one raised-and-fielded panel, 944 wide minus 2 x 50); 2.2 gives it from 2480 to 2850: here 2480 to 2790 with the head across it (2790 to 2850) as on the approved front (rita-day-kit-2026-10-06.jpg)"}
+    if newsagent_hood:
+        hood_u = [PILASTER_INNER[0], s1] if door_end == "R" else [s0, PILASTER_INNER[1]]
+        out["shutter_hood"] = {"u_mm": hood_u, "z_mm": [2550.0, 2850.0], "note": "2.2 alterations.roller_shutter: the hood is set INTO the toplight zone over window and door (u 350 to 4706): the toplights of the shop door show 2480 to 2550 only and the head over the shop door is cut away behind it; the head over the side door stays"}
+        out["toplights_over_shop_door"]["z_visible_mm"] = [2480.0, 2550.0]
+        out["head"]["u_mm"] = [side[0], side[1]] if side else list(run)
+        out["head"]["cut_away_behind_hood_mm"] = [s0, s1]
+    return out
+
+
+# ---- coverage of the elevation: FRN-07 -----------------------------------------------------------------------------------------------
+def largest_uncovered(rects, u0, u1, z0, z1, eps=0.05):
+    """The largest axis-aligned rectangle inside [u0, u1] x [z0, z1] that no rect (ua, za, ub, zb) covers, by area (mm^2): returns (area, width, height,
+    (ua, za)). Each rect is grown by eps on every side so that edges that touch within rounding do not count as a gap."""
+    us, zs = {u0, u1}, {z0, z1}
+    R = []
+    for (ua, za, ub, zb) in rects:
+        ua, ub = max(u0, min(ua, ub) - eps), min(u1, max(ua, ub) + eps)
+        za, zb = max(z0, min(za, zb) - eps), min(z1, max(za, zb) + eps)
+        if ub > ua and zb > za:
+            R.append((ua, za, ub, zb))
+            us.update((ua, ub))
+            zs.update((za, zb))
+    us, zs = sorted(us), sorted(zs)
+    nu, nz = len(us) - 1, len(zs) - 1
+    cov = np.zeros((nz, nu), bool)
+    for (ua, za, ub, zb) in R:
+        i0, i1 = us.index(ua), us.index(ub)
+        j0, j1 = zs.index(za), zs.index(zb)
+        cov[j0:j1, i0:i1] = True
+    uw = np.diff(us)
+    best = (0.0, 0.0, 0.0, (u0, z0))
+    for j in range(nz):
+        free = np.ones(nu, bool)
+        for k in range(j, nz):
+            free &= ~cov[k]
+            if not free.any():
+                break
+            h = zs[k + 1] - zs[j]
+            run_w, run_start = 0.0, None
+            for i in range(nu + 1):
+                if i < nu and free[i]:
+                    if run_start is None:
+                        run_start = i
+                    run_w += uw[i]
+                else:
+                    if run_start is not None and run_w * h > best[0]:
+                        best = (run_w * h, run_w, h, (us[run_start], zs[j]))
+                    run_start, run_w = None, 0.0
+    return best
+
+
+def tube_box(lights, ceiling=2.4, fitting_width=0.2):
+    """The box a room's ceiling battens fill, from its lights.tubes: x [min tube x - L/2, max + L/2], y [min tube y - 0.1, max + 0.1] (a fitting 0.2 wide),
+    z [ceiling - the deepest fitting, ceiling]. Returns (x, y, z) as lists of metres."""
+    tl = lights["tube_length_m"]
+    tb = lights["tubes"]
+    x = [round(min(t["x"] for t in tb) - tl / 2.0, 3), round(max(t["x"] for t in tb) + tl / 2.0, 3)]
+    y = [round(min(t["y"] for t in tb) - fitting_width / 2.0, 3), round(max(t["y"] for t in tb) + fitting_width / 2.0, 3)]
+    z = [round(ceiling - max(t["z_below_ceiling"] for t in tb), 4), ceiling]
+    return x, y, z

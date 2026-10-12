@@ -42,67 +42,111 @@ def rect(u0, z0, u1, z1):
     return [(u0, z0), (u1, z0), (u1, z1), (u0, z1)]
 
 
+COVERING_LAYERS = ("part", "frame", "glass")      # what FRN-07 counts as standing in the opening: stallriser, sill, frame, glass, door, fanlight, transom, toplight, panel, head
+
+
 def front_polys(shop):
+    """The bay's elevation as polygons in millimetres (u from the viewer's left, z up from the footway), from target.json alone. Parts in the layers
+    part / frame / glass are what stands between the pilasters (FRN-07 checks that nothing in u 350 to 5650, z 0 to 2850 is left open); furniture, overlay,
+    bg, card and display are drawn but do not count."""
     f = shop["front"]
     z = f["zones_u_mm"]
     w0, w1 = z["window"]
     L = []
 
     def add(name, poly, colour, layer="part", dash=False):
-        L.append({"name": name, "poly": [(round(a, 1), round(b, 1)) for a, b in poly], "colour": list(colour), "layer": layer, "dash": dash})
+        L.append({"name": name, "poly": [(round(a, 2), round(b, 2)) for a, b in poly], "colour": list(colour), "layer": layer, "dash": dash, "covers": layer in COVERING_LAYERS})
     pil = rgb(T, shop, "pilaster", (150, 150, 150))
     for side in ("L", "R"):
         m = (lambda u: u) if side == "L" else (lambda u: 6000 - u)
-        add("plinth_" + side, [(m(20), 0), (m(330), 0), (m(330), 600), (m(20), 600)], pil)
-        add("shaft_" + side, [(m(30), 600), (m(320), 600), (m(320), 2540), (m(30), 2540)], pil)
-        add("capital_" + side, [(m(30), 2540), (m(320), 2540), (m(350), 2850), (m(0), 2850)], pil)
+        add("plinth_" + side, [(m(20), 0), (m(330), 0), (m(330), 600), (m(20), 600)], pil, layer="pilaster")
+        add("shaft_" + side, [(m(30), 600), (m(320), 600), (m(320), 2540), (m(30), 2540)], pil, layer="pilaster")
+        add("capital_" + side, [(m(30), 2540), (m(320), 2540), (m(350), 2850), (m(0), 2850)], pil, layer="pilaster")
         if f.get("console_absent_viewer") != side:
-            add("console_" + side, [(m(55), 2850), (m(295), 2850), (m(295), 3400), (m(55), 3400)], rgb(T, shop, "console", pil))
-    add("fascia_board", rect(295, 2850, 5705, 3400), rgb(T, shop, "fascia_board", (200, 200, 200)))
-    add("cornice", rect(54, 3400, 5946, 3550), rgb(T, shop, "cornice", pil))
-    # stallriser, sill, window frame
-    add("stallriser", rect(w0, 0, w1, 600), rgb(T, shop, "stallriser", (120, 120, 120)))
-    add("sill", rect(w0, 525, w1, 600), rgb(T, shop, "window_frame", (220, 220, 210)))
-    wf = rgb(T, shop, "window_frame", (220, 220, 210))
-    add("window_frame_outer", rect(w0, 600, w1, 2850), wf, layer="frame")
-    add("glass_lights", rect(w0 + 50, 625, w1 - 50, 2400), (150, 170, 180), layer="glass")
-    add("glass_toplights", rect(w0 + 50, 2480, w1 - 50, 2790), (150, 170, 180), layer="glass")
-    gl = f.get("glazing_layout") or {}
-    mf = f["glazing"].get("mullion_face", 70)
-    for c in gl.get("mullion_centres", []):
-        add("mullion", rect(w0 + c - mf / 2, 625, w0 + c + mf / 2, 2790), wf, layer="frame")
-    for c in gl.get("toplight_bar_centres", []):
-        add("toplight_bar", rect(w0 + c - 14, 2480, w0 + c + 14, 2790), wf, layer="frame")
-    add("transom", rect(w0, 2400, w1, 2480), wf, layer="frame")
-    add("head", rect(w0, 2790, w1, 2850), wf, layer="frame")
-    # the shop door
+            add("console_" + side, [(m(55), 2850), (m(295), 2850), (m(295), 3400), (m(55), 3400)], rgb(T, shop, "console", pil), layer="pilaster")
+    add("fascia_board", rect(295, 2850, 5705, 3400), rgb(T, shop, "fascia_board", (200, 200, 200)), layer="pilaster")
+    add("cornice", rect(54, 3400, 5946, 3550), rgb(T, shop, "cornice", pil), layer="pilaster")
     d = shop["door"]
+    gl = f["glazing_layout"]
+    wf = rgb(T, shop, "window_frame", (220, 220, 210))
+    jf = gl["jamb_face"]
+    mf = gl["mullion_face"]
+    hood = d.get("shutter_hood")
+    ztop = hood["z_mm"][0] if hood else Z_TOPLIGHT_TOP        # the roller-shutter hood cuts the toplights, bars and jambs away above 2550 (2.2)
+    # ---- the window ---------------------------------------------------------------------------------------------------------------
+    add("window_frame_bg", rect(w0, 525, w1, 2850), wf, layer="bg")
+    add("stallriser", rect(w0, 0, w1, 600), rgb(T, shop, "stallriser", (120, 120, 120)))
+    add("sill", rect(w0, 525, w1, 600), wf)
+    add("window_jamb_L", rect(w0, 600, w0 + jf, ztop), wf, layer="frame")
+    add("window_jamb_R", rect(w1 - jf, 600, w1, ztop), wf, layer="frame")
+    add("window_seat_rail", rect(w0 + jf, 600, w1 - jf, 625), wf, layer="frame")
+    for a, b in gl["lights"]:
+        add("window_light", rect(w0 + a, 625, w0 + b, 2400), (150, 170, 180), layer="glass")
+    for c in gl["mullion_centres"]:
+        add("mullion", rect(w0 + c - mf / 2, 625, w0 + c + mf / 2, ztop), wf, layer="frame")
+    add("window_transom", rect(w0 + jf, 2400, w1 - jf, 2480), wf, layer="frame")
+    for a, b in gl["toplight_panes"]:
+        add("window_toplight", rect(w0 + a, 2480, w0 + b, ztop), (150, 170, 180), layer="glass")
+    for br in gl["toplight_bars"]:
+        add("toplight_bar", rect(w0 + br["centre"] - br["face"] / 2, 2480, w0 + br["centre"] + br["face"] / 2, ztop), wf, layer="frame")
+    if not hood:
+        add("window_head", rect(w0 + jf, 2790, w1 - jf, 2850), wf, layer="frame")
+    else:
+        add("roller_shutter_hood", rect(hood["u_mm"][0], hood["z_mm"][0], hood["u_mm"][1], hood["z_mm"][1]), (88, 90, 90), layer="part")
+    # ---- the shop door and what stands over it ------------------------------------------------------------------------------------
     s0, s1 = z["shop_door"]
     cx = (s0 + s1) / 2
     leaf0, leaf1 = cx - 450, cx + 450
     dp = rgb(T, shop, "shop_door", wf)
-    add("shop_door_frame", rect(s0, 25, s1, 2400), dp, layer="frame")
+    jb = 50.0
+    add("shop_door_threshold", rect(s0, 0, s1, 25), (170, 168, 160))
+    add("shop_door_jamb_L", rect(s0, 25, s0 + jb, ztop), dp, layer="frame")      # the door frame's jambs run up through the fanlight and the toplights to the head
+    add("shop_door_jamb_R", rect(s1 - jb, 25, s1, ztop), dp, layer="frame")
+    add("door_foot_clearance_seal", rect(s0 + jb, 25, s1 - jb, 28), (60, 60, 60), layer="frame")
+    add("door_stop_L", rect(s0 + jb, 28, leaf0, 2068), dp, layer="frame")
+    add("door_stop_R", rect(leaf1, 28, s1 - jb, 2068), dp, layer="frame")
     add("shop_door_leaf", rect(leaf0, 28, leaf1, 2068), dp, layer="part")
     gz = d["glass_foot_z_mm"]
     if d["variant"] == "T1":
         gtop = d["t1_rails_mm"]["glass"][1]
         bz = d["t1_rails_mm"]["glazing_bar"]["z"]
-        add("door_glass_lower", rect(leaf0 + 115, gz, leaf1 - 115, bz - 14), (150, 170, 180), layer="glass")
-        add("door_glass_upper", rect(leaf0 + 115, bz + 14, leaf1 - 115, gtop), (150, 170, 180), layer="glass")
+        add("door_glass_lower", rect(leaf0 + 115, gz, leaf1 - 115, bz - 14), (150, 170, 180), layer="overlay")
+        add("door_glass_upper", rect(leaf0 + 115, bz + 14, leaf1 - 115, gtop), (150, 170, 180), layer="overlay")
     elif d["variant"] == "M1":
-        add("door_glass", rect(leaf0 + 50, 170, leaf1 - 50, 1968), (150, 170, 180), layer="glass")
+        add("door_glass", rect(leaf0 + 50, 198, leaf1 - 50, 1968), (150, 170, 180), layer="overlay")
     else:
-        add("door_glass", rect(leaf0 + 40, 600, leaf1 - 40, 1968), (150, 170, 180), layer="glass")
+        add("door_glass", rect(leaf0 + 40, 600, leaf1 - 40, 1968), (150, 170, 180), layer="overlay")
     lp = d["letter_plate"]
     add("letter_plate", rect(cx - 125, lp["z_mm"] - 20, cx + 125, lp["z_mm"] + 20), (160, 120, 55), layer="furniture")
-    add("door_fanlight", rect(s0 + 50, 2131, s1 - 50, 2400), (150, 170, 180), layer="glass")
-    # the side door (F1 from 3.1)
+    add("door_frame_head", rect(s0 + jb, 2068, s1 - jb, 2131), dp, layer="frame")
+    fl = d["fanlight"]
+    add("door_fanlight", rect(fl["u_mm"][0], fl["z_mm"][0], fl["u_mm"][1], fl["z_mm"][1]), (150, 170, 180), layer="glass")
+    tr = d["transom"]
+    add("door_transom", rect(tr["u_mm"][0], tr["z_mm"][0], tr["u_mm"][1], tr["z_mm"][1]), wf, layer="frame")
+    ot = d["toplights_over_shop_door"]
+    topz = ot.get("z_visible_mm", ot["z_mm"])[1]
+    for a, b in ot["panes"]:
+        add("door_toplight", rect(a, ot["z_mm"][0], b, topz), (150, 170, 180), layer="glass")
+    for br in ot["bars"]:
+        add("door_toplight_bar", rect(br["centre"] - br["face"] / 2, ot["z_mm"][0], br["centre"] + br["face"] / 2, topz), wf, layer="frame")
+    hd = d["head"]
+    add("door_head", rect(hd["u_mm"][0], hd["z_mm"][0], hd["u_mm"][1], hd["z_mm"][1]), wf, layer="frame")
+    if hd.get("cut_away_behind_hood_mm"):
+        pass                                                   # the hood stands where the head is cut away (drawn with the window)
+    # ---- the side door (F1 from 3.1) and its panel -------------------------------------------------------------------------------
     if z.get("side_door"):
         a0, a1 = z["side_door"]
         ac = (a0 + a1) / 2
-        add("side_door_frame", rect(a0, 45, a1, 2400), rgb(T, shop, "side_door", (200, 190, 170)), layer="frame")
-        add("side_door_leaf", rect(ac - 419, 45, ac + 419, 2026), rgb(T, shop, "side_door", (200, 190, 170)), layer="part")
-    # the card and the display
+        sd = rgb(T, shop, "side_door", (200, 190, 170))
+        add("side_door_threshold", rect(a0, 0, a1, 45), (170, 168, 160))
+        add("side_door_filler_L", rect(a0, 45, a0 + 24.4, 2400), pil, layer="frame")
+        add("side_door_filler_R", rect(a1 - 24.4, 45, a1, 2400), pil, layer="frame")
+        add("side_door_F1", rect(a0 + 24.4, 45, a1 - 24.4, 2400), sd, layer="part")
+        add("side_door_leaf", rect(ac - 419, 45, ac + 419, 2026), sd, layer="overlay")
+        pn = d["panel_over_side_door"]
+        add("panel_over_side_door", rect(pn["u_mm"][0], pn["z_mm"][0], pn["u_mm"][1], pn["z_mm"][1]), wf, layer="frame")
+        add("panel_field", rect(pn["field_u_mm"][0], pn["z_mm"][0] + 12, pn["field_u_mm"][1], pn["z_mm"][1] - 12), tuple(min(255, c + 12) for c in wf), layer="overlay")
+    # ---- the card and the display ---------------------------------------------------------------------------------------------------
     add("card_outline", rect(350, 550, 5650, 2950), (255, 255, 255), layer="card", dash=True)
     if shop.get("display"):
         dd = shop["display"]
@@ -110,7 +154,21 @@ def front_polys(shop):
     return L
 
 
-def draw_polys(polys, size, scale, origin, title=None, bg=(238, 238, 232)):
+Z_TOPLIGHT_TOP = 2790.0
+
+
+def covering_rects(polys):
+    """The rectangles (ua, za, ub, zb) of the polygons that count as standing in the opening."""
+    out = []
+    for p in polys:
+        if p.get("covers"):
+            us = [a for a, b in p["poly"]]
+            zs = [b for a, b in p["poly"]]
+            out.append((min(us), min(zs), max(us), max(zs)))
+    return out
+
+
+def draw_polys(polys, size, scale, origin, title=None, bg=(238, 238, 232), labels=None):
     im = Image.new("RGB", size, bg)
     dr = ImageDraw.Draw(im)
     H = size[1]
@@ -125,6 +183,8 @@ def draw_polys(polys, size, scale, origin, title=None, bg=(238, 238, 232)):
                     dr.line([(a[0] + (b[0] - a[0]) * t0, a[1] + (b[1] - a[1]) * t0), (a[0] + (b[0] - a[0]) * t1, a[1] + (b[1] - a[1]) * t1)], fill=tuple(p["colour"]) if p["layer"] != "card" else (90, 90, 90), width=2)
         else:
             dr.polygon(pts, fill=tuple(p["colour"]), outline=(40, 40, 40))
+    for (u, zz, text, col) in (labels or []):
+        dr.text((origin[0] + u * scale, H - origin[1] - zz * scale), text, fill=tuple(col))
     if title:
         dr.rectangle([0, 0, size[0], 16], fill=(30, 30, 30))
         dr.text((6, 3), title, fill=(240, 240, 240))
