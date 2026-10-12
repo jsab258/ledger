@@ -171,13 +171,13 @@ The 3.2 kit built the window only and left the door slots empty on purpose; this
 | ironmonger | 2L-6T | 6 of 509.7 | 573.7, 1111.3, 2238.7, 2776.3 | 1675.0 (80 wide) | 3 of 283.3 | 0.0 x 0.0 |
 | newsagent | 3L-9T | 9 of 326.9 | 390.9, 745.8, 1497.6, 1852.4, 2604.2, 2959.1 | 1121.7, 2228.3 (70 wide) | 3 of 283.3 | 0.0 x 0.0 |
 
-**The toplight rule (3.2 street review fault 1, kit departure D6), now on every front:** each mullion is carried up through the toplight row as a bar of its own width, and each light's toplight is split equally by 28 wide bars. 2.2's table (a fixed pitch of bars, slivers of 91 to 95 mm beside the mullions on five fronts, the grocer's 256 mm panes beside both mullions, the launderette's one long pane) is replaced; the launderette's divided upper lights are P5's (disagreement D11); the grocer's sunrise is etched one to a light across its two toplights (Judgement). FRN-04 checks the bar centres (+-2 mm), a bar on every mullion line, equal widths in a light and no toplight under 250, not only the count.
+**The toplight rule (3.2 street review fault 1, kit departure D6), now on every front:** each mullion is carried up through the toplight row as a bar of its own width, and each light's toplight is split equally by 28 wide bars. 2.2's table (a fixed pitch of bars, slivers of 91 to 95 mm beside the mullions on five fronts, the grocer's 256 mm panes beside both mullions, the launderette's one long pane) is replaced; the launderette's divided upper lights are P5's (disagreement D11); the grocer's sunrise is etched one to a light across its two toplights (Judgement). FRN-04 checks the bar centres (+-2 mm), a bar on every mullion line, equal widths in a light and no toplight under 250, not only the count. (The kit's D6 and the review list the second light's second bar of Rita's at 1852.5; the rule gives 1852.43, a rounding of 0.07 mm, far inside the check's 2 mm.)
 
 **The street number on the fanlight.** on the SHOP door's fanlight, as the review reads it, at the shop door's centre (street x 19.203), not at 4.1's x (the side door's centre): a move of 4.1's x recorded for its owner; the side door's fanlight carries no number here. 4.1's z 2.18 is in the street frame, metres above the road crown: 2.18 above the crown is 2080 above the footway (crown + 0.10 = footway), which is BELOW this fanlight (z 2131 to 2400 above the footway). The number is therefore set in the fanlight: baseline 2200 above the footway, cap 110 (2200 to 2310, centred in the pane) = 2.30 above the crown: Judgement, 0.12 m above 4.1's z.
 
 ### 4.2 The shop door, the side door and the bell (the 3.2 kit has none)
 
-The door is **specified from 2.2's section 10 (T1, M1, M2 in numbers; not built by 3.2)** and changed where a photograph of an untouched timber shop front disagrees (D1: Geograph 2192169, a Worcester fish shop's front, May 2000, scaled on the leaf's height). T1 for Rita's, in millimetres above the footway (the leaf's foot stands at 28 on a terrazzo threshold 25 high):
+The door is **specified from 2.2's JSON (`targets/shopfronts/target.json` at commit dd706f6: `parts.shop_door`, its `variants` T1, M1, M2 and its `profiles`; not built by 3.2)** and changed where a photograph of an untouched timber shop front disagrees (D1: Geograph 2192169, a Worcester fish shop's front, May 2000, scaled on the leaf's height). T1 for Rita's, in millimetres above the footway (the leaf's foot stands at 28 on a terrazzo threshold 25 high):
 
 | member | z (mm) | kind and source |
 |---|---|---|
@@ -195,7 +195,7 @@ The door is **specified from 2.2's section 10 (T1, M1, M2 in numbers; not built 
 | the bell | inside the leaf's top rail at z 1950 to 2050 | a spring-arm shop bell: a 20 x 3 mm steel strip curved 220 long fixed to the INSIDE face of the leaf's top rail 90 from the hanging stile at z 1950 to 2050, carrying a 70 mm brass bell hung 80 below it; it rings on the door's swing against a fixed clapper on the frame (Judgement: no 1975 to 1995 photograph of a shop-door bell was reached; the part is seen through the door's glass from the street and from the close view) |
 | the OPEN / CLOSED sign | inside the glass at z 1500 | the plastic OPEN / CLOSED sign from 4.2 (the paper unit) on the inside of the door's glass at z 1500, hung by a suction cup: closed when the shop is shut; the hours plate (4.1) on the glass beside it |
 
-The side door is the door family's **F1** (3.1: production/assets/cloud-week/door/door_F1.glb), used as 2.2 section 10 places it: slot 944, F1 mirrored where the door end is the viewer's left, its frame's outside face at d 100, trimmed at the shop transom, painted buttermilk (222, 212, 184), letter plate 250 x 40, the bell push the 3.1 fix leaves as a plain oblong. Metal doors (M1 aluminium: full-height glass in a 50 frame, 100 top rail, 170 bottom rail, a 300 chrome D pull and a floor spring; M2 bronze: a bronze kick panel to 600, glass above) are as 2.2 for the shops that have them, with one change: an M1 door's letter plate is centred in the 170 bottom rail at z 113, outside the glass (2.2's 545 stood inside it); the M2 door's plate stays in the kick panel at 545.
+The side door is the door family's **F1** (3.1: production/assets/cloud-week/door/door_F1.glb), used as 2.2's `parts.side_door_slot` (and its `mapping_from_F1`) places it: slot 944, F1 mirrored where the door end is the viewer's left, its frame's outside face at d 100, trimmed at the shop transom, painted buttermilk (222, 212, 184), letter plate 250 x 40, the bell push the 3.1 fix leaves as a plain oblong. Metal doors (M1 aluminium: full-height glass in a 50 frame, 100 top rail, 170 bottom rail, a 300 chrome D pull and a floor spring; M2 bronze: a bronze kick panel to 600, glass above) are as 2.2 for the shops that have them, with one change: an M1 door's letter plate is centred in the 170 bottom rail at z 113, outside the glass (2.2's 545 stood inside it); the M2 door's plate stays in the kick panel at 545.
 
 ### 4.3 The glass, the fascia, the paint and the grille
 
@@ -216,7 +216,7 @@ The side door is the door family's **F1** (3.1: production/assets/cloud-week/doo
 
 | fixture | surface | stand-off | extent (x, y, z) | what |
 |---|---|---|---|---|
-| R-back-stock | back | 0.300 | [-2.6, 1.35]  [0.5, 2.25] | the stock wall: five tiers of 25 mm boards 0.30 deep, filled shoulder to shoulder from the left wall to x 1.35, a ticket on every piece; the lowest two tiers only at the ends, the counter standing in front of the middle; the wall from x 1.35 to the back door's frame (1.45) is plain, and the strip right of the door (x 2.35 to 2.6) is plain wall |
+| R-back-stock | back | 0.300 | [-2.6, 1.35]  [0.5, 2.25] | the stock wall: five tiers of 25 mm boards 0.30 deep, filled shoulder to shoulder from the left wall to x 1.35, a ticket on every piece; the lowest two tiers only at the ends, the counter standing in front of the middle; the wall from x 1.35 to the back door's frame (1.45) is plain, the door's frame runs to x 2.40, and the strip x 2.40 to 2.6 is plain wall |
 | R-back-tv-tiers | back | 0.350 | [-1.9, 0.9]  [1.35, 2.05] | the two tiers above the counter (z 1.35 and 1.70, x -1.90 to 0.90) are 0.35 deep boards for the four television sets (television_02 is 0.35 deep at its size; 0.35 stays inside the 20 px budget at the card's middle): a named exception to the 0.30 shelf rule |
 | R-back-door-boxes | back | 0.300 | [1.45, 2.35]  [2.05, 2.25] | one tier of boxes of stock over the back door only, at z 2.05 to 2.25 (x 1.45 to 2.35), 0.30 deep, a ticket on each |
 | R-back-counter | back | 0.600 | [-1.9, 0.9]  [0.0, 1.05] | the staff counter, glass-topped case on a velvet bed, against the wall (0.6 deep, 1.05 high), 2.8 m long; notices on its front |
@@ -230,12 +230,12 @@ The side door is the door family's **F1** (3.1: production/assets/cloud-week/doo
 
 | goods (model or scripted form) | n | on | why or note |
 |---|---|---|---|
-| television_02 | 4 | R-back-tv-tiers | CRT sets on the two tiers above the counter; none elsewhere |
-| boombox | 3 | R-back-stock |  |
+| television_02 | 4 | R-back-tv-tiers | CRT sets on the two tiers above the counter; none elsewhere; mark blanked as `inventory.polyhaven[television_02].marks` says |
+| boombox | 3 | R-back-stock | mark blanked as `inventory.polyhaven[boombox].marks` says |
 | cassette_player | 3 | R-back-stock | maker's name painted out |
 | portable_cassette_player | 4 | R-back-stock | maker's name painted out |
-| Camera_01 | 3 | R-back-stock | lens-ring lettering painted out |
-| vintage_video_camera | 2 | R-back-stock |  |
+| Camera_01 | 3 | R-back-stock | maker's lettering painted out (lens ring and body plate: inventory marks) |
+| vintage_video_camera | 2 | R-back-stock | mark blanked as `inventory.polyhaven[vintage_video_camera].marks` says |
 | vintage_binocular | 2 | R-back-stock |  |
 | binoculars | 1 | R-back-stock |  |
 | mantel_clock_01 | 2 | R-back-stock |  |
@@ -243,25 +243,25 @@ The side door is the door family's **F1** (3.1: production/assets/cloud-week/doo
 | brass_vase_01 | 2 | R-back-stock |  |
 | brass_vase_02 | 1 | R-back-stock |  |
 | brass_vase_03 | 2 | R-back-stock |  |
-| filmstrip_projector_8mm | 2 | R-back-stock |  |
+| filmstrip_projector_8mm | 2 | R-back-stock | mark blanked as `inventory.polyhaven[filmstrip_projector_8mm].marks` says |
 | metal_toolbox | 2 | R-back-stock |  |
 | hand_plane_no4 | 1 | R-back-stock |  |
 | cardboard_box_01 | 6 | R-back-stock | the top tier: boxes of stock, a ticket each |
 | cardboard_box_01 | 3 | R-back-door-boxes | the one tier over the back door |
-| CashRegister_01 | 1 | R-back-counter | the till at the counter's right end, on the glass |
+| CashRegister_01 | 1 | R-back-counter | the till at the counter's right end, on the glass; mark blanked as `inventory.polyhaven[CashRegister_01].marks` says |
 | script:counter_jewellery | 1 | R-back-counter | rings, chains and watches on velvet in the case: Rita's approved scripted jewellery (tori, discs, links), kept as approved |
-| pocket_watch | 3 | R-back-counter |  |
-| vintage_pocket_watch | 3 | R-back-counter |  |
-| pipe_wrench | 1 | R-right-board |  |
+| pocket_watch | 3 | R-back-counter | mark blanked as `inventory.polyhaven[pocket_watch].marks` says |
+| vintage_pocket_watch | 3 | R-back-counter | mark blanked as `inventory.polyhaven[vintage_pocket_watch].marks` says |
+| pipe_wrench | 1 | R-right-board | mark blanked as `inventory.polyhaven[pipe_wrench].marks` says |
 | cross_pein_hammer | 2 | R-right-board |  |
 | handsaw_wood | 2 | R-right-board |  |
 | hand_plane_no4 | 1 | R-right-board |  |
-| adjustable_wrench | 2 | R-right-board |  |
+| adjustable_wrench | 2 | R-right-board | mark blanked as `inventory.polyhaven[adjustable_wrench].marks` says |
 | pliers | 3 | R-right-board |  |
 | combination_wrench | 3 | R-right-board |  |
-| Ukulele_01 | 2 | R-right-hung |  |
+| Ukulele_01 | 2 | R-right-hung | mark blanked as `inventory.polyhaven[Ukulele_01].marks` says |
 | ornate_mirror_01 | 1 | R-right-hung |  |
-| wall_clock | 1 | R-back-stock | its dial's maker mark painted out (a 60 x 14 px patch under the 12) |
+| wall_clock | 1 | R-back-stock | its dial's maker mark painted out (the box under the 12 on the dial map: inventory marks) |
 | script:pledge_tickets | 90 | R-left-board | paper tickets 25 x 12 mm with handwritten numbers: texture-printed cards, no model exists |
 | wall_clock | 2 | R-left-board | hung flat; dial maker mark painted out |
 | hanging_picture_frame_02 | 2 | R-left-board | framed pictures hung flat; the picture replaced with the project's own invented print |
@@ -272,10 +272,10 @@ The side door is the door family's **F1** (3.1: production/assets/cloud-week/doo
 
 | model | n | zone u0-u1, v0-v1, w0-w1 (m) | note |
 |---|---|---|---|
-| pocket_watch | 2 | 0.20-0.90, 0.05-0.35, 0.00-0.12 |  |
-| vintage_pocket_watch | 2 | 0.90-1.50, 0.05-0.35, 0.00-0.12 |  |
-| Camera_01 | 2 | 0.10-0.90, 0.15-0.50, 0.12-0.40 |  |
-| vintage_video_camera | 1 | 1.00-1.50, 0.15-0.50, 0.12-0.40 |  |
+| pocket_watch | 2 | 0.20-0.90, 0.05-0.35, 0.00-0.12 | mark blanked as `inventory.polyhaven[pocket_watch].marks` says |
+| vintage_pocket_watch | 2 | 0.90-1.50, 0.05-0.35, 0.00-0.12 | mark blanked as `inventory.polyhaven[vintage_pocket_watch].marks` says |
+| Camera_01 | 2 | 0.10-0.90, 0.15-0.50, 0.12-0.40 | mark blanked as `inventory.polyhaven[Camera_01].marks` says |
+| vintage_video_camera | 1 | 1.00-1.50, 0.15-0.50, 0.12-0.40 | mark blanked as `inventory.polyhaven[vintage_video_camera].marks` says |
 | binoculars | 1 | 1.60-2.10, 0.15-0.50, 0.12-0.40 |  |
 | round_spectacles | 1 | 2.20-2.60, 0.05-0.30, 0.12-0.30 |  |
 | mantel_clock_01 | 1 | 0.20-0.90, 0.20-0.50, 0.40-0.75 |  |
@@ -283,11 +283,11 @@ The side door is the door family's **F1** (3.1: production/assets/cloud-week/doo
 | brass_vase_01 | 1 | 2.40-2.80, 0.20-0.50, 0.40-1.10 |  |
 | brass_vase_02 | 1 | 2.90-3.20, 0.20-0.50, 0.40-0.95 |  |
 | brass_vase_03 | 1 | 0.90-1.20, 0.30-0.50, 0.75-0.95 |  |
-| ceramic_vase_01 | 1 | 1.30-1.70, 0.25-0.50, 0.75-1.15 |  |
+| ceramic_vase_01 | 1 | 1.30-1.70, 0.25-0.50, 0.75-1.15 | mark blanked as `inventory.polyhaven[ceramic_vase_01].marks` says |
 | ceramic_vase_03 | 1 | 1.80-2.00, 0.25-0.45, 0.75-1.15 |  |
 | antique_ceramic_vase_01 | 1 | 2.10-2.70, 0.20-0.50, 0.75-1.20 |  |
-| standing_picture_frame_01 | 1 | 0.20-0.50, 0.25-0.40, 0.75-1.00 |  |
-| standing_picture_frame_02 | 1 | 2.80-3.10, 0.25-0.40, 0.75-1.00 |  |
+| standing_picture_frame_01 | 1 | 0.20-0.50, 0.25-0.40, 0.75-1.00 | mark blanked as `inventory.polyhaven[standing_picture_frame_01].marks` says |
+| standing_picture_frame_02 | 1 | 2.80-3.10, 0.25-0.40, 0.75-1.00 | mark blanked as `inventory.polyhaven[standing_picture_frame_02].marks` says |
 | portable_cassette_player | 2 | 1.70-2.30, 0.10-0.40, 0.00-0.20 | maker's name painted out |
 | seadogs_compass | 1 | 0.40-0.70, 0.05-0.25, 0.12-0.22 |  |
 | vintage_flashlight | 1 | 2.00-2.30, 0.05-0.35, 0.12-0.26 |  |
@@ -543,7 +543,7 @@ the numbers from the game's own rule: stock only on the back wall (0.30 deep is 
 | tools/art-recipes/fetch_polyhaven.py | the fetcher and the SETS | SETS gain the ids of the inventory; none of the denied |
 | production/assets/shop-goods/labels.jpg and make_label_atlas.py | the 32 fictional products | twelve tiles added (paint, varnish, twine, tobacco, crab paste, detergent) in the same fonts |
 | production/assets/shop-displays/pawnbroker-display.glb | as built, with its 23 models | maker marks blanked; the night grille added; no piece repeated more than twice |
-| the 3.2 kit (production/cloud-week/kit/shopfront) | pilaster (panel), console (scroll), fascia board, cornice (150 as built, 12 Oct), sill, stallriser (panel, three panels), window frame T1 (3 lights, nine toplights as built): Rita's front is complete but for the doors | nine variants are missing for the other fronts (front.missing_from_3_2 in each shop); the doors and the lobbies are specified here, from 2.2 section 10, with three changes (D1) and the bell |
+| the 3.2 kit (production/cloud-week/kit/shopfront) | pilaster (panel), console (scroll), fascia board, cornice (150 as built, 12 Oct), sill, stallriser (panel, three panels), window frame T1 (3 lights, nine toplights as built): Rita's front is complete but for the doors and the band above them | nine variants are missing for the other fronts (front.missing_from_3_2 in each shop; front.build_from names the exact keys of 2.2's target.json, at commit dd706f6, that build each); the doors, the lobbies and the band above the doors are specified here, from that JSON, with three changes (D1, D11, D12) and the bell |
 | 2.2 (targets/shopfronts/target.json, at commit dd706f6) | the ten fronts' table, paints, door ends and hinges; its JSON is the second versioned input of every front's build (`front.build_from`) | T1 door: glass foot, lock rail, letter plate, a glazing bar (D1); the bell; the toplight layout on seven fronts (the kit's D6 rule: mullions carried up, each light's toplight split equally); the band above the doors (fanlight, transom, three toplights over the shop door, a panel over the side door, the head) written into every shop's `door`; M1 letter plate in the bottom rail |
 | 4.1 (2d/fascias) | the ten boards, the four hanging signs, the glass rows, the whitewash and the letting board, unchanged | none; each shop names its board |
 | 4.2 to 4.4 (2d/paper) | the OPEN/CLOSED sign, the newsagent's board SB1, the letting boards | none |
@@ -879,7 +879,9 @@ the numbers from the game's own rule: stock only on the back wall (0.30 deep is 
 
 **What is kept:** Camera_01: the distance and aperture numerals (no maker), the film-speed numerals; CashRegister_01: the key legends (digits, A, B, R, X, Y, Z) and the receipt roll's plain paper; boombox: the speaker grilles and the cassette door; cassette_player: the tape's own label (cassette_player_tape_orangeblue_diff_1k.jpg: 'Classic Rock Vol. 1', 'HIGH FIDELITY', '90 MINUTES': no maker) and the control legends (Record, Play, Rewind, MIC, VOLUME); cement_bag: nothing of the print; pocket_watch: the numerals; portable_cassette_player: the cassette's window and the control symbols without words; rubber_boots: the sole and the lining; vintage_lighter: the scratches and wear; wall_clock: the numerals and ticks.
 
-**The final texture is checked (INV-06).** Script: after the step, for each listed box of the FINAL texture: the largest difference from the ring colour on any channel is at most 24 levels and fewer than 2 per cent of the box's pixels have a gradient above 40 levels: an erased box is the ring colour plus grain, with no glyph edge in it; a box that fails fails the build. Visual, where a script cannot test it: where a script cannot test it (a mark outside the listed boxes, a half-erased glyph, a seam): the builder opens the final map at 100 per cent beside the original and reads every printed word; any word, number, logo, face or sticker still legible is a fault, and a new mark found goes into this list with its box.
+**Notes on particular models:** Camera_01: 'leica' and 'leitz' are in brand_blocklist; CashRegister_01: the register stands in six shops (not in Mickey's real room): at the close view its readout is about 3 px high; the rule is applied anyway; cassette_player: the real British high-street retailer's name; 'dixons' is in brand_blocklist; the same model is in the approved recipe's stock (see could_not_settle); cement_bag: then a plain stamp is drawn: the single word 'CEMENT' and '50 kg' in a dark grey sans (the project's OFL font, 70 px tall) centred on the front panel [52, 568, 618, 1004] and on the back panel [60, 138, 618, 566]; no maker, no standard, no pictogram, no barcode; cigarette_pack: 'kentucky' is in brand_blocklist; cleaner_tin_01: then the atlas tile (a fictional maker) is laid over the label band; drain_cleaner: then the atlas tile (the yellow can's fictional label) is laid over the front label; lifebuoy: the made-up name, if the builder wants lettering: 'MARY ANN' in white sans on the ring, drawn by script over the first box.
+
+**The final texture is checked (INV-06).** Script: after the step, for each listed box of the FINAL texture: the largest difference from the ring colour on any channel is at most 24 levels and fewer than 2 per cent of the box's pixels have a gradient above 40 levels: an erased box is the ring colour plus grain, with no glyph edge in it; a box that fails fails the build; where a whole map is replaced (boxes [0, 0, 1024, 1024]: cigarette_pack, the picture frames' artworks) the script checks that the final map is a different file from the downloaded one (its hash differs) and that the glTF points at the project's print. Visual: the builder opens the final map at 100 per cent beside the original and reads every printed word (a mark outside the listed boxes, a half-erased glyph and a seam are what no script can test); any word, number, logo, face or sticker still legible is a fault, and a new mark found goes into this list with its box.
 
 **The brand blocklist** (`inventory.brand_blocklist`, searched by INV-05 and the self-check): 'dixons', 'currys', 'comet', 'rumbelows', 'titch banks', 'titch co', 'leitz', 'wetzlar', 'summilux', 'lanstey', 'polyluft', 'polyclean', 'kolo', 'steelbox', 'lorex', 'avventura', 'sirius', 'solidus', 'sdq', 'q-tech', 'jnl', 'micky', 'polyplast', 'urban quartz', 'nova presents', 'casio', 'sony', 'braun', 'zippo', 'leica', 'vtech', 'kentucky', 'snap-on', 'stanley', 'wd-40', 'ph 40', 'galler', 'philips', 'panasonic', 'sanyo', 'ncr', 'coca', 'pepsi', 'heinz', 'kellogg', 'lipton', 'tesco', 'woolworth', 'w h smith', 'wh smith', 'marlboro', 'benson', 'silk cut', 'embassy', 'players', 'rizla', 'post office', 'royal mail', 'bt '. The first four are the real British high-street retailers the review named; the next group are the makers and look-alikes read off the maps.
 
@@ -962,7 +964,7 @@ the numbers from the game's own rule: stock only on the back wall (0.30 deep is 
 
 Eleven JPEGs in production/previews/cloud-week/refs/shop-windows/ (at most 1200 px, under 300 KB each; credits in section 2). **What is masked in each, exactly** (flat grey 120, 120, 120, drawn on the original before the crop by `make_previews.py` on every rebuild from the list `extras.PREVIEW_PHOTOS`, then read back from the JPEG it wrote; `self_check.py` reads the committed JPEGs against the same list, checks PRV-01 to PRV-03; every preview was looked at by eye after the rebuild of 12 October and none shows a real firm's name, a door number, a face, alcohol, a gambling sign or a child):
 
-- **P1 `P1-worcester-fish-front-below-fascia.jpg`** (original crop [0, 108, 640, 480]). The fascia board (the shop's name, its street number and telephone number) is above the crop; the red car's number plate is outside the picture. Masked: the upper window sticker on the right-hand window's left pane (a newspaper firm's name) (box [383, 108, 436, 146]); the sticker on the right-hand window's right pane (a firm's name) (box [557, 94, 611, 134]); the door's number plate (the street number of the real shop), the oval at the foot of the glass (box [284, 329, 313, 347]).
+- **P1 `P1-worcester-fish-front-below-fascia.jpg`** (original crop [0, 108, 640, 480]). The fascia board (the shop's name, its street number and telephone number) is above the crop; the red car at the left edge shows only its rear lamp and bumper (no number plate is in the picture). Masked: the orange window sticker (a fish picture and a fish merchant's firm name) on the right-hand window's left pane (box [383, 108, 436, 146]); the second orange sticker of the same fish merchant's firm name, on the right-hand window's right pane (box [557, 94, 611, 134]); the door's number plate (the street number of the real shop), the oval at the foot of the glass (box [284, 329, 313, 347]).
 - **P2 `P2-bath-grocer-window-stock.jpg`** (original crop [30, 388, 192, 582]). The shop's fascia, its door and the person standing at it, and the right-hand shelves are outside the crop; no lettering in the crop is large enough to read (162 x 194 px). Masked: nothing needed masking (nothing legible is in the crop).
 - **P3 `P3-pinner-hardware-newsagent-windows.jpg`** (original crop [300, 326, 690, 520]). The parade's fascias and a drink merchant's sign are above and beside the crop; the one strip of a fascia at the top right and a notice at the top of the hardware window are a few pixels high and not legible. Masked: nothing needed masking (nothing legible is in the crop).
 - **P4 `P4-hull-chandler-front-mesh.jpg`** (original crop [225, 548, 600, 990]). The shop's fascia and sign are above the crop. Masked: the painted board on the door post, which names the firm, its office and its trades (the large grey box in the middle) (box [405, 655, 478, 748]); the gilt lettering on the upper glass at the left, which names the firm (the grey box at the top left) (box [300, 580, 350, 645]); the red sign on the glass below that lettering (a firm's or an alarm company's mark) (box [308, 644, 332, 690]).

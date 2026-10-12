@@ -221,14 +221,14 @@ def build():
                        "3 of %.1f" % d_["toplights_over_shop_door"]["pane_width_mm"], "%.1f x %.1f" % (ww_, hh_)])
     table(["shop", "glazing pattern", "window toplights", "28 wide toplight bars (u from the frame's left)", "mullions carried up as bars (centres)", "over the shop door", "largest open rectangle"], rows41)
     w("**The toplight rule (3.2 street review fault 1, kit departure D6), now on every front:** each mullion is carried up through the toplight row as a bar of its own width, and each light's toplight is split equally by 28 wide bars. 2.2's table (a fixed pitch of bars, slivers of 91 to 95 mm beside the mullions on five fronts, the grocer's 256 mm panes beside both mullions, the launderette's one long pane) is replaced; the launderette's divided upper lights are P5's (disagreement D11); the grocer's sunrise is etched one to a light across its two toplights (Judgement). "
-      "FRN-04 checks the bar centres (+-2 mm), a bar on every mullion line, equal widths in a light and no toplight under 250, not only the count.")
+      "FRN-04 checks the bar centres (+-2 mm), a bar on every mullion line, equal widths in a light and no toplight under 250, not only the count. (The kit's D6 and the review list the second light's second bar of Rita's at 1852.5; the rule gives 1852.43, a rounding of 0.07 mm, far inside the check's 2 mm.)")
     w()
     w("**The street number on the fanlight.** " + rd["fanlight"]["street_number"]["where"] + ". " + rd["fanlight"]["street_number"]["frame_of_z"] + ".")
     w()
     w("### 4.2 The shop door, the side door and the bell (the 3.2 kit has none)")
     w()
     d = r["door"]
-    w("The door is **specified from 2.2's section 10 (T1, M1, M2 in numbers; not built by 3.2)** and changed where a photograph of an untouched timber shop front disagrees (D1: Geograph 2192169, a Worcester fish shop's front, May 2000, scaled on the leaf's height). "
+    w("The door is **specified from 2.2's JSON (`targets/shopfronts/target.json` at commit dd706f6: `parts.shop_door`, its `variants` T1, M1, M2 and its `profiles`; not built by 3.2)** and changed where a photograph of an untouched timber shop front disagrees (D1: Geograph 2192169, a Worcester fish shop's front, May 2000, scaled on the leaf's height). "
       "T1 for Rita's, in millimetres above the footway (the leaf's foot stands at 28 on a terrazzo threshold 25 high):")
     w()
     rl = d["t1_rails_mm"]
@@ -247,7 +247,7 @@ def build():
         ["the bell", "inside the leaf's top rail at z 1950 to 2050", d["bell"]["kind"] + " (" + d["bell"]["kind_of_number"] + ")"],
         ["the OPEN / CLOSED sign", "inside the glass at z 1500", d["sign"]],
     ])
-    w("The side door is the door family's **F1** (3.1: production/assets/cloud-week/door/door_F1.glb), used as 2.2 section 10 places it: slot 944, F1 mirrored where the door end is the viewer's left, its frame's outside face at d 100, trimmed at the shop transom, painted buttermilk (222, 212, 184), "
+    w("The side door is the door family's **F1** (3.1: production/assets/cloud-week/door/door_F1.glb), used as 2.2's `parts.side_door_slot` (and its `mapping_from_F1`) places it: slot 944, F1 mirrored where the door end is the viewer's left, its frame's outside face at d 100, trimmed at the shop transom, painted buttermilk (222, 212, 184), "
       "letter plate 250 x 40, the bell push the 3.1 fix leaves as a plain oblong. Metal doors (M1 aluminium: full-height glass in a 50 frame, 100 top rail, 170 bottom rail, a 300 chrome D pull and a floor spring; M2 bronze: a bronze kick panel to 600, glass above) are as 2.2 for the shops that have them, with one change: an M1 door's letter plate is centred in the 170 bottom rail at z 113, outside the glass (2.2's 545 stood inside it); the M2 door's plate stays in the kick panel at 545.")
     w()
     w("### 4.3 The glass, the fascia, the paint and the grille")
@@ -387,7 +387,10 @@ def build():
     table(["model", "what is printed on it", "map (1k, 1024 x 1024)", "boxes [x0, y0, x1, y1]", "fill", "what the boxes hold"], mrows)
     w("**What is kept:** " + "; ".join("%s: %s" % (m_, inv["polyhaven"][m_]["keep"]) for m_ in tm["models_with_marks"] if inv["polyhaven"][m_].get("keep")) + ".")
     w()
-    w("**The final texture is checked (INV-06).** Script: " + tm["final_check"]["script"] + ". Visual, where a script cannot test it: " + tm["final_check"]["visual"] + ".")
+    nts = [(m_, inv["polyhaven"][m_]["marks_note"]) for m_ in tm["models_with_marks"] if inv["polyhaven"][m_].get("marks_note")]
+    w("**Notes on particular models:** " + "; ".join("%s: %s" % x_ for x_ in nts) + ".")
+    w()
+    w("**The final texture is checked (INV-06).** Script: " + tm["final_check"]["script"] + ". Visual: " + tm["final_check"]["visual"] + ".")
     w()
     w("**The brand blocklist** (`inventory.brand_blocklist`, searched by INV-05 and the self-check): " + ", ".join("'%s'" % b_ for b_ in inv["brand_blocklist"]) + ". The first four are the real British high-street retailers the review named; the next group are the makers and look-alikes read off the maps.")
     w()

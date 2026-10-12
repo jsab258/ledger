@@ -1,5 +1,5 @@
 #!/bin/sh
-# Rebuild everything in order (about 4 minutes): target.json, its self-check (live, written into target.json), the controls, the previews, TARGET.md.
+# Rebuild everything in order (about 30 seconds with the network): target.json, its self-check (live, written into target.json), the controls, the previews, TARGET.md.
 set -e
 PY=/home/user/.bpyenv/bin/python
 cd "$(dirname "$0")"

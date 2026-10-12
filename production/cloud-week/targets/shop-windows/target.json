@@ -4,7 +4,7 @@
  "summary_line": "Shop windows: ten units as built (twelve not found); eight rooms of 104 checked CC0 models and 51 named scripted forms, rendered 4096 wide to the game's own `trace` rule, stock only where that rule can show it and the near 0.55 m a real display; the fish scans wait on one login.",
  "status": "target for unit 7 of cloud week 42, part 2; written 12 October 2026 by the target writer; its fresh review (TARGET-REVIEW.md) failed it with 3 faults and 15 narrow points, every exact amendment is applied: FIXES APPLIED, NOT RE-REVIEWED (Jafar's 11 October rule: no more polishing of targets); nothing built, nothing committed",
  "units": {
-  "length": "metres (frames: street, card, picture, room, display: see TARGET.md section 3); front parts in millimetres in the 2.2 bay frame (u, d, z)",
+  "length": "metres (frames: street, card, picture, room, display: see this folder's TARGET.md, section 3); front parts in millimetres in the 2.2 bay frame (u, d, z)",
   "colour": "sRGB 0 to 255",
   "luma": "Rec. 709 weights on the 8-bit sRGB values"
  },
@@ -347,7 +347,7 @@
      1968.0
     ],
     "t1_rails_mm": null,
-    "threshold": "terrazzo 25 high at the leaf falling to 12, nose out to d 130 (flush) or at the lobby's floor level (recessed): 2.2 section 10",
+    "threshold": "terrazzo 25 high at the leaf falling to 12, nose out to d 130 (flush) or at the lobby's floor level (recessed): 2.2's target.json `parts.shop_door.profiles.threshold_section` and `parts.lobby`",
     "furniture": "chrome D pull 300, push plate, floor spring, rubber tape at the foot",
     "bell": {
      "kind": "a spring-arm shop bell: a 20 x 3 mm steel strip curved 220 long fixed to the INSIDE face of the leaf's top rail 90 from the hanging stile at z 1950 to 2050, carrying a 70 mm brass bell hung 80 below it; it rings on the door's swing against a fixed clapper on the frame",
@@ -910,7 +910,7 @@
      1968.0
     ],
     "t1_rails_mm": null,
-    "threshold": "terrazzo 25 high at the leaf falling to 12, nose out to d 130 (flush) or at the lobby's floor level (recessed): 2.2 section 10",
+    "threshold": "terrazzo 25 high at the leaf falling to 12, nose out to d 130 (flush) or at the lobby's floor level (recessed): 2.2's target.json `parts.shop_door.profiles.threshold_section` and `parts.lobby`",
     "furniture": "chrome D pull 300, push plate, floor spring, rubber tape at the foot",
     "bell": {
      "kind": "a spring-arm shop bell: a 20 x 3 mm steel strip curved 220 long fixed to the INSIDE face of the leaf's top rail 90 from the hanging stile at z 1950 to 2050, carrying a 70 mm brass bell hung 80 below it; it rings on the door's swing against a fixed clapper on the frame",
@@ -1963,7 +1963,7 @@
      ],
      "kind": "Photo, heights above the footway (the leaf stands at 28), scale from the leaf height 2040 (one dimension), error +-30"
     },
-    "threshold": "terrazzo 25 high at the leaf falling to 12, nose out to d 130 (flush) or at the lobby's floor level (recessed): 2.2 section 10",
+    "threshold": "terrazzo 25 high at the leaf falling to 12, nose out to d 130 (flush) or at the lobby's floor level (recessed): 2.2's target.json `parts.shop_door.profiles.threshold_section` and `parts.lobby`",
     "furniture": "brass lever on a 240 x 40 backplate at 1000, rim latch and escutcheon at 950, brass kick plate 770 x 170, three 100 x 75 butts",
     "bell": {
      "kind": "a spring-arm shop bell: a 20 x 3 mm steel strip curved 220 long fixed to the INSIDE face of the leaf's top rail 90 from the hanging stile at z 1950 to 2050, carrying a 70 mm brass bell hung 80 below it; it rings on the door's swing against a fixed clapper on the frame",
@@ -2200,7 +2200,7 @@
      {
       "id": "R-back-stock",
       "surface": "back",
-      "what": "the stock wall: five tiers of 25 mm boards 0.30 deep, filled shoulder to shoulder from the left wall to x 1.35, a ticket on every piece; the lowest two tiers only at the ends, the counter standing in front of the middle; the wall from x 1.35 to the back door's frame (1.45) is plain, and the strip right of the door (x 2.35 to 2.6) is plain wall",
+      "what": "the stock wall: five tiers of 25 mm boards 0.30 deep, filled shoulder to shoulder from the left wall to x 1.35, a ticket on every piece; the lowest two tiers only at the ends, the counter standing in front of the middle; the wall from x 1.35 to the back door's frame (1.45) is plain, the door's frame runs to x 2.40, and the strip x 2.40 to 2.6 is plain wall",
       "depth_m": 0.3,
       "x": [
        -2.6,
@@ -2401,14 +2401,14 @@
       "n": 4,
       "on": "R-back-tv-tiers",
       "size_m": null,
-      "note": "CRT sets on the two tiers above the counter; none elsewhere"
+      "note": "CRT sets on the two tiers above the counter; none elsewhere; mark blanked as `inventory.polyhaven[television_02].marks` says"
      },
      {
       "model": "boombox",
       "n": 3,
       "on": "R-back-stock",
       "size_m": null,
-      "note": ""
+      "note": "mark blanked as `inventory.polyhaven[boombox].marks` says"
      },
      {
       "model": "cassette_player",
@@ -2429,14 +2429,14 @@
       "n": 3,
       "on": "R-back-stock",
       "size_m": null,
-      "note": "lens-ring lettering painted out"
+      "note": "maker's lettering painted out (lens ring and body plate: inventory marks)"
      },
      {
       "model": "vintage_video_camera",
       "n": 2,
       "on": "R-back-stock",
       "size_m": null,
-      "note": ""
+      "note": "mark blanked as `inventory.polyhaven[vintage_video_camera].marks` says"
      },
      {
       "model": "vintage_binocular",
@@ -2492,7 +2492,7 @@
       "n": 2,
       "on": "R-back-stock",
       "size_m": null,
-      "note": ""
+      "note": "mark blanked as `inventory.polyhaven[filmstrip_projector_8mm].marks` says"
      },
      {
       "model": "metal_toolbox",
@@ -2527,7 +2527,7 @@
       "n": 1,
       "on": "R-back-counter",
       "size_m": 0.42,
-      "note": "the till at the counter's right end, on the glass"
+      "note": "the till at the counter's right end, on the glass; mark blanked as `inventory.polyhaven[CashRegister_01].marks` says"
      },
      {
       "model": "script:counter_jewellery",
@@ -2542,21 +2542,21 @@
       "n": 3,
       "on": "R-back-counter",
       "size_m": 0.06,
-      "note": ""
+      "note": "mark blanked as `inventory.polyhaven[pocket_watch].marks` says"
      },
      {
       "model": "vintage_pocket_watch",
       "n": 3,
       "on": "R-back-counter",
       "size_m": 0.06,
-      "note": ""
+      "note": "mark blanked as `inventory.polyhaven[vintage_pocket_watch].marks` says"
      },
      {
       "model": "pipe_wrench",
       "n": 1,
       "on": "R-right-board",
       "size_m": null,
-      "note": ""
+      "note": "mark blanked as `inventory.polyhaven[pipe_wrench].marks` says"
      },
      {
       "model": "cross_pein_hammer",
@@ -2584,7 +2584,7 @@
       "n": 2,
       "on": "R-right-board",
       "size_m": null,
-      "note": ""
+      "note": "mark blanked as `inventory.polyhaven[adjustable_wrench].marks` says"
      },
      {
       "model": "pliers",
@@ -2605,7 +2605,7 @@
       "n": 2,
       "on": "R-right-hung",
       "size_m": 0.62,
-      "note": ""
+      "note": "mark blanked as `inventory.polyhaven[Ukulele_01].marks` says"
      },
      {
       "model": "ornate_mirror_01",
@@ -2619,7 +2619,7 @@
       "n": 1,
       "on": "R-back-stock",
       "size_m": 0.3,
-      "note": "its dial's maker mark painted out (a 60 x 14 px patch under the 12)"
+      "note": "its dial's maker mark painted out (the box under the 12 on the dial map: inventory marks)"
      },
      {
       "model": "script:pledge_tickets",
@@ -2703,7 +2703,7 @@
        0.12
       ],
       "size_m": 0.06,
-      "note": ""
+      "note": "mark blanked as `inventory.polyhaven[pocket_watch].marks` says"
      },
      {
       "model": "vintage_pocket_watch",
@@ -2717,7 +2717,7 @@
        0.12
       ],
       "size_m": 0.06,
-      "note": ""
+      "note": "mark blanked as `inventory.polyhaven[vintage_pocket_watch].marks` says"
      },
      {
       "model": "Camera_01",
@@ -2731,7 +2731,7 @@
        0.4
       ],
       "size_m": null,
-      "note": ""
+      "note": "mark blanked as `inventory.polyhaven[Camera_01].marks` says"
      },
      {
       "model": "vintage_video_camera",
@@ -2745,7 +2745,7 @@
        0.4
       ],
       "size_m": null,
-      "note": ""
+      "note": "mark blanked as `inventory.polyhaven[vintage_video_camera].marks` says"
      },
      {
       "model": "binoculars",
@@ -2857,7 +2857,7 @@
        1.15
       ],
       "size_m": null,
-      "note": ""
+      "note": "mark blanked as `inventory.polyhaven[ceramic_vase_01].marks` says"
      },
      {
       "model": "ceramic_vase_03",
@@ -2899,7 +2899,7 @@
        1.0
       ],
       "size_m": null,
-      "note": ""
+      "note": "mark blanked as `inventory.polyhaven[standing_picture_frame_01].marks` says"
      },
      {
       "model": "standing_picture_frame_02",
@@ -2913,7 +2913,7 @@
        1.0
       ],
       "size_m": null,
-      "note": ""
+      "note": "mark blanked as `inventory.polyhaven[standing_picture_frame_02].marks` says"
      },
      {
       "model": "portable_cassette_player",
@@ -3546,7 +3546,7 @@
      ],
      "kind": "Photo, heights above the footway (the leaf stands at 28), scale from the leaf height 2040 (one dimension), error +-30"
     },
-    "threshold": "terrazzo 25 high at the leaf falling to 12, nose out to d 130 (flush) or at the lobby's floor level (recessed): 2.2 section 10",
+    "threshold": "terrazzo 25 high at the leaf falling to 12, nose out to d 130 (flush) or at the lobby's floor level (recessed): 2.2's target.json `parts.shop_door.profiles.threshold_section` and `parts.lobby`",
     "furniture": "brass lever on a 240 x 40 backplate at 1000, rim latch and escutcheon at 950, brass kick plate 770 x 170, three 100 x 75 butts",
     "bell": {
      "kind": "a spring-arm shop bell: a 20 x 3 mm steel strip curved 220 long fixed to the INSIDE face of the leaf's top rail 90 from the hanging stile at z 1950 to 2050, carrying a 70 mm brass bell hung 80 below it; it rings on the door's swing against a fixed clapper on the frame",
@@ -4076,7 +4076,7 @@
      1968.0
     ],
     "t1_rails_mm": null,
-    "threshold": "terrazzo 25 high at the leaf falling to 12, nose out to d 130 (flush) or at the lobby's floor level (recessed): 2.2 section 10",
+    "threshold": "terrazzo 25 high at the leaf falling to 12, nose out to d 130 (flush) or at the lobby's floor level (recessed): 2.2's target.json `parts.shop_door.profiles.threshold_section` and `parts.lobby`",
     "furniture": "chrome D pull 300, push plate, floor spring, rubber tape at the foot",
     "bell": {
      "kind": "a spring-arm shop bell: a 20 x 3 mm steel strip curved 220 long fixed to the INSIDE face of the leaf's top rail 90 from the hanging stile at z 1950 to 2050, carrying a 70 mm brass bell hung 80 below it; it rings on the door's swing against a fixed clapper on the frame",
@@ -5062,7 +5062,7 @@
      1968.0
     ],
     "t1_rails_mm": null,
-    "threshold": "terrazzo 25 high at the leaf falling to 12, nose out to d 130 (flush) or at the lobby's floor level (recessed): 2.2 section 10",
+    "threshold": "terrazzo 25 high at the leaf falling to 12, nose out to d 130 (flush) or at the lobby's floor level (recessed): 2.2's target.json `parts.shop_door.profiles.threshold_section` and `parts.lobby`",
     "furniture": "bronze D pull, bronze kick panel to 600",
     "bell": {
      "kind": "a spring-arm shop bell: a 20 x 3 mm steel strip curved 220 long fixed to the INSIDE face of the leaf's top rail 90 from the hanging stile at z 1950 to 2050, carrying a 70 mm brass bell hung 80 below it; it rings on the door's swing against a fixed clapper on the frame",
@@ -5452,7 +5452,7 @@
       "n": 1,
       "on": "G-back-counter",
       "size_m": 0.42,
-      "note": ""
+      "note": "mark blanked as `inventory.polyhaven[CashRegister_01].marks` says"
      },
      {
       "model": "script:counter_scale",
@@ -6159,7 +6159,7 @@
      1968.0
     ],
     "t1_rails_mm": null,
-    "threshold": "terrazzo 25 high at the leaf falling to 12, nose out to d 130 (flush) or at the lobby's floor level (recessed): 2.2 section 10",
+    "threshold": "terrazzo 25 high at the leaf falling to 12, nose out to d 130 (flush) or at the lobby's floor level (recessed): 2.2's target.json `parts.shop_door.profiles.threshold_section` and `parts.lobby`",
     "furniture": "chrome D pull 300, push plate, floor spring, rubber tape at the foot",
     "bell": {
      "kind": "a spring-arm shop bell: a 20 x 3 mm steel strip curved 220 long fixed to the INSIDE face of the leaf's top rail 90 from the hanging stile at z 1950 to 2050, carrying a 70 mm brass bell hung 80 below it; it rings on the door's swing against a fixed clapper on the frame",
@@ -6549,7 +6549,7 @@
       "n": 4,
       "on": "C-back-shelves",
       "size_m": null,
-      "note": "four pairs on the lowest tier"
+      "note": "four pairs on the lowest tier; mark blanked as `inventory.polyhaven[rubber_boots].marks` says"
      },
      {
       "model": "signal_flashlight",
@@ -6586,7 +6586,7 @@
       "n": 1,
       "on": "C-back-counter",
       "size_m": 0.42,
-      "note": ""
+      "note": "mark blanked as `inventory.polyhaven[CashRegister_01].marks` says"
      },
      {
       "model": "seadogs_compass",
@@ -6614,7 +6614,7 @@
       "n": 2,
       "on": "C-back-hooks",
       "size_m": null,
-      "note": ""
+      "note": "mark blanked as `inventory.polyhaven[lifebuoy].marks` says"
      },
      {
       "model": "script:oilskin_sou_wester",
@@ -6702,7 +6702,7 @@
        0.9
       ],
       "size_m": null,
-      "note": "leaning on its edge against the glass-side of the bed, 0.16 thick"
+      "note": "leaning on its edge against the glass-side of the bed, 0.16 thick; mark blanked as `inventory.polyhaven[lifebuoy].marks` says"
      },
      {
       "model": "life_jacket",
@@ -6745,7 +6745,7 @@
        0.4
       ],
       "size_m": null,
-      "note": ""
+      "note": "mark blanked as `inventory.polyhaven[rubber_boots].marks` says"
      },
      {
       "model": "Lantern_01",
@@ -7353,7 +7353,7 @@
      ],
      "kind": "Photo, heights above the footway (the leaf stands at 28), scale from the leaf height 2040 (one dimension), error +-30"
     },
-    "threshold": "terrazzo 25 high at the leaf falling to 12, nose out to d 130 (flush) or at the lobby's floor level (recessed): 2.2 section 10",
+    "threshold": "terrazzo 25 high at the leaf falling to 12, nose out to d 130 (flush) or at the lobby's floor level (recessed): 2.2's target.json `parts.shop_door.profiles.threshold_section` and `parts.lobby`",
     "furniture": "brass lever on a 240 x 40 backplate at 1000, rim latch and escutcheon at 950, brass kick plate 770 x 170, three 100 x 75 butts",
     "bell": {
      "kind": "a spring-arm shop bell: a 20 x 3 mm steel strip curved 220 long fixed to the INSIDE face of the leaf's top rail 90 from the hanging stile at z 1950 to 2050, carrying a 70 mm brass bell hung 80 below it; it rings on the door's swing against a fixed clapper on the frame",
@@ -7750,7 +7750,7 @@
       "n": 1,
       "on": "T-back-counter",
       "size_m": 0.42,
-      "note": ""
+      "note": "mark blanked as `inventory.polyhaven[CashRegister_01].marks` says"
      },
      {
       "model": "script:cups_saucers",
@@ -8476,7 +8476,7 @@
      ],
      "kind": "Photo, heights above the footway (the leaf stands at 28), scale from the leaf height 2040 (one dimension), error +-30"
     },
-    "threshold": "terrazzo 25 high at the leaf falling to 12, nose out to d 130 (flush) or at the lobby's floor level (recessed): 2.2 section 10",
+    "threshold": "terrazzo 25 high at the leaf falling to 12, nose out to d 130 (flush) or at the lobby's floor level (recessed): 2.2's target.json `parts.shop_door.profiles.threshold_section` and `parts.lobby`",
     "furniture": "brass lever on a 240 x 40 backplate at 1000, rim latch and escutcheon at 950, brass kick plate 770 x 170, three 100 x 75 butts",
     "bell": {
      "kind": "a spring-arm shop bell: a 20 x 3 mm steel strip curved 220 long fixed to the INSIDE face of the leaf's top rail 90 from the hanging stile at z 1950 to 2050, carrying a 70 mm brass bell hung 80 below it; it rings on the door's swing against a fixed clapper on the frame",
@@ -8878,7 +8878,7 @@
       "n": 12,
       "on": "I-back-shelves",
       "size_m": null,
-      "note": "in a box (script: box)"
+      "note": "in a box (script: box); mark blanked as `inventory.polyhaven[lightbulb_01].marks` says"
      },
      {
       "model": "watering_can_metal_01",
@@ -8913,7 +8913,7 @@
       "n": 1,
       "on": "I-back-counter",
       "size_m": 0.42,
-      "note": ""
+      "note": "mark blanked as `inventory.polyhaven[CashRegister_01].marks` says"
      },
      {
       "model": "measuring_tape_01",
@@ -8927,7 +8927,7 @@
       "n": 2,
       "on": "I-left-pegboard",
       "size_m": null,
-      "note": ""
+      "note": "mark blanked as `inventory.polyhaven[adjustable_wrench].marks` says"
      },
      {
       "model": "combination_wrench",
@@ -8969,7 +8969,7 @@
       "n": 4,
       "on": "I-left-pegboard",
       "size_m": null,
-      "note": ""
+      "note": "mark blanked as `inventory.polyhaven[screwdriver].marks` says"
      },
      {
       "model": "screwdrivers_02",
@@ -8997,7 +8997,7 @@
       "n": 1,
       "on": "I-left-pegboard",
       "size_m": null,
-      "note": ""
+      "note": "mark blanked as `inventory.polyhaven[hatchet].marks` says"
      },
      {
       "model": "ratchet_wrench",
@@ -9011,7 +9011,7 @@
       "n": 1,
       "on": "I-left-pegboard",
       "size_m": null,
-      "note": ""
+      "note": "mark blanked as `inventory.polyhaven[pipe_wrench].marks` says"
      },
      {
       "model": "bolt_cutters_01",
@@ -9046,7 +9046,7 @@
       "n": 4,
       "on": "I-right-pegboard",
       "size_m": null,
-      "note": ""
+      "note": "mark blanked as `inventory.polyhaven[garden_gloves_01].marks` says"
      },
      {
       "model": "dustpan",
@@ -9202,7 +9202,7 @@
        0.58
       ],
       "size_m": null,
-      "note": ""
+      "note": "mark blanked as `inventory.polyhaven[tire_pump].marks` says"
      },
      {
       "model": "sledgehammer_01",
@@ -9230,7 +9230,7 @@
        0.78
       ],
       "size_m": null,
-      "note": "on a hung card (script)"
+      "note": "on a hung card (script); mark blanked as `inventory.polyhaven[garden_gloves_01].marks` says"
      },
      {
       "model": "trowel_01",
@@ -9286,7 +9286,7 @@
        0.8
       ],
       "size_m": null,
-      "note": "in an open box"
+      "note": "in an open box; mark blanked as `inventory.polyhaven[lightbulb_01].marks` says"
      },
      {
       "model": "garden_sprinkler_01",
@@ -9300,7 +9300,7 @@
        0.62
       ],
       "size_m": null,
-      "note": ""
+      "note": "mark blanked as `inventory.polyhaven[garden_sprinkler_01].marks` says"
      },
      {
       "model": "plastic_broom",
@@ -9314,7 +9314,7 @@
        1.2
       ],
       "size_m": null,
-      "note": "leaning in a corner"
+      "note": "leaning in a corner; mark blanked as `inventory.polyhaven[plastic_broom].marks` says"
      },
      {
       "model": "script:price_cards",
@@ -9854,7 +9854,7 @@
      ],
      "kind": "Photo, heights above the footway (the leaf stands at 28), scale from the leaf height 2040 (one dimension), error +-30"
     },
-    "threshold": "terrazzo 25 high at the leaf falling to 12, nose out to d 130 (flush) or at the lobby's floor level (recessed): 2.2 section 10",
+    "threshold": "terrazzo 25 high at the leaf falling to 12, nose out to d 130 (flush) or at the lobby's floor level (recessed): 2.2's target.json `parts.shop_door.profiles.threshold_section` and `parts.lobby`",
     "furniture": "brass lever on a 240 x 40 backplate at 1000, rim latch and escutcheon at 950, brass kick plate 770 x 170, three 100 x 75 butts",
     "bell": {
      "kind": "a spring-arm shop bell: a 20 x 3 mm steel strip curved 220 long fixed to the INSIDE face of the leaf's top rail 90 from the hanging stile at z 1950 to 2050, carrying a 70 mm brass bell hung 80 below it; it rings on the door's swing against a fixed clapper on the frame",
@@ -10227,7 +10227,7 @@
       "n": 1,
       "on": "N-back-counter",
       "size_m": 0.42,
-      "note": ""
+      "note": "mark blanked as `inventory.polyhaven[CashRegister_01].marks` says"
      },
      {
       "model": "script:sweet_jars",
@@ -10280,7 +10280,7 @@
       "n": 3,
       "on": "N-back-counter",
       "size_m": null,
-      "note": ""
+      "note": "mark blanked as `inventory.polyhaven[stationery_supplies].marks` says"
      },
      {
       "model": "office_notepads",
@@ -10424,7 +10424,7 @@
        0.16
       ],
       "size_m": null,
-      "note": ""
+      "note": "mark blanked as `inventory.polyhaven[stationery_supplies].marks` says"
      },
      {
       "model": "office_notepads",
@@ -15079,8 +15079,8 @@
    "marks_for_models_not_in_the_inventory": [],
    "step": "script step (one per listed map, before the model is placed): open the map; for each box, take the fill (the median colour of a 6 px ring just outside the box, the sampled value is given for reference), paint the whole box to it, then copy a same-size patch of the map's own grain from the nearest clean area over it (no flat patch); write <map>_clean.jpg beside it; point the glTF material's baseColorTexture at the clean map. 'Whole label area' means every box listed for that map. The normal and roughness maps are not touched (a print has no relief at 1k).",
    "final_check": {
-    "script": "after the step, for each listed box of the FINAL texture: the largest difference from the ring colour on any channel is at most 24 levels and fewer than 2 per cent of the box's pixels have a gradient above 40 levels: an erased box is the ring colour plus grain, with no glyph edge in it; a box that fails fails the build",
-    "visual": "where a script cannot test it (a mark outside the listed boxes, a half-erased glyph, a seam): the builder opens the final map at 100 per cent beside the original and reads every printed word; any word, number, logo, face or sticker still legible is a fault, and a new mark found goes into this list with its box"
+    "script": "after the step, for each listed box of the FINAL texture: the largest difference from the ring colour on any channel is at most 24 levels and fewer than 2 per cent of the box's pixels have a gradient above 40 levels: an erased box is the ring colour plus grain, with no glyph edge in it; a box that fails fails the build; where a whole map is replaced (boxes [0, 0, 1024, 1024]: cigarette_pack, the picture frames' artworks) the script checks that the final map is a different file from the downloaded one (its hash differs) and that the glTF points at the project's print",
+    "visual": "the builder opens the final map at 100 per cent beside the original and reads every printed word (a mark outside the listed boxes, a half-erased glyph and a seam are what no script can test); any word, number, logo, face or sticker still legible is a fault, and a new mark found goes into this list with its box"
    },
    "map_frame": "pixels of the model's 1k glTF base-colour map, 1024 x 1024, origin top left, [x0, y0, x1, y1]",
    "looked_at": "all 104 models' 1k base-colour maps on 12 October after the review (25 contact sheets at 512 px; the marked ones at 1k with the boxes drawn on them); thumbnails alone had missed 'Dixons'",
@@ -16452,8 +16452,8 @@
   },
   {
    "part": "the 3.2 kit (production/cloud-week/kit/shopfront)",
-   "keeps": "pilaster (panel), console (scroll), fascia board, cornice (150 as built, 12 Oct), sill, stallriser (panel, three panels), window frame T1 (3 lights, nine toplights as built): Rita's front is complete but for the doors",
-   "changes": "nine variants are missing for the other fronts (front.missing_from_3_2 in each shop); the doors and the lobbies are specified here, from 2.2 section 10, with three changes (D1) and the bell"
+   "keeps": "pilaster (panel), console (scroll), fascia board, cornice (150 as built, 12 Oct), sill, stallriser (panel, three panels), window frame T1 (3 lights, nine toplights as built): Rita's front is complete but for the doors and the band above them",
+   "changes": "nine variants are missing for the other fronts (front.missing_from_3_2 in each shop; front.build_from names the exact keys of 2.2's target.json, at commit dd706f6, that build each); the doors, the lobbies and the band above the doors are specified here, from that JSON, with three changes (D1, D11, D12) and the bell"
   },
   {
    "part": "2.2 (targets/shopfronts/target.json, at commit dd706f6)",
@@ -16705,10 +16705,10 @@
      640,
      480
     ],
-    "cropped_away": "the fascia board (the shop's name, its street number and telephone number) is above the crop; the red car's number plate is outside the picture",
+    "cropped_away": "the fascia board (the shop's name, its street number and telephone number) is above the crop; the red car at the left edge shows only its rear lamp and bumper (no number plate is in the picture)",
     "masks": [
      {
-      "what": "the upper window sticker on the right-hand window's left pane (a newspaper firm's name)",
+      "what": "the orange window sticker (a fish picture and a fish merchant's firm name) on the right-hand window's left pane",
       "shape": "rect",
       "box": [
        383,
@@ -16718,7 +16718,7 @@
       ]
      },
      {
-      "what": "the sticker on the right-hand window's right pane (a firm's name)",
+      "what": "the second orange sticker of the same fish merchant's firm name, on the right-hand window's right pane",
       "shape": "rect",
       "box": [
        557,

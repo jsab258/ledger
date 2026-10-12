@@ -57,10 +57,10 @@ UNREACHED = [
 MASK_GREY = (120, 120, 120)
 PREVIEW_PHOTOS = [
     {"id": "P1", "gid": "2192169", "url": "https://s0.geograph.org.uk/geophotos/02/19/21/2192169_36cb6ecc.jpg", "name": "P1-worcester-fish-front-below-fascia", "crop": [0, 108, 640, 480],
-     "cropped_away": "the fascia board (the shop's name, its street number and telephone number) is above the crop; the red car's number plate is outside the picture",
+     "cropped_away": "the fascia board (the shop's name, its street number and telephone number) is above the crop; the red car at the left edge shows only its rear lamp and bumper (no number plate is in the picture)",
      "masks": [
-         {"what": "the upper window sticker on the right-hand window's left pane (a newspaper firm's name)", "shape": "rect", "box": [383, 108, 436, 146]},
-         {"what": "the sticker on the right-hand window's right pane (a firm's name)", "shape": "rect", "box": [557, 94, 611, 134]},
+         {"what": "the orange window sticker (a fish picture and a fish merchant's firm name) on the right-hand window's left pane", "shape": "rect", "box": [383, 108, 436, 146]},
+         {"what": "the second orange sticker of the same fish merchant's firm name, on the right-hand window's right pane", "shape": "rect", "box": [557, 94, 611, 134]},
          {"what": "the door's number plate (the street number of the real shop), the oval at the foot of the glass", "shape": "rect", "box": [284, 329, 313, 347]}]},
     {"id": "P2", "gid": "2184467", "url": "https://s0.geograph.org.uk/geophotos/02/18/44/2184467_941cf948.jpg", "name": "P2-bath-grocer-window-stock", "crop": [30, 388, 192, 582],
      "cropped_away": "the shop's fascia, its door and the person standing at it, and the right-hand shelves are outside the crop; no lettering in the crop is large enough to read (162 x 194 px)", "masks": []},
@@ -93,8 +93,8 @@ BLANK_STEP = ("script step (one per listed map, before the model is placed): ope
               "(no flat patch); write <map>_clean.jpg beside it; point the glTF material's baseColorTexture at the clean map. 'Whole label area' means every box listed for that map. "
               "The normal and roughness maps are not touched (a print has no relief at 1k).")
 FINAL_CHECK = {
-    "script": "after the step, for each listed box of the FINAL texture: the largest difference from the ring colour on any channel is at most 24 levels and fewer than 2 per cent of the box's pixels have a gradient above 40 levels: an erased box is the ring colour plus grain, with no glyph edge in it; a box that fails fails the build",
-    "visual": "where a script cannot test it (a mark outside the listed boxes, a half-erased glyph, a seam): the builder opens the final map at 100 per cent beside the original and reads every printed word; any word, number, logo, face or sticker still legible is a fault, and a new mark found goes into this list with its box",
+    "script": "after the step, for each listed box of the FINAL texture: the largest difference from the ring colour on any channel is at most 24 levels and fewer than 2 per cent of the box's pixels have a gradient above 40 levels: an erased box is the ring colour plus grain, with no glyph edge in it; a box that fails fails the build; where a whole map is replaced (boxes [0, 0, 1024, 1024]: cigarette_pack, the picture frames' artworks) the script checks that the final map is a different file from the downloaded one (its hash differs) and that the glTF points at the project's print",
+    "visual": "the builder opens the final map at 100 per cent beside the original and reads every printed word (a mark outside the listed boxes, a half-erased glyph and a seam are what no script can test); any word, number, logo, face or sticker still legible is a fault, and a new mark found goes into this list with its box",
 }
 
 
@@ -235,7 +235,7 @@ REUSE = [
     {"part": "tools/art-recipes/fetch_polyhaven.py", "keeps": "the fetcher and the SETS", "changes": "SETS gain the ids of the inventory; none of the denied"},
     {"part": "production/assets/shop-goods/labels.jpg and make_label_atlas.py", "keeps": "the 32 fictional products", "changes": "twelve tiles added (paint, varnish, twine, tobacco, crab paste, detergent) in the same fonts"},
     {"part": "production/assets/shop-displays/pawnbroker-display.glb", "keeps": "as built, with its 23 models", "changes": "maker marks blanked; the night grille added; no piece repeated more than twice"},
-    {"part": "the 3.2 kit (production/cloud-week/kit/shopfront)", "keeps": "pilaster (panel), console (scroll), fascia board, cornice (150 as built, 12 Oct), sill, stallriser (panel, three panels), window frame T1 (3 lights, nine toplights as built): Rita's front is complete but for the doors", "changes": "nine variants are missing for the other fronts (front.missing_from_3_2 in each shop); the doors and the lobbies are specified here, from 2.2 section 10, with three changes (D1) and the bell"},
+    {"part": "the 3.2 kit (production/cloud-week/kit/shopfront)", "keeps": "pilaster (panel), console (scroll), fascia board, cornice (150 as built, 12 Oct), sill, stallriser (panel, three panels), window frame T1 (3 lights, nine toplights as built): Rita's front is complete but for the doors and the band above them", "changes": "nine variants are missing for the other fronts (front.missing_from_3_2 in each shop; front.build_from names the exact keys of 2.2's target.json, at commit dd706f6, that build each); the doors, the lobbies and the band above the doors are specified here, from that JSON, with three changes (D1, D11, D12) and the bell"},
     {"part": "2.2 (targets/shopfronts/target.json, at commit dd706f6)", "keeps": "the ten fronts' table, paints, door ends and hinges; its JSON is the second versioned input of every front's build (`front.build_from`)",
      "changes": "T1 door: glass foot, lock rail, letter plate, a glazing bar (D1); the bell; the toplight layout on seven fronts (the kit's D6 rule: mullions carried up, each light's toplight split equally); the band above the doors (fanlight, transom, three toplights over the shop door, a panel over the side door, the head) written into every shop's `door`; M1 letter plate in the bottom rail"},
     {"part": "4.1 (2d/fascias)", "keeps": "the ten boards, the four hanging signs, the glass rows, the whitewash and the letting board, unchanged", "changes": "none; each shop names its board"},
@@ -375,6 +375,13 @@ def merge(t):
     inv["rule"] = ("every model a build places is listed in its inventory.json; each must be in `polyhaven`, `scripted` or a Sketchfab uid of `sketchfab_checked`; none in `denied`; no object, material or text "
                    "contains a word of the blocklists; every Poly Haven model's 1k maps are looked at BEFORE the build (step 0) and every maker's mark is painted out of its base-colour map exactly as that model's `blank` step says "
                    "(`texture_marks`); the gate then tests the listed boxes and the builder looks at the final map (INV-06); the approved pawnbroker pictures are searched by eye at full size for the same marks (INV-05)")
+    for e_ in t["shops"]:
+        if e_.get("room"):
+            for row in e_["room"]["goods"] + e_["display"]["items"]:
+                if row["model"] in MARKS:
+                    nt = row.get("note") or ""
+                    if not any(w_ in nt for w_ in ("blanked", "painted out", "replaced", "atlas")):
+                        row["note"] = (nt + "; " if nt else "") + "mark blanked as `inventory.polyhaven[%s].marks` says" % row["model"]
     t["owed_on_pc"] = [
         {"id": "PC-01", "for": "PRJ-02", "what": "from CLOSE_35 and CLOSE_35_B in the packaged game, a marker at the picture's centre moves as `trace` predicts (Rita's: 1322 px of 4096, +-20)", "why": "PRJ-02 runs on the gate's own trace() bake and proves the gate, not the game"},
         {"id": "PC-02", "for": "LIT-05", "what": "in the packaged game at night, the lit shops' window beds read at a mean luma of 45 or more in STREET_SQUARE with the game's own spill light", "why": "the gate models the spill; Lumen's own light on the display is the game's"},

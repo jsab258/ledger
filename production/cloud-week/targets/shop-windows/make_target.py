@@ -291,7 +291,7 @@ def build():
             "letter_plate": {"size_mm": [250, 40], "z_mm": LETTER_PLATE[f["shop_door"]]["z"], "centre": True, "note": LETTER_PLATE[f["shop_door"]]["note"], "outside_glass": True},
             "glass_z_mm": {"T1": [871.0, 1973.0], "M1": [198.0, 1968.0], "M2": [600.0, 1968.0]}[f["shop_door"]],
             "t1_rails_mm": ({"bottom_rail": [28, 228], "lower_panel_field": [241, 549], "lock_rail": [549, 871], "glass": [871, 1973], "glazing_bar": {"z": 1423, "width": 28, "note": "one horizontal bar dividing the glass into two panes of about 540 (Photo)"}, "top_rail": [1973, 2068], "kind": "Photo, heights above the footway (the leaf stands at 28), scale from the leaf height 2040 (one dimension), error +-30"} if f["shop_door"] == "T1" else None),
-            "threshold": "terrazzo 25 high at the leaf falling to 12, nose out to d 130 (flush) or at the lobby's floor level (recessed): 2.2 section 10",
+            "threshold": "terrazzo 25 high at the leaf falling to 12, nose out to d 130 (flush) or at the lobby's floor level (recessed): 2.2's target.json `parts.shop_door.profiles.threshold_section` and `parts.lobby`",
             "furniture": {"T1": "brass lever on a 240 x 40 backplate at 1000, rim latch and escutcheon at 950, brass kick plate 770 x 170, three 100 x 75 butts",
                           "M1": "chrome D pull 300, push plate, floor spring, rubber tape at the foot", "M2": "bronze D pull, bronze kick panel to 600"}[f["shop_door"]],
             "bell": {"kind": "a spring-arm shop bell: a 20 x 3 mm steel strip curved 220 long fixed to the INSIDE face of the leaf's top rail 90 from the hanging stile at z 1950 to 2050, carrying a 70 mm brass bell hung 80 below it; it rings on the door's swing against a fixed clapper on the frame",
@@ -461,7 +461,7 @@ def build():
         "family": "shop-windows",
         "summary_line": "",
         "status": "target for unit 7 of cloud week 42, part 2; written 12 October 2026 by the target writer; its fresh review (TARGET-REVIEW.md) failed it with 3 faults and 15 narrow points, every exact amendment is applied: FIXES APPLIED, NOT RE-REVIEWED (Jafar's 11 October rule: no more polishing of targets); nothing built, nothing committed",
-        "units": {"length": "metres (frames: street, card, picture, room, display: see TARGET.md section 3); front parts in millimetres in the 2.2 bay frame (u, d, z)", "colour": "sRGB 0 to 255",
+        "units": {"length": "metres (frames: street, card, picture, room, display: see this folder's TARGET.md, section 3); front parts in millimetres in the 2.2 bay frame (u, d, z)", "colour": "sRGB 0 to 255",
                   "luma": "Rec. 709 weights on the 8-bit sRGB values"},
         "street": {"ten_units_as_built": True, "twelve_not_found": True,
                    "what_is_found": "east_parade bays 0 to 5 (x 3 to 39, 6 m each), east_chandler bay 0 (x 40 to 46), west_north bays 0 to 2 counted from the high-x end (x 36 to 42, 30 to 36, 24 to 30). "

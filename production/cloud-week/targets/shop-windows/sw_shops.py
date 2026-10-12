@@ -68,7 +68,7 @@ SHOPS["ritas"] = {
     "hours": {"mon": [9, 17.5], "tue": [9, 17.5], "wed": [9, 13], "thu": [9, 17.5], "fri": [9, 17.5], "sat": [9, 17.5]}, "hours_source": "hook-cast.json areas.ritas",
     "fixtures": [
         fx("R-back-stock", "back", "the stock wall: five tiers of 25 mm boards 0.30 deep, filled shoulder to shoulder from the left wall to x 1.35, a ticket on every piece; the lowest two tiers only at the "
-           "ends, the counter standing in front of the middle; the wall from x 1.35 to the back door's frame (1.45) is plain, and the strip right of the door (x 2.35 to 2.6) is plain wall", 0.30,
+           "ends, the counter standing in front of the middle; the wall from x 1.35 to the back door's frame (1.45) is plain, the door's frame runs to x 2.40, and the strip x 2.40 to 2.6 is plain wall", 0.30,
            x=(-2.60, 1.35), z=(0.50, 2.25), tiers=[0.50, 0.85, 1.35, 1.70, 2.05], kind="shelf_unit"),
         fx("R-back-tv-tiers", "back", "the two tiers above the counter (z 1.35 and 1.70, x -1.90 to 0.90) are 0.35 deep boards for the four television sets (television_02 is 0.35 deep at its size; 0.35 "
            "stays inside the 20 px budget at the card's middle): a named exception to the 0.30 shelf rule", 0.35, x=(-1.90, 0.90), z=(1.35, 2.05), tiers=[1.35, 1.70], kind="shelf_unit_deep"),
@@ -87,7 +87,7 @@ SHOPS["ritas"] = {
     "goods": [
         gd("television_02", 4, "R-back-tv-tiers", note="CRT sets on the two tiers above the counter; none elsewhere"),
         gd("boombox", 3, "R-back-stock"), gd("cassette_player", 3, "R-back-stock", note="maker's name painted out"), gd("portable_cassette_player", 4, "R-back-stock", note="maker's name painted out"),
-        gd("Camera_01", 3, "R-back-stock", note="lens-ring lettering painted out"), gd("vintage_video_camera", 2, "R-back-stock"),
+        gd("Camera_01", 3, "R-back-stock", note="maker's lettering painted out (lens ring and body plate: inventory marks)"), gd("vintage_video_camera", 2, "R-back-stock"),
         gd("vintage_binocular", 2, "R-back-stock"), gd("binoculars", 1, "R-back-stock"), gd("mantel_clock_01", 2, "R-back-stock"), gd("alarm_clock_01", 3, "R-back-stock"),
         gd("brass_vase_01", 2, "R-back-stock"), gd("brass_vase_02", 1, "R-back-stock"), gd("brass_vase_03", 2, "R-back-stock"), gd("filmstrip_projector_8mm", 2, "R-back-stock"),
         gd("metal_toolbox", 2, "R-back-stock"), gd("hand_plane_no4", 1, "R-back-stock"), gd("cardboard_box_01", 6, "R-back-stock", size=0.30, note="the top tier: boxes of stock, a ticket each"), gd("cardboard_box_01", 3, "R-back-door-boxes", size=0.30, note="the one tier over the back door"),
@@ -97,7 +97,7 @@ SHOPS["ritas"] = {
         gd("pipe_wrench", 1, "R-right-board"), gd("cross_pein_hammer", 2, "R-right-board"), gd("handsaw_wood", 2, "R-right-board"), gd("hand_plane_no4", 1, "R-right-board"),
         gd("adjustable_wrench", 2, "R-right-board"), gd("pliers", 3, "R-right-board"), gd("combination_wrench", 3, "R-right-board"),
         gd("Ukulele_01", 2, "R-right-hung", size=0.62), gd("ornate_mirror_01", 1, "R-right-hung", size=0.42),
-        gd("wall_clock", 1, "R-back-stock", size=0.30, note="its dial's maker mark painted out (a 60 x 14 px patch under the 12)"),
+        gd("wall_clock", 1, "R-back-stock", size=0.30, note="its dial's maker mark painted out (the box under the 12 on the dial map: inventory marks)"),
         gd("script:pledge_tickets", 90, "R-left-board", why="paper tickets 25 x 12 mm with handwritten numbers: texture-printed cards, no model exists"),
         gd("wall_clock", 2, "R-left-board", size=0.30, note="hung flat; dial maker mark painted out"), gd("hanging_picture_frame_02", 2, "R-left-board", note="framed pictures hung flat; the picture replaced with the project's own invented print"),
     ],
