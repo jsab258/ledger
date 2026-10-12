@@ -82,7 +82,7 @@ def build_item(task):
     classes = classes_for(it, spec)
     row = dict(item=iid, title=it["title"], kind=it["kind"], format_mm=[it["format"]["w_mm"], it["format"]["h_mm"]], px_per_mm=it["px_per_mm"], size_px=[geo.shape[1], geo.shape[0]],
                stock=it["stock"], process=it["process"], wear_table=it["wear"].get("table"), held=bool(it.get("held")), seed=seed_base,
-               registration_offset_mm=list(geo.second_off), art_slots=[a["id"] for a in geo.art], classes={})
+               registration_offset_mm=list(geo.second_off), registration_draws=geo.reg_tries, art_slots=[a["id"] for a in geo.art], classes={})
     man = dict(item=iid, px_per_mm=it["px_per_mm"], size_px=[geo.shape[1], geo.shape[0]], blocks={bid: [dict(g) for g in gs] for bid, gs in geo.man.items()})
     gpath = Path(out) / iid / (iid + ".glyphs.json")
     gpath.parent.mkdir(parents=True, exist_ok=True)

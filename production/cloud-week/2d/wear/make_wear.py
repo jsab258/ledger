@@ -11,7 +11,7 @@ Writes into OUTDIR (never into git):
        manifest.json              each file: the kind, variant, seed, size in pixels and metres, px/m, wrap behaviour (seamless tile, tile along x, stamp), the origin text, the tone rows, the wet
                                   and dry multipliers, the variants' differences, and the SHA-256 of the pixels
 What this adds to the target's own envelope drawing (and what it keeps): the envelope is rasterised exactly as the target's checks read it (levels, then the stated 10-90 per cent edge), then
-(1) the edges are warped by a few tenths of a millimetre of noise (so that no edge is a ruled polygon's), and (2) a soft kind's strength varies a little inside its marks (up to 12 per cent, in
+(1) the edges are warped by noise of 0.35 to 1.6 texels (0.5 mm on the flakes to 18 mm on the soot tile and 40 mm on the paint fade; it softens an edge, it does not unrule a straight side), and (2) a soft kind's strength varies a little inside its marks (up to 12 per cent, in
 patches 4 to 8 times its smallest feature, wrapping where the kind tiles). Hard-edged kinds (cracks, flakes, discs, lines) and the kinds whose checks read where a level crosses a threshold (the foot and head bands, the salt, the gutter, the sign ghost) get the warp only. check_wear.py shows that both leave every one of the
 target's mask checks where the plain envelope has them.
 Deterministic: every random draw comes from (seed base, kind, variant); the same seed gives the same pixels.
@@ -31,9 +31,11 @@ from scipy import ndimage as ndi
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import wear_common as wc          # noqa: E402
+import wear_departures as wd      # noqa: E402
 
 SCHEMA = "ledger.cloud-week-42.wear-masks-manifest/1"
-HARD = {"paint_flake", "render_crack", "road_crack", "flag_patch_crack", "line_wear", "grate_wear", "cig_end", "gum", "rust_bleed", "render_patch", "poster_remnant", "bird_dropping", "tyre_scuff"}
+HARD = {"paint_flake", "render_crack", "road_crack", "flag_patch_crack", "line_wear", "grate_wear", "cig_end", "gum", "rust_bleed", "render_patch", "poster_remnant", "bird_dropping", "tyre_scuff",
+        "footway_infill", "graffiti_buff"}         # the last two are opaque fills: a strength variation let the flag joints show through by up to 11 per cent (the review's narrow point a)
 # kinds whose checks read WHERE a level crosses a threshold (the band's top edge on a brick course, its column profile, the peak): a strength variation would slide that line, so they take the warp only
 EDGE_KINDS = {"wall_foot_splash", "wall_foot_damp", "wall_head_band", "salt_bloom", "gutter_grime", "sign_ghost"}
 TRIES = 12                # seeds tried per variant until its mask passes every check of its kind on its own
@@ -51,7 +53,7 @@ def seed_for(base, variant):
 
 
 def refine(m, kid, k, ppm, ed_mm, wrap, rng):
-    """Warp the edges by noise (a few tenths of a millimetre) and, for a soft kind, vary the strength a little inside its marks."""
+    """Warp the edges by noise (0.35 to 1.6 texels) and, for a soft kind, vary the strength a little inside its marks."""
     h, w = m.shape
     warp_px = float(np.clip(0.18 * max(ed_mm, 3.0) * ppm / 1000.0, 0.35, 1.6))
     sc_px = max(2.0, k["texel"]["smallest_feature_mm"] * ppm / 1000.0 * 1.5)
@@ -76,7 +78,7 @@ def make_mask(tj, draw, ed, kid, seed, variant, ppm=None, do_refine=True):
     ext_mm = tuple(v * 1000.0 for v in ext)
     ppm = ppm or k["texel"]["px_per_m_recommended"]
     wrap = wc.wrap_mode(k)
-    polys = draw.kind_envelope(tj, kid, seed, variant)
+    polys = wd.envelope(tj, draw, kid, seed, variant)
     m = draw.rasterize(polys, ext_mm, ppm, ed.get(kid, 0.0), wrap=wrap)
     if do_refine:
         m = refine(m, kid, k, ppm, ed.get(kid, 0.0), wrap, wc.rng_for(seed, kid, variant, "refine"))
@@ -96,8 +98,8 @@ def build_kind(task):
     t0 = time.time()
     rows = []
     n = int(k["variants"]["count"])
-    checks = [c for c in k["checks"] if c.get("applies_to") == "mask" and c["measure"] not in _G["scw"].COMPOSITION_MEASURES]
     for v in range(n):
+        checks = wd.kind_checks(k, kid, _G["scw"].COMPOSITION_MEASURES, v)
         # the target tests its ranges on the median of a batch, and says a few kinds pass only 55 to 80 per cent of single masks; a delivered mask is used alone, so each variant takes
         # the first of up to TRIES seeds whose mask passes every one of its kind's checks on its own (or, failing that, the seed with the fewest failing checks)
         best = None
@@ -112,6 +114,7 @@ def build_kind(task):
                     ok = False
                 if not ok:
                     fails.append(c["name"])
+            fails += [nm for nm, _v, ok, _d in wd.extra_checks(kid, v, m, ppm, polys) if not ok]
             if best is None or len(fails) < len(best[3]):
                 best = (m, seed, ppm, fails, t + 1)
             if not fails:

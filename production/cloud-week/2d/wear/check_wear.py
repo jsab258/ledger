@@ -12,6 +12,7 @@ each check's min and max; `foot_profile` through foot_profile_check) and its com
   <kind>.single.<check>     the share of 12 single masks inside the range (reported: the target says a few pass only 55 to 80 per cent of single masks)
   <kind>.refine             the warp and the strength variation do not cost a check the plain envelope passes
   <kind>.seed               the same seed gives the same pixels, another seed gives other pixels
+  <kind>.<new>.v<N>         the review's new checks on the departures (wear_departures.py): algae_shoe, poster_intact or poster_strips, flake_on_crack, on every delivered mask
   wrong.<kind>.<n>          each of the target's deliberately wrong masks (twenty-seven of them) is refused by at least one check of its kind, and by the NAMED check where the target names one
   compose.<kind>.<check>    the composition checks (the foot, the soot, the head, the channel, the ground floor) run on the maker's own masks (self_check.composition with `masks`)
 """
@@ -29,6 +30,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import wear_common as wc          # noqa: E402
 import make_wear as mw           # noqa: E402
+import wear_departures as wd      # noqa: E402
 
 _G = {}
 
@@ -38,14 +40,14 @@ def init():
     _G.update(tj=tj, draw=draw, scw=scw, ed=draw.edges_by_kind(tj))
 
 
-def mask_checks(k):
-    return [c for c in k["checks"] if c.get("applies_to") == "mask" and c["measure"] not in _G["scw"].COMPOSITION_MEASURES]
+def mask_checks(k, variant=None):
+    return wd.kind_checks(k, k["_id"], _G["scw"].COMPOSITION_MEASURES, variant)
 
 
-def run_checks(k, mask, ppm):
+def run_checks(k, mask, ppm, variant=None):
     """{check name: (value, ok)}"""
     out = {}
-    for c in mask_checks(k):
+    for c in mask_checks(k, variant):
         try:
             out[c["name"]] = _G["scw"].run_mask_check(c, mask, ppm)
         except Exception as e:     # noqa: BLE001
@@ -58,7 +60,7 @@ def check_kind(task):
     if not _G:
         init()
     tj, draw, scw, ed = _G["tj"], _G["draw"], _G["scw"], _G["ed"]
-    k = tj["kinds"][kid]
+    k = dict(tj["kinds"][kid], _id=kid)
     rows = []
     t0 = time.time()
 
@@ -91,8 +93,14 @@ def check_kind(task):
     dfail = []
     for f in row["files"]:
         mm = np.asarray(Image.open(Path(out) / f["file"])).astype(np.float64) / 65535.0
-        r = run_checks(k, mm, ppm)
+        r = run_checks(k, mm, ppm, f["variant"])
         bad_c = [nm for nm, (val, ok) in r.items() if not ok]
+        _m, polys_f, _ = mw.make_mask(tj, draw, ed, kid, f["seed"], f["variant"])
+        for nm, val, ok, det in wd.extra_checks(kid, f["variant"], mm, ppm, polys_f):
+            add("%s.%s.v%d" % (kid, nm, f["variant"]), ok, det)
+            if not ok:
+                bad_c.append(nm)
+                r[nm] = (val, ok)
         if bad_c:
             dfail.append("%s: %s" % (f["file"].split("/")[-1], ", ".join("%s=%.3g" % (nm, r[nm][0]) for nm in bad_c)))
     add(kid + ".delivered", not dfail, "; ".join(dfail) if dfail else "each of the %d delivered masks passes every check of its kind on its own" % len(row["files"]))
@@ -122,6 +130,9 @@ def check_kind(task):
         if rawok and not ok:
             lost.append(c["name"])
         add("%s.%s" % (kid, c["name"]), ok, "%s: median %.4g over 6 masks (range %.4g to %.4g), expected %s to %s" % (c["measure"], med, min(vals), max(vals), "0.8" if c["measure"] == "foot_profile" else c["min"], "1" if c["measure"] == "foot_profile" else c["max"]))
+    for (rk, rn), (_vs, why) in wd.REPLACED.items():
+        if rk == kid:
+            add("%s.%s" % (kid, rn), True, why, reported=True)
     add(kid + ".refine", not lost, "the warp and the strength variation cost no check the plain envelope passes" if not lost else "refinement lost: %s" % lost)
     # single masks: 12
     singles = {nm: 0 for nm in names}

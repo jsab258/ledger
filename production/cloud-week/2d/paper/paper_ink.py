@@ -169,6 +169,31 @@ def hand_glyphs(sc, b, rng):
     return [dict(e, ox_mm=e["ox_mm"] + shift) for e in out]
 
 
+def pick_reg_offset(sc, gl, item, seed, ppm, shp, tries=8):
+    """The second colour's offset, drawn from reg_offset, kept only if the target's own reader still reads every line with it (its glyph check holds less than the process's 0.3 mm at
+    4 px/mm in some directions: F01's red lines failed at two of five seeds); else the next draw. Returns (offset, draws taken)."""
+    rng = pc.rng_for(seed, item["id"], "register")
+    H = item["format"]["h_mm"]
+    imprints = {b["id"] for b in item["blocks"] if b.get("role") == "imprint"}
+    off = (0.0, 0.0)
+    for t in range(tries):
+        off = reg_offset(rng)
+        canvas = np.zeros(shp, bool)
+        man = {}
+        for b in item["blocks"]:
+            if b.get("ghost"):
+                continue
+            o = off if b["ink"] in SECOND_PASS_INKS else (0.0, 0.0)
+            g = lay_block(sc, b, pc.rng_for(seed, item["id"], "block", b["id"]), o)
+            man[b["id"]] = g
+            win = block_window(item, b, shp, ppm)
+            canvas[win[2]:win[3], win[0]:win[1]] |= paste_block(sc, gl, g, ppm, H, win)
+        fails = [f for f in sc.all_pixel_checks(item, canvas, man) if not f.startswith(".clean") and f.split(" ")[0] not in imprints]
+        if not fails:
+            return off, t + 1
+    return off, tries
+
+
 def lay_block(sc, b, rng, off=(0.0, 0.0)):
     """The manifest of one block (the target's own layout or a person's hand, plus the registration offset)."""
     g = hand_glyphs(sc, b, rng) if b.get("hand") else sc.layout_glyphs(b)
@@ -345,7 +370,7 @@ def build(sc, gl, P, item, seed, mottle_cache=None):
         alpha = draw_cov((0, w, 0, h), lambda d, ss, ox, oy: d.rounded_rectangle([0, 0, w * ss - 1, h * ss - 1], radius=r * ss, fill=255))
     geo.alpha = alpha
     elems = []
-    second_off = reg_offset(pc.rng_for(seed, iid, "register")) if item["process"] in REG_PROCESSES else (0.0, 0.0)
+    second_off, geo.reg_tries = pick_reg_offset(sc, gl, item, seed, ppm, shp) if item["process"] in REG_PROCESSES else ((0.0, 0.0), 0)
     geo.second_off = second_off
     geo.holes = []
     # --- art slots: a stand-in (flat nominal colour; the picture itself is the image model's)

@@ -105,14 +105,14 @@ def composed(out, tj, draw, scw, rows):
         masks[kid], mppm[kid] = m, ppm
     ims = []
     for state in ("cleaned", "sooted"):
-        r = scw.compose_walls(tj, draw, seed, state, 200, head=True, masks=masks, masks_ppm=mppm)
+        r = scw.compose_walls(tj, draw, seed, state, 400, head=True, masks=masks, masks_ppm=mppm)          # 400 px/m: the review found 200 too small to judge the foot
         lin = r["final"]
         srgb = scw.lin_to_srgb8(lin) if hasattr(scw, "lin_to_srgb8") else np.clip(lin ** (1 / 2.2) * 255, 0, 255)
         ims.append(Image.fromarray(np.clip(srgb, 0, 255).astype(np.uint8)))
     w = sum(i.width for i in ims) + 10
     canvas = Image.new("RGB", (w, ims[0].height + 24), (72, 70, 68))
     d = ImageDraw.Draw(canvas)
-    d.text((6, 4), "composed brick foot (a downpipe at x 1 m) and the head under a verge, on the maker's own masks: cleaned and sooted house, 200 px/m", font=font(13), fill=(235, 235, 230))
+    d.text((6, 4), "composed brick foot (a downpipe at x 1 m) and the head under a verge, on the maker's own masks: cleaned and sooted house, 400 px/m", font=font(13), fill=(235, 235, 230))
     x = 0
     for i in ims:
         canvas.paste(i, (x, 24))

@@ -584,6 +584,8 @@ def chips(S, n, size_mm, near=None, edge_bias=0.7, colour=STEEL, halo_mm=(1, 3),
         else:
             x, y = rng.uniform(0, S.w), rng.uniform(0, S.h)
         x, y = float(np.clip(x, 0, S.w - 1)), float(np.clip(y, 0, S.h - 1))
+        if S.cls in ("A", "B") and S.hits_text((x - 1.6 * r, y - 1.6 * r, x + 1.6 * r, y + 1.6 * r), 1.5):
+            continue                   # in the young classes a chip keeps off the lettering (a light ring in a word gap reads as ink: S02d in the sixth build's seeded runs)
         ring_px = float(rng.uniform(0.5, 1.0)) * S.ppm
         hm = float(rng.uniform(*halo_mm)) * S.ppm if rusty else 0.0
         pad = 1.6 * r + ring_px + hm + 3
@@ -914,13 +916,19 @@ def curl(S, mm):
 
 
 def scratches(S, n, width_mm=(0.3, 0.5), length_mm=(10, 40)):
+    """Light scratches; in classes A and B they keep off the lettering (a scratch across white-on-black lettering reads as a stroke of ink: P06 in the sixth build's check)."""
     rng = S.rng
     for _ in range(n):
-        x, y = rng.uniform(0.1, 0.9) * S.w, rng.uniform(0.1, 0.9) * S.h
-        L = rng.uniform(*length_mm) * S.ppm
-        a = rng.uniform(0, math.pi)
-        wd = rng.uniform(*width_mm)
-        x2, y2 = x + L * math.cos(a), y + L * math.sin(a)
+        for _t in range(25):
+            x, y = rng.uniform(0.1, 0.9) * S.w, rng.uniform(0.1, 0.9) * S.h
+            L = rng.uniform(*length_mm) * S.ppm
+            a = rng.uniform(0, math.pi)
+            wd = rng.uniform(*width_mm)
+            x2, y2 = x + L * math.cos(a), y + L * math.sin(a)
+            if S.cls not in ("A", "B") or not S.hits_text((min(x, x2), min(y, y2), max(x, x2), max(y, y2)), 1.0):
+                break
+        else:
+            continue
         win = S.win_of((min(x, x2), min(y, y2), max(x, x2), max(y, y2)), 3)
         cov = pi.draw_cov(win, lambda d, ss, ox, oy: d.line([((x - ox) * ss, (y - oy) * ss), ((x2 - ox) * ss, (y2 - oy) * ss)], fill=255, width=max(1, int(wd * S.ppm * ss))))
         S.tint(win, cov, (240, 238, 230), 0.55)
