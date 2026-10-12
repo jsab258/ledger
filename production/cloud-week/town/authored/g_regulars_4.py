@@ -23,7 +23,7 @@ PEOPLE.append(regular(
     questions=[
         Q("Who are you?", "answers", "Christine Pickering. I'm a clerk at the harbour office.", ["job"], "firsts: Who are you?"),
         Q("What do you do here?", "answers", "I'm a clerk at the harbour office. It's all on the forms, if anybody ever read the forms.", ["job", "line"], "firsts: What do you do here?"),
-        Q("Where's the harbour office?", "answers", "At the docks: the harbourmaster's office.", ["day"], "invented: a stranger asks a clerk"),
+        Q("Where's the harbour office?", "answers", "The harbourmaster's office. That's where you'll find me.", ["day"], "invented: a stranger asks a clerk"),
         Q("Does the business owe anyone money?", "deflect", "It's all on the forms, if anybody ever read the forms.", ["line"], "held: Does the business owe anyone money?"),
         Q("How did Mickey die?", "answers", STD["died_heart"], ["died_heart"], "firsts: How did Mickey die?"),
         Q("What is this place?", "answers", STD["office"], ["office"], "firsts: What is this place?"),

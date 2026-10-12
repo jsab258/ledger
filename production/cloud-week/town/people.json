@@ -13293,10 +13293,9 @@
      "id": "zlata.q2",
      "q": "How do I get a cab?",
      "kind": "partly",
-     "a": "Ring the office or wait on the rank. Car to the station, two minutes. No, love, two real minutes.",
+     "a": "Car to the station, two minutes. No, love, two real minutes.",
      "uses": [
-      "zlata.k20",
-      "zlata.k09"
+      "zlata.k20"
      ],
      "bench": "held: Are we still taking bookings?",
      "new": "N-ANSWERS"
@@ -14849,9 +14848,11 @@
     {
      "id": "dusan.q7",
      "q": "What's the street like after dark?",
-     "kind": "dont_know",
-     "a": "Quiet. That's all I know.",
-     "uses": [],
+     "kind": "partly",
+     "a": "I see who comes and goes, but I say little of it. That's all I know.",
+     "uses": [
+      "dusan.s01"
+     ],
      "bench": "held: What's the street like after dark?",
      "new": "N-ANSWERS"
     },
@@ -15624,7 +15625,7 @@
      "id": "marla.q5",
      "q": "What's the price of that?",
      "kind": "answers",
-     "a": "I know the price of everything, love. Ask me and I'll tell you.",
+     "a": "I know the price of everything, love.",
      "uses": [
       "marla.k20"
      ],
@@ -15657,7 +15658,7 @@
      "id": "marla.q8",
      "q": "What is this place?",
      "kind": "answers",
-     "a": "That's Mickey's, next door. The minicab office, on Quay Street in the Hook, with the rank outside.",
+     "a": "That's Mickey's. The minicab office, on Quay Street in the Hook, with the rank outside.",
      "uses": [
       "marla.k13"
      ],
@@ -19593,7 +19594,7 @@
      "id": "tibor.q2",
      "q": "What do you do here?",
      "kind": "answers",
-     "a": "I'm a customs officer, on the quay.",
+     "a": "I'm a customs officer. I live past Rita's.",
      "uses": [
       "tibor.k17"
      ],
@@ -26730,7 +26731,7 @@
      "id": "bruno.q3",
      "q": "Where's the harbour office?",
      "kind": "answers",
-     "a": "At the docks: the harbourmaster's office.",
+     "a": "The harbourmaster's office. That's where you'll find me.",
      "uses": [
       "bruno.k19"
      ],
@@ -33495,7 +33496,7 @@
      "id": "cafe.q4",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "Here, love. The cafe's over the road from Mickey's. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "Here, love. Half six till ten at night, and eight till twelve on a Sunday.",
      "uses": [
       "cafe.k12",
       "cafe.k23"

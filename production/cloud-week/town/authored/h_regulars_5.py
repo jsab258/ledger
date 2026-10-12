@@ -124,7 +124,7 @@ PEOPLE.append(regular(
         Q("Who are you?", "answers", "Grace Rinaldi. I keep the caff, my Italian father's before me.", ["job"], "firsts: Who are you?"),
         Q("What have you got?", "answers", "Sit down before you fall down. Tea's on.", ["line"], "invented: a stranger walks into a caff"),
         Q("What time do you open?", "answers", "Half six till ten at night, Monday to Saturday. Eight till twelve on a Sunday.", ["my_hours"], "held: What time do we open in the morning?"),
-        Q("Where can I get something to eat?", "answers", "Here, love. The cafe's over the road from Mickey's. Half six till ten at night, and eight till twelve on a Sunday.", ["cafe", "my_hours"], "firsts: Where can I get something to eat?"),
+        Q("Where can I get something to eat?", "answers", "Here, love. Half six till ten at night, and eight till twelve on a Sunday.", ["cafe", "my_hours"], "firsts: Where can I get something to eat?"),
         Q("Is there anywhere to get breakfast?", "answers", "Here, love. Half six in the morning. Sit down and I'll bring you a tea.", ["my_hours", "line"], "fresh: Is there anywhere to get breakfast?"),
         Q("How did Mickey die?", "answers", STD["died_heart"], ["died_heart"], "firsts: How did Mickey die?"),
         Q("What was Mickey like?", "answers", STD["mickey"], ["mickey_counsel"], "firsts: What was Mickey like?"),

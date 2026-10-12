@@ -94,7 +94,7 @@ PEOPLE.append(regular(
     ],
     questions=[
         Q("Who are you?", "answers", "Susan Coverdale. I'm a customs officer, and I live past Rita's.", ["job"], "firsts: Who are you?"),
-        Q("What do you do here?", "answers", "I'm a customs officer, on the quay.", ["job"], "firsts: What do you do here?"),
+        Q("What do you do here?", "answers", "I'm a customs officer. I live past Rita's.", ["job"], "firsts: What do you do here?"),
         Q("What's the quay like?", "answers", "I've never known the quay this quiet. Not in all my time.", ["line"], "invented: a stranger asks a customs officer"),
         Q("Is it always this quiet?", "answers", "Not in all my time. Trade has been thin since the docks went.", ["line", "trade"], "held: Is it always this quiet?"),
         Q("How did Mickey die?", "answers", STD["died_heart"], ["died_heart"], "firsts: How did Mickey die?"),
