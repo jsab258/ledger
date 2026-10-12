@@ -2,12 +2,12 @@
 """Previews of Quay Street's sound, for the fresh listener and for Jafar (unit 10, cloud week 42).
 
     python make_previews.py            # reads the WAVs in SOUND_OUT, writes production/previews/cloud-week/sound/
-    python make_previews.py --clips-only   # only the listening clips (the spectrograms take several minutes)
+    python make_previews.py --clips-only   # only the listening clips (the spectrograms take several minutes; make_sound.py runs this itself)
 
   spec_<layer>.jpg          a spectrogram of each layer, its day, night and rain versions stacked (spec_rain.jpg: the three rains)
   spec_steps_<surface>.jpg  the eight variants of each footstep surface in a row
   spec_doors_*.jpg, spec_bell.jpg, spec_phonebox.jpg   the door, bell and phone-box one-shots in a row
-  clip_mix_{day,night,rain}.ogg   20 s of each bed: its layers summed at their own levels (mono layers centred), one gain for all three
+  clip_mix_{day,night,rain}.ogg   (audio is not committed: see make_clips) 20 s of each bed: its layers summed at their own levels (mono layers centred), one gain for all three
   clip_steps_<surface>.ogg        the eight variants of a surface, walked
   clip_doors.ogg                  shop door, bell, house door, phone box
 
@@ -17,6 +17,7 @@ listening volume: they are for judging what is in each bed and how the beds diff
 """
 import os
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -32,6 +33,7 @@ RATE = 48000
 LAYERS = ["traffic", "gulls", "harbour", "wind", "voices", "radio"]
 SURFACES = ["paving", "setts", "asphalt", "wet", "wood"]
 MIX_GAIN_DB = 10.0
+CLIPS = ["clip_mix_day.ogg", "clip_mix_night.ogg", "clip_mix_rain.ogg"] + ["clip_steps_%s.ogg" % s for s in SURFACES] + ["clip_doors.ogg"]
 
 
 def rd(name):
@@ -114,29 +116,14 @@ def encode_ogg(x, out, quality, tmp, limit=False, gain_db=0.0, max_kb=290):
         q -= 1
 
 
-def main():
+def make_clips():
+    """The nine listening clips. Audio does not go into git (the size guard refuses it): they are written beside the JPEGs in
+    production/previews/cloud-week/sound/ (kept out of git locally) and copied to SOUND_OUT/clips/, and make_sound.py makes them
+    at the end of a full run, so one command rebuilds the WAVs and the clips."""
     os.makedirs(PREV, exist_ok=True)
-    tmp = tempfile.mkdtemp(prefix="soundprev_")
-    clips_only = "--clips-only" in sys.argv       # re-make only the listening clips (the spectrograms take minutes)
+    tmp = tempfile.mkdtemp(prefix="soundclips_")
+    allnames = sorted(f[:-4] for f in os.listdir(OUT_DIR) if f.endswith(".wav"))
     try:
-        w = lambda n: os.path.join(OUT_DIR, n + ".wav")
-        # layer spectrograms
-        for layer in ([] if clips_only else LAYERS):
-            stack_jpeg([w("amb_%s_%s" % (layer, v)) for v in ("day", "night", "rain")], os.path.join(PREV, "spec_%s.jpg" % layer), 250, 10000, tmp)
-        if not clips_only:
-            stack_jpeg([w("amb_rain_pavement"), w("amb_rain_awning"), w("amb_rain_gutter")], os.path.join(PREV, "spec_rain.jpg"), 250, 14000, tmp)
-        # one-shot sets in a row
-        sets = {"spec_doors_shop.jpg": ("door_shop_", None), "spec_doors_house.jpg": ("door_house_", None), "spec_bell.jpg": ("bell_shop_", None),
-                "spec_phonebox.jpg": ("phonebox_", None)}
-        for s in SURFACES:
-            sets["spec_steps_%s.jpg" % s] = ("step_%s_" % s, None)
-        allnames = sorted(f[:-4] for f in os.listdir(OUT_DIR) if f.endswith(".wav"))
-        for out, (prefix, _) in ({} if clips_only else sets).items():
-            names = [n for n in allnames if n.startswith(prefix)]
-            seq = sequence(names, gap_s=0.3 if prefix.startswith("step_") else 0.6)
-            wav = os.path.join(tmp, "seq.wav")
-            wr(wav, seq)
-            stack_jpeg([wav], os.path.join(PREV, out), 360, 12000, tmp)
         # mix clips: layers at their own levels, one gain for all three
         for v in ("day", "night", "rain"):
             parts = ["amb_%s_%s" % (l, v) for l in LAYERS] + (["amb_rain_pavement", "amb_rain_awning", "amb_rain_gutter"] if v == "rain" else [])
@@ -160,6 +147,40 @@ def main():
         for f in os.listdir(tmp):
             os.remove(os.path.join(tmp, f))
         os.rmdir(tmp)
+    dest = os.path.join(OUT_DIR, "clips")
+    os.makedirs(dest, exist_ok=True)
+    for f in CLIPS:
+        shutil.copyfile(os.path.join(PREV, f), os.path.join(dest, f))
+
+
+def main():
+    os.makedirs(PREV, exist_ok=True)
+    tmp = tempfile.mkdtemp(prefix="soundprev_")
+    clips_only = "--clips-only" in sys.argv       # re-make only the listening clips (the spectrograms take minutes)
+    try:
+        w = lambda n: os.path.join(OUT_DIR, n + ".wav")
+        # layer spectrograms
+        for layer in ([] if clips_only else LAYERS):
+            stack_jpeg([w("amb_%s_%s" % (layer, v)) for v in ("day", "night", "rain")], os.path.join(PREV, "spec_%s.jpg" % layer), 250, 10000, tmp)
+        if not clips_only:
+            stack_jpeg([w("amb_rain_pavement"), w("amb_rain_awning"), w("amb_rain_gutter")], os.path.join(PREV, "spec_rain.jpg"), 250, 14000, tmp)
+        # one-shot sets in a row
+        sets = {"spec_doors_shop.jpg": ("door_shop_", None), "spec_doors_house.jpg": ("door_house_", None), "spec_bell.jpg": ("bell_shop_", None),
+                "spec_phonebox.jpg": ("phonebox_", None)}
+        for s in SURFACES:
+            sets["spec_steps_%s.jpg" % s] = ("step_%s_" % s, None)
+        allnames = sorted(f[:-4] for f in os.listdir(OUT_DIR) if f.endswith(".wav"))
+        for out, (prefix, _) in ({} if clips_only else sets).items():
+            names = [n for n in allnames if n.startswith(prefix)]
+            seq = sequence(names, gap_s=0.3 if prefix.startswith("step_") else 0.6)
+            wav = os.path.join(tmp, "seq.wav")
+            wr(wav, seq)
+            stack_jpeg([wav], os.path.join(PREV, out), 360, 12000, tmp)
+    finally:
+        for f in os.listdir(tmp):
+            os.remove(os.path.join(tmp, f))
+        os.rmdir(tmp)
+    make_clips()
     tot = 0
     for f in sorted(os.listdir(PREV)):
         sz = os.path.getsize(os.path.join(PREV, f))

@@ -6,6 +6,7 @@
                                        # and manifest.json beside this file
     python make_sound.py amb_wind      # only the outputs whose name starts with these
     python check_sound.py              # then the check (checks/check_v1.json)
+    python make_previews.py            # the spectrogram JPEGs (minutes); the listening clips come with a full make_sound.py run
 
 Everything is deterministic: fixed cut points, seeded random numbers (gull calls placed, voices scrambled),
 seeded dither. A second run gives byte-identical WAVs (the manifest holds each file's sha256).
@@ -588,6 +589,10 @@ def main():
     save_manifest()
     n = len(MANIFEST["outputs"])
     print("%d outputs written to %s; manifest.json updated" % (n, sl.OUT_DIR))
+    if not only:                      # a full run also makes the nine listening clips (audio: kept out of git; see make_previews.make_clips)
+        import make_previews
+        make_previews.make_clips()
+        print("9 listening clips written to %s and %s" % (make_previews.PREV, os.path.join(sl.OUT_DIR, "clips")))
 
 
 if __name__ == "__main__":
