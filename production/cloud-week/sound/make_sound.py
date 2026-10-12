@@ -48,6 +48,8 @@ TARGETS = sl.load_targets()
 LOOP_TARGET = TARGETS["loops_lufs"]            # by output name, integrated LUFS
 SHOT_TARGET = TARGETS["one_shot_lufs_m"]       # by class, highest 400 ms momentary LUFS
 SHOT_TOL = TARGETS["one_shot_tolerance"]
+STEP_CUT_DB = TARGETS["step_cut_db"]            # a footfall must die away, and start from, at least this far under its own peak (dB)
+WET_OPTS = dict(died_db=STEP_CUT_DB["step_wet"], pre_db=STEP_CUT_DB["step_wet"], fade_ms=40.0, fade_in_ms=8.0, centroid_range=(300.0, 6000.0))   # see STEP_TAKES
 GRAIN_REUSE_S = TARGETS["grain_reuse_min_s"]    # by output name: seconds before a moment of a speech source may come back
 TP_LIMIT = TARGETS["true_peak_max_dbtp"]
 
@@ -172,8 +174,12 @@ def find_lines(x, min_db=20.0, fmin=45.0, fmax=11000.0, block_hz=2.0, max_width_
             j += 1
         seg = cand[i:j + 1]
         k = seg[np.argmax(X[seg])]
-        near = np.flatnonzero(X[max(k - int(2 / df), 0):k + int(2 / df)] > X[k] / 10)
-        width = (near[-1] - near[0] + 1) * df if len(near) else 0.0
+        lo_k, hi_k = k, k                                   # the width at 10 dB down, walking out from the peak
+        while lo_k > 0 and X[lo_k - 1] > X[k] / 10 and k - lo_k < int(3 / df):
+            lo_k -= 1
+        while hi_k < len(X) - 1 and X[hi_k + 1] > X[k] / 10 and hi_k - k < int(3 / df):
+            hi_k += 1
+        width = (hi_k - lo_k + 1) * df
         if width <= max_width_hz:
             out.append((float(f[k]), float(10 * np.log10(ratio[k])), float(width)))
         i = j + 1
@@ -665,29 +671,32 @@ STEP_TAKES = {
     "paving": [("fs_273071", 70.0, {}), ("fs_273067", 70.0, {})],
     "setts": [("fs_637555", 70.0, {}), ("fs_868548", 70.0, {})],
     "asphalt": [("fs_637556", 70.0, {}), ("fs_455056", 70.0, {})],
-    "wet": [("fs_263495", 70.0, {}), ("fs_531566", 70.0, {})],
+    # The two puddle takes are noisy and hold few single steps: judged against the step's own peak, only 1 footfall dies away by 20 dB,
+    # 4 by 14 dB and 8 by 12 dB. So the wet set takes the 8 that die away by 12 dB (BRIEF.md: step_cut_db), with a long (40 ms) fade-out
+    # and an 8 ms fade-in, and the brighter splash a puddle makes (centroid up to 6 kHz).
+    "wet": [("fs_263495", 70.0, dict(WET_OPTS)), ("fs_531566", 70.0, dict(WET_OPTS))],
     "wood": [("fs_536770", 70.0, {}), ("fs_575898", 70.0, {})],
 }
-STEP_OPTS = dict(min_transients=1, centroid_range=(300.0, 3500.0), max_ms=260.0)
+STEP_OPTS = dict(min_transients=1, centroid_range=(300.0, 3500.0), max_ms=260.0, died_db=STEP_CUT_DB["default"], pre_db=STEP_CUT_DB["default"])
 STEPS_PER_SURFACE = 8
 
 
 def build_steps(surface):
-    cand = []   # (source, start sample, samples)
+    cand = []   # (source, start sample, samples, measures)
     for sid, hp, opts in STEP_TAKES[surface]:
         m = stepcut.highpass(sl.to_mono(S(sid)), hp)
-        for a, st in stepcut.cut(m, **dict(STEP_OPTS, **opts)):
-            cand.append((sid, a, st))
+        for a, st, info in stepcut.cut(m, **dict(STEP_OPTS, **opts)):
+            cand.append((sid, a, st, info))
     if len(cand) < STEPS_PER_SURFACE:
         raise SystemExit("%s: only %d clean steps found" % (surface, len(cand)))
-    loud = np.array([sl.momentary_max(st) for _, _, st in cand])
+    loud = np.array([sl.momentary_max(st) for _, _, st, _ in cand])
     # a step whose peak stands more than 25 dB over its momentary loudness cannot reach the target without passing -1.5 dBTP
-    crest = np.array([sl.true_peak_db(st) - l for (_, _, st), l in zip(cand, loud)])
+    crest = np.array([sl.true_peak_db(st) - l for (_, _, st, _), l in zip(cand, loud)])
     keep = np.flatnonzero(crest <= -1.5 - SHOT_TARGET["step"])
     if len(keep) >= 3 * STEPS_PER_SURFACE:
         cand, loud = [cand[i] for i in keep], loud[keep]
     # distinct choice across sources; any two of the eight must also correlate under 0.8 (the check allows 0.9)
-    pairs = [(a + (hash_name(sid) % 1000) * 10 ** 7, st) for sid, a, st in cand]   # keep takes apart in the time test
+    pairs = [(a + (hash_name(sid) % 1000) * 10 ** 7, st) for sid, a, st, _ in cand]   # keep takes apart in the time test
     alive = list(range(len(cand)))
     for _ in range(40):
         pick_local = stepcut.pick_distinct([pairs[i] for i in alive], STEPS_PER_SURFACE, loud[alive])
@@ -705,9 +714,10 @@ def build_steps(surface):
         raise SystemExit("%s: could not find %d steps that differ" % (surface, STEPS_PER_SURFACE))
     outs = []
     for k, i in enumerate(pick, 1):
-        sid, a, st = cand[i]
+        sid, a, st, info = cand[i]
         name = "step_%s_%02d" % (surface, k)
-        meta = {"sources": [sid], "cut_at_s": round(a / RATE, 3), "length_ms": round(1000 * len(st) / RATE), "highpass_hz": 70.0, "keep_edges": True}
+        meta = {"sources": [sid], "cut_at_s": round(a / RATE, 3), "length_ms": round(1000 * len(st) / RATE), "highpass_hz": 70.0, "keep_edges": True,
+                "cutter": dict(info, fade_out_ms=dict(STEP_TAKES[surface][0][2]).get("fade_ms", 15.0), fade_in_ms=dict(STEP_TAKES[surface][0][2]).get("fade_in_ms", 2.0))}
         outs.append(write_shot(name, "step", st, meta, "step_" + surface))
     return outs
 

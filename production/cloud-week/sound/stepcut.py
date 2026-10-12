@@ -49,8 +49,9 @@ def footfall_first(s):
 
 
 def cut(m, max_ms=250.0, thr_scale=0.08, min_gap=0.2, min_transients=2, centroid_range=(500.0, 1600.0),
-        min_ms=80.0, died_db=-20.0, ring_db=-35.0, min_snr_db=12.0, pre_db=-20.0, fade_ms=15.0):
-    """Every footfall in m that passes the tests: a list of (start_sample, samples).
+        min_ms=80.0, died_db=-20.0, ring_db=-35.0, min_snr_db=12.0, pre_db=-20.0, fade_ms=15.0, fade_in_ms=2.0):
+    """Every footfall in m that passes the tests: a list of (start_sample, samples, measures), measures being
+    {"pre_db": the 20 ms before the cut, "tail_db": the last 20 ms before the fade-out, both re the step's peak}.
 
     Outdoor takes carry a noise floor, so "where it ends" is judged against the larger of the original's threshold
     (35 dB below the step's loudest hit) and a level 2.5 times the take's own noise floor (the 20th percentile of its
@@ -97,13 +98,16 @@ def cut(m, max_ms=250.0, thr_scale=0.08, min_gap=0.2, min_transients=2, centroid
         if lo < 0 or e5[lo:hi].max() > se.max() * 10 ** (pre_db / 20.0):  # starts inside a sound, or no way to tell
             continue
         s = s[:end]
+        tail_db = 20.0 * np.log10(se[max(0, end - int(0.02 * RATE)):end].max() / se.max())
+        pre_meas = 20.0 * np.log10(e5[lo:hi].max() / se.max())
         n = min(len(s), int(fade_ms / 1000.0 * RATE))
         s[-n:] *= np.linspace(1.0, 0.0, n)
-        s[:int(0.002 * RATE)] *= np.linspace(0.0, 1.0, int(0.002 * RATE))
+        k = int(fade_in_ms / 1000.0 * RATE)
+        s[:k] *= np.linspace(0.0, 1.0, k) if fade_in_ms <= 2.0 else 0.5 - 0.5 * np.cos(np.linspace(0.0, np.pi, k))
         ms = 1000.0 * len(s) / RATE
         if (min_ms <= ms <= max_ms + 5 and len(transients(s)) >= min_transients and footfall_first(s)
                 and centroid_range[0] <= centroid(s) <= centroid_range[1]):
-            steps.append((a2, s))
+            steps.append((a2, s, {"pre_db": round(float(pre_meas), 1), "tail_db": round(float(tail_db), 1)}))
     return steps
 
 

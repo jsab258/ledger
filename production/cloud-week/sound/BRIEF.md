@@ -74,6 +74,7 @@ Loudness is ITU-R BS.1770-4: integrated (LUFS) for loops; for one-shots the high
  "seam_step_ok_db": 1.0,
  "step_variant_max_correlation": 0.9,
  "voice_hf_fraction_max": 0.001,
+ "step_cut_db": {"default": -20, "step_wet": -12},
  "grain_ms_max": 160,
  "grain_reuse_min_s": {"amb_voices_day": 12, "amb_voices_night": 20, "amb_voices_rain": 7,
                        "amb_radio_day": 20, "amb_radio_night": 20, "amb_radio_rain": 20}

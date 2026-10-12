@@ -16321,21 +16321,27 @@
     "fs_455056"
    ],
    "build": {
-    "cut_at_s": 5.935,
-    "length_ms": 201,
+    "cut_at_s": 1.462,
+    "length_ms": 223,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -49.5,
+     "tail_db": -31.5,
+     "fade_out_ms": 15.0,
+     "fade_in_ms": 2.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
    "bit_depth": 16,
-   "seconds": 0.201,
+   "seconds": 0.223,
    "target_lufs_m": -27,
    "lufs_m_max": -27.0,
-   "true_peak_dbtp": -9.01,
-   "sample_peak_dbfs": -9.02,
+   "true_peak_dbtp": -4.38,
+   "sample_peak_dbfs": -4.78,
    "limited_by_peak": false,
-   "sha256": "10de066eb30afc4f67649f611053f5f4345c29d13dd2f0a87cdfc1e013fe8a88"
+   "sha256": "359e43c625ad41ce98f707db79b40c4b883d5d935b049ceea05bfff71abbcc46"
   },
   "step_asphalt_02": {
    "file": "step_asphalt_02.wav",
@@ -16346,21 +16352,27 @@
     "fs_455056"
    ],
    "build": {
-    "cut_at_s": 28.747,
-    "length_ms": 171,
+    "cut_at_s": 5.381,
+    "length_ms": 260,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -47.0,
+     "tail_db": -29.9,
+     "fade_out_ms": 15.0,
+     "fade_in_ms": 2.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
    "bit_depth": 16,
-   "seconds": 0.171,
+   "seconds": 0.26,
    "target_lufs_m": -27,
    "lufs_m_max": -27.0,
-   "true_peak_dbtp": -2.9,
-   "sample_peak_dbfs": -2.9,
+   "true_peak_dbtp": -6.32,
+   "sample_peak_dbfs": -6.33,
    "limited_by_peak": false,
-   "sha256": "2bc1c2da6a67c5dce445292a3ae5c67de9babfe82b47552c5c75e96b55dc10b3"
+   "sha256": "0d02c4f1127159c2442ed3b2929041737e4739ca8db29ac206410a8b25df8ebf"
   },
   "step_asphalt_03": {
    "file": "step_asphalt_03.wav",
@@ -16371,21 +16383,27 @@
     "fs_455056"
    ],
    "build": {
-    "cut_at_s": 31.356,
-    "length_ms": 218,
+    "cut_at_s": 11.483,
+    "length_ms": 192,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -49.3,
+     "tail_db": -33.4,
+     "fade_out_ms": 15.0,
+     "fade_in_ms": 2.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
    "bit_depth": 16,
-   "seconds": 0.218,
+   "seconds": 0.192,
    "target_lufs_m": -27,
    "lufs_m_max": -27.0,
-   "true_peak_dbtp": -7.81,
-   "sample_peak_dbfs": -7.82,
+   "true_peak_dbtp": -6.1,
+   "sample_peak_dbfs": -6.11,
    "limited_by_peak": false,
-   "sha256": "7d924b632267c3b20b2f38237630893e7a24b91872c33571a441f734b15cccef"
+   "sha256": "a00ee9ace9197bbf3d1cfbee9b542f1c31d9def0f307686ab659982731776bd6"
   },
   "step_asphalt_04": {
    "file": "step_asphalt_04.wav",
@@ -16399,7 +16417,13 @@
     "cut_at_s": 33.487,
     "length_ms": 260,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -40.9,
+     "tail_db": -31.0,
+     "fade_out_ms": 15.0,
+     "fade_in_ms": 2.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
@@ -16421,21 +16445,27 @@
     "fs_455056"
    ],
    "build": {
-    "cut_at_s": 37.213,
-    "length_ms": 205,
+    "cut_at_s": 35.628,
+    "length_ms": 180,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -44.9,
+     "tail_db": -32.0,
+     "fade_out_ms": 15.0,
+     "fade_in_ms": 2.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
    "bit_depth": 16,
-   "seconds": 0.205,
+   "seconds": 0.18,
    "target_lufs_m": -27,
    "lufs_m_max": -27.0,
-   "true_peak_dbtp": -5.44,
-   "sample_peak_dbfs": -5.65,
+   "true_peak_dbtp": -3.7,
+   "sample_peak_dbfs": -3.71,
    "limited_by_peak": false,
-   "sha256": "26fa894c06902fb340b8dd0a6573cb1fc4f94a53ec8ad80efc529f21cbfa47f9"
+   "sha256": "3afc8ae075efceb9cae4db8bc1646c9d6ef2c7ade8ac092ed6b964dafddc9470"
   },
   "step_asphalt_06": {
    "file": "step_asphalt_06.wav",
@@ -16446,21 +16476,27 @@
     "fs_455056"
    ],
    "build": {
-    "cut_at_s": 39.361,
-    "length_ms": 255,
+    "cut_at_s": 38.291,
+    "length_ms": 260,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -47.9,
+     "tail_db": -33.4,
+     "fade_out_ms": 15.0,
+     "fade_in_ms": 2.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
    "bit_depth": 16,
-   "seconds": 0.255,
+   "seconds": 0.26,
    "target_lufs_m": -27,
    "lufs_m_max": -27.0,
-   "true_peak_dbtp": -6.14,
-   "sample_peak_dbfs": -6.15,
+   "true_peak_dbtp": -5.65,
+   "sample_peak_dbfs": -5.69,
    "limited_by_peak": false,
-   "sha256": "10ec353629d2c6a56870bcca812c98a8e087464d9a47973ed29fb789a733ce72"
+   "sha256": "a3b6d006ec90f98bb5a8be2a9855648304d11c5f40741364bc54294e28247aa7"
   },
   "step_asphalt_07": {
    "file": "step_asphalt_07.wav",
@@ -16474,7 +16510,13 @@
     "cut_at_s": 1.924,
     "length_ms": 237,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -36.0,
+     "tail_db": -29.8,
+     "fade_out_ms": 15.0,
+     "fade_in_ms": 2.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
@@ -16499,7 +16541,13 @@
     "cut_at_s": 6.572,
     "length_ms": 228,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -32.0,
+     "tail_db": -29.7,
+     "fade_out_ms": 15.0,
+     "fade_in_ms": 2.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
@@ -16524,7 +16572,13 @@
     "cut_at_s": 0.279,
     "length_ms": 238,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -39.8,
+     "tail_db": -31.2,
+     "fade_out_ms": 15.0,
+     "fade_in_ms": 2.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
@@ -16546,21 +16600,27 @@
     "fs_273067"
    ],
    "build": {
-    "cut_at_s": 15.624,
-    "length_ms": 245,
+    "cut_at_s": 17.661,
+    "length_ms": 252,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -42.2,
+     "tail_db": -32.1,
+     "fade_out_ms": 15.0,
+     "fade_in_ms": 2.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
    "bit_depth": 16,
-   "seconds": 0.245,
+   "seconds": 0.252,
    "target_lufs_m": -27,
    "lufs_m_max": -27.0,
-   "true_peak_dbtp": -5.05,
-   "sample_peak_dbfs": -5.06,
+   "true_peak_dbtp": -2.67,
+   "sample_peak_dbfs": -2.68,
    "limited_by_peak": false,
-   "sha256": "588081756d1079536ef53b504021994e24c079896691eb67379dc67eeaa25d13"
+   "sha256": "1809fbc2e12c5b6cf163f073078d4aed3d490cf9936d74923db86aaf1506115a"
   },
   "step_paving_03": {
    "file": "step_paving_03.wav",
@@ -16571,35 +16631,16 @@
     "fs_273067"
    ],
    "build": {
-    "cut_at_s": 17.913,
-    "length_ms": 216,
-    "highpass_hz": 70.0,
-    "keep_edges": true
-   },
-   "channels": 1,
-   "sample_rate": 48000,
-   "bit_depth": 16,
-   "seconds": 0.216,
-   "target_lufs_m": -27,
-   "lufs_m_max": -27.0,
-   "true_peak_dbtp": -4.25,
-   "sample_peak_dbfs": -4.26,
-   "limited_by_peak": false,
-   "sha256": "e0016cdfdbff1cbbced2f3c125291642cf6c849cc87734c2880aacb9de2e0606"
-  },
-  "step_paving_04": {
-   "file": "step_paving_04.wav",
-   "kind": "one-shot",
-   "group": "step_paving",
-   "class": "step",
-   "sources": [
-    "fs_273067"
-   ],
-   "build": {
     "cut_at_s": 20.983,
     "length_ms": 253,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -40.2,
+     "tail_db": -25.9,
+     "fade_out_ms": 15.0,
+     "fade_in_ms": 2.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
@@ -16610,7 +16651,38 @@
    "true_peak_dbtp": -4.45,
    "sample_peak_dbfs": -4.45,
    "limited_by_peak": false,
-   "sha256": "b808dec59fad424c3fa2f83f1895f86432ac9c06dfe9fffbb910c86f6df926d8"
+   "sha256": "50de24985defc17d78931b23e865ae5fde4817885d47602b20a62c90f14b9768"
+  },
+  "step_paving_04": {
+   "file": "step_paving_04.wav",
+   "kind": "one-shot",
+   "group": "step_paving",
+   "class": "step",
+   "sources": [
+    "fs_273067"
+   ],
+   "build": {
+    "cut_at_s": 24.348,
+    "length_ms": 260,
+    "highpass_hz": 70.0,
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -35.2,
+     "tail_db": -27.6,
+     "fade_out_ms": 15.0,
+     "fade_in_ms": 2.0
+    }
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.26,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -2.05,
+   "sample_peak_dbfs": -2.06,
+   "limited_by_peak": false,
+   "sha256": "ce90b8cbfabb60d0815a0b8c483197b758783c7a82bd96c3c2acfcee8f2908b5"
   },
   "step_paving_05": {
    "file": "step_paving_05.wav",
@@ -16624,7 +16696,13 @@
     "cut_at_s": 2.873,
     "length_ms": 233,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -36.5,
+     "tail_db": -28.3,
+     "fade_out_ms": 15.0,
+     "fade_in_ms": 2.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
@@ -16646,21 +16724,27 @@
     "fs_273071"
    ],
    "build": {
-    "cut_at_s": 18.063,
-    "length_ms": 115,
+    "cut_at_s": 20.102,
+    "length_ms": 248,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -39.9,
+     "tail_db": -27.9,
+     "fade_out_ms": 15.0,
+     "fade_in_ms": 2.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
    "bit_depth": 16,
-   "seconds": 0.115,
+   "seconds": 0.248,
    "target_lufs_m": -27,
    "lufs_m_max": -27.0,
-   "true_peak_dbtp": -4.2,
-   "sample_peak_dbfs": -4.21,
+   "true_peak_dbtp": -2.1,
+   "sample_peak_dbfs": -2.12,
    "limited_by_peak": false,
-   "sha256": "6eeb7ae3d6de88846892755118e72577eeb5031cfdf4e1db2fd4f3e373155baf"
+   "sha256": "27d9d94d3e1d2446900db0ec1af310c7bfa5ed5e0f0d94372fab59eeac82cc7d"
   },
   "step_paving_07": {
    "file": "step_paving_07.wav",
@@ -16671,10 +16755,16 @@
     "fs_273071"
    ],
    "build": {
-    "cut_at_s": 26.925,
+    "cut_at_s": 23.857,
     "length_ms": 260,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -43.5,
+     "tail_db": -31.4,
+     "fade_out_ms": 15.0,
+     "fade_in_ms": 2.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
@@ -16682,10 +16772,10 @@
    "seconds": 0.26,
    "target_lufs_m": -27,
    "lufs_m_max": -27.0,
-   "true_peak_dbtp": -1.83,
-   "sample_peak_dbfs": -1.88,
+   "true_peak_dbtp": -2.19,
+   "sample_peak_dbfs": -2.19,
    "limited_by_peak": false,
-   "sha256": "762264c80bffe8b71251739c02ea0c6aff7cdbb70a3e3bf10f7a89b431efb3fa"
+   "sha256": "5b686ee309324bfe4e7bd13727b306f1e1eecc747837d5479e6e7056b5b55fee"
   },
   "step_paving_08": {
    "file": "step_paving_08.wav",
@@ -16696,21 +16786,27 @@
     "fs_273071"
    ],
    "build": {
-    "cut_at_s": 30.064,
-    "length_ms": 118,
+    "cut_at_s": 26.925,
+    "length_ms": 260,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -40.6,
+     "tail_db": -31.1,
+     "fade_out_ms": 15.0,
+     "fade_in_ms": 2.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
    "bit_depth": 16,
-   "seconds": 0.118,
+   "seconds": 0.26,
    "target_lufs_m": -27,
    "lufs_m_max": -27.0,
-   "true_peak_dbtp": -3.53,
-   "sample_peak_dbfs": -3.54,
+   "true_peak_dbtp": -1.83,
+   "sample_peak_dbfs": -1.88,
    "limited_by_peak": false,
-   "sha256": "68fb04ffebb17b2d7915f97ff93d847d8213f9ce65819fa87708c2772635bfae"
+   "sha256": "7419e3f8a17c95241125a63e808b692e7465c815e92d7fd298d05ac5f4dc2a8c"
   },
   "step_setts_01": {
    "file": "step_setts_01.wav",
@@ -16724,7 +16820,13 @@
     "cut_at_s": 0.402,
     "length_ms": 201,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -41.7,
+     "tail_db": -31.6,
+     "fade_out_ms": 15.0,
+     "fade_in_ms": 2.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
@@ -16749,7 +16851,13 @@
     "cut_at_s": 1.942,
     "length_ms": 217,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -28.5,
+     "tail_db": -31.7,
+     "fade_out_ms": 15.0,
+     "fade_in_ms": 2.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
@@ -16774,7 +16882,13 @@
     "cut_at_s": 2.966,
     "length_ms": 243,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -35.0,
+     "tail_db": -34.5,
+     "fade_out_ms": 15.0,
+     "fade_in_ms": 2.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
@@ -16796,21 +16910,27 @@
     "fs_637555"
    ],
    "build": {
-    "cut_at_s": 5.088,
-    "length_ms": 186,
+    "cut_at_s": 3.468,
+    "length_ms": 239,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -39.9,
+     "tail_db": -33.8,
+     "fade_out_ms": 15.0,
+     "fade_in_ms": 2.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
    "bit_depth": 16,
-   "seconds": 0.186,
+   "seconds": 0.239,
    "target_lufs_m": -27,
-   "lufs_m_max": -30.51,
-   "true_peak_dbtp": -1.5,
-   "sample_peak_dbfs": -1.59,
-   "limited_by_peak": true,
-   "sha256": "70c33f4936dbb0afaccad0f1797c1d2a19dd242ecf9dd1916c1a9250d333da60"
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -3.71,
+   "sample_peak_dbfs": -3.72,
+   "limited_by_peak": false,
+   "sha256": "4f08e8cb71294e191837f485c95335826d249ec167a71db2af80650fc2ead99f"
   },
   "step_setts_05": {
    "file": "step_setts_05.wav",
@@ -16821,21 +16941,27 @@
     "fs_637555"
    ],
    "build": {
-    "cut_at_s": 6.061,
-    "length_ms": 260,
+    "cut_at_s": 4.501,
+    "length_ms": 205,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -38.3,
+     "tail_db": -27.8,
+     "fade_out_ms": 15.0,
+     "fade_in_ms": 2.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
    "bit_depth": 16,
-   "seconds": 0.26,
+   "seconds": 0.205,
    "target_lufs_m": -27,
    "lufs_m_max": -27.0,
-   "true_peak_dbtp": -4.21,
-   "sample_peak_dbfs": -4.3,
+   "true_peak_dbtp": -3.86,
+   "sample_peak_dbfs": -3.88,
    "limited_by_peak": false,
-   "sha256": "4aa0dd7521dcf276c1176541b233af7004c085d1d87237aba6b017a628764b7d"
+   "sha256": "d7b79f84429d28ae81535667799a271e91ef25deba8cedb8cbf09aba95dec288"
   },
   "step_setts_06": {
    "file": "step_setts_06.wav",
@@ -16843,24 +16969,30 @@
    "group": "step_setts",
    "class": "step",
    "sources": [
-    "fs_868548"
+    "fs_637555"
    ],
    "build": {
-    "cut_at_s": 0.01,
-    "length_ms": 253,
+    "cut_at_s": 5.539,
+    "length_ms": 235,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -31.4,
+     "tail_db": -21.7,
+     "fade_out_ms": 15.0,
+     "fade_in_ms": 2.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
    "bit_depth": 16,
-   "seconds": 0.253,
+   "seconds": 0.235,
    "target_lufs_m": -27,
    "lufs_m_max": -27.0,
-   "true_peak_dbtp": -2.23,
-   "sample_peak_dbfs": -2.24,
+   "true_peak_dbtp": -2.35,
+   "sample_peak_dbfs": -2.41,
    "limited_by_peak": false,
-   "sha256": "d847585daf85b97cabbfac9c1ee1cd697fd5c8b3fe210e01ec02a05f632672e4"
+   "sha256": "34ed5c1319d2365b5a97a40468e21de8bc7213e571fa3c1a62c432b24f730af7"
   },
   "step_setts_07": {
    "file": "step_setts_07.wav",
@@ -16874,7 +17006,13 @@
     "cut_at_s": 0.936,
     "length_ms": 153,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -30.6,
+     "tail_db": -27.7,
+     "fade_out_ms": 15.0,
+     "fade_in_ms": 2.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
@@ -16899,7 +17037,13 @@
     "cut_at_s": 5.644,
     "length_ms": 161,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -36.4,
+     "tail_db": -29.1,
+     "fade_out_ms": 15.0,
+     "fade_in_ms": 2.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
@@ -16921,21 +17065,27 @@
     "fs_263495"
    ],
    "build": {
-    "cut_at_s": 34.048,
-    "length_ms": 161,
+    "cut_at_s": 52.579,
+    "length_ms": 145,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -15.7,
+     "tail_db": -12.9,
+     "fade_out_ms": 40.0,
+     "fade_in_ms": 8.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
    "bit_depth": 16,
-   "seconds": 0.161,
+   "seconds": 0.145,
    "target_lufs_m": -27,
    "lufs_m_max": -27.0,
-   "true_peak_dbtp": -5.29,
-   "sample_peak_dbfs": -5.33,
+   "true_peak_dbtp": -1.99,
+   "sample_peak_dbfs": -2.39,
    "limited_by_peak": false,
-   "sha256": "f8dd48f6503d6a574d5708420925eea13c4c0a72dfa4c69d933e1d1857e51d83"
+   "sha256": "87b1091d6e6045573469ece28e5c92aef7d646179e832c0a3cb00d630d4c2165"
   },
   "step_wet_02": {
    "file": "step_wet_02.wav",
@@ -16946,21 +17096,27 @@
     "fs_263495"
    ],
    "build": {
-    "cut_at_s": 68.681,
-    "length_ms": 141,
+    "cut_at_s": 76.033,
+    "length_ms": 249,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -19.1,
+     "tail_db": -17.2,
+     "fade_out_ms": 40.0,
+     "fade_in_ms": 8.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
    "bit_depth": 16,
-   "seconds": 0.141,
+   "seconds": 0.249,
    "target_lufs_m": -27,
    "lufs_m_max": -27.0,
-   "true_peak_dbtp": -8.42,
-   "sample_peak_dbfs": -8.42,
+   "true_peak_dbtp": -8.41,
+   "sample_peak_dbfs": -8.45,
    "limited_by_peak": false,
-   "sha256": "23835f9313463aac2ef4dac6c50f58af1c13c167fd4d56a769aa622adf4f92e6"
+   "sha256": "597cffb79e9834f2adc9f5d5429e1c7589862aec5bce425caf19cb1e5e33af65"
   },
   "step_wet_03": {
    "file": "step_wet_03.wav",
@@ -16971,21 +17127,27 @@
     "fs_531566"
    ],
    "build": {
-    "cut_at_s": 1.38,
-    "length_ms": 192,
+    "cut_at_s": 2.698,
+    "length_ms": 133,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -13.1,
+     "tail_db": -16.5,
+     "fade_out_ms": 40.0,
+     "fade_in_ms": 8.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
    "bit_depth": 16,
-   "seconds": 0.192,
+   "seconds": 0.133,
    "target_lufs_m": -27,
-   "lufs_m_max": -27.0,
-   "true_peak_dbtp": -1.77,
-   "sample_peak_dbfs": -1.87,
-   "limited_by_peak": false,
-   "sha256": "508c1c3fbbd879ef47ad9b5db008ebc0a5804c3ea49a232b60989329b88e2a3d"
+   "lufs_m_max": -30.95,
+   "true_peak_dbtp": -1.5,
+   "sample_peak_dbfs": -1.59,
+   "limited_by_peak": true,
+   "sha256": "3cba719415e2f2591db09ad49d35a84ee315d39299522e1f81a8c81723dc4e9c"
   },
   "step_wet_04": {
    "file": "step_wet_04.wav",
@@ -16996,21 +17158,27 @@
     "fs_531566"
    ],
    "build": {
-    "cut_at_s": 4.136,
-    "length_ms": 150,
+    "cut_at_s": 2.976,
+    "length_ms": 163,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -13.2,
+     "tail_db": -22.4,
+     "fade_out_ms": 40.0,
+     "fade_in_ms": 8.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
    "bit_depth": 16,
-   "seconds": 0.15,
+   "seconds": 0.163,
    "target_lufs_m": -27,
-   "lufs_m_max": -31.45,
+   "lufs_m_max": -27.73,
    "true_peak_dbtp": -1.5,
-   "sample_peak_dbfs": -3.4,
+   "sample_peak_dbfs": -1.51,
    "limited_by_peak": true,
-   "sha256": "7d2053929a5bb82549d3af35b81dce61273f147cb0dc65e5995b1458327fa441"
+   "sha256": "48d1d2b127e482ea03978121899e5f791a8a9ea440b516d40d64a2789643e5e7"
   },
   "step_wet_05": {
    "file": "step_wet_05.wav",
@@ -17021,21 +17189,27 @@
     "fs_531566"
    ],
    "build": {
-    "cut_at_s": 5.149,
-    "length_ms": 141,
+    "cut_at_s": 6.516,
+    "length_ms": 164,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -19.6,
+     "tail_db": -27.6,
+     "fade_out_ms": 40.0,
+     "fade_in_ms": 8.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
    "bit_depth": 16,
-   "seconds": 0.141,
+   "seconds": 0.164,
    "target_lufs_m": -27,
-   "lufs_m_max": -27.0,
-   "true_peak_dbtp": -7.65,
-   "sample_peak_dbfs": -7.82,
-   "limited_by_peak": false,
-   "sha256": "fa0d7b8351373a9fc54b184d5d36eda3ad73fbd71aaa52066be3706c290fe330"
+   "lufs_m_max": -29.72,
+   "true_peak_dbtp": -1.5,
+   "sample_peak_dbfs": -1.73,
+   "limited_by_peak": true,
+   "sha256": "2904b73c66ce4a786c145bcddc4dc1cde561a3889a1db6277a775ab9f3c3f184"
   },
   "step_wet_06": {
    "file": "step_wet_06.wav",
@@ -17046,21 +17220,27 @@
     "fs_531566"
    ],
    "build": {
-    "cut_at_s": 7.396,
-    "length_ms": 147,
+    "cut_at_s": 8.038,
+    "length_ms": 189,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -27.1,
+     "tail_db": -14.7,
+     "fade_out_ms": 40.0,
+     "fade_in_ms": 8.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
    "bit_depth": 16,
-   "seconds": 0.147,
+   "seconds": 0.189,
    "target_lufs_m": -27,
    "lufs_m_max": -27.0,
-   "true_peak_dbtp": -2.33,
+   "true_peak_dbtp": -2.36,
    "sample_peak_dbfs": -2.38,
    "limited_by_peak": false,
-   "sha256": "1b54da1a5a719ae1ae81adeb39a0edcd61b44a12f42429ea398160eb141abff2"
+   "sha256": "38074999023fbd8c3d679d957035b2cb59d9f561c3c4c2e295948180994f88d5"
   },
   "step_wet_07": {
    "file": "step_wet_07.wav",
@@ -17071,21 +17251,27 @@
     "fs_531566"
    ],
    "build": {
-    "cut_at_s": 8.289,
-    "length_ms": 101,
+    "cut_at_s": 9.041,
+    "length_ms": 209,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -20.4,
+     "tail_db": -20.0,
+     "fade_out_ms": 40.0,
+     "fade_in_ms": 8.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
    "bit_depth": 16,
-   "seconds": 0.101,
+   "seconds": 0.209,
    "target_lufs_m": -27,
-   "lufs_m_max": -28.57,
+   "lufs_m_max": -33.66,
    "true_peak_dbtp": -1.5,
-   "sample_peak_dbfs": -1.86,
+   "sample_peak_dbfs": -1.6,
    "limited_by_peak": true,
-   "sha256": "167a77597a83054254159320a6fde6de9a609cb91b5dd51ff28cbbbf6a5f8a60"
+   "sha256": "1e74d911bf81989c0500850c9d174de840b21281518301dc082579f630af5a09"
   },
   "step_wet_08": {
    "file": "step_wet_08.wav",
@@ -17099,7 +17285,13 @@
     "cut_at_s": 9.316,
     "length_ms": 152,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -18.8,
+     "tail_db": -25.4,
+     "fade_out_ms": 40.0,
+     "fade_in_ms": 8.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
@@ -17107,10 +17299,10 @@
    "seconds": 0.152,
    "target_lufs_m": -27,
    "lufs_m_max": -27.0,
-   "true_peak_dbtp": -7.25,
-   "sample_peak_dbfs": -7.31,
+   "true_peak_dbtp": -7.24,
+   "sample_peak_dbfs": -7.3,
    "limited_by_peak": false,
-   "sha256": "7d6d16dff7a4127c357b3d317580b04bdb000df98cf5d952ab56ba797483a716"
+   "sha256": "659227247e9ddf626ec3ff23481700331d9e580d1c5ae703b8ba7cd1d28476bd"
   },
   "step_wood_01": {
    "file": "step_wood_01.wav",
@@ -17121,21 +17313,27 @@
     "fs_536770"
    ],
    "build": {
-    "cut_at_s": 1.051,
-    "length_ms": 134,
+    "cut_at_s": 3.708,
+    "length_ms": 178,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -25.0,
+     "tail_db": -31.4,
+     "fade_out_ms": 15.0,
+     "fade_in_ms": 2.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
    "bit_depth": 16,
-   "seconds": 0.134,
+   "seconds": 0.178,
    "target_lufs_m": -27,
    "lufs_m_max": -27.0,
-   "true_peak_dbtp": -3.49,
-   "sample_peak_dbfs": -3.52,
+   "true_peak_dbtp": -5.62,
+   "sample_peak_dbfs": -5.73,
    "limited_by_peak": false,
-   "sha256": "c72071689297858a285f2ef9d1941615c4b339c19a8d87dd1f14dab81604ff6a"
+   "sha256": "f0c2c2006b9fa6d744763bd2a3bb553fefafcbc142476ee14355eac53811e914"
   },
   "step_wood_02": {
    "file": "step_wood_02.wav",
@@ -17146,10 +17344,16 @@
     "fs_536770"
    ],
    "build": {
-    "cut_at_s": 8.381,
+    "cut_at_s": 12.411,
     "length_ms": 260,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -39.4,
+     "tail_db": -29.7,
+     "fade_out_ms": 15.0,
+     "fade_in_ms": 2.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
@@ -17157,10 +17361,10 @@
    "seconds": 0.26,
    "target_lufs_m": -27,
    "lufs_m_max": -27.0,
-   "true_peak_dbtp": -2.48,
-   "sample_peak_dbfs": -2.49,
+   "true_peak_dbtp": -1.64,
+   "sample_peak_dbfs": -1.65,
    "limited_by_peak": false,
-   "sha256": "ecc10e30d60312f8ed9e9d7c97a3d24fbbfe42175538d337987d03297713a2b7"
+   "sha256": "1280ac8ee2a1901a9df7c405f338b00e6b8e60864b6f6c4869cedd7beaf0d6ca"
   },
   "step_wood_03": {
    "file": "step_wood_03.wav",
@@ -17171,21 +17375,27 @@
     "fs_536770"
    ],
    "build": {
-    "cut_at_s": 10.595,
-    "length_ms": 260,
+    "cut_at_s": 15.234,
+    "length_ms": 254,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -46.9,
+     "tail_db": -34.5,
+     "fade_out_ms": 15.0,
+     "fade_in_ms": 2.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
    "bit_depth": 16,
-   "seconds": 0.26,
+   "seconds": 0.254,
    "target_lufs_m": -27,
-   "lufs_m_max": -27.0,
-   "true_peak_dbtp": -2.88,
-   "sample_peak_dbfs": -2.9,
-   "limited_by_peak": false,
-   "sha256": "2359ad152a2ca0f1916bf346b08c4fcf89f357478580fb88e1488f60e22aaa89"
+   "lufs_m_max": -28.86,
+   "true_peak_dbtp": -1.5,
+   "sample_peak_dbfs": -1.51,
+   "limited_by_peak": true,
+   "sha256": "819b4ae8f0b258d4377c18449a65c90ab0f3137729e2b1bdcbf82d37da7cfb53"
   },
   "step_wood_04": {
    "file": "step_wood_04.wav",
@@ -17199,7 +17409,13 @@
     "cut_at_s": 16.805,
     "length_ms": 200,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -38.1,
+     "tail_db": -26.5,
+     "fade_out_ms": 15.0,
+     "fade_in_ms": 2.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
@@ -17224,7 +17440,13 @@
     "cut_at_s": 29.516,
     "length_ms": 206,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -47.8,
+     "tail_db": -34.5,
+     "fade_out_ms": 15.0,
+     "fade_in_ms": 2.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
@@ -17246,21 +17468,27 @@
     "fs_536770"
    ],
    "build": {
-    "cut_at_s": 37.976,
-    "length_ms": 130,
+    "cut_at_s": 31.177,
+    "length_ms": 194,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -44.8,
+     "tail_db": -31.4,
+     "fade_out_ms": 15.0,
+     "fade_in_ms": 2.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
    "bit_depth": 16,
-   "seconds": 0.13,
+   "seconds": 0.194,
    "target_lufs_m": -27,
-   "lufs_m_max": -27.0,
-   "true_peak_dbtp": -8.78,
-   "sample_peak_dbfs": -8.83,
-   "limited_by_peak": false,
-   "sha256": "5757cc7cdda2e3cd8ecbb3570dc4d35432481b797bbc82a75dc3a5a2bc29eeeb"
+   "lufs_m_max": -28.06,
+   "true_peak_dbtp": -1.5,
+   "sample_peak_dbfs": -1.52,
+   "limited_by_peak": true,
+   "sha256": "9dc57dc6f3c86d8d22dd84db2c95f8230f263bf3f946256ccff2f5a5aa96426a"
   },
   "step_wood_07": {
    "file": "step_wood_07.wav",
@@ -17268,24 +17496,30 @@
    "group": "step_wood",
    "class": "step",
    "sources": [
-    "fs_575898"
+    "fs_536770"
    ],
    "build": {
-    "cut_at_s": 9.552,
-    "length_ms": 120,
+    "cut_at_s": 32.808,
+    "length_ms": 255,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -38.4,
+     "tail_db": -25.4,
+     "fade_out_ms": 15.0,
+     "fade_in_ms": 2.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
    "bit_depth": 16,
-   "seconds": 0.12,
+   "seconds": 0.255,
    "target_lufs_m": -27,
-   "lufs_m_max": -27.0,
-   "true_peak_dbtp": -6.16,
-   "sample_peak_dbfs": -6.17,
-   "limited_by_peak": false,
-   "sha256": "bad9506e9522ba5f26c946c652aac574878d30734ae2c97f8035d41808ba32e8"
+   "lufs_m_max": -27.2,
+   "true_peak_dbtp": -1.5,
+   "sample_peak_dbfs": -1.57,
+   "limited_by_peak": true,
+   "sha256": "449ec254462d4d98efda4bcfd0d7281d98b64b156b3271fb1dc6857ba4698618"
   },
   "step_wood_08": {
    "file": "step_wood_08.wav",
@@ -17293,24 +17527,30 @@
    "group": "step_wood",
    "class": "step",
    "sources": [
-    "fs_575898"
+    "fs_536770"
    ],
    "build": {
-    "cut_at_s": 15.666,
-    "length_ms": 196,
+    "cut_at_s": 34.996,
+    "length_ms": 260,
     "highpass_hz": 70.0,
-    "keep_edges": true
+    "keep_edges": true,
+    "cutter": {
+     "pre_db": -33.0,
+     "tail_db": -32.6,
+     "fade_out_ms": 15.0,
+     "fade_in_ms": 2.0
+    }
    },
    "channels": 1,
    "sample_rate": 48000,
    "bit_depth": 16,
-   "seconds": 0.196,
+   "seconds": 0.26,
    "target_lufs_m": -27,
    "lufs_m_max": -27.0,
-   "true_peak_dbtp": -9.05,
-   "sample_peak_dbfs": -9.09,
+   "true_peak_dbtp": -5.75,
+   "sample_peak_dbfs": -5.82,
    "limited_by_peak": false,
-   "sha256": "945159ca8d774aed25f497583556b0cdf70258c28a07e0aa714936c99c8a1411"
+   "sha256": "9d6cd24596227fd386265582495e3f759be68ad053d21c288501c4237f081d66"
   }
  }
 }
