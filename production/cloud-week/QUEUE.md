@@ -46,10 +46,10 @@ Where things go: research notes in production/cloud-week/research/; targets in p
 ## 4. 2D, finished
 
 - 4.1 done (12 Oct 07:20; the second reviews' fixes applied, not re-reviewed; known shortfalls listed): production/cloud-week/2d/fascias/ (make_fascias.py, check_fascias.py, fascia_*.py, make_previews.py, NOTES.md, REVIEW-v1-boards.md, REVIEW-v1-signs-glass.md, REVIEW-v2-boards.md, REVIEW-v2-signs-glass.md, checks/check_v4.json: 475 of 475, 3 of 67 negative controls not caught, 19 of 240 seeded runs fail a seed-sensitive age row); previews production/previews/cloud-week/fascias/ (v3 the last). The 128 PNGs (ten boards, nine sign faces, 23 glass rows, three panels; 33 seconds to rebuild) are not in git.
-- 4.2 open. Posters and notices for invented 1990 events and goods, in period type (OFL fonts).
-- 4.3 open. "To Let" boards.
-- 4.4 open. Street name plates.
-- 4.5 open. Wear textures as masks.
+- 4.2 open. Posters and notices for invented 1990 events and goods, in period type (OFL fonts). Where it stands (12 Oct, stopped by Jafar): maker, check and previews built in production/cloud-week/2d/paper/ (84 items and SB1, first full check 914 rows 0 failing); the street review FAIL (14 findings) is answered in the maker except the newsagent board SB1 (the target's: one hand, needs two more faces); the second check run (v5) and the close review were stopped before they finished.
+- 4.3 open. "To Let" boards. Where it stands: made and checked with 4.2 (L01 to L04, L03n); letting-board wear redone after the street review (streaks, separate peeled bites); not re-reviewed.
+- 4.4 open. Street name plates. Where it stands: made and checked with 4.2 (S01 to S03, n and d; relief in the height map); the cast plate's flaking redone as angular flakes after the street review; not re-reviewed.
+- 4.5 open. Wear textures as masks. Where it stands (stopped by Jafar): production/cloud-week/2d/wear/ makes all 33 kinds (165 masks, 16-bit PNG) and its check passed 344 of 344 on the first full run (the target's mask checks, 31 wrong masks refused, 12 composition checks); no fresh review yet, NOTES.md check section unfinished, checks/check_v1.json not yet written.
 
 ## 5. Handover
 
