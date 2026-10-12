@@ -138,7 +138,7 @@ def kerb_block(P, length, B, mat, bev, name="block"):
 
 def setts_run(P, B, rng, x0, x1, name_prefix="sett", along=(120.0, 210.0), joint=11.0, courses=None):
     """two courses of setts, long side along the kerb, in running bond: each a domed prism (4 mm of dome), the tops scattering 3 mm and the far course up to 5 lower where worn"""
-    courses = courses or [("A", 0.0, 104.0), ("B", 104.0, 204.0)]
+    courses = courses or [("A", 0.0, 98.5), ("B", 109.5, 204.0)]                # REVIEW-v2-street point 2: a joint between the two courses as wide and dark as the cross joints (11 recessed 8)
     mats = ["sett_pale_worn", "sett_dull", "granite_blue_grey"]
     share = [0.35, 0.5, 0.15]
     out = {m: [] for m in mats}
@@ -146,6 +146,7 @@ def setts_run(P, B, rng, x0, x1, name_prefix="sett", along=(120.0, 210.0), joint
     for ci, (nm, y0, y1) in enumerate(courses):
         x = x0 - (0.0 if ci == 0 else float(rng.uniform(40.0, 90.0)))
         while x < x1:
+            jt = float(rng.uniform(8.0, 16.0))                                       # REVIEW-v2-street point 3: joints 8 to 16
             L = float(rng.uniform(*along))
             if ci == 1:
                 for _ in range(40):
@@ -155,13 +156,13 @@ def setts_run(P, B, rng, x0, x1, name_prefix="sett", along=(120.0, 210.0), joint
             else:
                 joints_a.append(x + L + joint / 2.0)
             xa, xb = max(x, x0), min(x + L, x1)
-            if xb - xa > 20.0:
+            if xb - xa > 20.0 and (xb - xa >= 60.0 or (x + L) <= x1):                    # no cut sett under 60 mm: the gap is mortar (point 4)
                 dz = -float(rng.uniform(0.0, 3.0)) - (float(rng.uniform(0.0, 5.0)) if (ci == 1 and rng.random() < 0.3) else 0.0)
                 ym = (y0 + y1) / 2.0
                 sect = [(y0 + 0.5, -140.0), (y1 - 0.5, -140.0), (y1 - 0.5, -4.0 + dz), (ym, 0.0 + dz), (y0 + 0.5, -4.0 + dz)]
                 m = mats[int(rng.choice(3, p=share))]
                 out[m].append(prism_x(sect, xa + 0.5, xb - 0.5))
-            x += L + joint
+            x += L + jt
     for m, parts in out.items():
         if parts:
             B.add("%s_%s" % (name_prefix, m), orient(*merge(*parts)), m, bev=1.5, min_angle=60.0)
@@ -484,7 +485,7 @@ def piece_review(T, B):
     setts_run(T["pieces"]["channel_setts"], Shift(B), rng, -3550.0, 2802.0)
     Shift(B).add("mortar", box3(-3549.0, 2801.0, 1.0, 203.0, -141.0, -8.0), "bitumen_joint")
     for i in range(4):
-        Shift(B, X0C + i * 923.0, 0.0, 20.0).add("channel", prism_x([tuple(p) for p in T["pieces"]["channel_concrete"]["section_yz"]], -457.5, 457.5), "concrete_kerb", bev=None)
+        Shift(B, X0C + i * 923.0, 0.0, 0.0).add("channel", prism_x([tuple(p) for p in T["pieces"]["channel_concrete"]["section_yz"]], -457.5, 457.5), "concrete_kerb", bev=None)
     setts_run(T["pieces"]["channel_setts"], Shift(B), np.random.default_rng(8), 7300.0, 12900.0, name_prefix="sett_b")
     Shift(B).add("mortar_b", box3(7301.0, 12899.0, 1.0, 203.0, -141.0, -8.0), "bitumen_joint")
     # the street's own ground, for the pictures only: the footway flags (top 110, behind the kerb and round the crossing) and the road (top 6, flat)
@@ -510,7 +511,7 @@ def piece_review(T, B):
     rlo, rhi = rc.bounds()
     for ob in list(B.objs):
         if ob.name.startswith(("sett_", "mortar")) and not ob.name.endswith("_b"):
-            cut(ob, (glo[0] - 0.5, ghi[0] + 0.5, glo[1] - 0.5, 204.0, -300.0, 10.0))
+            cut(ob, (glo[0] - 12.0, ghi[0] + 12.0, glo[1] - 0.5, 204.0, -300.0, 10.0))             # a joint's width of mortar all round the grate: no sliver of sett against it (REVIEW-v2-street points 4, 5)
         if ob.name.startswith("ground_road_a"):
             cut(ob, (glo[0] - 0.5, ghi[0] + 0.5, glo[1] - 0.5, ghi[1] + 0.5, -300.0, 10.0))
             bs.bool_op(ob, *cyl_z(300.0, 1300.0, -300.0, 10.0, 346.0, 96), "DIFFERENCE")
