@@ -124,7 +124,7 @@ Try 1's two fresh reviews: street PASS (three narrow points), close FAIL on two 
 | D6 | street narrow point 1 | nine toplights of 326.9: each mullion carried up as a 70 wide bar (centres 1121.7, 2228.3 from the frame's left edge), two 28 wide bars a light (390.9, 745.8, 1497.6, 1852.5, 2604.2, 2959.1); glass and beads per light |
 | D7 | close narrow point 2 | the capital's tablet edge eased 3 mm (was 1) |
 
-Not changed, as the street review left it to Jafar: the cornice's height (150 against the board's 550). Not in this unit: doors and their heads (the pale strip under the board at the empty door slot was the render's: the scene's dark interior now reaches above the board).
+Not changed, as the street review left it to Jafar: the cornice's height (150 against the board's 550); Jafar, 12 October: 150 mm as built. Not in this unit: doors and their heads (the pale strip under the board at the empty door slot was the render's: the scene's dark interior now reaches above the board).
 
 ## Judgements
 

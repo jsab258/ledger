@@ -6,6 +6,14 @@
 
 The full note is notes/HF-legal.md.
 
+## His ruling of 11 October (given 12 October)
+
+Jafar has read this note and accepts the legal risk of one exception: **the AAA study opens the files of Kingdom Come: Deliverance II and Mafia: The Old Country** (route B of production/research/aaa-reference/KIT.md). The terms:
+- **Study only.** Nothing from either game enters LEDGER or git. Only our own written findings and numbers, in our own words.
+- **KCD2 through Warhorse's official modding tools** wherever they cover the need.
+- **Not covered:** breaking encryption or copy protection (a key), taking anything into the game, and any other game. Those stay as below, and need a new ruling.
+- Everything below stays true as research. The ruling is his choice to take the risk, not a finding that it is gone.
+
 ## The rule of thumb
 
 1. **Playing, watching, measuring, screenshotting for your own notes, and reading what developers have published (talks, papers, documentation, Unreal's own licensed source) is lawful everywhere.** This is how studios learn from each other.
@@ -66,7 +74,7 @@ The mods and mashups of September 2026 (1-WHAT-IS-NEW.md, 1.2) move other publis
 
 ## What follows for LEDGER (none of it changes a rule here)
 
-1. Learn from other games only by playing, watching and reading what they published. Never decompile or rip them, or feed their material to a model. Attaching a frame-capture tool to another game is left out too: the cautious line, since whether it counts as "observing" was not checked [I].
+1. Learn from other games only by playing, watching and reading what they published. Never decompile or rip them, or feed their material to a model. (His exception of 11 October, above: the AAA study's two games, study only.) Attaching a frame-capture tool to another game is left out too: the cautious line, since whether it counts as "observing" was not checked [I].
 2. **The AI notice already appears before the first conversation of each launch.** The game holds the flag only for the run (CrimeProbe.cpp, `bNoticeShown`, read here). That likely meets Anthropic's "beginning of each chat session" and the AI Act. Whether each separate conversation counts as a "session" is one of the questions for the lawyer in point 5.
 3. **Canon already forbids real lyrics.** No line about them was found in the talk program, so proof 4 (4-FIVE-PROOFS.md) tests whether live talk keeps to it.
 4. **Keep out every model whose licence is non-commercial, territory-limited, or trained on NoAI-tagged data:** FLUX.1 [dev], the Hunyuan family, HY-Motion, Lyra and the SMPL-based motion models. Objaverse-trained 3D generators raise the NoAI question; the allowlist lists TRELLIS 2 as MIT, so that entry is his to re-read before image-to-3D returns.

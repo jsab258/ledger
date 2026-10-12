@@ -22,6 +22,7 @@ His binding rulings; the later stands; canon.md outranks them.
 - 24 Sep: Nothing ships off the allowlist; a new tool enters only by a record naming its weights licence; free allowlisted, non-NoAI content downloaded without asking, named in the summary.
 - Allowed: OFL fonts with their licence; Mixamo on his account; VCTK voices, consent a stated risk; CLO's free CONNECT patterns, the revocable clause re-checked.
 - 2 Oct: Not allowed: CGTrader's licence (no-AI clause); the Gent jacket draft but as a reference.
+- 11 Oct (given 12 Oct): The AAA study opens both games' files, Kingdom Come: Deliverance II and Mafia: The Old Country; he accepts the legal risk. Study only: nothing from either game enters the game or git, only our own written findings and numbers; KCD2 through Warhorse's official modding tools wherever they cover the need.
 - 16 Sep: Purchases and accounts are his alone; nothing bought without his yes, none for the street or cars.
 - 29 Sep: No paid voice service.
 - 29 Sep: No API calls in development. 3 Oct: LEDGER's key serves his play, measurement runs ($1 a day in all, each logged) and his friends' evenings ($5 an evening); nothing else.
