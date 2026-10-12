@@ -38,7 +38,7 @@ Written 13 October 2026 for Jafar's order of 12 October: for every principal and
 2. Tom's life before the Hook stays unsaid (canon): no fact, rumour or answer gives it; the only rumour about it says that nobody knows (canon, 28 Sep).
 3. Tom's name follows the ladder (canon 88 to 91, what-they-call-him): only Ron, Sheila and Darren, who know it from the start, and Tom's own entry use it; everyone else says 'the new owner' or Mickey's nephew. Ron says 'boss'; Sheila's answers never name him.
 4. Sheila withholds his name until she trusts him: no answer of hers uses it. Whether she has read the fire's page in the real book is left open (the fire design leaves it open): no fact says either.
-5. The warehouse fire: the street's version only (last November, a Saturday night, started in two places, the paper's 'arson', nobody charged, the street's insurance talk). That the owner did it is marked false against the story and never corrected aloud. The truth is held only by Father Walsh, sealed, and in Alison's and Ellis's beliefs, marked secret; no non-secret text contains it.
+5. The warehouse fire: the street's version only (last November, a Saturday night, started in two places, the paper's 'arson', nobody charged, the street's insurance talk). That the owner did it is marked false against the story and never corrected aloud. The truth is held only by Father Walsh, sealed; Alison's belief (marked secret, unproved) matches it and Ellis's (that someone paid the watchman) does not; no non-secret text contains it.
 6. Nobody but regulars who knew Mickey describes him, and only in the two approved lines (RULINGS 101). The sixteen who may are listed below; June and Alison never do.
 7. A witness is only as sure as the witness (RULINGS 113): each rumour records how sure its first teller was; none turns a guess into 'he did it'. No deed of Tom's has happened at the baseline, so none appears.
 8. Mickey's is a minicab office (D19): no text calls it a pub or a bar; the pawn, the cafe, the chapel, the shops are the street's.
@@ -56,7 +56,7 @@ Written 13 October 2026 for Jafar's order of 12 October: for every principal and
 ## Who knew Mickey (group N-MICKEY: new, for Jafar)
 
 Only these 16 hold the two approved lines about him ("Mickey kept his business to himself...", "Mickey kept Ron on..."): Ron Kirby (rocco); Sheila Dunn (lena); Darren Milner (sam); Ada (ada); Father Brendan Walsh (emil); Pauline Kitching (zlata); Kevin Needham (ferko); Terry Hodgson (dusan); Brenda Laverack (marla); Rita Welburn (rita); Henry "Hal" Metcalfe (hal); Nora Cronin (vesna); Winifred Duggleby (magda); Doreen Harland (zora); Edith Stockill (hana); Grace Rinaldi (cafe).
-The rule used: those who worked for him (the dispatcher and the two drivers), Ron, Sheila, Darren, Ada, Father Walsh, and those over forty who keep a shop, the cafe, the laundry's floor, the pension counter or the priest's house on or beside Quay Street. Nobody else describes him; they say 'I never really knew him. That's all I know.'
+The rule used: those who worked for him (the dispatcher and the two drivers), Ron, Sheila, Darren, Ada, Father Walsh, and those over forty who keep a shop, the cafe, the laundry's floor, the pension counter or the priest's house on or beside Quay Street. Nobody else describes him; asked what he was like, they say they never really knew him.
 
 ## Every new fact, by person, one line each (for Jafar's check)
 
