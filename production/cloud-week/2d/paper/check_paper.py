@@ -433,6 +433,27 @@ def seed_item(task):
     return dict(item=iid, seed=seed, clean_fails=fails, worn_fails=f2)
 
 
+def safe(fn):
+    """A per-item task that cannot vanish: an error becomes a failing row naming it (the sixth and seventh builds' checks lost a third of their items without a word)."""
+    def run(task):
+        try:
+            return fn(task)
+        except BaseException as e:     # noqa: BLE001
+            import traceback
+            iid = task[1]
+            return [dict(id="%s.error" % iid, ok=False, detail="%s: %s" % (type(e).__name__, traceback.format_exc()[-400:]), reported=False)]
+    run.__name__ = fn.__name__
+    return run
+
+
+def check_item_safe(task):
+    return safe(check_item)(task)
+
+
+def control_item_safe(task):
+    return safe(control_item)(task)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("out")
@@ -447,12 +468,13 @@ def main():
     sc = _G["sc"]
     manifest = json.loads((out / "manifest.json").read_text())
     ids = [r["item"] for r in manifest["items"]]
+    print("manifest: %d items" % len(ids), flush=True)
     if a.only:
         ids = [i for i in ids if i in [s.strip() for s in a.only.split(",")]]
     t0 = time.time()
     rows = []
     with Pool(a.jobs, initializer=init, initargs=(str(out),)) as p:
-        for r in p.imap_unordered(check_item, [(str(out), i) for i in ids]):
+        for r in p.imap_unordered(check_item_safe, [(str(out), i) for i in ids]):
             rows += r
             bad = [x for x in r if not x["ok"]]
             print("%-10s %2d rows, %d failing" % (r[0]["id"].split(".")[0], len(r), len(bad)), flush=True)
@@ -460,7 +482,7 @@ def main():
                 print("    FAIL", x["id"], x["detail"][:160], flush=True)
         controls = []
         if not a.no_controls:
-            for r in p.imap_unordered(control_item, [(str(out), i) for i in ids]):
+            for r in p.imap_unordered(control_item_safe, [(str(out), i) for i in ids]):
                 controls += r
         seeds = []
         if a.seeds:
@@ -473,6 +495,10 @@ def main():
                 tasks += [(str(out), i, s) for s in range(2, 2 + n)]
             for r in p.imap_unordered(seed_item, tasks):
                 seeds.append(r)
+    seen = {r["id"].split(".")[0] for r in rows}
+    missing = [i for i in ids if i not in seen]
+    rows.append(dict(id="check.items", ok=not missing, detail=("every one of the %d items in the manifest has its rows" % len(ids)) if not missing else "%d of %d items have no rows: %s" % (len(missing), len(ids), ", ".join(missing)), reported=False))
+    print("items checked: %d of %d in the manifest" % (len(seen), len(ids)), flush=True)
     nbad = [r for r in rows if not r["ok"]]
     cbad = [r for r in controls if not r["ok"]]
     sbad = [s for s in seeds if s["clean_fails"] or s["worn_fails"]]

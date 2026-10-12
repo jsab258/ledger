@@ -403,6 +403,16 @@ def poly_mask(polys, shape, cpm):
     return np.asarray(im) > 127
 
 
+def open_disk(a, r):
+    """Binary opening by a disc of radius r, by distance transforms (as fast at r 32 as at 2; the disc structuring element took minutes on the A1 sheets)."""
+    if a.all() or not a.any():
+        return a.copy()
+    er = ndi.distance_transform_edt(a) > r
+    if not er.any():
+        return er
+    return ndi.distance_transform_edt(~er) <= r
+
+
 def cut_protrusions(m, cpm, sizes_mm=(4, 8, 16, 32), rng=None):
     """Cut off every tongue of loss or of paper longer than 1.5 times its base width (it replaces the 20 mm disc openings, which rounded every corner). The second close review: the cut
     is a straight torn chord, not the opening's disc arc: of the tongue's pixels touching the body, A and B the two farthest apart; only the tongue's pixels beyond the line AB (jagged 3
@@ -414,7 +424,7 @@ def cut_protrusions(m, cpm, sizes_mm=(4, 8, 16, 32), rng=None):
         r = max(1, int(round(D * cpm / 2)))
         for inv in (False, True):
             a = np.pad(~m if inv else m, p, mode="edge")
-            body = ndi.binary_opening(a, gl_disk(r))
+            body = open_disk(a, r)
             lab, k = ndi.label(a & ~body)
             for i, sl in enumerate(ndi.find_objects(lab) if k else [], 1):
                 if math.hypot(sl[0].stop - sl[0].start, sl[1].stop - sl[1].start) / cpm <= 1.5 * D:
@@ -464,7 +474,7 @@ def protrusions_left(m, cpm, sizes_mm=(4, 8, 16, 32)):
         r = max(1, int(round(D * cpm / 2)))
         for inv in (False, True):
             a = np.pad(~m if inv else m, p, mode="edge")
-            lab, k = ndi.label(a & ~ndi.binary_opening(a, gl_disk(r)))
+            lab, k = ndi.label(a & ~open_disk(a, r))
             for sl in ndi.find_objects(lab):
                 if math.hypot(sl[0].stop - sl[0].start, sl[1].stop - sl[1].start) / cpm > 1.5 * D:
                     n += 1
@@ -664,7 +674,8 @@ def loss_and_tears(S, share_range, n_tears):
         return f
     cpm = 2.0
     shp2 = (int(math.ceil(H_ * cpm)), int(math.ceil(W_ * cpm)))
-    for attempt in range(8):                             # a loss whose cutting leaves a tongue (a cut on one side making one on the other) is drawn again from the next seed
+    best = None
+    for attempt in range(16):                            # a loss whose cutting leaves a tongue (a cut on one side making one on the other) is drawn again from the next seed
         f = size_for(attempt * 104729)
         polys, lines = build(f, attempt * 104729)
         if not polys:
@@ -678,8 +689,14 @@ def loss_and_tears(S, share_range, n_tears):
                 break
         left_ = protrusions_left(lost, cpm)
         t150, few = tear_tests(outline_runs(lost, cpm))   # the review's tests on the final outline, not on the drawn lines
-        if not left_ and not t150 and not few:
+        got = float(lost.mean())
+        share_ok = share <= 0.01 or 0.8 * share <= got <= 1.2 * share          # a redrawn loss keeps its share (P05's class D fell under its range)
+        score = (left_ + t150 + few) * 10 + (0 if share_ok else 1)
+        if best is None or score < best[0]:
+            best = (score, lost, cut, left_, t150, few)
+        if score == 0:
             break
+    score, lost, cut, left_, t150, few = best                # the best of the draws (every test zero when one is)
     S.log["tear_tests"] = dict(turn_over_150=t150, few_sharp_vertices=few, tongues_left=left_, tongues_cut=cut)
     if not lost.any():
         return
@@ -1499,9 +1516,17 @@ def peel_bites(S, n, length_mm=(20, 80), depth_mm=(3, 15), colour=(150, 145, 135
         xs, ys = [q[0] for q in poly], [q[1] for q in poly]
         win = S.win_of((min(xs), min(ys), max(xs), max(ys)), int(2 * S.ppm) + 3)
         cov = pi.draw_cov(win, lambda d, ss, ox, oy, poly=poly: d.polygon([((x - ox) * ss, (y - oy) * ss) for x, y in poly], fill=255))
-        mb, _c = cut_protrusions(cov > 0.5, S.ppm, sizes_mm=(2, 4, 8), rng=r2)          # no needles (the second close review)
-        cov = np.minimum(cov, pc.smooth(mb.astype(np.float32), 0.5))
-        S.log["bite_tongues_left"] = S.log.get("bite_tongues_left", 0) + protrusions_left(cov > 0.5, S.ppm, sizes_mm=(2, 4, 8))
+        mb = cov > 0.5
+        for _p in range(8):                            # no needles (the second close review): cut until no tongue is left
+            mb, c_ = cut_protrusions(mb, S.ppm, sizes_mm=(2, 4, 8), rng=r2)
+            if not c_:
+                break
+        left_b = protrusions_left(mb, S.ppm, sizes_mm=(2, 4, 8))
+        if left_b:                                     # a tongue the cuts keep re-making: the bite becomes the opening of itself at 2 mm (rounded, no tongue)
+            mb = ndi.binary_opening(np.pad(mb, 4 * int(S.ppm) + 2, mode="edge"), gl_disk(max(1, int(round(S.ppm))))) [4 * int(S.ppm) + 2:-(4 * int(S.ppm) + 2), 4 * int(S.ppm) + 2:-(4 * int(S.ppm) + 2)]
+            left_b = protrusions_left(mb, S.ppm, sizes_mm=(2, 4, 8))
+        cov = pc.smooth(mb.astype(np.float32), 0.5)
+        S.log["bite_tongues_left"] = S.log.get("bite_tongues_left", 0) + left_b
         rim = np.clip(ndi.grey_dilation(cov, footprint=gl_disk(max(1, int(round(0.5 * S.ppm))))) - cov, 0, 1)
         sub = S.rgb[win[2]:win[3], win[0]:win[1]]
         sub[:] = sub * (1 - rim[..., None]) + np.minimum(255.0, sub * 1.08) * rim[..., None]

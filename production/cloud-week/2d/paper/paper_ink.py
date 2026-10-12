@@ -218,6 +218,10 @@ def paste_block(sc, gl, glyphs, ppm, H, win):
     return canvas
 
 
+INK_EDGE = 100.0 / 255.0     # the coverage at which a pixel is ink: the target's glyph maker draws a glyph and keeps the pixels over 100 of 255, so the reader's reference is that
+                             # bold; at 0.5 the anti-aliased strokes were a tenth of a pixel thinner each side and some glyphs no longer told apart (the tenth build's check)
+
+
 def aa_factor(ppm):
     return 4 if ppm <= 6 else 2
 
@@ -249,10 +253,10 @@ def look_of(item):
     return LOOK.get(item["process"], dict(sigma=0.12, film=0.0, rough=0.6))
 
 
-def block_coverage(sc, covf, look, item, b, rng, ppm, mottle_field, win):
+def block_coverage(sc, covf, look, item, b, rng, ppm, mottle_field, win, mask_b=None):
     """(cov, dens, rim): the ink's coverage, its density and a rim-darkening, from the lettering's anti-aliased coverage in a window, by the item's process (the second close review: a
     blur of 0.35 px and no smoothstep, which hardened every edge back to a step)."""
-    mask = covf >= 0.5
+    mask = covf >= INK_EDGE
     sig = max(0.55, min(0.62, look["sigma"] * ppm * 0.7))
     blur = ndi.gaussian_filter(covf.astype(np.float32), 0.35)
     bias = look.get("fat", 0.0)
@@ -260,7 +264,15 @@ def block_coverage(sc, covf, look, item, b, rng, ppm, mottle_field, win):
     if look.get("rag"):
         n = pc.value_noise(mask.shape, max(1.0, 0.6 * ppm), rng)
         jitter = (n - 0.5) * min(0.6, look["rag"] * ppm * 0.35)
-    cov = np.clip(blur - (0.5 - bias) + jitter + 0.5, 0, 1).astype(np.float32)
+    x = np.clip(blur + bias + jitter, 0, 1)
+    cov = np.where(x <= INK_EDGE, 0.5 * x / INK_EDGE, 0.5 + 0.5 * (x - INK_EDGE) / (1 - INK_EDGE)).astype(np.float32)    # bare paper 0, full ink 1, the reader's edge (INK_EDGE) at the middle
+    if mask_b is not None:
+        # which pixels are ink is the target's own bitmap at the item's scale (its glyph maker hints small type; the anti-aliased outline differs from it by fractions of a pixel,
+        # enough that the reader could not tell some glyphs apart): the side is decided as before the second close review, and only the edge's shading is anti-aliased (ink pixels
+        # 0.85 to 1, paper pixels 0 to 0.3)
+        bb = ndi.gaussian_filter(mask_b.astype(np.float32), sig)
+        side = smoothstep((bb - (0.5 - bias) + jitter) * 1.6 + 0.5) >= 0.5
+        cov = np.where(side, np.clip(cov, 0.85, 1.0), np.clip(cov, 0.0, 0.3)).astype(np.float32)
     dens = np.ones(mask.shape, np.float32)
     if look.get("density"):
         dens *= look["density"]
@@ -462,11 +474,13 @@ def build(sc, gl, P, item, seed, mottle_cache=None):
         geo.man[b["id"]] = glyphs
         win = block_window(item, b, shp, ppm)
         covf = paste_block_aa(sc, gl, glyphs, ppm, H, win)
+        mask_b = paste_block(sc, gl, glyphs, ppm, H, win)
         blot = None
         if look.get("blots") and b.get("hand") == "ballpoint":
-            blot = blot_ballpoint(covf >= 0.5, ppm, rng)
+            blot = blot_ballpoint(mask_b, ppm, rng)
             covf = np.maximum(covf, blot)
-        cov, dens, rim = block_coverage(sc, covf, look, item, b, rng, ppm, mf, win)
+            mask_b = mask_b | (blot > 0.5)
+        cov, dens, rim = block_coverage(sc, covf, look, item, b, rng, ppm, mf, win, mask_b=mask_b)
         if blot is not None:
             dens = np.where(blot > 0.5, 1.0, dens).astype(np.float32)
         if look.get("strike"):
