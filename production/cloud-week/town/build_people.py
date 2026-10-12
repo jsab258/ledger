@@ -192,7 +192,14 @@ def build_person(p, sf, proposed_places):
         other = T.hk_person(t["who"])
         t["other_role"] = other["role"] if other else None
     for t in p["extra"].get("ties_new", []):
+        dup = next((x for x in ties if x["who"] == t["who"]), None)
+        if dup is not None:
+            # the story's own tie and the computed one are the same pair: keep the computed hours, add the story's reason
+            dup["story_tie"] = {"band": t.get("band"), "meets": t.get("meets"), "source": t.get("source")}
+            continue
         ties.append(t)
+    for t in ties:
+        t["feeling"] = t.get("band")
 
     rumours = []
     for i, r in enumerate(p["rumours"], 1):

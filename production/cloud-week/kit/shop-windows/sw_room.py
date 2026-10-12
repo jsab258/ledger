@@ -848,6 +848,31 @@ class Room:
         bpy.ops.render.render(write_still=True)
 
 
+ROLLOFF = {"from": 232, "slope": 0.45}
+
+
+def rolloff(path):
+    """A highlight shoulder on the 8-bit picture: values above 232 are compressed (232 + 0.45 x the excess, so 255 becomes 242), so that the tubes, the white cards and the
+    clock dials stay under PIC-05's burnt level (250) without clipping to flat white. Below 232 nothing changes."""
+    im = np.asarray(Image.open(path).convert("RGB")).astype(np.float32)
+    f, k = ROLLOFF["from"], ROLLOFF["slope"]
+    out = np.where(im > f, f + (im - f) * k, im)
+    Image.fromarray(np.clip(out + 0.5, 0, 255).astype(np.uint8)).save(path)
+
+
+def rolloff_all(rooms_dir):
+    """Apply the shoulder to every picture of a finished room render once (the JSON beside them records it)."""
+    jp = os.path.join(rooms_dir, "pawnbroker.json")
+    rec = json.load(open(jp))
+    if rec.get("highlight_rolloff"):
+        return False
+    for s_ in STATES:
+        rolloff(os.path.join(rooms_dir, "pawnbroker_%s.png" % s_))
+    rec["highlight_rolloff"] = ROLLOFF
+    json.dump(rec, open(jp, "w"), indent=1)
+    return True
+
+
 def luma_stats(path):
     im = np.asarray(Image.open(path).convert("RGB")).astype(np.float32)
     y = 0.2126 * im[..., 0] + 0.7152 * im[..., 1] + 0.0722 * im[..., 2]
@@ -905,12 +930,13 @@ def render_states(r, work, P, out_dir, samples=128, res=PIX, states=STATES, log=
     import time
     os.makedirs(out_dir, exist_ok=True)
     times = {}
-    record = {"shop": "pawnbroker", "w": W, "h": H, "d": D, "camera_d": CAM_D, "pixels": list(res), "states": {}, "made_by": "production/cloud-week/kit/shop-windows/build_ritas.py (sw_room.py)", "samples": samples}
+    record = {"shop": "pawnbroker", "w": W, "h": H, "d": D, "camera_d": CAM_D, "pixels": list(res), "states": {}, "made_by": "production/cloud-week/kit/shop-windows/build_ritas.py (sw_room.py)", "samples": samples, "highlight_rolloff": ROLLOFF}
     for s in states:
         r.set_state(s, P)
         path = os.path.join(out_dir, "pawnbroker_%s.png" % s)
         t0 = time.time()
         r.render(path, samples, res)
+        rolloff(path)
         times[s] = round(time.time() - t0, 1)
         record["states"][s] = os.path.basename(path)
         log("render %s: %.0f s, mean luma %.1f" % (s, times[s], luma_stats(path)))
