@@ -72,6 +72,7 @@ PEOPLE.append(person(
         K("books_know", "S:lena", "I know what every fare cost and who never paid it."),
         K("arrangements", "WEEK", "Take it over, then? Mickey's arrangements and everything that comes with them, yours.", secret=True, via="her words on day 7, over the book"),
         K("knows_name", "NAMES", "Mickey's own people, Sheila, Ron and Darren, know it from the start"),
+        K("row", "NEWS", "Hal and Rita had words in the pawn, and nobody knows what about.", via="day 1, heard at Rita's step in the evening from the pawn's back-room hand"),
         D("day", "day"),
     ],
     believes=[
@@ -92,7 +93,7 @@ PEOPLE.append(person(
         rumour("Mickey's has not made much since the docks went; the takings are thin and the phone rings more than it used to, and it is rarely good news.", "true", TB_TRADE,
                "knows it from the books", ["self"], ["rocco", "june"], ["trade", "phone_rings"], ["L5"]),
         pool("june", ["self"], ["noor", "ada"], ["june"], "sees her at the office herself"),
-        pool("halrita", ["victor"], ["rocco", "ada"], ["fire"], "heard it from the pawn's back-room hand at Rita's step", limits=["L6", "L1"]),
+        pool("halrita", ["victor"], ["rocco", "ada"], ["row"], "heard it from the pawn's back-room hand at Rita's step", limits=["L6", "L1"]),
     ],
     questions=[
         Q("Who are you?", "answers", "Sheila Dunn. I keep the books at Mickey's, and have for thirty-one years.", ["sheila_books"], "firsts: Who are you?"),

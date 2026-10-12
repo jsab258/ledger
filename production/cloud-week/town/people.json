@@ -1817,6 +1817,19 @@
      "id": "lena.k29"
     },
     {
+     "key": "row",
+     "kind": "knows",
+     "secret": false,
+     "text": "Hal and Rita had words in the pawn, and nobody knows what about.",
+     "src": {
+      "file": "game-design/town-news-sample-2026-09-29.md",
+      "line": 10,
+      "end": 10
+     },
+     "via": "day 1, heard at Rita's step in the evening from the pawn's back-room hand",
+     "id": "lena.k30"
+    },
+    {
      "key": "day",
      "kind": "knows",
      "secret": false,
@@ -1826,7 +1839,7 @@
       "line": 368,
       "how": "day"
      },
-     "id": "lena.k30"
+     "id": "lena.k31"
     },
     {
      "key": "who_rocco",
@@ -1839,7 +1852,7 @@
       "end": 305
      },
      "via": "who rocco is, as the home describes them (hook-cast.json, the tie of 0.7)",
-     "id": "lena.k31"
+     "id": "lena.k32"
     },
     {
      "key": "who_sam",
@@ -1852,7 +1865,7 @@
       "end": 623
      },
      "via": "who sam is, as the home describes them (hook-cast.json, the tie of 0.6)",
-     "id": "lena.k32"
+     "id": "lena.k33"
     },
     {
      "key": "who_ada",
@@ -1865,7 +1878,7 @@
       "end": 889
      },
      "via": "who ada is, as the home describes them (hook-cast.json, the tie of 0.6)",
-     "id": "lena.k33"
+     "id": "lena.k34"
     },
     {
      "key": "who_noor",
@@ -1878,7 +1891,7 @@
       "end": 999
      },
      "via": "who noor is, as the home describes them (hook-cast.json, the tie of 0.5)",
-     "id": "lena.k34"
+     "id": "lena.k35"
     },
     {
      "key": "who_june",
@@ -1891,7 +1904,7 @@
       "end": 572
      },
      "via": "who june is, as the home describes them (hook-cast.json, the tie of 0.5)",
-     "id": "lena.k35"
+     "id": "lena.k36"
     },
     {
      "key": "who_franjo",
@@ -1904,7 +1917,7 @@
       "end": 2711
      },
      "via": "who franjo is, as the home describes them (hook-cast.json, the tie of 0.5)",
-     "id": "lena.k36"
+     "id": "lena.k37"
     },
     {
      "key": "who_victor",
@@ -1917,7 +1930,7 @@
       "end": 1299
      },
      "via": "who victor is, as the home describes them (hook-cast.json, the tie of 0.4)",
-     "id": "lena.k37"
+     "id": "lena.k38"
     },
     {
      "key": "who_danica",
@@ -1930,7 +1943,7 @@
       "end": 2794
      },
      "via": "who danica is, as the home describes them (hook-cast.json, the tie of 0.4)",
-     "id": "lena.k38"
+     "id": "lena.k39"
     },
     {
      "key": "who_jelena",
@@ -1943,7 +1956,7 @@
       "end": 2066
      },
      "via": "who jelena is, as the home describes them (hook-cast.json, the tie of 0.4)",
-     "id": "lena.k39"
+     "id": "lena.k40"
     },
     {
      "key": "who_zora",
@@ -1956,7 +1969,7 @@
       "end": 1769
      },
      "via": "who zora is, as the home describes them (hook-cast.json, the tie of 0.3)",
-     "id": "lena.k40"
+     "id": "lena.k41"
     },
     {
      "key": "who_ines",
@@ -1969,7 +1982,7 @@
       "end": 1980
      },
      "via": "who ines is, as the home describes them (hook-cast.json, the tie of 0.3)",
-     "id": "lena.k41"
+     "id": "lena.k42"
     },
     {
      "key": "worry",
@@ -2439,7 +2452,7 @@
       "ada"
      ],
      "based_on": [
-      "lena.k03"
+      "lena.k30"
      ],
      "limits": [
       "L6",
@@ -7920,6 +7933,19 @@
      "id": "noor.k23"
     },
     {
+     "key": "row",
+     "kind": "knows",
+     "secret": false,
+     "text": "Hal and Rita had words in the pawn, and nobody knows what about.",
+     "src": {
+      "file": "game-design/town-news-sample-2026-09-29.md",
+      "line": 10,
+      "end": 10
+     },
+     "via": "day 1, heard from the pawn's clerk at the kiosk",
+     "id": "noor.k24"
+    },
+    {
      "key": "day",
      "kind": "knows",
      "secret": false,
@@ -7929,7 +7955,7 @@
       "line": 998,
       "how": "day"
      },
-     "id": "noor.k24"
+     "id": "noor.k25"
     },
     {
      "key": "who_ada",
@@ -7942,7 +7968,7 @@
       "end": 889
      },
      "via": "who ada is, as the home describes them (hook-cast.json, the tie of 0.7)",
-     "id": "noor.k25"
+     "id": "noor.k26"
     },
     {
      "key": "who_sam",
@@ -7955,7 +7981,7 @@
       "end": 623
      },
      "via": "who sam is, as the home describes them (hook-cast.json, the tie of 0.6)",
-     "id": "noor.k26"
+     "id": "noor.k27"
     },
     {
      "key": "who_lena",
@@ -7968,7 +7994,7 @@
       "end": 371
      },
      "via": "who lena is, as the home describes them (hook-cast.json, the tie of 0.5)",
-     "id": "noor.k27"
+     "id": "noor.k28"
     },
     {
      "key": "who_rocco",
@@ -7981,7 +8007,7 @@
       "end": 305
      },
      "via": "who rocco is, as the home describes them (hook-cast.json, the tie of 0.5)",
-     "id": "noor.k28"
+     "id": "noor.k29"
     },
     {
      "key": "who_sanja",
@@ -7994,7 +8020,7 @@
       "end": 2575
      },
      "via": "who sanja is, as the home describes them (hook-cast.json, the tie of 0.5)",
-     "id": "noor.k29"
+     "id": "noor.k30"
     },
     {
      "key": "who_iva",
@@ -8007,7 +8033,7 @@
       "end": 1814
      },
      "via": "who iva is, as the home describes them (hook-cast.json, the tie of 0.5)",
-     "id": "noor.k30"
+     "id": "noor.k31"
     },
     {
      "key": "who_marla",
@@ -8020,7 +8046,7 @@
       "end": 1133
      },
      "via": "who marla is, as the home describes them (hook-cast.json, the tie of 0.4)",
-     "id": "noor.k31"
+     "id": "noor.k32"
     },
     {
      "key": "who_petra",
@@ -8033,7 +8059,7 @@
       "end": 2485
      },
      "via": "who petra is, as the home describes them (hook-cast.json, the tie of 0.4)",
-     "id": "noor.k32"
+     "id": "noor.k33"
     },
     {
      "key": "who_hana",
@@ -8046,7 +8072,7 @@
       "end": 2636
      },
      "via": "who hana is, as the home describes them (hook-cast.json, the tie of 0.4)",
-     "id": "noor.k33"
+     "id": "noor.k34"
     },
     {
      "key": "who_zora",
@@ -8059,7 +8085,7 @@
       "end": 1769
      },
      "via": "who zora is, as the home describes them (hook-cast.json, the tie of 0.4)",
-     "id": "noor.k34"
+     "id": "noor.k35"
     },
     {
      "key": "who_selma",
@@ -8072,7 +8098,7 @@
       "end": 1845
      },
      "via": "who selma is, as the home describes them (hook-cast.json, the tie of 0.4)",
-     "id": "noor.k35"
+     "id": "noor.k36"
     },
     {
      "key": "who_dario",
@@ -8085,7 +8111,7 @@
       "end": 2530
      },
      "via": "who dario is, as the home describes them (hook-cast.json, the tie of 0.3)",
-     "id": "noor.k36"
+     "id": "noor.k37"
     },
     {
      "key": "who_marta",
@@ -8098,7 +8124,7 @@
       "end": 2025
      },
      "via": "who marta is, as the home describes them (hook-cast.json, the tie of 0.3)",
-     "id": "noor.k37"
+     "id": "noor.k38"
     },
     {
      "key": "thinks_outfit",
@@ -8616,7 +8642,7 @@
       "sam"
      ],
      "based_on": [
-      "noor.k03"
+      "noor.k24"
      ],
      "limits": [
       "L6",
@@ -8762,6 +8788,3674 @@
      "new": "N-ANSWERS"
     }
    ]
+  },
+  {
+   "id": "ellis",
+   "name": "Carol Ellis",
+   "heard_as": "DS Ellis",
+   "tier": "principal",
+   "age": 40,
+   "role": {
+    "text": "Detective Sergeant, CID, in plain clothes.",
+    "src": {
+     "file": "production/casting/carol-ellis/SHEET.md",
+     "line": 11,
+     "end": 11
+    }
+   },
+   "identity_src": {
+    "file": "production/casting/CASTING.md",
+    "line": 65,
+    "end": 65
+   },
+   "knew_mickey": false,
+   "facts": [
+    {
+     "key": "died_when",
+     "kind": "knows",
+     "text": "Mickey died three weeks before the new owner, his nephew, came to Quay Street.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 33,
+      "end": 33
+     },
+     "street": "died_when",
+     "secret": false,
+     "id": "ellis.k01"
+    },
+    {
+     "key": "died_heart",
+     "kind": "knows",
+     "text": "Mickey died of his heart, at the office early one morning; Ron found him when he came on at the rank, and the doctor said it was his heart.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 36,
+      "end": 36
+     },
+     "street": "died_heart",
+     "secret": false,
+     "id": "ellis.k02"
+    },
+    {
+     "key": "fire",
+     "kind": "knows",
+     "text": "Last November, on a Saturday night, the importer's warehouse at the far end of the old warehouse row burned down; the evening paper called it arson, since it started in two places, but nobody was charged, and the street says the owner had it done for the insurance.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 41,
+      "end": 41
+     },
+     "street": "fire",
+     "secret": false,
+     "id": "ellis.k03"
+    },
+    {
+     "key": "office",
+     "kind": "knows",
+     "text": "Mickey's, the minicab office, is on Quay Street in the Hook, with the rank outside.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 70,
+      "end": 70
+     },
+     "street": "office",
+     "secret": false,
+     "id": "ellis.k04"
+    },
+    {
+     "key": "trade",
+     "kind": "knows",
+     "text": "Mickey's has not made much money since the docks went; trade has been thin.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 63,
+      "end": 63
+     },
+     "street": "trade",
+     "secret": false,
+     "id": "ellis.k05"
+    },
+    {
+     "key": "job",
+     "kind": "knows",
+     "text": "Detective Sergeant, CID, in plain clothes.",
+     "src": {
+      "file": "production/casting/carol-ellis/SHEET.md",
+      "line": 11,
+      "end": 11
+     },
+     "secret": false,
+     "via": "who and what they are, as their home gives it",
+     "id": "ellis.k06"
+    },
+    {
+     "key": "local",
+     "kind": "knows",
+     "secret": false,
+     "text": "A local woman who came up through the town's force.",
+     "src": {
+      "file": "production/casting/carol-ellis/SHEET.md",
+      "line": 10,
+      "end": 10
+     },
+     "id": "ellis.k07"
+    },
+    {
+     "key": "same_twice",
+     "kind": "knows",
+     "secret": false,
+     "text": "I'm not asking you to remember everything. I'm asking you to remember it the same way twice.",
+     "src": {
+      "file": "production/casting/carol-ellis/SHEET.md",
+      "line": 21,
+      "end": 21
+     },
+     "id": "ellis.k08"
+    },
+    {
+     "key": "write_down",
+     "kind": "knows",
+     "secret": false,
+     "text": "Write it down. Paper doesn't get tired and it doesn't change its mind.",
+     "src": {
+      "file": "production/casting/carol-ellis/SHEET.md",
+      "line": 22,
+      "end": 22
+     },
+     "id": "ellis.k09"
+    },
+    {
+     "key": "here_or_station",
+     "kind": "knows",
+     "secret": false,
+     "text": "You can talk to me here, or you can talk to me at the station. I'd rather here. So would you.",
+     "src": {
+      "file": "production/casting/carol-ellis/SHEET.md",
+      "line": 23,
+      "end": 23
+     },
+     "id": "ellis.k10"
+    },
+    {
+     "key": "on_the_fire",
+     "kind": "knows",
+     "secret": false,
+     "text": "she was the detective sergeant on it. The file was marked undetected, and she keeps asking",
+     "src": {
+      "file": "game-design/warehouse-fire-2026-09-29.md",
+      "line": 43,
+      "end": 44
+     },
+     "id": "ellis.k11"
+    },
+    {
+     "key": "times",
+     "kind": "knows",
+     "secret": false,
+     "text": "the watchman's times do not fit the brigade's",
+     "src": {
+      "file": "game-design/warehouse-fire-2026-09-29.md",
+      "line": 44,
+      "end": 45
+     },
+     "id": "ellis.k12"
+    },
+    {
+     "key": "moves",
+     "kind": "knows",
+     "secret": false,
+     "text": "Brisk and economical. Writes in her notebook while she listens and lets silences run.",
+     "src": {
+      "file": "production/casting/carol-ellis/SHEET.md",
+      "line": 16,
+      "end": 16
+     },
+     "id": "ellis.k13"
+    },
+    {
+     "key": "paid_away",
+     "kind": "believes",
+     "secret": false,
+     "text": "she thinks someone paid him to be away.",
+     "src": {
+      "file": "game-design/warehouse-fire-2026-09-29.md",
+      "line": 45,
+      "end": 45
+     },
+     "truth": "false",
+     "truth_basis": {
+      "src": {
+       "file": "game-design/warehouse-fire-2026-09-29.md",
+       "line": 45,
+       "end": 46
+      },
+      "note": "False against the story; it is why she will not let the fire go."
+     },
+     "id": "ellis.b01"
+    },
+    {
+     "key": "sergeant",
+     "kind": "saw",
+     "secret": false,
+     "text": "she was the detective sergeant on it.",
+     "src": {
+      "file": "game-design/warehouse-fire-2026-09-29.md",
+      "line": 43,
+      "end": 43
+     },
+     "when": "last November, the fire and the days after",
+     "id": "ellis.s01"
+    }
+   ],
+   "schedule": {
+    "weekday": [
+     {
+      "from": "00:00",
+      "to": "08:30",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     },
+     {
+      "from": "08:30",
+      "to": "17:00",
+      "place": "station",
+      "said": "the police station, in the CID office"
+     },
+     {
+      "from": "17:00",
+      "to": "18:00",
+      "place": "warehouse_row",
+      "said": "the old warehouse row"
+     },
+     {
+      "from": "18:00",
+      "to": "24:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     }
+    ],
+    "weekday_note": "Monday to Friday unless a day is listed below",
+    "weekday_differs": {
+     "tue": [
+      {
+       "from": "00:00",
+       "to": "08:30",
+       "place": "off",
+       "said": "away from the street (at home, or elsewhere)"
+      },
+      {
+       "from": "08:30",
+       "to": "18:00",
+       "place": "station",
+       "said": "the police station, in the CID office"
+      },
+      {
+       "from": "18:00",
+       "to": "24:00",
+       "place": "off",
+       "said": "away from the street (at home, or elsewhere)"
+      }
+     ],
+     "thu": [
+      {
+       "from": "00:00",
+       "to": "08:30",
+       "place": "off",
+       "said": "away from the street (at home, or elsewhere)"
+      },
+      {
+       "from": "08:30",
+       "to": "18:00",
+       "place": "station",
+       "said": "the police station, in the CID office"
+      },
+      {
+       "from": "18:00",
+       "to": "24:00",
+       "place": "off",
+       "said": "away from the street (at home, or elsewhere)"
+      }
+     ]
+    },
+    "saturday": [
+     {
+      "from": "00:00",
+      "to": "09:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     },
+     {
+      "from": "09:00",
+      "to": "13:00",
+      "place": "station",
+      "said": "the police station, in the CID office"
+     },
+     {
+      "from": "13:00",
+      "to": "24:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     }
+    ],
+    "sunday": [
+     {
+      "from": "00:00",
+      "to": "24:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     }
+    ],
+    "source": {
+     "new": "N-SCHEDULES",
+     "proposed": true
+    },
+    "note": "No routine for this person in hook-cast.json; proposed from the sheet, the shop hours and the districts of canon.md. She is off Quay Street until the story brings her (police-asking: days 4 and 5, each reason once); Monday, Wednesday and Friday at the row when the watchman comes on."
+   },
+   "talks_to": [
+    {
+     "who": "drago",
+     "weight": null,
+     "band": "shares the same place 3 hours a week (computed from the two schedules)",
+     "meets": "computed",
+     "hours_a_week": 3.0,
+     "source": {
+      "new": "N-SCHEDULES",
+      "computed": true
+     },
+     "other_role": "a scrap dealer on the old warehouse row",
+     "crowd": null
+    },
+    {
+     "who": "filip",
+     "weight": null,
+     "band": "shares the same place 3 hours a week (computed from the two schedules)",
+     "meets": "computed",
+     "hours_a_week": 3.0,
+     "source": {
+      "new": "N-SCHEDULES",
+      "computed": true
+     },
+     "other_role": "the night watchman on the warehouse row",
+     "crowd": null
+    },
+    {
+     "who": "noor",
+     "weight": null,
+     "band": "both are on the fire",
+     "meets": "the fire: the reporter who will not drop it, the sergeant who will not close it",
+     "hours_a_week": null,
+     "source": {
+      "file": "game-design/warehouse-fire-2026-09-29.md",
+      "line": 40,
+      "end": 47
+     }
+    },
+    {
+     "who": "filip",
+     "weight": null,
+     "band": "she goes back to him",
+     "meets": "the watchman whose times do not fit",
+     "hours_a_week": null,
+     "source": {
+      "file": "game-design/warehouse-fire-2026-09-29.md",
+      "line": 43,
+      "end": 47
+     }
+    }
+   ],
+   "rumours": [
+    {
+     "id": "ellis.r1",
+     "gist": "The importer's warehouse at the far end of the old warehouse row burned down last November; it started in two places and nobody was charged.",
+     "truth": "partly",
+     "truth_basis": {
+      "src": {
+       "file": "game-design/warehouse-fire-2026-09-29.md",
+       "line": 37,
+       "end": 39
+      },
+      "note": "The paper's 'arson' and 'nobody charged' stand; the owner's guilt is the street's talk, false against the story: the home's lines 48 to 56 say what is true and it is never said here (RULINGS: the truth is never the street's)."
+     },
+     "sure": "first hand: the file's own words",
+     "heard_from": [
+      "self"
+     ],
+     "would_pass_to": [
+      "noor"
+     ],
+     "based_on": [
+      "ellis.k03",
+      "ellis.k11"
+     ],
+     "limits": [
+      "L2",
+      "L1"
+     ],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "ellis.r2",
+     "gist": "The fire's file was marked undetected, and the sergeant on it keeps asking.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "game-design/warehouse-fire-2026-09-29.md",
+       "line": 43,
+       "end": 44
+      }
+     },
+     "sure": "first hand: her own file",
+     "heard_from": [
+      "self"
+     ],
+     "would_pass_to": [
+      "noor",
+      "filip"
+     ],
+     "based_on": [
+      "ellis.k11"
+     ],
+     "limits": [
+      "L2"
+     ],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "ellis.r3",
+     "gist": "The watchman's times on the night of the fire do not fit the brigade's.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "game-design/warehouse-fire-2026-09-29.md",
+       "line": 44,
+       "end": 45
+      }
+     },
+     "sure": "first hand: she has compared them",
+     "heard_from": [
+      "self"
+     ],
+     "would_pass_to": [
+      "filip"
+     ],
+     "based_on": [
+      "ellis.k12"
+     ],
+     "limits": [
+      "L2",
+      "L1"
+     ],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "ellis.r4",
+     "gist": "Mickey died of his heart at the office early one morning; Ron found him when he came on at the rank, and the doctor said it was his heart.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "RULINGS.md",
+       "line": 108,
+       "end": 108
+      }
+     },
+     "sure": "heard it on the street; the doctor's word",
+     "heard_from": [
+      "street"
+     ],
+     "would_pass_to": [
+      "noor"
+     ],
+     "based_on": [
+      "ellis.k02"
+     ],
+     "limits": [
+      "L4"
+     ],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "ellis.r5",
+     "gist": "Mickey's has not made much since the docks went; trade has been thin.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 63,
+       "end": 63
+      }
+     },
+     "sure": "heard it on the street",
+     "heard_from": [
+      "street"
+     ],
+     "would_pass_to": [
+      "noor"
+     ],
+     "based_on": [
+      "ellis.k05"
+     ],
+     "limits": [
+      "L5"
+     ],
+     "new": "N-RUMOURS"
+    }
+   ],
+   "newcomer_questions": [
+    {
+     "id": "ellis.q1",
+     "q": "Who are you?",
+     "kind": "answers",
+     "a": "DS Carol Ellis, CID. I'm in plain clothes.",
+     "uses": [
+      "ellis.k06"
+     ],
+     "bench": "firsts: Who are you?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "ellis.q2",
+     "q": "What do you do?",
+     "kind": "answers",
+     "a": "I ask questions, and I write the answers down. Paper doesn't get tired.",
+     "uses": [
+      "ellis.k09"
+     ],
+     "bench": "firsts: What do you do here?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "ellis.q3",
+     "q": "What happened at the warehouse fire?",
+     "kind": "partly",
+     "a": "The importer's warehouse on the old row, last November. Started in two places. Nobody was charged. I was the sergeant on it, and I keep asking.",
+     "uses": [
+      "ellis.k03",
+      "ellis.k11"
+     ],
+     "bench": "fresh: What happened at the warehouse fire?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "ellis.q4",
+     "q": "How did Mickey die?",
+     "kind": "answers",
+     "a": "His heart, the doctor said. Ron found him at the office early one morning, when he came on at the rank.",
+     "uses": [
+      "ellis.k02"
+     ],
+     "bench": "firsts: How did Mickey die?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "ellis.q5",
+     "q": "Did Mickey have any enemies?",
+     "kind": "deflect",
+     "a": "I'm not asking you to remember everything. I'm asking you to remember it the same way twice.",
+     "uses": [
+      "ellis.k08"
+     ],
+     "bench": "fresh: Did Mickey have any enemies?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "ellis.q6",
+     "q": "What do people say about me?",
+     "kind": "dont_know",
+     "a": "Nothing to me yet. That's all I know.",
+     "uses": [],
+     "bench": "fresh: What do people say about me?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "ellis.q7",
+     "q": "Who can I trust?",
+     "kind": "deflect",
+     "a": "Write it down. Paper doesn't get tired and it doesn't change its mind.",
+     "uses": [
+      "ellis.k09"
+     ],
+     "bench": "firsts: Who can I trust?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "ellis.q8",
+     "q": "What is this place?",
+     "kind": "answers",
+     "a": "Mickey's, the minicab office, on Quay Street in the Hook. The rank's outside.",
+     "uses": [
+      "ellis.k04"
+     ],
+     "bench": "firsts: What is this place?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "ellis.q9",
+     "q": "Can we talk?",
+     "kind": "answers",
+     "a": "You can talk to me here, or at the station. I'd rather here. So would you.",
+     "uses": [
+      "ellis.k10"
+     ],
+     "bench": "invented: a stranger meeting a detective",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "ellis.q10",
+     "q": "Who was Mickey's solicitor?",
+     "kind": "dont_know",
+     "a": "I couldn't tell you. That's all I know.",
+     "uses": [],
+     "bench": "held: Who was Mickey's solicitor?",
+     "new": "N-ANSWERS"
+    }
+   ]
+  },
+  {
+   "id": "aldous",
+   "name": "Geoffrey Agar",
+   "heard_as": "Mr Agar",
+   "tier": "principal",
+   "age": 62,
+   "role": {
+    "text": "solicitor and alderman, head of the old-money machine",
+    "src": {
+     "file": "production/casting/CASTING.md",
+     "line": 66,
+     "end": 66
+    }
+   },
+   "identity_src": {
+    "file": "production/casting/CASTING.md",
+    "line": 66,
+    "end": 66
+   },
+   "knew_mickey": false,
+   "facts": [
+    {
+     "key": "died_when",
+     "kind": "knows",
+     "text": "Mickey died three weeks before the new owner, his nephew, came to Quay Street.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 33,
+      "end": 33
+     },
+     "street": "died_when",
+     "secret": false,
+     "id": "aldous.k01"
+    },
+    {
+     "key": "died_heart",
+     "kind": "knows",
+     "text": "Mickey died of his heart, at the office early one morning; Ron found him when he came on at the rank, and the doctor said it was his heart.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 36,
+      "end": 36
+     },
+     "street": "died_heart",
+     "secret": false,
+     "id": "aldous.k02"
+    },
+    {
+     "key": "fire",
+     "kind": "knows",
+     "text": "Last November, on a Saturday night, the importer's warehouse at the far end of the old warehouse row burned down; the evening paper called it arson, since it started in two places, but nobody was charged, and the street says the owner had it done for the insurance.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 41,
+      "end": 41
+     },
+     "street": "fire",
+     "secret": false,
+     "id": "aldous.k03"
+    },
+    {
+     "key": "office",
+     "kind": "knows",
+     "text": "Mickey's, the minicab office, is on Quay Street in the Hook, with the rank outside.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 70,
+      "end": 70
+     },
+     "street": "office",
+     "secret": false,
+     "id": "aldous.k04"
+    },
+    {
+     "key": "trade",
+     "kind": "knows",
+     "text": "Mickey's has not made much money since the docks went; trade has been thin.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 63,
+      "end": 63
+     },
+     "street": "trade",
+     "secret": false,
+     "id": "aldous.k05"
+    },
+    {
+     "key": "job",
+     "kind": "knows",
+     "text": "solicitor and alderman, head of the old-money machine",
+     "src": {
+      "file": "production/casting/CASTING.md",
+      "line": 66,
+      "end": 66
+     },
+     "secret": false,
+     "via": "who and what they are, as their home gives it",
+     "id": "aldous.k06"
+    },
+    {
+     "key": "solicitor",
+     "kind": "knows",
+     "secret": false,
+     "text": "Solicitor; a former long-serving councillor, now honorary alderman",
+     "src": {
+      "file": "production/casting/geoffrey-agar/SHEET.md",
+      "line": 12,
+      "end": 12
+     },
+     "id": "aldous.k07"
+    },
+    {
+     "key": "machine",
+     "kind": "knows",
+     "secret": false,
+     "text": "the old-money machine (corruption and lawyers, head Geoffrey Agar)",
+     "src": {
+      "file": "canon.md",
+      "line": 80,
+      "end": 81
+     },
+     "id": "aldous.k08"
+    },
+    {
+     "key": "sit_down",
+     "kind": "knows",
+     "secret": false,
+     "text": "Sit down. I find most things go better sitting down.",
+     "src": {
+      "file": "production/casting/geoffrey-agar/SHEET.md",
+      "line": 22,
+      "end": 22
+     },
+     "id": "aldous.k09"
+    },
+    {
+     "key": "paperwork",
+     "kind": "knows",
+     "secret": false,
+     "text": "I don't make threats. I make sure people have read the paperwork.",
+     "src": {
+      "file": "production/casting/geoffrey-agar/SHEET.md",
+      "line": 23,
+      "end": 23
+     },
+     "id": "aldous.k10"
+    },
+    {
+     "key": "properly",
+     "kind": "knows",
+     "secret": false,
+     "text": "I prefer things done properly. It saves everybody so much trouble later.",
+     "src": {
+      "file": "production/casting/geoffrey-agar/SHEET.md",
+      "line": 24,
+      "end": 24
+     },
+     "id": "aldous.k11"
+    },
+    {
+     "key": "moves",
+     "kind": "knows",
+     "secret": false,
+     "text": "Slowly, and never seen to hurry. Waits for doors to be opened.",
+     "src": {
+      "file": "production/casting/geoffrey-agar/SHEET.md",
+      "line": 17,
+      "end": 17
+     },
+     "id": "aldous.k12"
+    },
+    {
+     "key": "hook_paper",
+     "kind": "believes",
+     "secret": false,
+     "text": "The Hook's affairs are beneath a visit and reach him, if at all, as paper.",
+     "new": "N-RIVALS",
+     "why": "Follows 'I make sure people have read the paperwork' and the outline's Act II, where his arm comes by paper (a letter, a licence, an inspection).",
+     "truth": "unknown",
+     "truth_basis": {
+      "note": "A stance, not a fact about the world."
+     },
+     "id": "aldous.b01"
+    },
+    {
+     "key": "read_fire",
+     "kind": "saw",
+     "secret": false,
+     "text": "He read of the warehouse fire in the evening paper, as the town did.",
+     "new": "N-RIVALS",
+     "why": "The paper called it arson (fire design); an alderman reads the evening paper.",
+     "when": "last November",
+     "id": "aldous.s01"
+    }
+   ],
+   "schedule": {
+    "weekday": [
+     {
+      "from": "00:00",
+      "to": "09:30",
+      "place": "fairview_house",
+      "said": "his house in Fairview, on the hills"
+     },
+     {
+      "from": "09:30",
+      "to": "13:00",
+      "place": "exchange_office",
+      "said": "his office in the Exchange, the district of offices and lawyers"
+     },
+     {
+      "from": "13:00",
+      "to": "14:30",
+      "place": "exchange_lunch",
+      "said": "his table at luncheon in the Exchange"
+     },
+     {
+      "from": "14:30",
+      "to": "17:30",
+      "place": "exchange_office",
+      "said": "his office in the Exchange, the district of offices and lawyers"
+     },
+     {
+      "from": "17:30",
+      "to": "24:00",
+      "place": "fairview_house",
+      "said": "his house in Fairview, on the hills"
+     }
+    ],
+    "weekday_note": "Monday to Friday unless a day is listed below",
+    "weekday_differs": {},
+    "saturday": [
+     {
+      "from": "00:00",
+      "to": "10:00",
+      "place": "fairview_house",
+      "said": "his house in Fairview, on the hills"
+     },
+     {
+      "from": "10:00",
+      "to": "12:30",
+      "place": "exchange_office",
+      "said": "his office in the Exchange, the district of offices and lawyers"
+     },
+     {
+      "from": "12:30",
+      "to": "24:00",
+      "place": "fairview_house",
+      "said": "his house in Fairview, on the hills"
+     }
+    ],
+    "sunday": [
+     {
+      "from": "00:00",
+      "to": "24:00",
+      "place": "fairview_house",
+      "said": "his house in Fairview, on the hills"
+     }
+    ],
+    "source": {
+     "new": "N-SCHEDULES",
+     "proposed": true
+    },
+    "note": "No routine for this person in hook-cast.json; proposed from the sheet, the shop hours and the districts of canon.md. Never on Quay Street at the baseline: the Exchange is canon's district of offices and lawyers, Fairview its residential hills."
+   },
+   "talks_to": [
+    {
+     "who": "fixer",
+     "weight": null,
+     "band": "the broker he uses",
+     "meets": "the Fixer brokers between all three rivals (canon)",
+     "hours_a_week": null,
+     "source": {
+      "file": "canon.md",
+      "line": 85,
+      "end": 87
+     }
+    }
+   ],
+   "rumours": [
+    {
+     "id": "aldous.r1",
+     "gist": "Mickey died of his heart at the office early one morning; Ron found him when he came on at the rank, and the doctor said it was his heart.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "RULINGS.md",
+       "line": 108,
+       "end": 108
+      }
+     },
+     "sure": "heard it from the Fixer",
+     "heard_from": [
+      "fixer"
+     ],
+     "would_pass_to": [
+      "fixer"
+     ],
+     "based_on": [
+      "aldous.k02"
+     ],
+     "limits": [
+      "L4"
+     ],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "aldous.r2",
+     "gist": "The importer's warehouse at the far end of the old warehouse row burned down last November; the paper called it arson and nobody was charged.",
+     "truth": "partly",
+     "truth_basis": {
+      "src": {
+       "file": "game-design/warehouse-fire-2026-09-29.md",
+       "line": 37,
+       "end": 39
+      },
+      "note": "The paper's 'arson' and 'nobody charged' stand; the owner's guilt is the street's talk, false against the story: the home's lines 48 to 56 say what is true and it is never said here (RULINGS: the truth is never the street's)."
+     },
+     "sure": "the paper's own word; he repeats nothing else",
+     "heard_from": [
+      "street"
+     ],
+     "would_pass_to": [
+      "fixer"
+     ],
+     "based_on": [
+      "aldous.k03",
+      "aldous.s01"
+     ],
+     "limits": [
+      "L2",
+      "L1"
+     ],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "aldous.r3",
+     "gist": "Mickey's has not made much since the docks went; trade has been thin.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 63,
+       "end": 63
+      }
+     },
+     "sure": "heard it from the Fixer",
+     "heard_from": [
+      "fixer"
+     ],
+     "would_pass_to": [
+      "fixer"
+     ],
+     "based_on": [
+      "aldous.k05"
+     ],
+     "limits": [
+      "L5"
+     ],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "aldous.r4",
+     "gist": "Mickey died three weeks before his nephew came to Quay Street.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 33,
+       "end": 33
+      }
+     },
+     "sure": "a plain fact, held by the whole street",
+     "heard_from": [
+      "street"
+     ],
+     "would_pass_to": [
+      "fixer"
+     ],
+     "based_on": [
+      "aldous.k01"
+     ],
+     "limits": [
+      "L7"
+     ],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "aldous.r5",
+     "gist": "Mickey's, the minicab office, is on Quay Street in the Hook.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 70,
+       "end": 70
+      }
+     },
+     "sure": "a plain fact",
+     "heard_from": [
+      "street"
+     ],
+     "would_pass_to": [
+      "fixer"
+     ],
+     "based_on": [
+      "aldous.k04"
+     ],
+     "limits": [],
+     "new": "N-RUMOURS"
+    }
+   ],
+   "newcomer_questions": [
+    {
+     "id": "aldous.q1",
+     "q": "Who are you?",
+     "kind": "answers",
+     "a": "Geoffrey Agar. I'm a solicitor, and an honorary alderman.",
+     "uses": [
+      "aldous.k07"
+     ],
+     "bench": "firsts: Who are you?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "aldous.q2",
+     "q": "What do you do?",
+     "kind": "answers",
+     "a": "I make sure people have read the paperwork.",
+     "uses": [
+      "aldous.k10"
+     ],
+     "bench": "firsts: What do you do here?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "aldous.q3",
+     "q": "What is this place?",
+     "kind": "answers",
+     "a": "Mickey's, I understand. The minicab office, on Quay Street in the Hook.",
+     "uses": [
+      "aldous.k04"
+     ],
+     "bench": "firsts: What is this place?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "aldous.q4",
+     "q": "How did Mickey die?",
+     "kind": "answers",
+     "a": "His heart, I understand. Ron found him at the office early one morning, when he came on at the rank.",
+     "uses": [
+      "aldous.k02"
+     ],
+     "bench": "firsts: How did Mickey die?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "aldous.q5",
+     "q": "What happened at the warehouse fire?",
+     "kind": "partly",
+     "a": "The paper called it arson, I understand. It started in two places. Nobody was charged.",
+     "uses": [
+      "aldous.k03",
+      "aldous.s01"
+     ],
+     "bench": "fresh: What happened at the warehouse fire?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "aldous.q6",
+     "q": "Who can I trust?",
+     "kind": "deflect",
+     "a": "Sit down. I find most things go better sitting down.",
+     "uses": [
+      "aldous.k09"
+     ],
+     "bench": "firsts: Who can I trust?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "aldous.q7",
+     "q": "Did Mickey have any enemies?",
+     "kind": "deflect",
+     "a": "I don't make threats. I make sure people have read the paperwork.",
+     "uses": [
+      "aldous.k10"
+     ],
+     "bench": "fresh: Did Mickey have any enemies?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "aldous.q8",
+     "q": "Is there any money in the business?",
+     "kind": "partly",
+     "a": "I'm told it has not made much since the docks went. Trade has been thin.",
+     "uses": [
+      "aldous.k05"
+     ],
+     "bench": "firsts: Is there any money in the business?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "aldous.q9",
+     "q": "What do people say about me?",
+     "kind": "dont_know",
+     "a": "Nothing that reaches me. That's all I know.",
+     "uses": [],
+     "bench": "fresh: What do people say about me?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "aldous.q10",
+     "q": "Who was Mickey's solicitor?",
+     "kind": "dont_know",
+     "a": "I couldn't say. That's all I know.",
+     "uses": [],
+     "bench": "held: Who was Mickey's solicitor?",
+     "new": "N-ANSWERS"
+    }
+   ],
+   "id_note": "'aldous' is the internal id (the old name Aldous Vane survives only as an id)."
+  },
+  {
+   "id": "sera",
+   "name": "Maureen Jensen",
+   "heard_as": "the Widow",
+   "tier": "principal",
+   "age": 57,
+   "role": {
+    "text": "head of the dockside syndicate",
+    "src": {
+     "file": "production/casting/CASTING.md",
+     "line": 67,
+     "end": 67
+    }
+   },
+   "identity_src": {
+    "file": "production/casting/CASTING.md",
+    "line": 67,
+    "end": 67
+   },
+   "knew_mickey": false,
+   "facts": [
+    {
+     "key": "died_when",
+     "kind": "knows",
+     "text": "Mickey died three weeks before the new owner, his nephew, came to Quay Street.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 33,
+      "end": 33
+     },
+     "street": "died_when",
+     "secret": false,
+     "id": "sera.k01"
+    },
+    {
+     "key": "died_heart",
+     "kind": "knows",
+     "text": "Mickey died of his heart, at the office early one morning; Ron found him when he came on at the rank, and the doctor said it was his heart.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 36,
+      "end": 36
+     },
+     "street": "died_heart",
+     "secret": false,
+     "id": "sera.k02"
+    },
+    {
+     "key": "fire",
+     "kind": "knows",
+     "text": "Last November, on a Saturday night, the importer's warehouse at the far end of the old warehouse row burned down; the evening paper called it arson, since it started in two places, but nobody was charged, and the street says the owner had it done for the insurance.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 41,
+      "end": 41
+     },
+     "street": "fire",
+     "secret": false,
+     "id": "sera.k03"
+    },
+    {
+     "key": "office",
+     "kind": "knows",
+     "text": "Mickey's, the minicab office, is on Quay Street in the Hook, with the rank outside.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 70,
+      "end": 70
+     },
+     "street": "office",
+     "secret": false,
+     "id": "sera.k04"
+    },
+    {
+     "key": "trade",
+     "kind": "knows",
+     "text": "Mickey's has not made much money since the docks went; trade has been thin.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 63,
+      "end": 63
+     },
+     "street": "trade",
+     "secret": false,
+     "id": "sera.k05"
+    },
+    {
+     "key": "job",
+     "kind": "knows",
+     "text": "head of the dockside syndicate",
+     "src": {
+      "file": "production/casting/CASTING.md",
+      "line": 67,
+      "end": 67
+     },
+     "secret": false,
+     "via": "who and what they are, as their home gives it",
+     "id": "sera.k06"
+    },
+    {
+     "key": "called_widow",
+     "kind": "knows",
+     "secret": false,
+     "text": "the dockside syndicate (muscle and smuggling, head Maureen Jensen, called the Widow)",
+     "src": {
+      "file": "canon.md",
+      "line": 81,
+      "end": 82
+     },
+     "id": "sera.k07"
+    },
+    {
+     "key": "hook_family",
+     "kind": "knows",
+     "secret": false,
+     "text": "A fishing family of the Hook",
+     "src": {
+      "file": "production/casting/maureen-jensen/SHEET.md",
+      "line": 11,
+      "end": 11
+     },
+     "id": "sera.k08"
+    },
+    {
+     "key": "trawler_widow",
+     "kind": "knows",
+     "secret": false,
+     "text": "a trawler-owner's widow.",
+     "src": {
+      "file": "production/casting/maureen-jensen/SHEET.md",
+      "line": 11,
+      "end": 11
+     },
+     "id": "sera.k09"
+    },
+    {
+     "key": "counts",
+     "kind": "knows",
+     "secret": false,
+     "text": "I've learned to count. You'd be surprised how few round here have.",
+     "src": {
+      "file": "production/casting/maureen-jensen/SHEET.md",
+      "line": 22,
+      "end": 22
+     },
+     "id": "sera.k10"
+    },
+    {
+     "key": "no_surprises",
+     "kind": "knows",
+     "secret": false,
+     "text": "I don't like surprises, love. I've had enough of them for one life.",
+     "src": {
+      "file": "production/casting/maureen-jensen/SHEET.md",
+      "line": 23,
+      "end": 23
+     },
+     "id": "sera.k11"
+    },
+    {
+     "key": "what_you_do",
+     "kind": "knows",
+     "secret": false,
+     "text": "I'm not interested in what you are. I'm interested in what you'll do.",
+     "src": {
+      "file": "production/casting/maureen-jensen/SHEET.md",
+      "line": 24,
+      "end": 24
+     },
+     "id": "sera.k12"
+    },
+    {
+     "key": "receives",
+     "kind": "knows",
+     "secret": false,
+     "text": "She hardly does: people come to her. Sits facing the door.",
+     "src": {
+      "file": "production/casting/maureen-jensen/SHEET.md",
+      "line": 17,
+      "end": 17
+     },
+     "id": "sera.k13"
+    },
+    {
+     "key": "her_people",
+     "kind": "knows",
+     "secret": true,
+     "text": "Joey (dock hand), Ferko (night cab)",
+     "src": {
+      "file": "game-design/empire-roster.md",
+      "line": 96,
+      "end": 96
+     },
+     "via": "the dockside syndicate's people on the street (empire roster, faction table); the sheet makes Ferko the day driver",
+     "id": "sera.k14"
+    },
+    {
+     "key": "show_me",
+     "kind": "believes",
+     "secret": false,
+     "text": "Whoever has inherited Mickey's has yet to show her what he will do; she is interested in that, not in what he is.",
+     "new": "N-RIVALS",
+     "why": "From her sheet line 'I'm interested in what you'll do.'",
+     "truth": "unknown",
+     "truth_basis": {
+      "note": "A stance, not a fact about the world."
+     },
+     "id": "sera.b01"
+    },
+    {
+     "key": "door_watch",
+     "kind": "saw",
+     "secret": false,
+     "text": "She hardly does: people come to her. Sits facing the door.",
+     "src": {
+      "file": "production/casting/maureen-jensen/SHEET.md",
+      "line": 17,
+      "end": 17
+     },
+     "when": "every day, in her dockside room",
+     "id": "sera.s01"
+    }
+   ],
+   "schedule": {
+    "weekday": [
+     {
+      "from": "00:00",
+      "to": "06:30",
+      "place": "jensen_house",
+      "said": "her house by the docks"
+     },
+     {
+      "from": "06:30",
+      "to": "07:30",
+      "place": "fish_dock",
+      "said": "the wholesale fish market on the fish dock"
+     },
+     {
+      "from": "07:30",
+      "to": "09:30",
+      "place": "jensen_house",
+      "said": "her house by the docks"
+     },
+     {
+      "from": "09:30",
+      "to": "17:30",
+      "place": "dock_room",
+      "said": "the back room of a dockside office in the Hook"
+     },
+     {
+      "from": "17:30",
+      "to": "24:00",
+      "place": "jensen_house",
+      "said": "her house by the docks"
+     }
+    ],
+    "weekday_note": "Monday to Friday unless a day is listed below",
+    "weekday_differs": {},
+    "saturday": [
+     {
+      "from": "00:00",
+      "to": "06:30",
+      "place": "jensen_house",
+      "said": "her house by the docks"
+     },
+     {
+      "from": "06:30",
+      "to": "07:30",
+      "place": "fish_dock",
+      "said": "the wholesale fish market on the fish dock"
+     },
+     {
+      "from": "07:30",
+      "to": "09:30",
+      "place": "jensen_house",
+      "said": "her house by the docks"
+     },
+     {
+      "from": "09:30",
+      "to": "13:00",
+      "place": "dock_room",
+      "said": "the back room of a dockside office in the Hook"
+     },
+     {
+      "from": "13:00",
+      "to": "24:00",
+      "place": "jensen_house",
+      "said": "her house by the docks"
+     }
+    ],
+    "sunday": [
+     {
+      "from": "00:00",
+      "to": "24:00",
+      "place": "jensen_house",
+      "said": "her house by the docks"
+     }
+    ],
+    "source": {
+     "new": "N-SCHEDULES",
+     "proposed": true
+    },
+    "note": "No routine for this person in hook-cast.json; proposed from the sheet, the shop hours and the districts of canon.md. The fish dock at the morning's selling (shop-hours note: auction about 7 to 7.30), then people come to her."
+   },
+   "talks_to": [
+    {
+     "who": "joey",
+     "weight": null,
+     "band": "one of her people on the street",
+     "meets": "empire roster, faction table",
+     "hours_a_week": null,
+     "source": {
+      "file": "game-design/empire-roster.md",
+      "line": 275,
+      "end": 275
+     }
+    },
+    {
+     "who": "ferko",
+     "weight": null,
+     "band": "one of her people on the street",
+     "meets": "empire roster, faction table (it calls him the night cab)",
+     "hours_a_week": null,
+     "source": {
+      "file": "game-design/empire-roster.md",
+      "line": 275,
+      "end": 275
+     }
+    },
+    {
+     "who": "fixer",
+     "weight": null,
+     "band": "the broker she uses",
+     "meets": "the Fixer brokers between all three rivals (canon)",
+     "hours_a_week": null,
+     "source": {
+      "file": "canon.md",
+      "line": 85,
+      "end": 87
+     }
+    }
+   ],
+   "rumours": [
+    {
+     "id": "sera.r1",
+     "gist": "Mickey died of his heart at the office early one morning; Ron found him when he came on at the rank, and the doctor said it was his heart.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "RULINGS.md",
+       "line": 108,
+       "end": 108
+      }
+     },
+     "sure": "heard it from the Fixer",
+     "heard_from": [
+      "fixer"
+     ],
+     "would_pass_to": [
+      "fixer"
+     ],
+     "based_on": [
+      "sera.k02"
+     ],
+     "limits": [
+      "L4"
+     ],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "sera.r2",
+     "gist": "The importer's warehouse at the far end of the old warehouse row burned down last November; the paper called it arson, nobody was charged, and the street says the owner had it done for the insurance.",
+     "truth": "partly",
+     "truth_basis": {
+      "src": {
+       "file": "game-design/warehouse-fire-2026-09-29.md",
+       "line": 37,
+       "end": 39
+      },
+      "note": "The paper's 'arson' and 'nobody charged' stand; the owner's guilt is the street's talk, false against the story: the home's lines 48 to 56 say what is true and it is never said here (RULINGS: the truth is never the street's)."
+     },
+     "sure": "the paper's word and street talk; she says nothing of it herself",
+     "heard_from": [
+      "street"
+     ],
+     "would_pass_to": [
+      "fixer"
+     ],
+     "based_on": [
+      "sera.k03"
+     ],
+     "limits": [
+      "L2",
+      "L1"
+     ],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "sera.r3",
+     "gist": "Mickey's has not made much since the docks went; trade has been thin.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 63,
+       "end": 63
+      }
+     },
+     "sure": "heard it from her people on the street",
+     "heard_from": [
+      "joey"
+     ],
+     "would_pass_to": [
+      "fixer"
+     ],
+     "based_on": [
+      "sera.k05"
+     ],
+     "limits": [
+      "L5"
+     ],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "sera.r4",
+     "gist": "Mickey died three weeks before his nephew came to Quay Street.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 33,
+       "end": 33
+      }
+     },
+     "sure": "a plain fact",
+     "heard_from": [
+      "street"
+     ],
+     "would_pass_to": [
+      "fixer"
+     ],
+     "based_on": [
+      "sera.k01"
+     ],
+     "limits": [
+      "L7"
+     ],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "sera.r5",
+     "gist": "Mickey's, the minicab office, is on Quay Street in the Hook, with the rank outside.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 70,
+       "end": 70
+      }
+     },
+     "sure": "a plain fact",
+     "heard_from": [
+      "street"
+     ],
+     "would_pass_to": [
+      "fixer"
+     ],
+     "based_on": [
+      "sera.k04"
+     ],
+     "limits": [],
+     "new": "N-RUMOURS"
+    }
+   ],
+   "newcomer_questions": [
+    {
+     "id": "sera.q1",
+     "q": "Who are you?",
+     "kind": "answers",
+     "a": "Maureen Jensen. They call me the Widow.",
+     "uses": [
+      "sera.k07"
+     ],
+     "bench": "firsts: Who are you?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "sera.q2",
+     "q": "What do you do?",
+     "kind": "deflect",
+     "a": "I count, love. You'd be surprised how few round here have.",
+     "uses": [
+      "sera.k10"
+     ],
+     "bench": "firsts: What do you do here?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "sera.q3",
+     "q": "Who runs things round here?",
+     "kind": "deflect",
+     "a": "People come to me, love. I don't go to them.",
+     "uses": [
+      "sera.k13"
+     ],
+     "bench": "firsts: Who runs things round here?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "sera.q4",
+     "q": "What happened at the warehouse fire?",
+     "kind": "partly",
+     "a": "The paper called it arson. Nobody was charged. I don't like surprises, love.",
+     "uses": [
+      "sera.k03",
+      "sera.k11"
+     ],
+     "bench": "fresh: What happened at the warehouse fire?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "sera.q5",
+     "q": "How did Mickey die?",
+     "kind": "answers",
+     "a": "His heart, I hear. Ron found him at the office early one morning, when he came on at the rank.",
+     "uses": [
+      "sera.k02"
+     ],
+     "bench": "firsts: How did Mickey die?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "sera.q6",
+     "q": "What was Mickey like?",
+     "kind": "deflect",
+     "a": "I'm not interested in what he was. I'm interested in what you'll do.",
+     "uses": [
+      "sera.k12"
+     ],
+     "bench": "firsts: What was Mickey like?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "sera.q7",
+     "q": "Is there any money in the business?",
+     "kind": "partly",
+     "a": "Not much, I hear, since the docks went. Trade has been thin.",
+     "uses": [
+      "sera.k05"
+     ],
+     "bench": "firsts: Is there any money in the business?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "sera.q8",
+     "q": "Did Mickey leave me anything?",
+     "kind": "dont_know",
+     "a": "No idea. That's all I know.",
+     "uses": [],
+     "bench": "firsts: Did Mickey leave me anything?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "sera.q9",
+     "q": "What do people say about me?",
+     "kind": "dont_know",
+     "a": "Nothing to me yet. That's all I know.",
+     "uses": [],
+     "bench": "fresh: What do people say about me?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "sera.q10",
+     "q": "Who can I trust?",
+     "kind": "deflect",
+     "a": "I've learned to count, love. You'd be surprised how few round here have.",
+     "uses": [
+      "sera.k10"
+     ],
+     "bench": "firsts: Who can I trust?",
+     "new": "N-ANSWERS"
+    }
+   ],
+   "id_note": "'sera' is the internal id (the voice file says kest); the old name Sera Kest survives only as an id."
+  },
+  {
+   "id": "danny",
+   "name": "Danny Cammack",
+   "heard_as": "Danny Cammack",
+   "tier": "principal",
+   "age": 27,
+   "role": {
+    "text": "head of the new crew",
+    "src": {
+     "file": "production/casting/CASTING.md",
+     "line": 68,
+     "end": 68
+    }
+   },
+   "identity_src": {
+    "file": "production/casting/CASTING.md",
+    "line": 68,
+    "end": 68
+   },
+   "knew_mickey": false,
+   "facts": [
+    {
+     "key": "died_when",
+     "kind": "knows",
+     "text": "Mickey died three weeks before the new owner, his nephew, came to Quay Street.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 33,
+      "end": 33
+     },
+     "street": "died_when",
+     "secret": false,
+     "id": "danny.k01"
+    },
+    {
+     "key": "died_heart",
+     "kind": "knows",
+     "text": "Mickey died of his heart, at the office early one morning; Ron found him when he came on at the rank, and the doctor said it was his heart.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 36,
+      "end": 36
+     },
+     "street": "died_heart",
+     "secret": false,
+     "id": "danny.k02"
+    },
+    {
+     "key": "fire",
+     "kind": "knows",
+     "text": "Last November, on a Saturday night, the importer's warehouse at the far end of the old warehouse row burned down; the evening paper called it arson, since it started in two places, but nobody was charged, and the street says the owner had it done for the insurance.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 41,
+      "end": 41
+     },
+     "street": "fire",
+     "secret": false,
+     "id": "danny.k03"
+    },
+    {
+     "key": "office",
+     "kind": "knows",
+     "text": "Mickey's, the minicab office, is on Quay Street in the Hook, with the rank outside.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 70,
+      "end": 70
+     },
+     "street": "office",
+     "secret": false,
+     "id": "danny.k04"
+    },
+    {
+     "key": "trade",
+     "kind": "knows",
+     "text": "Mickey's has not made much money since the docks went; trade has been thin.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 63,
+      "end": 63
+     },
+     "street": "trade",
+     "secret": false,
+     "id": "danny.k05"
+    },
+    {
+     "key": "job",
+     "kind": "knows",
+     "text": "head of the new crew",
+     "src": {
+      "file": "production/casting/CASTING.md",
+      "line": 68,
+      "end": 68
+     },
+     "secret": false,
+     "via": "who and what they are, as their home gives it",
+     "id": "danny.k06"
+    },
+    {
+     "key": "flashy",
+     "kind": "knows",
+     "secret": false,
+     "text": "Heads the new crew: flashy and reckless (canon); loud money (CASTING.md).",
+     "src": {
+      "file": "production/casting/danny-cammack/SHEET.md",
+      "line": 11,
+      "end": 11
+     },
+     "id": "danny.k07"
+    },
+    {
+     "key": "hurry",
+     "kind": "knows",
+     "secret": false,
+     "text": "Always in a hurry, me. Somebody's got to be.",
+     "src": {
+      "file": "production/casting/danny-cammack/SHEET.md",
+      "line": 22,
+      "end": 22
+     },
+     "id": "danny.k08"
+    },
+    {
+     "key": "stood_next",
+     "kind": "knows",
+     "secret": false,
+     "text": "You want to watch who you stand next to round here. You're stood next to me.",
+     "src": {
+      "file": "production/casting/danny-cammack/SHEET.md",
+      "line": 23,
+      "end": 23
+     },
+     "id": "danny.k09"
+    },
+    {
+     "key": "moves",
+     "kind": "knows",
+     "secret": false,
+     "text": "Fast. Takes up room, talks with his hands, never quite still; sits on tables rather than chairs.",
+     "src": {
+      "file": "production/casting/danny-cammack/SHEET.md",
+      "line": 16,
+      "end": 16
+     },
+     "id": "danny.k10"
+    },
+    {
+     "key": "fence",
+     "kind": "knows",
+     "secret": true,
+     "text": "Rita (the back-room fence)",
+     "src": {
+      "file": "game-design/empire-roster.md",
+      "line": 98,
+      "end": 98
+     },
+     "via": "the new crew's person on the street (empire roster, faction table)",
+     "id": "danny.k11"
+    },
+    {
+     "key": "old_men",
+     "kind": "believes",
+     "secret": false,
+     "text": "Old men and their arrangements. It's 1990, mate. Nobody asks permission any more.",
+     "src": {
+      "file": "production/casting/danny-cammack/SHEET.md",
+      "line": 21,
+      "end": 21
+     },
+     "truth": "unknown",
+     "truth_basis": {
+      "note": "His view of the old organisations; the story's Act II tests it and nothing at the baseline settles it."
+     },
+     "id": "danny.b01"
+    },
+    {
+     "key": "room",
+     "kind": "saw",
+     "secret": false,
+     "text": "Fast. Takes up room, talks with his hands, never quite still; sits on tables rather than chairs.",
+     "src": {
+      "file": "production/casting/danny-cammack/SHEET.md",
+      "line": 16,
+      "end": 16
+     },
+     "when": "every day, in the Parade's pavements and rooms",
+     "id": "danny.s01"
+    }
+   ],
+   "schedule": {
+    "weekday": [
+     {
+      "from": "00:00",
+      "to": "02:00",
+      "place": "parade_district",
+      "said": "the Parade, the nightlife district"
+     },
+     {
+      "from": "02:00",
+      "to": "13:00",
+      "place": "danny_flat",
+      "said": "his flat above a shop in the Parade district"
+     },
+     {
+      "from": "13:00",
+      "to": "24:00",
+      "place": "parade_district",
+      "said": "the Parade, the nightlife district"
+     }
+    ],
+    "weekday_note": "Monday to Friday unless a day is listed below",
+    "weekday_differs": {},
+    "saturday": [
+     {
+      "from": "00:00",
+      "to": "03:00",
+      "place": "parade_district",
+      "said": "the Parade, the nightlife district"
+     },
+     {
+      "from": "03:00",
+      "to": "13:00",
+      "place": "danny_flat",
+      "said": "his flat above a shop in the Parade district"
+     },
+     {
+      "from": "13:00",
+      "to": "24:00",
+      "place": "parade_district",
+      "said": "the Parade, the nightlife district"
+     }
+    ],
+    "sunday": [
+     {
+      "from": "00:00",
+      "to": "02:00",
+      "place": "parade_district",
+      "said": "the Parade, the nightlife district"
+     },
+     {
+      "from": "02:00",
+      "to": "14:00",
+      "place": "danny_flat",
+      "said": "his flat above a shop in the Parade district"
+     },
+     {
+      "from": "14:00",
+      "to": "24:00",
+      "place": "parade_district",
+      "said": "the Parade, the nightlife district"
+     }
+    ],
+    "source": {
+     "new": "N-SCHEDULES",
+     "proposed": true
+    },
+    "note": "No routine for this person in hook-cast.json; proposed from the sheet, the shop hours and the districts of canon.md. Never on Quay Street at the baseline: canon makes the Parade the nightlife district. Act II's noise on Quay Street is the story's, not his daily round."
+   },
+   "talks_to": [
+    {
+     "who": "rita",
+     "weight": null,
+     "band": "his fence on the street",
+     "meets": "empire roster, faction table",
+     "hours_a_week": null,
+     "source": {
+      "file": "game-design/empire-roster.md",
+      "line": 276,
+      "end": 276
+     }
+    },
+    {
+     "who": "fixer",
+     "weight": null,
+     "band": "the broker he uses",
+     "meets": "the Fixer brokers between all three rivals (canon)",
+     "hours_a_week": null,
+     "source": {
+      "file": "canon.md",
+      "line": 85,
+      "end": 87
+     }
+    }
+   ],
+   "rumours": [
+    {
+     "id": "danny.r1",
+     "gist": "Mickey died of his heart at the office early one morning; Ron found him when he came on at the rank, and the doctor said it was his heart.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "RULINGS.md",
+       "line": 108,
+       "end": 108
+      }
+     },
+     "sure": "heard it from the Fixer",
+     "heard_from": [
+      "fixer"
+     ],
+     "would_pass_to": [
+      "fixer"
+     ],
+     "based_on": [
+      "danny.k02"
+     ],
+     "limits": [
+      "L4"
+     ],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "danny.r2",
+     "gist": "The importer's warehouse at the far end of the old warehouse row burned down last November; the paper called it arson, nobody was charged, and the street says the owner had it done for the insurance.",
+     "truth": "partly",
+     "truth_basis": {
+      "src": {
+       "file": "game-design/warehouse-fire-2026-09-29.md",
+       "line": 37,
+       "end": 39
+      },
+      "note": "The paper's 'arson' and 'nobody charged' stand; the owner's guilt is the street's talk, false against the story: the home's lines 48 to 56 say what is true and it is never said here (RULINGS: the truth is never the street's)."
+     },
+     "sure": "the paper's word and street talk",
+     "heard_from": [
+      "street"
+     ],
+     "would_pass_to": [
+      "fixer"
+     ],
+     "based_on": [
+      "danny.k03"
+     ],
+     "limits": [
+      "L2",
+      "L1"
+     ],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "danny.r3",
+     "gist": "Mickey's has not made much since the docks went; trade has been thin.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 63,
+       "end": 63
+      }
+     },
+     "sure": "heard it from Rita, his fence",
+     "heard_from": [
+      "rita"
+     ],
+     "would_pass_to": [
+      "fixer"
+     ],
+     "based_on": [
+      "danny.k05"
+     ],
+     "limits": [
+      "L5"
+     ],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "danny.r4",
+     "gist": "Mickey died three weeks before his nephew came to Quay Street.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 33,
+       "end": 33
+      }
+     },
+     "sure": "a plain fact",
+     "heard_from": [
+      "street"
+     ],
+     "would_pass_to": [
+      "fixer"
+     ],
+     "based_on": [
+      "danny.k01"
+     ],
+     "limits": [
+      "L7"
+     ],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "danny.r5",
+     "gist": "Mickey's, the minicab office, is on Quay Street in the Hook, with the rank outside.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 70,
+       "end": 70
+      }
+     },
+     "sure": "a plain fact",
+     "heard_from": [
+      "street"
+     ],
+     "would_pass_to": [
+      "fixer"
+     ],
+     "based_on": [
+      "danny.k04"
+     ],
+     "limits": [],
+     "new": "N-RUMOURS"
+    }
+   ],
+   "newcomer_questions": [
+    {
+     "id": "danny.q1",
+     "q": "Who are you?",
+     "kind": "answers",
+     "a": "Danny Cammack, mate. Always in a hurry. Somebody's got to be.",
+     "uses": [
+      "danny.k08"
+     ],
+     "bench": "firsts: Who are you?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "danny.q2",
+     "q": "What do you do?",
+     "kind": "answers",
+     "a": "I head the new crew, mate. Flashy and reckless, they say. Loud money.",
+     "uses": [
+      "danny.k07"
+     ],
+     "bench": "firsts: What do you do here?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "danny.q3",
+     "q": "What is this place?",
+     "kind": "answers",
+     "a": "Mickey's, mate. The cab office on Quay Street. Old men and their arrangements.",
+     "uses": [
+      "danny.k04",
+      "danny.b01"
+     ],
+     "bench": "firsts: What is this place?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "danny.q4",
+     "q": "How did Mickey die?",
+     "kind": "answers",
+     "a": "His heart, I heard. Ron found him at the office early one morning, when he came on at the rank.",
+     "uses": [
+      "danny.k02"
+     ],
+     "bench": "firsts: How did Mickey die?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "danny.q5",
+     "q": "What happened at the warehouse fire?",
+     "kind": "partly",
+     "a": "Importer's warehouse, last November. Paper said arson. Nobody was charged.",
+     "uses": [
+      "danny.k03"
+     ],
+     "bench": "fresh: What happened at the warehouse fire?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "danny.q6",
+     "q": "Who runs things round here?",
+     "kind": "deflect",
+     "a": "Nobody asks permission any more, mate. It's 1990.",
+     "uses": [
+      "danny.b01"
+     ],
+     "bench": "firsts: Who runs things round here?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "danny.q7",
+     "q": "Who can I trust?",
+     "kind": "deflect",
+     "a": "You want to watch who you stand next to round here. You're stood next to me.",
+     "uses": [
+      "danny.k09"
+     ],
+     "bench": "firsts: Who can I trust?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "danny.q8",
+     "q": "Is there any money in the business?",
+     "kind": "partly",
+     "a": "Not much, mate, since the docks went. Trade's been thin.",
+     "uses": [
+      "danny.k05"
+     ],
+     "bench": "firsts: Is there any money in the business?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "danny.q9",
+     "q": "What do people say about me?",
+     "kind": "dont_know",
+     "a": "Nothing to me yet, mate. That's all I know.",
+     "uses": [],
+     "bench": "fresh: What do people say about me?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "danny.q10",
+     "q": "Did Mickey leave me anything?",
+     "kind": "dont_know",
+     "a": "No idea, mate. That's all I know.",
+     "uses": [],
+     "bench": "firsts: Did Mickey leave me anything?",
+     "new": "N-ANSWERS"
+    }
+   ],
+   "id_note": "'danny' is the internal id (the old name Danny Ro survives only as an id)."
+  },
+  {
+   "id": "fixer",
+   "name": "Keith Garbutt",
+   "heard_as": "the Fixer",
+   "tier": "principal",
+   "age": 48,
+   "role": {
+    "text": "brokers between all three rivals",
+    "src": {
+     "file": "production/casting/CASTING.md",
+     "line": 74,
+     "end": 74
+    }
+   },
+   "identity_src": {
+    "file": "production/casting/CASTING.md",
+    "line": 74,
+    "end": 74
+   },
+   "knew_mickey": false,
+   "facts": [
+    {
+     "key": "died_when",
+     "kind": "knows",
+     "text": "Mickey died three weeks before the new owner, his nephew, came to Quay Street.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 33,
+      "end": 33
+     },
+     "street": "died_when",
+     "secret": false,
+     "id": "fixer.k01"
+    },
+    {
+     "key": "died_heart",
+     "kind": "knows",
+     "text": "Mickey died of his heart, at the office early one morning; Ron found him when he came on at the rank, and the doctor said it was his heart.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 36,
+      "end": 36
+     },
+     "street": "died_heart",
+     "secret": false,
+     "id": "fixer.k02"
+    },
+    {
+     "key": "fire",
+     "kind": "knows",
+     "text": "Last November, on a Saturday night, the importer's warehouse at the far end of the old warehouse row burned down; the evening paper called it arson, since it started in two places, but nobody was charged, and the street says the owner had it done for the insurance.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 41,
+      "end": 41
+     },
+     "street": "fire",
+     "secret": false,
+     "id": "fixer.k03"
+    },
+    {
+     "key": "will",
+     "kind": "knows",
+     "text": "Mickey left the office, Mickey's, the cab office on Quay Street, to his nephew, the new owner, by his will; the new owner came with one suitcase and a letter saying so.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 45,
+      "end": 45
+     },
+     "street": "will",
+     "secret": false,
+     "id": "fixer.k04"
+    },
+    {
+     "key": "office",
+     "kind": "knows",
+     "text": "Mickey's, the minicab office, is on Quay Street in the Hook, with the rank outside.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 70,
+      "end": 70
+     },
+     "street": "office",
+     "secret": false,
+     "id": "fixer.k05"
+    },
+    {
+     "key": "trade",
+     "kind": "knows",
+     "text": "Mickey's has not made much money since the docks went; trade has been thin.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 63,
+      "end": 63
+     },
+     "street": "trade",
+     "secret": false,
+     "id": "fixer.k06"
+    },
+    {
+     "key": "job",
+     "kind": "knows",
+     "text": "brokers between all three rivals",
+     "src": {
+      "file": "production/casting/CASTING.md",
+      "line": 74,
+      "end": 74
+     },
+     "secret": false,
+     "via": "who and what they are, as their home gives it",
+     "id": "fixer.k07"
+    },
+    {
+     "key": "brokers",
+     "kind": "knows",
+     "secret": false,
+     "text": "Brokers between the old-money machine, the dockside syndicate and the new crew (canon).",
+     "src": {
+      "file": "production/casting/the-fixer/SHEET.md",
+      "line": 12,
+      "end": 12
+     },
+     "id": "fixer.k08"
+    },
+    {
+     "key": "of_the_town",
+     "kind": "knows",
+     "secret": false,
+     "text": "Of the town; nobody can say which side he started on, which is the point of him.",
+     "src": {
+      "file": "production/casting/the-fixer/SHEET.md",
+      "line": 11,
+      "end": 11
+     },
+     "id": "fixer.k09"
+    },
+    {
+     "key": "percentage",
+     "kind": "knows",
+     "secret": false,
+     "text": "I don't take sides. I take a percentage. It's a more honest arrangement.",
+     "src": {
+      "file": "production/casting/the-fixer/SHEET.md",
+      "line": 22,
+      "end": 22
+     },
+     "id": "fixer.k10"
+    },
+    {
+     "key": "first",
+     "kind": "knows",
+     "secret": false,
+     "text": "Everybody wants the same thing. They just want it first.",
+     "src": {
+      "file": "production/casting/the-fixer/SHEET.md",
+      "line": 23,
+      "end": 23
+     },
+     "id": "fixer.k11"
+    },
+    {
+     "key": "what_you_need",
+     "kind": "knows",
+     "secret": false,
+     "text": "Say what you need. Whether I can help is another conversation.",
+     "src": {
+      "file": "production/casting/the-fixer/SHEET.md",
+      "line": 24,
+      "end": 24
+     },
+     "id": "fixer.k12"
+    },
+    {
+     "key": "moves",
+     "kind": "knows",
+     "secret": false,
+     "text": "Calm; sits with his back to a wall; never raises his voice; lights other people's cigarettes before his own.",
+     "src": {
+      "file": "production/casting/the-fixer/SHEET.md",
+      "line": 17,
+      "end": 17
+     },
+     "id": "fixer.k13"
+    },
+    {
+     "key": "want_first",
+     "kind": "believes",
+     "secret": false,
+     "text": "Everybody wants the same thing. They just want it first.",
+     "src": {
+      "file": "production/casting/the-fixer/SHEET.md",
+      "line": 23,
+      "end": 23
+     },
+     "truth": "unknown",
+     "truth_basis": {
+      "note": "A stance, not a fact about the world."
+     },
+     "id": "fixer.b01"
+    },
+    {
+     "key": "wall",
+     "kind": "saw",
+     "secret": false,
+     "text": "Calm; sits with his back to a wall; never raises his voice; lights other people's cigarettes before his own.",
+     "src": {
+      "file": "production/casting/the-fixer/SHEET.md",
+      "line": 17,
+      "end": 17
+     },
+     "when": "every meeting he makes",
+     "id": "fixer.s01"
+    }
+   ],
+   "schedule": {
+    "weekday": [
+     {
+      "from": "00:00",
+      "to": "09:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     },
+     {
+      "from": "09:00",
+      "to": "11:00",
+      "place": "garbutt_room",
+      "said": "the room he keeps for meetings, over a shop in Copper Row"
+     },
+     {
+      "from": "11:00",
+      "to": "12:30",
+      "place": "exchange_lunch",
+      "said": "his table at luncheon in the Exchange"
+     },
+     {
+      "from": "12:30",
+      "to": "14:00",
+      "place": "garbutt_room",
+      "said": "the room he keeps for meetings, over a shop in Copper Row"
+     },
+     {
+      "from": "14:00",
+      "to": "16:00",
+      "place": "dock_room",
+      "said": "the back room of a dockside office in the Hook"
+     },
+     {
+      "from": "16:00",
+      "to": "17:30",
+      "place": "garbutt_room",
+      "said": "the room he keeps for meetings, over a shop in Copper Row"
+     },
+     {
+      "from": "17:30",
+      "to": "19:30",
+      "place": "parade_district",
+      "said": "the Parade, the nightlife district"
+     },
+     {
+      "from": "19:30",
+      "to": "24:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     }
+    ],
+    "weekday_note": "Monday to Friday unless a day is listed below",
+    "weekday_differs": {},
+    "saturday": [
+     {
+      "from": "00:00",
+      "to": "10:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     },
+     {
+      "from": "10:00",
+      "to": "12:00",
+      "place": "garbutt_room",
+      "said": "the room he keeps for meetings, over a shop in Copper Row"
+     },
+     {
+      "from": "12:00",
+      "to": "24:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     }
+    ],
+    "sunday": [
+     {
+      "from": "00:00",
+      "to": "24:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     }
+    ],
+    "source": {
+     "new": "N-SCHEDULES",
+     "proposed": true
+    },
+    "note": "No routine for this person in hook-cast.json; proposed from the sheet, the shop hours and the districts of canon.md. He calls on each of the three in turn: the Exchange, the docks and the Parade."
+   },
+   "talks_to": [
+    {
+     "who": "aldous",
+     "weight": null,
+     "band": "one of the three he brokers between",
+     "meets": "canon",
+     "hours_a_week": null,
+     "source": {
+      "file": "canon.md",
+      "line": 85,
+      "end": 87
+     }
+    },
+    {
+     "who": "sera",
+     "weight": null,
+     "band": "one of the three he brokers between",
+     "meets": "canon",
+     "hours_a_week": null,
+     "source": {
+      "file": "canon.md",
+      "line": 85,
+      "end": 87
+     }
+    },
+    {
+     "who": "danny",
+     "weight": null,
+     "band": "one of the three he brokers between",
+     "meets": "canon",
+     "hours_a_week": null,
+     "source": {
+      "file": "canon.md",
+      "line": 85,
+      "end": 87
+     }
+    }
+   ],
+   "rumours": [
+    {
+     "id": "fixer.r1",
+     "gist": "Mickey died of his heart at the office early one morning; Ron found him when he came on at the rank, and the doctor said it was his heart.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "RULINGS.md",
+       "line": 108,
+       "end": 108
+      }
+     },
+     "sure": "street talk; the doctor's word",
+     "heard_from": [
+      "street"
+     ],
+     "would_pass_to": [
+      "aldous",
+      "sera",
+      "danny"
+     ],
+     "based_on": [
+      "fixer.k02"
+     ],
+     "limits": [
+      "L4"
+     ],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "fixer.r2",
+     "gist": "Mickey's nephew has come to take the office, with one suitcase and a letter that says Mickey left it to him.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 45,
+       "end": 45
+      }
+     },
+     "sure": "street talk and the will",
+     "heard_from": [
+      "street"
+     ],
+     "would_pass_to": [
+      "aldous",
+      "sera",
+      "danny"
+     ],
+     "based_on": [
+      "fixer.k04"
+     ],
+     "limits": [
+      "L7"
+     ],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "fixer.r3",
+     "gist": "The importer's warehouse at the far end of the old warehouse row burned down last November; the paper called it arson, nobody was charged, and the street says the owner had it done for the insurance.",
+     "truth": "partly",
+     "truth_basis": {
+      "src": {
+       "file": "game-design/warehouse-fire-2026-09-29.md",
+       "line": 37,
+       "end": 39
+      },
+      "note": "The paper's 'arson' and 'nobody charged' stand; the owner's guilt is the street's talk, false against the story: the home's lines 48 to 56 say what is true and it is never said here (RULINGS: the truth is never the street's)."
+     },
+     "sure": "the paper's word and street talk",
+     "heard_from": [
+      "street"
+     ],
+     "would_pass_to": [
+      "aldous",
+      "sera",
+      "danny"
+     ],
+     "based_on": [
+      "fixer.k03"
+     ],
+     "limits": [
+      "L2",
+      "L1"
+     ],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "fixer.r4",
+     "gist": "Mickey's has not made much since the docks went; trade has been thin.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 63,
+       "end": 63
+      }
+     },
+     "sure": "street talk",
+     "heard_from": [
+      "street"
+     ],
+     "would_pass_to": [
+      "aldous",
+      "sera",
+      "danny"
+     ],
+     "based_on": [
+      "fixer.k06"
+     ],
+     "limits": [
+      "L5"
+     ],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "fixer.r5",
+     "gist": "Mickey's, the minicab office, is on Quay Street in the Hook, with the rank outside.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 70,
+       "end": 70
+      }
+     },
+     "sure": "a plain fact",
+     "heard_from": [
+      "street"
+     ],
+     "would_pass_to": [
+      "aldous",
+      "sera",
+      "danny"
+     ],
+     "based_on": [
+      "fixer.k05"
+     ],
+     "limits": [],
+     "new": "N-RUMOURS"
+    }
+   ],
+   "newcomer_questions": [
+    {
+     "id": "fixer.q1",
+     "q": "Who are you?",
+     "kind": "answers",
+     "a": "Keith Garbutt. Most call me the Fixer.",
+     "uses": [
+      "fixer.k07"
+     ],
+     "bench": "firsts: Who are you?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "fixer.q2",
+     "q": "What do you do?",
+     "kind": "answers",
+     "a": "I don't take sides. I take a percentage. It's a more honest arrangement.",
+     "uses": [
+      "fixer.k10"
+     ],
+     "bench": "firsts: What do you do here?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "fixer.q3",
+     "q": "What is this place?",
+     "kind": "answers",
+     "a": "Mickey's, the minicab office, on Quay Street in the Hook.",
+     "uses": [
+      "fixer.k05"
+     ],
+     "bench": "firsts: What is this place?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "fixer.q4",
+     "q": "How did Mickey die?",
+     "kind": "answers",
+     "a": "His heart, the doctor said. Ron found him at the office early one morning, when he came on at the rank.",
+     "uses": [
+      "fixer.k02"
+     ],
+     "bench": "firsts: How did Mickey die?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "fixer.q5",
+     "q": "What happened at the warehouse fire?",
+     "kind": "partly",
+     "a": "Importer's warehouse, last November. The paper called it arson. Nobody was charged.",
+     "uses": [
+      "fixer.k03"
+     ],
+     "bench": "fresh: What happened at the warehouse fire?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "fixer.q6",
+     "q": "Who can I trust?",
+     "kind": "deflect",
+     "a": "Everybody wants the same thing. They just want it first.",
+     "uses": [
+      "fixer.k11"
+     ],
+     "bench": "firsts: Who can I trust?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "fixer.q7",
+     "q": "Who runs things round here?",
+     "kind": "deflect",
+     "a": "Say what you need. Whether I can help is another conversation.",
+     "uses": [
+      "fixer.k12"
+     ],
+     "bench": "firsts: Who runs things round here?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "fixer.q8",
+     "q": "Is there any money in the business?",
+     "kind": "partly",
+     "a": "Not much, I hear, since the docks went. Trade has been thin.",
+     "uses": [
+      "fixer.k06"
+     ],
+     "bench": "firsts: Is there any money in the business?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "fixer.q9",
+     "q": "Did Mickey leave me anything?",
+     "kind": "answers",
+     "a": "The office, I hear. He left it to his nephew by his will.",
+     "uses": [
+      "fixer.k04"
+     ],
+     "bench": "firsts: Did Mickey leave me anything?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "fixer.q10",
+     "q": "What do people say about me?",
+     "kind": "dont_know",
+     "a": "Nothing to me yet. That's all I know.",
+     "uses": [],
+     "bench": "fresh: What do people say about me?",
+     "new": "N-ANSWERS"
+    }
+   ],
+   "id_note": "No internal id found; 'fixer' is proposed (the sheet folder is the-fixer)."
+  },
+  {
+   "id": "elias",
+   "name": "Philip Danby",
+   "heard_as": "Philip",
+   "tier": "principal",
+   "age": 33,
+   "role": {
+    "text": "a teacher at the comprehensive, which stands closed for the game's window",
+    "src": {
+     "file": "production/casting/CASTING.md",
+     "line": 73,
+     "end": 73
+    }
+   },
+   "identity_src": {
+    "file": "production/casting/CASTING.md",
+    "line": 73,
+    "end": 73
+   },
+   "knew_mickey": false,
+   "facts": [
+    {
+     "key": "died_when",
+     "kind": "knows",
+     "text": "Mickey died three weeks before the new owner, his nephew, came to Quay Street.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 33,
+      "end": 33
+     },
+     "street": "died_when",
+     "secret": false,
+     "id": "elias.k01"
+    },
+    {
+     "key": "died_heart",
+     "kind": "knows",
+     "text": "Mickey died of his heart, at the office early one morning; Ron found him when he came on at the rank, and the doctor said it was his heart.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 36,
+      "end": 36
+     },
+     "street": "died_heart",
+     "secret": false,
+     "id": "elias.k02"
+    },
+    {
+     "key": "fire",
+     "kind": "knows",
+     "text": "Last November, on a Saturday night, the importer's warehouse at the far end of the old warehouse row burned down; the evening paper called it arson, since it started in two places, but nobody was charged, and the street says the owner had it done for the insurance.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 41,
+      "end": 41
+     },
+     "street": "fire",
+     "secret": false,
+     "id": "elias.k03"
+    },
+    {
+     "key": "will",
+     "kind": "knows",
+     "text": "Mickey left the office, Mickey's, the cab office on Quay Street, to his nephew, the new owner, by his will; the new owner came with one suitcase and a letter saying so.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 45,
+      "end": 45
+     },
+     "street": "will",
+     "secret": false,
+     "id": "elias.k04"
+    },
+    {
+     "key": "funeral",
+     "kind": "knows",
+     "text": "Mickey's funeral was at Father Walsh's chapel, before the new owner came; he missed it.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 47,
+      "end": 47
+     },
+     "street": "funeral",
+     "secret": false,
+     "id": "elias.k05"
+    },
+    {
+     "key": "june",
+     "kind": "knows",
+     "text": "June, Mickey's daughter, came back to the Hook for the funeral and is still in town; she wants nothing from the office.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 49,
+      "end": 49
+     },
+     "street": "june",
+     "secret": false,
+     "id": "elias.k06"
+    },
+    {
+     "key": "trade",
+     "kind": "knows",
+     "text": "Mickey's has not made much money since the docks went; trade has been thin.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 63,
+      "end": 63
+     },
+     "street": "trade",
+     "secret": false,
+     "id": "elias.k07"
+    },
+    {
+     "key": "office",
+     "kind": "knows",
+     "text": "Mickey's, the minicab office, is on Quay Street in the Hook, with the rank outside.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 70,
+      "end": 70
+     },
+     "street": "office",
+     "secret": false,
+     "id": "elias.k08"
+    },
+    {
+     "key": "cafe",
+     "kind": "knows",
+     "text": "The cafe is across the street, in the shops opposite the north end of the parade; it opens at half past six and shuts at ten at night, and on Sundays it is open only from eight till twelve.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 65,
+      "end": 65
+     },
+     "street": "cafe",
+     "secret": false,
+     "id": "elias.k09"
+    },
+    {
+     "key": "job",
+     "kind": "knows",
+     "text": "a teacher at the comprehensive, which stands closed for the game's window",
+     "src": {
+      "file": "production/casting/CASTING.md",
+      "line": 73,
+      "end": 73
+     },
+     "secret": false,
+     "via": "who and what they are, as their home gives it",
+     "id": "elias.k10"
+    },
+    {
+     "key": "local",
+     "kind": "knows",
+     "secret": false,
+     "text": "Local; went away to train and came back.",
+     "src": {
+      "file": "production/casting/philip-danby/SHEET.md",
+      "line": 10,
+      "end": 10
+     },
+     "id": "elias.k11"
+    },
+    {
+     "key": "own_days",
+     "kind": "knows",
+     "secret": false,
+     "text": "so his days are his own.",
+     "src": {
+      "file": "production/casting/philip-danby/SHEET.md",
+      "line": 11,
+      "end": 11
+     },
+     "id": "elias.k12"
+    },
+    {
+     "key": "time",
+     "kind": "knows",
+     "secret": false,
+     "text": "I've more time than I know what to do with just now.",
+     "src": {
+      "file": "production/casting/philip-danby/SHEET.md",
+      "line": 21,
+      "end": 21
+     },
+     "id": "elias.k13"
+    },
+    {
+     "key": "walk",
+     "kind": "knows",
+     "secret": false,
+     "text": "I walk. It's that or sit indoors watching the rain.",
+     "src": {
+      "file": "production/casting/philip-danby/SHEET.md",
+      "line": 22,
+      "end": 22
+     },
+     "id": "elias.k14"
+    },
+    {
+     "key": "notice",
+     "kind": "knows",
+     "secret": false,
+     "text": "You notice things when you're not in a hurry. I'm never in a hurry now.",
+     "src": {
+      "file": "production/casting/philip-danby/SHEET.md",
+      "line": 23,
+      "end": 23
+     },
+     "id": "elias.k15"
+    },
+    {
+     "key": "moves",
+     "kind": "knows",
+     "secret": false,
+     "text": "Walks a great deal; carries a paperback or the paper; stands a little too close when he is interested and steps back when he notices.",
+     "src": {
+      "file": "production/casting/philip-danby/SHEET.md",
+      "line": 16,
+      "end": 16
+     },
+     "id": "elias.k16"
+    },
+    {
+     "key": "quiet_street",
+     "kind": "believes",
+     "secret": false,
+     "text": "The street is quiet enough now that anything out of the ordinary is noticed.",
+     "new": "N-LIVES",
+     "why": "Follows 'You notice things when you're not in a hurry' (sheet) and the street's thin trade.",
+     "truth": "unknown",
+     "truth_basis": {
+      "note": "A stance, not a fact about the world."
+     },
+     "id": "elias.b01"
+    },
+    {
+     "key": "walks_seen",
+     "kind": "saw",
+     "secret": false,
+     "text": "Walks a great deal; carries a paperback or the paper; stands a little too close when he is interested and steps back when he notices.",
+     "src": {
+      "file": "production/casting/philip-danby/SHEET.md",
+      "line": 16,
+      "end": 16
+     },
+     "when": "most days, with the school shut",
+     "id": "elias.s01"
+    }
+   ],
+   "schedule": {
+    "weekday": [
+     {
+      "from": "00:00",
+      "to": "08:30",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     },
+     {
+      "from": "08:30",
+      "to": "09:30",
+      "place": "cafe",
+      "said": "inside the cafe across the street from Mickey's"
+     },
+     {
+      "from": "09:30",
+      "to": "12:00",
+      "place": "quay",
+      "said": "the quay at the bottom of Quay Street"
+     },
+     {
+      "from": "12:00",
+      "to": "13:00",
+      "place": "kiosk",
+      "said": "by the kiosk on Quay Street"
+     },
+     {
+      "from": "13:00",
+      "to": "16:00",
+      "place": "allotments",
+      "said": "the allotments by the railway"
+     },
+     {
+      "from": "16:00",
+      "to": "18:00",
+      "place": "quay",
+      "said": "the quay at the bottom of Quay Street"
+     },
+     {
+      "from": "18:00",
+      "to": "24:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     }
+    ],
+    "weekday_note": "Monday to Friday unless a day is listed below",
+    "weekday_differs": {},
+    "saturday": [
+     {
+      "from": "00:00",
+      "to": "09:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     },
+     {
+      "from": "09:00",
+      "to": "11:00",
+      "place": "cafe",
+      "said": "inside the cafe across the street from Mickey's"
+     },
+     {
+      "from": "11:00",
+      "to": "13:00",
+      "place": "market",
+      "said": "the open market"
+     },
+     {
+      "from": "13:00",
+      "to": "24:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     }
+    ],
+    "sunday": [
+     {
+      "from": "00:00",
+      "to": "10:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     },
+     {
+      "from": "10:00",
+      "to": "13:00",
+      "place": "allotments",
+      "said": "the allotments by the railway"
+     },
+     {
+      "from": "13:00",
+      "to": "24:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     }
+    ],
+    "source": {
+     "new": "N-SCHEDULES",
+     "proposed": true
+    },
+    "note": "No routine for this person in hook-cast.json; proposed from the sheet, the shop hours and the districts of canon.md. He walks: the cafe, the quay, the kiosk for the paper, the allotments by the railway; the school stands closed (canon)."
+   },
+   "talks_to": [
+    {
+     "who": "sam",
+     "weight": null,
+     "band": "shares the same place 17 hours a week (computed from the two schedules)",
+     "meets": "computed",
+     "hours_a_week": 17.0,
+     "source": {
+      "new": "N-SCHEDULES",
+      "computed": true
+     },
+     "other_role": "Darren Milner: the street hustler, on his rounds (canon)",
+     "crowd": null
+    },
+    {
+     "who": "rocco",
+     "weight": null,
+     "band": "shares the same place 13 hours a week (computed from the two schedules)",
+     "meets": "computed",
+     "hours_a_week": 13.0,
+     "source": {
+      "new": "N-SCHEDULES",
+      "computed": true
+     },
+     "other_role": "Ron Kirby: Mickey's door and rank (canon)",
+     "crowd": null
+    },
+    {
+     "who": "joey",
+     "weight": null,
+     "band": "shares the same place 10 hours a week (computed from the two schedules)",
+     "meets": "computed",
+     "hours_a_week": 10.0,
+     "source": {
+      "new": "N-SCHEDULES",
+      "computed": true
+     },
+     "other_role": "a dock hand working the quay at the street's end",
+     "crowd": null
+    },
+    {
+     "who": "lena",
+     "weight": null,
+     "band": "shares the same place 5 hours a week (computed from the two schedules)",
+     "meets": "computed",
+     "hours_a_week": 5.0,
+     "source": {
+      "new": "N-SCHEDULES",
+      "computed": true
+     },
+     "other_role": "Sheila Dunn: Mickey's bookkeeper (canon)",
+     "crowd": null
+    },
+    {
+     "who": "ada",
+     "weight": null,
+     "band": "shares the same place 5 hours a week (computed from the two schedules)",
+     "meets": "computed",
+     "hours_a_week": 5.0,
+     "source": {
+      "new": "N-SCHEDULES",
+      "computed": true
+     },
+     "other_role": "Ada: the widow who keeps a window on Quay Street (canon)",
+     "crowd": null
+    },
+    {
+     "who": "noor",
+     "weight": null,
+     "band": "shares the same place 5 hours a week (computed from the two schedules)",
+     "meets": "computed",
+     "hours_a_week": 5.0,
+     "source": {
+      "new": "N-SCHEDULES",
+      "computed": true
+     },
+     "other_role": "Alison Sedman: the reporter on her rounds (canon)",
+     "crowd": null
+    },
+    {
+     "who": "marla",
+     "weight": null,
+     "band": "shares the same place 5 hours a week (computed from the two schedules)",
+     "meets": "computed",
+     "hours_a_week": 5.0,
+     "source": {
+      "new": "N-SCHEDULES",
+      "computed": true
+     },
+     "other_role": "the fish shop's woman, who buys on the fish dock",
+     "crowd": null
+    },
+    {
+     "who": "rita",
+     "weight": null,
+     "band": "shares the same place 5 hours a week (computed from the two schedules)",
+     "meets": "computed",
+     "hours_a_week": 5.0,
+     "source": {
+      "new": "N-SCHEDULES",
+      "computed": true
+     },
+     "other_role": "keeps Rita's pawn",
+     "crowd": null
+    },
+    {
+     "who": "victor",
+     "weight": null,
+     "band": "shares the same place 5 hours a week (computed from the two schedules)",
+     "meets": "computed",
+     "hours_a_week": 5.0,
+     "source": {
+      "new": "N-SCHEDULES",
+      "computed": true
+     },
+     "other_role": "the pawn's back room",
+     "crowd": null
+    },
+    {
+     "who": "ines",
+     "weight": null,
+     "band": "shares the same place 5 hours a week (computed from the two schedules)",
+     "meets": "computed",
+     "hours_a_week": 5.0,
+     "source": {
+      "new": "N-SCHEDULES",
+      "computed": true
+     },
+     "other_role": "the pawn's appraiser",
+     "crowd": null
+    },
+    {
+     "who": "marta",
+     "weight": null,
+     "band": "shares the same place 5 hours a week (computed from the two schedules)",
+     "meets": "computed",
+     "hours_a_week": 5.0,
+     "source": {
+      "new": "N-SCHEDULES",
+      "computed": true
+     },
+     "other_role": "the pawn's clerk",
+     "crowd": null
+    },
+    {
+     "who": "stipe",
+     "weight": null,
+     "band": "shares the same place 5 hours a week (computed from the two schedules)",
+     "meets": "computed",
+     "hours_a_week": 5.0,
+     "source": {
+      "new": "N-SCHEDULES",
+      "computed": true
+     },
+     "other_role": "a crane driver on the docks, home by the quay",
+     "crowd": null
+    },
+    {
+     "who": "fabjan",
+     "weight": null,
+     "band": "shares the same place 5 hours a week (computed from the two schedules)",
+     "meets": "computed",
+     "hours_a_week": 5.0,
+     "source": {
+      "new": "N-SCHEDULES",
+      "computed": true
+     },
+     "other_role": "mends nets on the docks",
+     "crowd": null
+    },
+    {
+     "who": "sanja",
+     "weight": null,
+     "band": "shares the same place 5 hours a week (computed from the two schedules)",
+     "meets": "computed",
+     "hours_a_week": 5.0,
+     "source": {
+      "new": "N-SCHEDULES",
+      "computed": true
+     },
+     "other_role": "keeps the boarding house; buys fish for her lodgers",
+     "crowd": null
+    },
+    {
+     "who": "luka",
+     "weight": null,
+     "band": "shares the same place 3 hours a week (computed from the two schedules)",
+     "meets": "computed",
+     "hours_a_week": 3.0,
+     "source": {
+      "new": "N-SCHEDULES",
+      "computed": true
+     },
+     "other_role": "a locksmith and repairman at the yard",
+     "crowd": null
+    },
+    {
+     "who": "franjo",
+     "weight": null,
+     "band": "shares the same place 3 hours a week (computed from the two schedules)",
+     "meets": "computed",
+     "hours_a_week": 3.0,
+     "source": {
+      "new": "N-SCHEDULES",
+      "computed": true
+     },
+     "other_role": "a sign painter, on the street's boards this month",
+     "crowd": null
+    },
+    {
+     "who": "danica",
+     "weight": null,
+     "band": "shares the same place 3 hours a week (computed from the two schedules)",
+     "meets": "computed",
+     "hours_a_week": 3.0,
+     "source": {
+      "new": "N-SCHEDULES",
+      "computed": true
+     },
+     "other_role": "runs for the rent collector",
+     "crowd": null
+    }
+   ],
+   "rumours": [
+    {
+     "id": "elias.r1",
+     "gist": "Mickey died of his heart at the office early one morning; Ron found him when he came on at the rank, and the doctor said it was his heart.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "RULINGS.md",
+       "line": 108,
+       "end": 108
+      }
+     },
+     "sure": "street talk; the doctor's word",
+     "heard_from": [
+      "street"
+     ],
+     "would_pass_to": [
+      "noor",
+      "sam"
+     ],
+     "based_on": [
+      "elias.k02"
+     ],
+     "limits": [
+      "L4"
+     ],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "elias.r2",
+     "gist": "Mickey's nephew has come to take the office, with one suitcase and a letter that says Mickey left it to him.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 45,
+       "end": 45
+      }
+     },
+     "sure": "heard it from Ada",
+     "heard_from": [
+      "ada"
+     ],
+     "would_pass_to": [
+      "noor",
+      "sam"
+     ],
+     "based_on": [
+      "elias.k04"
+     ],
+     "limits": [
+      "L7"
+     ],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "elias.r3",
+     "gist": "The importer's warehouse at the far end of the old warehouse row burned down last November; the paper called it arson, nobody was charged, and the street says the owner had it done for the insurance.",
+     "truth": "partly",
+     "truth_basis": {
+      "src": {
+       "file": "game-design/warehouse-fire-2026-09-29.md",
+       "line": 37,
+       "end": 39
+      },
+      "note": "The paper's 'arson' and 'nobody charged' stand; the owner's guilt is the street's talk, false against the story: the home's lines 48 to 56 say what is true and it is never said here (RULINGS: the truth is never the street's)."
+     },
+     "sure": "the paper's word and street talk",
+     "heard_from": [
+      "street"
+     ],
+     "would_pass_to": [
+      "noor",
+      "sam"
+     ],
+     "based_on": [
+      "elias.k03"
+     ],
+     "limits": [
+      "L2",
+      "L1"
+     ],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "elias.r4",
+     "gist": "June, Mickey's daughter, came back for the funeral, is still in town, and wants nothing from the office.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 49,
+       "end": 49
+      }
+     },
+     "sure": "street talk",
+     "heard_from": [
+      "street"
+     ],
+     "would_pass_to": [
+      "noor"
+     ],
+     "based_on": [
+      "elias.k06"
+     ],
+     "limits": [],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "elias.r5",
+     "gist": "Mickey's has not made much since the docks went; trade has been thin.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 63,
+       "end": 63
+      }
+     },
+     "sure": "street talk",
+     "heard_from": [
+      "street"
+     ],
+     "would_pass_to": [
+      "sam",
+      "noor"
+     ],
+     "based_on": [
+      "elias.k07"
+     ],
+     "limits": [
+      "L5"
+     ],
+     "new": "N-RUMOURS"
+    }
+   ],
+   "newcomer_questions": [
+    {
+     "id": "elias.q1",
+     "q": "Who are you?",
+     "kind": "answers",
+     "a": "Philip Danby. I'm a teacher at the comprehensive, but it's shut, so my days are my own.",
+     "uses": [
+      "elias.k10",
+      "elias.k12"
+     ],
+     "bench": "firsts: Who are you?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "elias.q2",
+     "q": "What do you do?",
+     "kind": "answers",
+     "a": "I walk. It's that or sit indoors watching the rain.",
+     "uses": [
+      "elias.k14"
+     ],
+     "bench": "firsts: What do you do here?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "elias.q3",
+     "q": "What is this place?",
+     "kind": "answers",
+     "a": "Mickey's, the minicab office, on Quay Street in the Hook. The rank's outside.",
+     "uses": [
+      "elias.k08"
+     ],
+     "bench": "firsts: What is this place?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "elias.q4",
+     "q": "How did Mickey die?",
+     "kind": "answers",
+     "a": "His heart, I heard. Ron found him at the office early one morning, when he came on at the rank.",
+     "uses": [
+      "elias.k02"
+     ],
+     "bench": "firsts: How did Mickey die?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "elias.q5",
+     "q": "What happened at the warehouse fire?",
+     "kind": "partly",
+     "a": "Last November, a Saturday night. The paper called it arson, since it started in two places. Nobody was charged.",
+     "uses": [
+      "elias.k03"
+     ],
+     "bench": "fresh: What happened at the warehouse fire?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "elias.q6",
+     "q": "Where can I get something to eat?",
+     "kind": "answers",
+     "a": "The cafe's over the road, in the shops across from the north end of the parade. Half past six till ten, and eight till twelve on a Sunday.",
+     "uses": [
+      "elias.k09"
+     ],
+     "bench": "firsts: Where can I get something to eat?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "elias.q7",
+     "q": "Is June still about?",
+     "kind": "answers",
+     "a": "She's still in town. She came back for the funeral and wants nothing from the office.",
+     "uses": [
+      "elias.k06"
+     ],
+     "bench": "fresh: Is June still about?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "elias.q8",
+     "q": "Who's the priest round here?",
+     "kind": "partly",
+     "a": "Father Walsh, I think. Mickey's funeral was at his chapel.",
+     "uses": [
+      "elias.k05"
+     ],
+     "bench": "fresh: Who's the priest round here?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "elias.q9",
+     "q": "What's the street like after dark?",
+     "kind": "dont_know",
+     "a": "I couldn't tell you. That's all I know.",
+     "uses": [],
+     "bench": "held: What's the street like after dark?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "elias.q10",
+     "q": "Who was Mickey closest to?",
+     "kind": "dont_know",
+     "a": "No idea. That's all I know.",
+     "uses": [],
+     "bench": "fresh: Who was Mickey closest to?",
+     "new": "N-ANSWERS"
+    }
+   ],
+   "id_note": "No internal id found in the code; 'elias' is proposed (the sheet says he was Elias until 24 September)."
   }
  ]
 }

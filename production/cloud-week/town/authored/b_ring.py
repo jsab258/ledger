@@ -151,6 +151,7 @@ PEOPLE.append(person(
         K("never_landed", "FIRE", "Mickey's outfit was the story she never landed."),
         K("editor", "FIRE", "Her editor wants it dropped."),
         K("moves", "S:noor", "Fast, always half writing; leans on counters; asks the second question after the answer."),
+        K("row", "NEWS", "Hal and Rita had words in the pawn, and nobody knows what about.", via="day 1, heard from the pawn's clerk at the kiosk"),
         D("day", "day"),
     ],
     believes=[
@@ -165,7 +166,7 @@ PEOPLE.append(person(
         pool("fire", ["street"], ["ada", "sam"], ["fire", "covered_fire"], "the paper's own word and street talk; she has not got more", limits=["L2", "L1"]),
         pool("heart", ["lena"], ["ada", "sam"], ["died_heart"], "heard it from Sheila"),
         pool("arrive", ["ada"], ["sam", "rocco"], ["will"], "heard it from Ada, who saw it from her window", limits=["L7"]),
-        pool("halrita", ["marta"], ["ada", "sam"], ["fire"], "heard it from the pawn's clerk at the kiosk", limits=["L6", "L1"]),
+        pool("halrita", ["marta"], ["ada", "sam"], ["row"], "heard it from the pawn's clerk at the kiosk", limits=["L6", "L1"]),
         pool("june", ["ada"], ["lena", "sam"], ["june"], "heard it from Ada"),
     ],
     questions=[
