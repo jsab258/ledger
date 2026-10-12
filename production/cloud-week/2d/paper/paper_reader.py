@@ -100,6 +100,9 @@ def flat_reference(sc, P, item, cls, tau=1.0):
             a = math.radians(ang)
             ex, ey = cx + s["length_mm"] * math.sin(a), cy + s["length_mm"] * math.cos(a)
             d.line([(X(cx), Y(cy)), (X(ex), Y(ey))], fill=255, width=max(1, int(round(s["width_mm"] * ppm))))
+            r = s["width_mm"] * ppm / 2          # the target's "rounded end" (the reference drew a square one, and the tip of K02's hour hand read as stray ink)
+            for px, py in ((X(cx), Y(cy)), (X(ex), Y(ey))):
+                d.ellipse([px - r, py - r, px + r, py + r], fill=255)
         m = np.asarray(im) > 127
         if kind == "rule":          # the compositor's rule: a rule that runs through a line of lettering is cut 2 mm round it (the maker does the same; NOTES.md)
             for b in item["blocks"]:
