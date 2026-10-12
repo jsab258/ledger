@@ -33,7 +33,7 @@ NPZ_DIR = os.path.join(HERE, "build")
 
 BURN_AZ = -58.0              # the burnt hole's azimuth: the target's -28 would merge it with the aperture (now 230 wide), so it moves to the hood's upper left, clear of the aperture's edge
 BIN_OFFSET = 232.0           # post axis to bin axis (TARGET-REVIEW fault 1: the target's 232): the rim bead stands 7 clear of the post
-SIDES_K1, SIDES_K2, SIDES_D1 = 36, 34, 36
+SIDES_K1, SIDES_K2, SIDES_D1 = 36, 32, 36
 
 
 # ------------------------------------------------------------------------------------------------------------------------------------ helpers
@@ -97,6 +97,21 @@ def band(profile, t):
         ip = ip[::-1]
     ip = [(max(0.0, r), z) for r, z in ip]
     return [tuple(p) for p in profile] + ip[::-1]
+
+
+def band_closed(profile, t):
+    """the wall of a thin shell whose outline closes on the axis at both ends (a bin from its foot to its crown): the outline mirrored about the axis, shrunk by t with mitre joins, the
+    wall = the outline less the shrunk one, its right half as the closed (r, z) section. (REVIEW-v1-close: the offset of the open polyline looped at the groove's step, and the exact
+    boolean then lost the inner wall.)"""
+    from shapely.geometry import Polygon, box as sbox
+    P = [tuple(p) for p in profile]
+    full = Polygon(P + [(-r, z) for r, z in P[::-1][1:-1]]).buffer(0)
+    inner = full.buffer(-t, join_style=2, mitre_limit=3.0)
+    wall = full.difference(inner).intersection(sbox(0.0, -1e5, 1e5, 1e5))
+    if wall.geom_type != "Polygon":
+        wall = max(wall.geoms, key=lambda g: g.area)
+    pts = [(max(0.0, round(x, 4)), round(y, 4)) for x, y in wall.exterior.coords[:-1]]
+    return pts
 
 
 def resample(profile, step):
@@ -318,7 +333,7 @@ def build_k1(T, cond, out_dir, npz_dir):
         zc = (c["z0"] + c["z1"]) / 2.0
         # ears: two 12 thick plates on the far side (-x), 22 long, 40 high, 6 apart in y
         for sy in (-1.0, 1.0):
-            ear = prism_y([(-37.0, c["z0"] + 2.0), (-60.0, c["z0"] + 2.0), (-60.0, c["z1"] - 2.0), (-37.0, c["z1"] - 2.0)], sy * 6.0 if sy > 0 else -18.0, 18.0 if sy > 0 else -6.0)
+            ear = prism_y([(-37.0, c["z0"] + 2.0), (-62.0, c["z0"] + 2.0), (-62.0, c["z1"] - 2.0), (-37.0, c["z1"] - 2.0)], 3.0 if sy > 0 else -8.0, 8.0 if sy > 0 else -3.0)      # 5 thick, 25 out, 6 apart (REVIEW-v1-close)
             parts["ear_%d_%s" % (i, "p" if sy > 0 else "m")] = (ear[0], ear[1], "paint_green", 1.5, "bin")
         bolt = cyl_y(-50.0, zc, -24.0, 24.0, 4.0, 12)
         parts["bolt_%d" % i] = (bolt[0], bolt[1], "paint_green", None, "bin")
@@ -337,12 +352,12 @@ def build_k1(T, cond, out_dir, npz_dir):
     if C["liner_sack"]:
         # REVIEW-v1-street point 1: the sack fills the bin down to the floor, its mouth turns over the rim and hangs 120 outside (gathered), and it stands no more than 75 above the rim
         def r_in(z):
-            return 165.0 + (K1["bin"]["r_top"] - 165.0) * (z - 560.0) / (1038.0 - 560.0) - 6.0
+            return 165.0 + (K["bin"]["r_top"] - 165.0) * (z - 560.0) / (1038.0 - 560.0) - 6.0
         prof_s = [(0.0, 1124.0), (70.0, 1118.0), (r_in(1050.0) - 14.0, 1100.0), (r_in(1050.0) - 4.0, 1070.0), (r_in(1050.0), 1050.0), (r_in(900.0), 900.0), (r_in(700.0), 700.0), (r_in(570.0), 570.0), (0.0, 566.0)]
         Vs_, Fs_ = revolve(prof_s, 24)
         Vs_ = np.array(Vs_)
         Vs_[:, 0] += BIN_OFFSET
-        cuff = [(r_in(1050.0) + 4.0, 1046.0), (r_in(1050.0) + 4.0, 1058.0), (K1["bin"]["r_top"] + 8.0, 1058.0), (K1["bin"]["r_top"] + 8.0, 930.0), (K1["bin"]["r_top"] + 4.0, 930.0), (K1["bin"]["r_top"] + 4.0, 1052.0)]
+        cuff = [(r_in(1050.0) + 4.0, 1046.0), (r_in(1050.0) + 4.0, 1058.0), (K["bin"]["r_top"] + 8.0, 1058.0), (K["bin"]["r_top"] + 8.0, 930.0), (K["bin"]["r_top"] + 4.0, 930.0), (K["bin"]["r_top"] + 4.0, 1052.0)]
         Vc_, Fc_ = revolve(cuff, 24)
         Vc_ = np.array(Vc_)
         a_c = np.arctan2(Vc_[:, 1], Vc_[:, 0])
@@ -389,7 +404,7 @@ def build_k2(T, cond, out_dir, npz_dir):
     mats["cement_patch"] = bs.make_material("cement_patch", tuple(gpm["srgb"]), gpm["rough"], 0.0)
     B = Parts()
     prof = [tuple(p) for p in K["outer_profile_rz"]]
-    sec = band(prof, K["shell"])
+    sec = band_closed(prof, K["shell"])
     # the shell: the outer profile and its inner offset, closed at the foot and the crown; resampled on the hood skirt for the aperture's corners
     sec = resample(sec, 40.0)
     V, F = revolve(sec, SIDES_K2)
@@ -417,7 +432,7 @@ def build_k2(T, cond, out_dir, npz_dir):
     # the barrel lock at the back of the join: an escutcheon 40 across, 4 proud, a 22 barrel, at azimuth 180, z 650 (a 2 mm slot cut across the barrel is the engine's normal map)
     lock = revolve([(0.0, -2.0), (20.0, -2.0), (20.0, 2.0), (11.0, 2.5), (11.0, 6.0), (0.0, 6.0)], 20)
     Vl = np.array(lock[0])
-    Vl = np.stack([-(206.0 - 2.0 + Vl[:, 2]), Vl[:, 1], K["parts"]["lock"]["z"] + Vl[:, 0]], 1)    # the disc's axis along -x, 4 proud of the groove's r 206 at z 640
+    Vl = np.stack([-(210.0 - 2.0 + Vl[:, 2]), Vl[:, 1], 600.0 + Vl[:, 0]], 1)    # the disc's axis along -x, 4 proud of the body's r 210 at z 600 (the target's z 640 puts half of it under the hood's lip: REVIEW-v1-close)
     B.add("k2_lock", (Vl, lock[1]), "lock_steel", bev=None)
     # the liner (a separate object): a galvanised sheet can with a rolled rim, 1.6 thick here
     lp = [tuple(p) for p in K["parts"]["liner"]["profile_rz"]]
@@ -427,8 +442,8 @@ def build_k2(T, cond, out_dir, npz_dir):
     # the cement patch the photographed bin stands on (TARGET-REVIEW fault 6): an irregular flush disc r 290 to 330, seeded, its top 1 over the flag, a separate object
     gp = K["parts"]["ground_patch"]
     prng = np.random.default_rng(12)
-    ang = np.linspace(0.0, 2 * math.pi, 28, endpoint=False)
-    rad = [float(gp["r"][0] + (gp["r"][1] - gp["r"][0]) * (0.5 + 0.5 * math.sin(3 * a + 0.7) * 0.8 + 0.2 * prng.standard_normal())) for a in ang]
+    ang = np.linspace(0.0, 2 * math.pi, 56, endpoint=False)
+    rad = [float(gp["r"][0] + (gp["r"][1] - gp["r"][0]) * (0.5 + 0.35 * math.sin(3 * a + 0.7) + 0.25 * math.sin(7 * a + 2.0) + 0.3 * prng.standard_normal())) for a in ang]       # a ragged, broken edge
     rad = [min(max(r, gp["r"][0]), gp["r"][1]) for r in rad]
     pv = extrude_poly([(r * math.cos(a), r * math.sin(a)) for r, a in zip(rad, ang)], -4.0, 1.0)
     B.add("k2_ground_patch", pv, "cement_patch", bev=None)
@@ -476,15 +491,16 @@ def build_d1(T, cond, out_dir, npz_dir):
         # off the bin, leaning against the wall: a separate object stood on its skirt edge at x 330, tilted 72 degrees from the horizontal, its top edge toward the bin
         LV = LV.copy()
         LV[:, 2] -= 588.0
-        a = math.radians(72.0)
+        a = math.radians(-72.0)                                              # the dome faces away from the can (+x), the lid's upper edge leans on it
         c, s = math.cos(a), math.sin(a)
         x, z = LV[:, 0].copy(), LV[:, 2].copy()
         LV[:, 0] = x * c - z * s
         LV[:, 2] = x * s + z * c
         LV[:, 2] -= LV[:, 2].min()
-        it = int(np.argmax(LV[:, 2]))                                         # its top edge rests against the can's wall (REVIEW-v1-street point 4)
-        zt = float(LV[it, 2])
-        LV[:, 0] += (199.0 + 25.0 * (min(zt, 560.0) - 28.0) / (582.0 - 28.0) + 3.0) - LV[it, 0]
+        for _ in range(3):                                                    # its upper edge rests against the can's wall (REVIEW-v1-street point 4): the lid's nearest point to the can touches it
+            it = int(np.argmin(LV[:, 0]))
+            zt = float(LV[it, 2])
+            LV[:, 0] += (199.0 + 25.0 * (min(zt, 560.0) - 28.0) / (582.0 - 28.0) + 2.0) - LV[it, 0]
     elif C.get("lid_tilt_deg"):
         LV = rot_y(LV, C["lid_tilt_deg"], (231.0, 588.0))
     B.add("d1_lid", (LV, lid[1]), "zinc", bev=None)
