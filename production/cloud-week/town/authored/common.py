@@ -74,3 +74,23 @@ def pool(name, frm, to, on, sure, gist=None, limits=None):
 
 def rumour(gist, truth, basis, sure, frm, to, on, limits=()):
     return R(gist, truth, basis, sure, frm, to, on, limits)
+
+
+# --- places the proposals need that hook-cast.json does not have (new, marked) -------------------
+T = sys.modules["town_lib"]
+T.PROPOSED_PLACES.update({
+    "exchange_office": {"said": "his office in the Exchange, the district of offices and lawyers", "district": "the Exchange", "new": "N-SCHEDULES"},
+    "exchange_lunch": {"said": "his table at luncheon in the Exchange", "district": "the Exchange", "new": "N-SCHEDULES"},
+    "fairview_house": {"said": "his house in Fairview, on the hills", "district": "Fairview", "new": "N-SCHEDULES"},
+    "dock_room": {"said": "the back room of a dockside office in the Hook", "district": "the Hook", "new": "N-SCHEDULES"},
+    "jensen_house": {"said": "her house by the docks", "district": "the Hook", "new": "N-SCHEDULES"},
+    "parade_district": {"said": "the Parade, the nightlife district", "district": "the Parade", "new": "N-SCHEDULES"},
+    "danny_flat": {"said": "his flat above a shop in the Parade district", "district": "the Parade", "new": "N-SCHEDULES"},
+    "station": {"said": "the police station, in the CID office", "district": "not named in canon", "new": "N-SCHEDULES"},
+    "garbutt_room": {"said": "the room he keeps for meetings, over a shop in Copper Row", "district": "Copper Row", "new": "N-SCHEDULES"},
+    "takeaway": {"said": "the Tangs' takeaway on the parade (its unit not yet fixed: RULINGS.md has bay 3 empty and to let)", "district": "the Hook", "new": "N-SCHEDULES"},
+})
+
+
+def PS(*a, **k):
+    return T.PS(*a, **k)

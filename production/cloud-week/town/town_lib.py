@@ -381,3 +381,77 @@ def person(pid, name, heard_as, tier, age, role, identity, knows, believes, saw,
                 believes=list(believes), saw=list(saw), rumours=list(rumours), questions=list(questions), street=list(street),
                 schedule=schedule, talks=talks or {}, knew_mickey=knew_mickey, tom_exception=tom_exception,
                 internal_id_note=internal_id_note, extra=extra or {})
+
+
+# --- proposed schedules (for the people hook-cast.json has no routine for) ------
+
+PROPOSED_PLACES = {}
+
+
+def _hv(x):
+    if isinstance(x, str):
+        h, m = x.split(":")
+        return int(h) + int(m) / 60.0
+    return float(x)
+
+
+def said_any(place):
+    if place in PROPOSED_PLACES:
+        return PROPOSED_PLACES[place]["said"]
+    return place_said(place)
+
+
+def PS(weekday, saturday, sunday, differs=None, note=""):
+    """A proposed schedule: lists of (from, to, place) with hours as numbers; places are hook-cast's or PROPOSED_PLACES."""
+    def seg(lst):
+        out = []
+        for a, b, pl in lst:
+            out.append({"from": hour_text(a), "to": hour_text(b) if b < 24 else "24:00", "place": pl, "said": said_any(pl)})
+        return out
+    d = {"weekday": seg(weekday), "weekday_note": "Monday to Friday unless a day is listed below",
+         "weekday_differs": {k: seg(v) for k, v in (differs or {}).items()},
+         "saturday": seg(saturday), "sunday": seg(sunday),
+         "source": {"new": "N-SCHEDULES", "proposed": True}, "note": note}
+    return Spec(d)
+
+
+def sched_day_segments(sched, day):
+    """[(from, to, place)] on a weekday for a schedule dict (derived or proposed)."""
+    if day == "sat":
+        lst = sched["saturday"]
+    elif day == "sun":
+        lst = sched["sunday"]
+    else:
+        lst = sched.get("weekday_differs", {}).get(day) or sched["weekday"]
+    return [(_hv(s["from"]), _hv(s["to"]), s["place"]) for s in lst]
+
+
+def hours_together_sched(sa, sb):
+    rng = hk()["talk_range_m"]
+    total = 0.0
+    for d in DAYS:
+        a, b = sched_day_segments(sa, d), sched_day_segments(sb, d)
+        for h in range(24):
+            pa = next((s[2] for s in a if s[0] <= h < s[1]), "off")
+            pb = next((s[2] for s in b if s[0] <= h < s[1]), "off")
+            xa, xb = pos(pa), pos(pb)
+            if xa is None or xb is None:
+                continue
+            if ((xa[0] - xb[0]) ** 2 + (xa[1] - xb[1]) ** 2) ** 0.5 <= rng:
+                total += 1
+    return total
+
+
+def propose_ties(pid, sched, min_hours=3):
+    """People whose hook-cast routines put them within the talking range of this proposed schedule: computed, not invented."""
+    out = []
+    for p in hk()["people"]:
+        if p["id"] == pid or p["id"] == "outfit_man":
+            continue
+        other = derive_schedule(p["id"])
+        h = hours_together_sched(sched, other)
+        if h >= min_hours:
+            out.append({"who": p["id"], "weight": None, "band": "shares the same place %d hours a week (computed from the two schedules)" % h,
+                        "meets": "computed", "hours_a_week": h, "source": {"new": "N-SCHEDULES", "computed": True}})
+    out.sort(key=lambda e: -e["hours_a_week"])
+    return out

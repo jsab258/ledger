@@ -101,8 +101,25 @@ def build_person(p, sf, proposed_places):
     # 1b. who they are, in the home's own words (the role cell or line)
     ralias, rquote = p["role"]
     add({"key": "job", "kind": "knows", "text": rquote, "src": src_dict(T.path_of(ralias), rquote), "secret": False, "via": "who and what they are, as their home gives it"})
-    # 2. the rest, in the order written
-    for f in p["knows"] + p["believes"] + p["saw"]:
+    # 2. the rest, in the order written (knows, then who they talk to, then believes and saw)
+    ties_early = T.derive_ties(pid) if T.hk_person(pid) else []
+
+    def who_facts():
+        out = []
+        for t in ties_early:
+            other = T.hk_person(t["who"])
+            called = other["called"]
+            line = None
+            ol = T.hk_person_line(t["who"])
+            for i in range(ol, ol + 8):
+                if T._lines(T.ALIASES["HK"])[i - 1].strip().startswith('"called": '):
+                    line = i
+                    break
+            out.append(T.Spec(key="who_" + t["who"], kind="knows", src=("HK", called, line), secret=False,
+                              via="who %s is, as the home describes them (hook-cast.json, the tie of %s)" % (t["who"], t["weight"])))
+        return out
+
+    for f in p["knows"] + who_facts() + p["believes"] + p["saw"]:
         out = {"key": f["key"], "kind": f["kind"], "secret": bool(f.get("secret"))}
         if "src" in f:
             alias, quote, near = f["src"]
@@ -142,12 +159,31 @@ def build_person(p, sf, proposed_places):
 
     # schedule: derived from the home when there is a routine, else the proposal
     sched = T.derive_schedule(pid)
+    overridden = False
+    if p["schedule"] is not None:
+        if sched is not None:
+            # a sheet outranks hook-cast: the proposal replaces the home's routine, and says so
+            overridden = True
+            home = sched
+            sched = dict(p["schedule"])
+            sched["overrides"] = {"file": T.ALIASES["HK"], "line": home["source"]["line"], "why": p["extra"].get("override_why", "")}
+        else:
+            sched = dict(p["schedule"])
     if sched is None:
-        sched = p["schedule"]
-        if sched is None:
-            raise SystemExit("no schedule for " + pid)
+        raise SystemExit("no schedule for " + pid)
     # ties
     ties = T.derive_ties(pid) if T.hk_person(pid) else []
+    if overridden:
+        for t in ties:
+            o = T.hk_person(t["who"])
+            if o:
+                t["hours_a_week"] = T.hours_together_sched(sched, T.derive_schedule(t["who"]))
+                t["hours_note"] = "computed from the proposed schedule, which replaces the routine in hook-cast.json"
+    if not T.hk_person(pid) and not p["tom_exception"]:
+        ties = T.propose_ties(pid, sched)
+        for t in ties:
+            t["other_role"] = T.hk_person(t["who"])["role"]
+            t["crowd"] = None
     colours = p["talks"]
     for t in ties:
         if t["who"] in colours:
@@ -198,7 +234,7 @@ def main():
         "made": "13 Oct 2026, cloud week 42, unit 11 (town content)",
         "status": "A PROPOSAL for the PC session. Homes are in HOMES.md. Nothing here is in the game. Every fact is either copied word for word from its home with file and line, derived by script from a home, or marked new with a group Jafar sees in DECISIONS.md.",
         "groups": GROUPS,
-        "proposed_places": places,
+        "proposed_places": T.PROPOSED_PLACES,
         "street_facts": street_index,
         "people": out_people,
     }

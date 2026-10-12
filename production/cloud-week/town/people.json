@@ -28,7 +28,58 @@
    "decisions_key": "which regulars knew Mickey"
   }
  },
- "proposed_places": {},
+ "proposed_places": {
+  "exchange_office": {
+   "said": "his office in the Exchange, the district of offices and lawyers",
+   "district": "the Exchange",
+   "new": "N-SCHEDULES"
+  },
+  "exchange_lunch": {
+   "said": "his table at luncheon in the Exchange",
+   "district": "the Exchange",
+   "new": "N-SCHEDULES"
+  },
+  "fairview_house": {
+   "said": "his house in Fairview, on the hills",
+   "district": "Fairview",
+   "new": "N-SCHEDULES"
+  },
+  "dock_room": {
+   "said": "the back room of a dockside office in the Hook",
+   "district": "the Hook",
+   "new": "N-SCHEDULES"
+  },
+  "jensen_house": {
+   "said": "her house by the docks",
+   "district": "the Hook",
+   "new": "N-SCHEDULES"
+  },
+  "parade_district": {
+   "said": "the Parade, the nightlife district",
+   "district": "the Parade",
+   "new": "N-SCHEDULES"
+  },
+  "danny_flat": {
+   "said": "his flat above a shop in the Parade district",
+   "district": "the Parade",
+   "new": "N-SCHEDULES"
+  },
+  "station": {
+   "said": "the police station, in the CID office",
+   "district": "not named in canon",
+   "new": "N-SCHEDULES"
+  },
+  "garbutt_room": {
+   "said": "the room he keeps for meetings, over a shop in Copper Row",
+   "district": "Copper Row",
+   "new": "N-SCHEDULES"
+  },
+  "takeaway": {
+   "said": "the Tangs' takeaway on the parade (its unit not yet fixed: RULINGS.md has bay 3 empty and to let)",
+   "district": "the Hook",
+   "new": "N-SCHEDULES"
+  }
+ },
  "street_facts": {
   "died_when": {
    "text": "Mickey died three weeks before the new owner, his nephew, came to Quay Street.",
@@ -570,6 +621,175 @@
       "how": "day"
      },
      "id": "rocco.k28"
+    },
+    {
+     "key": "who_sam",
+     "kind": "knows",
+     "secret": false,
+     "text": "Darren Milner, the street hustler, always on his rounds",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 623,
+      "end": 623
+     },
+     "via": "who sam is, as the home describes them (hook-cast.json, the tie of 0.8)",
+     "id": "rocco.k29"
+    },
+    {
+     "key": "who_lena",
+     "kind": "knows",
+     "secret": false,
+     "text": "Sheila Dunn, Mickey's bookkeeper",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 371,
+      "end": 371
+     },
+     "via": "who lena is, as the home describes them (hook-cast.json, the tie of 0.7)",
+     "id": "rocco.k30"
+    },
+    {
+     "key": "who_joey",
+     "kind": "knows",
+     "secret": false,
+     "text": "a dock hand on the quay",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 1200,
+      "end": 1200
+     },
+     "via": "who joey is, as the home describes them (hook-cast.json, the tie of 0.6)",
+     "id": "rocco.k31"
+    },
+    {
+     "key": "who_noor",
+     "kind": "knows",
+     "secret": false,
+     "text": "Alison Sedman, the reporter, out on her rounds",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 999,
+      "end": 999
+     },
+     "via": "who noor is, as the home describes them (hook-cast.json, the tie of 0.5)",
+     "id": "rocco.k32"
+    },
+    {
+     "key": "who_dusan",
+     "kind": "knows",
+     "secret": false,
+     "text": "the night cab driver",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 541,
+      "end": 541
+     },
+     "via": "who dusan is, as the home describes them (hook-cast.json, the tie of 0.5)",
+     "id": "rocco.k33"
+    },
+    {
+     "key": "who_franjo",
+     "kind": "knows",
+     "secret": false,
+     "text": "the sign painter doing the street's boards this month",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 2711,
+      "end": 2711
+     },
+     "via": "who franjo is, as the home describes them (hook-cast.json, the tie of 0.4)",
+     "id": "rocco.k34"
+    },
+    {
+     "key": "who_luka",
+     "kind": "knows",
+     "secret": false,
+     "text": "a locksmith and repairman at the yard",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 2405,
+      "end": 2405
+     },
+     "via": "who luka is, as the home describes them (hook-cast.json, the tie of 0.4)",
+     "id": "rocco.k35"
+    },
+    {
+     "key": "who_petra",
+     "kind": "knows",
+     "secret": false,
+     "text": "the ferry's ticket clerk, who lodges at the boarding house",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 2485,
+      "end": 2485
+     },
+     "via": "who petra is, as the home describes them (hook-cast.json, the tie of 0.3)",
+     "id": "rocco.k36"
+    },
+    {
+     "key": "who_tomas",
+     "kind": "knows",
+     "secret": false,
+     "text": "a boat repairer from the yard",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 2322,
+      "end": 2322
+     },
+     "via": "who tomas is, as the home describes them (hook-cast.json, the tie of 0.3)",
+     "id": "rocco.k37"
+    },
+    {
+     "key": "who_sanja",
+     "kind": "knows",
+     "secret": false,
+     "text": "the woman who keeps the boarding house",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 2575,
+      "end": 2575
+     },
+     "via": "who sanja is, as the home describes them (hook-cast.json, the tie of 0.3)",
+     "id": "rocco.k38"
+    },
+    {
+     "key": "who_stipe",
+     "kind": "knows",
+     "secret": false,
+     "text": "a crane driver on the docks",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 2151,
+      "end": 2151
+     },
+     "via": "who stipe is, as the home describes them (hook-cast.json, the tie of 0.3)",
+     "id": "rocco.k39"
+    },
+    {
+     "key": "who_drago",
+     "kind": "knows",
+     "secret": false,
+     "text": "a scrap dealer on the warehouse row",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 2926,
+      "end": 2926
+     },
+     "via": "who drago is, as the home describes them (hook-cast.json, the tie of 0.3)",
+     "id": "rocco.k40"
+    },
+    {
+     "key": "who_fabjan",
+     "kind": "knows",
+     "secret": false,
+     "text": "a net mender on the docks",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 2188,
+      "end": 2188
+     },
+     "via": "who fabjan is, as the home describes them (hook-cast.json, the tie of 0.3)",
+     "id": "rocco.k41"
     },
     {
      "key": "comes_back",
@@ -1609,6 +1829,149 @@
      "id": "lena.k30"
     },
     {
+     "key": "who_rocco",
+     "kind": "knows",
+     "secret": false,
+     "text": "Ron Kirby, who keeps Mickey's door and the rank",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 305,
+      "end": 305
+     },
+     "via": "who rocco is, as the home describes them (hook-cast.json, the tie of 0.7)",
+     "id": "lena.k31"
+    },
+    {
+     "key": "who_sam",
+     "kind": "knows",
+     "secret": false,
+     "text": "Darren Milner, the street hustler, always on his rounds",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 623,
+      "end": 623
+     },
+     "via": "who sam is, as the home describes them (hook-cast.json, the tie of 0.6)",
+     "id": "lena.k32"
+    },
+    {
+     "key": "who_ada",
+     "kind": "knows",
+     "secret": false,
+     "text": "Ada, the widow who keeps a window on Quay Street",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 889,
+      "end": 889
+     },
+     "via": "who ada is, as the home describes them (hook-cast.json, the tie of 0.6)",
+     "id": "lena.k33"
+    },
+    {
+     "key": "who_noor",
+     "kind": "knows",
+     "secret": false,
+     "text": "Alison Sedman, the reporter, out on her rounds",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 999,
+      "end": 999
+     },
+     "via": "who noor is, as the home describes them (hook-cast.json, the tie of 0.5)",
+     "id": "lena.k34"
+    },
+    {
+     "key": "who_june",
+     "kind": "knows",
+     "secret": false,
+     "text": "June, Mickey's daughter, back for the funeral",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 572,
+      "end": 572
+     },
+     "via": "who june is, as the home describes them (hook-cast.json, the tie of 0.5)",
+     "id": "lena.k35"
+    },
+    {
+     "key": "who_franjo",
+     "kind": "knows",
+     "secret": false,
+     "text": "the sign painter doing the street's boards this month",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 2711,
+      "end": 2711
+     },
+     "via": "who franjo is, as the home describes them (hook-cast.json, the tie of 0.5)",
+     "id": "lena.k36"
+    },
+    {
+     "key": "who_victor",
+     "kind": "knows",
+     "secret": false,
+     "text": "the pawn's back-room hand",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 1299,
+      "end": 1299
+     },
+     "via": "who victor is, as the home describes them (hook-cast.json, the tie of 0.4)",
+     "id": "lena.k37"
+    },
+    {
+     "key": "who_danica",
+     "kind": "knows",
+     "secret": false,
+     "text": "the rent collector's runner",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 2794,
+      "end": 2794
+     },
+     "via": "who danica is, as the home describes them (hook-cast.json, the tie of 0.4)",
+     "id": "lena.k38"
+    },
+    {
+     "key": "who_jelena",
+     "kind": "knows",
+     "secret": false,
+     "text": "a locksmith who works the pawn's counter in the mornings",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 2066,
+      "end": 2066
+     },
+     "via": "who jelena is, as the home describes them (hook-cast.json, the tie of 0.4)",
+     "id": "lena.k39"
+    },
+    {
+     "key": "who_zora",
+     "kind": "knows",
+     "secret": false,
+     "text": "a washerwoman at the steam laundry",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 1769,
+      "end": 1769
+     },
+     "via": "who zora is, as the home describes them (hook-cast.json, the tie of 0.3)",
+     "id": "lena.k40"
+    },
+    {
+     "key": "who_ines",
+     "kind": "knows",
+     "secret": false,
+     "text": "the pawn's appraiser",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 1980,
+      "end": 1980
+     },
+     "via": "who ines is, as the home describes them (hook-cast.json, the tie of 0.3)",
+     "id": "lena.k41"
+    },
+    {
      "key": "worry",
      "kind": "believes",
      "secret": false,
@@ -2578,6 +2941,344 @@
       "how": "day"
      },
      "id": "sam.k28"
+    },
+    {
+     "key": "who_rocco",
+     "kind": "knows",
+     "secret": false,
+     "text": "Ron Kirby, who keeps Mickey's door and the rank",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 305,
+      "end": 305
+     },
+     "via": "who rocco is, as the home describes them (hook-cast.json, the tie of 0.8)",
+     "id": "sam.k29"
+    },
+    {
+     "key": "who_lena",
+     "kind": "knows",
+     "secret": false,
+     "text": "Sheila Dunn, Mickey's bookkeeper",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 371,
+      "end": 371
+     },
+     "via": "who lena is, as the home describes them (hook-cast.json, the tie of 0.6)",
+     "id": "sam.k30"
+    },
+    {
+     "key": "who_noor",
+     "kind": "knows",
+     "secret": false,
+     "text": "Alison Sedman, the reporter, out on her rounds",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 999,
+      "end": 999
+     },
+     "via": "who noor is, as the home describes them (hook-cast.json, the tie of 0.6)",
+     "id": "sam.k31"
+    },
+    {
+     "key": "who_dusan",
+     "kind": "knows",
+     "secret": false,
+     "text": "the night cab driver",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 541,
+      "end": 541
+     },
+     "via": "who dusan is, as the home describes them (hook-cast.json, the tie of 0.6)",
+     "id": "sam.k32"
+    },
+    {
+     "key": "who_ada",
+     "kind": "knows",
+     "secret": false,
+     "text": "Ada, the widow who keeps a window on Quay Street",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 889,
+      "end": 889
+     },
+     "via": "who ada is, as the home describes them (hook-cast.json, the tie of 0.5)",
+     "id": "sam.k33"
+    },
+    {
+     "key": "who_victor",
+     "kind": "knows",
+     "secret": false,
+     "text": "the pawn's back-room hand",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 1299,
+      "end": 1299
+     },
+     "via": "who victor is, as the home describes them (hook-cast.json, the tie of 0.5)",
+     "id": "sam.k34"
+    },
+    {
+     "key": "who_goran",
+     "kind": "knows",
+     "secret": false,
+     "text": "a customs assistant on the docks",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 2225,
+      "end": 2225
+     },
+     "via": "who goran is, as the home describes them (hook-cast.json, the tie of 0.5)",
+     "id": "sam.k35"
+    },
+    {
+     "key": "who_katarina",
+     "kind": "knows",
+     "secret": false,
+     "text": "the seamstress who does alterations at the laundry and sells on the market",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 1903,
+      "end": 1903
+     },
+     "via": "who katarina is, as the home describes them (hook-cast.json, the tie of 0.5)",
+     "id": "sam.k36"
+    },
+    {
+     "key": "who_stipe",
+     "kind": "knows",
+     "secret": false,
+     "text": "a crane driver on the docks",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 2151,
+      "end": 2151
+     },
+     "via": "who stipe is, as the home describes them (hook-cast.json, the tie of 0.5)",
+     "id": "sam.k37"
+    },
+    {
+     "key": "who_drago",
+     "kind": "knows",
+     "secret": false,
+     "text": "a scrap dealer on the warehouse row",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 2926,
+      "end": 2926
+     },
+     "via": "who drago is, as the home describes them (hook-cast.json, the tie of 0.5)",
+     "id": "sam.k38"
+    },
+    {
+     "key": "who_ines",
+     "kind": "knows",
+     "secret": false,
+     "text": "the pawn's appraiser",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 1980,
+      "end": 1980
+     },
+     "via": "who ines is, as the home describes them (hook-cast.json, the tie of 0.5)",
+     "id": "sam.k39"
+    },
+    {
+     "key": "who_dario",
+     "kind": "knows",
+     "secret": false,
+     "text": "a ferryman",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 2530,
+      "end": 2530
+     },
+     "via": "who dario is, as the home describes them (hook-cast.json, the tie of 0.5)",
+     "id": "sam.k40"
+    },
+    {
+     "key": "who_filip",
+     "kind": "knows",
+     "secret": false,
+     "text": "the night watchman on the warehouse row",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 2957,
+      "end": 2957
+     },
+     "via": "who filip is, as the home describes them (hook-cast.json, the tie of 0.5)",
+     "id": "sam.k41"
+    },
+    {
+     "key": "who_marta",
+     "kind": "knows",
+     "secret": false,
+     "text": "the pawn's clerk",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 2025,
+      "end": 2025
+     },
+     "via": "who marta is, as the home describes them (hook-cast.json, the tie of 0.5)",
+     "id": "sam.k42"
+    },
+    {
+     "key": "who_jelena",
+     "kind": "knows",
+     "secret": false,
+     "text": "a locksmith who works the pawn's counter in the mornings",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 2066,
+      "end": 2066
+     },
+     "via": "who jelena is, as the home describes them (hook-cast.json, the tie of 0.5)",
+     "id": "sam.k43"
+    },
+    {
+     "key": "who_outfit_man",
+     "kind": "knows",
+     "secret": false,
+     "text": "a man who hangs about the ferry landing at night",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 2978,
+      "end": 2978
+     },
+     "via": "who outfit_man is, as the home describes them (hook-cast.json, the tie of 0.45)",
+     "id": "sam.k44"
+    },
+    {
+     "key": "who_danica",
+     "kind": "knows",
+     "secret": false,
+     "text": "the rent collector's runner",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 2794,
+      "end": 2794
+     },
+     "via": "who danica is, as the home describes them (hook-cast.json, the tie of 0.45)",
+     "id": "sam.k45"
+    },
+    {
+     "key": "who_marla",
+     "kind": "knows",
+     "secret": false,
+     "text": "the woman from the fish shop, who buys on the fish dock",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 1133,
+      "end": 1133
+     },
+     "via": "who marla is, as the home describes them (hook-cast.json, the tie of 0.4)",
+     "id": "sam.k46"
+    },
+    {
+     "key": "who_ferko",
+     "kind": "knows",
+     "secret": false,
+     "text": "a day driver on Mickey's rank",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 502,
+      "end": 502
+     },
+     "via": "who ferko is, as the home describes them (hook-cast.json, the tie of 0.4)",
+     "id": "sam.k47"
+    },
+    {
+     "key": "who_zlata",
+     "kind": "knows",
+     "secret": false,
+     "text": "the dispatcher at the cab office",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 459,
+      "end": 459
+     },
+     "via": "who zlata is, as the home describes them (hook-cast.json, the tie of 0.4)",
+     "id": "sam.k48"
+    },
+    {
+     "key": "who_tomas",
+     "kind": "knows",
+     "secret": false,
+     "text": "a boat repairer from the yard",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 2322,
+      "end": 2322
+     },
+     "via": "who tomas is, as the home describes them (hook-cast.json, the tie of 0.4)",
+     "id": "sam.k49"
+    },
+    {
+     "key": "who_iva",
+     "kind": "knows",
+     "secret": false,
+     "text": "a presser at the steam laundry",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 1814,
+      "end": 1814
+     },
+     "via": "who iva is, as the home describes them (hook-cast.json, the tie of 0.4)",
+     "id": "sam.k50"
+    },
+    {
+     "key": "who_fabjan",
+     "kind": "knows",
+     "secret": false,
+     "text": "a net mender on the docks",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 2188,
+      "end": 2188
+     },
+     "via": "who fabjan is, as the home describes them (hook-cast.json, the tie of 0.4)",
+     "id": "sam.k51"
+    },
+    {
+     "key": "who_joey",
+     "kind": "knows",
+     "secret": false,
+     "text": "a dock hand on the quay",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 1200,
+      "end": 1200
+     },
+     "via": "who joey is, as the home describes them (hook-cast.json, the tie of 0.3)",
+     "id": "sam.k52"
+    },
+    {
+     "key": "who_hal",
+     "kind": "knows",
+     "secret": false,
+     "text": "Hal, who keeps the coin shop that sells no coins",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 1345,
+      "end": 1345
+     },
+     "via": "who hal is, as the home describes them (hook-cast.json, the tie of 0.3)",
+     "id": "sam.k53"
+    },
+    {
+     "key": "who_hana",
+     "kind": "knows",
+     "secret": false,
+     "text": "the letter writer at the newsagent's pension counter",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 2636,
+      "end": 2636
+     },
+     "via": "who hana is, as the home describes them (hook-cast.json, the tie of 0.3)",
+     "id": "sam.k54"
     },
     {
      "key": "keeps_clear",
