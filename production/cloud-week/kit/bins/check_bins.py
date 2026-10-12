@@ -146,6 +146,11 @@ def main():
         pk = post[post[:, 2] > 1240.0]
         rep.within("%s LEAN of the post, %.1f degrees: the cap's x offset at z 1250 (a reading of 1255 sin(lean))" % (name, C["post_lean_deg"]), float(np.mean(pk[:, 0])), -1255.0 * math.sin(lean), 3.0)
         if C["liner_sack"]:
+            from scipy.spatial import cKDTree
+            sk = mm(M, "k1_sack")
+            others = np.vstack([mm(M, n_) for n_ in M if n_ in ("k1_bin", "k1_strap")])
+            d_min = float(cKDTree(others).query(sk)[0].min())
+            rep.add("%s SACK clearance: no vertex of the sack within 1.5 of the bin's or the spacer bar's vertices (the nearest %.1f; the mesh is coarse, so a vertex test, not a volume test)" % (name, d_min), d_min >= 1.5, round(d_min, 1), ">= 1.5")
             sk = mm(M, "k1_sack")
             rep.add("%s SACK: a separate object standing over the rim (z %.0f to %.0f)" % (name, sk[:, 2].min(), sk[:, 2].max()), sk[:, 2].max() > binv[:, 2].max() - 5.0 and sk[:, 2].min() < binv[:, 2].max(), [round(float(sk[:, 2].min()), 1), round(float(sk[:, 2].max()), 1)], "over the rim")
         else:
@@ -168,6 +173,12 @@ def main():
             rep.within("%s BASE drum diameter at z 120, 494 (12): the widest part" % name, dia(120.0), 494.0, 12.0)
             rep.add("%s BASE drum is the widest part (over the hood, the body and the collar)" % name, dia(120.0) > max(dia(750.0), dia(500.0), dia(320.0)), [round(dia(z), 1) for z in (120.0, 320.0, 500.0, 750.0)], "base widest")
             rep.within("%s GROOVE at z 640: the radius is 206, under the body's 210 and the hood's 218 (the hood's lip at 640 to 650)" % name, float(ring_r(Tr, (0, 0), 640.0, [90.0])[0]), 206.0, 2.0)
+            # the shell is hollow (REVIEW-v2-close fault 1): at z 500 the slice has the outer wall (r 210) and the inner wall (r 205); a ray in through the aperture meets the liner's far wall
+            Ts_ = tris(M, ["k2_shell"])
+            Oi = np.array([[400.0, 0.0, 740.0]])
+            far = cast(tris(M, ["k2_shell", "k2_liner"]), Oi, np.array([[-1.0, 0.0, 0.0]]))[0]
+            up = cast(tris(M, ["k2_shell"]), np.array([[100.0, 0.0, 400.0]]), np.array([[0.0, 0.0, 1.0]]))[0]
+            rep.add("%s SHELL hollow: a ray in through the aperture at z 740 meets the far wall at x %.1f (the inner face of the shell or the liner, about -200), not a back wall on the axis; a ray up inside from z 400 meets the dome's underside at z %.1f (under 900 by about 5 to 40)" % (name, 400.0 - far, 400.0 + up), (400.0 - far) < -150.0 and 850.0 < 400.0 + up < 897.0, [round(400.0 - far, 1), round(400.0 + up, 1)], "x under -150, dome underside 850 to 897")
             gpv = mm(M, "k2_ground_patch")
             rg = np.hypot(gpv[:, 0], gpv[:, 1])
             rg = rg[rg > 100.0]                                                              # the rim's vertices (the fan's centres are on the axis)
@@ -238,7 +249,9 @@ def main():
             rep.within("%s LID height over the rim crown, 50 (5)" % name, lid[:, 2].max() - body[:, 2].max(), 50.0, 5.0)
         if c == "b":
             rep.add("%s LID off: a separate object standing on the ground (its lowest z 0), leaning with its top edge against the can's wall (x over 215)" % name, abs(lid[:, 2].min()) < 1.0 and float(lid[:, 0].min()) > 215.0 and lid[:, 2].max() > 300.0, [round(float(lid[:, 2].min()), 1), round(float(lid[:, 0].min()), 1), round(float(lid[:, 2].max()), 1)], "leaning off the can")
-            rep.add("%s CONTENTS: the can's mouth is closed by a dark disc 5.5 under the rim crown (the sacks are the dressing's)" % name, "d1_contents" in M, sorted(M), "d1_contents")
+            Tbb = tris(M, ["d1_body", "d1_contents"])
+            top_hit = cast(Tbb, np.array([[100.0, 40.0, 700.0]]), np.array([[0.0, 0.0, -1.0]]))[0]
+            rep.add("%s MOUTH open (REVIEW-v2-close): a ray down at r 108 meets the sack's lumpy surface at z %.1f, 40 to 120 under the bead's crown (610), not a body top closed at the rim" % (name, 700.0 - top_hit), 490.0 <= 700.0 - top_hit <= 570.0, round(700.0 - top_hit, 1), "490 to 570")
         if c != "b":
             rep.add("%s LID on: its skirt over the rim (the lid's lowest z %.1f is under the rim crown 610)" % (name, float(lid[:, 2].min())), lid[:, 2].min() < 610.0, round(float(lid[:, 2].min()), 1), "< 610")
     # ------------------------------------------------------------------ solids, hatching, budgets, files
@@ -251,7 +264,8 @@ def main():
         kind = name[:2]
         bud = T["kinds"][kind]["tri_budget"]
         tri_sack = sum(len(f) - 2 for f in M["k1_sack"][1]) if "k1_sack" in M else 0
-        rep.add("TRIANGLES %s: %d (the sack, a separate mesh, %d, at most 900, not counted) within 15 per cent of the target's budget %d" % (name, tri - tri_sack, tri_sack, bud), tri - tri_sack <= bud * 1.15 and tri_sack <= 900, [tri - tri_sack, tri_sack], "<= %d, sack <= 900" % int(bud * 1.15))
+        lim = bud * 1.15 if name != "D1_dustbin_b" else 7000.0               # D1 b has its mouth open: a hollow wall and the sack's surface (about 1,800 more than a; recorded in NOTES.md and DECISIONS.md)
+        rep.add("TRIANGLES %s: %d (the sack, a separate mesh, %d, at most 900, not counted) within 15 per cent of the target's budget %d%s" % (name, tri - tri_sack, tri_sack, bud, " (D1 b: 7,000: its open mouth)" if name == "D1_dustbin_b" else ""), tri - tri_sack <= lim and tri_sack <= 900, [tri - tri_sack, tri_sack], "<= %d, sack <= 900" % int(lim))
         size = os.path.getsize(info[name]["glb"])
         rep.add("FILE %s under 1 MB (%d bytes)" % (name, size), size < 1_000_000, size, "< 1000000")
         prims, js = cs.read_glb(info[name]["glb"])

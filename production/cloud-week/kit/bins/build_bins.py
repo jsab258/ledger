@@ -114,6 +114,25 @@ def band_closed(profile, t):
     return pts
 
 
+def revolve_arc(sec_rz, a0, a1, n):
+    """a closed section (r, z) swept about z from angle a0 to a1 (degrees, from +x counter-clockwise): an arc solid with two flat end caps, outward-facing"""
+    P = np.asarray(sec_rz, float)
+    m = len(P)
+    V = []
+    for k in range(n + 1):
+        a = math.radians(a0 + (a1 - a0) * k / n)
+        for r, z in P:
+            V.append((r * math.cos(a), r * math.sin(a), z))
+    F = []
+    for k in range(n):
+        for i in range(m):
+            j = (i + 1) % m
+            F.append((k * m + i, k * m + j, (k + 1) * m + j, (k + 1) * m + i))
+    F.append(tuple(range(m))[::-1])
+    F.append(tuple(range(n * m, (n + 1) * m)))
+    return orient(np.array(V), F)
+
+
 def resample(profile, step):
     """add points along the long segments so that no segment is longer than step (so that a dent has vertices to move)"""
     out = [tuple(profile[0])]
@@ -268,6 +287,19 @@ def irregular_prism_dir(poly_uv, centre, direction, depth0, depth1, rng=None):
     return orient(np.array(V), F)
 
 
+def bool_diff(ob, V, F, solver="FLOAT"):
+    """a boolean difference with the float solver: the exact solver dropped the inner wall of the hollow hood shell (REVIEW-v2-close fault 1); the float solver keeps it"""
+    import bpy
+    import blender_parts
+    other = blender_parts.make_object("_cutter", np.asarray(V, float), [tuple(int(i) for i in f) for f in F])
+    m = ob.modifiers.new("b", "BOOLEAN")
+    m.operation, m.object, m.solver = "DIFFERENCE", other, solver
+    with bpy.context.temp_override(object=ob, active_object=ob, selected_objects=[ob]):
+        bpy.ops.object.modifier_apply(modifier=m.name)
+    bs._drop(other)
+    return ob
+
+
 def mats_for(T, names):
     out = {}
     for nm, key in names.items():
@@ -335,11 +367,11 @@ def build_k1(T, cond, out_dir, npz_dir):
         for sy in (-1.0, 1.0):
             ear = prism_y([(-37.0, c["z0"] + 2.0), (-62.0, c["z0"] + 2.0), (-62.0, c["z1"] - 2.0), (-37.0, c["z1"] - 2.0)], 3.0 if sy > 0 else -8.0, 8.0 if sy > 0 else -3.0)      # 5 thick, 25 out, 6 apart (REVIEW-v1-close)
             parts["ear_%d_%s" % (i, "p" if sy > 0 else "m")] = (ear[0], ear[1], "paint_green", 1.5, "bin")
-        bolt = cyl_y(-50.0, zc, -24.0, 24.0, 4.0, 12)
+        bolt = cyl_y(-50.0, zc, -15.0, 10.0, 4.0, 12)                      # the shank between the head and the nut, through the two ears (seated: REVIEW-v2-close point 4)
         parts["bolt_%d" % i] = (bolt[0], bolt[1], "paint_green", None, "bin")
-        head = hex_y(-50.0, zc, 18.0, 26.0, 13.0)
+        head = hex_y(-50.0, zc, 8.0, 13.3, 13.0)
         parts["bolthead_%d" % i] = (head[0], head[1], "paint_green", 0.8, "bin")
-        nut = dome_y(-50.0, zc, -18.0, -8.0, 7.5, 12)
+        nut = dome_y(-50.0, zc, -8.0, -8.0, 7.5, 12)
         parts["nut_%d" % i] = (nut[0], nut[1], "paint_green", None, "bin")
     # the tilt of the bin on its clamps and the lean of the post
     for nm, (V, F, mat, bev, grp) in parts.items():
@@ -350,20 +382,30 @@ def build_k1(T, cond, out_dir, npz_dir):
             V = rot_y(V, -C["post_lean_deg"], (0.0, 0.0))                # the post leans toward the roadway side by its lean (-x here is the far side from the bin)
         parts[nm] = (V, F, mat, bev, grp)
     if C["liner_sack"]:
-        # REVIEW-v1-street point 1: the sack fills the bin down to the floor, its mouth turns over the rim and hangs 120 outside (gathered), and it stands no more than 75 above the rim
-        def r_in(z):
-            return 165.0 + (K["bin"]["r_top"] - 165.0) * (z - 560.0) / (1038.0 - 560.0) - 6.0
-        prof_s = [(0.0, 1124.0), (70.0, 1118.0), (r_in(1050.0) - 14.0, 1100.0), (r_in(1050.0) - 4.0, 1070.0), (r_in(1050.0), 1050.0), (r_in(900.0), 900.0), (r_in(700.0), 700.0), (r_in(570.0), 570.0), (0.0, 566.0)]
-        Vs_, Fs_ = revolve(prof_s, 24)
+        # REVIEW-v2-close fault 3: a film, not a cushion: the contents' surface 20 to 60 under the rim (no dome), the film up the inside wall, its mouth turned over the bead at least 3 clear of it and hanging
+        # 120 down the outside in gathers, left open on the post side (it is tucked round the spacer bar); nothing touches the bin or the bar
+        r_top = K["bin"]["r_top"]
+        def r_wall_in(z):
+            return 165.0 + (r_top - 165.0) * (z - 560.0) / (1038.0 - 560.0) - K["bin"]["wall"]
+        rng_s = np.random.default_rng(5)
+        prof_c = [(0.0, 1018.0), (60.0, 1024.0), (110.0, 1030.0), (r_wall_in(1030.0) - 6.0, 1022.0), (r_wall_in(1000.0) - 4.0, 1000.0), (r_wall_in(700.0) - 4.0, 700.0), (r_wall_in(570.0) - 4.0, 570.0), (0.0, 566.0)]
+        Vs_, Fs_ = revolve(prof_c, 20)
         Vs_ = np.array(Vs_)
+        ang_s = np.arctan2(Vs_[:, 1], Vs_[:, 0])
+        lump = (Vs_[:, 2] > 1000.0) * (1.0 * np.sin(3 * ang_s + 1.0) * 9.0 + 1.0 * rng_s.standard_normal(len(Vs_)) * 3.0)           # a lumpy surface
+        Vs_[:, 2] += lump
         Vs_[:, 0] += BIN_OFFSET
-        cuff = [(r_in(1050.0) + 4.0, 1046.0), (r_in(1050.0) + 4.0, 1058.0), (K["bin"]["r_top"] + 8.0, 1058.0), (K["bin"]["r_top"] + 8.0, 930.0), (K["bin"]["r_top"] + 4.0, 930.0), (K["bin"]["r_top"] + 4.0, 1052.0)]
-        Vc_, Fc_ = revolve(cuff, 24)
+        film_in = r_wall_in(1050.0) - 4.0
+        cuff = [(film_in, 1000.0), (film_in, 1060.0), (r_top + 7.0, 1060.0), (r_top + 7.0, 936.0), (r_top + 5.0, 936.0), (r_top + 5.0, 1057.5), (film_in + 2.0, 1057.5), (film_in + 2.0, 1000.0)]
+        Vc_, Fc_ = revolve_arc(cuff, -145.0, 145.0, 28)                                          # azimuth 180 (the post side) left open
         Vc_ = np.array(Vc_)
         a_c = np.arctan2(Vc_[:, 1], Vc_[:, 0])
-        gath = 1.0 + 0.018 * np.sin(5.0 * a_c) + 0.008 * np.sin(11.0 * a_c + 1.0)               # the gathers
+        gath = 1.0 + 0.022 * np.sin(7.0 * a_c) + 0.010 * np.sin(13.0 * a_c + 1.0)               # eight or so folds
         rr_c = np.hypot(Vc_[:, 0], Vc_[:, 1])
+        hem = np.where(Vc_[:, 2] < 1000.0 + 0.0, 0.0, 0.0)
         Vc_[:, 0], Vc_[:, 1] = rr_c * gath * np.cos(a_c) + BIN_OFFSET, rr_c * gath * np.sin(a_c)
+        low = Vc_[:, 2] < 960.0
+        Vc_[low, 2] -= 14.0 * (0.5 + 0.5 * np.sin(5.0 * a_c[low] + 0.5))                         # an uneven hem
         sk = merge((Vs_, Fs_), (Vc_, Fc_))
         V = np.array(sk[0])
         if C["bin_tilt_deg"]:
@@ -406,7 +448,7 @@ def build_k2(T, cond, out_dir, npz_dir):
     prof = [tuple(p) for p in K["outer_profile_rz"]]
     sec = band_closed(prof, K["shell"])
     # the shell: the outer profile and its inner offset, closed at the foot and the crown; resampled on the hood skirt for the aperture's corners
-    sec = resample(sec, 40.0)
+    sec = resample(sec, 90.0)
     V, F = revolve(sec, SIDES_K2)
     body = B.add("k2_shell", (V, F), "gel_green", bev=None)
     # the aperture through the hood skirt, on +x: a rounded rectangle, through the wall (a prism along x), its sill's return flange left to the normal map
@@ -414,7 +456,7 @@ def build_k2(T, cond, out_dir, npz_dir):
     Vp, Fp = prism_y(rr, 0.0, 300.0)                                    # lateral (x of the profile) and z; the extrusion along y
     Vp = np.array(Vp)
     Va, Fa = orient(np.stack([Vp[:, 1], Vp[:, 0], Vp[:, 2]], 1), Fp)    # turned so that the axis runs along +x: (x, y, z) = (extrusion, lateral, z)
-    bs.bool_op(body, Va, Fa, "DIFFERENCE")
+    bool_diff(body, Va, Fa)
     # the burnt hood (condition c): an irregular hole melted through the skirt on the upper left, 115 x 85, at azimuth -28, z 770
     if C.get("burn"):
         bn = C["burn"]
@@ -428,21 +470,21 @@ def build_k2(T, cond, out_dir, npz_dir):
             rad = 1.0 + 0.16 * math.sin(3 * t + 0.6) + 0.07 * math.sin(5 * t)
             poly.append((math.cos(t) * w_ / 2.0 * rad, bn["z"] + 10.0 + math.sin(t) * h_ / 2.0 * rad))
         Vh, Fh = irregular_prism_dir(poly, (0.0, 0.0), dirv, 150.0, 300.0)
-        bs.bool_op(body, Vh, Fh, "DIFFERENCE")
+        bool_diff(body, Vh, Fh)
     # the barrel lock at the back of the join: an escutcheon 40 across, 4 proud, a 22 barrel, at azimuth 180, z 650 (a 2 mm slot cut across the barrel is the engine's normal map)
-    lock = revolve([(0.0, -2.0), (20.0, -2.0), (20.0, 2.0), (11.0, 2.5), (11.0, 6.0), (0.0, 6.0)], 20)
+    lock = revolve([(0.0, -2.0), (20.0, -2.0), (20.0, 2.0), (11.0, 2.5), (11.0, 6.0), (0.0, 6.0)], 16)
     Vl = np.array(lock[0])
     Vl = np.stack([-(210.0 - 2.0 + Vl[:, 2]), Vl[:, 1], 600.0 + Vl[:, 0]], 1)    # the disc's axis along -x, 4 proud of the body's r 210 at z 600 (the target's z 640 puts half of it under the hood's lip: REVIEW-v1-close)
     B.add("k2_lock", (Vl, lock[1]), "lock_steel", bev=None)
     # the liner (a separate object): a galvanised sheet can with a rolled rim, 1.6 thick here
     lp = [tuple(p) for p in K["parts"]["liner"]["profile_rz"]]
     lsec = band(lp, 1.6)
-    Vq, Fq = revolve(resample(lsec, 60.0), 40)
+    Vq, Fq = revolve(resample(lsec, 90.0), 24)
     B.add("k2_liner", (Vq, Fq), "zinc_liner", bev=None)
     # the cement patch the photographed bin stands on (TARGET-REVIEW fault 6): an irregular flush disc r 290 to 330, seeded, its top 1 over the flag, a separate object
     gp = K["parts"]["ground_patch"]
     prng = np.random.default_rng(12)
-    ang = np.linspace(0.0, 2 * math.pi, 56, endpoint=False)
+    ang = np.linspace(0.0, 2 * math.pi, 40, endpoint=False)
     rad = [float(gp["r"][0] + (gp["r"][1] - gp["r"][0]) * (0.5 + 0.35 * math.sin(3 * a + 0.7) + 0.25 * math.sin(7 * a + 2.0) + 0.3 * prng.standard_normal())) for a in ang]       # a ragged, broken edge
     rad = [min(max(r, gp["r"][0]), gp["r"][1]) for r in rad]
     pv = extrude_poly([(r * math.cos(a), r * math.sin(a)) for r, a in zip(rad, ang)], -4.0, 1.0)
@@ -463,18 +505,33 @@ def build_d1(T, cond, out_dir, npz_dir):
     B = Parts()
     prof = [tuple(p) for p in K["outer_profile_rz"]]
     t = 1.5
-    # the body: a solid of revolution closed at the rim (the sheet's thickness is not modelled: 0.6 mm); where the lid is off (b) a dark disc of contents stands just under the rim
-    V, F = lathe(resample(prof, 45.0), SIDES_D1)
-    V, F = orient(np.array(V), F)
-    V = np.array(V)
+    # the body: a solid of revolution closed at the rim (the sheet's thickness is not modelled: 0.6 mm). Where the lid is off (b) the can is open (REVIEW-v2-close, D1 b): the lower part
+    # (to z 430) is solid, the upper part a hollow wall 1.5 thick with its mouth open, and a lumpy black refuse sack fills it to 90 under the rim
     rng = np.random.default_rng(1990 + ord(cond))
+    if cond == "b":
+        zc_ = 430.0
+        rc_ = float(np.interp(zc_, [p_[1] for p_ in prof if p_[1] >= 28.0], [p_[0] for p_ in prof if p_[1] >= 28.0]))
+        lower = [p_ for p_ in prof if p_[1] <= zc_] + [(rc_, zc_), (0.0, zc_)]
+        V, F = lathe(resample(lower, 45.0), SIDES_D1)
+        V, F = orient(np.array(V), F)
+        upper = [(rc_, zc_)] + [p_ for p_ in prof if p_[1] > zc_]
+        Vu, Fu = revolve(band(upper, t), SIDES_D1)
+        V, F = merge((V, F), (Vu, Fu))
+    else:
+        V, F = lathe(resample(prof, 45.0), SIDES_D1)
+        V, F = orient(np.array(V), F)
+    V = np.array(V)
     n_d = int(C["dents"])
     for k in range(n_d):
         V = dent(V, (0.0, 0.0), float(rng.uniform(70, 540)), float(rng.uniform(0, 360)), float(rng.uniform(55, 110)), float(rng.uniform(3.0, 6.5 if cond == "c" else 5.0)))
     B.add("d1_body", (V, F), "zinc", bev=None)
     if cond == "b":
-        cv = lathe([(0.0, 603.5), (221.0, 603.5), (221.0, 604.5), (0.0, 604.5)], 24)
-        B.add("d1_contents", orient(np.array(cv[0]), cv[1]), "bin_sack_black", bev=None)
+        prof_c = [(0.0, 515.0), (90.0, 522.0), (170.0, 524.0), (212.0, 508.0), (213.0, 440.0), (0.0, 436.0)]
+        Vc, Fc = revolve(prof_c, 24)
+        Vc = np.array(Vc)
+        ac = np.arctan2(Vc[:, 1], Vc[:, 0])
+        Vc[:, 2] += (Vc[:, 2] > 480.0) * (7.0 * np.sin(3 * ac + 0.8) + 4.0 * np.sin(5 * ac) + 2.0 * rng.standard_normal(len(Vc)))        # the lumpy surface of the sack
+        B.add("d1_contents", orient(Vc, Fc), "bin_sack_black", bev=None)
     # the lid: a pressed dome with its skirt (a shell 1.5 thick), a flat strap handle on its crown with two rivets
     lp = [tuple(p) for p in K["lid"]["profile_rz"]]
     lsec = band(lp, t)
