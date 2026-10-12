@@ -296,9 +296,9 @@ LEDGER tie: PROOF P17 (combat, if ruled in); D24. No LEDGER need.
 
 ### Just below the line (praise)
 
-- **The town reacts to you: reputation, crime, NPC memory.** KCD2 168 of 5,701 (2.9%); Mafia 68 of 3,634 (1.9%). Seven of twelve KCD2 critics praise it (Windows Central: nothing short of astounding; RPS: a wonderful prickliness to the reputation system). Players name it rarely, in about three of every hundred KCD2 reviews, but they notice it when it fails (see punished: world). The Meridian Test is built on exactly this. LEDGER tie: The Meridian Test; D25; PLAN phase 3 exit.
-- **An ending that landed.** KCD2 71 of 5,701 (1.2%); Mafia 138 of 3,634 (3.8%). Some Mafia players call the ending the best part; many more punish it (see punished: ending). KCD2 players name the ending far less in either direction. LEDGER tie: D58 (five endings, no redemption, hunted-state endings reachable); research ending-reading.
-- **The love story (Mafia).** KCD2 76 of 5,701 (1.3%); Mafia 114 of 3,634 (3.1%). Mafia players and some critics like the love story at the centre; others call it thin. LEDGER tie: canon, content rule (no sexual content; seaside-postcard innuendo stays); cast: Alison Sedman and Philip Danby are canon's love interests.
+- The town reacts to you: reputation, crime, NPC memory. KCD2 168 of 5,701 (2.9%); Mafia 68 of 3,634 (1.9%). Seven of twelve KCD2 critics praise it (Windows Central: nothing short of astounding; RPS: a wonderful prickliness to the reputation system). Players name it rarely, in about three of every hundred KCD2 reviews, but they notice it when it fails (see punished: world). The Meridian Test is built on exactly this. LEDGER tie: The Meridian Test; D25; PLAN phase 3 exit.
+- An ending that landed. KCD2 71 of 5,701 (1.2%); Mafia 138 of 3,634 (3.8%). Some Mafia players call the ending the best part; many more punish it (see punished: ending). KCD2 players name the ending far less in either direction. LEDGER tie: D58 (five endings, no redemption, hunted-state endings reachable); research ending-reading.
+- The love story (Mafia). KCD2 76 of 5,701 (1.3%); Mafia 114 of 3,634 (3.1%). Mafia players and some critics like the love story at the centre; others call it thin. LEDGER tie: canon, content rule (no sexual content; seaside-postcard innuendo stays); cast: Alison Sedman and Philip Danby are canon's love interests.
 
 ## The twenty things players punished
 
@@ -391,7 +391,7 @@ LEDGER tie: RISK R6 and PROOF P4; PLAN phase 3 exit (at most five empty minutes)
 
 Rank 6 by mean share (11.2% of an average game's sample). Counts: KCD2 888 of 5,701 reviews (15.6%); Mafia 251 of 3,634 (6.9%). Read by hand: KCD2 28 of 150, Mafia 6 of 150. Critics: KCD2 4 of 12, Mafia 1 of 13.
 
-The second largest KCD2 complaint and a smaller one in Mafia. The worst are the ones that block a quest, hang the player or lose time. KCD2's patch notes are mostly quest fixes. In my sample, bugs appear in about a third of KCD2's negative reviews from the launch weeks and about one in six since October 2025.
+The second largest KCD2 complaint and a smaller one in Mafia. The worst are the ones that block a quest, hang the player or lose time. KCD2's patch notes are mostly quest fixes. In my sample, bugs appear in about a third of KCD2's negative reviews from the launch weeks and roughly one in five since October 2025.
 
 Quotes: "I have run into some kind of bug on just about half the quests" (a Steam reviewer, 9 Mar 2025, KCD2, review 189826986); "Game breaking bugs after this much time are embarrassing." (a Steam reviewer, 11 Sep 2026, KCD2, review 234998158).
 
@@ -539,7 +539,7 @@ LEDGER tie: PROOF P9; RULINGS 2 Oct (no cars until convincing); D24.
 
 Rank 19 by mean share (3.3% of an average game's sample). Counts: KCD2 327 of 5,701 reviews (5.7%); Mafia 29 of 3,634 (0.8%). Read by hand: KCD2 13 of 150, Mafia 2 of 150. Critics: KCD2 4 of 12, Mafia 0 of 13.
 
-KCD2 only lets you save by sleeping in a bed, quitting, or drinking a rare item; players lose an hour of play to a stray wolf and say so. In my sample about one in seventeen KCD2 reviews names it (one in nine of the launch-week negative reviews), and the share did not fall after the patches. Four KCD2 critics raise it too (Eurogamer, Game Rant, RPS, GamesRadar).
+KCD2 only lets you save by sleeping in a bed, quitting, or drinking a rare item; players lose an hour of play to a stray dog or wolf and say so. In my sample about one in seventeen KCD2 reviews names it (one in nine of the launch-week negative reviews), and the share did not fall after the patches. Four KCD2 critics raise it too (Eurogamer, Game Rant, RPS, GamesRadar).
 
 Quotes: "the saving system that they decided to implement is just annoying" (a Steam reviewer, 13 Sep 2026, KCD2, review 235189103); "cant save without quitting and re opening the game or use a potion." (a Steam reviewer, 5 Feb 2025, KCD2, review 187238226); "exceedingly stingy with its saves and checkpointing" (Eurogamer, 3 Feb 2025, EG-K).
 
@@ -561,14 +561,14 @@ LEDGER tie: The twenty basics 6 to 8 (a clear first purpose, a hint for each key
 
 ### Just below the line (punish)
 
-- **The look called poor, dated or glitchy.** KCD2 89 of 5,701 (1.6%); Mafia 116 of 3,634 (3.2%). Rarer than the praise; mostly graphics settings, faces blurring in cutscenes, or pop-in. LEDGER tie: CHARTER, Bar; RISK R3.
-- **Hunger, sleep, wear and washing as friction (KCD2).** KCD2 217 of 5,701 (3.8%); Mafia 58 of 3,634 (1.6%). Players who punish it say shoes wear out in days and chores replace play; players who praise it call it realism. RPS and GamesRadar make the same split. LEDGER tie: canon, What LEDGER is not (not an economy simulation); RULINGS 23 Sep (no crafting).
-- **Stiff faces and animation, repeated models and voices.** KCD2 134 of 5,701 (2.4%); Mafia 94 of 3,634 (2.6%). One Mafia player counts the same six models over and over; KCD2 players note stiff faces and shared voice actors (IGN too). LEDGER tie: PROOF P7 (idles and walks), P8 (Tom and one more principal, judged blind), P12 (the face solver); the twenty basics 12 (lips roughly in time); RISK R4; RULINGS 4 Oct (Sheila's face whole when she talks).
-- **Choices that change nothing.** KCD2 122 of 5,701 (2.1%); Mafia 79 of 3,634 (2.2%). Mafia: your actions make no difference. KCD2: some say the story forces the hero's path. LEDGER tie: The Meridian Test; PLAN phase 3 exit (a consequence seen and kept after restart).
-- **Paid add-ons that feel thin or late.** KCD2 123 of 5,701 (2.2%); Mafia 85 of 3,634 (2.3%). Mafia players call the expansion two short missions inserted in the middle; KCD2 has fixes after each add-on. LEDGER tie: No LEDGER tie: candidate risk (RULINGS 24 Sep: sold once; no add-ons planned).
-- **The studio replaced a translator with AI (KCD2).** KCD2 81 of 5,701 (1.4%); Mafia 2 of 3,634 (0.1%). 49 of 81 of these reviews were written in March or April 2026, right after a former translator said he was fired and replaced by AI (Push Square, 30 Mar 2026; his claim, the studio's reply not read); many older reviews were edited afterwards to say the same. A few say the game itself used AI (DLC art, voices); none of that was checked. Players say they will not buy the next game. Mafia has two such reviews. LEDGER tie: RULINGS 24 Sep (the AI notice before the first talk, a way to report any line, Steam's AI disclosure as drafted); production/research/steam-ai-disclosure; RISK R8 (a licence, terms or disclosure problem); PROOF P14 (the terms, read from his PC).
-- **Culture-war complaints about the studio or the casting (KCD2).** KCD2 94 of 5,701 (1.6%); Mafia 4 of 3,634 (0.1%). Off-topic for design. Counted so Jafar knows the volume. I quote none. LEDGER tie: No LEDGER tie.
-- **Slow or missing fixes.** KCD2 89 of 5,701 (1.6%); Mafia 23 of 3,634 (0.6%). KCD2 and Mafia players say bugs outlast the patches. LEDGER tie: PLAN phase 4 exit (the friends' first thirty minutes logged, blockers fixed before scope is added); FINDINGS.md (open faults only, at most twenty).
+- The look called poor, dated or glitchy. KCD2 89 of 5,701 (1.6%); Mafia 116 of 3,634 (3.2%). Rarer than the praise; mostly graphics settings, faces blurring in cutscenes, or pop-in. LEDGER tie: CHARTER, Bar; RISK R3.
+- Hunger, sleep, wear and washing as friction (KCD2). KCD2 217 of 5,701 (3.8%); Mafia 58 of 3,634 (1.6%). Players who punish it say shoes wear out in days and chores replace play; players who praise it call it realism. RPS and GamesRadar make the same split. LEDGER tie: canon, What LEDGER is not (not an economy simulation); RULINGS 23 Sep (no crafting).
+- Stiff faces and animation, repeated models and voices. KCD2 134 of 5,701 (2.4%); Mafia 94 of 3,634 (2.6%). One Mafia player counts the same six models over and over; KCD2 players note stiff faces and shared voice actors (IGN too). LEDGER tie: PROOF P7 (idles and walks), P8 (Tom and one more principal, judged blind), P12 (the face solver); the twenty basics 12 (lips roughly in time); RISK R4; RULINGS 4 Oct (Sheila's face whole when she talks).
+- Choices that change nothing. KCD2 122 of 5,701 (2.1%); Mafia 79 of 3,634 (2.2%). Mafia: your actions make no difference. KCD2: some say the story forces the hero's path. LEDGER tie: The Meridian Test; PLAN phase 3 exit (a consequence seen and kept after restart).
+- Paid add-ons that feel thin or late. KCD2 123 of 5,701 (2.2%); Mafia 85 of 3,634 (2.3%). Mafia players call the expansion two short missions inserted in the middle; KCD2 has fixes after each add-on. LEDGER tie: No LEDGER tie: candidate risk (RULINGS 24 Sep: sold once; no add-ons planned).
+- The studio replaced a translator with AI (KCD2). KCD2 81 of 5,701 (1.4%); Mafia 2 of 3,634 (0.1%). 49 of 81 of these reviews were written in March or April 2026, right after a former translator said he was fired and replaced by AI (Push Square, 30 Mar 2026; his claim, the studio's reply not read); many older reviews were edited afterwards to say the same. A few say the game itself used AI (DLC art, voices); none of that was checked. Players say they will not buy the next game. Mafia has two such reviews. LEDGER tie: RULINGS 24 Sep (the AI notice before the first talk, a way to report any line, Steam's AI disclosure as drafted); production/research/steam-ai-disclosure; RISK R8 (a licence, terms or disclosure problem); PROOF P14 (the terms, read from his PC).
+- Culture-war complaints about the studio or the casting (KCD2). KCD2 94 of 5,701 (1.6%); Mafia 4 of 3,634 (0.1%). Off-topic for design. Counted so Jafar knows the volume. I quote none. LEDGER tie: No LEDGER tie.
+- Slow or missing fixes. KCD2 89 of 5,701 (1.6%); Mafia 23 of 3,634 (0.6%). KCD2 and Mafia players say bugs outlast the patches. LEDGER tie: PLAN phase 4 exit (the friends' first thirty minutes logged, blockers fixed before scope is added); FINDINGS.md (open faults only, at most twenty).
 
 ## Where critics and players differ
 
@@ -576,7 +576,7 @@ From my coding of the critics and the script's counts for players.
 
 - KCD2: all twelve critics praise the living world and most praise its reactivity and choices, but players name those far less than story and looks. Critics fault KCD2's combat and saves; players fault them much more (combat in about a fifth of KCD2 reviews).
 - Mafia: critics are harder than players on story (nine of thirteen call it predictable or thin) and on stealth, gunplay and knife fights (eight, nine and seven of thirteen); players punish length, price and the ending more than critics do (no critic punished length; one faulted the ending).
-- Both: critics praise voice work and look; players do too. Critics almost never name price or save rules, which are among the loudest player complaints. Critics were given early copies; players pay and play on their own PCs.
+- Both: critics praise voice work and look; players do too. Critics rarely name price, and four of twelve KCD2 critics name the save rules, while both are among the loudest player complaints. Most critics say they were given review copies; players pay and play on their own PCs.
 
 ## What the patch notes show
 
@@ -670,7 +670,7 @@ Listed only so Jafar knows these themes exist in the reviews. No detail.
 - Item counts from patch pages (811, 433, 332, 247, 161, 94 and the section subtotals) are my own tallies by heading and by sentence opening; 1.3's count is by sentence opening only.
 - Gaming Trend 85, Impulse Gamer 98 and TheGamer 5/5 are scores from Metacritic's or OpenCritic's list, not printed in the review text I read; the Guardian's stars were not in the text.
 - The before and after shares in the patch section compare different kinds of pull (launch weeks against later months), so they show direction, not size.
-- Which of Steam's windows 'helpful' draws on (default list) is Steam's own and is not documented here.
+- Steam does not say how its default most helpful list is chosen; the rows for it are whatever it returned.
 
 ## Sources
 
