@@ -123,7 +123,9 @@ def read_bsb(src):
     return dict(
         title=title, author=g(r"Author : (.*?) Sound number"), page_title=None, licence="CC0 (public domain)",
         licence_url="https://creativecommons.org/publicdomain/zero/1.0/",
-        uploaded=None, description_on_page=None, original_duration=g(r"Length : (\S+)"),
+        uploaded=None, description_on_page=(re.search(r"Donations or merchandise purchases are appreciated\. (.*?) Listen", t).group(1)[:600]
+                                            if re.search(r"Donations or merchandise purchases are appreciated\. (.*?) Listen", t) else None),
+        original_duration=g(r"Length : (\S+)"),
         original_sample_rate=g(r"Sampling Rate : ([\d,]+ Hz)"), original_bit_depth=g(r"Bit Depth : (\d+ bits)"),
         original_channels=g(r"Channels : (\w+)"),
         download_url="https://bigsoundbank.com/UPLOAD/%s/%s.%s" % (kind, n, ext),

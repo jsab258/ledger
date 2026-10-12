@@ -38,7 +38,7 @@ Needs ffmpeg, ffprobe, curl, numpy and scipy; no other package. The defaults are
 1. Does the day bed read as a small British harbour town, or as somewhere else? (Distance of the traffic; the Hilversum and French sources.)
 2. Gulls: right birds, right number, right nearness?
 3. Voices and radio: behind glass, no word, no child (the sources are adult speech, but nobody has heard the loops); does the radio read as a radio?
-4. Harbour: are there voices or people in the water recordings? (Their pages say none; the Dorset takes open with what a comment on the page calls an "audio intro", so their first 12 s are not used.)
+4. Harbour: are there voices or people in the water recordings, or in the far boat engine (its page mentions a man and his dog aboard and wading birds; only the engine band below 700 Hz is used)? (The Dorset pages mention none; the Dorset takes open with what a comment on the page calls an "audio intro", so their first 12 s are not used.)
 5. Rain mix: loud enough, the three rains in their places, the gutter not nagging.
 6. Footsteps: does each surface sound like its name; do eight variants sound like one step repeated? Is the setts stand-in good enough or does it want a recording on the PC?
 7. Doors, bell, phone box: which movement is open and which close, which click is the latch; does the bell read as a sprung coil bell above a door; is the ring right for 1990?

@@ -2,6 +2,7 @@
 """Previews of Quay Street's sound, for the fresh listener and for Jafar (unit 10, cloud week 42).
 
     python make_previews.py            # reads the WAVs in SOUND_OUT, writes production/previews/cloud-week/sound/
+    python make_previews.py --clips-only   # only the listening clips (the spectrograms take several minutes)
 
   spec_<layer>.jpg          a spectrogram of each layer, its day, night and rain versions stacked (spec_rain.jpg: the three rains)
   spec_steps_<surface>.jpg  the eight variants of each footstep surface in a row
@@ -92,7 +93,8 @@ def sequence(names, gap_s=0.45, lead_s=0.15, max_s=None):
     return y[:int(max_s * RATE)] if max_s else y
 
 
-def encode_ogg(x, out, quality, tmp, limit=False, gain_db=0.0):
+def encode_ogg(x, out, quality, tmp, limit=False, gain_db=0.0, max_kb=290):
+    """Ogg Vorbis at the given quality, or the highest lower one that keeps the file under max_kb (rain is noise: it compresses badly)."""
     wav = os.path.join(tmp, "clip.wav")
     wr(wav, x)
     af = []
@@ -100,29 +102,36 @@ def encode_ogg(x, out, quality, tmp, limit=False, gain_db=0.0):
         af.append("volume=%gdB" % gain_db)
     if limit:
         af.append("alimiter=limit=0.89:attack=5:release=60:level=disabled")
-    cmd = ["ffmpeg", "-v", "error", "-y", "-i", wav]
-    if af:
-        cmd += ["-af", ",".join(af)]
-    cmd += ["-c:a", "libvorbis", "-q:a", str(quality), out]
-    run(cmd)
+    q = quality
+    while True:
+        cmd = ["ffmpeg", "-v", "error", "-y", "-i", wav]
+        if af:
+            cmd += ["-af", ",".join(af)]
+        cmd += ["-c:a", "libvorbis", "-q:a", str(q), out]
+        run(cmd)
+        if os.path.getsize(out) < max_kb * 1024 or q <= -1:
+            break
+        q -= 1
 
 
 def main():
     os.makedirs(PREV, exist_ok=True)
     tmp = tempfile.mkdtemp(prefix="soundprev_")
+    clips_only = "--clips-only" in sys.argv       # re-make only the listening clips (the spectrograms take minutes)
     try:
         w = lambda n: os.path.join(OUT_DIR, n + ".wav")
         # layer spectrograms
-        for layer in LAYERS:
+        for layer in ([] if clips_only else LAYERS):
             stack_jpeg([w("amb_%s_%s" % (layer, v)) for v in ("day", "night", "rain")], os.path.join(PREV, "spec_%s.jpg" % layer), 250, 10000, tmp)
-        stack_jpeg([w("amb_rain_pavement"), w("amb_rain_awning"), w("amb_rain_gutter")], os.path.join(PREV, "spec_rain.jpg"), 250, 14000, tmp)
+        if not clips_only:
+            stack_jpeg([w("amb_rain_pavement"), w("amb_rain_awning"), w("amb_rain_gutter")], os.path.join(PREV, "spec_rain.jpg"), 250, 14000, tmp)
         # one-shot sets in a row
         sets = {"spec_doors_shop.jpg": ("door_shop_", None), "spec_doors_house.jpg": ("door_house_", None), "spec_bell.jpg": ("bell_shop_", None),
                 "spec_phonebox.jpg": ("phonebox_", None)}
         for s in SURFACES:
             sets["spec_steps_%s.jpg" % s] = ("step_%s_" % s, None)
         allnames = sorted(f[:-4] for f in os.listdir(OUT_DIR) if f.endswith(".wav"))
-        for out, (prefix, _) in sets.items():
+        for out, (prefix, _) in ({} if clips_only else sets).items():
             names = [n for n in allnames if n.startswith(prefix)]
             seq = sequence(names, gap_s=0.3 if prefix.startswith("step_") else 0.6)
             wav = os.path.join(tmp, "seq.wav")

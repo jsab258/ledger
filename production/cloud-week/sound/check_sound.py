@@ -299,5 +299,53 @@ def main():
     return 0 if passed == len(rows) else 1
 
 
+def negative_controls():
+    """Break six outputs on purpose in a scratch copy and require the check to fail each one by name. Run: check_sound.py --negative-controls"""
+    import shutil
+    tmp = tempfile.mkdtemp(prefix="soundneg_")
+    for f in os.listdir(OUT_DIR):
+        os.symlink(os.path.join(OUT_DIR, f), os.path.join(tmp, f))
+
+    def broken(name, fn):
+        os.remove(os.path.join(tmp, name + ".wav"))
+        x, ch, bits, sr, raw = read_wav(os.path.join(OUT_DIR, name + ".wav"))
+        y = np.clip(fn(x.copy()), -1, 1)
+        pcm = (np.round(y * 32767)).astype("<i2")
+        with wave.open(os.path.join(tmp, name + ".wav"), "wb") as w:
+            w.setnchannels(ch); w.setsampwidth(2); w.setframerate(sr); w.writeframes(pcm.tobytes())
+
+    os.remove(os.path.join(tmp, "amb_wind_day.wav"))                                       # 1 an output missing
+    broken("amb_traffic_day", lambda x: x * 2.0)                                           # 2 +6 dB: off its loudness target
+    def click(x):                                                                           # 3 a step at the loop's seam
+        x[len(x) // 2:] += 0.25 if x.ndim == 1 else 0.25
+        return x
+    broken("amb_gulls_day", click)
+    os.remove(os.path.join(tmp, "step_paving_02.wav"))                                      # 4 two variants the same
+    shutil.copy(os.path.join(OUT_DIR, "step_paving_01.wav"), os.path.join(tmp, "step_paving_02.wav"))
+    broken("door_shop_latch_01", lambda x: x[int(0.012 * RATE) + 2000:] * 8.0)             # 5 a hard start and too loud
+    broken("amb_wind_night", lambda x: x * 40.0)                                           # 6 clipped
+    env = dict(os.environ, SOUND_OUT=tmp)
+    r = subprocess.run([sys.executable, os.path.abspath(__file__), "--out", "negative"], capture_output=True, text=True, env=env)
+    out = r.stdout
+    expect = [("an output missing", "MISSING amb_wind_day.wav"), ("loop off its target", "FAIL case 4: amb_traffic_day.wav"),
+              ("a step across the loop's seam", "FAIL case 6: amb_gulls_day.wav"), ("two identical footsteps", "FAIL case 9: step_paving_*"),
+              ("a click at a one-shot's start", "FAIL case 8: door_shop_latch_01.wav"), ("clipping", "FAIL case 5: amb_wind_night.wav")]
+    caught = 0
+    for what, needle in expect:
+        ok = needle in out
+        caught += ok
+        print("%-34s %s" % (what, "caught" if ok else "NOT CAUGHT (%s)" % needle))
+    print("negative controls: %d of %d caught" % (caught, len(expect)))
+    for f in os.listdir(tmp):
+        os.remove(os.path.join(tmp, f))
+    os.rmdir(tmp)
+    neg = os.path.join(HERE, "checks", "check_negative.json")
+    if os.path.exists(neg):
+        os.remove(neg)
+    return 0 if caught == len(expect) else 1
+
+
 if __name__ == "__main__":
+    if "--negative-controls" in sys.argv:
+        sys.exit(negative_controls())
     sys.exit(main())
