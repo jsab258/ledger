@@ -251,8 +251,9 @@ def specifics_ok(answer, allowed_text):
 
 # ------------------------------------------------------------------ main
 
-def main():
-    doc = json.loads(PEOPLE.read_text(encoding="utf-8"))
+def run(doc, full=True):
+    """All the rows over one people.json document. `full` also runs the git and canon-gate checks (not for seeded faults)."""
+    rows.clear()
     people = doc["people"]
     byid = {p["id"]: p for p in people}
     groups = doc["groups"]
@@ -308,16 +309,17 @@ def main():
             len(hit) == 1 and hit[0].rstrip().endswith("Marked for Jafar.") and re.match(r"- 13 Oct \d\d:\d\d \(cloud week 42, unit 11\): ", hit[0]) and "Reason:" in hit[0] and "Link:" in hit[0],
             "%d entries" % len(hit))
     row("decisions.only_mine_new", "every unit 11 line in DECISIONS.md belongs to a group", len(mine) == len(used_groups), "%d lines, %d groups" % (len(mine), len(used_groups)))
-    try:
-        ns = subprocess.run(["git", "diff", "--numstat", "--", "DECISIONS.md"], cwd=REPO, capture_output=True, text=True, timeout=60).stdout.split()
-        removed = int(ns[1]) if len(ns) >= 2 else 0
-        row("decisions.append_only", "DECISIONS.md has no removed or changed line against HEAD", removed == 0, "removed lines: %d" % removed)
-    except Exception as e:  # noqa: BLE001
-        row("decisions.append_only", "DECISIONS.md has no removed or changed line against HEAD", False, str(e))
+    if full:
+        try:
+            ns = subprocess.run(["git", "diff", "--numstat", "--", "DECISIONS.md"], cwd=REPO, capture_output=True, text=True, timeout=60).stdout.split()
+            removed = int(ns[1]) if len(ns) >= 2 else 0
+            row("decisions.append_only", "DECISIONS.md has no removed or changed line against HEAD", removed == 0, "removed lines: %d" % removed)
+        except Exception as e:  # noqa: BLE001
+            row("decisions.append_only", "DECISIONS.md has no removed or changed line against HEAD", False, str(e))
 
     # ---- per person
-    cg = load_content_gate()
-    any_case, as_name = real_world_lists()
+    cg = get_gate()
+    any_case, as_name = get_real()
     any_rx = re.compile(r"(?<![\w'])(" + "|".join(sorted((re.escape(x) for x in any_case), key=len, reverse=True)) + r")(?![\w-])", re.I)
     name_rx = re.compile(r"(?<![\w'])(" + "|".join(re.escape(x) for x in as_name) + r")(?![\w-])")
     place_rx = re.compile(r"(?<![\w'])(" + "|".join(re.escape(x) for x in EXTRA_PLACES) + r")(?![\w-])", re.I)
@@ -357,7 +359,12 @@ def main():
         bad = []
         n_src = n_der = n_new = 0
         for f in facts:
-            if f.get("src"):
+            if f.get("street") and not f.get("src"):
+                n_src += 1
+                if f["text"] != doc["street_facts"].get(f["street"], {}).get("text"):
+                    bad.append("%s street fact differs from the table" % f["id"])
+                carried_texts.append((pid, f["id"], f["text"]))
+            elif f.get("src"):
                 n_src += 1
                 s = f["src"]
                 if not quote_at(s["file"], s["line"], s["end"], f["text"]):
@@ -664,12 +671,13 @@ def main():
 
     # ---- canon-gate over the files
     files = [str((HERE / n).relative_to(REPO)) for n in ("people.json", "HOMES.md", "NOTES.md") if (HERE / n).exists()]
-    try:
-        r = subprocess.run([sys.executable, str(REPO / "tools" / "canon-gate.py")] + files, cwd=REPO, capture_output=True, text=True, timeout=300)
-        tail = (r.stdout.strip().split("\n") or [""])[-1] + " " + (r.stderr.strip().split("\n") or [""])[-1]
-        row("content.canon_gate", "tools/canon-gate.py is clean over %s" % ", ".join(files), r.returncode == 0, tail.strip())
-    except Exception as e:  # noqa: BLE001
-        row("content.canon_gate", "tools/canon-gate.py is clean over the files", False, str(e))
+    if full:
+        try:
+            r = subprocess.run([sys.executable, str(REPO / "tools" / "canon-gate.py")] + files, cwd=REPO, capture_output=True, text=True, timeout=300)
+            tail = (r.stdout.strip().split("\n") or [""])[-1] + " " + (r.stderr.strip().split("\n") or [""])[-1]
+            row("content.canon_gate", "tools/canon-gate.py is clean over %s" % ", ".join(files), r.returncode == 0, tail.strip())
+        except Exception as e:  # noqa: BLE001
+            row("content.canon_gate", "tools/canon-gate.py is clean over the files", False, str(e))
 
     # ---- global shape rows
     row("shape.homes_file", "HOMES.md exists and names each kind of fact's home", (HERE / "HOMES.md").exists())
@@ -680,16 +688,146 @@ def main():
     row("shape.counts", "44 entries, 5 rumours each, 10 answers each but Tom's", len(people) == 44 and all(len(p["rumours"]) == 5 for p in people) and sum(len(p["newcomer_questions"]) for p in people) == 430,
         "new facts: %d" % new_n)
 
-    # ---- write and print
-    passed = sum(1 for r in rows if r["pass"])
-    summary = {"rows": len(rows), "pass": passed, "fail": len(rows) - passed}
+    return list(rows)
+
+
+_gate = []
+_real = []
+
+
+def get_gate():
+    if not _gate:
+        _gate.append(load_content_gate())
+    return _gate[0]
+
+
+def get_real():
+    if not _real:
+        _real.append(real_world_lists())
+    return _real[0]
+
+
+def seeded_faults():
+    """(what, a row id part that must fail, a function that damages a copy of the document)."""
+    import copy  # noqa: F401
+
+    def person(d, pid):
+        return next(p for p in d["people"] if p["id"] == pid)
+
+    def q(d, pid, n=0):
+        return person(d, pid)["newcomer_questions"][n]
+
+    def first_sourced(d, pid):
+        return next(f for f in person(d, pid)["facts"] if f.get("src") and not f.get("street"))
+
+    def secret_of(d, pid):
+        return next(f for f in person(d, pid)["facts"] if f.get("secret"))
+
+    def m_text(d):
+        first_sourced(d, "rocco")["text"] += " indeed"
+    def m_line(d):
+        f = first_sourced(d, "rocco"); f["src"]["line"] += 3; f["src"]["end"] += 3
+    def m_group(d):
+        f = next(x for x in person(d, "ada")["facts"] if x.get("new")); f["new"] = "N-NOWHERE"
+    def m_unmarked(d):
+        f = first_sourced(d, "ada"); del f["src"]
+    def m_rumour_drop(d):
+        person(d, "ada")["rumours"].pop()
+    def m_rumour_to(d):
+        person(d, "ada")["rumours"][0]["would_pass_to"] = ["aldous"]
+    def m_fire_limit(d):
+        r = next(r for r in person(d, "ada")["rumours"] if "warehouse" in r["gist"]); r["limits"] = []
+    def m_foreign_fact(d):
+        q(d, "rocco")["uses"] = ["lena.k05"]
+    def m_secret_cited(d):
+        q(d, "lena", 0)["uses"] = ["lena.k21", secret_of(d, "lena")["id"]]; q(d, "lena", 0)["kind"] = "answers"
+    def m_long(d):
+        q(d, "rocco")["a"] = " ".join(["word"] * 31)
+    def m_name(d):
+        q(d, "rocco", 2)["a"] += " Mrs Pemberton saw it."
+    def m_number(d):
+        q(d, "rocco", 2)["a"] += " Fourteen men saw it."
+    def m_brand(d):
+        q(d, "rocco")["a"] = "Ron Kirby. I keep the rank, and I smoke Marlboro."
+    def m_pint(d):
+        q(d, "rocco")["a"] = "Ron Kirby. I keep the rank and have a pint after."
+    def m_child(d):
+        person(d, "ada")["rumours"][0]["gist"] += " The children know it."
+    def m_year(d):
+        q(d, "rocco")["a"] = "Ron Kirby. I keep the rank, since 1995."
+    def m_tom(d):
+        q(d, "ada")["a"] = "That is Tom, love."
+    def m_fire_truth(d):
+        q(d, "ada", 7)["a"] = "The outfit burned him out, love."
+    def m_mickey(d):
+        q(d, "june", 7)["a"] = "Mickey was a generous man."
+    def m_murder(d):
+        q(d, "ada", 3)["a"] = "Somebody murdered Mickey, love."
+    def m_day(d):
+        f = next(f for f in person(d, "rocco")["facts"] if f.get("derived")); f["text"] += " "
+    def m_sched(d):
+        person(d, "rocco")["schedule"]["weekday"][1]["place"] = "quay"
+    def m_missing(d):
+        d["people"] = [p for p in d["people"] if p["id"] != "hal"]
+    def m_extra(d):
+        d["people"].append(dict(person(d, "hal"), id="hal2", name="Harold Hal", tier="regular"))
+    def m_weight(d):
+        person(d, "rocco")["talks_to"][0]["weight"] = 0.1
+    def m_tom_q(d):
+        person(d, "tom")["newcomer_questions"].append(dict(q(d, "ada"), id="tom.q1"))
+    def m_teach(d):
+        q(d, "ada")["a"] = "I taught on this street, love."
+    def m_old_name(d):
+        q(d, "ada")["a"] = "That is Lena's affair, love."
+    def m_dk(d):
+        q(d, "ada", 9)["uses"] = ["ada.k05"]
+    def m_hours(d):
+        person(d, "rita")["schedule"]["weekday"][1]["place"] = "ritas_counter"; person(d, "rita")["schedule"]["weekday"][0]["to"] = "03:00"
+    return [
+        ("a sourced fact's words changed", "rocco.facts", m_text), ("a citation pointed at the wrong line", "rocco.facts", m_line),
+        ("a new fact with no such group", "ada.facts", m_group), ("a fact with no source and no mark", "ada.facts", m_unmarked),
+        ("a rumour dropped (four left)", "ada.rumours", m_rumour_drop), ("a rumour passed to someone never met", "ada.rumours", m_rumour_to),
+        ("a fire rumour without its limit", "ada.rumours", m_fire_limit), ("an answer citing another person's fact", "rocco.questions", m_foreign_fact),
+        ("a stranger told a secret", "lena.questions", m_secret_cited), ("an answer of 31 words", "rocco.questions", m_long),
+        ("an invented name in an answer", "rocco.questions", m_name), ("an invented number in an answer", "rocco.questions", m_number),
+        ("a real brand in an answer", "content.real_names", m_brand), ("drink in an answer", "content.gate_written", m_pint),
+        ("children in a rumour", "content.children", m_child), ("a year after 1992", "content.era", m_year),
+        ("Tom's name in Ada's answer", "content.tom_name", m_tom), ("the fire's truth in an answer", "content.fire_truth", m_fire_truth),
+        ("Mickey described by one who did not know him", "june.", m_mickey), ("murder suggested", "content.foul_play", m_murder),
+        ("a derived day fact altered", "rocco.facts", m_day), ("a schedule altered against hook-cast", "rocco.schedule", m_sched),
+        ("a regular missing", "cast.regular.hal", m_missing), ("an extra entry", "cast.no_extra", m_extra),
+        ("a tie's weight altered", "rocco.ties", m_weight), ("a question written for Tom", "content.tom_unwritten", m_tom_q),
+        ("a teacher outside Philip", "content.nobody_teaches", m_teach), ("an old name in an answer", "content.old_names", m_old_name),
+        ("a don't-know that cites a fact", "ada.questions", m_dk), ("a pawn counter open at three in the morning", "rita.shop_hours", m_hours),
+    ]
+
+
+def main():
+    import copy
+    doc = json.loads(PEOPLE.read_text(encoding="utf-8"))
+    real_rows = run(doc, True)
+    controls = []
+    for i, (what, expect, mut) in enumerate(seeded_faults(), 1):
+        d2 = copy.deepcopy(doc)
+        try:
+            mut(d2)
+            r2 = run(d2, False)
+            failed = [r["id"] for r in r2 if not r["pass"]]
+            caught = any(expect in rid for rid in failed)
+            detail = "failed rows: %s" % failed[:4]
+        except Exception as e:  # noqa: BLE001
+            caught, detail = False, "check crashed: %r" % (e,)
+        controls.append({"id": "control.%02d" % i, "what": "seeded fault caught: %s" % what, "pass": caught, "detail": "" if caught else "expected a failing row with '%s'; %s" % (expect, detail)})
+    all_rows = real_rows + controls
+    passed = sum(1 for r in all_rows if r["pass"])
+    summary = {"rows": len(all_rows), "pass": passed, "fail": len(all_rows) - passed, "seeded_faults": len(controls), "seeded_faults_caught": sum(1 for c in controls if c["pass"])}
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps({"made": "13 Oct 2026, cloud week 42, unit 11", "file_checked": "production/cloud-week/town/people.json", "summary": summary, "rows": rows}, indent=1) + "\n", encoding="utf-8")
-    for r in rows:
+    OUT.write_text(json.dumps({"made": "13 Oct 2026, cloud week 42, unit 11", "file_checked": "production/cloud-week/town/people.json", "summary": summary, "rows": all_rows}, indent=1) + "\n", encoding="utf-8")
+    for r in all_rows:
         if not r["pass"]:
             print("FAIL %s: %s | %s" % (r["id"], r["what"], r["detail"]))
-    print("%d of %d rows pass" % (passed, len(rows)))
-    return 0 if passed == len(rows) else 1
+    print("%d of %d rows pass (including %d of %d seeded faults caught)" % (passed, len(all_rows), summary["seeded_faults_caught"], len(controls)))
+    return 0 if passed == len(all_rows) else 1
 
 
 if __name__ == "__main__":

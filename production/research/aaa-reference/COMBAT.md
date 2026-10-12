@@ -4,7 +4,7 @@
 
 ## In plain words
 
-1. Neither game has a published timing test. The only hard numbers are Warhorse's own rules table for Kingdom Come 2 (stamina costs, about 2 seconds between a careful opponent's attacks, a slower rhythm for each extra attacker). For Mafia's knife duels there are no numbers at all, only "the timing window is different for each input".
+1. Neither game has a published timing test. The only hard numbers are Warhorse's own rules table for Kingdom Come 2 (stamina costs, about 2 seconds between a careful opponent's attacks, a slower rhythm for each extra attacker). For Mafia's knife duels there are no numbers at all, only the statement that the timing window is different for each input.
 2. Both games make a blow readable with one clear signal (a green shield, a red glint) and keep a slow, patient rhythm. That backs our spec's "telegraph, not tell". Kingdom Come's stamina, witnesses, town unrest and surrender-or-mercy choice suit LEDGER. Its stats, perks, skill-grown parry windows and lock-on do not.
 3. Of 42 points taken from the spec, 12 are ADOPT, 25 are ADAPT and 5 are IGNORE (section 4).
 4. The draft list for phase 3 has 17 animations for two men with a shove and a strike (section 5). Its key choice: the strike winds up for 0.65 s (20 frames at 30 fps), because a person needs about 0.2 s just to see a move and more to choose. That number is our judgement, not copied from a game.
@@ -40,7 +40,7 @@
 | Perfect block (parry) | Press block when the green shield shows. Costs no stamina and breaks the foe's chain. | K18 wiki, K28 press |
 | Riposte | A counter-blow right after a perfect block. A riposte can only be stopped by another perfect block. It costs stamina. | K18 wiki, K28 press |
 | Master strike | A counter from the opposite side at the green shield. Taught by Master Tomcat after a duel. Sword only, say Gamerant and the players; one player says NPCs use it in a fist fight. | K24 press, K31 press, K32 player |
-| Dodge | A sidestep that costs stamina (official cost 20, section 2.3). A perfect dodge is timed to the same shield. Guides say it suits fists best. | K1 official, K28 press |
+| Dodge | A sidestep that costs stamina (official cost 20, section 2.3). A perfect dodge is timed to the same shield. Beebom says it suits light swords and fists best. | K1 official, K28 press |
 | Clinch, lock, grip, throw | Warhorse says "locks, grips and throws" were added so a man can be grappled into submission, and that an unarmed man can disarm an armed one. A patch note says the clinch can push a man out of a fighting pen. A perk lets two unarmed men go from a clinch to an arm lock and a chokehold that knocks out. | K5 official, K9 official, K29 press |
 | Shove or kick | The first game's codex has a kick that pushes a man away. For KCD2 no page read describes a kick or shove as its own verb; the clinch push above is the nearest. | K22 wiki (first game), K9 official |
 | Fists | Hooks and jabs in the first game's codex. For KCD2, a wiki says a fistfight uses fists and "occasional kicks". | K22 wiki, K18 wiki |
@@ -112,7 +112,7 @@ Official stat names tell what the system tracks, without values [K2]: the player
 
 - **Death or knock-out.** Armed fights can kill. Official help text for the unarmed case says health "cannot reach" a knock-out level, value 0 [K1]; our reading is that fists knock out and do not kill (unverified reading). Knock-outs get their own count in the statistics [K18 wiki]. A knock-out is held as an unconsciousness "depth": 480 after a combat hit, used up at 1 per second plus a term for vitality [K1, official names CombatHitUnconsciousDepth, UnconsciousDepthFadeoutSpeedBase]. That is about 480 s before vitality counts (derived; whether game time or real time is not stated, so unverified).
 - **Surrender and mercy.** Surrender goes both ways. Patch 1.2 fixed "sometimes missing the chat option to surrender" and the reaction of an NPC "being attacked, but missed, while they're surrendering to the player" [K9]. Patch 1.3 fixed "the combat opponent asking for mercy while performing a combo" and made Cumans met on the road stop surrendering [K10].
-- **The first game's rule, which KCD2's patch notes follow in part.** A beaten man can surrender honourably; the winner may let him go, refuse, or take money or gear as a price. You cannot surrender to bandits or to a mortal enemy. After one surrender to someone you must wait before you can again. Surrender is only possible within a few metres [K22 wiki, first game's codex].
+- **The first game's rule, which KCD2's patch notes echo in part (Cumans do not surrender).** A beaten man can surrender honourably; the winner may let him go, refuse, or take money or gear as a price. You cannot surrender to bandits or to a mortal enemy. After one surrender to someone you must wait before you can again. Surrender is only possible within a few metres [K22 wiki, first game's codex].
 - **Hardcore Mode.** Warhorse's own description: "You won't get surrendering enemies, visual cues in combat" [K6]. So surrender is a switchable assist.
 - **Mercy kill.** A separate execution is used on a weakened or downed foe; a patch added the face animation for it [K9]. A wiki says a finisher is used when the enemy's health is low and needs no stealth [K18].
 - **Flight and guards.** Running from guards leads to a chase and a "wanted" state; guards attack if you run when confronted [K18, K26]. An NPC with morale under 0.2 flees a fight [K1]. A patch fixed NPCs being "indecisive about bandaging themselves, fighting, or running away" [K9].
@@ -120,11 +120,11 @@ Official stat names tell what the system tracks, without values [K2]: the player
 
 ### 2.7 Witnesses, guards, crime and reputation
 
-This ties to KIT.md and coverage-audit-kcd2. The audit built its rows B2, B3, E4 and E5 from search summaries; the pages below were opened, and they confirm B2 and E5 and add numbers.
+This ties to KIT.md and coverage-audit-kcd2. The audit built its rows B2, B3, E4 and E5 from search summaries. The pages below were opened: they confirm B2 and E5 and add numbers, the "watchers flee" note touches E4, and B3 (no surviving witness, no record) was neither confirmed nor contradicted.
 
 - **Who reports.** A guard who sees a crime reports it; civilians can report and set off an investigation [K26 press]. A witness can also ask money for silence, in the pre-release preview [K25 press, 16 August 2024]. An NPC about to raise the alarm can be killed before the alarm goes out [K30 press].
 - **Where it lives.** KIT.md could not find where KCD2 records witnesses. The official crime page says the crime logic is "mainly in AI Behavioral trees" with a few values in tables [K4]. The rules table holds the perception numbers: a view radius from 2.5 m (an almost blind NPC) to 50 m, a penalty to visibility at night outdoors, 4 s of recognition time for an unremarkable person, and a 4 s decay before NPCs become unaware of you [K1].
-- **Evidence.** Being seen near evidence such as a corpse still gets you accused [K25]. A corpse is hidden from the world 300 s after it is discovered, or 3,600 s if undiscovered (game time) [K1]. Crime entries carry fields named expiration and isSpreadable that the official page does not explain; the example entry for assault shows importance 130 and the violent flag set [K4, shown as an example of the table format].
+- **Evidence.** Being seen near evidence such as a corpse still gets you accused, and evidence left behind puts the guards in that area on high alert, so a return to the scene means questions [K25]. A corpse is hidden from the world 300 s after it is discovered, or 3,600 s if undiscovered (game time) [K1]. Crime entries carry fields named expiration and isSpreadable that the official page does not explain; the example entry for assault shows importance 130 and the violent flag set [K4, shown as an example of the table format].
 - **Spreading.** Reputation moves from a person to a faction after 10,800 s of world time (3 hours, derived) plus a random bias of up to 1,800 s, and to nearby factions up to 400 m away at a quarter strength [K1]. When opinions are combined, a person's counts 5, a faction's 3 and a larger group's 1 [K1]. A developer: if you commit a crime across town, the guards there do not know until time has passed; skip 24 hours and the same guard says "aren't you that guy" [K14, Tobias Stolz-Zwilling, 18 December 2024].
 - **Unrest.** If a crime goes unsolved, the area gets more watchful and people carry and ready weapons [K14]. A wiki's words: people "become more vigilant, arm themselves", and guards call reinforcements [K18]. Officially, NPCs arm everywhere once anger passes 0.67 [K1].
 - **During a fight.** Patch 1.2: NPCs watching a violent event "will now flee if the source of the violence moves too close"; NPCs reacting to violence got "boosted hearing"; the anger of a place from thefts and violence was rebalanced; NPCs seeing through obstacles or behind themselves was fixed [K9]. Distances: the "investigating" icon shows for NPCs up to 100 m away, the "active combat" icon inside 10 m [K1].
@@ -147,7 +147,7 @@ Taverns, drinking, dice games and betting on fist fights exist in KCD2 and its g
 
 ### 3.1 What it is
 
-Third person, linear, set in Sicily in the early 1900s, Unreal Engine 5, released 8 August 2025 [M10]. Official: "not an open-world game" [M2]. Hangar 13's own framing: "This isn't an era of advanced weaponry or easy brawls" [M2]. Combat has cover shooting, stealth, a knife used for takedowns, and one-on-one knife duels [M22, M10]. Official: even a payment collection "can lead to a standoff at gunpoint or a brutal knife duel", and the tools depend on the task [M9]. Metacritic 73 on all three platforms [M10]. KIT.md found no Hangar 13 talk; one exists (the PAX East 2025 panel), but it is a video that could not be read, so Popverse's report of it is used [M7].
+Third person, linear, set in Sicily in the early 1900s, Unreal Engine 5, released 8 August 2025 [M10]. Official: "not an open-world game" [M2], and "a focused, linear experience" [M4]. Hangar 13's own framing: "This isn't an era of advanced weaponry or easy brawls" [M2]. Combat has cover shooting, stealth, a knife used for takedowns, and one-on-one knife duels [M22, M10]. Official: even a payment collection "can lead to a standoff at gunpoint or a brutal knife duel", and the tools depend on the task [M9]. Metacritic 73 on all three platforms [M10]. KIT.md found no Hangar 13 talk; one exists (the PAX East 2025 panel), but it is a video that could not be read, so Popverse's report of it is used [M7].
 
 ### 3.2 Knife duels
 
@@ -168,7 +168,7 @@ Third person, linear, set in Sicily in the early 1900s, Unreal Engine 5, release
 
 - **Bare hands.** Approach crouched, in the target's blind spot, hold the grab and press the prompted button repeatedly to choke him out. The guide: "this takes time, and if another enemy appears nearby, he will spot you" [M15 press].
 - **Knife.** A quick lethal stab from behind, faster than choking, at the cost of knife durability [M15, M3]. A throwing knife kills from range and has to be collected [M1].
-- **Distraction.** Throw a coin or a bottle; every enemy close enough investigates; the nearest one comes, not necessarily the one you meant [M15, M16 press].
+- **Distraction.** Throw a coin or a bottle. The guides differ: one says the nearest enemy comes, not necessarily the one you meant [M15]; another says every guard close enough to hear investigates [M16].
 - **Bodies.** Official tip: stash bodies, "which will prevent guards from being alerted by the sight of a corpse" [M1]. Drag a body out of a patrol route or into a crate [M15, M17].
 - **Detection.** Enemies "spot you from a long distance" and move to where they saw you even if not fully alerted [M15]. Some sequences require staying undetected; most do not [M3].
 - **Instinct.** A mode that shows enemies through walls [M1, M6].
@@ -208,7 +208,7 @@ The verdict says what LEDGER should do with the games' practice for that point, 
 | 10 | Verb: Guard (absorb; cannot guard forever) | Block drains stamina with the blow, regain x0.6; perfect block free; armour turns hits into stamina loss [K18, K1, K28] | Parry and dodge; no held guard published; foes guard and can be guard-broken [M13] | ADAPT | Spec: "Absorb rather than avoid"; take stamina drain and slower regain, drop the perfect-block prize |
 | 11 | Verb: Back off ("the game should say so") | Developers' tip: "consider a tactical retreat" [K8]; fleeing draws a chase [K26] | No retreat inside a duel [M22] | ADOPT | Spec: "explicitly viable"; Warhorse's own tips say the same |
 | 12 | Finishing a downed man, as a decision afterwards | A separate mercy kill on a weak foe [K18, K9]; knock-out is the alternative | Quick-time kills inside the duel; one-hit knife kills mid-fight [M14, M3] | ADAPT | Spec: "never ... in the flow of a scuffle"; KCD2's separate act fits, Mafia's in-flow kills do not |
-| 13 | Guns out of scope | Crossbows and early firearms are slow, and a firearm can explode in the hand [K5, K8] | Guns central; "every bullet counts" [M5] | IGNORE | Spec: "Guns are out of scope"; RULINGS: firearms rare; KCD2's fragile rare gun is the model if they return |
+| 13 | Guns out of scope | Crossbows and early firearms are slow, and a firearm can explode in the hand [K5, K7, K8] | Guns central; "every bullet counts" [M5] | IGNORE | Spec: "Guns are out of scope"; RULINGS: firearms rare; KCD2's fragile rare gun is the model if they return |
 | 14 | No health bar, damage numbers or hit markers | Bars shown; Hardcore hides them and cuts cues; UI only when relevant [K20, K17, K11] | HUD scale option; combat bars not described [M3] | ADAPT | Spec: "No health bar"; Hardcore shows it can ship, ours is the default and keeps the data (spec 7c) |
 | 15 | Your condition on your body | Low stamina weakens blows; controller feedback for low stamina [K18, K11] | Not published | ADAPT | Spec: "breathing that gets ragged, a guard that drops"; KCD2 uses haptics, ours uses the body |
 | 16 | Their condition on theirs | NPCs bandage, flee or fight by state; low-health behaviour from 40 percent [K9, K1] | Not published; bosses regain health after a missed prompt [M14] | ADOPT | Spec: "how they hold the injured side"; KCD2 shows hurt people acting hurt |
@@ -255,7 +255,7 @@ Notes on the table:
 - Standard: simple human reaction to a visual signal is about 190 ms for college-age people, and "on the order of 200 ms" generally [S2]. Choosing between three answers (guard, shove, back off) and pressing a key takes longer; that part is judgement.
 - Game: KCD2's official numbers give a mean 2 s between a careful AI fighter's attacks and 0.2 s before a held attack starts to charge [K1]. They give no wind-up length for a plain swing. No Mafia number exists.
 - The repository's own constants: reach 1.6 m and shove reach 1.9 m (Combat.cs); a stumble is at most 0.55 m (Bumps.Stagger in Interaction.cs); VerbBeat's default wind-up is 0.18 s (Interaction.cs). That default is below the 0.19 s reaction time in [S2], so a strike left at it could not be read.
-- The wind-up, derived with judgement: 0.19 s to see (standard) + 0.45 s to choose and press (judgement) = 0.64 s, rounded to 20 frames (0.667 s). Range 0.50 to 0.80 s.
+- The wind-up, derived with judgement: 0.19 s to see (standard) + 0.35 s to choose among three answers and press (judgement) + 0.10 s for the guard to come live (E01) = 0.64 s, rounded to 20 frames (0.667 s). Range 0.50 to 0.80 s. Contact comes 2 frames later, at 0.733 s, so the guard is live about 3 frames before the blow lands.
 - Telegraph setting (spec section 4, "a longer telegraph window"): the wind-up is lengthened by 1.5 and nothing else changes. 20 frames become 30 and every later key frame moves by 10.
 
 ### 5.2 The list at a glance
@@ -332,7 +332,7 @@ It passes when all of these hold. The thresholds are judgement unless marked.
 
 1. **Timing.** Every key frame in 5.2 is within one frame (0.033 s) of the table in 10 of 10 runs, read from the clip's own markers and checked against a 30 fps recording.
 2. **Readable.** A fresh reviewer (not the builder; CLAUDE.md's gate), shown the strike from the street camera at 3 m and at 8 m, says "he is about to hit" before the contact frame in at least 9 of 10 showings, and tells a shove from a punch in 10 of 10.
-3. **Answerable.** A scripted player with a 0.45 s delay (our figure) gets the guard live by f20 with at least 3 frames to spare: 0.45 + 0.10 = 0.55 s against 0.667 s.
+3. **Answerable.** A scripted player who presses guard 0.54 s after the wind-up starts (0.19 s standard plus 0.35 s judgement) has the guard live at 0.64 s, at least 3 frames before contact at 0.733 s (f22).
 4. **Distances.** A shove ends with the two men more than 1.9 m apart in every run on level ground, with the shoved man moved 1.2 m, plus or minus 0.15 m. A strike moves a steady man 0.25 m, a reeling man no more than 0.55 m, a floored man ends within 0.15 m of 0.6 m from where he stood.
 5. **Footing and clip agree.** With Combat.Resolve, run 3 gives D03, D04, D04, D06 in that order (blows 1 to 4); a shove on a reeling man gives D02. No clip plays in the wrong footing, and the swinger is visibly short of breath by blow 4.
 6. **Joins.** No foot slide over 5 cm and no pop at any blend (NOW.md records a walk that slides at its joins, so this is a real risk).
@@ -359,7 +359,7 @@ Done means walked in the packaged build by the AI tester; it stays "ready for re
 - GameSpot reviews of both games, Stevivor, GamesHub, Checkpoint, Keengamer (403), Deltias and Sportskeeda (405), Nexus Mods (403). Nothing from them is used. Search summaries that quoted them were treated as leads only.
 - The Epic Games interview with Martin Ziegler: not opened; known only through the Insider Gaming page [K16].
 - Business Wire's launch release: the transfer failed.
-- Steam community pages not in the list below were not opened.
+- Other Steam community pages were not opened, except the two guides named at the end of the Sources list.
 
 ### Unverified
 
@@ -378,25 +378,23 @@ Done means walked in the packaged build by the AI tester; it stays "ready for re
 13. That fists knock out and do not kill in KCD2 (our reading of one help text with value 0) [K1].
 14. Any fist or brawl system in Mafia: not published; one critic says none [M20].
 15. Any bystander, civilian or police reaction to a fight in Mafia: not published.
-16. A player summary of KCD2 surrender prompts (E to talk): from a search summary of Steam threads, not read as a page, not used for any claim above.
-17. Which weapons lack which direction in KCD2: guides conflict [K18, K34, K31].
-18. The Steam post of 10 January 2025 that carries the phrase "authentic first person combat" was read through the Steam news feed [K39].
+16. Which weapons lack which direction in KCD2: guides conflict [K18, K34, K31].
 
 ### Sources
 
-All read 13 October 2026. "Full" means read to the end. "Sections" means the combat, crime, takedown, tutorial and feature sections were read and the rest searched by keyword.
+All read 13 October 2026. "Full" means read to the end. "Sections" means the named parts were read and the rest of the page was searched by keyword. The keys are not consecutive: M11, M23 and M24 were dropped when they proved not needed.
 
 **Our own repository (read first):** game-design/combat-spec.md (full), game-design/agency-model.md (full), game-design/weapons-spec.md (sections 4, 6, 8, 10), RULINGS.md (full), canon.md (full), CHARTER.md, PLAN.md, NOW.md, TOWN.md, CATALOGUE.md (homes table), production/research/aaa-reference/KIT.md, production/research/coverage-audit-kcd2/SUMMARY.md and DELIVERY.md (sections B, E, F), ledger/Assets/Scripts/Core/Combat.cs and Interaction.cs.
 
 **Kingdom Come: Deliverance II**
 
-- K1, official. Warhorse modding wiki, article KM-A-20 "RPG Constants/Params", values exported 14 January 2025, page updated 25 October 2025. Full. https://warhorse.youtrack.cloud/articles/KM-A-20 (the page is a script shell; the text was read through the wiki's public interface https://warhorse.youtrack.cloud/api/articles/KM-A-20?fields=idReadable,summary,content,updated)
+- K1, official. Warhorse modding wiki, article KM-A-20 "RPG Constants/Params", values exported 14 January 2025, page updated 25 October 2025. Whole table read; the help texts were read for the combat, crime, perception, reputation and injury rows. https://warhorse.youtrack.cloud/articles/KM-A-20 (the page is a script shell; the text was read through the wiki's public interface https://warhorse.youtrack.cloud/api/articles/KM-A-20?fields=idReadable,summary,content,updated)
 - K2, official. Same wiki, KM-A-21 "Stats and skills", updated 15 January 2025. Full. https://warhorse.youtrack.cloud/articles/KM-A-21
-- K3, official. Same wiki, KM-A-12 "Database tables", updated 28 January 2025. Full. https://warhorse.youtrack.cloud/articles/KM-A-12
+- K3, official. Same wiki, KM-A-12 "Database tables", updated 28 January 2025. Sections (the list of tables for combat, AI, RPG and crime). https://warhorse.youtrack.cloud/articles/KM-A-12
 - K4, official. Same wiki, KM-A-27 "Crime", updated 31 March 2025. Full. https://warhorse.youtrack.cloud/articles/KM-A-27
 - K5, official. Warhorse Steam announcement "Weapons and combat mechanics", 18 October 2024. Full. https://steamcommunity.com/games/1771300/announcements/detail/4521142560073672483
 - K6, official. Warhorse Steam announcement "Hardcore Mode is live NOW in Patch 1.2.4", 15 April 2025. Full. Steam news feed https://api.steampowered.com/ISteamNews/GetNewsForApp/v2/?appid=1771300&count=300&maxlength=0&format=json (item 1796631172410040)
-- K7, official. Deep Silver game page, Combat feature text. Full. https://www.deepsilver.com/games/kingdom-come-deliverance-ii
+- K7, official. Deep Silver game page, Combat feature text. Sections (the Combat feature text). https://www.deepsilver.com/games/kingdom-come-deliverance-ii
 - K8, official. Deep Silver "Insider tips from the developers of Kingdom Come: Deliverance 2" (before the 4 February 2025 launch). Full. https://www.deepsilver.com/games/kingdom-come-deliverance-ii/news/insider-tips-from-the-developers-of-kingdom-come-deliverance-2
 - K9, official. Patch 1.2 notes (Steam post of 13 March 2025 points to them). Sections plus keyword search of the quest lists. https://www.deepsilver.com/games/kingdom-come-deliverance-ii/news/patch-12
 - K10, official. Patch 1.3 notes (Steam post 15 May 2025). Sections. https://www.deepsilver.com/games/kingdom-come-deliverance-ii/news/patch-13
@@ -404,30 +402,30 @@ All read 13 October 2026. "Full" means read to the end. "Sections" means the com
 - K12, official. Patch 1.5 notes (page undated; hotfix 1.5.1 followed on 14 November 2025). Sections. https://www.deepsilver.com/games/kingdom-come-deliverance-ii/news/patch-15
 - K13, official. GDC Vault page for "Combining GOAP and MBTs to Create NPCs' Behaviors for Kingdom Come: Deliverance II", Matej Marko, Warhorse, GDC 2025. Abstract only. https://www.gdcvault.com/play/1035576
 - K14, interview. Tobias Stolz-Zwilling, Warhorse PR manager, with Stephen Farrelly, 3rd-Phase Boss, 18 December 2024. Full. https://3rd-phase-boss.com/blogs/gaming/kingdom-come-deliverance-2-developer-interview-hands-on
-- K15, interview. Tobias Stolz-Zwilling, Tech4Gamers, 3 March 2025. Full. https://tech4gamers.com/kingdom-come-deliverance-2-interview-warhorse/
+- K15, interview. Tobias Stolz-Zwilling, Tech4Gamers, 3 March 2025. Sections (the combat answer and its neighbours). https://tech4gamers.com/kingdom-come-deliverance-2-interview-warhorse/
 - K16, interview via press. Martin Ziegler quoted by Insider Gaming, 15 July 2024. Full. https://insider-gaming.com/warhorse-kingdom-come-deliverance-2-immersive/
-- K17, wiki. Wikipedia, Kingdom Come: Deliverance II. Full. https://en.wikipedia.org/wiki/Kingdom%20Come:%20Deliverance%20II
+- K17, wiki. Wikipedia, Kingdom Come: Deliverance II. Sections (gameplay, plot, mode notes). https://en.wikipedia.org/wiki/Kingdom%20Come:%20Deliverance%20II
 - K18, wiki. Fextralife KCD2 wiki, "Combat", edited 24 August 2026. Full. https://kingdomcomedeliverance2.wiki.fextralife.com/Combat
 - K19, wiki. Fextralife, "Feint". Full. https://kingdomcomedeliverance2.wiki.fextralife.com/Feint
-- K20, wiki. Fextralife, "Hardcore Mode". Full. https://kingdomcomedeliverance2.wiki.fextralife.com/Hardcore+Mode
-- K21, wiki. Fextralife, "Stamina". Full. https://kingdomcomedeliverance2.wiki.fextralife.com/Stamina
+- K20, wiki. Fextralife, "Hardcore Mode". Sections (the mode list and perks). https://kingdomcomedeliverance2.wiki.fextralife.com/Hardcore+Mode
+- K21, wiki. Fextralife, "Stamina". Sections (the description and stats). https://kingdomcomedeliverance2.wiki.fextralife.com/Stamina
 - K22, wiki. Kingdom Come: Deliverance Wiki on wiki.gg, "Combat" (codex entries of the first game). Full. https://kingdomcomedeliverance.wiki.gg/wiki/Combat
-- K23, press. Shacknews review, 3 February 2025. Full. https://www.shacknews.com/article/142932/kingdom-come-deliverance-2-review-score
+- K23, press. Shacknews review, 3 February 2025. Sections (the combat and save paragraphs, pros and cons). https://www.shacknews.com/article/142932/kingdom-come-deliverance-2-review-score
 - K24, press. Gamerant, "Master Strike, Explained", 5 February 2025. Full. https://gamerant.com/kingdom-come-deliverance-2-kcd2-how-master-strikes-explained/
 - K25, press. Gamerant, KCD2 crime and punishment preview, 16 August 2024. Full. https://gamerant.com/kingdom-come-deliverance-2-crime-punishment-reputation-system/
 - K26, press. The Escapist, "How Crime and Punishment Work in KCD2", 21 February 2025. Full. https://www.escapistmagazine.com/how-crime-and-punishment-work-in-kingdom-come-deliverance-2/
 - K27, press. PCGamesN combat and combos guide, updated 21 February 2025. Full. https://www.pcgamesn.com/kingdom-come-deliverance-2/combat-combos
 - K28, press. Beebom, block, parry, dodge and riposte, 4 February 2025. Full. https://beebom.com/how-to-block-parry-dodge-riposte-in-kingdom-come-deliverance-2/
 - K29, press. Gamer Guides, Unarmed leveling and perks, 4 February 2025. Sections. https://www.gamerguides.com/kingdom-come-deliverance-ii/guide/stats-and-skills/unarmed
-- K30, press. Gamer Guides, "The Rabbit Icon", 5 February 2025. Full. https://www.gamerguides.com/kingdom-come-deliverance-ii/guide/getting-started/gameplay/the-rabbit-icon-stealth-and-detection
-- K31, press. Seven Swords combat guide (page dated 10 October 2026). Full. https://sevenswords.uk/kingdom-come-deliverance-ii-combat-guide/
+- K30, press. Gamer Guides, "The Rabbit Icon", 5 February 2025. Read through the four hare icon states and the start of the sneaking advice. https://www.gamerguides.com/kingdom-come-deliverance-ii/guide/getting-started/gameplay/the-rabbit-icon-stealth-and-detection
+- K31, press. Seven Swords combat guide (page dated 10 October 2026). Full except its question-and-answer list. https://sevenswords.uk/kingdom-come-deliverance-ii-combat-guide/
 - K32, player. Steam discussion "Master strikes?", 6 February 2025. Full. https://steamcommunity.com/app/1771300/discussions/0/601895662819239243
 - K33, player. Steam discussion "This combat system is utter trash", February 2025. First page of replies. https://steamcommunity.com/app/1771300/discussions/0/601895505111307429
 - K34, player. Steam guide "Understanding how Combos work" by Kabirbd. Chapters 1 and 2. https://steamcommunity.com/sharedfiles/filedetails/?id=3442173547
 - K35, player. Steam guide on fighting multiple enemies, by The Last Virgin. Full. https://steamcommunity.com/sharedfiles/filedetails/?id=3455238658
 - K36, unverified. Expert Game Reviews, timing guide. Full. https://expertgamereviews.com/kingdom-come-deliverance-2-combat-timing-guide/
 - K37, unverified. LootLore, master strike guide (dated 23 May 2026). Full. https://lootlore.online/en/kingdom-come-deliverance-2/mechanics/kcd2-master-strike-guide
-- K38, press. Master of Warcraft, Easy Combat mod, 14 February 2025. Full. https://www.masterofwarcraft.net/2025/02/kingdom-come-2-easy-combat-mod-master.html
+- K38, press. Master of Warcraft, Easy Combat mod, 14 February 2025. Sections (the lines about timing windows). https://www.masterofwarcraft.net/2025/02/kingdom-come-2-easy-combat-mod-master.html
 - K39, official. Warhorse Steam announcement "Catch-up on our Gameplay Showcase", 10 January 2025. Full. Steam news feed (item 1788311419052726), same link as K6.
 
 **Mafia: The Old Country**
@@ -441,18 +439,18 @@ All read 13 October 2026. "Full" means read to the end. "Sections" means the com
 - M7, press report of a developer panel. Popverse, Nick Baynes at PAX East, 11 May 2025. Full. https://www.thepopverse.com/gaming-mafia-the-old-country-weapons-player-knife-duel-stealth-pax-east-2025
 - M8, interview via press. GamingBolt, Joshua Zammit quoted, 8 May 2025. Full. https://gamingbolt.com/mafia-the-old-countrys-combat-has-a-life-or-death-vibe-encourages-more-tactical-play
 - M9, official. 2K, "The Family Code" gameplay videos page. Full. https://mafia.2k.com/the-old-country/news/gameplay-deep-dive-videos-family-code/
-- M10, wiki. Wikipedia, Mafia: The Old Country. Full. https://en.wikipedia.org/wiki/Mafia:%5FThe%5FOld%5FCountry
-- M12, press. Game8, "Knife Fight Guide". Full. https://game8.co/games/Mafia-The-Old-Country/archives/542506
+- M10, wiki. Wikipedia, Mafia: The Old Country. Sections (gameplay, release, reception table). https://en.wikipedia.org/wiki/Mafia:%5FThe%5FOld%5FCountry
+- M12, press. Game8, "Knife Fight Guide". Sections (the duel tips and the controls table). https://game8.co/games/Mafia-The-Old-Country/archives/542506
 - M13, press. GamerBlurb, knife fight guide, 9 August 2025. Full. https://gamerblurb.com/articles/mafia-the-old-country-knife-fight-dueling-guide
 - M14, press. DTGRE, Palio chapter knife guide, 7 August 2025, and its L'Ombra boss guide. Full. https://www.dtgre.com/2025/08/mafia-old-country-palio-knife-combat-guide.html and https://www.dtgre.com/2025/08/boss-fight-guide-defeating-lombra-mafia-the-old-country-palio.html
 - M15, press. VGTimes, stealth guide, 13 August 2025. Full. https://vgtimes.com/guides/131564-mafia-the-old-country-stealth-guide-tips-for-silent-gameplay-and-sneaky-completion.html
-- M16, press. Gameranx, ten quick tips, 8 August 2025. Full. https://gameranx.com/features/id/547457/article/mafia-the-old-country-10-quick-tips-to-become-a-made-man/
+- M16, press. Gameranx, ten quick tips, 8 August 2025. Sections (the knife, dodge, parry and distraction tips). https://gameranx.com/features/id/547457/article/mafia-the-old-country-10-quick-tips-to-become-a-made-man/
 - M17, press. Game8, stealth guide. Sections. https://game8.co/games/Mafia-The-Old-Country/archives/542458
-- M18, press. CrimeNet Gazette review. Full. https://www.crimenetgazette.com/post/mafia-the-old-country-review-join-the-mafia-regret-the-knife-budget
-- M19, press. GameScreed review, 8 August 2025. Full. https://www.gamescreed.com/reviews/mafia-the-old-country-review
-- M20, press. Impulse Gamer review, 7 August 2025. Full. https://www.impulsegamer.com/mafia-the-old-country-review-pc/
-- M21, press. GameIndustry review, 22 September 2025. Full. https://www.gameindustry.com/reviews/game-review/mafia-the-old-country-is-a-crime-saga-told-with-cinematic-splendor/
-- M22, press. MobileSyrup review, 18 August 2025. Full. https://mobilesyrup.com/2025/08/18/mafia-the-old-country-breathes-new-life-into-the-classic-franchise/
+- M18, press. CrimeNet Gazette review. Sections (the lines on knives, stealth and duels). https://www.crimenetgazette.com/post/mafia-the-old-country-review-join-the-mafia-regret-the-knife-budget
+- M19, press. GameScreed review, 8 August 2025. Sections (the lines on combat, stealth and duels). https://www.gamescreed.com/reviews/mafia-the-old-country-review
+- M20, press. Impulse Gamer review, 7 August 2025. Sections (the lines on stealth, knives and duels). https://www.impulsegamer.com/mafia-the-old-country-review-pc/
+- M21, press. GameIndustry review, 22 September 2025. Sections (the lines on duels and missions). https://www.gameindustry.com/reviews/game-review/mafia-the-old-country-is-a-crime-saga-told-with-cinematic-splendor/
+- M22, press. MobileSyrup review, 18 August 2025. Sections (the lines on mechanics and duels). https://mobilesyrup.com/2025/08/18/mafia-the-old-country-breathes-new-life-into-the-classic-franchise/
 - M25, official. 2K, "Free Ride update". Sections. https://mafia.2k.com/the-old-country/news/free-ride-update/
 - M26, press (German). PC Games, new combat video, 31 July 2025. Full. https://www.pcgames.de/Mafia-The-Old-Country-Spiel-74877/News/Neues-Video-zum-Kampfsystem-1478658/
 

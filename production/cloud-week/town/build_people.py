@@ -97,7 +97,10 @@ def build_person(p, sf, proposed_places):
     for sid in ids:
         s = sf[sid]
         text = s["own"] if (s["about"] == pid and s["own"]) else s["fact"]
-        add({"key": sid, "kind": "knows", "text": text, "src": src_dict(T.ALIASES["SF"], text), "street": sid, "secret": False})
+        fact = {"key": sid, "kind": "knows", "text": text, "street": sid, "secret": False}
+        if text != s["fact"]:
+            fact["src"] = src_dict(T.ALIASES["SF"], text)   # the person's own words for a fact about them
+        add(fact)
     # 1b. who they are, in the home's own words (the role cell or line)
     ralias, rquote = p["role"]
     add({"key": "job", "kind": "knows", "text": rquote, "src": src_dict(T.path_of(ralias), rquote), "secret": False, "via": "who and what they are, as their home gives it"})
@@ -116,7 +119,7 @@ def build_person(p, sf, proposed_places):
                     line = i
                     break
             out.append(T.Spec(key="who_" + t["who"], kind="knows", src=("HK", called, line), secret=False,
-                              via="who %s is, as the home describes them (hook-cast.json, the tie of %s)" % (t["who"], t["weight"])))
+                              via="who %s is, as the home describes them" % t["who"]))
         return out
 
     for f in p["knows"] + who_facts() + p["believes"] + p["saw"]:

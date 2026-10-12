@@ -2,9 +2,11 @@
  "made": "13 Oct 2026, cloud week 42, unit 11",
  "file_checked": "production/cloud-week/town/people.json",
  "summary": {
-  "rows": 548,
-  "pass": 540,
-  "fail": 8
+  "rows": 578,
+  "pass": 572,
+  "fail": 6,
+  "seeded_faults": 30,
+  "seeded_faults_caught": 24
  },
  "rows": [
   {
@@ -292,44 +294,44 @@
   {
    "id": "decisions.N-ANSWERS",
    "what": "DECISIONS.md has one entry for N-ANSWERS, ending 'Marked for Jafar.'",
-   "pass": false,
-   "detail": "0 entries"
+   "pass": true,
+   "detail": "1 entries"
   },
   {
    "id": "decisions.N-LIVES",
    "what": "DECISIONS.md has one entry for N-LIVES, ending 'Marked for Jafar.'",
-   "pass": false,
-   "detail": "0 entries"
+   "pass": true,
+   "detail": "1 entries"
   },
   {
    "id": "decisions.N-MICKEY",
    "what": "DECISIONS.md has one entry for N-MICKEY, ending 'Marked for Jafar.'",
-   "pass": false,
-   "detail": "0 entries"
+   "pass": true,
+   "detail": "1 entries"
   },
   {
    "id": "decisions.N-RIVALS",
    "what": "DECISIONS.md has one entry for N-RIVALS, ending 'Marked for Jafar.'",
-   "pass": false,
-   "detail": "0 entries"
+   "pass": true,
+   "detail": "1 entries"
   },
   {
    "id": "decisions.N-RUMOURS",
    "what": "DECISIONS.md has one entry for N-RUMOURS, ending 'Marked for Jafar.'",
-   "pass": false,
-   "detail": "0 entries"
+   "pass": true,
+   "detail": "1 entries"
   },
   {
    "id": "decisions.N-SCHEDULES",
    "what": "DECISIONS.md has one entry for N-SCHEDULES, ending 'Marked for Jafar.'",
-   "pass": false,
-   "detail": "0 entries"
+   "pass": true,
+   "detail": "1 entries"
   },
   {
    "id": "decisions.only_mine_new",
    "what": "every unit 11 line in DECISIONS.md belongs to a group",
-   "pass": false,
-   "detail": "0 lines, 6 groups"
+   "pass": true,
+   "detail": "6 lines, 6 groups"
   },
   {
    "id": "decisions.append_only",
@@ -3267,9 +3269,9 @@
   },
   {
    "id": "content.canon_gate",
-   "what": "tools/canon-gate.py is clean over production/cloud-week/town/people.json, production/cloud-week/town/HOMES.md",
+   "what": "tools/canon-gate.py is clean over production/cloud-week/town/people.json, production/cloud-week/town/HOMES.md, production/cloud-week/town/NOTES.md",
    "pass": true,
-   "detail": "canon-gate: clean - 0 finding(s) in 2 file(s), 34952 line(s) examined, 13 era term(s) and 45 brand token(s) screened"
+   "detail": "canon-gate: clean - 0 finding(s) in 3 file(s), 31904 line(s) examined, 13 era term(s) and 45 brand token(s) screened"
   },
   {
    "id": "shape.homes_file",
@@ -3280,7 +3282,7 @@
   {
    "id": "shape.notes_file",
    "what": "NOTES.md exists",
-   "pass": false,
+   "pass": true,
    "detail": ""
   },
   {
@@ -3294,6 +3296,186 @@
    "what": "44 entries, 5 rumours each, 10 answers each but Tom's",
    "pass": true,
    "detail": "new facts: 29"
+  },
+  {
+   "id": "control.01",
+   "what": "seeded fault caught: a sourced fact's words changed",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "control.02",
+   "what": "seeded fault caught: a citation pointed at the wrong line",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "control.03",
+   "what": "seeded fault caught: a new fact with no such group",
+   "pass": false,
+   "detail": "expected a failing row with 'ada.facts'; check crashed: KeyError('N-NOWHERE')"
+  },
+  {
+   "id": "control.04",
+   "what": "seeded fault caught: a fact with no source and no mark",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "control.05",
+   "what": "seeded fault caught: a rumour dropped (four left)",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "control.06",
+   "what": "seeded fault caught: a rumour passed to someone never met",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "control.07",
+   "what": "seeded fault caught: a fire rumour without its limit",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "control.08",
+   "what": "seeded fault caught: an answer citing another person's fact",
+   "pass": false,
+   "detail": "expected a failing row with 'rocco.questions'; check crashed: KeyError('lena.k05')"
+  },
+  {
+   "id": "control.09",
+   "what": "seeded fault caught: a stranger told a secret",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "control.10",
+   "what": "seeded fault caught: an answer of 31 words",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "control.11",
+   "what": "seeded fault caught: an invented name in an answer",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "control.12",
+   "what": "seeded fault caught: an invented number in an answer",
+   "pass": false,
+   "detail": "expected a failing row with 'rocco.questions'; failed rows: []"
+  },
+  {
+   "id": "control.13",
+   "what": "seeded fault caught: a real brand in an answer",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "control.14",
+   "what": "seeded fault caught: drink in an answer",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "control.15",
+   "what": "seeded fault caught: children in a rumour",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "control.16",
+   "what": "seeded fault caught: a year after 1992",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "control.17",
+   "what": "seeded fault caught: Tom's name in Ada's answer",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "control.18",
+   "what": "seeded fault caught: the fire's truth in an answer",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "control.19",
+   "what": "seeded fault caught: Mickey described by one who did not know him",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "control.20",
+   "what": "seeded fault caught: murder suggested",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "control.21",
+   "what": "seeded fault caught: a derived day fact altered",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "control.22",
+   "what": "seeded fault caught: a schedule altered against hook-cast",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "control.23",
+   "what": "seeded fault caught: a regular missing",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "control.24",
+   "what": "seeded fault caught: an extra entry",
+   "pass": false,
+   "detail": "expected a failing row with 'cast.no_extra'; check crashed: KeyError('hal2')"
+  },
+  {
+   "id": "control.25",
+   "what": "seeded fault caught: a tie's weight altered",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "control.26",
+   "what": "seeded fault caught: a question written for Tom",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "control.27",
+   "what": "seeded fault caught: a teacher outside Philip",
+   "pass": false,
+   "detail": "expected a failing row with 'content.nobody_teaches'; failed rows: []"
+  },
+  {
+   "id": "control.28",
+   "what": "seeded fault caught: an old name in an answer",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "control.29",
+   "what": "seeded fault caught: a don't-know that cites a fact",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "control.30",
+   "what": "seeded fault caught: a pawn counter open at three in the morning",
+   "pass": false,
+   "detail": "expected a failing row with 'rita.shop_hours'; failed rows: ['rita.schedule']"
   }
  ]
 }
