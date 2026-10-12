@@ -1,0 +1,7429 @@
+{
+ "check": "check_sound.py v1",
+ "brief": "BRIEF.md",
+ "outputs_dir": "/home/user/ledger-scratch/sound-out",
+ "rows_pass": 1056,
+ "rows_total": 1058,
+ "failing": [
+  {
+   "case": 13,
+   "test": "every source in sources.json is used by an output",
+   "file": null,
+   "detail": "unused: ['fs_334457', 'fs_766212', 'fs_871593']"
+  },
+  {
+   "case": 16,
+   "test": "listening clip is Vorbis, at most 20 s, under 300 KB",
+   "file": "clip_mix_rain.ogg",
+   "detail": "vorbis 20.0 s 370 KB"
+  }
+ ],
+ "rows": [
+  {
+   "case": 1,
+   "test": "loop exists",
+   "file": "amb_gulls_day.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 1,
+   "test": "loop exists",
+   "file": "amb_gulls_night.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 1,
+   "test": "loop exists",
+   "file": "amb_gulls_rain.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 1,
+   "test": "loop exists",
+   "file": "amb_harbour_day.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 1,
+   "test": "loop exists",
+   "file": "amb_harbour_night.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 1,
+   "test": "loop exists",
+   "file": "amb_harbour_rain.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 1,
+   "test": "loop exists",
+   "file": "amb_radio_day.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 1,
+   "test": "loop exists",
+   "file": "amb_radio_night.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 1,
+   "test": "loop exists",
+   "file": "amb_radio_rain.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 1,
+   "test": "loop exists",
+   "file": "amb_rain_awning.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 1,
+   "test": "loop exists",
+   "file": "amb_rain_gutter.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 1,
+   "test": "loop exists",
+   "file": "amb_rain_pavement.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 1,
+   "test": "loop exists",
+   "file": "amb_traffic_day.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 1,
+   "test": "loop exists",
+   "file": "amb_traffic_night.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 1,
+   "test": "loop exists",
+   "file": "amb_traffic_rain.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 1,
+   "test": "loop exists",
+   "file": "amb_voices_day.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 1,
+   "test": "loop exists",
+   "file": "amb_voices_night.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 1,
+   "test": "loop exists",
+   "file": "amb_voices_rain.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 1,
+   "test": "loop exists",
+   "file": "amb_wind_day.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 1,
+   "test": "loop exists",
+   "file": "amb_wind_night.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 1,
+   "test": "loop exists",
+   "file": "amb_wind_rain.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 1,
+   "test": "at least 3 variants of bell_shop",
+   "file": null,
+   "pass": true,
+   "detail": "5 found"
+  },
+  {
+   "case": 1,
+   "test": "at least 2 variants of door_house_close",
+   "file": null,
+   "pass": true,
+   "detail": "5 found"
+  },
+  {
+   "case": 1,
+   "test": "at least 2 variants of door_house_latch",
+   "file": null,
+   "pass": true,
+   "detail": "3 found"
+  },
+  {
+   "case": 1,
+   "test": "at least 2 variants of door_house_open",
+   "file": null,
+   "pass": true,
+   "detail": "3 found"
+  },
+  {
+   "case": 1,
+   "test": "at least 2 variants of door_shop_close",
+   "file": null,
+   "pass": true,
+   "detail": "3 found"
+  },
+  {
+   "case": 1,
+   "test": "at least 2 variants of door_shop_latch",
+   "file": null,
+   "pass": true,
+   "detail": "4 found"
+  },
+  {
+   "case": 1,
+   "test": "at least 2 variants of door_shop_open",
+   "file": null,
+   "pass": true,
+   "detail": "2 found"
+  },
+  {
+   "case": 1,
+   "test": "at least 3 variants of phonebox_door_creak",
+   "file": null,
+   "pass": true,
+   "detail": "5 found"
+  },
+  {
+   "case": 1,
+   "test": "at least 2 variants of phonebox_door_shut",
+   "file": null,
+   "pass": true,
+   "detail": "3 found"
+  },
+  {
+   "case": 1,
+   "test": "at least 1 variants of phonebox_ring",
+   "file": null,
+   "pass": true,
+   "detail": "3 found"
+  },
+  {
+   "case": 1,
+   "test": "at least 6 variants of step_asphalt",
+   "file": null,
+   "pass": true,
+   "detail": "8 found"
+  },
+  {
+   "case": 1,
+   "test": "at least 6 variants of step_paving",
+   "file": null,
+   "pass": true,
+   "detail": "8 found"
+  },
+  {
+   "case": 1,
+   "test": "at least 6 variants of step_setts",
+   "file": null,
+   "pass": true,
+   "detail": "8 found"
+  },
+  {
+   "case": 1,
+   "test": "at least 6 variants of step_wet",
+   "file": null,
+   "pass": true,
+   "detail": "8 found"
+  },
+  {
+   "case": 1,
+   "test": "at least 6 variants of step_wood",
+   "file": null,
+   "pass": true,
+   "detail": "8 found"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "amb_gulls_day.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "loop is 75 s",
+   "file": "amb_gulls_day.wav",
+   "pass": true,
+   "detail": "75.00 s"
+  },
+  {
+   "case": 3,
+   "test": "loop at least 60 s",
+   "file": "amb_gulls_day.wav",
+   "pass": true,
+   "detail": "75.0 s"
+  },
+  {
+   "case": 4,
+   "test": "integrated loudness within 0.5 LU of -48.0",
+   "file": "amb_gulls_day.wav",
+   "pass": true,
+   "detail": "-48.00 LUFS"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "amb_gulls_day.wav",
+   "pass": true,
+   "detail": "-33.10 dBTP"
+  },
+  {
+   "case": 6,
+   "test": "no click at the seam (jump at most 4.0)",
+   "file": "amb_gulls_day.wav",
+   "pass": true,
+   "detail": "jump 0.00 x typical step"
+  },
+  {
+   "case": 6,
+   "test": "no level step across the seam",
+   "file": "amb_gulls_day.wav",
+   "pass": true,
+   "detail": "0.14 dB, larger than at 44% of other places"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "amb_gulls_day.wav",
+   "pass": true,
+   "detail": "peak -33.09 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "amb_gulls_day.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "amb_gulls_day.wav",
+   "pass": true,
+   "detail": "fs_372213, fs_538015, fs_538016, fs_73497"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "amb_gulls_night.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "loop is 75 s",
+   "file": "amb_gulls_night.wav",
+   "pass": true,
+   "detail": "75.00 s"
+  },
+  {
+   "case": 3,
+   "test": "loop at least 60 s",
+   "file": "amb_gulls_night.wav",
+   "pass": true,
+   "detail": "75.0 s"
+  },
+  {
+   "case": 4,
+   "test": "integrated loudness within 0.5 LU of -56.0",
+   "file": "amb_gulls_night.wav",
+   "pass": true,
+   "detail": "-56.00 LUFS"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "amb_gulls_night.wav",
+   "pass": true,
+   "detail": "-40.60 dBTP"
+  },
+  {
+   "case": 6,
+   "test": "no click at the seam (jump at most 4.0)",
+   "file": "amb_gulls_night.wav",
+   "pass": true,
+   "detail": "jump 0.00 x typical step"
+  },
+  {
+   "case": 6,
+   "test": "no level step across the seam",
+   "file": "amb_gulls_night.wav",
+   "pass": true,
+   "detail": "0.08 dB, larger than at 64% of other places"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "amb_gulls_night.wav",
+   "pass": true,
+   "detail": "peak -40.62 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "amb_gulls_night.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "amb_gulls_night.wav",
+   "pass": true,
+   "detail": "fs_538015, fs_744592"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "amb_gulls_rain.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "loop is 75 s",
+   "file": "amb_gulls_rain.wav",
+   "pass": true,
+   "detail": "75.00 s"
+  },
+  {
+   "case": 3,
+   "test": "loop at least 60 s",
+   "file": "amb_gulls_rain.wav",
+   "pass": true,
+   "detail": "75.0 s"
+  },
+  {
+   "case": 4,
+   "test": "integrated loudness within 0.5 LU of -54.0",
+   "file": "amb_gulls_rain.wav",
+   "pass": true,
+   "detail": "-54.00 LUFS"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "amb_gulls_rain.wav",
+   "pass": true,
+   "detail": "-40.10 dBTP"
+  },
+  {
+   "case": 6,
+   "test": "no click at the seam (jump at most 4.0)",
+   "file": "amb_gulls_rain.wav",
+   "pass": true,
+   "detail": "jump 1.42 x typical step"
+  },
+  {
+   "case": 6,
+   "test": "no level step across the seam",
+   "file": "amb_gulls_rain.wav",
+   "pass": true,
+   "detail": "0.04 dB, larger than at 60% of other places"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "amb_gulls_rain.wav",
+   "pass": true,
+   "detail": "peak -40.10 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "amb_gulls_rain.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "amb_gulls_rain.wav",
+   "pass": true,
+   "detail": "fs_538015, fs_538016"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "amb_harbour_day.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 2 ch"
+  },
+  {
+   "case": 2,
+   "test": "loop is 75 s",
+   "file": "amb_harbour_day.wav",
+   "pass": true,
+   "detail": "75.00 s"
+  },
+  {
+   "case": 3,
+   "test": "loop at least 60 s",
+   "file": "amb_harbour_day.wav",
+   "pass": true,
+   "detail": "75.0 s"
+  },
+  {
+   "case": 4,
+   "test": "integrated loudness within 0.5 LU of -41.0",
+   "file": "amb_harbour_day.wav",
+   "pass": true,
+   "detail": "-41.00 LUFS"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "amb_harbour_day.wav",
+   "pass": true,
+   "detail": "-14.90 dBTP"
+  },
+  {
+   "case": 6,
+   "test": "no click at the seam (jump at most 4.0)",
+   "file": "amb_harbour_day.wav",
+   "pass": true,
+   "detail": "jump 0.22 x typical step"
+  },
+  {
+   "case": 6,
+   "test": "no level step across the seam",
+   "file": "amb_harbour_day.wav",
+   "pass": true,
+   "detail": "1.46 dB, larger than at 52% of other places"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "amb_harbour_day.wav",
+   "pass": true,
+   "detail": "peak -14.87 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "amb_harbour_day.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "amb_harbour_day.wav",
+   "pass": true,
+   "detail": "fs_182611, fs_360633, fs_559821"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "amb_harbour_night.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 2 ch"
+  },
+  {
+   "case": 2,
+   "test": "loop is 75 s",
+   "file": "amb_harbour_night.wav",
+   "pass": true,
+   "detail": "75.00 s"
+  },
+  {
+   "case": 3,
+   "test": "loop at least 60 s",
+   "file": "amb_harbour_night.wav",
+   "pass": true,
+   "detail": "75.0 s"
+  },
+  {
+   "case": 4,
+   "test": "integrated loudness within 0.5 LU of -43.0",
+   "file": "amb_harbour_night.wav",
+   "pass": true,
+   "detail": "-43.00 LUFS"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "amb_harbour_night.wav",
+   "pass": true,
+   "detail": "-17.00 dBTP"
+  },
+  {
+   "case": 6,
+   "test": "no click at the seam (jump at most 4.0)",
+   "file": "amb_harbour_night.wav",
+   "pass": true,
+   "detail": "jump 0.00 x typical step"
+  },
+  {
+   "case": 6,
+   "test": "no level step across the seam",
+   "file": "amb_harbour_night.wav",
+   "pass": true,
+   "detail": "2.81 dB, larger than at 85% of other places"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "amb_harbour_night.wav",
+   "pass": true,
+   "detail": "peak -17.01 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "amb_harbour_night.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "amb_harbour_night.wav",
+   "pass": true,
+   "detail": "fs_182610, fs_360633"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "amb_harbour_rain.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 2 ch"
+  },
+  {
+   "case": 2,
+   "test": "loop is 75 s",
+   "file": "amb_harbour_rain.wav",
+   "pass": true,
+   "detail": "75.00 s"
+  },
+  {
+   "case": 3,
+   "test": "loop at least 60 s",
+   "file": "amb_harbour_rain.wav",
+   "pass": true,
+   "detail": "75.0 s"
+  },
+  {
+   "case": 4,
+   "test": "integrated loudness within 0.5 LU of -43.0",
+   "file": "amb_harbour_rain.wav",
+   "pass": true,
+   "detail": "-43.00 LUFS"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "amb_harbour_rain.wav",
+   "pass": true,
+   "detail": "-23.00 dBTP"
+  },
+  {
+   "case": 6,
+   "test": "no click at the seam (jump at most 4.0)",
+   "file": "amb_harbour_rain.wav",
+   "pass": true,
+   "detail": "jump 0.16 x typical step"
+  },
+  {
+   "case": 6,
+   "test": "no level step across the seam",
+   "file": "amb_harbour_rain.wav",
+   "pass": true,
+   "detail": "0.13 dB, larger than at 8% of other places"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "amb_harbour_rain.wav",
+   "pass": true,
+   "detail": "peak -23.06 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "amb_harbour_rain.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "amb_harbour_rain.wav",
+   "pass": true,
+   "detail": "fs_182612, fs_463373"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "amb_radio_day.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "loop is 75 s",
+   "file": "amb_radio_day.wav",
+   "pass": true,
+   "detail": "75.00 s"
+  },
+  {
+   "case": 3,
+   "test": "loop at least 60 s",
+   "file": "amb_radio_day.wav",
+   "pass": true,
+   "detail": "75.0 s"
+  },
+  {
+   "case": 4,
+   "test": "integrated loudness within 0.5 LU of -52.0",
+   "file": "amb_radio_day.wav",
+   "pass": true,
+   "detail": "-52.00 LUFS"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "amb_radio_day.wav",
+   "pass": true,
+   "detail": "-43.90 dBTP"
+  },
+  {
+   "case": 6,
+   "test": "no click at the seam (jump at most 4.0)",
+   "file": "amb_radio_day.wav",
+   "pass": true,
+   "detail": "jump 1.55 x typical step"
+  },
+  {
+   "case": 6,
+   "test": "no level step across the seam",
+   "file": "amb_radio_day.wav",
+   "pass": true,
+   "detail": "1.02 dB, larger than at 50% of other places"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "amb_radio_day.wav",
+   "pass": true,
+   "detail": "peak -43.91 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "amb_radio_day.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "amb_radio_day.wav",
+   "pass": true,
+   "detail": "fs_528615"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "amb_radio_night.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "loop is 75 s",
+   "file": "amb_radio_night.wav",
+   "pass": true,
+   "detail": "75.00 s"
+  },
+  {
+   "case": 3,
+   "test": "loop at least 60 s",
+   "file": "amb_radio_night.wav",
+   "pass": true,
+   "detail": "75.0 s"
+  },
+  {
+   "case": 4,
+   "test": "integrated loudness within 0.5 LU of -54.0",
+   "file": "amb_radio_night.wav",
+   "pass": true,
+   "detail": "-54.00 LUFS"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "amb_radio_night.wav",
+   "pass": true,
+   "detail": "-45.70 dBTP"
+  },
+  {
+   "case": 6,
+   "test": "no click at the seam (jump at most 4.0)",
+   "file": "amb_radio_night.wav",
+   "pass": true,
+   "detail": "jump 1.25 x typical step"
+  },
+  {
+   "case": 6,
+   "test": "no level step across the seam",
+   "file": "amb_radio_night.wav",
+   "pass": true,
+   "detail": "1.01 dB, larger than at 49% of other places"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "amb_radio_night.wav",
+   "pass": true,
+   "detail": "peak -45.75 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "amb_radio_night.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "amb_radio_night.wav",
+   "pass": true,
+   "detail": "fs_528615"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "amb_radio_rain.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "loop is 75 s",
+   "file": "amb_radio_rain.wav",
+   "pass": true,
+   "detail": "75.00 s"
+  },
+  {
+   "case": 3,
+   "test": "loop at least 60 s",
+   "file": "amb_radio_rain.wav",
+   "pass": true,
+   "detail": "75.0 s"
+  },
+  {
+   "case": 4,
+   "test": "integrated loudness within 0.5 LU of -54.0",
+   "file": "amb_radio_rain.wav",
+   "pass": true,
+   "detail": "-54.00 LUFS"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "amb_radio_rain.wav",
+   "pass": true,
+   "detail": "-44.90 dBTP"
+  },
+  {
+   "case": 6,
+   "test": "no click at the seam (jump at most 4.0)",
+   "file": "amb_radio_rain.wav",
+   "pass": true,
+   "detail": "jump 1.51 x typical step"
+  },
+  {
+   "case": 6,
+   "test": "no level step across the seam",
+   "file": "amb_radio_rain.wav",
+   "pass": true,
+   "detail": "0.97 dB, larger than at 46% of other places"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "amb_radio_rain.wav",
+   "pass": true,
+   "detail": "peak -44.87 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "amb_radio_rain.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "amb_radio_rain.wav",
+   "pass": true,
+   "detail": "fs_528615"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "amb_rain_awning.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 2 ch"
+  },
+  {
+   "case": 2,
+   "test": "loop is 75 s",
+   "file": "amb_rain_awning.wav",
+   "pass": true,
+   "detail": "75.00 s"
+  },
+  {
+   "case": 3,
+   "test": "loop at least 60 s",
+   "file": "amb_rain_awning.wav",
+   "pass": true,
+   "detail": "75.0 s"
+  },
+  {
+   "case": 4,
+   "test": "integrated loudness within 0.5 LU of -42.0",
+   "file": "amb_rain_awning.wav",
+   "pass": true,
+   "detail": "-42.00 LUFS"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "amb_rain_awning.wav",
+   "pass": true,
+   "detail": "-13.70 dBTP"
+  },
+  {
+   "case": 6,
+   "test": "no click at the seam (jump at most 4.0)",
+   "file": "amb_rain_awning.wav",
+   "pass": true,
+   "detail": "jump 1.05 x typical step"
+  },
+  {
+   "case": 6,
+   "test": "no level step across the seam",
+   "file": "amb_rain_awning.wav",
+   "pass": true,
+   "detail": "0.86 dB, larger than at 78% of other places"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "amb_rain_awning.wav",
+   "pass": true,
+   "detail": "peak -13.80 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "amb_rain_awning.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "amb_rain_awning.wav",
+   "pass": true,
+   "detail": "fs_454130"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "amb_rain_gutter.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 2 ch"
+  },
+  {
+   "case": 2,
+   "test": "loop is 75 s",
+   "file": "amb_rain_gutter.wav",
+   "pass": true,
+   "detail": "75.00 s"
+  },
+  {
+   "case": 3,
+   "test": "loop at least 60 s",
+   "file": "amb_rain_gutter.wav",
+   "pass": true,
+   "detail": "75.0 s"
+  },
+  {
+   "case": 4,
+   "test": "integrated loudness within 0.5 LU of -47.0",
+   "file": "amb_rain_gutter.wav",
+   "pass": true,
+   "detail": "-47.00 LUFS"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "amb_rain_gutter.wav",
+   "pass": true,
+   "detail": "-8.30 dBTP"
+  },
+  {
+   "case": 6,
+   "test": "no click at the seam (jump at most 4.0)",
+   "file": "amb_rain_gutter.wav",
+   "pass": true,
+   "detail": "jump 0.23 x typical step"
+  },
+  {
+   "case": 6,
+   "test": "no level step across the seam",
+   "file": "amb_rain_gutter.wav",
+   "pass": true,
+   "detail": "1.26 dB, larger than at 66% of other places"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "amb_rain_gutter.wav",
+   "pass": true,
+   "detail": "peak -8.84 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "amb_rain_gutter.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "amb_rain_gutter.wav",
+   "pass": true,
+   "detail": "fs_846446"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "amb_rain_pavement.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "loop is 75 s",
+   "file": "amb_rain_pavement.wav",
+   "pass": true,
+   "detail": "75.00 s"
+  },
+  {
+   "case": 3,
+   "test": "loop at least 60 s",
+   "file": "amb_rain_pavement.wav",
+   "pass": true,
+   "detail": "75.0 s"
+  },
+  {
+   "case": 4,
+   "test": "integrated loudness within 0.5 LU of -37.0",
+   "file": "amb_rain_pavement.wav",
+   "pass": true,
+   "detail": "-37.00 LUFS"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "amb_rain_pavement.wav",
+   "pass": true,
+   "detail": "-2.70 dBTP"
+  },
+  {
+   "case": 6,
+   "test": "no click at the seam (jump at most 4.0)",
+   "file": "amb_rain_pavement.wav",
+   "pass": true,
+   "detail": "jump 0.19 x typical step"
+  },
+  {
+   "case": 6,
+   "test": "no level step across the seam",
+   "file": "amb_rain_pavement.wav",
+   "pass": true,
+   "detail": "1.80 dB, larger than at 72% of other places"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "amb_rain_pavement.wav",
+   "pass": true,
+   "detail": "peak -3.94 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "amb_rain_pavement.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "amb_rain_pavement.wav",
+   "pass": true,
+   "detail": "bsb_1289"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "amb_traffic_day.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 2 ch"
+  },
+  {
+   "case": 2,
+   "test": "loop is 75 s",
+   "file": "amb_traffic_day.wav",
+   "pass": true,
+   "detail": "75.00 s"
+  },
+  {
+   "case": 3,
+   "test": "loop at least 60 s",
+   "file": "amb_traffic_day.wav",
+   "pass": true,
+   "detail": "75.0 s"
+  },
+  {
+   "case": 4,
+   "test": "integrated loudness within 0.5 LU of -40.0",
+   "file": "amb_traffic_day.wav",
+   "pass": true,
+   "detail": "-40.00 LUFS"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "amb_traffic_day.wav",
+   "pass": true,
+   "detail": "-24.20 dBTP"
+  },
+  {
+   "case": 6,
+   "test": "no click at the seam (jump at most 4.0)",
+   "file": "amb_traffic_day.wav",
+   "pass": true,
+   "detail": "jump 0.49 x typical step"
+  },
+  {
+   "case": 6,
+   "test": "no level step across the seam",
+   "file": "amb_traffic_day.wav",
+   "pass": true,
+   "detail": "0.55 dB, larger than at 19% of other places"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "amb_traffic_day.wav",
+   "pass": true,
+   "detail": "peak -24.21 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "amb_traffic_day.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "amb_traffic_day.wav",
+   "pass": true,
+   "detail": "fs_503456"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "amb_traffic_night.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 2 ch"
+  },
+  {
+   "case": 2,
+   "test": "loop is 75 s",
+   "file": "amb_traffic_night.wav",
+   "pass": true,
+   "detail": "75.00 s"
+  },
+  {
+   "case": 3,
+   "test": "loop at least 60 s",
+   "file": "amb_traffic_night.wav",
+   "pass": true,
+   "detail": "75.0 s"
+  },
+  {
+   "case": 4,
+   "test": "integrated loudness within 0.5 LU of -45.0",
+   "file": "amb_traffic_night.wav",
+   "pass": true,
+   "detail": "-45.00 LUFS"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "amb_traffic_night.wav",
+   "pass": true,
+   "detail": "-21.90 dBTP"
+  },
+  {
+   "case": 6,
+   "test": "no click at the seam (jump at most 4.0)",
+   "file": "amb_traffic_night.wav",
+   "pass": true,
+   "detail": "jump 0.15 x typical step"
+  },
+  {
+   "case": 6,
+   "test": "no level step across the seam",
+   "file": "amb_traffic_night.wav",
+   "pass": true,
+   "detail": "2.87 dB, larger than at 85% of other places"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "amb_traffic_night.wav",
+   "pass": true,
+   "detail": "peak -21.87 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "amb_traffic_night.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "amb_traffic_night.wav",
+   "pass": true,
+   "detail": "fs_395686"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "amb_traffic_rain.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 2 ch"
+  },
+  {
+   "case": 2,
+   "test": "loop is 75 s",
+   "file": "amb_traffic_rain.wav",
+   "pass": true,
+   "detail": "75.00 s"
+  },
+  {
+   "case": 3,
+   "test": "loop at least 60 s",
+   "file": "amb_traffic_rain.wav",
+   "pass": true,
+   "detail": "75.0 s"
+  },
+  {
+   "case": 4,
+   "test": "integrated loudness within 0.5 LU of -42.0",
+   "file": "amb_traffic_rain.wav",
+   "pass": true,
+   "detail": "-42.00 LUFS"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "amb_traffic_rain.wav",
+   "pass": true,
+   "detail": "-21.60 dBTP"
+  },
+  {
+   "case": 6,
+   "test": "no click at the seam (jump at most 4.0)",
+   "file": "amb_traffic_rain.wav",
+   "pass": true,
+   "detail": "jump 2.09 x typical step"
+  },
+  {
+   "case": 6,
+   "test": "no level step across the seam",
+   "file": "amb_traffic_rain.wav",
+   "pass": true,
+   "detail": "0.81 dB, larger than at 91% of other places"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "amb_traffic_rain.wav",
+   "pass": true,
+   "detail": "peak -21.55 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "amb_traffic_rain.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "amb_traffic_rain.wav",
+   "pass": true,
+   "detail": "bsb_621"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "amb_voices_day.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "loop is 75 s",
+   "file": "amb_voices_day.wav",
+   "pass": true,
+   "detail": "75.00 s"
+  },
+  {
+   "case": 3,
+   "test": "loop at least 60 s",
+   "file": "amb_voices_day.wav",
+   "pass": true,
+   "detail": "75.0 s"
+  },
+  {
+   "case": 4,
+   "test": "integrated loudness within 0.5 LU of -50.0",
+   "file": "amb_voices_day.wav",
+   "pass": true,
+   "detail": "-50.00 LUFS"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "amb_voices_day.wav",
+   "pass": true,
+   "detail": "-30.30 dBTP"
+  },
+  {
+   "case": 6,
+   "test": "no click at the seam (jump at most 4.0)",
+   "file": "amb_voices_day.wav",
+   "pass": true,
+   "detail": "jump 0.28 x typical step"
+  },
+  {
+   "case": 6,
+   "test": "no level step across the seam",
+   "file": "amb_voices_day.wav",
+   "pass": true,
+   "detail": "0.88 dB, larger than at 35% of other places"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "amb_voices_day.wav",
+   "pass": true,
+   "detail": "peak -30.29 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "amb_voices_day.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "amb_voices_day.wav",
+   "pass": true,
+   "detail": "fs_260124, fs_757318"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "amb_voices_night.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "loop is 75 s",
+   "file": "amb_voices_night.wav",
+   "pass": true,
+   "detail": "75.00 s"
+  },
+  {
+   "case": 3,
+   "test": "loop at least 60 s",
+   "file": "amb_voices_night.wav",
+   "pass": true,
+   "detail": "75.0 s"
+  },
+  {
+   "case": 4,
+   "test": "integrated loudness within 0.5 LU of -53.0",
+   "file": "amb_voices_night.wav",
+   "pass": true,
+   "detail": "-53.00 LUFS"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "amb_voices_night.wav",
+   "pass": true,
+   "detail": "-29.70 dBTP"
+  },
+  {
+   "case": 6,
+   "test": "no click at the seam (jump at most 4.0)",
+   "file": "amb_voices_night.wav",
+   "pass": true,
+   "detail": "jump 0.00 x typical step"
+  },
+  {
+   "case": 6,
+   "test": "no level step across the seam",
+   "file": "amb_voices_night.wav",
+   "pass": true,
+   "detail": "1.24 dB, larger than at 28% of other places"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "amb_voices_night.wav",
+   "pass": true,
+   "detail": "peak -29.73 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "amb_voices_night.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "amb_voices_night.wav",
+   "pass": true,
+   "detail": "fs_260124"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "amb_voices_rain.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "loop is 75 s",
+   "file": "amb_voices_rain.wav",
+   "pass": true,
+   "detail": "75.00 s"
+  },
+  {
+   "case": 3,
+   "test": "loop at least 60 s",
+   "file": "amb_voices_rain.wav",
+   "pass": true,
+   "detail": "75.0 s"
+  },
+  {
+   "case": 4,
+   "test": "integrated loudness within 0.5 LU of -55.0",
+   "file": "amb_voices_rain.wav",
+   "pass": true,
+   "detail": "-55.00 LUFS"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "amb_voices_rain.wav",
+   "pass": true,
+   "detail": "-35.70 dBTP"
+  },
+  {
+   "case": 6,
+   "test": "no click at the seam (jump at most 4.0)",
+   "file": "amb_voices_rain.wav",
+   "pass": true,
+   "detail": "jump 0.73 x typical step"
+  },
+  {
+   "case": 6,
+   "test": "no level step across the seam",
+   "file": "amb_voices_rain.wav",
+   "pass": true,
+   "detail": "1.78 dB, larger than at 70% of other places"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "amb_voices_rain.wav",
+   "pass": true,
+   "detail": "peak -35.74 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "amb_voices_rain.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "amb_voices_rain.wav",
+   "pass": true,
+   "detail": "fs_757318"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "amb_wind_day.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 2 ch"
+  },
+  {
+   "case": 2,
+   "test": "loop is 75 s",
+   "file": "amb_wind_day.wav",
+   "pass": true,
+   "detail": "75.00 s"
+  },
+  {
+   "case": 3,
+   "test": "loop at least 60 s",
+   "file": "amb_wind_day.wav",
+   "pass": true,
+   "detail": "75.0 s"
+  },
+  {
+   "case": 4,
+   "test": "integrated loudness within 0.5 LU of -46.0",
+   "file": "amb_wind_day.wav",
+   "pass": true,
+   "detail": "-46.00 LUFS"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "amb_wind_day.wav",
+   "pass": true,
+   "detail": "-25.50 dBTP"
+  },
+  {
+   "case": 6,
+   "test": "no click at the seam (jump at most 4.0)",
+   "file": "amb_wind_day.wav",
+   "pass": true,
+   "detail": "jump 2.75 x typical step"
+  },
+  {
+   "case": 6,
+   "test": "no level step across the seam",
+   "file": "amb_wind_day.wav",
+   "pass": true,
+   "detail": "0.20 dB, larger than at 13% of other places"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "amb_wind_day.wav",
+   "pass": true,
+   "detail": "peak -25.47 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "amb_wind_day.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "amb_wind_day.wav",
+   "pass": true,
+   "detail": "fs_454374"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "amb_wind_night.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 2 ch"
+  },
+  {
+   "case": 2,
+   "test": "loop is 75 s",
+   "file": "amb_wind_night.wav",
+   "pass": true,
+   "detail": "75.00 s"
+  },
+  {
+   "case": 3,
+   "test": "loop at least 60 s",
+   "file": "amb_wind_night.wav",
+   "pass": true,
+   "detail": "75.0 s"
+  },
+  {
+   "case": 4,
+   "test": "integrated loudness within 0.5 LU of -45.0",
+   "file": "amb_wind_night.wav",
+   "pass": true,
+   "detail": "-45.00 LUFS"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "amb_wind_night.wav",
+   "pass": true,
+   "detail": "-25.00 dBTP"
+  },
+  {
+   "case": 6,
+   "test": "no click at the seam (jump at most 4.0)",
+   "file": "amb_wind_night.wav",
+   "pass": true,
+   "detail": "jump 0.58 x typical step"
+  },
+  {
+   "case": 6,
+   "test": "no level step across the seam",
+   "file": "amb_wind_night.wav",
+   "pass": true,
+   "detail": "0.63 dB, larger than at 60% of other places"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "amb_wind_night.wav",
+   "pass": true,
+   "detail": "peak -25.04 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "amb_wind_night.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "amb_wind_night.wav",
+   "pass": true,
+   "detail": "fs_554845"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "amb_wind_rain.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 2 ch"
+  },
+  {
+   "case": 2,
+   "test": "loop is 75 s",
+   "file": "amb_wind_rain.wav",
+   "pass": true,
+   "detail": "75.00 s"
+  },
+  {
+   "case": 3,
+   "test": "loop at least 60 s",
+   "file": "amb_wind_rain.wav",
+   "pass": true,
+   "detail": "75.0 s"
+  },
+  {
+   "case": 4,
+   "test": "integrated loudness within 0.5 LU of -43.0",
+   "file": "amb_wind_rain.wav",
+   "pass": true,
+   "detail": "-43.00 LUFS"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "amb_wind_rain.wav",
+   "pass": true,
+   "detail": "-25.90 dBTP"
+  },
+  {
+   "case": 6,
+   "test": "no click at the seam (jump at most 4.0)",
+   "file": "amb_wind_rain.wav",
+   "pass": true,
+   "detail": "jump 0.67 x typical step"
+  },
+  {
+   "case": 6,
+   "test": "no level step across the seam",
+   "file": "amb_wind_rain.wav",
+   "pass": true,
+   "detail": "0.21 dB, larger than at 7% of other places"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "amb_wind_rain.wav",
+   "pass": true,
+   "detail": "peak -25.97 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "amb_wind_rain.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "amb_wind_rain.wav",
+   "pass": true,
+   "detail": "bsb_625"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "bell_shop_01.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "bell_shop_01.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -25.0, or lower and peak-limited",
+   "file": "bell_shop_01.wav",
+   "pass": true,
+   "detail": "-25.10 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "bell_shop_01.wav",
+   "pass": true,
+   "detail": "-16.20 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "bell_shop_01.wav",
+   "pass": true,
+   "detail": "start -90.3 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "bell_shop_01.wav",
+   "pass": true,
+   "detail": "peak -16.46 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "bell_shop_01.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "bell_shop_01.wav",
+   "pass": true,
+   "detail": "fs_57743"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "bell_shop_02.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "bell_shop_02.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -25.0, or lower and peak-limited",
+   "file": "bell_shop_02.wav",
+   "pass": true,
+   "detail": "-25.60 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "bell_shop_02.wav",
+   "pass": true,
+   "detail": "-8.50 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "bell_shop_02.wav",
+   "pass": true,
+   "detail": "start -90.3 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "bell_shop_02.wav",
+   "pass": true,
+   "detail": "peak -8.55 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "bell_shop_02.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "bell_shop_02.wav",
+   "pass": true,
+   "detail": "fs_494565"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "bell_shop_03.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "bell_shop_03.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -25.0, or lower and peak-limited",
+   "file": "bell_shop_03.wav",
+   "pass": true,
+   "detail": "-25.20 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "bell_shop_03.wav",
+   "pass": true,
+   "detail": "-9.50 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "bell_shop_03.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "bell_shop_03.wav",
+   "pass": true,
+   "detail": "peak -9.70 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "bell_shop_03.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "bell_shop_03.wav",
+   "pass": true,
+   "detail": "fs_494565"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "bell_shop_04.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "bell_shop_04.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -25.0, or lower and peak-limited",
+   "file": "bell_shop_04.wav",
+   "pass": true,
+   "detail": "-25.10 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "bell_shop_04.wav",
+   "pass": true,
+   "detail": "-7.20 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "bell_shop_04.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "bell_shop_04.wav",
+   "pass": true,
+   "detail": "peak -7.20 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "bell_shop_04.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "bell_shop_04.wav",
+   "pass": true,
+   "detail": "fs_494565"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "bell_shop_05.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "bell_shop_05.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -25.0, or lower and peak-limited",
+   "file": "bell_shop_05.wav",
+   "pass": true,
+   "detail": "-25.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "bell_shop_05.wav",
+   "pass": true,
+   "detail": "-5.80 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "bell_shop_05.wav",
+   "pass": true,
+   "detail": "start -90.3 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "bell_shop_05.wav",
+   "pass": true,
+   "detail": "peak -6.64 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "bell_shop_05.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "bell_shop_05.wav",
+   "pass": true,
+   "detail": "fs_494565"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "door_house_close_01.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "door_house_close_01.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -23.0, or lower and peak-limited",
+   "file": "door_house_close_01.wav",
+   "pass": true,
+   "detail": "-23.20 LUFS-M (peak-limited)"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "door_house_close_01.wav",
+   "pass": true,
+   "detail": "-1.50 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "door_house_close_01.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "door_house_close_01.wav",
+   "pass": true,
+   "detail": "peak -1.55 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "door_house_close_01.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "door_house_close_01.wav",
+   "pass": true,
+   "detail": "fs_402464"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "door_house_close_02.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "door_house_close_02.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -23.0, or lower and peak-limited",
+   "file": "door_house_close_02.wav",
+   "pass": true,
+   "detail": "-23.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "door_house_close_02.wav",
+   "pass": true,
+   "detail": "-7.90 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "door_house_close_02.wav",
+   "pass": true,
+   "detail": "start -90.3 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "door_house_close_02.wav",
+   "pass": true,
+   "detail": "peak -7.86 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "door_house_close_02.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "door_house_close_02.wav",
+   "pass": true,
+   "detail": "fs_402465"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "door_house_close_03.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "door_house_close_03.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -23.0, or lower and peak-limited",
+   "file": "door_house_close_03.wav",
+   "pass": true,
+   "detail": "-23.10 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "door_house_close_03.wav",
+   "pass": true,
+   "detail": "-6.10 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "door_house_close_03.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "door_house_close_03.wav",
+   "pass": true,
+   "detail": "peak -6.11 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "door_house_close_03.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "door_house_close_03.wav",
+   "pass": true,
+   "detail": "fs_402466"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "door_house_close_04.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "door_house_close_04.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -23.0, or lower and peak-limited",
+   "file": "door_house_close_04.wav",
+   "pass": true,
+   "detail": "-23.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "door_house_close_04.wav",
+   "pass": true,
+   "detail": "-2.70 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "door_house_close_04.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "door_house_close_04.wav",
+   "pass": true,
+   "detail": "peak -3.01 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "door_house_close_04.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "door_house_close_04.wav",
+   "pass": true,
+   "detail": "bsb_545"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "door_house_close_05.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "door_house_close_05.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -23.0, or lower and peak-limited",
+   "file": "door_house_close_05.wav",
+   "pass": true,
+   "detail": "-26.40 LUFS-M (peak-limited)"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "door_house_close_05.wav",
+   "pass": true,
+   "detail": "-1.50 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "door_house_close_05.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "door_house_close_05.wav",
+   "pass": true,
+   "detail": "peak -1.67 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "door_house_close_05.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "door_house_close_05.wav",
+   "pass": true,
+   "detail": "bsb_545"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "door_house_latch_01.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "door_house_latch_01.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -29.0, or lower and peak-limited",
+   "file": "door_house_latch_01.wav",
+   "pass": true,
+   "detail": "-29.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "door_house_latch_01.wav",
+   "pass": true,
+   "detail": "-10.50 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "door_house_latch_01.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -84.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "door_house_latch_01.wav",
+   "pass": true,
+   "detail": "peak -10.61 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "door_house_latch_01.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "door_house_latch_01.wav",
+   "pass": true,
+   "detail": "bsb_1320"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "door_house_latch_02.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "door_house_latch_02.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -29.0, or lower and peak-limited",
+   "file": "door_house_latch_02.wav",
+   "pass": true,
+   "detail": "-29.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "door_house_latch_02.wav",
+   "pass": true,
+   "detail": "-6.50 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "door_house_latch_02.wav",
+   "pass": true,
+   "detail": "start -90.3 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "door_house_latch_02.wav",
+   "pass": true,
+   "detail": "peak -6.58 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "door_house_latch_02.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "door_house_latch_02.wav",
+   "pass": true,
+   "detail": "bsb_1320"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "door_house_latch_03.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "door_house_latch_03.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -29.0, or lower and peak-limited",
+   "file": "door_house_latch_03.wav",
+   "pass": true,
+   "detail": "-29.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "door_house_latch_03.wav",
+   "pass": true,
+   "detail": "-6.00 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "door_house_latch_03.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -84.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "door_house_latch_03.wav",
+   "pass": true,
+   "detail": "peak -6.32 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "door_house_latch_03.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "door_house_latch_03.wav",
+   "pass": true,
+   "detail": "bsb_1320"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "door_house_open_01.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "door_house_open_01.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -26.0, or lower and peak-limited",
+   "file": "door_house_open_01.wav",
+   "pass": true,
+   "detail": "-26.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "door_house_open_01.wav",
+   "pass": true,
+   "detail": "-9.70 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "door_house_open_01.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "door_house_open_01.wav",
+   "pass": true,
+   "detail": "peak -9.85 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "door_house_open_01.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "door_house_open_01.wav",
+   "pass": true,
+   "detail": "fs_402464"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "door_house_open_02.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "door_house_open_02.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -26.0, or lower and peak-limited",
+   "file": "door_house_open_02.wav",
+   "pass": true,
+   "detail": "-26.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "door_house_open_02.wav",
+   "pass": true,
+   "detail": "-6.40 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "door_house_open_02.wav",
+   "pass": true,
+   "detail": "start -90.3 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "door_house_open_02.wav",
+   "pass": true,
+   "detail": "peak -6.41 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "door_house_open_02.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "door_house_open_02.wav",
+   "pass": true,
+   "detail": "fs_402465"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "door_house_open_03.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "door_house_open_03.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -26.0, or lower and peak-limited",
+   "file": "door_house_open_03.wav",
+   "pass": true,
+   "detail": "-26.60 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "door_house_open_03.wav",
+   "pass": true,
+   "detail": "-5.90 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "door_house_open_03.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "door_house_open_03.wav",
+   "pass": true,
+   "detail": "peak -6.18 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "door_house_open_03.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "door_house_open_03.wav",
+   "pass": true,
+   "detail": "bsb_1320"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "door_shop_close_01.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "door_shop_close_01.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -23.0, or lower and peak-limited",
+   "file": "door_shop_close_01.wav",
+   "pass": true,
+   "detail": "-23.30 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "door_shop_close_01.wav",
+   "pass": true,
+   "detail": "-9.00 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "door_shop_close_01.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "door_shop_close_01.wav",
+   "pass": true,
+   "detail": "peak -9.02 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "door_shop_close_01.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "door_shop_close_01.wav",
+   "pass": true,
+   "detail": "bsb_1270"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "door_shop_close_02.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "door_shop_close_02.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -23.0, or lower and peak-limited",
+   "file": "door_shop_close_02.wav",
+   "pass": true,
+   "detail": "-23.10 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "door_shop_close_02.wav",
+   "pass": true,
+   "detail": "-4.70 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "door_shop_close_02.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "door_shop_close_02.wav",
+   "pass": true,
+   "detail": "peak -5.12 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "door_shop_close_02.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "door_shop_close_02.wav",
+   "pass": true,
+   "detail": "bsb_1270"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "door_shop_close_03.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "door_shop_close_03.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -23.0, or lower and peak-limited",
+   "file": "door_shop_close_03.wav",
+   "pass": true,
+   "detail": "-23.20 LUFS-M (peak-limited)"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "door_shop_close_03.wav",
+   "pass": true,
+   "detail": "-1.50 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "door_shop_close_03.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "door_shop_close_03.wav",
+   "pass": true,
+   "detail": "peak -1.54 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "door_shop_close_03.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "door_shop_close_03.wav",
+   "pass": true,
+   "detail": "fs_402460"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "door_shop_latch_01.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "door_shop_latch_01.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -29.0, or lower and peak-limited",
+   "file": "door_shop_latch_01.wav",
+   "pass": true,
+   "detail": "-29.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "door_shop_latch_01.wav",
+   "pass": true,
+   "detail": "-11.10 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "door_shop_latch_01.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "door_shop_latch_01.wav",
+   "pass": true,
+   "detail": "peak -11.08 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "door_shop_latch_01.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "door_shop_latch_01.wav",
+   "pass": true,
+   "detail": "bsb_224"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "door_shop_latch_02.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "door_shop_latch_02.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -29.0, or lower and peak-limited",
+   "file": "door_shop_latch_02.wav",
+   "pass": true,
+   "detail": "-29.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "door_shop_latch_02.wav",
+   "pass": true,
+   "detail": "-12.60 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "door_shop_latch_02.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "door_shop_latch_02.wav",
+   "pass": true,
+   "detail": "peak -12.57 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "door_shop_latch_02.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "door_shop_latch_02.wav",
+   "pass": true,
+   "detail": "bsb_224"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "door_shop_latch_03.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "door_shop_latch_03.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -29.0, or lower and peak-limited",
+   "file": "door_shop_latch_03.wav",
+   "pass": true,
+   "detail": "-29.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "door_shop_latch_03.wav",
+   "pass": true,
+   "detail": "-10.80 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "door_shop_latch_03.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "door_shop_latch_03.wav",
+   "pass": true,
+   "detail": "peak -10.84 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "door_shop_latch_03.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "door_shop_latch_03.wav",
+   "pass": true,
+   "detail": "bsb_224"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "door_shop_latch_04.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "door_shop_latch_04.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -29.0, or lower and peak-limited",
+   "file": "door_shop_latch_04.wav",
+   "pass": true,
+   "detail": "-29.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "door_shop_latch_04.wav",
+   "pass": true,
+   "detail": "-8.50 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "door_shop_latch_04.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -73.4 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "door_shop_latch_04.wav",
+   "pass": true,
+   "detail": "peak -8.53 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "door_shop_latch_04.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "door_shop_latch_04.wav",
+   "pass": true,
+   "detail": "bsb_224"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "door_shop_open_01.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "door_shop_open_01.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -26.0, or lower and peak-limited",
+   "file": "door_shop_open_01.wav",
+   "pass": true,
+   "detail": "-26.20 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "door_shop_open_01.wav",
+   "pass": true,
+   "detail": "-9.30 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "door_shop_open_01.wav",
+   "pass": true,
+   "detail": "start -90.3 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "door_shop_open_01.wav",
+   "pass": true,
+   "detail": "peak -9.35 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "door_shop_open_01.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "door_shop_open_01.wav",
+   "pass": true,
+   "detail": "bsb_1270"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "door_shop_open_02.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "door_shop_open_02.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -26.0, or lower and peak-limited",
+   "file": "door_shop_open_02.wav",
+   "pass": true,
+   "detail": "-26.10 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "door_shop_open_02.wav",
+   "pass": true,
+   "detail": "-7.70 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "door_shop_open_02.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "door_shop_open_02.wav",
+   "pass": true,
+   "detail": "peak -7.68 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "door_shop_open_02.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "door_shop_open_02.wav",
+   "pass": true,
+   "detail": "fs_402460"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "phonebox_door_creak_01.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "phonebox_door_creak_01.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -31.0, or lower and peak-limited",
+   "file": "phonebox_door_creak_01.wav",
+   "pass": true,
+   "detail": "-31.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "phonebox_door_creak_01.wav",
+   "pass": true,
+   "detail": "-12.50 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "phonebox_door_creak_01.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "phonebox_door_creak_01.wav",
+   "pass": true,
+   "detail": "peak -13.31 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "phonebox_door_creak_01.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "phonebox_door_creak_01.wav",
+   "pass": true,
+   "detail": "fs_674027"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "phonebox_door_creak_02.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "phonebox_door_creak_02.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -31.0, or lower and peak-limited",
+   "file": "phonebox_door_creak_02.wav",
+   "pass": true,
+   "detail": "-31.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "phonebox_door_creak_02.wav",
+   "pass": true,
+   "detail": "-9.30 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "phonebox_door_creak_02.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "phonebox_door_creak_02.wav",
+   "pass": true,
+   "detail": "peak -9.32 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "phonebox_door_creak_02.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "phonebox_door_creak_02.wav",
+   "pass": true,
+   "detail": "fs_402460"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "phonebox_door_creak_03.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "phonebox_door_creak_03.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -31.0, or lower and peak-limited",
+   "file": "phonebox_door_creak_03.wav",
+   "pass": true,
+   "detail": "-31.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "phonebox_door_creak_03.wav",
+   "pass": true,
+   "detail": "-21.10 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "phonebox_door_creak_03.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "phonebox_door_creak_03.wav",
+   "pass": true,
+   "detail": "peak -21.36 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "phonebox_door_creak_03.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "phonebox_door_creak_03.wav",
+   "pass": true,
+   "detail": "fs_402460"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "phonebox_door_creak_04.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "phonebox_door_creak_04.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -31.0, or lower and peak-limited",
+   "file": "phonebox_door_creak_04.wav",
+   "pass": true,
+   "detail": "-31.10 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "phonebox_door_creak_04.wav",
+   "pass": true,
+   "detail": "-12.90 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "phonebox_door_creak_04.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "phonebox_door_creak_04.wav",
+   "pass": true,
+   "detail": "peak -12.92 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "phonebox_door_creak_04.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "phonebox_door_creak_04.wav",
+   "pass": true,
+   "detail": "bsb_605"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "phonebox_door_creak_05.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "phonebox_door_creak_05.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -31.0, or lower and peak-limited",
+   "file": "phonebox_door_creak_05.wav",
+   "pass": true,
+   "detail": "-31.10 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "phonebox_door_creak_05.wav",
+   "pass": true,
+   "detail": "-16.60 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "phonebox_door_creak_05.wav",
+   "pass": true,
+   "detail": "start -90.3 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "phonebox_door_creak_05.wav",
+   "pass": true,
+   "detail": "peak -16.56 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "phonebox_door_creak_05.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "phonebox_door_creak_05.wav",
+   "pass": true,
+   "detail": "bsb_605"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "phonebox_door_shut_01.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "phonebox_door_shut_01.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -23.0, or lower and peak-limited",
+   "file": "phonebox_door_shut_01.wav",
+   "pass": true,
+   "detail": "-25.20 LUFS-M (peak-limited)"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "phonebox_door_shut_01.wav",
+   "pass": true,
+   "detail": "-1.50 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "phonebox_door_shut_01.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "phonebox_door_shut_01.wav",
+   "pass": true,
+   "detail": "peak -1.53 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "phonebox_door_shut_01.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "phonebox_door_shut_01.wav",
+   "pass": true,
+   "detail": "fs_402459"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "phonebox_door_shut_02.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "phonebox_door_shut_02.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -23.0, or lower and peak-limited",
+   "file": "phonebox_door_shut_02.wav",
+   "pass": true,
+   "detail": "-24.60 LUFS-M (peak-limited)"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "phonebox_door_shut_02.wav",
+   "pass": true,
+   "detail": "-1.50 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "phonebox_door_shut_02.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "phonebox_door_shut_02.wav",
+   "pass": true,
+   "detail": "peak -1.51 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "phonebox_door_shut_02.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "phonebox_door_shut_02.wav",
+   "pass": true,
+   "detail": "fs_402459"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "phonebox_door_shut_03.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "phonebox_door_shut_03.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -23.0, or lower and peak-limited",
+   "file": "phonebox_door_shut_03.wav",
+   "pass": true,
+   "detail": "-23.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "phonebox_door_shut_03.wav",
+   "pass": true,
+   "detail": "-2.30 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "phonebox_door_shut_03.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "phonebox_door_shut_03.wav",
+   "pass": true,
+   "detail": "peak -2.35 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "phonebox_door_shut_03.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "phonebox_door_shut_03.wav",
+   "pass": true,
+   "detail": "fs_402460"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "phonebox_ring_01.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "phonebox_ring_01.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "phonebox_ring_01.wav",
+   "pass": true,
+   "detail": "-27.10 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "phonebox_ring_01.wav",
+   "pass": true,
+   "detail": "-16.60 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "phonebox_ring_01.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "phonebox_ring_01.wav",
+   "pass": true,
+   "detail": "peak -16.83 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "phonebox_ring_01.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "phonebox_ring_01.wav",
+   "pass": true,
+   "detail": "fs_435577"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "phonebox_ring_02.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "phonebox_ring_02.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "phonebox_ring_02.wav",
+   "pass": true,
+   "detail": "-27.50 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "phonebox_ring_02.wav",
+   "pass": true,
+   "detail": "-18.20 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "phonebox_ring_02.wav",
+   "pass": true,
+   "detail": "start -90.3 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "phonebox_ring_02.wav",
+   "pass": true,
+   "detail": "peak -18.17 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "phonebox_ring_02.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "phonebox_ring_02.wav",
+   "pass": true,
+   "detail": "fs_435577"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "phonebox_ring_03.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "phonebox_ring_03.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "phonebox_ring_03.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "phonebox_ring_03.wav",
+   "pass": true,
+   "detail": "-18.30 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "phonebox_ring_03.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "phonebox_ring_03.wav",
+   "pass": true,
+   "detail": "peak -18.32 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "phonebox_ring_03.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "phonebox_ring_03.wav",
+   "pass": true,
+   "detail": "fs_435577"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_asphalt_01.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_asphalt_01.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_asphalt_01.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_asphalt_01.wav",
+   "pass": true,
+   "detail": "-9.00 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_asphalt_01.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -84.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_asphalt_01.wav",
+   "pass": true,
+   "detail": "peak -9.02 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_asphalt_01.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_asphalt_01.wav",
+   "pass": true,
+   "detail": "fs_455056"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_asphalt_02.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_asphalt_02.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_asphalt_02.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_asphalt_02.wav",
+   "pass": true,
+   "detail": "-2.90 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_asphalt_02.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -84.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_asphalt_02.wav",
+   "pass": true,
+   "detail": "peak -2.90 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_asphalt_02.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_asphalt_02.wav",
+   "pass": true,
+   "detail": "fs_455056"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_asphalt_03.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_asphalt_03.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_asphalt_03.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_asphalt_03.wav",
+   "pass": true,
+   "detail": "-7.80 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_asphalt_03.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -84.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_asphalt_03.wav",
+   "pass": true,
+   "detail": "peak -7.82 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_asphalt_03.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_asphalt_03.wav",
+   "pass": true,
+   "detail": "fs_455056"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_asphalt_04.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_asphalt_04.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_asphalt_04.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_asphalt_04.wav",
+   "pass": true,
+   "detail": "-4.70 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_asphalt_04.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -84.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_asphalt_04.wav",
+   "pass": true,
+   "detail": "peak -4.94 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_asphalt_04.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_asphalt_04.wav",
+   "pass": true,
+   "detail": "fs_455056"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_asphalt_05.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_asphalt_05.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_asphalt_05.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_asphalt_05.wav",
+   "pass": true,
+   "detail": "-5.40 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_asphalt_05.wav",
+   "pass": true,
+   "detail": "start -90.3 dBFS, end -84.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_asphalt_05.wav",
+   "pass": true,
+   "detail": "peak -5.65 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_asphalt_05.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_asphalt_05.wav",
+   "pass": true,
+   "detail": "fs_455056"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_asphalt_06.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_asphalt_06.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_asphalt_06.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_asphalt_06.wav",
+   "pass": true,
+   "detail": "-6.10 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_asphalt_06.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -80.8 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_asphalt_06.wav",
+   "pass": true,
+   "detail": "peak -6.15 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_asphalt_06.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_asphalt_06.wav",
+   "pass": true,
+   "detail": "fs_455056"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_asphalt_07.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_asphalt_07.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_asphalt_07.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_asphalt_07.wav",
+   "pass": true,
+   "detail": "-3.20 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_asphalt_07.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -80.8 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_asphalt_07.wav",
+   "pass": true,
+   "detail": "peak -3.26 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_asphalt_07.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_asphalt_07.wav",
+   "pass": true,
+   "detail": "fs_637556"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_asphalt_08.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_asphalt_08.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_asphalt_08.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_asphalt_08.wav",
+   "pass": true,
+   "detail": "-2.20 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_asphalt_08.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -84.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_asphalt_08.wav",
+   "pass": true,
+   "detail": "peak -2.17 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_asphalt_08.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_asphalt_08.wav",
+   "pass": true,
+   "detail": "fs_637556"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_paving_01.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_paving_01.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_paving_01.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_paving_01.wav",
+   "pass": true,
+   "detail": "-2.80 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_paving_01.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_paving_01.wav",
+   "pass": true,
+   "detail": "peak -2.79 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_paving_01.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_paving_01.wav",
+   "pass": true,
+   "detail": "fs_273067"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_paving_02.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_paving_02.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_paving_02.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_paving_02.wav",
+   "pass": true,
+   "detail": "-5.10 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_paving_02.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -84.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_paving_02.wav",
+   "pass": true,
+   "detail": "peak -5.06 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_paving_02.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_paving_02.wav",
+   "pass": true,
+   "detail": "fs_273067"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_paving_03.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_paving_03.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_paving_03.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_paving_03.wav",
+   "pass": true,
+   "detail": "-4.20 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_paving_03.wav",
+   "pass": true,
+   "detail": "start -90.3 dBFS, end -71.2 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_paving_03.wav",
+   "pass": true,
+   "detail": "peak -4.26 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_paving_03.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_paving_03.wav",
+   "pass": true,
+   "detail": "fs_273067"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_paving_04.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_paving_04.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_paving_04.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_paving_04.wav",
+   "pass": true,
+   "detail": "-4.50 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_paving_04.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -84.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_paving_04.wav",
+   "pass": true,
+   "detail": "peak -4.45 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_paving_04.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_paving_04.wav",
+   "pass": true,
+   "detail": "fs_273067"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_paving_05.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_paving_05.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_paving_05.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_paving_05.wav",
+   "pass": true,
+   "detail": "-2.90 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_paving_05.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -84.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_paving_05.wav",
+   "pass": true,
+   "detail": "peak -2.92 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_paving_05.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_paving_05.wav",
+   "pass": true,
+   "detail": "fs_273071"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_paving_06.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_paving_06.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_paving_06.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_paving_06.wav",
+   "pass": true,
+   "detail": "-4.20 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_paving_06.wav",
+   "pass": true,
+   "detail": "start -90.3 dBFS, end -84.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_paving_06.wav",
+   "pass": true,
+   "detail": "peak -4.21 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_paving_06.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_paving_06.wav",
+   "pass": true,
+   "detail": "fs_273071"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_paving_07.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_paving_07.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_paving_07.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_paving_07.wav",
+   "pass": true,
+   "detail": "-1.80 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_paving_07.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -84.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_paving_07.wav",
+   "pass": true,
+   "detail": "peak -1.88 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_paving_07.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_paving_07.wav",
+   "pass": true,
+   "detail": "fs_273071"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_paving_08.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_paving_08.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_paving_08.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_paving_08.wav",
+   "pass": true,
+   "detail": "-3.50 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_paving_08.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -80.8 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_paving_08.wav",
+   "pass": true,
+   "detail": "peak -3.54 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_paving_08.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_paving_08.wav",
+   "pass": true,
+   "detail": "fs_273071"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_setts_01.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_setts_01.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_setts_01.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_setts_01.wav",
+   "pass": true,
+   "detail": "-4.00 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_setts_01.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -80.8 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_setts_01.wav",
+   "pass": true,
+   "detail": "peak -4.04 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_setts_01.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_setts_01.wav",
+   "pass": true,
+   "detail": "fs_637555"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_setts_02.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_setts_02.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_setts_02.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_setts_02.wav",
+   "pass": true,
+   "detail": "-4.80 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_setts_02.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -84.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_setts_02.wav",
+   "pass": true,
+   "detail": "peak -4.78 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_setts_02.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_setts_02.wav",
+   "pass": true,
+   "detail": "fs_637555"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_setts_03.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_setts_03.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_setts_03.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_setts_03.wav",
+   "pass": true,
+   "detail": "-3.80 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_setts_03.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -78.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_setts_03.wav",
+   "pass": true,
+   "detail": "peak -3.83 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_setts_03.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_setts_03.wav",
+   "pass": true,
+   "detail": "fs_637555"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_setts_04.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_setts_04.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_setts_04.wav",
+   "pass": true,
+   "detail": "-30.50 LUFS-M (peak-limited)"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_setts_04.wav",
+   "pass": true,
+   "detail": "-1.50 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_setts_04.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_setts_04.wav",
+   "pass": true,
+   "detail": "peak -1.59 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_setts_04.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_setts_04.wav",
+   "pass": true,
+   "detail": "fs_637555"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_setts_05.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_setts_05.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_setts_05.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_setts_05.wav",
+   "pass": true,
+   "detail": "-4.20 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_setts_05.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -66.8 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_setts_05.wav",
+   "pass": true,
+   "detail": "peak -4.30 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_setts_05.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_setts_05.wav",
+   "pass": true,
+   "detail": "fs_637555"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_setts_06.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_setts_06.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_setts_06.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_setts_06.wav",
+   "pass": true,
+   "detail": "-2.20 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_setts_06.wav",
+   "pass": true,
+   "detail": "start -90.3 dBFS, end -84.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_setts_06.wav",
+   "pass": true,
+   "detail": "peak -2.24 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_setts_06.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_setts_06.wav",
+   "pass": true,
+   "detail": "fs_868548"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_setts_07.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_setts_07.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_setts_07.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_setts_07.wav",
+   "pass": true,
+   "detail": "-4.40 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_setts_07.wav",
+   "pass": true,
+   "detail": "start -90.3 dBFS, end -84.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_setts_07.wav",
+   "pass": true,
+   "detail": "peak -4.45 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_setts_07.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_setts_07.wav",
+   "pass": true,
+   "detail": "fs_868548"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_setts_08.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_setts_08.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_setts_08.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_setts_08.wav",
+   "pass": true,
+   "detail": "-3.20 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_setts_08.wav",
+   "pass": true,
+   "detail": "start -90.3 dBFS, end -84.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_setts_08.wav",
+   "pass": true,
+   "detail": "peak -3.25 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_setts_08.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_setts_08.wav",
+   "pass": true,
+   "detail": "fs_868548"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_wet_01.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_wet_01.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_wet_01.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_wet_01.wav",
+   "pass": true,
+   "detail": "-3.80 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_wet_01.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -63.5 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_wet_01.wav",
+   "pass": true,
+   "detail": "peak -3.81 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_wet_01.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_wet_01.wav",
+   "pass": true,
+   "detail": "fs_263495"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_wet_02.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_wet_02.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_wet_02.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_wet_02.wav",
+   "pass": true,
+   "detail": "-2.80 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_wet_02.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -66.8 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_wet_02.wav",
+   "pass": true,
+   "detail": "peak -2.99 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_wet_02.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_wet_02.wav",
+   "pass": true,
+   "detail": "fs_263495"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_wet_03.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_wet_03.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_wet_03.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_wet_03.wav",
+   "pass": true,
+   "detail": "-8.40 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_wet_03.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -57.6 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_wet_03.wav",
+   "pass": true,
+   "detail": "peak -8.42 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_wet_03.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_wet_03.wav",
+   "pass": true,
+   "detail": "fs_263495"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_wet_04.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_wet_04.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_wet_04.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_wet_04.wav",
+   "pass": true,
+   "detail": "-1.80 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_wet_04.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -66.2 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_wet_04.wav",
+   "pass": true,
+   "detail": "peak -1.87 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_wet_04.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_wet_04.wav",
+   "pass": true,
+   "detail": "fs_531566"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_wet_05.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_wet_05.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_wet_05.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_wet_05.wav",
+   "pass": true,
+   "detail": "-7.70 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_wet_05.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -72.2 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_wet_05.wav",
+   "pass": true,
+   "detail": "peak -7.82 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_wet_05.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_wet_05.wav",
+   "pass": true,
+   "detail": "fs_531566"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_wet_06.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_wet_06.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_wet_06.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_wet_06.wav",
+   "pass": true,
+   "detail": "-2.30 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_wet_06.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -84.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_wet_06.wav",
+   "pass": true,
+   "detail": "peak -2.38 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_wet_06.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_wet_06.wav",
+   "pass": true,
+   "detail": "fs_531566"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_wet_07.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_wet_07.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_wet_07.wav",
+   "pass": true,
+   "detail": "-28.60 LUFS-M (peak-limited)"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_wet_07.wav",
+   "pass": true,
+   "detail": "-1.50 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_wet_07.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -78.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_wet_07.wav",
+   "pass": true,
+   "detail": "peak -1.86 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_wet_07.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_wet_07.wav",
+   "pass": true,
+   "detail": "fs_531566"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_wet_08.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_wet_08.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_wet_08.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_wet_08.wav",
+   "pass": true,
+   "detail": "-7.30 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_wet_08.wav",
+   "pass": true,
+   "detail": "start -90.3 dBFS, end -80.8 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_wet_08.wav",
+   "pass": true,
+   "detail": "peak -7.31 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_wet_08.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_wet_08.wav",
+   "pass": true,
+   "detail": "fs_531566"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_wood_01.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_wood_01.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_wood_01.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_wood_01.wav",
+   "pass": true,
+   "detail": "-2.50 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_wood_01.wav",
+   "pass": true,
+   "detail": "start -90.3 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_wood_01.wav",
+   "pass": true,
+   "detail": "peak -2.49 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_wood_01.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_wood_01.wav",
+   "pass": true,
+   "detail": "fs_536770"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_wood_02.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_wood_02.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_wood_02.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_wood_02.wav",
+   "pass": true,
+   "detail": "-2.90 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_wood_02.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -76.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_wood_02.wav",
+   "pass": true,
+   "detail": "peak -2.87 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_wood_02.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_wood_02.wav",
+   "pass": true,
+   "detail": "fs_536770"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_wood_03.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_wood_03.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_wood_03.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_wood_03.wav",
+   "pass": true,
+   "detail": "-3.30 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_wood_03.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -84.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_wood_03.wav",
+   "pass": true,
+   "detail": "peak -3.53 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_wood_03.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_wood_03.wav",
+   "pass": true,
+   "detail": "fs_536770"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_wood_04.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_wood_04.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_wood_04.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_wood_04.wav",
+   "pass": true,
+   "detail": "-5.80 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_wood_04.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_wood_04.wav",
+   "pass": true,
+   "detail": "peak -5.82 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_wood_04.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_wood_04.wav",
+   "pass": true,
+   "detail": "fs_536770"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_wood_05.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_wood_05.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_wood_05.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_wood_05.wav",
+   "pass": true,
+   "detail": "-5.70 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_wood_05.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -69.5 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_wood_05.wav",
+   "pass": true,
+   "detail": "peak -5.83 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_wood_05.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_wood_05.wav",
+   "pass": true,
+   "detail": "fs_536770"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_wood_06.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_wood_06.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_wood_06.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_wood_06.wav",
+   "pass": true,
+   "detail": "-8.80 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_wood_06.wav",
+   "pass": true,
+   "detail": "start -90.3 dBFS, end -78.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_wood_06.wav",
+   "pass": true,
+   "detail": "peak -8.83 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_wood_06.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_wood_06.wav",
+   "pass": true,
+   "detail": "fs_536770"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_wood_07.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_wood_07.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_wood_07.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_wood_07.wav",
+   "pass": true,
+   "detail": "-5.70 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_wood_07.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -70.3 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_wood_07.wav",
+   "pass": true,
+   "detail": "peak -5.71 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_wood_07.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_wood_07.wav",
+   "pass": true,
+   "detail": "fs_536770"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_wood_08.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_wood_08.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_wood_08.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_wood_08.wav",
+   "pass": true,
+   "detail": "-10.30 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_wood_08.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -74.7 dBFS"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_wood_08.wav",
+   "pass": true,
+   "detail": "peak -10.37 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_wood_08.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_wood_08.wav",
+   "pass": true,
+   "detail": "fs_575898"
+  },
+  {
+   "case": 9,
+   "test": "variants of step_paving differ (no pair above 0.90, none identical)",
+   "file": "step_paving_*",
+   "pass": true,
+   "detail": "closest pair ('step_paving_04', 'step_paving_08') correlate 0.74"
+  },
+  {
+   "case": 9,
+   "test": "variants of step_setts differ (no pair above 0.90, none identical)",
+   "file": "step_setts_*",
+   "pass": true,
+   "detail": "closest pair ('step_setts_07', 'step_setts_08') correlate 0.78"
+  },
+  {
+   "case": 9,
+   "test": "variants of step_asphalt differ (no pair above 0.90, none identical)",
+   "file": "step_asphalt_*",
+   "pass": true,
+   "detail": "closest pair ('step_asphalt_01', 'step_asphalt_03') correlate 0.71"
+  },
+  {
+   "case": 9,
+   "test": "variants of step_wet differ (no pair above 0.90, none identical)",
+   "file": "step_wet_*",
+   "pass": true,
+   "detail": "closest pair ('step_wet_01', 'step_wet_03') correlate 0.30"
+  },
+  {
+   "case": 9,
+   "test": "variants of step_wood differ (no pair above 0.90, none identical)",
+   "file": "step_wood_*",
+   "pass": true,
+   "detail": "closest pair ('step_wood_05', 'step_wood_06') correlate 0.68"
+  },
+  {
+   "case": 10,
+   "test": "day bed mix measures within 1.5 LU of -36.5",
+   "file": null,
+   "pass": true,
+   "detail": "-36.50 LUFS"
+  },
+  {
+   "case": 5,
+   "test": "day bed mix true peak at most -1.0 dBTP",
+   "file": null,
+   "pass": true,
+   "detail": "-15.10 dBTP"
+  },
+  {
+   "case": 10,
+   "test": "night bed mix measures within 1.5 LU of -39.5",
+   "file": null,
+   "pass": true,
+   "detail": "-39.60 LUFS"
+  },
+  {
+   "case": 5,
+   "test": "night bed mix true peak at most -1.0 dBTP",
+   "file": null,
+   "pass": true,
+   "detail": "-17.10 dBTP"
+  },
+  {
+   "case": 10,
+   "test": "rain bed mix measures within 1.5 LU of -33.5",
+   "file": null,
+   "pass": true,
+   "detail": "-33.40 LUFS"
+  },
+  {
+   "case": 5,
+   "test": "rain bed mix true peak at most -1.0 dBTP",
+   "file": null,
+   "pass": true,
+   "detail": "-5.70 dBTP"
+  },
+  {
+   "case": 10,
+   "test": "night bed at least 2 LU under day",
+   "file": null,
+   "pass": true,
+   "detail": "night -39.6, day -36.5"
+  },
+  {
+   "case": 10,
+   "test": "rain bed at least 2 LU over day",
+   "file": null,
+   "pass": true,
+   "detail": "rain -33.4, day -36.5"
+  },
+  {
+   "case": 11,
+   "test": "rain traffic's spectral centroid above day traffic's",
+   "file": null,
+   "pass": true,
+   "detail": "rain 704 Hz, day 485 Hz"
+  },
+  {
+   "case": 11,
+   "test": "night gulls: fewer calls than day and at most three",
+   "file": null,
+   "pass": true,
+   "detail": "calls day 9, night 2, rain 2"
+  },
+  {
+   "case": 11,
+   "test": "rain gulls: fewer calls than day",
+   "file": null,
+   "pass": true,
+   "detail": "rain 2, day 9"
+  },
+  {
+   "case": 12,
+   "test": "grains no longer than 160 ms",
+   "file": "amb_voices_day.wav",
+   "pass": true,
+   "detail": "grains [80, 150] ms"
+  },
+  {
+   "case": 12,
+   "test": "power above 2.5 kHz at most 0.1%",
+   "file": "amb_voices_day.wav",
+   "pass": true,
+   "detail": "0.0017%"
+  },
+  {
+   "case": 12,
+   "test": "grains no longer than 160 ms",
+   "file": "amb_voices_night.wav",
+   "pass": true,
+   "detail": "grains [80, 150] ms"
+  },
+  {
+   "case": 12,
+   "test": "power above 2.5 kHz at most 0.1%",
+   "file": "amb_voices_night.wav",
+   "pass": true,
+   "detail": "0.0038%"
+  },
+  {
+   "case": 12,
+   "test": "grains no longer than 160 ms",
+   "file": "amb_voices_rain.wav",
+   "pass": true,
+   "detail": "grains [80, 150] ms"
+  },
+  {
+   "case": 12,
+   "test": "power above 2.5 kHz at most 0.1%",
+   "file": "amb_voices_rain.wav",
+   "pass": true,
+   "detail": "0.0047%"
+  },
+  {
+   "case": 12,
+   "test": "grains no longer than 160 ms",
+   "file": "amb_radio_day.wav",
+   "pass": true,
+   "detail": "grains [90, 160] ms"
+  },
+  {
+   "case": 12,
+   "test": "power above 2.5 kHz at most 0.1%",
+   "file": "amb_radio_day.wav",
+   "pass": true,
+   "detail": "0.0028%"
+  },
+  {
+   "case": 12,
+   "test": "grains no longer than 160 ms",
+   "file": "amb_radio_night.wav",
+   "pass": true,
+   "detail": "grains [90, 160] ms"
+  },
+  {
+   "case": 12,
+   "test": "power above 2.5 kHz at most 0.1%",
+   "file": "amb_radio_night.wav",
+   "pass": true,
+   "detail": "0.0045%"
+  },
+  {
+   "case": 12,
+   "test": "grains no longer than 160 ms",
+   "file": "amb_radio_rain.wav",
+   "pass": true,
+   "detail": "grains [90, 160] ms"
+  },
+  {
+   "case": 12,
+   "test": "power above 2.5 kHz at most 0.1%",
+   "file": "amb_radio_rain.wav",
+   "pass": true,
+   "detail": "0.0045%"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "bsb_1270",
+   "pass": true,
+   "detail": "bsb_1270.flac"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "bsb_1270",
+   "pass": true,
+   "detail": "CC0 (public domain) | https://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "bsb_1270",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "bsb_1289",
+   "pass": true,
+   "detail": "bsb_1289.flac"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "bsb_1289",
+   "pass": true,
+   "detail": "CC0 (public domain) | https://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "bsb_1289",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "bsb_1320",
+   "pass": true,
+   "detail": "bsb_1320.flac"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "bsb_1320",
+   "pass": true,
+   "detail": "CC0 (public domain) | https://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "bsb_1320",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "bsb_224",
+   "pass": true,
+   "detail": "bsb_224.wav"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "bsb_224",
+   "pass": true,
+   "detail": "CC0 (public domain) | https://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "bsb_224",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "bsb_545",
+   "pass": true,
+   "detail": "bsb_545.wav"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "bsb_545",
+   "pass": true,
+   "detail": "CC0 (public domain) | https://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "bsb_545",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "bsb_605",
+   "pass": true,
+   "detail": "bsb_605.flac"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "bsb_605",
+   "pass": true,
+   "detail": "CC0 (public domain) | https://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "bsb_605",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "bsb_621",
+   "pass": true,
+   "detail": "bsb_621.wav"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "bsb_621",
+   "pass": true,
+   "detail": "CC0 (public domain) | https://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "bsb_621",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "bsb_625",
+   "pass": true,
+   "detail": "bsb_625.wav"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "bsb_625",
+   "pass": true,
+   "detail": "CC0 (public domain) | https://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "bsb_625",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_182610",
+   "pass": true,
+   "detail": "fs_182610.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_182610",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_182610",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_182611",
+   "pass": true,
+   "detail": "fs_182611.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_182611",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_182611",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_182612",
+   "pass": true,
+   "detail": "fs_182612.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_182612",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_182612",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_260124",
+   "pass": true,
+   "detail": "fs_260124.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_260124",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_260124",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_263495",
+   "pass": true,
+   "detail": "fs_263495.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_263495",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_263495",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_273067",
+   "pass": true,
+   "detail": "fs_273067.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_273067",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_273067",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_273071",
+   "pass": true,
+   "detail": "fs_273071.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_273071",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_273071",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_334457",
+   "pass": true,
+   "detail": "fs_334457.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_334457",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_334457",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_360633",
+   "pass": true,
+   "detail": "fs_360633.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_360633",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_360633",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_372213",
+   "pass": true,
+   "detail": "fs_372213.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_372213",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_372213",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_395686",
+   "pass": true,
+   "detail": "fs_395686.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_395686",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_395686",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_402459",
+   "pass": true,
+   "detail": "fs_402459.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_402459",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_402459",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_402460",
+   "pass": true,
+   "detail": "fs_402460.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_402460",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_402460",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_402464",
+   "pass": true,
+   "detail": "fs_402464.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_402464",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_402464",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_402465",
+   "pass": true,
+   "detail": "fs_402465.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_402465",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_402465",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_402466",
+   "pass": true,
+   "detail": "fs_402466.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_402466",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_402466",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_435577",
+   "pass": true,
+   "detail": "fs_435577.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_435577",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_435577",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_454130",
+   "pass": true,
+   "detail": "fs_454130.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_454130",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_454130",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_454374",
+   "pass": true,
+   "detail": "fs_454374.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_454374",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_454374",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_455056",
+   "pass": true,
+   "detail": "fs_455056.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_455056",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_455056",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_463373",
+   "pass": true,
+   "detail": "fs_463373.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_463373",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_463373",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_494565",
+   "pass": true,
+   "detail": "fs_494565.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_494565",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_494565",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_503456",
+   "pass": true,
+   "detail": "fs_503456.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_503456",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_503456",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_528615",
+   "pass": true,
+   "detail": "fs_528615.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_528615",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_528615",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_531566",
+   "pass": true,
+   "detail": "fs_531566.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_531566",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_531566",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_536770",
+   "pass": true,
+   "detail": "fs_536770.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_536770",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_536770",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_538015",
+   "pass": true,
+   "detail": "fs_538015.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_538015",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_538015",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_538016",
+   "pass": true,
+   "detail": "fs_538016.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_538016",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_538016",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_554845",
+   "pass": true,
+   "detail": "fs_554845.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_554845",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_554845",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_559821",
+   "pass": true,
+   "detail": "fs_559821.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_559821",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_559821",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_575898",
+   "pass": true,
+   "detail": "fs_575898.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_575898",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_575898",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_57743",
+   "pass": true,
+   "detail": "fs_57743.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_57743",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_57743",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_637555",
+   "pass": true,
+   "detail": "fs_637555.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_637555",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_637555",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_637556",
+   "pass": true,
+   "detail": "fs_637556.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_637556",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_637556",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_674027",
+   "pass": true,
+   "detail": "fs_674027.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_674027",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_674027",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_73497",
+   "pass": true,
+   "detail": "fs_73497.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_73497",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_73497",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_744592",
+   "pass": true,
+   "detail": "fs_744592.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_744592",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_744592",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_757318",
+   "pass": true,
+   "detail": "fs_757318.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_757318",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_757318",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_766212",
+   "pass": true,
+   "detail": "fs_766212.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_766212",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_766212",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_846446",
+   "pass": true,
+   "detail": "fs_846446.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_846446",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_846446",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_868548",
+   "pass": true,
+   "detail": "fs_868548.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_868548",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_868548",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "source file on disk matches its md5",
+   "file": "fs_871593",
+   "pass": true,
+   "detail": "fs_871593.mp3"
+  },
+  {
+   "case": 14,
+   "test": "licence reads CC0 on the page",
+   "file": "fs_871593",
+   "pass": true,
+   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
+  },
+  {
+   "case": 14,
+   "test": "title and page text hold no content-rule word",
+   "file": "fs_871593",
+   "pass": true,
+   "detail": "clean"
+  },
+  {
+   "case": 13,
+   "test": "every source in sources.json is used by an output",
+   "file": null,
+   "pass": false,
+   "detail": "unused: ['fs_334457', 'fs_766212', 'fs_871593']"
+  },
+  {
+   "case": 16,
+   "test": "spectrogram JPEG exists, under 500 KB",
+   "file": "spec_traffic.jpg",
+   "pass": true,
+   "detail": "159 KB"
+  },
+  {
+   "case": 16,
+   "test": "spectrogram JPEG exists, under 500 KB",
+   "file": "spec_gulls.jpg",
+   "pass": true,
+   "detail": "115 KB"
+  },
+  {
+   "case": 16,
+   "test": "spectrogram JPEG exists, under 500 KB",
+   "file": "spec_harbour.jpg",
+   "pass": true,
+   "detail": "211 KB"
+  },
+  {
+   "case": 16,
+   "test": "spectrogram JPEG exists, under 500 KB",
+   "file": "spec_wind.jpg",
+   "pass": true,
+   "detail": "169 KB"
+  },
+  {
+   "case": 16,
+   "test": "spectrogram JPEG exists, under 500 KB",
+   "file": "spec_voices.jpg",
+   "pass": true,
+   "detail": "188 KB"
+  },
+  {
+   "case": 16,
+   "test": "spectrogram JPEG exists, under 500 KB",
+   "file": "spec_radio.jpg",
+   "pass": true,
+   "detail": "192 KB"
+  },
+  {
+   "case": 16,
+   "test": "spectrogram JPEG exists, under 500 KB",
+   "file": "spec_rain.jpg",
+   "pass": true,
+   "detail": "324 KB"
+  },
+  {
+   "case": 16,
+   "test": "spectrogram JPEG exists, under 500 KB",
+   "file": "spec_steps_paving.jpg",
+   "pass": true,
+   "detail": "123 KB"
+  },
+  {
+   "case": 16,
+   "test": "spectrogram JPEG exists, under 500 KB",
+   "file": "spec_steps_setts.jpg",
+   "pass": true,
+   "detail": "121 KB"
+  },
+  {
+   "case": 16,
+   "test": "spectrogram JPEG exists, under 500 KB",
+   "file": "spec_steps_asphalt.jpg",
+   "pass": true,
+   "detail": "126 KB"
+  },
+  {
+   "case": 16,
+   "test": "spectrogram JPEG exists, under 500 KB",
+   "file": "spec_steps_wet.jpg",
+   "pass": true,
+   "detail": "104 KB"
+  },
+  {
+   "case": 16,
+   "test": "spectrogram JPEG exists, under 500 KB",
+   "file": "spec_steps_wood.jpg",
+   "pass": true,
+   "detail": "117 KB"
+  },
+  {
+   "case": 16,
+   "test": "spectrogram JPEG exists, under 500 KB",
+   "file": "spec_doors_shop.jpg",
+   "pass": true,
+   "detail": "130 KB"
+  },
+  {
+   "case": 16,
+   "test": "spectrogram JPEG exists, under 500 KB",
+   "file": "spec_doors_house.jpg",
+   "pass": true,
+   "detail": "131 KB"
+  },
+  {
+   "case": 16,
+   "test": "spectrogram JPEG exists, under 500 KB",
+   "file": "spec_bell.jpg",
+   "pass": true,
+   "detail": "97 KB"
+  },
+  {
+   "case": 16,
+   "test": "spectrogram JPEG exists, under 500 KB",
+   "file": "spec_phonebox.jpg",
+   "pass": true,
+   "detail": "130 KB"
+  },
+  {
+   "case": 16,
+   "test": "listening clip is Vorbis, at most 20 s, under 300 KB",
+   "file": "clip_mix_day.ogg",
+   "pass": true,
+   "detail": "vorbis 20.0 s 221 KB"
+  },
+  {
+   "case": 16,
+   "test": "listening clip is Vorbis, at most 20 s, under 300 KB",
+   "file": "clip_mix_night.ogg",
+   "pass": true,
+   "detail": "vorbis 20.0 s 226 KB"
+  },
+  {
+   "case": 16,
+   "test": "listening clip is Vorbis, at most 20 s, under 300 KB",
+   "file": "clip_mix_rain.ogg",
+   "pass": false,
+   "detail": "vorbis 20.0 s 370 KB"
+  },
+  {
+   "case": 16,
+   "test": "listening clip is Vorbis, at most 20 s, under 300 KB",
+   "file": "clip_steps_paving.ogg",
+   "pass": true,
+   "detail": "vorbis 5.8 s 23 KB"
+  },
+  {
+   "case": 16,
+   "test": "listening clip is Vorbis, at most 20 s, under 300 KB",
+   "file": "clip_steps_setts.ogg",
+   "pass": true,
+   "detail": "vorbis 5.8 s 21 KB"
+  },
+  {
+   "case": 16,
+   "test": "listening clip is Vorbis, at most 20 s, under 300 KB",
+   "file": "clip_steps_asphalt.ogg",
+   "pass": true,
+   "detail": "vorbis 5.9 s 23 KB"
+  },
+  {
+   "case": 16,
+   "test": "listening clip is Vorbis, at most 20 s, under 300 KB",
+   "file": "clip_steps_wet.ogg",
+   "pass": true,
+   "detail": "vorbis 5.2 s 18 KB"
+  },
+  {
+   "case": 16,
+   "test": "listening clip is Vorbis, at most 20 s, under 300 KB",
+   "file": "clip_steps_wood.ogg",
+   "pass": true,
+   "detail": "vorbis 5.9 s 23 KB"
+  },
+  {
+   "case": 16,
+   "test": "listening clip is Vorbis, at most 20 s, under 300 KB",
+   "file": "clip_doors.ogg",
+   "pass": true,
+   "detail": "vorbis 19.8 s 120 KB"
+  }
+ ]
+}

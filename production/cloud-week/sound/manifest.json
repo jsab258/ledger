@@ -1,0 +1,2964 @@
+{
+ "about": "Every output of make_sound.py: what it is made from, where it was cut, how loud it measures (BS.1770-4), and for loops how the seam closes. Rebuilt by make_sound.py from the sources listed in sources.json; the sha256 of each WAV shows a rebuild is identical.",
+ "rate": 48000,
+ "loop_seconds": 75.0,
+ "loop_crossfade_seconds": 4.0,
+ "loop_targets_lufs_integrated": {
+  "amb_gulls_day": -48,
+  "amb_gulls_night": -56,
+  "amb_gulls_rain": -54,
+  "amb_harbour_day": -41,
+  "amb_harbour_night": -43,
+  "amb_harbour_rain": -43,
+  "amb_radio_day": -52,
+  "amb_radio_night": -54,
+  "amb_radio_rain": -54,
+  "amb_rain_awning": -42,
+  "amb_rain_gutter": -47,
+  "amb_rain_pavement": -37,
+  "amb_traffic_day": -40,
+  "amb_traffic_night": -45,
+  "amb_traffic_rain": -42,
+  "amb_voices_day": -50,
+  "amb_voices_night": -53,
+  "amb_voices_rain": -55,
+  "amb_wind_day": -46,
+  "amb_wind_night": -45,
+  "amb_wind_rain": -43
+ },
+ "one_shot_targets_lufs_momentary_max": {
+  "step": -27,
+  "door_open": -26,
+  "door_close": -23,
+  "door_latch": -29,
+  "bell": -25,
+  "phonebox_creak": -31,
+  "phonebox_shut": -23,
+  "phonebox_ring": -27
+ },
+ "one_shot_tolerance_lu": 1.5,
+ "true_peak_limit_dbtp": -1.0,
+ "sources_md5": {
+  "fs_503456": "11af2e1f679dae2fc640d4417cfd2893",
+  "fs_395686": "9cc56dde42757be86e00cc50ce719633",
+  "bsb_621": "21f34b436ae143ecca9c6592a1073598",
+  "fs_538015": "2c852af293e9b30fa3a582aa260cd145",
+  "fs_538016": "2565aa6a57610f376bbd8f746dea569a",
+  "fs_73497": "12f9b6ecaa80fb60e7eddb09e25e595e",
+  "fs_372213": "889cdf79b7f431a00974491386a87338",
+  "fs_744592": "86dc6e732e5a911e3b9b48a597a0c5bd",
+  "fs_182610": "f8e06c650742ac37b35f2fb3dda2e346",
+  "fs_182611": "e0954d458039fde49fc3ce1b9e17fa68",
+  "fs_182612": "52da0912093c58e1441aee61aabc12d3",
+  "fs_360633": "698b8e806a7bae789c90a45591b92bdf",
+  "fs_463373": "ec1a506668a9458f51fe6d81b7860dfd",
+  "fs_559821": "8ab2639d5ed7def18dd3873e13081dd2",
+  "fs_454374": "0f30414bd74764e9ccf01d65ff7e0623",
+  "fs_554845": "519add9e1e6dae63a3dd8b8e53179335",
+  "bsb_625": "c8bd8af996b63462d75c29a628a4b881",
+  "fs_454130": "5903947d24c473342e77cf99e0f8dc9c",
+  "fs_846446": "782a381953f83f2d3159d9a2d6e63ab3",
+  "bsb_1289": "fc6f58c1d01f0fa4431f79863c4d90dc",
+  "fs_757318": "719087153966b589511aceecd82f1385",
+  "fs_260124": "1724d96a8c57a8b6fff77be3276fef6f",
+  "fs_528615": "ed714a0f03ccb43e0d9d418ede468fab",
+  "fs_273071": "9ba058e3c62f7b859d315673b4b69bbd",
+  "fs_273067": "b45c7c53e65baccf6c842b208aefff9f",
+  "fs_637555": "0470501d99b11a33923499fee20e4174",
+  "fs_868548": "d9dc119ea99c62dcb27511a410fde1ad",
+  "fs_637556": "1e06ce98c03e3c580e31a1063941f031",
+  "fs_455056": "e952e370bd6258ad3a1877f609a7755c",
+  "fs_263495": "aa1ceee0ef91ed2fed09f419ef772bec",
+  "fs_531566": "d95fb8e4da9b379b367d42fd440a7c02",
+  "fs_536770": "4c75e89357cec91628c6f399a4b37a1f",
+  "fs_575898": "8d6c3941669fcaf597fc9a0b7b628443",
+  "bsb_1270": "84a971a5c8d58d0daa0f9407246a0663",
+  "bsb_224": "d37ff324d73769d8174f2873ea71b3bc",
+  "fs_402464": "566398ddfbf675b27a280b44b8147850",
+  "fs_402465": "145fdb77e5022db12cb67b3dba483e25",
+  "fs_402466": "d20711f1cd2ab0a4b5e0a06f94f3205a",
+  "bsb_545": "8de24931f75c3fca0c09458f5d449a3c",
+  "bsb_1320": "646befc2308e74f24bbcbd09ed9a3448",
+  "fs_674027": "913bc59084ed072ccfdc9ef1ef5858e2",
+  "bsb_605": "94ab2f283f2f1313f84e9687c0f7c5ce",
+  "fs_402459": "b1b1203b7ff3aa7eb379f7b8aa98eef3",
+  "fs_402460": "6971592c1203ecb9dda9dcf974d65d23",
+  "fs_57743": "87fc35976b4d55c8111416f72a34f1e1",
+  "fs_494565": "f7d6257095f08818d6f717a5d7bf1516",
+  "fs_435577": "f33b8012579416dd16f13d984c08e03b"
+ },
+ "outputs": {
+  "amb_gulls_day": {
+   "file": "amb_gulls_day.wav",
+   "kind": "loop",
+   "layer": "gulls",
+   "version": "day",
+   "sources": [
+    "fs_372213",
+    "fs_538015",
+    "fs_538016",
+    "fs_73497"
+   ],
+   "build": {
+    "calls": [
+     {
+      "source": "fs_538015",
+      "from_s": 0.0,
+      "to_s": 1.6,
+      "placed_at_s": 4.0,
+      "level_db": -4,
+      "lowpass_hz": 5200,
+      "speed": 1.0
+     },
+     {
+      "source": "fs_73497",
+      "from_s": 0.07,
+      "to_s": 3.39,
+      "placed_at_s": 13.5,
+      "level_db": -9,
+      "lowpass_hz": 4200,
+      "speed": 1.0
+     },
+     {
+      "source": "fs_538016",
+      "from_s": 8.37,
+      "to_s": 12.54,
+      "placed_at_s": 21.0,
+      "level_db": -14,
+      "lowpass_hz": 3000,
+      "speed": 1.0
+     },
+     {
+      "source": "fs_538015",
+      "from_s": 7.67,
+      "to_s": 9.06,
+      "placed_at_s": 29.5,
+      "level_db": -8,
+      "lowpass_hz": 4400,
+      "speed": 1.04
+     },
+     {
+      "source": "fs_372213",
+      "from_s": 14.84,
+      "to_s": 17.37,
+      "placed_at_s": 37.0,
+      "level_db": -16,
+      "lowpass_hz": 2600,
+      "speed": 1.0
+     },
+     {
+      "source": "fs_538015",
+      "from_s": 2.6,
+      "to_s": 3.77,
+      "placed_at_s": 45.5,
+      "level_db": -12,
+      "lowpass_hz": 3400,
+      "speed": 0.96
+     },
+     {
+      "source": "fs_538016",
+      "from_s": 13.87,
+      "to_s": 17.4,
+      "placed_at_s": 52.0,
+      "level_db": -6,
+      "lowpass_hz": 4800,
+      "speed": 1.0
+     },
+     {
+      "source": "fs_73497",
+      "from_s": 0.07,
+      "to_s": 3.39,
+      "placed_at_s": 61.0,
+      "level_db": -15,
+      "lowpass_hz": 2800,
+      "speed": 1.07
+     },
+     {
+      "source": "fs_538015",
+      "from_s": 18.92,
+      "to_s": 20.28,
+      "placed_at_s": 68.0,
+      "level_db": -13,
+      "lowpass_hz": 3200,
+      "speed": 0.93
+     }
+    ],
+    "call_count": 9
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 75.0,
+   "target_lufs": -48,
+   "lufs_integrated": -48.0,
+   "true_peak_dbtp": -33.05,
+   "sample_peak_dbfs": -33.09,
+   "gain_applied_db": -20.76,
+   "seam": {
+    "jump_ratio": 0.0,
+    "level_step_db": 0.14,
+    "step_percentile": 0.439,
+    "crossfade_s": 4.0
+   },
+   "sha256": "1d98fddb53adc9ed10516028527960a27dff6c734435f0d1497933ebce3896ef"
+  },
+  "amb_gulls_night": {
+   "file": "amb_gulls_night.wav",
+   "kind": "loop",
+   "layer": "gulls",
+   "version": "night",
+   "sources": [
+    "fs_538015",
+    "fs_744592"
+   ],
+   "build": {
+    "calls": [
+     {
+      "source": "fs_744592",
+      "from_s": 0.0,
+      "to_s": 13.4,
+      "placed_at_s": 31.0,
+      "level_db": -9,
+      "lowpass_hz": 3200,
+      "speed": 1.0
+     },
+     {
+      "source": "fs_538015",
+      "from_s": 18.92,
+      "to_s": 20.28,
+      "placed_at_s": 66.0,
+      "level_db": -20,
+      "lowpass_hz": 2200,
+      "speed": 0.95
+     }
+    ],
+    "call_count": 2
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 75.0,
+   "target_lufs": -56,
+   "lufs_integrated": -56.0,
+   "true_peak_dbtp": -40.61,
+   "sample_peak_dbfs": -40.62,
+   "gain_applied_db": -25.18,
+   "seam": {
+    "jump_ratio": 0.0,
+    "level_step_db": 0.08,
+    "step_percentile": 0.638,
+    "crossfade_s": 4.0
+   },
+   "sha256": "be189764b3dac3a8e84f8d428bc85f6a95788a425f7f2da000fe964319c40e27"
+  },
+  "amb_gulls_rain": {
+   "file": "amb_gulls_rain.wav",
+   "kind": "loop",
+   "layer": "gulls",
+   "version": "rain",
+   "sources": [
+    "fs_538015",
+    "fs_538016"
+   ],
+   "build": {
+    "calls": [
+     {
+      "source": "fs_538015",
+      "from_s": 2.6,
+      "to_s": 3.77,
+      "placed_at_s": 18.0,
+      "level_db": -15,
+      "lowpass_hz": 2000,
+      "speed": 1.0
+     },
+     {
+      "source": "fs_538016",
+      "from_s": 13.87,
+      "to_s": 17.4,
+      "placed_at_s": 52.0,
+      "level_db": -17,
+      "lowpass_hz": 1900,
+      "speed": 1.0
+     }
+    ],
+    "call_count": 2
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 75.0,
+   "target_lufs": -54,
+   "lufs_integrated": -54.0,
+   "true_peak_dbtp": -40.09,
+   "sample_peak_dbfs": -40.1,
+   "gain_applied_db": -14.07,
+   "seam": {
+    "jump_ratio": 1.416,
+    "level_step_db": 0.04,
+    "step_percentile": 0.597,
+    "crossfade_s": 4.0
+   },
+   "sha256": "775ea6716e612ba6ddd3775468034e913ca3d282923e32137281d206f8714334"
+  },
+  "amb_harbour_day": {
+   "file": "amb_harbour_day.wav",
+   "kind": "loop",
+   "layer": "harbour",
+   "version": "day",
+   "sources": [
+    "fs_182611",
+    "fs_360633",
+    "fs_559821"
+   ],
+   "build": {
+    "cuts": [
+     [
+      "fs_182611",
+      12.0,
+      96.0
+     ],
+     [
+      "fs_360633",
+      4.0,
+      88.0
+     ],
+     [
+      "fs_559821",
+      150.0,
+      186.0
+     ]
+    ],
+    "chain": "water: highpass 100, lowpass 6000; rigging -8 dB from highpass 250; a far boat engine (lowpass 700, 8 s fades) at 22 s, -12 dB re the water"
+   },
+   "channels": 2,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 75.0,
+   "target_lufs": -41,
+   "lufs_integrated": -41.0,
+   "true_peak_dbtp": -14.86,
+   "sample_peak_dbfs": -14.87,
+   "gain_applied_db": -5.33,
+   "seam": {
+    "jump_ratio": 0.222,
+    "level_step_db": 1.46,
+    "step_percentile": 0.525,
+    "crossfade_s": 4.0
+   },
+   "sha256": "e9a0c46592ce658ba624acb3d92cb16a746c27fe929f57e602c3bcd01df7f34d"
+  },
+  "amb_harbour_night": {
+   "file": "amb_harbour_night.wav",
+   "kind": "loop",
+   "layer": "harbour",
+   "version": "night",
+   "sources": [
+    "fs_182610",
+    "fs_360633"
+   ],
+   "build": {
+    "cuts": [
+     [
+      "fs_182610",
+      14.0,
+      98.0
+     ],
+     [
+      "fs_360633",
+      20.0,
+      100.0
+     ]
+    ],
+    "chain": "water highpass 100, lowpass 3500; rigging -14 dB, lowpass 3000"
+   },
+   "channels": 2,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 75.0,
+   "target_lufs": -43,
+   "lufs_integrated": -43.0,
+   "true_peak_dbtp": -17.01,
+   "sample_peak_dbfs": -17.01,
+   "gain_applied_db": 1.05,
+   "seam": {
+    "jump_ratio": 0.0,
+    "level_step_db": 2.81,
+    "step_percentile": 0.845,
+    "crossfade_s": 4.0
+   },
+   "sha256": "5249e682e1e352317c6977856be6e96f0be376d3e94b2adb9bd1e76d13d4f831"
+  },
+  "amb_harbour_rain": {
+   "file": "amb_harbour_rain.wav",
+   "kind": "loop",
+   "layer": "harbour",
+   "version": "rain",
+   "sources": [
+    "fs_182612",
+    "fs_463373"
+   ],
+   "build": {
+    "cuts": [
+     [
+      "fs_182612",
+      12.0,
+      96.0
+     ],
+     [
+      "fs_463373",
+      0.0,
+      72.0
+     ]
+    ],
+    "chain": "water highpass 100, lowpass 4500; rigging whistle -12 dB from highpass 400; whistle excerpt repeated from 10 s"
+   },
+   "channels": 2,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 75.0,
+   "target_lufs": -43,
+   "lufs_integrated": -43.0,
+   "true_peak_dbtp": -23.0,
+   "sample_peak_dbfs": -23.06,
+   "gain_applied_db": -7.57,
+   "seam": {
+    "jump_ratio": 0.155,
+    "level_step_db": 0.13,
+    "step_percentile": 0.077,
+    "crossfade_s": 4.0
+   },
+   "sha256": "1ce701421d1ae3d600ad0a133aa91be04408ef68912cc7830406123fc2a40fc2"
+  },
+  "amb_radio_day": {
+   "file": "amb_radio_day.wav",
+   "kind": "loop",
+   "layer": "radio",
+   "version": "day",
+   "sources": [
+    "fs_528615"
+   ],
+   "build": {
+    "lowpass_hz": 1250.0,
+    "band_hz": [
+     320,
+     3200
+    ],
+    "grain_ms": [
+     90,
+     160
+    ],
+    "sources": [
+     "fs_528615"
+    ]
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 75.0,
+   "target_lufs": -52,
+   "lufs_integrated": -52.0,
+   "true_peak_dbtp": -43.9,
+   "sample_peak_dbfs": -43.91,
+   "gain_applied_db": -13.15,
+   "seam": {
+    "jump_ratio": 1.546,
+    "level_step_db": 1.02,
+    "step_percentile": 0.503,
+    "crossfade_s": 4.0
+   },
+   "sha256": "729d11f3b63bcc84265b16df5e2bd748056e95e920ec1471d539e94c4f361a9f"
+  },
+  "amb_radio_night": {
+   "file": "amb_radio_night.wav",
+   "kind": "loop",
+   "layer": "radio",
+   "version": "night",
+   "sources": [
+    "fs_528615"
+   ],
+   "build": {
+    "lowpass_hz": 1050.0,
+    "band_hz": [
+     320,
+     3200
+    ],
+    "grain_ms": [
+     90,
+     160
+    ],
+    "sources": [
+     "fs_528615"
+    ]
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 75.0,
+   "target_lufs": -54,
+   "lufs_integrated": -54.0,
+   "true_peak_dbtp": -45.74,
+   "sample_peak_dbfs": -45.75,
+   "gain_applied_db": -15.03,
+   "seam": {
+    "jump_ratio": 1.253,
+    "level_step_db": 1.01,
+    "step_percentile": 0.493,
+    "crossfade_s": 4.0
+   },
+   "sha256": "889537fc9c810cd4a52bb98239c0b5f27b964f80c8e0636f97cf7ce3439d8543"
+  },
+  "amb_radio_rain": {
+   "file": "amb_radio_rain.wav",
+   "kind": "loop",
+   "layer": "radio",
+   "version": "rain",
+   "sources": [
+    "fs_528615"
+   ],
+   "build": {
+    "lowpass_hz": 800.0,
+    "band_hz": [
+     320,
+     3200
+    ],
+    "grain_ms": [
+     90,
+     160
+    ],
+    "sources": [
+     "fs_528615"
+    ]
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 75.0,
+   "target_lufs": -54,
+   "lufs_integrated": -54.0,
+   "true_peak_dbtp": -44.86,
+   "sample_peak_dbfs": -44.87,
+   "gain_applied_db": -14.3,
+   "seam": {
+    "jump_ratio": 1.509,
+    "level_step_db": 0.97,
+    "step_percentile": 0.465,
+    "crossfade_s": 4.0
+   },
+   "sha256": "19c942b98516eff6e61201bb9b9920f4a4e5e5adc235baeae04f6f187e87b71c"
+  },
+  "amb_rain_awning": {
+   "file": "amb_rain_awning.wav",
+   "kind": "loop",
+   "layer": "rain_awning",
+   "version": "rain",
+   "sources": [
+    "fs_454130"
+   ],
+   "build": {
+    "cuts": [
+     [
+      "fs_454130",
+      0.0,
+      81.5
+     ]
+    ],
+    "chain": "highpass 150"
+   },
+   "channels": 2,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 75.0,
+   "target_lufs": -42,
+   "lufs_integrated": -42.0,
+   "true_peak_dbtp": -13.68,
+   "sample_peak_dbfs": -13.8,
+   "gain_applied_db": -12.32,
+   "seam": {
+    "jump_ratio": 1.048,
+    "level_step_db": 0.86,
+    "step_percentile": 0.777,
+    "crossfade_s": 4.0
+   },
+   "sha256": "0ad787d4f5e935ab26f48b7069530c60632ba46ff8f6851b8ad53120f7793b0f"
+  },
+  "amb_rain_gutter": {
+   "file": "amb_rain_gutter.wav",
+   "kind": "loop",
+   "layer": "rain_gutter",
+   "version": "rain",
+   "sources": [
+    "fs_846446"
+   ],
+   "build": {
+    "cuts": [
+     [
+      "fs_846446",
+      8.0,
+      92.0
+     ]
+    ],
+    "chain": "highpass 250"
+   },
+   "channels": 2,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 75.0,
+   "target_lufs": -47,
+   "lufs_integrated": -47.0,
+   "true_peak_dbtp": -8.34,
+   "sample_peak_dbfs": -8.84,
+   "gain_applied_db": 3.35,
+   "seam": {
+    "jump_ratio": 0.235,
+    "level_step_db": 1.26,
+    "step_percentile": 0.66,
+    "crossfade_s": 4.0
+   },
+   "sha256": "0c2c9a457d773ece6c8e9e3cd9abe505daecd0d6c8fdc9b0ede7052d7cf5ab13"
+  },
+  "amb_rain_pavement": {
+   "file": "amb_rain_pavement.wav",
+   "kind": "loop",
+   "layer": "rain_pavement",
+   "version": "rain",
+   "sources": [
+    "bsb_1289"
+   ],
+   "build": {
+    "cuts": [
+     [
+      "bsb_1289",
+      0.0,
+      79.5
+     ]
+    ],
+    "chain": "highpass 120 (mono source)"
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 75.0,
+   "target_lufs": -37,
+   "lufs_integrated": -37.0,
+   "true_peak_dbtp": -2.69,
+   "sample_peak_dbfs": -3.94,
+   "gain_applied_db": -3.96,
+   "seam": {
+    "jump_ratio": 0.186,
+    "level_step_db": 1.8,
+    "step_percentile": 0.722,
+    "crossfade_s": 4.0
+   },
+   "sha256": "33abf4885df097650aeb2befb6da1ce72bd458fae44aed392fc84f5a9490f2c6"
+  },
+  "amb_traffic_day": {
+   "file": "amb_traffic_day.wav",
+   "kind": "loop",
+   "layer": "traffic",
+   "version": "day",
+   "sources": [
+    "fs_503456"
+   ],
+   "build": {
+    "cuts": [
+     [
+      "fs_503456",
+      140.0,
+      224.0
+     ]
+    ],
+    "chain": "highpass 70 Hz, lowpass 1800 Hz (distance), leveller 0.6"
+   },
+   "channels": 2,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 75.0,
+   "target_lufs": -40,
+   "lufs_integrated": -40.0,
+   "true_peak_dbtp": -24.2,
+   "sample_peak_dbfs": -24.21,
+   "gain_applied_db": -4.17,
+   "seam": {
+    "jump_ratio": 0.494,
+    "level_step_db": 0.55,
+    "step_percentile": 0.194,
+    "crossfade_s": 4.0
+   },
+   "sha256": "6b42fec3be5285c8329a4c997e5a9fe648a7a8d77c19d8ac348f62f59d8763e0"
+  },
+  "amb_traffic_night": {
+   "file": "amb_traffic_night.wav",
+   "kind": "loop",
+   "layer": "traffic",
+   "version": "night",
+   "sources": [
+    "fs_395686"
+   ],
+   "build": {
+    "cuts": [
+     [
+      "fs_395686",
+      20.0,
+      104.0
+     ]
+    ],
+    "chain": "highpass 70 Hz, lowpass 1500 Hz, leveller 0.35"
+   },
+   "channels": 2,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 75.0,
+   "target_lufs": -45,
+   "lufs_integrated": -45.01,
+   "true_peak_dbtp": -21.86,
+   "sample_peak_dbfs": -21.87,
+   "gain_applied_db": -2.37,
+   "seam": {
+    "jump_ratio": 0.15,
+    "level_step_db": 2.87,
+    "step_percentile": 0.854,
+    "crossfade_s": 4.0
+   },
+   "sha256": "3080c8ea062456f1e8a758ac0f543fe2519cf446004df5c97f81ba92c09b28ae"
+  },
+  "amb_traffic_rain": {
+   "file": "amb_traffic_rain.wav",
+   "kind": "loop",
+   "layer": "traffic",
+   "version": "rain",
+   "sources": [
+    "bsb_621"
+   ],
+   "build": {
+    "cuts": [
+     [
+      "bsb_621",
+      0.0,
+      46.0
+     ],
+     [
+      "bsb_621",
+      24.0,
+      68.0
+     ]
+    ],
+    "chain": "highpass 80 Hz, +8 dB above 1.5 kHz (wet-road hiss), lowpass 6000 Hz, leveller 0.3; two excerpts crossfaded 3 s"
+   },
+   "channels": 2,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 75.0,
+   "target_lufs": -42,
+   "lufs_integrated": -42.0,
+   "true_peak_dbtp": -21.55,
+   "sample_peak_dbfs": -21.55,
+   "gain_applied_db": -11.77,
+   "seam": {
+    "jump_ratio": 2.088,
+    "level_step_db": 0.81,
+    "step_percentile": 0.909,
+    "crossfade_s": 4.0
+   },
+   "sha256": "16a1d3e64e366bf418b57e56135611984eeb7d6b1a30f6c63453a1a07f8891f5"
+  },
+  "amb_voices_day": {
+   "file": "amb_voices_day.wav",
+   "kind": "loop",
+   "layer": "voices",
+   "version": "day",
+   "sources": [
+    "fs_260124",
+    "fs_757318"
+   ],
+   "build": {
+    "lowpass_hz": 1150.0,
+    "grain_ms": [
+     80,
+     150
+    ],
+    "sources": [
+     "fs_757318",
+     "fs_260124"
+    ]
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 75.0,
+   "target_lufs": -50,
+   "lufs_integrated": -50.01,
+   "true_peak_dbtp": -30.29,
+   "sample_peak_dbfs": -30.29,
+   "gain_applied_db": -4.33,
+   "seam": {
+    "jump_ratio": 0.281,
+    "level_step_db": 0.88,
+    "step_percentile": 0.348,
+    "crossfade_s": 4.0
+   },
+   "sha256": "f8f9a003c33bed259312a1680fb6aeae4d2a79e4e915be3e862e170987f4fec5"
+  },
+  "amb_voices_night": {
+   "file": "amb_voices_night.wav",
+   "kind": "loop",
+   "layer": "voices",
+   "version": "night",
+   "sources": [
+    "fs_260124"
+   ],
+   "build": {
+    "lowpass_hz": 1000.0,
+    "grain_ms": [
+     80,
+     150
+    ],
+    "sources": [
+     "fs_260124"
+    ]
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 75.0,
+   "target_lufs": -53,
+   "lufs_integrated": -53.01,
+   "true_peak_dbtp": -29.72,
+   "sample_peak_dbfs": -29.73,
+   "gain_applied_db": 5.39,
+   "seam": {
+    "jump_ratio": 0.0,
+    "level_step_db": 1.24,
+    "step_percentile": 0.282,
+    "crossfade_s": 4.0
+   },
+   "sha256": "bbc8c367dc1822e16a46a513d2d1d39d2593b17daf45ea3081aa504b1c0c722f"
+  },
+  "amb_voices_rain": {
+   "file": "amb_voices_rain.wav",
+   "kind": "loop",
+   "layer": "voices",
+   "version": "rain",
+   "sources": [
+    "fs_757318"
+   ],
+   "build": {
+    "lowpass_hz": 800.0,
+    "grain_ms": [
+     80,
+     150
+    ],
+    "sources": [
+     "fs_757318"
+    ]
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 75.0,
+   "target_lufs": -55,
+   "lufs_integrated": -55.0,
+   "true_peak_dbtp": -35.74,
+   "sample_peak_dbfs": -35.74,
+   "gain_applied_db": -9.85,
+   "seam": {
+    "jump_ratio": 0.733,
+    "level_step_db": 1.78,
+    "step_percentile": 0.704,
+    "crossfade_s": 4.0
+   },
+   "sha256": "3e4c9a50fb7ba99d735d677a417f6444b435934f875726588827f73832978263"
+  },
+  "amb_wind_day": {
+   "file": "amb_wind_day.wav",
+   "kind": "loop",
+   "layer": "wind",
+   "version": "day",
+   "sources": [
+    "fs_454374"
+   ],
+   "build": {
+    "cuts": [
+     [
+      "fs_454374",
+      0.0,
+      50.0
+     ],
+     [
+      "fs_454374",
+      8.0,
+      44.0
+     ],
+     [
+      "fs_454374",
+      20.0,
+      66.0
+     ]
+    ],
+    "chain": "highpass 60, lowpass 2500; three excerpts crossfaded 3 s"
+   },
+   "channels": 2,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 75.0,
+   "target_lufs": -46,
+   "lufs_integrated": -46.0,
+   "true_peak_dbtp": -25.47,
+   "sample_peak_dbfs": -25.47,
+   "gain_applied_db": -2.89,
+   "seam": {
+    "jump_ratio": 2.75,
+    "level_step_db": 0.2,
+    "step_percentile": 0.127,
+    "crossfade_s": 4.0
+   },
+   "sha256": "63703b190dbb4d476bcb1430bd9b6dfd522d74dc2f6ae02af551ea89121ff014"
+  },
+  "amb_wind_night": {
+   "file": "amb_wind_night.wav",
+   "kind": "loop",
+   "layer": "wind",
+   "version": "night",
+   "sources": [
+    "fs_554845"
+   ],
+   "build": {
+    "cuts": [
+     [
+      "fs_554845",
+      20.0,
+      104.0
+     ]
+    ],
+    "chain": "highpass 90, lowpass 1800"
+   },
+   "channels": 2,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 75.0,
+   "target_lufs": -45,
+   "lufs_integrated": -45.0,
+   "true_peak_dbtp": -25.04,
+   "sample_peak_dbfs": -25.04,
+   "gain_applied_db": -6.97,
+   "seam": {
+    "jump_ratio": 0.58,
+    "level_step_db": 0.63,
+    "step_percentile": 0.605,
+    "crossfade_s": 4.0
+   },
+   "sha256": "345063395bcadc817c6c8e86b914b54514e0f1bf93a5281adfa62bdc6f33ad6d"
+  },
+  "amb_wind_rain": {
+   "file": "amb_wind_rain.wav",
+   "kind": "loop",
+   "layer": "wind",
+   "version": "rain",
+   "sources": [
+    "bsb_625"
+   ],
+   "build": {
+    "cuts": [
+     [
+      "bsb_625",
+      0.0,
+      50.0
+     ],
+     [
+      "bsb_625",
+      38.0,
+      91.0
+     ]
+    ],
+    "chain": "highpass 90, lowpass 3500; two excerpts crossfaded 3 s"
+   },
+   "channels": 2,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 75.0,
+   "target_lufs": -43,
+   "lufs_integrated": -43.0,
+   "true_peak_dbtp": -25.91,
+   "sample_peak_dbfs": -25.97,
+   "gain_applied_db": -11.17,
+   "seam": {
+    "jump_ratio": 0.67,
+    "level_step_db": 0.21,
+    "step_percentile": 0.075,
+    "crossfade_s": 4.0
+   },
+   "sha256": "18262105afa6fc182a40558dc768468ee5deb06f2a62dcdc8d9d3a2e73e4c12c"
+  },
+  "bell_shop_01": {
+   "file": "bell_shop_01.wav",
+   "kind": "one-shot",
+   "group": "bell_shop",
+   "class": "bell",
+   "sources": [
+    "fs_57743"
+   ],
+   "build": {
+    "from_s": 0.0,
+    "to_s": 3.2,
+    "what": "a bell on a shop door as someone enters",
+    "highpass_hz": 60.0,
+    "fade_out_ms": 150,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 3.2,
+   "target_lufs_m": -25,
+   "lufs_m_max": -25.0,
+   "true_peak_dbtp": -16.19,
+   "sample_peak_dbfs": -16.46,
+   "limited_by_peak": false,
+   "sha256": "118b2be910fc2ba1fbefb15d55e093298e5b4ca72d80d961a9504b0ecdba0502"
+  },
+  "bell_shop_02": {
+   "file": "bell_shop_02.wav",
+   "kind": "one-shot",
+   "group": "bell_shop",
+   "class": "bell",
+   "sources": [
+    "fs_494565"
+   ],
+   "build": {
+    "from_s": 0.25,
+    "to_s": 2.1,
+    "what": "a shop door bell, opening",
+    "highpass_hz": 60.0,
+    "fade_out_ms": 150,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 1.85,
+   "target_lufs_m": -25,
+   "lufs_m_max": -25.0,
+   "true_peak_dbtp": -8.54,
+   "sample_peak_dbfs": -8.55,
+   "limited_by_peak": false,
+   "sha256": "86fe883f5c9a54ae77f2bdda56f17bdb5e50cb2d52d1926289bcc4559fe1ff55"
+  },
+  "bell_shop_03": {
+   "file": "bell_shop_03.wav",
+   "kind": "one-shot",
+   "group": "bell_shop",
+   "class": "bell",
+   "sources": [
+    "fs_494565"
+   ],
+   "build": {
+    "from_s": 2.35,
+    "to_s": 3.8,
+    "what": "a shop door bell, opening",
+    "highpass_hz": 60.0,
+    "fade_out_ms": 150,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 1.45,
+   "target_lufs_m": -25,
+   "lufs_m_max": -25.0,
+   "true_peak_dbtp": -9.45,
+   "sample_peak_dbfs": -9.7,
+   "limited_by_peak": false,
+   "sha256": "0176c973a3eb3f9595bfe4d2b4de0169412806ad6c1f6cad7a2de5550fe04b17"
+  },
+  "bell_shop_04": {
+   "file": "bell_shop_04.wav",
+   "kind": "one-shot",
+   "group": "bell_shop",
+   "class": "bell",
+   "sources": [
+    "fs_494565"
+   ],
+   "build": {
+    "from_s": 4.4,
+    "to_s": 5.7,
+    "what": "a shop door bell, opening",
+    "highpass_hz": 60.0,
+    "fade_out_ms": 150,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 1.3,
+   "target_lufs_m": -25,
+   "lufs_m_max": -25.0,
+   "true_peak_dbtp": -7.19,
+   "sample_peak_dbfs": -7.2,
+   "limited_by_peak": false,
+   "sha256": "ac8390d4e1ce48b08fb9ca5c1b04604158dcbc623e279f9db7a20739ba705f80"
+  },
+  "bell_shop_05": {
+   "file": "bell_shop_05.wav",
+   "kind": "one-shot",
+   "group": "bell_shop",
+   "class": "bell",
+   "sources": [
+    "fs_494565"
+   ],
+   "build": {
+    "from_s": 6.7,
+    "to_s": 7.7,
+    "what": "a shop door bell, opening",
+    "highpass_hz": 60.0,
+    "fade_out_ms": 150,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 1.0,
+   "target_lufs_m": -25,
+   "lufs_m_max": -25.0,
+   "true_peak_dbtp": -5.8,
+   "sample_peak_dbfs": -6.64,
+   "limited_by_peak": false,
+   "sha256": "2e7541321f94198f35dfa8d0e4d7b627209fee74b8dfb76cd76d912de1ba8512"
+  },
+  "door_house_close_01": {
+   "file": "door_house_close_01.wav",
+   "kind": "one-shot",
+   "group": "door_house",
+   "class": "door_close",
+   "sources": [
+    "fs_402464"
+   ],
+   "build": {
+    "from_s": 5.9,
+    "to_s": 6.8,
+    "what": "heavy wooden door, closing on its seal",
+    "highpass_hz": 60.0,
+    "fade_out_ms": 60,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.9,
+   "target_lufs_m": -23,
+   "lufs_m_max": -23.2,
+   "true_peak_dbtp": -1.5,
+   "sample_peak_dbfs": -1.55,
+   "limited_by_peak": true,
+   "sha256": "48c2052cb358a08e1a5242d3f70d949ab503e5215f83f928e2e7268abe8be7d7"
+  },
+  "door_house_close_02": {
+   "file": "door_house_close_02.wav",
+   "kind": "one-shot",
+   "group": "door_house",
+   "class": "door_close",
+   "sources": [
+    "fs_402465"
+   ],
+   "build": {
+    "from_s": 2.9,
+    "to_s": 3.8,
+    "what": "heavy wooden door, closing hard",
+    "highpass_hz": 60.0,
+    "fade_out_ms": 60,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.9,
+   "target_lufs_m": -23,
+   "lufs_m_max": -23.0,
+   "true_peak_dbtp": -7.86,
+   "sample_peak_dbfs": -7.86,
+   "limited_by_peak": false,
+   "sha256": "dc89a97342bef7dcc953f2bb8c33ba98a56400a67119240c66a0f8aa27c6605a"
+  },
+  "door_house_close_03": {
+   "file": "door_house_close_03.wav",
+   "kind": "one-shot",
+   "group": "door_house",
+   "class": "door_close",
+   "sources": [
+    "fs_402466"
+   ],
+   "build": {
+    "from_s": 0.0,
+    "to_s": 1.6,
+    "what": "heavy wooden door, closed quietly",
+    "highpass_hz": 60.0,
+    "fade_out_ms": 60,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 1.6,
+   "target_lufs_m": -23,
+   "lufs_m_max": -23.0,
+   "true_peak_dbtp": -6.1,
+   "sample_peak_dbfs": -6.11,
+   "limited_by_peak": false,
+   "sha256": "253276f5d2eecc79b992c60dfb4b96e43c030161dd0a04229f757732190b10d9"
+  },
+  "door_house_close_04": {
+   "file": "door_house_close_04.wav",
+   "kind": "one-shot",
+   "group": "door_house",
+   "class": "door_close",
+   "sources": [
+    "bsb_545"
+   ],
+   "build": {
+    "from_s": 0.3,
+    "to_s": 1.3,
+    "what": "front door, a sharp closure",
+    "highpass_hz": 60.0,
+    "fade_out_ms": 60,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 1.0,
+   "target_lufs_m": -23,
+   "lufs_m_max": -23.0,
+   "true_peak_dbtp": -2.69,
+   "sample_peak_dbfs": -3.01,
+   "limited_by_peak": false,
+   "sha256": "b54daae73f194be49f9491ddc595ba48b2006e1b89711cbf03a7bd670800b48d"
+  },
+  "door_house_close_05": {
+   "file": "door_house_close_05.wav",
+   "kind": "one-shot",
+   "group": "door_house",
+   "class": "door_close",
+   "sources": [
+    "bsb_545"
+   ],
+   "build": {
+    "from_s": 4.6,
+    "to_s": 5.5,
+    "what": "front door, a sharp closure",
+    "highpass_hz": 60.0,
+    "fade_out_ms": 60,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.9,
+   "target_lufs_m": -23,
+   "lufs_m_max": -26.39,
+   "true_peak_dbtp": -1.5,
+   "sample_peak_dbfs": -1.67,
+   "limited_by_peak": true,
+   "sha256": "4ad233d4b7f8d225b3e6e80b5c7b01856518aafe7f0f4a0fc5ed27d54b93ece8"
+  },
+  "door_house_latch_01": {
+   "file": "door_house_latch_01.wav",
+   "kind": "one-shot",
+   "group": "door_house",
+   "class": "door_latch",
+   "sources": [
+    "bsb_1320"
+   ],
+   "build": {
+    "from_s": 0.352,
+    "to_s": 0.692,
+    "what": "key, bolt or latch of an entrance door",
+    "highpass_hz": 60.0,
+    "fade_out_ms": 40,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.34,
+   "target_lufs_m": -29,
+   "lufs_m_max": -29.0,
+   "true_peak_dbtp": -10.53,
+   "sample_peak_dbfs": -10.61,
+   "limited_by_peak": false,
+   "sha256": "da16c7ec3878ce8e6f5a897f75983ddd1755fbdbe37a01d4763c53ffc75f37ea"
+  },
+  "door_house_latch_02": {
+   "file": "door_house_latch_02.wav",
+   "kind": "one-shot",
+   "group": "door_house",
+   "class": "door_latch",
+   "sources": [
+    "bsb_1320"
+   ],
+   "build": {
+    "from_s": 1.241,
+    "to_s": 1.581,
+    "what": "key, bolt or latch of an entrance door",
+    "highpass_hz": 60.0,
+    "fade_out_ms": 40,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.34,
+   "target_lufs_m": -29,
+   "lufs_m_max": -29.0,
+   "true_peak_dbtp": -6.5,
+   "sample_peak_dbfs": -6.58,
+   "limited_by_peak": false,
+   "sha256": "bb3143dc1cb60621a24e09d67db9b0cc8f7a2d9e72cba650b9f61913cc71c1e3"
+  },
+  "door_house_latch_03": {
+   "file": "door_house_latch_03.wav",
+   "kind": "one-shot",
+   "group": "door_house",
+   "class": "door_latch",
+   "sources": [
+    "bsb_1320"
+   ],
+   "build": {
+    "from_s": 2.216,
+    "to_s": 2.556,
+    "what": "key, bolt or latch of an entrance door",
+    "highpass_hz": 60.0,
+    "fade_out_ms": 40,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.34,
+   "target_lufs_m": -29,
+   "lufs_m_max": -29.0,
+   "true_peak_dbtp": -6.04,
+   "sample_peak_dbfs": -6.32,
+   "limited_by_peak": false,
+   "sha256": "3dd95cec0b25f06fd6042985d82abc66333bdb8878112ca0820cd2ceffa5af8c"
+  },
+  "door_house_open_01": {
+   "file": "door_house_open_01.wav",
+   "kind": "one-shot",
+   "group": "door_house",
+   "class": "door_open",
+   "sources": [
+    "fs_402464"
+   ],
+   "build": {
+    "from_s": 0.4,
+    "to_s": 2.1,
+    "what": "heavy wooden door, opening",
+    "highpass_hz": 60.0,
+    "fade_out_ms": 40,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 1.7,
+   "target_lufs_m": -26,
+   "lufs_m_max": -26.0,
+   "true_peak_dbtp": -9.7,
+   "sample_peak_dbfs": -9.85,
+   "limited_by_peak": false,
+   "sha256": "7cf052b0018e68c77c2f3e3153b0c05724bd482a19bf49cdfe0a5ad5dc7b866e"
+  },
+  "door_house_open_02": {
+   "file": "door_house_open_02.wav",
+   "kind": "one-shot",
+   "group": "door_house",
+   "class": "door_open",
+   "sources": [
+    "fs_402465"
+   ],
+   "build": {
+    "from_s": 0.0,
+    "to_s": 1.2,
+    "what": "heavy wooden door, opened quickly",
+    "highpass_hz": 60.0,
+    "fade_out_ms": 40,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 1.2,
+   "target_lufs_m": -26,
+   "lufs_m_max": -26.0,
+   "true_peak_dbtp": -6.37,
+   "sample_peak_dbfs": -6.41,
+   "limited_by_peak": false,
+   "sha256": "7b34c0b1d5b86a2c8a873b99efa3c9f9fc99f1c8db0ab91ba15094fd179bddf5"
+  },
+  "door_house_open_03": {
+   "file": "door_house_open_03.wav",
+   "kind": "one-shot",
+   "group": "door_house",
+   "class": "door_open",
+   "sources": [
+    "bsb_1320"
+   ],
+   "build": {
+    "from_s": 1.25,
+    "to_s": 3.0,
+    "what": "entrance door, opening after the key",
+    "highpass_hz": 60.0,
+    "fade_out_ms": 40,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 1.75,
+   "target_lufs_m": -26,
+   "lufs_m_max": -26.0,
+   "true_peak_dbtp": -5.9,
+   "sample_peak_dbfs": -6.18,
+   "limited_by_peak": false,
+   "sha256": "623b0bed550d2284358faa017c86a606c4d1fba3b6c021e39ad48b00d683d906"
+  },
+  "door_shop_close_01": {
+   "file": "door_shop_close_01.wav",
+   "kind": "one-shot",
+   "group": "door_shop",
+   "class": "door_close",
+   "sources": [
+    "bsb_1270"
+   ],
+   "build": {
+    "from_s": 0.1,
+    "to_s": 1.35,
+    "what": "old glass door, shutting, glass rattling",
+    "highpass_hz": 60.0,
+    "fade_out_ms": 60,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 1.25,
+   "target_lufs_m": -23,
+   "lufs_m_max": -23.0,
+   "true_peak_dbtp": -9.0,
+   "sample_peak_dbfs": -9.02,
+   "limited_by_peak": false,
+   "sha256": "29ad6328bf5603fbdbdcbe025850c5b66e9cc12869bb21e0093f3c9f21ca2070"
+  },
+  "door_shop_close_02": {
+   "file": "door_shop_close_02.wav",
+   "kind": "one-shot",
+   "group": "door_shop",
+   "class": "door_close",
+   "sources": [
+    "bsb_1270"
+   ],
+   "build": {
+    "from_s": 3.85,
+    "to_s": 5.75,
+    "what": "old glass door, swinging shut and hitting its frame",
+    "highpass_hz": 60.0,
+    "fade_out_ms": 60,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 1.9,
+   "target_lufs_m": -23,
+   "lufs_m_max": -23.0,
+   "true_peak_dbtp": -4.7,
+   "sample_peak_dbfs": -5.12,
+   "limited_by_peak": false,
+   "sha256": "915127c0d9fcbdea165ced3165bc1dba8ef1ea0e90764fa1ce20765ac287237c"
+  },
+  "door_shop_close_03": {
+   "file": "door_shop_close_03.wav",
+   "kind": "one-shot",
+   "group": "door_shop",
+   "class": "door_close",
+   "sources": [
+    "fs_402460"
+   ],
+   "build": {
+    "from_s": 43.6,
+    "to_s": 45.7,
+    "what": "heavy glass and metal door, closing",
+    "highpass_hz": 60.0,
+    "fade_out_ms": 60,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 2.1,
+   "target_lufs_m": -23,
+   "lufs_m_max": -23.19,
+   "true_peak_dbtp": -1.5,
+   "sample_peak_dbfs": -1.54,
+   "limited_by_peak": true,
+   "sha256": "a3c4c35f9a6da122b98d0453c71fae66221685dd5b8bc57896a9aea3b1be9822"
+  },
+  "door_shop_latch_01": {
+   "file": "door_shop_latch_01.wav",
+   "kind": "one-shot",
+   "group": "door_shop",
+   "class": "door_latch",
+   "sources": [
+    "bsb_224"
+   ],
+   "build": {
+    "from_s": 2.361,
+    "to_s": 2.701,
+    "what": "a lightweight door's latch",
+    "highpass_hz": 60.0,
+    "fade_out_ms": 40,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.34,
+   "target_lufs_m": -29,
+   "lufs_m_max": -29.0,
+   "true_peak_dbtp": -11.07,
+   "sample_peak_dbfs": -11.08,
+   "limited_by_peak": false,
+   "sha256": "ef1ff5974a7125d5502284c1f450fba06b3f0db234fb2facc9989090420054aa"
+  },
+  "door_shop_latch_02": {
+   "file": "door_shop_latch_02.wav",
+   "kind": "one-shot",
+   "group": "door_shop",
+   "class": "door_latch",
+   "sources": [
+    "bsb_224"
+   ],
+   "build": {
+    "from_s": 6.131,
+    "to_s": 6.471,
+    "what": "a lightweight door's latch",
+    "highpass_hz": 60.0,
+    "fade_out_ms": 40,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.34,
+   "target_lufs_m": -29,
+   "lufs_m_max": -29.0,
+   "true_peak_dbtp": -12.56,
+   "sample_peak_dbfs": -12.57,
+   "limited_by_peak": false,
+   "sha256": "bfdaca0e6e3fc904081d7b66db0f68cc86a75eb53c14198b9124d66febb90afb"
+  },
+  "door_shop_latch_03": {
+   "file": "door_shop_latch_03.wav",
+   "kind": "one-shot",
+   "group": "door_shop",
+   "class": "door_latch",
+   "sources": [
+    "bsb_224"
+   ],
+   "build": {
+    "from_s": 9.534,
+    "to_s": 9.874,
+    "what": "a lightweight door's latch",
+    "highpass_hz": 60.0,
+    "fade_out_ms": 40,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.34,
+   "target_lufs_m": -29,
+   "lufs_m_max": -29.0,
+   "true_peak_dbtp": -10.83,
+   "sample_peak_dbfs": -10.84,
+   "limited_by_peak": false,
+   "sha256": "18db364c413c764b1e89ffe120de00c45fdaf4ec226665c8e1b11f275fea92b6"
+  },
+  "door_shop_latch_04": {
+   "file": "door_shop_latch_04.wav",
+   "kind": "one-shot",
+   "group": "door_shop",
+   "class": "door_latch",
+   "sources": [
+    "bsb_224"
+   ],
+   "build": {
+    "from_s": 13.185,
+    "to_s": 13.525,
+    "what": "a lightweight door's latch",
+    "highpass_hz": 60.0,
+    "fade_out_ms": 40,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.34,
+   "target_lufs_m": -29,
+   "lufs_m_max": -29.0,
+   "true_peak_dbtp": -8.48,
+   "sample_peak_dbfs": -8.53,
+   "limited_by_peak": false,
+   "sha256": "df549cb26686a509460a23ff798ff237db6b8981593dd123d1923a46aa00d659"
+  },
+  "door_shop_open_01": {
+   "file": "door_shop_open_01.wav",
+   "kind": "one-shot",
+   "group": "door_shop",
+   "class": "door_open",
+   "sources": [
+    "bsb_1270"
+   ],
+   "build": {
+    "from_s": 1.7,
+    "to_s": 2.45,
+    "what": "old glass door, the soft opening",
+    "highpass_hz": 60.0,
+    "fade_out_ms": 40,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.75,
+   "target_lufs_m": -26,
+   "lufs_m_max": -26.0,
+   "true_peak_dbtp": -9.33,
+   "sample_peak_dbfs": -9.35,
+   "limited_by_peak": false,
+   "sha256": "5f1c29330b47c42b98ce5cca086abcb2c40ec11001bf72f7ec4b023beee095d1"
+  },
+  "door_shop_open_02": {
+   "file": "door_shop_open_02.wav",
+   "kind": "one-shot",
+   "group": "door_shop",
+   "class": "door_open",
+   "sources": [
+    "fs_402460"
+   ],
+   "build": {
+    "from_s": 38.0,
+    "to_s": 41.0,
+    "what": "heavy glass and metal door, opening with creaks",
+    "highpass_hz": 60.0,
+    "fade_out_ms": 40,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 3.0,
+   "target_lufs_m": -26,
+   "lufs_m_max": -26.0,
+   "true_peak_dbtp": -7.66,
+   "sample_peak_dbfs": -7.68,
+   "limited_by_peak": false,
+   "sha256": "e6e928b8025a2c109092cb6a55ab0c9379091f947e21f8f9b01b3f54d4ae3c1a"
+  },
+  "phonebox_door_creak_01": {
+   "file": "phonebox_door_creak_01.wav",
+   "kind": "one-shot",
+   "group": "phonebox",
+   "class": "phonebox_creak",
+   "sources": [
+    "fs_674027"
+   ],
+   "build": {
+    "from_s": 0.07,
+    "to_s": 2.6,
+    "what": "old telephone booth door creaking",
+    "highpass_hz": 60.0,
+    "fade_out_ms": 60,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 2.53,
+   "target_lufs_m": -31,
+   "lufs_m_max": -31.0,
+   "true_peak_dbtp": -12.51,
+   "sample_peak_dbfs": -13.31,
+   "limited_by_peak": false,
+   "sha256": "0e0c15c30c9e9263a2d4f6aa04a4fe9e7d903506d8a1a2072d927fb7de76f927"
+  },
+  "phonebox_door_creak_02": {
+   "file": "phonebox_door_creak_02.wav",
+   "kind": "one-shot",
+   "group": "phonebox",
+   "class": "phonebox_creak",
+   "sources": [
+    "fs_402460"
+   ],
+   "build": {
+    "from_s": 3.9,
+    "to_s": 5.8,
+    "what": "heavy glass and metal door creaking slowly",
+    "highpass_hz": 60.0,
+    "fade_out_ms": 60,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 1.9,
+   "target_lufs_m": -31,
+   "lufs_m_max": -31.0,
+   "true_peak_dbtp": -9.29,
+   "sample_peak_dbfs": -9.32,
+   "limited_by_peak": false,
+   "sha256": "f7dbba7095cbc4fd371685a9252e9c0418d23cb6609234d3e4474061bc16fe4a"
+  },
+  "phonebox_door_creak_03": {
+   "file": "phonebox_door_creak_03.wav",
+   "kind": "one-shot",
+   "group": "phonebox",
+   "class": "phonebox_creak",
+   "sources": [
+    "fs_402460"
+   ],
+   "build": {
+    "from_s": 10.4,
+    "to_s": 12.4,
+    "what": "heavy glass and metal door, a squeak and a creak",
+    "highpass_hz": 60.0,
+    "fade_out_ms": 60,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 2.0,
+   "target_lufs_m": -31,
+   "lufs_m_max": -31.0,
+   "true_peak_dbtp": -21.11,
+   "sample_peak_dbfs": -21.36,
+   "limited_by_peak": false,
+   "sha256": "0f321c6a3870b61b121a226b6a05cf307fb5b87c1a7fb12a85aea0e645b58dda"
+  },
+  "phonebox_door_creak_04": {
+   "file": "phonebox_door_creak_04.wav",
+   "kind": "one-shot",
+   "group": "phonebox",
+   "class": "phonebox_creak",
+   "sources": [
+    "bsb_605"
+   ],
+   "build": {
+    "from_s": 0.18,
+    "to_s": 1.4,
+    "what": "door spring grinding",
+    "highpass_hz": 60.0,
+    "fade_out_ms": 60,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 1.22,
+   "target_lufs_m": -31,
+   "lufs_m_max": -31.0,
+   "true_peak_dbtp": -12.92,
+   "sample_peak_dbfs": -12.92,
+   "limited_by_peak": false,
+   "sha256": "811b968e8218221fa2180c7a202e87d65e068ec833742683ceebc43c2cbef4b5"
+  },
+  "phonebox_door_creak_05": {
+   "file": "phonebox_door_creak_05.wav",
+   "kind": "one-shot",
+   "group": "phonebox",
+   "class": "phonebox_creak",
+   "sources": [
+    "bsb_605"
+   ],
+   "build": {
+    "from_s": 4.4,
+    "to_s": 5.4,
+    "what": "door spring grinding",
+    "highpass_hz": 60.0,
+    "fade_out_ms": 60,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 1.0,
+   "target_lufs_m": -31,
+   "lufs_m_max": -31.0,
+   "true_peak_dbtp": -16.55,
+   "sample_peak_dbfs": -16.56,
+   "limited_by_peak": false,
+   "sha256": "981c42d3fe8f06ed2529effbe69e3188cdd1dfc250a372967b34f4aa453353aa"
+  },
+  "phonebox_door_shut_01": {
+   "file": "phonebox_door_shut_01.wav",
+   "kind": "one-shot",
+   "group": "phonebox",
+   "class": "phonebox_shut",
+   "sources": [
+    "fs_402459"
+   ],
+   "build": {
+    "from_s": 11.35,
+    "to_s": 12.25,
+    "what": "heavy glass and metal door, shutting sharply",
+    "highpass_hz": 60.0,
+    "fade_out_ms": 60,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.9,
+   "target_lufs_m": -23,
+   "lufs_m_max": -25.17,
+   "true_peak_dbtp": -1.5,
+   "sample_peak_dbfs": -1.53,
+   "limited_by_peak": true,
+   "sha256": "e56e77dc1d51717165d45a222d1ef162d7dbbacb48f7114ce20b82088a27533f"
+  },
+  "phonebox_door_shut_02": {
+   "file": "phonebox_door_shut_02.wav",
+   "kind": "one-shot",
+   "group": "phonebox",
+   "class": "phonebox_shut",
+   "sources": [
+    "fs_402459"
+   ],
+   "build": {
+    "from_s": 8.55,
+    "to_s": 9.4,
+    "what": "heavy glass and metal door, shutting",
+    "highpass_hz": 60.0,
+    "fade_out_ms": 60,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.85,
+   "target_lufs_m": -23,
+   "lufs_m_max": -24.55,
+   "true_peak_dbtp": -1.5,
+   "sample_peak_dbfs": -1.51,
+   "limited_by_peak": true,
+   "sha256": "777df5ddffcdfade19aa5ca90d0bfc0f7271f1481d9df8e531b141f633a23c3c"
+  },
+  "phonebox_door_shut_03": {
+   "file": "phonebox_door_shut_03.wav",
+   "kind": "one-shot",
+   "group": "phonebox",
+   "class": "phonebox_shut",
+   "sources": [
+    "fs_402460"
+   ],
+   "build": {
+    "from_s": 22.9,
+    "to_s": 24.9,
+    "what": "heavy glass and metal door, swinging shut",
+    "highpass_hz": 60.0,
+    "fade_out_ms": 60,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 2.0,
+   "target_lufs_m": -23,
+   "lufs_m_max": -23.0,
+   "true_peak_dbtp": -2.33,
+   "sample_peak_dbfs": -2.35,
+   "limited_by_peak": false,
+   "sha256": "b5e6d1b3f99488f966d4a7a39a10ffac147a3a809430e09f3cd5192948825600"
+  },
+  "phonebox_ring_01": {
+   "file": "phonebox_ring_01.wav",
+   "kind": "one-shot",
+   "group": "phonebox",
+   "class": "phonebox_ring",
+   "sources": [
+    "fs_435577"
+   ],
+   "build": {
+    "from_s": 0.55,
+    "to_s": 2.6,
+    "what": "a GPO 746 telephone ringing, one double ring (a house telephone: no kiosk payphone recording was found)",
+    "highpass_hz": 60.0,
+    "fade_out_ms": 200,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 2.05,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -16.55,
+   "sample_peak_dbfs": -16.83,
+   "limited_by_peak": false,
+   "sha256": "584845eb0011f2c7aa2bf5ee3e4f6f64ae00cb4f2b2384af66e2a08d0f5d905f"
+  },
+  "phonebox_ring_02": {
+   "file": "phonebox_ring_02.wav",
+   "kind": "one-shot",
+   "group": "phonebox",
+   "class": "phonebox_ring",
+   "sources": [
+    "fs_435577"
+   ],
+   "build": {
+    "from_s": 3.5,
+    "to_s": 5.55,
+    "what": "a GPO 746 telephone ringing, one double ring (a house telephone: no kiosk payphone recording was found)",
+    "highpass_hz": 60.0,
+    "fade_out_ms": 200,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 2.05,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -18.17,
+   "sample_peak_dbfs": -18.17,
+   "limited_by_peak": false,
+   "sha256": "8a1e5c14d1f33eed92c3c639582bf3c67e87e10d08377560cd46899756f8e041"
+  },
+  "phonebox_ring_03": {
+   "file": "phonebox_ring_03.wav",
+   "kind": "one-shot",
+   "group": "phonebox",
+   "class": "phonebox_ring",
+   "sources": [
+    "fs_435577"
+   ],
+   "build": {
+    "from_s": 6.5,
+    "to_s": 8.55,
+    "what": "a GPO 746 telephone ringing, one double ring (a house telephone: no kiosk payphone recording was found)",
+    "highpass_hz": 60.0,
+    "fade_out_ms": 200,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 2.05,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -18.31,
+   "sample_peak_dbfs": -18.32,
+   "limited_by_peak": false,
+   "sha256": "c7d6a171e4da2cfdf31078cbd353bc777a0821050aa15191556630ddda02d807"
+  },
+  "step_asphalt_01": {
+   "file": "step_asphalt_01.wav",
+   "kind": "one-shot",
+   "group": "step_asphalt",
+   "class": "step",
+   "sources": [
+    "fs_455056"
+   ],
+   "build": {
+    "cut_at_s": 5.935,
+    "length_ms": 201,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.201,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -9.01,
+   "sample_peak_dbfs": -9.02,
+   "limited_by_peak": false,
+   "sha256": "10de066eb30afc4f67649f611053f5f4345c29d13dd2f0a87cdfc1e013fe8a88"
+  },
+  "step_asphalt_02": {
+   "file": "step_asphalt_02.wav",
+   "kind": "one-shot",
+   "group": "step_asphalt",
+   "class": "step",
+   "sources": [
+    "fs_455056"
+   ],
+   "build": {
+    "cut_at_s": 28.747,
+    "length_ms": 171,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.171,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -2.9,
+   "sample_peak_dbfs": -2.9,
+   "limited_by_peak": false,
+   "sha256": "2bc1c2da6a67c5dce445292a3ae5c67de9babfe82b47552c5c75e96b55dc10b3"
+  },
+  "step_asphalt_03": {
+   "file": "step_asphalt_03.wav",
+   "kind": "one-shot",
+   "group": "step_asphalt",
+   "class": "step",
+   "sources": [
+    "fs_455056"
+   ],
+   "build": {
+    "cut_at_s": 31.356,
+    "length_ms": 218,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.218,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -7.81,
+   "sample_peak_dbfs": -7.82,
+   "limited_by_peak": false,
+   "sha256": "7d924b632267c3b20b2f38237630893e7a24b91872c33571a441f734b15cccef"
+  },
+  "step_asphalt_04": {
+   "file": "step_asphalt_04.wav",
+   "kind": "one-shot",
+   "group": "step_asphalt",
+   "class": "step",
+   "sources": [
+    "fs_455056"
+   ],
+   "build": {
+    "cut_at_s": 33.487,
+    "length_ms": 260,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.26,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -4.72,
+   "sample_peak_dbfs": -4.94,
+   "limited_by_peak": false,
+   "sha256": "4a8bc3970fa938de5b784d1a38f90308bf87d075c3f946f1a7f234934571d91f"
+  },
+  "step_asphalt_05": {
+   "file": "step_asphalt_05.wav",
+   "kind": "one-shot",
+   "group": "step_asphalt",
+   "class": "step",
+   "sources": [
+    "fs_455056"
+   ],
+   "build": {
+    "cut_at_s": 37.213,
+    "length_ms": 205,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.205,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -5.44,
+   "sample_peak_dbfs": -5.65,
+   "limited_by_peak": false,
+   "sha256": "26fa894c06902fb340b8dd0a6573cb1fc4f94a53ec8ad80efc529f21cbfa47f9"
+  },
+  "step_asphalt_06": {
+   "file": "step_asphalt_06.wav",
+   "kind": "one-shot",
+   "group": "step_asphalt",
+   "class": "step",
+   "sources": [
+    "fs_455056"
+   ],
+   "build": {
+    "cut_at_s": 39.361,
+    "length_ms": 255,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.255,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -6.14,
+   "sample_peak_dbfs": -6.15,
+   "limited_by_peak": false,
+   "sha256": "10ec353629d2c6a56870bcca812c98a8e087464d9a47973ed29fb789a733ce72"
+  },
+  "step_asphalt_07": {
+   "file": "step_asphalt_07.wav",
+   "kind": "one-shot",
+   "group": "step_asphalt",
+   "class": "step",
+   "sources": [
+    "fs_637556"
+   ],
+   "build": {
+    "cut_at_s": 1.924,
+    "length_ms": 237,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.237,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -3.24,
+   "sample_peak_dbfs": -3.26,
+   "limited_by_peak": false,
+   "sha256": "2085987cbb11c1e6c408d28281528f0f4b3f57f907cc5bfcbde1f809a83e772b"
+  },
+  "step_asphalt_08": {
+   "file": "step_asphalt_08.wav",
+   "kind": "one-shot",
+   "group": "step_asphalt",
+   "class": "step",
+   "sources": [
+    "fs_637556"
+   ],
+   "build": {
+    "cut_at_s": 6.572,
+    "length_ms": 228,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.228,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -2.17,
+   "sample_peak_dbfs": -2.17,
+   "limited_by_peak": false,
+   "sha256": "7cbbddffb3fed351c84dcf8a629240d15db567a93b0e0ae5dccb54ee8c4b912d"
+  },
+  "step_paving_01": {
+   "file": "step_paving_01.wav",
+   "kind": "one-shot",
+   "group": "step_paving",
+   "class": "step",
+   "sources": [
+    "fs_273067"
+   ],
+   "build": {
+    "cut_at_s": 0.279,
+    "length_ms": 238,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.238,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -2.78,
+   "sample_peak_dbfs": -2.79,
+   "limited_by_peak": false,
+   "sha256": "ddd4c6445334d1f39d0cac088218df97e48e0ef17c254edc7bda8f85cafdebe0"
+  },
+  "step_paving_02": {
+   "file": "step_paving_02.wav",
+   "kind": "one-shot",
+   "group": "step_paving",
+   "class": "step",
+   "sources": [
+    "fs_273067"
+   ],
+   "build": {
+    "cut_at_s": 15.624,
+    "length_ms": 245,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.245,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -5.05,
+   "sample_peak_dbfs": -5.06,
+   "limited_by_peak": false,
+   "sha256": "588081756d1079536ef53b504021994e24c079896691eb67379dc67eeaa25d13"
+  },
+  "step_paving_03": {
+   "file": "step_paving_03.wav",
+   "kind": "one-shot",
+   "group": "step_paving",
+   "class": "step",
+   "sources": [
+    "fs_273067"
+   ],
+   "build": {
+    "cut_at_s": 17.913,
+    "length_ms": 216,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.216,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -4.25,
+   "sample_peak_dbfs": -4.26,
+   "limited_by_peak": false,
+   "sha256": "e0016cdfdbff1cbbced2f3c125291642cf6c849cc87734c2880aacb9de2e0606"
+  },
+  "step_paving_04": {
+   "file": "step_paving_04.wav",
+   "kind": "one-shot",
+   "group": "step_paving",
+   "class": "step",
+   "sources": [
+    "fs_273067"
+   ],
+   "build": {
+    "cut_at_s": 20.983,
+    "length_ms": 253,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.253,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -4.45,
+   "sample_peak_dbfs": -4.45,
+   "limited_by_peak": false,
+   "sha256": "b808dec59fad424c3fa2f83f1895f86432ac9c06dfe9fffbb910c86f6df926d8"
+  },
+  "step_paving_05": {
+   "file": "step_paving_05.wav",
+   "kind": "one-shot",
+   "group": "step_paving",
+   "class": "step",
+   "sources": [
+    "fs_273071"
+   ],
+   "build": {
+    "cut_at_s": 2.873,
+    "length_ms": 233,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.233,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -2.91,
+   "sample_peak_dbfs": -2.92,
+   "limited_by_peak": false,
+   "sha256": "dac58b4b83aef9e5b0e1701d01984c9b82ab3b1c0e6933cbf5065b2f81cecf77"
+  },
+  "step_paving_06": {
+   "file": "step_paving_06.wav",
+   "kind": "one-shot",
+   "group": "step_paving",
+   "class": "step",
+   "sources": [
+    "fs_273071"
+   ],
+   "build": {
+    "cut_at_s": 18.063,
+    "length_ms": 115,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.115,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -4.2,
+   "sample_peak_dbfs": -4.21,
+   "limited_by_peak": false,
+   "sha256": "6eeb7ae3d6de88846892755118e72577eeb5031cfdf4e1db2fd4f3e373155baf"
+  },
+  "step_paving_07": {
+   "file": "step_paving_07.wav",
+   "kind": "one-shot",
+   "group": "step_paving",
+   "class": "step",
+   "sources": [
+    "fs_273071"
+   ],
+   "build": {
+    "cut_at_s": 26.925,
+    "length_ms": 260,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.26,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -1.83,
+   "sample_peak_dbfs": -1.88,
+   "limited_by_peak": false,
+   "sha256": "762264c80bffe8b71251739c02ea0c6aff7cdbb70a3e3bf10f7a89b431efb3fa"
+  },
+  "step_paving_08": {
+   "file": "step_paving_08.wav",
+   "kind": "one-shot",
+   "group": "step_paving",
+   "class": "step",
+   "sources": [
+    "fs_273071"
+   ],
+   "build": {
+    "cut_at_s": 30.064,
+    "length_ms": 118,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.118,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -3.53,
+   "sample_peak_dbfs": -3.54,
+   "limited_by_peak": false,
+   "sha256": "68fb04ffebb17b2d7915f97ff93d847d8213f9ce65819fa87708c2772635bfae"
+  },
+  "step_setts_01": {
+   "file": "step_setts_01.wav",
+   "kind": "one-shot",
+   "group": "step_setts",
+   "class": "step",
+   "sources": [
+    "fs_637555"
+   ],
+   "build": {
+    "cut_at_s": 0.402,
+    "length_ms": 201,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.201,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -4.03,
+   "sample_peak_dbfs": -4.04,
+   "limited_by_peak": false,
+   "sha256": "f9e527c33f8275c15900702036838f7c6d7c26644ac51c83bdb97411dc796ca9"
+  },
+  "step_setts_02": {
+   "file": "step_setts_02.wav",
+   "kind": "one-shot",
+   "group": "step_setts",
+   "class": "step",
+   "sources": [
+    "fs_637555"
+   ],
+   "build": {
+    "cut_at_s": 1.942,
+    "length_ms": 217,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.217,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -4.77,
+   "sample_peak_dbfs": -4.78,
+   "limited_by_peak": false,
+   "sha256": "14af880891e1839fe56e30b13ba4df8ca7f26b0a2182a2bbc04db7fa15d7e73d"
+  },
+  "step_setts_03": {
+   "file": "step_setts_03.wav",
+   "kind": "one-shot",
+   "group": "step_setts",
+   "class": "step",
+   "sources": [
+    "fs_637555"
+   ],
+   "build": {
+    "cut_at_s": 2.966,
+    "length_ms": 243,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.243,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -3.83,
+   "sample_peak_dbfs": -3.83,
+   "limited_by_peak": false,
+   "sha256": "394cbd18beb4425c16a6822f13ac11293cdd3ad3da8228578cbf76b791d8a5d5"
+  },
+  "step_setts_04": {
+   "file": "step_setts_04.wav",
+   "kind": "one-shot",
+   "group": "step_setts",
+   "class": "step",
+   "sources": [
+    "fs_637555"
+   ],
+   "build": {
+    "cut_at_s": 5.088,
+    "length_ms": 186,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.186,
+   "target_lufs_m": -27,
+   "lufs_m_max": -30.51,
+   "true_peak_dbtp": -1.5,
+   "sample_peak_dbfs": -1.59,
+   "limited_by_peak": true,
+   "sha256": "70c33f4936dbb0afaccad0f1797c1d2a19dd242ecf9dd1916c1a9250d333da60"
+  },
+  "step_setts_05": {
+   "file": "step_setts_05.wav",
+   "kind": "one-shot",
+   "group": "step_setts",
+   "class": "step",
+   "sources": [
+    "fs_637555"
+   ],
+   "build": {
+    "cut_at_s": 6.061,
+    "length_ms": 260,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.26,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -4.21,
+   "sample_peak_dbfs": -4.3,
+   "limited_by_peak": false,
+   "sha256": "4aa0dd7521dcf276c1176541b233af7004c085d1d87237aba6b017a628764b7d"
+  },
+  "step_setts_06": {
+   "file": "step_setts_06.wav",
+   "kind": "one-shot",
+   "group": "step_setts",
+   "class": "step",
+   "sources": [
+    "fs_868548"
+   ],
+   "build": {
+    "cut_at_s": 0.01,
+    "length_ms": 253,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.253,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -2.23,
+   "sample_peak_dbfs": -2.24,
+   "limited_by_peak": false,
+   "sha256": "d847585daf85b97cabbfac9c1ee1cd697fd5c8b3fe210e01ec02a05f632672e4"
+  },
+  "step_setts_07": {
+   "file": "step_setts_07.wav",
+   "kind": "one-shot",
+   "group": "step_setts",
+   "class": "step",
+   "sources": [
+    "fs_868548"
+   ],
+   "build": {
+    "cut_at_s": 0.936,
+    "length_ms": 153,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.153,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -4.44,
+   "sample_peak_dbfs": -4.45,
+   "limited_by_peak": false,
+   "sha256": "2d6e29825c3aa23c560bbb4864eabd4092eed0d29df79181b2ce2b893b6478c0"
+  },
+  "step_setts_08": {
+   "file": "step_setts_08.wav",
+   "kind": "one-shot",
+   "group": "step_setts",
+   "class": "step",
+   "sources": [
+    "fs_868548"
+   ],
+   "build": {
+    "cut_at_s": 5.644,
+    "length_ms": 161,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.161,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -3.24,
+   "sample_peak_dbfs": -3.25,
+   "limited_by_peak": false,
+   "sha256": "3f90e55cc85f0a1769fa27baeef4a1c0d4093acc6389b2b88299c3132d9eebd1"
+  },
+  "step_wet_01": {
+   "file": "step_wet_01.wav",
+   "kind": "one-shot",
+   "group": "step_wet",
+   "class": "step",
+   "sources": [
+    "fs_263495"
+   ],
+   "build": {
+    "cut_at_s": 34.048,
+    "length_ms": 161,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.161,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -5.29,
+   "sample_peak_dbfs": -5.33,
+   "limited_by_peak": false,
+   "sha256": "f8dd48f6503d6a574d5708420925eea13c4c0a72dfa4c69d933e1d1857e51d83"
+  },
+  "step_wet_02": {
+   "file": "step_wet_02.wav",
+   "kind": "one-shot",
+   "group": "step_wet",
+   "class": "step",
+   "sources": [
+    "fs_263495"
+   ],
+   "build": {
+    "cut_at_s": 68.681,
+    "length_ms": 141,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.141,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -8.42,
+   "sample_peak_dbfs": -8.42,
+   "limited_by_peak": false,
+   "sha256": "23835f9313463aac2ef4dac6c50f58af1c13c167fd4d56a769aa622adf4f92e6"
+  },
+  "step_wet_03": {
+   "file": "step_wet_03.wav",
+   "kind": "one-shot",
+   "group": "step_wet",
+   "class": "step",
+   "sources": [
+    "fs_531566"
+   ],
+   "build": {
+    "cut_at_s": 1.38,
+    "length_ms": 192,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.192,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -1.77,
+   "sample_peak_dbfs": -1.87,
+   "limited_by_peak": false,
+   "sha256": "508c1c3fbbd879ef47ad9b5db008ebc0a5804c3ea49a232b60989329b88e2a3d"
+  },
+  "step_wet_04": {
+   "file": "step_wet_04.wav",
+   "kind": "one-shot",
+   "group": "step_wet",
+   "class": "step",
+   "sources": [
+    "fs_531566"
+   ],
+   "build": {
+    "cut_at_s": 4.136,
+    "length_ms": 150,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.15,
+   "target_lufs_m": -27,
+   "lufs_m_max": -31.45,
+   "true_peak_dbtp": -1.5,
+   "sample_peak_dbfs": -3.4,
+   "limited_by_peak": true,
+   "sha256": "7d2053929a5bb82549d3af35b81dce61273f147cb0dc65e5995b1458327fa441"
+  },
+  "step_wet_05": {
+   "file": "step_wet_05.wav",
+   "kind": "one-shot",
+   "group": "step_wet",
+   "class": "step",
+   "sources": [
+    "fs_531566"
+   ],
+   "build": {
+    "cut_at_s": 5.149,
+    "length_ms": 141,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.141,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -7.65,
+   "sample_peak_dbfs": -7.82,
+   "limited_by_peak": false,
+   "sha256": "fa0d7b8351373a9fc54b184d5d36eda3ad73fbd71aaa52066be3706c290fe330"
+  },
+  "step_wet_06": {
+   "file": "step_wet_06.wav",
+   "kind": "one-shot",
+   "group": "step_wet",
+   "class": "step",
+   "sources": [
+    "fs_531566"
+   ],
+   "build": {
+    "cut_at_s": 7.396,
+    "length_ms": 147,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.147,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -2.33,
+   "sample_peak_dbfs": -2.38,
+   "limited_by_peak": false,
+   "sha256": "1b54da1a5a719ae1ae81adeb39a0edcd61b44a12f42429ea398160eb141abff2"
+  },
+  "step_wet_07": {
+   "file": "step_wet_07.wav",
+   "kind": "one-shot",
+   "group": "step_wet",
+   "class": "step",
+   "sources": [
+    "fs_531566"
+   ],
+   "build": {
+    "cut_at_s": 8.289,
+    "length_ms": 101,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.101,
+   "target_lufs_m": -27,
+   "lufs_m_max": -28.57,
+   "true_peak_dbtp": -1.5,
+   "sample_peak_dbfs": -1.86,
+   "limited_by_peak": true,
+   "sha256": "167a77597a83054254159320a6fde6de9a609cb91b5dd51ff28cbbbf6a5f8a60"
+  },
+  "step_wet_08": {
+   "file": "step_wet_08.wav",
+   "kind": "one-shot",
+   "group": "step_wet",
+   "class": "step",
+   "sources": [
+    "fs_531566"
+   ],
+   "build": {
+    "cut_at_s": 9.316,
+    "length_ms": 152,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.152,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -7.25,
+   "sample_peak_dbfs": -7.31,
+   "limited_by_peak": false,
+   "sha256": "7d6d16dff7a4127c357b3d317580b04bdb000df98cf5d952ab56ba797483a716"
+  },
+  "step_wood_01": {
+   "file": "step_wood_01.wav",
+   "kind": "one-shot",
+   "group": "step_wood",
+   "class": "step",
+   "sources": [
+    "fs_536770"
+   ],
+   "build": {
+    "cut_at_s": 1.051,
+    "length_ms": 134,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.134,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -3.49,
+   "sample_peak_dbfs": -3.52,
+   "limited_by_peak": false,
+   "sha256": "c72071689297858a285f2ef9d1941615c4b339c19a8d87dd1f14dab81604ff6a"
+  },
+  "step_wood_02": {
+   "file": "step_wood_02.wav",
+   "kind": "one-shot",
+   "group": "step_wood",
+   "class": "step",
+   "sources": [
+    "fs_536770"
+   ],
+   "build": {
+    "cut_at_s": 8.381,
+    "length_ms": 260,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.26,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -2.48,
+   "sample_peak_dbfs": -2.49,
+   "limited_by_peak": false,
+   "sha256": "ecc10e30d60312f8ed9e9d7c97a3d24fbbfe42175538d337987d03297713a2b7"
+  },
+  "step_wood_03": {
+   "file": "step_wood_03.wav",
+   "kind": "one-shot",
+   "group": "step_wood",
+   "class": "step",
+   "sources": [
+    "fs_536770"
+   ],
+   "build": {
+    "cut_at_s": 10.595,
+    "length_ms": 260,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.26,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -2.88,
+   "sample_peak_dbfs": -2.9,
+   "limited_by_peak": false,
+   "sha256": "2359ad152a2ca0f1916bf346b08c4fcf89f357478580fb88e1488f60e22aaa89"
+  },
+  "step_wood_04": {
+   "file": "step_wood_04.wav",
+   "kind": "one-shot",
+   "group": "step_wood",
+   "class": "step",
+   "sources": [
+    "fs_536770"
+   ],
+   "build": {
+    "cut_at_s": 16.805,
+    "length_ms": 200,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.2,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -2.86,
+   "sample_peak_dbfs": -2.87,
+   "limited_by_peak": false,
+   "sha256": "581794ef99381399e81acf7980efa8356e35432573a256140a5f3bf132193baf"
+  },
+  "step_wood_05": {
+   "file": "step_wood_05.wav",
+   "kind": "one-shot",
+   "group": "step_wood",
+   "class": "step",
+   "sources": [
+    "fs_536770"
+   ],
+   "build": {
+    "cut_at_s": 29.516,
+    "length_ms": 206,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.206,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -3.26,
+   "sample_peak_dbfs": -3.53,
+   "limited_by_peak": false,
+   "sha256": "b5f84cd079c14ce4b27fda02b62cbcae39584ccf524088925e72567dd5bc4a8b"
+  },
+  "step_wood_06": {
+   "file": "step_wood_06.wav",
+   "kind": "one-shot",
+   "group": "step_wood",
+   "class": "step",
+   "sources": [
+    "fs_536770"
+   ],
+   "build": {
+    "cut_at_s": 37.976,
+    "length_ms": 130,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.13,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -8.78,
+   "sample_peak_dbfs": -8.83,
+   "limited_by_peak": false,
+   "sha256": "5757cc7cdda2e3cd8ecbb3570dc4d35432481b797bbc82a75dc3a5a2bc29eeeb"
+  },
+  "step_wood_07": {
+   "file": "step_wood_07.wav",
+   "kind": "one-shot",
+   "group": "step_wood",
+   "class": "step",
+   "sources": [
+    "fs_575898"
+   ],
+   "build": {
+    "cut_at_s": 9.552,
+    "length_ms": 120,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.12,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -6.16,
+   "sample_peak_dbfs": -6.17,
+   "limited_by_peak": false,
+   "sha256": "bad9506e9522ba5f26c946c652aac574878d30734ae2c97f8035d41808ba32e8"
+  },
+  "step_wood_08": {
+   "file": "step_wood_08.wav",
+   "kind": "one-shot",
+   "group": "step_wood",
+   "class": "step",
+   "sources": [
+    "fs_575898"
+   ],
+   "build": {
+    "cut_at_s": 15.666,
+    "length_ms": 196,
+    "highpass_hz": 70.0,
+    "keep_edges": true
+   },
+   "channels": 1,
+   "sample_rate": 48000,
+   "bit_depth": 16,
+   "seconds": 0.196,
+   "target_lufs_m": -27,
+   "lufs_m_max": -27.0,
+   "true_peak_dbtp": -9.05,
+   "sample_peak_dbfs": -9.09,
+   "limited_by_peak": false,
+   "sha256": "945159ca8d774aed25f497583556b0cdf70258c28a07e0aa714936c99c8a1411"
+  }
+ }
+}
