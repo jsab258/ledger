@@ -73,7 +73,7 @@ def build():
     w()
     table(["file", "what it is"], [
         ["TARGET.md", "this page (made by make_doc.py from target.json)"],
-        ["target.json", "the ten shops (front, door, glass, fascia, room, display, lights, pictures, cameras), the method's numbers, the inventory, the spec entries, the checks, the self-check"],
+        ["target.json", "the ten shops (front, door, glass, fascia, room, display, lights, pictures, cameras), the method's numbers, the inventory (with each model's `marks` and blanking step), the spec entries, the checks, the rows owed on the PC (`owed_on_pc`), the previews' crops and masks (`previews`), the self-check"],
         ["target_drawing.py", "draws target.json alone: each bay's elevation, each room's plan, back wall and picture layout, the ten fronts' sheet, and the elevation laid on the main photograph"],
         ["self_check.py, controls.py", "tests the target against its sources (%d rows; it writes nothing unless --write) and shows the self-check can fail (%d mutations of target.json, every one caught)" % (len(T["self_check"]["rows"]), json.load(open(os.path.join(HERE, "controls_result.json")))["of"])],
         ["sw_common.py, sw_shops.py, make_target.py, extras.py, make_doc.py, make_previews.py", "author tools: the game's rule and the stand-off budgets; the rooms and displays as data; the builders of target.json, TARGET.md and the previews"],
