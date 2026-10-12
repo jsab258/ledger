@@ -36,6 +36,7 @@ SCHEMA = "ledger.cloud-week-42.wear-masks-manifest/1"
 HARD = {"paint_flake", "render_crack", "road_crack", "flag_patch_crack", "line_wear", "grate_wear", "cig_end", "gum", "rust_bleed", "render_patch", "poster_remnant", "bird_dropping", "tyre_scuff"}
 # kinds whose checks read WHERE a level crosses a threshold (the band's top edge on a brick course, its column profile, the peak): a strength variation would slide that line, so they take the warp only
 EDGE_KINDS = {"wall_foot_splash", "wall_foot_damp", "wall_head_band", "salt_bloom", "gutter_grime", "sign_ghost"}
+TRIES = 12                # seeds tried per variant until its mask passes every check of its kind on its own
 MOD_DEPTH = 0.12          # a soft kind's strength varies inside its marks by up to this much
 _G = {}
 
@@ -46,7 +47,7 @@ def init():
 
 
 def seed_for(base, variant):
-    return base + 1000 * variant
+    return base + 1000 * variant          # the first seed tried; a variant may take up to TRIES - 1 more (the manifest records the one kept)
 
 
 def refine(m, kid, k, ppm, ed_mm, wrap, rng):
@@ -95,15 +96,34 @@ def build_kind(task):
     t0 = time.time()
     rows = []
     n = int(k["variants"]["count"])
+    checks = [c for c in k["checks"] if c.get("applies_to") == "mask" and c["measure"] not in _G["scw"].COMPOSITION_MEASURES]
     for v in range(n):
-        seed = seed_for(seed_base, v)
-        m, polys, ppm = make_mask(tj, draw, ed, kid, seed, v, do_refine=do_refine)
+        # the target tests its ranges on the median of a batch, and says a few kinds pass only 55 to 80 per cent of single masks; a delivered mask is used alone, so each variant takes
+        # the first of up to TRIES seeds whose mask passes every one of its kind's checks on its own (or, failing that, the seed with the fewest failing checks)
+        best = None
+        for t in range(TRIES):
+            seed = seed_for(seed_base, v) + t
+            m, polys, ppm = make_mask(tj, draw, ed, kid, seed, v, do_refine=do_refine)
+            fails = []
+            for c in checks:
+                try:
+                    val, ok = _G["scw"].run_mask_check(c, m, ppm)
+                except Exception:     # noqa: BLE001
+                    ok = False
+                if not ok:
+                    fails.append(c["name"])
+            if best is None or len(fails) < len(best[3]):
+                best = (m, seed, ppm, fails, t + 1)
+            if not fails:
+                break
+        m, seed, ppm, fails, tries = best
         a = to16(m)
         rel = "%s/%s_v%d.png" % (kid, kid, v)
         p = Path(out) / rel
         p.parent.mkdir(parents=True, exist_ok=True)
         Image.fromarray(a).save(p, compress_level=6)
-        rows.append(dict(file=rel, variant=v, seed=seed, size_px=[int(a.shape[1]), int(a.shape[0])], px_per_m=ppm, coverage_half=float((m >= 0.5).mean()), mean=float(m.mean()), max=float(m.max()), sha256_pixels=wc.pix_hash(a)))
+        rows.append(dict(file=rel, variant=v, seed=seed, seeds_tried=tries, failing_checks=fails, size_px=[int(a.shape[1]), int(a.shape[0])], px_per_m=ppm, coverage_half=float((m >= 0.5).mean()),
+                         mean=float(m.mean()), max=float(m.max()), sha256_pixels=wc.pix_hash(a)))
     ext = k["mask"]["frame_extent_m"]
     return dict(kind=kid, label=k["label"], layer=k["layer"], frame_extent_m=ext, decal_frame_m=k["mask"]["decal_frame_m"], origin=k["mask"]["origin"], wrap=wc.wrap_mode(k) or "none (a stamp)",
                 encoding="16-bit greyscale, 65535 = mask 1.0 (the kind's full effect), row 0 the top of the frame", px_per_m=k["texel"]["px_per_m_recommended"], smallest_feature_mm=k["texel"]["smallest_feature_mm"],

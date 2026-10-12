@@ -6,6 +6,7 @@
 OUTDIR is what make_wear.py wrote. The check reads the PNG files, then runs the target's own mask checks (self_check.run_mask_check, i.e. `measure(mask, px_per_m, measure_id, **params)` against
 each check's min and max; `foot_profile` through foot_profile_check) and its composition functions on the maker's masks:
 
+  <kind>.delivered          every delivered mask, read from its PNG, passes every mask check of its kind ON ITS OWN (the maker keeps, per variant, the first of up to 12 seeds that does)
   <kind>.files              every delivered mask has the size the frame and the texel scale give, is 16-bit, and reads back to the maker's own float mask
   <kind>.<check>            the target's mask checks on the MEDIAN of six masks (seeds 1990 and 2024, variants 0 to 2: the target's own way, part D), at the delivered texel scale
   <kind>.single.<check>     the share of 12 single masks inside the range (reported: the target says a few pass only 55 to 80 per cent of single masks)
@@ -86,6 +87,15 @@ def check_kind(task):
     err = float(np.abs(back - m0).max()) if back.shape == m0.shape else 1.0
     if err > 1.0 / 65535 + 1e-9:
         bad.append("variant 0 reads back %.5f from the maker's own mask" % err)
+    # every delivered mask, on its own: the seed the maker kept passes every check of its kind (read back from the PNG file)
+    dfail = []
+    for f in row["files"]:
+        mm = np.asarray(Image.open(Path(out) / f["file"])).astype(np.float64) / 65535.0
+        r = run_checks(k, mm, ppm)
+        bad_c = [nm for nm, (val, ok) in r.items() if not ok]
+        if bad_c:
+            dfail.append("%s: %s" % (f["file"].split("/")[-1], ", ".join("%s=%.3g" % (nm, r[nm][0]) for nm in bad_c)))
+    add(kid + ".delivered", not dfail, "; ".join(dfail) if dfail else "each of the %d delivered masks passes every check of its kind on its own" % len(row["files"]))
     add(kid + ".files", not bad, "; ".join(bad) or "%d masks of %d x %d px at %g px/m (frame %s m), 16-bit, read back exactly" % (n, W, H, ppm, [round(v, 3) for v in ext]))
     # --- the median of six, and the single masks
     runs = []
