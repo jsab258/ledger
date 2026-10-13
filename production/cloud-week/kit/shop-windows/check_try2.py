@@ -84,6 +84,7 @@ def load_glb_objects(path):
     import bpy
     before = set(bpy.data.objects)
     bpy.ops.import_scene.gltf(filepath=path)
+    bpy.context.view_layer.update()
     return [o for o in bpy.data.objects if o not in before]
 
 

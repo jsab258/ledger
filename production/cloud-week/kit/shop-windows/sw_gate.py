@@ -428,9 +428,12 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
         # lighting channel 1 (the game's): the spill lights the display, the front and the street but not the night grille's lattice (the bars would flare)
         recv = bpy.data.collections.new("spill_receivers")
         sc.collection.children.link(recv)
+        # the spill's channel holds the DISPLAY and nothing else (13 Oct, street review N1 condition 3: the pavement pool no brighter than the lit glass). With the spill behind the glass
+        # its light still goes out through the night glass (0.8 transparent) and made a pool on the pavement in front of the window as bright as the lamps' own; in the game the pavement's
+        # pool is the game's own light (owed on the PC, PC-02). The window frame, the door frame, the band, the front, the street and the lattice are not on the channel
         for o in list(bpy.data.objects):
-            if o.type == "MESH" and o not in lattice and o.name != "card" and not o.name.startswith(SPILL_OFF):
-                recv.objects.link(o)          # the window frame, the door frame and the band stand out of the spill's channel, with the lattice (the game's lighting channel)
+            if o.type == "MESH" and o in disp and o.name != "card" and not o.name.startswith(("return_wall_",)):
+                recv.objects.link(o)
         ro.light_linking.receiver_collection = recv
     # --- the glass mask (a check's render, 13 Oct): every pixel where the window's glass is the first thing the camera sees white, everything else (frame, mullions, beads, lattice, display,
     # wall) black: the window-glass pixels without the frame
