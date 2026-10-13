@@ -292,14 +292,16 @@ class Room:
         root.scale = (scale,) * 3
         # rotation about the model's own origin then translation: the corners above were rotated about the origin, so the same offset applies
         root.location = off
+        self.last_objs = []
         for m in meshes:
             c = m.copy()
             self.sc.collection.objects.link(c)
             c.parent = root
             c.matrix_parent_inverse = Matrix.Identity(4)
+            self.last_objs.append(c.name)
         ext = [mn.x + off.x, mx.x + off.x, mn.y + off.y, mx.y + off.y, mn.z + off.z, mx.z + off.z]
         if record:
-            self.placed.append({"fixture": fixture, "model": asset, "ext": [round(v, 4) for v in ext], "scale": round(scale, 4), "rot_deg": [round(math.degrees(r), 1) for r in rot]})
+            self.placed.append({"fixture": fixture, "model": asset, "ext": [round(v, 4) for v in ext], "scale": round(scale, 4), "rot_deg": [round(math.degrees(r), 1) for r in rot], "objs": list(self.last_objs)})
         return ext
 
     # ------------------------------------------------------------------------------------------------ textures made by script
