@@ -3398,14 +3398,17 @@
   }
  ],
  "self_check": {
-  "line": "SELF-CHECK a-board: 170 checks, 170 passed, 0 failed; negative controls 0 of 0 caught (offline)",
-  "checks": 170,
-  "passed": 170,
+  "line": "SELF-CHECK a-board: 171 checks, 171 passed, 0 failed; negative controls 56 of 58 caught (offline)",
+  "checks": 171,
+  "passed": 171,
   "failed": 0,
-  "controls": 0,
-  "controls_caught": 0,
+  "controls": 58,
+  "controls_caught": 56,
   "options": "offline",
   "failing": [],
-  "uncaught": []
+  "uncaught": [
+   "detail: the left screw eye set deeper in the edge than the right",
+   "placement (shared check): the board stood against the party pilaster"
+  ]
  }
 }

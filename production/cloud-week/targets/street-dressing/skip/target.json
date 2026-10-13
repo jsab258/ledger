@@ -1624,12 +1624,12 @@
   "keep the hexagonal profile exact: its widest line is at 793 and its bottom edge shorter than its top"
  ],
  "self_check": {
-  "line": "SELF-CHECK skip: 127 checks, 127 passed, 0 failed; negative controls 0 of 0 caught (offline)",
-  "checks": 127,
-  "passed": 127,
+  "line": "SELF-CHECK skip: 126 checks, 126 passed, 0 failed; negative controls 53 of 53 caught (offline)",
+  "checks": 126,
+  "passed": 126,
   "failed": 0,
-  "controls": 0,
-  "controls_caught": 0,
+  "controls": 53,
+  "controls_caught": 53,
   "options": "offline",
   "failing": [],
   "uncaught": []
