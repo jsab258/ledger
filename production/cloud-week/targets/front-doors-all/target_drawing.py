@@ -367,6 +367,7 @@ def main():
     ap.add_argument("--overlay", nargs=4, metavar=("KIND", "PHOTO", "OUT", "BOX"), default=None, help="BOX as x0,y0,x1,y1 in the photograph's pixels")
     a = ap.parse_args()
     T = load_json(TARGET_JSON)
+    os.makedirs(a.out_dir, exist_ok=True)
     D = drawing(T)
     if a.json:
         with open(a.json, "w") as f:

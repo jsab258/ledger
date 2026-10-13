@@ -84,9 +84,9 @@ def furniture(A):
     }
     F["latch"] = {
         "LK0": {"name": "none"},
-        "LK1": {"name": "rim night latch, plain collar (3.1 T1)", "collar": lk["outer_diameter_mm"], "plug": lk["plug_diameter_mm"], "collar_proud": 5.0, "keyway": "vertical 3 x 9", **CHROME,
+        "LK1": {"name": "rim night latch, plain collar (the escutcheon), 3.1 T1", "collar": lk["outer_diameter_mm"], "plug": lk["plug_diameter_mm"], "collar_proud": 5.0, "keyway": "vertical 3 x 9", **CHROME,
                 "place": {"T1": {"u": "46.6 from the stop face, right", "v": lk["centre_above_leaf_bottom_mm"]}}, "src": "3.1 as built (P1: collar 43.5, 8.4 px; the 3.1 name for it was cylinder lock)"},
-        "LK2": {"name": "rim night latch, knurled collar (3.1 F1)", "collar": fir["cylinder_lock"]["outer_diameter_mm"], "plug": fir["cylinder_lock"]["plug_diameter_mm"], "collar_proud": 5.0, "scallops": 8,
+        "LK2": {"name": "rim night latch, knurled collar (the escutcheon), 3.1 F1", "collar": fir["cylinder_lock"]["outer_diameter_mm"], "plug": fir["cylinder_lock"]["plug_diameter_mm"], "collar_proud": 5.0, "scallops": 8,
                 "keyway": "vertical 3 x 9", **CHROME, "place": {"F1": {"u": "46.3 from the stop face, right", "v": fir["cylinder_lock"]["centre_above_leaf_bottom_mm"]},
                                                               "F2": {"u": "46.3 from the stop face, right", "v": round(opt["furniture_heights_fraction_of_visible_height"]["cylinder"] * H31, 1)}},
                 "src": "3.1 as built (P2: collar 37, scalloped)"},

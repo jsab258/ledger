@@ -85,6 +85,8 @@ Why each house has its kind, paint and fittings:
 
 What the photographs show on a door, and where it is in this target: panel layout and counts (section 5, per kind); mouldings and profiles (T1 F1 F2 the 3.1 bolection at 46 and 43; F3 a stuck ovolo; T3 an embossed step; the rest none); glazing (plain, reeded, leaded; section 5); the fanlight (a plain dark light over D2's doors and D4's; a leaded light over D3's; a reeded light over D5's; the T and F frames' transoms carry them); the frame and its stops (frame sets, FF6); the number (forms NM1, NM3, NM4; the digits are the town's); furniture (section 6); paint and wear (sections 7 and 8). Hoods over the doors, arched recesses and painted reveals (D1, D6, D7) belong to the wall and are listed for the wall kit.
 
+**The brief's door types, and where each is.** Four-panel: T1, F1 (3.1). Six-panel: F2. Two long panels (a 1930s door, D1): F3. Half-glazed: F4 (three long lights over a low rail, D2) and T2 (four stacked lights, D3, D1); half-glazed with a small light: T3 (a small arched light in an embossed panel, D4) and F5 (a tall slit light, D2, D4). A council replacement flush door of the 1970s or 1980s: F6 (D5, D9). A ledged door to a yard or a service passage: F7 (Hasluck only). A fanlight: every door has one, the frame sets' transom light (plain dark over D2's and D4's doors, leaded over D3's, reeded over D5's); a door with no fanlight is not offered, because every door read (D1 to D5, P1, P2) has a light or a panel above its leaf. Glazing: plain (T2, F4, F5, T3, every transom but two), leaded diamond (T2's fanlight), reeded (F6's transom); frosted and wired are listed and placed nowhere. The frame and its stops: frame sets T and F as 3.1 (rebate 22 x 53, stop 74 deep, a 5 x 2.5 stop bead on F), FF6 for the 762 leaf. Letter plates, knockers, knobs and levers, the rim night latch with its escutcheon (the collar), the bell, house numbers, the boot scraper: section 6.
+
 ## 5. The doors, kind by kind
 
 **Covering every opening.** Nothing may show through (check CV): in elevation the frame, the leaf, the glass and the transom cover the clear opening except the 10 mm foot gap and the leaf's 1.6 mm margins; from 60 degrees the leaf laps 20.4 behind each stop and behind the transom's stop (F6: its stops are planted behind the leaf's edge, 22 wide), which closes the margin; F7's boards are tongued and grooved with a tongue of at least 6 mm; the reveals' returns are the wall kit's (T: buff brick, 3.1 L1 to L5) and the shopfront's pilaster return (F: 24.4 a side), and FF6 keeps the frame's outer width so they are unchanged; the 3.1 door review's dark hall is the render aid.
@@ -408,8 +410,8 @@ Every variant with its size, place by kind, material, colour and source. Positio
 | id | variant | size (mm) | place | material (sRGB) | source |
 |---|---|---|---|---|---|
 | LK0 | none |  |  |  |  |
-| LK1 | rim night latch, plain collar (3.1 T1) | [43.5, 43.5] | T1: u 46.6 from the stop face, right, v 1235 | nickel or chrome-look (170,170,168) | 3.1 as built (P1: collar 43.5, 8.4 px; the 3.1 name for it was cylinder lock) |
-| LK2 | rim night latch, knurled collar (3.1 F1) | [37.0, 37.0] | F1: u 46.3 from the stop face, right, v 1040; F2: u 46.3 from the stop face, right, v 1070.5 | nickel or chrome-look (170,170,168) | 3.1 as built (P2: collar 37, scalloped) |
+| LK1 | rim night latch, plain collar (the escutcheon), 3.1 T1 | [43.5, 43.5] | T1: u 46.6 from the stop face, right, v 1235 | nickel or chrome-look (170,170,168) | 3.1 as built (P1: collar 43.5, 8.4 px; the 3.1 name for it was cylinder lock) |
+| LK2 | rim night latch, knurled collar (the escutcheon), 3.1 F1 | [37.0, 37.0] | F1: u 46.3 from the stop face, right, v 1040; F2: u 46.3 from the stop face, right, v 1070.5 | nickel or chrome-look (170,170,168) | 3.1 as built (P2: collar 37, scalloped) |
 
 **knocker**
 

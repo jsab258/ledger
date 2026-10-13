@@ -2169,7 +2169,7 @@
     "name": "none"
    },
    "LK1": {
-    "name": "rim night latch, plain collar (3.1 T1)",
+    "name": "rim night latch, plain collar (the escutcheon), 3.1 T1",
     "collar": 43.5,
     "plug": 28.0,
     "collar_proud": 5.0,
@@ -2191,7 +2191,7 @@
     "src": "3.1 as built (P1: collar 43.5, 8.4 px; the 3.1 name for it was cylinder lock)"
    },
    "LK2": {
-    "name": "rim night latch, knurled collar (3.1 F1)",
+    "name": "rim night latch, knurled collar (the escutcheon), 3.1 F1",
     "collar": 37.0,
     "plug": 18.0,
     "collar_proud": 5.0,

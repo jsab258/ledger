@@ -554,7 +554,7 @@ def evaluate(T, c, R):
         s = json.dumps(T["gate"])
         ok = "[1.0, 0.25, 0.0]" in s and STALE_NIGHT.replace(" ", "") not in json.dumps({k2: v for k2, v in T.items() if k2 not in ("self_check", "checks")}).replace(" ", "")
     elif typ == "owed_text":
-        ok = all("—" not in s and "–" not in s and "*" not in s for s in T["owed_for_jafar"]) and 0 < len(T["owed_for_jafar"]) <= 5 and all("recommended" in s for s in T["owed_for_jafar"])
+        ok = all("\u2014" not in s and "\u2013" not in s and "*" not in s for s in T["owed_for_jafar"]) and 0 < len(T["owed_for_jafar"]) <= 5 and all("recommended" in s for s in T["owed_for_jafar"])
     elif typ == "views":
         ok = len(T["gate"]["views"][k]) == c["expect"]
     R.add("checks", "%s %s" % (c["id"], c["name"]), ok, detail)
@@ -605,9 +605,9 @@ def check_text(T, R):
     txt = json.dumps(body)
     R.add("text", "the word 'Yale' does not occur", "yale" not in txt.lower(), "")
     R.add("text", "the lantern colour (1.0, 0.25, 0.0) is in the gate, the stale colour is not anywhere", "[1.0, 0.25, 0.0]" in json.dumps(T["gate"]) and STALE_NIGHT.replace(" ", "") not in txt.replace(" ", ""), "")
-    dash = [p for p, s in strings(body) if "—" in s or "–" in s]
+    dash = [p for p, s in strings(body) if "\u2014" in s or "\u2013" in s]
     R.add("text", "no em or en dash in any string", not dash, str(dash[:3]))
-    R.add("text", "owed lines: at most 5, each with a recommendation, no dash, no italic marker", len(T["owed_for_jafar"]) <= 5 and all("recommended" in s and "—" not in s and "*" not in s and "_" not in s for s in T["owed_for_jafar"]), "")
+    R.add("text", "owed lines: at most 5, each with a recommendation, no dash, no italic marker", len(T["owed_for_jafar"]) <= 5 and all("recommended" in s and "\u2014" not in s and "*" not in s and "_" not in s for s in T["owed_for_jafar"]), "")
     R.add("text", "photographs-win disagreements are written down (>= 8)", len(T["disagreements_photographs_win"]) >= 8, "")
     R.add("text", "could-not-settle is written down", len(T["could_not_settle"]) >= 8, "")
     R.add("text", "rulings checked are listed (6)", len(T["rulings_checked"]) == 6, "")
@@ -719,7 +719,7 @@ def controls(T, photo_dir, live, previews):
     mut("a lion's head knocker offered", lambda x: x["furniture"]["knocker"]["KN3"].update({"offered": True}))
     mut("a maker's name in a text", lambda x: x["furniture"]["latch"]["LK1"].update({"name": "Yale-type rim cylinder"}))
     mut("the stale night colour in the gate", lambda x: x["gate"]["street_views"][2]["light"].update({"lantern_colour_linear": [1, 0.7055, 0]}))
-    mut("an em dash in an owed line", lambda x: x["owed_for_jafar"].__setitem__(0, x["owed_for_jafar"][0] + " — now"))
+    mut("an em dash in an owed line", lambda x: x["owed_for_jafar"].__setitem__(0, x["owed_for_jafar"][0] + " \u2014 now"))
     mut("an owed line without a recommendation", lambda x: x["owed_for_jafar"].__setitem__(1, "Door surrounds: white or coloured?"))
     mut("a photograph's date after 1995 used as period", lambda x: x["sources"]["photographs"]["D3"].update({"taken": "2012-05-06"}))
     mut("a measurement box outside its image", lambda x: x["sources"]["measurements"]["D4_T3_light"].update({"box": [559.0, 363.0, 700.0, 384.0]}))
