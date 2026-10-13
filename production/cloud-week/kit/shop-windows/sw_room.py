@@ -74,6 +74,16 @@ class Room:
             p.inputs["Transmission Weight"].default_value = 1.0
             p.inputs["IOR"].default_value = 1.45
             p.inputs["Roughness"].default_value = 0.02
+            # real glass lets a lamp's light through: Cycles' glass blocks the shadow rays (and caustics are off), so for shadow rays the pane is clear
+            # (without this the counter's case under its glass top, lit by the battens above, rendered black: PIC-02's first run, 13 October)
+            lp = nt.nodes.new("ShaderNodeLightPath")
+            tr = nt.nodes.new("ShaderNodeBsdfTransparent")
+            mx = nt.nodes.new("ShaderNodeMixShader")
+            out = next(n for n in nt.nodes if n.type == "OUTPUT_MATERIAL")
+            nt.links.new(lp.outputs["Is Shadow Ray"], mx.inputs["Fac"])
+            nt.links.new(p.outputs["BSDF"], mx.inputs[1])
+            nt.links.new(tr.outputs["BSDF"], mx.inputs[2])
+            nt.links.new(mx.outputs["Shader"], out.inputs["Surface"])
         if emit is not None:
             p.inputs["Emission Color"].default_value = (*emit, 1.0)
             p.inputs["Emission Strength"].default_value = emit_strength

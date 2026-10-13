@@ -7,6 +7,7 @@ not counted in M. Extra rows (noise, sample count, previews) are named `X-...` a
 """
 import hashlib
 import json
+import re
 import math
 import os
 import sys
@@ -329,8 +330,13 @@ def room_rows(R, T, work, rows, assets):
     # never lists
     cb = inv["content_blocklist"]
     words = [w for k in cb for w in cb[k]]
-    nhits = sorted({n for n in names for w in words if w in (" " + n.lower() + " ")})
-    rows.add("NEV-01", "no people, drink, betting, children", not nhits, "%d names and text strings against %d content-blocklist words: %s" % (len(names), len(words), nhits or "no match"))
+    # a blocklist word that ends in a space ('ale ', 'gin ', 'pub ', 'boy ', 'girl ', 'bet ') is a whole word: matched as one. As a bare substring 'ale ' hits the target's own notice
+    # 'PLEDGES FOR SALE' (13 October first run), and 'gin ' would hit 'margin'. The words without a trailing space ('child', 'toy', 'wine') stay substrings, as the target has them.
+    def hit(n, w):
+        t = " " + re.sub(r"[^a-z0-9' -]+", " ", n.lower()) + " "
+        return (" " + w) in t if w.endswith(" ") else w in t
+    nhits = sorted({n for n in names for w in words if hit(n, w)})
+    rows.add("NEV-01", "no people, drink, betting, children", not nhits, "%d names and text strings against %d content-blocklist words (the ones ending in a space as whole words: as substrings 'ale ' would hit 'PLEDGES FOR SALE', the target's own notice; the list's owner may want ' ale '): %s" % (len(names), len(words), nhits or "no match"))
     rows.add("NEV-02", "nothing after 1992", not denied, "no model from inventory.denied; the models are the 1980s radios, cameras, clocks, tools and ornaments of the approved room (no modern phone, flat screen, cordless drill or LED lamp)")
 
 
