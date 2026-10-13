@@ -1,0 +1,26 @@
+{
+ "made": "2026-10-13 19:50:19",
+ "what": "the files of the narrow-points build (13 Oct, from the try 2 reviews; v3); the three glbs and the three 4096 pictures are out of git (rebuilt by build_ritas.py) so this names the versions",
+ "files": {
+  "tea_rooms_front.glb": {
+   "bytes": 6094172,
+   "sha256": "39283f30ec0f86bc04671e4c9bb8c17a204dc58b7cd2523aa7fa2ac8483f18b8"
+  },
+  "tea_rooms_display.glb": {
+   "bytes": 3257656,
+   "sha256": "bf056fcdd9636866f76b95dcffc4fd4c8b68a304885cceef1d7d49910bc41ded"
+  },
+  "tea_room_day.png": {
+   "bytes": 7340471,
+   "sha256": "7480bd48e999057bbcb14cdbc111d6e7c232cca80db5340e0b64b32b5130552e"
+  },
+  "tea_room_night_lit.png": {
+   "bytes": 6728500,
+   "sha256": "792d8a9d3ebbae05fa8e3c007d1f53fe28ff4d4949656f8e1ca096e3295c81e6"
+  },
+  "tea_room_night_dark.png": {
+   "bytes": 5196990,
+   "sha256": "415c01ce47798c171aef7a7814f1a6e22c8b468cd850b88257efbef60c02dbf8"
+  }
+ }
+}

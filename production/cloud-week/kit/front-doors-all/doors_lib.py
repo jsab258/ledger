@@ -154,20 +154,27 @@ def loft_rings(rings, cap=True):
     return V, F
 
 
-# ------------------------------------------------------------------ a small stroke font (no real typeface): digits as strokes, rounded ends
-# Each digit is a list of polylines in a box 0..1 wide and 0..1 high (z up). The strokes are buffered by half the stroke width.
+# ------------------------------------------------------------------ a small stroke font (no real typeface): digits as strokes with round bowls, rounded ends
+# Each digit is a list of polylines in a box 0..1 wide and 0..1 high (z up). The strokes are buffered by half the stroke width. Round bowls (the first build's digits were
+# square, in the seven-segment look of a digital display, which the street and close reviews of 13 October both named): 2 with a curved neck, 3 with two round bowls,
+# 4 closed with a diagonal, 5 and 6 and 9 with a round bowl, 8 with two loops, 0 an oval.
+def _arc(cx, cz, rx, rz, a0, a1, n=14):
+    """Points of an elliptical arc in the unit box, from angle a0 to a1 (degrees, counter-clockwise from +x; a1 < a0 runs clockwise)."""
+    return [(cx + rx * math.cos(math.radians(a0 + (a1 - a0) * i / n)), cz + rz * math.sin(math.radians(a0 + (a1 - a0) * i / n))) for i in range(n + 1)]
+
+
 _G = {
-    "0": [[(0.1, 0.0), (0.9, 0.0), (0.9, 1.0), (0.1, 1.0), (0.1, 0.0)]],
-    "1": [[(0.25, 0.8), (0.55, 1.0), (0.55, 0.0)]],
-    "2": [[(0.1, 1.0), (0.9, 1.0), (0.9, 0.55), (0.1, 0.45), (0.1, 0.0), (0.9, 0.0)]],
-    "3": [[(0.1, 1.0), (0.9, 1.0), (0.9, 0.0), (0.1, 0.0)], [(0.3, 0.5), (0.9, 0.5)]],
-    "4": [[(0.15, 1.0), (0.1, 0.4), (0.9, 0.4)], [(0.7, 1.0), (0.7, 0.0)]],
-    "5": [[(0.9, 1.0), (0.1, 1.0), (0.1, 0.55), (0.9, 0.5), (0.9, 0.0), (0.1, 0.0)]],
-    "6": [[(0.9, 1.0), (0.1, 1.0), (0.1, 0.0), (0.9, 0.0), (0.9, 0.5), (0.1, 0.5)]],
-    "7": [[(0.1, 1.0), (0.9, 1.0), (0.4, 0.0)]],
-    "8": [[(0.1, 0.0), (0.9, 0.0), (0.9, 1.0), (0.1, 1.0), (0.1, 0.0)], [(0.1, 0.5), (0.9, 0.5)]],
-    "9": [[(0.1, 0.0), (0.9, 0.0), (0.9, 1.0), (0.1, 1.0), (0.1, 0.5), (0.9, 0.5)]],
+    "0": [_arc(0.5, 0.5, 0.5, 0.5, 0, 360, 28)],
+    "1": [[(0.12, 0.76), (0.58, 1.0), (0.58, 0.0)]],
+    "2": [_arc(0.5, 0.72, 0.42, 0.28, 160, -40, 14) + [(0.08, 0.0), (0.92, 0.0)]],
+    "3": [_arc(0.5, 0.75, 0.40, 0.25, 150, -90, 12) + _arc(0.5, 0.25, 0.44, 0.25, 90, -150, 12)],
+    "4": [[(0.66, 1.0), (0.04, 0.30), (0.96, 0.30)], [(0.66, 1.0), (0.66, 0.0)]],
+    "5": [[(0.88, 1.0), (0.18, 1.0), (0.12, 0.56)] + _arc(0.47, 0.31, 0.43, 0.31, 115, -150, 14)],
+    "6": [_arc(0.52, 0.52, 0.43, 0.46, 50, 200, 14), _arc(0.5, 0.30, 0.42, 0.30, 0, 360, 24)],
+    "7": [[(0.06, 1.0), (0.94, 1.0), (0.36, 0.0)]],
+    "8": [_arc(0.5, 0.75, 0.34, 0.25, 0, 360, 22), _arc(0.5, 0.25, 0.42, 0.25, 0, 360, 24)],
 }
+_G["9"] = [[(1.0 - x, 1.0 - z) for x, z in line] for line in _G["6"]]
 
 
 def digit_polygon(ch, w, h, stroke, cx=0.0, cz=0.0):
@@ -177,7 +184,7 @@ def digit_polygon(ch, w, h, stroke, cx=0.0, cz=0.0):
     for line in _G[ch]:
         pts = [(cx - w / 2.0 + r + (px) * (w - 2 * r), cz - h / 2.0 + r + py * (h - 2 * r)) for px, py in line]
         strokes.append(LineString(pts).buffer(r, resolution=3, cap_style=1, join_style=1))
-    return unary_union(strokes)
+    return unary_union(strokes).simplify(0.04, preserve_topology=True)
 
 
 def row_polygons(text, w, h, stroke, gap, cx, cz):
@@ -199,3 +206,45 @@ def stack_polygons(text, w, h, stroke, gap, cx, zs):
 
 def lin(c):
     return bd.lin(c)
+
+
+# ------------------------------------------------------------------ a round bar along z (a grip), straight or bowed
+def tube_z(length, radius, yc_of_z=None, y0=0.0, m=20, cap_n=4, zc=0.0):
+    """A round bar along z of the given length (its two ends hemispheres, so `length` is the overall length), centre line at y = y0 + yc_of_z(z) (z measured from the bar's
+    middle), centred at z = zc. Returns (V, F) in mm: closed, (x, y, z) with the same axes as the kit (y into the wall)."""
+    r = radius
+    half = length / 2.0
+    rings = []
+    for j in range(cap_n + 1):                                   # the lower cap from the apex up to the full radius
+        ph = math.radians(90.0 * (1.0 - j / float(cap_n)))
+        rings.append((-half + r - r * math.sin(ph), r * math.cos(ph)))
+    n_mid = 12
+    for i in range(1, n_mid):
+        rings.append((-half + r + (length - 2 * r) * i / n_mid, r))
+    for j in range(cap_n + 1):
+        ph = math.radians(90.0 * (j / float(cap_n)))
+        rings.append((half - r + r * math.sin(ph), r * math.cos(ph)))
+    V, idx = [], []
+    for z, rad in rings:
+        yc = y0 + (yc_of_z(z) if yc_of_z else 0.0)
+        if rad < 1e-6:
+            V.append((0.0, yc, zc + z))
+            idx.append([len(V) - 1])
+        else:
+            ids = []
+            for k in range(m):
+                a = 2 * math.pi * k / m
+                V.append((rad * math.cos(a), yc + rad * math.sin(a), zc + z))
+                ids.append(len(V) - 1)
+            idx.append(ids)
+    F = []
+    for a, b in zip(idx[:-1], idx[1:]):
+        for k in range(m):
+            k1 = (k + 1) % m
+            if len(a) == 1:
+                F.append((a[0], b[k1], b[k]))
+            elif len(b) == 1:
+                F.append((a[k], a[k1], b[0]))
+            else:
+                F.append((a[k], a[k1], b[k1], b[k]))
+    return np.array(V, float), F

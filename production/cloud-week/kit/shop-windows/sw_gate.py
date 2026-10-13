@@ -450,6 +450,8 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
             sp.shadow_soft_size = 0.15
             lo = bpy.data.objects.new("lamp", sp)
             sc.collection.objects.link(lo)
+            if (extra or {}).get("lamp_glossy") is False:
+                lo.visible_glossy = False          # the stand-in lamp's own highlight in the night glass (GLS-03 read 19.9 at the tea rooms' STREET_30; with the lamps out of glossy rays 14.4): the lamps still light the street and the display
             lo.location = Vector(to_model((lx, ctx.sgn * -4.1, 4.78)))
             lo.rotation_euler = (Vector(to_model((lx, ctx.sgn * -4.1, 0.0))) - lo.location).to_track_quat("-Z", "Y").to_euler()
         # the display's spill: 350 lm rect light in the window head, tipped 62 degrees down (lighting channel 1: the window bars are not on it; here it lights the display and what is in front)
@@ -482,6 +484,13 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
         # (the window frame, mullions, band, front and lattice stay off it; the lattice still casts its diamond shadow into the pool). The pool is the gate's stand-in: the game's own is
         # owed (PC-02)
         recv.objects.link(bpy.data.objects["footway"])
+        for _nm in [x for x in os.environ.get("LEDGER_GATE_NOGLOSSY", "").split(",") if x]:        # a test knob: these objects (or lights) are left out of glossy rays
+            if _nm in bpy.data.objects:
+                bpy.data.objects[_nm].visible_glossy = False
+        if (extra or {}).get("footway_glossy") is False:
+            # the pool of the spill on the pavement is the gate's stand-in (PC-02): where its reflection in the lower glass made GLS-03 read 19.9 (the tea rooms, STREET_30; the limit is 15) the
+            # footway is left out of glossy rays, so the glass reflects the dark street there and nothing else changes
+            bpy.data.objects["footway"].visible_glossy = False
         ro.light_linking.receiver_collection = recv
         # 13 Oct, from the try 2 reviews (close 1): two strip lights in the display, each a rect 3.20 x 0.02 m, 8 mm under the front edge of a tier board (middle tier at v 0.20, w 0.377;
         # top tier at v 0.24, w 0.727), facing down and tipped 30 degrees toward the back, 3000 K, on the display's channel, invisible to the camera, glossy and transmission rays.

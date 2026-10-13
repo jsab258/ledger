@@ -286,9 +286,10 @@ def display(d):
     # the white of the printed goods is held at about 0.86 of full in the window (a sheet of newsprint is not paper white): under the gate's night spill the white card, paper and carton tops burnt
     # 3.5 per cent of the close frames (PIC-05g; the room's pictures use the atlases at full white, they are lit differently)
     from PIL import Image as _Im
-    for _nm in ("papers.png", "cards.png", "postcards.png", "packs.png"):
+    # and the magazines' dark covers (navy, green, dark red) are lifted 1.35 times: they read 0.60 of the room round them at night (LIT-08) at the spill this shop's gate now has
+    for _nm, _k in (("papers.png", 0.86), ("cards.png", 0.86), ("postcards.png", 0.86), ("packs.png", 0.86), ("magazines.png", 1.35)):
         _p = os.path.join(tex, _nm)
-        _a = np.asarray(_Im.open(_p).convert("RGB")).astype(np.float32) * 0.86
+        _a = np.asarray(_Im.open(_p).convert("RGB")).astype(np.float32) * _k
         _Im.fromarray(np.clip(_a, 0, 255).astype(np.uint8)).save(_p)
     mag_m = d.image_mat("magazines", os.path.join(tex, "magazines.png"), rough=0.5)
     pap_m = d.image_mat("papers", os.path.join(tex, "papers.png"), rough=0.7)

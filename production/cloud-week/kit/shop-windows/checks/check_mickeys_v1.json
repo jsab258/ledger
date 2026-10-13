@@ -1,13 +1,13 @@
 {
  "schema": "ledger.cloud-week-42.shop-windows-check/1",
  "shop": "mickeys",
- "made": "2026-10-13 18:34:50",
+ "made": "2026-10-13 19:48:14",
  "target": "production/cloud-week/targets/shop-windows/target.json (status: target for unit 7 of cloud week 42, part 2; written 12 October 2026; failed its )",
  "pass": 20,
  "counted": 20,
  "na": 4,
  "pending": 0,
- "seconds": 20.4,
+ "seconds": 18.8,
  "rows": [
   {
    "id": "GLB-01",

@@ -99,6 +99,34 @@ class GDisplay(RG.GRoom):
             self.solid("return_wall_%s_dado" % side, xa, xb, ya, yb, WALL_Z[0], dado_top, dado, "return_wall", bevel=0.0)
             self.solid("return_wall_%s_plaster" % side, xa, xb, ya, yb, dado_top, WALL_Z[1], plaster, "return_wall", bevel=0.0)
 
+    def tone(self, obj_names, k):
+        """Scale the base-colour image of the materials of the named objects by `k` in the image's own (sRGB) values, clipped, once per image: k under 1 takes the white out of a model that burns under
+        the gate's night spill (the tea room's white chairs: PIC-05g), k over 1 lifts a model that reads dark against the room (the walnut table: LIT-08). The model's own texture is changed (CC0)."""
+        import numpy as _np
+        done = self.__dict__.setdefault("_toned", set())
+        for nm in obj_names:
+            ob = bpy.data.objects.get(nm)
+            if ob is None:
+                continue
+            for sl in ob.material_slots:
+                m = sl.material
+                if not m or not m.use_nodes:
+                    continue
+                pb = m.node_tree.nodes.get("Principled BSDF")
+                if pb is None or not pb.inputs["Base Color"].links:
+                    continue
+                src = pb.inputs["Base Color"].links[0].from_node
+                if src.type != "TEX_IMAGE" or src.image is None or src.image.name in done:
+                    continue
+                im = src.image
+                done.add(im.name)
+                a = _np.empty(len(im.pixels), dtype=_np.float32)
+                im.pixels.foreach_get(a)
+                a = a.reshape(-1, 4)
+                a[:, :3] = _np.clip(a[:, :3] * k, 0.0, 1.0)
+                im.pixels.foreach_set(a.reshape(-1))
+                im.update()
+
     # ---------------------------------------------------------------------------------------------- placing
     def piece(self, asset, u, v, w, rot=(0.0, 0.0, 0.0), scale=1.0, size=None, tier="bed", yaw=0.0, tris=TRIS, tag=None):
         """A Poly Haven piece with its bounding box's middle at (u, v) (u from the window zone's left edge) and its foot on w. Returns (ext in the display frame, names)."""

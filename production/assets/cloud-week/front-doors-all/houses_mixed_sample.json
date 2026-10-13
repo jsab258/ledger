@@ -16,7 +16,7 @@
     "bell": "BL0",
     "number": "NM3",
     "scraper": "BS0",
-    "keyhole": "KH0"
+    "keyhole": "KH1"
    },
    "condition": "neglected",
    "seed": 1,
@@ -142,7 +142,7 @@
     "bell": "BL0",
     "number": "NM6",
     "scraper": "BS0",
-    "keyhole": "KH0"
+    "keyhole": "KH1"
    },
    "condition": "kept",
    "seed": 1,

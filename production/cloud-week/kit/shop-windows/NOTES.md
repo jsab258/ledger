@@ -361,3 +361,413 @@ Read at full size (2048 x 927): production/art/shop-rooms/pawnbroker_day.png, _n
 ## Left for the target's owner
 
 `inventory.texture_marks` lacks the marks listed above (nine models); the content blocklist's 'ale ' hits the target's own notice 'PLEDGES FOR SALE' as a substring (use ' ale '); the 4.1 glass rows (one toplight wide) contradict the three-toplight glass rule; the pocket watch's blanking box for 'AVVENTURA' straddles the dial's ring (a tighter box is in `sw_assets.BOX_FIX`).
+
+<!-- BATCH-A-BEGIN -->
+---
+
+# Batch A (13 October 2026): the ironmonger, the newsagent and tobacconist, the tea rooms, and the fronts of Mickey's and the empty unit
+
+Unit 7, part 2, stage 2. The builder of this batch worked from Rita's kit (the sections above), the four reviews of her shop and the 15 lessons ("For the next nine shops"). Nothing was committed or pushed; nothing outside this folder, `production/assets/cloud-week/shop-windows/`, `production/previews/cloud-week/shop-windows/`, the target's own "Changes after the build" (TARGET.md section 13, target.json) and the two notebooks the brief names (RECIPE.md, DECISIONS.md) was changed.
+
+## The one command (step 0)
+
+`python3 build_shop.py --shop <id> [stages]` builds one shop (ids: ritas, ironmonger, newsagent, tea_rooms, mickeys, empty_unit). The stages are `assets paper front display room gate checks` (a shop with no room has `paper front gate checks`); `python3 build_shop.py --shop <id> scenecheck` builds the room's scene and runs the stand-off and intersection rows (SO-01 to SO-07) on it in seconds, which is how every layout below was tested before its hour of rendering. `build_ritas.py` is now a three-line wrapper. Nothing about a shop is typed into the code: `sw_ctx.Ctx(shop)` reads the shop from target.json (its side, the bay's street x, the zones, the door's end, the variants, the card, the cameras, the picture's name, whether it is lit at night) and gives the frames: the front model's x runs to the viewer's right, east shops stand at street y +5.295 with the viewer's left at the HIGH street x, west shops (west_north: the ironmonger, the newsagent, the tea rooms) at y -5.295 with the viewer's left at the LOW x, and `trace` is called with side +1 or -1. What a shop needs that the target does not say is a named Judgement below, never a number in the code.
+
+What was generalised, and how Rita's output was kept: `sw_front.py` (the Front takes the Ctx; the kit's parts and variants come from `sw_variants.VBuilder`, a subclass of the 3.2 kit's Builder that calls the kit's own methods for the variants the kit built), `sw_gate.py` and `sw_gate_run.py` (frames, sides, card position, window centre, file names from the Ctx), `sw_assets.py` (the models of the shop being built; `set_shop`), `check_try2.py` (every function takes the shop from `use(ctx)`; Rita's remains the default) and a new `check_shop.py` + `check_shops.py` for the other shops. Rita's own check is `check_ritas.py`, unchanged but for the call into the generalised pieces. The regression after the change: **front** (rebuilt by `build_shop.py --shop ritas front`): the glb's JSON and every binary buffer equal to the v3 build's except one index buffer (bufferView 570, 3,766 bytes), which is not deterministic in the original code either (two runs of the unchanged code differ in it); **room**: the rebuilt scene's placed.json (146 pieces) and fixtures.json (53) equal to the stored ones; **display**: `sw_display.py` is byte-for-byte the v3 file; **gate**: STREET_SQUARE by day re-rendered from the stored card, glbs and lights: every pixel equal (largest difference 0, mean 0.0); **checks**: `checks/check_ritas_v3_regen.json` (her check run again on the regenerated files) passes 60 of 61, the same rows as `check_ritas_v3.json`; only the wording of LIT-05's detail differs (it names the gate's light strengths).
+
+## The ironmonger (west_north bay 1, no. 16)
+
+### What was made
+
+Built in the order the brief gives: front, room, display, gate, check, previews. Street number 16, west_north bay 1, on the quay side of Quay Street (the viewer's left is the LOW street x; the shop door is at the viewer's right and the black side door at the far right).
+
+- **Front** (`production/assets/cloud-week/shop-windows/ironmonger_front.glb`, 8.6 MB, 59,697 triangles, 272 objects; out of git, listed in `.git/info/exclude`): fluted pilasters on scroll consoles, a timber cornice, a panel stallriser, the T2 window (two lights of 1,585 mm, one 80 mm mullion carried up through the six toplights as a bar of its own width), the T1 shop door and the F1 side door painted black (35, 36, 40), the 4.1 fascia (IRONMONGER, TOOLS & HARDWARE, PAINTS & PARAFFIN), EST. 1884 in a toplight and the number 16 in gilt on the shop door's fanlight, the OPEN / CLOSED sign, and the 4.1 hanging board (KEYS CUT) on two chains from a scroll bracket on the viewer's right pilaster, its two faces the 4.1 faces a and b.
+- **Room** (4.4, 5.3 x 2.4 x 4.5 m, three pictures of 4096 x 1855 and their JSON, `production/assets/cloud-week/shop-windows/rooms/ironmonger_*.png`, out of git): the drawer wall (6 x 10 = 60 drawers, each with a brass label holder and a ring pull), the counter with its brass rule, the till, two toolboxes, a measuring tape and a watering can, the shelf unit with the tins, oils, cleaners, bulbs and the blowtorch on three tiers, the floor group (dustbin, two paraffin cans, three cement bags), two pegboards of hand tools and garden tools, two brooms hung on the right wall. 178 pieces and fixtures placed; 33 Poly Haven models, every maker's mark painted out by script and looked at at 100 per cent.
+- **Display** (4.5, `ironmonger_display.glb`, 3.4 MB, 158,067 triangles, out of git): 41 pieces of ['brass_blowtorch', 'cleaner_tin_01', 'garden_gloves_01', 'garden_sprinkler_01', 'lightbulb_01', 'metal_toolbox', 'oil_tin', 'plastic_broom', 'sledgehammer_01', 'tire_pump', 'trowel_01', 'watering_can_metal_01'] models and 9 scripted pieces: the 36-tin pyramid against its backing board, six gloves on a hung card, two trays of six bulbs, four trowels on two trays, two toolboxes, a stepped crate with four oil and four cleaner tins and the blowtorch, the sprinkler, two watering cans, the pump, the sledgehammer, three leaning brooms, twelve price cards.
+- **Gate**: the card baked through `trace` for each of the four cameras, the front, the display and the glass rendered at 2560 x 1440 by day and in the lit night state, and, because the shop is dark at night, one more street view (STREET_SQUARE, night_dark, the spill off). The previews are in `production/previews/cloud-week/shop-windows/` (`ironmonger-<view>-<state>-2026-10-13.jpg`).
+
+### How to rebuild
+
+`python3 build_shop.py --shop ironmonger` (every stage in order; `scenecheck` tests the room's layout in seconds first). Rebuilt in one go from the target and the kit: nothing is typed into the code.
+
+### Where the target was silent or contradicted itself, and what the build did (Judgement, each one named)
+
+I1. **The glass lettering.** 4.1 puts EST. 1884 on the mullion's bar: it stands in a toplight (u 1497 to 1969, z 2510 to 2631) where no bar crosses a letter; the number 16 stands on the shop door's fanlight (u 4123 to 4283).
+I2. **The hanging board** (4.1 `ironmonger_hanging_board`): a plate on the brick over the viewer's right pilaster (street x 35.825), an arm and a scroll bracket, two rings and two chains of 22 mm links to eyebolts in the board's top, the board 0.55 x 0.38 x 0.04 projecting 0.70 m; face a (the low-x, quay-end side) and face b are quads 1.5 mm proud of the core (0.3 mm was a coplanar overlap, FRN-10).
+I3. **The shelf unit** (x -0.45 to 2.6, 0.28 deep, the target's tiers 0.4, 0.8, 1.2, 1.6, 1.95). The counter (1.0 high) hides everything under 1.0 at x -0.45 to 1.15 and the floor goods stand in front of the rest to 1.1, so the tiers at 0.4 and 0.8 are not built; the tier at 1.2 runs from x 1.3 (the till stands 0.42 high on the counter and would go through a board at 1.175); 1.6 and 1.95 run the whole length; the left upright stands on the counter. The goods (tins in stacks of one to three, oils, cleaners, bulbs in two open trays of six, the blowtorch, the drain cleaner) go to the 1.2 tier first and to 85 per cent of its length (the first try left it the dregs: 18 per cent), then to the two high tiers with their free length shared out between them (up to 0.10 m more in each gap).
+I4. **The counter.** The till at the target's 0.42, a measuring tape, the two toolboxes and ONE of the three watering cans (a can is 0.45 deep with its spout and fits no shelf; the other two are in the window); a brass rule is let into the top along its front edge.
+I5. **The floor run** (x 1.3 to 2.6, 0.58 deep). The dustbin is the clean one of the model's two (the glTF holds a clean and a rusted bin 1.85 m apart) at 0.85 (a galvanised bin of 1990 stood 0.6 to 0.7 high); three cement bags at 0.60 (at 0.75 the bin, a can and three bags do not fit 1.3 m: 23 intersecting pairs at the first try); two of the three paraffin cans, one on the floor and one on the bags; the wooden step ladder (0.96 x 0.50 x 1.34) fits nowhere and is left out (named in ROOM-05).
+I6. **The pegboards** (2.4 x 1.2). The target's counts are low for 2.9 m2 (33 hand tools, 17 garden pieces): both boards take the counts the rows need (44 and 36 tools; the counts placed are written to `Changes after the build`); the tall tools (the bolt cutters, the crowbar) hang in columns from the two ends, the rest in rows of one height, each hung from one line; the two wooden brooms hang on the wall itself past the board's end at 0.82 (the head is 0.113 thick). A tool that stands more than 0.10 off the wall at 0.75 of its size is left off (none now).
+I7. **The drawer wall.** 6 x 10 drawers, flat fronts, each with a brass label holder carrying a hand-lettered card (24 labels, repeated: NAILS 1", SCREWS No 6, HINGES, ...) and a ring pull.
+I8. **The window.** The target's zones overlap in volume and add up to more than the window takes at full size: at 3.35 m x 0.55 m the goods need about 3.6 m of bed in the 2.3 m beside the pyramid. The build shrinks four things and moves two, and says so: the toolboxes at 0.85, the watering cans at 0.85, the three brooms at 0.80 (the target's zone is 0.25 wide; a yard broom's head is 0.33 at this size, so they lean from u 2.72 to 3.35 as a bundle with their heads 85 mm apart), the bulbs at 1.25 (the model's bulb is 0.07 m high; a bayonet bulb is 0.105); the sprinkler stands in front of the second toolbox (target u 1.9 to 2.4, w 0.4 to 0.62), the blowtorch on the front step of the crate at w 0.35 (target u 1.2 to 1.5, w 0.2 to 0.41). The toolboxes stand at u 1.08 to 1.80 (target 2.0 to 2.9), the tins' crate at u 1.85 to 2.71 (target: oil 2.0 to 2.6, cleaner 2.6 to 3.2).
+I9. **The stepped crate and the trays.** The oil tins stand at w 0.45 to 0.655 (target 0.35 to 0.56) on a rear step so that no tin hides another from the street (DSP-03 gave 0.05 to 0.11 seen for the rear pair); the cleaner tins and the blowtorch on the front step at 0.35. The four trowels lie two and two on two trays 60 mm high, because the sill hides the lowest 40 mm of the bed from the far pavement and a trowel is 0.10 high (0.30 seen on the bed, 0.97 on the tray); the upper trowel of a pair lies 0.08 behind the lower and 0.05 higher so the lower shows whole. The supports are weathered deal (150, 113, 72): the lighter timber burnt under the gate's night spill (PIC-05g).
+I10. **The price cards.** Twelve, 70 x 50 mm on 70 mm stakes at the bed's front edge in front of what they price, the project's own hand lettering (TINS 99p, OIL 1.15, BULBS 40p, ...); PAINT 2.99 and TINS 99p are both for the pyramid.
+I11. **A dark shop.** The target says the shop is dark at night (lit_at_night false), so its real night is night_dark, rendered as one extra street view at STREET_SQUARE with the spill off (a dark shop spills nothing; the first view had its display bright against a dark room); the lit-room pictures and frames are the tests' state.
+I12. **Lights and lights' strength.** The room's day light is 6 per cent weaker than the first calibration gave (it burnt 0.0101 of the day picture, limit 0.01): sunlit plaster behind the shelves; night_dark's wash is 30 per cent stronger than the approved mean asks (mean 22 against 17.7) so that LIT-01's dark shop reads 10 or more through the glass (9.5 at the approved strength).
+I13. **Glow.** The Poly Haven lightbulb carries an emission of strength 10 on its filament and burnt white in the dark room; every imported material's emission is set to zero in the rooms and displays of the new shops (lesson 23).
+I14. **Samples.** 64 a pixel, denoised (the target says 128).
+
+### Models placed, source and licence (Poly Haven, all CC0 1.0, each asset's own source.json read: present, CC0, polyhaven.com; 37 models)
+
+| model | Poly Haven page | licence | in the room | in the display | maker's marks painted out |
+|---|---|---|---|---|---|
+| CashRegister_01 | https://polyhaven.com/a/CashRegister_01 | CC0 1.0 | 1 | 0 | the dollar sign in the readout; TITCH BANKS (the plate on the drawer, printed upright on the map); TITCH CO. and its small print; I (heart) LAS VEGAS; I (heart) TORONTO, I (heart) QUEBEC; a Canadian banknote ('CANADA'); printed receipt slips with 'TOTAL' and amounts |
+| adjustable_wrench | https://polyhaven.com/a/adjustable_wrench | CC0 1.0 | 3 | 0 | STEELBOX TOOLS (diamond) |
+| bolt_cutters_01 | https://polyhaven.com/a/bolt_cutters_01 | CC0 1.0 | 1 | 0 | none found |
+| brass_blowtorch | https://polyhaven.com/a/brass_blowtorch | CC0 1.0 | 1 | 1 | none found |
+| cement_bag | https://polyhaven.com/a/cement_bag | CC0 1.0 | 3 | 0 | every printed panel (back, front, side) and the two red top bands with 'CEMENT' reversed out |
+| cleaner_tin_01 | https://polyhaven.com/a/cleaner_tin_01 | CC0 1.0 | 4 | 4 | the lid print and the whole red label band |
+| combination_wrench | https://polyhaven.com/a/combination_wrench | CC0 1.0 | 5 | 0 | none found |
+| cross_pein_hammer | https://polyhaven.com/a/cross_pein_hammer | CC0 1.0 | 3 | 0 | none found |
+| crowbar_01 | https://polyhaven.com/a/crowbar_01 | CC0 1.0 | 1 | 0 | none found |
+| drain_cleaner | https://polyhaven.com/a/drain_cleaner | CC0 1.0 | 3 | 0 | the two printed labels |
+| dustpan | https://polyhaven.com/a/dustpan | CC0 1.0 | 4 | 0 | none found |
+| flathead_screwdriver | https://polyhaven.com/a/flathead_screwdriver | CC0 1.0 | 5 | 0 | none found |
+| garden_gloves_01 | https://polyhaven.com/a/garden_gloves_01 | CC0 1.0 | 8 | 6 | a printed label ('S.BOX' / size) |
+| garden_sprinkler_01 | https://polyhaven.com/a/garden_sprinkler_01 | CC0 1.0 | 0 | 1 | a maker's line of small print |
+| handsaw_wood | https://polyhaven.com/a/handsaw_wood | CC0 1.0 | 2 | 0 | none found |
+| hatchet | https://polyhaven.com/a/hatchet | CC0 1.0 | 2 | 0 | UC (R) |
+| lightbulb_01 | https://polyhaven.com/a/lightbulb_01 | CC0 1.0 | 12 | 12 | Lumen and its small print |
+| measuring_tape_01 | https://polyhaven.com/a/measuring_tape_01 | CC0 1.0 | 1 | 0 | 3m, Q-TECH, QC PASSED |
+| metal_jerrycan_green | https://polyhaven.com/a/metal_jerrycan_green | CC0 1.0 | 2 | 0 | none found |
+| metal_toolbox | https://polyhaven.com/a/metal_toolbox | CC0 1.0 | 2 | 2 | a word stamped round the toolbox's badge in red ('STEELIN...' and a number): a maker's badge |
+| metal_trash_can | https://polyhaven.com/a/metal_trash_can | CC0 1.0 | 1 | 0 | none found |
+| mousetrap | https://polyhaven.com/a/mousetrap | CC0 1.0 | 14 | 0 | none found |
+| oil_tin | https://polyhaven.com/a/oil_tin | CC0 1.0 | 6 | 4 | none found |
+| pipe_wrench | https://polyhaven.com/a/pipe_wrench | CC0 1.0 | 2 | 0 | SES / 18 |
+| plastic_broom | https://polyhaven.com/a/plastic_broom | CC0 1.0 | 0 | 3 | MICKY |
+| pliers | https://polyhaven.com/a/pliers | CC0 1.0 | 4 | 0 | '160 mm', the VDE and GS approval marks and '1000 V' (German certification marks, a modern insulated tool) |
+| ratchet_wrench | https://polyhaven.com/a/ratchet_wrench | CC0 1.0 | 3 | 0 | an engraved line of three words and a year (a maker's inscription and '2016': after 1992) |
+| screwdriver | https://polyhaven.com/a/screwdriver | CC0 1.0 | 6 | 0 | LANSTEY |
+| screwdrivers_02 | https://polyhaven.com/a/screwdrivers_02 | CC0 1.0 | 2 | 0 | none found |
+| sledgehammer_01 | https://polyhaven.com/a/sledgehammer_01 | CC0 1.0 | 0 | 1 | a warning label: a column of small print and 'WARN...' (modern safety text) |
+| small_oil_can_01 | https://polyhaven.com/a/small_oil_can_01 | CC0 1.0 | 4 | 0 | a flame hazard diamond in the EU's modern (CLP) form: after 1992 |
+| tire_pump | https://polyhaven.com/a/tire_pump | CC0 1.0 | 0 | 1 | POLYLUFT (rotated), the roundel logo, the orange label |
+| tongue_groove_pliers | https://polyhaven.com/a/tongue_groove_pliers | CC0 1.0 | 3 | 0 | none found |
+| trowel_01 | https://polyhaven.com/a/trowel_01 | CC0 1.0 | 8 | 4 | a stamped word on the blade, mirrored ('Yokis' or 'Yoks': a maker's name) |
+| watering_can_metal_01 | https://polyhaven.com/a/watering_can_metal_01 | CC0 1.0 | 1 | 2 | none found |
+| wooden_broom | https://polyhaven.com/a/wooden_broom | CC0 1.0 | 2 | 0 | none found |
+| wooden_hammer_01 | https://polyhaven.com/a/wooden_hammer_01 | CC0 1.0 | 2 | 0 | a maker's logo stamped on the head (a letter P in a rounded frame with a registered-mark sign) |
+
+THIRD-PARTY.md is outside the folders this batch may change: the table above is the form unit 7 used, ready to be appended there by the repository's owner.
+
+### Known shortfalls now, in plain words
+
+- The window is crowded: at full size the target's goods need about 3.6 m of bed in the 2.3 m beside the pyramid, so the two toolboxes and the two watering cans are at 0.85 of their size, the three brooms at 0.80 (they lean on the right return wall), the bulbs at 1.25; the sprinkler stands in front of the second toolbox, not at the target's u 1.9 to 2.4. A reviewer who measures the window against the target's zones will find these.
+- The step ladder is not in the room (it fits nowhere in the 1.3 m run that holds the dustbin and the bags), one of the three paraffin cans is left out (two stand), the shelf tiers at 0.4 and 0.8 are not built (the counter and the floor goods hide them from every camera), and only one of the three watering cans is in the room (the other two are in the window).
+- The pegboards carry 44 and 36 tools, more than the target's 33 and 17 (a board of 2.9 m2 needs them); by bounding box they cover about a third of each board, which reads right for thin hand tools but is far under Rita's 60 per cent (that row is hers, not this shop's).
+- The shop is dark at night (the target: lit_at_night false), so its night_lit pictures are the tests' state and its real night is night_dark, one extra street view at STREET_SQUARE. Its display goods are dark there as well (the spill is off in night_dark).
+- Two display goods read darker than 0.6 of the room round them in night_lit at CLOSE_35_B (LIT-08): the brass blowtorch and the tyre pump. Brass and black enamel are dark, and lighting them more would burn the light timber (PIC-05g): the tension Rita's third round left as a taste call.
+- LIT-02b: where the card shows the dark-green dado in shade (under the drawer wall, behind the dustbin) the glass reads under luma 12 in one patch a little over 1 per cent of the glass at STREET_30 by day and 1.02 per cent of the glass at CLOSE_35_B. The dado's paint is the target's.
+- FRN-10: one patch of 26 x 20 px (0.11 x 0.09 m) at the top corner of the black side door, in the shade of its hood, reads under luma 8 at STREET_SQUARE and STREET_30. The paint (35, 36, 40) is the target's.
+- The pictures are rendered at 64 samples a pixel, denoised, not the target's 128 (four cores, no GPU); the noise row is measured on the ceiling.
+- The hanging board's bracket and chains are black iron; the board's two faces are the 4.1 faces a and b. Nothing is lit on it (the ironmonger is a day shop).
+
+### Owed to the PC (nothing here can be shown from the cloud)
+
+- PC-01 to PC-07 as Rita's (the parallax of the card in the game, the lit-shop spill, the game's glass, the wear layer, the display lights): nothing here differs.
+- The game's own night for a dark shop: the street's night view with the shop unlit (the extra STREET_SQUARE night_dark picture here) is the gate's stand-in; on the PC the glass, the lamps and the footway's pool are the game's.
+- The pictures at 128 samples (this build's are at 64).
+- Wear on the joinery from the D53 layer, as for every front.
+- The hanging board's sway: none modelled.
+
+### How the check went (every failure named)
+
+Run on the finished build (13 October): **55 of 61 rows pass** (0 pending, 5 n/a); `checks/check_ironmonger_v1.json`.
+
+- **PRJ-02 (the room shifts with the eye).** the card's centre lands 1322.1 px apart between CLOSE_35 and CLOSE_35_B (target -1321.93, +-1.5); the mean absolute difference of the two baked cards is 25.5 levels (at least 8). This runs on the gate's own `trace` bake: it proves the gate, not the game (owed on the PC: PC-01)
+- **FRN-10 (no two parts of the front share a visible face plane; nothing on the front is black).** 49 coplanar same-facing overlaps of more than 1 mm2 among the front's parts (hidden ones, behind the doors or inside the joinery: not a fault), 0 of them where a camera can see them. By day, in the four gate frames at 2560 x 1440, over the front's own pixels (a mask render: the glass, the two fanlights, the shop door's glass, the hall, the lettering rows and the OPEN sign are not the front; the mask eroded by 2 px; a dark patch counts when it is 35 mm wide on the front or more, a thin line of shade under the cornice or the sill does not): STREET_SQUARE 1468 of 739704 front pixels under luma 8, 124 of them in patches 8 px (35 mm) or wider (the darkest pixel 0.0); STREET_30 759 of 420403 front pixels under luma 8, 96 of them in patches 8 px (35 mm) or wider (the darkest pixel 0.0); CLOSE_35 3297 of 853876 front pixels under luma 8, 0 of them in patches 28 px (35 mm) or wider (the darkest pixel 1.0); CLOSE_35_B 201 of 608344 front pixels under luma 8, 0 of them in patches 28 px (35 mm) or wider (the darkest pixel 4.9) (try 2: the two strips beside the side door were luma 0 to 3, about 1...
+- **LIT-01 (lit shops lit at night, dark shops dark).** this shop is dark at night (lit_at_night false: vignette-pieces lit_names omits west_north_interior1): STREET_SQUARE at night, the room-only composite over the glass lights reads 9.5 (a dark shop reads 10 to 35); the same room lit (night_lit, the state the tests and the lit-room pictures use) reads 75.1, so the difference is 65.7 (at least 25)
+- **LIT-08 (the display's goods are lit at night).** at night_lit, each display piece's mean luma over the lattice's gaps against the room's mean luma in a 24 px ring round it: CLOSE_35: 7 pieces seen against the room, lowest ratio oil_tin 0.74 (59 against 80), metal_toolbox 0.77 (63 against 82), brass_blowtorch 0.98 (52 against 53), 0 under 0.6; median ratio 1.84; CLOSE_35_B: 9 pieces seen against the room, lowest ratio brass_blowtorch 0.53 (51 against 96), tire_pump 0.55 (55 against 100), metal_toolbox 0.96 (66 against 68), 2 under 0.6 (brass_blowtorch 0.53, tire_pump 0.55); median ratio 1.10 (limit 0.6; try 2, CLOSE_35_B: the alarm clock's dial 33 against a room of 95, the cassette player 26, the mantel clock 25; the two strip lights under the tier boards are the fix; PIC-05g stays at 0.01 or under)
+- **LIT-02b (no black void in the rendered frames).** window-glass pixels (the glass mask: no frame, mullion, bead or lattice) under luma 12, in frames rendered with the glass's reflection off, where the glass shows the room: CLOSE_35_B day: room share 0.0102 (of 621639 glass px, the room shows in 72 per cent of them), largest patch 0.0031, all glass 0.0106 [share and patch: OVER 1 per cent]; CLOSE_35_B night_lit: room share 0.0039 (of 621639 glass px, the room shows in 72 per cent of them), largest patch 0.0015, all glass 0.0122 [share and patch]; STREET_30 day: room share 0.0233 (of 47834 glass px, the room shows in 74 per cent of them), largest patch 0.0125, all glass 0.0250 [patch: OVER 1 per cent]; STREET_30 night_lit: room share 0.0067 (of 47834 glass px, the room shows in 74 per cent of them), largest patch 0.0030, all glass 0.0118 [patch]; STREET_SQUARE day: room share 0.0127 (of 73486 glass px, the room shows in 75 per cent of them), largest patch 0.0064, all glass 0.0139 [patch]; STREET_SQUARE night_lit: room share 0.0056 (of 73486 glass px, the room shows in 75 per cent of them), largest patch 0.0033, all glass 0.0094 [patch]...
+- **PIC-05g (nothing burnt in the gate's frames).** share of pixels with a channel at 250 or above in the eight rendered frames (limit 0.01; try 1: night frames 0.033 and 0.031): STREET_SQUARE day 0.0000, STREET_SQUARE night_lit 0.0005, STREET_30 day 0.0000, STREET_30 night_lit 0.0004, CLOSE_35 day 0.0002, CLOSE_35 night_lit 0.0133, CLOSE_35_B day 0.0000, CLOSE_35_B night_lit 0.0142
+
+Not applicable: SO-05 (the room has no back door in the target); ROOM-01 (Rita's row (the target's ROOM-01 applies_to ritas: 60 per cent of her left board by bounding box) and the ironmonger's target gives no cover); FRN-06 (no lobby in this shop's front (the grocer's and the launderette's check)); LIT-03 (the empty unit's check, not this shop's); PRV-01 (the photograph previews of the target (P1 to P6), not this build's; this build's previews were looked at: no real firm's name, number, perso).
+
+### Times (four cores, no GPU, Cycles on the CPU with denoising)
+
+room at 64 samples a pixel (the calibration of the light strengths first, about 4 minutes): day 845 s, night_lit 763 s, night_dark 743 s; gate frames (32 samples, 2560 x 1440): STREET SQUARE day 154 s, STREET SQUARE night lit 182 s, STREET 30 day 161 s, STREET 30 night lit 127 s, CLOSE 35 day 233 s, CLOSE 35 night lit 284 s, CLOSE 35 B day 342 s, CLOSE 35 B night lit 184 s, STREET SQUARE night dark 139 s; 20 check renders, 923 s in all
+
+### Where a fresh reviewer should look first
+
+- Street: the front at STREET_SQUARE by day (the fascia, the hanging board, EST. 1884 in the toplight, the number 16 on the shop door's fanlight, the black side door's shade) and the night_dark view (a dark shop whose goods read at the bed only by the lamps).
+- Close: the window at CLOSE_35 and CLOSE_35_B: the pyramid's 36 tins, the stepped crate's oil and cleaner tins, the trowels on their trays, the three leaning brooms and whether the right end is too full; the tins' labels (all invented names: COLDWELL, ELMSTEAD, HARTSIDE, BRANTHAM) and any maker's mark left on a tool at 100 per cent.
+
+## The newsagent and tobacconist (west_north bay 0, no. 18)
+
+### What was made
+
+Street number 18, west_north bay 0 (the viewer's left is the LOW street x; the shop door is at the viewer's right, the dark-blue side door beside it).
+
+- **Front** (`newsagent_front.glb`, 6.2 MB, 52,549 triangles, 213 objects; out of git): panel pilasters and stallriser in dove grey (150, 152, 150), scroll consoles, a timber cornice, the T1 window of three lights with two mullions and nine toplights (each mullion carried up as a bar), the T1 shop door, the F1 side door in dark blue (24, 38, 78), the roller shutter of 2.2 up by day (a steel hood 300 high across the window and the shop door, three guide rails), the lit box sign (4.1 `newsagent_box`: powder-black returns, eight screws, the red face with cream NEWSAGENT and its two rules), glass lettering TOBACCONIST & CONFECTIONER and the hours MON-SAT 6-5.30, SUN 7-12 on the shop door's glass, the number 18, the OPEN / CLOSED sign.
+- **Room** (4.4, 5.3 x 2.4 x 4.5 m, three pictures of 4096 x 1855 at 48 samples, `rooms/newsagent_*.png`, out of git): the cigarette gantry (about 265 invented packs on three boards), the counter with ten sweet jars, the till, a tray of stationery, four notepads and a toast rack, the pension counter with its clear screen, brass slot and hours card, the back door, the left wall's 60 magazine covers (five rows of twelve), the right wall's 40 greetings cards, 20 postcards, a cork board and a wall clock, a rubber mat; the floor a 300 mm chequer of two greys and a slate blue. 77 pieces and fixtures placed, 4 Poly Haven models.
+- **Display** (4.5, `newsagent_display.glb`, 0.9 MB, in git): 5 Poly Haven pieces and 24 scripted pieces: ten folded newspapers on two stepped stands, six cigarette cartons on a timber stand, twelve magazines on a sloping board, a plinth with two pots of pens and three pads, six sweet jars, a spinner of 16 greetings cards and a turning rack of 24 postcards, six price cards. Every title, headline, verse, view and maker is invented (sw_gen.TEXTS holds the list).
+- **Gate**: as the ironmonger's; the shop is lit at night, so the lit-night frames are its real night, the box sign glows with its 4.1 emissive map (the gate puts it on at night; the glb is the day state), and the spill and the display are on.
+
+### How to rebuild
+
+`python3 build_shop.py --shop newsagent` (every stage in order; `scenecheck` tests the room's layout in seconds first). Rebuilt in one go from the target and the kit: nothing is typed into the code.
+
+### Where the target was silent or contradicted itself, and what the build did (Judgement, each one named)
+
+N1. **The roller shutter.** 2.2's hood (300 high, 210 out) is built up (the shop is lit and open): a steel hood across the window and the shop door, z 2550 to 2850 just under the fascia, d 95 to 212, with three guide rails 50 x 50 (at the window's left end, between the window and the door, and at the door's right end). The toplights (z 2480 to 2790) are therefore behind the hood from z 2550 up; the lettering rows were placed below it. No slats hang in the opening.
+N2. **The lit box sign.** 4.1's `newsagent_box`: outer 95, 40 to 5315, 510 on the board, 0.14 out; powder-black returns 12 thick, eight pan-head screws, and a face 6 mm inside the front edge that carries the 4.1 board's own picture (the name block and the rules). The face is not emissive here (the glb is the day state; an emissive map would light the sign by day): the night glow is owed on the PC (PC-NA1).
+N3. **The cigarette gantry.** The target counts 100 packs and 8 Poly Haven `cigarette_pack`. 100 packs fill about a third of the three boards' 2.6 m and an empty gantry reads wrong, so the boards are filled with packs 56 x 29 x 103 mm in columns of two or three (a few columns missing, a few packs pulled forward): about 265 in all, the makers' names the project's own (HOLLINGWORTH, KESTRELL, MARSDEN, ALDERLEY, CASTLEMERE, SELWYN, TOWNLEY, AVONLEA, BRANSTONE, RIVERMEAD, DEVEREUX, WYNDHAM; none is on the brand blocklist). The Poly Haven `cigarette_pack` is not used: 7,582 triangles a pack, 'Kentucky Ace' on its net. The sliding glass front is not modelled (glass over goods: the black-void risk of Rita's close review). Tobacco is allowed (CLAUDE.md).
+N4. **The counter.** Left to right: a tray of three stationery sets (the pens lie flat, the pencil cup stands; in the room they are seen from above and close), ten sweet jars in front of the gantry's foot (screw lids, opaque pattern contents, curved paper labels; the target's `Candy001/002` stripes are painted by script: the humbug jar), four pads of `office_notepads` (the kit model is ten loose pads: the stacks, one each), a toast rack of six cards, the till (0.42) at the right end. The 'glass cabinet end' is the tray (no glass sides).
+N5. **The pension counter.** A counter 1.0 high with a timber frame and a clear glass 1.0 x 0.8 (the room's glass trick), a brass-edged slot in the bottom rail and an hours card on the glass: PENSIONS & ALLOWANCES / MON-SAT 9-5.30. The words 'post office' and 'royal mail' are on the brand blocklist and are not used.
+N6. **The racks.** Left wall: five rows of twelve magazine covers (60) on ledges, each row 4.5 mm in front of the one above so that it hides the foot of the one over it; right wall: four rows of ten greetings cards (40), a cork board of twenty postcards, the wall clock (0.3). Every title, headline, card verse and postcard view is invented (sw_gen.TEXTS lists them; nobody is drawn).
+N7. **The window.** The zones overlap (newspapers u 0.1 to 1.2 under the cartons u 0.2 to 0.9; the magazines' u 1.3 to 2.3 over the notepads' 1.0 to 1.7), and the far pavement cannot see anything lying flat on the bed (the sill hides the lowest 40 mm: the first display had pens and pads at 0.00 seen, and papers shingled over each other at 0.05 to 0.46), so each piece has a place and a height of its own: two paper stands 0.58 wide (a lower step at 60 mm, a higher step at 240 mm and a back board), five folded papers on each (three on the lower step shingled 12 mm apart in depth, two on the higher step between their gaps; the papers are 0.22 wide, not the 0.27 of the first try, so that the overlap is under a third); the six cartons on a timber stand behind the boards (shelf at w 0.46); the magazines on a board leaning 40 degrees, 12 not 24 (the zone is 1.0 wide: 24 at 0.19 across would hide each other); a plinth 60 mm high along the board's foot with two pots of pens (the kit's pens stood up in its pencil cup, seven to a pot, composed by script; the eraser is left out: 4 cm and flat) and the three pads at 0.6 of their size (A5, so that three and two pots fit the 0.14 m deep plinth; the target's pads are flat on the bed at w 0 to 0.02 and cannot be seen from the street); the sweet jars (6); a spinner of 16 cards and a turning rack of 24 postcards on poles from the bed, the top ring above the cards.
+N8. **The window board SB1** (hand cards on the glass) is 4.2's paper work and is not built here: no card floats in front of the glass (the target's own rule).
+N9. **Floor.** Poly Haven `rubber_tiles` tinted in a 300 mm chequer of two greys and a slate blue (the target's 'grey and blue vinyl'); the rubber mat at the door is 12 mm thick (SO-03's floor limit 25 mm).
+N10. **The gate's night.** The shop is lit at night (the target: lit_at_night true, hours to 17:30 kept as the street file has them), so the lit-night frames are its night; the box sign glows with its 4.1 emissive map at 0.5 (the gate puts it on: the glb is the day state). The whites of the printed goods in the window are held at 0.86 of full and the stands' board is (150, 146, 136): under the gate's night spill the white card, paper and carton tops burnt 3.5 per cent of the close frames (PIC-05g, limit 1).
+
+### Models placed, source and licence (Poly Haven, all CC0 1.0, each asset's own source.json read: present, CC0, polyhaven.com; 4 models)
+
+| model | Poly Haven page | licence | in the room | in the display | maker's marks painted out |
+|---|---|---|---|---|---|
+| CashRegister_01 | https://polyhaven.com/a/CashRegister_01 | CC0 1.0 | 1 | 0 | the dollar sign in the readout; TITCH BANKS (the plate on the drawer, printed upright on the map); TITCH CO. and its small print; I (heart) LAS VEGAS; I (heart) TORONTO, I (heart) QUEBEC; a Canadian banknote ('CANADA'); printed receipt slips with 'TOTAL' and amounts |
+| office_notepads | https://polyhaven.com/a/office_notepads | CC0 1.0 | 4 | 3 | none found |
+| stationery_supplies | https://polyhaven.com/a/stationery_supplies | CC0 1.0 | 6 | 2 | the pencil boxes' lettering and the pads' printing; 'Haven Penworks' and the grade (2H, BUDGET, 6B) printed on three pencils (a maker's name) |
+| wall_clock | https://polyhaven.com/a/wall_clock | CC0 1.0 | 1 | 0 | URBAN / quartz |
+
+THIRD-PARTY.md is outside the folders this batch may change: the table above is the form unit 7 used, ready to be appended there by the repository's owner.
+
+### Known shortfalls now, in plain words
+
+- The gantry holds about 265 invented packs, not the target's 100 packs and 8 of the Poly Haven `cigarette_pack`: the Poly Haven pack is not used (7,582 triangles a pack and a real brand on its net) and the sliding glass front is not modelled (glass over goods is the black-void risk of Rita's close review). The makers are HOLLINGWORTH, KESTRELL, MARSDEN, ALDERLEY, CASTLEMERE, SELWYN, TOWNLEY, AVONLEA, BRANSTONE, RIVERMEAD, DEVEREUX and WYNDHAM, none on the brand blocklist.
+- The window holds 12 magazines (the target's 24 at 0.19 across would not fit 1.0 m without hiding each other), the papers are 0.22 wide on two stepped stands, the pads are at 0.6 on a plinth beside two pots of pens (the flat bed cannot be seen from the far pavement), the eraser of the stationery model is left out.
+- The roller shutter is up (a steel hood across the window and the shop door, three guide rails): the shut-up variant with its slats is not built; the target says "up by day, down in the shut-up variant" and only the lit view is asked for here.
+- The lit box sign: the glb is the day state and its face is not emissive; the gate puts the 4.1 emissive map on it at night (0.5), the game's own glow is owed (PC-08). By day the ground (red) and the letters (cream) read 1.87 to 1 against FAS-01c's 2.0: the colours are 4.1's.
+- The pension counter is a counter with a clear screen, a brass slot and an hours card: no real firm's name (the words 'post office' and 'royal mail' are on the brand blocklist and are not used).
+- Nobody stands behind the counter (the never-list: no people).
+- The pictures are at 48 samples a pixel, denoised (Rita's 64, the target's 128).
+
+### Owed to the PC (nothing here can be shown from the cloud)
+
+- PC-01 to PC-07 as Rita's.
+- PC-08 (new): the box sign's night glow in the packaged game (the 4.1 emissive map on the sign's face material, the game's own strength), and the shut-up variant's lowered shutter if the game wants it.
+- The shop's pictures at 128 samples; the wear layer on the joinery.
+
+### How the check went (every failure named)
+
+Run on the finished build (13 October): **57 of 61 rows pass** (0 pending, 4 n/a); `checks/check_newsagent_v1.json`.
+
+- **INV-04 (scripted goods are the listed ones and carry a why).** scripted goods in this build: script:card_rack, script:cigarette_cartons, script:cigarette_packs, script:crate, script:greeting_cards, script:magazine_covers, script:magazines, script:newspapers, script:postcard_rack, script:sweet_jars; each is a key of inventory.scripted with its why; MISSING: ['script:crate']; supports that carry goods and are not goods (named in NOTES.md, in `Changes after the build`): script:paper_stand, script:carton_stand, script:magazine_board, script:table_laminate; no fish, crab or prawn
+- **FAS-01c (the board reads by day).** STREET_SQUARE by day: the board's ground luma 97.9 (not black: at least 12), the light letters (75th percentile of the lettering's pixels) 182.9: letters to ground 1.87 (at least 2.0). The stallriser's luma 129.4 is written beside it (76 per cent of the ground's); for Rita's the two had to agree within 15 per cent because both were one paint, which is not asked of a shop whose stallriser is another material
+- **PIC-05g (nothing burnt in the gate's frames).** share of pixels with a channel at 250 or above in the eight rendered frames (limit 0.01; try 1: night frames 0.033 and 0.031): STREET_SQUARE day 0.0003, STREET_SQUARE night_lit 0.0018, STREET_30 day 0.0002, STREET_30 night_lit 0.0018, CLOSE_35 day 0.0036, CLOSE_35 night_lit 0.0358, CLOSE_35_B day 0.0049, CLOSE_35_B night_lit 0.0350
+- **X-PRV (previews: JPEG, about 1600 px wide, under 500 KB).** 7 JPEGs of this shop in the previews folder (at least 8): newsagent-close-35-day 225 KB 1600 px, newsagent-close-35-night-lit 221 KB 1600 px, newsagent-room-day 178 KB 1600 px, newsagent-room-night-dark 89 KB 1600 px, newsagent-room-night-lit 158 KB 1600 px, newsagent-street-square-day 244 KB 1600 px, newsagent-street-square-night-lit 171 KB 1600 px
+
+Not applicable: FRN-06 (no lobby in this shop's front (the grocer's and the launderette's check)); FAS-02 (this shop has no hanging sign in 4.1); LIT-03 (the empty unit's check, not this shop's); PRV-01 (the photograph previews of the target (P1 to P6), not this build's; this build's previews were looked at: no real firm's name, number, perso).
+
+### Times (four cores, no GPU, Cycles on the CPU with denoising)
+
+room at 48 samples a pixel (the calibration of the light strengths first, about 4 minutes): day 966 s, night_lit 1152 s, night_dark 1120 s; gate frames (32 samples, 2560 x 1440): STREET SQUARE day 318 s, STREET SQUARE night lit 219 s, STREET 30 day 316 s, STREET 30 night lit 218 s, CLOSE 35 day 507 s, CLOSE 35 night lit 324 s, CLOSE 35 B day 457 s, CLOSE 35 B night lit 294 s; 20 check renders, 1229 s in all
+
+### Where a fresh reviewer should look first
+
+- Street: STREET_SQUARE by day (the steel hood over the window and the shop door, the three rails, the sign's returns and screws, the glass lettering on the shop door) and at night (the sign's glow, the lit window, no stand-in lamp through the glass, the display of papers and cards read from the far pavement).
+- Close: the window at CLOSE_35 and CLOSE_35_B: the two paper stands (every title and headline is invented; look at 100 per cent for any real name), the six cartons, the magazine board with the plinth of pens and pads in front, the two racks of cards (no real view, no person), the jars; the room picture at 100 per cent: the gantry's packs (invented makers), the covers on the left wall, the greetings cards and postcards on the right, the pension counter's glass.
+
+## The tea rooms (west_north bay 2, no. 14)
+
+### What was made
+
+Street number 14, west_north bay 2 (the viewer's left is the LOW street x; the shop door is at the viewer's LEFT end, the dark-brown side door to its left).
+
+- **Front** (`tea_rooms_front.glb`, 6.1 MB, 48,993 triangles, 194 objects; out of git): fluted pilasters, scroll consoles and a timber cornice in brown (120, 74, 44), a rendered stallriser, the T1 window of three lights with two mullions and six toplights, the T1 shop door in door cream and the F1 side door in dark brown (74, 48, 34), the 4.1 flat panel sign (`tea_rooms_panel`: Tea Rooms with BREAKFASTS, LUNCHES & TEAS), the number 14, the OPEN / CLOSED sign.
+- **Room** (4.4, 5.3 x 2.4 x 4.5 m, three pictures of 4096 x 1855 at 48 samples, `rooms/tea_rooms_*.png`, out of git): the counter with two glass cake domes, a board of rolls, the tea set put together, the kettle, the till and the tea urn; two shelves of 24 cups on saucers, stacks of plates and a metal jug; the serving hatch with its half-lowered roller; the menu board; framed pictures, the wall clock and a notice board; the floor a 300 mm cream and brown chequer. 57 pieces and fixtures placed, 11 Poly Haven models.
+- **Display** (4.5, `tea_rooms_display.glb`, 3.3 MB, out of git): 9 Poly Haven pieces and 11 scripted pieces: the table set for tea (table, laminate top, two chairs, teapot, two cups and saucers, a sugar bowl, a menu stand), the carrot cake on a two-tier china stand, the strawberry chocolate cake on a plate, the potted plant, two panels of café curtain on a brass rod over the outer lights, the hand-lettered window card on two suction cups, price cards.
+- **Gate**: as the newsagent's (a lit shop).
+
+### How to rebuild
+
+`python3 build_shop.py --shop tea_rooms` (every stage in order; `scenecheck` tests the room's layout in seconds first). Rebuilt in one go from the target and the kit: nothing is typed into the code.
+
+### Where the target was silent or contradicted itself, and what the build did (Judgement, each one named)
+
+T1. **The counter.** 3.0 m, panelled front (a plinth, a rail, five raised panels 12 mm proud inside the 0.55 depth). Left to right: two glass cake domes (the carrot cake on a china plate, the strawberry chocolate cake on another; the target counts one dome: a cake under each), a board with the two rolls of `hamburger_buns` (the kit model is a row of three), the tea set put together (the kit's `tea_set_01` is loose pieces in rows: a teapot, a sugar bowl, two cups moved onto their own saucers by `compose`; the plates stay on the shelf as scripts), the vintage kettle, the till (0.42, against the wall so that it does not overhang the counter: 0.63 at the first try, limit 0.60) and a tea urn (a script: stainless body, lid, tap, side handles) at the right end.
+T2. **The shelf.** Two boards 0.20 deep: the lower (z 1.35) stops at x -0.60 so that the kettle and the till and the urn stand under the upper one only (z 1.75, the whole 3.0 m); 24 cups on saucers (10 and 14, lathe forms with a glaze: the target's `script:cups_saucers`), stacks of plates (scripted the same way) and the metal jug.
+T3. **The hatch.** 1.2 x 0.9, 80 deep: a cream timber frame, a tiled recess, a ledge and the roller flap half down in nine slats; the opening is shallow (no black void).
+T4. **The menu board** (flat 30 mm): a black board with the day's menu in chalk (a script picture: TODAY'S MENU, TEA 25p, COFFEE 35p, TOAST 30p, EGG & CHIPS, SOUP, TEACAKE) and a price card; the notice board on the right wall carries six notices.
+T5. **The walls.** Left: `hanging_picture_frame_02` and `_03` and the wall clock; right: `hanging_picture_frame_01` and a cork notice board. The frames' pictures are the project's own (the blanking step replaces the model's palace painting signed 'Celine.F', its castle photograph and its poster text 'Ray Homes' with `invented_print` or the harbour crop): no empty frames, no real place.
+T6. **The pilot lamp.** night_dark's one warm point of light is a point light on the counter's left end (6 Blender watts), not a visible lamp.
+T7. **The window** (the target's 'changes': a real table set in the middle light, the café curtain over the two outer lights): the table is `round_wooden_table_02` scaled to 0.50 m, not the target's 0.55 (the model is 0.80; at 0.55 it touched the glass and the back, DSP-01) with a laminate top (a 12 mm disc over the wood, the target's 'a laminate top replaces the wood'); the two chairs at 0.75 at its sides, clear of its edge (the first try put their front legs under it, and they cut through the rim: DSP-03); the teapot and two cups on saucers on the table, a sugar bowl and a menu stand (the menu at the table's front, where the pot does not hide it: DSP-03 gave 0.15 seen at the back); the carrot cake on a two-tier china stand and the strawberry cake on a plate under the curtain's hem; the potted plant in the right light; the curtain: two panels of cream cotton gathered in folds on a brass rod at z 1.50 above the footway (w 0.90), hung 0.55 with a scalloped hem, over the two outer lights; the hand-lettered card (BREAKFASTS, LUNCHES, TEAS) on two suction cups on the glass's inside. The steamed glass of the research is not modelled (the gate's glass material is the gate's own).
+T8. **The front.** 4.1's flat panel sign (`tea_rooms_panel`, outer 90, 40 to 5320, 510, 30 deep, white timber returns 16 wide) over the old cream board: the frame and a face that carries the board's own picture. The render stallriser, the flute pilasters and the T1 window are `sw_variants`' (the 3.2 kit built none of them).
+T9. **Floor.** The target's 'cream and brown 300 mm' chequer on Poly Haven `old_linoleum_flooring_01` (texture scale 1.6 m so that its grain does not read as a second pattern).
+T10. **The gate's night and the toning.** A lit shop: its lit-night frames are its night. The window's whites and the bed are toned (the china and curtain 0.88 of white, the chairs 0.78, the bed (122, 96, 64), the laminate (160, 142, 106)), the walnut table lifted 2.2 times, night_dark's wash 70 per cent stronger in ratio, and the gate's footway left out of glossy rays for this shop (see the shortfalls): each for a named row (PIC-05g, LIT-08, LIT-01, GLS-03).
+
+### Models placed, source and licence (Poly Haven, all CC0 1.0, each asset's own source.json read: present, CC0, polyhaven.com; 14 models)
+
+| model | Poly Haven page | licence | in the room | in the display | maker's marks painted out |
+|---|---|---|---|---|---|
+| CashRegister_01 | https://polyhaven.com/a/CashRegister_01 | CC0 1.0 | 1 | 0 | the dollar sign in the readout; TITCH BANKS (the plate on the drawer, printed upright on the map); TITCH CO. and its small print; I (heart) LAS VEGAS; I (heart) TORONTO, I (heart) QUEBEC; a Canadian banknote ('CANADA'); printed receipt slips with 'TOTAL' and amounts |
+| carrot_cake | https://polyhaven.com/a/carrot_cake | CC0 1.0 | 1 | 1 | none found |
+| hamburger_buns | https://polyhaven.com/a/hamburger_buns | CC0 1.0 | 2 | 0 | none found |
+| hanging_picture_frame_01 | https://polyhaven.com/a/hanging_picture_frame_01 | CC0 1.0 | 1 | 0 | the placeholder and its credit |
+| hanging_picture_frame_02 | https://polyhaven.com/a/hanging_picture_frame_02 | CC0 1.0 | 1 | 0 | the painting and its signature |
+| hanging_picture_frame_03 | https://polyhaven.com/a/hanging_picture_frame_03 | CC0 1.0 | 1 | 0 | the photograph |
+| metal_jug | https://polyhaven.com/a/metal_jug | CC0 1.0 | 1 | 0 | none found |
+| painted_wooden_chair_01 | https://polyhaven.com/a/painted_wooden_chair_01 | CC0 1.0 | 0 | 2 | none found |
+| potted_plant_04 | https://polyhaven.com/a/potted_plant_04 | CC0 1.0 | 0 | 1 | none found |
+| round_wooden_table_02 | https://polyhaven.com/a/round_wooden_table_02 | CC0 1.0 | 0 | 1 | none found |
+| strawberry_chocolate_cake | https://polyhaven.com/a/strawberry_chocolate_cake | CC0 1.0 | 1 | 1 | none found |
+| tea_set_01 | https://polyhaven.com/a/tea_set_01 | CC0 1.0 | 4 | 3 | none found |
+| vintage_electric_kettle | https://polyhaven.com/a/vintage_electric_kettle | CC0 1.0 | 1 | 0 | none found |
+| wall_clock | https://polyhaven.com/a/wall_clock | CC0 1.0 | 1 | 0 | URBAN / quartz |
+
+THIRD-PARTY.md is outside the folders this batch may change: the table above is the form unit 7 used, ready to be appended there by the repository's owner.
+
+### Known shortfalls now, in plain words
+
+- The room is sparse by the target's own list (a counter, two shelves, a hatch, a menu board, frames, a notice board): no tables or chairs stand in the room picture (the target's own rule: free tables smeared in the first card), so the room reads as a serving room, not a dining room; the table set is in the window only.
+- Two cake domes (a cake under each; the target counts one); the tea set's plates stay on the shelf as scripts; the table is 0.50 m, not the target's 0.55 (it touched the glass).
+- The steamed glass of the research is not modelled (the gate's glass is its own).
+- The window card's lettering is the project's own hand lettering (BREAKFASTS, LUNCHES, TEAS); the menu board's chalk is a picture (TODAY'S MENU, TEA 25p, COFFEE 35p, TOAST 30p, EGG & CHIPS, SOUP, TEACAKE).
+- The window's whites and the bed are toned for the night gate: the china and curtain at about 0.88 of white, the chairs' paint at 0.78 of the model's, the bed a dark stained deal (122, 96, 64) and the laminate (160, 142, 106); the walnut table's pedestal is lifted 2.2 times to a pale-stained oak so that it reads in the night frames (LIT-08: 0.18 to 0.25 of the room before). Each is a look decision, named in `Changes after the build`.
+- Night_dark's wash is 70 per cent stronger in ratio than the approved mean asks (mean about 23 against 17.7) so that the shut-up shop reads 10 or more through the glass (LIT-01 read 8.1).
+- The gate's footway is left out of glossy rays for this shop (the pool of the spill is the gate's stand-in; its reflection in the lower glass read 19.9 at STREET_30 against GLS-03's 15).
+- 48 samples a pixel, denoised (Rita's 64, the target's 128).
+
+### Owed to the PC (nothing here can be shown from the cloud)
+
+- PC-01 to PC-07 as Rita's; PC-02 includes the game's own light on the display and the pool on the pavement (the gate's stand-in is here).
+- The steamed glass and the curtain's sway; the cake domes' glass in the game's material.
+- The pictures at 128 samples; the wear layer.
+
+### How the check went (every failure named)
+
+Run on the finished build (13 October): **55 of 59 rows pass** (0 pending, 5 n/a); `checks/check_tea_rooms_v1.json`.
+
+- **LIT-01 (lit shops lit at night, dark shops dark).** STREET_SQUARE at night, the room-only composite (picture x 0.7, glass reflection off) over the glass lights: lit 72.3 (at least 45); the same shop dark (night_dark) 8.1 (a dark shop reads 10 to 35); difference 64.2 (at least 25)
+- **GLS-03 (the night glass does not double what is behind it).** at night, p95 of |gate frame minus the render with the glass's reflection off| (luma, levels), the frame against a render of the same size, samples and seed with the glass's reflection off, over the glass mask eroded by 2 px at 1280 (4 at 2560): STREET_SQUARE p95 7.2 (mean 2.1, 268758 glass px); STREET_30 p95 19.9 (mean 4.4, 173120 glass px); CLOSE_35 p95 11.1 (mean 4.4, 2299634 glass px); CLOSE_35_B p95 11.0 (mean 4.8, 2359226 glass px) (limit 15; try 2: 32.9 at STREET_30 and 17.2 at STREET_SQUARE: the stand-in glass mixed a Transparent and a Glass BSDF, which bent each ray at one face of the closed 6 mm slab and not the other, so everything behind it came two or three times; now a Glossy BSDF, GGX 0.02, weighted 0.2 x Fresnel at IOR 1.5, nothing refracted)
+- **LIT-08 (the display's goods are lit at night).** at night_lit, each display piece's mean luma over the lattice's gaps against the room's mean luma in a 24 px ring round it: CLOSE_35: 13 pieces seen against the room, lowest ratio round_wooden_table_02 0.25 (19 against 76), script:window_card_menu 0.72 (47 against 66), script:cafe_curtain 0.78 (57 against 73), 1 under 0.6 (round_wooden_table_02 0.25); median ratio 2.01; CLOSE_35_B: 13 pieces seen against the room, lowest ratio round_wooden_table_02 0.18 (18 against 97), script:window_card_menu 0.73 (48 against 66), script:cafe_curtain 1.12 (58 against 52), 1 under 0.6 (round_wooden_table_02 0.18); median ratio 1.86 (limit 0.6; try 2, CLOSE_35_B: the alarm clock's dial 33 against a room of 95, the cassette player 26, the mantel clock 25; the two strip lights under the tier boards are the fix; PIC-05g stays at 0.01 or under)
+- **PIC-05g (nothing burnt in the gate's frames).** share of pixels with a channel at 250 or above in the eight rendered frames (limit 0.01; try 1: night frames 0.033 and 0.031): STREET_SQUARE day 0.0000, STREET_SQUARE night_lit 0.0005, STREET_30 day 0.0000, STREET_30 night_lit 0.0006, CLOSE_35 day 0.0014, CLOSE_35 night_lit 0.0281, CLOSE_35_B day 0.0001, CLOSE_35_B night_lit 0.0283
+
+Not applicable: SO-05 (the room has no back door in the target); FRN-06 (no lobby in this shop's front (the grocer's and the launderette's check)); FAS-02 (this shop has no hanging sign in 4.1); LIT-03 (the empty unit's check, not this shop's); PRV-01 (the photograph previews of the target (P1 to P6), not this build's; this build's previews were looked at: no real firm's name, number, perso).
+
+### Times (four cores, no GPU, Cycles on the CPU with denoising)
+
+room at 48 samples a pixel (the calibration of the light strengths first, about 4 minutes): day 674 s, night_lit 616 s, night_dark 650 s; gate frames (32 samples, 2560 x 1440): STREET SQUARE day 172 s, STREET SQUARE night lit 107 s, STREET 30 day 152 s, STREET 30 night lit 103 s, CLOSE 35 day 230 s, CLOSE 35 night lit 160 s, CLOSE 35 B day 250 s, CLOSE 35 B night lit 180 s; 20 check renders, 714 s in all
+
+### Where a fresh reviewer should look first
+
+- Street: STREET_SQUARE by day and at night: the flat panel sign (Tea Rooms, BREAKFASTS, LUNCHES & TEAS) and its returns, the number 14 and the OPEN sign, the door at the LEFT end, the curtains over the outer lights and the table set in the middle light read from the far pavement.
+- Close: CLOSE_35 and CLOSE_35_B: the two curtain panels (the scalloped hem, the folds), the table set (teapot, two cups on saucers, sugar bowl, menu stand), the cakes at the bed's ends, the window card on its suction cups; the room picture at 100 per cent: the 24 cups, the cake domes, the tea urn, the hatch's roller, the menu board's chalk, the frames' pictures (a harbour crop; no person, no real place named).
+
+## Mickey's (east_parade, no. 1): the front only
+
+### What was made
+
+Street number 1, east_parade (east side: the viewer's left is the HIGH street x; the shop door is at the viewer's right). Front only: its real room is already approved and walked (the brief), so there is no room, no display and no new picture; the glass shows a flat stand-in card for the gate.
+
+- **Front** (`mickeys_front.glb`, 6.7 MB, 49,447 triangles, 158 objects; out of git): the A2 steel refit: clad pilasters (three sheets), scroll consoles, a timber cornice in slate (62, 75, 87), a tile stallriser with its printed pattern (cream tile, 609.6 mm), the M1 steel window of three lights with two mullions and three aligned toplights (the transom a 50 mm box under a 30 mm cover plate, an 80 mm band), the M1 steel door (stiles 50, rails 28 to 198 and 1968 to 2068, one glass, beads, a chrome letter plate and D pull) and the F1 side door in oxblood (93, 46, 49), the raised gilt letters MICKEY'S at 4.1's place (a mesh, not a texture), the number 1, the OPEN / CLOSED sign.
+- **Gate**: the card is a stand-in (a flat warm-grey card at the card plane, the same card the gate bakes for every shop), four cameras by day and night_lit; no room picture, so rows that need one are n/a.
+
+### How to rebuild
+
+`python3 build_shop.py --shop mickeys front gate checks` (every stage in order). Rebuilt in one go from the target and the kit: nothing is typed into the code.
+
+### Where the target was silent or contradicted itself, and what the build did (Judgement, each one named)
+
+M1. **Scope.** The brief builds only Mickey's front: its real room was approved and walked, so there is no room, no display and no new room picture here. The glass shows the gate's flat stand-in card (the same warm-grey card, 0.58 m behind the wall, for the gate's four cameras), so the room's rows (picture, projection, stand-off, inventory, display) are n/a; the real room is owed to the PC with the game's own card.
+M2. **The transom.** The M1 window's transom is 50 mm high in the target's section but the band above the lights is 80: a 30 mm cover plate closes the difference (FRN-07 found the gap).
+M3. **The bars over the door.** The M1 door's bars over it are the 50 mm mullion carried up, not the 28 mm toplight bar of the T1/T2 fronts; FRN-04 reads the over-door pane width (283.3 mm) from the target.
+M4. **The stallriser's pattern.** The tile pattern is the 4.1 board's print repeated at 609.6 mm on the panel (the first build wrapped the UVs modulo one and drew stripes).
+M5. **The letters.** MICKEY'S is applied raised gilt letters as a mesh (4.1: `applied_letters`), size 0.573, spacing 1.08 at baseline z 2.9709, centred at u 4350, back at d 120; measured on the built mesh (a Blender text object's size is not the cap height 4.1 measured: capitals 329 mm). FAS-04 holds the letters to 4.1's place within 12 mm.
+M6. **Chrome.** The door furniture and letter plate are chrome (170, 172, 174).
+
+### Known shortfalls now, in plain words
+
+- Only the front: the room (approved, walked) and any window display are not built here, so Mickey's glass shows a flat card in the gate; what a street reviewer sees through it is not the shop.
+- The door is shut and the shop is shown lit at night from the card only: its real night (dark until Tom's key, then open to 3 am) needs the game's own states.
+- The gilt letters are plain gilt (no gilding wear); the tile pattern is the 4.1 print.
+- Rows that need the stand-in card to look like a room (LIT-02, LIT-05, LIT-08, DSP, ROOM, INV) are n/a here.
+
+### Owed to the PC (nothing here can be shown from the cloud)
+
+- The real room's card through the game's own `trace` (PC-01), the game's night and the key's state, the glass, the wear layer; the sign's night lighting (the hours put it open to 3 am).
+
+### How the check went (every failure named)
+
+Run on the finished build (13 October): **20 of 20 rows pass** (0 pending, 4 n/a); `checks/check_mickeys_v1.json`.
+
+No row fails.
+
+Not applicable: FRN-06 (no lobby in this shop's front (the grocer's and the launderette's check)); FAS-02 (this shop has no hanging sign in 4.1); FAS-01c (the lettering is applied in 3D (raised gilt letters): measured by FAS-04 against the 4.1 place, not read from the board's picture); PRV-01 (the photograph previews of the target (P1 to P6), not this build's; this build's previews were looked at: no real firm's name, number, perso).
+
+### Times (four cores, no GPU, Cycles on the CPU with denoising)
+
+gate frames (32 samples, 2560 x 1440): STREET SQUARE day 383 s, STREET SQUARE night lit 178 s, STREET 30 day 300 s, STREET 30 night lit 181 s, CLOSE 35 day 372 s, CLOSE 35 night lit 191 s, CLOSE 35 B day 410 s, CLOSE 35 B night lit 154 s; 0 check renders, 0 s in all
+
+### Where a fresh reviewer should look first
+
+- Street: STREET_SQUARE by day: the raised gilt letters on the slate board (read as MICKEY'S, not cut by anything), the clad pilasters, the cream tile stallriser with its pattern, the steel window and door (transom band, bars over the door), the oxblood side door.
+- Close: CLOSE_35 and CLOSE_35_B: the steel window's sections and the door's stiles, rails, beads and chrome plate; the tile pattern at 100 per cent (no stripes, no real maker's name on a tile).
+
+## The empty unit (east_parade bay 3, no. 7): the front only
+
+### What was made
+
+Street number 7, east_parade bay 3 (east side). To let: whitewashed glass, no room, nothing lit at night.
+
+- **Front** (`empty_unit_front.glb`, 7.0 MB, 37,411 triangles, 195 objects; out of git): panel pilasters, scroll consoles and a timber cornice in bare timber (46, 37, 30), a boarded stallriser, the T2 window of three lights with two mullions and nine toplights in bleached white (170, 166, 156), the T1 shop door and the F1 side door painted black (35, 36, 40), a bare fascia (no name, no lettering), a letting board turned 2 degrees and the number 7 painted on the glass's outside; no OPEN sign.
+- **Whitewash**: every pane (the window, the toplights, the shop door's glass, the fanlights) is the 4.1 tile composited over a pale ground (214, 212, 204) and opaque, planar-mapped from one anchor so the brush strokes run across the bars; nothing is behind the glass.
+- **Gate**: four cameras by day and night_lit; no card behind (the glass is opaque), no room.
+
+### How to rebuild
+
+`python3 build_shop.py --shop empty_unit front gate checks` (every stage in order). Rebuilt in one go from the target and the kit: nothing is typed into the code.
+
+### Where the target was silent or contradicted itself, and what the build did (Judgement, each one named)
+
+E1. **Scope and the glass.** The brief builds the front only (no room). Every pane is whitewashed from inside: the 4.1 whitewash tile (mean alpha 0.8, so a see-through slot would show a room that does not exist) is composited over a pale ground (214, 212, 204) and is opaque, planar-mapped from one anchor (u 400, z 600, 3250 x 1800 mm) so the brush strokes run across the bars; the glass mesh is opaque, not a card.
+E2. **The letting board.** 4.1's letting board (TO LET, the agent's name blank) is a box turned 2 degrees round its own d axis, its face a quad over it; nothing is lit.
+E3. **The number.** The number 7 stands painted on the glass's outside (d 37) in the 4.1 colour; no OPEN sign.
+E4. **No name.** The fascia is bare (no name block): FAS-01c is n/a, FAS-04 has no applied letters.
+E5. **The paint.** Bare timber (46, 37, 30) for pilasters, consoles, cornice, fascia and stallriser; bleached white (170, 166, 156) for the window frame; black (35, 36, 40) for both doors. All are the target's.
+E6. **The gate's night.** Nothing is lit; the stand-in lamps light the whitewash (LIT-03 asks 40 or under at night): the lamp strength is 42,000 W for this shop (Rita's 50,000 gave 42.0).
+
+### Known shortfalls now, in plain words
+
+- Nothing behind the glass: the whitewash is opaque, so the shop is a blank pale panel by day and a dim one at night; the interior is not modelled and none is owed.
+- Dark paints in shade: the bare timber (46, 37, 30) under the cornice and above the right console reads under luma 8 in one patch of 21 x 27 px (0.09 x 0.12 m) at STREET_SQUARE by day (FRN-10); the paint is the target's.
+- The lamp strength for this shop is 42,000 W against 50,000 for the others (LIT-03).
+- The 4.1 whitewash's brush strokes run across the bars (one anchor); a real whitewash would stop at each bar. No peeling or ladder marks.
+
+### Owed to the PC (nothing here can be shown from the cloud)
+
+- PC-02 as Rita's (the game's own lamps and footway pool); the game's whitewash material (the cloud's is an opaque textured pane).
+
+### How the check went (every failure named)
+
+Run on the finished build (13 October): **18 of 20 rows pass** (0 pending, 4 n/a); `checks/check_empty_unit_v1.json`.
+
+- **FRN-10 (no two parts of the front share a visible face plane; nothing on the front is black).** 46 coplanar same-facing overlaps of more than 1 mm2 among the front's parts (hidden ones, behind the doors or inside the joinery: not a fault), 0 of them where a camera can see them. By day, in the four gate frames at 2560 x 1440, over the front's own pixels (a mask render: the glass, the two fanlights, the shop door's glass, the hall, the lettering rows and the OPEN sign are not the front; the mask eroded by 2 px; a dark patch counts when it is 35 mm wide on the front or more, a thin line of shade under the cornice or the sill does not): STREET_SQUARE 2842 of 736858 front pixels under luma 8, 423 of them in patches 8 px (35 mm) or wider (the darkest pixel 0.0); STREET_30 1951 of 615978 front pixels under luma 8, 0 of them in patches 8 px (35 mm) or wider (the darkest pixel 0.0); CLOSE_35 34 of 668338 front pixels under luma 8, 0 of them in patches 28 px (35 mm) or wider (the darkest pixel 5.1); CLOSE_35_B 4731 of 978343 front pixels under luma 8, 0 of them in patches 28 px (35 mm) or wider (the darkest pixel 0.1) (try 2: the two strips beside the side door were luma 0 to 3, about 12...
+- **LIT-03 (the empty unit is a pale blank by day, not black).** mean luma of the whitewashed lower lights at STREET_SQUARE: by day 175.0 (at least 150), at night 42.0 (at most 40; the gate lights the street with its two stand-in lamps and the whitewash is unlit)
+
+Not applicable: FRN-06 (no lobby in this shop's front (the grocer's and the launderette's check)); FAS-02 (this shop has no hanging sign in 4.1); FAS-01c (the board carries no name (an empty unit's bare timber): its light patches are worn paint, not lettering); PRV-01 (the photograph previews of the target (P1 to P6), not this build's; this build's previews were looked at: no real firm's name, number, perso).
+
+### Times (four cores, no GPU, Cycles on the CPU with denoising)
+
+gate frames (32 samples, 2560 x 1440): STREET SQUARE day 313 s, STREET SQUARE night lit 174 s, STREET 30 day 274 s, STREET 30 night lit 183 s, CLOSE 35 day 296 s, CLOSE 35 night lit 189 s, CLOSE 35 B day 317 s, CLOSE 35 B night lit 265 s; 0 check renders, 0 s in all
+
+### Where a fresh reviewer should look first
+
+- Street: STREET_SQUARE by day and at night: the whitewash reads as whitewash (pale, streaked, not a lit window), the letting board askew, the number 7 on the glass, nothing glowing through the glass at night.
+- Close: CLOSE_35: the whitewash at 100 per cent against the bars (strokes crossing a bar), the fascia's wear, the black doors in their shade.
+
+
+
+## For the next shops (what batch A taught, in words that hold for any shop)
+
+16. **Test the layout before the render.** `build_shop.py --shop X scenecheck` builds the scene and runs SO-01 to SO-07 in four seconds. The ironmonger's floor run had three bags, three paraffin cans and a dustbin in 1.3 m (23 intersecting pairs) and the first hour of its render was thrown away; the check would have said so before it started.
+17. **A kit model is often a layout, not an object.** The tea set is a row of cups, a row of saucers, a teapot and a sugar bowl; office_notepads is ten loose pads; stationery_supplies is a front elevation of pencils and a cup (lay the pens flat, stand the cup up). `sub_template` takes pieces by name, `compose` puts loose pieces together (a cup moved onto its saucer). Read the mesh names and extents before placing a model whose bounding box is a metre wide.
+18. **The target's counts and zones disagree with each other and with the room.** 24 magazines at 0.19 across in a 1.0 m zone, 100 packs on a 2.6 m gantry, a dustbin and three bags and three cans in a 1.3 m run, a 0.55 m table with chairs in a window 0.55 deep: decide, build what fits at a believable size, and name each change (each is in `Changes after the build`).
+19. **Glass over goods in a room picture** (a cake dome, a pension screen) renders with the shadow-ray trick of `GRoom.mat(glass=True)` and reads as glass; it never goes black.
+20. **A front's variant parts need their own numbers checked, not Rita's.** The M1 window's transom is 50 high under a 30 mm cover plate, the M1 door's bars over the door are the 50 mullion carried up (not the 28 toplight bar): each was a gap in FRN-07 until the target's own sections were read.
+21. **Text on a Blender curve is not the size the 4.1 script measured.** Set the size from a measurement of the built mesh (capitals 329 mm and a word 2113 mm at size 0.573, spacing 1.08), then the row FAS-04 holds it.
+22. **Nothing lying flat on the bed can be seen from the far pavement.** The sill hides the lowest 40 mm, so a pad, a pen set or a trowel on the bed reads 0.00 to 0.30 in DSP-03 however it is placed. Raise it (a 60 mm tray or plinth), stand it up (pens in a pot, a card on a stand) or lean it; and a paper or a card shingled over its neighbour must overlap by under a third and be 12 mm off its plane (the 4 mm sheets at 6 mm cut through each other once a degree of tilt was added).
+23. **A model's own material can glow.** The Poly Haven lightbulb has a filament emission of strength 10: harmless by day, a lit lamp burning in the dark shop of night_dark. `GRoom.template` now sets the emission of every material it imports to zero; a room's own lights are made by the room, so they are untouched. Look at night_dark at 100 per cent, brightened, before the hour of the gate.
+24. **Measure noise where nothing is textured.** The picture-noise row read 2.29 on the ironmonger's plaster at 64, 128 and 256 samples alike: the plaster's grain, not noise. The ceiling above the back wall reads 0.40. The row now takes the ceiling, and writes the wall's number beside it.
+25. **Read every number of a layout against the whole window or run before placing the third thing.** The ironmonger's window at full size needed 3.6 m of bed in 2.3 m: two toolboxes, two cans and three brooms were put to 0.80 to 0.85 and said so; a good layout is a table of u and v written down first (the right end took three tries).
+<!-- BATCH-A-END -->

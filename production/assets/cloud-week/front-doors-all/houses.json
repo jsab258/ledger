@@ -794,6 +794,22 @@
      ],
      "glb": "NM6",
      "mirror_x": false
+    },
+    {
+     "slot": "keyhole",
+     "variant": "KH1",
+     "frame_mm": [
+      91.8,
+      188.3,
+      1041.6
+     ],
+     "mount_m": [
+      -0.3492,
+      0.1883,
+      1.3596
+     ],
+     "glb": "KH1",
+     "mirror_x": false
     }
    ],
    "variants": {
@@ -804,7 +820,7 @@
     "bell": "BL0",
     "number": "NM6",
     "scraper": "BS0",
-    "keyhole": "KH0"
+    "keyhole": "KH1"
    },
    "why": "the cottage by the yard slot: the 1930s four-light glazed door of D3 with its fanlight (a plain pane over a band of leaded lozenges) and small dark numerals on its top rail; D3's own door is white, but west_south_bay1 beside it is white gloss, and two pale doors side by side break the neighbour rule (paint class), so this door is maroon (its neighbours white_gloss and deep_teal, the doors facing it navy and brown)"
   },
@@ -867,13 +883,13 @@
    "kind": "F3",
    "frame_set": "F",
    "door_glb": "door_F3.glb",
-   "paint": "dark_green",
+   "paint": "brown",
    "paint_srgb": [
-    28,
-    59,
-    41
+    74,
+    48,
+    34
    ],
-   "paint_class": "dark_chroma",
+   "paint_class": "dark_neutral",
    "frame_colour": "white",
    "frame_srgb": [
     226,
@@ -930,6 +946,22 @@
      ],
      "glb": "NM3",
      "mirror_x": false
+    },
+    {
+     "slot": "keyhole",
+     "variant": "KH1",
+     "frame_mm": [
+      95.6,
+      188.3,
+      1060.0
+     ],
+     "mount_m": [
+      -0.352,
+      0.1883,
+      1.105
+     ],
+     "glb": "KH1",
+     "mirror_x": false
     }
    ],
    "variants": {
@@ -940,9 +972,9 @@
     "bell": "BL0",
     "number": "NM3",
     "scraper": "BS0",
-    "keyhole": "KH0"
+    "keyhole": "KH1"
    },
-   "why": "a household door in the row: two long panels as D1's left door, a bar pull on the left stile"
+   "why": "a household door in the row: two long panels as D1's left door, a bar pull on the left stile; brown (13 Oct, from the try 1 reviews: dark green put it next to F7's deep teal at a colour difference of 8.4)"
   },
   {
    "house": "west_north_bay0",
@@ -951,11 +983,11 @@
    "kind": "F1",
    "frame_set": "F",
    "door_glb": "door_F1.glb",
-   "paint": "maroon",
+   "paint": "dark_green",
    "paint_srgb": [
-    92,
-    26,
-    32
+    28,
+    59,
+    41
    ],
    "paint_class": "dark_chroma",
    "frame_colour": "white",
@@ -1250,10 +1282,10 @@
  "numbers": {
   "note": "The forms are the target's (NM1 NM3 NM6); the digits are placeholders the town assigns (none is canon, none is a real address).",
   "digits": {
-   "NM1:T1": "34",
-   "NM1:F2": "246",
+   "NM1:T1": "17",
+   "NM1:F2": "14",
    "NM6:T2": "21",
-   "NM3:F3": "15"
+   "NM3:F3": "29"
   }
  },
  "night_light": {

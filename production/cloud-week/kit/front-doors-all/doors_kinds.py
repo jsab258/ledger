@@ -3,10 +3,12 @@
 A kind is its frame (the 3.1 frame set T or F: jambs, head, weathered transom, fanlight, glazing bead, step or sill, all inherited unchanged), its leaf
 (built here from the target's numbers), and the glazing. No furniture is in a kind: letter plates, handles, latches, keyholes, numbers, the bell push and the
 scraper are separate parts (doors_furniture.py) placed per house by data. Nothing is cut in a leaf for a fitting (the 3.1 leaf's slot behind its plate, the
-bores for its lock, the rose's recess are gone): every fitting stands on the face, 0.4 mm into it, and carries what it needs (the plate its own dark liner).
+bores for its lock, the rose's recess are gone): every fitting stands on the face, 0.4 mm into it, and carries what it needs (the plate its own dark liner). The exception
+is the plugged keyhole KH1, which is sunk as the target says: a blind pocket 2.2 deep in the leaf of each kind that carries one (F1, F2, F3, T2; not through).
 
 Parts are named by the layer the check reads: frame_, glass_, leaf_, panel_, moulding_, stone_, timber_ (the F sill), bead_ (glazing beads), lead_ (the leaded
-came), net_ (the white net card behind T2's lights, a render aid in the file), iron_ (the spyhole's ring and the F7 nail heads).
+came), net_ (the net card behind T2's lights, material net_voile, a plain card: the PC builds the folded net), iron_ (the spyhole's ring, the F7 nail heads, T2's hinge-stile
+fitting).
 """
 import copy
 import json
@@ -18,10 +20,13 @@ import numpy as np
 from shapely.geometry import LineString, Polygon
 from shapely.ops import unary_union
 
+import bpy  # noqa: E402
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import doors_lib as L  # noqa: E402
 from doors_lib import bd  # noqa: E402
+import doors_shading as SH  # noqa: E402
 
 REPO = bd.REPO
 NEW_TARGET = os.path.join(REPO, "production", "cloud-week", "targets", "front-doors-all", "target.json")
@@ -66,6 +71,16 @@ def smooth_cove(d0, h0, h1, width=14.0, n=8):
     return out
 
 
+def quarter_cove(d0, h0, h1, width, n=8):
+    """A cove 6 mm across and 6 mm deep as a quarter circle (T3's steps since the street review): (d, depth) points from d0, the face's edge at the top with a vertical tangent
+    (a crisp arris against the face, the 'quirk') running down to a horizontal tangent on the floor, n facets 90/n degrees apart."""
+    out = []
+    for i in range(n + 1):
+        a = math.radians(180.0 + 90.0 * i / n)
+        out.append((d0 + width * (1.0 + math.cos(a)), h0 + (h1 - h0) * (-math.sin(a))))
+    return out
+
+
 class KindDoor(bd.Door):
     """One kind in its frame, in the condition and paint of a house (default: the kind's first street house). Built part by part in millimetres."""
 
@@ -93,7 +108,13 @@ class KindDoor(bd.Door):
         self.mats["door"] = bd.make_material("paint_" + self.paint, pcol["srgb"], cond["roughness"])
         M = self.T31["materials"]
         self.mats["lead"] = bd.make_material("lead_came", [90, 92, 95], 0.5, 0.8)
-        self.mats["net"] = bd.make_material("net_white", [200, 198, 190], 0.9)
+        # the glass is clear: the 3.1 kit's base colour (121, 131, 139) tinted every pane dark blue-grey, so T2's nets read as slate boards (close review point 7, street review
+        # point 1): base colour (235, 238, 236), and the dark hall supplies the darkness. The reeded glass of F6's transom is its own material, rough in transmission (street review 6).
+        Mg = M["glass"]
+        self.mats["glass"] = bd.make_material("glass", [235, 238, 236], Mg["roughness"], 0.0, 1.0, Mg["ior"])
+        self.mats["glass_reeded"] = bd.make_material("glass_reeded", [235, 238, 236], 0.35, 0.0, 1.0, Mg["ior"])
+        # T2's net cards take the house windows' net material (their N1: white 238, 238, 232), a plain card: the PC builds the folded translucent net
+        self.mats["net"] = bd.make_material("net_voile", [238, 238, 232], 0.9)
         self.mats["timber_bare"] = bd.make_material("timber_bare", [118, 110, 100], 0.85)
         self.mats["iron_black"] = bd.make_material("cast_iron", [30, 30, 32], 0.65, 1.0)
         self.lap = self.P["mouldings"]["outside_bolection"]["lap_over_framing_mm"]
@@ -133,34 +154,99 @@ class KindDoor(bd.Door):
         bd.cut(ob, *bd.prism(pts, ("x", "z"), "y", a, b))
 
     # -------------------------------------------------------------- the condition: the rotted foot of a neglected door
+    NOTCH = {"width": 130.0, "height": 25.0, "wander": 5.0, "depth": 3.0, "end_depth": 0.5, "taper": 35.0, "round": 4.0}
+
     def hinge_side_u(self):
         """u range of the notch: 130 wide at the hinge-side end of the bottom edge (the target: 60 to 200 wide, 25 high, 3 deep, in the lower arris at the hinge side)."""
-        w = 130.0
+        w = self.NOTCH["width"]
         return (0.0, w) if self.spec["leaf"]["lock_side"] == "right" else (self.W - w, self.W)
 
+    @staticmethod
+    def _smoothstep(t):
+        t = min(1.0, max(0.0, t))
+        return t * t * (3.0 - 2.0 * t)
+
+    def notch_height(self, s):
+        """The top edge of the notch at s mm from the leaf's end: 25 high, wandering by up to +-5 (three irregular waves, 46, 19 and 8 mm), tapering to nothing over the last 35."""
+        n = self.NOTCH
+        w = 0.55 * math.sin(2 * math.pi * s / 46.0 + 0.6) + 0.30 * math.sin(2 * math.pi * s / 19.0 + 2.1) + 0.15 * math.sin(2 * math.pi * s / 8.3 + 4.0)
+        t = (max(s, 0.0) - (n["width"] - n["taper"])) / n["taper"]
+        return (n["height"] + n["wander"] * w) * (1.0 - self._smoothstep(t))
+
+    def notch_depth(self, s):
+        """The depth of the notch at s: 3 mm along its length, 0.5 at the free end (the taper's last 35 mm)."""
+        n = self.NOTCH
+        t = (max(s, 0.0) - (n["width"] - n["taper"])) / n["taper"]
+        return n["end_depth"] + (n["depth"] - n["end_depth"]) * (1.0 - self._smoothstep(t))
+
+    def notch_cutter(self, grow=0.0, y_front=None):
+        """An irregular cutter for the eroded notch (the street review's point 8: the first build's was a crisp 130 x 25 x 3 rectangle that read as a fitted strip, not rot):
+        the planform (top edge wandering, ends tapering, corners rounded to r 4) extruded through the depth, intersected with the depth section (3 mm along, 0.5 at the free end).
+        `grow` moves every wall of it out (+) or in (-) by that many mm, for the bare-wood liner. Returns the object; it opens at the leaf's end and at its foot."""
+        n = self.NOTCH
+        left = self.spec["leaf"]["lock_side"] == "right"                 # hinge side on the left: s runs from the left edge in
+        ss = [-12.0 + 2.5 * i for i in range(int((n["width"] + 12.0) / 2.5) + 1)]
+        ss[-1] = n["width"]
+        top = [(sv, self.notch_height(sv) if sv >= 0 else self.notch_height(0.0)) for sv in ss]
+        poly = Polygon([(-12.0, -8.0), (n["width"], -8.0)] + top[::-1])
+        r = n["round"]
+        poly = poly.buffer(-r, join_style=1, resolution=8).buffer(r, join_style=1, resolution=8).simplify(0.05)
+        if grow:
+            poly = poly.buffer(grow, join_style=1, resolution=8)
+        if poly.geom_type != "Polygon":
+            poly = max(list(poly.geoms), key=lambda g: g.area)
+
+        def to_xz(sv, v):
+            return (self.X0 + sv if left else self.X0 + self.W - sv, self.Z0 + v)
+        pts = [to_xz(sv, v) for sv, v in list(poly.exterior.coords)[:-1]]
+        yb = self.LY0 + 3.9 + grow
+        y0 = self.LY0 - 2.5 if y_front is None else y_front
+        ob = bd.new_obj("_notch", *bd.prism(L.ccw(pts), ("x", "z"), "y", y0, yb))
+        dsec = [to_xz(sv, 0.0)[0] for sv in ss]
+        dpts = [(dsec[0], self.LY0 - 3.0), (dsec[-1], self.LY0 - 3.0)] + [(dsec[i], self.LY0 + self.notch_depth(ss[i]) + grow) for i in range(len(ss) - 1, -1, -1)]
+        bd.keep_inside(ob, *bd.prism(L.ccw(dpts), ("x", "y"), "z", self.Z0 - 20.0, self.Z0 + 60.0))
+        return ob
+
+    @staticmethod
+    def _obj_vf(ob):
+        me = ob.data
+        return np.array([v.co[:] for v in me.vertices], float), [tuple(p.vertices) for p in me.polygons]
+
     def notch(self, ob):
-        """The eroded notch in the lower arris at the hinge side: 25 high, 130 wide, 3 deep (from the face), cut from the leaf; bare grey wood lines it (leaf_notch_bare)."""
+        """The eroded notch in the lower arris at the hinge side: 25 high on average (the top edge wanders +-5, the free end tapers to nothing over 35 mm, corners r 4), 130 wide,
+        3 deep along its length and 0.5 at the free end, cut from the leaf; bare grey wood lines it (leaf_notch_bare, a shell 0.6 thick straddling the cut surface, 0.5 in from the
+        leaf's end and 0.4 up from its foot so it shares no face plane with the leaf)."""
         if self.condition != "neglected":
             return
-        u0, u1 = self.hinge_side_u()
-        a, b = self.X0 + u0, self.X0 + u1
-        # open at the end of the leaf: the cutter runs past the leaf's edge, so the notch begins at the corner
-        ca, cb = (a - 1.0 if u0 == 0.0 else a), (b + 1.0 if u1 == self.W else b)
-        bd.cut(ob, *bd.box(ca, self.LY0 - 1.0, self.Z0 - 1.0, cb, self.LY0 + 3.0, self.Z0 + 25.0))
-        t = 0.3
-        liners = [bd.box(a - t, self.LY0 + 2.7, self.Z0 + 0.4, b + t, self.LY0 + 3.3, self.Z0 + 25.3),            # the back wall
-                  bd.box(a - t, self.LY0 + 0.4, self.Z0 + 24.7, b + t, self.LY0 + 3.3, self.Z0 + 25.3)]            # the roof
-        if u0 != 0.0:
-            liners.append(bd.box(a - t, self.LY0 + 0.4, self.Z0 + 0.4, a + t, self.LY0 + 3.3, self.Z0 + 25.3))
-        if u1 != self.W:
-            liners.append(bd.box(b - t, self.LY0 + 0.4, self.Z0 + 0.4, b + t, self.LY0 + 3.3, self.Z0 + 25.3))
-        Vs, Fs, off = [], [], 0
-        for V, Fc in liners:
-            Vs.append(V)
-            Fs += [tuple(i + off for i in f) for f in Fc]
-            off += len(V)
-        self.add("leaf_notch_bare", np.vstack(Vs), Fs, "timber_bare")
-        self.notes["notch_u"] = [u0, u1]
+        left = self.spec["leaf"]["lock_side"] == "right"
+        cut = self.notch_cutter()
+        V, Fc = self._obj_vf(cut)
+        bd._drop(cut)
+        bd.cut(ob, V, Fc)
+        big = self.notch_cutter(0.3, y_front=self.LY0 + 0.4)
+        clip_x = (self.X0 + 0.5, self.X0 + self.W + 5.0) if left else (self.X0 - 5.0, self.X0 + self.W - 0.5)
+        bd.keep_inside(big, *bd.box(clip_x[0], self.LY0, self.Z0 + 0.4, clip_x[1], self.LY0 + 6.0, self.Z0 + 80.0))
+        inner = self.notch_cutter(-0.3)
+        Vi, Fi = self._obj_vf(inner)
+        bd._drop(inner)
+        bd.cut(big, Vi, Fi)
+        Vb, Fb = self._obj_vf(big)
+        bd._drop(big)
+        self.add("leaf_notch_bare", Vb, Fb, "timber_bare")
+        self.notes["notch_u"] = list(self.hinge_side_u())
+
+    # -------------------------------------------------------------- KH1 is sunk: a blind pocket in the leaf
+    def keyhole_pockets(self, ob):
+        """KH1, the plugged mortice keyhole, is sunk as the target says (close review point 10): a blind keyhole-shaped pocket 2.2 deep (not through, so nothing can show through)
+        where the target places KH1 for this kind. The fitting (doors_furniture.keyhole) sits in it: its dark plate's face 2.0 below the leaf's face, the pale blank 0.5 below."""
+        kh = self.N["furniture"]["keyhole"]["KH1"]
+        pl = kh["place"].get(self.kind)
+        if not pl:
+            return
+        outline = bd.Door.keyhole_outline(self.uabs(pl["u"]), self.vabs(pl["v"]), kh["head_dia"], kh["slot_w"], kh["size"][1])
+        grown = Polygon(outline).buffer(0.3, resolution=8)                # the fitting's plate (the outline grown by 0.1) sits in it with 0.2 clear all round
+        self.cut_poly(ob, L.ccw(list(grown.exterior.coords)[:-1]), self.LY0 - 1.0, self.LY0 + kh["depth"] + 0.2)
+        self.notes.setdefault("keyhole_pocket", {"u": pl["u"], "v": pl["v"], "depth_mm": kh["depth"] + 0.2})
 
     # -------------------------------------------------------------- panelled leaves: T1 F1 F2 F3
     def groups_of_rows(self, ops):
@@ -209,6 +295,7 @@ class KindDoor(bd.Door):
         mo = spec["mouldings"]["outside"]
         gap = (self.lap if mo["kind"] == "bolection" else 0.0) + 0.2
         self.cut_joints_general(ob, ops, gap)
+        self.keyhole_pockets(ob)
         self.notch(ob)
         self.leaf_edges_bevel()
         for o in ops:                                                                       # the panels, floating in their grooves
@@ -279,6 +366,7 @@ class KindDoor(bd.Door):
         for o in ops:
             x0, x1, z0, z1 = self.uabs(o["u0"]), self.uabs(o["u1"]), self.vabs(o["v0"]), self.vabs(o["v1"])
             bd.cut(ob, *bd.box(x0 - 6.4, gy0 - 0.5, z0 - 6.4, x1 + 6.4, gy1 + 0.5, z1 + 6.4))
+        self.keyhole_pockets(ob)
         self.notch(ob)
         self.leaf_edges_bevel()
         dt = self.bead_dt(gy0)
@@ -291,6 +379,14 @@ class KindDoor(bd.Door):
             if self.kind == "T2":                                          # D3 shows a white net behind the lights: a pale card 1.5 behind the pane
                 V, Fc = bd.box(x0 + 0.3, gy1 + 1.5, z0 + 0.3, x1 - 0.3, gy1 + 2.0, z1 - 0.3)
                 self.add("net_" + o["id"], V, Fc, "net")
+        if self.kind == "T2":                                              # D3's small dark two-part fitting on the hinge stile (the first build left it out: street 5, close 1)
+            fx = self.spec["small_fixings"][0]
+            fw, fh = fx["size_mm"]
+            fpr = fx["proud_mm"]
+            gap, each = 10.0, (fh - 10.0) / 2.0
+            for i, (za, zb) in enumerate(((fx["v"] - fh / 2.0, fx["v"] - fh / 2.0 + each), (fx["v"] + fh / 2.0 - each, fx["v"] + fh / 2.0)), 1):
+                V, Fc = bd.box(self.uabs(fx["u"]) - fw / 2.0, self.LY0 - fpr, self.vabs(za), self.uabs(fx["u"]) + fw / 2.0, self.LY0 + 0.4, self.vabs(zb))
+                self.add("iron_hinge_fixing_%d" % i, V, Fc, "steel_dark", (0.6, None, 1))
 
     # -------------------------------------------------------------- flush leaves: F5 F6
     def lipping_lines(self, ob):
@@ -328,22 +424,28 @@ class KindDoor(bd.Door):
             cx, cz = 0.5 * (self.uabs(o["u0"]) + self.uabs(o["u1"])), 0.5 * (self.vabs(o["v0"]) + self.vabs(o["v1"]))
             V, Fc = bd.lathe([(0.0, 0.0), (6.6, 0.0), (6.6, 3.0), (0.0, 3.0)], 24)       # the lens: a glass disc 14 across, 3 thick, 8 behind the face
             self.add("glass_lens", np.stack([cx + V[:, 0], self.LY0 + 8.0 + V[:, 2], cz + V[:, 1]], axis=1), Fc, "glass")
+            # the viewer's flange (close review point 9: a bare drilled hole is not a door viewer): a ring of chrome 25 across, 2.5 proud, round the lens, its bore 12.8 across
+            V, Fc = bd.lathe([(6.4, -0.4), (12.5, -0.4), (12.5, 1.0), (11.2, 2.5), (8.4, 2.5), (7.0, 1.1), (6.4, 1.1)], 36, hollow=True)
+            self.add("iron_spyhole_ring", np.stack([cx + V[:, 0], self.LY0 - V[:, 2], cz + V[:, 1]], axis=1), Fc, "chrome_nickel")
 
     # -------------------------------------------------------------- T3: the moulded sheet with two embossed panels and a small light
     def build_leaf_moulded(self):
         spec, lf = self.spec, self.spec["leaf"]
         ob = self.new_slab()
         by_id = {o["id"]: o for o in lf["openings"]}
-        prof_cove = smooth_cove(0.0, 0.0, 3.0)                                              # (d, depth): the outer cove, 0 to 3 over 14 mm
-        prof_cove2 = smooth_cove(0.0, 3.0, 6.0)                                             # the inner cove, 3 to 6 over 14 mm
+        # the street review's fault 1 (the target's numbers): two steps 3 mm deep over 14 mm gave outlines that dipped 1 to 3 per cent in the street view against D4's 14 to 40.
+        # Now each step is 6 mm deep over 6 mm across (a quirked cove steeper than 45 degrees): the margin lies 6 below the face, the field 12 below. The outlines stay where they were.
+        step_d, step_w = 6.0, 6.0
+        prof_cove = quarter_cove(0.0, 0.0, step_d, step_w)                                  # (d, depth): the outer cove, 0 to 6 over 6 mm
+        prof_cove2 = quarter_cove(0.0, step_d, 2 * step_d, step_w)                          # the inner cove, 6 to 12 over 6 mm
         for oid in ("upper_panel", "lower_panel"):
             o = by_id[oid]
             outer = L.ccw(L.rect_pts(self.uabs(o["u0"]), self.vabs(o["v0"]), self.uabs(o["u1"]), self.vabs(o["v1"])))
             iv = o["inner"]
             ix = (self.uabs(iv["u0"]), self.vabs(iv["v0"]), self.uabs(iv["u1"]), self.vabs(iv["v1"]))
             inner = L.ccw(L.segmental_rect_pts(*ix, iv["springing_below_crown"]) if iv["head"] == "segmental" else L.rect_pts(*ix))
-            # cutter 1: from above the face down the cove to the margin's floor (3 deep); cutter 2: from the inner outline down its cove to the field (6 deep)
-            for poly, prof, top in ((outer, prof_cove, 0.0), (inner, prof_cove2, 3.0)):
+            # cutter 1: from above the face down the cove to the margin's floor (6 deep); cutter 2: from the inner outline down its cove to the field (12 deep)
+            for poly, prof, top in ((outer, prof_cove, 0.0), (inner, prof_cove2, step_d)):
                 rings = [(L.offset_poly(poly, -0.05), self.LY0 + top - 1.0)]
                 rings += [(L.offset_poly(poly, d), self.LY0 + h) for d, h in prof]
                 end_d, end_h = prof[-1]
@@ -422,7 +524,7 @@ class KindDoor(bd.Door):
             Vs.append(Vd)
             Fs += [tuple(i + off for i in f) for f in Fd]
             off += len(Vd)
-        self.add("iron_nail_heads", np.vstack(Vs), Fs, "iron_black")
+        self.add("iron_nail_heads", np.vstack(Vs), Fs, "door")                              # wrought nails on a painted ledged door are painted over with it (close review 6)
 
     # -------------------------------------------------------------- the glazing of the transom: leaded (T2), reeded (F6)
     def build_glazing(self):
@@ -433,13 +535,13 @@ class KindDoor(bd.Door):
         elif g == "reeded_4mm":
             self.build_reeded()
 
-    def swap_glass(self, name, V, Fc):
+    def swap_glass(self, name, V, Fc, mat="glass"):
         for d in self.objs:
             if d["ob"].name == name:
                 bd._drop(d["ob"])
                 self.objs.remove(d)
                 break
-        self.add(name, V, Fc, "glass")
+        self.add(name, V, Fc, mat)
 
     def build_came(self):
         """T2's fanlight (D3): the upper 144 of the 267 one plain pane; under it a band 83 high of crossed diagonal came at a 145 pitch (lozenges 145 x 83, five whole,
@@ -487,7 +589,7 @@ class KindDoor(bd.Door):
         y_mid = self.GLASS_Y
         base_t = g["thickness"] - depth
         V, Fc = bd.box(gx0, y_mid - base_t / 2.0, gz0, gx1, y_mid + base_t / 2.0, gz1)
-        self.swap_glass("glass_fanlight", V, Fc)
+        self.swap_glass("glass_fanlight", V, Fc, "glass_reeded")
         yf = y_mid - base_t / 2.0                                                            # the base's street face
         nflute = int((self.GX1 - self.GX0 - 2.0) / pitch)            # whole flutes, 1 to 2 mm short of the pane's edges
         wtot = nflute * pitch
@@ -506,7 +608,7 @@ class KindDoor(bd.Door):
         pts = L.dedupe(pts)
         pts = pts if _area(pts) > 0 else pts[::-1]
         V, Fc = bd.prism(pts, ("x", "y"), "z", self.GZ0 + 0.5, self.GZ1 - 0.5)
-        self.add("glass_fanlight_flutes", V, Fc, "glass")
+        self.add("glass_fanlight_flutes", V, Fc, "glass_reeded")
 
     # -------------------------------------------------------------- build
     def build_leaf(self):
@@ -525,6 +627,36 @@ class KindDoor(bd.Door):
 
     def build_ironmongery(self):
         return                                                  # no fitting is part of a kind: see doors_furniture.py
+
+    def sharp_angle(self, name):
+        """The angle (degrees) above which an edge is kept sharp when a part is shaded smooth: 3.1's 35, except that F7's boards are FLAT boards (the close review's fault: their front
+        faces carried the averaged normals of their V-joint chamfers, 17 degrees off, and read as rounded staves in raking light), so every edge of a board is hard. Every part also has the
+        boundary of each large flat face made sharp (doors_shading.sharpen_flat_faces): T3's steep coves, the stone tread's flat top and the rest."""
+        if name.startswith("leaf_board_"):
+            return 5.0
+        return 35.0
+
+    def finish(self):
+        """3.1's finish (bevels in mm, then metres at the pivot, UVs, smooth shading by angle, materials), with the per-part sharp angle above."""
+        px, py, pz = self.pivot
+        M = bd.Matrix.Scale(0.001, 4) @ bd.Matrix.Translation((-px, -py, -pz))
+        out = []
+        for d in self.objs:
+            ob = d["ob"]
+            if d["bev"]:
+                w, pred, seg = d["bev"]
+                bd.bevel(ob, w, pred, 30.0, seg)
+            me = ob.data
+            me.transform(M)
+            me.update()
+            bd.box_uv(me)
+            me.shade_smooth()
+            me.set_sharp_from_angle(angle=math.radians(self.sharp_angle(ob.name)))
+            SH.sharpen_flat_faces(me)
+            me.materials.clear()
+            me.materials.append(self.mats[d["mat"]])
+            out.append(ob)
+        return out
 
     def build(self):
         self.build_frame()

@@ -1,13 +1,13 @@
 {
  "schema": "ledger.cloud-week-42.shop-windows-check/1",
  "shop": "empty_unit",
- "made": "2026-10-13 17:57:40",
+ "made": "2026-10-13 19:47:54",
  "target": "production/cloud-week/targets/shop-windows/target.json (status: target for unit 7 of cloud week 42, part 2; written 12 October 2026; failed its )",
  "pass": 18,
  "counted": 20,
  "na": 4,
  "pending": 0,
- "seconds": 21.0,
+ "seconds": 17.5,
  "rows": [
   {
    "id": "GLB-01",

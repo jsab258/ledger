@@ -2,7 +2,7 @@
  "family": "front-doors-all",
  "title": "Front doors for every house kind (cloud week 42, unit 9)",
  "summary": "Front doors for every house kind of Quay Street: from the passed 3.1 door (T1 cottage four-panel, F1 flat four-panel, its bell push fixed to one plain dark oblong), 10 door kinds (cottage T1 T2 T3, flat F1 to F7) fitted to the street's 12 household doors by house, 8 furniture slots with 28 variants (letter plates, handles, rim night latches, plugged keyholes, knockers, bells, numbers, a boot scraper), 15 paints and 3 conditions, a street order in which no two neighbours match, and a gate of 7 views a kind plus the street rows.",
- "status": "fixes applied, not re-reviewed",
+ "status": "built; the try 1 reviews' corrections applied 13 Oct 2026 (see changes_after_the_build); try 2 awaiting its second fresh review",
  "units": "mm; leaf frame u across from the leaf's left edge seen from outside, v up from its bottom; frame frame x across the opening from the left reveal, z up from the threshold top (the 3.1 axes)",
  "axes": {
   "leaf": "u, v as above (structural leaf, including the 20.4 that laps behind each stop and the head)",
@@ -308,7 +308,9 @@
        -16.95
       ]
      ],
-     "src": "3.1 as built (departures D7: 46, target 36)"
+     "src": "3.1 as built (departures D7: 46, target 36)",
+     "lap_over_framing_mm": 4.8,
+     "ring_note": "13 Oct, from the try 1 reviews: the bolection's ring stands 4.8 outside the opening's edge (its lap over the framing, as the passed 3.1 door builds it) and reaches width_on_face less 4.8 inside it; the first drawing started the ring at the opening's edge"
     },
     "band_and_weatherboard": "kept: lock-rail band 72.5 high and weatherboard 80 high as built (3.1 D4, D6)"
    },
@@ -531,7 +533,7 @@
     "t": 44.0,
     "construction": "moulded flush sheet over a core, painted-look gloss",
     "lock_side": "right",
-    "border": 65.0,
+    "border": 62.5,
     "openings": [
      {
       "id": "upper_panel",
@@ -589,71 +591,83 @@
        0.0
       ],
       [
-       2.0,
-       0.166
+       0.115,
+       1.1705
       ],
       [
-       4.0,
-       0.595
+       0.457,
+       2.2961
+      ],
+      [
+       1.011,
+       3.3334
+      ],
+      [
+       1.757,
+       4.2426
+      ],
+      [
+       2.667,
+       4.9888
+      ],
+      [
+       3.704,
+       5.5433
+      ],
+      [
+       4.829,
+       5.8847
       ],
       [
        6.0,
-       1.181
-      ],
-      [
-       8.0,
-       1.819
-      ],
-      [
-       10.0,
-       2.405
-      ],
-      [
-       12.0,
-       2.834
-      ],
-      [
-       14.0,
-       3.0
-      ],
-      [
-       76.0,
-       3.0
-      ],
-      [
-       78.0,
-       3.166
-      ],
-      [
-       80.0,
-       3.595
-      ],
-      [
-       82.0,
-       4.181
-      ],
-      [
-       84.0,
-       4.819
-      ],
-      [
-       86.0,
-       5.405
-      ],
-      [
-       88.0,
-       5.834
-      ],
-      [
-       90.0,
        6.0
+      ],
+      [
+       60.0,
+       6.0
+      ],
+      [
+       62.5,
+       6.0
+      ],
+      [
+       62.615,
+       7.1705
+      ],
+      [
+       62.957,
+       8.2961
+      ],
+      [
+       63.511,
+       9.3334
+      ],
+      [
+       64.257,
+       10.2426
+      ],
+      [
+       65.167,
+       10.9888
+      ],
+      [
+       66.204,
+       11.5433
+      ],
+      [
+       67.329,
+       11.8847
+      ],
+      [
+       68.5,
+       12.0
       ],
       [
        110.0,
-       6.0
+       12.0
       ]
      ],
-     "note": "each moulded panel has TWO outlines (D4): an outer and an inner outline, a margin of about 70 to 85 between them; the margin is a flat raised border with a 14 mm cove at each line (3 mm down at the outer line to the margin, 3 mm more at the inner line to the field, which is 6 below the border face); the border is 65 wide all round; the upper panel's inner outline has a segmental head (crown v 1646, springing 22 lower) under a flat outer top; no applied mouldings"
+     "note": "each moulded panel has TWO outlines (D4): an outer and an inner outline, a margin of about 62.5 between them at the sides (the border); the margin is a flat raised border with a quirked (quarter-circle) cove at each line, each step 6 mm deep over 6 mm across, a quarter-circle cove whose top meets the face at a vertical tangent (steeper than 45 degrees: 13 Oct, from the try 1 reviews; the first numbers, two coves 3 mm deep over 14, dipped 1 to 3 per cent in the street view against D4's 14 to 40): 6 mm down at the outer line to the margin, 6 mm more at the inner line to the field, which is 12 below the border face; the outlines and the 44 mm leaf are as they were; the upper panel's inner outline has a segmental head (crown v 1646, springing 22 lower) under a flat outer top; no applied mouldings"
     }
    },
    "glass": {
@@ -886,7 +900,9 @@
        -16.95
       ]
      ],
-     "src": "3.1 as built (departures D8: 43)"
+     "src": "3.1 as built (departures D8: 43)",
+     "lap_over_framing_mm": 4.8,
+     "ring_note": "13 Oct, from the try 1 reviews: the bolection's ring stands 4.8 outside the opening's edge (its lap over the framing, as the passed 3.1 door builds it) and reaches width_on_face less 4.8 inside it; the first drawing started the ring at the opening's edge"
     }
    },
    "glass": {
@@ -1042,7 +1058,9 @@
        -16.95
       ]
      ],
-     "src": "3.1 F1 as built (P2, 43)"
+     "src": "3.1 F1 as built (P2, 43)",
+     "lap_over_framing_mm": 4.8,
+     "ring_note": "13 Oct, from the try 1 reviews: the bolection's ring stands 4.8 outside the opening's edge (its lap over the framing, as the passed 3.1 door builds it) and reaches width_on_face less 4.8 inside it; the first drawing started the ring at the opening's edge"
     }
    },
    "glass": {
@@ -1380,7 +1398,7 @@
    "mouldings": {
     "outside": {
      "kind": "none",
-     "note": "flat painted face; a 1 mm hairline round the lipping; the slit has a 15 mm square timber bead, 4 proud"
+     "note": "flat painted face; a 1 mm hairline round the lipping, 6 mm in from the edge (it lies under the stops' 20.4 mm lap on three sides, so it shows only at the foot: 13 Oct, from the try 1 reviews, kept as built); the slit has a 15 mm square timber bead, 4 proud"
     }
    },
    "glass": {
@@ -1572,8 +1590,8 @@
    "leaf": {
     "w": 838.0,
     "h": 1981.0,
-    "t": 38.0,
-    "construction": "ledged and braced matchboarding",
+    "t": 47.0,
+    "construction": "ledged and braced matchboarding: boards 22, ledges 25, braces 25 behind them (47 thick: Hasluck's proportion; fits the F frame's rebate of 53)",
     "lock_side": "right",
     "board_w": 139.67,
     "boards": 6,
@@ -1771,17 +1789,20 @@
    "ior": 1.5,
    "roughness": 0.05,
    "transmission": 1.0,
-   "src": "3.1"
+   "src": "3.1",
+   "base_srgb_note": "13 Oct, from the try 1 reviews: the clear glass of the kit's files has base colour (235, 238, 236); the first build inherited 3.1's (121, 131, 139), which tinted every pane dark"
   },
   "reeded_4mm": {
    "name": "reeded (ribbed) glass",
    "thickness": 4.0,
    "flute_pitch": 6.0,
    "flute_depth": 1.2,
-   "section": "circular segments, vertical",
+   "section": "circular segments, vertical, standing 1.2 on a base 2.8 thick: 4.0 thick in all (13 Oct, from the try 1 reviews; the drawing's reeded_section, which has a 4.0 base, is not changed here)",
    "roughness": 0.08,
    "transmission": 0.9,
-   "src": "Judgement: reeded glass in F6's transom (D5's ribbed transom and sidelight are an indoor lining's, not a street door's); pitch and depth Judgement"
+   "src": "Judgement: reeded glass in F6's transom (D5's ribbed transom and sidelight are an indoor lining's, not a street door's); pitch and depth Judgement",
+   "base_thickness": 2.8,
+   "material": "glass_reeded: its own material, rough in transmission (the PC gives it an obscure glass); no texture in the file"
   },
   "leaded_diamond": {
    "name": "leaded light: a plain upper pane over a band of crossed diagonal came",
@@ -1880,22 +1901,21 @@
     "backplate_t": 3.0,
     "rim_proud": 6.0,
     "flap": "sprung, two pivot bosses",
-    "material": "brass",
+    "material": "nickel or chrome-look",
     "srgb": [
-     181,
-     150,
-     85
+     170,
+     170,
+     168
     ],
     "metal": 1.0,
-    "roughness": 0.4,
-    "worn_roughness": 0.25,
+    "roughness": 0.35,
     "place": {
      "F2": {
       "u": "leaf centre",
       "v": 1545.0
      }
     },
-    "src": "3.1 option_six_panel (P2: 195 x 70 at 0.788 of the height)"
+    "src": "3.1 option_six_panel (P2: 195 x 70 at 0.788 of the height); 13 Oct, from the try 1 reviews: P2's plate is chrome-coloured, not brass (close review 12(h))"
    },
    "LP3": {
     "name": "black iron plate, horizontal (reserve, not placed)",
@@ -2116,10 +2136,19 @@
       "v": 909.5
      }
     },
-    "src": "Photo D5 (an indoor landing door: the place only): lever 45 px = 105 at 2.34 mm a pixel, centre at 0.911 of the face's width and 0.457 of its height, on the right stile"
+    "src": "Photo D5 (an indoor landing door: the place only): lever 45 px = 105 at 2.34 mm a pixel, centre at 0.911 of the face's width and 0.457 of its height, on the right stile; 13 Oct, from the try 1 reviews: the bar tapers from 16 at the neck to 12 at the end and its last 25 mm curve back 9 toward the door (close review 5); the round rose is kept (D5 shows it)",
+    "lever_taper_mm": [
+     16.0,
+     12.0
+    ],
+    "lever_bend": {
+     "length_mm": 25.0,
+     "back_toward_the_door_mm": 9.0
+    },
+    "place_note": "u, v is the centre of the lever's rose (HD2b, HD2c: of its boss on the backplate): the pivot and the fitting's mount point; the bar points toward the door's middle from there (13 Oct, from the try 1 reviews)"
    },
    "HD2b": {
-    "name": "lever handle on a round rose, chrome-look, left stile",
+    "name": "lever handle on a long backplate with a keyhole, chrome-look, left stile",
     "lever": [
      100.0,
      18.0
@@ -2145,7 +2174,30 @@
       "v": 1228.0
      }
     },
-    "src": "Photo D2: a small pale handle at the left stile of the middle door, v 1048 (the review's number, 0.535 of the visible height; the leaf's own box gives 1054; +-24); the left door's at about 1228 (+-30)"
+    "src": "Photo D2: a small pale handle at the left stile of the middle door, v 1048 (the review's number, 0.535 of the visible height; the leaf's own box gives 1054; +-24); the left door's at about 1228 (+-30); 13 Oct, from the try 1 reviews: a backplate 40 x 170 with a keyhole 57 below the lever's centre (sashlock furniture: the street review's dated 1990 photograph of a lever on a long backplate, point 2) in place of the round rose; the bar tapers 16 to 12 and curves back (close review 5)",
+    "lever_taper_mm": [
+     16.0,
+     12.0
+    ],
+    "lever_bend": {
+     "length_mm": 25.0,
+     "back_toward_the_door_mm": 9.0
+    },
+    "backplate": {
+     "size": [
+      40.0,
+      170.0
+     ],
+     "proud": 2.5,
+     "top_above_lever_centre": 40.0,
+     "keyhole_below_lever_centre": 57.0,
+     "keyhole_head": 12.0,
+     "keyhole_slot": 6.0,
+     "keyhole_h": 24.0,
+     "boss_dia": 30.0,
+     "boss_proud": 2.5
+    },
+    "place_note": "u, v is the centre of the lever's rose (HD2b, HD2c: of its boss on the backplate): the pivot and the fitting's mount point; the bar points toward the door's middle from there (13 Oct, from the try 1 reviews)"
    },
    "HD2c": {
     "name": "short lever at the lock edge of a moulded door",
@@ -2170,15 +2222,38 @@
       "v": 910.0
      }
     },
-    "src": "Photo D4 right door: a dark mark at columns 577 to 578.5, rows 388 to 396, ON the door (the first box lay on the reveal), v 910 (the review's number; the box gives 921; +-32); lever size Judgement"
+    "src": "Photo D4 right door: a dark mark at columns 577 to 578.5, rows 388 to 396, ON the door (the first box lay on the reveal), v 910 (the review's number; the box gives 921; +-32); lever size Judgement; 13 Oct, from the try 1 reviews: a backplate 40 x 170 with a keyhole 57 below the lever's centre (sashlock furniture: the street review's dated 1990 photograph of a lever on a long backplate, point 2) in place of the round rose; the bar tapers 16 to 12 and curves back (close review 5)",
+    "lever_taper_mm": [
+     16.0,
+     12.0
+    ],
+    "lever_bend": {
+     "length_mm": 25.0,
+     "back_toward_the_door_mm": 9.0
+    },
+    "backplate": {
+     "size": [
+      40.0,
+      170.0
+     ],
+     "proud": 2.5,
+     "top_above_lever_centre": 40.0,
+     "keyhole_below_lever_centre": 57.0,
+     "keyhole_head": 12.0,
+     "keyhole_slot": 6.0,
+     "keyhole_h": 24.0,
+     "boss_dia": 30.0,
+     "boss_proud": 2.5
+    },
+    "place_note": "u, v is the centre of the lever's rose (HD2b, HD2c: of its boss on the backplate): the pivot and the fitting's mount point; the bar points toward the door's middle from there (13 Oct, from the try 1 reviews)"
    },
    "HD3": {
-    "name": "vertical bar pull on the lock stile",
+    "name": "vertical bar pull on the lock stile: a round grip on two posts that flare into roses",
     "size": [
      25.0,
      270.0
     ],
-    "proud": 35.0,
+    "proud": 39.5,
     "material": "dark steel",
     "srgb": [
      40,
@@ -2197,20 +2272,20 @@
       "v": 1255.0
      }
     },
-    "src": "Photo D3: a dark vertical handle on the left stile, rows 498.25 to 524.25 of a 191.5 px visible leaf = 262 long (+-30), centred on the visible lock stile (u 57.2: the stile is 94.0 structural, 73.6 visible); D1 left door shows a vertical metal strip on its left stile"
+    "src": "Photo D3: a dark vertical handle on the left stile, rows 498.25 to 524.25 of a 191.5 px visible leaf = 262 long (+-30), centred on the visible lock stile (u 57.2: the stile is 94.0 structural, 73.6 visible); D1 left door shows a vertical metal strip on its left stile; 13 Oct, from the try 1 reviews (close review 3): the grip is 19 across with domed ends, 270 long overall; the posts flare into roses 25 across; the stand-off is 30 (face to the grip's axis, so the grip stands 39.5 proud; the first number was 35 for a flat bar)",
+    "grip_dia": 19.0,
+    "stand_off": 30.0,
+    "rose_dia": 25.0
    },
    "HD4": {
-    "name": "thumb latch on a ledged door",
+    "name": "thumb latch on a ledged door: a plate with cusped ends, a round bow on two posts, a flat thumb lever through a slot in the head",
     "plate": [
      38.0,
      190.0
     ],
     "plate_t": 3.0,
-    "bar": [
-     20.0,
-     150.0
-    ],
-    "thumb_piece": "a 25 x 35 pressed thumb piece",
+    "bar": "replaced by the bow: a round bar 19 across, 150 long with domed ends, bowed 4, its axis 30 off the plate, on posts 120 apart",
+    "thumb_piece": "a flat lever 14 wide and 45 long that rises through a slot in the plate's head at 15 degrees (13 Oct, from the try 1 reviews; was a 25 x 35 pressed piece)",
     "material": "dark steel",
     "srgb": [
      40,
@@ -2225,7 +2300,24 @@
       "v": 1000.0
      }
     },
-    "src": "Judgement: the usual iron thumb latch for a ledged door; Hasluck draws only the hinges"
+    "src": "Judgement: the usual iron thumb latch for a ledged door; Hasluck draws only the hinges; 13 Oct, from the try 1 reviews (close review 4): cusped plate ends, a 19 round bow standing 30 off on posts 120 apart, a thumb lever 14 x 45 at 15 degrees",
+    "plate_ends": "cusped (arrow-shaped) at both ends",
+    "slot": [
+     16.0,
+     4.0
+    ],
+    "slot_z": 72.0,
+    "bow_len": 150.0,
+    "bow_sag": 4.0,
+    "bow_centre_z": 0.0,
+    "grip_dia": 19.0,
+    "stand_off": 30.0,
+    "post_gap": 120.0,
+    "thumb": {
+     "length": 45.0,
+     "width": 14.0,
+     "angle_deg": 15.0
+    }
    }
   },
   "latch": {
@@ -2309,7 +2401,7 @@
     "name": "none"
    },
    "KH1": {
-    "name": "plugged mortice keyhole: a round head over a parallel slot, a dark recess 2 mm sunk, a pale metal blank filling the slot",
+    "name": "plugged mortice keyhole: a round head over a parallel slot, SUNK in a blind pocket 2.2 deep (the dark plate's face 2.0 below the leaf's face), a pale metal blank filling the slot, its face 0.5 below the leaf's face",
     "head_dia": 15.0,
     "slot_w": 8.0,
     "size": [
@@ -2333,9 +2425,17 @@
      "F2": {
       "u": 782.8,
       "v": 1188.1
+     },
+     "T2": {
+      "u": 57.2,
+      "v": 1031.6
+     },
+     "F3": {
+      "u": 67.0,
+      "v": 1050.0
      }
     },
-    "src": "3.1 as built (P2 5x crop: (493, 447) px, 10 x 14 px = 23 x 32; head 15, slot 8); F1 at 3.1's v 1151, F2 at 0.606 of the visible height (P2)"
+    "src": "3.1 as built (P2 5x crop: (493, 447) px, 10 x 14 px = 23 x 32; head 15, slot 8); F1 at 3.1's v 1151, F2 at 0.606 of the visible height (P2); 13 Oct, from the try 1 reviews: sunk, not a raised plate (close review 10); T2 and F3 carry one 70 below the foot of the bar pull (street review 2 asked for 70 below the pull's centre, which lies behind the 270 long bar: the foot is 135 below the centre, so the keyhole is placed 70 below the foot, where it shows)"
    }
   },
   "knocker": {
@@ -2577,7 +2677,7 @@
    "BS1": {
     "name": "cast-iron boot scraper beside the step",
     "size": [
-     330.0,
+     404.0,
      130.0,
      200.0
     ],
@@ -2593,102 +2693,102 @@
      "centred": true,
      "src": "Judgement from D10"
     },
-    "standards": "two end standards 200 high, each a flat bar 25 x 12 rising from a splayed foot to a scroll of radius 35 curling outward at the top; the profile is the point list standard_profile_xz (x outward from the blade's end, z up, mm), mirrored for the other end",
+    "standards": "two end standards 200 high, each a flat bar 25 x 12 rising from a splayed foot to a scroll of radius 35 that sits OUTSIDE the bar and curls outward at the top (D10: the scrolls sit outboard of the blade's ends); the profile is the point list standard_profile_xz (x outward from the blade's end, the bar at 0 to 25, the scroll to 62, z up, mm; 13 Oct, from the try 1 reviews: the first list had the scroll at negative x, over the blade), mirrored for the other end; the bars stand 10 mm over the blade's ends; the feet stand 0.4 into the ground and the standards 0.55 (no two bottoms share a plane)",
     "standard_profile_xz": [
+     [
+      25.0,
+      0.0
+     ],
      [
       0.0,
       0.0
      ],
      [
-      25.0,
-      0.0
-     ],
-     [
-      25.0,
+      0.0,
       154.0
      ],
      [
-      25.0,
+      0.0,
       169.0
      ],
      [
-      19.2,
+      5.8,
       185.8
      ],
      [
-      6.2,
+      18.8,
       197.0
      ],
      [
-      -10.0,
+      35.0,
       200.0
      ],
      [
-      -24.8,
+      49.8,
       194.7
      ],
      [
-      -34.5,
+      59.5,
       183.2
      ],
      [
-      -37.0,
+      62.0,
       169.0
      ],
      [
-      -32.2,
+      57.2,
       156.2
      ],
      [
-      -22.2,
+      47.2,
       147.9
      ],
      [
-      -10.0,
+      35.0,
       146.0
      ],
      [
-      -10.0,
+      35.0,
       158.0
      ],
      [
-      -16.2,
+      41.2,
       158.3
      ],
      [
-      -21.8,
+      46.8,
       162.2
      ],
      [
-      -25.0,
+      50.0,
       169.0
      ],
      [
-      -24.1,
+      49.1,
       177.2
      ],
      [
-      -18.8,
+      43.8,
       184.3
      ],
      [
-      -10.0,
+      35.0,
       188.0
      ],
      [
-      0.2,
+      24.8,
       186.6
      ],
      [
-      8.8,
+      16.2,
       179.8
      ],
      [
-      13.0,
+      12.0,
       169.0
      ],
      [
-      0.0,
+      25.0,
       154.0
      ]
     ],
@@ -3603,8 +3703,11 @@
       "place": null
      },
      "keyhole": {
-      "variant": "KH0",
-      "place": null
+      "variant": "KH1",
+      "place": {
+       "u": 57.2,
+       "v": 1031.6
+      }
      }
     },
     "why": "the cottage by the yard slot: the 1930s four-light glazed door of D3 with its fanlight (a plain pane over a band of leaded lozenges) and small dark numerals on its top rail; D3's own door is white, but west_south_bay1 beside it is white gloss, and two pale doors side by side break the neighbour rule (paint class), so this door is maroon (its neighbours white_gloss and deep_teal, the doors facing it navy and brown)",
@@ -3689,7 +3792,7 @@
     },
     "kind": "F3",
     "frame_set": "F",
-    "paint": "dark_green",
+    "paint": "brown",
     "frame_colour": "white",
     "condition": "tired",
     "furniture": {
@@ -3731,11 +3834,14 @@
       "place": null
      },
      "keyhole": {
-      "variant": "KH0",
-      "place": null
+      "variant": "KH1",
+      "place": {
+       "u": 67.0,
+       "v": 1050.0
+      }
      }
     },
-    "why": "a household door in the row: two long panels as D1's left door, a bar pull on the left stile",
+    "why": "a household door in the row: two long panels as D1's left door, a bar pull on the left stile; brown (13 Oct, from the try 1 reviews: dark green put it next to F7's deep teal at a colour difference of 8.4)",
     "windows_modernised": false
    },
    {
@@ -3756,7 +3862,7 @@
     },
     "kind": "F1",
     "frame_set": "F",
-    "paint": "maroon",
+    "paint": "dark_green",
     "frame_colour": "white",
     "condition": "kept",
     "furniture": {
@@ -6278,10 +6384,10 @@
    "kind": "T3",
    "what": "member widths on the face, mm",
    "expect": {
-    "border": 65.0
+    "border": 62.5
    },
    "tol": 2.0,
-   "src": "kind spec",
+   "src": "kind spec; 13 Oct, from the try 1 reviews: the border is the flat margin between the outer and the inner outline at the sides, 182.4 less 119.9 = 62.5 (the first target said 65, which no feature of its own outlines has)",
    "type": "members"
   },
   {
@@ -6296,6 +6402,20 @@
    "tol": 0.0,
    "src": "construction",
    "type": "framing"
+  },
+  {
+   "id": "PL-T3-street-dip",
+   "group": "PL",
+   "name": "T3: every outline dips at least 10 per cent in the street view",
+   "kind": "T3",
+   "what": "on the street picture (camera 3.5 m out, 2 m along, eye 1.6 m; 1600 x 1200), across each of the 16 outlines of the two panels (the outer and the inner outline, both sides and top and foot, at each panel's middle) the brightness changes by at least 10 per cent of the leaf face's brightness within 4 px of where the outline projects: (the greatest less the least of a 4-sample band averaged along 15 px) divided by the median of the leaf face",
+   "expect": {
+    "min_dip_fraction": 0.1,
+    "outlines": 16
+   },
+   "tol": 0.0,
+   "src": "street review of 13 Oct, fault 1 (D4's outlines dip 14 to 40 per cent in the same flat overcast light; the first build's dipped 1 to 3)",
+   "type": "street_dip"
   },
   {
    "id": "PL-F1-count",
@@ -7657,7 +7777,7 @@
    "group": "FU",
    "name": "F4: handle HD2b",
    "kind": "F4",
-   "what": "centre of the fitting in the leaf frame (u, v) and its outer size",
+   "what": "centre of the lever's rose or boss (its pivot, the mount point) in the leaf frame (u, v)",
    "expect": {
     "u": 95.0,
     "v": 1228.0,
@@ -7702,7 +7822,7 @@
    "group": "FU",
    "name": "F6: handle HD2a",
    "kind": "F6",
-   "what": "centre of the fitting in the leaf frame (u, v) and its outer size",
+   "what": "centre of the lever's rose or boss (its pivot, the mount point) in the leaf frame (u, v)",
    "expect": {
     "u": 747.0,
     "v": 909.5,
@@ -7771,7 +7891,7 @@
    "group": "FU",
    "name": "F5: handle HD2b",
    "kind": "F5",
-   "what": "centre of the fitting in the leaf frame (u, v) and its outer size",
+   "what": "centre of the lever's rose or boss (its pivot, the mount point) in the leaf frame (u, v)",
    "expect": {
     "u": 73.9,
     "v": 1048.0,
@@ -7897,7 +8017,7 @@
     "u": null,
     "v": null,
     "size": [
-     330.0,
+     404.0,
      130.0,
      200.0
     ],
@@ -7941,7 +8061,7 @@
    "group": "FU",
    "name": "T3: handle HD2c",
    "kind": "T3",
-   "what": "centre of the fitting in the leaf frame (u, v) and its outer size",
+   "what": "centre of the lever's rose or boss (its pivot, the mount point) in the leaf frame (u, v)",
    "expect": {
     "u": 757.0,
     "v": 910.0,
@@ -8006,6 +8126,30 @@
    "variant": "HD3"
   },
   {
+   "id": "FU-T2-keyhole-KH1",
+   "group": "FU",
+   "name": "T2: keyhole KH1",
+   "kind": "T2",
+   "what": "centre of the fitting in the leaf frame (u, v) and its outer size",
+   "expect": {
+    "u": 57.2,
+    "v": 1031.6,
+    "size": [
+     23.0,
+     32.0
+    ],
+    "place": {
+     "u": 57.2,
+     "v": 1031.6
+    }
+   },
+   "tol": 8.0,
+   "src": "street review 2 (13 Oct): a keyhole below the bar pull so that the door can be locked from the street",
+   "type": "furniture",
+   "slot": "keyhole",
+   "variant": "KH1"
+  },
+  {
    "id": "FU-T2-number-NM6",
    "group": "FU",
    "name": "T2: number NM6",
@@ -8028,6 +8172,26 @@
    "type": "furniture",
    "slot": "number",
    "variant": "NM6"
+  },
+  {
+   "id": "FU-T2-hinge_fixing",
+   "group": "FU",
+   "name": "T2: the small dark two-part fitting on the hinge stile",
+   "kind": "T2",
+   "what": "two steel_dark boxes 20 x 25, 10 apart, 8 proud, in the door file (parts iron_hinge_fixing_1 and _2): their centre in the leaf frame and their size together",
+   "expect": {
+    "u": 753.0,
+    "v": 1390.0,
+    "size": [
+     20.0,
+     60.0
+    ],
+    "proud": 8.0,
+    "parts": 2
+   },
+   "tol": 3.0,
+   "src": "target kinds.T2.small_fixings (D3); street review 5 and close review 1: the first build left it out",
+   "type": "kind_fixing"
   },
   {
    "id": "FU-F7-handle-HD4",
@@ -8097,6 +8261,30 @@
    "type": "furniture",
    "slot": "handle",
    "variant": "HD3"
+  },
+  {
+   "id": "FU-F3-keyhole-KH1",
+   "group": "FU",
+   "name": "F3: keyhole KH1",
+   "kind": "F3",
+   "what": "centre of the fitting in the leaf frame (u, v) and its outer size",
+   "expect": {
+    "u": 67.0,
+    "v": 1050.0,
+    "size": [
+     23.0,
+     32.0
+    ],
+    "place": {
+     "u": 67.0,
+     "v": 1050.0
+    }
+   },
+   "tol": 8.0,
+   "src": "street review 2 (13 Oct): a keyhole below the bar pull so that the door can be locked from the street",
+   "type": "furniture",
+   "slot": "keyhole",
+   "variant": "KH1"
   },
   {
    "id": "FU-F3-number-NM3",
@@ -14122,5 +14310,98 @@
    }
   ],
   "run": "13 October 2026"
- }
+ },
+ "numbers_note": "13 Oct, from the try 1 reviews: the placeholder digits are odd on the west (cottage) side and even on the east side, rising from the quay, two digits at most (T1 17, T2 21, F3 29; F2 14), and drawn with round bowls (2, 3, 5, 6, 9, 0, 8 and a closed 4) in strokes 6 mm on the 56 mm digits. None is canon; the town assigns the real ones.",
+ "changes_after_the_build": [
+  {
+   "change": "T3: profile_dh: each of the two steps 6 mm deep over 6 mm across (the margin 6 below the face, the field 12 below); the outlines (u 119.9 / 182.4 / 630.4 / 692.9) and the 44 mm leaf are kept; the second cove at d 62.5 to 68.5",
+   "why": "street review, fault 1: the outlines dipped 1 to 3 per cent in the street view; D4's dip 14 to 40 per cent. Also narrow point 12(c) of the close review (the second cove at 62.5, not 76)",
+   "date": "13 Oct, from the try 1 reviews"
+  },
+  {
+   "change": "T3: border 65 becomes 62.5 (row PL-T3-members)",
+   "why": "street review point 10, close review 12(a): the flat margin of the target's own outlines is 62.5 at the sides",
+   "date": "13 Oct, from the try 1 reviews"
+  },
+  {
+   "change": "T3: new row PL-T3-street-dip: in the street view every outline dips at least 10 per cent of the face's brightness",
+   "why": "street review, fault 1",
+   "date": "13 Oct, from the try 1 reviews"
+  },
+  {
+   "change": "T1, F1, F2: the bolection ring starts 4.8 outside the opening's edge (lap_over_framing_mm 4.8)",
+   "why": "street review 11, close review 12(b); target_drawing.py (the reference drawing, not this unit's file) still draws the literal ring: the check's required rows read the lap from this field, its three literal extras keep failing for that reason only",
+   "date": "13 Oct, from the try 1 reviews"
+  },
+  {
+   "change": "F7: leaf 47 thick (boards 22, ledges 25, braces 25) instead of 38 with thin ledges",
+   "why": "street review 13, close review 12(d): 22 + 25 cannot make 38; 16 mm ledges are thin against Hasluck's",
+   "date": "13 Oct, from the try 1 reviews"
+  },
+  {
+   "change": "BS1: the point list is mirrored so each scroll sits outside its standard and curls outward; the overall length is 404 (the blade 300 between bars 140 either side of the middle, the scrolls to 202); the feet stand 0.4 into the ground and the standards 0.55",
+   "why": "street review 9 (D10's scrolls sit outboard of the blade's ends and curl outward; the photograph shows it); the close review's 12(e) reads D10 the other way, and is wrong: the left scroll's centre is about 70 px outboard of the blade's end in D10",
+   "date": "13 Oct, from the try 1 reviews"
+  },
+  {
+   "change": "reeded glass: a base 2.8 thick under flutes 1.2 deep (4.0 in all)",
+   "why": "street review 14, close review 12(f)",
+   "date": "13 Oct, from the try 1 reviews"
+  },
+  {
+   "change": "LP2: chrome (nickel or chrome-look, sRGB 170, 170, 168) instead of brass",
+   "why": "close review 12(h): P2's plate is chrome-coloured",
+   "date": "13 Oct, from the try 1 reviews"
+  },
+  {
+   "change": "F5: the hairline is kept and said to show only at the foot (under the stops' lap on three sides)",
+   "why": "close review 12(h)",
+   "date": "13 Oct, from the try 1 reviews"
+  },
+  {
+   "change": "HD2a, HD2b, HD2c: the lever bar tapers from 16 at the neck to 12 at the end and its last 25 mm curve back 9 toward the door",
+   "why": "close review 5",
+   "date": "13 Oct, from the try 1 reviews"
+  },
+  {
+   "change": "HD2b and HD2c: a backplate 40 x 170 with a keyhole 57 below the lever's centre in place of the round rose (HD2a, F6, keeps its rose)",
+   "why": "street review 2 (and its 1990 photograph); the close review's 'keep the round rose' rests on D5, which is F6's door, HD2a",
+   "date": "13 Oct, from the try 1 reviews"
+  },
+  {
+   "change": "HD3: a round grip 19 across on posts that flare into 25 roses, stand-off 30 (face to the grip's axis), 25 x 270 overall kept; HD4: cusped plate, a 19 round bow standing 30 off on posts 120 apart, a thumb lever 14 x 45 at 15 degrees through a slot in the head",
+   "why": "close review 3 and 4",
+   "date": "13 Oct, from the try 1 reviews"
+  },
+  {
+   "change": "a lever's u, v (rows FU-*-handle-HD2a, HD2b, HD2c) is the centre of its rose, or of its boss on the backplate",
+   "why": "close review 12(g)",
+   "date": "13 Oct, from the try 1 reviews"
+  },
+  {
+   "change": "KH1 is sunk (a blind pocket 2.2 deep in the leaf, plate face 2.0 and blank 0.5 below the leaf's face); T2 and F3 carry one, 70 below the foot of the bar pull",
+   "why": "close review 10; street review 2 (the keyhole 70 below the pull's CENTRE would lie behind the 270 mm bar, 135 each way: placed below its foot)",
+   "date": "13 Oct, from the try 1 reviews"
+  },
+  {
+   "change": "T2: the hinge-stile fitting is built (two boxes 20 x 25, 10 apart, centred u 753, v 1390, 8 proud) and has a row, FU-T2-hinge_fixing",
+   "why": "street review 5, close review 1",
+   "date": "13 Oct, from the try 1 reviews"
+  },
+  {
+   "change": "west_north_bay1 (F3) is brown (was dark green); west_north_bay0 (F1) is dark green (was maroon)",
+   "why": "street review 7: F3 dark green next to F7 deep teal measured a colour difference of 8.4 against 15 to 60 for every other neighbouring pair; the two maroon F1s were twins",
+   "date": "13 Oct, from the try 1 reviews"
+  },
+  {
+   "change": "house numbers: odd on one side and even on the other, rising from the quay, two digits at most (T1 17, T2 21, F3 29, F2 14); strokes with round bowls",
+   "why": "street review 3 and 4, close review 8",
+   "date": "13 Oct, from the try 1 reviews"
+  },
+  {
+   "change": "glass: base colour (235, 238, 236) for every clear pane; reeded glass its own material glass_reeded; T2's net cards take the windows' net material net_voile (white 238, 238, 232)",
+   "why": "street review 1 and 6, close review 7",
+   "date": "13 Oct, from the try 1 reviews"
+  }
+ ]
 }

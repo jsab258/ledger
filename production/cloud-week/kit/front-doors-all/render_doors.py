@@ -9,7 +9,8 @@ Steps, for one house (or one of the hill's doors):
      quoins, arch and plinth for the T kinds, the painted pilaster for the F kinds; never in a .glb) with its dark closing face and dark hall behind the glass;
   2. the shared harness tools/review_render.py with the gate's cameras of that kind (target.json gate.views: front, street, close, low, front_head, front_foot,
      close_plate, close_foot), 1600 x 1200, 64 samples, Cycles on the CPU, LEDGER_REVIEW_HDRI=/home/user/cache/hdri/bethnal_green_entrance_2k.hdr;
-  3. reduced previews (JPEG, at most 1600 px, under 500 KB) as <kind>-<view>-v1-<date>.jpg (the kind's first house) or <kind>-<view>-<house>-v1-<date>.jpg.
+  3. reduced previews (JPEG, at most 1600 px, under 500 KB) as <kind>-<view>-v<version>-<date>.jpg (the kind's first house) or <kind>-<view>-<house>-v<version>-<date>.jpg
+     (--version 2 for the pictures of try 2; the v1 pictures stay as the record).
 A render aid in the scene, never in a file: the glass lets shadow rays through, so a pale net card behind a pane is lit by the sky as it would be through a real pane
 (Cycles otherwise treats the glass as opaque to light and the net reads black). The look itself is the engine's.
 """
@@ -65,6 +66,49 @@ def glass_passes_shadow_rays():
         nt.links.new(mix.outputs["Shader"], out.inputs["Surface"])
 
 
+def net_look():
+    """A second render aid, only in the scene (never in a file): the T2 net cards (material net_voile, a plain white card in the file) get the look of a gathered net: vertical folds, three
+    gathers of 48, 37.7 and 83 mm (the windows target's NET_COMMON: wavelength 40 to 55 mm, brightness modulation 0.22), so that they read as nets behind glass and not as white boards. The first
+    build's nets were a flat grey card that read as slate (the street review's point 1). The PC builds the real folded translucent net from net_voile."""
+    import math as _m
+    for m in bpy.data.materials:
+        if not m.name.startswith("net_voile") or not m.use_nodes:
+            continue
+        nt = m.node_tree
+        b = nt.nodes["Principled BSDF"]
+        base = tuple(b.inputs["Base Color"].default_value)
+        tc = nt.nodes.new("ShaderNodeTexCoord")
+        sep = nt.nodes.new("ShaderNodeSeparateXYZ")
+        nt.links.new(tc.outputs["Object"], sep.inputs["Vector"])
+        def math(op, a_=None, b_=None):
+            n = nt.nodes.new("ShaderNodeMath")
+            n.operation = op
+            for i_, v_ in enumerate((a_, b_)):
+                if v_ is None:
+                    continue
+                if isinstance(v_, (int, float)):
+                    n.inputs[i_].default_value = v_
+                else:
+                    nt.links.new(v_, n.inputs[i_])
+            return n.outputs[0]
+        x = sep.outputs["X"]
+        total = None
+        for wl, ph, amp in ((0.048, 0.0, 0.07), (0.0377, 1.3, 0.05), (0.083, 2.4, 0.04)):      # three gathers: 48, 37.7 and 83 mm, so the folds are not a regular corrugation
+            w = math("MULTIPLY", math("SINE", math("ADD", math("MULTIPLY", x, 2.0 * _m.pi / wl), ph)), amp)
+            total = w if total is None else math("ADD", total, w)
+        mad = math("ADD", total, 0.78)                         # the net's mean brightness against a white card: a voile passes light and shows the dark hall a little
+        cc = nt.nodes.new("ShaderNodeCombineColor")
+        for i in range(3):
+            nt.links.new(mad, cc.inputs[i])
+        mix = nt.nodes.new("ShaderNodeMix")
+        mix.data_type = "RGBA"
+        mix.blend_type = "MULTIPLY"
+        mix.inputs[0].default_value = 1.0
+        mix.inputs[6].default_value = base
+        nt.links.new(cc.outputs[0], mix.inputs[7])
+        nt.links.new(mix.outputs[2], b.inputs["Base Color"])
+
+
 def place_furniture(H, fur, ASSET):
     """Import one fitting's .glb and put it at its mount point (metres, the kind's own frame)."""
     before = set(bpy.data.objects)
@@ -100,6 +144,7 @@ def build_house_scene(T31, N, H, rec, blend_path, asset=ASSET_DIR, kind_glb=None
     for fur in rec.get("furniture", []):
         place_furniture(H, fur, asset)
     glass_passes_shadow_rays()
+    net_look()
     bpy.ops.wm.save_as_mainfile(filepath=blend_path, compress=True)
 
 
@@ -137,7 +182,7 @@ def main():
     ap.add_argument("--date", default="2026-10-13")
     ap.add_argument("--version", type=int, default=1)
     ap.add_argument("--scene-only", action="store_true")
-    ap.add_argument("--camera", help="an extra aid view NAME=x,y,z;tx,ty,tz;lens (metres, the kind's frame), rendered as NAME")
+    ap.add_argument("--camera", action="append", help="an extra aid view NAME=x,y,z;tx,ty,tz;lens (metres, the kind's frame), rendered as NAME (may be given several times)")
     a = ap.parse_args()
     T31 = bd.load_target()
     N = K.load_new_target()
@@ -160,8 +205,8 @@ def main():
         return
     views = {v["name"]: v for v in N["gate"]["views"][kind]}
     names = a.views.split(",") if a.views else []
-    if a.camera:
-        nm, rest = a.camera.split("=")
+    for cam_ in (a.camera or []):
+        nm, rest = cam_.split("=")
         loc, tgt, lens = rest.split(";")
         views[nm] = {"name": nm, "loc": [float(x) for x in loc.split(",")], "target": [float(x) for x in tgt.split(",")], "lens": float(lens)}
         names.append(nm)

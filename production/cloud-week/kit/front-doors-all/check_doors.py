@@ -63,7 +63,7 @@ LAP = 20.4
 VIS = TK.VIS
 FORBID_BELL = ("bezel", "button", "ring", "lens", "led", "camera", "speaker", "video")
 ALLOWED_MATERIALS = {"paint_", "frame_", "glass", "brass", "chrome_nickel", "steel_dark", "cast_iron", "aluminium_pale", "plastic_", "slot_interior", "stone_step",
-                     "timber_threshold", "lead_came", "net_white", "timber_bare", "paint_numeral_white"}
+                     "timber_threshold", "lead_came", "net_voile", "timber_bare", "paint_numeral_white"}
 
 
 # ------------------------------------------------------------------ the report
@@ -306,7 +306,8 @@ def check_drawings(N, mod, rep, overlays):
             overlay(a, b, os.path.join(overlays, "A1_%s_%s.png" % (k, dname)))
     # the openings: holes in the slab (T3: at three depths), against the drawn openings
     spec = mod.spec
-    depth_sets = [("t3", 0.1, ("upper_panel", "lower_panel")), ("t3", 8.0, ("small_light",))] if k == "T3" else [("all", 1.0, None)]
+    # the openings are THROUGH holes: sections at depth 5 (T3: the outer pockets at 0.1, the small light at 20, below the field's 12); a keyhole's blind pocket (2.2 deep) is not an opening
+    depth_sets = [("t3", 0.1, ("upper_panel", "lower_panel")), ("t3", 20.0, ("small_light",))] if k == "T3" else [("all", 5.0, None)]
     got = []
     for tag, dy, ids in depth_sets:
         for h in mod.holes(mod.LY0 + dy):
@@ -329,7 +330,7 @@ def check_drawings(N, mod, rep, overlays):
         names = mod.names("moulding_bolection_", "moulding_ovolo_")
         fr3 = frame_for([[mod.X0, mod.Z0], [mod.X0 + mod.W, mod.Z0 + mod.H]], 5.0)
         a = union_sil(mod.M, names, fr3)
-        lap = 4.8 if mo["kind"] == "bolection" else 0.0
+        lap = mo.get("lap_over_framing_mm", 4.8) if mo["kind"] == "bolection" else 0.0
         rings = []
         for o in spec["leaf"]["openings"]:
             if o["type"] != "panel":
@@ -451,7 +452,7 @@ def profile_rows(N, mod, rep):
         xm = mod.X0 + 0.5 * (inner["u0"] + inner["u1"])
         seg = reg.intersection(LineString([(xm, mod.LY0 - 10.0), (xm, mod.LY0 + 60.0)]))
         ys = [p[1] for g in ([seg] if hasattr(seg, "coords") else list(seg.geoms)) for p in g.coords] if not seg.is_empty else []
-        rep.within("A4:T3:field_depth", (min(ys) - mod.LY0) if ys else -1.0, 6.0, 0.2, "the field inside the inner outline lies 6 below the border face", group="A", kind=k)
+        rep.within("A4:T3:field_depth", (min(ys) - mod.LY0) if ys else -1.0, 12.0, 0.2, "the field inside the inner outline lies 12 below the border face (13 Oct, from the try 1 reviews: two steps of 6; was 6 in all)", group="A", kind=k)
     if k == "F7":
         jx = mod.X0 + spec["leaf"]["board_edges_u"][1]
         reg = mod.region(mod.names("leaf_board_"), 2, mod.Z0 + 600.0, (0, 1))
@@ -488,8 +489,8 @@ def interior_holes(mod):
     if mod.kind == "T3":
         cand = {"upper_panel": None, "lower_panel": None}
         outer_h = mod.holes(mod.LY0 + 0.1)
-        inner_h = mod.holes(mod.LY0 + 3.1)
-        light_h = mod.holes(mod.LY0 + 8.0)
+        inner_h = mod.holes(mod.LY0 + 6.1)                       # the margin lies 6 below the face: the inner pockets start below it
+        light_h = mod.holes(mod.LY0 + 20.0)                      # the field lies 12 below the face: only the small light is a hole at 20
         for o in ops:
             c = Point(mod.X0 + 0.5 * (o["u0"] + o["u1"]), mod.Z0 + 0.5 * (o["v0"] + o["v1"]))
             pool = light_h if o["id"] == "small_light" else outer_h
@@ -500,7 +501,7 @@ def interior_holes(mod):
                 ci = Point(mod.X0 + 0.5 * (iv["u0"] + iv["u1"]), mod.Z0 + 0.5 * (iv["v0"] + iv["v1"]))
                 inner[o["id"]] = min(inner_h, key=lambda p: p.centroid.distance(ci))
         return out, inner
-    hs = mod.holes(mod.LY0 + 1.0)
+    hs = mod.holes(mod.LY0 + 5.0)
     used = set()
     for o in ops:
         c = Point(mod.X0 + 0.5 * (o["u0"] + o["u1"]), mod.Z0 + 0.5 * (o["v0"] + o["v1"]))
@@ -739,13 +740,17 @@ def joints_row(N, mod, c):
 
 # ---- FU
 ANCHORS = {"letter_plate": "iron_letter_plate", "latch": ("iron_lock", "iron_lock_collar"), "keyhole": "iron_keyhole_plate", "number": None, "scraper": None, "bell": "iron_bellpush"}
-HANDLE_ANCHOR = {"HD1": "iron_knob_rose", "HD2a": "iron_rose", "HD2b": "iron_rose", "HD2c": "iron_rose", "HD3": "iron_pull_bar", "HD4": "iron_latch_plate"}
+# the part(s) whose bounding box is the handle's place and size; and the part(s) that lie ON the leaf (the footprint the FIT rows test against mouldings and beads): a lever stands 55 proud, so
+# only its rose (or boss) and its long backplate lie on the leaf; a bar pull's posts' roses; a thumb latch's plate
+HANDLE_ANCHOR = {"HD1": ("iron_knob_rose",), "HD2a": ("iron_rose",), "HD2b": ("iron_rose",), "HD2c": ("iron_rose",), "HD3": ("iron_pull_bar", "iron_pull_post_u", "iron_pull_post_l"), "HD4": ("iron_latch_plate",)}
+HANDLE_FOOT = {"HD1": ("iron_knob_rose",), "HD2a": ("iron_rose",), "HD2b": ("iron_rose", "iron_backplate"), "HD2c": ("iron_rose", "iron_backplate"), "HD3": ("iron_pull_post_u", "iron_pull_post_l"),
+               "HD4": ("iron_latch_plate",)}
 
 
 def fitting_centre(mod, slot, variant):
     """The fitting's anchor part's bbox centre and size in the target's frame (mm), from the assembled house."""
     if slot == "handle":
-        an = [HANDLE_ANCHOR[variant]]
+        an = list(HANDLE_ANCHOR[variant])
     elif slot == "number":
         an = [n.split(":", 2)[2] for n in mod.M if n.startswith("fit:number:")]
     elif slot == "scraper":
@@ -765,7 +770,7 @@ def row_FU(N, kind, mod_house, rep):
     lf = spec["leaf"]
     fs = mod_house.fs
     for c in N["checks"]:
-        if c["group"] != "FU" or c["kind"] != kind:
+        if c["group"] != "FU" or c["kind"] != kind or c.get("type") == "kind_fixing":
             continue
         slot, var = c["slot"], c["variant"]
         got = fitting_centre(mod_house, slot, var)
@@ -814,7 +819,7 @@ def assemble_variants(mod_house):
     """The handle variant of an assembled house, read back from the part names (a lever has an iron_rose and an iron_lever; a knob its iron_knob_rose; a bar pull its bar; a thumb latch its plate)."""
     names = {n.split(":", 2)[2] for n in mod_house.M if n.startswith("fit:handle:")}
     for var, anchor in HANDLE_ANCHOR.items():
-        if anchor in names:
+        if all(a in names for a in anchor):
             return [var]
     return [""]
 
@@ -830,9 +835,10 @@ def row_FIT(N, mod_house, rep, house):
     foot = {}
     for s in slots:
         names = [n for n in mod_house.M if n.startswith("fit:%s:" % s) and not n.endswith("liner")]
-        if s == "handle":                                   # a lever stands 55 proud: only its rose (or a knob's rose, a pull's bar) lies on the leaf
+        if s == "handle":                                   # a lever stands 55 proud: only its rose or boss and its backplate lie on the leaf (a pull's roses, a latch's plate)
             var = [f for f in assemble_variants(mod_house) if f][0]
-            names = [n for n in names if n.split(":", 2)[2] in (HANDLE_ANCHOR.get(var, ""),)] or names
+            on_leaf = set(HANDLE_FOOT.get(var, ())) | (set(HANDLE_FOOT["HD2b"]) if var in ("HD2a", "HD2b", "HD2c") else set())
+            names = [n for n in names if n.split(":", 2)[2] in on_leaf] or names
         foot[s] = ndimage.binary_fill_holes(union_sil(mod_house.M, names, fr))
     px2 = MMPX * MMPX
     over_m = {s: round(float((foot[s] & rs).sum() * px2), 1) for s in slots}
@@ -1215,7 +1221,7 @@ def row_DIM(N, mod, rep):
     rep.within("DIM:%s:leaf_h" % k, sz[2], spec["h"], 1.0, group="DIM", kind=k)
     if k == "F7":
         lo2, hi2 = mod.bbox(mod.names("leaf_board_", "leaf_ledge_", "leaf_brace_"))
-        rep.within("DIM:%s:leaf_t" % k, hi2[1] - lo2[1], spec["t"], 1.0, "boards 22 and ledges 16 behind them (the target's ledge_t 25 would make 47)", group="DIM", kind=k)
+        rep.within("DIM:%s:leaf_t" % k, hi2[1] - lo2[1], spec["t"], 1.0, "boards 22 and ledges 25 behind them, braces under the ledges' backs (47: the target's thickness since the try 1 reviews)", group="DIM", kind=k)
     else:
         rep.within("DIM:%s:leaf_t" % k, sz[1], spec["t"], 1.0, group="DIM", kind=k)
     rep.within("DIM:%s:leaf_x0" % k, lo[0], fs["leaf_x0"], 1.0, group="DIM", kind=k)
@@ -1249,7 +1255,7 @@ def row_GLB(N, mod, rep, path):
     nz = [n for n, prims in meshes.items() for p in prims if len(p["N"]) != len(p["P"])]
     rep.add("GLB:%s:normals" % k, not nz, nz or "a normal on every vertex", group="GLB", kind=k)
     bad = [m.get("name") for m in js.get("materials", []) if not m.get("name") or not any(m.get("name").startswith(a) for a in ALLOWED_MATERIALS)]
-    rep.add("GLB:%s:material_names" % k, not bad, bad or [m.get("name") for m in js.get("materials", [])], "named by what they are (paint_<colour>, glass, lead_came, net_white, timber_bare, stone_step, timber_threshold ...)", group="GLB", kind=k)
+    rep.add("GLB:%s:material_names" % k, not bad, bad or [m.get("name") for m in js.get("materials", [])], "named by what they are (paint_<colour>, glass, glass_reeded, lead_came, net_voile, timber_bare, stone_step, timber_threshold ...)", group="GLB", kind=k)
     unit = js["asset"].get("generator", "")
     lo = np.full(3, 1e9)
     hi = np.full(3, -1e9)
@@ -1293,10 +1299,404 @@ def load_furniture_checks(rep, N, furn_cache):
         rep.add("GLB:fitting:%s" % vid, ok, {"bytes": size, "primitives_without_uv": no_uv, "textures": tex, "unnamed_materials": bad, "parts": sorted(parts)}, "under 1 MB, UVs on every primitive, no texture, named materials", group="GLB")
         V = np.vstack([v for v, f in parts.values()]) * 1000.0
         # the fitting stands on its face: nothing behind y = +5 mm (into the leaf) and something proud
-        ok2 = V[:, 1].max() <= 5.0 and V[:, 1].min() < -0.2
-        rep.add("GLB:fitting:%s:on_the_face" % vid, ok2, {"y_range_mm": [round(float(V[:, 1].min()), 2), round(float(V[:, 1].max()), 2)]}, "origin on the face: stands proud (y < 0) and goes into the face by at most a few mm", group="GLB")
+        sunk = vid in ("KH1",)                                  # the sunk keyhole sits in a pocket 2.2 deep: everything of it is behind the face (y > 0), none of it proud
+        ok2 = V[:, 1].max() <= 5.0 and (V[:, 1].min() < -0.2 or (sunk and V[:, 1].min() >= 0.3))
+        rep.add("GLB:fitting:%s:on_the_face" % vid, ok2, {"y_range_mm": [round(float(V[:, 1].min()), 2), round(float(V[:, 1].max()), 2)]},
+                "origin on the face: stands proud (y < 0) and goes into the face by at most a few mm (KH1: sunk in its pocket, all of it behind the face, y 0.3 to 5)", group="GLB")
+        row_flat_shading(rep, meshes, "fitting:%s" % vid)
+        row_near_coplanar(rep, parts, "fitting:%s" % vid)
         names_bad = [n for n in parts if n.startswith("glass") or "label" in n.lower()]
         rep.add("GLB:fitting:%s:own_parts" % vid, True, sorted(parts), "separate part, not merged into a kind", group="GLB", extra=True)
+
+
+# ------------------------------------------------------------------ new in try 2: the fresh reviews of 13 October (street and close)
+def planar_faces_shading(meshes, min_area_mm2=100.0, min_side_mm=8.0, max_deg=5.0):
+    """The close review's fault, as a row: a large flat face must be shaded flat. A large flat face is a planar face (connected triangles in one plane, edge-connected through welded
+    vertices, seeded by the biggest) of more than `min_area_mm2` whose narrower side is at least `min_side_mm` (a strip a few mm wide is a facet of a moulding's curve, shaded
+    smooth on purpose, and is not a flat face). Its shading is off by the area-weighted mean angle between its vertex normals, as the .glb carries them, and its own face normal:
+    at most `max_deg`. F7's boards carried the averaged normals of their V-joint chamfers, 17 degrees off at each edge (8.5 on average across the face), and read as rounded staves
+    in raking light. (A mean, not the worst vertex, so that a flat strip joining a rounded corner of a sweep is not charged for the two vertices of the join.)
+    Returns (faces found, [violations])."""
+    big, bad = 0, []
+    for name, prims in meshes.items():
+        for pi, pr in enumerate(prims):
+            P = pr["P"] * 1000.0
+            I = pr["I"]
+            if len(I) == 0:
+                continue
+            a, b, c = P[I[:, 0]], P[I[:, 1]], P[I[:, 2]]
+            cr = np.cross(b - a, c - a)
+            ar = 0.5 * np.linalg.norm(cr, axis=1)
+            ok = ar > 1e-9
+            fn = np.zeros_like(cr)
+            fn[ok] = cr[ok] / (2.0 * ar[ok, None])
+            d = (fn * a).sum(1)
+            _, wid = np.unique(np.round(P, 3), axis=0, return_inverse=True)
+            wid = wid.reshape(-1)
+            edges = defaultdict(list)
+            for t in range(len(I)):
+                if not ok[t]:
+                    continue
+                w = wid[I[t]]
+                for e in ((w[0], w[1]), (w[1], w[2]), (w[2], w[0])):
+                    edges[tuple(sorted((int(e[0]), int(e[1]))))].append(t)
+            nbr = defaultdict(set)
+            for ts in edges.values():
+                for x in ts:
+                    for y in ts:
+                        if x != y:
+                            nbr[x].add(y)
+            seen = np.zeros(len(I), bool)
+            for seed in np.argsort(-ar):
+                if seen[seed] or not ok[seed]:
+                    continue
+                comp, stack = [], [int(seed)]
+                seen[seed] = True
+                while stack:
+                    t = stack.pop()
+                    comp.append(t)
+                    for u in nbr[t]:
+                        if not seen[u] and ok[u] and float(fn[u] @ fn[seed]) > 0.99995 and abs(float(d[u] - d[seed])) < 0.02:
+                            seen[u] = True
+                            stack.append(u)
+                area = float(ar[comp].sum())
+                if area < min_area_mm2:
+                    continue
+                u_, v_ = cd.basis(fn[seed])
+                polys = [Polygon([(p @ u_, p @ v_) for p in (a[t], b[t], c[t])]) for t in comp]
+                rect = unary_union([q.buffer(0.001) for q in polys if q.area > 0]).minimum_rotated_rectangle
+                xy = list(rect.exterior.coords)
+                sides = sorted([math.dist(xy[0], xy[1]), math.dist(xy[1], xy[2])])
+                if sides[0] < min_side_mm:
+                    continue
+                big += 1
+                vn = pr["N"][I[comp]]                                                   # (m, 3, 3)
+                vn = vn / np.maximum(np.linalg.norm(vn, axis=2, keepdims=True), 1e-12)
+                ang = np.degrees(np.arccos(np.clip(vn @ fn[seed], -1.0, 1.0)))             # (m, 3)
+                mean = float((ang.mean(1) * ar[comp]).sum() / ar[comp].sum())
+                if mean > max_deg:
+                    bad.append({"part": name, "area_mm2": round(area, 1), "mean_deg": round(mean, 1), "worst_deg": round(float(ang.max()), 1), "normal": [round(float(x), 2) for x in fn[seed]]})
+    return big, bad
+
+
+def row_flat_shading(rep, meshes, label, kind=None):
+    big, bad = planar_faces_shading(meshes)
+    rep.add("GLB:%s:flat_faces_flat_shaded" % label, not bad, {"large_flat_faces": big, "shaded_off_by_more_than_5_deg_on_average": bad[:6]},
+            "every large flat face (a planar face over 100 mm2 and at least 8 mm across) is shaded flat: its vertex normals are on average within 5 degrees of its own face normal (the close review: F7's boards read as rounded staves)", group="GLB", kind=kind)
+    return not bad
+
+
+def near_coplanar_overlaps(M, tol=0.1, max_deg=2.0, min_area=1.0, limit=20):
+    """The wider form of 3.1's coplanar test (the close review's narrow point 2): faces of different parts that face the same way within `max_deg` (2 degrees: the review asked for under 1; LP1's flap has facets 1.2 degrees off the liner), overlap by more than `min_area` mm2
+    seen along one face's normal, and lie within `tol` mm of each other over that overlap (the distance of the overlap's corners, lifted onto one face, from the other's plane). The first
+    test grouped faces by normals rounded to two decimals, so a dished flap whose middle facets tilt 0.3 degrees did not meet the flat liner lying 0.1 mm behind its deepest point."""
+    from scipy.spatial import cKDTree
+    tris = cd.triangle_planes(M)
+    if len(tris) < 2:
+        return 0, []
+    names = sorted({t[0] for t in tris})
+    pid = np.array([names.index(t[0]) for t in tris])
+    Nn = np.array([t[1] for t in tris])
+    Dd = np.array([t[2] for t in tris])
+    Pt = np.array([t[3] for t in tris])
+    lo, hi = Pt.min(1) - tol, Pt.max(1) + tol
+    pairs = cKDTree(Nn).query_pairs(2.0 * math.sin(math.radians(max_deg) / 2.0), output_type="ndarray")
+    if len(pairs) == 0:
+        return 0, []
+    i, j = pairs[:, 0], pairs[:, 1]
+    keep = pid[i] != pid[j]
+    i, j = i[keep], j[keep]
+    keep = np.all(lo[i] <= hi[j], axis=1) & np.all(lo[j] <= hi[i], axis=1)
+    i, j = i[keep], j[keep]
+    n, ex = 0, []
+    for a, b in zip(i, j):
+        u, v = cd.basis(Nn[a])
+        A = Polygon([(p @ u, p @ v) for p in Pt[a]])
+        B = Polygon([(p @ u, p @ v) for p in Pt[b]])
+        if not A.intersects(B):
+            continue
+        ov = A.intersection(B)
+        if ov.area <= min_area:
+            continue
+        polys = [ov] if ov.geom_type == "Polygon" else [g for g in ov.geoms if g.geom_type == "Polygon"]
+        worst = 0.0
+        for g in polys:
+            for (x, y) in g.exterior.coords:
+                q = Dd[a] * Nn[a] + x * u + y * v                      # the overlap's corner lifted onto face a's plane (Nn[a] is a unit normal: its point nearest the origin is Dd[a] * Nn[a])
+                worst = max(worst, abs(float(Nn[b] @ q - Dd[b])))
+        if worst <= tol:
+            n += 1
+            if len(ex) < limit:
+                ex.append([names[pid[a]], names[pid[b]], round(float(ov.area), 1), round(worst, 3)])
+    return n, ex
+
+
+def row_near_coplanar(rep, M, label, kind=None):
+    n, ex = near_coplanar_overlaps(M)
+    rep.add("GLB:%s:no_near_coplanar_faces" % label, n == 0, {"overlaps": n, "examples": ex[:5]},
+            "no two parts have faces facing the same way within 2 degrees and lying within 0.1 mm of each other's planes, overlapping by more than 1 mm2 (the dished flap of LP1 and LP2 against its liner)",
+            group="GLB", kind=kind)
+    return n == 0
+
+
+def glass_rows(rep, kind, path, parts_json, expect_reeded=False, nets=False, mats=None):
+    """The glass of the files: every glass material is clear (the 3.1 kit's base colour tinted every pane dark: the close review's point 7); F6's reeded glass is its own rough material
+    (street review 6); T2's net cards carry the windows' net material (street review 1)."""
+    ms = mats if mats is not None else glb_materials(path)[0]
+    glass = {n: m for n, m in ms.items() if n and n.startswith("glass")}
+    lin_min = min((min(m["base"][:3]) for m in glass.values()), default=1.0)
+    rep.add("GLB:%s:glass_clear" % kind, glass and lin_min >= 0.75, {n: [round(srgb_of_linear(x)) for x in m["base"][:3]] for n, m in glass.items()},
+            "every glass material's base colour is clear (each channel at least 0.75 linear, about 225 of 255)", group="GLB", kind=kind)
+    if expect_reeded:
+        r = glass.get("glass_reeded")
+        used = {n: v["material"] for n, v in parts_json.items() if n.startswith("glass_fanlight")}
+        ok = r is not None and r["rough"] >= 0.2 and set(used.values()) == {"glass_reeded"} and len(used) == 2
+        rep.add("GLB:%s:reeded_glass_own_material" % kind, ok, {"glass_reeded": r, "parts": used},
+                "the transom's two glass parts carry their own material glass_reeded, rough in transmission (roughness at least 0.2), no texture", group="GLB", kind=kind)
+    if nets:
+        used = {n: v["material"] for n, v in parts_json.items() if n.startswith("net_")}
+        rep.add("GLB:%s:nets_net_voile" % kind, len(used) == 4 and set(used.values()) == {"net_voile"}, used, "the four net cards carry the windows kit's net material net_voile (a plain card: the PC builds the folded net)",
+                group="GLB", kind=kind)
+
+
+def row_hinge_fixing(N, mod, rep, parts_json=None):
+    """T2's small dark two-part fitting on the hinge stile (target kinds.T2.small_fixings, record FU-T2-hinge_fixing): the first build left it out and no row looked for it."""
+    for c in N["checks"]:
+        if c.get("type") != "kind_fixing" or c["kind"] != mod.kind:
+            continue
+        ex = c["expect"]
+        names = sorted(n for n in mod.M if n.startswith("iron_hinge_fixing_"))
+        if len(names) != ex["parts"]:
+            rep.add(c["id"], False, {"parts": names}, ex, c["what"], c["tol"], group="FU", kind=mod.kind)
+            continue
+        lo, hi = mod.bbox(names)
+        ctr, size = (lo + hi) / 2.0, hi - lo
+        zs = sorted((float(mod.bbox(n)[0][2]), float(mod.bbox(n)[1][2])) for n in names)
+        gap = zs[1][0] - zs[0][1]
+        mat = {parts_json[n]["material"] for n in names} if parts_json else {"steel_dark"}
+        got = {"u": round(float(ctr[0] - mod.X0), 1), "v": round(float(ctr[2] - mod.Z0), 1), "size": [round(float(size[0]), 1), round(float(size[2]), 1)], "proud": round(float(mod.LY0 - lo[1]), 2),
+               "gap_mm": round(float(gap), 1), "material": sorted(mat)}
+        ok = (abs(got["u"] - ex["u"]) <= c["tol"] and abs(got["v"] - ex["v"]) <= c["tol"] and abs(size[0] - ex["size"][0]) <= 1.0 and abs(size[2] - ex["size"][1]) <= c["tol"]
+              and abs(got["proud"] - ex["proud"]) <= 0.5 and abs(gap - 10.0) <= 1.0 and mat == {"steel_dark"})
+        rep.add(c["id"], ok, got, ex, c["what"], c["tol"], group="FU", kind=mod.kind)
+
+
+def row_kh_pocket(N, mod, rep):
+    """KH1 is sunk: where the target places KH1 for this kind the leaf has a blind keyhole-shaped pocket, 2.2 deep (at 2.0 below the face the keyhole is open, at 2.4 it is solid), whose
+    outline is the keyhole's (IoU at least 0.9). Not through, so nothing can show through."""
+    kh = N["furniture"]["keyhole"]["KH1"]
+    pl = kh["place"].get(mod.kind)
+    if not pl:
+        return
+    cx, cz = mod.X0 + pl["u"], mod.Z0 + pl["v"]
+    want = Polygon(bd.Door.keyhole_outline(cx, cz, kh["head_dia"], kh["slot_w"], kh["size"][1]))
+    from shapely.geometry import Point as _P
+    got = {}
+    ok = True
+    for tag, dy in (("front", 1.0), ("floor_minus", 2.0), ("floor_plus", 2.4)):
+        hs = [h for h in mod.holes(mod.LY0 + dy) if h.contains(_P(cx, cz))]
+        got[tag] = round(float(hs[0].area), 1) if hs else 0.0
+        if tag == "front":
+            iou = float(hs[0].intersection(want).area / hs[0].union(want).area) if hs else 0.0
+            got["iou_with_the_keyhole"] = round(iou, 3)
+            ok &= iou >= 0.9
+        elif tag == "floor_minus":
+            ok &= got[tag] > 0.0
+        else:
+            ok &= got[tag] == 0.0
+    rep.add("FU-%s-keyhole-pocket" % mod.kind, ok, got, "a keyhole-shaped blind pocket 2.2 deep at u %s, v %s: open at 1.0 and 2.0 below the face, solid at 2.4" % (pl["u"], pl["v"]),
+            "KH1 is SUNK, as the target says (close review 10): the leaf is cut with a pocket, the fitting sits in it", group="FU", kind=mod.kind)
+
+
+def notch_measure(void, X0, W, Z0, left):
+    """The cavity of a notch from the section of the leaf at 0.3 mm below its face (`void`: the missing material at the hinge-side foot), in leaf millimetres: its width, the greatest
+    and the mean height of its top edge, the top edge's wander (peak to peak over s 15 to 90), the height in the last 8 mm. s runs from the leaf's end in."""
+    if void is None or void.is_empty:
+        return None
+    b = void.bounds
+    xs = np.arange(b[0] + 0.5, b[2] - 0.4, 1.0)
+    tops = []
+    for x in xs:
+        seg = void.intersection(LineString([(x, Z0 - 5.0), (x, Z0 + 60.0)]))
+        tops.append(seg.bounds[3] - Z0 if not seg.is_empty else 0.0)
+    tops = np.array(tops)
+    s = (xs - X0) if left else (X0 + W - xs)
+    order = np.argsort(s)
+    s, tops = s[order], tops[order]
+    mid = (s >= 15.0) & (s <= 90.0)
+    return {"width_mm": round(float(b[2] - b[0]), 1), "max_height_mm": round(float(tops.max()), 1), "mean_height_mid_mm": round(float(tops[mid].mean()), 1),
+            "wander_pp_mm": round(float(tops[mid].max() - tops[mid].min()), 1), "height_at_free_end_mm": round(float(tops[-8:].mean()), 1)}
+
+
+def notch_ok(m):
+    """The street review's point 8: an irregular worn edge, not a crisp rectangle: 25 high on average (20 to 30), the top edge wandering by at least 4 mm peak to peak (and under 14),
+    the free end tapering to under 6 mm over its last 8 mm, 100 to 135 wide."""
+    return (m is not None and 100.0 <= m["width_mm"] <= 135.0 and 18.0 <= m["mean_height_mid_mm"] <= 30.0 and m["max_height_mm"] <= 33.0 and 4.0 <= m["wander_pp_mm"] <= 14.0
+            and m["height_at_free_end_mm"] <= 6.0)
+
+
+def camera_px(view, pts_m, W=1600, H=1200, sensor=36.0):
+    """Project points (metres, the kind's glb frame) with a gate view (loc, target, lens mm), as Blender does for a camera that tracks its target (-Z) with Y up, sensor 36 wide."""
+    loc, tgt = np.array(view["loc"], float), np.array(view["target"], float)
+    f = tgt - loc
+    f /= np.linalg.norm(f)
+    right = np.cross(f, [0.0, 0.0, 1.0])
+    right /= np.linalg.norm(right)
+    up = np.cross(right, f)
+    fpx = view["lens"] / sensor * W
+    Q = np.asarray(pts_m, float) - loc
+    z = Q @ f
+    return np.stack([W / 2.0 + fpx * (Q @ right) / z, H / 2.0 - fpx * (Q @ up) / z], axis=1)
+
+
+def luma(path):
+    im = np.asarray(Image.open(path).convert("RGB"), float)
+    return 0.2126 * im[..., 0] + 0.7152 * im[..., 1] + 0.0722 * im[..., 2], im.shape[1], im.shape[0]
+
+
+def row_t3_street_dip(N, rep, picture, label="v2"):
+    """PL-T3-street-dip (the street review's fault 1): on the street picture, across each of the 16 outlines of T3's two panels the brightness changes by at least 10 per cent of the leaf
+    face's within 4 px of where the outline projects. The picture is the same flat overcast light as D4's, whose outlines dip 14 to 40 per cent."""
+    from scipy.ndimage import map_coordinates
+    c = [x for x in N["checks"] if x["id"] == "PL-T3-street-dip"][0]
+    if not os.path.exists(picture):
+        rep.add(c["id"], False, "no picture %s" % picture, c["expect"], c["what"], group="PL", kind="T3")
+        return
+    Y, W, H = luma(picture)
+    fs = N["frame_sets"]["T"]
+    px, py, pz = fs["glb_pivot"]
+    X0, Z0, LY0 = fs["leaf_x0"], fs["leaf_z0"], fs["leaf_front_y"]
+    view = [v for v in N["gate"]["views"]["T3"] if v["name"] == "street"][0]
+    ops = {o["id"]: o for o in N["kinds"]["T3"]["leaf"]["openings"]}
+
+    def pt(u, v):
+        return np.array([(X0 + u - px) / 1000.0, LY0 / 1000.0, (Z0 + v - pz) / 1000.0])
+    lines = []
+    for pid in ("upper_panel", "lower_panel"):
+        o = ops[pid]
+        iv = o["inner"]
+        umid, vmid = 0.5 * (o["u0"] + o["u1"]), 0.5 * (o["v0"] + o["v1"])
+        for tag, box_ in (("outer", (o["u0"], o["u1"], o["v0"], o["v1"])), ("inner", (iv["u0"], iv["u1"], iv["v0"], iv["v1"]))):
+            u0, u1, v0, v1 = box_
+            lines.append(("%s_%s_left" % (pid, tag), pt(u0, vmid), pt(u0, vmid + 20.0)))
+            lines.append(("%s_%s_right" % (pid, tag), pt(u1, vmid), pt(u1, vmid + 20.0)))
+            lines.append(("%s_%s_foot" % (pid, tag), pt(umid, v0), pt(umid + 20.0, v0)))
+            top_u = umid
+            lines.append(("%s_%s_top" % (pid, tag), pt(top_u, v1), pt(top_u + 20.0, v1)))
+    # the leaf face: the left stile, between the leaf's edge and the outer outlines
+    gy, gx = np.mgrid[0:6, 0:6]
+    face_pts = np.array([pt(35.0 + 70.0 * a / 5.0, 960.0 + 700.0 * b / 5.0) for a in range(6) for b in range(6)])
+    fq = camera_px(view, face_pts, W, H)
+    face = float(np.median(map_coordinates(Y, [fq[:, 1], fq[:, 0]], order=1)))
+    res = {}
+    worst = 9.0
+    for name, p0, p1 in lines:
+        q = camera_px(view, np.array([p0, p1]), W, H)
+        t = q[1] - q[0]
+        t /= np.linalg.norm(t)
+        nrm = np.array([-t[1], t[0]])
+        offs = np.arange(-6.0, 6.01, 0.5)
+        prof = []
+        for o_ in offs:
+            ss = np.arange(-8.0, 8.01, 1.0)
+            xx = q[0][0] + o_ * nrm[0] + ss * t[0]
+            yy = q[0][1] + o_ * nrm[1] + ss * t[1]
+            prof.append(float(map_coordinates(Y, [yy, xx], order=1).mean()))
+        prof = np.array(prof)
+        win = np.abs(offs) <= 4.0
+        dip = float((prof[win].max() - prof[win].min()) / face)
+        res[name] = round(dip, 3)
+        worst = min(worst, dip)
+    ok = worst >= c["expect"]["min_dip_fraction"] and len(res) == c["expect"]["outlines"]
+    by = {"foot_and_top_outlines_least": min(v for k_, v in res.items() if k_.endswith(("_foot", "_top"))), "right_hand_outlines_least": min(v for k_, v in res.items() if k_.endswith("_right")),
+          "left_hand_outlines_least": min(v for k_, v in res.items() if k_.endswith("_left"))}
+    fails = sorted(k_ for k_, v in res.items() if v < c["expect"]["min_dip_fraction"])
+    rep.add(c["id"], ok, {"face_brightness": round(face, 1), "least_dip": round(worst, 3), "by_orientation": by, "outlines_under_the_limit": fails, "dips": res}, c["expect"], c["what"] + " [measured on %s]" % os.path.basename(picture), group="PL", kind="T3")
+
+
+def row_t2_nets_lit(N, rep, picture):
+    """The street review's narrow point 1: T2's nets read as slate-grey boards (about half the jamb's white) where D3's are pale. On the street picture the four lights' glass area reads at
+    least 75 per cent of the right jamb's white (the median brightness over the lights, less their bars, against the median over the jamb's face)."""
+    from scipy.ndimage import map_coordinates
+    if not os.path.exists(picture):
+        rep.add("GA-T2-nets-lit", False, "no picture %s" % picture, ">= 0.75 of the jamb's white", group="GA", kind="T2")
+        return
+    Y, W, H = luma(picture)
+    fs = N["frame_sets"]["T"]
+    px, py, pz = fs["glb_pivot"]
+    X0, Z0, LY0 = fs["leaf_x0"], fs["leaf_z0"], fs["leaf_front_y"]
+    view = [v for v in N["gate"]["views"]["T2"] if v["name"] == "street"][0]
+    pts = []
+    for o in N["kinds"]["T2"]["leaf"]["openings"]:
+        for a in range(8):
+            for b in range(5):
+                u = o["u0"] + 25.0 + (o["u1"] - o["u0"] - 50.0) * a / 7.0
+                v = o["v0"] + 25.0 + (o["v1"] - o["v0"] - 50.0) * b / 4.0
+                pts.append(((X0 + u - px) / 1000.0, (LY0 + 14.0) / 1000.0, (Z0 + v - pz) / 1000.0))
+    q = camera_px(view, np.array(pts), W, H)
+    nets = float(np.median(map_coordinates(Y, [q[:, 1], q[:, 0]], order=1)))
+    jx0, jx1 = fs["jamb_x"]["right"]
+    jp = np.array([((jx0 + 12.0 + (jx1 - jx0 - 24.0) * a / 5.0 - px) / 1000.0, fs["frame_front_y"] / 1000.0, (z - pz) / 1000.0) for a in range(6) for z in (700.0, 900.0, 1100.0, 1300.0, 1500.0)])
+    jq = camera_px(view, jp, W, H)
+    jamb = float(np.median(map_coordinates(Y, [jq[:, 1], jq[:, 0]], order=1)))
+    ratio = nets / jamb
+    rep.add("GA-T2-nets-lit", ratio >= 0.75, {"nets_median": round(nets, 1), "jamb_white_median": round(jamb, 1), "ratio": round(ratio, 3)}, ">= 0.75 of the jamb's white",
+            "T2's four lights, on the street picture, read at least 75 per cent of the right jamb's white (D3's nets are pale beside its white stiles) [measured on %s]" % os.path.basename(picture), group="GA", kind="T2")
+
+
+def lab_of_srgb(rgb):
+    def f(c):
+        c = c / 255.0
+        return c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4
+    r, g, b = [f(x) for x in rgb]
+    X, Y, Z = 0.4124 * r + 0.3576 * g + 0.1805 * b, 0.2126 * r + 0.7152 * g + 0.0722 * b, 0.0193 * r + 0.1192 * g + 0.9505 * b
+
+    def ff(t):
+        return t ** (1.0 / 3.0) if t > 0.008856 else 7.787 * t + 16.0 / 116.0
+    fx, fy, fz = ff(X / 0.95047), ff(Y), ff(Z / 1.08883)
+    return (116.0 * fy - 16.0, 500.0 * (fx - fy), 200.0 * (fy - fz))
+
+
+def row_street_extra(N, H, rep, numbers=None):
+    """Rows the street review of 13 October added (its points 3, 4 and 7), on the house table and the placeholder numbers:
+    AD-neighbours-deltaE: every neighbouring pair's paints differ by a CIELAB colour difference of at least 20 (F3 dark green beside F7 deep teal measured 8.4 on the render, 13.8 on the paints,
+    against 25 to 80 for every other pair); AD-same-kind-other-paint: no two houses of one kind share a paint (two F1 doors were maroon twins);
+    AD-numbers: the placeholder house numbers are British: odd on the west side, even on the east, rising from the quay, two digits at most, none a number read from a photograph (69, 178)."""
+    byid = {h["house"]: h for h in H["houses"]}
+    pal = {p["id"]: p["srgb"] for p in N["paints"]}
+    bad, mn = [], 1e9
+    for side in ("east", "west"):
+        order = N["street"]["order"][side]
+        for a, b in zip(order[:-1], order[1:]):
+            if a in byid and b in byid:
+                de = math.dist(lab_of_srgb(pal[byid[a]["paint"]]), lab_of_srgb(pal[byid[b]["paint"]]))
+                mn = min(mn, de)
+                if de < 20.0:
+                    bad.append((a, byid[a]["paint"], b, byid[b]["paint"], round(de, 1)))
+    rep.add("AD-neighbours-deltaE", not bad, bad or {"least_deltaE": round(mn, 1)}, ">= 20 between neighbouring doors' paints (CIELAB)", "street review point 7", group="AD")
+    twins = []
+    for k in sorted({h["kind"] for h in H["houses"]}):
+        ps = [h["paint"] for h in H["houses"] if h["kind"] == k]
+        if len(ps) != len(set(ps)):
+            twins.append((k, ps))
+    rep.add("AD-same-kind-other-paint", not twins, twins or "no two houses of a kind share a paint", "no twins", "street review point 7 (two F1 doors were the same maroon)", group="AD")
+    digits = numbers if numbers is not None else H.get("numbers", {}).get("digits", {})
+    placed = []
+    for h in H["houses"]:
+        for f in h["furniture"]:
+            if f["slot"] == "number":
+                key = "%s:%s" % (f["glb"].replace("_stacked", ""), h["kind"])
+                placed.append((h["side"], h["x_centre_m"], h["house"], digits.get(key)))
+    bad = []
+    for side, parity in (("west", 1), ("east", 0)):
+        row = sorted([p for p in placed if p[0] == side], key=lambda p: p[1])
+        nums = [p[3] for p in row]
+        if any(n is None or not n.isdigit() or int(n) % 2 != parity or len(n) > 2 or int(n) in (69, 178) for n in nums):
+            bad.append((side, nums, "odd on the west, even on the east, two digits at most, none from a photograph"))
+        elif [int(n) for n in nums] != sorted(int(n) for n in nums):
+            bad.append((side, nums, "rising from the quay"))
+    rep.add("AD-numbers", not bad and len(placed) == 4, bad or {"placed": [(p[2], p[3]) for p in placed]}, "odd on the west side, even on the east, rising from the quay, two digits at most",
+            "street review points 3 and 4 (the first build had 34, 21 and 15 on one side and a 246 on a street 48 m long): the digits stay placeholders, the town assigns the real ones", group="AD")
 
 
 # ------------------------------------------------------------------ the run
@@ -1311,11 +1711,11 @@ def run(args):
     rep.adapt += [
         "Frame sets T and F only (the target's FIXES-APPLIED.md: the planted-stop frame FF6 and its frame_change are gone; F6 stands in frame F, an inward-opening 838 leaf).",
         "A1: the drawing's frame, transom glass and visible leaf are compared as what shows from the street (the nearest part wins), because a pane is let 6 mm into its frame's slot and a leaf laps 20.4 behind its stops; the glazing bead counts as glass (it stands on the pane inside the opening).",
-        "A3 mouldings: the drawing's ring starts at the opening's edge and runs 46 (T1) or 43 (F1, F2) inward; the 3.1 build's bolection stands 4.8 outside the opening's edge (its lap over the framing) and so reaches 41.2 or 38.2 in. The row compares with the ring grown by the lap; the literal ring is an extra (it differs by that lap).",
-        "T3: the profile list puts the second cove at d 76 to 90, 13.5 mm further in than the inner outline the drawing, the photograph's rows and PL-T3-upper_panel-inner draw (d 62.5). Built to the drawing and the photograph: the cove lies 14 mm inside each outline. The profile row compares the outer cove and the flat margin (d to 60) and the field's 6 depth.",
-        "PL-T3-members: border 65 has no counterpart in the target's own T3 outlines (the flat margin between the outlines is 62.5 at the sides, 75.9 at the foot of the upper panel); measured as the side margin.",
-        "F7: the target's leaf is 38 thick with boards 22 and ledges 25 (47 together): the ledges are built 16 thick so the leaf is 38; the braces 15.",
-        "BS1: the point list standard_profile_xz puts the scroll's tip on the blade's side (x negative where x is outward from the blade's end), the target's words say the scroll curls outward: built as the point list gives it.",
+        "A3 mouldings: the drawing's ring (target_drawing.py, which is not this unit's file and is not changed) starts at the opening's edge and runs 46 (T1) or 43 (F1, F2) inward; the 3.1 build's bolection stands 4.8 outside the opening's edge (its lap over the framing) and so reaches 41.2 or 38.2 in. Since the try 1 reviews the target states that lap (kinds.*.mouldings.outside.lap_over_framing_mm 4.8) and the row compares with the ring grown by it; the literal ring stays an extra, failing only for that reason (the drawing script is owed the same change).",
+        "T3 (changed 13 Oct, from the try 1 reviews): the target's profile is two steps 6 mm deep over 6 mm across (the margin 6 below the face, the field 12), the second cove at d 62.5 to 68.5, built to it; the first target's coves (3 deep over 14, the second at d 76 to 90) dipped 1 to 3 per cent in the street view against D4's 14 to 40.",
+        "PL-T3-members (changed 13 Oct): the target's border is now 62.5, the flat margin between the outer and the inner outline at the sides.",
+        "F7 (changed 13 Oct): the target's leaf is now 47 thick (boards 22, ledges 25, braces 25); the first build had thin 16 mm ledges (the leaf 38).",
+        "BS1 (changed 13 Oct): the target's point list now has the scroll outside its standard, curling outward (D10); the first build, to the first list, curled it inward over the blade. Overall length 404.",
         "The reeded section the target draws (reeded_section) is a 4.0 base with flutes on top (5.2 in all); the glass table says thickness 4.0: built 2.8 + 1.2 = 4.0, flutes of circular segments pitch 6, depth 1.2.",
     ]
     mods = {k: Model.load(N, k) for k in KINDS if os.path.exists(os.path.join(NPZ, "door_%s.npz" % k))}
@@ -1345,10 +1745,19 @@ def run(args):
         row_FU(N, k, houses_mods[k], rep)
         row_DIM(N, mod, rep)
         row_GLB(N, mod, rep, os.path.join(ASSET, "door_%s.glb" % k))
+        meshes_k, _ = cd.read_glb(os.path.join(ASSET, "door_%s.glb" % k))
+        row_flat_shading(rep, meshes_k, k, k)
+        parts_k = json.load(open(os.path.join(NPZ, "door_%s.parts.json" % k)))
+        glass_rows(rep, k, os.path.join(ASSET, "door_%s.glb" % k), parts_k, expect_reeded=(k == "F6"), nets=(k == "T2"))
+        row_hinge_fixing(N, mod, rep, parts_k)
+        row_kh_pocket(N, mod, rep)
         row_coplanar(N, mod, rep, k)
+        row_near_coplanar(rep, mod.M, k, k)
         for h in H["houses"]:
             if h["kind"] == k:
-                row_coplanar(N, assemble(N, mod, h, furn_cache), rep, "%s@%s" % (k, h["house"]))
+                mh = assemble(N, mod, h, furn_cache)
+                row_coplanar(N, mh, rep, "%s@%s" % (k, h["house"]))
+                row_near_coplanar(rep, mh.M, "%s@%s" % (k, h["house"]), k)
         for h in H["houses"]:
             if h["kind"] == k and h["furniture"]:
                 row_FIT(N, assemble(N, mod, h, furn_cache), rep, h["house"])
@@ -1365,10 +1774,14 @@ def run(args):
             texts[fn] = open(os.path.join(ASSET, fn), encoding="utf-8").read()
         glb_paths = {k: os.path.join(ASSET, "door_%s.glb" % k) for k in KINDS}
         row_AD_PN_WR_NM(N, H, rep, [c for g in ("AD", "PN", "WR", "NM") for c in tgt[g]], paint_json, cond_json, glb_paths, texts)
+        row_street_extra(N, H, rep)
         row_GL(N, mods, rep, tgt["GL"])
         row_MIX(N, H, rep)
         row_PH(N, mods, houses_mods, H, rep, tgt["PH"])
         row_GA(N, rep, tgt["GA"], args.renders)
+        ver, date = args.picture_version, args.date
+        row_t3_street_dip(N, rep, os.path.join(args.renders, "T3-street-v%d-%s.jpg" % (ver, date)))
+        row_t2_nets_lit(N, rep, os.path.join(args.renders, "T2-street-v%d-%s.jpg" % (ver, date)))
         load_furniture_checks(rep, N, furn_cache)
         # the notch of a neglected door, and the kept copies: built to prove the condition parameter
         notch_rows(N, rep)
@@ -1377,18 +1790,51 @@ def run(args):
     return out, rep, N, H, mods, houses_mods, furn_cache
 
 
-def notch_rows(N, rep, neglected_npz=None):
-    """The neglected doors of the street carry the notch (leaf_notch_bare); a kept door does not: read from the built parts (F4 and F7 are neglected, F4 also exists kept)."""
+def notch_void(m):
+    """The cavity of the notch in a model's leaf: the missing material at 0.3 mm below the face near the hinge-side foot (clear of the V joint of F7's boards: s under 135)."""
+    left = m.spec["leaf"]["lock_side"] == "right"
+    slab = m.region(m.slab_names(), 1, m.LY0 + 0.3, (0, 2))
+    leaf = sbox(m.X0, m.Z0, m.X0 + m.W, m.Z0 + m.H)
+    box_ = sbox(m.X0 - 1.0, m.Z0 - 1.0, m.X0 + 135.0, m.Z0 + 45.0) if left else sbox(m.X0 + m.W - 135.0, m.Z0 - 1.0, m.X0 + m.W + 1.0, m.Z0 + 45.0)
+    g = leaf.difference(slab).intersection(box_)
+    g = g.buffer(-0.8, join_style=2).buffer(0.8, join_style=2)               # the 1.5 mm bevel of the foot is a strip a millimetre high along the whole bottom edge: not the notch
+    polys = [g] if g.geom_type == "Polygon" else [h for h in getattr(g, "geoms", []) if h.geom_type == "Polygon"]
+    polys = [p for p in polys if p.area > 100.0]
+    return unary_union(polys) if polys else None
+
+
+def notch_depths(m):
+    """The depth of the notch along its length: the section of the leaf at 2.0 below the face still has the void in the middle; at 0.7 it reaches nearer the free end (0.5 deep there)."""
+    left = m.spec["leaf"]["lock_side"] == "right"
+    out = {}
+    for tag, dy in (("at_0.7", 0.7), ("at_2.0", 2.0), ("at_3.4", 3.4)):
+        slab = m.region(m.slab_names(), 1, m.LY0 + dy, (0, 2))
+        leaf = sbox(m.X0, m.Z0, m.X0 + m.W, m.Z0 + m.H)
+        box_ = sbox(m.X0 - 1.0, m.Z0 - 1.0, m.X0 + 135.0, m.Z0 + 45.0) if left else sbox(m.X0 + m.W - 135.0, m.Z0 - 1.0, m.X0 + m.W + 1.0, m.Z0 + 45.0)
+        g = leaf.difference(slab).intersection(box_).buffer(-0.8, join_style=2).buffer(0.8, join_style=2)
+        out[tag] = float(g.area)
+    return out
+
+
+def notch_rows(N, rep, neglected_npz=None, void_override=None):
+    """The neglected doors of the street carry the notch; a kept door does not: read from the built parts (F4 and F7 are neglected, F4 also exists kept). The notch is an irregular worn edge
+    (the street review's point 8; the first build's was a crisp 130 x 25 x 3 rectangle that read as a fitted strip): the cavity's top edge wanders, its free end tapers, it is 3 deep along
+    its length and 0.5 at the free end."""
     for k in ("F4", "F7"):
         m = Model.load(N, k, neglected_npz if (neglected_npz and k == "F4") else None)
         has = "leaf_notch_bare" in m.M
         if has:
             lo, hi = m.bbox("leaf_notch_bare")
-            u0 = lo[0] - m.X0
-            hinge_ok = (u0 < 5.0) if m.spec["leaf"]["lock_side"] == "right" else (hi[0] - m.X0 > m.W - 5.0)
-            w = (hi[0] - lo[0]) - 0.6
-            rep.add("WR:%s:notch" % k, hinge_ok and 60.0 <= w <= 200.5 and abs((hi[2] - lo[2]) - 25.3 - 0.0) <= 2.0, {"width_mm": round(float(w), 1), "height_mm": round(float(hi[2] - lo[2]), 1), "at_hinge_side": hinge_ok},
-                    "25 high, 60 to 200 wide, 3 deep, in the lower arris at the hinge side", "the neglected door's eroded notch, read from the built part", group="WR", kind=k)
+            left = m.spec["leaf"]["lock_side"] == "right"
+            hinge_ok = (lo[0] - m.X0 < 5.0) if left else (m.X0 + m.W - hi[0] < 5.0)
+            meas = notch_measure(void_override(m) if void_override else notch_void(m), m.X0, m.W, m.Z0, left)
+            dep = notch_depths(m)
+            depth_ok = dep["at_0.7"] - dep["at_2.0"] >= 50.0 and dep["at_3.4"] < 1.0                # shallower toward the free end, nothing at 3.4
+            depth_max = float(hi[1] - m.LY0) - 0.3
+            ok = hinge_ok and notch_ok(meas) and depth_ok and 2.5 <= depth_max <= 3.5
+            rep.add("WR:%s:notch" % k, ok, {**(meas or {}), "depth_mm": round(depth_max, 2), "void_area_at_depth_mm2": {a: round(b_, 0) for a, b_ in dep.items()}, "at_hinge_side": hinge_ok},
+                    "an irregular worn edge: 100 to 135 wide, 25 high on average (18 to 30, at most 33), the top edge wandering 4 to 14 mm, the free end tapering under 6 mm, 3 deep along its length and less toward the free end",
+                    "the neglected door's eroded notch, read from the built leaf (a section 0.3 below its face) and its bare-wood part", group="WR", kind=k)
         else:
             rep.add("WR:%s:notch" % k, False, "no leaf_notch_bare", "a notch in a neglected door", group="WR", kind=k)
     kp = os.path.join(NPZ, "door_F4_kept.npz")
@@ -1420,6 +1866,8 @@ def main():
     ap.add_argument("--overlays")
     ap.add_argument("--renders", default=os.path.join(REPO, "production", "previews", "cloud-week", "front-doors-all"))
     ap.add_argument("--controls", action="store_true")
+    ap.add_argument("--picture-version", type=int, default=2, help="the pictures the rows that measure pixels read: <kind>-street-v<N>-<date>.jpg")
+    ap.add_argument("--date", default="2026-10-13")
     a = ap.parse_args()
     if a.controls_only:
         import check_controls

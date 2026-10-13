@@ -116,7 +116,7 @@ def run_controls(N, H, mods, houses_mods, furn_cache, C):
         rep = new()
         C.row_CV(N, mod, rep)
         return rep
-    shift_leaf = lambda n: n.startswith(("leaf_", "panel_", "moulding_", "bead_", "glass_light", "glass_slit", "glass_small", "net_", "iron_nail", "glass_lens"))
+    shift_leaf = lambda n: n.startswith(("leaf_", "panel_", "moulding_", "bead_", "glass_light", "glass_slit", "glass_small", "net_", "iron_nail", "glass_lens", "iron_hinge", "iron_spyhole"))
     ctl("T1: a leaf shifted 14 mm (the left stop laps it by only 6.4)", "CV-T1-angle", lambda: cv("T1", mods["T1"].copy_with(shift=(shift_leaf, (14.0, 0.0, 0.0)))))
     ctl("T1: a leaf set back 12 mm behind the stops", "CV-T1-angle", lambda: cv("T1", mods["T1"].copy_with(shift=(shift_leaf, (0.0, 12.0, 0.0)))))
     ctl("T1: a leaf hung 12 mm in front of its stops", "CV-T1-inward", lambda: cv("T1", mods["T1"].copy_with(shift=(shift_leaf, (0.0, -12.0, 0.0)))))
@@ -374,5 +374,168 @@ def run_controls(N, H, mods, houses_mods, furn_cache, C):
         C.notch_rows(N, rep, neglected_npz=os.path.join(C.NPZ, "door_F4_kept.npz"))
         return rep
     ctl("a neglected door built with no notch (the kept copy read as the neglected one)", "WR:F4:notch", notch_off)
+    # ======================================================== try 2: the fresh reviews of 13 October (each wrong copy is the first build's fault, or what the review said was wrong)
+    # ---- F7's boards shaded as rounded staves (the close review's fault): the .glb's own normals of one board tilted 17 degrees by the side of its face they stand on
+    def staves():
+        meshes, _ = C.cd.read_glb(os.path.join(C.ASSET, "door_F7.glb"))
+        bad = {}
+        for name, prims in meshes.items():
+            if name == "leaf_board_3":
+                prims2 = []
+                for pr in prims:
+                    P, Nn = pr["P"].copy(), pr["N"].copy()
+                    front = Nn[:, 2] > 0.999                                   # glTF z is the street: the board's front face
+                    xc = 0.5 * (P[front, 0].min() + P[front, 0].max())
+                    t = np.radians(17.0)
+                    sgn = np.where(P[front, 0] < xc, -1.0, 1.0)
+                    Nn[front] = np.stack([sgn * np.sin(t), np.zeros(sgn.shape), np.cos(t) * np.ones(sgn.shape)], axis=1)
+                    prims2.append({**pr, "N": Nn})
+                bad[name] = prims2
+            else:
+                bad[name] = prims
+        rep = new()
+        C.row_flat_shading(rep, bad, "F7", "F7")
+        return rep
+    ctl("F7: board 3's front face shaded with the averaged normals of its V-joint chamfers (17 degrees off: rounded staves)", "GLB:F7:flat_faces_flat_shaded", staves)
+
+    # ---- LP2's liner back at the first build's place, 0.5 in front of the face: its front face within 0.1 mm of the dished flap's middle
+    def liner_back():
+        parts = {n: (V.copy(), F) for n, (V, F) in furn_cache["LP2"].items()}
+        V, F = parts["iron_letter_liner"]
+        V[:, 1] -= 0.25e-3
+        parts["iron_letter_liner"] = (V, F)
+        rep = new()
+        C.row_near_coplanar(rep, parts, "LP2")
+        return rep
+    ctl("LP2: the liner 0.25 mm further out (its front face 0.5 in front of the leaf's, as the first build had it)", "GLB:LP2:no_near_coplanar_faces", liner_back)
+
+    # ---- the hinge-stile fitting left out
+    def fixing(drop):
+        rep = new()
+        C.row_hinge_fixing(N, mods["T2"].copy_with(drop=drop), rep)
+        return rep
+    ctl("T2: the hinge-stile fitting left out (the first build)", "FU-T2-hinge_fixing", lambda: fixing(("iron_hinge_fixing_1", "iron_hinge_fixing_2")))
+    ctl("T2: the hinge-stile fitting built as one box", "FU-T2-hinge_fixing", lambda: fixing(("iron_hinge_fixing_2",)))
+
+    # ---- the keyhole's pocket: a kind with no pocket given a keyhole in the target
+    def kh_pocket():
+        Nx = copy.deepcopy(N)
+        Nx["furniture"]["keyhole"]["KH1"]["place"]["F4"] = {"u": 782.8, "v": 1151.0}
+        rep = new()
+        C.row_kh_pocket(Nx, mods["F4"], rep)
+        return rep
+    ctl("F4: a sunk keyhole expected where the leaf has no pocket", "FU-F4-keyhole-pocket", kh_pocket)
+
+    def kh_moved():
+        Nx = copy.deepcopy(N)
+        Nx["furniture"]["keyhole"]["KH1"]["place"]["F1"] = {"u": 700.0, "v": 1151.0}
+        rep = new()
+        C.row_kh_pocket(Nx, mods["F1"], rep)
+        return rep
+    ctl("F1: the keyhole expected 83 mm from where its pocket is cut", "FU-F1-keyhole-pocket", kh_moved)
+
+    # ---- the notch: a crisp rectangle (the first build's) in place of the irregular worn edge
+    def rectangle_notch():
+        def rect(m):
+            left = m.spec["leaf"]["lock_side"] == "right"
+            return C.sbox(m.X0, m.Z0, m.X0 + 130.0, m.Z0 + 25.0) if left else C.sbox(m.X0 + m.W - 130.0, m.Z0, m.X0 + m.W, m.Z0 + 25.0)
+        rep = new()
+        C.notch_rows(N, rep, void_override=rect)
+        return rep
+    ctl("a neglected door's notch a crisp 130 x 25 rectangle (the first build's)", "WR:F4:notch", rectangle_notch)
+
+    # ---- the glass and the materials
+    def tinted():
+        ms = copy.deepcopy(C.glb_materials(os.path.join(C.ASSET, "door_T2.glb"))[0])
+        for n_ in ms:
+            if n_ == "glass":
+                ms[n_]["base"] = [C.bd.lin(121), C.bd.lin(131), C.bd.lin(139), 1.0]
+        rep = new()
+        C.glass_rows(rep, "T2", None, {}, mats=ms)
+        return rep
+    ctl("T2: the glass tinted dark blue-grey (121, 131, 139), the 3.1 kit's material", "GLB:T2:glass_clear", tinted)
+
+    def reeded_plain():
+        pj = json.load(open(os.path.join(C.NPZ, "door_F6.parts.json")))
+        pj = {n: ({"material": "glass"} if n.startswith("glass_fanlight") else v) for n, v in pj.items()}
+        rep = new()
+        C.glass_rows(rep, "F6", os.path.join(C.ASSET, "door_F6.glb"), pj, expect_reeded=True)
+        return rep
+    ctl("F6: the reeded transom carrying the clear glass material (the first build)", "GLB:F6:reeded_glass_own_material", reeded_plain)
+
+    def nets_white():
+        pj = json.load(open(os.path.join(C.NPZ, "door_T2.parts.json")))
+        pj = {n: ({"material": "net_white"} if n.startswith("net_") else v) for n, v in pj.items()}
+        rep = new()
+        C.glass_rows(rep, "T2", os.path.join(C.ASSET, "door_T2.glb"), pj, nets=True)
+        return rep
+    ctl("T2: the net cards in a plain net_white card (the first build)", "GLB:T2:nets_net_voile", nets_white)
+
+    # ---- the pictures: the first build's own pictures are the wrong copies
+    v1 = os.path.join(C.REPO, "production", "previews", "cloud-week", "front-doors-all")
+
+    def dip_v1():
+        rep = new()
+        C.row_t3_street_dip(N, rep, os.path.join(v1, "T3-street-v1-2026-10-13.jpg"))
+        return rep
+    ctl("T3: the first build's street picture (outlines 3 mm deep over 14)", "PL-T3-street-dip", dip_v1)
+
+    def nets_v1():
+        rep = new()
+        C.row_t2_nets_lit(N, rep, os.path.join(v1, "T2-street-v1-2026-10-13.jpg"))
+        return rep
+    ctl("T2: the first build's street picture (the nets slate grey)", "GA-T2-nets-lit", nets_v1)
+
+    # ---- the profile, the thickness and the scraper as the first target had them
+    def old_t3_profile():
+        Nx = copy.deepcopy(N)
+        old = [[0.0, 0.0], [2.0, 0.166], [4.0, 0.595], [6.0, 1.181], [8.0, 1.819], [10.0, 2.405], [12.0, 2.834], [14.0, 3.0], [76.0, 3.0]]
+        Nx["kinds"]["T3"]["mouldings"]["outside"]["profile_dh"] = [q for q in old if q[0] <= 60.0] + [[60.0, 3.0], [76.0, 3.0]]
+        rep = new()
+        C.profile_rows(Nx, mods["T3"], rep)
+        return rep
+    ctl("T3: the first target's profile (steps 3 mm deep over 14) expected of the new leaf", "A4:T3:embossed_step", old_t3_profile)
+
+    def f7_38():
+        Nx = copy.deepcopy(N)
+        Nx["kinds"]["F7"]["leaf"]["t"] = 38.0
+        rep = new()
+        C.row_DIM(Nx, C.Model(Nx, "F7", mods["F7"].M, mods["F7"].pivot), rep)
+        return rep
+    ctl("F7: a leaf 38 thick expected (the first target), 47 built", "DIM:F7:leaf_t", f7_38)
+
+    def scraper_330():
+        Nx = copy.deepcopy(N)
+        for c in Nx["checks"]:
+            if c["id"] == "FU-T1-scraper-BS1":
+                c["expect"]["size"] = [330.0, 130.0, 200.0]
+        rep = new()
+        C.row_FU(Nx, "T1", houses_mods["T1"], rep)
+        return rep
+    ctl("T1: the scraper expected 330 long, the scrolls curling inward over the blade (the first build)", "FU-T1-scraper-BS1", scraper_330)
+
+    # ---- the street: the neighbours and the numbers
+    def teal_beside_green(Hx):
+        b = {h["house"]: h for h in Hx["houses"]}
+        b["west_north_bay1"]["paint"] = "dark_green"
+    pj_ = None
+
+    def extra(mutate=None, numbers=None):
+        Hx = copy.deepcopy(H)
+        if mutate:
+            mutate(Hx)
+        rep = new()
+        C.row_street_extra(N, Hx, rep, numbers)
+        return rep
+    ctl("F3 dark green beside F7 deep teal (the first table)", "AD-neighbours-deltaE", lambda: extra(teal_beside_green))
+
+    def twin_f1(Hx):
+        b = {h["house"]: h for h in Hx["houses"]}
+        b["west_north_bay0"]["paint"] = b["east_parade_bay0"]["paint"]
+    ctl("two F1 houses in the same maroon (the first table)", "AD-same-kind-other-paint", lambda: extra(twin_f1))
+    ctl("a 246 on the east side (the first numbers: 34, 21, 15 on one side)", "AD-numbers", lambda: extra(None, {"NM1:T1": "34", "NM1:F2": "246", "NM6:T2": "21", "NM3:F3": "15"}))
+    ctl("odd and even mixed on the west side", "AD-numbers", lambda: extra(None, {"NM1:T1": "17", "NM1:F2": "14", "NM6:T2": "22", "NM3:F3": "29"}))
+    ctl("the west numbers falling from the quay", "AD-numbers", lambda: extra(None, {"NM1:T1": "29", "NM1:F2": "14", "NM6:T2": "21", "NM3:F3": "17"}))
+
     caught = sum(1 for r in rows if r["caught"])
     return {"run": len(rows), "caught": caught, "rows": rows}

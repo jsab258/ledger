@@ -219,7 +219,7 @@ def display(d):
     import sw_room_gen as RG
     rr = d.RR
     walls = rr["walls"]
-    d.start((176, 144, 100), RG._rgb(walls["above"]), RG._rgb(walls["dado"]))
+    d.start((122, 96, 64), RG._rgb(walls["above"]), RG._rgb(walls["dado"]))      # a dark stained deal bed: the first (176, 144, 100) burnt under the gate's night spill (PIC-05g read 0.028)
     rnd = d.rnd
     L = d.L
     X = lambda u: u - L / 2
@@ -232,9 +232,10 @@ def display(d):
     ts = 0.50 / max(d.dims("round_wooden_table_02").x, d.dims("round_wooden_table_02").y)
     tu, tv = 1.675, 0.27
     d.piece("round_wooden_table_02", tu, tv, 0.0, rot=(0, 0, 0), scale=ts, tier="bed", tris=None)
+    d.tone(d.last_objs, 2.2)                    # the walnut's pedestal read 0.18 to 0.25 of the room at night (LIT-08): a pale-stained oak
     tab_ext = d.items[-1]["ext"]
     top_z = tab_ext[5]
-    lam = d.mat("laminate", rgb8(206, 188, 150), rough=0.35)
+    lam = d.mat("laminate", rgb8(160, 142, 106), rough=0.35)
     lg = GM()
     rt = 0.25
     lg.lathe(X(tu), tv, top_z, [(0.0, 0.0), (rt, 0.0), (rt, 0.008), (rt - 0.004, 0.012), (0.0, 0.012)], mi=0, n=36)
@@ -242,6 +243,7 @@ def display(d):
     top_z += 0.012
     cs = 0.75
     d.piece("painted_wooden_chair_01", tu - 0.462, tv, 0.0, rot=(0, 0, -math.pi / 2), scale=cs, tier="bed", tris=None)
+    d.tone(d.last_objs, 0.78)                   # the white paint burnt on the seats under the gate's night spill (PIC-05g)
     d.piece("painted_wooden_chair_01", tu + 0.462, tv, 0.0, rot=(0, 0, math.pi / 2), scale=cs, tier="bed", tris=None)
     pot = d.sub_template("tea_set_01", "pot", lambda n: "teapot" in n)
     sug = d.sub_template("tea_set_01", "sugar", lambda n: "sugar" in n)

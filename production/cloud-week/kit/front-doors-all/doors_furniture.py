@@ -3,7 +3,8 @@
 Every variant is built in millimetres in its own frame and written in metres: the origin is the fitting's mounting point on the leaf's face (the bell push: on the
 jamb's stop face; the scraper: on the ground against the wall), x across as seen from the street, z up, y into the wall (the street toward -y, so a fitting
 stands at negative y), scale 1. A fitting stands 0.4 mm INTO the face it sits on and carries what it needs (a plate its own dark liner), so no leaf is cut for
-it and no two faces are coplanar. Which house gets which variant, and where (the mount point in the kind's own frame), is data: doors_street.py, houses.json.
+it and no two faces are coplanar. The one exception is the plugged keyhole KH1, which is SUNK: the leaf has a blind pocket for it (doors_kinds.keyhole_pockets) and the fitting
+sits in the pocket, behind the face. Large flat faces are shaded flat (doors_shading.py). Which house gets which variant, and where (the mount point in the kind's own frame), is data: doors_street.py, houses.json.
 A lever is built pointing +x (toward the middle of a left-locking door); houses.json says mirror_x for the others.
 
 Reserve variants (LP3, KN1, KN2, BL2, NM2, NM4, NM5) are built and placed nowhere; KN3 (lion's head) is not offered by the target and is not built.
@@ -22,12 +23,14 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import doors_lib as L  # noqa: E402
 from doors_lib import bd  # noqa: E402
+import doors_shading as SH  # noqa: E402
 
 import bpy  # noqa: E402
 from mathutils import Matrix  # noqa: E402
 
-# placeholder numbers (the town's to assign; none is canon): the forms are the target's, the digits are not
-NUMBERS = {"NM1:T1": "34", "NM1:F2": "246", "NM6:T2": "21", "NM3:F3": "15"}
+# placeholder numbers (the town's to assign; none is canon): the forms are the target's, the digits are not. British numbering (the street review of 13 October, point 4): odd on one
+# side and even on the other, rising from the quay, two digits at most (the first build had 34 and 21 and 15 on one side and a 246 on a 48 m street)
+NUMBERS = {"NM1:T1": "17", "NM1:F2": "14", "NM6:T2": "21", "NM3:F3": "29"}      # west (cottage) side odd, rising from the quay: 17, 21, 29; east side even: 14
 
 
 def srgb(c):
@@ -77,6 +80,7 @@ class PartSet:
             bd.box_uv(me)
             me.shade_smooth()
             me.set_sharp_from_angle(angle=math.radians(35.0))
+            SH.sharpen_flat_faces(me)
             me.materials.clear()
             me.materials.append(self.mats[d["mat"]])
             out.append(ob)
@@ -140,8 +144,9 @@ def plate_rim(ps, d, mat, aperture_top_margin, bosses=None):
              bd.rect_ring(-aw / 2, zbot_ap, aw / 2, ztop_ap, yb)]
     V, F = bd.loft_rings(rings)
     ps.add("iron_letter_plate", V, F, mat)
-    # the dark liner behind the flap: 0.3 in front of the leaf's face, so the gaps round the flap and under its lip read as a slot, never as paint
-    V, F = bd.box(-aw / 2 + 0.3, -0.5, zbot_ap + 0.3, aw / 2 - 0.3, -0.3, ztop_ap - 0.3)
+    # the dark liner behind the flap: 0.25 to 0.05 in front of the leaf's face (the first build had it at 0.5 to 0.3, whose front face lay within 0.1 mm of the dished flap's
+    # middle: the close review's narrow point 2), so the gaps round the flap and under its lip read as a slot, never as paint, and no two faces lie within 0.1 mm
+    V, F = bd.box(-aw / 2 + 0.3, -0.25, zbot_ap + 0.3, aw / 2 - 0.3, -0.05, ztop_ap - 0.3)
     ps.add("iron_letter_liner", V, F, "slot_interior")
     fw = aw / 2 - 1.0
     xs_ = [-fw + 2 * fw * i / 12 for i in range(13)]
@@ -173,7 +178,7 @@ def plate_flush(ps, d, mat):
              bd.rect_ring(-ow / 2, -oh / 2, ow / 2, oh / 2, yb)]
     V, F = bd.loft_rings(rings)
     ps.add("iron_letter_plate", V, F, mat)
-    V, F = bd.box(-ow / 2 + 0.3, -0.5, -oh / 2 + 0.3, ow / 2 - 0.3, -0.3, oh / 2 - 0.3)
+    V, F = bd.box(-ow / 2 + 0.3, -0.25, -oh / 2 + 0.3, ow / 2 - 0.3, -0.05, oh / 2 - 0.3)
     ps.add("iron_letter_liner", V, F, "slot_interior")
     V, F = bd.box(-ow / 2 + 1.2, -(pr - 0.8) + 0.0 - 0.0 + 0.0, -oh / 2 + 1.2, ow / 2 - 1.2, -(pr - 0.8) + 0.8 + 0.0, oh / 2 - 1.2)
     ps.add("iron_letter_flap", V, F, mat)
@@ -208,48 +213,100 @@ def knob(ps, d):
     ps.add("iron_knob_rose", V, F, "paint_black")
 
 
-def lever(ps, d):
-    """A lever handle on a round rose, pointing +x: a rose (rose_dia, rose_proud, rounded edge), a neck, and a bar of the lever's length (from the rose's centre)
-    and width, 14 deep, standing lever_proud from the face."""
-    rr, rpr = d["rose_dia"] / 2.0, d["rose_proud"]
+def lever_bar(ps, ln, w0, w1, lp, depth=14.0, bend_len=25.0, drop=9.0):
+    """The bar of a lever handle, pointing +x from the pivot: tapered in the front view from w0 at the neck to w1 at the tip (a rounded end), and in the side view its last
+    bend_len curving back toward the door by `drop` (the close review's narrow point 5: the first build's bar was straight, flat and parallel-sided, a 2000s minimal lever).
+    The bar is the intersection of two extrusions: the front outline (x, z) through the depth, and the side outline (x, y) through the height. It stands lp from the face."""
+    rr, re = w0 / 2.0, w1 / 2.0
+    pts = [(rr * math.cos(math.radians(a)), rr * math.sin(math.radians(a))) for a in range(90, 271, 15)]
+    pts += [(ln - re, -re)] + [((ln - re) + re * math.cos(math.radians(a)), re * math.sin(math.radians(a))) for a in range(-90, 91, 15)][1:]
+    pts += [(0.0, rr)]
+    xb = ln - bend_len
+
+    def off(x):
+        return 0.0 if x <= xb else drop * ((x - xb) / bend_len) ** 2
+    xs = [-rr, 0.0, xb] + [xb + bend_len * i / 8.0 for i in range(1, 9)]
+    top = [(x, -lp + off(x)) for x in xs]
+    bot = [(x, -(lp - depth) + off(x)) for x in xs]
+    ob = ps.add("iron_lever", *bd.prism(pts, ("x", "z"), "y", -lp - 3.0, -(lp - depth) + drop + 3.0), "chrome_nickel", (1.5, None, 1))
+    bd.keep_inside(ob, *bd.prism(top + bot[::-1], ("x", "y"), "z", -40.0, 40.0))
+    return ob
+
+
+def lever(ps, d, backplate=None):
+    """A lever handle pointing +x, standing lever_proud from the face: a pivot (a round rose, or with `backplate` a small round boss on a long backplate), a neck and the bar.
+    HD2a keeps the round rose (D5 shows a lever on a rose). HD2b and HD2c have a backplate 40 x 170 with a keyhole 57 below the lever's centre (sashlock furniture: the
+    street review's point 2 and its dated 1990 photograph of a lever on a long backplate; the close review's 'keep the round rose' rests on D5, which is HD2a's door only)."""
     ln, wd = d["lever"]
     lp = d["lever_proud"]
-    V, F = lathe_y([(0.0, -0.4), (rr, -0.4), (rr, rpr - 1.5), (rr - 1.5, rpr), (0.0, rpr)], 40)
-    ps.add("iron_rose", V, F, "chrome_nickel")
-    V, F = lathe_y([(0.0, rpr - 0.4), (7.0, rpr - 0.4), (7.0, lp - 6.0), (0.0, lp - 6.0)], 24)
+    if backplate is None:
+        rr, rpr = d["rose_dia"] / 2.0, d["rose_proud"]
+        V, F = lathe_y([(0.0, -0.4), (rr, -0.4), (rr, rpr - 1.5), (rr - 1.5, rpr), (0.0, rpr)], 40)
+        ps.add("iron_rose", V, F, "chrome_nickel")
+        base = rpr
+    else:
+        bw, bh = backplate["size"]
+        bt = backplate["proud"]
+        top = backplate["top_above_lever_centre"]
+        zc = top - bh / 2.0
+        ob = ps.add("iron_backplate", *bd.prism(rrect(0.0, zc, bw, bh, 14.0, 6), ("x", "z"), "y", -bt, 0.4), "chrome_nickel", (0.8, None, 1))
+        kh = bd.Door.keyhole_outline(0.0, -backplate["keyhole_below_lever_centre"], backplate["keyhole_head"], backplate["keyhole_slot"], backplate["keyhole_h"])
+        bd.cut(ob, *bd.prism(L.ccw(kh), ("x", "z"), "y", -bt - 1.0, 1.0))
+        from shapely.geometry import Polygon as SPoly
+        inner = SPoly(kh).buffer(-0.3)
+        ps.add("iron_keyhole_liner", *bd.prism(L.ccw(list(inner.exterior.coords)[:-1]), ("x", "z"), "y", -0.7, 0.2), "slot_interior")
+        rr, rpr = backplate["boss_dia"] / 2.0, bt + backplate["boss_proud"]
+        V, F = lathe_y([(0.0, bt - 1.0), (rr, bt - 1.0), (rr, rpr - 1.2), (rr - 1.2, rpr), (0.0, rpr)], 36)           # the boss starts inside the plate: no face shared with its back
+        ps.add("iron_rose", V, F, "chrome_nickel")
+        base = rpr
+    V, F = lathe_y([(0.0, base - 0.4), (7.0, base - 0.4), (7.0, lp - 6.0), (0.0, lp - 6.0)], 24)
     ps.add("iron_neck", V, F, "chrome_nickel")
-    cap = LineString([(0.0, 0.0), (ln - wd / 2.0, 0.0)]).buffer(wd / 2.0, resolution=6)
-    pts = list(cap.exterior.coords)[:-1]
-    V, F = bd.prism(L.ccw(pts), ("x", "z"), "y", -lp, -(lp - 14.0))
-    ps.add("iron_lever", V, F, "chrome_nickel", (1.5, None, 1))
+    lever_bar(ps, ln, 16.0, 12.0, lp)
 
 
 def bar_pull(ps, d):
-    """HD3: a vertical bar pull on two standoffs (dark steel): 25 x 270, 35 proud."""
+    """HD3: a vertical pull on two standoffs, 25 across (the roses) and 270 long overall, dark steel. The close review's narrow point 3: the first build's was a flat front face
+    with rounded ends, the look of a recent composite-door pull. Now a round grip 19 across with domed ends (so it carries a highlight along its length), on two posts that flare
+    into roses 25 across, the grip's axis 30 from the face (the review's 30 mm stand-off, read as face to the grip's axis)."""
     w, h = d["size"]
-    pr = d["proud"]
-    V, F = bd.prism(rrect(0.0, 0.0, w, h, 8.0, 5), ("x", "z"), "y", -pr, -(pr - 12.0))
-    ps.add("iron_pull_bar", V, F, "steel_dark", (1.0, None, 1))
+    gd, so = d["grip_dia"], d["stand_off"]
+    V, F = L.tube_z(h, gd / 2.0, None, -so, 24)
+    ps.add("iron_pull_bar", V, F, "steel_dark")
     for z, tag in ((h / 2 - 28.0, "u"), (-h / 2 + 28.0, "l")):
-        V, F = lathe_y([(0.0, -0.4), (6.0, -0.4), (6.0, pr - 11.6), (0.0, pr - 11.6)], 20, 0.0, z)
+        rose = w / 2.0
+        V, F = lathe_y([(0.0, -0.4), (rose, -0.4), (rose, 2.2), (rose - 2.0, 3.4), (rose - 6.0, 5.2), (4.6, 9.0), (4.0, 12.0), (4.0, so), (0.0, so)], 32, 0.0, z)
         ps.add("iron_pull_post_" + tag, V, F, "steel_dark")
 
 
 def thumb_latch(ps, d):
-    """HD4: the iron thumb latch of a ledged door: a back plate, a grip bar on two posts, a pressed thumb piece at its head."""
+    """HD4: the iron thumb latch of a ledged door. The close review's narrow point 4: the first build's read as a modern pull on a rounded plate. Now: the 38 x 190 plate with
+    cusped (arrow) ends; a grip that is a round bow 19 across, 30 off the plate (to its axis), on posts 120 apart; a thumb piece that is a flat lever 14 wide and 45 long rising
+    through a slot in the plate's head at 15 degrees."""
     pw, ph = d["plate"]
     bt = d["plate_t"]
-    V, F = bd.prism(rrect(0.0, 0.0, pw, ph, 6.0, 4), ("x", "z"), "y", -bt, 0.4)
-    ps.add("iron_latch_plate", V, F, "steel_dark", (0.8, None, 1))
-    bw, bh = d["bar"]
-    V, F = bd.prism(rrect(0.0, -10.0, bw, bh, 8.0, 4), ("x", "z"), "y", -(bt + 12.0), -(bt + 3.0))
-    ps.add("iron_latch_bar", V, F, "steel_dark", (0.8, None, 1))
-    for z, tag in ((-10.0 + bh / 2 - 22.0, "u"), (-10.0 - bh / 2 + 22.0, "l")):
-        V, F = lathe_y([(0.0, 0.0), (4.0, 0.0), (4.0, bt + 3.5), (0.0, bt + 3.5)], 16, 0.0, z)
+    half, flat = ph / 2.0, ph / 2.0 - 33.0
+    tip = [(pw / 2.0, flat), (18.0, flat + 5.0), (16.0, flat + 10.0), (13.5, flat + 15.0), (10.5, flat + 20.0), (7.0, flat + 24.5), (3.5, flat + 29.0), (0.0, half)]
+    outline = tip + [(-x, z) for x, z in tip[::-1]] + [(-x, -z) for x, z in tip] + [(x, -z) for x, z in tip[::-1]]
+    ob = ps.add("iron_latch_plate", *bd.prism(L.ccw(outline), ("x", "z"), "y", -bt, 0.4), "steel_dark", (0.8, None, 1))
+    zs, sw, sh = d["slot_z"], d["slot"][0], d["slot"][1]
+    bd.cut(ob, *bd.box(-sw / 2, -bt - 1.0, zs - sh / 2, sw / 2, 1.0, zs + sh / 2))
+    ps.add("iron_latch_slot_liner", *bd.box(-sw / 2 + 0.3, -0.7, zs - sh / 2 + 0.3, sw / 2 - 0.3, 0.2, zs + sh / 2 - 0.3), "slot_interior")
+    bl, bs, so, gd = d["bow_len"], d["bow_sag"], d["stand_off"], d["grip_dia"]
+    zc = d["bow_centre_z"]
+    ax = -(bt + so)
+    V, F = L.tube_z(bl, gd / 2.0, lambda z: -bs * (1.0 - (2.0 * z / bl) ** 2), ax, 24, zc=zc)
+    ps.add("iron_latch_bow", V, F, "steel_dark")
+    for sgn, tag in ((1, "u"), (-1, "l")):
+        z = zc + sgn * d["post_gap"] / 2.0
+        V, F = lathe_y([(0.0, 1.0), (6.5, 1.0), (6.5, bt + 1.2), (4.2, bt + 3.0), (3.6, bt + 6.0), (3.6, bt + so), (0.0, bt + so)], 20, 0.0, z)       # from inside the plate: no face shared with its back
         ps.add("iron_latch_post_" + tag, V, F, "steel_dark")
-    tw, th = 25.0, 35.0
-    V, F = bd.prism(rrect(0.0, ph / 2 - 6.0 - th / 2 + 0.0, tw, th, 8.0, 4), ("x", "z"), "y", -(bt + 9.0), -(bt - 0.4))
-    ps.add("iron_latch_thumb", V, F, "steel_dark", (1.0, None, 1))
+    tl, tw, tt, ang = d["thumb"]["length"], d["thumb"]["width"], 2.4, math.radians(d["thumb"]["angle_deg"])
+    V, F = bd.box(-tw / 2, -tt / 2, 0.0, tw / 2, tt / 2, tl)
+    V = np.asarray(V, float)
+    y = V[:, 1] * math.cos(ang) - V[:, 2] * math.sin(ang)
+    z = V[:, 2] * math.cos(ang) + V[:, 1] * math.sin(ang)
+    V2 = np.stack([V[:, 0], y - 1.0, z + zs - sh / 2.0 + 0.5], axis=1)
+    ps.add("iron_latch_thumb", V2, F, "steel_dark", (0.6, None, 1))
 
 
 # ------------------------------------------------------------------ latches (the rim night latch)
@@ -304,19 +361,20 @@ def cylinder_bare(ps, d):
 
 # ------------------------------------------------------------------ keyhole, knockers, bells
 def keyhole(ps, d):
-    """KH1: a plugged mortice keyhole: a round head over a parallel slot, a dark plate 0.8 proud (the target: a recess 2 mm sunk; the leaf is not cut here), a pale blank
-    filling the slot, 0.8 higher."""
+    """KH1: a plugged mortice keyhole, SUNK as the target says (the close review's narrow point 10: the first build stood a plate 0.8 proud, which catches an edge in raking light).
+    The leaf is cut with a blind keyhole-shaped pocket 2.2 deep (doors_kinds.keyhole_pockets: not through, so nothing can show through); this fitting sits in it, as it is placed
+    on the same mount point: a dark plate whose face is 2.0 below the leaf's face, and the pale blank in the slot 0.5 below the face. Origin on the leaf's face; everything of it
+    has y > 0 (into the leaf)."""
     from shapely.geometry import Polygon as SPoly
     hd, sw = d["head_dia"], d["slot_w"]
     hh = d["size"][1]
     out = SPoly(bd.Door.keyhole_outline(0.0, 0.0, hd, sw, hh))
-    V, F = bd.prism(L.ccw(list(out.buffer(-0.0).exterior.coords)[:-1]), ("x", "z"), "y", -0.8, 0.4)
-    ps.add("iron_keyhole_plate", V, F, "steel_dark")
+    plate = out.buffer(0.1)                                           # 0.2 clear of the pocket's walls all round (the pocket is the outline grown by 0.3)
+    ps.add("iron_keyhole_plate", *bd.prism(L.ccw(list(plate.exterior.coords)[:-1]), ("x", "z"), "y", 2.0, 2.6), "steel_dark")
     top = hh / 2 - hd / 2
     foot = -hh / 2 + sw / 2
     blank = LineString([(0.0, top - hd / 2 + 1.5), (0.0, foot)]).buffer((sw - 1.8) / 2, 10, cap_style=1)
-    V, F = bd.prism(L.ccw(list(blank.exterior.coords)[:-1]), ("x", "z"), "y", -1.6, -0.5)
-    ps.add("iron_keyhole_blank", V, F, "chrome_nickel")
+    ps.add("iron_keyhole_blank", *bd.prism(L.ccw(list(blank.exterior.coords)[:-1]), ("x", "z"), "y", 0.5, 2.4), "chrome_nickel")
 
 
 def knocker_ring(ps, d):
@@ -376,28 +434,40 @@ def bell_pull(ps, d):
 
 
 # ------------------------------------------------------------------ numbers and the plaque
+def poly_solid(poly, relief, embed=0.4):
+    """A shapely polygon (with holes) in (x, z) as one closed solid, `relief` proud (toward -y), `embed` into the face: the outer prism, each hole cut out of it. Returns the object."""
+    ob = bd.new_obj("_digit", *bd.prism(L.ccw(list(poly.exterior.coords)[:-1]), ("x", "z"), "y", -relief, embed))
+    for ring in poly.interiors:
+        pts = L.ccw(list(ring.coords)[:-1])
+        bd.cut(ob, *bd.prism(pts, ("x", "z"), "y", -relief - 1.0, embed + 1.0))
+    return ob
+
+
 def number_part(ps, d, text, w, h, stroke, gap, relief, mat, stacked_z=None, name="iron_numerals", on_glass=False):
-    """A row (or a stack) of digits as one solid: each digit's strokes are capsule prisms united by boolean; `relief` proud, 0.4 into the face."""
-    r = stroke / 2.0
+    """A row (or a stack) of digits as one solid: each digit a shapely polygon of round-bowled strokes (doors_lib), extruded `relief` proud, 0.4 into the face. A row is laid
+    out by the digits' own widths (a 1 is narrow) with `gap` between them and centred; a stack puts each digit's middle on the centre line. Digits are disjoint."""
+    from shapely import affinity
+    polys = []
+    for ch in text:
+        polys.append(L.digit_polygon(ch, w, h, stroke, 0.0, 0.0))
     if stacked_z is not None:
-        centres = [(0.0, z) for z in stacked_z]
+        placed = []
+        for g, z in zip(polys, stacked_z):
+            b = g.bounds
+            placed.append(affinity.translate(g, -0.5 * (b[0] + b[2]), z))
     else:
-        n = len(text)
-        total = n * w + (n - 1) * gap
-        x = -total / 2.0 + w / 2.0
-        centres = []
-        for _ in text:
-            centres.append((x, 0.0))
-            x += w + gap
-    objs = []
-    for ch, (cx, cz) in zip(text, centres):
-        for line in L._G[ch]:
-            pts = [(cx - w / 2.0 + r + px * (w - 2 * r), cz - h / 2.0 + r + py * (h - 2 * r)) for px, py in line]
-            for p0, p1 in zip(pts[:-1], pts[1:]):
-                cap = LineString([p0, p1]).buffer(r, resolution=3, cap_style=1)
-                V, F = bd.prism(L.ccw(list(cap.exterior.coords)[:-1]), ("x", "z"), "y", -relief, 0.4)
-                objs.append(bd.new_obj("_stroke", V, F))
-    ob = bd.unite_objs(name, objs)
+        widths = [g.bounds[2] - g.bounds[0] for g in polys]
+        total = sum(widths) + gap * (len(polys) - 1)
+        x = -total / 2.0
+        placed = []
+        for g, wd in zip(polys, widths):
+            placed.append(affinity.translate(g, x - g.bounds[0], 0.0))
+            x += wd + gap
+    objs = [poly_solid(g, relief) for g in placed]
+    ob = bd.unite_objs(name, objs) if len(objs) > 1 else objs[0]
+    if len(objs) == 1:
+        ob.name = name
+        ob.data.name = name
     ps.objs.append({"ob": ob, "mat": mat, "bev": None})
 
 
@@ -420,19 +490,20 @@ def plaque_oval(ps, d):
 # ------------------------------------------------------------------ the boot scraper
 def scraper(ps, d):
     """BS1: a cast-iron boot scraper (Judgement from D10): a straight blade 300 x 25 x 12 with a notched underside between two end standards 200 high
-    (the target's point list standard_profile_xz, mirrored for the other end), each on a foot running back to the wall. Origin: its centre on the ground at the wall; y runs
+    (the target's point list standard_profile_xz, mirrored for the other end, the scroll outside the standard and curling outward as D10 shows), each on a foot running back to the wall. Origin: its centre on the ground at the wall; y runs
     toward the street (negative). The standards stand 140 either side of the centre so the whole is 330 long."""
     prof = [tuple(q) for q in d["standard_profile_xz"]]
+    prof = [(x, z - 0.55 if z == 0.0 else z) for x, z in prof]          # the standards stand 0.55 into the ground, the feet 0.4 (the first build stopped at 0; no two bottoms share a plane)
     th = d["blade_thickness"]
     depth = d["size"][1]
     xo = 140.0
     zb0, zb1 = 110.0, 135.0                                         # the blade's height: 25 on edge
     for sx, tag in ((-1, "l"), (1, "r")):
-        pts = [(sx * (xo + x), z) for x, z in prof]
+        pts = [(sx * (xo + x), z) for x, z in prof]                   # the point list reads x outward from the blade's end: the scroll (x < 0 in the old list) now sits OUTSIDE its standard
         pts = L.ccw(pts)
         V, F = bd.prism(pts, ("x", "z"), "y", -(depth / 2 + th / 2), -(depth / 2 - th / 2))
         ps.add("iron_scraper_standard_" + tag, V, F, "cast_iron", (0.8, None, 1))
-        V, F = bd.box(sx * (xo + 12.5) - 11.7, -depth, 0.4, sx * (xo + 12.5) + 11.7, 0.4, th + 0.4)       # the foot, 23.4 wide (no face shared with the standard), running back to the wall
+        V, F = bd.box(sx * (xo + 12.5) - 11.7, -depth, -0.4, sx * (xo + 12.5) + 11.7, 0.4, th - 0.4)       # the foot, 23.4 wide (no face shared with the standard), running back to the wall, 0.4 into the ground
         ps.add("iron_scraper_foot_" + tag, V, F, "cast_iron")
     bl = d["blade"][0]
     nt = d["blade_underside_notch"]
@@ -449,7 +520,7 @@ def variant_builders(N):
     B = {}
     lp = F["letter_plate"]
     B["LP1"] = lambda ps: plate_rim(ps, lp["LP1"], "brass", 22.0)
-    B["LP2"] = lambda ps: plate_rim(ps, lp["LP2"], "brass", 15.0, bosses=True)
+    B["LP2"] = lambda ps: plate_rim(ps, lp["LP2"], "chrome_nickel", 15.0, bosses=True)      # P2's plate is chrome-coloured (close review 12h)
     B["LP3"] = lambda ps: plate_rim(ps, lp["LP3"], "cast_iron", 15.0)
     B["LP4"] = lambda ps: plate_flush(ps, lp["LP4"], "chrome_nickel")
     B["LP5"] = lambda ps: plate_flush(ps, lp["LP5"], "aluminium_pale")
@@ -458,7 +529,7 @@ def variant_builders(N):
     hd = F["handle"]
     B["HD1"] = lambda ps: knob(ps, hd["HD1"])
     for k in ("HD2a", "HD2b", "HD2c"):
-        B[k] = (lambda kk: (lambda ps: lever(ps, hd[kk])))(k)
+        B[k] = (lambda kk: (lambda ps: lever(ps, hd[kk], hd[kk].get("backplate"))))(k)
     B["HD3"] = lambda ps: bar_pull(ps, hd["HD3"])
     B["HD4"] = lambda ps: thumb_latch(ps, hd["HD4"])
     lk = F["latch"]

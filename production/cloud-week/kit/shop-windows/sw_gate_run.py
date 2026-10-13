@@ -126,6 +126,9 @@ def run(work, assets, previews, samples, views=None, log=print, check_renders=Tr
     if not os.path.exists(lp):
         json.dump({"lamp_w": 50000, "spill_w": 175, "strip_w": 0.0}, open(lp, "w"))      # Blender watts, set by eye (see NOTES.md)
     extra = json.load(open(lp))
+    xp = os.path.join(ctx.work, "gate_lights_extra.json")             # what a shop's gate needs beyond the strengths (e.g. {"lamp_glossy": false}); kept outside gate/ so a rebuilt gate keeps it
+    if os.path.exists(xp):
+        extra.update(json.load(open(xp)))
 
     def cols(st):
         return {"l": os.path.join(gate, "col_l_%s.png" % st), "r": os.path.join(gate, "col_r_%s.png" % st)}
