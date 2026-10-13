@@ -1244,16 +1244,14 @@
   "no lettering, no plate, no mark"
  ],
  "self_check": {
-  "line": "SELF-CHECK telegraph-pole: 73 checks, 73 passed, 0 failed; negative controls 23 of 24 caught (offline)",
+  "line": "SELF-CHECK telegraph-pole: 73 checks, 73 passed, 0 failed; negative controls 24 of 24 caught (offline)",
   "checks": 73,
   "passed": 73,
   "failed": 0,
   "controls": 24,
-  "controls_caught": 23,
+  "controls_caught": 24,
   "options": "offline",
   "failing": [],
-  "uncaught": [
-   "geometry: a part pushed deep into its neighbour"
-  ]
+  "uncaught": []
  }
 }
