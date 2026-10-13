@@ -215,54 +215,54 @@ Try 2's changes are marked (try 2). Numbers 1 to 18 keep the try 1 numbering.
 - **The new pictures searched at 100 per cent** (day, night_lit; the shelves, the cassette players, the till, the boombox, the tools, the ukuleles' labels, the clocks): no word, number, logo or face is legible. The till's two plates are plain; the tape labels on the cassette players read 'Classic Rock Vol. 1' / 'HIGH FIDELITY' in the model's own map and are too small to read in the picture (no maker).
 - **Try 2's pictures searched at 100 per cent after the final render** (the three rooms at 4096 wide in crops of the stock wall, the counter, both boards, the back door; the eight gate frames in crops of the fascia, the door, the hours plate, the tickets, the display's pieces and the stock wall seen through the glass): no maker's name, number, logo, person, drink, gambling or child is legible. The only words are the project's own: RITA'S PAWNBROKER, WATCHES / JEWELLERY / LOANS, the hours plate, OPEN and CLOSED, the licence and unredeemed-pledges notices on the left board, CASH LOANS on Gold, Watches & Tools, ALL ELECTRICAL GOODS TESTED. The frames' prints are crops of a harbour with no person in any of them; the tickets' lettering is too small to read.
 
-## Models placed, source and licence (Poly Haven, all CC0 1.0, each asset's own source.json read: present, CC0, polyhaven.com)
+## Models placed, source and licence (Poly Haven, all CC0 1.0, each asset's own source.json read: present, CC0, polyhaven.com; the counts are the try 3 build's)
 
 | model | Poly Haven page | licence | in the room | in the display | maker's marks painted out |
 |---|---|---|---|---|---|
 | Camera_01 | https://polyhaven.com/a/Camera_01 | CC0 1.0 | 3 | 2 | the whole lens-ring engraving line (LEICA SUMMILUX ...) and the red island (a red-dot emblem); ERNST LEITZ GMBH WETZLAR GERMANY / DEP, M3-785000, the dial's emblem, 'close - zu', 'open - auf'; 'INGRID' handwritten in red on the strap (a person's name); 'DEP' (the German registered-design mark), prin |
 | CashRegister_01 | https://polyhaven.com/a/CashRegister_01 | CC0 1.0 | 1 | 0 | the dollar sign in the readout; TITCH BANKS (the plate on the drawer, printed upright on the map); TITCH CO. and its small print; I (heart) LAS VEGAS; I (heart) TORONTO, I (heart) QUEBEC; a Canadian banknote ('CANADA'); printed receipt slips with 'TOTAL' and amounts |
 | Ukulele_01 | https://polyhaven.com/a/Ukulele_01 | CC0 1.0 | 4 | 0 | KOLO label |
-| adjustable_wrench | https://polyhaven.com/a/adjustable_wrench | CC0 1.0 | 4 | 0 | STEELBOX TOOLS (diamond) |
-| alarm_clock_01 | https://polyhaven.com/a/alarm_clock_01 | CC0 1.0 | 3 | 2 | none found |
+| adjustable_wrench | https://polyhaven.com/a/adjustable_wrench | CC0 1.0 | 8 | 0 | STEELBOX TOOLS (diamond) |
+| alarm_clock_01 | https://polyhaven.com/a/alarm_clock_01 | CC0 1.0 | 8 | 2 | none found |
 | antique_ceramic_vase_01 | https://polyhaven.com/a/antique_ceramic_vase_01 | CC0 1.0 | 0 | 1 | none found |
-| binoculars | https://polyhaven.com/a/binoculars | CC0 1.0 | 2 | 1 | none found |
-| boombox | https://polyhaven.com/a/boombox | CC0 1.0 | 1 | 1 | the plate's printed legends and logo; the guitar-playing cartoon (a child-like figure), the skull, the skeleton |
+| binoculars | https://polyhaven.com/a/binoculars | CC0 1.0 | 3 | 1 | none found |
+| boombox | https://polyhaven.com/a/boombox | CC0 1.0 | 0 | 1 | the plate's printed legends and logo; the guitar-playing cartoon (a child-like figure), the skull, the skeleton |
 | brass_vase_01 | https://polyhaven.com/a/brass_vase_01 | CC0 1.0 | 0 | 1 | none found |
 | brass_vase_02 | https://polyhaven.com/a/brass_vase_02 | CC0 1.0 | 0 | 0 | (not placed in try 2) none found |
 | brass_vase_03 | https://polyhaven.com/a/brass_vase_03 | CC0 1.0 | 2 | 0 | none found |
 | cardboard_box_01 | https://polyhaven.com/a/cardboard_box_01 | CC0 1.0 | 9 | 0 | 'no sharp instruments to open', 'Keep Out of Reach of Children' (the children rule), the two handling pictograms and 'Recommended storage below 30 C' |
 | carved_wooden_elephant | https://polyhaven.com/a/carved_wooden_elephant | CC0 1.0 | 0 | 1 | none found |
-| cassette_player | https://polyhaven.com/a/cassette_player | CC0 1.0 | 2 | 2 | a red roundel, the word 'Dixons' and the line 'TR12 Cassette Recorder', printed upside down on the map at the foot of the light-grey panel |
+| cassette_player | https://polyhaven.com/a/cassette_player | CC0 1.0 | 3 | 2 | a red roundel, the word 'Dixons' and the line 'TR12 Cassette Recorder', printed upside down on the map at the foot of the light-grey panel |
 | ceramic_vase_01 | https://polyhaven.com/a/ceramic_vase_01 | CC0 1.0 | 0 | 1 | a barcode sticker |
 | ceramic_vase_03 | https://polyhaven.com/a/ceramic_vase_03 | CC0 1.0 | 0 | 0 | (not placed in try 2) none found |
 | cigarette_case | https://polyhaven.com/a/cigarette_case | CC0 1.0 | 0 | 1 | none found |
-| combination_wrench | https://polyhaven.com/a/combination_wrench | CC0 1.0 | 6 | 0 | none found |
-| cross_pein_hammer | https://polyhaven.com/a/cross_pein_hammer | CC0 1.0 | 4 | 0 | none found |
+| combination_wrench | https://polyhaven.com/a/combination_wrench | CC0 1.0 | 15 | 0 | none found |
+| cross_pein_hammer | https://polyhaven.com/a/cross_pein_hammer | CC0 1.0 | 13 | 0 | none found |
 | filmstrip_projector_8mm | https://polyhaven.com/a/filmstrip_projector_8mm | CC0 1.0 | 1 | 1 | SIRIUS steering; 'PROJECTOMAT GPP' (the model name, gilt, upright) and the control legends under it |
-| hand_plane_no4 | https://polyhaven.com/a/hand_plane_no4 | CC0 1.0 | 2 | 0 | a small stamped plate, five letters, mirrored, 5 px high (a maker's or pattern stamp) |
+| hand_plane_no4 | https://polyhaven.com/a/hand_plane_no4 | CC0 1.0 | 4 | 0 | a small stamped plate, five letters, mirrored, 5 px high (a maker's or pattern stamp) |
 | handsaw_wood | https://polyhaven.com/a/handsaw_wood | CC0 1.0 | 4 | 0 | none found |
 | hanging_picture_frame_02 | https://polyhaven.com/a/hanging_picture_frame_02 | CC0 1.0 | 5 | 0 | the painting and its signature |
 | horse_statue_01 | https://polyhaven.com/a/horse_statue_01 | CC0 1.0 | 0 | 1 | none found |
 | jug_01 | https://polyhaven.com/a/jug_01 | CC0 1.0 | 0 | 1 | none found |
 | magnifying_glass_01 | https://polyhaven.com/a/magnifying_glass_01 | CC0 1.0 | 0 | 1 | none found |
-| mantel_clock_01 | https://polyhaven.com/a/mantel_clock_01 | CC0 1.0 | 2 | 1 | none found |
+| mantel_clock_01 | https://polyhaven.com/a/mantel_clock_01 | CC0 1.0 | 3 | 1 | none found |
 | measuring_tape_01 | https://polyhaven.com/a/measuring_tape_01 | CC0 1.0 | 0 | 1 | 3m, Q-TECH, QC PASSED |
 | metal_toolbox | https://polyhaven.com/a/metal_toolbox | CC0 1.0 | 1 | 0 | a word stamped round the toolbox's badge in red ('STEELIN...' and a number): a maker's badge |
 | ornate_mirror_01 | https://polyhaven.com/a/ornate_mirror_01 | CC0 1.0 | 3 | 0 | none found |
-| pipe_wrench | https://polyhaven.com/a/pipe_wrench | CC0 1.0 | 2 | 0 | SES / 18 |
-| pliers | https://polyhaven.com/a/pliers | CC0 1.0 | 6 | 0 | '160 mm', the VDE and GS approval marks and '1000 V' (German certification marks, a modern insulated tool) |
+| pipe_wrench | https://polyhaven.com/a/pipe_wrench | CC0 1.0 | 6 | 0 | SES / 18 |
+| pliers | https://polyhaven.com/a/pliers | CC0 1.0 | 16 | 0 | '160 mm', the VDE and GS approval marks and '1000 V' (German certification marks, a modern insulated tool) |
 | pocket_watch | https://polyhaven.com/a/pocket_watch | CC0 1.0 | 3 | 2 | Lorex |
-| portable_cassette_player | https://polyhaven.com/a/portable_cassette_player | CC0 1.0 | 3 | 2 | SDQ, SUPER PRECISION RIGID CASSETTE MECHANISM, SIDE A / SIDE B, the side lettering, 'pro'; a name plate ('NORT-o-ORUM' in bold, three lines of serial small print) and a model number 'ST7242 MI NA' |
+| portable_cassette_player | https://polyhaven.com/a/portable_cassette_player | CC0 1.0 | 8 | 2 | SDQ, SUPER PRECISION RIGID CASSETTE MECHANISM, SIDE A / SIDE B, the side lettering, 'pro'; a name plate ('NORT-o-ORUM' in bold, three lines of serial small print) and a model number 'ST7242 MI NA' |
 | round_spectacles | https://polyhaven.com/a/round_spectacles | CC0 1.0 | 0 | 1 | none found |
 | seadogs_compass | https://polyhaven.com/a/seadogs_compass | CC0 1.0 | 0 | 1 | 'LONDON 1965' and the maker's name 'RADOLIER' stamped on the bezel ring |
 | standing_picture_frame_01 | https://polyhaven.com/a/standing_picture_frame_01 | CC0 1.0 | 0 | 1 | the photograph |
 | standing_picture_frame_02 | https://polyhaven.com/a/standing_picture_frame_02 | CC0 1.0 | 0 | 1 | the photograph with its figures |
 | television_02 | https://polyhaven.com/a/television_02 | CC0 1.0 | 4 | 0 | a model number strip |
-| vintage_binocular | https://polyhaven.com/a/vintage_binocular | CC0 1.0 | 2 | 1 | none found |
+| vintage_binocular | https://polyhaven.com/a/vintage_binocular | CC0 1.0 | 3 | 1 | none found |
 | vintage_flashlight | https://polyhaven.com/a/vintage_flashlight | CC0 1.0 | 0 | 1 | none found |
 | vintage_lighter | https://polyhaven.com/a/vintage_lighter | CC0 1.0 | 0 | 1 | TROP(R), and the engraved logo plate with its triangle emblem |
 | vintage_pocket_watch | https://polyhaven.com/a/vintage_pocket_watch | CC0 1.0 | 3 | 2 | AVVENTURA (rotated) |
-| vintage_video_camera | https://polyhaven.com/a/vintage_video_camera | CC0 1.0 | 3 | 1 | PH JNL 7; PH.JNL - OPTICAL CO., LTD; the red and black label; 'PH-JNL' three times on the lens strips (the maker the target already lists for this model as 'PH JNL 7' and 'PH.JNL - OPTICAL CO., LTD') |
+| vintage_video_camera | https://polyhaven.com/a/vintage_video_camera | CC0 1.0 | 6 | 1 | PH JNL 7; PH.JNL - OPTICAL CO., LTD; the red and black label; 'PH-JNL' three times on the lens strips (the maker the target already lists for this model as 'PH JNL 7' and 'PH.JNL - OPTICAL CO., LTD') |
 | wall_clock | https://polyhaven.com/a/wall_clock | CC0 1.0 | 7 | 0 | URBAN / quartz |
 
 Textures: `old_linoleum_flooring_01` (Poly Haven, CC0) for the floor, `painted_plaster_wall` (Poly Haven, CC0) for the walls and the dado; ambientCG `Fabric034` (CC0) for the velvet's normal map. The frames' prints are crops of Poly Haven's Lake Pier HDRI (CC0). The HDRI for the gate's day sky is Poly Haven's Bethnal Green Entrance (CC0). Painted by script (no source): the pegboard, the worn path, the pawn tickets' atlas, the notices (set in Libre Franklin, OFL). THIRD-PARTY.md is not appended: the target does not ask for it and the file is outside this unit's folders; the table above is the record in the form `verify_display_sources.py` writes (asset, page, licence).
