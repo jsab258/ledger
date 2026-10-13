@@ -87,7 +87,10 @@ def previews_main(here, family, specs):
     out = os.path.join(L.PREVIEWS, family)
     from PIL import Image
     for s in specs:
-        pg, path = L.sampled_photo(s["gid"], s["key"], scratch(family))
+        if s.get("path"):
+            path = os.path.join(scratch(family), s["path"])
+        else:
+            pg, path = L.sampled_photo(s["gid"], s["key"], scratch(family))
         im = Image.open(path).convert("RGB")
         m = P.blur_boxes(im, s.get("blur", []), radius=s.get("radius", 7)) if s.get("blur") else im
         m = P.fill_boxes(m, s["fill"]) if s.get("fill") else m

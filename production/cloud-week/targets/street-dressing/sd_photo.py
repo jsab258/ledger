@@ -49,11 +49,10 @@ def overlay(im, T, ph, outlines=True, features=True):
     V = ph.get("variant", T["sample"])
     ps = K._ps_cache(L.variant_parts(T, V))
     fit = ph["fit"]
-    lo_ref, hi_ref = ps.bbox(only=fit.get("parts"))
-    s = (fit["y_bottom_px"] - fit["y_top_px"]) / (hi_ref[2] - lo_ref[2])
+    s, z0, cxw, ax, sign = K.fit_frame(ps, fit)
     view = ph.get("view", "front")
-    ax, sign = L.view_axes(view)
-    cx = sign * (lo_ref[ax] + hi_ref[ax]) / 2.0
+    cx = sign * cxw
+    lo_ref = [0, 0, z0]
     d = ImageDraw.Draw(im)
     r, u, f = [np.array(a, float) for a in L.VIEWS[view]]
     polys = []

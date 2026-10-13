@@ -9,15 +9,12 @@ from PIL import Image
 ROT_DEG, ROT_CENTRE = 7.2, (730, 270)
 OBJECT_BOX = [540, 190, 912, 345]
 FEATURES = [
-    dict(id="top_y", axis="y", band=[650, 780], win=[190, 206], pol="any"),
+    dict(id="rim_under_y", axis="y", band=[650, 780], win=[202, 212], pol="-"),
     dict(id="rim_line_y", axis="y", band=[650, 700], win=[222, 242], pol="any"),
     dict(id="bottom_y", axis="y", band=[670, 740], win=[326, 345], pol="any"),
     dict(id="tip_left_x", axis="x", band=[238, 246], win=[536, 562], pol="any"),
     dict(id="tip_right_x", axis="x", band=[236, 244], win=[894, 914], pol="any"),
-    dict(id="top_left_x", axis="x", band=[203, 209], win=[584, 614], pol="any"),
-    dict(id="top_right_x", axis="x", band=[203, 209], win=[834, 866], pol="any"),
     dict(id="bottom_left_x", axis="x", band=[326, 332], win=[606, 640], pol="any"),
-    dict(id="bottom_right_x", axis="x", band=[326, 332], win=[774, 806], pol="any"),
 ]
 if __name__ == "__main__":
     here = os.path.dirname(os.path.abspath(__file__))

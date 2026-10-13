@@ -20,21 +20,21 @@
    ]
   },
   "features": {
-   "top_y": {
-    "px": 206.5,
-    "contrast": 17.6,
-    "spread": 0.0,
-    "id": "top_y",
+   "rim_under_y": {
+    "px": 207.07,
+    "contrast": 18.3,
+    "spread": 1.67,
+    "id": "rim_under_y",
     "axis": "y",
     "band": [
      650,
      780
     ],
     "win": [
-     190,
-     206
+     202,
+     212
     ],
-    "pol": "any"
+    "pol": "-"
    },
    "rim_line_y": {
     "px": 228.39,
@@ -100,38 +100,6 @@
     ],
     "pol": "any"
    },
-   "top_left_x": {
-    "px": 588.81,
-    "contrast": 3.2,
-    "spread": 4.8,
-    "id": "top_left_x",
-    "axis": "x",
-    "band": [
-     203,
-     209
-    ],
-    "win": [
-     584,
-     614
-    ],
-    "pol": "any"
-   },
-   "top_right_x": {
-    "px": 866.5,
-    "contrast": 11.3,
-    "spread": 10.04,
-    "id": "top_right_x",
-    "axis": "x",
-    "band": [
-     203,
-     209
-    ],
-    "win": [
-     834,
-     866
-    ],
-    "pol": "any"
-   },
    "bottom_left_x": {
     "px": 624.84,
     "contrast": 17.1,
@@ -145,22 +113,6 @@
     "win": [
      606,
      640
-    ],
-    "pol": "any"
-   },
-   "bottom_right_x": {
-    "px": 781.47,
-    "contrast": 2.1,
-    "spread": 2.83,
-    "id": "bottom_right_x",
-    "axis": "x",
-    "band": [
-     326,
-     332
-    ],
-    "win": [
-     774,
-     806
     ],
     "pol": "any"
    }

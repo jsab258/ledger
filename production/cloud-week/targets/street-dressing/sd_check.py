@@ -155,20 +155,35 @@ def _ps_cache(parts):
 
 
 # ------------------------------------------------------------------------------------------------ photographs
+def fit_frame(ps, fit):
+    """(scale px per mm, z of the bottom reference, horizontal centre in world units, axis, sign): the scale is fitted on the
+    height only: between the parts' bounding box, or between a named top edge and a named bottom edge (top_ref, bottom_ref)."""
+    ax, sign = L.view_axes(fit.get("view", "front"))
+    if fit.get("top_ref"):
+        lt, ht = ps.part_bbox(fit["top_ref"]["part"])
+        lb, hb = ps.part_bbox(fit["bottom_ref"]["part"])
+        ztop = (ht if fit["top_ref"].get("side", "hi") == "hi" else lt)[2]
+        zbot = (hb if fit["bottom_ref"].get("side", "lo") == "hi" else lb)[2]
+        lo_ref, hi_ref = ps.bbox(only=fit.get("parts") or None)
+    else:
+        lo_ref, hi_ref = ps.bbox(only=fit.get("parts"))
+        ztop, zbot = hi_ref[2], lo_ref[2]
+    s = (fit["y_bottom_px"] - fit["y_top_px"]) / (ztop - zbot)
+    lo_c, hi_c = ps.bbox(only=fit.get("centre_parts") or fit.get("parts"))
+    cx = (lo_c[ax] + hi_c[ax]) / 2.0
+    return s, zbot, cx, ax, sign
+
+
 def predicted_px(ps, ph, f):
     """Where the drawing puts a feature in the photograph, with the scale fitted on ONE dimension (the height) only."""
     fit = ph["fit"]
-    lo_ref, hi_ref = ps.bbox(only=fit.get("parts"))
-    H = hi_ref[2] - lo_ref[2]
-    s = (fit["y_bottom_px"] - fit["y_top_px"]) / H
-    ax, sign = L.view_axes(fit.get("view", "front"))
-    cx = (lo_ref[ax] + hi_ref[ax]) / 2.0
+    s, z0, cx, ax, sign = fit_frame(ps, fit)
     ref = f["ref"]
     lo, hi = ps.part_bbox(ref["part"]) if ref.get("part") else ps.bbox(only=ref.get("parts"))
     side = ref.get("side", "hi")
     if f["axis"] == "y":
         z = (hi if side == "hi" else lo)[2] + ref.get("add", 0.0)
-        return fit["y_bottom_px"] - (z - lo_ref[2]) * s
+        return fit["y_bottom_px"] - (z - z0) * s
     x = (hi if side == "hi" else lo)[ax] + ref.get("add", 0.0)
     return fit["x_centre_px"] + sign * (x - cx) * s
 
