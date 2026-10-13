@@ -7,7 +7,7 @@ tiers and small pedestals, a ticket on every piece.
 
 KEPT from the approved production/assets/shop-displays/pawnbroker-display.glb (23 Poly Haven models, 23 MB): the stepped velvet bed, the ticket on each piece, the cut of each
 model to about 4,500 triangles (never by more than 70 per cent), the display's size (3.35 x 0.55) and the 512-pixel JPEG pictures. CHANGED: the pieces and their places are the
-target's table (36 pieces, 26 models; none more than twice), every model carries its blanked 1k maps (sw_assets), digital_wrist_watch is gone, glass meshes are left out as
+target's table (31 pieces, 26 models; none more than twice), every model carries its blanked 1k maps (sw_assets), digital_wrist_watch is gone, glass meshes are left out as
 before; the scripted ring trays, watch pads and chains of the approved display are not made again (the target's table fills the bed with models and they were not in it).
 """
 import json

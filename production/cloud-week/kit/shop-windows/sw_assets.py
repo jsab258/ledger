@@ -32,14 +32,27 @@ RES = "1k"
 # Marks the builder found at 1k that the target's list does not have (step 0, looked at every map): applied the same way, reported in NOTES.md
 # for the target's owner to add to inventory.texture_marks. Boxes in pixels of the 1k base-colour map, [x0, y0, x1, y1].
 EXTRA_BLANK = {
-    "Camera_01": [{"map": "Camera_01_strap_diff_1k.jpg", "boxes": [[632, 840, 712, 874]],
-                   "fill": "the strap leather's brown", "reads": "'INGRID' handwritten in red on the strap (a person's name)"}],
     "cardboard_box_01": [{"map": "cardboard_box_01_diff_1k.jpg", "boxes": [[185, 190, 395, 350], [395, 255, 505, 365], [250, 360, 375, 465]],
                           "fill": "the cardboard's own tan", "reads": "'no sharp instruments to open', 'Keep Out of Reach of Children' (the children rule), the two handling pictograms and 'Recommended storage below 30 C'"}],
     "pliers": [{"map": "pliers_diff_1k.jpg", "boxes": [[146, 530, 196, 778]],
                 "fill": "the handle's red", "reads": "'160 mm', the VDE and GS approval marks and '1000 V' (German certification marks, a modern insulated tool)"}],
     "seadogs_compass": [{"map": "seadogs_compass_diff_1k.jpg", "boxes": [[560, 230, 615, 335], [650, 225, 735, 350]],
                          "fill": "the brass ring's brown", "reads": "'LONDON 1965' and the maker's name 'RADOLIER' stamped on the bezel ring"}],
+    # found on the second pass, every map of the 45 models at 1:1 to 2:1 in halves (the first pass was contact sheets at 512 px, which a 10 px word does not show on)
+    "metal_toolbox": [{"map": "metal_toolbox_diff_1k.jpg", "boxes": [[209, 59, 237, 82]],
+                       "fill": "the badge's own grey", "reads": "a word stamped round the toolbox's badge in red ('STEELIN...' and a number): a maker's badge"}],
+    "filmstrip_projector_8mm": [{"map": "filmstrip_projector_8mm_diff_1k.jpg", "boxes": [[444, 560, 472, 632], [440, 672, 476, 726]],
+                                 "fill": "the control plate's dark brown", "reads": "'PROJECTOMAT GPP' (the model name, gilt, upright) and the control legends under it"}],
+    "vintage_video_camera": [{"map": "vintage_video_camera_diff_1k.jpg", "boxes": [[614, 251, 648, 263], [775, 633, 788, 661], [766, 975, 776, 1008]],
+                              "fill": "the strip's grey", "reads": "'PH-JNL' three times on the lens strips (the maker the target already lists for this model as 'PH JNL 7' and 'PH.JNL - OPTICAL CO., LTD')"}],
+    "portable_cassette_player": [{"map": "portable_cassette_player_diff_1k.jpg", "boxes": [[555, 965, 586, 1022], [954, 618, 970, 666]],
+                                  "fill": "the case's grey-green", "reads": "a name plate ('NORT-o-ORUM' in bold, three lines of serial small print) and a model number 'ST7242 MI NA'"}],
+    "Camera_01": [{"map": "Camera_01_strap_diff_1k.jpg", "boxes": [[632, 840, 712, 874]],
+                   "fill": "the strap leather's brown", "reads": "'INGRID' handwritten in red on the strap (a person's name)"},
+                  {"map": "Camera_01_body_diff_1k.jpg", "boxes": [[792, 626, 830, 652]],
+                   "fill": "the body's black", "reads": "'DEP' (the German registered-design mark), printed mirrored below the first plate; the target's box for 'DEP' is 8 px above it"}],
+    "hand_plane_no4": [{"map": "hand_plane_no4_diff_1k.jpg", "boxes": [[804, 272, 847, 292]],
+                        "fill": "the casting's brown", "reads": "a small stamped plate, five letters, mirrored, 5 px high (a maker's or pattern stamp)"}],
 }
 
 
@@ -50,7 +63,10 @@ BOX_FIX = {("vintage_pocket_watch", "vintage_pocket_watch_diff_1k.jpg"): {(620, 
 
 # Where the ring just outside a box is mostly another surface than the print's own, the target's stated sampled fill is used instead of the ring's median:
 # {(model, box): (r, g, b)}. The box's own test in verify() then compares with that fill.
-FILL_OVERRIDE = {("vintage_pocket_watch", (640, 664, 694, 762)): (180, 182, 184)}
+FILL_OVERRIDE = {("vintage_pocket_watch", (640, 664, 694, 762)): (180, 182, 184),
+                 # the video camera's lens strips are light grey bands 12 to 14 px wide between dark rows: the ring would take the dark rows' median
+                 ("vintage_video_camera", (614, 251, 648, 263)): (138, 142, 142),
+                 ("vintage_video_camera", (775, 633, 788, 661)): (138, 140, 139)}
 
 
 def entries(T, a):
@@ -441,6 +457,6 @@ def models_table(placed_json, display_json):
         if not src or "CC0" not in lic or "polyhaven.com" not in page:
             bad.append(a)
         ent = entries(T, a)
-        marks = ("; ".join(sorted({e["reads"].split(";")[0].split(" (")[0][:48] for e in ent}))[:150]) if ent else "none found"
+        marks = ("; ".join(dict.fromkeys(e["reads"].replace("|", "/") for e in ent))[:300]) if ent else "none found"
         rows.append("| %s | %s | %s | %d | %d | %s |" % (a, page, lic, room_n.get(a, 0), disp_n.get(a, 0), marks))
     return "\n".join(rows), bad
