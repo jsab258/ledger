@@ -606,7 +606,8 @@ def build_display(work, out_dir, log=print):
         x += wd + gap
     # ---- 13 Oct, try 3 (PIC-05g in the night frames, once the strips light the display): the white of the standing frames' mounts and of the white ceramics is 0.8 of the model's white, as the hung
     # frames' paint is 0.75 of it in the room (judgement 25 of NOTES.md)
-    for mname, f_ in (("standing_picture_frame_01", 0.8), ("standing_picture_frame_02", 0.8), ("ceramic_vase_01", 0.85), ("antique_ceramic_vase_01", 0.85), ("jug_01", 0.85), ("horse_statue_01", 0.85)):
+    for mname, f_ in (("standing_picture_frame_01", 0.8), ("standing_picture_frame_02", 0.8), ("standing_picture_frame_01_artwork", 0.8), ("standing_picture_frame_02_artwork", 0.8), ("ceramic_vase_01", 0.85),
+                      ("antique_ceramic_vase_01", 0.85), ("jug_01", 0.85), ("horse_statue_01", 0.85), ("pocket_watch", 0.85), ("vintage_pocket_watch", 0.85)):
         if mname in bpy.data.materials:
             r.tone_material(mname, f_)
     # ---- no alpha cut-out or blend anywhere in the display (DSP-02: real geometry): the boombox's speaker grille is a perforated-looking alpha card in its glTF; here it is opaque
