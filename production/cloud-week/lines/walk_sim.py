@@ -804,24 +804,24 @@ def rule_tests(doc, rules):
     # 7b. Sheila and Pauline are never picked the two lines that are about their own desks (canon review L4)
     bad, seen_other = [], 0
     ex = rules["speaker_overrides"].get("excluded_lines", {})
-    for sid in ex.get("speakers", []):
+    for sid in ("lena", "zlata"):
         for sit, bank, standing in (("greeting.owner", "greeting/owner", "owner"), ("greeting.nowak", "greeting/nowak", "nowak")):
             s = fresh()
             for k in range(60):
                 ctx = {"weather": "dry", "time": "afternoon", "standing": standing}
                 l, _, _ = s.pick("%s@office_worker" % bank, ctx, sid, 5000.0 * (k + 1))
-                if l and l["id"] in ex["lines"]:
+                if l and l["id"] in ("office_worker.greet-owner.04", "office_worker.greet-nowak.05"):
                     bad.append((sid, l["id"]))
                 if l:
                     s.spk_line_last[sid][l["id"]] = 5000.0 * (k + 1)
     t = fresh()
     for k in range(60):
         l, _, _ = t.pick("greeting/owner@office_worker", {"weather": "dry", "time": "afternoon", "standing": "owner"}, "noor", 5000.0 * (k + 1))
-        if l and l["id"] in ex.get("lines", []):
+        if l and l["id"] in ("office_worker.greet-owner.04", "office_worker.greet-nowak.05"):
             seen_other += 1
         if l:
             t.spk_line_last["noor"][l["id"]] = 5000.0 * (k + 1)
-    out.append(("rule.excluded_lines_never_picked", "Sheila and the dispatcher are never picked the two lines about their own desks (240 picks), and another clerk still is", not bad and (seen_other > 0 or not ex), "%s; others %d" % (bad[:3], seen_other)))
+    out.append(("rule.excluded_lines_never_picked", "Sheila and the dispatcher are never picked the two lines about their own desks (240 picks), and another clerk still is", not bad and seen_other > 0, "%s; others %d" % (bad[:3], seen_other)))
 
     # 8. a speaker whose voice is not local never gets a dialect line
     bad = []

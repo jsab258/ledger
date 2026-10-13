@@ -15,30 +15,30 @@
   "lines_heard": 23,
   "heard_by_situation": {
    "asked_way": 1,
-   "crime_face": 1,
+   "crime_shape": 1,
    "farewell": 4,
-   "greeting.nowak": 1,
+   "greeting.nowak": 2,
    "greeting.owner": 10,
-   "greeting.stranger": 4,
+   "greeting.stranger": 3,
    "greeting.tom": 1,
    "in_rain": 1
   },
   "heard_by_kind": {
-   "casual_worker": 2,
+   "casual_worker": 3,
    "dock_worker": 4,
    "father_walsh": 1,
    "laundry_worker": 2,
    "office_worker": 1,
    "pensioner": 2,
-   "ron": 3,
+   "ron": 2,
    "shopkeeper": 6,
    "tradesman": 2
   },
   "busiest_minute_heard": 5,
   "busiest_minute_at_s": 59.0,
   "busiest_minute_without_crime_lines": 5,
-  "longest_gap_s": 232.0,
-  "longest_gap_from_s": 901.2,
+  "longest_gap_s": 230.9,
+  "longest_gap_from_s": 902.3,
   "longest_gap_to_s": 1133.2,
   "minutes_with_no_line": 16,
   "quiet_share": 0.53,
@@ -66,19 +66,19 @@
    "greeting_attempts_not_played_in_those_20_s": [],
    "crime_lines": [
     {
-     "t": 901.2,
-     "id": "ron.crime-face.05",
-     "sure": "face",
-     "heard": true,
-     "speaker": "rocco",
-     "waited": 0.0
-    },
-    {
      "t": 901.5,
-     "id": "shopkeeper.crime-noise.01",
+     "id": "shopkeeper.crime-noise.03",
      "sure": "noise",
      "heard": false,
      "speaker": "marla",
+     "waited": 0.0
+    },
+    {
+     "t": 902.3,
+     "id": "casual_worker.crime-shape.08",
+     "sure": "shape",
+     "heard": true,
+     "speaker": "joey",
      "waited": 0.0
     }
    ]
@@ -87,14 +87,14 @@
   "asked": [
    {
     "t": 350.5,
-    "who": "petra",
+    "who": "dario",
     "dest": "docks",
     "knows": false
    },
    {
     "t": 1352.9,
     "who": "drago",
-    "dest": "harbour_board",
+    "dest": "harbour_office",
     "knows": true
    }
   ],
@@ -230,39 +230,39 @@
     "waited": 0.0
    },
    {
-    "t": 347.5,
-    "id": "dock_worker.greet-stranger.01",
-    "text": "Right then?",
+    "t": 348.5,
+    "id": "dock_worker.greet-nowak.01",
+    "text": "Now then, Nowak.",
     "kind": "dock_worker",
-    "speaker": "petra",
-    "situation": "greeting.stranger",
+    "speaker": "dario",
+    "situation": "greeting.nowak",
     "heard": true,
-    "dist": 5.2,
+    "dist": 4.5,
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
     "waited": 0.0
    },
    {
-    "t": 350.5,
+    "t": 350.8,
     "id": "dock_worker.way.07",
     "text": "Ask at the cab office. That's what they're for.",
     "kind": "dock_worker",
-    "speaker": "petra",
+    "speaker": "dario",
     "situation": "asked_way",
     "heard": true,
-    "dist": 1.8,
+    "dist": 3.8,
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
-    "waited": 0.0
+    "waited": 0.3
    },
    {
     "t": 568.9,
-    "id": "dock_worker.greet-stranger.05",
-    "text": "Not many come down this end.",
+    "id": "dock_worker.greet-stranger.04",
+    "text": "Watch the setts. They'll turn your ankle.",
     "kind": "dock_worker",
-    "speaker": "dario",
+    "speaker": "drago",
     "situation": "greeting.stranger",
     "heard": true,
     "dist": 4.6,
@@ -328,23 +328,9 @@
     "waited": 0.0
    },
    {
-    "t": 901.2,
-    "id": "ron.crime-face.05",
-    "text": "Plain as day, that face.",
-    "kind": "ron",
-    "speaker": "rocco",
-    "situation": "crime_face",
-    "heard": true,
-    "dist": 2.0,
-    "delivery": "normal",
-    "weather": "rain",
-    "sure": "face",
-    "waited": 0.0
-   },
-   {
     "t": 901.5,
-    "id": "shopkeeper.crime-noise.01",
-    "text": "That wasn't a van door.",
+    "id": "shopkeeper.crime-noise.03",
+    "text": "Lock the till. Just in case.",
     "kind": "shopkeeper",
     "speaker": "marla",
     "situation": "crime_noise",
@@ -353,6 +339,20 @@
     "delivery": "normal",
     "weather": "rain",
     "sure": "noise",
+    "waited": 0.0
+   },
+   {
+    "t": 902.3,
+    "id": "casual_worker.crime-shape.08",
+    "text": "Something moved. I'll leave it at that.",
+    "kind": "casual_worker",
+    "speaker": "joey",
+    "situation": "crime_shape",
+    "heard": true,
+    "dist": 1.7,
+    "delivery": "normal",
+    "weather": "rain",
+    "sure": "shape",
     "waited": 0.0
    },
    {
@@ -416,7 +416,7 @@
     "id": "casual_worker.greet-tom.03",
     "text": "Hello, Tom. Cadge a fag?",
     "kind": "casual_worker",
-    "speaker": "joey",
+    "speaker": "tanja",
     "situation": "greeting.tom",
     "heard": true,
     "dist": 5.1,
@@ -430,7 +430,7 @@
     "id": "casual_worker.greet-stranger.02",
     "text": "Don't suppose you're hiring?",
     "kind": "casual_worker",
-    "speaker": "tanja",
+    "speaker": "joey",
     "situation": "greeting.stranger",
     "heard": true,
     "dist": 5.2,
@@ -453,59 +453,53 @@
   ],
   "crime_minute": 15.0,
   "people_who_came_within_earshot": 84,
-  "lines_played": 50,
-  "lines_heard": 49,
+  "lines_played": 41,
+  "lines_heard": 40,
   "heard_by_situation": {
-   "after_deed": 1,
-   "asked_way": 1,
-   "bumped": 2,
+   "bumped": 5,
    "crime_face": 1,
-   "crime_noise": 1,
-   "farewell": 10,
-   "greeting.nowak": 6,
-   "greeting.owner": 18,
+   "farewell": 8,
+   "greeting.nowak": 2,
+   "greeting.owner": 17,
    "greeting.stranger": 6,
-   "greeting.tom": 1,
-   "in_rain": 1,
-   "rain_starts": 1
+   "greeting.tom": 1
   },
   "heard_by_kind": {
-   "casual_worker": 6,
-   "darren": 1,
-   "dock_worker": 9,
-   "driver": 3,
+   "casual_worker": 3,
+   "dock_worker": 8,
+   "driver": 4,
    "father_walsh": 1,
    "laundry_worker": 2,
-   "office_worker": 4,
+   "office_worker": 2,
    "pensioner": 5,
-   "ron": 5,
-   "shopkeeper": 13
+   "ron": 3,
+   "shopkeeper": 11,
+   "tradesman": 1
   },
   "busiest_minute_heard": 6,
   "busiest_minute_at_s": 576.7,
   "busiest_minute_without_crime_lines": 6,
-  "longest_gap_s": 318.5,
-  "longest_gap_from_s": 905.7,
-  "longest_gap_to_s": 1224.2,
-  "minutes_with_no_line": 6,
-  "quiet_share": 0.2,
+  "longest_gap_s": 354.7,
+  "longest_gap_from_s": 902.2,
+  "longest_gap_to_s": 1256.9,
+  "minutes_with_no_line": 10,
+  "quiet_share": 0.33,
   "repeats_same_speaker_same_line_within_floor": [],
   "repeats_same_line_two_speakers_within_floor": [],
   "same_words_heard_twice": [],
-  "neighbour_lines": 2,
-  "neighbour_min_gap_s": 550.0,
-  "group_min_gap_s": 62.9,
-  "attempts_not_played": 224,
+  "neighbour_lines": 0,
+  "neighbour_min_gap_s": null,
+  "group_min_gap_s": 67.4,
+  "attempts_not_played": 234,
   "not_played_by_reason": {
-   "the chance roll failed": 132,
-   "neighbours' gap": 23,
-   "a witness within the hour says nothing of this kind": 20,
-   "family gap": 17,
-   "speaker's family cooldown": 15,
-   "speaker spoke inside 15 s": 12,
-   "the group spoke inside a minute": 3,
-   "minute cap": 1,
-   "no eligible line": 1
+   "the chance roll failed": 135,
+   "neighbours' gap": 26,
+   "a witness within the hour says nothing of this kind": 26,
+   "speaker's family cooldown": 19,
+   "family gap": 13,
+   "speaker spoke inside 15 s": 9,
+   "the group spoke inside a minute": 4,
+   "no eligible line": 2
   },
   "voice_drops": [],
   "cut_while_playing": [],
@@ -515,43 +509,35 @@
    "greeting_attempts_not_played_in_those_20_s": [],
    "crime_lines": [
     {
-     "t": 901.1,
-     "id": "dock_worker.crime-face.08",
+     "t": 902.2,
+     "id": "ron.crime-face.02",
      "sure": "face",
      "heard": true,
-     "speaker": "petra",
-     "waited": 0.0
-    },
-    {
-     "t": 902.4,
-     "id": "pensioner.crime-noise.06",
-     "sure": "noise",
-     "heard": false,
-     "speaker": "ada",
-     "waited": 0.0
-    },
-    {
-     "t": 905.7,
-     "id": "ron.crime-noise.04",
-     "sure": "noise",
-     "heard": true,
      "speaker": "rocco",
-     "waited": 3.1
+     "waited": 0.0
+    },
+    {
+     "t": 904.7,
+     "id": "shopkeeper.crime-shape.06",
+     "sure": "shape",
+     "heard": false,
+     "speaker": "rita",
+     "waited": 1.8
     }
    ]
   },
-  "after_deed_lines_heard": 1,
+  "after_deed_lines_heard": 0,
   "asked": [
    {
     "t": 350.5,
-    "who": "dario",
-    "dest": "winter_rooms",
-    "knows": false
+    "who": "drago",
+    "dest": "harbour_board",
+    "knows": true
    },
    {
     "t": 1307.3,
     "who": "ines",
-    "dest": "laundry",
+    "dest": "phone_box",
     "knows": true
    }
   ],
@@ -575,14 +561,14 @@
     "waited": 0.0
    },
    {
-    "t": 21.5,
-    "id": "office_worker.greet-nowak.07",
-    "text": "Mr Nowak. If anything wants typing, I know where.",
+    "t": 22.8,
+    "id": "office_worker.greet-stranger.07",
+    "text": "Morning. I've not had my tea yet.",
     "kind": "office_worker",
-    "speaker": "goran",
-    "situation": "greeting.nowak",
+    "speaker": "danica",
+    "situation": "greeting.stranger",
     "heard": true,
-    "dist": 5.7,
+    "dist": 6.5,
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
@@ -619,7 +605,7 @@
    {
     "t": 42.2,
     "id": "casual_worker.greet-owner.07",
-    "text": "The new owner. They say you're fair.",
+    "text": "The new owner. I'm good with a broom, me.",
     "kind": "casual_worker",
     "speaker": "tanja",
     "situation": "greeting.owner",
@@ -635,10 +621,10 @@
     "id": "office_worker.farewell.06",
     "text": "Do take care.",
     "kind": "office_worker",
-    "speaker": "bruno",
+    "speaker": "goran",
     "situation": "farewell",
     "heard": true,
-    "dist": 6.3,
+    "dist": 7.0,
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
@@ -747,7 +733,7 @@
     "id": "dock_worker.greet-owner.01",
     "text": "You'll be the new owner. Mickey's old place.",
     "kind": "dock_worker",
-    "speaker": "dario",
+    "speaker": "drago",
     "situation": "greeting.owner",
     "heard": true,
     "dist": 5.5,
@@ -757,25 +743,11 @@
     "waited": 0.0
    },
    {
-    "t": 351.5,
-    "id": "dock_worker.way.01",
-    "text": "Don't know it. I'm quay, not town.",
-    "kind": "dock_worker",
-    "speaker": "dario",
-    "situation": "asked_way",
-    "heard": true,
-    "dist": 3.7,
-    "delivery": "normal",
-    "weather": "dry",
-    "sure": null,
-    "waited": 1.0
-   },
-   {
     "t": 414.9,
     "id": "dock_worker.greet-owner.07",
     "text": "New owner, eh? The cabs still got their wheels?",
     "kind": "dock_worker",
-    "speaker": "petra",
+    "speaker": "stipe",
     "situation": "greeting.owner",
     "heard": true,
     "dist": 4.7,
@@ -869,140 +841,84 @@
     "waited": 0.0
    },
    {
-    "t": 664.6,
-    "id": "dock_worker.greet-stranger.02",
-    "text": "Now then.",
-    "kind": "dock_worker",
-    "speaker": "stipe",
-    "situation": "greeting.stranger",
-    "heard": true,
-    "dist": 5.3,
-    "delivery": "normal",
-    "weather": "dry",
-    "sure": null,
-    "waited": 0.0
-   },
-   {
-    "t": 708.8,
+    "t": 666.5,
     "id": "laundry_worker.greet-owner.02",
     "text": "The new owner! Well, you're not what I expected.",
     "kind": "laundry_worker",
-    "speaker": "katarina",
+    "speaker": "iva",
     "situation": "greeting.owner",
     "heard": true,
-    "dist": 5.1,
+    "dist": 5.0,
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
     "waited": 0.0
    },
    {
-    "t": 715.2,
-    "id": "shopkeeper.farewell.07",
-    "text": "Ta-ra for now.",
+    "t": 709.7,
+    "id": "shopkeeper.greet-stranger.05",
+    "text": "Don't stand in the doorway, love, come in.",
     "kind": "shopkeeper",
     "speaker": "ines",
-    "situation": "farewell",
+    "situation": "greeting.stranger",
     "heard": true,
-    "dist": 6.2,
+    "dist": 5.2,
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
     "waited": 0.0
    },
    {
-    "t": 723.1,
-    "id": "ron.rain-starts.06",
-    "text": "Only spitting. I've stood in worse.",
-    "kind": "ron",
-    "speaker": "rocco",
-    "situation": "rain_starts",
-    "heard": true,
-    "dist": 3.2,
-    "delivery": "normal",
-    "weather": "drizzle",
-    "sure": null,
-    "waited": 0.0
-   },
-   {
-    "t": 795.0,
-    "id": "ron.in-rain.02",
-    "text": "Rank's a pond. Mind your boots, boss.",
-    "kind": "ron",
-    "speaker": "rocco",
-    "situation": "in_rain",
-    "heard": true,
-    "dist": 2.4,
-    "delivery": "normal",
-    "weather": "rain",
-    "sure": null,
-    "waited": 0.0
-   },
-   {
-    "t": 862.5,
-    "id": "darren.greet-nowak.02",
-    "text": "Morning, Mr Nowak. Tell me it's a good one.",
-    "kind": "darren",
-    "speaker": "sam",
-    "situation": "greeting.nowak",
-    "heard": true,
-    "dist": 4.4,
-    "delivery": "normal",
-    "weather": "rain",
-    "sure": null,
-    "waited": 0.0
-   },
-   {
-    "t": 901.1,
-    "id": "dock_worker.crime-face.08",
-    "text": "A face I'd know in a crowd, or a fog.",
+    "t": 901.4,
+    "id": "dock_worker.bumped.04",
+    "text": "Oi. Look up when you walk.",
     "kind": "dock_worker",
-    "speaker": "petra",
+    "speaker": "drago",
+    "situation": "bumped",
+    "heard": true,
+    "dist": 2.1,
+    "delivery": "normal",
+    "weather": "rain",
+    "sure": null,
+    "waited": 0.0
+   },
+   {
+    "t": 902.2,
+    "id": "ron.crime-face.02",
+    "text": "I'd know that face, boss. I'll keep it to myself.",
+    "kind": "ron",
+    "speaker": "rocco",
     "situation": "crime_face",
     "heard": true,
-    "dist": 2.5,
+    "dist": 2.0,
     "delivery": "normal",
     "weather": "rain",
     "sure": "face",
     "waited": 0.0
    },
    {
-    "t": 902.4,
-    "id": "pensioner.crime-noise.06",
-    "text": "That's the second noise this week.",
-    "kind": "pensioner",
-    "speaker": "ada",
-    "situation": "crime_noise",
+    "t": 904.7,
+    "id": "shopkeeper.crime-shape.06",
+    "text": "Something crossed the glass fast. I couldn't say what.",
+    "kind": "shopkeeper",
+    "speaker": "rita",
+    "situation": "crime_shape",
     "heard": false,
-    "dist": 5.2,
+    "dist": 10.3,
     "delivery": "normal",
     "weather": "rain",
-    "sure": "noise",
-    "waited": 0.0
+    "sure": "shape",
+    "waited": 1.8
    },
    {
-    "t": 905.7,
-    "id": "ron.crime-noise.04",
-    "text": "That's not ours. Not today.",
-    "kind": "ron",
-    "speaker": "rocco",
-    "situation": "crime_noise",
+    "t": 1256.9,
+    "id": "dock_worker.bumped.08",
+    "text": "Now then. You want to look up more.",
+    "kind": "dock_worker",
+    "speaker": "dario",
+    "situation": "bumped",
     "heard": true,
-    "dist": 2.0,
-    "delivery": "normal",
-    "weather": "rain",
-    "sure": "noise",
-    "waited": 3.1
-   },
-   {
-    "t": 1224.2,
-    "id": "casual_worker.greet-owner.03",
-    "text": "New owner! I can drive. Sort of.",
-    "kind": "casual_worker",
-    "speaker": "danica",
-    "situation": "greeting.owner",
-    "heard": true,
-    "dist": 5.9,
+    "dist": 2.9,
     "delivery": "normal",
     "weather": "drizzle",
     "sure": null,
@@ -1012,6 +928,48 @@
     "t": 1264.5,
     "id": "driver.greet-owner.02",
     "text": "The new owner. Mind my wing mirror, it's loose.",
+    "kind": "driver",
+    "speaker": "dusan",
+    "situation": "greeting.owner",
+    "heard": true,
+    "dist": 5.4,
+    "delivery": "normal",
+    "weather": "dry",
+    "sure": null,
+    "waited": 0.0
+   },
+   {
+    "t": 1276.7,
+    "id": "tradesman.farewell.01",
+    "text": "Duck under the ladder. Not through it.",
+    "kind": "tradesman",
+    "speaker": "luka",
+    "situation": "farewell",
+    "heard": true,
+    "dist": 6.2,
+    "delivery": "normal",
+    "weather": "dry",
+    "sure": null,
+    "waited": 0.0
+   },
+   {
+    "t": 1350.9,
+    "id": "dock_worker.greet-stranger.06",
+    "text": "Where've you sprung from, then?",
+    "kind": "dock_worker",
+    "speaker": "dario",
+    "situation": "greeting.stranger",
+    "heard": true,
+    "dist": 6.6,
+    "delivery": "normal",
+    "weather": "dry",
+    "sure": null,
+    "waited": 0.0
+   },
+   {
+    "t": 1386.4,
+    "id": "driver.greet-owner.07",
+    "text": "The new owner. They say you've the keys to the lot.",
     "kind": "driver",
     "speaker": "ferko",
     "situation": "greeting.owner",
@@ -1023,65 +981,9 @@
     "waited": 0.0
    },
    {
-    "t": 1273.5,
-    "id": "shopkeeper.farewell.04",
-    "text": "Take care out there.",
-    "kind": "shopkeeper",
-    "speaker": "takeaway_m",
-    "situation": "farewell",
-    "heard": true,
-    "dist": 6.8,
-    "delivery": "normal",
-    "weather": "dry",
-    "sure": null,
-    "waited": 0.0
-   },
-   {
-    "t": 1345.0,
-    "id": "shopkeeper.after-deed.03",
-    "text": "Nobody's talking. Have you noticed? Nobody's talking.",
-    "kind": "shopkeeper",
-    "speaker": "rita",
-    "situation": "after_deed",
-    "heard": true,
-    "dist": 4.0,
-    "delivery": "hushed",
-    "weather": "dry",
-    "sure": null,
-    "waited": 0.0
-   },
-   {
-    "t": 1354.4,
-    "id": "dock_worker.farewell.06",
-    "text": "Watch the ropes, they bite.",
-    "kind": "dock_worker",
-    "speaker": "petra",
-    "situation": "farewell",
-    "heard": true,
-    "dist": 6.5,
-    "delivery": "normal",
-    "weather": "dry",
-    "sure": null,
-    "waited": 0.0
-   },
-   {
-    "t": 1392.2,
-    "id": "office_worker.greet-nowak.04",
-    "text": "Mr Nowak. You've post waiting, I expect.",
-    "kind": "office_worker",
-    "speaker": "tibor",
-    "situation": "greeting.nowak",
-    "heard": true,
-    "dist": 4.3,
-    "delivery": "normal",
-    "weather": "dry",
-    "sure": null,
-    "waited": 0.0
-   },
-   {
     "t": 1398.7,
-    "id": "laundry_worker.bumped.07",
-    "text": "Well, I never did.",
+    "id": "laundry_worker.bumped.04",
+    "text": "Steady on. Not on my sheets.",
     "kind": "laundry_worker",
     "speaker": "katarina",
     "situation": "bumped",
@@ -1094,8 +996,8 @@
    },
    {
     "t": 1482.6,
-    "id": "father_walsh.greet-owner.05",
-    "text": "Welcome to the Hook, new owner. It grows on a man.",
+    "id": "father_walsh.greet-owner.03",
+    "text": "Morning to you, new owner. I'm Father Walsh.",
     "kind": "father_walsh",
     "speaker": "emil",
     "situation": "greeting.owner",
@@ -1108,8 +1010,8 @@
    },
    {
     "t": 1497.4,
-    "id": "casual_worker.greet-owner.01",
-    "text": "You'll be the new owner. Any jobs going?",
+    "id": "casual_worker.greet-owner.05",
+    "text": "The new owner. I'd work for tea.",
     "kind": "casual_worker",
     "speaker": "joey",
     "situation": "greeting.owner",
@@ -1122,8 +1024,8 @@
    },
    {
     "t": 1533.2,
-    "id": "pensioner.greet-stranger.03",
-    "text": "Good day to you. Don't mind me.",
+    "id": "pensioner.greet-stranger.04",
+    "text": "Don't rush on my account, dear.",
     "kind": "pensioner",
     "speaker": "ada",
     "situation": "greeting.stranger",
@@ -1135,14 +1037,14 @@
     "waited": 0.0
    },
    {
-    "t": 1542.4,
-    "id": "dock_worker.greet-stranger.01",
-    "text": "Right then?",
+    "t": 1546.9,
+    "id": "dock_worker.farewell.02",
+    "text": "Be seeing you.",
     "kind": "dock_worker",
     "speaker": "stipe",
-    "situation": "greeting.stranger",
+    "situation": "farewell",
     "heard": true,
-    "dist": 4.5,
+    "dist": 6.9,
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
@@ -1150,8 +1052,8 @@
    },
    {
     "t": 1556.2,
-    "id": "shopkeeper.greet-tom.04",
-    "text": "Come through, Tom. I'll put the kettle on.",
+    "id": "shopkeeper.greet-tom.01",
+    "text": "Tom! There you are. How's the day treating you?",
     "kind": "shopkeeper",
     "speaker": "takeaway_f",
     "situation": "greeting.tom",
@@ -1164,8 +1066,8 @@
    },
    {
     "t": 1602.4,
-    "id": "shopkeeper.greet-nowak.03",
-    "text": "Nowak. Come in, you'll want something hot.",
+    "id": "shopkeeper.greet-nowak.06",
+    "text": "Morning, Mr Nowak. How's business your end?",
     "kind": "shopkeeper",
     "speaker": "hal",
     "situation": "greeting.nowak",
@@ -1178,8 +1080,8 @@
    },
    {
     "t": 1610.8,
-    "id": "casual_worker.farewell.01",
-    "text": "See you around. I'm always about.",
+    "id": "casual_worker.farewell.02",
+    "text": "Keep your chin up, mate.",
     "kind": "casual_worker",
     "speaker": "joey",
     "situation": "farewell",
@@ -1191,70 +1093,28 @@
     "waited": 0.0
    },
    {
-    "t": 1673.7,
-    "id": "casual_worker.farewell.04",
-    "text": "Right you are, then.",
-    "kind": "casual_worker",
-    "speaker": "danica",
-    "situation": "farewell",
-    "heard": true,
-    "dist": 6.0,
-    "delivery": "normal",
-    "weather": "dry",
-    "sure": null,
-    "waited": 0.0
-   },
-   {
-    "t": 1676.3,
-    "id": "dock_worker.greet-owner.08",
-    "text": "Quiet week for a new owner to turn up.",
+    "t": 1677.9,
+    "id": "dock_worker.bumped.03",
+    "text": "Mind out. Wet setts, and my hands full.",
     "kind": "dock_worker",
     "speaker": "dario",
-    "situation": "greeting.owner",
+    "situation": "bumped",
     "heard": true,
-    "dist": 4.8,
-    "delivery": "normal",
-    "weather": "dry",
-    "sure": null,
-    "waited": 0.3
-   },
-   {
-    "t": 1684.5,
-    "id": "casual_worker.greet-owner.08",
-    "text": "New owner. I could run messages. I run fast.",
-    "kind": "casual_worker",
-    "speaker": "tanja",
-    "situation": "greeting.owner",
-    "heard": true,
-    "dist": 5.6,
+    "dist": 4.1,
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
     "waited": 0.0
    },
    {
-    "t": 1754.4,
-    "id": "office_worker.greet-nowak.02",
-    "text": "Nowak. A pleasure.",
-    "kind": "office_worker",
-    "speaker": "goran",
-    "situation": "greeting.nowak",
-    "heard": true,
-    "dist": 4.3,
-    "delivery": "normal",
-    "weather": "dry",
-    "sure": null,
-    "waited": 0.0
-   },
-   {
-    "t": 1774.4,
-    "id": "shopkeeper.greet-stranger.04",
-    "text": "Take your time. I'm not going anywhere.",
+    "t": 1773.4,
+    "id": "shopkeeper.greet-owner.01",
+    "text": "You'll be the new owner. Pleased to meet you.",
     "kind": "shopkeeper",
-    "speaker": "rita",
-    "situation": "greeting.stranger",
+    "speaker": "takeaway_m",
+    "situation": "greeting.owner",
     "heard": true,
-    "dist": 5.4,
+    "dist": 5.2,
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
@@ -1278,30 +1138,30 @@
   "lines_heard": 23,
   "heard_by_situation": {
    "asked_way": 1,
-   "crime_face": 1,
+   "crime_shape": 1,
    "farewell": 4,
-   "greeting.nowak": 1,
+   "greeting.nowak": 2,
    "greeting.owner": 10,
-   "greeting.stranger": 4,
+   "greeting.stranger": 3,
    "greeting.tom": 1,
    "in_rain": 1
   },
   "heard_by_kind": {
-   "casual_worker": 2,
+   "casual_worker": 3,
    "dock_worker": 4,
    "father_walsh": 1,
    "laundry_worker": 2,
    "office_worker": 1,
    "pensioner": 2,
-   "ron": 3,
+   "ron": 2,
    "shopkeeper": 6,
    "tradesman": 2
   },
   "busiest_minute_heard": 5,
   "busiest_minute_at_s": 59.0,
   "busiest_minute_without_crime_lines": 5,
-  "longest_gap_s": 232.0,
-  "longest_gap_from_s": 901.2,
+  "longest_gap_s": 230.9,
+  "longest_gap_from_s": 902.3,
   "longest_gap_to_s": 1133.2,
   "minutes_with_no_line": 16,
   "quiet_share": 0.53,
@@ -1329,19 +1189,19 @@
    "greeting_attempts_not_played_in_those_20_s": [],
    "crime_lines": [
     {
-     "t": 901.2,
-     "id": "ron.crime-face.05",
-     "sure": "face",
-     "heard": true,
-     "speaker": "rocco",
-     "waited": 0.0
-    },
-    {
      "t": 901.5,
-     "id": "shopkeeper.crime-noise.01",
+     "id": "shopkeeper.crime-noise.03",
      "sure": "noise",
      "heard": false,
      "speaker": "marla",
+     "waited": 0.0
+    },
+    {
+     "t": 902.3,
+     "id": "casual_worker.crime-shape.08",
+     "sure": "shape",
+     "heard": true,
+     "speaker": "joey",
      "waited": 0.0
     }
    ]
@@ -1350,14 +1210,14 @@
   "asked": [
    {
     "t": 350.5,
-    "who": "petra",
+    "who": "dario",
     "dest": "docks",
     "knows": false
    },
    {
     "t": 1352.9,
     "who": "drago",
-    "dest": "harbour_board",
+    "dest": "harbour_office",
     "knows": true
    }
   ],
@@ -1493,39 +1353,39 @@
     "waited": 0.0
    },
    {
-    "t": 347.5,
-    "id": "dock_worker.greet-stranger.01",
-    "text": "Right then?",
+    "t": 348.5,
+    "id": "dock_worker.greet-nowak.01",
+    "text": "Now then, Nowak.",
     "kind": "dock_worker",
-    "speaker": "petra",
-    "situation": "greeting.stranger",
+    "speaker": "dario",
+    "situation": "greeting.nowak",
     "heard": true,
-    "dist": 5.2,
+    "dist": 4.5,
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
     "waited": 0.0
    },
    {
-    "t": 350.5,
+    "t": 350.8,
     "id": "dock_worker.way.07",
     "text": "Ask at the cab office. That's what they're for.",
     "kind": "dock_worker",
-    "speaker": "petra",
+    "speaker": "dario",
     "situation": "asked_way",
     "heard": true,
-    "dist": 1.8,
+    "dist": 3.8,
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
-    "waited": 0.0
+    "waited": 0.3
    },
    {
     "t": 568.9,
     "id": "dock_worker.greet-stranger.04",
     "text": "Watch the setts. They'll turn your ankle.",
     "kind": "dock_worker",
-    "speaker": "dario",
+    "speaker": "drago",
     "situation": "greeting.stranger",
     "heard": true,
     "dist": 4.6,
@@ -1591,23 +1451,9 @@
     "waited": 0.0
    },
    {
-    "t": 901.2,
-    "id": "ron.crime-face.05",
-    "text": "Plain as day, that face.",
-    "kind": "ron",
-    "speaker": "rocco",
-    "situation": "crime_face",
-    "heard": true,
-    "dist": 2.0,
-    "delivery": "normal",
-    "weather": "rain",
-    "sure": "face",
-    "waited": 0.0
-   },
-   {
     "t": 901.5,
-    "id": "shopkeeper.crime-noise.01",
-    "text": "That wasn't a van door.",
+    "id": "shopkeeper.crime-noise.03",
+    "text": "Lock the till. Just in case.",
     "kind": "shopkeeper",
     "speaker": "marla",
     "situation": "crime_noise",
@@ -1616,6 +1462,20 @@
     "delivery": "normal",
     "weather": "rain",
     "sure": "noise",
+    "waited": 0.0
+   },
+   {
+    "t": 902.3,
+    "id": "casual_worker.crime-shape.08",
+    "text": "Something moved. I'll leave it at that.",
+    "kind": "casual_worker",
+    "speaker": "joey",
+    "situation": "crime_shape",
+    "heard": true,
+    "dist": 1.7,
+    "delivery": "normal",
+    "weather": "rain",
+    "sure": "shape",
     "waited": 0.0
    },
    {
@@ -1679,7 +1539,7 @@
     "id": "casual_worker.greet-tom.04",
     "text": "Tom. Is it true you've a rank to fill?",
     "kind": "casual_worker",
-    "speaker": "joey",
+    "speaker": "tanja",
     "situation": "greeting.tom",
     "heard": true,
     "dist": 5.1,
@@ -1693,7 +1553,7 @@
     "id": "casual_worker.greet-stranger.02",
     "text": "Don't suppose you're hiring?",
     "kind": "casual_worker",
-    "speaker": "tanja",
+    "speaker": "joey",
     "situation": "greeting.stranger",
     "heard": true,
     "dist": 5.2,
@@ -1716,22 +1576,22 @@
   ],
   "crime_minute": 15.0,
   "people_who_came_within_earshot": 21,
-  "lines_played": 18,
-  "lines_heard": 18,
+  "lines_played": 19,
+  "lines_heard": 19,
   "heard_by_situation": {
    "after_deed": 1,
    "asked_way": 2,
-   "bumped": 3,
+   "bumped": 2,
    "crime_shape": 1,
    "farewell": 1,
    "greeting.nowak": 3,
-   "greeting.owner": 4,
-   "greeting.stranger": 2,
-   "greeting.tom": 1
+   "greeting.owner": 6,
+   "greeting.stranger": 1,
+   "greeting.tom": 2
   },
   "heard_by_kind": {
    "casual_worker": 2,
-   "dock_worker": 3,
+   "dock_worker": 4,
    "driver": 2,
    "father_walsh": 1,
    "night_shift": 1,
@@ -1742,25 +1602,24 @@
   "busiest_minute_heard": 3,
   "busiest_minute_at_s": 60.0,
   "busiest_minute_without_crime_lines": 3,
-  "longest_gap_s": 300.7,
-  "longest_gap_from_s": 1499.3,
+  "longest_gap_s": 244.8,
+  "longest_gap_from_s": 1555.2,
   "longest_gap_to_s": 1800.0,
-  "minutes_with_no_line": 18,
-  "quiet_share": 0.6,
+  "minutes_with_no_line": 17,
+  "quiet_share": 0.57,
   "repeats_same_speaker_same_line_within_floor": [],
   "repeats_same_line_two_speakers_within_floor": [],
   "same_words_heard_twice": [],
   "neighbour_lines": 1,
   "neighbour_min_gap_s": null,
-  "group_min_gap_s": 365.2,
-  "attempts_not_played": 31,
+  "group_min_gap_s": 525.8,
+  "attempts_not_played": 30,
   "not_played_by_reason": {
-   "the chance roll failed": 19,
+   "the chance roll failed": 18,
    "speaker's family cooldown": 6,
-   "speaker spoke inside 15 s": 2,
+   "speaker spoke inside 15 s": 3,
    "a witness within the hour says nothing of this kind": 2,
-   "the group spoke inside a minute": 1,
-   "family gap": 1
+   "the group spoke inside a minute": 1
   },
   "voice_drops": [],
   "cut_while_playing": [],
@@ -1789,8 +1648,8 @@
    },
    {
     "t": 1352.9,
-    "who": "tibor",
-    "dest": "walsh_chapel",
+    "who": "danica",
+    "dest": "warehouse_row",
     "knows": false
    }
   ],
@@ -1902,7 +1761,7 @@
     "id": "office_worker.greet-tom.11",
     "text": "Hello, Tom. Is there anything you need signing?",
     "kind": "office_worker",
-    "speaker": "zlata",
+    "speaker": "tibor",
     "situation": "greeting.tom",
     "heard": true,
     "dist": 5.7,
@@ -1944,7 +1803,7 @@
     "id": "office_worker.bumped.05",
     "text": "Goodness. You've scattered my afternoon.",
     "kind": "office_worker",
-    "speaker": "lena",
+    "speaker": "noor",
     "situation": "bumped",
     "heard": true,
     "dist": 2.4,
@@ -1972,7 +1831,7 @@
     "id": "casual_worker.bumped.02",
     "text": "Careful. I'm all I've got.",
     "kind": "casual_worker",
-    "speaker": "danica",
+    "speaker": "joey",
     "situation": "bumped",
     "heard": true,
     "dist": 2.2,
@@ -1982,35 +1841,35 @@
     "waited": 0.0
    },
    {
-    "t": 1350.9,
-    "id": "office_worker.greet-stranger.01",
-    "text": "Can I help you? Only I'm rather busy.",
+    "t": 1349.9,
+    "id": "office_worker.greet-tom.01",
+    "text": "Tom. Good to see you.",
     "kind": "office_worker",
-    "speaker": "tibor",
-    "situation": "greeting.stranger",
+    "speaker": "danica",
+    "situation": "greeting.tom",
     "heard": true,
-    "dist": 5.2,
+    "dist": 5.3,
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
     "waited": 0.0
    },
    {
-    "t": 1354.9,
+    "t": 1352.9,
     "id": "office_worker.way.01",
     "text": "Sorry. I've only ever been to the office.",
     "kind": "office_worker",
-    "speaker": "tibor",
+    "speaker": "danica",
     "situation": "asked_way",
     "heard": true,
-    "dist": 6.5,
+    "dist": 2.1,
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
-    "waited": 2.0
+    "waited": 0.0
    },
    {
-    "t": 1358.8,
+    "t": 1356.9,
     "id": "ron.after-deed.02",
     "text": "Best go in. Walls have ears.",
     "kind": "ron",
@@ -2021,12 +1880,12 @@
     "delivery": "hushed",
     "weather": "dry",
     "sure": null,
-    "waited": 3.8
+    "waited": 1.9
    },
    {
     "t": 1483.6,
-    "id": "father_walsh.greet-owner.02",
-    "text": "Ah, the new owner. You're very welcome.",
+    "id": "father_walsh.greet-owner.09",
+    "text": "Ah, the new owner. I'm glad you've come.",
     "kind": "father_walsh",
     "speaker": "emil",
     "situation": "greeting.owner",
@@ -2038,14 +1897,28 @@
     "waited": 0.0
    },
    {
-    "t": 1499.3,
-    "id": "casual_worker.bumped.01",
-    "text": "Oi! Watch it. I've nowt to lose but my dignity.",
+    "t": 1498.4,
+    "id": "casual_worker.greet-owner.01",
+    "text": "You'll be the new owner. Any jobs going?",
     "kind": "casual_worker",
     "speaker": "joey",
-    "situation": "bumped",
+    "situation": "greeting.owner",
     "heard": true,
-    "dist": 3.6,
+    "dist": 4.6,
+    "delivery": "normal",
+    "weather": "dry",
+    "sure": null,
+    "waited": 0.0
+   },
+   {
+    "t": 1555.2,
+    "id": "dock_worker.greet-owner.06",
+    "text": "Come to see the quay, new owner? Not much to see.",
+    "kind": "dock_worker",
+    "speaker": "drago",
+    "situation": "greeting.owner",
+    "heard": true,
+    "dist": 5.7,
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
@@ -2066,41 +1939,40 @@
   "crime_minute": 15.0,
   "people_who_came_within_earshot": 84,
   "lines_played": 114,
-  "lines_heard": 88,
+  "lines_heard": 83,
   "heard_by_situation": {
-   "after_deed": 16,
-   "asked_way": 1,
-   "bumped": 1,
-   "crime_shape": 1,
-   "farewell": 9,
-   "greeting.nowak": 9,
-   "greeting.owner": 33,
-   "greeting.stranger": 10,
+   "after_deed": 14,
+   "bumped": 3,
+   "crime_face": 1,
+   "farewell": 11,
+   "greeting.nowak": 8,
+   "greeting.owner": 30,
+   "greeting.stranger": 8,
    "greeting.tom": 1,
    "in_rain": 6,
    "rain_starts": 1
   },
   "heard_by_kind": {
-   "casual_worker": 3,
+   "casual_worker": 2,
    "darren": 1,
-   "dock_worker": 8,
-   "driver": 7,
+   "dock_worker": 11,
+   "driver": 5,
    "father_walsh": 1,
    "laundry_worker": 4,
    "night_shift": 1,
    "office_worker": 5,
    "pensioner": 9,
-   "ron": 13,
-   "shopkeeper": 36
+   "ron": 11,
+   "shopkeeper": 33
   },
-  "busiest_minute_heard": 10,
-  "busiest_minute_at_s": 597.0,
-  "busiest_minute_without_crime_lines": 10,
-  "longest_gap_s": 147.9,
-  "longest_gap_from_s": 902.1,
+  "busiest_minute_heard": 8,
+  "busiest_minute_at_s": 676.3,
+  "busiest_minute_without_crime_lines": 8,
+  "longest_gap_s": 146.6,
+  "longest_gap_from_s": 903.4,
   "longest_gap_to_s": 1050.0,
-  "minutes_with_no_line": 1,
-  "quiet_share": 0.03,
+  "minutes_with_no_line": 2,
+  "quiet_share": 0.07,
   "repeats_same_speaker_same_line_within_floor": [
    [
     "shopkeeper.greet-owner.02",
@@ -2108,9 +1980,24 @@
     184.0
    ],
    [
-    "driver.greet-owner.07",
-    "ferko",
-    411.1
+    "ron.greet-nowak.02",
+    "rocco",
+    150.6
+   ],
+   [
+    "shopkeeper.greet-owner.04",
+    "rita",
+    321.3
+   ],
+   [
+    "pensioner.greet-owner.01",
+    "ada",
+    561.3
+   ],
+   [
+    "shopkeeper.greet-owner.07",
+    "marla",
+    158.7
    ],
    [
     "shopkeeper.in-rain.09",
@@ -2135,12 +2022,12 @@
    [
     "ron.after-deed.01",
     "rocco",
-    650.0
+    635.0
    ],
    [
     "shopkeeper.after-deed.05",
     "marla",
-    680.0
+    665.0
    ]
   ],
   "repeats_same_line_two_speakers_within_floor": [
@@ -2151,10 +2038,10 @@
     8.1
    ],
    [
-    "pensioner.farewell.06",
-    "vesna",
+    "pensioner.greet-owner.04",
     "ada",
-    36.3
+    "magda",
+    30.6
    ],
    [
     "shopkeeper.after-deed.07",
@@ -2167,19 +2054,25 @@
     "marla",
     "rita",
     115.0
+   ],
+   [
+    "dock_worker.greet-nowak.02",
+    "dario",
+    "stipe",
+    104.3
    ]
   ],
   "same_words_heard_twice": [
    [
     "So you're the new owner. Welcome to the street.",
-    4
+    3
    ],
    [
     "The new owner, is it? Come in, come in.",
     2
    ],
    [
-    "The new owner. They say you've the keys to the lot.",
+    "You'll be the new owner. I've heard so much.",
     2
    ],
    [
@@ -2191,15 +2084,19 @@
     2
    ],
    [
-    "Quiet week for a new owner to turn up.",
+    "Morning, boss. Gate's locked, rank's ready.",
     2
    ],
    [
-    "You'll be the new owner. Pleased to meet you.",
+    "Morning to the new owner. Settling in?",
     2
    ],
    [
-    "Goodbye, dear. Give my regards to nobody.",
+    "The new owner! You look very young for it.",
+    2
+   ],
+   [
+    "Morning, new owner. Mind the gulls.",
     2
    ],
    [
@@ -2223,19 +2120,20 @@
     2
    ],
    [
-    "Mr Nowak. If anything wants typing, I know where.",
+    "Nowak. Quiet on the quay today.",
     2
    ]
   ],
-  "neighbour_lines": 28,
+  "neighbour_lines": 29,
   "neighbour_min_gap_s": 5.0,
   "group_min_gap_s": 4.6,
-  "attempts_not_played": 150,
+  "attempts_not_played": 154,
   "not_played_by_reason": {
    "the chance roll failed": 138,
-   "shelf life": 9,
-   "replaced while waiting by a higher priority": 2,
-   "no eligible line": 1
+   "shelf life": 5,
+   "replaced while waiting by a higher priority": 5,
+   "a waiting line of equal or higher priority": 4,
+   "no eligible line": 2
   },
   "voice_drops": [
    {
@@ -2246,32 +2144,53 @@
     "why": "shelf life: would wait 3.6 s for the voice"
    },
    {
-    "t": 353.0,
-    "situation": "greeting.owner",
-    "speaker": "rita",
-    "id": "shopkeeper.greet-owner.06",
-    "why": "shelf life: would wait 3.1 s for the voice"
-   },
-   {
-    "t": 409.0,
+    "t": 407.0,
     "situation": "farewell",
     "speaker": "rita",
-    "id": "shopkeeper.farewell.03",
-    "why": "replaced while waiting by a higher priority (pensioner.greet-owner.05)"
-   },
-   {
-    "t": 560.0,
-    "situation": "greeting.owner",
-    "speaker": "ada",
-    "id": "pensioner.greet-owner.01",
+    "id": "shopkeeper.farewell.04",
     "why": "shelf life: would wait 3.3 s for the voice"
    },
    {
-    "t": 561.0,
-    "situation": "bumped",
+    "t": 559.1,
+    "situation": "farewell",
+    "speaker": "rita",
+    "id": "shopkeeper.farewell.01",
+    "why": "replaced while waiting by a higher priority (pensioner.greet-stranger.04)"
+   },
+   {
+    "t": 560.0,
+    "situation": "greeting.stranger",
     "speaker": "fabjan",
-    "id": "pensioner.bumped.06",
-    "why": "shelf life: would wait 2.2 s for the voice"
+    "id": "pensioner.greet-stranger.04",
+    "why": "replaced while waiting by a higher priority (pensioner.greet-owner.04)"
+   },
+   {
+    "t": 901.4,
+    "situation": "bumped",
+    "speaker": "drago",
+    "id": "dock_worker.bumped.06",
+    "why": "shelf life: would wait 3.6 s for the voice"
+   },
+   {
+    "t": 902.1,
+    "situation": "crime_shape",
+    "speaker": "marla",
+    "id": "shopkeeper.crime-shape.08",
+    "why": "a waiting line of equal or higher priority"
+   },
+   {
+    "t": 902.4,
+    "situation": "crime_noise",
+    "speaker": "drago",
+    "id": "dock_worker.crime-noise.06",
+    "why": "a waiting line of equal or higher priority"
+   },
+   {
+    "t": 902.6,
+    "situation": "crime_noise",
+    "speaker": "rita",
+    "id": "shopkeeper.crime-noise.04",
+    "why": "a waiting line of equal or higher priority"
    },
    {
     "t": 1140.0,
@@ -2281,18 +2200,25 @@
     "why": "shelf life: would wait 3.6 s for the voice"
    },
    {
-    "t": 1270.0,
-    "situation": "farewell",
-    "speaker": "ferko",
-    "id": "driver.farewell.06",
-    "why": "shelf life: would wait 3.3 s for the voice"
+    "t": 1352.0,
+    "situation": "after_deed",
+    "speaker": "rita",
+    "id": "shopkeeper.after-deed.08",
+    "why": "replaced while waiting by a higher priority (ron.greet-nowak.02)"
    },
    {
-    "t": 1353.0,
+    "t": 1353.4,
+    "situation": "farewell",
+    "speaker": "dario",
+    "id": "dock_worker.farewell.01",
+    "why": "a waiting line of equal or higher priority"
+   },
+   {
+    "t": 1355.0,
     "situation": "farewell",
     "speaker": "rita",
-    "id": "shopkeeper.farewell.07",
-    "why": "shelf life: would wait 3.6 s for the voice"
+    "id": "shopkeeper.farewell.04",
+    "why": "replaced while waiting by a higher priority (pensioner.greet-owner.05)"
    },
    {
     "t": 1484.5,
@@ -2302,64 +2228,75 @@
     "why": "shelf life: would wait 1.7 s for the voice"
    },
    {
-    "t": 1676.0,
+    "t": 1673.0,
     "situation": "after_deed",
     "speaker": "rita",
-    "id": "shopkeeper.after-deed.01",
-    "why": "replaced while waiting by a higher priority (dock_worker.greet-owner.07)"
-   },
-   {
-    "t": 1779.0,
-    "situation": "farewell",
-    "speaker": "marla",
-    "id": "shopkeeper.farewell.03",
-    "why": "shelf life: would wait 3.6 s for the voice"
+    "id": "shopkeeper.after-deed.02",
+    "why": "replaced while waiting by a higher priority (ron.greet-nowak.08)"
    }
   ],
-  "cut_while_playing": [],
+  "cut_while_playing": [
+   {
+    "t": 901.6,
+    "cut": "shopkeeper.after-deed.05",
+    "by": "pensioner.crime-face.01"
+   },
+   {
+    "t": 902.0,
+    "cut": "shopkeeper.after-deed.05",
+    "by": "ron.crime-face.06"
+   },
+   {
+    "t": 902.1,
+    "cut": "shopkeeper.after-deed.05",
+    "by": "shopkeeper.crime-shape.08"
+   },
+   {
+    "t": 902.4,
+    "cut": "shopkeeper.after-deed.05",
+    "by": "dock_worker.crime-noise.06"
+   },
+   {
+    "t": 902.6,
+    "cut": "shopkeeper.after-deed.05",
+    "by": "shopkeeper.crime-noise.04"
+   }
+  ],
   "crime": {
    "greetings_played_in_the_20_s_after_the_crime": [],
    "greetings_overlapping_a_crime_line": [],
    "greeting_attempts_not_played_in_those_20_s": [],
    "crime_lines": [
     {
-     "t": 901.9,
-     "id": "shopkeeper.crime-face.03",
+     "t": 901.6,
+     "id": "pensioner.crime-face.01",
      "sure": "face",
      "heard": false,
-     "speaker": "rita",
+     "speaker": "ada",
      "waited": 0.0
     },
     {
-     "t": 902.1,
-     "id": "ron.crime-shape.08",
-     "sure": "shape",
+     "t": 903.4,
+     "id": "ron.crime-face.06",
+     "sure": "face",
      "heard": true,
      "speaker": "rocco",
-     "waited": 0.0
-    },
-    {
-     "t": 905.4,
-     "id": "dock_worker.crime-shape.08",
-     "sure": "shape",
-     "heard": false,
-     "speaker": "petra",
-     "waited": 2.8
+     "waited": 1.4
     }
    ]
   },
-  "after_deed_lines_heard": 16,
+  "after_deed_lines_heard": 14,
   "asked": [
    {
     "t": 350.5,
-    "who": "dario",
-    "dest": "police_station",
-    "knows": false
+    "who": "drago",
+    "dest": "quay",
+    "knows": true
    },
    {
     "t": 1307.3,
     "who": "ines",
-    "dest": "retort_works",
+    "dest": "flats",
     "knows": true
    }
   ],
@@ -2387,10 +2324,10 @@
     "id": "dock_worker.greet-stranger.07",
     "text": "Early start. I'd still be in bed if I could.",
     "kind": "dock_worker",
-    "speaker": "stipe",
+    "speaker": "dario",
     "situation": "greeting.stranger",
     "heard": true,
-    "dist": 4.9,
+    "dist": 4.6,
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
@@ -2429,10 +2366,10 @@
     "id": "office_worker.farewell.06",
     "text": "Do take care.",
     "kind": "office_worker",
-    "speaker": "bruno",
+    "speaker": "goran",
     "situation": "farewell",
     "heard": true,
-    "dist": 6.3,
+    "dist": 7.0,
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
@@ -2583,7 +2520,7 @@
     "id": "dock_worker.greet-owner.08",
     "text": "Quiet week for a new owner to turn up.",
     "kind": "dock_worker",
-    "speaker": "dario",
+    "speaker": "drago",
     "situation": "greeting.owner",
     "heard": true,
     "dist": 5.5,
@@ -2593,23 +2530,9 @@
     "waited": 0.0
    },
    {
-    "t": 351.8,
-    "id": "dock_worker.way.08",
-    "text": "I'd draw you a map but the pencil's frozen.",
-    "kind": "dock_worker",
-    "speaker": "dario",
-    "situation": "asked_way",
-    "heard": true,
-    "dist": 4.2,
-    "delivery": "normal",
-    "weather": "dry",
-    "sure": null,
-    "waited": 1.3
-   },
-   {
     "t": 358.0,
-    "id": "shopkeeper.greet-owner.05",
-    "text": "The new owner, is it? Come in, come in.",
+    "id": "shopkeeper.greet-owner.06",
+    "text": "Not seen the new owner in here yet.",
     "kind": "shopkeeper",
     "speaker": "marla",
     "situation": "greeting.owner",
@@ -2621,9 +2544,23 @@
     "waited": 0.0
    },
    {
+    "t": 401.0,
+    "id": "casual_worker.greet-stranger.05",
+    "text": "Spare a minute? I've plenty.",
+    "kind": "casual_worker",
+    "speaker": "joey",
+    "situation": "greeting.stranger",
+    "heard": true,
+    "dist": 6.1,
+    "delivery": "normal",
+    "weather": "dry",
+    "sure": null,
+    "waited": 0.0
+   },
+   {
     "t": 407.0,
-    "id": "ron.greet-nowak.03",
-    "text": "Boss. Anything wants doing, say.",
+    "id": "ron.greet-nowak.02",
+    "text": "Morning, boss. Gate's locked, rank's ready.",
     "kind": "ron",
     "speaker": "rocco",
     "situation": "greeting.nowak",
@@ -2635,9 +2572,9 @@
     "waited": 0.0
    },
    {
-    "t": 410.0,
-    "id": "pensioner.greet-owner.05",
-    "text": "Welcome, new owner. We're not as bad as we look.",
+    "t": 410.3,
+    "id": "pensioner.greet-owner.06",
+    "text": "The new owner. You must meet everybody, dear.",
     "kind": "pensioner",
     "speaker": "ada",
     "situation": "greeting.owner",
@@ -2646,14 +2583,14 @@
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
-    "waited": 1.0
+    "waited": 1.3
    },
    {
     "t": 414.9,
-    "id": "dock_worker.greet-owner.06",
-    "text": "Come to see the quay, new owner? Not much to see.",
+    "id": "dock_worker.greet-owner.02",
+    "text": "So that's the new owner. Smaller than I thought.",
     "kind": "dock_worker",
-    "speaker": "petra",
+    "speaker": "stipe",
     "situation": "greeting.owner",
     "heard": true,
     "dist": 4.7,
@@ -2663,12 +2600,12 @@
     "waited": 0.0
    },
    {
-    "t": 426.0,
-    "id": "shopkeeper.greet-owner.06",
-    "text": "Not seen the new owner in here yet.",
-    "kind": "shopkeeper",
-    "speaker": "rita",
-    "situation": "greeting.owner",
+    "t": 437.0,
+    "id": "pensioner.farewell.04",
+    "text": "Take care of yourself.",
+    "kind": "pensioner",
+    "speaker": "ada",
+    "situation": "farewell",
     "heard": true,
     "dist": 7.0,
     "delivery": "normal",
@@ -2677,54 +2614,12 @@
     "waited": 0.0
    },
    {
-    "t": 439.0,
-    "id": "ron.farewell.06",
-    "text": "Off to put the kettle on.",
-    "kind": "ron",
-    "speaker": "rocco",
+    "t": 447.0,
+    "id": "shopkeeper.farewell.01",
+    "text": "Mind how you get home.",
+    "kind": "shopkeeper",
+    "speaker": "rita",
     "situation": "farewell",
-    "heard": true,
-    "dist": 5.9,
-    "delivery": "normal",
-    "weather": "dry",
-    "sure": null,
-    "waited": 0.0
-   },
-   {
-    "t": 442.3,
-    "id": "office_worker.greet-owner.01",
-    "text": "You'll be the new owner, I take it.",
-    "kind": "office_worker",
-    "speaker": "zlata",
-    "situation": "greeting.owner",
-    "heard": true,
-    "dist": 4.0,
-    "delivery": "normal",
-    "weather": "dry",
-    "sure": null,
-    "waited": 0.6
-   },
-   {
-    "t": 495.5,
-    "id": "casual_worker.greet-stranger.06",
-    "text": "You're not the foreman, are you? No. Pity.",
-    "kind": "casual_worker",
-    "speaker": "tanja",
-    "situation": "greeting.stranger",
-    "heard": true,
-    "dist": 5.3,
-    "delivery": "normal",
-    "weather": "dry",
-    "sure": null,
-    "waited": 0.0
-   },
-   {
-    "t": 530.4,
-    "id": "driver.greet-owner.07",
-    "text": "The new owner. They say you've the keys to the lot.",
-    "kind": "driver",
-    "speaker": "ferko",
-    "situation": "greeting.owner",
     "heard": true,
     "dist": 6.0,
     "delivery": "normal",
@@ -2733,42 +2628,14 @@
     "waited": 0.0
    },
    {
-    "t": 535.3,
+    "t": 533.9,
     "id": "driver.farewell.05",
     "text": "Cheerio.",
     "kind": "driver",
     "speaker": "ferko",
     "situation": "farewell",
-    "heard": false,
-    "dist": 8.7,
-    "delivery": "normal",
-    "weather": "dry",
-    "sure": null,
-    "waited": 1.5
-   },
-   {
-    "t": 541.3,
-    "id": "shopkeeper.greet-stranger.02",
-    "text": "Mind the step as you go by.",
-    "kind": "shopkeeper",
-    "speaker": "takeaway_f",
-    "situation": "greeting.stranger",
     "heard": true,
-    "dist": 6.5,
-    "delivery": "normal",
-    "weather": "dry",
-    "sure": null,
-    "waited": 0.0
-   },
-   {
-    "t": 549.0,
-    "id": "shopkeeper.greet-owner.01",
-    "text": "You'll be the new owner. Pleased to meet you.",
-    "kind": "shopkeeper",
-    "speaker": "rita",
-    "situation": "greeting.owner",
-    "heard": true,
-    "dist": 5.0,
+    "dist": 6.6,
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
@@ -2776,8 +2643,8 @@
    },
    {
     "t": 554.0,
-    "id": "shopkeeper.greet-owner.04",
-    "text": "You must be the new owner. Mind how you go.",
+    "id": "shopkeeper.greet-owner.07",
+    "text": "Morning to the new owner. Settling in?",
     "kind": "shopkeeper",
     "speaker": "marla",
     "situation": "greeting.owner",
@@ -2789,37 +2656,51 @@
     "waited": 0.0
    },
    {
-    "t": 558.6,
-    "id": "ron.greet-nowak.06",
-    "text": "Boss. You've the look of a man who's not eaten.",
+    "t": 557.6,
+    "id": "ron.greet-nowak.02",
+    "text": "Morning, boss. Gate's locked, rank's ready.",
     "kind": "ron",
     "speaker": "rocco",
     "situation": "greeting.nowak",
     "heard": true,
-    "dist": 3.8,
+    "dist": 4.9,
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
-    "waited": 1.6
+    "waited": 0.6
    },
    {
-    "t": 564.6,
-    "id": "pensioner.farewell.02",
-    "text": "Bless you, dear.",
+    "t": 560.9,
+    "id": "pensioner.greet-owner.04",
+    "text": "The new owner! You look very young for it.",
     "kind": "pensioner",
-    "speaker": "fabjan",
-    "situation": "farewell",
+    "speaker": "ada",
+    "situation": "greeting.owner",
     "heard": true,
     "dist": 6.3,
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
-    "waited": 0.0
+    "waited": 0.9
+   },
+   {
+    "t": 565.2,
+    "id": "pensioner.farewell.01",
+    "text": "Mind how you go, dear.",
+    "kind": "pensioner",
+    "speaker": "fabjan",
+    "situation": "farewell",
+    "heard": false,
+    "dist": 7.5,
+    "delivery": "normal",
+    "weather": "dry",
+    "sure": null,
+    "waited": 0.6
    },
    {
     "t": 568.9,
-    "id": "dock_worker.greet-owner.08",
-    "text": "Quiet week for a new owner to turn up.",
+    "id": "dock_worker.greet-owner.03",
+    "text": "Morning, new owner. Mind the gulls.",
     "kind": "dock_worker",
     "speaker": "drago",
     "situation": "greeting.owner",
@@ -2831,23 +2712,9 @@
     "waited": 0.0
    },
    {
-    "t": 573.2,
-    "id": "dock_worker.farewell.05",
-    "text": "Tarra, then.",
-    "kind": "dock_worker",
-    "speaker": "drago",
-    "situation": "farewell",
-    "heard": false,
-    "dist": 7.0,
-    "delivery": "normal",
-    "weather": "dry",
-    "sure": null,
-    "waited": 0.8
-   },
-   {
     "t": 576.7,
-    "id": "pensioner.greet-owner.06",
-    "text": "The new owner. You must meet everybody, dear.",
+    "id": "pensioner.greet-owner.02",
+    "text": "So you're the new owner. We'd heard you were coming.",
     "kind": "pensioner",
     "speaker": "vesna",
     "situation": "greeting.owner",
@@ -2859,23 +2726,23 @@
     "waited": 0.0
    },
    {
-    "t": 580.7,
+    "t": 581.4,
     "id": "pensioner.farewell.06",
     "text": "Goodbye, dear. Give my regards to nobody.",
     "kind": "pensioner",
     "speaker": "vesna",
     "situation": "farewell",
-    "heard": true,
-    "dist": 6.7,
+    "heard": false,
+    "dist": 7.8,
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
-    "waited": 0.5
+    "waited": 1.1
    },
    {
     "t": 591.5,
-    "id": "pensioner.greet-owner.02",
-    "text": "So you're the new owner. We'd heard you were coming.",
+    "id": "pensioner.greet-owner.04",
+    "text": "The new owner! You look very young for it.",
     "kind": "pensioner",
     "speaker": "magda",
     "situation": "greeting.owner",
@@ -2888,8 +2755,8 @@
    },
    {
     "t": 597.0,
-    "id": "pensioner.farewell.01",
-    "text": "Mind how you go, dear.",
+    "id": "pensioner.farewell.06",
+    "text": "Goodbye, dear. Give my regards to nobody.",
     "kind": "pensioner",
     "speaker": "magda",
     "situation": "farewell",
@@ -2902,8 +2769,8 @@
    },
    {
     "t": 617.0,
-    "id": "pensioner.farewell.06",
-    "text": "Goodbye, dear. Give my regards to nobody.",
+    "id": "pensioner.farewell.02",
+    "text": "Bless you, dear.",
     "kind": "pensioner",
     "speaker": "ada",
     "situation": "farewell",
@@ -2915,9 +2782,9 @@
     "waited": 0.0
    },
    {
-    "t": 620.6,
-    "id": "shopkeeper.greet-owner.02",
-    "text": "So you're the new owner. Welcome to the street.",
+    "t": 619.3,
+    "id": "shopkeeper.greet-owner.04",
+    "text": "You must be the new owner. Mind how you go.",
     "kind": "shopkeeper",
     "speaker": "rita",
     "situation": "greeting.owner",
@@ -2926,12 +2793,26 @@
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
-    "waited": 1.6
+    "waited": 0.3
+   },
+   {
+    "t": 643.7,
+    "id": "dock_worker.greet-stranger.08",
+    "text": "Morning. The gulls are up before me.",
+    "kind": "dock_worker",
+    "speaker": "stipe",
+    "situation": "greeting.stranger",
+    "heard": true,
+    "dist": 5.1,
+    "delivery": "normal",
+    "weather": "dry",
+    "sure": null,
+    "waited": 0.0
    },
    {
     "t": 660.0,
-    "id": "shopkeeper.greet-stranger.04",
-    "text": "Take your time. I'm not going anywhere.",
+    "id": "shopkeeper.greet-stranger.08",
+    "text": "Morning. The door's only just been unlocked.",
     "kind": "shopkeeper",
     "speaker": "cafe",
     "situation": "greeting.stranger",
@@ -2957,40 +2838,26 @@
     "waited": 0.0
    },
    {
-    "t": 666.6,
-    "id": "laundry_worker.greet-owner.10",
-    "text": "The new owner, love. Don't be a stranger.",
-    "kind": "laundry_worker",
-    "speaker": "iva",
-    "situation": "greeting.owner",
-    "heard": true,
-    "dist": 4.9,
-    "delivery": "normal",
-    "weather": "dry",
-    "sure": null,
-    "waited": 0.1
-   },
-   {
-    "t": 670.5,
-    "id": "dock_worker.farewell.02",
-    "text": "Be seeing you.",
+    "t": 670.1,
+    "id": "dock_worker.farewell.03",
+    "text": "Keep your feet dry.",
     "kind": "dock_worker",
     "speaker": "stipe",
     "situation": "farewell",
-    "heard": false,
-    "dist": 7.1,
+    "heard": true,
+    "dist": 6.2,
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
-    "waited": 0.4
+    "waited": 0.0
    },
    {
-    "t": 675.0,
-    "id": "pensioner.greet-owner.03",
-    "text": "Good morning, new owner. Have you everything you need?",
-    "kind": "pensioner",
-    "speaker": "ada",
-    "situation": "greeting.owner",
+    "t": 673.0,
+    "id": "shopkeeper.farewell.02",
+    "text": "Come again when you've more time.",
+    "kind": "shopkeeper",
+    "speaker": "rita",
+    "situation": "farewell",
     "heard": true,
     "dist": 6.0,
     "delivery": "normal",
@@ -2999,7 +2866,21 @@
     "waited": 0.0
    },
    {
-    "t": 679.3,
+    "t": 676.3,
+    "id": "pensioner.greet-owner.01",
+    "text": "You'll be the new owner. I've heard so much.",
+    "kind": "pensioner",
+    "speaker": "ada",
+    "situation": "greeting.owner",
+    "heard": true,
+    "dist": 5.4,
+    "delivery": "normal",
+    "weather": "dry",
+    "sure": null,
+    "waited": 1.3
+   },
+   {
+    "t": 680.6,
     "id": "shopkeeper.farewell.05",
     "text": "Cheerio, then.",
     "kind": "shopkeeper",
@@ -3010,26 +2891,40 @@
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
-    "waited": 1.3
+    "waited": 2.6
    },
    {
-    "t": 709.7,
-    "id": "shopkeeper.greet-stranger.07",
-    "text": "Morning. You're up early.",
+    "t": 703.2,
+    "id": "shopkeeper.farewell.03",
+    "text": "Don't be a stranger.",
     "kind": "shopkeeper",
-    "speaker": "ines",
-    "situation": "greeting.stranger",
+    "speaker": "takeaway_f",
+    "situation": "farewell",
     "heard": true,
-    "dist": 5.2,
+    "dist": 5.4,
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
     "waited": 0.0
    },
    {
-    "t": 712.4,
-    "id": "shopkeeper.greet-owner.03",
-    "text": "The new owner. We've been expecting you.",
+    "t": 708.8,
+    "id": "laundry_worker.greet-owner.10",
+    "text": "The new owner, love. Don't be a stranger.",
+    "kind": "laundry_worker",
+    "speaker": "katarina",
+    "situation": "greeting.owner",
+    "heard": true,
+    "dist": 5.1,
+    "delivery": "normal",
+    "weather": "dry",
+    "sure": null,
+    "waited": 0.0
+   },
+   {
+    "t": 712.7,
+    "id": "shopkeeper.greet-owner.07",
+    "text": "Morning to the new owner. Settling in?",
     "kind": "shopkeeper",
     "speaker": "marla",
     "situation": "greeting.owner",
@@ -3038,24 +2933,24 @@
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
-    "waited": 1.4
+    "waited": 1.7
    },
    {
-    "t": 716.0,
-    "id": "shopkeeper.farewell.02",
-    "text": "Come again when you've more time.",
+    "t": 716.4,
+    "id": "shopkeeper.farewell.07",
+    "text": "Ta-ra for now.",
     "kind": "shopkeeper",
     "speaker": "ines",
     "situation": "farewell",
     "heard": false,
-    "dist": 7.7,
+    "dist": 8.4,
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
-    "waited": 0.8
+    "waited": 1.1
    },
    {
-    "t": 722.9,
+    "t": 721.6,
     "id": "ron.rain-starts.02",
     "text": "Told you. My back said so.",
     "kind": "ron",
@@ -3069,7 +2964,7 @@
     "waited": 0.0
    },
    {
-    "t": 730.0,
+    "t": 745.0,
     "id": "ron.in-rain.02",
     "text": "Rank's a pond. Mind your boots, boss.",
     "kind": "ron",
@@ -3083,7 +2978,7 @@
     "waited": 0.0
    },
    {
-    "t": 750.0,
+    "t": 765.0,
     "id": "shopkeeper.in-rain.05",
     "text": "Rain's brought the smell of the quay up.",
     "kind": "shopkeeper",
@@ -3097,7 +2992,7 @@
     "waited": 0.0
    },
    {
-    "t": 795.0,
+    "t": 805.0,
     "id": "shopkeeper.in-rain.09",
     "text": "Listen to it hammering on the awning.",
     "kind": "shopkeeper",
@@ -3111,7 +3006,7 @@
     "waited": 0.0
    },
    {
-    "t": 830.0,
+    "t": 840.0,
     "id": "ron.in-rain.01",
     "text": "Cab windows all steamed up. Bit of peace.",
     "kind": "ron",
@@ -3125,7 +3020,7 @@
     "waited": 0.0
    },
    {
-    "t": 835.0,
+    "t": 845.0,
     "id": "shopkeeper.in-rain.09",
     "text": "Listen to it hammering on the awning.",
     "kind": "shopkeeper",
@@ -3139,7 +3034,7 @@
     "waited": 0.0
    },
    {
-    "t": 840.0,
+    "t": 850.0,
     "id": "ron.in-rain.08",
     "text": "Rain like nails on the roof, listen.",
     "kind": "ron",
@@ -3154,8 +3049,8 @@
    },
    {
     "t": 862.5,
-    "id": "darren.greet-nowak.02",
-    "text": "Morning, Mr Nowak. Tell me it's a good one.",
+    "id": "darren.greet-nowak.05",
+    "text": "Nowak! You've met half the street. I've met all.",
     "kind": "darren",
     "speaker": "sam",
     "situation": "greeting.nowak",
@@ -3167,46 +3062,46 @@
     "waited": 0.0
    },
    {
-    "t": 901.9,
-    "id": "shopkeeper.crime-face.03",
-    "text": "I get a hundred faces a day. That one I kept.",
+    "t": 900.0,
+    "id": "shopkeeper.after-deed.05",
+    "text": "I've pulled the blind. I'd advise you to do the same.",
     "kind": "shopkeeper",
-    "speaker": "rita",
+    "speaker": "marla",
+    "situation": "after_deed",
+    "heard": false,
+    "dist": 4.6,
+    "delivery": "hushed",
+    "weather": "rain",
+    "sure": null,
+    "waited": 0.0
+   },
+   {
+    "t": 901.6,
+    "id": "pensioner.crime-face.01",
+    "text": "My eyes are poor, dear, but that face I saw plain.",
+    "kind": "pensioner",
+    "speaker": "ada",
     "situation": "crime_face",
     "heard": false,
-    "dist": 10.3,
+    "dist": 5.2,
     "delivery": "normal",
     "weather": "rain",
     "sure": "face",
     "waited": 0.0
    },
    {
-    "t": 902.1,
-    "id": "ron.crime-shape.08",
-    "text": "A back going away. That's all.",
+    "t": 903.4,
+    "id": "ron.crime-face.06",
+    "text": "I've kept worse to myself than a face, boss.",
     "kind": "ron",
     "speaker": "rocco",
-    "situation": "crime_shape",
+    "situation": "crime_face",
     "heard": true,
     "dist": 2.0,
     "delivery": "normal",
     "weather": "rain",
-    "sure": "shape",
-    "waited": 0.0
-   },
-   {
-    "t": 905.4,
-    "id": "dock_worker.crime-shape.08",
-    "text": "Somebody went past me like a gull with a chip.",
-    "kind": "dock_worker",
-    "speaker": "petra",
-    "situation": "crime_shape",
-    "heard": false,
-    "dist": 7.1,
-    "delivery": "normal",
-    "weather": "rain",
-    "sure": "shape",
-    "waited": 2.8
+    "sure": "face",
+    "waited": 1.4
    },
    {
     "t": 920.0,
@@ -3423,7 +3318,7 @@
     "id": "office_worker.greet-stranger.03",
     "text": "Hello. Are you looking for somebody?",
     "kind": "office_worker",
-    "speaker": "elias",
+    "speaker": "petra",
     "situation": "greeting.stranger",
     "heard": true,
     "dist": 4.4,
@@ -3433,56 +3328,56 @@
     "waited": 0.0
    },
    {
-    "t": 1232.0,
-    "id": "shopkeeper.farewell.05",
-    "text": "Cheerio, then.",
+    "t": 1237.0,
+    "id": "shopkeeper.farewell.01",
+    "text": "Mind how you get home.",
     "kind": "shopkeeper",
-    "speaker": "marla",
+    "speaker": "rita",
     "situation": "farewell",
     "heard": false,
-    "dist": 6.4,
+    "dist": 6.7,
     "delivery": "normal",
     "weather": "drizzle",
     "sure": null,
     "waited": 0.0
    },
    {
-    "t": 1264.5,
-    "id": "driver.greet-owner.10",
-    "text": "The new owner. Fancy a lift round the block?",
-    "kind": "driver",
-    "speaker": "ferko",
+    "t": 1255.0,
+    "id": "dock_worker.greet-owner.03",
+    "text": "Morning, new owner. Mind the gulls.",
+    "kind": "dock_worker",
+    "speaker": "dario",
     "situation": "greeting.owner",
     "heard": true,
-    "dist": 5.3,
+    "dist": 5.7,
     "delivery": "normal",
-    "weather": "dry",
+    "weather": "drizzle",
     "sure": null,
     "waited": 0.0
    },
    {
-    "t": 1269.0,
-    "id": "shopkeeper.greet-owner.01",
-    "text": "You'll be the new owner. Pleased to meet you.",
-    "kind": "shopkeeper",
-    "speaker": "takeaway_m",
-    "situation": "greeting.owner",
+    "t": 1258.3,
+    "id": "dock_worker.bumped.09",
+    "text": "Careful. It's slippy here, even for you.",
+    "kind": "dock_worker",
+    "speaker": "dario",
+    "situation": "bumped",
     "heard": true,
-    "dist": 4.4,
+    "dist": 3.1,
     "delivery": "normal",
-    "weather": "dry",
+    "weather": "drizzle",
     "sure": null,
-    "waited": 0.0
+    "waited": 1.4
    },
    {
-    "t": 1273.5,
-    "id": "shopkeeper.farewell.06",
-    "text": "Mind the step on your way out.",
+    "t": 1268.0,
+    "id": "shopkeeper.greet-owner.05",
+    "text": "The new owner, is it? Come in, come in.",
     "kind": "shopkeeper",
-    "speaker": "takeaway_m",
-    "situation": "farewell",
+    "speaker": "sanja",
+    "situation": "greeting.owner",
     "heard": true,
-    "dist": 6.8,
+    "dist": 5.1,
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
@@ -3490,8 +3385,8 @@
    },
    {
     "t": 1286.0,
-    "id": "driver.greet-owner.06",
-    "text": "New owner. The car's still going, in case you wondered.",
+    "id": "driver.greet-owner.04",
+    "text": "The new owner. Cab office is that way, if you're lost.",
     "kind": "driver",
     "speaker": "dusan",
     "situation": "greeting.owner",
@@ -3504,8 +3399,8 @@
    },
    {
     "t": 1344.0,
-    "id": "shopkeeper.greet-owner.04",
-    "text": "You must be the new owner. Mind how you go.",
+    "id": "shopkeeper.greet-owner.07",
+    "text": "Morning to the new owner. Settling in?",
     "kind": "shopkeeper",
     "speaker": "rita",
     "situation": "greeting.owner",
@@ -3517,9 +3412,23 @@
     "waited": 0.0
    },
    {
-    "t": 1352.0,
-    "id": "ron.greet-nowak.06",
-    "text": "Boss. You've the look of a man who's not eaten.",
+    "t": 1349.0,
+    "id": "shopkeeper.greet-owner.03",
+    "text": "The new owner. We've been expecting you.",
+    "kind": "shopkeeper",
+    "speaker": "marla",
+    "situation": "greeting.owner",
+    "heard": false,
+    "dist": 5.0,
+    "delivery": "normal",
+    "weather": "dry",
+    "sure": null,
+    "waited": 0.0
+   },
+   {
+    "t": 1352.6,
+    "id": "ron.greet-nowak.02",
+    "text": "Morning, boss. Gate's locked, rank's ready.",
     "kind": "ron",
     "speaker": "rocco",
     "situation": "greeting.nowak",
@@ -3528,10 +3437,10 @@
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
-    "waited": 0.0
+    "waited": 0.6
    },
    {
-    "t": 1356.6,
+    "t": 1355.9,
     "id": "pensioner.greet-owner.05",
     "text": "Welcome, new owner. We're not as bad as we look.",
     "kind": "pensioner",
@@ -3542,21 +3451,7 @@
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
-    "waited": 1.6
-   },
-   {
-    "t": 1365.0,
-    "id": "ron.after-deed.05",
-    "text": "Folk are watching, boss. Stand easy.",
-    "kind": "ron",
-    "speaker": "rocco",
-    "situation": "after_deed",
-    "heard": true,
-    "dist": 3.0,
-    "delivery": "hushed",
-    "weather": "dry",
-    "sure": null,
-    "waited": 0.0
+    "waited": 0.9
    },
    {
     "t": 1386.4,
@@ -3588,11 +3483,11 @@
    },
    {
     "t": 1394.3,
-    "id": "office_worker.greet-nowak.07",
-    "text": "Mr Nowak. If anything wants typing, I know where.",
+    "id": "office_worker.greet-owner.07",
+    "text": "The new owner. I've seen you about.",
     "kind": "office_worker",
-    "speaker": "tibor",
-    "situation": "greeting.nowak",
+    "speaker": "lena",
+    "situation": "greeting.owner",
     "heard": true,
     "dist": 3.3,
     "delivery": "normal",
@@ -3812,8 +3707,8 @@
    },
    {
     "t": 1670.0,
-    "id": "shopkeeper.greet-owner.01",
-    "text": "You'll be the new owner. Pleased to meet you.",
+    "id": "shopkeeper.greet-owner.04",
+    "text": "You must be the new owner. Mind how you go.",
     "kind": "shopkeeper",
     "speaker": "marla",
     "situation": "greeting.owner",
@@ -3825,7 +3720,7 @@
     "waited": 0.0
    },
    {
-    "t": 1674.3,
+    "t": 1674.6,
     "id": "ron.greet-nowak.08",
     "text": "Boss. I'm about if you want me.",
     "kind": "ron",
@@ -3836,38 +3731,38 @@
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
-    "waited": 1.3
+    "waited": 1.6
    },
    {
-    "t": 1677.9,
-    "id": "dock_worker.greet-owner.07",
-    "text": "New owner, eh? The cabs still got their wheels?",
+    "t": 1678.3,
+    "id": "dock_worker.greet-nowak.02",
+    "text": "Nowak. Quiet on the quay today.",
     "kind": "dock_worker",
     "speaker": "dario",
-    "situation": "greeting.owner",
+    "situation": "greeting.nowak",
     "heard": true,
-    "dist": 2.2,
+    "dist": 4.0,
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
-    "waited": 1.9
+    "waited": 1.2
    },
    {
-    "t": 1688.0,
-    "id": "casual_worker.farewell.06",
-    "text": "I'm here every day, mate. Worse luck.",
-    "kind": "casual_worker",
-    "speaker": "tanja",
+    "t": 1681.6,
+    "id": "dock_worker.farewell.02",
+    "text": "Be seeing you.",
+    "kind": "dock_worker",
+    "speaker": "dario",
     "situation": "farewell",
-    "heard": true,
-    "dist": 6.2,
+    "heard": false,
+    "dist": 7.2,
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
-    "waited": 0.0
+    "waited": 1.0
    },
    {
-    "t": 1720.0,
+    "t": 1705.0,
     "id": "ron.after-deed.01",
     "text": "Quiet, boss. Say nowt.",
     "kind": "ron",
@@ -3881,7 +3776,7 @@
     "waited": 0.0
    },
    {
-    "t": 1740.0,
+    "t": 1725.0,
     "id": "shopkeeper.after-deed.05",
     "text": "I've pulled the blind. I'd advise you to do the same.",
     "kind": "shopkeeper",
@@ -3895,65 +3790,93 @@
     "waited": 0.0
    },
    {
-    "t": 1754.4,
-    "id": "office_worker.greet-nowak.07",
-    "text": "Mr Nowak. If anything wants typing, I know where.",
-    "kind": "office_worker",
-    "speaker": "goran",
-    "situation": "greeting.nowak",
-    "heard": true,
-    "dist": 4.3,
-    "delivery": "normal",
-    "weather": "dry",
-    "sure": null,
-    "waited": 0.0
-   },
-   {
-    "t": 1770.0,
-    "id": "shopkeeper.after-deed.02",
-    "text": "I'm not saying who. I don't know who.",
+    "t": 1750.0,
+    "id": "shopkeeper.after-deed.08",
+    "text": "It's gone quiet now. I don't like quiet.",
     "kind": "shopkeeper",
-    "speaker": "marla",
+    "speaker": "rita",
     "situation": "after_deed",
-    "heard": true,
-    "dist": 2.1,
+    "heard": false,
+    "dist": 6.8,
     "delivery": "hushed",
     "weather": "dry",
     "sure": null,
     "waited": 0.0
    },
    {
-    "t": 1774.4,
-    "id": "shopkeeper.greet-stranger.03",
-    "text": "We're open, if you were wondering.",
-    "kind": "shopkeeper",
-    "speaker": "rita",
-    "situation": "greeting.stranger",
+    "t": 1755.3,
+    "id": "office_worker.bumped.02",
+    "text": "Do mind. That's important paper.",
+    "kind": "office_worker",
+    "speaker": "tibor",
+    "situation": "bumped",
     "heard": true,
-    "dist": 5.4,
+    "dist": 2.2,
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
     "waited": 0.0
    },
    {
-    "t": 1777.7,
-    "id": "driver.greet-owner.04",
-    "text": "The new owner. Cab office is that way, if you're lost.",
-    "kind": "driver",
-    "speaker": "dusan",
-    "situation": "greeting.owner",
+    "t": 1758.9,
+    "id": "office_worker.farewell.02",
+    "text": "Do watch your step.",
+    "kind": "office_worker",
+    "speaker": "tibor",
+    "situation": "farewell",
     "heard": true,
-    "dist": 5.7,
+    "dist": 6.3,
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
-    "waited": 0.4
+    "waited": 0.0
+   },
+   {
+    "t": 1761.5,
+    "id": "shopkeeper.after-deed.03",
+    "text": "Nobody's talking. Have you noticed? Nobody's talking.",
+    "kind": "shopkeeper",
+    "speaker": "rita",
+    "situation": "after_deed",
+    "heard": false,
+    "dist": 6.8,
+    "delivery": "hushed",
+    "weather": "dry",
+    "sure": null,
+    "waited": 1.5
+   },
+   {
+    "t": 1773.4,
+    "id": "shopkeeper.greet-owner.03",
+    "text": "The new owner. We've been expecting you.",
+    "kind": "shopkeeper",
+    "speaker": "takeaway_m",
+    "situation": "greeting.owner",
+    "heard": true,
+    "dist": 5.2,
+    "delivery": "normal",
+    "weather": "dry",
+    "sure": null,
+    "waited": 0.0
+   },
+   {
+    "t": 1779.0,
+    "id": "shopkeeper.farewell.06",
+    "text": "Mind the step on your way out.",
+    "kind": "shopkeeper",
+    "speaker": "marla",
+    "situation": "farewell",
+    "heard": false,
+    "dist": 7.0,
+    "delivery": "normal",
+    "weather": "dry",
+    "sure": null,
+    "waited": 0.0
    },
    {
     "t": 1782.6,
-    "id": "dock_worker.greet-nowak.09",
-    "text": "Mr Nowak. Mind the crates. They fall without warning.",
+    "id": "dock_worker.greet-nowak.02",
+    "text": "Nowak. Quiet on the quay today.",
     "kind": "dock_worker",
     "speaker": "stipe",
     "situation": "greeting.nowak",
@@ -3963,6 +3886,20 @@
     "weather": "dry",
     "sure": null,
     "waited": 0.9
+   },
+   {
+    "t": 1785.9,
+    "id": "shopkeeper.farewell.03",
+    "text": "Don't be a stranger.",
+    "kind": "shopkeeper",
+    "speaker": "rita",
+    "situation": "farewell",
+    "heard": false,
+    "dist": 8.2,
+    "delivery": "normal",
+    "weather": "dry",
+    "sure": null,
+    "waited": 2.9
    }
   ]
  },
@@ -3988,74 +3925,77 @@
   },
   {
    "seed": 1992,
-   "lines_heard": 18,
-   "busiest_minute_without_crime_lines": 6,
-   "busiest_minute_heard": 6,
-   "quiet_share": 0.6,
-   "longest_gap_s": 626.6,
-   "neighbour_min_gap_s": null,
+   "lines_heard": 22,
+   "busiest_minute_without_crime_lines": 5,
+   "busiest_minute_heard": 5,
+   "quiet_share": 0.43,
+   "longest_gap_s": 273.5,
+   "neighbour_min_gap_s": 605.0,
    "heard_by_situation": {
+    "after_deed": 2,
     "asked_way": 1,
-    "farewell": 5,
-    "greeting.nowak": 5,
-    "greeting.owner": 2,
+    "crime_face": 1,
+    "farewell": 4,
+    "greeting.nowak": 4,
+    "greeting.owner": 7,
     "greeting.stranger": 2,
-    "greeting.tom": 2,
     "rain_starts": 1
    }
   },
   {
    "seed": 1993,
-   "lines_heard": 19,
-   "busiest_minute_without_crime_lines": 4,
-   "busiest_minute_heard": 4,
-   "quiet_share": 0.57,
-   "longest_gap_s": 420.1,
+   "lines_heard": 18,
+   "busiest_minute_without_crime_lines": 3,
+   "busiest_minute_heard": 3,
+   "quiet_share": 0.53,
+   "longest_gap_s": 407.7,
    "neighbour_min_gap_s": null,
    "heard_by_situation": {
-    "after_deed": 1,
-    "bumped": 1,
-    "crime_shape": 1,
+    "crime_face": 1,
     "farewell": 5,
     "greeting.nowak": 2,
-    "greeting.owner": 7,
-    "greeting.stranger": 1,
+    "greeting.owner": 6,
+    "greeting.stranger": 2,
+    "greeting.tom": 1,
     "rain_starts": 1
    }
   },
   {
    "seed": 1994,
    "lines_heard": 23,
-   "busiest_minute_without_crime_lines": 4,
-   "busiest_minute_heard": 4,
-   "quiet_share": 0.37,
-   "longest_gap_s": 323.0,
-   "neighbour_min_gap_s": null,
+   "busiest_minute_without_crime_lines": 3,
+   "busiest_minute_heard": 3,
+   "quiet_share": 0.47,
+   "longest_gap_s": 246.7,
+   "neighbour_min_gap_s": 405.0,
    "heard_by_situation": {
-    "after_deed": 1,
-    "crime_face": 1,
+    "after_deed": 2,
+    "crime_face": 2,
+    "crime_shape": 1,
     "farewell": 4,
-    "greeting.nowak": 5,
-    "greeting.owner": 10,
-    "greeting.stranger": 2
+    "greeting.nowak": 4,
+    "greeting.owner": 7,
+    "greeting.stranger": 1,
+    "greeting.tom": 1,
+    "rain_starts": 1
    }
   },
   {
    "seed": 1995,
-   "lines_heard": 17,
+   "lines_heard": 22,
    "busiest_minute_without_crime_lines": 3,
    "busiest_minute_heard": 3,
-   "quiet_share": 0.6,
-   "longest_gap_s": 336.2,
+   "quiet_share": 0.57,
+   "longest_gap_s": 544.9,
    "neighbour_min_gap_s": null,
    "heard_by_situation": {
     "after_deed": 1,
+    "asked_way": 2,
     "bumped": 1,
-    "farewell": 5,
+    "farewell": 4,
     "greeting.nowak": 3,
-    "greeting.owner": 5,
-    "greeting.stranger": 1,
-    "rain_starts": 1
+    "greeting.owner": 6,
+    "greeting.stranger": 5
    }
   },
   {
@@ -4069,8 +4009,8 @@
    "heard_by_situation": {
     "farewell": 3,
     "greeting.nowak": 2,
-    "greeting.owner": 7,
-    "greeting.stranger": 3,
+    "greeting.owner": 8,
+    "greeting.stranger": 2,
     "greeting.tom": 1,
     "rain_starts": 1
    }
@@ -4094,108 +4034,86 @@
   },
   {
    "seed": 1998,
-   "lines_heard": 24,
+   "lines_heard": 21,
    "busiest_minute_without_crime_lines": 3,
    "busiest_minute_heard": 3,
-   "quiet_share": 0.5,
-   "longest_gap_s": 490.0,
-   "neighbour_min_gap_s": null,
-   "heard_by_situation": {
-    "asked_way": 1,
-    "bumped": 1,
-    "farewell": 8,
-    "greeting.nowak": 4,
-    "greeting.owner": 8,
-    "greeting.stranger": 2
-   }
-  },
-  {
-   "seed": 1999,
-   "lines_heard": 22,
-   "busiest_minute_without_crime_lines": 4,
-   "busiest_minute_heard": 4,
-   "quiet_share": 0.5,
-   "longest_gap_s": 214.8,
-   "neighbour_min_gap_s": 251.7,
-   "heard_by_situation": {
-    "after_deed": 1,
-    "bumped": 1,
-    "crime_face": 2,
-    "farewell": 3,
-    "greeting.nowak": 2,
-    "greeting.owner": 9,
-    "greeting.stranger": 3,
-    "greeting.tom": 1
-   }
-  },
-  {
-   "seed": 2000,
-   "lines_heard": 17,
-   "busiest_minute_without_crime_lines": 3,
-   "busiest_minute_heard": 3,
-   "quiet_share": 0.67,
-   "longest_gap_s": 542.8,
-   "neighbour_min_gap_s": null,
-   "heard_by_situation": {
-    "farewell": 4,
-    "greeting.nowak": 2,
-    "greeting.owner": 8,
-    "greeting.stranger": 2,
-    "rain_starts": 1
-   }
-  },
-  {
-   "seed": 2001,
-   "lines_heard": 20,
-   "busiest_minute_without_crime_lines": 4,
-   "busiest_minute_heard": 4,
-   "quiet_share": 0.63,
-   "longest_gap_s": 475.7,
+   "quiet_share": 0.53,
+   "longest_gap_s": 670.3,
    "neighbour_min_gap_s": null,
    "heard_by_situation": {
     "bumped": 1,
-    "crime_shape": 1,
-    "farewell": 3,
+    "farewell": 5,
     "greeting.nowak": 3,
-    "greeting.owner": 8,
-    "greeting.stranger": 1,
-    "greeting.tom": 1,
+    "greeting.owner": 7,
+    "greeting.stranger": 3,
     "in_rain": 1,
     "rain_starts": 1
    }
   },
   {
-   "seed": 2002,
+   "seed": 1999,
    "lines_heard": 20,
    "busiest_minute_without_crime_lines": 3,
    "busiest_minute_heard": 3,
-   "quiet_share": 0.57,
-   "longest_gap_s": 359.5,
-   "neighbour_min_gap_s": null,
-   "heard_by_situation": {
-    "after_deed": 1,
-    "asked_way": 1,
-    "crime_noise": 1,
-    "farewell": 5,
-    "greeting.nowak": 5,
-    "greeting.owner": 6,
-    "greeting.stranger": 1
-   }
-  },
-  {
-   "seed": 2003,
-   "lines_heard": 24,
-   "busiest_minute_without_crime_lines": 3,
-   "busiest_minute_heard": 3,
-   "quiet_share": 0.43,
-   "longest_gap_s": 358.9,
+   "quiet_share": 0.53,
+   "longest_gap_s": 296.5,
    "neighbour_min_gap_s": null,
    "heard_by_situation": {
     "asked_way": 1,
     "bumped": 1,
-    "crime_face": 1,
     "crime_shape": 1,
-    "farewell": 6,
+    "farewell": 3,
+    "greeting.nowak": 2,
+    "greeting.owner": 11,
+    "greeting.tom": 1
+   }
+  },
+  {
+   "seed": 2000,
+   "lines_heard": 15,
+   "busiest_minute_without_crime_lines": 3,
+   "busiest_minute_heard": 3,
+   "quiet_share": 0.67,
+   "longest_gap_s": 719.4,
+   "neighbour_min_gap_s": null,
+   "heard_by_situation": {
+    "farewell": 5,
+    "greeting.nowak": 2,
+    "greeting.owner": 7,
+    "greeting.stranger": 1
+   }
+  },
+  {
+   "seed": 2001,
+   "lines_heard": 18,
+   "busiest_minute_without_crime_lines": 3,
+   "busiest_minute_heard": 3,
+   "quiet_share": 0.57,
+   "longest_gap_s": 602.0,
+   "neighbour_min_gap_s": null,
+   "heard_by_situation": {
+    "after_deed": 1,
+    "asked_way": 1,
+    "bumped": 1,
+    "farewell": 4,
+    "greeting.nowak": 3,
+    "greeting.owner": 5,
+    "greeting.stranger": 2,
+    "rain_starts": 1
+   }
+  },
+  {
+   "seed": 2002,
+   "lines_heard": 21,
+   "busiest_minute_without_crime_lines": 3,
+   "busiest_minute_heard": 3,
+   "quiet_share": 0.5,
+   "longest_gap_s": 359.5,
+   "neighbour_min_gap_s": null,
+   "heard_by_situation": {
+    "after_deed": 1,
+    "crime_noise": 1,
+    "farewell": 5,
     "greeting.nowak": 4,
     "greeting.owner": 6,
     "greeting.stranger": 3,
@@ -4203,36 +4121,55 @@
    }
   },
   {
-   "seed": 2004,
+   "seed": 2003,
    "lines_heard": 19,
    "busiest_minute_without_crime_lines": 4,
    "busiest_minute_heard": 4,
-   "quiet_share": 0.53,
-   "longest_gap_s": 508.2,
+   "quiet_share": 0.57,
+   "longest_gap_s": 302.4,
    "neighbour_min_gap_s": null,
    "heard_by_situation": {
+    "bumped": 1,
+    "crime_face": 1,
     "farewell": 3,
     "greeting.nowak": 5,
-    "greeting.owner": 6,
-    "greeting.stranger": 4,
+    "greeting.owner": 7,
+    "greeting.stranger": 1,
+    "in_rain": 1
+   }
+  },
+  {
+   "seed": 2004,
+   "lines_heard": 22,
+   "busiest_minute_without_crime_lines": 4,
+   "busiest_minute_heard": 4,
+   "quiet_share": 0.5,
+   "longest_gap_s": 558.7,
+   "neighbour_min_gap_s": null,
+   "heard_by_situation": {
+    "asked_way": 1,
+    "bumped": 1,
+    "farewell": 4,
+    "greeting.nowak": 7,
+    "greeting.owner": 5,
+    "greeting.stranger": 3,
     "rain_starts": 1
    }
   },
   {
    "seed": 2005,
-   "lines_heard": 19,
+   "lines_heard": 21,
    "busiest_minute_without_crime_lines": 3,
    "busiest_minute_heard": 3,
-   "quiet_share": 0.6,
-   "longest_gap_s": 462.4,
+   "quiet_share": 0.5,
+   "longest_gap_s": 292.1,
    "neighbour_min_gap_s": null,
    "heard_by_situation": {
     "asked_way": 1,
     "crime_face": 1,
-    "crime_noise": 1,
-    "farewell": 3,
+    "farewell": 4,
     "greeting.nowak": 2,
-    "greeting.owner": 8,
+    "greeting.owner": 10,
     "greeting.stranger": 2,
     "rain_starts": 1
    }
@@ -4243,7 +4180,7 @@
    "busiest_minute_without_crime_lines": 4,
    "busiest_minute_heard": 4,
    "quiet_share": 0.5,
-   "longest_gap_s": 229.5,
+   "longest_gap_s": 293.3,
    "neighbour_min_gap_s": null,
    "heard_by_situation": {
     "after_deed": 1,
@@ -4256,37 +4193,35 @@
   },
   {
    "seed": 2007,
-   "lines_heard": 29,
+   "lines_heard": 21,
    "busiest_minute_without_crime_lines": 4,
    "busiest_minute_heard": 4,
-   "quiet_share": 0.43,
-   "longest_gap_s": 296.0,
+   "quiet_share": 0.63,
+   "longest_gap_s": 652.4,
    "neighbour_min_gap_s": null,
    "heard_by_situation": {
-    "after_deed": 1,
     "asked_way": 1,
     "bumped": 1,
-    "farewell": 9,
+    "farewell": 4,
     "greeting.nowak": 4,
-    "greeting.owner": 11,
-    "greeting.stranger": 1,
-    "rain_starts": 1
+    "greeting.owner": 8,
+    "greeting.stranger": 3
    }
   },
   {
    "seed": 2008,
-   "lines_heard": 23,
+   "lines_heard": 18,
    "busiest_minute_without_crime_lines": 3,
    "busiest_minute_heard": 3,
-   "quiet_share": 0.53,
-   "longest_gap_s": 302.4,
+   "quiet_share": 0.63,
+   "longest_gap_s": 590.9,
    "neighbour_min_gap_s": null,
    "heard_by_situation": {
-    "after_deed": 1,
+    "asked_way": 1,
     "farewell": 6,
-    "greeting.nowak": 2,
-    "greeting.owner": 8,
-    "greeting.stranger": 6
+    "greeting.nowak": 3,
+    "greeting.owner": 7,
+    "greeting.stranger": 1
    }
   },
   {
@@ -4299,46 +4234,44 @@
    "neighbour_min_gap_s": null,
    "heard_by_situation": {
     "farewell": 3,
-    "greeting.nowak": 4,
-    "greeting.owner": 6,
-    "greeting.stranger": 2,
-    "rain_starts": 1
+    "greeting.nowak": 3,
+    "greeting.owner": 4,
+    "greeting.stranger": 5,
+    "in_rain": 1
    }
   },
   {
    "seed": 2010,
-   "lines_heard": 22,
-   "busiest_minute_without_crime_lines": 5,
-   "busiest_minute_heard": 5,
-   "quiet_share": 0.53,
-   "longest_gap_s": 507.1,
+   "lines_heard": 18,
+   "busiest_minute_without_crime_lines": 3,
+   "busiest_minute_heard": 3,
+   "quiet_share": 0.63,
+   "longest_gap_s": 671.5,
    "neighbour_min_gap_s": null,
    "heard_by_situation": {
     "asked_way": 1,
     "bumped": 1,
-    "farewell": 7,
-    "greeting.nowak": 5,
-    "greeting.owner": 6,
-    "greeting.tom": 1,
+    "farewell": 4,
+    "greeting.nowak": 2,
+    "greeting.owner": 8,
+    "greeting.stranger": 1,
     "rain_starts": 1
    }
   },
   {
    "seed": 2011,
-   "lines_heard": 19,
+   "lines_heard": 15,
    "busiest_minute_without_crime_lines": 3,
    "busiest_minute_heard": 3,
-   "quiet_share": 0.53,
-   "longest_gap_s": 333.3,
+   "quiet_share": 0.6,
+   "longest_gap_s": 633.6,
    "neighbour_min_gap_s": null,
    "heard_by_situation": {
     "asked_way": 1,
     "bumped": 1,
-    "crime_noise": 1,
-    "farewell": 4,
-    "greeting.nowak": 4,
-    "greeting.owner": 7,
-    "greeting.stranger": 1
+    "farewell": 3,
+    "greeting.nowak": 3,
+    "greeting.owner": 7
    }
   },
   {
@@ -4346,69 +4279,69 @@
    "lines_heard": 25,
    "busiest_minute_without_crime_lines": 4,
    "busiest_minute_heard": 4,
-   "quiet_share": 0.5,
-   "longest_gap_s": 588.6,
+   "quiet_share": 0.47,
+   "longest_gap_s": 592.2,
    "neighbour_min_gap_s": null,
    "heard_by_situation": {
     "asked_way": 1,
-    "bumped": 1,
+    "bumped": 2,
     "farewell": 5,
-    "greeting.nowak": 5,
+    "greeting.nowak": 4,
     "greeting.owner": 10,
+    "greeting.stranger": 2,
+    "in_rain": 1
+   }
+  },
+  {
+   "seed": 2013,
+   "lines_heard": 17,
+   "busiest_minute_without_crime_lines": 3,
+   "busiest_minute_heard": 3,
+   "quiet_share": 0.5,
+   "longest_gap_s": 484.2,
+   "neighbour_min_gap_s": null,
+   "heard_by_situation": {
+    "crime_shape": 1,
+    "farewell": 2,
+    "greeting.nowak": 2,
+    "greeting.owner": 7,
     "greeting.stranger": 1,
+    "greeting.tom": 2,
     "in_rain": 1,
     "rain_starts": 1
    }
   },
   {
-   "seed": 2013,
-   "lines_heard": 23,
+   "seed": 2014,
+   "lines_heard": 25,
    "busiest_minute_without_crime_lines": 4,
    "busiest_minute_heard": 4,
    "quiet_share": 0.47,
-   "longest_gap_s": 376.8,
+   "longest_gap_s": 257.8,
    "neighbour_min_gap_s": null,
    "heard_by_situation": {
-    "farewell": 6,
-    "greeting.nowak": 4,
-    "greeting.owner": 9,
-    "greeting.stranger": 2,
-    "greeting.tom": 1,
-    "rain_starts": 1
-   }
-  },
-  {
-   "seed": 2014,
-   "lines_heard": 23,
-   "busiest_minute_without_crime_lines": 3,
-   "busiest_minute_heard": 3,
-   "quiet_share": 0.47,
-   "longest_gap_s": 255.8,
-   "neighbour_min_gap_s": 180.0,
-   "heard_by_situation": {
     "after_deed": 1,
-    "crime_face": 1,
-    "farewell": 5,
+    "bumped": 1,
+    "crime_noise": 1,
+    "farewell": 6,
     "greeting.nowak": 3,
     "greeting.owner": 7,
-    "greeting.stranger": 4,
-    "greeting.tom": 1,
-    "in_rain": 1
+    "greeting.stranger": 5,
+    "greeting.tom": 1
    }
   },
   {
    "seed": 2015,
    "lines_heard": 24,
-   "busiest_minute_without_crime_lines": 5,
-   "busiest_minute_heard": 5,
-   "quiet_share": 0.47,
+   "busiest_minute_without_crime_lines": 4,
+   "busiest_minute_heard": 4,
+   "quiet_share": 0.53,
    "longest_gap_s": 416.6,
-   "neighbour_min_gap_s": 665.0,
+   "neighbour_min_gap_s": null,
    "heard_by_situation": {
-    "after_deed": 1,
     "asked_way": 1,
     "crime_noise": 2,
-    "farewell": 5,
+    "farewell": 6,
     "greeting.nowak": 2,
     "greeting.owner": 10,
     "greeting.stranger": 2,
@@ -4421,16 +4354,17 @@
    "busiest_minute_without_crime_lines": 3,
    "busiest_minute_heard": 3,
    "quiet_share": 0.63,
-   "longest_gap_s": 458.7,
+   "longest_gap_s": 459.7,
    "neighbour_min_gap_s": null,
    "heard_by_situation": {
     "asked_way": 1,
     "crime_face": 1,
     "farewell": 2,
-    "greeting.nowak": 1,
-    "greeting.owner": 7,
-    "greeting.stranger": 1,
-    "greeting.tom": 2
+    "greeting.nowak": 2,
+    "greeting.owner": 5,
+    "greeting.stranger": 2,
+    "greeting.tom": 1,
+    "rain_starts": 1
    }
   },
   {
@@ -4442,10 +4376,9 @@
    "longest_gap_s": 301.0,
    "neighbour_min_gap_s": null,
    "heard_by_situation": {
-    "asked_way": 1,
     "crime_face": 1,
     "crime_shape": 1,
-    "farewell": 6,
+    "farewell": 7,
     "greeting.nowak": 3,
     "greeting.owner": 6,
     "greeting.stranger": 3,
@@ -4454,19 +4387,19 @@
   },
   {
    "seed": 2018,
-   "lines_heard": 18,
-   "busiest_minute_without_crime_lines": 4,
-   "busiest_minute_heard": 4,
-   "quiet_share": 0.57,
-   "longest_gap_s": 477.4,
-   "neighbour_min_gap_s": 315.0,
+   "lines_heard": 24,
+   "busiest_minute_without_crime_lines": 5,
+   "busiest_minute_heard": 5,
+   "quiet_share": 0.5,
+   "longest_gap_s": 500.6,
+   "neighbour_min_gap_s": 309.8,
    "heard_by_situation": {
     "after_deed": 1,
-    "crime_shape": 1,
+    "crime_noise": 1,
     "farewell": 4,
-    "greeting.nowak": 2,
-    "greeting.owner": 6,
-    "greeting.stranger": 1,
+    "greeting.nowak": 3,
+    "greeting.owner": 9,
+    "greeting.stranger": 3,
     "greeting.tom": 1,
     "in_rain": 1,
     "rain_starts": 1
@@ -4490,19 +4423,20 @@
   },
   {
    "seed": 2020,
-   "lines_heard": 20,
-   "busiest_minute_without_crime_lines": 3,
-   "busiest_minute_heard": 3,
-   "quiet_share": 0.47,
-   "longest_gap_s": 298.2,
-   "neighbour_min_gap_s": null,
+   "lines_heard": 19,
+   "busiest_minute_without_crime_lines": 4,
+   "busiest_minute_heard": 4,
+   "quiet_share": 0.57,
+   "longest_gap_s": 420.5,
+   "neighbour_min_gap_s": 460.0,
    "heard_by_situation": {
     "after_deed": 1,
-    "crime_face": 1,
-    "farewell": 4,
+    "crime_noise": 2,
+    "farewell": 5,
     "greeting.nowak": 2,
-    "greeting.owner": 8,
-    "greeting.stranger": 4
+    "greeting.owner": 7,
+    "greeting.stranger": 1,
+    "in_rain": 1
    }
   }
  ]

@@ -90,6 +90,11 @@ BAD_ADDRESS = re.compile(r"\b(Sir|Guv|Guvnor|Governor|Squire|Chief|Skipper|Capta
 KIND_ADDRESS_RX = re.compile(r"\b(boss|son|young man)\b", re.I)
 ADDRESS_OK = {"boss": {"ron"}, "son": {"father_walsh"}, "young man": {"pensioner"}}
 POLICE = re.compile(r"\b(police|guards|station|ring|telephone|radio it in)\b", re.I)
+# canon review, fault 2: what the street thinks of him is the game's mechanic, so a canned line may not claim it (the simulation may not hold it)
+OPINION = re.compile(r"\b(?:they|people|folk|folks|everyone|everybody) (?:say|says|tell me|think|reckon) (?:you|he)\b[^.?!]*\b(?:fair|all right|alright|good|decent|honest|kind|straight|trouble|mad|bad|hard|soft)\b"
+                     r"|\byour name'?s all over\b|\byou'?re famous\b|\bis it true what they say\b|\b(?:talking|talked) about you\b", re.I)
+# canon review, fault 5: Ada's tea is asked once and never to a stranger, and Ada speaks the shared pensioner lines
+TEA_INVITE = re.compile(r"\b(kettle|cuppa|come (?:in )?(?:for|to) tea|your tea|tea'?s (?:on|ready|poured)|pot'?s on|cup of tea)\b", re.I)
 
 rows = []
 
@@ -137,6 +142,22 @@ TOWN = json.loads((REPO / "production/cloud-week/town/people.json").read_text(en
 TOWN_IDS = [p["id"] for p in TOWN["people"]]
 KNEW_MICKEY = {p["id"] for p in TOWN["people"] if p["knew_mickey"]}
 ATLAS = json.loads((REPO / "production/art/atlas-01/data/atlas.json").read_text(encoding="utf-8"))
+
+
+def _proposal_names(node, out):
+    if isinstance(node, dict):
+        n = node.get("name")
+        if isinstance(n, str) and "(proposal)" in n:
+            out.add(re.sub(r"\s*\(proposal\)", "", n))
+        for v in node.values():
+            _proposal_names(v, out)
+    elif isinstance(node, list):
+        for v in node:
+            _proposal_names(v, out)
+    return out
+
+
+PROPOSAL_NAMES = {n for n in _proposal_names(ATLAS, set()) if not re.search(r"[→/]|alignment", n)}   # the atlas's street and footway names only
 BARKS = json.loads((REPO / "game-design/barks.json").read_text(encoding="utf-8"))
 SV = (REPO / "ledger/Assets/Scripts/Core/StreetVoice.cs").read_text(encoding="utf-8")
 SF = (REPO / "ledger/Assets/Scripts/Core/StreetFacts.cs").read_text(encoding="utf-8")
@@ -243,7 +264,7 @@ def home_places():
         "fish_shop": (P["fish_counter"]["x_m"], P["fish_counter"]["z_m"]), "ritas": (P["ritas_counter"]["x_m"], P["ritas_counter"]["z_m"]),
         "phone_box": (P["kiosk"]["x_m"], P["kiosk"]["z_m"]), "laundry": (P["laundry_counter"]["x_m"], P["laundry_counter"]["z_m"]),
         "cafe": (P["cafe"]["x_m"], P["cafe"]["z_m"]), "newsagent": (P["pension_counter"]["x_m"], P["pension_counter"]["z_m"]),
-        "hals": (P["hals_shop"]["x_m"], P["hals_shop"]["z_m"]), "bus_stop": (P["bus_stop"]["x_m"], P["bus_stop"]["z_m"]),
+        "bus_stop": (P["bus_stop"]["x_m"], P["bus_stop"]["z_m"]),
         "docks": (P["docks"]["x_m"], P["docks"]["z_m"]), "fish_dock": (P["fish_dock"]["x_m"], P["fish_dock"]["z_m"]),
         "boatyard": (P["repair_yard"]["x_m"], P["repair_yard"]["z_m"]), "harbour_office": (P["harbour_office"]["x_m"], P["harbour_office"]["z_m"]),
         "customs_shed": (P["customs_shed"]["x_m"], P["customs_shed"]["z_m"]), "ferry": (P["ferry_stop"]["x_m"], P["ferry_stop"]["z_m"]),
@@ -269,8 +290,11 @@ def home_places():
 
 HOME_PLACES = home_places()
 STREET_SIDE = {"mickeys": "east", "fish_shop": "east", "ritas": "east", "phone_box": "east", "laundry": "east", "grocer": "east", "chandler": "east",
-               "cafe": "west", "newsagent": "west", "hals": "west", "bus_stop": "west"}
-STREET_IDS = ["quay", "mickeys", "fish_shop", "ritas", "phone_box", "laundry", "grocer", "chandler", "cafe", "newsagent", "hals", "bus_stop"]
+               "cafe": "west", "newsagent": "west", "bus_stop": "west"}
+STREET_IDS = ["quay", "mickeys", "fish_shop", "ritas", "phone_box", "laundry", "grocer", "chandler", "cafe", "newsagent", "bus_stop"]
+# Hal's coin shop (hook-cast.json x 39) has no unit on the built street: the west row is a tea room, an ironmonger and the newsagent (RULINGS 3 Oct).
+# Its directions are held until Jafar places it, so it is in no list of places here (canon review of 13 October, fault 4).
+HELD_PLACES = ["hals"]
 PLACE_CLASS_FAR_M = 200.0
 MIDDLE = 24.0
 
@@ -306,7 +330,7 @@ def mentions(text, forms):
 
 ANCHOR_NAMES = {"quay": ["the quay"], "mickeys": ["mickey's", "the cab office"], "fish_shop": ["the fish shop"], "ritas": ["rita's", "the pawn"],
                 "phone_box": ["the phone box"], "laundry": ["the laundry"], "grocer": ["the grocer's"], "chandler": ["the chandler's"], "cafe": ["the caff"],
-                "newsagent": ["the paper shop", "the newsagent's"], "hals": ["hal's"], "bus_stop": ["the bus stop"], "docks": ["the dock gate", "the docks"],
+                "newsagent": ["the paper shop", "the newsagent's"], "bus_stop": ["the bus stop"], "docks": ["the dock gate", "the docks"],
                 "walsh_chapel": ["the chapel"], "open_market": ["the market"], "harbour_office": ["the harbour office"], "customs_shed": ["the customs shed"]}
 REL = [
     (r"\b(?:up past|up from)\s+(?:the\s+)?", "up"),
@@ -527,6 +551,10 @@ def line_failures(l, ctx):
     for a in KIND_ADDRESS_RX.findall(t):
         if kind not in ADDRESS_OK.get(a.lower(), set()):
             f.append("address word '%s' belongs to another kind" % a.lower())
+    if OPINION.search(t):
+        f.append("says what the street thinks of him: the simulation may not hold it (canon review, fault 2)")
+    if kind == "pensioner" and TEA_INVITE.search(t):
+        f.append("an invitation to tea in a kind Ada speaks: her tea is asked once and never to a stranger (day-three design)")
     # Mickey
     f += mickey_failures(t, kind, c)
     # gendered words only where the kind is single-gender
@@ -619,7 +647,7 @@ def group_rows_for(doc, ctx, emit):
         if kind == "anyone" or kind not in kinds:
             continue
         persons = [m for m in kinds[kind]["members"]] or [None]
-        combos = {(who in ctx["not_local"], who in ctx["never_police"]) for who in persons}
+        combos = {(who in ctx["not_local"], who in ctx["never_police"], frozenset(ctx["excluded"].get(who, ()))) for who in persons}
         standings = kinds[kind]["greeting_rungs"] if sit == "bumped" else [sit.split(".")[1]] if sit.startswith("greeting") else [None]
         worst, worst_at = 999, ""
         for w in WEATHERS:
@@ -628,12 +656,14 @@ def group_rows_for(doc, ctx, emit):
             for tm in TIMES:
                 for st in standings:
                     base = [l for l in ls if cond_ok(l, w, tm, st)]
-                    for nl, npol in combos:
+                    for nl, npol, nex in combos:
                         el = base
                         if nl:
                             el = [l for l in el if l["dialect"] != "local"]
                         if npol:
                             el = [l for l in el if not l.get("calls_police")]
+                        if nex:
+                            el = [l for l in el if l["id"] not in nex]
                         if len(el) < worst:
                             worst, worst_at = len(el), "%s %s %s accent-limited=%s never-police=%s" % (w, tm, st, nl, npol)
         emit("pool." + g, "%s keeps at least %d lines in every weather and hour, standing, accent and never-police case" % (g, MIN_ELIGIBLE), worst >= MIN_ELIGIBLE, "worst %d at %s" % (worst, worst_at))
@@ -700,6 +730,7 @@ def doc_rows(doc, rules, emit, light=False):
         "dialect_markers": ["nowt", "owt", "summat", "aye", "nithered", "mither", "mardy", "nesh", "ey up", "eh up", "now then", "ginnel", "gansey", "mucky", "daft", "tha", "reet", "chuffed", "scran"],
         "not_local": set(rules["speaker_overrides"]["not_local_voice"]["speakers"]),
         "never_police": set(rules["speaker_overrides"]["never_police"]["speakers"]),
+        "excluded": {who: set(rules["speaker_overrides"].get("excluded_lines", {}).get("lines", [])) for who in rules["speaker_overrides"].get("excluded_lines", {}).get("speakers", [])},
     }
     ctx["banks"] = {"greeting.stranger": "greeting/stranger", "greeting.owner": "greeting/owner", "greeting.nowak": "greeting/nowak", "greeting.tom": "greeting/tom",
                     "greeting.tommy": "greeting/tommy", "bumped": "bumped", "rain_starts": "rain/starts", "in_rain": "rain/in", "crime_noise": "crime/noise",
@@ -720,6 +751,11 @@ def doc_rows(doc, rules, emit, light=False):
     emit("doc.texts_unique", "no two lines in the whole bank have the same words (case and punctuation aside)", not dup, str(list(dup.values())[:4]))
     ex = [ids_[0] for t, ids_ in texts.items() if t in EXISTING]
     emit("doc.no_second_home", "no line repeats one the street already has (StreetVoice.cs, OwnLines.cs, barks.json, the dialogue banks)", not ex, str(ex[:6]))
+    # ---- no street name the adopted atlas still marks '(proposal)': canon mints three streets (Quay Street, Weighhouse Lane, Tannery Row)
+    proposal_names = sorted(PROPOSAL_NAMES)
+    bad_names = [l["id"] for l in lines if any(n.lower() in l.get("text", "").lower() for n in proposal_names)]
+    emit("doc.no_proposal_street_names", "no line speaks a street name the adopted atlas still marks '(proposal)' (canon mints three: Quay Street, Weighhouse Lane, Tannery Row)",
+         not bad_names and len(proposal_names) >= 5, "%s %s" % (bad_names[:4], len(proposal_names)))
     # ---- one row for every line
     for l in lines:
         fails = line_failures(l, ctx)
@@ -767,6 +803,16 @@ def kinds_rows(doc, ctx, emit):
     emit("kinds.sheila_first_rung", "Sheila is held at the first rung until she trusts him (canon): rules.json says so", RULES_DOC["speaker_overrides"]["lena"]["standing_cap"] == "owner", "")
     # tommy: three kinds only
     tommy_kinds = sorted({l["kind"] for l in doc["lines"] if l["situation"] == "greeting.tommy"})
+    # a rung a kind has lines for must be one some member can stand at (canon review L10: thirteen stranger lines of the drivers could never be said)
+    RANK = {r: i for i, r in enumerate(RUNGS)}
+    so = RULES_DOC["speaker_overrides"]
+    floor = {k: so[k]["standing_floor"] for k in ("lena", "rocco", "sam")}
+    floor.update({who: so["staff"]["standing_floor"] for who in so["staff"]["speakers"]})
+    for k, v in kinds.items():
+        if k == "anyone":
+            continue
+        unreachable = [r for r in v["greeting_rungs"] if not any(RANK[floor.get(m, "stranger")] <= RANK[r] for m in v["members"])]
+        emit("kinds.rung_reachable." + k, "every greeting rung %s has lines for is one a member can stand at (floors from rules.json)" % k, not unreachable, str(unreachable))
     emit("kinds.tommy_few", "Tommy is the last rung and canon keeps it for two or three people: lines for it exist in three kinds only", len(tommy_kinds) <= 3 and tommy_kinds == ["father_walsh", "office_worker", "pensioner"], str(tommy_kinds))
     # the approved Mickey lines: carried by no kind in the file (they stay answers to 'What was Mickey like?')
     carried = [l["id"] for l in doc["lines"] if norm(l["text"]) in APPROVED_MICKEY]
@@ -776,7 +822,10 @@ def kinds_rows(doc, ctx, emit):
 
 def places_rows(doc, ctx, emit):
     by_id = {p["id"]: p for p in doc["places"]}
-    emit("places.same_set", "lines.json's places are the thirty-five the homes name", set(by_id) == set(HOME_PLACES) and len(by_id) == 35, "%d vs %d" % (len(by_id), len(HOME_PLACES)))
+    emit("places.same_set", "lines.json's places are the thirty-four the homes name and the built street has", set(by_id) == set(HOME_PLACES) and len(by_id) == 34, "%d vs %d" % (len(by_id), len(HOME_PLACES)))
+    held = [l["id"] for l in doc["lines"] if l["conditions"].get("destination") in HELD_PLACES]
+    emit("places.held_have_no_directions", "a place held until Jafar places it (Hal's coin shop) has no directions and is in no line's words",
+         not held and not any(re.search(r"\bhal's\b|\bcoin shop\b", l["text"], re.I) for l in doc["lines"]), str(held[:3]))
     per = Counter(l["conditions"].get("destination") for l in doc["lines"] if l["situation"] == "asked_way" and l["kind"] == "anyone")
     named = Counter()
     for l in doc["lines"]:
@@ -834,6 +883,10 @@ def rules_rows(rules, doc, emit):
     emit("rules.never_police_list", "the never-police list is the seven (Ron, Sheila, Rita, Hal, the pawn's back-room hand, the customs officer, the scrap dealer)", set(so["never_police"]["speakers"]) == NEVER_POLICE, str(so["never_police"]["speakers"]))
     emit("rules.not_local_voices", "the three whose voices are not local are Nora and the Tangs (REGULARS.md rows 11, 29, 30)", set(so["not_local_voice"]["speakers"]) == {"vesna", "takeaway_m", "takeaway_f"}, "")
     emit("rules.staff_know_him", "the dispatcher and the two drivers, who work at Mickey's, start at the new owner; Sheila is held there", so["staff"]["standing_floor"] == "owner" and set(so["staff"]["speakers"]) == {"zlata", "ferko", "dusan"} and so["lena"]["standing_floor"] == "owner", "")
+    ex = so.get("excluded_lines", {})
+    ids_ok = all(any(l["id"] == i and l["kind"] == "office_worker" and l["situation"].startswith("greeting.") for l in doc["lines"]) for i in ex.get("lines", []))
+    emit("rules.excluded_lines", "Sheila and the dispatcher are kept from the two office-worker greetings about their own desks ('Do you have a card?', 'Is the radio still crackling?')",
+         set(ex.get("speakers", [])) == {"lena", "zlata"} and set(ex.get("lines", [])) == {"office_worker.greet-owner.04", "office_worker.greet-nowak.05"} and ids_ok and bool(ex.get("why")), str(ex))
     emit("rules.ron_darren_start_at_nowak", "Ron and Darren begin at Nowak: they know his name from the start", so["rocco"]["standing_floor"] == "nowak" and so["sam"]["standing_floor"] == "nowak", "")
     emit("rules.minute_cap", "no more than six heard lines in any minute outside a crime, as a rule the picker enforces", cd["lines_per_minute_cap"]["lines"]["value"] == 6 and cd["lines_per_minute_cap"]["window_s"]["value"] == 60, "")
     emit("rules.min_eligible", "six lines must stay after conditions", rules["variety"]["min_eligible"]["value"] == MIN_ELIGIBLE, "")
@@ -1017,8 +1070,15 @@ def seeded_faults(doc, rules):
     trial("a Ron line that rings the police", "line.", lambda d, r: put(d, "ron", "crime_noise", 0, "Somebody ring the police, boss."))
     trial("after a deed, not hushed", "line.", lambda d, r: lines_of(d, "driver", "after_deed")[0].update({"delivery": "normal"}))
     trial("a cell left with seven lines", "cell.", lambda d, r: d.update({"lines": [l for l in d["lines"] if l["id"] != "driver.farewell.01"]}))
-    trial("a group starved by conditions", "pool.", lambda d, r: [l["conditions"].update({"weather": ["rain"]}) for l in lines_of(d, "driver", "greeting.stranger")[:8]])
+    trial("a group starved by conditions", "pool.", lambda d, r: [l["conditions"].update({"weather": ["rain"]}) for l in lines_of(d, "shopkeeper", "greeting.stranger")[:8]])
     trial("a line for a situation the kind does not have", "cell.", lambda d, r: d["lines"].append(dict(lines_of(d, "ron", "farewell")[0], id="ron.greet-stranger.99", situation="greeting.stranger", bank="greeting/stranger", group="greeting/stranger@ron", rung="stranger", context="greeting", text="Hello there, stranger.", conditions={"standing": ["stranger"]})))
+    trial("a stranger greeting for a kind none of whose members can be a stranger to him", "kinds.rung_reachable", lambda d, r: d["speakers"]["driver"]["greeting_rungs"].insert(0, "stranger"))
+    trial("what the street thinks of him, in a greeting", "line.", lambda d, r: put(d, "dock_worker", "greeting.nowak", 0, "They tell me you're all right."))
+    trial("an invitation to tea in a pensioner's mouth", "line.", lambda d, r: put(d, "pensioner", "greeting.owner", 0, "The new owner. Come to tea one day."))
+    trial("a street name the atlas marks proposal", "doc.no_proposal_street_names", lambda d, r: put(d, "driver", "farewell", 0, "Take Sea Road, love."))
+    trial("directions to a place with no unit on the built street (Hal's)", "places.", lambda d, r: d["lines"].append(dict(lines_of(d, "driver", "farewell")[0], id="anyone.way-hals.01", kind="anyone", speaker="anyone", situation="asked_way", bank="way/ask/to/hals", group="way/ask/to/hals@anyone", rung="any", context="way", text="Hal's? Up the top, on the quiet side.", conditions={"destination": "hals"})))
+    trial("Sheila given back the line about her own desk", "rules.", lambda d, r: r["speaker_overrides"]["excluded_lines"].update({"speakers": []}))
+    trial("Sheila given back the line about her own desk, in the picker", "rule.excluded", lambda d, r: r["speaker_overrides"]["excluded_lines"].update({"speakers": []}), walk=True)
     trial("a place moved", "places.", lambda d, r: [p for p in d["places"] if p["id"] == "ritas"][0].update({"x_m": 30.0}))
     trial("a person left out of every kind", "kinds.", lambda d, r: d["speakers"]["driver"]["members"].remove("ferko"))
     trial("a trade left out", "kinds.", lambda d, r: d["speakers"]["driver"]["trades"].remove("bus driver"))
