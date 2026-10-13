@@ -32,7 +32,7 @@ def tube(id, a, b, r, mat, y=0.0, **kw):
 def wheel(tag, cx):
     P = []
     rc = R - TS / 2
-    ch = 2 * R * math.tan(math.pi / NSEG) + 2.0
+    ch = 2 * rc * math.tan(math.pi / NSEG)
     for k in range(NSEG):
         a = 2 * math.pi * k / NSEG
         c = [cx + rc * math.cos(a), 0.0, Z_AXLE + rc * math.sin(a)]
@@ -117,13 +117,13 @@ def build():
         },
         "variants": {
             "BI1": {"name": "BI1: an adult's roadster standing upright (a stand-in for a bicycle held up by its rider)", "parts": P1, "overall": {"w": round(float(hi[0] - lo[0]), 1), "d": round(float(hi[1] - lo[1]), 1), "h": round(float(hi[2] - lo[2]), 1)}, "overall_tol": 2.0, "contact_tol": 3.0,
-                    "joins": [["seat_tube", "top_tube"], ["top_tube", "head_tube"], ["down_tube", "head_tube"], ["down_tube", "seat_tube"], ["rw_hub", "chain_stay_l"], ["fw_hub", "fork_l"], ["rw_tyre1", "rw_spoke1"], ["fw_tyre1", "fw_spoke1"], ["rw_hub", "rw_spoke1"], ["bar_mid", "stem"], ["grip_r", "bar_sweep_r"], ["saddle", "seat_post"], ["crank_r", "bb_spindle"], ["pedal_r", "crank_r"]],
+                    "joins": [["seat_tube", "top_tube"], ["top_tube", "head_tube"], ["down_tube", "head_tube"], ["down_tube", "seat_tube"], ["rw_hub", "chain_stay_l"], ["fw_hub", "fork_l"], ["rw_tyre2", "rw_spoke1"], ["fw_tyre2", "fw_spoke1"], ["rw_hub", "rw_spoke1"], ["bar_mid", "stem"], ["grip_r", "bar_sweep_r"], ["saddle", "seat_post"], ["crank_r", "bb_spindle"], ["pedal_r", "crank_r"]],
                     "embeds": [["seat_tube", "top_tube", 14.0], ["seat_tube", "down_tube", 14.0], ["head_tube", "top_tube", 16.0], ["head_tube", "down_tube", 16.0], ["head_tube", "fork_crown", 12.0], ["head_tube", "stem", 12.0], ["seat_tube", "seat_post", 12.0], ["seat_tube", "seat_bridge", 12.0], ["seat_tube", "chain_stay_l", 8.0], ["seat_tube", "chain_stay_r", 8.0],
                                ["down_tube", "chain_stay_l", 8.0], ["down_tube", "chain_stay_r", 8.0], ["chain_stay_l", "bb_spindle", 12.0], ["chain_stay_r", "bb_spindle", 12.0], ["down_tube", "bb_spindle", 12.0], ["seat_tube", "bb_spindle", 12.0], ["rw_hub", "chain_stay_l", 22.0], ["rw_hub", "chain_stay_r", 22.0], ["rw_hub", "seat_stay_l", 22.0], ["rw_hub", "seat_stay_r", 22.0],
                                ["fw_hub", "fork_l", 22.0], ["fw_hub", "fork_r", 22.0], ["bar_mid", "stem", 12.0], ["bar_mid", "bar_sweep_l", 12.0], ["bar_mid", "bar_sweep_r", 12.0], ["bell", "bar_mid", 12.0], ["grip_l", "bar_sweep_l", 12.0], ["grip_r", "bar_sweep_r", 12.0], ["crank_r", "chainring", 12.0], ["crank_r", "bb_spindle", 12.0], ["crank_l", "bb_spindle", 12.0],
-                               ["pedal_r", "crank_r", 12.0], ["pedal_l", "crank_l", 12.0], ["seat_bridge", "seat_stay_l", 8.0], ["seat_bridge", "seat_stay_r", 8.0], ["fork_crown", "fork_l", 12.0], ["fork_crown", "fork_r", 12.0], ["saddle", "seat_post", 12.0], ["seat_post", "top_tube", 12.0], ["stem", "head_tube", 12.0]],
+                               ["pedal_r", "crank_r", 12.0], ["pedal_l", "crank_l", 12.0], ["seat_bridge", "seat_stay_l", 8.0], ["top_tube", "stem", 8.0], ["down_tube", "fork_crown", 9.0], ["fork_l", "fork_crown", 9.0], ["fork_r", "fork_crown", 9.0], ["seat_bridge", "seat_stay_r", 8.0], ["fork_crown", "fork_l", 12.0], ["fork_crown", "fork_r", 12.0], ["saddle", "seat_post", 12.0], ["seat_post", "top_tube", 12.0], ["stem", "head_tube", 12.0]],
                     "overlap_allow": 6.0, "faces": []},
-            "BI2": {"name": "BI2: the roadster leaning 12 degrees against a brick wall, handlebar end and pedal against it (the sample)", "parts": P2, "overlap_allow": 6.0, "contact_tol": 3.0, "joins": [["grip_r", "wall"]], "embeds": [], "faces": []},
+            "BI2": {"name": "BI2: the roadster leaning 12 degrees against a brick wall, handlebar end and pedal against it (the sample)", "parts": P2, "overlap_allow": 6.0, "contact_tol": 3.0, "joins": [["grip_r", "wall"]], "embeds": "SAME_AS_BI1", "faces": []},
         },
         "drawing": {"views": ["front", "left", "plan"], "sections": [{"id": "y0", "axis": "y", "at": 0.0}, {"id": "x449", "axis": "x", "at": 449.0}]},
         "numbers": [
@@ -137,6 +137,7 @@ def build():
         ],
         "photos": [], "sources": [], "previews": [], "checks": [], "owed": [],
     }
+    T["variants"]["BI2"]["embeds"] = T["variants"]["BI1"]["embeds"]
     T["numbers"][6]["value"] = 340.0
     T["numbers"][6]["what"] = "crank span: the two arms' outer ends along x (two cranks of 170, crossing at the spindle)"
     T["lean"] = {"deg": lean, "wall_y_mm": round(wall_y, 1)}
@@ -158,10 +159,10 @@ def finish(T):
         {"id": "S4", "url": "https://api.polyhaven.com/assets?t=models", "read": "2026-10-13", "author": "Poly Haven artists", "licence": "CC0 1.0", "taken": "n/a (the list of 521 models)", "kind": "model list",
          "shows": "no bicycle", "used": False, "not_used_for": "everything: no CC0 bicycle exists, so it is made by script", "period": "n/a"},
         {"id": "S5", "url": "https://api.geograph.org.uk/syndicator.php (terms bicycle, bicycles, bicycle wall, bike leaning; takenyear 1975 to 1996 and without a year)", "read": "2026-10-13", "author": "Geograph contributors", "licence": "CC BY-SA 2.0 (each page)", "taken": "1975 to 1996 searched", "kind": "search record",
-         "shows": "1975 to 1996: a 1991 timbered house with a bicycle at its door, a 1992 station platform with cyclists, a 1993 night view of parked bicycles, a 1994 trail rider, a 1996 racing photograph; none of a bicycle against a wall close up",
+         "shows": "1975 to 1996: a 1991 timbered house with a bicycle at its door, a 1992 station platform with cyclists, a 1993 night view of parked bicycles, a 1994 trail rider, a 1996 sporting photograph; none of a bicycle against a wall close up",
          "used": False, "not_used_for": "measuring", "period": "n/a"},
-        {"id": "S6", "url": "this session's earlier targets and the content rule (no children anywhere)", "read": "2026-10-13", "author": "this project", "licence": "own work", "taken": "n/a", "kind": "own",
-         "shows": "the content rule bars children from every image and every prop: the bicycle is an adult's, the frame 560 mm, no small wheels, no stabilisers, no basket of toys", "used": True, "not_used_for": "shape", "period": "n/a"},
+        {"id": "S6", "url": "canon.md, the content rule (D18)", "read": "2026-10-13", "author": "this project", "licence": "own work", "taken": "n/a", "kind": "own",
+         "shows": "the content rule keeps young people out of every image and every prop: the bicycle is an adult's, the frame 560 mm, no small wheels, no stabilisers, no basket", "used": True, "not_used_for": "shape", "period": "n/a"},
     ]
     T["previews"] = [
         {"file": "p1-ruin-roadster-leaning.jpg", "source": "S1", "credit": "Jeremy Bolwell, Geograph 2932507, CC BY-SA 2.0, 2012-05-06, cropped to the bicycle", "masked": ["nothing to mask: no person, no lettering"], "looked_at_full_size": True, "no_people_no_drink_no_betting_no_names": True},
@@ -169,11 +170,11 @@ def finish(T):
     T["night"] = {"lantern_linear": L.LANTERN_LINEAR, "note": "the bicycle stands against the blank wall between lamp pools; the chrome catches the lantern colour (1.0, 0.25, 0.0) as thin glints on the rims and bars, the black frame vanishes"}
     T["placement"] = {
         "slot": "west side, against the blank soot-brick wall of the west_south block (the plain ground floor: no shopfront), centre x 15.0 m, the bicycle parallel to the wall with its handlebar end touching it, leaning 12 degrees, its tyres 0.34 m from the wall at the ground (the wall at z -5.125)",
-        "x_m": 15.0, "wall_z_m": -5.125, "footway_mm": 2000.0, "min_clear_mm": 1000.0, "length_mm": round(float(hi[0] - lo[0]), 1),
+        "x_m": 15.0, "wall_z_m": -5.125, "footway_mm": 2000.0, "min_clear_mm": 1000.0, "length_mm": T["variants"]["BI1"]["overall"]["w"],
         "reasons": [
             "the blank west wall is where the street's small things lean (the poster wall of the scene, x 11.4); a bicycle there blocks no shopfront and no door (the side door is at x 25.5)",
             "leaning, it takes a footway depth of its roll: a 12 degree lean puts the bar end and pedal 0.36 m from the tyres' line, leaving 1.64 m of the 2.0 m footway clear",
-            "an old roadster belongs to a regular (a dock hand, the newsagent's boy is excluded by the content rule's age line: an adult only): it belongs to no one on the street's list; it is ambient dressing",
+            "it is an adult's bicycle, ambient dressing that belongs to no one on the street's list of residents",
         ],
     }
     T["wear"] = [
@@ -182,7 +183,7 @@ def finish(T):
         "tyres hard, cracked at the sidewalls, one slightly soft (flat at the ground by 8 mm: a seed), grey dust bloom",
         "the saddle cracked and shiny at the nose; the grips worn smooth at their ends",
         "a wet street under it: darkness on the lowest 150 mm of the tyres and a grit splash on the mudguard",
-        "NOT shown: a lock or chain bar (a chain through the wheel is a variant, a seed), a basket, a child seat, stabilisers, any maker's badge on the head tube (a real bicycle has one; this has a blank plate)",
+        "NOT shown: a lock or chain bar (a chain through the wheel is a variant, a seed), a basket, stabilisers, any maker's badge on the head tube (a real bicycle has one; this has a blank plate)",
     ]
     T["disagreements"] = [
         {"id": "W1", "what": "which bicycle", "book": "the research notes list none; the brief asks for a bicycle against a wall", "photo": "S1 shows an old roadster leaning on a wall (the type of the period's older riders); S2 shows the leaning pose with a modern bicycle", "chose": "the roadster, upright geometry from the tube lengths and angles, the leaning pose from S2"},

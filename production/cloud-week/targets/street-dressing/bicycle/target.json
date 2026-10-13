@@ -1,0 +1,5771 @@
+{
+ "family": "bicycle",
+ "title": "Quay Street's bicycle against a wall",
+ "units": "millimetres; angles in degrees; z up; x forward (the front wheel at +x); y to the rider's right; the pivot is the rear wheel's ground contact",
+ "status": "written 13 October 2026, not yet reviewed",
+ "sample": "BI2",
+ "materials": {
+  "paint_black": {
+   "name": "black enamel, chipped and rusting at the welds",
+   "srgb": [
+    24,
+    26,
+    26
+   ],
+   "rough": 0.45,
+   "rough_words": "semi-gloss",
+   "metal": true,
+   "note": "frame, forks, mudguards: chipped to red-brown rust at the dropouts, the lower head tube and the mudguard stays"
+  },
+  "steel": {
+   "name": "chrome-plated steel gone dull",
+   "srgb": [
+    150,
+    152,
+    150
+   ],
+   "rough": 0.4,
+   "rough_words": "dull satin",
+   "metal": true,
+   "note": "bars, stem, cranks, hubs, spokes: pitted with orange rust spots, never mirror bright"
+  },
+  "tyre": {
+   "name": "black rubber tyre, cracked, grey-white dust",
+   "srgb": [
+    30,
+    30,
+    30
+   ],
+   "rough": 0.8,
+   "rough_words": "matt",
+   "metal": false,
+   "note": "a pale grey bloom of dust on the sidewalls; the rim (not separate) is dull steel in the 2 mm inner edge"
+  },
+  "saddle_black": {
+   "name": "saddle black leather-look, cracked",
+   "srgb": [
+    34,
+    30,
+    28
+   ],
+   "rough": 0.55,
+   "rough_words": "semi-matt",
+   "metal": false,
+   "note": "cracked and shiny at the nose, a worn nose edge"
+  },
+  "grip_black": {
+   "name": "grips black rubber, worn",
+   "srgb": [
+    22,
+    22,
+    22
+   ],
+   "rough": 0.7,
+   "rough_words": "matt",
+   "metal": false,
+   "note": ""
+  },
+  "wall_brick": {
+   "name": "soot-blackened brick (the street's)",
+   "srgb": [
+    78,
+    64,
+    58
+   ],
+   "rough": 0.9,
+   "rough_words": "rough",
+   "metal": false,
+   "note": "a stand-in"
+  }
+ },
+ "variants": {
+  "BI1": {
+   "name": "BI1: an adult's roadster standing upright (a stand-in for a bicycle held up by its rider)",
+   "parts": [
+    {
+     "id": "rw_tyre1",
+     "type": "box",
+     "c": [
+      311.0,
+      0.0,
+      330.0
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -90.0,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38"
+    },
+    {
+     "id": "rw_tyre2",
+     "type": "box",
+     "c": [
+      287.33,
+      0.0,
+      449.01
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -112.5,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38"
+    },
+    {
+     "id": "rw_tyre3",
+     "type": "box",
+     "c": [
+      219.91,
+      0.0,
+      549.91
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -135.0,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38"
+    },
+    {
+     "id": "rw_tyre4",
+     "type": "box",
+     "c": [
+      119.01,
+      0.0,
+      617.33
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -157.5,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38"
+    },
+    {
+     "id": "rw_tyre5",
+     "type": "box",
+     "c": [
+      0.0,
+      0.0,
+      641.0
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -180.0,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38"
+    },
+    {
+     "id": "rw_tyre6",
+     "type": "box",
+     "c": [
+      -119.01,
+      0.0,
+      617.33
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -202.5,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38"
+    },
+    {
+     "id": "rw_tyre7",
+     "type": "box",
+     "c": [
+      -219.91,
+      0.0,
+      549.91
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -225.0,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38"
+    },
+    {
+     "id": "rw_tyre8",
+     "type": "box",
+     "c": [
+      -287.33,
+      0.0,
+      449.01
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -247.5,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38"
+    },
+    {
+     "id": "rw_tyre9",
+     "type": "box",
+     "c": [
+      -311.0,
+      0.0,
+      330.0
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -270.0,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38"
+    },
+    {
+     "id": "rw_tyre10",
+     "type": "box",
+     "c": [
+      -287.33,
+      0.0,
+      210.99
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -292.5,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38"
+    },
+    {
+     "id": "rw_tyre11",
+     "type": "box",
+     "c": [
+      -219.91,
+      0.0,
+      110.09
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -315.0,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38"
+    },
+    {
+     "id": "rw_tyre12",
+     "type": "box",
+     "c": [
+      -119.01,
+      0.0,
+      42.67
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -337.5,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38"
+    },
+    {
+     "id": "rw_tyre13",
+     "type": "box",
+     "c": [
+      -0.0,
+      0.0,
+      19.0
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -360.0,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38"
+    },
+    {
+     "id": "rw_tyre14",
+     "type": "box",
+     "c": [
+      119.01,
+      0.0,
+      42.67
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -382.5,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38"
+    },
+    {
+     "id": "rw_tyre15",
+     "type": "box",
+     "c": [
+      219.91,
+      0.0,
+      110.09
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -405.0,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38"
+    },
+    {
+     "id": "rw_tyre16",
+     "type": "box",
+     "c": [
+      287.33,
+      0.0,
+      210.99
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -427.5,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38"
+    },
+    {
+     "id": "rw_hub",
+     "type": "cyl",
+     "p0": [
+      0.0,
+      -50.0,
+      330.0
+     ],
+     "p1": [
+      0.0,
+      50.0,
+      330.0
+     ],
+     "r0": 22.0,
+     "material": "steel",
+     "note": "hub 44 across, 100 long"
+    },
+    {
+     "id": "rw_spoke1",
+     "type": "cyl",
+     "p0": [
+      22.17310878027088,
+      0.0,
+      339.18440237676214
+     ],
+     "p1": [
+      267.9250644282732,
+      0.0,
+      440.978195385876
+     ],
+     "r0": 1.2,
+     "material": "steel",
+     "note": "spoke 2.4 across (8 drawn of 36)"
+    },
+    {
+     "id": "rw_spoke2",
+     "type": "cyl",
+     "p0": [
+      9.184402376762156,
+      0.0,
+      352.17310878027087
+     ],
+     "p1": [
+      110.97819538587605,
+      0.0,
+      597.9250644282731
+     ],
+     "r0": 1.2,
+     "material": "steel",
+     "note": "spoke 2.4 across (8 drawn of 36)"
+    },
+    {
+     "id": "rw_spoke3",
+     "type": "cyl",
+     "p0": [
+      -9.184402376762154,
+      0.0,
+      352.17310878027087
+     ],
+     "p1": [
+      -110.97819538587602,
+      0.0,
+      597.9250644282731
+     ],
+     "r0": 1.2,
+     "material": "steel",
+     "note": "spoke 2.4 across (8 drawn of 36)"
+    },
+    {
+     "id": "rw_spoke4",
+     "type": "cyl",
+     "p0": [
+      -22.17310878027088,
+      0.0,
+      339.18440237676214
+     ],
+     "p1": [
+      -267.9250644282732,
+      0.0,
+      440.97819538587606
+     ],
+     "r0": 1.2,
+     "material": "steel",
+     "note": "spoke 2.4 across (8 drawn of 36)"
+    },
+    {
+     "id": "rw_spoke5",
+     "type": "cyl",
+     "p0": [
+      -22.173108780270883,
+      0.0,
+      320.81559762323786
+     ],
+     "p1": [
+      -267.9250644282732,
+      0.0,
+      219.021804614124
+     ],
+     "r0": 1.2,
+     "material": "steel",
+     "note": "spoke 2.4 across (8 drawn of 36)"
+    },
+    {
+     "id": "rw_spoke6",
+     "type": "cyl",
+     "p0": [
+      -9.184402376762169,
+      0.0,
+      307.82689121972913
+     ],
+     "p1": [
+      -110.97819538587619,
+      0.0,
+      62.07493557172688
+     ],
+     "r0": 1.2,
+     "material": "steel",
+     "note": "spoke 2.4 across (8 drawn of 36)"
+    },
+    {
+     "id": "rw_spoke7",
+     "type": "cyl",
+     "p0": [
+      9.18440237676216,
+      0.0,
+      307.82689121972913
+     ],
+     "p1": [
+      110.9781953858761,
+      0.0,
+      62.07493557172688
+     ],
+     "r0": 1.2,
+     "material": "steel",
+     "note": "spoke 2.4 across (8 drawn of 36)"
+    },
+    {
+     "id": "rw_spoke8",
+     "type": "cyl",
+     "p0": [
+      22.173108780270876,
+      0.0,
+      320.8155976232378
+     ],
+     "p1": [
+      267.9250644282731,
+      0.0,
+      219.02180461412377
+     ],
+     "r0": 1.2,
+     "material": "steel",
+     "note": "spoke 2.4 across (8 drawn of 36)"
+    },
+    {
+     "id": "fw_tyre1",
+     "type": "box",
+     "c": [
+      1407.84,
+      0.0,
+      330.0
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -90.0,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38"
+    },
+    {
+     "id": "fw_tyre2",
+     "type": "box",
+     "c": [
+      1384.17,
+      0.0,
+      449.01
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -112.5,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38"
+    },
+    {
+     "id": "fw_tyre3",
+     "type": "box",
+     "c": [
+      1316.75,
+      0.0,
+      549.91
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -135.0,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38"
+    },
+    {
+     "id": "fw_tyre4",
+     "type": "box",
+     "c": [
+      1215.85,
+      0.0,
+      617.33
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -157.5,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38"
+    },
+    {
+     "id": "fw_tyre5",
+     "type": "box",
+     "c": [
+      1096.84,
+      0.0,
+      641.0
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -180.0,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38"
+    },
+    {
+     "id": "fw_tyre6",
+     "type": "box",
+     "c": [
+      977.82,
+      0.0,
+      617.33
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -202.5,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38"
+    },
+    {
+     "id": "fw_tyre7",
+     "type": "box",
+     "c": [
+      876.93,
+      0.0,
+      549.91
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -225.0,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38"
+    },
+    {
+     "id": "fw_tyre8",
+     "type": "box",
+     "c": [
+      809.51,
+      0.0,
+      449.01
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -247.5,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38"
+    },
+    {
+     "id": "fw_tyre9",
+     "type": "box",
+     "c": [
+      785.84,
+      0.0,
+      330.0
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -270.0,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38"
+    },
+    {
+     "id": "fw_tyre10",
+     "type": "box",
+     "c": [
+      809.51,
+      0.0,
+      210.99
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -292.5,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38"
+    },
+    {
+     "id": "fw_tyre11",
+     "type": "box",
+     "c": [
+      876.93,
+      0.0,
+      110.09
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -315.0,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38"
+    },
+    {
+     "id": "fw_tyre12",
+     "type": "box",
+     "c": [
+      977.82,
+      0.0,
+      42.67
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -337.5,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38"
+    },
+    {
+     "id": "fw_tyre13",
+     "type": "box",
+     "c": [
+      1096.84,
+      0.0,
+      19.0
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -360.0,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38"
+    },
+    {
+     "id": "fw_tyre14",
+     "type": "box",
+     "c": [
+      1215.85,
+      0.0,
+      42.67
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -382.5,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38"
+    },
+    {
+     "id": "fw_tyre15",
+     "type": "box",
+     "c": [
+      1316.75,
+      0.0,
+      110.09
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -405.0,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38"
+    },
+    {
+     "id": "fw_tyre16",
+     "type": "box",
+     "c": [
+      1384.17,
+      0.0,
+      210.99
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -427.5,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38"
+    },
+    {
+     "id": "fw_hub",
+     "type": "cyl",
+     "p0": [
+      1096.838873863232,
+      -50.0,
+      330.0
+     ],
+     "p1": [
+      1096.838873863232,
+      50.0,
+      330.0
+     ],
+     "r0": 22.0,
+     "material": "steel",
+     "note": "hub 44 across, 100 long"
+    },
+    {
+     "id": "fw_spoke1",
+     "type": "cyl",
+     "p0": [
+      1119.011982643503,
+      0.0,
+      339.18440237676214
+     ],
+     "p1": [
+      1364.7639382915052,
+      0.0,
+      440.978195385876
+     ],
+     "r0": 1.2,
+     "material": "steel",
+     "note": "spoke 2.4 across (8 drawn of 36)"
+    },
+    {
+     "id": "fw_spoke2",
+     "type": "cyl",
+     "p0": [
+      1106.0232762399942,
+      0.0,
+      352.17310878027087
+     ],
+     "p1": [
+      1207.817069249108,
+      0.0,
+      597.9250644282731
+     ],
+     "r0": 1.2,
+     "material": "steel",
+     "note": "spoke 2.4 across (8 drawn of 36)"
+    },
+    {
+     "id": "fw_spoke3",
+     "type": "cyl",
+     "p0": [
+      1087.65447148647,
+      0.0,
+      352.17310878027087
+     ],
+     "p1": [
+      985.860678477356,
+      0.0,
+      597.9250644282731
+     ],
+     "r0": 1.2,
+     "material": "steel",
+     "note": "spoke 2.4 across (8 drawn of 36)"
+    },
+    {
+     "id": "fw_spoke4",
+     "type": "cyl",
+     "p0": [
+      1074.6657650829611,
+      0.0,
+      339.18440237676214
+     ],
+     "p1": [
+      828.9138094349589,
+      0.0,
+      440.97819538587606
+     ],
+     "r0": 1.2,
+     "material": "steel",
+     "note": "spoke 2.4 across (8 drawn of 36)"
+    },
+    {
+     "id": "fw_spoke5",
+     "type": "cyl",
+     "p0": [
+      1074.6657650829611,
+      0.0,
+      320.81559762323786
+     ],
+     "p1": [
+      828.9138094349589,
+      0.0,
+      219.021804614124
+     ],
+     "r0": 1.2,
+     "material": "steel",
+     "note": "spoke 2.4 across (8 drawn of 36)"
+    },
+    {
+     "id": "fw_spoke6",
+     "type": "cyl",
+     "p0": [
+      1087.65447148647,
+      0.0,
+      307.82689121972913
+     ],
+     "p1": [
+      985.8606784773558,
+      0.0,
+      62.07493557172688
+     ],
+     "r0": 1.2,
+     "material": "steel",
+     "note": "spoke 2.4 across (8 drawn of 36)"
+    },
+    {
+     "id": "fw_spoke7",
+     "type": "cyl",
+     "p0": [
+      1106.0232762399942,
+      0.0,
+      307.82689121972913
+     ],
+     "p1": [
+      1207.817069249108,
+      0.0,
+      62.07493557172688
+     ],
+     "r0": 1.2,
+     "material": "steel",
+     "note": "spoke 2.4 across (8 drawn of 36)"
+    },
+    {
+     "id": "fw_spoke8",
+     "type": "cyl",
+     "p0": [
+      1119.011982643503,
+      0.0,
+      320.8155976232378
+     ],
+     "p1": [
+      1364.7639382915052,
+      0.0,
+      219.02180461412377
+     ],
+     "r0": 1.2,
+     "material": "steel",
+     "note": "spoke 2.4 across (8 drawn of 36)"
+    },
+    {
+     "id": "rw_guard1",
+     "type": "box",
+     "c": [
+      280.21,
+      0.0,
+      519.01
+     ],
+     "s": [
+      170.5,
+      60.0,
+      2.0
+     ],
+     "rot": [
+      0,
+      -124.0,
+      0
+     ],
+     "material": "paint_black",
+     "note": "mudguard segment, 60 wide, 2 thick"
+    },
+    {
+     "id": "rw_guard2",
+     "type": "box",
+     "c": [
+      158.68,
+      0.0,
+      628.44
+     ],
+     "s": [
+      170.5,
+      60.0,
+      2.0
+     ],
+     "rot": [
+      0,
+      -152.0,
+      0
+     ],
+     "material": "paint_black",
+     "note": "mudguard segment, 60 wide, 2 thick"
+    },
+    {
+     "id": "rw_guard3",
+     "type": "box",
+     "c": [
+      0.0,
+      0.0,
+      668.0
+     ],
+     "s": [
+      170.5,
+      60.0,
+      2.0
+     ],
+     "rot": [
+      0,
+      -180.0,
+      0
+     ],
+     "material": "paint_black",
+     "note": "mudguard segment, 60 wide, 2 thick"
+    },
+    {
+     "id": "rw_guard4",
+     "type": "box",
+     "c": [
+      -158.68,
+      0.0,
+      628.44
+     ],
+     "s": [
+      170.5,
+      60.0,
+      2.0
+     ],
+     "rot": [
+      0,
+      -208.0,
+      0
+     ],
+     "material": "paint_black",
+     "note": "mudguard segment, 60 wide, 2 thick"
+    },
+    {
+     "id": "rw_guard5",
+     "type": "box",
+     "c": [
+      -280.21,
+      0.0,
+      519.01
+     ],
+     "s": [
+      170.5,
+      60.0,
+      2.0
+     ],
+     "rot": [
+      0,
+      -236.0,
+      0
+     ],
+     "material": "paint_black",
+     "note": "mudguard segment, 60 wide, 2 thick"
+    },
+    {
+     "id": "fw_guard1",
+     "type": "box",
+     "c": [
+      1380.31,
+      0.0,
+      514.09
+     ],
+     "s": [
+      158.1,
+      60.0,
+      2.0
+     ],
+     "rot": [
+      0,
+      -123.0,
+      0
+     ],
+     "material": "paint_black",
+     "note": "mudguard segment, 60 wide, 2 thick"
+    },
+    {
+     "id": "fw_guard2",
+     "type": "box",
+     "c": [
+      1270.92,
+      0.0,
+      619.72
+     ],
+     "s": [
+      158.1,
+      60.0,
+      2.0
+     ],
+     "rot": [
+      0,
+      -149.0,
+      0
+     ],
+     "material": "paint_black",
+     "note": "mudguard segment, 60 wide, 2 thick"
+    },
+    {
+     "id": "fw_guard3",
+     "type": "box",
+     "c": [
+      1126.3,
+      0.0,
+      666.71
+     ],
+     "s": [
+      158.1,
+      60.0,
+      2.0
+     ],
+     "rot": [
+      0,
+      -175.0,
+      0
+     ],
+     "material": "paint_black",
+     "note": "mudguard segment, 60 wide, 2 thick"
+    },
+    {
+     "id": "fw_guard4",
+     "type": "box",
+     "c": [
+      975.71,
+      0.0,
+      645.55
+     ],
+     "s": [
+      158.1,
+      60.0,
+      2.0
+     ],
+     "rot": [
+      0,
+      -201.0,
+      0
+     ],
+     "material": "paint_black",
+     "note": "mudguard segment, 60 wide, 2 thick"
+    },
+    {
+     "id": "fw_guard5",
+     "type": "box",
+     "c": [
+      849.64,
+      0.0,
+      560.52
+     ],
+     "s": [
+      158.1,
+      60.0,
+      2.0
+     ],
+     "rot": [
+      0,
+      -227.0,
+      0
+     ],
+     "material": "paint_black",
+     "note": "mudguard segment, 60 wide, 2 thick"
+    },
+    {
+     "id": "seat_tube",
+     "type": "cyl",
+     "p0": [
+      449.0,
+      0.0,
+      300.0
+     ],
+     "p1": [
+      275.9504831500294,
+      0.0,
+      832.5916491252859
+     ],
+     "r0": 14.0,
+     "material": "paint_black",
+     "note": "seat tube 28 across, 560 centre to top, 72 degrees"
+    },
+    {
+     "id": "top_tube",
+     "type": "cyl",
+     "p0": [
+      275.9504831500294,
+      0.0,
+      832.5916491252859
+     ],
+     "p1": [
+      845.9504831500294,
+      0.0,
+      839.5916491252859
+     ],
+     "r0": 14.0,
+     "material": "paint_black",
+     "note": "top tube 28, 570 long, level"
+    },
+    {
+     "id": "down_tube",
+     "type": "cyl",
+     "p0": [
+      449.0,
+      0.0,
+      300.0
+     ],
+     "p1": [
+      902.1414721624162,
+      0.0,
+      700.5140709402679
+     ],
+     "r0": 15.0,
+     "material": "paint_black",
+     "note": "down tube 30"
+    },
+    {
+     "id": "head_tube",
+     "type": "cyl",
+     "p0": [
+      902.1414721624162,
+      0.0,
+      700.5140709402679
+     ],
+     "p1": [
+      845.9504831500294,
+      0.0,
+      839.5916491252859
+     ],
+     "r0": 18.0,
+     "material": "paint_black",
+     "note": "head tube 36 across, 150 long, 68 degrees"
+    },
+    {
+     "id": "chain_stay_l",
+     "type": "cyl",
+     "p0": [
+      449.0,
+      -55.0,
+      300.0
+     ],
+     "p1": [
+      0.0,
+      -55.0,
+      330.0
+     ],
+     "r0": 8.0,
+     "material": "paint_black",
+     "note": "chain stay 16, 450 long"
+    },
+    {
+     "id": "seat_stay_l",
+     "type": "cyl",
+     "p0": [
+      275.9504831500294,
+      -55.0,
+      832.5916491252859
+     ],
+     "p1": [
+      0.0,
+      -55.0,
+      330.0
+     ],
+     "r0": 8.0,
+     "material": "paint_black",
+     "note": "seat stay 16"
+    },
+    {
+     "id": "fork_l",
+     "type": "cyl",
+     "p0": [
+      902.1414721624162,
+      -57.75,
+      700.5140709402679
+     ],
+     "p1": [
+      1096.838873863232,
+      -57.75,
+      330.0
+     ],
+     "r0": 11.0,
+     "material": "paint_black",
+     "note": "fork blade 22, rake 45 at the foot"
+    },
+    {
+     "id": "chain_stay_r",
+     "type": "cyl",
+     "p0": [
+      449.0,
+      55.0,
+      300.0
+     ],
+     "p1": [
+      0.0,
+      55.0,
+      330.0
+     ],
+     "r0": 8.0,
+     "material": "paint_black",
+     "note": "chain stay 16, 450 long"
+    },
+    {
+     "id": "seat_stay_r",
+     "type": "cyl",
+     "p0": [
+      275.9504831500294,
+      55.0,
+      832.5916491252859
+     ],
+     "p1": [
+      0.0,
+      55.0,
+      330.0
+     ],
+     "r0": 8.0,
+     "material": "paint_black",
+     "note": "seat stay 16"
+    },
+    {
+     "id": "fork_r",
+     "type": "cyl",
+     "p0": [
+      902.1414721624162,
+      57.75,
+      700.5140709402679
+     ],
+     "p1": [
+      1096.838873863232,
+      57.75,
+      330.0
+     ],
+     "r0": 11.0,
+     "material": "paint_black",
+     "note": "fork blade 22, rake 45 at the foot"
+    },
+    {
+     "id": "seat_bridge",
+     "type": "box",
+     "c": [
+      275.95,
+      0.0,
+      832.592
+     ],
+     "s": [
+      16.0,
+      120.0,
+      20.0
+     ],
+     "material": "paint_black",
+     "note": "seat-stay bridge"
+    },
+    {
+     "id": "fork_crown",
+     "type": "box",
+     "c": [
+      902.141,
+      0.0,
+      682.514
+     ],
+     "s": [
+      24.0,
+      124.0,
+      24.0
+     ],
+     "material": "paint_black",
+     "note": "fork crown"
+    },
+    {
+     "id": "seat_post",
+     "type": "cyl",
+     "p0": [
+      275.9504831500294,
+      0.0,
+      832.5916491252859
+     ],
+     "p1": [
+      230.9504831500294,
+      0.0,
+      985.0
+     ],
+     "r0": 11.0,
+     "material": "steel",
+     "note": "seat post 22"
+    },
+    {
+     "id": "saddle",
+     "type": "box",
+     "c": [
+      220.95,
+      0.0,
+      1010.0
+     ],
+     "s": [
+      280.0,
+      180.0,
+      50.0
+     ],
+     "material": "saddle_black",
+     "edge": "nose r 30, edges r 8",
+     "note": "saddle 280 x 180 x 50, leather-look, springs not modelled"
+    },
+    {
+     "id": "stem",
+     "type": "cyl",
+     "p0": [
+      845.9504831500294,
+      0.0,
+      839.5916491252859
+     ],
+     "p1": [
+      782.2673622693244,
+      0.0,
+      997.2129044016398
+     ],
+     "r0": 11.0,
+     "material": "steel",
+     "note": "stem 22, 170 above the head tube"
+    },
+    {
+     "id": "bar_mid",
+     "type": "cyl",
+     "p0": [
+      782.2673622693244,
+      -190.0,
+      997.2129044016398
+     ],
+     "p1": [
+      782.2673622693244,
+      190.0,
+      997.2129044016398
+     ],
+     "r0": 11.0,
+     "material": "steel",
+     "note": "handlebar: the straight middle, 22 across, 380 wide"
+    },
+    {
+     "id": "bar_sweep_l",
+     "type": "cyl",
+     "p0": [
+      782.2673622693244,
+      -190.0,
+      997.2129044016398
+     ],
+     "p1": [
+      697.2673622693244,
+      -290.0,
+      1009.2129044016398
+     ],
+     "r0": 11.0,
+     "material": "steel",
+     "note": "swept-back end, 100 across to 580 over the grips"
+    },
+    {
+     "id": "grip_l",
+     "type": "cyl",
+     "p0": [
+      697.2673622693244,
+      -290.0,
+      1009.2129044016398
+     ],
+     "p1": [
+      692.2673622693244,
+      -395.0,
+      1011.2129044016398
+     ],
+     "r0": 14.0,
+     "material": "grip_black",
+     "note": "grip 28 across, 105 long"
+    },
+    {
+     "id": "bar_sweep_r",
+     "type": "cyl",
+     "p0": [
+      782.2673622693244,
+      190.0,
+      997.2129044016398
+     ],
+     "p1": [
+      697.2673622693244,
+      290.0,
+      1009.2129044016398
+     ],
+     "r0": 11.0,
+     "material": "steel",
+     "note": "swept-back end, 100 across to 580 over the grips"
+    },
+    {
+     "id": "grip_r",
+     "type": "cyl",
+     "p0": [
+      697.2673622693244,
+      290.0,
+      1009.2129044016398
+     ],
+     "p1": [
+      692.2673622693244,
+      395.0,
+      1011.2129044016398
+     ],
+     "r0": 14.0,
+     "material": "grip_black",
+     "note": "grip 28 across, 105 long"
+    },
+    {
+     "id": "bell",
+     "type": "cyl",
+     "p0": [
+      787.2673622693244,
+      -150.0,
+      1011.2129044016398
+     ],
+     "p1": [
+      787.2673622693244,
+      -150.0,
+      1037.2129044016397
+     ],
+     "r0": 26.0,
+     "material": "steel",
+     "note": "bell 52 across, a plain dome"
+    },
+    {
+     "id": "bb_spindle",
+     "type": "cyl",
+     "p0": [
+      449.0,
+      -70.0,
+      300.0
+     ],
+     "p1": [
+      449.0,
+      70.0,
+      300.0
+     ],
+     "r0": 12.0,
+     "material": "steel",
+     "note": "bottom bracket spindle"
+    },
+    {
+     "id": "chainring",
+     "type": "cyl",
+     "p0": [
+      449.0,
+      52.0,
+      300.0
+     ],
+     "p1": [
+      449.0,
+      58.0,
+      300.0
+     ],
+     "r0": 90.0,
+     "material": "steel",
+     "note": "chainring 180 across, 6 thick (the chainguard is not modelled)"
+    },
+    {
+     "id": "crank_r",
+     "type": "box",
+     "c": [
+      529.0,
+      64.0,
+      300.0
+     ],
+     "s": [
+      180.0,
+      12.0,
+      20.0
+     ],
+     "material": "steel",
+     "note": "right crank arm 170 long"
+    },
+    {
+     "id": "crank_l",
+     "type": "box",
+     "c": [
+      369.0,
+      -64.0,
+      300.0
+     ],
+     "s": [
+      180.0,
+      12.0,
+      20.0
+     ],
+     "material": "steel",
+     "note": "left crank arm 170 long"
+    },
+    {
+     "id": "pedal_r",
+     "type": "box",
+     "c": [
+      599.0,
+      122.5,
+      300.0
+     ],
+     "s": [
+      100.0,
+      105.0,
+      24.0
+     ],
+     "material": "steel",
+     "note": "pedal 100 x 105 x 24, rubber blocks not modelled"
+    },
+    {
+     "id": "pedal_l",
+     "type": "box",
+     "c": [
+      299.0,
+      -122.5,
+      300.0
+     ],
+     "s": [
+      100.0,
+      105.0,
+      24.0
+     ],
+     "material": "steel"
+    }
+   ],
+   "overall": {
+    "w": 1756.8,
+    "d": 791.4,
+    "h": 1037.2
+   },
+   "overall_tol": 2.0,
+   "contact_tol": 3.0,
+   "joins": [
+    [
+     "seat_tube",
+     "top_tube"
+    ],
+    [
+     "top_tube",
+     "head_tube"
+    ],
+    [
+     "down_tube",
+     "head_tube"
+    ],
+    [
+     "down_tube",
+     "seat_tube"
+    ],
+    [
+     "rw_hub",
+     "chain_stay_l"
+    ],
+    [
+     "fw_hub",
+     "fork_l"
+    ],
+    [
+     "rw_tyre2",
+     "rw_spoke1"
+    ],
+    [
+     "fw_tyre2",
+     "fw_spoke1"
+    ],
+    [
+     "rw_hub",
+     "rw_spoke1"
+    ],
+    [
+     "bar_mid",
+     "stem"
+    ],
+    [
+     "grip_r",
+     "bar_sweep_r"
+    ],
+    [
+     "saddle",
+     "seat_post"
+    ],
+    [
+     "crank_r",
+     "bb_spindle"
+    ],
+    [
+     "pedal_r",
+     "crank_r"
+    ]
+   ],
+   "embeds": [
+    [
+     "seat_tube",
+     "top_tube",
+     14.0
+    ],
+    [
+     "seat_tube",
+     "down_tube",
+     14.0
+    ],
+    [
+     "head_tube",
+     "top_tube",
+     16.0
+    ],
+    [
+     "head_tube",
+     "down_tube",
+     16.0
+    ],
+    [
+     "head_tube",
+     "fork_crown",
+     12.0
+    ],
+    [
+     "head_tube",
+     "stem",
+     12.0
+    ],
+    [
+     "seat_tube",
+     "seat_post",
+     12.0
+    ],
+    [
+     "seat_tube",
+     "seat_bridge",
+     12.0
+    ],
+    [
+     "seat_tube",
+     "chain_stay_l",
+     8.0
+    ],
+    [
+     "seat_tube",
+     "chain_stay_r",
+     8.0
+    ],
+    [
+     "down_tube",
+     "chain_stay_l",
+     8.0
+    ],
+    [
+     "down_tube",
+     "chain_stay_r",
+     8.0
+    ],
+    [
+     "chain_stay_l",
+     "bb_spindle",
+     12.0
+    ],
+    [
+     "chain_stay_r",
+     "bb_spindle",
+     12.0
+    ],
+    [
+     "down_tube",
+     "bb_spindle",
+     12.0
+    ],
+    [
+     "seat_tube",
+     "bb_spindle",
+     12.0
+    ],
+    [
+     "rw_hub",
+     "chain_stay_l",
+     22.0
+    ],
+    [
+     "rw_hub",
+     "chain_stay_r",
+     22.0
+    ],
+    [
+     "rw_hub",
+     "seat_stay_l",
+     22.0
+    ],
+    [
+     "rw_hub",
+     "seat_stay_r",
+     22.0
+    ],
+    [
+     "fw_hub",
+     "fork_l",
+     22.0
+    ],
+    [
+     "fw_hub",
+     "fork_r",
+     22.0
+    ],
+    [
+     "bar_mid",
+     "stem",
+     12.0
+    ],
+    [
+     "bar_mid",
+     "bar_sweep_l",
+     12.0
+    ],
+    [
+     "bar_mid",
+     "bar_sweep_r",
+     12.0
+    ],
+    [
+     "bell",
+     "bar_mid",
+     12.0
+    ],
+    [
+     "grip_l",
+     "bar_sweep_l",
+     12.0
+    ],
+    [
+     "grip_r",
+     "bar_sweep_r",
+     12.0
+    ],
+    [
+     "crank_r",
+     "chainring",
+     12.0
+    ],
+    [
+     "crank_r",
+     "bb_spindle",
+     12.0
+    ],
+    [
+     "crank_l",
+     "bb_spindle",
+     12.0
+    ],
+    [
+     "pedal_r",
+     "crank_r",
+     12.0
+    ],
+    [
+     "pedal_l",
+     "crank_l",
+     12.0
+    ],
+    [
+     "seat_bridge",
+     "seat_stay_l",
+     8.0
+    ],
+    [
+     "top_tube",
+     "stem",
+     8.0
+    ],
+    [
+     "down_tube",
+     "fork_crown",
+     9.0
+    ],
+    [
+     "fork_l",
+     "fork_crown",
+     9.0
+    ],
+    [
+     "fork_r",
+     "fork_crown",
+     9.0
+    ],
+    [
+     "seat_bridge",
+     "seat_stay_r",
+     8.0
+    ],
+    [
+     "fork_crown",
+     "fork_l",
+     12.0
+    ],
+    [
+     "fork_crown",
+     "fork_r",
+     12.0
+    ],
+    [
+     "saddle",
+     "seat_post",
+     12.0
+    ],
+    [
+     "seat_post",
+     "top_tube",
+     12.0
+    ],
+    [
+     "stem",
+     "head_tube",
+     12.0
+    ]
+   ],
+   "overlap_allow": 6.0,
+   "faces": []
+  },
+  "BI2": {
+   "name": "BI2: the roadster leaning 12 degrees against a brick wall, handlebar end and pedal against it (the sample)",
+   "parts": [
+    {
+     "id": "rw_tyre1",
+     "type": "box",
+     "c": [
+      311.0,
+      0.0,
+      330.0
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -90.0,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_tyre2",
+     "type": "box",
+     "c": [
+      287.33,
+      0.0,
+      449.01
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -112.5,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_tyre3",
+     "type": "box",
+     "c": [
+      219.91,
+      0.0,
+      549.91
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -135.0,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_tyre4",
+     "type": "box",
+     "c": [
+      119.01,
+      0.0,
+      617.33
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -157.5,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_tyre5",
+     "type": "box",
+     "c": [
+      0.0,
+      0.0,
+      641.0
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -180.0,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_tyre6",
+     "type": "box",
+     "c": [
+      -119.01,
+      0.0,
+      617.33
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -202.5,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_tyre7",
+     "type": "box",
+     "c": [
+      -219.91,
+      0.0,
+      549.91
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -225.0,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_tyre8",
+     "type": "box",
+     "c": [
+      -287.33,
+      0.0,
+      449.01
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -247.5,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_tyre9",
+     "type": "box",
+     "c": [
+      -311.0,
+      0.0,
+      330.0
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -270.0,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_tyre10",
+     "type": "box",
+     "c": [
+      -287.33,
+      0.0,
+      210.99
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -292.5,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_tyre11",
+     "type": "box",
+     "c": [
+      -219.91,
+      0.0,
+      110.09
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -315.0,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_tyre12",
+     "type": "box",
+     "c": [
+      -119.01,
+      0.0,
+      42.67
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -337.5,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_tyre13",
+     "type": "box",
+     "c": [
+      -0.0,
+      0.0,
+      19.0
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -360.0,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_tyre14",
+     "type": "box",
+     "c": [
+      119.01,
+      0.0,
+      42.67
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -382.5,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_tyre15",
+     "type": "box",
+     "c": [
+      219.91,
+      0.0,
+      110.09
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -405.0,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_tyre16",
+     "type": "box",
+     "c": [
+      287.33,
+      0.0,
+      210.99
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -427.5,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_hub",
+     "type": "cyl",
+     "p0": [
+      0.0,
+      -50.0,
+      330.0
+     ],
+     "p1": [
+      0.0,
+      50.0,
+      330.0
+     ],
+     "r0": 22.0,
+     "material": "steel",
+     "note": "hub 44 across, 100 long",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_spoke1",
+     "type": "cyl",
+     "p0": [
+      22.17310878027088,
+      0.0,
+      339.18440237676214
+     ],
+     "p1": [
+      267.9250644282732,
+      0.0,
+      440.978195385876
+     ],
+     "r0": 1.2,
+     "material": "steel",
+     "note": "spoke 2.4 across (8 drawn of 36)",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_spoke2",
+     "type": "cyl",
+     "p0": [
+      9.184402376762156,
+      0.0,
+      352.17310878027087
+     ],
+     "p1": [
+      110.97819538587605,
+      0.0,
+      597.9250644282731
+     ],
+     "r0": 1.2,
+     "material": "steel",
+     "note": "spoke 2.4 across (8 drawn of 36)",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_spoke3",
+     "type": "cyl",
+     "p0": [
+      -9.184402376762154,
+      0.0,
+      352.17310878027087
+     ],
+     "p1": [
+      -110.97819538587602,
+      0.0,
+      597.9250644282731
+     ],
+     "r0": 1.2,
+     "material": "steel",
+     "note": "spoke 2.4 across (8 drawn of 36)",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_spoke4",
+     "type": "cyl",
+     "p0": [
+      -22.17310878027088,
+      0.0,
+      339.18440237676214
+     ],
+     "p1": [
+      -267.9250644282732,
+      0.0,
+      440.97819538587606
+     ],
+     "r0": 1.2,
+     "material": "steel",
+     "note": "spoke 2.4 across (8 drawn of 36)",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_spoke5",
+     "type": "cyl",
+     "p0": [
+      -22.173108780270883,
+      0.0,
+      320.81559762323786
+     ],
+     "p1": [
+      -267.9250644282732,
+      0.0,
+      219.021804614124
+     ],
+     "r0": 1.2,
+     "material": "steel",
+     "note": "spoke 2.4 across (8 drawn of 36)",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_spoke6",
+     "type": "cyl",
+     "p0": [
+      -9.184402376762169,
+      0.0,
+      307.82689121972913
+     ],
+     "p1": [
+      -110.97819538587619,
+      0.0,
+      62.07493557172688
+     ],
+     "r0": 1.2,
+     "material": "steel",
+     "note": "spoke 2.4 across (8 drawn of 36)",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_spoke7",
+     "type": "cyl",
+     "p0": [
+      9.18440237676216,
+      0.0,
+      307.82689121972913
+     ],
+     "p1": [
+      110.9781953858761,
+      0.0,
+      62.07493557172688
+     ],
+     "r0": 1.2,
+     "material": "steel",
+     "note": "spoke 2.4 across (8 drawn of 36)",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_spoke8",
+     "type": "cyl",
+     "p0": [
+      22.173108780270876,
+      0.0,
+      320.8155976232378
+     ],
+     "p1": [
+      267.9250644282731,
+      0.0,
+      219.02180461412377
+     ],
+     "r0": 1.2,
+     "material": "steel",
+     "note": "spoke 2.4 across (8 drawn of 36)",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_tyre1",
+     "type": "box",
+     "c": [
+      1407.84,
+      0.0,
+      330.0
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -90.0,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_tyre2",
+     "type": "box",
+     "c": [
+      1384.17,
+      0.0,
+      449.01
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -112.5,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_tyre3",
+     "type": "box",
+     "c": [
+      1316.75,
+      0.0,
+      549.91
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -135.0,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_tyre4",
+     "type": "box",
+     "c": [
+      1215.85,
+      0.0,
+      617.33
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -157.5,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_tyre5",
+     "type": "box",
+     "c": [
+      1096.84,
+      0.0,
+      641.0
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -180.0,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_tyre6",
+     "type": "box",
+     "c": [
+      977.82,
+      0.0,
+      617.33
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -202.5,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_tyre7",
+     "type": "box",
+     "c": [
+      876.93,
+      0.0,
+      549.91
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -225.0,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_tyre8",
+     "type": "box",
+     "c": [
+      809.51,
+      0.0,
+      449.01
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -247.5,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_tyre9",
+     "type": "box",
+     "c": [
+      785.84,
+      0.0,
+      330.0
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -270.0,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_tyre10",
+     "type": "box",
+     "c": [
+      809.51,
+      0.0,
+      210.99
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -292.5,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_tyre11",
+     "type": "box",
+     "c": [
+      876.93,
+      0.0,
+      110.09
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -315.0,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_tyre12",
+     "type": "box",
+     "c": [
+      977.82,
+      0.0,
+      42.67
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -337.5,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_tyre13",
+     "type": "box",
+     "c": [
+      1096.84,
+      0.0,
+      19.0
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -360.0,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_tyre14",
+     "type": "box",
+     "c": [
+      1215.85,
+      0.0,
+      42.67
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -382.5,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_tyre15",
+     "type": "box",
+     "c": [
+      1316.75,
+      0.0,
+      110.09
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -405.0,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_tyre16",
+     "type": "box",
+     "c": [
+      1384.17,
+      0.0,
+      210.99
+     ],
+     "s": [
+      123.7,
+      38.0,
+      38.0
+     ],
+     "rot": [
+      0,
+      -427.5,
+      0
+     ],
+     "material": "tyre",
+     "note": "tyre and rim segment (16 round the wheel), section 38 x 38",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_hub",
+     "type": "cyl",
+     "p0": [
+      1096.838873863232,
+      -50.0,
+      330.0
+     ],
+     "p1": [
+      1096.838873863232,
+      50.0,
+      330.0
+     ],
+     "r0": 22.0,
+     "material": "steel",
+     "note": "hub 44 across, 100 long",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_spoke1",
+     "type": "cyl",
+     "p0": [
+      1119.011982643503,
+      0.0,
+      339.18440237676214
+     ],
+     "p1": [
+      1364.7639382915052,
+      0.0,
+      440.978195385876
+     ],
+     "r0": 1.2,
+     "material": "steel",
+     "note": "spoke 2.4 across (8 drawn of 36)",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_spoke2",
+     "type": "cyl",
+     "p0": [
+      1106.0232762399942,
+      0.0,
+      352.17310878027087
+     ],
+     "p1": [
+      1207.817069249108,
+      0.0,
+      597.9250644282731
+     ],
+     "r0": 1.2,
+     "material": "steel",
+     "note": "spoke 2.4 across (8 drawn of 36)",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_spoke3",
+     "type": "cyl",
+     "p0": [
+      1087.65447148647,
+      0.0,
+      352.17310878027087
+     ],
+     "p1": [
+      985.860678477356,
+      0.0,
+      597.9250644282731
+     ],
+     "r0": 1.2,
+     "material": "steel",
+     "note": "spoke 2.4 across (8 drawn of 36)",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_spoke4",
+     "type": "cyl",
+     "p0": [
+      1074.6657650829611,
+      0.0,
+      339.18440237676214
+     ],
+     "p1": [
+      828.9138094349589,
+      0.0,
+      440.97819538587606
+     ],
+     "r0": 1.2,
+     "material": "steel",
+     "note": "spoke 2.4 across (8 drawn of 36)",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_spoke5",
+     "type": "cyl",
+     "p0": [
+      1074.6657650829611,
+      0.0,
+      320.81559762323786
+     ],
+     "p1": [
+      828.9138094349589,
+      0.0,
+      219.021804614124
+     ],
+     "r0": 1.2,
+     "material": "steel",
+     "note": "spoke 2.4 across (8 drawn of 36)",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_spoke6",
+     "type": "cyl",
+     "p0": [
+      1087.65447148647,
+      0.0,
+      307.82689121972913
+     ],
+     "p1": [
+      985.8606784773558,
+      0.0,
+      62.07493557172688
+     ],
+     "r0": 1.2,
+     "material": "steel",
+     "note": "spoke 2.4 across (8 drawn of 36)",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_spoke7",
+     "type": "cyl",
+     "p0": [
+      1106.0232762399942,
+      0.0,
+      307.82689121972913
+     ],
+     "p1": [
+      1207.817069249108,
+      0.0,
+      62.07493557172688
+     ],
+     "r0": 1.2,
+     "material": "steel",
+     "note": "spoke 2.4 across (8 drawn of 36)",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_spoke8",
+     "type": "cyl",
+     "p0": [
+      1119.011982643503,
+      0.0,
+      320.8155976232378
+     ],
+     "p1": [
+      1364.7639382915052,
+      0.0,
+      219.02180461412377
+     ],
+     "r0": 1.2,
+     "material": "steel",
+     "note": "spoke 2.4 across (8 drawn of 36)",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_guard1",
+     "type": "box",
+     "c": [
+      280.21,
+      0.0,
+      519.01
+     ],
+     "s": [
+      170.5,
+      60.0,
+      2.0
+     ],
+     "rot": [
+      0,
+      -124.0,
+      0
+     ],
+     "material": "paint_black",
+     "note": "mudguard segment, 60 wide, 2 thick",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_guard2",
+     "type": "box",
+     "c": [
+      158.68,
+      0.0,
+      628.44
+     ],
+     "s": [
+      170.5,
+      60.0,
+      2.0
+     ],
+     "rot": [
+      0,
+      -152.0,
+      0
+     ],
+     "material": "paint_black",
+     "note": "mudguard segment, 60 wide, 2 thick",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_guard3",
+     "type": "box",
+     "c": [
+      0.0,
+      0.0,
+      668.0
+     ],
+     "s": [
+      170.5,
+      60.0,
+      2.0
+     ],
+     "rot": [
+      0,
+      -180.0,
+      0
+     ],
+     "material": "paint_black",
+     "note": "mudguard segment, 60 wide, 2 thick",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_guard4",
+     "type": "box",
+     "c": [
+      -158.68,
+      0.0,
+      628.44
+     ],
+     "s": [
+      170.5,
+      60.0,
+      2.0
+     ],
+     "rot": [
+      0,
+      -208.0,
+      0
+     ],
+     "material": "paint_black",
+     "note": "mudguard segment, 60 wide, 2 thick",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_guard5",
+     "type": "box",
+     "c": [
+      -280.21,
+      0.0,
+      519.01
+     ],
+     "s": [
+      170.5,
+      60.0,
+      2.0
+     ],
+     "rot": [
+      0,
+      -236.0,
+      0
+     ],
+     "material": "paint_black",
+     "note": "mudguard segment, 60 wide, 2 thick",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_guard1",
+     "type": "box",
+     "c": [
+      1380.31,
+      0.0,
+      514.09
+     ],
+     "s": [
+      158.1,
+      60.0,
+      2.0
+     ],
+     "rot": [
+      0,
+      -123.0,
+      0
+     ],
+     "material": "paint_black",
+     "note": "mudguard segment, 60 wide, 2 thick",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_guard2",
+     "type": "box",
+     "c": [
+      1270.92,
+      0.0,
+      619.72
+     ],
+     "s": [
+      158.1,
+      60.0,
+      2.0
+     ],
+     "rot": [
+      0,
+      -149.0,
+      0
+     ],
+     "material": "paint_black",
+     "note": "mudguard segment, 60 wide, 2 thick",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_guard3",
+     "type": "box",
+     "c": [
+      1126.3,
+      0.0,
+      666.71
+     ],
+     "s": [
+      158.1,
+      60.0,
+      2.0
+     ],
+     "rot": [
+      0,
+      -175.0,
+      0
+     ],
+     "material": "paint_black",
+     "note": "mudguard segment, 60 wide, 2 thick",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_guard4",
+     "type": "box",
+     "c": [
+      975.71,
+      0.0,
+      645.55
+     ],
+     "s": [
+      158.1,
+      60.0,
+      2.0
+     ],
+     "rot": [
+      0,
+      -201.0,
+      0
+     ],
+     "material": "paint_black",
+     "note": "mudguard segment, 60 wide, 2 thick",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_guard5",
+     "type": "box",
+     "c": [
+      849.64,
+      0.0,
+      560.52
+     ],
+     "s": [
+      158.1,
+      60.0,
+      2.0
+     ],
+     "rot": [
+      0,
+      -227.0,
+      0
+     ],
+     "material": "paint_black",
+     "note": "mudguard segment, 60 wide, 2 thick",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "seat_tube",
+     "type": "cyl",
+     "p0": [
+      449.0,
+      0.0,
+      300.0
+     ],
+     "p1": [
+      275.9504831500294,
+      0.0,
+      832.5916491252859
+     ],
+     "r0": 14.0,
+     "material": "paint_black",
+     "note": "seat tube 28 across, 560 centre to top, 72 degrees",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "top_tube",
+     "type": "cyl",
+     "p0": [
+      275.9504831500294,
+      0.0,
+      832.5916491252859
+     ],
+     "p1": [
+      845.9504831500294,
+      0.0,
+      839.5916491252859
+     ],
+     "r0": 14.0,
+     "material": "paint_black",
+     "note": "top tube 28, 570 long, level",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "down_tube",
+     "type": "cyl",
+     "p0": [
+      449.0,
+      0.0,
+      300.0
+     ],
+     "p1": [
+      902.1414721624162,
+      0.0,
+      700.5140709402679
+     ],
+     "r0": 15.0,
+     "material": "paint_black",
+     "note": "down tube 30",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "head_tube",
+     "type": "cyl",
+     "p0": [
+      902.1414721624162,
+      0.0,
+      700.5140709402679
+     ],
+     "p1": [
+      845.9504831500294,
+      0.0,
+      839.5916491252859
+     ],
+     "r0": 18.0,
+     "material": "paint_black",
+     "note": "head tube 36 across, 150 long, 68 degrees",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "chain_stay_l",
+     "type": "cyl",
+     "p0": [
+      449.0,
+      -55.0,
+      300.0
+     ],
+     "p1": [
+      0.0,
+      -55.0,
+      330.0
+     ],
+     "r0": 8.0,
+     "material": "paint_black",
+     "note": "chain stay 16, 450 long",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "seat_stay_l",
+     "type": "cyl",
+     "p0": [
+      275.9504831500294,
+      -55.0,
+      832.5916491252859
+     ],
+     "p1": [
+      0.0,
+      -55.0,
+      330.0
+     ],
+     "r0": 8.0,
+     "material": "paint_black",
+     "note": "seat stay 16",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fork_l",
+     "type": "cyl",
+     "p0": [
+      902.1414721624162,
+      -57.75,
+      700.5140709402679
+     ],
+     "p1": [
+      1096.838873863232,
+      -57.75,
+      330.0
+     ],
+     "r0": 11.0,
+     "material": "paint_black",
+     "note": "fork blade 22, rake 45 at the foot",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "chain_stay_r",
+     "type": "cyl",
+     "p0": [
+      449.0,
+      55.0,
+      300.0
+     ],
+     "p1": [
+      0.0,
+      55.0,
+      330.0
+     ],
+     "r0": 8.0,
+     "material": "paint_black",
+     "note": "chain stay 16, 450 long",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "seat_stay_r",
+     "type": "cyl",
+     "p0": [
+      275.9504831500294,
+      55.0,
+      832.5916491252859
+     ],
+     "p1": [
+      0.0,
+      55.0,
+      330.0
+     ],
+     "r0": 8.0,
+     "material": "paint_black",
+     "note": "seat stay 16",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fork_r",
+     "type": "cyl",
+     "p0": [
+      902.1414721624162,
+      57.75,
+      700.5140709402679
+     ],
+     "p1": [
+      1096.838873863232,
+      57.75,
+      330.0
+     ],
+     "r0": 11.0,
+     "material": "paint_black",
+     "note": "fork blade 22, rake 45 at the foot",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "seat_bridge",
+     "type": "box",
+     "c": [
+      275.95,
+      0.0,
+      832.592
+     ],
+     "s": [
+      16.0,
+      120.0,
+      20.0
+     ],
+     "material": "paint_black",
+     "note": "seat-stay bridge",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fork_crown",
+     "type": "box",
+     "c": [
+      902.141,
+      0.0,
+      682.514
+     ],
+     "s": [
+      24.0,
+      124.0,
+      24.0
+     ],
+     "material": "paint_black",
+     "note": "fork crown",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "seat_post",
+     "type": "cyl",
+     "p0": [
+      275.9504831500294,
+      0.0,
+      832.5916491252859
+     ],
+     "p1": [
+      230.9504831500294,
+      0.0,
+      985.0
+     ],
+     "r0": 11.0,
+     "material": "steel",
+     "note": "seat post 22",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "saddle",
+     "type": "box",
+     "c": [
+      220.95,
+      0.0,
+      1010.0
+     ],
+     "s": [
+      280.0,
+      180.0,
+      50.0
+     ],
+     "material": "saddle_black",
+     "edge": "nose r 30, edges r 8",
+     "note": "saddle 280 x 180 x 50, leather-look, springs not modelled",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "stem",
+     "type": "cyl",
+     "p0": [
+      845.9504831500294,
+      0.0,
+      839.5916491252859
+     ],
+     "p1": [
+      782.2673622693244,
+      0.0,
+      997.2129044016398
+     ],
+     "r0": 11.0,
+     "material": "steel",
+     "note": "stem 22, 170 above the head tube",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "bar_mid",
+     "type": "cyl",
+     "p0": [
+      782.2673622693244,
+      -190.0,
+      997.2129044016398
+     ],
+     "p1": [
+      782.2673622693244,
+      190.0,
+      997.2129044016398
+     ],
+     "r0": 11.0,
+     "material": "steel",
+     "note": "handlebar: the straight middle, 22 across, 380 wide",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "bar_sweep_l",
+     "type": "cyl",
+     "p0": [
+      782.2673622693244,
+      -190.0,
+      997.2129044016398
+     ],
+     "p1": [
+      697.2673622693244,
+      -290.0,
+      1009.2129044016398
+     ],
+     "r0": 11.0,
+     "material": "steel",
+     "note": "swept-back end, 100 across to 580 over the grips",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "grip_l",
+     "type": "cyl",
+     "p0": [
+      697.2673622693244,
+      -290.0,
+      1009.2129044016398
+     ],
+     "p1": [
+      692.2673622693244,
+      -395.0,
+      1011.2129044016398
+     ],
+     "r0": 14.0,
+     "material": "grip_black",
+     "note": "grip 28 across, 105 long",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "bar_sweep_r",
+     "type": "cyl",
+     "p0": [
+      782.2673622693244,
+      190.0,
+      997.2129044016398
+     ],
+     "p1": [
+      697.2673622693244,
+      290.0,
+      1009.2129044016398
+     ],
+     "r0": 11.0,
+     "material": "steel",
+     "note": "swept-back end, 100 across to 580 over the grips",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "grip_r",
+     "type": "cyl",
+     "p0": [
+      697.2673622693244,
+      290.0,
+      1009.2129044016398
+     ],
+     "p1": [
+      692.2673622693244,
+      395.0,
+      1011.2129044016398
+     ],
+     "r0": 14.0,
+     "material": "grip_black",
+     "note": "grip 28 across, 105 long",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "bell",
+     "type": "cyl",
+     "p0": [
+      787.2673622693244,
+      -150.0,
+      1011.2129044016398
+     ],
+     "p1": [
+      787.2673622693244,
+      -150.0,
+      1037.2129044016397
+     ],
+     "r0": 26.0,
+     "material": "steel",
+     "note": "bell 52 across, a plain dome",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "bb_spindle",
+     "type": "cyl",
+     "p0": [
+      449.0,
+      -70.0,
+      300.0
+     ],
+     "p1": [
+      449.0,
+      70.0,
+      300.0
+     ],
+     "r0": 12.0,
+     "material": "steel",
+     "note": "bottom bracket spindle",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "chainring",
+     "type": "cyl",
+     "p0": [
+      449.0,
+      52.0,
+      300.0
+     ],
+     "p1": [
+      449.0,
+      58.0,
+      300.0
+     ],
+     "r0": 90.0,
+     "material": "steel",
+     "note": "chainring 180 across, 6 thick (the chainguard is not modelled)",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "crank_r",
+     "type": "box",
+     "c": [
+      529.0,
+      64.0,
+      300.0
+     ],
+     "s": [
+      180.0,
+      12.0,
+      20.0
+     ],
+     "material": "steel",
+     "note": "right crank arm 170 long",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "crank_l",
+     "type": "box",
+     "c": [
+      369.0,
+      -64.0,
+      300.0
+     ],
+     "s": [
+      180.0,
+      12.0,
+      20.0
+     ],
+     "material": "steel",
+     "note": "left crank arm 170 long",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "pedal_r",
+     "type": "box",
+     "c": [
+      599.0,
+      122.5,
+      300.0
+     ],
+     "s": [
+      100.0,
+      105.0,
+      24.0
+     ],
+     "material": "steel",
+     "note": "pedal 100 x 105 x 24, rubber blocks not modelled",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "pedal_l",
+     "type": "box",
+     "c": [
+      299.0,
+      -122.5,
+      300.0
+     ],
+     "s": [
+      100.0,
+      105.0,
+      24.0
+     ],
+     "material": "steel",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "wall",
+     "type": "box",
+     "c": [
+      700.0,
+      279.356,
+      1175.0
+     ],
+     "s": [
+      2600.0,
+      200.0,
+      2450.0
+     ],
+     "material": "wall_brick",
+     "note": "the wall (a stand-in slab)"
+    }
+   ],
+   "overlap_allow": 6.0,
+   "contact_tol": 3.0,
+   "joins": [
+    [
+     "grip_r",
+     "wall"
+    ]
+   ],
+   "embeds": [
+    [
+     "seat_tube",
+     "top_tube",
+     14.0
+    ],
+    [
+     "seat_tube",
+     "down_tube",
+     14.0
+    ],
+    [
+     "head_tube",
+     "top_tube",
+     16.0
+    ],
+    [
+     "head_tube",
+     "down_tube",
+     16.0
+    ],
+    [
+     "head_tube",
+     "fork_crown",
+     12.0
+    ],
+    [
+     "head_tube",
+     "stem",
+     12.0
+    ],
+    [
+     "seat_tube",
+     "seat_post",
+     12.0
+    ],
+    [
+     "seat_tube",
+     "seat_bridge",
+     12.0
+    ],
+    [
+     "seat_tube",
+     "chain_stay_l",
+     8.0
+    ],
+    [
+     "seat_tube",
+     "chain_stay_r",
+     8.0
+    ],
+    [
+     "down_tube",
+     "chain_stay_l",
+     8.0
+    ],
+    [
+     "down_tube",
+     "chain_stay_r",
+     8.0
+    ],
+    [
+     "chain_stay_l",
+     "bb_spindle",
+     12.0
+    ],
+    [
+     "chain_stay_r",
+     "bb_spindle",
+     12.0
+    ],
+    [
+     "down_tube",
+     "bb_spindle",
+     12.0
+    ],
+    [
+     "seat_tube",
+     "bb_spindle",
+     12.0
+    ],
+    [
+     "rw_hub",
+     "chain_stay_l",
+     22.0
+    ],
+    [
+     "rw_hub",
+     "chain_stay_r",
+     22.0
+    ],
+    [
+     "rw_hub",
+     "seat_stay_l",
+     22.0
+    ],
+    [
+     "rw_hub",
+     "seat_stay_r",
+     22.0
+    ],
+    [
+     "fw_hub",
+     "fork_l",
+     22.0
+    ],
+    [
+     "fw_hub",
+     "fork_r",
+     22.0
+    ],
+    [
+     "bar_mid",
+     "stem",
+     12.0
+    ],
+    [
+     "bar_mid",
+     "bar_sweep_l",
+     12.0
+    ],
+    [
+     "bar_mid",
+     "bar_sweep_r",
+     12.0
+    ],
+    [
+     "bell",
+     "bar_mid",
+     12.0
+    ],
+    [
+     "grip_l",
+     "bar_sweep_l",
+     12.0
+    ],
+    [
+     "grip_r",
+     "bar_sweep_r",
+     12.0
+    ],
+    [
+     "crank_r",
+     "chainring",
+     12.0
+    ],
+    [
+     "crank_r",
+     "bb_spindle",
+     12.0
+    ],
+    [
+     "crank_l",
+     "bb_spindle",
+     12.0
+    ],
+    [
+     "pedal_r",
+     "crank_r",
+     12.0
+    ],
+    [
+     "pedal_l",
+     "crank_l",
+     12.0
+    ],
+    [
+     "seat_bridge",
+     "seat_stay_l",
+     8.0
+    ],
+    [
+     "top_tube",
+     "stem",
+     8.0
+    ],
+    [
+     "down_tube",
+     "fork_crown",
+     9.0
+    ],
+    [
+     "fork_l",
+     "fork_crown",
+     9.0
+    ],
+    [
+     "fork_r",
+     "fork_crown",
+     9.0
+    ],
+    [
+     "seat_bridge",
+     "seat_stay_r",
+     8.0
+    ],
+    [
+     "fork_crown",
+     "fork_l",
+     12.0
+    ],
+    [
+     "fork_crown",
+     "fork_r",
+     12.0
+    ],
+    [
+     "saddle",
+     "seat_post",
+     12.0
+    ],
+    [
+     "seat_post",
+     "top_tube",
+     12.0
+    ],
+    [
+     "stem",
+     "head_tube",
+     12.0
+    ]
+   ],
+   "faces": []
+  }
+ },
+ "drawing": {
+  "views": [
+   "front",
+   "left",
+   "plan"
+  ],
+  "sections": [
+   {
+    "id": "y0",
+    "axis": "y",
+    "at": 0.0
+   },
+   {
+    "id": "x449",
+    "axis": "x",
+    "at": 449.0
+   }
+  ]
+ },
+ "numbers": [
+  {
+   "id": "N1",
+   "what": "tyre outer diameter (the wheel)",
+   "value": 660.0,
+   "kind": "Judgement",
+   "source": "a 26 x 1 3/8 inch roadster tyre: 590 mm bead seat plus two 35 mm sections is about 660 (the ISO number is from memory: not reached on a page this session); error 10",
+   "tol": 10.0,
+   "measure": {
+    "kind": "bbox",
+    "axis": "z",
+    "parts": [
+     "rw_tyre1",
+     "rw_tyre2",
+     "rw_tyre3",
+     "rw_tyre4",
+     "rw_tyre5",
+     "rw_tyre6",
+     "rw_tyre7",
+     "rw_tyre8",
+     "rw_tyre9",
+     "rw_tyre10",
+     "rw_tyre11",
+     "rw_tyre12",
+     "rw_tyre13",
+     "rw_tyre14",
+     "rw_tyre15",
+     "rw_tyre16"
+    ]
+   },
+   "variant": "BI1"
+  },
+  {
+   "id": "N2",
+   "what": "wheelbase (axle to axle)",
+   "value": 1096.8,
+   "kind": "Judgement",
+   "source": "a gent's roadster's wheelbase is about 1100 to 1140; from the stated tube lengths and angles: 1097; error 40",
+   "tol": 40.0,
+   "measure": {
+    "kind": "centre_dx",
+    "axis": "x",
+    "a": "rw_hub",
+    "b": "fw_hub"
+   },
+   "variant": "BI1"
+  },
+  {
+   "id": "N3",
+   "what": "saddle top above the ground",
+   "value": 1035.0,
+   "kind": "Judgement",
+   "source": "a rider of 1.75 m sits with the saddle about 1.0 m up; error 40",
+   "tol": 40.0,
+   "measure": {
+    "kind": "edge",
+    "axis": "z",
+    "part": "saddle",
+    "side": "hi"
+   },
+   "variant": "BI1"
+  },
+  {
+   "id": "N4",
+   "what": "handlebar grips above the ground",
+   "value": 1024.2,
+   "kind": "Judgement",
+   "source": "roadster bars stand about as high as the saddle or just above it; error 40",
+   "tol": 40.0,
+   "measure": {
+    "kind": "edge",
+    "axis": "z",
+    "part": "grip_r",
+    "side": "hi"
+   },
+   "variant": "BI1"
+  },
+  {
+   "id": "N5",
+   "what": "bottom bracket height",
+   "value": 300.0,
+   "kind": "Judgement",
+   "source": "a roadster's bottom bracket is about 300 mm up (30 mm below the axles); error 15",
+   "tol": 15.0,
+   "measure": {
+    "kind": "centre",
+    "axis": "z",
+    "part": "bb_spindle"
+   },
+   "variant": "BI1"
+  },
+  {
+   "id": "N6",
+   "what": "handlebar width over the grips",
+   "value": 790.0,
+   "kind": "Judgement",
+   "source": "swept-back roadster bars are 560 to 620 between the bends and about 790 over the grips' ends; error 50",
+   "tol": 50.0,
+   "measure": {
+    "kind": "span",
+    "axis": "y",
+    "a": "grip_l",
+    "b": "grip_r"
+   },
+   "variant": "BI1"
+  },
+  {
+   "id": "N7",
+   "what": "crank span: the two arms' outer ends along x (two cranks of 170, crossing at the spindle)",
+   "value": 340.0,
+   "kind": "Judgement",
+   "source": "170 mm, the usual crank; error 6",
+   "tol": 6.0,
+   "measure": {
+    "kind": "span",
+    "axis": "x",
+    "a": "crank_l",
+    "b": "crank_r"
+   },
+   "variant": "BI1"
+  }
+ ],
+ "photos": [],
+ "sources": [
+  {
+   "id": "S1",
+   "url": "https://www.geograph.org.uk/photo/2932507",
+   "read": "2026-10-13",
+   "author": "Jeremy Bolwell",
+   "licence": "CC BY-SA 2.0 (read on the page)",
+   "taken": "2012-05-06",
+   "kind": "photograph",
+   "shows": "a rusted gent's roadster leaning on a stone wall in a ruined building: a diamond frame with a level top tube, two big spoked wheels with mudguards, swept-back bars, a sprung saddle, a rear carrier; the rear wheel nearer the camera so the perspective is strong",
+   "used": true,
+   "not_used_for": "any number (the camera is oblique and close, the picture low in contrast); the rust is a wear state, not the sample's",
+   "period": "2012; a roadster of the 1950s to 1970s kind, the type an old man or a dock worker still rode in 1990"
+  },
+  {
+   "id": "S2",
+   "url": "https://www.geograph.org.uk/photo/4155634",
+   "read": "2026-10-13",
+   "author": "DS Pugh",
+   "licence": "CC BY-SA 2.0 (read on the page)",
+   "taken": "2014-09-01",
+   "kind": "photograph",
+   "shows": "a modern road bicycle leaning with its front tyre against a dry-stone wall: shows how a bicycle leans on a wall (front wheel and bar end against the stone, the rear wheel on the ground at a lean of about 10 to 15 degrees); a pannier and a bottle (brands masked)",
+   "used": true,
+   "not_used_for": "the bicycle's form (modern: 700c wheels, derailleur, drop frame) and any number",
+   "period": "2014; used only for the leaning pose"
+  },
+  {
+   "id": "S3",
+   "url": "https://www.geograph.org.uk/photo/4811433",
+   "read": "2026-10-13",
+   "author": "Bill Nicholls",
+   "licence": "CC BY-SA 2.0 (read on the page)",
+   "taken": "2014-09-21",
+   "kind": "photograph",
+   "shows": "a black gent's roadster on a display stand in a museum room: the diamond frame in a clean side view, swept bars, a plain saddle, 28 inch wheels",
+   "used": false,
+   "not_used_for": "everything (an interior display of an older machine, not a street photograph: looked at for the frame's layout only)",
+   "period": "2014 interior of a heritage machine"
+  },
+  {
+   "id": "S4",
+   "url": "https://api.polyhaven.com/assets?t=models",
+   "read": "2026-10-13",
+   "author": "Poly Haven artists",
+   "licence": "CC0 1.0",
+   "taken": "n/a (the list of 521 models)",
+   "kind": "model list",
+   "shows": "no bicycle",
+   "used": false,
+   "not_used_for": "everything: no CC0 bicycle exists, so it is made by script",
+   "period": "n/a"
+  },
+  {
+   "id": "S5",
+   "url": "https://api.geograph.org.uk/syndicator.php (terms bicycle, bicycles, bicycle wall, bike leaning; takenyear 1975 to 1996 and without a year)",
+   "read": "2026-10-13",
+   "author": "Geograph contributors",
+   "licence": "CC BY-SA 2.0 (each page)",
+   "taken": "1975 to 1996 searched",
+   "kind": "search record",
+   "shows": "1975 to 1996: a 1991 timbered house with a bicycle at its door, a 1992 station platform with cyclists, a 1993 night view of parked bicycles, a 1994 trail rider, a 1996 sporting photograph; none of a bicycle against a wall close up",
+   "used": false,
+   "not_used_for": "measuring",
+   "period": "n/a"
+  },
+  {
+   "id": "S6",
+   "url": "canon.md, the content rule (D18)",
+   "read": "2026-10-13",
+   "author": "this project",
+   "licence": "own work",
+   "taken": "n/a",
+   "kind": "own",
+   "shows": "the content rule keeps young people out of every image and every prop: the bicycle is an adult's, the frame 560 mm, no small wheels, no stabilisers, no basket",
+   "used": true,
+   "not_used_for": "shape",
+   "period": "n/a"
+  }
+ ],
+ "previews": [
+  {
+   "file": "p1-ruin-roadster-leaning.jpg",
+   "source": "S1",
+   "credit": "Jeremy Bolwell, Geograph 2932507, CC BY-SA 2.0, 2012-05-06, cropped to the bicycle",
+   "masked": [
+    "nothing to mask: no person, no lettering"
+   ],
+   "looked_at_full_size": true,
+   "no_people_no_drink_no_betting_no_names": true
+  }
+ ],
+ "checks": [
+  {
+   "name": "N1: tyre outer diameter (the wheel)",
+   "measure": "measure it on the built mesh in millimetres (bbox)",
+   "expect": "660 mm",
+   "tol": "+-10 mm"
+  },
+  {
+   "name": "N2: wheelbase (axle to axle)",
+   "measure": "measure it on the built mesh in millimetres (centre_dx)",
+   "expect": "1097 mm",
+   "tol": "+-40 mm"
+  },
+  {
+   "name": "N3: saddle top above the ground",
+   "measure": "measure it on the built mesh in millimetres (edge)",
+   "expect": "1035 mm",
+   "tol": "+-40 mm"
+  },
+  {
+   "name": "N4: handlebar grips above the ground",
+   "measure": "measure it on the built mesh in millimetres (edge)",
+   "expect": "1024 mm",
+   "tol": "+-40 mm"
+  },
+  {
+   "name": "N5: bottom bracket height",
+   "measure": "measure it on the built mesh in millimetres (centre)",
+   "expect": "300 mm",
+   "tol": "+-15 mm"
+  },
+  {
+   "name": "N6: handlebar width over the grips",
+   "measure": "measure it on the built mesh in millimetres (span)",
+   "expect": "790 mm",
+   "tol": "+-50 mm"
+  },
+  {
+   "name": "N7: crank span: the two arms' outer ends along x (two cranks of 170, crossing at the spindle)",
+   "measure": "measure it on the built mesh in millimetres (span)",
+   "expect": "340 mm",
+   "tol": "+-6 mm"
+  },
+  {
+   "name": "C1: both wheels the same diameter, on the ground",
+   "measure": "the tyres' bounding boxes",
+   "expect": "660 mm, z 0",
+   "tol": "+-10 mm"
+  },
+  {
+   "name": "C2: no part floats; the bicycle touches the ground and the wall",
+   "measure": "the contact graph",
+   "expect": "connected",
+   "tol": "0 floating"
+  },
+  {
+   "name": "C3: the frame's tube angles",
+   "measure": "seat tube 72 degrees, head tube 68 degrees",
+   "expect": "72 and 68",
+   "tol": "+-2 degrees"
+  },
+  {
+   "name": "C4: no lettering, no badge",
+   "measure": "textures and text",
+   "expect": "none",
+   "tol": "exact"
+  }
+ ],
+ "owed": [],
+ "lean": {
+  "deg": 12.0,
+  "wall_y_mm": 179.4
+ },
+ "night": {
+  "lantern_linear": [
+   1.0,
+   0.25,
+   0.0
+  ],
+  "note": "the bicycle stands against the blank wall between lamp pools; the chrome catches the lantern colour (1.0, 0.25, 0.0) as thin glints on the rims and bars, the black frame vanishes"
+ },
+ "placement": {
+  "slot": "west side, against the blank soot-brick wall of the west_south block (the plain ground floor: no shopfront), centre x 15.0 m, the bicycle parallel to the wall with its handlebar end touching it, leaning 12 degrees, its tyres 0.34 m from the wall at the ground (the wall at z -5.125)",
+  "x_m": 15.0,
+  "wall_z_m": -5.125,
+  "footway_mm": 2000.0,
+  "min_clear_mm": 1000.0,
+  "length_mm": 1756.8,
+  "reasons": [
+   "the blank west wall is where the street's small things lean (the poster wall of the scene, x 11.4); a bicycle there blocks no shopfront and no door (the side door is at x 25.5)",
+   "leaning, it takes a footway depth of its roll: a 12 degree lean puts the bar end and pedal 0.36 m from the tyres' line, leaving 1.64 m of the 2.0 m footway clear",
+   "it is an adult's bicycle, ambient dressing that belongs to no one on the street's list of residents"
+  ]
+ },
+ "wear": [
+  "enamel chipped to red-brown rust at the dropouts, the head tube's lower end, the seat-stay bridge and the mudguard stays; paint dulled, a few small dents in the mudguards",
+  "chrome gone to dull grey with orange pitting on the bars, rims and spokes; the chain brown with oil and rust (not modelled)",
+  "tyres hard, cracked at the sidewalls, one slightly soft (flat at the ground by 8 mm: a seed), grey dust bloom",
+  "the saddle cracked and shiny at the nose; the grips worn smooth at their ends",
+  "a wet street under it: darkness on the lowest 150 mm of the tyres and a grit splash on the mudguard",
+  "NOT shown: a lock or chain bar (a chain through the wheel is a variant, a seed), a basket, stabilisers, any maker's badge on the head tube (a real bicycle has one; this has a blank plate)"
+ ],
+ "disagreements": [
+  {
+   "id": "W1",
+   "what": "which bicycle",
+   "book": "the research notes list none; the brief asks for a bicycle against a wall",
+   "photo": "S1 shows an old roadster leaning on a wall (the type of the period's older riders); S2 shows the leaning pose with a modern bicycle",
+   "chose": "the roadster, upright geometry from the tube lengths and angles, the leaning pose from S2"
+  },
+  {
+   "id": "W2",
+   "what": "the lean",
+   "book": "none",
+   "photo": "S2: the rear tyre on the ground, the front tyre and the bar end on the wall, a lean of about 12 degrees",
+   "chose": "12 degrees, the wall touching the right grip's end"
+  }
+ ],
+ "variants_note": [
+  "BI2 (the sample): the roadster leaning 12 degrees on the wall.",
+  "BI1: the same upright (for a bicycle held by a figure or standing on a stand).",
+  "a ten-speed with drop bars is the second kind of adult bicycle of 1990: not written (its frame would be a new target); one kind only, as the street needs one bicycle.",
+  "conditions (materials): C0 sound, C1 worn (the sample's wear), C2 rusted solid (S1's state, a derelict leaning for years)."
+ ],
+ "not_settled": [
+  "no 1975 to 1995 bicycle photograph was measurable and S1 and S2 are oblique and low in contrast: every number is Judgement (a gent's roadster's usual geometry), checked for internal consistency and against ranges, not against pixels",
+  "the 26 x 1 3/8 wheel's exact tyre diameter (660 mm is from memory; the page that gives the ISO 590 bead seat was not reached)",
+  "whether the street's bicycle should be a roadster or a ten-speed (the roadster is chosen because S1 is a street-leaning roadster)",
+  "the rear carrier, lamp and chain guard are not modelled (they are textures and decals); the chain is not modelled",
+  "the lean's wall contact is by the handlebar end (S2 shows the front tyre against the wall): either is a seed"
+ ],
+ "content_rule_note": "an adult's bicycle only: no small frame, no stabilisers, no child seat, no toy (a statement of the content rule).",
+ "builder_notes": [
+  "build by script: the tubes as cylinders from the end points in target.json (a part's p0 and p1), the tyres as one torus of section 38 (the 16 boxes are the engine's approximation), the 36 spokes (8 drawn) in the real wheel; the mudguards as one swept strip per wheel",
+  "BI2 is BI1 with the part transform (a roll of 12 degrees about the x axis through the tyre contacts) and the wall; the builder places the bicycle with the transform",
+  "no maker's badge, no transfer, no lettering of any kind",
+  "the right pedal and the right grip end are the two points that can touch the wall"
+ ],
+ "self_check": {
+  "line": "SELF-CHECK bicycle: 68 checks, 68 passed, 0 failed; negative controls 23 of 23 caught (offline)",
+  "checks": 68,
+  "passed": 68,
+  "failed": 0,
+  "controls": 23,
+  "controls_caught": 23,
+  "options": "offline",
+  "failing": [],
+  "uncaught": []
+ }
+}
