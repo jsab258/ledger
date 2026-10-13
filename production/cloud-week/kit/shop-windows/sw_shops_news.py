@@ -58,7 +58,7 @@ def room(r):
     jar_m = r.image_mat("jars", os.path.join(tex, "jars.png"), rough=0.3)
     lid_m = r.mat("jar_lid", rgb8(190, 190, 186), rough=0.3, metal=0.9)
     # ---- the counter and what stands on it
-    cx0, cx1, cy0, cy1, ch = r.counter("N-back-counter")
+    cx0, cx1, cy0, cy1, ch = r.counter("N-back-counter", panels=True)
     # the gantry (above the counter: its uprights stand on the counter's top)
     gx0, gx1 = fx["N-back-gantry"]["x"]
     tiers = [(1.35, gx0, gx1), (1.70, gx0, gx1), (2.0, gx0, gx1)]
@@ -106,13 +106,16 @@ def room(r):
     r.place("CashRegister_01", (cx1 - 0.40, D - gd - 0.01, ch), rot=(0, 0, 0), scale=till_s, fixture="N-back-counter", anchor=("c", "max", "min"))
     # the stationery tray at the left end: a shallow tray, the three sets lying flat on it
     tray_m = r.mat("stationery_tray", rgb8(120, 84, 54), rough=0.6)
-    tx0, tx1, ty0, ty1 = cx0 + 0.02, cx0 + 0.62, cy0 + 0.05, cy0 + 0.50
+    tx0, tx1, ty0, ty1 = cx0 + 0.02, cx0 + 0.62, cy0 + 0.04, cy0 + 0.58
     r.box("stationery_tray_base", tx0, tx1, ty0, ty1, ch, ch + 0.004, tray_m, fixture="N-back-counter")
     for nm, (a, b, c_, d_) in (("l", (tx0, tx0 + 0.006, ty0, ty1)), ("r", (tx1 - 0.006, tx1, ty0, ty1)), ("f", (tx0, tx1, ty0, ty0 + 0.006)), ("b", (tx0, tx1, ty1 - 0.006, ty1))):
         r.box("stationery_tray_%s" % nm, a, b, c_, d_, ch + 0.004, ch + 0.016, tray_m, fixture="N-back-counter")
-    sd = r.dims("stationery_supplies", (math.pi / 2, 0, 0))
+    pens = r.sub_template("stationery_supplies", "pens", lambda n: "pencilcup" not in n)
+    cup = r.sub_template("stationery_supplies", "cup", lambda n: "pencilcup" in n)
     for k in range(3):
-        r.place("stationery_supplies", ((tx0 + tx1) / 2 + rnd.uniform(-0.01, 0.01), ty0 + 0.012 + 0.16 * k + 0.08 + rnd.uniform(-0.004, 0.004), ch + 0.004), rot=(math.pi / 2, 0, rnd.uniform(-0.05, 0.05)), scale=1.0, fixture="N-back-counter", anchor=("c", "c", "min"))
+        yy = ty0 + 0.02 + 0.08 + 0.165 * k
+        r.place(pens, (tx0 + 0.02 + 0.14, yy, ch + 0.004), rot=(math.pi / 2, 0, rnd.uniform(-0.04, 0.04)), scale=1.0, fixture="N-back-counter", anchor=("c", "c", "min"), tag="pens")
+        r.place(cup, (tx1 - 0.06, yy, ch + 0.004), rot=(0, 0, 0), scale=1.0, fixture="N-back-counter", anchor=("c", "c", "min"), tag="cup")
     # the four pads of office_notepads (the model is a kit of loose pads: the stacks, one each) on the counter beside the till
     pads = ["office_notepads_a4_stack", "office_notepads_yellow_pad", "office_notepads_note_stack", "office_notepads_sticky_stack"]
     xp = cx0 + 0.70
@@ -144,7 +147,7 @@ def room(r):
     r.placed_rec("N-back-counter", "script:greeting_cards", cg.extents(), [oc.name], tag="toast_rack", n=6)
     # ---- the pension counter, its screen and its hours card
     px0, px1 = fx["N-back-pensions"]["x"]
-    r.counter("N-back-pensions", top_h=1.0)
+    r.counter("N-back-pensions", top_h=1.0, panels=True)
     wood = r.mat("screen_wood", rgb8(96, 62, 38), rough=0.5)
     brass = r.brass_m
     ys = D - 0.46
@@ -288,28 +291,34 @@ def display(d):
     wood = d.mat("stand_wood", rgb8(150, 108, 70), rough=0.55)
     board = d.mat("slope_board", rgb8(196, 192, 182), rough=0.7)
     wire = d.mat("rack_wire", rgb8(70, 70, 74), rough=0.4, metal=0.8)
-    # ---- the two ramps (a wedge each) and the ten papers
+    # ---- the two paper stands (two steps and a back board each) and the ten papers, folded once
     for ri, (u0, u1) in enumerate(((0.10, 0.62), (0.66, 1.18))):
         gm = GM()
-        v0, v1, hh = 0.05, 0.30, 0.12
         x0, x1 = X(u0), X(u1)
-        V = [(x0, v0, 0.0), (x1, v0, 0.0), (x1, v1, 0.0), (x0, v1, 0.0), (x0, v1, hh), (x1, v1, hh)]
-        gm.add(V, [(0, 3, 2, 1), (0, 1, 5, 4), (3, 4, 5, 2), (0, 4, 3), (1, 2, 5)], 0)
-        d.gm_object("paper_ramp_%d" % ri, gm, [board], "support", "script:paper_ramp")
+        gm.box(x0, x1, 0.04, 0.19, 0.0, 0.06, 0)            # the lower step
+        gm.box(x0, x1, 0.19, 0.34, 0.0, 0.18, 0)            # the upper step
+        gm.box(x0, x1, 0.34, 0.352, 0.18, 0.40, 0)          # the back board over it
+        d.gm_object("paper_stand_%d" % ri, gm, [board], "support", "script:paper_stand")
+    lean = 18.0
     for pi in range(10):
         ri, k = divmod(pi, 5)
         u0 = (0.10, 0.66)[ri]
-        row, col = (0, k) if k < 3 else (1, k - 3)
-        xc = X(u0 + 0.03 + 0.14 + col * 0.14 + (0.07 if row else 0.0)) + rnd.uniform(-0.004, 0.004)
-        vc = 0.10 + row * 0.12
-        zc = 0.012 + row * 0.04 + 0.10 * math.sin(math.radians(20)) + 0.03
+        if k < 3:
+            xc = X(u0 + 0.13 + k * 0.125) + rnd.uniform(-0.004, 0.004)
+            foot_v, foot_w = 0.15, 0.06
+        else:
+            xc = X(u0 + 0.19 + (k - 3) * 0.14) + rnd.uniform(-0.004, 0.004)
+            foot_v, foot_w = 0.30, 0.18
+        hh = 0.20
+        zc = foot_w + hh / 2 * math.cos(math.radians(lean)) + 0.002
+        vc = foot_v - 0.01 + hh / 2 * math.sin(math.radians(lean))
         gm = GM()
         tile = paper_uv[pi % 6]
         top = (tile[0], tile[1] + (tile[3] - tile[1]) * 0.38, tile[2], tile[3])
-        gm.sheet((xc, vc + 0.06 + row * 0.0, zc + 0.02), 0.27, 0.20, 0.004, tilt=-(70 - 0), yaw=rnd.uniform(-4, 4), mi=0, uv=top, uv_other=(tile[0] + 0.01, tile[1] + 0.01))
-        d.gm_object("newspaper_%d" % pi, gm, [pap_m], "scripted", "script:newspapers", tier="bed")
+        gm.sheet((xc, vc, zc), 0.27, hh, 0.004, tilt=lean + rnd.uniform(-2, 2), yaw=rnd.uniform(-3, 3), mi=0, uv=top, uv_other=(tile[0] + 0.01, tile[1] + 0.01))
+        d.gm_object("newspaper_%d" % pi, gm, [pap_m], "scripted", "script:newspapers", tier="bed" if k < 3 else "step")
     # ---- the stand with the cartons
-    sx0, sx1, sv0, sv1, sw = X(0.20), X(0.88), 0.34, 0.50, 0.40
+    sx0, sx1, sv0, sv1, sw = X(0.20), X(0.88), 0.37, 0.53, 0.46
     gm = GM()
     for xx in (sx0 + 0.015, sx1 - 0.015):
         for vv in (sv0 + 0.015, sv1 - 0.015):
@@ -324,8 +333,11 @@ def display(d):
             cg.box(sx0 + 0.04 + col * 0.215, sx0 + 0.04 + col * 0.215 + 0.20, sv0 + 0.04, sv0 + 0.04 + 0.055, sw + 0.02 + lay * 0.10, sw + 0.02 + (lay + 1) * 0.10 - 0.001, 0, uv_front=pack_uv[kk], uv_other=(pack_uv[kk][0] + 0.01, pack_uv[kk][1] + 0.01))
     d.gm_object("cigarette_cartons", cg, [pack_m], "scripted", "script:cigarette_cartons", tier="stand")
     # ---- the stationery sets (flat in front of the stand, between the ramps and the notepads) and the pads
-    for k_, u in enumerate((1.26, 1.60)):
-        d.piece("stationery_supplies", u, 0.14, 0.0, rot=(math.pi / 2, 0, 0.0), yaw=rnd.uniform(-0.05, 0.05), tier="bed")
+    pens = d.sub_template("stationery_supplies", "pens", lambda n: "pencilcup" not in n)
+    cup = d.sub_template("stationery_supplies", "cup", lambda n: "pencilcup" in n)
+    for k_, u in enumerate((1.20, 1.52)):
+        d.piece(pens, u, 0.14, 0.0, rot=(math.pi / 2, 0, 0.0), yaw=rnd.uniform(-0.05, 0.05), tier="bed", tris=None)
+        d.piece(cup, u + 0.20, 0.14, 0.0, rot=(0, 0, 0), tier="bed", tris=None)
     # (the pads: three of the kit's loose stacks, flat)
     x_pad = 1.95
     for nm in ("office_notepads_yellow_pad", "office_notepads_a4_stack", "office_notepads_note_stack"):
@@ -333,23 +345,24 @@ def display(d):
         dd = d.dims(key, (0, 0, math.pi / 2))
         d.piece(key, x_pad + dd.x / 2, 0.14, 0.0, rot=(0, 0, math.pi / 2), tier="bed", tag=nm, tris=None)
         x_pad += dd.x + 0.04
-    # ---- the magazines on a sloping board
-    mx0, mx1, mv0 = X(1.30), X(2.20), 0.20
+    # ---- the magazines on a sloping board (leaning 40 degrees from the vertical, 0.58 long)
+    mx0, mx1, vb = X(1.30), X(2.20), 0.20
+    lean_b = 40.0
+    blen = 0.58
     gm = GM()
-    slope = 60.0
-    bh = 0.38
-    gm.sheet(((mx0 + mx1) / 2, mv0 + 0.20, 0.0 + bh / 2 + 0.005), mx1 - mx0, bh, 0.012, tilt=-(90 - slope) * -1.0 * 0.0 + (90.0 - slope), mi=0)
+    cb, sb = math.cos(math.radians(lean_b)), math.sin(math.radians(lean_b))
+    gm.sheet(((mx0 + mx1) / 2, vb + blen / 2 * sb, 0.004 + blen / 2 * cb), mx1 - mx0, blen, 0.012, tilt=lean_b, mi=0)
     d.gm_object("magazine_board", gm, [board], "support", "script:magazine_board")
     mg = GM()
     for row in range(3):
         for i in range(4):
             kk = (row * 4 + i * 5) % len(mag_uv)
             xc = (mx0 + mx1) / 2 + (i - 1.5) * 0.225
-            # a magazine lying on the board: leaned the board's angle, its foot 0.07 higher each row
-            t_ = row * 0.095 + 0.12
-            zc = 0.03 + t_ * math.sin(math.radians(slope))
-            vc = mv0 + 0.22 + t_ * math.cos(math.radians(slope)) * 0.9 - 0.10
-            mg.sheet((xc, vc, zc), 0.19, 0.26, 0.003, tilt=(90.0 - slope) + 2.0, yaw=rnd.uniform(-2, 2), mi=0, uv=mag_uv[kk], uv_other=(mag_uv[kk][0] + 0.01, mag_uv[kk][1] + 0.01))
+            s0 = 0.015 + row * 0.14 + 0.125
+            off = 0.0095 + 0.0045 * row                                 # each row 4.5 mm in front of the one above: they do not touch
+            zc = 0.004 + s0 * cb - off * sb
+            vc = vb + s0 * sb + off * cb * -1.0
+            mg.sheet((xc, vc, zc), 0.19, 0.25, 0.003, tilt=lean_b, yaw=rnd.uniform(-1.5, 1.5), mi=0, uv=mag_uv[kk], uv_other=(mag_uv[kk][0] + 0.01, mag_uv[kk][1] + 0.01))
     d.gm_object("magazines", mg, [mag_m], "scripted", "script:magazines", tier="board")
     # ---- the sweet jars
     gmj, gml, gmb = GM(), GM(), GM()

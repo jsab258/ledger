@@ -6,7 +6,7 @@ Written 13 October 2026 for Jafar's order of 12 October: "Ambient lines: short s
 
 - **lines.json**: the lines. 1,626 lines, 13 kinds of person, 14 situations, 34 places for directions. Each line has an id, its words, who says it (kind), the moment (situation), the conditions that must hold (weather, time of day, his standing with them, how sure they are, the place asked about), a weight and a cooldown group. It is the street's own dialogue-bank format, extended (see the format section).
 - **rules.json**: the rules, as data: cooldowns, variety, priorities and silence. Every number carries its reason and its source, or says it is invented here.
-- **check_lines.py**, **checks/check_v1.json**, **checks/walk_v1.json**: the check, its rows, and the walks. Result today: **2491 of 2491 rows pass**, and **54 of 54 seeded faults** are caught.
+- **check_lines.py**, **checks/check_v1.json**, **checks/walk_v1.json**: the check, its rows, and the walks. Result today: **2500 of 2500 rows pass**, and **62 of 62 seeded faults** are caught.
 - **walk_sim.py**: the small simulation the check plays (thirty minutes of a walk through the rules).
 - **build_lines.py**, **lines_lib.py**, **rules_source.py**, **authored/**: the builder and the written text. `python3 build_lines.py` makes lines.json and rules.json; `python3 check_lines.py` checks them; `python3 make_notes.py` makes this file; `python3 export_slots.py` turns lines.json into the street's two existing derived shapes (below). Standard library only; each takes seconds on one core.
 
@@ -54,20 +54,21 @@ Lines by kind and moment (the kind's own words, not the directions):
 
 Greeting lines by standing, over all kinds: stranger 104, the new owner 103, Nowak 122, Tom 124, Tommy 27. Ron and Darren have no stranger or new owner greeting (they know his name from the start); Father Walsh and June have no stranger greeting; the drivers have none either (the day driver and the night driver both know who he is from the first day, so thirteen such lines could never be said and were dropped after the canon review); Tommy has lines in three kinds only (pensioner, office worker, Father Walsh).
 
-## The check (check_lines.py): 2491 of 2491 rows pass
+## The check (check_lines.py): 2500 of 2500 rows pass
 
 It re-reads every home (the cast and the routines, the atlas, Population.cs, RealWorld.cs, StreetFacts.cs, StreetVoice.cs, the content and canon gates) and does not trust what the builder said. One row for each of the 1626 lines, and rows for:
 
-- **each line**: under twelve words; its fields, id and bank right; every condition valid for its situation; none of the words the content rule bans (the content gate and slurs-v1.json), no real brand, place, person, team or programme (RealWorld.cs's lists and a few of its own), nothing after 1992, no quotation or known lyric; standing words exactly canon's (the new owner, Nowak, Tom, Tommy, and only the line's own rung); Mickey named only as the place, and the two approved lines carried by no kind; dialect, police and gender flags true; a crime line never claims more than its sureness (a noise line never says it saw, a shape line never gives a face, a sex or a coat, a face line never names or accuses); each direction checked against where its place really is.
+- **each line**: under twelve words; its fields, id and bank right; every condition valid for its situation; none of the words the content rule bans (the content gate and slurs-v1.json), no real brand, place, person, team or programme (RealWorld.cs's lists and a few of its own), nothing after 1992, no quotation or known lyric; standing words exactly canon's (the new owner, Nowak, Tom, Tommy, and only the line's own rung); Mickey named only as the place, and the two approved lines carried by no kind; dialect, police and gender flags true; a crime line never claims more than its sureness (a noise line never says it saw, a shape line never gives a face, a sex or a coat, a face line never names or accuses); no line states a standing the simulation might not hold (what the street has said, heard, expected or felt about him, what he has done or been called before, an opening nobody set, a window the speaker may not have); each direction checked against where its place really is.
+- **the two lines that say 'heard you ...'** and stay (a dock worker's one suitcase, a casual worker's rank to run): each claims only what a StreetFacts.cs fact states, held by every named member of the kind in people.json.
 - **each kind and situation**: the count, and no lines in a situation the kind does not have.
-- **each situation across kinds**: no two kinds say the same thing in other words (at least 60 percent of the words shared, address words such as boss, love and son aside). This is the fault that failed the street's earlier attempts at lines in several mouths; all 153 pairs found at 60 percent or more were rewritten, and 83 pairs between 50 and 60 percent remain (the same fact in a similar frame, such as two ways to say mind how you go).
+- **each situation across kinds**: no two kinds say the same thing in other words (at least 60 percent of the words shared, address words such as boss, love and son aside). This is the fault that failed the street's earlier attempts at lines in several mouths; all 153 pairs found at 60 percent or more were rewritten, and 82 pairs between 50 and 60 percent remain (the same fact in a similar frame, such as two ways to say mind how you go).
 - **each group (kind and bank)**: after every condition (each weather and hour it can happen, each standing, each accent, never-police) at least six lines are left; each rung reads out its word; no two lines say the same thing (a shared four-word run, or three quarters of the content words).
 - **the cast and the trades**: every person in the cast and the routines has one kind or a stated reason for none; every trade the old crowd generator names has one kind; the own kinds are exactly the four RULINGS names; Sheila, Alison and Ada keep the shared lines.
 - **the places**: each place is where its home says (the routines, the built street, the atlas converted with its own anchor), with five or more lines.
 - **the rules**: each number agrees with the code and the rulings it comes from (the 45 s is StreetVoice.ClearWordsEverySeconds), each has a reason, and the priorities put a crime above a greeting.
 - **each rule alone** (rule.*): a small scenario for each: a crime line fades neighbour talk, a crime outranks a waiting greeting, a higher priority replaces a waiting line, the neighbours' gap in the dry and in rain, the hush doubles it, a witness says no hello, the bag uses every line before a repeat, the seven who never go to the police are never picked a line that rings them, Nora and the Tangs never get dialect, a question is always answered.
 - **the walks** (below), **canon-gate** over lines.json, rules.json and this file, and **content-gate** over this file.
-- **54 seeded faults**: the check damages a copy of the files (a thirteen-word line, a banned word of each of the rule's kinds, a real brand, a year after 1992, a real place, Nowak in a stranger greeting, a stranger describing Mickey, a direction up for a place down, a long walk for a place at 76 m, Ron ringing the police, the neighbours' gap set to 30 s, a greeting above a crime in the priorities and the rest) and requires each to fail a row. **54 of 54** do.
+- **62 seeded faults**: the check damages a copy of the files (a thirteen-word line, a banned word of each of the rule's kinds, a real brand, a year after 1992, a real place, Nowak in a stranger greeting, a stranger describing Mickey, a direction up for a place down, a long walk for a place at 76 m, Ron ringing the police, the neighbours' gap set to 30 s, a greeting above a crime in the priorities and the rest) and requires each to fail a row. **62 of 62** do.
 
 Words are checked by lists: a screen, not a reader. What a reader still has to judge is at the end of this file.
 
@@ -86,12 +87,12 @@ Tom walks Quay Street and pauses; twenty passers-by cross his path; four of the 
 The lines he heard, in order (minutes and seconds into the walk):
 
 - 00:01, Ron, greeting to Nowak: "Boss. You've the look of a man who's not eaten."
-- 00:28, shopkeeper, greeting to the new owner: "The new owner. We've been expecting you."
-- 00:31, pensioner, farewell: "I'll let you get on, dear."
+- 00:28, shopkeeper, greeting to the new owner: "The new owner. Anything you need, just ask."
+- 00:32, pensioner, farewell: "I'll let you get on, dear."
 - 00:44, shopkeeper, greeting to a stranger: "Anything I can help you find?"
 - 00:59, office worker, greeting to the new owner: "You'll be the new owner, I take it."
 - 01:53, shopkeeper, farewell: "Mind how you get home."
-- 01:56, pensioner, greeting to the new owner: "You'll be the new owner. I've heard so much."
+- 01:56, pensioner, greeting to the new owner: "You'll be the new owner. How do you do, dear?"
 - 04:58, shopkeeper, greeting to the new owner: "Not seen the new owner in here yet."
 - 05:02, shopkeeper, farewell: "Ta-ra for now."
 - 05:48, dock worker, greeting to Nowak: "Now then, Nowak."
@@ -109,7 +110,7 @@ The lines he heard, in order (minutes and seconds into the walk):
 - 24:57, casual worker, greeting to Tom: "Hello, Tom. Cadge a fag?"
 - 26:45, casual worker, greeting to a stranger: "Don't suppose you're hiring?"
 
-**Thirty other seeds of the same walk** (1991 to 2020), with the main one: lines heard 15 to 25 (middle 21); busiest minute outside a crime 3 to 5; minutes with no line 43 percent to 70 percent of the half hour (middle 53 percent); longest silence 203 s to 719 s (middle 420 s). Zero repeats inside a floor and no neighbour line closer than 45 s in any of them. Across them every moment was heard at least once but Tommy: after a deed 12, asked the way 15, bumped into 15, a crime seen face to face 8, a crime heard 10, a crime glimpsed 5, farewell 130, greeting to Nowak 98, greeting to the new owner 217, greeting to a stranger 61, greeting to Tom 12, talk in rain 9, rain starting 13.
+**Thirty other seeds of the same walk** (1991 to 2020), with the main one: lines heard 15 to 25 (middle 21); busiest minute outside a crime 3 to 6; minutes with no line 43 percent to 70 percent of the half hour (middle 53 percent); longest silence 203 s to 719 s (middle 420 s). Zero repeats inside a floor and no neighbour line closer than 45 s in any of them. Across them every moment was heard at least once but Tommy: after a deed 12, asked the way 16, bumped into 15, a crime seen face to face 8, a crime heard 10, a crime glimpsed 5, farewell 131, greeting to Nowak 98, greeting to the new owner 217, greeting to a stranger 61, greeting to Tom 12, talk in rain 9, rain starting 13.
 
 **A busy half hour** (eighty passers-by instead of twenty, same rain and crime): 40 lines heard, busiest minute 6 outside the crime, still no repeat and no neighbour line closer than 45 s. **An afternoon walk** (15:00): 23 heard. **A night walk** (22:00, more night shift, fewer old people and shopkeepers out): 19 heard, no repeat. **The test has teeth:** the busy walk with the variety and cooldown rules switched off shows 11 same-speaker repeats and a neighbour gap of 5.0 s.
 
@@ -142,6 +143,8 @@ export_slots.py writes the second shape (barks.json's slots) and the third (bark
 ## After the canon review of 13 October
 
 A fresh reviewer read all 1,643 lines of the first version and failed the unit on three faults, each a text change, now applied: six greetings that claimed what the street thinks of him (replaced by neutral lines, and the check now fails that kind of claim); five directions to Hal's coin shop, which has no unit on the built street (held, the place taken out of the list, so 34 places); and three pensioner lines that invited him to tea, which Ada's design forbids (replaced, and the check now fails a tea invitation in the pensioner kind). The narrow points are applied too: no street name the atlas still marks as a proposal, later or American idiom, lines that asserted what nobody set, Petra and Dawn moved to office worker, Sheila and the dispatcher kept from the two lines about their own desks, Ron's Tom greeting, June's train, Darren's hair, two lines that sounded written, and the thirteen stranger greetings of the drivers, which could never be said and were dropped. Two consequences the review did not name: two driver bump lines marked for strangers lost that mark for the same reason, and office worker gained one new-owner greeting so that Sheila and the dispatcher still keep six lines to draw on after the exclusion.
+
+A second pass the same day (REVIEW-canon-11-12-B5-FIXES-2.md) took the eleven greetings and crime lines the first fixer reported but left, which claim a standing the simulation might not hold (what the street has said, heard or expected of him, what he has done, what was said of his name, an opening nobody set, a window a pensioner may not have). Nine were replaced by neutral lines of the same voice and two stay, because each claims only a StreetFacts.cs fact that every named member of the kind holds (the one suitcase, the rank outside the office). The new check found six more of the same kind in other kinds (the street's talk, curiosity or expectation in four, what he has done in one, a window in one); those were replaced too, so fifteen lines changed in all, each in place with the same conditions, so no pool changed size. The check gained seven patterns and one row, each pattern with a planted fault aimed at it alone.
 
 ## The voices it needs
 
@@ -201,7 +204,7 @@ Rules the voice plan rests on, all checked: shared lines are gender-free (a gend
 ## What the check cannot judge
 
 - Whether a line is funny, or in a person's voice, or bears a third hearing. The machine part is screens and counts. The eight groups of greetings to a stranger are the ones to read first, since they are said the most.
-- Whether two kinds say the same thing in other words below the 60 percent line: 83 pairs stand between 50 and 60 percent. Across kinds the crime lines share a plain fact (I saw the face; I'd know it again), and some ideas recur (ask at the cab office, a face in the head).
+- Whether two kinds say the same thing in other words below the 60 percent line: 82 pairs stand between 50 and 60 percent. Across kinds the crime lines share a plain fact (I saw the face; I'd know it again), and some ideas recur (ask at the cab office, a face in the head).
 - Whether a direction is easy to follow in the game's own geometry. It agrees with the atlas, the routines and the built street's bays; it was not walked.
 - The real lyric or catchphrase: the check holds a list of known ones and the line lengths; it cannot prove none exists.
 

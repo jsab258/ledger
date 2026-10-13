@@ -116,7 +116,7 @@ class GRoom(S.Room):
             geo = nt.nodes.new("ShaderNodeNewGeometry")
             chk = nt.nodes.new("ShaderNodeTexChecker")
             chk.inputs["Scale"].default_value = 1.0 / 0.3
-            c1, c2 = ((rgb8(*(176, 156, 118)), rgb8(*(110, 74, 46))) if kind == "chequer" else (rgb8(*(118, 120, 124)), rgb8(*(64, 82, 122))))
+            c1, c2 = ((rgb8(*(176, 156, 118)), rgb8(*(110, 74, 46))) if kind == "chequer" else (rgb8(*(124, 126, 128)), rgb8(*(92, 106, 136))))
             chk.inputs["Color1"].default_value = (*c1, 1.0)
             chk.inputs["Color2"].default_value = (*c2, 1.0)
             nt.links.new(geo.outputs["Position"], chk.inputs["Vector"])
@@ -293,14 +293,27 @@ class GRoom(S.Room):
             recs.append({"z": z, "x": (aa, bb), "depth": depth})
         return recs
 
-    def counter(self, fid, x0=None, x1=None, top_h=None):
+    def counter(self, fid, x0=None, x1=None, top_h=None, panels=False):
+        """The counter: a base and a top. `panels` (the newsagent's and the tea rooms', 13 Oct): the front carries a plinth, a rail at the top and raised panels 0.012 proud (inside the counter's depth: the base
+        stands back 0.012), so that a 2.6 m face is not one flat brown."""
         f = self.fxd[fid]
         x0 = f["x"][0] if x0 is None else x0
         x1 = f["x"][1] if x1 is None else x1
         dep = f["depth_m"]
         h = f["z"][1] if top_h is None else top_h
         cy0 = D - dep
-        self.box("counter_%s_base" % fid, x0, x1, cy0, D - 0.005, 0.0, h - 0.03, self.wood_m, fixture=fid)
+        if panels:
+            pm = self.mat("counter_panel_" + self.ctx.id, rgb8(112, 70, 42), rough=0.5)
+            rail = self.mat("counter_rail_" + self.ctx.id, rgb8(84, 50, 30), rough=0.5)
+            self.box("counter_%s_base" % fid, x0, x1, cy0 + 0.012, D - 0.005, 0.0, h - 0.03, self.wood_m, fixture=fid)
+            self.box("counter_%s_plinth" % fid, x0, x1, cy0, cy0 + 0.012, 0.0, 0.10, rail, fixture=fid)
+            self.box("counter_%s_rail" % fid, x0, x1, cy0, cy0 + 0.012, h - 0.12, h - 0.03, rail, fixture=fid)
+            npan = max(2, int(round((x1 - x0) / 0.55)))
+            wpan = (x1 - x0) / npan
+            for k in range(npan):
+                self.box("counter_%s_panel_%d" % (fid, k), x0 + k * wpan + 0.05, x0 + (k + 1) * wpan - 0.05, cy0, cy0 + 0.012, 0.16, h - 0.17, pm, fixture=fid)
+        else:
+            self.box("counter_%s_base" % fid, x0, x1, cy0, D - 0.005, 0.0, h - 0.03, self.wood_m, fixture=fid)
         top = self.mat("counter_top_" + self.ctx.id, rgb8(120, 80, 48), rough=0.38)
         self.box("counter_%s_top" % fid, x0, x1, cy0, D - 0.005, h - 0.03, h, top, fixture=fid)
         self.counter_ext = (x0, x1, cy0, D - 0.005, h)
