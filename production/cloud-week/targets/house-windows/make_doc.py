@@ -23,6 +23,54 @@ def table(head, rows):
     w()
 
 
+def cap(x):
+    x = str(x).strip()
+    first = x.split(" ")[0] if x else ""
+    if any(c in first for c in "_./[`"):
+        return x
+    return x[:1].upper() + x[1:]
+
+
+def sent(x):
+    x = cap(x)
+    return x if x[-1:] in ".!?" else x + "."
+
+
+def endp(x):
+    x = str(x).strip()
+    return x if x[-1:] in ".!?" else x + "."
+
+
+def rgb(v):
+    return "(" + ", ".join(str(int(a)) for a in v) + ")"
+
+
+def xz(c):
+    return "x %s to %s, z %s to %s" % (c["x"][0], c["x"][1], c["z"][0], c["z"][1])
+
+
+def card_txt(c):
+    if "card" in c:
+        return xz(c["card"])
+    return "left: " + xz(c["card_left"]) + "; right: " + xz(c["card_right"])
+
+
+def rgb_map(d):
+    return ", ".join("%s %s" % (k.replace("_", " "), rgb(v)) for k, v in d.items())
+
+
+def band_txt(v):
+    parts = []
+    for k, x in v.items():
+        if k in ("photo", "source"):
+            continue
+        rngtxt = ("%s to %s" % (x[0], x[1])) if isinstance(x, list) else str(x)
+        lab = {"P_over_L": "P/L", "D_over_L_max": "D/L at most", "D_over_L": "D/L", "spread_min": "pane spread at least", "spread": "pane spread", "blue_over_red_min": "pane blue minus red at least"}[k]
+        parts.append("%s %s" % (lab, rngtxt) + (" levels" if "spread" in k or "blue" in k else ""))
+    tail = ("Photographs: " + sent(v["photo"])) if "photo" in v else ("Source: " + sent(v["source"]))
+    return "; ".join(parts) + ". " + tail
+
+
 S = t["sites"]
 RM = t["rooms"]
 fam = RM["families"]
@@ -121,11 +169,13 @@ rows = []
 for k, b in bands.items():
     rows.append([k, b["n"], "%.2f to %.2f" % (b["P_over_L_min"], b["P_over_L_max"]), "%.2f" % b["P_over_L_median"], "%.2f" % b["D_over_L_median"], ", ".join(str(a) for a in b["angles_deg"])])
 table(["state", "n", "P/L range", "P/L median", "D/L median", "angles"], rows)
-w("Brick beside the windows: median luma %s (P1, P8); the frame's linear brightness over the brick's is **%s** (P1, P8): frames are about 4 times the wall on a photograph (film contrast included); the concept sheet's 7 is outside it (D9). The game's albedos give 0.82 / 0.13 = 6.3." % (ph["brick_median_luma"], ph["frame_to_brick_linear_ratio"]))
+bm = ph["brick_median_luma"]
+fb = ph["frame_to_brick_linear_ratio"]
+w("Brick beside the windows: median luma %s in P1 and %s in P8; the frame's linear brightness over the brick's is **%s in P1 and %s in P8**: frames are about 4 times the wall on a photograph (film contrast included); the concept sheet's 7 is outside it (D9). The game's albedos give 0.82 / 0.13 = 6.3." % (bm["P1"], bm["P8"], fb["P1"], fb["P8"]))
 w()
-w("**Nets, curtains, blinds** (a hand count of every window whose state could be read, 60 windows in P1, P2, P3, P4, P6, P7, P12; Photo ±8 points): " + ", ".join("%s %d (%.0f%%)" % (k, v, 100.0 * v / 60) for k, v in ph["tally"]["by_net"].items()) + ". %s **Paint** (60 windows, by eye): white %.0f%%, cream or ivory %.0f%%, dark or red-brown %.0f%%, olive green %.0f%%, blue %.0f%%." % (ph["tally"]["note"], 100 * ph["paint_tally"]["white"], 100 * ph["paint_tally"]["cream_or_ivory"], 100 * ph["paint_tally"]["dark_brown_or_red_brown"], 100 * ph["paint_tally"]["olive_green"], 100 * ph["paint_tally"]["blue"]))
+w("**Nets, curtains, blinds** (a hand count of every window whose state could be read, 60 windows in P1, P2, P3, P4, P6, P7, P12; Photo ±8 points): " + ", ".join("%s %d (%.0f%%)" % (k.replace("_", " "), v, 100.0 * v / 60) for k, v in ph["tally"]["by_net"].items()) + ". %s **Paint** (60 windows, by eye): white %.0f%%, cream or ivory %.0f%%, dark or red-brown %.0f%%, olive green %.0f%%, blue %.0f%%." % (sent(ph["tally"]["note"]), 100 * ph["paint_tally"]["white"], 100 * ph["paint_tally"]["cream_or_ivory"], 100 * ph["paint_tally"]["dark_brown_or_red_brown"], 100 * ph["paint_tally"]["olive_green"], 100 * ph["paint_tally"]["blue"]))
 w()
-w("**What the photographs show in each window, element by element** (the list the build is judged against): the white frame member at each jamb 37 to 47 mm on a rear (P8) and 76 to 79 mm on a front (the lab's P6); a meeting rail that reads 34 mm of face and more with its shade (P8: 62 mm with the underside); a glazing bar of 22 to 27 mm (P8: 27 ±6); panes that differ from one another by up to 10 per cent in brightness (P8: six panes 86 to 105) and are smooth inside (std 4 to 5 levels); a dark edge between frame and net where the net hangs back from the glass (P1, P4); the near jamb's dark reveal beside a white lining at 10 to 20 degrees (P1, P13); a white painted sill and head in stone (P1, P3, P4); at under 10 degrees a white slit beside a dark void (P13). The nets: a gathered voile on the lower sash only with a lace band at the foot (P6, P7, P12), the upper sash clear, a full-height net on the tall windows (P4, P3), a net hanging a little askew or yellowed in an empty house (P14: no net at all, ply boarding), vertical louvres (P2, P11).")
+w("**What the photographs show in each window, element by element** (the list the build is judged against): the white frame member at each jamb 37 to 47 mm on a rear (P8) and 76 to 79 mm on a front (the lab's P6); a meeting rail that reads 34 mm of face and more with its shade (P8: 62 mm with the underside); a glazing bar of 22 to 27 mm (P8: 27 ±6); panes that differ from one another by up to 10 per cent in brightness (P8: four panes, mean luma 86 to 105) and are smooth inside (P8: three of the four flat to 1.4 levels over the central 60 per cent of the box); a dark edge between frame and net where the net hangs back from the glass (P1, P4); the near jamb's dark reveal beside a white lining at 10 to 20 degrees (P1, P13); a white painted sill and head in stone (P1, P3, P4); at under 10 degrees a white slit beside a dark void (P13). The nets: a gathered voile on the lower sash only with a lace band at the foot (P6, P7, P12), the upper sash clear, a full-height net on the tall windows (P4, P3), vertical louvres (P2, P11). P14 (boarded houses) shows plywood in the openings and no nets: the empty flat's torn, yellowed net (section 6) is a Judgement, not a photograph's.")
 w()
 w("### 3.3 The game's rule for a room behind a house window")
 w()
@@ -147,19 +197,28 @@ rows = []
 for f in ("UP", "GF"):
     for surf in ("back", "side", "ceiling", "floor"):
         c = bud[f]["surfaces"][surf]
-        rows.append([f, surf, c["true_20px"], c["true_40px"]])
+        rows.append([f, surf, c["true_20px"] if c["true_20px"] is not None else "not seen from the street", c["true_40px"] if c["true_40px"] is not None else "not seen from the street"])
 table(["family", "surface", "reads true (20 px), m", "tolerated (40 px), m"], rows)
 w("**The rule the rooms keep** (the smaller of the two families' figures, rounded down; `rooms.budget_rule`): " + "; ".join("%s %.3f true, %.3f tolerated" % (k, v["true"], v["tolerated"]) for k, v in rule.items()) + ". (An upper room's floor is never seen from the street; the cottages' floor figure stands.) Anything that would stand further off its surface is not drawn in the picture: a bed, a table, a free-standing chair are dropped; a chimney breast, a radiator, a stair's stringer are drawn flat (`rooms.forms`). **A pendant light's shade is the one real object in a lit room** (kit node `pendant__shade`), because it is what a lit upstairs window shows. The checks PIC-05 and the self-check test every object's and every form's stand-off against these numbers.")
 w()
-w("**What shows of a room, and so where its picture needs detail** (`rooms.visible_zone`, computed): ")
+w("**What shows of a room, and so where its picture needs detail** (`rooms.visible_zone`, computed; metres in the room frame, x from the room's centre, y back from the card, z up from the floor):")
 w()
 for f in ("UP", "GF"):
     for cam in ("H_ACROSS_0", "H_ACROSS_30", "H_ALONG_15_NEAR", "H_ALONG_30_NEAR", "H_ALONG_15_ROAD", "H_UNDER"):
         z = RM["visible_zone"]["by_family"][f][cam]
-        seen = "; ".join("%s y %s z %s" % (k, v["y"], v["z"]) for k, v in z["surfaces_seen"].items())
-        w("- %s from %s: %s" % (f, cam, seen))
+        seen = []
+        for k, v in z["surfaces_seen"].items():
+            if k == "back":
+                seen.append("the back wall (x %s to %s, z %s to %s)" % (v["x"][0], v["x"][1], v["z"][0], v["z"][1]))
+            elif k in ("left", "right"):
+                seen.append("the %s wall (y %s to %s, z %s to %s)" % (k, v["y"][0], v["y"][1], v["z"][0], v["z"][1]))
+            elif k == "ceiling":
+                seen.append("the ceiling (x %s to %s, y %s to %s)" % (v["x"][0], v["x"][1], v["y"][0], v["y"][1]))
+            else:
+                seen.append("the floor (x %s to %s, y %s to %s)" % (v["x"][0], v["x"][1], v["y"][0], v["y"][1]))
+        w("- %s from %s: %s" % (f, cam, "; ".join(seen)))
 w()
-w(RM["visible_zone"]["reading"] + ".")
+w(sent(RM["visible_zone"]["reading"]))
 w()
 w("**The review cameras** (street frame; eye 1.60 above the footway = 1.70 above the crown; 2560 x 1440): ")
 w()
@@ -176,7 +235,7 @@ w()
 w("### 4.1 Two over two (S22) and one over one (S11): the lab's checked sash, reused")
 w()
 k = t["kinds"]["S22"]
-w("The sash is the lab's, amended on 8 October for Jafar's ruling (`production/art/sash-window/target.json`, models `production/assets/sash-window/sash_window.glb` and `sash_window_1over1.glb`, reviewed on narrow points). Nothing is redrawn: this unit changes its glass (section 5), shades its box (5.4), adds its nets and its room (6, 7), and applies it to every row. **Numbers read from the lab's file** (the self-check re-reads them): opening 850.0 x 1676.4; frame reveal %s; outer lining margin %s (so each jamb shows 3 in of painted timber, 76.2); head visible %s; stile %s, top rail %s, bottom rail %s, meeting rail %s deep, glazing bar %s (one vertical bar in each sash of the S22; none on the S11), thickness %s, horns %s long on the upper sash only, glass %s." % (
+w("The sash is the lab's, amended on 8 October for Jafar's ruling (`production/art/sash-window/target.json`, models `production/assets/sash-window/sash_window.glb` and `sash_window_1over1.glb`, reviewed on narrow points). Nothing is redrawn: this unit changes its glass (section 5), shades its box (5.4), adds its nets and its room (6, 7), and applies it to every row. **Numbers read from the lab's file** (the self-check re-reads them): opening 850.0 x 1676.4; frame reveal %s; outer lining margin %s (so each jamb shows 3 in of painted timber, 76.2); head visible %s; stile %s, top rail %s, bottom rail %s, meeting rail %s deep, glazing bar %s (one vertical bar in each sash of the S22; none on the S11), sash thickness %s, horns %s long on the upper sash only, glass %s thick." % (
     k["frame_sections_from_lab_target"]["reveal_mm"], k["frame_sections_from_lab_target"]["outer_lining_margin_mm"], k["frame_sections_from_lab_target"]["head_visible_mm"], k["sections_from_lab_target"]["stile_width_mm"], k["sections_from_lab_target"]["top_rail_mm"], k["sections_from_lab_target"]["bottom_rail_mm"], k["sections_from_lab_target"]["meeting_rail_depth_mm"], k["sections_from_lab_target"]["glazing_bar_width_mm"], k["sections_from_lab_target"]["thickness_mm"], k["horns_mm"], k["sections_from_lab_target"]["glass_mm"]))
 w()
 w("**Glass planes** (Read from the lab's glb; 1a): the upper glass 142.0 mm behind the brick face, the lower 190.0. The sill: an oak sill 41.3 high at the front; the stone sill and the segmental arch belong to the wall kit (stone sill 127 high, 50.8 proud, 76.2 wider than the opening each side; the arch ring 215, rise one seventh of the span, 12 proud: terrace-front.py). **Horns:** ogee horns on the upper sash's stiles (76.2 below the meeting rail), none on the lower. **Reveal:** the brick reveal is half a brick, 102.5 (the street file), the lab's frame stands 114.3 back from the face.")
@@ -204,7 +263,7 @@ w("A fixed light under a top-hung light, no bars, in the same 850 x 1676.4 openi
 w()
 rows = [[p["name"], p["x"], p["y_into_wall"], p["z_up"], p.get("material", "paint")] for p in rc["parts_mm"]]
 table(["part", "x (mm)", "y into the wall (mm)", "z up (mm)", "material"], rows)
-w("Glass sightlines: lower %s, top %s (mm). The top light is hinged at its head and opens outward in the photographs (P11, P14: one stands open): a closed light is drawn; the open one is a variant the PC may add (not required)." % (rc["glass_sightlines_mm"]["lower"], rc["glass_sightlines_mm"]["top"]))
+w("Glass sightlines (width x height, mm): lower %s x %s, top %s x %s. The top light is hinged at its head and opens outward in the photographs (P11, P14: one stands open): a closed light is drawn; the open one is a variant the PC may add (not required)." % (rc["glass_sightlines_mm"]["lower"][0], rc["glass_sightlines_mm"]["lower"][1], rc["glass_sightlines_mm"]["top"][0], rc["glass_sightlines_mm"]["top"][1]))
 w()
 w("### 4.4 Sills, heads and arches, and what the kit does not carry")
 w()
@@ -221,17 +280,17 @@ w()
 gp = t["glass"]["pane"]
 w("### 5.1 The pane")
 w()
-w("**The game's pane** (research 1a, step 1): " + gp["game"] + ". The pane is a real glass surface: its reflectance and roughness are the game's. **What the cloud render uses to stand in for it:** " + gp["cloud_stand_in"] + ".")
+w("**The game's pane:** " + sent(gp["game"]) + " The pane is a real glass surface: its reflectance and roughness are the game's. **What the cloud render uses to stand in for it:** " + gp["cloud_stand_in"] + ".")
 w()
-w("**Two-face reflectance of float glass** (n 1.52, unpolarised, the reflections between the faces counted: Derived, recomputed by the self-check; 1a's table is 0.02 to 0.03 higher at 16 to 30 degrees) by the angle from the wall: " + ", ".join("%s degrees %.3f" % (a, v) for a, v in gp["fresnel_two_face"].items()) + ". " + gp["fresnel_note"])
+w("**Two-face reflectance of float glass** (n 1.52, unpolarised, the reflections between the faces counted: Derived, recomputed by the self-check; 1a's table is 0.02 to 0.03 higher at 16 to 30 degrees) by the angle from the wall: " + ", ".join("%s degrees %.3f" % (a, v) for a, v in gp["fresnel_two_face"].items()) + ". " + sent(gp["fresnel_note"]))
 w()
 w("### 5.2 Old glass's waviness")
 w()
-w(t["glass"]["waviness"]["what"] + " **Photographs:** " + t["glass"]["waviness"]["photo"] + ". No wave normal map: the glass looks flat on the photographs.")
+w(sent(t["glass"]["waviness"]["what"]) + " **Photographs:** " + sent(t["glass"]["waviness"]["photo"]) + " No wave normal map: the glass looks flat on the photographs.")
 w()
 w("### 5.3 Dirt and reflections")
 w()
-w(t["glass"]["dirt"] + " **Reflections by floor:** upper panes: " + t["glass"]["reflections_by_floor"]["upper"] + ". Ground panes: " + t["glass"]["reflections_by_floor"]["ground"] + ".")
+w(sent(t["glass"]["dirt"]) + " **Reflections by floor.** Upper panes: " + t["glass"]["reflections_by_floor"]["upper"] + ". Ground panes: " + t["glass"]["reflections_by_floor"]["ground"] + ".")
 w()
 w("### 5.4 The box shaded and its dark lines drawn")
 w()
@@ -262,19 +321,29 @@ w()
 rows = []
 for kk, n in t["nets"].items():
     c = n.get("card")
-    rows.append([kk, n["label"], n["what"], "x %s, z %s" % (c["x"], c["z"]) if c else "-", ("S22/S11 %d, RC %d" % (n["plane_mm"]["S22"], n["plane_mm"]["RC"])) if "plane_mm" in n else "-", n.get("voile_coverage", "-"), n.get("lace_band", {}).get("share_of_height", "-"), "%.0f%%" % (100 * n["share_photo"])])
+    rows.append([kk, n["label"], n["what"], xz(c) if c else "-", ("S22/S11 %d, RC %d" % (n["plane_mm"]["S22"], n["plane_mm"]["RC"])) if "plane_mm" in n else "-", n.get("voile_coverage", "-"), n.get("lace_band", {}).get("share_of_height", "-"), "%.0f%%" % (100 * n["share_photo"])])
 table(["net", "name", "what", "card (mm)", "plane (mm behind the face)", "voile coverage", "lace band share of height", "share of the photographs' windows"], rows)
 nc = t["net_common"]
-w("**The fabric** (all nets): " + nc["weave"] + ". " + nc["layers_and_coverage"] + ". Gathered at %.0f per cent fullness, the fold wavelength %s mm, depth %d mm (a normal and brightness map, not geometry), brightness modulation ±%.0f per cent. Hem: %s. Head: %s. **Colours** (sRGB): white %s, greyed %s, yellowed (nicotine) %s: %s. **By day:** %s. **Night, lit:** %s. **Night, dark:** %s. %s" % (
-    nc["fullness"] * 100, nc["gather_wavelength_mm"], nc["gather_depth_mm"], nc["fold_brightness_modulation"] * 100, nc["hem"], nc["head"], nc["colours"]["white"], nc["colours"]["greyed"], nc["colours"]["yellowed"], nc["photo_note"], nc["day_look"], nc["night_lit"], nc["night_dark"], nc["no_parallax"]))
+w("**The fabric** (all nets):")
+w()
+w("- **Weave:** " + sent(nc["weave"]))
+w("- **Layers and coverage:** " + sent(nc["layers_and_coverage"]))
+w("- **Gathering:** At %.0f per cent fullness, fold wavelength %s to %s mm, depth %d mm (a normal and brightness map, not geometry), brightness modulation +-%.0f per cent." % (nc["fullness"] * 100, nc["gather_wavelength_mm"][0], nc["gather_wavelength_mm"][1], nc["gather_depth_mm"], nc["fold_brightness_modulation"] * 100))
+w("- **Hem:** " + sent(nc["hem"]))
+w("- **Head:** " + sent(nc["head"]))
+w("- **Colours** (sRGB): white %s, greyed %s, and yellowed by nicotine %s. %s" % (rgb(nc["colours"]["white"]), rgb(nc["colours"]["greyed"]), rgb(nc["colours"]["yellowed"]), sent(nc["photo_note"])))
+w("- **By day:** " + sent(nc["day_look"]))
+w("- **Night, lit:** " + sent(nc["night_lit"]))
+w("- **Night, dark:** " + sent(nc["night_dark"]))
+w("- **Parallax:** " + sent(nc["no_parallax"]))
 w()
 rows = []
 for kk, cur in t["curtains"].items():
-    rows.append([kk, cur["label"], cur["what"], cur.get("card", cur.get("card_left")), cur["plane_mm"], cur["opacity"], cur["folds"], cur["colours"], cur["night_lit"]])
+    rows.append([kk, cur["label"], cur["what"], card_txt(cur), cur["plane_mm"], cur["opacity"], cur["folds"], rgb_map(cur["colours"]), cur["night_lit"]])
 for kk, b in t["blinds"].items():
-    rows.append([kk, b["label"], b["what"], b["card"], b["plane_mm"], b.get("opacity", "slat gaps %s" % b.get("slat_gap_alpha")), "slat pitch %s mm" % b.get("slat_pitch_mm", "-"), b.get("colour"), b["night_lit"]])
+    rows.append([kk, b["label"], b["what"], xz(b["card"]), b["plane_mm"], b["opacity"] if "opacity" in b else "slat gaps alpha %s" % b.get("slat_gap_alpha"), ("slat pitch %s mm" % b["slat_pitch_mm"]) if "slat_pitch_mm" in b else "a plain sheet", rgb(b["colour"]), b["night_lit"]])
 table(["kind", "name", "what", "card (mm)", "plane", "opacity", "folds or slats", "colours", "night, lit"], rows)
-w("**Per house** the street's mix is in the table of section 1 (net kind and colour, drape): the upper sash is clear wherever the net is N1, N3 or none, so the room shows through it; a torn yellowed net hangs askew in the empty flat (one lower corner off its wire, the hem 80 mm out of true). **Drawn curtains** stand in front of the net and cover the window; open curtains stand 170 mm wide at each side. A lit room behind a lit net reads as the net's own glow (emissive 0.48) with the room's pendant and the top of the back wall seen through it.")
+w("**Per house** the street's mix is in the table of section 1 (net kind and colour, drape): the upper sash is clear wherever the net is N1, N3 or none, so the room shows through it; a torn yellowed net hangs askew in the empty flat (one lower corner off its wire, the hem 80 mm out of true: a Judgement). **Drawn curtains** stand in front of the net and cover the window; open curtains stand 170 mm wide at each side. A lit room behind a lit net reads as the net's own glow (emissive 0.48) with the room's pendant and the top of the back wall seen through it.")
 w()
 
 # ---------------------------------------------------------------------------------------------------------------------------
@@ -283,9 +352,9 @@ w()
 w("### 7.1 The format")
 w()
 cards = RM["cards"]
-w("Each room is built by script from CC0 models in Blender (Cycles), rendered to the shop rooms' picture format: " + cards["picture_names"] + ". Three states: `day`, `night_lit`, `night_dark`. " + cards["camera_rule"] + ". **Brightness** (the game's emissive scale): day %s, night %s (%s). **Picture standards** (Judgement, scaled from the approved pawnbroker pictures' 119.5 / 79.8 / 17.7): mean luma day %s, night_lit %s, night_dark %s, within ±%.0f per cent; the checks' floors are %.1f of them (%s)." % (cards["brightness"]["day"], cards["brightness"]["night"], cards["brightness_note"], RM["picture_standards"]["day_mean_luma"], RM["picture_standards"]["night_lit_mean_luma"], RM["picture_standards"]["night_dark_mean_luma"], 100 * RM["picture_standards"]["tolerance"], RM["picture_standards"]["floor_factor"], RM["picture_standards"]["note"]))
+w("Each room is built by script from CC0 models in Blender (Cycles), rendered to the shop rooms' picture format: " + cards["picture_names"] + ". Three states: `day`, `night_lit`, `night_dark`. " + sent(cards["camera_rule"]) + " **Brightness** (the game's emissive scale): %s **Picture standards** (Judgement): mean luma day %g, night_lit %g, night_dark %g, within ±%.0f per cent. %s" % (sent(cards["brightness_note"]), RM["picture_standards"]["day_mean_luma"], RM["picture_standards"]["night_lit_mean_luma"], RM["picture_standards"]["night_dark_mean_luma"], 100 * RM["picture_standards"]["tolerance"], sent(RM["picture_standards"]["note"].replace("Judgement, scaled", "Scaled"))))
 w()
-w("**Lights per state:** day: " + RM["lights_by_state"]["day"] + ". Night, lit: " + RM["lights_by_state"]["night_lit"] + ". Night, dark: " + RM["lights_by_state"]["night_dark"] + ".")
+w("**Lights per state.** Day: " + endp(RM["lights_by_state"]["day"]) + " Night, lit: " + endp(RM["lights_by_state"]["night_lit"]) + " Night, dark: " + endp(RM["lights_by_state"]["night_dark"]))
 w()
 w("### 7.2 The thirteen rooms")
 w()
@@ -303,11 +372,11 @@ w("**What each type shows from the street.** *Upper lounges and bedrooms*: the c
 w()
 w("### 7.3 Which windows are lit at night")
 w()
-w(lit["source"])
+w(lit["source"].replace("Judgement. production/research/evening-light-1990 gives", "Judgement. The research file production/research/evening-light-1990 gives"))
 w()
 rows = [[h, "%.2f" % sh, lit["lit_by_hour"][h]["n"]] for h, sh in lit["table_hour_to_share_of_all_20_windows"].items()]
 table(["hour", "share of the 20 windows", "windows lit"], rows)
-w(lit["rule"] + " **At 20:30, seven lit (35 per cent):** " + ", ".join(sorted(lit["lit_by_hour"]["20:30"]["windows"])) + ". **The fixed lit order** (after the always-lit pair): " + " > ".join(lit["lit_order_of_the_non_always_lit_windows"]) + ". " + lit["by_day"] + ".")
+w(sent(lit["rule"]) + " **At 20:30, seven lit (35 per cent):** " + ", ".join(sorted(lit["lit_by_hour"]["20:30"]["windows"])) + ". **The fixed lit order** (after the always-lit pair): " + " > ".join(lit["lit_order_of_the_non_always_lit_windows"]) + ". " + sent(lit["by_day"]))
 w()
 w("### 7.4 The inventory")
 w()
@@ -317,52 +386,87 @@ rows = []
 for mid, m in sorted(inv.items()):
     rows.append([mid, m["dims_mm_catalogue_xyz"], m["polycount"], ", ".join(m["used_in_rooms"]) or "-", m["status"], m["marks"]])
 table(["model", "dims mm (x y z)", "polycount", "used in", "status", "marks seen at 1k"], rows)
-w("**Textures** (1k base colour looked at, no marks seen): " + ", ".join(sorted(t["inventory"]["polyhaven_textures"])) + ". **Brand blocklist** (the self-check scans every string of target.json outside a marks entry for these): " + ", ".join(t["inventory"]["brand_blocklist"]) + ". " + t["inventory"]["rule"] + ".")
+w("**Textures** (1k base colour looked at, no marks seen): " + ", ".join(sorted(t["inventory"]["polyhaven_textures"])) + ". **Brand blocklist** (the self-check scans every string of target.json outside a marks entry for these): " + ", ".join(t["inventory"]["brand_blocklist"]) + ". " + sent(t["inventory"]["rule"]))
 w()
 
 # ---------------------------------------------------------------------------------------------------------------------------
 w("## 8. As kit pieces")
 w()
 kp = t["kit_pieces"]
-w("**Frame and pivot.** " + kp["frame"] + ". " + kp["pivot"] + ". **Placement:** east: " + kp["placement"]["east"] + "; west: " + kp["placement"]["west"] + "; " + kp["placement"]["sill_z"] + ".")
+w("**Frame and pivot.** " + sent(kp["frame"]) + " " + sent(kp["pivot"]))
 w()
-w("**Files:** " + "; ".join("%s = %s" % (k, v) for k, v in kp["files"].items()) + "; " + "; ".join(kp["extra_files"].values()) + ". **Budget:** %d triangles and %d bytes each; %s" % (kp["budget"]["triangles_each_kind"], kp["budget"]["bytes_each_glb"], kp["budget"]["note"]))
+w("**Placement.** East: " + kp["placement"]["east"] + ". West: " + kp["placement"]["west"] + ". Height: " + kp["placement"]["sill_z"].replace("above the crown: ", "above the road's crown, ") + ".")
+w()
+w("**Files:**")
+w()
+for k2, v in kp["files"].items():
+    w("- %s: `%s`" % (k2, v))
+for v in kp["extra_files"].values():
+    path_, rest_ = v.split(" ", 1)
+    w("- room_card_gf: `%s` %s" % (path_, rest_))
+w()
+w("**Budget:** %d triangles and %d bytes each. %s" % (kp["budget"]["triangles_each_kind"], kp["budget"]["bytes_each_glb"], sent(kp["budget"]["note"])))
 w()
 for kind in ("S22", "S11", "RC"):
-    w("**%s: added nodes** (the lab's %d nodes are reused as they are for S22 and S11; the RC's parts are in section 4.3):" % (kind, kp["per_kind"][kind]["reused_nodes"]))
+    if kind == "RC":
+        w("**RC: added nodes** (the RC has no lab model: its frame parts are the table in section 4.3; these are its glass, nets, drapes, blinds and pendant):")
+    else:
+        w("**%s: added nodes** (the lab's %d nodes are reused as they are; the RC's parts are in section 4.3):" % (kind, kp["per_kind"][kind]["reused_nodes"]))
     w()
-    rows = [[n["name"], n["material"], n["x"], n["y_into_wall"], n["z_up"], n["note"]] for n in kp["per_kind"][kind]["added_nodes"]]
+    rows = []
+    seen_notes = {}
+    for n in kp["per_kind"][kind]["added_nodes"]:
+        note = n["note"]
+        if note in seen_notes and len(note) > 40:
+            note = "as `%s`" % seen_notes[note]
+        else:
+            seen_notes[note] = n["name"]
+        rows.append([n["name"], n["material"], "%s to %s" % tuple(n["x"]), "%s to %s" % tuple(n["y_into_wall"]), "%s to %s" % tuple(n["z_up"]), note])
     table(["node", "material", "x (mm)", "y into the wall (mm)", "z up (mm)", "note"], rows)
-w("**The room card:** upper windows: node `room__card`, plane %s mm, x %s, z %s (size %s m): %s. Cottages: %s." % (kp["room_card"]["upper"]["plane_mm"], kp["room_card"]["upper"]["x"], kp["room_card"]["upper"]["z_up"], kp["room_card"]["upper"]["size_m"], kp["room_card"]["upper"]["note"], kp["room_card"]["cottage"]))
+rcu = kp["room_card"]["upper"]
+cot = kp["room_card"]["cottage"].replace("room_card_gf: ", "").replace("3.4 x 2.6,", "3.4 x 2.6 m,")
+w("**The room card.** Upper windows: node `%s`, plane %s mm behind the brick face, x %s to %s, z %s to %s (%s x %s m): %s. Cottages (glb `room_card_gf`): %s." % (rcu["node"], rcu["plane_mm"], rcu["x"][0], rcu["x"][1], rcu["z_up"][0], rcu["z_up"][1], rcu["size_m"][0], rcu["size_m"][1], rcu["note"], cot))
 w()
-w("**Materials:** " + "; ".join("%s: %s" % (k, v) for k, v in kp["materials"].items()) + ".")
+w("**Materials:**")
+w()
+for k2, v in kp["materials"].items():
+    w("- `%s`: %s" % (k2, sent(v)))
 w()
 w("**How a piece goes into the game** (HANDOVER.md's route, and what is different here):")
 w()
 for x in kp["how_it_goes_into_the_game"]:
     w("- " + x)
 w()
-w("**The room card's parameters per site** are in `sites[].card`: CardOrigin (cm: low-x corner, front y, floor z), RoomSize (cm), CamD (cm), Side (+1 east, -1 west), and the picture ids by the site's `room`. Example, `%s`: CardOrigin %s, RoomSize %s, CamD %s, Side %s, window in the card (m) %s." % (S[0]["id"], S[0]["card"]["card_origin_cm"], S[0]["card"]["room_size_cm"], S[0]["card"]["cam_d_cm"], S[0]["card"]["side"], S[0]["card"]["window_in_card_m"]))
+w("**The room card's parameters per site** are in `sites[].card`: CardOrigin (cm: low-x corner, front y, floor z), RoomSize (cm), CamD (cm), Side (+1 east, -1 west), and the picture ids by the site's `room`. Example, `%s`: CardOrigin %s, RoomSize %s, CamD %s, Side %s, the window in the card (m): x %s to %s, z %s to %s." % (S[0]["id"], S[0]["card"]["card_origin_cm"], S[0]["card"]["room_size_cm"], S[0]["card"]["cam_d_cm"], S[0]["card"]["side"], S[0]["card"]["window_in_card_m"]["x0"], S[0]["card"]["window_in_card_m"]["x1"], S[0]["card"]["window_in_card_m"]["z0"], S[0]["card"]["window_in_card_m"]["z1"]))
 w()
 
 # ---------------------------------------------------------------------------------------------------------------------------
 w("## 9. The gate, in the cloud (no Unreal)")
 w()
-w(g["what"] + ".")
+w(sent(g["what"]))
 w()
-w("**Scene.** " + "; ".join("%s: %s" % (k, v) for k, v in g["scene"].items() if k != "house_sets") + ". **House sets:** " + "; ".join("%s: %s" % (k, v) for k, v in g["scene"]["house_sets"].items()) + ".")
+w("**Scene.**")
 w()
-w("**Views:** " + g["views"] + ".")
+for k2, v in g["scene"].items():
+    if k2 != "house_sets":
+        w("- **%s:** %s" % (k2.replace("_", " "), sent(v)))
+w()
+w("**House sets:**")
+w()
+for k2, v in g["scene"]["house_sets"].items():
+    w("- **%s:** %s" % (k2, sent(v)))
+w()
+w("**Views:** " + sent(g["views"]))
 w()
 w("**What is measured** (from the Material Index and Object Index passes, never by eye):")
 w()
 for k2, v in g["measure"].items():
-    w("- **%s:** %s" % (k2, v))
+    w("- **%s:** %s" % (k2.replace("_", " "), sent(v)))
 w()
-w("**Bands** (from the photographs, section 3.2; the check numbers of section 10 quote them):")
+w("**Bands** (from the photographs, section 3.2; the check numbers of section 10 quote them; P is the pane median, L the frame's 90th percentile, D the outline's 5th percentile):")
 w()
 for k2, v in g["bands"].items():
-    w("- **%s:** %s" % (k2, json.dumps(v)))
+    w("- **%s:** %s" % (k2, band_txt(v)))
 w()
 w("**What the gate cannot show:** the game's glass reflections (Lumen, the cube), the exposure, the motion vectors of the card under TSR, the real glass hand-over: owed on the PC (section 10, OWED rows).")
 w()
@@ -377,7 +481,7 @@ table(["id", "name", "measure", "expected", "tolerance", "applies to", "kind", "
 w("**Owed on the PC** (the cloud cannot show them):")
 w()
 for o in t["owed_on_pc"]:
-    w("- **%s** %s. Check: %s." % (o["id"], o["what"], o["check"]))
+    w("- **%s** %s Check: %s" % (o["id"], sent(o["what"]), sent(o["check"])))
 w()
 
 # ---------------------------------------------------------------------------------------------------------------------------

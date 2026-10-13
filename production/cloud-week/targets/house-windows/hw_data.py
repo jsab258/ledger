@@ -7,7 +7,7 @@ z UP from the opening's bottom edge); metres for rooms and the street. Kinds of 
 # ---------------------------------------------------------------------------------------------------------------------------
 # colours: sRGB triples (0-255) as seen; the builder converts to linear
 PAINTS = {
-    "white_fresh":   {"srgb": [234, 233, 229], "lin": [0.82, 0.812, 0.78], "rough": 0.42, "note": "the street's paint_joinery as it stands (terrace-front.py MATERIALS); the lab's sash and the 4.1/3.2 kits use it"},
+    "white_fresh":   {"srgb": [234, 233, 229], "lin": [0.82, 0.812, 0.78], "rough": 0.42, "note": "the street's paint_joinery as it stands (terrace-front.py MATERIALS) and the lab sash's paint: the kit pieces' default before a house's paint is set; no house of the twenty takes it unchanged"},
     "white_grimy":   {"srgb": [214, 212, 205], "lin": [0.68, 0.66, 0.62], "rough": 0.48, "note": "weathered 1990 gloss white, 1a's 0.72 to 0.80 less the dirt in the lower rails and the sill: the lower rail and sill at x 0.85, the rest 1.0"},
     "white_flaking": {"srgb": [205, 202, 192], "lin": [0.60, 0.58, 0.53], "rough": 0.55, "note": "an unlet house's paint: 12 per cent of the area on the lower rails, sill and stiles' feet is flaked to grey primer (66, 60, 54) or bare timber (96, 66, 40)"},
     "cream":         {"srgb": [222, 204, 164], "lin": [0.73, 0.60, 0.37], "rough": 0.45, "note": "P3's cream-painted sashes (frame sampled 181, 163, 131 in the sun and shade of the photograph, so the paint is lighter), P2's cream render"},

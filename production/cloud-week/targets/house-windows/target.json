@@ -874,7 +874,7 @@
     ],
     "room_size_cm": [
      280.0,
-     254.99999999999997,
+     255.0,
      420.0
     ],
     "cam_d_cm": 280.0,
@@ -940,7 +940,7 @@
     ],
     "room_size_cm": [
      280.0,
-     254.99999999999997,
+     255.0,
      420.0
     ],
     "cam_d_cm": 280.0,
@@ -1006,7 +1006,7 @@
     ],
     "room_size_cm": [
      280.0,
-     254.99999999999997,
+     255.0,
      420.0
     ],
     "cam_d_cm": 280.0,
@@ -1075,7 +1075,7 @@
     ],
     "room_size_cm": [
      280.0,
-     254.99999999999997,
+     255.0,
      420.0
     ],
     "cam_d_cm": 280.0,
@@ -1144,7 +1144,7 @@
     ],
     "room_size_cm": [
      280.0,
-     254.99999999999997,
+     255.0,
      420.0
     ],
     "cam_d_cm": 280.0,
@@ -1213,7 +1213,7 @@
     ],
     "room_size_cm": [
      280.0,
-     254.99999999999997,
+     255.0,
      420.0
     ],
     "cam_d_cm": 280.0,
@@ -1282,7 +1282,7 @@
     ],
     "room_size_cm": [
      280.0,
-     254.99999999999997,
+     255.0,
      420.0
     ],
     "cam_d_cm": 280.0,
@@ -1348,7 +1348,7 @@
     ],
     "room_size_cm": [
      280.0,
-     254.99999999999997,
+     255.0,
      420.0
     ],
     "cam_d_cm": 280.0,
@@ -1414,7 +1414,7 @@
     ],
     "room_size_cm": [
      280.0,
-     254.99999999999997,
+     255.0,
      420.0
     ],
     "cam_d_cm": 280.0,
@@ -1480,7 +1480,7 @@
     ],
     "room_size_cm": [
      280.0,
-     254.99999999999997,
+     255.0,
      420.0
     ],
     "cam_d_cm": 280.0,
@@ -1549,7 +1549,7 @@
     ],
     "room_size_cm": [
      280.0,
-     254.99999999999997,
+     255.0,
      420.0
     ],
     "cam_d_cm": 280.0,
@@ -1615,7 +1615,7 @@
     ],
     "room_size_cm": [
      280.0,
-     254.99999999999997,
+     255.0,
      420.0
     ],
     "cam_d_cm": 280.0,
@@ -1684,7 +1684,7 @@
     ],
     "room_size_cm": [
      280.0,
-     254.99999999999997,
+     255.0,
      420.0
     ],
     "cam_d_cm": 280.0,
@@ -1750,7 +1750,7 @@
     ],
     "room_size_cm": [
      280.0,
-     254.99999999999997,
+     255.0,
      420.0
     ],
     "cam_d_cm": 280.0,
@@ -3957,7 +3957,7 @@
     0.78
    ],
    "rough": 0.42,
-   "note": "the street's paint_joinery as it stands (terrace-front.py MATERIALS); the lab's sash and the 4.1/3.2 kits use it"
+   "note": "the street's paint_joinery as it stands (terrace-front.py MATERIALS) and the lab sash's paint: the kit pieces' default before a house's paint is set; no house of the twenty takes it unchanged"
   },
   "white_grimy": {
    "srgb": [
@@ -4096,11 +4096,11 @@
     "10": 0.544,
     "8": 0.622
    },
-   "fresnel_note": "angle from the wall; float glass n 1.52, both faces, unpolarised, the reflections between the faces counted (Derived, recomputed by self_check.py: 1a's table is 0.02 to 0.03 higher at 16 to 30 degrees); Unreal's Specular 1 (F0 0.08, Schlick) gives 0.26 at 16 degrees, about three quarters of true: close enough"
+   "fresnel_note": "Unreal's Specular 1 (F0 0.08, Schlick) gives 0.26 at 16 degrees from the wall, about three quarters of the true two-face figure (0.36): close enough"
   },
   "waviness": {
    "what": "per-pane tilt, not a wave texture: each pane mesh is rotated by a seeded angle uniform in +-0.5 degrees about the vertical axis and +-0.3 degrees about the horizontal one (never zero, the spread of a window's panes at least 0.3 degrees)",
-   "photo": "P8 (Oxford rear, 1987): six panes of two original sashes read mean luma 86, 87, 99, 102, 105 (neighbouring panes differ by up to 19 levels, 10 per cent) and a smooth tone inside each pane (std 4 to 5 levels at 70 px a window): the glass is flat to the eye and each pane catches the sky differently",
+   "photo": "P8 (Oxford rear, 1987): the four panes of the two windows measured (the boxes of section 3.2) read mean luma 86, 100, 100 and 105 (19 levels apart, 18 per cent of the brightest); inside, three are flat to 1.2 to 1.4 levels (the central 60 per cent of the box) and the fourth, the right window's upper pane, carries a brighter patch (95th percentile 176): the glass is flat to the eye and each pane catches the sky differently",
    "no_wave_normal_map": true
   },
   "dirt": "a 6 mm band round every pane's edge is roughened (roughness 0.35, base colour x 0.8): the putty line's dirt; the lowest 25 mm of each pane carries the same (water and dust on the bottom rail)",
@@ -5148,7 +5148,8 @@
     "h": 0.04,
     "proud": 0.02,
     "z": 2.15,
-    "surface": "side+back"
+    "surface": "side+back",
+    "note": "a 40 mm timber rail painted white round the side and back walls at 2.15 m, 0.02 proud, with a dark shade line under it"
    },
    "coving": {
     "h": 0.055,
@@ -8668,14 +8669,14 @@
   "budget": {
    "triangles_each_kind": 6000,
    "bytes_each_glb": 400000,
-   "note": "the lab's 2/2 is 2,000 or so triangles; nets, curtains and blinds are cards (2 triangles each); the push guard allows 1 MB a model in git"
+   "note": "the lab's 2/2 is 1068 triangles and 72988 bytes; nets, curtains and blinds are cards (2 triangles each); the push guard allows 1 MB a model in git"
   },
   "how_it_goes_into_the_game": [
-   "terrace-front.py: SASH_KIT_ROWS to None (every row takes the period opening 850 x 1676.4: the cottages' sill goes to 0.8236 above the crown, 0.7236 above the threshold, the head kept at 2.5), and `_plain_ground` to follow `_window_kind` (it draws every cottage window as a 2/2 today)",
-   "HOUSE_PANE_TRANSLUCENT stays False: the glass is the pane material, the net card behind it; the translucent pane stays shops' only",
-   "held props: one glb per kind, placed by `sites[]` (HANDOVER.md steps 1 to 4); the room pictures are rebuilt on the PC by their one command and imported as textures (sRGB, no mips below 256)",
-   "M_LedgerInterior parameters per site from `sites[].card` (CardOrigin, RoomSize, CamD, Side) and the picture ids; Night and LitOn from the lit table; Brightness day 0.12, night 0.7",
-   "the wall kit takes the reveal's brick returns' shade (BOX_SHADE.brick_returns_of_the_reveal) and the carcass behind the card (its front face at 0.29 m or more)"
+   "In terrace-front.py set SASH_KIT_ROWS to None (every row takes the period opening 850 x 1676.4: the cottages' sill goes to 0.8236 above the crown, 0.7236 above the threshold, the head kept at 2.5), and make `_plain_ground` follow `_window_kind` (it draws every cottage window as a 2/2 today).",
+   "HOUSE_PANE_TRANSLUCENT stays False: the glass is the pane material, the net card behind it; the translucent pane stays the shops' only.",
+   "Held props: one glb per kind, placed by `sites[]` (HANDOVER.md steps 1 to 4); the room pictures are rebuilt on the PC by their one command and imported as textures (sRGB, no mips below 256).",
+   "M_LedgerInterior parameters per site from `sites[].card` (CardOrigin, RoomSize, CamD, Side) and the picture ids; Night and LitOn from the lit table; Brightness day 0.12, night 0.7.",
+   "The wall kit takes the reveal's brick returns' shade (BOX_SHADE.brick_returns_of_the_reveal) and the carcass behind the card (its front face at 0.29 m or more)."
   ]
  },
  "gate": {
@@ -9344,7 +9345,7 @@
    "what": "the replacement frame's colour",
    "street_file": "dark anodised bronze (frame_bronze) for every replacement (terrace-front.py _sash)",
    "photographs": "white in all four replacement windows reached (P6, P7, P11, and P6's ground bay): none brown or bronze",
-   "chosen": "white satin (white_upvc) by default; bronze kept for the one metal-refit house (the ship chandler's, whose front is aluminium: Judgement, D06 'Hook shops receive metal frames'); not Jafar's ruling: the asset plan's"
+   "chosen": "white satin (white_upvc) by default; bronze kept for the one metal-refit house (the ship chandler's, whose front is aluminium: Judgement); that rests on the asset plan's D06 ('Hook shops receive metal frames'), not on a ruling of Jafar's"
   },
   {
    "id": "D2",
