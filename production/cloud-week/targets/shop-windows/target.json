@@ -2,7 +2,7 @@
  "schema": "ledger-shop-windows-target/1",
  "family": "shop-windows",
  "summary_line": "Shop windows: ten units as built (twelve not found); eight rooms of 104 checked CC0 models and 51 named scripted forms, rendered 4096 wide to the game's own `trace` rule, stock only where that rule can show it and the near 0.55 m a real display; the fish scans wait on one login.",
- "status": "target for unit 7 of cloud week 42, part 2; written 12 October 2026; failed its review (3 faults, 15 narrow points), fixes applied 12 October (not re-reviewed); BUILT 13 October; the build failed both fresh reviews at try 1 (street view: 2 faults, 5 narrow points; close view: 5 faults, 13 narrow points); try 2 amendments from those reviews applied 13 October (section 13, marked '13 Oct, from the try 1 reviews'); not re-reviewed; nothing committed",
+ "status": "target for unit 7 of cloud week 42, part 2; written 12 October 2026; failed its review (3 faults, 15 narrow points), fixes applied 12 October (not re-reviewed); BUILT 13 October; the build failed both fresh reviews at try 1 (street view: 2 faults, 5 narrow points; close view: 5 faults, 13 narrow points); try 2 amendments from those reviews applied 13 October (section 13, marked '13 Oct, from the try 1 reviews'); try 3 narrow points from the try 2 reviews (both PASS: street 0 faults and 6 narrow points, close 0 faults and 11 narrow points) applied 13 October (section 13, marked '13 Oct, from the try 2 reviews'); no further review ordered; nothing committed",
  "units": {
   "length": "metres (frames: street, card, picture, room, display: see this folder's TARGET.md, section 3); front parts in millimetres in the 2.2 bay frame (u, d, z)",
   "colour": "sRGB 0 to 255",
@@ -1997,6 +1997,10 @@
      "profile_try2": {
       "added": "13 Oct, from the try 1 reviews",
       "what": "a crown loop, a dome to a flared lip, 70 mm across the lip, 55 high, a 3 mm wall (hollow), the clapper showing under the lip"
+     },
+     "position_try3": {
+      "added": "13 Oct, from the try 2 reviews",
+      "what": "the strip centred on the TOP RAIL, 90 mm in from the hanging stile's inner edge (model x -0.958; try 2 centred it 90 mm from the leaf's edge, which is on the 115 mm hinge stile, so the bell hid behind it); the bell 80 mm below as before"
      }
     },
     "sign": "the plastic OPEN / CLOSED sign from 4.2 (the paper unit) on the inside of the door's glass at z 1500, hung by a suction cup: closed when the shop is shut; the hours plate (4.1) on the glass beside it",
@@ -2249,7 +2253,7 @@
      {
       "id": "R-back-stock",
       "surface": "back",
-      "what": "the stock wall: five tiers of 25 mm boards 0.30 deep, filled shoulder to shoulder, every piece at 0.9 to 1.0 of its modelled size (never scaled up), a ticket on every piece; the lowest two tiers only at the ends, the counter standing in front of the middle; the top tier (z 2.05) over the two ends only (x -2.6 to -1.9 and 0.9 to 1.35): over the television sets the wall is open to the ceiling; the wall from x 1.35 to the back door's frame (1.45) is plain, the door's frame runs to x 2.40, and the strip x 2.40 to 2.6 is plain wall [13 Oct, from the try 1 reviews]",
+      "what": "the stock wall: five tiers of 25 mm boards 0.30 deep, filled shoulder to shoulder, every piece at 0.9 to 1.0 of its modelled size (never scaled up), a ticket on every piece; the lowest two tiers only at the ends, the counter standing in front of the middle; the top tier (z 2.05) over the two ends only (x -2.6 to -1.9 and 0.9 to 1.35): over the television sets the wall is open to the ceiling; the wall from x 1.35 to the back door's frame (1.45) is plain, the door's frame runs to x 2.40, and the strip x 2.40 to 2.6 is plain wall [13 Oct, from the try 1 reviews] The two television boards carry RISER SHELVES (0.20 above the board, 0.20 deep against the wall) in every free stretch between and beside the sets, filled to about 85 per cent of their length with the pool's pieces that fit (cameras, video cameras, binoculars, clocks, cassette players, the plane, a vase) at 0.9 to 1.0; a front row of slim pieces (cassette players, clocks) stands on the board in front of them; one cardboard box stands on top of each upper set [13 Oct, from the try 2 reviews]",
       "depth_m": 0.3,
       "x": [
        -2.6,
@@ -2272,7 +2276,7 @@
      {
       "id": "R-back-tv-tiers",
       "surface": "back",
-      "what": "the two tiers above the counter (z 1.35 and 1.80, 0.45 apart, x -1.90 to 0.90) are 0.35 deep boards for the four television sets at their real size (television_02 is 0.35 deep and 0.41 high; 0.35 stays inside the 20 px budget at the card's middle): a named exception to the 0.30 shelf rule [13 Oct, from the try 1 reviews]",
+      "what": "the two tiers above the counter (z 1.35 and 1.80, 0.45 apart, x -1.90 to 0.90) are 0.35 deep boards for the four television sets at their real size (television_02 is 0.35 deep and 0.41 high; 0.35 stays inside the 20 px budget at the card's middle): a named exception to the 0.30 shelf rule [13 Oct, from the try 1 reviews] The z 1.35 board ends at x 0.20 (the till stands at x 0.28 to 0.72 and rises to z 1.47: the board ran through it) [13 Oct, from the try 2 reviews]",
       "depth_m": 0.35,
       "x": [
        -1.9,
@@ -2287,6 +2291,10 @@
       "tiers": [
        1.35,
        1.8
+      ],
+      "x_low_tier": [
+       -1.9,
+       0.2
       ]
      },
      {
@@ -2311,7 +2319,7 @@
      {
       "id": "R-back-counter",
       "surface": "back",
-      "what": "the staff counter, glass-topped case on a velvet bed, against the wall (0.6 deep, 1.05 high), 2.8 m long; notices on its front [13 Oct, from the try 1 reviews] The velvet bed is raked 25 degrees up toward the back so the jewellery shows as rings; the CASH LOANS card hangs on the back wall above the counter (z 1.075 to 1.315), the tested-goods card stays on the counter's front.",
+      "what": "the staff counter, glass-topped case on a velvet bed, against the wall (0.6 deep, 1.05 high), 2.8 m long; notices on its front [13 Oct, from the try 1 reviews] The velvet bed is raked 25 degrees up toward the back so the jewellery shows as rings; the CASH LOANS card hangs on the back wall above the counter (z 1.075 to 1.315), the tested-goods card stays on the counter's front. The CASH LOANS card hangs 0.05 lower (z 1.025 to 1.265) on paper (235, 232, 222) with ink (25, 25, 50) [13 Oct, from the try 2 reviews]",
       "depth_m": 0.6,
       "x": [
        -1.9,
@@ -2343,7 +2351,7 @@
      {
       "id": "R-left-board",
       "surface": "left",
-      "what": "pledge board: pegboard panels and hung boards over the whole left wall (0.3 to 4.2 back, 0.45 to 2.15 up), 0.08 deep: ticketed small goods flat to it, wall clocks and framed pictures; the notices hang on it [13 Oct, from the try 1 reviews] Covered with goods at real size and at most 0.08 off the wall: 5 framed pictures, 2 mirrors, 6 clocks, 2 ukuleles, the two notices and 40 watch-and-chain cards (at least 60 per cent of the board).",
+      "what": "pledge board: pegboard panels and hung boards over the whole left wall (0.3 to 4.2 back, 0.45 to 2.15 up), 0.08 deep: ticketed small goods flat to it, wall clocks and framed pictures; the notices hang on it [13 Oct, from the try 1 reviews] Covered with goods at real size and at most 0.08 off the wall: 5 framed pictures, 2 mirrors, 6 clocks, 2 ukuleles, the two notices and 40 watch-and-chain cards (at least 60 per cent of the board). Laid out in three bands: the five frames side by side at z 0.52 to 1.03, the 40 watch-and-chain cards in two rows at z 1.08 to 1.38, and above them the mirror, a ukulele, the six clocks in two staggered rows (z about 1.58 and 1.85, three in each, each a different time), a ukulele, the second mirror, the licence card with the unredeemed-pledges card above it [13 Oct, from the try 2 reviews]",
       "depth_m": 0.08,
       "x": null,
       "y": [
@@ -2376,7 +2384,7 @@
      {
       "id": "R-right-board",
       "surface": "right",
-      "what": "tools hung flat on pegboard panels over the right wall's far part (1.3 to 4.2 back, 0.45 to 2.15 up), 0.08 deep [13 Oct, from the try 1 reviews] Every tool's count doubled (pipe_wrench 2, adjustable_wrench 4, combination_wrench 6, pliers 6, handsaw_wood 4, cross_pein_hammer 4) at real size. The review asks for at least 60 per cent of the board covered; doubled counts of these tools reach about 19 per cent: named in the notes.",
+      "what": "tools hung flat on pegboard panels over the right wall's far part (1.3 to 4.2 back, 0.45 to 2.15 up), 0.08 deep [13 Oct, from the try 1 reviews] Every tool's count doubled (pipe_wrench 2, adjustable_wrench 4, combination_wrench 6, pliers 6, handsaw_wood 4, cross_pein_hammer 4) at real size. The review asks for at least 60 per cent of the board covered; doubled counts of these tools reach about 19 per cent: named in the notes. Filled by ROWS across the full 2.9 m, each row's tools 0.04 to 0.06 m apart, 65 tools at 0.9 to 1.0: saws z 1.85 to 2.10 (4), hammers and pipe wrenches 1.40 to 1.80 (13 and 6), pliers and adjustable wrenches 0.95 to 1.35 (16 and 8), combination wrenches and the planes 0.50 to 0.90 (15 and 3). ROOM-02 measures each row: 80 per cent of the board's width [13 Oct, from the try 2 reviews]",
       "depth_m": 0.08,
       "x": null,
       "y": [
@@ -2454,24 +2462,24 @@
      },
      {
       "model": "boombox",
-      "n": 1,
+      "n": 0,
       "on": "R-back-stock",
       "size_m": null,
-      "note": "mark blanked as `inventory.polyhaven[boombox].marks` says"
+      "note": "the room's boombox leaves: with the risers on the television boards it fits no shelf (0.47 high, 0.72 wide); the display keeps its own on the top tier [13 Oct, from the try 2 reviews]"
      },
      {
       "model": "cassette_player",
-      "n": 2,
+      "n": 5,
       "on": "R-back-stock",
       "size_m": null,
-      "note": "maker's name painted out"
+      "note": "maker's name painted out count 2 -> 5 [13 Oct, from the try 2 reviews]"
      },
      {
       "model": "portable_cassette_player",
-      "n": 3,
+      "n": 8,
       "on": "R-back-stock",
       "size_m": null,
-      "note": "maker's name painted out"
+      "note": "maker's name painted out count 3 -> 8 [13 Oct, from the try 2 reviews]"
      },
      {
       "model": "Camera_01",
@@ -2482,38 +2490,38 @@
      },
      {
       "model": "vintage_video_camera",
-      "n": 3,
+      "n": 6,
       "on": "R-back-stock",
       "size_m": null,
-      "note": "mark blanked as `inventory.polyhaven[vintage_video_camera].marks` says"
+      "note": "mark blanked as `inventory.polyhaven[vintage_video_camera].marks` says count 3 -> 6 [13 Oct, from the try 2 reviews]"
      },
      {
       "model": "vintage_binocular",
-      "n": 2,
-      "on": "R-back-stock",
-      "size_m": null,
-      "note": ""
-     },
-     {
-      "model": "binoculars",
-      "n": 2,
-      "on": "R-back-stock",
-      "size_m": null,
-      "note": ""
-     },
-     {
-      "model": "mantel_clock_01",
-      "n": 2,
-      "on": "R-back-stock",
-      "size_m": null,
-      "note": ""
-     },
-     {
-      "model": "alarm_clock_01",
       "n": 3,
       "on": "R-back-stock",
       "size_m": null,
-      "note": ""
+      "note": "count 2 -> 3 [13 Oct, from the try 2 reviews]"
+     },
+     {
+      "model": "binoculars",
+      "n": 3,
+      "on": "R-back-stock",
+      "size_m": null,
+      "note": "count 2 -> 3 [13 Oct, from the try 2 reviews]"
+     },
+     {
+      "model": "mantel_clock_01",
+      "n": 3,
+      "on": "R-back-stock",
+      "size_m": null,
+      "note": "count 2 -> 3 [13 Oct, from the try 2 reviews]"
+     },
+     {
+      "model": "alarm_clock_01",
+      "n": 8,
+      "on": "R-back-stock",
+      "size_m": null,
+      "note": "count 3 -> 8 [13 Oct, from the try 2 reviews]"
      },
      {
       "model": "brass_vase_03",
@@ -2548,14 +2556,14 @@
       "n": 6,
       "on": "R-back-stock",
       "size_m": 0.3,
-      "note": "the top tier: boxes of stock, a ticket each"
+      "note": "the top tier: boxes of stock, a ticket each; two of the six stand on top of the upper television sets (scaled to stand 12 mm under the ceiling) [13 Oct, from the try 2 reviews]"
      },
      {
       "model": "cardboard_box_01",
       "n": 3,
       "on": "R-back-door-boxes",
-      "size_m": 0.3,
-      "note": "the one tier over the back door"
+      "size_m": 0.285,
+      "note": "the one tier over the back door: three boxes of 0.285 largest side, 0.30 apart, clear of one another [13 Oct, from the try 2 reviews]"
      },
      {
       "model": "CashRegister_01",
@@ -2588,17 +2596,17 @@
      },
      {
       "model": "pipe_wrench",
-      "n": 2,
+      "n": 6,
       "on": "R-right-board",
       "size_m": null,
-      "note": "mark blanked as `inventory.polyhaven[pipe_wrench].marks` says"
+      "note": "mark blanked as `inventory.polyhaven[pipe_wrench].marks` says count 2 -> 6 (rows across the board's full 2.9 m) [13 Oct, from the try 2 reviews]"
      },
      {
       "model": "cross_pein_hammer",
-      "n": 4,
+      "n": 13,
       "on": "R-right-board",
       "size_m": null,
-      "note": ""
+      "note": "count 4 -> 13 (rows across the board's full 2.9 m) [13 Oct, from the try 2 reviews]"
      },
      {
       "model": "handsaw_wood",
@@ -2609,31 +2617,31 @@
      },
      {
       "model": "hand_plane_no4",
-      "n": 1,
+      "n": 3,
       "on": "R-right-board",
       "size_m": null,
-      "note": ""
+      "note": "count 1 -> 3 (rows across the board's full 2.9 m) [13 Oct, from the try 2 reviews]"
      },
      {
       "model": "adjustable_wrench",
-      "n": 4,
+      "n": 8,
       "on": "R-right-board",
       "size_m": null,
-      "note": "mark blanked as `inventory.polyhaven[adjustable_wrench].marks` says"
+      "note": "mark blanked as `inventory.polyhaven[adjustable_wrench].marks` says count 4 -> 8 (rows across the board's full 2.9 m) [13 Oct, from the try 2 reviews]"
      },
      {
       "model": "pliers",
-      "n": 6,
+      "n": 16,
       "on": "R-right-board",
       "size_m": null,
-      "note": ""
+      "note": "count 6 -> 16 (rows across the board's full 2.9 m) [13 Oct, from the try 2 reviews]"
      },
      {
       "model": "combination_wrench",
-      "n": 6,
+      "n": 15,
       "on": "R-right-board",
       "size_m": null,
-      "note": ""
+      "note": "count 6 -> 15 (rows across the board's full 2.9 m) [13 Oct, from the try 2 reviews]"
      },
      {
       "model": "Ukulele_01",
@@ -2654,7 +2662,7 @@
       "n": 1,
       "on": "R-back-stock",
       "size_m": 0.3,
-      "note": "its dial's maker mark painted out (the box under the 12 on the dial map: inventory marks)"
+      "note": "its dial's maker mark painted out; it shows a time of its own [13 Oct, from the try 2 reviews]"
      },
      {
       "model": "script:pledge_tickets",
@@ -2669,7 +2677,7 @@
       "n": 6,
       "on": "R-left-board",
       "size_m": null,
-      "note": "hung flat at real size (0.32); dial maker mark painted out [13 Oct, from the try 1 reviews]"
+      "note": "hung flat at real size (0.32), in two staggered rows (z 1.55 to 1.60 and 1.83 to 1.88, three in each), each showing a different time; dial maker mark painted out [13 Oct, from the try 2 reviews]"
      },
      {
       "model": "hanging_picture_frame_02",
@@ -2839,7 +2847,7 @@
         1.98
        ]
       ],
-      "note": "the approved display's chains: 18 gold links in an arc, 0.14 long, a ticket in front",
+      "note": "the approved display's chains, now 60 gold links of 4 x 1.2 mm each turned 90 degrees to the last, 2.4 mm apart in an arc, 0.14 long, a ticket in front [13 Oct, from the try 2 reviews]",
       "why": "a chain of links is modelled, not scanned: the approved display's scripted chains"
      },
      {
@@ -3322,7 +3330,7 @@
        0.14,
        3.2
       ],
-      "what": "the front row: 4 ring trays of 24 rings, 4 watch pads of 8 watches, 2 chains, with the spectacles, the lighter, the cigarette case and the magnifier among them; no free run along the window over 0.20 m"
+      "what": "the front row: 4 ring trays of 24 rings, 4 watch pads of 8 watches, 2 chains, with the spectacles, the lighter, the cigarette case and the magnifier among them; no free run along the window over 0.20 m; lying on the raked riser (below) [13 Oct, from the try 2 reviews]"
      },
      "step": {
       "w": 0.12,
@@ -3363,6 +3371,23 @@
      "frame_prints": {
       "added": "13 Oct, from the try 1 reviews",
       "what": "the frames' prints are crops of a CC0 Poly Haven HDRI of a harbour (Lake Pier, polyhaven.com/a/lake_pier, Alexander Scholten, CC0), tone-mapped, saturation 0.7, a slight warm cast, paper grain, a 6 mm white mount, no person; the five hung frames on the pledge board carry five different crops; catalogue line owed (CATALOGUE.md is outside this unit's folders): 'lake_pier HDRI, CC0, Poly Haven: frame prints, Rita's shop'"
+     },
+     "riser": {
+      "added": "13 Oct, from the try 2 reviews",
+      "from": "street 3",
+      "what": "a velvet riser raked 20 degrees (19.3: w 0.05 at v 0.04 rising to w 0.12 where it meets the step at v 0.24) under the front strip, u 0.10 to 3.24; the 4 trays, 4 pads, 2 chains and the small pieces lie on it 25 mm up the slope, each ticket on the velvet",
+      "why": "the sight line over the window's bottom rail (z 0.637 above the footway, 0.037 above the bed) from the far pavement hid everything on the flat strip lower than 28 mm at v 0.04 to 8 mm at v 0.22"
+     },
+     "scripted_try3": {
+      "added": "13 Oct, from the try 2 reviews",
+      "from": "close 7",
+      "dials": "each wrist and pocket watch's dial is a painted map (256 px a dial: 12 hour marks, two hands at a random time, white, cream, black and champagne grounds; the 12 toward the back of the case)",
+      "chains": "60 links of 4 x 1.2 mm, each turned 90 degrees to the last, 2.4 mm apart along the same arc (the rings stay)"
+     },
+     "night_strips": {
+      "added": "13 Oct, from the try 2 reviews",
+      "from": "close 1",
+      "what": "two strip lights in the display, on the display's light channel: each a rect 3.20 x 0.02 m, 8 mm under the front edge of a tier board (middle tier at v 0.20, w 0.377; top tier at v 0.24, w 0.727), facing down and tipped 30 degrees toward the back, 3000 K; strength set in the gate so that LIT-08 holds; the game's display entry (shop-interiors.json, pawnbroker display lights) takes the same two strips, to be measured on the PC with PC-02 (PC-07)"
      }
     }
    },
@@ -14450,6 +14475,12 @@
      "ritas"
     ],
     "added": "13 Oct, from the try 1 reviews"
+   },
+   "script:bs1363_plug": {
+    "why": "the projector's lead ends in a British 13 A plug (BS 1363): 51 x 45 x 25 mm, black, three flat pins; the model's own plug is a continental Schuko (close review 11, 13 Oct, from the try 2 reviews): the lead is cut where its Schuko head starts, the loose Schuko plug and kettle connector beside the projector are dropped, and the plug is scripted",
+    "shops": [
+     "ritas"
+    ]
    }
   },
   "denied": {
@@ -16673,8 +16704,8 @@
   {
    "id": "LIT-07",
    "name": "the night spill stays behind the glass",
-   "what": "head band at 250 or above under 1 per cent; mullion fronts darker than the display glass beside them; the pavement pool no brighter than the lit glass",
-   "expected": "head band at 250 or above under 1 per cent; mullion fronts darker than the display glass beside them; the pavement pool no brighter than the lit glass",
+   "what": "head band at 250 or above under 1 per cent; mullion fronts darker than the display glass beside them. The third condition (the pavement pool no brighter than the lit glass) is struck [13 Oct, from the try 2 reviews, street 5]: it could not be met; the gate's footway is on the spill's channel again and the pool is the gate's stand-in (the game's own is owed: PC-02)",
+   "expected": "head band at 250 or above under 1 per cent; mullion fronts darker than the display glass beside them",
    "tolerance": "none",
    "applies_to": [
     "ritas"
@@ -16682,7 +16713,8 @@
    "kind": "gate",
    "how": "check_try2.py, run by build_ritas.py checks",
    "added": "13 Oct, from the try 1 reviews",
-   "from": "street N1"
+   "from": "street N1",
+   "changed": "13 Oct, from the try 2 reviews"
   },
   {
    "id": "FRN-08",
@@ -16715,8 +16747,8 @@
   {
    "id": "DSP-03",
    "name": "no display mesh intersects another; every piece shows",
-   "what": "no display mesh intersects another (BVH, 2 mm tolerance); every piece shows at least half its silhouette from CLOSE_35 or STREET_SQUARE (object-index pass)",
-   "expected": "no display mesh intersects another (BVH, 2 mm tolerance); every piece shows at least half its silhouette from CLOSE_35 or STREET_SQUARE (object-index pass)",
+   "what": "no display mesh intersects another (BVH, 2 mm tolerance); every piece shows at least half its silhouette from CLOSE_35 or STREET_SQUARE (object-index pass); EVERY FRONT-ROW PIECE (the bed's pieces and the scripted trays, pads and chains) shows at least half its silhouette from STREET_SQUARE itself [13 Oct, from the try 2 reviews, street 3]",
+   "expected": "no display mesh intersects another (BVH, 2 mm tolerance); every piece shows at least half its silhouette from CLOSE_35 or STREET_SQUARE; every front-row piece at least half from STREET_SQUARE itself",
    "tolerance": "none",
    "applies_to": [
     "ritas"
@@ -16724,7 +16756,8 @@
    "kind": "gate",
    "how": "check_try2.py, run by build_ritas.py checks",
    "added": "13 Oct, from the try 1 reviews",
-   "from": "close fault 1"
+   "from": "close fault 1",
+   "changed": "13 Oct, from the try 2 reviews"
   },
   {
    "id": "DSP-04",
@@ -16743,8 +16776,8 @@
   {
    "id": "LIT-02b",
    "name": "no black void in the rendered frames",
-   "what": "LIT-02 on the rendered CLOSE_35_B and STREET_30 frames with the glass reflection off: at most 1 per cent of the window-glass pixels under luma 12",
-   "expected": "LIT-02 on the rendered CLOSE_35_B and STREET_30 frames with the glass reflection off: at most 1 per cent of the window-glass pixels under luma 12",
+   "what": "LIT-02 on the rendered frames with the glass reflection off: at STREET_SQUARE and STREET_30 the largest connected patch of dark (under luma 12) room pixels at most 1 per cent of the window-glass pixels (a slab test); at CLOSE_35_B both the share and the largest patch at most 1 per cent [13 Oct, from the try 2 reviews, street 6 and close 8]",
+   "expected": "largest patch at most 1 per cent at the two street cameras; share and patch at most 1 per cent at CLOSE_35_B",
    "tolerance": "none",
    "applies_to": [
     "ritas"
@@ -16752,7 +16785,8 @@
    "kind": "gate",
    "how": "check_try2.py, run by build_ritas.py checks",
    "added": "13 Oct, from the try 1 reviews",
-   "from": "close fault 3"
+   "from": "close fault 3",
+   "changed": "13 Oct, from the try 2 reviews"
   },
   {
    "id": "PIC-05g",
@@ -16799,8 +16833,8 @@
   {
    "id": "ROOM-02",
    "name": "the right board is covered",
-   "what": "at least 60 per cent of the right board covered with goods at real size",
-   "expected": "at least 60 per cent of the right board covered with goods at real size",
+   "what": "each row of the right board (saws z 1.85 to 2.10; hammers and pipe wrenches 1.40 to 1.80; pliers and adjustable wrenches 0.95 to 1.35; combination wrenches and the planes 0.50 to 0.90) filled to at least 80 per cent of the board's width (a gap of 0.06 m or less counts as filled); about 60 tools at 0.9 to 1.0 [13 Oct, from the try 2 reviews, close 6]",
+   "expected": "every row at least 80 per cent of the board's 2.9 m",
    "tolerance": "none",
    "applies_to": [
     "ritas"
@@ -16808,7 +16842,92 @@
    "kind": "gate",
    "how": "check_try2.py, run by build_ritas.py checks",
    "added": "13 Oct, from the try 1 reviews",
-   "from": "close narrow 2"
+   "from": "close narrow 2",
+   "changed": "13 Oct, from the try 2 reviews"
+  },
+  {
+   "tolerance": "none",
+   "applies_to": [
+    "ritas"
+   ],
+   "kind": "gate",
+   "how": "check_try2.py, run by build_ritas.py checks",
+   "added": "13 Oct, from the try 2 reviews",
+   "id": "FRN-10",
+   "name": "no two parts of the front share a visible face plane; nothing on the front is black",
+   "what": "no faces of two different parts of the front (the door family's own F1 parts among themselves apart) lie within 0.5 mm of one plane, face the same way and overlap by more than 1 mm2 where a camera (the four review cameras and 15 street viewpoints) can see them; in the day gate frames no pixel of the front (outside the glass, the two fanlights and the shop door's glass) is under luma 8",
+   "expected": "0 visible coplanar overlaps; 0 front pixels under luma 8",
+   "from": "street 1, close 2"
+  },
+  {
+   "tolerance": "none",
+   "applies_to": [
+    "ritas"
+   ],
+   "kind": "gate",
+   "how": "check_try2.py, run by build_ritas.py checks",
+   "added": "13 Oct, from the try 2 reviews",
+   "id": "GLS-03",
+   "name": "the night glass does not double what is behind it",
+   "what": "at night, p95 of |the gate frame minus the render with the glass's reflection off| over the window's glass at most 15 levels at every camera (the night stand-in glass is reflection only: Glossy GGX 0.02 weighted 0.2 x Fresnel at IOR 1.5)",
+   "expected": "p95 at most 15 levels at STREET_SQUARE, STREET_30, CLOSE_35, CLOSE_35_B",
+   "from": "street 2, close 3"
+  },
+  {
+   "tolerance": "none",
+   "applies_to": [
+    "ritas"
+   ],
+   "kind": "gate",
+   "how": "check_try2.py, run by build_ritas.py checks",
+   "added": "13 Oct, from the try 2 reviews",
+   "id": "LIT-08",
+   "name": "the display's goods are lit at night",
+   "what": "at night_lit from CLOSE_35 and CLOSE_35_B, each display piece's mean luma over the lattice's gaps is at least 0.6 of the room's mean luma seen round it; PIC-05g stays at or under 0.01 (the two strip lights of display.structure.night_strips)",
+   "expected": "every piece at least 0.6",
+   "from": "close 1"
+  },
+  {
+   "tolerance": "none",
+   "applies_to": [
+    "ritas"
+   ],
+   "kind": "gate",
+   "how": "check_try2.py, run by build_ritas.py checks",
+   "added": "13 Oct, from the try 2 reviews",
+   "id": "SO-07",
+   "name": "no room mesh intersects another",
+   "what": "no mesh of the room (fixtures, goods, tickets, notices) intersects another, 2 mm tolerance (each mesh inset 1 mm)",
+   "expected": "0 intersecting pairs",
+   "from": "close 5"
+  },
+  {
+   "tolerance": "none",
+   "applies_to": [
+    "ritas"
+   ],
+   "kind": "gate",
+   "how": "check_try2.py, run by build_ritas.py checks",
+   "added": "13 Oct, from the try 2 reviews",
+   "id": "ROOM-03",
+   "name": "the risers and the boxes on the sets",
+   "what": "the riser shelves on the television boards are 0.20 above the board and 0.20 deep and filled to at least 80 per cent of their length overall (each stretch at least 70 per cent), with pieces at 0.9 to 1.0; one cardboard box stands on top of each upper set",
+   "expected": "fill >= 0.80 overall, 2 boxes on the sets",
+   "from": "close 4"
+  },
+  {
+   "tolerance": "none",
+   "applies_to": [
+    "ritas"
+   ],
+   "kind": "gate",
+   "how": "check_try2.py, run by build_ritas.py checks",
+   "added": "13 Oct, from the try 2 reviews",
+   "id": "ROOM-04",
+   "name": "the left board's six clocks",
+   "what": "the six wall clocks hang in two staggered rows (about z 1.58 and 1.85, three in each, never more than three in a line), each showing a different time, at scale 0.9 to 1.0",
+   "expected": "2 rows of 3, 6 different times",
+   "from": "close 4"
   }
  ],
  "disagreements_photographs_win": [
@@ -17215,7 +17334,7 @@
   {
    "id": "PC-02",
    "for": "LIT-05",
-   "what": "in the packaged game at night, the lit shops' window beds read at a mean luma of 45 or more in STREET_SQUARE with the game's own spill light",
+   "what": "in the packaged game at night, the lit shops' window beds read at a mean luma of 45 or more in STREET_SQUARE with the game's own spill light; the pool of that light on the pavement is the game's own (the gate's footway takes the stand-in spill again: show it on his page as 'the gate's stand-in; the game's own is owed (PC-02)') [13 Oct, from the try 2 reviews]",
    "why": "the gate models the spill; Lumen's own light on the display is the game's"
   },
   {
@@ -17235,6 +17354,18 @@
    "for": "close narrow 9, 11, 1",
    "what": "wear on the joinery from the D53 layer (foot grime, lever band, chips); the final pictures at 128 samples; the display lit by the game's own light through the game's glass",
    "why": "the gate's wear-free joinery, 64-sample pictures and stand-in glass; added 13 Oct, from the try 1 reviews"
+  },
+  {
+   "id": "PC-06",
+   "for": "street review 4",
+   "what": "at night in the packaged game, from STREET_SQUARE, the RITA'S letters on the fascia and the board's ground differ by a luma ratio of 1.3 or more either way (the gate's gilt reads 11.8 against a ground of 12.0 because it mirrors the gate's black night world and the board is lit only by two assumed lamps 9 and 11 m to the side); if the game does not give it, a light over the board is a look decision for Jafar's page, one line, from the target's owner",
+   "why": "the gate cannot judge the game's reflections of the lit street or its lamps; added 13 Oct, from the try 2 reviews"
+  },
+  {
+   "id": "PC-07",
+   "for": "close review 1, LIT-08",
+   "what": "the game's display entry (shop-interiors.json, pawnbroker display lights) takes the same two strip lights (rect 3.20 x 0.02 m, 8 mm under the front edge of the middle tier at v 0.20, w 0.377 and the top tier at v 0.24, w 0.727, tipped 30 degrees toward the back, 3000 K, the display's channel), their strength in lumens measured on the PC with PC-02 so that the goods read at 0.6 of the room's luma at night",
+   "why": "the gate's strength is in Blender watts set by eye; added 13 Oct, from the try 2 reviews"
   }
  ],
  "previews": {

@@ -10,6 +10,15 @@
   LIT-02b          the rendered frames with the glass's reflection off: at most 1 per cent of the window-glass pixels under luma 12 (close fault 3)
   PIC-05g          the gate's rendered review frames: at most 1 per cent at 250 or above (close fault 4)
   SO-06, ROOM-01/02  the stock wall's scales 0.9 to 1.1; the boards' coverage (close narrow 2, 3)
+13 October, from the try 2 reviews (the narrow points):
+  FRN-10           no two parts of the front share a face plane where a camera can see it; nothing on the front under luma 8 by day outside the glass (street 1, close 2)
+  GLS-03           at night, p95 of |frame - the reflection-off render| over the glass at most 15 levels at every camera (street 2, close 3)
+  LIT-08           at night from the two close cameras every display piece's mean luma over the lattice's gaps is at least 0.6 of the room's mean luma round it (close 1)
+  SO-07            no room mesh intersects another, 2 mm tolerance (close 5)
+  DSP-03 (changed) every front-row piece shows at least half its silhouette from STREET_SQUARE itself (street 3)
+  LIT-02b (changed) a slab test at the street cameras: the largest patch of dark room pixels at most 1 per cent of the glass (street 6, close 8)
+  LIT-07 (changed) the pavement-pool condition is struck (street 5)
+  ROOM-02 (changed) each row of the right board filled to 80 per cent of its width (close 6); ROOM-03 the risers and the boxes on the sets; ROOM-04 the left board's clocks (close 4)
 """
 import json
 import math
@@ -475,12 +484,19 @@ def display_rows(R, work, assets, rows):
         return "%s(%s)" % (g["model"], nm)
     bad_l = [(label(a), label(b), n) for a, b, n in bad]
     # the silhouette visibility: object-index pass from STREET_SQUARE and CLOSE_35
-    vis = visibility(R, work, assets, di, group_of)
-    low = [(g["model"], round(v, 2)) for g, v in zip(di["groups"], vis) if g["kind"] == "piece" and v < 0.5]
-    rows.add("DSP-03", "no display mesh intersects another; every piece shows", not bad and not low,
-             "%d display meshes, %d pairs with overlapping boxes tested (each mesh inset 1 mm, so a 2 mm contact is tolerated): %d pairs intersect%s; the share of each piece's silhouette seen from CLOSE_35 or STREET_SQUARE (an object-index pass, the frame's bars and the other pieces in front): %d pieces, lowest %.2f, %d under 0.5%s"
-             % (len(names), pairs, len(bad), (" (" + "; ".join("%s x %s" % (a, b) for a, b, _ in bad_l[:8]) + ")") if bad else "", sum(1 for g in di["groups"] if g["kind"] == "piece"),
-                min([v for g, v in zip(di["groups"], vis) if g["kind"] == "piece"] or [0]), len(low), (": " + ", ".join("%s %.2f" % kv for kv in low[:8])) if low else ""))
+    per_cam = visibility(R, work, assets, di, group_of)
+    vis = np.maximum(per_cam["STREET_SQUARE"], per_cam["CLOSE_35"])
+    sq = per_cam["STREET_SQUARE"]
+    # 13 Oct, from the try 2 reviews (street 3): the front row (the bed's pieces and the scripted trays, pads and chains) must show half its silhouette from STREET_SQUARE ITSELF, because the
+    # old rule (the better of CLOSE_35 and STREET_SQUARE) let a front row that the far pavement could not see pass; every other piece keeps the old rule
+    front_row = [i for i, g in enumerate(di["groups"]) if (g["kind"] == "piece" and g.get("tier") == "bed") or g["kind"] == "scripted"]
+    other = [i for i, g in enumerate(di["groups"]) if g["kind"] == "piece" and i not in front_row]
+    low_front = [(di["groups"][i]["model"], round(float(sq[i]), 2)) for i in front_row if sq[i] < 0.5]
+    low = [(di["groups"][i]["model"], round(float(vis[i]), 2)) for i in other if vis[i] < 0.5]
+    rows.add("DSP-03", "no display mesh intersects another; every piece shows", not bad and not low and not low_front,
+             "%d display meshes, %d pairs with overlapping boxes tested (each mesh inset 1 mm, so a 2 mm contact is tolerated): %d pairs intersect%s; the share of each piece's silhouette seen (an object-index pass, the frame's bars and the other pieces in front): the %d pieces of the front row (the bed's pieces and the scripted trays, pads and chains) from STREET_SQUARE itself: lowest %.2f, %d under 0.5%s; the other %d pieces from CLOSE_35 or STREET_SQUARE: lowest %.2f, %d under 0.5%s"
+             % (len(names), pairs, len(bad), (" (" + "; ".join("%s x %s" % (a, b) for a, b, _ in bad_l[:8]) + ")") if bad else "", len(front_row), min([float(sq[i]) for i in front_row] or [0]), len(low_front),
+                (": " + ", ".join("%s %.2f" % kv for kv in low_front[:8])) if low_front else "", len(other), min([float(vis[i]) for i in other] or [0]), len(low), (": " + ", ".join("%s %.2f" % kv for kv in low[:8])) if low else ""))
     # DSP-04
     L = di["length_m"]
     out, ok = [], True
@@ -511,8 +527,10 @@ def visibility(R, work, assets, di, group_of):
     import bpy
     import mathutils
     res = (1920, 1080)                    # thin pieces (the spectacles' rims) are under a pixel wide at 1280
-    best = np.zeros(len(di["groups"]))
+    per_cam = {}
     for cam in ("STREET_SQUARE", "CLOSE_35"):
+        best = np.zeros(len(di["groups"]))
+        per_cam[cam] = best
         bpy.ops.wm.read_factory_settings(use_empty=True)
         sc = bpy.context.scene
         disp = load_glb_objects(os.path.join(assets, "ritas_display.glb"))
@@ -594,7 +612,7 @@ def visibility(R, work, assets, di, group_of):
         white = flat((1, 1, 1))
         all_disp = [o for o in disp if o.type == "MESH"]
         for gi, g in enumerate(di["groups"]):
-            if g["kind"] != "piece":
+            if g["kind"] not in ("piece", "scripted"):          # (13 Oct: the front row's trays, pads and chains are tested too: street review 3)
                 continue
             names = set(g["objs"])
             for o in bpy.data.objects:
@@ -622,7 +640,7 @@ def visibility(R, work, assets, di, group_of):
         for o in bpy.data.objects:
             if o.type == "MESH":
                 o.hide_render = False
-    return best
+    return per_cam
 
 
 def gate_frame_rows(R, work, rows):
@@ -647,9 +665,12 @@ def glass_zone_mask(R, cam, state, work, res=CHECK_RES, which="mask"):
 
 
 def lit02b_rows(R, work, rows):
-    """LIT-02b (close review fault 3c): the rendered frames with the glass's reflection off: at most 1 per cent of the window-glass pixels under luma 12 where the glass shows the ROOM
-    (the card, the reveals, the display's return walls): that is the black slab of try 1. The display's own dark things (black plastic, velvet at night, the shade under a tier) are not a
-    void; the share over ALL the window-glass pixels is written beside it. Pass on CLOSE_35_B and STREET_30 (the review's two cameras), both states; the other two are reported."""
+    """LIT-02b (close review fault 3c; try 2 narrow points: street 6, close 8): the rendered frames with the glass's reflection off, window-glass pixels under luma 12 where the glass shows the
+    ROOM (the card, the reveals, the display's return walls). A black slab is one big patch (try 1's was about a third of the window); the room's own shade under the shelves, seen through the day
+    card's 0.15, is a scatter of small ones (STREET_30 by day: 1.13 per cent of the glass in all, the largest patch 0.63). So at the two STREET cameras the limit is on the LARGEST CONNECTED
+    patch (the dark room pixels dilated by 2 px, as the row measured it): at most 1 per cent of the glass. At CLOSE_35_B, the camera of the slab the row was written for, both limits hold: the
+    share of the glass at most 1 per cent AND the largest patch at most 1 per cent. CLOSE_35 is reported. The display's own dark things (black plastic, velvet at night, the shade under a tier)
+    are not a void; the share over ALL the window-glass pixels is written beside it."""
     det, ok = [], True
     for cam in ("CLOSE_35_B", "STREET_30", "STREET_SQUARE", "CLOSE_35"):
         for st in ("day", "night_lit"):
@@ -667,15 +688,22 @@ def lit02b_rows(R, work, rows):
             dark = lum < 12
             share_room = float((dark & room).sum()) / max(n, 1)
             share_all = float((dark & mk).sum()) / max(n, 1)
-            good = share_room <= 0.01
-            if cam in ("CLOSE_35_B", "STREET_30"):
-                ok &= good
             # the largest connected patch of those dark room pixels (a slab is one patch; the brown dado seen at the day card's 0.15 is a scatter of small ones)
             from scipy import ndimage as _nd
             lab, nl = _nd.label(_nd.binary_dilation(dark & room, iterations=2))
             big = float(max(_nd.sum(dark & room, lab, range(1, nl + 1)))) / max(n, 1) if nl else 0.0
-            det.append("%s %s: room %.4f (of %d px, the room shows in %.0f per cent of them; the largest patch %.4f), all glass %.4f%s" % (cam, st, share_room, n, 100.0 * float(room.sum()) / max(n, 1), big, share_all, "" if good else " (OVER 1 per cent)"))
-    rows.add("LIT-02b", "no black void in the rendered frames", ok, "window-glass pixels (the glass mask: no frame, mullion, bead or lattice) under luma 12, in frames rendered with the glass's reflection off, where the glass shows the room: " + "; ".join(det) + " (limit 0.01 on CLOSE_35_B and STREET_30; try 1's black slab at CLOSE_35_B's far light was about a third of the window)")
+            good_share, good_slab = share_room <= 0.01, big <= 0.01
+            if cam == "CLOSE_35_B":
+                ok &= good_share and good_slab
+                tested = "share and patch"
+            elif cam in ("STREET_30", "STREET_SQUARE"):
+                ok &= good_slab
+                tested = "patch"
+            else:
+                tested = "reported"
+            det.append("%s %s: room share %.4f (of %d glass px, the room shows in %.0f per cent of them), largest patch %.4f, all glass %.4f [%s%s]" % (
+                cam, st, share_room, n, 100.0 * float(room.sum()) / max(n, 1), big, share_all, tested, "" if (good_slab and (good_share or cam != "CLOSE_35_B")) else ": OVER 1 per cent"))
+    rows.add("LIT-02b", "no black void in the rendered frames", ok, "window-glass pixels (the glass mask: no frame, mullion, bead or lattice) under luma 12, in frames rendered with the glass's reflection off, where the glass shows the room: " + "; ".join(det) + " (limits: 0.01 on the largest patch at STREET_SQUARE and STREET_30, 0.01 on both the share and the patch at CLOSE_35_B; try 1's black slab at CLOSE_35_B's far light was about a third of the window)")
 
 
 def night_rows(R, work, rows, spill_w):
@@ -743,11 +771,10 @@ def night_rows(R, work, rows, spill_w):
     for cam, c in res_cond.items():
         c1 = c["head_burnt"] < 0.01
         c2 = c["mullion"] < c["glass"]
-        c3 = c["pool"] <= c["glass"]
-        ok &= c1 and c2 and c3
-        det.append("%s: head band at 250 or above %.4f (under 0.01) %s; mullion fronts %.1f (p95 %.1f) against the glass %.1f %s; pavement pool %.1f against the lit glass %.1f %s" % (
-            cam, c["head_burnt"], "ok" if c1 else "FAIL", c["mullion"], c["mullion_p95"], c["glass"], "ok" if c2 else "FAIL", c["pool"], c["glass"], "ok" if c3 else "FAIL"))
-    rows.add("LIT-07", "the night spill stays behind the glass", ok and bool(res_cond), "; ".join(det) + " (try 1: head band 0.32 and 0.35, mullion fronts p95 228, pavement 113 against the glass 66.8)")
+        ok &= c1 and c2
+        det.append("%s: head band at 250 or above %.4f (under 0.01) %s; mullion fronts %.1f (p95 %.1f) against the glass %.1f %s; the pavement pool in front of the window %.1f (written, not a condition: see below)" % (
+            cam, c["head_burnt"], "ok" if c1 else "FAIL", c["mullion"], c["mullion_p95"], c["glass"], "ok" if c2 else "FAIL", c["pool"]))
+    rows.add("LIT-07", "the night spill stays behind the glass", ok and bool(res_cond), "; ".join(det) + " (try 1: head band 0.32 and 0.35, mullion fronts p95 228, pavement 113 against the glass 66.8). The third condition (the pavement pool no brighter than the lit glass) is STRUCK (13 Oct, from the try 2 street review, 5: it compared a pale pavement with a window whose glass shows dark velvet and black plastic and could not be met by any spill that lights the bed through the glass); the gate's footway is on the spill's channel again, so the pool is the gate's stand-in and the game's own is owed (PC-02)")
 
 
 def board_rows(R, work, rows):
@@ -794,7 +821,312 @@ def board_rows(R, work, rows):
     cl, tl = cover("R-left-board", (0.3, 4.2), (0.45, 2.15))
     cr, tr = cover("R-right-board", (1.3, 4.2), (0.45, 2.15))
     rows.add("ROOM-01", "the left board is covered", cl >= 0.60, "the left board (y 0.3 to 4.2, z 0.45 to 2.15, 6.63 m2): goods at real size cover %.0f per cent by bounding box (%.2f m2; at least 60 per cent)" % (100 * cl, tl))
-    rows.add("ROOM-02", "the right board is covered", cr >= 0.60, "the right board (y 1.3 to 4.2, z 0.45 to 2.15, 4.93 m2): the tools at real size with every count doubled, as the review words the fix, cover %.0f per cent by bounding box (%.2f m2; the review asks for 60 per cent: doubled counts of these tools cannot reach it)" % (100 * cr, tr))
+    # ROOM-02 (13 Oct, from the try 2 close review, 6): an area share by bounding box does not measure slim tools, so each ROW is measured: the tools of a row (placed with the row's tag) as intervals along
+    # the board (y), each widened by 0.03 (the rows' gaps are 0.04 to 0.06, so a gap of 0.06 or less counts as filled), their union at least 80 per cent of the board's 2.9 m
+    out, ok2, ntools = [], True, 0
+    for tag_, band in (("R1", "saws z 1.85 to 2.10"), ("R2", "hammers and pipe wrenches 1.40 to 1.80"), ("R3", "pliers and adjustable wrenches 0.95 to 1.35"), ("R4", "combination wrenches and planes 0.50 to 0.90")):
+        iv = sorted((max(q["ext"][2] - 0.03, 1.3), min(q["ext"][3] + 0.03, 4.2)) for q in placed if q.get("tag") == tag_ and q["fixture"] == "R-right-board")
+        cur, tot = 1.3, 0.0
+        for a, b in iv:
+            a = max(a, cur)
+            if b > a:
+                tot += b - a
+                cur = b
+        sc_ = [q["scale"] for q in placed if q.get("tag") == tag_]
+        gaps = [iv[k + 1][0] + 0.03 - (iv[k][1] - 0.03) for k in range(len(iv) - 1)]
+        frac = tot / 2.9
+        ntools += len(iv)
+        ok2 &= frac >= 0.80 and bool(iv) and (not sc_ or min(sc_) >= 0.9 - 1e-3) and (not gaps or (min(gaps) >= 0.04 - 1e-3 and max(gaps) <= 0.06 + 1e-3))
+        out.append("%s (%s): %d tools, %.0f per cent of the width, gaps %.3f to %.3f, scales %.2f to %.2f" % (tag_, band, len(iv), 100 * frac, min(gaps or [0]), max(gaps or [0]), min(sc_ or [0]), max(sc_ or [0])))
+    rows.add("ROOM-02", "the right board is covered", ok2, "by rows, each tool's interval along the board widened by 0.03, the union against the board's 2.9 m (at least 80 per cent), gaps 0.04 to 0.06, scales 0.9 to 1.0: " + "; ".join(out) + "; %d tools (the review: about 60); the area share by bounding box, for the record: %.0f per cent (try 2: 18)" % (ntools, 100 * cr))
+    # ROOM-03: the risers and the boxes on the sets
+    rs = [f for f in fixtures if f.get("name", "").startswith("riser_")]
+    det3, tot_len, tot_fill, ok3 = [], 0.0, 0.0, bool(rs)
+    for f in rs:
+        e = f["ext"]
+        zt = e[5]
+        ln = e[1] - e[0]
+        ws = [(q["ext"][0], q["ext"][1]) for q in placed if q["fixture"] == "R-back-stock" and abs(q["ext"][4] - zt) < 1e-3 and q["ext"][0] >= e[0] - 0.01 and q["ext"][1] <= e[1] + 0.01 and q["model"] != "cardboard_box_01"]
+        w = sum(b - a for a, b in ws)
+        tot_len += ln
+        tot_fill += w
+        sc_ = [q["scale"] for q in placed if q["fixture"] == "R-back-stock" and abs(q["ext"][4] - zt) < 1e-3 and q["ext"][0] >= e[0] - 0.01 and q["ext"][1] <= e[1] + 0.01]
+        dims_ok = abs((e[3] - e[2]) - 0.195) < 0.006 and abs(zt - (e[5] - 0.0)) < 1e-6
+        det3.append("z %.2f x %.2f to %.2f: %d pieces, %.0f per cent" % (zt - RISER_H, e[0], e[1], len(ws), 100 * w / ln if ln else 0))
+        ok3 &= (w / ln >= 0.70 if ln else False) and dims_ok and (not sc_ or min(sc_) >= 0.9 - 1e-3)
+    boxes_on_tv = [q for q in placed if q["model"] == "cardboard_box_01" and q["fixture"] == "R-back-stock" and q["ext"][4] > 2.15]
+    ok3 &= (tot_fill / tot_len >= 0.80 if tot_len else False) and len(boxes_on_tv) == 2
+    rows.add("ROOM-03", "the risers and the boxes on the sets", ok3, "%d riser shelves (0.20 above their television board, 0.195 deep): %s; overall %.0f per cent of %.2f m (at least 80, each at least 70); %d cardboard boxes on top of the upper sets (2 wanted), the stock wall's pieces at scale 0.9 to 1.0; the review: 'about 14 more pieces': %d stock pieces now against 33 in try 2" % (
+        len(rs), "; ".join(det3), 100 * tot_fill / tot_len if tot_len else 0, tot_len, len(boxes_on_tv), sum(1 for q in placed if q["fixture"] == "R-back-stock" and q["model"] != "television_02")))
+    # ROOM-04: the left board's clocks
+    ck = [q for q in placed if q["model"] == "wall_clock" and q["fixture"] == "R-left-board"]
+    zs = sorted(q["ext"][4] / 2 + q["ext"][5] / 2 for q in ck)
+    rowA = [z for z in zs if z < 1.72]
+    rowB = [z for z in zs if z >= 1.72]
+    times = [tuple(q["clock"]) if q.get("clock") else None for q in ck]
+    ys = sorted((q["ext"][2] + q["ext"][3]) / 2 for q in ck)
+    # never more than three in a line: no three at one z within 0.05 beyond rows of three; neighbours in different rows clear each other
+    ok4 = (len(ck) == 6 and len(rowA) == 3 and len(rowB) == 3 and all(1.55 - 0.001 <= z <= 1.60 + 0.001 for z in rowA) and all(1.83 - 0.001 <= z <= 1.88 + 0.001 for z in rowB)
+           and len({(t_[0], t_[1]) for t_ in times if t_}) == 6 and all(0.9 - 1e-3 <= q["scale"] <= 1.0 + 1e-3 for q in ck))
+    rows.add("ROOM-04", "the left board's six clocks", ok4, "%d wall clocks on the left board: z of the centres %s (two rows: z 1.55 to 1.60 and 1.83 to 1.88, three in each); y %s; the times shown %s (all different); scale 1.0" % (
+        len(ck), [round(z, 3) for z in zs], [round(y, 2) for y in ys], ["%d:%02d" % (t_[0], t_[1]) for t_ in times if t_]))
+
+
+# ------------------------------------------------------------------------------------------------------------------------- 13 Oct, from the try 2 reviews
+RISER_H = 0.20
+
+
+def so07_rows(work, rows, tol=0.002):
+    """SO-07 (close review 5): no mesh of the room intersects another, 2 mm tolerance (each mesh inset 1 mm along its normals, or less on a thin one, then a BVH overlap, as DSP-03 does for the display).
+    The room is rebuilt here from the same script and target (seconds); a piece's own meshes (its hands, its lens) do not count against each other."""
+    import bpy
+    from mathutils.bvhtree import BVHTree
+    import sw_room as S
+    r = S.build_scene(os.path.join(work, "rooms_check"))
+    deps = bpy.context.evaluated_depsgraph_get()
+    group_of = {}
+    for gi, q in enumerate(r.placed):
+        for nm in q["objs"]:
+            group_of[nm] = gi
+    data = {}
+    for ob in bpy.data.objects:
+        if ob.type != "MESH" or r.coll_t in ob.users_collection or ob.hide_render:
+            continue
+        V, T, N = mesh_world(ob, deps)
+        if len(V) == 0 or len(T) == 0:
+            continue
+        lo, hi = V.min(axis=0), V.max(axis=0)
+        inset = min(0.001, 0.2 * float((hi - lo).min()) / 2.0)
+        Ne = N / np.maximum(np.linalg.norm(N, axis=1, keepdims=True), 1e-9)
+        data[ob.name] = {"lo": lo, "hi": hi, "bvh": BVHTree.FromPolygons((V - Ne * inset).tolist(), T.tolist(), epsilon=0.0)}
+    names = sorted(data)
+    bad, pairs = [], 0
+    for i in range(len(names)):
+        a = data[names[i]]
+        for j in range(i + 1, len(names)):
+            b = data[names[j]]
+            if np.any(a["hi"] < b["lo"] + tol) or np.any(b["hi"] < a["lo"] + tol):
+                continue
+            ga, gb = group_of.get(names[i]), group_of.get(names[j])
+            if ga is not None and ga == gb:
+                continue
+            pairs += 1
+            if a["bvh"].overlap(b["bvh"]):
+                bad.append((names[i], names[j]))
+
+    def lab(n):
+        g = group_of.get(n)
+        return "%s(%s)" % (r.placed[g]["model"], n) if g is not None else n
+    rows.add("SO-07", "no room mesh intersects another", not bad, "%d room meshes (fixtures, %d placed goods, tickets, notices), %d pairs with overlapping boxes tested (each mesh inset 1 mm, so a 2 mm contact is tolerated): %d pairs intersect%s (try 2: the till ran 0.12 m up through the z 1.35 board and the box on it)" % (
+        len(names), len(r.placed), pairs, len(bad), (" (" + "; ".join("%s x %s" % (lab(a), lab(b)) for a, b in bad[:8]) + ")") if bad else ""))
+    return r
+
+
+def coplanar_front(glb, R, members, tol=0.5, min_area=1.0, ang=2.0):
+    """The visible coplanar overlaps of the front's parts. Returns [(partA, partB, direction, plane mm, area mm2, viewpoints that see it)]."""
+    import bpy
+    from mathutils.bvhtree import BVHTree
+    from shapely.geometry import Polygon
+    from shapely.ops import unary_union
+    from collections import defaultdict
+    bpy.ops.wm.read_factory_settings(use_empty=True)
+    objs = load_glb_objects(glb)
+    deps = bpy.context.evaluated_depsgraph_get()
+    dirs = {(0, 1): "+x", (0, -1): "-x", (1, 1): "+y", (1, -1): "-y (street)", (2, 1): "+z", (2, -1): "-z"}
+    per = {k: [] for k in dirs}
+    cosang = math.cos(math.radians(ang))
+    verts, polys, owner = [], [], []
+    off = 0
+    f1 = {k for k, v in members.items() if v.get("group") == "side_door_F1"}
+    for ob in objs:
+        if ob.type != "MESH":
+            continue
+        V, T_, _ = mesh_world(ob, deps)
+        V = V * 1000.0
+        if len(T_) == 0:
+            continue
+        low = ob.name.lower()
+        if not (low.startswith(("sign_", "glass_row", "door_sign", "grille_lattice")) or "glass" in low):
+            verts.extend(V.tolist())
+            polys.extend((T_ + off).tolist())
+            owner.extend([ob.name] * len(T_))
+            off += len(V)
+        a, b, c = V[T_[:, 0]], V[T_[:, 1]], V[T_[:, 2]]
+        n = np.cross(b - a, c - a)
+        ln = np.linalg.norm(n, axis=1)
+        okf = ln > 1e-9
+        n = n / np.where(okf, ln, 1.0)[:, None]
+        for ax in range(3):
+            for sg in (1, -1):
+                sel = okf & (n[:, ax] * sg >= cosang)
+                other = [i for i in range(3) if i != ax]
+                for ti in np.nonzero(sel)[0]:
+                    pts = V[T_[ti]]
+                    per[(ax, sg)].append((float(pts[:, ax].mean()), ob.name, pts[:, other]))
+    bvh = BVHTree.FromPolygons(verts, polys, epsilon=1e-6)
+    eyes = [np.array(G.to_model(R["cameras"][c]["eye_street_m"])) * 1000.0 for c in ("STREET_SQUARE", "STREET_30", "CLOSE_35", "CLOSE_35_B")]
+    for xs in (-6, -3, 0, 3, 6):
+        for ys in (-1.5, -4.0, -8.0):
+            eyes.append(np.array([xs, ys, 1.5]) * 1000.0)       # model frame: y negative toward the street
+    res = []
+    for key, items in per.items():
+        ax, sg = key
+        other = [i for i in range(3) if i != ax]
+        bk = defaultdict(list)
+        for c, nm, p in items:
+            bk[int(round(c / tol))].append((c, nm, p))
+        seen = set()
+        for b in sorted(bk):
+            cand = bk[b] + bk.get(b + 1, [])
+            by = defaultdict(list)
+            for c, nm, p in cand:
+                by[nm].append((c, p))
+            if len(by) < 2:
+                continue
+            polysd = {}
+            for nm in by:
+                ps = [q for q in (Polygon(p) for c, p in by[nm]) if q.area > 1e-6]
+                if ps:
+                    polysd[nm] = (unary_union(ps), float(np.mean([c for c, p in by[nm]])))
+            ns = sorted(polysd)
+            for i in range(len(ns)):
+                for j in range(i + 1, len(ns)):
+                    if ns[i] in f1 and ns[j] in f1:
+                        continue                              # the door family's own parts (F1 is kept as it was built and checked)
+                    A_, B_ = polysd[ns[i]], polysd[ns[j]]
+                    if abs(A_[1] - B_[1]) > tol or not A_[0].intersects(B_[0]):
+                        continue
+                    ov = A_[0].intersection(B_[0])
+                    if ov.area <= min_area or (ns[i], ns[j], key) in seen:
+                        continue
+                    seen.add((ns[i], ns[j], key))
+                    geoms = [g for g in (ov.geoms if hasattr(ov, "geoms") else [ov]) if g.area > 0.2]
+                    samp = []
+                    for g in geoms:
+                        samp.append(g.representative_point())
+                        c0 = g.centroid
+                        if g.contains(c0):
+                            samp.append(c0)
+                    vis = 0
+                    for sp in samp[:6]:
+                        p = np.zeros(3)
+                        p[other[0]] = sp.x
+                        p[other[1]] = sp.y
+                        p[ax] = A_[1] + sg * 0.3
+                        for e in eyes:
+                            d = e - p
+                            if np.dot(d, np.eye(3)[ax] * sg) <= 0:
+                                continue
+                            dist = np.linalg.norm(d)
+                            h = bvh.ray_cast(tuple(p), tuple(d / dist))
+                            if h[0] is None or h[3] >= dist - 0.5:
+                                vis += 1
+                                break
+                    res.append((ns[i], ns[j], dirs[key], round(A_[1], 2), round(ov.area, 1), vis))
+    return res
+
+
+def frn10_rows(R, work, assets, rows, members):
+    """FRN-10 (street review 1, close review 2): (a) no two parts of the front share a face plane where a camera can see it; (b) in the day gate frames no pixel of the front is under luma 8."""
+    glb = os.path.join(assets, "ritas_front.glb")
+    cop = coplanar_front(glb, R, members)
+    vis = [c for c in cop if c[5]]
+    det_a = "%d coplanar same-facing overlaps of more than 1 mm2 among the front's parts (hidden ones, behind the doors or inside the joinery: not a fault), %d of them where a camera can see them%s" % (
+        len(cop), len(vis), (": " + "; ".join("%s x %s at %s %s (%s mm2)" % (a, b, d, pl, ar) for a, b, d, pl, ar, v in vis[:6])) if vis else "")
+    gate = os.path.join(work, "gate")
+    res = (2560, 1440)
+    dark_tot, det_b, miss = 0, [], False
+    from scipy import ndimage as _nd
+    for cam in ("STREET_SQUARE", "STREET_30", "CLOSE_35", "CLOSE_35_B"):
+        pf = os.path.join(gate, "%s_day.png" % cam)
+        pm = os.path.join(gate, "check_%s_day_frontmask.png" % cam)
+        if not (os.path.exists(pf) and os.path.exists(pm)):
+            miss = True
+            continue
+        im = np.asarray(Image.open(pf).convert("RGB")).astype(np.float32)
+        mk = np.asarray(Image.open(pm).convert("L")) > 128
+        if mk.shape != im.shape[:2]:
+            mk = np.asarray(Image.open(pm).convert("L").resize((im.shape[1], im.shape[0]), Image.NEAREST)) > 128
+        mk = _nd.binary_erosion(mk, iterations=2)               # an edge pixel is half something else
+        lum = luma(im)
+        dk = mk & (lum < 8)
+        n = int(dk.sum())
+        dark_tot += n
+        det_b.append("%s %d of %d front pixels under luma 8 (the darkest %.1f)" % (cam, n, int(mk.sum()), float(lum[mk].min()) if mk.any() else -1))
+    rows.add("FRN-10", "no two parts of the front share a visible face plane; nothing on the front is black", not vis and dark_tot == 0 and not miss,
+             det_a + ". By day, in the four gate frames at 2560 x 1440, over the front's own pixels (a mask render: the glass, the two fanlights, the shop door's glass, the hall, the lettering rows and the OPEN sign are not the front; the mask eroded by 2 px): " + "; ".join(det_b) +
+             " (try 2: the two strips beside the side door were luma 0 to 3, about 12,000 pixels at STREET_SQUARE: F1's frame jambs, the added side jambs and the fillers stood in one plane, d 100)")
+
+
+def glass_night_rows(R, work, rows):
+    """GLS-03 (street review 2, close review 3): at night p95 of |frame - the render with the glass's reflection off| over the window's glass, at most 15 levels at every camera. The frame
+    (2560 x 1440) is reduced to the check render's 1280 x 720 by averaging 2 x 2; luma; the glass mask is the check's own."""
+    gate = os.path.join(work, "gate")
+    det, ok, n = [], True, 0
+    for cam in ("STREET_SQUARE", "STREET_30", "CLOSE_35", "CLOSE_35_B"):
+        pf = os.path.join(gate, "%s_night_lit.png" % cam)
+        pn = os.path.join(gate, "check_%s_night_lit_norefl.png" % cam)
+        pm = os.path.join(gate, "check_%s_night_lit_mask.png" % cam)
+        if not (os.path.exists(pf) and os.path.exists(pn) and os.path.exists(pm)):
+            ok = False
+            continue
+        fr = np.asarray(Image.open(pf).convert("RGB")).astype(np.float32)
+        h2, w2 = fr.shape[0] // 2, fr.shape[1] // 2
+        fr = fr[:h2 * 2, :w2 * 2].reshape(h2, 2, w2, 2, 3).mean(axis=(1, 3))
+        nr = np.asarray(Image.open(pn).convert("RGB")).astype(np.float32)
+        mk = np.asarray(Image.open(pm).convert("L")) > 128
+        if nr.shape[:2] != fr.shape[:2]:
+            nr = np.asarray(Image.open(pn).convert("RGB").resize((w2, h2), Image.BILINEAR)).astype(np.float32)
+            mk = np.asarray(Image.open(pm).convert("L").resize((w2, h2), Image.NEAREST)) > 128
+        d = np.abs(luma(fr) - luma(nr))
+        p95 = float(np.percentile(d[mk], 95)) if mk.any() else -1.0
+        mean_d = float(d[mk].mean()) if mk.any() else -1.0
+        ok &= 0 <= p95 <= 15.0
+        n += 1
+        det.append("%s p95 %.1f (mean %.1f, %d glass px)" % (cam, p95, mean_d, int(mk.sum())))
+    rows.add("GLS-03", "the night glass does not double what is behind it", ok and n == 4, "at night, p95 of |gate frame minus the render with the glass's reflection off| (luma, levels) over the glass mask: " + "; ".join(det) +
+             " (limit 15; try 2: 32.9 at STREET_30 and 17.2 at STREET_SQUARE: the stand-in glass mixed a Transparent and a Glass BSDF, which bent each ray at one face of the closed 6 mm slab and not the other, so everything behind it came two or three times; now a Glossy BSDF, GGX 0.02, weighted 0.2 x Fresnel at IOR 1.5, nothing refracted)")
+
+
+def lit08_rows(R, work, rows):
+    """LIT-08 (close review 1): at night_lit from CLOSE_35 and CLOSE_35_B, each display piece's mean luma over the lattice's gaps at least 0.6 of the room's mean luma seen round it. A piece's pixels
+    are those an object-index render (the lattice drawn, the glass left out) shows as the piece; 'round it' is the ring of room pixels (the card, the reveals, the return walls) within 24 px of it."""
+    from scipy import ndimage as _nd
+    di = json.load(open(os.path.join(work, "display_work", "display_items.json")))
+    gate = os.path.join(work, "gate")
+    det, ok, worst_all = [], True, []
+    for cam in ("CLOSE_35", "CLOSE_35_B"):
+        pf = os.path.join(gate, "%s_night_lit.png" % cam)
+        pp = os.path.join(gate, "check_%s_night_lit_pieces.png" % cam)
+        if not (os.path.exists(pf) and os.path.exists(pp)):
+            ok = False
+            continue
+        lum = luma(np.asarray(Image.open(pf).convert("RGB")).astype(np.float32))
+        idx = np.asarray(Image.open(pp).convert("RGB")).astype(np.float32) / 255.0
+        if idx.shape[:2] != lum.shape:
+            idx = np.asarray(Image.open(pp).convert("RGB").resize((lum.shape[1], lum.shape[0]), Image.NEAREST)).astype(np.float32) / 255.0
+        room = (idx.min(axis=2) > 0.985)
+        res_ = []
+        for gi, g in enumerate(di["groups"]):
+            if g["kind"] not in ("piece", "scripted"):
+                continue
+            c = np.array(((gi + 1) % 17 / 17.0 + 0.03, ((gi + 1) // 17) % 17 / 17.0 + 0.03, ((gi + 1) // 289) % 17 / 17.0 + 0.03))
+            m = np.abs(idx - c[None, None, :]).max(axis=2) < 0.012
+            n = int(m.sum())
+            if n < 60:
+                continue
+            ring = _nd.binary_dilation(m, iterations=24) & ~m & room
+            if int(ring.sum()) < 150:
+                continue
+            res_.append((float(lum[m].mean()) / max(float(lum[ring].mean()), 1e-6), g["model"], float(lum[m].mean()), float(lum[ring].mean()), n))
+        res_.sort()
+        low = [r_ for r_ in res_ if r_[0] < 0.6]
+        ok &= not low and bool(res_)
+        worst_all += [(r_[0], cam, r_[1]) for r_ in res_[:3]]
+        det.append("%s: %d pieces seen against the room, lowest ratio %s, %d under 0.6%s; median ratio %.2f" % (cam, len(res_), ", ".join("%s %.2f (%.0f against %.0f)" % (r_[1], r_[0], r_[2], r_[3]) for r_ in res_[:3]), len(low),
+                                                                                                    (" (" + ", ".join("%s %.2f" % (r_[1], r_[0]) for r_ in low[:8]) + ")") if low else "", float(np.median([r_[0] for r_ in res_])) if res_ else 0.0))
+    rows.add("LIT-08", "the display's goods are lit at night", ok, "at night_lit, each display piece's mean luma over the lattice's gaps against the room's mean luma in a 24 px ring round it: " + "; ".join(det) +
+             " (limit 0.6; try 2, CLOSE_35_B: the alarm clock's dial 33 against a room of 95, the cassette player 26, the mantel clock 25; the two strip lights under the tier boards are the fix; PIC-05g stays at 0.01 or under)")
 
 
 def manifest(HERE_, assets, work, out_path):

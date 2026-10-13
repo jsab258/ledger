@@ -13,6 +13,14 @@ on every piece. 13 October, try 2 (from the try 1 close and street reviews):
       line and brown dado below (street z 1.65), part of this glb so the game has it too.
   furniture (close narrow 6): velvet as a Principled BSDF with sheen 0.8 (roughness 0.3), its base colour varied +-5 per cent at 0.05 m and a CC0 fabric normal map (ambientCG
       Fabric034) at strength 0.2 on a 0.25 m tile; a 4 mm bevel on every tier, the step and the bed; the posts 12 mm round rods in black lacquer.
+13 October, from the try 2 reviews (the narrow points):
+
+  the raked riser (street review 3): the front strip stood flat on the bed (w 0 to 0.03) and from the far pavement the sight line over the window's bottom rail (z 0.637 above the
+      footway, 0.037 above the bed) hid everything lower than 28 mm at its front edge to 8 mm at its back, so the trays, rings and pads did not show. A velvet riser raked 20 degrees now
+      lies under the strip: w 0.05 at its front edge (v 0.04) rising to w 0.12 where it meets the step (v 0.24); the 4 trays, 4 pads, 2 chains and the small pieces lie on it as laid before,
+      25 mm up the slope from its front edge so that each ticket stands on the velvet too.
+  the scripted watches and chains (close review 7): each wrist and pocket watch's dial is a painted map (256 px a dial: 12 hour marks, two hands at a random time, four grounds:
+      white, cream, black, champagne; the 12 toward the back of the case); each chain is 60 links of 4 x 1.2 mm, each turned 90 degrees to the last, 2.4 mm apart, along the same arc.
 KEPT from the approved production/assets/shop-displays/pawnbroker-display.glb: the stepped velvet bed, the ticket on each piece, the cut of each model to about 4,500 triangles
 (never by more than 70 per cent), the display's size (3.35 x 0.55), the 512-pixel JPEG pictures and its scripted ring trays, watch pads and chains (the target's `inventory.scripted`).
 """
@@ -68,6 +76,49 @@ BED_SEQUENCE = [("ring_tray", 0.24), ("watch_pad", 0.26), ("round_spectacles", 0
 # stand in the left two thirds of the strip: from CLOSE_35 the window's right end is out of frame and from the street the sill hides the strip (DSP-03 asks each piece to show)
 PAD_WATCHES = {1: "pocket_watch", 5: "vintage_pocket_watch"}
 BED_U0 = 0.14
+# the raked riser under the front strip (street review 3): front edge (v 0.04, w 0.05), rising to the step (v 0.24, w 0.12): 19.3 degrees, the review's 20. Pieces lie on its surface,
+# their old v 0.04 now 25 mm up the slope (a piece's local y becomes s = y - 0.015 along the slope, its local z the height off the velvet)
+RISER = {"y0": 0.04, "w0": 0.05, "y1": 0.24, "w1": 0.12, "s_off": 0.015, "x0": 0.10, "x1": 3.24}
+RISER["theta"] = math.atan2(RISER["w1"] - RISER["w0"], RISER["y1"] - RISER["y0"])
+
+
+def rake_xyz(x, y, z):
+    """A point of the strip in its old flat frame (y = v, z = height above the bed's top) to the display's frame on the raked riser."""
+    s = y - RISER["s_off"]
+    th = RISER["theta"]
+    return (x, RISER["y0"] + s * math.cos(th) - z * math.sin(th), RISER["w0"] + s * math.sin(th) + z * math.cos(th))
+
+
+def make_dial_atlas(path):
+    """The dial maps (close review 7): one 512 px picture, four dials of 256 px (2 x 2 cells; cell k's origin is (k % 2, k // 2) / 2 in UV): white, cream, black and champagne grounds, 12 hour
+    marks (the four quarters longer), an hour hand and a minute hand at a random time (a seeded draw: the same four times every build), a hub. The 12 is at the top of each cell. Painted
+    at 4 times the size and reduced."""
+    from PIL import ImageDraw as _ID
+    rng = random.Random(31)
+    grounds = [((238, 236, 228), (30, 30, 34)), ((232, 220, 190), (46, 36, 28)), ((26, 26, 30), (228, 222, 206)), ((214, 196, 150), (52, 40, 26))]
+    S4 = 1024
+    atlas = Image.new("RGB", (512, 512), (128, 128, 128))
+    times = []
+    for k, (ground, ink) in enumerate(grounds):
+        im = Image.new("RGB", (S4, S4), ground)
+        d = _ID.Draw(im)
+        c = S4 / 2.0
+        d.ellipse([c - 0.97 * c, c - 0.97 * c, c + 0.97 * c, c + 0.97 * c], outline=ink, width=14)
+        d.ellipse([c - 0.80 * c, c - 0.80 * c, c + 0.80 * c, c + 0.80 * c], outline=ink, width=4)
+        for h in range(12):
+            a = math.radians(30.0 * h)
+            r1, r2, wd = (0.64, 0.80, 26) if h % 3 == 0 else (0.70, 0.80, 14)
+            d.line([c + r1 * c * math.sin(a), c - r1 * c * math.cos(a), c + r2 * c * math.sin(a), c - r2 * c * math.cos(a)], fill=ink, width=wd)
+        hh, mm = rng.randrange(12), rng.randrange(60)
+        times.append("%d:%02d" % (hh if hh else 12, mm))
+        ah = math.radians(30.0 * hh + 0.5 * mm)
+        am = math.radians(6.0 * mm)
+        d.line([c, c, c + 0.42 * c * math.sin(ah), c - 0.42 * c * math.cos(ah)], fill=ink, width=34)
+        d.line([c, c, c + 0.68 * c * math.sin(am), c - 0.68 * c * math.cos(am)], fill=ink, width=20)
+        d.ellipse([c - 36, c - 36, c + 36, c + 36], fill=ink)
+        atlas.paste(im.resize((256, 256), Image.LANCZOS), ((k % 2) * 256, (1 - k // 2) * 256))       # cell 0 and 1 in the bottom row (v 0 to 0.5): image row 0 is the TOP of the picture
+    atlas.save(path)
+    return times
 
 
 def turned_rot(r, asset, base_rot):
@@ -102,31 +153,38 @@ def piece_scale(r, asset, rot, zone_w, zone_d, zone_h, size=None):
 
 # ---------------------------------------------------------------------------------------------------------------------- small mesh helpers (numpy, one object per group)
 class MB:
-    """Collects boxes, cylinders and tori into one mesh with a material index per face."""
+    """Collects boxes, cylinders and tori into one mesh with a material index per face (and, for a dial's top face, its own UVs)."""
 
     def __init__(self):
-        self.V, self.F, self.M = [], [], []
+        self.V, self.F, self.M, self.U = [], [], [], []
 
-    def add(self, V, F, mi):
+    def add(self, V, F, mi, uv=None):
         off = len(self.V)
         self.V.extend(tuple(float(c) for c in v) for v in V)
-        for f in F:
+        for k, f in enumerate(F):
             self.F.append(tuple(off + int(i) for i in f))
-            self.M.append(mi)
+            self.M.append(mi[k] if isinstance(mi, (list, tuple)) else mi)
+            self.U.append(uv[k] if uv else None)
 
     def box(self, x0, x1, y0, y1, z0, z1, mi):
         V = [(x0, y0, z0), (x1, y0, z0), (x1, y1, z0), (x0, y1, z0), (x0, y0, z1), (x1, y0, z1), (x1, y1, z1), (x0, y1, z1)]
         F = [(0, 3, 2, 1), (4, 5, 6, 7), (0, 1, 5, 4), (1, 2, 6, 5), (2, 3, 7, 6), (3, 0, 4, 7)]
         self.add(V, F, mi)
 
-    def cyl(self, x, y, z0, z1, r, mi, n=16):
+    def cyl(self, x, y, z0, z1, r, mi, n=16, mi_top=None, dial=None):
+        """A cylinder; with `dial` = (u0, v0) the cell's origin in the dial atlas, the top face carries the dial map (material `mi_top`), the 12 toward +y."""
         V = []
         for z in (z0, z1):
             for k in range(n):
                 t = 2 * math.pi * k / n
                 V.append((x + r * math.cos(t), y + r * math.sin(t), z))
         F = [tuple(range(n))[::-1], tuple(range(n, 2 * n))] + [(i, (i + 1) % n, n + (i + 1) % n, n + i) for i in range(n)]
-        self.add(V, F, mi)
+        mis = [mi] * len(F)
+        uvs = [None] * len(F)
+        if dial is not None:
+            mis[1] = mi_top if mi_top is not None else mi
+            uvs[1] = [(dial[0] + 0.25 + 0.25 * math.cos(2 * math.pi * k / n), dial[1] + 0.25 + 0.25 * math.sin(2 * math.pi * k / n)) for k in range(n)]
+        self.add(V, F, mis, uvs)
 
     def torus(self, c, R, r, mi, axis="y", nm=12, nn=5):
         """A torus about `c` with its axis along x, y or z (a ring standing on its edge has its axis along y)."""
@@ -142,6 +200,33 @@ class MB:
                 elif axis == "x":
                     p = (p[2], p[0], p[1])
                 V.append((c[0] + p[0], c[1] + p[1], c[2] + p[2]))
+        for i in range(nm):
+            for j in range(nn):
+                i2, j2 = (i + 1) % nm, (j + 1) % nn
+                F.append((i * nn + j, i2 * nn + j, i2 * nn + j2, i * nn + j2))
+        self.add(V, F, mi)
+
+    def link(self, centre, tangent, up, a, b, r, mi, edge, nm=10, nn=4):
+        """One chain link (13 Oct, close review 7): an oval of 2a x 2b (centre line) along `tangent`, a round wire of radius r. Flat (the oval in the plane of tangent and the horizontal
+        normal) or on edge (the oval in the plane of tangent and `up`): `edge` turns it 90 degrees to the flat one."""
+        t = np.array(tangent, float)
+        t /= np.linalg.norm(t)
+        up = np.array(up, float)
+        side = np.cross(up, t)
+        side /= np.linalg.norm(side)
+        e2 = up if edge else side            # the oval's second axis
+        ax = side if edge else up            # the wire's cross-section plane's normal to the oval: the link's axis
+        V, F = [], []
+        for i in range(nm):
+            th = 2 * math.pi * i / nm
+            cc = np.array(centre, float) + a * math.cos(th) * t + b * math.sin(th) * e2
+            tg = -a * math.sin(th) * t + b * math.cos(th) * e2
+            tg /= np.linalg.norm(tg)
+            nrm = math.cos(th) * b * t + math.sin(th) * a * e2           # outward in the oval's plane
+            nrm /= np.linalg.norm(nrm)
+            for j in range(nn):
+                ph = 2 * math.pi * j / nn
+                V.append(cc + r * (math.cos(ph) * nrm + math.sin(ph) * ax))
         for i in range(nm):
             for j in range(nn):
                 i2, j2 = (i + 1) % nm, (j + 1) % nn
@@ -164,7 +249,21 @@ class MB:
         bm.free()
         ob = bpy.data.objects.new(name, me)
         scene.collection.objects.link(ob)
+        ob["_special_uv"] = json.dumps([[i, u] for i, u in enumerate(self.U) if u is not None]) if any(u is not None for u in self.U) else ""
         return ob
+
+
+def apply_special_uvs(ob):
+    """After box_uvs (which gives every face a cube projection): the faces that carry a map of their own (a dial's top face) get their own UVs."""
+    spec = ob.get("_special_uv")
+    if not spec:
+        return
+    me = ob.data
+    layer = me.uv_layers.active
+    for i, uvs in json.loads(spec):
+        p = me.polygons[i]
+        for li, uv in zip(p.loop_indices, uvs):
+            layer.data[li].uv = uv
 
 
 def box_uvs(ob, tile_m=0.25):
@@ -256,6 +355,10 @@ def build_display(work, out_dir, log=print):
     bases, nrm = make_velvet_textures(tex_dir)
     velvet = velvet_material("velvet_red", bases["velvet_red"], nrm)
     velvet_b = velvet_material("velvet_blue", bases["velvet_blue"], nrm)
+    dial_png = os.path.join(tex_dir, "dial_atlas.png")
+    dial_times = make_dial_atlas(dial_png)
+    dial_map_m = r.image_mat("dial_atlas", dial_png, rough=0.3)
+    drng = random.Random(23)            # which of the four dials a watch gets: its own draw, so the main stream (tickets, trays' colours) is the one the try 2 build used
     board = r.mat("bed_board", S.rgb8(70, 44, 28), rough=0.7)
     lacquer = r.mat("post_lacquer", S.rgb8(12, 12, 12), rough=0.25)
     plaster = r.mat("return_plaster", S.rgb8(242, 219, 168), rough=0.9)
@@ -288,6 +391,32 @@ def build_display(work, out_dir, log=print):
             mb.cyl(px, DEPTH - 0.03, pz0, pz1, 0.006, 0, n=12)
             ob = mb.to_object("tier_post_%s_%.2f" % (nm, px), [lacquer], r.sc)
             struct(ob, "post", [px - 0.006, px + 0.006, DEPTH - 0.036, DEPTH - 0.024, pz0, pz1])
+    # ---- the raked riser under the front strip (street review 3): a velvet wedge, front edge (v 0.04, w 0.05) rising to the step at (v 0.24, w 0.12), over u 0.10 to 3.24
+    rx0, rx1 = x0 + RISER["x0"], x0 + RISER["x1"]
+    mbr = MB()
+    mbr.add([(rx0, RISER["y0"], 0.0), (rx1, RISER["y0"], 0.0), (rx1, RISER["y1"], 0.0), (rx0, RISER["y1"], 0.0),
+             (rx0, RISER["y0"], RISER["w0"]), (rx1, RISER["y0"], RISER["w0"]), (rx1, RISER["y1"], RISER["w1"]), (rx0, RISER["y1"], RISER["w1"])],
+            [(0, 3, 2, 1), (4, 5, 6, 7), (0, 1, 5, 4), (1, 2, 6, 5), (2, 3, 7, 6), (3, 0, 4, 7)], 0)
+    riser_ob = mbr.to_object("riser", [velvet], r.sc)
+    box_uvs(riser_ob)
+    md_ = riser_ob.modifiers.new("bevel", "BEVEL")
+    md_.width = 0.004
+    md_.segments = 2
+    md_.limit_method = "ANGLE"
+    md_.angle_limit = math.radians(30.0)
+    struct(riser_ob, "riser", [rx0, rx1, RISER["y0"], RISER["y1"], 0.0, RISER["w1"]])
+    # the rake: pieces of the bed's row (the Poly Haven ones) are placed in the slope's own frame (x along the case, y up the slope from the riser's front edge, z off the velvet)
+    rake_ob = bpy.data.objects.new("rake", None)
+    r.sc.collection.objects.link(rake_ob)
+    rake_ob.location = (0.0, RISER["y0"], RISER["w0"])
+    rake_ob.rotation_euler = (RISER["theta"], 0.0, 0.0)
+
+    def rake_ext(e):
+        """A piece's extents [x0, x1, s0, s1, h0, h1] in the slope's frame to the display's frame (the box of the eight corners)."""
+        th = RISER["theta"]
+        pts = [(x, RISER["y0"] + s * math.cos(th) - h * math.sin(th), RISER["w0"] + s * math.sin(th) + h * math.cos(th)) for x in (e[0], e[1]) for s in (e[2], e[3]) for h in (e[4], e[5])]
+        return [min(p[0] for p in pts), max(p[0] for p in pts), min(p[1] for p in pts), max(p[1] for p in pts), min(p[2] for p in pts), max(p[2] for p in pts)]
+
     # ---- the return walls (close fault 3): at each end of the window zone, from the back of the glass to the card plane, over the card's full height
     ya, yb = -0.005, CARD_PLANE_LOCAL_Y
     for side, (xa, xb) in (("l", (-L / 2 - 0.01, -L / 2)), ("r", (L / 2, L / 2 + 0.01))):
@@ -296,7 +425,7 @@ def build_display(work, out_dir, log=print):
 
     items = []
 
-    def ticket(x_c, y_front, w0, y_min):
+    def ticket(x_c, y_front, w0, y_min, rake=False):
         """A 3 mm price card standing in front of a piece, leaning back a little, the front face from the atlas."""
         tw = rnd.uniform(0.026, 0.034)
         tx = x_c + rnd.uniform(-0.02, 0.02)
@@ -308,11 +437,14 @@ def build_display(work, out_dir, log=print):
         lean = 0.004
         V = [(x_a, ty, w0 + 0.001), (x_b, ty, w0 + 0.001), (x_b, ty - lean, w0 + 0.019), (x_a, ty - lean, w0 + 0.019),
              (x_a, ty + t, w0 + 0.001), (x_b, ty + t, w0 + 0.001), (x_b, ty + t - lean, w0 + 0.019), (x_a, ty + t - lean, w0 + 0.019)]
+        V0 = list(V)                                 # the flat frame's x and z give the UVs
+        if rake:
+            V = [rake_xyz(*v) for v in V]
         me = bpy.data.meshes.new("ticket")
         me.from_pydata(V, [], [(0, 1, 2, 3), (5, 4, 7, 6), (0, 4, 5, 1), (1, 5, 6, 2), (2, 6, 7, 3), (3, 7, 4, 0)])
         uv = me.uv_layers.new(name="UVMap")
         for loop in me.loops:
-            vx, vz = V[loop.vertex_index][0], V[loop.vertex_index][2]
+            vx, vz = V0[loop.vertex_index][0], V0[loop.vertex_index][2]
             a_ = (vx - x_a) / max(x_b - x_a, 1e-6)
             b_ = (vz - (w0 + 0.001)) / 0.018
             uv.data[loop.index].uv = (cu + a_ / 12.0, cv + b_ / 8.0)
@@ -356,17 +488,30 @@ def build_display(work, out_dir, log=print):
             vr = STEP_V if tier == "step" else TIERS[tier]["piece_v"]
             put(it["model"], tier, xc, w0, vr, it.get("size_m"), yaw=rnd.uniform(-0.12, 0.12) if tier != "top" or it["model"] not in ("boombox", "filmstrip_projector_8mm") else 0.0)
     # ---- the bed's front row: the approved generator (tools/art-recipes/shop-room.py), laid along the strip in the target's sequence
+    def dial_cell():
+        k = drng.randrange(4)
+        return ((k % 2) * 0.5, (k // 2) * 0.5)
+
     def wristwatch(mb, wx, wy, z, metal_i, strap_i):
         mb.box(wx - 0.009, wx + 0.009, wy - 0.045, wy + 0.045, z, z + 0.003, strap_i)
         mb.cyl(wx, wy, z + 0.003, z + 0.010, 0.0155, metal_i, n=16)
-        mb.cyl(wx, wy, z + 0.010, z + 0.0108, 0.0125, 3, n=16)
+        mb.cyl(wx, wy, z + 0.010, z + 0.0108, 0.0125, 3, n=16, mi_top=6, dial=dial_cell())          # the dial: a painted map, the 12 toward the back of the case (close review 7)
 
     def pocketwatch(mb, wx, wy, z, metal_i):
         mb.cyl(wx, wy, z, z + 0.009, 0.022, metal_i, n=20)
-        mb.cyl(wx, wy, z + 0.009, z + 0.0098, 0.019, 3, n=20)
+        mb.cyl(wx, wy, z + 0.009, z + 0.0098, 0.019, 3, n=20, mi_top=6, dial=dial_cell())
         mb.torus((wx, wy + 0.027, z + 0.004), 0.006, 0.0015, metal_i, axis="y", nm=10, nn=4)
 
-    bed_mats = [gold, silver, leather, dial_m, velvet_b, velvet]
+    def place_on_riser(asset, x, y_old, h, rot, scale):
+        """A Poly Haven piece lying on the raked riser: placed in the slope's frame (x, s, h) and parented to the rake. Returns (extents in the slope's frame, object names)."""
+        ext_ = r.place(asset, (x, y_old - RISER["s_off"], h), rot=rot, scale=scale, fixture="display", anchor=("c", "c", "min"), tris=TRIS)
+        names_ = list(r.last_objs)
+        root = bpy.data.objects[names_[0]].parent
+        root.parent = rake_ob
+        root.matrix_parent_inverse = Matrix.Identity(4)
+        return ext_, names_
+
+    bed_mats = [gold, silver, leather, dial_m, velvet_b, velvet, dial_map_m]
     GOLD, SILVER, LEATHER, DIAL, BLUE, RED = 0, 1, 2, 3, 4, 5
     total_w = sum(e[1] for e in BED_SEQUENCE)
     gap = (3.20 - BED_U0 - total_w) / (len(BED_SEQUENCE) - 1)
@@ -381,10 +526,11 @@ def build_display(work, out_dir, log=print):
             for rr in range(4):
                 for cc in range(6):
                     mb.torus((x + 0.02 + cc * 0.04, 0.065 + rr * 0.035, 0.024 + 0.009 + 0.0025 - 0.001), 0.009, 0.0025, GOLD if rnd.random() < 0.75 else SILVER, axis="y", nm=12, nn=5)
+            mb.V = [rake_xyz(*v) for v in mb.V]                          # on the raked riser
             ob = mb.to_object("ring_tray", bed_mats, r.sc)
             box_uvs(ob)
             groups.append({"kind": "scripted", "model": "script:ring_tray", "objs": [ob.name]})
-            ticket(xc, 0.04, 0.0, 0.004)
+            ticket(xc, 0.04, 0.0, 0.004, rake=True)
             scripted.append({"model": "script:ring_tray", "u": [round(x - x0, 3), round(x - x0 + 0.24, 3)], "rings": 24})
             n_rings += 24
         elif kind == "watch_pad":
@@ -405,45 +551,56 @@ def build_display(work, out_dir, log=print):
                     else:
                         pocketwatch(mb, wx, wy, 0.016, metal)
                     nw += 1
+            mb.V = [rake_xyz(*v) for v in mb.V]
             ob = mb.to_object("watch_pad", bed_mats, r.sc)
             box_uvs(ob)
+            apply_special_uvs(ob)
             groups.append({"kind": "scripted", "model": "script:watch_pad", "objs": [ob.name]})
-            ticket(xc + 0.10, 0.04, 0.0, 0.004)
+            ticket(xc + 0.10, 0.04, 0.0, 0.004, rake=True)
             scripted.append({"model": "script:watch_pad", "u": [round(x - x0, 3), round(x - x0 + 0.26, 3)], "watches": nw + len(poly_slots)})
             n_watches += nw
             for (rr, cc) in poly_slots:
                 wrot = ROT[poly]
                 ws, _ = piece_scale(r, poly, wrot, 0.06, 0.07, 0.05)
                 wx, wy = x + 0.035 + cc * 0.063, 0.08 + rr * 0.075
-                ext2 = r.place(poly, (wx, wy, 0.016), rot=(wrot[0], wrot[1], wrot[2] + rnd.uniform(-0.4, 0.4)), scale=ws, fixture="display", anchor=("c", "c", "min"), tris=TRIS)
-                names2 = list(r.last_objs)
+                ext2, names2 = place_on_riser(poly, wx, wy, 0.016, (wrot[0], wrot[1], wrot[2] + rnd.uniform(-0.4, 0.4)), ws)
+                ext2 = rake_ext(ext2)
                 groups.append({"kind": "piece", "model": poly, "tier": "bed", "objs": names2})
                 items.append({"model": poly, "tier": "bed", "scale": round(ws, 3), "ext": [round(v, 4) for v in ext2], "objs": names2})
         elif kind == "chain":
+            # 13 Oct, close review 7: 60 links of 4 x 1.2 mm (an oval of 4 mm outside length, a 1.2 mm wire), each turned 90 degrees to the last, 2.4 mm apart along the same arc (try 2: 18
+            # beads); one object, so the interlocking is not an intersection of two meshes. The arc is the old one: x from 0.01 to 0.15 along the slot, y 0.12 + 0.035 sin(a); the chain
+            # is centred on it
             mb = MB()
-            for i in range(18):
-                a = i / 17.0 * math.pi
-                cx, cy = x + 0.01 + 0.14 * i / 17.0, 0.12 + 0.035 * math.sin(a)
-                # links alternately on edge (axis x) and flat (axis z); one object, so their interlocking is not an intersection of two meshes
-                if i % 2:
-                    mb.torus((cx, cy, 0.0052), 0.004, 0.0012, GOLD, axis="x", nm=8, nn=4)
-                else:
-                    mb.torus((cx, cy, 0.0012), 0.004, 0.0012, GOLD, axis="z", nm=8, nn=4)
+            tt = np.linspace(0.0, math.pi, 4001)
+            ax_ = 0.14 * tt / math.pi
+            ay_ = 0.035 * np.sin(tt)
+            cum = np.concatenate([[0.0], np.cumsum(np.hypot(np.diff(ax_), np.diff(ay_)))])
+            n_l, pitch_l = 60, 0.0024
+            s0 = (cum[-1] - (n_l - 1) * pitch_l) / 2.0
+            for i in range(n_l):
+                k = int(np.searchsorted(cum, s0 + i * pitch_l))
+                k = min(max(k, 1), len(tt) - 1)
+                cx, cy = x + 0.01 + ax_[k], 0.12 + ay_[k]
+                tg = (0.14 / math.pi, 0.035 * math.cos(tt[k]), 0.0)
+                edge = bool(i % 2)
+                mb.link((cx, cy, 0.0013 if edge else 0.0006), tg, (0.0, 0.0, 1.0), 0.0014, 0.0007, 0.0006, GOLD, edge)
+            mb.V = [rake_xyz(*v) for v in mb.V]
             ob = mb.to_object("chain", bed_mats, r.sc)
             groups.append({"kind": "scripted", "model": "script:chain", "objs": [ob.name]})
-            ticket(xc, 0.04, 0.0, 0.004)
-            scripted.append({"model": "script:chain", "u": [round(x - x0, 3), round(x - x0 + 0.16, 3)], "links": 18})
+            ticket(xc, 0.04, 0.0, 0.004, rake=True)
+            scripted.append({"model": "script:chain", "u": [round(x - x0, 3), round(x - x0 + 0.16, 3)], "links": n_l})
             n_chains += 1
         else:
             asset = kind
             rot = turned_rot(r, asset, ROT.get(asset, (0.0, 0.0, 0.0)))
             rot = (rot[0], rot[1], rot[2] + rnd.uniform(-0.15, 0.15))
             s, _ = piece_scale(r, asset, rot, wd, 0.17, 0.2)
-            ext = r.place(asset, (xc, 0.04 + 0.01 + 0.085, 0.0), rot=rot, scale=s, fixture="display", anchor=("c", "c", "min"), tris=TRIS)
-            names = list(r.last_objs)
+            ext_s, names = place_on_riser(asset, xc, 0.04 + 0.01 + 0.085, 0.0, rot, s)
+            ext = rake_ext(ext_s)
             groups.append({"kind": "piece", "model": asset, "tier": "bed", "objs": names})
             items.append({"model": asset, "tier": "bed", "scale": round(s, 3), "ext": [round(v, 4) for v in ext], "objs": names})
-            ticket(xc, ext[2], 0.0, 0.004)
+            ticket(xc, ext_s[2] + RISER["s_off"], 0.0, 0.004, rake=True)
         x += wd + gap
     # ---- no alpha cut-out or blend anywhere in the display (DSP-02: real geometry): the boombox's speaker grille is a perforated-looking alpha card in its glTF; here it is opaque
     n_alpha = 0
@@ -489,6 +646,8 @@ def build_display(work, out_dir, log=print):
                                                                  "middle": {"w": TIERS["middle"]["w"], "v": list(TIERS["middle"]["piece_v"]), "max_h": TIERS["middle"]["max_h"], "u": [x0 + 0.05, x0 + L - 0.05]},
                                                                  "top": {"w": TIERS["top"]["w"], "v": list(TIERS["top"]["piece_v"]), "max_h": TIERS["top"]["max_h"], "u": [x0 + 0.05, x0 + L - 0.05]},
                                                                  "bed": {"w": 0.0, "v": list(BED_V), "u": [x0 + BED_U0, x0 + 3.20]}}}
+    info["dial_times"] = dial_times
+    info["riser"] = dict(RISER)
     json.dump(info, open(os.path.join(work, "display_items.json"), "w"), indent=1)
     log("display: %d pieces of %d models + %d trays, %d pads, %d chains, %d triangles, %d bytes" % (info["pieces"], len(info["models"]), info["scripted_counts"]["ring_trays"], info["scripted_counts"]["watch_pads"], n_chains, tri, info["bytes"]))
     return info

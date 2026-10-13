@@ -1,5 +1,9 @@
 """The gate stage: bake the card for each review camera and state, render, write the review set to the previews. See sw_gate.py for the method.
 
+Try 3 (13 October, from the try 2 reviews): the review pictures are named `...-v3-2026-10-13.jpg` (v1 and v2 stay as the record); the night glass is reflection only; the footway is on the
+spill's channel; two strip lights light the display's tiers at night (`strip_w` in gate_lights.json); two more check renders: the front's mask by day (FRN-10's pixel test) and the display
+pieces' object-index mask at night from the two close cameras (LIT-08).
+
 Try 2 (13 October): the review pictures are named `...-v2-2026-10-13.jpg` (the try 1 files stay as the record); the room picture's side-wall front columns are baked for the gate's
 reveals and the display's return walls; and the checks' own renders are made here (a no-reflection beauty and a glass mask for every camera and state, at 1280 x 720)."""
 import json
@@ -16,12 +20,13 @@ import sw_assets as A  # noqa: E402
 import sw_gate as G  # noqa: E402
 
 DATE = "2026-10-13"
-TAG = "-v2"
+TAG = "-v3"
 CAMS = ["STREET_SQUARE", "STREET_30", "CLOSE_35", "CLOSE_35_B"]
 STATES = ["day", "night_lit"]
 REVIEW = [("STREET_SQUARE", "day"), ("STREET_SQUARE", "night_lit"), ("CLOSE_35", "day"), ("CLOSE_35", "night_lit")]
 HDRI = "/home/user/cache/hdri/bethnal_green_entrance_2k.hdr"
 CHECK_RES = (1280, 720)
+RES_FRAME = (2560, 1440)
 CHECK_SAMPLES = 16
 
 
@@ -90,7 +95,7 @@ def run(work, assets, previews, samples, views=None, log=print, check_renders=Tr
     grille = os.path.join(assets, "ritas_grille_night.glb")
     lp = os.path.join(gate, "gate_lights.json")
     if not os.path.exists(lp):
-        json.dump({"lamp_w": 50000, "spill_w": 175}, open(lp, "w"))      # Blender watts, set by eye (see NOTES.md)
+        json.dump({"lamp_w": 50000, "spill_w": 175, "strip_w": 0.0}, open(lp, "w"))      # Blender watts, set by eye (see NOTES.md)
     extra = json.load(open(lp))
 
     def cols(st):
@@ -118,6 +123,16 @@ def run(work, assets, previews, samples, views=None, log=print, check_renders=Tr
                 if st != "day":
                     t = G.render_view(cam, R["cameras"][cam], st, os.path.join(gate, "card_%s_%s.png" % (cam, st)), os.path.join(gate, "check_%s_%s_maskopen.png" % (cam, st)), front, grille, disp, HDRI,
                                       samples=1, extra=extra, res=CHECK_RES, mode="mask_glass_open", column_pngs=cols(st))
+                else:
+                    # FRN-10's pixel test: the front's opaque parts, white, at the frames' own size
+                    G.render_view(cam, R["cameras"][cam], st, os.path.join(gate, "card_%s_%s.png" % (cam, st)), os.path.join(gate, "check_%s_%s_frontmask.png" % (cam, st)), front, grille, disp, HDRI,
+                                  samples=1, extra=extra, res=RES_FRAME, mode="mask_front", column_pngs=cols(st))
+                if st != "day" and cam in ("CLOSE_35", "CLOSE_35_B"):
+                    # LIT-08: one colour a display piece, the room white, the lattice drawn (black)
+                    di = json.load(open(os.path.join(work, "display_work", "display_items.json")))
+                    groups = {nm: gi for gi, g in enumerate(di["groups"]) for nm in g["objs"]}
+                    G.render_view(cam, R["cameras"][cam], st, os.path.join(gate, "card_%s_%s.png" % (cam, st)), os.path.join(gate, "check_%s_%s_pieces.png" % (cam, st)), front, grille, disp, HDRI,
+                                  samples=1, extra=extra, res=RES_FRAME, mode="mask_pieces", column_pngs=cols(st), groups=groups)
                 log("check renders %s %s done" % (cam, st))
         json.dump(times, open(os.path.join(gate, "render_times.json"), "w"), indent=1)
     # the review set: STREET_SQUARE and CLOSE_35, day and night_lit

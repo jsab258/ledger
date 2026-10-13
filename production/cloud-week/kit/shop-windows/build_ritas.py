@@ -13,7 +13,7 @@ script runs itself under that Python if the one it was started with has none):
   display   the near metre as real meshes (sw_display.py)
   room      the room (target 4.4): light strengths calibrated to the approved pictures' means, then the three 4096 x 1855 pictures and their JSON (sw_room.py)
   gate      per review camera, the card baked through the game's `trace`, the front + display + glass rendered at 2560 x 1440 (sw_gate.py), the review set to previews
-  checks    every check of the target that applies, one row each: checks/check_ritas_v2.json, printing "N of M rows pass" (check_ritas.py)
+  checks    every check of the target that applies, one row each: checks/check_ritas_v3.json, printing "N of M rows pass" (check_ritas.py)
 
 Where things go: models in production/assets/cloud-week/shop-windows/ (the front, the display and the lattice are over 1 MB: out of git, listed in .git/info/exclude, rebuilt here);
 heavy outputs (pictures, bakes, renders, Poly Haven files) in SCRATCH (default /home/user/ledger-scratch; F:/LedgerTools on the PC); previews in production/previews/cloud-week/shop-windows/.
@@ -84,7 +84,7 @@ def run_inner(stage):
         G.run(WORK, ASSETS, PREVIEWS, GATE_SAMPLES)
     elif stage == "checks":
         import check_ritas as C
-        C.run(WORK, ASSETS, PREVIEWS, os.path.join(HERE, "checks", "check_ritas_v2.json"))
+        C.run(WORK, ASSETS, PREVIEWS, os.path.join(HERE, "checks", "check_ritas_v3.json"))
     print("stage %s: %.0f s" % (stage, time.time() - t0), flush=True)
 
 

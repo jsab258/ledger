@@ -293,7 +293,7 @@ class Front:
         self.add("bell_spring_strip", polyline_strip(arc, ub - 10.0, ub + 10.0, 3.0), "steel", bev=None)
         end = arc[-1]
         bz = end[1] - 80.0
-        self.add("bell_hanger", cyl_z(ub, end[0] + 0.0, bz + 2.0, end[1], 1.6, 6), "steel", bev=None)
+        self.add("bell_hanger", cyl_z(ub, end[0] + 0.0, bz + 2.0, end[1], 1.6, 8), "steel", bev=None)       # 8 sides: a 6-sided rod has a face square to the street, in the crown loop's plane (FRN-10)
         # the bell (13 Oct, from the try 1 close review, narrow 8): a crown loop, a dome to a flared lip, 70 mm across the lip, 55 high, a 3 mm wall (outer profile down, inner profile back
         # up, so the cup is hollow), the clapper showing under the lip
         outer = [(0.0, 0.0), (4.0, -0.8), (9.0, -3.0), (14.0, -7.0), (18.0, -12.5), (21.0, -19.0), (23.0, -26.0), (25.0, -33.0), (28.0, -40.0), (32.0, -46.5), (35.0, -52.0), (35.0, -55.0)]
@@ -324,7 +324,8 @@ class Front:
         # fanlight: one pane 6 mm at d 30 to 36 between the door frame's jambs, an ovolo bead round it
         fl = D["fanlight"]
         bd = [(p[0], -p[1]) for p in wp["glazing_bead_ovolo"]["points"]]
-        self.add("fanlight_glass", bx(fl["u_mm"][0] - 2.0, fl["u_mm"][1] + 2.0, 30.0, 36.0, fl["z_mm"][0] - 4.0, fl["z_mm"][1] + 4.0), "glass", bev=None)
+        # (13 Oct, FRN-10: the three panes below and this one are 6 mm at d 30.3 to 35.7, not 30 to 36: the pane's front face stood in the plane of the door jamb's rebate, d 36)
+        self.add("fanlight_glass", bx(fl["u_mm"][0] - 2.0, fl["u_mm"][1] + 2.0, 30.3, 35.7, fl["z_mm"][0] - 4.0, fl["z_mm"][1] + 4.0), "glass", bev=None)
         V, F = joinery.sweep_frame(bd, fl["u_mm"][0], fl["z_mm"][0], fl["u_mm"][1], fl["z_mm"][1], -36.0)
         self.add("fanlight_bead", (V, [tuple(int(i) for i in f) for f in F]), "white", bev=None)
         # three toplights over the shop door: two 28 bars (toplight_bar_plan) at 1641.33 and 1952.67, glass and beads as the window's
@@ -333,7 +334,7 @@ class Front:
         for k, bar in enumerate(t["bars"]):
             self.add("band_bar_%d" % k, bs.prism_ud([(bar["centre"] + p[0], max(p[1], 1.0)) for p in bp], 2474.0, 2793.0), "white")
         for k, (a, b) in enumerate(t["panes"]):
-            self.add("band_toplight_glass_%d" % k, bx(a - 4.0, b + 4.0, 30.0, 36.0, 2480.0, 2790.0), "glass", bev=None)
+            self.add("band_toplight_glass_%d" % k, bx(a - 4.0, b + 4.0, 30.3, 35.7, 2480.0, 2790.0), "glass", bev=None)
             V, F = joinery.sweep_frame(bd, a, 2480.0, b, 2790.0, -36.0)
             self.add("band_toplight_bead_%d" % k, (V, [tuple(int(i) for i in f) for f in F]), "white", bev=None)
         # the panel over the side door: backing board, the frame round the raised-and-fielded panel (stiles and rails 50), the field 844 wide
@@ -359,7 +360,8 @@ class Front:
         # fixing plates on the pilaster shaft (right end) and on the door frame's right jamb (left end): 60 x 110 x 6 with two bolts
         for nm, u_edge, side in (("r", win[1], +1), ("l", win[0], -1)):
             for zc in (2420.0, 620.0):
-                ua, ub = (u_edge, u_edge + 60.0) if side > 0 else (u_edge - 60.0, u_edge)
+                # (13 Oct, FRN-10: the plate's inner face stood in the pilaster plinth cap's plane, x 2650: moved 1 mm off it)
+                ua, ub = (u_edge + 1.0, u_edge + 61.0) if side > 0 else (u_edge - 61.0, u_edge - 1.0)
                 self.add("grille_plate_%s_%d" % (nm, int(zc)), bx(ua, ub, 100.0, 136.0, zc - 55.0, zc + 55.0), "black", bev=None)
 
     def lattice(self):
@@ -600,7 +602,8 @@ def make_balls_and_bracket(front, fasc_dir):
         objs.append(("black_iron", bs.new_obj("sign_bolt_%d" % k, *cyl_d(uc + du, z_arm + dz, 8.0, 14.0, 6.0, 8))))
     objs.append(("black_iron", bs.new_obj("sign_arm", *bx(uc - 4.0, uc + 4.0, 8.0, 850.0, z_arm - 10.0, z_arm + 10.0))))
     # a diagonal brace from the plate's foot to the arm at d 600, and two scrolls (C curves in the d-z plane)
-    brace = polyline_strip([(8.0, 3640.0), (200.0, 3690.0), (420.0, 3730.0), (600.0, z_arm - 10.0)], uc - 4.0, uc + 4.0, 20.0)
+    # (13 Oct, FRN-10: the brace is 6 mm wide, the arm 8, so their side faces are 1 mm apart, not one plane)
+    brace = polyline_strip([(8.0, 3640.0), (200.0, 3690.0), (420.0, 3730.0), (600.0, z_arm - 10.0)], uc - 3.0, uc + 3.0, 20.0)
     objs.append(("black_iron", bs.new_obj("sign_brace", *brace)))
     for k, (cd, cz, r0, flip) in enumerate(((300.0, 3640.0, 70.0, 1), (700.0, 3690.0, 55.0, -1))):
         pts = [(cd + (r0 * (1 - t / 4.0)) * math.cos(t * 1.1 + (0 if flip > 0 else math.pi)), cz + (r0 * (1 - t / 4.0)) * math.sin(t * 1.1 + (0 if flip > 0 else math.pi))) for t in np.linspace(0.0, 4.0, 18)]

@@ -313,9 +313,9 @@ def room_rows(R, T, work, rows, assets):
     rows.add("INV-02", "nothing denied is placed", not denied, "placed models checked against inventory.denied (%d ids): %s" % (len(inv["denied"]), denied or "none denied"))
     notin = [a for a in allids if a not in inv["polyhaven"]]
     rows.add("INV-03", "every model is allowed", not notin, "%d models placed, all in inventory.polyhaven%s; scripted: counter_jewellery and pledge_tickets (inventory.scripted)" % (len(allids), ("; NOT IN IT: %s" % notin) if notin else ""))
-    mine = {"script:counter_jewellery", "script:pledge_tickets", "script:ring_tray", "script:watch_pad", "script:chain", "script:watch_chain_cards"}
+    mine = {"script:counter_jewellery", "script:pledge_tickets", "script:ring_tray", "script:watch_pad", "script:chain", "script:watch_chain_cards", "script:bs1363_plug"}
     sc_ok = mine <= set(inv["scripted"]) and all(inv["scripted"][k].get("why") for k in mine)
-    rows.add("INV-04", "scripted goods are the listed ones and carry a why", sc_ok, "scripted in this build: counter_jewellery (rings, watch discs, chains on the raked velvet), pledge_tickets (%d tickets), ring_tray, watch_pad and chain (the approved display's front row: %s) and watch_chain_cards (%d on the pledge board); each is in inventory.scripted with its why; no fish, crab or prawn" % (
+    rows.add("INV-04", "scripted goods are the listed ones and carry a why", sc_ok, "scripted in this build: counter_jewellery (rings, watch discs, chains on the raked velvet), pledge_tickets (%d tickets), ring_tray, watch_pad (each dial a painted map) and chain (60 links; the approved display's front row: %s), watch_chain_cards (%d on the pledge board) and the projector's BS 1363 plug; each is in inventory.scripted with its why; no fish, crab or prawn" % (
         fixtures_count(fixtures, "pledge_tickets"), json.dumps(di.get("scripted_counts")), fixtures_count(fixtures, "watch_chain_cards")))
     # INV-05 by script: names and text against the brand blocklist
     block = [b.lower() for b in inv["brand_blocklist"]]
@@ -397,14 +397,17 @@ def front_rows(R, T, work, rows, assets):
     t1 = R["door"]["t1_rails_mm"]
     lp = m["door_letter_plate"]
     bell_z = (m["bell_spring_strip"]["z"][0], m["bell_spring_strip"]["z"][1])
+    bell_u = (m["bell_spring_strip"]["u"][0] + m["bell_spring_strip"]["u"][1]) / 2.0
+    rail_u = (m["door_rail_top"]["u"][0], m["door_rail_top"]["u"][1])
+    bell_on_rail = rail_u[0] <= bell_u - 10.0 and bell_u + 10.0 <= rail_u[1] and near(rail_u[1] - bell_u, 90.0, 3.0)
     glass_visible = (m["door_rail_lock"]["z"][1], m["door_rail_top"]["z"][0])
     bar_c = (m["door_glazing_bar"]["z"][0] + m["door_glazing_bar"]["z"][1]) / 2
     ok3 = (near(leaf_w, 900, 5) and near(leaf_h, 2040, 5) and near(lv["z"][0], 28, 5) and near(glass_visible[0], 871, 5) and near(glass_visible[1], 1973, 5) and near(bar_c, 1423, 5)
            and near(m["door_glazing_bar"]["z"][1] - m["door_glazing_bar"]["z"][0], 28, 5) and near(m["door_rail_lock"]["z"][0], 549, 5) and near((lp["z"][0] + lp["z"][1]) / 2, 678, 5)
-           and near(lp["u"][1] - lp["u"][0], 250, 5) and near(lp["z"][1] - lp["z"][0], 40, 5) and near(bell_z[0], 1950, 5) and near(bell_z[1], 2050, 5) and lv["u"][0] < hg["u"][0]
+           and near(lp["u"][1] - lp["u"][0], 250, 5) and near(lp["z"][1] - lp["z"][0], 40, 5) and near(bell_z[0], 1950, 5) and near(bell_z[1], 2050, 5) and lv["u"][0] < hg["u"][0] and bell_on_rail
            and lp["z"][1] < glass_visible[0])
-    rows.add("FRN-03", "the shop door", ok3, "T1: leaf %.0f x %.0f at z %.0f; glass %.0f to %.0f with one bar at %.0f (%.0f wide); lock rail %.0f to %.0f; letter plate %.0f x %.0f at z %.0f and clear of the glass; the lever on the viewer's LEFT stile (u %.0f), the hinge side on the RIGHT (u %.0f); the bell's spring strip z %.0f to %.0f, inside the leaf" % (
-        leaf_w, leaf_h, lv["z"][0], glass_visible[0], glass_visible[1], bar_c, m["door_glazing_bar"]["z"][1] - m["door_glazing_bar"]["z"][0], m["door_rail_lock"]["z"][0], m["door_rail_lock"]["z"][1], lp["u"][1] - lp["u"][0], lp["z"][1] - lp["z"][0], (lp["z"][0] + lp["z"][1]) / 2, lv["u"][0], hg["u"][1], bell_z[0], bell_z[1]))
+    rows.add("FRN-03", "the shop door", ok3, "T1: leaf %.0f x %.0f at z %.0f; glass %.0f to %.0f with one bar at %.0f (%.0f wide); lock rail %.0f to %.0f; letter plate %.0f x %.0f at z %.0f and clear of the glass; the lever on the viewer's LEFT stile (u %.0f), the hinge side on the RIGHT (u %.0f); the bell's spring strip z %.0f to %.0f, inside the leaf, centred at u %.0f on the TOP RAIL (the rail runs u %.0f to %.0f), 90 mm in from the hanging stile's inner edge (try 2: on the hinge stile, hidden behind it)" % (
+        leaf_w, leaf_h, lv["z"][0], glass_visible[0], glass_visible[1], bar_c, m["door_glazing_bar"]["z"][1] - m["door_glazing_bar"]["z"][0], m["door_rail_lock"]["z"][0], m["door_rail_lock"]["z"][1], lp["u"][1] - lp["u"][0], lp["z"][1] - lp["z"][0], (lp["z"][0] + lp["z"][1]) / 2, lv["u"][0], hg["u"][1], bell_z[0], bell_z[1], bell_u, rail_u[0], rail_u[1]))
     # FRN-04 toplight layout
     gl = fr["glazing_layout"]
     u0 = win_u[0]
@@ -483,6 +486,7 @@ def front_rows(R, T, work, rows, assets):
     X.hall_check(R, work, assets, rows, m)
     X.uv_rows(assets, rows)
     X.backdrop_rows(R, assets, work, rows)
+    X.frn10_rows(R, work, assets, rows, m)
 
 
 # ------------------------------------------------------------------------------------------------------------- the gate renders
@@ -550,6 +554,8 @@ def gate_rows(R, work, rows, means, lum_pics):
     lp = os.path.join(gate, "gate_lights.json")
     spill_w = json.load(open(lp)).get("spill_w") if os.path.exists(lp) else "?"
     X.night_rows(R, work, rows, spill_w)
+    X.glass_night_rows(R, work, rows)
+    X.lit08_rows(R, work, rows)
     return comp, dark
 
 
@@ -567,6 +573,7 @@ def run(work, assets, previews, out_json):
     X.lit02b_rows(R, work, rows)
     X.gate_frame_rows(R, work, rows)
     X.board_rows(R, work, rows)
+    X.so07_rows(work, rows)
     lt = np.array([1.0, 0.25, 0.0])
     rows.add("LIT-06", "the sodium wash is the game's", float(np.abs(np.array(sod) - lt).max()) <= 0.01, "night_dark's sodium wash colour (linear) %s against unreal-look.json lantern_linear_rgb %s (the scene file's stale 1.0, 0.7055, 0.0 is not used)" % ([round(float(x), 3) for x in sod], lt.tolist()))
     rows.na("PRV-01", "the previews show nothing they must not", "the photograph previews of the target (P1 to P6), not this build's; this build's previews were looked at: no real firm's name, number, person, drink, gambling or child in them")
