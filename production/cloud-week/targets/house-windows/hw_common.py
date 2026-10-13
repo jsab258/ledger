@@ -97,7 +97,7 @@ CAMERAS = {
     "H_ACROSS_30": {"what": "from the far pavement's kerb edge, 30 degrees off the window's normal toward the quay end", "spec": ("across", 30.0, None), "vfov_deg": 39.0},
     "H_ALONG_15_NEAR": {"what": "on the house's own footway 1.5 m from the wall, the window seen 15 degrees from the wall (5.6 m along)", "spec": ("along", 15.0, 1.5), "vfov_deg": 46.0},
     "H_ALONG_30_NEAR": {"what": "on the house's own footway 1.5 m from the wall, the window seen 30 degrees from the wall (2.6 m along)", "spec": ("along", 30.0, 1.5), "vfov_deg": 46.0},
-    "H_ALONG_15_ROAD": {"what": "2.6 m from the wall (the kerb edge of the road), the window seen 15 degrees from the wall (9.7 m along)", "spec": ("along", 15.0, 2.6), "vfov_deg": 39.0},
+    "H_ALONG_15_ROAD": {"what": "in the road, 1 m out from the kerb (2.6 m from the wall: the footway is 5.125 - 3.505 = 1.62 m wide), the window seen 15 degrees from the wall (9.7 m along)", "spec": ("along", 15.0, 2.6), "vfov_deg": 39.0},
     "H_UNDER": {"what": "0.8 m from the wall, directly below the window (looking up)", "spec": ("under", None, 0.8), "vfov_deg": 60.0},
 }
 STAND_OFF_CAMERAS = ["H_ACROSS_0", "H_ACROSS_30", "H_ALONG_15_NEAR", "H_ALONG_30_NEAR", "H_ALONG_15_ROAD", "H_UNDER"]
@@ -162,9 +162,15 @@ def slide_deg_vec(eye, obj, hitpts, sid, room):
     return out
 
 
+def pixel_angle_deg(vfov_deg, res_h=1440):
+    """The angle one pixel subtends at the centre of the frame for a pinhole camera of vertical field vfov_deg over res_h lines: atan(tan(vfov / 2) / (res_h / 2)).
+    (The first version of this file used vfov / res_h, which is 4 per cent small at 39 degrees and 10 per cent small at 60: the review's 'exact pixel angles'.)"""
+    return math.degrees(math.atan(math.tan(math.radians(vfov_deg / 2.0)) / (res_h / 2.0)))
+
+
 def max_standoff(eye, hitpts, sid, room, px_limit, vfov_deg, res_h=1440):
     """For each hit point the greatest stand-off (m) at which an object painted on its surface slides at most px_limit pixels."""
-    lim = px_limit * vfov_deg / float(res_h)
+    lim = px_limit * pixel_angle_deg(vfov_deg, res_h)
     lo = np.zeros(len(hitpts))
     hi = np.full(len(hitpts), 3.0)
     nrm = NORMALS[sid]
@@ -205,7 +211,10 @@ def see_through(eye, rect, room, depth_from_card=None):
 
 def budgets_for(room_key, sill_above_floor, head_above_floor, win_off_x, sides=(+1,), card_cx=0.0, px=(20, 40)):
     """The stand-off table for one room and window, over the review cameras and both mirror images of the pavement position: for each surface
-    class the 15th percentile, over the points the window shows, of the greatest stand-off, then the smallest over the cameras."""
+    class the 15th percentile, over the points the window shows, of the greatest stand-off, then the smallest over the cameras.
+    The EYE STANDS BY THE WINDOW, as the camera table says (TARGET-REVIEW narrow point 1): the cameras are placed relative to the window's own street x
+    (xc = card_cx - win_off_x for an east card), not the card's centre; the mirror image is taken about the window, not about the room's middle. For a cottage
+    (window 0.9 m off the card's centre) the first version put every eye 0.9 m from its window and so over-stated the back wall's budget (0.41 against 0.38)."""
     room = ROOMS[room_key]
     rect = window_in_picture(room, win_off_x, sill_above_floor, head_above_floor)
     classes = {"back": [0], "side": [1, 2], "floor": [3], "ceiling": [4]}
@@ -214,10 +223,12 @@ def budgets_for(room_key, sill_above_floor, head_above_floor, win_off_x, sides=(
     for cam in STAND_OFF_CAMERAS:
         spec = CAMERAS[cam]["spec"]
         for mirror in (+1, -1):
-            e_st = eye_street(spec, 1, card_cx)           # east card, window at card_cx
+            xc = card_cx - win_off_x                       # the window's street x (east card: the picture's right is toward low x)
+            e_st = eye_street(spec, 1, xc)
             e_pic = eye_in_picture(e_st, 1, card_cx, room)
             if mirror < 0:
-                e_pic = np.array([room["w"] - e_pic[0], e_pic[1], e_pic[2]])
+                cxw = room["w"] / 2.0 + win_off_x           # the window's centre in the picture: the mirror is about the window
+                e_pic = np.array([2.0 * cxw - e_pic[0], e_pic[1], e_pic[2]])
             hp, sid, G, P = see_through(e_pic, rect, room)
             if len(hp) < 8:
                 continue
