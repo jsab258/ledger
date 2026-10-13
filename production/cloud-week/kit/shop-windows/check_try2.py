@@ -35,8 +35,50 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import sw_assets as A  # noqa: E402
 import sw_gate as G  # noqa: E402
+import sw_ctx  # noqa: E402
 
 CHECK_RES = (1280, 720)
+
+# 13 October (batch A): the rows are for any shop. `use(ctx)` names the shop (Rita's when never called, so her checks run as they did); the file names, the frames and the shop's own numbers come from it.
+_CTX = [None]
+
+
+def use(ctx):
+    _CTX[0] = ctx
+
+
+def ctx():
+    if _CTX[0] is None:
+        _CTX[0] = sw_ctx.rita()
+    return _CTX[0]
+
+
+def to_model(p):
+    return ctx().to_model(p)
+
+
+def front_glb(assets):
+    return os.path.join(assets, ctx().front_glb)
+
+
+def display_glb(assets):
+    return os.path.join(assets, ctx().display_glb)
+
+
+def glbs_of(assets):
+    """The shop's own glbs that exist (the front always; the lattice and the display where the shop has them)."""
+    c = ctx()
+    out = [c.front_glb]
+    if c.has_grille:
+        out.append(c.grille_glb)
+    if c.has_room:
+        out.append(c.display_glb)
+    return [n for n in out if os.path.exists(os.path.join(assets, n))]
+
+
+def picture(work, state):
+    c = ctx()
+    return os.path.join(c.rooms if c.id != "ritas" else os.path.join(work, "rooms"), "%s_%s.png" % (c.picture_name or "pawnbroker", state))
 
 
 def luma(arr):
@@ -60,8 +102,8 @@ def glb_image_bytes(path, index):
 # ------------------------------------------------------------------------------------------------------------------------- cameras and projection
 def cam_params(R, cam, res=CHECK_RES):
     cd = R["cameras"][cam]
-    eye = np.array(G.to_model(cd["eye_street_m"]))
-    aim = np.array(G.to_model(cd["aim_street_m"]))
+    eye = np.array(to_model(cd["eye_street_m"]))
+    aim = np.array(to_model(cd["aim_street_m"]))
     fwd = (aim - eye) / np.linalg.norm(aim - eye)
     right = np.cross(fwd, np.array([0, 0, 1.0]))
     right /= np.linalg.norm(right)
@@ -145,7 +187,7 @@ def fascia_rows(R, work, assets, rows, front_png_day_sq, members):
     """FAS-01n: every normalTexture in the front's glb is RGB, mean within 10 levels of (128, 128, 255), blue 200 or more on 99 per cent of pixels.
     FAS-01c: by day at STREET_SQUARE the board's ground luma is within 15 per cent of the stallriser's and the letters are 2.0 or more times the ground."""
     import io
-    glb = os.path.join(assets, "ritas_front.glb")
+    glb = front_glb(assets)
     g, _, _ = glb_json(glb)
     det, ok = [], True
     ntex = 0
@@ -198,7 +240,7 @@ def fascia_rows(R, work, assets, rows, front_png_day_sq, members):
     P = np.stack([xs.ravel() + 0.5, ys.ravel() + 0.5, np.ones(xs.size)], axis=0)
     Q = Hi @ P
     tu, tv = Q[0] / Q[2], Q[1] / Q[2]
-    base = np.asarray(Image.open(os.path.join(work, "fascia_export", "ritas_basecolour_worn.png")).convert("RGB")).astype(np.float32)
+    base = np.asarray(Image.open(os.path.join(work, "fascia_export", "%s_basecolour_worn.png" % ctx().id)).convert("RGB")).astype(np.float32)
     inside = (tu >= 0) & (tu < 5410) & (tv >= 0) & (tv < 550)
     tl = luma(base)
     # letters: the gilt of the name block (centre third of the board, texture luma well above the ground's), ground: the maroon (texture luma near the median)
@@ -206,37 +248,61 @@ def fascia_rows(R, work, assets, rows, front_png_day_sq, members):
     tj = np.clip(tv.astype(int), 0, 549)
     tluma = tl[tj, ti]
     med = float(np.median(tl))
-    sel_letters = inside & (tluma > med * 1.8) & (tu > 1500) & (tu < 3900)
-    sel_ground = inside & (np.abs(tluma - med) < med * 0.25) & (tu > 400) & (tu < 5000)
+    rita_ = ctx().id == "ritas"
+    if rita_:
+        sel_letters = inside & (tluma > med * 1.8) & (tu > 1500) & (tu < 3900)
+        sel_ground = inside & (np.abs(tluma - med) < med * 0.25) & (tu > 400) & (tu < 5000)
+    else:
+        # 13 Oct, batch A: the lettering is whatever stands away from the ground's luma by more than 0.6 of it in either direction (light letters on a dark board, or dark on light), over the whole board
+        sel_letters = inside & (np.abs(tluma - med) > med * 0.6) & (tu > 400) & (tu < 5000)
+        sel_ground = inside & (np.abs(tluma - med) < med * 0.25) & (tu > 400) & (tu < 5000)
     rl = luma(im.reshape(-1, 3).reshape(im.shape))[ys.ravel(), xs.ravel()]
     ground = float(rl[sel_ground].mean()) if sel_ground.any() else 0.0
-    letters = float(np.percentile(rl[sel_letters], 75)) if sel_letters.any() else 0.0
-    # the stallriser's panel (front face at d 135, u 2300..5650, z 0..525): its mean luma over the panel's middle band
-    st = np.array([[(2400 - 3000) / 1000.0, -0.135, 0.45], [(5550 - 3000) / 1000.0, -0.135, 0.45], [(5550 - 3000) / 1000.0, -0.135, 0.10], [(2400 - 3000) / 1000.0, -0.135, 0.10]])
+    light_letters = bool(sel_letters.any() and float(tluma[sel_letters].mean()) > med)
+    if rita_ or light_letters:
+        letters = float(np.percentile(rl[sel_letters], 75)) if sel_letters.any() else 0.0
+        cl = letters / ground if ground else 0.0
+    else:
+        letters = float(np.percentile(rl[sel_letters], 25)) if sel_letters.any() else 0.0
+        cl = ground / max(letters, 1.0)
+    # the stallriser's panel (front face; Rita's: d 135, u 2400..5550, z 0.10 to 0.45): its mean luma over the panel's middle band
+    if rita_:
+        su0, su1, sd, sz0, sz1 = 2400.0, 5550.0, 0.135, 0.10, 0.45
+    else:
+        sp_ = members["sta_panel"]
+        wu = ctx().window_u
+        su0, su1, sd, sz0, sz1 = wu[0] + 100.0, wu[1] - 100.0, sp_["d"][1] / 1000.0, max(0.10, sp_["z"][0] / 1000.0 + 0.10), min(0.45, sp_["z"][1] / 1000.0 - 0.05)
+    st = np.array([[(su0 - 3000) / 1000.0, -sd, sz1], [(su1 - 3000) / 1000.0, -sd, sz1], [(su1 - 3000) / 1000.0, -sd, sz0], [(su0 - 3000) / 1000.0, -sd, sz0]])
     sx_, sy_, _ = project_np(cp, st)
     mk = Image.new("L", res, 0)
     ImageDraw.Draw(mk).polygon(list(zip(sx_, sy_)), fill=255)
     smask = np.asarray(mk) > 0
     stall = float(luma(im)[smask].mean())
     ratio = ground / stall if stall else 0.0
-    cl = letters / ground if ground else 0.0
-    rows.add("FAS-01c", "the board reads by day", abs(ground - stall) / stall <= 0.15 and cl >= 2.0,
-             "STREET_SQUARE by day: the board's ground luma %.1f against the stallriser's %.1f (%.0f per cent; within 15 per cent), the gilt letters (75th percentile of the lettering's pixels) %.1f: letters to ground %.2f (at least 2.0; try 1: 34.2 against 55.6 and 1.39)" % (ground, stall, 100.0 * ratio, letters, cl))
+    if rita_:
+        rows.add("FAS-01c", "the board reads by day", abs(ground - stall) / stall <= 0.15 and cl >= 2.0,
+                 "STREET_SQUARE by day: the board's ground luma %.1f against the stallriser's %.1f (%.0f per cent; within 15 per cent), the gilt letters (75th percentile of the lettering's pixels) %.1f: letters to ground %.2f (at least 2.0; try 1: 34.2 against 55.6 and 1.39)" % (ground, stall, 100.0 * ratio, letters, cl))
+    else:
+        rows.add("FAS-01c", "the board reads by day", cl >= 2.0 and ground >= 12.0,
+                 "STREET_SQUARE by day: the board's ground luma %.1f (not black: at least 12), the %s letters (%s of the lettering's pixels) %.1f: letters to ground %.2f (at least 2.0). The stallriser's luma %.1f is written beside it (%.0f per cent of the ground's); for Rita's the two had to agree within 15 per cent because both were one paint, which is not asked of a shop whose stallriser is another material" % (
+                     ground, "light" if light_letters else "dark", "75th percentile" if light_letters else "25th percentile", letters, cl, stall, 100.0 * ratio))
 
 
 def glass_rows_check(R, work, assets, rows, members):
     """GLS-02: no ink pixel of a glass row lies behind a bar, mullion or bead at STREET_SQUARE and STREET_30 (a ray from the eye to each ink pixel meets nothing opaque first)."""
-    bvh, owner = front_bvh(os.path.join(assets, "ritas_front.glb"))
+    bvh, owner = front_bvh(front_glb(assets))
     fasc = os.path.join(work, "fascias")
     man = json.load(open(os.path.join(fasc, "manifest.json")))
     out, ok = [], True
     for cam in ("STREET_SQUARE", "STREET_30"):
         cp = cam_params(R, cam)
         for g in man["glass_lettering"]:
-            if g["shop"] != "ritas" or g["row"] not in (7, 8, 9):
+            if g["shop"] != ctx().id or (ctx().id == "ritas" and g["row"] not in (7, 8, 9)):
                 continue
-            key = [k for k in members if k.startswith("glass_row_%d_" % g["row"])][0]
-            mem = members[key]
+            keys = [k for k in members if k.startswith("glass_row_%d_" % g["row"])]
+            if not keys:
+                continue
+            mem = members[keys[0]]
             a = np.asarray(Image.open(os.path.join(fasc, g["files"]["rgba"]["file"])).convert("RGBA"))[..., 3]
             jj, ii = np.nonzero(a[::2, ::2] > 128)
             jj, ii = jj * 2, ii * 2
@@ -255,16 +321,20 @@ def glass_rows_check(R, work, assets, rows, members):
                     by[nm] = by.get(nm, 0) + 1
             ok &= blocked == 0
             out.append("%s %s: %d of %d ink points behind %s" % (cam, g["string"], blocked, len(pts), by or "nothing"))
-    rows.add("GLS-02", "no glass row lies behind a bar, mullion or bead", ok, "a ray from the camera's eye to each ink point of WATCHES, JEWELLERY and LOANS (the row's alpha, every 2 mm) must meet no opaque part of the front first: " + "; ".join(out))
+    rows.add("GLS-02", "no glass row lies behind a bar, mullion or bead", ok, "a ray from the camera's eye to each ink point of %s (the row's alpha, every 2 mm) must meet no opaque part of the front first: " % ("WATCHES, JEWELLERY and LOANS" if ctx().id == "ritas" else "the shop's glass rows") + "; ".join(out))
 
 
 def hall_check(R, work, assets, rows, members):
     """FRN-09: through the side door's fanlight from STREET_SQUARE every ray meets the hall (or the door frame), none gets through to the room's card."""
-    bvh, owner = front_bvh(os.path.join(assets, "ritas_front.glb"))
+    bvh, owner = front_bvh(front_glb(assets))
     cp = cam_params(R, "STREET_SQUARE")
-    fl = R["door"]["fanlight"]
-    us = np.linspace(fl["u_mm"][0] + 15, fl["u_mm"][1] - 15, 40) if False else np.linspace(450.0, 1200.0, 40)
-    zs = np.linspace(2130.0, 2380.0, 14)
+    if ctx().id == "ritas":
+        us = np.linspace(450.0, 1200.0, 40)
+        zs = np.linspace(2130.0, 2380.0, 14)
+    else:
+        fg = members["glass_fanlight"]          # the side door's fanlight (the F1 family's `glass_fanlight`): rays through its middle, 15 mm in from its edges
+        us = np.linspace(fg["u"][0] + 15, fg["u"][1] - 15, 40)
+        zs = np.linspace(fg["z"][0] + 15, fg["z"][1] - 15, 14)
     miss, hall, other = 0, 0, {}
     tot = 0
     for u in us:
@@ -290,7 +360,7 @@ def hall_check(R, work, assets, rows, members):
 def uv_rows(assets, rows):
     """FAS-03: every textured primitive carries TEXCOORD_0 and every texCoord is 0 or more, in the three glbs."""
     det, ok = [], True
-    for nm in ("ritas_front.glb", "ritas_grille_night.glb", "ritas_display.glb"):
+    for nm in glbs_of(assets):
         g, _, _ = glb_json(os.path.join(assets, nm))
         bad_prims, bad_tc = 0, 0
         for m in g["materials"]:
@@ -357,7 +427,7 @@ def backdrop_rows(R, assets, work, rows):
     for cam in ("STREET_SQUARE", "STREET_30", "CLOSE_35", "CLOSE_35_B"):
         bpy.ops.wm.read_factory_settings(use_empty=True)
         sc = bpy.context.scene
-        objs = load_glb_objects(os.path.join(assets, "ritas_front.glb"))
+        objs = load_glb_objects(front_glb(assets))
         solid = bpy.data.materials.new("solid")
         solid.use_nodes = True
         solid.node_tree.nodes["Principled BSDF"].inputs["Base Color"].default_value = (0.2, 0.2, 0.2, 1)
@@ -384,8 +454,8 @@ def backdrop_rows(R, assets, work, rows):
         nt.links.new(e.outputs[0], o2.inputs[0])
         bd.data.materials.append(m)
         cd = R["cameras"][cam]
-        eye = G.to_model(cd["eye_street_m"])
-        aim = G.to_model(cd["aim_street_m"])
+        eye = to_model(cd["eye_street_m"])
+        aim = to_model(cd["aim_street_m"])
         cam_d = bpy.data.cameras.new("cam")
         cam_d.sensor_fit = "VERTICAL"
         cam_d.angle_y = math.radians(G.VFOV[cam])
@@ -439,7 +509,7 @@ def display_rows(R, work, assets, rows):
     from mathutils.bvhtree import BVHTree
     di = json.load(open(os.path.join(work, "display_work", "display_items.json")))
     bpy.ops.wm.read_factory_settings(use_empty=True)
-    objs = load_glb_objects(os.path.join(assets, "ritas_display.glb"))
+    objs = load_glb_objects(display_glb(assets))
     deps = bpy.context.evaluated_depsgraph_get()
     meshes = {}
     for ob in objs:
@@ -504,7 +574,12 @@ def display_rows(R, work, assets, rows):
     # DSP-04
     L = di["length_m"]
     out, ok = [], True
-    for tier, span in (("bed", (-L / 2 + 0.14, -L / 2 + 3.20)), ("step", tuple(di["tiers"]["step"]["u"])), ("middle", tuple(di["tiers"]["middle"]["u"])), ("top", tuple(di["tiers"]["top"]["u"]))):
+    if ctx().id == "ritas":
+        tier_spans = (("bed", (-L / 2 + 0.14, -L / 2 + 3.20)), ("step", tuple(di["tiers"]["step"]["u"])), ("middle", tuple(di["tiers"]["middle"]["u"])), ("top", tuple(di["tiers"]["top"]["u"])))
+    else:
+        # batch A: the bed along the whole window zone less 0.10 at each end (the return walls' corners), and any tier the shop's display records
+        tier_spans = (("bed", (-L / 2 + 0.10, L / 2 - 0.10)),) + tuple((k, tuple(v["u"])) for k, v in di["tiers"].items() if k != "bed")
+    for tier, span in tier_spans:
         iv = []
         for it in di["items"]:
             if it["tier"] == tier and not (tier == "bed" and it["ext"][5] > 0.011 and False):
@@ -523,7 +598,7 @@ def display_rows(R, work, assets, rows):
             worst = max(worst, span[1] - cur)
         ok &= worst <= 0.20 + 1e-9
         out.append("%s %.3f m (%d pieces)" % (tier, worst, len(iv)))
-    rows.add("DSP-04", "no free run along a tier over 0.20 m", ok, "the longest stretch of the bed's front strip (u 0.14 to 3.20), the step and each tier with nothing on it: " + "; ".join(out) + " (limit 0.20)")
+    rows.add("DSP-04", "no free run along a tier over 0.20 m", ok, ("the longest stretch of the bed's front strip (u 0.14 to 3.20), the step and each tier with nothing on it: " if ctx().id == "ritas" else "the longest stretch of the bed (the window's length less 0.10 at each end) and of each tier with nothing on it (the crates and trays count as what stands there): ") + "; ".join(out) + " (limit 0.20)")
 
 
 def visibility(R, work, assets, di, group_of):
@@ -539,11 +614,11 @@ def visibility(R, work, assets, di, group_of):
         areas[cam] = np.zeros(len(di["groups"]))
         bpy.ops.wm.read_factory_settings(use_empty=True)
         sc = bpy.context.scene
-        disp = load_glb_objects(os.path.join(assets, "ritas_display.glb"))
-        front = load_glb_objects(os.path.join(assets, "ritas_front.glb"))
+        disp = load_glb_objects(display_glb(assets))
+        front = load_glb_objects(front_glb(assets))
         for o in disp:
             if o.type == "MESH":
-                o.location += mathutils.Vector((0.975, -0.025, 0.600)) if o.parent is None else mathutils.Vector()
+                o.location += mathutils.Vector((ctx().window_cx_m, -0.025, 0.600)) if o.parent is None else mathutils.Vector()
         deps0 = bpy.context.evaluated_depsgraph_get()
 
         def flat(c):
@@ -580,8 +655,8 @@ def visibility(R, work, assets, di, group_of):
             o.data.materials.clear()
             o.data.materials.append(black)
         cd = R["cameras"][cam]
-        eye = G.to_model(cd["eye_street_m"])
-        aim = G.to_model(cd["aim_street_m"])
+        eye = to_model(cd["eye_street_m"])
+        aim = to_model(cd["aim_street_m"])
         cam_d = bpy.data.cameras.new("cam")
         cam_d.sensor_fit = "VERTICAL"
         cam_d.angle_y = math.radians(G.VFOV[cam])
@@ -717,7 +792,12 @@ def lit02b_rows(R, work, rows):
 def night_rows(R, work, rows, spill_w):
     """LIT-05 on the glass only, and LIT-07 (the review's three conditions)."""
     gate = os.path.join(work, "gate")
-    win_x = (-0.70, 2.65)
+    c_ = ctx()
+    win_x = ((c_.window_u[0] - 3000.0) / 1000.0, (c_.window_u[1] - 3000.0) / 1000.0)       # Rita's (-0.70, 2.65)
+    mem = json.load(open(os.path.join(work, "front_members.json")))["members"]
+    mull_us = [(3386.7, 3456.7), (4493.3, 4563.3)] if c_.id == "ritas" else [(v["u"][0], v["u"][1]) for k, v in sorted(mem.items()) if k.startswith("win_mullion_")]
+    mull_d = 0.092 if c_.id == "ritas" else max([v["d"][1] for k, v in mem.items() if k.startswith("win_mullion_")] or [92.0]) / 1000.0
+    head_z0 = 2.25 if c_.id == "ritas" else (mem["win_transom"]["z"][0] / 1000.0 - 0.15 if "win_transom" in mem else 2.25)
     res = (2560, 1440)
     out05 = {}
     res_cond = {}
@@ -745,7 +825,7 @@ def night_rows(R, work, rows, spill_w):
         glass_with_lattice = float(lum[zone_m & gm_open].mean()) if gm_open is not None and (zone_m & gm_open).any() else None
         out05[cam] = (glass_only, glass_with_lattice, int((zone_m & gm).sum()))
         # the head band: z 2.25 to 2.39 across the window zone
-        hb = np.array([[win_x[0], -0.033, 2.25], [win_x[1], -0.033, 2.25], [win_x[1], -0.033, 2.39], [win_x[0], -0.033, 2.39]])
+        hb = np.array([[win_x[0], -0.033, head_z0], [win_x[1], -0.033, head_z0], [win_x[1], -0.033, head_z0 + 0.14], [win_x[0], -0.033, head_z0 + 0.14]])
         hx, hy, _ = project_np(cp, hb)
         hm = Image.new("L", res, 0)
         ImageDraw.Draw(hm).polygon(list(zip(hx, hy)), fill=255)
@@ -753,15 +833,20 @@ def night_rows(R, work, rows, spill_w):
         head_burnt = float((im.max(axis=2)[head] >= 250).mean())
         # the mullion fronts (u 3386.7 to 3456.7 and 4493.3 to 4563.3, front face d 92, z 700 to 1400)
         mull_vals = []
-        for (ua, ub) in ((3386.7, 3456.7), (4493.3, 4563.3)):
-            q = np.array([[(ua - 3000) / 1000.0, -0.092, 0.70], [(ub - 3000) / 1000.0, -0.092, 0.70], [(ub - 3000) / 1000.0, -0.092, 1.40], [(ua - 3000) / 1000.0, -0.092, 1.40]])
+        for (ua, ub) in mull_us:
+            q = np.array([[(ua - 3000) / 1000.0, -mull_d, 0.70], [(ub - 3000) / 1000.0, -mull_d, 0.70], [(ub - 3000) / 1000.0, -mull_d, 1.40], [(ua - 3000) / 1000.0, -mull_d, 1.40]])
             qx, qy, _ = project_np(cp, q)
             qm = Image.new("L", res, 0)
             ImageDraw.Draw(qm).polygon(list(zip(qx, qy)), fill=255)
             mull_vals.append(np.asarray(qm) > 0)
-        mm = mull_vals[0] | mull_vals[1]
-        mull = float(lum[mm].mean())
-        mull_p95 = float(np.percentile(lum[mm], 95))
+        if mull_vals:
+            mm = mull_vals[0]
+            for _m in mull_vals[1:]:
+                mm = mm | _m
+            mull = float(lum[mm].mean())
+            mull_p95 = float(np.percentile(lum[mm], 95))
+        else:
+            mull, mull_p95 = 0.0, 0.0           # a window without a mullion: nothing to read
         # the pavement pool in front of the window: the review's box (x 860 to 1760, y 1075 to 1145 at STREET_SQUARE; the same ground patch at STREET_30)
         pav = np.array([[win_x[0], -0.60, 0.0], [win_x[1], -0.60, 0.0], [win_x[1], -1.20, 0.0], [win_x[0], -1.20, 0.0]])
         px_, py_, _ = project_np(cp, pav)
@@ -772,9 +857,13 @@ def night_rows(R, work, rows, spill_w):
     if "STREET_SQUARE" in out05:
         a, b, n = out05["STREET_SQUARE"]
         ok05 = a >= 45          # "on the glass only": the frame, mullions, beads AND the lattice's bars are not glass and stay out of the zone; the reading with the bars in is written beside it
+        if ctx().has_grille:
+            lat_txt = "With the lattice's bars in the zone, as the street sees the window all night, it reads %s: the bars are black and cover about 30 per cent of it (a known shortfall: the room behind is lit as the approved night shot is)." % (("%.1f" % b) if b is not None else "?")
+        else:
+            lat_txt = "The shop has no night grille: the glass is what the street sees."
         rows.add("LIT-05", "the display is lit at night", ok05,
-                 "STREET_SQUARE at night, on the GLASS ONLY as the review words it (the mullions, the frame, the beads and the lattice's bars are not glass and are masked out): the display zone (z 0.60 to 1.45 above the footway across the window zone, %d glass px) mean luma %.1f (at least 45; try 1 measured 45.4 with the glowing mullions inside its zone). With the lattice's bars in the zone, as the street sees the window all night, it reads %s: the bars are black and cover about 30 per cent of it (a known shortfall: the room behind is lit as the approved night shot is). The spill is the gate's stand-in (a rect light 0.10 behind the wall face at z 2.30, %s Blender watts, invisible to the camera, on the display's channel and the gate's footway): Lumen's own light on the display is owed on the PC (PC-02)"
-                 % (n, a, ("%.1f" % b) if b is not None else "?", spill_w))
+                 "STREET_SQUARE at night, on the GLASS ONLY as the review words it (the mullions, the frame and the beads are not glass and are masked out): the display zone (z 0.60 to 1.45 above the footway across the window zone, %d glass px) mean luma %.1f (at least 45; Rita's try 1 measured 45.4 with the glowing mullions inside its zone). %s The spill is the gate's stand-in (a rect light 0.10 behind the wall face at z 2.30, %s Blender watts, invisible to the camera, on the display's channel and the gate's footway): Lumen's own light on the display is owed on the PC (PC-02)"
+                 % (n, a, lat_txt, spill_w))
     det, ok = [], True
     for cam, c in res_cond.items():
         c1 = c["head_burnt"] < 0.01
@@ -889,8 +978,12 @@ def so07_rows(work, rows, tol=0.002):
     The room is rebuilt here from the same script and target (seconds); a piece's own meshes (its hands, its lens) do not count against each other."""
     import bpy
     from mathutils.bvhtree import BVHTree
-    import sw_room as S
-    r = S.build_scene(os.path.join(work, "rooms_check"))
+    if ctx().id == "ritas":
+        import sw_room as S
+        r = S.build_scene(os.path.join(work, "rooms_check"))
+    else:
+        import sw_room_gen as RG
+        r = RG.build_scene(os.path.join(work, "rooms_check"), ctx())
     deps = bpy.context.evaluated_depsgraph_get()
     group_of = {}
     for gi, q in enumerate(r.placed):
@@ -972,7 +1065,7 @@ def coplanar_front(glb, R, members, tol=0.5, min_area=1.0, ang=2.0):
                     pts = V[T_[ti]]
                     per[(ax, sg)].append((float(pts[:, ax].mean()), ob.name, pts[:, other]))
     bvh = BVHTree.FromPolygons(verts, polys, epsilon=1e-6)
-    eyes = [np.array(G.to_model(R["cameras"][c]["eye_street_m"])) * 1000.0 for c in ("STREET_SQUARE", "STREET_30", "CLOSE_35", "CLOSE_35_B")]
+    eyes = [np.array(to_model(R["cameras"][c]["eye_street_m"])) * 1000.0 for c in ("STREET_SQUARE", "STREET_30", "CLOSE_35", "CLOSE_35_B")]
     for xs in (-6, -3, 0, 3, 6):
         for ys in (-1.5, -4.0, -8.0):
             eyes.append(np.array([xs, ys, 1.5]) * 1000.0)       # model frame: y negative toward the street
@@ -1036,7 +1129,7 @@ def coplanar_front(glb, R, members, tol=0.5, min_area=1.0, ang=2.0):
 
 def frn10_rows(R, work, assets, rows, members):
     """FRN-10 (street review 1, close review 2): (a) no two parts of the front share a face plane where a camera can see it; (b) in the day gate frames no pixel of the front is under luma 8."""
-    glb = os.path.join(assets, "ritas_front.glb")
+    glb = front_glb(assets)
     cop = coplanar_front(glb, R, members)
     vis = [c for c in cop if c[5]]
     det_a = "%d coplanar same-facing overlaps of more than 1 mm2 among the front's parts (hidden ones, behind the doors or inside the joinery: not a fault), %d of them where a camera can see them%s" % (
@@ -1152,10 +1245,11 @@ def lit08_rows(R, work, rows):
 
 def manifest(HERE_, assets, work, out_path):
     files = []
-    for nm in ("ritas_front.glb", "ritas_grille_night.glb", "ritas_display.glb"):
+    for nm in glbs_of(assets):
         files.append(os.path.join(assets, nm))
-    for st in ("day", "night_lit", "night_dark"):
-        files.append(os.path.join(work, "rooms", "pawnbroker_%s.png" % st))
+    if ctx().has_room:
+        for st in ("day", "night_lit", "night_dark"):
+            files.append(picture(work, st))
     out = {"made": __import__("time").strftime("%Y-%m-%d %H:%M:%S"), "what": "the files of the narrow-points build (13 Oct, from the try 2 reviews; v3); the three glbs and the three 4096 pictures are out of git (rebuilt by build_ritas.py) so this names the versions",
            "files": {}}
     for p in files:
