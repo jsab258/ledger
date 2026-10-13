@@ -122,6 +122,7 @@ def run_inner(shop, stage):
         if not rita:
             json.dump(getattr(r, "notes", []), open(os.path.join(rooms, "layout_notes.json"), "w"), indent=1)
             json.dump(getattr(r, "rows", {}), open(os.path.join(rooms, "rows.json"), "w"), indent=1)
+            json.dump(getattr(r, "texts", []), open(os.path.join(rooms, "texts.json"), "w"), indent=1)
         # the masters' copies beside the glbs (out of git: .git/info/exclude lists the folder); on the PC the masters go to F:/LedgerTools/shop-rooms
         dst = os.path.join(ASSETS, "rooms")
         os.makedirs(dst, exist_ok=True)

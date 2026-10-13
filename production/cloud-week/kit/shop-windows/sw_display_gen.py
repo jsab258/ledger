@@ -321,7 +321,7 @@ def build_display(work, out_dir, ctx, log=print):
     LAYOUTS[ctx.id](d)
     path, tri, n_alpha = d.finish(out_dir, log)
     info = {"glb": path, "bytes": os.path.getsize(path), "triangles": tri, "pieces": len(d.items), "models": sorted({i["model"] for i in d.items}), "items": d.items, "length_m": d.L, "depth_m": DEPTH,
-            "scripted": d.scripted, "groups": d.groups, "structure": d.structure, "tiers": {"bed": {"w": 0.0, "v": [0.0, DEPTH], "u": [-d.L / 2, d.L / 2]}}, "alpha_links_removed": n_alpha}
+            "scripted": d.scripted, "groups": d.groups, "structure": d.structure, "texts": list(getattr(d, "display_texts", [])), "tiers": {"bed": {"w": 0.0, "v": [0.0, DEPTH], "u": [-d.L / 2, d.L / 2]}}, "alpha_links_removed": n_alpha}
     os.makedirs(work, exist_ok=True)
     json.dump(info, open(os.path.join(work, "display_items.json"), "w"), indent=1)
     log("display: %d pieces of %d models, %d scripted, %d triangles, %d bytes" % (info["pieces"], len(info["models"]), len(info["scripted"]), tri, info["bytes"]))
