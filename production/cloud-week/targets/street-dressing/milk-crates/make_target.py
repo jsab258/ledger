@@ -94,7 +94,7 @@ def build():
     T = {
         "family": FAMILY, "title": "Quay Street's milk crates: a stack, with empties",
         "units": "millimetres; angles in degrees; z up; the long side's dairy band faces -y; the pivot is the bottom crate's footprint centre on the ground",
-        "status": "written 13 October 2026, not yet reviewed", "sample": "MC3",
+        "status": "fixes applied, not re-reviewed", "sample": "MC3",
         "materials": {
             "crate_plastic": {"name": "moulded crate plastic, faded", "srgb": [168, 40, 36], "rough": 0.5, "rough_words": "semi-gloss", "metal": False,
                               "note": "the sample crate is red: a JUDGEMENT (a dairy chose one colour for all its crates and dairies used many: red, blue, yellow, green, orange; the red was first seen on the rejected Poly Haven crate and S2's photograph shows blue crates, which stay the first variant); UV-faded to a lighter, chalky red on the top rim; grime in every slot; NO printed brand (the CC0 texture's 'GALLER STORAGE' print is not used)"},

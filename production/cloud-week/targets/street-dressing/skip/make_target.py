@@ -85,7 +85,7 @@ def build():
     P = build_parts()
     T = {
         "family": FAMILY, "title": "Quay Street's skip", "units": "millimetres; angles in degrees; z up; the long side with the firm's name faces -y; the pivot is the floor's centre on the ground",
-        "status": "written 13 October 2026, not yet reviewed", "sample": "SK1",
+        "status": "fixes applied, not re-reviewed", "sample": "SK1",
         "materials": {
             "skip_paint": {"name": "skip yellow, chalked and dented", "srgb": [226, 188, 24], "rough": 0.6, "rough_words": "semi-matt", "metal": True, "note": "steel under paint: dents, chipped to rust at the rim, mud to knee height, black rubber and tar splashes; yellow in the sample (variants: orange, blue-green)"},
             "lamp_amber": {"name": "amber battery lamp lens", "srgb": [220, 120, 20], "rough": 0.2, "rough_words": "glossy", "metal": False, "note": "emissive at night: the lantern colour (1.0, 0.25, 0.0) linear; off by day"},

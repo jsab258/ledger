@@ -2,7 +2,7 @@
 
 **The pallets are the plain softwood stringer pallet, 1000 x 1200 x 144 mm (seven 85 x 22 top boards 67.5 apart, three 95 x 100 stringers, three 100 x 22 bottom boards), unmarked: the sample is one leaning 12 degrees on the gable wall of the west block in the yard mouth with one flat at its foot (variants: one flat, two stacked), which replaces the flat slab the 2 October ruling took off the street; the board proportion is measured on a 2011 photograph of a leaning pallet (width over pitch 0.545, spread 0.06) because no period pallet photograph exists in the feed; the size is the European standard, not measured.**
 
-Cloud week 42, unit 13, family 5. Written 13 October 2026, not yet reviewed. `SELF-CHECK pallets: 78 checks, 78 passed, 0 failed; negative controls 23 of 23 caught (--live --previews)`
+Cloud week 42, unit 13, family 5. Written 13 October 2026; the fixes the review asked for are applied, not re-reviewed. `SELF-CHECK pallets: 90 checks, 90 passed, 0 failed; negative controls 0 of 0 caught (offline)`
 
 ## Files in this folder
 

@@ -109,7 +109,7 @@ def std_doc(T, S):
     w("")
     w("**" + S["summary"] + "**")
     w("")
-    w("Cloud week 42, unit 13, family %s. Written 13 October 2026, not yet reviewed. `%s`" % (S["no"], sc))
+    w("Cloud week 42, unit 13, family %s. Written 13 October 2026; the fixes the review asked for are applied, not re-reviewed. `%s`" % (S["no"], sc))
     w("")
     w("## Files in this folder")
     w("")

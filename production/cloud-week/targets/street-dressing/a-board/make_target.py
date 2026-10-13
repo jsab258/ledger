@@ -186,7 +186,7 @@ def build():
         "family": FAMILY,
         "title": "Quay Street's A-board outside the fish market",
         "units": "millimetres; angles in degrees; z up; the front leaf's painted face looks -y and the back leaf's looks +y; the pivot is the centre of the two feet's line on the paving",
-        "status": "written 13 October 2026, not yet reviewed",
+        "status": "fixes applied, not re-reviewed",
         "sample": "AB1",
         "materials": {
             "ply_paint": {"name": "painted plywood, off-white, weathered", "srgb": [212, 213, 206], "rough": 0.6, "rough_words": "satin to matt, chalking", "metal": False,

@@ -2,7 +2,7 @@
  "family": "milk-crates",
  "title": "Quay Street's milk crates: a stack, with empties",
  "units": "millimetres; angles in degrees; z up; the long side's dairy band faces -y; the pivot is the bottom crate's footprint centre on the ground",
- "status": "written 13 October 2026, not yet reviewed",
+ "status": "fixes applied, not re-reviewed",
  "sample": "MC3",
  "materials": {
   "crate_plastic": {
@@ -3255,12 +3255,12 @@
   "stand the stack at x 37.30, z 4.776 (its centre), 0.14 m clear of the grocer's door jamb; never in front of the lobby (x 37.644 to 38.650)"
  ],
  "self_check": {
-  "line": "SELF-CHECK milk-crates: 91 checks, 91 passed, 0 failed; negative controls 0 of 0 caught (offline)",
+  "line": "SELF-CHECK milk-crates: 91 checks, 91 passed, 0 failed; negative controls 38 of 38 caught (offline)",
   "checks": 91,
   "passed": 91,
   "failed": 0,
-  "controls": 0,
-  "controls_caught": 0,
+  "controls": 38,
+  "controls_caught": 38,
   "options": "offline",
   "failing": [],
   "uncaught": []

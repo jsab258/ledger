@@ -82,7 +82,7 @@ def build():
     T = {
         "family": FAMILY, "title": "Quay Street's telegraph pole with its wires",
         "units": "millimetres; angles in degrees; z up from the pavement; the bracket is on the +y face; the pivot is the pole's centre at the pavement; in the street (yaw 0) local +y is street +z: across the street, to the east parade, and the bracket faces the street's axis",
-        "status": "written 13 October 2026, not yet reviewed", "sample": "TP1",
+        "status": "fixes applied, not re-reviewed", "sample": "TP1",
         "materials": {
             "creosote_timber": {"name": "creosoted pine, grey-brown, weathered", "srgb": [92, 78, 62], "rough": 0.85, "rough_words": "rough, checked", "metal": False, "note": "darker brown-black with tar at the foot (lowest 1.5 m), silvered grey above with vertical checks 100 to 400 long; a dark stain below the bracket where rain runs"},
             "galvanised": {"name": "galvanised steel, dull", "srgb": [128, 130, 128], "rough": 0.55, "rough_words": "matt satin", "metal": True, "note": "steps, cap: white rust, never bright"},

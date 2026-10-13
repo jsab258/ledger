@@ -2,7 +2,7 @@
  "family": "skip",
  "title": "Quay Street's skip",
  "units": "millimetres; angles in degrees; z up; the long side with the firm's name faces -y; the pivot is the floor's centre on the ground",
- "status": "written 13 October 2026, not yet reviewed",
+ "status": "fixes applied, not re-reviewed",
  "sample": "SK1",
  "materials": {
   "skip_paint": {

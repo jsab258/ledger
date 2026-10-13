@@ -303,7 +303,7 @@ def build():
     T = {
         "family": FAMILY, "title": "Quay Street's bicycle against a wall",
         "units": "millimetres; angles in degrees; z up; x forward (the front wheel at +x); y to the rider's right; the pivot is the rear wheel's ground contact; BI2 leans toward -y, the rider's left, where its wall stands",
-        "status": "written 13 October 2026, not yet reviewed", "sample": "BI2",
+        "status": "fixes applied, not re-reviewed", "sample": "BI2",
         "materials": {
             "paint_black": {"name": "black enamel, chipped and rusting at the welds", "srgb": [24, 26, 26], "rough": 0.45, "rough_words": "semi-gloss", "metal": True, "note": "frame, forks, mudguards: chipped to red-brown rust at the dropouts, the lower head tube and the mudguard stays"},
             "steel": {"name": "chrome-plated steel gone dull", "srgb": [150, 152, 150], "rough": 0.4, "rough_words": "dull satin", "metal": True, "note": "bars, stem, cranks, hubs, spokes: pitted with orange rust spots, never mirror bright"},

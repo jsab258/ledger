@@ -2,7 +2,7 @@
  "family": "bicycle",
  "title": "Quay Street's bicycle against a wall",
  "units": "millimetres; angles in degrees; z up; x forward (the front wheel at +x); y to the rider's right; the pivot is the rear wheel's ground contact; BI2 leans toward -y, the rider's left, where its wall stands",
- "status": "written 13 October 2026, not yet reviewed",
+ "status": "fixes applied, not re-reviewed",
  "sample": "BI2",
  "materials": {
   "paint_black": {
@@ -11364,12 +11364,12 @@
   "the chain: strips of 8 x 6 mm on the pitch circles (88.9 and 36.6 radius) joined by two runs on the common tangents; build real links of 12.7 pitch along the same path (102 links); the chain, ring and sprocket lie in the plane y = 55, outboard of the chain stays at y = +-40"
  ],
  "self_check": {
-  "line": "SELF-CHECK bicycle: 138 checks, 138 passed, 0 failed; negative controls 0 of 0 caught (offline)",
+  "line": "SELF-CHECK bicycle: 138 checks, 138 passed, 0 failed; negative controls 58 of 58 caught (offline)",
   "checks": 138,
   "passed": 138,
   "failed": 0,
-  "controls": 0,
-  "controls_caught": 0,
+  "controls": 58,
+  "controls_caught": 58,
   "options": "offline",
   "failing": [],
   "uncaught": []

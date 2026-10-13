@@ -2,7 +2,7 @@
  "family": "a-board",
  "title": "Quay Street's A-board outside the fish market",
  "units": "millimetres; angles in degrees; z up; the front leaf's painted face looks -y and the back leaf's looks +y; the pivot is the centre of the two feet's line on the paving",
- "status": "written 13 October 2026, not yet reviewed",
+ "status": "fixes applied, not re-reviewed",
  "sample": "AB1",
  "materials": {
   "ply_paint": {

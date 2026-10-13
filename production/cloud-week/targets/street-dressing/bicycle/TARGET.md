@@ -2,7 +2,7 @@
 
 **The bicycle is an adult's gent's roadster (26 x 1 3/8 wheels 660 mm over the tyre, a 1097 mm wheelbase, a level top tube on a 72 degree seat tube and a 68 degree head tube, swept-back bars 790 over the grips, a sprung saddle at 1035, mudguards with their stays and a red reflector, a plain bell, 170 mm cranks, a chain on an 18 tooth rear sprocket under a chainguard, rims as their own rings, rod brakes with 120 mm bar levers and stirrups under the rims, and a rear carrier 340 x 130 at 780) in the enamel-chipped, dull-chromed state of a street bicycle, no badge or lettering, shown leaning 12 degrees toward the soot-brick wall of the cottages (centre x 15.0, its left grip end on brick between the door at x 13.5 and the window at x 15.9: the wall is not blank, and the first version's lean was away from its wall); no period photograph was measurable (the two street photographs are oblique and low in contrast), so every number is Judgement within stated ranges and the target is checked for internal consistency, the tube angles and the ranges, not against pixels; an adult's bicycle only.**
 
-Cloud week 42, unit 13, family 7. Written 13 October 2026, not yet reviewed. `SELF-CHECK bicycle: 79 checks, 77 passed, 2 failed; negative controls 0 of 0 caught (offline)`
+Cloud week 42, unit 13, family 7. Written 13 October 2026; the fixes the review asked for are applied, not re-reviewed. `SELF-CHECK bicycle: 138 checks, 138 passed, 0 failed; negative controls 0 of 0 caught (offline)`
 
 ## Files in this folder
 

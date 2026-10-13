@@ -119,7 +119,7 @@ def build():
         "family": FAMILY,
         "title": "Quay Street's bus stop with its timetable",
         "units": "millimetres; angles in degrees; z up; the flag and the case face -y (towards the oncoming bus); the pivot is the pole's centre at the paving",
-        "status": "written 13 October 2026, not yet reviewed",
+        "status": "fixes applied, not re-reviewed",
         "sample": "BS1",
         "materials": {
             "paint_black": {"name": "pole black gloss, chalked", "srgb": [28, 28, 30], "rough": 0.5, "rough_words": "semi-gloss", "metal": False, "note": "paint over steel, chipped to grey primer at the foot"},

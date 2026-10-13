@@ -96,7 +96,7 @@ def build():
         "family": FAMILY,
         "title": "Quay Street's council bench",
         "units": "millimetres; angles in degrees; z up; the sitter faces -y; the pivot is the centre of the bench's length on the ground, midway front to back of the end frames' feet",
-        "status": "written 13 October 2026, not yet reviewed",
+        "status": "fixes applied, not re-reviewed",
         "sample": "B1",
         "materials": {
             "timber": {"name": "iroko slats, weathered", "srgb": [122, 98, 70], "rough": 0.8, "rough_words": "rough, grained", "metal": False, "note": "silvering on the top faces, dark at the bolt holes, a green algal stain on the back slats' lower edges"},

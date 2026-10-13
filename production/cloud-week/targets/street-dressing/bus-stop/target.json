@@ -2,7 +2,7 @@
  "family": "bus-stop",
  "title": "Quay Street's bus stop with its timetable",
  "units": "millimetres; angles in degrees; z up; the flag and the case face -y (towards the oncoming bus); the pivot is the pole's centre at the paving",
- "status": "written 13 October 2026, not yet reviewed",
+ "status": "fixes applied, not re-reviewed",
  "sample": "BS1",
  "materials": {
   "paint_black": {
@@ -2253,14 +2253,17 @@
   "orientation: the local -y faces the bus (towards -x in the street's frame, yaw 90 degrees)"
  ],
  "self_check": {
-  "line": "SELF-CHECK bus-stop: 148 checks, 148 passed, 0 failed; negative controls 0 of 0 caught (offline)",
+  "line": "SELF-CHECK bus-stop: 148 checks, 148 passed, 0 failed; negative controls 39 of 41 caught (offline)",
   "checks": 148,
   "passed": 148,
   "failed": 0,
-  "controls": 0,
-  "controls_caught": 0,
+  "controls": 41,
+  "controls_caught": 39,
   "options": "offline",
   "failing": [],
-  "uncaught": []
+  "uncaught": [
+   "case: the middle bar removed",
+   "flag: the front assembly left where the 76 mm pole had it (6.5 mm too far back)"
+  ]
  }
 }

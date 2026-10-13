@@ -60,7 +60,7 @@ def build():
     P3 = flat + lean + wall
     T = {
         "family": FAMILY, "title": "Quay Street's pallets", "units": "millimetres; angles in degrees; z up; the stringers run along x; the deck boards along y; the pivot is the flat pallet's centre on the ground",
-        "status": "written 13 October 2026, not yet reviewed", "sample": "PA3",
+        "status": "fixes applied, not re-reviewed", "sample": "PA3",
         "materials": {
             "pallet_wood": {"name": "softwood pallet timber, grey-brown, weathered", "srgb": [150, 124, 92], "rough": 0.85, "rough_words": "rough, fibrous", "metal": False,
                             "note": "new boards pale (190, 165, 120) at the ends, weathered grey-brown (130, 112, 90) on the faces; nail heads rust-stained; NO printed mark, no stamp, no brand (a real pallet carries IPPC and owner marks: left off)"},

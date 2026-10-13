@@ -79,7 +79,7 @@ def build():
         "family": FAMILY,
         "title": "Quay Street's telephone box (the 1985 to 1991 stainless kind, no operator's mark)",
         "units": "millimetres; angles in degrees; z up, the front (the door) faces -y, the pivot is the centre of the base on the ground; the .glb is metres",
-        "status": "written 13 October 2026, not yet reviewed",
+        "status": "fixes applied, not re-reviewed",
         "sample": "KX1",
         "materials": {
             "stainless": {"name": "brushed stainless steel", "srgb": [196, 198, 200], "rough": 0.38, "rough_words": "satin, brushed", "metal": True, "note": "water-stained, never mirror bright"},

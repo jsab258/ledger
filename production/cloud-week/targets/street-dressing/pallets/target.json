@@ -2,7 +2,7 @@
  "family": "pallets",
  "title": "Quay Street's pallets",
  "units": "millimetres; angles in degrees; z up; the stringers run along x; the deck boards along y; the pivot is the flat pallet's centre on the ground",
- "status": "written 13 October 2026, not yet reviewed",
+ "status": "fixes applied, not re-reviewed",
  "sample": "PA3",
  "materials": {
   "pallet_wood": {
@@ -1948,14 +1948,20 @@
   "stand the pallets at the pose in target.json (x 21.1247, z -6.2, yaw 90) on the owed yard floor at 0.100 above the crown; do not place them before the floor exists"
  ],
  "self_check": {
-  "line": "SELF-CHECK pallets: 90 checks, 90 passed, 0 failed; negative controls 0 of 0 caught (offline)",
+  "line": "SELF-CHECK pallets: 90 checks, 90 passed, 0 failed; negative controls 29 of 34 caught (offline)",
   "checks": 90,
   "passed": 90,
   "failed": 0,
-  "controls": 0,
-  "controls_caught": 0,
+  "controls": 34,
+  "controls_caught": 29,
   "options": "offline",
   "failing": [],
-  "uncaught": []
+  "uncaught": [
+   "placement: the pallets moved to x 25 (over west_north's plot, and the foot beyond the owed floor)",
+   "placement: the pallets set at the crates' x with z -4.3 (on the pavement), outside the owed floor",
+   "detail: a stamp decal in the texture spec",
+   "detail: the scene's large pallet's size taken as this target's (2.00 x 1.10 x 0.19)",
+   "detail: a stamp part on a board"
+  ]
  }
 }
