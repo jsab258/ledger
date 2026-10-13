@@ -1,6 +1,7 @@
-"""Rita's whole front, assembled in Blender from the 3.2 kit's parts and the doors, the band above them, the fascia, the signs and the grille.
+"""A shop's whole front, assembled in Blender from the 3.2 kit's parts (and sw_variants for the variants the kit did not build), the doors, the band above them, the fascia, the signs and
+(Rita's) the grille. Written for Rita's and generalised on 13 October for the other shops: every shop number comes from sw_ctx.Ctx (target.json), and for Rita's the output is the earlier one.
 
-Used by build_ritas.py (stage `front`). Run inside a Python that has bpy (Blender 5.2.2 as a module).
+Used by build_shop.py (stage `front`). Run inside a Python that has bpy (Blender 5.2.2 as a module).
 
 Frame (the kit's, millimetres while building): x = u across the bay from the viewer's LEFT (bay middle u 3000 = model x 0), y = -d (d out from the
 wall face, the street toward -y), z up from the footway. Written in metres, z up, scale 1, pivot at the bay's middle on the footway.
@@ -31,11 +32,12 @@ import bmesh  # noqa: E402
 from mathutils import Matrix, Vector  # noqa: E402
 import build_shopfront as bs  # noqa: E402  (the 3.2 kit: Builder, prism_ud, prism_dz, box, finish, materials)
 import joinery  # noqa: E402
+sys.path.insert(0, HERE)
+import sw_ctx  # noqa: E402
+import sw_variants  # noqa: E402
 
-SHOP = "ritas"
 F1_GLB = os.path.join(REPO, "production", "assets", "cloud-week", "door", "door_F1.glb")
 BAY_MID = 3000.0
-Y_WALL = 5.295   # street y of the wall face (d 0): the kit's glass back face (d 30) stands at the street model's 5.265
 # the brick piers the gate stands behind each pilaster (13 Oct, from the try 1 street review, N2): model x, y 0 to 0.30 back, z 0 to 3.56. The pilaster's shaft and core stop 30 mm
 # short of the bay's edge (x 2.970) and the street model's wall opening is the whole bay, so without a pier the outer 30 to 54 mm of the bay shows the sky at STREET_30.
 PIERS_X = ((-3.0, -2.65), (2.65, 3.0))
@@ -175,16 +177,22 @@ def clip_object(ob, co, no):
 
 # ---------------------------------------------------------------------------------------------------------------- the build
 class Front:
-    def __init__(self, scratch, T):
+    def __init__(self, scratch, T, ctx=None):
+        self.ctx = ctx or sw_ctx.rita()
         self.scratch = scratch
         self.T = T
         self.SW = load_sw_target()
-        self.R = next(s for s in self.SW["shops"] if s["id"] == SHOP)
+        self.R = self.ctx.R
         self.kt = bs.load_target()          # the 3.2 kit's target with its departures
-        self.B = bs.Builder(self.kt, SHOP)
-        self.mats = bs.setup_materials(self.kt, SHOP)
+        shop = self.ctx.id
+        self.sync_kit_glazing()
+        self.B = sw_variants.VBuilder(self.kt, shop, self.ctx.variants)
+        self.B.pilaster_side = "l" if self.ctx.door_end == "R" else "r"       # which end of the window meets a pilaster: the one away from the doors
+        self.mats = bs.setup_materials(self.kt, shop)
         m = self.mats
-        m["buttermilk"] = bs.make_material("paint_buttermilk", self.R["front"]["paint_srgb"]["side_door"], 0.5, 0.0)
+        self.paint_materials()
+        # (Rita's: the side door's leaf paint is named paint_buttermilk, as the earlier builds had it; the other shops' is named for the target's own paint)
+        m["buttermilk"] = bs.make_material("paint_buttermilk" if shop == "ritas" else "paint_side_door_" + self.R["front"]["paints"]["side_door"], self.R["front"]["paint_srgb"]["side_door"], 0.5, 0.0)
         m["brass"] = bs.make_material("brass", (160, 120, 55), 0.38, 1.0)
         m["steel"] = bs.make_material("steel_dark", (60, 60, 62), 0.5, 0.7)
         m["terrazzo"] = bs.make_material("terrazzo", (176, 170, 158), 0.35, 0.0)
@@ -196,6 +204,24 @@ class Front:
         self.members = {}        # name -> dict(u, d, z ranges in mm) for the checks
         self.extra = []          # objects made outside the Builder (textured quads, F1)
 
+    def sync_kit_glazing(self):
+        """The 3.2 kit's target carries the toplight layout of 2.2 for every shop but Rita's (its departure D6 is written for her alone); the shop-windows target's `front.glazing_layout` has D6 for each
+        (the mullions carried up as bars of their own width, each light's toplight split equally), so the kit's copy is brought to it for the shop being built."""
+        if self.ctx.id == "ritas":
+            return
+        kg = bs.shop_of(self.kt, self.ctx.id)["glazing_layout"]
+        g = self.R["front"]["glazing_layout"]
+        for k in ("mullion_centres", "toplight_bar_centres", "toplight_width", "toplights", "light_width", "mullion_face"):
+            kg[k] = g[k]
+        if g.get("mullion_carried_up"):
+            kg["toplight_mullion_bar_centres"] = list(g["mullion_centres"])
+
+    def paint_materials(self):
+        """The shop door's paint as a role of its own (Rita's is the window frame's: the same Blender material)."""
+        pid = bs.shop_of(self.kt, self.ctx.id)["paints"]["shop_door"]
+        p = self.kt["paints"][pid]
+        self.mats["door_paint"] = bs.make_material("paint_" + pid, p["srgb"], p["rough"], p["metal"])
+
     # ----------------------------------------------------------------------------------------------- the kit's own parts
     def kit_parts(self):
         B = self.B
@@ -204,8 +230,10 @@ class Front:
         for o in B.objs:
             if o.name.startswith("pilR_"):
                 bs.mirror_u(o, 3000.0)
-        B.console("L", uc=175.0)
-        B.console("R", uc=5825.0)
+        if self.R["front"].get("console_absent_viewer") != "L":
+            B.console("L", uc=175.0)
+        if self.R["front"].get("console_absent_viewer") != "R":
+            B.console("R", uc=5825.0)
         B.fascia_board()
         B.cornice()
         B.sill()
@@ -219,8 +247,10 @@ class Front:
     def shop_door(self):
         R = self.R
         D = R["door"]
+        n_before = len(self.B.objs)
         pr = self.kt["parts"]["shop_door"]["profiles"]
-        slot = R["front"]["zones_u_mm"]["shop_door"]            # [1294, 2300]
+        slot = R["front"]["zones_u_mm"]["shop_door"]            # [1294, 2300] (Rita's)
+        slot_side = R["front"]["zones_u_mm"]["side_door"]
         u_in0, u_in1 = slot[0] + 50.0, slot[1] - 50.0           # 1344, 2250
         uc = (slot[0] + slot[1]) / 2.0                          # 1797
         z_foot, z_top = 28.0, 2068.0
@@ -228,10 +258,10 @@ class Front:
         jp = pr["frame_jamb_plan"]["points"]
         jl = [(u_in0 - p[0], p[1]) for p in jp]                 # inner face at u_in0, outer at the slot's edge
         jr = [(u_in1 + p[0], p[1]) for p in jp]
-        self.add("door_jamb_l", bs.prism_ud(jl, 25.0, 2790.0), "white")
-        self.add("door_jamb_r", bs.prism_ud(jr, 25.0, 2790.0), "white")
+        self.add("door_jamb_l", bs.prism_ud(jl, 25.0, 2790.0), "door_paint")
+        self.add("door_jamb_r", bs.prism_ud(jr, 25.0, 2790.0), "door_paint")
         # the frame's head rail under the fanlight (60 over the leaf's 3 clear)
-        self.add("door_frame_head", bx(u_in0, u_in1, 0.0, 100.0, 2071.0, 2131.0), "white")
+        self.add("door_frame_head", bx(u_in0, u_in1, 0.0, 100.0, 2071.0, 2131.0), "door_paint")
         # threshold: terrazzo, the full frame width, threshold_section (d, z)
         th = [(p[0], p[1]) for p in pr["threshold_section"]["points"]]
         self.add("door_threshold", bs.prism_dz(th, slot[0], slot[1]), "terrazzo", bev=None)
@@ -239,25 +269,25 @@ class Front:
         lu0, lu1 = uc - 450.0, uc + 450.0                       # 1347, 2247
         st = 115.0
         d0, d1 = 20.0, 70.0
-        self.add("door_leaf_stile_lever", bx(lu0, lu0 + st, d0, d1, z_foot, z_top), "white")
-        self.add("door_leaf_stile_hinge", bx(lu1 - st, lu1, d0, d1, z_foot, z_top), "white")
+        self.add("door_leaf_stile_lever", bx(lu0, lu0 + st, d0, d1, z_foot, z_top), "door_paint")
+        self.add("door_leaf_stile_hinge", bx(lu1 - st, lu1, d0, d1, z_foot, z_top), "door_paint")
         ru0, ru1 = lu0 + st, lu1 - st
         rails = D["t1_rails_mm"]
-        self.add("door_rail_bottom", bx(ru0, ru1, d0, d1, rails["bottom_rail"][0], rails["bottom_rail"][1]), "white")
-        self.add("door_rail_lock", bx(ru0, ru1, d0, d1, rails["lock_rail"][0], rails["lock_rail"][1]), "white")
-        self.add("door_rail_top", bx(ru0, ru1, d0, d1, rails["top_rail"][0], rails["top_rail"][1]), "white")
+        self.add("door_rail_bottom", bx(ru0, ru1, d0, d1, rails["bottom_rail"][0], rails["bottom_rail"][1]), "door_paint")
+        self.add("door_rail_lock", bx(ru0, ru1, d0, d1, rails["lock_rail"][0], rails["lock_rail"][1]), "door_paint")
+        self.add("door_rail_top", bx(ru0, ru1, d0, d1, rails["top_rail"][0], rails["top_rail"][1]), "door_paint")
         bar = rails["glazing_bar"]
-        self.add("door_glazing_bar", bx(ru0, ru1, d0, d1, bar["z"] - bar["width"] / 2, bar["z"] + bar["width"] / 2), "white")
+        self.add("door_glazing_bar", bx(ru0, ru1, d0, d1, bar["z"] - bar["width"] / 2, bar["z"] + bar["width"] / 2), "door_paint")
         # lower panel: raised and fielded (raised_field_edge: flat margin 32, bevel 8 rising 10), tongues 10 into the rails and stiles
         V, F = joinery.fielded_panel(ru0 - 10.0, rails["bottom_rail"][1] - 10.0, ru1 + 10.0, rails["lock_rail"][0] + 10.0, -26.0, 14.0, 24.0, 8.0, margin=32.0)
-        self.add("door_lower_panel", (V, F), "white", bev=None)
+        self.add("door_lower_panel", (V, F), "door_paint", bev=None)
         # glass: two panes of 6 mm at d 40 to 46 in 12 rebates, an ovolo bead 14 x 11 round each (glazing_bead)
         bead = [(p[0], -p[1]) for p in pr["glazing_bead"]["points"]]
         panes = [(ru0, rails["lock_rail"][1], ru1, bar["z"] - bar["width"] / 2), (ru0, bar["z"] + bar["width"] / 2, ru1, rails["top_rail"][0])]
         for k, (a, b, c, e) in enumerate(panes):
             self.add("door_glass_%d" % k, bx(a - 10.0, c + 10.0, 40.0, 46.0, b - 8.0, e + 8.0), "glass", bev=None)
             V, F = joinery.sweep_frame(bead, a, b, c, e, -46.0)
-            self.add("door_bead_%d" % k, (V, [tuple(int(i) for i in f) for f in F]), "white", bev=None)
+            self.add("door_bead_%d" % k, (V, [tuple(int(i) for i in f) for f in F]), "door_paint", bev=None)
         # furniture (brass): kick plate 770 x 170 with 8 screws, a 30 high foot strip 3 proud, letter plate 250 x 40 at z 678 centred, lever 240 x 40
         # backplate at z 1000 with the keyhole at 950, three butts 100 x 75 on the hinge edge
         self.add("door_kick_plate", bx(uc - 385.0, uc + 385.0, 70.0, 73.0, 28.0, 198.0), "brass", bev=None)
@@ -276,11 +306,11 @@ class Front:
             self.add("door_butt_%d" % k, cyl_z(lu1 + 1.0, 62.0, z - 50.0, z + 50.0, 5.5, 10), "brass", bev=None)
         # the leaf's stops behind its 3 mm clearances (left, right, head and foot) and the hall floor behind both doors: what stands behind a gap in the real door, so the front has no
         # see-through crack (FRN-07): 14 wide stops on the room side of the leaf's back face (d 4 to 20), a floor slab inside from the pilaster to the window frame
-        self.add("door_stop_l", bx(u_in0, u_in0 + 14.0, 4.0, 20.0, 25.0, 2071.0), "white", bev=None)
-        self.add("door_stop_r", bx(u_in1 - 14.0, u_in1, 4.0, 20.0, 25.0, 2071.0), "white", bev=None)
-        self.add("door_stop_head", bx(u_in0, u_in1, 4.0, 20.0, 2060.0, 2071.0), "white", bev=None)
-        self.add("door_stop_foot", bx(u_in0, u_in1, 4.0, 20.0, 25.0, 40.0), "white", bev=None)
-        self.add("hall_floor_behind_doors", bx(slot[0] - 944.0, slot[1], -160.0, 4.0, 0.0, 58.0), "terrazzo", bev=None)
+        self.add("door_stop_l", bx(u_in0, u_in0 + 14.0, 4.0, 20.0, 25.0, 2071.0), "door_paint", bev=None)
+        self.add("door_stop_r", bx(u_in1 - 14.0, u_in1, 4.0, 20.0, 25.0, 2071.0), "door_paint", bev=None)
+        self.add("door_stop_head", bx(u_in0, u_in1, 4.0, 20.0, 2060.0, 2071.0), "door_paint", bev=None)
+        self.add("door_stop_foot", bx(u_in0, u_in1, 4.0, 20.0, 25.0, 40.0), "door_paint", bev=None)
+        self.add("hall_floor_behind_doors", bx(min(slot[0], slot_side[0]), max(slot[1], slot_side[1]), -160.0, 4.0, 0.0, 58.0), "terrazzo", bev=None)
         # the bell (target 4.2): a spring strip 20 x 3, 220 long, on the INSIDE of the top rail, 90 from the hanging stile; the bell hung 80 below
         bd = D["bell"]
         # 13 Oct, from the try 2 reviews (close 9): the strip stood 90 mm in from the leaf's edge, which is ON the hinge stile (115 wide), so the bell hid behind it. The target puts it on
@@ -304,6 +334,19 @@ class Front:
         self.add("bell_clapper_rod", cyl_z(ub, end[0], bz - 58.0, bz - 3.0, 1.2, 6), "steel", bev=None)
         self.add("bell_clapper_bracket", bx(ub - 1.5, ub + 1.5, end[0] - 1.5, 20.0, bz - 48.0, bz - 46.0), "steel", bev=None)
         # note the fixed clapper bracket is a hint: the bell rings against a clapper on the frame (Judgement), not modelled further
+        if D["hinge_viewer"] == "L":
+            # the door is built hinged on the viewer's RIGHT (Rita's, whose doors are on the viewer's left); where the doors are on the right the target hands it the other way (hinged on the window
+            # side, the viewer's left, the lever on the right): every part of the door is turned about the slot's middle, and the _l / _r names follow the sides they now stand on
+            mine = [o for o in self.B.objs[n_before:] if o.name != "hall_floor_behind_doors"]
+            for o in mine:
+                bs.mirror_u(o, uc)
+            for a_, b_ in (("door_jamb_l", "door_jamb_r"), ("door_stop_l", "door_stop_r")):
+                oa, ob_ = self.B.get(a_), self.B.get(b_)
+                ma, mb = self.B.meta.pop(a_), self.B.meta.pop(b_)
+                oa.name = "swap_tmp"
+                ob_.name = a_
+                oa.name = b_
+                self.B.meta[a_], self.B.meta[b_] = mb, ma
         return {"uc": uc, "leaf": (lu0, lu1)}
 
     # ----------------------------------------------------------------------------------------------- the band above the doors (4.1a)
@@ -320,14 +363,14 @@ class Front:
         self.add("band_transom_door", bs.prism_dz(tz, u_in0, u_in1), "white")
         # head (head_section 95 x 60 from z 2790) from the pilaster to the window frame's jamb
         hz = [(p[0], p[1] + 2790.0) for p in wp["head_section"]["points"]]
-        self.add("band_head", bs.prism_dz(hz, slot_s[0], slot_d[1]), "white")
+        self.add("band_head", bs.prism_dz(hz, min(slot_s[0], slot_d[0]), max(slot_s[1], slot_d[1])), "white")
         # fanlight: one pane 6 mm at d 30 to 36 between the door frame's jambs, an ovolo bead round it
         fl = D["fanlight"]
         bd = [(p[0], -p[1]) for p in wp["glazing_bead_ovolo"]["points"]]
         # (13 Oct, FRN-10: the three panes below and this one are 6 mm at d 30.3 to 35.7, not 30 to 36: the pane's front face stood in the plane of the door jamb's rebate, d 36)
         self.add("fanlight_glass", bx(fl["u_mm"][0] - 2.0, fl["u_mm"][1] + 2.0, 30.3, 35.7, fl["z_mm"][0] - 4.0, fl["z_mm"][1] + 4.0), "glass", bev=None)
         V, F = joinery.sweep_frame(bd, fl["u_mm"][0], fl["z_mm"][0], fl["u_mm"][1], fl["z_mm"][1], -36.0)
-        self.add("fanlight_bead", (V, [tuple(int(i) for i in f) for f in F]), "white", bev=None)
+        self.add("fanlight_bead", (V, [tuple(int(i) for i in f) for f in F]), "door_paint", bev=None)
         # three toplights over the shop door: two 28 bars (toplight_bar_plan) at 1641.33 and 1952.67, glass and beads as the window's
         t = D["toplights_over_shop_door"]
         bp = wp["toplight_bar_plan"]["points"]
@@ -445,7 +488,7 @@ class Front:
         meshes = [o for o in new if o.type == "MESH" and o.name in bpy.data.objects]
         # F1 (glb: metres, x centred on its opening, y into the building from the brick face, z = bay z): bay u = uc + x*1000 (mirrored: uc - x*1000),
         # bay y = (y_glb - 0.2143) m  (d = 214.3 - y_F1)
-        mir = True            # the door end is the viewer's left (Rita's): hinge on the shop-door side, knob on the pier side
+        mir = self.ctx.door_end == "L"            # F1 is used mirrored where the door end is the viewer's LEFT (Rita's: hinge on the shop-door side, knob on the pier side), as drawn where it is the right (3.2 target, side_door_slot.mapping_from_F1)
         M = Matrix.Translation(((uc - BAY_MID) / 1000.0, -0.2143, 0.0)) @ Matrix.Scale(-1.0 if mir else 1.0, 4, (1, 0, 0))
         for o in meshes:
             me = o.data
@@ -486,7 +529,10 @@ class Front:
         self.extra += out
         # the sealing strip where the sill's end stands 3 short of the pilaster's plinth (the kit's meets row), so no crack shows
         win = self.R["front"]["zones_u_mm"]["window"]
-        self.add("sill_end_seal", bx(win[1] - 8.0, win[1], 0.0, 60.0, 525.0, 600.0), "white", bev=None)
+        if self.ctx.door_end == "L":
+            self.add("sill_end_seal", bx(win[1] - 8.0, win[1], 0.0, 60.0, 525.0, 600.0), "white", bev=None)
+        else:           # the pilaster is at the window's left end
+            self.add("sill_end_seal", bx(win[0], win[0] + 8.0, 0.0, 60.0, 525.0, 600.0), "white", bev=None)
         return out
 
     # ----------------------------------------------------------------------------------------------- the hall behind the side door (N3)
@@ -652,44 +698,229 @@ def make_balls_and_bracket(front, fasc_dir):
     return objs, balls
 
 
-GLASS_ROW_HEAD = {7: 18.132, 8: 17.025, 9: 15.918}       # row id -> street x of the ink's centre (WATCHES, JEWELLERY, LOANS)
-
-
-def make_glass_rows(fasc_dir):
-    """The 4.1 glass lettering rows (RGBA) on the glass: WATCHES, JEWELLERY, LOANS on the three lights' toplights, the 5 on the shop door's fanlight, the hours plate
-    on the door's lower pane. Planes just behind the glass (applied inside it). Returns [(object, info)]."""
+def make_hanging_board(ctx, front, fasc_dir):
+    """The ironmonger's hanging board (4.1 ironmonger_hanging_board): a plate on the brick above the cornice over the pier at the door end of the bay (street x 35.825 = the viewer's RIGHT pilaster),
+    a plainer scroll bracket than the pawnbroker's (an arm, a brace and one scroll), two iron rings on the arm and a chain of round links 0.70 m long from each ring to an eyebolt in the board's top
+    (the drop from the arm to the board's top is 0.76 m), and the board 0.55 x 0.38 x 0.04 hanging in the plane out from the wall, projecting 0.70 m in all, its two big faces carrying the 4.1 faces
+    a and b (each reads left to right for the person looking at it). Judgements: face a on the side that looks toward the quay end (low street x), face b on the other; the chains' links are 22 mm round
+    (R 9, wire 2.2) at a 20 mm pitch, alternate links turned 90 degrees. Returns (parts [(material key, object in mm)], textured objects already in metres)."""
+    hs = ctx.R["fascia"]["hanging_sign"]
+    mt, pt = hs["mount"], None
+    uc = ctx.u_of_x(mt["x_street_m"])
+    z_arm = mt["arm_height_m"] * 1000.0
+    proj = mt["projection_m"] * 1000.0
+    foot = mt["plate_foot_m"] * 1000.0
     man = json.load(open(os.path.join(fasc_dir, "manifest.json")))
-    rows = {g["row"]: g for g in man["glass_lettering"] if g["shop"] == "ritas"}
+    hsm = next(h for h in man["hanging_signs"] if h["id"] == hs["id"])
+    bw, bh, bt = (v * 1000.0 for v in hsm["parts"]["board_m"])          # 550 x 380 x 40
+    drop = hsm["parts"]["drop_m"] * 1000.0                                # 760: from the arm to the board's top
+    z_top = z_arm - drop
+    z_bot = z_top - bh
+    parts = []
+    parts.append(("black_iron", bs.new_obj("sign_plate", *bx(uc - 90.0, uc + 90.0, 0.0, 8.0, foot, foot + 300.0))))
+    for k, (du, dz) in enumerate(((-65, 100), (65, 100), (-65, -100), (65, -100))):
+        parts.append(("black_iron", bs.new_obj("sign_bolt_%d" % k, *cyl_d(uc + du, z_arm + dz, 8.0, 14.0, 6.0, 8))))
+    arm_end = proj - 40.0
+    parts.append(("black_iron", bs.new_obj("sign_arm", *bx(uc - 4.0, uc + 4.0, 8.0, arm_end, z_arm - 10.0, z_arm + 10.0))))
+    brace = polyline_strip([(8.0, foot + 40.0), (200.0, foot + 90.0), (380.0, foot + 130.0), (arm_end * 0.55, z_arm - 10.0)], uc - 3.0, uc + 3.0, 20.0)
+    parts.append(("black_iron", bs.new_obj("sign_brace", *brace)))
+    r0 = 55.0
+    pts = [(300.0 + (r0 * (1 - t / 4.0)) * math.cos(t * 1.1), foot + 50.0 + (r0 * (1 - t / 4.0)) * math.sin(t * 1.1)) for t in np.linspace(0.0, 4.0, 18)]
+    parts.append(("black_iron", bs.new_obj("sign_scroll_0", *polyline_strip(pts, uc - 4.0, uc + 4.0, 20.0))))
+    # the board: its two rings hang 60 in from each end
+    d_out, d_in = proj, proj - bw
+    hang_d = (d_in + 60.0, d_out - 60.0)
+    parts.append(("black_iron", bs.new_obj("sign_board_core", *bx(uc - bt / 2.0, uc + bt / 2.0, d_in, d_out, z_bot, z_top))))
+    for k, dh in enumerate(hang_d):
+        # the iron ring on the arm (axis along u), then the chain down to an eyebolt in the board's top
+        parts.append(("black_iron", bs.new_obj("sign_ring_%d" % k, *_ring_u(uc, dh, z_arm - 26.0, 16.0, 3.0))))
+        n_links = int(round((z_arm - 26.0 - 16.0 - (z_top + 14.0)) / 20.0))
+        for j in range(n_links):
+            zc = z_arm - 26.0 - 16.0 - 10.0 - 20.0 * j
+            parts.append(("black_iron", bs.new_obj("sign_chain_%d_%02d" % (k, j), *_link(uc, dh, zc, 9.0, 2.2, j % 2))))
+        parts.append(("black_iron", bs.new_obj("sign_eye_%d" % k, *_ring_u(uc, dh, z_top + 10.0, 9.0, 2.5))))
+    # the two textured faces (one-sided quads 0.3 mm proud of the core), in metres
+    faces = []
+    for fk, side in (("a", -1), ("b", 1)):
+        f = next(x for x in hsm["faces"] if x["id"].endswith("." + fk))
+        base = os.path.join(fasc_dir, f["files"]["basecolour"]["file"])
+        orm = os.path.join(fasc_dir, f["files"]["orm"]["file"])
+        x = (uc - BAY_MID + side * (bt / 2.0 + 0.3)) / 1000.0
+        z0, z1 = z_bot / 1000.0, z_top / 1000.0
+        ya, yb = -d_out / 1000.0, -d_in / 1000.0           # the big d to the small d
+        if side > 0:       # +x face: a viewer there looks along -x with his right toward the wall: left = the street end (big d)
+            V = [(x, ya, z0), (x, yb, z0), (x, yb, z1), (x, ya, z1)]
+        else:              # -x face: left = the wall end (small d)
+            V = [(x, yb, z0), (x, ya, z0), (x, ya, z1), (x, yb, z1)]
+        me = bpy.data.meshes.new("sign_face_%s" % fk)
+        me.from_pydata(V, [], [(0, 1, 2, 3)])
+        me.update()
+        uv = me.uv_layers.new(name="UVMap")
+        for loop, (a_, b_) in zip(me.loops, ((0, 0), (1, 0), (1, 1), (0, 1))):
+            uv.data[loop.index].uv = (a_, b_)
+        ob = bpy.data.objects.new("sign_face_%s" % fk, me)
+        bpy.context.scene.collection.objects.link(ob)
+        ob.data.materials.append(image_material("sign_face_%s" % fk, base, orm=orm))
+        faces.append(ob)
+    return parts, faces
+
+
+def _ring_u(u, d, z, R, r, nm=16, nn=6):
+    """A torus whose axis runs along u (the ring stands in the d-z plane): centre (u, d, z), major radius R, minor r, as (V, F) in mm."""
+    V, F = [], []
+    for i in range(nm):
+        a = 2 * math.pi * i / nm
+        for j in range(nn):
+            b = 2 * math.pi * j / nn
+            rho = R + r * math.cos(b)
+            V.append((u + r * math.sin(b), -(d + rho * math.cos(a)), z + rho * math.sin(a)))
+    for i in range(nm):
+        for j in range(nn):
+            i2, j2 = (i + 1) % nm, (j + 1) % nn
+            F.append((i * nn + j, i2 * nn + j, i2 * nn + j2, i * nn + j2))
+    return np.array(V), F
+
+
+def _link(u, d, z, R, r, turn, nm=12, nn=5):
+    """One round chain link of major radius R and wire radius r at (u, d, z): turn 0 stands in the d-z plane (axis along u), turn 1 in the u-z plane (axis along d)."""
+    V, F = [], []
+    for i in range(nm):
+        a = 2 * math.pi * i / nm
+        for j in range(nn):
+            b = 2 * math.pi * j / nn
+            rho = R + r * math.cos(b)
+            if turn == 0:
+                V.append((u + r * math.sin(b), -(d + rho * math.cos(a)), z + rho * math.sin(a)))
+            else:
+                V.append((u + rho * math.cos(a), -(d + r * math.sin(b)), z + rho * math.sin(a)))
+    for i in range(nm):
+        for j in range(nn):
+            i2, j2 = (i + 1) % nm, (j + 1) % nn
+            F.append((i * nn + j, i2 * nn + j, i2 * nn + j2, i * nn + j2))
+    return np.array(V), F
+
+
+def clear_rects(ctx, R):
+    """The clear glass of the window and the door, as rectangles (u0, u1, z0, z1) in the bay frame (mm): each light and toplight's glass less the bead or putty round it (16 mm), and the shop
+    door's two panes (between the leaf's stiles, above the lock rail, either side of the glazing bar) less the glazing bead (14 mm). A glass row must lie wholly inside ONE of them: that is the
+    rule that no bar, mullion or bead ever crosses a letter (street review F2: 'W TCHES'), tested here as numbers and again by GLS-02's ray test on the built front."""
+    gl = R["front"]["glazing_layout"]
+    u0 = ctx.zones["window"][0]
+    bead = 16.0
+    out = {"lights": [], "toplights": [], "door": []}
+    for a, b in gl["lights"]:
+        out["lights"].append((u0 + a + bead, u0 + b - bead, 625.0 + bead, 2400.0 - bead))
+    panes = gl.get("toplight_panes") or []
+    for a, b in panes:
+        out["toplights"].append((u0 + a + bead, u0 + b - bead, 2480.0 + bead, 2790.0 - bead))
+    sd = R["front"]["zones_u_mm"]["shop_door"]
+    uc = (sd[0] + sd[1]) / 2.0
+    t1 = R["door"].get("t1_rails_mm")
+    if t1:
+        bar = t1["glazing_bar"]
+        ua, ub = uc - 450.0 + 115.0 + 14.0, uc + 450.0 - 115.0 - 14.0
+        out["door"].append((ua, ub, t1["lock_rail"][1] + 14.0, bar["z"] - bar["width"] / 2 - 14.0))
+        out["door"].append((ua, ub, bar["z"] + bar["width"] / 2 + 14.0, t1["top_rail"][0] - 14.0))
+    return out
+
+
+def row_places(ctx, R, rows):
+    """Where each glass row stands: {row id: (x_street_m of the ink centre, baseline z above the footway, d mm, kind)}. Rita's are the target's own (glass.lettering_places, 13 Oct, G1). For the
+    other shops the rule (a Judgement, recorded in NOTES.md and the target's 'Changes after the build'): the street number on the shop door's fanlight as the target's door.fanlight.street_number
+    puts it; a row 4.1 put on the shop door's glass stays at 4.1's x and z if its tile lies in one of the door's panes (else it is moved to the nearest pane); a row on the window stays where 4.1 put it
+    if its ink box lies wholly inside one clear rectangle of the glass, and otherwise stands, ink centred, in the clear rectangle nearest to 4.1's x that holds it: a toplight (4.1's baseline), then
+    the head of a light (baseline 2250)."""
+    places = {}
+    lp = (R["glass"].get("lettering_places") or {}).get("rows")
+    cr = clear_rects(ctx, R)
+    for rid, g in sorted(rows.items()):
+        string = g["string"]
+        w, h = g["size_mm"]
+        ink = g["ink_box_in_tile_mm"]
+        ink_c = (ink[0] + ink[2]) / 2.0
+        ink_w = ink[2] - ink[0]
+        base_b = g["place"]["tile_baseline_from_tile_bottom_mm"]
+        xs = g["place"]["x_street_m_of_ink_centre"]
+        zb = g["place"]["z_baseline_m"] * 1000.0 - 100.0
+        d = 29.0
+        kind = "window"
+        if lp and string in lp:
+            xs = lp[string]["x_street_m_of_ink_centre"]
+            zb = float((R["glass"]["lettering_places"]).get("baseline_above_footway_mm", 2250.0))
+            places[rid] = (xs, zb, d, "head")
+            continue
+        if string.strip().isdigit():
+            sn = R["door"]["fanlight"]["street_number"]
+            places[rid] = (sn["x_street_m"], sn["baseline_z_above_footway_mm"], d, "fanlight")
+            continue
+        u_c = ctx.u_of_x(xs)
+        sd = R["front"]["zones_u_mm"]["shop_door"]
+        ink_h = ink[3] - ink[1]
+        ink_lo = h - ink[3]                  # the ink's lowest point above the tile's bottom
+        if sd[0] <= u_c <= sd[1] and cr["door"]:
+            # on the door's glass: 4.1's height if the ink box fits one pane, else the pane nearest it
+            zc_pref = (zb - base_b) + ink_lo + ink_h / 2.0
+            best = None
+            for (ua, ub, za, zt) in cr["door"]:
+                if ink_w + 20.0 > ub - ua or ink_h + 20.0 > zt - za:
+                    continue
+                zc = min(max(zc_pref, za + ink_h / 2.0 + 10.0), zt - ink_h / 2.0 - 10.0)
+                if best is None or abs(zc - zc_pref) < best[0]:
+                    best = (abs(zc - zc_pref), zc)
+            if best:
+                places[rid] = (xs, best[1] - ink_h / 2.0 - ink_lo + base_b, 39.0, "door")
+                continue
+        # a window row
+        def inside(zbase, uc_):
+            u0_, u1_ = uc_ - ink_w / 2.0, uc_ + ink_w / 2.0
+            z0_ = zbase - (base_b - (h - ink[3])) - 0.0      # the ink's lowest point
+            z1_ = z0_ + ink_h
+            return any(ra <= u0_ and u1_ <= rb and rc <= z0_ and z1_ <= rd for (ra, rb, rc, rd) in cr["lights"] + cr["toplights"])
+        if inside(zb, u_c):
+            places[rid] = (xs, zb, d, "as 4.1")
+            continue
+        cands = []
+        for (ra, rb, rc, rd) in cr["toplights"]:
+            if ink_w + 10.0 <= rb - ra:
+                cands.append((abs((ra + rb) / 2.0 - u_c), (ra + rb) / 2.0, zb))
+        for (ra, rb, rc, rd) in cr["lights"]:
+            if ink_w + 10.0 <= rb - ra:
+                cands.append((abs((ra + rb) / 2.0 - u_c) + 1e-3, (ra + rb) / 2.0, 2250.0))
+        cands.sort()
+        for dist, uc_, zbase in cands:
+            if inside(zbase, uc_):
+                places[rid] = (ctx.x_of_u(uc_), zbase, d, "moved")
+                break
+        else:
+            places[rid] = (xs, zb, d, "UNPLACED")
+    return places
+
+
+def make_glass_rows(ctx, fasc_dir):
+    """The 4.1 glass lettering rows (RGBA) on the glass: the shop's own strings (the trade's lettering at the head of the lights or in a toplight, the street number on the shop door's fanlight, the hours
+    plate on the door's glass). Planes just behind the glass (applied inside it). Returns [(object, info)]. Rita's rows are placed as the earlier builds placed them."""
+    man = json.load(open(os.path.join(fasc_dir, "manifest.json")))
+    R = ctx.R
+    rows = {g["row"]: g for g in man["glass_lettering"] if g["shop"] == ctx.id and "row" in g}
+    places = row_places(ctx, R, rows)
     out = []
     for rid, g in sorted(rows.items()):
         w, h = g["size_mm"]
-        pl = g["place"]
-        xs = pl["x_street_m_of_ink_centre"]
         ink_c = (g["ink_box_in_tile_mm"][0] + g["ink_box_in_tile_mm"][2]) / 2.0
-        base_from_bottom = pl["tile_baseline_from_tile_bottom_mm"]
-        z_base = pl["z_baseline_m"] * 1000.0 - 100.0           # street z above the crown -> above the footway (crown + 0.10 = footway)
-        d = 29.0
-        if rid in GLASS_ROW_HEAD:
-            # 13 Oct, from the try 1 street review, F2: WATCHES, JEWELLERY and LOANS at the head of the three main lights, the ink centred on each light (street x 18.132, 17.025,
-            # 15.918 = u 2868, 3975, 5082), baseline 2250 above the footway, 4.1's sizes: the cap top is at about 2336, below the transom's glass edge at 2400, and each row fits inside
-            # its light's 1037 of clear glass. The toplights stay clear: no bar, mullion or bead crosses a row
-            xs = GLASS_ROW_HEAD[rid]
-            z_base = 2250.0
-        if rid == 10:
-            xs = 19.203                                         # the shop door's centre (target 4.1a: moved from the side door's)
-            z_base = 2200.0
-        if rid == 24:
-            xs = 19.203
-            z_base = 1040.0 + base_from_bottom                  # the door's lower pane (the glazing bar at 1423 crosses 4.1's z 1.38)
+        base_from_bottom = g["place"]["tile_baseline_from_tile_bottom_mm"]
+        xs, z_base, d, kind = places[rid]
+        if ctx.id == "ritas" and "|" in g["string"]:
+            # Rita's hours plate: the door's lower pane (the glazing bar at 1423 crosses 4.1's z 1.38)
+            z_base = 1040.0 + base_from_bottom
             d = 39.0
-        u_ink = BAY_MID + (18.0 - xs) * 1000.0                  # u from the viewer's left: street x 18.0 is the bay's middle
+        u_ink = BAY_MID + (ctx.mid_x - xs) * 1000.0 if not ctx.west else BAY_MID + (xs - ctx.mid_x) * 1000.0      # u from the viewer's left
         u0 = u_ink - ink_c
         z0 = z_base - base_from_bottom
         ob = quad_obj("glass_row_%d_%s" % (rid, g["string"].split(" ")[0].lower()), u0, u0 + w, z0, z0 + h, d)
         path = os.path.join(fasc_dir, g["files"]["rgba"]["file"])
         m = image_material("glass_row_%d" % rid, path, alpha=True, rough=0.3)
         ob.data.materials.append(m)
-        out.append((ob, {"id": g["id"], "string": g["string"], "u_mm": [round(u0, 1), round(u0 + w, 1)], "z_mm": [round(z0, 1), round(z0 + h, 1)], "d_mm": d}))
+        out.append((ob, {"id": g["id"], "string": g["string"], "u_mm": [round(u0, 1), round(u0 + w, 1)], "z_mm": [round(z0, 1), round(z0 + h, 1)], "d_mm": d, "where": kind}))
     return out
 
 
