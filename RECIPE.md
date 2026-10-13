@@ -19,6 +19,15 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 13 Oct 2026, unit 14: what came before 13 October written up from the records, and every tool sorted into method and content
+- Made: a section at the end of this file (PROVEN 30, FAILED 21, OPEN 14 lines, about 2,050 words, every line citing a file) and REUSE.md at the repository root (21 entries over tools/, ledger/, production/cloud-week/ and the AAA study kit, about 1,860 words): for each tool, what is method and what is 1990 or Meridian content in code, as file and constant, the separation graded easy, medium or hard. One line in DECISIONS.md. Nothing committed.
+- Method (setting-free): to write up past work after the fact, read the records in order of authority (rulings, plan, catalogue; then decisions by date, findings, audits, queue, handover, time log), sort each fact into proved, failed or open, and give each line its evidence file, its section and its cost as that file states it, "not recorded" where none does; where a notebook entry already covers a thing, point to it. To split method from content in a tool, read its opening note for what it does, find the constants, tables and lists that name this game (people, places, dates, colours, trades, sizes, word lists, period rules), cite each as file: name, and grade the separation by how many places hold it: one table, a few places, or woven through the logic. Count one list copied into several files as a finding, and so a hard-coded drive path.
+- Tools: python with re and os only; a scratch script reads both files and fails on a cited path that does not exist, a "file: name" anchor not found in its file, a dash or an italic; it is not committed (no recipe tests).
+- Target and check: every cited path exists (111 in the section, 208 in REUSE.md, 0 missing); 69 anchors found in their files; no dash or italic; each of the section's 65 lines cites a file.
+- Cost (hours): about 0.4 for one writer (about 09:25 to 09:46 UTC by the clock), no context break; the brief allowed about 3.
+- Failed and why: (1) The first REUSE draft ran to 2,096 words against an aim of 1,800 and named cloud-week files by short paths under a rule that paths start at the root; the path check caught a doubled prefix. All paths now start at the root and the file is cut to about 1,860. (2) Two lines were written from what a name suggested, not from what the file holds: ASSET_BANNED was first described as holding children's words (it holds alcohol and gambling words in clip names), and the hill, brick and facades were first said to have had three reviews each (the hill had three builds and two reviews). Look each constant and count up in its home before writing it. (3) A figure with no unit in its source ("99.6 of 100" for a turn proof) was dropped, not guessed at. (4) Most costs read "not recorded": the time log ends 8 October and the cloud week's units 2 to 7 were never logged. That is a gap in the records, not in the method: log each unit when it starts. (5) Found, not fixed: tools/retention.py bakes a Windows drive path, and run on Linux it made folders literally named F:\LedgerTools\retention in the repository root and beside Rita's shop, and its space check logged GO with nothing measured; the same lists of real makers are copied in four target files, and two licence lists disagree (REUSE.md, Targets: method and shared checks).
+- Evidence: RECIPE.md (section "What came before 13 October 2026"), REUSE.md
+
 ### 13 Oct 2026, unit 13: exact targets for nine kinds of small street furniture, written from photographs with one shared check library, failed its fresh review, fixed
 - Made: nine targets (a phone box, a bus stop with its timetable, a bench, a stack of crates with bottles, pallets, a skip, a bicycle against a wall, a telegraph pole with wires, a pavement board), 17 variants and 63 listed sources in all: every part in millimetres with a material, a colour and its wear; every number marked Photo, Read or Judgement with its error; a slot on the street with its reasons; the text an object carries as data; seven photographs measured on the pixels (63 edges); previews with every name, plate and person cut or blurred out by script; four lines owed to the owner (a move, a plain word, two objects back); nothing committed.
 - Method (setting-free): build each object from convex pieces (boxes, cylinders, prisms from a polygon, wires) so that one linear-programming test decides contact, overlap and floating, declare every join and every allowed embed, and shoot rays at every face, square on and leaning, so a see-through slot cannot hide. Search dated photographs first, then say per photograph what it is used for and not used for; take edges on the object itself with a recorded box, fit the scale on one height only and predict every other feature from the drawing, so a width can disagree with the picture; when nothing can be measured (oblique or low-contrast pictures), say so, mark every number a judgement with its error and check it for internal consistency and against ranges, never force a fit. Put text an object carries (a timetable, a price list) in data and check it against the place's own files (stops on the map, opening hours, a sourced price). Test a slot against the place's own clear width, neighbours and standing spots, and move it, with a line to the owner, when the old one fails. Every check gets a wrong copy that must make its named row fail; a crash is a failing row, never a pass.
@@ -63,3 +72,99 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 - Cost (hours): about 0.4 of one helper's work, plus about 0.5 to find and read the design doc and brief the helper.
 - Failed and why: the first brief gave the helper only a summary of the design, because the design doc was thought to be unreadable; it was a Claude doc, found through the artifact list, and the helper was re-briefed mid-task. Lesson: when a source "cannot be found", list every place the owner keeps documents (Drive, the artifact list, the repository) before working from a summary.
 - Evidence: production/research/aaa-reference/COMBAT.md
+
+## What came before 13 October 2026
+
+Written by unit 14 from the repository's records; each line names its evidence file. Hours are the time log's or a file's own; "not recorded" means no file states them (the log ends 8 October). Units 6.1b, 7b follow-up, 8, 9 and 13 are in the notebook above; what is specific to 1990 or Meridian is in REUSE.md.
+
+### PROVEN
+
+**The street's art**
+- A kit piece built by script from a written target's numbers, checked against them, then judged by a fresh reviewer per view against photographs. Passed: guard rail 28 of 28, pillar box 71 of 71, lamp post 69 of 69, kerbs and covers 67 of 67, door 162 of 162 and 108 of 108. Cost not recorded. production/cloud-week/HANDOVER.md (Pieces built); production/cloud-week/kit/BUILD-BRIEF.md
+- Photographs win over books, element by element: the pillar box's body is 390 across, not the target's 489; a concrete lamp column replaced the steel one. production/cloud-week/targets/pillar-box/PHOTO-CHECK.md; DECISIONS.md (9 Oct 12:29; 11 Oct 21:55)
+- Camera height of each panorama read from brick courses to the horizon: 0.9 to 1.3 m, so sizes taken at an assumed 1.6 m ran up to 55 percent high. production/cloud-week/targets/railings/calibrate.py; production/cloud-week/QUEUE.md (Log, 9 Oct 09:17)
+- An exact target written by someone who does not build: a sash window matched within 1.4 mm after two tries; an hour, 1.5 h of a helper, two reviews. The check caught every building error but missed four misreadings by its writer; a fresh reviewer found three. production/lab/LAB-REPORT.md (section 2)
+- Pictures made by seeded script that rebuild exactly: fascias (128 PNGs, 33 s, 475 of 475 rows), paper (84 items, 1,797 rows, 457 of 464 wrong pictures refused), wear (33 kinds, 405 rows, 31 wrong masks refused). Cost not recorded. production/cloud-week/HANDOVER.md (2D); production/cloud-week/2d/fascias/NOTES.md
+- Sound from fetched CC0 sources by script, rebuilt byte for byte: 97 WAVs, 1,235 of 1,235 rows, 13 of 13 deliberate faults caught; a fresh review passed with no faults and 12 narrow points (it could not hear). Cost not recorded. production/cloud-week/sound/NOTES.md; production/cloud-week/sound/REVIEW-v1.md
+- A walk-in room built by script from a plan, props modelled to dated references, walked packaged: Mickey's office and front pass their gate. Logged 7.5, 3.0 and 13.2 hours (the last overnight), other items alongside. NOW.md (state); production/audits/office-2026-10-08/GATE-OFFICE.md; production/time-log.jsonl (1.1 entries)
+- A shop's room as three pictures by script plus a cloud gate that bakes the game's projected room per camera and state: Rita's try 2 passed street and close on narrow points, 53 of 55 rows. Cost not recorded. production/cloud-week/kit/shop-windows/NOTES.md; production/cloud-week/kit/shop-windows/REVIEW-v2-street.md
+- Read the engine's installed source before tuning: the street was lit at 41 percent of the sky it shows, by the project's own setting; the fix brought every view closer to the Hook sheet. About 30 minutes and an 11-minute helper. production/lab/LAB-REPORT.md (section 1); production/audits/sky-2026-10-08/GATE-SKY-REVIEW.md
+- Measure a look against the sheet's own numbers: road film 0.5 to 0.115 moved the near lane from 208 to 171 against the sheet's 152, no new fault; lamp 750 to 500 lm cut clipped flags from 1.1 to 0.5 percent. production/audits/road-2026-10-08/GATE-ROAD.md; production/audits/night-2026-10-08/GATE-NIGHT.md
+
+**People**
+- Faces built by script from Epic's presets, finished by landmark moves and measured colours, judged blind, then by his eye: Ron P2, Sheila S4, Darren S6 frozen. Cost not recorded. DECISIONS.md (28 and 30 Sep); RULINGS.md (30 Sep)
+- A garment pattern drafted by code is exact: every printed value of the 1911 coat, its drawing within 0.15 inch. Counting body points through a garment, gated on zero, is kept. production/lab/LAB-REPORT.md (sections 3 and 4)
+- Clips chosen by what they do, not by name (hips profiled): Ron seated on the bench; sit and stand land 0.5 cm from the seat, no foot slip; both turn proofs pass. DECISIONS.md (7 and 8 Oct); production/research/sit-and-turn/RETARGET-FAULT-2026-10-07.md
+
+**Voice and talk**
+- A second model reads each reply against what the character knows: invented details fell from 30 to 7 percent (16 of 240 turns). Cost not recorded. FINDINGS.md (invented claims); production/research/invented-claims/RESULTS-2026-09-28.md
+- Facts chosen by code before writing, then a ladder before "that's all I know": empty answers 36 of 60 down to a mean of 21.7, then 35 of 145 down to 19; inventions level. production/research/grounded-replies/MEASURED-2026-09-30.md; production/research/grounded-replies/LADDER-2026-10-07.md
+- A voice gate that reads 2.5 s windows, calibrated on real English speech after a single-window rule rejected 11 of 50 genuine clips. DECISIONS.md (29 Sep); production/research/voice-alternatives-2026-09-24/ACCENT-WINDOWS-2026-09-29.md
+- Delay measured on the real path, not beside it: five checked replies each way; thirty minutes of talk, 8 of 8 checked, $0.20. production/research/voice-off-card/CLOUD-VOICE-2026-10-07.md; production/playtest/thirty-minutes-2026-10-03.md
+
+**The simulation**
+- A golden table from the C# Core read by the C++ port: 57,913 checks, no failure, over 57,876 rows; 650,000 random runs through both, no difference. production/audits/sweep-2026-10-05/port-vs-core.md; CATALOGUE.md (disagreements, 2)
+- Probe each time-and-state fault before fixing it: twelve proved, ten fixed with regressions. DECISIONS.md (30 Sep); production/handovers/ROUTE.md
+- Town content built from its homes, every quote found in its home, every invention marked: 44 people, 1,162 facts (29 new), 578 of 578 rows, 30 of 30 seeded faults caught; no fresh review. production/cloud-week/town/NOTES.md
+- Ambient lines as data with rules and a walk simulation: 1,643 lines, 2,489 of 2,489 rows, 47 of 47 planted faults; 23 lines in 30 minutes with no repeats, 8 repeats without the rules. No fresh review. production/cloud-week/lines/NOTES.md
+
+**The build and the gate**
+- The packaged game profiled with the engine's own counters, voice speaking: 80 fps, 2.97 to 3.29 ms to spare, card peak 5.9 GB. production/research/pre-production/P1-PACKAGED-2026-10-07.md; production/audits/phase1-exit/BUNDLE.md (row 6)
+- History cleaned from 30.8 GB to 3.2 GB; a guard reads the commit map before every push. production/audits/history-clean-2026-10/README.md; tools/push_guard.py
+- Every rule gets a check that fails the build and names what it measured: 58 checks. DECISIONS.md (5 Oct, item 0.5); tools/ci-checks.sh
+- Phase 0's exit: three fresh reviews; the first two failed (old jobs waiting; an unattended run stopped for approval), the third passed on narrow points. Logged 5.2 hours production, 7.7 review. production/audits/phase0-exit/BUNDLE.md; production/time-log.jsonl (0.1 to 0.8)
+- One view per reviewer, the last good picture beside it: 18 of 20 planted faults caught alone, 20 of 20 beside. production/audits/reviewer-test/REPORT.md
+
+**How the work is run**
+- When tries fail, research the method: it found the cause of three failed glass tries (an unlit capture, magnified), the sitting fault and Mickey's other direction. DECISIONS.md (4 Oct; 7 Oct, "THE CAUGHT GLASS, ITS CAUSE FOUND"); production/research/sit-and-turn/RETARGET-FAULT-2026-10-07.md
+- A sweep of 440 rulings ranked those never built; "grime is the strategy" (21 Sep) was built only on 1 Oct. production/audits/rulings-sweep/SUMMARY.md; DECISIONS.md (1 Oct)
+- Five public-source research files by five parallel helpers, then one fresh Opus review of two: pass with 24 fixes, about 60 combat numbers and the whole credits count rechecked; fixes applied, not re-reviewed. Cost not recorded. production/research/aaa-reference/REVIEW-7b.md; production/cloud-week/HANDOVER.md (Unit 7b)
+- Helpers in parallel spend the week's usage about twice as fast. RULINGS.md (6 Oct)
+
+### FAILED
+
+**The street's art**
+- Wet street set aside after two failed reviews (a seam down the centre line, an ice-smooth lane): darkness, not smoothness, was the lever. DECISIONS.md (3 Oct); production/audits/road-2026-10-08/GATE-ROAD.md
+- Hill, brick and facades set aside after three tries each: plain geometry in one 25 MB file cannot carry trees or far houses; scans had hidden the drawn Flemish brick since September; deep sashes read as white boards from low angles. DECISIONS.md (4 Oct); production/audits/windows-2026-10-08/GATE-2.md
+- Caught glass: the stepped roofline resisted; anti-aliasing was tried three times, the third without fresh research (a breach); the catch round costs frames (p99 33.66, then 46.8 ms, against the 33.3 line). DECISIONS.md (7 Oct; 8 Oct 16:45); production/cloud-week/research/1d-shop-glass-without-frame-cost.md
+- Shopfront wear never showed: marks fell on paints the 3 Oct rule exempts; two tries. DECISIONS.md (7 Oct); production/research/street-wear/PAINTED-FRONTS-2026-10-07.md
+- Every fresh review of the 2D sets failed (fascias on both tries, paper four reviews, wear two); fixes applied, not re-reviewed; the check missed 3 of 67 wrong boards. production/cloud-week/HANDOVER.md (2D; Found this week)
+- Close reviews failed pieces whose targets were wrong (a floating sack, a closed crater), found by slicing the meshes, not by the check. production/cloud-week/kit/bins/REVIEW-v1-close.md; production/cloud-week/QUEUE.md (3.5)
+- No 1975 to 1995 photograph reached for the pillar box, bins, lamp and crossover; the network refused photograph sites until 11 Oct; those numbers are judgement. production/cloud-week/QUEUE.md (Log, 8 Oct 22:05); production/cloud-week/HANDOVER.md (Targets ready)
+
+**People**
+- Tom's face: the blend route set aside after ten steps and six blind reviews; one more try failed because the brows' baked colour cannot be set by script. DECISIONS.md (6 and 7 Oct); production/research/casting/TOM-FACE-METHOD-2026-10-07.md
+- Clothes failed by every route tried: four free tailoring routes, a skin-shell jacket (three blind reviews, fourteen rounds), a draped jacket (eleven runs, a smock), Ron's outfit (three reviews), the CC0 outfit (48 to 74 points through the jumper). Outlines cannot see taste. The cast keeps the white base layer. production/lab/LAB-REPORT.md (sections 3 and 4); production/audits/clothing/RON-OUTFIT-REVIEW-3.md; FINDINGS.md (Clothes)
+- The speaker's walk failed its 3 cm bar (first step 13 to 20 cm, stop 18 to 27 cm); Mixamo file names do not match their motions. DECISIONS.md (7 and 8 Oct); production/cloud-week/research/1b-walk-without-foot-slide.md
+
+**Voice and talk**
+- First sound after Enter: median 4.6 s (4.0 s with a faster first sentence) against 2 s; off the card 3.36 s and 4.18 s against 1.0 s; a cloud voice has a floor of about 2.4 s. No third attempt. RULINGS.md (7 Oct, speech); production/research/voice-off-card/RESULTS-2026-10-06.md
+- Pocket TTS set aside (American drift, or a duller man); the accent checker cannot tell Irish recordings from drift; Sheila's new voices drift (4 and 2 of 7). DECISIONS.md (26 and 28 Sep); FINDINGS.md
+- The check's tuning set aside after three tries; a third of newcomer answers still end "that's all I know". production/research/grounded-replies/MEASURED-2026-09-30.md; FINDINGS.md
+- The nightly walk measured nothing on 4, 5 and 8 Oct, and its eyes looked for .png while the tester saved .jpg. FINDINGS.md; DECISIONS.md (7 Oct)
+
+**The simulation, the build and the records**
+- The port: 21 disagreements, five rules living only in C++ with no Core home, 11 of 30 planted breaks caught by no test. production/audits/sweep-2026-10-05/port-vs-core.md
+- The magistrates' day set aside: a new system, and its first independent check failed. DECISIONS.md (29 Sep)
+- The reviewer failed all 58 reviews, clean pictures included, and a bundle of about ninety pictures hid the black block; the gate became one view beside the last good picture. production/audits/reviewer-test/REPORT.md
+- The history held 29.9 GB of test frames committed every run. production/audits/history-clean-2026-10/README.md
+- A 320-minute "review" entry was mostly production. DECISIONS.md (6 Oct)
+- DECISIONS.md reached 23,600 words in ten days; sessions skimmed; caps followed. tools/doc-caps.py
+- A brief wrongly sent a helper to retry a refused site with a browser identity; a block is not to be got round. DECISIONS.md (13 Oct 04:45)
+
+### OPEN
+
+- The game's own gate for every kit piece and 2D set; the held-props route has never run on the PC. production/cloud-week/HANDOVER.md (How a piece gets into the game, step 2; Not done yet)
+- Whether the 2D sets pass a fresh review after their fixes. production/cloud-week/QUEUE.md (4.1 to 4.5)
+- Rita's shop: try 3 is in hand by another helper; nine more shops, night versions; none in the game. production/cloud-week/QUEUE.md (7, B2); production/cloud-week/kit/shop-windows/NOTES.md
+- Windows, doors and street dressing: targets written and fixed, not built, not re-reviewed. RECIPE.md (notebook, units 8, 9, 13)
+- The rest of the street's windows: note 1a's fix is in the unit 8 target, not built. production/cloud-week/research/1a-sash-windows-low-angles.md; FINDINGS.md (sash windows)
+- Wet road, hill, brick, glass steps and the catch round's frame cost. FINDINGS.md; production/audits/glass-2026-10-08/GATE-GLASS.md
+- Whether Epic's MetaHuman garments and Game Animation Sample (allowed on 13 Oct) clear clothes and the walk. RULINGS.md (13 Oct)
+- Whether a faster voice or a cheaper check can reach 2 s: parked. RULINGS.md (7 Oct, speech)
+- Whether invented details (7 percent) and newcomer fallbacks (a third) fall further; the retune waits on his yes. FINDINGS.md; DECISIONS.md (29 Sep)
+- Sound: only an ear can judge the day bed, the radio and a possible whine at 3.4 kHz. production/cloud-week/sound/REVIEW-v1.md (last section)
+- Town content and ambient lines: no fresh review; his reading is the gate. production/cloud-week/HANDOVER.md (Part 2, units 11 and 12)
+- The study of two games' files waits on one question to him. production/research/aaa-reference/KIT.md (section 0)
+- Whether one family's cost and reuse time can carry a town: phase 1 was to measure it. PLAN.md (opening); CLAUDE.md (How the work is done)
+- Three shipped libraries have no licence read. FINDINGS.md (libraries)

@@ -95,7 +95,9 @@ def make_dial_atlas(path):
     at 4 times the size and reduced."""
     from PIL import ImageDraw as _ID
     rng = random.Random(31)
-    grounds = [((238, 236, 228), (30, 30, 34)), ((232, 220, 190), (46, 36, 28)), ((26, 26, 30), (228, 222, 206)), ((214, 196, 150), (52, 40, 26))]
+    # the white and cream grounds are a little under paper white (206 and 212, not 238 and 232): lit by the strips at night a white dial burnt at 250 (PIC-05g), as the frames' paint did in
+    # the room (judgement 25)
+    grounds = [((206, 205, 198), (30, 30, 34)), ((212, 201, 172), (46, 36, 28)), ((26, 26, 30), (228, 222, 206)), ((214, 196, 150), (52, 40, 26))]
     S4 = 1024
     atlas = Image.new("RGB", (512, 512), (128, 128, 128))
     times = []
@@ -602,6 +604,11 @@ def build_display(work, out_dir, log=print):
             items.append({"model": asset, "tier": "bed", "scale": round(s, 3), "ext": [round(v, 4) for v in ext], "objs": names})
             ticket(xc, ext_s[2] + RISER["s_off"], 0.0, 0.004, rake=True)
         x += wd + gap
+    # ---- 13 Oct, try 3 (PIC-05g in the night frames, once the strips light the display): the white of the standing frames' mounts and of the white ceramics is 0.8 of the model's white, as the hung
+    # frames' paint is 0.75 of it in the room (judgement 25 of NOTES.md)
+    for mname, f_ in (("standing_picture_frame_01", 0.8), ("standing_picture_frame_02", 0.8), ("ceramic_vase_01", 0.85), ("antique_ceramic_vase_01", 0.85), ("jug_01", 0.85), ("horse_statue_01", 0.85)):
+        if mname in bpy.data.materials:
+            r.tone_material(mname, f_)
     # ---- no alpha cut-out or blend anywhere in the display (DSP-02: real geometry): the boombox's speaker grille is a perforated-looking alpha card in its glTF; here it is opaque
     n_alpha = 0
     for m in bpy.data.materials:
