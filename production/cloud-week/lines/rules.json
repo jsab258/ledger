@@ -1,0 +1,724 @@
+{
+ "bank": "ambient-lines-v1",
+ "status": "PROPOSED: tested only by check_lines.py's walks; nothing here is in the game",
+ "made": "13 Oct 2026, cloud week 42, unit 12",
+ "how_to_read": "value is the number; why is the reason; source is where the number comes from, or 'invented here' (marked for Jafar in DECISIONS.md)",
+ "inputs": {
+  "weather": "dry | drizzle | rain, from Weather.Rain with the cut points below",
+  "time": "morning | afternoon | evening | night, from the game clock with the bands in lines.json",
+  "standing": "the speaker's rung with Tom: stranger | owner | nowak | tom | tommy (PlayerIdentity's ladder, decision A of what-they-call-him); Mickey's own people start at nowak (Ron, Darren: they know his name from the start); Father Walsh and June start at owner",
+  "stance": "StanceKind of the speaker toward Tom (StreetVoice.Stance)",
+  "sure": "noise | shape | face: the speaker's perception of a crime (idRung 0, 1, 3), never above what Perception measured for that person",
+  "destination": "a place id from lines.json places, when Tom asks the way",
+  "since_deed_s": "seconds since the last deed within 20 m of the speaker, or none"
+ },
+ "weather_cuts": {
+  "dry_below": {
+   "value": 0.1,
+   "why": "below this the sky is dry; Weather.cs's own drizzle rolls start at about 0.1 and its day-one 0.35 is called rain there",
+   "source": "invented here, from Weather.cs's sample days"
+  },
+  "rain_from": {
+   "value": 0.5,
+   "why": "halfway; Weather.cs's downpour day is 0.90 and its first day, 0.35, reads as drizzle on screen",
+   "source": "invented here"
+  },
+  "episode_ends_after_dry_s": {
+   "value": 600,
+   "why": "rain 'starts' again only after ten dry minutes, so a shower with a break is one episode",
+   "source": "invented here"
+  }
+ },
+ "kind_of_speaker": {
+  "order": "an own kind first (rocco -> ron, sam -> darren, emil -> father_walsh, june -> june), then the person's kind in lines.json speakers, then the crowd's trade (Population.Trades) through trade_kinds; an unknown trade says nothing",
+  "why": "silence is better than a wrong voice; the old crowd generator names thirty trades and every one is mapped"
+ },
+ "speaker_overrides": {
+  "lena": {
+   "standing_floor": "owner",
+   "standing_cap": "owner",
+   "until": "sheila_trusts_tom",
+   "why": "canon: Sheila withholds his name until she trusts him; she is held at the first rung of the ladder (the new owner: she showed the new management round on day one, so never a stranger) until the trust flag (sheila-trust-2026-09-29) is set"
+  },
+  "staff": {
+   "speakers": [
+    "zlata",
+    "ferko",
+    "dusan"
+   ],
+   "standing_floor": "owner",
+   "why": "the dispatcher and the two drivers work at Mickey's: they know who he is from the first day (day-one design: the six who see him come)"
+  },
+  "rocco": {
+   "standing_floor": "nowak",
+   "why": "Ron knows Tom's name from the start (what-they-call-him); his word for Tom is 'boss' in every line"
+  },
+  "sam": {
+   "standing_floor": "nowak",
+   "why": "Darren knows Tom's name from the start (what-they-call-him)"
+  },
+  "never_police": {
+   "speakers": [
+    "rocco",
+    "lena",
+    "rita",
+    "hal",
+    "victor",
+    "tibor",
+    "drago"
+   ],
+   "why": "RULINGS 1 Oct: Mickey's people (Ron, Sheila) never go to the police about one of their own; the Ellis design: Rita, Hal, the pawn's back-room hand, the customs officer and the scrap dealer never go at all. A line that rings, tells or fetches the police is never given to them (lines.json flags it calls_police)."
+  },
+  "not_local_voice": {
+   "speakers": [
+    "vesna",
+    "takeaway_m",
+    "takeaway_f"
+   ],
+   "why": "their voice slots are Irish (Cork) and Hong Kong English (REGULARS.md rows 11, 29, 30); a line in northern dialect is never given to them"
+  }
+ },
+ "cooldowns": {
+  "neighbours_talk_min_gap_s": {
+   "value": 45,
+   "why": "RULINGS 'neighbours' talk at most every 45 s'; StreetVoice.ClearWordsEverySeconds, measured: at 45 s a fourteen-line band does not come back inside BarkGen's ten-minute floor",
+   "source": "RULINGS Talk and AI; StreetVoice.cs 1595"
+  },
+  "neighbours_rain_multiplier": {
+   "value": 1.5,
+   "why": "in rain fewer are out and the rain masks speech; the street is quieter by half again",
+   "source": "invented here; RULINGS 5 Oct says rain changes who is out and what is heard"
+  },
+  "start_gap_s": {
+   "value": 1.0,
+   "why": "a second of breath after any line ends before the next begins, so two voices are never stacked",
+   "source": "invented here"
+  },
+  "lines_per_minute_cap": {
+   "lines": {
+    "value": 6,
+    "why": "no more than six lines in any sixty seconds outside a crime: six short lines fill about 20 s of 60, and the rest of the minute is the street",
+    "source": "invented here"
+   },
+   "window_s": {
+    "value": 60,
+    "why": "a minute",
+    "source": "invented here"
+   }
+  },
+  "crime_chorus_cap": {
+   "lines": {
+    "value": 4,
+    "why": "at most four crime lines in any twenty seconds; the fifth person in the street is silent, as a crowd's fifth voice is lost in the first four",
+    "source": "invented here"
+   },
+   "window_s": {
+    "value": 20,
+    "why": "about the length of four lines and their breaths",
+    "source": "invented here"
+   }
+  },
+  "per_speaker_any_line_s": {
+   "value": 15,
+   "why": "one person does not speak twice inside fifteen seconds unless answering a question",
+   "source": "invented here"
+  },
+  "per_speaker_lines_per_10min": {
+   "value": 4,
+   "why": "a regular who has said four things to Tom in ten minutes has said enough",
+   "source": "invented here"
+  },
+  "per_line": {
+   "same_speaker_same_line_s": {
+    "value": 1800,
+    "why": "never inside half an hour: BarkGen's floor is 600 s for a fourteen-line band and Ruskin's 'never twice, not inside 60 s'; with groups of 8 to 13 and a bag the same speaker meets a repeat after the bag, and the hard floor stops a short group from showing it",
+    "source": "BarkGen repeatFloorSeconds 600 raised to 1800; Valve (METHOD-2026-09-30 item 10)"
+   },
+   "any_speaker_same_line_s": {
+    "value": 120,
+    "why": "two mouths saying the same words inside two minutes is the whole town talking in one voice; twice Valve's 60 seconds",
+    "source": "Valve (METHOD item 10), doubled"
+   }
+  },
+  "per_family": {
+   "greet": {
+    "class": "to_tom",
+    "gap_s": {
+     "value": 8,
+     "why": "no two greetings overlap: a line is 3 to 4 s and he needs a breath",
+     "source": "invented here"
+    },
+    "speaker_s": {
+     "value": 600,
+     "why": "a person greets him once in ten minutes, even if he passes twice",
+     "source": "invented here"
+    }
+   },
+   "bump": {
+    "class": "to_tom",
+    "gap_s": {
+     "value": 10,
+     "why": "a crowd crush must not become ten 'watch its' in a row",
+     "source": "invented here"
+    },
+    "speaker_s": {
+     "value": 120,
+     "why": "a second bump inside two minutes gets a look, not a line",
+     "source": "invented here"
+    }
+   },
+   "way": {
+    "class": "to_tom",
+    "gap_s": {
+     "value": 0,
+     "why": "an answer to a question is never held back by chatter",
+     "source": "invented here"
+    },
+    "speaker_s": {
+     "value": 0,
+     "why": "always answers; the same words not twice inside 30 min (per_line), and when every line is used the oldest is said",
+     "source": "invented here"
+    }
+   },
+   "farewell": {
+    "class": "to_tom",
+    "gap_s": {
+     "value": 8,
+     "why": "as greetings",
+     "source": "invented here"
+    },
+    "speaker_s": {
+     "value": 600,
+     "why": "a goodbye once per meeting",
+     "source": "invented here"
+    }
+   },
+   "rain_starts": {
+    "class": "event",
+    "gap_s": {
+     "value": 6,
+     "why": "a few people can say it together; not a chorus",
+     "source": "invented here"
+    },
+    "speaker_s": {
+     "value": 1800,
+     "why": "once per rain episode (the episode is longer than any shower)",
+     "source": "invented here"
+    }
+   },
+   "crime": {
+    "class": "event",
+    "gap_s": {
+     "value": 0,
+     "why": "a crime is the one moment several people speak close together: the voice serialises them, the chorus cap below stops a pile-up",
+     "source": "invented here"
+    },
+    "speaker_s": {
+     "value": 60,
+     "why": "one line per person per crime: a person's sureness is fixed by what they perceived",
+     "source": "invented here"
+    }
+   },
+   "in_rain": {
+    "class": "neighbour",
+    "gap_s": {
+     "value": 45,
+     "why": "the neighbours' rule",
+     "source": "invented here"
+    },
+    "speaker_s": {
+     "value": 300,
+     "why": "five minutes before the same person remarks on the rain again",
+     "source": "invented here"
+    }
+   },
+   "after_deed": {
+    "class": "neighbour",
+    "gap_s": {
+     "value": 45,
+     "why": "the neighbours' rule, doubled by the hush below",
+     "source": "invented here"
+    },
+    "speaker_s": {
+     "value": 300,
+     "why": "five minutes between one person's low remarks",
+     "source": "invented here"
+    }
+   }
+  },
+  "per_group": {
+   "min_gap_s": {
+    "value": 60,
+    "why": "one bag (one kind and bank) speaks at most once a minute, so one kind never sounds like the street",
+    "source": "invented here"
+   },
+   "except": [
+    "crime",
+    "way"
+   ]
+  }
+ },
+ "variety": {
+  "bag": {
+   "per": "group (one kind and bank: the ledger's own key 'bank@kind') and per listener",
+   "draw": "among the lines that pass the conditions and have not been used since the last refill, chosen with probability proportional to weight; when none is left the bag refills",
+   "refill_spacing": {
+    "value": "the last half-bag (floor of n over 2) played lines are held out of the first half-bag of draws when others exist",
+    "why": "so a refill cannot repeat the line just heard; with 8 lines the nearest repeat is 5 plays away",
+    "source": "invented here"
+   },
+   "memory": "the existing RemarkLedger keeps the lines heard under 'bank@kind' and saves them (ToJson 'heard'), so a reload does not refill the bag; only what he HEARD counts, as in RemarkLedger.HeardLine",
+   "why": "Valve's response groups play every line once before any repeats; Hades the same; the street's own RemarkLedger.Fresh already does the never-heard-first half of this"
+  },
+  "weights": {
+   "values": "1 (a joke or a strong turn: bears fewer hearings), 2 (ordinary), 3 (the kind's core lines)",
+   "why": "the method note: 'low-key enough to bear a third hearing'; the strong lines come later in a bag"
+  },
+  "min_eligible": {
+   "value": 6,
+   "why": "after every condition (weather, time, standing, accent, never-police) at least six lines must be left in a group, so a bag is never one or two lines",
+   "source": "METHOD item 12 (8 to 20 variants); six is the floor after conditions, eight the floor written"
+  },
+  "pool_sizes": {
+   "floor_written": {
+    "value": 8,
+    "why": "the brief: at least eight lines per kind and situation",
+    "source": "invented here"
+   },
+   "greeting_stranger_written": {
+    "value": 13,
+    "why": "the busiest bank: said to every stranger he passes",
+    "source": "invented here"
+   }
+  },
+  "no_same_kind_twice_running": {
+   "value": true,
+   "why": "a group the bag has just used is not used again by the same kind inside per_group.min_gap_s",
+   "source": "invented here"
+  }
+ },
+ "chance": {
+  "greet": {
+   "stranger": {
+    "value": 0.3,
+    "why": "most passers-by do not greet a stranger on a 1990 street; one in three does (the old and the shopkeepers more)",
+    "source": "invented here"
+   },
+   "owner": {
+    "value": 0.65,
+    "why": "they know who he is and are curious",
+    "source": "invented here"
+   },
+   "nowak": {
+    "value": 0.85,
+    "why": "they know his name",
+    "source": "invented here"
+   },
+   "tom": {
+    "value": 0.9,
+    "why": "on first-name terms",
+    "source": "invented here"
+   },
+   "tommy": {
+    "value": 0.95,
+    "why": "the last rung: nearly always",
+    "source": "invented here"
+   },
+   "kind_multiplier": {
+    "pensioner": 1.5,
+    "shopkeeper": 1.3,
+    "laundry_worker": 1.2,
+    "dock_worker": 1.0,
+    "driver": 1.0,
+    "tradesman": 1.0,
+    "casual_worker": 1.0,
+    "night_shift": 0.8,
+    "office_worker": 0.7,
+    "ron": 1.0,
+    "darren": 1.3,
+    "father_walsh": 1.2,
+    "june": 0.6,
+    "why": "invented here from the contact sheet's manners: the old and the counter folk speak first; clerks hurry; June is on guard"
+   },
+   "weather_multiplier": {
+    "dry": 1.0,
+    "drizzle": 0.75,
+    "rain": 0.5,
+    "why": "heads down in rain"
+   },
+   "capped_at": 1.0
+  },
+  "bump": {
+   "value": 0.8,
+   "why": "a bump is hard to ignore; one in five says nothing and glares",
+   "source": "invented here"
+  },
+  "farewell": {
+   "value": 0.5,
+   "why": "half of those who stop for a word say goodbye aloud",
+   "source": "invented here"
+  },
+  "rain_starts": {
+   "value": 0.35,
+   "why": "of those within earshot, a third remark on it",
+   "source": "invented here"
+  },
+  "crime": {
+   "noise": {
+    "value": 0.7,
+    "why": "most who hear a crash say something",
+    "source": "invented here"
+   },
+   "shape": {
+    "value": 0.6,
+    "why": "fewer: they are unsure of what they saw",
+    "source": "invented here"
+   },
+   "face": {
+    "value": 0.9,
+    "why": "one who saw a face almost always says so",
+    "source": "invented here"
+   }
+  },
+  "in_rain": {
+   "value": 0.3,
+   "why": "per neighbour opportunity, when two or more are in earshot",
+   "source": "invented here"
+  },
+  "after_deed": {
+   "value": 0.4,
+   "why": "per neighbour opportunity, for those near the deed",
+   "source": "invented here"
+  },
+  "way": {
+   "value": 1.0,
+   "why": "always answers",
+   "source": "invented here"
+  }
+ },
+ "priority": {
+  "order": {
+   "crime_face": 100,
+   "crime_shape": 95,
+   "crime_noise": 90,
+   "bumped": 80,
+   "asked_way": 75,
+   "greeting.nowak": 52,
+   "greeting.tom": 52,
+   "greeting.tommy": 52,
+   "greeting.owner": 50,
+   "greeting.stranger": 48,
+   "farewell": 45,
+   "rain_starts": 40,
+   "after_deed": 35,
+   "in_rain": 20
+  },
+  "why": "a crime line outranks a greeting (the brief); a reaction to his body (a bump) outranks a reply to his question, which outranks a hello; neighbours' talk yields to everything",
+  "voices": {
+   "ordinary": {
+    "value": 1,
+    "why": "one line sounds at a time, so each can be understood and the street never talks over itself",
+    "source": "invented here"
+   },
+   "crime": {
+    "value": 2,
+    "why": "in a crime two people may speak at once (that is what a street does); three is noise",
+    "source": "invented here"
+   }
+  },
+  "in_progress": "a line already playing is never cut, except neighbour-class lines (in_rain, after_deed), which fade over 0.4 s when a crime line starts",
+  "waiting": "one line may wait for the voice; a higher-priority arrival replaces it",
+  "shelf_life_s": {
+   "crime": {
+    "value": 4,
+    "why": "a shout answered within four seconds is still a shout; later it is not",
+    "source": "invented here"
+   },
+   "bumped": {
+    "value": 1.5,
+    "why": "the moment is gone in a second and a half",
+    "source": "invented here"
+   },
+   "greet": {
+    "value": 3,
+    "why": "he has walked on",
+    "source": "invented here"
+   },
+   "farewell": {
+    "value": 3,
+    "why": "as greetings",
+    "source": "invented here"
+   },
+   "rain_starts": {
+    "value": 3,
+    "why": "as they happen",
+    "source": "invented here"
+   },
+   "asked_way": {
+    "value": 6,
+    "why": "an answer may wait a little for a question",
+    "source": "invented here"
+   },
+   "in_rain": {
+    "value": 5,
+    "why": "idle talk",
+    "source": "invented here"
+   },
+   "after_deed": {
+    "value": 5,
+    "why": "idle talk",
+    "source": "invented here"
+   }
+  },
+  "line_seconds": {
+   "value": "0.3 + words / 3.0",
+   "why": "Sheila's voice-key lines run 19 words in 6.16 s (3.1 words a second) plus a short lead; a line under 12 words is under 4.3 s",
+   "source": "production/casting/voice-key.json"
+  }
+ },
+ "after_deed": {
+  "hour_s": {
+   "value": 3600,
+   "why": "RULINGS 23 Sep: witnesses talk quieter for an hour",
+   "source": "RULINGS 23 Sep"
+  },
+  "who": "witnesses (anybody with a sureness), and anybody within 20 m of the deed when it happened",
+  "near_m": {
+   "value": 20,
+   "why": "the limit at which the identification ladder reads a figure at all (eyewitness-testimony: 42 percent accuracy at 20 m); beyond it nobody is a witness",
+   "source": "production/research/eyewitness-testimony/SUMMARY.md"
+  },
+  "gap_multiplier": {
+   "value": 2.0,
+   "why": "their neighbours' talk comes at most every 90 s instead of 45 s: quieter in count",
+   "source": "invented here"
+  },
+  "gain_db": {
+   "value": -6,
+   "why": "quieter in level: half the loudness, which a listener hears as clearly lower and still hears",
+   "source": "invented here"
+  },
+  "hear_radius_m": {
+   "value": 4,
+   "why": "hushed lines carry 4 m, not the street's 7 m; GossipDirector's talk range is 6 m, Acoustics.SpeechCarry 14 m for ordinary speech",
+   "source": "invented here, against GossipDirector.TalkRange and Acoustics.SpeechCarry"
+  },
+  "silent_for_witnesses": [
+   "greeting.stranger",
+   "greeting.owner",
+   "greeting.nowak",
+   "greeting.tom",
+   "greeting.tommy",
+   "rain_starts",
+   "in_rain",
+   "farewell"
+  ],
+  "why_silent": "people who have just seen something do not say 'morning' or remark on the weather; they say the hushed lines, or nothing",
+  "look_and_gather": "near people look (the nearest three, within 12 m, turn to the deed), some gather (up to four within 20 m come to within 6 m for 90 s) and drift back: that is movement, the builder's; only what they may SAY is set here: gatherers use after_deed lines only, hushed, while gathered"
+ },
+ "rain": {
+  "presence": {
+   "values": {
+    "pensioner": [
+     1.0,
+     0.3,
+     0.15
+    ],
+    "shopkeeper": [
+     1.0,
+     0.6,
+     0.3
+    ],
+    "dock_worker": [
+     1.0,
+     1.0,
+     0.9
+    ],
+    "driver": [
+     1.0,
+     1.1,
+     1.3
+    ],
+    "office_worker": [
+     1.0,
+     0.8,
+     0.6
+    ],
+    "laundry_worker": [
+     1.0,
+     0.8,
+     0.6
+    ],
+    "tradesman": [
+     1.0,
+     0.7,
+     0.3
+    ],
+    "night_shift": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "casual_worker": [
+     1.0,
+     0.8,
+     0.5
+    ],
+    "ron": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "darren": [
+     1.0,
+     1.0,
+     0.7
+    ],
+    "father_walsh": [
+     1.0,
+     0.8,
+     0.6
+    ],
+    "june": [
+     1.0,
+     0.7,
+     0.5
+    ]
+   },
+   "order": "[dry, drizzle, rain]: the share of a kind's usual passers-by still out",
+   "why": "RULINGS 5 Oct: rain changes who is out; Weather.cs: rain thins the crowd. The old stay in, work that is outdoors carries on, cabs are busier; invented here from the contact sheet's trades"
+  },
+  "hear_radius_m": {
+   "dry": {
+    "value": 7,
+    "why": "GossipDirector's within-7-m unprompted lines",
+    "source": "GossipDirector.cs"
+   },
+   "drizzle": {
+    "value": 6,
+    "why": "a little masked",
+    "source": "invented here"
+   },
+   "rain": {
+    "value": 5,
+    "why": "masked by the rain: 'what is heard' (RULINGS 5 Oct)",
+    "source": "invented here"
+   }
+  },
+  "starts_window_s": {
+   "value": 40,
+   "why": "rain_starts lines only within 40 s of the weather crossing a cut point from dry",
+   "source": "invented here"
+  }
+ },
+ "silence": {
+  "nobody_says_anything_when": [
+   "nobody is within the hearing radius of Tom (7 m dry, 6 drizzle, 5 rain; 4 for hushed lines)",
+   "fewer than two people are in earshot: neighbours' talk needs two (StreetVoice.AmbientEverySeconds returns never below two)",
+   "no line is left once weather, time, standing, accent and never-police are applied: silence is better than a repeat (asked_way is the one exception: the oldest-heard line is said, because a question must be answered)",
+   "the speaker's stance toward Tom is above Notices (Watches, Comments, Avoids, Refuses, Confronts): the existing recognition banks speak for them; these ambient banks stay silent",
+   "the speaker is a witness within the hour after a deed (see after_deed.silent_for_witnesses)",
+   "the speaker's group is under any cooldown above",
+   "the speaker has a kind with no group for the moment (Ron and Darren have no stranger or owner greeting; they begin at nowak; Walsh and June at owner)",
+   "the moment's chance roll fails (see chance): most moments are silent by design"
+  ],
+  "target_quiet_share": {
+   "value": 0.33,
+   "why": "in every walk at least a third of the minutes pass with no line heard: a street, not a stage. First set at 40 percent; one of thirty-one seeds came in at 37 percent, which is a busy half hour and no fault, so it was set at a third",
+   "source": "invented here, adjusted once after the first run"
+  },
+  "target_quiet_median": {
+   "value": 0.45,
+   "why": "and in the middle walk of thirty-one at least 45 percent",
+   "source": "invented here"
+  },
+  "busiest_minute_max": {
+   "value": 6,
+   "why": "no minute holds more than six heard lines except in the moments of a crime: six short lines fill about 20 s of 60",
+   "source": "invented here"
+  },
+  "never_to_fill_a_gap": true
+ },
+ "tests_that_pin_it": [
+  "no group has fewer than min_eligible lines in any weather and hour it can occur (check_lines.py rows pool.*)",
+  "the walk: zero same-speaker repeats inside same_speaker_same_line_s, zero same-line repeats between speakers inside any_speaker_same_line_s, no neighbour line closer than the neighbours' gap (rows walk.*)"
+ ],
+ "trade_kinds": {
+  "baker": "shopkeeper",
+  "barber": "shopkeeper",
+  "hairdresser": "shopkeeper",
+  "cook": "shopkeeper",
+  "line cook": "shopkeeper",
+  "waitress": "shopkeeper",
+  "cashier": "shopkeeper",
+  "usher": "shopkeeper",
+  "bartender": "shopkeeper",
+  "dock hand": "dock_worker",
+  "stevedore": "dock_worker",
+  "ferry hand": "dock_worker",
+  "forklift driver": "dock_worker",
+  "scrap hauler": "dock_worker",
+  "clerk": "office_worker",
+  "bookkeeper": "office_worker",
+  "secretary": "office_worker",
+  "bus driver": "driver",
+  "cab driver": "driver",
+  "trucker": "driver",
+  "mechanic": "tradesman",
+  "welder": "tradesman",
+  "printer": "tradesman",
+  "roofer": "tradesman",
+  "electrician": "tradesman",
+  "machinist": "tradesman",
+  "sign painter": "tradesman",
+  "night janitor": "night_shift",
+  "security guard": "night_shift",
+  "nurse": "night_shift"
+ },
+ "person_kinds": {
+  "marla": "shopkeeper",
+  "rita": "shopkeeper",
+  "victor": "shopkeeper",
+  "hal": "shopkeeper",
+  "cafe": "shopkeeper",
+  "takeaway_m": "shopkeeper",
+  "takeaway_f": "shopkeeper",
+  "sanja": "shopkeeper",
+  "ines": "shopkeeper",
+  "marta": "shopkeeper",
+  "stipe": "dock_worker",
+  "drago": "dock_worker",
+  "dario": "dock_worker",
+  "petra": "dock_worker",
+  "ada": "pensioner",
+  "hana": "pensioner",
+  "fabjan": "pensioner",
+  "magda": "pensioner",
+  "vesna": "pensioner",
+  "lena": "office_worker",
+  "noor": "office_worker",
+  "zlata": "office_worker",
+  "bruno": "office_worker",
+  "tibor": "office_worker",
+  "elias": "office_worker",
+  "goran": "office_worker",
+  "ferko": "driver",
+  "dusan": "driver",
+  "zora": "laundry_worker",
+  "katarina": "laundry_worker",
+  "iva": "laundry_worker",
+  "selma": "laundry_worker",
+  "luka": "tradesman",
+  "franjo": "tradesman",
+  "jelena": "tradesman",
+  "tomas": "tradesman",
+  "filip": "night_shift",
+  "joey": "casual_worker",
+  "tanja": "casual_worker",
+  "danica": "casual_worker",
+  "rocco": "ron",
+  "sam": "darren",
+  "emil": "father_walsh",
+  "june": "june"
+ }
+}
