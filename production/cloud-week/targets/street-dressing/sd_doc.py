@@ -197,6 +197,12 @@ def std_doc(T, S):
     w("")
     w(owed_list(T) or "None.")
     w("")
+    if T.get("handovers"):
+        w("## Handovers (for the town or the scene's owner, not for his page)")
+        w("")
+        for h in T["handovers"]:
+            w("- %s: %s" % (h["id"], h["line"]))
+        w("")
     w("## What the target could not settle")
     w("")
     for x in T["not_settled"]:

@@ -1050,11 +1050,14 @@ def frn10_rows(R, work, assets, rows, members):
         mk = _nd.binary_erosion(mk, iterations=2)               # an edge pixel is half something else
         lum = luma(im)
         dk = mk & (lum < 8)
-        n = int(dk.sum())
+        n_raw = int(dk.sum())
+        # a black AREA is the fault (the strips beside the side door were 11 px wide and 548 high at STREET_SQUARE); the thin line of shade under the cornice or the sill (3 to 4 px) is
+        # light and shadow, not a missing face: only dark patches that survive an opening by a 5 x 5 square count
+        n = int(_nd.binary_opening(dk, structure=np.ones((5, 5), bool)).sum())
         dark_tot += n
-        det_b.append("%s %d of %d front pixels under luma 8 (the darkest %.1f)" % (cam, n, int(mk.sum()), float(lum[mk].min()) if mk.any() else -1))
+        det_b.append("%s %d of %d front pixels under luma 8, %d of them in patches 5 px or wider (the darkest pixel %.1f)" % (cam, n_raw, int(mk.sum()), n, float(lum[mk].min()) if mk.any() else -1))
     rows.add("FRN-10", "no two parts of the front share a visible face plane; nothing on the front is black", not vis and dark_tot == 0 and not miss,
-             det_a + ". By day, in the four gate frames at 2560 x 1440, over the front's own pixels (a mask render: the glass, the two fanlights, the shop door's glass, the hall, the lettering rows and the OPEN sign are not the front; the mask eroded by 2 px): " + "; ".join(det_b) +
+             det_a + ". By day, in the four gate frames at 2560 x 1440, over the front's own pixels (a mask render: the glass, the two fanlights, the shop door's glass, the hall, the lettering rows and the OPEN sign are not the front; the mask eroded by 2 px; a dark patch counts when it is 5 px wide or more, a thin line of shade under the cornice or the sill does not): " + "; ".join(det_b) +
              " (try 2: the two strips beside the side door were luma 0 to 3, about 12,000 pixels at STREET_SQUARE: F1's frame jambs, the added side jambs and the fillers stood in one plane, d 100)")
 
 

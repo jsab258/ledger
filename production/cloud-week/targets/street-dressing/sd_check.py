@@ -14,6 +14,7 @@ import sys
 import numpy as np
 
 import sd_lib as L
+import sd_place as PL
 
 ALLOWED_LICENCES = ("creativecommons.org/licenses/by-sa/2.0", "CC BY-SA 2.0", "CC0", "CC BY 4.0", "CC BY-SA 4.0", "CC BY-SA 3.0",
                     "public domain", "CC BY 2.0", "CC BY 3.0")
@@ -316,6 +317,14 @@ def text_rows(T, tdir, rows, extra_files=()):
     badl = [o["id"] for o in owed if "—" in o["line"] or "*" in o["line"] or "_" in o["line"]]
     rows.add("owed", "owed/no em dash or italics in his lines", not badl, "bad: %s" % badl)
     rows.add("owed", "owed/each line has a recommendation and one question", all(o.get("recommended") and "?" in o["line"] for o in owed), "")
+    # handovers (town and scene lines) carry no em dash or italics either; placeholders never reach his page
+    hv = T.get("handovers", [])
+    rows.add("owed", "owed/handovers have an id, a line and no em dash or italics", all(h.get("id") and h.get("line") and "\u2014" not in h["line"] and "*" not in h["line"] for h in hv), "%d handovers" % len(hv))
+    ph = T.get("placeholders", [])
+    rows.add("owed", "owed/placeholders are marked fictional placeholder", all(p.get("marked") == "fictional placeholder" and p.get("name") for p in ph), "%d placeholders: %s" % (len(ph), [p.get("name") for p in ph]))
+    page_text = " ".join(o["line"] + " " + o.get("recommended", "") for o in owed).lower()
+    leaked = [p["name"] for p in ph if p["name"].lower() in page_text]
+    rows.add("owed", "owed/no placeholder name reaches his page lines", not leaked, "found in his lines: %s" % leaked)
     # night
     nj = json.dumps(T)
     rows.add("night", "night/no stale lantern colour", L.STALE_NIGHT not in nj, "")
@@ -369,6 +378,10 @@ def all_rows(T, tdir, extra=None, live=False, previews=False, photos_dir=None, p
     photo_rows(T, rows, live=live, photos_dir=photos_dir)
     source_rows(T, rows, tdir)
     text_rows(T, tdir, rows)
+    if T.get("placement", {}).get("poses"):
+        PL.placement_rows(T, rows)
+    else:
+        rows.add("placement", "place/poses are declared", False, "the target has no placement.poses: the shared placement check could not run")
     if previews:
         preview_rows(T, rows, tdir, previews_dir or L.PREVIEWS)
     if extra:
@@ -480,6 +493,9 @@ def generic_controls(T, spec):
     C.append(("names: a real operator's name written in a part's material note", lambda t: t["variants"][V]["parts"][0].__setitem__("note", "made by " + L.BLOCKLIST[0]), "names/target.json"))
     C.append(("content: a drink word in a note", lambda t: t["variants"][V]["parts"][0].__setitem__("note", "stacks of beer crates"), "content/no alcohol, gambling or children in the data"))
     C.append(("night: the stale lantern colour put back", lambda t: t.__setitem__("night_old", L.STALE_NIGHT), "night/no stale lantern colour"))
+    if T.get("placeholders"):
+        C.append(("owed: a placeholder name written into a line for his page", lambda t: t["owed"][0].__setitem__("line", t["owed"][0]["line"][:-1] + " (" + t["placeholders"][0]["name"] + ")?") if t.get("owed") else t.__setitem__("owed", [{"id": "x", "line": "May " + t["placeholders"][0]["name"] + " be used?", "recommended": "y"}]), "owed/no placeholder name reaches his page lines"))
+        C.append(("owed: a placeholder not marked as one", lambda t: t["placeholders"][0].__setitem__("marked", "name"), "owed/placeholders are marked fictional placeholder"))
     C.append(("owed: an em dash in a line for his page", lambda t: t["owed"][0].__setitem__("line", t["owed"][0]["line"] + " — now") if t.get("owed") else t.__setitem__("owed", [{"id": "x", "line": "a — b?", "recommended": "y"}]), "owed/no em dash or italics in his lines"))
     C.append(("sources: a source with no licence", lambda t: t["sources"][0].__setitem__("licence", ""), "sources/%s fields" % T["sources"][0]["id"] if T.get("sources") else "sources/"))
     return C
