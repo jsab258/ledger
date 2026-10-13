@@ -5,7 +5,7 @@
   the drawing's projected edges fall on photograph P8 within the stated error (laid on at one scale, fitted on the width)
   internal consistency (the sites against terrace-front.py as it stands; the rooms' stand-offs against the budgets; nothing overlaps that should not; nothing floats; the lit table is nested)
   the inventory (every model named has its marks entry; no blocklisted name outside a marks entry), the checks, the previews (when --previews DIR)
-  negative controls: 14 seeded faults, each must be caught
+  negative controls: 20 seeded faults (14 of the first version and 6 added by the fixes of 13 October), each must be caught
 usage: self_check.py [--photos DIR] [--previews DIR] [--live] [--write] [--no-controls]   (writes the result into target.json under "self_check" only with --write)
 Run with /home/user/.bpyenv/bin/python."""
 import argparse
@@ -101,7 +101,31 @@ def check_photographs(t, R, photo_dir):
     net = [r for r in rows.values() if r["state"] == "net_full" and r["angle_deg"] <= 40]
     lo, hi = g["net_N1_N2_in_15_to_30_deg"]["P_over_L"]
     R.add("photo", "net bands enclose the net windows at 40 degrees or less (n=%d)" % len(net), all(lo <= r["P_over_L"] <= hi for r in net), str([r["P_over_L"] for r in net]))
-    R.add("photo", "net D/L limit holds on the tight outlines (P1)", all(r["D_over_L"] <= g["net_N1_N2_in_15_to_30_deg"]["D_over_L_max"] for r in rows.values() if r["photo"] == "P1" and r["state"] == "net_full"), str([r["D_over_L"] for r in rows.values() if r["photo"] == "P1" and r["state"] == "net_full"]))
+    R.add("photo", "net D/L limit holds on the tight outlines (P1, boxed without stone or brick, the gate's way)", all(r["D_over_L"] <= g["net_N1_N2_in_15_to_30_deg"]["D_over_L_max"] for r in rows.values() if r["photo"] == "P1" and r["state"] == "net_full"), str([r["D_over_L"] for r in rows.values() if r["photo"] == "P1" and r["state"] == "net_full"]))
+    nb = g["net_N1_N2_in_15_to_30_deg"]
+    R.add("photo", "WB-01 band is the review's: P/L 0.55 to 0.97 with no median cap", nb["P_over_L"] == [0.55, 0.97] and "median_cap" not in nb and "no median cap" in [c for c in t["checks"] if c["id"] == "WB-01"][0]["expected"] and "at most 0.92" not in [c for c in t["checks"] if c["id"] == "WB-01"][0]["expected"], str(nb["P_over_L"]))
+    R.add("photo", "WB-04 limit is the review's 0.72 and the P1 net windows (D/L 0.52 to 0.71) are under it, the old fault (0.85) over it", nb["D_over_L_max"] == 0.72 and all(r["D_over_L"] <= 0.72 for r in rows.values() if r["photo"] == "P1" and r["state"] == "net_full") and g["old_fault_to_fail"]["D_over_L"] > 0.72 and "at most 0.72" in [c for c in t["checks"] if c["id"] == "WB-04"][0]["expected"], "")
+    lc = g.get("net_N1_N2_line_check", {})
+    R.add("photo", "WB-04b: a dip at least 1 px wide to at most 0.60 of L, in the gate and in the check", lc.get("dip_width_px_min") == 1 and lc.get("dip_over_L_max") == 0.60 and "WB-04b" in [c["id"] for c in t["checks"]] and "0.60 of L" in [c for c in t["checks"] if c["id"] == "WB-04b"][0]["expected"], str(lc))
+    st = t["gate"].get("window_states", {})
+    R.add("photo", "window states bare, net, draped are defined for the WB checks (C2 counts by its net; draped has no P/L band, a spread of at least 20 only)", all(k in st for k in ("bare", "net", "draped")) and "C2" in st.get("net", "") and "spread of at least 20" in st.get("draped", ""), "")
+    R.add("photo", "frame class: the P/L and D/L bands apply to white and cream frames only", "white and cream frames only" in t["gate"].get("frame_class", ""), "")
+    # which street windows are bare and which draped, from the sites
+    bare_sites = [x["id"] for x in t["sites"] if x["net"]["kind"] == "N0" and not x["extra"]]
+    draped_sites = [x["id"] for x in t["sites"] if x["extra"] and x["extra"]["kind"] in ("C1", "B1", "B2", "B3")]
+    R.add("photo", "the street's bare windows are %s and its draped windows %d (the review: three of the four N0 windows carry a blind or a curtain)" % (bare_sites, len(draped_sites)), len(bare_sites) == 1 and sum(1 for x in t["sites"] if x["net"]["kind"] == "N0") == 4 and len(draped_sites) == 5, str(draped_sites))
+    # the quoted numbers in the checks are the rows'
+    chk = {c["id"]: c for c in t["checks"]}
+    quoted = all(("%.2f" % rows[k]["P_over_L"]) in chk["WB-01"]["source"] for k in ("P1_a", "P1_b", "P1_e")) and all(("%.2f" % rows[k]["D_over_L"]) in chk["WB-04"]["source"] for k in ("P1_a", "P1_b", "P1_e")) and all(("%.2f" % rows[k]["P_over_L"]) in chk["WB-02"]["source"] for k in ("P1_c", "P4_G", "P3_d")) and all(("%.2f" % rows[k]["P_over_L"]) in chk["WB-03"]["source"] for k in ("P8_L", "P8_R"))
+    R.add("photo", "the numbers quoted in WB-01 to WB-04 are the photograph rows' own", quoted, "")
+    R.add("photo", "WB-08 makes WB-04b fail on the old pane (with WB-04, WB-05 and WB-02)", all(x in chk["WB-08"]["expected"] for x in ("WB-04b", "WB-04", "WB-05", "WB-02")), "")
+    a_, b_, e_ = rows["P1_a"], rows["P1_b"], rows["P1_e"]
+    alt = a_.get("alt_top_rows_out", {})
+    R.add("photo", "P1_a, P1_b and the alternative top-rows-out box reproduce the review's rows (0.93 / 0.65 / 76; 0.94 / 0.65 / 64; 0.93 / 0.71 / 68)",
+          abs(a_["P_over_L"] - 0.93) <= 0.01 and abs(a_["D_over_L"] - 0.65) <= 0.01 and abs(a_["pane_spread_5_95"] - 76) <= 1 and abs(b_["P_over_L"] - 0.94) <= 0.01 and abs(b_["D_over_L"] - 0.65) <= 0.01 and abs(b_["pane_spread_5_95"] - 64) <= 1
+          and abs(alt.get("P_over_L", 0) - 0.93) <= 0.01 and abs(alt.get("D_over_L", 0) - 0.71) <= 0.01 and abs(alt.get("pane_spread_5_95", 0) - 68) <= 1, "%s %s %s" % (a_["D_over_L"], b_["D_over_L"], alt.get("D_over_L")))
+    R.add("photo", "P1_e is boxed the same way (no stone, no brick): its L is the joinery's (about 215, not the stone's 248) and its D/L is under 0.72", 210 <= e_["L90"] <= 222 and e_["D_over_L"] < 0.72 and e_["joinery_px"] < 400, "L %s D/L %s" % (e_["L90"], e_["D_over_L"]))
+    R.add("photo", "P8 measured the gate's way (all four panes, joinery-only L): P/L inside WB-03's band and blue over red at least 10", 0.35 <= t["photo_measurements"]["p8_four_panes_the_gates_way"]["P_over_L"] <= 0.70 and t["photo_measurements"]["p8_four_panes_the_gates_way"]["blue_minus_red"] >= 10, str(t["photo_measurements"]["p8_four_panes_the_gates_way"]))
     R.add("photo", "net spread minimum under every net window's spread", all(r["pane_spread_5_95"] >= g["net_N1_N2_in_15_to_30_deg"]["spread_min"] for r in rows.values() if r["state"] == "net_full"), "")
     bare = [r for r in rows.values() if r["state"] == "bare_dark"]
     lo, hi = g["bare_N0_in_15_to_30_deg"]["P_over_L"]
@@ -169,10 +193,11 @@ def check_sites(t, R):
         if s is None or abs(s["x_centre"] - round((d["x_min"] + d["x_max"]) / 2.0, 3)) > 0.002 or s["kind_by_house_in_terrace_front"] != tf._window_kind(d["block"], d["bay"]):
             ok = False
     R.add("sites", "every site's centre and kind equal terrace-front.py's as it stands", ok, "")
-    kc = {"S22": 0, "S11": 0, "RC": 0}
+    kc = {"S22": 0, "S11": 0, "RC": 0, "RC2": 0}
     for s in sites:
         kc[s["kind"]] += 1
-    R.add("sites", "kinds: 6 two-over-two, 6 one-over-one, 8 replacement", kc == {"S22": 6, "S11": 6, "RC": 8}, str(kc))
+    R.add("sites", "kinds: 6 two-over-two, 6 one-over-one, 6 replacement (RC, P7's form), 2 replacement RC2 (P6's form)", kc == {"S22": 6, "S11": 6, "RC": 6, "RC2": 2}, str(kc))
+    R.add("sites", "RC2 is east_parade_bay4's, both windows, and every other replacement house keeps RC", {s["house"] for s in sites if s["kind"] == "RC2"} == {"east_parade_bay4"} and all(s["kind_by_house_in_terrace_front"] == "replacement" for s in sites if s["kind"] in ("RC", "RC2")), "")
     R.add("sites", "ten houses", len(t["houses"]) == 10, "")
     out = []
     tf._north_approach(out)
@@ -182,8 +207,8 @@ def check_sites(t, R):
     R.add("sites", "a cottage's arch clears the eaves: head 2.5 + rise 0.85/7 + ring 0.215 under 3.1", 2.5 + 0.85 / 7 + 0.215 < 3.1, "")
     R.add("sites", "upper heads at 5.9 and cottage heads at 2.5 above the crown (today's)", all(abs(s["head_z_above_crown"] - (5.9 if s["floor"] == "upper" else 2.5)) < 1e-6 for s in sites), "")
     R.add("sites", "the kit rows today are the parade's S22 and S11 only", all(s["kit_row_today"] == (s["block"] == "east_parade" and s["kind"] in ("S22", "S11")) for s in sites), "")
-    bad_paint = [s["id"] for s in sites if s["kind"] == "RC" and s["paint"] not in ("white_upvc", "bronze")] + [s["id"] for s in sites if s["kind"] != "RC" and s["paint"] in ("white_upvc", "bronze")]
-    R.add("sites", "paint fits the kind (a replacement is white or bronze; a timber sash is painted)", not bad_paint, str(bad_paint))
+    bad_paint = [s["id"] for s in sites if s["kind"] in ("RC", "RC2") and s["paint"] not in ("white_upvc", "bronze")] + [s["id"] for s in sites if s["kind"] not in ("RC", "RC2") and s["paint"] in ("white_upvc", "bronze")]
+    R.add("sites", "paint fits the kind (a replacement is white upvc; a timber sash is painted)", not bad_paint, str(bad_paint))
     # no repeat within three places along a row
     for side in (1, -1):
         row = sorted([s for s in sites if s["side"] == side], key=lambda s: s["x_centre"])
@@ -207,7 +232,17 @@ def check_sites(t, R):
         p = [s for s in sites if s["house"] == h][0]["paint"]
         paints[p] = paints.get(p, 0) + 1
     white = sum(v for k, v in paints.items() if k.startswith("white"))
-    R.add("sites", "SITE-04 paint: white 5 to 7 of 10, cream 1, brown 1, olive 1, blue 1, bronze 1", 5 <= white <= 7 and paints.get("cream") == 1 and paints.get("brown") == 1 and paints.get("olive") == 1 and paints.get("blue") == 1 and paints.get("bronze") == 1, str(paints))
+    R.add("sites", "SITE-04 paint: white (white_fresh, white_grimy, white_flaking, white_upvc) 10 of 10 until Jafar's page rules otherwise (RULINGS.md 3 October)", white == 10 and len(t["houses"]) == 10, str(paints))
+    R.add("sites", "SITE-04 says 10 of 10 and names the four whites; D13 records that the ruling stands over the tally", "10 of 10" in [c for c in t["checks"] if c["id"] == "SITE-04"][0]["expected"] and all(x in [c for c in t["checks"] if c["id"] == "SITE-04"][0]["expected"] for x in ("white_fresh", "white_grimy", "white_flaking", "white_upvc")) and any(d["id"] == "D13" and "ruling" in d and "stands over" in d["chosen"] for d in t["photographs_win"]), "")
+    d1 = [d for d in t["photographs_win"] if d["id"] == "D1"][0]
+    R.add("sites", "D1 no longer keeps bronze for the chandler: the bronze question is on D13's line", "D13" in d1["chosen"] and "none is bronze" in d1["chosen"], "")
+    pi = t["paints"]
+    R.add("sites", "the coloured paints are marked not used until Jafar's page rules; white_fresh is used", all("NOT USED ON ANY HOUSE" in pi[k]["note"] for k in ("cream", "olive", "blue", "brown", "bronze")) and paints.get("white_fresh", 0) == 2, str(paints))
+    ow = {o["id"]: o for o in t["owed_on_pc"]}
+    lines = " ".join(ow.get("OWED-05", {}).get("lines", []))
+    R.add("sites", "OWED-05 carries the review's two lines (frames: all white as ruled, or the photographs' mix; cottage sill 0.72 or 0.9) and OWED-06 the reflections check", "Window frames: all white as you ruled on 3 October (recommended)" in lines and "white 55%, brown 13, cream 12, blue 8, olive 7: one house each" in lines and "Cottage windows: head kept, sill 0.72 above the step (recommended), or sill 0.9 with 9 cm of brick under the eaves?" in lines and "at least 2 of 3 upper panes show a horizontal edge with a step of at least 30 levels, moving when the camera moves 1 m" in ow.get("OWED-06", {}).get("check", ""), "")
+    R.add("sites", "OWED-05's lines carry no em dash and no italic mark (they are for Jafar)", "\u2014" not in lines and "\u2013" not in lines and "*" not in lines and "_" not in lines, "")
+    R.add("sites", "D14 records the brick under the arch against P8's painted head and that a change reaches Jafar's page", any(d["id"] == "D14" and "BRICK is built" in d["chosen"] and "Jafar's page" in d["chosen"] and "P8" in d["photographs"] for d in t["photographs_win"]), "")
     # the cards
     for s in sites:
         c = s["card"]
@@ -249,7 +284,19 @@ def check_sites(t, R):
             if len(a) <= len(b) and not a <= b:
                 nested = False
     R.add("lit", "NIGHT-05: a smaller lit set is a subset of every larger one (the order is never reshuffled)", nested, "")
-    R.add("lit", "the lit table's shares are the stated ones", all(lt[h]["n"] == int(round(sh * 20)) - (0 if 18 <= int(h[:2]) + int(h[3:]) / 60.0 <= 23 else 0) or True for h, sh in t["rooms"]["lit_share"]["table_hour_to_share_of_all_20_windows"].items()), "")
+    R.add("lit", "the lit table's shares are the stated ones (the count at each hour is round(share x 20))", all(lt[h]["n"] == int(round(sh * 20)) for h, sh in t["rooms"]["lit_share"]["table_hour_to_share_of_all_20_windows"].items()), "")
+    # the lit ORDER (TARGET-REVIEW narrow point 6): every eligible window once; in 1990 the evening's light is in the front room or the lounge, landings are lit last
+    order = t["rooms"]["lit_share"]["lit_order_of_the_non_always_lit_windows"]
+    sbi = {x["id"]: x for x in t["sites"]}
+    elig_ids = {x["id"] for x in t["sites"] if not x["room"].startswith("up_empty") and not x["always_lit"]}
+    R.add("lit", "the lit order names every eligible window once (16)", len(order) == len(set(order)) == len(elig_ids) and set(order) == elig_ids, "")
+    first = ["west_south_bay1_gf_w1", "east_parade_bay0_upper_w1", "east_parade_bay2_upper_w0", "east_parade_bay5_upper_w0"]
+    R.add("lit", "the lit order starts with the review's four: the cottage front room, then the three lounges", order[:4] == first, str(order[:4]))
+    kind_rank = lambda i: 0 if sbi[i]["room"].startswith(("gf_front", "up_lounge")) else (1 if sbi[i]["room"].startswith("up_bedroom") else 2)
+    last_non_landing = max((k for k, i in enumerate(order) if kind_rank(i) < 2), default=-1)
+    first_landing = min((k for k, i in enumerate(order) if kind_rank(i) == 2), default=99)
+    R.add("lit", "every landing comes after every lounge, front room and bedroom in the lit order, and no landing is lit at 20:30", last_non_landing < first_landing and not any(sbi[i]["room"].startswith("up_landing") for i in lt["20:30"]["windows"]), "")
+    R.add("lit", "the lit set at 20:30 is the always-lit pair and the first five of the order", set(lt["20:30"]["windows"]) == always | set(order[:5]), "")
     R.add("lit", "no window is lit by day (the table has no hour between 09:00 and 16:59)", all(not (9 <= int(h[:2]) < 17) for h in lt), "")
 
 
@@ -268,9 +315,39 @@ def check_rooms(t, R):
             if c["true_20px"] is not None:
                 R.add("budget", "%s %s: rule true %.3f <= computed %.3f" % (fam_k, surf, bud[surf]["true"], c["true_20px"]), bud[surf]["true"] <= c["true_20px"] + 0.0051, "")
                 R.add("budget", "%s %s: rule tolerated %.3f <= computed %.3f" % (fam_k, surf, bud[surf]["tolerated"], c["true_40px"]), bud[surf]["tolerated"] <= c["true_40px"] + 0.0051, "")
-    # recompute the budgets live
-    live, _ = H.budgets_for("GF", 2.5 - H.WIN_H_PERIOD - 0.45, 2.5 - 0.45, 0.9)
-    R.add("budget", "the computed GF back-wall budget recomputes (0.41 / 0.80)", abs(live["back"]["true_20px"] - comp["GF"]["surfaces"]["back"]["true_20px"]) < 0.002 or abs(live["back"]["true_20px"] - 0.41) < 0.01, str(live["back"]))
+    # recompute the budgets live: the eye by the window (narrow point 1), both cottage windows, the smaller of the two
+    sill_gf, head_gf = 2.5 - H.WIN_H_PERIOD - 0.45, 2.5 - 0.45
+    lives = [H.budgets_for("GF", sill_gf, head_gf, off)[0] for off in comp["GF"]["window_offsets_m"]]
+    live_back = min(l["back"]["true_20px"] for l in lives)
+    live_back40 = min(l["back"]["true_40px"] for l in lives)
+    R.add("budget", "the computed GF back-wall budget recomputes with the eye at the window (%.3f / %.3f; stored %s)" % (live_back, live_back40, comp["GF"]["surfaces"]["back"]), abs(live_back - comp["GF"]["surfaces"]["back"]["true_20px"]) < 0.002 and abs(live_back40 - comp["GF"]["surfaces"]["back"]["true_40px"]) < 0.002, "")
+    R.add("budget", "the cottage rooms' back-wall rule is the review's 0.38 true and 0.71 tolerated (the old 0.40 and 0.80 put the eye 0.9 m from its window)", bud["back"]["true"] == 0.38 and bud["back"]["tolerated"] == 0.71 and bud["back"]["true"] <= comp["GF"]["surfaces"]["back"]["true_20px"] and bud["back"]["tolerated"] <= comp["GF"]["surfaces"]["back"]["true_40px"], str(bud["back"]))
+    R.add("budget", "the budgets are computed with the eye at the window and the exact pixel angle", "eye at the window" in comp["GF"].get("method", "") and abs(H.pixel_angle_deg(39.0) - 0.02818) < 0.0002, comp["GF"].get("method", ""))
+    vzx = t["rooms"]["visible_zone"]
+    R.add("rooms", "visible_zone states its x frame (from the picture-left wall) in `what` and in `x_frame`", vzx.get("x_frame") == "from the picture-left wall" and "PICTURE-LEFT WALL" in vzx["what"], "")
+    gfeye = vzx["by_family"]["GF"]["H_ACROSS_0"]["eye_in_picture_frame_m"]
+    R.add("rooms", "the GF visible zone's eye stands by the window (x = the room's half width + the window's 0.9 offset = 2.60, not the room's middle 1.70)", abs(gfeye[0] - 2.6) < 0.01, str(gfeye))
+    objs_all = {(rid, o["model"]) for rid, r in rooms.items() for o in r["objects"]}
+    R.add("rooms", "ArmChair_01 and drawer_cabinet are replaced (the bench in gf_front_2, the bookshelf in up_bedroom_2) and no longer used anywhere", ("gf_front_2", "painted_wooden_bench") in objs_all and ("up_bedroom_2", "wooden_bookshelf_worn") in objs_all and not any(m in ("ArmChair_01", "drawer_cabinet") for _, m in objs_all), "")
+    R.add("rooms", "the replaced pieces' marks entries are corrected (the drawer cabinet's lettering-like marks; the armchair's depth over the budget)", "lettering" in t["inventory"]["polyhaven_models"]["drawer_cabinet"]["marks"] and "NOT USED" in t["inventory"]["polyhaven_models"]["drawer_cabinet"]["marks"] and "NOT USED" in t["inventory"]["polyhaven_models"]["ArmChair_01"]["marks"], "")
+    bs_ = t["box_shade"]
+    R.add("kit", "box_shade: keep_paint is for white_fresh only; street-facing faces take 1.0; the depth law is for the faces that run into the wall", bs_["keep_paint"]["applies_to"] == "white_fresh only" and bs_["street_facing_faces"] == 1.0 and "ONLY to the faces that run into the wall" in bs_["lining_from_brick_edge_to_glass"]["law"] and "street" in [c for c in t["checks"] if c["id"] == "KIT-09"][0]["expected"], "")
+    gl = t["paints"]
+    R.add("kit", "keep_paint's roughness 0.40 belongs to white_fresh (roughness 0.42): the other paints' roughness is their own", gl["white_fresh"]["rough"] in (0.40, 0.42) and gl["white_grimy"]["rough"] == 0.48 and gl["white_grimy"]["lin"][0] < bs_["keep_paint"]["albedo"][0], "")
+    # night: absolute emissions (narrow point 5)
+    def luma_lin(c):
+        return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]
+    emis = []
+    for k, c in t["curtains"].items():
+        emis += list(c["night_lit_emission_linear"].values())
+    for k, b in t["blinds"].items():
+        emis.append(b["night_lit_emission_linear"])
+    emis.append(t["rooms"]["lights_by_state"]["landing_bulb"]["card_emission_floor_linear"])
+    pane = [luma_lin(e) * (1 - 0.082) for e in emis]
+    R.add("lit", "every lit fabric's and the landing bulb's absolute emission reads a pane median of 0.19 linear (sRGB 100 to 140) square on through the glass (%d emissions)" % len(emis), all(0.127 <= v <= 0.262 for v in pane), str([round(v, 3) for v in pane]))
+    R.add("lit", "the lit curtains in use at 20:30 glow r > g > b (the brown one 0.39 g/r), so NIGHT-01's second form (r > g > b) can be met", all(c[0] > c[1] > c[2] for c in (t["curtains"]["C1"]["night_lit_emission_linear"]["brown"], t["curtains"]["C1"]["night_lit_emission_linear"]["cream"], t["curtains"]["C2"]["night_lit_emission_linear"]["floral_cream"], t["rooms"]["lights_by_state"]["landing_bulb"]["card_emission_floor_linear"])), "")
+    n1 = [c for c in t["checks"] if c["id"] == "NIGHT-01"][0]
+    R.add("lit", "NIGHT-01 is the review's second form: pane median at least 4 times the dark windows' with r > g > b (no absolute 100 line)", "at least 4 times the dark windows' median" in n1["measure"] and "r > g > b" in n1["measure"] and ">= 100" not in n1["measure"], "")
     for rid, r in rooms.items():
         W, Hh, Dd = r["size_m"]
         bad = [o["model"] for o in r["objects"] if o["class"] == "NOT DRAWN"]
@@ -327,7 +404,11 @@ def check_inventory(t, R):
     R.add("inventory", "no excluded model (children, brand) is used", not any(inv[m]["status"].startswith("excluded") for m in used), "")
     R.add("inventory", "every framed picture used has its artwork replaced", all(inv[m]["status"].startswith("replace_artwork") for m in used if "picture_frame" in m), "")
     R.add("inventory", "wall_clock's dial is blanked where used", inv["wall_clock"]["status"].startswith("blank") or "wall_clock" not in used, "")
-    R.add("inventory", "television_02's plate is blanked where used", inv["television_02"]["status"].startswith("blank") or "television_02" not in used, "")
+    R.add("inventory", "television_02's marks are blanked where used: the rating plate AND the front bezel's maker's lettering, both painted out to the bezel's grey", (inv["television_02"]["status"].startswith("blank") or "television_02" not in used) and "rating plate" in inv["television_02"]["marks"] and "front bezel" in inv["television_02"]["marks"] and "painted out to the bezel's grey" in inv["television_02"]["marks"] and inv["television_02"]["status"] == "blank", inv["television_02"]["marks"][:80])
+    bl0 = [b.lower() for b in t["inventory"]["brand_blocklist"]]
+    R.add("inventory", "the blocklist names every maker's name found on a placed model's map: paragon (television_02), ray homes, celine, dixons, currys, vtech", all(x in bl0 for x in ("paragon", "ray homes", "celine", "dixons", "currys", "vtech")), str(bl0[:8]))
+    pic7 = [c for c in t["checks"] if c["id"] == "PIC-07"][0]
+    R.add("inventory", "PIC-07 requires every placed model's 1k base colour checked region by region against its marks entry before the room is rendered", "region by region" in pic7["measure"] and "marks entry" in pic7["measure"] and "before the room is rendered" in pic7["measure"], "")
     R.add("inventory", "every model's licence is CC0 and its 1k base colour was looked at", all(m["licence"].startswith("CC0") and m["base_colour_maps_looked_at_1k"] >= 1 for m in inv.values()), "")
     # blocklist scan of every string outside the marks and the blocklist
     bl = [b.lower() for b in t["inventory"]["brand_blocklist"]]
@@ -375,7 +456,7 @@ def check_checks(t, R):
     req = ("id", "group", "name", "measure", "expected", "tolerance", "applies_to", "kind", "source")
     R.add("checks", "every check has its nine fields filled", all(all(c.get(k) not in (None, "") for k in req) for c in cs), "")
     R.add("checks", "kinds of number are the five named", all(c["kind"] in t["units"]["kinds_of_number"] for c in cs), "")
-    need = {"WB-01", "WB-02", "WB-04", "WB-05", "WB-06", "NIGHT-01", "KIT-09", "MAT-01", "PIC-04", "PIC-05", "PIC-07", "SITE-01"}
+    need = {"WB-01", "WB-02", "WB-04", "WB-04b", "WB-05", "WB-06", "NIGHT-01", "KIT-09", "MAT-01", "PIC-04", "PIC-05", "PIC-07", "SITE-01", "SITE-04"}
     R.add("checks", "the brief's checks are present (pane darker than frame, dark lines, something behind the glass, lit and dark share)", need <= set(ids), str(need - set(ids)))
     R.add("checks", "the white-board check can fail (WB-08 present and the old fault outside its bands)", "WB-08" in ids, "")
     # the numbers the checks quote are the data's
@@ -385,6 +466,8 @@ def check_checks(t, R):
     bwg = H.back_wall_px(H.ROOMS["GF"], 3072)
     R.add("checks", "PIC-04 quotes the back wall rectangles of the target (%s, %s)" % (bwu, bwg), "(%d, %d) to (%d, %d)" % tuple(round(v) for v in bwu) in chk["PIC-04"]["expected"] and "(%d, %d) to (%d, %d)" % tuple(round(v) for v in bwg) in chk["PIC-04"]["expected"], "")
     R.add("checks", "NIGHT-01 quotes 7 lit", "7 lit" in chk["NIGHT-01"]["expected"], "")
+    R.add("checks", "KIT-12, KIT-14 and KIT-15 name RC2 (the P6 form) beside RC", all("RC2" in chk[c]["applies_to"] for c in ("KIT-12", "KIT-14", "KIT-15")) and "1106.4" in chk["KIT-14"]["expected"] and "mullion" in chk["KIT-14"]["expected"], "")
+    R.add("checks", "WB-02 and WB-03 are for bare windows only; draped windows have no P/L band (the window states)", "BARE" in chk["WB-02"]["measure"] and "BARE" in chk["WB-03"]["measure"] and "draped" in chk["WB-02"]["measure"], "")
     R.add("checks", "PIC-01 quotes both picture sizes", "1536 x 1399" in chk["PIC-01"]["expected"] and "3072 x 2349" in chk["PIC-01"]["expected"], "")
     # glass rules in the checks are the data's
     g = t["glass"]["pane"]
@@ -431,7 +514,7 @@ def coverage(t, kind):
 
 
 def check_kit(t, R):
-    for kind in ("S22", "S11", "RC"):
+    for kind in ("S22", "S11", "RC", "RC2"):
         M = coverage(t, kind)
         sq = largest_empty_square(M)
         R.add("kit", "KIT-15 %s: the opening is covered (largest uncovered square %d mm, at most 5)" % (kind, sq), sq <= 5, "")
@@ -449,12 +532,19 @@ def check_kit(t, R):
             R.add("kit", "KIT-14 S22: in each sash the two panes mirror each other about x = 0 (the bar's centre)", ok and len(rows_) == 2, "")
     rcp = {p["name"]: p for p in t["kinds"]["RC"]["parts_mm"]}
     R.add("kit", "KIT-14 RC: both lights and the transom centred on x = 0", all(abs(rcp[n]["x"][0] + rcp[n]["x"][1]) <= 0.5 for n in ("glass_lower", "glass_top", "transom", "vent_sash_bottom_rail")), "")
+    r2p = {p["name"]: p for p in t["kinds"]["RC2"]["parts_mm"]}
+    R.add("kit", "KIT-14 RC2: the top light, the transom and the mullion are centred on x = 0", all(abs(r2p[n]["x"][0] + r2p[n]["x"][1]) <= 0.5 for n in ("glass_top", "transom", "mullion")), "")
+    lo = t["kinds"]["RC2"]["lower_light_openings_mm"]
+    R.add("kit", "KIT-14 RC2: the two lower lights' openings are equal (%s)" % lo, abs(lo["left"][0] - lo["right"][0]) <= 0.5 and abs(lo["left"][1] - lo["right"][1]) <= 0.5 and abs(lo["left"][0] - 330.0) <= 0.5, "")
+    R.add("kit", "RC2: the transom is centred at 0.66 x 1676.4 = 1106.4 (+-1), 70 wide; the mullion is 70 wide from z 60 to the transom's underside 1071.4", abs((r2p["transom"]["z_up"][0] + r2p["transom"]["z_up"][1]) / 2 - 1106.4) <= 1.0 and abs((r2p["transom"]["z_up"][1] - r2p["transom"]["z_up"][0]) - 70.0) <= 0.5 and abs((r2p["mullion"]["x"][1] - r2p["mullion"]["x"][0]) - 70.0) <= 0.5 and abs(r2p["mullion"]["z_up"][0] - 60.0) <= 0.5 and abs(r2p["mullion"]["z_up"][1] - 1071.4) <= 0.5, str(r2p["mullion"]["z_up"]))
+    R.add("kit", "RC2: the left light is a side-hung casement (stiles and rails 45, a 4 mm gap each side, the hinge on the jamb side), the right light and the top light are fixed", all(abs((r2p[n]["x"][1] - r2p[n]["x"][0]) - 45.0) <= 0.5 for n in ("casement_stile_L", "casement_stile_R")) and all(abs((r2p[n]["z_up"][1] - r2p[n]["z_up"][0]) - 45.0) <= 0.5 for n in ("casement_bottom_rail", "casement_top_rail")) and abs((r2p["casement_stile_L"]["x"][0] - r2p["frame_jamb_L"]["x"][1]) - 4.0) <= 0.5 and abs((r2p["mullion"]["x"][0] - r2p["casement_stile_R"]["x"][1]) - 4.0) <= 0.5 and "left jamb" in t["kinds"]["RC2"]["casement"]["hinge"] and not any(n.startswith("casement") and "right" in n for n in r2p) and "fixed" in t["kinds"]["RC2"]["fixed_light"], "")
+    R.add("kit", "RC2: P6's transom fraction 0.66 is the photograph's (D11 records both forms)", t["kinds"]["RC2"]["transom"]["centre_fraction"] == 0.66 and t["kinds"]["RC2"]["photo_transom_fractions"]["P6"] == 0.66 and "RC2" in [d for d in t["photographs_win"] if d["id"] == "D11"][0]["chosen"], "")
     kp = t["kit_pieces"]
-    for kind in ("S22", "S11", "RC"):
+    for kind in ("S22", "S11", "RC", "RC2"):
         added = kp["per_kind"][kind]["added_nodes"]
         names = [n["name"] for n in added]
         panes = [n for n in added if n["name"].startswith("glass__")]
-        R.add("kit", "%s: pane meshes %d" % (kind, len(panes)), len(panes) == {"S22": 4, "S11": 2, "RC": 2}[kind], str([n["name"] for n in panes]))
+        R.add("kit", "%s: pane meshes %d" % (kind, len(panes)), len(panes) == {"S22": 4, "S11": 2, "RC": 2, "RC2": 3}[kind], str([n["name"] for n in panes]))
         for n in added:
             if n["name"].startswith(("net__", "curtain__", "blind__")):
                 R.add("kit", "%s: %s behind the glass by 40 mm or more and in front of the card (270)" % (kind, n["name"]), all(max(p["y_into_wall"][1] for p in panes) + 40 <= n["y_into_wall"][0] <= 269 for _ in [0]), str(n["y_into_wall"]))
@@ -462,7 +552,7 @@ def check_kit(t, R):
         if kind in ("S22", "S11"):
             back = max(n["y_into_wall"][1] for n in t["kinds"][kind]["lab_nodes"])
         else:
-            back = max(p["y_into_wall"][1] for p in t["kinds"]["RC"]["parts_mm"])
+            back = max(p["y_into_wall"][1] for p in t["kinds"][kind]["parts_mm"])
         for n in added:
             if n["name"].startswith("net__"):
                 R.add("kit", "%s: %s clears the joinery's back face (%.1f)" % (kind, n["name"], back), n["y_into_wall"][0] > back, str(n["y_into_wall"]))
@@ -475,14 +565,17 @@ def check_kit(t, R):
     R.add("kit", "RC: the transom's centre is 0.72 of the opening and between the photographs' 0.66 and 0.75", abs(rc["transom_centre_z_mm"] / 1676.4 - 0.72) < 1e-3 and all(0.66 <= v <= 0.75 for v in rc["photo_transom_fractions"].values()), "")
     parts = {p["name"]: p for p in rc["parts_mm"]}
     R.add("kit", "RC: glass sightlines %s" % rc["glass_sightlines_mm"], rc["glass_sightlines_mm"]["lower"][1] > 1000 and rc["glass_sightlines_mm"]["top"][1] > 250, "")
-    # RC members do not overlap each other where they should not
-    names = [p for p in rc["parts_mm"] if p.get("material") != "glass_house"]
-    over = []
-    for i, a in enumerate(names):
-        for b in names[i + 1:]:
-            if a["x"][0] < b["x"][1] - 1e-6 and b["x"][0] < a["x"][1] - 1e-6 and a["z_up"][0] < b["z_up"][1] - 1e-6 and b["z_up"][0] < a["z_up"][1] - 1e-6 and a["y_into_wall"][0] < b["y_into_wall"][1] - 1e-6 and b["y_into_wall"][0] < a["y_into_wall"][1] - 1e-6:
-                over.append((a["name"], b["name"]))
-    R.add("kit", "RC: no two members overlap (%s)" % over[:3], not over, "")
+    # RC and RC2 members do not overlap each other where they should not
+    for kn in ("RC", "RC2"):
+        names = [p for p in t["kinds"][kn]["parts_mm"] if p.get("material") != "glass_house"]
+        over = []
+        for i, a in enumerate(names):
+            for b in names[i + 1:]:
+                if a["x"][0] < b["x"][1] - 1e-6 and b["x"][0] < a["x"][1] - 1e-6 and a["z_up"][0] < b["z_up"][1] - 1e-6 and b["z_up"][0] < a["z_up"][1] - 1e-6 and a["y_into_wall"][0] < b["y_into_wall"][1] - 1e-6 and b["y_into_wall"][0] < a["y_into_wall"][1] - 1e-6:
+                    over.append((a["name"], b["name"]))
+        R.add("kit", "%s: no two members overlap (%s)" % (kn, over[:3]), not over, "")
+    sl = t["kinds"]["RC2"]["glass_sightlines_mm"]
+    R.add("kit", "RC2: glass sightlines %s" % sl, sl["casement"][1] > 800 and sl["fixed"][1] > 1000 and sl["top"][1] > 400, "")
     # S22 sash members: sashes do not overlap the glass sheets
     # the glass material table lists every material the nodes use
     R.add("kit", "the box shade's numbers are in range", 0.25 <= t["box_shade"]["inside_corners"] <= t["box_shade"]["track_faces"] <= 1.0 and t["box_shade"]["lining_from_brick_edge_to_glass"]["at_glass"] < t["box_shade"]["lining_from_brick_edge_to_glass"]["at_brick_edge"], "")
