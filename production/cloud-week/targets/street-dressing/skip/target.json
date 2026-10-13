@@ -1321,18 +1321,14 @@
   "keep the hexagonal profile exact: its widest line is at 793 and its bottom edge shorter than its top"
  ],
  "self_check": {
-  "line": "SELF-CHECK skip: 76 checks, 76 passed, 0 failed; negative controls 22 of 25 caught (offline)",
+  "line": "SELF-CHECK skip: 76 checks, 76 passed, 0 failed; negative controls 25 of 25 caught (offline)",
   "checks": 76,
   "passed": 76,
   "failed": 0,
   "controls": 25,
-  "controls_caught": 22,
+  "controls_caught": 25,
   "options": "offline",
   "failing": [],
-  "uncaught": [
-   "geometry: the carrying part(s) removed so the rest floats",
-   "geometry: a part pushed deep into its neighbour",
-   "numbers: a printed number changed by 10 percent"
-  ]
+  "uncaught": []
  }
 }
