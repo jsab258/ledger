@@ -444,6 +444,19 @@ def build_display(work, out_dir, log=print):
             items.append({"model": asset, "tier": "bed", "scale": round(s, 3), "ext": [round(v, 4) for v in ext], "objs": names})
             ticket(xc, ext[2], 0.0, 0.004)
         x += wd + gap
+    # ---- no alpha cut-out or blend anywhere in the display (DSP-02: real geometry): the boombox's speaker grille is a perforated-looking alpha card in its glTF; here it is opaque
+    n_alpha = 0
+    for m in bpy.data.materials:
+        if m.use_nodes and m.users:
+            pb = next((n for n in m.node_tree.nodes if n.type == "BSDF_PRINCIPLED"), None)
+            if pb is not None and pb.inputs["Alpha"].is_linked:
+                for l in list(pb.inputs["Alpha"].links):
+                    m.node_tree.links.remove(l)
+                pb.inputs["Alpha"].default_value = 1.0
+                n_alpha += 1
+            if hasattr(m, "surface_render_method"):
+                m.surface_render_method = "DITHERED"
+    log("display: %d materials lost an alpha link" % n_alpha)
     # ---- pictures to 512 px (the approved display's rule) and export with JPEG textures
     for im in bpy.data.images:
         if im.size[0] > 512 and im.name not in ("Render Result",):

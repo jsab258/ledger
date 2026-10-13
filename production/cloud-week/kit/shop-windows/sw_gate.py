@@ -437,6 +437,52 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
         ro.light_linking.receiver_collection = recv
     # --- the glass mask (a check's render, 13 Oct): every pixel where the window's glass is the first thing the camera sees white, everything else (frame, mullions, beads, lattice, display,
     # wall) black: the window-glass pixels without the frame
+    if mode == "mask_room":
+        # what the window's glass shows: the room (the card, the reveals, the display's return walls) red, the display's pieces and furniture blue, everything else black, the glass itself
+        # not drawn (13 Oct, LIT-02b: a black void in the room is a fault; the display's own dark things, black plastic and velvet at night, are not)
+        def flat2(c):
+            m = bpy.data.materials.new("flat")
+            m.use_nodes = True
+            t = m.node_tree
+            for n in list(t.nodes):
+                t.nodes.remove(n)
+            e = t.nodes.new("ShaderNodeEmission")
+            e.inputs["Color"].default_value = (*c, 1.0)
+            o2 = t.nodes.new("ShaderNodeOutputMaterial")
+            t.links.new(e.outputs[0], o2.inputs[0])
+            return m
+        red, blue, black2 = flat2((1, 0, 0)), flat2((0, 0, 1)), flat2((0, 0, 0))
+        for o in bpy.data.objects:
+            if o.type == "MESH":
+                o.data.materials.clear()
+                if o.name.startswith("win_glass_lower"):
+                    o.hide_render = True
+                    continue
+                if o.name == "card" or o.name.startswith(("reveal_", "return_wall_")):
+                    o.data.materials.append(red)
+                elif o in disp:
+                    o.data.materials.append(blue)
+                else:
+                    o.data.materials.append(black2)
+            elif o.type == "LIGHT":
+                o.hide_render = True
+        sc.world.node_tree.nodes["Background"].inputs["Color"].default_value = (0, 0, 0, 1)
+        sc.world.node_tree.nodes["Background"].inputs["Strength"].default_value = 0.0
+        sc.render.engine = "CYCLES"
+        sc.cycles.device = "CPU"
+        sc.cycles.samples = 1
+        sc.cycles.use_denoising = False
+        sc.cycles.use_adaptive_sampling = False
+        sc.cycles.filter_width = 0.01
+        sc.view_settings.view_transform = "Raw"
+        sc.render.resolution_x, sc.render.resolution_y = res
+        sc.render.resolution_percentage = 100
+        sc.render.image_settings.file_format = "PNG"
+        sc.render.image_settings.color_mode = "RGB"
+        sc.render.filepath = out_png
+        t0 = time.time()
+        bpy.ops.render.render(write_still=True)
+        return round(time.time() - t0, 1)
     if mode in ("mask_glass", "mask_glass_open"):
         def flat(c):
             m = bpy.data.materials.new("flat")
