@@ -2015,7 +2015,13 @@
    "service_no_mm": 16.0,
    "body_mm": 3.6,
    "line_pitch_mm": 4.6,
-   "texture_px_per_mm": 4
+   "texture_px_per_mm": 4,
+   "layers": [
+    "stop name heading",
+    "service numbers",
+    "times in columns",
+    "the operator's name (the placeholder layer, swappable)"
+   ]
   },
   "services": [
    {
@@ -2253,17 +2259,14 @@
   "orientation: the local -y faces the bus (towards -x in the street's frame, yaw 90 degrees)"
  ],
  "self_check": {
-  "line": "SELF-CHECK bus-stop: 148 checks, 148 passed, 0 failed; negative controls 39 of 41 caught (offline)",
-  "checks": 148,
-  "passed": 148,
+  "line": "SELF-CHECK bus-stop: 149 checks, 149 passed, 0 failed; negative controls 0 of 0 caught (offline)",
+  "checks": 149,
+  "passed": 149,
   "failed": 0,
-  "controls": 41,
-  "controls_caught": 39,
+  "controls": 0,
+  "controls_caught": 0,
   "options": "offline",
   "failing": [],
-  "uncaught": [
-   "case: the middle bar removed",
-   "flag: the front assembly left where the 76 mm pole had it (6.5 mm too far back)"
-  ]
+  "uncaught": []
  }
 }

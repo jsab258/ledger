@@ -338,6 +338,8 @@ def text_rows(T, tdir, rows, extra_files=()):
     rows.add("owed", "owed/handovers have an id, a line and no em dash or italics", all(h.get("id") and h.get("line") and "\u2014" not in h["line"] and "*" not in h["line"] for h in hv), "%d handovers" % len(hv))
     ph = T.get("placeholders", [])
     rows.add("owed", "owed/placeholders are marked fictional placeholder", all(p.get("marked") == "fictional placeholder" and p.get("name") for p in ph), "%d placeholders: %s" % (len(ph), [p.get("name") for p in ph]))
+    rows.add("owed", "owed/every placeholder is named in a handover line that asks the town to mint it", all(any(p["name"].lower() in h["line"].lower() and "mint" in h["line"].lower() for h in hv) for p in ph),
+             "%d placeholders, %d handovers; without a handover: %s" % (len(ph), len(hv), [p["name"] for p in ph if not any(p["name"].lower() in h["line"].lower() and "mint" in h["line"].lower() for h in hv)]))
     page_text = " ".join(o["line"] + " " + o.get("recommended", "") for o in owed).lower()
     leaked = [p["name"] for p in ph if p["name"].lower() in page_text]
     rows.add("owed", "owed/no placeholder name reaches his page lines", not leaked, "found in his lines: %s" % leaked)
@@ -515,6 +517,7 @@ def generic_controls(T, spec):
     C.append(("night: the stale lantern colour put back", lambda t: t.__setitem__("night_old", L.STALE_NIGHT), "night/no stale lantern colour"))
     if T.get("placeholders"):
         C.append(("owed: a placeholder name written into a line for his page", lambda t: t["owed"][0].__setitem__("line", t["owed"][0]["line"][:-1] + " (" + t["placeholders"][0]["name"] + ")?") if t.get("owed") else t.__setitem__("owed", [{"id": "x", "line": "May " + t["placeholders"][0]["name"] + " be used?", "recommended": "y"}]), "owed/no placeholder name reaches his page lines"))
+        C.append(("owed: the placeholders' handover to the town removed", lambda t: t.__setitem__("handovers", []), "owed/every placeholder has a handover line"))
         C.append(("owed: a placeholder not marked as one", lambda t: t["placeholders"][0].__setitem__("marked", "name"), "owed/placeholders are marked fictional placeholder"))
     C.append(("owed: an em dash in a line for his page", lambda t: t["owed"][0].__setitem__("line", t["owed"][0]["line"] + " — now") if t.get("owed") else t.__setitem__("owed", [{"id": "x", "line": "a — b?", "recommended": "y"}]), "owed/no em dash or italics in his lines"))
     C.append(("sources: a source with no licence", lambda t: t["sources"][0].__setitem__("licence", ""), "sources/%s fields" % T["sources"][0]["id"] if T.get("sources") else "sources/"))

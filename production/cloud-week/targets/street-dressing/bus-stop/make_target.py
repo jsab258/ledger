@@ -238,7 +238,7 @@ def finish(T):
         sv.append({"no": sv_["no"], "via": sv_["via"], "stops": sv_["stops"], "mf": sv_["mf"], "sat": sv_["sat"], "sun": sv_["sun"]})
     T["text"] = {
         "operator": OPERATOR, "stop_name": STOP_NAME,
-        "card": {"w": 200.0, "h": 470.0, "margin": 10.0, "font": "Liberation Sans (SIL OFL 1.1)", "head_mm": 11.0, "service_no_mm": 16.0, "body_mm": 3.6, "line_pitch_mm": 4.6, "texture_px_per_mm": 4},
+        "card": {"w": 200.0, "h": 470.0, "margin": 10.0, "font": "Liberation Sans (SIL OFL 1.1)", "head_mm": 11.0, "service_no_mm": 16.0, "body_mm": 3.6, "line_pitch_mm": 4.6, "texture_px_per_mm": 4, "layers": ["stop name heading", "service numbers", "times in columns", "the operator's name (the placeholder layer, swappable)"]},
         "services": sv,
         "legend": ["Mondays to Fridays", "Saturdays", "Sundays"],
         "no_logo": "no operator logo anywhere; the name is a placeholder the town will mint (RULINGS 3 Oct: names minted within canon, placeholders meanwhile)",

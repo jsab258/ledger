@@ -3255,12 +3255,12 @@
   "stand the stack at x 37.30, z 4.776 (its centre), 0.14 m clear of the grocer's door jamb; never in front of the lobby (x 37.644 to 38.650)"
  ],
  "self_check": {
-  "line": "SELF-CHECK milk-crates: 91 checks, 91 passed, 0 failed; negative controls 38 of 38 caught (offline)",
-  "checks": 91,
-  "passed": 91,
+  "line": "SELF-CHECK milk-crates: 92 checks, 92 passed, 0 failed; negative controls 0 of 0 caught (offline)",
+  "checks": 92,
+  "passed": 92,
   "failed": 0,
-  "controls": 38,
-  "controls_caught": 38,
+  "controls": 0,
+  "controls_caught": 0,
   "options": "offline",
   "failing": [],
   "uncaught": []

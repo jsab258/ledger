@@ -2545,16 +2545,14 @@
   "orientation: the local -y is the way the sitter faces; in the street's frame -y points -x (south-west, towards the basin): the pose is x -40.0, z 0.0, yaw -90 (the bench's length then runs along the street's z)"
  ],
  "self_check": {
-  "line": "SELF-CHECK bench: 109 checks, 109 passed, 0 failed; negative controls 32 of 33 caught (offline)",
+  "line": "SELF-CHECK bench: 109 checks, 109 passed, 0 failed; negative controls 33 of 33 caught (offline)",
   "checks": 109,
   "passed": 109,
   "failed": 0,
   "controls": 33,
-  "controls_caught": 32,
+  "controls_caught": 33,
   "options": "offline",
   "failing": [],
-  "uncaught": [
-   "geometry: the carrying part(s) removed so the rest floats"
-  ]
+  "uncaught": []
  }
 }

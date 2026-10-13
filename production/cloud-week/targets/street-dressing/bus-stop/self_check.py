@@ -93,7 +93,9 @@ def extra(T, rows):
     rows.add("detail", "detail/the flag and the case face the same way (-y)", fb[0][1] < pb[0][1] and cb[0][1] < pb[0][1], "")
     rows.add("detail", "detail/the flag text is two lines BUS and STOP", T["text"]["flag_text"] == ["BUS", "STOP"], str(T["text"]["flag_text"]))
     rows.add("detail", "detail/BS2 has no case", not any(n.startswith("case_") for n in K._ps_cache(T["variants"]["BS2"]["parts"]).names), "")
-    rows.add("detail", "detail/the card has no logo", "no operator logo" in T["text"]["no_logo"], "")
+    logo_words = re.compile(r"logo|crest|badge|emblem|roundel|device|trademark", re.I)
+    card_logo = [str(x) for x in T["text"]["card"].get("layers", [])] + [n for n in K._ps_cache(T["variants"]["BS1"]["parts"]).names] + [m for m in T["materials"]]
+    rows.add("detail", "detail/the card has no logo: no card layer, part or material is a logo, crest, badge or emblem, and the statement is there", "no operator logo" in T["text"]["no_logo"] and bool(T["text"]["card"].get("layers")) and not [x for x in card_logo if logo_words.search(x)], str([x for x in card_logo if logo_words.search(x)][:3]))
     rows.add("detail", "detail/every part's material is defined", all(p["material"] in T["materials"] for v in T["variants"].values() for p in v["parts"]), "")
     # the earlier script's flag and case really are different from this target
     scr = os.path.join(L.REPO, "tools", "meshgen", "blender", "clutter", "bus_stop.py")
@@ -116,15 +118,17 @@ def extra(T, rows):
     rows.near("detail", "detail/the white length runs 554 to 2310", ps.part_bbox("pole_white")[1][2], 2310.0, 1.0)
     rows.near("detail", "detail/the lower white begins where the foot ends (554)", ps.part_bbox("pole_white")[0][2], ps.part_bbox("pole_foot")[1][2], 1.0)
     # the case's middle bar and the card under it
-    mb, mh = ps.part_bbox("case_mid_bar"), ps.part_bbox("case_mid_head_l")
-    rows.add("detail", "detail/the case's middle bar is 220 x 15 x 4 at 1590 to 1605, with two 8 mm round heads at x -105 and 105 behind the clear sheet", abs((mb[1][0] - mb[0][0]) - 220.0) < 0.5 and abs((mb[1][2] - mb[0][2]) - 15.0) < 0.5 and abs((mb[1][1] - mb[0][1]) - 4.0) < 0.5 and abs(mb[0][2] - 1590.0) < 0.5
-             and abs(ps.part_bbox("case_mid_head_r")[0][0] - 101.0) < 0.5 and abs(mh[1][0] + 101.0) < 0.5 and abs((mh[1][0] - mh[0][0]) - 8.0) < 0.5 and mb[0][1] >= ps.part_bbox("case_glass")[1][1] - 0.5, "bar %s to %s" % (mb[0], mb[1]))
-    rows.add("detail", "detail/the card's top edge is just under the middle bar (1502, P1 row 299)", abs(ps.part_bbox("case_card")[1][2] - 1502.0) < 1.0 and ps.part_bbox("case_card")[1][2] < mb[0][2] - 50.0, "card top %.0f, bar bottom %.0f" % (ps.part_bbox("case_card")[1][2], mb[0][2]))
+    have_bar = all(n in ps.index for n in ("case_mid_bar", "case_mid_head_l", "case_mid_head_r"))
+    if have_bar:
+        mb, mh = ps.part_bbox("case_mid_bar"), ps.part_bbox("case_mid_head_l")
+    rows.add("detail", "detail/the case's middle bar is 220 x 15 x 4 at 1590 to 1605, with two 8 mm round heads at x -105 and 105 behind the clear sheet", have_bar and abs((mb[1][0] - mb[0][0]) - 220.0) < 0.5 and abs((mb[1][2] - mb[0][2]) - 15.0) < 0.5 and abs((mb[1][1] - mb[0][1]) - 4.0) < 0.5 and abs(mb[0][2] - 1590.0) < 0.5
+             and abs(ps.part_bbox("case_mid_head_r")[0][0] - 101.0) < 0.5 and abs(mh[1][0] + 101.0) < 0.5 and abs((mh[1][0] - mh[0][0]) - 8.0) < 0.5 and mb[0][1] >= ps.part_bbox("case_glass")[1][1] - 0.5, ("bar %s to %s" % (mb[0], mb[1])) if have_bar else "the middle bar or one of its heads is missing")
+    rows.add("detail", "detail/the card's top edge is just under the middle bar (1502, P1 row 299)", have_bar and abs(ps.part_bbox("case_card")[1][2] - 1502.0) < 1.0 and ps.part_bbox("case_card")[1][2] < mb[0][2] - 50.0, ("card top %.0f, bar bottom %.0f" % (ps.part_bbox("case_card")[1][2], mb[0][2])) if have_bar else "no middle bar")
     # the flag's back face: the same border on both faces
     fr = {n: ps.part_bbox(n) for n in ps.names if n.startswith("flag_border_")}
     bk = {n: ps.part_bbox(n) for n in ps.names if n.startswith("flag_back_border_")}
     rows.add("detail", "detail/the flag is double-sided: a back border for each front border, the same size, on the plate's other face", len(fr) == 4 and len(bk) == 4 and all(abs((fr["flag_border_" + k][1][0] - fr["flag_border_" + k][0][0]) - (bk["flag_back_border_" + k][1][0] - bk["flag_back_border_" + k][0][0])) < 0.01 and abs(fr["flag_border_" + k][0][2] - bk["flag_back_border_" + k][0][2]) < 0.01 and bk["flag_back_border_" + k][0][1] > ps.part_bbox("flag_plate")[1][1] - 0.5 and fr["flag_border_" + k][1][1] < ps.part_bbox("flag_plate")[0][1] + 0.5 for k in ("top", "bottom", "left", "right")), "")
-    rows.add("detail", "detail/the front assembly meets the pole's front face (the plate's clamps and the case's back sheet reach the pole)", ps.part_bbox("case_back")[1][1] >= -pb[1][0] - 0.5 and ps.part_bbox("flag_clamp_top")[1][1] >= -pb[1][0] - 0.5, "case back at y %.1f, the pole's front at %.1f" % (ps.part_bbox("case_back")[1][1], -pb[1][0]))
+    rows.add("detail", "detail/the front assembly meets the pole's front face (the plate's clamps and the case's back sheet reach the pole and sink at most 3 mm into it)", -pb[1][0] - 0.5 <= ps.part_bbox("case_back")[1][1] <= -pb[1][0] + 3.0 and -pb[1][0] - 0.5 <= ps.part_bbox("flag_clamp_top")[1][1] <= -pb[1][0] + 3.0, "case back at y %.1f, the pole's front at %.1f" % (ps.part_bbox("case_back")[1][1], -pb[1][0]))
     # the slot: the pose; the wording against the scene's blocks
     pose = pl["poses"][0]
     rows.add("placement", "placement/the pose is the stated slot (x, z) and the flag faces -x", abs(pose["x_m"] - pl["x_m"]) < 1e-6 and abs(pose["z_m"] - pl["z_m"]) < 1e-6 and PL.direction_name(PL.front_direction(pose)) == "-x", "")
@@ -139,6 +143,8 @@ def extra_controls(T):
     def svc(t, i, key, field, val):
         t["text"]["services"][i][key][field] = val
     C = [
+        ("card: a logo layer added to the card's texture spec", lambda t: t["text"]["card"]["layers"].append("the operator's logo"), "detail/the card has no logo"),
+        ("card: a logo part added to the case", lambda t: t["variants"]["BS1"]["parts"].append({"id": "case_logo", "type": "box", "c": [0, -96, 1300], "s": [60, 1, 40], "material": "paper"}), "detail/the card has no logo"),
         ("timetable: the last time not on the interval", lambda t: svc(t, 0, "mf", "last", 1755), "timetable/service 4 mf"),
         ("timetable: the stops' minutes not rising", lambda t: t["text"]["services"][1]["stops"].__setitem__(2, ["Retort Works", 3]), "timetable/service 9: minutes from the stop rise"),
         ("timetable: a stop that is not on the town's map", lambda t: t["text"]["services"][2]["stops"].__setitem__(3, ["Leeds Station", 18]), "timetable/service 12: every stop is a road or place"),
