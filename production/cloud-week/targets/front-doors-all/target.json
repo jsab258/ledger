@@ -1,0 +1,5566 @@
+{
+ "family": "front-doors-all",
+ "title": "Front doors for every house kind (cloud week 42, unit 9)",
+ "summary": "Front doors for every house kind of Quay Street: from the passed 3.1 door (T1 cottage four-panel, F1 flat four-panel, its bell push fixed to one plain dark oblong), 10 door kinds (cottage T1 T2 T3, flat F1 to F7) fitted to the street's 12 household doors by house, 8 furniture slots with 24 variants (letter plates, handles, rim night latches, knockers, bells, numbers, a boot scraper), 16 paints and 3 conditions, a street order in which no two neighbours match, and a gate of 7 views a kind plus the street rows.",
+ "status": "WRITTEN 13 October 2026, not yet reviewed",
+ "units": "mm; leaf frame u across from the leaf's left edge seen from outside, v up from its bottom; frame frame x across the opening from the left reveal, z up from the threshold top (the 3.1 axes)",
+ "axes": {
+  "leaf": "u, v as above (structural leaf, including the 20.4 that laps behind each stop and the head)",
+  "frame": "x, z as target 3.1: x 0 at the left brick reveal, z 0 at the top of the threshold",
+  "visible_face": {
+   "T": [
+    772.0,
+    1927.6
+   ],
+   "F": [
+    797.2,
+    1960.6
+   ],
+   "lap": 20.4,
+   "rule": "u_struct = 20.4 + fraction x visible width; v_struct = fraction x visible height"
+  }
+ },
+ "reuse": {
+  "from": "production/cloud-week/targets/front-door/ (TARGET.md, target.json: the passed 3.1 door), production/cloud-week/kit/door/ (build_door.py, departures.py, check_door.py, views_T1.json, views_F1.json, NOTES.md), production/assets/cloud-week/door/door_T1.glb and door_F1.glb, HANDOVER.md row 3.1",
+  "as_built": "every number taken from 3.1 is the target.json value with kit/door/departures.py applied (moulding width 46 and 43, collar 5.0 proud, keyway vertical 3 x 9, bell push a plain oblong)",
+  "handover_fix": "delete the parts iron_bellpush_bezel and iron_bellpush_button from door_T1 (rebuild without them) so a plain dark oblong remains",
+  "departures_applied": [
+   "D1:collar_proud:T1",
+   "D1:collar_proud:F1",
+   "D2:keyway:F1",
+   "D3:collar_scallops:F1",
+   "D4:weatherboard",
+   "D5:step_ends",
+   "D6:lock_rail_band",
+   "D7:moulding_width:T1",
+   "D8:moulding_width:F1",
+   "D9:plate_rim",
+   "D10:plate_pivots:F1",
+   "D11:keyhole:F1",
+   "D12:keep:F1",
+   "D13:bell_push:T1",
+   "D14:sill_front:F1",
+   "D15:joint_lines"
+  ]
+ },
+ "frame_sets": {
+  "T": {
+   "id": "T",
+   "from": "3.1 T1 (production/assets/cloud-week/door/door_T1.glb): the brick opening, the cambered head, the stone step",
+   "opening_w": 882.0,
+   "head_top": 2340.0,
+   "head_ends": 2322.0,
+   "clear_between_stops": 772.0,
+   "reveal_depth": 114.3,
+   "jamb_x": {
+    "left": [
+     -46.6,
+     55.0
+    ],
+    "right": [
+     827.0,
+     928.6
+    ]
+   },
+   "stop_edges_x": [
+    55.0,
+    827.0
+   ],
+   "head_z": [
+    2269.6,
+    2340.0
+   ],
+   "transom_z": [
+    1937.6,
+    2002.6
+   ],
+   "transom_x": [
+    45.0,
+    837.0
+   ],
+   "transom_face_h": 65.0,
+   "glass_opening_x": [
+    55.0,
+    827.0
+   ],
+   "glass_opening_z": [
+    2002.6,
+    2269.6
+   ],
+   "leaf_x0": 34.6,
+   "leaf_z0": 10.0,
+   "leaf_w": 812.8,
+   "leaf_h": 1948.0,
+   "visible_leaf_x": [
+    55.0,
+    827.0
+   ],
+   "visible_leaf_z": [
+    10.0,
+    1937.6
+   ],
+   "jamb_face": 101.6,
+   "jamb_depth": 127.0,
+   "rebate": [
+    22.0,
+    53.0
+   ],
+   "stop_depth": 74.0,
+   "glb_pivot": [
+    441.0,
+    0.0,
+    -318.0
+   ],
+   "ground_z": -318.0
+  },
+  "F": {
+   "id": "F",
+   "from": "3.1 F1 (door_F1.glb): the shop bay's side slot, a flat head at 2400, a timber sill 45 above the paving",
+   "opening_w": 895.2,
+   "head_top": 2400.0,
+   "head_ends": 2400.0,
+   "clear_between_stops": 797.2,
+   "reveal_depth": 114.3,
+   "jamb_x": {
+    "left": [
+     -52.6,
+     49.0
+    ],
+    "right": [
+     846.2,
+     947.8
+    ]
+   },
+   "stop_edges_x": [
+    49.0,
+    846.2
+   ],
+   "head_z": [
+    2339.6,
+    2400.0
+   ],
+   "transom_z": [
+    1970.6,
+    2072.6
+   ],
+   "transom_x": [
+    21.0,
+    874.2
+   ],
+   "transom_face_h": 102.0,
+   "glass_opening_x": [
+    49.0,
+    846.2
+   ],
+   "glass_opening_z": [
+    2072.6,
+    2339.6
+   ],
+   "leaf_x0": 28.6,
+   "leaf_z0": 10.0,
+   "leaf_w": 838.0,
+   "leaf_h": 1981.0,
+   "visible_leaf_x": [
+    49.0,
+    846.2
+   ],
+   "visible_leaf_z": [
+    10.0,
+    1970.6
+   ],
+   "jamb_face": 101.6,
+   "jamb_depth": 127.0,
+   "rebate": [
+    22.0,
+    53.0
+   ],
+   "stop_depth": 74.0,
+   "glb_pivot": [
+    447.6,
+    0.0,
+    -45.0
+   ],
+   "ground_z": -45.0
+  },
+  "FF6": {
+   "id": "FF6",
+   "from": "frame set F with the stops planted on the inside face, for F6 (leaf shown whole)",
+   "opening_w": 895.2,
+   "head_top": 2400.0,
+   "head_ends": 2400.0,
+   "clear_between_stops": 765.2,
+   "reveal_depth": 114.3,
+   "jamb_x": {
+    "left": [
+     -52.6,
+     65.0
+    ],
+    "right": [
+     830.2,
+     947.8
+    ]
+   },
+   "stop_edges_x": [
+    65.0,
+    830.2
+   ],
+   "head_z": [
+    2339.6,
+    2400.0
+   ],
+   "transom_z": [
+    1970.6,
+    2072.6
+   ],
+   "transom_x": [
+    37.0,
+    858.2
+   ],
+   "transom_face_h": 102.0,
+   "glass_opening_x": [
+    65.0,
+    830.2
+   ],
+   "glass_opening_z": [
+    2072.6,
+    2339.6
+   ],
+   "leaf_x0": 66.6,
+   "leaf_z0": 10.0,
+   "leaf_w": 762.0,
+   "leaf_h": 1981.0,
+   "visible_leaf_x": [
+    65.0,
+    830.2
+   ],
+   "visible_leaf_z": [
+    10.0,
+    1970.6
+   ],
+   "jamb_face": 101.6,
+   "jamb_depth": 127.0,
+   "rebate": [
+    22.0,
+    53.0
+   ],
+   "stop_depth": 74.0,
+   "glb_pivot": [
+    447.6,
+    0.0,
+    -45.0
+   ],
+   "ground_z": -45.0
+  }
+ },
+ "kinds": {
+  "T1": {
+   "name": "four-panel front door with a transom, in its brick opening (3.1 T1)",
+   "frame_set": "T",
+   "family": "cottage front door",
+   "leaf": {
+    "w": 812.8,
+    "h": 1948.0,
+    "t": 50.8,
+    "construction": "framed",
+    "lock_side": "right",
+    "stile_left": 114.3,
+    "stile_right": 114.3,
+    "top_rail": 127.0,
+    "bottom_rail": 192.8,
+    "lock_rail": 228.6,
+    "lock_rail_centre_v": 787.0,
+    "muntin": 120.0,
+    "openings": [
+     {
+      "id": "top_left",
+      "type": "panel",
+      "u0": 114.3,
+      "u1": 346.4,
+      "v0": 901.3,
+      "v1": 1821.0,
+      "moulding": "bolection_outside",
+      "glass": null
+     },
+     {
+      "id": "top_right",
+      "type": "panel",
+      "u0": 466.4,
+      "u1": 698.5,
+      "v0": 901.3,
+      "v1": 1821.0,
+      "moulding": "bolection_outside",
+      "glass": null
+     },
+     {
+      "id": "bottom_left",
+      "type": "panel",
+      "u0": 114.3,
+      "u1": 346.4,
+      "v0": 192.8,
+      "v1": 672.7,
+      "moulding": "bolection_outside",
+      "glass": null
+     },
+     {
+      "id": "bottom_right",
+      "type": "panel",
+      "u0": 466.4,
+      "u1": 698.5,
+      "v0": 192.8,
+      "v1": 672.7,
+      "moulding": "bolection_outside",
+      "glass": null
+     }
+    ]
+   },
+   "mouldings": {
+    "outside": {
+     "kind": "bolection",
+     "width_on_face": 46.0,
+     "profile_dh": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       3.5
+      ],
+      [
+       1.789,
+       5.8
+      ],
+      [
+       4.472,
+       6.9
+      ],
+      [
+       7.028,
+       7.0
+      ],
+      [
+       9.583,
+       6.4
+      ],
+      [
+       13.417,
+       4.6
+      ],
+      [
+       18.528,
+       1.0
+      ],
+      [
+       24.278,
+       -4.5
+      ],
+      [
+       30.667,
+       -10.5
+      ],
+      [
+       37.056,
+       -14.5
+      ],
+      [
+       42.167,
+       -16.3
+      ],
+      [
+       46.0,
+       -16.95
+      ]
+     ],
+     "src": "3.1 as built (departures D7: 46, target 36)"
+    },
+    "band_and_weatherboard": "kept: lock-rail band 72.5 high and weatherboard 80 high as built (3.1 D4, D6)"
+   },
+   "glass": {
+    "transom": "plain_3mm",
+    "leaf": null
+   },
+   "photographs": [
+    "P1"
+   ],
+   "parts_vs_3_1": [
+    [
+     "frame_jamb_l/r, frame_head, frame_transom, glass_fanlight, frame_glazing_bead",
+     "kept",
+     "the passed frame set T and its transom, untouched"
+    ],
+    [
+     "leaf_frame, panel_*, moulding_bolection_*, moulding_single_*, moulding_band, moulding_weatherboard",
+     "kept",
+     "passed in 3.1 (fresh reviews of 9 October)"
+    ],
+    [
+     "iron_letter_plate, flap, lip",
+     "kept",
+     "LP1, the vertical brass plate"
+    ],
+    [
+     "iron_lock, collar, plug",
+     "kept",
+     "LK1, the rim night latch (the 3.1 name for it was cylinder lock)"
+    ],
+    [
+     "iron_bellpush",
+     "kept",
+     "the plain dark oblong of P1: one part, 22 x 72.6, 3 proud; the handover's fix"
+    ],
+    [
+     "iron_bellpush_bezel, iron_bellpush_button",
+     "removed",
+     "the two-part push read as a modern video doorbell (3.1 review v2 close); deleted, not replaced by any ring or lens"
+    ],
+    [
+     "stone_threshold, stone_riser, stone_tread",
+     "kept",
+     "the step of 3.1; the wall's plinth returns stay with the wall kit"
+    ],
+    [
+     "iron_keyhole_*, iron_knob_*",
+     "not present",
+     "T1 never had them"
+    ]
+   ]
+  },
+  "T2": {
+   "name": "four stacked lights over a low rail, a leaded diamond fanlight (D3, D1)",
+   "frame_set": "T",
+   "family": "cottage front door",
+   "leaf": {
+    "w": 812.8,
+    "h": 1948.0,
+    "t": 50.8,
+    "construction": "framed, glazed",
+    "lock_side": "left",
+    "stile_left": 114.3,
+    "stile_right": 114.3,
+    "top_rail": 78.4,
+    "bottom_rail": 205.0,
+    "bar": 30.0,
+    "light_h": 393.65,
+    "openings": [
+     {
+      "id": "light1",
+      "type": "light",
+      "u0": 114.3,
+      "u1": 698.5,
+      "v0": 205.0,
+      "v1": 598.6,
+      "glass": "plain_3mm",
+      "bead": "planted_quarter_round_10x8"
+     },
+     {
+      "id": "light2",
+      "type": "light",
+      "u0": 114.3,
+      "u1": 698.5,
+      "v0": 628.6,
+      "v1": 1022.3,
+      "glass": "plain_3mm",
+      "bead": "planted_quarter_round_10x8"
+     },
+     {
+      "id": "light3",
+      "type": "light",
+      "u0": 114.3,
+      "u1": 698.5,
+      "v0": 1052.3,
+      "v1": 1445.9,
+      "glass": "plain_3mm",
+      "bead": "planted_quarter_round_10x8"
+     },
+     {
+      "id": "light4",
+      "type": "light",
+      "u0": 114.3,
+      "u1": 698.5,
+      "v0": 1475.9,
+      "v1": 1869.6,
+      "glass": "plain_3mm",
+      "bead": "planted_quarter_round_10x8"
+     }
+    ],
+    "visible_note": "structural numbers; the visible top rail is 58 (78.4 less the 20.4 behind the transom's stop) and the visible stiles 93.9"
+   },
+   "mouldings": {
+    "outside": {
+     "kind": "none",
+     "note": "glazing bars 30 wide x 22 deep, square, eased 1 mm; stiles and rails square, eased 1.5; the bead is the 3.1 planted quarter-round 10 x 8 on all four sides of each light"
+    }
+   },
+   "glass": {
+    "transom": "leaded_diamond",
+    "leaf": "plain_3mm",
+    "nets_behind": "white net card behind the lights (D3 shows one), the windows target's net N1 white"
+   },
+   "photographs": [
+    "D3",
+    "D1"
+   ],
+   "measured_fractions_of_leaf_height": {
+    "top_rail": 0.0303,
+    "bar": 0.0154,
+    "light": 0.2046,
+    "bottom_rail": 0.1053
+   },
+   "parts_vs_3_1": [
+    [
+     "frame_jamb_l/r, frame_head, frame_transom, frame_glazing_bead (transom)",
+     "kept",
+     "frame set T"
+    ],
+    [
+     "glass_fanlight",
+     "changed",
+     "plain 3 mm glass becomes a leaded diamond light (came 6 wide, diamonds 95 x 70): D3 shows a leaded fanlight over this door; the height (P6's is 624 mm) is not taken, the T frame's 267 mm stays"
+    ],
+    [
+     "leaf_frame",
+     "changed",
+     "stiles 114.3 (visible 93.9), top rail 78.4 (visible 58), bottom rail 205, no lock rail, no muntin; four openings 584.2 x 393.7 with 30 mm bars (D3's fractions of the visible face 0.030, 0.2066, 0.0158, 0.105)"
+    ],
+    [
+     "panel_*, moulding_bolection_*, moulding_single_*, moulding_band, moulding_weatherboard",
+     "removed",
+     "a glazed door has no panels or mouldings; D3 and D1 show none"
+    ],
+    [
+     "glass (new parts glass_light1..4) and bead",
+     "added",
+     "four panes of 3 mm glass, each with the 3.1 planted bead"
+    ],
+    [
+     "iron_letter_plate",
+     "changed",
+     "LP5, a pale low plate in the bottom rail, as D1 and D4 show (the vertical brass plate has no muntin to sit on)"
+    ],
+    [
+     "iron_lock, collar, plug",
+     "removed",
+     "no latch cylinder is read on D3's leaf; a bar pull stands in (HD3)"
+    ],
+    [
+     "iron_bellpush",
+     "removed",
+     "none on D3"
+    ],
+    [
+     "stone_*",
+     "kept",
+     "the step of 3.1 under the same opening"
+    ]
+   ]
+  },
+  "T3": {
+   "name": "white moulded modern door with a small arched light (D4 right door)",
+   "frame_set": "T",
+   "family": "modernised cottage",
+   "leaf": {
+    "w": 812.8,
+    "h": 1948.0,
+    "t": 44.0,
+    "construction": "moulded flush sheet over a core, painted-look gloss",
+    "lock_side": "right",
+    "border": 65.0,
+    "openings": [
+     {
+      "id": "upper_panel",
+      "type": "embossed_panel",
+      "u0": 140.5,
+      "u1": 706.6,
+      "v0": 981.1,
+      "v1": 1806.3,
+      "moulding": "embossed_step"
+     },
+     {
+      "id": "small_light",
+      "type": "arched_light",
+      "u0": 320.6,
+      "u1": 513.6,
+      "v0": 1082.9,
+      "v1": 1537.7,
+      "glass": "plain_3mm",
+      "head": "semicircle",
+      "bead": "moulded"
+     },
+     {
+      "id": "lower_panel",
+      "type": "embossed_panel",
+      "u0": 234.8,
+      "u1": 642.3,
+      "v0": 324.9,
+      "v1": 736.4,
+      "moulding": "embossed_step"
+     }
+    ]
+   },
+   "mouldings": {
+    "outside": {
+     "kind": "embossed panel step",
+     "profile_dh": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       1.5,
+       0.4
+      ],
+      [
+       4.0,
+       3.0
+      ],
+      [
+       8.0,
+       5.2
+      ],
+      [
+       12.0,
+       5.9
+      ],
+      [
+       14.0,
+       6.0
+      ],
+      [
+       40.0,
+       6.0
+      ]
+     ],
+     "note": "each embossed panel is a field 6 mm below the border face, edged by a 14 mm cove; the border is 65 wide all round; no applied mouldings"
+    }
+   },
+   "glass": {
+    "transom": "plain_3mm",
+    "leaf": "plain_3mm"
+   },
+   "photographs": [
+    "D4"
+   ],
+   "measured_fractions_of_leaf": {
+    "upper": {
+     "u": [
+      0.1555555555555562,
+      0.8888888888888888
+     ],
+     "v": [
+      0.508988764044944,
+      0.9370786516853931
+     ]
+    },
+    "light": {
+     "u": [
+      0.3888888888888889,
+      0.6388888888888888
+     ],
+     "v": [
+      0.5617977528089888,
+      0.797752808988764
+     ]
+    },
+    "plate": {
+     "u": [
+      0.3611111111111111,
+      0.6944444444444444
+     ],
+     "v": [
+      0.43146067415730316,
+      0.4662921348314607
+     ]
+    },
+    "lower": {
+     "u": [
+      0.2777777777777778,
+      0.8055555555555556
+     ],
+     "v": [
+      0.1685393258426966,
+      0.3820224719101124
+     ]
+    },
+    "handle": {
+     "u": [
+      1.0,
+      1.0555555555555556
+     ],
+     "v": [
+      0.4044943820224719,
+      0.449438202247191
+     ]
+    }
+   },
+   "parts_vs_3_1": [
+    [
+     "frame_jamb_l/r, frame_head, frame_transom, glass_fanlight, frame_glazing_bead",
+     "kept",
+     "frame set T; D4's door has a plain dark transom light over it"
+    ],
+    [
+     "leaf_frame, panel_*, moulding_*",
+     "changed",
+     "no stiles or rails: one moulded sheet 44 thick with two embossed panels and a small arched light (D4's fractions)"
+    ],
+    [
+     "glass_light (new part)",
+     "added",
+     "one pane about 200 x 460 with a semicircular head, glazed from inside with a moulded bead"
+    ],
+    [
+     "iron_letter_plate",
+     "changed",
+     "LP6, a white oblong 270 x 50 in the border between the panels (D4: 0.448 of the visible height)"
+    ],
+    [
+     "iron_lock, collar, plug",
+     "removed",
+     "D4 shows none outside; a small lever HD2c at the lock edge"
+    ],
+    [
+     "iron_bellpush, stone_*",
+     "removed / kept",
+     "no push; the step of 3.1 stays"
+    ]
+   ]
+  },
+  "F1": {
+   "name": "four-panel flat door (3.1 F1)",
+   "frame_set": "F",
+   "family": "side door to a flat",
+   "leaf": {
+    "w": 838.0,
+    "h": 1981.0,
+    "t": 50.8,
+    "construction": "framed",
+    "lock_side": "right",
+    "stile_left": 114.3,
+    "stile_right": 114.3,
+    "top_rail": 127.0,
+    "bottom_rail": 192.8,
+    "lock_rail": 228.6,
+    "lock_rail_centre_v": 787.0,
+    "muntin": 120.0,
+    "openings": [
+     {
+      "id": "top_left",
+      "type": "panel",
+      "u0": 114.3,
+      "u1": 359.0,
+      "v0": 901.3,
+      "v1": 1854.0,
+      "moulding": "bolection_outside",
+      "glass": null
+     },
+     {
+      "id": "top_right",
+      "type": "panel",
+      "u0": 479.0,
+      "u1": 723.7,
+      "v0": 901.3,
+      "v1": 1854.0,
+      "moulding": "bolection_outside",
+      "glass": null
+     },
+     {
+      "id": "bottom_left",
+      "type": "panel",
+      "u0": 114.3,
+      "u1": 359.0,
+      "v0": 192.8,
+      "v1": 672.7,
+      "moulding": "bolection_outside",
+      "glass": null
+     },
+     {
+      "id": "bottom_right",
+      "type": "panel",
+      "u0": 479.0,
+      "u1": 723.7,
+      "v0": 192.8,
+      "v1": 672.7,
+      "moulding": "bolection_outside",
+      "glass": null
+     }
+    ]
+   },
+   "mouldings": {
+    "outside": {
+     "kind": "bolection",
+     "width_on_face": 43.0,
+     "profile_dh": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       3.5
+      ],
+      [
+       1.433,
+       5.8
+      ],
+      [
+       3.583,
+       6.9
+      ],
+      [
+       5.631,
+       7.0
+      ],
+      [
+       8.211,
+       6.4
+      ],
+      [
+       11.876,
+       4.6
+      ],
+      [
+       16.76,
+       1.0
+      ],
+      [
+       22.247,
+       -4.5
+      ],
+      [
+       28.349,
+       -10.5
+      ],
+      [
+       34.451,
+       -14.5
+      ],
+      [
+       39.335,
+       -16.3
+      ],
+      [
+       43.0,
+       -16.95
+      ]
+     ],
+     "src": "3.1 as built (departures D8: 43)"
+    }
+   },
+   "glass": {
+    "transom": "plain_3mm",
+    "leaf": null
+   },
+   "photographs": [
+    "P2",
+    "P1"
+   ],
+   "parts_vs_3_1": [
+    [
+     "everything of door_F1.glb",
+     "kept",
+     "passed in 3.1 (street and close views); the street's F1 is that model, unchanged"
+    ],
+    [
+     "iron_knob_*, iron_keyhole_*",
+     "kept",
+     "F1's turned centre knob and plugged keyhole as built; on the houses given F1 the knob is HD0 'none' unless the house table says HD1 (F1 has the rose and knob in 3.1: kept as an option, not on a house)"
+    ]
+   ]
+  },
+  "F2": {
+   "name": "six-panel flat door (P2)",
+   "frame_set": "F",
+   "family": "side door to a flat",
+   "leaf": {
+    "w": 838.0,
+    "h": 1981.0,
+    "t": 50.8,
+    "construction": "framed",
+    "lock_side": "right",
+    "stile_left": 85.5,
+    "stile_right": 85.5,
+    "top_rail": 77.3,
+    "bottom_rail": 190.2,
+    "lock_rail": 208.0,
+    "frieze_rail": 101.0,
+    "muntin": 109.8,
+    "openings": [
+     {
+      "id": "bottom_l",
+      "type": "panel",
+      "u0": 85.5,
+      "u1": 364.1,
+      "v0": 190.2,
+      "v1": 511.1,
+      "moulding": "bolection_outside"
+     },
+     {
+      "id": "bottom_r",
+      "type": "panel",
+      "u0": 473.9,
+      "u1": 752.5,
+      "v0": 190.2,
+      "v1": 511.1,
+      "moulding": "bolection_outside"
+     },
+     {
+      "id": "long_l",
+      "type": "panel",
+      "u0": 85.5,
+      "u1": 364.1,
+      "v0": 719.1,
+      "v1": 1523.4,
+      "moulding": "bolection_outside"
+     },
+     {
+      "id": "long_r",
+      "type": "panel",
+      "u0": 473.9,
+      "u1": 752.5,
+      "v0": 719.1,
+      "v1": 1523.4,
+      "moulding": "bolection_outside"
+     },
+     {
+      "id": "small_upper_l",
+      "type": "panel",
+      "u0": 85.5,
+      "u1": 364.1,
+      "v0": 1624.4,
+      "v1": 1903.7,
+      "moulding": "bolection_outside"
+     },
+     {
+      "id": "small_upper_r",
+      "type": "panel",
+      "u0": 473.9,
+      "u1": 752.5,
+      "v0": 1624.4,
+      "v1": 1903.7,
+      "moulding": "bolection_outside"
+     }
+    ]
+   },
+   "mouldings": {
+    "outside": {
+     "kind": "bolection",
+     "width_on_face": 43.0,
+     "profile_dh": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       3.5
+      ],
+      [
+       1.433,
+       5.8
+      ],
+      [
+       3.583,
+       6.9
+      ],
+      [
+       5.631,
+       7.0
+      ],
+      [
+       8.211,
+       6.4
+      ],
+      [
+       11.876,
+       4.6
+      ],
+      [
+       16.76,
+       1.0
+      ],
+      [
+       22.247,
+       -4.5
+      ],
+      [
+       28.349,
+       -10.5
+      ],
+      [
+       34.451,
+       -14.5
+      ],
+      [
+       39.335,
+       -16.3
+      ],
+      [
+       43.0,
+       -16.95
+      ]
+     ],
+     "src": "3.1 F1 as built (P2, 43)"
+    }
+   },
+   "glass": {
+    "transom": "plain_3mm",
+    "leaf": null
+   },
+   "photographs": [
+    "P2"
+   ],
+   "measured_fractions_of_height": {
+    "top_rail": 0.039,
+    "small_upper_panels": 0.141,
+    "frieze_rail": 0.051,
+    "long_panels": 0.406,
+    "lock_rail": 0.105,
+    "bottom_panels": 0.162,
+    "bottom_rail": 0.096
+   },
+   "parts_vs_3_1": [
+    [
+     "frame_*, glass_fanlight, timber sill",
+     "kept",
+     "frame set F, the 49 mm jambs, the weathered transom, the sill"
+    ],
+    [
+     "leaf_frame, panel_*, moulding_bolection_*",
+     "changed",
+     "six panels (two small, two long, two small) from 3.1's option_six_panel fractions of P2; the same bolection profile at 43"
+    ],
+    [
+     "iron_knob_*, iron_keyhole_*, iron_lock_*",
+     "kept",
+     "the centre knob on the lock rail and the plugged keyhole, at P2's heights (fractions 0.305, 0.606, cylinder 0.546)"
+    ],
+    [
+     "iron_letter_plate",
+     "changed",
+     "LP2, the horizontal brass plate 195 x 70 at 0.788 of the height, P2's"
+    ]
+   ]
+  },
+  "F3": {
+   "name": "two long panels (D1 left door)",
+   "frame_set": "F",
+   "family": "side door to a flat",
+   "leaf": {
+    "w": 838.0,
+    "h": 1981.0,
+    "t": 50.8,
+    "construction": "framed",
+    "lock_side": "left",
+    "stile_left": 114.3,
+    "stile_right": 114.3,
+    "top_rail": 127.0,
+    "bottom_rail": 192.8,
+    "muntin": 120.0,
+    "openings": [
+     {
+      "id": "long_l",
+      "type": "panel",
+      "u0": 114.3,
+      "u1": 359.0,
+      "v0": 192.8,
+      "v1": 1854.0,
+      "moulding": "stuck_ovolo"
+     },
+     {
+      "id": "long_r",
+      "type": "panel",
+      "u0": 479.0,
+      "u1": 723.7,
+      "v0": 192.8,
+      "v1": 1854.0,
+      "moulding": "stuck_ovolo"
+     }
+    ]
+   },
+   "mouldings": {
+    "outside": {
+     "kind": "stuck ovolo",
+     "width_on_face": 20.0,
+     "profile_dh": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       1.5
+      ],
+      [
+       1.67,
+       2.28
+      ],
+      [
+       2.19,
+       3.05
+      ],
+      [
+       3.03,
+       3.77
+      ],
+      [
+       4.17,
+       4.44
+      ],
+      [
+       5.6,
+       5.04
+      ],
+      [
+       7.27,
+       5.55
+      ],
+      [
+       9.14,
+       5.96
+      ],
+      [
+       11.17,
+       6.26
+      ],
+      [
+       13.31,
+       6.44
+      ],
+      [
+       15.5,
+       6.5
+      ],
+      [
+       18.0,
+       6.5
+      ],
+      [
+       20.0,
+       5.5
+      ],
+      [
+       20.0,
+       0.0
+      ]
+     ],
+     "src": "Judgement: D1 shows two long flat panels with narrow lit edges, no bolection"
+    }
+   },
+   "glass": {
+    "transom": "plain_3mm",
+    "leaf": null
+   },
+   "photographs": [
+    "D1"
+   ],
+   "parts_vs_3_1": [
+    [
+     "frame_*, glass_fanlight, sill",
+     "kept",
+     "frame set F"
+    ],
+    [
+     "leaf_frame, panel_*",
+     "changed",
+     "no lock rail: the muntin runs the full height between the 127 top rail and the 192.8 bottom rail; two panels 244.7 x 1661.2 (D1 shows no cross rail on this door)"
+    ],
+    [
+     "moulding_bolection_*",
+     "changed",
+     "a stuck ovolo moulding 20 wide, 6.5 proud, replaces the 43 mm bolection (D1 shows thin lit edges)"
+    ],
+    [
+     "iron_letter_plate",
+     "kept",
+     "LP1 on the muntin, at the 3.1 height 1617"
+    ],
+    [
+     "iron_knob_*, iron_keyhole_*",
+     "removed",
+     "a bar pull HD3 on the left stile (D1 shows a vertical metal strip on that stile)"
+    ]
+   ]
+  },
+  "F4": {
+   "name": "three long narrow lights over a low rail (D2 left door)",
+   "frame_set": "F",
+   "family": "side door to a flat",
+   "leaf": {
+    "w": 838.0,
+    "h": 1981.0,
+    "t": 50.8,
+    "construction": "framed, glazed",
+    "lock_side": "left",
+    "stile_left": 170.0,
+    "stile_right": 110.0,
+    "top_rail": 104.4,
+    "bottom_rail": 200.0,
+    "bar": 40.0,
+    "light_w": 159.33,
+    "openings": [
+     {
+      "id": "light1",
+      "type": "light",
+      "u0": 170.0,
+      "u1": 329.3,
+      "v0": 200.0,
+      "v1": 1876.6,
+      "glass": "plain_3mm",
+      "bead": "putty_fillet"
+     },
+     {
+      "id": "light2",
+      "type": "light",
+      "u0": 369.3,
+      "u1": 528.7,
+      "v0": 200.0,
+      "v1": 1876.6,
+      "glass": "plain_3mm",
+      "bead": "putty_fillet"
+     },
+     {
+      "id": "light3",
+      "type": "light",
+      "u0": 568.7,
+      "u1": 728.0,
+      "v0": 200.0,
+      "v1": 1876.6,
+      "glass": "plain_3mm",
+      "bead": "putty_fillet"
+     }
+    ]
+   },
+   "mouldings": {
+    "outside": {
+     "kind": "none",
+     "note": "bars 40 wide, square; putty fillet on the glass as F1's"
+    }
+   },
+   "glass": {
+    "transom": "plain_3mm",
+    "leaf": "plain_3mm",
+    "nets_behind": "none (D2 shows a dark hall)"
+   },
+   "photographs": [
+    "D2"
+   ],
+   "measured_fractions_of_width": {
+    "lights": [
+     [
+      0.233,
+      0.433
+     ],
+     [
+      0.5,
+      0.717
+     ],
+     [
+      0.8,
+      1.0
+     ]
+    ],
+    "bars": [
+     [
+      0.45,
+      0.5
+     ],
+     [
+      0.733,
+      0.783
+     ]
+    ]
+   },
+   "parts_vs_3_1": [
+    [
+     "frame_*, glass_fanlight, sill",
+     "kept",
+     "frame set F"
+    ],
+    [
+     "leaf_frame, panel_*, moulding_*",
+     "changed",
+     "stiles 170 and 110 (visible 150 and 90), top rail 104.4 (visible 84), bottom rail 200, three lights 159.3 wide with 40 mm bars (D2: lights 160 to 173 at 26.6 mm a pixel, bars 40)"
+    ],
+    [
+     "glass_light1..3",
+     "added",
+     "three tall panes of 3 mm glass, putty fillet as F1's"
+    ],
+    [
+     "iron_letter_plate",
+     "changed",
+     "LP5, the low plate in the bottom rail"
+    ],
+    [
+     "iron_knob_*, iron_keyhole_*, iron_lock_*",
+     "removed",
+     "a lever HD2b at the left stile"
+    ]
+   ]
+  },
+  "F5": {
+   "name": "flush door with a tall slit light (D2 middle door, D4 left door)",
+   "frame_set": "F",
+   "family": "side door to a flat, modernised",
+   "leaf": {
+    "w": 838.0,
+    "h": 1981.0,
+    "t": 44.0,
+    "construction": "flush, hardboard-faced, lipped",
+    "lock_side": "left",
+    "lipping": 6.0,
+    "openings": [
+     {
+      "id": "slit",
+      "type": "slit_light",
+      "u0": 320.8,
+      "u1": 524.1,
+      "v0": 914.9,
+      "v1": 1806.1,
+      "glass": "plain_3mm",
+      "bead": "timber_bead_15"
+     }
+    ]
+   },
+   "mouldings": {
+    "outside": {
+     "kind": "none",
+     "note": "flat painted face; a 1 mm hairline round the lipping; the slit has a 15 mm square timber bead, 4 proud"
+    }
+   },
+   "glass": {
+    "transom": "plain_3mm",
+    "leaf": "plain_3mm"
+   },
+   "photographs": [
+    "D2",
+    "D4"
+   ],
+   "measured_fractions_of_leaf": {
+    "slit": {
+     "u": [
+      0.37681159420289856,
+      0.6318840579710132
+     ],
+     "v": [
+      0.4666666666666667,
+      0.9212121212121213
+     ]
+    },
+    "plate": {
+     "u": [
+      0.3333333333333333,
+      0.6521739130434783
+     ],
+     "v": [
+      0.406060606060606,
+      0.4303030303030303
+     ]
+    },
+    "handle": {
+     "u": [
+      0.014492753623188406,
+      0.11594202898550725
+     ],
+     "v": [
+      0.5333333333333333,
+      0.5757575757575757
+     ]
+    }
+   },
+   "parts_vs_3_1": [
+    [
+     "frame_*, glass_fanlight, sill",
+     "kept",
+     "frame set F"
+    ],
+    [
+     "leaf_frame, panel_*, moulding_*",
+     "changed",
+     "one flush slab 44 thick, lipped; no panels or mouldings"
+    ],
+    [
+     "glass_slit (new)",
+     "added",
+     "one pane about 205 x 900 centred on the leaf (D2: 8.8 x 37.5 px at 23 to 24 mm a pixel)"
+    ],
+    [
+     "iron_letter_plate",
+     "changed",
+     "LP7, a pale 265 x 50 plate under the slit, centre about 829"
+    ],
+    [
+     "iron_knob_*, iron_keyhole_*, iron_lock_*",
+     "removed",
+     "a lever HD2b at the left edge, v 1093"
+    ]
+   ]
+  },
+  "F6": {
+   "name": "council-style flush door, olive in D5, turquoise in D9 (leaf 762, shown whole)",
+   "frame_set": "F, with planted inside stops (frame_change)",
+   "family": "council or modernised",
+   "leaf": {
+    "w": 762.0,
+    "h": 1981.0,
+    "t": 44.0,
+    "construction": "flush, plywood-faced, lipped",
+    "lock_side": "right",
+    "lipping": 6.0,
+    "openings": [
+     {
+      "id": "spyhole",
+      "type": "spyhole",
+      "u0": 374.0,
+      "u1": 388.0,
+      "v0": 1502.0,
+      "v1": 1516.0,
+      "glass": "lens_14"
+     }
+    ]
+   },
+   "frame_change": {
+    "clear_between_faces": 765.2,
+    "jamb_showing": 117.6,
+    "stops": "planted on the inside face: the leaf shows whole, nothing laps in front, the 1.6 mm margins show the stop behind (not the hall)",
+    "why": "D5's leaf is 325 x 835 px = 0.389 of its height, a 2 ft 6 in (762) leaf seen whole, with a white frame about 130 wide beside it (55 px at 2.37 mm); 3.1's lapped 838 leaf would read 0.407. The frame's outer width 1000.4 is kept, so the jambs show (1000.4 - 765.2) / 2 = 117.6"
+   },
+   "mouldings": {
+    "outside": {
+     "kind": "none",
+     "note": "flat face; the lipping line 1 mm; no panel, no moulding"
+    }
+   },
+   "glass": {
+    "transom": "reeded_4mm",
+    "leaf": null,
+    "sidelight": "none in the street (D5's reeded sidelight is not built)"
+   },
+   "photographs": [
+    "D5",
+    "D9"
+   ],
+   "measured_fractions_of_leaf": {
+    "plate": {
+     "u": [
+      0.3415384615384615,
+      0.6707692307692308
+     ],
+     "v": [
+      0.4441776710684273,
+      0.4801920768307323
+     ]
+    },
+    "handle": {
+     "u": [
+      0.8461538461538461,
+      0.9846153846153847
+     ],
+     "v": [
+      0.44717887154861946,
+      0.4651860744297719
+     ]
+    },
+    "spy": {
+     "u": [
+      0.4461538461538462,
+      0.5538461538461539
+     ],
+     "v": [
+      0.7539015606242497,
+      0.7683073229291717
+     ]
+    },
+    "ratio_w_h": 0.39015606242497
+   },
+   "parts_vs_3_1": [
+    [
+     "frame_jamb_l/r, frame_stop_bead_*",
+     "changed",
+     "the stops are planted on the inside face and the jambs show 117.6 each (clear between faces 765.2); the leaf shows whole"
+    ],
+    [
+     "frame_transom, glass_fanlight",
+     "changed",
+     "the transom's x range shortens to the jambs' inner faces; its glass is reeded 4 mm (D5: ribbed transom)"
+    ],
+    [
+     "leaf_frame, panel_*, moulding_*",
+     "changed",
+     "one flush slab 762 x 1981 x 44, lipped"
+    ],
+    [
+     "iron_letter_plate",
+     "changed",
+     "LP4, a chrome-look oblong 250 x 70, flush, at u 386, v 912 (D5)"
+    ],
+    [
+     "iron_knob_*, iron_keyhole_*, iron_lock_*",
+     "removed",
+     "lever HD2a at the right edge, v 902; a spyhole 14 across at v 1509 (D5, place only)"
+    ]
+   ]
+  },
+  "F7": {
+   "name": "ledged and braced service door (Hasluck; no period photograph read)",
+   "frame_set": "F, no transom glass change",
+   "family": "service door",
+   "leaf": {
+    "w": 762.0,
+    "h": 1981.0,
+    "t": 38.0,
+    "construction": "ledged and braced matchboarding",
+    "lock_side": "right",
+    "board_w": 127.0,
+    "boards": 6,
+    "board_edges_u": [
+     0.0,
+     127.0,
+     254.0,
+     381.0,
+     508.0,
+     635.0,
+     762.0
+    ],
+    "board_t": 22.0,
+    "joint": "tongued and grooved with a V joint 6 wide, 2 deep",
+    "ledges_v": [
+     [
+      100.0,
+      240.0
+     ],
+     [
+      920.0,
+      1060.0
+     ],
+     [
+      1741.0,
+      1881.0
+     ]
+    ],
+    "ledge_t": 25.0,
+    "braces": "two, back, from the foot of the hinge ledge to the head of the lock ledge",
+    "nail_heads": {
+     "dia": 9.0,
+     "proud": 3.0,
+     "at": [
+      [
+       63.5,
+       170.0
+      ],
+      [
+       190.5,
+       170.0
+      ],
+      [
+       317.5,
+       170.0
+      ],
+      [
+       444.5,
+       170.0
+      ],
+      [
+       571.5,
+       170.0
+      ],
+      [
+       698.5,
+       170.0
+      ],
+      [
+       63.5,
+       990.0
+      ],
+      [
+       190.5,
+       990.0
+      ],
+      [
+       317.5,
+       990.0
+      ],
+      [
+       444.5,
+       990.0
+      ],
+      [
+       571.5,
+       990.0
+      ],
+      [
+       698.5,
+       990.0
+      ],
+      [
+       63.5,
+       1811.0
+      ],
+      [
+       190.5,
+       1811.0
+      ],
+      [
+       317.5,
+       1811.0
+      ],
+      [
+       444.5,
+       1811.0
+      ],
+      [
+       571.5,
+       1811.0
+      ],
+      [
+       698.5,
+       1811.0
+      ]
+     ],
+     "note": "one head per board at each ledge, driven from the face and clenched behind (Hasluck p.316)"
+    },
+    "openings": []
+   },
+   "mouldings": {
+    "outside": {
+     "kind": "v_joint",
+     "profile": [
+      [
+       -3.0,
+       0.0
+      ],
+      [
+       0.0,
+       -2.0
+      ],
+      [
+       3.0,
+       0.0
+      ]
+     ]
+    }
+   },
+   "glass": {
+    "transom": "plain_3mm",
+    "leaf": null
+   },
+   "photographs": [],
+   "sources": "Read: Hasluck pp.312-317, Figs. 1015-1039: boards 3 to 7 in wide (127 mm = 5 in used), 3/4 to 1 1/4 in thick (22.2 used), grooved and tongued, V joint; ledges nailed with wrought nails driven from the face and clenched; hook-and-plate hinges inside for an inward door. Sizes of ledges, nail heads and leaf: Judgement (no photograph of such a door on these streets was reached).",
+   "parts_vs_3_1": [
+    [
+     "frame_*, glass_fanlight, sill",
+     "kept",
+     "frame set F; a service door also takes the transom light"
+    ],
+    [
+     "leaf_frame, panel_*, moulding_*",
+     "changed",
+     "six matchboards 127 wide, V-jointed, 22 thick, three ledges and two braces behind (not visible), nail heads in rows on the face"
+    ],
+    [
+     "iron_letter_plate, iron_knob_*, iron_keyhole_*, iron_lock_*",
+     "removed",
+     "a service door has no letter plate; HD4, a thumb latch, on the lock side"
+    ]
+   ]
+  }
+ },
+ "kind_use": {
+  "F1": [
+   "east_parade_bay0",
+   "east_parade_bay2",
+   "west_north_bay0"
+  ],
+  "F2": [
+   "east_parade_bay1"
+  ],
+  "F4": [
+   "east_parade_bay3"
+  ],
+  "F6": [
+   "east_parade_bay4"
+  ],
+  "F5": [
+   "east_chandler_bay0"
+  ],
+  "T1": [
+   "west_south_bay2"
+  ],
+  "T3": [
+   "west_south_bay1"
+  ],
+  "T2": [
+   "west_south_bay0"
+  ],
+  "F7": [
+   "west_north_bay2"
+  ],
+  "F3": [
+   "west_north_bay1"
+  ]
+ },
+ "glass": {
+  "plain_3mm": {
+   "name": "plain clear float",
+   "thickness": 3.0,
+   "ior": 1.5,
+   "roughness": 0.05,
+   "transmission": 1.0,
+   "src": "3.1"
+  },
+  "reeded_4mm": {
+   "name": "reeded (ribbed) glass",
+   "thickness": 4.0,
+   "flute_pitch": 6.0,
+   "flute_depth": 1.2,
+   "section": "circular segments, vertical",
+   "roughness": 0.08,
+   "transmission": 0.9,
+   "src": "Photo D5: a ribbed transom and sidelight, vertical flutes; pitch and depth Judgement"
+  },
+  "leaded_diamond": {
+   "name": "leaded light, diamond lattice",
+   "came_w": 6.0,
+   "came_proud": 3.0,
+   "diamond": [
+    95.0,
+    70.0
+   ],
+   "glass_t": 3.0,
+   "came_material": "dull lead-grey (90, 92, 95), roughness 0.5",
+   "src": "Photo D3: a leaded diamond fanlight over the leaf; the pitch is scaled to the T frame's 267 high light (Judgement)"
+  },
+  "frosted": {
+   "name": "acid-etched frosted (reserve, not placed)",
+   "thickness": 4.0,
+   "roughness": 0.35,
+   "transmission": 0.6,
+   "src": "Judgement; no photograph read shows it"
+  },
+  "wired": {
+   "name": "wired polished (reserve, not placed)",
+   "thickness": 6.0,
+   "mesh": 12.5,
+   "wire_dia": 0.6,
+   "src": "Judgement; a stair door of a council block; none read"
+  },
+  "lens_14": {
+   "name": "door viewer lens, 14 across (D5's spyhole place only)",
+   "dia": 14.0,
+   "src": "Photo D5, place only"
+  }
+ },
+ "furniture": {
+  "letter_plate": {
+   "LP0": {
+    "name": "none",
+    "note": "F7, the service door, has no plate"
+   },
+   "LP1": {
+    "name": "brass plate, vertical, on the muntin",
+    "outer": [
+     76.0,
+     242.0
+    ],
+    "aperture": [
+     48.0,
+     190.0
+    ],
+    "backplate_t": 3.0,
+    "rim_proud": 6.0,
+    "rim_edge": "chamfered 45 degrees",
+    "flap": "sprung, hinged at the top, dished 3",
+    "material": "brass",
+    "srgb": [
+     181,
+     150,
+     85
+    ],
+    "metal": 1.0,
+    "roughness": 0.4,
+    "worn_roughness": 0.25,
+    "place": {
+     "T1": {
+      "u": "leaf centre",
+      "v": 1617.0
+     },
+     "F1": {
+      "u": "leaf centre",
+      "v": 1617.0
+     },
+     "F3": {
+      "u": "leaf centre",
+      "v": 1617.0
+     }
+    },
+    "src": "3.1 as built (P1: 76 x 242, centre 1617)"
+   },
+   "LP2": {
+    "name": "brass plate, horizontal, above the lock rail",
+    "outer": [
+     195.0,
+     70.0
+    ],
+    "aperture": [
+     168.0,
+     40.0
+    ],
+    "rim": 12.0,
+    "backplate_t": 3.0,
+    "rim_proud": 6.0,
+    "flap": "sprung, two pivot bosses",
+    "material": "brass",
+    "srgb": [
+     181,
+     150,
+     85
+    ],
+    "metal": 1.0,
+    "roughness": 0.4,
+    "worn_roughness": 0.25,
+    "place": {
+     "F2": {
+      "u": "leaf centre",
+      "v": 1561.0
+     }
+    },
+    "src": "3.1 option_six_panel (P2: 195 x 70 at 0.788 of the height)"
+   },
+   "LP3": {
+    "name": "black iron plate, horizontal (reserve, not placed)",
+    "outer": [
+     230.0,
+     60.0
+    ],
+    "aperture": [
+     190.0,
+     30.0
+    ],
+    "backplate_t": 4.0,
+    "rim_proud": 5.0,
+    "material": "cast iron, black",
+    "srgb": [
+     30,
+     30,
+     32
+    ],
+    "metal": 1.0,
+    "roughness": 0.65,
+    "place": {},
+    "src": "Judgement: cast-iron plates were common but none is read in a photograph here; listed so a script may place one; the check rejects it on any house today"
+   },
+   "LP4": {
+    "name": "chrome-look oblong, flush",
+    "outer": [
+     250.0,
+     70.0
+    ],
+    "frame_w": 6.0,
+    "proud": 2.0,
+    "flap": "hinged behind, the opening 238 x 58",
+    "material": "nickel or chrome-look",
+    "srgb": [
+     170,
+     170,
+     168
+    ],
+    "metal": 1.0,
+    "roughness": 0.35,
+    "place": {
+     "F6": {
+      "u": 385.7,
+      "v": 915.6
+     }
+    },
+    "src": "Photo D5: 107 x 30 px at 2.35 mm a pixel = 250 x 70, centre at 0.506 of the leaf's width and 912 above its foot (+-15)"
+   },
+   "LP5": {
+    "name": "pale low plate in the bottom rail",
+    "outer": [
+     250.0,
+     50.0
+    ],
+    "frame_w": 5.0,
+    "proud": 2.0,
+    "material": "anodised aluminium, pale",
+    "srgb": [
+     190,
+     190,
+     185
+    ],
+    "metal": 1.0,
+    "roughness": 0.45,
+    "place": {
+     "T2": {
+      "u": "leaf centre",
+      "v": 100.0
+     },
+     "F4": {
+      "u": "leaf centre",
+      "v": 100.0
+     }
+    },
+    "src": "Photo D1 right door (rows 659 to 662.5 of a 150 px leaf: centre 83 above the foot, 46 high) and D4 black door (a 10 x 3 px plate at the foot, 90): centre 100 chosen to sit mid-rail (+-20)"
+   },
+   "LP6": {
+    "name": "white plastic oblong in a moulded door",
+    "outer": [
+     270.0,
+     50.0
+    ],
+    "frame_w": 5.0,
+    "proud": 3.0,
+    "material": "white moulded plastic",
+    "srgb": [
+     226,
+     224,
+     214
+    ],
+    "metal": 0.0,
+    "roughness": 0.4,
+    "place": {
+     "T3": {
+      "u": "leaf centre",
+      "v": 865.3
+     }
+    },
+    "src": "Photo D4 right door: 12 x 3.1 px at 21.7 mm a pixel = 260 x 67, centre 0.448 of the visible height (+-25)"
+   },
+   "LP7": {
+    "name": "small pale plate under a slit light",
+    "outer": [
+     265.0,
+     50.0
+    ],
+    "frame_w": 5.0,
+    "proud": 2.0,
+    "material": "anodised aluminium, pale",
+    "srgb": [
+     190,
+     190,
+     185
+    ],
+    "metal": 1.0,
+    "roughness": 0.45,
+    "place": {
+     "F5": {
+      "u": 413.2,
+      "v": 819.9
+     }
+    },
+    "src": "Photo D2 middle door: 11 x 2 px at 23.8 mm a pixel = 262 x 48 (+-24), centre about 830"
+   }
+  },
+  "handle": {
+   "HD0": {
+    "name": "none",
+    "note": "T1, T2's lock side has HD3, F7 HD4"
+   },
+   "HD1": {
+    "name": "turned centre knob on a dished rose",
+    "dia": 69.0,
+    "proud": 62.0,
+    "rose": 76.0,
+    "profile_rz": [
+     [
+      0,
+      0
+     ],
+     [
+      30,
+      0
+     ],
+     [
+      34.5,
+      6
+     ],
+     [
+      34.5,
+      20
+     ],
+     [
+      30,
+      34
+     ],
+     [
+      20,
+      46
+     ],
+     [
+      12,
+      54
+     ],
+     [
+      6,
+      60
+     ],
+     [
+      2,
+      62
+     ],
+     [
+      0,
+      62
+     ]
+    ],
+    "cap": "brass 4 mm",
+    "material": "black-painted wood, brass cap",
+    "srgb": [
+     35,
+     36,
+     40
+    ],
+    "place": {
+     "F1": {
+      "u": "leaf centre",
+      "v": 787.0
+     },
+     "F2": {
+      "u": "leaf centre",
+      "v": 604.2
+     }
+    },
+    "src": "3.1 as built (P2 8x crop)"
+   },
+   "HD2a": {
+    "name": "lever handle on a round rose, chrome-look, right stile",
+    "lever": [
+     105.0,
+     18.0
+    ],
+    "lever_proud": 55.0,
+    "rose_dia": 50.0,
+    "rose_proud": 6.0,
+    "material": "nickel or chrome-look",
+    "srgb": [
+     170,
+     170,
+     168
+    ],
+    "metal": 1.0,
+    "roughness": 0.35,
+    "place": {
+     "F6": {
+      "u": 697.5,
+      "v": 903.7
+     }
+    },
+    "src": "Photo D5: lever 45 px = 106 at 2.35 mm a pixel, centre 902 above the foot (+-15), on the right stile"
+   },
+   "HD2b": {
+    "name": "lever handle on a round rose, chrome-look, left stile",
+    "lever": [
+     100.0,
+     18.0
+    ],
+    "lever_proud": 55.0,
+    "rose_dia": 50.0,
+    "rose_proud": 6.0,
+    "material": "nickel or chrome-look",
+    "srgb": [
+     170,
+     170,
+     168
+    ],
+    "metal": 1.0,
+    "roughness": 0.35,
+    "place": {
+     "F5": {
+      "u": 72.4,
+      "v": 1087.2
+     },
+     "F4": {
+      "u": 95.0,
+      "v": 1228.0
+     }
+    },
+    "src": "Photo D2: a small pale handle at the left stile of the middle door, 0.557 of the visible height (about 1092, +-24); the left door's at about 1228 (+-30)"
+   },
+   "HD2c": {
+    "name": "short lever at the lock edge of a moulded door",
+    "lever": [
+     80.0,
+     16.0
+    ],
+    "lever_proud": 45.0,
+    "rose_dia": 40.0,
+    "rose_proud": 5.0,
+    "material": "nickel or chrome-look",
+    "srgb": [
+     170,
+     170,
+     168
+    ],
+    "metal": 1.0,
+    "roughness": 0.35,
+    "place": {
+     "T3": {
+      "u": 757.0,
+      "v": 823.0
+     }
+    },
+    "src": "Photo D4 right door: a dark 2 x 4 px mark at the right edge, 0.43 of the visible height (+-35); lever size Judgement"
+   },
+   "HD3": {
+    "name": "vertical bar pull on the lock stile",
+    "size": [
+     25.0,
+     270.0
+    ],
+    "proud": 35.0,
+    "material": "dark steel",
+    "srgb": [
+     40,
+     40,
+     42
+    ],
+    "metal": 1.0,
+    "roughness": 0.6,
+    "place": {
+     "T2": {
+      "u": 67.0,
+      "v": 1242.8
+     },
+     "F3": {
+      "u": 67.0,
+      "v": 1255.0
+     }
+    },
+    "src": "Photo D3: a dark vertical handle on the left stile, rows 498.25 to 524.25 of a 190 px visible leaf = 264 long, v 1111 to 1375 (+-30); D1 left door shows a vertical metal strip on its left stile"
+   },
+   "HD4": {
+    "name": "thumb latch on a ledged door",
+    "plate": [
+     38.0,
+     190.0
+    ],
+    "plate_t": 3.0,
+    "bar": [
+     20.0,
+     150.0
+    ],
+    "thumb_piece": "a 25 x 35 pressed thumb piece",
+    "material": "dark steel",
+    "srgb": [
+     40,
+     40,
+     42
+    ],
+    "metal": 1.0,
+    "roughness": 0.6,
+    "place": {
+     "F7": {
+      "u": 692.0,
+      "v": 1000.0
+     }
+    },
+    "src": "Judgement: the usual iron thumb latch for a ledged door; Hasluck draws only the hinges"
+   }
+  },
+  "latch": {
+   "LK0": {
+    "name": "none"
+   },
+   "LK1": {
+    "name": "rim night latch, plain collar (3.1 T1)",
+    "collar": 43.5,
+    "plug": 28.0,
+    "collar_proud": 5.0,
+    "keyway": "vertical 3 x 9",
+    "material": "nickel or chrome-look",
+    "srgb": [
+     170,
+     170,
+     168
+    ],
+    "metal": 1.0,
+    "roughness": 0.35,
+    "place": {
+     "T1": {
+      "u": "46.6 from the stop face, right",
+      "v": 1235.0
+     }
+    },
+    "src": "3.1 as built (P1: collar 43.5, 8.4 px; the 3.1 name for it was cylinder lock)"
+   },
+   "LK2": {
+    "name": "rim night latch, knurled collar (3.1 F1)",
+    "collar": 37.0,
+    "plug": 18.0,
+    "collar_proud": 5.0,
+    "scallops": 8,
+    "keyway": "vertical 3 x 9",
+    "material": "nickel or chrome-look",
+    "srgb": [
+     170,
+     170,
+     168
+    ],
+    "metal": 1.0,
+    "roughness": 0.35,
+    "place": {
+     "F1": {
+      "u": "46.3 from the stop face, right",
+      "v": 1040.0
+     },
+     "F2": {
+      "u": "46.3 from the stop face, right",
+      "v": 1081.6
+     }
+    },
+    "src": "3.1 as built (P2: collar 37, scalloped)"
+   }
+  },
+  "knocker": {
+   "KN0": {
+    "name": "none",
+    "note": "the default on every house"
+   },
+   "KN1": {
+    "name": "ring knocker on a back plate (reserve, not placed)",
+    "ring": [
+     95.0,
+     12.0
+    ],
+    "plate": [
+     70.0,
+     110.0
+    ],
+    "plate_t": 5.0,
+    "material": "brass or iron",
+    "place": {},
+    "src": "Judgement: no period photograph read shows a knocker on these streets; the check refuses it on every house today"
+   },
+   "KN2": {
+    "name": "plain bar knocker (reserve, not placed)",
+    "size": [
+     150.0,
+     30.0
+    ],
+    "material": "brass",
+    "place": {},
+    "src": "Judgement, as KN1"
+   },
+   "KN3": {
+    "name": "lion's head knocker",
+    "offered": false,
+    "note": "NOT OFFERED: the photographs read (D1 to D9, P1, P2) show no lion's head on any door of these streets; the brief allows one only if they do"
+   }
+  },
+  "bell": {
+   "BL0": {
+    "name": "none"
+   },
+   "BL1": {
+    "name": "plain dark oblong push, one part",
+    "size": [
+     22.0,
+     72.6
+    ],
+    "proud": 3.0,
+    "corner_r": 1.0,
+    "groove": {
+     "w": 14.0,
+     "h": 2.0,
+     "depth": 1.0,
+     "below_centre": 8.0
+    },
+    "parts": 1,
+    "material": "dark steel or dark plastic",
+    "srgb": [
+     60,
+     60,
+     62
+    ],
+    "metal": 0.0,
+    "roughness": 0.6,
+    "place": {
+     "T1": {
+      "x": 859.4,
+      "z_range": [
+       1120.3,
+       1192.9
+      ],
+      "on": "the right jamb's stop face (3.1 as built: x 859.4, z 1120.3 to 1192.9)"
+     }
+    },
+    "forbidden": [
+     "bezel",
+     "button",
+     "ring",
+     "lens",
+     "led",
+     "camera",
+     "speaker",
+     "any second part",
+     "rounded pill corners above 2 mm",
+     "any bright or lit element"
+    ],
+    "src": "Photo P1 16x crop rows 300.3 to 314.4: a dark-grey oblong 22 x 72.6, no bright element, a darker band a little below its middle; 3.1 review v2 (close) and the handover's fix: the two-part push is deleted"
+   },
+   "BL2": {
+    "name": "old brass bell pull (reserve, not placed)",
+    "knob": [
+     40.0,
+     40.0
+    ],
+    "rod": [
+     12.0,
+     90.0
+    ],
+    "material": "brass",
+    "place": {},
+    "src": "Judgement: no photograph read shows one; refused on every house today"
+   }
+  },
+  "number": {
+   "NM0": {
+    "name": "none"
+   },
+   "NM1": {
+    "name": "screwed metal numerals in a row on the top rail",
+    "digit": [
+     51.0,
+     56.0
+    ],
+    "stroke": 6.0,
+    "relief": 3.0,
+    "gap": 12.0,
+    "face": "plain upright sans-serif, no serif, no real typeface",
+    "material": "brass",
+    "srgb": [
+     181,
+     150,
+     85
+    ],
+    "metal": 1.0,
+    "roughness": 0.4,
+    "worn_roughness": 0.25,
+    "place": {
+     "T1": {
+      "stacked": "two digits 39 x 72 on the muntin, v 1207 to 1277.6 and 1300 to 1373",
+      "u": "leaf centre"
+     },
+     "F1": {
+      "v": 1917.0,
+      "u": "leaf centre"
+     },
+     "F2": {
+      "v": 1943.0,
+      "u": "leaf centre"
+     }
+    },
+    "src": "3.1 (P1 stacked on the muntin, P2 in a row on the top rail: 56 high)"
+   },
+   "NM2": {
+    "name": "black metal screwed numerals (reserve)",
+    "digit": [
+     51.0,
+     56.0
+    ],
+    "stroke": 6.0,
+    "relief": 3.0,
+    "material": "cast iron, black",
+    "srgb": [
+     30,
+     30,
+     32
+    ],
+    "metal": 1.0,
+    "roughness": 0.65,
+    "place": {},
+    "src": "Judgement"
+   },
+   "NM3": {
+    "name": "numerals painted white on the leaf's top rail",
+    "digit_h": 60.0,
+    "stroke": 8.0,
+    "material": "white gloss paint",
+    "srgb": [
+     226,
+     224,
+     214
+    ],
+    "metal": 0.0,
+    "roughness": 0.35,
+    "place": {
+     "F3": {
+      "v": 1925.0,
+      "u": "leaf centre"
+     }
+    },
+    "src": "Photo D6: a white numeral painted on a blue door (size Judgement, 60 +-15)"
+   },
+   "NM4": {
+    "name": "numerals painted white on the transom glass",
+    "digit_h": 90.0,
+    "stroke": 10.0,
+    "material": "white gloss paint",
+    "srgb": [
+     226,
+     224,
+     214
+    ],
+    "metal": 0.0,
+    "roughness": 0.35,
+    "place": {
+     "T2": {
+      "on": "the transom glass, centred"
+     }
+    },
+    "src": "Judgement: a fanlight number is standard on such houses; no period photograph read shows one at a readable size"
+   },
+   "NM5": {
+    "name": "oval plaque with a relief ornament, no digits (reserve)",
+    "size": [
+     230.0,
+     154.0
+    ],
+    "material": "dark moulded plastic with a pale rim",
+    "place": {},
+    "src": "Photo D2 white door: an oval 9.5 x 6.4 px at 24 mm a pixel (a house number's place); not placed"
+   }
+  },
+  "scraper": {
+   "BS0": {
+    "name": "none"
+   },
+   "BS1": {
+    "name": "cast-iron boot scraper beside the step",
+    "size": [
+     330.0,
+     130.0,
+     200.0
+    ],
+    "blade": [
+     300.0,
+     25.0
+    ],
+    "standards": "two end standards 200 high with scroll tops",
+    "material": "cast iron, black",
+    "srgb": [
+     30,
+     30,
+     32
+    ],
+    "metal": 1.0,
+    "roughness": 0.65,
+    "place": {
+     "T1": {
+      "x_from_jamb": "left, 150 clear of the step's end",
+      "z": 0.0
+     }
+    },
+    "src": "Photo D10 (2014, said why: iron fittings of this kind were never renewed); sizes are Judgement, the photograph has no scale in its plane (+-25 per cent)"
+   }
+  }
+ },
+ "furniture_counts": {
+  "letter_plate": 7,
+  "handle": 6,
+  "latch": 2,
+  "knocker": 3,
+  "bell": 2,
+  "number": 5,
+  "scraper": 1
+ },
+ "paints": [
+  {
+   "id": "black",
+   "name": "gloss black, faintly blue",
+   "srgb": [
+    35,
+    36,
+    40
+   ],
+   "class": "dark_neutral",
+   "src": "3.1 (P2 median 39,40,45)"
+  },
+  {
+   "id": "dark_green",
+   "name": "dark green",
+   "srgb": [
+    28,
+    59,
+    41
+   ],
+   "class": "dark_chroma",
+   "src": "3.1; the shopfront kit's door green"
+  },
+  {
+   "id": "maroon",
+   "name": "maroon, the sheet's deep red",
+   "srgb": [
+    92,
+    26,
+    32
+   ],
+   "class": "dark_chroma",
+   "src": "3.1; terrace-front.py reads the sheet's doors as 'a deep teal and a deep red'"
+  },
+  {
+   "id": "navy",
+   "name": "dark blue",
+   "srgb": [
+    24,
+    38,
+    78
+   ],
+   "class": "dark_neutral",
+   "src": "3.1"
+  },
+  {
+   "id": "brown",
+   "name": "dark brown",
+   "srgb": [
+    74,
+    48,
+    34
+   ],
+   "class": "dark_neutral",
+   "src": "3.1"
+  },
+  {
+   "id": "deep_teal",
+   "name": "deep teal, the sheet's other door",
+   "srgb": [
+    22,
+    64,
+    66
+   ],
+   "class": "dark_chroma",
+   "src": "terrace-front.py comment on the Hook sheet; D1 left door (a teal gone dark in shade, median 28,39,29); value Judgement"
+  },
+  {
+   "id": "cream",
+   "name": "cream",
+   "srgb": [
+    222,
+    212,
+    184
+   ],
+   "class": "light",
+   "src": "3.1 frame cream; D3's door reads white-cream"
+  },
+  {
+   "id": "white_gloss",
+   "name": "white gloss (plastic-look moulded door)",
+   "srgb": [
+    226,
+    224,
+    214
+   ],
+   "class": "light",
+   "src": "3.1 frame white; D3, D4, D2 white doors"
+  },
+  {
+   "id": "council_turquoise",
+   "name": "council turquoise",
+   "srgb": [
+    30,
+    112,
+    128
+   ],
+   "class": "bright",
+   "src": "D9 box median (22,108,126) lifted for film; value Judgement"
+  },
+  {
+   "id": "olive",
+   "name": "olive (the 1960s council colour)",
+   "srgb": [
+    114,
+    102,
+    65
+   ],
+   "class": "mid",
+   "src": "D5 box median"
+  },
+  {
+   "id": "khaki",
+   "name": "khaki",
+   "srgb": [
+    128,
+    124,
+    78
+   ],
+   "class": "mid",
+   "src": "D2 middle door box median (136,132,83) darkened a little for film"
+  },
+  {
+   "id": "mustard",
+   "name": "mustard",
+   "srgb": [
+    140,
+    128,
+    40
+   ],
+   "class": "bright",
+   "src": "D2 left door box median (142,136,39)"
+  },
+  {
+   "id": "bright_blue",
+   "name": "bright blue (Hull 1980s)",
+   "srgb": [
+    30,
+    78,
+    140
+   ],
+   "class": "bright",
+   "src": "D6 box median (26,67,117) lifted for film; value Judgement"
+  },
+  {
+   "id": "lime",
+   "name": "lime green (Hull 1980s)",
+   "srgb": [
+    112,
+    118,
+    44
+   ],
+   "class": "bright",
+   "src": "D7 box median (119,119,41)"
+  },
+  {
+   "id": "red",
+   "name": "bright red",
+   "srgb": [
+    201,
+    41,
+    32
+   ],
+   "class": "bright",
+   "src": "3.1 (P1 median)"
+  },
+  {
+   "id": "varnish",
+   "name": "natural varnished timber (a stained door)",
+   "srgb": [
+    122,
+    76,
+    40
+   ],
+   "class": "mid",
+   "src": "Judgement: no photograph read shows one on these streets"
+  }
+ ],
+ "frame_colours": [
+  {
+   "id": "white",
+   "name": "gloss white, yellowed",
+   "srgb": [
+    226,
+    224,
+    214
+   ],
+   "src": "3.1 (P1 240,239,245 fresh; P2 222,225,229 old); the Hook sheet's surrounds are white"
+  },
+  {
+   "id": "white_grimy",
+   "name": "white, grimed",
+   "srgb": [
+    208,
+    205,
+    192
+   ],
+   "src": "3.1 white x 0.92, the windows target's white_grimy"
+  }
+ ],
+ "conditions": {
+  "kept": {
+   "paint_flake_share": 0.03,
+   "paint_fade": 0.3,
+   "crazing": "none",
+   "chips": "0 to 2 chips of 8 to 15 mm on the leaf's lower arrises",
+   "bottom_rail": "clean; a dark splash band to 0.24 m only",
+   "kick_marks": "0 to 2 scuffs, 20 to 40 mm, on the bottom rail",
+   "polish": "the brass is polished: a bright ring 12 mm wide round the letter plate's flap and the knob (kept bright), the rest dull gold",
+   "frame": "white, sound, a yellowing at the foot",
+   "roughness": 0.35,
+   "src": "wear target paint_flake range low end 0.03; 3.1 'new' 0.35"
+  },
+  "tired": {
+   "paint_flake_share": 0.063,
+   "paint_fade": 0.6,
+   "crazing": "cells 2 to 4 mm over 30 per cent of the leaf (P2's)",
+   "chips": "4 to 8 chips of 10 to 40 mm on arrises and the mouldings' lower lips, bare wood or undercoat showing",
+   "bottom_rail": "darkened by splash to 0.33 m, a paint loss of 20 per cent on the rail",
+   "kick_marks": "3 to 6 scuffs and one boot print band 60 mm high at the lock side",
+   "polish": "brass dull; a brighter ring where the flap is pushed (10 to 14 mm wide), a dark grease halo 0.17 m round the handle (handle_wear)",
+   "frame": "yellowed, a hairline crack at the stop's foot",
+   "roughness": 0.55,
+   "src": "wear target paint_flake typical 0.063, handle_wear halo p50 0.17 m; 3.1 'weathered' 0.55"
+  },
+  "neglected": {
+   "paint_flake_share": 0.4,
+   "paint_fade": 1.0,
+   "crazing": "cells 2 to 4 mm over the whole leaf (P2's old door)",
+   "chips": "12 to 20 chips and two sheets of 80 to 250 mm off the rail and stile feet, grey bare timber below",
+   "bottom_rail": "rotted: an eroded notch 25 mm high and 60 to 200 mm wide, 3 mm deep, in the lower arris at the hinge side, bare grey wood, a soft dark wet stain to 0.5 m",
+   "kick_marks": "8 to 15 scuffs and dents, a split 120 mm long in the bottom panel's lower edge",
+   "polish": "brass dark and green-brown; the plate's flap rubbed bright in a ring 10 mm wide only where fingers push; no polish elsewhere",
+   "frame": "peeling down to a darker undercoat, a dirty foot",
+   "roughness": 0.65,
+   "src": "wear target paint_flake neglected up to 0.40; 3.1 weather side low down 0.65"
+  }
+ },
+ "wear_kinds_used": [
+  "paint_flake",
+  "paint_fade",
+  "handle_wear",
+  "wall_foot_splash",
+  "iron_wear"
+ ],
+ "wear_not_covered": [
+  "crazing in 2 to 4 mm cells: the layer's paint_flake crazing cells are 0.14 to 0.23 m (render); a timber-door tile is owed",
+  "kick marks and boot prints on a bottom rail: not a kind of the layer (the nearest is wall_foot_splash)",
+  "a letter plate's bright polish ring: not a kind (the layer's handle_wear is a dark grease halo); owed as a small brightening mask in the brass's own material",
+  "rot as geometry (the eroded notch): the layer is a texture, so the notch is a build parameter of the door"
+ ],
+ "street": {
+  "source": "tools/art-recipes/terrace-front.py plan_street (the drawn street), production/specs/vignette-scene.json (blocks), production/specs/vignette-pieces.json (the coarse side doors), the house-windows target (modernised = white_upvc)",
+  "houses": [
+   {
+    "house": "east_parade_bay0",
+    "side": "east",
+    "x_centre_m": 3.769,
+    "stand_in": {
+     "opening_w_mm": 838.0,
+     "leaf_w_mm": 766.0,
+     "leaf_h_mm": 1981.0,
+     "step": null,
+     "letterplate_mm": [
+      250.0,
+      40.0,
+      1000.0
+     ],
+     "kit_side_door": false
+    },
+    "kind": "F1",
+    "frame_set": "F",
+    "paint": "maroon",
+    "frame_colour": "white_grimy",
+    "condition": "tired",
+    "furniture": {
+     "letter_plate": {
+      "variant": "LP1",
+      "place": {
+       "u": "leaf centre",
+       "v": 1617.0
+      }
+     },
+     "handle": {
+      "variant": "HD1",
+      "place": {
+       "u": "leaf centre",
+       "v": 787.0
+      }
+     },
+     "latch": {
+      "variant": "LK2",
+      "place": {
+       "u": "46.3 from the stop face, right",
+       "v": 1040.0
+      }
+     },
+     "knocker": {
+      "variant": "KN0",
+      "place": null
+     },
+     "bell": {
+      "variant": "BL0",
+      "place": null
+     },
+     "number": {
+      "variant": "NM1",
+      "place": {
+       "v": 1917.0,
+       "u": "leaf centre"
+      }
+     },
+     "scraper": {
+      "variant": "BS0",
+      "place": null
+     }
+    },
+    "why": "Mickey's side door, the four-panel door as built in 3.1 (the recipe already gave it four panels and a knob: a plain slab failed a review on 4 October); maroon is the sheet's deep red",
+    "windows_modernised": false
+   },
+   {
+    "house": "east_parade_bay1",
+    "side": "east",
+    "x_centre_m": 9.769,
+    "stand_in": {
+     "opening_w_mm": 838.0,
+     "leaf_w_mm": 766.0,
+     "leaf_h_mm": 1981.0,
+     "step": null,
+     "letterplate_mm": [
+      250.0,
+      40.0,
+      1000.0
+     ],
+     "kit_side_door": false
+    },
+    "kind": "F2",
+    "frame_set": "F",
+    "paint": "black",
+    "frame_colour": "white",
+    "condition": "kept",
+    "furniture": {
+     "letter_plate": {
+      "variant": "LP2",
+      "place": {
+       "u": "leaf centre",
+       "v": 1561.0
+      }
+     },
+     "handle": {
+      "variant": "HD1",
+      "place": {
+       "u": "leaf centre",
+       "v": 604.2
+      }
+     },
+     "latch": {
+      "variant": "LK2",
+      "place": {
+       "u": "46.3 from the stop face, right",
+       "v": 1081.6
+      }
+     },
+     "knocker": {
+      "variant": "KN0",
+      "place": null
+     },
+     "bell": {
+      "variant": "BL0",
+      "place": null
+     },
+     "number": {
+      "variant": "NM1",
+      "place": {
+       "v": 1943.0,
+       "u": "leaf centre"
+      }
+     },
+     "scraper": {
+      "variant": "BS0",
+      "place": null
+     }
+    },
+    "why": "the fishmonger's flat, an old six-panel door as P2 shows; kept because a working shop keeps its own door",
+    "windows_modernised": false
+   },
+   {
+    "house": "east_parade_bay2",
+    "side": "east",
+    "x_centre_m": 20.178,
+    "stand_in": {
+     "opening_w_mm": 844.0,
+     "leaf_w_mm": null,
+     "leaf_h_mm": null,
+     "step": null,
+     "letterplate_mm": null,
+     "kit_side_door": true
+    },
+    "kind": "F1",
+    "frame_set": "F",
+    "paint": "dark_green",
+    "frame_colour": "white",
+    "condition": "kept",
+    "furniture": {
+     "letter_plate": {
+      "variant": "LP1",
+      "place": {
+       "u": "leaf centre",
+       "v": 1617.0
+      }
+     },
+     "handle": {
+      "variant": "HD1",
+      "place": {
+       "u": "leaf centre",
+       "v": 787.0
+      }
+     },
+     "latch": {
+      "variant": "LK2",
+      "place": {
+       "u": "46.3 from the stop face, right",
+       "v": 1040.0
+      }
+     },
+     "knocker": {
+      "variant": "KN0",
+      "place": null
+     },
+     "bell": {
+      "variant": "BL0",
+      "place": null
+     },
+     "number": {
+      "variant": "NM0",
+      "place": null
+     },
+     "scraper": {
+      "variant": "BS0",
+      "place": null
+     }
+    },
+    "why": "Rita's: the shopfront kit's own side door (a fanlight over it); four-panel as built, dark green against the cream painted front (the 4 October reading of the sheet's third house)",
+    "windows_modernised": true
+   },
+   {
+    "house": "east_parade_bay3",
+    "side": "east",
+    "x_centre_m": 21.769,
+    "stand_in": {
+     "opening_w_mm": 838.0,
+     "leaf_w_mm": 678.0,
+     "leaf_h_mm": 1981.0,
+     "step": null,
+     "letterplate_mm": [
+      250.0,
+      40.0,
+      1000.0
+     ],
+     "kit_side_door": false
+    },
+    "kind": "F4",
+    "frame_set": "F",
+    "paint": "brown",
+    "frame_colour": "white_grimy",
+    "condition": "neglected",
+    "furniture": {
+     "letter_plate": {
+      "variant": "LP5",
+      "place": {
+       "u": "leaf centre",
+       "v": 100.0
+      }
+     },
+     "handle": {
+      "variant": "HD2b",
+      "place": {
+       "u": 95.0,
+       "v": 1228.0
+      }
+     },
+     "latch": {
+      "variant": "LK0",
+      "place": null
+     },
+     "knocker": {
+      "variant": "KN0",
+      "place": null
+     },
+     "bell": {
+      "variant": "BL0",
+      "place": null
+     },
+     "number": {
+      "variant": "NM0",
+      "place": null
+     },
+     "scraper": {
+      "variant": "BS0",
+      "place": null
+     }
+    },
+    "why": "the empty unit to let (whitewashed): its flat is empty too; an old three-light glazed door, neglected, with a low plate in its bottom rail",
+    "windows_modernised": false
+   },
+   {
+    "house": "east_parade_bay4",
+    "side": "east",
+    "x_centre_m": 32.231,
+    "stand_in": {
+     "opening_w_mm": 838.0,
+     "leaf_w_mm": 678.0,
+     "leaf_h_mm": 1981.0,
+     "step": null,
+     "letterplate_mm": [
+      250.0,
+      40.0,
+      1000.0
+     ],
+     "kit_side_door": false
+    },
+    "kind": "F6",
+    "frame_set": "FF6",
+    "paint": "council_turquoise",
+    "frame_colour": "white",
+    "condition": "tired",
+    "furniture": {
+     "letter_plate": {
+      "variant": "LP4",
+      "place": {
+       "u": 385.7,
+       "v": 915.6
+      }
+     },
+     "handle": {
+      "variant": "HD2a",
+      "place": {
+       "u": 697.5,
+       "v": 903.7
+      }
+     },
+     "latch": {
+      "variant": "LK0",
+      "place": null
+     },
+     "knocker": {
+      "variant": "KN0",
+      "place": null
+     },
+     "bell": {
+      "variant": "BL0",
+      "place": null
+     },
+     "number": {
+      "variant": "NM0",
+      "place": null
+     },
+     "scraper": {
+      "variant": "BS0",
+      "place": null
+     }
+    },
+    "why": "the launderette's flat, modernised (the windows target gave it replacement windows): a council-style flush door in the 1980s turquoise that D9 shows; the only bright door on the east side",
+    "windows_modernised": true
+   },
+   {
+    "house": "east_chandler_bay0",
+    "side": "east",
+    "x_centre_m": 45.231,
+    "stand_in": {
+     "opening_w_mm": 838.0,
+     "leaf_w_mm": 766.0,
+     "leaf_h_mm": 1981.0,
+     "step": null,
+     "letterplate_mm": [
+      250.0,
+      40.0,
+      1000.0
+     ],
+     "kit_side_door": false
+    },
+    "kind": "F5",
+    "frame_set": "F",
+    "paint": "navy",
+    "frame_colour": "white",
+    "condition": "kept",
+    "furniture": {
+     "letter_plate": {
+      "variant": "LP7",
+      "place": {
+       "u": 413.2,
+       "v": 819.9
+      }
+     },
+     "handle": {
+      "variant": "HD2b",
+      "place": {
+       "u": 72.4,
+       "v": 1087.2
+      }
+     },
+     "latch": {
+      "variant": "LK0",
+      "place": null
+     },
+     "knocker": {
+      "variant": "KN0",
+      "place": null
+     },
+     "bell": {
+      "variant": "BL0",
+      "place": null
+     },
+     "number": {
+      "variant": "NM0",
+      "place": null
+     },
+     "scraper": {
+      "variant": "BS0",
+      "place": null
+     }
+    },
+    "why": "the chandler's flat, modernised (replacement windows, a metal refit below): a flush door with a slit light as D2 and D4 show",
+    "windows_modernised": true
+   },
+   {
+    "house": "west_south_bay2",
+    "side": "west",
+    "x_centre_m": 4.5,
+    "stand_in": {
+     "opening_w_mm": 838.0,
+     "leaf_w_mm": 678.0,
+     "leaf_h_mm": 1981.0,
+     "step": {
+      "w_mm": 998.0,
+      "depth_mm": 352.5,
+      "h_mm": 70.0
+     },
+     "letterplate_mm": [
+      250.0,
+      40.0,
+      1000.0
+     ],
+     "kit_side_door": false
+    },
+    "kind": "T1",
+    "frame_set": "T",
+    "paint": "deep_teal",
+    "frame_colour": "white_grimy",
+    "condition": "tired",
+    "furniture": {
+     "letter_plate": {
+      "variant": "LP1",
+      "place": {
+       "u": "leaf centre",
+       "v": 1617.0
+      }
+     },
+     "handle": {
+      "variant": "HD0",
+      "place": null
+     },
+     "latch": {
+      "variant": "LK1",
+      "place": {
+       "u": "46.6 from the stop face, right",
+       "v": 1235.0
+      }
+     },
+     "knocker": {
+      "variant": "KN0",
+      "place": null
+     },
+     "bell": {
+      "variant": "BL1",
+      "place": {
+       "x": 859.4,
+       "z_range": [
+        1120.3,
+        1192.9
+       ],
+       "on": "the right jamb's stop face (3.1 as built: x 859.4, z 1120.3 to 1192.9)"
+      }
+     },
+     "number": {
+      "variant": "NM1",
+      "place": {
+       "stacked": "two digits 39 x 72 on the muntin, v 1207 to 1277.6 and 1300 to 1373",
+       "u": "leaf centre"
+      }
+     },
+     "scraper": {
+      "variant": "BS1",
+      "place": {
+       "x_from_jamb": "left, 150 clear of the step's end",
+       "z": 0.0
+      }
+     }
+    },
+    "why": "the cottage nearest the quay, four-panel as built in 3.1 with its plain oblong bell push; the sheet's deep teal; the one boot scraper, by the step (owed: no period photograph shows one here)",
+    "windows_modernised": false
+   },
+   {
+    "house": "west_south_bay1",
+    "side": "west",
+    "x_centre_m": 13.5,
+    "stand_in": {
+     "opening_w_mm": 838.0,
+     "leaf_w_mm": 678.0,
+     "leaf_h_mm": 1981.0,
+     "step": {
+      "w_mm": 998.0,
+      "depth_mm": 352.5,
+      "h_mm": 70.0
+     },
+     "letterplate_mm": [
+      250.0,
+      40.0,
+      1000.0
+     ],
+     "kit_side_door": false
+    },
+    "kind": "T3",
+    "frame_set": "T",
+    "paint": "white_gloss",
+    "frame_colour": "white",
+    "condition": "kept",
+    "furniture": {
+     "letter_plate": {
+      "variant": "LP6",
+      "place": {
+       "u": "leaf centre",
+       "v": 865.3
+      }
+     },
+     "handle": {
+      "variant": "HD2c",
+      "place": {
+       "u": 757.0,
+       "v": 823.0
+      }
+     },
+     "latch": {
+      "variant": "LK0",
+      "place": null
+     },
+     "knocker": {
+      "variant": "KN0",
+      "place": null
+     },
+     "bell": {
+      "variant": "BL0",
+      "place": null
+     },
+     "number": {
+      "variant": "NM0",
+      "place": null
+     },
+     "scraper": {
+      "variant": "BS0",
+      "place": null
+     }
+    },
+    "why": "the cottage with replacement windows: the white moulded door with a small arched light that D4 shows next to its replacement windows",
+    "windows_modernised": true
+   },
+   {
+    "house": "west_south_bay0",
+    "side": "west",
+    "x_centre_m": 19.5,
+    "stand_in": {
+     "opening_w_mm": 838.0,
+     "leaf_w_mm": 678.0,
+     "leaf_h_mm": 1981.0,
+     "step": {
+      "w_mm": 998.0,
+      "depth_mm": 352.5,
+      "h_mm": 70.0
+     },
+     "letterplate_mm": [
+      250.0,
+      40.0,
+      1000.0
+     ],
+     "kit_side_door": false
+    },
+    "kind": "T2",
+    "frame_set": "T",
+    "paint": "cream",
+    "frame_colour": "white",
+    "condition": "tired",
+    "furniture": {
+     "letter_plate": {
+      "variant": "LP5",
+      "place": {
+       "u": "leaf centre",
+       "v": 100.0
+      }
+     },
+     "handle": {
+      "variant": "HD3",
+      "place": {
+       "u": 67.0,
+       "v": 1242.8
+      }
+     },
+     "latch": {
+      "variant": "LK0",
+      "place": null
+     },
+     "knocker": {
+      "variant": "KN0",
+      "place": null
+     },
+     "bell": {
+      "variant": "BL0",
+      "place": null
+     },
+     "number": {
+      "variant": "NM4",
+      "place": {
+       "on": "the transom glass, centred"
+      }
+     },
+     "scraper": {
+      "variant": "BS0",
+      "place": null
+     }
+    },
+    "why": "the cottage by the yard slot: the 1930s four-light glazed door of D3 with its leaded fanlight; a painted number on the glass",
+    "windows_modernised": false
+   },
+   {
+    "house": "west_north_bay2",
+    "side": "west",
+    "x_centre_m": 24.769,
+    "stand_in": {
+     "opening_w_mm": 838.0,
+     "leaf_w_mm": 678.0,
+     "leaf_h_mm": 1981.0,
+     "step": null,
+     "letterplate_mm": [
+      250.0,
+      40.0,
+      1000.0
+     ],
+     "kit_side_door": false
+    },
+    "kind": "F7",
+    "frame_set": "F",
+    "paint": "navy",
+    "frame_colour": "white_grimy",
+    "condition": "neglected",
+    "furniture": {
+     "letter_plate": {
+      "variant": "LP0",
+      "place": null
+     },
+     "handle": {
+      "variant": "HD4",
+      "place": {
+       "u": 692.0,
+       "v": 1000.0
+      }
+     },
+     "latch": {
+      "variant": "LK0",
+      "place": null
+     },
+     "knocker": {
+      "variant": "KN0",
+      "place": null
+     },
+     "bell": {
+      "variant": "BL0",
+      "place": null
+     },
+     "number": {
+      "variant": "NM0",
+      "place": null
+     },
+     "scraper": {
+      "variant": "BS0",
+      "place": null
+     }
+    },
+    "why": "beside the yard slot, in a one-storey shop row: a service door to the back passage, ledged and braced (owed line 3: if the PC wants flats in this row it takes F1 instead)",
+    "windows_modernised": false
+   },
+   {
+    "house": "west_north_bay1",
+    "side": "west",
+    "x_centre_m": 35.231,
+    "stand_in": {
+     "opening_w_mm": 838.0,
+     "leaf_w_mm": 766.0,
+     "leaf_h_mm": 1981.0,
+     "step": null,
+     "letterplate_mm": [
+      250.0,
+      40.0,
+      1000.0
+     ],
+     "kit_side_door": false
+    },
+    "kind": "F3",
+    "frame_set": "F",
+    "paint": "black",
+    "frame_colour": "white",
+    "condition": "tired",
+    "furniture": {
+     "letter_plate": {
+      "variant": "LP1",
+      "place": {
+       "u": "leaf centre",
+       "v": 1617.0
+      }
+     },
+     "handle": {
+      "variant": "HD3",
+      "place": {
+       "u": 67.0,
+       "v": 1255.0
+      }
+     },
+     "latch": {
+      "variant": "LK0",
+      "place": null
+     },
+     "knocker": {
+      "variant": "KN0",
+      "place": null
+     },
+     "bell": {
+      "variant": "BL0",
+      "place": null
+     },
+     "number": {
+      "variant": "NM3",
+      "place": {
+       "v": 1925.0,
+       "u": "leaf centre"
+      }
+     },
+     "scraper": {
+      "variant": "BS0",
+      "place": null
+     }
+    },
+    "why": "a household door in the row: two long panels as D1's left door, a bar pull on the left stile",
+    "windows_modernised": false
+   },
+   {
+    "house": "west_north_bay0",
+    "side": "west",
+    "x_centre_m": 41.231,
+    "stand_in": {
+     "opening_w_mm": 838.0,
+     "leaf_w_mm": 678.0,
+     "leaf_h_mm": 1981.0,
+     "step": null,
+     "letterplate_mm": [
+      250.0,
+      40.0,
+      1000.0
+     ],
+     "kit_side_door": false
+    },
+    "kind": "F1",
+    "frame_set": "F",
+    "paint": "maroon",
+    "frame_colour": "white",
+    "condition": "kept",
+    "furniture": {
+     "letter_plate": {
+      "variant": "LP1",
+      "place": {
+       "u": "leaf centre",
+       "v": 1617.0
+      }
+     },
+     "handle": {
+      "variant": "HD1",
+      "place": {
+       "u": "leaf centre",
+       "v": 787.0
+      }
+     },
+     "latch": {
+      "variant": "LK2",
+      "place": {
+       "u": "46.3 from the stop face, right",
+       "v": 1040.0
+      }
+     },
+     "knocker": {
+      "variant": "KN0",
+      "place": null
+     },
+     "bell": {
+      "variant": "BL0",
+      "place": null
+     },
+     "number": {
+      "variant": "NM0",
+      "place": null
+     },
+     "scraper": {
+      "variant": "BS0",
+      "place": null
+     }
+    },
+    "why": "the north end of the row: the four-panel door as built",
+    "windows_modernised": false
+   }
+  ],
+  "order": {
+   "east": [
+    "east_parade_bay0",
+    "east_parade_bay1",
+    "east_parade_bay2",
+    "east_parade_bay3",
+    "east_parade_bay4",
+    "east_chandler_bay0"
+   ],
+   "west": [
+    "west_south_bay2",
+    "west_south_bay1",
+    "west_south_bay0",
+    "west_north_bay2",
+    "west_north_bay1",
+    "west_north_bay0"
+   ]
+  },
+  "adjacent_pairs": [
+   [
+    "east_parade_bay0",
+    "east_parade_bay1"
+   ],
+   [
+    "east_parade_bay1",
+    "east_parade_bay2"
+   ],
+   [
+    "east_parade_bay2",
+    "east_parade_bay3"
+   ],
+   [
+    "east_parade_bay3",
+    "east_parade_bay4"
+   ],
+   [
+    "east_parade_bay4",
+    "east_chandler_bay0"
+   ],
+   [
+    "west_south_bay2",
+    "west_south_bay1"
+   ],
+   [
+    "west_south_bay1",
+    "west_south_bay0"
+   ],
+   [
+    "west_south_bay0",
+    "west_north_bay2"
+   ],
+   [
+    "west_north_bay2",
+    "west_north_bay1"
+   ],
+   [
+    "west_north_bay1",
+    "west_north_bay0"
+   ]
+  ],
+  "opposite_pairs_within_4_6_m": [
+   [
+    "east_parade_bay0",
+    "west_south_bay2",
+    0.731
+   ],
+   [
+    "east_parade_bay1",
+    "west_south_bay1",
+    3.731
+   ],
+   [
+    "east_parade_bay2",
+    "west_south_bay0",
+    0.678
+   ],
+   [
+    "east_parade_bay2",
+    "west_north_bay2",
+    4.591
+   ],
+   [
+    "east_parade_bay3",
+    "west_south_bay0",
+    2.269
+   ],
+   [
+    "east_parade_bay3",
+    "west_north_bay2",
+    3.0
+   ],
+   [
+    "east_parade_bay4",
+    "west_north_bay1",
+    3.0
+   ],
+   [
+    "east_chandler_bay0",
+    "west_north_bay0",
+    4.0
+   ]
+  ],
+  "no_side_door": [
+   {
+    "house": "east_parade_bay5",
+    "why": "the grocer's flat is reached from the rear yard (terrace-front.py BAY_WITHOUT_SIDE_DOOR 5; the coarse piece east_parade_sidedoor5 is not drawn)"
+   }
+  ],
+  "yard_slot": {
+   "x_m": [
+    21.0,
+    24.0
+   ],
+   "note": "the 3.0 m yard entrance between the west blocks is a gap in the data, no door piece; a gate there belongs to the gate family, not this one"
+  },
+  "council_owned": "none: no file names a council-owned house on Quay Street; the council-style flush door F6 is used on a modernised flat, not on a council house",
+  "backdrop": {
+   "rule": "The 12 doors of the hill's rows (backdrop_rise_approach_e0 e1, w0 to w4, x0 to x4) are seen at 44 m and more: leaf kind and paint, nothing else. Door i takes kind BACKDROP_KINDS[i mod 6] and paint BACKDROP_PAINTS[(i + 2) mod 6], so that no two doors of a row, taken in their order, share a kind or a paint. No furniture, no step, no wear mask beyond the foot band.",
+   "doors": [
+    {
+     "id": "backdrop_rise_approach_e0",
+     "kind": "F1",
+     "paint": "navy"
+    },
+    {
+     "id": "backdrop_rise_approach_e1",
+     "kind": "F2",
+     "paint": "dark_green"
+    },
+    {
+     "id": "backdrop_rise_approach_w0",
+     "kind": "F3",
+     "paint": "brown"
+    },
+    {
+     "id": "backdrop_rise_approach_w1",
+     "kind": "F4",
+     "paint": "deep_teal"
+    },
+    {
+     "id": "backdrop_rise_approach_w2",
+     "kind": "T1",
+     "paint": "black"
+    },
+    {
+     "id": "backdrop_rise_approach_w3",
+     "kind": "T2",
+     "paint": "maroon"
+    },
+    {
+     "id": "backdrop_rise_approach_w4",
+     "kind": "F1",
+     "paint": "navy"
+    },
+    {
+     "id": "backdrop_rise_approach_x0",
+     "kind": "F2",
+     "paint": "dark_green"
+    },
+    {
+     "id": "backdrop_rise_approach_x1",
+     "kind": "F3",
+     "paint": "brown"
+    },
+    {
+     "id": "backdrop_rise_approach_x2",
+     "kind": "F4",
+     "paint": "deep_teal"
+    },
+    {
+     "id": "backdrop_rise_approach_x3",
+     "kind": "T1",
+     "paint": "black"
+    },
+    {
+     "id": "backdrop_rise_approach_x4",
+     "kind": "T2",
+     "paint": "maroon"
+    }
+   ]
+  }
+ },
+ "mix_rule": {
+  "text": "A new house takes a kind its frame set allows (cottage frame T: T1 T2 T3; flat frame F: F1 to F7), a paint that is not its neighbours' on the same side nor the paint of a door within 4.6 m across the street, and furniture so that each neighbour differs in at least 2 of the slots letter plate, handle, latch, number. A modernised house (replacement windows) takes T3, F5 or F6 or keeps its old kind. Knockers, bells (except T1's oblong), black iron plates, bell pulls, frosted and wired glass and numerals in black metal are not placed on any house today.",
+  "adjacent_rule": {
+   "differ_in_kind": true,
+   "differ_in_paint": true,
+   "min_furniture_slots_differing": 2
+  },
+  "opposite_rule": {
+   "within_m": 4.6,
+   "paint_class_differs": true
+  }
+ },
+ "owed_for_jafar": [
+  "Door colours: dark doors as the Hook sheet shows, with two lighter ones from 1980s photographs (one white, one council turquoise)? Yes, two (recommended), or all dark?",
+  "Door surrounds: all white as you ruled for windows on 3 October (recommended), or the painted surrounds the 1980s Hull streets show, as on the windows line?",
+  "The west shop row has one storey: its three side doors become a service door and two household doors (recommended), or flats in its roof with household doors on all three?"
+ ],
+ "sources": {
+  "photographs": {
+   "P1": {
+    "src": "front-door target (3.1)",
+    "title": "Front door, 69 Lower Brimley Road, Teignmouth",
+    "author": "Robin Stott",
+    "licence": "CC BY-SA 2.0",
+    "taken": "2012-05-06",
+    "period": "later; the type is the 1890s four-panel door",
+    "used_for": "T1 and F1 (kept), the bell push's plain oblong, the brass plate, the rim night latch",
+    "preview": "production/previews/cloud-week/refs/front-door/door-photo-01-teignmouth-four-panel-red.jpg",
+    "reached_by_me": "preview only (3.1's page not reachable then)"
+   },
+   "P2": {
+    "src": "front-door target (3.1)",
+    "title": "Doorway Philip Lane Tottenham London England",
+    "author": "Acabashi",
+    "licence": "CC BY-SA 4.0",
+    "taken": "2024-02-03",
+    "period": "later; an unrestored door of the old type",
+    "used_for": "F2 six-panel, centre knob, plugged keyhole, wear",
+    "preview": "production/previews/cloud-week/refs/front-door/door-photo-02-tottenham-six-panel-black.jpg",
+    "reached_by_me": "preview only"
+   },
+   "D1": {
+    "gid": "7292055",
+    "title": "Carrville Terrace",
+    "author": "David M Clark",
+    "licence": "CC BY-SA 2.0",
+    "taken": "1975-01-22",
+    "url": "https://www.geograph.org.uk/photo/7292055",
+    "size_px": [
+     534,
+     800
+    ],
+    "period": "the period (1975)",
+    "shows": "two doors in white frames under painted-cement hoods, each with a transom light: a deep teal door of two long panels, and a blue-grey door of four stacked lights with a low letter plate in its bottom rail; a white painted step",
+    "used_for": "F3 two long panels, the low letter plate, the stacked lights (vertical rows only: the leaves are seen at an angle from the right)",
+    "preview": "d1-durham-carrville-terrace-1975-two-doors.jpg"
+   },
+   "D2": {
+    "gid": "2238747",
+    "title": "Terraced housing in Railway Street",
+    "author": "P L Chadwick",
+    "licence": "CC BY-SA 2.0",
+    "taken": "1987-08-09",
+    "url": "https://www.geograph.org.uk/photo/2238747",
+    "size_px": [
+     800,
+     529
+    ],
+    "period": "the period (1987)",
+    "shows": "a stone terrace: a mustard door of three long narrow lights, a khaki flush door with a tall slit light, a lever handle and a small plate under the slit (white frame, dark transom), a white door with an oval plaque",
+    "used_for": "F4 three long lights, F5 slit-light flush door, the lever handle, the slit plate",
+    "preview": "d2-railway-street-1987-three-doors.jpg"
+   },
+   "D3": {
+    "gid": "2321423",
+    "title": "Terraced House - Ratcliffe Street, Levenshulme",
+    "author": "Anthony Parkes",
+    "licence": "CC BY-SA 2.0",
+    "taken": "1994-06-10",
+    "url": "https://www.geograph.org.uk/photo/2321423",
+    "size_px": [
+     658,
+     1024
+    ],
+    "period": "the period (1994); the door is a 1930s type kept in 1994",
+    "shows": "a brick terrace front square on: a white door of four stacked lights with nets, a leaded diamond fanlight, a dark vertical pull handle on the left stile",
+    "used_for": "T2 four stacked lights, the leaded fanlight, the bar pull",
+    "preview": "d3-levenshulme-ratcliffe-street-1994-four-light-door.jpg"
+   },
+   "D4": {
+    "gid": "689253",
+    "title": "Nos. 34, 32 and 30, Frederick Street, Barnoldswick",
+    "author": "Dr Neil Clifton",
+    "licence": "CC BY-SA 2.0",
+    "taken": "1990-04-10",
+    "url": "https://www.geograph.org.uk/photo/689253",
+    "size_px": [
+     640,
+     550
+    ],
+    "period": "the period (1990), black and white; the page says 'mostly modernised with double glazing'",
+    "shows": "three doors of a stone terrace: a pale flush door with a tall slit light, a dark door in a white frame with a transom and a low plate at its foot, a white moulded door with a small arched light, an oblong letter plate and two embossed panels",
+    "used_for": "T3 moulded modern door, the slit light's height, the low letter plate",
+    "preview": "d4-barnoldswick-frederick-street-1990-three-doors.jpg"
+   },
+   "D5": {
+    "gid": null,
+    "title": "Hazlehead I, Provost Graham Avenue (SC 1141987)",
+    "author": "Miles Glendinning (Tower Block Archive, Edinburgh College of Art)",
+    "licence": "CC BY 4.0",
+    "taken": "1987",
+    "url": "https://commons.wikimedia.org/wiki/File:Hazlehead_I,_Provost_Graham_Avenue_(SC_1141987).png",
+    "size_px": [
+     4000,
+     2646
+    ],
+    "period": "the period (1987); a flush door of a council flat's landing, the same leaf the council fitted to its houses",
+    "shows": "an olive-green flush door with an oblong letter plate at its middle, a lever handle on the right stile, a spyhole above the plate, white frame with a reeded transom and reeded sidelight",
+    "used_for": "F6 council flush door, the chrome-look oblong plate, the lever handle, reeded glass",
+    "preview": "d5-aberdeen-hazlehead-1987-council-flush-door.jpg",
+    "read_by_me": "file page via the Commons API (date 1987, CC BY 4.0, uploaded with the University of Edinburgh); the 1920 px copy was measured"
+   },
+   "D6": {
+    "gid": "7982731",
+    "title": "Rensburg Street, Kingston upon Hull",
+    "author": "Bernard Sharp",
+    "licence": "CC BY-SA 2.0",
+    "taken": "1982-03-19",
+    "url": "https://www.geograph.org.uk/photo/7982731",
+    "size_px": [
+     1024,
+     660
+    ],
+    "period": "the period (1982)",
+    "shows": "a Hull terrace in 1982: recessed doorways under painted hoods in blue and red, a bright blue door with a white numeral painted on it, a black door with a yellow foot, painted brick surrounds",
+    "used_for": "the bright blue and the red door colours (a box inside the leaf), the painted numeral, the hood",
+    "preview": "d6-hull-rensburg-street-1982-blue-door.jpg"
+   },
+   "D7": {
+    "gid": "3462921",
+    "title": "Abbey Street, Kingston upon Hull",
+    "author": "Bernard Sharp",
+    "licence": "CC BY-SA 2.0",
+    "taken": "1986-06-08",
+    "url": "https://www.geograph.org.uk/photo/3462921",
+    "size_px": [
+     1024,
+     661
+    ],
+    "period": "the period (1986)",
+    "shows": "the same kind of street, arched recessed doorways with a rendered arch, a lime-green door, red and brown doors, a blue painted gutter",
+    "used_for": "the lime-green and brown door colours, the recess",
+    "preview": "d7-hull-abbey-street-1986-arched-doorways.jpg"
+   },
+   "D8": {
+    "gid": "3462940",
+    "title": "Brazil Street, Kingston upon Hull",
+    "author": "Bernard Sharp",
+    "licence": "CC BY-SA 2.0",
+    "taken": "1986-06-08",
+    "url": "https://www.geograph.org.uk/photo/3462940",
+    "size_px": [
+     1024,
+     669
+    ],
+    "period": "the period (1986)",
+    "shows": "a street of Hull terraces with brightly painted frames, canopies and doors (red, blue, yellow, sky blue)",
+    "used_for": "the finding that these streets paint frames and doors in bright colours, set against Jafar's white-frames ruling (owed line 2); no number taken from it",
+    "preview": "d8-hull-brazil-street-1986-painted-frames.jpg"
+   },
+   "D9": {
+    "gid": "2876894",
+    "title": "Newburn Council Houses",
+    "author": "Kevin Hall",
+    "licence": "CC BY-SA 2.0",
+    "taken": "1989-08-01",
+    "url": "https://www.geograph.org.uk/photo/2876894",
+    "size_px": [
+     1024,
+     686
+    ],
+    "period": "the period (mid to late 1989)",
+    "shows": "1960s council houses: flush doors under small concrete canopies, one painted turquoise",
+    "used_for": "the council turquoise (a box inside the leaf)",
+    "preview": "d9-newburn-council-houses-1989-turquoise-door.jpg"
+   },
+   "D10": {
+    "gid": "3911943",
+    "title": "Old Town, Poole: in search of the boot scraper",
+    "author": "Mike Searle",
+    "licence": "CC BY-SA 2.0",
+    "taken": "2014-03-30",
+    "url": "https://www.geograph.org.uk/photo/3911943",
+    "size_px": [
+     640,
+     427
+    ],
+    "period": "later (2014). The object is a cast-iron scraper set by a town house's step in the 19th century and left in place; iron fittings of this kind were never renewed, so its form is the period's",
+    "shows": "a cast-iron boot scraper beside a painted step: a straight blade between two end standards with scroll tops",
+    "used_for": "the boot scraper's form (the sizes are Judgement, the photograph has no scale in its plane)",
+    "preview": "d10-poole-boot-scraper-2014.jpg"
+   }
+  },
+  "books": {
+   "H": {
+    "title": "P. N. Hasluck, Cassell's Carpentry and Joinery",
+    "year": 1907,
+    "pages": "pp.312-317, Figs. 1015-1039 (ledged, ledged and braced, framed and braced doors)",
+    "url": "https://archive.org/details/cassellscarpentr00hasl",
+    "how_read": "the OCR text (djvu.txt) of the page range; the page images were not opened by me",
+    "says": "boards 3 in to 7 in wide, 3/4 in to 1 1/4 in thick, grooved and tongued, edges beaded or chamfered to a V joint; ledges nailed across with wrought-iron nails driven from the face and clenched; hook-and-plate hinges; the frame square with no beads or stops, the door overhanging"
+   },
+   "E": {
+    "title": "George Ellis, Modern Practical Joinery",
+    "year": 1902,
+    "pages": "pp.92, 93 (via the 3.1 target)",
+    "how_read": "through production/cloud-week/targets/front-door/TARGET.md"
+   },
+   "R": {
+    "title": "J. W. Riley, A Manual of Carpentry and Joinery",
+    "year": 1905,
+    "pages": "p.357 (via the 3.1 target)",
+    "how_read": "through production/cloud-week/targets/front-door/TARGET.md"
+   }
+  },
+  "measurements": {
+   "D3_leaf": {
+    "photo": "D3",
+    "box": [
+     45.75,
+     443.75,
+     124.25,
+     633.75
+    ],
+    "leaf_mm": [
+     772.0,
+     1927.6
+    ],
+    "error_px": 1.5,
+    "what": "the door leaf: left stile's outer edge, right stile's outer edge, top of the top rail, foot of the bottom rail"
+   },
+   "D3_rows": {
+    "photo": "D3",
+    "rows_px": {
+     "light1": [
+      449.5,
+      488.75
+     ],
+     "light2": [
+      491.75,
+      531.25
+     ],
+     "light3": [
+      534.25,
+      574.25
+     ],
+     "light4": [
+      577.0,
+      613.75
+     ]
+    },
+    "what": "the four lights, top and foot row of each (the glass between the bars)",
+    "error_px": 1.5
+   },
+   "D3_stiles": {
+    "photo": "D3",
+    "left_px": [
+     45.75,
+     55.5
+    ],
+    "right_px": [
+     114.5,
+     124.25
+    ],
+    "what": "the two stiles (outer edge to the glass)",
+    "error_px": 1.5
+   },
+   "D3_handle": {
+    "photo": "D3",
+    "box": [
+     46.0,
+     498.25,
+     52.0,
+     524.25
+    ],
+    "what": "the dark vertical pull handle on the left stile",
+    "error_px": 1.5
+   },
+   "D3_fanlight": {
+    "photo": "D3",
+    "box": [
+     40.0,
+     376.0,
+     122.0,
+     436.0
+    ],
+    "what": "the leaded fanlight over the leaf (taller than the T frame's 267 mm light: the type is taken, not the height)",
+    "error_px": 2.0
+   },
+   "D4_T3_leaf": {
+    "photo": "D4",
+    "box": [
+     545.0,
+     345.0,
+     581.0,
+     434.0
+    ],
+    "leaf_mm": [
+     772.0,
+     1927.6
+    ],
+    "error_px": 1.5,
+    "what": "the white moulded door's outer edge"
+   },
+   "D4_T3_light": {
+    "photo": "D4",
+    "box": [
+     559.0,
+     363.0,
+     568.0,
+     384.0
+    ],
+    "what": "the small arched light (its square foot)",
+    "error_px": 1.0
+   },
+   "D4_T3_plate": {
+    "photo": "D4",
+    "box": [
+     558.0,
+     392.5,
+     570.0,
+     395.6
+    ],
+    "what": "the oblong letter plate",
+    "error_px": 1.0
+   },
+   "D4_T3_upper": {
+    "photo": "D4",
+    "box": [
+     550.6,
+     350.6,
+     577.0,
+     388.7
+    ],
+    "what": "the upper embossed panel's outline",
+    "error_px": 1.5
+   },
+   "D4_T3_lower": {
+    "photo": "D4",
+    "box": [
+     555.0,
+     400.0,
+     574.0,
+     419.0
+    ],
+    "what": "the lower embossed panel's inner outline",
+    "error_px": 1.5
+   },
+   "D4_T3_handle": {
+    "photo": "D4",
+    "box": [
+     581.0,
+     394.0,
+     583.0,
+     398.0
+    ],
+    "what": "the small lever at the lock edge",
+    "error_px": 1.5
+   },
+   "D4_slit": {
+    "photo": "D4",
+    "box": [
+     357.0,
+     340.0,
+     363.0,
+     383.75
+    ],
+    "leaf_box": [
+     345.0,
+     332.0,
+     370.0,
+     408.0
+    ],
+    "what": "the pale door's slit light and its leaf (the leaf is seen a little obliquely: rows only)",
+    "error_px": 1.5
+   },
+   "D4_low_plate": {
+    "photo": "D4",
+    "box": [
+     392.0,
+     405.0,
+     402.0,
+     408.0
+    ],
+    "leaf_box": [
+     384.0,
+     335.0,
+     407.0,
+     410.0
+    ],
+    "what": "the low letter plate at the dark door's foot (rows only)",
+    "error_px": 1.0
+   },
+   "D2_F5_leaf": {
+    "photo": "D2",
+    "box": [
+     561.0,
+     280.5,
+     595.5,
+     363.0
+    ],
+    "leaf_mm": [
+     797.2,
+     1960.6
+    ],
+    "error_px": 1.5,
+    "what": "the khaki flush door, top edge below the transom rail, foot at the step"
+   },
+   "D2_F5_slit": {
+    "photo": "D2",
+    "box": [
+     574.0,
+     287.0,
+     582.8,
+     324.5
+    ],
+    "what": "the slit light",
+    "error_px": 1.0
+   },
+   "D2_F5_plate": {
+    "photo": "D2",
+    "box": [
+     572.5,
+     327.5,
+     583.5,
+     329.5
+    ],
+    "what": "the small pale plate under the slit",
+    "error_px": 1.0
+   },
+   "D2_F5_handle": {
+    "photo": "D2",
+    "box": [
+     561.5,
+     315.5,
+     565.0,
+     319.0
+    ],
+    "what": "the small pale handle at the left stile",
+    "error_px": 1.0
+   },
+   "D2_F4_cols": {
+    "photo": "D2",
+    "leaf_x_px": [
+     374.5,
+     404.5
+    ],
+    "light_x_px": [
+     [
+      381.5,
+      387.5
+     ],
+     [
+      389.5,
+      396.0
+     ],
+     [
+      398.5,
+      404.5
+     ]
+    ],
+    "bar_x_px": [
+     [
+      388.0,
+      389.5
+     ],
+     [
+      396.5,
+      398.0
+     ]
+    ],
+    "what": "the three long narrow lights and the two bars between them, across; the leaf's right edge is hidden in shadow",
+    "error_px": 1.0
+   },
+   "D2_F4_top": {
+    "photo": "D2",
+    "rows_px": {
+     "top_rail": [
+      270.0,
+      273.0
+     ]
+    },
+    "what": "the top rail",
+    "error_px": 1.0
+   },
+   "D5_leaf": {
+    "photo": "D5",
+    "box": [
+     450.0,
+     137.0,
+     775.0,
+     970.0
+    ],
+    "leaf_mm": [
+     762.0,
+     1981.0
+    ],
+    "error_px": 3.0,
+    "what": "the leaf: left edge, right edge, top, the floor line"
+   },
+   "D5_plate": {
+    "photo": "D5",
+    "box": [
+     561.0,
+     570.0,
+     668.0,
+     600.0
+    ],
+    "what": "the oblong letter plate",
+    "error_px": 3.0
+   },
+   "D5_handle": {
+    "photo": "D5",
+    "box": [
+     725.0,
+     582.5,
+     770.0,
+     597.5
+    ],
+    "what": "the lever handle on the right stile",
+    "error_px": 3.0
+   },
+   "D5_spy": {
+    "photo": "D5",
+    "box": [
+     595.0,
+     330.0,
+     630.0,
+     342.0
+    ],
+    "what": "the round spyhole, its place only (blurred)",
+    "error_px": 5.0
+   },
+   "D1_L": {
+    "photo": "D1",
+    "leaf_rows_px": [
+     517.0,
+     667.0
+    ],
+    "transom_rows_px": [
+     480.0,
+     509.0
+    ],
+    "what": "the teal door: leaf top and foot, the transom light",
+    "error_px": 1.5
+   },
+   "D1_R": {
+    "photo": "D1",
+    "leaf_rows_px": [
+     517.0,
+     667.0
+    ],
+    "light_rows_px": [
+     [
+      517.0,
+      548.0
+     ],
+     [
+      552.0,
+      582.0
+     ],
+     [
+      588.0,
+      617.0
+     ],
+     [
+      622.0,
+      655.0
+     ]
+    ],
+    "plate_rows_px": [
+     659.0,
+     662.5
+    ],
+    "what": "the blue-grey door: the four lights and the low plate",
+    "error_px": 1.5
+   }
+  },
+  "colour_boxes": {
+   "D1_L_teal": {
+    "photo": "D1",
+    "box": [
+     48,
+     525,
+     66,
+     640
+    ],
+    "median_rgb": [
+     28,
+     39,
+     29
+    ],
+    "note": "shade; almost black-green"
+   },
+   "D2_F4_mustard": {
+    "photo": "D2",
+    "box": [
+     375,
+     282,
+     380,
+     330
+    ],
+    "median_rgb": [
+     142,
+     136,
+     39
+    ],
+    "note": "yellow-olive"
+   },
+   "D2_F5_khaki": {
+    "photo": "D2",
+    "box": [
+     563,
+     290,
+     572,
+     325
+    ],
+    "median_rgb": [
+     136,
+     132,
+     83
+    ],
+    "note": "grey-olive"
+   },
+   "D5_olive": {
+    "photo": "D5",
+    "box": [
+     470,
+     200,
+     740,
+     500
+    ],
+    "median_rgb": [
+     114,
+     102,
+     65
+    ],
+    "note": "olive, inside; flat"
+   },
+   "D6_blue": {
+    "photo": "D6",
+    "box": [
+     838,
+     335,
+     850,
+     415
+    ],
+    "median_rgb": [
+     26,
+     67,
+     117
+    ],
+    "note": "strong blue"
+   },
+   "D7_lime": {
+    "photo": "D7",
+    "box": [
+     648,
+     400,
+     664,
+     560
+    ],
+    "median_rgb": [
+     119,
+     119,
+     41
+    ],
+    "note": "lime-olive"
+   },
+   "D9_turquoise": {
+    "photo": "D9",
+    "box": [
+     393,
+     620,
+     399,
+     630
+    ],
+    "median_rgb": [
+     22,
+     108,
+     126
+    ],
+    "note": "turquoise, a small box low on the leaf"
+   }
+  }
+ },
+ "rulings_checked": [
+  {
+   "ruling": "3 Oct: the proof view's bars: windows with white frames, sash bars, sky in the glass",
+   "applies": "the fanlights are windows and the Hook sheet's door surrounds are white: every frame colour is white or grimed white; 3.1's cream frame option is dropped; the Hull streets' painted surrounds (D8) are NOT adopted: owed line 2"
+  },
+  {
+   "ruling": "21 Sep and 1 Oct: the Hook sheet governs mood, palette and composition; dated photographs govern what things looked like and win",
+   "applies": "dark doors lead (black, dark green, maroon, navy, brown, deep teal); the bright 1980s colours the photographs show are limited to 2 doors of 12: owed line 1"
+  },
+  {
+   "ruling": "8 Oct: kit pieces period books draw (doors): a fresh helper writes the target; photographs win over books",
+   "applies": "this target; Hasluck is followed only for the ledged door, for which no photograph was reached"
+  },
+  {
+   "ruling": "2 Oct: Rita's window is the model; the other shopfronts are made like it",
+   "applies": "Rita's side door is the shopfront kit's own; the target gives it F1 and the kit keeps its fanlight"
+  },
+  {
+   "ruling": "4 Oct (terrace-front.py, Jafar: every house on the right is the same): each house its own door colour, never its neighbour's",
+   "applies": "the adjacency rule; the 12 doors share no colour with a neighbour on their side"
+  },
+  {
+   "ruling": "13 Oct: no alcohol or gambling shown; no children; no real firm or maker; night light (1.0, 0.25, 0.0) linear",
+   "applies": "no pub, sign or drink in any preview; 'rim night latch'; the gate's night view uses the lantern colour"
+  }
+ ],
+ "gate": {
+  "views": {
+   "T1": [
+    {
+     "name": "front",
+     "ortho": 4.0,
+     "loc": [
+      0.0,
+      -10.0,
+      1.45
+     ],
+     "target": [
+      0.0,
+      0.0,
+      1.45
+     ]
+    },
+    {
+     "name": "street",
+     "loc": [
+      -2.0,
+      -3.5,
+      1.6
+     ],
+     "target": [
+      0.0,
+      0.0,
+      1.35
+     ],
+     "lens": 32
+    },
+    {
+     "name": "close",
+     "loc": [
+      0.33,
+      -1.2,
+      1.44
+     ],
+     "target": [
+      0.25,
+      0.19,
+      1.44
+     ],
+     "lens": 50
+    },
+    {
+     "name": "low",
+     "loc": [
+      -7.0,
+      -2.7,
+      1.6
+     ],
+     "target": [
+      0.0,
+      0.0,
+      1.2
+     ],
+     "lens": 50
+    },
+    {
+     "name": "front_head",
+     "ortho": 1.9,
+     "loc": [
+      0.0,
+      -10.0,
+      2.25
+     ],
+     "target": [
+      0.0,
+      0.0,
+      2.25
+     ]
+    },
+    {
+     "name": "front_foot",
+     "ortho": 1.9,
+     "loc": [
+      0.0,
+      -10.0,
+      0.5
+     ],
+     "target": [
+      0.0,
+      0.0,
+      0.5
+     ]
+    },
+    {
+     "name": "close_plate",
+     "loc": [
+      0.1,
+      -1.0,
+      1.63
+     ],
+     "target": [
+      0.0,
+      0.19,
+      1.63
+     ],
+     "lens": 50
+    }
+   ],
+   "T2": [
+    {
+     "name": "front",
+     "ortho": 4.0,
+     "loc": [
+      0.0,
+      -10.0,
+      1.45
+     ],
+     "target": [
+      0.0,
+      0.0,
+      1.45
+     ]
+    },
+    {
+     "name": "street",
+     "loc": [
+      -2.0,
+      -3.5,
+      1.6
+     ],
+     "target": [
+      0.0,
+      0.0,
+      1.35
+     ],
+     "lens": 32
+    },
+    {
+     "name": "close",
+     "loc": [
+      0.33,
+      -1.2,
+      0.68
+     ],
+     "target": [
+      0.25,
+      0.19,
+      0.68
+     ],
+     "lens": 50
+    },
+    {
+     "name": "low",
+     "loc": [
+      -7.0,
+      -2.7,
+      1.6
+     ],
+     "target": [
+      0.0,
+      0.0,
+      1.2
+     ],
+     "lens": 50
+    },
+    {
+     "name": "front_head",
+     "ortho": 1.9,
+     "loc": [
+      0.0,
+      -10.0,
+      2.25
+     ],
+     "target": [
+      0.0,
+      0.0,
+      2.25
+     ]
+    },
+    {
+     "name": "front_foot",
+     "ortho": 1.9,
+     "loc": [
+      0.0,
+      -10.0,
+      0.5
+     ],
+     "target": [
+      0.0,
+      0.0,
+      0.5
+     ]
+    },
+    {
+     "name": "close_plate",
+     "loc": [
+      0.1,
+      -1.0,
+      0.11
+     ],
+     "target": [
+      0.0,
+      0.19,
+      0.11
+     ],
+     "lens": 50
+    }
+   ],
+   "T3": [
+    {
+     "name": "front",
+     "ortho": 4.0,
+     "loc": [
+      0.0,
+      -10.0,
+      1.45
+     ],
+     "target": [
+      0.0,
+      0.0,
+      1.45
+     ]
+    },
+    {
+     "name": "street",
+     "loc": [
+      -2.0,
+      -3.5,
+      1.6
+     ],
+     "target": [
+      0.0,
+      0.0,
+      1.35
+     ],
+     "lens": 32
+    },
+    {
+     "name": "close",
+     "loc": [
+      0.33,
+      -1.2,
+      0.85
+     ],
+     "target": [
+      0.25,
+      0.19,
+      0.85
+     ],
+     "lens": 50
+    },
+    {
+     "name": "low",
+     "loc": [
+      -7.0,
+      -2.7,
+      1.6
+     ],
+     "target": [
+      0.0,
+      0.0,
+      1.2
+     ],
+     "lens": 50
+    },
+    {
+     "name": "front_head",
+     "ortho": 1.9,
+     "loc": [
+      0.0,
+      -10.0,
+      2.25
+     ],
+     "target": [
+      0.0,
+      0.0,
+      2.25
+     ]
+    },
+    {
+     "name": "front_foot",
+     "ortho": 1.9,
+     "loc": [
+      0.0,
+      -10.0,
+      0.5
+     ],
+     "target": [
+      0.0,
+      0.0,
+      0.5
+     ]
+    },
+    {
+     "name": "close_plate",
+     "loc": [
+      0.1,
+      -1.0,
+      0.88
+     ],
+     "target": [
+      0.0,
+      0.19,
+      0.88
+     ],
+     "lens": 50
+    }
+   ],
+   "F1": [
+    {
+     "name": "front",
+     "ortho": 3.6,
+     "loc": [
+      0.0,
+      -10.0,
+      1.3
+     ],
+     "target": [
+      0.0,
+      0.0,
+      1.3
+     ]
+    },
+    {
+     "name": "street",
+     "loc": [
+      -2.0,
+      -3.5,
+      1.6
+     ],
+     "target": [
+      0.0,
+      0.0,
+      1.25
+     ],
+     "lens": 32
+    },
+    {
+     "name": "close",
+     "loc": [
+      0.33,
+      -1.2,
+      1.35
+     ],
+     "target": [
+      0.25,
+      0.19,
+      1.35
+     ],
+     "lens": 50
+    },
+    {
+     "name": "low",
+     "loc": [
+      -7.0,
+      -2.7,
+      1.6
+     ],
+     "target": [
+      0.0,
+      0.0,
+      1.2
+     ],
+     "lens": 50
+    },
+    {
+     "name": "front_head",
+     "ortho": 1.9,
+     "loc": [
+      0.0,
+      -10.0,
+      2.1
+     ],
+     "target": [
+      0.0,
+      0.0,
+      2.1
+     ]
+    },
+    {
+     "name": "front_foot",
+     "ortho": 1.9,
+     "loc": [
+      0.0,
+      -10.0,
+      0.5
+     ],
+     "target": [
+      0.0,
+      0.0,
+      0.5
+     ]
+    },
+    {
+     "name": "close_plate",
+     "loc": [
+      0.1,
+      -1.0,
+      1.63
+     ],
+     "target": [
+      0.0,
+      0.19,
+      1.63
+     ],
+     "lens": 50
+    }
+   ],
+   "F2": [
+    {
+     "name": "front",
+     "ortho": 3.6,
+     "loc": [
+      0.0,
+      -10.0,
+      1.3
+     ],
+     "target": [
+      0.0,
+      0.0,
+      1.3
+     ]
+    },
+    {
+     "name": "street",
+     "loc": [
+      -2.0,
+      -3.5,
+      1.6
+     ],
+     "target": [
+      0.0,
+      0.0,
+      1.25
+     ],
+     "lens": 32
+    },
+    {
+     "name": "close",
+     "loc": [
+      0.33,
+      -1.2,
+      1.31
+     ],
+     "target": [
+      0.25,
+      0.19,
+      1.31
+     ],
+     "lens": 50
+    },
+    {
+     "name": "low",
+     "loc": [
+      -7.0,
+      -2.7,
+      1.6
+     ],
+     "target": [
+      0.0,
+      0.0,
+      1.2
+     ],
+     "lens": 50
+    },
+    {
+     "name": "front_head",
+     "ortho": 1.9,
+     "loc": [
+      0.0,
+      -10.0,
+      2.1
+     ],
+     "target": [
+      0.0,
+      0.0,
+      2.1
+     ]
+    },
+    {
+     "name": "front_foot",
+     "ortho": 1.9,
+     "loc": [
+      0.0,
+      -10.0,
+      0.5
+     ],
+     "target": [
+      0.0,
+      0.0,
+      0.5
+     ]
+    },
+    {
+     "name": "close_plate",
+     "loc": [
+      0.1,
+      -1.0,
+      1.57
+     ],
+     "target": [
+      0.0,
+      0.19,
+      1.57
+     ],
+     "lens": 50
+    }
+   ],
+   "F3": [
+    {
+     "name": "front",
+     "ortho": 3.6,
+     "loc": [
+      0.0,
+      -10.0,
+      1.3
+     ],
+     "target": [
+      0.0,
+      0.0,
+      1.3
+     ]
+    },
+    {
+     "name": "street",
+     "loc": [
+      -2.0,
+      -3.5,
+      1.6
+     ],
+     "target": [
+      0.0,
+      0.0,
+      1.25
+     ],
+     "lens": 32
+    },
+    {
+     "name": "close",
+     "loc": [
+      0.33,
+      -1.2,
+      1.61
+     ],
+     "target": [
+      0.25,
+      0.19,
+      1.61
+     ],
+     "lens": 50
+    },
+    {
+     "name": "low",
+     "loc": [
+      -7.0,
+      -2.7,
+      1.6
+     ],
+     "target": [
+      0.0,
+      0.0,
+      1.2
+     ],
+     "lens": 50
+    },
+    {
+     "name": "front_head",
+     "ortho": 1.9,
+     "loc": [
+      0.0,
+      -10.0,
+      2.1
+     ],
+     "target": [
+      0.0,
+      0.0,
+      2.1
+     ]
+    },
+    {
+     "name": "front_foot",
+     "ortho": 1.9,
+     "loc": [
+      0.0,
+      -10.0,
+      0.5
+     ],
+     "target": [
+      0.0,
+      0.0,
+      0.5
+     ]
+    },
+    {
+     "name": "close_plate",
+     "loc": [
+      0.1,
+      -1.0,
+      1.63
+     ],
+     "target": [
+      0.0,
+      0.19,
+      1.63
+     ],
+     "lens": 50
+    }
+   ],
+   "F4": [
+    {
+     "name": "front",
+     "ortho": 3.6,
+     "loc": [
+      0.0,
+      -10.0,
+      1.3
+     ],
+     "target": [
+      0.0,
+      0.0,
+      1.3
+     ]
+    },
+    {
+     "name": "street",
+     "loc": [
+      -2.0,
+      -3.5,
+      1.6
+     ],
+     "target": [
+      0.0,
+      0.0,
+      1.25
+     ],
+     "lens": 32
+    },
+    {
+     "name": "close",
+     "loc": [
+      0.33,
+      -1.2,
+      0.67
+     ],
+     "target": [
+      0.25,
+      0.19,
+      0.67
+     ],
+     "lens": 50
+    },
+    {
+     "name": "low",
+     "loc": [
+      -7.0,
+      -2.7,
+      1.6
+     ],
+     "target": [
+      0.0,
+      0.0,
+      1.2
+     ],
+     "lens": 50
+    },
+    {
+     "name": "front_head",
+     "ortho": 1.9,
+     "loc": [
+      0.0,
+      -10.0,
+      2.1
+     ],
+     "target": [
+      0.0,
+      0.0,
+      2.1
+     ]
+    },
+    {
+     "name": "front_foot",
+     "ortho": 1.9,
+     "loc": [
+      0.0,
+      -10.0,
+      0.5
+     ],
+     "target": [
+      0.0,
+      0.0,
+      0.5
+     ]
+    },
+    {
+     "name": "close_plate",
+     "loc": [
+      0.1,
+      -1.0,
+      0.11
+     ],
+     "target": [
+      0.0,
+      0.19,
+      0.11
+     ],
+     "lens": 50
+    }
+   ],
+   "F5": [
+    {
+     "name": "front",
+     "ortho": 3.6,
+     "loc": [
+      0.0,
+      -10.0,
+      1.3
+     ],
+     "target": [
+      0.0,
+      0.0,
+      1.3
+     ]
+    },
+    {
+     "name": "street",
+     "loc": [
+      -2.0,
+      -3.5,
+      1.6
+     ],
+     "target": [
+      0.0,
+      0.0,
+      1.25
+     ],
+     "lens": 32
+    },
+    {
+     "name": "close",
+     "loc": [
+      0.33,
+      -1.2,
+      0.96
+     ],
+     "target": [
+      0.25,
+      0.19,
+      0.96
+     ],
+     "lens": 50
+    },
+    {
+     "name": "low",
+     "loc": [
+      -7.0,
+      -2.7,
+      1.6
+     ],
+     "target": [
+      0.0,
+      0.0,
+      1.2
+     ],
+     "lens": 50
+    },
+    {
+     "name": "front_head",
+     "ortho": 1.9,
+     "loc": [
+      0.0,
+      -10.0,
+      2.1
+     ],
+     "target": [
+      0.0,
+      0.0,
+      2.1
+     ]
+    },
+    {
+     "name": "front_foot",
+     "ortho": 1.9,
+     "loc": [
+      0.0,
+      -10.0,
+      0.5
+     ],
+     "target": [
+      0.0,
+      0.0,
+      0.5
+     ]
+    },
+    {
+     "name": "close_plate",
+     "loc": [
+      0.1,
+      -1.0,
+      0.83
+     ],
+     "target": [
+      0.0,
+      0.19,
+      0.83
+     ],
+     "lens": 50
+    }
+   ],
+   "F6": [
+    {
+     "name": "front",
+     "ortho": 3.6,
+     "loc": [
+      0.0,
+      -10.0,
+      1.3
+     ],
+     "target": [
+      0.0,
+      0.0,
+      1.3
+     ]
+    },
+    {
+     "name": "street",
+     "loc": [
+      -2.0,
+      -3.5,
+      1.6
+     ],
+     "target": [
+      0.0,
+      0.0,
+      1.25
+     ],
+     "lens": 32
+    },
+    {
+     "name": "close",
+     "loc": [
+      0.33,
+      -1.2,
+      0.92
+     ],
+     "target": [
+      0.25,
+      0.19,
+      0.92
+     ],
+     "lens": 50
+    },
+    {
+     "name": "low",
+     "loc": [
+      -7.0,
+      -2.7,
+      1.6
+     ],
+     "target": [
+      0.0,
+      0.0,
+      1.2
+     ],
+     "lens": 50
+    },
+    {
+     "name": "front_head",
+     "ortho": 1.9,
+     "loc": [
+      0.0,
+      -10.0,
+      2.1
+     ],
+     "target": [
+      0.0,
+      0.0,
+      2.1
+     ]
+    },
+    {
+     "name": "front_foot",
+     "ortho": 1.9,
+     "loc": [
+      0.0,
+      -10.0,
+      0.5
+     ],
+     "target": [
+      0.0,
+      0.0,
+      0.5
+     ]
+    },
+    {
+     "name": "close_plate",
+     "loc": [
+      0.1,
+      -1.0,
+      0.93
+     ],
+     "target": [
+      0.0,
+      0.19,
+      0.93
+     ],
+     "lens": 50
+    }
+   ],
+   "F7": [
+    {
+     "name": "front",
+     "ortho": 3.6,
+     "loc": [
+      0.0,
+      -10.0,
+      1.3
+     ],
+     "target": [
+      0.0,
+      0.0,
+      1.3
+     ]
+    },
+    {
+     "name": "street",
+     "loc": [
+      -2.0,
+      -3.5,
+      1.6
+     ],
+     "target": [
+      0.0,
+      0.0,
+      1.25
+     ],
+     "lens": 32
+    },
+    {
+     "name": "close",
+     "loc": [
+      0.33,
+      -1.2,
+      1.01
+     ],
+     "target": [
+      0.25,
+      0.19,
+      1.01
+     ],
+     "lens": 50
+    },
+    {
+     "name": "low",
+     "loc": [
+      -7.0,
+      -2.7,
+      1.6
+     ],
+     "target": [
+      0.0,
+      0.0,
+      1.2
+     ],
+     "lens": 50
+    },
+    {
+     "name": "front_head",
+     "ortho": 1.9,
+     "loc": [
+      0.0,
+      -10.0,
+      2.1
+     ],
+     "target": [
+      0.0,
+      0.0,
+      2.1
+     ]
+    },
+    {
+     "name": "front_foot",
+     "ortho": 1.9,
+     "loc": [
+      0.0,
+      -10.0,
+      0.5
+     ],
+     "target": [
+      0.0,
+      0.0,
+      0.5
+     ]
+    },
+    {
+     "name": "close_plate",
+     "loc": [
+      0.1,
+      -1.0,
+      1.01
+     ],
+     "target": [
+      0.0,
+      0.19,
+      1.01
+     ],
+     "lens": 50
+    }
+   ]
+  },
+  "pass_rule": {
+   "front_view_by_layer": "IoU >= 0.97, outline p95 <= 2 mm, worst <= 6 mm (3.1's rule)",
+   "sections": "IoU >= 0.97, p95 <= 2 mm, worst <= 6 mm",
+   "profiles": "p95 <= 1.5 mm, worst <= 3 mm"
+  },
+  "street_views": [
+   {
+    "name": "hook_day",
+    "from": "vignette-scene.json cameras cam_A (x 4 east footway, looking up +x), condition overcast_day",
+    "sees": "the west cottages' near doors and the east parade's side doors in perspective"
+   },
+   {
+    "name": "reverse_day",
+    "from": "the reverse camera of the same file",
+    "sees": "the east parade's row from the quay end"
+   },
+   {
+    "name": "street_night",
+    "from": "cam_A, condition wet_night",
+    "light": {
+     "lantern_colour_linear": [
+      1.0,
+      0.25,
+      0.0
+     ],
+     "note": "the game's lantern colour, never the stale (1, 0.7055, 0)"
+    }
+   },
+   {
+    "name": "row_east",
+    "from": "an orthographic elevation at 1.6 m of the east side, x 3 to 46, from the west footway",
+    "reads": "no two neighbours alike (checks AD1 to AD6)"
+   },
+   {
+    "name": "row_west",
+    "from": "the same for the west side",
+    "reads": "as above"
+   }
+  ],
+  "photograph_pairs": [
+   {
+    "kind": "T2",
+    "photographs": [
+     "D3",
+     "D1"
+    ],
+    "reads": "four lights equal, bars thin, a low plate, a bar pull on the left stile, a leaded fanlight"
+   },
+   {
+    "kind": "T3",
+    "photographs": [
+     "D4"
+    ],
+    "reads": "a small arched light in an embossed upper panel, an oblong plate between the panels"
+   },
+   {
+    "kind": "F5",
+    "photographs": [
+     "D2",
+     "D4"
+    ],
+    "reads": "a tall slit light centred on a flat door, a small plate under it, a lever on the left"
+   },
+   {
+    "kind": "F6",
+    "photographs": [
+     "D5",
+     "D9"
+    ],
+    "reads": "a flat door with an oblong plate at the middle, a lever on the right, a wide white frame, reeded transom"
+   },
+   {
+    "kind": "F4",
+    "photographs": [
+     "D2"
+    ],
+    "reads": "three long narrow lights"
+   },
+   {
+    "kind": "F3",
+    "photographs": [
+     "D1"
+    ],
+    "reads": "two long panels, no cross rail"
+   },
+   {
+    "kind": "T1/F1/F2",
+    "photographs": [
+     "P1",
+     "P2"
+    ],
+    "reads": "as 3.1's reviews"
+   },
+   {
+    "kind": "F7",
+    "photographs": [],
+    "reads": "no photograph reached; reads against Hasluck's figures only, listed as a known shortfall"
+   }
+  ],
+  "near_misses_to_report": [
+   "F7 has no photograph",
+   "the knockers, bell pulls, black iron plates, frosted and wired glass are listed and not placed"
+  ]
+ },
+ "disagreements_photographs_win": [
+  {
+   "id": "W1",
+   "what": "the leaf width of a council flush door",
+   "scene_or_book": "the scene's side door 0.838 x 1.981 (SCENE-SLOTS)",
+   "photograph": "D5: 0.389 of the height, a 762 leaf shown whole in a wide white frame",
+   "chosen": "F6: 762, frame set FF6"
+  },
+  {
+   "id": "W2",
+   "what": "the letter plate on every household door",
+   "scene_or_book": "the scene's 0.25 x 0.04 at 1.0 on every side door (west_north and east_chandler included)",
+   "photograph": "D1, D4: a low plate at the foot; D2: a plate under a slit at 0.83; D5: 250 x 70 at 0.91; D4 right: 260 x 67 at 0.87; a service door has none",
+   "chosen": "per kind (LP1 to LP7); none on F7"
+  },
+  {
+   "id": "W3",
+   "what": "the stand-in leaf is 766 or 678 wide in the drawn street; 3.1's leaves are 812.8 and 838",
+   "scene_or_book": "terrace-front.py: leaf = 838 less two 36 casings (parade) or 838 less two 80 (cottages)",
+   "photograph": "P1, P2, D3 (a 2 ft 8 in to 2 ft 9 in leaf)",
+   "chosen": "3.1's frame sets T and F replace the stand-ins; the wall kit meets their openings"
+  },
+  {
+   "id": "W4",
+   "what": "the brass kick plate on the drawn parade doors",
+   "scene_or_book": "terrace-front.py draws a brass kick plate 726 x 140 on each side door",
+   "photograph": "no photograph read (P1, P2, D1 to D6) shows a kick plate",
+   "chosen": "none; kick marks are wear"
+  },
+  {
+   "id": "W5",
+   "what": "hinges outside a ledged door",
+   "scene_or_book": "Hasluck Fig. 1027 draws hook-and-plate hinges on the face of a frame set in a wall",
+   "photograph": "none reached",
+   "chosen": "an inward-opening door, hinges inside (3.1's rule for all its doors); the face shows boards and nail heads"
+  },
+  {
+   "id": "W6",
+   "what": "the 3.1 cream frame (weight 0.3)",
+   "scene_or_book": "3.1's frame_colours",
+   "photograph": "the Hook sheet's door surrounds are white; Jafar 3 Oct: windows with white frames",
+   "chosen": "white and grimed white only; the Hull painted surrounds (D8) are an owed line"
+  },
+  {
+   "id": "W7",
+   "what": "the bell push of 3.1's try 2",
+   "scene_or_book": "build_door.py: oblong plus a brass bezel plus a dark button",
+   "photograph": "P1: a plain dark oblong with a darker band, nothing bright",
+   "chosen": "BL1: one plain part; the two-part push is a fault"
+  },
+  {
+   "id": "W8",
+   "what": "the leaded fanlight's height",
+   "scene_or_book": "the T frame's glass opening 267 high",
+   "photograph": "D3: a leaded light about 624 high over a 1981 leaf",
+   "chosen": "the T frame's 267 stays (the wall kit owns the head); only the leaded diamond glazing is taken"
+  }
+ ],
+ "could_not_settle": [
+  "No dated photograph read shows a door knocker, a bell pull, a black iron letter plate, frosted or wired door glass, or a ledged service door on these streets. KN1, KN2, BL2, LP3, frosted, wired and NM2 are listed with Judgement sizes and refused on every house by the checks; F7 is built from Hasluck and Judgement alone.",
+  "Door colours of 1990: the slides of 1975 to 1994 shift hue and exposure, so the palette's bright and mid values (turquoise, bright blue, lime, khaki, mustard, olive) are Judgement from boxes whose medians are recorded; the dark classics are 3.1's.",
+  "Small hardware at 22 to 27 mm a pixel (plates, levers, a small light) carries +-24 to +-35 mm; the positions are fractions of the visible face with that error written in each check.",
+  "D1's doors stand in deep recesses and are seen from the right: only their vertical rows are used; the leaves' widths and the letter plate's length are not taken from it.",
+  "Whether the west shop row (one storey in the drawn street) has flats: its side doors are 1 service door and 2 household doors until Jafar answers owed line 3.",
+  "The painted cement hoods over Hull doorways (D1, D6) and their arched recesses (D7) are wall features; not in the door piece, listed for the wall kit.",
+  "A house number's digits are the town's; the target fixes only the form (NM1, NM3, NM4).",
+  "The shopfront kit's own side door at east_parade bay 2 (Rita's) has its own geometry and a fanlight (unit 2.2); this target gives it kind F1 and expects the builder to put F1's leaf in that slot.",
+  "The boot scraper: one cast-iron scraper by the nearest cottage's step; no period photograph of these streets shows one (D10 is 2014); the sizes are Judgement +-25 per cent."
+ ],
+ "self_check": {
+  "result": "not run yet"
+ }
+}

@@ -14,6 +14,18 @@ def _r(x, n=1):
     return round(float(x), n)
 
 
+# The leaf laps its rebate: 20.4 mm of each side and of the head hide behind the stops and the transom (3.1: leaf 812.8 in a clear 772;
+# 838 in a clear 797.2). Photographs show the visible face, so a photograph's fraction of the visible face maps to the structural leaf as
+# u = LAP + fraction x visible width, v = fraction x visible height (the foot hides nothing).
+LAP = 20.4
+VIS = {"T": (772.0, 1927.6), "F": (797.2, 1960.6)}
+
+
+def to_struct(frame, box_u, box_v):
+    vw, vh = VIS[frame]
+    return (LAP + box_u[0] * vw, LAP + box_u[1] * vw, box_v[0] * vh, box_v[1] * vh)
+
+
 def px_to_mm(meas, photo_scale):
     return photo_scale
 
@@ -163,7 +175,8 @@ def build_kinds(A):
     # ------------------------------------------------------------------ T2 (four stacked lights, leaded fanlight; D3, D1 right door)
     f3 = d3_fractions()
     lh = tl["height_mm"]
-    top_rail, bottom_rail, bar, stile = 60.0, 205.0, 30.0, 92.0
+    # visible top rail 0.030 of the visible height (58 mm) plus the 20.4 hidden behind the transom's stop = 78.4 structural; stiles 114.3 (3.1's; visible 93.9, D3 reads 92)
+    top_rail, bottom_rail, bar, stile = 78.4, 205.0, 30.0, tl["stile_mm"]
     light_h = (lh - top_rail - bottom_rail - 3 * bar) / 4.0
     lights = []
     v = bottom_rail
@@ -173,7 +186,8 @@ def build_kinds(A):
     K["T2"] = {
         "name": "four stacked lights over a low rail, a leaded diamond fanlight (D3, D1)", "frame_set": "T", "family": "cottage front door",
         "leaf": {"w": tl["width_mm"], "h": lh, "t": tl["thickness_mm"], "construction": "framed, glazed", "lock_side": "left",
-                 "stile_left": stile, "stile_right": stile, "top_rail": top_rail, "bottom_rail": bottom_rail, "bar": bar, "light_h": _r(light_h, 2), "openings": lights},
+                 "stile_left": stile, "stile_right": stile, "top_rail": top_rail, "bottom_rail": bottom_rail, "bar": bar, "light_h": _r(light_h, 2), "openings": lights,
+                 "visible_note": "structural numbers; the visible top rail is 58 (78.4 less the 20.4 behind the transom's stop) and the visible stiles 93.9"},
         "mouldings": {"outside": {"kind": "none", "note": "glazing bars 30 wide x 22 deep, square, eased 1 mm; stiles and rails square, eased 1.5; the bead is the 3.1 planted quarter-round 10 x 8 on all four sides of each light"}},
         "glass": {"transom": "leaded_diamond", "leaf": "plain_3mm", "nets_behind": "white net card behind the lights (D3 shows one), the windows target's net N1 white"},
         "photographs": ["D3", "D1"],
@@ -181,7 +195,7 @@ def build_kinds(A):
         "parts_vs_3_1": [
             ("frame_jamb_l/r, frame_head, frame_transom, frame_glazing_bead (transom)", "kept", "frame set T"),
             ("glass_fanlight", "changed", "plain 3 mm glass becomes a leaded diamond light (came 6 wide, diamonds 95 x 70): D3 shows a leaded fanlight over this door; the height (P6's is 624 mm) is not taken, the T frame's 267 mm stays"),
-            ("leaf_frame", "changed", "stiles 92, top rail 60, bottom rail 205, no lock rail, no muntin; four rectangular openings 628.8 x 398.3 with 30 mm bars (D3's fractions 0.031, 0.205, 0.016, 0.105)"),
+            ("leaf_frame", "changed", "stiles 114.3 (visible 93.9), top rail 78.4 (visible 58), bottom rail 205, no lock rail, no muntin; four openings 584.2 x 393.7 with 30 mm bars (D3's fractions of the visible face 0.030, 0.2066, 0.0158, 0.105)"),
             ("panel_*, moulding_bolection_*, moulding_single_*, moulding_band, moulding_weatherboard", "removed", "a glazed door has no panels or mouldings; D3 and D1 show none"),
             ("glass (new parts glass_light1..4) and bead", "added", "four panes of 3 mm glass, each with the 3.1 planted bead"),
             ("iron_letter_plate", "changed", "LP5, a pale low plate in the bottom rail, as D1 and D4 show (the vertical brass plate has no muntin to sit on)"),
@@ -194,16 +208,13 @@ def build_kinds(A):
     # ------------------------------------------------------------------ T3 (moulded modern door, small arched light; D4 right door)
     f4 = d4_t3_fractions()
     w3, h3 = tl["width_mm"], tl["height_mm"]
-    up_u0, up_u1 = f4["upper"]["u"]
-    up_v0, up_v1 = f4["upper"]["v"]
-    li_u0, li_u1 = f4["light"]["u"]
-    li_v0, li_v1 = f4["light"]["v"]
-    lo_u0, lo_u1 = f4["lower"]["u"]
-    lo_v0, lo_v1 = f4["lower"]["v"]
+    up = to_struct("T", f4["upper"]["u"], f4["upper"]["v"])
+    li = to_struct("T", f4["light"]["u"], f4["light"]["v"])
+    lo = to_struct("T", f4["lower"]["u"], f4["lower"]["v"])
     ops3 = [
-        opening("upper_panel", "embossed_panel", up_u0 * w3, up_u1 * w3, up_v0 * h3, up_v1 * h3, moulding="embossed_step"),
-        opening("small_light", "arched_light", li_u0 * w3, li_u1 * w3, li_v0 * h3, li_v1 * h3, glass="plain_3mm", head="semicircle", bead="moulded"),
-        opening("lower_panel", "embossed_panel", lo_u0 * w3, lo_u1 * w3, lo_v0 * h3, lo_v1 * h3, moulding="embossed_step"),
+        opening("upper_panel", "embossed_panel", up[0], up[1], up[2], up[3], moulding="embossed_step"),
+        opening("small_light", "arched_light", li[0], li[1], li[2], li[3], glass="plain_3mm", head="semicircle", bead="moulded"),
+        opening("lower_panel", "embossed_panel", lo[0], lo[1], lo[2], lo[3], moulding="embossed_step"),
     ]
     K["T3"] = {
         "name": "white moulded modern door with a small arched light (D4 right door)", "frame_set": "T", "family": "modernised cottage",
@@ -215,8 +226,8 @@ def build_kinds(A):
         "parts_vs_3_1": [
             ("frame_jamb_l/r, frame_head, frame_transom, glass_fanlight, frame_glazing_bead", "kept", "frame set T; D4's door has a plain dark transom light over it"),
             ("leaf_frame, panel_*, moulding_*", "changed", "no stiles or rails: one moulded sheet 44 thick with two embossed panels and a small arched light (D4's fractions)"),
-            ("glass_light (new part)", "added", "one pane 203 x 460 with a semicircular head, glazed from inside with a moulded bead"),
-            ("iron_letter_plate", "changed", "LP6, a white oblong 270 x 50 in the border between the panels (D4: v 873)"),
+            ("glass_light (new part)", "added", "one pane about 200 x 460 with a semicircular head, glazed from inside with a moulded bead"),
+            ("iron_letter_plate", "changed", "LP6, a white oblong 270 x 50 in the border between the panels (D4: 0.448 of the visible height)"),
             ("iron_lock, collar, plug", "removed", "D4 shows none outside; a small lever HD2c at the lock edge"),
             ("iron_bellpush, stone_*", "removed / kept", "no push; the step of 3.1 stays"),
         ],
@@ -302,9 +313,9 @@ def build_kinds(A):
 
     # ------------------------------------------------------------------ F4 (three long narrow lights, D2 left door)
     fx = d2_f4_fractions()
-    lock_st, hinge_st, barw = 150.0, 90.0, 40.0
+    lock_st, hinge_st, barw = 170.0, 110.0, 40.0      # structural; visible 150 and 90 (D2: lights 160 to 173, bars 40)
     lw = (W - lock_st - hinge_st - 2 * barw) / 3.0
-    top_r4, bot_r4 = 84.0, 200.0
+    top_r4, bot_r4 = 104.4, 200.0                     # visible top rail 84 (D2: 3 px) + 20.4 behind the transom's stop
     ops4 = []
     u = lock_st
     for i in range(3):
@@ -320,7 +331,7 @@ def build_kinds(A):
         "measured_fractions_of_width": {"lights": [[_r(a, 3), _r(b, 3)] for a, b in fx["lights"]], "bars": [[_r(a, 3), _r(b, 3)] for a, b in fx["bars"]]},
         "parts_vs_3_1": [
             ("frame_*, glass_fanlight, sill", "kept", "frame set F"),
-            ("leaf_frame, panel_*, moulding_*", "changed", "stiles 150 and 90, top rail 84, bottom rail 200, three lights 172.7 wide with 40 mm bars (D2: lights 168 to 181, bars 42)"),
+            ("leaf_frame, panel_*, moulding_*", "changed", "stiles 170 and 110 (visible 150 and 90), top rail 104.4 (visible 84), bottom rail 200, three lights 159.3 wide with 40 mm bars (D2: lights 160 to 173 at 26.6 mm a pixel, bars 40)"),
             ("glass_light1..3", "added", "three tall panes of 3 mm glass, putty fillet as F1's"),
             ("iron_letter_plate", "changed", "LP5, the low plate in the bottom rail"),
             ("iron_knob_*, iron_keyhole_*, iron_lock_*", "removed", "a lever HD2b at the left stile"),
@@ -329,12 +340,11 @@ def build_kinds(A):
 
     # ------------------------------------------------------------------ F5 (flush door with a slit light, D2 middle, D4 left)
     f5 = d2_f5_fractions()
-    s_u0, s_u1 = f5["slit"]["u"]
-    s_v0, s_v1 = f5["slit"]["v"]
+    s_u0, s_u1, s_v0, s_v1 = to_struct("F", f5["slit"]["u"], f5["slit"]["v"])
     K["F5"] = {
         "name": "flush door with a tall slit light (D2 middle door, D4 left door)", "frame_set": "F", "family": "side door to a flat, modernised",
         "leaf": {"w": W, "h": H, "t": 44.0, "construction": "flush, hardboard-faced, lipped", "lock_side": "left", "lipping": 6.0,
-                 "openings": [opening("slit", "slit_light", s_u0 * W, s_u1 * W, s_v0 * H, s_v1 * H, glass="plain_3mm", bead="timber_bead_15")]},
+                 "openings": [opening("slit", "slit_light", s_u0, s_u1, s_v0, s_v1, glass="plain_3mm", bead="timber_bead_15")]},
         "mouldings": {"outside": {"kind": "none", "note": "flat painted face; a 1 mm hairline round the lipping; the slit has a 15 mm square timber bead, 4 proud"}},
         "glass": {"transom": "plain_3mm", "leaf": "plain_3mm"},
         "photographs": ["D2", "D4"],
@@ -342,8 +352,8 @@ def build_kinds(A):
         "parts_vs_3_1": [
             ("frame_*, glass_fanlight, sill", "kept", "frame set F"),
             ("leaf_frame, panel_*, moulding_*", "changed", "one flush slab 44 thick, lipped; no panels or mouldings"),
-            ("glass_slit (new)", "added", "one pane 211 x 900 at u 313 to 524, v 925 to 1825 (D2: 8.8 x 37.5 px at 24 mm a pixel)"),
-            ("iron_letter_plate", "changed", "LP7, a pale 265 x 50 plate under the slit at v 829"),
+            ("glass_slit (new)", "added", "one pane about 205 x 900 centred on the leaf (D2: 8.8 x 37.5 px at 23 to 24 mm a pixel)"),
+            ("iron_letter_plate", "changed", "LP7, a pale 265 x 50 plate under the slit, centre about 829"),
             ("iron_knob_*, iron_keyhole_*, iron_lock_*", "removed", "a lever HD2b at the left edge, v 1093"),
         ],
     }
@@ -352,19 +362,20 @@ def build_kinds(A):
     f6 = d5_fractions()
     w6 = 762.0
     K["F6"] = {
-        "name": "council-style flush door, olive in D5, turquoise in D9 (leaf 762)", "frame_set": "F, stops moved in 38 a side", "family": "council or modernised",
+        "name": "council-style flush door, olive in D5, turquoise in D9 (leaf 762, shown whole)", "frame_set": "F, with planted inside stops (frame_change)", "family": "council or modernised",
         "leaf": {"w": w6, "h": H, "t": 44.0, "construction": "flush, plywood-faced, lipped", "lock_side": "right", "lipping": 6.0,
                  "openings": [opening("spyhole", "spyhole", w6 * 0.5 - 7.0, w6 * 0.5 + 7.0, 1502.0, 1516.0, glass="lens_14")]},
-        "frame_change": {"clear_between_stops": 721.2, "jamb_showing": 87.0, "why": "the leaf is 762 wide (D5: 325 x 835 px = 0.389, a 2 ft 6 in leaf), not 838; 3.1's clear between stops 797.2 becomes 721.2 (leaf + 3.2 - 44 + ...) so the leaf still laps its rebate by 20.4 each side and nothing shows through; the frame's outer width 1000.4 is kept"},
+        "frame_change": {"clear_between_faces": 765.2, "jamb_showing": 117.6, "stops": "planted on the inside face: the leaf shows whole, nothing laps in front, the 1.6 mm margins show the stop behind (not the hall)",
+                         "why": "D5's leaf is 325 x 835 px = 0.389 of its height, a 2 ft 6 in (762) leaf seen whole, with a white frame about 130 wide beside it (55 px at 2.37 mm); 3.1's lapped 838 leaf would read 0.407. The frame's outer width 1000.4 is kept, so the jambs show (1000.4 - 765.2) / 2 = 117.6"},
         "mouldings": {"outside": {"kind": "none", "note": "flat face; the lipping line 1 mm; no panel, no moulding"}},
         "glass": {"transom": "reeded_4mm", "leaf": None, "sidelight": "none in the street (D5's reeded sidelight is not built)"},
         "photographs": ["D5", "D9"],
         "measured_fractions_of_leaf": {k: v for k, v in f6.items() if not k.startswith("scale")},
         "parts_vs_3_1": [
-            ("frame_jamb_l/r, frame_stop_bead_*", "changed", "stops move in by 38 a side (clear 721.2): the jambs show 87.0"),
-            ("frame_transom, glass_fanlight", "changed", "the transom's x range shortens to the new stops; its glass is reeded 4 mm (D5: ribbed transom)"),
+            ("frame_jamb_l/r, frame_stop_bead_*", "changed", "the stops are planted on the inside face and the jambs show 117.6 each (clear between faces 765.2); the leaf shows whole"),
+            ("frame_transom, glass_fanlight", "changed", "the transom's x range shortens to the jambs' inner faces; its glass is reeded 4 mm (D5: ribbed transom)"),
             ("leaf_frame, panel_*, moulding_*", "changed", "one flush slab 762 x 1981 x 44, lipped"),
-            ("iron_letter_plate", "changed", "LP4, a chrome-look oblong 250 x 70, flush, at u 386 v 912 (D5)"),
+            ("iron_letter_plate", "changed", "LP4, a chrome-look oblong 250 x 70, flush, at u 386, v 912 (D5)"),
             ("iron_knob_*, iron_keyhole_*, iron_lock_*", "removed", "lever HD2a at the right edge, v 902; a spyhole 14 across at v 1509 (D5, place only)"),
         ],
     }

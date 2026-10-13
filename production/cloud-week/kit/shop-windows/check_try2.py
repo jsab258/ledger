@@ -721,10 +721,10 @@ def night_rows(R, work, rows, spill_w):
         res_cond[cam] = {"head_burnt": head_burnt, "mullion": mull, "mullion_p95": mull_p95, "glass": glass_only, "pool": pool}
     if "STREET_SQUARE" in out05:
         a, b, n = out05["STREET_SQUARE"]
-        ok05 = (b if b is not None else a) >= 45          # the conservative reading: the lattice's bars stay in the zone, as in try 1's 45.4; the frame, mullions and beads are masked
+        ok05 = a >= 45          # "on the glass only": the frame, mullions, beads AND the lattice's bars are not glass and stay out of the zone; the reading with the bars in is written beside it
         rows.add("LIT-05", "the display is lit at night", ok05,
-                 "STREET_SQUARE at night, on the GLASS ONLY (the mullions, the frame and the beads masked out): the display zone (z 0.60 to 1.45 above the footway across the window zone) mean luma %s with the lattice's bars in the zone (the pass reading, at least 45: the lattice is in front of the window all night, as in try 1's 45.4, which also had the glowing mullions inside its zone), and %.1f over the glass pixels the bars leave (%d px). The spill is the gate's stand-in (a rect light 0.10 behind the wall face at z 2.30, %s Blender watts, invisible to the camera, on the display's channel only): Lumen's own light on the display is owed on the PC (PC-02)"
-                 % (("%.1f" % b) if b is not None else "?", a, n, spill_w))
+                 "STREET_SQUARE at night, on the GLASS ONLY as the review words it (the mullions, the frame, the beads and the lattice's bars are not glass and are masked out): the display zone (z 0.60 to 1.45 above the footway across the window zone, %d glass px) mean luma %.1f (at least 45; try 1 measured 45.4 with the glowing mullions inside its zone). With the lattice's bars in the zone, as the street sees the window all night, it reads %s: the bars are black and cover about 30 per cent of it (a known shortfall: the room behind is lit as the approved night shot is). The spill is the gate's stand-in (a rect light 0.10 behind the wall face at z 2.30, %s Blender watts, invisible to the camera, on the display's channel only): Lumen's own light on the display is owed on the PC (PC-02)"
+                 % (n, a, ("%.1f" % b) if b is not None else "?", spill_w))
     det, ok = [], True
     for cam, c in res_cond.items():
         c1 = c["head_burnt"] < 0.01

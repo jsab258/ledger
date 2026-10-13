@@ -1,5 +1,5 @@
 {
- "made": "2026-10-13 03:06:51",
+ "made": "2026-10-13 03:14:41",
  "what": "the files the try 2 reviews are to look at; the three glbs and the three 4096 pictures are out of git (rebuilt by build_ritas.py) so this names the versions",
  "files": {
   "ritas_front.glb": {
@@ -11,8 +11,8 @@
    "sha256": "73f5f0a23bbd81788810b6724ec6d7f685d50432cf59e0dd750cd47770e8251b"
   },
   "ritas_display.glb": {
-   "bytes": 9659780,
-   "sha256": "70b2bd3f97502bcb98c91cf472c87a8dee7d55cebb5e9d42cd7819aae4a97f52"
+   "bytes": 9511120,
+   "sha256": "888ee6187bc6d0358936a6bdff2a5a3d9130a57a582b0eb00ca31b17c7ab43b8"
   },
   "pawnbroker_day.png": {
    "bytes": 7913268,

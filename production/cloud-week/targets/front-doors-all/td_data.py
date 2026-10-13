@@ -82,16 +82,16 @@ BOOKS = {
 #    size Geograph serves, or the Commons file reduced to 1920 px wide). A reviewer reproduces a row by cutting that box.
 # --------------------------------------------------------------------------------------------------------------------------
 MEAS = {
-    # D3, left door of Ratcliffe Street (kind T2). Square on; 10.43 mm a pixel (leaf 1981 / 190 px).
-    "D3_leaf": {"photo": "D3", "box": [45.75, 443.75, 124.25, 633.75], "leaf_mm": [813.0, 1981.0], "error_px": 1.5,
+    # D3, left door of Ratcliffe Street (kind T2). Square on; 10.14 mm a pixel (the visible face of frame set T, 1927.6 / 190 px).
+    "D3_leaf": {"photo": "D3", "box": [45.75, 443.75, 124.25, 633.75], "leaf_mm": [772.0, 1927.6], "error_px": 1.5,
                 "what": "the door leaf: left stile's outer edge, right stile's outer edge, top of the top rail, foot of the bottom rail"},
     "D3_rows": {"photo": "D3", "rows_px": {"light1": [449.5, 488.75], "light2": [491.75, 531.25], "light3": [534.25, 574.25], "light4": [577.0, 613.75]},
                 "what": "the four lights, top and foot row of each (the glass between the bars)", "error_px": 1.5},
     "D3_stiles": {"photo": "D3", "left_px": [45.75, 55.5], "right_px": [114.5, 124.25], "what": "the two stiles (outer edge to the glass)", "error_px": 1.5},
     "D3_handle": {"photo": "D3", "box": [46.0, 498.25, 52.0, 524.25], "what": "the dark vertical pull handle on the left stile", "error_px": 1.5},
     "D3_fanlight": {"photo": "D3", "box": [40.0, 376.0, 122.0, 436.0], "what": "the leaded fanlight over the leaf (taller than the T frame's 267 mm light: the type is taken, not the height)", "error_px": 2.0},
-    # D4, right door of Frederick Street (kind T3). 22.5 mm a pixel.
-    "D4_T3_leaf": {"photo": "D4", "box": [545.0, 345.0, 581.0, 434.0], "leaf_mm": [810.0, 1981.0], "error_px": 1.5, "what": "the white moulded door's outer edge"},
+    # D4, right door of Frederick Street (kind T3). 21.7 mm a pixel (visible face of frame set T, 1927.6 / 89 px).
+    "D4_T3_leaf": {"photo": "D4", "box": [545.0, 345.0, 581.0, 434.0], "leaf_mm": [772.0, 1927.6], "error_px": 1.5, "what": "the white moulded door's outer edge"},
     "D4_T3_light": {"photo": "D4", "box": [559.0, 363.0, 568.0, 384.0], "what": "the small arched light (its square foot)", "error_px": 1.0},
     "D4_T3_plate": {"photo": "D4", "box": [558.0, 392.5, 570.0, 395.6], "what": "the oblong letter plate", "error_px": 1.0},
     "D4_T3_upper": {"photo": "D4", "box": [550.6, 350.6, 577.0, 388.7], "what": "the upper embossed panel's outline", "error_px": 1.5},
@@ -99,17 +99,17 @@ MEAS = {
     "D4_T3_handle": {"photo": "D4", "box": [581.0, 394.0, 583.0, 398.0], "what": "the small lever at the lock edge", "error_px": 1.5},
     "D4_slit": {"photo": "D4", "box": [357.0, 340.0, 363.0, 383.75], "leaf_box": [345.0, 332.0, 370.0, 408.0], "what": "the pale door's slit light and its leaf (the leaf is seen a little obliquely: rows only)", "error_px": 1.5},
     "D4_low_plate": {"photo": "D4", "box": [392.0, 405.0, 402.0, 408.0], "leaf_box": [384.0, 335.0, 407.0, 410.0], "what": "the low letter plate at the dark door's foot (rows only)", "error_px": 1.0},
-    # D2 middle door (kind F5). Square on; 24.0 mm a pixel.
-    "D2_F5_leaf": {"photo": "D2", "box": [561.0, 280.5, 595.5, 363.0], "leaf_mm": [838.0, 1981.0], "error_px": 1.5, "what": "the khaki flush door, top edge below the transom rail, foot at the step"},
+    # D2 middle door (kind F5). Square on; 23.8 mm a pixel (visible face of frame set F, 1960.6 / 82.5 px).
+    "D2_F5_leaf": {"photo": "D2", "box": [561.0, 280.5, 595.5, 363.0], "leaf_mm": [797.2, 1960.6], "error_px": 1.5, "what": "the khaki flush door, top edge below the transom rail, foot at the step"},
     "D2_F5_slit": {"photo": "D2", "box": [574.0, 287.0, 582.8, 324.5], "what": "the slit light", "error_px": 1.0},
     "D2_F5_plate": {"photo": "D2", "box": [572.5, 327.5, 583.5, 329.5], "what": "the small pale plate under the slit", "error_px": 1.0},
     "D2_F5_handle": {"photo": "D2", "box": [561.5, 315.5, 565.0, 319.0], "what": "the small pale handle at the left stile", "error_px": 1.0},
-    # D2 left door (kind F4). 27.9 mm a pixel (leaf width 30 px = 838).
+    # D2 left door (kind F4). 26.6 mm a pixel (the visible width 797.2 = 30 px).
     "D2_F4_cols": {"photo": "D2", "leaf_x_px": [374.5, 404.5], "light_x_px": [[381.5, 387.5], [389.5, 396.0], [398.5, 404.5]], "bar_x_px": [[388.0, 389.5], [396.5, 398.0]],
                    "what": "the three long narrow lights and the two bars between them, across; the leaf's right edge is hidden in shadow", "error_px": 1.0},
     "D2_F4_top": {"photo": "D2", "rows_px": {"top_rail": [270.0, 273.0]}, "what": "the top rail", "error_px": 1.0},
-    # D5, Hazlehead flush door (kind F6). 1920 px copy; 2.37 mm a pixel (leaf 1981 / 835 px).
-    "D5_leaf": {"photo": "D5", "box": [450.0, 137.0, 775.0, 970.0], "leaf_mm": [771.0, 1981.0], "error_px": 3.0, "what": "the leaf: left edge, right edge, top, the floor line"},
+    # D5, Hazlehead flush door (kind F6). 1920 px copy; 2.37 mm a pixel (the leaf, shown whole: 1981 / 835 px).
+    "D5_leaf": {"photo": "D5", "box": [450.0, 137.0, 775.0, 970.0], "leaf_mm": [762.0, 1981.0], "error_px": 3.0, "what": "the leaf: left edge, right edge, top, the floor line"},
     "D5_plate": {"photo": "D5", "box": [561.0, 570.0, 668.0, 600.0], "what": "the oblong letter plate", "error_px": 3.0},
     "D5_handle": {"photo": "D5", "box": [725.0, 582.5, 770.0, 597.5], "what": "the lever handle on the right stile", "error_px": 3.0},
     "D5_spy": {"photo": "D5", "box": [595.0, 330.0, 630.0, 342.0], "what": "the round spyhole, its place only (blurred)", "error_px": 5.0},
