@@ -26,8 +26,17 @@ SCRATCH = os.environ.get("LEDGER_SW_SCRATCH", "/home/user/ledger-scratch")
 POLY = os.environ.get("LEDGER_POLYHAVEN", os.path.join(SCRATCH, "polyhaven"))
 WORK = os.path.join(SCRATCH, "shop-windows")
 TARGET_JSON = os.path.join(REPO, "production", "cloud-week", "targets", "shop-windows", "target.json")
-TEXTURES = ["old_linoleum_flooring_01", "painted_plaster_wall"]
+TEXTURES = ["old_linoleum_flooring_01", "painted_plaster_wall"]       # Rita's room (the other shops' are TEXTURES_OF)
 RES = "1k"
+CURRENT = "ritas"             # the shop this process builds (build_shop.py sets it): model_ids, fetch, blank and verify work on that shop's room and display
+# the Poly Haven textures each shop's room lays (the target's room.floor names them: Rita's lino and the tea room's chequer share a map)
+TEXTURES_OF = {"ritas": ["old_linoleum_flooring_01", "painted_plaster_wall"], "ironmonger": ["old_wooden_floor_03", "painted_plaster_wall"],
+               "newsagent": ["rubber_tiles", "painted_plaster_wall"], "tea_rooms": ["old_linoleum_flooring_01", "painted_plaster_wall"]}
+
+
+def set_shop(shop_id):
+    global CURRENT
+    CURRENT = shop_id
 
 
 # Marks the builder found at 1k that the target's list does not have (step 0, looked at every map): applied the same way, reported in NOTES.md
@@ -85,14 +94,15 @@ def load_target():
 
 
 def ritas(T):
-    return next(s for s in T["shops"] if s["id"] == "ritas")
+    """The record of the shop this process builds (the name is the kit's old one; it is Rita's unless set_shop() said otherwise)."""
+    return next(s for s in T["shops"] if s["id"] == CURRENT)
 
 
 def model_ids(T):
-    """Every Poly Haven model Rita's room and display place (target.json), sorted."""
+    """Every Poly Haven model the current shop's room and display place (target.json), sorted."""
     r = ritas(T)
-    ids = {g["model"] for g in r["room"]["goods"] if not g["model"].startswith("script:")}
-    ids |= {i["model"] for i in r["display"]["items"] if not i["model"].startswith("script:")}
+    ids = {g["model"] for g in (r.get("room") or {}).get("goods", []) if not g["model"].startswith("script:")}
+    ids |= {i["model"] for i in (r.get("display") or {}).get("items", []) if not i["model"].startswith("script:")}
     return sorted(ids)
 
 
@@ -107,7 +117,7 @@ def _fetcher():
 def fetch(ids=None, log=print):
     T = load_target()
     fp = _fetcher()
-    ids = list(ids or (model_ids(T) + TEXTURES))
+    ids = list(ids or (model_ids(T) + TEXTURES_OF.get(CURRENT, [])))
     os.makedirs(POLY, exist_ok=True)
     total = 0
     for a in ids:
