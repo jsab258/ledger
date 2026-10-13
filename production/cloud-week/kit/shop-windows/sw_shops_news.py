@@ -291,34 +291,35 @@ def display(d):
     wood = d.mat("stand_wood", rgb8(150, 108, 70), rough=0.55)
     board = d.mat("slope_board", rgb8(196, 192, 182), rough=0.7)
     wire = d.mat("rack_wire", rgb8(70, 70, 74), rough=0.4, metal=0.8)
-    # ---- the two paper stands (two steps and a back board each) and the ten papers, folded once
-    for ri, (u0, u1) in enumerate(((0.10, 0.62), (0.66, 1.18))):
+    # ---- the two paper stands (a lower step, a higher step and a back board each) and the ten papers, folded once: three on the lower step, shingled 12 mm apart in depth, two on the higher step between
+    # their gaps, so that every paper shows at least half to the far pavement
+    for ri, u0 in enumerate((0.10, 0.70)):
         gm = GM()
-        x0, x1 = X(u0), X(u1)
-        gm.box(x0, x1, 0.04, 0.19, 0.0, 0.06, 0)            # the lower step
-        gm.box(x0, x1, 0.19, 0.34, 0.0, 0.18, 0)            # the upper step
-        gm.box(x0, x1, 0.34, 0.352, 0.18, 0.40, 0)          # the back board over it
+        x0, x1 = X(u0), X(u0 + 0.58)
+        gm.box(x0, x1, 0.04, 0.24, 0.0, 0.06, 0)            # the lower step
+        gm.box(x0, x1, 0.24, 0.37, 0.0, 0.24, 0)            # the upper step
+        gm.box(x0, x1, 0.37, 0.382, 0.24, 0.46, 0)          # the back board over it
         d.gm_object("paper_stand_%d" % ri, gm, [board], "support", "script:paper_stand")
     lean = 18.0
     for pi in range(10):
         ri, k = divmod(pi, 5)
-        u0 = (0.10, 0.66)[ri]
+        u0 = (0.10, 0.70)[ri]
         if k < 3:
-            xc = X(u0 + 0.13 + k * 0.125) + rnd.uniform(-0.004, 0.004)
-            foot_v, foot_w = 0.15, 0.06
+            xc = X(u0 + 0.15 + k * 0.16) + rnd.uniform(-0.004, 0.004)
+            foot_v, foot_w = 0.150 - 0.012 * k, 0.06
         else:
-            xc = X(u0 + 0.19 + (k - 3) * 0.14) + rnd.uniform(-0.004, 0.004)
-            foot_v, foot_w = 0.30, 0.18
+            xc = X(u0 + 0.23 + (k - 3) * 0.16) + rnd.uniform(-0.004, 0.004)
+            foot_v, foot_w = 0.295 - 0.012 * (k - 3), 0.24
         hh = 0.20
-        zc = foot_w + hh / 2 * math.cos(math.radians(lean)) + 0.002
+        zc = foot_w + hh / 2 * math.cos(math.radians(lean)) + 0.003
         vc = foot_v - 0.01 + hh / 2 * math.sin(math.radians(lean))
         gm = GM()
         tile = paper_uv[pi % 6]
         top = (tile[0], tile[1] + (tile[3] - tile[1]) * 0.38, tile[2], tile[3])
-        gm.sheet((xc, vc, zc), 0.27, hh, 0.004, tilt=lean + rnd.uniform(-2, 2), yaw=rnd.uniform(-3, 3), mi=0, uv=top, uv_other=(tile[0] + 0.01, tile[1] + 0.01))
+        gm.sheet((xc, vc, zc), 0.22, hh, 0.004, tilt=lean + rnd.uniform(-1.0, 1.0), yaw=rnd.uniform(-1.0, 1.0), mi=0, uv=top, uv_other=(tile[0] + 0.01, tile[1] + 0.01))
         d.gm_object("newspaper_%d" % pi, gm, [pap_m], "scripted", "script:newspapers", tier="bed" if k < 3 else "step")
     # ---- the stand with the cartons
-    sx0, sx1, sv0, sv1, sw = X(0.20), X(0.88), 0.37, 0.53, 0.46
+    sx0, sx1, sv0, sv1, sw = X(0.20), X(0.88), 0.39, 0.55, 0.46
     gm = GM()
     for xx in (sx0 + 0.015, sx1 - 0.015):
         for vv in (sv0 + 0.015, sv1 - 0.015):
@@ -332,21 +333,43 @@ def display(d):
             kk = rnd.randrange(len(pack_uv))
             cg.box(sx0 + 0.04 + col * 0.215, sx0 + 0.04 + col * 0.215 + 0.20, sv0 + 0.04, sv0 + 0.04 + 0.055, sw + 0.02 + lay * 0.10, sw + 0.02 + (lay + 1) * 0.10 - 0.001, 0, uv_front=pack_uv[kk], uv_other=(pack_uv[kk][0] + 0.01, pack_uv[kk][1] + 0.01))
     d.gm_object("cigarette_cartons", cg, [pack_m], "scripted", "script:cigarette_cartons", tier="stand")
-    # ---- the stationery sets (flat in front of the stand, between the ramps and the notepads) and the pads
-    pens = d.sub_template("stationery_supplies", "pens", lambda n: "pencilcup" not in n)
-    cup = d.sub_template("stationery_supplies", "cup", lambda n: "pencilcup" in n)
-    for k_, u in enumerate((1.20, 1.52)):
-        d.piece(pens, u, 0.14, 0.0, rot=(math.pi / 2, 0, 0.0), yaw=rnd.uniform(-0.05, 0.05), tier="bed", tris=None)
-        d.piece(cup, u + 0.20, 0.14, 0.0, rot=(0, 0, 0), tier="bed", tris=None)
-    # (the pads: three of the kit's loose stacks, flat)
-    x_pad = 1.95
+    # ---- the plinth along the front of the magazine board (60 mm high: the sill hides the lowest 40 mm of the bed from the far pavement, and a pad lies 30 mm high): two pots of pens and three pads
+    d.crate("stationery_plinth", 1.36, 2.20, 0.03, 0.17, 0.0, 0.06)
+    from mathutils import Matrix, Vector
+    meshes_t, lo_t, hi_t = d.template("stationery_supplies")
+    cupm = [m for m in meshes_t if "pencilcup" in m.name][0]
+    cpts = [cupm.matrix_world @ Vector(c) for c in cupm.bound_box]
+    ccx = (min(p.x for p in cpts) + max(p.x for p in cpts)) / 2
+    ccy = (min(p.y for p in cpts) + max(p.y for p in cpts)) / 2
+    cfloor = min(p.z for p in cpts) + 0.004
+    pen_names = ["pen_blue", "pen_fancy", "pen_red", "pencil_new_a", "pencil_new_b", "pencil_old", "pencil_used"]
+    pots = []
+    for pot in range(2):
+        parts = [(("pencilcup",), Matrix.Identity(4))]
+        order = pen_names if pot == 0 else pen_names[3:] + pen_names[:3]
+        for i, nm in enumerate(order):
+            m = [mm for mm in meshes_t if mm.name.endswith(nm)][0]
+            pts = [m.matrix_world @ Vector(c) for c in m.bound_box]
+            piv = Vector((min(p.x for p in pts), (min(p.y for p in pts) + max(p.y for p in pts)) / 2, (min(p.z for p in pts) + max(p.z for p in pts)) / 2))
+            phi = 2 * math.pi * i / 7 + 0.9 * pot
+            base = Vector((ccx + 0.017 * math.cos(phi), ccy + 0.017 * math.sin(phi), cfloor))
+            ax = Vector((-math.sin(phi), math.cos(phi), 0.0))
+            lean_ = math.radians(5.0 + 2.0 * (i % 3))
+            xf = Matrix.Translation(base) @ Matrix.Rotation(lean_, 4, ax) @ Matrix.Rotation(-math.pi / 2, 4, "Y") @ Matrix.Translation(-piv)
+            parts.append(((nm,), xf))
+        pots.append(d.compose("stationery_supplies", "pot%d" % pot, parts))
+    d.piece(pots[0], 1.43, 0.10, 0.06, rot=(0, 0, 0), tier="plinth", tris=None)
+    x_pad = 1.43 + 0.05 + 0.03
     for nm in ("office_notepads_yellow_pad", "office_notepads_a4_stack", "office_notepads_note_stack"):
         key = d.sub_template("office_notepads", nm, lambda n, nm=nm: n == nm)
-        dd = d.dims(key, (0, 0, math.pi / 2))
-        d.piece(key, x_pad + dd.x / 2, 0.14, 0.0, rot=(0, 0, math.pi / 2), tier="bed", tag=nm, tris=None)
-        x_pad += dd.x + 0.04
+        rt = (0, 0, math.pi / 2) if "note_stack" not in nm else (0, 0, 0)
+        dd = d.dims(key, rt)
+        sc_ = 0.6
+        d.piece(key, x_pad + dd.x * sc_ / 2, 0.10, 0.06, rot=rt, scale=sc_, tier="plinth", tag=nm, tris=None)
+        x_pad += dd.x * sc_ + 0.03
+    d.piece(pots[1], x_pad + 0.05, 0.10, 0.06, rot=(0, 0, 0), tier="plinth", tris=None)
     # ---- the magazines on a sloping board (leaning 40 degrees from the vertical, 0.58 long)
-    mx0, mx1, vb = X(1.30), X(2.20), 0.20
+    mx0, mx1, vb = X(1.30), X(2.20), 0.17
     lean_b = 40.0
     blen = 0.58
     gm = GM()
@@ -386,7 +409,7 @@ def display(d):
         g.cylinder(xc, vc, 0.0, 0.012, 0.12, 0, 20)
         rad = 0.09 if n_face == 4 else 0.12
         for ri in range(rows_ + 1):
-            zr = w0 + (w1 - w0 - ch_) * ri / max(rows_ - 1, 1) if ri < rows_ else w1
+            zr = w0 + (w1 - w0 - ch_) * ri / max(rows_ - 1, 1) if ri < rows_ else w1 + 0.010
             g.torus((xc, vc, zr - 0.004), rad, 0.0018, 0, axis="z", nm=24, nn=5)
         d.gm_object(name + "_frame", g, [wire], "support", "script:" + name)
         cgm = GM()
@@ -401,10 +424,11 @@ def display(d):
                 cnt += 1
         d.gm_object(name, cgm, [tile_m_], "scripted", "script:" + ("card_rack" if n_face == 4 else "postcard_rack"), tier="rack")
     # ---- the price cards (hand cards on the bed's front edge)
-    texts = ["PAPERS\nORDERED", "SWEETS\n2oz 25p", "CARDS\nFROM 25p", "MAGAZINES", "STATIONERY", "PENS & PADS"]
+    cards = [("PAPERS\nORDERED", 0.40), ("SWEETS\n2oz 25p", 2.69), ("CARDS\nFROM 25p", 3.12), ("MAGAZINES", 1.95), ("STATIONERY", 1.50), ("PENS & PADS", 1.75)]
+    texts = [c[0] for c in cards]
     path = os.path.join(tex, "price_cards.png")
     uvs = GEN.card_atlas(path, texts, cols=3, tile=(256, 128), size=46)
     pm = [d.image_mat("price_cards", path, rough=0.8), d.mat("stake", rgb8(60, 60, 62), rough=0.5, metal=0.7)]
-    for k, uc in enumerate((0.35, 0.90, 1.43, 1.75, 2.62, 3.05)):
+    for k, (_, uc) in enumerate(cards):
         d.price_card(uc, 0.02, 0.0, k, uvs, pm)
     d.display_texts = list(GEN.TEXTS) + [t.replace("\n", " ") for t in texts]

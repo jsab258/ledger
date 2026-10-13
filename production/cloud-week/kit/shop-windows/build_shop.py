@@ -112,12 +112,18 @@ def run_inner(shop, stage):
                 P = S.calibrate(r, rooms)
             else:
                 P = r.calibrate(rooms)
+        only = [x for x in os.environ.get("LEDGER_ROOM_STATES", "").split(",") if x]       # a state rendered again, the others kept (e.g. night_dark)
         if rita:
             import sw_room as S
             times = S.render_states(r, rooms, P, rooms, samples=ROOM_SAMPLES)
         else:
-            times = r.render_states(rooms, P, rooms, samples=ROOM_SAMPLES)
-        json.dump({"times_s": times, "samples": ROOM_SAMPLES, "params": P}, open(os.path.join(rooms, "render_times.json"), "w"), indent=1)
+            times = r.render_states(rooms, P, rooms, samples=ROOM_SAMPLES, **({"states": tuple(only)} if only else {}))
+        tp = os.path.join(rooms, "render_times.json")
+        if only and os.path.exists(tp):
+            prev = json.load(open(tp))["times_s"]
+            prev.update(times)
+            times = prev
+        json.dump({"times_s": times, "samples": ROOM_SAMPLES, "params": P}, open(tp, "w"), indent=1)
         json.dump(r.placed, open(os.path.join(rooms, "placed.json"), "w"), indent=0)
         json.dump(r.fixtures, open(os.path.join(rooms, "fixtures.json"), "w"), indent=0)
         if not rita:

@@ -33,10 +33,10 @@ def extras_newsagent(self):
     after the board's material exists (`late_newsagent`). The slats are in the hood by day: nothing hangs in the opening."""
     SF = _sf()
     self.mats["shutter"] = bs.make_material("shutter_steel", (150, 152, 150), 0.45, 0.5)
-    u0, u1 = 350.0, 4706.0
+    u0, u1 = 348.0, 4708.0                # 2 mm past the opening at each end: a face on the jamb's plane is a coplanar overlap (FRN-10)
     prof = [(95.0, 2550.0), (212.0, 2550.0), (212.0, 2770.0), (172.0, 2850.0), (95.0, 2850.0)]
     self.add("hood_shutter", bs.prism_dz(prof, u0, u1), "shutter", bev=2.0)
-    for k, (ua, ub, zb) in enumerate(((350.0, 400.0, 600.0), (3680.0, 3730.0, 0.0), (4656.0, 4706.0, 0.0))):
+    for k, (ua, ub, zb) in enumerate(((348.0, 402.0, 600.0), (3678.0, 3732.0, 0.0), (4654.0, 4708.0, 0.0))):
         self.add("rail_shutter_%d" % k, SF.bx(ua, ub, 96.0, 146.0, zb + (4.0 if zb == 0.0 else 0.0), 2550.0), "shutter", bev=1.5)
     # the box sign's returns (the face: late_newsagent)
     outer = (295.0 + 95.0, 3400.0 - 510.0, 295.0 + 5315.0, 3400.0 - 40.0)

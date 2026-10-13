@@ -771,13 +771,13 @@ def make_hanging_board(ctx, front, fasc_dir):
             zc = z_arm - 26.0 - 16.0 - 10.0 - 20.0 * j
             parts.append(("black_iron", bs.new_obj("sign_chain_%d_%02d" % (k, j), *_link(uc, dh, zc, 9.0, 2.2, j % 2))))
         parts.append(("black_iron", bs.new_obj("sign_eye_%d" % k, *_ring_u(uc, dh, z_top + 10.0, 9.0, 2.5))))
-    # the two textured faces (one-sided quads 0.3 mm proud of the core), in metres
+    # the two textured faces (one-sided quads 1.5 mm proud of the core: at 0.3 mm FRN-10 saw a coplanar overlap of the whole face), in metres
     faces = []
     for fk, side in (("a", -1), ("b", 1)):
         f = next(x for x in hsm["faces"] if x["id"].endswith("." + fk))
         base = os.path.join(fasc_dir, f["files"]["basecolour"]["file"])
         orm = os.path.join(fasc_dir, f["files"]["orm"]["file"])
-        x = (uc - BAY_MID + side * (bt / 2.0 + 0.3)) / 1000.0
+        x = (uc - BAY_MID + side * (bt / 2.0 + 1.5)) / 1000.0
         z0, z1 = z_bot / 1000.0, z_top / 1000.0
         ya, yb = -d_out / 1000.0, -d_in / 1000.0           # the big d to the small d
         if side > 0:       # +x face: a viewer there looks along -x with his right toward the wall: left = the street end (big d)

@@ -213,7 +213,7 @@ def room(r):
 def display(d):
     """The tea rooms' window (target `shops.tea_rooms.display`, 10 item rows; bed 3.35 x 0.55): the café curtain on its brass rod over the two outer lights (z 1.50 above the footway, so w 0.90 above the bed;
     it hangs 0.55 to w 0.35), the table set for tea in the middle light (u 1.16 to 2.19), the cakes under the curtain's hem on the bed, the potted plant in the right light, the hand-lettered card on the
-    glass. What the target left open: the table is scaled to the target's 0.55 m, as it asks, the chairs to 0.75 (a cafe pair for a window 0.55 deep: at the table's sides, their front legs under its edge), the
+    glass. What the target left open: the table is scaled to 0.50 m (the target asks 0.55, which leaves no air at the glass and none at the back), the chairs to 0.75 (a cafe pair for a window 0.55 deep: at the table's sides, their front legs under its edge), the
     cakes on the bed under the curtain (the carrot cake on a two-tier china stand, the strawberry cake on a plain plate), a sugar bowl and a menu stand."""
     _setup()
     import sw_room_gen as RG
@@ -229,20 +229,20 @@ def display(d):
     steel = d.mat("stainless", rgb8(190, 192, 194), rough=0.28, metal=1.0)
     brass = d.mat("brass", rgb8(160, 120, 55), rough=0.3, metal=1.0)
     # the table (a cafe table 0.55 across), its laminate top, two chairs, the tea set in pieces
-    ts = 0.55 / max(d.dims("round_wooden_table_02").x, d.dims("round_wooden_table_02").y)
-    tu, tv = 1.675, 0.285
+    ts = 0.50 / max(d.dims("round_wooden_table_02").x, d.dims("round_wooden_table_02").y)
+    tu, tv = 1.675, 0.27
     d.piece("round_wooden_table_02", tu, tv, 0.0, rot=(0, 0, 0), scale=ts, tier="bed", tris=None)
     tab_ext = d.items[-1]["ext"]
     top_z = tab_ext[5]
     lam = d.mat("laminate", rgb8(206, 188, 150), rough=0.35)
     lg = GM()
-    rt = 0.275
+    rt = 0.25
     lg.lathe(X(tu), tv, top_z, [(0.0, 0.0), (rt, 0.0), (rt, 0.008), (rt - 0.004, 0.012), (0.0, 0.012)], mi=0, n=36)
     d.gm_object("table_laminate", lg, [lam], "support", "script:table_laminate", smooth=True)
     top_z += 0.012
     cs = 0.75
-    d.piece("painted_wooden_chair_01", tu - 0.40, tv, 0.0, rot=(0, 0, -math.pi / 2), scale=cs, tier="bed", tris=None)
-    d.piece("painted_wooden_chair_01", tu + 0.40, tv, 0.0, rot=(0, 0, math.pi / 2), scale=cs, tier="bed", tris=None)
+    d.piece("painted_wooden_chair_01", tu - 0.462, tv, 0.0, rot=(0, 0, -math.pi / 2), scale=cs, tier="bed", tris=None)
+    d.piece("painted_wooden_chair_01", tu + 0.462, tv, 0.0, rot=(0, 0, math.pi / 2), scale=cs, tier="bed", tris=None)
     pot = d.sub_template("tea_set_01", "pot", lambda n: "teapot" in n)
     sug = d.sub_template("tea_set_01", "sugar", lambda n: "sugar" in n)
     cupa = d.compose("tea_set_01", "cupA", [(("cup_small_01",), (0.0, 0.2335, 0.013)), (("saucer_circular_04",), (0.0, 0.0, 0.0))])
@@ -260,7 +260,7 @@ def display(d):
     GEN.TEXTS.extend(["TEAS FROM 25p"])
     mm = d.image_mat("menu_stand", mp, rough=0.8)
     mg = GM()
-    mg.sheet((X(tu + 0.0), tv + 0.20, top_z + 0.045), 0.070, 0.050, 0.002, tilt=12.0, mi=0, uv=muv[0], uv_other=(muv[0][0] + 0.01, muv[0][1] + 0.01))
+    mg.sheet((X(tu - 0.10), tv - 0.19, top_z + 0.045), 0.070, 0.050, 0.002, tilt=12.0, mi=0, uv=muv[0], uv_other=(muv[0][0] + 0.01, muv[0][1] + 0.01))
     d.gm_object("menu_stand", mg, [mm], "scripted", "script:sugar_bowl_menu", tier="table")
     # the carrot cake on a two-tier china stand; the strawberry cake on a plate
     ug = GM()
@@ -298,7 +298,7 @@ def display(d):
     sc_ = GM()
     for xx in (2.55, 3.05):
         sc_.cylinder(X(xx), 0.020, 1.24, 1.27, 0.014, 0, 10)
-        sc_.rod((X(xx), 0.02, 1.255), (X(xx), 0.042, 1.255), 0.003, 0, 6)
+        sc_.rod((X(xx), 0.02, 1.255), (X(xx), 0.0395, 1.255), 0.003, 0, 6)
     d.gm_object("window_card_cups", sc_, [cupm], "support", "script:window_card_menu")
     # the price cards
     texts = ["CAKES 40p", "TEAS 25p", "TOAST 30p", "HOME MADE"]

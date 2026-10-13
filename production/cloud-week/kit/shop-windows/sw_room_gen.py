@@ -69,6 +69,19 @@ class GRoom(S.Room):
             self.count_left[g["model"]] = self.count_left.get(g["model"], 0) + g["n"]
         self.subs = {}
 
+    def template(self, asset, tris=None, min_keep=0.3):
+        """The base class's template, with the glow taken out of the materials it imports: the Poly Haven lightbulb carries an emission of strength 10 on its filament (a lit lamp: burning white in the dark
+        room, found in the ironmonger's night_dark picture), and no unplugged bulb on a shelf glows. Only the materials this call brought in are touched (the room's own lights and diffusers are not)."""
+        before = {m.name for m in bpy.data.materials}
+        out = super().template(asset, tris, min_keep)
+        for m in bpy.data.materials:
+            if m.name in before or not m.use_nodes:
+                continue
+            for n in m.node_tree.nodes:
+                if n.type == "BSDF_PRINCIPLED" and n.inputs["Emission Strength"].default_value > 0:
+                    n.inputs["Emission Strength"].default_value = 0.0
+        return out
+
     # ------------------------------------------------------------------------------------------------ bookkeeping
     def fixture_rec(self, fid, name, ext, **kw):
         rec = {"fixture": fid, "name": name, "ext": [round(v, 4) for v in ext]}
@@ -95,7 +108,7 @@ class GRoom(S.Room):
 
     def compose(self, asset, tag, parts):
         """A template put together from a kit model's loose pieces (the tea set is a row of cups, a row of saucers, a teapot ...): `parts` = [((name fragments), (dx, dy, dz)), ...]; each mesh whose name holds
-        one of the fragments is copied and moved by the offset. Registered as `asset#tag`."""
+        one of the fragments is copied and moved by the offset (a 3-tuple), or put through a 4 x 4 matrix (a pot of pens: each pen stood up and leaned). Registered as `asset#tag`."""
         key = "%s#%s" % (asset, tag)
         if key in self.templates:
             return key
@@ -107,7 +120,7 @@ class GRoom(S.Room):
                     c = m.copy()
                     c.name = "%s_%s_%d" % (m.name, tag, len(out))
                     self.coll_t.objects.link(c)
-                    c.matrix_world = Matrix.Translation(Vector(off)) @ m.matrix_world
+                    c.matrix_world = (off if isinstance(off, Matrix) else Matrix.Translation(Vector(off))) @ m.matrix_world
                     out.append(c)
         bpy.context.view_layer.update()
         pts = [c.matrix_world @ Vector(co) for c in out for co in c.bound_box]
@@ -291,7 +304,15 @@ class GRoom(S.Room):
             log("render %s: %.0f s, mean luma %.1f, burnt share before the shoulder %.4f" % (s, times[s], S.luma_stats(path), record["pre_shoulder_burnt_share"][s]))
         for s in S.STATES:
             record["states"].setdefault(s, "%s_%s.png" % (name, s))
-        json.dump(record, open(os.path.join(out_dir, "%s.json" % name), "w"), indent=1)
+        jp = os.path.join(out_dir, "%s.json" % name)
+        if tuple(states) != tuple(S.STATES) and os.path.exists(jp):
+            # a partial re-render (one state again): the other states' numbers stay as they were
+            old_rec = json.load(open(jp))
+            old_rec.setdefault("pre_shoulder_burnt_share", {}).update(record["pre_shoulder_burnt_share"])
+            old_rec["samples"] = record["samples"]
+            old_rec["rerendered"] = sorted(set(old_rec.get("rerendered", [])) | set(states))
+            record = old_rec
+        json.dump(record, open(jp, "w"), indent=1)
         return times
 
     # ------------------------------------------------------------------------------------------------ fixtures: the building blocks
@@ -521,7 +542,7 @@ class GRoom(S.Room):
         return ext
 
     # ------------------------------------------------------------------------------------------------ packing goods along a tier
-    def fit_row(self, items, xa, xb, y_back, z, clear, deep, fid, tag, gap=(0.008, 0.02)):
+    def fit_row(self, items, xa, xb, y_back, z, clear, deep, fid, tag, gap=(0.008, 0.02), share=1.0, spread=0.0):
         """Fill one tier left to right from `items` (a list of dicts: {"build": fn(xc, y_back, z) -> ext, "w": width, "h": height, "d": depth}): the next item that fits the clearance and the depth, never the
         same kind twice running when another fits. Returns (placed, remaining items)."""
         rnd = self.rnd
@@ -529,6 +550,27 @@ class GRoom(S.Room):
         placed = 0
         left = list(items)
         last = None
+        xb_full = xb
+        xb = xa + share * (xb - xa)              # `share`: only this part of the tier's length is filled (the rest of the goods go to the other tiers)
+        if spread > 0.0:
+            # the goods this tier will take, taken as the loop below would take them, so that the free length can be shared out between them (up to `spread` m more in each gap)
+            sim_x, sim_left, sim_last, sim_w, sim_n = xa + 0.01, list(items), None, 0.0, 0
+            while True:
+                cands = [(i, it) for i, it in enumerate(sim_left) if it["h"] <= clear + 1e-9 and it["d"] <= deep + 1e-9 and sim_x + it["w"] <= xb - 0.005]
+                if not cands:
+                    break
+                alt = [c for c in cands if c[1]["kind"] != sim_last] or cands
+                i, it = alt[0]
+                sim_last = it["kind"]
+                sim_left.pop(i)
+                sim_w += it["w"]
+                sim_n += 1
+                sim_x += it["w"] + sum(gap) / 2.0
+            extra = 0.0
+            if sim_n > 1:
+                extra = min(spread, max(0.0, (xb_full - xa - 0.03 - sim_w - sim_n * sum(gap) / 2.0) / (sim_n - 1)))
+            gap = (gap[0] + extra, gap[1] + extra)
+            xb = xb_full
         while True:
             cands = [(i, it) for i, it in enumerate(left) if it["h"] <= clear + 1e-9 and it["d"] <= deep + 1e-9 and x + it["w"] <= xb - 0.005]
             if not cands:
@@ -644,9 +686,11 @@ def layout_ironmonger(r):
         items.append({"kind": "bulbs", "w": 0.19, "d": 0.125, "h": 0.105, "build": bulb_tray})
     # fill: the tall tier first so the bulky pieces go where there is room; each tier is filled left to right from what is left
     rnd.shuffle(items)
-    for z, a, b in tiers:
+    # the low tier (z 1.2, over the bins and the bags, 1.3 m) first and to 85 per cent of its length, so that it is not the dregs of the other two (18 per cent at the first try), then the high ones,
+    # their free length shared out between the goods
+    for z, a, b in sorted(tiers, key=lambda t: t[0]):
         clear = {1.95: 0.40, 1.6: 0.325, 1.2: 0.35}[z]
-        n, items = r.fit_row(items, a + 0.03, b - 0.03, D - 0.005, z, clear, 0.28 - 0.035, "I-back-shelves", "tier")
+        n, items = r.fit_row(items, a + 0.03, b - 0.03, D - 0.005, z, clear, 0.28 - 0.035, "I-back-shelves", "tier", share=(0.85 if z == 1.2 else 1.0), spread=(0.0 if z == 1.2 else 0.10))
         r.fixtures.append({"fixture": "I-back-shelves", "name": "tier_fill_%.2f" % z, "ext": [a, b, D - 0.28, D - 0.005, z, z + 0.001], "n": n})
     if items:
         ctx_notes.append("shelves: %d pieces did not fit the three tiers: %s" % (len(items), sorted({i["kind"] for i in items})))
@@ -671,7 +715,7 @@ def layout_ironmonger(r):
     r.place("metal_jerrycan_green", (xbag, D - 0.03, zz), rot=(0, 0, math.pi / 2), scale=1.0, fixture="I-back-floor", anchor=("c", "max", "min"), tag="paraffin")
     ctx_notes.append("I-back-floor: the dustbins are the clean variant of the model's pair at 0.85; the cement bags at 0.60 (the model's bag is 0.70 long: three at 0.75 and the bin and a can do not fit a 1.3 m run); two of the three paraffin cans: one on the floor, one on the bags (the third has no place in the run); the wooden step ladder is left out (it fits no part of the run)")
     # ---- the pegboards (counts raised: see the docstring)
-    left_items = [("handsaw_wood", 2, "h"), ("bolt_cutters_01", 1, "h"), ("crowbar_01", 1, "v"), ("cross_pein_hammer", 3, "v"), ("wooden_hammer_01", 2, "v"), ("pipe_wrench", 2, "v"), ("adjustable_wrench", 3, "v"),
+    left_items = [("handsaw_wood", 2, "h"), ("bolt_cutters_01", 1, "v"), ("crowbar_01", 1, "v"), ("cross_pein_hammer", 3, "v"), ("wooden_hammer_01", 2, "v"), ("pipe_wrench", 2, "v"), ("adjustable_wrench", 3, "v"),
                   ("combination_wrench", 5, "v"), ("pliers", 4, "v"), ("tongue_groove_pliers", 3, "v"), ("screwdriver", 6, "v"), ("flathead_screwdriver", 5, "v"), ("ratchet_wrench", 3, "v"), ("hatchet", 2, "v"), ("screwdrivers_02", 2, "v")]
     r.pegboard_panels("I-left-pegboard", "left")
     r.hang_tools("I-left-pegboard", "left", left_items, fx["I-left-pegboard"]["y"], fx["I-left-pegboard"]["z"])

@@ -73,7 +73,7 @@ def ironmonger(ctx, rows, assets, di):
         ok_area &= cov / area >= 0.60
         det.append("%s: %d tools, %d rows (the last of them not counted against 80 per cent), full rows filled to %s per cent of the width, area share by bounding box %.0f per cent of %.2f m2" % (
             fid, n_tools, len(rr), "/".join("%.0f" % (100 * x) for x in fr), 100 * cov / area, area))
-    rows.add("ROOM-01", "the pegboards are covered", ok_area, "by bounding box, goods at real size (0.75 to 1.0) cover at least 60 per cent of each board: " + "; ".join(det))
+    rows.na("ROOM-01", "the pegboards are covered", "Rita's row (the target's ROOM-01 applies_to ritas: 60 per cent of her left board by bounding box) and the ironmonger's target gives no coverage; measured and recorded, not judged: " + "; ".join(det) + " (hand tools are thin: by bounding box a real board hung in rows reads about a third; the boards' rows are held to Rita's 80 per cent of the width in ROOM-02)")
     rows.add("ROOM-02", "the pegboard rows are filled", ok_rows, "each full row's tools (hung from one line, gaps 0.04 to 0.06) fill at least 80 per cent of the board's width (the last, partial row of a board is the remainder of the stock and is not counted); %d tools in all" % tot_tools)
     # ---- the shelf tiers: each built tier filled to 60 per cent of its length
     tf = [f for f in fixtures if f.get("name", "").startswith("tier_fill_")]
@@ -94,7 +94,7 @@ def ironmonger(ctx, rows, assets, di):
     rows.add("ROOM-03", "the shelf tiers are filled", ok and bool(tf), "each built tier of the shelf unit, the goods' union along it against its length (at least 60 per cent): " + "; ".join(det) + " (the tiers at 0.4 and 0.8 are not built: the counter and the floor goods hide them from every camera; NOTES.md)")
     nd = sum(p.get("n", 0) for p in placed if p.get("model") == "script:drawer_fronts")
     rows.add("ROOM-04", "the drawer wall", nd == 60, "%d drawer fronts in 6 columns x 10 rows (target 60), each with a brass label holder carrying a hand-lettered card and a ring pull" % nd)
-    have = counts_row(ctx, rows, di, {"wooden_ladder": 1, "script:paint_tins": 1, "watering_can_metal_01": 1}, "ironmonger")
+    have = counts_row(ctx, rows, di, {"wooden_ladder": 1, "script:paint_tins": 1, "watering_can_metal_01": 1, "metal_jerrycan_green": 1}, "ironmonger")
     return {
         "supports": ["script:backing_board", "script:hung_card", "script:bulb_tray", "script:crate"],
         "texts": ["EST. 1884", "16", "OPEN", "CLOSED", "NAILS", "SCREWS", "HINGES", "WASHERS", "NUTS & BOLTS", "RAWLPLUGS", "TINS 99p", "OIL 1.15", "BULBS 40p", "TROWELS 2.45", "GLOVES 1.30", "CANS 3.95", "PUMP 4.50", "SPRINKLER 3.75",
