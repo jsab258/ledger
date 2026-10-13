@@ -56,8 +56,20 @@ def kind_section(T, k):
         L.append(lf["visible_note"] + ".")
     L.append("")
     if lf["openings"]:
-        rows = [(o["id"], o["type"], num(o["u0"]), num(o["u1"]), num(o["v0"]), num(o["v1"]), o.get("moulding") or o.get("glass") or "") for o in lf["openings"]]
+        rows = []
+        for o in lf["openings"]:
+            ty = o["type"] + ((", head %s" % o["head"]) if o.get("head") else "") + ((", top corners r %s" % num(o["corner_r"])) if o.get("corner_r") else "") \
+                + ((" (%s lower at the outer corner, high toward the %s)" % (num(o["head_rise"]), o["rise_toward"])) if o.get("head") == "raked" else "")
+            rows.append((o["id"], ty, num(o["u0"]), num(o["u1"]), num(o["v0"]), num(o["v1"]), o.get("moulding") or o.get("glass") or ""))
+            if o.get("inner"):
+                iv = o["inner"]
+                rows.append(("%s, inner outline" % o["id"], "outline, head %s%s" % (iv["head"], (", springing %s below the crown" % num(iv["springing_below_crown"])) if iv.get("springing_below_crown") else ""),
+                             num(iv["u0"]), num(iv["u1"]), num(iv["v0"]), num(iv["v1"]), "a 14 mm cove at this line too"))
         L.append(md_table(["opening", "type", "u0", "u1", "v0", "v1", "moulding or glass"], rows))
+        L.append("")
+    for fx in sp.get("small_fixings", []):
+        L.append("Small fitting that is no furniture variant: %s at u %s, v %s, %s x %s mm, %s proud, dark (%s). %s. What it is not: %s." % (fx["name"], num(fx["u"]), num(fx["v"]), num(fx["size_mm"][0]), num(fx["size_mm"][1]), num(fx["proud_mm"]),
+                                                                                                                    ",".join(str(c) for c in fx["srgb"]), fx["src"], fx["what_it_is_not"]))
         L.append("")
     mo = sp["mouldings"]["outside"]
     L.append("Mouldings: %s." % (mo.get("note") or "%s, %s mm on the face (%s)" % (mo["kind"], num(mo.get("width_on_face")), mo.get("src", ""))))
@@ -102,7 +114,7 @@ def build(T):
     L.append("")
     L.append("The handover's fix is the first line of the work: **delete the parts `iron_bellpush_bezel` and `iron_bellpush_button` from door_T1 (rebuild without them) so a plain dark oblong remains.** The two-part push read as a modern video doorbell (the 3.1 close review). The only bell push in this target is BL1, one part, 22 x 72.6 x 3 proud, square-cornered (radius at most 1), a 14 x 2 groove 1 deep a little below its middle (the darker band P1 shows), no bezel, no button, no ring, no bright element; it is on T1 only. Checks BP-form, BP-none-elsewhere, BP-no-modern and BP-houses hold it, and the negative controls build a push with a bezel, a push on F1 and a brass push to prove they fail.")
     L.append("")
-    L.append("The new kinds are made from 3.1's script and method: the frame sets T (the cottage's brick opening, cambered head, transom 65, step) and F (the flat's side slot, flat head at 2400, transom 102, jambs showing 49) are 3.1's unchanged except one frame variant FF6 (section 5, F6); the leaf is rebuilt per kind from the same members (stiles 114.3, rails, 1.6 mm margins, panels floating in their grooves where there are panels); the fittings are 3.1's parts with new places. Section 5 says part by part, kind by kind, what is kept, changed, removed or added and why.")
+    L.append("The new kinds are made from 3.1's script and method: the frame sets T (the cottage's brick opening, cambered head, transom 65, step) and F (the flat's side slot, flat head at 2400, transom 102, jambs showing 49) are 3.1's unchanged (every kind, F6 included, stands in one of them: the stops in front of the leaf, an inward-opening door); the leaf is rebuilt per kind from the same members (stiles 114.3, rails, 1.6 mm margins, panels floating in their grooves where there are panels); the fittings are 3.1's parts with new places. Section 5 says part by part, kind by kind, what is kept, changed, removed or added and why.")
     L.append("")
     L.append("## 2. Sources")
     L.append("")
@@ -111,7 +123,7 @@ def build(T):
         rows.append((pid, "%s, %s" % (ph["title"], ph.get("url") or ph.get("src")), "13 Oct 2026 (%s)" % ph.get("reached_by_me", ph.get("read_by_me", "page opened, file measured")), "%s, %s" % (ph["author"], ph["licence"]), ph["taken"], ph.get("shows", ""), ph.get("used_for", "")))
     L.append(md_table(["id", "photograph and page", "read", "author, licence", "taken", "shows", "used for"], rows))
     L.append("")
-    L.append("All photographs are references for measuring only: never placed in the game, never traced into a texture, never fed to an image model. No NoAI source is used. Each Geograph page was opened by this writer and its title, author, taken date and CC BY-SA 2.0 read there (`pages_read.json`; `self_check.py --live` reads them again). D5 is a Wikimedia Commons file (the Tower Block Archive of Edinburgh College of Art, uploaded with the University of Edinburgh), page read through the Commons API: date 1987, licence CC BY 4.0, author Miles Glendinning; the 1920 px copy served by Commons was measured, the original is 4000 x 2646. D10 is a later photograph (2014) of a cast-iron fixture left in place since the 19th century; P1 (2012) and P2 (2024) are 3.1's, their previews only (the lab's pages could not be reached then).")
+    L.append("All photographs are references for measuring only: never placed in the game, never traced into a texture, never fed to an image model. No NoAI source is used. Each Geograph page was opened by this writer and its title, author, taken date and CC BY-SA 2.0 read there (`pages_read.json`; `self_check.py --live` reads them again). D5 is a Wikimedia Commons file (the Tower Block Archive of Edinburgh College of Art, uploaded with the University of Edinburgh), page read through the Commons API: date 1987, licence CC BY 4.0, author Miles Glendinning; the 1920 px copy served by Commons (`?width=1920`) was measured, the original is 4000 x 2646. **D5 is an indoor landing door** (the file's own description: \"View of hallway and door inside one of Hazlehead I blocks\"; the frame shows a carpeted landing, a plant and a floor number): it is used for the flush face and the places of the plate, lever, lock and spyhole only, never for a street frame, a leaf width, stops or a transom. D9's door is 6 px wide, so \"half-glazed\" is a best reading; only its lower panel's turquoise is used. D10 is a later photograph (2014) of a cast-iron fixture left in place since the 19th century; P1 (2012) and P2 (2024) are 3.1's, their previews only (the lab's pages could not be reached then).")
     L.append("")
     L.append("Books (public domain by age): Hasluck, Cassell's Carpentry and Joinery (1907), pp.312-317, Figs. 1015-1039 (ledged and braced doors), read as the OCR text from archive.org, page images not opened; Ellis (1902) and Riley (1905) only through the 3.1 target.")
     L.append("")
@@ -131,7 +143,7 @@ def build(T):
     for h in T["street"]["houses"]:
         si = h["stand_in"]
         fu = h["furniture"]
-        short = {"letter_plate": "plate", "handle": "handle", "latch": "latch", "knocker": "knocker", "bell": "bell", "number": "number", "scraper": "scraper"}
+        short = {"letter_plate": "plate", "handle": "handle", "latch": "latch", "keyhole": "keyhole", "knocker": "knocker", "bell": "bell", "number": "number", "scraper": "scraper"}
         flist = ", ".join("%s %s" % (short[s], d["variant"]) for s, d in fu.items() if d["variant"][-1] != "0")
         rows.append((h["house"], "%s %.2f" % (h["side"], h["x_centre_m"]), TRADE[h["house"]], "%s%s%s" % (num(si["opening_w_mm"]), (", leaf %s x %s" % (num(si["leaf_w_mm"]), num(si["leaf_h_mm"]))) if si["leaf_w_mm"] else ", the kit's", ", step" if si["step"] else ""),
                      h["kind"], h["frame_set"], h["paint"], h["condition"], flist, "modernised" if h["windows_modernised"] else ""))
@@ -148,9 +160,9 @@ def build(T):
     L.append("")
     L.append("## 4. The reading of the photographs, element by element")
     L.append("")
-    L.append("What the photographs show on a door, and where it is in this target: panel layout and counts (section 5, per kind); mouldings and profiles (T1 F1 F2 the 3.1 bolection at 46 and 43; F3 a stuck ovolo; T3 an embossed step; the rest none); glazing (plain, reeded, leaded; section 5); the fanlight (a plain dark light over D2's doors and D4's; a leaded light over D3's; a reeded light over D5's; the T and F frames' transoms carry them); the frame and its stops (frame sets, FF6); the number (forms NM1, NM3, NM4; the digits are the town's); furniture (section 6); paint and wear (sections 7 and 8). Hoods over the doors, arched recesses and painted reveals (D1, D6, D7) belong to the wall and are listed for the wall kit.")
+    L.append("What the photographs show on a door, and where it is in this target: panel layout and counts (section 5, per kind); mouldings and profiles (T1 F1 F2 the 3.1 bolection at 46 and 43; F3 a stuck ovolo; T3 an embossed step; the rest none); glazing (plain, reeded, leaded; section 5); the fanlight (a plain dark light over D2's doors and D4's; a leaded light over D3's; a reeded light on F6, Judgement; the T and F frames' transoms carry them); the frame and its stops (frame sets T and F); the number (forms NM1, NM3, NM6; the digits are the town's); furniture (section 6); paint and wear (sections 7 and 8). Hoods over the doors, arched recesses and painted reveals (D1, D6, D7) belong to the wall and are listed for the wall kit.")
     L.append("")
-    L.append("**The brief's door types, and where each is.** Four-panel: T1, F1 (3.1). Six-panel: F2. Two long panels (a 1930s door, D1): F3. Half-glazed: F4 (three long lights over a low rail, D2) and T2 (four stacked lights, D3, D1); half-glazed with a small light: T3 (a small arched light in an embossed panel, D4) and F5 (a tall slit light, D2, D4). A council replacement flush door of the 1970s or 1980s: F6 (D5, D9). A ledged door to a yard or a service passage: F7 (Hasluck only). A fanlight: every door has one, the frame sets' transom light (plain dark over D2's and D4's doors, leaded over D3's, reeded over D5's); a door with no fanlight is not offered, because every door read (D1 to D5, P1, P2) has a light or a panel above its leaf. Glazing: plain (T2, F4, F5, T3, every transom but two), leaded diamond (T2's fanlight), reeded (F6's transom); frosted and wired are listed and placed nowhere. The frame and its stops: frame sets T and F as 3.1 (rebate 22 x 53, stop 74 deep, a 5 x 2.5 stop bead on F), FF6 for the 762 leaf. Letter plates, knockers, knobs and levers, the rim night latch with its escutcheon (the collar), the bell, house numbers, the boot scraper: section 6.")
+    L.append("**The brief's door types, and where each is.** Four-panel: T1, F1 (3.1). Six-panel: F2. Two long panels (a 1930s door, D1): F3. Half-glazed: F4 (three long lights over a low rail, D2) and T2 (four stacked lights, D3, D1); half-glazed with a small light: T3 (a small flat-topped light in a moulded panel, D4) and F5 (a tall slit light, D2, D4). A council replacement flush door of the 1970s or 1980s: F6 (the fittings' places from D5, an indoor door; the hue from D9; a flush leaf in a white street frame as D4's middle door). A ledged door to a yard or a service passage: F7 (Hasluck only). A fanlight: every door has one, the frame sets' transom light (plain dark over D2's and D4's doors, leaded over D3's, reeded on F6 as Judgement); a door with no fanlight is not offered, because every door read (D1 to D4, P1, P2) has a light or a panel above its leaf. Glazing: plain (T2, F4, F5, T3, every transom but two), leaded diamond (T2's fanlight), reeded (F6's transom); frosted and wired are listed and placed nowhere. The frame and its stops: frame sets T and F as 3.1 (rebate 22 x 53, stop 74 deep, a 5 x 2.5 stop bead on F), every kind in one of them. Letter plates, knockers, knobs and levers, the rim night latch with its escutcheon (the collar), the bell, house numbers, the boot scraper: section 6.")
     L.append("")
     L.append("## 5. The doors, kind by kind")
     L.append("")
@@ -160,7 +172,7 @@ def build(T):
         L.append(kind_section(T, k))
     L.append("## 6. Door furniture variants")
     L.append("")
-    L.append("Every variant with its size, place by kind, material, colour and source. Positions are the fitting's centre in the leaf frame (u, v mm). No real maker's name or mark on any fitting: the lock is a rim night latch (the 3.1 file called it a cylinder lock).")
+    L.append("Every variant with its size, place by kind, material, colour and source. Positions are the fitting's centre in the leaf frame (u, v mm). No real maker's name or mark on any fitting: the lock is a rim night latch.")
     L.append("")
     for slot, cat in T["furniture"].items():
         L.append("**%s**" % slot.replace("_", " "))
@@ -209,7 +221,7 @@ def build(T):
         rows.append((key, m["photo"], json.dumps({a: b for a, b in m.items() if a not in ("photo", "what", "error_px")}).replace('"', ""), m.get("error_px", ""), m["what"]))
     L.append(md_table(["record", "photo", "boxes and rows (px)", "error (px)", "what"], rows))
     L.append("")
-    L.append("The photograph rows of the self-check (group photo) compare each kind's numbers with these records: T2's four lights and rails against D3 and D1, T3's panels, light and plate against D4, F5's slit, plate and lever against D2, F4's three lights against D2, F6's plate, lever and spyhole against D5, LP5's height against D1 and D4. The live rows then re-measure the boxes on the pixels: the arched light's dark run (D4), the slit's dark run (D2), the plate's light run (D5), the leaf's edges (D3, D5), and the colour medians.")
+    L.append("The photograph rows of the self-check (group photo) compare each kind's numbers with these records: T2's four lights and rails against D3 and D1, T3's panels, light and plate against D4, F5's slit, plate and lever against D2, F4's three lights against D2, F6's plate, lever, lock and spyhole against D5 (an indoor door: places only), the lozenge pattern and the stiles' white against D3's re-measured leaf, LP5's height against D1 and D4. Each of the six PH records of the checks list carries those fractions as its expected values with a tolerance, and the self-check recomputes both sides (the recorded boxes, the kind's own drawn parts). The live rows then re-measure the boxes on the pixels: the small light's flat head and the seven outline rows (D4), the lever's mark on the door (D4), the slit's dark run and the leaf's foot above the sill (D2), the plate's light run and the lock's dark mark (D5), the leaf's own edges row by row, its top, its foot, the stiles' white and the fanlight's plain pane against its lozenge band (D3), and the colour medians.")
     L.append("")
     L.append("## 9. The gate in the cloud")
     L.append("")
@@ -250,11 +262,11 @@ def build(T):
     L.append("")
     L.append("`python self_check.py [--live] [--photos DIR] [--previews] [--write]` writes its result into target.json under self_check. Result recorded: **%s** (options: %s; run %s)." % (S.get("result"), S.get("options"), S.get("run")))
     L.append("")
-    L.append("Groups: 31 (3.1's numbers as built, the handover's fix), meta (each photograph's title, author, licence, date and period note; every box inside its image), photo (the fractions above), street (the 12 doors, kinds, paints, neighbours, facing doors, the hill, no knocker, no council house), geom (the drawing: openings inside the leaf and not overlapping, fittings on the leaf, nothing shows through in elevation or at 60 degrees, the leaf's lap, FF6, the lead came, the boards and nails, the bars, the sections), checks (every record of the list, and that every opening and every placed fitting has one), wear (the numbers, and live against the wear target), text (no maker's name, no dash, the lantern colour, owed lines), gate, live (the street re-derived from terrace-front.py and the windows target, the photographs fetched and measured again on their pixels, the pages read again), previews (sizes, flat grey masks, credits).")
+    L.append("Groups: 31 (3.1's numbers as built, the handover's fix), meta (each photograph's title, author, licence, date and period note; every box inside its image), photo (the fractions above), street (the 12 doors, kinds, paints, neighbours, facing doors, the hill, no knocker, no council house), geom (the drawing: openings inside the leaf and not overlapping, fittings on the leaf, nothing shows through in elevation or at 60 degrees, the leaf's lap computed from the stop edges and the leaf's edges at 60 degrees in plan, every leaf behind its stops, the margins of each kind's leaf in its frame, the lead came's uprights and crossings counted on the drawing, the numerals inside the top rail, the boards and nails, the bars, the sections), checks (every record of the list, and that every opening and every placed fitting has one), wear (the numbers, and live against the wear target), text (no maker's name, no dash, the lantern colour, owed lines), gate, live (the street re-derived from terrace-front.py and the windows target, the photographs fetched and measured again on their pixels, the pages read again), previews (sizes, flat grey masks, credits).")
     L.append("")
     L.append("**Negative controls** (wrong copies of the target, each run offline, each must make some row fail): " + "; ".join(c["name"] for c in S.get("controls", [])) + ". Counts are printed with the options named, offline and with --live (the controls always run offline, since the live rows read the world and not the copy).")
     L.append("")
-    L.append("**How to read it honestly.** The photograph fractions that are independent of the numbers drawn from them are T2's bottom rail, bars and stiles (3.1's frame, not the photograph, gives 114.3 and 205), D1's lights against T2 (a second photograph, oblique), D4's panels and plates, D2's slit and plate (the live rows measure them on pixels), and F6's ratio. T2's lights, T3's panels, F5's slit and F6's plate were fitted to the same photographs, so their near-zero differences are by construction; the live edge rows are what test them. Everything not measured is marked Judgement, and section 14 lists it.")
+    L.append("**How to read it honestly.** The photograph fractions that are independent of the numbers drawn from them are T2's bottom rail and bars (3.1's frame, not the photograph, gives 205 and 30), D1's lights against T2 (a second photograph, oblique), D4's panels and plates, D2's slit and plate (the live rows measure them on pixels), and the stiles' white and the fanlight's three parts (D3, re-measured on the leaf's own face; the stiles 94.0 and 69.0 and the fanlight pattern were set from the review's re-measure, then compared with the boxes). T2's lights, T3's panels, F5's slit and F6's fittings were fitted to the same photographs, so their near-zero differences are by construction; the live edge rows are what test them, and the first draft's wrong boxes (D3's, D2's, D4's) are among the live negative controls. F5's slit, plate and lever and T3's lever are the review's numbers, 5 to 12 mm from what the recorded boxes give (inside the stated error), and the photograph rows hold that difference. Everything not measured is marked Judgement, and section 14 lists it.")
     L.append("")
     L.append("## 14. Could not settle")
     L.append("")
@@ -263,7 +275,7 @@ def build(T):
     L.append("")
     L.append("## 15. Credits for the previews in `production/previews/cloud-week/refs/front-doors-all/`")
     L.append("")
-    L.append("Reduced crops of the doors only (at most 1200 px, under 300 KB), for measuring and for the reviewers, never placed in the game. Masked flat grey by script and recorded in `preview_masks.json`: a pole-mounted board and an oval plaque (D2), a small numeral (D3), a small label (D5), a painted numeral (D6), a board on a fence (D8). No people, no child, no drink or betting, no firm's name, no house number and no vehicle plate in any preview; each was looked at in full.")
+    L.append("Reduced crops of the doors only (at most 1200 px, under 300 KB), for measuring and for the reviewers, never placed in the game. Masked flat grey by script and recorded in `preview_masks.json`: a pole-mounted board and an oval plaque (D2), small numerals (D3), a small label (D5), a painted numeral (D6), a board on a fence (D8). No people, no child, no drink or betting, no firm's name, no house number and no vehicle plate in any preview; each was looked at in full.")
     L.append("")
     cred = []
     for pid, ph in T["sources"]["photographs"].items():
@@ -271,7 +283,8 @@ def build(T):
             cred.append((ph["preview"], "%s, %s, %s, taken %s (%s); cropped, reduced, masked as above" % (ph["author"], ph["licence"], ph.get("url", ""), ph["taken"], ph["title"])))
     over = {"d3-levenshulme-ratcliffe-street-1994-target-on-photo.jpg": "T2", "d2-railway-street-1987-target-on-photo.jpg": "F5", "d5-aberdeen-hazlehead-1987-target-on-photo.jpg": "F6"}
     for f, k in over.items():
-        cred.append((f, "the target's drawing of %s (own work) laid on the photograph it was measured from (%s), the scale fitted on the visible height only; yellow the visible face, red the openings, orange the mouldings, green the fittings" % (k, f.split("-")[0].upper())))
+        cred.append((f, "the target's drawing of %s (own work) laid on the photograph it was measured from (%s), %s; yellow the visible face, red the openings, orange the mouldings, green the fittings" % (k, f.split("-")[0].upper(),
+                  "fitted on height and width because D5 is an indoor door with a narrower leaf and only the fittings' places are taken from it" if k == "F6" else "the scale fitted on the visible height only")))
     cred.append(("target-ten-door-kinds-elevations.jpg", "the target's own drawing of the ten kinds (own work), each in its house's first paint"))
     cred.append(("target-street-rows-east-and-west.jpg", "the target's own drawing of the street's two rows of doors in street order (own work)"))
     L.append(md_table(["file", "credit"], cred))

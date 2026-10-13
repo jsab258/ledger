@@ -38,6 +38,7 @@ def frame_sets(A):
             "leaf_x0": P["leaf"]["x0_mm"], "leaf_z0": P["leaf"]["z0_mm"], "leaf_w": P["leaf"]["width_mm"], "leaf_h": P["leaf"]["height_mm"],
             "visible_leaf_x": [fr["jamb_x_mm"]["left"][1], fr["jamb_x_mm"]["right"][0]], "visible_leaf_z": [P["leaf"]["z0_mm"], tr["z_stop_underside"]],
             "jamb_face": fr["jamb_face_mm"], "jamb_depth": fr["jamb_depth_mm"], "rebate": [fr["rebate_width_mm"], fr["rebate_depth_mm"]], "stop_depth": fr["stop_depth_mm"],
+            "frame_front_y": fr["frame_outside_face_y_mm"], "leaf_front_y": P["leaf"]["outside_face_y_mm"], "leaf_edge_clearance": P["leaf"]["edge_clearance_mm"],
         }
     ts = one(T, "T", "3.1 T1 (production/assets/cloud-week/door/door_T1.glb): the brick opening, the cambered head, the stone step")
     ts["glb_pivot"] = A["glb_pivot"]["terrace_four_panel"]
@@ -45,26 +46,13 @@ def frame_sets(A):
     fs = one(F, "F", "3.1 F1 (door_F1.glb): the shop bay's side slot, a flat head at 2400, a timber sill 45 above the paving")
     fs["glb_pivot"] = A["glb_pivot"]["flat_door_over_shop"]
     fs["ground_z"] = F["brick"] and -45.0
-    ff6 = copy.deepcopy(fs)
-    ff6["id"] = "FF6"
-    ff6["from"] = "frame set F with the stops planted on the inside face, for F6 (leaf shown whole)"
-    cx = (fs["stop_edges_x"][0] + fs["stop_edges_x"][1]) / 2.0
-    ff6["clear_between_stops"] = 765.2
-    ff6["stop_edges_x"] = [r(cx - 382.6, 2), r(cx + 382.6, 2)]
-    ff6["jamb_x"] = {"left": [fs["jamb_x"]["left"][0], ff6["stop_edges_x"][0]], "right": [ff6["stop_edges_x"][1], fs["jamb_x"]["right"][1]]}
-    ff6["visible_leaf_x"] = list(ff6["stop_edges_x"])
-    ff6["glass_opening_x"] = list(ff6["stop_edges_x"])
-    ff6["transom_x"] = [r(ff6["stop_edges_x"][0] - 28.0, 2), r(ff6["stop_edges_x"][1] + 28.0, 2)]
-    ff6["leaf_x0"] = r(ff6["stop_edges_x"][0] + 1.6, 2)
-    ff6["leaf_w"] = 762.0
-    ff6["leaf_h"] = 1981.0
-    return {"T": ts, "F": fs, "FF6": ff6}
+    return {"T": ts, "F": fs}
 
 
 def resolve_house(h, choice, kinds, furn):
     kind = choice["kind"]
     ks = kinds[kind]
-    fr = "FF6" if kind == "F6" else ks["frame_set"][0]
+    fr = ks["frame_set"][0]
     placements = {}
     for slot, var in choice["furniture"].items():
         cat = furn[slot]
@@ -142,10 +130,10 @@ def main():
     T["family"] = "front-doors-all"
     T["title"] = "Front doors for every house kind (cloud week 42, unit 9)"
     T["summary"] = ("Front doors for every house kind of Quay Street: from the passed 3.1 door (T1 cottage four-panel, F1 flat four-panel, its bell push fixed to one plain dark oblong), "
-                    "10 door kinds (cottage T1 T2 T3, flat F1 to F7) fitted to the street's 12 household doors by house, 7 furniture slots with %d variants "
-                    "(letter plates, handles, rim night latches, knockers, bells, numbers, a boot scraper), %d paints and 3 conditions, a street order in which no two neighbours "
-                    "match, and a gate of 7 views a kind plus the street rows." % (N_VARIANTS, len(D.PALETTE)))
-    T["status"] = "WRITTEN 13 October 2026, not yet reviewed"
+                    "10 door kinds (cottage T1 T2 T3, flat F1 to F7) fitted to the street's 12 household doors by house, %d furniture slots with %d variants "
+                    "(letter plates, handles, rim night latches, plugged keyholes, knockers, bells, numbers, a boot scraper), %d paints and 3 conditions, a street order in which no two neighbours "
+                    "match, and a gate of 7 views a kind plus the street rows." % (len(furn), N_VARIANTS, len(D.PALETTE)))
+    T["status"] = "fixes applied, not re-reviewed"
     T["units"] = "mm; leaf frame u across from the leaf's left edge seen from outside, v up from its bottom; frame frame x across the opening from the left reveal, z up from the threshold top (the 3.1 axes)"
     T["axes"] = {"leaf": "u, v as above (structural leaf, including the 20.4 that laps behind each stop and the head)", "frame": "x, z as target 3.1: x 0 at the left brick reveal, z 0 at the top of the threshold",
                  "visible_face": {"T": list(K.VIS["T"]), "F": list(K.VIS["F"]), "lap": LAP, "rule": "u_struct = 20.4 + fraction x visible width; v_struct = fraction x visible height"}}
@@ -182,15 +170,15 @@ def main():
         "opposite_rule": {"within_m": 4.6, "paint_class_differs": True},
     }
     T["for_builder"] = [
-        "First: rebuild door_T1 without iron_bellpush_bezel and iron_bellpush_button (the handover's fix); the oblong iron_bellpush stays, one part, with the BL1 groove.",
-        "build_door.py takes a kind (T1 T2 T3 F1 to F7) as well as the colour: the leaf, openings, mouldings and fittings come from target.json kinds and furniture; the frame set is T, F or FF6.",
+        "First: rebuild door_T1 without iron_bellpush_bezel and iron_bellpush_button (the handover's fix); the oblong iron_bellpush stays, one part, rebuilt square-cornered with corners r 1 (3.1 built r 6) and the BL1 groove 14 x 2 x 1 (3.1 built none).",
+        "build_door.py takes a kind (T1 T2 T3 F1 to F7) as well as the colour: the leaf, openings, mouldings and fittings come from target.json kinds and furniture; the frame set is T or F (every kind, F6 included, in its stops-in-front frame: the leaf opens inward, hinges inside).",
         "New paints for --door-colour: deep_teal, cream, white_gloss, council_turquoise, olive, khaki, mustard, bright_blue, red, varnish (with the 3.1 six); --frame-colour takes white or white_grimy only (cream is dropped).",
         "A condition parameter (kept, tired, neglected) sets the roughness and, for neglected, the eroded notch in the bottom rail (25 high, 60 to 200 wide, 3 deep, at the hinge side); the 2D wear layer's masks do the rest.",
         "Behind every glazed kind (T2, T3, F4, F5 and every transom) the scene needs its own dark hall: the engine shows whatever is behind the glass (3.1 NOTES).",
         "Check every kind with the 3.1 pass rule and the records of target.json checks; a push, a knocker or a plate the table does not place on a house is a fault.",
     ]
-    T["covering_every_opening"] = ("Nothing may show through (check CV): in elevation the frame, the leaf, the glass and the transom cover the clear opening except the 10 mm foot gap and the leaf's 1.6 mm margins; from 60 degrees the leaf laps 20.4 behind each stop and behind the transom's stop (F6: its stops are planted behind the leaf's edge, 22 wide), which closes the margin; "
-                                  "F7's boards are tongued and grooved with a tongue of at least 6 mm; the reveals' returns are the wall kit's (T: buff brick, 3.1 L1 to L5) and the shopfront's pilaster return (F: 24.4 a side), and FF6 keeps the frame's outer width so they are unchanged; the 3.1 door review's dark hall is the render aid.")
+    T["covering_every_opening"] = ("Nothing may show through (check CV): in elevation the frame, the leaf, the glass and the transom cover the clear opening except the 10 mm foot gap and the leaf's 1.6 mm margins; at 60 degrees in plan the leaf laps 20.4 behind each stop and behind the transom's stop (the rows compute the lap from the frame's stop edges and the leaf's edges, and the setback of the leaf behind the stops from their depth), which closes the margin; every leaf lies behind its stops and opens inward; "
+                                  "F7's boards are tongued and grooved with a tongue of at least 6 mm; the reveals' returns are the wall kit's (T: buff brick, 3.1 L1 to L5) and the shopfront's pilaster return (F: 24.4 a side); the 3.1 door review's dark hall is the render aid.")
     T["owed_for_jafar"] = D.OWED
     T["sources"] = {"photographs": D.PHOTOS, "books": D.BOOKS, "measurements": D.MEAS, "colour_boxes": D.COLOUR_BOXES}
     T["rulings_checked"] = [
@@ -204,7 +192,7 @@ def main():
     # ---- the gate
     gate = {"views": {}, "pass_rule": {"front_view_by_layer": "IoU >= 0.97, outline p95 <= 2 mm, worst <= 6 mm (3.1's rule)", "sections": "IoU >= 0.97, p95 <= 2 mm, worst <= 6 mm", "profiles": "p95 <= 1.5 mm, worst <= 3 mm"}}
     for k, spec in kinds.items():
-        fr = "FF6" if k == "F6" else spec["frame_set"][0]
+        fr = spec["frame_set"][0]
         base = "T" if fr == "T" else "F"
         v = copy.deepcopy(load_json(VIEWS_T1 if base == "T" else VIEWS_F1))
         # close view at the kind's own furniture: the handle and latch heights when they stand above 0.7 m, else the plate; a foot view for a low plate
@@ -240,12 +228,12 @@ def main():
         {"name": "row_west", "from": "the same for the west side", "reads": "as above"},
     ]
     gate["photograph_pairs"] = [
-        {"kind": "T2", "photographs": ["D3", "D1"], "reads": "four lights equal, bars thin, a low plate, a bar pull on the left stile, a leaded fanlight"},
-        {"kind": "T3", "photographs": ["D4"], "reads": "a small arched light in an embossed upper panel, an oblong plate between the panels"},
+        {"kind": "T2", "photographs": ["D3", "D1"], "reads": "four lights equal, bars thin, stiles 84 and 58 of white, a low plate, a bar pull on the left stile, small dark numerals on the top rail, a fanlight with a plain pane over a band of leaded lozenges"},
+        {"kind": "T3", "photographs": ["D4"], "reads": "a small flat-topped light in a moulded upper panel (two outlines, the inner one arched over the light), an oblong plate between the panels, a lower panel as wide as the upper with two outlines, a short lever at the lock edge"},
         {"kind": "F5", "photographs": ["D2", "D4"], "reads": "a tall slit light centred on a flat door, a small plate under it, a lever on the left"},
-        {"kind": "F6", "photographs": ["D5", "D9"], "reads": "a flat door with an oblong plate at the middle, a lever on the right, a wide white frame, reeded transom"},
+        {"kind": "F6", "photographs": ["D4", "D5", "D9"], "reads": "a flat door with an oblong plate at the middle, a lever on the right, a small dark lock under it, a spyhole, in the street frame F (the fittings from an indoor door, the colour from D9, a flush face in a white frame from D4's middle door)"},
         {"kind": "F4", "photographs": ["D2"], "reads": "three long narrow lights"},
-        {"kind": "F3", "photographs": ["D1"], "reads": "two long panels, no cross rail"},
+        {"kind": "F3", "photographs": ["D1"], "reads": "two long panels with raked heads, no cross rail"},
         {"kind": "T1/F1/F2", "photographs": ["P1", "P2"], "reads": "as 3.1's reviews"},
         {"kind": "F7", "photographs": [], "reads": "no photograph reached; reads against Hasluck's figures only, listed as a known shortfall"},
     ]
@@ -254,14 +242,15 @@ def main():
     import td_checks
     T["checks"] = td_checks.build_checks(T)
     T["disagreements_photographs_win"] = [
-        {"id": "W1", "what": "the leaf width of a council flush door", "scene_or_book": "the scene's side door 0.838 x 1.981 (SCENE-SLOTS)", "photograph": "D5: 0.389 of the height, a 762 leaf shown whole in a wide white frame", "chosen": "F6: 762, frame set FF6"},
-        {"id": "W2", "what": "the letter plate on every household door", "scene_or_book": "the scene's 0.25 x 0.04 at 1.0 on every side door (west_north and east_chandler included)", "photograph": "D1, D4: a low plate at the foot; D2: a plate under a slit at 0.83; D5: 250 x 70 at 0.91; D4 right: 260 x 67 at 0.87; a service door has none", "chosen": "per kind (LP1 to LP7); none on F7"},
+        {"id": "W2", "what": "the letter plate on every household door", "scene_or_book": "the scene's 0.25 x 0.04 at 1.0 on every side door (west_north and east_chandler included)", "photograph": "D1, D4: a low plate at the foot; D2: a plate under a slit at 0.79; D5 (indoor, place only): 250 x 70 at 0.47 of the face; D4 right: 260 x 67 at 0.45; a service door has none", "chosen": "per kind (LP1 to LP7); none on F7"},
         {"id": "W3", "what": "the stand-in leaf is 766 or 678 wide in the drawn street; 3.1's leaves are 812.8 and 838", "scene_or_book": "terrace-front.py: leaf = 838 less two 36 casings (parade) or 838 less two 80 (cottages)", "photograph": "P1, P2, D3 (a 2 ft 8 in to 2 ft 9 in leaf)", "chosen": "3.1's frame sets T and F replace the stand-ins; the wall kit meets their openings"},
         {"id": "W4", "what": "the brass kick plate on the drawn parade doors", "scene_or_book": "terrace-front.py draws a brass kick plate 726 x 140 on each side door", "photograph": "no photograph read (P1, P2, D1 to D6) shows a kick plate", "chosen": "none; kick marks are wear"},
-        {"id": "W5", "what": "hinges outside a ledged door", "scene_or_book": "Hasluck Fig. 1027 draws hook-and-plate hinges on the face of a frame set in a wall", "photograph": "none reached", "chosen": "an inward-opening door, hinges inside (3.1's rule for all its doors); the face shows boards and nail heads"},
-        {"id": "W6", "what": "the 3.1 cream frame (weight 0.3)", "scene_or_book": "3.1's frame_colours", "photograph": "the Hook sheet's door surrounds are white; Jafar 3 Oct: windows with white frames", "chosen": "white and grimed white only; the Hull painted surrounds (D8) are an owed line"},
-        {"id": "W7", "what": "the bell push of 3.1's try 2", "scene_or_book": "build_door.py: oblong plus a brass bezel plus a dark button", "photograph": "P1: a plain dark oblong with a darker band, nothing bright", "chosen": "BL1: one plain part; the two-part push is a fault"},
-        {"id": "W8", "what": "the leaded fanlight's height", "scene_or_book": "the T frame's glass opening 267 high", "photograph": "D3: a leaded light about 624 high over a 1981 leaf", "chosen": "the T frame's 267 stays (the wall kit owns the head); only the leaded diamond glazing is taken"},
+        {"id": "W5", "what": "hinges outside a ledged door", "scene_or_book": "Hasluck Fig. 1027 draws hook-and-plate hinges on the face of a frame set in a wall", "photograph": "none reached", "chosen": "an inward-opening door, hinges inside (3.1's rule for all its doors, F6 included); the face shows boards and nail heads"},
+        {"id": "W6", "what": "the 3.1 cream frame (weight 0.3)", "scene_or_book": "3.1's frame_colours", "photograph": "the Hook sheet's door surrounds are white; Jafar 3 Oct: windows with white frames; D8 (Hull) and D2 (Railway Street: a mustard door frame and mustard window frames) show painted frames", "chosen": "white and grimed white only; the painted frames of D8 and D2 are an owed line"},
+        {"id": "W7", "what": "the bell push of 3.1's try 2", "scene_or_book": "build_door.py: oblong plus a brass bezel plus a dark button", "photograph": "P1: a plain dark oblong with a darker band, nothing bright", "chosen": "BL1: one plain part, square-cornered; the two-part push is a fault"},
+        {"id": "W8", "what": "the leaded fanlight's height", "scene_or_book": "the T frame's glass opening 267 high", "photograph": "D3: a leaded light about 604 high over a 1948 leaf (rows 376 to 436)", "chosen": "the T frame's 267 stays (the wall kit owns the head); only the leaded glazing pattern is taken (a plain pane over a band of lozenges)"},
+        {"id": "W9", "what": "where a T2 door's house number goes", "scene_or_book": "the earlier draft (and a common habit): a number painted on the fanlight glass (NM4)", "photograph": "D3: small dark numerals centred on the leaf's top rail, none on the glass", "chosen": "NM6, small dark metal numerals on the top rail; NM4 is a reserve, placed nowhere"},
+        {"id": "W10", "what": "the frame and stops of a council-style flush door", "scene_or_book": "the first draft took a lining with the stops behind the leaf from D5", "photograph": "D5 is an indoor landing door (Commons description): it is not evidence for a street frame; D4's middle door is an outdoor flush door in a white frame", "chosen": "F6 stands in the street frame F, an inward-opening 838 leaf with the stops in front; D5 gives the places of the fittings only"},
     ]
     T["could_not_settle"] = [
         "No dated photograph read shows a door knocker, a bell pull, a black iron letter plate, frosted or wired door glass, or a ledged service door on these streets. KN1, KN2, BL2, LP3, frosted, wired and NM2 are listed with Judgement sizes and refused on every house by the checks; F7 is built from Hasluck and Judgement alone.",
@@ -270,7 +259,9 @@ def main():
         "D1's doors stand in deep recesses and are seen from the right: only their vertical rows are used; the leaves' widths and the letter plate's length are not taken from it.",
         "Whether the west shop row (one storey in the drawn street) has flats: its side doors are 1 service door and 2 household doors until Jafar answers owed line 3.",
         "The painted cement hoods over Hull doorways (D1, D6) and their arched recesses (D7) are wall features; not in the door piece, listed for the wall kit.",
-        "A house number's digits are the town's; the target fixes only the form (NM1, NM3, NM4).",
+        "A house number's digits are the town's; the target fixes only the form (NM1, NM3, NM6).",
+        "F6: no outdoor photograph read shows a council-style flush door close enough to measure its fittings. The places of its plate, lever, lock and spyhole come from an indoor landing door (D5) as fractions of its face, +-35 mm; D9's door (6 px wide) reads as half-glazed, so only its lower panel's turquoise is used; the leaf is the street's 838 in the frame F.",
+        "T2's fanlight pattern is read at 10 mm a pixel with 14 px lozenges: the pitch (145) and the band's height (83) are Photo within 1 px, the came's width (6) and the two end tips (23.5) are Judgement; the small two-part fitting on D3's hinge stile cannot be identified.",
         "The shopfront kit's own side door at east_parade bay 2 (Rita's) has its own geometry and a fanlight (unit 2.2); this target gives it kind F1 and expects the builder to put F1's leaf in that slot.",
         "The boot scraper: one cast-iron scraper by the nearest cottage's step; no period photograph of these streets shows one (D10 is 2014); the sizes are Judgement +-25 per cent.",
     ]

@@ -32,7 +32,7 @@ SPECS = {
 OVERLAYS = {
     "d3-levenshulme-ratcliffe-street-1994-target-on-photo.jpg": ("T2", "D3", (0, 360, 260, 650), 4.0, "D3_leaf"),
     "d2-railway-street-1987-target-on-photo.jpg": ("F5", "D2", (520, 250, 640, 380), 7.0, "D2_F5_leaf"),
-    "d5-aberdeen-hazlehead-1987-target-on-photo.jpg": ("F6", "D5", (430, 100, 830, 1010), 1.0, "D5_leaf"),
+    "d5-aberdeen-hazlehead-1987-target-on-photo.jpg": ("F6", "D5", (430, 100, 830, 1010), 1.0, "D5_leaf", "both"),
 }
 
 
@@ -81,7 +81,9 @@ def main():
                 ml.append({"what": what, "box_in_preview": [x0 + 3, y0 + 3, max(x0 + 4, x1 - 3), max(y0 + 4, y1 - 3)]})
             masks_out[fname] = ml
         print(fname, c.size, os.path.getsize(os.path.join(PREVIEWS, fname)) // 1024, "KB")
-    for fname, (kind, pid, box, zoom, mkey) in OVERLAYS.items():
+    for fname, ov in OVERLAYS.items():
+        kind, pid, box, zoom, mkey = ov[:5]
+        fit_both = len(ov) > 5 and ov[5] == "both"      # D5 is an indoor door whose leaf is narrower than the street's: the fittings are placed by fractions, so the drawing is fitted on both axes
         im = open_photo(d, pid)
         for spec_name, (spid, sbox_, sz, smasks) in SPECS.items():
             if spid == pid:
@@ -96,12 +98,13 @@ def main():
         vz0, vz1 = fs["visible_leaf_z"]
         vx0, vx1 = fs["visible_leaf_x"]
         s = (lb[3] - lb[1]) / (vz1 - vz0) * zoom            # the scale fitted on the visible HEIGHT only
+        sx = (lb[2] - lb[0]) / (vx1 - vx0) * zoom if fit_both else s
         ox = (lb[0] - box[0]) * zoom
         oy = (lb[3] - box[1]) * zoom
         dr = ImageDraw.Draw(c)
 
         def px(x, z):
-            return (ox + (x - vx0) * s, oy - (z - vz0) * s)
+            return (ox + (x - vx0) * sx, oy - (z - vz0) * s)
 
         def outline(g, col):
             for part in TD.poly_coords(g):
@@ -118,7 +121,8 @@ def main():
                 for what, mb in smasks:      # the masks go on last, over the drawing's lines
                     if box[0] <= mb[0] and mb[2] <= box[2] and box[1] <= mb[1] and mb[3] <= box[3]:
                         dr.rectangle([(mb[0] - box[0]) * zoom, (mb[1] - box[1]) * zoom, (mb[2] - box[0]) * zoom, (mb[3] - box[1]) * zoom], fill=GREY)
-        dr.text((6, 6), "drawing of %s (scale fitted on the height only): yellow visible face, red openings, green fittings" % kind, fill=(255, 255, 255))
+        dr.text((6, 6), ("drawing of %s (fitted on height and width: an indoor door, the fittings by fractions): yellow visible face, red openings, green fittings" if fit_both else
+                         "drawing of %s (scale fitted on the height only): yellow visible face, red openings, green fittings") % kind, fill=(255, 255, 255))
         save_small(c, os.path.join(PREVIEWS, fname))
         masks_out[fname] = [{"what": w, "box_in_preview": [int((mb[0] - box[0]) * zoom) + 3, int((mb[1] - box[1]) * zoom) + 3, int((mb[2] - box[0]) * zoom) - 3, int((mb[3] - box[1]) * zoom) - 3]}
                             for spec_name, (spid, sbox_, sz, smasks) in SPECS.items() if spid == pid for w, mb in smasks

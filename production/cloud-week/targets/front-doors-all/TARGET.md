@@ -1,8 +1,8 @@
-Front doors for every house kind of Quay Street: from the passed 3.1 door (T1 cottage four-panel, F1 flat four-panel, its bell push fixed to one plain dark oblong), 10 door kinds (cottage T1 T2 T3, flat F1 to F7) fitted to the street's 12 household doors by house, 7 furniture slots with 25 variants (letter plates, handles, rim night latches, knockers, bells, numbers, a boot scraper), 15 paints and 3 conditions, a street order in which no two neighbours match, and a gate of 7 views a kind plus the street rows. Self-check: --live --previews: 563 pass, 0 fail; negative controls (wrong copies, offline rows) 48 of 48 caught; live controls (wrong copies, live rows) 10 of 10 caught.
+Front doors for every house kind of Quay Street: from the passed 3.1 door (T1 cottage four-panel, F1 flat four-panel, its bell push fixed to one plain dark oblong), 10 door kinds (cottage T1 T2 T3, flat F1 to F7) fitted to the street's 12 household doors by house, 8 furniture slots with 28 variants (letter plates, handles, rim night latches, plugged keyholes, knockers, bells, numbers, a boot scraper), 15 paints and 3 conditions, a street order in which no two neighbours match, and a gate of 7 views a kind plus the street rows. Self-check: --live --previews: 716 pass, 0 fail; negative controls (wrong copies, offline rows) 83 of 83 caught; live controls (wrong copies, live rows) 17 of 17 caught.
 
 # Front doors for every house kind: the target (cloud week 42, unit 9)
 
-Files in this folder: `TARGET.md` (this), `target.json` (the same numbers: frame sets, 10 kinds, the furniture, paints, wear, the street's house table, the gate and 145 checks, with the self-check result), `target_drawing.py` (draws target.json alone: an elevation of each kind in the 3.1 frame, the sections, the street's rows; `OUT_DIR [--json F] [--overlay KIND PHOTO OUT BOX]`), `self_check.py` (`--live --previews --photos DIR --write`), the makers (`td_data.py`, `td_kinds.py`, `td_furn.py`, `td_checks.py`, `td_sites.py`, `td_photos.py`, `make_target.py`, `make_doc.py`, `make_previews.py`) and `pages_read.json`. Run with `/home/user/.bpyenv/bin/python`. Previews: `production/previews/cloud-week/refs/front-doors-all/`.
+Files in this folder: `TARGET.md` (this), `target.json` (the same numbers: frame sets, 10 kinds, the furniture, paints, wear, the street's house table, the gate and 162 checks, with the self-check result), `target_drawing.py` (draws target.json alone: an elevation of each kind in the 3.1 frame, the sections, the street's rows; `OUT_DIR [--json F] [--overlay KIND PHOTO OUT BOX]`), `self_check.py` (`--live --previews --photos DIR --write`), the makers (`td_data.py`, `td_kinds.py`, `td_furn.py`, `td_checks.py`, `td_sites.py`, `td_photos.py`, `make_target.py`, `make_doc.py`, `make_previews.py`) and `pages_read.json`. Run with `/home/user/.bpyenv/bin/python`. Previews: `production/previews/cloud-week/refs/front-doors-all/`.
 
 Units and axes as the 3.1 target: millimetres; frame x across the opening from the left reveal, z up from the top of the threshold; leaf u across from the leaf's left edge seen from outside, v up from its bottom. The leaf laps behind each stop and behind the transom by 20.4 mm, so a photograph's visible face is the leaf less that lap: `u_structural = 20.4 + fraction x visible width`, `v = fraction x visible height` (visible T 772 x 1927.6, F 797.2 x 1960.6). Kinds of number: Read (printed), Scaled, Photo (with its box and error), Derived, Judgement.
 
@@ -12,26 +12,26 @@ Jafar, 12 October: "Front doors for every house kind, from the 3.1 door with its
 
 The handover's fix is the first line of the work: **delete the parts `iron_bellpush_bezel` and `iron_bellpush_button` from door_T1 (rebuild without them) so a plain dark oblong remains.** The two-part push read as a modern video doorbell (the 3.1 close review). The only bell push in this target is BL1, one part, 22 x 72.6 x 3 proud, square-cornered (radius at most 1), a 14 x 2 groove 1 deep a little below its middle (the darker band P1 shows), no bezel, no button, no ring, no bright element; it is on T1 only. Checks BP-form, BP-none-elsewhere, BP-no-modern and BP-houses hold it, and the negative controls build a push with a bezel, a push on F1 and a brass push to prove they fail.
 
-The new kinds are made from 3.1's script and method: the frame sets T (the cottage's brick opening, cambered head, transom 65, step) and F (the flat's side slot, flat head at 2400, transom 102, jambs showing 49) are 3.1's unchanged except one frame variant FF6 (section 5, F6); the leaf is rebuilt per kind from the same members (stiles 114.3, rails, 1.6 mm margins, panels floating in their grooves where there are panels); the fittings are 3.1's parts with new places. Section 5 says part by part, kind by kind, what is kept, changed, removed or added and why.
+The new kinds are made from 3.1's script and method: the frame sets T (the cottage's brick opening, cambered head, transom 65, step) and F (the flat's side slot, flat head at 2400, transom 102, jambs showing 49) are 3.1's unchanged (every kind, F6 included, stands in one of them: the stops in front of the leaf, an inward-opening door); the leaf is rebuilt per kind from the same members (stiles 114.3, rails, 1.6 mm margins, panels floating in their grooves where there are panels); the fittings are 3.1's parts with new places. Section 5 says part by part, kind by kind, what is kept, changed, removed or added and why.
 
 ## 2. Sources
 
 | id | photograph and page | read | author, licence | taken | shows | used for |
 |---|---|---|---|---|---|---|
-| P1 | Front door, 69 Lower Brimley Road, Teignmouth, front-door target (3.1) | 13 Oct 2026 (preview only (3.1's page not reachable then)) | Robin Stott, CC BY-SA 2.0 | 2012-05-06 | 69 Lower Brimley Road: a red four-panel door with bolection mouldings, a lock-rail band, a weatherboard, a white frame with a single-pane transom, a plain dark bell oblong on the right jamb, a brass letter plate and a cylinder lock | T1 and F1 (kept), the bell push's plain oblong, the brass plate, the rim night latch |
-| P2 | Doorway Philip Lane Tottenham London England, front-door target (3.1) | 13 Oct 2026 (preview only) | Acabashi, CC BY-SA 4.0 | 2024-02-03 | 178 Philip Lane: an unrestored black six-panel door beside a shop, a deep moulded transom with a full round nose, a centre knob, a knurled cylinder, a plugged keyhole, a horizontal brass plate, crazed and chipped paint | F2 six-panel, centre knob, plugged keyhole, wear |
-| D1 | Carrville Terrace, https://www.geograph.org.uk/photo/7292055 | 13 Oct 2026 (page opened, file measured) | David M Clark, CC BY-SA 2.0 | 1975-01-22 | two doors in white frames under painted-cement hoods, each with a transom light: a deep teal door of two long panels, and a blue-grey door of four stacked lights with a low letter plate in its bottom rail; a white painted step | F3 two long panels, the low letter plate, the stacked lights (vertical rows only: the leaves are seen at an angle from the right) |
-| D2 | Terraced housing in Railway Street, https://www.geograph.org.uk/photo/2238747 | 13 Oct 2026 (page opened, file measured) | P L Chadwick, CC BY-SA 2.0 | 1987-08-09 | a stone terrace: a mustard door of three long narrow lights, a khaki flush door with a tall slit light, a lever handle and a small plate under the slit (white frame, dark transom), a white door with an oval plaque | F4 three long lights, F5 slit-light flush door, the lever handle, the slit plate |
-| D3 | Terraced House - Ratcliffe Street, Levenshulme, https://www.geograph.org.uk/photo/2321423 | 13 Oct 2026 (page opened, file measured) | Anthony Parkes, CC BY-SA 2.0 | 1994-06-10 | a brick terrace front square on: a white door of four stacked lights with nets, a leaded diamond fanlight, a dark vertical pull handle on the left stile | T2 four stacked lights, the leaded fanlight, the bar pull |
-| D4 | Nos. 34, 32 and 30, Frederick Street, Barnoldswick, https://www.geograph.org.uk/photo/689253 | 13 Oct 2026 (page opened, file measured) | Dr Neil Clifton, CC BY-SA 2.0 | 1990-04-10 | three doors of a stone terrace: a pale flush door with a tall slit light, a dark door in a white frame with a transom and a low plate at its foot, a white moulded door with a small arched light, an oblong letter plate and two embossed panels | T3 moulded modern door, the slit light's height, the low letter plate |
-| D5 | Hazlehead I, Provost Graham Avenue (SC 1141987), https://commons.wikimedia.org/wiki/File:Hazlehead_I,_Provost_Graham_Avenue_(SC_1141987).png | 13 Oct 2026 (file page via the Commons API (date 1987, CC BY 4.0, uploaded with the University of Edinburgh); the 1920 px copy was measured) | Miles Glendinning (Tower Block Archive, Edinburgh College of Art), CC BY 4.0 | 1987 | an olive-green flush door with an oblong letter plate at its middle, a lever handle on the right stile, a spyhole above the plate, white frame with a reeded transom and reeded sidelight | F6 council flush door, the chrome-look oblong plate, the lever handle, reeded glass |
+| P1 | Front door, 69 Lower Brimley Road, Teignmouth, front-door target (3.1) | 13 Oct 2026 (preview only (3.1's page not reachable then)) | Robin Stott, CC BY-SA 2.0 | 2012-05-06 | 69 Lower Brimley Road: a red four-panel door with bolection mouldings, a lock-rail band, a weatherboard, a white frame with a single-pane transom, a plain dark bell oblong on the right jamb, a brass letter plate and a rim night latch | T1 and F1 (kept), the bell push's plain oblong, the brass plate, the rim night latch |
+| P2 | Doorway Philip Lane Tottenham London England, front-door target (3.1) | 13 Oct 2026 (preview only) | Acabashi, CC BY-SA 4.0 | 2024-02-03 | 178 Philip Lane: an unrestored black six-panel door beside a shop, a deep moulded transom with a full round nose, a centre knob, a knurled rim night latch collar, a plugged keyhole, a horizontal brass plate, crazed and chipped paint | F2 six-panel, centre knob, plugged keyhole, wear |
+| D1 | Carrville Terrace, https://www.geograph.org.uk/photo/7292055 | 13 Oct 2026 (page opened, file measured) | David M Clark, CC BY-SA 2.0 | 1975-01-22 | two doors in white frames under painted-cement hoods, each with a transom light: a deep teal door of two long panels whose heads are raked, rising toward the muntin (the left panel's top line runs from (47.5, 526.7) to (56.7, 522.9)), and a blue-grey door of four stacked lights with a low letter plate in its bottom rail; a white painted step | F3 two long panels and their raked heads (a rise of 50 mm, Photo, +-25), the low letter plate, the stacked lights (vertical rows only: the leaves are seen at an angle from the right) |
+| D2 | Terraced housing in Railway Street, https://www.geograph.org.uk/photo/2238747 | 13 Oct 2026 (page opened, file measured) | P L Chadwick, CC BY-SA 2.0 | 1987-08-09 | a stone terrace: a mustard door of three long narrow lights, its timber door frame and the window frames of the same house painted mustard too; a khaki flush door with a tall slit light, a lever handle and a small plate under the slit (white frame, dark transom), its leaf ending at row 360 above the sill lines (rows 360 to 366 are the sill, not the door); a white door with an oval plaque | F4 three long lights, F5 slit-light flush door, the lever handle, the slit plate; the mustard-painted frames are a finding set against the white-frames ruling (owed line 2) |
+| D3 | Terraced House - Ratcliffe Street, Levenshulme, https://www.geograph.org.uk/photo/2321423 | 13 Oct 2026 (page opened, file measured) | Anthony Parkes, CC BY-SA 2.0 | 1994-06-10 | a brick terrace front square on: a white door of four stacked lights with nets, a fanlight with a plain upper pane over a band of crossed diagonal leading (lozenges about 145 mm across) and an upright under each lozenge point, small dark numerals centred on the leaf's top rail, a dark vertical pull handle on the left stile, a small dark two-part fitting on the right (hinge) stile; the leaf's edges lean about 1 px every 40 rows | T2 four stacked lights, the stiles (84 and 58 mm of white), the leaded fanlight, the numerals on the top rail, the bar pull, the small fitting on the hinge stile |
+| D4 | Nos. 34, 32 and 30, Frederick Street, Barnoldswick, https://www.geograph.org.uk/photo/689253 | 13 Oct 2026 (page opened, file measured) | Dr Neil Clifton, CC BY-SA 2.0 | 1990-04-10 | three doors of a stone terrace: a pale flush door with a tall slit light, a dark flush door in a white frame about 5.7 px (about 120 mm) wide with a transom and a low plate at its foot, a white moulded door with a small flat-topped dark light (the moulding round it is arched), an oblong letter plate, a short lever at the lock edge, and two moulded panels each with two outlines | T3 moulded modern door, the slit light's height, the low letter plate, an outdoor flush door in a white street frame (the middle door: F6's evidence for a flush face in a street) |
+| D5 | Hazlehead I, Provost Graham Avenue (SC 1141987), https://commons.wikimedia.org/wiki/File:Hazlehead_I,_Provost_Graham_Avenue_(SC_1141987).png | 13 Oct 2026 (file page via the Commons API (date 1987, CC BY 4.0, uploaded with the University of Edinburgh); the 1920 px copy was measured) | Miles Glendinning (Tower Block Archive, Edinburgh College of Art), CC BY 4.0 | 1987 | an indoor landing of a tower block (a carpeted landing, a plant on a side table, a large floor number on the wall) and an olive-green flush door in a white lining with an oblong letter plate at its middle, a lever handle on the right stile, a small dark lock under the lever (columns 766 to 771, rows 617 to 626), a spyhole above the plate, a reeded transom and a reeded sidelight | an indoor landing door of a 1960s tower block (Commons description); used for the flush face and its plate, lever, lock and spyhole only (their places as fractions of the face), NOT for the frame, the leaf's width, its stops or its transom: those are Judgement (the street frame F, an inward-opening 838 leaf) |
 | D6 | Rensburg Street, Kingston upon Hull, https://www.geograph.org.uk/photo/7982731 | 13 Oct 2026 (page opened, file measured) | Bernard Sharp, CC BY-SA 2.0 | 1982-03-19 | a Hull terrace in 1982: recessed doorways under painted hoods in blue and red, a bright blue door with a white numeral painted on it, a black door with a yellow foot, painted brick surrounds | the bright blue door colour (a box inside the leaf), the painted numeral, the painted hood |
 | D7 | Abbey Street, Kingston upon Hull, https://www.geograph.org.uk/photo/3462921 | 13 Oct 2026 (page opened, file measured) | Bernard Sharp, CC BY-SA 2.0 | 1986-06-08 | a street of Hull terraces: arched recessed doorways under rendered arches with the doors standing deep inside; the left reveal's brickwork is painted lime green, the next arch's brick left bare | the recessed doorway and painted reveal (wall kit's, listed in could-not-settle); no door colour is taken from it (the green is the reveal's, not a door) |
 | D8 | Brazil Street, Kingston upon Hull, https://www.geograph.org.uk/photo/3462940 | 13 Oct 2026 (page opened, file measured) | Bernard Sharp, CC BY-SA 2.0 | 1986-06-08 | a street of Hull terraces with brightly painted frames, canopies and doors (red, blue, yellow, sky blue) | the finding that these streets paint frames and doors in bright colours, set against Jafar's white-frames ruling (owed line 2); no number taken from it |
-| D9 | Newburn Council Houses, https://www.geograph.org.uk/photo/2876894 | 13 Oct 2026 (page opened, file measured) | Kevin Hall, CC BY-SA 2.0 | 1989-08-01 | 1960s council houses: flush doors under small concrete canopies, one painted turquoise | the council turquoise (a box inside the leaf) |
-| D10 | Old Town, Poole: in search of the boot scraper, https://www.geograph.org.uk/photo/3911943 | 13 Oct 2026 (page opened, file measured) | Mike Searle, CC BY-SA 2.0 | 2014-03-30 | a cast-iron boot scraper beside a painted step: a straight blade between two end standards with scroll tops | the boot scraper's form (the sizes are Judgement, the photograph has no scale in its plane) |
+| D9 | Newburn Council Houses, https://www.geograph.org.uk/photo/2876894 | 13 Oct 2026 (page opened, file measured) | Kevin Hall, CC BY-SA 2.0 | 1989-08-01 | 1960s council houses with small concrete canopies; the door under the canopy at column 396 is 6 px wide, so the reading is a best reading: half-glazed (its face is pale grey-teal, about 85,122,130, which reads as glass, from row 583 to 619, and turquoise only from row 621 to 640) | the council turquoise: the hue of the lower panel only (a box inside the leaf); not evidence of a flush door |
+| D10 | Old Town, Poole: in search of the boot scraper, https://www.geograph.org.uk/photo/3911943 | 13 Oct 2026 (page opened, file measured) | Mike Searle, CC BY-SA 2.0 | 2014-03-30 | a cast-iron boot scraper beside a painted step: a straight blade with a notched underside between two end standards with scroll tops | the boot scraper's form (the sizes are Judgement, the photograph has no scale in its plane) |
 
-All photographs are references for measuring only: never placed in the game, never traced into a texture, never fed to an image model. No NoAI source is used. Each Geograph page was opened by this writer and its title, author, taken date and CC BY-SA 2.0 read there (`pages_read.json`; `self_check.py --live` reads them again). D5 is a Wikimedia Commons file (the Tower Block Archive of Edinburgh College of Art, uploaded with the University of Edinburgh), page read through the Commons API: date 1987, licence CC BY 4.0, author Miles Glendinning; the 1920 px copy served by Commons was measured, the original is 4000 x 2646. D10 is a later photograph (2014) of a cast-iron fixture left in place since the 19th century; P1 (2012) and P2 (2024) are 3.1's, their previews only (the lab's pages could not be reached then).
+All photographs are references for measuring only: never placed in the game, never traced into a texture, never fed to an image model. No NoAI source is used. Each Geograph page was opened by this writer and its title, author, taken date and CC BY-SA 2.0 read there (`pages_read.json`; `self_check.py --live` reads them again). D5 is a Wikimedia Commons file (the Tower Block Archive of Edinburgh College of Art, uploaded with the University of Edinburgh), page read through the Commons API: date 1987, licence CC BY 4.0, author Miles Glendinning; the 1920 px copy served by Commons (`?width=1920`) was measured, the original is 4000 x 2646. **D5 is an indoor landing door** (the file's own description: "View of hallway and door inside one of Hazlehead I blocks"; the frame shows a carpeted landing, a plant and a floor number): it is used for the flush face and the places of the plate, lever, lock and spyhole only, never for a street frame, a leaf width, stops or a transom. D9's door is 6 px wide, so "half-glazed" is a best reading; only its lower panel's turquoise is used. D10 is a later photograph (2014) of a cast-iron fixture left in place since the 19th century; P1 (2012) and P2 (2024) are 3.1's, their previews only (the lab's pages could not be reached then).
 
 Books (public domain by age): Hasluck, Cassell's Carpentry and Joinery (1907), pp.312-317, Figs. 1015-1039 (ledged and braced doors), read as the OCR text from archive.org, page images not opened; Ellis (1902) and Riley (1905) only through the 3.1 target.
 
@@ -49,18 +49,18 @@ From `tools/art-recipes/terrace-front.py plan_street` (the drawn street; `td_sit
 
 | house | side, door centre x (m) | trade | the files' opening (mm) | kind | frame | paint | condition | fittings | windows |
 |---|---|---|---|---|---|---|---|---|---|
-| east_parade_bay0 | east 3.77 | Mickey's, the minicab office (the quay end of the parade) | 838, leaf 766 x 1981 | F1 | F | maroon | tired | plate LP1, handle HD1, latch LK2 |  |
-| east_parade_bay1 | east 9.77 | the fishmonger | 838, leaf 766 x 1981 | F2 | F | black | kept | plate LP2, handle HD1, latch LK2, number NM1 |  |
-| east_parade_bay2 | east 20.18 | Rita's, the pawnbroker | 844, the kit's | F1 | F | navy | kept | plate LP1, handle HD1, latch LK2 | modernised |
+| east_parade_bay0 | east 3.77 | Mickey's, the minicab office (the quay end of the parade) | 838, leaf 766 x 1981 | F1 | F | maroon | tired | plate LP1, handle HD1, latch LK2, keyhole KH1 |  |
+| east_parade_bay1 | east 9.77 | the fishmonger | 838, leaf 766 x 1981 | F2 | F | black | kept | plate LP2, handle HD1, latch LK2, number NM1, keyhole KH1 |  |
+| east_parade_bay2 | east 20.18 | Rita's, the pawnbroker | 844, the kit's | F1 | F | navy | kept | plate LP1, handle HD1, latch LK2, keyhole KH1 | modernised |
 | east_parade_bay3 | east 21.77 | the empty unit to let | 838, leaf 678 x 1981 | F4 | F | brown | neglected | plate LP5, handle HD2b |  |
-| east_parade_bay4 | east 32.23 | the launderette | 838, leaf 678 x 1981 | F6 | FF6 | council_turquoise | tired | plate LP4, handle HD2a | modernised |
+| east_parade_bay4 | east 32.23 | the launderette | 838, leaf 678 x 1981 | F6 | F | council_turquoise | tired | plate LP4, handle HD2a, latch LK3 | modernised |
 | east_chandler_bay0 | east 45.23 | the ship chandler | 838, leaf 766 x 1981 | F5 | F | black | kept | plate LP7, handle HD2b | modernised |
 | west_south_bay2 | west 4.50 | a cottage of the plain terraces (quay end) | 838, leaf 678 x 1981, step | T1 | T | navy | tired | plate LP1, latch LK1, bell BL1, number NM1, scraper BS1 |  |
 | west_south_bay1 | west 13.50 | a cottage of the plain terraces | 838, leaf 678 x 1981, step | T3 | T | white_gloss | kept | plate LP6, handle HD2c | modernised |
-| west_south_bay0 | west 19.50 | a cottage of the plain terraces (by the yard slot) | 838, leaf 678 x 1981, step | T2 | T | cream | tired | plate LP5, handle HD3, number NM4 |  |
+| west_south_bay0 | west 19.50 | a cottage of the plain terraces (by the yard slot) | 838, leaf 678 x 1981, step | T2 | T | maroon | tired | plate LP5, handle HD3, number NM6 |  |
 | west_north_bay2 | west 24.77 | a shop of the west shop row (by the yard slot) | 838, leaf 678 x 1981 | F7 | F | deep_teal | neglected | handle HD4 |  |
 | west_north_bay1 | west 35.23 | a shop of the west shop row | 838, leaf 766 x 1981 | F3 | F | dark_green | tired | plate LP1, handle HD3, number NM3 |  |
-| west_north_bay0 | west 41.23 | a shop of the west shop row (north end) | 838, leaf 678 x 1981 | F1 | F | maroon | kept | plate LP1, handle HD1, latch LK2 |  |
+| west_north_bay0 | west 41.23 | a shop of the west shop row (north end) | 838, leaf 678 x 1981 | F1 | F | maroon | kept | plate LP1, handle HD1, latch LK2, keyhole KH1 |  |
 
 Why each house has its kind, paint and fittings:
 
@@ -68,11 +68,11 @@ Why each house has its kind, paint and fittings:
 - east_parade_bay1: the fishmonger's flat, an old six-panel door as P2 shows; kept because a working shop keeps its own door.
 - east_parade_bay2: Rita's: the shopfront kit's own side door (a fanlight over it); four-panel as built, dark blue against the cream painted front (the 4 October reading of the sheet's third house).
 - east_parade_bay3: the empty unit to let (whitewashed): its flat is empty too; an old three-light glazed door, neglected, with a low plate in its bottom rail.
-- east_parade_bay4: the launderette's flat, modernised (the windows target gave it replacement windows): a council-style flush door in the 1980s turquoise that D9 shows; the only bright door on the east side.
+- east_parade_bay4: the launderette's flat, modernised (the windows target gave it replacement windows): a council-style flush door in the 1980s turquoise of D9's lower panel (D9's own door is half-glazed, a best reading), in the street frame F, an inward-opening 838 leaf; the fittings' places come from D5, an indoor landing door, and an outdoor flush door in a white frame is D4's middle door; the only bright door on the east side.
 - east_chandler_bay0: the chandler's flat, modernised (replacement windows, a metal refit below): a flush door with a slit light as D2 and D4 show.
 - west_south_bay2: the cottage nearest the quay, four-panel as built in 3.1 with its plain oblong bell push; dark blue; the one boot scraper, by the step (owed: no period photograph shows one here).
-- west_south_bay1: the cottage with replacement windows: the white moulded door with a small arched light that D4 shows next to its replacement windows.
-- west_south_bay0: the cottage by the yard slot: the 1930s four-light glazed door of D3 with its leaded fanlight; a painted number on the glass.
+- west_south_bay1: the cottage with replacement windows: the white moulded door with a small flat-topped light that D4 shows next to its replacement windows.
+- west_south_bay0: the cottage by the yard slot: the 1930s four-light glazed door of D3 with its fanlight (a plain pane over a band of leaded lozenges) and small dark numerals on its top rail; D3's own door is white, but west_south_bay1 beside it is white gloss, and two pale doors side by side break the neighbour rule (paint class), so this door is maroon (its neighbours white_gloss and deep_teal, the doors facing it navy and brown).
 - west_north_bay2: beside the yard slot, in a one-storey shop row: a service door to the back passage, ledged and braced, in the sheet's deep teal (owed line 3: if the PC wants flats in this row it takes F1 instead).
 - west_north_bay1: a household door in the row: two long panels as D1's left door, a bar pull on the left stile.
 - west_north_bay0: the north end of the row: the four-panel door as built.
@@ -83,13 +83,13 @@ Why each house has its kind, paint and fittings:
 
 ## 4. The reading of the photographs, element by element
 
-What the photographs show on a door, and where it is in this target: panel layout and counts (section 5, per kind); mouldings and profiles (T1 F1 F2 the 3.1 bolection at 46 and 43; F3 a stuck ovolo; T3 an embossed step; the rest none); glazing (plain, reeded, leaded; section 5); the fanlight (a plain dark light over D2's doors and D4's; a leaded light over D3's; a reeded light over D5's; the T and F frames' transoms carry them); the frame and its stops (frame sets, FF6); the number (forms NM1, NM3, NM4; the digits are the town's); furniture (section 6); paint and wear (sections 7 and 8). Hoods over the doors, arched recesses and painted reveals (D1, D6, D7) belong to the wall and are listed for the wall kit.
+What the photographs show on a door, and where it is in this target: panel layout and counts (section 5, per kind); mouldings and profiles (T1 F1 F2 the 3.1 bolection at 46 and 43; F3 a stuck ovolo; T3 an embossed step; the rest none); glazing (plain, reeded, leaded; section 5); the fanlight (a plain dark light over D2's doors and D4's; a leaded light over D3's; a reeded light on F6, Judgement; the T and F frames' transoms carry them); the frame and its stops (frame sets T and F); the number (forms NM1, NM3, NM6; the digits are the town's); furniture (section 6); paint and wear (sections 7 and 8). Hoods over the doors, arched recesses and painted reveals (D1, D6, D7) belong to the wall and are listed for the wall kit.
 
-**The brief's door types, and where each is.** Four-panel: T1, F1 (3.1). Six-panel: F2. Two long panels (a 1930s door, D1): F3. Half-glazed: F4 (three long lights over a low rail, D2) and T2 (four stacked lights, D3, D1); half-glazed with a small light: T3 (a small arched light in an embossed panel, D4) and F5 (a tall slit light, D2, D4). A council replacement flush door of the 1970s or 1980s: F6 (D5, D9). A ledged door to a yard or a service passage: F7 (Hasluck only). A fanlight: every door has one, the frame sets' transom light (plain dark over D2's and D4's doors, leaded over D3's, reeded over D5's); a door with no fanlight is not offered, because every door read (D1 to D5, P1, P2) has a light or a panel above its leaf. Glazing: plain (T2, F4, F5, T3, every transom but two), leaded diamond (T2's fanlight), reeded (F6's transom); frosted and wired are listed and placed nowhere. The frame and its stops: frame sets T and F as 3.1 (rebate 22 x 53, stop 74 deep, a 5 x 2.5 stop bead on F), FF6 for the 762 leaf. Letter plates, knockers, knobs and levers, the rim night latch with its escutcheon (the collar), the bell, house numbers, the boot scraper: section 6.
+**The brief's door types, and where each is.** Four-panel: T1, F1 (3.1). Six-panel: F2. Two long panels (a 1930s door, D1): F3. Half-glazed: F4 (three long lights over a low rail, D2) and T2 (four stacked lights, D3, D1); half-glazed with a small light: T3 (a small flat-topped light in a moulded panel, D4) and F5 (a tall slit light, D2, D4). A council replacement flush door of the 1970s or 1980s: F6 (the fittings' places from D5, an indoor door; the hue from D9; a flush leaf in a white street frame as D4's middle door). A ledged door to a yard or a service passage: F7 (Hasluck only). A fanlight: every door has one, the frame sets' transom light (plain dark over D2's and D4's doors, leaded over D3's, reeded on F6 as Judgement); a door with no fanlight is not offered, because every door read (D1 to D4, P1, P2) has a light or a panel above its leaf. Glazing: plain (T2, F4, F5, T3, every transom but two), leaded diamond (T2's fanlight), reeded (F6's transom); frosted and wired are listed and placed nowhere. The frame and its stops: frame sets T and F as 3.1 (rebate 22 x 53, stop 74 deep, a 5 x 2.5 stop bead on F), every kind in one of them. Letter plates, knockers, knobs and levers, the rim night latch with its escutcheon (the collar), the bell, house numbers, the boot scraper: section 6.
 
 ## 5. The doors, kind by kind
 
-**Covering every opening.** Nothing may show through (check CV): in elevation the frame, the leaf, the glass and the transom cover the clear opening except the 10 mm foot gap and the leaf's 1.6 mm margins; from 60 degrees the leaf laps 20.4 behind each stop and behind the transom's stop (F6: its stops are planted behind the leaf's edge, 22 wide), which closes the margin; F7's boards are tongued and grooved with a tongue of at least 6 mm; the reveals' returns are the wall kit's (T: buff brick, 3.1 L1 to L5) and the shopfront's pilaster return (F: 24.4 a side), and FF6 keeps the frame's outer width so they are unchanged; the 3.1 door review's dark hall is the render aid.
+**Covering every opening.** Nothing may show through (check CV): in elevation the frame, the leaf, the glass and the transom cover the clear opening except the 10 mm foot gap and the leaf's 1.6 mm margins; at 60 degrees in plan the leaf laps 20.4 behind each stop and behind the transom's stop (the rows compute the lap from the frame's stop edges and the leaf's edges, and the setback of the leaf behind the stops from their depth), which closes the margin; every leaf lies behind its stops and opens inward; F7's boards are tongued and grooved with a tongue of at least 6 mm; the reveals' returns are the wall kit's (T: buff brick, 3.1 L1 to L5) and the shopfront's pilaster return (F: 24.4 a side); the 3.1 door review's dark hall is the render aid.
 
 ### T1: four-panel front door with a transom, in its brick opening (3.1 T1)
 
@@ -117,40 +117,44 @@ Part by part against the 3.1 door (door_T1.glb, door_F1.glb):
 | frame_jamb_l/r, frame_head, frame_transom, glass_fanlight, frame_glazing_bead | kept | the passed frame set T and its transom, untouched |
 | leaf_frame, panel_*, moulding_bolection_*, moulding_single_*, moulding_band, moulding_weatherboard | kept | passed in 3.1 (fresh reviews of 9 October) |
 | iron_letter_plate, flap, lip | kept | LP1, the vertical brass plate |
-| iron_lock, collar, plug | kept | LK1, the rim night latch (the 3.1 name for it was cylinder lock) |
-| iron_bellpush | kept | the plain dark oblong of P1: one part, 22 x 72.6, 3 proud; the handover's fix |
+| iron_lock, collar, plug | kept | LK1, the rim night latch, as built in 3.1 |
+| iron_bellpush | changed | rebuilt square-cornered (r 1, was r 6), groove added: the plain dark oblong of P1, one part, 22 x 72.6, 3 proud, with the 14 x 2 x 1 groove a little below its middle; 3.1 built it with r 6 corners and no groove (build_door.py line 664); the handover's fix |
 | iron_bellpush_bezel, iron_bellpush_button | removed | the two-part push read as a modern video doorbell (3.1 review v2 close); deleted, not replaced by any ring or lens |
 | stone_threshold, stone_riser, stone_tread | kept | the step of 3.1; the wall's plinth returns stay with the wall kit |
 | iron_keyhole_*, iron_knob_* | not present | T1 never had them |
 
-### T2: four stacked lights over a low rail, a leaded diamond fanlight (D3, D1)
+### T2: four stacked lights over a low rail, a fanlight with a plain pane over a band of leaded lozenges (D3, D1)
 
 Frame set T. Houses: west_south_bay0. Photographs: D3, D1.
 
-Leaf 812.8 x 1948 x 50.8 mm, framed, glazed, lock on the left as seen from outside. Members (structural, mm): stile_left 114.30, stile_right 114.30, top_rail 78.40, bottom_rail 205, bar 30, light_h 393.65.
+Leaf 812.8 x 1948 x 50.8 mm, framed, glazed, lock on the left as seen from outside. Members (structural, mm): stile_left 94, stile_right 69, top_rail 78.40, bottom_rail 205, bar 30, light_h 393.65.
 
-structural numbers; the visible top rail is 58 (78.4 less the 20.4 behind the transom's stop) and the visible stiles 93.9.
+structural numbers; the visible top rail is 58 (78.4 less the 20.4 behind the transom's stop) and the visible stiles 73.6 (lock side, left) and 48.6 (hinge side, right), which with the 10 mm bead are 84 and 59 of white (D3 reads 84 and 58).
 
 | opening | type | u0 | u1 | v0 | v1 | moulding or glass |
 |---|---|---|---|---|---|---|
-| light1 | light | 114.3 | 698.5 | 205 | 598.6 | plain_3mm |
-| light2 | light | 114.3 | 698.5 | 628.6 | 1022.3 | plain_3mm |
-| light3 | light | 114.3 | 698.5 | 1052.3 | 1445.9 | plain_3mm |
-| light4 | light | 114.3 | 698.5 | 1475.9 | 1869.6 | plain_3mm |
+| light1 | light | 94 | 743.8 | 205 | 598.6 | plain_3mm |
+| light2 | light | 94 | 743.8 | 628.6 | 1022.3 | plain_3mm |
+| light3 | light | 94 | 743.8 | 1052.3 | 1445.9 | plain_3mm |
+| light4 | light | 94 | 743.8 | 1475.9 | 1869.6 | plain_3mm |
+
+Small fitting that is no furniture variant: a small dark two-part fitting on the hinge stile (D3) at u 753, v 1390, 20 x 60 mm, 8 proud, dark (40,40,42). Photo D3 box [116.5, 492.5, 118.5, 498.5]: its centre 2.2 px (22 mm) beyond the glass edge and 4.2 px (42 mm) in from the leaf's right edge, so u about 753 (+-10) on the white of the hinge stile (733.8 to 792.4), v about 1390 (+-15), about 25 x 60 mm. What it is not: not a rim night latch, a bell push, a knocker, a letter plate or a handle (none of those is read on the hinge stile); what it is cannot be told at 10 mm a pixel (a bolt keep or a stop screw): it is added as a small dark box, two parts 20 x 25 mm apart, and no more.
 
 Mouldings: glazing bars 30 wide x 22 deep, square, eased 1 mm; stiles and rails square, eased 1.5; the bead is the 3.1 planted quarter-round 10 x 8 on all four sides of each light.
 
 Glazing: transom leaded_diamond; leaf plain_3mm; white net card behind the lights (D3 shows one), the windows target's net N1 white.
 
-Photograph numbers behind it (measured_fractions_of_leaf_height): {top_rail: 0.03, bar: 0.015, light: 0.205, bottom_rail: 0.105}.
+Photograph numbers behind it (measured_fractions_of_leaf_height): {top_rail: 0.036, bar: 0.015, light: 0.203, bottom_rail: 0.106}.
 
 Part by part against the 3.1 door (door_T1.glb, door_F1.glb):
 
 | 3.1 part | status | why |
 |---|---|---|
 | frame_jamb_l/r, frame_head, frame_transom, frame_glazing_bead (transom) | kept | frame set T |
-| glass_fanlight | changed | plain 3 mm glass becomes a leaded diamond light (came 6 wide, diamonds 95 x 70): D3 shows a leaded fanlight over this door; the height (P6's is 624 mm) is not taken, the T frame's 267 mm stays |
-| leaf_frame | changed | stiles 114.3 (visible 93.9), top rail 78.4 (visible 58), bottom rail 205, no lock rail, no muntin; four openings 584.2 x 393.7 with 30 mm bars (D3's fractions of the visible face 0.030, 0.2066, 0.0158, 0.105) |
+| glass_fanlight | changed | plain 3 mm glass becomes a leaded light as D3 shows it: the upper 144 of the 267 one plain pane; under it a band 83 high of crossed diagonal came at a 145 pitch (lozenges 145 x 83, 5 whole, a tip of a lozenge at each end); a horizontal came 40 above the foot with an upright under each lozenge point; came 6 wide. The T frame's 267 mm light is kept (the wall kit owns the head) |
+| leaf_frame | changed | stiles 94.0 (lock side, left) and 69.0 (hinge side, right), visible 73.6 and 48.6, with the bead 84 and 59 of white (D3: 84 and 58); top rail 78.4 (visible 58), bottom rail 205, no lock rail, no muntin; four openings 649.8 x 393.7 with 30 mm bars (D3's fractions of the visible face 0.030, 0.2066, 0.0158, 0.105) |
+| iron_numerals (new) | added | NM6: small dark metal numerals 30 high centred on the visible top rail, v 1898.6 (D3; the number is not on the fanlight glass) |
+| small fitting on the hinge stile (new) | added | the small dark two-part fitting D3 shows on the hinge stile (T2_hinge_fixing, u 753, v 1390): what it is cannot be told, so it is a small dark box and nothing more |
 | panel_*, moulding_bolection_*, moulding_single_*, moulding_band, moulding_weatherboard | removed | a glazed door has no panels or mouldings; D3 and D1 show none |
 | glass (new parts glass_light1..4) and bead | added | four panes of 3 mm glass, each with the 3.1 planted bead |
 | iron_letter_plate | changed | LP5, a pale low plate in the bottom rail, as D1 and D4 show (the vertical brass plate has no muntin to sit on) |
@@ -158,7 +162,7 @@ Part by part against the 3.1 door (door_T1.glb, door_F1.glb):
 | iron_bellpush | removed | none on D3 |
 | stone_* | kept | the step of 3.1 under the same opening |
 
-### T3: white moulded modern door with a small arched light (D4 right door)
+### T3: white moulded modern door with a small flat-topped light (D4 right door)
 
 Frame set T. Houses: west_south_bay1. Photographs: D4.
 
@@ -166,27 +170,29 @@ Leaf 812.8 x 1948 x 44 mm, moulded flush sheet over a core, painted-look gloss, 
 
 | opening | type | u0 | u1 | v0 | v1 | moulding or glass |
 |---|---|---|---|---|---|---|
-| upper_panel | embossed_panel | 140.5 | 706.6 | 981.1 | 1806.3 | embossed_step |
-| small_light | arched_light | 320.6 | 513.6 | 1082.9 | 1537.7 | plain_3mm |
-| lower_panel | embossed_panel | 234.8 | 642.3 | 324.9 | 736.4 | embossed_step |
+| upper_panel | embossed_panel | 119.9 | 692.9 | 920.5 | 1776.1 | embossed_step |
+| upper_panel, inner outline | outline, head segmental, springing 22 below the crown | 182.4 | 630.4 | 996.4 | 1646.2 | a 14 mm cove at this line too |
+| small_light | small_light, head flat, top corners r 20 | 297.4 | 515.4 | 1109 | 1555.2 | plain_3mm |
+| lower_panel | embossed_panel | 119.9 | 692.9 | 324.9 | 725.6 | embossed_step |
+| lower_panel, inner outline | outline, head flat | 182.4 | 630.4 | 400.7 | 639 | a 14 mm cove at this line too |
 
-Mouldings: each embossed panel is a field 6 mm below the border face, edged by a 14 mm cove; the border is 65 wide all round; no applied mouldings.
+Mouldings: each moulded panel has TWO outlines (D4): an outer and an inner outline, a margin of about 70 to 85 between them; the margin is a flat raised border with a 14 mm cove at each line (3 mm down at the outer line to the margin, 3 mm more at the inner line to the field, which is 6 below the border face); the border is 65 wide all round; the upper panel's inner outline has a segmental head (crown v 1646, springing 22 lower) under a flat outer top; no applied mouldings.
 
-Profile (d across the face from the moulding's outer edge, h above the framing face, mm): (0,0) (1.50,0.40) (4,3) (8,5.20) (12,5.90) (14,6) (40,6).
+Profile (d across the face from the moulding's outer edge, h above the framing face, mm): (0,0) (2,0.17) (4,0.59) (6,1.18) (8,1.82) (10,2.40) (12,2.83) (14,3) (76,3) (78,3.17) (80,3.60) (82,4.18) (84,4.82) (86,5.41) (88,5.83) (90,6) (110,6).
 
 Glazing: transom plain_3mm; leaf plain_3mm.
 
-Photograph numbers behind it (measured_fractions_of_leaf): {upper: {u: [0.156, 0.889], v: [0.509, 0.937]}, light: {u: [0.389, 0.639], v: [0.562, 0.798]}, plate: {u: [0.361, 0.694], v: [0.431, 0.466]}, lower: {u: [0.278, 0.806], v: [0.169, 0.382]}, handle: {u: [1.0, 1.056], v: [0.404, 0.449]}}.
+Photograph numbers behind it (measured_fractions_of_leaf): {upper: {u: [0.154, 0.941], v: [0.478, 0.921]}, upper_inner: {u: [0.243, 0.852], v: [0.517, 0.854]}, light: {u: [0.392, 0.674], v: [0.575, 0.807]}, plate: {u: [0.377, 0.733], v: [0.437, 0.472]}, lower: {u: [0.154, 0.941], v: [0.169, 0.376]}, lower_inner: {u: [0.243, 0.852], v: [0.208, 0.331]}, handle: {u: [0.941, 0.985], v: [0.433, 0.522]}}.
 
 Part by part against the 3.1 door (door_T1.glb, door_F1.glb):
 
 | 3.1 part | status | why |
 |---|---|---|
 | frame_jamb_l/r, frame_head, frame_transom, glass_fanlight, frame_glazing_bead | kept | frame set T; D4's door has a plain dark transom light over it |
-| leaf_frame, panel_*, moulding_* | changed | no stiles or rails: one moulded sheet 44 thick with two embossed panels and a small arched light (D4's fractions) |
-| glass_light (new part) | added | one pane about 200 x 460 with a semicircular head, glazed from inside with a moulded bead |
-| iron_letter_plate | changed | LP6, a white oblong 270 x 50 in the border between the panels (D4: 0.448 of the visible height) |
-| iron_lock, collar, plug | removed | D4 shows none outside; a small lever HD2c at the lock edge |
+| leaf_frame, panel_*, moulding_* | changed | no stiles or rails: one moulded sheet 44 thick with two moulded panels, each with two outlines, and a small flat-topped light (D4, re-measured on the leaf's own face) |
+| glass_light (new part) | added | one pane 218 x 446 with a flat head (top corners r 20; the head rises at most 22 mm), glazed from inside with a moulded bead; the arch D4 shows is the moulding round it |
+| iron_letter_plate | changed | LP6, a white oblong 270 x 50 in the margin between the panels (D4: 0.45 of the visible height) |
+| iron_lock, collar, plug | removed | D4 shows none outside; a small lever HD2c at the lock edge, v 910 |
 | iron_bellpush, stone_* | removed / kept | no push; the step of 3.1 stays |
 
 ### F1: four-panel flat door (3.1 F1)
@@ -255,8 +261,8 @@ Leaf 838 x 1981 x 50.8 mm, framed, lock on the left as seen from outside. Member
 
 | opening | type | u0 | u1 | v0 | v1 | moulding or glass |
 |---|---|---|---|---|---|---|
-| long_l | panel | 114.3 | 359 | 192.8 | 1854 | stuck_ovolo |
-| long_r | panel | 479 | 723.7 | 192.8 | 1854 | stuck_ovolo |
+| long_l | panel, head raked (50 lower at the outer corner, high toward the right) | 114.3 | 359 | 192.8 | 1854 | stuck_ovolo |
+| long_r | panel, head raked (50 lower at the outer corner, high toward the left) | 479 | 723.7 | 192.8 | 1854 | stuck_ovolo |
 
 Mouldings: stuck ovolo, 20 mm on the face (Judgement: D1 shows two long flat panels with narrow lit edges, no bolection).
 
@@ -270,7 +276,7 @@ Part by part against the 3.1 door (door_T1.glb, door_F1.glb):
 |---|---|---|
 | frame_*, glass_fanlight, sill | kept | frame set F |
 | leaf_frame, panel_* | changed | no lock rail: the muntin runs the full height between the 127 top rail and the 192.8 bottom rail; two panels 244.7 x 1661.2 (D1 shows no cross rail on this door) |
-| moulding_bolection_* | changed | a stuck ovolo moulding 20 wide, 6.5 proud, replaces the 43 mm bolection (D1 shows thin lit edges) |
+| moulding_bolection_* | changed | a stuck ovolo moulding 20 wide, 6.5 proud, replaces the 43 mm bolection (D1 shows thin lit edges); each panel's head is raked, 50 mm lower at the stile than at the muntin (D1) |
 | iron_letter_plate | kept | LP1 on the muntin, at the 3.1 height 1617 |
 | iron_knob_*, iron_keyhole_* | removed | a bar pull HD3 on the left stile (D1 shows a vertical metal strip on that stile) |
 
@@ -310,13 +316,13 @@ Leaf 838 x 1981 x 44 mm, flush, hardboard-faced, lipped, lock on the left as see
 
 | opening | type | u0 | u1 | v0 | v1 | moulding or glass |
 |---|---|---|---|---|---|---|
-| slit | slit_light | 320.8 | 524.1 | 914.9 | 1806.1 | plain_3mm |
+| slit | slit_light | 329.8 | 539.2 | 870 | 1789 | plain_3mm |
 
 Mouldings: flat painted face; a 1 mm hairline round the lipping; the slit has a 15 mm square timber bead, 4 proud.
 
 Glazing: transom plain_3mm; leaf plain_3mm.
 
-Photograph numbers behind it (measured_fractions_of_leaf): {slit: {u: [0.377, 0.632], v: [0.467, 0.921]}, plate: {u: [0.333, 0.652], v: [0.406, 0.43]}, handle: {u: [0.014, 0.116], v: [0.533, 0.576]}}.
+Photograph numbers behind it (measured_fractions_of_leaf): {slit: {u: [0.388, 0.651], v: [0.447, 0.918]}, plate: {u: [0.343, 0.672], v: [0.384, 0.409]}, handle: {u: [0.015, 0.119], v: [0.516, 0.56]}}.
 
 Part by part against the 3.1 door (door_T1.glb, door_F1.glb):
 
@@ -324,37 +330,36 @@ Part by part against the 3.1 door (door_T1.glb, door_F1.glb):
 |---|---|---|
 | frame_*, glass_fanlight, sill | kept | frame set F |
 | leaf_frame, panel_*, moulding_* | changed | one flush slab 44 thick, lipped; no panels or mouldings |
-| glass_slit (new) | added | one pane about 205 x 900 centred on the leaf (D2: 8.8 x 37.5 px at 23 to 24 mm a pixel) |
-| iron_letter_plate | changed | LP7, a pale 265 x 50 plate under the slit, centre about 829 |
-| iron_knob_*, iron_keyhole_*, iron_lock_* | removed | a lever HD2b at the left edge, v 1093 |
+| glass_slit (new) | added | one pane about 210 x 920 (v 870 to 1789) on the leaf's face (D2: 8.8 x 37.5 px at 24.7 mm a pixel, on the leaf's own box, foot at row 360) |
+| iron_letter_plate | changed | LP7, a pale 265 x 50 plate under the slit, centre v 772 |
+| iron_knob_*, iron_keyhole_*, iron_lock_* | removed | a lever HD2b at the left edge, v 1048 |
 
-### F6: council-style flush door, olive in D5, turquoise in D9 (leaf 762, shown whole)
+### F6: council-style flush door: a plain flush leaf in the street frame F (fittings placed from D5, an indoor door; the turquoise from D9; a flush face in a white street frame as D4's middle door)
 
-Frame set F, with planted inside stops (frame_change). Houses: east_parade_bay4. Photographs: D5, D9.
+Frame set F. Houses: east_parade_bay4. Photographs: D4, D5, D9.
 
-Leaf 762 x 1981 x 44 mm, flush, plywood-faced, lipped, lock on the right as seen from outside. Members (structural, mm): lipping 6.
+Leaf 838 x 1981 x 44 mm, flush, plywood-faced, lipped, lock on the right as seen from outside. Members (structural, mm): lipping 6.
 
 | opening | type | u0 | u1 | v0 | v1 | moulding or glass |
 |---|---|---|---|---|---|---|
-| spyhole | spyhole | 374 | 388 | 1502 | 1516 | lens_14 |
+| spyhole | spyhole | 411.4 | 425.4 | 1491.9 | 1505.9 | lens_14 |
 
 Mouldings: flat face; the lipping line 1 mm; no panel, no moulding.
 
 Glazing: transom reeded_4mm; leaf none.
 
-Frame change: {clear_between_faces: 765.2, jamb_showing: 117.6, stops: planted on the inside face: the leaf shows whole, nothing laps in front, the 1.6 mm margins show the stop behind (not the hall), why: D5's leaf is 325 x 835 px = 0.389 of its height, a 2 ft 6 in (762) leaf seen whole, with a white frame about 130 wide beside it (55 px at 2.37 mm); 3.1's lapped 838 leaf would read 0.407. The frame's outer width 1000.4 is kept, so the jambs show (1000.4 - 765.2) / 2 = 117.6}.
-
-Photograph numbers behind it (measured_fractions_of_leaf): {plate: {u: [0.342, 0.671], v: [0.444, 0.48]}, handle: {u: [0.846, 0.985], v: [0.447, 0.465]}, spy: {u: [0.446, 0.554], v: [0.754, 0.768]}, ratio_w_h: 0.39}.
+Photograph numbers behind it (measured_fractions_of_leaf): {plate: {u: [0.342, 0.669], v: [0.452, 0.488]}, handle: {u: [0.843, 0.98], v: [0.455, 0.473]}, lock: {u: [0.968, 0.983], v: [0.421, 0.432]}, spy: {u: [0.446, 0.553], v: [0.757, 0.772]}}.
 
 Part by part against the 3.1 door (door_T1.glb, door_F1.glb):
 
 | 3.1 part | status | why |
 |---|---|---|
-| frame_jamb_l/r, frame_stop_bead_* | changed | the stops are planted on the inside face and the jambs show 117.6 each (clear between faces 765.2); the leaf shows whole |
-| frame_transom, glass_fanlight | changed | the transom's x range shortens to the jambs' inner faces; its glass is reeded 4 mm (D5: ribbed transom) |
-| leaf_frame, panel_*, moulding_* | changed | one flush slab 762 x 1981 x 44, lipped |
-| iron_letter_plate | changed | LP4, a chrome-look oblong 250 x 70, flush, at u 386, v 912 (D5) |
-| iron_knob_*, iron_keyhole_*, iron_lock_* | removed | lever HD2a at the right edge, v 902; a spyhole 14 across at v 1509 (D5, place only) |
+| frame_*, sill | kept | frame set F unchanged: the stops stand in front of the leaf, which laps 20.4 behind each stop and the transom (an inward-opening door, hinges inside); the jambs show 49, the visible face is 797.2 x 1960.6; D5's indoor lining is not copied |
+| glass_fanlight | changed | reeded 4 mm glass in the transom: Judgement (D5's ribbed light is indoors; no outdoor photograph read shows one) |
+| leaf_frame, panel_*, moulding_* | changed | one flush slab 838 x 1981 x 44, lipped (a flush leaf in a white street frame: D4's middle door) |
+| iron_letter_plate | changed | LP4, a chrome-look oblong 250 x 70, flush, by D5's fractions of the visible face |
+| iron_knob_*, iron_keyhole_* | removed | lever HD2a at the right stile; a spyhole 14 across above the plate (D5, places only) |
+| iron_lock_* | changed | LK3, a small dark 18 mm lock face under the lever (D5 columns 766 to 771, rows 617 to 626), by D5's fractions of the visible face |
 
 ### F7: ledged and braced service door (Hasluck; no period photograph read)
 
@@ -378,7 +383,7 @@ Part by part against the 3.1 door (door_T1.glb, door_F1.glb):
 
 ## 6. Door furniture variants
 
-Every variant with its size, place by kind, material, colour and source. Positions are the fitting's centre in the leaf frame (u, v mm). No real maker's name or mark on any fitting: the lock is a rim night latch (the 3.1 file called it a cylinder lock).
+Every variant with its size, place by kind, material, colour and source. Positions are the fitting's centre in the leaf frame (u, v mm). No real maker's name or mark on any fitting: the lock is a rim night latch.
 
 **letter plate**
 
@@ -388,10 +393,10 @@ Every variant with its size, place by kind, material, colour and source. Positio
 | LP1 | brass plate, vertical, on the muntin | [76.0, 242.0] | T1: u leaf centre, v 1617; F1: u leaf centre, v 1617; F3: u leaf centre, v 1617 | brass (181,150,85) | 3.1 as built (P1: 76 x 242, centre 1617) |
 | LP2 | brass plate, horizontal, above the lock rail | [195.0, 70.0] | F2: u leaf centre, v 1545 | brass (181,150,85) | 3.1 option_six_panel (P2: 195 x 70 at 0.788 of the height) |
 | LP3 | black iron plate, horizontal (reserve, not placed) | [230.0, 60.0] | not placed | cast iron, black (30,30,32) | Judgement: cast-iron plates were common but none is read in a photograph here; listed so a script may place one; the check rejects it on any house today |
-| LP4 | chrome-look oblong, flush | [250.0, 70.0] | F6: u 385.7, v 915.6 | nickel or chrome-look (170,170,168) | Photo D5: 107 x 30 px at 2.35 mm a pixel = 250 x 70, centre at 0.506 of the leaf's width and 912 above its foot (+-15) |
+| LP4 | chrome-look oblong, flush | [250.0, 70.0] | F6: u 423.3, v 921.1 | nickel or chrome-look (170,170,168) | Photo D5 (an indoor landing door: the place only, as fractions of its face): 107 x 30 px at 2.34 mm a pixel = 250 x 70 (the size is Judgement), centre at 0.505 of the face's width and 0.470 of its height |
 | LP5 | pale low plate in the bottom rail | [250.0, 50.0] | T2: u leaf centre, v 100; F4: u leaf centre, v 100 | anodised aluminium, pale (190,190,185) | Photo D1 right door (rows 659 to 662.5 of a 150 px leaf: centre 83 above the foot, 46 high) and D4 black door (a 10 x 3 px plate at the foot, 90): centre 100 chosen to sit mid-rail (+-20) |
-| LP6 | white plastic oblong in a moulded door | [270.0, 50.0] | T3: u leaf centre, v 865.3 | white moulded plastic (226,224,214) | Photo D4 right door: 12 x 3.1 px at 21.7 mm a pixel = 260 x 67, centre 0.448 of the visible height (+-25) |
-| LP7 | small pale plate under a slit light | [265.0, 50.0] | F5: u 413.2, v 819.9 | anodised aluminium, pale (190,190,185) | Photo D2 middle door: 11 x 2 px at 23.8 mm a pixel = 262 x 48 (+-24), centre about 830 |
+| LP6 | white plastic oblong in a moulded door | [270.0, 50.0] | T3: u leaf centre, v 876.1 | white moulded plastic (226,224,214) | Photo D4 right door: 12 x 3.1 px at 21.7 mm a pixel = 260 x 67, centre 0.448 of the visible height (+-25) |
+| LP7 | small pale plate under a slit light | [265.0, 50.0] | F5: u 424.9, v 772 | anodised aluminium, pale (190,190,185) | Photo D2 middle door: 11 x 2 px at 24.7 mm a pixel = 272 x 49 (+-25), centre v 772 (the review's number; the leaf's own box gives 777) |
 
 **handle**
 
@@ -399,10 +404,10 @@ Every variant with its size, place by kind, material, colour and source. Positio
 |---|---|---|---|---|---|
 | HD0 | none |  |  |  | T1, T2's lock side has HD3, F7 HD4 |
 | HD1 | turned centre knob on a dished rose | 69.0 | F1: u leaf centre, v 787; F2: u leaf centre, v 598 | black-painted wood, brass cap (35,36,40) | 3.1 as built (P2 8x crop) |
-| HD2a | lever handle on a round rose, chrome-look, right stile | [105.0, 18.0] | F6: u 697.5, v 903.7 | nickel or chrome-look (170,170,168) | Photo D5: lever 45 px = 106 at 2.35 mm a pixel, centre 902 above the foot (+-15), on the right stile |
-| HD2b | lever handle on a round rose, chrome-look, left stile | [100.0, 18.0] | F5: u 72.4, v 1087.2; F4: u 95, v 1228 | nickel or chrome-look (170,170,168) | Photo D2: a small pale handle at the left stile of the middle door, 0.557 of the visible height (about 1092, +-24); the left door's at about 1228 (+-30) |
-| HD2c | short lever at the lock edge of a moulded door | [80.0, 16.0] | T3: u 757, v 823 | nickel or chrome-look (170,170,168) | Photo D4 right door: a dark 2 x 4 px mark at the right edge, 0.43 of the visible height (+-35); lever size Judgement |
-| HD3 | vertical bar pull on the lock stile | [25.0, 270.0] | T2: u 67, v 1242.8; F3: u 67, v 1255 | dark steel (40,40,42) | Photo D3: a dark vertical handle on the left stile, rows 498.25 to 524.25 of a 190 px visible leaf = 264 long, v 1111 to 1375 (+-30); D1 left door shows a vertical metal strip on its left stile |
+| HD2a | lever handle on a round rose, chrome-look, right stile | [105.0, 18.0] | F6: u 747, v 909.5 | nickel or chrome-look (170,170,168) | Photo D5 (an indoor landing door: the place only): lever 45 px = 105 at 2.34 mm a pixel, centre at 0.911 of the face's width and 0.457 of its height, on the right stile |
+| HD2b | lever handle on a round rose, chrome-look, left stile | [100.0, 18.0] | F5: u 73.9, v 1048; F4: u 95, v 1228 | nickel or chrome-look (170,170,168) | Photo D2: a small pale handle at the left stile of the middle door, v 1048 (the review's number, 0.535 of the visible height; the leaf's own box gives 1054; +-24); the left door's at about 1228 (+-30) |
+| HD2c | short lever at the lock edge of a moulded door | [80.0, 16.0] | T3: u 757, v 910 | nickel or chrome-look (170,170,168) | Photo D4 right door: a dark mark at columns 577 to 578.5, rows 388 to 396, ON the door (the first box lay on the reveal), v 910 (the review's number; the box gives 921; +-32); lever size Judgement |
+| HD3 | vertical bar pull on the lock stile | [25.0, 270.0] | T2: u 57.2, v 1236.6; F3: u 67, v 1255 | dark steel (40,40,42) | Photo D3: a dark vertical handle on the left stile, rows 498.25 to 524.25 of a 191.5 px visible leaf = 262 long (+-30), centred on the visible lock stile (u 57.2: the stile is 94.0 structural, 73.6 visible); D1 left door shows a vertical metal strip on its left stile |
 | HD4 | thumb latch on a ledged door | [38.0, 190.0] | F7: u 738, v 1000 | dark steel (40,40,42) | Judgement: the usual iron thumb latch for a ledged door; Hasluck draws only the hinges |
 
 **latch**
@@ -410,8 +415,16 @@ Every variant with its size, place by kind, material, colour and source. Positio
 | id | variant | size (mm) | place | material (sRGB) | source |
 |---|---|---|---|---|---|
 | LK0 | none |  |  |  |  |
-| LK1 | rim night latch, plain collar (the escutcheon), 3.1 T1 | [43.5, 43.5] | T1: u 46.6 from the stop face, right, v 1235 | nickel or chrome-look (170,170,168) | 3.1 as built (P1: collar 43.5, 8.4 px; the 3.1 name for it was cylinder lock) |
+| LK1 | rim night latch, plain collar (the escutcheon), 3.1 T1 | [43.5, 43.5] | T1: u 46.6 from the stop face, right, v 1235 | nickel or chrome-look (170,170,168) | 3.1 as built (P1: collar 43.5, 8.4 px) |
 | LK2 | rim night latch, knurled collar (the escutcheon), 3.1 F1 | [37.0, 37.0] | F1: u 46.3 from the stop face, right, v 1040; F2: u 46.3 from the stop face, right, v 1070.5 | nickel or chrome-look (170,170,168) | 3.1 as built (P2: collar 37, scalloped) |
+| LK3 | rim night latch, bare dark cylinder face under the lever, no collar | [18.0, 18.0] | F6: u 798.1, v 836.4 | dark steel (40,40,42) | Photo D5 (an indoor landing door: the place only): a small dark mark under the lever, columns 766 to 771, rows 617 to 626, an 18 mm dark cylinder face at 0.976 of the face's width and 0.427 of its height (the review's u 743, v 845 were on the old 762 x 1981 basis) |
+
+**keyhole**
+
+| id | variant | size (mm) | place | material (sRGB) | source |
+|---|---|---|---|---|---|
+| KH0 | none |  |  |  |  |
+| KH1 | plugged mortice keyhole: a round head over a parallel slot, a dark recess 2 mm sunk, a pale metal blank filling the slot | [23.0, 32.0] | F1: u 782.8, v 1151; F2: u 782.8, v 1188.1 | dark recess, pale metal blank (60,60,62) | 3.1 as built (P2 5x crop: (493, 447) px, 10 x 14 px = 23 x 32; head 15, slot 8); F1 at 3.1's v 1151, F2 at 0.606 of the visible height (P2) |
 
 **knocker**
 
@@ -435,10 +448,11 @@ Every variant with its size, place by kind, material, colour and source. Positio
 | id | variant | size (mm) | place | material (sRGB) | source |
 |---|---|---|---|---|---|
 | NM0 | none |  |  |  |  |
-| NM1 | screwed metal numerals in a row on the top rail | [51.0, 56.0] | T1: u leaf centre, v two digits 39 x 72 on the muntin, v 1207 to 1277.6 and 1300 to 1373; F1: u leaf centre, v 1917; F2: u leaf centre, v 1943 | brass (181,150,85) | 3.1 (P1 stacked on the muntin, P2 in a row on the top rail: 56 high) |
+| NM1 | screwed metal numerals in a row on the top rail | [51.0, 56.0] | T1: u leaf centre, v two digits 39 x 72 on the muntin, v 1207 to 1277.6 and 1300 to 1373; F1: u leaf centre, v 1917; F2: u leaf centre, v 1922 | brass (181,150,85) | 3.1 (P1 stacked on the muntin, P2 in a row on the top rail: 56 high); F2 at v 1922, the middle of the visible top rail, so the digits (to v 1950) stay under the visible top 1960.6 and in front of the transom |
 | NM2 | black metal screwed numerals (reserve) | [51.0, 56.0] | not placed | cast iron, black (30,30,32) | Judgement |
 | NM3 | numerals painted white on the leaf's top rail |  | F3: u leaf centre, v 1925 | white gloss paint (226,224,214) | Photo D6: a white numeral painted on a blue door (size Judgement, 60 +-15) |
-| NM4 | numerals painted white on the transom glass |  | T2: u , v the transom glass, centred | white gloss paint (226,224,214) | Judgement: a fanlight number is standard on such houses; no period photograph read shows one at a readable size |
+| NM4 | numerals painted white on the transom glass (reserve, not placed) |  | not placed | white gloss paint (226,224,214) | Judgement: a fanlight number is usual on such houses, but D3 shows its numerals on the leaf's top rail and none on the glass; refused on every house today (see NM6) |
+| NM6 | small dark metal numerals on the leaf's top rail | [26.0, 30.0] | T2: u leaf centre, v 1898.6 | dark steel (40,40,42) | Photo D3: small dark numerals centred on the leaf's top rail, 3 to 4 px high at 10.07 mm a pixel = 30 (+-10), box [78, 443, 84.5, 446.5] (masked in the preview); v 1898.6 is the middle of the visible top rail (the review's number) |
 | NM5 | oval plaque with a relief ornament, no digits (reserve) | [230.0, 154.0] | not placed | dark moulded plastic with a pale rim | Photo D2 white door: an oval 9.5 x 6.4 px at 24 mm a pixel (a house number's place); not placed |
 
 **scraper**
@@ -446,11 +460,11 @@ Every variant with its size, place by kind, material, colour and source. Positio
 | id | variant | size (mm) | place | material (sRGB) | source |
 |---|---|---|---|---|---|
 | BS0 | none |  |  |  |  |
-| BS1 | cast-iron boot scraper beside the step | [330.0, 130.0, 200.0] | T1: u , v  | cast iron, black (30,30,32) | Photo D10 (2014, said why: iron fittings of this kind were never renewed); sizes are Judgement, the photograph has no scale in its plane (+-25 per cent) |
+| BS1 | cast-iron boot scraper beside the step | [330.0, 130.0, 200.0] | T1: u , v  | cast iron, black (30,30,32) | Photo D10 (2014, said why: iron fittings of this kind were never renewed): scrolled standards and a blade with a notched underside; every size and the profile are Judgement, the photograph has no scale in its plane (+-25 per cent) |
 
 Bell push BL1 in full: {name: plain dark oblong push, one part, size: [22.0, 72.6], proud: 3.0, corner_r: 1.0, groove: {w: 14.0, h: 2.0, depth: 1.0, below_centre: 8.0}, parts: 1, material: dark steel or dark plastic, srgb: [60, 60, 62], metal: 0.0, roughness: 0.6, place: {T1: {x: 859.4, z_range: [1120.3, 1192.9], on: the right jamb's stop face (3.1 as built: x 859.4, z 1120.3 to 1192.9)}}, forbidden: [bezel, button, ring, lens, led, camera, speaker, any second part, rounded pill corners above 2 mm, any bright or lit element], src: Photo P1 16x crop rows 300.3 to 314.4: a dark-grey oblong 22 x 72.6, no bright element, a darker band a little below its middle; 3.1 review v2 (close) and the handover's fix: the two-part push is deleted}.
 
-Glass: plain_3mm: {thickness: 3.0, ior: 1.5, roughness: 0.05, transmission: 1.0, src: 3.1}; reeded_4mm: {thickness: 4.0, flute_pitch: 6.0, flute_depth: 1.2, section: circular segments, vertical, roughness: 0.08, transmission: 0.9, src: Photo D5: a ribbed transom and sidelight, vertical flutes; pitch and depth Judgement}; leaded_diamond: {came_w: 6.0, came_proud: 3.0, diamond: [95.0, 70.0], glass_t: 3.0, came_material: dull lead-grey (90, 92, 95), roughness 0.5, src: Photo D3: a leaded diamond fanlight over the leaf; the pitch is scaled to the T frame's 267 high light (Judgement)}; frosted: {thickness: 4.0, roughness: 0.35, transmission: 0.6, src: Judgement; no photograph read shows it}; wired: {thickness: 6.0, mesh: 12.5, wire_dia: 0.6, src: Judgement; a stair door of a council block; none read}; lens_14: {dia: 14.0, src: Photo D5, place only}.
+Glass: plain_3mm: {thickness: 3.0, ior: 1.5, roughness: 0.05, transmission: 1.0, src: 3.1}; reeded_4mm: {thickness: 4.0, flute_pitch: 6.0, flute_depth: 1.2, section: circular segments, vertical, roughness: 0.08, transmission: 0.9, src: Judgement: reeded glass in F6's transom (D5's ribbed transom and sidelight are an indoor lining's, not a street door's); pitch and depth Judgement}; leaded_diamond: {came_w: 6.0, came_proud: 3.0, plain_pane_h: 144.0, band_h: 83.0, lozenge: [145.0, 83.0], foot_came_above_foot: 40.0, uprights: one under each lozenge point (5), whole_lozenges: 5, layout: in a light 772 x 267: the upper 144 plain; under it the band 83 high of two families of diagonal came crossing in a lattice of lozenges 145 wide and 83 high, the lozenge points (their lower vertices) on x = centre + k x 145 for k = -2 to 2 (5 whole lozenges, a tip of the next at each end, 23.5 wide), a horizontal came at the top of the band; a horizontal came 40 above the foot with an upright under each lozenge point down to the glass foot, glass_t: 3.0, came_material: dull lead-grey (90, 92, 95), roughness 0.5, src: Photo D3 (fanlight rows 376 to 436 at 10.07 mm a pixel): the upper 54 per cent one plain pane (rows 376 to 408), a band of crossed diagonals at a 14.3 px (144 mm) pitch (rows 408 to 427), a foot strip with an upright under each lozenge point (rows 427 to 436); the T frame's 267 mm light is kept; came 6 wide is Judgement}; frosted: {thickness: 4.0, roughness: 0.35, transmission: 0.6, src: Judgement; no photograph read shows it}; wired: {thickness: 6.0, mesh: 12.5, wire_dia: 0.6, src: Judgement; a stair door of a council block; none read}; lens_14: {dia: 14.0, src: Photo D5, place only}.
 
 ## 7. Paint and condition
 
@@ -460,14 +474,14 @@ Glass: plain_3mm: {thickness: 3.0, ior: 1.5, roughness: 0.05, transmission: 1.0,
 |---|---|---|---|---|---|
 | black | gloss black, faintly blue | 35,36,40 | dark_neutral | east_parade bay 1; east_chandler bay 0 | 3.1 (P2 median 39,40,45) |
 | dark_green | dark green | 28,59,41 | dark_chroma | west_north bay 1 | 3.1; the shopfront kit's door green |
-| maroon | maroon, the sheet's deep red | 92,26,32 | dark_chroma | east_parade bay 0; west_north bay 0 | 3.1; terrace-front.py reads the sheet's doors as 'a deep teal and a deep red' |
+| maroon | maroon, the sheet's deep red | 92,26,32 | dark_chroma | east_parade bay 0; west_south bay 0; west_north bay 0 | 3.1; terrace-front.py reads the sheet's doors as 'a deep teal and a deep red' |
 | navy | dark blue | 24,38,78 | dark_neutral | east_parade bay 2; west_south bay 2 | 3.1 |
 | brown | dark brown | 74,48,34 | dark_neutral | east_parade bay 3 | 3.1 |
 | deep_teal | deep teal, the sheet's other door | 22,64,66 | dark_chroma | west_north bay 2 | terrace-front.py comment on the Hook sheet; D1 left door (a teal gone dark in shade, median 28,39,29); value Judgement |
-| cream | cream | 222,212,184 | light | west_south bay 0 | 3.1 frame cream; D3's door reads white-cream |
+| cream | cream | 222,212,184 | light | no house today | 3.1 frame cream; D3's door reads white-cream; held in reserve (no house takes it today: two pale doors side by side broke the neighbour rule) |
 | white_gloss | white gloss (plastic-look moulded door) | 226,224,214 | light | west_south bay 1 | 3.1 frame white; D3, D4, D2 white doors |
 | council_turquoise | council turquoise | 30,112,128 | bright | east_parade bay 4 | D9 box median (22,108,126) lifted for film; value Judgement |
-| olive | olive (the 1960s council colour) | 114,102,65 | mid | no house today | D5 box median |
+| olive | olive (the 1960s council colour) | 114,102,65 | mid | no house today | D5 box median (the paint of an indoor door: Judgement for a street door); on no house today |
 | khaki | khaki | 128,124,78 | mid | no house today | D2 middle door box median (136,132,83) darkened a little for film |
 | mustard | mustard | 140,128,40 | bright | no house today | D2 left door box median (142,136,39) |
 | bright_blue | bright blue (Hull 1980s) | 30,78,140 | bright | no house today | D6 box median (26,67,117) lifted for film; value Judgement |
@@ -502,72 +516,79 @@ Every row a reviewer can reproduce: the box is [x0, y0, x1, y1] in the pixels of
 
 | record | photo | boxes and rows (px) | error (px) | what |
 |---|---|---|---|---|
-| D3_leaf | D3 | {box: [45.75, 443.75, 124.25, 633.75], leaf_mm: [772.0, 1927.6]} | 1.5 | the door leaf: left stile's outer edge, right stile's outer edge, top of the top rail, foot of the bottom rail |
+| D3_leaf | D3 | {box: [45.4, 442.6, 121.1, 634.1], at_row: 470, edges_by_row_px: {445: [44.9, 120.1], 470: [45.4, 121.1], 549: [47.4, 122.5]}, leaf_mm: [772.0, 1927.6], scale_mm_px: 10.07} | 1.5 | the door leaf on its own face: left stile's outer edge and right stile's outer edge at row 470 (white against the dark gap, never the brick beyond), top of the top rail, foot of the bottom rail |
 | D3_rows | D3 | {rows_px: {light1: [449.5, 488.75], light2: [491.75, 531.25], light3: [534.25, 574.25], light4: [577.0, 613.75]}} | 2.5 | the four lights, top and foot row of each (the glass between the bars; soft against the nets, so 2.5 px) |
-| D3_stiles | D3 | {left_px: [45.75, 55.5], right_px: [114.5, 124.25]} | 1.5 | the two stiles (outer edge to the glass) |
+| D3_stiles | D3 | {at_row: 470, left_px: [45.4, 53.7], right_px: [115.3, 121.1], glass_mm: 625.0} | 1.5 | the white beside the glass on each side at row 470 (stile plus bead): 8.3 px = 84 mm on the lock side, 5.8 px = 58 mm on the hinge side; the glass between is about 625 mm |
 | D3_handle | D3 | {box: [46.0, 498.25, 52.0, 524.25]} | 1.5 | the dark vertical pull handle on the left stile |
-| D3_fanlight | D3 | {box: [40.0, 376.0, 122.0, 436.0]} | 2.0 | the leaded fanlight over the leaf (taller than the T frame's 267 mm light: the type is taken, not the height) |
-| D4_T3_leaf | D4 | {box: [545.0, 345.0, 581.0, 434.0], leaf_mm: [772.0, 1927.6]} | 1.5 | the white moulded door's outer edge |
-| D4_T3_light | D4 | {box: [559.0, 363.0, 568.0, 384.0]} | 1.0 | the small arched light (its square foot) |
+| D3_fixing | D3 | {box: [116.5, 492.5, 118.5, 498.5]} | 1.5 | a small dark two-part fitting on the right (hinge) stile, about 25 x 60 mm, centre v about 1390: not identified (a bolt keep or a stop screw): added as a small dark fitting, no more |
+| D3_numbers | D3 | {box: [78.0, 443.0, 84.5, 446.5]} | 1.5 | the small dark numerals centred on the leaf's top rail (3 to 4 px high = about 30 mm; masked in the preview) |
+| D3_fanlight | D3 | {box: [42.0, 376.0, 122.0, 436.0], rows_px: {plain_pane: [376.0, 408.0], diagonal_band: [408.0, 427.0], foot_strip: [427.0, 436.0]}, lozenge_pitch_px: 14.3} | 2.0 | the leaded fanlight over the leaf: the upper 54 per cent one plain pane (rows 376 to 408); below it a band of crossed diagonals forming lozenges at a 14.3 px (about 145 mm) pitch (rows 408 to 427); at the foot a strip with an upright under each lozenge point (rows 427 to 436). The T frame's 267 mm light is kept, the pattern is taken |
+| D4_T3_leaf | D4 | {box: [545.3, 345.5, 579.0, 434.5], leaf_mm: [772.0, 1927.6], scale_mm_px: 21.66} | 1.0 | the white moulded door's outer edges (left 545.3; right 578.5 at row 375 to 579.5 at row 410: columns 580 to 583 are the dark reveal), top 345.5, foot 434.5 |
+| D4_T3_light | D4 | {box: [558.5, 362.7, 568.0, 383.3]} | 1.0 | the small dark light: a flat head (row 363 is already dark over 8 of its 9.5 px, rows 361 and 362 are bright), top corners slightly rounded, the arch is the moulding round it (its line lies on row 358 in the middle and 359 at the sides) |
 | D4_T3_plate | D4 | {box: [558.0, 392.5, 570.0, 395.6]} | 1.0 | the oblong letter plate |
-| D4_T3_upper | D4 | {box: [550.6, 350.6, 577.0, 388.7]} | 1.5 | the upper embossed panel's outline |
-| D4_T3_lower | D4 | {box: [555.0, 400.0, 574.0, 419.0]} | 1.5 | the lower embossed panel's inner outline |
-| D4_T3_handle | D4 | {box: [581.0, 394.0, 583.0, 398.0]} | 1.5 | the small lever at the lock edge |
-| D4_slit | D4 | {box: [357.0, 340.0, 363.0, 383.75], leaf_box: [345.0, 332.0, 370.0, 408.0]} | 1.5 | the pale door's slit light and its leaf (the leaf is seen a little obliquely: rows only) |
+| D4_T3_upper | D4 | {box: [550.5, 352.5, 577.0, 392.0]} | 1.5 | the upper panel's OUTER outline: columns 551 and 576 (rows 375 and 410 dip there), top line row 352.5, foot about 3.5 rows under the inner outline's foot (row 388.5: the stored first box ended on that inner line) |
+| D4_T3_upper_inner | D4 | {box: [553.5, 358.5, 574.0, 388.5]} | 1.5 | the upper panel's INNER outline: columns 554 and 573.5, the arched line over the light on row 358.5 (crown), its foot on row 388.5; a margin of about 70 to 85 mm to the outer line |
+| D4_T3_lower | D4 | {box: [550.5, 401.0, 577.0, 419.5]} | 1.5 | the lower panel's OUTER outline: as wide as the upper panel's (the same columns 551 and 576), rows 401 and 419.5 |
+| D4_T3_lower_inner | D4 | {box: [553.5, 405.0, 574.0, 416.0]} | 1.5 | the lower panel's INNER outline: rows 405 and 416, columns 554 and 573.5 |
+| D4_T3_handle | D4 | {box: [577.0, 388.0, 578.5, 396.0]} | 1.5 | the small lever at the lock edge: the dark mark at columns 577 to 578.5, rows 388 to 396, on the door (the first box, 581 to 583, lay on the dark reveal) |
+| D4_slit | D4 | {box: [357.0, 340.0, 363.0, 383.75], leaf_box: [345.5, 334.5, 368.5, 407.5]} | 1.5 | the pale door's slit light and its leaf (the leaf is seen a little obliquely: rows only; rows 332 to 333 are the transom rail, columns 369 to 373 the jamb); the slit is 0.336 to 0.925 of the leaf |
 | D4_low_plate | D4 | {box: [392.0, 405.0, 402.0, 408.0], leaf_box: [384.0, 335.0, 407.0, 410.0]} | 1.0 | the low letter plate at the dark door's foot (rows only) |
-| D2_F5_leaf | D2 | {box: [561.0, 280.5, 595.5, 363.0], leaf_mm: [797.2, 1960.6]} | 1.5 | the khaki flush door, top edge below the transom rail, foot at the step |
+| D4_mid_frame | D4 | {frame_px_wide: 5.7} | 1.0 | the dark middle door is a flush door in a white frame about 5.7 px (about 120 mm) wide: the outdoor evidence for a flush face and a white street frame (F6) |
+| D2_F5_leaf | D2 | {box: [561.0, 280.5, 594.5, 360.0], leaf_mm: [797.2, 1960.6]} | 1.5 | the khaki flush door, top edge below the transom rail, foot at row 360 (the khaki leaf ends at row 359.5 to 360; the pale sill lines at rows 360 to 362 and 365 to 366 are not part of it) |
 | D2_F5_slit | D2 | {box: [574.0, 287.0, 582.8, 324.5]} | 1.0 | the slit light |
 | D2_F5_plate | D2 | {box: [572.5, 327.5, 583.5, 329.5]} | 1.0 | the small pale plate under the slit |
 | D2_F5_handle | D2 | {box: [561.5, 315.5, 565.0, 319.0]} | 1.0 | the small pale handle at the left stile |
 | D2_F4_cols | D2 | {leaf_x_px: [374.5, 404.5], scale_mm_px: 23.3, light_x_px: [[381.5, 387.5], [389.5, 396.0], [398.5, 404.5]], bar_x_px: [[388.0, 389.5], [396.5, 398.0]]} | 1.0 | the three long narrow lights and the two bars between them, across, from the leaf's visible left edge (x 374.5); the scale 23.3 mm a pixel is the middle door's, in the same photograph at the same wall plane (797.2 / 34.2 px); the right stile is hidden in the reveal's shadow |
 | D2_F4_top | D2 | {rows_px: {top_rail: [270.0, 273.0]}} | 1.0 | the top rail |
-| D5_leaf | D5 | {box: [450.0, 137.0, 775.0, 970.0], leaf_mm: [762.0, 1981.0]} | 3.0 | the leaf: left edge, right edge, top, the floor line |
+| D5_leaf | D5 | {box: [449.0, 137.0, 776.5, 982.0], leaf_mm: [762.0, 1981.0]} | 3.0 | the indoor leaf: left edge, right edge, top, the floor line (row 982: the mat starts at 984); used as the reference for fractions only |
 | D5_plate | D5 | {box: [561.0, 570.0, 668.0, 600.0]} | 3.0 | the oblong letter plate |
 | D5_handle | D5 | {box: [725.0, 582.5, 770.0, 597.5]} | 3.0 | the lever handle on the right stile |
+| D5_lock | D5 | {box: [766.0, 617.0, 771.0, 626.0]} | 3.0 | the small dark lock under the lever (an 18 mm dark cylinder face) |
 | D5_spy | D5 | {box: [595.0, 330.0, 630.0, 342.0]} | 5.0 | the round spyhole, its place only (blurred) |
 | D1_L | D1 | {leaf_rows_px: [517.0, 667.0], transom_rows_px: [480.0, 509.0]} | 1.5 | the teal door: leaf top and foot, the transom light |
 | D1_R | D1 | {leaf_rows_px: [517.0, 667.0], light_rows_px: [[517.0, 548.0], [552.0, 582.0], [588.0, 617.0], [622.0, 655.0]], plate_rows_px: [659.0, 662.5]} | 1.5 | the blue-grey door: the four lights and the low plate |
 
-The photograph rows of the self-check (group photo) compare each kind's numbers with these records: T2's four lights and rails against D3 and D1, T3's panels, light and plate against D4, F5's slit, plate and lever against D2, F4's three lights against D2, F6's plate, lever and spyhole against D5, LP5's height against D1 and D4. The live rows then re-measure the boxes on the pixels: the arched light's dark run (D4), the slit's dark run (D2), the plate's light run (D5), the leaf's edges (D3, D5), and the colour medians.
+The photograph rows of the self-check (group photo) compare each kind's numbers with these records: T2's four lights and rails against D3 and D1, T3's panels, light and plate against D4, F5's slit, plate and lever against D2, F4's three lights against D2, F6's plate, lever, lock and spyhole against D5 (an indoor door: places only), the lozenge pattern and the stiles' white against D3's re-measured leaf, LP5's height against D1 and D4. Each of the six PH records of the checks list carries those fractions as its expected values with a tolerance, and the self-check recomputes both sides (the recorded boxes, the kind's own drawn parts). The live rows then re-measure the boxes on the pixels: the small light's flat head and the seven outline rows (D4), the lever's mark on the door (D4), the slit's dark run and the leaf's foot above the sill (D2), the plate's light run and the lock's dark mark (D5), the leaf's own edges row by row, its top, its foot, the stiles' white and the fanlight's plain pane against its lozenge band (D3), and the colour medians.
 
 ## 9. The gate in the cloud
 
-The same views and checks as 3.1 (`kit/door/views_T1.json` for the cottage kinds, `views_F1.json` for the flat kinds): front (orthographic), street (3.5 m out, 2 m along, eye 1.6 m), close, low (7 m along, 2.7 m out), front_head, front_foot, close_plate, with the close and close_plate cameras lowered or raised to each kind's own fittings (T1 close at 1.25 m; T2 close at 1.25 m; T3 close at 0.83 m; F1 close at 0.92 m; F2 close at 1.52 m; F3 close at 1.60 m; F4 close at 1.24 m; F5 close at 1.10 m; F6 close at 0.91 m; F7 close at 1.01 m) and a close_foot view for a kind with a low plate. Pass rule as 3.1: front view by layer IoU >= 0.97, outline p95 <= 2 mm, worst <= 6 mm; sections the same; profiles p95 <= 1.5, worst <= 3. One fresh reviewer per view, never bundled, its last good picture beside; the photographs of each kind beside the render (below). Street views: hook_day (vignette-scene.json cameras cam_A (x 4 east footway, looking up +x), condition overcast_day); reverse_day (the reverse camera of the same file); street_night (cam_A, condition wet_night); row_east (an orthographic elevation at 1.6 m of the east side, x 3 to 46, from the west footway); row_west (the same for the west side). Night light is the game's lantern colour, linear (1.0, 0.25, 0.0).
+The same views and checks as 3.1 (`kit/door/views_T1.json` for the cottage kinds, `views_F1.json` for the flat kinds): front (orthographic), street (3.5 m out, 2 m along, eye 1.6 m), close, low (7 m along, 2.7 m out), front_head, front_foot, close_plate, with the close and close_plate cameras lowered or raised to each kind's own fittings (T1 close at 1.25 m; T2 close at 1.58 m; T3 close at 0.92 m; F1 close at 1.00 m; F2 close at 1.40 m; F3 close at 1.60 m; F4 close at 1.24 m; F5 close at 1.06 m; F6 close at 0.88 m; F7 close at 1.01 m) and a close_foot view for a kind with a low plate. Pass rule as 3.1: front view by layer IoU >= 0.97, outline p95 <= 2 mm, worst <= 6 mm; sections the same; profiles p95 <= 1.5, worst <= 3. One fresh reviewer per view, never bundled, its last good picture beside; the photographs of each kind beside the render (below). Street views: hook_day (vignette-scene.json cameras cam_A (x 4 east footway, looking up +x), condition overcast_day); reverse_day (the reverse camera of the same file); street_night (cam_A, condition wet_night); row_east (an orthographic elevation at 1.6 m of the east side, x 3 to 46, from the west footway); row_west (the same for the west side). Night light is the game's lantern colour, linear (1.0, 0.25, 0.0).
 
 No model from a library is placed by this target (the doors are built by script from numbers), so there are no base-colour maps to read for lettering; the previews and the gate's renders carry no firm's name, house number or vehicle plate, and "rim night latch" is the only name for the lock anywhere in the text, data or pictures.
 
-Photograph pairs for the reviewer: T2 against D3, D1: four lights equal, bars thin, a low plate, a bar pull on the left stile, a leaded fanlight; T3 against D4: a small arched light in an embossed upper panel, an oblong plate between the panels; F5 against D2, D4: a tall slit light centred on a flat door, a small plate under it, a lever on the left; F6 against D5, D9: a flat door with an oblong plate at the middle, a lever on the right, a wide white frame, reeded transom; F4 against D2: three long narrow lights; F3 against D1: two long panels, no cross rail; T1/F1/F2 against P1, P2: as 3.1's reviews; F7 against no photograph: no photograph reached; reads against Hasluck's figures only, listed as a known shortfall.
+Photograph pairs for the reviewer: T2 against D3, D1: four lights equal, bars thin, stiles 84 and 58 of white, a low plate, a bar pull on the left stile, small dark numerals on the top rail, a fanlight with a plain pane over a band of leaded lozenges; T3 against D4: a small flat-topped light in a moulded upper panel (two outlines, the inner one arched over the light), an oblong plate between the panels, a lower panel as wide as the upper with two outlines, a short lever at the lock edge; F5 against D2, D4: a tall slit light centred on a flat door, a small plate under it, a lever on the left; F6 against D4, D5, D9: a flat door with an oblong plate at the middle, a lever on the right, a small dark lock under it, a spyhole, in the street frame F (the fittings from an indoor door, the colour from D9, a flush face in a white frame from D4's middle door); F4 against D2: three long narrow lights; F3 against D1: two long panels with raked heads, no cross rail; T1/F1/F2 against P1, P2: as 3.1's reviews; F7 against no photograph: no photograph reached; reads against Hasluck's figures only, listed as a known shortfall.
 
-**The checks** (`target.json` checks, 145 records, each with name, what to measure, expected value, tolerance and source):
+**The checks** (`target.json` checks, 162 records, each with name, what to measure, expected value, tolerance and source):
 
 | group | count | what | examples |
 |---|---|---|---|
 | AD | 7 | the street: neighbours, facing doors, every house, frame sets, every kind used, the hill | AD-adjacent-east; AD-adjacent-west; AD-opposite; AD-coverage |
 | BP | 4 | the bell push: one plain part, only on T1, no two-part modern push on any variant | BP-form; BP-none-elsewhere; BP-no-modern; BP-houses |
-| CV | 21 | nothing shows through, in elevation and from 60 degrees, per kind; F7's joints | CV-T1-elevation; CV-T1-angle; CV-T2-elevation; CV-T2-angle |
-| FU | 27 | furniture size and place per kind and variant (8 mm) | FU-F1-letter_plate-LP1; FU-F1-handle-HD1; FU-F1-latch-LK2; FU-F2-letter_plate-LP2 |
+| CV | 31 | nothing shows through, in elevation and from 60 degrees, per kind; F7's joints | CV-T1-elevation; CV-T1-angle; CV-T1-inward; CV-T2-elevation |
+| FU | 30 | furniture size and place per kind and variant (8 mm) | FU-F1-letter_plate-LP1; FU-F1-handle-HD1; FU-F1-latch-LK2; FU-F1-keyhole-KH1 |
 | GA | 10 | the gate's views per kind | GA-T1-views; GA-T2-views; GA-T3-views; GA-F1-views |
 | GL | 3 | glass types and values | GL-types; GL-reeded; GL-leaded |
 | NM | 3 | no maker's name, the lantern colour, the lines for Jafar | NM-maker; NM-night; NM-dash |
-| PH | 6 | each kind against its photograph | PH-T2-D3; PH-T3-D4; PH-F5-D2; PH-F6-D5 |
-| PL | 57 | panel layout per kind (counts, every opening's bounds to 3 mm, members to 2 mm, framing) | PL-T1-count; PL-T1-top_left; PL-T1-top_right; PL-T1-bottom_left |
+| PH | 6 | each kind against its photograph | PH-T2-D3; PH-T2-D1; PH-T3-D4; PH-F5-D2 |
+| PL | 61 | panel layout per kind (counts, every opening's bounds to 3 mm, members to 2 mm, framing) | PL-T1-count; PL-T1-top_left; PL-T1-top_right; PL-T1-bottom_left |
 | PN | 4 | paint palette, white frames, at most 3 light doors, the 3.1 colours' values | PN-palette; PN-frames; PN-light-doors; PN-srgb |
 | WR | 3 | wear numbers equal the wear target's | WR-order; WR-wear-target; WR-houses |
 
-**For the builder.** (1) First: rebuild door_T1 without iron_bellpush_bezel and iron_bellpush_button (the handover's fix); the oblong iron_bellpush stays, one part, with the BL1 groove. (2) build_door.py takes a kind (T1 T2 T3 F1 to F7) as well as the colour: the leaf, openings, mouldings and fittings come from target.json kinds and furniture; the frame set is T, F or FF6. (3) New paints for --door-colour: deep_teal, cream, white_gloss, council_turquoise, olive, khaki, mustard, bright_blue, red, varnish (with the 3.1 six); --frame-colour takes white or white_grimy only (cream is dropped). (4) A condition parameter (kept, tired, neglected) sets the roughness and, for neglected, the eroded notch in the bottom rail (25 high, 60 to 200 wide, 3 deep, at the hinge side); the 2D wear layer's masks do the rest. (5) Behind every glazed kind (T2, T3, F4, F5 and every transom) the scene needs its own dark hall: the engine shows whatever is behind the glass (3.1 NOTES). (6) Check every kind with the 3.1 pass rule and the records of target.json checks; a push, a knocker or a plate the table does not place on a house is a fault.
+**For the builder.** (1) First: rebuild door_T1 without iron_bellpush_bezel and iron_bellpush_button (the handover's fix); the oblong iron_bellpush stays, one part, rebuilt square-cornered with corners r 1 (3.1 built r 6) and the BL1 groove 14 x 2 x 1 (3.1 built none). (2) build_door.py takes a kind (T1 T2 T3 F1 to F7) as well as the colour: the leaf, openings, mouldings and fittings come from target.json kinds and furniture; the frame set is T or F (every kind, F6 included, in its stops-in-front frame: the leaf opens inward, hinges inside). (3) New paints for --door-colour: deep_teal, cream, white_gloss, council_turquoise, olive, khaki, mustard, bright_blue, red, varnish (with the 3.1 six); --frame-colour takes white or white_grimy only (cream is dropped). (4) A condition parameter (kept, tired, neglected) sets the roughness and, for neglected, the eroded notch in the bottom rail (25 high, 60 to 200 wide, 3 deep, at the hinge side); the 2D wear layer's masks do the rest. (5) Behind every glazed kind (T2, T3, F4, F5 and every transom) the scene needs its own dark hall: the engine shows whatever is behind the glass (3.1 NOTES). (6) Check every kind with the 3.1 pass rule and the records of target.json checks; a push, a knocker or a plate the table does not place on a house is a fault.
 
 ## 10. Photographs win: where a photograph and the scene, a book or a ruling differ
 
 | id | what | scene or book | photograph | chosen |
 |---|---|---|---|---|
-| W1 | the leaf width of a council flush door | the scene's side door 0.838 x 1.981 (SCENE-SLOTS) | D5: 0.389 of the height, a 762 leaf shown whole in a wide white frame | F6: 762, frame set FF6 |
-| W2 | the letter plate on every household door | the scene's 0.25 x 0.04 at 1.0 on every side door (west_north and east_chandler included) | D1, D4: a low plate at the foot; D2: a plate under a slit at 0.83; D5: 250 x 70 at 0.91; D4 right: 260 x 67 at 0.87; a service door has none | per kind (LP1 to LP7); none on F7 |
+| W2 | the letter plate on every household door | the scene's 0.25 x 0.04 at 1.0 on every side door (west_north and east_chandler included) | D1, D4: a low plate at the foot; D2: a plate under a slit at 0.79; D5 (indoor, place only): 250 x 70 at 0.47 of the face; D4 right: 260 x 67 at 0.45; a service door has none | per kind (LP1 to LP7); none on F7 |
 | W3 | the stand-in leaf is 766 or 678 wide in the drawn street; 3.1's leaves are 812.8 and 838 | terrace-front.py: leaf = 838 less two 36 casings (parade) or 838 less two 80 (cottages) | P1, P2, D3 (a 2 ft 8 in to 2 ft 9 in leaf) | 3.1's frame sets T and F replace the stand-ins; the wall kit meets their openings |
 | W4 | the brass kick plate on the drawn parade doors | terrace-front.py draws a brass kick plate 726 x 140 on each side door | no photograph read (P1, P2, D1 to D6) shows a kick plate | none; kick marks are wear |
-| W5 | hinges outside a ledged door | Hasluck Fig. 1027 draws hook-and-plate hinges on the face of a frame set in a wall | none reached | an inward-opening door, hinges inside (3.1's rule for all its doors); the face shows boards and nail heads |
-| W6 | the 3.1 cream frame (weight 0.3) | 3.1's frame_colours | the Hook sheet's door surrounds are white; Jafar 3 Oct: windows with white frames | white and grimed white only; the Hull painted surrounds (D8) are an owed line |
-| W7 | the bell push of 3.1's try 2 | build_door.py: oblong plus a brass bezel plus a dark button | P1: a plain dark oblong with a darker band, nothing bright | BL1: one plain part; the two-part push is a fault |
-| W8 | the leaded fanlight's height | the T frame's glass opening 267 high | D3: a leaded light about 624 high over a 1981 leaf | the T frame's 267 stays (the wall kit owns the head); only the leaded diamond glazing is taken |
+| W5 | hinges outside a ledged door | Hasluck Fig. 1027 draws hook-and-plate hinges on the face of a frame set in a wall | none reached | an inward-opening door, hinges inside (3.1's rule for all its doors, F6 included); the face shows boards and nail heads |
+| W6 | the 3.1 cream frame (weight 0.3) | 3.1's frame_colours | the Hook sheet's door surrounds are white; Jafar 3 Oct: windows with white frames; D8 (Hull) and D2 (Railway Street: a mustard door frame and mustard window frames) show painted frames | white and grimed white only; the painted frames of D8 and D2 are an owed line |
+| W7 | the bell push of 3.1's try 2 | build_door.py: oblong plus a brass bezel plus a dark button | P1: a plain dark oblong with a darker band, nothing bright | BL1: one plain part, square-cornered; the two-part push is a fault |
+| W8 | the leaded fanlight's height | the T frame's glass opening 267 high | D3: a leaded light about 604 high over a 1948 leaf (rows 376 to 436) | the T frame's 267 stays (the wall kit owns the head); only the leaded glazing pattern is taken (a plain pane over a band of lozenges) |
+| W9 | where a T2 door's house number goes | the earlier draft (and a common habit): a number painted on the fanlight glass (NM4) | D3: small dark numerals centred on the leaf's top rail, none on the glass | NM6, small dark metal numerals on the top rail; NM4 is a reserve, placed nowhere |
+| W10 | the frame and stops of a council-style flush door | the first draft took a lining with the stops behind the leaf from D5 | D5 is an indoor landing door (Commons description): it is not evidence for a street frame; D4's middle door is an outdoor flush door in a white frame | F6 stands in the street frame F, an inward-opening 838 leaf with the stops in front; D5 gives the places of the fittings only |
 
 Where a photograph disagrees with a ruling of Jafar's the ruling stands and the disagreement goes to him on his page (section 12). The Hull streets (D6 to D8) show window frames and surrounds painted in blue, red and yellow; his ruling of 3 October is windows with white frames, so every frame here is white or grimed white and the finding is owed line 2. "Photographs win" settles books and the scene's stand-ins against photographs; it does not settle a tally against his word.
 
@@ -584,19 +605,19 @@ Where a photograph disagrees with a ruling of Jafar's the ruling stands and the 
 
 ## 12. Owed to Jafar's page (one line each, recommendation first)
 
-- Door colours: dark doors as the Hook sheet shows, with three lighter ones from 1980s photographs (cream, white, council turquoise)? Yes, three (recommended), or all dark?
-- Door surrounds: all white as you ruled for windows on 3 October (recommended), or the painted surrounds the 1980s Hull streets show, as on the windows line?
+- Door colours: dark doors as the Hook sheet shows, with up to three lighter ones from 1980s photographs (two today: white, council turquoise; cream held back)? Yes, up to three (recommended), or all dark?
+- Door surrounds: all white as you ruled for windows on 3 October (recommended), or the painted surrounds the 1980s Hull streets and Railway Street (D2, a mustard door frame and mustard window frames) show, as on the windows line?
 - The west shop row has one storey: its three side doors become a service door and two household doors (recommended), or flats in its roof with household doors on all three?
 
 ## 13. Self-check
 
-`python self_check.py [--live] [--photos DIR] [--previews] [--write]` writes its result into target.json under self_check. Result recorded: **--live --previews: 563 pass, 0 fail; negative controls (wrong copies, offline rows) 48 of 48 caught; live controls (wrong copies, live rows) 10 of 10 caught** (options: --live --previews; run 13 October 2026).
+`python self_check.py [--live] [--photos DIR] [--previews] [--write]` writes its result into target.json under self_check. Result recorded: **--live --previews: 716 pass, 0 fail; negative controls (wrong copies, offline rows) 83 of 83 caught; live controls (wrong copies, live rows) 17 of 17 caught** (options: --live --previews; run 13 October 2026).
 
-Groups: 31 (3.1's numbers as built, the handover's fix), meta (each photograph's title, author, licence, date and period note; every box inside its image), photo (the fractions above), street (the 12 doors, kinds, paints, neighbours, facing doors, the hill, no knocker, no council house), geom (the drawing: openings inside the leaf and not overlapping, fittings on the leaf, nothing shows through in elevation or at 60 degrees, the leaf's lap, FF6, the lead came, the boards and nails, the bars, the sections), checks (every record of the list, and that every opening and every placed fitting has one), wear (the numbers, and live against the wear target), text (no maker's name, no dash, the lantern colour, owed lines), gate, live (the street re-derived from terrace-front.py and the windows target, the photographs fetched and measured again on their pixels, the pages read again), previews (sizes, flat grey masks, credits).
+Groups: 31 (3.1's numbers as built, the handover's fix), meta (each photograph's title, author, licence, date and period note; every box inside its image), photo (the fractions above), street (the 12 doors, kinds, paints, neighbours, facing doors, the hill, no knocker, no council house), geom (the drawing: openings inside the leaf and not overlapping, fittings on the leaf, nothing shows through in elevation or at 60 degrees, the leaf's lap computed from the stop edges and the leaf's edges at 60 degrees in plan, every leaf behind its stops, the margins of each kind's leaf in its frame, the lead came's uprights and crossings counted on the drawing, the numerals inside the top rail, the boards and nails, the bars, the sections), checks (every record of the list, and that every opening and every placed fitting has one), wear (the numbers, and live against the wear target), text (no maker's name, no dash, the lantern colour, owed lines), gate, live (the street re-derived from terrace-front.py and the windows target, the photographs fetched and measured again on their pixels, the pages read again), previews (sizes, flat grey masks, credits).
 
-**Negative controls** (wrong copies of the target, each run offline, each must make some row fail): T2: a bar moved 20 mm; T2: three lights instead of four; T2: the fanlight glass plain instead of leaded; T3: the small light 60 mm lower; F5: the slit 50 mm wider on each side; F4: a bar 25 mm instead of 40; F6: the letter plate at 1000 instead of 912; F5: the lever on the right stile (u 700); F6: the leaf 838 wide in the planted-stop frame (a see-through margin); F7: the leaf 700 wide in the F frame (a slot beside it); the bell push given a bezel part; a bell push on F1; the push made brass; two neighbours given one paint; two neighbours given one kind; two neighbours given the same furniture; a door facing another in the same paint class; a cottage given a flat kind; a house missing from the street; east_parade_bay5 given a side door; a cream frame colour on a house; a paint outside the palette; five bright doors; a knocker on a house; a lion's head knocker offered; a maker's name in a text; the stale night colour in the gate; an em dash in an owed line; an owed line without a recommendation; a photograph's date after 1995 used as period; a measurement box outside its image; D3's light row moved 12 px; a check removed from the list; neglected wear share 0.20 instead of 0.40; the T1 bolection width 36 instead of 3.1's built 46; the gate lacks a view; a kind never used; the backdrop's neighbours alike; reeded glass pitch changed to 9 mm; the leaded came 10 wide; LK1's collar 40 instead of 3.1's 43.5; F2 given 8 openings; a house given a knocker, a bell pull and a lion's head together; the wear layer's typical share changed; the hill's list shortened; the three owed lines made six; the T1 letter plate moved 40 mm; a placed fitting outside its leaf. Counts are printed with the options named, offline and with --live (the controls always run offline, since the live rows read the world and not the copy).
+**Negative controls** (wrong copies of the target, each run offline, each must make some row fail): T2: a bar moved 20 mm; T2: three lights instead of four; T2: the fanlight glass plain instead of leaded; T3: the small light 60 mm lower; F5: the slit 50 mm wider on each side; F4: a bar 21 mm instead of 36; F6: the letter plate at 1000 instead of 912; F5: the lever on the right stile (u 700); F6: the old 762 leaf in the street frame (a see-through slot beside it); F7: the leaf 700 wide in the F frame (a slot beside it); the bell push given a bezel part; a bell push on F1; the push made brass; two neighbours given one paint; two neighbours given one kind; two neighbours given the same furniture; a door facing another in the same paint class; a cottage given a flat kind; a house missing from the street; east_parade_bay5 given a side door; a cream frame colour on a house; a paint outside the palette; five bright doors; a knocker on a house; a lion's head knocker offered; a maker's name in a text; the stale night colour in the gate; an em dash in an owed line; an owed line without a recommendation; a photograph's date after 1995 used as period; a measurement box outside its image; D3's light row moved 12 px; a check removed from the list; neglected wear share 0.20 instead of 0.40; the T1 bolection width 36 instead of 3.1's built 46; the gate lacks a view; a kind never used; the backdrop's neighbours alike; reeded glass pitch changed to 9 mm; the leaded came 10 wide; LK1's collar 40 instead of 3.1's 43.5; F2 given 8 openings; a house given a lion's head knocker and a bell pull together; the wear layer's typical share changed; the hill's list shortened; the three owed lines made six; the T1 letter plate moved 40 mm; a placed fitting outside its leaf; F6: the leaf 838 in the rejected narrow frame (stops moved in to a clear of 765.2, an 838 leaf); the flat frame's leaf hung in front of its stops (the rejected planted-stop frame of F6: it would open outward); a leaf shifted 14 mm (the left stop laps it by only 6.4: the 60 degree row); a leaf set back 12 mm behind the stops (a 60 degree ray reaches 20.8 sideways, past the 20.4 lap); F1's leaf 40 mm shorter (the lap under the transom lost); the record CV-F1-angle with a right lap of 30 instead of 20.4; T2: stiles 114.3 on both sides (the first draft's 93.9 visible, 104 of white on each side); T2: the fanlight lozenges all over (no plain upper pane); T2: the lozenge pitch 95 and 70 high (the first draft); T2: three lozenge points instead of five; T2: the house number back on the fanlight glass (NM4); T2: the small dark fitting on the hinge stile left out; T3: the small light given a semicircular head (corner radius 109); T3: the lower panel 160 mm narrower than the upper (the first draft's u 234.8 to 642.3); T3: the upper panel with one outline only; T3: the lever on the reveal (v 823 as the first draft); F5: the slit at the first draft's v 914.9 to 1806.1; F5: D2's leaf box taken down to the sill (foot row 363); D3's leaf box on the first draft's span (a box that spans the lean); F3: the panel heads square (the first draft); F6: the lock under the lever left out; F1: the plugged keyhole left out; F2: the numerals at v 1943, behind the transom (the first draft); the bell push with r 6 corners (3.1's build); T1's parts table says the bell push is kept; two pale doors side by side (west_south_bay0 back to cream beside white gloss); a maker's name in TARGET.md; the lock's old name in a part table; the lock's old name in a script's prose; D5 named again as the evidence for the frame; D9 called a flush door again; F6 given a frame_change again (the rejected FF6); a photograph record with nothing to compare (PH-F6-D5 expect null); owed line 2 without Railway Street's mustard frames; the boot scraper's standard without its profile. Counts are printed with the options named, offline and with --live (the controls always run offline, since the live rows read the world and not the copy).
 
-**How to read it honestly.** The photograph fractions that are independent of the numbers drawn from them are T2's bottom rail, bars and stiles (3.1's frame, not the photograph, gives 114.3 and 205), D1's lights against T2 (a second photograph, oblique), D4's panels and plates, D2's slit and plate (the live rows measure them on pixels), and F6's ratio. T2's lights, T3's panels, F5's slit and F6's plate were fitted to the same photographs, so their near-zero differences are by construction; the live edge rows are what test them. Everything not measured is marked Judgement, and section 14 lists it.
+**How to read it honestly.** The photograph fractions that are independent of the numbers drawn from them are T2's bottom rail and bars (3.1's frame, not the photograph, gives 205 and 30), D1's lights against T2 (a second photograph, oblique), D4's panels and plates, D2's slit and plate (the live rows measure them on pixels), and the stiles' white and the fanlight's three parts (D3, re-measured on the leaf's own face; the stiles 94.0 and 69.0 and the fanlight pattern were set from the review's re-measure, then compared with the boxes). T2's lights, T3's panels, F5's slit and F6's fittings were fitted to the same photographs, so their near-zero differences are by construction; the live edge rows are what test them, and the first draft's wrong boxes (D3's, D2's, D4's) are among the live negative controls. F5's slit, plate and lever and T3's lever are the review's numbers, 5 to 12 mm from what the recorded boxes give (inside the stated error), and the photograph rows hold that difference. Everything not measured is marked Judgement, and section 14 lists it.
 
 ## 14. Could not settle
 
@@ -606,13 +627,15 @@ Groups: 31 (3.1's numbers as built, the handover's fix), meta (each photograph's
 4. D1's doors stand in deep recesses and are seen from the right: only their vertical rows are used; the leaves' widths and the letter plate's length are not taken from it.
 5. Whether the west shop row (one storey in the drawn street) has flats: its side doors are 1 service door and 2 household doors until Jafar answers owed line 3.
 6. The painted cement hoods over Hull doorways (D1, D6) and their arched recesses (D7) are wall features; not in the door piece, listed for the wall kit.
-7. A house number's digits are the town's; the target fixes only the form (NM1, NM3, NM4).
-8. The shopfront kit's own side door at east_parade bay 2 (Rita's) has its own geometry and a fanlight (unit 2.2); this target gives it kind F1 and expects the builder to put F1's leaf in that slot.
-9. The boot scraper: one cast-iron scraper by the nearest cottage's step; no period photograph of these streets shows one (D10 is 2014); the sizes are Judgement +-25 per cent.
+7. A house number's digits are the town's; the target fixes only the form (NM1, NM3, NM6).
+8. F6: no outdoor photograph read shows a council-style flush door close enough to measure its fittings. The places of its plate, lever, lock and spyhole come from an indoor landing door (D5) as fractions of its face, +-35 mm; D9's door (6 px wide) reads as half-glazed, so only its lower panel's turquoise is used; the leaf is the street's 838 in the frame F.
+9. T2's fanlight pattern is read at 10 mm a pixel with 14 px lozenges: the pitch (145) and the band's height (83) are Photo within 1 px, the came's width (6) and the two end tips (23.5) are Judgement; the small two-part fitting on D3's hinge stile cannot be identified.
+10. The shopfront kit's own side door at east_parade bay 2 (Rita's) has its own geometry and a fanlight (unit 2.2); this target gives it kind F1 and expects the builder to put F1's leaf in that slot.
+11. The boot scraper: one cast-iron scraper by the nearest cottage's step; no period photograph of these streets shows one (D10 is 2014); the sizes are Judgement +-25 per cent.
 
 ## 15. Credits for the previews in `production/previews/cloud-week/refs/front-doors-all/`
 
-Reduced crops of the doors only (at most 1200 px, under 300 KB), for measuring and for the reviewers, never placed in the game. Masked flat grey by script and recorded in `preview_masks.json`: a pole-mounted board and an oval plaque (D2), a small numeral (D3), a small label (D5), a painted numeral (D6), a board on a fence (D8). No people, no child, no drink or betting, no firm's name, no house number and no vehicle plate in any preview; each was looked at in full.
+Reduced crops of the doors only (at most 1200 px, under 300 KB), for measuring and for the reviewers, never placed in the game. Masked flat grey by script and recorded in `preview_masks.json`: a pole-mounted board and an oval plaque (D2), small numerals (D3), a small label (D5), a painted numeral (D6), a board on a fence (D8). No people, no child, no drink or betting, no firm's name, no house number and no vehicle plate in any preview; each was looked at in full.
 
 | file | credit |
 |---|---|
@@ -628,6 +651,6 @@ Reduced crops of the doors only (at most 1200 px, under 300 KB), for measuring a
 | d10-poole-boot-scraper-2014.jpg | Mike Searle, CC BY-SA 2.0, https://www.geograph.org.uk/photo/3911943, taken 2014-03-30 (Old Town, Poole: in search of the boot scraper); cropped, reduced, masked as above |
 | d3-levenshulme-ratcliffe-street-1994-target-on-photo.jpg | the target's drawing of T2 (own work) laid on the photograph it was measured from (D3), the scale fitted on the visible height only; yellow the visible face, red the openings, orange the mouldings, green the fittings |
 | d2-railway-street-1987-target-on-photo.jpg | the target's drawing of F5 (own work) laid on the photograph it was measured from (D2), the scale fitted on the visible height only; yellow the visible face, red the openings, orange the mouldings, green the fittings |
-| d5-aberdeen-hazlehead-1987-target-on-photo.jpg | the target's drawing of F6 (own work) laid on the photograph it was measured from (D5), the scale fitted on the visible height only; yellow the visible face, red the openings, orange the mouldings, green the fittings |
+| d5-aberdeen-hazlehead-1987-target-on-photo.jpg | the target's drawing of F6 (own work) laid on the photograph it was measured from (D5), fitted on height and width because D5 is an indoor door with a narrower leaf and only the fittings' places are taken from it; yellow the visible face, red the openings, orange the mouldings, green the fittings |
 | target-ten-door-kinds-elevations.jpg | the target's own drawing of the ten kinds (own work), each in its house's first paint |
 | target-street-rows-east-and-west.jpg | the target's own drawing of the street's two rows of doors in street order (own work) |

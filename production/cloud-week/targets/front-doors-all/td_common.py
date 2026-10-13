@@ -19,7 +19,7 @@ VIEWS_F1 = os.path.join(ROOT, "production", "cloud-week", "kit", "door", "views_
 PREVIEWS = os.path.join(ROOT, "production", "previews", "cloud-week", "refs", "front-doors-all")
 TARGET_JSON = os.path.join(HERE, "target.json")
 
-# Whole-word blocklist: real makers, firms and marks. "Yale" is a real maker's name: the target says "rim night latch".
+# Whole-word blocklist: real makers, firms and marks. The target says "rim night latch" for the lock.
 BLOCKLIST = ["yale", "chubb", "ingersoll", "banham", "ebco", "hoppe", "paragon", "dixons", "everest", "anglian",
              "crittall", "pilkington", "masonite", "hormann", "union jack", "rolex"]
 STALE_NIGHT = "(1, 0.7055, 0)"
@@ -52,9 +52,9 @@ def blocklist_hits(o, skip_paths=()):
     for p, s in strings(o):
         if any(p.startswith(k) for k in skip_paths):
             continue
-        w = words(s)
+        low = s.lower()
         for b in BLOCKLIST:
-            if b in w:
+            if re.search(r"(?<![a-z0-9'])" + re.escape(b) + r"(?![a-z0-9'])", low):
                 hits.append((p, b))
     return hits
 

@@ -50,7 +50,8 @@ def fetch_commons_d5(d):
     p = os.path.join(d, "D5.png")
     if os.path.exists(p):
         return p
-    url = "https://commons.wikimedia.org/wiki/Special:FilePath/" + urllib.parse.quote(COMMONS_D5)
+    # the 1920 px copy (width=1920): the same file the boxes were measured on, and far lighter than the 4000 px original
+    url = "https://commons.wikimedia.org/wiki/Special:FilePath/" + urllib.parse.quote(COMMONS_D5) + "?width=1920"
     for attempt in range(6):
         try:
             data = urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": UA}), timeout=120).read()

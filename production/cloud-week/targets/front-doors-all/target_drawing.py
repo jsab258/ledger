@@ -9,7 +9,7 @@ import os
 import sys
 
 from shapely.affinity import translate
-from shapely.geometry import MultiPolygon, Point, Polygon, box
+from shapely.geometry import LineString, MultiPolygon, Point, Polygon, box
 from shapely.ops import unary_union
 
 from td_common import TARGET_JSON, load_json
@@ -25,13 +25,54 @@ def rect(x0, z0, x1, z1):
     return box(min(x0, x1), min(z0, z1), max(x0, x1), max(z0, z1))
 
 
-def arch_rect(x0, z0, x1, z1):
-    """A rectangle whose head is a semicircle (T3's small light): the arch springs at z1 - half the width."""
-    w = x1 - x0
-    r = w / 2.0
-    body = rect(x0, z0, x1, z1 - r)
-    head = circle((x0 + x1) / 2.0, z1 - r, r, 40)
-    return unary_union([body, head])
+def round_top_rect(x0, z0, x1, z1, r):
+    """A rectangle with a flat head whose two top corners are rounded to radius r (T3's small light)."""
+    return unary_union([rect(x0, z0, x1, z1 - r), rect(x0 + r, z0, x1 - r, z1), circle(x0 + r, z1 - r, r, 40), circle(x1 - r, z1 - r, r, 40)])
+
+
+def segmental_rect(x0, z0, x1, z1, spring):
+    """A rectangle whose head is a segmental arch: the crown at z1, the springing `spring` lower (T3's upper panel's inner outline)."""
+    c = (x1 - x0) / 2.0
+    R = (c * c + spring * spring) / (2.0 * spring)
+    cx, cz = (x0 + x1) / 2.0, z1 - R
+    pts = [(x0, z0), (x1, z0), (x1, z1 - spring)]
+    n = 24
+    for i in range(1, n):
+        x = x1 - (x1 - x0) * i / n
+        pts.append((x, cz + math.sqrt(max(R * R - (x - cx) ** 2, 0.0))))
+    pts.append((x0, z1 - spring))
+    return Polygon(pts)
+
+
+def raked_rect(x0, z0, x1, z1, rise, toward):
+    """A panel whose head is raked: `rise` lower at the outer corner than at the muntin end (toward = 'right' puts the high end at x1)."""
+    if toward == "right":
+        return Polygon([(x0, z0), (x1, z0), (x1, z1), (x0, z1 - rise)])
+    return Polygon([(x0, z0), (x1, z0), (x1, z1 - rise), (x0, z1)])
+
+
+def leaded_came(g, gx0, gx1, gz0, gz1):
+    """The leaded fanlight as polygons: the upper plain_pane_h plain; a band band_h high of two families of diagonal came (lozenges `lozenge` wide x high, the lozenge points on
+    x = centre + k x pitch at the band's foot); a horizontal came at the band's top and one foot_came_above_foot above the glass foot; an upright under each lozenge point."""
+    cw = g["came_w"]
+    P, H = g["lozenge"]
+    zt = gz1 - g["plain_pane_h"]
+    zb = gz0 + g["foot_came_above_foot"]
+    cx = (gx0 + gx1) / 2.0
+    glass = rect(gx0, gz0, gx1, gz1)
+    parts = []
+    nk = int((gx1 - gx0) / P) + 3
+    for k in range(-nk, nk + 1):
+        xk = cx + k * P
+        for seg in (((xk, zb), (xk + P, zt)), ((xk, zt), (xk + P, zb))):
+            parts.append(LineString(seg).buffer(cw / 2.0, cap_style=2))
+    parts = [unary_union(parts).intersection(rect(gx0, zb, gx1, zt))]
+    parts.append(rect(gx0, zb - cw / 2.0, gx1, zb + cw / 2.0))
+    parts.append(rect(gx0, zt - cw / 2.0, gx1, zt + cw / 2.0))
+    for k in range(-(g["whole_lozenges"] // 2), g["whole_lozenges"] // 2 + 1):
+        xk = cx + k * P
+        parts.append(rect(xk - cw / 2.0, gz0, xk + cw / 2.0, zb))
+    return unary_union(parts).intersection(glass)
 
 
 def poly_coords(g):
@@ -49,7 +90,7 @@ def poly_coords(g):
 
 def frame_of(T, k):
     spec = T["kinds"][k]
-    fs = T["frame_sets"]["FF6"] if k == "F6" else T["frame_sets"][spec["frame_set"][0]]
+    fs = T["frame_sets"][spec["frame_set"][0]]
     return spec, fs
 
 
@@ -92,19 +133,28 @@ def draw_kind(T, k):
     L["leaf"] = leaf
     L["visible"] = rect(fs["visible_leaf_x"][0], fs["visible_leaf_z"][0], fs["visible_leaf_x"][1], fs["visible_leaf_z"][1])
     ops = {}
+    inner = {}
     for o in lf["openings"]:
         ox0, ox1 = x0 + o["u0"], x0 + o["u1"]
         oz0, oz1 = z0 + o["v0"], z0 + o["v1"]
-        if o["type"] == "arched_light":
-            g = arch_rect(ox0, oz0, ox1, oz1)
+        if o["type"] == "small_light":
+            g = round_top_rect(ox0, oz0, ox1, oz1, o.get("corner_r", 0.0)) if o.get("head") == "flat" else rect(ox0, oz0, ox1, oz1)
         elif o["type"] == "spyhole":
             g = circle((ox0 + ox1) / 2.0, (oz0 + oz1) / 2.0, (ox1 - ox0) / 2.0)
+        elif o.get("head") == "raked":
+            g = raked_rect(ox0, oz0, ox1, oz1, o["head_rise"], o["rise_toward"])
         else:
             g = rect(ox0, oz0, ox1, oz1)
         ops[o["id"]] = g
+        iv = o.get("inner")
+        if iv:
+            ix0, ix1, iz0, iz1 = x0 + iv["u0"], x0 + iv["u1"], z0 + iv["v0"], z0 + iv["v1"]
+            inner[o["id"]] = segmental_rect(ix0, iz0, ix1, iz1, iv["springing_below_crown"]) if iv["head"] == "segmental" else rect(ix0, iz0, ix1, iz1)
     L["openings"] = ops
+    L["inner_outlines"] = inner
     # mouldings: a ring of the moulding's width inside each panel opening
     mw = spec["mouldings"]["outside"].get("width_on_face")
+    inner_outlines = L["inner_outlines"]
     rings = []
     for o in lf["openings"]:
         if o["type"] == "panel" and mw:
@@ -112,24 +162,14 @@ def draw_kind(T, k):
             inner = outer.buffer(-mw, join_style=2)
             rings.append(outer.difference(inner) if not inner.is_empty else outer)
         if o["type"] == "embossed_panel":
-            outer = ops[o["id"]]
-            inner = outer.buffer(-14.0, join_style=2)
-            rings.append(outer.difference(inner) if not inner.is_empty else outer)
+            for outer in [ops[o["id"]]] + ([inner_outlines[o["id"]]] if o["id"] in inner_outlines else []):      # a 14 mm cove at each of the two outlines
+                core = outer.buffer(-14.0, join_style=2)
+                rings.append(outer.difference(core) if not core.is_empty else outer)
     L["mouldings"] = unary_union(rings) if rings else Polygon()
     # glazing bars of T2 and F4 are the framing between lights: nothing to add; the leaded fanlight's lattice lines
     came = Polygon()
     if spec["glass"].get("transom") == "leaded_diamond":
-        g = T["glass"]["leaded_diamond"]
-        dw, dh = g["diamond"]
-        cw = g["came_w"]
-        lines = []
-        gx = gx0 - dw
-        nx = int((gx1 - gx0) / (dw / 2.0)) + 4
-        for i in range(-2, nx):
-            xa = gx0 + i * dw / 2.0
-            lines.append(Polygon([(xa, gz0), (xa + dw / 2.0, gz1), (xa + dw / 2.0 + cw, gz1), (xa + cw, gz0)]))
-            lines.append(Polygon([(xa + dw / 2.0, gz0), (xa, gz1), (xa + cw, gz1), (xa + dw / 2.0 + cw, gz0)]))
-        came = unary_union(lines).intersection(L["transom_glass"])
+        came = leaded_came(T["glass"]["leaded_diamond"], gx0, gx1, gz0, gz1).intersection(L["transom_glass"])
     L["lead_came"] = came
     # the ledged door's board joints and nail heads
     joints, nails = [], []
@@ -172,8 +212,13 @@ def draw_kind(T, k):
                 lever = rect(x0 + u, z0 + v - cat["lever"][1] / 2.0, x0 + u + direction * cat["lever"][0], z0 + v + cat["lever"][1] / 2.0)
                 g = unary_union([rose, lever])
         elif slot == "latch" and v is not None:
-            xs = fs["stop_edges_x"][1] - 46.6 if lf.get("lock_side") != "left" else fs["stop_edges_x"][0] + 46.6
-            g = circle(xs, z0 + v, cat["collar"] / 2.0)
+            if isinstance(u, (int, float)):         # a bare cylinder face on the leaf (LK3): placed by u and v
+                g = circle(x0 + u, z0 + v, cat["collar"] / 2.0)
+            else:
+                xs = fs["stop_edges_x"][1] - 46.6 if lf.get("lock_side") != "left" else fs["stop_edges_x"][0] + 46.6
+                g = circle(xs, z0 + v, cat["collar"] / 2.0)
+        elif slot == "keyhole" and isinstance(u, (int, float)) and v is not None:
+            g = circle(x0 + u, z0 + v, cat["head_dia"] / 2.0)
         elif slot == "bell" and var == "BL1":
             w, hh = cat["size"]
             cx = pl["x"]
@@ -181,10 +226,12 @@ def draw_kind(T, k):
         elif slot == "number" and v is not None and isinstance(pl.get("v"), (int, float)):
             dh = cat.get("digit", [0, cat.get("digit_h", 60.0)])[1] if "digit" in cat else cat.get("digit_h", 60.0)
             n3 = 3
-            wd = (cat.get("digit", [51.0, 56.0])[0] if "digit" in cat else 38.0) * n3 + 12.0 * (n3 - 1)
+            wd = (cat.get("digit", [51.0, 56.0])[0] if "digit" in cat else 38.0) * n3 + cat.get("gap", 12.0) * (n3 - 1)
             g = rect(x0 + lf["w"] / 2.0 - wd / 2.0, z0 + v - dh / 2.0, x0 + lf["w"] / 2.0 + wd / 2.0, z0 + v + dh / 2.0)
         if g is not None:
             furn["%s:%s" % (slot, var)] = g
+    for fx in spec.get("small_fixings", []):      # a small dark fitting that is no furniture variant (D3's, on the hinge stile)
+        furn["fixing:%s" % fx["id"]] = rect(x0 + fx["u"] - fx["size_mm"][0] / 2.0, z0 + fx["v"] - fx["size_mm"][1] / 2.0, x0 + fx["u"] + fx["size_mm"][0] / 2.0, z0 + fx["v"] + fx["size_mm"][1] / 2.0)
     L["furniture"] = furn
     return L
 
@@ -194,7 +241,8 @@ def sections(T):
     pr = T["kinds"]["T1"]["mouldings"]["outside"]["profile_dh"]
     out["bolection_T1_46"] = Polygon([(d, h) for d, h in pr] + [(4.8, -16.95 * 0 - 17.0)]) if False else Polygon([(d, h) for d, h in pr])
     out["stuck_ovolo_F3"] = Polygon([(d, h) for d, h in T["kinds"]["F3"]["mouldings"]["outside"]["profile_dh"]])
-    out["embossed_step_T3"] = Polygon([(d, -h) for d, h in T["kinds"]["T3"]["mouldings"]["outside"]["profile_dh"]] + [(40.0, -8.0), (0.0, -8.0)])
+    ep = T["kinds"]["T3"]["mouldings"]["outside"]["profile_dh"]
+    out["embossed_step_T3"] = Polygon([(d, -h) for d, h in ep] + [(ep[-1][0], -8.0), (0.0, -8.0)])
     rs = T["glass"]["reeded_4mm"]
     pts = [[0.0, 4.0]]
     n = int(round(24.0 / rs["flute_pitch"]))
@@ -276,20 +324,23 @@ def picture_kinds(T, out_dir, scale=0.26):
         P(L["leaf"], col)
         for i, g in L["openings"].items():
             typ = [o for o in T["kinds"][k]["leaf"]["openings"] if o["id"] == i][0]["type"]
-            P(g, (60, 70, 80) if typ in ("light", "slit_light", "arched_light", "spyhole") else tuple(int(c * 0.82) for c in col))
+            P(g, (60, 70, 80) if typ in ("light", "slit_light", "small_light", "spyhole") else tuple(int(c * 0.82) for c in col))
         for i, g in L["openings"].items():
             typ = [o for o in T["kinds"][k]["leaf"]["openings"] if o["id"] == i][0]["type"]
             if typ in ("panel", "embossed_panel"):
                 P(g.difference(g.buffer(-(T["kinds"][k]["mouldings"]["outside"].get("width_on_face") or 14.0), join_style=2)), tuple(min(255, int(c * 1.35) + 18) for c in col))
                 P(g.buffer(-(T["kinds"][k]["mouldings"]["outside"].get("width_on_face") or 14.0), join_style=2), (30, 30, 32) if k in ("T1", "F1", "F2", "F3") else tuple(int(c * 0.9) for c in col))
+        for i, g in L["inner_outlines"].items():      # T3's second outline of each moulded panel: its cove, and the field inside
+            P(g, tuple(int(c * 0.9) for c in col), (170, 170, 165))
+            P(g.difference(g.buffer(-14.0, join_style=2)), tuple(min(255, int(c * 1.35) + 18) for c in col))
         for i, g in L["openings"].items():
             typ = [o for o in T["kinds"][k]["leaf"]["openings"] if o["id"] == i][0]["type"]
-            if typ in ("light", "slit_light", "arched_light", "spyhole"):
+            if typ in ("light", "slit_light", "small_light", "spyhole"):
                 P(g, (60, 70, 80))
         P(L["board_joints"], tuple(int(c * 0.6) for c in col))
         P(L["nail_heads"], (170, 170, 165))
         for name, g in L["furniture"].items():
-            P(g, (200, 170, 100) if "brass" in name or name.startswith("letter_plate:LP1") else (210, 210, 205), (30, 30, 30))
+            P(g, (40, 40, 42) if name.startswith("fixing:") else ((200, 170, 100) if "brass" in name or name.startswith("letter_plate:LP1") else (210, 210, 205)), (30, 30, 30))
     os.makedirs(out_dir, exist_ok=True)
     path = os.path.join(out_dir, "kinds-elevations.png")
     im.save(path)
@@ -320,7 +371,7 @@ def picture_rows(T, out_dir, scale=0.055):
             d.rectangle([px, top - lf["h"] * scale * 1.4, px + lf["w"] * scale * 1.4, top], fill=col)
             for o in lf["openings"]:
                 typ = o["type"]
-                fillc = (60, 70, 80) if typ in ("light", "slit_light", "arched_light") else tuple(int(c * 0.8) for c in col)
+                fillc = (60, 70, 80) if typ in ("light", "slit_light", "small_light") else tuple(int(c * 0.8) for c in col)
                 d.rectangle([px + o["u0"] * scale * 1.4, top - o["v1"] * scale * 1.4, px + o["u1"] * scale * 1.4, top - o["v0"] * scale * 1.4], fill=fillc)
             d.text((px, top + 2), "%s" % k, fill=(230, 230, 230))
         y0 += int(2600 * scale * 1.4) + pad + 30
