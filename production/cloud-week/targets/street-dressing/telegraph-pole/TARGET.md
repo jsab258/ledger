@@ -2,7 +2,7 @@
 
 **The telegraph pole is a creosoted pine pole 8.0 m above the pavement, 230 mm across at the ground tapering to 150, with a galvanised cap, a distribution bracket of six porcelain knobs just under the top, eleven climbing pegs every 450 mm on alternate sides from 2.4 m, and four black drop wires of real length (two across the street to the east parade at 6.1 and 6.2 m, two to its own side) each sagging about 3 percent of its span and never below 6.1 m; it stands on the west pavement at x 33.0, 0.60 m behind the kerb (the earlier pole at x 12 is dropped), 5 m from both lamp columns; it replaces the 29 September pole's ring and stubs, which the photographs do not show; no period street-pole photograph exists in the feed and the two 2009 and 2011 photographs have no scale, so the height rests on a written range and every other number is judged, checked for consistency only.**
 
-Cloud week 42, unit 13, family 8. Written 13 October 2026, not yet reviewed. `SELF-CHECK telegraph-pole: 73 checks, 73 passed, 0 failed; negative controls 24 of 24 caught (offline)`
+Cloud week 42, unit 13, family 8. Written 13 October 2026, not yet reviewed. `SELF-CHECK telegraph-pole: 76 checks, 76 passed, 0 failed; negative controls 24 of 24 caught (--live --previews)`
 
 ## Files in this folder
 

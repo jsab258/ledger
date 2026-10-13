@@ -1244,16 +1244,14 @@
   "no lettering, no plate, no mark"
  ],
  "self_check": {
-  "line": "SELF-CHECK telegraph-pole: 74 checks, 73 passed, 1 failed; negative controls 24 of 24 caught (--live --previews)",
-  "checks": 74,
-  "passed": 73,
-  "failed": 1,
+  "line": "SELF-CHECK telegraph-pole: 76 checks, 76 passed, 0 failed; negative controls 24 of 24 caught (--live --previews)",
+  "checks": 76,
+  "passed": 76,
+  "failed": 0,
   "controls": 24,
   "controls_caught": 24,
   "options": "--live --previews",
-  "failing": [
-   "previews/p1-wilmott-close-pole-top.jpg exists"
-  ],
+  "failing": [],
   "uncaught": []
  }
 }

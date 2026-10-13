@@ -3279,19 +3279,14 @@
   }
  ],
  "self_check": {
-  "line": "SELF-CHECK a-board: 154 checks, 150 passed, 4 failed; negative controls 39 of 39 caught (--live --previews)",
-  "checks": 154,
-  "passed": 150,
-  "failed": 4,
+  "line": "SELF-CHECK a-board: 165 checks, 165 passed, 0 failed; negative controls 39 of 39 caught (--live --previews)",
+  "checks": 165,
+  "passed": 165,
+  "failed": 0,
   "controls": 39,
   "controls_caught": 39,
   "options": "--live --previews",
-  "failing": [
-   "live/P1/photograph present",
-   "previews/p1-village-board-front-leaf.jpg exists",
-   "previews/p1-village-board-target-on-photo.jpg exists",
-   "previews/p2-1978-notice-board.jpg exists"
-  ],
+  "failing": [],
   "uncaught": []
  }
 }

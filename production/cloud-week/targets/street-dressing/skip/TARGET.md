@@ -2,7 +2,7 @@
 
 **The skip is a 6-yard builder's skip with the hexagonal side profile of the photograph (3015 mm long at its widest line 793 up, 1850 along the floor, 2320 along the top, 1200 high, 1700 wide), 5 mm plates, an 86 mm folded top rim, a stiffening rib at 923, four chain lugs, two amber lamps lit in the lantern colour at night and the invented stencil TIDEWAY SKIP HIRE, TEL 555 0142, yellow; it stands in the west carriageway before the yard mouth at x 22.5, 0.30 m off the kerb, which puts the 2 October ruling's skip back as a real skip (owed: one line), and the scene's two cones move out to x 20.7 and 24.3; the profile is measured on a 2021 side view (turned 7.2 degrees to level it) and the scale is the assumed height of 1.2 m, so the lengths are judged; no period skip photograph exists in the feed.**
 
-Cloud week 42, unit 13, family 6. Written 13 October 2026, not yet reviewed. `SELF-CHECK skip: 76 checks, 76 passed, 0 failed; negative controls 25 of 25 caught (offline)`
+Cloud week 42, unit 13, family 6. Written 13 October 2026, not yet reviewed. `SELF-CHECK skip: 86 checks, 86 passed, 0 failed; negative controls 25 of 25 caught (--live --previews)`
 
 ## Files in this folder
 
