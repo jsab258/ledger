@@ -1196,40 +1196,40 @@
     "t": 50.8,
     "construction": "framed, glazed",
     "lock_side": "left",
-    "stile_left": 170.0,
-    "stile_right": 110.0,
-    "top_rail": 104.4,
+    "stile_left": 184.0,
+    "stile_right": 114.3,
+    "top_rail": 90.4,
     "bottom_rail": 200.0,
-    "bar": 40.0,
-    "light_w": 159.33,
+    "bar": 36.0,
+    "light_w": 155.9,
     "openings": [
      {
       "id": "light1",
       "type": "light",
-      "u0": 170.0,
-      "u1": 329.3,
+      "u0": 184.0,
+      "u1": 339.9,
       "v0": 200.0,
-      "v1": 1876.6,
+      "v1": 1890.6,
       "glass": "plain_3mm",
       "bead": "putty_fillet"
      },
      {
       "id": "light2",
       "type": "light",
-      "u0": 369.3,
-      "u1": 528.7,
+      "u0": 375.9,
+      "u1": 531.8,
       "v0": 200.0,
-      "v1": 1876.6,
+      "v1": 1890.6,
       "glass": "plain_3mm",
       "bead": "putty_fillet"
      },
      {
       "id": "light3",
       "type": "light",
-      "u0": 568.7,
-      "u1": 728.0,
+      "u0": 567.8,
+      "u1": 723.7,
       "v0": 200.0,
-      "v1": 1876.6,
+      "v1": 1890.6,
       "glass": "plain_3mm",
       "bead": "putty_fillet"
      }
@@ -1238,7 +1238,7 @@
    "mouldings": {
     "outside": {
      "kind": "none",
-     "note": "bars 40 wide, square; putty fillet on the glass as F1's"
+     "note": "bars 36 wide, square; putty fillet on the glass as F1's"
     }
    },
    "glass": {
@@ -1249,31 +1249,32 @@
    "photographs": [
     "D2"
    ],
-   "measured_fractions_of_width": {
+   "measured_from_left_edge_mm": {
     "lights": [
      [
-      0.233,
-      0.433
+      183.5,
+      323.3
      ],
      [
-      0.5,
-      0.717
+      369.9,
+      521.4
      ],
      [
-      0.8,
-      1.0
+      579.6,
+      719.4
      ]
     ],
     "bars": [
      [
-      0.45,
-      0.5
+      334.9,
+      369.9
      ],
      [
-      0.733,
-      0.783
+      533.0,
+      568.0
      ]
-    ]
+    ],
+    "scale_mm_px": 23.3
    },
    "parts_vs_3_1": [
     [
@@ -1284,7 +1285,7 @@
     [
      "leaf_frame, panel_*, moulding_*",
      "changed",
-     "stiles 170 and 110 (visible 150 and 90), top rail 104.4 (visible 84), bottom rail 200, three lights 159.3 wide with 40 mm bars (D2: lights 160 to 173 at 26.6 mm a pixel, bars 40)"
+     "stiles 184 and 114.3 (visible 164 and 93.9), top rail 90.4 (visible 70), bottom rail 200, three lights 155.9 wide with 36 mm bars (D2 at 23.3 mm a pixel: lights 140 to 152, bars 35)"
     ],
     [
      "glass_light1..3",
@@ -2796,11 +2797,8 @@
       "place": null
      },
      "number": {
-      "variant": "NM1",
-      "place": {
-       "v": 1917.0,
-       "u": "leaf centre"
-      }
+      "variant": "NM0",
+      "place": null
      },
      "scraper": {
       "variant": "BS0",
@@ -2890,7 +2888,7 @@
     },
     "kind": "F1",
     "frame_set": "F",
-    "paint": "dark_green",
+    "paint": "navy",
     "frame_colour": "white",
     "condition": "kept",
     "furniture": {
@@ -2932,7 +2930,7 @@
       "place": null
      }
     },
-    "why": "Rita's: the shopfront kit's own side door (a fanlight over it); four-panel as built, dark green against the cream painted front (the 4 October reading of the sheet's third house)",
+    "why": "Rita's: the shopfront kit's own side door (a fanlight over it); four-panel as built, dark blue against the cream painted front (the 4 October reading of the sheet's third house)",
     "windows_modernised": true
    },
    {
@@ -3073,7 +3071,7 @@
     },
     "kind": "F5",
     "frame_set": "F",
-    "paint": "navy",
+    "paint": "black",
     "frame_colour": "white",
     "condition": "kept",
     "furniture": {
@@ -3137,7 +3135,7 @@
     },
     "kind": "T1",
     "frame_set": "T",
-    "paint": "deep_teal",
+    "paint": "navy",
     "frame_colour": "white_grimy",
     "condition": "tired",
     "furniture": {
@@ -3189,7 +3187,7 @@
       }
      }
     },
-    "why": "the cottage nearest the quay, four-panel as built in 3.1 with its plain oblong bell push; the sheet's deep teal; the one boot scraper, by the step (owed: no period photograph shows one here)",
+    "why": "the cottage nearest the quay, four-panel as built in 3.1 with its plain oblong bell push; dark blue; the one boot scraper, by the step (owed: no period photograph shows one here)",
     "windows_modernised": false
    },
    {
@@ -3340,7 +3338,7 @@
     },
     "kind": "F7",
     "frame_set": "F",
-    "paint": "navy",
+    "paint": "deep_teal",
     "frame_colour": "white_grimy",
     "condition": "neglected",
     "furniture": {
@@ -3376,7 +3374,7 @@
       "place": null
      }
     },
-    "why": "beside the yard slot, in a one-storey shop row: a service door to the back passage, ledged and braced (owed line 3: if the PC wants flats in this row it takes F1 instead)",
+    "why": "beside the yard slot, in a one-storey shop row: a service door to the back passage, ledged and braced, in the sheet's deep teal (owed line 3: if the PC wants flats in this row it takes F1 instead)",
     "windows_modernised": false
    },
    {
@@ -3397,7 +3395,7 @@
     },
     "kind": "F3",
     "frame_set": "F",
-    "paint": "black",
+    "paint": "dark_green",
     "frame_colour": "white",
     "condition": "tired",
     "furniture": {
@@ -3801,6 +3799,10 @@
     "taken": "1987",
     "url": "https://commons.wikimedia.org/wiki/File:Hazlehead_I,_Provost_Graham_Avenue_(SC_1141987).png",
     "size_px": [
+     1920,
+     1270
+    ],
+    "original_size_px": [
      4000,
      2646
     ],
@@ -3949,8 +3951,8 @@
       613.75
      ]
     },
-    "what": "the four lights, top and foot row of each (the glass between the bars)",
-    "error_px": 1.5
+    "what": "the four lights, top and foot row of each (the glass between the bars; soft against the nets, so 2.5 px)",
+    "error_px": 2.5
    },
    "D3_stiles": {
     "photo": "D3",
@@ -4145,6 +4147,7 @@
      374.5,
      404.5
     ],
+    "scale_mm_px": 23.3,
     "light_x_px": [
      [
       381.5,
@@ -4169,7 +4172,7 @@
       398.0
      ]
     ],
-    "what": "the three long narrow lights and the two bars between them, across; the leaf's right edge is hidden in shadow",
+    "what": "the three long narrow lights and the two bars between them, across, from the leaf's visible left edge (x 374.5); the scale 23.3 mm a pixel is the middle door's, in the same photograph at the same wall plane (797.2 / 34.2 px); the right stile is hidden in the reveal's shadow",
     "error_px": 1.0
    },
    "D2_F4_top": {
@@ -4760,12 +4763,12 @@
      "loc": [
       0.33,
       -1.2,
-      1.26
+      0.92
      ],
      "target": [
       0.25,
       0.19,
-      1.26
+      0.92
      ],
      "lens": 50
     },
@@ -5466,7 +5469,7 @@
       0.25,
       0.0
      ],
-     "note": "the game's lantern colour, never the stale (1, 0.7055, 0)"
+     "note": "the game's lantern colour (linear red 1.0, green 0.25, blue 0.0), never the older yellow value"
     }
    },
    {
@@ -6223,10 +6226,10 @@
    "kind": "F4",
    "what": "bounds of the opening in the leaf frame: u0, u1, v0, v1",
    "expect": [
-    170.0,
-    329.3,
+    184.0,
+    339.9,
     200.0,
-    1876.6
+    1890.6
    ],
    "tol": 3.0,
    "src": "kind spec (photograph fractions for T2 T3 F4 F5 F6, 3.1 for T1 F1 F2 F3)",
@@ -6240,10 +6243,10 @@
    "kind": "F4",
    "what": "bounds of the opening in the leaf frame: u0, u1, v0, v1",
    "expect": [
-    369.3,
-    528.7,
+    375.9,
+    531.8,
     200.0,
-    1876.6
+    1890.6
    ],
    "tol": 3.0,
    "src": "kind spec (photograph fractions for T2 T3 F4 F5 F6, 3.1 for T1 F1 F2 F3)",
@@ -6257,10 +6260,10 @@
    "kind": "F4",
    "what": "bounds of the opening in the leaf frame: u0, u1, v0, v1",
    "expect": [
-    568.7,
-    728.0,
+    567.8,
+    723.7,
     200.0,
-    1876.6
+    1890.6
    ],
    "tol": 3.0,
    "src": "kind spec (photograph fractions for T2 T3 F4 F5 F6, 3.1 for T1 F1 F2 F3)",
@@ -6274,11 +6277,11 @@
    "kind": "F4",
    "what": "member widths on the face, mm",
    "expect": {
-    "stile_left": 170.0,
-    "stile_right": 110.0,
-    "top_rail": 104.4,
+    "stile_left": 184.0,
+    "stile_right": 114.3,
+    "top_rail": 90.4,
     "bottom_rail": 200.0,
-    "bar": 40.0
+    "bar": 36.0
    },
    "tol": 2.0,
    "src": "kind spec",
@@ -6822,30 +6825,6 @@
    "type": "furniture",
    "slot": "latch",
    "variant": "LK2"
-  },
-  {
-   "id": "FU-F1-number-NM1",
-   "group": "FU",
-   "name": "F1: number NM1",
-   "kind": "F1",
-   "what": "centre of the fitting in the leaf frame (u, v) and its outer size",
-   "expect": {
-    "u": "leaf centre",
-    "v": 1917.0,
-    "size": [
-     51.0,
-     56.0
-    ],
-    "place": {
-     "v": 1917.0,
-     "u": "leaf centre"
-    }
-   },
-   "tol": 8.0,
-   "src": "3.1 (P1 stacked on the muntin, P2 in a row on the top rail: 56 high)",
-   "type": "furniture",
-   "slot": "number",
-   "variant": "NM1"
   },
   {
    "id": "FU-F2-letter_plate-LP2",

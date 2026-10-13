@@ -225,7 +225,7 @@ def main():
     gate["street_views"] = [
         {"name": "hook_day", "from": "vignette-scene.json cameras cam_A (x 4 east footway, looking up +x), condition overcast_day", "sees": "the west cottages' near doors and the east parade's side doors in perspective"},
         {"name": "reverse_day", "from": "the reverse camera of the same file", "sees": "the east parade's row from the quay end"},
-        {"name": "street_night", "from": "cam_A, condition wet_night", "light": {"lantern_colour_linear": LANTERN_LINEAR, "note": "the game's lantern colour, never the stale (1, 0.7055, 0)"}},
+        {"name": "street_night", "from": "cam_A, condition wet_night", "light": {"lantern_colour_linear": LANTERN_LINEAR, "note": "the game's lantern colour (linear red 1.0, green 0.25, blue 0.0), never the older yellow value"}},
         {"name": "row_east", "from": "an orthographic elevation at 1.6 m of the east side, x 3 to 46, from the west footway", "reads": "no two neighbours alike (checks AD1 to AD6)"},
         {"name": "row_west", "from": "the same for the west side", "reads": "as above"},
     ]

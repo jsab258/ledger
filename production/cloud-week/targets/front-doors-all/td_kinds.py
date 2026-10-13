@@ -81,10 +81,10 @@ def d5_fractions():
 
 def d2_f4_fractions():
     m = MEAS["D2_F4_cols"]
-    x0, x1 = m["leaf_x_px"]
-    w = x1 - x0
-    return {"lights": [[(a - x0) / w, (b - x0) / w] for a, b in m["light_x_px"]], "bars": [[(a - x0) / w, (b - x0) / w] for a, b in m["bar_x_px"]],
-            "scale_mm_px": 838.0 / w}
+    x0 = m["leaf_x_px"][0]
+    s = m["scale_mm_px"]
+    return {"lights_mm": [[LAP + (a - x0) * s, LAP + (b - x0) * s] for a, b in m["light_x_px"]], "bars_mm": [[LAP + (a - x0) * s, LAP + (b - x0) * s] for a, b in m["bar_x_px"]],
+            "scale_mm_px": s}
 
 
 def d1_r_fractions():
@@ -314,9 +314,9 @@ def build_kinds(A):
 
     # ------------------------------------------------------------------ F4 (three long narrow lights, D2 left door)
     fx = d2_f4_fractions()
-    lock_st, hinge_st, barw = 170.0, 110.0, 40.0      # structural; visible 150 and 90 (D2: lights 160 to 173, bars 40)
+    lock_st, hinge_st, barw = 184.0, 114.3, 36.0      # structural; visible 164 and 93.9 (D2 at 23.3 mm a pixel: lock stile 7 px, lights 140 to 155, bars 35, the hinge stile hidden)
     lw = (W - lock_st - hinge_st - 2 * barw) / 3.0
-    top_r4, bot_r4 = 104.4, 200.0                     # visible top rail 84 (D2: 3 px) + 20.4 behind the transom's stop
+    top_r4, bot_r4 = 90.4, 200.0                      # visible top rail 70 (D2: 3 px at 23.3) + 20.4 behind the transom's stop
     ops4 = []
     u = lock_st
     for i in range(3):
@@ -326,13 +326,13 @@ def build_kinds(A):
         "name": "three long narrow lights over a low rail (D2 left door)", "frame_set": "F", "family": "side door to a flat",
         "leaf": {"w": W, "h": H, "t": fl["thickness_mm"], "construction": "framed, glazed", "lock_side": "left", "stile_left": lock_st, "stile_right": hinge_st, "top_rail": top_r4,
                  "bottom_rail": bot_r4, "bar": barw, "light_w": _r(lw, 2), "openings": ops4},
-        "mouldings": {"outside": {"kind": "none", "note": "bars 40 wide, square; putty fillet on the glass as F1's"}},
+        "mouldings": {"outside": {"kind": "none", "note": "bars 36 wide, square; putty fillet on the glass as F1's"}},
         "glass": {"transom": "plain_3mm", "leaf": "plain_3mm", "nets_behind": "none (D2 shows a dark hall)"},
         "photographs": ["D2"],
-        "measured_fractions_of_width": {"lights": [[_r(a, 3), _r(b, 3)] for a, b in fx["lights"]], "bars": [[_r(a, 3), _r(b, 3)] for a, b in fx["bars"]]},
+        "measured_from_left_edge_mm": {"lights": [[_r(a, 1), _r(b, 1)] for a, b in fx["lights_mm"]], "bars": [[_r(a, 1), _r(b, 1)] for a, b in fx["bars_mm"]], "scale_mm_px": fx["scale_mm_px"]},
         "parts_vs_3_1": [
             ("frame_*, glass_fanlight, sill", "kept", "frame set F"),
-            ("leaf_frame, panel_*, moulding_*", "changed", "stiles 170 and 110 (visible 150 and 90), top rail 104.4 (visible 84), bottom rail 200, three lights 159.3 wide with 40 mm bars (D2: lights 160 to 173 at 26.6 mm a pixel, bars 40)"),
+            ("leaf_frame, panel_*, moulding_*", "changed", "stiles 184 and 114.3 (visible 164 and 93.9), top rail 90.4 (visible 70), bottom rail 200, three lights 155.9 wide with 36 mm bars (D2 at 23.3 mm a pixel: lights 140 to 152, bars 35)"),
             ("glass_light1..3", "added", "three tall panes of 3 mm glass, putty fillet as F1's"),
             ("iron_letter_plate", "changed", "LP5, the low plate in the bottom rail"),
             ("iron_knob_*, iron_keyhole_*, iron_lock_*", "removed", "a lever HD2b at the left stile"),
