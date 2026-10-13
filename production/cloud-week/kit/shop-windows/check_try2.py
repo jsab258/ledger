@@ -670,7 +670,11 @@ def lit02b_rows(R, work, rows):
             good = share_room <= 0.01
             if cam in ("CLOSE_35_B", "STREET_30"):
                 ok &= good
-            det.append("%s %s: room %.4f (of %d px, the room shows in %.0f per cent of them), all glass %.4f%s" % (cam, st, share_room, n, 100.0 * float(room.sum()) / max(n, 1), share_all, "" if good else " (OVER 1 per cent)"))
+            # the largest connected patch of those dark room pixels (a slab is one patch; the brown dado seen at the day card's 0.15 is a scatter of small ones)
+            from scipy import ndimage as _nd
+            lab, nl = _nd.label(_nd.binary_dilation(dark & room, iterations=2))
+            big = float(max(_nd.sum(dark & room, lab, range(1, nl + 1)))) / max(n, 1) if nl else 0.0
+            det.append("%s %s: room %.4f (of %d px, the room shows in %.0f per cent of them; the largest patch %.4f), all glass %.4f%s" % (cam, st, share_room, n, 100.0 * float(room.sum()) / max(n, 1), big, share_all, "" if good else " (OVER 1 per cent)"))
     rows.add("LIT-02b", "no black void in the rendered frames", ok, "window-glass pixels (the glass mask: no frame, mullion, bead or lattice) under luma 12, in frames rendered with the glass's reflection off, where the glass shows the room: " + "; ".join(det) + " (limit 0.01 on CLOSE_35_B and STREET_30; try 1's black slab at CLOSE_35_B's far light was about a third of the window)")
 
 

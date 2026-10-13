@@ -435,7 +435,7 @@ class Room:
         self.box("backroom_left", 1.33, 1.35, D + 0.1, D + 2.4, 0.0, H, br)
         self.box("backroom_right", 2.45, 2.47, D + 0.1, D + 2.4, 0.0, H, br)
         # ceiling battens (T12 in slim fittings): fitting 0.02 + opal diffuser 0.025 = 0.045 below the ceiling
-        self.diff_m = self.mat("tube_diffuser", rgb8(236, 238, 232), rough=0.5, emit=(0.95, 0.97, 1.0), emit_strength=0.0)
+        self.diff_m = self.mat("tube_diffuser", rgb8(172, 174, 168), rough=0.5, emit=(0.95, 0.97, 1.0), emit_strength=0.0)
         fit_m = self.mat("batten_fitting", rgb8(190, 188, 180), rough=0.5)
         self.tube_objs = []
         for k, t in enumerate(self.R["room"]["lights"]["tubes"]):
@@ -726,6 +726,21 @@ class Room:
         self.fixtures.append({"fixture": "R-left-board", "name": "watch_chain_cards(%d)" % len(spots), "ext": [xl, xl + 0.032, 0.3, 4.2, 0.45, 2.15], "n": len(spots), "boxes_yz": [[round(y - 0.05, 3), round(y + 0.05, 3), round(z - 0.07, 3), round(z + 0.07, 3)] for (y, z) in spots]})
         return ob
 
+    def tone_material(self, name, f):
+        """The material's base-colour map times a grey f (a Multiply node between the map and the shader): a model's white paint made a little less white."""
+        m = bpy.data.materials[name]
+        nt = m.node_tree
+        for l in list(nt.links):
+            if l.to_socket.name == "Base Color" and l.to_node.type == "BSDF_PRINCIPLED":
+                mix = nt.nodes.new("ShaderNodeMix")
+                mix.data_type = "RGBA"
+                mix.blend_type = "MULTIPLY"
+                mix.inputs[0].default_value = 1.0
+                mix.inputs[7].default_value = (f, f, f, 1.0)
+                src, to = l.from_socket, l.to_socket
+                nt.links.new(src, mix.inputs[6])
+                nt.links.new(mix.outputs[2], to)
+
     def print_variant(self, names, asset, k):
         """Another print for one hung frame (the five frames on the pledge board differ): its own copy of the mesh and of the artwork material, the picture node pointing at
         <asset>_artwork_diff_1k_clean_v<k>.jpg (made by sw_assets.harbour_print)."""
@@ -767,6 +782,8 @@ class Room:
         for k, y in enumerate((0.68, 1.54, 2.40, 3.26)):
             hang("hanging_picture_frame_02", y, 0.78, "frame", variant=k)
         hang("hanging_picture_frame_02", 1.545, 1.78, "frame", variant=4)
+        # 13 Oct, try 2 (PIC-05 measured before the shoulder: the white paint of the frames burnt at the lit edge): the frames' paint is 0.75 of the model's white in every state
+        self.tone_material("hanging_picture_frame_02", 0.75)
         for y in (0.50, 1.14, 1.78, 2.42, 3.06, 3.70):
             hang("wall_clock", y, 1.24, "clock")
         hang("ornate_mirror_01", 0.543, 1.775, "mirror")
@@ -973,7 +990,7 @@ def luma_stats(path):
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------- the driver
-DEFAULT_P = {"day": 900.0, "tube": 60.0, "sodium_ratio": 0.06, "back_day": 25.0, "back_nl": 25.0, "back_nd": 4.0, "diff_emit": 0.85}
+DEFAULT_P = {"day": 900.0, "tube": 60.0, "sodium_ratio": 0.06, "back_day": 14.0, "back_nl": 25.0, "back_nd": 4.0, "diff_emit": 0.5}
 TARGET_MEAN = {"day": 119.5, "night_lit": 79.8, "night_dark": 17.7}
 
 

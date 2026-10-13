@@ -62,7 +62,7 @@ SIZE = {"round_spectacles": 0.13, "vintage_lighter": 0.08, "cigarette_case": 0.1
 # the bed's front row, in order, each with the width of its slot (m): the approved recipe's trays (0.24), pads (0.26) and chains (0.14 of links), then the small pieces among them. The
 # recipe's own pitches (0.255, 0.275, 0.16: its loop took a tray's centre as its place and drew from a shuffled bag) leave gaps of 0.015 to 0.02 between trays; here every piece has a
 # slot of its own so that nothing overlaps its neighbour (the close review's DSP-03), and the pitches come out at 0.26 to 0.28 with the same gaps. 4 trays, 4 pads, 2 chains, 4 small pieces
-BED_SEQUENCE = [("ring_tray", 0.24), ("watch_pad", 0.26), ("chain", 0.16), ("round_spectacles", 0.13), ("ring_tray", 0.24), ("watch_pad", 0.26), ("vintage_lighter", 0.08),
+BED_SEQUENCE = [("ring_tray", 0.24), ("watch_pad", 0.26), ("round_spectacles", 0.13), ("chain", 0.16), ("ring_tray", 0.24), ("watch_pad", 0.26), ("vintage_lighter", 0.08),
                 ("magnifying_glass_01", 0.15), ("chain", 0.16), ("cigarette_case", 0.12), ("ring_tray", 0.24), ("watch_pad", 0.26), ("ring_tray", 0.24), ("watch_pad", 0.26)]
 # the four Poly Haven pocket watches lie on two of the pads, two on each (the pad's slots they take are not drawn by script): sequence index -> model. The small pieces and these two pads
 # stand in the left two thirds of the strip: from CLOSE_35 the window's right end is out of frame and from the street the sill hides the strip (DSP-03 asks each piece to show)
