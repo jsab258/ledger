@@ -2,19 +2,19 @@
  "made": "13 Oct 2026, cloud week 42, unit 12",
  "file_checked": "production/cloud-week/lines/lines.json and rules.json",
  "summary": {
-  "rows": 2489,
-  "pass": 2489,
+  "rows": 2491,
+  "pass": 2491,
   "fail": 0,
-  "seeded_faults": 47,
-  "seeded_faults_caught": 47,
+  "seeded_faults": 54,
+  "seeded_faults_caught": 54,
   "kinds": 13,
   "situations": 14,
-  "lines": 1643,
-  "places": 35
+  "lines": 1626,
+  "places": 34
  },
  "counts_per_kind_and_situation": {
   "anyone": {
-   "asked_way(directions)": 176
+   "asked_way(directions)": 171
   },
   "casual_worker": {
    "after_deed": 8,
@@ -69,7 +69,6 @@
    "farewell": 8,
    "greeting.nowak": 9,
    "greeting.owner": 10,
-   "greeting.stranger": 13,
    "greeting.tom": 9,
    "in_rain": 9,
    "rain_starts": 9
@@ -142,7 +141,7 @@
    "crime_shape": 8,
    "farewell": 8,
    "greeting.nowak": 9,
-   "greeting.owner": 9,
+   "greeting.owner": 10,
    "greeting.stranger": 13,
    "greeting.tom": 11,
    "greeting.tommy": 9,
@@ -225,30 +224,30 @@
   "lines_heard": 23,
   "heard_by_situation": {
    "asked_way": 1,
-   "crime_face": 1,
+   "crime_shape": 1,
    "farewell": 4,
-   "greeting.nowak": 1,
+   "greeting.nowak": 2,
    "greeting.owner": 10,
-   "greeting.stranger": 4,
+   "greeting.stranger": 3,
    "greeting.tom": 1,
    "in_rain": 1
   },
   "heard_by_kind": {
-   "casual_worker": 2,
+   "casual_worker": 3,
    "dock_worker": 4,
    "father_walsh": 1,
    "laundry_worker": 2,
    "office_worker": 1,
    "pensioner": 2,
-   "ron": 3,
+   "ron": 2,
    "shopkeeper": 6,
    "tradesman": 2
   },
   "busiest_minute_heard": 5,
   "busiest_minute_at_s": 59.0,
   "busiest_minute_without_crime_lines": 5,
-  "longest_gap_s": 232.0,
-  "longest_gap_from_s": 901.2,
+  "longest_gap_s": 230.9,
+  "longest_gap_from_s": 902.3,
   "longest_gap_to_s": 1133.2,
   "minutes_with_no_line": 16,
   "quiet_share": 0.53,
@@ -276,19 +275,19 @@
    "greeting_attempts_not_played_in_those_20_s": [],
    "crime_lines": [
     {
-     "t": 901.2,
-     "id": "ron.crime-face.05",
-     "sure": "face",
-     "heard": true,
-     "speaker": "rocco",
-     "waited": 0.0
-    },
-    {
      "t": 901.5,
-     "id": "shopkeeper.crime-noise.01",
+     "id": "shopkeeper.crime-noise.03",
      "sure": "noise",
      "heard": false,
      "speaker": "marla",
+     "waited": 0.0
+    },
+    {
+     "t": 902.3,
+     "id": "casual_worker.crime-shape.08",
+     "sure": "shape",
+     "heard": true,
+     "speaker": "joey",
      "waited": 0.0
     }
    ]
@@ -297,14 +296,14 @@
   "asked": [
    {
     "t": 350.5,
-    "who": "petra",
+    "who": "dario",
     "dest": "docks",
     "knows": false
    },
    {
     "t": 1352.9,
     "who": "drago",
-    "dest": "harbour_board",
+    "dest": "harbour_office",
     "knows": true
    }
   ],
@@ -343,6 +342,12 @@
    "what": "no line repeats one the street already has (StreetVoice.cs, OwnLines.cs, barks.json, the dialogue banks)",
    "pass": true,
    "detail": "[]"
+  },
+  {
+   "id": "doc.no_proposal_street_names",
+   "what": "no line speaks a street name the adopted atlas still marks '(proposal)' (canon mints three: Quay Street, Weighhouse Lane, Tannery Row)",
+   "pass": true,
+   "detail": "[] 9"
   },
   {
    "id": "line.shopkeeper.greet-stranger.01",
@@ -2625,6 +2630,12 @@
    "detail": ""
   },
   {
+   "id": "line.office_worker.greet-owner.10",
+   "what": "line office_worker.greet-owner.10 passes every line check",
+   "pass": true,
+   "detail": ""
+  },
+  {
    "id": "line.office_worker.greet-nowak.01",
    "what": "line office_worker.greet-nowak.01 passes every line check",
    "pass": true,
@@ -3245,84 +3256,6 @@
   {
    "id": "line.office_worker.farewell.08",
    "what": "line office_worker.farewell.08 passes every line check",
-   "pass": true,
-   "detail": ""
-  },
-  {
-   "id": "line.driver.greet-stranger.01",
-   "what": "line driver.greet-stranger.01 passes every line check",
-   "pass": true,
-   "detail": ""
-  },
-  {
-   "id": "line.driver.greet-stranger.02",
-   "what": "line driver.greet-stranger.02 passes every line check",
-   "pass": true,
-   "detail": ""
-  },
-  {
-   "id": "line.driver.greet-stranger.03",
-   "what": "line driver.greet-stranger.03 passes every line check",
-   "pass": true,
-   "detail": ""
-  },
-  {
-   "id": "line.driver.greet-stranger.04",
-   "what": "line driver.greet-stranger.04 passes every line check",
-   "pass": true,
-   "detail": ""
-  },
-  {
-   "id": "line.driver.greet-stranger.05",
-   "what": "line driver.greet-stranger.05 passes every line check",
-   "pass": true,
-   "detail": ""
-  },
-  {
-   "id": "line.driver.greet-stranger.06",
-   "what": "line driver.greet-stranger.06 passes every line check",
-   "pass": true,
-   "detail": ""
-  },
-  {
-   "id": "line.driver.greet-stranger.07",
-   "what": "line driver.greet-stranger.07 passes every line check",
-   "pass": true,
-   "detail": ""
-  },
-  {
-   "id": "line.driver.greet-stranger.08",
-   "what": "line driver.greet-stranger.08 passes every line check",
-   "pass": true,
-   "detail": ""
-  },
-  {
-   "id": "line.driver.greet-stranger.09",
-   "what": "line driver.greet-stranger.09 passes every line check",
-   "pass": true,
-   "detail": ""
-  },
-  {
-   "id": "line.driver.greet-stranger.10",
-   "what": "line driver.greet-stranger.10 passes every line check",
-   "pass": true,
-   "detail": ""
-  },
-  {
-   "id": "line.driver.greet-stranger.11",
-   "what": "line driver.greet-stranger.11 passes every line check",
-   "pass": true,
-   "detail": ""
-  },
-  {
-   "id": "line.driver.greet-stranger.12",
-   "what": "line driver.greet-stranger.12 passes every line check",
-   "pass": true,
-   "detail": ""
-  },
-  {
-   "id": "line.driver.greet-stranger.13",
-   "what": "line driver.greet-stranger.13 passes every line check",
    "pass": true,
    "detail": ""
   },
@@ -9453,36 +9386,6 @@
    "detail": ""
   },
   {
-   "id": "line.anyone.way-hals.01",
-   "what": "line anyone.way-hals.01 passes every line check",
-   "pass": true,
-   "detail": ""
-  },
-  {
-   "id": "line.anyone.way-hals.02",
-   "what": "line anyone.way-hals.02 passes every line check",
-   "pass": true,
-   "detail": ""
-  },
-  {
-   "id": "line.anyone.way-hals.03",
-   "what": "line anyone.way-hals.03 passes every line check",
-   "pass": true,
-   "detail": ""
-  },
-  {
-   "id": "line.anyone.way-hals.04",
-   "what": "line anyone.way-hals.04 passes every line check",
-   "pass": true,
-   "detail": ""
-  },
-  {
-   "id": "line.anyone.way-hals.05",
-   "what": "line anyone.way-hals.05 passes every line check",
-   "pass": true,
-   "detail": ""
-  },
-  {
    "id": "line.anyone.way-bus-stop.01",
    "what": "line anyone.way-bus-stop.01 passes every line check",
    "pass": true,
@@ -10470,7 +10373,7 @@
    "id": "cell.office_worker.greeting.owner",
    "what": "office_worker has at least 8 lines for greeting.owner",
    "pass": true,
-   "detail": "9"
+   "detail": "10"
   },
   {
    "id": "cell.office_worker.greeting.nowak",
@@ -10551,12 +10454,6 @@
    "detail": "[]"
   },
   {
-   "id": "cell.driver.greeting.stranger",
-   "what": "driver has at least 12 lines for greeting.stranger",
-   "pass": true,
-   "detail": "13"
-  },
-  {
    "id": "cell.driver.greeting.owner",
    "what": "driver has at least 8 lines for greeting.owner",
    "pass": true,
@@ -10630,7 +10527,7 @@
   },
   {
    "id": "cell.driver.extra",
-   "what": "driver has no lines for a situation it does not have (greeting.tommy)",
+   "what": "driver has no lines for a situation it does not have (greeting.stranger, greeting.tommy)",
    "pass": true,
    "detail": "[]"
   },
@@ -11292,13 +11189,13 @@
    "id": "pool.bumped@dock_worker",
    "what": "bumped@dock_worker keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 7 at dry morning stranger accent-limited=False never-police=True"
+   "detail": "worst 7 at dry morning stranger accent-limited=False never-police=False"
   },
   {
    "id": "pool.bumped@driver",
    "what": "bumped@driver keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 7 at dry morning stranger accent-limited=False never-police=False"
+   "detail": "worst 9 at dry morning owner accent-limited=False never-police=False"
   },
   {
    "id": "pool.bumped@father_walsh",
@@ -11346,7 +11243,7 @@
    "id": "pool.bumped@shopkeeper",
    "what": "bumped@shopkeeper keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 7 at dry morning stranger accent-limited=False never-police=True"
+   "detail": "worst 7 at dry morning stranger accent-limited=True never-police=False"
   },
   {
    "id": "pool.bumped@tradesman",
@@ -11370,7 +11267,7 @@
    "id": "pool.crime/face@dock_worker",
    "what": "crime/face@dock_worker keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 8 at dry morning None accent-limited=False never-police=True"
+   "detail": "worst 8 at dry morning None accent-limited=False never-police=False"
   },
   {
    "id": "pool.crime/face@driver",
@@ -11424,7 +11321,7 @@
    "id": "pool.crime/face@shopkeeper",
    "what": "crime/face@shopkeeper keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 8 at dry morning None accent-limited=False never-police=True"
+   "detail": "worst 8 at dry morning None accent-limited=True never-police=False"
   },
   {
    "id": "pool.crime/face@tradesman",
@@ -11448,7 +11345,7 @@
    "id": "pool.crime/noise@dock_worker",
    "what": "crime/noise@dock_worker keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 8 at dry morning None accent-limited=False never-police=True"
+   "detail": "worst 8 at dry morning None accent-limited=False never-police=False"
   },
   {
    "id": "pool.crime/noise@driver",
@@ -11526,7 +11423,7 @@
    "id": "pool.crime/shape@dock_worker",
    "what": "crime/shape@dock_worker keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 8 at dry morning None accent-limited=False never-police=True"
+   "detail": "worst 8 at dry morning None accent-limited=False never-police=False"
   },
   {
    "id": "pool.crime/shape@driver",
@@ -11580,7 +11477,7 @@
    "id": "pool.crime/shape@shopkeeper",
    "what": "crime/shape@shopkeeper keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 8 at dry morning None accent-limited=False never-police=True"
+   "detail": "worst 8 at dry morning None accent-limited=True never-police=False"
   },
   {
    "id": "pool.crime/shape@tradesman",
@@ -11604,7 +11501,7 @@
    "id": "pool.deed/after@dock_worker",
    "what": "deed/after@dock_worker keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 8 at dry morning None accent-limited=False never-police=True"
+   "detail": "worst 8 at dry morning None accent-limited=False never-police=False"
   },
   {
    "id": "pool.deed/after@driver",
@@ -11658,7 +11555,7 @@
    "id": "pool.deed/after@shopkeeper",
    "what": "deed/after@shopkeeper keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 8 at dry morning None accent-limited=False never-police=True"
+   "detail": "worst 8 at dry morning None accent-limited=True never-police=False"
   },
   {
    "id": "pool.deed/after@tradesman",
@@ -11682,7 +11579,7 @@
    "id": "pool.farewell@dock_worker",
    "what": "farewell@dock_worker keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 6 at dry morning None accent-limited=False never-police=True"
+   "detail": "worst 6 at dry morning None accent-limited=False never-police=False"
   },
   {
    "id": "pool.farewell@driver",
@@ -11736,7 +11633,7 @@
    "id": "pool.farewell@shopkeeper",
    "what": "farewell@shopkeeper keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 7 at dry morning None accent-limited=False never-police=True"
+   "detail": "worst 7 at dry morning None accent-limited=True never-police=False"
   },
   {
    "id": "pool.farewell@tradesman",
@@ -11760,7 +11657,7 @@
    "id": "pool.greeting/nowak@dock_worker",
    "what": "greeting/nowak@dock_worker keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 6 at dry night nowak accent-limited=False never-police=True"
+   "detail": "worst 6 at dry night nowak accent-limited=False never-police=False"
   },
   {
    "id": "pool.greeting/nowak@driver",
@@ -11796,7 +11693,7 @@
    "id": "pool.greeting/nowak@office_worker",
    "what": "greeting/nowak@office_worker keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 6 at dry evening nowak accent-limited=False never-police=True"
+   "detail": "worst 6 at dry afternoon nowak accent-limited=False never-police=False"
   },
   {
    "id": "pool.greeting/nowak@pensioner",
@@ -11814,7 +11711,7 @@
    "id": "pool.greeting/nowak@shopkeeper",
    "what": "greeting/nowak@shopkeeper keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 6 at dry evening nowak accent-limited=False never-police=True"
+   "detail": "worst 6 at dry evening nowak accent-limited=True never-police=False"
   },
   {
    "id": "pool.greeting/nowak@tradesman",
@@ -11832,7 +11729,7 @@
    "id": "pool.greeting/owner@dock_worker",
    "what": "greeting/owner@dock_worker keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 6 at dry afternoon owner accent-limited=False never-police=True"
+   "detail": "worst 6 at dry afternoon owner accent-limited=False never-police=False"
   },
   {
    "id": "pool.greeting/owner@driver",
@@ -11868,7 +11765,7 @@
    "id": "pool.greeting/owner@office_worker",
    "what": "greeting/owner@office_worker keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 6 at dry evening owner accent-limited=False never-police=True"
+   "detail": "worst 6 at dry evening owner accent-limited=False never-police=False"
   },
   {
    "id": "pool.greeting/owner@pensioner",
@@ -11880,7 +11777,7 @@
    "id": "pool.greeting/owner@shopkeeper",
    "what": "greeting/owner@shopkeeper keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 7 at dry afternoon owner accent-limited=False never-police=True"
+   "detail": "worst 7 at dry afternoon owner accent-limited=True never-police=False"
   },
   {
    "id": "pool.greeting/owner@tradesman",
@@ -11898,13 +11795,7 @@
    "id": "pool.greeting/stranger@dock_worker",
    "what": "greeting/stranger@dock_worker keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 7 at dry afternoon stranger accent-limited=False never-police=True"
-  },
-  {
-   "id": "pool.greeting/stranger@driver",
-   "what": "greeting/stranger@driver keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
-   "pass": true,
-   "detail": "worst 8 at dry morning stranger accent-limited=False never-police=False"
+   "detail": "worst 7 at dry afternoon stranger accent-limited=False never-police=False"
   },
   {
    "id": "pool.greeting/stranger@laundry_worker",
@@ -11934,7 +11825,7 @@
    "id": "pool.greeting/stranger@shopkeeper",
    "what": "greeting/stranger@shopkeeper keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 7 at dry afternoon stranger accent-limited=False never-police=True"
+   "detail": "worst 7 at dry afternoon stranger accent-limited=True never-police=False"
   },
   {
    "id": "pool.greeting/stranger@tradesman",
@@ -11958,7 +11849,7 @@
    "id": "pool.greeting/tom@dock_worker",
    "what": "greeting/tom@dock_worker keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 6 at dry night tom accent-limited=False never-police=True"
+   "detail": "worst 6 at dry night tom accent-limited=False never-police=False"
   },
   {
    "id": "pool.greeting/tom@driver",
@@ -12012,7 +11903,7 @@
    "id": "pool.greeting/tom@shopkeeper",
    "what": "greeting/tom@shopkeeper keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 6 at dry night tom accent-limited=False never-police=True"
+   "detail": "worst 6 at dry night tom accent-limited=True never-police=False"
   },
   {
    "id": "pool.greeting/tom@tradesman",
@@ -12054,7 +11945,7 @@
    "id": "pool.rain/in@dock_worker",
    "what": "rain/in@dock_worker keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 7 at drizzle morning None accent-limited=False never-police=True"
+   "detail": "worst 7 at drizzle morning None accent-limited=False never-police=False"
   },
   {
    "id": "pool.rain/in@driver",
@@ -12108,7 +11999,7 @@
    "id": "pool.rain/in@shopkeeper",
    "what": "rain/in@shopkeeper keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 7 at drizzle morning None accent-limited=False never-police=True"
+   "detail": "worst 7 at drizzle morning None accent-limited=True never-police=False"
   },
   {
    "id": "pool.rain/in@tradesman",
@@ -12132,7 +12023,7 @@
    "id": "pool.rain/starts@dock_worker",
    "what": "rain/starts@dock_worker keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 7 at drizzle morning None accent-limited=False never-police=True"
+   "detail": "worst 7 at drizzle morning None accent-limited=False never-police=False"
   },
   {
    "id": "pool.rain/starts@driver",
@@ -12186,7 +12077,7 @@
    "id": "pool.rain/starts@shopkeeper",
    "what": "rain/starts@shopkeeper keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 7 at drizzle morning None accent-limited=False never-police=True"
+   "detail": "worst 7 at drizzle morning None accent-limited=True never-police=False"
   },
   {
    "id": "pool.rain/starts@tradesman",
@@ -12210,7 +12101,7 @@
    "id": "pool.way/ask@dock_worker",
    "what": "way/ask@dock_worker keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 8 at dry morning None accent-limited=False never-police=True"
+   "detail": "worst 8 at dry morning None accent-limited=False never-police=False"
   },
   {
    "id": "pool.way/ask@driver",
@@ -12264,7 +12155,7 @@
    "id": "pool.way/ask@shopkeeper",
    "what": "way/ask@shopkeeper keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 8 at dry morning None accent-limited=False never-police=True"
+   "detail": "worst 8 at dry morning None accent-limited=True never-police=False"
   },
   {
    "id": "pool.way/ask@tradesman",
@@ -12396,7 +12287,7 @@
    "id": "group.reads_rung.greeting/owner@office_worker",
    "what": "greeting/owner@office_worker reads out its rung (at least half the lines carry the word)",
    "pass": true,
-   "detail": "9 of 9"
+   "detail": "10 of 10"
   },
   {
    "id": "group.reads_rung.greeting/owner@pensioner",
@@ -13221,12 +13112,6 @@
    "detail": ""
   },
   {
-   "id": "group.distinct.greeting/stranger@driver",
-   "what": "no two lines in greeting/stranger@driver say the same thing (a shared 4-word run, or three-quarters of the content words)",
-   "pass": true,
-   "detail": ""
-  },
-  {
    "id": "group.distinct.greeting/stranger@laundry_worker",
    "what": "no two lines in greeting/stranger@laundry_worker say the same thing (a shared 4-word run, or three-quarters of the content words)",
    "pass": true,
@@ -13620,7 +13505,7 @@
    "id": "kinds.person.danica",
    "what": "danica (people.json or hook-cast.json) has exactly one kind, or a stated reason for none",
    "pass": true,
-   "detail": "['casual_worker']"
+   "detail": "['office_worker']"
   },
   {
    "id": "kinds.person.danny",
@@ -13794,7 +13679,7 @@
    "id": "kinds.person.petra",
    "what": "petra (people.json or hook-cast.json) has exactly one kind, or a stated reason for none",
    "pass": true,
-   "detail": "['dock_worker']"
+   "detail": "['office_worker']"
   },
   {
    "id": "kinds.person.rita",
@@ -14163,6 +14048,84 @@
    "detail": ""
   },
   {
+   "id": "kinds.rung_reachable.shopkeeper",
+   "what": "every greeting rung shopkeeper has lines for is one a member can stand at (floors from rules.json)",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "kinds.rung_reachable.dock_worker",
+   "what": "every greeting rung dock_worker has lines for is one a member can stand at (floors from rules.json)",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "kinds.rung_reachable.pensioner",
+   "what": "every greeting rung pensioner has lines for is one a member can stand at (floors from rules.json)",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "kinds.rung_reachable.office_worker",
+   "what": "every greeting rung office_worker has lines for is one a member can stand at (floors from rules.json)",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "kinds.rung_reachable.driver",
+   "what": "every greeting rung driver has lines for is one a member can stand at (floors from rules.json)",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "kinds.rung_reachable.laundry_worker",
+   "what": "every greeting rung laundry_worker has lines for is one a member can stand at (floors from rules.json)",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "kinds.rung_reachable.tradesman",
+   "what": "every greeting rung tradesman has lines for is one a member can stand at (floors from rules.json)",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "kinds.rung_reachable.night_shift",
+   "what": "every greeting rung night_shift has lines for is one a member can stand at (floors from rules.json)",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "kinds.rung_reachable.casual_worker",
+   "what": "every greeting rung casual_worker has lines for is one a member can stand at (floors from rules.json)",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "kinds.rung_reachable.ron",
+   "what": "every greeting rung ron has lines for is one a member can stand at (floors from rules.json)",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "kinds.rung_reachable.darren",
+   "what": "every greeting rung darren has lines for is one a member can stand at (floors from rules.json)",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "kinds.rung_reachable.father_walsh",
+   "what": "every greeting rung father_walsh has lines for is one a member can stand at (floors from rules.json)",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "kinds.rung_reachable.june",
+   "what": "every greeting rung june has lines for is one a member can stand at (floors from rules.json)",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
    "id": "kinds.tommy_few",
    "what": "Tommy is the last rung and canon keeps it for two or three people: lines for it exist in three kinds only",
    "pass": true,
@@ -14182,9 +14145,15 @@
   },
   {
    "id": "places.same_set",
-   "what": "lines.json's places are the thirty-five the homes name",
+   "what": "lines.json's places are the thirty-four the homes name and the built street has",
    "pass": true,
-   "detail": "35 vs 35"
+   "detail": "34 vs 34"
+  },
+  {
+   "id": "places.held_have_no_directions",
+   "what": "a place held until Jafar places it (Hal's coin shop) has no directions and is in no line's words",
+   "pass": true,
+   "detail": "[]"
   },
   {
    "id": "places.where.allotments",
@@ -14367,18 +14336,6 @@
    "detail": "5 lines, 5 name it"
   },
   {
-   "id": "places.where.hals",
-   "what": "hals is where its home says (x 39.0, z -7.5), its class and distance are right",
-   "pass": true,
-   "detail": "{'id': 'hals', 'names': [\"Hal's\"], 'x_m': 39.0, 'z_m': -7.5, 'class': 'street', 'far': False, 'src': 'hook-cast.json places.hals_shop'}"
-  },
-  {
-   "id": "places.directions.hals",
-   "what": "hals has at least five lines of directions, and at least two of them name it",
-   "pass": true,
-   "detail": "5 lines, 4 name it"
-  },
-  {
    "id": "places.where.harbour_board",
    "what": "harbour_board is where its home says (x -30.0, z 110.0), its class and distance are right",
    "pass": true,
@@ -14442,7 +14399,7 @@
    "id": "places.where.newsagent",
    "what": "newsagent is where its home says (x 32.0, z -7.5), its class and distance are right",
    "pass": true,
-   "detail": "{'id': 'newsagent', 'names': [\"the newsagent's\", 'the paper shop'], 'x_m': 32.0, 'z_m': -7.5, 'class': 'street', 'far': False, 'src': 'hook-cast.json places.pension_counter'}"
+   "detail": "{'id': 'newsagent', 'names': [\"the newsagent's\", 'the paper shop'], 'x_m': 32.0, 'z_m': -7.5, 'class': 'street', 'far': False, 'src': \"hook-cast.json places.pension_counter (x 32); the built unit is the newsagent and tobacconist at x 36 to 42 (RULINGS 3 Oct; DECISIONS 3 Oct), so the directions say 'opposite the grocer's' (bay 5, x 33 to 39), true at both\"}"
   },
   {
    "id": "places.directions.newsagent",
@@ -14715,6 +14672,12 @@
    "detail": ""
   },
   {
+   "id": "rules.excluded_lines",
+   "what": "Sheila and the dispatcher are kept from the two office-worker greetings about their own desks ('Do you have a card?', 'Is the radio still crackling?')",
+   "pass": true,
+   "detail": "{'speakers': ['lena', 'zlata'], 'lines': ['office_worker.greet-owner.04', 'office_worker.greet-nowak.05'], 'why': \"Sheila keeps the books and Pauline works the radio, so 'Do you have a card?' and 'Is the radio still crackling?' would be said to him by the very people it is about (canon review, 13 October, L4)\"}"
+  },
+  {
    "id": "rules.ron_darren_start_at_nowak",
    "what": "Ron and Darren begin at Nowak: they know his name from the start",
    "pass": true,
@@ -14856,7 +14819,7 @@
    "id": "walk.stress.neighbours_gap",
    "what": "with eighty passers-by, neighbour lines are never closer than 45 s",
    "pass": true,
-   "detail": "550.0"
+   "detail": "None"
   },
   {
    "id": "walk.afternoon.holds",
@@ -14868,13 +14831,13 @@
    "id": "walk.night.holds",
    "what": "the night walk: lines are heard, no repeat inside a floor, no minute over six outside the crime",
    "pass": true,
-   "detail": "heard 18"
+   "detail": "heard 19"
   },
   {
    "id": "walk.teeth",
    "what": "the test has teeth: the same busy walk with the variety and cooldown rules switched off shows repeats and over-close neighbour talk",
    "pass": true,
-   "detail": "8 same-speaker repeats, neighbour gap 5.0, busiest 10"
+   "detail": "11 same-speaker repeats, neighbour gap 5.0, busiest 8"
   },
   {
    "id": "rule.crime_fades_neighbour_talk",
@@ -14931,6 +14894,12 @@
    "detail": "[]"
   },
   {
+   "id": "rule.excluded_lines_never_picked",
+   "what": "Sheila and the dispatcher are never picked the two lines about their own desks (240 picks), and another clerk still is",
+   "pass": true,
+   "detail": "[]; others 8"
+  },
+  {
    "id": "rule.not_local_voice_no_dialect",
    "what": "Nora and the Tangs are never picked a line in local dialect (720 picks)",
    "pass": true,
@@ -14946,7 +14915,7 @@
    "id": "content.canon_gate",
    "what": "tools/canon-gate.py is clean over production/cloud-week/lines/lines.json, production/cloud-week/lines/rules.json, production/cloud-week/lines/NOTES.md",
    "pass": true,
-   "detail": "canon-gate: clean - 0 finding(s) in 3 file(s), 3337 line(s) examined, 13 era term(s) and 45 brand token(s) screened"
+   "detail": "canon-gate: clean - 0 finding(s) in 3 file(s), 3319 line(s) examined, 13 era term(s) and 45 brand token(s) screened"
   },
   {
    "id": "content.notes_no_em_dash_or_italics",
@@ -15174,13 +15143,55 @@
    "id": "fault.a_group_starved_by_conditions",
    "what": "seeded fault caught: a group starved by conditions",
    "pass": true,
-   "detail": "by pool.greeting/stranger@driver"
+   "detail": "by pool.greeting/stranger@shopkeeper"
   },
   {
    "id": "fault.a_line_for_a_situation_the_kind_does_not_have",
    "what": "seeded fault caught: a line for a situation the kind does not have",
    "pass": true,
    "detail": "by cell.ron.extra"
+  },
+  {
+   "id": "fault.a_stranger_greeting_for_a_kind_none_of_whose_members_can_be_a_stranger_to_him",
+   "what": "seeded fault caught: a stranger greeting for a kind none of whose members can be a stranger to him",
+   "pass": true,
+   "detail": "by kinds.rung_reachable.driver"
+  },
+  {
+   "id": "fault.what_the_street_thinks_of_him_in_a_greeting",
+   "what": "seeded fault caught: what the street thinks of him, in a greeting",
+   "pass": true,
+   "detail": "by line.dock_worker.greet-nowak.01"
+  },
+  {
+   "id": "fault.an_invitation_to_tea_in_a_pensioner_s_mouth",
+   "what": "seeded fault caught: an invitation to tea in a pensioner's mouth",
+   "pass": true,
+   "detail": "by line.pensioner.greet-owner.01"
+  },
+  {
+   "id": "fault.a_street_name_the_atlas_marks_proposal",
+   "what": "seeded fault caught: a street name the atlas marks proposal",
+   "pass": true,
+   "detail": "by doc.no_proposal_street_names"
+  },
+  {
+   "id": "fault.directions_to_a_place_with_no_unit_on_the_built_street_hal_s",
+   "what": "seeded fault caught: directions to a place with no unit on the built street (Hal's)",
+   "pass": true,
+   "detail": "by places.held_have_no_directions"
+  },
+  {
+   "id": "fault.sheila_given_back_the_line_about_her_own_desk",
+   "what": "seeded fault caught: Sheila given back the line about her own desk",
+   "pass": true,
+   "detail": "by rules.excluded_lines"
+  },
+  {
+   "id": "fault.sheila_given_back_the_line_about_her_own_desk_in_the_picker",
+   "what": "seeded fault caught: Sheila given back the line about her own desk, in the picker",
+   "pass": true,
+   "detail": "by rule.excluded_lines_never_picked"
   },
   {
    "id": "fault.a_place_moved",

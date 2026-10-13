@@ -28,6 +28,7 @@ LINES = {
         "The new owner. I've seen you about.",
         "Welcome to the street, new owner. Bring a sense of humour.",
         "New owner. You'd best get under cover. @wet",
+        "The new owner. Mind the paperwork, it breeds.",
     ],
     "greeting.nowak": [
         "Mr Nowak. Good morning. @m",

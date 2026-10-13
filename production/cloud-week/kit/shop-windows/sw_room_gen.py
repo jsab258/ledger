@@ -344,10 +344,11 @@ class GRoom(S.Room):
         base[hole] = (34, 24, 16)
         Image.fromarray(np.clip(base, 0, 255).astype(np.uint8)).save(os.path.join(self.tex, "pegboard.png"))
 
-    def hang_tools(self, fid, side, items, y_range, z_range, gap=(0.04, 0.06), max_off=0.10, margin=0.03, tag_prefix="R"):
-        """Hang tools flat on a pegboard in ROWS (Rita's lesson 10): each tool turned so its thinnest side is against the board (and, by `orient`, its long side along the wall 'h' or up it 'v'),
-        at 0.9 to 1.0 of its size (a tool and the board together stand at most `max_off` off the wall, so a thick one is scaled down to fit, never below 0.8), packed first-fit-decreasing into rows
-        across the full width, each row's tools hung from one line (their tops level), gaps `gap`, each row centred. `items` = [(asset, count, orient), ...]. Returns the rows' records."""
+    def hang_tools(self, fid, side, items, y_range, z_range, gap=(0.04, 0.06), max_off=0.10, margin=0.03, tag_prefix="R", min_scale=0.75, tall=0.6):
+        """Hang tools flat on a pegboard in ROWS (Rita's lesson 10): each tool turned so its thinnest side is against the board (and, by `orient`, its long side along the wall 'h' or up it 'v'), at 1.0 of its
+        size, or smaller (never below `min_scale`) where a thick one would stand more than `max_off` off the wall with the board; the tall ones (taller than `tall`: the brooms) hang in columns from the two
+        ends, the rest in rows across what is left, filled in order of height so the rows are of one height, each row's tools hung from one line (their tops level), gaps `gap`, each row centred.
+        `items` = [(asset, count, orient), ...]. Returns the rows' records."""
         rnd = self.rnd
         t_front = (-W / 2 + 0.02) if side == "left" else (W / 2 - 0.02)
         tools = []
@@ -364,43 +365,58 @@ class GRoom(S.Room):
                     rot = tuple(qm.to_euler("XYZ"))
                 d2 = self.dims(asset, rot)
                 s_ = min(1.0, (max_off - 0.02 - 0.004) / d2.x)
-                if s_ < 0.8 - 1e-9:
+                if s_ < min_scale - 1e-9:
                     self.notes.append("%s does not hang flat within %.2f of the wall (needs %.3f): left off %s" % (asset, max_off, d2.x, fid))
                     continue
                 tools.append({"asset": asset, "rot": rot, "s": s_, "w": d2.y * s_, "h": d2.z * s_})
-        width = (y_range[1] - y_range[0]) - 2 * margin
-        tools.sort(key=lambda t: (-t["w"] if t["w"] > 0.3 else 0.0, -t["h"]))
+        y_lo, y_hi = y_range[0] + margin, y_range[1] - margin
+        anc = ("max", "c", "c") if side == "right" else ("min", "c", "c")
+        talls = [t for t in tools if t["h"] > tall]
+        rest = [t for t in tools if t["h"] <= tall]
+        # the tall ones in columns at the two ends (alternately), hung from the board's top line
+        z_top0 = z_range[1] - 0.02
+        recs = []
+        ya, yb = y_lo, y_hi
+        for i, t in enumerate(talls):
+            if i % 2 == 0:
+                yc = ya + t["w"] / 2
+                ya += t["w"] + 0.05
+            else:
+                yc = yb - t["w"] / 2
+                yb -= t["w"] + 0.05
+            self.place(t["asset"], (t_front, yc, z_top0 - t["h"] / 2), rot=t["rot"], scale=t["s"], fixture=fid, anchor=anc, tag="%sC%d" % (tag_prefix, i + 1))
+        if talls:
+            recs.append({"tag": "%sC" % tag_prefix, "z_top": z_top0, "n": len(talls), "span": round(sum(t["w"] for t in talls), 3), "columns": True})
+        width = yb - ya
+        rest.sort(key=lambda t: -t["h"])
         rows = []
-        for t in sorted(tools, key=lambda t: -t["w"]):
-            for r_ in rows:
-                if r_["w"] + t["w"] + (gap[1] if r_["tools"] else 0) <= width:
-                    r_["tools"].append(t)
-                    r_["w"] += t["w"] + (gap[1] if len(r_["tools"]) > 1 else 0)
-                    break
+        for t in rest:
+            if rows and rows[-1]["w"] + t["w"] + gap[1] <= width:
+                rows[-1]["tools"].append(t)
+                rows[-1]["w"] += t["w"] + gap[1]
             else:
                 rows.append({"tools": [t], "w": t["w"]})
         for r_ in rows:
             r_["h"] = max(t["h"] for t in r_["tools"])
-        rows.sort(key=lambda r_: -r_["h"])
-        z = z_range[1] - 0.02
-        recs = []
+        z = z_top0
         for k, r_ in enumerate(rows):
             if z - r_["h"] < z_range[0] - 0.12:
-                self.notes.append("%s: %d tools do not fit the board's rows and are left off" % (fid, len(r_["tools"])))
+                self.notes.append("%s: %d tools do not fit the board's rows and are left off" % (fid, sum(len(x["tools"]) for x in rows[k:])))
                 break
             gaps = [rnd.uniform(*gap) for _ in range(len(r_["tools"]) - 1)]
             total = sum(t["w"] for t in r_["tools"]) + sum(gaps)
-            y = y_range[0] + margin + (width - total) / 2.0
+            y = ya + (width - total) / 2.0
             tag = "%s%d" % (tag_prefix, k + 1)
             n = 0
+            r_["tools"].sort(key=lambda t: rnd.random())
+            gaps = [rnd.uniform(*gap) for _ in range(len(r_["tools"]) - 1)]
+            total = sum(t["w"] for t in r_["tools"]) + sum(gaps)
+            y = ya + (width - total) / 2.0
             for i, t in enumerate(r_["tools"]):
-                zc = z - t["h"] / 2.0
-                anc = ("max", "c", "c") if side == "right" else ("min", "c", "c")
-                self.place(t["asset"], (t_front, y + t["w"] / 2, zc), rot=t["rot"], scale=t["s"], fixture=fid, anchor=anc, tag=tag)
+                self.place(t["asset"], (t_front, y + t["w"] / 2, z - t["h"] / 2), rot=t["rot"], scale=t["s"], fixture=fid, anchor=anc, tag=tag)
                 n += 1
                 y += t["w"] + (gaps[i] if i < len(gaps) else 0.0)
-            self.count_left["#hung"] = self.count_left.get("#hung", 0) + n
-            recs.append({"tag": tag, "z_top": z, "n": n, "span": round(total, 3)})
+            recs.append({"tag": tag, "z_top": z, "n": n, "span": round(total, 3), "region": [round(ya, 3), round(yb, 3)]})
             z -= r_["h"] + rnd.uniform(0.05, 0.08)
         self.rows[fid] = recs
         return recs
@@ -621,9 +637,14 @@ def layout_ironmonger(r):
                   ("combination_wrench", 5, "v"), ("pliers", 4, "v"), ("tongue_groove_pliers", 3, "v"), ("screwdriver", 6, "v"), ("flathead_screwdriver", 5, "v"), ("ratchet_wrench", 3, "v"), ("hatchet", 2, "v"), ("screwdrivers_02", 2, "v")]
     r.pegboard_panels("I-left-pegboard", "left")
     r.hang_tools("I-left-pegboard", "left", left_items, fx["I-left-pegboard"]["y"], fx["I-left-pegboard"]["z"])
-    right_items = [("wooden_broom", 3, "v"), ("trowel_01", 8, "v"), ("garden_gloves_01", 8, "v"), ("dustpan", 4, "v"), ("mousetrap", 14, "v")]
+    right_items = [("trowel_01", 8, "v"), ("garden_gloves_01", 8, "v"), ("dustpan", 4, "v"), ("mousetrap", 14, "v")]
     r.pegboard_panels("I-right-pegboard", "right")
     r.hang_tools("I-right-pegboard", "right", right_items, fx["I-right-pegboard"]["y"], fx["I-right-pegboard"]["z"], max_off=0.10)
+    # the two wooden brooms hang on the wall itself past the end of the board (y 3.5 and 3.9): a broom's head is 0.113 thick, which on a board 0.02 off the wall would stand 0.137 out; at 0.82 and
+    # hung on the wall it stands 0.093 (the side wall's tolerated 0.10)
+    for k, yb in enumerate((3.55, 3.95)):
+        r.place("wooden_broom", (W / 2 - 0.002, yb, 0.06), rot=(0, 0, math.radians(-90)), scale=0.82, fixture="I-right-pegboard", anchor=("max", "c", "min"), tag="broom")
+    ctx_notes.append("the brooms (2 of the room's pieces on the right wall) hang on the wall past the board's end at 0.82: the head is 0.113 thick")
     # a door mat? the target gives none: not built
 
 

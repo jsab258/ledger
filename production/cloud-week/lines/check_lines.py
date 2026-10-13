@@ -342,6 +342,8 @@ REL = [
 
 def way_failures(text, pid, names):
     """Where the words say a place is, against where its home says it is."""
+    if pid not in HOME_PLACES:
+        return ["directions to %s, which is not a place on the built street (held places have none)" % pid]
     fails = []
     low = text.lower().replace("\u2019", "'")
     x, z = HOME_PLACES[pid]

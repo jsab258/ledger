@@ -3483,8 +3483,8 @@
    },
    {
     "t": 1394.3,
-    "id": "office_worker.greet-owner.07",
-    "text": "The new owner. I've seen you about.",
+    "id": "office_worker.greet-owner.08",
+    "text": "Welcome to the street, new owner. Bring a sense of humour.",
     "kind": "office_worker",
     "speaker": "lena",
     "situation": "greeting.owner",
@@ -3496,18 +3496,18 @@
     "waited": 2.1
    },
    {
-    "t": 1398.7,
+    "t": 1399.3,
     "id": "laundry_worker.bumped.05",
     "text": "Now then, hands to yourself.",
     "kind": "laundry_worker",
     "speaker": "katarina",
     "situation": "bumped",
     "heard": true,
-    "dist": 3.9,
+    "dist": 3.8,
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
-    "waited": 0.0
+    "waited": 0.6
    },
    {
     "t": 1440.0,

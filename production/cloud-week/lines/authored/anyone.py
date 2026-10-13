@@ -201,7 +201,7 @@ WAY = {
         "That's in the Parade. A long walk, up and east.",
         "The Tivoli's a good walk. Up the hill, then east.",
         "The pictures? The Tivoli. Up the top and east, the Parade.",
-        "The Tivoli, in the Parade. Up the hill, a long way east.",
+        "Tivoli, in the Parade. Up the hill, a long way east.",
     ],
     "fairview_chapel": [
         "Fairview Chapel? A long way up the hill.",

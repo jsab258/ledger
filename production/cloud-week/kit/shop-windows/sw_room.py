@@ -37,6 +37,7 @@ RISER_D = 0.20
 ALLOW_RISER = ("vintage_video_camera", "alarm_clock_01", "cassette_player", "portable_cassette_player", "binoculars", "vintage_binocular", "mantel_clock_01", "brass_vase_03", "hand_plane_no4", "Camera_01")
 ALLOW_FRONT = ("cassette_player", "portable_cassette_player", "alarm_clock_01", "mantel_clock_01")
 GLASSY = ("glass", "lense", "lens_glass")
+KEEP_BLEND = {"wooden_broom": ("bristles",), "plastic_broom": ("bristles",)}       # batch A (13 Oct): the brooms' bristles are geometry with a blended material: not left out as glass
 
 
 def srgb_to_lin(c):
@@ -225,6 +226,9 @@ class Room:
                 bpy.data.objects.remove(o, do_unlink=True)
 
         def is_glassy(m):
+            if m is not None and any(k in m.name.lower() for k in KEEP_BLEND.get(asset, ())):
+                m.surface_render_method = "DITHERED"          # a model whose blended material is real geometry (the brooms' bristles), kept: dithered, as the display's alpha materials are
+                return False
             return m is not None and (getattr(m, "surface_render_method", "") == "BLENDED" or any(g in m.name.lower() for g in GLASSY))
         # a mesh whose every slot is glass or alpha goes; in a mesh that mixes them (the clocks' faces) the glass faces are cut out
         keep = []
