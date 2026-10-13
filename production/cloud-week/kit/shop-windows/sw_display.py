@@ -53,8 +53,8 @@ ROT = {
     "magnifying_glass_01": (math.pi / 2, 0.0, 0.0),
     "round_spectacles": (0.0, 0.0, 0.0),
     "vintage_lighter": (math.pi / 2, 0.0, 0.0),                 # lying on its back
-    "pocket_watch": (math.pi / 2, 0.0, 0.0),                    # lying face up, crown to the back
-    "vintage_pocket_watch": (math.pi / 2, 0.0, 0.0),
+    "pocket_watch": (-math.pi / 2, 0.0, 0.0),                   # lying face up (try 1 stood them; a quarter turn the other way showed the case's back), crown to the back
+    "vintage_pocket_watch": (-math.pi / 2, 0.0, 0.0),
     "cigarette_case": (0.0, 0.0, 0.0),
 }
 # sizes (largest dimension, m) where the approved front-row loop sized a piece, and where the target gives one; everything else stands at its real size (scale 1.0)

@@ -673,10 +673,10 @@ class Room:
         for i, (a, xx) in enumerate(zip(["pocket_watch"] * 3 + ["vintage_pocket_watch"] * 3, np.linspace(cx0 + 0.5, cx1 - 0.7, 6))):
             sc_ = 0.06 / max(self.dims(a))
             s_ = 0.14 + 0.05 * (i % 2)
-            # the model stands upright; laid face up on the slope: turn it about x by 90 degrees and then by the rake
+            # the model stands upright; laid face up on the slope: a quarter turn about x (face up), then the rake's 25 degrees
             ypos = yf + s_ * math.cos(th)
             zpos = zf + s_ * math.sin(th)
-            rot = (math.pi / 2 + th, 0.0, rnd.uniform(-0.4, 0.4))
+            rot = (th - math.pi / 2, 0.0, rnd.uniform(-0.4, 0.4))
             ext = self.place(a, (xx, ypos, zpos), rot=rot, scale=sc_, fixture="R-back-counter", anchor=("c", "c", "min"))
         # the till at the counter's right end, on the glass top
         s = 0.42 / max(self.dims("CashRegister_01"))

@@ -2200,7 +2200,7 @@
      {
       "id": "R-back-stock",
       "surface": "back",
-      "what": "the stock wall: five tiers of 25 mm boards 0.30 deep, filled shoulder to shoulder from the left wall to x 1.35, a ticket on every piece; the lowest two tiers only at the ends, the counter standing in front of the middle; the wall from x 1.35 to the back door's frame (1.45) is plain, the door's frame runs to x 2.40, and the strip x 2.40 to 2.6 is plain wall",
+      "what": "the stock wall: five tiers of 25 mm boards 0.30 deep, filled shoulder to shoulder, every piece at 0.9 to 1.0 of its modelled size (never scaled up), a ticket on every piece; the lowest two tiers only at the ends, the counter standing in front of the middle; the top tier (z 2.05) over the two ends only (x -2.6 to -1.9 and 0.9 to 1.35): over the television sets the wall is open to the ceiling; the wall from x 1.35 to the back door's frame (1.45) is plain, the door's frame runs to x 2.40, and the strip x 2.40 to 2.6 is plain wall [13 Oct, from the try 1 reviews]",
       "depth_m": 0.3,
       "x": [
        -2.6,
@@ -2216,14 +2216,14 @@
        0.5,
        0.85,
        1.35,
-       1.7,
+       1.8,
        2.05
       ]
      },
      {
       "id": "R-back-tv-tiers",
       "surface": "back",
-      "what": "the two tiers above the counter (z 1.35 and 1.70, x -1.90 to 0.90) are 0.35 deep boards for the four television sets (television_02 is 0.35 deep at its size; 0.35 stays inside the 20 px budget at the card's middle): a named exception to the 0.30 shelf rule",
+      "what": "the two tiers above the counter (z 1.35 and 1.80, 0.45 apart, x -1.90 to 0.90) are 0.35 deep boards for the four television sets at their real size (television_02 is 0.35 deep and 0.41 high; 0.35 stays inside the 20 px budget at the card's middle): a named exception to the 0.30 shelf rule [13 Oct, from the try 1 reviews]",
       "depth_m": 0.35,
       "x": [
        -1.9,
@@ -2232,12 +2232,12 @@
       "y": null,
       "z": [
        1.35,
-       2.05
+       2.21
       ],
       "kind": "shelf_unit_deep",
       "tiers": [
        1.35,
-       1.7
+       1.8
       ]
      },
      {
@@ -2262,7 +2262,7 @@
      {
       "id": "R-back-counter",
       "surface": "back",
-      "what": "the staff counter, glass-topped case on a velvet bed, against the wall (0.6 deep, 1.05 high), 2.8 m long; notices on its front",
+      "what": "the staff counter, glass-topped case on a velvet bed, against the wall (0.6 deep, 1.05 high), 2.8 m long; notices on its front [13 Oct, from the try 1 reviews] The velvet bed is raked 25 degrees up toward the back so the jewellery shows as rings; the CASH LOANS card hangs on the back wall above the counter (z 1.075 to 1.315), the tested-goods card stays on the counter's front.",
       "depth_m": 0.6,
       "x": [
        -1.9,
@@ -2294,7 +2294,7 @@
      {
       "id": "R-left-board",
       "surface": "left",
-      "what": "pledge board: pegboard panels and hung boards over the whole left wall (0.3 to 4.2 back, 0.45 to 2.15 up), 0.08 deep: ticketed small goods flat to it, wall clocks and framed pictures; the notices hang on it",
+      "what": "pledge board: pegboard panels and hung boards over the whole left wall (0.3 to 4.2 back, 0.45 to 2.15 up), 0.08 deep: ticketed small goods flat to it, wall clocks and framed pictures; the notices hang on it [13 Oct, from the try 1 reviews] Covered with goods at real size and at most 0.08 off the wall: 5 framed pictures, 2 mirrors, 6 clocks, 2 ukuleles, the two notices and 40 watch-and-chain cards (at least 60 per cent of the board).",
       "depth_m": 0.08,
       "x": null,
       "y": [
@@ -2327,7 +2327,7 @@
      {
       "id": "R-right-board",
       "surface": "right",
-      "what": "tools hung flat on pegboard panels over the right wall's far part (1.3 to 4.2 back, 0.45 to 2.15 up), 0.08 deep",
+      "what": "tools hung flat on pegboard panels over the right wall's far part (1.3 to 4.2 back, 0.45 to 2.15 up), 0.08 deep [13 Oct, from the try 1 reviews] Every tool's count doubled (pipe_wrench 2, adjustable_wrench 4, combination_wrench 6, pliers 6, handsaw_wood 4, cross_pein_hammer 4) at real size. The review asks for at least 60 per cent of the board covered; doubled counts of these tools reach about 19 per cent: named in the notes.",
       "depth_m": 0.08,
       "x": null,
       "y": [
@@ -2378,8 +2378,8 @@
      {
       "id": "R-ceiling-tubes",
       "surface": "ceiling",
-      "what": "three T12 battens in slim fittings",
-      "depth_m": 0.045,
+      "what": "three T12 battens in slim fittings, the fitting and the diffuser 0.025 deep in all [13 Oct, from the try 1 reviews]",
+      "depth_m": 0.025,
       "x": [
        -0.75,
        0.75
@@ -2389,7 +2389,7 @@
        3.1
       ],
       "z": [
-       2.355,
+       2.375,
        2.4
       ],
       "kind": "light"
@@ -2405,21 +2405,21 @@
      },
      {
       "model": "boombox",
-      "n": 3,
+      "n": 1,
       "on": "R-back-stock",
       "size_m": null,
       "note": "mark blanked as `inventory.polyhaven[boombox].marks` says"
      },
      {
       "model": "cassette_player",
-      "n": 3,
+      "n": 2,
       "on": "R-back-stock",
       "size_m": null,
       "note": "maker's name painted out"
      },
      {
       "model": "portable_cassette_player",
-      "n": 4,
+      "n": 3,
       "on": "R-back-stock",
       "size_m": null,
       "note": "maker's name painted out"
@@ -2433,7 +2433,7 @@
      },
      {
       "model": "vintage_video_camera",
-      "n": 2,
+      "n": 3,
       "on": "R-back-stock",
       "size_m": null,
       "note": "mark blanked as `inventory.polyhaven[vintage_video_camera].marks` says"
@@ -2447,7 +2447,7 @@
      },
      {
       "model": "binoculars",
-      "n": 1,
+      "n": 2,
       "on": "R-back-stock",
       "size_m": null,
       "note": ""
@@ -2467,20 +2467,6 @@
       "note": ""
      },
      {
-      "model": "brass_vase_01",
-      "n": 2,
-      "on": "R-back-stock",
-      "size_m": null,
-      "note": ""
-     },
-     {
-      "model": "brass_vase_02",
-      "n": 1,
-      "on": "R-back-stock",
-      "size_m": null,
-      "note": ""
-     },
-     {
       "model": "brass_vase_03",
       "n": 2,
       "on": "R-back-stock",
@@ -2489,14 +2475,14 @@
      },
      {
       "model": "filmstrip_projector_8mm",
-      "n": 2,
+      "n": 1,
       "on": "R-back-stock",
       "size_m": null,
       "note": "mark blanked as `inventory.polyhaven[filmstrip_projector_8mm].marks` says"
      },
      {
       "model": "metal_toolbox",
-      "n": 2,
+      "n": 1,
       "on": "R-back-stock",
       "size_m": null,
       "note": ""
@@ -2553,21 +2539,21 @@
      },
      {
       "model": "pipe_wrench",
-      "n": 1,
+      "n": 2,
       "on": "R-right-board",
       "size_m": null,
       "note": "mark blanked as `inventory.polyhaven[pipe_wrench].marks` says"
      },
      {
       "model": "cross_pein_hammer",
-      "n": 2,
+      "n": 4,
       "on": "R-right-board",
       "size_m": null,
       "note": ""
      },
      {
       "model": "handsaw_wood",
-      "n": 2,
+      "n": 4,
       "on": "R-right-board",
       "size_m": null,
       "note": ""
@@ -2581,21 +2567,21 @@
      },
      {
       "model": "adjustable_wrench",
-      "n": 2,
+      "n": 4,
       "on": "R-right-board",
       "size_m": null,
       "note": "mark blanked as `inventory.polyhaven[adjustable_wrench].marks` says"
      },
      {
       "model": "pliers",
-      "n": 3,
+      "n": 6,
       "on": "R-right-board",
       "size_m": null,
       "note": ""
      },
      {
       "model": "combination_wrench",
-      "n": 3,
+      "n": 6,
       "on": "R-right-board",
       "size_m": null,
       "note": ""
@@ -2631,17 +2617,39 @@
      },
      {
       "model": "wall_clock",
-      "n": 2,
+      "n": 6,
       "on": "R-left-board",
-      "size_m": 0.3,
-      "note": "hung flat; dial maker mark painted out"
+      "size_m": null,
+      "note": "hung flat at real size (0.32); dial maker mark painted out [13 Oct, from the try 1 reviews]"
      },
      {
       "model": "hanging_picture_frame_02",
+      "n": 5,
+      "on": "R-left-board",
+      "size_m": null,
+      "note": "framed pictures hung flat at real size (0.75 x 0.5); the picture replaced with the project's own print (a crop of a CC0 Poly Haven harbour HDRI) [13 Oct, from the try 1 reviews]"
+     },
+     {
+      "model": "ornate_mirror_01",
       "n": 2,
       "on": "R-left-board",
       "size_m": null,
-      "note": "framed pictures hung flat; the picture replaced with the project's own invented print"
+      "note": "hung flat at real size (0.49 x 0.74) [13 Oct, from the try 1 reviews]"
+     },
+     {
+      "model": "Ukulele_01",
+      "n": 2,
+      "on": "R-left-board",
+      "size_m": null,
+      "note": "hung by their heads, flat, real size; mark blanked as `inventory.polyhaven[Ukulele_01].marks` says [13 Oct, from the try 1 reviews]"
+     },
+     {
+      "model": "script:watch_chain_cards",
+      "n": 40,
+      "on": "R-left-board",
+      "size_m": null,
+      "note": "paper cards 0.10 x 0.14 x 0.01, each with a gold watch, a chain and a ticket, pinned to the board [13 Oct, from the try 1 reviews]",
+      "why": "paper cards with a watch and a chain, 40 of them on the pledge board: no model exists; shapes by script"
      }
     ],
     "lights": {
@@ -3332,7 +3340,14 @@
       "night_dark": "pawnbroker_night_dark.png"
      },
      "made_by": "tools/art-recipes/shop-room.py",
-     "samples": 128
+     "samples": 128,
+     "highlight_rolloff": {
+      "from": 232,
+      "slope": 0.45,
+      "what": "a Judgement: above luma level 232 the 8-bit picture is compressed (232 + 0.45 x the excess, so 255 becomes 242); PIC-05 (at most 1 per cent of pixels at 250 or above) is measured on the render BEFORE the shoulder",
+      "added": "13 Oct, from the try 1 reviews"
+     },
+     "pre_shoulder_burnt_share": "per state, the share of pixels with a channel at 250 or above before the shoulder (written by the build)"
     },
     "brightness": {
      "day": 0.15,
@@ -14370,6 +14385,13 @@
    },
    "script:chain": {
     "why": "a watch three centimetres across is modelled, not scanned (1 October): the approved display's scripted ring trays, watch pads and chains, kept as approved",
+    "shops": [
+     "ritas"
+    ],
+    "added": "13 Oct, from the try 1 reviews"
+   },
+   "script:watch_chain_cards": {
+    "why": "paper cards 0.10 x 0.14 x 0.01 with a gold watch disc, a chain and a ticket (40 on Rita's pledge board): no CC0 model; shapes by script",
     "shops": [
      "ritas"
     ],
