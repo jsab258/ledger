@@ -165,7 +165,7 @@ _p1 = [_rows[k_] for k_ in ("P1_a", "P1_b", "P1_e")]
 _bare = [r_["P_over_L"] for r_ in _rows.values() if r_["state"] == "bare_dark"]
 _p8 = [_rows[k_]["P_over_L"] for k_ in ("P8_L", "P8_R")]
 _p8g = ph["p8_four_panes_the_gates_way"]
-w("Research 1a found the cause: the pane was a pale lit card (not glass over a dark room), the box was lit flat with no dark lines, and the upper panes reflected no shapes. This unit builds 1a's fix as numbers a builder can follow (sections 5 and 6). **What the photographs add** (14 photographs, 1979 to 1994; 18 windows measured, section 3.2, the way the gate measures): at 15 to 40 degrees from the wall the real windows are *not* uniformly dark. A window with a net reads **%.2f to %.2f** of its frame's brightness (P1, three windows at %.0f to %.0f degrees, boxed without the white-painted stone head and sill and without the brick column, L taken over the joinery); a window with bare glass and a dark room reads **%.2f to %.2f**; seen nearly square from below, glass over a dark room under a blue sky reads **%.2f to %.2f** (P8; **%.2f** for all four panes together, blue over red %d). The white-board fault is therefore not 'a pane as bright as its frame' but **a pane that is one even tone with no dark line round it**: the old build's pane read 157 to 175 against paint 178 to 205 (0.85) with no corner line (D/L 0.85, a spread of 14 levels), where the photographs' tight outlines read D/L %.2f to %.2f (P1_a with its top rows out %.2f) and a pane spread of %d to %d levels. **The first version of these numbers measured the stone and the brick, not the frame:** it boxed the white-painted stone head and sill and a column of brick into P1's outlines, so L read 233 to 245 (the stone's paint reads 248 to 254) and D/L 0.47 to 0.50 (the brick's own 119 over the stone). Measured the way the gate measures, the same photographs would have failed WB-04 and WB-01's median cap; this is the review's fault 2 and the lesson in section 12. The checks of section 9 test the lines and the spread by window state (bare, net, draped), not one pane ratio." % (
+w("Research 1a found the cause: the pane was a pale lit card (not glass over a dark room), the box was lit flat with no dark lines, and the upper panes reflected no shapes. This unit builds 1a's fix as numbers a builder can follow (sections 5 and 6). **What the photographs add** (14 photographs, 1979 to 1994; 18 windows measured, section 3.2, the way the gate measures): at 15 to 40 degrees from the wall the real windows are *not* uniformly dark. A window with a net reads **%.2f to %.2f** of its frame's brightness (P1, three windows at %.0f to %.0f degrees, boxed without the white-painted stone head and sill and without the brick column, L taken over the joinery); a window with bare glass and a dark room reads **%.2f to %.2f**; seen nearly square from below, glass over a dark room under a blue sky reads **%.2f to %.2f** (P8; **%.2f** for all four panes together, blue over red %d). The white-board fault is therefore not 'a pane as bright as its frame' but **a pane that is one even tone with no dark line round it**: the old build's pane read 157 to 175 against paint 178 to 205 (0.85) with no corner line (D/L 0.85, a spread of 14 levels), where the photographs' tight outlines read D/L %.2f to %.2f (P1_a with its top rows out %.2f) and a pane spread of %d to %d levels. **The first version of these numbers measured the stone and the brick, not the frame:** it boxed the white-painted stone head and sill and a column of brick into P1's outlines, so L read 233 to 245 (the stone's paint reads 248 to 254) and D/L 0.47 to 0.50 (the brick's own 119 over the stone). Measured the way the gate measures, the same photographs would have failed WB-04 and WB-01's median cap; this is the review's fault 2 and the first lesson at the top of this page. The checks of section 9 test the lines and the spread by window state (bare, net, draped), not one pane ratio." % (
     min(r_["P_over_L"] for r_ in _p1), max(r_["P_over_L"] for r_ in _p1), min(r_["angle_deg"] for r_ in _p1), max(r_["angle_deg"] for r_ in _p1), min(_bare), max(_bare), min(_p8), max(_p8), _p8g["P_over_L"], round(_p8g["blue_minus_red"]),
     min(r_["D_over_L"] for r_ in _p1), max(max(r_["D_over_L"] for r_ in _p1), _rows["P1_a"]["alt_top_rows_out"]["D_over_L"]), _rows["P1_a"]["alt_top_rows_out"]["D_over_L"], round(min(r_["pane_spread_5_95"] for r_ in _p1)), round(max(r_["pane_spread_5_95"] for r_ in _p1))))
 w()
@@ -272,16 +272,23 @@ for h_, ids_ in t["houses"].items():
     _wc.setdefault([x_ for x_ in S if x_["house"] == h_][0]["paint"], []).append(h_)
 w("**Every house is white** (the review's fault 1). Jafar's ruling of 3 October is 'windows with white frames, sash bars, sky in the glass', and the approved Hook sheet is recorded the same way ('every upstairs window is PALE - white frames over white nets'). The first version of this target gave five houses coloured frames (brown, olive, blue, cream, bronze) from the photographs' tally; the review found that against his ruling, with no question put to him. **The ruling stands over the tally until he answers on his page** (OWED-05, first line; D13; CLAUDE.md: if code must change a ruling, ask him first). The ten houses: " + "; ".join("%s %d (%s)" % (k_, len(v_), ", ".join(v_)) for k_, v_ in sorted(_wc.items())) + ". The cream, olive, blue, brown and bronze paints stay in the table above as unused data for his answer. **What the photographs say, for his page:** white paint is 55 per cent of the 60 windows; cream or ivory 12, dark brown or red-brown 13, blue 8, olive 7 (a council terrace painted by its tenants: P2). The 1980s and 1990s replacement is white in every photograph reached (P6, P7, P11): the brown or bronze anodised frame the street file draws for every replacement is in none of them (D1), and the first version's bronze chandler is on the same question to Jafar, not decided here. A council replacement in the photographs is the Newburn casement (P11): a fixed light under a top-hung light, white, with nets and vertical drapes: the RC kind; P6's replacement is the other form (RC2, section 4.3). **Condition:** `sound` is the paint as in the table; `grimy` multiplies the lower rail and sill by 0.85 and darkens the box's inside corners (the shade already does it) with a grime band 30 mm high along the sill; `flaking` (the unlet flat): 12 per cent of the area on the lower rails, the sill and the stiles' feet is flaked to grey primer (66, 60, 54) or bare timber (96, 66, 40).")
 w()
-w("### 4.3 The replacement casement (RC)")
+w("### 4.3 The replacement casements: RC (P7's form) and RC2 (P6's form)")
 w()
 rc = t["kinds"]["RC"]
-w("A fixed light under a top-hung light, no bars, in the same 850 x 1676.4 opening (the street's `REPLACEMENT_TRANSOM` 0.72 and the photographs' 0.66 (P6), 0.72 (P7), 0.75 (P11): the street's value stands). **One transom and equal lights** (unit 7's toplight fault does not arise: there are no bars, one transom, and the top light is a single pane). The parts, in the kit frame (mm): frame face %.0f, depth %.0f, front %.1f behind the brick face (the reveal's 102.5 less 30 proud); transom face %.0f, centred at %.1f above the opening's bottom; the top-hung light's sash stiles %.0f with a %.0f dark gap; glass %.0f mm (a sealed unit drawn as one pane, section 5.5) at %.1f behind the face; a gasket line %.0f wide at luma x %.2f and a welded-corner groove %.0f wide at x %.2f at each corner of each sash." % (
+w("**RC (P7's and P11's form):** a fixed light under a top-hung light, no bars, in the same 850 x 1676.4 opening (the street's `REPLACEMENT_TRANSOM` 0.72 and the photographs' 0.66 (P6), 0.72 (P7), 0.75 (P11): the street's value stands). **One transom and equal lights** (unit 7's toplight fault does not arise: there are no bars, one transom, and the top light is a single pane). The parts, in the kit frame (mm): frame face %.0f, depth %.0f, front %.1f behind the brick face (the reveal's 102.5 less 30 proud); transom face %.0f, centred at %.1f above the opening's bottom; the top-hung light's sash stiles %.0f with a %.0f dark gap; glass %.0f mm (a sealed unit drawn as one pane, section 5.5) at %.1f behind the face; a gasket line %.0f wide at luma x %.2f and a welded-corner groove %.0f wide at x %.2f at each corner of each sash." % (
     rc["frame_face"], rc["frame_depth"], rc["frame_front_y"], rc["transom"]["face"], rc["transom_centre_z_mm"], rc["vent_sash"]["stile_face"], rc["vent_sash"]["gap"], rc["glass_mm"], rc["glass_plane_y"], rc["gasket"]["width"], rc["gasket"]["luma_factor"], rc["weld_groove"]["width"], rc["weld_groove"]["luma_factor"]))
 w()
 rows = [[p["name"], p["x"], p["y_into_wall"], p["z_up"], p.get("material", "paint")] for p in rc["parts_mm"]]
 table(["part", "x (mm)", "y into the wall (mm)", "z up (mm)", "material"], rows)
 w("Glass sightlines (width x height, mm): lower %s x %s, top %s x %s. The top light is hinged at its head and opens outward in the photographs (P11, P14: one stands open): a closed light is drawn; the open one is a variant the PC may add (not required)." % (rc["glass_sightlines_mm"]["lower"][0], rc["glass_sightlines_mm"]["lower"][1], rc["glass_sightlines_mm"]["top"][0], rc["glass_sightlines_mm"]["top"][1]))
 w()
+r2_ = t["kinds"]["RC2"]
+w("**RC2 (P6's form, added by the fixes of 13 October: narrow point 7).** P6 (Levenshulme, 1994) shows a replacement with a fixed top light across the whole width over two lower lights: a side-hung casement beside a fixed light, the mullion near the middle. RC is P7's form only, so the street's replacement houses were all identical; RC2 is built for east_parade_bay4 (both windows). Same opening, frame section (face %.0f, depth %.0f, front %.1f behind the brick face), glass plane (%.1f) and white upvc as RC. **Parts** (kit frame, mm): the transom's face is %.0f, centred at 0.66 x 1676.4 = %.1f above the opening's bottom (P6's 0.66); the top light is one fixed pane; a %.0f mm mullion is centred at x 0 from z %.0f (the sill rail's top) to %.1f (the transom's underside); the left light is a side-hung casement, its stiles and rails %.0f with a %.0f mm gap all round and the hinge on the jamb side (the left jamb); the right light is fixed. The two lower lights' openings are equal, %.1f x %.1f each. **Glass sightlines** (width x height, mm): casement %s, fixed light %s, top light %s. KIT-12, KIT-14 and KIT-15 cover RC2 as they cover RC." % (
+    r2_["frame_face"], r2_["frame_depth"], r2_["frame_front_y"], r2_["glass_plane_y"], r2_["transom"]["face"], r2_["transom_centre_z_mm"], r2_["mullion"]["face"], r2_["mullion"]["z_from"], r2_["mullion_z_mm"][1], r2_["casement"]["stile_face"], r2_["casement"]["gap"],
+    r2_["lower_light_openings_mm"]["left"][0], r2_["lower_light_openings_mm"]["left"][1], r2_["glass_sightlines_mm"]["casement"], r2_["glass_sightlines_mm"]["fixed"], r2_["glass_sightlines_mm"]["top"]))
+w()
+rows = [[p["name"], p["x"], p["y_into_wall"], p["z_up"], p.get("material", "paint")] for p in r2_["parts_mm"]]
+table(["part", "x (mm)", "y into the wall (mm)", "z up (mm)", "material"], rows)
 w("### 4.4 Sills, heads and arches, and what the kit does not carry")
 w()
 w("The stone sill (127 high, 50.8 proud, 76.2 wider each side than the opening), the segmental arch (ring 215, rise one seventh, 12 proud) and the brick returns of the reveal are the wall kit's, not this unit's; this target names the shade the wall kit must give the returns (section 5.4). **Brick returns**: 0.8 of the wall's value at the face falling to 0.6 at the sash, 0.7 under the head.")
@@ -315,7 +322,8 @@ bs = t["box_shade"]
 w(bs["what"] + ". Numbers (1a step 2, Judgement from 1a's photograph-9 figures; the check KIT-09 reads them back from the exported file):")
 w()
 table(["part", "red channel of COLOR_0 (x paint)", "note"], [
-    ["lining, from the brick edge to the glass", "%.1f at y = 0 falling linearly to %.1f at the glass plane" % (bs["lining_from_brick_edge_to_glass"]["at_brick_edge"], bs["lining_from_brick_edge_to_glass"]["at_glass"]), "the sash's own lining and the outer lining's face"],
+    ["faces whose normal points to the street", "%.1f (not darkened)" % bs["street_facing_faces"], bs["street_facing_note"]],
+    ["the faces that run into the wall: the reveal-facing sides of the linings, the beads, the pulley stiles and the sash stiles", "%.1f at y = 0 falling linearly to %.1f at the glass plane" % (bs["lining_from_brick_edge_to_glass"]["at_brick_edge"], bs["lining_from_brick_edge_to_glass"]["at_glass"]), "the sash's own lining and the outer lining's face"],
     ["the track faces", bs["track_faces"], bs["track_note"]],
     ["inside corners", "%.1f within %.0f mm of a concave edge" % (bs["inside_corners"], bs["inside_corner_reach_mm"]), "photograph 9's corner line 105 to 125 against a lining of 220 to 250"],
     ["the putty and shadow line round each pane", "%.2f, %.0f mm wide" % (bs["putty_and_shadow_line_round_each_pane"]["factor"], bs["putty_and_shadow_line_round_each_pane"]["width_mm"]), bs["putty_and_shadow_line_round_each_pane"]["note"]],
@@ -323,7 +331,7 @@ table(["part", "red channel of COLOR_0 (x paint)", "note"], [
     ["the parting bead's gap", "%.2f over %.0f mm" % (bs["parting_bead_gap"], bs["parting_bead_gap_width_mm"] * 3), "the gap itself is a 2 mm geometric gap"],
     ["the brick returns of the reveal (wall kit)", "%.1f to %.1f" % tuple(bs["brick_returns_of_the_reveal"]), bs["brick_returns_note"]],
 ])
-w("Keep the paint's albedo at %s and roughness %.2f (try %.2f once: a traced sheen). **Every dark line of the box is at least 6 mm wide** (1 pixel at 10 m is 5.9 mm at 1440 lines and 46 degrees): the lab's putty strips are 6.4 wide, the parting bead's gap is 2 mm but its shade is painted over 6 mm each side, the RC's gasket and weld groove are shaded over 6 mm. Check KIT-10." % (bs["keep_paint"]["albedo"], bs["keep_paint"]["roughness"], bs["keep_paint"]["try_once"]))
+w("**The paint:** only the sound gloss white (`white_fresh`, east_parade_bay1 and west_south_bay2) keeps 1a's albedo %s and roughness %.2f (try %.2f once: a traced sheen); every other house takes its own paint from the `paints` table, which governs (white_grimy is 0.66 at roughness 0.48, for example), not this line (the review's narrow point 4). **Every dark line of the box is at least 6 mm wide** (1 pixel at 10 m is 5.9 mm at 1440 lines and 46 degrees): the lab's putty strips are 6.4 wide, the parting bead's gap is 2 mm but its shade is painted over 6 mm each side, the RC's gasket and weld groove are shaded over 6 mm. Check KIT-10." % (bs["keep_paint"]["albedo"], bs["keep_paint"]["roughness"], bs["keep_paint"]["try_once"]))
 w()
 w("### 5.5 What this cannot reach")
 w()
@@ -397,7 +405,7 @@ w(sent(lit["rule"]) + " **At 20:30, seven lit (35 per cent):** " + ", ".join(sor
 w()
 w("### 7.4 The inventory")
 w()
-w("**%d Poly Haven models were looked at at 1k (base colour map, 13 October); %d are used in the rooms; 17 textures.** Every id exists in the live catalogue (`self_check.py --live` re-reads it) and is CC0. A mark found on a map is blanked (painted out to the surface's own colour) before the model is used, or the model is not used; every framed picture's artwork is replaced by a script-drawn print (flat grey-green landscape band under a pale sky, no text). Never used: `fancy_picture_frame_02` (its painting shows a group of figures including children)." % (len(inv), len(used)))
+w("**%d Poly Haven models were looked at at 1k (base colour map, 13 October); %d are used in the rooms; %d textures.** Every id exists in the live catalogue (`self_check.py --live` re-reads it) and is CC0. A mark found on a map is blanked (painted out to the surface's own colour) before the model is used, or the model is not used; every framed picture's artwork is replaced by a script-drawn print (flat grey-green landscape band under a pale sky, no text). Never used: `fancy_picture_frame_02` (its painting shows a group of figures including children)." % (len(inv), len(used), len(t["inventory"]["polyhaven_textures"])))
 w()
 rows = []
 for mid, m in sorted(inv.items()):
@@ -424,9 +432,9 @@ for v in kp["extra_files"].values():
 w()
 w("**Budget:** %d triangles and %d bytes each. %s" % (kp["budget"]["triangles_each_kind"], kp["budget"]["bytes_each_glb"], sent(kp["budget"]["note"])))
 w()
-for kind in ("S22", "S11", "RC"):
-    if kind == "RC":
-        w("**RC: added nodes** (the RC has no lab model: its frame parts are the table in section 4.3; these are its glass, nets, drapes, blinds and pendant):")
+for kind in ("S22", "S11", "RC", "RC2"):
+    if kind in ("RC", "RC2"):
+        w("**%s: added nodes** (the %s has no lab model: its frame parts are the table in section 4.3; these are its glass, nets, drapes, blinds and pendant):" % (kind, kind))
     else:
         w("**%s: added nodes** (the lab's %d nodes are reused as they are; the RC's parts are in section 4.3):" % (kind, kp["per_kind"][kind]["reused_nodes"]))
     w()
@@ -485,6 +493,10 @@ w()
 for k2, v in g["bands"].items():
     w("- **%s:** %s" % (k2, band_txt(v)))
 w()
+w("**Window states for every WB check** (the review's fault 2(b)): " + "; ".join("**%s**: %s" % (k2, v.rstrip(". ")) for k2, v in g["window_states"].items() if k2 != "why") + ". " + sent(g["window_states"]["why"]))
+w()
+w("**Frame class:** " + sent(g["frame_class"]))
+w()
 w("**What the gate cannot show:** the game's glass reflections (Lumen, the cube), the exposure, the motion vectors of the card under TSR, the real glass hand-over: owed on the PC (section 10, OWED rows).")
 w()
 
@@ -499,6 +511,8 @@ w("**Owed on the PC** (the cloud cannot show them):")
 w()
 for o in t["owed_on_pc"]:
     w("- **%s** %s Check: %s" % (o["id"], sent(o["what"]), sent(o["check"])))
+    for ln in o.get("lines", []):
+        w("    - Line for his page: " + ln)
 w()
 
 # ---------------------------------------------------------------------------------------------------------------------------
