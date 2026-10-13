@@ -7963,5 +7963,458 @@
    "A3:F5:handle:HD2b"
   ]
  },
- "seconds": 269.3
+ "seconds": 254.1,
+ "controls": {
+  "run": 53,
+  "caught": 53,
+  "rows": [
+   {
+    "name": "T2: a bar moved 20 mm (light 2 20 mm higher in the target)",
+    "row": "PL-T2-light2",
+    "caught": true,
+    "failed_rows": [
+     "PL-T2-light2"
+    ]
+   },
+   {
+    "name": "T2: three lights expected, four built",
+    "row": "PL-T2-count",
+    "caught": true,
+    "failed_rows": [
+     "PL-T2-count"
+    ]
+   },
+   {
+    "name": "F5: the slit 50 mm wider on each side in the target",
+    "row": "PL-F5-slit",
+    "caught": true,
+    "failed_rows": [
+     "PL-F5-slit"
+    ]
+   },
+   {
+    "name": "T3: the small light 60 mm lower in the target",
+    "row": "PL-T3-small_light",
+    "caught": true,
+    "failed_rows": [
+     "PL-T3-members",
+     "PL-T3-small_light"
+    ]
+   },
+   {
+    "name": "T3: the upper panel's inner outline 60 mm narrower in the target",
+    "row": "PL-T3-upper_panel-inner",
+    "caught": true,
+    "failed_rows": [
+     "PL-T3-members",
+     "PL-T3-upper_panel-inner"
+    ]
+   },
+   {
+    "name": "F3: square panel heads expected, raked ones built (the first draft)",
+    "row": "PL-F3-long_l-head",
+    "caught": true,
+    "failed_rows": [
+     "PL-F3-long_l-head"
+    ]
+   },
+   {
+    "name": "T2: both stiles 114.3 expected (the first draft), 94 and 69 built",
+    "row": "PL-T2-members",
+    "caught": true,
+    "failed_rows": [
+     "PL-T2-members"
+    ]
+   },
+   {
+    "name": "T1: a leaf shifted 14 mm (the left stop laps it by only 6.4)",
+    "row": "CV-T1-angle",
+    "caught": true,
+    "failed_rows": [
+     "CV-T1-angle"
+    ]
+   },
+   {
+    "name": "T1: a leaf set back 12 mm behind the stops",
+    "row": "CV-T1-angle",
+    "caught": true,
+    "failed_rows": [
+     "CV-T1-angle"
+    ]
+   },
+   {
+    "name": "T1: a leaf hung 12 mm in front of its stops",
+    "row": "CV-T1-inward",
+    "caught": true,
+    "failed_rows": [
+     "CV-T1-angle",
+     "CV-T1-inward"
+    ]
+   },
+   {
+    "name": "F1: a leaf 40 mm lower (the lap under the transom lost)",
+    "row": "CV-F1-angle",
+    "caught": true,
+    "failed_rows": [
+     "CV-F1-angle",
+     "CV-F1-elevation",
+     "CV-F1-inward"
+    ]
+   },
+   {
+    "name": "F1: a panel left out (a see-through hole)",
+    "row": "CV-F1-elevation",
+    "caught": true,
+    "failed_rows": [
+     "CV-F1-elevation"
+    ]
+   },
+   {
+    "name": "F7: the last board left out (a slot beside the leaf)",
+    "row": "CV-F7-elevation",
+    "caught": true,
+    "failed_rows": [
+     "CV-F7-angle",
+     "CV-F7-elevation",
+     "CV-F7-joints"
+    ]
+   },
+   {
+    "name": "F7: a board with no tongue",
+    "row": "CV-F7-joints",
+    "caught": true,
+    "failed_rows": [
+     "CV-F7-angle",
+     "CV-F7-joints"
+    ]
+   },
+   {
+    "name": "T1: the letter plate moved 40 mm",
+    "row": "FU-T1-letter_plate-LP1",
+    "caught": true,
+    "failed_rows": [
+     "FU-T1-letter_plate-LP1"
+    ]
+   },
+   {
+    "name": "T2: the bar pull moved 40 mm",
+    "row": "FU-T2-handle-HD3",
+    "caught": true,
+    "failed_rows": [
+     "FU-T2-handle-HD3"
+    ]
+   },
+   {
+    "name": "F6: the lever on the wrong stile (700 mm to the left)",
+    "row": "FU-F6-handle-HD2a",
+    "caught": true,
+    "failed_rows": [
+     "FU-F6-handle-HD2a"
+    ]
+   },
+   {
+    "name": "F6: the lock under the lever left out",
+    "row": "FU-F6-latch-LK3",
+    "caught": true,
+    "failed_rows": [
+     "FU-F6-latch-LK3"
+    ]
+   },
+   {
+    "name": "F1: the plugged keyhole left out",
+    "row": "FU-F1-keyhole-KH1",
+    "caught": true,
+    "failed_rows": [
+     "FU-F1-keyhole-KH1"
+    ]
+   },
+   {
+    "name": "F2: the letter plate at the target's v 1545 (its foot on the long panels' moulding lip)",
+    "row": "FIT:F2:east_parade_bay1:clear_of_mouldings",
+    "caught": true,
+    "failed_rows": [
+     "FIT:F2:east_parade_bay1:clear_of_mouldings"
+    ]
+   },
+   {
+    "name": "the push given a bezel part",
+    "row": "BP-form",
+    "caught": true,
+    "failed_rows": [
+     "BP-form",
+     "BP-no-modern"
+    ]
+   },
+   {
+    "name": "the push given a button part",
+    "row": "BP-no-modern",
+    "caught": true,
+    "failed_rows": [
+     "BP-form",
+     "BP-no-modern"
+    ]
+   },
+   {
+    "name": "a bell push on every F1 house",
+    "row": "BP-houses",
+    "caught": true,
+    "failed_rows": [
+     "BP-houses"
+    ]
+   },
+   {
+    "name": "F1 carrying a part named iron_bellpush",
+    "row": "BP-none-elsewhere",
+    "caught": true,
+    "failed_rows": [
+     "BP-none-elsewhere"
+    ]
+   },
+   {
+    "name": "two neighbours given one paint",
+    "row": "AD-adjacent-east",
+    "caught": true,
+    "failed_rows": [
+     "AD-adjacent-east"
+    ]
+   },
+   {
+    "name": "two neighbours given one kind",
+    "row": "AD-adjacent-west",
+    "caught": true,
+    "failed_rows": [
+     "AD-adjacent-west"
+    ]
+   },
+   {
+    "name": "two neighbours given the same fittings",
+    "row": "AD-adjacent-east",
+    "caught": true,
+    "failed_rows": [
+     "AD-adjacent-east"
+    ]
+   },
+   {
+    "name": "a door facing another in the same paint class",
+    "row": "AD-opposite",
+    "caught": true,
+    "failed_rows": [
+     "AD-opposite"
+    ]
+   },
+   {
+    "name": "a cottage given a flat kind",
+    "row": "AD-frame-set",
+    "caught": true,
+    "failed_rows": [
+     "AD-frame-set",
+     "AD-kinds-used"
+    ]
+   },
+   {
+    "name": "a house missing from the street",
+    "row": "AD-coverage",
+    "caught": true,
+    "failed_rows": [
+     "AD-adjacent-east",
+     "AD-coverage",
+     "AD-kinds-used",
+     "AD-opposite",
+     "WR-houses"
+    ]
+   },
+   {
+    "name": "a paint outside the palette on a house (palette list changed)",
+    "row": "PN-palette",
+    "caught": true,
+    "failed_rows": [
+     "PN-palette"
+    ]
+   },
+   {
+    "name": "five bright doors",
+    "row": "PN-light-doors",
+    "caught": true,
+    "failed_rows": [
+     "PN-light-doors"
+    ]
+   },
+   {
+    "name": "a cream frame colour on a house",
+    "row": "PN-frames",
+    "caught": true,
+    "failed_rows": [
+     "PN-frames"
+    ]
+   },
+   {
+    "name": "the black paint changed from 3.1's value in the data",
+    "row": "PN-srgb",
+    "caught": true,
+    "failed_rows": [
+     "PN-srgb"
+    ]
+   },
+   {
+    "name": "the hill's neighbours alike",
+    "row": "AD-backdrop",
+    "caught": true,
+    "failed_rows": [
+     "AD-backdrop"
+    ]
+   },
+   {
+    "name": "neglected wear share 0.20 instead of 0.40",
+    "row": "WR-wear-target",
+    "caught": true,
+    "failed_rows": [
+     "WR-order",
+     "WR-wear-target"
+    ]
+   },
+   {
+    "name": "tired wear share below kept",
+    "row": "WR-order",
+    "caught": true,
+    "failed_rows": [
+     "WR-order",
+     "WR-wear-target"
+    ]
+   },
+   {
+    "name": "no neglected house in the street",
+    "row": "WR-houses",
+    "caught": true,
+    "failed_rows": [
+     "WR-houses"
+    ]
+   },
+   {
+    "name": "the stale night colour in a text",
+    "row": "NM-night",
+    "caught": true,
+    "failed_rows": [
+     "NM-night"
+    ]
+   },
+   {
+    "name": "a maker's name in a text",
+    "row": "NM-maker",
+    "caught": true,
+    "failed_rows": [
+     "NM-maker"
+    ]
+   },
+   {
+    "name": "the leaded came expected 10 wide (built 6)",
+    "row": "GL-leaded",
+    "caught": true,
+    "failed_rows": [
+     "GL-leaded"
+    ]
+   },
+   {
+    "name": "the reeded pitch expected 9 mm (built 6)",
+    "row": "GL-reeded",
+    "caught": true,
+    "failed_rows": [
+     "GL-reeded"
+    ]
+   },
+   {
+    "name": "T2's fanlight plain (no came built)",
+    "row": "GL-leaded",
+    "caught": true,
+    "failed_rows": [
+     "GL-leaded",
+     "GL-types"
+    ]
+   },
+   {
+    "name": "F6's transom flat (no flutes built)",
+    "row": "GL-reeded",
+    "caught": true,
+    "failed_rows": [
+     "GL-reeded",
+     "GL-types"
+    ]
+   },
+   {
+    "name": "D3's light rows moved 12 px",
+    "row": "PH-T2-D3",
+    "caught": true,
+    "failed_rows": [
+     "PH-T2-D3"
+    ]
+   },
+   {
+    "name": "D2's slit box moved 20 px",
+    "row": "PH-F5-D2",
+    "caught": true,
+    "failed_rows": [
+     "PH-F5-D2"
+    ]
+   },
+   {
+    "name": "D4's small light box moved 8 px",
+    "row": "PH-T3-D4",
+    "caught": true,
+    "failed_rows": [
+     "PH-T3-D4"
+    ]
+   },
+   {
+    "name": "F1: the transom missing",
+    "row": "A1:F1:frame",
+    "caught": true,
+    "failed_rows": [
+     "A1:F1:frame",
+     "A1:F1:transom_glass",
+     "A1:F1:visible",
+     "A3:F1:mouldings_literal"
+    ]
+   },
+   {
+    "name": "T2: the leaf's lights 20 mm out (a glass pane moved is not a hole: the leaf slab shifted)",
+    "row": "A1:T2:visible",
+    "caught": true,
+    "failed_rows": [
+     "A1:T2:visible",
+     "A2:T2:openings"
+    ]
+   },
+   {
+    "name": "T1: the target's bolection 36 wide instead of the built 46",
+    "row": "A4:T1:bolection",
+    "caught": true,
+    "failed_rows": [
+     "A4:T1:bolection"
+    ]
+   },
+   {
+    "name": "a second part on the leaf's own face planes",
+    "row": "GLB:F1:no_shared_face_plane",
+    "caught": true,
+    "failed_rows": [
+     "GLB:F1:no_shared_face_plane"
+    ]
+   },
+   {
+    "name": "F2: the leaf 6 mm too high",
+    "row": "DIM:F2:leaf_z0",
+    "caught": true,
+    "failed_rows": [
+     "DIM:F2:leaf_z0"
+    ]
+   },
+   {
+    "name": "a neglected door built with no notch (the kept copy read as the neglected one)",
+    "row": "WR:F4:notch",
+    "caught": true,
+    "failed_rows": [
+     "WR:F4:notch"
+    ]
+   }
+  ]
+ }
 }
