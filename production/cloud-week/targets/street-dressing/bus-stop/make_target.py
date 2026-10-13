@@ -1,5 +1,6 @@
 """bus-stop: writes target.json and TARGET.md (cloud week 42, unit 13, family 2: the bus stop with its timetable)."""
 import json
+import math
 import os
 import sys
 
@@ -163,9 +164,35 @@ def build():
         "sources": [], "previews": [], "checks": [], "owed": [],
     }
     T["numbers"][4]["measure"] = {"kind": "span", "axis": "z", "a": "case_bar_bottom", "b": "case_bar_top"}
+    T["numbers"] += [
+        {"id": "N11", "what": "where the white length begins (the black upper length's lower end)", "value": WHITE_T, "kind": "Photo, scaled on the assumed width", "source": "P1 white_top row 174.8 (box [540, 165, 560, 185]): 3000 - (174.8 - 70.6) x 6.56 = 2317; the review of 13 October writes 2310 (the first version had 2118 from the case's blurred upper edge); error 40", "tol": 40.0,
+         "measure": {"kind": "edge", "axis": "z", "part": "pole_upper", "side": "lo"}},
+        {"id": "N12", "what": "the black ring under the case: its lower end above the paving", "value": RING_B, "kind": "Photo, scaled on the assumed width", "source": "P1 ring_bottom row 392.3 (box [540, 384, 560, 400]): 3000 - (392.3 - 70.6) x 6.56 = 890; the ring runs from the case's foot (1008, row 374 to 376) down to it: a black band the first version did not have; error 40", "tol": 40.0,
+         "measure": {"kind": "edge", "axis": "z", "part": "pole_ring", "side": "lo"}},
+        {"id": "N13", "what": "the case's middle bar height", "value": 15.0, "kind": "Photo", "source": "P1: a thin dark bar across the window at row 284.5 (about 1597 mm), 2 to 3 px = about 15 mm high, with a small dark fixing at each end; the card's top edge just under it (row 299, about 1502); error 6", "tol": 6.0,
+         "measure": {"kind": "extent", "axis": "z", "part": "case_mid_bar"}},
+        {"id": "N14", "what": "the case's middle bar above the paving (its centre)", "value": 1597.5, "kind": "Photo, scaled on the assumed width", "source": "P1 row 284.5: 3000 - (284.5 - 70.6) x 6.56 = 1597; error 60", "tol": 60.0,
+         "measure": {"kind": "centre", "axis": "z", "part": "case_mid_bar"}},
+    ]
+    # source errors: the plate's width is an ASSUMPTION (300, +-50 = 16.7 percent) that sets P1's scale, so each length measured on P1 carries that
+    # relative error as what the SOURCE can tell; the builder's tolerance (tol) stays a separate field and never stands for the source's error
+    rel_ = 50.0 / 300.0
+    scaled_len = {"N2": 2 * R_POLE, "N4": 285.0, "N5": 875.0, "N6": 3000.0 - 1008.0, "N7": 3000.0 - 1883.0, "N10": 3000.0 - 2705.0, "N11": 3000.0 - WHITE_T, "N12": 3000.0 - RING_B, "N14": 3000.0 - 1597.5}
+    for n in T["numbers"]:
+        if n["id"] == "N3":
+            n["source_error"] = 50.0
+        elif n["id"] in scaled_len:
+            n["scaled_on"] = "N3"
+            n["scaled_length"] = scaled_len[n["id"]]
+            n["source_error"] = math.ceil(rel_ * scaled_len[n["id"]] / 5.0) * 5.0
+            if n["kind"] == "Photo":
+                n["kind"] = "Photo, scaled on the assumed width"
+        elif n["id"] in ("N1", "N8", "N9"):
+            n["source_error"] = n["tol"]
     refs = {"flag_top": ("y", "flag_plate", "hi"), "flag_bottom": ("y", "flag_plate", "lo", {"add": -10.0}), "case_top": ("y", "case_bar_top", "hi"),
-            "case_bottom": ("y", "case_bar_bottom", "lo"), "band2_bottom": ("y", "pole_white", "lo"),
-            "flag_left": ("x", "flag_plate", "lo"), "flag_right": ("x", "flag_plate", "hi")}
+            "case_bottom": ("y", "case_bar_bottom", "lo"), "band2_bottom": ("y", "pole_foot", "hi"),
+            "flag_left": ("x", "flag_plate", "lo"), "flag_right": ("x", "flag_plate", "hi"),
+            "pole_l": ("x", "pole_white", "lo"), "pole_r": ("x", "pole_white", "hi"), "white_top": ("y", "pole_upper", "lo"), "ring_bottom": ("y", "pole_ring", "lo")}
     keep = {k: v for k, v in refs.items()}
     pm = dict(PM)
     pm["features"] = {k: v for k, v in F.items() if k in keep}
@@ -215,20 +242,25 @@ def finish(T):
         "services": sv,
         "legend": ["Mondays to Fridays", "Saturdays", "Sundays"],
         "no_logo": "no operator logo anywhere; the name is a placeholder the town will mint (RULINGS 3 Oct: names minted within canon, placeholders meanwhile)",
+        "operator_layer": {"kind": "a separate texture layer on the card", "blank_in_pictures_for_his_page": True, "note": "the placeholder name sits on its own layer of the card's texture; every picture meant for Jafar's page shows the layer blank"},
+        "flag_back": "the flag's back face (toward the pole) is double-sided: the same border and BUS over STOP, Judgement (a stop flag is read from both directions); the borders exist on both faces in the parts",
         "flag_text": ["BUS", "STOP"], "flag_text_mm": 62.0, "flag_font": "a plain upright grotesque (Liberation Sans Narrow or similar, SIL OFL), black on the off-white plate, centred; two lines of 62 mm capitals",
         "road_marking": "none in this target (the road legend belongs to the wear and road targets)",
     }
     T["night"] = {"lantern_linear": L.LANTERN_LINEAR, "note": "the stop has no light; the nearest lamp column is LC4 at x 38 west, 8 m away, so the flag and case stand in the dark between pools; the plate's enamel catches the lantern colour as a glint on its rolled edge"}
+    T["placeholders"] = [{"name": "Weighhouse Motor Services", "marked": "fictional placeholder", "kind": "the bus company's name on the timetable card", "where": "text.operator and the card's own texture layer (blank in any picture for his page)", "until": "the town mints the operator (handover H1)"}]
+    T["handovers"] = [{"id": "H1", "line": "For the town: mint the bus operator for the timetable card (its name, within canon's naming rules; the card's three services and their stops come from atlas.json already). Now the placeholder 'Weighhouse Motor Services' on the card's own texture layer, never shown on Jafar's page."}]
     T["placement"] = {
         "slot": "west pavement, pole centre at x 46.0 m (the cast's bus stop, hook-cast.json), 0.50 m behind the kerb's back edge (z -3.625), the flag and the case facing -x (south, towards the bus coming up the street); the waiting spot z -4.3 is behind it; no shelter",
+        "poses": [{"id": "stop", "variant": "BS1", "x_m": 46.0, "z_m": -3.625, "yaw_deg": -90.0, "zone": "west_footway", "front_faces": "-x"}],
         "x_m": 46.0, "z_m": -3.625, "z_wait_m": -4.3, "kerb_back_z_m": -3.125, "frontage_z_m": -5.125, "footway_mm": 2000.0, "set_back_mm": 500.0, "min_clear_behind_mm": 1000.0,
         "bin_slot": {"file": "litter-bins", "slot": "B3", "max_m": 3.0},
         "reasons": [
-            "the cast already puts the stop at x 46.0, z -4.3 on the west pavement (production/specs/hook-cast.json: 'the bus stop at the top of Quay Street'), and Rita's, the newsagent's and Hal's shop lie below it; the scene file has no stop, so this is a new slot (the 29 September README said the street had none)",
+            "the cast already puts the stop at x 46.0, z -4.3 on the west pavement (production/specs/hook-cast.json: 'the bus stop at the top of Quay Street'), and the west row's newsagent (west_north, x 36 to 42) lies below it (Rita's is on the east side, across the street); the scene file has no stop, so this is a new slot (the 29 September README said the street had none)",
             "a bus on the west lane travels north (+x) with the kerb on its left; the flag must face the bus coming from the south, so it faces -x; waiting people read the case from the road side of the pole",
             "no shelter: a shelter is 1.2 to 1.5 m deep and would leave 0.5 to 0.8 m of a 2.0 m footway, under the 1.0 m this target requires behind a pole (the tester's walk found 0.65 m too narrow on 29 September); the stop is a pole with a case",
             "the litter bin B3 of the litter-bins target (the hooded drum K2) stands at x 44.0 west, z -3.8, 2.0 m from the pole, inside the 3 m the asset plan asks for",
-            "the stop is beyond the west block's end (x 39), so no shopfront is hidden by the pole or the queue",
+            "the stop is beyond the west row's end (west_north runs to x 42; the stop is 4.0 m past it), so no shopfront is hidden by the pole or the queue",
         ],
     }
     T["wear"] = [

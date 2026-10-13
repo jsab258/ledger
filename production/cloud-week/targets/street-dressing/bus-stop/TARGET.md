@@ -2,7 +2,7 @@
 
 **The bus stop is a 76 mm pole 3.0 m high (black foot, white length, black top, a concrete collar) carrying an old-style enamel flag 300 x 285 with BUS and STOP in two lines and a black border, and below it a dark-green timetable case 260 x 875 x 60 whose window holds one 200 x 470 card: the fictional Weighhouse Motor Services, services 4, 9 and 12 to stops that are on the town's own map; it stands on the west pavement at x 46.0 (the cast's stop) 0.50 m behind the kerb, with no shelter, its flag and case facing the bus; it replaces the 29 September script's flag and case; no 1975 to 1995 photograph of a stop was measurable, so the proportions are measured on a 2018 photograph of an old-style stop and the absolute sizes are judged (the plate's width sets the scale).**
 
-Cloud week 42, unit 13, family 2. Written 13 October 2026, not yet reviewed. `SELF-CHECK bus-stop: 116 checks, 116 passed, 0 failed; negative controls 28 of 28 caught (--live --previews)`
+Cloud week 42, unit 13, family 2. Written 13 October 2026, not yet reviewed. `SELF-CHECK bus-stop: 130 checks, 128 passed, 2 failed; negative controls 0 of 0 caught (offline)`
 
 ## Files in this folder
 
@@ -122,18 +122,22 @@ Axes: x across the flag (right is +x seen from the front), y from the front (-y,
 
 ### The numbers, with their sources and kinds (the self-check measures each back off the parts)
 
-| id | what | value | kind | source and method | tolerance |
-|---|---|---|---|---|---|
-| N1 | pole length above the paving to the cap's top | 3008 mm | Judgement | a 3.0 m stop pole (the repository's research note and the 29 September script agree; P1's span flag top to foot gives 3.0 m only if the plate is 300 wide); error 150 mm | +-150 |
-| N2 | pole diameter | 76 mm | Judgement | 76 mm (3 inch) tube, the standard stop post; P1's pole is 7 to 8 px wide = 50 mm at 6.56 mm per px which is too coarse to read, so the standard is kept (+-10) | +-10 |
-| N3 | flag plate width | 300 mm | Judgement | assumed 300 mm: it sets P1's scale (6.56 mm per px); P1 flag_left 526.0 to flag_right 571.7 = 45.7 px | +-30 |
-| N4 | flag plate height | 285 mm | Photo | P1 flag_top 70.6 to flag_bottom 117.1 (46.5 px, includes the yellow lichen and clamp below the plate) at 6.56 mm per px = 305; the plate itself 285 (+-25) | +-25 |
-| N5 | case height | 875 mm | Photo | P1 case_top 240.8 to case_bottom 374.2 (133.4 px) at 6.56 mm per px; error 60 | +-60 |
-| N6 | case bottom above the paving | 1008 mm | Photo | P1 case_bottom 374.2 below flag_top 70.6: 303.6 px = 1992 mm below the flag's top at 3000 (+-130) | +-130 |
-| N7 | case top above the paving | 1883 mm | Photo | P1 case_top 240.8: 170.2 px below the flag's top = 1117 mm; error 130 | +-130 |
-| N8 | case width | 260 mm | Judgement | P1 case x 535 to 577 = 42 px = 275 mm by eye (low contrast, not measured by the algorithm); 260 kept for an A3-card case (+-35) | +-35 |
-| N9 | case depth (from the pole's front face) | 60 mm | Judgement | typical stop case 60 mm; not measurable on P1 (+-20) | +-20 |
-| N10 | flag bottom above the paving | 2705 mm | Photo | P1 flag_bottom 117.1 below the top: 46.5 px = 305 mm; the plate's own bottom edge at 2715 (+-30) | +-30 |
+| id | what | value | kind | source and method | source error (what the source can tell) | builder tolerance (what the check allows) |
+|---|---|---|---|---|---|---|
+| N1 | pole length above the paving to the cap's top | 3008 mm | Judgement | a 3.0 m stop pole (the repository's research note and the 29 September script agree; P1's span flag top to foot gives 3.0 m only if the plate is 300 wide); error 150 mm | +-150 | +-150 |
+| N2 | pole diameter | 89 mm | Photo, scaled on the assumed width | P1: the white pole is 13 to 14 px wide on the 640 px copy (edges x 543.5 and 556.5 at rows 200 to 225; 543.5 and 557.5 at rows 395 to 410; my own edge finder gives 544.1 and 557.5), 13.5 px x 6.56 mm per px = 89 mm: a 3 1/2 inch (89 mm) tube; against the flag's 45.7 px that is 0.30 (+-0.03) while the first version built 76 / 300 = 0.25 (it had read the pole as 7 to 8 px = 50 mm and kept the 76 mm standard). The scale rests on the assumed plate width (N3) | +-15 | +-10 |
+| N3 | flag plate width | 300 mm | Judgement | assumed 300 mm: it sets P1's scale (6.56 mm per px); P1 flag_left 526.0 to flag_right 571.7 = 45.7 px. The photograph fixes only the RATIO of the pole to the plate: with a 76 mm pole the plate would be about 255 mm, outside this number's old +-30, so the source error is +-50 (a stop plate is 250 to 350 wide); N2, N4 to N7 and N10 are scaled on it | +-50 | +-30 |
+| N4 | flag plate height | 285 mm | Photo, scaled on the assumed width | P1 flag_top 70.6 to flag_bottom 117.1 (46.5 px, includes the yellow lichen and clamp below the plate) at 6.56 mm per px = 305; the plate itself 285 (+-25) | +-50 | +-25 |
+| N5 | case height | 875 mm | Photo, scaled on the assumed width | P1 case_top 240.8 to case_bottom 374.2 (133.4 px) at 6.56 mm per px; error 60 | +-150 | +-60 |
+| N6 | case bottom above the paving | 1008 mm | Photo, scaled on the assumed width | P1 case_bottom 374.2 below flag_top 70.6: 303.6 px = 1992 mm below the flag's top at 3000 (+-130) | +-335 | +-130 |
+| N7 | case top above the paving | 1883 mm | Photo, scaled on the assumed width | P1 case_top 240.8: 170.2 px below the flag's top = 1117 mm; error 130 | +-190 | +-130 |
+| N8 | case width | 260 mm | Judgement | P1 case x 535 to 577 = 42 px = 275 mm by eye (low contrast, not measured by the algorithm); 260 kept for an A3-card case (+-35) | +-35 | +-35 |
+| N9 | case depth (from the pole's front face) | 60 mm | Judgement | typical stop case 60 mm; not measurable on P1 (+-20) | +-20 | +-20 |
+| N10 | flag bottom above the paving | 2705 mm | Photo, scaled on the assumed width | P1 flag_bottom 117.1 below the top: 46.5 px = 305 mm; the plate's own bottom edge at 2715 (+-30) | +-50 | +-30 |
+| N11 | where the white length begins (the black upper length's lower end) | 2310 mm | Photo, scaled on the assumed width | P1 white_top row 174.8 (box [540, 165, 560, 185]): 3000 - (174.8 - 70.6) x 6.56 = 2317; the review of 13 October writes 2310 (the first version had 2118 from the case's blurred upper edge); error 40 | +-115 | +-40 |
+| N12 | the black ring under the case: its lower end above the paving | 890 mm | Photo, scaled on the assumed width | P1 ring_bottom row 392.3 (box [540, 384, 560, 400]): 3000 - (392.3 - 70.6) x 6.56 = 890; the ring runs from the case's foot (1008, row 374 to 376) down to it: a black band the first version did not have; error 40 | +-355 | +-40 |
+| N13 | the case's middle bar height | 15 mm | Photo | P1: a thin dark bar across the window at row 284.5 (about 1597 mm), 2 to 3 px = about 15 mm high, with a small dark fixing at each end; the card's top edge just under it (row 299, about 1502); error 6 |  | +-6 |
+| N14 | the case's middle bar above the paving (its centre) | 1597.5 mm | Photo, scaled on the assumed width | P1 row 284.5: 3000 - (284.5 - 70.6) x 6.56 = 1597; error 60 | +-235 | +-60 |
 
 ### Photograph measurements (P1, S1)
 
@@ -145,9 +149,13 @@ each edge is the strongest grey-level step inside the recorded window, averaged 
 | P1 | flag_bottom | y | 117.1 | [535, 100, 565, 120] | 5.0 | lo of flag_plate |
 | P1 | case_top | y | 240.8 | [530, 226, 570, 246] | 5.0 | hi of case_bar_top |
 | P1 | case_bottom | y | 374.2 | [530, 364, 570, 386] | 5.0 | lo of case_bar_bottom |
-| P1 | band2_bottom | y | 443.5 | [538, 430, 546, 456] | 12.7 | lo of pole_white |
+| P1 | band2_bottom | y | 443.5 | [538, 430, 546, 456] | 12.7 | hi of pole_foot |
 | P1 | flag_left | x | 526.0 | [515, 78, 535, 98] | 5.0 | lo of flag_plate |
 | P1 | flag_right | x | 571.7 | [565, 78, 590, 98] | 5.0 | hi of flag_plate |
+| P1 | pole_l | x | 544.0 | [536, 200, 550, 225] | 5.0 | lo of pole_white |
+| P1 | pole_r | x | 557.5 | [550, 200, 564, 225] | 5.0 | hi of pole_white |
+| P1 | white_top | y | 174.8 | [540, 165, 560, 185] | 5.0 | lo of pole_upper |
+| P1 | ring_bottom | y | 392.3 | [540, 384, 560, 400] | 5.0 | lo of pole_ring |
 
 ### Materials and colours
 
@@ -182,11 +190,11 @@ each edge is the strongest grey-level step inside the recorded window, averaged 
 
 **Slot:** west pavement, pole centre at x 46.0 m (the cast's bus stop, hook-cast.json), 0.50 m behind the kerb's back edge (z -3.625), the flag and the case facing -x (south, towards the bus coming up the street); the waiting spot z -4.3 is behind it; no shelter
 
-- the cast already puts the stop at x 46.0, z -4.3 on the west pavement (production/specs/hook-cast.json: 'the bus stop at the top of Quay Street'), and Rita's, the newsagent's and Hal's shop lie below it; the scene file has no stop, so this is a new slot (the 29 September README said the street had none)
+- the cast already puts the stop at x 46.0, z -4.3 on the west pavement (production/specs/hook-cast.json: 'the bus stop at the top of Quay Street'), and the west row's newsagent (west_north, x 36 to 42) lies below it (Rita's is on the east side, across the street); the scene file has no stop, so this is a new slot (the 29 September README said the street had none)
 - a bus on the west lane travels north (+x) with the kerb on its left; the flag must face the bus coming from the south, so it faces -x; waiting people read the case from the road side of the pole
 - no shelter: a shelter is 1.2 to 1.5 m deep and would leave 0.5 to 0.8 m of a 2.0 m footway, under the 1.0 m this target requires behind a pole (the tester's walk found 0.65 m too narrow on 29 September); the stop is a pole with a case
 - the litter bin B3 of the litter-bins target (the hooded drum K2) stands at x 44.0 west, z -3.8, 2.0 m from the pole, inside the 3 m the asset plan asks for
-- the stop is beyond the west block's end (x 39), so no shopfront is hidden by the pole or the queue
+- the stop is beyond the west row's end (west_north runs to x 42; the stop is 4.0 m past it), so no shopfront is hidden by the pole or the queue
 
 ### Lettering and text
 
@@ -210,7 +218,7 @@ each edge is the strongest grey-level step inside the recorded window, averaged 
 | check | what to measure | expected | tolerance |
 |---|---|---|---|
 | N1: pole length above the paving to the cap's top | measure it on the built mesh in millimetres (bbox) | 3008 mm | +-150 mm |
-| N2: pole diameter | measure it on the built mesh in millimetres (extent) | 76 mm | +-10 mm |
+| N2: pole diameter | measure it on the built mesh in millimetres (extent) | 89 mm | +-10 mm |
 | N3: flag plate width | measure it on the built mesh in millimetres (extent) | 300 mm | +-30 mm |
 | N4: flag plate height | measure it on the built mesh in millimetres (extent) | 285 mm | +-25 mm |
 | N5: case height | measure it on the built mesh in millimetres (span) | 875 mm | +-60 mm |
@@ -219,6 +227,10 @@ each edge is the strongest grey-level step inside the recorded window, averaged 
 | N8: case width | measure it on the built mesh in millimetres (extent) | 260 mm | +-35 mm |
 | N9: case depth (from the pole's front face) | measure it on the built mesh in millimetres (extent) | 60 mm | +-20 mm |
 | N10: flag bottom above the paving | measure it on the built mesh in millimetres (edge) | 2705 mm | +-30 mm |
+| N11: where the white length begins (the black upper length's lower end) | measure it on the built mesh in millimetres (edge) | 2310 mm | +-40 mm |
+| N12: the black ring under the case: its lower end above the paving | measure it on the built mesh in millimetres (edge) | 890 mm | +-40 mm |
+| N13: the case's middle bar height | measure it on the built mesh in millimetres (extent) | 15 mm | +-6 mm |
+| N14: the case's middle bar above the paving (its centre) | measure it on the built mesh in millimetres (centre) | 1598 mm | +-60 mm |
 | C1: no part floats | the contact graph of the meshes (touching within 2 mm) | all parts reach the ground | 0 floating |
 | C2: the flag plate is closed from the front, square on and leaning | rays at the plate face at 0, 30 and 45 degrees | 0 get through | exact |
 | C3: the card lies inside the case's window | the card's box inside the clear sheet's box | inside | exact |
@@ -235,6 +247,10 @@ each edge is the strongest grey-level step inside the recorded window, averaged 
 ## Owed to Jafar's page (one line each, with a recommendation)
 
 None.
+
+## Handovers (for the town or the scene's owner, not for his page)
+
+- H1: For the town: mint the bus operator for the timetable card (its name, within canon's naming rules; the card's three services and their stops come from atlas.json already). Now the placeholder 'Weighhouse Motor Services' on the card's own texture layer, never shown on Jafar's page.
 
 ## What the target could not settle
 

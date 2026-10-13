@@ -685,10 +685,6 @@
      "pole_foot"
     ],
     [
-     "pole_ring",
-     "pole_foot"
-    ],
-    [
      "case_mid_bar",
      "case_bar_left"
     ],
@@ -747,7 +743,7 @@
     ],
     [
      "pole_ring",
-     "pole_foot",
+     "case_bar_bottom",
      6.0
     ],
     [
@@ -796,7 +792,7 @@
      "id": "flag plate",
      "o": [
       -150.0,
-      -50.0,
+      -56.5,
       2707.0
      ],
      "u": [
@@ -1152,7 +1148,7 @@
     ],
     [
      "pole_ring",
-     "pole_foot",
+     "case_bar_bottom",
      6.0
     ]
    ],
@@ -1195,52 +1191,60 @@
      "pole_upper",
      "pole_cap"
     ]
-   }
+   },
+   "source_error": 150.0
   },
   {
    "id": "N2",
    "what": "pole diameter",
-   "value": 76.0,
-   "kind": "Judgement",
-   "source": "76 mm (3 inch) tube, the standard stop post; P1's pole is 7 to 8 px wide = 50 mm at 6.56 mm per px which is too coarse to read, so the standard is kept (+-10)",
+   "value": 89.0,
+   "kind": "Photo, scaled on the assumed width",
+   "source": "P1: the white pole is 13 to 14 px wide on the 640 px copy (edges x 543.5 and 556.5 at rows 200 to 225; 543.5 and 557.5 at rows 395 to 410; my own edge finder gives 544.1 and 557.5), 13.5 px x 6.56 mm per px = 89 mm: a 3 1/2 inch (89 mm) tube; against the flag's 45.7 px that is 0.30 (+-0.03) while the first version built 76 / 300 = 0.25 (it had read the pole as 7 to 8 px = 50 mm and kept the 76 mm standard). The scale rests on the assumed plate width (N3)",
    "tol": 10.0,
    "measure": {
     "kind": "extent",
     "axis": "x",
     "part": "pole_foot"
-   }
+   },
+   "scaled_on": "N3",
+   "scaled_length": 89.0,
+   "source_error": 15.0
   },
   {
    "id": "N3",
    "what": "flag plate width",
    "value": 300.0,
    "kind": "Judgement",
-   "source": "assumed 300 mm: it sets P1's scale (6.56 mm per px); P1 flag_left 526.0 to flag_right 571.7 = 45.7 px",
+   "source": "assumed 300 mm: it sets P1's scale (6.56 mm per px); P1 flag_left 526.0 to flag_right 571.7 = 45.7 px. The photograph fixes only the RATIO of the pole to the plate: with a 76 mm pole the plate would be about 255 mm, outside this number's old +-30, so the source error is +-50 (a stop plate is 250 to 350 wide); N2, N4 to N7 and N10 are scaled on it",
    "tol": 30.0,
    "measure": {
     "kind": "extent",
     "axis": "x",
     "part": "flag_plate"
-   }
+   },
+   "source_error": 50.0
   },
   {
    "id": "N4",
    "what": "flag plate height",
    "value": 285.0,
-   "kind": "Photo",
+   "kind": "Photo, scaled on the assumed width",
    "source": "P1 flag_top 70.6 to flag_bottom 117.1 (46.5 px, includes the yellow lichen and clamp below the plate) at 6.56 mm per px = 305; the plate itself 285 (+-25)",
    "tol": 25.0,
    "measure": {
     "kind": "extent",
     "axis": "z",
     "part": "flag_plate"
-   }
+   },
+   "scaled_on": "N3",
+   "scaled_length": 285.0,
+   "source_error": 50.0
   },
   {
    "id": "N5",
    "what": "case height",
    "value": 875.0,
-   "kind": "Photo",
+   "kind": "Photo, scaled on the assumed width",
    "source": "P1 case_top 240.8 to case_bottom 374.2 (133.4 px) at 6.56 mm per px; error 60",
    "tol": 60.0,
    "measure": {
@@ -1248,13 +1252,16 @@
     "axis": "z",
     "a": "case_bar_bottom",
     "b": "case_bar_top"
-   }
+   },
+   "scaled_on": "N3",
+   "scaled_length": 875.0,
+   "source_error": 150.0
   },
   {
    "id": "N6",
    "what": "case bottom above the paving",
    "value": 1008.0,
-   "kind": "Photo",
+   "kind": "Photo, scaled on the assumed width",
    "source": "P1 case_bottom 374.2 below flag_top 70.6: 303.6 px = 1992 mm below the flag's top at 3000 (+-130)",
    "tol": 130.0,
    "measure": {
@@ -1262,13 +1269,16 @@
     "axis": "z",
     "part": "case_bar_bottom",
     "side": "lo"
-   }
+   },
+   "scaled_on": "N3",
+   "scaled_length": 1992.0,
+   "source_error": 335.0
   },
   {
    "id": "N7",
    "what": "case top above the paving",
    "value": 1883.0,
-   "kind": "Photo",
+   "kind": "Photo, scaled on the assumed width",
    "source": "P1 case_top 240.8: 170.2 px below the flag's top = 1117 mm; error 130",
    "tol": 130.0,
    "measure": {
@@ -1276,7 +1286,10 @@
     "axis": "z",
     "part": "case_bar_top",
     "side": "hi"
-   }
+   },
+   "scaled_on": "N3",
+   "scaled_length": 1117.0,
+   "source_error": 190.0
   },
   {
    "id": "N8",
@@ -1289,7 +1302,8 @@
     "kind": "extent",
     "axis": "x",
     "part": "case_bar_top"
-   }
+   },
+   "source_error": 35.0
   },
   {
    "id": "N9",
@@ -1302,13 +1316,14 @@
     "kind": "extent",
     "axis": "y",
     "part": "case_bar_top"
-   }
+   },
+   "source_error": 20.0
   },
   {
    "id": "N10",
    "what": "flag bottom above the paving",
    "value": 2705.0,
-   "kind": "Photo",
+   "kind": "Photo, scaled on the assumed width",
    "source": "P1 flag_bottom 117.1 below the top: 46.5 px = 305 mm; the plate's own bottom edge at 2715 (+-30)",
    "tol": 30.0,
    "measure": {
@@ -1316,7 +1331,73 @@
     "axis": "z",
     "part": "flag_plate",
     "side": "lo"
+   },
+   "scaled_on": "N3",
+   "scaled_length": 295.0,
+   "source_error": 50.0
+  },
+  {
+   "id": "N11",
+   "what": "where the white length begins (the black upper length's lower end)",
+   "value": 2310.0,
+   "kind": "Photo, scaled on the assumed width",
+   "source": "P1 white_top row 174.8 (box [540, 165, 560, 185]): 3000 - (174.8 - 70.6) x 6.56 = 2317; the review of 13 October writes 2310 (the first version had 2118 from the case's blurred upper edge); error 40",
+   "tol": 40.0,
+   "measure": {
+    "kind": "edge",
+    "axis": "z",
+    "part": "pole_upper",
+    "side": "lo"
+   },
+   "scaled_on": "N3",
+   "scaled_length": 690.0,
+   "source_error": 115.0
+  },
+  {
+   "id": "N12",
+   "what": "the black ring under the case: its lower end above the paving",
+   "value": 890.0,
+   "kind": "Photo, scaled on the assumed width",
+   "source": "P1 ring_bottom row 392.3 (box [540, 384, 560, 400]): 3000 - (392.3 - 70.6) x 6.56 = 890; the ring runs from the case's foot (1008, row 374 to 376) down to it: a black band the first version did not have; error 40",
+   "tol": 40.0,
+   "measure": {
+    "kind": "edge",
+    "axis": "z",
+    "part": "pole_ring",
+    "side": "lo"
+   },
+   "scaled_on": "N3",
+   "scaled_length": 2110.0,
+   "source_error": 355.0
+  },
+  {
+   "id": "N13",
+   "what": "the case's middle bar height",
+   "value": 15.0,
+   "kind": "Photo",
+   "source": "P1: a thin dark bar across the window at row 284.5 (about 1597 mm), 2 to 3 px = about 15 mm high, with a small dark fixing at each end; the card's top edge just under it (row 299, about 1502); error 6",
+   "tol": 6.0,
+   "measure": {
+    "kind": "extent",
+    "axis": "z",
+    "part": "case_mid_bar"
    }
+  },
+  {
+   "id": "N14",
+   "what": "the case's middle bar above the paving (its centre)",
+   "value": 1597.5,
+   "kind": "Photo, scaled on the assumed width",
+   "source": "P1 row 284.5: 3000 - (284.5 - 70.6) x 6.56 = 1597; error 60",
+   "tol": 60.0,
+   "measure": {
+    "kind": "centre",
+    "axis": "z",
+    "part": "case_mid_bar"
+   },
+   "scaled_on": "N3",
+   "scaled_length": 1402.5,
+   "source_error": 235.0
   }
  ],
  "photos": [
@@ -1494,8 +1575,8 @@
       "pol": "any"
      },
      "ref": {
-      "part": "pole_white",
-      "side": "lo"
+      "part": "pole_foot",
+      "side": "hi"
      },
      "anchor": false,
      "boundary": true
@@ -1561,6 +1642,130 @@
      },
      "anchor": false,
      "boundary": true
+    },
+    {
+     "id": "pole_l",
+     "axis": "x",
+     "px": 544.05,
+     "box": [
+      536,
+      200,
+      550,
+      225
+     ],
+     "tol_px": 5.0,
+     "contrast": 28.6,
+     "measure": {
+      "axis": "x",
+      "band": [
+       200,
+       225
+      ],
+      "win": [
+       536,
+       550
+      ],
+      "pol": "any"
+     },
+     "ref": {
+      "part": "pole_white",
+      "side": "lo"
+     },
+     "anchor": false,
+     "boundary": false
+    },
+    {
+     "id": "pole_r",
+     "axis": "x",
+     "px": 557.47,
+     "box": [
+      550,
+      200,
+      564,
+      225
+     ],
+     "tol_px": 5.0,
+     "contrast": 37.8,
+     "measure": {
+      "axis": "x",
+      "band": [
+       200,
+       225
+      ],
+      "win": [
+       550,
+       564
+      ],
+      "pol": "any"
+     },
+     "ref": {
+      "part": "pole_white",
+      "side": "hi"
+     },
+     "anchor": false,
+     "boundary": false
+    },
+    {
+     "id": "white_top",
+     "axis": "y",
+     "px": 174.77,
+     "box": [
+      540,
+      165,
+      560,
+      185
+     ],
+     "tol_px": 5.0,
+     "contrast": 17.4,
+     "measure": {
+      "axis": "y",
+      "band": [
+       540,
+       560
+      ],
+      "win": [
+       165,
+       185
+      ],
+      "pol": "any"
+     },
+     "ref": {
+      "part": "pole_upper",
+      "side": "lo"
+     },
+     "anchor": false,
+     "boundary": false
+    },
+    {
+     "id": "ring_bottom",
+     "axis": "y",
+     "px": 392.3,
+     "box": [
+      540,
+      384,
+      560,
+      400
+     ],
+     "tol_px": 5.0,
+     "contrast": 21.5,
+     "measure": {
+      "axis": "y",
+      "band": [
+       540,
+       560
+      ],
+      "win": [
+       384,
+       400
+      ],
+      "pol": "any"
+     },
+     "ref": {
+      "part": "pole_ring",
+      "side": "lo"
+     },
+     "anchor": false,
+     "boundary": false
     }
    ],
    "method": "each edge is the strongest grey-level step inside the recorded window, averaged over the recorded band; the scale is fitted on the one span from the flag plate's top edge to the case's lower edge (303.6 px); the plate's width is the unit that sets 6.56 mm per px (Judgement), so the absolute sizes are judged within the stated errors and the photograph checks the proportions; case sides were too faint to measure; the band-2 foot (the white band's lower end) has a spread of 3.6 px; the tolerance is the measured spread times 3 plus 2 px, at least 5 px (33 mm)"
@@ -1691,7 +1896,7 @@
   {
    "name": "N2: pole diameter",
    "measure": "measure it on the built mesh in millimetres (extent)",
-   "expect": "76 mm",
+   "expect": "89 mm",
    "tol": "+-10 mm"
   },
   {
@@ -1741,6 +1946,30 @@
    "measure": "measure it on the built mesh in millimetres (edge)",
    "expect": "2705 mm",
    "tol": "+-30 mm"
+  },
+  {
+   "name": "N11: where the white length begins (the black upper length's lower end)",
+   "measure": "measure it on the built mesh in millimetres (edge)",
+   "expect": "2310 mm",
+   "tol": "+-40 mm"
+  },
+  {
+   "name": "N12: the black ring under the case: its lower end above the paving",
+   "measure": "measure it on the built mesh in millimetres (edge)",
+   "expect": "890 mm",
+   "tol": "+-40 mm"
+  },
+  {
+   "name": "N13: the case's middle bar height",
+   "measure": "measure it on the built mesh in millimetres (extent)",
+   "expect": "15 mm",
+   "tol": "+-6 mm"
+  },
+  {
+   "name": "N14: the case's middle bar above the paving (its centre)",
+   "measure": "measure it on the built mesh in millimetres (centre)",
+   "expect": "1598 mm",
+   "tol": "+-60 mm"
   },
   {
    "name": "C1: no part floats",
@@ -1895,6 +2124,12 @@
    "Sundays"
   ],
   "no_logo": "no operator logo anywhere; the name is a placeholder the town will mint (RULINGS 3 Oct: names minted within canon, placeholders meanwhile)",
+  "operator_layer": {
+   "kind": "a separate texture layer on the card",
+   "blank_in_pictures_for_his_page": true,
+   "note": "the placeholder name sits on its own layer of the card's texture; every picture meant for Jafar's page shows the layer blank"
+  },
+  "flag_back": "the flag's back face (toward the pole) is double-sided: the same border and BUS over STOP, Judgement (a stop flag is read from both directions); the borders exist on both faces in the parts",
   "flag_text": [
    "BUS",
    "STOP"
@@ -1911,8 +2146,34 @@
   ],
   "note": "the stop has no light; the nearest lamp column is LC4 at x 38 west, 8 m away, so the flag and case stand in the dark between pools; the plate's enamel catches the lantern colour as a glint on its rolled edge"
  },
+ "placeholders": [
+  {
+   "name": "Weighhouse Motor Services",
+   "marked": "fictional placeholder",
+   "kind": "the bus company's name on the timetable card",
+   "where": "text.operator and the card's own texture layer (blank in any picture for his page)",
+   "until": "the town mints the operator (handover H1)"
+  }
+ ],
+ "handovers": [
+  {
+   "id": "H1",
+   "line": "For the town: mint the bus operator for the timetable card (its name, within canon's naming rules; the card's three services and their stops come from atlas.json already). Now the placeholder 'Weighhouse Motor Services' on the card's own texture layer, never shown on Jafar's page."
+  }
+ ],
  "placement": {
   "slot": "west pavement, pole centre at x 46.0 m (the cast's bus stop, hook-cast.json), 0.50 m behind the kerb's back edge (z -3.625), the flag and the case facing -x (south, towards the bus coming up the street); the waiting spot z -4.3 is behind it; no shelter",
+  "poses": [
+   {
+    "id": "stop",
+    "variant": "BS1",
+    "x_m": 46.0,
+    "z_m": -3.625,
+    "yaw_deg": -90.0,
+    "zone": "west_footway",
+    "front_faces": "-x"
+   }
+  ],
   "x_m": 46.0,
   "z_m": -3.625,
   "z_wait_m": -4.3,
@@ -1927,11 +2188,11 @@
    "max_m": 3.0
   },
   "reasons": [
-   "the cast already puts the stop at x 46.0, z -4.3 on the west pavement (production/specs/hook-cast.json: 'the bus stop at the top of Quay Street'), and Rita's, the newsagent's and Hal's shop lie below it; the scene file has no stop, so this is a new slot (the 29 September README said the street had none)",
+   "the cast already puts the stop at x 46.0, z -4.3 on the west pavement (production/specs/hook-cast.json: 'the bus stop at the top of Quay Street'), and the west row's newsagent (west_north, x 36 to 42) lies below it (Rita's is on the east side, across the street); the scene file has no stop, so this is a new slot (the 29 September README said the street had none)",
    "a bus on the west lane travels north (+x) with the kerb on its left; the flag must face the bus coming from the south, so it faces -x; waiting people read the case from the road side of the pole",
    "no shelter: a shelter is 1.2 to 1.5 m deep and would leave 0.5 to 0.8 m of a 2.0 m footway, under the 1.0 m this target requires behind a pole (the tester's walk found 0.65 m too narrow on 29 September); the stop is a pole with a case",
    "the litter bin B3 of the litter-bins target (the hooded drum K2) stands at x 44.0 west, z -3.8, 2.0 m from the pole, inside the 3 m the asset plan asks for",
-   "the stop is beyond the west block's end (x 39), so no shopfront is hidden by the pole or the queue"
+   "the stop is beyond the west row's end (west_north runs to x 42; the stop is 4.0 m past it), so no shopfront is hidden by the pole or the queue"
   ]
  },
  "wear": [
@@ -1992,20 +2253,14 @@
   "orientation: the local -y faces the bus (towards -x in the street's frame, yaw 90 degrees)"
  ],
  "self_check": {
-  "line": "SELF-CHECK bus-stop: 109 checks, 104 passed, 5 failed; negative controls 0 of 0 caught (offline)",
-  "checks": 109,
-  "passed": 104,
-  "failed": 5,
+  "line": "SELF-CHECK bus-stop: 148 checks, 148 passed, 0 failed; negative controls 0 of 0 caught (offline)",
+  "checks": 148,
+  "passed": 148,
+  "failed": 0,
   "controls": 0,
   "controls_caught": 0,
   "options": "offline",
-  "failing": [
-   "geometry/BS1/declared joins meet",
-   "geometry/BS1/face flag plate closed",
-   "numbers/N2",
-   "place/poses are declared",
-   "reuse/the old pole (76 mm, 3.0 m) is kept"
-  ],
+  "failing": [],
   "uncaught": []
  }
 }

@@ -187,12 +187,13 @@ def numbers_rows(T, rows):
             rows.add("numbers", "numbers/%s" % n["id"], False, "could not measure: %s" % e)
             continue
         rows.near("numbers", "numbers/%s" % n["id"], got, n["value"], n.get("tol", 1.0))
-        # a number measured on a photograph at an ASSUMED scale inherits the assumed number's relative source error;
+        # a number measured on a photograph at an ASSUMED scale inherits the assumed number's relative source error (applied to the length that
+        # was scaled: scaled_length, which is the value itself unless the number is a height read as a distance from the plate's top edge);
         # the builder's tolerance is a separate field and never stands for the source's error
         if n.get("scaled_on"):
             base = by_id.get(n["scaled_on"])
             ok = bool(base) and base.get("kind") == "Judgement" and "source_error" in base and "source_error" in n
-            need = (base["source_error"] / base["value"]) * n["value"] if ok else None
+            need = (base["source_error"] / base["value"]) * n.get("scaled_length", n["value"]) if ok else None
             rows.add("numbers", "numbers/%s source error covers the assumed scale (%s)" % (n["id"], n["scaled_on"]),
                      ok and n["source_error"] + 1e-9 >= need - 0.5,
                      ("source error +-%.1f against %.1f needed (the assumed %s is +-%.1f on %.0f)" % (n["source_error"], need, n["scaled_on"], base["source_error"], base["value"])) if ok else "the assumed number %s is not a Judgement with a source error" % n["scaled_on"])
