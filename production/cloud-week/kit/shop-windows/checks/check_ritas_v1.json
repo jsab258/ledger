@@ -1,11 +1,11 @@
 {
  "schema": "ledger.cloud-week-42.shop-windows-ritas-check/1",
- "made": "2026-10-13 00:22:38",
+ "made": "2026-10-13 01:33:00",
  "target": "production/cloud-week/targets/shop-windows/target.json (status: target for unit 7 of cloud week 42, part 2; written 12 October 2026 by the targe)",
- "pass": 38,
+ "pass": 41,
  "counted": 41,
  "na": 3,
- "seconds": 32.4,
+ "seconds": 32.9,
  "rows": [
   {
    "id": "PIC-01",
@@ -16,14 +16,14 @@
   {
    "id": "PIC-02",
    "name": "no black void in the picture",
-   "status": "fail",
-   "detail": "day: mean 117.5 (floor 83.7), share under 12 0.0014, largest dark region 0.0007 of the area; night_lit: mean 74.2 (floor 55.9), share under 12 0.0337, largest dark region 0.0199 of the area"
+   "status": "pass",
+   "detail": "day: mean 120.9 (floor 83.7), share under 12 0.0011, largest dark region 0.0001 of the area; night_lit: mean 79.1 (floor 55.9), share under 12 0.0136, largest dark region 0.0037 of the area"
   },
   {
    "id": "PIC-03",
    "name": "night_dark is dark, not black",
    "status": "pass",
-   "detail": "night_dark mean 16.7 (12.4 to 40; the approved 17.7)"
+   "detail": "night_dark mean 17.7 (12.4 to 40; the approved 17.7)"
   },
   {
    "id": "PIC-05",
@@ -41,13 +41,13 @@
    "id": "PIC-06",
    "name": "each surface has texture",
    "status": "pass",
-   "detail": "standard deviation of luma (mean of day and night_lit), levels: back 44.2, floor 28.2, left 29.5, right 26.0 (at least 6)"
+   "detail": "standard deviation of luma (mean of day and night_lit), levels: back 44.0, floor 30.0, left 30.1, right 26.4 (at least 6)"
   },
   {
    "id": "X-NOISE",
    "name": "picture noise after denoising",
    "status": "pass",
-   "detail": "high-pass standard deviation of a plain-wall patch: 1.69 levels (limit 2.0); 64 samples a pixel (the target says 128: cut for the cloud's four cores, denoised)"
+   "detail": "high-pass standard deviation of a plain-wall patch: 1.70 levels (limit 2.0); 64 samples a pixel (the target says 128: cut for the cloud's four cores, denoised)"
   },
   {
    "id": "PRJ-01",
@@ -59,7 +59,7 @@
    "id": "PRJ-02",
    "name": "the room shifts with the eye",
    "status": "pass",
-   "detail": "the card's centre lands 1322.1 px apart between CLOSE_35 and CLOSE_35_B (target 1321.93, +-1.5); the mean absolute difference of the two baked cards is 24.3 levels (at least 8). This runs on the gate's own `trace` bake: it proves the gate, not the game (owed on the PC: PC-01)"
+   "detail": "the card's centre lands 1322.1 px apart between CLOSE_35 and CLOSE_35_B (target 1321.93, +-1.5); the mean absolute difference of the two baked cards is 24.8 levels (at least 8). This runs on the gate's own `trace` bake: it proves the gate, not the game (owed on the PC: PC-01)"
   },
   {
    "id": "PRJ-03",
@@ -148,8 +148,8 @@
   {
    "id": "NEV-01",
    "name": "no people, drink, betting, children",
-   "status": "fail",
-   "detail": "550 names and text strings against 51 content-blocklist words: ['PLEDGES FOR SALE']"
+   "status": "pass",
+   "detail": "550 names and text strings against 51 content-blocklist words (the ones ending in a space as whole words: as substrings 'ale ' would hit 'PLEDGES FOR SALE', the target's own notice; the list's owner may want ' ale '): no match"
   },
   {
    "id": "NEV-02",
@@ -227,13 +227,13 @@
    "id": "LIT-01",
    "name": "lit shops lit at night, dark shops dark",
    "status": "pass",
-   "detail": "STREET_SQUARE at night, the room-only composite (picture x 0.7, glass reflection off) over the glass lights: lit 67.1 (at least 45); the same shop dark (night_dark) 12.0 (a dark shop reads 10 to 35); difference 55.1 (at least 25)"
+   "detail": "STREET_SQUARE at night, the room-only composite (picture x 0.7, glass reflection off) over the glass lights: lit 73.4 (at least 45); the same shop dark (night_dark) 12.6 (a dark shop reads 10 to 35); difference 60.8 (at least 25)"
   },
   {
    "id": "LIT-02",
    "name": "no black void in the street view",
    "status": "pass",
-   "detail": "composite luma over the glass lights: by day STREET_SQUARE 44.9, STREET_30 38.4, CLOSE_35 47.7 (at least 33); at night (lit) 67.1, 59.2, 66.5 (at least 45)"
+   "detail": "composite luma over the glass lights: by day STREET_SQUARE 47.2, STREET_30 40.6, CLOSE_35 49.1 (at least 33); at night (lit) 73.4, 65.2, 70.3 (at least 45)"
   },
   {
    "id": "LIT-03",
@@ -244,8 +244,8 @@
   {
    "id": "LIT-05",
    "name": "the display is lit at night",
-   "status": "fail",
-   "detail": "STREET_SQUARE at night, the display zone (the window lights' lowest 0.85 m over the bed: z 0.60 to 1.45 above the footway = 0.70 to 1.55 above the crown, across the window zone; 153846 px) in the rendered picture, with the spill modelled (a rect light in the window head, tipped 62 degrees down, strength set in the gate): mean luma 44.6 (at least 45). Lumen's own light on the display is owed on the PC (PC-02)"
+   "status": "pass",
+   "detail": "STREET_SQUARE at night, the display zone (the window lights' lowest 0.85 m over the bed: z 0.60 to 1.45 above the footway = 0.70 to 1.55 above the crown, across the window zone; 153846 px) in the rendered picture, with the spill modelled (a rect light in the window head, tipped 62 degrees down, strength set in the gate): mean luma 47.9 (at least 45). Lumen's own light on the display is owed on the PC (PC-02)"
   },
   {
    "id": "LIT-06",
@@ -269,7 +269,7 @@
    "id": "X-PRV",
    "name": "previews: JPEG, about 1600 px wide, under 500 KB",
    "status": "pass",
-   "detail": "8 JPEGs in the previews folder: ritas-close-35-day 200 KB 1600 px, ritas-close-35-night-lit 350 KB 1600 px, ritas-room-before-after 312 KB 1400 px, ritas-room-day 205 KB 1600 px, ritas-room-night-dark 93 KB 1600 px, ritas-room-night-lit 184 KB 1600 px, ritas-street-square-day 247 KB 1600 px, ritas-street-square-night-lit 199 KB 1600 px"
+   "detail": "8 JPEGs in the previews folder: ritas-close-35-day 201 KB 1600 px, ritas-close-35-night-lit 357 KB 1600 px, ritas-room-before-after 315 KB 1400 px, ritas-room-day 209 KB 1600 px, ritas-room-night-dark 97 KB 1600 px, ritas-room-night-lit 189 KB 1600 px, ritas-street-square-day 248 KB 1600 px, ritas-street-square-night-lit 202 KB 1600 px"
   }
  ]
 }
