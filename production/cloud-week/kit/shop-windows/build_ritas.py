@@ -41,7 +41,7 @@ def run_inner(stage):
     t0 = time.time()
     if stage == "assets":
         import sw_assets as A
-        A.fetch()
+        A.fetch_all()
         A.sheets()
         A.blank()
         rows = A.verify()

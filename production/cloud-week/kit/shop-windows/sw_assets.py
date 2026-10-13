@@ -18,6 +18,7 @@ import sys
 
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
+from scipy import ndimage
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, "..", "..", "..", ".."))
@@ -122,6 +123,11 @@ def fetch(ids=None, log=print):
             except Exception as e:  # network resets happen: try again, then say
                 log("fetch %s try %d failed: %s" % (a, attempt + 1, e))
     return total
+
+
+def fetch_all(log=print):
+    fetch(log=log)
+    fetch_print_sources(log=log)
 
 
 def gltf_path(asset, clean=True):
@@ -302,6 +308,108 @@ def invented_print(path, kind, size=1024, seed=1):
     Image.fromarray((np.clip(img, 0, 1) * 255).astype(np.uint8)).save(path, quality=92)
 
 
+# ---------------------------------------------------------------------------------------------------------------------------------- the frames' prints (13 Oct, try 2)
+# Close review narrow 7: the invented prints read as flat clip-art. Each frame's print is now a crop of a CC0 Poly Haven HDRI of a harbour (Lake Pier, polyhaven.com/a/lake_pier,
+# Alexander Scholten, CC0), looked at in a rectilinear view, tone-mapped, saturation 0.7, a slight warm cast, paper grain and a 6 mm white mount; no person is in the crops (looked at
+# at 100 per cent). The catalogue line (CATALOGUE.md is outside this unit's folders): "lake_pier HDRI, CC0, Poly Haven: frame prints of Rita's shop (kit/shop-windows)".
+HDRI_ID = "lake_pier"
+PRINT_HDRI = os.path.join(POLY, "_hdri", "lake_pier_2k.hdr")
+FABRIC_ID = "Fabric034"
+FABRIC_DIR = os.path.join(POLY, "_acg", "Fabric034")
+# per model: the print's box in the 1024 px artwork map (u0, v0, u1, v1 in 0..1, v up, read from the model's UVs) and the quad's size in metres (to size the 6 mm mount)
+PRINT_MAP = {"standing_picture_frame_01": ((0.165, 0.002, 0.835, 0.998), (0.132, 0.186)),
+             "standing_picture_frame_02": ((0.143, 0.005, 0.861, 0.995), (0.135, 0.185)),
+             "hanging_picture_frame_02": ((0.007, 0.223, 0.993, 0.801), (0.605, 0.354))}
+# the views (yaw degrees from the HDRI's centre, pitch, horizontal field): the hanging frame has five (the five frames on the pledge board differ), the standing ones one each
+PRINT_VIEWS = {"hanging_picture_frame_02": [(-30, -3, 62), (22, -2, 56), (150, -2, 56), (4, 8, 66), (-160, -1, 56)],
+               "standing_picture_frame_01": [(-12, -2, 38)], "standing_picture_frame_02": [(30, -1, 36)]}
+
+
+def fetch_print_sources(log=print):
+    """The HDRI of the frames' prints (Poly Haven, CC0) and the fabric normal map of the display's velvet (ambientCG Fabric034, CC0), into SCRATCH/polyhaven."""
+    import subprocess
+    os.makedirs(os.path.dirname(PRINT_HDRI), exist_ok=True)
+    if not os.path.exists(PRINT_HDRI):
+        meta = json.loads(subprocess.check_output(["curl", "-sS", "-m", "60", "https://api.polyhaven.com/files/%s" % HDRI_ID]))
+        url = meta["hdri"]["2k"]["hdr"]["url"]
+        subprocess.check_call(["curl", "-sS", "-m", "180", "-o", PRINT_HDRI, url])
+        log("fetched HDRI %s (%d bytes)" % (HDRI_ID, os.path.getsize(PRINT_HDRI)))
+    nrm = os.path.join(FABRIC_DIR, "Fabric034_1K-JPG_NormalGL.jpg")
+    if not os.path.exists(nrm):
+        os.makedirs(FABRIC_DIR, exist_ok=True)
+        zp = os.path.join(FABRIC_DIR, "f.zip")
+        subprocess.check_call(["curl", "-sS", "-L", "-m", "180", "-o", zp, "https://ambientcg.com/get?file=Fabric034_1K-JPG.zip"])
+        import zipfile
+        with zipfile.ZipFile(zp) as z:
+            z.extract("Fabric034_1K-JPG_NormalGL.jpg", FABRIC_DIR)
+        os.remove(zp)
+        log("fetched ambientCG Fabric034 normal map")
+
+
+def _load_hdri(path):
+    import bpy
+    im = bpy.data.images.load(path, check_existing=True)
+    w, h = im.size
+    px = np.empty(w * h * 4, np.float32)
+    im.pixels.foreach_get(px)
+    return px.reshape(h, w, 4)[::-1, :, :3].copy()             # row 0 at the top
+
+
+def _rect_view(env, yaw_deg, pitch_deg, hfov_deg, out_w, out_h):
+    """A rectilinear (pinhole) view of an equirectangular image: yaw, pitch and horizontal field in degrees; bilinear."""
+    h, w = env.shape[:2]
+    f = (out_w / 2.0) / np.tan(np.radians(hfov_deg) / 2.0)
+    xs = (np.arange(out_w) + 0.5 - out_w / 2.0)
+    ys = (np.arange(out_h) + 0.5 - out_h / 2.0)
+    X, Y = np.meshgrid(xs, ys)
+    d = np.stack([X / f, -Y / f, np.ones_like(X)], axis=-1)                # camera: +z forward, +y up
+    d /= np.linalg.norm(d, axis=-1, keepdims=True)
+    p, yv = np.radians(pitch_deg), np.radians(yaw_deg)
+    Rp = np.array([[1, 0, 0], [0, np.cos(p), -np.sin(p)], [0, np.sin(p), np.cos(p)]])
+    Ry = np.array([[np.cos(yv), 0, np.sin(yv)], [0, 1, 0], [-np.sin(yv), 0, np.cos(yv)]])
+    d = d @ Rp.T @ Ry.T
+    lon = np.arctan2(d[..., 0], d[..., 2])
+    lat = np.arcsin(np.clip(d[..., 1], -1, 1))
+    u = (lon / (2 * np.pi) + 0.5) * w - 0.5
+    v = (0.5 - lat / np.pi) * h - 0.5
+    out = np.stack([ndimage.map_coordinates(env[..., c], [v, u], order=1, mode="wrap") for c in range(3)], axis=-1)
+    return out
+
+
+def harbour_print(dst, asset, variant=0, seed=1):
+    """The frame's print: a harbour view cropped from the HDRI to the print's own shape, tone-mapped, desaturated to 0.7, warmed a little, with paper grain and a 6 mm white mount,
+    laid into the 1024 px artwork map where the model's UVs put the print (the rest of the map is white card). Falls back to the painted print if the HDRI is not there."""
+    if not os.path.exists(PRINT_HDRI):
+        return False
+    box, quad = PRINT_MAP[asset]
+    yaw, pitch, hfov = PRINT_VIEWS[asset][variant % len(PRINT_VIEWS[asset])]
+    n = 1024
+    c0, r0 = int(round(box[0] * n)), int(round((1 - box[3]) * n))
+    c1, r1 = int(round(box[2] * n)), int(round((1 - box[1]) * n))
+    pw, ph = c1 - c0, r1 - r0
+    mount_px = max(2, int(round(0.006 / quad[0] * pw)))
+    iw, ih = pw - 2 * mount_px, ph - 2 * mount_px
+    env = _load_hdri(PRINT_HDRI)
+    view = _rect_view(env, yaw, pitch, hfov, iw, ih)
+    lum = 0.2126 * view[..., 0] + 0.7152 * view[..., 1] + 0.0722 * view[..., 2]
+    view = view * (0.22 / max(float(np.median(lum)), 1e-4))               # middle grey from the median
+    view = view / (1.0 + view * 0.55)                                      # a soft shoulder
+    view = np.clip(view, 0, 1) ** (1 / 2.2)
+    g = (0.2126 * view[..., 0] + 0.7152 * view[..., 1] + 0.0722 * view[..., 2])[..., None]
+    view = g + (view - g) * 0.7                                            # saturation 0.7
+    view = view * np.array([1.045, 1.0, 0.93])                             # a slight warm cast
+    rng = np.random.default_rng(seed + variant)
+    view = view + ndimage.gaussian_filter(rng.normal(0, 0.020, view.shape), (0.6, 0.6, 0)) + rng.normal(0, 0.006, view.shape)
+    canvas = np.full((n, n, 3), 0.93, np.float32)
+    canvas[r0:r1, c0:c1] = 0.96                                            # the mount
+    canvas[r0 + mount_px:r1 - mount_px, c0 + mount_px:c1 - mount_px] = np.clip(view, 0, 1)
+    # a hairline of shade where the mount's bevel meets the print
+    canvas[r0 + mount_px - 1, c0 + mount_px:c1 - mount_px] *= 0.82
+    canvas[r0 + mount_px:r1 - mount_px, c0 + mount_px - 1] *= 0.86
+    Image.fromarray((np.clip(canvas, 0, 1) * 255 + 0.5).astype(np.uint8)).save(dst, quality=94, subsampling=0)
+    return True
+
+
 def blank(ids=None, log=print):
     """Apply every blanking entry of target.json to the maps of the given models. Returns {asset: report}."""
     T = load_target()
@@ -325,8 +433,13 @@ def blank(ids=None, log=print):
                 boxes = [bx for b in bl for bx in b["boxes"]]
                 if boxes == [[0, 0, 1024, 1024]]:
                     kind = {"hanging_picture_frame_02": 0, "standing_picture_frame_01": 1, "standing_picture_frame_02": 2}.get(a, 0)
-                    invented_print(dst, kind)
-                    rows = [{"box": boxes[0], "whole_map": True, "replaced_by": "invented_print(kind=%d)" % kind}]
+                    if a in PRINT_MAP and harbour_print(dst, a, 0):
+                        rows = [{"box": boxes[0], "whole_map": True, "replaced_by": "harbour_print: a crop of the CC0 Poly Haven HDRI %s (yaw %d, pitch %d, field %d)" % ((HDRI_ID,) + PRINT_VIEWS[a][0])}]
+                        for k in range(1, len(PRINT_VIEWS[a])):          # the hanging frame's other four prints (the five frames on the pledge board differ)
+                            harbour_print(os.path.splitext(dst)[0] + "_v%d.jpg" % k, a, k)
+                    else:
+                        invented_print(dst, kind)
+                        rows = [{"box": boxes[0], "whole_map": True, "replaced_by": "invented_print(kind=%d)" % kind}]
                 else:
                     fills = {k[1]: v for k, v in FILL_OVERRIDE.items() if k[0] == a}
                     rows = blank_map(src, dst, boxes, seed=int(hashlib.md5(a.encode()).hexdigest()[:6], 16), fills=fills)

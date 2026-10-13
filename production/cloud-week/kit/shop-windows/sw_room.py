@@ -726,6 +726,24 @@ class Room:
         self.fixtures.append({"fixture": "R-left-board", "name": "watch_chain_cards(%d)" % len(spots), "ext": [xl, xl + 0.032, 0.3, 4.2, 0.45, 2.15], "n": len(spots), "boxes_yz": [[round(y - 0.05, 3), round(y + 0.05, 3), round(z - 0.07, 3), round(z + 0.07, 3)] for (y, z) in spots]})
         return ob
 
+    def print_variant(self, names, asset, k):
+        """Another print for one hung frame (the five frames on the pledge board differ): its own copy of the mesh and of the artwork material, the picture node pointing at
+        <asset>_artwork_diff_1k_clean_v<k>.jpg (made by sw_assets.harbour_print)."""
+        path = os.path.join(A.POLY, asset, "1k", "textures", "%s_artwork_diff_1k_clean_v%d.jpg" % (asset, k))
+        if not os.path.exists(path):
+            return
+        for nm in names:
+            ob = bpy.data.objects[nm]
+            ob.data = ob.data.copy()
+            for i, m in enumerate(ob.data.materials):
+                if m is not None and "artwork" in m.name.lower():
+                    m2 = m.copy()
+                    for n in m2.node_tree.nodes:
+                        if n.type == "TEX_IMAGE" and n.image is not None and "artwork_diff" in n.image.name:
+                            n.image = bpy.data.images.load(path, check_existing=True)
+                            n.image.colorspace_settings.name = "sRGB"
+                    ob.data.materials[i] = m2
+
     def side_walls(self):
         rnd = self.rnd
         peg = self.image_mat("pegboard", os.path.join(self.tex, "pegboard.png"), tile_m=0.6, rough=0.8)
@@ -741,12 +759,14 @@ class Room:
         # 13 Oct (close review, narrow 2): the board covered with goods at real size (scale 1.0), at most 0.08 off the wall: 5 framed pictures, 2 mirrors, 6 clocks, 2 ukuleles, the two
         # notices and 40 watch-and-chain cards. Turn +90 degrees: the front toward +x. Positions (y, z centres, m) are laid out in rows: the frames along the low band, the clocks between the
         # frames and the mirrors, the mirrors, a frame, the ukuleles and the licence card in the upper band, the cards in the gaps
-        def hang(asset, y, z, label):
+        def hang(asset, y, z, label, variant=0):
             ext = self.place(asset, (xl + 0.022, y, z), rot=(0, 0, math.pi / 2), scale=1.0, fixture="R-left-board", anchor=("min", "c", "c"))
+            if variant:
+                self.print_variant(list(self.last_objs), asset, variant)
             return ext
-        for y in (0.68, 1.54, 2.40, 3.26):
-            hang("hanging_picture_frame_02", y, 0.78, "frame")
-        hang("hanging_picture_frame_02", 1.545, 1.78, "frame")
+        for k, y in enumerate((0.68, 1.54, 2.40, 3.26)):
+            hang("hanging_picture_frame_02", y, 0.78, "frame", variant=k)
+        hang("hanging_picture_frame_02", 1.545, 1.78, "frame", variant=4)
         for y in (0.50, 1.14, 1.78, 2.42, 3.06, 3.70):
             hang("wall_clock", y, 1.24, "clock")
         hang("ornate_mirror_01", 0.543, 1.775, "mirror")
