@@ -1,0 +1,178 @@
+{
+ "P1": {
+  "photo": "P1rot",
+  "gid": "6875634",
+  "size": [
+   1024,
+   576
+  ],
+  "object_box": [
+   540,
+   190,
+   912,
+   345
+  ],
+  "rotated": {
+   "deg": 7.2,
+   "centre": [
+    730,
+    270
+   ]
+  },
+  "features": {
+   "top_y": {
+    "px": 206.5,
+    "contrast": 17.6,
+    "spread": 0.0,
+    "id": "top_y",
+    "axis": "y",
+    "band": [
+     650,
+     780
+    ],
+    "win": [
+     190,
+     206
+    ],
+    "pol": "any"
+   },
+   "rim_line_y": {
+    "px": 228.39,
+    "contrast": 29.2,
+    "spread": 0.2,
+    "id": "rim_line_y",
+    "axis": "y",
+    "band": [
+     650,
+     700
+    ],
+    "win": [
+     222,
+     242
+    ],
+    "pol": "any"
+   },
+   "bottom_y": {
+    "px": 331.5,
+    "contrast": 21.7,
+    "spread": 0.01,
+    "id": "bottom_y",
+    "axis": "y",
+    "band": [
+     670,
+     740
+    ],
+    "win": [
+     326,
+     345
+    ],
+    "pol": "any"
+   },
+   "tip_left_x": {
+    "px": 559.64,
+    "contrast": 14.0,
+    "spread": 0.09,
+    "id": "tip_left_x",
+    "axis": "x",
+    "band": [
+     238,
+     246
+    ],
+    "win": [
+     536,
+     562
+    ],
+    "pol": "any"
+   },
+   "tip_right_x": {
+    "px": 896.37,
+    "contrast": 16.4,
+    "spread": 1.37,
+    "id": "tip_right_x",
+    "axis": "x",
+    "band": [
+     236,
+     244
+    ],
+    "win": [
+     894,
+     914
+    ],
+    "pol": "any"
+   },
+   "top_left_x": {
+    "px": 588.81,
+    "contrast": 3.2,
+    "spread": 4.8,
+    "id": "top_left_x",
+    "axis": "x",
+    "band": [
+     203,
+     209
+    ],
+    "win": [
+     584,
+     614
+    ],
+    "pol": "any"
+   },
+   "top_right_x": {
+    "px": 866.5,
+    "contrast": 11.3,
+    "spread": 10.04,
+    "id": "top_right_x",
+    "axis": "x",
+    "band": [
+     203,
+     209
+    ],
+    "win": [
+     834,
+     866
+    ],
+    "pol": "any"
+   },
+   "bottom_left_x": {
+    "px": 624.84,
+    "contrast": 17.1,
+    "spread": 0.66,
+    "id": "bottom_left_x",
+    "axis": "x",
+    "band": [
+     326,
+     332
+    ],
+    "win": [
+     606,
+     640
+    ],
+    "pol": "any"
+   },
+   "bottom_right_x": {
+    "px": 781.47,
+    "contrast": 2.1,
+    "spread": 2.83,
+    "id": "bottom_right_x",
+    "axis": "x",
+    "band": [
+     326,
+     332
+    ],
+    "win": [
+     774,
+     806
+    ],
+    "pol": "any"
+   }
+  },
+  "page": {
+   "id": "6875634",
+   "title": "Skip, Dunstanburgh Castle",
+   "author": "Ian Taylor cc-by-sa/2.0",
+   "licence": "http://creativecommons.org/licenses/by-sa/2.0/",
+   "taken": "2021-06-15",
+   "image": "https://s0.geograph.org.uk/geophotos/06/87/56/6875634_b2c42724.jpg",
+   "ok": true
+  }
+ }
+}

@@ -1,0 +1,3223 @@
+{
+ "family": "milk-crates",
+ "title": "Quay Street's milk crates: a stack, with empties",
+ "units": "millimetres; angles in degrees; z up; the long side's dairy band faces -y; the pivot is the bottom crate's footprint centre on the ground",
+ "status": "written 13 October 2026, not yet reviewed",
+ "sample": "MC3",
+ "materials": {
+  "crate_plastic": {
+   "name": "moulded crate plastic, faded",
+   "srgb": [
+    168,
+    40,
+    36
+   ],
+   "rough": 0.5,
+   "rough_words": "semi-gloss",
+   "metal": false,
+   "note": "the sample crate is red (the 1990 range: red, blue, yellow, green, orange as variants); UV-faded to a lighter, chalky red on the top rim; grime in every slot; NO printed brand (the CC0 texture's 'GALLER STORAGE' print is not used)"
+  },
+  "glass": {
+   "name": "clear glass, milk-filmed",
+   "srgb": [
+    210,
+    218,
+    214
+   ],
+   "rough": 0.05,
+   "rough_words": "smooth",
+   "metal": false,
+   "note": "a faint milky film on the inside, a dull ring where the cap sat; embossed dairy name on the shoulder"
+  }
+ },
+ "variants": {
+  "MC1": {
+   "name": "MC1: one 12-pint crate, empty",
+   "parts": [
+    {
+     "id": "c1_floor",
+     "type": "box",
+     "c": [
+      0.0,
+      0.0,
+      5.0
+     ],
+     "s": [
+      400.0,
+      290.0,
+      10
+     ],
+     "material": "crate_plastic",
+     "edge": "edges r 2",
+     "note": "floor plate, 10 thick, with 36 drain slots 20 x 8 (a mask in the build; see the text)"
+    },
+    {
+     "id": "c1_rail_f",
+     "type": "box",
+     "c": [
+      0.0,
+      -147.0,
+      12.0
+     ],
+     "s": [
+      408.0,
+      4.0,
+      24
+     ],
+     "material": "crate_plastic",
+     "edge": "lower edge r 2",
+     "note": "base rail 24 high, 4 thick"
+    },
+    {
+     "id": "c1_rail_b",
+     "type": "box",
+     "c": [
+      0.0,
+      147.0,
+      12.0
+     ],
+     "s": [
+      408.0,
+      4.0,
+      24
+     ],
+     "material": "crate_plastic",
+     "edge": "lower edge r 2",
+     "note": "base rail 24 high, 4 thick"
+    },
+    {
+     "id": "c1_rail_l",
+     "type": "box",
+     "c": [
+      -202.0,
+      0.0,
+      12.0
+     ],
+     "s": [
+      4.0,
+      290.0,
+      24
+     ],
+     "material": "crate_plastic",
+     "edge": "lower edge r 2",
+     "note": "base rail 24 high, 4 thick"
+    },
+    {
+     "id": "c1_rail_r",
+     "type": "box",
+     "c": [
+      202.0,
+      0.0,
+      12.0
+     ],
+     "s": [
+      4.0,
+      290.0,
+      24
+     ],
+     "material": "crate_plastic",
+     "edge": "lower edge r 2",
+     "note": "base rail 24 high, 4 thick"
+    },
+    {
+     "id": "c1_rim_f",
+     "type": "box",
+     "c": [
+      0.0,
+      -146.0,
+      250.0
+     ],
+     "s": [
+      408.0,
+      6.0,
+      28.0
+     ],
+     "material": "crate_plastic",
+     "edge": "top edge r 3",
+     "note": "rim 28 high, 6 thick, a stiffening band"
+    },
+    {
+     "id": "c1_rim_b",
+     "type": "box",
+     "c": [
+      0.0,
+      146.0,
+      250.0
+     ],
+     "s": [
+      408.0,
+      6.0,
+      28.0
+     ],
+     "material": "crate_plastic",
+     "edge": "top edge r 3",
+     "note": "rim 28 high, 6 thick, a stiffening band"
+    },
+    {
+     "id": "c1_rim_l",
+     "type": "box",
+     "c": [
+      -201.0,
+      0.0,
+      250.0
+     ],
+     "s": [
+      6.0,
+      286.0,
+      28.0
+     ],
+     "material": "crate_plastic",
+     "edge": "top edge r 3",
+     "note": "rim 28 high, 6 thick, a stiffening band"
+    },
+    {
+     "id": "c1_rim_r",
+     "type": "box",
+     "c": [
+      201.0,
+      0.0,
+      250.0
+     ],
+     "s": [
+      6.0,
+      286.0,
+      28.0
+     ],
+     "material": "crate_plastic",
+     "edge": "top edge r 3",
+     "note": "rim 28 high, 6 thick, a stiffening band"
+    },
+    {
+     "id": "c1_post_fl",
+     "type": "box",
+     "c": [
+      -196.0,
+      -141.0,
+      130.0
+     ],
+     "s": [
+      16.0,
+      16.0,
+      212.0
+     ],
+     "material": "crate_plastic",
+     "edge": "vertical edge r 4",
+     "note": "corner post 16 x 16"
+    },
+    {
+     "id": "c1_post_fr",
+     "type": "box",
+     "c": [
+      196.0,
+      -141.0,
+      130.0
+     ],
+     "s": [
+      16.0,
+      16.0,
+      212.0
+     ],
+     "material": "crate_plastic",
+     "edge": "vertical edge r 4",
+     "note": "corner post 16 x 16"
+    },
+    {
+     "id": "c1_post_bl",
+     "type": "box",
+     "c": [
+      -196.0,
+      141.0,
+      130.0
+     ],
+     "s": [
+      16.0,
+      16.0,
+      212.0
+     ],
+     "material": "crate_plastic",
+     "edge": "vertical edge r 4",
+     "note": "corner post 16 x 16"
+    },
+    {
+     "id": "c1_post_br",
+     "type": "box",
+     "c": [
+      196.0,
+      141.0,
+      130.0
+     ],
+     "s": [
+      16.0,
+      16.0,
+      212.0
+     ],
+     "material": "crate_plastic",
+     "edge": "vertical edge r 4",
+     "note": "corner post 16 x 16"
+    },
+    {
+     "id": "c1_rib_f0",
+     "type": "box",
+     "c": [
+      -102.0,
+      -147.0,
+      130.0
+     ],
+     "s": [
+      14.0,
+      4.0,
+      212.0
+     ],
+     "material": "crate_plastic",
+     "note": "rib 14 wide between the slots"
+    },
+    {
+     "id": "c1_rib_b0",
+     "type": "box",
+     "c": [
+      -102.0,
+      147.0,
+      130.0
+     ],
+     "s": [
+      14.0,
+      4.0,
+      212.0
+     ],
+     "material": "crate_plastic"
+    },
+    {
+     "id": "c1_rib_f1",
+     "type": "box",
+     "c": [
+      0.0,
+      -147.0,
+      130.0
+     ],
+     "s": [
+      14.0,
+      4.0,
+      212.0
+     ],
+     "material": "crate_plastic",
+     "note": "rib 14 wide between the slots"
+    },
+    {
+     "id": "c1_rib_b1",
+     "type": "box",
+     "c": [
+      0.0,
+      147.0,
+      130.0
+     ],
+     "s": [
+      14.0,
+      4.0,
+      212.0
+     ],
+     "material": "crate_plastic"
+    },
+    {
+     "id": "c1_rib_f2",
+     "type": "box",
+     "c": [
+      102.0,
+      -147.0,
+      130.0
+     ],
+     "s": [
+      14.0,
+      4.0,
+      212.0
+     ],
+     "material": "crate_plastic",
+     "note": "rib 14 wide between the slots"
+    },
+    {
+     "id": "c1_rib_b2",
+     "type": "box",
+     "c": [
+      102.0,
+      147.0,
+      130.0
+     ],
+     "s": [
+      14.0,
+      4.0,
+      212.0
+     ],
+     "material": "crate_plastic"
+    },
+    {
+     "id": "c1_band_f",
+     "type": "box",
+     "c": [
+      0.0,
+      -147.0,
+      151.0
+     ],
+     "s": [
+      376.0,
+      4.0,
+      66
+     ],
+     "material": "crate_plastic",
+     "note": "solid band 66 high that carries the dairy's name"
+    },
+    {
+     "id": "c1_band_b",
+     "type": "box",
+     "c": [
+      0.0,
+      147.0,
+      151.0
+     ],
+     "s": [
+      376.0,
+      4.0,
+      66
+     ],
+     "material": "crate_plastic"
+    },
+    {
+     "id": "c1_rib_l",
+     "type": "box",
+     "c": [
+      -202.0,
+      0.0,
+      130.0
+     ],
+     "s": [
+      4.0,
+      14,
+      212.0
+     ],
+     "material": "crate_plastic",
+     "note": "centre rib of each end wall; the two openings beside it are the hand holds"
+    },
+    {
+     "id": "c1_rib_r",
+     "type": "box",
+     "c": [
+      202.0,
+      0.0,
+      130.0
+     ],
+     "s": [
+      4.0,
+      14,
+      212.0
+     ],
+     "material": "crate_plastic"
+    },
+    {
+     "id": "c1_lug_fl",
+     "type": "box",
+     "c": [
+      -191.0,
+      -136.0,
+      268.5
+     ],
+     "s": [
+      14.0,
+      14.0,
+      9.0
+     ],
+     "material": "crate_plastic",
+     "note": "stacking lug 14 x 14 x 9 on the rim; it enters the recess in the next crate's base rail"
+    },
+    {
+     "id": "c1_lug_fr",
+     "type": "box",
+     "c": [
+      191.0,
+      -136.0,
+      268.5
+     ],
+     "s": [
+      14.0,
+      14.0,
+      9.0
+     ],
+     "material": "crate_plastic",
+     "note": "stacking lug 14 x 14 x 9 on the rim; it enters the recess in the next crate's base rail"
+    },
+    {
+     "id": "c1_lug_bl",
+     "type": "box",
+     "c": [
+      -191.0,
+      136.0,
+      268.5
+     ],
+     "s": [
+      14.0,
+      14.0,
+      9.0
+     ],
+     "material": "crate_plastic",
+     "note": "stacking lug 14 x 14 x 9 on the rim; it enters the recess in the next crate's base rail"
+    },
+    {
+     "id": "c1_lug_br",
+     "type": "box",
+     "c": [
+      191.0,
+      136.0,
+      268.5
+     ],
+     "s": [
+      14.0,
+      14.0,
+      9.0
+     ],
+     "material": "crate_plastic",
+     "note": "stacking lug 14 x 14 x 9 on the rim; it enters the recess in the next crate's base rail"
+    }
+   ],
+   "overall": {
+    "w": 408.0,
+    "d": 298.0,
+    "h": 273.0
+   },
+   "overall_tol": 1.0,
+   "joins": [
+    [
+     "c1_rail_f",
+     "c1_floor"
+    ],
+    [
+     "c1_post_fl",
+     "c1_rail_f"
+    ],
+    [
+     "c1_rim_f",
+     "c1_post_fl"
+    ],
+    [
+     "c1_rib_f0",
+     "c1_rail_f"
+    ],
+    [
+     "c1_band_f",
+     "c1_rib_f0"
+    ],
+    [
+     "c1_lug_fl",
+     "c1_rim_f"
+    ],
+    [
+     "c1_rim_l",
+     "c1_rim_f"
+    ],
+    [
+     "c1_rail_l",
+     "c1_rail_f"
+    ]
+   ],
+   "embeds": [
+    [
+     "c1_lug_fl",
+     "c2_floor",
+     6.0
+    ],
+    [
+     "c1_lug_fr",
+     "c2_floor",
+     6.0
+    ],
+    [
+     "c1_lug_bl",
+     "c2_floor",
+     6.0
+    ],
+    [
+     "c1_lug_br",
+     "c2_floor",
+     6.0
+    ],
+    [
+     "c2_lug_fl",
+     "c3_floor",
+     6.0
+    ],
+    [
+     "c2_lug_fr",
+     "c3_floor",
+     6.0
+    ],
+    [
+     "c2_lug_bl",
+     "c3_floor",
+     6.0
+    ],
+    [
+     "c2_lug_br",
+     "c3_floor",
+     6.0
+    ],
+    [
+     "c3_lug_fl",
+     "c4_floor",
+     6.0
+    ],
+    [
+     "c3_lug_fr",
+     "c4_floor",
+     6.0
+    ],
+    [
+     "c3_lug_bl",
+     "c4_floor",
+     6.0
+    ],
+    [
+     "c3_lug_br",
+     "c4_floor",
+     6.0
+    ]
+   ],
+   "overlap_allow": 5.0,
+   "faces": [
+    {
+     "id": "c1 front band",
+     "o": [
+      -188.0,
+      -149.0,
+      118.0
+     ],
+     "u": [
+      1,
+      0,
+      0
+     ],
+     "v": [
+      0,
+      0,
+      1
+     ],
+     "n": [
+      0,
+      -1,
+      0
+     ],
+     "nu": 376.0,
+     "nv": 66.0,
+     "depth": 8.0,
+     "blockers": [
+      "c1_band_f"
+     ]
+    },
+    {
+     "id": "c1 rim front",
+     "o": [
+      -202.0,
+      -149.0,
+      238.0
+     ],
+     "u": [
+      1,
+      0,
+      0
+     ],
+     "v": [
+      0,
+      0,
+      1
+     ],
+     "n": [
+      0,
+      -1,
+      0
+     ],
+     "nu": 404.0,
+     "nv": 24.0,
+     "depth": 10.0,
+     "blockers": [
+      "c1_rim_f"
+     ]
+    },
+    {
+     "id": "c1 base rail front",
+     "o": [
+      -202.0,
+      -149.0,
+      2.0
+     ],
+     "u": [
+      1,
+      0,
+      0
+     ],
+     "v": [
+      0,
+      0,
+      1
+     ],
+     "n": [
+      0,
+      -1,
+      0
+     ],
+     "nu": 404.0,
+     "nv": 20.0,
+     "depth": 8.0,
+     "blockers": [
+      "c1_rail_f"
+     ]
+    }
+   ]
+  },
+  "MC3": {
+   "name": "MC3: a stack of three crates, six empty pint bottles in the top one (the sample)",
+   "parts": [
+    {
+     "id": "c1_floor",
+     "type": "box",
+     "c": [
+      0.0,
+      0.0,
+      5.0
+     ],
+     "s": [
+      400.0,
+      290.0,
+      10.0
+     ],
+     "material": "crate_plastic",
+     "edge": "edges r 2",
+     "note": "floor plate, 10 thick, with 36 drain slots 20 x 8 (a mask in the build; see the text)"
+    },
+    {
+     "id": "c1_rail_f",
+     "type": "box",
+     "c": [
+      0.0,
+      -147.0,
+      12.0
+     ],
+     "s": [
+      408.0,
+      4.0,
+      24.0
+     ],
+     "material": "crate_plastic",
+     "edge": "lower edge r 2",
+     "note": "base rail 24 high, 4 thick"
+    },
+    {
+     "id": "c1_rail_b",
+     "type": "box",
+     "c": [
+      0.0,
+      147.0,
+      12.0
+     ],
+     "s": [
+      408.0,
+      4.0,
+      24.0
+     ],
+     "material": "crate_plastic",
+     "edge": "lower edge r 2",
+     "note": "base rail 24 high, 4 thick"
+    },
+    {
+     "id": "c1_rail_l",
+     "type": "box",
+     "c": [
+      -202.0,
+      0.0,
+      12.0
+     ],
+     "s": [
+      4.0,
+      290.0,
+      24.0
+     ],
+     "material": "crate_plastic",
+     "edge": "lower edge r 2",
+     "note": "base rail 24 high, 4 thick"
+    },
+    {
+     "id": "c1_rail_r",
+     "type": "box",
+     "c": [
+      202.0,
+      0.0,
+      12.0
+     ],
+     "s": [
+      4.0,
+      290.0,
+      24.0
+     ],
+     "material": "crate_plastic",
+     "edge": "lower edge r 2",
+     "note": "base rail 24 high, 4 thick"
+    },
+    {
+     "id": "c1_rim_f",
+     "type": "box",
+     "c": [
+      0.0,
+      -146.0,
+      250.0
+     ],
+     "s": [
+      408.0,
+      6.0,
+      28.0
+     ],
+     "material": "crate_plastic",
+     "edge": "top edge r 3",
+     "note": "rim 28 high, 6 thick, a stiffening band"
+    },
+    {
+     "id": "c1_rim_b",
+     "type": "box",
+     "c": [
+      0.0,
+      146.0,
+      250.0
+     ],
+     "s": [
+      408.0,
+      6.0,
+      28.0
+     ],
+     "material": "crate_plastic",
+     "edge": "top edge r 3",
+     "note": "rim 28 high, 6 thick, a stiffening band"
+    },
+    {
+     "id": "c1_rim_l",
+     "type": "box",
+     "c": [
+      -201.0,
+      0.0,
+      250.0
+     ],
+     "s": [
+      6.0,
+      286.0,
+      28.0
+     ],
+     "material": "crate_plastic",
+     "edge": "top edge r 3",
+     "note": "rim 28 high, 6 thick, a stiffening band"
+    },
+    {
+     "id": "c1_rim_r",
+     "type": "box",
+     "c": [
+      201.0,
+      0.0,
+      250.0
+     ],
+     "s": [
+      6.0,
+      286.0,
+      28.0
+     ],
+     "material": "crate_plastic",
+     "edge": "top edge r 3",
+     "note": "rim 28 high, 6 thick, a stiffening band"
+    },
+    {
+     "id": "c1_post_fl",
+     "type": "box",
+     "c": [
+      -196.0,
+      -141.0,
+      130.0
+     ],
+     "s": [
+      16.0,
+      16.0,
+      212.0
+     ],
+     "material": "crate_plastic",
+     "edge": "vertical edge r 4",
+     "note": "corner post 16 x 16"
+    },
+    {
+     "id": "c1_post_fr",
+     "type": "box",
+     "c": [
+      196.0,
+      -141.0,
+      130.0
+     ],
+     "s": [
+      16.0,
+      16.0,
+      212.0
+     ],
+     "material": "crate_plastic",
+     "edge": "vertical edge r 4",
+     "note": "corner post 16 x 16"
+    },
+    {
+     "id": "c1_post_bl",
+     "type": "box",
+     "c": [
+      -196.0,
+      141.0,
+      130.0
+     ],
+     "s": [
+      16.0,
+      16.0,
+      212.0
+     ],
+     "material": "crate_plastic",
+     "edge": "vertical edge r 4",
+     "note": "corner post 16 x 16"
+    },
+    {
+     "id": "c1_post_br",
+     "type": "box",
+     "c": [
+      196.0,
+      141.0,
+      130.0
+     ],
+     "s": [
+      16.0,
+      16.0,
+      212.0
+     ],
+     "material": "crate_plastic",
+     "edge": "vertical edge r 4",
+     "note": "corner post 16 x 16"
+    },
+    {
+     "id": "c1_rib_f0",
+     "type": "box",
+     "c": [
+      -102.0,
+      -147.0,
+      130.0
+     ],
+     "s": [
+      14.0,
+      4.0,
+      212.0
+     ],
+     "material": "crate_plastic",
+     "note": "rib 14 wide between the slots"
+    },
+    {
+     "id": "c1_rib_b0",
+     "type": "box",
+     "c": [
+      -102.0,
+      147.0,
+      130.0
+     ],
+     "s": [
+      14.0,
+      4.0,
+      212.0
+     ],
+     "material": "crate_plastic"
+    },
+    {
+     "id": "c1_rib_f1",
+     "type": "box",
+     "c": [
+      0.0,
+      -147.0,
+      130.0
+     ],
+     "s": [
+      14.0,
+      4.0,
+      212.0
+     ],
+     "material": "crate_plastic",
+     "note": "rib 14 wide between the slots"
+    },
+    {
+     "id": "c1_rib_b1",
+     "type": "box",
+     "c": [
+      0.0,
+      147.0,
+      130.0
+     ],
+     "s": [
+      14.0,
+      4.0,
+      212.0
+     ],
+     "material": "crate_plastic"
+    },
+    {
+     "id": "c1_rib_f2",
+     "type": "box",
+     "c": [
+      102.0,
+      -147.0,
+      130.0
+     ],
+     "s": [
+      14.0,
+      4.0,
+      212.0
+     ],
+     "material": "crate_plastic",
+     "note": "rib 14 wide between the slots"
+    },
+    {
+     "id": "c1_rib_b2",
+     "type": "box",
+     "c": [
+      102.0,
+      147.0,
+      130.0
+     ],
+     "s": [
+      14.0,
+      4.0,
+      212.0
+     ],
+     "material": "crate_plastic"
+    },
+    {
+     "id": "c1_band_f",
+     "type": "box",
+     "c": [
+      0.0,
+      -147.0,
+      151.0
+     ],
+     "s": [
+      376.0,
+      4.0,
+      66.0
+     ],
+     "material": "crate_plastic",
+     "note": "solid band 66 high that carries the dairy's name"
+    },
+    {
+     "id": "c1_band_b",
+     "type": "box",
+     "c": [
+      0.0,
+      147.0,
+      151.0
+     ],
+     "s": [
+      376.0,
+      4.0,
+      66.0
+     ],
+     "material": "crate_plastic"
+    },
+    {
+     "id": "c1_rib_l",
+     "type": "box",
+     "c": [
+      -202.0,
+      0.0,
+      130.0
+     ],
+     "s": [
+      4.0,
+      14,
+      212.0
+     ],
+     "material": "crate_plastic",
+     "note": "centre rib of each end wall; the two openings beside it are the hand holds"
+    },
+    {
+     "id": "c1_rib_r",
+     "type": "box",
+     "c": [
+      202.0,
+      0.0,
+      130.0
+     ],
+     "s": [
+      4.0,
+      14,
+      212.0
+     ],
+     "material": "crate_plastic"
+    },
+    {
+     "id": "c1_lug_fl",
+     "type": "box",
+     "c": [
+      -191.0,
+      -136.0,
+      268.5
+     ],
+     "s": [
+      14.0,
+      14.0,
+      9.0
+     ],
+     "material": "crate_plastic",
+     "note": "stacking lug 14 x 14 x 9 on the rim; it enters the recess in the next crate's base rail"
+    },
+    {
+     "id": "c1_lug_fr",
+     "type": "box",
+     "c": [
+      191.0,
+      -136.0,
+      268.5
+     ],
+     "s": [
+      14.0,
+      14.0,
+      9.0
+     ],
+     "material": "crate_plastic",
+     "note": "stacking lug 14 x 14 x 9 on the rim; it enters the recess in the next crate's base rail"
+    },
+    {
+     "id": "c1_lug_bl",
+     "type": "box",
+     "c": [
+      -191.0,
+      136.0,
+      268.5
+     ],
+     "s": [
+      14.0,
+      14.0,
+      9.0
+     ],
+     "material": "crate_plastic",
+     "note": "stacking lug 14 x 14 x 9 on the rim; it enters the recess in the next crate's base rail"
+    },
+    {
+     "id": "c1_lug_br",
+     "type": "box",
+     "c": [
+      191.0,
+      136.0,
+      268.5
+     ],
+     "s": [
+      14.0,
+      14.0,
+      9.0
+     ],
+     "material": "crate_plastic",
+     "note": "stacking lug 14 x 14 x 9 on the rim; it enters the recess in the next crate's base rail"
+    },
+    {
+     "id": "c2_floor",
+     "type": "box",
+     "c": [
+      0.0,
+      0.0,
+      269.0
+     ],
+     "s": [
+      400.0,
+      290.0,
+      10.0
+     ],
+     "material": "crate_plastic",
+     "edge": "edges r 2",
+     "note": "floor plate, 10 thick, with 36 drain slots 20 x 8 (a mask in the build; see the text)"
+    },
+    {
+     "id": "c2_rail_f",
+     "type": "box",
+     "c": [
+      0.0,
+      -147.0,
+      276.0
+     ],
+     "s": [
+      408.0,
+      4.0,
+      24.0
+     ],
+     "material": "crate_plastic",
+     "edge": "lower edge r 2",
+     "note": "base rail 24 high, 4 thick"
+    },
+    {
+     "id": "c2_rail_b",
+     "type": "box",
+     "c": [
+      0.0,
+      147.0,
+      276.0
+     ],
+     "s": [
+      408.0,
+      4.0,
+      24.0
+     ],
+     "material": "crate_plastic",
+     "edge": "lower edge r 2",
+     "note": "base rail 24 high, 4 thick"
+    },
+    {
+     "id": "c2_rail_l",
+     "type": "box",
+     "c": [
+      -202.0,
+      0.0,
+      276.0
+     ],
+     "s": [
+      4.0,
+      290.0,
+      24.0
+     ],
+     "material": "crate_plastic",
+     "edge": "lower edge r 2",
+     "note": "base rail 24 high, 4 thick"
+    },
+    {
+     "id": "c2_rail_r",
+     "type": "box",
+     "c": [
+      202.0,
+      0.0,
+      276.0
+     ],
+     "s": [
+      4.0,
+      290.0,
+      24.0
+     ],
+     "material": "crate_plastic",
+     "edge": "lower edge r 2",
+     "note": "base rail 24 high, 4 thick"
+    },
+    {
+     "id": "c2_rim_f",
+     "type": "box",
+     "c": [
+      0.0,
+      -146.0,
+      514.0
+     ],
+     "s": [
+      408.0,
+      6.0,
+      28.0
+     ],
+     "material": "crate_plastic",
+     "edge": "top edge r 3",
+     "note": "rim 28 high, 6 thick, a stiffening band"
+    },
+    {
+     "id": "c2_rim_b",
+     "type": "box",
+     "c": [
+      0.0,
+      146.0,
+      514.0
+     ],
+     "s": [
+      408.0,
+      6.0,
+      28.0
+     ],
+     "material": "crate_plastic",
+     "edge": "top edge r 3",
+     "note": "rim 28 high, 6 thick, a stiffening band"
+    },
+    {
+     "id": "c2_rim_l",
+     "type": "box",
+     "c": [
+      -201.0,
+      0.0,
+      514.0
+     ],
+     "s": [
+      6.0,
+      286.0,
+      28.0
+     ],
+     "material": "crate_plastic",
+     "edge": "top edge r 3",
+     "note": "rim 28 high, 6 thick, a stiffening band"
+    },
+    {
+     "id": "c2_rim_r",
+     "type": "box",
+     "c": [
+      201.0,
+      0.0,
+      514.0
+     ],
+     "s": [
+      6.0,
+      286.0,
+      28.0
+     ],
+     "material": "crate_plastic",
+     "edge": "top edge r 3",
+     "note": "rim 28 high, 6 thick, a stiffening band"
+    },
+    {
+     "id": "c2_post_fl",
+     "type": "box",
+     "c": [
+      -196.0,
+      -141.0,
+      394.0
+     ],
+     "s": [
+      16.0,
+      16.0,
+      212.0
+     ],
+     "material": "crate_plastic",
+     "edge": "vertical edge r 4",
+     "note": "corner post 16 x 16"
+    },
+    {
+     "id": "c2_post_fr",
+     "type": "box",
+     "c": [
+      196.0,
+      -141.0,
+      394.0
+     ],
+     "s": [
+      16.0,
+      16.0,
+      212.0
+     ],
+     "material": "crate_plastic",
+     "edge": "vertical edge r 4",
+     "note": "corner post 16 x 16"
+    },
+    {
+     "id": "c2_post_bl",
+     "type": "box",
+     "c": [
+      -196.0,
+      141.0,
+      394.0
+     ],
+     "s": [
+      16.0,
+      16.0,
+      212.0
+     ],
+     "material": "crate_plastic",
+     "edge": "vertical edge r 4",
+     "note": "corner post 16 x 16"
+    },
+    {
+     "id": "c2_post_br",
+     "type": "box",
+     "c": [
+      196.0,
+      141.0,
+      394.0
+     ],
+     "s": [
+      16.0,
+      16.0,
+      212.0
+     ],
+     "material": "crate_plastic",
+     "edge": "vertical edge r 4",
+     "note": "corner post 16 x 16"
+    },
+    {
+     "id": "c2_rib_f0",
+     "type": "box",
+     "c": [
+      -102.0,
+      -147.0,
+      394.0
+     ],
+     "s": [
+      14.0,
+      4.0,
+      212.0
+     ],
+     "material": "crate_plastic",
+     "note": "rib 14 wide between the slots"
+    },
+    {
+     "id": "c2_rib_b0",
+     "type": "box",
+     "c": [
+      -102.0,
+      147.0,
+      394.0
+     ],
+     "s": [
+      14.0,
+      4.0,
+      212.0
+     ],
+     "material": "crate_plastic"
+    },
+    {
+     "id": "c2_rib_f1",
+     "type": "box",
+     "c": [
+      0.0,
+      -147.0,
+      394.0
+     ],
+     "s": [
+      14.0,
+      4.0,
+      212.0
+     ],
+     "material": "crate_plastic",
+     "note": "rib 14 wide between the slots"
+    },
+    {
+     "id": "c2_rib_b1",
+     "type": "box",
+     "c": [
+      0.0,
+      147.0,
+      394.0
+     ],
+     "s": [
+      14.0,
+      4.0,
+      212.0
+     ],
+     "material": "crate_plastic"
+    },
+    {
+     "id": "c2_rib_f2",
+     "type": "box",
+     "c": [
+      102.0,
+      -147.0,
+      394.0
+     ],
+     "s": [
+      14.0,
+      4.0,
+      212.0
+     ],
+     "material": "crate_plastic",
+     "note": "rib 14 wide between the slots"
+    },
+    {
+     "id": "c2_rib_b2",
+     "type": "box",
+     "c": [
+      102.0,
+      147.0,
+      394.0
+     ],
+     "s": [
+      14.0,
+      4.0,
+      212.0
+     ],
+     "material": "crate_plastic"
+    },
+    {
+     "id": "c2_band_f",
+     "type": "box",
+     "c": [
+      0.0,
+      -147.0,
+      415.0
+     ],
+     "s": [
+      376.0,
+      4.0,
+      66.0
+     ],
+     "material": "crate_plastic",
+     "note": "solid band 66 high that carries the dairy's name"
+    },
+    {
+     "id": "c2_band_b",
+     "type": "box",
+     "c": [
+      0.0,
+      147.0,
+      415.0
+     ],
+     "s": [
+      376.0,
+      4.0,
+      66.0
+     ],
+     "material": "crate_plastic"
+    },
+    {
+     "id": "c2_rib_l",
+     "type": "box",
+     "c": [
+      -202.0,
+      0.0,
+      394.0
+     ],
+     "s": [
+      4.0,
+      14,
+      212.0
+     ],
+     "material": "crate_plastic",
+     "note": "centre rib of each end wall; the two openings beside it are the hand holds"
+    },
+    {
+     "id": "c2_rib_r",
+     "type": "box",
+     "c": [
+      202.0,
+      0.0,
+      394.0
+     ],
+     "s": [
+      4.0,
+      14,
+      212.0
+     ],
+     "material": "crate_plastic"
+    },
+    {
+     "id": "c2_lug_fl",
+     "type": "box",
+     "c": [
+      -191.0,
+      -136.0,
+      532.5
+     ],
+     "s": [
+      14.0,
+      14.0,
+      9.0
+     ],
+     "material": "crate_plastic",
+     "note": "stacking lug 14 x 14 x 9 on the rim; it enters the recess in the next crate's base rail"
+    },
+    {
+     "id": "c2_lug_fr",
+     "type": "box",
+     "c": [
+      191.0,
+      -136.0,
+      532.5
+     ],
+     "s": [
+      14.0,
+      14.0,
+      9.0
+     ],
+     "material": "crate_plastic",
+     "note": "stacking lug 14 x 14 x 9 on the rim; it enters the recess in the next crate's base rail"
+    },
+    {
+     "id": "c2_lug_bl",
+     "type": "box",
+     "c": [
+      -191.0,
+      136.0,
+      532.5
+     ],
+     "s": [
+      14.0,
+      14.0,
+      9.0
+     ],
+     "material": "crate_plastic",
+     "note": "stacking lug 14 x 14 x 9 on the rim; it enters the recess in the next crate's base rail"
+    },
+    {
+     "id": "c2_lug_br",
+     "type": "box",
+     "c": [
+      191.0,
+      136.0,
+      532.5
+     ],
+     "s": [
+      14.0,
+      14.0,
+      9.0
+     ],
+     "material": "crate_plastic",
+     "note": "stacking lug 14 x 14 x 9 on the rim; it enters the recess in the next crate's base rail"
+    },
+    {
+     "id": "c3_floor",
+     "type": "box",
+     "c": [
+      0.0,
+      0.0,
+      533.0
+     ],
+     "s": [
+      400.0,
+      290.0,
+      10.0
+     ],
+     "material": "crate_plastic",
+     "edge": "edges r 2",
+     "note": "floor plate, 10 thick, with 36 drain slots 20 x 8 (a mask in the build; see the text)"
+    },
+    {
+     "id": "c3_rail_f",
+     "type": "box",
+     "c": [
+      0.0,
+      -147.0,
+      540.0
+     ],
+     "s": [
+      408.0,
+      4.0,
+      24.0
+     ],
+     "material": "crate_plastic",
+     "edge": "lower edge r 2",
+     "note": "base rail 24 high, 4 thick"
+    },
+    {
+     "id": "c3_rail_b",
+     "type": "box",
+     "c": [
+      0.0,
+      147.0,
+      540.0
+     ],
+     "s": [
+      408.0,
+      4.0,
+      24.0
+     ],
+     "material": "crate_plastic",
+     "edge": "lower edge r 2",
+     "note": "base rail 24 high, 4 thick"
+    },
+    {
+     "id": "c3_rail_l",
+     "type": "box",
+     "c": [
+      -202.0,
+      0.0,
+      540.0
+     ],
+     "s": [
+      4.0,
+      290.0,
+      24.0
+     ],
+     "material": "crate_plastic",
+     "edge": "lower edge r 2",
+     "note": "base rail 24 high, 4 thick"
+    },
+    {
+     "id": "c3_rail_r",
+     "type": "box",
+     "c": [
+      202.0,
+      0.0,
+      540.0
+     ],
+     "s": [
+      4.0,
+      290.0,
+      24.0
+     ],
+     "material": "crate_plastic",
+     "edge": "lower edge r 2",
+     "note": "base rail 24 high, 4 thick"
+    },
+    {
+     "id": "c3_rim_f",
+     "type": "box",
+     "c": [
+      0.0,
+      -146.0,
+      778.0
+     ],
+     "s": [
+      408.0,
+      6.0,
+      28.0
+     ],
+     "material": "crate_plastic",
+     "edge": "top edge r 3",
+     "note": "rim 28 high, 6 thick, a stiffening band"
+    },
+    {
+     "id": "c3_rim_b",
+     "type": "box",
+     "c": [
+      0.0,
+      146.0,
+      778.0
+     ],
+     "s": [
+      408.0,
+      6.0,
+      28.0
+     ],
+     "material": "crate_plastic",
+     "edge": "top edge r 3",
+     "note": "rim 28 high, 6 thick, a stiffening band"
+    },
+    {
+     "id": "c3_rim_l",
+     "type": "box",
+     "c": [
+      -201.0,
+      0.0,
+      778.0
+     ],
+     "s": [
+      6.0,
+      286.0,
+      28.0
+     ],
+     "material": "crate_plastic",
+     "edge": "top edge r 3",
+     "note": "rim 28 high, 6 thick, a stiffening band"
+    },
+    {
+     "id": "c3_rim_r",
+     "type": "box",
+     "c": [
+      201.0,
+      0.0,
+      778.0
+     ],
+     "s": [
+      6.0,
+      286.0,
+      28.0
+     ],
+     "material": "crate_plastic",
+     "edge": "top edge r 3",
+     "note": "rim 28 high, 6 thick, a stiffening band"
+    },
+    {
+     "id": "c3_post_fl",
+     "type": "box",
+     "c": [
+      -196.0,
+      -141.0,
+      658.0
+     ],
+     "s": [
+      16.0,
+      16.0,
+      212.0
+     ],
+     "material": "crate_plastic",
+     "edge": "vertical edge r 4",
+     "note": "corner post 16 x 16"
+    },
+    {
+     "id": "c3_post_fr",
+     "type": "box",
+     "c": [
+      196.0,
+      -141.0,
+      658.0
+     ],
+     "s": [
+      16.0,
+      16.0,
+      212.0
+     ],
+     "material": "crate_plastic",
+     "edge": "vertical edge r 4",
+     "note": "corner post 16 x 16"
+    },
+    {
+     "id": "c3_post_bl",
+     "type": "box",
+     "c": [
+      -196.0,
+      141.0,
+      658.0
+     ],
+     "s": [
+      16.0,
+      16.0,
+      212.0
+     ],
+     "material": "crate_plastic",
+     "edge": "vertical edge r 4",
+     "note": "corner post 16 x 16"
+    },
+    {
+     "id": "c3_post_br",
+     "type": "box",
+     "c": [
+      196.0,
+      141.0,
+      658.0
+     ],
+     "s": [
+      16.0,
+      16.0,
+      212.0
+     ],
+     "material": "crate_plastic",
+     "edge": "vertical edge r 4",
+     "note": "corner post 16 x 16"
+    },
+    {
+     "id": "c3_rib_f0",
+     "type": "box",
+     "c": [
+      -102.0,
+      -147.0,
+      658.0
+     ],
+     "s": [
+      14.0,
+      4.0,
+      212.0
+     ],
+     "material": "crate_plastic",
+     "note": "rib 14 wide between the slots"
+    },
+    {
+     "id": "c3_rib_b0",
+     "type": "box",
+     "c": [
+      -102.0,
+      147.0,
+      658.0
+     ],
+     "s": [
+      14.0,
+      4.0,
+      212.0
+     ],
+     "material": "crate_plastic"
+    },
+    {
+     "id": "c3_rib_f1",
+     "type": "box",
+     "c": [
+      0.0,
+      -147.0,
+      658.0
+     ],
+     "s": [
+      14.0,
+      4.0,
+      212.0
+     ],
+     "material": "crate_plastic",
+     "note": "rib 14 wide between the slots"
+    },
+    {
+     "id": "c3_rib_b1",
+     "type": "box",
+     "c": [
+      0.0,
+      147.0,
+      658.0
+     ],
+     "s": [
+      14.0,
+      4.0,
+      212.0
+     ],
+     "material": "crate_plastic"
+    },
+    {
+     "id": "c3_rib_f2",
+     "type": "box",
+     "c": [
+      102.0,
+      -147.0,
+      658.0
+     ],
+     "s": [
+      14.0,
+      4.0,
+      212.0
+     ],
+     "material": "crate_plastic",
+     "note": "rib 14 wide between the slots"
+    },
+    {
+     "id": "c3_rib_b2",
+     "type": "box",
+     "c": [
+      102.0,
+      147.0,
+      658.0
+     ],
+     "s": [
+      14.0,
+      4.0,
+      212.0
+     ],
+     "material": "crate_plastic"
+    },
+    {
+     "id": "c3_band_f",
+     "type": "box",
+     "c": [
+      0.0,
+      -147.0,
+      679.0
+     ],
+     "s": [
+      376.0,
+      4.0,
+      66.0
+     ],
+     "material": "crate_plastic",
+     "note": "solid band 66 high that carries the dairy's name"
+    },
+    {
+     "id": "c3_band_b",
+     "type": "box",
+     "c": [
+      0.0,
+      147.0,
+      679.0
+     ],
+     "s": [
+      376.0,
+      4.0,
+      66.0
+     ],
+     "material": "crate_plastic"
+    },
+    {
+     "id": "c3_rib_l",
+     "type": "box",
+     "c": [
+      -202.0,
+      0.0,
+      658.0
+     ],
+     "s": [
+      4.0,
+      14,
+      212.0
+     ],
+     "material": "crate_plastic",
+     "note": "centre rib of each end wall; the two openings beside it are the hand holds"
+    },
+    {
+     "id": "c3_rib_r",
+     "type": "box",
+     "c": [
+      202.0,
+      0.0,
+      658.0
+     ],
+     "s": [
+      4.0,
+      14,
+      212.0
+     ],
+     "material": "crate_plastic"
+    },
+    {
+     "id": "c3_lug_fl",
+     "type": "box",
+     "c": [
+      -191.0,
+      -136.0,
+      796.5
+     ],
+     "s": [
+      14.0,
+      14.0,
+      9.0
+     ],
+     "material": "crate_plastic",
+     "note": "stacking lug 14 x 14 x 9 on the rim; it enters the recess in the next crate's base rail"
+    },
+    {
+     "id": "c3_lug_fr",
+     "type": "box",
+     "c": [
+      191.0,
+      -136.0,
+      796.5
+     ],
+     "s": [
+      14.0,
+      14.0,
+      9.0
+     ],
+     "material": "crate_plastic",
+     "note": "stacking lug 14 x 14 x 9 on the rim; it enters the recess in the next crate's base rail"
+    },
+    {
+     "id": "c3_lug_bl",
+     "type": "box",
+     "c": [
+      -191.0,
+      136.0,
+      796.5
+     ],
+     "s": [
+      14.0,
+      14.0,
+      9.0
+     ],
+     "material": "crate_plastic",
+     "note": "stacking lug 14 x 14 x 9 on the rim; it enters the recess in the next crate's base rail"
+    },
+    {
+     "id": "c3_lug_br",
+     "type": "box",
+     "c": [
+      191.0,
+      136.0,
+      796.5
+     ],
+     "s": [
+      14.0,
+      14.0,
+      9.0
+     ],
+     "material": "crate_plastic",
+     "note": "stacking lug 14 x 14 x 9 on the rim; it enters the recess in the next crate's base rail"
+    },
+    {
+     "id": "c3_bottle1",
+     "type": "cyl",
+     "p0": [
+      -150.0,
+      -100.0,
+      538.0
+     ],
+     "p1": [
+      -150.0,
+      -100.0,
+      666.0
+     ],
+     "r0": 32.0,
+     "material": "glass",
+     "note": "empty pint bottle body (glass, no cap, foil gone)"
+    },
+    {
+     "id": "c3_neck1",
+     "type": "cyl",
+     "p0": [
+      -150.0,
+      -100.0,
+      666.0
+     ],
+     "p1": [
+      -150.0,
+      -100.0,
+      722.0
+     ],
+     "r0": 14.0,
+     "material": "glass",
+     "transparent": true,
+     "note": "neck 28 across with a lip ring"
+    },
+    {
+     "id": "c3_bottle2",
+     "type": "cyl",
+     "p0": [
+      -50.0,
+      0.0,
+      538.0
+     ],
+     "p1": [
+      -50.0,
+      0.0,
+      666.0
+     ],
+     "r0": 32.0,
+     "material": "glass",
+     "note": "empty pint bottle body (glass, no cap, foil gone)"
+    },
+    {
+     "id": "c3_neck2",
+     "type": "cyl",
+     "p0": [
+      -50.0,
+      0.0,
+      666.0
+     ],
+     "p1": [
+      -50.0,
+      0.0,
+      722.0
+     ],
+     "r0": 14.0,
+     "material": "glass",
+     "transparent": true,
+     "note": "neck 28 across with a lip ring"
+    },
+    {
+     "id": "c3_bottle3",
+     "type": "cyl",
+     "p0": [
+      50.0,
+      100.0,
+      538.0
+     ],
+     "p1": [
+      50.0,
+      100.0,
+      666.0
+     ],
+     "r0": 32.0,
+     "material": "glass",
+     "note": "empty pint bottle body (glass, no cap, foil gone)"
+    },
+    {
+     "id": "c3_neck3",
+     "type": "cyl",
+     "p0": [
+      50.0,
+      100.0,
+      666.0
+     ],
+     "p1": [
+      50.0,
+      100.0,
+      722.0
+     ],
+     "r0": 14.0,
+     "material": "glass",
+     "transparent": true,
+     "note": "neck 28 across with a lip ring"
+    },
+    {
+     "id": "c3_bottle4",
+     "type": "cyl",
+     "p0": [
+      150.0,
+      -100.0,
+      538.0
+     ],
+     "p1": [
+      150.0,
+      -100.0,
+      666.0
+     ],
+     "r0": 32.0,
+     "material": "glass",
+     "note": "empty pint bottle body (glass, no cap, foil gone)"
+    },
+    {
+     "id": "c3_neck4",
+     "type": "cyl",
+     "p0": [
+      150.0,
+      -100.0,
+      666.0
+     ],
+     "p1": [
+      150.0,
+      -100.0,
+      722.0
+     ],
+     "r0": 14.0,
+     "material": "glass",
+     "transparent": true,
+     "note": "neck 28 across with a lip ring"
+    },
+    {
+     "id": "c3_bottle5",
+     "type": "cyl",
+     "p0": [
+      -150.0,
+      100.0,
+      538.0
+     ],
+     "p1": [
+      -150.0,
+      100.0,
+      666.0
+     ],
+     "r0": 32.0,
+     "material": "glass",
+     "note": "empty pint bottle body (glass, no cap, foil gone)"
+    },
+    {
+     "id": "c3_neck5",
+     "type": "cyl",
+     "p0": [
+      -150.0,
+      100.0,
+      666.0
+     ],
+     "p1": [
+      -150.0,
+      100.0,
+      722.0
+     ],
+     "r0": 14.0,
+     "material": "glass",
+     "transparent": true,
+     "note": "neck 28 across with a lip ring"
+    },
+    {
+     "id": "c3_bottle6",
+     "type": "cyl",
+     "p0": [
+      -50.0,
+      -100.0,
+      538.0
+     ],
+     "p1": [
+      -50.0,
+      -100.0,
+      666.0
+     ],
+     "r0": 32.0,
+     "material": "glass",
+     "note": "empty pint bottle body (glass, no cap, foil gone)"
+    },
+    {
+     "id": "c3_neck6",
+     "type": "cyl",
+     "p0": [
+      -50.0,
+      -100.0,
+      666.0
+     ],
+     "p1": [
+      -50.0,
+      -100.0,
+      722.0
+     ],
+     "r0": 14.0,
+     "material": "glass",
+     "transparent": true,
+     "note": "neck 28 across with a lip ring"
+    }
+   ],
+   "overall": {
+    "w": 408.0,
+    "d": 298.0,
+    "h": 801.0
+   },
+   "overall_tol": 1.0,
+   "joins": [
+    [
+     "c1_rail_f",
+     "c1_floor"
+    ],
+    [
+     "c1_post_fl",
+     "c1_rail_f"
+    ],
+    [
+     "c1_rim_f",
+     "c1_post_fl"
+    ],
+    [
+     "c1_rib_f0",
+     "c1_rail_f"
+    ],
+    [
+     "c1_band_f",
+     "c1_rib_f0"
+    ],
+    [
+     "c1_lug_fl",
+     "c1_rim_f"
+    ],
+    [
+     "c1_rim_l",
+     "c1_rim_f"
+    ],
+    [
+     "c1_rail_l",
+     "c1_rail_f"
+    ],
+    [
+     "c2_rail_f",
+     "c2_floor"
+    ],
+    [
+     "c2_post_fl",
+     "c2_rail_f"
+    ],
+    [
+     "c2_rim_f",
+     "c2_post_fl"
+    ],
+    [
+     "c2_rib_f0",
+     "c2_rail_f"
+    ],
+    [
+     "c2_band_f",
+     "c2_rib_f0"
+    ],
+    [
+     "c2_lug_fl",
+     "c2_rim_f"
+    ],
+    [
+     "c2_rim_l",
+     "c2_rim_f"
+    ],
+    [
+     "c2_rail_l",
+     "c2_rail_f"
+    ],
+    [
+     "c3_rail_f",
+     "c3_floor"
+    ],
+    [
+     "c3_post_fl",
+     "c3_rail_f"
+    ],
+    [
+     "c3_rim_f",
+     "c3_post_fl"
+    ],
+    [
+     "c3_rib_f0",
+     "c3_rail_f"
+    ],
+    [
+     "c3_band_f",
+     "c3_rib_f0"
+    ],
+    [
+     "c3_lug_fl",
+     "c3_rim_f"
+    ],
+    [
+     "c3_rim_l",
+     "c3_rim_f"
+    ],
+    [
+     "c3_rail_l",
+     "c3_rail_f"
+    ],
+    [
+     "c2_rail_f",
+     "c1_rim_f"
+    ],
+    [
+     "c2_floor",
+     "c1_lug_fl"
+    ],
+    [
+     "c3_rail_f",
+     "c2_rim_f"
+    ],
+    [
+     "c3_floor",
+     "c2_lug_fl"
+    ]
+   ],
+   "embeds": [
+    [
+     "c3_bottle1",
+     "c3_neck1",
+     20.0
+    ],
+    [
+     "c3_bottle1",
+     "c3_floor",
+     6.0
+    ],
+    [
+     "c3_bottle2",
+     "c3_neck2",
+     20.0
+    ],
+    [
+     "c3_bottle2",
+     "c3_floor",
+     6.0
+    ],
+    [
+     "c3_bottle3",
+     "c3_neck3",
+     20.0
+    ],
+    [
+     "c3_bottle3",
+     "c3_floor",
+     6.0
+    ],
+    [
+     "c3_bottle4",
+     "c3_neck4",
+     20.0
+    ],
+    [
+     "c3_bottle4",
+     "c3_floor",
+     6.0
+    ],
+    [
+     "c3_bottle5",
+     "c3_neck5",
+     20.0
+    ],
+    [
+     "c3_bottle5",
+     "c3_floor",
+     6.0
+    ],
+    [
+     "c3_bottle6",
+     "c3_neck6",
+     20.0
+    ],
+    [
+     "c3_bottle6",
+     "c3_floor",
+     6.0
+    ],
+    [
+     "c1_lug_fl",
+     "c2_floor",
+     6.0
+    ],
+    [
+     "c1_lug_fr",
+     "c2_floor",
+     6.0
+    ],
+    [
+     "c1_lug_bl",
+     "c2_floor",
+     6.0
+    ],
+    [
+     "c1_lug_br",
+     "c2_floor",
+     6.0
+    ],
+    [
+     "c2_lug_fl",
+     "c3_floor",
+     6.0
+    ],
+    [
+     "c2_lug_fr",
+     "c3_floor",
+     6.0
+    ],
+    [
+     "c2_lug_bl",
+     "c3_floor",
+     6.0
+    ],
+    [
+     "c2_lug_br",
+     "c3_floor",
+     6.0
+    ],
+    [
+     "c3_lug_fl",
+     "c4_floor",
+     6.0
+    ],
+    [
+     "c3_lug_fr",
+     "c4_floor",
+     6.0
+    ],
+    [
+     "c3_lug_bl",
+     "c4_floor",
+     6.0
+    ],
+    [
+     "c3_lug_br",
+     "c4_floor",
+     6.0
+    ]
+   ],
+   "overlap_allow": 5.0,
+   "faces": [
+    {
+     "id": "c2 front band",
+     "o": [
+      -188.0,
+      -149.0,
+      382.0
+     ],
+     "u": [
+      1,
+      0,
+      0
+     ],
+     "v": [
+      0,
+      0,
+      1
+     ],
+     "n": [
+      0,
+      -1,
+      0
+     ],
+     "nu": 376.0,
+     "nv": 66.0,
+     "depth": 8.0,
+     "blockers": [
+      "c2_band_f"
+     ]
+    },
+    {
+     "id": "c2 rim front",
+     "o": [
+      -202.0,
+      -149.0,
+      502.0
+     ],
+     "u": [
+      1,
+      0,
+      0
+     ],
+     "v": [
+      0,
+      0,
+      1
+     ],
+     "n": [
+      0,
+      -1,
+      0
+     ],
+     "nu": 404.0,
+     "nv": 24.0,
+     "depth": 10.0,
+     "blockers": [
+      "c2_rim_f"
+     ]
+    },
+    {
+     "id": "c2 base rail front",
+     "o": [
+      -202.0,
+      -149.0,
+      266.0
+     ],
+     "u": [
+      1,
+      0,
+      0
+     ],
+     "v": [
+      0,
+      0,
+      1
+     ],
+     "n": [
+      0,
+      -1,
+      0
+     ],
+     "nu": 404.0,
+     "nv": 20.0,
+     "depth": 8.0,
+     "blockers": [
+      "c2_rail_f"
+     ]
+    }
+   ]
+  }
+ },
+ "drawing": {
+  "views": [
+   "front",
+   "left",
+   "plan"
+  ],
+  "sections": [
+   {
+    "id": "x0",
+    "axis": "x",
+    "at": 0.0
+   },
+   {
+    "id": "z140",
+    "axis": "z",
+    "at": 140.0
+   }
+  ]
+ },
+ "numbers": [
+  {
+   "id": "N1",
+   "what": "crate outer length",
+   "value": 408.0,
+   "kind": "Read",
+   "source": "Poly Haven plastic_crate_01 (CC0, tagged beverage crate and milk crate): dimensions [298.0, 408.0, 264.2] read from api.polyhaven.com/info on 13 October 2026; the self-check's --live re-reads them",
+   "tol": 1.0,
+   "measure": {
+    "kind": "bbox",
+    "axis": "x",
+    "parts": [
+     "c1_floor",
+     "c1_rail_f",
+     "c1_rail_b",
+     "c1_rail_l",
+     "c1_rail_r",
+     "c1_rim_f",
+     "c1_rim_b",
+     "c1_rim_l",
+     "c1_rim_r",
+     "c1_post_fl",
+     "c1_post_fr",
+     "c1_post_bl",
+     "c1_post_br",
+     "c1_rib_f0",
+     "c1_rib_b0",
+     "c1_rib_f1",
+     "c1_rib_b1",
+     "c1_rib_f2",
+     "c1_rib_b2",
+     "c1_band_f",
+     "c1_band_b",
+     "c1_rib_l",
+     "c1_rib_r"
+    ]
+   },
+   "variant": "MC1"
+  },
+  {
+   "id": "N2",
+   "what": "crate outer width",
+   "value": 298.0,
+   "kind": "Read",
+   "source": "same record: 298.0",
+   "tol": 1.0,
+   "measure": {
+    "kind": "bbox",
+    "axis": "y",
+    "parts": [
+     "c1_floor",
+     "c1_rail_f",
+     "c1_rail_b",
+     "c1_rail_l",
+     "c1_rail_r",
+     "c1_rim_f",
+     "c1_rim_b",
+     "c1_rim_l",
+     "c1_rim_r",
+     "c1_post_fl",
+     "c1_post_fr",
+     "c1_post_bl",
+     "c1_post_br",
+     "c1_rib_f0",
+     "c1_rib_b0",
+     "c1_rib_f1",
+     "c1_rib_b1",
+     "c1_rib_f2",
+     "c1_rib_b2",
+     "c1_band_f",
+     "c1_band_b",
+     "c1_rib_l",
+     "c1_rib_r"
+    ]
+   },
+   "variant": "MC1"
+  },
+  {
+   "id": "N3",
+   "what": "crate height to the rim (lugs excluded)",
+   "value": 264.0,
+   "kind": "Read",
+   "source": "same record: 264.2; 264 kept",
+   "tol": 1.0,
+   "measure": {
+    "kind": "bbox",
+    "axis": "z",
+    "parts": [
+     "c1_floor",
+     "c1_rail_f",
+     "c1_rail_b",
+     "c1_rail_l",
+     "c1_rail_r",
+     "c1_rim_f",
+     "c1_rim_b",
+     "c1_rim_l",
+     "c1_rim_r",
+     "c1_post_fl",
+     "c1_post_fr",
+     "c1_post_bl",
+     "c1_post_br",
+     "c1_rib_f0",
+     "c1_rib_b0",
+     "c1_rib_f1",
+     "c1_rib_b1",
+     "c1_rib_f2",
+     "c1_rib_b2",
+     "c1_band_f",
+     "c1_band_b",
+     "c1_rib_l",
+     "c1_rib_r"
+    ]
+   },
+   "variant": "MC1"
+  },
+  {
+   "id": "N4",
+   "what": "stack pitch: one crate's base on the next one's rim",
+   "value": 264.0,
+   "kind": "Derived",
+   "source": "the base rail's underside rests on the rim top; the lugs (9 high) enter the next floor's recesses; so the pitch is the crate height",
+   "tol": 1.0,
+   "measure": {
+    "kind": "centre_dx",
+    "axis": "z",
+    "a": "c1_floor",
+    "b": "c2_floor"
+   }
+  },
+  {
+   "id": "N5",
+   "what": "stack height of three crates with lugs",
+   "value": 801.0,
+   "kind": "Derived",
+   "source": "3 x 264 + 9",
+   "tol": 1.5,
+   "measure": {
+    "kind": "bbox",
+    "axis": "z",
+    "parts": [
+     "c1_floor",
+     "c1_rail_f",
+     "c1_rail_b",
+     "c1_rail_l",
+     "c1_rail_r",
+     "c1_rim_f",
+     "c1_rim_b",
+     "c1_rim_l",
+     "c1_rim_r",
+     "c1_post_fl",
+     "c1_post_fr",
+     "c1_post_bl",
+     "c1_post_br",
+     "c1_rib_f0",
+     "c1_rib_b0",
+     "c1_rib_f1",
+     "c1_rib_b1",
+     "c1_rib_f2",
+     "c1_rib_b2",
+     "c1_band_f",
+     "c1_band_b",
+     "c1_rib_l",
+     "c1_rib_r",
+     "c1_lug_fl",
+     "c1_lug_fr",
+     "c1_lug_bl",
+     "c1_lug_br",
+     "c2_floor",
+     "c2_rail_f",
+     "c2_rail_b",
+     "c2_rail_l",
+     "c2_rail_r",
+     "c2_rim_f",
+     "c2_rim_b",
+     "c2_rim_l",
+     "c2_rim_r",
+     "c2_post_fl",
+     "c2_post_fr",
+     "c2_post_bl",
+     "c2_post_br",
+     "c2_rib_f0",
+     "c2_rib_b0",
+     "c2_rib_f1",
+     "c2_rib_b1",
+     "c2_rib_f2",
+     "c2_rib_b2",
+     "c2_band_f",
+     "c2_band_b",
+     "c2_rib_l",
+     "c2_rib_r",
+     "c2_lug_fl",
+     "c2_lug_fr",
+     "c2_lug_bl",
+     "c2_lug_br",
+     "c3_floor",
+     "c3_rail_f",
+     "c3_rail_b",
+     "c3_rail_l",
+     "c3_rail_r",
+     "c3_rim_f",
+     "c3_rim_b",
+     "c3_rim_l",
+     "c3_rim_r",
+     "c3_post_fl",
+     "c3_post_fr",
+     "c3_post_bl",
+     "c3_post_br",
+     "c3_rib_f0",
+     "c3_rib_b0",
+     "c3_rib_f1",
+     "c3_rib_b1",
+     "c3_rib_f2",
+     "c3_rib_b2",
+     "c3_band_f",
+     "c3_band_b",
+     "c3_rib_l",
+     "c3_rib_r",
+     "c3_lug_fl",
+     "c3_lug_fr",
+     "c3_lug_bl",
+     "c3_lug_br"
+    ]
+   }
+  },
+  {
+   "id": "N6",
+   "what": "bottle body diameter",
+   "value": 64.0,
+   "kind": "Judgement",
+   "source": "a pint milk bottle's body is about 64 mm across (twelve fit a 4 x 3 grid of 100 mm cells with room); not measured on a photograph; error 6",
+   "tol": 6.0,
+   "measure": {
+    "kind": "extent",
+    "axis": "x",
+    "part": "c3_bottle1"
+   }
+  },
+  {
+   "id": "N7",
+   "what": "bottle height (body and neck)",
+   "value": 184.0,
+   "kind": "Judgement",
+   "source": "about 184 mm for a pint (128 body + 56 neck); error 15",
+   "tol": 15.0,
+   "measure": {
+    "kind": "span",
+    "axis": "z",
+    "a": "c3_bottle1",
+    "b": "c3_neck1"
+   }
+  },
+  {
+   "id": "N8",
+   "what": "name band height",
+   "value": 66.0,
+   "kind": "Judgement",
+   "source": "P1's name panel on the front wall reads about 60 to 70 mm (oblique view); error 12",
+   "tol": 12.0,
+   "measure": {
+    "kind": "extent",
+    "axis": "z",
+    "part": "c1_band_f"
+   },
+   "variant": "MC1"
+  },
+  {
+   "id": "N9",
+   "what": "rim height",
+   "value": 28.0,
+   "kind": "Judgement",
+   "source": "P1's rim band reads 13 px of 105 for 528 mm = 65 mm including the rim's top face seen from 45 degrees above; the front face alone is taken as 28 (error 12)",
+   "tol": 12.0,
+   "measure": {
+    "kind": "extent",
+    "axis": "z",
+    "part": "c1_rim_f"
+   },
+   "variant": "MC1"
+  }
+ ],
+ "photos": [],
+ "sources": [
+  {
+   "id": "S1",
+   "url": "https://polyhaven.com/a/plastic_crate_01 (api.polyhaven.com/info/plastic_crate_01 and /files/plastic_crate_01)",
+   "read": "2026-10-13",
+   "author": "PierreB3D (Poly Haven)",
+   "licence": "CC0 1.0",
+   "taken": "model published 2026-06",
+   "kind": "model",
+   "shows": "a deep red plastic crate with lattice sides, cutout handles and a worn storage print, 298 x 408 x 264 mm, 18,320 triangles, tagged milk crate; its 1k base colour carries the lettering GALLER STORAGE (looked at at 100 percent on 13 October)",
+   "used": true,
+   "not_used_for": "its mesh and texture: the lattice sides and the print disagree with the photographs and the rules; ONLY its box (298 x 408 x 264) is used as the measured size",
+   "period": "a modern storage crate; the 12-pint milk crate's box is the same"
+  },
+  {
+   "id": "S2",
+   "url": "https://www.geograph.org.uk/photo/6898849",
+   "read": "2026-10-13",
+   "author": "Jaggery",
+   "licence": "CC BY-SA 2.0 (read on the page)",
+   "taken": "2021-07-14",
+   "kind": "photograph",
+   "shows": "two blue crates stacked on a pavement against a shutter, seen from about 45 degrees above: a deep rim band, a name band on the front wall, slots between ribs, a stack with the upper crate's base on the lower rim; four plastic bottles in the top crate (a 2021 pack, not glass pints)",
+   "used": true,
+   "not_used_for": "any number (oblique; the view's foreshortening makes every vertical ratio unusable); the dairy's name (masked); the plastic bottles",
+   "period": "2021; the crate form is that of 1990 (the design has not changed) but the bottles are modern"
+  },
+  {
+   "id": "S3",
+   "url": "https://www.geograph.org.uk/photo/4802548",
+   "read": "2026-10-13",
+   "author": "Robert Lamb",
+   "licence": "CC BY-SA 2.0 (read on the page)",
+   "taken": "2016-01-23",
+   "kind": "photograph",
+   "shows": "stacks of red, blue, green and orange crates used as benches: shows the colour range and the stacking in courses",
+   "used": false,
+   "not_used_for": "everything (looked at only: two people in the frame; a stall's lettering)",
+   "period": "2016"
+  },
+  {
+   "id": "S4",
+   "url": "https://api.polyhaven.com/assets?t=models",
+   "read": "2026-10-13",
+   "author": "Poly Haven artists",
+   "licence": "CC0 1.0",
+   "taken": "n/a (the list of 521 models)",
+   "kind": "model list",
+   "shows": "plastic_crate_01 (298 x 408 x 264), plastic_crate_02 (506 x 406 x 254), plastic_crate_03 (481 x 265 x 266), wooden_crate_01 and 02, cardboard_box_01; no pint bottle",
+   "used": true,
+   "not_used_for": "any other model",
+   "period": "n/a"
+  },
+  {
+   "id": "S5",
+   "url": "https://api.geograph.org.uk/syndicator.php (terms milk crates, crates, milk float, milk bottles, each with takenyear 1975 to 1996)",
+   "read": "2026-10-13",
+   "author": "Geograph contributors",
+   "licence": "CC BY-SA 2.0 (each page)",
+   "taken": "1975 to 1996 searched",
+   "kind": "search record",
+   "shows": "milk floats of 1975 to 1995 in village and town photographs, none showing crates closely; the term 'crates' alone returned nothing",
+   "used": false,
+   "not_used_for": "measuring",
+   "period": "n/a"
+  },
+  {
+   "id": "S6",
+   "url": "production/specs/vignette-scene.json (this repository)",
+   "read": "2026-10-13",
+   "author": "this project",
+   "licence": "own work",
+   "taken": "n/a",
+   "kind": "own",
+   "shows": "the yard mouth holds two wooden crates (wooden_crate_01 twice, x 22.4 and 23.1 west) and a barrel; no milk crates, no pallet, no skip",
+   "used": true,
+   "not_used_for": "any shape",
+   "period": "n/a"
+  }
+ ],
+ "previews": [
+  {
+   "file": "p1-pavement-two-crates-stacked.jpg",
+   "source": "S2",
+   "credit": "Jaggery, Geograph 6898849, CC BY-SA 2.0, 2021-07-14, cropped to the crates; the printed dairy's name on the front band painted out, the bottles' labels blurred",
+   "masked": [
+    "the dairy's name on the front band (painted out)",
+    "the bottle labels (blurred)"
+   ],
+   "looked_at_full_size": true,
+   "no_people_no_drink_no_betting_no_names": true
+  }
+ ],
+ "checks": [
+  {
+   "name": "N1: crate outer length",
+   "measure": "measure it on the built mesh in millimetres (bbox)",
+   "expect": "408.0 mm",
+   "tol": "+-1.0 mm"
+  },
+  {
+   "name": "N2: crate outer width",
+   "measure": "measure it on the built mesh in millimetres (bbox)",
+   "expect": "298.0 mm",
+   "tol": "+-1.0 mm"
+  },
+  {
+   "name": "N3: crate height to the rim (lugs excluded)",
+   "measure": "measure it on the built mesh in millimetres (bbox)",
+   "expect": "264.0 mm",
+   "tol": "+-1.0 mm"
+  },
+  {
+   "name": "N4: stack pitch: one crate's base on the next one's rim",
+   "measure": "measure it on the built mesh in millimetres (centre_dx)",
+   "expect": "264.0 mm",
+   "tol": "+-1.0 mm"
+  },
+  {
+   "name": "N5: stack height of three crates with lugs",
+   "measure": "measure it on the built mesh in millimetres (bbox)",
+   "expect": "801.0 mm",
+   "tol": "+-1.5 mm"
+  },
+  {
+   "name": "N6: bottle body diameter",
+   "measure": "measure it on the built mesh in millimetres (extent)",
+   "expect": "64.0 mm",
+   "tol": "+-6.0 mm"
+  },
+  {
+   "name": "N7: bottle height (body and neck)",
+   "measure": "measure it on the built mesh in millimetres (span)",
+   "expect": "184.0 mm",
+   "tol": "+-15.0 mm"
+  },
+  {
+   "name": "N8: name band height",
+   "measure": "measure it on the built mesh in millimetres (extent)",
+   "expect": "66.0 mm",
+   "tol": "+-12.0 mm"
+  },
+  {
+   "name": "N9: rim height",
+   "measure": "measure it on the built mesh in millimetres (extent)",
+   "expect": "28.0 mm",
+   "tol": "+-12.0 mm"
+  },
+  {
+   "name": "C1: the crate's box",
+   "measure": "outer box of one crate without its lugs",
+   "expect": "408 x 298 x 264",
+   "tol": "+-1 mm"
+  },
+  {
+   "name": "C2: three crates stacked, six bottles",
+   "measure": "count crates and bottles",
+   "expect": "3 and 6",
+   "tol": "exact"
+  },
+  {
+   "name": "C3: the walls closed where they should be",
+   "measure": "rays at the front band, the rim and the base rail at 0, 30 and 45 degrees",
+   "expect": "0 get through",
+   "tol": "exact"
+  },
+  {
+   "name": "C4: no part floats, every join meets",
+   "measure": "the contact graph",
+   "expect": "all parts reach the ground",
+   "tol": "0 floating"
+  },
+  {
+   "name": "C5: the text",
+   "measure": "the front band's text",
+   "expect": "COPPER ROW DAIRY only",
+   "tol": "exact"
+  },
+  {
+   "name": "C6: the CC0 model's lettering is not in the base colour",
+   "measure": "the crate colour map at 100 percent",
+   "expect": "no GALLER or STORAGE",
+   "tol": "exact"
+  }
+ ],
+ "owed": [],
+ "polyhaven": {
+  "plastic_crate_01": {
+   "dimensions": [
+    298.00063371658325,
+    408.00413489341736,
+    264.1694247722626
+   ],
+   "authors": {
+    "PierreB3D": "All"
+   },
+   "tags": [
+    "beverage crate",
+    "milk crate",
+    "storage",
+    "crate",
+    "box",
+    "garage"
+   ],
+   "description": "Free 4K model of a deep red plastic crate with lattice sides, cutout handles, and a worn GALLER STORAGE print. Realistic scuffs, grime, and sturdy ribs."
+  },
+  "plastic_crate_02": {
+   "dimensions": [
+    505.501389503479,
+    405.5013954639435,
+    254.08916175365448
+   ],
+   "authors": {
+    "Fabi_G": "All"
+   },
+   "tags": [
+    "plastic",
+    "crate",
+    "stackable",
+    "industrial",
+    "storage",
+    "utility"
+   ],
+   "description": "Free 4K model of a rugged plastic crate with vented sides, stackable ribs, and cutout handles. Adjustable color with subtle scuffs and molded seams."
+  },
+  "plastic_crate_03": {
+   "dimensions": [
+    481.1011254787445,
+    264.971524477005,
+    265.92550610776743
+   ],
+   "authors": {
+    "Pacific Penguin": "All"
+   },
+   "tags": [
+    "plastic",
+    "crate",
+    "stackable",
+    "crate",
+    "aged",
+    "sun damaged"
+   ],
+   "description": "Free 8K model of a weathered red plastic crate with lattice sides, ribbed frame, open handles, and realistic scuffs, grime, and edge wear."
+  },
+  "wooden_crate_01": {
+   "dimensions": [
+    825.2729177474976,
+    408.9537411928177,
+    349.6182831004262
+   ],
+   "authors": {
+    "James Ray Cock": "All"
+   },
+   "tags": [
+    "vintage",
+    "wood",
+    "old",
+    "wooden",
+    "fancy",
+    "colonial"
+   ],
+   "description": "Free 8K model of a vintage wooden crate - weathered colonial chest with rope handles, metal rivets and latch; ideal as maritime, farmhouse or prop container."
+  },
+  "wooden_crate_02": {
+   "dimensions": [
+    1166.325867176056,
+    529.1010439395905,
+    463.95453810691833
+   ],
+   "authors": {
+    "James Ray Cock": "modeling",
+    "Jurita Burger": "graphic design"
+   },
+   "tags": [
+    "vintage",
+    "wood",
+    "old",
+    "wooden",
+    "worn",
+    "colonial"
+   ],
+   "description": "Free 8K model of a vintage wooden crate with worn planks, dovetail joins, brass corner plates and rope handles - ideal for maritime, colonial or farmhouse props."
+  }
+ },
+ "night": {
+  "lantern_linear": [
+   1.0,
+   0.25,
+   0.0
+  ],
+  "note": "the crates stand in the grocer's doorway recess, outside the lamp pools; the red plastic reads near black under the lantern colour (1, 0.25, 0) with a glint on the rim's top edge and on the bottles' glass"
+ },
+ "text": {
+  "dairy": "COPPER ROW DAIRY",
+  "dairy_note": "invented; named for the town's Copper Row district; moulded on the front band of each crate in raised capitals 18 mm tall, 2 mm proud, and embossed on each bottle's shoulder in 6 mm capitals; no logo, no real dairy's name, no cow, no price",
+  "band_text": "COPPER ROW DAIRY | PROPERTY OF THE DAIRY | THIS CRATE IS NOT TO BE USED FOR ANY OTHER PURPOSE",
+  "band_text_mm": [
+   18.0,
+   6.0
+  ],
+  "bottle_text": "COPPER ROW DAIRY"
+ },
+ "placement": {
+  "slot": "east side, bay 5 (the grocer, x 33 to 39): one stack of three crates against the shopfront at the grocer's side-door end, x 38.0, back 0.05 m clear of the stallriser line (z 4.975), long side facing the road; a second, single crate (MC1) is the street's spare, not placed",
+  "x_m": 38.0,
+  "stallriser_z_m": 4.975,
+  "gap_to_wall_mm": 50.0,
+  "kerb_back_z_m": 3.125,
+  "clear_strip_mm": 1502.0,
+  "footway_mm": 2000.0,
+  "min_clear_mm": 1000.0,
+  "shop_bay": {
+   "name": "grocer",
+   "x0": 33.0,
+   "x1": 39.0
+  },
+  "milk_float": "yes: Quay Street's grocer and the tea room are doorstep customers of the dairy (a 1990 fact of British shops; Judgement, no source in canon names a float): the empties are put out for collection at the shop door; no milk float is drawn (the cars ruling), only its crates",
+  "reasons": [
+   "crates stand at the shop that sells milk: the grocer (bay 5) takes a daily delivery; the stack stands 50 mm clear of the stallriser line (z 4.975) so it never leans on the glass, its 298 mm width taking 4.627 to 4.925 of the footway and leaving 1.50 m clear from the kerb's back edge (3.125)",
+   "it stands at the shop's side-door end (x 38.0) beside the litter and bin traffic of the east parade's end, 4 m from the chandler's door at x 40",
+   "the scene's yard-mouth crates are wooden and stay (one family's yard stuff); these are the grocer's"
+  ]
+ },
+ "wear": [
+  "the plastic is scuffed white along the rim's top edge and the lugs, and along the base rail's lower edge where crates are dragged; the faded top rim is chalkier than the body",
+  "dirt in every slot and in the floor's drain slots (a darker mask), a milky film on the floor under the bottles, a dried ring where bottles stood",
+  "the bottles: cap-less, a dull ring on each lip, embossed shoulder, a smear of old milk inside the lowest 10 mm (a mask on the glass)",
+  "one crate in the stack is a different colour (blue) from the other two: crates were swapped between dairies' rounds only within a dairy, so the stack is one colour in the sample and a blue one is a variant",
+  "NOT shown: any lettering but the dairy's name, a person, any other drink, a sticker"
+ ],
+ "disagreements": [
+  {
+   "id": "W1",
+   "what": "the crate model",
+   "book": "S1 (CC0): a lattice-sided storage crate with a printed brand-like name; the asset plan wants CC0 first",
+   "photo": "S2: slot-sided crates with a solid name band on the front wall and a deep rim",
+   "chose": "built by script to S1's box with slot sides and a name band; S1's mesh and texture are not used (its base colour carries the lettering GALLER STORAGE)"
+  },
+  {
+   "id": "W2",
+   "what": "the bottles",
+   "book": "the photograph's four-pint plastic bottles",
+   "photo": "S2 shows 2021 plastic bottles; 1990's were glass pints",
+   "chose": "glass pint bottles, empty, no cap, an embossed fictional name"
+  },
+  {
+   "id": "W3",
+   "what": "the stacking",
+   "book": "none",
+   "photo": "S2 shows the upper crate's base resting on the lower crate's rim with the lugs inside",
+   "chose": "pitch = crate height 264, lugs 9 high entering the next floor"
+  }
+ ],
+ "variants_note": [
+  "MC3 (the sample): three crates, six empty pint bottles in the top one, one colour (red).",
+  "MC1: a single crate, empty (a spare for the yard or a doorstep).",
+  "colours: red (the sample), blue, yellow, green, orange (a dairy's crates are all one colour); fade and grime as wear.",
+  "a crate on its side or two stacked with bottles in the lower one (a seed, not a mesh): the builder may place the MC1 mesh as it likes."
+ ],
+ "not_settled": [
+  "no photograph of a 1975 to 1995 crate was reached; P1 is a 2021 oblique view, so the slot layout, the rim depth (28 mm, error 12) and the name band (66 mm, error 12) are judged; the box is Poly Haven's measured 298 x 408 x 264",
+  "whether a 1990 12-pint crate is 264 high (the CC0 record, a storage crate tagged milk crate) or nearer 200: the bottles then stand fully inside (their tops 70 mm below the rim); one number for the builder to confirm against a period crate if one is ever reached",
+  "the crate's slot sizes and the floor's drain slots (36 slots 20 x 8 are a Judgement written as a texture mask, not geometry)",
+  "whether a milk float served Quay Street: stated as a Judgement; the empties are the only sign of it",
+  "the pint bottle's exact shape (body 64 across, neck 28, 184 high: Judgement)"
+ ],
+ "content_rule_note": "milk, not drink: no beer, wine or spirit bottle, no crate with a drinks brand, no person (a statement of the content rule).",
+ "builder_notes": [
+  "build the crate by script in one mesh: floor plate with 36 drain slots cut (a mask or real holes), four walls as ribs and slots (the gaps between the ribs are open), rim, base rail with four recesses under the corners for the lugs, name band with the raised text",
+  "stack by instancing the crate at z 0, 264, 528 (no scale), rotate each crate by a seed of 0 to 2 degrees about z (not more: they interlock)",
+  "bottles: glass, a body 128 and neck 56 with a lip ring; six in the top crate in a 4 x 3 grid of 100 mm cells (six of the twelve cells)",
+  "texture: our own colour map for the crate; the CC0 model's texture is NOT used (its lettering)"
+ ],
+ "self_check": {
+  "line": "SELF-CHECK milk-crates: 76 checks, 76 passed, 0 failed; negative controls 26 of 26 caught (offline)",
+  "checks": 76,
+  "passed": 76,
+  "failed": 0,
+  "controls": 26,
+  "controls_caught": 26,
+  "options": "offline",
+  "failing": [],
+  "uncaught": []
+ }
+}

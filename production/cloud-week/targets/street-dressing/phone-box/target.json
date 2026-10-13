@@ -1,0 +1,2737 @@
+{
+ "family": "phone-box",
+ "title": "Quay Street's telephone box (the 1985 to 1991 stainless kind, no operator's mark)",
+ "units": "millimetres; angles in degrees; z up, the front (the door) faces -y, the pivot is the centre of the base on the ground; the .glb is metres",
+ "status": "written 13 October 2026, not yet reviewed",
+ "sample": "KX1",
+ "materials": {
+  "stainless": {
+   "name": "brushed stainless steel",
+   "srgb": [
+    196,
+    198,
+    200
+   ],
+   "rough": 0.38,
+   "rough_words": "satin, brushed",
+   "metal": true,
+   "note": "water-stained, never mirror bright"
+  },
+  "black_plastic": {
+   "name": "black moulded plastic, faded",
+   "srgb": [
+    26,
+    26,
+    27
+   ],
+   "rough": 0.55,
+   "rough_words": "semi-matt",
+   "metal": false,
+   "note": "UV-faded to a very dark grey-brown at the top edges"
+  },
+  "handle_yellow": {
+   "name": "handle yellow, dulled",
+   "srgb": [
+    232,
+    188,
+    22
+   ],
+   "rough": 0.45,
+   "rough_words": "semi-gloss",
+   "metal": false,
+   "note": "the 1985 to 1991 colour; dulled, scuffed at the pull"
+  },
+  "glass": {
+   "name": "clear toughened glass, slight grey cast",
+   "srgb": [
+    205,
+    212,
+    214
+   ],
+   "rough": 0.05,
+   "rough_words": "smooth",
+   "metal": false,
+   "note": "transmission 0.84 (Judgement); smoked glass belongs to the first deliveries only"
+  },
+  "phone_grey": {
+   "name": "payphone body, cream-grey plastic",
+   "srgb": [
+    168,
+    164,
+    150
+   ],
+   "rough": 0.5,
+   "rough_words": "semi-matt",
+   "metal": false,
+   "note": "stained brown by smoke (tobacco is allowed)"
+  }
+ },
+ "variants": {
+  "KX1": {
+   "name": "KX1: the door kiosk, 1985 to 1991 livery, clear glass (the sample)",
+   "parts": [
+    {
+     "id": "lid_top",
+     "type": "box",
+     "c": [
+      0.0,
+      0.0,
+      2190.5
+     ],
+     "s": [
+      890.0,
+      890.0,
+      3.0
+     ],
+     "material": "stainless",
+     "edge": "folded edge r 4",
+     "note": "lid plate, 3 mm sheet"
+    },
+    {
+     "id": "lid_skirt_front",
+     "type": "box",
+     "c": [
+      0.0,
+      -443.5,
+      2141.0
+     ],
+     "s": [
+      890.0,
+      3.0,
+      98.0
+     ],
+     "material": "stainless",
+     "edge": "lower edge turned in 8 mm",
+     "note": "skirt 100 deep"
+    },
+    {
+     "id": "lid_skirt_back",
+     "type": "box",
+     "c": [
+      0.0,
+      443.5,
+      2141.0
+     ],
+     "s": [
+      890.0,
+      3.0,
+      98.0
+     ],
+     "material": "stainless",
+     "edge": "lower edge turned in 8 mm"
+    },
+    {
+     "id": "lid_skirt_left",
+     "type": "box",
+     "c": [
+      -443.5,
+      0.0,
+      2141.0
+     ],
+     "s": [
+      3.0,
+      884.0,
+      98.0
+     ],
+     "material": "stainless"
+    },
+    {
+     "id": "lid_skirt_right",
+     "type": "box",
+     "c": [
+      443.5,
+      0.0,
+      2141.0
+     ],
+     "s": [
+      3.0,
+      884.0,
+      98.0
+     ],
+     "material": "stainless"
+    },
+    {
+     "id": "lid_lip_front",
+     "type": "box",
+     "c": [
+      0.0,
+      -438.0,
+      2093.5
+     ],
+     "s": [
+      884.0,
+      8.0,
+      3.0
+     ],
+     "material": "stainless",
+     "note": "turned-in lower edge, 8 mm"
+    },
+    {
+     "id": "lid_lip_back",
+     "type": "box",
+     "c": [
+      0.0,
+      438.0,
+      2093.5
+     ],
+     "s": [
+      884.0,
+      8.0,
+      3.0
+     ],
+     "material": "stainless"
+    },
+    {
+     "id": "lid_lip_left",
+     "type": "box",
+     "c": [
+      -438.0,
+      0.0,
+      2093.5
+     ],
+     "s": [
+      8.0,
+      868.0,
+      3.0
+     ],
+     "material": "stainless"
+    },
+    {
+     "id": "lid_lip_right",
+     "type": "box",
+     "c": [
+      438.0,
+      0.0,
+      2093.5
+     ],
+     "s": [
+      8.0,
+      868.0,
+      3.0
+     ],
+     "material": "stainless"
+    },
+    {
+     "id": "p_fl",
+     "type": "box",
+     "c": [
+      -415.0,
+      -415.0,
+      1094.5
+     ],
+     "s": [
+      40.0,
+      40.0,
+      2189.0
+     ],
+     "material": "stainless",
+     "edge": "vertical edges r 3",
+     "note": "brushed box section 40 x 40"
+    },
+    {
+     "id": "p_fr",
+     "type": "box",
+     "c": [
+      415.0,
+      -415.0,
+      1094.5
+     ],
+     "s": [
+      40.0,
+      40.0,
+      2189.0
+     ],
+     "material": "stainless",
+     "edge": "vertical edges r 3",
+     "note": "brushed box section 40 x 40"
+    },
+    {
+     "id": "p_bl",
+     "type": "box",
+     "c": [
+      -415.0,
+      415.0,
+      1094.5
+     ],
+     "s": [
+      40.0,
+      40.0,
+      2189.0
+     ],
+     "material": "stainless",
+     "edge": "vertical edges r 3",
+     "note": "brushed box section 40 x 40"
+    },
+    {
+     "id": "p_br",
+     "type": "box",
+     "c": [
+      415.0,
+      415.0,
+      1094.5
+     ],
+     "s": [
+      40.0,
+      40.0,
+      2189.0
+     ],
+     "material": "stainless",
+     "edge": "vertical edges r 3",
+     "note": "brushed box section 40 x 40"
+    },
+    {
+     "id": "f_header",
+     "type": "box",
+     "c": [
+      0.0,
+      -420.0,
+      1957.0
+     ],
+     "s": [
+      790.0,
+      30.0,
+      270.0
+     ],
+     "material": "black_plastic",
+     "edge": "corners r 6",
+     "note": "black header panel, 30 deep, carries the word"
+    },
+    {
+     "id": "f_stile_l",
+     "type": "box",
+     "c": [
+      -369.0,
+      -425.0,
+      1031.0
+     ],
+     "s": [
+      52.0,
+      20.0,
+      1582.0
+     ],
+     "material": "black_plastic",
+     "edge": "outer edge r 2",
+     "note": "door stile 52 wide, 20 deep"
+    },
+    {
+     "id": "f_stile_r",
+     "type": "box",
+     "c": [
+      369.0,
+      -425.0,
+      1031.0
+     ],
+     "s": [
+      52.0,
+      20.0,
+      1582.0
+     ],
+     "material": "black_plastic",
+     "edge": "outer edge r 2"
+    },
+    {
+     "id": "f_rail_bottom",
+     "type": "box",
+     "c": [
+      0.0,
+      -425.0,
+      206.0
+     ],
+     "s": [
+      790.0,
+      20.0,
+      68.0
+     ],
+     "material": "black_plastic",
+     "edge": "lower edge r 2",
+     "note": "bottom rail 68 high"
+    },
+    {
+     "id": "f_band",
+     "type": "box",
+     "c": [
+      0.0,
+      -430.0,
+      978.5
+     ],
+     "s": [
+      686.0,
+      30.0,
+      145.0
+     ],
+     "material": "handle_yellow",
+     "edge": "corners r 8",
+     "note": "moulded handle panel, 10 proud of the frame"
+    },
+    {
+     "id": "f_pull",
+     "type": "box",
+     "c": [
+      -318.0,
+      -459.0,
+      951.0
+     ],
+     "s": [
+      50.0,
+      28.0,
+      66.0
+     ],
+     "material": "handle_yellow",
+     "edge": "r 6",
+     "note": "rectangular pull with a finger recess, at the lock end"
+    },
+    {
+     "id": "f_glass_up",
+     "type": "box",
+     "c": [
+      0.0,
+      -426.0,
+      1436.5
+     ],
+     "s": [
+      694.0,
+      4.0,
+      779.0
+     ],
+     "material": "glass",
+     "transparent": true,
+     "edge": "arrised 1 mm",
+     "note": "upper pane, 4 mm toughened"
+    },
+    {
+     "id": "f_glass_lo",
+     "type": "box",
+     "c": [
+      0.0,
+      -426.0,
+      573.0
+     ],
+     "s": [
+      694.0,
+      4.0,
+      674.0
+     ],
+     "material": "glass",
+     "transparent": true,
+     "edge": "arrised 1 mm",
+     "note": "lower pane, 4 mm toughened"
+    },
+    {
+     "id": "f_hinge1",
+     "type": "cyl",
+     "p0": [
+      392.0,
+      -425.0,
+      300.0
+     ],
+     "p1": [
+      392.0,
+      -425.0,
+      370.0
+     ],
+     "r0": 7.0,
+     "material": "stainless",
+     "note": "pivot hinge, hinge side right"
+    },
+    {
+     "id": "f_hinge2",
+     "type": "cyl",
+     "p0": [
+      392.0,
+      -425.0,
+      1000.0
+     ],
+     "p1": [
+      392.0,
+      -425.0,
+      1070.0
+     ],
+     "r0": 7.0,
+     "material": "stainless",
+     "note": "pivot hinge, hinge side right"
+    },
+    {
+     "id": "f_hinge3",
+     "type": "cyl",
+     "p0": [
+      392.0,
+      -425.0,
+      1700.0
+     ],
+     "p1": [
+      392.0,
+      -425.0,
+      1770.0
+     ],
+     "r0": 7.0,
+     "material": "stainless",
+     "note": "pivot hinge, hinge side right"
+    },
+    {
+     "id": "sl_header",
+     "type": "box",
+     "c": [
+      -420.0,
+      0.0,
+      1957.0
+     ],
+     "s": [
+      30.0,
+      790.0,
+      270.0
+     ],
+     "material": "black_plastic",
+     "note": "black fascia round the side, same height as the header"
+    },
+    {
+     "id": "sl_stile_f",
+     "type": "box",
+     "c": [
+      -425.0,
+      -369.0,
+      1031.0
+     ],
+     "s": [
+      20.0,
+      52.0,
+      1582.0
+     ],
+     "material": "black_plastic"
+    },
+    {
+     "id": "sl_stile_b",
+     "type": "box",
+     "c": [
+      -425.0,
+      369.0,
+      1031.0
+     ],
+     "s": [
+      20.0,
+      52.0,
+      1582.0
+     ],
+     "material": "black_plastic"
+    },
+    {
+     "id": "sl_rail_bottom",
+     "type": "box",
+     "c": [
+      -425.0,
+      0.0,
+      206.0
+     ],
+     "s": [
+      20.0,
+      790.0,
+      68.0
+     ],
+     "material": "black_plastic"
+    },
+    {
+     "id": "sl_band",
+     "type": "box",
+     "c": [
+      -430.0,
+      0.0,
+      978.5
+     ],
+     "s": [
+      30.0,
+      686.0,
+      145.0
+     ],
+     "material": "black_plastic",
+     "note": "plain black band, 10 proud"
+    },
+    {
+     "id": "sl_glass_up",
+     "type": "box",
+     "c": [
+      -426.0,
+      0.0,
+      1436.5
+     ],
+     "s": [
+      4.0,
+      694.0,
+      779.0
+     ],
+     "material": "glass",
+     "transparent": true
+    },
+    {
+     "id": "sl_glass_lo",
+     "type": "box",
+     "c": [
+      -426.0,
+      0.0,
+      573.0
+     ],
+     "s": [
+      4.0,
+      694.0,
+      674.0
+     ],
+     "material": "glass",
+     "transparent": true
+    },
+    {
+     "id": "sr_header",
+     "type": "box",
+     "c": [
+      420.0,
+      0.0,
+      1957.0
+     ],
+     "s": [
+      30.0,
+      790.0,
+      270.0
+     ],
+     "material": "black_plastic",
+     "note": "black fascia round the side, same height as the header"
+    },
+    {
+     "id": "sr_stile_f",
+     "type": "box",
+     "c": [
+      425.0,
+      -369.0,
+      1031.0
+     ],
+     "s": [
+      20.0,
+      52.0,
+      1582.0
+     ],
+     "material": "black_plastic"
+    },
+    {
+     "id": "sr_stile_b",
+     "type": "box",
+     "c": [
+      425.0,
+      369.0,
+      1031.0
+     ],
+     "s": [
+      20.0,
+      52.0,
+      1582.0
+     ],
+     "material": "black_plastic"
+    },
+    {
+     "id": "sr_rail_bottom",
+     "type": "box",
+     "c": [
+      425.0,
+      0.0,
+      206.0
+     ],
+     "s": [
+      20.0,
+      790.0,
+      68.0
+     ],
+     "material": "black_plastic"
+    },
+    {
+     "id": "sr_band",
+     "type": "box",
+     "c": [
+      430.0,
+      0.0,
+      978.5
+     ],
+     "s": [
+      30.0,
+      686.0,
+      145.0
+     ],
+     "material": "black_plastic",
+     "note": "plain black band, 10 proud"
+    },
+    {
+     "id": "sr_glass_up",
+     "type": "box",
+     "c": [
+      426.0,
+      0.0,
+      1436.5
+     ],
+     "s": [
+      4.0,
+      694.0,
+      779.0
+     ],
+     "material": "glass",
+     "transparent": true
+    },
+    {
+     "id": "sr_glass_lo",
+     "type": "box",
+     "c": [
+      426.0,
+      0.0,
+      573.0
+     ],
+     "s": [
+      4.0,
+      694.0,
+      674.0
+     ],
+     "material": "glass",
+     "transparent": true
+    },
+    {
+     "id": "back_panel",
+     "type": "box",
+     "c": [
+      0.0,
+      432.0,
+      1046.0
+     ],
+     "s": [
+      870.0,
+      6.0,
+      2092.0
+     ],
+     "material": "stainless",
+     "note": "single sheet back (Mk2), 6 mm with its backing"
+    },
+    {
+     "id": "lower_enclosure",
+     "type": "box",
+     "c": [
+      35.0,
+      364.5,
+      300.0
+     ],
+     "s": [
+      450.0,
+      129.0,
+      360.0
+     ],
+     "material": "stainless",
+     "note": "coin-vault housing, brushed steel (Judgement)"
+    },
+    {
+     "id": "pp_body",
+     "type": "box",
+     "c": [
+      -100.0,
+      389.5,
+      1170.0
+     ],
+     "s": [
+      140.0,
+      79.0,
+      340.0
+     ],
+     "material": "phone_grey",
+     "note": "payphone body, 140 x 79 x 340"
+    },
+    {
+     "id": "pp_keypad",
+     "type": "box",
+     "c": [
+      -100.0,
+      344.0,
+      1150.0
+     ],
+     "s": [
+      100.0,
+      12.0,
+      100.0
+     ],
+     "material": "stainless"
+    },
+    {
+     "id": "pp_handset",
+     "type": "box",
+     "c": [
+      -178.0,
+      365.0,
+      1210.0
+     ],
+     "s": [
+      28.0,
+      50.0,
+      180.0
+     ],
+     "material": "black_plastic",
+     "note": "handset on its cradle at the left of the body"
+    },
+    {
+     "id": "notice_frame",
+     "type": "box",
+     "c": [
+      125.0,
+      422.0,
+      1200.0
+     ],
+     "s": [
+      170.0,
+      14.0,
+      300.0
+     ],
+     "material": "black_plastic",
+     "note": "notice and charges frame"
+    }
+   ],
+   "overall": {
+    "w": 890.0,
+    "d": 890.0,
+    "h": 2192.0
+   },
+   "overall_tol": 1.5,
+   "overall_exclude": [
+    "f_pull"
+   ],
+   "joins": [
+    [
+     "p_fl",
+     "lid_top"
+    ],
+    [
+     "p_fr",
+     "lid_top"
+    ],
+    [
+     "p_bl",
+     "lid_top"
+    ],
+    [
+     "p_br",
+     "lid_top"
+    ],
+    [
+     "lid_top",
+     "lid_skirt_front"
+    ],
+    [
+     "f_stile_l",
+     "p_fl"
+    ],
+    [
+     "f_stile_r",
+     "p_fr"
+    ],
+    [
+     "f_header",
+     "p_fl"
+    ],
+    [
+     "f_header",
+     "p_fr"
+    ],
+    [
+     "f_header",
+     "lid_lip_front"
+    ],
+    [
+     "f_rail_bottom",
+     "f_stile_l"
+    ],
+    [
+     "f_band",
+     "f_stile_l"
+    ],
+    [
+     "f_pull",
+     "f_band"
+    ],
+    [
+     "f_glass_up",
+     "f_header"
+    ],
+    [
+     "f_glass_up",
+     "f_band"
+    ],
+    [
+     "f_glass_lo",
+     "f_band"
+    ],
+    [
+     "f_glass_lo",
+     "f_rail_bottom"
+    ],
+    [
+     "f_hinge1",
+     "p_fr"
+    ],
+    [
+     "f_hinge1",
+     "f_stile_r"
+    ],
+    [
+     "f_hinge2",
+     "p_fr"
+    ],
+    [
+     "f_hinge3",
+     "p_fr"
+    ],
+    [
+     "back_panel",
+     "p_bl"
+    ],
+    [
+     "back_panel",
+     "p_br"
+    ],
+    [
+     "back_panel",
+     "lid_lip_back"
+    ],
+    [
+     "sl_header",
+     "p_fl"
+    ],
+    [
+     "sl_header",
+     "p_bl"
+    ],
+    [
+     "sl_glass_up",
+     "sl_header"
+    ],
+    [
+     "sl_glass_lo",
+     "sl_rail_bottom"
+    ],
+    [
+     "sr_glass_up",
+     "sr_band"
+    ],
+    [
+     "pp_body",
+     "back_panel"
+    ],
+    [
+     "pp_handset",
+     "pp_body"
+    ],
+    [
+     "notice_frame",
+     "back_panel"
+    ],
+    [
+     "lower_enclosure",
+     "back_panel"
+    ]
+   ],
+   "embeds": [
+    [
+     "f_hinge1",
+     "f_stile_r",
+     5
+    ],
+    [
+     "f_hinge2",
+     "f_stile_r",
+     5
+    ],
+    [
+     "f_hinge3",
+     "f_stile_r",
+     5
+    ],
+    [
+     "f_hinge1",
+     "p_fr",
+     5
+    ],
+    [
+     "f_hinge2",
+     "p_fr",
+     5
+    ],
+    [
+     "f_hinge3",
+     "p_fr",
+     5
+    ],
+    [
+     "pp_handset",
+     "pp_body",
+     5
+    ]
+   ],
+   "faces": [
+    {
+     "id": "back",
+     "o": [
+      -435.0,
+      435.0,
+      100.0
+     ],
+     "u": [
+      1,
+      0,
+      0
+     ],
+     "v": [
+      0,
+      0,
+      1
+     ],
+     "n": [
+      0,
+      1,
+      0
+     ],
+     "nu": 870.0,
+     "nv": 1992.0,
+     "depth": 10.0,
+     "blockers": [
+      "back_panel"
+     ]
+    },
+    {
+     "id": "roof",
+     "o": [
+      -445.0,
+      -445.0,
+      2192.0
+     ],
+     "u": [
+      1,
+      0,
+      0
+     ],
+     "v": [
+      0,
+      1,
+      0
+     ],
+     "n": [
+      0,
+      0,
+      1
+     ],
+     "nu": 890.0,
+     "nv": 890.0,
+     "depth": 7.0,
+     "blockers": [
+      "lid_top"
+     ]
+    },
+    {
+     "id": "header front",
+     "o": [
+      -435.0,
+      -435.0,
+      1827.0
+     ],
+     "u": [
+      1,
+      0,
+      0
+     ],
+     "v": [
+      0,
+      0,
+      1
+     ],
+     "n": [
+      0,
+      -1,
+      0
+     ],
+     "nu": 870.0,
+     "nv": 260.0,
+     "depth": 36.0,
+     "blockers": [
+      "f_header"
+     ]
+    },
+    {
+     "id": "handle band",
+     "o": [
+      -343.0,
+      -445.0,
+      910.0
+     ],
+     "u": [
+      1,
+      0,
+      0
+     ],
+     "v": [
+      0,
+      0,
+      1
+     ],
+     "n": [
+      0,
+      -1,
+      0
+     ],
+     "nu": 686.0,
+     "nv": 137.0,
+     "depth": 33.0,
+     "blockers": [
+      "f_band"
+     ],
+     "apertures": [
+      [
+       0.0,
+       0.0,
+       52.0,
+       200.0
+      ]
+     ]
+    },
+    {
+     "id": "left side header",
+     "o": [
+      -435.0,
+      -393.0,
+      1827.0
+     ],
+     "u": [
+      0,
+      1,
+      0
+     ],
+     "v": [
+      0,
+      0,
+      1
+     ],
+     "n": [
+      -1,
+      0,
+      0
+     ],
+     "nu": 786.0,
+     "nv": 260.0,
+     "depth": 36.0,
+     "blockers": [
+      "sl_header"
+     ]
+    }
+   ]
+  },
+  "KX2": {
+   "name": "KX2: the doorless open kiosk (the 1985 'open booth' that the same makers supplied beside the door kind)",
+   "parts": [
+    {
+     "id": "lid_top",
+     "type": "box",
+     "c": [
+      0.0,
+      0.0,
+      2190.5
+     ],
+     "s": [
+      890.0,
+      890.0,
+      3.0
+     ],
+     "material": "stainless",
+     "edge": "folded edge r 4",
+     "note": "lid plate, 3 mm sheet"
+    },
+    {
+     "id": "lid_skirt_front",
+     "type": "box",
+     "c": [
+      0.0,
+      -443.5,
+      2141.0
+     ],
+     "s": [
+      890.0,
+      3.0,
+      98.0
+     ],
+     "material": "stainless",
+     "edge": "lower edge turned in 8 mm",
+     "note": "skirt 100 deep"
+    },
+    {
+     "id": "lid_skirt_back",
+     "type": "box",
+     "c": [
+      0.0,
+      443.5,
+      2141.0
+     ],
+     "s": [
+      890.0,
+      3.0,
+      98.0
+     ],
+     "material": "stainless",
+     "edge": "lower edge turned in 8 mm"
+    },
+    {
+     "id": "lid_skirt_left",
+     "type": "box",
+     "c": [
+      -443.5,
+      0.0,
+      2141.0
+     ],
+     "s": [
+      3.0,
+      884.0,
+      98.0
+     ],
+     "material": "stainless"
+    },
+    {
+     "id": "lid_skirt_right",
+     "type": "box",
+     "c": [
+      443.5,
+      0.0,
+      2141.0
+     ],
+     "s": [
+      3.0,
+      884.0,
+      98.0
+     ],
+     "material": "stainless"
+    },
+    {
+     "id": "lid_lip_front",
+     "type": "box",
+     "c": [
+      0.0,
+      -438.0,
+      2093.5
+     ],
+     "s": [
+      884.0,
+      8.0,
+      3.0
+     ],
+     "material": "stainless",
+     "note": "turned-in lower edge, 8 mm"
+    },
+    {
+     "id": "lid_lip_back",
+     "type": "box",
+     "c": [
+      0.0,
+      438.0,
+      2093.5
+     ],
+     "s": [
+      884.0,
+      8.0,
+      3.0
+     ],
+     "material": "stainless"
+    },
+    {
+     "id": "lid_lip_left",
+     "type": "box",
+     "c": [
+      -438.0,
+      0.0,
+      2093.5
+     ],
+     "s": [
+      8.0,
+      868.0,
+      3.0
+     ],
+     "material": "stainless"
+    },
+    {
+     "id": "lid_lip_right",
+     "type": "box",
+     "c": [
+      438.0,
+      0.0,
+      2093.5
+     ],
+     "s": [
+      8.0,
+      868.0,
+      3.0
+     ],
+     "material": "stainless"
+    },
+    {
+     "id": "p_fl",
+     "type": "box",
+     "c": [
+      -415.0,
+      -415.0,
+      1094.5
+     ],
+     "s": [
+      40.0,
+      40.0,
+      2189.0
+     ],
+     "material": "stainless",
+     "edge": "vertical edges r 3",
+     "note": "brushed box section 40 x 40"
+    },
+    {
+     "id": "p_fr",
+     "type": "box",
+     "c": [
+      415.0,
+      -415.0,
+      1094.5
+     ],
+     "s": [
+      40.0,
+      40.0,
+      2189.0
+     ],
+     "material": "stainless",
+     "edge": "vertical edges r 3",
+     "note": "brushed box section 40 x 40"
+    },
+    {
+     "id": "p_bl",
+     "type": "box",
+     "c": [
+      -415.0,
+      415.0,
+      1094.5
+     ],
+     "s": [
+      40.0,
+      40.0,
+      2189.0
+     ],
+     "material": "stainless",
+     "edge": "vertical edges r 3",
+     "note": "brushed box section 40 x 40"
+    },
+    {
+     "id": "p_br",
+     "type": "box",
+     "c": [
+      415.0,
+      415.0,
+      1094.5
+     ],
+     "s": [
+      40.0,
+      40.0,
+      2189.0
+     ],
+     "material": "stainless",
+     "edge": "vertical edges r 3",
+     "note": "brushed box section 40 x 40"
+    },
+    {
+     "id": "f_header",
+     "type": "box",
+     "c": [
+      0.0,
+      -420.0,
+      1957.0
+     ],
+     "s": [
+      790.0,
+      30.0,
+      270.0
+     ],
+     "material": "black_plastic",
+     "edge": "corners r 6",
+     "note": "black header panel, 30 deep, carries the word"
+    },
+    {
+     "id": "sl_header",
+     "type": "box",
+     "c": [
+      -420.0,
+      0.0,
+      1957.0
+     ],
+     "s": [
+      30.0,
+      790.0,
+      270.0
+     ],
+     "material": "black_plastic",
+     "note": "black fascia round the side, same height as the header"
+    },
+    {
+     "id": "sl_stile_f",
+     "type": "box",
+     "c": [
+      -425.0,
+      -369.0,
+      1031.0
+     ],
+     "s": [
+      20.0,
+      52.0,
+      1582.0
+     ],
+     "material": "black_plastic"
+    },
+    {
+     "id": "sl_stile_b",
+     "type": "box",
+     "c": [
+      -425.0,
+      369.0,
+      1031.0
+     ],
+     "s": [
+      20.0,
+      52.0,
+      1582.0
+     ],
+     "material": "black_plastic"
+    },
+    {
+     "id": "sl_rail_bottom",
+     "type": "box",
+     "c": [
+      -425.0,
+      0.0,
+      206.0
+     ],
+     "s": [
+      20.0,
+      790.0,
+      68.0
+     ],
+     "material": "black_plastic"
+    },
+    {
+     "id": "sl_band",
+     "type": "box",
+     "c": [
+      -430.0,
+      0.0,
+      978.5
+     ],
+     "s": [
+      30.0,
+      686.0,
+      145.0
+     ],
+     "material": "black_plastic",
+     "note": "plain black band, 10 proud"
+    },
+    {
+     "id": "sl_glass_up",
+     "type": "box",
+     "c": [
+      -426.0,
+      0.0,
+      1436.5
+     ],
+     "s": [
+      4.0,
+      694.0,
+      779.0
+     ],
+     "material": "glass",
+     "transparent": true
+    },
+    {
+     "id": "sl_glass_lo",
+     "type": "box",
+     "c": [
+      -426.0,
+      0.0,
+      573.0
+     ],
+     "s": [
+      4.0,
+      694.0,
+      674.0
+     ],
+     "material": "glass",
+     "transparent": true
+    },
+    {
+     "id": "sr_header",
+     "type": "box",
+     "c": [
+      420.0,
+      0.0,
+      1957.0
+     ],
+     "s": [
+      30.0,
+      790.0,
+      270.0
+     ],
+     "material": "black_plastic",
+     "note": "black fascia round the side, same height as the header"
+    },
+    {
+     "id": "sr_stile_f",
+     "type": "box",
+     "c": [
+      425.0,
+      -369.0,
+      1031.0
+     ],
+     "s": [
+      20.0,
+      52.0,
+      1582.0
+     ],
+     "material": "black_plastic"
+    },
+    {
+     "id": "sr_stile_b",
+     "type": "box",
+     "c": [
+      425.0,
+      369.0,
+      1031.0
+     ],
+     "s": [
+      20.0,
+      52.0,
+      1582.0
+     ],
+     "material": "black_plastic"
+    },
+    {
+     "id": "sr_rail_bottom",
+     "type": "box",
+     "c": [
+      425.0,
+      0.0,
+      206.0
+     ],
+     "s": [
+      20.0,
+      790.0,
+      68.0
+     ],
+     "material": "black_plastic"
+    },
+    {
+     "id": "sr_band",
+     "type": "box",
+     "c": [
+      430.0,
+      0.0,
+      978.5
+     ],
+     "s": [
+      30.0,
+      686.0,
+      145.0
+     ],
+     "material": "black_plastic",
+     "note": "plain black band, 10 proud"
+    },
+    {
+     "id": "sr_glass_up",
+     "type": "box",
+     "c": [
+      426.0,
+      0.0,
+      1436.5
+     ],
+     "s": [
+      4.0,
+      694.0,
+      779.0
+     ],
+     "material": "glass",
+     "transparent": true
+    },
+    {
+     "id": "sr_glass_lo",
+     "type": "box",
+     "c": [
+      426.0,
+      0.0,
+      573.0
+     ],
+     "s": [
+      4.0,
+      694.0,
+      674.0
+     ],
+     "material": "glass",
+     "transparent": true
+    },
+    {
+     "id": "back_panel",
+     "type": "box",
+     "c": [
+      0.0,
+      432.0,
+      1046.0
+     ],
+     "s": [
+      870.0,
+      6.0,
+      2092.0
+     ],
+     "material": "stainless",
+     "note": "single sheet back (Mk2), 6 mm with its backing"
+    },
+    {
+     "id": "lower_enclosure",
+     "type": "box",
+     "c": [
+      35.0,
+      364.5,
+      300.0
+     ],
+     "s": [
+      450.0,
+      129.0,
+      360.0
+     ],
+     "material": "stainless",
+     "note": "coin-vault housing, brushed steel (Judgement)"
+    },
+    {
+     "id": "pp_body",
+     "type": "box",
+     "c": [
+      -100.0,
+      389.5,
+      1170.0
+     ],
+     "s": [
+      140.0,
+      79.0,
+      340.0
+     ],
+     "material": "phone_grey",
+     "note": "payphone body, 140 x 79 x 340"
+    },
+    {
+     "id": "pp_keypad",
+     "type": "box",
+     "c": [
+      -100.0,
+      344.0,
+      1150.0
+     ],
+     "s": [
+      100.0,
+      12.0,
+      100.0
+     ],
+     "material": "stainless"
+    },
+    {
+     "id": "pp_handset",
+     "type": "box",
+     "c": [
+      -178.0,
+      365.0,
+      1210.0
+     ],
+     "s": [
+      28.0,
+      50.0,
+      180.0
+     ],
+     "material": "black_plastic",
+     "note": "handset on its cradle at the left of the body"
+    },
+    {
+     "id": "notice_frame",
+     "type": "box",
+     "c": [
+      125.0,
+      422.0,
+      1200.0
+     ],
+     "s": [
+      170.0,
+      14.0,
+      300.0
+     ],
+     "material": "black_plastic",
+     "note": "notice and charges frame"
+    }
+   ],
+   "overall": {
+    "w": 890.0,
+    "d": 890.0,
+    "h": 2192.0
+   },
+   "overall_tol": 1.5,
+   "noground": [],
+   "joins": [
+    [
+     "p_fl",
+     "lid_top"
+    ],
+    [
+     "f_header",
+     "p_fl"
+    ],
+    [
+     "f_header",
+     "p_fr"
+    ],
+    [
+     "back_panel",
+     "p_bl"
+    ]
+   ],
+   "embeds": [
+    [
+     "pp_handset",
+     "pp_body",
+     5
+    ]
+   ],
+   "faces": []
+  }
+ },
+ "drawing": {
+  "views": [
+   "front",
+   "left",
+   "back",
+   "plan"
+  ],
+  "sections": [
+   {
+    "id": "x0",
+    "axis": "x",
+    "at": 0.0
+   },
+   {
+    "id": "z1000",
+    "axis": "z",
+    "at": 1000.0
+   },
+   {
+    "id": "z2140",
+    "axis": "z",
+    "at": 2140.0
+   }
+  ]
+ },
+ "numbers": [
+  {
+   "id": "N1",
+   "what": "overall height, ground to lid top",
+   "value": 2192.0,
+   "kind": "Read",
+   "source": "britishtelephones.com KX kiosk page (read 13 Oct): Height 2192; the other site's 7 ft 1 in = 2159 is 33 mm (1.5 percent) lower and is kept as the alternative",
+   "tol": 1.5,
+   "measure": {
+    "kind": "bbox",
+    "axis": "z"
+   }
+  },
+  {
+   "id": "N2",
+   "what": "overall width",
+   "value": 890.0,
+   "kind": "Read",
+   "source": "same page: Width 890; the other site gives 2 ft 11 in = 889",
+   "tol": 1.5,
+   "measure": {
+    "kind": "bbox",
+    "axis": "x"
+   }
+  },
+  {
+   "id": "N3",
+   "what": "overall depth",
+   "value": 890.0,
+   "kind": "Read",
+   "source": "same page: Depth 890",
+   "tol": 1.5,
+   "measure": {
+    "kind": "bbox",
+    "axis": "y",
+    "exclude": [
+     "f_pull"
+    ]
+   }
+  },
+  {
+   "id": "N4",
+   "what": "lid skirt depth",
+   "value": 100.0,
+   "kind": "Photo",
+   "source": "P1 rows roof_top 67.1 to cap_bottom 96.3 (29.2 px) at 3.40 mm per px; error 12 mm",
+   "tol": 12.0,
+   "measure": {
+    "kind": "extent",
+    "axis": "z",
+    "part": "lid_skirt_front"
+   }
+  },
+  {
+   "id": "N5",
+   "what": "header height",
+   "value": 270.0,
+   "kind": "Photo",
+   "source": "P1 rows cap_bottom 96.3 to header_bottom 176.0 (79.7 px) at 3.40 mm per px; error 15 mm",
+   "tol": 15.0,
+   "measure": {
+    "kind": "extent",
+    "axis": "z",
+    "part": "f_header"
+   }
+  },
+  {
+   "id": "N6",
+   "what": "handle band height",
+   "value": 145.0,
+   "kind": "Photo",
+   "source": "P1 rows band_top 402.6 to band_bottom 445.3 (42.7 px); error 12 mm",
+   "tol": 12.0,
+   "measure": {
+    "kind": "extent",
+    "axis": "z",
+    "part": "f_band"
+   }
+  },
+  {
+   "id": "N7",
+   "what": "band centre above the ground",
+   "value": 978.5,
+   "kind": "Photo",
+   "source": "P1 band centre row 424.0, scale from the lid top (67.1) to the bottom rail's lower edge (661.2); error 20 mm",
+   "tol": 20.0,
+   "measure": {
+    "kind": "centre",
+    "axis": "z",
+    "part": "f_band"
+   }
+  },
+  {
+   "id": "N8",
+   "what": "gap between the bottom rail and the ground",
+   "value": 172.0,
+   "kind": "Photo",
+   "source": "P1 post feet row about 709 (+-9) against rail_bottom 661.2: 48 px = 163 mm; 172 kept (+-35)",
+   "tol": 35.0,
+   "measure": {
+    "kind": "edge",
+    "axis": "z",
+    "part": "f_rail_bottom",
+    "side": "lo"
+   }
+  },
+  {
+   "id": "N9",
+   "what": "clear glazing width",
+   "value": 686.0,
+   "kind": "Photo",
+   "source": "P1 columns glass_l 437.2 to glass_r 638.2 (201 px) at 3.40 mm per px; error 14 mm",
+   "tol": 14.0,
+   "measure": {
+    "kind": "gap",
+    "axis": "x",
+    "a": "f_stile_l",
+    "b": "f_stile_r"
+   }
+  },
+  {
+   "id": "N10",
+   "what": "post face width (stainless strip seen from the front)",
+   "value": 40.0,
+   "kind": "Photo",
+   "source": "P1 columns post_l_outer 410.3 to frame_l_outer 421.9 (11.6 px) = 39 mm; error 6 mm",
+   "tol": 6.0,
+   "measure": {
+    "kind": "extent",
+    "axis": "x",
+    "part": "p_fl"
+   }
+  },
+  {
+   "id": "N11",
+   "what": "door stile face width",
+   "value": 52.0,
+   "kind": "Photo",
+   "source": "P1 columns frame_l_outer 421.9 to glass_l 437.2 (15.3 px) = 52 mm; error 8 mm",
+   "tol": 8.0,
+   "measure": {
+    "kind": "extent",
+    "axis": "x",
+    "part": "f_stile_l"
+   }
+  },
+  {
+   "id": "N12",
+   "what": "lid overhang each side beyond the posts",
+   "value": 10.0,
+   "kind": "Photo",
+   "source": "P1: lid 17 mm wider than the posts' 870 in total (the lid is 890); error 6 mm",
+   "tol": 6.0,
+   "measure": {
+    "kind": "gap",
+    "axis": "x",
+    "a": "lid_top",
+    "b": "p_fl",
+    "side_a": "lo",
+    "side_b": "lo"
+   }
+  }
+ ],
+ "photos": [
+  {
+   "id": "P1",
+   "source": "S1",
+   "file": "P1.jpg",
+   "view": "front",
+   "variant": "KX1",
+   "object_box": [
+    405,
+    60,
+    670,
+    715
+   ],
+   "fit": {
+    "parts": [
+     "lid_top",
+     "f_rail_bottom"
+    ],
+    "y_top_px": 67.06,
+    "y_bottom_px": 661.15,
+    "x_centre_px": 538.07,
+    "fitted_on": "height",
+    "view": "front"
+   },
+   "features": [
+    {
+     "id": "roof_top",
+     "axis": "y",
+     "px": 67.06,
+     "box": [
+      525,
+      60,
+      555,
+      76
+     ],
+     "tol_px": 4.0,
+     "contrast": 6.1,
+     "measure": {
+      "axis": "y",
+      "band": [
+       525,
+       555
+      ],
+      "win": [
+       60,
+       76
+      ],
+      "pol": "any"
+     },
+     "ref": {
+      "part": "lid_top",
+      "side": "hi"
+     },
+     "anchor": true,
+     "boundary": true
+    },
+    {
+     "id": "cap_bottom",
+     "axis": "y",
+     "px": 96.31,
+     "box": [
+      525,
+      88,
+      555,
+      104
+     ],
+     "tol_px": 4.0,
+     "contrast": 26.2,
+     "measure": {
+      "axis": "y",
+      "band": [
+       525,
+       555
+      ],
+      "win": [
+       88,
+       104
+      ],
+      "pol": "any"
+     },
+     "ref": {
+      "part": "lid_skirt_front",
+      "side": "lo"
+     },
+     "anchor": false,
+     "boundary": false
+    },
+    {
+     "id": "header_bottom",
+     "axis": "y",
+     "px": 176.0,
+     "box": [
+      560,
+      168,
+      600,
+      190
+     ],
+     "tol_px": 4.0,
+     "contrast": 17.1,
+     "measure": {
+      "axis": "y",
+      "band": [
+       560,
+       600
+      ],
+      "win": [
+       168,
+       190
+      ],
+      "pol": "any"
+     },
+     "ref": {
+      "part": "f_header",
+      "side": "lo"
+     },
+     "anchor": false,
+     "boundary": false
+    },
+    {
+     "id": "band_top",
+     "axis": "y",
+     "px": 402.6,
+     "box": [
+      470,
+      392,
+      500,
+      410
+     ],
+     "tol_px": 4.0,
+     "contrast": 15.3,
+     "measure": {
+      "axis": "y",
+      "band": [
+       470,
+       500
+      ],
+      "win": [
+       392,
+       410
+      ],
+      "pol": "any"
+     },
+     "ref": {
+      "part": "f_band",
+      "side": "hi"
+     },
+     "anchor": false,
+     "boundary": false
+    },
+    {
+     "id": "band_bottom",
+     "axis": "y",
+     "px": 445.29,
+     "box": [
+      470,
+      436,
+      500,
+      452
+     ],
+     "tol_px": 4.0,
+     "contrast": 16.2,
+     "measure": {
+      "axis": "y",
+      "band": [
+       470,
+       500
+      ],
+      "win": [
+       436,
+       452
+      ],
+      "pol": "any"
+     },
+     "ref": {
+      "part": "f_band",
+      "side": "lo"
+     },
+     "anchor": false,
+     "boundary": false
+    },
+    {
+     "id": "rail_top",
+     "axis": "y",
+     "px": 641.22,
+     "box": [
+      470,
+      628,
+      500,
+      644
+     ],
+     "tol_px": 4.2,
+     "contrast": 12.5,
+     "measure": {
+      "axis": "y",
+      "band": [
+       470,
+       500
+      ],
+      "win": [
+       628,
+       644
+      ],
+      "pol": "any"
+     },
+     "ref": {
+      "part": "f_rail_bottom",
+      "side": "hi"
+     },
+     "anchor": false,
+     "boundary": false
+    },
+    {
+     "id": "rail_bottom",
+     "axis": "y",
+     "px": 661.15,
+     "box": [
+      470,
+      650,
+      500,
+      664
+     ],
+     "tol_px": 5.1,
+     "contrast": 12.4,
+     "measure": {
+      "axis": "y",
+      "band": [
+       470,
+       500
+      ],
+      "win": [
+       650,
+       664
+      ],
+      "pol": "any"
+     },
+     "ref": {
+      "part": "f_rail_bottom",
+      "side": "lo"
+     },
+     "anchor": true,
+     "boundary": false
+    },
+    {
+     "id": "post_l_outer",
+     "axis": "x",
+     "px": 410.32,
+     "box": [
+      404,
+      250,
+      416,
+      330
+     ],
+     "tol_px": 4.1,
+     "contrast": 29.6,
+     "measure": {
+      "axis": "x",
+      "band": [
+       250,
+       330
+      ],
+      "win": [
+       404,
+       416
+      ],
+      "pol": "any"
+     },
+     "ref": {
+      "part": "p_fl",
+      "side": "lo"
+     },
+     "anchor": false,
+     "boundary": true
+    },
+    {
+     "id": "frame_l_outer",
+     "axis": "x",
+     "px": 421.94,
+     "box": [
+      416,
+      250,
+      428,
+      330
+     ],
+     "tol_px": 4.0,
+     "contrast": 36.0,
+     "measure": {
+      "axis": "x",
+      "band": [
+       250,
+       330
+      ],
+      "win": [
+       416,
+       428
+      ],
+      "pol": "any"
+     },
+     "ref": {
+      "part": "p_fl",
+      "side": "hi"
+     },
+     "anchor": false,
+     "boundary": false
+    },
+    {
+     "id": "glass_l",
+     "axis": "x",
+     "px": 437.22,
+     "box": [
+      430,
+      250,
+      444,
+      330
+     ],
+     "tol_px": 4.0,
+     "contrast": 16.7,
+     "measure": {
+      "axis": "x",
+      "band": [
+       250,
+       330
+      ],
+      "win": [
+       430,
+       444
+      ],
+      "pol": "any"
+     },
+     "ref": {
+      "part": "f_stile_l",
+      "side": "hi"
+     },
+     "anchor": false,
+     "boundary": false
+    },
+    {
+     "id": "glass_r",
+     "axis": "x",
+     "px": 638.16,
+     "box": [
+      630,
+      250,
+      645,
+      330
+     ],
+     "tol_px": 4.0,
+     "contrast": 22.9,
+     "measure": {
+      "axis": "x",
+      "band": [
+       250,
+       330
+      ],
+      "win": [
+       630,
+       645
+      ],
+      "pol": "any"
+     },
+     "ref": {
+      "part": "f_stile_r",
+      "side": "lo"
+     },
+     "anchor": false,
+     "boundary": false
+    },
+    {
+     "id": "frame_r_outer",
+     "axis": "x",
+     "px": 654.81,
+     "box": [
+      646,
+      250,
+      660,
+      330
+     ],
+     "tol_px": 4.0,
+     "contrast": 35.5,
+     "measure": {
+      "axis": "x",
+      "band": [
+       250,
+       330
+      ],
+      "win": [
+       646,
+       660
+      ],
+      "pol": "any"
+     },
+     "ref": {
+      "part": "p_fr",
+      "side": "lo"
+     },
+     "anchor": false,
+     "boundary": false
+    },
+    {
+     "id": "post_r_outer",
+     "axis": "x",
+     "px": 665.82,
+     "box": [
+      660,
+      250,
+      672,
+      330
+     ],
+     "tol_px": 4.2,
+     "contrast": 21.2,
+     "measure": {
+      "axis": "x",
+      "band": [
+       250,
+       330
+      ],
+      "win": [
+       660,
+       672
+      ],
+      "pol": "any"
+     },
+     "ref": {
+      "part": "p_fr",
+      "side": "hi"
+     },
+     "anchor": false,
+     "boundary": true
+    }
+   ],
+   "method": "each edge is the strongest grey-level step inside the recorded window, averaged over the recorded band on the kiosk's own face; the scale is fitted on the height from the lid's top edge to the bottom rail's lower edge only; the photograph leans about 1.8 degrees (the lid edge runs 4 px lower at the right) and the camera looks slightly down, so the tolerance is the measured spread plus 2 px, at least 4 px (14 mm)"
+  }
+ ],
+ "sources": [
+  {
+   "id": "S1",
+   "url": "https://www.geograph.org.uk/photo/5269043",
+   "read": "2026-10-13",
+   "author": "David Hillas",
+   "licence": "CC BY-SA 2.0 (creativecommons.org/licenses/by-sa/2.0, read on the page)",
+   "taken": "2017-01-04",
+   "kind": "photograph",
+   "shows": "a door-type KX100 in a village verge, head on, whole height, clear glass, post-1991 red-pink handle panel and a 'Coins' header; roof, header, band, lower pane and the four posts all show; the grass hides the foot",
+   "used": true,
+   "not_used_for": "the livery (post-1991: the handle panel, the header's lettering, the printed logo, all masked in the preview), the interior (blurred), the ground",
+   "period": "2017 photograph of a unit built 1985 to 1996; the structure is the same in 1990, the livery differs (1991 revamp), so it is used for geometry only"
+  },
+  {
+   "id": "S2",
+   "url": "https://www.geograph.org.uk/photo/5558709",
+   "read": "2026-10-13",
+   "author": "David Hillas",
+   "licence": "CC BY-SA 2.0 (read on the page)",
+   "taken": "2017-07-19",
+   "kind": "photograph",
+   "shows": "a door-type KX100, nearer and looking down: the lid's rolled lip, the black channel frame, the stainless post with one round fixing, the moulded handle panel with its rectangular pull and finger recess, mud on the lower pane, plants at the foot",
+   "used": true,
+   "not_used_for": "measuring (the camera looks down about 25 degrees, the sides converge); the sticker on the lid, the etched figure and the notices (not period, real marks)",
+   "period": "2017; unit of the same kind as 1990's apart from the 1991 livery"
+  },
+  {
+   "id": "S3",
+   "url": "https://www.geograph.org.uk/photo/5314484",
+   "read": "2026-10-13",
+   "author": "David Hillas",
+   "licence": "CC BY-SA 2.0 (read on the page)",
+   "taken": "2017-02-17",
+   "kind": "photograph",
+   "shows": "the doorless KX100: the back panel, a payphone body with its keypad and handset, a notice frame, the stainless coin-vault housing above a low step, the two side panels seen from inside",
+   "used": true,
+   "not_used_for": "any number (oblique, the camera looks down); the notices' text and logos",
+   "period": "2017; the same housing as 1990's"
+  },
+  {
+   "id": "S4",
+   "url": "https://www.britishtelephones.com/kxkiosk.htm",
+   "read": "2026-10-13",
+   "author": "the site's author (a hobbyist reference)",
+   "licence": "read for facts only (nothing copied); facts are not licensed",
+   "taken": "n/a (undated page)",
+   "kind": "book",
+   "shows": "KX100 dimensions Height 2192, Width 890, Depth 890 (mm), weight 266 kg; sides slightly raised above the ground against litter; the Mk2 'biscuit tin lid'; smoked glass at launch, clear later; the first handle panels yellow, 1991 pink",
+   "used": true,
+   "not_used_for": "any photograph or text copied",
+   "period": "describes the 1985 to 1996 kiosk"
+  },
+  {
+   "id": "S5",
+   "url": "https://www.the-telephone-box.co.uk/kiosks/kx100/",
+   "read": "2026-10-13",
+   "author": "the site's author (a hobbyist reference)",
+   "licence": "read for facts only",
+   "taken": "n/a (undated page)",
+   "kind": "book",
+   "shows": "Height 7 ft 1 in, Width 2 ft 11 in; aluminium frame clad in stainless panels with anodised edging; black plastic modesty panel and trim; the first panels yellow, the phonecard kind green",
+   "used": true,
+   "not_used_for": "any number beyond the two dimensions (it gives 2159 x 889, which is 33 mm lower than S4; both are kept, S4 is chosen)",
+   "period": "describes the 1985 to 1996 kiosk"
+  },
+  {
+   "id": "S6",
+   "url": "https://en.wikipedia.org/wiki/KX_telephone_boxes",
+   "read": "2026-10-13 (raw wikitext through en.wikipedia.org)",
+   "author": "Wikipedia contributors",
+   "licence": "CC BY-SA 4.0 (the page's own)",
+   "taken": "n/a (a text)",
+   "kind": "book",
+   "shows": "production 1985 to 1996, 3,000 a month in 1987 to 1989; the first deliveries had cylindrical levelling legs, a flat-sheet roof with upturned edges and a multi-panel back, the Mk2 followed with a single back sheet and the biscuit-tin lid; door panel and handle yellow (coin) or green (card) until the 1991 revamp; a windswept gap at the foot",
+   "used": true,
+   "not_used_for": "any picture",
+   "period": "history of the 1985 to 1996 kiosk"
+  },
+  {
+   "id": "S7",
+   "url": "https://api.polyhaven.com/assets?t=models",
+   "read": "2026-10-13",
+   "author": "Poly Haven artists",
+   "licence": "CC0 1.0",
+   "taken": "n/a (the list of 521 models)",
+   "kind": "model list",
+   "shows": "no British telephone box of any kind; the only phone is korean_public_payphone_01 (a post-mounted payphone, 401 x 301 x 740 mm)",
+   "used": false,
+   "not_used_for": "everything: no CC0 model fits, so the kiosk is made by script",
+   "period": "n/a"
+  },
+  {
+   "id": "S8",
+   "url": "https://api.geograph.org.uk/syndicator.php (the feed; terms phone box, telephone box, telephone kiosk, KX100, phone kiosk, each with takenyear 1975 to 1996)",
+   "read": "2026-10-13",
+   "author": "Geograph contributors",
+   "licence": "CC BY-SA 2.0 (each page)",
+   "taken": "1975 to 1996 searched",
+   "kind": "search record",
+   "shows": "about 120 photographs of 1975 to 1996 with a telephone box in them, all of the older red boxes, one white box of a different municipal kind (1989) and one open-sided box named in a caption (1987); not one KX100 photograph before 2009 in about 400 results for the KX100 terms",
+   "used": false,
+   "not_used_for": "measuring: no period KX100 photograph was reached",
+   "period": "n/a"
+  },
+  {
+   "id": "S9",
+   "url": "production/assets/street/clutter/kx100-kiosk.glb and tools/meshgen/blender/clutter/kx100_kiosk.py (this repository)",
+   "read": "2026-10-13",
+   "author": "this project",
+   "licence": "own work",
+   "taken": "made 29 September 2026",
+   "kind": "own",
+   "shows": "an earlier scripted kiosk: 0.89 square, 2.18 high, a 50 mm roof slab, header 200 high, band 1.00 to 1.12 m, panes 0.11 to 1.00 and 1.12 to 1.93, a 120 mm gap, the word Telephone in yellow",
+   "used": true,
+   "not_used_for": "its numbers (they disagree with P1 in six places, see the reuse table)",
+   "period": "n/a"
+  }
+ ],
+ "previews": [
+  {
+   "file": "p1-verge-kx100-front.jpg",
+   "source": "S1",
+   "credit": "David Hillas, Geograph 5269043, CC BY-SA 2.0, 2017-01-04, cropped to the kiosk; the printed logo, the header's lettering and the interior blurred",
+   "masked": [
+    "the printed operator logo and the notices inside the glass (blurred)",
+    "the header's lettering (painted out)"
+   ],
+   "looked_at_full_size": true,
+   "no_people_no_drink_no_betting_no_names": true
+  },
+  {
+   "file": "p1-verge-kx100-target-on-photo.jpg",
+   "source": "S1",
+   "credit": "overlay of this target's front drawing (red) on the same crop (the scale fitted on the height from the lid's top edge to the bottom rail's lower edge, the measured edges in green); same photograph and masks",
+   "masked": [
+    "as p1"
+   ],
+   "looked_at_full_size": true,
+   "no_people_no_drink_no_betting_no_names": true
+  },
+  {
+   "file": "p2-handle-kx100-detail.jpg",
+   "source": "S2",
+   "credit": "David Hillas, Geograph 5558709, CC BY-SA 2.0, 2017-07-19, cropped to the handle panel, the stainless post and the lower pane",
+   "masked": [
+    "the sticker, the etched figure and the notices are outside the crop"
+   ],
+   "looked_at_full_size": true,
+   "no_people_no_drink_no_betting_no_names": true
+  }
+ ],
+ "checks": [
+  {
+   "name": "N1: overall height, ground to lid top",
+   "measure": "measure it on the built mesh in millimetres (bbox)",
+   "expect": "2192.0 mm",
+   "tol": "+-1.5 mm"
+  },
+  {
+   "name": "N2: overall width",
+   "measure": "measure it on the built mesh in millimetres (bbox)",
+   "expect": "890.0 mm",
+   "tol": "+-1.5 mm"
+  },
+  {
+   "name": "N3: overall depth",
+   "measure": "measure it on the built mesh in millimetres (bbox)",
+   "expect": "890.0 mm",
+   "tol": "+-1.5 mm"
+  },
+  {
+   "name": "N4: lid skirt depth",
+   "measure": "measure it on the built mesh in millimetres (extent)",
+   "expect": "100.0 mm",
+   "tol": "+-12.0 mm"
+  },
+  {
+   "name": "N5: header height",
+   "measure": "measure it on the built mesh in millimetres (extent)",
+   "expect": "270.0 mm",
+   "tol": "+-15.0 mm"
+  },
+  {
+   "name": "N6: handle band height",
+   "measure": "measure it on the built mesh in millimetres (extent)",
+   "expect": "145.0 mm",
+   "tol": "+-12.0 mm"
+  },
+  {
+   "name": "N7: band centre above the ground",
+   "measure": "measure it on the built mesh in millimetres (centre)",
+   "expect": "978.5 mm",
+   "tol": "+-20.0 mm"
+  },
+  {
+   "name": "N8: gap between the bottom rail and the ground",
+   "measure": "measure it on the built mesh in millimetres (edge)",
+   "expect": "172.0 mm",
+   "tol": "+-35.0 mm"
+  },
+  {
+   "name": "N9: clear glazing width",
+   "measure": "measure it on the built mesh in millimetres (gap)",
+   "expect": "686.0 mm",
+   "tol": "+-14.0 mm"
+  },
+  {
+   "name": "N10: post face width (stainless strip seen from the front)",
+   "measure": "measure it on the built mesh in millimetres (extent)",
+   "expect": "40.0 mm",
+   "tol": "+-6.0 mm"
+  },
+  {
+   "name": "N11: door stile face width",
+   "measure": "measure it on the built mesh in millimetres (extent)",
+   "expect": "52.0 mm",
+   "tol": "+-8.0 mm"
+  },
+  {
+   "name": "N12: lid overhang each side beyond the posts",
+   "measure": "measure it on the built mesh in millimetres (gap)",
+   "expect": "10.0 mm",
+   "tol": "+-6.0 mm"
+  },
+  {
+   "name": "C1: three glazed faces and a solid back",
+   "measure": "count the glazed faces (front, left, right) and the back sheet",
+   "expect": "3 glazed, 1 solid",
+   "tol": "exact"
+  },
+  {
+   "name": "C2: three hinges on the right of the door",
+   "measure": "count pivot hinges on the front's right post",
+   "expect": "3",
+   "tol": "exact"
+  },
+  {
+   "name": "C3: the handle panel is proud of the frame",
+   "measure": "the panel's front face minus the stile's front face",
+   "expect": "10 mm",
+   "tol": "+-3 mm"
+  },
+  {
+   "name": "C4: the pull stands out of the panel",
+   "measure": "the pull's front face minus the panel's front face",
+   "expect": "28 mm",
+   "tol": "+-6 mm"
+  },
+  {
+   "name": "C5: no part floats and every join meets",
+   "measure": "the contact graph of the meshes (touching within 2 mm)",
+   "expect": "all parts reach the ground",
+   "tol": "0 floating"
+  },
+  {
+   "name": "C6: the back, lid and header are closed from the front, back and side at 0, 30 and 45 degrees",
+   "measure": "rays at the stated faces",
+   "expect": "0 get through",
+   "tol": "exact"
+  },
+  {
+   "name": "C7: the header word",
+   "measure": "the text on the header",
+   "expect": "Telephone",
+   "tol": "exact"
+  },
+  {
+   "name": "C8: no real mark",
+   "measure": "any text or logo on the model",
+   "expect": "none but the header word",
+   "tol": "exact"
+  }
+ ],
+ "owed": [
+  {
+   "id": "O1",
+   "line": "Move the phone box from before Rita's window to before the empty unit, 7 m up the street (east x 23.5)? It also gives walkers a 0.96 m strip against 0.56 m now.",
+   "recommended": "Yes, move it"
+  },
+  {
+   "id": "O2",
+   "line": "May the phone box's header carry the plain word Telephone, with no logo, until the town mints the Meridian operator's mark?",
+   "recommended": "Yes, the plain word"
+  }
+ ],
+ "night": {
+  "lantern_linear": [
+   1.0,
+   0.25,
+   0.0
+  ],
+  "note": "the street's only light is the lantern colour; the kiosk shows it on the stainless (a warm orange wash on the brushed steel) and the glass reflects it; the kiosk's own interior lamp is OFF in the sample (an unlit kiosk is the safe 1990 night; a lit one is one item for his taste page, owed line 2)"
+ },
+ "placement": {
+  "slot": "east side, centre x 23.5 m, front (the door) facing the road, back 0.05 m clear of the stallriser line (z 4.975), set back 1.14 m from the kerb's back edge; the scene's E3 line (east x 16.5, 0.55 m from the kerb, 0.914 square) is replaced",
+  "scene_line": "furniture E3: east, x 16.5, setback 0.55 m, plan 0.914, height 2.515 (K6 proportions)",
+  "reasons": [
+   "x 16.5 stands before Rita's window (bay 2 is x 15 to 21): the window is the model for every shopfront (RULINGS 2 Oct) and its lit pane at night is the proof's accent, so a kiosk must not stand in front of it",
+   "with the scene's 0.55 m set-back the kiosk leaves 2.0 - 0.55 - 0.89 = 0.56 m of footway, narrower than a walking person (0.68 m, the number the tester's 29 September finding used)",
+   "x 23.5 stands before bay 3, the whitewashed empty unit to let, where nothing is hidden; the kiosk's back to the shopfront leaves a clear strip from the kerb of 4.085 - 3.125 = 0.96 m",
+   "clear of the lamp column at x 28 east (4.5 m), the pillar box at x 27 (3.5 m), the two dustbins at x 21.4 and 22.0 (1.1 m from their centres to the kiosk's face, they stand against the wall at 1.6 m, the kiosk's front is at 1.14 m)"
+  ],
+  "stallriser_line_z_m": 4.975,
+  "kerb_back_z_m": 3.125,
+  "kiosk_face_z_m": [
+   4.085,
+   4.975
+  ],
+  "clear_strip_mm": 960.0,
+  "min_clear_mm": 680.0,
+  "x_centre_m": 23.5,
+  "orientation": "the door faces -z in the street's frame (towards the road), the back panel towards the shopfront"
+ },
+ "wear": [
+  "tide mark: dust and splash grime on both lower panes from the bottom rail up to about 350 mm, darkest in the lowest 100 mm, a clean line above (S2)",
+  "streaks of rain-carried grime down the glass from the lid's skirt, three or four, 1 to 3 mm wide as a mask",
+  "scratched patches and fine scratches on the lower pane at hand height and on the yellow handle panel (scuffed at the pull, paint dulled to 232, 188, 22)",
+  "the stainless is water-stained near the foot and the lid's lower lip, never mirror bright",
+  "the black frame faded to dark grey-brown on the sun side, dust in its channels, a few small round fixings visible on the posts (S2 shows one on the left post beside the handle panel)",
+  "litter caught in the gap under the lower rail: two crisp-packet shapes and a few cigarette ends (tobacco is allowed), none inside the kiosk",
+  "NOT shown: any card or sticker advertisement (the content rule), any person, any drink container, any real logo"
+ ],
+ "disagreements": [
+  {
+   "id": "W1",
+   "what": "size and proportion",
+   "book": "the scene file (E3) draws 0.914 square and 2.515 high, a plinth 0.15, a cornice, post 0.1 and a cap 0.7 x 0.2: the proportions of the older red kiosk",
+   "photo": "P1: height to width 2.51 measured over lid and posts (with the camera leaning), the printed KX100 gives 2192 / 890 = 2.46, the older kiosk 2.75; the lid, header, band and posts match the KX100",
+   "chose": "890 x 890 x 2192; the scene's numbers are replaced"
+  },
+  {
+   "id": "W2",
+   "what": "roof",
+   "book": "the 29 September script and the research note: a flat stainless slab 50 mm thick, slightly proud",
+   "photo": "P1 and S2: a folded lid with a skirt about 100 mm deep all round and a rolled lip",
+   "chose": "lid plate 3 mm on four 3 mm skirts 100 deep"
+  },
+  {
+   "id": "W3",
+   "what": "header height",
+   "book": "the script: 200 mm (1.93 to 2.13 m)",
+   "photo": "P1: header from the lid's lower edge to the glazing, 270 mm",
+   "chose": "270 mm"
+  },
+  {
+   "id": "W4",
+   "what": "the handle band's height above the ground",
+   "book": "the script: 1.00 to 1.12 m (a chest-high band 120 mm)",
+   "photo": "P1: band 906 to 1051 mm, 145 mm high",
+   "chose": "906 to 1051"
+  },
+  {
+   "id": "W5",
+   "what": "the foot",
+   "book": "the script: panes begin 110 mm up and a floor plate stands inside",
+   "photo": "P1: the bottom rail's lower edge 172 mm up, the posts alone reach the ground, no floor plate",
+   "chose": "172 mm gap, no floor plate"
+  },
+  {
+   "id": "W6",
+   "what": "the lower enclosure",
+   "book": "none",
+   "photo": "S3 shows a stainless housing over a step; kept as a Judgement box",
+   "chose": "lower_enclosure box, flagged Judgement"
+  }
+ ],
+ "variants_note": [
+  "KX1 (the sample): the door kiosk. It stands in the street.",
+  "KX2: the doorless open kiosk (S3): the same lid, header, posts, back and payphone with no front leaf, glass, stiles or band; one more place for the town if it wants a second box (none in the scene today).",
+  "conditions (materials, not shapes): C0 sound, C1 grimy (the sample's wear), C2 one lower pane cracked in a star from a point 1 m above the ground (a mask on the glass, not a mesh).",
+  "glass: G0 clear (the sample), G1 smoked (transmission 0.55): the first deliveries of 1985 to 1986 and a few after; at most one in ten on the street."
+ ],
+ "text": {
+  "header_word": "Telephone",
+  "header_note": "the word is the plain English word, set in one line, upright, 100 mm tall letters in the middle of the header, in an OFL grotesque such as Liberation Sans (SIL OFL 1.1); no logo, no operator's name, no crown; colour a pale yellow-white (240, 224, 150); the mark the brand bible still owes is a placeholder: the upper pane's logo zone (centred, 300 x 300, from z 1250) stays empty",
+  "logo_zone": [
+   -150.0,
+   150.0,
+   1250.0,
+   1550.0
+  ],
+  "forbidden": [
+   "any real operator's name or logo",
+   "a crown",
+   "a cypher",
+   "a card or advertisement",
+   "a price"
+  ]
+ },
+ "not_settled": [
+  "the 1990 header's lettering colour (the research note says yellow on black; no 1985 to 1991 photograph was reached; chosen pale yellow-white, Judgement)",
+  "the side fascia's height (S3 shows the header across the front; the side fascia is Judgement at the same height)",
+  "the interior (payphone, enclosure and notice frame positions are Judgement within about 30 mm: S3 is oblique)",
+  "whether Quay Street's box has a door (the sample has one; KX2 is the alternative)",
+  "smoked or clear glass for the single box (clear chosen: from 1988 on most were clear)",
+  "the exact lid lip profile (S2 shows a rolled lip; modelled as a 3 mm skirt with an 8 mm turned-in edge)"
+ ],
+ "content_rule_note": "no cards, no stickers, no people, no drink, no betting, nobody young: the kiosk stands empty (a statement of the content rule).",
+ "builder_notes": [
+  "build by script from the parts; every part is a box or cylinder with the edges stated in its row; weld the stainless into one shape per post; glass is a separate mesh with a glass material and 4 mm thickness",
+  "replace production/assets/street/clutter/kx100-kiosk.glb with the new kiosk at the slot; the old asset stays in git",
+  "UVs: stainless 1 m tiling brushed (horizontal grain on the lid and back, vertical on the posts); header and handle panel one texture each",
+  "keep the foot gap open and the posts' feet 40 x 40 on the ground"
+ ],
+ "self_check": {
+  "line": "SELF-CHECK phone-box: 113 checks, 113 passed, 0 failed; negative controls 31 of 33 caught (offline)",
+  "checks": 113,
+  "passed": 113,
+  "failed": 0,
+  "controls": 33,
+  "controls_caught": 31,
+  "options": "offline",
+  "failing": [],
+  "uncaught": [
+   "geometry: the part that closes face header front removed",
+   "geometry: the part that closes face handle band removed"
+  ]
+ }
+}

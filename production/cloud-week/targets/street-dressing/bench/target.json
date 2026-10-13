@@ -1,0 +1,2501 @@
+{
+ "family": "bench",
+ "title": "Quay Street's council bench",
+ "units": "millimetres; angles in degrees; z up; the sitter faces -y; the pivot is the centre of the bench's length on the ground, midway front to back of the end frames' feet",
+ "status": "written 13 October 2026, not yet reviewed",
+ "sample": "B1",
+ "materials": {
+  "timber": {
+   "name": "iroko slats, weathered",
+   "srgb": [
+    122,
+    98,
+    70
+   ],
+   "rough": 0.8,
+   "rough_words": "rough, grained",
+   "metal": false,
+   "note": "silvering on the top faces, dark at the bolt holes, a green algal stain on the back slats' lower edges"
+  },
+  "timber_leg": {
+   "name": "iroko legs and posts, stained dark",
+   "srgb": [
+    74,
+    58,
+    42
+   ],
+   "rough": 0.8,
+   "rough_words": "rough, grained",
+   "metal": false,
+   "note": "dark with water and ground dirt, lightest at the arrised edges; a green stain at the foot"
+  },
+  "galvanised": {
+   "name": "galvanised bolt heads",
+   "srgb": [
+    138,
+    140,
+    138
+   ],
+   "rough": 0.5,
+   "rough_words": "satin",
+   "metal": true,
+   "note": "domed heads, rust rings"
+  }
+ },
+ "variants": {
+  "B1": {
+   "name": "B1: three-support council bench, 1800 long, 5 + 5 slats (the sample)",
+   "parts": [
+    {
+     "id": "end_l_slab",
+     "type": "prism",
+     "plane": "yz",
+     "poly": [
+      [
+       -215.0,
+       0.0
+      ],
+      [
+       245.0,
+       0.0
+      ],
+      [
+       245.0,
+       60.0
+      ],
+      [
+       225.0,
+       372.0
+      ],
+      [
+       -195.0,
+       372.0
+      ],
+      [
+       -215.0,
+       60.0
+      ]
+     ],
+     "w": [
+      -804.0,
+      -704.0
+     ],
+     "material": "timber_leg",
+     "edge": "edges r 6, foot flared 20 each end over the lowest 60",
+     "note": "slab leg, 372 high, flared at the foot"
+    },
+    {
+     "id": "end_l_bearer",
+     "type": "box",
+     "c": [
+      -789.5,
+      15.0,
+      390.0
+     ],
+     "s": [
+      171.0,
+      480.0,
+      36.0
+     ],
+     "material": "timber_leg",
+     "edge": "edges r 3",
+     "note": "seat bearer, 36 deep, carries the slats and the post"
+    },
+    {
+     "id": "end_l_post",
+     "type": "prism",
+     "plane": "yz",
+     "poly": [
+      [
+       205.0,
+       408.0
+      ],
+      [
+       245.0,
+       408.0
+      ],
+      [
+       324.69979528022617,
+       860.0
+      ],
+      [
+       284.69979528022617,
+       860.0
+      ]
+     ],
+     "w": [
+      -875.0,
+      -800.0
+     ],
+     "material": "timber_leg",
+     "edge": "edges r 4",
+     "note": "raked back post, 10 degrees, 40 deep, to z 860"
+    },
+    {
+     "id": "end_r_slab",
+     "type": "prism",
+     "plane": "yz",
+     "poly": [
+      [
+       -215.0,
+       0.0
+      ],
+      [
+       245.0,
+       0.0
+      ],
+      [
+       245.0,
+       60.0
+      ],
+      [
+       225.0,
+       372.0
+      ],
+      [
+       -195.0,
+       372.0
+      ],
+      [
+       -215.0,
+       60.0
+      ]
+     ],
+     "w": [
+      704.0,
+      804.0
+     ],
+     "material": "timber_leg",
+     "edge": "edges r 6, foot flared 20 each end over the lowest 60",
+     "note": "slab leg, 372 high, flared at the foot"
+    },
+    {
+     "id": "end_r_bearer",
+     "type": "box",
+     "c": [
+      789.5,
+      15.0,
+      390.0
+     ],
+     "s": [
+      171.0,
+      480.0,
+      36.0
+     ],
+     "material": "timber_leg",
+     "edge": "edges r 3",
+     "note": "seat bearer, 36 deep, carries the slats and the post"
+    },
+    {
+     "id": "end_r_post",
+     "type": "prism",
+     "plane": "yz",
+     "poly": [
+      [
+       205.0,
+       408.0
+      ],
+      [
+       245.0,
+       408.0
+      ],
+      [
+       324.69979528022617,
+       860.0
+      ],
+      [
+       284.69979528022617,
+       860.0
+      ]
+     ],
+     "w": [
+      800.0,
+      875.0
+     ],
+     "material": "timber_leg",
+     "edge": "edges r 4",
+     "note": "raked back post, 10 degrees, 40 deep, to z 860"
+    },
+    {
+     "id": "mid_slab",
+     "type": "prism",
+     "plane": "yz",
+     "poly": [
+      [
+       -215.0,
+       0.0
+      ],
+      [
+       245.0,
+       0.0
+      ],
+      [
+       245.0,
+       60.0
+      ],
+      [
+       225.0,
+       372.0
+      ],
+      [
+       -195.0,
+       372.0
+      ],
+      [
+       -215.0,
+       60.0
+      ]
+     ],
+     "w": [
+      -25.0,
+      25.0
+     ],
+     "material": "timber_leg",
+     "edge": "edges r 6, foot flared 20 each end over the lowest 60",
+     "note": "slab leg, 372 high, flared at the foot"
+    },
+    {
+     "id": "mid_bearer",
+     "type": "box",
+     "c": [
+      0.0,
+      15.0,
+      390.0
+     ],
+     "s": [
+      50.0,
+      480.0,
+      36.0
+     ],
+     "material": "timber_leg",
+     "edge": "edges r 3",
+     "note": "seat bearer, 36 deep, carries the slats and the post"
+    },
+    {
+     "id": "mid_post",
+     "type": "prism",
+     "plane": "yz",
+     "poly": [
+      [
+       205.0,
+       408.0
+      ],
+      [
+       245.0,
+       408.0
+      ],
+      [
+       324.69979528022617,
+       860.0
+      ],
+      [
+       284.69979528022617,
+       860.0
+      ]
+     ],
+     "w": [
+      -25.0,
+      25.0
+     ],
+     "material": "timber_leg",
+     "edge": "edges r 4",
+     "note": "raked back post, 10 degrees, 40 deep, to z 860"
+    },
+    {
+     "id": "seat_slat_1",
+     "type": "box",
+     "c": [
+      0.0,
+      -183.5,
+      424.0
+     ],
+     "s": [
+      1800.0,
+      63.0,
+      32.0
+     ],
+     "material": "timber",
+     "edge": "arrised 2 mm all round, ends square",
+     "note": "iroko 63 x 32"
+    },
+    {
+     "id": "seat_slat_2",
+     "type": "box",
+     "c": [
+      0.0,
+      -97.0,
+      424.0
+     ],
+     "s": [
+      1800.0,
+      63.0,
+      32.0
+     ],
+     "material": "timber",
+     "edge": "arrised 2 mm all round, ends square",
+     "note": "iroko 63 x 32"
+    },
+    {
+     "id": "seat_slat_3",
+     "type": "box",
+     "c": [
+      0.0,
+      -10.5,
+      424.0
+     ],
+     "s": [
+      1800.0,
+      63.0,
+      32.0
+     ],
+     "material": "timber",
+     "edge": "arrised 2 mm all round, ends square",
+     "note": "iroko 63 x 32"
+    },
+    {
+     "id": "seat_slat_4",
+     "type": "box",
+     "c": [
+      0.0,
+      76.0,
+      424.0
+     ],
+     "s": [
+      1800.0,
+      63.0,
+      32.0
+     ],
+     "material": "timber",
+     "edge": "arrised 2 mm all round, ends square",
+     "note": "iroko 63 x 32"
+    },
+    {
+     "id": "seat_slat_5",
+     "type": "box",
+     "c": [
+      0.0,
+      162.5,
+      424.0
+     ],
+     "s": [
+      1800.0,
+      63.0,
+      32.0
+     ],
+     "material": "timber",
+     "edge": "arrised 2 mm all round, ends square",
+     "note": "iroko 63 x 32"
+    },
+    {
+     "id": "back_slat_1",
+     "type": "box",
+     "c": [
+      0.0,
+      200.83,
+      476.5
+     ],
+     "s": [
+      1800.0,
+      32.0,
+      63.0
+     ],
+     "rot": [
+      0,
+      0,
+      -10.0
+     ],
+     "material": "timber",
+     "edge": "arrised 2 mm all round",
+     "note": "iroko 63 x 32, raked 10 degrees with the posts"
+    },
+    {
+     "id": "back_slat_2",
+     "type": "box",
+     "c": [
+      0.0,
+      216.08,
+      563.0
+     ],
+     "s": [
+      1800.0,
+      32.0,
+      63.0
+     ],
+     "rot": [
+      0,
+      0,
+      -10.0
+     ],
+     "material": "timber",
+     "edge": "arrised 2 mm all round",
+     "note": "iroko 63 x 32, raked 10 degrees with the posts"
+    },
+    {
+     "id": "back_slat_3",
+     "type": "box",
+     "c": [
+      0.0,
+      231.34,
+      649.5
+     ],
+     "s": [
+      1800.0,
+      32.0,
+      63.0
+     ],
+     "rot": [
+      0,
+      0,
+      -10.0
+     ],
+     "material": "timber",
+     "edge": "arrised 2 mm all round",
+     "note": "iroko 63 x 32, raked 10 degrees with the posts"
+    },
+    {
+     "id": "back_slat_4",
+     "type": "box",
+     "c": [
+      0.0,
+      246.59,
+      736.0
+     ],
+     "s": [
+      1800.0,
+      32.0,
+      63.0
+     ],
+     "rot": [
+      0,
+      0,
+      -10.0
+     ],
+     "material": "timber",
+     "edge": "arrised 2 mm all round",
+     "note": "iroko 63 x 32, raked 10 degrees with the posts"
+    },
+    {
+     "id": "back_slat_5",
+     "type": "box",
+     "c": [
+      0.0,
+      261.84,
+      822.5
+     ],
+     "s": [
+      1800.0,
+      32.0,
+      63.0
+     ],
+     "rot": [
+      0,
+      0,
+      -10.0
+     ],
+     "material": "timber",
+     "edge": "arrised 2 mm all round",
+     "note": "iroko 63 x 32, raked 10 degrees with the posts"
+    },
+    {
+     "id": "bolt_l1",
+     "type": "cyl",
+     "p0": [
+      -837.5,
+      177.584746598186,
+      476.5
+     ],
+     "p1": [
+      -837.5,
+      185.584746598186,
+      476.5
+     ],
+     "r0": 10.0,
+     "material": "galvanised",
+     "note": "coach-bolt head, 20 across"
+    },
+    {
+     "id": "bolt_r1",
+     "type": "cyl",
+     "p0": [
+      837.5,
+      177.584746598186,
+      476.5
+     ],
+     "p1": [
+      837.5,
+      185.584746598186,
+      476.5
+     ],
+     "r0": 10.0,
+     "material": "galvanised",
+     "note": "coach-bolt head, 20 across"
+    },
+    {
+     "id": "bolt_m1",
+     "type": "cyl",
+     "p0": [
+      0.0,
+      177.584746598186,
+      476.5
+     ],
+     "p1": [
+      0.0,
+      185.584746598186,
+      476.5
+     ],
+     "r0": 10.0,
+     "material": "galvanised",
+     "note": "coach-bolt head, 20 across"
+    },
+    {
+     "id": "bolt_l2",
+     "type": "cyl",
+     "p0": [
+      -837.5,
+      192.83703042946823,
+      563.0
+     ],
+     "p1": [
+      -837.5,
+      200.83703042946823,
+      563.0
+     ],
+     "r0": 10.0,
+     "material": "galvanised",
+     "note": "coach-bolt head, 20 across"
+    },
+    {
+     "id": "bolt_r2",
+     "type": "cyl",
+     "p0": [
+      837.5,
+      192.83703042946823,
+      563.0
+     ],
+     "p1": [
+      837.5,
+      200.83703042946823,
+      563.0
+     ],
+     "r0": 10.0,
+     "material": "galvanised",
+     "note": "coach-bolt head, 20 across"
+    },
+    {
+     "id": "bolt_m2",
+     "type": "cyl",
+     "p0": [
+      0.0,
+      192.83703042946823,
+      563.0
+     ],
+     "p1": [
+      0.0,
+      200.83703042946823,
+      563.0
+     ],
+     "r0": 10.0,
+     "material": "galvanised",
+     "note": "coach-bolt head, 20 across"
+    },
+    {
+     "id": "bolt_l3",
+     "type": "cyl",
+     "p0": [
+      -837.5,
+      208.08931426075043,
+      649.5
+     ],
+     "p1": [
+      -837.5,
+      216.08931426075043,
+      649.5
+     ],
+     "r0": 10.0,
+     "material": "galvanised",
+     "note": "coach-bolt head, 20 across"
+    },
+    {
+     "id": "bolt_r3",
+     "type": "cyl",
+     "p0": [
+      837.5,
+      208.08931426075043,
+      649.5
+     ],
+     "p1": [
+      837.5,
+      216.08931426075043,
+      649.5
+     ],
+     "r0": 10.0,
+     "material": "galvanised",
+     "note": "coach-bolt head, 20 across"
+    },
+    {
+     "id": "bolt_m3",
+     "type": "cyl",
+     "p0": [
+      0.0,
+      208.08931426075043,
+      649.5
+     ],
+     "p1": [
+      0.0,
+      216.08931426075043,
+      649.5
+     ],
+     "r0": 10.0,
+     "material": "galvanised",
+     "note": "coach-bolt head, 20 across"
+    },
+    {
+     "id": "bolt_l4",
+     "type": "cyl",
+     "p0": [
+      -837.5,
+      223.34159809203265,
+      736.0
+     ],
+     "p1": [
+      -837.5,
+      231.34159809203265,
+      736.0
+     ],
+     "r0": 10.0,
+     "material": "galvanised",
+     "note": "coach-bolt head, 20 across"
+    },
+    {
+     "id": "bolt_r4",
+     "type": "cyl",
+     "p0": [
+      837.5,
+      223.34159809203265,
+      736.0
+     ],
+     "p1": [
+      837.5,
+      231.34159809203265,
+      736.0
+     ],
+     "r0": 10.0,
+     "material": "galvanised",
+     "note": "coach-bolt head, 20 across"
+    },
+    {
+     "id": "bolt_m4",
+     "type": "cyl",
+     "p0": [
+      0.0,
+      223.34159809203265,
+      736.0
+     ],
+     "p1": [
+      0.0,
+      231.34159809203265,
+      736.0
+     ],
+     "r0": 10.0,
+     "material": "galvanised",
+     "note": "coach-bolt head, 20 across"
+    },
+    {
+     "id": "bolt_l5",
+     "type": "cyl",
+     "p0": [
+      -837.5,
+      238.59388192331488,
+      822.5
+     ],
+     "p1": [
+      -837.5,
+      246.59388192331488,
+      822.5
+     ],
+     "r0": 10.0,
+     "material": "galvanised",
+     "note": "coach-bolt head, 20 across"
+    },
+    {
+     "id": "bolt_r5",
+     "type": "cyl",
+     "p0": [
+      837.5,
+      238.59388192331488,
+      822.5
+     ],
+     "p1": [
+      837.5,
+      246.59388192331488,
+      822.5
+     ],
+     "r0": 10.0,
+     "material": "galvanised",
+     "note": "coach-bolt head, 20 across"
+    },
+    {
+     "id": "bolt_m5",
+     "type": "cyl",
+     "p0": [
+      0.0,
+      238.59388192331488,
+      822.5
+     ],
+     "p1": [
+      0.0,
+      246.59388192331488,
+      822.5
+     ],
+     "r0": 10.0,
+     "material": "galvanised",
+     "note": "coach-bolt head, 20 across"
+    }
+   ],
+   "overall": {
+    "w": 1800.0,
+    "d": 550.0,
+    "h": 860.0
+   },
+   "overall_tol": 12.0,
+   "noground": [],
+   "joins": [
+    [
+     "end_l_bearer",
+     "end_l_slab"
+    ],
+    [
+     "end_l_post",
+     "end_l_bearer"
+    ],
+    [
+     "end_r_bearer",
+     "end_r_slab"
+    ],
+    [
+     "end_r_post",
+     "end_r_bearer"
+    ],
+    [
+     "mid_bearer",
+     "mid_slab"
+    ],
+    [
+     "mid_post",
+     "mid_bearer"
+    ],
+    [
+     "seat_slat_1",
+     "end_l_bearer"
+    ],
+    [
+     "seat_slat_5",
+     "end_r_bearer"
+    ],
+    [
+     "back_slat_1",
+     "end_l_post"
+    ],
+    [
+     "back_slat_5",
+     "end_r_post"
+    ],
+    [
+     "bolt_l1",
+     "back_slat_1"
+    ],
+    [
+     "bolt_r5",
+     "back_slat_5"
+    ],
+    [
+     "seat_slat_3",
+     "mid_bearer"
+    ],
+    [
+     "back_slat_3",
+     "mid_post"
+    ],
+    [
+     "bolt_m3",
+     "back_slat_3"
+    ]
+   ],
+   "embeds": [
+    [
+     "bolt_l1",
+     "back_slat_1",
+     12.0
+    ],
+    [
+     "bolt_l1",
+     "end_l_post",
+     12.0
+    ],
+    [
+     "bolt_l2",
+     "back_slat_2",
+     12.0
+    ],
+    [
+     "bolt_l2",
+     "end_l_post",
+     12.0
+    ],
+    [
+     "bolt_l3",
+     "back_slat_3",
+     12.0
+    ],
+    [
+     "bolt_l3",
+     "end_l_post",
+     12.0
+    ],
+    [
+     "bolt_l4",
+     "back_slat_4",
+     12.0
+    ],
+    [
+     "bolt_l4",
+     "end_l_post",
+     12.0
+    ],
+    [
+     "bolt_l5",
+     "back_slat_5",
+     12.0
+    ],
+    [
+     "bolt_l5",
+     "end_l_post",
+     12.0
+    ],
+    [
+     "bolt_m1",
+     "back_slat_1",
+     12.0
+    ],
+    [
+     "bolt_m1",
+     "mid_post",
+     12.0
+    ],
+    [
+     "bolt_m2",
+     "back_slat_2",
+     12.0
+    ],
+    [
+     "bolt_m2",
+     "mid_post",
+     12.0
+    ],
+    [
+     "bolt_m3",
+     "back_slat_3",
+     12.0
+    ],
+    [
+     "bolt_m3",
+     "mid_post",
+     12.0
+    ],
+    [
+     "bolt_m4",
+     "back_slat_4",
+     12.0
+    ],
+    [
+     "bolt_m4",
+     "mid_post",
+     12.0
+    ],
+    [
+     "bolt_m5",
+     "back_slat_5",
+     12.0
+    ],
+    [
+     "bolt_m5",
+     "mid_post",
+     12.0
+    ],
+    [
+     "bolt_r1",
+     "back_slat_1",
+     12.0
+    ],
+    [
+     "bolt_r1",
+     "end_r_post",
+     12.0
+    ],
+    [
+     "bolt_r2",
+     "back_slat_2",
+     12.0
+    ],
+    [
+     "bolt_r2",
+     "end_r_post",
+     12.0
+    ],
+    [
+     "bolt_r3",
+     "back_slat_3",
+     12.0
+    ],
+    [
+     "bolt_r3",
+     "end_r_post",
+     12.0
+    ],
+    [
+     "bolt_r4",
+     "back_slat_4",
+     12.0
+    ],
+    [
+     "bolt_r4",
+     "end_r_post",
+     12.0
+    ],
+    [
+     "bolt_r5",
+     "back_slat_5",
+     12.0
+    ],
+    [
+     "bolt_r5",
+     "end_r_post",
+     12.0
+    ]
+   ],
+   "overlap_allow": 6.0,
+   "faces": []
+  },
+  "B2": {
+   "name": "B2: the two-support short bench, 1200 long, same slats and ends",
+   "parts": [
+    {
+     "id": "end_l_slab",
+     "type": "prism",
+     "plane": "yz",
+     "poly": [
+      [
+       -215.0,
+       0.0
+      ],
+      [
+       245.0,
+       0.0
+      ],
+      [
+       245.0,
+       60.0
+      ],
+      [
+       225.0,
+       372.0
+      ],
+      [
+       -195.0,
+       372.0
+      ],
+      [
+       -215.0,
+       60.0
+      ]
+     ],
+     "w": [
+      -504.0,
+      -404.0
+     ],
+     "material": "timber_leg",
+     "edge": "edges r 6, foot flared 20 each end over the lowest 60",
+     "note": "slab leg, 372 high, flared at the foot"
+    },
+    {
+     "id": "end_l_bearer",
+     "type": "box",
+     "c": [
+      -489.5,
+      15.0,
+      390.0
+     ],
+     "s": [
+      171.0,
+      480.0,
+      36.0
+     ],
+     "material": "timber_leg",
+     "edge": "edges r 3",
+     "note": "seat bearer, 36 deep, carries the slats and the post"
+    },
+    {
+     "id": "end_l_post",
+     "type": "prism",
+     "plane": "yz",
+     "poly": [
+      [
+       205.0,
+       408.0
+      ],
+      [
+       245.0,
+       408.0
+      ],
+      [
+       324.69979528022617,
+       860.0
+      ],
+      [
+       284.69979528022617,
+       860.0
+      ]
+     ],
+     "w": [
+      -575.0,
+      -500.0
+     ],
+     "material": "timber_leg",
+     "edge": "edges r 4",
+     "note": "raked back post, 10 degrees, 40 deep, to z 860"
+    },
+    {
+     "id": "end_r_slab",
+     "type": "prism",
+     "plane": "yz",
+     "poly": [
+      [
+       -215.0,
+       0.0
+      ],
+      [
+       245.0,
+       0.0
+      ],
+      [
+       245.0,
+       60.0
+      ],
+      [
+       225.0,
+       372.0
+      ],
+      [
+       -195.0,
+       372.0
+      ],
+      [
+       -215.0,
+       60.0
+      ]
+     ],
+     "w": [
+      404.0,
+      504.0
+     ],
+     "material": "timber_leg",
+     "edge": "edges r 6, foot flared 20 each end over the lowest 60",
+     "note": "slab leg, 372 high, flared at the foot"
+    },
+    {
+     "id": "end_r_bearer",
+     "type": "box",
+     "c": [
+      489.5,
+      15.0,
+      390.0
+     ],
+     "s": [
+      171.0,
+      480.0,
+      36.0
+     ],
+     "material": "timber_leg",
+     "edge": "edges r 3",
+     "note": "seat bearer, 36 deep, carries the slats and the post"
+    },
+    {
+     "id": "end_r_post",
+     "type": "prism",
+     "plane": "yz",
+     "poly": [
+      [
+       205.0,
+       408.0
+      ],
+      [
+       245.0,
+       408.0
+      ],
+      [
+       324.69979528022617,
+       860.0
+      ],
+      [
+       284.69979528022617,
+       860.0
+      ]
+     ],
+     "w": [
+      500.0,
+      575.0
+     ],
+     "material": "timber_leg",
+     "edge": "edges r 4",
+     "note": "raked back post, 10 degrees, 40 deep, to z 860"
+    },
+    {
+     "id": "seat_slat_1",
+     "type": "box",
+     "c": [
+      0.0,
+      -183.5,
+      424.0
+     ],
+     "s": [
+      1200.0,
+      63.0,
+      32.0
+     ],
+     "material": "timber",
+     "edge": "arrised 2 mm all round, ends square",
+     "note": "iroko 63 x 32"
+    },
+    {
+     "id": "seat_slat_2",
+     "type": "box",
+     "c": [
+      0.0,
+      -97.0,
+      424.0
+     ],
+     "s": [
+      1200.0,
+      63.0,
+      32.0
+     ],
+     "material": "timber",
+     "edge": "arrised 2 mm all round, ends square",
+     "note": "iroko 63 x 32"
+    },
+    {
+     "id": "seat_slat_3",
+     "type": "box",
+     "c": [
+      0.0,
+      -10.5,
+      424.0
+     ],
+     "s": [
+      1200.0,
+      63.0,
+      32.0
+     ],
+     "material": "timber",
+     "edge": "arrised 2 mm all round, ends square",
+     "note": "iroko 63 x 32"
+    },
+    {
+     "id": "seat_slat_4",
+     "type": "box",
+     "c": [
+      0.0,
+      76.0,
+      424.0
+     ],
+     "s": [
+      1200.0,
+      63.0,
+      32.0
+     ],
+     "material": "timber",
+     "edge": "arrised 2 mm all round, ends square",
+     "note": "iroko 63 x 32"
+    },
+    {
+     "id": "seat_slat_5",
+     "type": "box",
+     "c": [
+      0.0,
+      162.5,
+      424.0
+     ],
+     "s": [
+      1200.0,
+      63.0,
+      32.0
+     ],
+     "material": "timber",
+     "edge": "arrised 2 mm all round, ends square",
+     "note": "iroko 63 x 32"
+    },
+    {
+     "id": "back_slat_1",
+     "type": "box",
+     "c": [
+      0.0,
+      200.83,
+      476.5
+     ],
+     "s": [
+      1200.0,
+      32.0,
+      63.0
+     ],
+     "rot": [
+      0,
+      0,
+      -10.0
+     ],
+     "material": "timber",
+     "edge": "arrised 2 mm all round",
+     "note": "iroko 63 x 32, raked 10 degrees with the posts"
+    },
+    {
+     "id": "back_slat_2",
+     "type": "box",
+     "c": [
+      0.0,
+      216.08,
+      563.0
+     ],
+     "s": [
+      1200.0,
+      32.0,
+      63.0
+     ],
+     "rot": [
+      0,
+      0,
+      -10.0
+     ],
+     "material": "timber",
+     "edge": "arrised 2 mm all round",
+     "note": "iroko 63 x 32, raked 10 degrees with the posts"
+    },
+    {
+     "id": "back_slat_3",
+     "type": "box",
+     "c": [
+      0.0,
+      231.34,
+      649.5
+     ],
+     "s": [
+      1200.0,
+      32.0,
+      63.0
+     ],
+     "rot": [
+      0,
+      0,
+      -10.0
+     ],
+     "material": "timber",
+     "edge": "arrised 2 mm all round",
+     "note": "iroko 63 x 32, raked 10 degrees with the posts"
+    },
+    {
+     "id": "back_slat_4",
+     "type": "box",
+     "c": [
+      0.0,
+      246.59,
+      736.0
+     ],
+     "s": [
+      1200.0,
+      32.0,
+      63.0
+     ],
+     "rot": [
+      0,
+      0,
+      -10.0
+     ],
+     "material": "timber",
+     "edge": "arrised 2 mm all round",
+     "note": "iroko 63 x 32, raked 10 degrees with the posts"
+    },
+    {
+     "id": "back_slat_5",
+     "type": "box",
+     "c": [
+      0.0,
+      261.84,
+      822.5
+     ],
+     "s": [
+      1200.0,
+      32.0,
+      63.0
+     ],
+     "rot": [
+      0,
+      0,
+      -10.0
+     ],
+     "material": "timber",
+     "edge": "arrised 2 mm all round",
+     "note": "iroko 63 x 32, raked 10 degrees with the posts"
+    },
+    {
+     "id": "bolt_l1",
+     "type": "cyl",
+     "p0": [
+      -537.5,
+      177.584746598186,
+      476.5
+     ],
+     "p1": [
+      -537.5,
+      185.584746598186,
+      476.5
+     ],
+     "r0": 10.0,
+     "material": "galvanised",
+     "note": "coach-bolt head, 20 across"
+    },
+    {
+     "id": "bolt_r1",
+     "type": "cyl",
+     "p0": [
+      537.5,
+      177.584746598186,
+      476.5
+     ],
+     "p1": [
+      537.5,
+      185.584746598186,
+      476.5
+     ],
+     "r0": 10.0,
+     "material": "galvanised",
+     "note": "coach-bolt head, 20 across"
+    },
+    {
+     "id": "bolt_l2",
+     "type": "cyl",
+     "p0": [
+      -537.5,
+      192.83703042946823,
+      563.0
+     ],
+     "p1": [
+      -537.5,
+      200.83703042946823,
+      563.0
+     ],
+     "r0": 10.0,
+     "material": "galvanised",
+     "note": "coach-bolt head, 20 across"
+    },
+    {
+     "id": "bolt_r2",
+     "type": "cyl",
+     "p0": [
+      537.5,
+      192.83703042946823,
+      563.0
+     ],
+     "p1": [
+      537.5,
+      200.83703042946823,
+      563.0
+     ],
+     "r0": 10.0,
+     "material": "galvanised",
+     "note": "coach-bolt head, 20 across"
+    },
+    {
+     "id": "bolt_l3",
+     "type": "cyl",
+     "p0": [
+      -537.5,
+      208.08931426075043,
+      649.5
+     ],
+     "p1": [
+      -537.5,
+      216.08931426075043,
+      649.5
+     ],
+     "r0": 10.0,
+     "material": "galvanised",
+     "note": "coach-bolt head, 20 across"
+    },
+    {
+     "id": "bolt_r3",
+     "type": "cyl",
+     "p0": [
+      537.5,
+      208.08931426075043,
+      649.5
+     ],
+     "p1": [
+      537.5,
+      216.08931426075043,
+      649.5
+     ],
+     "r0": 10.0,
+     "material": "galvanised",
+     "note": "coach-bolt head, 20 across"
+    },
+    {
+     "id": "bolt_l4",
+     "type": "cyl",
+     "p0": [
+      -537.5,
+      223.34159809203265,
+      736.0
+     ],
+     "p1": [
+      -537.5,
+      231.34159809203265,
+      736.0
+     ],
+     "r0": 10.0,
+     "material": "galvanised",
+     "note": "coach-bolt head, 20 across"
+    },
+    {
+     "id": "bolt_r4",
+     "type": "cyl",
+     "p0": [
+      537.5,
+      223.34159809203265,
+      736.0
+     ],
+     "p1": [
+      537.5,
+      231.34159809203265,
+      736.0
+     ],
+     "r0": 10.0,
+     "material": "galvanised",
+     "note": "coach-bolt head, 20 across"
+    },
+    {
+     "id": "bolt_l5",
+     "type": "cyl",
+     "p0": [
+      -537.5,
+      238.59388192331488,
+      822.5
+     ],
+     "p1": [
+      -537.5,
+      246.59388192331488,
+      822.5
+     ],
+     "r0": 10.0,
+     "material": "galvanised",
+     "note": "coach-bolt head, 20 across"
+    },
+    {
+     "id": "bolt_r5",
+     "type": "cyl",
+     "p0": [
+      537.5,
+      238.59388192331488,
+      822.5
+     ],
+     "p1": [
+      537.5,
+      246.59388192331488,
+      822.5
+     ],
+     "r0": 10.0,
+     "material": "galvanised",
+     "note": "coach-bolt head, 20 across"
+    }
+   ],
+   "overall": {
+    "w": 1200.0,
+    "d": 550.0,
+    "h": 860.0
+   },
+   "overall_tol": 12.0,
+   "joins": [
+    [
+     "end_l_bearer",
+     "end_l_slab"
+    ],
+    [
+     "end_l_post",
+     "end_l_bearer"
+    ],
+    [
+     "end_r_bearer",
+     "end_r_slab"
+    ],
+    [
+     "end_r_post",
+     "end_r_bearer"
+    ],
+    [
+     "seat_slat_1",
+     "end_l_bearer"
+    ],
+    [
+     "seat_slat_5",
+     "end_r_bearer"
+    ],
+    [
+     "back_slat_1",
+     "end_l_post"
+    ],
+    [
+     "back_slat_5",
+     "end_r_post"
+    ],
+    [
+     "bolt_l1",
+     "back_slat_1"
+    ],
+    [
+     "bolt_r5",
+     "back_slat_5"
+    ]
+   ],
+   "embeds": [
+    [
+     "bolt_l1",
+     "back_slat_1",
+     12.0
+    ],
+    [
+     "bolt_l1",
+     "end_l_post",
+     12.0
+    ],
+    [
+     "bolt_l2",
+     "back_slat_2",
+     12.0
+    ],
+    [
+     "bolt_l2",
+     "end_l_post",
+     12.0
+    ],
+    [
+     "bolt_l3",
+     "back_slat_3",
+     12.0
+    ],
+    [
+     "bolt_l3",
+     "end_l_post",
+     12.0
+    ],
+    [
+     "bolt_l4",
+     "back_slat_4",
+     12.0
+    ],
+    [
+     "bolt_l4",
+     "end_l_post",
+     12.0
+    ],
+    [
+     "bolt_l5",
+     "back_slat_5",
+     12.0
+    ],
+    [
+     "bolt_l5",
+     "end_l_post",
+     12.0
+    ],
+    [
+     "bolt_r1",
+     "back_slat_1",
+     12.0
+    ],
+    [
+     "bolt_r1",
+     "end_r_post",
+     12.0
+    ],
+    [
+     "bolt_r2",
+     "back_slat_2",
+     12.0
+    ],
+    [
+     "bolt_r2",
+     "end_r_post",
+     12.0
+    ],
+    [
+     "bolt_r3",
+     "back_slat_3",
+     12.0
+    ],
+    [
+     "bolt_r3",
+     "end_r_post",
+     12.0
+    ],
+    [
+     "bolt_r4",
+     "back_slat_4",
+     12.0
+    ],
+    [
+     "bolt_r4",
+     "end_r_post",
+     12.0
+    ],
+    [
+     "bolt_r5",
+     "back_slat_5",
+     12.0
+    ],
+    [
+     "bolt_r5",
+     "end_r_post",
+     12.0
+    ]
+   ],
+   "overlap_allow": 6.0,
+   "faces": []
+  }
+ },
+ "drawing": {
+  "views": [
+   "front",
+   "back",
+   "left",
+   "plan"
+  ],
+  "sections": [
+   {
+    "id": "x400",
+    "axis": "x",
+    "at": 400.0
+   },
+   {
+    "id": "z700",
+    "axis": "z",
+    "at": 700.0
+   }
+  ]
+ },
+ "numbers": [
+  {
+   "id": "N1",
+   "what": "bench length (slat length)",
+   "value": 1800.0,
+   "kind": "Judgement",
+   "source": "a three-seat council bench; it also fixes P1's scale: P1's overall width 356.6 px = 1800 mm gives 0.198 px per mm; error 20 mm",
+   "tol": 20.0,
+   "measure": {
+    "kind": "bbox",
+    "axis": "x"
+   }
+  },
+  {
+   "id": "N2",
+   "what": "seat height (top of the seat slats)",
+   "value": 440.0,
+   "kind": "Judgement",
+   "source": "440 mm, the usual public-seat height; the seat is hidden behind the back on P1; error 30",
+   "tol": 30.0,
+   "measure": {
+    "kind": "edge",
+    "axis": "z",
+    "part": "seat_slat_3",
+    "side": "hi"
+   }
+  },
+  {
+   "id": "N3",
+   "what": "slat width (the seat slat's depth)",
+   "value": 63.0,
+   "kind": "Photo",
+   "source": "P1 slat height 12.4 px (pitch 17.0 px less gap 4.6 px) at 0.198 px per mm = 63 mm; error 5",
+   "tol": 5.0,
+   "measure": {
+    "kind": "extent",
+    "axis": "y",
+    "part": "seat_slat_1"
+   }
+  },
+  {
+   "id": "N4",
+   "what": "slat pitch on the back (centre to centre)",
+   "value": 86.5,
+   "kind": "Photo",
+   "source": "P1 gap tops at 197.7, 214.8, 232.4, 248.6: mean pitch 17.0 px = 86 mm; error 4",
+   "tol": 4.0,
+   "measure": {
+    "kind": "centre_dx",
+    "axis": "z",
+    "a": "back_slat_1",
+    "b": "back_slat_2"
+   }
+  },
+  {
+   "id": "N5",
+   "what": "slat thickness",
+   "value": 32.0,
+   "kind": "Judgement",
+   "source": "32 mm iroko, the usual section; not visible on P1; error 4",
+   "tol": 4.0,
+   "measure": {
+    "kind": "extent",
+    "axis": "z",
+    "part": "seat_slat_1"
+   }
+  },
+  {
+   "id": "N6",
+   "what": "top of the highest back slat above the ground",
+   "value": 854.0,
+   "kind": "Judgement",
+   "source": "five slats from 445 up (the bench's back top is not measurable against the ground on P1); error 40",
+   "tol": 40.0,
+   "measure": {
+    "kind": "edge",
+    "axis": "z",
+    "part": "back_slat_5",
+    "side": "hi"
+   }
+  },
+  {
+   "id": "N7",
+   "what": "back post top above the ground",
+   "value": 860.0,
+   "kind": "Judgement",
+   "source": "860 mm: the post stands a little above the highest slat; P1 is a back view; error 40",
+   "tol": 40.0,
+   "measure": {
+    "kind": "edge",
+    "axis": "z",
+    "part": "end_l_post",
+    "side": "hi"
+   }
+  },
+  {
+   "id": "N8",
+   "what": "centre support thickness along the bench",
+   "value": 50.0,
+   "kind": "Photo",
+   "source": "P1 mid_left 325.4 to mid_right 335.3 (9.9 px) at 0.198 px per mm = 50 mm; error 10",
+   "tol": 10.0,
+   "measure": {
+    "kind": "extent",
+    "axis": "x",
+    "part": "mid_post"
+   }
+  }
+ ],
+ "photos": [
+  {
+   "id": "P1",
+   "source": "S1",
+   "file": "P1.jpg",
+   "view": "back",
+   "variant": "B1",
+   "object_box": [
+    148,
+    178,
+    512,
+    372
+   ],
+   "fit": {
+    "parts": [
+     "back_slat_5",
+     "back_slat_2"
+    ],
+    "y_top_px": 186.2,
+    "y_bottom_px": 248.56,
+    "x_centre_px": 324.01,
+    "fitted_on": "height",
+    "view": "back"
+   },
+   "features": [
+    {
+     "id": "back_top",
+     "axis": "y",
+     "px": 186.2,
+     "box": [
+      200,
+      176,
+      300,
+      192
+     ],
+     "tol_px": 5.0,
+     "contrast": 26.2,
+     "measure": {
+      "axis": "y",
+      "band": [
+       200,
+       300
+      ],
+      "win": [
+       176,
+       192
+      ],
+      "pol": "-"
+     },
+     "ref": {
+      "part": "back_slat_5",
+      "side": "hi"
+     },
+     "anchor": true,
+     "boundary": true
+    },
+    {
+     "id": "gap1_top",
+     "axis": "y",
+     "px": 197.7,
+     "box": [
+      200,
+      194,
+      290,
+      206
+     ],
+     "tol_px": 5.0,
+     "contrast": 27.7,
+     "measure": {
+      "axis": "y",
+      "band": [
+       200,
+       290
+      ],
+      "win": [
+       194,
+       206
+      ],
+      "pol": "+"
+     },
+     "ref": {
+      "part": "back_slat_5",
+      "side": "lo"
+     },
+     "anchor": false,
+     "boundary": false
+    },
+    {
+     "id": "gap1_bottom",
+     "axis": "y",
+     "px": 202.2,
+     "box": [
+      200,
+      198,
+      290,
+      212
+     ],
+     "tol_px": 5.0,
+     "contrast": 26.9,
+     "measure": {
+      "axis": "y",
+      "band": [
+       200,
+       290
+      ],
+      "win": [
+       198,
+       212
+      ],
+      "pol": "-"
+     },
+     "ref": {
+      "part": "back_slat_4",
+      "side": "hi"
+     },
+     "anchor": false,
+     "boundary": false
+    },
+    {
+     "id": "gap2_top",
+     "axis": "y",
+     "px": 214.77,
+     "box": [
+      200,
+      210,
+      290,
+      222
+     ],
+     "tol_px": 5.0,
+     "contrast": 29.0,
+     "measure": {
+      "axis": "y",
+      "band": [
+       200,
+       290
+      ],
+      "win": [
+       210,
+       222
+      ],
+      "pol": "+"
+     },
+     "ref": {
+      "part": "back_slat_4",
+      "side": "lo"
+     },
+     "anchor": false,
+     "boundary": false
+    },
+    {
+     "id": "gap2_bottom",
+     "axis": "y",
+     "px": 220.17,
+     "box": [
+      200,
+      216,
+      290,
+      228
+     ],
+     "tol_px": 5.0,
+     "contrast": 29.9,
+     "measure": {
+      "axis": "y",
+      "band": [
+       200,
+       290
+      ],
+      "win": [
+       216,
+       228
+      ],
+      "pol": "-"
+     },
+     "ref": {
+      "part": "back_slat_3",
+      "side": "hi"
+     },
+     "anchor": false,
+     "boundary": false
+    },
+    {
+     "id": "gap3_top",
+     "axis": "y",
+     "px": 232.39,
+     "box": [
+      200,
+      226,
+      290,
+      238
+     ],
+     "tol_px": 5.0,
+     "contrast": 30.0,
+     "measure": {
+      "axis": "y",
+      "band": [
+       200,
+       290
+      ],
+      "win": [
+       226,
+       238
+      ],
+      "pol": "+"
+     },
+     "ref": {
+      "part": "back_slat_3",
+      "side": "lo"
+     },
+     "anchor": false,
+     "boundary": false
+    },
+    {
+     "id": "gap3_bottom",
+     "axis": "y",
+     "px": 236.6,
+     "box": [
+      200,
+      232,
+      290,
+      244
+     ],
+     "tol_px": 5.2,
+     "contrast": 29.4,
+     "measure": {
+      "axis": "y",
+      "band": [
+       200,
+       290
+      ],
+      "win": [
+       232,
+       244
+      ],
+      "pol": "-"
+     },
+     "ref": {
+      "part": "back_slat_2",
+      "side": "hi"
+     },
+     "anchor": false,
+     "boundary": false
+    },
+    {
+     "id": "gap4_top",
+     "axis": "y",
+     "px": 248.56,
+     "box": [
+      200,
+      242,
+      290,
+      254
+     ],
+     "tol_px": 6.1,
+     "contrast": 27.6,
+     "measure": {
+      "axis": "y",
+      "band": [
+       200,
+       290
+      ],
+      "win": [
+       242,
+       254
+      ],
+      "pol": "+"
+     },
+     "ref": {
+      "part": "back_slat_2",
+      "side": "lo"
+     },
+     "anchor": true,
+     "boundary": false
+    },
+    {
+     "id": "gap4_bottom",
+     "axis": "y",
+     "px": 252.75,
+     "box": [
+      200,
+      246,
+      290,
+      258
+     ],
+     "tol_px": 6.7,
+     "contrast": 26.5,
+     "measure": {
+      "axis": "y",
+      "band": [
+       200,
+       290
+      ],
+      "win": [
+       246,
+       258
+      ],
+      "pol": "-"
+     },
+     "ref": {
+      "part": "back_slat_1",
+      "side": "hi"
+     },
+     "anchor": false,
+     "boundary": false
+    },
+    {
+     "id": "left_end",
+     "axis": "x",
+     "px": 145.72,
+     "box": [
+      140,
+      186,
+      160,
+      196
+     ],
+     "tol_px": 7.0,
+     "contrast": 20.4,
+     "measure": {
+      "axis": "x",
+      "band": [
+       186,
+       196
+      ],
+      "win": [
+       140,
+       160
+      ],
+      "pol": "-"
+     },
+     "ref": {
+      "part": "back_slat_5",
+      "side": "hi"
+     },
+     "anchor": false,
+     "boundary": true
+    },
+    {
+     "id": "mid_left",
+     "axis": "x",
+     "px": 325.4,
+     "box": [
+      316,
+      217,
+      334,
+      221
+     ],
+     "tol_px": 8.0,
+     "contrast": 15.1,
+     "measure": {
+      "axis": "x",
+      "band": [
+       217,
+       221
+      ],
+      "win": [
+       316,
+       334
+      ],
+      "pol": "-"
+     },
+     "ref": {
+      "part": "mid_post",
+      "side": "hi",
+      "add": 0.0
+     },
+     "anchor": false,
+     "boundary": false
+    },
+    {
+     "id": "mid_right",
+     "axis": "x",
+     "px": 335.26,
+     "box": [
+      328,
+      217,
+      346,
+      221
+     ],
+     "tol_px": 8.0,
+     "contrast": 13.6,
+     "measure": {
+      "axis": "x",
+      "band": [
+       217,
+       221
+      ],
+      "win": [
+       328,
+       346
+      ],
+      "pol": "+"
+     },
+     "ref": {
+      "part": "mid_post",
+      "side": "lo",
+      "add": 0.0
+     },
+     "anchor": false,
+     "boundary": false
+    },
+    {
+     "id": "right_end",
+     "axis": "x",
+     "px": 502.3,
+     "box": [
+      494,
+      186,
+      516,
+      196
+     ],
+     "tol_px": 7.0,
+     "contrast": 22.3,
+     "measure": {
+      "axis": "x",
+      "band": [
+       186,
+       196
+      ],
+      "win": [
+       494,
+       516
+      ],
+      "pol": "+"
+     },
+     "ref": {
+      "part": "back_slat_5",
+      "side": "lo"
+     },
+     "anchor": false,
+     "boundary": true
+    }
+   ],
+   "method": "each edge is the strongest grey-level step of the stated sign inside the recorded window, averaged over the recorded band; the scale is fitted on the one span from the back's top edge to the fourth slat's lower edge (62.4 px); the bench is seen from behind against the light (the sea is bright behind it, the gaps between the slats shine through) so the dark slats and the bright gaps give sharp edges; the width (356.6 px) is the unit that gives 0.198 px per mm if the bench is 1800 long (Judgement); the photograph's centre bar is 6 px right of the bench's centre (the camera is a little to the right), so the mid features carry 8 px; the tolerance is the measured spread times 3 plus 2 px, at least 5 px (25 mm)"
+  }
+ ],
+ "sources": [
+  {
+   "id": "S1",
+   "url": "https://www.geograph.org.uk/photo/2693537",
+   "read": "2026-10-13",
+   "author": "Chris Downer",
+   "licence": "CC BY-SA 2.0 (read on the page)",
+   "taken": "2011-11-06",
+   "kind": "photograph",
+   "shows": "Poole: a long slatted timber bench seen from behind against a bright harbour: five back slats with their gaps shining through, a centre support about 50 mm wide, end uprights about 75 mm, and a broad flared timber leg about 100 mm thick under each end, 146 mm in from the slat end; the seat is hidden",
+   "used": true,
+   "not_used_for": "any absolute size (no scale object), the leg's depth and curve (a backlit silhouette), the colours",
+   "period": "2011; a council bench pattern of long standing; used for the slat proportions only"
+  },
+  {
+   "id": "S2",
+   "url": "https://www.geograph.org.uk/photo/2672444",
+   "read": "2026-10-13",
+   "author": "Stefan Czapski",
+   "licence": "CC BY-SA 2.0 (read on the page)",
+   "taken": "2011-10-28",
+   "kind": "photograph",
+   "shows": "a cast-iron-ended slatted park bench in side view: raked back, seat bearer, legs joined by a floor stretcher, a scrolled arm",
+   "used": false,
+   "not_used_for": "everything: its cast ends are Victorian ornament (heritage, not a 1990 council bench) and S1 shows a different, timber-legged type, which wins",
+   "period": "2011 heritage park bench"
+  },
+  {
+   "id": "S3",
+   "url": "https://www.geograph.org.uk/photo/2029816",
+   "read": "2026-10-13",
+   "author": "Chris Downer",
+   "licence": "CC BY-SA 2.0 (read on the page)",
+   "taken": "2010-08-20",
+   "kind": "photograph",
+   "shows": "benches in a row on a harbour wall: timber slat seat and back on painted cast end frames with arms, bolted to the paving",
+   "used": false,
+   "not_used_for": "everything (looked at: it supports benches standing on a harbour wall; they are single-seat cast-frame benches, a different type from S1)",
+   "period": "2010"
+  },
+  {
+   "id": "S4",
+   "url": "https://api.polyhaven.com/assets?t=models",
+   "read": "2026-10-13",
+   "author": "Poly Haven artists",
+   "licence": "CC0 1.0",
+   "taken": "n/a (the list of 521 models)",
+   "kind": "model list",
+   "shows": "painted_wooden_bench (1165 x 497 x 889 mm, a farmhouse bench), modular_street_seating (4340 x 770 x 950, a modern set), wooden_picnic_table (a table with benches)",
+   "used": false,
+   "not_used_for": "everything: none is a 1990 council bench (painted farmhouse, modern, picnic)",
+   "period": "n/a"
+  },
+  {
+   "id": "S5",
+   "url": "production/specs/vignette-scene.json (this repository)",
+   "read": "2026-10-13",
+   "author": "this project",
+   "licence": "own work",
+   "taken": "n/a",
+   "kind": "own",
+   "shows": "the held bench models (park_bench, garden_bench_01, ornate_bench, curved_stone_bench) are NOT placed: 'a bench belongs on a wide pavement or a quay, and this footway is 2.0 m'",
+   "used": true,
+   "not_used_for": "any shape",
+   "period": "n/a"
+  },
+  {
+   "id": "S6",
+   "url": "https://api.geograph.org.uk/syndicator.php (terms bench, seat, slatted bench, harbour bench, wooden bench, iron bench; takenyear 1975 to 1996 and without a year)",
+   "read": "2026-10-13",
+   "author": "Geograph contributors",
+   "licence": "CC BY-SA 2.0 (each page)",
+   "taken": "1975 to 1996 searched",
+   "kind": "search record",
+   "shows": "for 1975 to 1995 only a 1990 white metal garden bench in a village and a 1993 timber bench in a park (looked at: tiny in frame, one with a person); about 250 later photographs, the survey 'bench marks' flooding the results; no period photograph of a council bench near a harbour was measurable",
+   "used": false,
+   "not_used_for": "measuring",
+   "period": "n/a"
+  }
+ ],
+ "previews": [
+  {
+   "file": "p1-poole-bench-back.jpg",
+   "source": "S1",
+   "credit": "Chris Downer, Geograph 2693537, CC BY-SA 2.0, 2011-11-06, cropped to the bench",
+   "masked": [
+    "nothing to mask: a silhouette with a boat far behind"
+   ],
+   "looked_at_full_size": true,
+   "no_people_no_drink_no_betting_no_names": true
+  },
+  {
+   "file": "p1-poole-bench-target-on-photo.jpg",
+   "source": "S1",
+   "credit": "overlay of this target's back elevation (red) on the same crop, the scale fitted on the height from the back's top to the fourth slat's lower edge, measured edges in green",
+   "masked": [
+    "as p1"
+   ],
+   "looked_at_full_size": true,
+   "no_people_no_drink_no_betting_no_names": true
+  }
+ ],
+ "checks": [
+  {
+   "name": "N1: bench length (slat length)",
+   "measure": "measure it on the built mesh in millimetres (bbox)",
+   "expect": "1800.0 mm",
+   "tol": "+-20.0 mm"
+  },
+  {
+   "name": "N2: seat height (top of the seat slats)",
+   "measure": "measure it on the built mesh in millimetres (edge)",
+   "expect": "440.0 mm",
+   "tol": "+-30.0 mm"
+  },
+  {
+   "name": "N3: slat width (the seat slat's depth)",
+   "measure": "measure it on the built mesh in millimetres (extent)",
+   "expect": "63.0 mm",
+   "tol": "+-5.0 mm"
+  },
+  {
+   "name": "N4: slat pitch on the back (centre to centre)",
+   "measure": "measure it on the built mesh in millimetres (centre_dx)",
+   "expect": "86.5 mm",
+   "tol": "+-4.0 mm"
+  },
+  {
+   "name": "N5: slat thickness",
+   "measure": "measure it on the built mesh in millimetres (extent)",
+   "expect": "32.0 mm",
+   "tol": "+-4.0 mm"
+  },
+  {
+   "name": "N6: top of the highest back slat above the ground",
+   "measure": "measure it on the built mesh in millimetres (edge)",
+   "expect": "854.0 mm",
+   "tol": "+-40.0 mm"
+  },
+  {
+   "name": "N7: back post top above the ground",
+   "measure": "measure it on the built mesh in millimetres (edge)",
+   "expect": "860.0 mm",
+   "tol": "+-40.0 mm"
+  },
+  {
+   "name": "N8: centre support thickness along the bench",
+   "measure": "measure it on the built mesh in millimetres (extent)",
+   "expect": "50.0 mm",
+   "tol": "+-10.0 mm"
+  },
+  {
+   "name": "C1: five seat slats and five back slats, equal gaps",
+   "measure": "count the slats and measure each gap",
+   "expect": "5 + 5; gap 23.5 mm",
+   "tol": "+-3 mm"
+  },
+  {
+   "name": "C2: three identical end frames",
+   "measure": "compare the three frames' parts",
+   "expect": "identical",
+   "tol": "exact"
+  },
+  {
+   "name": "C3: no part floats and every join meets",
+   "measure": "the contact graph of the meshes",
+   "expect": "all parts reach the ground",
+   "tol": "0 floating"
+  },
+  {
+   "name": "C4: the bolts sit on the back slats' front faces",
+   "measure": "each bolt head against its slat",
+   "expect": "head proud 7 mm",
+   "tol": "+-3 mm"
+  },
+  {
+   "name": "C5: no plaque, no lettering",
+   "measure": "the model's text",
+   "expect": "none",
+   "tol": "exact"
+  }
+ ],
+ "owed": [],
+ "night": {
+  "lantern_linear": [
+   1.0,
+   0.25,
+   0.0
+  ],
+  "note": "the bench stands outside the street's lamp pools on the quay apron; the timber top faces catch the lantern colour (1, 0.25, 0) only as a glint; nothing on it lights"
+ },
+ "placement": {
+  "slot": "the quay apron south of the street's end, the bench's centre at x -9.0 m, z +2.5 m (east of the road's axis), the sitter facing -x (south, over the Old Basin), the back to the street; one bench",
+  "x_m": -9.0,
+  "z_m": 2.5,
+  "faces": "-x",
+  "min_pavement_mm": 3000.0,
+  "footway_mm": 2000.0,
+  "bench_depth_mm": 550.0,
+  "reasons": [
+   "the scene file keeps benches off the street: 'a bench belongs on a wide pavement or a quay, and this footway is 2.0 m' (S5); a bench needs its 550 mm of depth plus 900 mm of leg room in front and 1000 mm of clear way behind it, about 2.4 m, against a 2.0 m footway",
+   "the asset plan lists benches 'on the quay' (1 to 2); the quay apron south of x 0 is open ground (south_quay_geom.py: 'the open quay apron'), where the reverse view looks",
+   "it faces the water so that the reverse view (the morning pictures' second view) sees the bench's back, the slats shining, the basin beyond; the hook camera at x -3.2 looks the other way and never sees it",
+   "9 m from the street's last kerb, clear of the quay's bollards (the bollards target stands them at the quay edge and the corners)"
+  ]
+ },
+ "wear": [
+  "the iroko is silvered on its top faces and weathered grey-brown on the back slats, with a darker band along each slat's lower edge where water sits; end grain checked and darker, one slat split 300 mm from an end",
+  "the legs and posts are dark with water and ground dirt, green-stained over the lowest 120 mm, the arrised edges lighter; rust rings 20 to 40 mm round the bolt heads and short rust streaks below them",
+  "dirt: a pale bird-lime splash on the top of the back and two on the seat; moss in the joint between end frame and slat; none of anyone's belongings",
+  "carved or scratched marks on the back slats' upper edge (a few initials, never a word that is a name or a firm)",
+  "NOT shown: a person, a bottle or can, any advertisement plate (a bench was often given in memory: no plaque)"
+ ],
+ "disagreements": [
+  {
+   "id": "W1",
+   "what": "where benches stand",
+   "book": "the asset plan: benches 1 to 2 on the quay; the scene file's held benches are named for a street",
+   "photo": "n/a (a placement fact)",
+   "chose": "the quay apron only; never the 2.0 m footway"
+  },
+  {
+   "id": "W2",
+   "what": "the slat's size",
+   "book": "none (the usual 70 x 32 iroko)",
+   "photo": "P1: the slat reads 63 mm (12.4 px at 0.198 px per mm, the scale from an assumed 1800 length)",
+   "chose": "63 x 32, gap 23.5, pitch 86.5 (Photo within 5 mm of the assumption)"
+  },
+  {
+   "id": "W3",
+   "what": "the ends",
+   "book": "the asset plan: cast ends with timber slats; S2 and S3 show cast-iron ends",
+   "photo": "S1: the end support is a broad flared timber leg about 100 mm thick (20 px at 0.198 px per mm), 146 mm in from the slat end, with a 75 mm upright at the end",
+   "chose": "timber slab legs 100 thick, flared at the foot, a bearer, a 75 wide raked post; no cast iron (the photograph wins over the plan)"
+  }
+ ],
+ "variants_note": [
+  "B1 (the sample): three supports, 5 + 5 slats, no arms; one on the quay apron.",
+  "B2: a short bench, 1200 long, two supports, the same slats and ends (a second bench or the south quay's other end; not placed today).",
+  "conditions (materials): C0 sound; C1 worn (the sample's wear); C2 one back slat missing at the right end (a gap 63 mm, a seed).",
+  "colours: the iroko is left unpainted; a repainted bench is a seed (council green on the legs and posts, 40 percent), the slats stay bare."
+ ],
+ "not_settled": [
+  "absolute sizes: S1 has no scale object; the 1800 length is Judgement (it sets the slat width at 63 mm); seat height 440, back height 854 and the 10 degree rake are Judgement",
+  "the end frames' exact shape (S1's ends are in silhouette; S2 is ornate; S3 is a plain pedestal type): the plain straight-legged end is a Judgement from S2's construction and S3's plainness",
+  "the apron's exact extents (south_quay_geom.py was not read in this unit): the slot's x and z are within 3 m and the builder moves it to keep 3.0 m from the quay edge",
+  "whether the street had any bench in 1990 (the scene says none on the footway); one on the quay is the asset plan's count"
+ ],
+ "content_rule_note": "no person on the bench, no bottle or can, no memorial plaque (a statement of the content rule).",
+ "builder_notes": [
+  "supports: each is a flared slab leg (prism in the y-z plane, points in the parts table, 100 thick; the centre one 50), a bearer and a raked post (end 75 wide, centre 50); build the two end supports identical, mirrored",
+  "slats: 1800 long, arrised 2 mm; the back slats are rotated 10 degrees about the bench's length axis with the posts; the bolt heads on the back's face at each post, 20 across and 7 high, domed",
+  "the seat slats sit on the bearers (z 408); the slats' underside is the bearer's top",
+  "orientation: the local -y is the way the sitter faces; in the street's frame -y points -x (south, towards the basin)"
+ ],
+ "self_check": {
+  "line": "SELF-CHECK bench: 95 checks, 95 passed, 0 failed; negative controls 24 of 24 caught (offline)",
+  "checks": 95,
+  "passed": 95,
+  "failed": 0,
+  "controls": 24,
+  "controls_caught": 24,
+  "options": "offline",
+  "failing": [],
+  "uncaught": []
+ }
+}

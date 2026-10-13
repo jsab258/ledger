@@ -1,0 +1,123 @@
+{
+ "P1": {
+  "photo": "P1",
+  "gid": "6898849",
+  "size": [
+   752,
+   1024
+  ],
+  "object_box": [
+   474,
+   595,
+   720,
+   906
+  ],
+  "features": {
+   "top_rim_top": {
+    "px": 715.16,
+    "contrast": 23.6,
+    "spread": 1.45,
+    "id": "top_rim_top",
+    "axis": "y",
+    "band": [
+     608,
+     640
+    ],
+    "win": [
+     704,
+     728
+    ],
+    "pol": "any"
+   },
+   "top_rim_bottom": {
+    "px": 736.07,
+    "contrast": 32.2,
+    "spread": 1.81,
+    "id": "top_rim_bottom",
+    "axis": "y",
+    "band": [
+     608,
+     640
+    ],
+    "win": [
+     728,
+     749
+    ],
+    "pol": "any"
+   },
+   "lower_rim_top": {
+    "px": 818.68,
+    "contrast": 13.4,
+    "spread": 1.32,
+    "id": "lower_rim_top",
+    "axis": "y",
+    "band": [
+     608,
+     640
+    ],
+    "win": [
+     803,
+     829
+    ],
+    "pol": "any"
+   },
+   "stack_bottom": {
+    "px": 877.45,
+    "contrast": 19.7,
+    "spread": 11.13,
+    "id": "stack_bottom",
+    "axis": "y",
+    "band": [
+     608,
+     640
+    ],
+    "win": [
+     864,
+     896
+    ],
+    "pol": "any"
+   },
+   "front_left": {
+    "px": 526.76,
+    "contrast": 20.0,
+    "spread": 9.11,
+    "id": "front_left",
+    "axis": "x",
+    "band": [
+     832,
+     872
+    ],
+    "win": [
+     515,
+     544
+    ],
+    "pol": "any"
+   },
+   "front_right": {
+    "px": 660.54,
+    "contrast": 29.7,
+    "spread": 0.29,
+    "id": "front_right",
+    "axis": "x",
+    "band": [
+     832,
+     872
+    ],
+    "win": [
+     646,
+     672
+    ],
+    "pol": "any"
+   }
+  },
+  "page": {
+   "id": "6898849",
+   "title": "Cotteswold Dairy Tewkesbury milk crate...",
+   "author": "Jaggery",
+   "licence": "http://creativecommons.org/licenses/by-sa/2.0/",
+   "taken": "2021-07-14",
+   "image": "https://s0.geograph.org.uk/geophotos/06/89/88/6898849_9da9e756.jpg",
+   "ok": true
+  }
+ }
+}

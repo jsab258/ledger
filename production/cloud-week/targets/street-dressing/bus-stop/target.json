@@ -1,0 +1,1733 @@
+{
+ "family": "bus-stop",
+ "title": "Quay Street's bus stop with its timetable",
+ "units": "millimetres; angles in degrees; z up; the flag and the case face -y (towards the oncoming bus); the pivot is the pole's centre at the paving",
+ "status": "written 13 October 2026, not yet reviewed",
+ "sample": "BS1",
+ "materials": {
+  "paint_black": {
+   "name": "pole black gloss, chalked",
+   "srgb": [
+    28,
+    28,
+    30
+   ],
+   "rough": 0.5,
+   "rough_words": "semi-gloss",
+   "metal": false,
+   "note": "paint over steel, chipped to grey primer at the foot"
+  },
+  "paint_white": {
+   "name": "pole white, dirty",
+   "srgb": [
+    214,
+    212,
+    200
+   ],
+   "rough": 0.55,
+   "rough_words": "semi-matt",
+   "metal": false,
+   "note": "street-grey, splashed to knee height"
+  },
+  "enamel_white": {
+   "name": "enamel plate, cream-yellow, dirty",
+   "srgb": [
+    226,
+    214,
+    170
+   ],
+   "rough": 0.3,
+   "rough_words": "glossy, crazed",
+   "metal": false,
+   "note": "vitreous enamel on steel, yellowed with age (P1: cream with a yellow cast), chipped at the bolt holes and edges"
+  },
+  "enamel_black": {
+   "name": "enamel dark brown-black",
+   "srgb": [
+    38,
+    28,
+    24
+   ],
+   "rough": 0.3,
+   "rough_words": "glossy",
+   "metal": false,
+   "note": "border and lettering"
+  },
+  "galvanised": {
+   "name": "galvanised steel",
+   "srgb": [
+    140,
+    142,
+    140
+   ],
+   "rough": 0.5,
+   "rough_words": "satin",
+   "metal": true,
+   "note": "clamps, straps, lock"
+  },
+  "case_green": {
+   "name": "case dark green",
+   "srgb": [
+    44,
+    66,
+    52
+   ],
+   "rough": 0.5,
+   "rough_words": "semi-matt",
+   "metal": false,
+   "note": "the 1980s council green, faded to grey-green"
+  },
+  "glass": {
+   "name": "clear acrylic sheet, scratched",
+   "srgb": [
+    214,
+    220,
+    222
+   ],
+   "rough": 0.08,
+   "rough_words": "smooth",
+   "metal": false,
+   "note": "crazed at the corners, a dirt line along the lower edge"
+  },
+  "paper": {
+   "name": "timetable card, white paper",
+   "srgb": [
+    236,
+    234,
+    224
+   ],
+   "rough": 0.8,
+   "rough_words": "matt",
+   "metal": false,
+   "note": "black print, a yellowed edge; no operator logo"
+  },
+  "concrete": {
+   "name": "concrete collar",
+   "srgb": [
+    128,
+    126,
+    120
+   ],
+   "rough": 0.9,
+   "rough_words": "rough",
+   "metal": false,
+   "note": "cracked at the pole"
+  }
+ },
+ "variants": {
+  "BS1": {
+   "name": "BS1: pole, old-style flag and timetable case (the sample)",
+   "parts": [
+    {
+     "id": "pole_foot",
+     "type": "cyl",
+     "p0": [
+      0,
+      0,
+      0
+     ],
+     "p1": [
+      0,
+      0,
+      554.0
+     ],
+     "r0": 38.0,
+     "material": "paint_black",
+     "note": "76 mm steel tube, black lower part"
+    },
+    {
+     "id": "pole_white",
+     "type": "cyl",
+     "p0": [
+      0,
+      0,
+      554.0
+     ],
+     "p1": [
+      0,
+      0,
+      2118.0
+     ],
+     "r0": 38.0,
+     "material": "paint_white",
+     "note": "white-painted length, hidden behind the case between its ends"
+    },
+    {
+     "id": "pole_upper",
+     "type": "cyl",
+     "p0": [
+      0,
+      0,
+      2118.0
+     ],
+     "p1": [
+      0,
+      0,
+      3000.0
+     ],
+     "r0": 38.0,
+     "material": "paint_black",
+     "note": "black upper length carrying the flag"
+    },
+    {
+     "id": "pole_cap",
+     "type": "cyl",
+     "p0": [
+      0,
+      0,
+      3000.0
+     ],
+     "p1": [
+      0,
+      0,
+      3008.0
+     ],
+     "r0": 40.0,
+     "material": "paint_black",
+     "note": "plug cap, 8 mm, slightly proud of the tube"
+    },
+    {
+     "id": "pole_collar",
+     "type": "cyl",
+     "p0": [
+      0,
+      0,
+      0
+     ],
+     "p1": [
+      0,
+      0,
+      22.0
+     ],
+     "r0": 95.0,
+     "material": "concrete",
+     "note": "a small concrete collar round the foot, 22 mm proud of the paving"
+    },
+    {
+     "id": "flag_plate",
+     "type": "box",
+     "c": [
+      0.0,
+      -46.5,
+      2852.5
+     ],
+     "s": [
+      300.0,
+      3.0,
+      295.0
+     ],
+     "material": "enamel_white",
+     "edge": "corners r 20, edge rolled back 4 mm",
+     "note": "old-style enamel plate, 3 mm steel"
+    },
+    {
+     "id": "flag_border_top",
+     "type": "box",
+     "c": [
+      0.0,
+      -49.0,
+      2982.0
+     ],
+     "s": [
+      276.0,
+      2.0,
+      12.0
+     ],
+     "material": "enamel_black",
+     "film": false,
+     "note": "black border 12 wide, 2 mm raised"
+    },
+    {
+     "id": "flag_border_bottom",
+     "type": "box",
+     "c": [
+      0.0,
+      -49.0,
+      2723.0
+     ],
+     "s": [
+      276.0,
+      2.0,
+      12.0
+     ],
+     "material": "enamel_black"
+    },
+    {
+     "id": "flag_border_left",
+     "type": "box",
+     "c": [
+      -132.0,
+      -49.0,
+      2852.5
+     ],
+     "s": [
+      12.0,
+      2.0,
+      247.0
+     ],
+     "material": "enamel_black"
+    },
+    {
+     "id": "flag_border_right",
+     "type": "box",
+     "c": [
+      132.0,
+      -49.0,
+      2852.5
+     ],
+     "s": [
+      12.0,
+      2.0,
+      247.0
+     ],
+     "material": "enamel_black"
+    },
+    {
+     "id": "flag_clamp_top",
+     "type": "box",
+     "c": [
+      0.0,
+      -42.0,
+      2940.0
+     ],
+     "s": [
+      68.0,
+      12.0,
+      20.0
+     ],
+     "material": "galvanised",
+     "note": "flat clamp bracket, two bolts"
+    },
+    {
+     "id": "flag_clamp_bottom",
+     "type": "box",
+     "c": [
+      0.0,
+      -42.0,
+      2745.0
+     ],
+     "s": [
+      68.0,
+      12.0,
+      20.0
+     ],
+     "material": "galvanised"
+    },
+    {
+     "id": "case_bar_top",
+     "type": "box",
+     "c": [
+      0.0,
+      -68.0,
+      1873.0
+     ],
+     "s": [
+      260.0,
+      60.0,
+      20.0
+     ],
+     "material": "case_green",
+     "edge": "corners r 4",
+     "note": "case frame 20 wide, 60 deep, folded sheet"
+    },
+    {
+     "id": "case_bar_bottom",
+     "type": "box",
+     "c": [
+      0.0,
+      -68.0,
+      1018.0
+     ],
+     "s": [
+      260.0,
+      60.0,
+      20.0
+     ],
+     "material": "case_green"
+    },
+    {
+     "id": "case_bar_left",
+     "type": "box",
+     "c": [
+      -120.0,
+      -68.0,
+      1445.5
+     ],
+     "s": [
+      20.0,
+      60.0,
+      835.0
+     ],
+     "material": "case_green"
+    },
+    {
+     "id": "case_bar_right",
+     "type": "box",
+     "c": [
+      120.0,
+      -68.0,
+      1445.5
+     ],
+     "s": [
+      20.0,
+      60.0,
+      835.0
+     ],
+     "material": "case_green"
+    },
+    {
+     "id": "case_back",
+     "type": "box",
+     "c": [
+      0.0,
+      -41.0,
+      1445.5
+     ],
+     "s": [
+      220.0,
+      6.0,
+      835.0
+     ],
+     "material": "case_green",
+     "note": "back sheet, 6 mm with its lining"
+    },
+    {
+     "id": "case_glass",
+     "type": "box",
+     "c": [
+      0.0,
+      -97.0,
+      1445.5
+     ],
+     "s": [
+      224.0,
+      2.0,
+      839.0
+     ],
+     "material": "glass",
+     "transparent": true,
+     "note": "2 mm clear sheet in the front rebate (acrylic)"
+    },
+    {
+     "id": "case_card",
+     "type": "box",
+     "c": [
+      0.0,
+      -95.75,
+      1283.0
+     ],
+     "s": [
+      200.0,
+      0.5,
+      470.0
+     ],
+     "material": "paper",
+     "film": true,
+     "note": "the printed timetable card, 200 x 470, behind the sheet"
+    },
+    {
+     "id": "case_lock",
+     "type": "box",
+     "c": [
+      118.0,
+      -101.0,
+      1414.0
+     ],
+     "s": [
+      12.0,
+      6.0,
+      12.0
+     ],
+     "material": "galvanised",
+     "note": "a round lock head on the right bar, 12 mm"
+    },
+    {
+     "id": "case_strap_top",
+     "type": "cyl",
+     "p0": [
+      0,
+      0,
+      1859.0
+     ],
+     "p1": [
+      0,
+      0,
+      1871.0
+     ],
+     "r0": 41.0,
+     "material": "galvanised",
+     "note": "stainless clamp strap round the pole, 12 wide"
+    },
+    {
+     "id": "case_strap_bottom",
+     "type": "cyl",
+     "p0": [
+      0,
+      0,
+      1020.0
+     ],
+     "p1": [
+      0,
+      0,
+      1032.0
+     ],
+     "r0": 41.0,
+     "material": "galvanised"
+    }
+   ],
+   "overall": {
+    "w": 300.0,
+    "d": 139.0,
+    "h": 3008.0
+   },
+   "overall_tol": 2.0,
+   "overall_exclude": [
+    "pole_collar",
+    "case_lock"
+   ],
+   "joins": [
+    [
+     "pole_foot",
+     "pole_white"
+    ],
+    [
+     "pole_white",
+     "pole_upper"
+    ],
+    [
+     "pole_upper",
+     "pole_cap"
+    ],
+    [
+     "flag_clamp_top",
+     "pole_upper"
+    ],
+    [
+     "flag_clamp_top",
+     "flag_plate"
+    ],
+    [
+     "flag_clamp_bottom",
+     "pole_upper"
+    ],
+    [
+     "flag_clamp_bottom",
+     "flag_plate"
+    ],
+    [
+     "flag_border_top",
+     "flag_plate"
+    ],
+    [
+     "case_bar_top",
+     "pole_white"
+    ],
+    [
+     "case_bar_bottom",
+     "pole_white"
+    ],
+    [
+     "case_back",
+     "case_bar_left"
+    ],
+    [
+     "case_glass",
+     "case_bar_left"
+    ],
+    [
+     "case_card",
+     "case_glass"
+    ],
+    [
+     "case_lock",
+     "case_bar_right"
+    ],
+    [
+     "case_strap_top",
+     "case_bar_top"
+    ],
+    [
+     "case_strap_bottom",
+     "case_bar_bottom"
+    ],
+    [
+     "pole_collar",
+     "pole_foot"
+    ]
+   ],
+   "embeds": [
+    [
+     "pole_collar",
+     "pole_foot",
+     42.0
+    ],
+    [
+     "case_strap_top",
+     "pole_white",
+     42.0
+    ],
+    [
+     "case_strap_bottom",
+     "pole_white",
+     42.0
+    ],
+    [
+     "pole_cap",
+     "pole_upper",
+     5.0
+    ],
+    [
+     "case_back",
+     "case_bar_left",
+     6.0
+    ],
+    [
+     "case_back",
+     "case_bar_right",
+     6.0
+    ],
+    [
+     "case_glass",
+     "case_bar_left",
+     4.0
+    ],
+    [
+     "case_glass",
+     "case_bar_right",
+     4.0
+    ],
+    [
+     "case_glass",
+     "case_bar_top",
+     4.0
+    ],
+    [
+     "case_glass",
+     "case_bar_bottom",
+     4.0
+    ],
+    [
+     "case_back",
+     "case_bar_top",
+     6.0
+    ],
+    [
+     "case_back",
+     "case_bar_bottom",
+     6.0
+    ]
+   ],
+   "faces": [
+    {
+     "id": "flag plate",
+     "o": [
+      -150.0,
+      -50.0,
+      2707.0
+     ],
+     "u": [
+      1,
+      0,
+      0
+     ],
+     "v": [
+      0,
+      0,
+      1
+     ],
+     "n": [
+      0,
+      -1,
+      0
+     ],
+     "nu": 300.0,
+     "nv": 291.0,
+     "depth": 8.0,
+     "blockers": [
+      "flag_plate"
+     ]
+    }
+   ],
+   "service_note": "see text.services"
+  },
+  "BS2": {
+   "name": "BS2: pole and flag without a case (a second stop elsewhere; not placed today)",
+   "parts": [
+    {
+     "id": "pole_foot",
+     "type": "cyl",
+     "p0": [
+      0,
+      0,
+      0
+     ],
+     "p1": [
+      0,
+      0,
+      554.0
+     ],
+     "r0": 38.0,
+     "material": "paint_black",
+     "note": "76 mm steel tube, black lower part"
+    },
+    {
+     "id": "pole_white",
+     "type": "cyl",
+     "p0": [
+      0,
+      0,
+      554.0
+     ],
+     "p1": [
+      0,
+      0,
+      2118.0
+     ],
+     "r0": 38.0,
+     "material": "paint_white",
+     "note": "white-painted length, hidden behind the case between its ends"
+    },
+    {
+     "id": "pole_upper",
+     "type": "cyl",
+     "p0": [
+      0,
+      0,
+      2118.0
+     ],
+     "p1": [
+      0,
+      0,
+      3000.0
+     ],
+     "r0": 38.0,
+     "material": "paint_black",
+     "note": "black upper length carrying the flag"
+    },
+    {
+     "id": "pole_cap",
+     "type": "cyl",
+     "p0": [
+      0,
+      0,
+      3000.0
+     ],
+     "p1": [
+      0,
+      0,
+      3008.0
+     ],
+     "r0": 40.0,
+     "material": "paint_black",
+     "note": "plug cap, 8 mm, slightly proud of the tube"
+    },
+    {
+     "id": "pole_collar",
+     "type": "cyl",
+     "p0": [
+      0,
+      0,
+      0
+     ],
+     "p1": [
+      0,
+      0,
+      22.0
+     ],
+     "r0": 95.0,
+     "material": "concrete",
+     "note": "a small concrete collar round the foot, 22 mm proud of the paving"
+    },
+    {
+     "id": "flag_plate",
+     "type": "box",
+     "c": [
+      0.0,
+      -46.5,
+      2852.5
+     ],
+     "s": [
+      300.0,
+      3.0,
+      295.0
+     ],
+     "material": "enamel_white",
+     "edge": "corners r 20, edge rolled back 4 mm",
+     "note": "old-style enamel plate, 3 mm steel"
+    },
+    {
+     "id": "flag_border_top",
+     "type": "box",
+     "c": [
+      0.0,
+      -49.0,
+      2982.0
+     ],
+     "s": [
+      276.0,
+      2.0,
+      12.0
+     ],
+     "material": "enamel_black",
+     "film": false,
+     "note": "black border 12 wide, 2 mm raised"
+    },
+    {
+     "id": "flag_border_bottom",
+     "type": "box",
+     "c": [
+      0.0,
+      -49.0,
+      2723.0
+     ],
+     "s": [
+      276.0,
+      2.0,
+      12.0
+     ],
+     "material": "enamel_black"
+    },
+    {
+     "id": "flag_border_left",
+     "type": "box",
+     "c": [
+      -132.0,
+      -49.0,
+      2852.5
+     ],
+     "s": [
+      12.0,
+      2.0,
+      247.0
+     ],
+     "material": "enamel_black"
+    },
+    {
+     "id": "flag_border_right",
+     "type": "box",
+     "c": [
+      132.0,
+      -49.0,
+      2852.5
+     ],
+     "s": [
+      12.0,
+      2.0,
+      247.0
+     ],
+     "material": "enamel_black"
+    },
+    {
+     "id": "flag_clamp_top",
+     "type": "box",
+     "c": [
+      0.0,
+      -42.0,
+      2940.0
+     ],
+     "s": [
+      68.0,
+      12.0,
+      20.0
+     ],
+     "material": "galvanised",
+     "note": "flat clamp bracket, two bolts"
+    },
+    {
+     "id": "flag_clamp_bottom",
+     "type": "box",
+     "c": [
+      0.0,
+      -42.0,
+      2745.0
+     ],
+     "s": [
+      68.0,
+      12.0,
+      20.0
+     ],
+     "material": "galvanised"
+    }
+   ],
+   "overall": {
+    "w": 300.0,
+    "d": 90.0,
+    "h": 3008.0
+   },
+   "overall_tol": 2.0,
+   "overall_exclude": [
+    "pole_collar"
+   ],
+   "joins": [
+    [
+     "pole_foot",
+     "pole_white"
+    ],
+    [
+     "pole_upper",
+     "pole_cap"
+    ],
+    [
+     "flag_clamp_top",
+     "pole_upper"
+    ]
+   ],
+   "embeds": [
+    [
+     "pole_collar",
+     "pole_foot",
+     42.0
+    ],
+    [
+     "pole_cap",
+     "pole_upper",
+     5.0
+    ]
+   ],
+   "faces": []
+  }
+ },
+ "drawing": {
+  "views": [
+   "front",
+   "left",
+   "plan"
+  ],
+  "sections": [
+   {
+    "id": "z1500",
+    "axis": "z",
+    "at": 1500.0
+   },
+   {
+    "id": "z2850",
+    "axis": "z",
+    "at": 2850.0
+   }
+  ]
+ },
+ "numbers": [
+  {
+   "id": "N1",
+   "what": "pole length above the paving to the cap's top",
+   "value": 3008.0,
+   "kind": "Judgement",
+   "source": "a 3.0 m stop pole (the repository's research note and the 29 September script agree; P1's span flag top to foot gives 3.0 m only if the plate is 300 wide); error 150 mm",
+   "tol": 150.0,
+   "measure": {
+    "kind": "bbox",
+    "axis": "z",
+    "parts": [
+     "pole_foot",
+     "pole_white",
+     "pole_upper",
+     "pole_cap"
+    ]
+   }
+  },
+  {
+   "id": "N2",
+   "what": "pole diameter",
+   "value": 76.0,
+   "kind": "Judgement",
+   "source": "76 mm (3 inch) tube, the standard stop post; P1's pole is 7 to 8 px wide = 50 mm at 6.56 mm per px which is too coarse to read, so the standard is kept (+-10)",
+   "tol": 10.0,
+   "measure": {
+    "kind": "extent",
+    "axis": "x",
+    "part": "pole_foot"
+   }
+  },
+  {
+   "id": "N3",
+   "what": "flag plate width",
+   "value": 300.0,
+   "kind": "Judgement",
+   "source": "assumed 300 mm: it sets P1's scale (6.56 mm per px); P1 flag_left 526.0 to flag_right 571.7 = 45.7 px",
+   "tol": 30.0,
+   "measure": {
+    "kind": "extent",
+    "axis": "x",
+    "part": "flag_plate"
+   }
+  },
+  {
+   "id": "N4",
+   "what": "flag plate height",
+   "value": 285.0,
+   "kind": "Photo",
+   "source": "P1 flag_top 70.6 to flag_bottom 117.1 (46.5 px, includes the yellow lichen and clamp below the plate) at 6.56 mm per px = 305; the plate itself 285 (+-25)",
+   "tol": 25.0,
+   "measure": {
+    "kind": "extent",
+    "axis": "z",
+    "part": "flag_plate"
+   }
+  },
+  {
+   "id": "N5",
+   "what": "case height",
+   "value": 875.0,
+   "kind": "Photo",
+   "source": "P1 case_top 240.8 to case_bottom 374.2 (133.4 px) at 6.56 mm per px; error 60",
+   "tol": 60.0,
+   "measure": {
+    "kind": "span",
+    "axis": "z",
+    "a": "case_bar_bottom",
+    "b": "case_bar_top"
+   }
+  },
+  {
+   "id": "N6",
+   "what": "case bottom above the paving",
+   "value": 1008.0,
+   "kind": "Photo",
+   "source": "P1 case_bottom 374.2 below flag_top 70.6: 303.6 px = 1992 mm below the flag's top at 3000 (+-130)",
+   "tol": 130.0,
+   "measure": {
+    "kind": "edge",
+    "axis": "z",
+    "part": "case_bar_bottom",
+    "side": "lo"
+   }
+  },
+  {
+   "id": "N7",
+   "what": "case top above the paving",
+   "value": 1883.0,
+   "kind": "Photo",
+   "source": "P1 case_top 240.8: 170.2 px below the flag's top = 1117 mm; error 130",
+   "tol": 130.0,
+   "measure": {
+    "kind": "edge",
+    "axis": "z",
+    "part": "case_bar_top",
+    "side": "hi"
+   }
+  },
+  {
+   "id": "N8",
+   "what": "case width",
+   "value": 260.0,
+   "kind": "Judgement",
+   "source": "P1 case x 535 to 577 = 42 px = 275 mm by eye (low contrast, not measured by the algorithm); 260 kept for an A3-card case (+-35)",
+   "tol": 35.0,
+   "measure": {
+    "kind": "extent",
+    "axis": "x",
+    "part": "case_bar_top"
+   }
+  },
+  {
+   "id": "N9",
+   "what": "case depth (from the pole's front face)",
+   "value": 60.0,
+   "kind": "Judgement",
+   "source": "typical stop case 60 mm; not measurable on P1 (+-20)",
+   "tol": 20.0,
+   "measure": {
+    "kind": "extent",
+    "axis": "y",
+    "part": "case_bar_top"
+   }
+  },
+  {
+   "id": "N10",
+   "what": "flag bottom above the paving",
+   "value": 2705.0,
+   "kind": "Photo",
+   "source": "P1 flag_bottom 117.1 below the top: 46.5 px = 305 mm; the plate's own bottom edge at 2715 (+-30)",
+   "tol": 30.0,
+   "measure": {
+    "kind": "edge",
+    "axis": "z",
+    "part": "flag_plate",
+    "side": "lo"
+   }
+  }
+ ],
+ "photos": [
+  {
+   "id": "P1",
+   "source": "S1",
+   "file": "P1.jpg",
+   "view": "front",
+   "variant": "BS1",
+   "object_box": [
+    500,
+    62,
+    610,
+    458
+   ],
+   "fit": {
+    "parts": [
+     "flag_plate",
+     "case_bar_bottom"
+    ],
+    "y_top_px": 70.6,
+    "y_bottom_px": 374.21,
+    "x_centre_px": 548.88,
+    "fitted_on": "height",
+    "view": "front"
+   },
+   "features": [
+    {
+     "id": "flag_top",
+     "axis": "y",
+     "px": 70.6,
+     "box": [
+      535,
+      60,
+      565,
+      80
+     ],
+     "tol_px": 5.0,
+     "contrast": 22.7,
+     "measure": {
+      "axis": "y",
+      "band": [
+       535,
+       565
+      ],
+      "win": [
+       60,
+       80
+      ],
+      "pol": "any"
+     },
+     "ref": {
+      "part": "flag_plate",
+      "side": "hi"
+     },
+     "anchor": true,
+     "boundary": true
+    },
+    {
+     "id": "flag_bottom",
+     "axis": "y",
+     "px": 117.06,
+     "box": [
+      535,
+      100,
+      565,
+      120
+     ],
+     "tol_px": 5.0,
+     "contrast": 16.4,
+     "measure": {
+      "axis": "y",
+      "band": [
+       535,
+       565
+      ],
+      "win": [
+       100,
+       120
+      ],
+      "pol": "any"
+     },
+     "ref": {
+      "part": "flag_plate",
+      "side": "lo",
+      "add": -10.0
+     },
+     "anchor": false,
+     "boundary": false
+    },
+    {
+     "id": "case_top",
+     "axis": "y",
+     "px": 240.81,
+     "box": [
+      530,
+      226,
+      570,
+      246
+     ],
+     "tol_px": 5.0,
+     "contrast": 22.9,
+     "measure": {
+      "axis": "y",
+      "band": [
+       530,
+       570
+      ],
+      "win": [
+       226,
+       246
+      ],
+      "pol": "any"
+     },
+     "ref": {
+      "part": "case_bar_top",
+      "side": "hi"
+     },
+     "anchor": false,
+     "boundary": false
+    },
+    {
+     "id": "case_bottom",
+     "axis": "y",
+     "px": 374.21,
+     "box": [
+      530,
+      364,
+      570,
+      386
+     ],
+     "tol_px": 5.0,
+     "contrast": 14.8,
+     "measure": {
+      "axis": "y",
+      "band": [
+       530,
+       570
+      ],
+      "win": [
+       364,
+       386
+      ],
+      "pol": "any"
+     },
+     "ref": {
+      "part": "case_bar_bottom",
+      "side": "lo"
+     },
+     "anchor": true,
+     "boundary": false
+    },
+    {
+     "id": "band2_bottom",
+     "axis": "y",
+     "px": 443.47,
+     "box": [
+      538,
+      430,
+      546,
+      456
+     ],
+     "tol_px": 12.7,
+     "contrast": 11.3,
+     "measure": {
+      "axis": "y",
+      "band": [
+       538,
+       546
+      ],
+      "win": [
+       430,
+       456
+      ],
+      "pol": "any"
+     },
+     "ref": {
+      "part": "pole_white",
+      "side": "lo"
+     },
+     "anchor": false,
+     "boundary": true
+    },
+    {
+     "id": "flag_left",
+     "axis": "x",
+     "px": 526.03,
+     "box": [
+      515,
+      78,
+      535,
+      98
+     ],
+     "tol_px": 5.0,
+     "contrast": 37.6,
+     "measure": {
+      "axis": "x",
+      "band": [
+       78,
+       98
+      ],
+      "win": [
+       515,
+       535
+      ],
+      "pol": "any"
+     },
+     "ref": {
+      "part": "flag_plate",
+      "side": "lo"
+     },
+     "anchor": false,
+     "boundary": true
+    },
+    {
+     "id": "flag_right",
+     "axis": "x",
+     "px": 571.73,
+     "box": [
+      565,
+      78,
+      590,
+      98
+     ],
+     "tol_px": 5.0,
+     "contrast": 29.3,
+     "measure": {
+      "axis": "x",
+      "band": [
+       78,
+       98
+      ],
+      "win": [
+       565,
+       590
+      ],
+      "pol": "any"
+     },
+     "ref": {
+      "part": "flag_plate",
+      "side": "hi"
+     },
+     "anchor": false,
+     "boundary": true
+    }
+   ],
+   "method": "each edge is the strongest grey-level step inside the recorded window, averaged over the recorded band; the scale is fitted on the one span from the flag plate's top edge to the case's lower edge (303.6 px); the plate's width is the unit that sets 6.56 mm per px (Judgement), so the absolute sizes are judged within the stated errors and the photograph checks the proportions; case sides were too faint to measure; the band-2 foot (the white band's lower end) has a spread of 3.6 px; the tolerance is the measured spread times 3 plus 2 px, at least 5 px (33 mm)"
+  }
+ ],
+ "sources": [
+  {
+   "id": "S1",
+   "url": "https://www.geograph.org.uk/photo/5668101",
+   "read": "2026-10-13",
+   "author": "Jaggery",
+   "licence": "CC BY-SA 2.0 (read on the page)",
+   "taken": "2018-01-16",
+   "kind": "photograph",
+   "shows": "an old-style bus stop in a Cotswold village: an enamel flag with BUS STOP in two lines on a black pole with white bands, a dark-green timetable case with a clear window (blank upper half, a paper card in the lower half) clamped below the flag; the foot is in shadow",
+   "used": true,
+   "not_used_for": "any absolute size (no scale object; the flag's width is assumed), the colours (a winter evening, strong shadow), the ground",
+   "period": "2018 photograph of a sign of an older type that was still in use in 1990 (a Gloucestershire village stop; the type is far older than 1990)"
+  },
+  {
+   "id": "S2",
+   "url": "https://www.geograph.org.uk/photo/1981245",
+   "read": "2026-10-13",
+   "author": "Rob Candlish",
+   "licence": "CC BY-SA 2.0 (read on the page)",
+   "taken": "2010-07-25",
+   "kind": "photograph",
+   "shows": "a stop pole with a tall case holding two printed timetables stacked and a notice; shows how a card fills a case and how text blocks stack",
+   "used": true,
+   "not_used_for": "any number; the operator's logo and the notice's wording (real marks, not copied)",
+   "period": "2010; the paper-in-a-case idea is older"
+  },
+  {
+   "id": "S3",
+   "url": "https://www.geograph.org.uk/photo/4340832",
+   "read": "2026-10-13",
+   "author": "Jaggery",
+   "licence": "CC BY-SA 2.0 (read on the page)",
+   "taken": "2015-02-05",
+   "kind": "photograph",
+   "shows": "a plain black pole in a terraced street with a small flag plate with a bus pictogram and a two-line text; shows how a stop sits against a kerb in a street of houses",
+   "used": false,
+   "not_used_for": "everything (looked at; the plate is of a later type)",
+   "period": "2015"
+  },
+  {
+   "id": "S4",
+   "url": "production/art/atlas-01/data/atlas.json and production/specs/hook-cast.json (this repository)",
+   "read": "2026-10-13",
+   "author": "this project",
+   "licence": "own work",
+   "taken": "n/a",
+   "kind": "own",
+   "shows": "the town's roads and landmarks (Weighhouse Lane, Tannery Row, Civic Rise, Sea Road, Market Hall, Retort works, Winter Rooms, Short pier) and the cast's bus stop at x 46.0, z -4.3 on the west pavement",
+   "used": true,
+   "not_used_for": "the stop's design",
+   "period": "n/a"
+  },
+  {
+   "id": "S5",
+   "url": "tools/meshgen/blender/clutter/bus_stop.py, production/research/street-clutter-1990 (this repository)",
+   "read": "2026-10-13",
+   "author": "this project",
+   "licence": "own work",
+   "taken": "29 September 2026",
+   "kind": "own",
+   "shows": "an earlier scripted stop: a 3.0 m 76 mm pole, a 450 x 375 flag of diagram 970, a grey case at eye height",
+   "used": true,
+   "not_used_for": "its flag and case (they disagree with S1)",
+   "period": "n/a"
+  },
+  {
+   "id": "S6",
+   "url": "https://api.polyhaven.com/assets?t=models",
+   "read": "2026-10-13",
+   "author": "Poly Haven artists",
+   "licence": "CC0 1.0",
+   "taken": "n/a (the list of 521 models)",
+   "kind": "model list",
+   "shows": "no bus stop, bus shelter or timetable model; the nearest is a wet-floor sign and two chalkboards",
+   "used": false,
+   "not_used_for": "everything: so the stop is made by script",
+   "period": "n/a"
+  },
+  {
+   "id": "S7",
+   "url": "https://api.geograph.org.uk/syndicator.php (terms bus stop, bus shelter, bus stop timetable, bus stop sign, bus stop pole, each with takenyear 1975 to 1996)",
+   "read": "2026-10-13",
+   "author": "Geograph contributors",
+   "licence": "CC BY-SA 2.0 (each page)",
+   "taken": "1975 to 1996 searched",
+   "kind": "search record",
+   "shows": "about 100 photographs of 1975 to 1996 with a bus or a stop in them; the nearest to a close view of a stop is a Belfast flag of 1990 (a different country's operator flag, with a real logo) and a 1996 supermarket stop that shows a person and a real brand; none was measurable and none is used",
+   "used": false,
+   "not_used_for": "measuring",
+   "period": "n/a"
+  }
+ ],
+ "previews": [
+  {
+   "file": "p1-fulbrook-stop-flag-and-case.jpg",
+   "source": "S1",
+   "credit": "Jaggery, Geograph 5668101, CC BY-SA 2.0, 2018-01-16, cropped to the pole; the timetable card's small print blurred",
+   "masked": [
+    "the timetable card's print (blurred)"
+   ],
+   "looked_at_full_size": true,
+   "no_people_no_drink_no_betting_no_names": true
+  },
+  {
+   "file": "p1-fulbrook-stop-target-on-photo.jpg",
+   "source": "S1",
+   "credit": "overlay of this target's front drawing (red) on the same crop, the scale fitted on the height from the flag's top to the case's lower edge, measured edges in green",
+   "masked": [
+    "as p1"
+   ],
+   "looked_at_full_size": true,
+   "no_people_no_drink_no_betting_no_names": true
+  }
+ ],
+ "checks": [
+  {
+   "name": "N1: pole length above the paving to the cap's top",
+   "measure": "measure it on the built mesh in millimetres (bbox)",
+   "expect": "3008 mm",
+   "tol": "+-150 mm"
+  },
+  {
+   "name": "N2: pole diameter",
+   "measure": "measure it on the built mesh in millimetres (extent)",
+   "expect": "76 mm",
+   "tol": "+-10 mm"
+  },
+  {
+   "name": "N3: flag plate width",
+   "measure": "measure it on the built mesh in millimetres (extent)",
+   "expect": "300 mm",
+   "tol": "+-30 mm"
+  },
+  {
+   "name": "N4: flag plate height",
+   "measure": "measure it on the built mesh in millimetres (extent)",
+   "expect": "285 mm",
+   "tol": "+-25 mm"
+  },
+  {
+   "name": "N5: case height",
+   "measure": "measure it on the built mesh in millimetres (span)",
+   "expect": "875 mm",
+   "tol": "+-60 mm"
+  },
+  {
+   "name": "N6: case bottom above the paving",
+   "measure": "measure it on the built mesh in millimetres (edge)",
+   "expect": "1008 mm",
+   "tol": "+-130 mm"
+  },
+  {
+   "name": "N7: case top above the paving",
+   "measure": "measure it on the built mesh in millimetres (edge)",
+   "expect": "1883 mm",
+   "tol": "+-130 mm"
+  },
+  {
+   "name": "N8: case width",
+   "measure": "measure it on the built mesh in millimetres (extent)",
+   "expect": "260 mm",
+   "tol": "+-35 mm"
+  },
+  {
+   "name": "N9: case depth (from the pole's front face)",
+   "measure": "measure it on the built mesh in millimetres (extent)",
+   "expect": "60 mm",
+   "tol": "+-20 mm"
+  },
+  {
+   "name": "N10: flag bottom above the paving",
+   "measure": "measure it on the built mesh in millimetres (edge)",
+   "expect": "2705 mm",
+   "tol": "+-30 mm"
+  },
+  {
+   "name": "C1: no part floats",
+   "measure": "the contact graph of the meshes (touching within 2 mm)",
+   "expect": "all parts reach the ground",
+   "tol": "0 floating"
+  },
+  {
+   "name": "C2: the flag plate is closed from the front, square on and leaning",
+   "measure": "rays at the plate face at 0, 30 and 45 degrees",
+   "expect": "0 get through",
+   "tol": "exact"
+  },
+  {
+   "name": "C3: the card lies inside the case's window",
+   "measure": "the card's box inside the clear sheet's box",
+   "expect": "inside",
+   "tol": "exact"
+  },
+  {
+   "name": "C4: the card has no logo and carries exactly the services of text.services",
+   "measure": "the card texture's text",
+   "expect": "services 4, 9 and 12 as written",
+   "tol": "exact"
+  },
+  {
+   "name": "C5: the stop stands where the placement says",
+   "measure": "pole centre against the placement",
+   "expect": "x 46.0, z -3.625",
+   "tol": "+-50 mm"
+  }
+ ],
+ "owed": [],
+ "text": {
+  "operator": "WEIGHHOUSE MOTOR SERVICES",
+  "stop_name": "QUAY STREET (TOP)",
+  "card": {
+   "w": 200.0,
+   "h": 470.0,
+   "margin": 10.0,
+   "font": "Liberation Sans (SIL OFL 1.1)",
+   "head_mm": 11.0,
+   "service_no_mm": 16.0,
+   "body_mm": 3.6,
+   "line_pitch_mm": 4.6,
+   "texture_px_per_mm": 4
+  },
+  "services": [
+   {
+    "no": "4",
+    "via": "Weighhouse Lane, Market Hall, Civic Rise",
+    "stops": [
+     [
+      "Quay Street (top)",
+      0
+     ],
+     [
+      "Weighhouse Lane",
+      6
+     ],
+     [
+      "Market Hall",
+      11
+     ],
+     [
+      "Civic Rise",
+      19
+     ]
+    ],
+    "mf": {
+     "first": 710,
+     "last": 1750,
+     "every": 20
+    },
+    "sat": {
+     "first": 750,
+     "last": 1750,
+     "every": 30
+    },
+    "sun": null
+   },
+   {
+    "no": "9",
+    "via": "Tannery Row, Retort Works",
+    "stops": [
+     [
+      "Quay Street (top)",
+      0
+     ],
+     [
+      "Tannery Row",
+      5
+     ],
+     [
+      "Retort Works",
+      14
+     ]
+    ],
+    "mf": {
+     "first": 710,
+     "last": 1710,
+     "every": 30
+    },
+    "sat": {
+     "first": 750,
+     "last": 1350,
+     "every": 60
+    },
+    "sun": null
+   },
+   {
+    "no": "12",
+    "via": "Sea Road, Winter Rooms, Short Pier",
+    "stops": [
+     [
+      "Quay Street (top)",
+      0
+     ],
+     [
+      "Sea Road",
+      7
+     ],
+     [
+      "Winter Rooms",
+      15
+     ],
+     [
+      "Short Pier",
+      18
+     ]
+    ],
+    "mf": {
+     "first": 900,
+     "last": 1700,
+     "every": 60
+    },
+    "sat": {
+     "first": 900,
+     "last": 1800,
+     "every": 60
+    },
+    "sun": {
+     "first": 1100,
+     "last": 1700,
+     "every": 120
+    }
+   }
+  ],
+  "legend": [
+   "Mondays to Fridays",
+   "Saturdays",
+   "Sundays"
+  ],
+  "no_logo": "no operator logo anywhere; the name is a placeholder the town will mint (RULINGS 3 Oct: names minted within canon, placeholders meanwhile)",
+  "flag_text": [
+   "BUS",
+   "STOP"
+  ],
+  "flag_text_mm": 62.0,
+  "flag_font": "a plain upright grotesque (Liberation Sans Narrow or similar, SIL OFL), black on the off-white plate, centred; two lines of 62 mm capitals",
+  "road_marking": "none in this target (the road legend belongs to the wear and road targets)"
+ },
+ "night": {
+  "lantern_linear": [
+   1.0,
+   0.25,
+   0.0
+  ],
+  "note": "the stop has no light; the nearest lamp column is LC4 at x 38 west, 8 m away, so the flag and case stand in the dark between pools; the plate's enamel catches the lantern colour as a glint on its rolled edge"
+ },
+ "placement": {
+  "slot": "west pavement, pole centre at x 46.0 m (the cast's bus stop, hook-cast.json), 0.50 m behind the kerb's back edge (z -3.625), the flag and the case facing -x (south, towards the bus coming up the street); the waiting spot z -4.3 is behind it; no shelter",
+  "x_m": 46.0,
+  "z_m": -3.625,
+  "z_wait_m": -4.3,
+  "kerb_back_z_m": -3.125,
+  "frontage_z_m": -5.125,
+  "footway_mm": 2000.0,
+  "set_back_mm": 500.0,
+  "min_clear_behind_mm": 1000.0,
+  "bin_slot": {
+   "file": "litter-bins",
+   "slot": "B3",
+   "max_m": 3.0
+  },
+  "reasons": [
+   "the cast already puts the stop at x 46.0, z -4.3 on the west pavement (production/specs/hook-cast.json: 'the bus stop at the top of Quay Street'), and Rita's, the newsagent's and Hal's shop lie below it; the scene file has no stop, so this is a new slot (the 29 September README said the street had none)",
+   "a bus on the west lane travels north (+x) with the kerb on its left; the flag must face the bus coming from the south, so it faces -x; waiting people read the case from the road side of the pole",
+   "no shelter: a shelter is 1.2 to 1.5 m deep and would leave 0.5 to 0.8 m of a 2.0 m footway, under the 1.0 m this target requires behind a pole (the tester's walk found 0.65 m too narrow on 29 September); the stop is a pole with a case",
+   "the litter bin B3 of the litter-bins target (the hooded drum K2) stands at x 44.0 west, z -3.8, 2.0 m from the pole, inside the 3 m the asset plan asks for",
+   "the stop is beyond the west block's end (x 39), so no shopfront is hidden by the pole or the queue"
+  ]
+ },
+ "wear": [
+  "the pole's paint is chipped to grey primer within 300 mm of the paving (kicks, bicycle pedals); the lowest 120 mm has a dark splash line; the white band is street-grey",
+  "scraps of old sticker and tape on the pole between 1.2 and 1.6 m, never legible; a few dog marks at the foot (nothing else at the foot)",
+  "the flag plate: chips at the bolt holes with rust runs 30 to 80 mm long, a bent corner, a patch of yellow-green lichen and bird lime along its lower edge and clamp (P1 shows yellow lichen under the plate), the plate off square by 2 to 3 degrees (the sample's lean; BS1 is built square and the lean is a seed)",
+  "the case: green faded to grey-green on its top bar, a dirt line along the window's lower edge, two fine scratches on the sheet, one cracked corner of the sheet in the worn variant, the card yellowed at the edges with its top corner curled",
+  "NOT shown: any advertisement on the case, any person, any drink, any real operator's logo"
+ ],
+ "disagreements": [
+  {
+   "id": "W1",
+   "what": "the flag",
+   "book": "the 29 September script and the research note: a 450 x 375 plate of diagram 970 (a bus pictogram over a Bus Stop panel)",
+   "photo": "S1: an old-style enamel plate, about 300 wide, two lines BUS and STOP, a black border, a rolled edge; S3 shows the later pictogram type on a street of houses",
+   "chose": "the S1 plate as the sample; the diagram-970 plate is a later flag and not written (a variant if the street wants a second stop)"
+  },
+  {
+   "id": "W2",
+   "what": "the case",
+   "book": "the script: a grey case with a perspex window at eye height",
+   "photo": "S1: a dark-green framed case, tall (about 875 mm), with a blank upper half and the paper card in the lower half, its foot at about 1.0 m",
+   "chose": "the S1 case: green, 260 x 875 x 60, the card low in the window"
+  },
+  {
+   "id": "W3",
+   "what": "the pole's paint",
+   "book": "the script: one galvanised grey tube",
+   "photo": "S1: black tube with a white band above the case and below it, black foot",
+   "chose": "black foot to 554, white 554 to 2118, black above"
+  },
+  {
+   "id": "W4",
+   "what": "the collar",
+   "book": "none",
+   "photo": "S1's foot is in shadow and S2/S3 show the pole entering the paving with a small collar",
+   "chose": "a 22 mm concrete collar r 95 (Judgement)"
+  }
+ ],
+ "variants_note": [
+  "BS1 (the sample): pole, old-style flag, timetable case. One on the street.",
+  "BS2: pole and flag only (no case), the same pole and flag: for a second stop if the town wants one (none today).",
+  "conditions (materials): C0 sound; C1 worn (the sample's wear); C2 flag knocked 3 degrees off square with a bent corner and a cracked case sheet (a seed, not a mesh).",
+  "timetable cards: T1 as written; T2 the same card yellowed with a curled corner and one service struck through in ink (a mask over T1, never other times)."
+ ],
+ "not_settled": [
+  "absolute sizes: S1 has no scale object, the plate's width (300 mm) is assumed and sets 6.56 mm per px; every size from S1 is Judgement within the stated error (the flag's height, the case's height and its height above the paving, the white band's lower end)",
+  "the case's width and depth (the sides were too faint to measure; 260 wide and 60 deep are typical)",
+  "the 1990 flag type on the real street (S1's old enamel plate or the pictogram plate of S3): either is period; S1 is chosen because a photograph exists",
+  "the real timetable's look (S2 is 2010 and carries an operator's logo, so only its stacking of text blocks is used)",
+  "whether Quay Street's stop had a shelter in the cast's mind (the cast gives only the stop)"
+ ],
+ "content_rule_note": "no advertisement, no person, no drink or betting wording on the case or card (a statement of the content rule).",
+ "builder_notes": [
+  "pole: three tubes (black, white, black) of 76 mm and a cap; the paving collar is a short cylinder; weld the three tubes into one mesh with one material id each",
+  "flag plate: 3 mm with corners r 20 and the edge rolled back 4 mm; the border and the two lines of capitals are texture on the plate, not meshes; the border strips in the parts table are the raised edge's guide (2 mm)",
+  "case: four folded bars (60 deep), a 6 mm back sheet, a 2 mm clear sheet, the card 4 px per mm (800 x 1880 px) with the text from text.services set in the stated font; the card has no logo",
+  "orientation: the local -y faces the bus (towards -x in the street's frame, yaw 90 degrees)"
+ ],
+ "self_check": {
+  "line": "SELF-CHECK bus-stop: 105 checks, 105 passed, 0 failed; negative controls 28 of 28 caught (offline)",
+  "checks": 105,
+  "passed": 105,
+  "failed": 0,
+  "controls": 28,
+  "controls_caught": 28,
+  "options": "offline",
+  "failing": [],
+  "uncaught": []
+ }
+}
