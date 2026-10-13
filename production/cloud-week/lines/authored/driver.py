@@ -2,21 +2,8 @@
 always about the road, the car, the fare."""
 
 LINES = {
-    "greeting.stranger": [
-        "Need a cab?",
-        "Going far? I'm not busy.",
-        "Where to?",
-        "Cab's here if you want it.",
-        "Don't stand in the road, mate.",
-        "Rank's here, cab's here. Don't be shy.",
-        "Early fare? I'm only just warm. @m",
-        "Afternoon. Dead as a doornail on the rank. @a",
-        "Evening. Good time for a fare. @e",
-        "Cold night for walking. Hop in. @n",
-        "Not a day for walking. Get in. @wet",
-        "I'd sooner be driving than standing in this. @wet",
-        "Short cut to anywhere, if you want one.",
-    ],
+    # No stranger greetings: the kind's only members are the day driver and the night driver, both of whom know who he is from the first day
+    # (rules.json speaker_overrides.staff), so thirteen such lines could never be said (canon review, 13 October: L10).
     "greeting.owner": [
         "So you're the new owner. Does that mean a pay rise?",
         "The new owner. Mind my wing mirror, it's loose.",
@@ -56,7 +43,7 @@ LINES = {
         "Mind where you step, mate. I've a fare waiting.",
         "Oi, that's my foot.",
         "Careful. It's too early for an accident.",
-        "Steady. I'd run you over in a heartbeat. Not really.",
+        "Steady. I've run over better. Not really.",
         "Look where you're going, pal. @st",
         "You want your eyes testing. @st",
         "Oh, it's you. Sorry about that. @kn",

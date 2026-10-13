@@ -24,7 +24,7 @@ LINES = {
         "Morning, new owner. Not that I'm after anything. @m",
         "The new owner. I'd work for tea.",
         "Evening, new owner. I'm available. Cheap. @e",
-        "The new owner. They say you're fair.",
+        "The new owner. I'm good with a broom, me.",
         "New owner. I could run messages. I run fast.",
         "New owner, I'd shake hands, but mine are wet. @wet",
     ],

@@ -101,7 +101,7 @@ KINDS = {
     },
     "dock_worker": {
         "desc": "dockside and quayside hands: the crane, the yard, the fish dock, the scrap, the ferry",
-        "members": ["stipe", "drago", "dario", "petra"],
+        "members": ["stipe", "drago", "dario"],
         "trades": ["dock hand", "stevedore", "ferry hand", "forklift driver", "scrap hauler"],
         "rungs": ["stranger", "owner", "nowak", "tom"], "voice": "any", "own": False,
     },
@@ -112,8 +112,8 @@ KINDS = {
         "rungs": ["stranger", "owner", "nowak", "tom", "tommy"], "voice": "any", "own": False,
     },
     "office_worker": {
-        "desc": "desks and counters of paper: the books, the radio and phone, the harbour office, customs, the paper",
-        "members": ["lena", "noor", "zlata", "bruno", "tibor", "elias", "goran"],
+        "desc": "desks and counters of paper: the books, the radio and phone, the harbour office, customs, the paper, the ferry's ticket desk, the rent collector's round",
+        "members": ["lena", "noor", "zlata", "bruno", "tibor", "elias", "goran", "petra", "danica"],
         "trades": ["clerk", "bookkeeper", "secretary"],
         "rungs": ["stranger", "owner", "nowak", "tom", "tommy"], "voice": "any", "own": False,
     },
@@ -121,7 +121,7 @@ KINDS = {
         "desc": "wheels for hire or for the firm: the cab on Mickey's rank, the bus, the lorry",
         "members": ["ferko", "dusan"],
         "trades": ["bus driver", "cab driver", "trucker"],
-        "rungs": ["stranger", "owner", "nowak", "tom"], "voice": "any", "own": False,
+        "rungs": ["owner", "nowak", "tom"], "voice": "any", "own": False,
     },
     "laundry_worker": {
         "desc": "the steam laundry's floor and the seamstress's bench: presses, folding, pins and thread",
@@ -142,8 +142,8 @@ KINDS = {
         "rungs": ["stranger", "owner", "nowak", "tom"], "voice": "any", "own": False,
     },
     "casual_worker": {
-        "desc": "no steady work in 1990: casual days on the quay, laid off, looking for anything, running for the rent collector",
-        "members": ["joey", "tanja", "danica"],
+        "desc": "no steady work in 1990: casual days on the quay, laid off, looking for anything",
+        "members": ["joey", "tanja"],
         "trades": [],
         "rungs": ["stranger", "owner", "nowak", "tom"], "voice": "any", "own": False,
     },
@@ -226,8 +226,7 @@ DESTS = [
     _d("grocer", ["the grocer's"], 36.0, 7.5, "RULINGS trades: bay 5 grocer (x 33 to 39)", "east"),
     _d("chandler", ["the chandler's", "the ship's chandler"], 43.0, 7.5, "vignette-scene.json east_chandler (x 40 to 46)", "east"),
     _d("cafe", ["the caff", "the cafe"], 24.0, -7.5, "hook-cast.json places.cafe (west block, across from the parade's north half)", "west"),
-    _d("newsagent", ["the newsagent's", "the paper shop"], 32.0, -7.5, "hook-cast.json places.pension_counter", "west"),
-    _d("hals", ["Hal's"], 39.0, -7.5, "hook-cast.json places.hals_shop", "west"),
+    _d("newsagent", ["the newsagent's", "the paper shop"], 32.0, -7.5, "hook-cast.json places.pension_counter (x 32); the built unit is the newsagent and tobacconist at x 36 to 42 (RULINGS 3 Oct; DECISIONS 3 Oct), so the directions say 'opposite the grocer's' (bay 5, x 33 to 39), true at both", "west"),
     _d("bus_stop", ["the bus stop"], 46.0, -4.3, "hook-cast.json places.bus_stop (the street's north end)", "west"),
     # ---- the town the street's people go to (hook-cast.json places, same frame)
     _d("docks", ["the dock gate", "the docks"], -60.0, 0.0, "hook-cast.json places.docks", None, "town"),
@@ -256,6 +255,9 @@ DESTS = [
     _d("short_pier", ["the Short pier"], 100.0, 660.0, "atlas.json landmarks G2 [1060, 450]", None, "atlas"),
 ]
 DEST = {d["id"]: d for d in DESTS}
+# Places the homes name that have NO unit on the built street, and so no directions until Jafar places them (canon review of 13 October, fault 4):
+# Hal's coin shop (hook-cast.json places.hals_shop, x 39) stands where RULINGS 3 Oct puts the newsagent and tobacconist (x 36 to 42).
+HELD_DESTS = {"hals": "Hal's coin shop: hook-cast.json x 39, but the built west row is a tea room, an ironmonger and the newsagent (RULINGS 3 Oct); directions held until Jafar places it"}
 STREET_TOP = 46.0
 STREET_MIDDLE = 24.0
 

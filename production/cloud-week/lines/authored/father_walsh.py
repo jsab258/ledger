@@ -46,7 +46,7 @@ LINES = {
         "Evening, Tommy. I've kept a chair for you. @e",
         "Tommy. It keeps till morning, whatever it is.",
         "Tommy. You're always welcome. That never changes.",
-        "Tommy, mind the damp. Your chest. @wet",
+        "Tommy, mind the damp, now. @wet",
         "Tommy, son. You've been in my prayers.",
     ],
     "bumped": [
@@ -75,7 +75,7 @@ LINES = {
         "The old gutters are singing again.",
         "It rains on the just and the unjust, they say.",
         "Mind the puddles, son. They hide the deep ones.",
-        "Each umbrella is a small prayer, if you look.",
+        "Ah, the damp. It gets into the old hymn books.",
         "A soft day, this. A good day for thinking. @dz",
         "Misty and mild. I'll not complain. @dz",
         "It's a hard rain. We'll be glad of a dry floor. @rn",

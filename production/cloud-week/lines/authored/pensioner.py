@@ -7,7 +7,7 @@ LINES = {
         "You're not from round here, are you?",
         "Good day to you. Don't mind me.",
         "Don't rush on my account, dear.",
-        "I've lived on this street fifty years, you know.",
+        "I've known this street a long time, you know.",
         "Hello there. It's nice to see a new face.",
         "Good morning, young man. You're about early. @m",
         "Morning, dear. Has the paper come yet? @m",
@@ -25,7 +25,7 @@ LINES = {
         "Welcome, new owner. We're not as bad as we look.",
         "The new owner. You must meet everybody, dear.",
         "Evening, new owner. It's a quiet street after dark. @e",
-        "The new owner. You'll come to tea one day.",
+        "The new owner. I've seen you go by.",
         "New owner, you're soaked. Stand under here. @wet",
     ],
     "greeting.nowak": [
@@ -37,7 +37,7 @@ LINES = {
         "Good afternoon, Mr Nowak. Mind the kerb. @a",
         "Mr Nowak. We've all been hearing about you.",
         "Nowak. Isn't it dreadful out? @wet",
-        "Mr Nowak. I've the kettle on, if you're passing.",
+        "Mr Nowak. You've found your feet, then.",
     ],
     "greeting.tom": [
         "Tom, dear. Come and sit a minute.",
@@ -59,7 +59,7 @@ LINES = {
         "Morning, Tommy. You look better today. @m",
         "Evening, Tommy. Come in out of the dark. @e",
         "Tommy. Don't you go getting into trouble.",
-        "Tommy, dear. Your tea's gone cold waiting. @a",
+        "Tommy, dear. Sit a minute, if you've a minute. @a",
         "Tommy, dear. I knitted this. Don't argue.",
     ],
     "bumped": [
@@ -123,7 +123,7 @@ LINES = {
         "I couldn't give you a name. But the face, yes.",
         "That face will be in my dreams tonight.",
         "They looked at me, dear. They know I saw.",
-        "Fifty years at this window. Faces stay with me.",
+        "Faces stay with me. Always have.",
     ],
     "after_deed": [
         "Softly, dear. Softly now.",

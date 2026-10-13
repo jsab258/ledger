@@ -3,8 +3,8 @@
  "file_checked": "production/cloud-week/town/people.json",
  "summary": {
   "rows": 619,
-  "pass": 617,
-  "fail": 2,
+  "pass": 619,
+  "fail": 0,
   "seeded_faults": 34,
   "seeded_faults_caught": 34
  },
@@ -312,8 +312,8 @@
   {
    "id": "decisions.N-REWORDED",
    "what": "DECISIONS.md has one entry for N-REWORDED, ending 'Marked for Jafar.'",
-   "pass": false,
-   "detail": "0 entries"
+   "pass": true,
+   "detail": "1 entries"
   },
   {
    "id": "decisions.N-RIVALS",
@@ -336,8 +336,8 @@
   {
    "id": "decisions.only_mine_new",
    "what": "every unit 11 line in DECISIONS.md belongs to a group",
-   "pass": false,
-   "detail": "6 lines, 7 groups"
+   "pass": true,
+   "detail": "7 lines, 7 groups"
   },
   {
    "id": "decisions.append_only",
@@ -3493,7 +3493,7 @@
    "id": "content.canon_gate",
    "what": "tools/canon-gate.py is clean over production/cloud-week/town/people.json, production/cloud-week/town/HOMES.md, production/cloud-week/town/NOTES.md",
    "pass": true,
-   "detail": "canon-gate: clean - 0 finding(s) in 3 file(s), 31878 line(s) examined, 13 era term(s) and 45 brand token(s) screened"
+   "detail": "canon-gate: clean - 0 finding(s) in 3 file(s), 31915 line(s) examined, 13 era term(s) and 45 brand token(s) screened"
   },
   {
    "id": "shape.homes_file",

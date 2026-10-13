@@ -81,6 +81,8 @@ class Sim:
         sp = rules["speaker_overrides"]
         self.never_police = set(sp["never_police"]["speakers"])
         self.not_local = set(sp["not_local_voice"]["speakers"])
+        ex = sp.get("excluded_lines", {})
+        self.excluded = {who: set(ex.get("lines", [])) for who in ex.get("speakers", [])}      # lines these people never say (canon review L4)
         self.prio = rules["priority"]["order"]
         self.shelf = {k: v["value"] for k, v in rules["priority"]["shelf_life_s"].items()}
         self.fam = rules["cooldowns"]["per_family"]
@@ -260,6 +262,8 @@ class Sim:
             if speaker in self.not_local and l["dialect"] == "local":
                 continue
             if speaker in self.never_police and l.get("calls_police"):
+                continue
+            if l["id"] in self.excluded.get(speaker, ()):
                 continue
             out.append(l)
         return out
@@ -718,10 +722,10 @@ def rule_tests(doc, rules):
     # 2. a crime line outranks a greeting that is waiting for the voice
     s = fresh()
     way = line_of(s, "way/ask@shopkeeper", 0)
-    g = line_of(s, "greeting/stranger@driver", 0)
+    g = line_of(s, "greeting/stranger@tradesman", 0)
     cr = line_of(s, "crime/shape@laundry_worker", 0)
     s.place(way, person("a", "shopkeeper"), 0.0, False, False, None)
-    s.place(g, person("b", "driver"), 0.5, False, False, None)
+    s.place(g, person("b", "tradesman"), 0.5, False, False, None)
     s.place(cr, person("c", "laundry_worker"), 0.8, False, False, "shape")
     s.voice_advance(30.0)
     crime_rec = [r for r in s.log if r["situation"] == "crime_shape"]
@@ -796,6 +800,28 @@ def rule_tests(doc, rules):
             if l:
                 s.spk_line_last[sid][l["id"]] = 5000.0 * (k + 1)
     out.append(("rule.never_police_never_rings", "the seven who never go to the police are never picked a line that rings them (420 picks)", not bad, str(bad[:3])))
+
+    # 7b. Sheila and Pauline are never picked the two lines that are about their own desks (canon review L4)
+    bad, seen_other = [], 0
+    ex = rules["speaker_overrides"].get("excluded_lines", {})
+    for sid in ex.get("speakers", []):
+        for sit, bank, standing in (("greeting.owner", "greeting/owner", "owner"), ("greeting.nowak", "greeting/nowak", "nowak")):
+            s = fresh()
+            for k in range(60):
+                ctx = {"weather": "dry", "time": "afternoon", "standing": standing}
+                l, _, _ = s.pick("%s@office_worker" % bank, ctx, sid, 5000.0 * (k + 1))
+                if l and l["id"] in ex["lines"]:
+                    bad.append((sid, l["id"]))
+                if l:
+                    s.spk_line_last[sid][l["id"]] = 5000.0 * (k + 1)
+    t = fresh()
+    for k in range(60):
+        l, _, _ = t.pick("greeting/owner@office_worker", {"weather": "dry", "time": "afternoon", "standing": "owner"}, "noor", 5000.0 * (k + 1))
+        if l and l["id"] in ex.get("lines", []):
+            seen_other += 1
+        if l:
+            t.spk_line_last["noor"][l["id"]] = 5000.0 * (k + 1)
+    out.append(("rule.excluded_lines_never_picked", "Sheila and the dispatcher are never picked the two lines about their own desks (240 picks), and another clerk still is", not bad and (seen_other > 0 or not ex), "%s; others %d" % (bad[:3], seen_other)))
 
     # 8. a speaker whose voice is not local never gets a dialect line
     bad = []

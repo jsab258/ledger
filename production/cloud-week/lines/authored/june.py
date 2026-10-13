@@ -38,7 +38,7 @@ LINES = {
     ],
     "bumped": [
         "Careful! I've a bag.",
-        "Watch it. I've a train.",
+        "Watch it. I've enough on today.",
         "Do be careful.",
         "Don't. I'm not in the mood.",
         "Oh, for God's sake.",
@@ -73,7 +73,7 @@ LINES = {
         "That's a window gone. I know the sound.",
         "Glass. I'd know it anywhere.",
         "Somebody's been broken into.",
-        "Not my business. I've a train.",
+        "Not my business. Not any more.",
         "Who does that? Who does that here?",
         "Typical. The one week I'm back.",
         "Somebody ought to ring the police.",
@@ -106,7 +106,7 @@ LINES = {
         "Lower your voice. Please.",
         "People are looking. Walk.",
         "The less I know, the better.",
-        "I'm saying nothing. I've a train to catch.",
+        "I'm saying nothing. I'm not stopping.",
         "It's always the same round here. Eyes everywhere.",
     ],
     "asked_way": [

@@ -49,6 +49,17 @@
    "standing_floor": "owner",
    "why": "the dispatcher and the two drivers work at Mickey's: they know who he is from the first day (day-one design: the six who see him come)"
   },
+  "excluded_lines": {
+   "speakers": [
+    "lena",
+    "zlata"
+   ],
+   "lines": [
+    "office_worker.greet-owner.04",
+    "office_worker.greet-nowak.05"
+   ],
+   "why": "Sheila keeps the books and Pauline works the radio, so 'Do you have a card?' and 'Is the radio still crackling?' would be said to him by the very people it is about (canon review, 13 October, L4)"
+  },
   "rocco": {
    "standing_floor": "nowak",
    "why": "Ron knows Tom's name from the start (what-they-call-him); his word for Tom is 'boss' in every line"
@@ -689,7 +700,6 @@
   "stipe": "dock_worker",
   "drago": "dock_worker",
   "dario": "dock_worker",
-  "petra": "dock_worker",
   "ada": "pensioner",
   "hana": "pensioner",
   "fabjan": "pensioner",
@@ -702,6 +712,8 @@
   "tibor": "office_worker",
   "elias": "office_worker",
   "goran": "office_worker",
+  "petra": "office_worker",
+  "danica": "office_worker",
   "ferko": "driver",
   "dusan": "driver",
   "zora": "laundry_worker",
@@ -715,7 +727,6 @@
   "filip": "night_shift",
   "joey": "casual_worker",
   "tanja": "casual_worker",
-  "danica": "casual_worker",
   "rocco": "ron",
   "sam": "darren",
   "emil": "father_walsh",

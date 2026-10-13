@@ -25,7 +25,7 @@ LINES = {
         "New owner. Do you have a card?",
         "The new owner. I'd shake hands, but I'm holding a file.",
         "Afternoon, new owner. A busy week for you, I imagine. @a",
-        "The new owner. I've seen your name on a letter.",
+        "The new owner. I've seen you about.",
         "Welcome to the street, new owner. Bring a sense of humour.",
         "New owner. You'd best get under cover. @wet",
     ],

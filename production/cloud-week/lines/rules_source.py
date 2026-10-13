@@ -41,6 +41,10 @@ RULES = {
     "speaker_overrides": {
         "lena": {"standing_floor": "owner", "standing_cap": "owner", "until": "sheila_trusts_tom", "why": "canon: Sheila withholds his name until she trusts him; she is held at the first rung of the ladder (the new owner: she showed the new management round on day one, so never a stranger) until the trust flag (sheila-trust-2026-09-29) is set"},
         "staff": {"speakers": ["zlata", "ferko", "dusan"], "standing_floor": "owner", "why": "the dispatcher and the two drivers work at Mickey's: they know who he is from the first day (day-one design: the six who see him come)"},
+        "excluded_lines": {
+            "speakers": ["lena", "zlata"],
+            "lines": ["office_worker.greet-owner.04", "office_worker.greet-nowak.05"],
+            "why": "Sheila keeps the books and Pauline works the radio, so 'Do you have a card?' and 'Is the radio still crackling?' would be said to him by the very people it is about (canon review, 13 October, L4)"},
         "rocco": {"standing_floor": "nowak", "why": "Ron knows Tom's name from the start (what-they-call-him); his word for Tom is 'boss' in every line"},
         "sam": {"standing_floor": "nowak", "why": "Darren knows Tom's name from the start (what-they-call-him)"},
         "never_police": {

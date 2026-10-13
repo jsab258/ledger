@@ -41,7 +41,7 @@ LINES = {
     ],
     "greeting.tom": [
         "Tom. How are the locks holding up?",
-        "Morning, Tom. I've got your key done. @m",
+        "Morning, Tom. Any locks giving you bother? @m",
         "Hello, Tom. Pass me that spanner, would you?",
         "Tom. Don't worry, I've a ladder.",
         "Evening, Tom. I'll look at it in the morning. @e",

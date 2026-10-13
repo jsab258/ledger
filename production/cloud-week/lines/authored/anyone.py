@@ -5,7 +5,7 @@ street); check_lines.py checks every line against it: 'up' and 'down' words agai
 only where the place is far enough across. No left or right: it depends on which way the asker faces.
 
 Quay Street runs up from the quay (x 0, the bottom); the shops are on the east side, the parade, six bays from Mickey's at 3
-to 9 m; the west side has the terraces below the cafe and the shops above it."""
+to 9 m; the west side has the terraces below the cafe and the shops above it (the built row is a tea room, x 24 to 30, an ironmonger, 30 to 36, and the newsagent and tobacconist, 36 to 42)."""
 
 WAY = {
     # ---------------------------------------------------------------- on the street
@@ -77,22 +77,17 @@ WAY = {
         "The newsagent's? Across the road, up near the laundry.",
         "Up past the caff, the paper shop.",
         "Pensions are paid at the newsagent's, across the way.",
-        "The paper shop's opposite the laundry.",
-        "The newsagent's. Over the road from the laundry, mind the traffic.",
+        "The paper shop's opposite the grocer's.",
+        "The newsagent's. Over the road from the grocer's, mind the traffic.",
     ],
-    "hals": [
-        "Hal's? Up the top, on the quiet side.",
-        "The coin shop? Up past the newsagent's.",
-        "Look for Hal's, at the end of the row.",
-        "Hal's. Opposite the grocer's, near the top.",
-        "Hal's is up past the paper shop. Mind the step.",
-    ],
+    # Hal's coin shop has no unit on the built street (RULINGS 3 Oct: the west row is a tea room, an ironmonger and the newsagent), so its five directions are
+    # held until Jafar places it (canon review, 13 October: fault 4). lines_lib.HELD_DESTS says so.
     "bus_stop": [
         "The bus stop? Top of the street, quiet side.",
         "The stop's at the very top, above everything.",
         "Bus stop's at the very top. Bring a brolly. @wet",
         "Top of Quay Street. You can't miss the stop.",
-        "Up past Hal's. The bus stop's the last thing.",
+        "Up past the newsagent's. The bus stop's the last thing.",
     ],
     # ---------------------------------------------------------------- the town's places the street's people go to
     "docks": [
@@ -206,10 +201,10 @@ WAY = {
         "That's in the Parade. A long walk, up and east.",
         "The Tivoli's a good walk. Up the hill, then east.",
         "The pictures? The Tivoli. Up the top and east, the Parade.",
-        "Tivoli Street, the Parade. Up the hill, a long way east.",
+        "The Tivoli, in the Parade. Up the hill, a long way east.",
     ],
     "fairview_chapel": [
-        "Fairview Chapel? A long way up the hill. Chapel Road.",
+        "Fairview Chapel? A long way up the hill.",
         "Up and up. Fairview's the hills. The chapel's at the top.",
         "It's a hard climb to Fairview Chapel. Take your time.",
         "Fairview Chapel? Up past the market, then keep climbing.",
@@ -224,10 +219,10 @@ WAY = {
     ],
     "police_station": [
         "The police station? Up and east, the Exchange. A long walk.",
-        "The station's in the Exchange. Civic Rise, way up the hill.",
+        "The station's in the Exchange, way up the hill.",
         "Up the hill to the Exchange. It's a long walk.",
         "The station? Up past the offices and lawyers. A long way.",
-        "Ask for Civic Rise. The police station's up there.",
+        "Ask for the Exchange. The police station's up there.",
     ],
     "canteen": [
         "The clocking-in canteen? Up and west, in Ironside.",
@@ -244,17 +239,17 @@ WAY = {
         "Out west, in Ironside. A long walk to the Retort works.",
     ],
     "winter_rooms": [
-        "The Winter Rooms? East, along Sea Road. Gullwing's the front.",
+        "The Winter Rooms? East, along the front. Gullwing.",
         "That's Gullwing. East, a long way, along the front.",
         "The Winter Rooms? A seafront cafe. Gullwing, way out east.",
         "Gullwing way. It's a very long walk east.",
-        "East to the sea front. Ask for Sea Road.",
+        "East to the sea front. Ask for Gullwing.",
     ],
     "short_pier": [
         "The Short pier? Way out east, east of the Winter Rooms.",
         "Gullwing's Short pier. East, all the way to the end.",
         "It's the pier at Gullwing. East, a very long walk.",
-        "The pier? East along Sea Road till the land runs out.",
+        "The pier? East along the front till the land runs out.",
         "The Short pier? A very long way east, at Gullwing.",
     ],
 }

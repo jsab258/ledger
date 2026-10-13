@@ -23,7 +23,7 @@ LINES = {
         "Evening, Tom. Rank's put to bed. @e",
         "All right, Tom? Soles holding out?",
         "Tom. You've the walk of a man who's lost his keys.",
-        "Afternoon, boss. Tea's on, if you want it. @a",
+        "Afternoon, Tom. Tea's on, if you want it. @a",
         "Tom. Do that coat up. @wet",
         "Tom. I'll walk you to the gate.",
         "Tom. You've a face like a closed door.",

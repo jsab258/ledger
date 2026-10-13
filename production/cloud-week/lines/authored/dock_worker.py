@@ -34,7 +34,7 @@ LINES = {
         "Mr Nowak. You'll find us all here, as ever.",
         "Evening, Nowak. Home for a sit-down? @e",
         "Nowak. If you want the quay, you'll have to queue.",
-        "Mr Nowak. They tell me you're all right.",
+        "Mr Nowak. Mind the bollards, they're low.",
         "Nowak. Come to count the empty berths? @a",
         "Mr Nowak. Mind the crates. They fall without warning.",
     ],
