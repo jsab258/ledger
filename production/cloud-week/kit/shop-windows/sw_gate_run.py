@@ -116,9 +116,11 @@ def run(work, assets, previews, samples, views=None, log=print, check_renders=Tr
     os.makedirs(previews, exist_ok=True)
     tag = TAG if ctx.id == "ritas" else ""
     states = list(STATES)
-    stats = bake_all(work, log, ctx=ctx, states=states + (["night_dark"] if not ctx.lit else []))
+    if not ctx.has_room:
+        standin_card_pictures(ctx, log)            # Mickey's and the empty unit: a flat stand-in card (see standin_card_pictures)
+    stats = bake_all(work, log, ctx=ctx, states=states + (["night_dark"] if (not ctx.lit and ctx.has_room) else []))
     front = os.path.join(assets, ctx.front_glb)
-    disp = os.path.join(assets, ctx.display_glb)
+    disp = os.path.join(assets, ctx.display_glb) if ctx.has_room else None
     grille = os.path.join(assets, ctx.grille_glb) if ctx.has_grille else None
     lp = os.path.join(gate, "gate_lights.json")
     if not os.path.exists(lp):
@@ -129,7 +131,7 @@ def run(work, assets, previews, samples, views=None, log=print, check_renders=Tr
         return {"l": os.path.join(gate, "col_l_%s.png" % st), "r": os.path.join(gate, "col_r_%s.png" % st)}
     times = {}
     todo = views or [(c, s) for c in CAMS for s in states]
-    if not ctx.lit and not views:
+    if not ctx.lit and not views and ctx.has_room:
         todo = todo + [("STREET_SQUARE", "night_dark")]            # a shop that is dark at night: the street's own night picture, one view, as an extra
     for cam, st in todo:
         out = os.path.join(gate, "%s_%s.png" % (cam, st))
@@ -137,6 +139,13 @@ def run(work, assets, previews, samples, views=None, log=print, check_renders=Tr
         times["%s_%s" % (cam, st)] = t
         log("render %s %s: %.0f s" % (cam, st, t))
         json.dump(times, open(os.path.join(gate, "render_times.json"), "w"), indent=1)
+    if check_renders and not ctx.has_room:
+        for cam in CAMS:
+            card = os.path.join(gate, "card_%s_day.png" % cam)
+            G.render_view(cam, R["cameras"][cam], "day", card, os.path.join(gate, "check_%s_day_frontmask.png" % cam), front, grille, disp, HDRI,
+                          samples=1, extra=extra, res=RES_FRAME, mode="mask_front", column_pngs=cols("day"), ctx=ctx)
+            log("front mask %s done" % cam)
+        check_renders = False
     if check_renders:
         # the checks' own renders: LIT-02 on the rendered frames with the glass's reflection off, and the glass mask (the window's glass pixels without frame, mullions, beads, lattice)
         for cam in CAMS:
@@ -182,7 +191,7 @@ def run(work, assets, previews, samples, views=None, log=print, check_renders=Tr
         if os.path.exists(p):
             jpeg_under(Image.open(p), os.path.join(previews, "%s-street-square-night-dark%s-%s.jpg" % (ctx.id, tag, DATE)))
     # the three pictures reduced, and (Rita's only: an approved room exists) the before-and-after for Jafar
-    for st in ("day", "night_lit", "night_dark"):
+    for st in (("day", "night_lit", "night_dark") if ctx.has_room else ()):
         p = room_picture(ctx, st)
         if os.path.exists(p):
             jpeg_under(Image.open(p), os.path.join(previews, "%s-room-%s%s-%s.jpg" % (ctx.id, st.replace("_", "-"), tag, DATE)))

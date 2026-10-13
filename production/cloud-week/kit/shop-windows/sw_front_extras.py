@@ -72,3 +72,77 @@ def late_tea_rooms(self, fm, members, extra_objs):
     face.data.materials.append(fm)
     members[face.name] = {"u": [u0, u1], "z": [z0, z1], "d": [147.0, 147.0], "group": "panel_sign"}
     extra_objs.append(face)
+
+
+# ---------------------------------------------------------------------------------------------------------------------------------- the empty unit
+def _rot_box(SF, u0, u1, d0, d1, z0, z1, deg):
+    """A box turned `deg` degrees about its own d axis (in the u, z plane) round its centre: the letting board, askew."""
+    V, F = SF.bx(u0, u1, d0, d1, z0, z1)
+    uc, zc = (u0 + u1) / 2.0, (z0 + z1) / 2.0
+    a = math.radians(deg)
+    out = []
+    for (u, d, z) in [tuple(v) for v in V]:
+        du, dz = u - uc, z - zc
+        out.append((uc + du * math.cos(a) - dz * math.sin(a), d, zc + du * math.sin(a) + dz * math.cos(a)))
+    return out, F
+
+
+def extras_empty_unit(self):
+    """The letting board (4.1: `letting_board`, 900 x 450, screwed over the fascia, turned 2 degrees, centre at board u 2705, z 275 up from the board's foot: the unit's bare timber fascia carries it): its edges
+    here (a 25 mm board standing 25 out from the fascia's face); the face, with its TO LET lettering and its four screws, in `late_empty_unit`."""
+    SF = _sf()
+    self.mats["board_timber"] = bs.make_material("letting_board_edge", (190, 184, 166), 0.7, 0.0)
+    uc, zc = 295.0 + 2705.0, 2850.0 + 275.0
+    V, F = _rot_box(SF, uc - 450.0, uc + 450.0, 120.0, 145.0, zc - 225.0, zc + 225.0, 2.0)
+    self.add("letting_board_edge", (V, F), "board_timber", bev=None)
+
+
+def late_empty_unit(self, fm, members, extra_objs):
+    """The letting board's face and the whitewash on every pane (the 4.1 tile `window_whitewash`, 3250 x 1800 at a millimetre a pixel, anchored to the window glass: u 400 to 3650, z 600 to 2400, repeated beyond
+    it over the toplights and the door's glass). The tile's alpha (a mean of 0.8: whiting laid on with a cloth) is composited over a pale ground (214, 212, 204) so that the pane is opaque: the empty unit has no room
+    behind it, and an unlit pane that showed the street's sky would not be a whitewashed one."""
+    import os
+    import numpy as np
+    from PIL import Image
+    SF = _sf()
+    ctx = self.ctx
+    # the board's face
+    d = os.path.join(ctx.fascias, "panels", "letting_board")
+    uc, zc = 295.0 + 2705.0, 2850.0 + 275.0
+    face = SF.quad_obj("letting_board_face", uc - 450.0 + 4.0, uc + 450.0 - 4.0, zc - 225.0 + 4.0, zc + 225.0 - 4.0, 145.5)
+    # (turned with the edge: rotate its vertices 2 degrees about the board's centre)
+    a = math.radians(2.0)
+    for v in face.data.vertices:
+        u = v.co.x * 1000.0 + 3000.0 - uc
+        z = v.co.z * 1000.0 - zc
+        v.co.x = (uc + u * math.cos(a) - z * math.sin(a) - 3000.0) / 1000.0
+        v.co.z = (zc + u * math.sin(a) + z * math.cos(a)) / 1000.0
+    face.data.update()
+    face.data.materials.append(SF.image_material("letting_board", os.path.join(d, "letting_board_basecolour.png"), orm=os.path.join(d, "letting_board_orm.png")))
+    members[face.name] = {"u": [uc - 446.0, uc + 446.0], "z": [zc - 221.0, zc + 221.0], "d": [145.5, 145.5], "group": "letting_board"}
+    extra_objs.append(face)
+    # the whitewash
+    src = os.path.join(ctx.fascias, "glass", "empty_unit", "window_whitewash_rgba.png")
+    im = np.asarray(Image.open(src).convert("RGBA")).astype(np.float32)
+    a_ = im[..., 3:4] / 255.0
+    ground = np.array([214.0, 212.0, 204.0], np.float32)
+    comp = (im[..., :3] * a_ + ground * (1.0 - a_)).clip(0, 255).astype(np.uint8)
+    out = os.path.join(self.scratch, "whitewash_composite.png")
+    Image.fromarray(comp).resize((1625, 900), Image.LANCZOS).save(out)
+    wm = SF.image_material("whitewash", out, rough=0.9)
+    u_a, z_a, wu, wz = 400.0, 600.0, 3250.0, 1800.0
+    n = 0
+    for ob in bpy.data.objects:
+        if ob.type != "MESH" or not ob.name.startswith(("win_glass_", "door_glass_", "fanlight_glass", "band_toplight_glass_", "glass_fanlight")):
+            continue
+        me = ob.data
+        uv = me.uv_layers.active or me.uv_layers.new(name="UVMap")
+        for loop in me.loops:
+            co = me.vertices[loop.vertex_index].co
+            uv.data[loop.index].uv = ((co.x * 1000.0 + 3000.0 - u_a) / wu, (co.z * 1000.0 - z_a) / wz)
+        me.materials.clear()
+        me.materials.append(wm)
+        if ob.name in members:
+            members[ob.name]["material"] = "whitewash"
+        n += 1
+    return n

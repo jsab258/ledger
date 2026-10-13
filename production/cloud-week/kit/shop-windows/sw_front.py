@@ -1068,14 +1068,15 @@ def build_front(out_dir, work_dir, fasc_dir, paper_dir, log=print, ctx=None):
             raise RuntimeError("glass row %s has no clear glass that holds it" % info["string"])
         members[ob.name] = dict(info, group="glass_rows")
         glass_rows.append(ob)
-    # the OPEN sign (4.2: the plastic card, 200 x 110, face OPEN by day) inside the door glass at z 1500, hung by a suction cup
+    # the OPEN sign (4.2: the plastic card, 200 x 110, face OPEN by day) inside the door glass at z 1500, hung by a suction cup (an empty unit to let has none)
     uc = door["uc"]
-    sign = quad_obj("door_sign_open", uc - 100.0, uc + 100.0, 1445.0, 1555.0, 37.0)
-    spath = os.path.join(paper_dir, "K03a", "K03a_B_basecolour.png")
-    sign.data.materials.append(image_material("door_sign", spath, alpha=True, rough=0.35))
-    members[sign.name] = {"u": [uc - 100.0, uc + 100.0], "z": [1445.0, 1555.0], "d": [37.0, 37.0], "group": "door_sign", "image": spath}
-    cup = bs.new_obj("door_sign_cup", *cyl_d(uc, 1548.0, 36.0, 38.0, 12.0, 12))
-    to_metres(cup, F.mats["steel"])
+    if ctx.id != "empty_unit":
+        sign = quad_obj("door_sign_open", uc - 100.0, uc + 100.0, 1445.0, 1555.0, 37.0)
+        spath = os.path.join(paper_dir, "K03a", "K03a_B_basecolour.png")
+        sign.data.materials.append(image_material("door_sign", spath, alpha=True, rough=0.35))
+        members[sign.name] = {"u": [uc - 100.0, uc + 100.0], "z": [1445.0, 1555.0], "d": [37.0, 37.0], "group": "door_sign", "image": spath}
+        cup = bs.new_obj("door_sign_cup", *cyl_d(uc, 1548.0, 36.0, 38.0, 12.0, 12))
+        to_metres(cup, F.mats["steel"])
     # the lattice (night grille) as its own object (Rita's only)
     lat, nrivets = (F.lattice() if ctx.has_grille else (None, 0))
     if lat is not None:

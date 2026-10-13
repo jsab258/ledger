@@ -55,10 +55,17 @@ class Ctx:
             self.card_x0, self.card_x1 = self.card["x0"], self.card["x1"]
             self.card_y = abs(self.card["z"])                # |y|: 5.875
             self.card_bottom, self.card_top = self.card["bottom"], self.card["top"]
+        else:
+            # the empty unit has no card in the street (bay 3 of 6 is skipped): the gate stands one in (the rule's: bay start + 0.35 to bay end - 0.35, z 0.65 to 3.05, 5.875 out) behind the whitewash
+            self.card_x0, self.card_x1 = self.bay0 + 0.35, self.bay1 - 0.35
+            self.card_y = 5.875
+            self.card_bottom, self.card_top = 0.65, 3.05
         # pictures: the spec name is the file stem (pawnbroker for Rita's, tea_room for the tea rooms)
         self.picture_name = None
         if R.get("pictures"):
             self.picture_name = R["pictures"]["states"]["day"][:-len("_day.png")]
+        elif not self.has_room:
+            self.picture_name = "%s_standin" % shop_id             # Mickey's (its real room is owed to the PC) and the empty unit: a flat stand-in card for the gate (sw_gate_run.standin_card_pictures)
         self.lit = bool(R.get("lit_at_night"))
         # file names
         self.front_glb = "%s_front.glb" % shop_id
