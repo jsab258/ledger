@@ -1038,6 +1038,10 @@ def build_front(out_dir, work_dir, fasc_dir, paper_dir, log=print, ctx=None):
     nt.links.new(nmap.outputs["Normal"], pb.inputs["Normal"])
     fb.data.materials.clear()
     fb.data.materials.append(fm)
+    late = getattr(F, "late_" + ctx.id, None)             # a sign's face that carries the fascia's own picture (the newsagent's box, the tea rooms' panel)
+    late_objs = []
+    if late:
+        late(fm, members, late_objs)
     # the hanging sign (Rita's three balls on their bracket; the ironmonger's board on its chains) and its bracket
     hsid = (ctx.R["fascia"].get("hanging_sign") or {}).get("id")
     sign_objs = []
@@ -1138,6 +1142,12 @@ def _export(objs, path):
     bpy.context.view_layer.objects.active = objs[0]
     bpy.ops.export_scene.gltf(filepath=path, export_format="GLB", use_selection=True, export_apply=True, export_materials="EXPORT",
                               export_cameras=False, export_lights=False, export_yup=True)
+
+
+import sw_front_extras as _X  # noqa: E402  (batch A: the shops' own parts, bound to the Front as extras_<id> / late_<id>)
+for _n in dir(_X):
+    if _n.startswith(("extras_", "late_")):
+        setattr(Front, _n, getattr(_X, _n))
 
 
 if __name__ == "__main__":
