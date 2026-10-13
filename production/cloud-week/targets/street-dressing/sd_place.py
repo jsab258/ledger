@@ -499,7 +499,8 @@ def quay():
             for f in p["faces"]:
                 pts = np.array([p["verts"][i] for i in f])
                 furn.append((k, MultiPoint(pts[:, :2].tolist()).convex_hull, float(pts[:, 2].min()), float(pts[:, 2].max())))
-    res = {"apron": top("quay_stone__apron_setts"), "roads": unary_union([top(k) for k in road_keys]),
+    at = G.read_atlas()
+    res = {"cope_x": at["north_quay_x"] + G.COPING_W_M, "apron": top("quay_stone__apron_setts"), "roads": unary_union([top(k) for k in road_keys]),
            "footways": unary_union([top(k) for k in foot_keys]), "apron_z": info["apron_z"], "info": {k: info[k] for k in ("apron_z", "water_z", "yard_z")},
            "furniture": furn}
     _quay["q"] = res
@@ -541,6 +542,9 @@ def placement_rows(T, rows):
             rows.add("placement", "%s/footprint plus the margin touches no quay road or footway" % g, not on_road, "roads or footways of south_quay_geom within %.1f m" % pose.get("apron_margin_m", 1.0))
             near = [(n, round(poly.distance(unary_union([q.poly for q in feet])), 2)) for n, poly, z0, z1 in Q["furniture"] if poly.distance(unary_union([q.poly for q in feet])) < pose.get("apron_margin_m", 1.0)]
             rows.add("placement", "%s/nothing of the quay's furniture within %.1f m" % (g, pose.get("apron_margin_m", 1.0)), not near, str(near[:4]))
+            if "cope_min_m" in pose:
+                dcope = min(q.poly.bounds[0] for q in feet) - Q["cope_x"]
+                rows.add("placement", "%s/the piece is at least %.1f m from the quay's cope" % (g, pose["cope_min_m"]), dcope >= pose["cope_min_m"], "%.1f m from the cope at x %.1f" % (dcope, Q["cope_x"]))
             rows.add("placement", "%s/ground level is the apron's (%.2f above the crown)" % (g, Q["apron_z"]), abs(base - Q["apron_z"]) < 0.005, "base %.3f, apron %.3f" % (base, Q["apron_z"]))
         elif zone == "yard_floor":
             owed = pose.get("floor_owed")

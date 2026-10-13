@@ -97,6 +97,11 @@ def measure(ps, spec):
         if what == "hi":
             return float(hi[ax])
         return float(hi[ax] - lo[ax])
+    if k == "edge_to_centre":  # the high (or low) edge of one part minus the centre of another, along an axis
+        le, he = ps.part_bbox(spec["edge_part"])
+        lc, hc = ps.part_bbox(spec["centre_part"])
+        e = (he if spec.get("edge_side", "hi") == "hi" else le)[ax]
+        return float(abs(e - (lc[ax] + hc[ax]) / 2.0))
     if k == "count":
         pre = spec["prefix"]
         return float(sum(1 for n in ps.names if n.startswith(pre)))

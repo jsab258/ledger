@@ -9,6 +9,7 @@ sys.path.insert(0, os.path.dirname(HERE))
 import sd_lib as L
 import sd_check as K
 import sd_family as SF
+import sd_place as PL
 
 V = "B1"
 
@@ -20,8 +21,22 @@ def extra(T, rows):
     depth = hi[1] - lo[1]
     need = depth + 900.0 + 1000.0
     rows.add("placement", "placement/the footway cannot hold it (depth + 900 leg room + 1000 clear exceeds the footway)", need > pl["footway_mm"], "needs %.0f mm, footway %.0f" % (need, pl["footway_mm"]))
-    rows.at_least("placement", "placement/the apron is at least 3 m wide where it stands", pl["min_pavement_mm"], 3000.0)
-    rows.add("placement", "placement/it stands south of the street's end (x below 0) and faces -x", pl["x_m"] < 0 and pl["faces"] == "-x", "")
+    pose = pl["poses"][0]
+    rows.add("placement", "placement/the pose is the stated slot", abs(pose["x_m"] - pl["x_m"]) < 1e-6 and abs(pose["z_m"] - pl["z_m"]) < 1e-6 and PL.direction_name(PL.front_direction(pose)) == pl["faces"], "pose x %.2f z %.2f faces %s; slot x %.2f z %.2f faces %s" % (pose["x_m"], pose["z_m"], PL.direction_name(PL.front_direction(pose)), pl["x_m"], pl["z_m"], pl["faces"]))
+    # the cameras: the stated distance to the reverse camera is the scene's own
+    cams = {c["id"]: c for c in json.load(open(os.path.join(L.REPO, "production", "specs", "vignette-scene.json")))["cameras"]}
+    cr = cams["cam_reverse"]
+    d_rev = math.hypot(cr["x_m"] - pose["x_m"], cr["z_m"] - pose["z_m"])
+    rows.add("placement", "placement/the stated distance to the reverse camera is the scene's (cam_reverse)", abs(d_rev - pl["cam_reverse"]["distance_m"]) < 0.5 and abs(cr["x_m"] - pl["cam_reverse"]["x_m"]) < 0.01, "%.1f m (stated %.1f)" % (d_rev, pl["cam_reverse"]["distance_m"]))
+    rows.add("placement", "placement/the reasons do not claim that the reverse view sees the bench", d_rev > 50.0 and not any("reverse view sees" in r.lower() for r in pl["reasons"]), "%.0f m away" % d_rev)
+    # handover H1: the town's own quay place lies on the road arm, not on the apron (the geometry decides)
+    h1 = next(h for h in T["handovers"] if h["id"] == "H1")
+    hc = json.load(open(os.path.join(L.REPO, h1["place"]["file"])))["places"][h1["place"]["place"]]
+    from shapely.geometry import Point
+    Q = PL.quay()
+    pt = Point(hc["x_m"], hc["z_m"])
+    rows.add("placement", "placement/handover H1 is true: the town's quay place is on the road arm and not on the apron", abs(hc["x_m"] - h1["place"]["x_m"]) < 0.01 and abs(hc["z_m"] - h1["place"]["z_m"]) < 0.01 and Q["roads"].buffer(1e-6).contains(pt) and not Q["apron"].contains(pt),
+             "places.quay (%.1f, %.1f): on the road arm %s, on the apron %s" % (hc["x_m"], hc["z_m"], Q["roads"].buffer(1e-6).contains(pt), Q["apron"].contains(pt)))
     rows.near("placement", "placement/the stated depth is the bench's", depth, pl["bench_depth_mm"], 50.0)
     # slats: counts and gaps measured from the parts
     seat = [n for n in ps.names if n.startswith("seat_slat_")]
@@ -73,7 +88,16 @@ def extra(T, rows):
 def extra_controls(T):
     return [
         ("placement: the footway stated as 3 m", lambda t: t["placement"].__setitem__("footway_mm", 3000.0), "placement/the footway cannot hold it"),
-        ("placement: the bench put at x +20 on the street", lambda t: t["placement"].__setitem__("x_m", 20.0), "placement/it stands south"),
+        PL.ctl("placement: the first version's slot (x -9.0, z 2.5) is on the road arm", "bench", "place/bench/footprint plus", x_m=-9.0, z_m=2.5),
+        PL.ctl("placement: the first version's slot touches the road and the footway of the quay kit", "bench", "place/bench/footprint plus the margin touches no quay road", x_m=-9.0, z_m=2.5),
+        PL.ctl("placement: the bench turned to face the street (+x)", "bench", "place/bench/front faces", yaw_deg=90.0),
+        PL.ctl("placement: the bench 1 m from the cope (x -68.4)", "bench", "place/bench/the piece is at least", x_m=-68.4),
+        PL.ctl("placement: the bench beside a quay bollard (x -68.2, z -28)", "bench", "place/bench/nothing of the quay's furniture", x_m=-68.2, z_m=-28.0),
+        PL.ctl("placement: the bench at the level of the street's crown, not the apron", "bench", "place/bench/ground level is the apron's", base_y_m=0.0),
+        ("placement: the stated slot changed without the pose", lambda t: t["placement"].__setitem__("x_m", -9.0), "placement/the pose is the stated slot"),
+        ("placement: the reverse camera's distance stated as 38 m", lambda t: t["placement"]["cam_reverse"].__setitem__("distance_m", 38.0), "placement/the stated distance to the reverse camera"),
+        ("placement: the town's quay place recorded on the apron (x -40)", lambda t: t["handovers"][0]["place"].__setitem__("x_m", -40.0), "placement/handover H1 is true"),
+        ("numbers: the end leg 100 mm nearer the slat end", lambda t: K.shift_part(t, V, "end_r_slab", [100.0, 0, 0]), "numbers/N9"),
         ("detail: one back slat moved 20 mm out of pitch", lambda t: K.shift_part(t, V, "back_slat_3", [0, 0, 20]), "detail/the back slats' pitch"),
         ("detail: one seat gap closed", lambda t: K.shift_part(t, V, "seat_slat_3", [0, -15, 0]), "detail/the seat gaps"),
         ("detail: a bolt head off its slat", lambda t: K.shift_part(t, V, "bolt_m2", [0, 60, 0]), "detail/every bolt head lies on its slat"),

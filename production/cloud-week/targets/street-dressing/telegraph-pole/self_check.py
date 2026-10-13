@@ -112,7 +112,7 @@ def extra_controls(T):
         ("placement: the pole turned so the bracket faces the wall", lambda t: PL.set_pose(t, "pole", yaw_deg=180.0), "placement/the bracket stands on the pole's street face"),
         ("placement: the pole put back on the street without the owed line", lambda t: t["placement"].__setitem__("on_street", True), "placement/the pole stays off the street"),
         ("placement: the owed line dropped", lambda t: t.__setitem__("owed", []), "placement/the pole stays off the street"),
-        ("placement: the pole beside the shop door (x 33.7) in the door's approach", lambda t: PL.set_pose(t, "pole", x_m=33.9), "place/pole/clear of every shop and house door zone"),
+        ("placement: the pole standing in the ironmonger's door approach (x 34.2, z -4.6)", lambda t: PL.set_pose(t, "pole", x_m=34.2, z_m=-4.6), "place/pole/clear of every shop and house door zone"),
         ("placement: the pole in the carriageway", lambda t: PL.set_pose(t, "pole", z_m=-2.0), "place/pole/feet lie in zone"),
         ("placement: the east anchor above its eaves", lambda t: K.shift_part(t, V, "anchor_w2", [0, 0, 300.0]), "place/pole/every anchor lies on a modelled wall below its eaves"),
         ("detail: a plate part on the pole", lambda t: t["variants"][V]["parts"].append({"id": "owner_plate", "type": "box", "c": [0, -120, 2000], "s": [100, 4, 100], "material": "galvanised"}), "detail/no plate"),

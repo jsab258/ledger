@@ -118,6 +118,8 @@ def build():
             {"id": "N5", "what": "slat thickness", "value": ST, "kind": "Judgement", "source": "32 mm iroko, the usual section; not visible on P1; error 4", "tol": 4.0, "measure": {"kind": "extent", "axis": "z", "part": "seat_slat_1"}},
             {"id": "N6", "what": "top of the highest back slat above the ground", "value": 445.0 + 5 * SW + 4 * SG, "kind": "Judgement", "source": "five slats from 445 up (the bench's back top is not measurable against the ground on P1); error 40", "tol": 40.0, "measure": {"kind": "edge", "axis": "z", "part": "back_slat_5", "side": "hi"}},
             {"id": "N7", "what": "back post top above the ground", "value": 860.0, "kind": "Judgement", "source": "860 mm: the post stands a little above the highest slat; P1 is a back view; error 40", "tol": 40.0, "measure": {"kind": "edge", "axis": "z", "part": "end_l_post", "side": "hi"}},
+            {"id": "N9", "what": "the end legs' centre line in from the slat end", "value": 146.0, "kind": "Judgement", "source": "P1's right end shows 146 mm (the leg's centre 29 px in at 0.198 px per mm); the left end is seen obliquely and its leg flares about 35 px further out, so the inset rests on the right end alone: Judgement, error 60", "tol": 60.0,
+             "measure": {"kind": "edge_to_centre", "axis": "x", "edge_part": "seat_slat_1", "edge_side": "hi", "centre_part": "end_r_slab"}},
             {"id": "N8", "what": "centre support thickness along the bench", "value": 50.0, "kind": "Photo", "source": "P1 mid_left 325.4 to mid_right 335.3 (9.9 px) at 0.198 px per mm = 50 mm; error 10", "tol": 10.0, "measure": {"kind": "extent", "axis": "x", "part": "mid_post"}},
         ],
         "photos": [],
@@ -146,7 +148,7 @@ def build():
 def finish(T):
     T["sources"] = [
         {"id": "S1", "url": "https://www.geograph.org.uk/photo/2693537", "read": "2026-10-13", "author": "Chris Downer", "licence": "CC BY-SA 2.0 (read on the page)", "taken": "2011-11-06", "kind": "photograph",
-         "shows": "Poole: a long slatted timber bench seen from behind against a bright harbour: five back slats with their gaps shining through, a centre support about 50 mm wide, end uprights about 75 mm, and a broad flared timber leg about 100 mm thick under each end, 146 mm in from the slat end; the seat is hidden",
+         "shows": "Poole: a long slatted timber bench seen from behind against a bright harbour: five back slats with their gaps shining through, a centre support about 50 mm wide, end uprights about 75 mm, and a broad flared timber leg about 100 mm thick under each end; the RIGHT end shows it 146 mm in from the slat end (the left end is seen obliquely and its leg flares outward at the slat end, about 35 px outside the drawn leg on the 420 px crop); the seat is hidden",
          "used": True, "not_used_for": "any absolute size (no scale object), the leg's depth and curve (a backlit silhouette), the colours", "period": "2011; a council bench pattern of long standing; used for the slat proportions only"},
         {"id": "S2", "url": "https://www.geograph.org.uk/photo/2672444", "read": "2026-10-13", "author": "Stefan Czapski", "licence": "CC BY-SA 2.0 (read on the page)", "taken": "2011-10-28", "kind": "photograph",
          "shows": "a cast-iron-ended slatted park bench in side view: raked back, seat bearer, legs joined by a floor stretcher, a scrolled arm",
@@ -173,14 +175,18 @@ def finish(T):
     ]
     T["night"] = {"lantern_linear": L.LANTERN_LINEAR, "note": "the bench stands outside the street's lamp pools on the quay apron; the timber top faces catch the lantern colour (1, 0.25, 0) only as a glint; nothing on it lights"}
     T["placement"] = {
-        "slot": "the quay apron south of the street's end, the bench's centre at x -9.0 m, z +2.5 m (east of the road's axis), the sitter facing -x (south, over the Old Basin), the back to the street; one bench",
-        "x_m": -9.0, "z_m": 2.5, "faces": "-x", "min_pavement_mm": 3000.0, "footway_mm": 2000.0, "bench_depth_mm": 550.0,
+        "slot": "the quay apron, the bench's centre at x -40.0 m, z 0.0 m (on the street's axis), the sitter facing -x (south-west over the Old Basin, which lies beyond the cope at x -69.4), the back to the street; one bench. (The first version stood it at x -9.0, z 2.5: that point is on the road arm of Quay Street, 0.5 m inside the east kerb; the apron's setts begin at about x -33.1.)",
+        "x_m": -40.0, "z_m": 0.0, "faces": "-x", "min_pavement_mm": 3000.0, "footway_mm": 2000.0, "bench_depth_mm": 550.0,
         "reasons": [
             "the scene file keeps benches off the street: 'a bench belongs on a wide pavement or a quay, and this footway is 2.0 m' (S5); a bench needs its 550 mm of depth plus 900 mm of leg room in front and 1000 mm of clear way behind it, about 2.4 m, against a 2.0 m footway",
-            "the asset plan lists benches 'on the quay' (1 to 2); the quay apron south of x 0 is open ground (south_quay_geom.py: 'the open quay apron'), where the reverse view looks",
-            "it faces the water so that the reverse view (the morning pictures' second view) sees the bench's back, the slats shining, the basin beyond; the hook camera at x -3.2 looks the other way and never sees it",
-            "9 m from the street's last kerb, clear of the quay's bollards (the bollards target stands them at the quay edge and the corners)",
+            "the asset plan lists benches 'on the quay' (1 to 2). The apron was read from tools/art-recipes/south-quay/south_quay_geom.py (build(), 13 October): Quay Street runs on south of x 0 as its own 6 m carriageway (road_quay_street_south, x -2.0 to -21.2) to the junction, whose south kerb is at about x -33.0; the apron's setts (apron_setts, level 0.05 m above the crown) begin at about x -33.1 and run to the cope at x -69.4. The first version's point (-9.0, 2.5) lies on the road arm, 0.5 m inside the east kerb face, and its far end on footway_northeast_corner; the row that said 'it stands south' (x below 0) could not tell the apron from the road",
+            "x -40.0, z 0.0: the footprint (600 x 1800) and 1.0 m round it lie only on apron_setts, 6.9 m from its edge at the junction's south kerb, 29.4 m from the cope, clear of the quay's fish boxes, rings and bollards (all beyond x -64); the sitter faces -x, over the basin",
+            "the bench is far from both pictures: it is 78 m from the reverse camera (cam_reverse, x 38, z 1.6) and 37 m from the hook camera (x -3, z -1.6), small and seen from behind or from the side, if at all; it is not put there to be seen in the morning pictures but for the player who walks down to the quay",
+            "clear of the quay's bollards (the bollards target stands them at the quay edge and the corners, 30 m away)",
         ],
+        "poses": [{"id": "bench", "variant": "B1", "x_m": -40.0, "z_m": 0.0, "yaw_deg": -90.0, "zone": "quay_apron", "front_faces": "-x", "base_y_m": 0.05, "apron_margin_m": 1.0, "cope_min_m": 3.0}],
+        "cam_reverse": {"x_m": 38.0, "z_m": 1.6, "distance_m": 78.0},
+        "cam_hook": {"x_m": -3.0, "z_m": -1.6},
     }
     T["wear"] = [
         "the iroko is silvered on its top faces and weathered grey-brown on the back slats, with a darker band along each slat's lower edge where water sits; end grain checked and darker, one slat split 300 mm from an end",
@@ -192,19 +198,22 @@ def finish(T):
     T["disagreements"] = [
         {"id": "W1", "what": "where benches stand", "book": "the asset plan: benches 1 to 2 on the quay; the scene file's held benches are named for a street", "photo": "n/a (a placement fact)", "chose": "the quay apron only; never the 2.0 m footway"},
         {"id": "W2", "what": "the slat's size", "book": "none (the usual 70 x 32 iroko)", "photo": "P1: the slat reads 63 mm (12.4 px at 0.198 px per mm, the scale from an assumed 1800 length)", "chose": "63 x 32, gap 23.5, pitch 86.5 (Photo within 5 mm of the assumption)"},
-        {"id": "W3", "what": "the ends", "book": "the asset plan: cast ends with timber slats; S2 and S3 show cast-iron ends", "photo": "S1: the end support is a broad flared timber leg about 100 mm thick (20 px at 0.198 px per mm), 146 mm in from the slat end, with a 75 mm upright at the end", "chose": "timber slab legs 100 thick, flared at the foot, a bearer, a 75 wide raked post; no cast iron (the photograph wins over the plan)"},
+        {"id": "W3", "what": "the ends", "book": "the asset plan: cast ends with timber slats; S2 and S3 show cast-iron ends", "photo": "S1: the end support is a broad flared timber leg about 100 mm thick (20 px at 0.198 px per mm), 146 mm in from the slat end on the right end ONLY (the left end is seen obliquely and its leg lies about 35 px further out), with a 75 mm upright at the end", "chose": "timber slab legs 100 thick, flared at the foot, a bearer, a 75 wide raked post; the inset 146 mm is a Judgement of plus or minus 60 resting on the right end alone; no cast iron (the photograph wins over the plan)"},
     ]
     T["variants_note"] = [
-        "B1 (the sample): three supports, 5 + 5 slats, no arms; one on the quay apron.",
+        "B1 (the sample): three supports, 5 + 5 slats, no arms; one on the quay apron (x -40.0, z 0.0).",
         "B2: a short bench, 1200 long, two supports, the same slats and ends (a second bench or the south quay's other end; not placed today).",
         "conditions (materials): C0 sound; C1 worn (the sample's wear); C2 one back slat missing at the right end (a gap 63 mm, a seed).",
         "colours: the iroko is left unpainted; a repainted bench is a seed (council green on the legs and posts, 40 percent), the slats stay bare.",
     ]
     T["owed"] = []
+    T["handovers"] = [
+        {"id": "H1", "place": {"file": "production/specs/hook-cast.json", "place": "quay", "x_m": -5.0, "z_m": 0.0}, "line": "For the town: hook-cast.json places.quay (x -5.0, z 0.0, 'the quay apron at the street's south end') lies on the road arm (road_quay_street_south spans x -21.2 to -2.0 and the apron's setts begin at about x -33.1), not on the apron; move the place onto the apron (the bench's slot, x -40.0, z 0.0, is on it) or say it is the road's end, and re-check the routines that use it."},
+    ]
     T["not_settled"] = [
         "absolute sizes: S1 has no scale object; the 1800 length is Judgement (it sets the slat width at 63 mm); seat height 440, back height 854 and the 10 degree rake are Judgement",
         "the end frames' exact shape (S1's ends are in silhouette; S2 is ornate; S3 is a plain pedestal type): the plain straight-legged end is a Judgement from S2's construction and S3's plainness",
-        "the apron's exact extents (south_quay_geom.py was not read in this unit): the slot's x and z are within 3 m and the builder moves it to keep 3.0 m from the quay edge",
+        "the apron's extents were read on 13 October from south_quay_geom.build() (setts from x -33.1 to the cope at x -69.4); the town's own quay place (hook-cast.json places.quay, x -5.0, z 0.0) lies on the road arm, not the apron: handover H1",
         "whether the street had any bench in 1990 (the scene says none on the footway); one on the quay is the asset plan's count",
     ]
     T["content_rule_note"] = "no person on the bench, no bottle or can, no memorial plaque (a statement of the content rule)."
@@ -212,7 +221,7 @@ def finish(T):
         "supports: each is a flared slab leg (prism in the y-z plane, points in the parts table, 100 thick; the centre one 50), a bearer and a raked post (end 75 wide, centre 50); build the two end supports identical, mirrored",
         "slats: 1800 long, arrised 2 mm; the back slats are rotated 10 degrees about the bench's length axis with the posts; the bolt heads on the back's face at each post, 20 across and 7 high, domed",
         "the seat slats sit on the bearers (z 408); the slats' underside is the bearer's top",
-        "orientation: the local -y is the way the sitter faces; in the street's frame -y points -x (south, towards the basin)",
+        "orientation: the local -y is the way the sitter faces; in the street's frame -y points -x (south-west, towards the basin): the pose is x -40.0, z 0.0, yaw -90 (the bench's length then runs along the street's z)",
     ]
     C = []
     for n in T["numbers"]:
@@ -229,7 +238,7 @@ def finish(T):
 
 
 SUMMARY = ("The council bench is 1800 mm long on three timber supports (a flared slab leg 100 mm thick under each end 146 mm in from the slat end, a 50 mm centre leg, a seat bearer and a back post raked 10 degrees), with five iroko seat slats and five back slats each 63 x 32 mm and 23.5 mm apart, bolted with domed coach-bolt heads, the seat 440 high and the back's top at 854; "
-           "it does not stand on the 2.0 m footway (the scene file says so and the arithmetic agrees: it needs about 2.4 m) but on the quay apron south of the street at x -9.0, facing the basin, where the reverse view sees its back; "
+           "it does not stand on the 2.0 m footway (the scene file says so and the arithmetic agrees: it needs about 2.4 m) but on the quay apron at x -40.0, z 0.0 (the first version's x -9.0 was on the road arm), facing the basin, 78 m from the reverse camera, so small and seen from behind if at all: it serves the player's walk to the quay; "
            "no period bench photograph was measurable, so the slat proportions are measured on a 2011 photograph of the back of a council bench against the light and every absolute size is judged (the bench's length sets the scale).")
 
 
@@ -245,7 +254,7 @@ def story(T):
             ["production/specs/vignette-scene.json held props: park_bench, garden_bench_01, ornate_bench, curved_stone_bench (not placed)", "four held bench models", "NOT USED", "each is a park, garden or ornate bench; the scene itself says none belongs on the footway"],
             ["production/research/asset-plan 3 (A3 assemblies: bench, cast ends with timber slats; A5: 2 models, 1 to 2 on the quay)", "the plan for the bench", "KEPT as the brief, its cast ends REPLACED", "S1 shows timber slab legs (W3)"],
             ["Poly Haven models painted_wooden_bench, modular_street_seating, wooden_picnic_table", "CC0 benches", "REJECTED", "S4: not a 1990 council bench"],
-            ["tools/art-recipes/south-quay (the quay apron)", "the apron the bench stands on", "READ for its place only; not edited", "the slot must be checked against south_quay_geom.py by the builder"],
+            ["tools/art-recipes/south-quay (the quay apron)", "the apron the bench stands on", "READ (build() run on 13 October) and the slot tested against its surfaces by the placement rows; not edited", "x -40.0, z 0.0 lies on apron_setts; the first version's x -9.0 was on the road"],
             ["git branches (git log --all for bench)", "none", "none to reuse", ""],
         ],
         "axes": "Axes: x along the bench (the length), y from the sitter's front (-y) to the back (+y), z up from the ground. Boxes, cylinders and one prism per end frame (the raked back post); the self-check measures every number back off the parts.",
@@ -256,7 +265,7 @@ def story(T):
             "**Fixings**: a domed coach-bolt head (20 across, 7 high) through each back slat at each post (15), square nuts behind; the seat slats are screwed from above with countersunk heads flush (not modelled).",
             "**B2** is the same bench 1200 long with two supports and no centre frame.",
         ],
-        "own_rows": "the bench's depth against the footway and the 3.0 m clearance (the placement), the slat counts and gaps, the three frames identical, the bolts on the back slats",
+        "own_rows": "the bench's depth against the footway (the arithmetic that keeps it off the 2.0 m footway), the pose against the south quay kit's surfaces (the footprint and 1 m round it on the apron's setts, no road or footway, nothing of the quay's furniture within 1 m, 3 m from the cope), the distance to the reverse camera, the slat counts and gaps, the three frames identical, the bolts on the back slats, the legs' inset",
     }
     return S
 
