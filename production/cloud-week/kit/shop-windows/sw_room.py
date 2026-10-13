@@ -11,6 +11,7 @@ import json
 import math
 import os
 import random
+import shutil
 import sys
 
 import numpy as np
@@ -438,8 +439,9 @@ class Room:
         fit_m = self.mat("batten_fitting", rgb8(190, 188, 180), rough=0.5)
         self.tube_objs = []
         for k, t in enumerate(self.R["room"]["lights"]["tubes"]):
-            self.box("batten_%d" % k, -0.78, 0.78, t["y"] - 0.06, t["y"] + 0.06, H - 0.02, H, fit_m, fixture="R-ceiling-tubes")
-            o = self.box("tube_%d" % k, -0.75, 0.75, t["y"] - 0.045, t["y"] + 0.045, H - 0.045, H - 0.02, self.diff_m, fixture="R-ceiling-tubes")
+            # 13 Oct (close review, narrow 13): the fitting and the diffuser 0.025 deep in all (try 1: 0.045, painted on the ceiling and stretched about 0.2 m in depth)
+            self.box("batten_%d" % k, -0.78, 0.78, t["y"] - 0.06, t["y"] + 0.06, H - 0.010, H, fit_m, fixture="R-ceiling-tubes")
+            o = self.box("tube_%d" % k, -0.75, 0.75, t["y"] - 0.045, t["y"] + 0.045, H - 0.025, H - 0.010, self.diff_m, fixture="R-ceiling-tubes")
             self.tube_objs.append(o)
 
     # ------------------------------------------------------------------------------------------------ fixtures
@@ -450,43 +452,63 @@ class Room:
         stock = fx["R-back-stock"]
         x0s, x1s = stock["x"]                                        # -2.6, 1.35
         cx0, cx1 = fx["R-back-counter"]["x"]                         # -1.9, 0.9
-        tiers = stock["tiers"]                                       # 0.5, 0.85, 1.35, 1.70, 2.05
-        gaps = {0.5: 0.35, 0.85: 0.50, 1.35: 0.35, 1.7: 0.35, 2.05: 0.30}
+        tiers = stock["tiers"]                                       # 0.5, 0.85, 1.35, 1.80, 2.05  (13 Oct: the TV tiers 0.45 apart, the review's z 1.35 and 1.80)
+        self.tv_tiers = fx["R-back-tv-tiers"]["tiers"]               # 1.35, 1.80
+        self.tiers = tiers
         self.tier_defs = []
         for z in tiers:
             if z in (0.5, 0.85):
                 ranges = [(x0s, cx0), (cx1, x1s)]                    # the lowest two tiers only at the ends: the counter stands in front of the middle
-                dep = 0.30
-            elif z in (1.35, 1.7):
+            elif z in self.tv_tiers:
                 ranges = [(x0s, cx0), (cx0, cx1), (cx1, x1s)]
-                dep = 0.30
             else:
-                ranges = [(x0s, x1s)]
-                dep = 0.30
+                # the top tier over the ends only: a television at its real size (0.41) on the upper TV tier stands 2.21 high, through a board at 2.05 (the review's z 1.35 and 1.80
+                # for the TV tiers did not allow for the top tier); over the TVs the wall is open to the ceiling
+                ranges = [(x0s, cx0), (cx1, x1s)]
+            rng = []
             for (a, b) in ranges:
-                d_board = fx["R-back-tv-tiers"]["depth_m"] if (z in (1.35, 1.7) and a == cx0) else dep
-                self.box("shelf_%s_%.2f_%.2f" % (str(z), a, b), a, b, D - d_board, D - 0.005, z - BOARD_T, z, shelf_m,
-                         fixture="R-back-tv-tiers" if d_board > 0.31 else "R-back-stock")
-            self.tier_defs.append({"z": z, "ranges": ranges, "gap": gaps[z], "depth": dep})
-        for x in (x0s, cx0, cx1, x1s):
-            if x in (cx0, cx1):
-                continue
+                is_tv = z in self.tv_tiers and a == cx0
+                d_board = fx["R-back-tv-tiers"]["depth_m"] if is_tv else 0.30
+                self.box("shelf_%s_%.2f_%.2f" % (str(z), a, b), a, b, D - d_board, D - 0.005, z - BOARD_T, z, shelf_m, fixture="R-back-tv-tiers" if is_tv else "R-back-stock")
+                above = [t for t in tiers if t > z + 1e-6]
+                if is_tv and z == max(self.tv_tiers):
+                    gap = H - z                                       # open above the upper TV tier
+                else:
+                    gap = (min(above) if above else H) - z
+                rng.append((a, b, gap, d_board))
+            self.tier_defs.append({"z": z, "ranges": rng})
+        for x in (x0s, x1s):
             self.box("upright_%.2f" % x, x - 0.015, x + 0.015, D - 0.30, D - 0.005, 0.5 - BOARD_T, 2.05, upright_m, fixture="R-back-stock")
         # the door-boxes' tier: over the back door only, z 2.05 to 2.25, boards 0.30 deep
         self.box("shelf_door_boxes", 1.45, 2.35, D - 0.30, D - 0.005, 2.05 - BOARD_T, 2.05, shelf_m, fixture="R-back-door-boxes")
-        # the counter: a glass-topped case on a velvet bed, against the wall (0.6 deep, 1.05 high, 2.8 long)
+        # the counter: a glass-topped case on a velvet bed, against the wall (0.6 deep, 1.05 high, 2.8 long). 13 Oct (close review, narrow 4): the velvet bed is RAKED 25 degrees up toward
+        # the back so the jewellery on it shows as rings, not as a row of points, from the low angle the camera sees the case at
         cy0, cy1 = D - 0.60, D - 0.005
         wood = self.mat("counter_wood", rgb8(96, 58, 34), rough=0.42)
         velvet = self.mat("velvet", rgb8(112, 14, 24), rough=0.92)
         glass = self.mat("counter_glass", (1, 1, 1), glass=True)
         self.box("counter_base", cx0, cx1, cy0, cy1, 0.0, 0.75, wood, fixture="R-back-counter")
-        self.box("counter_velvet", cx0 + 0.04, cx1 - 0.04, cy0 + 0.04, cy1 - 0.04, 0.75, 0.77, velvet)
+        self.rake_deg = 25.0
+        yf, yb = cy0 + 0.04, cy1 - 0.04
+        th = math.radians(self.rake_deg)
+        zf = 0.77
+        zb = zf + (yb - yf) * math.tan(th)
+        # a wedge of velvet: front edge z 0.75 to 0.77, rising to the back
+        V = [(cx0 + 0.04, yf, 0.75), (cx1 - 0.04, yf, 0.75), (cx1 - 0.04, yb, 0.75), (cx0 + 0.04, yb, 0.75), (cx0 + 0.04, yf, zf), (cx1 - 0.04, yf, zf), (cx1 - 0.04, yb, zb), (cx0 + 0.04, yb, zb)]
+        me = bpy.data.meshes.new("counter_velvet")
+        me.from_pydata(V, [], [(0, 3, 2, 1), (4, 5, 6, 7), (0, 1, 5, 4), (1, 2, 6, 5), (2, 3, 7, 6), (3, 0, 4, 7)])
+        me.validate()
+        ob = bpy.data.objects.new("counter_velvet", me)
+        self.sc.collection.objects.link(ob)
+        ob.data.materials.append(velvet)
+        self.rake_origin = (yf, zf)
         for nm, (a, b, c, d_, e, f) in {"top": (cx0, cx1, cy0, cy1, 1.04, 1.05), "front": (cx0, cx1, cy0, cy0 + 0.006, 0.75, 1.05),
                                        "end_l": (cx0, cx0 + 0.006, cy0, cy1, 0.75, 1.05), "end_r": (cx1 - 0.006, cx1, cy0, cy1, 0.75, 1.05)}.items():
             self.box("counter_glass_" + nm, a, b, c, d_, e, f, glass)
         self.counter_ext = (cx0, cx1, cy0, cy1)
-        # the notices on the counter's front (paper cards, 5 mm off it): CASH LOANS and the tested-goods card
-        self.flat_card("notice_loans", "notice_loans", cy0 - 0.004, cx0 + 0.15, cx0 + 1.45, 0.34, 0.66, wall="front")
+        # the notices: CASH LOANS moves from the counter's front to the back wall above the counter (close review, narrow 5), flat on the wall (0.004 off it), so the card moves true
+        # with the stock wall instead of shearing as a counter does; the tested-goods card stays on the counter's front
+        self.flat_card("notice_loans", "notice_loans", D - 0.004, cx0 + 0.45, cx0 + 1.40, 1.075, 1.315, wall="front")
         self.flat_card("notice_tested", "notice_tested", cy0 - 0.004, cx0 + 1.55, cx1 - 0.15, 0.12, 0.30, wall="front")
         # the back door: half-glazed painted door, ajar, hinged at the right jamb (x 2.35), swinging into the back room; frame 40 proud of the wall
         door_m = self.mat("door_paint", rgb8(210, 204, 186), rough=0.4)
@@ -514,54 +536,55 @@ class Room:
 
     # ------------------------------------------------------------------------------------------------ the back wall's stock
     def stock(self):
+        """The stock wall (13 Oct, close review narrow 3): every piece at its real size or at 0.9 to 1.0 of it (never scaled up: the try 1 wall ran 0.45 to 1.45), each shelf filled by
+        COUNT: the target's counts were raised until the tiers run shoulder to shoulder. A piece that does not fit a tier at 0.9 goes to the next; one that fits none is reported."""
         R = self.R
         goods = [g for g in R["room"]["goods"] if g["on"] in ("R-back-stock", "R-back-tv-tiers", "R-back-door-boxes") and not g["model"].startswith("script:")]
         rnd = self.rnd
-
-        def fit(asset, gap, depth_max, long_side=None):
-            """Orientation and scale of a piece on a shelf: turn 0 or 90 degrees about z for the least depth, then scaled to the clearance (and the depth)."""
+        # a piece's (scale, turn): real size 1.0 unless the tier's clearance or depth asks for less (not below 0.9); a piece with a size of its own (the boxes 0.3, the clock 0.3) keeps it
+        def fit(asset, gap, depth_max, size=None):
             best = None
             for turn in (0.0, math.pi / 2):
                 d = self.dims(asset, (0, 0, turn))
-                # the stock was crammed and sized to its shelf (the approved room's pool sizes: a cassette player 0.3, a camera 0.15 against 0.24 and 0.26 as modelled):
-                # scaled to fill the clearance, at most 1.45 times its modelled size, never deeper than the shelf
-                s = min(1.45, (gap - BOARD_T - 0.015) / d.z, (depth_max - 0.035) / d.y)
+                clear, deep = gap - BOARD_T - 0.015, depth_max - 0.035
+                if size:
+                    s = size / max(d)
+                    if d.z * s > clear + 1e-9 or d.y * s > deep + 1e-9:
+                        continue
+                else:
+                    s = min(1.0, clear / d.z, deep / d.y)
+                    if s < 0.9 - 1e-9:
+                        continue
                 if best is None or s > best[0] + 1e-9 or (abs(s - best[0]) < 1e-9 and d.y < best[2].y):
                     best = (s, turn, d)
             return best
-
-        # the pool, in the target's counts
         pool = []
         for g in goods:
             for _ in range(g["n"]):
                 pool.append({"model": g["model"], "on": g["on"], "size": g.get("size_m")})
         tvs = [p for p in pool if p["model"] == "television_02"]
         boxes_door = [p for p in pool if p["on"] == "R-back-door-boxes"]
-        boxes_top = [p for p in pool if p["model"] == "cardboard_box_01" and p["on"] == "R-back-stock"]
-        rest = [p for p in pool if p not in tvs and p not in boxes_door and p not in boxes_top]
-        rest.sort(key=lambda p: -max(self.dims(p["model"])))
+        rest = [p for p in pool if p not in tvs and p not in boxes_door]
         # the doorway's boxes: three over the back door at z 2.05 to 2.25 (0.30 largest side)
         xs = np.linspace(1.62, 2.18, 3)
         for p, x in zip(boxes_door, xs):
             s = 0.3 / max(self.dims("cardboard_box_01"))
-            d = self.dims("cardboard_box_01", (0, 0, 0.0))
             self.place("cardboard_box_01", (x, D - 0.005, 2.05), rot=(0, 0, math.pi / 2 + rnd.uniform(-0.06, 0.06)), scale=s, fixture="R-back-door-boxes", anchor=("c", "max", "min"))
-        # the four television sets on the two TV tiers (1.35 and 1.70), x -1.9 to 0.9: scaled to 0.75 so each stands clear of the tier above (the target gives 0.35 depth; at 0.75 they are 0.26)
-        tv_x = {1.35: [-1.55, -0.25], 1.7: [-1.1, 0.25]}
-        k = 0
+        # the four television sets on the two TV tiers, at their real size (1.0: the tiers are 0.45 apart); back to the wall, 0.35 deep
+        zt = sorted(self.tv_tiers)
+        tv_x = {zt[0]: [-1.55, -0.25], zt[1]: [-1.1, 0.25]}
         for z, xl in tv_x.items():
             for x in xl:
-                s = 0.75
-                self.place("television_02", (x, D - 0.02, z), rot=(0, 0, rnd.uniform(-0.05, 0.05)), scale=s, fixture="R-back-tv-tiers", anchor=("c", "max", "min"))
-                self.tickets_for(x, D - 0.30 + 0.0, z)
-                k += 1
+                ext = self.place("television_02", (x, D, z), rot=(0, 0, 0), scale=1.0, fixture="R-back-tv-tiers", anchor=("c", "max", "min"))
+                self.tickets_for(x, ext[2] - 0.003, z)
         self.tv_spans = tv_x
-        # fill the tiers shoulder to shoulder from the rest of the pool, bottom up: in each free stretch of a tier (the TVs' places taken out) the widest piece that still fits
+        rest.sort(key=lambda p: -max(self.dims(p["model"])))
         queue = rest[:]
         self.fill_log = []
+        self.scales = []
 
         def free_stretches(z, a, b):
-            obst = sorted([(x - 0.17, x + 0.17) for x in tv_x.get(z, []) if a - 0.2 <= x <= b + 0.2])
+            obst = sorted([(x - 0.21, x + 0.21) for x in tv_x.get(z, []) if a - 0.25 <= x <= b + 0.25])
             out, cur = [], a
             for (o0, o1) in obst:
                 if o0 > cur:
@@ -571,80 +594,34 @@ class Room:
                 out.append((cur, b))
             return out
         for td in self.tier_defs:
-            z, gap = td["z"], td["gap"]
-            if z == 2.05:
-                continue
-            for (a, b) in td["ranges"]:
+            z = td["z"]
+            for (a, b, gap, d_board) in td["ranges"]:
                 n_in = 0
                 for (fa, fb) in free_stretches(z, a, b):
-                    x = fa + 0.03
+                    x = fa + 0.02
                     while queue:
                         cands = []
                         for i, p in enumerate(queue):
-                            s, turn, d = fit(p["model"], gap, td["depth"], long_side=p["size"])
-                            if s < 0.30:
+                            f = fit(p["model"], gap, d_board if d_board <= 0.30 else 0.30, size=p["size"])
+                            if f is None:
                                 continue
+                            s, turn, d = f
                             w = d.x * s
-                            if x + w <= fb - 0.015:
+                            if x + w <= fb - 0.01:
                                 cands.append((w, i, s, turn, d))
                         if not cands:
                             break
                         w, i, s, turn, d = max(cands, key=lambda c: c[0])
                         p = queue[i]
-                        self.place(p["model"], (x + w / 2, D - 0.005, z), rot=(0, 0, turn + rnd.uniform(-0.06, 0.06)), scale=s, fixture="R-back-stock", anchor=("c", "max", "min"))
+                        self.place(p["model"], (x + w / 2, D - 0.005, z), rot=(0, 0, turn + rnd.uniform(-0.05, 0.05)), scale=s, fixture="R-back-stock", anchor=("c", "max", "min"))
+                        self.scales.append({"model": p["model"], "scale": round(s, 3), "sized": bool(p["size"])})
                         self.tickets_for(x + w / 2, D - 0.30, z)
                         queue.pop(i)
                         n_in += 1
-                        x += w + rnd.uniform(0.0, 0.02)
+                        x += w + rnd.uniform(0.0, 0.015)
                 self.fill_log.append((z, round(a, 2), round(b, 2), n_in))
-        leftovers = queue
-        # the top tier (z 2.05), the whole wall: the cardboard boxes of stock first (0.30 largest side), then what is left, each in the widest stretch left; pieces that do not fit
-        # at 0.25 of their size are reported (leftover_count) and not placed
-        top_a, top_b = -2.6, 1.35
-        x = top_a + 0.03
-        top_items = [("box", p) for p in boxes_top] + [("good", p) for p in leftovers]
-        unplaced = []
-        spare = (top_b - top_a - 0.06) - sum(0.30 for k, _ in top_items if k == "box")
-        rest_items = [p for k, p in top_items if k == "good"]
-        # a uniform shrink so the left-overs fit the room that the boxes leave: scale each to its clearance, then all by one factor if the row is too long
-        sizes = []
-        for p in rest_items:
-            s_, turn_, d_ = fit(p["model"], 0.35, 0.30, long_side=p["size"])
-            sizes.append((p, s_, turn_, d_))
-        total_w = sum(d_.x * s_ for (_, s_, _, d_) in sizes) + 0.01 * len(sizes)
-        k_shrink = min(1.0, spare / total_w) if total_w > 0 else 1.0
-        placed_top = []
-        for kind, p in top_items:
-            if kind == "box":
-                sc_ = 0.3 / max(self.dims("cardboard_box_01"))
-                w = 0.3                    # turned a quarter so the 0.30 side runs along the shelf and the box is 0.225 deep
-                placed_top.append(("box", p, sc_, math.pi / 2, w))
-        for (p, s_, turn_, d_) in sizes:
-            s2 = s_ * k_shrink
-            if s2 < 0.25:
-                unplaced.append(p)
-                continue
-            placed_top.append(("good", p, s2, turn_, d_.x * s2))
-        # interleave: boxes and goods alternate along the wall so the row reads as stock, not as two blocks
-        boxes_l = [t for t in placed_top if t[0] == "box"]
-        goods_l = [t for t in placed_top if t[0] == "good"]
-        order = []
-        while boxes_l or goods_l:
-            if goods_l:
-                order.append(goods_l.pop(0))
-            if goods_l:
-                order.append(goods_l.pop(0))
-            if boxes_l:
-                order.append(boxes_l.pop(0))
-        tot = sum(t[4] for t in order)
-        gapw = max(0.0, (top_b - top_a - 0.06 - tot) / max(1, len(order) - 1))
-        x = top_a + 0.03
-        for kind, p, s_, turn_, w in order:
-            self.place(p["model"], (x + w / 2, D - 0.005, 2.05), rot=(0, 0, turn_ + rnd.uniform(-0.06, 0.06)), scale=s_, fixture="R-back-stock", anchor=("c", "max", "min"))
-            self.tickets_for(x + w / 2, D - 0.30, 2.05)
-            x += w + min(gapw, 0.03)
-        leftovers = unplaced
-        self.leftover_count = len(leftovers)
+        self.leftover_count = len(queue)
+        self.leftovers = [p["model"] for p in queue]
 
     def tickets_for(self, x, y_front, z):
         """A white ticket standing in front of each piece, on the shelf's edge."""
@@ -660,29 +637,95 @@ class Room:
         silver = self.mat("silver", rgb8(204, 204, 208), rough=0.2, metal=1.0)
         black = self.mat("plastic_black", rgb8(24, 24, 24), rough=0.35)
         ticket = self.mat("ticket", rgb8(226, 218, 196), rough=0.85)
+        # the raked bed: a parent empty at the bed's front edge turned 25 degrees about x; everything laid on the velvet is a child in the bed's own frame (x along the case, s up the
+        # slope, h off the velvet)
+        yf, zf = self.rake_origin
+        th = math.radians(self.rake_deg)
+        rake = bpy.data.objects.new("rake", None)
+        self.sc.collection.objects.link(rake)
+        rake.location = (0.0, yf, zf)
+        rake.rotation_euler = (th, 0.0, 0.0)
+
+        def child(o):
+            o.parent = rake
+            o.matrix_parent_inverse = Matrix.Identity(4)
+            return o
+        s_max = (cy1 - 0.04 - yf) / math.cos(th)
         # script:counter_jewellery: rings (tori), watch discs on straps, chains of links; on the velvet, each with a ticket
         x = cx0 + 0.12
         while x < cx1 - 0.35:
-            y = cy0 + 0.1 + rnd.random() * 0.3
+            s_ = 0.06 + rnd.random() * 0.32
             kind = rnd.random()
             if kind < 0.45:
-                bpy.ops.mesh.primitive_torus_add(major_radius=0.012, minor_radius=0.0032, location=(x, y, 0.775))
-                bpy.context.object.data.materials.append(gold if rnd.random() < 0.7 else silver)
+                bpy.ops.mesh.primitive_torus_add(major_radius=0.012, minor_radius=0.0032, location=(x, s_, 0.0033))
+                o = bpy.context.object
+                o.data.materials.append(gold if rnd.random() < 0.7 else silver)
+                child(o)
             elif kind < 0.8:
-                self.cyl("watch", x, y, 0.78, 0.018, 0.008, gold if rnd.random() < 0.5 else silver)
-                self.box("strap", x - 0.008, x + 0.008, y - 0.05, y + 0.05, 0.771, 0.775, black)
+                o = self.cyl("watch", x, s_, 0.0044, 0.018, 0.008, gold if rnd.random() < 0.5 else silver)
+                child(o)
+                child(self.box("strap", x - 0.008, x + 0.008, s_ - 0.05, s_ + 0.05, 0.0, 0.0035, black))
             else:
-                self.box("chain", x - 0.06, x + 0.06, y - 0.004, y + 0.004, 0.771, 0.776, gold)
-            self.box("tag", x + 0.02, x + 0.045, y - 0.01, y + 0.01, 0.771, 0.773, ticket)
+                child(self.box("chain", x - 0.06, x + 0.06, s_ - 0.004, s_ + 0.004, 0.0, 0.0045, gold))
+            child(self.box("tag", x + 0.02, x + 0.045, s_ - 0.01, s_ + 0.01, 0.0, 0.0022, ticket))
             x += 0.05 + rnd.random() * 0.05
-        # pocket_watch x3, vintage_pocket_watch x3 on the velvet (0.06 largest side)
+        # pocket_watch x3, vintage_pocket_watch x3 on the velvet (0.06 largest side), lying on the slope
         for i, (a, xx) in enumerate(zip(["pocket_watch"] * 3 + ["vintage_pocket_watch"] * 3, np.linspace(cx0 + 0.5, cx1 - 0.7, 6))):
-            self.place(a, (xx, cy0 + 0.30 + 0.04 * (i % 2), 0.77), rot=(math.pi / 2, 0, rnd.uniform(-1, 1)) if False else (0, 0, rnd.uniform(-0.4, 0.4)), scale=0.06 / max(self.dims(a)), fixture="R-back-counter")
+            sc_ = 0.06 / max(self.dims(a))
+            s_ = 0.14 + 0.05 * (i % 2)
+            # the model stands upright; laid face up on the slope: turn it about x by 90 degrees and then by the rake
+            ypos = yf + s_ * math.cos(th)
+            zpos = zf + s_ * math.sin(th)
+            rot = (math.pi / 2 + th, 0.0, rnd.uniform(-0.4, 0.4))
+            ext = self.place(a, (xx, ypos, zpos), rot=rot, scale=sc_, fixture="R-back-counter", anchor=("c", "c", "min"))
         # the till at the counter's right end, on the glass top
         s = 0.42 / max(self.dims("CashRegister_01"))
-        self.place("CashRegister_01", (cx1 - 0.40, cy0 + 0.32, 1.05), rot=(0, 0, math.pi + 0.0 if False else rnd.uniform(-0.15, 0.15)), scale=s, fixture="R-back-counter")
+        self.place("CashRegister_01", (cx1 - 0.40, cy0 + 0.32, 1.05), rot=(0, 0, rnd.uniform(-0.15, 0.15)), scale=s, fixture="R-back-counter")
 
     # ------------------------------------------------------------------------------------------------ the side walls
+    def watch_cards(self, xl, spots, side="left"):
+        """script:watch_chain_cards (13 Oct, close review narrow 2): paper cards 0.10 x 0.14 x 0.01 pinned to the board, each with a gold watch and a hanging chain and a ticket under it,
+        one mesh. `spots` are (y, z) centres on the left board (x = xl + 0.02 .. 0.03, the face toward +x)."""
+        card_m = self.mat("watchcard_paper", rgb8(214, 204, 178), rough=0.85)
+        gold = self.mat("gold", rgb8(218, 160, 66), rough=0.25, metal=1.0)
+        tk = self.mat("ticket", rgb8(226, 218, 196), rough=0.85)
+        V, F, M = [], [], []
+
+        def add_box(x0, x1, y0, y1, z0, z1, mi):
+            o = len(V)
+            V.extend([(x0, y0, z0), (x1, y0, z0), (x1, y1, z0), (x0, y1, z0), (x0, y0, z1), (x1, y0, z1), (x1, y1, z1), (x0, y1, z1)])
+            F.extend([(o + 0, o + 3, o + 2, o + 1), (o + 4, o + 5, o + 6, o + 7), (o + 0, o + 1, o + 5, o + 4), (o + 1, o + 2, o + 6, o + 5), (o + 2, o + 3, o + 7, o + 6), (o + 3, o + 0, o + 4, o + 7)])
+            M.extend([mi] * 6)
+
+        def add_disc(x0, x1, yc, zc, r, mi, n=14):
+            o = len(V)
+            for xx in (x0, x1):
+                for k in range(n):
+                    t = 2 * math.pi * k / n
+                    V.append((xx, yc + r * math.cos(t), zc + r * math.sin(t)))
+            F.append(tuple(o + i for i in range(n))[::-1])
+            F.append(tuple(o + n + i for i in range(n)))
+            for i in range(n):
+                F.append((o + i, o + (i + 1) % n, o + n + (i + 1) % n, o + n + i))
+            M.extend([mi] * (n + 2))
+        for (y, z) in spots:
+            x0 = xl + 0.021
+            add_box(x0, x0 + 0.010, y - 0.05, y + 0.05, z - 0.07, z + 0.07, 0)                       # the card 0.10 x 0.14 x 0.01
+            add_disc(x0 + 0.010, x0 + 0.016, y, z + 0.032, 0.022, 1)                                  # the watch
+            add_box(x0 + 0.010, x0 + 0.0125, y - 0.002, y + 0.002, z - 0.02, z + 0.012, 1)            # its chain, hanging
+            add_box(x0 + 0.010, x0 + 0.0125, y - 0.016, y + 0.016, z - 0.062, z - 0.044, 2)           # the ticket
+        me = bpy.data.meshes.new("watch_chain_cards")
+        me.from_pydata(V, [], F)
+        me.validate()
+        for m in (card_m, gold, tk):
+            me.materials.append(m)
+        for p_, mi in zip(me.polygons, M):
+            p_.material_index = mi
+        ob = bpy.data.objects.new("watch_chain_cards", me)
+        self.sc.collection.objects.link(ob)
+        self.fixtures.append({"fixture": "R-left-board", "name": "watch_chain_cards(%d)" % len(spots), "ext": [xl, xl + 0.032, 0.3, 4.2, 0.45, 2.15], "n": len(spots), "boxes_yz": [[round(y - 0.05, 3), round(y + 0.05, 3), round(z - 0.07, 3), round(z + 0.07, 3)] for (y, z) in spots]})
+        return ob
+
     def side_walls(self):
         rnd = self.rnd
         peg = self.image_mat("pegboard", os.path.join(self.tex, "pegboard.png"), tile_m=0.6, rough=0.8)
@@ -695,24 +738,45 @@ class Room:
                 self.box("left_peg_%d_%d" % (k, j), xl + 0.012, xl + 0.02, ya + 0.004, yb - 0.004, za + 0.004, zb - 0.004, peg, fixture="R-left-board")
         for k, ya in enumerate((0.3, 2.9)):
             self.box("left_batten_%d" % k, xl, xl + 0.012, ya, ya + 0.04, 0.45, 2.15, batt, fixture="R-left-board")
-        # clocks and framed pictures hung flat (turn +90 deg: the front toward +x), the licence card and the unredeemed card
-        hung = []
-        for (asset, y, z, size) in (("wall_clock", 0.95, 1.75, 0.30), ("wall_clock", 2.2, 1.55, 0.30)):
-            s = size / max(self.dims(asset))
-            ext = self.place(asset, (xl + 0.022, y, z), rot=(0, 0, math.pi / 2), scale=s, fixture="R-left-board", anchor=("min", "c", "c"))
-            hung.append(ext)
-        for (asset, y, z) in (("hanging_picture_frame_02", 1.45, 0.95), ("hanging_picture_frame_02", 3.5, 0.95)):
-            s = 0.6 / self.dims(asset).x
-            ext = self.place(asset, (xl + 0.022, y, z), rot=(0, 0, math.pi / 2), scale=s, fixture="R-left-board", anchor=("min", "c", "c"))
-            hung.append(ext)
-        self.flat_card("notice_licence", "notice_licence", xl + 0.03, 3.0, 3.8, 1.5, 1.9, wall="left")
-        self.flat_card("notice_unredeemed", "notice_unredeemed", xl + 0.03, 2.55, 3.15, 0.55, 0.75, wall="left")
-        self.fixtures.append({"fixture": "R-left-notices", "name": "notices", "ext": [xl, xl + 0.035, 2.55, 3.8, 0.55, 1.9]})
-        # 90 pawn tickets pinned on the pegboard (25 x 12 mm each: one mesh, UVs into the ticket atlas)
-        keep_out = [(0.65, 1.25, 1.55, 1.95), (1.9, 2.5, 1.35, 1.75), (1.15, 1.75, 0.65, 1.25), (3.2, 3.8, 0.65, 1.25), (3.0, 3.8, 1.5, 1.9), (2.55, 3.15, 0.55, 0.75)]
+        # 13 Oct (close review, narrow 2): the board covered with goods at real size (scale 1.0), at most 0.08 off the wall: 5 framed pictures, 2 mirrors, 6 clocks, 2 ukuleles, the two
+        # notices and 40 watch-and-chain cards. Turn +90 degrees: the front toward +x. Positions (y, z centres, m) are laid out in rows: the frames along the low band, the clocks between the
+        # frames and the mirrors, the mirrors, a frame, the ukuleles and the licence card in the upper band, the cards in the gaps
+        def hang(asset, y, z, label):
+            ext = self.place(asset, (xl + 0.022, y, z), rot=(0, 0, math.pi / 2), scale=1.0, fixture="R-left-board", anchor=("min", "c", "c"))
+            return ext
+        for y in (0.68, 1.54, 2.40, 3.26):
+            hang("hanging_picture_frame_02", y, 0.78, "frame")
+        hang("hanging_picture_frame_02", 1.545, 1.78, "frame")
+        for y in (0.50, 1.14, 1.78, 2.42, 3.06, 3.70):
+            hang("wall_clock", y, 1.24, "clock")
+        hang("ornate_mirror_01", 0.543, 1.775, "mirror")
+        hang("ornate_mirror_01", 2.26, 1.775, "mirror")
+        hang("Ukulele_01", 0.95, 1.75, "ukulele")
+        hang("Ukulele_01", 2.66, 1.75, "ukulele")
+        self.flat_card("notice_licence", "notice_licence", xl + 0.03, 3.04, 3.80, 1.5, 1.9, wall="left")
+        self.flat_card("notice_unredeemed", "notice_unredeemed", xl + 0.03, 3.70, 4.18, 0.55, 0.71, wall="left")
+        self.fixtures.append({"fixture": "R-left-notices", "name": "notices", "ext": [xl, xl + 0.035, 3.04, 3.80, 0.55, 1.9]})
+        self.fixtures.append({"fixture": "R-left-board", "name": "notice_boxes", "ext": [xl, xl + 0.035, 3.04, 3.80, 1.5, 1.9], "box_yz": [3.04, 3.80, 1.5, 1.9]})
+        self.fixtures.append({"fixture": "R-left-board", "name": "notice_boxes", "ext": [xl, xl + 0.035, 3.70, 4.18, 0.55, 0.71], "box_yz": [3.70, 4.18, 0.55, 0.71]})
+        # the 40 watch-and-chain cards: 20 in the five gaps between the clocks (2 x 2 each), 12 at the far end (3 x 4), 8 between the second ukulele and the licence card (2 x 4)
+        spots = []
+        for gy in (0.82, 1.46, 2.10, 2.74, 3.38):
+            for cc in (-0.055, 0.055):
+                for zz in (1.15, 1.31):
+                    spots.append((gy + cc, zz))
+        for cc in (3.89, 4.01, 4.13):
+            for zz in (1.59, 1.75, 1.91, 2.07):
+                spots.append((cc, zz))
+        for cc in (2.84, 2.96):
+            for zz in (1.59, 1.75, 1.91, 2.07):
+                spots.append((cc, zz))
+        self.watch_cards(xl, spots)
+        # 90 pawn tickets pinned on the pegboard (25 x 12 mm each: one mesh, UVs into the ticket atlas), where nothing hangs
+        keep_out = [(y - 0.40, y + 0.40, 0.45, 1.05) for y in (0.68, 1.54, 2.40, 3.26)] + [(0.30, 0.80, 1.38, 2.16), (1.1, 1.95, 1.5, 2.06), (2.02, 2.80, 1.38, 2.16), (2.8, 3.84, 1.45, 2.16), (3.84, 4.2, 1.45, 2.16)] + \
+                   [(y - 0.18, y + 0.18, 1.06, 1.42) for y in (0.50, 1.14, 1.78, 2.42, 3.06, 3.70)] + [(3.64, 4.22, 0.5, 0.75)]
         pts = []
         tries = 0
-        while len(pts) < 90 and tries < 5000:
+        while len(pts) < 90 and tries < 20000:
             tries += 1
             y, z = rnd.uniform(0.4, 4.1), rnd.uniform(0.5, 2.1)
             if any(a - 0.02 <= y <= b + 0.02 and c - 0.02 <= z <= d + 0.02 for (a, b, c, d) in keep_out):
@@ -749,11 +813,12 @@ class Room:
                 self.box("right_peg_%d_%d" % (k, j), xr - 0.02, xr - 0.012, ya + 0.004, yb - 0.004, za + 0.004, zb - 0.004, peg, fixture="R-right-board")
         for k, ya in enumerate((1.3, 3.2)):
             self.box("right_batten_%d" % k, xr - 0.012, xr, ya, ya + 0.04, 0.45, 2.15, batt, fixture="R-right-board")
-        # tools: each turned so its thinnest side is against the wall, scaled so the board and the tool together stand no more than 0.08 off the wall
+        # tools at their real size (13 Oct: the saws were scaled to 0.6 m and the plane to 0.71), each turned so its thinnest side is against the wall, scaled down only so that the board
+        # and the tool together stand at most 0.08 off the wall. The counts are doubled (close review, narrow 2) and the positions laid out in rows
         t_front = xr - 0.02          # the pegboard's face
-        layout = [("pipe_wrench", 1.55, 1.75), ("cross_pein_hammer", 1.95, 1.8), ("cross_pein_hammer", 2.3, 1.8), ("handsaw_wood", 2.9, 1.65), ("handsaw_wood", 3.4, 1.65),
-                  ("pliers", 1.5, 1.1), ("pliers", 1.75, 1.1), ("pliers", 2.0, 1.1), ("adjustable_wrench", 2.35, 1.1), ("adjustable_wrench", 2.6, 1.1),
-                  ("hand_plane_no4", 3.2, 1.05), ("combination_wrench", 3.8, 1.5), ("combination_wrench", 3.95, 1.5), ("combination_wrench", 4.1, 1.5)]
+        layout = ([("handsaw_wood", y, 2.00) for y in (1.70, 2.40, 3.10, 3.80)] + [("cross_pein_hammer", y, 1.62) for y in (1.50, 1.75, 2.00, 2.25)] + [("pipe_wrench", y, 1.62) for y in (3.00, 3.25)] +
+                  [("hand_plane_no4", 3.70, 1.65)] + [("pliers", y, 1.15) for y in (1.50, 1.70, 1.90, 2.10, 2.30, 2.50)] + [("adjustable_wrench", y, 1.15) for y in (2.80, 3.05, 3.30, 3.55)] +
+                  [("combination_wrench", y, z) for z in (0.62, 0.74, 0.86) for y in (2.2, 3.6)])
         want = {}
         for g in self.R["room"]["goods"]:
             if g["on"] == "R-right-board":
@@ -764,16 +829,12 @@ class Room:
                 continue
             used[asset] = used.get(asset, 0) + 1
             d0 = self.dims(asset)
-            # rotation: put the thinnest axis along x (the wall normal), the longest along z where it is an upright tool, along y for the saw and the plane
             order = sorted(range(3), key=lambda i: (d0.x, d0.y, d0.z)[i])
             thin = order[0]
-            rots = {0: (0, 0, math.radians(-90)) if False else (0, math.radians(0), 0), 1: (0, 0, math.radians(-90)), 2: (0, math.radians(90), 0)}
             rot = {0: (0, 0, 0), 1: (0, 0, math.radians(-90)), 2: (0, math.radians(-90), 0)}[thin]
             d1 = self.dims(asset, rot)
             s = min(1.0, (0.08 - 0.02 - 0.004) / d1.x)
-            if asset in ("handsaw_wood", "hand_plane_no4"):
-                s = min(s, 0.6 / max(d1.y, d1.z))
-            ext = self.place(asset, (t_front, y, z), rot=rot, scale=s, fixture="R-right-board", anchor=("max", "c", "c"))
+            self.place(asset, (t_front, y, z), rot=rot, scale=s, fixture="R-right-board", anchor=("max", "c", "c"))
         # near end: two ukuleles hung by their heads and the ornate mirror, flat to the wall (0.07)
         for k, y in enumerate((0.80, 1.10)):
             s = 0.62 / max(self.dims("Ukulele_01"))
@@ -805,7 +866,7 @@ class Room:
         # the three T12 battens, cool white 4000 K: each a 1.5 x 0.09 area light under its diffuser
         self.L_tube = []
         for k, t in enumerate(self.R["room"]["lights"]["tubes"]):
-            self.L_tube.append(area("tube_light_%d" % k, (0.0, t["y"], H - 0.05), (0.0, 0.0, 0.0), 1.5, 0.09, (1.0, 0.89, 0.76)))
+            self.L_tube.append(area("tube_light_%d" % k, (0.0, t["y"], H - 0.03), (0.0, 0.0, 0.0), 1.5, 0.09, (1.0, 0.89, 0.76)))
         # sodium wash through the front (linear 1.0, 0.25, 0.0: the game's lantern_linear_rgb), and the back-room light (2700 K) in the doorway's room
         self.L_sod = area("sodium", (0.0, -0.04, H * 0.9), (math.pi / 2 - 0.3, 0.0, 0.0), W, 0.5, (1.0, 0.25, 0.0))
         self.L_back = area("backroom_light", (1.9, D + 1.2, H - 0.1), (0.0, 0.0, 0.0), 0.9, 0.3, (1.0, 0.71, 0.45))
@@ -943,15 +1004,24 @@ def render_states(r, work, P, out_dir, samples=128, res=PIX, states=STATES, log=
     os.makedirs(out_dir, exist_ok=True)
     times = {}
     record = {"shop": "pawnbroker", "w": W, "h": H, "d": D, "camera_d": CAM_D, "pixels": list(res), "states": {}, "made_by": "production/cloud-week/kit/shop-windows/build_ritas.py (sw_room.py)", "samples": samples, "highlight_rolloff": ROLLOFF}
+    raw_dir = os.path.join(out_dir, "raw")
+    os.makedirs(raw_dir, exist_ok=True)
+    record["pre_shoulder_burnt_share"] = {}
     for s in states:
         r.set_state(s, P)
         path = os.path.join(out_dir, "pawnbroker_%s.png" % s)
         t0 = time.time()
         r.render(path, samples, res)
+        # the highlight shoulder is a Judgement (13 Oct, close review narrow 10): PIC-05 (at most 1 per cent of the pixels at 250 or above) is measured on the render BEFORE it, and the
+        # raw render is kept beside the picture (rooms/raw/); the shoulder only keeps what is white from clipping flat in the game's picture
+        raw_path = os.path.join(raw_dir, "pawnbroker_%s_raw.png" % s)
+        shutil.copyfile(path, raw_path)
+        raw = np.asarray(Image.open(raw_path).convert("RGB"))
+        record["pre_shoulder_burnt_share"][s] = round(float((raw.max(axis=2) >= 250).mean()), 5)
         rolloff(path)
         times[s] = round(time.time() - t0, 1)
         record["states"][s] = os.path.basename(path)
-        log("render %s: %.0f s, mean luma %.1f" % (s, times[s], luma_stats(path)))
+        log("render %s: %.0f s, mean luma %.1f, burnt share before the shoulder %.4f" % (s, times[s], luma_stats(path), record["pre_shoulder_burnt_share"][s]))
     for s in STATES:
         record["states"].setdefault(s, "pawnbroker_%s.png" % s)
     json.dump(record, open(os.path.join(out_dir, "pawnbroker.json"), "w"), indent=1)
