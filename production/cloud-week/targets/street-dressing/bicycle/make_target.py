@@ -23,6 +23,19 @@ HT2 = (HT1[0] + 150.0 * math.cos(HEAD), HT1[1] - 150.0 * math.sin(HEAD))
 RAKE = 45.0
 FX = HT2[0] + (HT2[1] - Z_AXLE) / math.tan(HEAD) + RAKE      # the front axle's x = the wheelbase
 STEM_TOP = (HT1[0] - 170.0 * math.cos(HEAD), HT1[1] + 170.0 * math.sin(HEAD))
+# the parts the review of 13 October found missing (each a Judgement unless said): the drive, the guard, the rims, the brakes, the carrier
+PITCH = 12.7                         # a 1/2 inch roller chain
+N_RING, N_SPR = 44, 18               # teeth: the 44 tooth chainring (pitch circle 180) and the 18 tooth rear sprocket (73 across)
+R_RING = PITCH / (2.0 * math.sin(math.pi / N_RING))     # 88.9
+R_SPR = PITCH / (2.0 * math.sin(math.pi / N_SPR))       # 36.6
+CH_Y, CH_W, CH_T = 55.0, 8.0, 6.0    # the chain line (the chainring's plane), the chain's width and thickness
+STAY_Y = 40.0                        # the chain and seat stays stand 40 off the centre line (their outer face 48), so the chain, sprocket and ring run outboard of them
+RIM_W, RIM_D = 25.0, 10.0            # rim width and depth (radial), its own ring inside the tyre
+GUARD_DEPTH, GUARD_T, GUARD_GAP = 60.0, 1.0, 13.0       # chainguard: 60 deep, 1 thick, 13 mm over the chain's pitch line
+LEVER_L, ROD_D = 120.0, 8.0          # bar levers 120 long, rods 8 across
+CARRIER_X = (-101.0, 239.0)          # the carrier's platform: 340 long ...
+CARRIER_W, CARRIER_Z = 130.0, 780.0  # ... 130 wide, at 780 above the ground
+LEAN = 12.0
 
 
 def tube(id, a, b, r, mat, y=0.0, **kw):
@@ -38,6 +51,14 @@ def wheel(tag, cx):
         c = [cx + rc * math.cos(a), 0.0, Z_AXLE + rc * math.sin(a)]
         P.append({"id": "%s_tyre%d" % (tag, k + 1), "type": "box", "c": [round(v, 2) for v in c], "s": [round(ch, 1), TS, TS], "rot": [0, -(math.degrees(a) + 90.0), 0], "material": "tyre",
                   "note": "tyre and rim segment (16 round the wheel), section 38 x 38"})
+    # the rim: its own ring of 16 segments inside the tyre, 25 wide and 10 deep (radial), its outer face at the tyre's inner face (292)
+    rr = R - TS - RIM_D / 2.0
+    rch = 2 * rr * math.tan(math.pi / NSEG)
+    for k in range(NSEG):
+        a = 2 * math.pi * k / NSEG
+        c = [cx + rr * math.cos(a), 0.0, Z_AXLE + rr * math.sin(a)]
+        P.append({"id": "%s_rim%d" % (tag, k + 1), "type": "box", "c": [round(v, 2) for v in c], "s": [round(rch, 1), RIM_W, RIM_D], "rot": [0, -(math.degrees(a) + 90.0), 0], "material": "steel",
+                  "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement"})
     P.append(CY("%s_hub" % tag, (cx, -50.0, Z_AXLE), (cx, 50.0, Z_AXLE), 22.0, "steel", note="hub 44 across, 100 long"))
     for k in range(8):
         a = 2 * math.pi * (k + 0.5) / 8
@@ -66,11 +87,12 @@ def bike():
     P.append(tube("top_tube", SEAT_TOP, HT1, 14.0, "paint_black", note="top tube 28, 570 long, level"))
     P.append(tube("down_tube", BB, HT2, 15.0, "paint_black", note="down tube 30"))
     P.append(tube("head_tube", HT2, HT1, 18.0, "paint_black", note="head tube 36 across, 150 long, 68 degrees"))
-    for s, y in (("l", -55.0), ("r", 55.0)):
-        P.append(tube("chain_stay_%s" % s, BB, (0.0, Z_AXLE), 8.0, "paint_black", y=y, note="chain stay 16, 450 long"))
+    for s, y in (("l", -STAY_Y), ("r", STAY_Y)):
+        P.append(tube("chain_stay_%s" % s, BB, (0.0, Z_AXLE), 8.0, "paint_black", y=y, note="chain stay 16, 450 long, 40 off the centre line (80 apart): the chain runs outboard of the right one"))
         P.append(tube("seat_stay_%s" % s, SEAT_TOP, (0.0, Z_AXLE), 8.0, "paint_black", y=y, note="seat stay 16"))
+    for s, y in (("l", -55.0), ("r", 55.0)):
         P.append(tube("fork_%s" % s, HT2, (FX, Z_AXLE), 11.0, "paint_black", y=y * 1.05, note="fork blade 22, rake 45 at the foot"))
-    P.append(B("seat_bridge", SEAT_TOP[0] - 8, SEAT_TOP[0] + 8, -60.0, 60.0, SEAT_TOP[1] - 10, SEAT_TOP[1] + 10, "paint_black", note="seat-stay bridge"))
+    P.append(B("seat_bridge", SEAT_TOP[0] - 8, SEAT_TOP[0] + 8, -STAY_Y - 5.0, STAY_Y + 5.0, SEAT_TOP[1] - 10, SEAT_TOP[1] + 10, "paint_black", note="seat-stay bridge"))
     P.append(B("fork_crown", HT2[0] - 12, HT2[0] + 12, -62.0, 62.0, HT2[1] - 30, HT2[1] - 6, "paint_black", note="fork crown"))
     P.append(CY("seat_post", (SEAT_TOP[0], 0.0, SEAT_TOP[1]), (SEAT_TOP[0] - 45.0, 0.0, 985.0), 11.0, "steel", note="seat post 22"))
     P.append(B("saddle", SEAT_TOP[0] - 45.0 - 150.0, SEAT_TOP[0] - 45.0 + 130.0, -90.0, 90.0, 985.0, 1035.0, "saddle_black", edge="nose r 30, edges r 8", note="saddle 280 x 180 x 50, leather-look, springs not modelled"))
@@ -86,6 +108,98 @@ def bike():
     P.append(B("crank_l", BB[0] - 170.0, BB[0] + 10.0, -70.0, -58.0, BB[1] - 10.0, BB[1] + 10.0, "steel", note="left crank arm 170 long"))
     P.append(B("pedal_r", BB[0] + 100.0, BB[0] + 200.0, 70.0, 175.0, BB[1] - 12.0, BB[1] + 12.0, "steel", note="pedal 100 x 105 x 24, rubber blocks not modelled"))
     P.append(B("pedal_l", BB[0] - 200.0, BB[0] - 100.0, -175.0, -70.0, BB[1] - 12.0, BB[1] + 12.0, "steel"))
+    return P
+
+
+def _unit(v):
+    n = math.hypot(*v)
+    return (v[0] / n, v[1] / n)
+
+
+def _seg(id, a, b, y, w, t, mat, off=0.0, **kw):
+    """A strip in the x-z plane from a to b (width w along y, thickness t across the strip), its centre line shifted by off along the strip's left normal."""
+    dx, dz = b[0] - a[0], b[1] - a[1]
+    L_ = math.hypot(dx, dz)
+    ux, uz = dx / L_, dz / L_
+    nx, nz = -uz, ux
+    cx_, cz_ = (a[0] + b[0]) / 2.0 + off * nx, (a[1] + b[1]) / 2.0 + off * nz
+    phi = math.degrees(math.atan2(dz, dx))
+    d = {"id": id, "type": "box", "c": [round(cx_, 2), y, round(cz_, 2)], "s": [round(L_, 2), w, t], "rot": [0, -phi, 0], "material": mat}
+    d.update(kw)
+    return d
+
+
+def drive():
+    """The chain (geometry on the pitch circles), the rear sprocket, the chainguard and its fixings."""
+    P = []
+    c1, c2 = BB, (0.0, Z_AXLE)
+    d = math.hypot(c1[0] - c2[0], c1[1] - c2[1])
+    u = ((c1[0] - c2[0]) / d, (c1[1] - c2[1]) / d)
+    perp = (-u[1], u[0])
+    k = -(R_RING - R_SPR) / d
+    cc = math.sqrt(1 - k * k)
+    n_top = (k * u[0] + cc * perp[0], k * u[1] + cc * perp[1])
+    n_bot = (k * u[0] - cc * perp[0], k * u[1] - cc * perp[1])
+    th_u = math.atan2(u[1], u[0])
+    th_top = math.atan2(n_top[1], n_top[0])
+    th_bot = math.atan2(n_bot[1], n_bot[0])
+    P.append(CY("sprocket", (0.0, CH_Y - 7.0, Z_AXLE), (0.0, CH_Y + 3.0, Z_AXLE), 36.5, "steel", note="rear sprocket: 18 teeth, 73 across (pitch circle %.1f), 10 thick, on the hub's drive end" % (2 * R_SPR)))
+    runs = {}
+    for nm, n in (("top", n_top), ("bot", n_bot)):
+        a = (c2[0] + R_SPR * n[0], c2[1] + R_SPR * n[1])
+        b = (c1[0] + R_RING * n[0], c1[1] + R_RING * n[1])
+        runs[nm] = (a, b)
+        P.append(_seg("chain_%s" % nm, a, b, CH_Y, CH_W, CH_T, "chain_dark", note="chain run (%s): %.1f long, %d links of 12.7, 8 wide, 6 thick, on the pitch circles' common tangent" % (nm, math.dist(a, b), round(math.dist(a, b) / PITCH))))
+    # wraps: the ring's far side (193 degrees) and the sprocket's far side (167 degrees), as short strips on the pitch circles
+    def wrap(tag, cen, rad, a0, a1, n):
+        out = []
+        for j in range(n):
+            t0 = a0 + (a1 - a0) * j / n
+            t1 = a0 + (a1 - a0) * (j + 1) / n
+            p0 = (cen[0] + rad * math.cos(t0), cen[1] + rad * math.sin(t0))
+            p1 = (cen[0] + rad * math.cos(t1), cen[1] + rad * math.sin(t1))
+            tm = (t0 + t1) / 2.0
+            # the strip along the chord, its thickness across it: the chord's outward normal is the left normal when the arc runs clockwise (a1 < a0)
+            out.append(_seg("chain_%s%02d" % (tag, j + 1), p0, p1, CH_Y, CH_W, CH_T, "chain_dark", off=0.0,
+                            note="chain on the %s: %d links of 12.7 in this strip" % ("chainring" if tag == "c" else "sprocket", round(rad * abs(a1 - a0) / n / PITCH))))
+        return out
+    P += wrap("c", c1, R_RING, th_bot, th_top, 14) if False else []
+    # ring: from the bottom tangent round through the far side (th_u) to the top tangent
+    ring_a0 = th_bot
+    ring_a1 = th_top
+    if ring_a1 < ring_a0:
+        ring_a1 += 2 * math.pi
+    # the far side of the ring is the side of u: go from th_bot up through th_u to th_top
+    span = th_top - th_bot
+    if span < 0:
+        span += 2 * math.pi
+    P += wrap("c", c1, R_RING, th_bot, th_bot + 2 * math.pi - (2 * math.pi - span) if False else th_bot + (2 * math.pi - ((th_bot - th_top) % (2 * math.pi))), 14)
+    # sprocket: from the top tangent through the far side (th_u + 180) to the bottom tangent
+    s0 = th_top
+    s1 = th_bot + 2 * math.pi if th_bot < th_top else th_bot
+    P += wrap("s", c2, R_SPR, s0, s1, 12)
+    # the chainguard: sheet steel over the top run, 60 deep, 1 thick, from 40 mm behind the chainring's front to the sprocket's centre, 13 over the pitch line
+    ta, tb = runs["top"]
+    ux, uz = _unit((tb[0] - ta[0], tb[1] - ta[1]))
+    x_front = BB[0] + 90.0 - 40.0
+    x_back = 0.0
+    def on_run(x):
+        t = (x - ta[0]) / (tb[0] - ta[0])
+        return (x, ta[1] + (tb[1] - ta[1]) * t)
+    ga, gb = on_run(x_back), on_run(x_front)
+    P.append(_seg("chainguard", ga, gb, CH_Y, GUARD_DEPTH, GUARD_T, "paint_black", off=GUARD_GAP, edge="edges rolled 3 mm", note="chainguard: sheet steel 60 deep, 1 thick, from x %.0f (40 mm behind the chainring's front) to the sprocket's centre, %d over the chain's pitch line" % (x_front, GUARD_GAP)))
+    # its fixings: a clip down to the right chain stay at the rear, a strap rod to the seat tube at the front
+    gz_rear = ga[1] + GUARD_GAP * math.cos(math.atan2(uz, ux)) - GUARD_T / 2.0
+    stay_top = Z_AXLE - 30.0 * (14.0 / 449.0) + 8.0
+    P.append(B("chainguard_clip", 8.0, 22.0, STAY_Y - 6.0, STAY_Y + 6.0, stay_top - 1.0, gz_rear + 1.0, "paint_black", note="clip: 14 x 12, from the right chain stay up to the guard's rear end"))
+    sx = BB[0] - 20.0 / math.tan(SEAT)
+    P.append(CY("chainguard_strap", (x_front - 14.0, CH_Y - 22.0, on_run(x_front)[1] + GUARD_GAP - 4.0), (BB[0] - (360.0 - BB[1]) * 0.0 - (BB[0] - SEAT_TOP[0]) * (390.0 - BB[1]) / (SEAT_TOP[1] - BB[1]) + 10.0, 9.0, 390.0), 3.0, "paint_black", note="strap rod 6 across from the guard's front to the seat tube"))
+    return P
+
+
+def extras():
+    P = []
+    P += drive()
     return P
 
 
