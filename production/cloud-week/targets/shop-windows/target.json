@@ -2683,7 +2683,7 @@
    },
    "display": {
     "keeps": "production/assets/shop-displays/pawnbroker-display.glb as built (23 Poly Haven models on a stepped velvet bed, a ticket on each), 3.35 m long, 0.55 deep",
-    "changes": "drop digital_wrist_watch (a maker's mark, not in the glb's list today: confirm) and any model whose map shows a maker's name after the 1k inspection; add the night grille; pieces are not repeated more than twice (the third review's copy-paste note)",
+    "changes": "drop digital_wrist_watch (a maker's mark, not in the glb's list today: confirm) and any model whose map shows a maker's name after the 1k inspection; add the night grille; pieces are not repeated more than twice (the third review's copy-paste note) [13 Oct, from the try 1 reviews] The table is re-laid: no pedestals; the old w 0.12 zones stand on the step (v 0.26 to 0.52); the bed's front strip holds the approved ring trays, watch pads and chains with the small pieces among them; the middle tier takes pieces at most 0.32 tall; the top tier keeps at most three vases (brass_vase_02 and brass_vase_03 and ceramic_vase_03 leave the display: they stay in the room's stock); the boombox and the 8 mm projector stand on the top tier; every zone is the slot the piece occupies.",
     "u_range": [
      0.0,
      3.35
@@ -2692,371 +2692,617 @@
     "height_max_w": 1.55,
     "items": [
      {
-      "model": "pocket_watch",
-      "n": 2,
+      "model": "script:ring_tray",
+      "n": 4,
+      "tier": "bed",
       "zone": [
-       0.2,
-       0.9,
-       0.05,
-       0.35,
+       0.14,
+       3.2,
+       0.04,
+       0.22,
        0.0,
-       0.12
+       0.03
       ],
-      "size_m": 0.06,
-      "note": "mark blanked as `inventory.polyhaven[pocket_watch].marks` says"
+      "size_m": null,
+      "slots": [
+       [
+        0.14,
+        0.38
+       ],
+       [
+        1.01,
+        1.25
+       ],
+       [
+        1.65,
+        1.89
+       ],
+       [
+        2.51,
+        2.75
+       ]
+      ],
+      "note": "the approved display's ring trays: 0.24 x 0.16, velvet, 6 x 4 gold and silver rings each (24), a ticket in front",
+      "why": "a watch three centimetres across is modelled, not scanned (1 October): the approved display's scripted ring trays, kept as approved (13 Oct, from the try 1 reviews)"
      },
      {
-      "model": "vintage_pocket_watch",
-      "n": 2,
+      "model": "script:watch_pad",
+      "n": 4,
+      "tier": "bed",
       "zone": [
-       0.9,
-       1.5,
-       0.05,
-       0.35,
+       0.14,
+       3.2,
+       0.04,
+       0.22,
        0.0,
-       0.12
+       0.03
       ],
-      "size_m": 0.06,
-      "note": "mark blanked as `inventory.polyhaven[vintage_pocket_watch].marks` says"
+      "size_m": null,
+      "slots": [
+       [
+        0.4,
+        0.66
+       ],
+       [
+        1.27,
+        1.53
+       ],
+       [
+        2.09,
+        2.35
+       ],
+       [
+        2.77,
+        3.03
+       ]
+      ],
+      "note": "the approved display's watch pads: 0.26 x 0.16, velvet, 2 x 4 wrist and pocket watches modelled by script (the Poly Haven pocket watches below lie on two of the pads, two each, and take two of the pad's slots)",
+      "why": "a watch three centimetres across is modelled, not scanned (1 October)"
      },
      {
-      "model": "Camera_01",
+      "model": "script:chain",
       "n": 2,
+      "tier": "bed",
       "zone": [
-       0.1,
-       0.9,
-       0.15,
-       0.5,
-       0.12,
-       0.4
+       0.14,
+       3.2,
+       0.04,
+       0.22,
+       0.0,
+       0.03
       ],
       "size_m": null,
-      "note": "mark blanked as `inventory.polyhaven[Camera_01].marks` says"
-     },
-     {
-      "model": "vintage_video_camera",
-      "n": 1,
-      "zone": [
-       1.0,
-       1.5,
-       0.15,
-       0.5,
-       0.12,
-       0.4
+      "slots": [
+       [
+        0.68,
+        0.84
+       ],
+       [
+        1.91,
+        2.07
+       ]
       ],
-      "size_m": null,
-      "note": "mark blanked as `inventory.polyhaven[vintage_video_camera].marks` says"
-     },
-     {
-      "model": "binoculars",
-      "n": 1,
-      "zone": [
-       1.6,
-       2.1,
-       0.15,
-       0.5,
-       0.12,
-       0.4
-      ],
-      "size_m": null,
-      "note": ""
+      "note": "the approved display's chains: 18 gold links in an arc, 0.14 long, a ticket in front",
+      "why": "a chain of links is modelled, not scanned: the approved display's scripted chains"
      },
      {
       "model": "round_spectacles",
       "n": 1,
+      "tier": "bed",
       "zone": [
-       2.2,
-       2.6,
-       0.05,
-       0.3,
-       0.12,
-       0.3
-      ],
-      "size_m": null,
-      "note": ""
-     },
-     {
-      "model": "mantel_clock_01",
-      "n": 1,
-      "zone": [
-       0.2,
-       0.9,
-       0.2,
-       0.5,
-       0.4,
-       0.75
-      ],
-      "size_m": null,
-      "note": ""
-     },
-     {
-      "model": "alarm_clock_01",
-      "n": 2,
-      "zone": [
-       1.0,
-       1.9,
-       0.2,
-       0.5,
-       0.4,
-       0.75
-      ],
-      "size_m": null,
-      "note": ""
-     },
-     {
-      "model": "brass_vase_01",
-      "n": 1,
-      "zone": [
-       2.4,
-       2.8,
-       0.2,
-       0.5,
-       0.4,
-       1.1
-      ],
-      "size_m": null,
-      "note": ""
-     },
-     {
-      "model": "brass_vase_02",
-      "n": 1,
-      "zone": [
-       2.9,
-       3.2,
-       0.2,
-       0.5,
-       0.4,
-       0.95
-      ],
-      "size_m": null,
-      "note": ""
-     },
-     {
-      "model": "brass_vase_03",
-      "n": 1,
-      "zone": [
-       0.9,
-       1.2,
-       0.3,
-       0.5,
-       0.75,
-       0.95
-      ],
-      "size_m": null,
-      "note": ""
-     },
-     {
-      "model": "ceramic_vase_01",
-      "n": 1,
-      "zone": [
-       1.3,
-       1.7,
-       0.25,
-       0.5,
-       0.75,
-       1.15
-      ],
-      "size_m": null,
-      "note": "mark blanked as `inventory.polyhaven[ceramic_vase_01].marks` says"
-     },
-     {
-      "model": "ceramic_vase_03",
-      "n": 1,
-      "zone": [
-       1.8,
-       2.0,
-       0.25,
-       0.45,
-       0.75,
-       1.15
-      ],
-      "size_m": null,
-      "note": ""
-     },
-     {
-      "model": "antique_ceramic_vase_01",
-      "n": 1,
-      "zone": [
-       2.1,
-       2.7,
-       0.2,
-       0.5,
-       0.75,
-       1.2
-      ],
-      "size_m": null,
-      "note": ""
-     },
-     {
-      "model": "standing_picture_frame_01",
-      "n": 1,
-      "zone": [
-       0.2,
-       0.5,
-       0.25,
-       0.4,
-       0.75,
-       1.0
-      ],
-      "size_m": null,
-      "note": "mark blanked as `inventory.polyhaven[standing_picture_frame_01].marks` says"
-     },
-     {
-      "model": "standing_picture_frame_02",
-      "n": 1,
-      "zone": [
-       2.8,
-       3.1,
-       0.25,
-       0.4,
-       0.75,
-       1.0
-      ],
-      "size_m": null,
-      "note": "mark blanked as `inventory.polyhaven[standing_picture_frame_02].marks` says"
-     },
-     {
-      "model": "portable_cassette_player",
-      "n": 2,
-      "zone": [
-       1.7,
-       2.3,
-       0.1,
-       0.4,
-       0.0,
-       0.2
-      ],
-      "size_m": null,
-      "note": "maker's name painted out"
-     },
-     {
-      "model": "seadogs_compass",
-      "n": 1,
-      "zone": [
-       0.4,
-       0.7,
-       0.05,
-       0.25,
-       0.12,
-       0.22
-      ],
-      "size_m": null,
-      "note": ""
-     },
-     {
-      "model": "vintage_flashlight",
-      "n": 1,
-      "zone": [
-       2.0,
-       2.3,
-       0.05,
-       0.35,
-       0.12,
-       0.26
-      ],
-      "size_m": null,
-      "note": ""
-     },
-     {
-      "model": "cigarette_case",
-      "n": 1,
-      "zone": [
-       1.2,
-       1.7,
-       0.05,
-       0.25,
+       0.86,
+       0.99,
+       0.04,
+       0.22,
        0.0,
        0.03
       ],
-      "size_m": null,
-      "note": "tobacco is allowed; a plain metal case"
+      "size_m": 0.13,
+      "note": "among the trays, as the approved front-row loop places it (size 0.13)"
      },
      {
       "model": "vintage_lighter",
       "n": 1,
+      "tier": "bed",
       "zone": [
-       1.8,
-       2.0,
-       0.05,
-       0.2,
+       1.55,
+       1.63,
+       0.04,
+       0.22,
        0.0,
-       0.07
+       0.03
       ],
-      "size_m": null,
-      "note": "the stamp under the base blanked"
+      "size_m": 0.08,
+      "note": "lying on its back among the trays (size 0.08, the approved loop's); the stamp under the base blanked"
+     },
+     {
+      "model": "cigarette_case",
+      "n": 1,
+      "tier": "bed",
+      "zone": [
+       2.37,
+       2.49,
+       0.04,
+       0.22,
+       0.0,
+       0.03
+      ],
+      "size_m": 0.12,
+      "note": "among the trays; tobacco is allowed; a plain metal case (size 0.12: the model is 0.32 long, the approved loop sized it 0.08)"
      },
      {
       "model": "magnifying_glass_01",
       "n": 1,
+      "tier": "bed",
       "zone": [
-       0.5,
-       0.8,
-       0.05,
-       0.3,
+       3.05,
+       3.2,
+       0.04,
+       0.22,
        0.0,
        0.03
       ],
-      "size_m": null,
-      "note": ""
+      "size_m": 0.15,
+      "note": "lying among the trays, turned along the window (size 0.15)"
      },
      {
-      "model": "carved_wooden_elephant",
-      "n": 1,
-      "zone": [
-       2.5,
-       2.8,
-       0.05,
-       0.25,
-       0.12,
-       0.22
-      ],
-      "size_m": null,
-      "note": ""
-     },
-     {
-      "model": "horse_statue_01",
-      "n": 1,
+      "model": "pocket_watch",
+      "n": 2,
+      "tier": "bed",
       "zone": [
        0.4,
-       0.8,
-       0.3,
-       0.5,
-       0.75,
-       1.0
+       0.66,
+       0.04,
+       0.2,
+       0.016,
+       0.03
       ],
-      "size_m": null,
-      "note": ""
+      "size_m": 0.06,
+      "note": "lying face up on a watch pad, two to a pad (the pad's own slots), mark blanked as `inventory.polyhaven[pocket_watch].marks` says"
      },
      {
-      "model": "jug_01",
-      "n": 1,
+      "model": "vintage_pocket_watch",
+      "n": 2,
+      "tier": "bed",
       "zone": [
-       3.0,
-       3.3,
-       0.05,
-       0.3,
+       2.09,
+       2.35,
+       0.04,
+       0.2,
+       0.016,
+       0.03
+      ],
+      "size_m": 0.06,
+      "note": "lying face up on a watch pad, two to a pad (the pad's own slots), mark blanked as `inventory.polyhaven[vintage_pocket_watch].marks` says"
+     },
+     {
+      "model": "Camera_01",
+      "n": 1,
+      "tier": "step",
+      "zone": [
+       0.157,
+       0.451,
+       0.26,
+       0.52,
        0.12,
-       0.32
+       0.38
       ],
       "size_m": null,
-      "note": ""
+      "note": "stands ON the step (v 0.26 to 0.52), longest side along the window, no pedestal; mark blanked as `inventory.polyhaven[Camera_01].marks` says"
+     },
+     {
+      "model": "seadogs_compass",
+      "n": 1,
+      "tier": "step",
+      "zone": [
+       0.553,
+       0.727,
+       0.26,
+       0.52,
+       0.12,
+       0.38
+      ],
+      "size_m": null,
+      "note": "stands ON the step (v 0.26 to 0.52), longest side along the window, no pedestal"
+     },
+     {
+      "model": "vintage_video_camera",
+      "n": 1,
+      "tier": "step",
+      "zone": [
+       0.83,
+       0.993,
+       0.26,
+       0.52,
+       0.12,
+       0.38
+      ],
+      "size_m": null,
+      "note": "stands ON the step (v 0.26 to 0.52), longest side along the window, no pedestal; mark blanked as `inventory.polyhaven[vintage_video_camera].marks` says"
      },
      {
       "model": "measuring_tape_01",
       "n": 1,
+      "tier": "step",
       "zone": [
-       1.5,
-       1.7,
-       0.05,
-       0.2,
+       1.095,
+       1.294,
+       0.26,
+       0.52,
        0.12,
-       0.19
+       0.38
       ],
       "size_m": null,
-      "note": "its label blanked"
+      "note": "stands ON the step (v 0.26 to 0.52), longest side along the window, no pedestal; its label blanked"
+     },
+     {
+      "model": "binoculars",
+      "n": 1,
+      "tier": "step",
+      "zone": [
+       1.397,
+       1.715,
+       0.26,
+       0.52,
+       0.12,
+       0.38
+      ],
+      "size_m": null,
+      "note": "stands ON the step (v 0.26 to 0.52), longest side along the window, no pedestal"
+     },
+     {
+      "model": "carved_wooden_elephant",
+      "n": 1,
+      "tier": "step",
+      "zone": [
+       1.817,
+       1.956,
+       0.26,
+       0.52,
+       0.12,
+       0.38
+      ],
+      "size_m": null,
+      "note": "stands ON the step (v 0.26 to 0.52), longest side along the window, no pedestal"
+     },
+     {
+      "model": "Camera_01",
+      "n": 1,
+      "tier": "step",
+      "zone": [
+       2.059,
+       2.352,
+       0.26,
+       0.52,
+       0.12,
+       0.38
+      ],
+      "size_m": null,
+      "note": "stands ON the step (v 0.26 to 0.52), longest side along the window, no pedestal; mark blanked as `inventory.polyhaven[Camera_01].marks` says"
+     },
+     {
+      "model": "vintage_flashlight",
+      "n": 1,
+      "tier": "step",
+      "zone": [
+       2.455,
+       2.785,
+       0.26,
+       0.52,
+       0.12,
+       0.38
+      ],
+      "size_m": null,
+      "note": "stands ON the step (v 0.26 to 0.52), longest side along the window, no pedestal"
+     },
+     {
+      "model": "jug_01",
+      "n": 1,
+      "tier": "step",
+      "zone": [
+       2.887,
+       3.193,
+       0.26,
+       0.52,
+       0.12,
+       0.38
+      ],
+      "size_m": null,
+      "note": "stands ON the step (v 0.26 to 0.52), longest side along the window, no pedestal"
+     },
+     {
+      "model": "alarm_clock_01",
+      "n": 1,
+      "tier": "middle",
+      "zone": [
+       0.19,
+       0.351,
+       0.2,
+       0.51,
+       0.4,
+       0.72
+      ],
+      "size_m": null,
+      "note": "on the w 0.40 tier, at most 0.32 tall"
+     },
+     {
+      "model": "cassette_player",
+      "n": 1,
+      "tier": "middle",
+      "zone": [
+       0.486,
+       0.646,
+       0.2,
+       0.51,
+       0.4,
+       0.72
+      ],
+      "size_m": null,
+      "note": "on the w 0.40 tier, at most 0.32 tall"
+     },
+     {
+      "model": "mantel_clock_01",
+      "n": 1,
+      "tier": "middle",
+      "zone": [
+       0.78,
+       1.153,
+       0.2,
+       0.51,
+       0.4,
+       0.72
+      ],
+      "size_m": null,
+      "note": "on the w 0.40 tier, at most 0.32 tall"
+     },
+     {
+      "model": "vintage_binocular",
+      "n": 1,
+      "tier": "middle",
+      "zone": [
+       1.288,
+       1.512,
+       0.2,
+       0.51,
+       0.4,
+       0.72
+      ],
+      "size_m": null,
+      "note": "on the w 0.40 tier, at most 0.32 tall"
+     },
+     {
+      "model": "portable_cassette_player",
+      "n": 1,
+      "tier": "middle",
+      "zone": [
+       1.647,
+       1.85,
+       0.2,
+       0.51,
+       0.4,
+       0.72
+      ],
+      "size_m": null,
+      "note": "on the w 0.40 tier, at most 0.32 tall"
+     },
+     {
+      "model": "cassette_player",
+      "n": 1,
+      "tier": "middle",
+      "zone": [
+       1.985,
+       2.144,
+       0.2,
+       0.51,
+       0.4,
+       0.72
+      ],
+      "size_m": null,
+      "note": "on the w 0.40 tier, at most 0.32 tall"
+     },
+     {
+      "model": "alarm_clock_01",
+      "n": 1,
+      "tier": "middle",
+      "zone": [
+       2.279,
+       2.441,
+       0.2,
+       0.51,
+       0.4,
+       0.72
+      ],
+      "size_m": null,
+      "note": "on the w 0.40 tier, at most 0.32 tall"
+     },
+     {
+      "model": "standing_picture_frame_02",
+      "n": 1,
+      "tier": "middle",
+      "zone": [
+       2.575,
+       2.822,
+       0.2,
+       0.51,
+       0.4,
+       0.72
+      ],
+      "size_m": null,
+      "note": "on the w 0.40 tier, at most 0.32 tall; mark blanked as `inventory.polyhaven[standing_picture_frame_02].marks` says"
+     },
+     {
+      "model": "portable_cassette_player",
+      "n": 1,
+      "tier": "middle",
+      "zone": [
+       2.957,
+       3.16,
+       0.2,
+       0.51,
+       0.4,
+       0.72
+      ],
+      "size_m": null,
+      "note": "on the w 0.40 tier, at most 0.32 tall"
+     },
+     {
+      "model": "standing_picture_frame_01",
+      "n": 1,
+      "tier": "top",
+      "zone": [
+       0.137,
+       0.368,
+       0.24,
+       0.52,
+       0.75,
+       1.45
+      ],
+      "size_m": null,
+      "note": "on the w 0.75 tier; mark blanked as `inventory.polyhaven[standing_picture_frame_01].marks` says"
+     },
+     {
+      "model": "antique_ceramic_vase_01",
+      "n": 1,
+      "tier": "top",
+      "zone": [
+       0.449,
+       0.734,
+       0.24,
+       0.52,
+       0.75,
+       1.45
+      ],
+      "size_m": null,
+      "note": "on the w 0.75 tier"
+     },
+     {
+      "model": "filmstrip_projector_8mm",
+      "n": 1,
+      "tier": "top",
+      "zone": [
+       0.816,
+       1.449,
+       0.24,
+       0.52,
+       0.75,
+       1.45
+      ],
+      "size_m": null,
+      "note": "on the w 0.75 tier"
+     },
+     {
+      "model": "ceramic_vase_01",
+      "n": 1,
+      "tier": "top",
+      "zone": [
+       1.53,
+       1.764,
+       0.24,
+       0.52,
+       0.75,
+       1.45
+      ],
+      "size_m": null,
+      "note": "on the w 0.75 tier; mark blanked as `inventory.polyhaven[ceramic_vase_01].marks` says"
+     },
+     {
+      "model": "boombox",
+      "n": 1,
+      "tier": "top",
+      "zone": [
+       1.846,
+       2.599,
+       0.24,
+       0.52,
+       0.75,
+       1.45
+      ],
+      "size_m": null,
+      "note": "on the w 0.75 tier"
+     },
+     {
+      "model": "brass_vase_01",
+      "n": 1,
+      "tier": "top",
+      "zone": [
+       2.681,
+       2.939,
+       0.24,
+       0.52,
+       0.75,
+       1.45
+      ],
+      "size_m": null,
+      "note": "on the w 0.75 tier"
+     },
+     {
+      "model": "horse_statue_01",
+      "n": 1,
+      "tier": "top",
+      "zone": [
+       3.02,
+       3.213,
+       0.24,
+       0.52,
+       0.75,
+       1.45
+      ],
+      "size_m": null,
+      "note": "on the w 0.75 tier"
      }
     ],
-    "night": "an external lattice grille closed over the window zone from dusk to dawn: flat bars 20 x 4 mm at 45 degrees, the diamond 120 mm across, rivets at every crossing, a 40 x 40 box top rail at the transom (z 2.50 above the crown, 2400 above the footway) and a bottom channel at z 0.70 above the crown (600 above the footway), the plane 100 mm in front of the glass front (street y 5.145), powder black (37, 35, 34) rough 0.45; the window behind it stays lit. By day the lattice is lifted out and stored inside; the 40 x 40 top rail and the bottom channel stay, powder black, with their fixing plates on the pilaster shafts"
+    "night": "an external lattice grille closed over the window zone from dusk to dawn: flat bars 20 x 4 mm at 45 degrees, the diamond 120 mm across, rivets at every crossing, a 40 x 40 box top rail at the transom (z 2.50 above the crown, 2400 above the footway) and a bottom channel at z 0.70 above the crown (600 above the footway), the plane 100 mm in front of the glass front (street y 5.145), powder black (37, 35, 34) rough 0.45; the window behind it stays lit. By day the lattice is lifted out and stored inside; the 40 x 40 top rail and the bottom channel stay, powder black, with their fixing plates on the pilaster shafts",
+    "structure": {
+     "added": "13 Oct, from the try 1 reviews",
+     "rule": "no pedestals; no piece passes through a tier; every piece stands on a surface; the bed's front strip carries only bed pieces (w 0)",
+     "bed": {
+      "w": 0.0,
+      "v": [
+       0.04,
+       0.22
+      ],
+      "u": [
+       0.14,
+       3.2
+      ],
+      "what": "the front row: 4 ring trays of 24 rings, 4 watch pads of 8 watches, 2 chains, with the spectacles, the lighter, the cigarette case and the magnifier among them; no free run along the window over 0.20 m"
+     },
+     "step": {
+      "w": 0.12,
+      "v": [
+       0.26,
+       0.52
+      ],
+      "what": "every piece of the old w 0.12 zones, turned so its longest side runs along the window; at most 0.265 tall (the middle tier's board is 0.385 above the bed)"
+     },
+     "middle": {
+      "w": 0.4,
+      "v": [
+       0.2,
+       0.51
+      ],
+      "max_height_m": 0.32,
+      "what": "stock at real size (scale 1.0): clocks, cassette players, binoculars, a standing frame"
+     },
+     "top": {
+      "w": 0.75,
+      "v": [
+       0.24,
+       0.52
+      ],
+      "max_height_m": 0.7,
+      "what": "taller pieces and the larger stock: at most three vases (antique_ceramic_vase_01, ceramic_vase_01 and one brass), the boombox, the projector, the horse, a standing frame; up to w 1.45"
+     },
+     "free_run_max_m": 0.2,
+     "return_walls": {
+      "what": "at each end of the window zone a wall from the back of the glass to the card plane (0.61 deep), over the card's full height (street z 0.65 to 3.05), plaster (0.95, 0.86, 0.66) above the dado line, brown dado (0.42, 0.27, 0.17) below it (1.0 m above the room's floor = street z 1.65); part of the display glb, so the game has it too"
+     },
+     "furniture": {
+      "velvet": "Principled BSDF, sheen weight 0.8, sheen roughness 0.3; base colour varied +-5 per cent at 0.05 m; ambientCG Fabric034 normal map (CC0) at strength 0.2, tile 0.25 m",
+      "bevel_mm": 4,
+      "posts": "12 mm round rods, black lacquer"
+     }
+    }
    },
    "pictures": {
     "pixels": [
@@ -14107,6 +14353,27 @@
     "shops": [
      "newsagent"
     ]
+   },
+   "script:ring_tray": {
+    "why": "a watch three centimetres across is modelled, not scanned (1 October): the approved display's scripted ring trays, watch pads and chains, kept as approved",
+    "shops": [
+     "ritas"
+    ],
+    "added": "13 Oct, from the try 1 reviews"
+   },
+   "script:watch_pad": {
+    "why": "a watch three centimetres across is modelled, not scanned (1 October): the approved display's scripted ring trays, watch pads and chains, kept as approved",
+    "shops": [
+     "ritas"
+    ],
+    "added": "13 Oct, from the try 1 reviews"
+   },
+   "script:chain": {
+    "why": "a watch three centimetres across is modelled, not scanned (1 October): the approved display's scripted ring trays, watch pads and chains, kept as approved",
+    "shops": [
+     "ritas"
+    ],
+    "added": "13 Oct, from the try 1 reviews"
    }
   },
   "denied": {

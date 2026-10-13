@@ -91,7 +91,7 @@ def model_ids(T):
     """Every Poly Haven model Rita's room and display place (target.json), sorted."""
     r = ritas(T)
     ids = {g["model"] for g in r["room"]["goods"] if not g["model"].startswith("script:")}
-    ids |= {i["model"] for i in r["display"]["items"]}
+    ids |= {i["model"] for i in r["display"]["items"] if not i["model"].startswith("script:")}
     return sorted(ids)
 
 
