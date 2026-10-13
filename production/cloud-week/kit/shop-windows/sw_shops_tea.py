@@ -225,7 +225,7 @@ def display(d):
     X = lambda u: u - L / 2
     tex = d.tex
     GEN.TEXTS.clear()
-    china = d.mat("china", rgb8(236, 232, 220), rough=0.25)
+    china = d.mat("china", rgb8(208, 204, 194), rough=0.25)      # toned: pure white china burns under the gate's night spill (PIC-05g)
     steel = d.mat("stainless", rgb8(190, 192, 194), rough=0.28, metal=1.0)
     brass = d.mat("brass", rgb8(160, 120, 55), rough=0.3, metal=1.0)
     # the table (a cafe table 0.55 across), its laminate top, two chairs, the tea set in pieces
@@ -256,7 +256,7 @@ def display(d):
     sg.lathe(X(tu - 0.16), tv + 0.14, top_z + 0.046, [(0.0, 0.0), (0.032, 0.0), (0.030, 0.012), (0.004, 0.018), (0.0, 0.026)], mi=0, n=18)
     d.gm_object("sugar_bowl", sg, [china], "scripted", "script:sugar_bowl_menu", tier="table", smooth=True)
     mp = os.path.join(tex, "menu_stand.png")
-    muv = GEN.card_atlas(mp, ["TEAS\nFROM 25p"], cols=1, tile=(256, 160), size=40)
+    muv = GEN.card_atlas(mp, ["TEAS\nFROM 25p"], cols=1, tile=(256, 160), size=40, bg=(206, 200, 180))
     GEN.TEXTS.extend(["TEAS FROM 25p"])
     mm = d.image_mat("menu_stand", mp, rough=0.8)
     mg = GM()
@@ -276,7 +276,7 @@ def display(d):
     d.piece("potted_plant_04", 3.10, 0.28, 0.0, rot=(0, 0, 0.3), tier="bed", tris=None)
     # the café curtain: a brass rod at w 0.90 and two panels (cream cotton gathered in folds, a scalloped hem) hung 0.55, over the two outer lights (u 0.05 to 1.09 and 2.27 to 3.30)
     rod_w = 0.90
-    cur_m = d.mat("cafe_curtain", rgb8(234, 226, 204), rough=0.9)
+    cur_m = d.mat("cafe_curtain", rgb8(208, 200, 178), rough=0.9)
     for side, (ua, ub) in (("l", (0.04, 1.10)), ("r", (2.26, 3.31))):
         g = GM()
         g.rod((X(ua - 0.01), 0.07, rod_w + 0.012), (X(ub + 0.01), 0.07, rod_w + 0.012), 0.008, 0, 10)
@@ -288,7 +288,7 @@ def display(d):
         d.gm_object("curtain_" + side, cg, [cur_m], "scripted", "script:cafe_curtain", tier="curtain")
     # the hand-lettered card on the glass's inside (BREAKFASTS, LUNCHES, TEAS), on two suction cups
     cp = os.path.join(tex, "window_card.png")
-    cuv = GEN.card_atlas(cp, ["BREAKFASTS\nLUNCHES\nTEAS"], cols=1, tile=(512, 320), size=58)
+    cuv = GEN.card_atlas(cp, ["BREAKFASTS\nLUNCHES\nTEAS"], cols=1, tile=(512, 320), size=58, bg=(206, 200, 180))
     GEN.TEXTS.extend(["BREAKFASTS", "LUNCHES", "TEAS"])
     cm = d.image_mat("window_card", cp, rough=0.7)
     wg = GM()
@@ -303,7 +303,7 @@ def display(d):
     # the price cards
     texts = ["CAKES 40p", "TEAS 25p", "TOAST 30p", "HOME MADE"]
     path = os.path.join(tex, "price_cards.png")
-    uvs = GEN.card_atlas(path, texts, cols=2, tile=(256, 128), size=46)
+    uvs = GEN.card_atlas(path, texts, cols=2, tile=(256, 128), size=46, bg=(206, 200, 180))
     pm = [d.image_mat("price_cards", path, rough=0.8), d.mat("stake", rgb8(60, 60, 62), rough=0.5, metal=0.7)]
     for k, uc in enumerate((0.70, 2.00, 2.90, 1.25)):
         d.price_card(uc, 0.02, 0.0, k, uvs, pm)
