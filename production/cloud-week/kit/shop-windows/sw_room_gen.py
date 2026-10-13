@@ -444,7 +444,7 @@ class GRoom(S.Room):
             zz += h
         ob = gm.to_object("tins_%s_%d" % (fid, len(self.placed)), [metal, label], self.sc)
         ext = gm.extents()
-        self.placed_rec(fid, "script:paint_tins", ext, [ob.name], tag=tag)
+        self.placed_rec(fid, "script:paint_tins", ext, [ob.name], tag=tag, n=len(tins))
         return ext
 
     def drawer_wall(self, fid, label_texts):
