@@ -11,7 +11,7 @@ LINES = {
         "The new owner. Cab office is that way, if you're lost.",
         "Evening, new owner. I'm off, if anyone asks. @e",
         "New owner. The car's still going, in case you wondered.",
-        "The new owner. They say you've the keys to the lot.",
+        "The new owner. Say where, and I'll drive you.",
         "Afternoon, new owner. Quiet today, honest. @a",
         "New owner, you're drenched. Get in, I'll run you round. @wet",
         "The new owner. Fancy a lift round the block?",

@@ -13,7 +13,10 @@ What each row says, in plain words:
                alcohol, gambling, child, slur, real brand, place, person, team or programme, nothing after 1992, no quotation or
                known lyric; standing words exactly canon's (the new owner, Nowak, Tom, Tommy, and only the rung's own); only the
                regulars who knew Mickey mention him, and only in the two approved lines; dialect, police and gender flags true;
-               a crime line never claims more than its sureness; a direction agrees with the map
+               a crime line never claims more than its sureness; no line states a standing the simulation might not hold (what the street has said,
+               heard, expected or felt about him; what he has done or been called before; an opening nobody set; a window the speaker may not
+               have); a direction agrees with the map
+  claims.*     the two lines that say 'heard you ...' and stay claim only what a StreetFacts.cs fact says, held by every named member of the kind
   cell.*       counts per kind and situation: eight or more where the kind has the situation, none where it has not
   pool.*       after every condition (each weather and hour it can happen, each standing, each accent, never-police) at least six
                lines are left in every group, so a bag is never one or two lines
@@ -95,6 +98,33 @@ OPINION = re.compile(r"\b(?:they|people|folk|folks|everyone|everybody) (?:say|sa
                      r"|\byour name'?s all over\b|\byou'?re famous\b|\bis it true what they say\b|\b(?:talking|talked) about you\b", re.I)
 # canon review, fault 5: Ada's tea is asked once and never to a stranger, and Ada speaks the shared pensioner lines
 TEA_INVITE = re.compile(r"\b(kettle|cuppa|come (?:in )?(?:for|to) tea|your tea|tea'?s (?:on|ready|poured)|pot'?s on|cup of tea)\b", re.I)
+# canon review, follow-up of 13 October: a canned line may not state a standing the simulation might not hold. Six kinds of claim, each its own pattern
+# (and its own planted fault): what the street has said, heard, waited for or felt about him; what is reported of him; what he has done; what was said
+# of his name before; an opening nobody set. 'heard you ...' passes only on the two lines whose claim a StreetFacts.cs fact holds (KEPT_CLAIMS).
+STANDING_CLAIMS = [
+    ("street talk", re.compile(r"\b(?:everyone|everybody)(?:'s| has| have)? (?:been )?(?:talking|hearing)\b"
+                               r"|\b(?:we|they|everyone|everybody)(?:'ve| have|'d| had)? (?:all )?(?:been )?(?:hearing|heard|dying|expecting|waiting|talking|told)\b[^.?!]*\b(?:you|new owner)\b", re.I),
+     "says the street has talked of him, heard of him, waited or been curious: the simulation holds none of that for the speaker"),
+    ("hearsay", re.compile(r"\bheard (?:so much|all about|a lot about|plenty about|about you|of you)\b"
+                           r"|\b(?:they|people|folk|everyone|everybody) (?:say|says|tell me|told me|reckon|think|know|hear) (?:you|he|that you)\b", re.I),
+     "reports what is said or known of him: the simulation may not hold it"),
+    ("heard you", re.compile(r"\bheard (?:that )?you\b", re.I),
+     "'heard you ...' reports something about him: only a line whose claim a StreetFacts.cs fact holds for every member of the kind may (claims.kept_lines_held_by_street_facts)"),
+    ("his doings", re.compile(r"\bdoing the rounds\b|\byou'?ve (?:met|seen|been round|been to|done) (?:half|all|most|everyone|everybody|the whole)\b", re.I),
+     "says what he has done in the town: the simulation may not hold it"),
+    ("his name", re.compile(r"\byour name right\b|\b(?:was|were|been|just|only) (?:just |only )?(?:saying|said|using|learning|practising) your name\b|\bgot your name\b", re.I),
+     "says what was said of his name before: the simulation may not hold it"),
+    ("an opening", re.compile(r"\bto fill\b|\bis it true\b|\bit'?s true (?:that )?you\b|\btrue (?:that )?you\b", re.I),
+     "asserts, or asks as if it were so, an opening or a fact nobody set"),
+]
+# a speaker may not be put at a window, a door or a step in a crime line unless the kind has a shop window (the shopkeeper's: a counter, a doorway)
+WINDOW_CLAIM = re.compile(r"\b(?:past|by|across|through|at|behind) (?:my|the) (?:window|door|step)\b|\bmy (?:window|door|step)\b", re.I)
+# The two 'heard you ...' lines that stay (canon review follow-up, 13 October): each claims only what a StreetFacts.cs fact states, and every named member of the
+# kind holds that fact in people.json: 'will' (Mickey left the office to the new owner, who came with one suitcase and a letter) and 'office' (Mickey's, with the rank outside).
+KEPT_CLAIMS = {
+    "dock_worker.greet-owner.05": {"phrase": "one suitcase", "facts": {"will": ["came with one suitcase"]}},
+    "casual_worker.greet-owner.02": {"phrase": "a rank to run", "facts": {"office": ["with the rank outside"], "will": ["left the office", "the new owner"]}},
+}
 
 rows = []
 
@@ -161,6 +191,13 @@ PROPOSAL_NAMES = {n for n in _proposal_names(ATLAS, set()) if not re.search(r"[â
 BARKS = json.loads((REPO / "game-design/barks.json").read_text(encoding="utf-8"))
 SV = (REPO / "ledger/Assets/Scripts/Core/StreetVoice.cs").read_text(encoding="utf-8")
 SF = (REPO / "ledger/Assets/Scripts/Core/StreetFacts.cs").read_text(encoding="utf-8")
+TOWN_BY_ID = {p["id"]: p for p in TOWN["people"]}
+
+
+def street_fact_text(fid):
+    """The street's words for a StreetFacts.cs fact (the third string of its tuple), or None."""
+    m = re.search(r'\("%s",\s*"[^"]*",\s*"((?:[^"\\]|\\.)*)"' % re.escape(fid), SF)
+    return m.group(1) if m else None
 
 
 def string_literals(path):
@@ -557,6 +594,11 @@ def line_failures(l, ctx):
         f.append("says what the street thinks of him: the simulation may not hold it (canon review, fault 2)")
     if kind == "pensioner" and TEA_INVITE.search(t):
         f.append("an invitation to tea in a kind Ada speaks: her tea is asked once and never to a stranger (day-three design)")
+    for code, rx, why in STANDING_CLAIMS:
+        if rx.search(t) and not (code == "heard you" and l["id"] in KEPT_CLAIMS):
+            f.append("standing claim (%s): %s" % (code, why))
+    if sit.startswith("crime") and kind != "shopkeeper" and WINDOW_CLAIM.search(t):
+        f.append("standing claim (a window): puts the speaker at a window, door or step, which a speaker of this kind may not have; only the shopkeeper's kind has a shop window")
     # Mickey
     f += mickey_failures(t, kind, c)
     # gendered words only where the kind is single-gender
@@ -762,10 +804,37 @@ def doc_rows(doc, rules, emit, light=False):
     for l in lines:
         fails = line_failures(l, ctx)
         emit("line." + str(l.get("id")), "line %s passes every line check" % l.get("id"), not fails, "; ".join(fails[:5]))
+    kept_claims_row(doc, emit)
     group_rows_for(doc, ctx, emit)
     kinds_rows(doc, ctx, emit)
     places_rows(doc, ctx, emit)
     return ctx
+
+
+def kept_claims_row(doc, emit):
+    """The lines that say 'heard you ...' and stay: the words still carry the claim, a StreetFacts.cs fact states it, and every named member of the kind holds that fact."""
+    by_id = {l["id"]: l for l in doc["lines"]}
+    bad = []
+    for lid, c in KEPT_CLAIMS.items():
+        l = by_id.get(lid)
+        if l is None:
+            bad.append("%s is missing" % lid)
+            continue
+        if c["phrase"] not in l["text"]:
+            bad.append("%s no longer says '%s'" % (lid, c["phrase"]))
+            continue
+        members = doc["speakers"][l["kind"]]["members"]
+        for fid, needs in c["facts"].items():
+            ft = street_fact_text(fid)
+            if ft is None or not all(n in ft for n in needs):
+                bad.append("%s: StreetFacts.cs fact %s does not say %s" % (lid, fid, needs))
+            for m in members:
+                person = TOWN_BY_ID.get(m)
+                if person is None or fid not in {f.get("street") for f in person["facts"]}:
+                    bad.append("%s: %s does not hold fact %s" % (lid, m, fid))
+    emit("claims.kept_lines_held_by_street_facts",
+         "the %d lines that say 'heard you ...' claim only what a StreetFacts.cs fact states, held by every named member of their kind (people.json)" % len(KEPT_CLAIMS),
+         not bad and len(KEPT_CLAIMS) == 2, "; ".join(bad[:4]))
 
 
 def kinds_rows(doc, ctx, emit):
@@ -1002,15 +1071,17 @@ def seeded_faults(doc, rules):
     def lines_of(d, kind, sit):
         return [l for l in d["lines"] if l["kind"] == kind and l["situation"] == sit]
 
-    def trial(name, prefix, mutate, rules_mut=None, walk=False):
+    def trial(name, prefix, mutate, rules_mut=None, walk=False, needle=None):
         d = copy.deepcopy(doc)
         r = copy.deepcopy(rules)
         mutate(d, r)
         got = []
+        detail_of = {}
 
         def emit(rid, what, ok, detail=""):
             if not ok:
                 got.append(rid)
+                detail_of[rid] = detail
         global RULES_DOC
         saved = RULES_DOC
         RULES_DOC = r
@@ -1032,6 +1103,8 @@ def seeded_faults(doc, rules):
         finally:
             RULES_DOC = saved
         hit = [g for g in got if g.startswith(prefix)] if prefix else got
+        if needle:
+            hit = [g for g in hit if needle in detail_of.get(g, "")]      # caught by the check this fault is aimed at, not by another
         out.append((name, prefix, bool(hit), (hit or got)[:2]))
 
     def put(d, kind, sit, i, text):
@@ -1077,6 +1150,14 @@ def seeded_faults(doc, rules):
     trial("a stranger greeting for a kind none of whose members can be a stranger to him", "kinds.rung_reachable", lambda d, r: d["speakers"]["driver"]["greeting_rungs"].insert(0, "stranger"))
     trial("what the street thinks of him, in a greeting", "line.", lambda d, r: put(d, "dock_worker", "greeting.nowak", 0, "They tell me you're all right."))
     trial("an invitation to tea in a pensioner's mouth", "line.", lambda d, r: put(d, "pensioner", "greeting.owner", 0, "The new owner. Come to tea one day."))
+    trial("a standing claim: the street has been hearing about him", "line.", lambda d, r: put(d, "dock_worker", "greeting.owner", 0, "The new owner. We've all been hearing about you."), needle="standing claim (street talk)")
+    trial("a standing claim: they say he has the keys to the lot", "line.", lambda d, r: put(d, "tradesman", "greeting.owner", 0, "The new owner. They say you've the keys to the lot."), needle="standing claim (hearsay)")
+    trial("a standing claim: 'heard you' on a line no street fact holds", "line.", lambda d, r: put(d, "night_shift", "greeting.owner", 0, "The new owner. Heard you've a bad back."), needle="standing claim (heard you)")
+    trial("a standing claim: what he has done in the town", "line.", lambda d, r: put(d, "tradesman", "greeting.nowak", 0, "Mr Nowak. You've met half the street already."), needle="standing claim (his doings)")
+    trial("a standing claim: what was said of his name before", "line.", lambda d, r: put(d, "shopkeeper", "greeting.tom", 0, "Tom. I was just saying your name."), needle="standing claim (his name)")
+    trial("a standing claim: an opening nobody set", "line.", lambda d, r: put(d, "driver", "greeting.tom", 0, "Tom. Got a vacancy to fill?"), needle="standing claim (an opening)")
+    trial("a standing claim: a window the speaker may not have", "line.", lambda d, r: put(d, "pensioner", "crime_shape", 0, "Somebody ran, past my window. Gone in a flash."), needle="standing claim (a window)")
+    trial("a kept 'heard you' line that no longer matches its street fact", "claims.", lambda d, r: put(d, "dock_worker", "greeting.owner", 4, "The new owner. Heard you came with two suitcases."))
     trial("a street name the atlas marks proposal", "doc.no_proposal_street_names", lambda d, r: put(d, "driver", "farewell", 0, "Take Sea Road, love."))
     trial("directions to a place with no unit on the built street (Hal's)", "places.", lambda d, r: d["lines"].append(dict(lines_of(d, "driver", "farewell")[0], id="anyone.way-hals.01", kind="anyone", speaker="anyone", situation="asked_way", bank="way/ask/to/hals", group="way/ask/to/hals@anyone", rung="any", context="way", text="Hal's? Up the top, on the quiet side.", conditions={"destination": "hals"})))
     trial("Sheila given back the line about her own desk", "rules.", lambda d, r: r["speaker_overrides"]["excluded_lines"].update({"speakers": []}))

@@ -21,7 +21,7 @@ LINES = {
         "Oh, you're the new owner, love. Pleased, I'm sure.",
         "The new owner! Well, you're not what I expected.",
         "New owner, is it? Don't stand in my steam.",
-        "The new owner. We've all been dying to look at you.",
+        "The new owner. Well, there's a thing.",
         "Afternoon, new owner. Bring us some custom, will you? @a",
         "The new owner! Well, well. Mind the steam.",
         "Evening, new owner. You've a face like a wet weekend. @e",
@@ -30,7 +30,7 @@ LINES = {
         "The new owner, love. Don't be a stranger.",
     ],
     "greeting.nowak": [
-        "Mr Nowak. We've heard all about you.",
+        "Mr Nowak. Pleased to see you, love.",
         "Morning, Mr Nowak. Mind the wet floor. @m",
         "Nowak. You look like a man needing shirts doing.",
         "Mr Nowak. Our best press, for you.",

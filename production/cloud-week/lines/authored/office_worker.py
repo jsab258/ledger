@@ -20,7 +20,7 @@ LINES = {
     ],
     "greeting.owner": [
         "You'll be the new owner, I take it.",
-        "So you're the new owner. Everyone's been talking.",
+        "So you're the new owner. Do excuse the rush.",
         "Good morning, new owner. I hope the office treats you well. @m",
         "New owner. Do you have a card?",
         "The new owner. I'd shake hands, but I'm holding a file.",
@@ -109,7 +109,7 @@ LINES = {
         "Loud enough to hear over the typewriter.",
     ],
     "crime_shape": [
-        "Somebody went by the window, quickly. I couldn't say who.",
+        "Somebody went by, quickly. I couldn't say who.",
         "A figure. Possibly. The light was poor.",
         "A shape. In a hurry. That's all I can offer.",
         "Something moved at the end of the road. A person, probably.",

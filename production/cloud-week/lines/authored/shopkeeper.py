@@ -20,7 +20,7 @@ LINES = {
     "greeting.owner": [
         "You'll be the new owner. Pleased to meet you.",
         "So you're the new owner. Welcome to the street.",
-        "The new owner. We've been expecting you.",
+        "The new owner. Anything you need, just ask.",
         "You must be the new owner. Mind how you go.",
         "The new owner, is it? Come in, come in.",
         "Not seen the new owner in here yet.",
