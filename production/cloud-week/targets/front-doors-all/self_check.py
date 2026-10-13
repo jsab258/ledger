@@ -288,7 +288,7 @@ def check_live_photos(T, R, photo_dir):
     # D5: the oblong plate is lighter than the olive leaf; the handle is darker
     b = M["D5_plate"]["box"]
     e = run_edges(imgs["D5"], "cols", (int(b[1]) + 8, int(b[3]) - 8), (int(b[0]) - 40, int(b[2]) + 40), "light", 0.45)
-    edge_row("D5 plate: light run columns %s against box %.0f to %.0f" % (e, b[0], b[2]), e is not None and close(e[0], b[0], 8) and close(e[1], b[2], 8), "")
+    edge_row("D5 plate: light run columns %s against box %.0f to %.0f (the plate's darker rim is inside the box, so 14 px)" % (e, b[0], b[2]), e is not None and close(e[0], b[0], 14) and close(e[1], b[2], 14), "")
     e = run_edges(imgs["D5"], "rows", (int(b[0]) + 20, int(b[2]) - 20), (int(b[1]) - 30, int(b[3]) + 30), "light", 0.45)
     edge_row("D5 plate: light run rows %s against box %.0f to %.0f" % (e, b[1], b[3]), e is not None and close(e[0], b[1], 8) and close(e[1], b[3], 8), "")
     # D5 leaf edges against the white frame: the leaf is darker than the frame at rows 400 to 700

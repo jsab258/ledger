@@ -51,8 +51,8 @@ PHOTOS = {
            "used_for": "the bright blue and the red door colours (a box inside the leaf), the painted numeral, the hood", "preview": "d6-hull-rensburg-street-1982-blue-door.jpg"},
     "D7": {"gid": "3462921", "title": "Abbey Street, Kingston upon Hull", "author": "Bernard Sharp", "licence": "CC BY-SA 2.0", "taken": "1986-06-08",
            "url": "https://www.geograph.org.uk/photo/3462921", "size_px": [1024, 661], "period": "the period (1986)",
-           "shows": "the same kind of street, arched recessed doorways with a rendered arch, a lime-green door, red and brown doors, a blue painted gutter",
-           "used_for": "the lime-green and brown door colours, the recess", "preview": "d7-hull-abbey-street-1986-arched-doorways.jpg"},
+           "shows": "a street of Hull terraces: arched recessed doorways under rendered arches with the doors standing deep inside; the left reveal's brickwork is painted lime green, the next arch's brick left bare",
+           "used_for": "the recessed doorway and painted reveal (wall kit's, listed in could-not-settle); no door colour is taken from it (the green is the reveal's, not a door)", "preview": "d7-hull-abbey-street-1986-arched-doorways.jpg"},
     "D8": {"gid": "3462940", "title": "Brazil Street, Kingston upon Hull", "author": "Bernard Sharp", "licence": "CC BY-SA 2.0", "taken": "1986-06-08",
            "url": "https://www.geograph.org.uk/photo/3462940", "size_px": [1024, 669], "period": "the period (1986)",
            "shows": "a street of Hull terraces with brightly painted frames, canopies and doors (red, blue, yellow, sky blue)",
@@ -126,7 +126,6 @@ COLOUR_BOXES = {
     "D2_F5_khaki": {"photo": "D2", "box": [563, 290, 572, 325], "median_rgb": [136, 132, 83], "note": "grey-olive"},
     "D5_olive": {"photo": "D5", "box": [470, 200, 740, 500], "median_rgb": [114, 102, 65], "note": "olive, inside; flat"},
     "D6_blue": {"photo": "D6", "box": [838, 335, 850, 415], "median_rgb": [26, 67, 117], "note": "strong blue"},
-    "D7_lime": {"photo": "D7", "box": [648, 400, 664, 560], "median_rgb": [119, 119, 41], "note": "lime-olive"},
     "D9_turquoise": {"photo": "D9", "box": [393, 620, 399, 630], "median_rgb": [22, 108, 126], "note": "turquoise, a small box low on the leaf"},
 }
 
@@ -147,7 +146,6 @@ PALETTE = [
     {"id": "khaki", "name": "khaki", "srgb": [128, 124, 78], "class": "mid", "src": "D2 middle door box median (136,132,83) darkened a little for film"},
     {"id": "mustard", "name": "mustard", "srgb": [140, 128, 40], "class": "bright", "src": "D2 left door box median (142,136,39)"},
     {"id": "bright_blue", "name": "bright blue (Hull 1980s)", "srgb": [30, 78, 140], "class": "bright", "src": "D6 box median (26,67,117) lifted for film; value Judgement"},
-    {"id": "lime", "name": "lime green (Hull 1980s)", "srgb": [112, 118, 44], "class": "bright", "src": "D7 box median (119,119,41)"},
     {"id": "red", "name": "bright red", "srgb": [201, 41, 32], "class": "bright", "src": "3.1 (P1 median)"},
     {"id": "varnish", "name": "natural varnished timber (a stained door)", "srgb": [122, 76, 40], "class": "mid", "src": "Judgement: no photograph read shows one on these streets"},
 ]

@@ -143,8 +143,8 @@ def main():
     T["title"] = "Front doors for every house kind (cloud week 42, unit 9)"
     T["summary"] = ("Front doors for every house kind of Quay Street: from the passed 3.1 door (T1 cottage four-panel, F1 flat four-panel, its bell push fixed to one plain dark oblong), "
                     "10 door kinds (cottage T1 T2 T3, flat F1 to F7) fitted to the street's 12 household doors by house, 7 furniture slots with %d variants "
-                    "(letter plates, handles, rim night latches, knockers, bells, numbers, a boot scraper), 16 paints and 3 conditions, a street order in which no two neighbours "
-                    "match, and a gate of 7 views a kind plus the street rows." % N_VARIANTS)
+                    "(letter plates, handles, rim night latches, knockers, bells, numbers, a boot scraper), %d paints and 3 conditions, a street order in which no two neighbours "
+                    "match, and a gate of 7 views a kind plus the street rows." % (N_VARIANTS, len(D.PALETTE)))
     T["status"] = "WRITTEN 13 October 2026, not yet reviewed"
     T["units"] = "mm; leaf frame u across from the leaf's left edge seen from outside, v up from its bottom; frame frame x across the opening from the left reveal, z up from the threshold top (the 3.1 axes)"
     T["axes"] = {"leaf": "u, v as above (structural leaf, including the 20.4 that laps behind each stop and the head)", "frame": "x, z as target 3.1: x 0 at the left brick reveal, z 0 at the top of the threshold",

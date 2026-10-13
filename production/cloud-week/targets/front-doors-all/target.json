@@ -1,7 +1,7 @@
 {
  "family": "front-doors-all",
  "title": "Front doors for every house kind (cloud week 42, unit 9)",
- "summary": "Front doors for every house kind of Quay Street: from the passed 3.1 door (T1 cottage four-panel, F1 flat four-panel, its bell push fixed to one plain dark oblong), 10 door kinds (cottage T1 T2 T3, flat F1 to F7) fitted to the street's 12 household doors by house, 7 furniture slots with 25 variants (letter plates, handles, rim night latches, knockers, bells, numbers, a boot scraper), 16 paints and 3 conditions, a street order in which no two neighbours match, and a gate of 7 views a kind plus the street rows.",
+ "summary": "Front doors for every house kind of Quay Street: from the passed 3.1 door (T1 cottage four-panel, F1 flat four-panel, its bell push fixed to one plain dark oblong), 10 door kinds (cottage T1 T2 T3, flat F1 to F7) fitted to the street's 12 household doors by house, 7 furniture slots with 25 variants (letter plates, handles, rim night latches, knockers, bells, numbers, a boot scraper), 15 paints and 3 conditions, a street order in which no two neighbours match, and a gate of 7 views a kind plus the street rows.",
  "status": "WRITTEN 13 October 2026, not yet reviewed",
  "units": "mm; leaf frame u across from the leaf's left edge seen from outside, v up from its bottom; frame frame x across the opening from the left reveal, z up from the threshold top (the 3.1 axes)",
  "axes": {
@@ -2636,17 +2636,6 @@
    "src": "D6 box median (26,67,117) lifted for film; value Judgement"
   },
   {
-   "id": "lime",
-   "name": "lime green (Hull 1980s)",
-   "srgb": [
-    112,
-    118,
-    44
-   ],
-   "class": "bright",
-   "src": "D7 box median (119,119,41)"
-  },
-  {
    "id": "red",
    "name": "bright red",
    "srgb": [
@@ -3840,8 +3829,8 @@
      661
     ],
     "period": "the period (1986)",
-    "shows": "the same kind of street, arched recessed doorways with a rendered arch, a lime-green door, red and brown doors, a blue painted gutter",
-    "used_for": "the lime-green and brown door colours, the recess",
+    "shows": "a street of Hull terraces: arched recessed doorways under rendered arches with the doors standing deep inside; the left reveal's brickwork is painted lime green, the next arch's brick left bare",
+    "used_for": "the recessed doorway and painted reveal (wall kit's, listed in could-not-settle); no door colour is taken from it (the green is the reveal's, not a door)",
     "preview": "d7-hull-abbey-street-1986-arched-doorways.jpg"
    },
    "D8": {
@@ -4354,21 +4343,6 @@
      117
     ],
     "note": "strong blue"
-   },
-   "D7_lime": {
-    "photo": "D7",
-    "box": [
-     648,
-     400,
-     664,
-     560
-    ],
-    "median_rgb": [
-     119,
-     119,
-     41
-    ],
-    "note": "lime-olive"
    },
    "D9_turquoise": {
     "photo": "D9",
@@ -7701,7 +7675,6 @@
     "khaki",
     "mustard",
     "bright_blue",
-    "lime",
     "red",
     "varnish"
    ],

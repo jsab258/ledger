@@ -51,9 +51,16 @@ def fetch_commons_d5(d):
     if os.path.exists(p):
         return p
     url = "https://commons.wikimedia.org/wiki/Special:FilePath/" + urllib.parse.quote(COMMONS_D5)
-    data = urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": UA}), timeout=120).read()
-    open(p, "wb").write(data)
-    return p
+    for attempt in range(6):
+        try:
+            data = urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": UA}), timeout=120).read()
+            open(p, "wb").write(data)
+            return p
+        except urllib.error.HTTPError as e:
+            if e.code != 429:
+                raise
+            time.sleep(int(e.headers.get("retry-after", "30")) + 3)
+    raise RuntimeError("Commons kept answering 429 (rate limit) for the D5 file")
 
 
 def fetch_all(d):
