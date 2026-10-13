@@ -64,6 +64,16 @@ def kit_pieces(target):
 
 
 def gate(target):
+    rows = target["photo_measurements"]["windows"]
+    p8 = target["photo_measurements"]["p8_four_panes_the_gates_way"]
+    nets_p1 = [rows[k] for k in ("P1_a", "P1_b", "P1_e")]
+    alt = rows["P1_a"]["alt_top_rows_out"]
+    pl_p1 = ", ".join("%s %.2f" % (k, rows[k]["P_over_L"]) for k in ("P1_a", "P1_b", "P1_e"))
+    dl_p1 = ", ".join("%s %.2f" % (k, rows[k]["D_over_L"]) for k in ("P1_a", "P1_b", "P1_e"))
+    sp_p1 = ", ".join("%d" % round(rows[k]["pane_spread_5_95"]) for k in ("P1_a", "P1_b", "P1_e"))
+    ang_p1 = "%.0f to %.0f" % (min(r["angle_deg"] for r in nets_p1), max(r["angle_deg"] for r in nets_p1))
+    net_all = [r["P_over_L"] for r in rows.values() if r["state"] == "net_full"]
+    bare_txt = "P1_c (%.0f degrees) %.2f; P4_G %.2f; P3_d %.2f" % (rows["P1_c"]["angle_deg"], rows["P1_c"]["P_over_L"], rows["P4_G"]["P_over_L"], rows["P3_d"]["P_over_L"])
     cams = {}
     for name, c in H.CAMERAS.items():
         cams[name] = {"what": c["what"], "spec": [c["spec"][0], c["spec"][1], c["spec"][2]], "vfov_deg": c["vfov_deg"], "resolution": [2560, 1440], "eye_above_footway_m": 1.6}
@@ -86,14 +96,25 @@ def gate(target):
             "D": "the 5th percentile of the luma over the window's outline (joinery and pane pixels, no brick)",
             "spread": "the pane pixels' 95th minus 5th percentile",
             "angle": "the angle from the wall at which the window's centre is seen from the camera, from the scene's geometry (not from the picture)",
-            "window_state": "its net class (sites[].net.kind with N0 = bare) and its time (day, or night lit or dark)",
+            "window_state": "bare, net or draped (`window_states`: N0 with no curtain or blind is bare; any B1 to B3 or C1 is draped; C2 counts by its net) and its time (day, or night lit or dark)",
+            "line_profile": "for WB-04b: a horizontal luma profile across each stile-to-pane edge (through the pane's mid-height) and a vertical profile across each rail-to-pane edge (through the pane's mid-width), the pane's edges found from the Material Index pass (pane 1 against frame 2); the dip is the darkest run of at least 1 pixel next to the edge, its value over L",
             "bands_come_from": "photo_measurements.bands_by_state (Photo, +-5 degrees on the angle, outlines by eye)",
         },
+        "window_states": {
+            "bare": "N0 with no curtain and no blind (on the street: east_parade_bay3_upper_w1, the unlet flat's second window, the only one; the other three N0 sites carry a blind or a curtain)",
+            "net": "N1, N2 or N3 with no C1 and no B1 to B3; a C2 (curtains drawn back to the sides) counts by its net",
+            "draped": "any B1, B2, B3 or C1 (a blind or a drawn curtain over the pane: east_parade_bay1_upper_w0 B2, east_chandler_bay0_upper_w0 B1, west_south_bay1_gf_w1 C1, east_parade_bay4_upper_w0 C1, west_south_bay2_gf_w1 B3): NO P/L band; a pane spread of at least 20 levels only",
+            "why": "TARGET-REVIEW fault 2(b): a cream or white blind cannot read 0.10 to 0.45 of its frame (WB-02), a drawn brown curtain cannot read blue over red by 10 levels (WB-03); the bands were taken from white and cream frames and bare or net panes",
+        },
+        "frame_class": "the P/L and D/L bands apply to white and cream frames only: a bronze frame (linear 0.05) or a brown one (0.09) gives a dark L, so P/L of 1 or more is correct for them and still fails. Under fault 1's amendment every street frame is one of those (white_fresh, white_grimy, white_flaking, white_upvc)",
         "bands": {
-            "net_N1_N2_in_15_to_30_deg": {"P_over_L": [0.55, 0.95], "D_over_L_max": 0.55, "spread_min": 40, "photo": "P1_a, P1_b, P1_e at 31 to 37 degrees: 0.87, 0.83, 0.85 (D/L 0.47 to 0.50); the nine net windows 0.60 to 0.97"},
-            "net_N3_cafe": {"P_over_L": [0.35, 0.75], "photo": "P4_E (a net over the lower half, 35 degrees): 0.56"},
-            "bare_N0_in_15_to_30_deg": {"P_over_L": [0.10, 0.45], "spread_min": 20, "photo": "P1_c (22 degrees) 0.32; P4_G 0.19; P3_d 0.36"},
-            "bare_N0_over_60_deg_from_across": {"P_over_L": [0.35, 0.70], "blue_over_red_min": 10, "photo": "P8_L, P8_R (near square, from below, sky over a dark room): 0.62, 0.51; the pane's colour (87, 99, 135): blue over red 48"},
+            "net_N1_N2_in_15_to_30_deg": {"P_over_L": [0.55, 0.97], "D_over_L_max": 0.72, "spread_min": 40,
+                                          "photo": "P1_a, P1_b, P1_e at %s degrees, boxed without the stone head and sill and without the brick column and measured the gate's way (L over the outline minus the pane boxes, D over the outline with no brick): P/L %s; D/L %s (P1_a with its top rows out %.2f); pane spread %s; the nine net windows %.2f to %.2f. No net window was measured inside 15 to 30 degrees: the band is the nets at 31 to 39 and beyond, applied lower down by the shape of the rule. No median cap (the first version's 0.92 failed the real net windows)" % (ang_p1, pl_p1, dl_p1, alt["D_over_L"], sp_p1, min(net_all), max(net_all))},
+            "net_N1_N2_line_check": {"dip_width_px_min": 1, "dip_over_L_max": 0.60, "photo": "1a section 5: photograph 9's inside corner and lining edge 105 to 125 against 220 to 250 (a profile across the lining, 0.5 of L); at P1's scale (a window 15 to 18 px wide) a 6 mm line cannot be resolved, so no outline percentile there can set a limit for it. The old fault (no line, a uniform pane against the paint) has no dip and fails"},
+            "net_N3_cafe": {"P_over_L": [0.35, 0.75], "photo": "P4_E (a net over the lower half, %.0f degrees): %.2f" % (rows["P4_E"]["angle_deg"], rows["P4_E"]["P_over_L"])},
+            "bare_N0_in_15_to_30_deg": {"P_over_L": [0.10, 0.45], "spread_min": 20, "photo": bare_txt},
+            "bare_N0_over_60_deg_from_across": {"P_over_L": [0.35, 0.70], "blue_over_red_min": 10, "photo": "P8_L, P8_R (near square, from below, sky over a dark room): %.2f, %.2f; all four panes together over the joinery of both windows (the gate's way) %.2f, the pane's colour (%s): blue over red %d (the review reads 46, a mean; both inside the band)" % (rows["P8_L"]["P_over_L"], rows["P8_R"]["P_over_L"], p8["P_over_L"], ", ".join("%d" % round(v) for v in p8["pane_rgb_median"]), round(p8["blue_minus_red"]))},
+            "draped_any_in_15_to_30_deg": {"spread_min": 20, "photo": "no band on P/L or D/L (a blind or a drawn curtain is its own sheet); the pane spread of at least 20 levels (1a section 5) is the one test"},
             "old_fault_to_fail": {"P_over_L": 0.85, "D_over_L": 0.85, "spread": 14, "source": "1a: pane 157 to 175 against paint 178 to 205, the lace uniform, no corner line; the checks below must fail this"},
         },
     }
