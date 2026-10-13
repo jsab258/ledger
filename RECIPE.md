@@ -19,6 +19,15 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 13 Oct 2026, unit 6.1b: checklists for a set of studies from the owner's own study plan
+- Made: one page per study for twelve studies (game, where to look first, what to count, when to stop, what the output page must hold), in one file beside the kit that covers the other four.
+- Method (setting-free): turn a study plan into an operating checklist without touching the thing studied. Take each study's questions, "where it lives" and output lines straight from the plan; add the kit's maps; mark every line by where it came from (plan, kit, inference) so nothing inferred passes as read. Give each study a stop rule and one thing it must not copy. Tie each output to the existing ruling or finished unit it must be set against, so the study adds to a decision and does not reopen it.
+- Tools: none beyond a check script for forbidden dashes and italics.
+- Target and check: every study in the plan has a page; the check script; no review (ordered).
+- Cost (hours): about 0.6 of my own time.
+- Failed and why: nothing failed. The first draft cited the wrong document for the frame-time exit; found by looking the number up before finishing. Lesson: look a number up in its home file before writing its source.
+- Evidence: production/research/aaa-reference/CHECKLISTS.md
+
 ### 13 Oct 2026, unit 7b follow-up: a finished research file set against a new design
 - Made: a section in COMBAT.md comparing its findings with Jafar's new combat rulings and design (39 rows, each adopt, adapt, ignore or not covered), the old comparison rows marked superseded and kept, the draft target list for the first combat test extended by 15 entries.
 - Method (setting-free): when a design replaces the document a finished study was written against, add a comparison section instead of rewriting the study: one row per design point, what the references do (cited to the study's own sections), a verdict, and where the design is silent say "not covered". Mark superseded old rows, never delete them. Extend a target list with new ids and never renumber, so every cross reference holds. List every point the design leaves unclear for its author. Read the design from its source, not from a summary.
