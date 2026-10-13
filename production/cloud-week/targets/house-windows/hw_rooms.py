@@ -8,7 +8,7 @@ of slide; tolerated: 40 pixels; a stand-off over the tolerated budget is not dra
 BUDGET = {
     "back": {"true": 0.40, "tolerated": 0.80},
     "side": {"true": 0.03, "tolerated": 0.06},
-    "ceiling": {"true": 0.03, "tolerated": 0.06},
+    "ceiling": {"true": 0.02, "tolerated": 0.04},
     "floor": {"true": 0.018, "tolerated": 0.037},
 }
 
@@ -30,12 +30,12 @@ FINISH = {
 FORMS = {
     "skirting": {"h": 0.15, "proud": 0.020, "surface": "side+back", "note": "painted white, on all three walls"},
     "picture_rail": {"h": 0.040, "proud": 0.020, "z": 2.15, "surface": "side+back"},
-    "coving": {"h": 0.055, "proud": 0.055, "surface": "ceiling edge", "note": "tolerated class (0.055 under 0.06)"},
-    "ceiling_rose": {"d": 0.30, "proud": 0.030, "surface": "ceiling", "note": "a plaster rose at the pendant's place"},
-    "bare_bulb": {"d": 0.06, "proud": 0.03, "surface": "ceiling", "note": "a flat glowing disc (a pendant of bare bulb on its flex: the flex is not drawn)"},
+    "coving": {"h": 0.055, "proud": 0.020, "surface": "ceiling edge", "note": "a cove drawn as a 55 mm band shaded like a cove, 0.02 proud (a real 55 mm cove is over the ceiling budget)"},
+    "ceiling_rose": {"d": 0.30, "proud": 0.030, "surface": "ceiling", "note": "a plaster rose at the pendant's place: tolerated class on the ceiling (0.03 over 0.02, under 0.04)"},
+    "bare_bulb": {"d": 0.06, "proud": 0.02, "surface": "ceiling", "note": "a flat glowing disc (a pendant of bare bulb on its flex: the flex is not drawn)"},
     "fire_surround_flat": {"w": 1.30, "h": 1.10, "proud": 0.03, "surface": "side", "note": "a tiled fire surround drawn flat (the real one stands 0.18 off the wall: over the budget)"},
     "internal_door_flat": {"w": 0.78, "h": 1.98, "proud": 0.02, "surface": "back or side", "note": "a four-panel internal door, panels 0.02 proud"},
-    "radiator_flat": {"w": 0.80, "h": 0.55, "proud": 0.03, "surface": "side", "note": "a pressed-steel radiator drawn flat (the real one stands 0.08 off: tolerated, over true)"},
+    "radiator_flat": {"w": 0.80, "h": 0.55, "proud": 0.03, "surface": "side", "note": "a pressed-steel radiator drawn flat (the real one stands 0.08 off: over the budget)"},
     "stair_flat": {"proud": 0.03, "surface": "side", "note": "the stringer and handrail of the flight along the side wall drawn as flat strips (the handrail 0.9 to 1.0 above the nosings, rising 36 degrees); balusters not drawn"},
     "chimney_breast_flat": {"w": 1.20, "h": 2.55, "proud": 0.03, "surface": "back", "note": "a chimney breast drawn flat (the real one stands 0.23 off the wall)"},
     "picture_ghost": {"w": 0.45, "h": 0.60, "proud": 0.0, "surface": "back", "note": "a pale rectangle on a stripped wall where a picture hung (painted, no stand-off)"},

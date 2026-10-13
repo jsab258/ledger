@@ -91,18 +91,17 @@ def draw_elev(t, kind, path, scale=0.5):
 
 
 def draw_sections(t, kind, path):
-    sc = 1.2
     im = Image.new("RGB", (1500, 760), (40, 40, 44))
     dr = ImageDraw.Draw(im)
-    dr.text((8, 4), "%s: horizontal section at z=300 (x across, y into the wall: down) and at z=1000; vertical section at x=0 (y across, z up)" % kind, fill=(255, 255, 255))
+    dr.text((8, 4), "%s: horizontal sections at z=300 and z=1000 (x across, y into the wall: down); vertical section at x=-150 through a pane (y across, z up)" % kind, fill=(255, 255, 255))
     for i, z in enumerate((300, 1000)):
-        ox, oy = 40 + i * 430, 60
+        ox, oy = 20 + i * 440, 60
         for p in hsection(t, kind, z):
-            pts = [(ox + (x + 520) * sc * 0.55, oy + y * sc * 0.55 + 20) for x, y in p["poly"]]
+            pts = [(ox + (x + 520) * 0.40, oy + y * 0.40 + 20) for x, y in p["poly"]]
             dr.polygon(pts, fill=COL[p["material"]], outline=COL["line"])
         dr.text((ox, oy - 14), "z=%d" % z, fill=(255, 255, 0))
     ox, oy = 900, 60
-    for p in vsection(t, kind, 0.0):
+    for p in vsection(t, kind, -150.0):
         pts = [(ox + y * 1.6 + 60, oy + (1700 - z) * 0.40) for y, z in p["poly"]]
         dr.polygon(pts, fill=COL[p["material"]], outline=COL["line"])
     for nk, nm in (("N1", "N1"), ("N2", "N2")):
@@ -111,7 +110,7 @@ def draw_sections(t, kind, path):
         dr.line([(ox + y * 1.6 + 60, oy + (1700 - c["card"]["z"][0]) * 0.40), (ox + y * 1.6 + 60, oy + (1700 - c["card"]["z"][1]) * 0.40)], fill=(255, 170, 0) if nk == "N1" else (0, 200, 255), width=2)
     y = t["street"]["card_plane_behind_frontage_m"] * 1000
     dr.line([(ox + y * 1.6 + 60, oy), (ox + y * 1.6 + 60, oy + 700 * 0.40 * 1.7)], fill=(0, 255, 0), width=1)
-    dr.text((ox, oy - 14), "vertical x=0; nets orange/cyan; room card green (y=270)", fill=(255, 255, 0))
+    dr.text((ox, oy - 14), "vertical x=-150; nets orange/cyan; room card green (y=270)", fill=(255, 255, 0))
     im.save(path)
 
 
@@ -218,6 +217,10 @@ def overlay(t, photo, out):
         return ((px - ov["crop"][0]) * sc, (py - ov["crop"][1]) * sc)
     polys = elevation(t, "S22")
     for p in polys:
+        # only what shows in the opening: the linings and the pulley stiles lie behind the brick beyond +-425 mm
+        p = dict(p, poly=[[max(-425.0, min(425.0, x)), z] for x, z in p["poly"]])
+        if p["poly"][0][0] == p["poly"][1][0]:
+            continue
         if p["material"] == "paint" and p["name"].split("__")[-1].startswith(("upper_stile", "lower_stile", "upper_top_rail", "lower_bottom_rail", "lower_top_rail", "upper_bottom_rail", "lower_bar", "upper_bar", "inner_lining", "outer_lining", "head_lining", "head_outer")):
             pts = [Pp(x, z) for x, z in p["poly"]]
             dr.line(pts + [pts[0]], fill=(255, 40, 40), width=1)
@@ -241,7 +244,7 @@ def main():
     os.makedirs(a.out_dir, exist_ok=True)
     drawing = {"units": "millimetres; elevations (x across, z up) and sections (x or y, y or z) in the kit frame", "kinds": {}}
     for kind in ("S22", "S11", "RC"):
-        drawing["kinds"][kind] = {"elevation": elevation(t, kind), "hsection_z300": hsection(t, kind, 300), "hsection_z1000": hsection(t, kind, 1000), "vsection_x0": vsection(t, kind, 0.0)}
+        drawing["kinds"][kind] = {"elevation": elevation(t, kind), "hsection_z300": hsection(t, kind, 300), "hsection_z1000": hsection(t, kind, 1000), "vsection_x_minus150": vsection(t, kind, -150.0)}
         draw_elev(t, kind, os.path.join(a.out_dir, "E-%s-elevation.png" % kind))
         draw_sections(t, kind, os.path.join(a.out_dir, "S-%s-sections.png" % kind))
     for rid in t["rooms"]["rooms"]:

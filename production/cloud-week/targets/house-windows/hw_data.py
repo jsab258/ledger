@@ -88,8 +88,8 @@ GLASS = {
         "game": "one opaque Default Lit material on the pane (research 1a, step 1): base colour = lerp(room 0.03, lace x 0.6, the net's alpha) with the alpha WIRED; Specular 1.0 (F0 0.08, standing for both faces of a single pane); roughness 0.03; metallic 0; day emissive 0",
         "base_colour_room_linear": 0.03, "lace_albedo_factor": 0.6, "specular": 1.0, "f0": 0.08, "roughness": 0.03, "roughness_range": [0.02, 0.04], "metallic": 0.0, "day_emissive": 0.0,
         "cloud_stand_in": "Cycles Principled BSDF, NOT Glass BSDF: Base Color 0.03 (linear grey) with the net card's alpha as the mix, Specular IOR Level 1.0, Roughness 0.03, Transmission 0, Metallic 0, the room card (baked through `trace`) as Emission x (1 - Fresnel) x brightness; the opposite row and the sky dome are what it reflects (Cycles traces them; Lumen's reflections and the box-projected street cube are the game's)",
-        "fresnel_two_face": {"90": 0.08, "30": 0.17, "24": 0.23, "18": 0.34, "16": 0.38, "10": 0.56, "8": 0.64},
-        "fresnel_note": "angle from the wall; 1a's two-face float glass n 1.52 (Derived); Unreal's Specular 1 gives 26 per cent at 16 degrees (two thirds of true, close enough)",
+        "fresnel_two_face": {"90": 0.082, "30": 0.157, "24": 0.215, "18": 0.314, "16": 0.360, "10": 0.544, "8": 0.622},
+        "fresnel_note": "angle from the wall; float glass n 1.52, both faces, unpolarised, the reflections between the faces counted (Derived, recomputed by self_check.py: 1a's table is 0.02 to 0.03 higher at 16 to 30 degrees); Unreal's Specular 1 (F0 0.08, Schlick) gives 0.26 at 16 degrees, about three quarters of true: close enough",
     },
     "waviness": {
         "what": "per-pane tilt, not a wave texture: each pane mesh is rotated by a seeded angle uniform in +-0.5 degrees about the vertical axis and +-0.3 degrees about the horizontal one (never zero, the spread of a window's panes at least 0.3 degrees)",

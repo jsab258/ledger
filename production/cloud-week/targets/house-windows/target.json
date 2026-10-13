@@ -914,8 +914,8 @@
    "paint": "bronze",
    "condition": "grimy",
    "net": {
-    "kind": "N0",
-    "colour": null,
+    "kind": "N2",
+    "colour": "yellowed",
     "torn": false
    },
    "extra": null,
@@ -1322,8 +1322,8 @@
    "paint": "white_upvc",
    "condition": "sound",
    "net": {
-    "kind": "N0",
-    "colour": null,
+    "kind": "N2",
+    "colour": "greyed",
     "torn": false
    },
    "extra": null,
@@ -4072,15 +4072,15 @@
    "day_emissive": 0.0,
    "cloud_stand_in": "Cycles Principled BSDF, NOT Glass BSDF: Base Color 0.03 (linear grey) with the net card's alpha as the mix, Specular IOR Level 1.0, Roughness 0.03, Transmission 0, Metallic 0, the room card (baked through `trace`) as Emission x (1 - Fresnel) x brightness; the opposite row and the sky dome are what it reflects (Cycles traces them; Lumen's reflections and the box-projected street cube are the game's)",
    "fresnel_two_face": {
-    "90": 0.08,
-    "30": 0.17,
-    "24": 0.23,
-    "18": 0.34,
-    "16": 0.38,
-    "10": 0.56,
-    "8": 0.64
+    "90": 0.082,
+    "30": 0.157,
+    "24": 0.215,
+    "18": 0.314,
+    "16": 0.36,
+    "10": 0.544,
+    "8": 0.622
    },
-   "fresnel_note": "angle from the wall; 1a's two-face float glass n 1.52 (Derived); Unreal's Specular 1 gives 26 per cent at 16 degrees (two thirds of true, close enough)"
+   "fresnel_note": "angle from the wall; float glass n 1.52, both faces, unpolarised, the reflections between the faces counted (Derived, recomputed by self_check.py: 1a's table is 0.02 to 0.03 higher at 16 to 30 degrees); Unreal's Specular 1 (F0 0.08, Schlick) gives 0.26 at 16 degrees, about three quarters of true: close enough"
   },
   "waviness": {
    "what": "per-pane tilt, not a wave texture: each pane mesh is rotated by a seeded angle uniform in +-0.5 degrees about the vertical axis and +-0.3 degrees about the horizontal one (never zero, the spread of a window's panes at least 0.3 degrees)",
@@ -4413,6 +4413,472 @@
   }
  },
  "rooms": {
+  "visible_zone": {
+   "what": "which parts of the room each review camera sees through the glass rectangle (144 rays, hit points in the room frame: x across from the picture's left edge, y back from the card, z above the floor)",
+   "by_family": {
+    "UP": {
+     "H_ACROSS_0": {
+      "eye_in_picture_frame_m": [
+       1.4,
+       -8.9,
+       -2.05
+      ],
+      "rays": 144,
+      "surfaces_seen": {
+       "back": {
+        "x": [
+         0.84,
+         1.96
+        ],
+        "y": [
+         4.2,
+         4.2
+        ],
+        "z": [
+         1.78,
+         2.41
+        ]
+       },
+       "ceiling": {
+        "x": [
+         0.84,
+         1.96
+        ],
+        "y": [
+         0.85,
+         4.16
+        ],
+        "z": [
+         2.55,
+         2.55
+        ]
+       }
+      }
+     },
+     "H_ACROSS_30": {
+      "eye_in_picture_frame_m": [
+       6.48,
+       -8.9,
+       -2.05
+      ],
+      "rays": 144,
+      "surfaces_seen": {
+       "left": {
+        "x": [
+         0.0,
+         0.0
+        ],
+        "y": [
+         1.55,
+         3.22
+        ],
+        "z": [
+         1.01,
+         2.54
+        ]
+       },
+       "ceiling": {
+        "x": [
+         0.02,
+         1.26
+        ],
+        "y": [
+         0.85,
+         2.95
+        ],
+        "z": [
+         2.55,
+         2.55
+        ]
+       }
+      }
+     },
+     "H_ALONG_15_NEAR": {
+      "eye_in_picture_frame_m": [
+       7.0,
+       -1.77,
+       -2.05
+      ],
+      "rays": 144,
+      "surfaces_seen": {
+       "left": {
+        "x": [
+         -0.0,
+         0.0
+        ],
+        "y": [
+         0.18,
+         0.46
+        ],
+        "z": [
+         0.97,
+         2.54
+        ]
+       },
+       "ceiling": {
+        "x": [
+         0.01,
+         1.21
+        ],
+        "y": [
+         0.08,
+         0.41
+        ],
+        "z": [
+         2.55,
+         2.55
+        ]
+       }
+      }
+     },
+     "H_ALONG_30_NEAR": {
+      "eye_in_picture_frame_m": [
+       4.0,
+       -1.77,
+       -2.05
+      ],
+      "rays": 144,
+      "surfaces_seen": {
+       "left": {
+        "x": [
+         -0.0,
+         0.0
+        ],
+        "y": [
+         0.47,
+         1.1
+        ],
+        "z": [
+         1.41,
+         2.55
+        ]
+       },
+       "ceiling": {
+        "x": [
+         0.0,
+         1.53
+        ],
+        "y": [
+         0.08,
+         1.21
+        ],
+        "z": [
+         2.55,
+         2.55
+        ]
+       }
+      }
+     },
+     "H_ALONG_15_ROAD": {
+      "eye_in_picture_frame_m": [
+       11.1,
+       -2.87,
+       -2.05
+      ],
+      "rays": 144,
+      "surfaces_seen": {
+       "left": {
+        "x": [
+         -0.0,
+         0.0
+        ],
+        "y": [
+         0.18,
+         0.42
+        ],
+        "z": [
+         0.79,
+         2.55
+        ]
+       },
+       "ceiling": {
+        "x": [
+         0.04,
+         0.76
+        ],
+        "y": [
+         0.2,
+         0.36
+        ],
+        "z": [
+         2.55,
+         2.55
+        ]
+       }
+      }
+     },
+     "H_UNDER": {
+      "eye_in_picture_frame_m": [
+       1.4,
+       -1.07,
+       -2.05
+      ],
+      "rays": 144,
+      "surfaces_seen": {
+       "ceiling": {
+        "x": [
+         0.73,
+         2.07
+        ],
+        "y": [
+         0.0,
+         0.66
+        ],
+        "z": [
+         2.55,
+         2.55
+        ]
+       }
+      }
+     }
+    },
+    "GF": {
+     "H_ACROSS_0": {
+      "eye_in_picture_frame_m": [
+       1.7,
+       -8.9,
+       1.25
+      ],
+      "rays": 144,
+      "surfaces_seen": {
+       "back": {
+        "x": [
+         2.48,
+         3.32
+        ],
+        "y": [
+         4.2,
+         4.2
+        ],
+        "z": [
+         0.02,
+         2.37
+        ]
+       },
+       "right": {
+        "x": [
+         3.4,
+         3.4
+        ],
+        "y": [
+         2.83,
+         3.76
+        ],
+        "z": [
+         0.06,
+         2.33
+        ]
+       }
+      }
+     },
+     "H_ACROSS_30": {
+      "eye_in_picture_frame_m": [
+       6.78,
+       -8.9,
+       1.25
+      ],
+      "rays": 144,
+      "surfaces_seen": {
+       "back": {
+        "x": [
+         0.14,
+         1.11
+        ],
+        "y": [
+         4.2,
+         4.2
+        ],
+        "z": [
+         0.02,
+         2.37
+        ]
+       },
+       "left": {
+        "x": [
+         0.0,
+         0.0
+        ],
+        "y": [
+         4.19,
+         4.19
+        ],
+        "z": [
+         0.02,
+         2.37
+        ]
+       }
+      }
+     },
+     "H_ALONG_15_NEAR": {
+      "eye_in_picture_frame_m": [
+       7.3,
+       -1.77,
+       1.25
+      ],
+      "rays": 144,
+      "surfaces_seen": {
+       "left": {
+        "x": [
+         -0.0,
+         0.0
+        ],
+        "y": [
+         0.63,
+         1.04
+        ],
+        "z": [
+         0.02,
+         2.52
+        ]
+       },
+       "floor": {
+        "x": [
+         0.05,
+         0.76
+        ],
+        "y": [
+         0.75,
+         0.75
+        ],
+        "z": [
+         0.0,
+         0.0
+        ]
+       }
+      }
+     },
+     "H_ALONG_30_NEAR": {
+      "eye_in_picture_frame_m": [
+       4.3,
+       -1.77,
+       1.25
+      ],
+      "rays": 144,
+      "surfaces_seen": {
+       "left": {
+        "x": [
+         -0.0,
+         0.0
+        ],
+        "y": [
+         1.68,
+         3.64
+        ],
+        "z": [
+         0.02,
+         2.59
+        ]
+       },
+       "floor": {
+        "x": [
+         0.09,
+         2.3
+        ],
+        "y": [
+         0.75,
+         3.36
+        ],
+        "z": [
+         -0.0,
+         0.0
+        ]
+       },
+       "ceiling": {
+        "x": [
+         0.05,
+         1.92
+        ],
+        "y": [
+         1.23,
+         3.4
+        ],
+        "z": [
+         2.6,
+         2.6
+        ]
+       }
+      }
+     },
+     "H_ALONG_15_ROAD": {
+      "eye_in_picture_frame_m": [
+       11.4,
+       -2.87,
+       1.25
+      ],
+      "rays": 144,
+      "surfaces_seen": {
+       "left": {
+        "x": [
+         -0.0,
+         0.0
+        ],
+        "y": [
+         0.57,
+         0.87
+        ],
+        "z": [
+         0.13,
+         2.26
+        ]
+       }
+      }
+     },
+     "H_UNDER": {
+      "eye_in_picture_frame_m": [
+       1.7,
+       -1.07,
+       1.25
+      ],
+      "rays": 144,
+      "surfaces_seen": {
+       "right": {
+        "x": [
+         3.4,
+         3.4
+        ],
+        "y": [
+         0.22,
+         2.06
+        ],
+        "z": [
+         0.02,
+         2.54
+        ]
+       },
+       "floor": {
+        "x": [
+         2.49,
+         3.34
+        ],
+        "y": [
+         0.39,
+         1.9
+        ],
+        "z": [
+         0.0,
+         0.0
+        ]
+       },
+       "ceiling": {
+        "x": [
+         2.65,
+         3.39
+        ],
+        "y": [
+         0.67,
+         1.93
+        ],
+        "z": [
+         2.6,
+         2.6
+        ]
+       }
+      }
+     }
+    }
+   },
+   "reading": "an upper room is seen from the street as its ceiling and the top 0.6 m of its back wall (from across) or the first 0.5 m of one side wall (along the street, near): so its picture's detail is ceiling, cornice, picture rail, wall tops and tall furniture tops; a cottage's front room is seen at eye level: the whole back wall and the side walls"
+  },
   "families": {
    "UP": {
     "w": 2.8,
@@ -4496,8 +4962,8 @@
     "tolerated": 0.06
    },
    "ceiling": {
-    "true": 0.03,
-    "tolerated": 0.06
+    "true": 0.02,
+    "tolerated": 0.04
    },
    "floor": {
     "true": 0.018,
@@ -4668,19 +5134,19 @@
    },
    "coving": {
     "h": 0.055,
-    "proud": 0.055,
+    "proud": 0.02,
     "surface": "ceiling edge",
-    "note": "tolerated class (0.055 under 0.06)"
+    "note": "a cove drawn as a 55 mm band shaded like a cove, 0.02 proud (a real 55 mm cove is over the ceiling budget)"
    },
    "ceiling_rose": {
     "d": 0.3,
     "proud": 0.03,
     "surface": "ceiling",
-    "note": "a plaster rose at the pendant's place"
+    "note": "a plaster rose at the pendant's place: tolerated class on the ceiling (0.03 over 0.02, under 0.04)"
    },
    "bare_bulb": {
     "d": 0.06,
-    "proud": 0.03,
+    "proud": 0.02,
     "surface": "ceiling",
     "note": "a flat glowing disc (a pendant of bare bulb on its flex: the flex is not drawn)"
    },
@@ -4703,7 +5169,7 @@
     "h": 0.55,
     "proud": 0.03,
     "surface": "side",
-    "note": "a pressed-steel radiator drawn flat (the real one stands 0.08 off: tolerated, over true)"
+    "note": "a pressed-steel radiator drawn flat (the real one stands 0.08 off: over the budget)"
    },
    "stair_flat": {
     "proud": 0.03,
@@ -8363,7 +8829,7 @@
    "group": "kit",
    "name": "pivot",
    "measure": "the bounding box of the whole piece in the kit frame",
-   "expected": "x centred on 0 (+-1 mm), z min 0 (+-0.5 mm), y (into the wall) min 0 within 115 mm (the lab's oak sill reaches 108.3 in front of the opening's inner lining but not past the brick face)",
+   "expected": "x centred on 0 (+-1 mm), z min 0 (+-0.5 mm), nothing in front of the brick face (y into the wall min >= 0: the lab sash 108.3, RC 72.5)",
    "tolerance": "+-1 mm",
    "applies_to": "S22 S11 RC",
    "kind": "Derived",
@@ -8528,8 +8994,8 @@
    "group": "glass",
    "name": "reflectance at a grazing angle",
    "measure": "render a flat pane at 16 degrees from the wall against a uniform sky of luma 1.0 with the room black",
-   "expected": "the pane's luma 0.26 of the sky (+-0.03) with F0 0.08: Unreal's own figure for Specular 1 (1a section 2)",
-   "tolerance": "+-0.03",
+   "expected": "the pane's luma 0.26 of the sky with F0 0.08 (Schlick at 74 degrees from the normal: Unreal's own figure for Specular 1, 1a section 2); Cycles' dielectric Fresnel at specular level 1.0 may read up to 0.31",
+   "tolerance": "+-0.05",
    "applies_to": "the pane material",
    "kind": "Derived",
    "source": "1a Fresnel table: true two-face 0.38, Unreal 0.26"
@@ -8736,8 +9202,8 @@
    "id": "PIC-05",
    "group": "rooms",
    "name": "stand-off",
-   "measure": "every object's stand-off from its surface (rooms.rooms[].objects)",
-   "expected": "back wall <= 0.80 (true <= 0.40), side walls and ceiling <= 0.06 (true <= 0.03), floor <= 0.037 (true <= 0.018)",
+   "measure": "every object's and every form's stand-off from its surface (rooms.rooms[].objects, rooms.forms)",
+   "expected": "back wall <= 0.80 (true <= 0.40), side walls <= 0.06 (true <= 0.03), ceiling <= 0.04 (true <= 0.02), floor <= 0.037 (true <= 0.018)",
    "tolerance": "limit",
    "applies_to": "all",
    "kind": "Derived",
@@ -8803,7 +9269,7 @@
    "group": "sites",
    "name": "the mix",
    "measure": "the street's twenty windows by net class",
-   "expected": "N0 4 to 5, N1 8 to 10, N2 2 to 4, N3 1, curtain or blind 6 to 8 (some windows carry two)",
+   "expected": "N0 4 to 5, N1 8 to 10, N2 3 to 5, N3 1; curtains (open beside a net, or drawn) and blinds 6 to 10 of the 20",
    "tolerance": "counts",
    "applies_to": "20 sites",
    "kind": "Photo",

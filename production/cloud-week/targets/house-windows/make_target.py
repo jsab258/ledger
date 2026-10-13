@@ -77,7 +77,7 @@ SITE_PLAN = {
     ("east_parade", 1, 0): dict(room="up_landing_2", net=("N0", None), extra=("B2", "cream"), paint="cream", cond="sound"),
     ("east_parade", 1, 1): dict(room="up_bedroom_1", net=("N1", "white"), extra=("C2", "brown"), paint="cream", cond="sound"),
     ("east_parade", 2, 0): dict(room="up_lounge_2", net=("N1", "greyed"), extra=("C2", "green"), paint="white_upvc", cond="sound"),
-    ("east_parade", 2, 1): dict(room="up_landing_1", net=("N0", None), extra=None, paint="white_upvc", cond="sound"),
+    ("east_parade", 2, 1): dict(room="up_landing_1", net=("N2", "greyed"), extra=None, paint="white_upvc", cond="sound"),
     ("east_parade", 3, 0): dict(room="up_empty_1", net=("N1", "yellowed"), extra=None, paint="white_flaking", cond="flaking", torn_net=True),
     ("east_parade", 3, 1): dict(room="up_empty_2", net=("N0", None), extra=None, paint="white_flaking", cond="flaking"),
     ("east_parade", 4, 0): dict(room="up_bedroom_2", net=("N2", "white"), extra=("C1", "green"), paint="white_upvc", cond="sound"),
@@ -85,7 +85,7 @@ SITE_PLAN = {
     ("east_parade", 5, 0): dict(room="up_lounge_3", net=("N1", "white"), extra=("C2", "floral_cream"), paint="olive", cond="sound"),
     ("east_parade", 5, 1): dict(room="up_landing_1", net=("N3", "white"), extra=None, paint="olive", cond="sound"),
     ("east_chandler", 0, 0): dict(room="up_bedroom_3", net=("N0", None), extra=("B1", "white"), paint="bronze", cond="sound"),
-    ("east_chandler", 0, 1): dict(room="up_landing_2", net=("N0", None), extra=None, paint="bronze", cond="grimy"),
+    ("east_chandler", 0, 1): dict(room="up_landing_2", net=("N2", "yellowed"), extra=None, paint="bronze", cond="grimy"),
     ("west_south", 2, 0): dict(room="gf_front_3", net=("N1", "white"), extra=None, paint="cream", cond="sound", always_lit=True),
     ("west_south", 2, 1): dict(room="gf_front_3", net=("N1", "white"), extra=("B3", "white"), paint="cream", cond="sound", always_lit=True),
     ("west_south", 1, 0): dict(room="gf_front_2", net=("N2", "white"), extra=None, paint="white_upvc", cond="sound"),
@@ -241,6 +241,22 @@ def main():
                         if b[c][kk] is not None and (best[c][kk] is None or b[c][kk] < best[c][kk]):
                             best[c][kk] = b[c][kk]
         budgets[fam] = {"surfaces": best, "window_above_floor_m": [round(sill_above_floor, 4), round(head_above_floor, 4)], "window_offsets_m": offs}
+    # what shows of each room from the review cameras (computed through the game's rule's geometry)
+    vz = {}
+    names = ["back", "left", "right", "floor", "ceiling"]
+    for fam, (sill_above_floor, head_above_floor, off) in {"UP": (4.2236 - 3.75, 5.9 - 3.75, 0.0), "GF": (2.5 - H.WIN_H_PERIOD - 0.45, 2.05, 0.9)}.items():
+        room = H.ROOMS[fam]
+        rect = H.window_in_picture(room, off, sill_above_floor, head_above_floor)
+        vz[fam] = {}
+        for cam in H.STAND_OFF_CAMERAS:
+            e = H.eye_in_picture(H.eye_street(H.CAMERAS[cam]["spec"], 1, 0.0), 1, 0.0, room)
+            hp, sid, G, Pp = H.see_through(e, rect, room)
+            rec = {}
+            for i, nm in enumerate(names):
+                mk = sid == i
+                if mk.any():
+                    rec[nm] = {"x": [round(float(hp[mk, 0].min()), 2), round(float(hp[mk, 0].max()), 2)], "y": [round(float(hp[mk, 1].min()), 2), round(float(hp[mk, 1].max()), 2)], "z": [round(float(hp[mk, 2].min()), 2), round(float(hp[mk, 2].max()), 2)]}
+            vz[fam][cam] = {"eye_in_picture_frame_m": [round(float(v), 2) for v in e], "rays": int(len(hp)), "surfaces_seen": rec}
     # picture geometry
     pictures = {}
     for fam, room in H.ROOMS.items():
@@ -369,7 +385,7 @@ def main():
                      "count_checked_by_self_check": 48, "hill_framed_windows": "the north rise's framed windows (`_framed_window`, 125 m out: two pixels of frame) stay flat cards: not kit pieces"},
         "kinds": kinds, "paints": D.PAINTS,
         "glass": D.GLASS, "box_shade": D.BOX_SHADE, "nets": D.NETS, "net_common": D.NET_COMMON, "curtains": D.CURTAINS, "blinds": D.BLINDS,
-        "rooms": {"families": H.ROOMS, "budgets_computed": budgets, "budget_rule": R.BUDGET, "pictures_by_family": pictures, "finishes": R.FINISH, "forms": R.FORMS, "rooms": rooms,
+        "rooms": {"visible_zone": {"what": "which parts of the room each review camera sees through the glass rectangle (144 rays, hit points in the room frame: x across from the picture's left edge, y back from the card, z above the floor)", "by_family": vz, "reading": "an upper room is seen from the street as its ceiling and the top 0.6 m of its back wall (from across) or the first 0.5 m of one side wall (along the street, near): so its picture's detail is ceiling, cornice, picture rail, wall tops and tall furniture tops; a cottage's front room is seen at eye level: the whole back wall and the side walls"}, "families": H.ROOMS, "budgets_computed": budgets, "budget_rule": R.BUDGET, "pictures_by_family": pictures, "finishes": R.FINISH, "forms": R.FORMS, "rooms": rooms,
                   "cards": {"camera_rule": "the render camera stands on the room's centre line d = W in front of the card, framing the card rectangle W x H exactly; the game's `trace` is imported, not rewritten",
                             "picture_names": "<room_id>_<state>.png with <room_id>.json beside them (room, w, h, d, camera_d, pixels, states, made_by, samples); 8-bit sRGB PNG; Cycles 128 samples, denoised; masters on F:/LedgerTools/house-rooms",
                             "states": ["day", "night_lit", "night_dark"], "brightness": {"day": 0.12, "night": 0.7},
