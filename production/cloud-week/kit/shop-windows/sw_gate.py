@@ -38,6 +38,7 @@ SPILL_OFF = ("win_", "frame_", "door_jamb_", "door_frame_head", "band_", "sil_si
 SPILL_POS = (0.975, 0.10, 2.30)        # the stand-in rect light, model frame: 0.10 behind the wall face, z 2.30 (street review N1): the whole rect stands 50 mm or more behind the glass
 PIERS = {"x": ((-3.0, -2.65), (2.65, 3.0)), "y": (0.0, 0.30), "z": (0.0, 3.56)}     # the brick piers behind the pilasters (sw_front.PIERS_X; street review N2)
 CARD_X0, CARD_Y, CARD_BOTTOM = 15.35, 5.875, 0.65
+CARD_BOTTOM_M = CARD_BOTTOM - 0.10          # the card's bottom in the front model's z (above the footway)
 BAY_MID_X = 18.0
 Y_WALL = 5.295
 FOOT = 0.10
@@ -239,22 +240,62 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
     card.visible_diffuse = False
     card.visible_glossy = False
     card.visible_shadow = False
-    # --- reveals (dark, matt) between the wall and the card so a grazing ray finds a surface: sides, top, and under the bed
+    # --- reveals between the wall and the card so a grazing ray finds a surface: top and under the bed are dark and matt; the SIDES (and the display's two return walls) are an emission of
+    # the room picture's own side-wall front column (picture u 0 to 8 px for the left wall, 4088 to 4096 for the right) at the same height, times the state's brightness, so the wall
+    # meets the card without a step (13 Oct, close review fault 3: from CLOSE_35_B a third of the window was a black slab, the 0.61 m gap beside the card's edge)
     dark = bpy.data.materials.new("reveal")
     dark.use_nodes = True
     dark.node_tree.nodes["Principled BSDF"].inputs["Base Color"].default_value = (0.02, 0.02, 0.02, 1)
-    def slab(name, a0, a1, b0, b1, c0, c1):
+
+    def wall_material(side):
+        m = bpy.data.materials.new("side_wall_" + side)
+        m.use_nodes = True
+        t = m.node_tree
+        for n in list(t.nodes):
+            t.nodes.remove(n)
+        if not column_pngs:
+            return dark
+        geo = t.nodes.new("ShaderNodeNewGeometry")
+        sep = t.nodes.new("ShaderNodeSeparateXYZ")
+        mth = t.nodes.new("ShaderNodeMath")          # v = (z - card bottom) / card height
+        mth.operation = "MULTIPLY_ADD"
+        mth.inputs[1].default_value = 1.0 / H
+        mth.inputs[2].default_value = -CARD_BOTTOM_M / H
+        com = t.nodes.new("ShaderNodeCombineXYZ")
+        com.inputs["X"].default_value = 0.5
+        tex = t.nodes.new("ShaderNodeTexImage")
+        tex.image = bpy.data.images.load(column_pngs[side], check_existing=True)
+        tex.image.colorspace_settings.name = "sRGB"
+        tex.interpolation = "Linear"
+        tex.extension = "EXTEND"
+        emn = t.nodes.new("ShaderNodeEmission")
+        emn.inputs["Strength"].default_value = BRIGHTNESS[state]
+        outn = t.nodes.new("ShaderNodeOutputMaterial")
+        t.links.new(geo.outputs["Position"], sep.inputs["Vector"])
+        t.links.new(sep.outputs["Z"], mth.inputs[0])
+        t.links.new(mth.outputs[0], com.inputs["Y"])
+        t.links.new(com.outputs["Vector"], tex.inputs["Vector"])
+        t.links.new(tex.outputs["Color"], emn.inputs["Color"])
+        t.links.new(emn.outputs[0], outn.inputs[0])
+        return m
+    wall_l, wall_r = wall_material("l"), wall_material("r")
+
+    def slab(name, a0, a1, b0, b1, c0, c1, mat=None):
         bpy.ops.mesh.primitive_cube_add(size=1, location=((a0 + a1) / 2, (b0 + b1) / 2, (c0 + c1) / 2))
         o = bpy.context.object
         o.name = name
         o.scale = (a1 - a0, b1 - b0, c1 - c0)
-        o.data.materials.append(dark)
+        o.data.materials.append(mat or dark)
         return o
     ycard = yc
-    slab("reveal_l", -W / 2 - 0.012, -W / 2, 0.0, ycard + 0.02, 0.0, 2.97)
-    slab("reveal_r", W / 2, W / 2 + 0.012, 0.0, ycard + 0.02, 0.0, 2.97)
+    slab("reveal_l", -W / 2 - 0.012, -W / 2, 0.0, ycard + 0.02, 0.0, 2.97, wall_l)
+    slab("reveal_r", W / 2, W / 2 + 0.012, 0.0, ycard + 0.02, 0.0, 2.97, wall_r)
     slab("reveal_top", -W / 2, W / 2, 0.0, ycard + 0.02, 2.95, 2.97)
     slab("reveal_floor", -W / 2, W / 2, 0.02, ycard + 0.02, 0.0, 0.55)
+    for o in disp:
+        if o.type == "MESH" and o.name.startswith("return_wall_"):
+            o.data.materials.clear()
+            o.data.materials.append(wall_l if o.name.startswith("return_wall_l") else wall_r)
     # --- the street: wall, footway, road, far footway
     brick = bpy.data.materials.new("brick")
     brick.use_nodes = True
