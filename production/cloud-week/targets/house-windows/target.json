@@ -7227,7 +7227,7 @@
     "00:00": 0.1,
     "01:00": 0.05
    },
-   "rule": "a window is lit at hour h when its place in the lit order is below round(share(h) x 20); the order is fixed (below) and never reshuffled, so a window lit at 23:00 is lit at 20:30; empty rooms are never lit; the two cottage windows of the always-lit house are lit from 18:00 to 23:00 whatever the share. THE ORDER (TARGET-REVIEW narrow point 6, Judgement): in 1990 the evening's light is in the front room or the lounge and a landing is lit briefly; after the always-lit pair: the cottage front room west_south_bay1_gf_w1, then the three lounges, then a bedroom (the chandler's), then the other cottage front rooms, then the other bedrooms, then the landings",
+   "rule": "a window is lit at hour h when its place in the lit order is below round(share(h) x 20); the order is fixed (below) and never reshuffled, so a window lit at 23:00 is lit at 20:30; empty rooms are never lit; the two cottage windows of the always-lit house are lit from 18:00 to 23:00 whatever the share. THE ORDER (TARGET-REVIEW narrow point 6, Judgement): in 1990 the evening's light is in the front room or the lounge and a landing is lit briefly; after the always-lit pair: the cottage front room west_south_bay1_gf_w1, then the three lounges, then a bedroom (the chandler's), then the other cottage front rooms, then the other bedrooms, then the landings. The review's text names east_chandler_bay0_upper_w1 as the fifth, but that window is a landing (up_landing_2, as the review's own fault text says): the chandler's bedroom window, _w0, stands there",
    "by_day": "no window is lit by day; a lit room by day would be invisible in the glass's reflection",
    "lit_at_20_30": 7,
    "tolerance_at_20_30": 1,
@@ -9719,7 +9719,7 @@
    "id": "KIT-14",
    "group": "kit",
    "name": "equal lights, centred bars",
-   "measure": "the x extents of every pane node, the bar's centre, the RC's transom",
+   "measure": "the x extents of every pane node, the bar's centre, the RC's transom, RC2's top light, transom and mullion and its two lower lights' openings",
    "expected": "S22: four panes of equal width (352.6 +-0.5), the bar and the putty strips centred on x = 0 (+-0.5); S11: two panes equal; RC: both lights centred on x = 0 (+-0.5), the transom's centre at 0.72 x 1676.4 = 1207.0 (+-1); RC2: the top light, the transom and the mullion centred on x = 0 (+-0.5), the two lower lights' openings equal (330.0 +-0.5 each), the transom's centre at 0.66 x 1676.4 = 1106.4 (+-1), the mullion 70 wide from z 60 to 1071.4 (+-0.5)",
    "tolerance": "+-0.5 mm",
    "applies_to": "S22 S11 RC RC2",
