@@ -1,30 +1,30 @@
 {
- "made": "2026-10-13 05:48:20",
- "what": "the files the try 2 reviews are to look at; the three glbs and the three 4096 pictures are out of git (rebuilt by build_ritas.py) so this names the versions",
+ "made": "2026-10-13 10:25:06",
+ "what": "the files of the narrow-points build (13 Oct, from the try 2 reviews; v3); the three glbs and the three 4096 pictures are out of git (rebuilt by build_ritas.py) so this names the versions",
  "files": {
   "ritas_front.glb": {
-   "bytes": 9065372,
-   "sha256": "23893a0e90c9e2c3a9a08a2df16fd2ec99fd0bdaa030248306a1c7f62b43a30b"
+   "bytes": 9061428,
+   "sha256": "34007a6332c3652b307f86ba0061bb7e4af79b5f3f1c1ff3a79c4c807a84cef4"
   },
   "ritas_grille_night.glb": {
    "bytes": 1503204,
    "sha256": "73f5f0a23bbd81788810b6724ec6d7f685d50432cf59e0dd750cd47770e8251b"
   },
   "ritas_display.glb": {
-   "bytes": 9523888,
-   "sha256": "7312a7a9a3882c98ecc4b68458ea3b865107d8337c2d525c2272147854cb1f17"
+   "bytes": 9952816,
+   "sha256": "f1d034874bbe3d9aa8cfb84e1eca48a89550e394ff553e7c2dd57bae0686411a"
   },
   "pawnbroker_day.png": {
-   "bytes": 7882681,
-   "sha256": "fe2dee0b2518ac74ae63ce01e792be5c01e342a1ac15b3d6860e58a8bff26a5e"
+   "bytes": 7945592,
+   "sha256": "7ae458629a1f928dbc8191b943e876452116122db0c5b0ce48c8f518e8e216ec"
   },
   "pawnbroker_night_lit.png": {
-   "bytes": 7344725,
-   "sha256": "d7f5c507119b6703d12ef42d31168cdda2d8a574d3ba3eac1ed7f6464078dcf4"
+   "bytes": 7419098,
+   "sha256": "b77e24f75af8abf0cb9ddaa3b657ef67f903718215a9e1db54c535fb9e9fbf8d"
   },
   "pawnbroker_night_dark.png": {
-   "bytes": 5293690,
-   "sha256": "faaf118d573c180957fde3ff575019abc6e57a2793978d5757fb77d7ca4d638c"
+   "bytes": 5326271,
+   "sha256": "d062c72ad3c76ab6fb9705b6d8aaef9c5c5d2874243ae63f27839b13c0a63b29"
   }
  }
 }

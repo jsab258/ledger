@@ -711,7 +711,7 @@ class Room:
         self.riser_log = []
         shelf_m = self.mat("shelf", rgb8(150, 108, 70), rough=0.55)
 
-        def place_row(queue, allowed, xa, xb, y_back, z, clear, deep, tag):
+        def place_row(queue, allowed, xa, xb, y_back, z, clear, deep, tag, fixture="R-back-stock"):
             """Greedy fill of one row (the widest piece that fits, left to right) from the queue's models in `allowed`. Returns (pieces placed, width placed)."""
             x = xa + 0.01
             n, wsum = 0, 0.0
@@ -737,7 +737,7 @@ class Room:
                 clk = None
                 if p["model"] == "wall_clock":
                     clk = self.next_clock()
-                self.place(p["model"], (x + w / 2, y_back, z), rot=(0, 0, turn + rnd.uniform(-JIT, JIT)), scale=sc_, fixture="R-back-stock", anchor=("c", "max", "min"), clock=clk)
+                self.place(p["model"], (x + w / 2, y_back, z), rot=(0, 0, turn + rnd.uniform(-JIT, JIT)), scale=sc_, fixture=fixture, anchor=("c", "max", "min"), clock=clk, tag=tag)
                 self.scales.append({"model": p["model"], "scale": round(sc_, 3), "sized": bool(p["size"]), "row": tag})
                 self.tickets_for(x + w / 2, y_back - d.y * sc_ - 0.008, z)
                 last_model = p["model"]
@@ -768,7 +768,8 @@ class Room:
                 self.riser_log.append({"z": z, "x": [round(a, 3), round(b, 3)], "kind": "riser", "length": round(b - a, 3), "n": n, "filled": round(w / (b - a), 3)})
                 # the front row on the board, backs against the riser's front edge 5 mm clear of it; the board is 0.35 deep: a piece at most 0.35 - 0.205 - 0.015 deep
                 clear_f = (zt[1] - BOARD_T - z - 0.015) if z == zt[0] else (H - z - 0.02)
-                n2, w2 = place_row(queue, ALLOW_FRONT, a, b, D - RISER_D - 0.005, z, clear_f, 0.35 - RISER_D - 0.005 - 0.015, "front")
+                # the front row stands on the television board (0.35 deep, the stand-off rule of the TV tiers): its fixture is the TV tier's
+                n2, w2 = place_row(queue, ALLOW_FRONT, a, b, D - RISER_D - 0.005, z, clear_f, 0.35 - RISER_D - 0.005 - 0.015, "front", fixture="R-back-tv-tiers")
                 self.riser_log.append({"z": z, "x": [round(a, 3), round(b, 3)], "kind": "front", "length": round(b - a, 3), "n": n2, "filled": round(w2 / (b - a), 3)})
 
         def free_stretches(z, a, b):

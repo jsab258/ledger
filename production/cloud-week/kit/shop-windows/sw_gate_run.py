@@ -115,6 +115,11 @@ def run(work, assets, previews, samples, views=None, log=print, check_renders=Tr
                 t = G.render_view(cam, R["cameras"][cam], st, os.path.join(gate, "card_%s_%s.png" % (cam, st)), os.path.join(gate, "check_%s_%s_norefl.png" % (cam, st)), front, grille, disp, HDRI,
                                   samples=CHECK_SAMPLES, extra=extra, res=CHECK_RES, glass_refl=0.0, column_pngs=cols(st))
                 times["check_%s_%s_norefl" % (cam, st)] = t
+                if st != "day":
+                    # GLS-03: the same frame (same size, same samples, same seed) with the glass's reflection off, so that the difference is the glass and nothing else
+                    t = G.render_view(cam, R["cameras"][cam], st, os.path.join(gate, "card_%s_%s.png" % (cam, st)), os.path.join(gate, "check_%s_%s_norefl_full.png" % (cam, st)), front, grille, disp, HDRI,
+                                      samples=samples, extra=extra, res=RES_FRAME, glass_refl=0.0, column_pngs=cols(st))
+                    times["check_%s_%s_norefl_full" % (cam, st)] = t
                 t = G.render_view(cam, R["cameras"][cam], st, os.path.join(gate, "card_%s_%s.png" % (cam, st)), os.path.join(gate, "check_%s_%s_mask.png" % (cam, st)), front, grille, disp, HDRI,
                                   samples=1, extra=extra, res=CHECK_RES, mode="mask_glass", column_pngs=cols(st))
                 times["check_%s_%s_mask" % (cam, st)] = t

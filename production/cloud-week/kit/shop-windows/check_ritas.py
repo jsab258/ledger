@@ -552,7 +552,8 @@ def gate_rows(R, work, rows, means, lum_pics):
     rows.na("LIT-03", "the empty unit is a pale blank by day", "the empty unit's check, not Rita's")
     # LIT-05 and LIT-07 on the glass only (13 Oct)
     lp = os.path.join(gate, "gate_lights.json")
-    spill_w = json.load(open(lp)).get("spill_w") if os.path.exists(lp) else "?"
+    gl = json.load(open(lp)) if os.path.exists(lp) else {}
+    spill_w = "%s, with the two strip lights under the tier boards at %s each" % (gl.get("spill_w", "?"), gl.get("strip_w", "?"))
     X.night_rows(R, work, rows, spill_w)
     X.glass_night_rows(R, work, rows)
     X.lit08_rows(R, work, rows)

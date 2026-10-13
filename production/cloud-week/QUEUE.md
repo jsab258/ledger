@@ -79,7 +79,7 @@ The same method and rules as part 1: targets from sources, photographs win, buil
 - B2. open. Night versions of the shop rooms.
 - B3. open. The posters' second street try.
 - B4. open. Fascia signs for the other rows.
-- B5. open. A first draft of LEDGER's first 30 minutes from canon and PLAN.md, marked "draft until the AAA study".
+- B5. done 13 Oct 10:40 UTC (a helper; check_draft.py 64 of 64 rows, 25 of 25 damaged copies caught, both content gates clean; no fresh review: it is a design draft, every invention is a proposal marked for Jafar in DECISIONS.md): production/cloud-week/first-30-minutes/DRAFT.md (two routes minute by minute, a measurement table, three proposals for Jafar: why Tom puts Rita's window in, the arrival shot, Ada's tea; three decisions for his page). Was: open. A first draft of LEDGER's first 30 minutes from canon and PLAN.md, marked "draft until the AAA study".
 
 ## Log
 

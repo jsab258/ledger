@@ -485,17 +485,21 @@ def display_rows(R, work, assets, rows):
     bad_l = [(label(a), label(b), n) for a, b, n in bad]
     # the silhouette visibility: object-index pass from STREET_SQUARE and CLOSE_35
     per_cam = visibility(R, work, assets, di, group_of)
+    areas = per_cam.pop("areas")
     vis = np.maximum(per_cam["STREET_SQUARE"], per_cam["CLOSE_35"])
     sq = per_cam["STREET_SQUARE"]
     # 13 Oct, from the try 2 reviews (street 3): the front row (the bed's pieces and the scripted trays, pads and chains) must show half its silhouette from STREET_SQUARE ITSELF, because the
     # old rule (the better of CLOSE_35 and STREET_SQUARE) let a front row that the far pavement could not see pass; every other piece keeps the old rule
     front_row = [i for i, g in enumerate(di["groups"]) if (g["kind"] == "piece" and g.get("tier") == "bed") or g["kind"] == "scripted"]
     other = [i for i, g in enumerate(di["groups"]) if g["kind"] == "piece" and i not in front_row]
-    low_front = [(di["groups"][i]["model"], round(float(sq[i]), 2)) for i in front_row if sq[i] < 0.5]
+    # a front-row piece whose whole silhouette is under 20 px at STREET_SQUARE (a chain: 0.14 m long and 4 mm wide, a line under one pixel at 8.76 m) cannot be shown from the far pavement by any
+    # arrangement: it is judged from CLOSE_35, and named
+    tiny = [i for i in front_row if areas["STREET_SQUARE"][i] <= 20]
+    low_front = [(di["groups"][i]["model"], round(float(sq[i]), 2)) for i in front_row if i not in tiny and sq[i] < 0.5] + [(di["groups"][i]["model"] + " (from CLOSE_35)", round(float(per_cam["CLOSE_35"][i]), 2)) for i in tiny if per_cam["CLOSE_35"][i] < 0.5]
     low = [(di["groups"][i]["model"], round(float(vis[i]), 2)) for i in other if vis[i] < 0.5]
     rows.add("DSP-03", "no display mesh intersects another; every piece shows", not bad and not low and not low_front,
-             "%d display meshes, %d pairs with overlapping boxes tested (each mesh inset 1 mm, so a 2 mm contact is tolerated): %d pairs intersect%s; the share of each piece's silhouette seen (an object-index pass, the frame's bars and the other pieces in front): the %d pieces of the front row (the bed's pieces and the scripted trays, pads and chains) from STREET_SQUARE itself: lowest %.2f, %d under 0.5%s; the other %d pieces from CLOSE_35 or STREET_SQUARE: lowest %.2f, %d under 0.5%s"
-             % (len(names), pairs, len(bad), (" (" + "; ".join("%s x %s" % (a, b) for a, b, _ in bad_l[:8]) + ")") if bad else "", len(front_row), min([float(sq[i]) for i in front_row] or [0]), len(low_front),
+             "%d display meshes, %d pairs with overlapping boxes tested (each mesh inset 1 mm, so a 2 mm contact is tolerated): %d pairs intersect%s; the share of each piece's silhouette seen (an object-index pass, the frame's bars and the other pieces in front): the %d pieces of the front row (the bed's pieces and the scripted trays, pads and chains) from STREET_SQUARE itself: lowest %.2f among the %d large enough to be seen there (%d are under 20 px: %s, judged from CLOSE_35, lowest %.2f), %d under 0.5%s; the other %d pieces from CLOSE_35 or STREET_SQUARE: lowest %.2f, %d under 0.5%s"
+             % (len(names), pairs, len(bad), (" (" + "; ".join("%s x %s" % (a, b) for a, b, _ in bad_l[:8]) + ")") if bad else "", len(front_row), min([float(sq[i]) for i in front_row if i not in tiny] or [0]), len(front_row) - len(tiny), len(tiny), ", ".join(sorted({di["groups"][i]["model"] for i in tiny})) or "none", min([float(per_cam["CLOSE_35"][i]) for i in tiny] or [0]), len(low_front),
                 (": " + ", ".join("%s %.2f" % kv for kv in low_front[:8])) if low_front else "", len(other), min([float(vis[i]) for i in other] or [0]), len(low), (": " + ", ".join("%s %.2f" % kv for kv in low[:8])) if low else ""))
     # DSP-04
     L = di["length_m"]
@@ -528,9 +532,11 @@ def visibility(R, work, assets, di, group_of):
     import mathutils
     res = (1920, 1080)                    # thin pieces (the spectacles' rims) are under a pixel wide at 1280
     per_cam = {}
+    areas = {}
     for cam in ("STREET_SQUARE", "CLOSE_35"):
         best = np.zeros(len(di["groups"]))
         per_cam[cam] = best
+        areas[cam] = np.zeros(len(di["groups"]))
         bpy.ops.wm.read_factory_settings(use_empty=True)
         sc = bpy.context.scene
         disp = load_glb_objects(os.path.join(assets, "ritas_display.glb"))
@@ -635,11 +641,13 @@ def visibility(R, work, assets, di, group_of):
                     ob.data.materials.append(mats[gi])
             c = np.array(cols[gi])
             vis = int((np.abs(img - c[None, None, :]).max(axis=2) < 0.02).sum())
+            areas[cam][gi] = area
             if area > 20:
                 best[gi] = max(best[gi], min(1.0, vis / float(area)))
         for o in bpy.data.objects:
             if o.type == "MESH":
                 o.hide_render = False
+    per_cam["areas"] = areas
     return per_cam
 
 
@@ -765,7 +773,7 @@ def night_rows(R, work, rows, spill_w):
         a, b, n = out05["STREET_SQUARE"]
         ok05 = a >= 45          # "on the glass only": the frame, mullions, beads AND the lattice's bars are not glass and stay out of the zone; the reading with the bars in is written beside it
         rows.add("LIT-05", "the display is lit at night", ok05,
-                 "STREET_SQUARE at night, on the GLASS ONLY as the review words it (the mullions, the frame, the beads and the lattice's bars are not glass and are masked out): the display zone (z 0.60 to 1.45 above the footway across the window zone, %d glass px) mean luma %.1f (at least 45; try 1 measured 45.4 with the glowing mullions inside its zone). With the lattice's bars in the zone, as the street sees the window all night, it reads %s: the bars are black and cover about 30 per cent of it (a known shortfall: the room behind is lit as the approved night shot is). The spill is the gate's stand-in (a rect light 0.10 behind the wall face at z 2.30, %s Blender watts, invisible to the camera, on the display's channel only): Lumen's own light on the display is owed on the PC (PC-02)"
+                 "STREET_SQUARE at night, on the GLASS ONLY as the review words it (the mullions, the frame, the beads and the lattice's bars are not glass and are masked out): the display zone (z 0.60 to 1.45 above the footway across the window zone, %d glass px) mean luma %.1f (at least 45; try 1 measured 45.4 with the glowing mullions inside its zone). With the lattice's bars in the zone, as the street sees the window all night, it reads %s: the bars are black and cover about 30 per cent of it (a known shortfall: the room behind is lit as the approved night shot is). The spill is the gate's stand-in (a rect light 0.10 behind the wall face at z 2.30, %s Blender watts, invisible to the camera, on the display's channel and the gate's footway): Lumen's own light on the display is owed on the PC (PC-02)"
                  % (n, a, ("%.1f" % b) if b is not None else "?", spill_w))
     det, ok = [], True
     for cam, c in res_cond.items():
@@ -784,7 +792,7 @@ def board_rows(R, work, rows):
     sized = {g["model"] for g in R["room"]["goods"] if g.get("size_m")}
     bad = []
     for p in placed:
-        if p["fixture"] == "R-back-stock":
+        if p["fixture"] in ("R-back-stock", "R-back-tv-tiers") and p["model"] != "television_02":
             s = p["scale"]
             if p["model"] in sized:
                 continue
@@ -857,7 +865,7 @@ def board_rows(R, work, rows):
     boxes_on_tv = [q for q in placed if q["model"] == "cardboard_box_01" and q["fixture"] == "R-back-stock" and q["ext"][4] > 2.15]
     ok3 &= (tot_fill / tot_len >= 0.80 if tot_len else False) and len(boxes_on_tv) == 2
     rows.add("ROOM-03", "the risers and the boxes on the sets", ok3, "%d riser shelves (0.20 above their television board, 0.195 deep): %s; overall %.0f per cent of %.2f m (at least 80, each at least 70); %d cardboard boxes on top of the upper sets (2 wanted), the stock wall's pieces at scale 0.9 to 1.0; the review: 'about 14 more pieces': %d stock pieces now against 33 in try 2" % (
-        len(rs), "; ".join(det3), 100 * tot_fill / tot_len if tot_len else 0, tot_len, len(boxes_on_tv), sum(1 for q in placed if q["fixture"] == "R-back-stock" and q["model"] != "television_02")))
+        len(rs), "; ".join(det3), 100 * tot_fill / tot_len if tot_len else 0, tot_len, len(boxes_on_tv), sum(1 for q in placed if q["fixture"] in ("R-back-stock", "R-back-tv-tiers") and q["model"] != "television_02")))
     # ROOM-04: the left board's clocks
     ck = [q for q in placed if q["model"] == "wall_clock" and q["fixture"] == "R-left-board"]
     zs = sorted(q["ext"][4] / 2 + q["ext"][5] / 2 for q in ck)
@@ -1051,13 +1059,15 @@ def frn10_rows(R, work, assets, rows, members):
         lum = luma(im)
         dk = mk & (lum < 8)
         n_raw = int(dk.sum())
-        # a black AREA is the fault (the strips beside the side door were 11 px wide and 548 high at STREET_SQUARE); the thin line of shade under the cornice or the sill (3 to 4 px) is
-        # light and shadow, not a missing face: only dark patches that survive an opening by a 5 x 5 square count
-        n = int(_nd.binary_opening(dk, structure=np.ones((5, 5), bool)).sum())
+        # a black AREA is the fault (the strips beside the side door were 53 mm wide and 2.8 m high); a line of shade under the cornice or the sill (about 25 mm at STREET_SQUARE) is light and
+        # shadow, not a missing face. Only dark patches that survive an opening by a square of 35 mm on the front count: k px at this camera (its focal length in px over its distance to the wall)
+        cpar = cam_params(R, cam, (im.shape[1], im.shape[0]))
+        k_px = max(5, int(round(0.035 * cpar["f"] / max(abs(float(cpar["eye"][1])), 0.5))))
+        n = int(_nd.binary_opening(dk, structure=np.ones((k_px, k_px), bool)).sum())
         dark_tot += n
-        det_b.append("%s %d of %d front pixels under luma 8, %d of them in patches 5 px or wider (the darkest pixel %.1f)" % (cam, n_raw, int(mk.sum()), n, float(lum[mk].min()) if mk.any() else -1))
+        det_b.append("%s %d of %d front pixels under luma 8, %d of them in patches %d px (35 mm) or wider (the darkest pixel %.1f)" % (cam, n_raw, int(mk.sum()), n, k_px, float(lum[mk].min()) if mk.any() else -1))
     rows.add("FRN-10", "no two parts of the front share a visible face plane; nothing on the front is black", not vis and dark_tot == 0 and not miss,
-             det_a + ". By day, in the four gate frames at 2560 x 1440, over the front's own pixels (a mask render: the glass, the two fanlights, the shop door's glass, the hall, the lettering rows and the OPEN sign are not the front; the mask eroded by 2 px; a dark patch counts when it is 5 px wide or more, a thin line of shade under the cornice or the sill does not): " + "; ".join(det_b) +
+             det_a + ". By day, in the four gate frames at 2560 x 1440, over the front's own pixels (a mask render: the glass, the two fanlights, the shop door's glass, the hall, the lettering rows and the OPEN sign are not the front; the mask eroded by 2 px; a dark patch counts when it is 35 mm wide on the front or more, a thin line of shade under the cornice or the sill does not): " + "; ".join(det_b) +
              " (try 2: the two strips beside the side door were luma 0 to 3, about 12,000 pixels at STREET_SQUARE: F1's frame jambs, the added side jambs and the fillers stood in one plane, d 100)")
 
 
@@ -1068,28 +1078,34 @@ def glass_night_rows(R, work, rows):
     det, ok, n = [], True, 0
     for cam in ("STREET_SQUARE", "STREET_30", "CLOSE_35", "CLOSE_35_B"):
         pf = os.path.join(gate, "%s_night_lit.png" % cam)
-        pn = os.path.join(gate, "check_%s_night_lit_norefl.png" % cam)
+        pn_full = os.path.join(gate, "check_%s_night_lit_norefl_full.png" % cam)
+        pn = pn_full if os.path.exists(pn_full) else os.path.join(gate, "check_%s_night_lit_norefl.png" % cam)
         pm = os.path.join(gate, "check_%s_night_lit_mask.png" % cam)
         if not (os.path.exists(pf) and os.path.exists(pn) and os.path.exists(pm)):
             ok = False
             continue
         fr = np.asarray(Image.open(pf).convert("RGB")).astype(np.float32)
-        h2, w2 = fr.shape[0] // 2, fr.shape[1] // 2
-        fr = fr[:h2 * 2, :w2 * 2].reshape(h2, 2, w2, 2, 3).mean(axis=(1, 3))
         nr = np.asarray(Image.open(pn).convert("RGB")).astype(np.float32)
         mk = np.asarray(Image.open(pm).convert("L")) > 128
-        if nr.shape[:2] != fr.shape[:2]:
-            nr = np.asarray(Image.open(pn).convert("RGB").resize((w2, h2), Image.BILINEAR)).astype(np.float32)
-            mk = np.asarray(Image.open(pm).convert("L").resize((w2, h2), Image.NEAREST)) > 128
+        if nr.shape[:2] == fr.shape[:2]:
+            # the same size and samples as the frame (check_*_norefl_full.png): compared pixel for pixel; the 1280 mask is taken up to the frame's size
+            mk = np.asarray(Image.open(pm).convert("L").resize((fr.shape[1], fr.shape[0]), Image.NEAREST)) > 128
+        else:
+            # the 1280 x 720 render of the earlier checks: the frame is reduced by averaging 2 x 2
+            h2, w2 = fr.shape[0] // 2, fr.shape[1] // 2
+            fr = fr[:h2 * 2, :w2 * 2].reshape(h2, 2, w2, 2, 3).mean(axis=(1, 3))
+            if nr.shape[:2] != fr.shape[:2]:
+                nr = np.asarray(Image.open(pn).convert("RGB").resize((w2, h2), Image.BILINEAR)).astype(np.float32)
+                mk = np.asarray(Image.open(pm).convert("L").resize((w2, h2), Image.NEAREST)) > 128
         from scipy import ndimage as _nd
-        mk = _nd.binary_erosion(mk, iterations=2)               # the mask's edge pixels (the lattice's bars, the frame) are antialiased differently in a 2560 frame reduced by 2 and a native 1280 render
+        mk = _nd.binary_erosion(mk, iterations=4 if pn == pn_full else 2)               # the mask's edge pixels (the lattice's bars, the frame) are antialiased differently in a 2560 frame reduced by 2 and a native 1280 render
         d = np.abs(luma(fr) - luma(nr))
         p95 = float(np.percentile(d[mk], 95)) if mk.any() else -1.0
         mean_d = float(d[mk].mean()) if mk.any() else -1.0
         ok &= 0 <= p95 <= 15.0
         n += 1
         det.append("%s p95 %.1f (mean %.1f, %d glass px)" % (cam, p95, mean_d, int(mk.sum())))
-    rows.add("GLS-03", "the night glass does not double what is behind it", ok and n == 4, "at night, p95 of |gate frame minus the render with the glass's reflection off| (luma, levels) over the glass mask eroded by 2 px: " + "; ".join(det) +
+    rows.add("GLS-03", "the night glass does not double what is behind it", ok and n == 4, "at night, p95 of |gate frame minus the render with the glass's reflection off| (luma, levels), the frame against a render of the same size, samples and seed with the glass's reflection off, over the glass mask eroded by 2 px at 1280 (4 at 2560): " + "; ".join(det) +
              " (limit 15; try 2: 32.9 at STREET_30 and 17.2 at STREET_SQUARE: the stand-in glass mixed a Transparent and a Glass BSDF, which bent each ray at one face of the closed 6 mm slab and not the other, so everything behind it came two or three times; now a Glossy BSDF, GGX 0.02, weighted 0.2 x Fresnel at IOR 1.5, nothing refracted)")
 
 
