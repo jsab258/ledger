@@ -529,6 +529,9 @@ def placement_rows(T, rows):
                      "the pose turns the piece's front to %s (vector %.2f, %.2f)" % (direction_name(fd), fd[0], fd[1]))
         # 2. the zone, on the parts that touch the ground
         feet, _ = foot_prisms(T, pose)
+        if not feet or not body:
+            rows.add("placement", "%s/the piece has parts that touch the ground" % g, False, "no part of the pose reaches the ground (a part the pose stands on is missing)")
+            continue
         if zone in ZONES:
             ok = all(ZONES[zone].buffer(1e-6).contains(q.poly) for q in feet) and bool(feet)
             rows.add("placement", "%s/feet lie in zone %s" % (g, zone), ok,
@@ -697,3 +700,56 @@ def ctl_copies_across(name, pid, prefix, step=0.5):
             i += 1
         base["extra_poses"] = poses
     return (name, mut, prefix)
+
+
+# ------------------------------------------------------------------------------------------------ a camera's share of a piece
+def object_vertices(T, pose, only=None):
+    """[(part id, convex piece vertices as (x, y up, z) in the street frame, metres)] for the pose's parts."""
+    V = pose.get("variant", T.get("sample"))
+    parts = [p for p in L.variant_parts(T, V) if only is None or p["id"] in only]
+    ps = L.PartSet(parts)
+    base = pose.get("base_y_m")
+    if base is None:
+        base = ground_y(pose["x_m"], pose["z_m"])
+    th = math.radians(pose.get("yaw_deg", 0.0))
+    c, s = math.cos(th), math.sin(th)
+    out = []
+    for p, pcs in zip(ps.parts, ps.pieces):
+        for pc in pcs:
+            V3 = pc.V
+            xs = pose["x_m"] + (V3[:, 0] * c - V3[:, 1] * s) / 1000.0
+            zs = pose["z_m"] + (V3[:, 0] * s + V3[:, 1] * c) / 1000.0
+            ys = base + V3[:, 2] / 1000.0
+            out.append((p["id"], np.c_[xs, ys, zs]))
+    return out
+
+
+def camera_share(T, pose, cam, only=None, aspect=16.0 / 9.0, tilt_deg=0.0):
+    """The share of a camera's frame covered by the piece's silhouette, by pinhole projection (an upper bound: nothing in
+    front of it hides it). cam: {x_m, z_m, eye_y_m, yaw_deg, pitch_deg (negative looks up, as the scene's), fov_vertical_deg}.
+    This is a projection of the target's own parts, not a render."""
+    th = math.radians(cam["yaw_deg"])
+    el = math.radians(-cam["pitch_deg"])
+    f = np.array([math.cos(el) * math.cos(th), math.sin(el), math.cos(el) * math.sin(th)])
+    up = np.array([0.0, 1.0, 0.0])
+    r = np.cross(f, up)
+    r /= np.linalg.norm(r)
+    uc = np.cross(r, f)
+    tv = math.tan(math.radians(cam["fov_vertical_deg"]) / 2.0)
+    th_h = tv * aspect
+    C = np.array([cam["x_m"], cam["eye_y_m"], cam["z_m"]])
+    polys = []
+    for pid, V3 in object_vertices(T, pose, only):
+        d = V3 - C
+        zc = d @ f
+        if np.any(zc < 0.5):
+            continue
+        u = (d @ r) / (zc * th_h)
+        v = (d @ uc) / (zc * tv)
+        h = MultiPoint(list(zip(u, v))).convex_hull
+        if h.geom_type == "Polygon" and h.area > 0:
+            polys.append(h)
+    if not polys:
+        return 0.0
+    frame = sbox(-1, -1, 1, 1)
+    return float(unary_union(polys).intersection(frame).area / 4.0)

@@ -715,6 +715,7 @@ class Room:
             """Greedy fill of one row (the widest piece that fits, left to right) from the queue's models in `allowed`. Returns (pieces placed, width placed)."""
             x = xa + 0.01
             n, wsum = 0, 0.0
+            last_model = None
             while True:
                 cands = []
                 for i, p in enumerate(queue):
@@ -730,7 +731,8 @@ class Room:
                 if not cands:
                     break
                 cands.sort(key=lambda c: -c[0])
-                w, i, sc_, turn, d = cands[rnd.randrange(min(3, len(cands)))]            # one of the three widest that fit: the row is not sorted by width
+                alt = [c for c in cands if queue[c[1]]["model"] != last_model] or cands          # (try 3) not the same model twice running when another fits
+                w, i, sc_, turn, d = alt[rnd.randrange(min(3, len(alt)))]            # one of the three widest that fit: the row is not sorted by width
                 p = queue[i]
                 clk = None
                 if p["model"] == "wall_clock":
@@ -738,6 +740,7 @@ class Room:
                 self.place(p["model"], (x + w / 2, y_back, z), rot=(0, 0, turn + rnd.uniform(-JIT, JIT)), scale=sc_, fixture="R-back-stock", anchor=("c", "max", "min"), clock=clk)
                 self.scales.append({"model": p["model"], "scale": round(sc_, 3), "sized": bool(p["size"]), "row": tag})
                 self.tickets_for(x + w / 2, y_back - d.y * sc_ - 0.008, z)
+                last_model = p["model"]
                 queue.pop(i)
                 n += 1
                 wsum += w
@@ -900,24 +903,38 @@ class Room:
         tk = self.mat("ticket", rgb8(226, 218, 196), rough=0.85)
         V, F, M = [], [], []
 
+        turn = [0.0, 0.0, 0.0]            # (angle, centre y, centre z) of the card being added: its parts turn about its centre (13 Oct, try 3: the 40 cards were two ruled rows)
+
         def add_box(x0, x1, y0, y1, z0, z1, mi):
             o = len(V)
-            V.extend([(x0, y0, z0), (x1, y0, z0), (x1, y1, z0), (x0, y1, z0), (x0, y0, z1), (x1, y0, z1), (x1, y1, z1), (x0, y1, z1)])
+            ang, cy_, cz_ = turn
+            ca_, sa_ = math.cos(ang), math.sin(ang)
+
+            def tp(x, y, z):
+                dy, dz = y - cy_, z - cz_
+                return (x, cy_ + dy * ca_ - dz * sa_, cz_ + dy * sa_ + dz * ca_)
+            V.extend([tp(x0, y0, z0), tp(x1, y0, z0), tp(x1, y1, z0), tp(x0, y1, z0), tp(x0, y0, z1), tp(x1, y0, z1), tp(x1, y1, z1), tp(x0, y1, z1)])
             F.extend([(o + 0, o + 3, o + 2, o + 1), (o + 4, o + 5, o + 6, o + 7), (o + 0, o + 1, o + 5, o + 4), (o + 1, o + 2, o + 6, o + 5), (o + 2, o + 3, o + 7, o + 6), (o + 3, o + 0, o + 4, o + 7)])
             M.extend([mi] * 6)
 
         def add_disc(x0, x1, yc, zc, r, mi, n=14):
             o = len(V)
+            ang, cy_, cz_ = turn
+            ca_, sa_ = math.cos(ang), math.sin(ang)
             for xx in (x0, x1):
                 for k in range(n):
                     t = 2 * math.pi * k / n
-                    V.append((xx, yc + r * math.cos(t), zc + r * math.sin(t)))
+                    py, pz = yc + r * math.cos(t), zc + r * math.sin(t)
+                    dy, dz = py - cy_, pz - cz_
+                    V.append((xx, cy_ + dy * ca_ - dz * sa_, cz_ + dy * sa_ + dz * ca_))
             F.append(tuple(o + i for i in range(n))[::-1])
             F.append(tuple(o + n + i for i in range(n)))
             for i in range(n):
                 F.append((o + i, o + (i + 1) % n, o + n + (i + 1) % n, o + n + i))
             M.extend([mi] * (n + 2))
-        for (y, z) in spots:
+        for spot in spots:
+            y, z = spot[0], spot[1]
+            turn[0], turn[1], turn[2] = (spot[2] if len(spot) > 2 else 0.0), y, z
             x0 = xl + 0.021
             add_box(x0, x0 + 0.010, y - 0.05, y + 0.05, z - 0.07, z + 0.07, 0)                       # the card 0.10 x 0.14 x 0.01
             add_disc(x0 + 0.010, x0 + 0.016, y, z + 0.032, 0.022, 1)                                  # the watch
@@ -932,7 +949,7 @@ class Room:
             p_.material_index = mi
         ob = bpy.data.objects.new("watch_chain_cards", me)
         self.sc.collection.objects.link(ob)
-        self.fixtures.append({"fixture": "R-left-board", "name": "watch_chain_cards(%d)" % len(spots), "ext": [xl, xl + 0.032, 0.3, 4.2, 0.45, 2.15], "n": len(spots), "boxes_yz": [[round(y - 0.05, 3), round(y + 0.05, 3), round(z - 0.07, 3), round(z + 0.07, 3)] for (y, z) in spots]})
+        self.fixtures.append({"fixture": "R-left-board", "name": "watch_chain_cards(%d)" % len(spots), "ext": [xl, xl + 0.032, 0.3, 4.2, 0.45, 2.15], "n": len(spots), "boxes_yz": [[round(sp[0] - 0.05, 3), round(sp[0] + 0.05, 3), round(sp[1] - 0.07, 3), round(sp[1] + 0.07, 3)] for sp in spots]})
         return ob
 
     def tone_material(self, name, f):
@@ -1008,11 +1025,21 @@ class Room:
         self.fixtures.append({"fixture": "R-left-notices", "name": "notices", "ext": [xl, xl + 0.035, 3.58, 4.18, 1.55, 2.01]})
         self.fixtures.append({"fixture": "R-left-board", "name": "notice_boxes", "ext": [xl, xl + 0.035, lic[0], lic[1], lic[2], lic[3]], "box_yz": list(lic)})
         self.fixtures.append({"fixture": "R-left-board", "name": "notice_boxes", "ext": [xl, xl + 0.035, unr[0], unr[1], unr[2], unr[3]], "box_yz": list(unr)})
-        # the 40 watch-and-chain cards: two rows of 20 in the mid band (z 1.15 and 1.31, 0.19 apart, the lower row 0.095 along)
+        # the 40 watch-and-chain cards (13 Oct, try 3: in clusters with uneven gaps, each a little up or down and turned by up to 6 degrees; try 2's two ruled rows of 20 read as a grid):
+        # two bands of z (1.15 and 1.30, +-0.012) from y 0.42 to 4.10, the pitch 0.145 to 0.215, the lower row begun 0.07 to 0.12 along
         spots = []
-        for i in range(20):
-            spots.append((0.42 + 0.19 * i, 1.31))
-            spots.append((0.515 + 0.19 * i, 1.15))
+        for zc, y0_, n_ in ((1.30, 0.42, 20), (1.15, 0.50, 20)):
+            y_ = y0_
+            for i in range(n_):
+                spots.append((round(y_, 4), round(zc + rnd.uniform(-0.012, 0.012), 4), math.radians(rnd.uniform(-6.0, 6.0))))
+                y_ += rnd.uniform(0.145, 0.215) if i % 5 != 4 else rnd.uniform(0.2, 0.26)         # a wider gap after every fifth card
+            # (the row is then squeezed or stretched to end at y 4.10)
+            last = spots[-1][0]
+            first = spots[-n_][0]
+            k_ = (4.10 - first) / (last - first)
+            for j in range(len(spots) - n_, len(spots)):
+                sp = spots[j]
+                spots[j] = (round(first + (sp[0] - first) * k_, 4), sp[1], sp[2])
         self.watch_cards(xl, spots)
         # 90 pawn tickets pinned on the pegboard (25 x 12 mm each: one mesh, UVs into the ticket atlas), where nothing hangs: the boxes of everything placed on the board
         keep_out = []

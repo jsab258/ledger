@@ -40,6 +40,23 @@
    "rough_words": "satin",
    "metal": true,
    "note": ""
+  },
+  "marking_red_yellow": {
+   "name": "end marking plate: red fluorescent stripes on yellow reflex-reflecting sheet",
+   "srgb": [
+    243,
+    205,
+    24
+   ],
+   "stripe_srgb": [
+    226,
+    52,
+    36
+   ],
+   "rough": 0.3,
+   "rough_words": "smooth, retro-reflective sheet",
+   "metal": false,
+   "note": "the yellow is the plate's reflex ground (a little brighter and cleaner than the skip's chalked yellow), the red the fluorescent stripes: 45 degrees to the vertical, 140 mm breadth up the plate, rising toward the plate's inner edge (the two plates of an end make a chevron pointing up); the stripe pattern is a texture (numbers in marking); the colours are Judgement from the regulation's words; scuffed, dirt-streaked, the red faded toward orange-red, one plate cracked across a corner"
   }
  },
  "variants": {
@@ -221,6 +238,114 @@
      ],
      "material": "skip_paint",
      "note": "upper end plate, sloping in and up to the top rim"
+    },
+    {
+     "id": "mark_s1",
+     "type": "box",
+     "c": [
+      1362.65,
+      -705.0,
+      969.15
+     ],
+     "s": [
+      380.0,
+      270.0,
+      3.0
+     ],
+     "rot": [
+      0,
+      49.46833762313987,
+      0
+     ],
+     "material": "marking_red_yellow",
+     "edge": "corners r 5, a 2 mm yellow border",
+     "stripe": {
+      "angle_deg": 45.0,
+      "breadth_mm": 140.0,
+      "rise": "toward the inner edge"
+     },
+     "note": "end marking plate 1 of 2 on the south end (Schedule 1: red fluorescent stripes on yellow reflex), 270 x 380 x 3, upper edge 4 mm under the rim bar"
+    },
+    {
+     "id": "mark_s2",
+     "type": "box",
+     "c": [
+      1362.65,
+      705.0,
+      969.15
+     ],
+     "s": [
+      380.0,
+      270.0,
+      3.0
+     ],
+     "rot": [
+      0,
+      49.46833762313987,
+      0
+     ],
+     "material": "marking_red_yellow",
+     "edge": "corners r 5, a 2 mm yellow border",
+     "stripe": {
+      "angle_deg": 45.0,
+      "breadth_mm": 140.0,
+      "rise": "toward the inner edge"
+     },
+     "note": "end marking plate 2 of 2 on the south end (Schedule 1: red fluorescent stripes on yellow reflex), 270 x 380 x 3, upper edge 4 mm under the rim bar"
+    },
+    {
+     "id": "mark_n1",
+     "type": "box",
+     "c": [
+      -1362.65,
+      -705.0,
+      969.15
+     ],
+     "s": [
+      380.0,
+      270.0,
+      3.0
+     ],
+     "rot": [
+      0,
+      -49.46833762313987,
+      0
+     ],
+     "material": "marking_red_yellow",
+     "edge": "corners r 5, a 2 mm yellow border",
+     "stripe": {
+      "angle_deg": 45.0,
+      "breadth_mm": 140.0,
+      "rise": "toward the inner edge"
+     },
+     "note": "end marking plate 1 of 2 on the north end (Schedule 1: red fluorescent stripes on yellow reflex), 270 x 380 x 3, upper edge 4 mm under the rim bar"
+    },
+    {
+     "id": "mark_n2",
+     "type": "box",
+     "c": [
+      -1362.65,
+      705.0,
+      969.15
+     ],
+     "s": [
+      380.0,
+      270.0,
+      3.0
+     ],
+     "rot": [
+      0,
+      -49.46833762313987,
+      0
+     ],
+     "material": "marking_red_yellow",
+     "edge": "corners r 5, a 2 mm yellow border",
+     "stripe": {
+      "angle_deg": 45.0,
+      "breadth_mm": 140.0,
+      "rise": "toward the inner edge"
+     },
+     "note": "end marking plate 2 of 2 on the north end (Schedule 1: red fluorescent stripes on yellow reflex), 270 x 380 x 3, upper edge 4 mm under the rim bar"
     },
     {
      "id": "rim_f",
@@ -466,7 +591,11 @@
     "lug_f1",
     "lug_f2",
     "lug_b1",
-    "lug_b2"
+    "lug_b2",
+    "mark_s1",
+    "mark_s2",
+    "mark_n1",
+    "mark_n2"
    ],
    "joins": [
     [
@@ -532,6 +661,22 @@
     [
      "lamp_1",
      "lamp_hook_1"
+    ],
+    [
+     "mark_s1",
+     "end_up_r"
+    ],
+    [
+     "mark_s2",
+     "end_up_r"
+    ],
+    [
+     "mark_n1",
+     "end_up_l"
+    ],
+    [
+     "mark_n2",
+     "end_up_l"
     ]
    ],
    "embeds": [
@@ -715,65 +860,74 @@
    "measure": {
     "kind": "bbox",
     "axis": "z"
-   }
+   },
+   "source_error": 100.0
   },
   {
    "id": "N2",
    "what": "widest length (at the junction of the two trapezia)",
    "value": 3016.0,
-   "kind": "Photo",
+   "kind": "Photo, scaled on the assumed height",
    "source": "P1 tip_left_x 559.6 to tip_right_x 896.4 = 336.7 px at 0.1117 px per mm (the height is the assumed unit); error 150",
    "tol": 150.0,
    "measure": {
     "kind": "extent",
     "axis": "x",
     "part": "side_f"
-   }
+   },
+   "scaled_on": "N1",
+   "source_error": 255.0
   },
   {
    "id": "N3",
    "what": "floor length (the bottom edge)",
    "value": 1848.0,
-   "kind": "Photo",
+   "kind": "Photo, scaled on the assumed height",
    "source": "P1 bottom_left_x 624.8 from the centre 728.0 = 924 mm half length (the right corner is faint; symmetry assumed); error 120",
    "tol": 120.0,
    "measure": {
     "kind": "extent",
     "axis": "x",
     "part": "floor"
-   }
+   },
+   "scaled_on": "N1",
+   "source_error": 155.0
   },
   {
    "id": "N4",
    "what": "rim bar depth",
    "value": 86.0,
-   "kind": "Photo",
+   "kind": "Photo, scaled on the assumed height",
    "source": "P1 rim_under_y 207.1 below the top edge 197.5: 9.6 px = 86 mm; error 20",
    "tol": 20.0,
    "measure": {
     "kind": "extent",
     "axis": "z",
     "part": "rim_f"
-   }
+   },
+   "scaled_on": "N1",
+   "source_error": 20.0
   },
   {
    "id": "N5",
    "what": "stiffening rib centre above the floor",
    "value": 923.0,
-   "kind": "Photo",
+   "kind": "Photo, scaled on the assumed height",
    "source": "P1 rim_line_y 228.4 above the foot 331.5: 103.1 px = 923 mm; error 40",
    "tol": 40.0,
    "measure": {
     "kind": "centre",
     "axis": "z",
     "part": "rib_f"
-   }
+   },
+   "scaled_on": "N1",
+   "source_error": 80.0
   },
   {
    "id": "N6",
    "what": "height of the widest line",
    "value": 793.0,
-   "kind": "Photo",
+   "kind": "Photo, scaled on the assumed height",
    "source": "P1 tips at row 243 of the turned copy: (331.5 - 243) / 0.1117 = 792; error 50",
    "tol": 50.0,
    "measure": {
@@ -781,7 +935,9 @@
     "axis": "z",
     "part": "end_low_r",
     "side": "hi"
-   }
+   },
+   "scaled_on": "N1",
+   "source_error": 70.0
   },
   {
    "id": "N7",
@@ -794,7 +950,8 @@
     "kind": "extent",
     "axis": "y",
     "part": "floor"
-   }
+   },
+   "source_error": 150.0
   }
  ],
  "photos": [
@@ -1111,6 +1268,19 @@
    "period": "n/a"
   },
   {
+   "id": "S8",
+   "url": "https://www.legislation.gov.uk/uksi/1984/1933/made",
+   "read": "2026-10-13 (the made text and the original print PDF, page 5686 for Schedule 1's diagram)",
+   "author": "the Secretary of State for Transport and the Secretary of State for Wales (a statutory instrument: The Builders' Skips (Markings) Regulations 1984, SI 1984/1933)",
+   "licence": "Open Government Licence v3.0 (legislation.gov.uk)",
+   "taken": "1984-12-11 (made; in force 21 January 1985; the marking required from 1 January 1986)",
+   "kind": "book",
+   "shows": "every end of a builder's skip any part of which stands on a highway other than a footway or verge must from 1 January 1986 carry a marking of two plates of equal size and shape (BS AU 152: 1970, the rear marking plate standard), red fluorescent stripes and yellow reflex-reflecting ground as Schedule 1's diagram shows (each plate 140 to 280 wide, 350 to 700 long, area at least 980 square cm, stripes 40 to 50 degrees to the vertical and 133 to 147 broad, rising toward the inner edge); Schedule 2 places them: as near an outer edge as the skip allows, innermost edges equidistant from the skip's axis, upper edges level with each other and not lower than the skip's upper edge unless the construction needs it, at most 1.5 m above the ground, never on a lid, on a door only if nowhere else will do",
+   "used": true,
+   "not_used_for": "BS AU 152 itself (not freely readable: the plate's own small marking is a Judgement); no picture",
+   "period": "in force in 1990: a skip in Quay Street's road carries these plates on both ends"
+  },
+  {
    "id": "S7",
    "url": "https://api.geograph.org.uk/syndicator.php (terms skip, skip hire, builders skip, skip in the street; takenyear 1980 to 1996 and without a year)",
    "read": "2026-10-13",
@@ -1209,8 +1379,14 @@
   },
   {
    "name": "C4: the name and number are the invented ones",
-   "measure": "the stencil text",
-   "expect": "TIDEWAY SKIP HIRE, TEL 555 0142",
+   "measure": "the stencil text layer",
+   "expect": "the placeholder firm and a British number of the form TEL. 0632 960nnn (no 555)",
+   "tol": "exact"
+  },
+  {
+   "name": "C6: both ends carry two marking plates",
+   "measure": "count the marking plates on each end plate; their size, stripe angle and breadth, their upper edges",
+   "expect": "2 + 2 plates, 270 x 380 (140 to 280 by 350 to 700, area at least 980 square cm), stripes 45 degrees (40 to 50), breadth 140 (133 to 147), upper edges level, under 1500 above the ground",
    "tol": "exact"
   },
   {
@@ -1223,7 +1399,7 @@
  "owed": [
   {
    "id": "O1",
-   "line": "Put the skip back in the road before the yard, with its two lamps lit at night and a made-up hire firm's name on it, now that it is a real skip?",
+   "line": "Put the skip back in the road before the yard, with its two lamps lit at night, the striped end plates the law asked for, and a made-up hire firm's name on it, now that it is a real skip?",
    "recommended": "Yes, put it back"
   }
  ],
@@ -1237,14 +1413,81 @@
  },
  "text": {
   "hire_firm": "TIDEWAY SKIP HIRE",
-  "number_line": "TEL 555 0142",
+  "number_line": "TEL. 0632 960142",
   "stencil": "stencilled capitals on the side plate between z 450 and 760, black, name 120 mm tall, number 90 mm tall, centred; a second line 'FILL LEVEL' 40 mm tall painted on the end plates 120 below the rim",
-  "note": "invented hire firm and an invented number (the 555 exchange); no real firm; the stencil is a texture; the name sits on the side facing the road and again on the other side; none on the ends but FILL LEVEL"
+  "note": "invented hire firm (a fictional placeholder until the town mints one) and an invented British number: an STD code of the period with the exchange 960, a block no exchange was given (the range British drama has used); no real firm; the stencil is a texture; the name sits on the side facing the road and again on the other side; none on the ends but FILL LEVEL"
  },
+ "marking": {
+  "regulation": {
+   "title": "The Builders' Skips (Markings) Regulations 1984 (SI 1984/1933), made 11 December 1984 under s.139(4) of the Highways Act 1980, in force 21 January 1985; the marking required from 1 January 1986",
+   "url": "https://www.legislation.gov.uk/uksi/1984/1933/made",
+   "kind": "Read",
+   "read": "2026-10-13: the made text and the original print PDF (Schedule 1's diagram, page 5686)",
+   "plate_width_mm": [
+    140.0,
+    280.0
+   ],
+   "plate_length_mm": [
+    350.0,
+    700.0
+   ],
+   "stripe_angle_deg": [
+    40.0,
+    50.0
+   ],
+   "stripe_breadth_mm": [
+    133.0,
+    147.0
+   ],
+   "min_area_cm2": 980.0,
+   "upper_edge_max_above_ground_mm": 1500.0,
+   "plates_per_end": 2,
+   "standard": "BS AU 152: 1970 (rear marking plates for vehicles); the Standard itself was not read"
+  },
+  "chosen": {
+   "plate_width_mm": 270.0,
+   "plate_length_mm": 380.0,
+   "plate_thickness_mm": 3.0,
+   "area_cm2": 1026.0,
+   "stripe_angle_deg": 45.0,
+   "stripe_breadth_mm": 140.0,
+   "stripe_period_mm": 280.0,
+   "stripe_rise": "toward the plate's inner edge (the two plates of an end make a chevron pointing up, as Schedule 1's two halves do)",
+   "red": "fluorescent, srgb (226, 52, 36)",
+   "yellow": "reflex-reflecting, srgb (243, 205, 24)",
+   "pattern": "plate frame: v down from the upper edge, d from the inner edge; red where ((v - d x tan 45) - 70) mod 280 lies within 70 of zero, yellow elsewhere; the first stripe at the upper edge is partial, as in the diagram; a 2 mm yellow border",
+   "size_reason": "the upper end plate is 535 mm along its slope and 422 mm of it lie under the rim bar's lower edge: a 380 long plate fits with 38 mm to spare, 270 wide takes 1026 square cm, over the 980 minimum",
+   "mark_text": "the Standard's paragraph 5 marking (BS AU 152 and a maker's mark) was not read: a small 'BS AU 152' in 8 mm capitals on the lower yellow margin is a Judgement, with no maker's mark"
+  },
+  "diagram": "Schedule 1 shows two halves, mirror images: stippled stripes (red fluorescent) alternate with unstippled (yellow reflex), 40 to 50 degrees to the vertical, 133 to 147 broad measured up the plate; each half 140 to 280 wide and 350 to 700 long; the stripes rise toward the inner edges, so the two plates of an end make a chevron pointing up"
+ },
+ "placeholders": [
+  {
+   "name": "Tideway Skip Hire",
+   "marked": "fictional placeholder",
+   "kind": "the hire firm's name on the stencil",
+   "where": "text.hire_firm, the stencil's separate texture layer",
+   "until": "the town mints the firm (handover H1)"
+  },
+  {
+   "name": "0632 960142",
+   "marked": "fictional placeholder",
+   "kind": "the firm's telephone number on the stencil",
+   "where": "text.number_line",
+   "until": "the town mints the firm and a number in its own code (handover H1)"
+  }
+ ],
+ "handovers": [
+  {
+   "id": "H1",
+   "line": "For the town: mint the skip hire firm's name and a telephone number in the town's own STD code for the skip's stencil (now the placeholders 'Tideway Skip Hire' and 'TEL. 0632 960142', kept in the stencil's own texture layer and never shown on Jafar's page)."
+  }
+ ],
  "placement": {
-  "slot": "west carriageway, the long side parallel to the kerb, centre x 22.5 m (in front of the yard mouth, x 21 to 24), 0.30 m from the kerb face (the skip's near side at z -2.70), the name on the road side; the two scene cones belong at the ends, 0.3 m beyond the skip",
+  "slot": "west carriageway, the long side parallel to the kerb, centre x 22.5 m (in front of the yard mouth, x 21 to 24), 0.30 m from the kerb face (the skip's near side at z -2.70, its centre line at z -1.85), the firm's name and the lamps on the road side (street +z); its floor lies on the road's camber, tilted 1.4 degrees with the kerb side low; the south end (street -x) faces the hook camera with two striped marking plates on each end",
   "x_m": 22.5,
   "z_near_m": -2.7,
+  "z_centre_m": -1.85,
   "kerb_face_z_m": -3.0,
   "gap_to_kerb_mm": 300.0,
   "lane_mm": 3000.0,
@@ -1257,23 +1500,64 @@
    21.3,
    23.7
   ],
-  "cones_needed_x_m": [
-   null,
-   null
-  ],
+  "cones_scene_z_m": -3.35,
+  "cones_optional": {
+   "x_m": [
+    20.7,
+    24.3
+   ],
+   "z_m": -1.85,
+   "note": "if cones are wanted at the skip's road ends they stand in the carriageway on the skip's centre line, 0.2 to 0.3 m beyond its ends; the scene's own cones stay where they are (on the west footway); the cones are off the drawn street since 3 October (terrace-front.py HELD_PROPS_OFF_STREET)"
+  },
+  "tilt": {
+   "deg": 1.43,
+   "low_side": "the kerb side (z -2.70)",
+   "drop_across_mm": 42.0,
+   "rule": "the floor lies on the road's camber (1 in 40) and tilts with it, so the builder neither sinks one side into the road nor floats the other (42 mm across the 1690 width)"
+  },
+  "accent": {
+   "hook_frame_share": 0.0036,
+   "ceiling": 0.078,
+   "method": "pinhole projection of the skip's parts at its pose into the hook camera (x -3, z -1.6, eye 2.2 m above the crown, yaw 20.4, pitch -3.4 up, 46 degrees vertical, 16:9), nothing in front hiding it, so an upper bound; a projection of this target's own parts, not a render",
+   "verdict": "about 0.4 percent of the frame against the 7.8 percent ceiling of art-direction R-B4 (the frame's share above saturation 0.6): small, so the sample stays yellow; the orange and faded blue-green stay colour variants"
+  },
   "reasons": [
    "the 2 October ruling took the skip off the street 'until real'; the scene's story ('the yard is shut': a barrier across the mouth, cones, a skip) places it before the yard mouth, one event with the pallets behind the barrier (the pallets target)",
-   "the near lane is 3.0 m: a skip 1700 mm wide at 0.30 m from the kerb leaves 3.0 - 0.30 - 1.70 = 1.0 m in its own lane and the whole 3.0 m other lane: the street stays passable (2.8 m is the least a bus needs; cars are off in any case)",
+   "the near lane is 3.0 m: a skip 1700 mm wide at 0.30 m from the kerb leaves 3.0 - 0.30 - 1.70 = 1.0 m in its own lane and the whole 3.0 m other lane: the street stays passable (2.8 m is the least a bus needs; cars are off in any case); the shared placement rows measure the widest free width across the road",
    "its length is 3.0 m, the width of the yard mouth: it fills the street frontage of the gap without crossing a shop front",
-   "the scene's two cones (x 21.3 and 23.7 at 0.35 m from the kerb) now stand inside the skip's length: they move to x 20.7 and 24.3 (a change for the scene's owner, not edited here)",
-   "a skip on the highway needs lamps at night and a permit: the two amber lamps are on the skip; the double yellow lines (0.25 m from the kerb) lie under it: a skip on the lines is a street fact (a permit, Judgement)"
-  ]
+   "THE CONES DO NOT MOVE. The first version moved the scene's two cones to x 20.7 and 24.3 on a misreading: they stand on the west FOOTWAY, 0.35 m behind the kerb face (vignette-pieces.json prop_traffic_cone_01_0 and _02_0 at z -3.35), not inside the skip's length; the skip (z -2.70 to -1.00) does not touch them, and cones moved to x 20.7 and 24.3 at that depth would stand inside the bollards there (prop_decorative_bollard_02_0 and _1, z -3.40 to -3.60). If cones are wanted at the skip's road ends they go at z -1.85, in the carriageway on the skip's centre line, at x 20.7 and 24.3; the cones are off the drawn street since 3 October",
+   "a skip on the highway needs lamps at night and a permit: the two amber lamps are on the skip; the double yellow lines (0.25 m from the kerb) lie under it: a skip on the lines is a street fact (a permit, Judgement)",
+   "a skip any part of which stands on the carriageway carried, from 1 January 1986, a marking of two striped plates on each end (SI 1984/1933, S8): the south end faces the hook camera, about 24 m away and 20 degrees off its axis, well inside the frame, so four striped plates are among the first things a 1990 skip in the road shows; they are on the upper end plates, level with each other (their upper edges 4 mm under the rim bar, about 1.1 m above the road), 270 wide, 380 long, 5 mm inside the end's outer edges and mirror images about the skip's axis",
+   "the floor lies on the road's camber: 1 in 40 is 1.43 degrees, the kerb side low, 42 mm across the 1690 width"
+  ],
+  "poses": [
+   {
+    "id": "skip",
+    "variant": "SK1",
+    "x_m": 22.5,
+    "z_m": -1.85,
+    "yaw_deg": 180.0,
+    "zone": "west_carriageway",
+    "front_faces": "+z",
+    "walk_check": false,
+    "head_check": false
+   }
+  ],
+  "hook_camera": {
+   "x_m": -3.0,
+   "z_m": -1.6,
+   "eye_y_m": 2.2,
+   "yaw_deg": 20.4,
+   "pitch_deg": -3.4,
+   "fov_vertical_deg": 46.0
+  }
  },
  "wear": [
   "yellow paint chalked, dented along the rim and the lower plates (a hundred dents 20 to 80 mm, seeds), chipped to rust at the rim's top edge and the lugs, rust runs 30 to 120 mm below the chipped places",
   "mud and cement to knee height (a mask from the floor up, 0.4 m on the side plates), black tar and bitumen splashes, lime-white splashes",
   "the stencilled name worn, a few letters chipped; the paint on the end plates scraped by the lorry's chains",
   "the lamps: dirty lenses, one cracked (a seed)",
+  "the four end marking plates: scuffed and dirt-streaked (the regulation asks them to be clean and efficient, so a dirty one is a street fact, not the target), the fluorescent red faded toward orange-red, one plate cracked across a corner (a seed), mud splashes on the lowest 100 mm",
   "contents: empty in the sample (a variant carries a heap of plasterboard, bricks and timber lath, never a person or a drink container: a seed in the builder's decals)",
   "NOT shown: a real firm's name or number, a person, any drink container"
  ],
@@ -1298,6 +1582,13 @@
    "book": "S4: usually two on each side",
    "photo": "S1: two small lugs near the top at about x -990 and +990",
    "chose": "two on each side at x -990 and +990, 80 x 60 x 25"
+  },
+  {
+   "id": "W4",
+   "what": "the end markings",
+   "book": "the first version: none (it named lamps and a permit for a skip on the highway and nothing else)",
+   "photo": "S2 shows a skip from its end in a terraced street with its end plates and a FILL LEVEL line; the law (S8, Schedules 1 and 2) puts two striped plates on each end of a skip standing on a highway from 1 January 1986",
+   "chose": "two plates 270 x 380 on each end's upper end plate, red fluorescent stripes on yellow reflex, 45 degrees, 140 broad, rising toward the inner edges (the review of 13 October found their absence)"
   }
  ],
  "variants_note": [
@@ -1311,23 +1602,25 @@
   "the width across (1700, Judgement: no end view was measured; S2's end view is oblique)",
   "the right bottom corner and the top corners (faint against fence and sky in S1): the profile is taken symmetric about the centre of the widest line",
   "whether a skip stood on Quay Street in 1990 (the scene's story says one did; the ruling put it back as soon as it is real)",
+  "the marking plates' own colours and small mark: the regulation names red fluorescent and yellow reflex-reflecting and the Standard BS AU 152: 1970, which was not read; the sRGB values and the small 'BS AU 152' marking are Judgements",
+  "the skip's share of the hook frame is a projection of the target's own parts with nothing hiding it, not a render",
   "the lamps' exact fixing (a hook over the rim: Judgement)"
  ],
  "content_rule_note": "no firm's real name, no person, no drink container in the contents (a statement of the content rule).",
  "builder_notes": [
   "build by script: the two side plates are prisms of the hexagonal profile in the x-z plane (5 mm), the floor and the four end plates are boxes (the end plates' rotations are in target.json), the rim a folded bar along the top edge",
-  "texture: yellow paint with the stencil (TIDEWAY SKIP HIRE, TEL 555 0142) on the side plate; no real mark",
+  "texture: yellow paint with the stencil on the side plate as a SEPARATE texture layer, blank in any picture for his page (the firm and the number are fictional placeholders in text.hire_firm and text.number_line); the marking plates have their own texture (see marking); no real mark",
   "lamps: emissive amber (1.0, 0.25, 0.0) linear at night, off by day; the lens 90 across",
   "keep the hexagonal profile exact: its widest line is at 793 and its bottom edge shorter than its top"
  ],
  "self_check": {
-  "line": "SELF-CHECK skip: 86 checks, 86 passed, 0 failed; negative controls 25 of 25 caught (--live --previews)",
-  "checks": 86,
-  "passed": 86,
+  "line": "SELF-CHECK skip: 126 checks, 126 passed, 0 failed; negative controls 0 of 0 caught (offline)",
+  "checks": 126,
+  "passed": 126,
   "failed": 0,
-  "controls": 25,
-  "controls_caught": 25,
-  "options": "--live --previews",
+  "controls": 0,
+  "controls_caught": 0,
+  "options": "offline",
   "failing": [],
   "uncaught": []
  }

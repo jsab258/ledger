@@ -176,6 +176,7 @@ def geometry(ps, V, vspec, rows, contacts=None):
 
 
 def numbers_rows(T, rows):
+    by_id = {n["id"]: n for n in T.get("numbers", [])}
     for n in T.get("numbers", []):
         V = n.get("variant", T.get("sample"))
         parts = L.variant_parts(T, V)
@@ -186,6 +187,15 @@ def numbers_rows(T, rows):
             rows.add("numbers", "numbers/%s" % n["id"], False, "could not measure: %s" % e)
             continue
         rows.near("numbers", "numbers/%s" % n["id"], got, n["value"], n.get("tol", 1.0))
+        # a number measured on a photograph at an ASSUMED scale inherits the assumed number's relative source error;
+        # the builder's tolerance is a separate field and never stands for the source's error
+        if n.get("scaled_on"):
+            base = by_id.get(n["scaled_on"])
+            ok = bool(base) and base.get("kind") == "Judgement" and "source_error" in base and "source_error" in n
+            need = (base["source_error"] / base["value"]) * n["value"] if ok else None
+            rows.add("numbers", "numbers/%s source error covers the assumed scale (%s)" % (n["id"], n["scaled_on"]),
+                     ok and n["source_error"] + 1e-9 >= need - 0.5,
+                     ("source error +-%.1f against %.1f needed (the assumed %s is +-%.1f on %.0f)" % (n["source_error"], need, n["scaled_on"], base["source_error"], base["value"])) if ok else "the assumed number %s is not a Judgement with a source error" % n["scaled_on"])
 
 
 _ps_store = {}
@@ -485,6 +495,10 @@ def generic_controls(T, spec):
                 if n["id"] == spec["number_id"]:
                     n["value"] = n["value"] * 1.1 + 5
         C.append(("numbers: a printed number changed by 10 percent", tamper, "numbers/%s" % spec["number_id"]))
+    scaled = [n for n in T.get("numbers", []) if n.get("scaled_on")]
+    if scaled:
+        sid = scaled[0]["id"]
+        C.append(("numbers: %s's source error cut to one tenth (the builder's tolerance used for it)" % sid, (lambda t: [n.__setitem__("source_error", n["source_error"] * 0.1) for n in t["numbers"] if n["id"] == sid]), "numbers/%s source error covers" % sid))
     for ph in T.get("photos", []):
         if not ph.get("fit"):
             continue

@@ -41,8 +41,17 @@ def materials_table(T):
 
 def numbers_table(T):
     rows = []
+    se = any("source_error" in n for n in T["numbers"])
     for n in T["numbers"]:
-        rows.append([n["id"], n["what"], "%s %s" % (_f(n["value"]), n.get("unit", "mm")), n["kind"], n["source"], "+-%s" % _f(n.get("tol", 1.0))])
+        row = [n["id"], n["what"], "%s %s" % (_f(n["value"]), n.get("unit", "mm")), n["kind"], n["source"]]
+        if se:
+            row.append(("+-%s" % _f(n["source_error"])) if "source_error" in n else "")
+            row.append("+-%s" % _f(n.get("tol", 1.0)))
+        else:
+            row.append("+-%s" % _f(n.get("tol", 1.0)))
+        rows.append(row)
+    if se:
+        return table(["id", "what", "value", "kind", "source and method", "source error (what the source can tell)", "builder tolerance (what the check allows)"], rows)
     return table(["id", "what", "value", "kind", "source and method", "tolerance"], rows)
 
 
