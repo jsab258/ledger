@@ -1,7 +1,7 @@
 {
  "family": "telegraph-pole",
  "title": "Quay Street's telegraph pole with its wires",
- "units": "millimetres; angles in degrees; z up from the pavement; the bracket faces -y here; the pivot is the pole's centre at the pavement; in the street the local +y points across the street, to the east parade",
+ "units": "millimetres; angles in degrees; z up from the pavement; the bracket is on the +y face; the pivot is the pole's centre at the pavement; in the street (yaw 0) local +y is street +z: across the street, to the east parade, and the bracket faces the street's axis",
  "status": "written 13 October 2026, not yet reviewed",
  "sample": "TP1",
  "materials": {
@@ -76,6 +76,18 @@
    "rough_words": "rough",
    "metal": false,
    "note": "stand-in slabs for the two facades"
+  },
+  "roof_slate": {
+   "name": "slate roof, wet grey (the street's)",
+   "srgb": [
+    62,
+    64,
+    68
+   ],
+   "rough": 0.7,
+   "rough_words": "rough",
+   "metal": false,
+   "note": "stand-in plane for the west row's drawn roof"
   }
  },
  "variants": {
@@ -124,7 +136,7 @@
      "type": "box",
      "c": [
       0.0,
-      -89.5,
+      89.5,
       7755.0
      ],
      "s": [
@@ -134,19 +146,19 @@
      ],
      "material": "iron_dark",
      "edge": "corners r 6",
-     "note": "distribution bracket 300 x 22 x 170, galvanised iron painted black, two bolts into the pole"
+     "note": "distribution bracket 300 x 22 x 170, galvanised iron painted black, two bolts into the pole, on the pole's street (east) face"
     },
     {
      "id": "knob_11",
      "type": "cyl",
      "p0": [
       -100.0,
-      -105.0,
+      105.0,
       7715.0
      ],
      "p1": [
       -100.0,
-      -151.0,
+      151.0,
       7715.0
      ],
      "r0": 20.0,
@@ -159,12 +171,12 @@
      "type": "cyl",
      "p0": [
       0.0,
-      -105.0,
+      105.0,
       7715.0
      ],
      "p1": [
       0.0,
-      -151.0,
+      151.0,
       7715.0
      ],
      "r0": 20.0,
@@ -177,12 +189,12 @@
      "type": "cyl",
      "p0": [
       100.0,
-      -105.0,
+      105.0,
       7715.0
      ],
      "p1": [
       100.0,
-      -151.0,
+      151.0,
       7715.0
      ],
      "r0": 20.0,
@@ -195,12 +207,12 @@
      "type": "cyl",
      "p0": [
       -100.0,
-      -105.0,
+      105.0,
       7800.0
      ],
      "p1": [
       -100.0,
-      -151.0,
+      151.0,
       7800.0
      ],
      "r0": 20.0,
@@ -213,12 +225,12 @@
      "type": "cyl",
      "p0": [
       0.0,
-      -105.0,
+      105.0,
       7800.0
      ],
      "p1": [
       0.0,
-      -151.0,
+      151.0,
       7800.0
      ],
      "r0": 20.0,
@@ -231,12 +243,12 @@
      "type": "cyl",
      "p0": [
       100.0,
-      -105.0,
+      105.0,
       7800.0
      ],
      "p1": [
       100.0,
-      -151.0,
+      151.0,
       7800.0
      ],
      "r0": 20.0,
@@ -437,15 +449,15 @@
      "c": [
       3000.0,
       9000.0,
-      4500.0
+      3117.5
      ],
      "s": [
       24000.0,
       300.0,
-      9000.0
+      6235.0
      ],
      "material": "wall_brick",
-     "note": "the east parade's front (a stand-in slab)"
+     "note": "the east parade's front to its eaves (6.30 m above the crown, two storeys; a stand-in slab)"
     },
     {
      "id": "facade_west",
@@ -453,15 +465,44 @@
      "c": [
       3000.0,
       -1550.0,
-      4250.0
+      1717.5
      ],
      "s": [
       24000.0,
       300.0,
-      8500.0
+      3435.0
      ],
      "material": "wall_brick",
-     "note": "the west block's front (a stand-in slab)"
+     "note": "the west row's drawn front: ONE storey since 3 October (vignette-scene.json west_north drawn: storey 3.4 m), its eaves 3.5 m above the crown, 3435 above the pavement at the pole"
+    },
+    {
+     "id": "roof_west",
+     "type": "prism",
+     "plane": "yz",
+     "poly": [
+      [
+       -1100.0,
+       3224.937738537087
+      ],
+      [
+       -5400.0,
+       6235.830152838838
+      ],
+      [
+       -5400.0,
+       6175.830152838838
+      ],
+      [
+       -1100.0,
+       3164.937738537087
+      ]
+     ],
+     "w": [
+      -9000.0,
+      15000.0
+     ],
+     "material": "roof_slate",
+     "note": "the drawn roof plane: 35 degrees from the eaves up to the ridge 4.0 m back (about 6.3 m above the crown), its eaves overhanging 300 (a stand-in plane)"
     },
     {
      "id": "anchor_w1",
@@ -485,7 +526,7 @@
      "c": [
       2500.0,
       8805.0,
-      6200.0
+      6100.0
      ],
      "s": [
       80.0,
@@ -501,7 +542,7 @@
      "c": [
       -4500.0,
       -1355.0,
-      6500.0
+      3200.0
      ],
      "s": [
       80.0,
@@ -517,7 +558,7 @@
      "c": [
       3500.0,
       -1355.0,
-      6600.0
+      3200.0
      ],
      "s": [
       80.0,
@@ -533,27 +574,27 @@
      "pts": [
       [
        0.0,
-       -151.0,
+       151.0,
        7715.0
       ],
       [
        -600.0,
-       1631.2,
+       1872.8,
        7212.8
       ],
       [
        -1200.0,
-       3413.4,
+       3594.6,
        6800.2
       ],
       [
        -1800.0,
-       5195.6,
+       5316.4,
        6477.2
       ],
       [
        -2400.0,
-       6977.8,
+       7038.2,
        6243.8
       ],
       [
@@ -564,7 +605,7 @@
      ],
      "r": 3.0,
      "material": "wire_black",
-     "note": "drop wire 6 across, black PVC over copper, across to the east parade",
+     "note": "drop wire 6 across, black PVC over copper, across to the east parade (the launderette's bay)",
      "hangs": true
     },
     {
@@ -573,38 +614,38 @@
      "pts": [
       [
        100.0,
-       -151.0,
+       151.0,
        7715.0
       ],
       [
        580.0,
-       1631.2,
-       7239.2
+       1872.8,
+       7219.2
       ],
       [
        1060.0,
-       3413.4,
-       6849.8
+       3594.6,
+       6809.8
       ],
       [
        1540.0,
-       5195.6,
-       6546.8
+       5316.4,
+       6486.8
       ],
       [
        2020.0,
-       6977.8,
-       6330.2
+       7038.2,
+       6250.2
       ],
       [
        2500.0,
        8760.0,
-       6200.0
+       6100.0
       ]
      ],
      "r": 3.0,
      "material": "wire_black",
-     "note": "drop wire 6 across, black PVC over copper, across to the east parade",
+     "note": "drop wire 6 across, black PVC over copper, across to the east parade (the grocer's bay)",
      "hangs": true
     },
     {
@@ -613,38 +654,38 @@
      "pts": [
       [
        -100.0,
-       -151.0,
+       151.0,
        7800.0
       ],
       [
        -980.0,
-       -382.8,
-       7450.4
+       -141.2,
+       6784.0
       ],
       [
        -1860.0,
-       -614.6,
-       7145.6
+       -433.4,
+       5816.0
       ],
       [
        -2740.0,
-       -846.4,
-       6885.6
+       -725.6,
+       4896.0
       ],
       [
        -3620.0,
-       -1078.2,
-       6670.4
+       -1017.8,
+       4024.0
       ],
       [
        -4500.0,
        -1310.0,
-       6500.0
+       3200.0
       ]
      ],
      "r": 3.0,
      "material": "wire_black",
-     "note": "drop wire 6 across, black PVC over copper, along to the west block, a bay down the street",
+     "note": "drop wire 6 across, black PVC over copper, down to the west row's eaves course, a bay down the street",
      "hangs": true
     },
     {
@@ -653,44 +694,45 @@
      "pts": [
       [
        100.0,
-       -151.0,
+       151.0,
        7800.0
       ],
       [
        780.0,
-       -382.8,
-       7483.2
+       -141.2,
+       6796.8
       ],
       [
        1460.0,
-       -614.6,
-       7204.8
+       -433.4,
+       5835.2
       ],
       [
        2140.0,
-       -846.4,
-       6964.8
+       -725.6,
+       4915.2
       ],
       [
        2820.0,
-       -1078.2,
-       6763.2
+       -1017.8,
+       4036.8
       ],
       [
        3500.0,
        -1310.0,
-       6600.0
+       3200.0
       ]
      ],
      "r": 3.0,
      "material": "wire_black",
-     "note": "drop wire 6 across, black PVC over copper, to the west block, the other way",
+     "note": "drop wire 6 across, black PVC over copper, down to the west row's eaves course, the other way",
      "hangs": true
     }
    ],
    "overall_exclude": [
     "facade_east",
     "facade_west",
+    "roof_west",
     "anchor_w1",
     "anchor_w2",
     "anchor_w3",
@@ -769,11 +811,38 @@
      "facade_east"
     ],
     [
+     "anchor_w2",
+     "facade_east"
+    ],
+    [
      "anchor_w3",
      "facade_west"
+    ],
+    [
+     "anchor_w4",
+     "facade_west"
+    ],
+    [
+     "facade_west",
+     "roof_west"
     ]
    ],
    "embeds": [
+    [
+     "facade_west",
+     "roof_west",
+     25.0
+    ],
+    [
+     "roof_west",
+     "anchor_w3",
+     0.0
+    ],
+    [
+     "roof_west",
+     "anchor_w4",
+     0.0
+    ],
     [
      "step_01",
      "pole",
@@ -974,7 +1043,7 @@
    "what": "lowest point of the across wires (at the east parade, their ends)",
    "value": 6100.0,
    "kind": "Judgement",
-   "source": "the wires land on the first-floor eaves brackets of the east parade at 6.1 and 6.2 m (above the 5.5 m a wire must keep over a road: the regulation was not reached on a page this session); error 300",
+   "source": "the two across wires land on the east parade's eaves course at 6.1 m (its eaves are 6.30 m above the crown, so 6.215 m with the pavement at the pole; above the 5.5 m a wire must keep over a road, a figure from memory: no page for the regulation was reached, kept in not_settled); error 300",
    "tol": 300.0,
    "measure": {
     "kind": "wire_min_z",
@@ -982,6 +1051,33 @@
      "w1",
      "w2"
     ]
+   }
+  },
+  {
+   "id": "N6",
+   "what": "height of the west anchors above the pavement at the pole (under the drawn eaves)",
+   "value": 3200.0,
+   "kind": "Derived",
+   "source": "vignette-scene.json west_north.drawn: ONE storey of 3.4 m since 3 October, so the eaves stand 0.1 + 3.4 = 3.50 m above the crown, 3435 above the pavement at the pole (0.065 above the crown); the anchors (100 high) sit at 3150 to 3250, under the gutter and the overhang's soffit; error 100",
+   "tol": 100.0,
+   "measure": {
+    "kind": "centre",
+    "axis": "z",
+    "part": "anchor_w3"
+   }
+  },
+  {
+   "id": "N7",
+   "what": "the west row's eaves above the pavement at the pole (the drawn wall's top)",
+   "value": 3435,
+   "kind": "Derived",
+   "source": "vignette-scene.json west_north.drawn.storey_heights_m [3.4] plus the threshold 0.100 less the pavement's 0.065 at the pole",
+   "tol": 2.0,
+   "measure": {
+    "kind": "edge",
+    "axis": "z",
+    "part": "facade_west",
+    "side": "hi"
    }
   },
   {
@@ -1074,7 +1170,7 @@
    "licence": "own work",
    "taken": "29 September 2026",
    "kind": "own",
-   "shows": "an earlier pole: 8.5 m, 0.24 across at the foot and 0.17 at the top, steps from 2.4 m every 0.45 m, a steel ring with seven 1.6 m stub wires, a number plate; stands at the west kerb, x 12 (terrace-front.py)",
+   "shows": "an earlier pole: 8.5 m, 0.24 across at the foot and 0.17 at the top, steps from 2.4 m every 0.45 m, a steel ring with seven 1.6 m stub wires, a number plate; stood at the west kerb, x 12 (terrace-front.py) until 3 October, when it was taken off the street",
    "used": true,
    "not_used_for": "its ring and its stubs",
    "period": "n/a"
@@ -1131,6 +1227,18 @@
    "tol": "+-300 mm"
   },
   {
+   "name": "N6: height of the west anchors above the pavement at the pole (under the drawn eaves)",
+   "measure": "measure it on the built mesh in millimetres (centre)",
+   "expect": "3200 mm",
+   "tol": "+-100 mm"
+  },
+  {
+   "name": "N7: the west row's eaves above the pavement at the pole (the drawn wall's top)",
+   "measure": "measure it on the built mesh in millimetres (edge)",
+   "expect": "3435 mm",
+   "tol": "+-2 mm"
+  },
+  {
    "name": "N5: the pole's own height to the bracket's lower edge",
    "measure": "measure it on the built mesh in millimetres (edge)",
    "expect": "7670 mm",
@@ -1143,7 +1251,7 @@
    "tol": "exact"
   },
   {
-   "name": "C2: the wires over the carriageway stay above 5.5 m",
+   "name": "C2: the wires over the carriageway stay above 5.5 m (a figure from memory: no page for the regulation was reached)",
    "measure": "the lowest z of the across wires",
    "expect": ">= 5500",
    "tol": "exact"
@@ -1161,7 +1269,13 @@
    "tol": "exact"
   }
  ],
- "owed": [],
+ "owed": [
+  {
+   "id": "O1",
+   "line": "Put a telegraph pole with two wires across the street back at the far end, though it came off on 3 October because the Hook sheet has none?",
+   "recommended": "No, unless the hook picture shows it does not cross the sky"
+  }
+ ],
  "night": {
   "lantern_linear": [
    1.0,
@@ -1171,8 +1285,15 @@
   "note": "the pole stands between the lamp columns at x 28 east and 38 west: its lower 4 m catch the lantern colour (1.0, 0.25, 0.0) on the road-side face; the wires vanish at night except where a lamp is behind them"
  },
  "placement": {
-  "slot": "west side, pole centre x 33.0 m, z -3.725 (0.60 m behind the kerb's back edge), the bracket facing the street's axis (+z in the street's frame), wires to the east parade (the bays at x 30 to 36) and to the west block; the earlier pole at x 12 west is dropped",
-  "x_m": 33.0,
+  "slot": "OFF THE STREET until Jafar rules (owed line O1): the pole came off the street on 3 October and this target does not put it back. The slot it would take: west side, pole centre x 32.4 m, z -3.725 (0.60 m behind the kerb's back edge), the bracket on its street face (+z in the street's frame), two wires across to the east parade (the launderette's bay x 27 to 33 and the grocer's bay x 33 to 39) and two down to the west row's eaves; the foot stands 0.32 m clear of the west shops' litter bin (x 33.0, z -3.65)",
+  "on_street": false,
+  "conflict": {
+   "ruling": "DECISIONS 2026-10-03 (the proof view, step 2.1, composition, under his order of 3 October): the telegraph pole and its drop wires were taken off the street; the pole was the strongest vertical in the left third of the hook frame, with wires across the sky the sheet does not have; tools/art-recipes/terrace-front.py keeps the note THE TELEGRAPH POLE IS OFF THE STREET above CLUTTER_ADDED and says the props step (2.8) decides the street's furniture again",
+   "hook_sheet": "the Hook sheet (the governing composition, RULINGS 21 Sep) has no pole and no wires across the sky",
+   "geometry": "at x 32.4 the pole stands about 35 m from the hook camera (x -3, z -1.6, yaw 20.4), about 24 degrees left of its axis, in the left third again, 8 m tall (about 12.5 degrees of a 46 degree frame) with two wires across the street at 6.1 m against the sky, and 5 m in front of the reverse camera, on its right",
+   "status": "the pole stays off the street until he rules; the pictures he needs (the hook camera and the reverse view, each with and without the pole and its wires) are made by the builder when he asks; none was made here (nothing is built or rendered by this target)"
+  },
+  "x_m": 32.4,
   "z_m": -3.725,
   "kerb_back_z_m": -3.125,
   "set_back_mm": 600.0,
@@ -1186,11 +1307,63 @@
    "west_x_m": 38.0,
    "mounting_m": 5.0
   },
+  "litter_bin": {
+   "piece": "prop_swing_bin_1",
+   "x_m": 33.0,
+   "z_m": -3.65,
+   "note": "the west shops' own bin (held_props DRESSING, 24 September; drawn as the litter-bin model by terrace-front.py CLUTTER_FOR_HELD)"
+  },
   "reasons": [
-   "the earlier pole stood at x 12 on the west kerb, beside the poster wall at x 11.4 and 8 m from the lamp column at 18; x 33.0 is 5 m from both the lamp column at 28 east and at 38 west, in the span of the grocer's bay (east x 27 to 39)",
-   "the pole is set back 0.60 m so its 230 mm foot leaves 2.0 - 0.60 - 0.115 = 1.29 m of footway clear (at least 1.0 m)",
-   "its wires cross the street at 6.1 and 6.2 m at the east parade, never lower than 6.1 m: above the lamp columns' 5.0 m mounting height with 1.1 m to spare, and clear of the lamp column at x 28 (the wires land at x 30 and 35.5)",
+   "the pole is OFF the street (3 October, see the conflict above); this slot is only where it would stand if he says yes. It is not at x 12: that pole has been off since 3 October too",
+   "x 32.4 is 0.32 m clear of the west shops' litter bin (the scene's prop_swing_bin_1 at x 33.0, z -3.65, 0.33 by 0.32: the first version's x 33.0 put the 230 mm foot inside it), 5.6 m from the lamp column at x 38 west and 4.4 m from the one at x 28 east, in front of the ironmonger's window (x 30.35 to 33.70) and 1.3 m short of its shop door (x 33.70 to 34.706)",
+   "the pole is set back 0.60 m so its 230 mm foot leaves 2.0 - 0.60 - 0.115 = 1.29 m of footway clear (at least 1.0 m); the shared placement rows (sd_place.py) also test it against every piece of vignette-pieces.json and the shopfronts' door zones",
+   "its two across wires land on the east parade's eaves course at 6.1 m (the launderette's bay at x 29.4 and the grocer's bay at x 34.9: bay 4 is x 27 to 33, bay 5 x 33 to 39), never lower than 6.1 m: above the lamp columns' 5.0 m mounting height with 0.9 m to spare, and clear of the lamp column at x 28; the 5.5 m a wire must keep over a road is a figure from memory, no page for it was reached (not_settled)",
+   "its two west wires land on the west row's eaves course at 3.2 m above the pavement (the review said about 3.3 m; at 3.3 the 100 mm anchor stands in the soffit of the roof's 300 mm overhang), under the gutter of the drawn one-storey row (eaves 3.5 m above the crown: vignette-scene.json west_north drawn), at x 27.9 and 35.9; the first version landed them at 6.5 m, 3 m above that row's eaves, in the air",
    "the wires carry no lettering or mark; the real poles' owner marks are left off (S4 lists them; none is copied)"
+  ],
+  "poses": [
+   {
+    "id": "pole",
+    "variant": "TP1",
+    "x_m": 32.4,
+    "z_m": -3.725,
+    "yaw_deg": 0.0,
+    "zone": "west_footway",
+    "ignore_parts": [
+     "w1",
+     "w2",
+     "w3",
+     "w4",
+     "anchor_",
+     "facade_",
+     "roof_west"
+    ],
+    "wires": {
+     "anchors": [
+      {
+       "part": "anchor_w1"
+      },
+      {
+       "part": "anchor_w2"
+      },
+      {
+       "part": "anchor_w3"
+      },
+      {
+       "part": "anchor_w4"
+      }
+     ],
+     "wire_parts": [
+      "w1",
+      "w2",
+      "w3",
+      "w4"
+     ],
+     "under_eaves_min_m": 0.05,
+     "wire_clear_m": 0.5,
+     "over_road_min_m": 5.5
+    }
+   }
   ]
  },
  "wear": [
@@ -1224,7 +1397,7 @@
   }
  ],
  "variants_note": [
-  "TP1 (the sample): the pole with 4 wires (two across, two to its own side). One on the street.",
+  "TP1 (the sample): the pole with 4 wires (two across, two to its own side). One, and OFF the street until Jafar rules (owed line O1).",
   "wear states (materials and seeds): C0 sound; C1 worn (the sample); C2 leaning 2 degrees with one wire slack (a transform seed).",
   "a pole with two more wires or one fewer is a seed on the wire list: the rule is each wire sags 1.5 to 3.5 percent of its span and keeps 5.5 m over the carriageway.",
   "NOT written: a crossarm pole (the electricity kind), a stay wire, a transformer pole: none stands in the street."
@@ -1240,17 +1413,18 @@
  "builder_notes": [
   "pole: a 20-sided tapered cylinder (230 at the ground, 150 at the top), UVs along its length with vertical checks in the height map; the cap and bracket separate meshes; the steps as pegs",
   "wires: tubes of 6 mm along the polylines in target.json (each point listed), the sag a parabola; hang them as splines in the engine if it prefers; the two ends are on a knob tip and on the wall bracket's face",
-  "the two facades in the file are stand-ins for the street's own walls; the anchors bolt to the eaves course at the stated heights",
+  "the facades in the file are stand-ins for the street's own walls: the east one runs to the parade's eaves (6.30 m above the crown), the west one is the DRAWN one-storey row (wall 3.5 m above the crown and its 35 degree roof plane); the anchors bolt to the eaves course at the stated heights, under the gutter",
+  "do NOT place the pole in the street until Jafar says yes (owed line O1): it is off since 3 October",
   "no lettering, no plate, no mark"
  ],
  "self_check": {
-  "line": "SELF-CHECK telegraph-pole: 76 checks, 76 passed, 0 failed; negative controls 24 of 24 caught (--live --previews)",
-  "checks": 76,
-  "passed": 76,
+  "line": "SELF-CHECK telegraph-pole: 95 checks, 95 passed, 0 failed; negative controls 0 of 0 caught (offline)",
+  "checks": 95,
+  "passed": 95,
   "failed": 0,
-  "controls": 24,
-  "controls_caught": 24,
-  "options": "--live --previews",
+  "controls": 0,
+  "controls_caught": 0,
+  "options": "offline",
   "failing": [],
   "uncaught": []
  }
