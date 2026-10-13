@@ -2740,7 +2740,7 @@
    },
    "display": {
     "keeps": "production/assets/shop-displays/pawnbroker-display.glb as built (23 Poly Haven models on a stepped velvet bed, a ticket on each), 3.35 m long, 0.55 deep",
-    "changes": "drop digital_wrist_watch (a maker's mark, not in the glb's list today: confirm) and any model whose map shows a maker's name after the 1k inspection; add the night grille; pieces are not repeated more than twice (the third review's copy-paste note) [13 Oct, from the try 1 reviews] The table is re-laid: no pedestals; the old w 0.12 zones stand on the step (v 0.26 to 0.52); the bed's front strip holds the approved ring trays, watch pads and chains with the small pieces among them; the middle tier takes pieces at most 0.32 tall; the top tier keeps at most three vases (brass_vase_02 and brass_vase_03 and ceramic_vase_03 leave the display: they stay in the room's stock); the boombox and the 8 mm projector stand on the top tier; every zone is the slot the piece occupies.",
+    "changes": "drop digital_wrist_watch (a maker's mark, not in the glb's list today: confirm) and any model whose map shows a maker's name after the 1k inspection; add the night grille; pieces are not repeated more than twice (the third review's copy-paste note) [13 Oct, from the try 1 reviews] The table is re-laid: no pedestals; the old w 0.12 zones stand on the step (v 0.26 to 0.505); the bed's front strip holds the approved ring trays, watch pads and chains with the small pieces among them; the middle tier takes pieces at most 0.32 tall; the top tier keeps at most three vases (brass_vase_02 and brass_vase_03 and ceramic_vase_03 leave the display: they stay in the room's stock); the boombox and the 8 mm projector stand on the top tier; every zone is the slot the piece occupies.",
     "u_range": [
      0.0,
      3.35
@@ -2940,12 +2940,12 @@
        0.157,
        0.451,
        0.26,
-       0.52,
+       0.505,
        0.12,
        0.38
       ],
       "size_m": null,
-      "note": "stands ON the step (v 0.26 to 0.52), longest side along the window, no pedestal; mark blanked as `inventory.polyhaven[Camera_01].marks` says"
+      "note": "stands ON the step (v 0.26 to 0.505), longest side along the window, no pedestal; mark blanked as `inventory.polyhaven[Camera_01].marks` says"
      },
      {
       "model": "seadogs_compass",
@@ -2955,12 +2955,12 @@
        0.553,
        0.727,
        0.26,
-       0.52,
+       0.505,
        0.12,
        0.38
       ],
       "size_m": null,
-      "note": "stands ON the step (v 0.26 to 0.52), longest side along the window, no pedestal"
+      "note": "stands ON the step (v 0.26 to 0.505), longest side along the window, no pedestal"
      },
      {
       "model": "vintage_video_camera",
@@ -2970,12 +2970,12 @@
        0.83,
        0.993,
        0.26,
-       0.52,
+       0.505,
        0.12,
        0.38
       ],
       "size_m": null,
-      "note": "stands ON the step (v 0.26 to 0.52), longest side along the window, no pedestal; mark blanked as `inventory.polyhaven[vintage_video_camera].marks` says"
+      "note": "stands ON the step (v 0.26 to 0.505), longest side along the window, no pedestal; mark blanked as `inventory.polyhaven[vintage_video_camera].marks` says"
      },
      {
       "model": "measuring_tape_01",
@@ -2985,12 +2985,12 @@
        1.095,
        1.294,
        0.26,
-       0.52,
+       0.505,
        0.12,
        0.38
       ],
       "size_m": null,
-      "note": "stands ON the step (v 0.26 to 0.52), longest side along the window, no pedestal; its label blanked"
+      "note": "stands ON the step (v 0.26 to 0.505), longest side along the window, no pedestal; its label blanked"
      },
      {
       "model": "binoculars",
@@ -3000,12 +3000,12 @@
        1.397,
        1.715,
        0.26,
-       0.52,
+       0.505,
        0.12,
        0.38
       ],
       "size_m": null,
-      "note": "stands ON the step (v 0.26 to 0.52), longest side along the window, no pedestal"
+      "note": "stands ON the step (v 0.26 to 0.505), longest side along the window, no pedestal"
      },
      {
       "model": "carved_wooden_elephant",
@@ -3015,12 +3015,12 @@
        1.817,
        1.956,
        0.26,
-       0.52,
+       0.505,
        0.12,
        0.38
       ],
       "size_m": null,
-      "note": "stands ON the step (v 0.26 to 0.52), longest side along the window, no pedestal"
+      "note": "stands ON the step (v 0.26 to 0.505), longest side along the window, no pedestal"
      },
      {
       "model": "Camera_01",
@@ -3030,12 +3030,12 @@
        2.059,
        2.352,
        0.26,
-       0.52,
+       0.505,
        0.12,
        0.38
       ],
       "size_m": null,
-      "note": "stands ON the step (v 0.26 to 0.52), longest side along the window, no pedestal; mark blanked as `inventory.polyhaven[Camera_01].marks` says"
+      "note": "stands ON the step (v 0.26 to 0.505), longest side along the window, no pedestal; mark blanked as `inventory.polyhaven[Camera_01].marks` says"
      },
      {
       "model": "vintage_flashlight",
@@ -3045,12 +3045,12 @@
        2.455,
        2.785,
        0.26,
-       0.52,
+       0.505,
        0.12,
        0.38
       ],
       "size_m": null,
-      "note": "stands ON the step (v 0.26 to 0.52), longest side along the window, no pedestal"
+      "note": "stands ON the step (v 0.26 to 0.505), longest side along the window, no pedestal"
      },
      {
       "model": "jug_01",
@@ -3060,12 +3060,12 @@
        2.887,
        3.193,
        0.26,
-       0.52,
+       0.505,
        0.12,
        0.38
       ],
       "size_m": null,
-      "note": "stands ON the step (v 0.26 to 0.52), longest side along the window, no pedestal"
+      "note": "stands ON the step (v 0.26 to 0.505), longest side along the window, no pedestal"
      },
      {
       "model": "alarm_clock_01",
@@ -3075,7 +3075,7 @@
        0.19,
        0.351,
        0.2,
-       0.51,
+       0.505,
        0.4,
        0.72
       ],
@@ -3090,7 +3090,7 @@
        0.486,
        0.646,
        0.2,
-       0.51,
+       0.505,
        0.4,
        0.72
       ],
@@ -3105,7 +3105,7 @@
        0.78,
        1.153,
        0.2,
-       0.51,
+       0.505,
        0.4,
        0.72
       ],
@@ -3120,7 +3120,7 @@
        1.288,
        1.512,
        0.2,
-       0.51,
+       0.505,
        0.4,
        0.72
       ],
@@ -3135,7 +3135,7 @@
        1.647,
        1.85,
        0.2,
-       0.51,
+       0.505,
        0.4,
        0.72
       ],
@@ -3150,7 +3150,7 @@
        1.985,
        2.144,
        0.2,
-       0.51,
+       0.505,
        0.4,
        0.72
       ],
@@ -3165,7 +3165,7 @@
        2.279,
        2.441,
        0.2,
-       0.51,
+       0.505,
        0.4,
        0.72
       ],
@@ -3180,7 +3180,7 @@
        2.575,
        2.822,
        0.2,
-       0.51,
+       0.505,
        0.4,
        0.72
       ],
@@ -3195,7 +3195,7 @@
        2.957,
        3.16,
        0.2,
-       0.51,
+       0.505,
        0.4,
        0.72
       ],
@@ -3209,8 +3209,8 @@
       "zone": [
        0.137,
        0.368,
-       0.24,
-       0.52,
+       0.232,
+       0.505,
        0.75,
        1.45
       ],
@@ -3224,8 +3224,8 @@
       "zone": [
        0.449,
        0.734,
-       0.24,
-       0.52,
+       0.232,
+       0.505,
        0.75,
        1.45
       ],
@@ -3239,8 +3239,8 @@
       "zone": [
        0.816,
        1.449,
-       0.24,
-       0.52,
+       0.232,
+       0.505,
        0.75,
        1.45
       ],
@@ -3254,8 +3254,8 @@
       "zone": [
        1.53,
        1.764,
-       0.24,
-       0.52,
+       0.232,
+       0.505,
        0.75,
        1.45
       ],
@@ -3269,8 +3269,8 @@
       "zone": [
        1.846,
        2.599,
-       0.24,
-       0.52,
+       0.232,
+       0.505,
        0.75,
        1.45
       ],
@@ -3284,8 +3284,8 @@
       "zone": [
        2.681,
        2.939,
-       0.24,
-       0.52,
+       0.232,
+       0.505,
        0.75,
        1.45
       ],
@@ -3299,8 +3299,8 @@
       "zone": [
        3.02,
        3.213,
-       0.24,
-       0.52,
+       0.232,
+       0.505,
        0.75,
        1.45
       ],
@@ -3328,7 +3328,7 @@
       "w": 0.12,
       "v": [
        0.26,
-       0.52
+       0.505
       ],
       "what": "every piece of the old w 0.12 zones, turned so its longest side runs along the window; at most 0.265 tall (the middle tier's board is 0.385 above the bed)"
      },
@@ -3336,7 +3336,7 @@
       "w": 0.4,
       "v": [
        0.2,
-       0.51
+       0.505
       ],
       "max_height_m": 0.32,
       "what": "stock at real size (scale 1.0): clocks, cassette players, binoculars, a standing frame"
@@ -3344,8 +3344,8 @@
      "top": {
       "w": 0.75,
       "v": [
-       0.24,
-       0.52
+       0.232,
+       0.505
       ],
       "max_height_m": 0.7,
       "what": "taller pieces and the larger stock: at most three vases (antique_ceramic_vase_01, ceramic_vase_01 and one brass), the boombox, the projector, the horse, a standing frame; up to w 1.45"

@@ -668,6 +668,7 @@ def night_rows(R, work, rows, spill_w):
         if not os.path.exists(p):
             continue
         im = np.asarray(Image.open(p).convert("RGB")).astype(np.float32)
+        res = (im.shape[1], im.shape[0])
         lum = luma(im)
         cp = cam_params(R, cam, res)
         # the display zone: z 0.60 to 1.45 above the footway across the window zone, at the glass (d 33)

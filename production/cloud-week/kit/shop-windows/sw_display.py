@@ -40,9 +40,9 @@ DEPTH = 0.55
 BED_TOP = 0.0
 # the structure (local metres): the step, the two tiers (board 15 mm under its w), their y extents
 STEP = {"w": 0.12, "y": (0.24, DEPTH - 0.02), "x_in": 0.05}
-TIERS = {"middle": {"w": 0.40, "y": (0.18, DEPTH - 0.02), "piece_v": (0.20, 0.51), "max_h": 0.32},
-         "top": {"w": 0.75, "y": (0.22, DEPTH - 0.02), "piece_v": (0.24, 0.52), "max_h": 0.70}}
-STEP_V = (0.26, 0.52)
+TIERS = {"middle": {"w": 0.40, "y": (0.18, DEPTH - 0.02), "piece_v": (0.20, 0.505), "max_h": 0.32, "post_z": (STEP["w"], 0.40 - 0.015)},
+         "top": {"w": 0.75, "y": (0.22, DEPTH - 0.02), "piece_v": (0.232, 0.505), "max_h": 0.70, "post_z": (0.40, 0.75 - 0.015)}}
+STEP_V = (0.26, 0.505)             # pieces stop 9 mm short of the posts (y 0.514 to 0.526)
 BED_V = (0.04, 0.22)
 CARD_PLANE_LOCAL_Y = 0.605            # the card stands 0.61 behind the glass's back face; the display's y = 0 is 5 mm inside the glass (the gate puts it at y_m -0.025)
 WALL_Z = (-0.05, 2.35)                # the card's full height (street z 0.65 to 3.05), local to the bed's top at z_m 0.60
@@ -280,11 +280,13 @@ def build_display(work, out_dir, log=print):
         w = td["w"]
         struct(solid_box(r, "tier_%s" % nm, x0 + 0.05, x0 + L - 0.05, td["y"][0], td["y"][1], w - 0.015, w, velvet_b if k else velvet), "tier_" + nm,
                [x0 + 0.05, x0 + L - 0.05, td["y"][0], td["y"][1], w - 0.015, w])
+        # the posts stand on what is under the tier: the middle tier's on the step's top, the top tier's on the middle tier's board (a post through a board would intersect it: DSP-03)
+        pz0, pz1 = td["post_z"]
         for px in np.linspace(x0 + 0.08, x0 + L - 0.08, 5):
             mb = MB()
-            mb.cyl(px, DEPTH - 0.03, 0.0, w - 0.015, 0.006, 0, n=12)
+            mb.cyl(px, DEPTH - 0.03, pz0, pz1, 0.006, 0, n=12)
             ob = mb.to_object("tier_post_%s_%.2f" % (nm, px), [lacquer], r.sc)
-            struct(ob, "post", [px - 0.006, px + 0.006, DEPTH - 0.036, DEPTH - 0.024, 0.0, w - 0.015])
+            struct(ob, "post", [px - 0.006, px + 0.006, DEPTH - 0.036, DEPTH - 0.024, pz0, pz1])
     # ---- the return walls (close fault 3): at each end of the window zone, from the back of the glass to the card plane, over the card's full height
     ya, yb = -0.005, CARD_PLANE_LOCAL_Y
     for side, (xa, xb) in (("l", (-L / 2 - 0.01, -L / 2)), ("r", (L / 2, L / 2 + 0.01))):
