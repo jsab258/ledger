@@ -916,10 +916,12 @@ def make_glass_rows(ctx, fasc_dir):
         ink_c = (g["ink_box_in_tile_mm"][0] + g["ink_box_in_tile_mm"][2]) / 2.0
         base_from_bottom = g["place"]["tile_baseline_from_tile_bottom_mm"]
         xs, z_base, d, kind = places[rid]
-        if ctx.id == "ritas" and "|" in g["string"]:
-            # Rita's hours plate: the door's lower pane (the glazing bar at 1423 crosses 4.1's z 1.38)
-            z_base = 1040.0 + base_from_bottom
-            d = 39.0
+        if "|" in g["string"]:
+            xs = R["front"]["centres_street_x_m"]["shop_door"]           # the hours plate at the shop door's centre (4.1's x is within 3 mm of it)
+            if ctx.id == "ritas":
+                # Rita's hours plate: the door's lower pane (the glazing bar at 1423 crosses 4.1's z 1.38)
+                z_base = 1040.0 + base_from_bottom
+                d = 39.0
         u_ink = BAY_MID + (ctx.mid_x - xs) * 1000.0 if not ctx.west else BAY_MID + (xs - ctx.mid_x) * 1000.0      # u from the viewer's left
         u0 = u_ink - ink_c
         z0 = z_base - base_from_bottom

@@ -1,6 +1,6 @@
 """The gate in the cloud (target section 3, last paragraph): what the game will show from each review camera, without Unreal.
 
-Used by build_ritas.py (stage `gate`). For each camera and state:
+Used by build_shop.py (stage `gate`); written for Rita's and generalised on 13 October (every shop's frames, sides and positions come from sw_ctx.Ctx; for Rita's the frames are the earlier ones). For each camera and state:
   1. the card picture is baked through tools/ue/make_interior_material.py's `trace` (imported, not rewritten): for every pixel of the card the card point and the eye go
      through `trace`, and the room picture is sampled at the returned (u, v), bilinear with mips; the card's emission is that picture times the state's brightness
      (day 0.15, night 0.7);
@@ -9,7 +9,8 @@ Used by build_ritas.py (stage `gate`). For each camera and state:
      all of the pane's reflectance by day, 0.2 of it at night: the look file's glass_specular_night); the game's own glass is the game's.
      13 Oct, from the try 2 reviews: at night the pane is REFLECTION ONLY (a Glossy BSDF, GGX, roughness 0.02, weighted 0.2 x Fresnel at IOR 1.5; nothing is refracted), because the
      night mix of a Transparent and a Glass BSDF bent each ray at one face of the closed 6 mm slab and not the other, so everything behind the glass was drawn two or three times.
-Frames: the front model's (x_m = 18 - street x, y_m = street y - 5.295, z_m = street z - 0.10), the card at y_m 0.58, x_m -2.65..2.65, z_m 0.55..2.95.
+Frames: the front model's (x_m to the viewer's right = (u - 3000) / 1000, y_m = Y - 5.295 with Y the distance from the street's centreline toward the shops, z_m = street z - 0.10), the card at y_m 0.58, x_m -2.65..2.65,
+z_m 0.55..2.95. Rita's (east) x_m = 18 - street x; the west shops' x_m = street x - the bay's middle.
 """
 import importlib.util
 import json
@@ -25,6 +26,7 @@ from scipy import ndimage
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, "..", "..", "..", ".."))
 sys.path.insert(0, HERE)
+import sw_ctx  # noqa: E402
 
 # the game's rule, imported
 _spec = importlib.util.spec_from_file_location("make_interior_material", os.path.join(REPO, "tools", "ue", "make_interior_material.py"))
@@ -37,11 +39,11 @@ CAMD = 5.3
 # the spill's receivers: the window frame and the door frame stand OUT of the display's light channel, as the game has it (shop-interiors.json lit_note: "the window bars are not on that
 # channel, so they no longer flare"; try 1 read "the window bars" as the night lattice only, 13 Oct, close review fault 4)
 SPILL_OFF = ("win_", "frame_", "door_jamb_", "door_frame_head", "band_", "sil_sill")
-SPILL_POS = (0.975, 0.10, 2.30)        # the stand-in rect light, model frame: 0.10 behind the wall face, z 2.30 (street review N1): the whole rect stands 50 mm or more behind the glass
+SPILL_POS = (0.975, 0.10, 2.30)        # the stand-in rect light, model frame (Rita's x; the other shops' is their window zone's centre): 0.10 behind the wall face, z 2.30 (street review N1): the whole rect stands 50 mm or more behind the glass
 PIERS = {"x": ((-3.0, -2.65), (2.65, 3.0)), "y": (0.0, 0.30), "z": (0.0, 3.56)}     # the brick piers behind the pilasters (sw_front.PIERS_X; street review N2)
 STRIP_AT = ((0.20, 0.377), (0.24, 0.727))     # the two strip lights' (v, w) in the display's frame (close review 1): 8 mm under the middle and the top tier boards' front edges
 STRIP_W = 0.0                                  # their strength in Blender watts: set from gate_lights.json (strip_w) by the gate stage
-CARD_X0, CARD_Y, CARD_BOTTOM = 15.35, 5.875, 0.65
+CARD_X0, CARD_Y, CARD_BOTTOM = 15.35, 5.875, 0.65         # Rita's (the other shops': sw_ctx.Ctx.card_*)
 CARD_BOTTOM_M = CARD_BOTTOM - 0.10          # the card's bottom in the front model's z (above the footway)
 BAY_MID_X = 18.0
 Y_WALL = 5.295
@@ -62,37 +64,41 @@ def srgb(l):
     return np.where(l <= 0.0031308, l * 12.92, 1.055 * l ** (1 / 2.4) - 0.055)
 
 
-def eye_card(eye_street):
-    return (eye_street[0] - CARD_X0, eye_street[1] - CARD_Y, eye_street[2] - CARD_BOTTOM)
+def eye_card(eye_street, ctx=None):
+    ctx = ctx or sw_ctx.rita()
+    return ctx.eye_card(eye_street)
 
 
-def to_model(p):
-    """street (x, y, z above the crown) -> the front model's frame (x_m to the viewer's right, y_m out from the wall toward -y, z_m above the footway)."""
-    return (BAY_MID_X - p[0], p[1] - Y_WALL, p[2] - FOOT)
+def to_model(p, ctx=None):
+    """street (x, y, z above the crown) -> the front model's frame (x_m to the viewer's right, y_m out from the wall toward the street, z_m above the footway)."""
+    ctx = ctx or sw_ctx.rita()
+    return ctx.to_model(p)
 
 
 # ------------------------------------------------------------------------------------------------------------- the bake
 def _bake_rows(args):
-    j0, j1, ex, ey, ez = args
+    j0, j1, ex, ey, ez = args[:5]
+    side = args[5] if len(args) > 5 else 1
     nw, nh = CARD_PX
     out = np.empty((j1 - j0, nw, 2), np.float32)
     for j in range(j0, j1):
         zc = H - (j + 0.5) / nh * H
         for i in range(nw):
-            xc = W - (i + 0.5) / nw * W            # column 0 is the card's HIGH x: the viewer's left on an east card
-            u, v = trace((xc, 0.0, zc), (ex, ey, ez), (W, H, D), CAMD, 1)
+            xc = (i + 0.5) / nw * W if side < 0 else W - (i + 0.5) / nw * W            # column 0 is the viewer's LEFT: the card's HIGH x on an east card, its LOW x on a west one
+            u, v = trace((xc, 0.0, zc), (ex, ey, ez), (W, H, D), CAMD, side)
             out[j - j0, i, 0] = u
             out[j - j0, i, 1] = v
     return j0, out
 
 
-def uv_map(eye_street, jobs=4):
+def uv_map(eye_street, jobs=4, ctx=None):
     """(u, v) of the room picture for every card pixel, through the game's `trace` (the Python function, called per pixel)."""
     from multiprocessing import Pool
-    ex, ey, ez = eye_card(eye_street)
+    ctx = ctx or sw_ctx.rita()
+    ex, ey, ez = ctx.eye_card(eye_street)
     nh = CARD_PX[1]
     step = 24
-    chunks = [(j, min(nh, j + step), ex, ey, ez) for j in range(0, nh, step)]
+    chunks = [(j, min(nh, j + step), ex, ey, ez, ctx.trace_side) for j in range(0, nh, step)]
     uv = np.empty((nh, CARD_PX[0], 2), np.float32)
     with Pool(jobs) as p:
         for j0, o in p.imap_unordered(_bake_rows, chunks):
@@ -135,11 +141,11 @@ def sample_mips(chain, uv, base_wh):
     return out
 
 
-def bake_card(eye_street, picture_png, brightness, out_png, uv=None, jobs=4):
+def bake_card(eye_street, picture_png, brightness, out_png, uv=None, jobs=4, ctx=None):
     """The card's emission picture for one camera and state: the room picture (sRGB) sampled through trace with mips; written as 8-bit sRGB WITHOUT the brightness
     (the render's emission strength carries it) and returned together with the linear-light composite (picture x brightness)."""
     if uv is None:
-        uv = uv_map(eye_street, jobs)
+        uv = uv_map(eye_street, jobs, ctx)
     pic = np.asarray(Image.open(picture_png).convert("RGB")).astype(np.float32) / 255.0
     chain = mips(lin(pic))
     lin_img = sample_mips(chain, uv, (pic.shape[1], pic.shape[0]))
@@ -155,9 +161,14 @@ def composite_luma(lin_img, brightness):
 
 
 # ------------------------------------------------------------------------------------------------------------- the render
-def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_glb, display_glb, hdri, samples=64, log=print, extra=None, res=None, glass_refl=None, mode="beauty", column_pngs=None, groups=None):
+def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_glb, display_glb, hdri, samples=64, log=print, extra=None, res=None, glass_refl=None, mode="beauty", column_pngs=None, groups=None, ctx=None):
     import bpy
     from mathutils import Vector, Matrix
+    ctx = ctx or sw_ctx.rita()
+    to_model = ctx.to_model                                    # (the module's own to_model is Rita's; every use below is this shop's)
+    CARD_Y_ = ctx.card_y
+    YC = ctx.ym(CARD_Y_)                                       # the card's y in the front model (+0.58)
+    CARD_BOTTOM_M = ctx.card_bottom - sw_ctx.FOOT
     bpy.ops.wm.read_factory_settings(use_empty=True)
     sc = bpy.context.scene
     night = state != "day"
@@ -167,11 +178,11 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
         bpy.ops.import_scene.gltf(filepath=path)
         return [o for o in bpy.data.objects if o not in before]
     front = load(front_glb)
-    disp = load(display_glb)
+    disp = load(display_glb) if display_glb else []
     for o in disp:
         if o.parent is None:
-            o.location += Vector((BAY_MID_X - 17.025 + 0.0, 0.0, 0.0)) if False else Vector((0.975, -0.025, 0.600))
-    lattice = load(grille_glb) if night else []
+            o.location += Vector((ctx.window_cx_m, -0.025, 0.600))          # the display's local x is centred on the window zone (Rita's 0.975)
+    lattice = load(grille_glb) if (night and grille_glb) else []
     # empties from the importer carry the Y-up conversion; apply the display's offset on the roots only
     # glass: a mix of a clear pane (all the glass's reflectance) and a transparent one, 1.0 by day and 0.2 at night
     refl = (0.2 if night else 1.0) if glass_refl is None else glass_refl
@@ -231,10 +242,10 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
                 if m and night:
                     for n in m.node_tree.nodes:
                         if n.type == "TEX_IMAGE":
-                            n.image = bpy.data.images.load(os.path.join(os.path.dirname(os.path.dirname(card_png)), "paper", "K03b", "K03b_A_basecolour.png"), check_existing=True)
+                            n.image = bpy.data.images.load(os.path.join(ctx.paper, "K03b", "K03b_A_basecolour.png"), check_existing=True)
     # --- the card: emission = the baked picture x the state's brightness; it does not light the scene (the game's card is unlit; Lumen's light is owed on the PC)
     me = bpy.data.meshes.new("card")
-    x0, x1, z0, z1, yc = -W / 2, W / 2, 0.55, 2.95, CARD_Y - Y_WALL
+    x0, x1, z0, z1, yc = -W / 2, W / 2, 0.55, 2.95, YC
     me.from_pydata([(x0, yc, z0), (x1, yc, z0), (x1, yc, z1), (x0, yc, z1)], [], [(0, 1, 2, 3)])
     uv = me.uv_layers.new(name="UVMap")
     for loop, (a, b) in zip(me.loops, ((0, 0), (1, 0), (1, 1), (0, 1))):
@@ -359,10 +370,10 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
     plane("wall_l", [(-xs, 0.0, 0.0), (-3.0, 0.0, 0.0), (-3.0, 0.0, 12.0), (-xs, 0.0, 12.0)], brick)
     plane("wall_r", [(3.0, 0.0, 0.0), (xs, 0.0, 0.0), (xs, 0.0, 12.0), (3.0, 0.0, 12.0)], brick)
     plane("wall_top", [(-3.0, 0.0, 3.56), (3.0, 0.0, 3.56), (3.0, 0.0, 12.0), (-3.0, 0.0, 12.0)], brick)
-    kerb_y = 3.63 - Y_WALL
+    kerb_y = 3.63 - sw_ctx.WALL_Y
     plane("footway", [(-xs, kerb_y, 0.0), (xs, kerb_y, 0.0), (xs, 0.0, 0.0), (-xs, 0.0, 0.0)], paving)
-    plane("road", [(-xs, -3.0 - Y_WALL, -FOOT), (xs, -3.0 - Y_WALL, -FOOT), (xs, kerb_y, -FOOT), (-xs, kerb_y, -FOOT)], road)
-    plane("far_footway", [(-xs, -9.0 - Y_WALL, 0.0), (xs, -9.0 - Y_WALL, 0.0), (xs, -3.0 - Y_WALL, 0.0), (-xs, -3.0 - Y_WALL, 0.0)], paving)
+    plane("road", [(-xs, -3.0 - sw_ctx.WALL_Y, -FOOT), (xs, -3.0 - sw_ctx.WALL_Y, -FOOT), (xs, kerb_y, -FOOT), (-xs, kerb_y, -FOOT)], road)
+    plane("far_footway", [(-xs, -9.0 - sw_ctx.WALL_Y, 0.0), (xs, -9.0 - sw_ctx.WALL_Y, 0.0), (xs, -3.0 - sw_ctx.WALL_Y, 0.0), (-xs, -3.0 - sw_ctx.WALL_Y, 0.0)], paving)
 
     def block(name, x0, x1, y0, y1, z0, z1, m):
         """A closed box in the model frame (vertices in world coordinates, so the brick shader's object coordinates are the wall's own)."""
@@ -393,7 +404,7 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
     bpy.context.view_layer.update()
     fwd = co_.matrix_world.to_quaternion() @ Vector((0.0, 0.0, -1.0))
     to_aim = (Vector(aim) - Vector(eye)).normalized()
-    cam_rec = {"camera": cam_name, "state": state, "eye_street_m": [BAY_MID_X - co_.location.x, co_.location.y + Y_WALL, co_.location.z + FOOT],
+    cam_rec = {"camera": cam_name, "state": state, "eye_street_m": [ctx.x_of_u(co_.location.x * 1000.0 + 3000.0), ctx.sgn * (co_.location.y + sw_ctx.WALL_Y), co_.location.z + FOOT],
                "defined_eye_street_m": list(cam_def["eye_street_m"]), "aim_street_m": list(cam_def["aim_street_m"]),
                "aim_error_deg": round(math.degrees(fwd.angle(to_aim)), 4), "vfov_deg": round(math.degrees(cam.angle_y), 4), "defined_vfov_deg": VFOV[cam_name],
                "resolution": list(res)}
@@ -416,7 +427,7 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
         bg.inputs["Color"].default_value = (0.004, 0.005, 0.009, 1)
         bg.inputs["Strength"].default_value = 1.0
     if night:
-        for lx in (8.0, 28.0):
+        for lx in ctx.lamp_xs():
             sp = bpy.data.lights.new("lamp_%g" % lx, "SPOT")
             sp.color = (1.0, 0.25, 0.0)
             sp.energy = (extra or {}).get("lamp_w", 4000.0)
@@ -425,8 +436,8 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
             sp.shadow_soft_size = 0.15
             lo = bpy.data.objects.new("lamp", sp)
             sc.collection.objects.link(lo)
-            lo.location = Vector(to_model((lx, -4.1, 4.78)))
-            lo.rotation_euler = (Vector(to_model((lx, -4.1, 0.0))) - lo.location).to_track_quat("-Z", "Y").to_euler()
+            lo.location = Vector(to_model((lx, ctx.sgn * -4.1, 4.78)))
+            lo.rotation_euler = (Vector(to_model((lx, ctx.sgn * -4.1, 0.0))) - lo.location).to_track_quat("-Z", "Y").to_euler()
         # the display's spill: 350 lm rect light in the window head, tipped 62 degrees down (lighting channel 1: the window bars are not on it; here it lights the display and what is in front)
         rl = bpy.data.lights.new("spill", "AREA")
         rl.shape = "RECTANGLE"
@@ -438,7 +449,7 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
         # centred at y 0.10 behind the wall face and z 2.30 (13 Oct, street review N1; try 1 had it at y -0.02, z 2.36, so its front edge stood 63 mm IN FRONT of the glass, its emitting face
         # was seen from the street and it lit the window frame from in front: the burnt bar, the glowing mullions, the bright pavement). Now the whole rect, tipped as before, stands 50 mm or
         # more behind the glass's inner face, and the light itself is invisible to the camera, to glossy rays and to transmission rays
-        ro.location = SPILL_POS
+        ro.location = (ctx.window_cx_m, SPILL_POS[1], SPILL_POS[2])
         ro.visible_camera = False
         ro.visible_glossy = False
         ro.visible_transmission = False
@@ -462,8 +473,9 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
         # top tier at v 0.24, w 0.727), facing down and tipped 30 degrees toward the back, 3000 K, on the display's channel, invisible to the camera, glossy and transmission rays.
         # The display's local (x, y, w) is the model frame's (0.975 + x, -0.025 + y, 0.600 + w). Strength: Blender watts, set so that LIT-08 holds (the game's lumens are owed: PC-02)
         sw = (extra or {}).get("strip_w", STRIP_W)
+        strips = (extra or {}).get("strip_at", STRIP_AT if ctx.id == "ritas" else [])
         if sw and not (extra or {}).get("no_strips"):
-            for (yv, wv) in STRIP_AT:
+            for (yv, wv) in strips:
                 sl = bpy.data.lights.new("strip_%g" % wv, "AREA")
                 sl.shape = "RECTANGLE"
                 sl.size, sl.size_y = 3.2, 0.02
@@ -473,7 +485,7 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
                 sl.energy = sw
                 so = bpy.data.objects.new("strip_%g" % wv, sl)
                 sc.collection.objects.link(so)
-                so.location = (0.975, -0.025 + yv, 0.600 + wv)
+                so.location = (ctx.window_cx_m, -0.025 + yv, 0.600 + wv)
                 so.rotation_euler = (math.radians(30.0), 0.0, 0.0)
                 so.visible_camera = False
                 so.visible_glossy = False
