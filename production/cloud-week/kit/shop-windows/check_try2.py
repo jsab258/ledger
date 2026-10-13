@@ -38,6 +38,7 @@ import sw_gate as G  # noqa: E402
 import sw_ctx  # noqa: E402
 
 CHECK_RES = (1280, 720)
+_LAST = {}
 
 # 13 October (batch A): the rows are for any shop. `use(ctx)` names the shop (Rita's when never called, so her checks run as they did); the file names, the frames and the shop's own numbers come from it.
 _CTX = [None]
@@ -556,6 +557,7 @@ def display_rows(R, work, assets, rows):
     # the silhouette visibility: object-index pass from STREET_SQUARE and CLOSE_35
     per_cam = visibility(R, work, assets, di, group_of)
     areas = per_cam.pop("areas")
+    _LAST["vis"] = (per_cam, areas, di)          # for the trade's-goods row (check_shop.py TRD-01)
     vis = np.maximum(per_cam["STREET_SQUARE"], per_cam["CLOSE_35"])
     sq = per_cam["STREET_SQUARE"]
     # 13 Oct, from the try 2 reviews (street 3): the front row (the bed's pieces and the scripted trays, pads and chains) must show half its silhouette from STREET_SQUARE ITSELF, because the
