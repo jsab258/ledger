@@ -201,8 +201,8 @@ def late_mickeys(self, fm, members, extra_objs):
     cu = bpy.data.curves.new("mickeys_letters_curve", "FONT")
     cu.body = "MICKEY’S"
     cu.font = bpy.data.fonts.load(os.path.join(font_dir, ttf))
-    cu.size = 0.33 / 0.701
-    cu.space_character = 1.0 + 0.03
+    cu.size = 0.573                    # Blender's size is not the em the 4.1 script measured: at 0.573 the capitals stand 329 mm (4.1: cap 0.33), measured on the built mesh
+    cu.space_character = 1.08          # and at 1.08 the word is 2113 mm wide (4.1: 2118 for 0.03 em tracking)
     cu.extrude = 0.007
     cu.offset = 0.003
     cu.align_x = "CENTER"
@@ -225,7 +225,7 @@ def late_mickeys(self, fm, members, extra_objs):
     for v in me.vertices:
         v.co.y += -0.120 - y_back - 0.0           # the back of the letters on the board's face (d 120): they stand out 14 mm
         v.co.x += (295.0 + 4055.0 - 3000.0) / 1000.0
-        v.co.z += (2850.0 + 100.0) / 1000.0
+        v.co.z += 2.9709                           # the ink's lowest point at 4.1's z 2961 (board y 439 from the top): the baseline 9.9 mm above it
     me.update()
     me.materials.clear()
     gm = bs.make_material("brass_gilt", (200, 160, 70), 0.38, 0.85)

@@ -16,6 +16,7 @@ if the one it was started with has none):
   display   the near metre as real meshes (sw_display.py for Rita's, sw_display_gen.py for the others)                                                                      [shops with a room]
   room      the room (target 4.4): light strengths calibrated to the approved pictures' means, then the three 4096 x 1855 pictures and their JSON (sw_room.py / sw_room_gen.py)  [shops with a room]
   gate      per review camera, the card baked through the game's `trace`, the front + display + glass rendered at 2560 x 1440 (sw_gate.py), the review set to previews
+  (scenecheck  not a stage of the run: `build_shop.py --shop X scenecheck` builds the room's scene and runs SO-01 to SO-07 on it in seconds, before the hour's render)
   checks    every check of the target that applies, one row each: checks/check_<shop>_<version>.json, printing "N of M rows pass" (check_shop.py; Rita's: check_ritas.py's v3 rows)
 
 Where things go: models in production/assets/cloud-week/shop-windows/ (the ones over 1 MB are out of git, listed in .git/info/exclude, rebuilt here);
@@ -129,6 +130,29 @@ def run_inner(shop, stage):
         for st in ("day", "night_lit", "night_dark"):
             shutil.copyfile(os.path.join(rooms, "%s_%s.png" % (ctx.picture_name, st)), os.path.join(dst, "%s_%s.png" % (ctx.picture_name, st)))
         shutil.copyfile(os.path.join(rooms, "%s.json" % ctx.picture_name), os.path.join(dst, "%s.json" % ctx.picture_name))
+    elif stage == "scenecheck":
+        # the room's layout tested without the hour's render: the scene is built, its placement written to rooms_scene/ and the stand-off and intersection rows (SO-01 to SO-07) run on it
+        import sw_assets as A
+        import check_shop as CS
+        import check_try2 as X
+        import sw_room_gen as RG
+        A.set_shop(shop)
+        A.WORK = ctx.work
+        X.use(ctx)
+        sdir = os.path.join(ctx.work, "rooms_scene")
+        os.makedirs(sdir, exist_ok=True)
+        r = RG.build_scene(sdir, ctx)
+        json.dump(r.placed, open(os.path.join(sdir, "placed.json"), "w"))
+        json.dump(r.fixtures, open(os.path.join(sdir, "fixtures.json"), "w"))
+        keep, ctx.rooms = ctx.rooms, sdir
+        rows = CS.Rows()
+        CS.room_rows(ctx, rows, ASSETS)
+        ctx.rooms = keep
+        X.so07_rows(ctx.work, rows)
+        for rr in rows.rows:
+            print(rr["status"].upper(), rr["id"], rr["detail"][:900])
+        for n in getattr(r, "notes", []):
+            print("NOTE", n)
     elif stage == "gate":
         import sw_gate_run as G
         G.run(ctx.work, ASSETS, PREVIEWS, GATE_SAMPLES, ctx=ctx)
@@ -156,9 +180,9 @@ def main(argv):
         run_inner(a.shop, a.inner)
         return 0
     have = stages_of(a.shop)
-    stages = [s for s in a.stages if s in ALL_STAGES] or have
+    stages = [s for s in a.stages if s in ALL_STAGES or s == "scenecheck"] or have
     for st in stages:
-        if st not in have:
+        if st not in have and st != "scenecheck":
             print("stage %s: not for %s (no room), skipped" % (st, a.shop))
             continue
         r = subprocess.run([PY, os.path.abspath(__file__), "--shop", a.shop, "--inner", st])

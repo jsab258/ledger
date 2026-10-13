@@ -498,8 +498,9 @@ def front_rows(ctx, rows, assets, members_path=None):
     band = sorted([(v["u"][0], v["u"][1]) for k, v in m.items() if k.startswith("band_bar_")])
     if len(band) == 2:
         bpanes = [band[0][0] - door_u[0] - 50, band[1][0] - band[0][1], door_u[1] - 50 - band[1][1]]
-        ok4 &= all(near(p, 283.33, 1) for p in bpanes)
-        btxt = "; the three over-door toplights %s (target 283.3)" % [round(p, 1) for p in bpanes]
+        pw_ = R["door"]["toplights_over_shop_door"]["pane_width_mm"]
+        ok4 &= all(near(p, pw_, 1) for p in bpanes)
+        btxt = "; the three over-door toplights %s (target %.2f)" % ([round(p, 1) for p in bpanes], pw_)
     else:
         btxt = ""
     rows.add("FRN-04", "the glass and the toplight layout", ok4, "%d lights, %d toplights of %s (target %.1f), bar centres %s against %s (each within 2 mm), a bar on each of the %d mullion lines, no toplight under %.0f%s; every 6 mm plate at d 30 to 36" % (
