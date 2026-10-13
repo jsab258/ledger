@@ -861,9 +861,9 @@
      "passed in 3.1 (street and close views); the street's F1 is that model, unchanged"
     ],
     [
-     "iron_knob_*, iron_keyhole_*",
+     "iron_knob_*, iron_keyhole_*, iron_lock_*",
      "kept",
-     "F1's turned centre knob and plugged keyhole as built; on the houses given F1 the knob is HD0 'none' unless the house table says HD1 (F1 has the rose and knob in 3.1: kept as an option, not on a house)"
+     "F1's turned centre knob (HD1), plugged keyhole and knurled rim night latch (LK2) as built"
     ]
    ]
   },
@@ -1643,7 +1643,8 @@
        3.0,
        0.0
       ]
-     ]
+     ],
+     "note": "no applied moulding; a V joint 6 wide and 2 deep between tongued and grooved matchboards (profile (d across, h from the face) in target.json)"
     }
    },
    "glass": {
@@ -3687,6 +3688,15 @@
    "paint_class_differs": true
   }
  },
+ "for_builder": [
+  "First: rebuild door_T1 without iron_bellpush_bezel and iron_bellpush_button (the handover's fix); the oblong iron_bellpush stays, one part, with the BL1 groove.",
+  "build_door.py takes a kind (T1 T2 T3 F1 to F7) as well as the colour: the leaf, openings, mouldings and fittings come from target.json kinds and furniture; the frame set is T, F or FF6.",
+  "New paints for --door-colour: deep_teal, cream, white_gloss, council_turquoise, olive, khaki, mustard, bright_blue, red, varnish (with the 3.1 six); --frame-colour takes white or white_grimy only (cream is dropped).",
+  "A condition parameter (kept, tired, neglected) sets the roughness and, for neglected, the eroded notch in the bottom rail (25 high, 60 to 200 wide, 3 deep, at the hinge side); the 2D wear layer's masks do the rest.",
+  "Behind every glazed kind (T2, T3, F4, F5 and every transom) the scene needs its own dark hall: the engine shows whatever is behind the glass (3.1 NOTES).",
+  "Check every kind with the 3.1 pass rule and the records of target.json checks; a push, a knocker or a plate the table does not place on a house is a fault."
+ ],
+ "covering_every_opening": "Nothing may show through (check CV): in elevation the frame, the leaf, the glass and the transom cover the clear opening except the 10 mm foot gap and the leaf's 1.6 mm margins; from 60 degrees the leaf laps 20.4 behind each stop and behind the transom's stop (F6: its stops are planted behind the leaf's edge, 22 wide), which closes the margin; F7's boards are tongued and grooved with a tongue of at least 6 mm; the reveals' returns are the wall kit's (T: buff brick, 3.1 L1 to L5) and the shopfront's pilaster return (F: 24.4 a side), and FF6 keeps the frame's outer width so they are unchanged; the 3.1 door review's dark hall is the render aid.",
  "owed_for_jafar": [
   "Door colours: dark doors as the Hook sheet shows, with three lighter ones from 1980s photographs (cream, white, council turquoise)? Yes, three (recommended), or all dark?",
   "Door surrounds: all white as you ruled for windows on 3 October (recommended), or the painted surrounds the 1980s Hull streets show, as on the windows line?",
@@ -3701,6 +3711,7 @@
     "licence": "CC BY-SA 2.0",
     "taken": "2012-05-06",
     "period": "later; the type is the 1890s four-panel door",
+    "shows": "69 Lower Brimley Road: a red four-panel door with bolection mouldings, a lock-rail band, a weatherboard, a white frame with a single-pane transom, a plain dark bell oblong on the right jamb, a brass letter plate and a cylinder lock",
     "used_for": "T1 and F1 (kept), the bell push's plain oblong, the brass plate, the rim night latch",
     "preview": "production/previews/cloud-week/refs/front-door/door-photo-01-teignmouth-four-panel-red.jpg",
     "reached_by_me": "preview only (3.1's page not reachable then)"
@@ -3712,6 +3723,7 @@
     "licence": "CC BY-SA 4.0",
     "taken": "2024-02-03",
     "period": "later; an unrestored door of the old type",
+    "shows": "178 Philip Lane: an unrestored black six-panel door beside a shop, a deep moulded transom with a full round nose, a centre knob, a knurled cylinder, a plugged keyhole, a horizontal brass plate, crazed and chipped paint",
     "used_for": "F2 six-panel, centre knob, plugged keyhole, wear",
     "preview": "production/previews/cloud-week/refs/front-door/door-photo-02-tottenham-six-panel-black.jpg",
     "reached_by_me": "preview only"
@@ -3814,7 +3826,7 @@
     ],
     "period": "the period (1982)",
     "shows": "a Hull terrace in 1982: recessed doorways under painted hoods in blue and red, a bright blue door with a white numeral painted on it, a black door with a yellow foot, painted brick surrounds",
-    "used_for": "the bright blue and the red door colours (a box inside the leaf), the painted numeral, the hood",
+    "used_for": "the bright blue door colour (a box inside the leaf), the painted numeral, the painted hood",
     "preview": "d6-hull-rensburg-street-1982-blue-door.jpg"
    },
    "D7": {
@@ -8136,6 +8148,3682 @@
   "The boot scraper: one cast-iron scraper by the nearest cottage's step; no period photograph of these streets shows one (D10 is 2014); the sizes are Judgement +-25 per cent."
  ],
  "self_check": {
-  "result": "not run yet"
+  "result": "--live --previews: 563 pass, 0 fail; negative controls (wrong copies, offline rows) 48 of 48 caught; live controls (wrong copies, live rows) 10 of 10 caught",
+  "options": "--live --previews",
+  "rows": [
+   {
+    "group": "31",
+    "name": "BL1 oblong = 3.1's push back 22 x 72.6, 3 proud, at x 859.4, z 1120.3 to 1192.9",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "31",
+    "name": "F1 bolection width is the 3.1 build's (departures: 46 and 43)",
+    "ok": true,
+    "detail": "43.0"
+   },
+   {
+    "group": "31",
+    "name": "F1 four panel openings are 3.1's",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "31",
+    "name": "F1 leaf size is 3.1's",
+    "ok": true,
+    "detail": "838.0 x 1981.0"
+   },
+   {
+    "group": "31",
+    "name": "LK1 = 3.1 T1 latch (collar 43.5, plug 28, 5.0 proud)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "31",
+    "name": "LK2 = 3.1 F1 latch (collar 37, plug 18, 8 scallops)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "31",
+    "name": "LP1 = 3.1 brass plate 76 x 242, aperture 48 x 190, centre 1617",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "31",
+    "name": "T1 bolection width is the 3.1 build's (departures: 46 and 43)",
+    "ok": true,
+    "detail": "46.0"
+   },
+   {
+    "group": "31",
+    "name": "T1 four panel openings are 3.1's",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "31",
+    "name": "T1 leaf size is 3.1's",
+    "ok": true,
+    "detail": "812.8 x 1948.0"
+   },
+   {
+    "group": "31",
+    "name": "every kind lists part by part what is kept, changed, removed or added",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "31",
+    "name": "frame set F equals 3.1's frame",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "31",
+    "name": "frame set T equals 3.1's frame",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "31",
+    "name": "the handover's fix is written: bezel and button removed from T1",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "31",
+    "name": "the part lists use the words kept, changed, removed, added",
+    "ok": true,
+    "detail": "added,changed,kept,not present,removed,removed / kept"
+   },
+   {
+    "group": "checks",
+    "name": "AD-adjacent-east no two neighbours alike on the east side",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "AD-adjacent-west no two neighbours alike on the west side",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "AD-backdrop the hill's 12 doors: no neighbours alike",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "AD-coverage every household door of the street has a kind",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "AD-frame-set a kind sits in its frame set",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "AD-kinds-used every kind is used at least once",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "AD-opposite doors facing within 4.6 m differ in paint class",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "BP-form bell push: one plain part",
+    "ok": true,
+    "detail": "parts 1 corner 1.0"
+   },
+   {
+    "group": "checks",
+    "name": "BP-houses the push is placed on one house only",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "BP-no-modern no two-part modern push on any variant",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "BP-none-elsewhere no push on any other kind",
+    "ok": true,
+    "detail": "{'T1'}"
+   },
+   {
+    "group": "checks",
+    "name": "CV-F1-angle F1: no see-through slot from an angle",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "CV-F1-elevation F1: no see-through slot in elevation",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "CV-F2-angle F2: no see-through slot from an angle",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "CV-F2-elevation F2: no see-through slot in elevation",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "CV-F3-angle F3: no see-through slot from an angle",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "CV-F3-elevation F3: no see-through slot in elevation",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "CV-F4-angle F4: no see-through slot from an angle",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "CV-F4-elevation F4: no see-through slot in elevation",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "CV-F5-angle F5: no see-through slot from an angle",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "CV-F5-elevation F5: no see-through slot in elevation",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "CV-F6-angle F6: no see-through slot from an angle",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "CV-F6-elevation F6: no see-through slot in elevation",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "CV-F7-angle F7: no see-through slot from an angle",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "CV-F7-elevation F7: no see-through slot in elevation",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "CV-F7-joints F7: board joints are tongued and grooved",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "CV-T1-angle T1: no see-through slot from an angle",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "CV-T1-elevation T1: no see-through slot in elevation",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "CV-T2-angle T2: no see-through slot from an angle",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "CV-T2-elevation T2: no see-through slot in elevation",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "CV-T3-angle T3: no see-through slot from an angle",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "CV-T3-elevation T3: no see-through slot in elevation",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "FU-F1-handle-HD1 F1: handle HD1",
+    "ok": true,
+    "detail": "{'u': 'leaf centre', 'v': 787.0}"
+   },
+   {
+    "group": "checks",
+    "name": "FU-F1-latch-LK2 F1: latch LK2",
+    "ok": true,
+    "detail": "{'u': '46.3 from the stop face, right', 'v': 1040.0}"
+   },
+   {
+    "group": "checks",
+    "name": "FU-F1-letter_plate-LP1 F1: letter_plate LP1",
+    "ok": true,
+    "detail": "{'u': 'leaf centre', 'v': 1617.0}"
+   },
+   {
+    "group": "checks",
+    "name": "FU-F2-handle-HD1 F2: handle HD1",
+    "ok": true,
+    "detail": "{'u': 'leaf centre', 'v': 598.0}"
+   },
+   {
+    "group": "checks",
+    "name": "FU-F2-latch-LK2 F2: latch LK2",
+    "ok": true,
+    "detail": "{'u': '46.3 from the stop face, right', 'v': 1070.5}"
+   },
+   {
+    "group": "checks",
+    "name": "FU-F2-letter_plate-LP2 F2: letter_plate LP2",
+    "ok": true,
+    "detail": "{'u': 'leaf centre', 'v': 1545.0}"
+   },
+   {
+    "group": "checks",
+    "name": "FU-F2-number-NM1 F2: number NM1",
+    "ok": true,
+    "detail": "{'v': 1943.0, 'u': 'leaf centre'}"
+   },
+   {
+    "group": "checks",
+    "name": "FU-F3-handle-HD3 F3: handle HD3",
+    "ok": true,
+    "detail": "{'u': 67.0, 'v': 1255.0}"
+   },
+   {
+    "group": "checks",
+    "name": "FU-F3-letter_plate-LP1 F3: letter_plate LP1",
+    "ok": true,
+    "detail": "{'u': 'leaf centre', 'v': 1617.0}"
+   },
+   {
+    "group": "checks",
+    "name": "FU-F3-number-NM3 F3: number NM3",
+    "ok": true,
+    "detail": "{'v': 1925.0, 'u': 'leaf centre'}"
+   },
+   {
+    "group": "checks",
+    "name": "FU-F4-handle-HD2b F4: handle HD2b",
+    "ok": true,
+    "detail": "{'u': 95.0, 'v': 1228.0}"
+   },
+   {
+    "group": "checks",
+    "name": "FU-F4-letter_plate-LP5 F4: letter_plate LP5",
+    "ok": true,
+    "detail": "{'u': 'leaf centre', 'v': 100.0}"
+   },
+   {
+    "group": "checks",
+    "name": "FU-F5-handle-HD2b F5: handle HD2b",
+    "ok": true,
+    "detail": "{'u': 72.4, 'v': 1087.2}"
+   },
+   {
+    "group": "checks",
+    "name": "FU-F5-letter_plate-LP7 F5: letter_plate LP7",
+    "ok": true,
+    "detail": "{'u': 413.2, 'v': 819.9}"
+   },
+   {
+    "group": "checks",
+    "name": "FU-F6-handle-HD2a F6: handle HD2a",
+    "ok": true,
+    "detail": "{'u': 697.5, 'v': 903.7}"
+   },
+   {
+    "group": "checks",
+    "name": "FU-F6-letter_plate-LP4 F6: letter_plate LP4",
+    "ok": true,
+    "detail": "{'u': 385.7, 'v': 915.6}"
+   },
+   {
+    "group": "checks",
+    "name": "FU-F7-handle-HD4 F7: handle HD4",
+    "ok": true,
+    "detail": "{'u': 738.0, 'v': 1000.0}"
+   },
+   {
+    "group": "checks",
+    "name": "FU-T1-bell-BL1 T1: bell BL1",
+    "ok": true,
+    "detail": "{'x': 859.4, 'z_range': [1120.3, 1192.9], 'on': \"the right jamb's stop face (3.1 as built: x 859.4, "
+   },
+   {
+    "group": "checks",
+    "name": "FU-T1-latch-LK1 T1: latch LK1",
+    "ok": true,
+    "detail": "{'u': '46.6 from the stop face, right', 'v': 1235.0}"
+   },
+   {
+    "group": "checks",
+    "name": "FU-T1-letter_plate-LP1 T1: letter_plate LP1",
+    "ok": true,
+    "detail": "{'u': 'leaf centre', 'v': 1617.0}"
+   },
+   {
+    "group": "checks",
+    "name": "FU-T1-number-NM1 T1: number NM1",
+    "ok": true,
+    "detail": "{'stacked': 'two digits 39 x 72 on the muntin, v 1207 to 1277.6 and 1300 to 1373', 'u': 'leaf centre"
+   },
+   {
+    "group": "checks",
+    "name": "FU-T1-scraper-BS1 T1: scraper BS1",
+    "ok": true,
+    "detail": "{'x_from_jamb': \"left, 150 clear of the step's end\", 'z': 0.0}"
+   },
+   {
+    "group": "checks",
+    "name": "FU-T2-handle-HD3 T2: handle HD3",
+    "ok": true,
+    "detail": "{'u': 67.0, 'v': 1242.8}"
+   },
+   {
+    "group": "checks",
+    "name": "FU-T2-letter_plate-LP5 T2: letter_plate LP5",
+    "ok": true,
+    "detail": "{'u': 'leaf centre', 'v': 100.0}"
+   },
+   {
+    "group": "checks",
+    "name": "FU-T2-number-NM4 T2: number NM4",
+    "ok": true,
+    "detail": "{'on': 'the transom glass, centred'}"
+   },
+   {
+    "group": "checks",
+    "name": "FU-T3-handle-HD2c T3: handle HD2c",
+    "ok": true,
+    "detail": "{'u': 757.0, 'v': 823.0}"
+   },
+   {
+    "group": "checks",
+    "name": "FU-T3-letter_plate-LP6 T3: letter_plate LP6",
+    "ok": true,
+    "detail": "{'u': 'leaf centre', 'v': 865.3}"
+   },
+   {
+    "group": "checks",
+    "name": "GA-F1-views F1: the gate's views",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "GA-F2-views F2: the gate's views",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "GA-F3-views F3: the gate's views",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "GA-F4-views F4: the gate's views",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "GA-F5-views F5: the gate's views",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "GA-F6-views F6: the gate's views",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "GA-F7-views F7: the gate's views",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "GA-T1-views T1: the gate's views",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "GA-T2-views T2: the gate's views",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "GA-T3-views T3: the gate's views",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "GL-leaded leaded light: came 6 wide, diamonds 95 x 70",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "GL-reeded reeded glass: 6 mm flutes, 1.2 deep",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "GL-types glass types used exist",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "NM-dash no em dash or italic marker in the lines for Jafar",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "NM-maker no maker's name in any text or data",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "NM-night night light is the lantern colour",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "PH-F4-D2 F4 against photograph D2",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "PH-F5-D2 F5 against photograph D2",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "PH-F6-D5 F6 against photograph D5",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "PH-T2-D1 T2 against photograph D1",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "PH-T2-D3 T2 against photograph D3",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "PH-T3-D4 T3 against photograph D4",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "PL-F1-bottom_left F1: opening bottom_left",
+    "ok": true,
+    "detail": "[114.3, 359.0, 192.8, 672.7]"
+   },
+   {
+    "group": "checks",
+    "name": "PL-F1-bottom_right F1: opening bottom_right",
+    "ok": true,
+    "detail": "[479.0, 723.7, 192.8, 672.7]"
+   },
+   {
+    "group": "checks",
+    "name": "PL-F1-count F1: number of leaf openings",
+    "ok": true,
+    "detail": "4"
+   },
+   {
+    "group": "checks",
+    "name": "PL-F1-framing F1: framing between openings",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "PL-F1-members F1: stiles, rails, muntin and bars",
+    "ok": true,
+    "detail": "{'stile_left': 114.3, 'stile_right': 114.3, 'top_rail': 127.0, 'bottom_rail': 192.8, 'lock_rail': 228.6, 'muntin': 120.0}"
+   },
+   {
+    "group": "checks",
+    "name": "PL-F1-top_left F1: opening top_left",
+    "ok": true,
+    "detail": "[114.3, 359.0, 901.3, 1854.0]"
+   },
+   {
+    "group": "checks",
+    "name": "PL-F1-top_right F1: opening top_right",
+    "ok": true,
+    "detail": "[479.0, 723.7, 901.3, 1854.0]"
+   },
+   {
+    "group": "checks",
+    "name": "PL-F2-bottom_l F2: opening bottom_l",
+    "ok": true,
+    "detail": "[101.7, 366.8, 188.2, 505.8]"
+   },
+   {
+    "group": "checks",
+    "name": "PL-F2-bottom_r F2: opening bottom_r",
+    "ok": true,
+    "detail": "[471.2, 736.3, 188.2, 505.8]"
+   },
+   {
+    "group": "checks",
+    "name": "PL-F2-count F2: number of leaf openings",
+    "ok": true,
+    "detail": "6"
+   },
+   {
+    "group": "checks",
+    "name": "PL-F2-framing F2: framing between openings",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "PL-F2-long_l F2: opening long_l",
+    "ok": true,
+    "detail": "[101.7, 366.8, 711.7, 1507.7]"
+   },
+   {
+    "group": "checks",
+    "name": "PL-F2-long_r F2: opening long_r",
+    "ok": true,
+    "detail": "[471.2, 736.3, 711.7, 1507.7]"
+   },
+   {
+    "group": "checks",
+    "name": "PL-F2-members F2: stiles, rails, muntin and bars",
+    "ok": true,
+    "detail": "{'stile_left': 101.7, 'stile_right': 101.7, 'top_rail': 96.9, 'bottom_rail': 188.2, 'lock_rail': 205.9, 'muntin': 104.4, 'frieze_rail': 100.0}"
+   },
+   {
+    "group": "checks",
+    "name": "PL-F2-small_upper_l F2: opening small_upper_l",
+    "ok": true,
+    "detail": "[101.7, 366.8, 1607.7, 1884.1]"
+   },
+   {
+    "group": "checks",
+    "name": "PL-F2-small_upper_r F2: opening small_upper_r",
+    "ok": true,
+    "detail": "[471.2, 736.3, 1607.7, 1884.1]"
+   },
+   {
+    "group": "checks",
+    "name": "PL-F3-count F3: number of leaf openings",
+    "ok": true,
+    "detail": "2"
+   },
+   {
+    "group": "checks",
+    "name": "PL-F3-framing F3: framing between openings",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "PL-F3-long_l F3: opening long_l",
+    "ok": true,
+    "detail": "[114.3, 359.0, 192.8, 1854.0]"
+   },
+   {
+    "group": "checks",
+    "name": "PL-F3-long_r F3: opening long_r",
+    "ok": true,
+    "detail": "[479.0, 723.7, 192.8, 1854.0]"
+   },
+   {
+    "group": "checks",
+    "name": "PL-F3-members F3: stiles, rails, muntin and bars",
+    "ok": true,
+    "detail": "{'stile_left': 114.3, 'stile_right': 114.3, 'top_rail': 127.0, 'bottom_rail': 192.8, 'muntin': 120.0}"
+   },
+   {
+    "group": "checks",
+    "name": "PL-F4-count F4: number of leaf openings",
+    "ok": true,
+    "detail": "3"
+   },
+   {
+    "group": "checks",
+    "name": "PL-F4-framing F4: framing between openings",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "PL-F4-light1 F4: opening light1",
+    "ok": true,
+    "detail": "[184.0, 339.9, 200.0, 1890.6]"
+   },
+   {
+    "group": "checks",
+    "name": "PL-F4-light2 F4: opening light2",
+    "ok": true,
+    "detail": "[375.9, 531.8, 200.0, 1890.6]"
+   },
+   {
+    "group": "checks",
+    "name": "PL-F4-light3 F4: opening light3",
+    "ok": true,
+    "detail": "[567.8, 723.7, 200.0, 1890.6]"
+   },
+   {
+    "group": "checks",
+    "name": "PL-F4-members F4: stiles, rails, muntin and bars",
+    "ok": true,
+    "detail": "{'stile_left': 184.0, 'stile_right': 114.3, 'top_rail': 90.4, 'bottom_rail': 200.0, 'bar': 36.0}"
+   },
+   {
+    "group": "checks",
+    "name": "PL-F5-count F5: number of leaf openings",
+    "ok": true,
+    "detail": "1"
+   },
+   {
+    "group": "checks",
+    "name": "PL-F5-framing F5: framing between openings",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "PL-F5-members F5: stiles, rails, muntin and bars",
+    "ok": true,
+    "detail": "{}"
+   },
+   {
+    "group": "checks",
+    "name": "PL-F5-slit F5: opening slit",
+    "ok": true,
+    "detail": "[320.8, 524.1, 914.9, 1806.1]"
+   },
+   {
+    "group": "checks",
+    "name": "PL-F6-count F6: number of leaf openings",
+    "ok": true,
+    "detail": "1"
+   },
+   {
+    "group": "checks",
+    "name": "PL-F6-framing F6: framing between openings",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "PL-F6-members F6: stiles, rails, muntin and bars",
+    "ok": true,
+    "detail": "{}"
+   },
+   {
+    "group": "checks",
+    "name": "PL-F6-spyhole F6: opening spyhole",
+    "ok": true,
+    "detail": "[374.0, 388.0, 1502.0, 1516.0]"
+   },
+   {
+    "group": "checks",
+    "name": "PL-F7-count F7: number of leaf openings",
+    "ok": true,
+    "detail": "0"
+   },
+   {
+    "group": "checks",
+    "name": "PL-F7-members F7: stiles, rails, muntin and bars",
+    "ok": true,
+    "detail": "{}"
+   },
+   {
+    "group": "checks",
+    "name": "PL-T1-bottom_left T1: opening bottom_left",
+    "ok": true,
+    "detail": "[114.3, 346.4, 192.8, 672.7]"
+   },
+   {
+    "group": "checks",
+    "name": "PL-T1-bottom_right T1: opening bottom_right",
+    "ok": true,
+    "detail": "[466.4, 698.5, 192.8, 672.7]"
+   },
+   {
+    "group": "checks",
+    "name": "PL-T1-count T1: number of leaf openings",
+    "ok": true,
+    "detail": "4"
+   },
+   {
+    "group": "checks",
+    "name": "PL-T1-framing T1: framing between openings",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "PL-T1-members T1: stiles, rails, muntin and bars",
+    "ok": true,
+    "detail": "{'stile_left': 114.3, 'stile_right': 114.3, 'top_rail': 127.0, 'bottom_rail': 192.8, 'lock_rail': 228.6, 'muntin': 120.0}"
+   },
+   {
+    "group": "checks",
+    "name": "PL-T1-top_left T1: opening top_left",
+    "ok": true,
+    "detail": "[114.3, 346.4, 901.3, 1821.0]"
+   },
+   {
+    "group": "checks",
+    "name": "PL-T1-top_right T1: opening top_right",
+    "ok": true,
+    "detail": "[466.4, 698.5, 901.3, 1821.0]"
+   },
+   {
+    "group": "checks",
+    "name": "PL-T2-count T2: number of leaf openings",
+    "ok": true,
+    "detail": "4"
+   },
+   {
+    "group": "checks",
+    "name": "PL-T2-framing T2: framing between openings",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "PL-T2-light1 T2: opening light1",
+    "ok": true,
+    "detail": "[114.3, 698.5, 205.0, 598.6]"
+   },
+   {
+    "group": "checks",
+    "name": "PL-T2-light2 T2: opening light2",
+    "ok": true,
+    "detail": "[114.3, 698.5, 628.6, 1022.3]"
+   },
+   {
+    "group": "checks",
+    "name": "PL-T2-light3 T2: opening light3",
+    "ok": true,
+    "detail": "[114.3, 698.5, 1052.3, 1445.9]"
+   },
+   {
+    "group": "checks",
+    "name": "PL-T2-light4 T2: opening light4",
+    "ok": true,
+    "detail": "[114.3, 698.5, 1475.9, 1869.6]"
+   },
+   {
+    "group": "checks",
+    "name": "PL-T2-members T2: stiles, rails, muntin and bars",
+    "ok": true,
+    "detail": "{'stile_left': 114.3, 'stile_right': 114.3, 'top_rail': 78.4, 'bottom_rail': 205.0, 'bar': 30.0}"
+   },
+   {
+    "group": "checks",
+    "name": "PL-T3-count T3: number of leaf openings",
+    "ok": true,
+    "detail": "3"
+   },
+   {
+    "group": "checks",
+    "name": "PL-T3-framing T3: framing between openings",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "PL-T3-lower_panel T3: opening lower_panel",
+    "ok": true,
+    "detail": "[234.8, 642.3, 324.9, 736.4]"
+   },
+   {
+    "group": "checks",
+    "name": "PL-T3-members T3: stiles, rails, muntin and bars",
+    "ok": true,
+    "detail": "{'border': 65.0}"
+   },
+   {
+    "group": "checks",
+    "name": "PL-T3-small_light T3: opening small_light",
+    "ok": true,
+    "detail": "[320.6, 513.6, 1082.9, 1537.7]"
+   },
+   {
+    "group": "checks",
+    "name": "PL-T3-upper_panel T3: opening upper_panel",
+    "ok": true,
+    "detail": "[140.5, 706.6, 981.1, 1806.3]"
+   },
+   {
+    "group": "checks",
+    "name": "PN-frames frames are white or grimed white",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "PN-light-doors at most 3 of 12 doors are light or bright",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "PN-palette every door paint is in the palette",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "PN-srgb paint values are sRGB triples in range and the dark classics are 3.1's",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "WR-houses every house has a condition; the street has all three",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "WR-order conditions order",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "WR-wear-target numbers equal the wear target's",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "check ids are unique (145 records)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "every opening of every kind has a check",
+    "ok": true,
+    "detail": "[]"
+   },
+   {
+    "group": "checks",
+    "name": "every placed fitting of every kind has a check",
+    "ok": true,
+    "detail": "[]"
+   },
+   {
+    "group": "checks",
+    "name": "every record has a name, what, expect, tolerance and source",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "the groups PL CV FU BP AD PN GL WR PH NM GA are all present",
+    "ok": true,
+    "detail": "AD,BP,CV,FU,GA,GL,NM,PH,PL,PN,WR"
+   },
+   {
+    "group": "gate",
+    "name": "F1: the 3.1 views are all there, cameras as 3.1's (close heights aside)",
+    "ok": true,
+    "detail": "['close', 'close_plate', 'front', 'front_foot', 'front_head', 'low', 'street']"
+   },
+   {
+    "group": "gate",
+    "name": "F2: the 3.1 views are all there, cameras as 3.1's (close heights aside)",
+    "ok": true,
+    "detail": "['close', 'close_plate', 'front', 'front_foot', 'front_head', 'low', 'street']"
+   },
+   {
+    "group": "gate",
+    "name": "F3: the 3.1 views are all there, cameras as 3.1's (close heights aside)",
+    "ok": true,
+    "detail": "['close', 'close_plate', 'front', 'front_foot', 'front_head', 'low', 'street']"
+   },
+   {
+    "group": "gate",
+    "name": "F4: the 3.1 views are all there, cameras as 3.1's (close heights aside)",
+    "ok": true,
+    "detail": "['close', 'close_foot', 'close_plate', 'front', 'front_foot', 'front_head', 'low', 'street']"
+   },
+   {
+    "group": "gate",
+    "name": "F5: the 3.1 views are all there, cameras as 3.1's (close heights aside)",
+    "ok": true,
+    "detail": "['close', 'close_plate', 'front', 'front_foot', 'front_head', 'low', 'street']"
+   },
+   {
+    "group": "gate",
+    "name": "F6: the 3.1 views are all there, cameras as 3.1's (close heights aside)",
+    "ok": true,
+    "detail": "['close', 'close_plate', 'front', 'front_foot', 'front_head', 'low', 'street']"
+   },
+   {
+    "group": "gate",
+    "name": "F7: the 3.1 views are all there, cameras as 3.1's (close heights aside)",
+    "ok": true,
+    "detail": "['close', 'close_plate', 'front', 'front_foot', 'front_head', 'low', 'street']"
+   },
+   {
+    "group": "gate",
+    "name": "T1: the 3.1 views are all there, cameras as 3.1's (close heights aside)",
+    "ok": true,
+    "detail": "['close', 'close_plate', 'front', 'front_foot', 'front_head', 'low', 'street']"
+   },
+   {
+    "group": "gate",
+    "name": "T2: the 3.1 views are all there, cameras as 3.1's (close heights aside)",
+    "ok": true,
+    "detail": "['close', 'close_foot', 'close_plate', 'front', 'front_foot', 'front_head', 'low', 'street']"
+   },
+   {
+    "group": "gate",
+    "name": "T3: the 3.1 views are all there, cameras as 3.1's (close heights aside)",
+    "ok": true,
+    "detail": "['close', 'close_plate', 'front', 'front_foot', 'front_head', 'low', 'street']"
+   },
+   {
+    "group": "gate",
+    "name": "every kind has a photograph pair or says it has none",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "gate",
+    "name": "the street views name the hook day, reverse day, night and the two rows",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F1: from 60 degrees the lap closes the 1.6 mm margin (lap 20.4)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F1: handle:HD1 lies on the leaf",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F1: latch:LK2 lies on the leaf or stop",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F1: leaf height reaches the transom's rebate (10 + height >= stop underside + 20)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F1: letter_plate:LP1 lies on the leaf",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F1: nothing shows through the clear opening (foot gap 10, margins 1.6)",
+    "ok": true,
+    "detail": "extra 0.000 mm2"
+   },
+   {
+    "group": "geom",
+    "name": "F1: openings inside the leaf, none overlapping",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F1: the leaf lies inside the frame's outer width",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F1: the visible face is the leaf less its lap behind the stops and the transom",
+    "ok": true,
+    "detail": "(49.0, 10.0, 846.2, 1970.6) vs (49.0, 10.0, 846.2, 1970.6)"
+   },
+   {
+    "group": "geom",
+    "name": "F2: from 60 degrees the lap closes the 1.6 mm margin (lap 20.4)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F2: handle:HD1 lies on the leaf",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F2: latch:LK2 lies on the leaf or stop",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F2: leaf height reaches the transom's rebate (10 + height >= stop underside + 20)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F2: letter_plate:LP2 lies on the leaf",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F2: nothing shows through the clear opening (foot gap 10, margins 1.6)",
+    "ok": true,
+    "detail": "extra 0.000 mm2"
+   },
+   {
+    "group": "geom",
+    "name": "F2: number:NM1 lies on the leaf",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F2: openings inside the leaf, none overlapping",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F2: the leaf lies inside the frame's outer width",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F2: the visible face is the leaf less its lap behind the stops and the transom",
+    "ok": true,
+    "detail": "(49.0, 10.0, 846.2, 1970.6) vs (49.0, 10.0, 846.2, 1970.6)"
+   },
+   {
+    "group": "geom",
+    "name": "F3: from 60 degrees the lap closes the 1.6 mm margin (lap 20.4)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F3: handle:HD3 lies on the leaf",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F3: leaf height reaches the transom's rebate (10 + height >= stop underside + 20)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F3: letter_plate:LP1 lies on the leaf",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F3: nothing shows through the clear opening (foot gap 10, margins 1.6)",
+    "ok": true,
+    "detail": "extra 0.000 mm2"
+   },
+   {
+    "group": "geom",
+    "name": "F3: number:NM3 lies on the leaf",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F3: openings inside the leaf, none overlapping",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F3: the leaf lies inside the frame's outer width",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F3: the visible face is the leaf less its lap behind the stops and the transom",
+    "ok": true,
+    "detail": "(49.0, 10.0, 846.2, 1970.6) vs (49.0, 10.0, 846.2, 1970.6)"
+   },
+   {
+    "group": "geom",
+    "name": "F4: from 60 degrees the lap closes the 1.6 mm margin (lap 20.4)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F4: handle:HD2b lies on the leaf",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F4: leaf height reaches the transom's rebate (10 + height >= stop underside + 20)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F4: letter_plate:LP5 lies on the leaf",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F4: nothing shows through the clear opening (foot gap 10, margins 1.6)",
+    "ok": true,
+    "detail": "extra 0.000 mm2"
+   },
+   {
+    "group": "geom",
+    "name": "F4: openings inside the leaf, none overlapping",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F4: the leaf lies inside the frame's outer width",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F4: the two bars are the stated width",
+    "ok": true,
+    "detail": "[36.0, 36.0]"
+   },
+   {
+    "group": "geom",
+    "name": "F4: the visible face is the leaf less its lap behind the stops and the transom",
+    "ok": true,
+    "detail": "(49.0, 10.0, 846.2, 1970.6) vs (49.0, 10.0, 846.2, 1970.6)"
+   },
+   {
+    "group": "geom",
+    "name": "F5: from 60 degrees the lap closes the 1.6 mm margin (lap 20.4)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F5: handle:HD2b lies on the leaf",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F5: leaf height reaches the transom's rebate (10 + height >= stop underside + 20)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F5: letter_plate:LP7 lies on the leaf",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F5: nothing shows through the clear opening (foot gap 10, margins 1.6)",
+    "ok": true,
+    "detail": "extra 0.000 mm2"
+   },
+   {
+    "group": "geom",
+    "name": "F5: openings inside the leaf, none overlapping",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F5: the leaf lies inside the frame's outer width",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F5: the visible face is the leaf less its lap behind the stops and the transom",
+    "ok": true,
+    "detail": "(49.0, 10.0, 846.2, 1970.6) vs (49.0, 10.0, 846.2, 1970.6)"
+   },
+   {
+    "group": "geom",
+    "name": "F6: from 60 degrees the lap closes the 1.6 mm margin (lap 22.0)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F6: handle:HD2a lies on the leaf",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F6: leaf height reaches the transom's rebate (10 + height >= stop underside + 20)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F6: letter_plate:LP4 lies on the leaf",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F6: nothing shows through the clear opening (foot gap 10, margins 1.6)",
+    "ok": true,
+    "detail": "extra 0.000 mm2"
+   },
+   {
+    "group": "geom",
+    "name": "F6: openings inside the leaf, none overlapping",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F6: the leaf lies inside the frame's outer width",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F6: the visible face is the leaf less its lap behind the stops and the transom",
+    "ok": true,
+    "detail": "(65.0, 10.0, 830.2, 1970.6) vs (66.6, 10.0, 828.6, 1991.0)"
+   },
+   {
+    "group": "geom",
+    "name": "F7: 18 nail heads inside the leaf",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F7: from 60 degrees the lap closes the 1.6 mm margin (lap 20.4)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F7: handle:HD4 lies on the leaf",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F7: leaf height reaches the transom's rebate (10 + height >= stop underside + 20)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F7: nothing shows through the clear opening (foot gap 10, margins 1.6)",
+    "ok": true,
+    "detail": "extra 0.000 mm2"
+   },
+   {
+    "group": "geom",
+    "name": "F7: openings inside the leaf, none overlapping",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F7: six boards across the leaf, 5 joints",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F7: the leaf lies inside the frame's outer width",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "F7: the visible face is the leaf less its lap behind the stops and the transom",
+    "ok": true,
+    "detail": "(49.0, 10.0, 846.2, 1970.6) vs (49.0, 10.0, 846.2, 1970.6)"
+   },
+   {
+    "group": "geom",
+    "name": "FF6: jambs show 117.6 each and the clear is 765.2",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "FF6: the leaf's 1.6 mm margins each side",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "T1: bell:BL1 lies on the leaf or stop",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "T1: from 60 degrees the lap closes the 1.6 mm margin (lap 20.4)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "T1: latch:LK1 lies on the leaf or stop",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "T1: leaf height reaches the transom's rebate (10 + height >= stop underside + 20)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "T1: letter_plate:LP1 lies on the leaf",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "T1: nothing shows through the clear opening (foot gap 10, margins 1.6)",
+    "ok": true,
+    "detail": "extra 0.000 mm2"
+   },
+   {
+    "group": "geom",
+    "name": "T1: openings inside the leaf, none overlapping",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "T1: the leaf lies inside the frame's outer width",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "T1: the visible face is the leaf less its lap behind the stops and the transom",
+    "ok": true,
+    "detail": "(55.0, 10.0, 827.0, 1937.6) vs (55.0, 10.0, 827.0, 1937.6)"
+   },
+   {
+    "group": "geom",
+    "name": "T2: from 60 degrees the lap closes the 1.6 mm margin (lap 20.4)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "T2: handle:HD3 lies on the leaf",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "T2: leaf height reaches the transom's rebate (10 + height >= stop underside + 20)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "T2: letter_plate:LP5 lies on the leaf",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "T2: nothing shows through the clear opening (foot gap 10, margins 1.6)",
+    "ok": true,
+    "detail": "extra 0.000 mm2"
+   },
+   {
+    "group": "geom",
+    "name": "T2: openings inside the leaf, none overlapping",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "T2: the came covers 8 to 30 per cent of the fanlight",
+    "ok": true,
+    "detail": "0.236"
+   },
+   {
+    "group": "geom",
+    "name": "T2: the lead came lies inside the fanlight's glass opening",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "T2: the leaf lies inside the frame's outer width",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "T2: the three bars are 30 mm",
+    "ok": true,
+    "detail": "[30.0, 30.0, 30.0]"
+   },
+   {
+    "group": "geom",
+    "name": "T2: the visible face is the leaf less its lap behind the stops and the transom",
+    "ok": true,
+    "detail": "(55.0, 10.0, 827.0, 1937.6) vs (55.0, 10.0, 827.0, 1937.6)"
+   },
+   {
+    "group": "geom",
+    "name": "T3: from 60 degrees the lap closes the 1.6 mm margin (lap 20.4)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "T3: handle:HD2c lies on the leaf",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "T3: leaf height reaches the transom's rebate (10 + height >= stop underside + 20)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "T3: letter_plate:LP6 lies on the leaf",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "T3: nothing shows through the clear opening (foot gap 10, margins 1.6)",
+    "ok": true,
+    "detail": "extra 0.000 mm2"
+   },
+   {
+    "group": "geom",
+    "name": "T3: openings inside the leaf, none overlapping",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "T3: the leaf lies inside the frame's outer width",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "T3: the visible face is the leaf less its lap behind the stops and the transom",
+    "ok": true,
+    "detail": "(55.0, 10.0, 827.0, 1937.6) vs (55.0, 10.0, 827.0, 1937.6)"
+   },
+   {
+    "group": "geom",
+    "name": "sections: the embossed step is 6 deep over 14",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "sections: the reeded glass has 4 flutes of 6 mm",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "geom",
+    "name": "sections: the stuck ovolo is 20 wide and 6.5 proud",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "D1 page: title, author, date, licence as recorded",
+    "ok": true,
+    "detail": "{\"title_on_page\": \"Carrville Terrace\", \"author_on_page\": \"David M Clark\", \"taken_iso\": \"1975-01-22\", \"licence_on_page\": \"by-sa/2.0\"}"
+   },
+   {
+    "group": "live",
+    "name": "D1 size is as recorded",
+    "ok": true,
+    "detail": "(534, 800)"
+   },
+   {
+    "group": "live",
+    "name": "D10 page: title, author, date, licence as recorded",
+    "ok": true,
+    "detail": "{\"title_on_page\": \"Old Town, Poole: in search of the...\", \"author_on_page\": \"Mike Searle\", \"taken_iso\": \"2014-03-30\", \"licence_on_page\": \"by-sa/2.0\"}"
+   },
+   {
+    "group": "live",
+    "name": "D10 size is as recorded",
+    "ok": true,
+    "detail": "(640, 427)"
+   },
+   {
+    "group": "live",
+    "name": "D2 page: title, author, date, licence as recorded",
+    "ok": true,
+    "detail": "{\"title_on_page\": \"Terraced housing in Railway Street\", \"author_on_page\": \"P L Chadwick\", \"taken_iso\": \"1987-08-09\", \"licence_on_page\": \"by-sa/2.0\"}"
+   },
+   {
+    "group": "live",
+    "name": "D2 size is as recorded",
+    "ok": true,
+    "detail": "(800, 529)"
+   },
+   {
+    "group": "live",
+    "name": "D2 slit: dark run columns (np.int64(574), np.int64(583)) against box 574.0 to 582.8",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "D2 slit: dark run rows (np.int64(287), np.int64(325)) against box 287.0 to 324.5",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "D3 leaf: light run columns (np.int64(48), np.int64(123)) against box 45.8 to 124.2",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "D3 page: title, author, date, licence as recorded",
+    "ok": true,
+    "detail": "{\"title_on_page\": \"Terraced House - Ratcliffe Street...\", \"author_on_page\": \"Anthony Parkes\", \"taken_iso\": \"1994-06-10\", \"licence_on_page\": \"by-sa/2.0\"}"
+   },
+   {
+    "group": "live",
+    "name": "D3 size is as recorded",
+    "ok": true,
+    "detail": "(658, 1024)"
+   },
+   {
+    "group": "live",
+    "name": "D4 page: title, author, date, licence as recorded",
+    "ok": true,
+    "detail": "{\"title_on_page\": \"Nos. 34, 32 and 30, Frederick Street,...\", \"author_on_page\": \"Dr Neil Clifton\", \"taken_iso\": \"1990-04-10\", \"licence_on_page\": \"by-sa/2.0\"}"
+   },
+   {
+    "group": "live",
+    "name": "D4 size is as recorded",
+    "ok": true,
+    "detail": "(640, 550)"
+   },
+   {
+    "group": "live",
+    "name": "D4 small light: dark run rows (np.int64(363), np.int64(384)) against box 363.0 to 384.0",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "D5 leaf: dark run columns (np.int64(451), np.int64(779)) against box 450 to 775",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "D5 plate: light run columns (np.int64(573), np.int64(657)) against box 561 to 668 (the plate's darker rim is inside the box, so 14 px)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "D5 plate: light run rows (np.int64(575), np.int64(597)) against box 570 to 600",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "D5 size is as recorded",
+    "ok": true,
+    "detail": "(1920, 1270)"
+   },
+   {
+    "group": "live",
+    "name": "D6 page: title, author, date, licence as recorded",
+    "ok": true,
+    "detail": "{\"title_on_page\": \"Rensburg Street, Kingston upon Hull\", \"author_on_page\": \"Bernard Sharp\", \"taken_iso\": \"1982-03-19\", \"licence_on_page\": \"by-sa/2.0\"}"
+   },
+   {
+    "group": "live",
+    "name": "D6 size is as recorded",
+    "ok": true,
+    "detail": "(1024, 660)"
+   },
+   {
+    "group": "live",
+    "name": "D7 page: title, author, date, licence as recorded",
+    "ok": true,
+    "detail": "{\"title_on_page\": \"Abbey Street, Kingston upon Hull\", \"author_on_page\": \"Bernard Sharp\", \"taken_iso\": \"1986-06-08\", \"licence_on_page\": \"by-sa/2.0\"}"
+   },
+   {
+    "group": "live",
+    "name": "D7 size is as recorded",
+    "ok": true,
+    "detail": "(1024, 661)"
+   },
+   {
+    "group": "live",
+    "name": "D8 page: title, author, date, licence as recorded",
+    "ok": true,
+    "detail": "{\"title_on_page\": \"Brazil Street, Kingston upon Hull\", \"author_on_page\": \"Bernard Sharp\", \"taken_iso\": \"1986-06-08\", \"licence_on_page\": \"by-sa/2.0\"}"
+   },
+   {
+    "group": "live",
+    "name": "D8 size is as recorded",
+    "ok": true,
+    "detail": "(1024, 669)"
+   },
+   {
+    "group": "live",
+    "name": "D9 page: title, author, date, licence as recorded",
+    "ok": true,
+    "detail": "{\"title_on_page\": \"Newburn Council Houses\", \"author_on_page\": \"Kevin Hall\", \"taken_iso\": \"1989-08-01\", \"licence_on_page\": \"by-sa/2.0\"}"
+   },
+   {
+    "group": "live",
+    "name": "D9 size is as recorded",
+    "ok": true,
+    "detail": "(1024, 686)"
+   },
+   {
+    "group": "live",
+    "name": "colour box D1_L_teal median [28, 39, 29] (recorded [28, 39, 29])",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "colour box D2_F4_mustard median [142, 136, 39] (recorded [142, 136, 39])",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "colour box D2_F5_khaki median [136, 132, 83] (recorded [136, 132, 83])",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "colour box D5_olive median [114, 102, 65] (recorded [114, 102, 65])",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "colour box D6_blue median [26, 67, 117] (recorded [26, 67, 117])",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "colour box D9_turquoise median [22, 108, 126] (recorded [22, 108, 126])",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "east_chandler_bay0 door centre 45.231 m as derived",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "east_chandler_bay0 modernised flag as the windows target (['white_upvc'])",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "east_parade_bay0 door centre 3.769 m as derived",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "east_parade_bay0 modernised flag as the windows target (['white_grimy'])",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "east_parade_bay1 door centre 9.769 m as derived",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "east_parade_bay1 modernised flag as the windows target (['white_fresh'])",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "east_parade_bay2 door centre 20.178 m as derived",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "east_parade_bay2 modernised flag as the windows target (['white_upvc'])",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "east_parade_bay3 door centre 21.769 m as derived",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "east_parade_bay3 modernised flag as the windows target (['white_flaking'])",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "east_parade_bay4 door centre 32.231 m as derived",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "east_parade_bay4 modernised flag as the windows target (['white_upvc'])",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "photographs fetched (10 files)",
+    "ok": true,
+    "detail": "/tmp/claude-0/-home-user-ledger/6ce8dcad-c1af-55c1-8a8d-c9e781414d13/scratchpad/td_photos"
+   },
+   {
+    "group": "live",
+    "name": "the street derives the same 12 houses from terrace-front.py",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "wear target has every kind this target names",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "wear target: handle_wear halo p50 170 mm",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "wear target: neglected up to 0.40 stated",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "wear target: paint_flake range [0.03, 0.1] typical 0.063",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "west_north_bay0 door centre 41.231 m as derived",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "west_north_bay0 modernised flag as the windows target (None)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "west_north_bay1 door centre 35.231 m as derived",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "west_north_bay1 modernised flag as the windows target (None)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "west_north_bay2 door centre 24.769 m as derived",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "west_north_bay2 modernised flag as the windows target (None)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "west_south_bay0 door centre 19.500 m as derived",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "west_south_bay0 modernised flag as the windows target (['white_grimy'])",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "west_south_bay1 door centre 13.500 m as derived",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "west_south_bay1 modernised flag as the windows target (['white_upvc'])",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "west_south_bay2 door centre 4.500 m as derived",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "live",
+    "name": "west_south_bay2 modernised flag as the windows target (['white_fresh'])",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "D1 has title, author, licence, date and a period note",
+    "ok": true,
+    "detail": "Carrville Terrace"
+   },
+   {
+    "group": "meta",
+    "name": "D1 licence is free",
+    "ok": true,
+    "detail": "CC BY-SA 2.0"
+   },
+   {
+    "group": "meta",
+    "name": "D1 taken 1975 to 1995 (1975)",
+    "ok": true,
+    "detail": "1975-01-22"
+   },
+   {
+    "group": "meta",
+    "name": "D10 has title, author, licence, date and a period note",
+    "ok": true,
+    "detail": "Old Town, Poole: in search of the boot scraper"
+   },
+   {
+    "group": "meta",
+    "name": "D10 is later (2014) and says why",
+    "ok": true,
+    "detail": "later (2014). The object is a cast-iron scraper set by a tow"
+   },
+   {
+    "group": "meta",
+    "name": "D10 licence is free",
+    "ok": true,
+    "detail": "CC BY-SA 2.0"
+   },
+   {
+    "group": "meta",
+    "name": "D2 has title, author, licence, date and a period note",
+    "ok": true,
+    "detail": "Terraced housing in Railway Street"
+   },
+   {
+    "group": "meta",
+    "name": "D2 licence is free",
+    "ok": true,
+    "detail": "CC BY-SA 2.0"
+   },
+   {
+    "group": "meta",
+    "name": "D2 taken 1975 to 1995 (1987)",
+    "ok": true,
+    "detail": "1987-08-09"
+   },
+   {
+    "group": "meta",
+    "name": "D3 has title, author, licence, date and a period note",
+    "ok": true,
+    "detail": "Terraced House - Ratcliffe Street, Levenshulme"
+   },
+   {
+    "group": "meta",
+    "name": "D3 licence is free",
+    "ok": true,
+    "detail": "CC BY-SA 2.0"
+   },
+   {
+    "group": "meta",
+    "name": "D3 taken 1975 to 1995 (1994)",
+    "ok": true,
+    "detail": "1994-06-10"
+   },
+   {
+    "group": "meta",
+    "name": "D4 has title, author, licence, date and a period note",
+    "ok": true,
+    "detail": "Nos. 34, 32 and 30, Frederick Street, Barnoldswick"
+   },
+   {
+    "group": "meta",
+    "name": "D4 licence is free",
+    "ok": true,
+    "detail": "CC BY-SA 2.0"
+   },
+   {
+    "group": "meta",
+    "name": "D4 taken 1975 to 1995 (1990)",
+    "ok": true,
+    "detail": "1990-04-10"
+   },
+   {
+    "group": "meta",
+    "name": "D5 has title, author, licence, date and a period note",
+    "ok": true,
+    "detail": "Hazlehead I, Provost Graham Avenue (SC 1141987)"
+   },
+   {
+    "group": "meta",
+    "name": "D5 licence is free",
+    "ok": true,
+    "detail": "CC BY 4.0"
+   },
+   {
+    "group": "meta",
+    "name": "D5 taken 1975 to 1995 (1987)",
+    "ok": true,
+    "detail": "1987"
+   },
+   {
+    "group": "meta",
+    "name": "D6 has title, author, licence, date and a period note",
+    "ok": true,
+    "detail": "Rensburg Street, Kingston upon Hull"
+   },
+   {
+    "group": "meta",
+    "name": "D6 licence is free",
+    "ok": true,
+    "detail": "CC BY-SA 2.0"
+   },
+   {
+    "group": "meta",
+    "name": "D6 taken 1975 to 1995 (1982)",
+    "ok": true,
+    "detail": "1982-03-19"
+   },
+   {
+    "group": "meta",
+    "name": "D7 has title, author, licence, date and a period note",
+    "ok": true,
+    "detail": "Abbey Street, Kingston upon Hull"
+   },
+   {
+    "group": "meta",
+    "name": "D7 licence is free",
+    "ok": true,
+    "detail": "CC BY-SA 2.0"
+   },
+   {
+    "group": "meta",
+    "name": "D7 taken 1975 to 1995 (1986)",
+    "ok": true,
+    "detail": "1986-06-08"
+   },
+   {
+    "group": "meta",
+    "name": "D8 has title, author, licence, date and a period note",
+    "ok": true,
+    "detail": "Brazil Street, Kingston upon Hull"
+   },
+   {
+    "group": "meta",
+    "name": "D8 licence is free",
+    "ok": true,
+    "detail": "CC BY-SA 2.0"
+   },
+   {
+    "group": "meta",
+    "name": "D8 taken 1975 to 1995 (1986)",
+    "ok": true,
+    "detail": "1986-06-08"
+   },
+   {
+    "group": "meta",
+    "name": "D9 has title, author, licence, date and a period note",
+    "ok": true,
+    "detail": "Newburn Council Houses"
+   },
+   {
+    "group": "meta",
+    "name": "D9 licence is free",
+    "ok": true,
+    "detail": "CC BY-SA 2.0"
+   },
+   {
+    "group": "meta",
+    "name": "D9 taken 1975 to 1995 (1989)",
+    "ok": true,
+    "detail": "1989-08-01"
+   },
+   {
+    "group": "meta",
+    "name": "P1 has title, author, licence, date and a period note",
+    "ok": true,
+    "detail": "Front door, 69 Lower Brimley Road, Teignmouth"
+   },
+   {
+    "group": "meta",
+    "name": "P1 is later (2012) and says why",
+    "ok": true,
+    "detail": "later; the type is the 1890s four-panel door"
+   },
+   {
+    "group": "meta",
+    "name": "P1 licence is free",
+    "ok": true,
+    "detail": "CC BY-SA 2.0"
+   },
+   {
+    "group": "meta",
+    "name": "P2 has title, author, licence, date and a period note",
+    "ok": true,
+    "detail": "Doorway Philip Lane Tottenham London England"
+   },
+   {
+    "group": "meta",
+    "name": "P2 is later (2024) and says why",
+    "ok": true,
+    "detail": "later; an unrestored door of the old type"
+   },
+   {
+    "group": "meta",
+    "name": "P2 licence is free",
+    "ok": true,
+    "detail": "CC BY-SA 4.0"
+   },
+   {
+    "group": "meta",
+    "name": "colour box D1_L_teal lies inside its image",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "colour box D2_F4_mustard lies inside its image",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "colour box D2_F5_khaki lies inside its image",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "colour box D5_olive lies inside its image",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "colour box D6_blue lies inside its image",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "colour box D9_turquoise lies inside its image",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D1_L boxes lie inside D1's image (534x800)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D1_L has a stated error",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D1_R boxes lie inside D1's image (534x800)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D1_R has a stated error",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D2_F4_cols boxes lie inside D2's image (800x529)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D2_F4_cols has a stated error",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D2_F4_top boxes lie inside D2's image (800x529)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D2_F4_top has a stated error",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D2_F5_handle boxes lie inside D2's image (800x529)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D2_F5_handle has a stated error",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D2_F5_leaf boxes lie inside D2's image (800x529)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D2_F5_leaf has a stated error",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D2_F5_plate boxes lie inside D2's image (800x529)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D2_F5_plate has a stated error",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D2_F5_slit boxes lie inside D2's image (800x529)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D2_F5_slit has a stated error",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D3_fanlight boxes lie inside D3's image (658x1024)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D3_fanlight has a stated error",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D3_handle boxes lie inside D3's image (658x1024)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D3_handle has a stated error",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D3_leaf boxes lie inside D3's image (658x1024)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D3_leaf has a stated error",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D3_rows boxes lie inside D3's image (658x1024)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D3_rows has a stated error",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D3_stiles boxes lie inside D3's image (658x1024)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D3_stiles has a stated error",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D4_T3_handle boxes lie inside D4's image (640x550)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D4_T3_handle has a stated error",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D4_T3_leaf boxes lie inside D4's image (640x550)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D4_T3_leaf has a stated error",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D4_T3_light boxes lie inside D4's image (640x550)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D4_T3_light has a stated error",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D4_T3_lower boxes lie inside D4's image (640x550)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D4_T3_lower has a stated error",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D4_T3_plate boxes lie inside D4's image (640x550)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D4_T3_plate has a stated error",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D4_T3_upper boxes lie inside D4's image (640x550)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D4_T3_upper has a stated error",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D4_low_plate boxes lie inside D4's image (640x550)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D4_low_plate has a stated error",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D4_slit boxes lie inside D4's image (640x550)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D4_slit has a stated error",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D5_handle boxes lie inside D5's image (1920x1270)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D5_handle has a stated error",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D5_leaf boxes lie inside D5's image (1920x1270)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D5_leaf has a stated error",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D5_plate boxes lie inside D5's image (1920x1270)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D5_plate has a stated error",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D5_spy boxes lie inside D5's image (1920x1270)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "meta",
+    "name": "measurement D5_spy has a stated error",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "photo",
+    "name": "F4 light1 across against D2 left door (u 184 to 323 measured, 184 to 340 drawn)",
+    "ok": true,
+    "detail": "tol 33.3"
+   },
+   {
+    "group": "photo",
+    "name": "F4 light2 across against D2 left door (u 370 to 521 measured, 376 to 532 drawn)",
+    "ok": true,
+    "detail": "tol 33.3"
+   },
+   {
+    "group": "photo",
+    "name": "F4 light3 across against D2 left door (u 580 to 719 measured, 568 to 724 drawn)",
+    "ok": true,
+    "detail": "tol 33.3"
+   },
+   {
+    "group": "photo",
+    "name": "F5 handle HD2b against D2 (centre u 0.065 v 0.555)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "photo",
+    "name": "F5 letter_plate LP7 against D2 (centre u 0.493 v 0.418)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "photo",
+    "name": "F5 slit against D2 middle door (u 0.377 0.632 v 0.467 0.921)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "photo",
+    "name": "F6 handle HD2a against D5 (centre u 0.915 v 0.456)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "photo",
+    "name": "F6 leaf ratio against D5 (0.390 measured, 0.385 drawn)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "photo",
+    "name": "F6 letter_plate LP4 against D5 (centre u 0.506 v 0.462)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "photo",
+    "name": "F6 spyhole place against D5",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "photo",
+    "name": "LP5 low plate height against D1 (0.042 of the leaf height, drawn 0.052)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "photo",
+    "name": "LP5 low plate height against D4's dark door (0.047, drawn 0.052)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "photo",
+    "name": "T2 light 1 against D1's blue door (fractions 0.080 0.300)",
+    "ok": true,
+    "detail": "oblique view, rows only"
+   },
+   {
+    "group": "photo",
+    "name": "T2 light 2 against D1's blue door (fractions 0.333 0.527)",
+    "ok": true,
+    "detail": "oblique view, rows only"
+   },
+   {
+    "group": "photo",
+    "name": "T2 light 3 against D1's blue door (fractions 0.567 0.767)",
+    "ok": true,
+    "detail": "oblique view, rows only"
+   },
+   {
+    "group": "photo",
+    "name": "T2 light 4 against D1's blue door (fractions 0.793 1.000)",
+    "ok": true,
+    "detail": "oblique view, rows only"
+   },
+   {
+    "group": "photo",
+    "name": "T2 light1 against D3 rows (v 1471 to 1869 measured, 1476 to 1870 drawn)",
+    "ok": true,
+    "detail": "tol 33.4"
+   },
+   {
+    "group": "photo",
+    "name": "T2 light2 against D3 rows (v 1040 to 1441 measured, 1052 to 1446 drawn)",
+    "ok": true,
+    "detail": "tol 33.4"
+   },
+   {
+    "group": "photo",
+    "name": "T2 light3 against D3 rows (v 604 to 1009 measured, 629 to 1022 drawn)",
+    "ok": true,
+    "detail": "tol 33.4"
+   },
+   {
+    "group": "photo",
+    "name": "T2 light4 against D3 rows (v 203 to 576 measured, 205 to 599 drawn)",
+    "ok": true,
+    "detail": "tol 33.4"
+   },
+   {
+    "group": "photo",
+    "name": "T2 visible left stile against D3 (96 measured, 93.9 drawn)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "photo",
+    "name": "T2 visible right stile against D3 (96 measured, 93.9 drawn)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "photo",
+    "name": "T2 visible top rail against D3 (58 measured, 58.0 drawn)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "photo",
+    "name": "T3 lower_panel against D4 right door",
+    "ok": true,
+    "detail": "u 0.278 0.806 v 0.169 0.382"
+   },
+   {
+    "group": "photo",
+    "name": "T3 plate LP6 height against D4 (0.449 of the visible height)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "photo",
+    "name": "T3 small_light against D4 right door",
+    "ok": true,
+    "detail": "u 0.389 0.639 v 0.562 0.798"
+   },
+   {
+    "group": "photo",
+    "name": "T3 upper_panel against D4 right door",
+    "ok": true,
+    "detail": "u 0.156 0.889 v 0.509 0.937"
+   },
+   {
+    "group": "previews",
+    "name": "d1-durham-carrville-terrace-1975-two-doors.jpg is at most 1200 px and 300 KB (800x1080, 97 KB)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "d1-durham-carrville-terrace-1975-two-doors.jpg is credited in TARGET.md",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "d10-poole-boot-scraper-2014.jpg is at most 1200 px and 300 KB (1024x683, 254 KB)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "d10-poole-boot-scraper-2014.jpg is credited in TARGET.md",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "d2-railway-street-1987-target-on-photo.jpg is at most 1200 px and 300 KB (840x910, 100 KB)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "d2-railway-street-1987-target-on-photo.jpg is credited in TARGET.md",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "d2-railway-street-1987-three-doors.jpg is at most 1200 px and 300 KB (1080x360, 85 KB)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "d2-railway-street-1987-three-doors.jpg is credited in TARGET.md",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "d2-railway-street-1987-three-doors.jpg mask 'a pole-mounted board' is flat grey",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "d2-railway-street-1987-three-doors.jpg mask 'an oval plaque on the white door' is flat grey",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "d3-levenshulme-ratcliffe-street-1994-four-light-door.jpg is at most 1200 px and 300 KB (1040x1160, 140 KB)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "d3-levenshulme-ratcliffe-street-1994-four-light-door.jpg is credited in TARGET.md",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "d3-levenshulme-ratcliffe-street-1994-four-light-door.jpg mask 'a small numeral over the left door' is flat grey",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "d3-levenshulme-ratcliffe-street-1994-target-on-photo.jpg is at most 1200 px and 300 KB (1040x1160, 153 KB)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "d3-levenshulme-ratcliffe-street-1994-target-on-photo.jpg is credited in TARGET.md",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "d3-levenshulme-ratcliffe-street-1994-target-on-photo.jpg mask 'a small numeral over the left door' is flat grey",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "d4-barnoldswick-frederick-street-1990-three-doors.jpg is at most 1200 px and 300 KB (1080x600, 61 KB)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "d4-barnoldswick-frederick-street-1990-three-doors.jpg is credited in TARGET.md",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "d5-aberdeen-hazlehead-1987-council-flush-door.jpg is at most 1200 px and 300 KB (400x910, 38 KB)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "d5-aberdeen-hazlehead-1987-council-flush-door.jpg is credited in TARGET.md",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "d5-aberdeen-hazlehead-1987-council-flush-door.jpg mask 'a small white label on the door' is flat grey",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "d5-aberdeen-hazlehead-1987-target-on-photo.jpg is at most 1200 px and 300 KB (400x910, 46 KB)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "d5-aberdeen-hazlehead-1987-target-on-photo.jpg is credited in TARGET.md",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "d5-aberdeen-hazlehead-1987-target-on-photo.jpg mask 'a small white label on the door' is flat grey",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "d6-hull-rensburg-street-1982-blue-door.jpg is at most 1200 px and 300 KB (480x912, 64 KB)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "d6-hull-rensburg-street-1982-blue-door.jpg is credited in TARGET.md",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "d6-hull-rensburg-street-1982-blue-door.jpg mask 'a painted numeral on the door' is flat grey",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "d7-hull-abbey-street-1986-arched-doorways.jpg is at most 1200 px and 300 KB (540x900, 74 KB)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "d7-hull-abbey-street-1986-arched-doorways.jpg is credited in TARGET.md",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "d8-hull-brazil-street-1986-painted-frames.jpg is at most 1200 px and 300 KB (1140x600, 113 KB)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "d8-hull-brazil-street-1986-painted-frames.jpg is credited in TARGET.md",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "d8-hull-brazil-street-1986-painted-frames.jpg mask 'a board on the fence' is flat grey",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "d9-newburn-council-houses-1989-turquoise-door.jpg is at most 1200 px and 300 KB (720x840, 59 KB)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "d9-newburn-council-houses-1989-turquoise-door.jpg is credited in TARGET.md",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "no preview file is named after a street number, a firm or a plate",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "previews exist (15)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "target-street-rows-east-and-west.jpg is at most 1200 px and 300 KB (1200x242, 13 KB)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "target-street-rows-east-and-west.jpg is credited in TARGET.md",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "target-ten-door-kinds-elevations.jpg is at most 1200 px and 300 KB (1200x1114, 117 KB)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "target-ten-door-kinds-elevations.jpg is credited in TARGET.md",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "12 household doors, each once",
+    "ok": true,
+    "detail": "12"
+   },
+   {
+    "group": "street",
+    "name": "at most 3 of the 12 doors are light or bright (3)",
+    "ok": true,
+    "detail": "east_parade_bay4,west_south_bay1,west_south_bay0"
+   },
+   {
+    "group": "street",
+    "name": "east_chandler_bay0 is modernised and takes a modern kind (T3 F5 F6)",
+    "ok": true,
+    "detail": "F5"
+   },
+   {
+    "group": "street",
+    "name": "east_chandler_bay0: kind F5 fits its frame set",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "east_chandler_bay0: paint black is in the palette, frame colour is white-family",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "east_parade_bay0: kind F1 fits its frame set",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "east_parade_bay0: paint maroon is in the palette, frame colour is white-family",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "east_parade_bay1: kind F2 fits its frame set",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "east_parade_bay1: paint black is in the palette, frame colour is white-family",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "east_parade_bay2: kind F1 fits its frame set",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "east_parade_bay2: paint navy is in the palette, frame colour is white-family",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "east_parade_bay3: kind F4 fits its frame set",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "east_parade_bay3: paint brown is in the palette, frame colour is white-family",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "east_parade_bay4 is modernised and takes a modern kind (T3 F5 F6)",
+    "ok": true,
+    "detail": "F6"
+   },
+   {
+    "group": "street",
+    "name": "east_parade_bay4: kind F6 fits its frame set",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "east_parade_bay4: paint council_turquoise is in the palette, frame colour is white-family",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "east_parade_bay5 has no side door",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "every kind is used at least once",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "facing doors east_chandler_bay0 and west_north_bay0 (4.00 m) differ in paint class",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "facing doors east_parade_bay0 and west_south_bay2 (0.73 m) differ in paint class",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "facing doors east_parade_bay1 and west_south_bay1 (3.73 m) differ in paint class",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "facing doors east_parade_bay2 and west_north_bay2 (4.59 m) differ in paint class",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "facing doors east_parade_bay2 and west_south_bay0 (0.68 m) differ in paint class",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "facing doors east_parade_bay3 and west_north_bay2 (3.00 m) differ in paint class",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "facing doors east_parade_bay3 and west_south_bay0 (2.27 m) differ in paint class",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "facing doors east_parade_bay4 and west_north_bay1 (3.00 m) differ in paint class",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "knockers: every house has none (no photograph shows one)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "neighbours east_parade_bay0 and east_parade_bay1 differ in kind, paint and 2 furniture slots",
+    "ok": true,
+    "detail": "F1 F2"
+   },
+   {
+    "group": "street",
+    "name": "neighbours east_parade_bay1 and east_parade_bay2 differ in kind, paint and 2 furniture slots",
+    "ok": true,
+    "detail": "F2 F1"
+   },
+   {
+    "group": "street",
+    "name": "neighbours east_parade_bay2 and east_parade_bay3 differ in kind, paint and 2 furniture slots",
+    "ok": true,
+    "detail": "F1 F4"
+   },
+   {
+    "group": "street",
+    "name": "neighbours east_parade_bay3 and east_parade_bay4 differ in kind, paint and 2 furniture slots",
+    "ok": true,
+    "detail": "F4 F6"
+   },
+   {
+    "group": "street",
+    "name": "neighbours east_parade_bay4 and east_chandler_bay0 differ in kind, paint and 2 furniture slots",
+    "ok": true,
+    "detail": "F6 F5"
+   },
+   {
+    "group": "street",
+    "name": "neighbours west_north_bay1 and west_north_bay0 differ in kind, paint and 2 furniture slots",
+    "ok": true,
+    "detail": "F3 F1"
+   },
+   {
+    "group": "street",
+    "name": "neighbours west_north_bay2 and west_north_bay1 differ in kind, paint and 2 furniture slots",
+    "ok": true,
+    "detail": "F7 F3"
+   },
+   {
+    "group": "street",
+    "name": "neighbours west_south_bay0 and west_north_bay2 differ in kind, paint and 2 furniture slots",
+    "ok": true,
+    "detail": "T2 F7"
+   },
+   {
+    "group": "street",
+    "name": "neighbours west_south_bay1 and west_south_bay0 differ in kind, paint and 2 furniture slots",
+    "ok": true,
+    "detail": "T3 T2"
+   },
+   {
+    "group": "street",
+    "name": "neighbours west_south_bay2 and west_south_bay1 differ in kind, paint and 2 furniture slots",
+    "ok": true,
+    "detail": "T1 T3"
+   },
+   {
+    "group": "street",
+    "name": "no council-owned house is claimed",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "no knocker, bell pull, black iron plate, frosted or wired glass is placed",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "no lion's head knocker is offered",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "the boot scraper is on one house only",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "the hill's 12 doors: no neighbours alike in kind or paint",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "the push BL1 is on one house, a T1",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "the street has all three conditions",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "west_north_bay0: kind F1 fits its frame set",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "west_north_bay0: paint maroon is in the palette, frame colour is white-family",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "west_north_bay1: kind F3 fits its frame set",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "west_north_bay1: paint dark_green is in the palette, frame colour is white-family",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "west_north_bay2: kind F7 fits its frame set",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "west_north_bay2: paint deep_teal is in the palette, frame colour is white-family",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "west_south_bay0: kind T2 fits its frame set",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "west_south_bay0: paint cream is in the palette, frame colour is white-family",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "west_south_bay1 is modernised and takes a modern kind (T3 F5 F6)",
+    "ok": true,
+    "detail": "T3"
+   },
+   {
+    "group": "street",
+    "name": "west_south_bay1: kind T3 fits its frame set",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "west_south_bay1: paint white_gloss is in the palette, frame colour is white-family",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "west_south_bay2: kind T1 fits its frame set",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "street",
+    "name": "west_south_bay2: paint navy is in the palette, frame colour is white-family",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "text",
+    "name": "could-not-settle is written down",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "text",
+    "name": "no em or en dash in any string",
+    "ok": true,
+    "detail": "[]"
+   },
+   {
+    "group": "text",
+    "name": "no placed model: this target places none (doors are built by script)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "text",
+    "name": "no real maker's name, whole word, anywhere in target.json",
+    "ok": true,
+    "detail": "[]"
+   },
+   {
+    "group": "text",
+    "name": "owed lines: at most 5, each with a recommendation, no dash, no italic marker",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "text",
+    "name": "photographs-win disagreements are written down (>= 8)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "text",
+    "name": "rulings checked are listed (6)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "text",
+    "name": "the lantern colour (1.0, 0.25, 0.0) is in the gate, the stale colour is not anywhere",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "text",
+    "name": "the word 'Yale' does not occur",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "wear",
+    "name": "each condition names crazing, chips, bottom rail, kick marks, polish and frame",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "wear",
+    "name": "paint_flake shares kept < tired < neglected",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "wear",
+    "name": "roughness kept 0.35, tired 0.55, neglected 0.65 as 3.1",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "wear",
+    "name": "the layer's kinds are named and what it cannot do is listed",
+    "ok": true,
+    "detail": ""
+   }
+  ],
+  "controls": [
+   {
+    "name": "T2: a bar moved 20 mm",
+    "caught": true,
+    "first_failure": "T2 light3 against D3 rows (v 604 to 1009 measured, 649 to 1042 drawn)"
+   },
+   {
+    "name": "T2: three lights instead of four",
+    "caught": true,
+    "first_failure": "raised 'light4'"
+   },
+   {
+    "name": "T2: the fanlight glass plain instead of leaded",
+    "caught": true,
+    "first_failure": "T2: the lead came lies inside the fanlight's glass opening"
+   },
+   {
+    "name": "T3: the small light 60 mm lower",
+    "caught": true,
+    "first_failure": "PL-T3-small_light T3: opening small_light"
+   },
+   {
+    "name": "F5: the slit 50 mm wider on each side",
+    "caught": true,
+    "first_failure": "F5 slit against D2 middle door (u 0.377 0.632 v 0.467 0.921)"
+   },
+   {
+    "name": "F4: a bar 25 mm instead of 40",
+    "caught": true,
+    "first_failure": "F4: the two bars are the stated width"
+   },
+   {
+    "name": "F6: the letter plate at 1000 instead of 912",
+    "caught": true,
+    "first_failure": "F6 letter_plate LP4 against D5 (centre u 0.506 v 0.462)"
+   },
+   {
+    "name": "F5: the lever on the right stile (u 700)",
+    "caught": true,
+    "first_failure": "F5 handle HD2b against D2 (centre u 0.065 v 0.555)"
+   },
+   {
+    "name": "F6: the leaf 838 wide in the planted-stop frame (a see-through margin)",
+    "caught": true,
+    "first_failure": "F6: handle:HD2a lies on the leaf"
+   },
+   {
+    "name": "F7: the leaf 700 wide in the F frame (a slot beside it)",
+    "caught": true,
+    "first_failure": "F7: the visible face is the leaf less its lap behind the stops and the"
+   },
+   {
+    "name": "the bell push given a bezel part",
+    "caught": true,
+    "first_failure": "BP-form bell push: one plain part"
+   },
+   {
+    "name": "a bell push on F1",
+    "caught": true,
+    "first_failure": "the push BL1 is on one house, a T1"
+   },
+   {
+    "name": "the push made brass",
+    "caught": true,
+    "first_failure": "BP-form bell push: one plain part"
+   },
+   {
+    "name": "two neighbours given one paint",
+    "caught": true,
+    "first_failure": "neighbours east_parade_bay0 and east_parade_bay1 differ in kind, paint"
+   },
+   {
+    "name": "two neighbours given one kind",
+    "caught": true,
+    "first_failure": "raised list index out of range"
+   },
+   {
+    "name": "two neighbours given the same furniture",
+    "caught": true,
+    "first_failure": "neighbours east_parade_bay0 and east_parade_bay1 differ in kind, paint"
+   },
+   {
+    "name": "a door facing another in the same paint class",
+    "caught": true,
+    "first_failure": "facing doors east_parade_bay0 and west_south_bay2 (0.73 m) differ in p"
+   },
+   {
+    "name": "a cottage given a flat kind",
+    "caught": true,
+    "first_failure": "raised list index out of range"
+   },
+   {
+    "name": "a house missing from the street",
+    "caught": true,
+    "first_failure": "raised 'west_north_bay0'"
+   },
+   {
+    "name": "east_parade_bay5 given a side door",
+    "caught": true,
+    "first_failure": "12 household doors, each once"
+   },
+   {
+    "name": "a cream frame colour on a house",
+    "caught": true,
+    "first_failure": "east_parade_bay0: paint maroon is in the palette, frame colour is whit"
+   },
+   {
+    "name": "a paint outside the palette",
+    "caught": true,
+    "first_failure": "raised 'hot_pink'"
+   },
+   {
+    "name": "five bright doors",
+    "caught": true,
+    "first_failure": "neighbours east_parade_bay0 and east_parade_bay1 differ in kind, paint"
+   },
+   {
+    "name": "a knocker on a house",
+    "caught": true,
+    "first_failure": "no knocker, bell pull, black iron plate, frosted or wired glass is pla"
+   },
+   {
+    "name": "a lion's head knocker offered",
+    "caught": true,
+    "first_failure": "no lion's head knocker is offered"
+   },
+   {
+    "name": "a maker's name in a text",
+    "caught": true,
+    "first_failure": "NM-maker no maker's name in any text or data"
+   },
+   {
+    "name": "the stale night colour in the gate",
+    "caught": true,
+    "first_failure": "NM-night night light is the lantern colour"
+   },
+   {
+    "name": "an em dash in an owed line",
+    "caught": true,
+    "first_failure": "NM-dash no em dash or italic marker in the lines for Jafar"
+   },
+   {
+    "name": "an owed line without a recommendation",
+    "caught": true,
+    "first_failure": "NM-dash no em dash or italic marker in the lines for Jafar"
+   },
+   {
+    "name": "a photograph's date after 1995 used as period",
+    "caught": true,
+    "first_failure": "D3 taken 1975 to 1995 (2012)"
+   },
+   {
+    "name": "a measurement box outside its image",
+    "caught": true,
+    "first_failure": "measurement D4_T3_light boxes lie inside D4's image (640x550)"
+   },
+   {
+    "name": "D3's light row moved 12 px",
+    "caught": true,
+    "first_failure": "T2 light2 against D3 rows (v 921 to 1326 measured, 1052 to 1446 drawn)"
+   },
+   {
+    "name": "a check removed from the list",
+    "caught": true,
+    "first_failure": "every opening of every kind has a check"
+   },
+   {
+    "name": "neglected wear share 0.20 instead of 0.40",
+    "caught": true,
+    "first_failure": "WR-order conditions order"
+   },
+   {
+    "name": "the T1 bolection width 36 instead of 3.1's built 46",
+    "caught": true,
+    "first_failure": "T1 bolection width is the 3.1 build's (departures: 46 and 43)"
+   },
+   {
+    "name": "the gate lacks a view",
+    "caught": true,
+    "first_failure": "GA-T2-views T2: the gate's views"
+   },
+   {
+    "name": "a kind never used",
+    "caught": true,
+    "first_failure": "raised list index out of range"
+   },
+   {
+    "name": "the backdrop's neighbours alike",
+    "caught": true,
+    "first_failure": "the hill's 12 doors: no neighbours alike in kind or paint"
+   },
+   {
+    "name": "reeded glass pitch changed to 9 mm",
+    "caught": true,
+    "first_failure": "sections: the reeded glass has 4 flutes of 6 mm"
+   },
+   {
+    "name": "the leaded came 10 wide",
+    "caught": true,
+    "first_failure": "T2: the came covers 8 to 30 per cent of the fanlight"
+   },
+   {
+    "name": "LK1's collar 40 instead of 3.1's 43.5",
+    "caught": true,
+    "first_failure": "LK1 = 3.1 T1 latch (collar 43.5, plug 28, 5.0 proud)"
+   },
+   {
+    "name": "F2 given 8 openings",
+    "caught": true,
+    "first_failure": "every opening of every kind has a check"
+   },
+   {
+    "name": "a house given a knocker, a bell pull and a lion's head together",
+    "caught": true,
+    "first_failure": "no knocker, bell pull, black iron plate, frosted or wired glass is pla"
+   },
+   {
+    "name": "the wear layer's typical share changed",
+    "caught": true,
+    "first_failure": "WR-order conditions order"
+   },
+   {
+    "name": "the hill's list shortened",
+    "caught": true,
+    "first_failure": "the hill's 12 doors: no neighbours alike in kind or paint"
+   },
+   {
+    "name": "the three owed lines made six",
+    "caught": true,
+    "first_failure": "NM-dash no em dash or italic marker in the lines for Jafar"
+   },
+   {
+    "name": "the T1 letter plate moved 40 mm",
+    "caught": true,
+    "first_failure": "LP1 = 3.1 brass plate 76 x 242, aperture 48 x 190, centre 1617"
+   },
+   {
+    "name": "a placed fitting outside its leaf",
+    "caught": true,
+    "first_failure": "LP5 low plate height against D1 (0.042 of the leaf height, drawn 2.594"
+   }
+  ],
+  "live_controls": [
+   {
+    "name": "a colour box's recorded median is wrong",
+    "caught": true,
+    "first_failure": "colour box D5_olive median [114, 102, 65] (recorded [200, 102, 65])"
+   },
+   {
+    "name": "D2's slit box is 12 px too low",
+    "caught": true,
+    "first_failure": "D2 slit: dark run rows (np.int64(291), np.int64(325)) against box 299."
+   },
+   {
+    "name": "D4's small light box is 12 px too high",
+    "caught": true,
+    "first_failure": "D4 small light: dark run rows (np.int64(363), np.int64(380)) against b"
+   },
+   {
+    "name": "D3's leaf box is 8 px too far left",
+    "caught": true,
+    "first_failure": "D3 leaf: light run columns (np.int64(48), np.int64(123)) against box 3"
+   },
+   {
+    "name": "D5's plate box is 40 px too far left",
+    "caught": true,
+    "first_failure": "D5 plate: light run columns (np.int64(573), np.int64(657)) against box"
+   },
+   {
+    "name": "a photograph's recorded size is wrong",
+    "caught": true,
+    "first_failure": "D2 size is as recorded"
+   },
+   {
+    "name": "a photograph's recorded author is wrong",
+    "caught": true,
+    "first_failure": "D3 page: title, author, date, licence as recorded"
+   },
+   {
+    "name": "a house's door centre moved 0.5 m",
+    "caught": true,
+    "first_failure": "east_parade_bay0 door centre 3.769 m as derived"
+   },
+   {
+    "name": "a modernised flag flipped",
+    "caught": true,
+    "first_failure": "east_parade_bay2 modernised flag as the windows target (['white_upvc']"
+   },
+   {
+    "name": "the wear target's typical share not as recorded",
+    "caught": true,
+    "first_failure": "wear target: paint_flake range [0.03, 0.1] typical 0.063"
+   }
+  ],
+  "run": "13 October 2026"
  }
 }

@@ -113,6 +113,11 @@ def main():
         outline(L["mouldings"], (255, 140, 0))
         for g in L["furniture"].values():
             outline(g, (40, 255, 40))
+        for spec_name, (spid, sbox_, sz, smasks) in SPECS.items():
+            if spid == pid:
+                for what, mb in smasks:      # the masks go on last, over the drawing's lines
+                    if box[0] <= mb[0] and mb[2] <= box[2] and box[1] <= mb[1] and mb[3] <= box[3]:
+                        dr.rectangle([(mb[0] - box[0]) * zoom, (mb[1] - box[1]) * zoom, (mb[2] - box[0]) * zoom, (mb[3] - box[1]) * zoom], fill=GREY)
         dr.text((6, 6), "drawing of %s (scale fitted on the height only): yellow visible face, red openings, green fittings" % kind, fill=(255, 255, 255))
         save_small(c, os.path.join(PREVIEWS, fname))
         masks_out[fname] = [{"what": w, "box_in_preview": [int((mb[0] - box[0]) * zoom) + 3, int((mb[1] - box[1]) * zoom) + 3, int((mb[2] - box[0]) * zoom) - 3, int((mb[3] - box[1]) * zoom) - 3]}

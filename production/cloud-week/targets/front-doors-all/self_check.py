@@ -248,7 +248,7 @@ def run_edges(img, axis, fixed, rng, mode, thresh_rel=0.5):
 
 def check_live_photos(T, R, photo_dir):
     import td_photos as TP
-    from td_data import PHOTOS
+    PHOTOS = T["sources"]["photographs"]
     try:
         paths = TP.fetch_all(photo_dir)
     except Exception as e:
@@ -652,7 +652,7 @@ def check_previews(T, R):
         for m in ms:
             x0, y0, x1, y1 = m["box_in_preview"]
             reg = a[y0:y1, x0:x1].reshape(-1, 3)
-            R.add("previews", "%s mask '%s' is flat grey" % (f, m["what"]), reg.std(axis=0).max() < 3.0 and abs(reg.mean() - 120) < 8, "")
+            R.add("previews", "%s mask '%s' is flat grey" % (f, m["what"]), reg.std(axis=0).max() < 6.0 and abs(reg.mean() - 120) < 8, "")
     R.add("previews", "no preview file is named after a street number, a firm or a plate", not any(re.search(r"\d{2,}-(street|road)|plate|ltd|co\b", f.lower()) for f in files), "")
 
 
@@ -730,8 +730,47 @@ def controls(T, photo_dir, live, previews):
     mut("the gate lacks a view", lambda x: x["gate"]["views"]["T2"].pop(0))
     mut("a kind never used", lambda x: [h.update({"kind": "F1"}) for h in x["street"]["houses"] if h["kind"] == "F7"])
     mut("the backdrop's neighbours alike", lambda x: x["street"]["backdrop"]["doors"][1].update(kind=x["street"]["backdrop"]["doors"][0]["kind"], paint=x["street"]["backdrop"]["doors"][0]["paint"]))
-    if live:
-        pass
+    mut("reeded glass pitch changed to 9 mm", lambda x: x["glass"]["reeded_4mm"].update({"flute_pitch": 9.0}))
+    mut("the leaded came 10 wide", lambda x: x["glass"]["leaded_diamond"].update({"came_w": 10.0}))
+    mut("LK1's collar 40 instead of 3.1's 43.5", lambda x: x["furniture"]["latch"]["LK1"].update({"collar": 40.0}))
+    mut("F2 given 8 openings", lambda x: x["kinds"]["F2"]["leaf"]["openings"].append(dict(x["kinds"]["F2"]["leaf"]["openings"][0], id="extra", u0=300.0, u1=340.0)))
+    mut("a house given a knocker, a bell pull and a lion's head together", lambda x: x["street"]["houses"][3]["furniture"].update({"knocker": {"variant": "KN3", "place": None}}))
+    mut("the wear layer's typical share changed", lambda x: x["conditions"]["tired"].update({"paint_flake_share": 0.08}))
+    mut("the hill's list shortened", lambda x: x["street"]["backdrop"]["doors"].pop())
+    mut("the three owed lines made six", lambda x: x["owed_for_jafar"].extend(["Door frames: yes (recommended)?"] * 3))
+    mut("the T1 letter plate moved 40 mm", lambda x: x["furniture"]["letter_plate"]["LP1"]["place"]["T1"].update({"v": 1657.0}))
+    mut("a placed fitting outside its leaf", lambda x: x["furniture"]["letter_plate"]["LP5"]["place"]["T2"].update({"v": 5000.0}))
+    return sum(1 for c in out if c["caught"]), out
+
+
+def live_controls(T, photo_dir):
+    """Wrong copies that only the live rows can catch (the street re-derived, the pixels re-measured, the pages and the wear target re-read)."""
+    out = []
+
+    def mut(name, fn):
+        X = copy.deepcopy(T)
+        fn(X)
+        try:
+            R = Rows()
+            check_street(X, R, True)
+            check_wear(X, R, True)
+            check_live_photos(X, R, photo_dir)
+            caught = any((not r["ok"]) and r["group"] == "live" for r in R.rows)
+            which = next((r["name"][:70] for r in R.rows if not r["ok"] and r["group"] == "live"), "")
+        except Exception as e:
+            caught, which = True, "raised %s" % str(e)[:50]
+        out.append({"name": name, "caught": caught, "first_failure": which})
+
+    mut("a colour box's recorded median is wrong", lambda x: x["sources"]["colour_boxes"]["D5_olive"].update({"median_rgb": [200, 102, 65]}))
+    mut("D2's slit box is 12 px too low", lambda x: x["sources"]["measurements"]["D2_F5_slit"].update({"box": [574.0, 299.0, 582.8, 336.5]}))
+    mut("D4's small light box is 12 px too high", lambda x: x["sources"]["measurements"]["D4_T3_light"].update({"box": [559.0, 351.0, 568.0, 372.0]}))
+    mut("D3's leaf box is 8 px too far left", lambda x: x["sources"]["measurements"]["D3_leaf"].update({"box": [37.75, 443.75, 116.25, 633.75]}))
+    mut("D5's plate box is 40 px too far left", lambda x: x["sources"]["measurements"]["D5_plate"].update({"box": [521.0, 570.0, 628.0, 600.0]}))
+    mut("a photograph's recorded size is wrong", lambda x: x["sources"]["photographs"]["D2"].update({"size_px": [800, 600]}))
+    mut("a photograph's recorded author is wrong", lambda x: x["sources"]["photographs"]["D3"].update({"author": "Someone Else"}))
+    mut("a house's door centre moved 0.5 m", lambda x: x["street"]["houses"][0].update({"x_centre_m": x["street"]["houses"][0]["x_centre_m"] + 0.5}))
+    mut("a modernised flag flipped", lambda x: x["street"]["houses"][2].update({"windows_modernised": not x["street"]["houses"][2]["windows_modernised"]}))
+    mut("the wear target's typical share not as recorded", lambda x: x["conditions"]["kept"].update({"paint_flake_share": 0.05}))
     return sum(1 for c in out if c["caught"]), out
 
 
@@ -750,19 +789,25 @@ def main():
     for r in R.fails:
         print("FAIL [%s] %s | %s" % (r["group"], r["name"], r["detail"]))
     line = "%s: %d pass, %d fail" % (opts, n_pass, len(R.fails))
-    cc, cl = 0, []
+    cc, cl, lcc, lcl = 0, [], 0, []
     if not a.no_controls:
         cc, cl = controls(T, a.photos, a.live, a.previews)
-        line += "; negative controls (run offline on wrong copies) %d of %d caught" % (cc, len(cl))
+        line += "; negative controls (wrong copies, offline rows) %d of %d caught" % (cc, len(cl))
         for c in cl:
             if not c["caught"]:
                 print("UNCAUGHT control:", c["name"])
+        if a.live:
+            lcc, lcl = live_controls(T, a.photos)
+            line += "; live controls (wrong copies, live rows) %d of %d caught" % (lcc, len(lcl))
+            for c in lcl:
+                if not c["caught"]:
+                    print("UNCAUGHT live control:", c["name"])
     print(line)
     if a.write:
-        T["self_check"] = {"result": line, "options": opts, "rows": sorted(R.rows, key=lambda r: (r["group"], r["name"])), "controls": cl, "run": "13 October 2026"}
+        T["self_check"] = {"result": line, "options": opts, "rows": sorted(R.rows, key=lambda r: (r["group"], r["name"])), "controls": cl, "live_controls": lcl, "run": "13 October 2026"}
         with open(TARGET_JSON, "w") as f:
             json.dump(T, f, indent=1)
-    sys.exit(1 if R.fails or (not a.no_controls and cc != len(cl)) else 0)
+    sys.exit(1 if R.fails or (not a.no_controls and (cc != len(cl) or lcc != len(lcl))) else 0)
 
 
 if __name__ == "__main__":

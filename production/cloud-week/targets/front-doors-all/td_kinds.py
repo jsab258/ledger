@@ -245,7 +245,7 @@ def build_kinds(A):
         "photographs": ["P2", "P1"],
         "parts_vs_3_1": [
             ("everything of door_F1.glb", "kept", "passed in 3.1 (street and close views); the street's F1 is that model, unchanged"),
-            ("iron_knob_*, iron_keyhole_*", "kept", "F1's turned centre knob and plugged keyhole as built; on the houses given F1 the knob is HD0 'none' unless the house table says HD1 (F1 has the rose and knob in 3.1: kept as an option, not on a house)"),
+            ("iron_knob_*, iron_keyhole_*, iron_lock_*", "kept", "F1's turned centre knob (HD1), plugged keyhole and knurled rim night latch (LK2) as built"),
         ],
     }
 
@@ -395,7 +395,7 @@ def build_kinds(A):
         "leaf": {"w": w7, "h": H, "t": 38.0, "construction": "ledged and braced matchboarding", "lock_side": "right", "board_w": _r(bw, 2), "boards": 6, "board_edges_u": boards,
                  "board_t": 22.0, "joint": "tongued and grooved with a V joint 6 wide, 2 deep", "ledges_v": ledges, "ledge_t": 25.0, "braces": "two, back, from the foot of the hinge ledge to the head of the lock ledge",
                  "nail_heads": {"dia": 9.0, "proud": 3.0, "at": nails, "note": "one head per board at each ledge, driven from the face and clenched behind (Hasluck p.316)"}, "openings": []},
-        "mouldings": {"outside": {"kind": "v_joint", "profile": v_joint_profile()}},
+        "mouldings": {"outside": {"kind": "v_joint", "profile": v_joint_profile(), "note": "no applied moulding; a V joint 6 wide and 2 deep between tongued and grooved matchboards (profile (d across, h from the face) in target.json)"}},
         "glass": {"transom": "plain_3mm", "leaf": None},
         "photographs": [],
         "sources": "Read: Hasluck pp.312-317, Figs. 1015-1039: boards 3 to 7 in wide (139.7 mm = 5.5 in used, six across 838), 3/4 to 1 1/4 in thick (22.2 used), grooved and tongued, V joint; ledges nailed with wrought nails driven from the face and clenched; hook-and-plate hinges inside for an inward door. Sizes of ledges, nail heads and leaf: Judgement (no photograph of such a door on these streets was reached).",

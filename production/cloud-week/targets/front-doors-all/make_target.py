@@ -181,6 +181,16 @@ def main():
         "adjacent_rule": {"differ_in_kind": True, "differ_in_paint": True, "min_furniture_slots_differing": 2},
         "opposite_rule": {"within_m": 4.6, "paint_class_differs": True},
     }
+    T["for_builder"] = [
+        "First: rebuild door_T1 without iron_bellpush_bezel and iron_bellpush_button (the handover's fix); the oblong iron_bellpush stays, one part, with the BL1 groove.",
+        "build_door.py takes a kind (T1 T2 T3 F1 to F7) as well as the colour: the leaf, openings, mouldings and fittings come from target.json kinds and furniture; the frame set is T, F or FF6.",
+        "New paints for --door-colour: deep_teal, cream, white_gloss, council_turquoise, olive, khaki, mustard, bright_blue, red, varnish (with the 3.1 six); --frame-colour takes white or white_grimy only (cream is dropped).",
+        "A condition parameter (kept, tired, neglected) sets the roughness and, for neglected, the eroded notch in the bottom rail (25 high, 60 to 200 wide, 3 deep, at the hinge side); the 2D wear layer's masks do the rest.",
+        "Behind every glazed kind (T2, T3, F4, F5 and every transom) the scene needs its own dark hall: the engine shows whatever is behind the glass (3.1 NOTES).",
+        "Check every kind with the 3.1 pass rule and the records of target.json checks; a push, a knocker or a plate the table does not place on a house is a fault.",
+    ]
+    T["covering_every_opening"] = ("Nothing may show through (check CV): in elevation the frame, the leaf, the glass and the transom cover the clear opening except the 10 mm foot gap and the leaf's 1.6 mm margins; from 60 degrees the leaf laps 20.4 behind each stop and behind the transom's stop (F6: its stops are planted behind the leaf's edge, 22 wide), which closes the margin; "
+                                  "F7's boards are tongued and grooved with a tongue of at least 6 mm; the reveals' returns are the wall kit's (T: buff brick, 3.1 L1 to L5) and the shopfront's pilaster return (F: 24.4 a side), and FF6 keeps the frame's outer width so they are unchanged; the 3.1 door review's dark hall is the render aid.")
     T["owed_for_jafar"] = D.OWED
     T["sources"] = {"photographs": D.PHOTOS, "books": D.BOOKS, "measurements": D.MEAS, "colour_boxes": D.COLOUR_BOXES}
     T["rulings_checked"] = [
