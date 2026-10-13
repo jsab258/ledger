@@ -36,6 +36,15 @@ SHOP = "ritas"
 F1_GLB = os.path.join(REPO, "production", "assets", "cloud-week", "door", "door_F1.glb")
 BAY_MID = 3000.0
 Y_WALL = 5.295   # street y of the wall face (d 0): the kit's glass back face (d 30) stands at the street model's 5.265
+# the brick piers the gate stands behind each pilaster (13 Oct, from the try 1 street review, N2): model x, y 0 to 0.30 back, z 0 to 3.56. The pilaster's shaft and core stop 30 mm
+# short of the bay's edge (x 2.970) and the street model's wall opening is the whole bay, so without a pier the outer 30 to 54 mm of the bay shows the sky at STREET_30.
+PIERS_X = ((-3.0, -2.65), (2.65, 3.0))
+PIER_Y = (0.0, 0.30)
+PIER_Z = (0.0, 3.56)
+# the hall behind the side door (N3): from the frame's back face (d 0) back to d -HALL_DEPTH, a closed box. The review words it 1.2 m deep; the card stands 0.58 behind the wall
+# (d -580), so a box deeper than that would cut through the card and the card would show inside the hall: 0.50 keeps the hall's back wall 0.08 in front of the card
+HALL_DEPTH = 500.0
+HALL_Z = (25.0, 2420.0)
 
 
 def load_sw_target():
@@ -68,6 +77,41 @@ def cyl_d(u, z, d0, d1, r, n=12):
     V = np.array(V)
     F = [tuple(range(n))[::-1], tuple(range(n, 2 * n))] + [(i, (i + 1) % n, n + (i + 1) % n, n + i) for i in range(n)]
     return V, F
+
+
+def rod(p0, p1, r, n=8):
+    """A straight round rod from p0 to p1, each (u, d, z) in mm, radius r, as (V, F) (closed ends)."""
+    a = np.array([p0[0], -p0[1], p0[2]], float)
+    b = np.array([p1[0], -p1[1], p1[2]], float)
+    ax = b - a
+    ax /= np.linalg.norm(ax)
+    helper = np.array([0.0, 1.0, 0.0]) if abs(ax[1]) < 0.9 else np.array([1.0, 0.0, 0.0])
+    e1 = np.cross(ax, helper)
+    e1 /= np.linalg.norm(e1)
+    e2 = np.cross(ax, e1)
+    V = []
+    for c in (a, b):
+        for k in range(n):
+            t = 2 * math.pi * k / n
+            V.append(c + r * (math.cos(t) * e1 + math.sin(t) * e2))
+    F = [tuple(range(n))[::-1], tuple(range(n, 2 * n))] + [(i, (i + 1) % n, n + (i + 1) % n, n + i) for i in range(n)]
+    return np.array(V), F
+
+
+def torus_d(u, z, d, R, r, nm=16, nn=6):
+    """A torus whose axis runs along d (the ring stands in the u-z plane, facing the street): centre (u, d, z), major radius R, minor radius r, as (V, F), mm."""
+    V, F = [], []
+    for i in range(nm):
+        a = 2 * math.pi * i / nm
+        for j in range(nn):
+            b = 2 * math.pi * j / nn
+            rho = R + r * math.cos(b)
+            V.append((u + rho * math.cos(a), -(d + r * math.sin(b)), z + rho * math.sin(a)))
+    for i in range(nm):
+        for j in range(nn):
+            i2, j2 = (i + 1) % nm, (j + 1) % nn
+            F.append((i * nn + j, i2 * nn + j, i2 * nn + j2, i * nn + j2))
+    return np.array(V), F
 
 
 def lathe(profile_rz, u, d, z, n=14):
@@ -146,6 +190,9 @@ class Front:
         m["terrazzo"] = bs.make_material("terrazzo", (176, 170, 158), 0.35, 0.0)
         m["black"] = bs.make_material("powder_black", (37, 35, 34), 0.45, 0.0)
         m["black_iron"] = bs.make_material("sign_black_iron", (30, 29, 28), 0.6, 0.5)
+        # the hall behind the side door: plaster and ceiling at about half the room's brightness (the room's plaster is (0.95, 0.86, 0.66) on a light texture), unlit at night
+        m["hall_plaster"] = bs.make_material("hall_plaster", (150, 142, 124), 0.9, 0.0)
+        m["hall_dark"] = bs.make_material("hall_floor", (82, 72, 60), 0.8, 0.0)
         self.members = {}        # name -> dict(u, d, z ranges in mm) for the checks
         self.extra = []          # objects made outside the Builder (textured quads, F1)
 
@@ -245,9 +292,14 @@ class Front:
         end = arc[-1]
         bz = end[1] - 80.0
         self.add("bell_hanger", cyl_z(ub, end[0] + 0.0, bz + 2.0, end[1], 1.6, 6), "steel", bev=None)
-        prof = [(0.0, 0.0), (7.0, -1.0), (14.0, -9.0), (22.0, -26.0), (30.0, -42.0), (35.0, -52.0), (33.0, -54.0), (0.0, -54.0)]
-        self.add("bell_brass", lathe(prof, ub, end[0], bz + 2.0, 16), "brass", bev=None)
-        self.add("bell_clapper", lathe([(0.0, 0.0), (4.0, -2.0), (7.0, -7.0), (4.0, -12.0), (0.0, -13.0)], ub, end[0], bz - 56.0, 10), "steel", bev=None)
+        # the bell (13 Oct, from the try 1 close review, narrow 8): a crown loop, a dome to a flared lip, 70 mm across the lip, 55 high, a 3 mm wall (outer profile down, inner profile back
+        # up, so the cup is hollow), the clapper showing under the lip
+        outer = [(0.0, 0.0), (4.0, -0.8), (9.0, -3.0), (14.0, -7.0), (18.0, -12.5), (21.0, -19.0), (23.0, -26.0), (25.0, -33.0), (28.0, -40.0), (32.0, -46.5), (35.0, -52.0), (35.0, -55.0)]
+        inner = [(32.0, -55.0), (29.0, -49.5), (25.5, -43.0), (22.5, -36.0), (20.5, -29.0), (18.5, -22.0), (15.5, -15.5), (11.5, -10.0), (6.5, -6.0), (0.0, -3.0)]
+        self.add("bell_brass", lathe(outer + inner, ub, end[0], bz + 2.0, 20), "brass", bev=None)
+        self.add("bell_crown_loop", torus_d(ub, bz + 2.0 + 6.0, end[0], 5.5, 1.5), "brass", bev=None)
+        self.add("bell_clapper", lathe([(0.0, 0.0), (4.0, -2.0), (7.0, -7.0), (4.0, -12.0), (0.0, -13.0)], ub, end[0], bz - 58.0, 10), "steel", bev=None)
+        self.add("bell_clapper_rod", cyl_z(ub, end[0], bz - 58.0, bz - 3.0, 1.2, 6), "steel", bev=None)
         self.add("bell_clapper_bracket", bx(ub - 1.5, ub + 1.5, end[0] - 1.5, 20.0, bz - 48.0, bz - 46.0), "steel", bev=None)
         # note the fixed clapper bracket is a hint: the bell rings against a clapper on the frame (Judgement), not modelled further
         return {"uc": uc, "leaf": (lu0, lu1)}
@@ -422,11 +474,31 @@ class Front:
         # 24.4 filler strips (the pilaster return, the pier's colour) each side, d 0 to 100, z 25 to 2400
         for nm, (a, b) in (("l", (s[0], s[0] + 24.4)), ("r", (s[1] - 24.4, s[1]))):
             self.add("side_filler_" + nm, bx(a, b, 0.0, 100.0, 25.0, 2400.0), "oxblood", bev=None)
+        # F1's own frame jambs, put back (13 Oct, from the try 1 close review, fault 5): the leaf (u 403 to 1241) sits between fillers that end at 374.4 and 1269.6, which left two open
+        # slots 28.6 wide and 100 deep onto the unlit space behind the front. White joinery (226, 224, 214), d 0 to 100, z 25 to 2400: 838 + 2 x 28.6 + 2 x 24.4 = 944
+        for nm, (a, b) in (("l", (s[0] + 24.4, s[0] + 24.4 + 28.6)), ("r", (s[1] - 24.4 - 28.6, s[1] - 24.4))):
+            self.add("side_jamb_" + nm, bx(a, b, 0.0, 100.0, 25.0, 2400.0), "white", bev=None)
         self.extra += out
         # the sealing strip where the sill's end stands 3 short of the pilaster's plinth (the kit's meets row), so no crack shows
         win = self.R["front"]["zones_u_mm"]["window"]
         self.add("sill_end_seal", bx(win[1] - 8.0, win[1], 0.0, 60.0, 525.0, 600.0), "white", bev=None)
         return out
+
+    # ----------------------------------------------------------------------------------------------- the hall behind the side door (N3)
+    def hall(self):
+        """The side door leads to the stair for the flat above, not into the shop (13 Oct, from the try 1 street review, N3): a closed box over the side door's slot from the frame's
+        back face (d 0) back HALL_DEPTH, plaster walls, ceiling and back wall at about half the room's brightness, a darker floor, no light of its own (unlit at night). Seen through
+        the fanlight it hides the room's card, so no wall clock or pegboard shows over the buttermilk door."""
+        s = self.R["front"]["zones_u_mm"]["side_door"]          # 350..1294
+        u0, u1 = s[0], s[1]
+        z0, z1 = HALL_Z
+        t = 20.0
+        dd = HALL_DEPTH
+        self.add("hall_wall_l", bx(u0, u0 + t, -dd, 0.0, z0, z1), "hall_plaster", bev=None)
+        self.add("hall_wall_r", bx(u1 - t, u1, -dd, 0.0, z0, z1), "hall_plaster", bev=None)
+        self.add("hall_ceiling", bx(u0 + t, u1 - t, -dd, 0.0, z1 - t, z1), "hall_plaster", bev=None)
+        self.add("hall_back", bx(u0 + t, u1 - t, -dd - t, -dd, z0, z1), "hall_plaster", bev=None)
+        self.add("hall_floor", bx(u0 + t, u1 - t, -dd, 0.0, z0, z0 + 20.0), "hall_dark", bev=None)
 
     # ----------------------------------------------------------------------------------------------- finishing: the builder's objects to metres, UVs, materials
     def finish(self):
@@ -544,9 +616,19 @@ def make_balls_and_bracket(front, fasc_dir):
     # the three balls: 0.26 m, centres (out 0.57; height 3.0 / 3.0 / 2.78 m; along the street +-0.14)
     balls = []
     cen = ((0.57, 3.0, -0.14), (0.57, 3.0, 0.14), (0.57, 2.78, 0.0))
+    # three 10 mm rods from the ring to each ball's top (13 Oct, N4: the top balls stood 38 mm clear of the ring, the lower one 0.2 m): each rod runs from the ring's edge toward the ball's
+    # top and 6 mm into the ball, so the balls hang from the ring
+    ring_c = np.array([uc, 3150.0])
+    for k, (out, h, along) in enumerate(cen):
+        top = np.array([uc + along * 1000.0, h * 1000.0 + 130.0])
+        dirv = (top - ring_c) / np.linalg.norm(top - ring_c)
+        p0 = ring_c + dirv * 26.0
+        p1 = top - dirv * 6.0
+        objs.append(("black_iron", bs.new_obj("sign_rod_%d" % (k + 1), *rod((p0[0], d_h, p0[1]), (p1[0], d_h, p1[1]), 5.0, 8))))
     for k, (out, h, along) in enumerate(cen):
         bm = bmesh.new()
-        bmesh.ops.create_uvsphere(bm, u_segments=32, v_segments=20, radius=0.13)
+        bm.loops.layers.uv.new("UVMap")          # the layer must exist before calc_uvs has anywhere to write
+        bmesh.ops.create_uvsphere(bm, u_segments=32, v_segments=20, radius=0.13, calc_uvs=True)       # with UVs (13 Oct, N4): the 4.1 face maps land
         me = bpy.data.meshes.new("sign_ball_%d" % (k + 1))
         bm.to_mesh(me)
         bm.free()
@@ -564,6 +646,9 @@ def make_balls_and_bracket(front, fasc_dir):
     return objs, balls
 
 
+GLASS_ROW_HEAD = {7: 18.132, 8: 17.025, 9: 15.918}       # row id -> street x of the ink's centre (WATCHES, JEWELLERY, LOANS)
+
+
 def make_glass_rows(fasc_dir):
     """The 4.1 glass lettering rows (RGBA) on the glass: WATCHES, JEWELLERY, LOANS on the three lights' toplights, the 5 on the shop door's fanlight, the hours plate
     on the door's lower pane. Planes just behind the glass (applied inside it). Returns [(object, info)]."""
@@ -578,6 +663,12 @@ def make_glass_rows(fasc_dir):
         base_from_bottom = pl["tile_baseline_from_tile_bottom_mm"]
         z_base = pl["z_baseline_m"] * 1000.0 - 100.0           # street z above the crown -> above the footway (crown + 0.10 = footway)
         d = 29.0
+        if rid in GLASS_ROW_HEAD:
+            # 13 Oct, from the try 1 street review, F2: WATCHES, JEWELLERY and LOANS at the head of the three main lights, the ink centred on each light (street x 18.132, 17.025,
+            # 15.918 = u 2868, 3975, 5082), baseline 2250 above the footway, 4.1's sizes: the cap top is at about 2336, below the transom's glass edge at 2400, and each row fits inside
+            # its light's 1037 of clear glass. The toplights stay clear: no bar, mullion or bead crosses a row
+            xs = GLASS_ROW_HEAD[rid]
+            z_base = 2250.0
         if rid == 10:
             xs = 19.203                                         # the shop door's centre (target 4.1a: moved from the side door's)
             z_base = 2200.0
@@ -627,6 +718,32 @@ def tri_count(ob):
     return len(me.loop_triangles)
 
 
+def fascia_maps(base, out_dir):
+    """The fascia board's two derived maps (written beside the build, not over the 4.1 files):
+    ritas_basecolour_worn.png  the 4.1 base colour with the wear darkened in: x (1 - 0.25 x the strongest of the wear map's three masks), as the build had it in Blender's node tree;
+    ritas_normal.png           a tangent-space normal map from ritas_height.png (16-bit, mean 0.526; 1 px a mm): h in mm = (H - 32768) / 25600, n = normalize(-dh/dcolumn, +dh/drow, 1)
+                               (green up as glTF reads it), RGB = 127.5 (n + 1)
+    Returns (colour path, normal path, info)."""
+    from PIL import Image
+    os.makedirs(out_dir, exist_ok=True)
+    col = np.asarray(Image.open(base + "basecolour.png").convert("RGB")).astype(np.float32)
+    wear = np.asarray(Image.open(base + "wear.png").convert("RGB")).astype(np.float32) / 255.0
+    m = wear.max(axis=2)
+    worn = np.clip(col * (1.0 - 0.25 * m)[..., None] + 0.5, 0, 255).astype(np.uint8)
+    col_path = os.path.join(out_dir, "ritas_basecolour_worn.png")
+    Image.fromarray(worn).save(col_path)
+    h = np.asarray(Image.open(base + "height.png")).astype(np.float32)
+    hmm = (h - 32768.0) / 25600.0
+    dx = np.gradient(hmm, axis=1)
+    dr = np.gradient(hmm, axis=0)
+    n = np.stack([-dx, dr, np.ones_like(hmm)], axis=-1)
+    n /= np.linalg.norm(n, axis=-1, keepdims=True)
+    rgb = np.clip(127.5 * (n + 1.0) + 0.5, 0, 255).astype(np.uint8)
+    nrm_path = os.path.join(out_dir, "ritas_normal.png")
+    Image.fromarray(rgb).save(nrm_path)
+    return col_path, nrm_path, {"wear_mean_mask": float(m.mean()), "relief_mm": [float(hmm.min()), float(hmm.max())], "normal_mean_rgb": [float(v) for v in rgb.reshape(-1, 3).mean(axis=0)]}
+
+
 # ---------------------------------------------------------------------------------------------------------------- the build
 def build_front(out_dir, work_dir, fasc_dir, paper_dir, log=print):
     """Builds the front; writes out_dir/ritas_front.glb and ritas_grille_night.glb and work_dir/front_members.json. Returns the info dict."""
@@ -640,6 +757,7 @@ def build_front(out_dir, work_dir, fasc_dir, paper_dir, log=print):
     F.band()
     F.grille_fixed()
     F.side_door()
+    F.hall()
     obs = F.finish()
     def srgb_of(ob):
         if not ob.data.materials or ob.data.materials[0] is None:
@@ -650,51 +768,25 @@ def build_front(out_dir, work_dir, fasc_dir, paper_dir, log=print):
     members = {ob.name: dict(bbox_mm(ob), material=ob.data.materials[0].name if ob.data.materials else None, base_srgb=srgb_of(ob)) for ob in obs}
     for ob in F.extra:
         members[ob.name] = dict(bbox_mm(ob), material=ob.data.materials[0].name if ob.data.materials else None, base_srgb=srgb_of(ob), group="side_door_F1")
-    # the 4.1 fascia board on the board's face
+    # the 4.1 fascia board on the board's face (13 Oct, from the try 1 street review, F1): the exported material carries the base colour with the wear darkening baked in, the orm and a
+    # REAL tangent-space normal map made from the 4.1 height map. Try 1 linked a Bump node, which the glTF exporter turned into the 16-bit grey height map used as a normal map
+    # (grey read as a normal points 55 degrees off the face and flips with the grain: the black streaks); a Mix node for the wear did not survive export either
     fb = F.B.get("fas_board")
     set_fascia_uvs(fb)
     base = os.path.join(fasc_dir, "fascias", "ritas", "ritas_")
-    fm = image_material("fascia_ritas", base + "basecolour.png", orm=base + "orm.png")
+    exp_dir = os.path.join(work_dir, "fascia_export")
+    col_path, nrm_path, fa_info = fascia_maps(base, exp_dir)
+    fm = image_material("fascia_ritas", col_path, orm=base + "orm.png")
     nt = fm.node_tree
     pb = nt.nodes["Principled BSDF"]
-    hi = nt.nodes.new("ShaderNodeTexImage")
-    hi.image = bpy.data.images.load(base + "height.png", check_existing=True)
-    hi.image.colorspace_settings.name = "Non-Color"
-    bump = nt.nodes.new("ShaderNodeBump")
-    bump.inputs["Distance"].default_value = 0.00256
-    nt.links.new(hi.outputs["Color"], bump.inputs["Height"])
-    nt.links.new(bump.outputs["Normal"], pb.inputs["Normal"])
-    # the wear masks (rain, gull and rust runs) darken the paint a little: 25 per cent of the strongest mask
-    wi = nt.nodes.new("ShaderNodeTexImage")
-    wi.image = bpy.data.images.load(base + "wear.png", check_existing=True)
-    wi.image.colorspace_settings.name = "Non-Color"
-    sep = nt.nodes.new("ShaderNodeSeparateColor")
-    nt.links.new(wi.outputs["Color"], sep.inputs["Color"])
-    mx1 = nt.nodes.new("ShaderNodeMath")
-    mx1.operation = "MAXIMUM"
-    nt.links.new(sep.outputs["Red"], mx1.inputs[0])
-    nt.links.new(sep.outputs["Green"], mx1.inputs[1])
-    mx2 = nt.nodes.new("ShaderNodeMath")
-    mx2.operation = "MAXIMUM"
-    nt.links.new(mx1.outputs["Value"], mx2.inputs[0])
-    nt.links.new(sep.outputs["Blue"], mx2.inputs[1])
-    inv = nt.nodes.new("ShaderNodeMath")
-    inv.operation = "MULTIPLY_ADD"
-    inv.inputs[1].default_value = -0.25
-    inv.inputs[2].default_value = 1.0
-    nt.links.new(mx2.outputs["Value"], inv.inputs[0])
-    mulc = nt.nodes.new("ShaderNodeMix")
-    mulc.data_type = "RGBA"
-    mulc.blend_type = "MULTIPLY"
-    mulc.inputs[0].default_value = 1.0
-    src = [l for l in nt.links if l.to_socket == pb.inputs["Base Color"]][0].from_socket
-    nt.links.new(src, mulc.inputs[6])
-    nt.links.new(inv.outputs["Value"], mulc.inputs[7]) if False else None
-    comb = nt.nodes.new("ShaderNodeCombineColor")
-    for nm in ("Red", "Green", "Blue"):
-        nt.links.new(inv.outputs["Value"], comb.inputs[nm])
-    nt.links.new(comb.outputs["Color"], mulc.inputs[7])
-    nt.links.new(mulc.outputs[2], pb.inputs["Base Color"])
+    ni = nt.nodes.new("ShaderNodeTexImage")
+    ni.image = bpy.data.images.load(nrm_path, check_existing=True)
+    ni.image.colorspace_settings.name = "Non-Color"
+    nmap = nt.nodes.new("ShaderNodeNormalMap")
+    nmap.space = "TANGENT"
+    nmap.inputs["Strength"].default_value = 1.0
+    nt.links.new(ni.outputs["Color"], nmap.inputs["Color"])
+    nt.links.new(nmap.outputs["Normal"], pb.inputs["Normal"])
     fb.data.materials.clear()
     fb.data.materials.append(fm)
     # the three balls and their bracket
@@ -742,15 +834,20 @@ def build_front(out_dir, work_dir, fasc_dir, paper_dir, log=print):
     return info
 
 
-def elevation_mask(objs, path, u0=350.0, u1=5650.0, z0=0.0, z1=2850.0):
-    """Draw every triangle of the front's parts (not the lettering planes, the sign or the hanging sign) on a 1 mm raster of the elevation; white = a part is there."""
+HALL_NAMES = ("hall_wall_l", "hall_wall_r", "hall_ceiling", "hall_back", "hall_floor")
+
+
+def elevation_mask(objs, path, u0=0.0, u1=6000.0, z0=0.0, z1=2850.0):
+    """Draw every triangle of the front's parts (not the lettering planes, the sign or the hanging sign, nor the side door's hall, which would hide a defect behind the door) on a 1 mm
+    raster of the elevation, u 0 to 6000 (the whole bay, 13 Oct: try 1 drew u 350 to 5650 and could not see the bay's outer 30 to 54 mm); white = a part is there. The gate stands a
+    brick pier behind each pilaster (PIERS_X): those are drawn as 'the wall' in a second mask. Returns (path, path of the parts-only mask)."""
     from PIL import Image, ImageDraw
     w, h = int(u1 - u0), int(z1 - z0)
     im = Image.new("L", (w, h), 0)
     dr = ImageDraw.Draw(im)
     skip = ("glass_row", "door_sign", "sign_", "grille_lattice")
     for ob in objs:
-        if ob.name.startswith(skip):
+        if ob.name.startswith(skip) or ob.name in HALL_NAMES:
             continue
         me = ob.data
         me.calc_loop_triangles()
@@ -763,8 +860,13 @@ def elevation_mask(objs, path, u0=350.0, u1=5650.0, z0=0.0, z1=2850.0):
         for t in me.loop_triangles:
             a, b, c = t.vertices
             dr.polygon([(U[a], Z[a]), (U[b], Z[b]), (U[c], Z[c])], fill=255, outline=255)
+    parts_only = os.path.splitext(path)[0] + "_parts.png"
+    im.save(parts_only)
+    for (xa, xb) in PIERS_X:
+        ua, ub = xa * 1000.0 + BAY_MID - u0, xb * 1000.0 + BAY_MID - u0
+        dr.rectangle([ua, 0, ub, h], fill=255)
     im.save(path)
-    return path
+    return path, parts_only
 
 
 def _export(objs, path):

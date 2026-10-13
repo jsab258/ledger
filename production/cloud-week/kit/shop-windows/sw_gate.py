@@ -32,6 +32,11 @@ trace = MIM.trace
 
 W, H, D = 5.3, 2.4, 4.5
 CAMD = 5.3
+# the spill's receivers: the window frame and the door frame stand OUT of the display's light channel, as the game has it (shop-interiors.json lit_note: "the window bars are not on that
+# channel, so they no longer flare"; try 1 read "the window bars" as the night lattice only, 13 Oct, close review fault 4)
+SPILL_OFF = ("win_", "frame_", "door_jamb_", "door_frame_head", "band_", "sil_sill")
+SPILL_POS = (0.975, 0.10, 2.30)        # the stand-in rect light, model frame: 0.10 behind the wall face, z 2.30 (street review N1): the whole rect stands 50 mm or more behind the glass
+PIERS = {"x": ((-3.0, -2.65), (2.65, 3.0)), "y": (0.0, 0.30), "z": (0.0, 3.56)}     # the brick piers behind the pilasters (sw_front.PIERS_X; street review N2)
 CARD_X0, CARD_Y, CARD_BOTTOM = 15.35, 5.875, 0.65
 BAY_MID_X = 18.0
 Y_WALL = 5.295
@@ -145,7 +150,7 @@ def composite_luma(lin_img, brightness):
 
 
 # ------------------------------------------------------------------------------------------------------------- the render
-def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_glb, display_glb, hdri, samples=64, log=print, extra=None):
+def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_glb, display_glb, hdri, samples=64, log=print, extra=None, res=None, glass_refl=None, mode="beauty", column_pngs=None):
     import bpy
     from mathutils import Vector, Matrix
     bpy.ops.wm.read_factory_settings(use_empty=True)
@@ -164,7 +169,8 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
     lattice = load(grille_glb) if night else []
     # empties from the importer carry the Y-up conversion; apply the display's offset on the roots only
     # glass: a mix of a clear pane (all the glass's reflectance) and a transparent one, 1.0 by day and 0.2 at night
-    refl = 0.2 if night else 1.0
+    refl = (0.2 if night else 1.0) if glass_refl is None else glass_refl
+    res = res or RES
     gm = bpy.data.materials.new("gate_glass")
     gm.use_nodes = True
     nt = gm.node_tree
@@ -180,7 +186,18 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
     gl.inputs["Color"].default_value = (0.97, 0.99, 0.98, 1.0)
     nt.links.new(tr.outputs[0], mixn.inputs[1])
     nt.links.new(gl.outputs[0], mixn.inputs[2])
-    nt.links.new(mixn.outputs[0], out.inputs[0])
+    if not night:
+        # by day Cycles' glass stops the sky's shadow rays, so the display got no direct sky light (close review, narrow 1, tested there): for a shadow ray the pane is clear, as real
+        # glass is to the sky's light. Camera, reflection and refraction rays still meet the glass as before
+        lpn = nt.nodes.new("ShaderNodeLightPath")
+        tr2 = nt.nodes.new("ShaderNodeBsdfTransparent")
+        mix2 = nt.nodes.new("ShaderNodeMixShader")
+        nt.links.new(lpn.outputs["Is Shadow Ray"], mix2.inputs[0])
+        nt.links.new(mixn.outputs[0], mix2.inputs[1])
+        nt.links.new(tr2.outputs[0], mix2.inputs[2])
+        nt.links.new(mix2.outputs[0], out.inputs[0])
+    else:
+        nt.links.new(mixn.outputs[0], out.inputs[0])
     for o in front + disp:
         if o.type == "MESH":
             for slot in o.material_slots:
