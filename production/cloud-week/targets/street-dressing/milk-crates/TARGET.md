@@ -2,7 +2,7 @@
 
 **The milk crates are a stack of three 408 x 298 x 264 mm plastic crates (the measured box of the CC0 crate on Poly Haven, whose lattice sides and printed storage name are not used) built by script with a 28 mm rim, a 24 mm base rail, ribs and slots, a 66 mm name band carrying only the invented COPPER ROW DAIRY, stacking lugs 9 mm high and a pitch of 264, red, with six empty glass pint bottles in the top crate because the grocer and the tea room took a daily delivery (a Judgement: no float is drawn); the stack stands against the grocer's window at east x 37.30, 0.14 m clear of its shop door (the first version stood it across the door at x 38.0; the scene's wooden yard crates stay); no 1975 to 1995 crate photograph was reached and the one photograph (2021, oblique) gives form only, so the slots, rim and band are judged.**
 
-Cloud week 42, unit 13, family 4. Written 13 October 2026; the fixes the review asked for are applied, not re-reviewed. `SELF-CHECK milk-crates: 91 checks, 91 passed, 0 failed; negative controls 0 of 0 caught (offline)`
+Cloud week 42, unit 13, family 4. Written 13 October 2026; the fixes the review asked for are applied, not re-reviewed. `SELF-CHECK milk-crates: 92 checks, 92 passed, 0 failed; negative controls 0 of 0 caught (offline)`
 
 ## Files in this folder
 

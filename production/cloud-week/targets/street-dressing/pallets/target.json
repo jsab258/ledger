@@ -1948,13 +1948,13 @@
   "stand the pallets at the pose in target.json (x 21.1247, z -6.2, yaw 90) on the owed yard floor at 0.100 above the crown; do not place them before the floor exists"
  ],
  "self_check": {
-  "line": "SELF-CHECK pallets: 90 checks, 90 passed, 0 failed; negative controls 36 of 36 caught (offline)",
-  "checks": 90,
-  "passed": 90,
+  "line": "SELF-CHECK pallets: 94 checks, 94 passed, 0 failed; negative controls 36 of 36 caught (--live --previews)",
+  "checks": 94,
+  "passed": 94,
   "failed": 0,
   "controls": 36,
   "controls_caught": 36,
-  "options": "offline",
+  "options": "--live --previews",
   "failing": [],
   "uncaught": []
  }

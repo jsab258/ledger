@@ -517,7 +517,7 @@ def generic_controls(T, spec):
     C.append(("night: the stale lantern colour put back", lambda t: t.__setitem__("night_old", L.STALE_NIGHT), "night/no stale lantern colour"))
     if T.get("placeholders"):
         C.append(("owed: a placeholder name written into a line for his page", lambda t: t["owed"][0].__setitem__("line", t["owed"][0]["line"][:-1] + " (" + t["placeholders"][0]["name"] + ")?") if t.get("owed") else t.__setitem__("owed", [{"id": "x", "line": "May " + t["placeholders"][0]["name"] + " be used?", "recommended": "y"}]), "owed/no placeholder name reaches his page lines"))
-        C.append(("owed: the placeholders' handover to the town removed", lambda t: t.__setitem__("handovers", []), "owed/every placeholder has a handover line"))
+        C.append(("owed: the placeholders' handover to the town removed", lambda t: t.__setitem__("handovers", []), "owed/every placeholder is named in a handover line"))
         C.append(("owed: a placeholder not marked as one", lambda t: t["placeholders"][0].__setitem__("marked", "name"), "owed/placeholders are marked fictional placeholder"))
     C.append(("owed: an em dash in a line for his page", lambda t: t["owed"][0].__setitem__("line", t["owed"][0]["line"] + " — now") if t.get("owed") else t.__setitem__("owed", [{"id": "x", "line": "a — b?", "recommended": "y"}]), "owed/no em dash or italics in his lines"))
     C.append(("sources: a source with no licence", lambda t: t["sources"][0].__setitem__("licence", ""), "sources/%s fields" % T["sources"][0]["id"] if T.get("sources") else "sources/"))

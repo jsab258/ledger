@@ -2,7 +2,7 @@
 
 **The skip is a 6-yard builder's skip with the hexagonal side profile of the photograph (3015 mm long at its widest line 793 up, 1850 along the floor, 2320 along the top, 1200 high, 1700 wide), 5 mm plates, an 86 mm folded top rim, a stiffening rib at 923, four chain lugs, two amber lamps lit in the lantern colour at night, two red-and-yellow striped marking plates on each end (the plates the Builders' Skips (Markings) Regulations 1984 required from 1 January 1986: 270 x 380 mm, stripes at 45 degrees and 140 mm broad) and the invented stencil of a placeholder hire firm and a British telephone number, yellow; it stands in the west carriageway before the yard mouth at x 22.5, 0.30 m off the kerb on the road's camber, which puts the 2 October ruling's skip back as a real skip (owed: one line); the scene's two cones stay where they are (on the west footway; the first version's move of them was a misreading); the profile is measured on a 2021 side view (turned 7.2 degrees to level it) and the scale is the assumed height of 1.2 m, so the lengths are judged; no period skip photograph exists in the feed.**
 
-Cloud week 42, unit 13, family 6. Written 13 October 2026; the fixes the review asked for are applied, not re-reviewed. `SELF-CHECK skip: 126 checks, 126 passed, 0 failed; negative controls 52 of 53 caught (offline)`
+Cloud week 42, unit 13, family 6. Written 13 October 2026; the fixes the review asked for are applied, not re-reviewed. `SELF-CHECK skip: 126 checks, 126 passed, 0 failed; negative controls 53 of 53 caught (offline)`
 
 ## Files in this folder
 

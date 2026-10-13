@@ -2,7 +2,7 @@
 
 **The council bench is 1800 mm long on three timber supports (a flared slab leg 100 mm thick under each end 146 mm in from the slat end, a 50 mm centre leg, a seat bearer and a back post raked 10 degrees), with five iroko seat slats and five back slats each 63 x 32 mm and 23.5 mm apart, bolted with domed coach-bolt heads, the seat 440 high and the back's top at 854; it does not stand on the 2.0 m footway (the scene file says so and the arithmetic agrees: it needs about 2.4 m) but on the quay apron at x -40.0, z 0.0 (the first version's x -9.0 was on the road arm), facing the basin, 78 m from the reverse camera, so small and seen from behind if at all: it serves the player's walk to the quay; no period bench photograph was measurable, so the slat proportions are measured on a 2011 photograph of the back of a council bench against the light and every absolute size is judged (the bench's length sets the scale).**
 
-Cloud week 42, unit 13, family 3. Written 13 October 2026; the fixes the review asked for are applied, not re-reviewed. `SELF-CHECK bench: 109 checks, 109 passed, 0 failed; negative controls 32 of 33 caught (offline)`
+Cloud week 42, unit 13, family 3. Written 13 October 2026; the fixes the review asked for are applied, not re-reviewed. `SELF-CHECK bench: 109 checks, 109 passed, 0 failed; negative controls 33 of 33 caught (offline)`
 
 ## Files in this folder
 
