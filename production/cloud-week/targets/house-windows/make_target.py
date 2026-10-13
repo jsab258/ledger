@@ -74,8 +74,8 @@ SITE_PLAN = {
     # (block, bay, index): room, net, extra, paint, condition, always_lit
     ("east_parade", 0, 0): dict(room="up_landing_1", net=("N2", "greyed"), extra=None, paint="white_grimy", cond="grimy"),
     ("east_parade", 0, 1): dict(room="up_lounge_1", net=("N1", "white"), extra=("C2", "cream"), paint="white_grimy", cond="grimy"),
-    ("east_parade", 1, 0): dict(room="up_landing_2", net=("N0", None), extra=("B2", "cream"), paint="cream", cond="sound"),
-    ("east_parade", 1, 1): dict(room="up_bedroom_1", net=("N1", "white"), extra=("C2", "brown"), paint="cream", cond="sound"),
+    ("east_parade", 1, 0): dict(room="up_landing_2", net=("N0", None), extra=("B2", "cream"), paint="brown", cond="sound"),
+    ("east_parade", 1, 1): dict(room="up_bedroom_1", net=("N1", "white"), extra=("C2", "brown"), paint="brown", cond="sound"),
     ("east_parade", 2, 0): dict(room="up_lounge_2", net=("N1", "greyed"), extra=("C2", "green"), paint="white_upvc", cond="sound"),
     ("east_parade", 2, 1): dict(room="up_landing_1", net=("N2", "greyed"), extra=None, paint="white_upvc", cond="sound"),
     ("east_parade", 3, 0): dict(room="up_empty_1", net=("N1", "yellowed"), extra=None, paint="white_flaking", cond="flaking", torn_net=True),
@@ -93,7 +93,7 @@ SITE_PLAN = {
     ("west_south", 0, 0): dict(room="gf_front_1", net=("N1", "white"), extra=None, paint="blue", cond="grimy"),
     ("west_south", 0, 1): dict(room="gf_front_1", net=("N1", "white"), extra=None, paint="blue", cond="grimy"),
 }
-KIND_OF_PAINT_OK = {"S22": ("white_fresh", "white_grimy", "white_flaking", "cream", "olive", "blue"), "S11": ("white_fresh", "white_grimy", "white_flaking", "cream", "olive", "blue"),
+KIND_OF_PAINT_OK = {"S22": ("white_fresh", "white_grimy", "white_flaking", "cream", "olive", "blue", "brown"), "S11": ("white_fresh", "white_grimy", "white_flaking", "cream", "olive", "blue", "brown"),
                     "RC": ("white_upvc", "bronze")}
 # a house's frame paint follows the kind: the street's _window_kind(house) decides the kind; a replacement cannot be painted blue or olive
 KIND_NAME = {"2/2": "S22", "1/1": "S11", "replacement": "RC"}

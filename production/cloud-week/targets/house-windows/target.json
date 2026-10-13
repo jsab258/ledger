@@ -1112,7 +1112,7 @@
    },
    "room": "up_landing_2",
    "family": "UP",
-   "paint": "cream",
+   "paint": "brown",
    "condition": "sound",
    "net": {
     "kind": "N0",
@@ -1181,7 +1181,7 @@
    },
    "room": "up_bedroom_1",
    "family": "UP",
-   "paint": "cream",
+   "paint": "brown",
    "condition": "sound",
    "net": {
     "kind": "N1",
@@ -4028,6 +4028,20 @@
    ],
    "rough": 0.42,
    "note": "P2's blue sashes (sampled 61, 87, 136), the tenants' own paint on a terrace of one owner"
+  },
+  "brown": {
+   "srgb": [
+    84,
+    58,
+    42
+   ],
+   "lin": [
+    0.089,
+    0.042,
+    0.023
+   ],
+   "rough": 0.42,
+   "note": "P1's four dark-brown sashes and P3's red-brown frames (sampled 141, 131, 115 and 162, 129, 119 in the sun): an oxide or brown gloss, the second commonest painted colour after white"
   },
   "bronze": {
    "srgb": [
@@ -9306,7 +9320,7 @@
    "group": "sites",
    "name": "paint",
    "measure": "houses by paint",
-   "expected": "white (any kind) 5 to 7 of 10, cream 2, olive 1, blue 1, bronze 1",
+   "expected": "white (any kind) 5 to 7 of 10, cream 1, brown 1, olive 1, blue 1, bronze 1",
    "tolerance": "counts",
    "applies_to": "10 houses",
    "kind": "Photo",
@@ -9349,9 +9363,9 @@
   {
    "id": "D4",
    "what": "the cottages' windows",
-   "street_file": "all six drawn as 2/2 box sashes 1.5 high (the per-house kind is not read on the ground floor)",
-   "photographs": "the ground windows of P1, P3, P4, P12 are the same sashes as the floor above; P6's ground sill stands 0.72 to 0.92 above the step (Photo: door leaf 195 px = 1.98 m)",
-   "chosen": "the house's own kind and the period opening 1676.4 with the head kept (sill 0.7236 above the threshold)"
+   "street_file": "all six drawn as 2/2 box sashes 1.5 high (the per-house kind is not read on the ground floor); sill 0.9 above the threshold, head 2.4 (the 3 October rule: arches clear the eaves)",
+   "photographs": "the ground windows of P1, P3, P4, P12 are the same kinds of sash as the floor above; P6's ground bay window's sill stands 0.85 +-0.05 above the step (Photo: the door leaf is 193 px = 1981 mm, the sill 83 px above the step)",
+   "chosen": "the house's own kind and the period opening 1676.4 with the head kept at 2.5 above the crown: the sill 0.7236 above the threshold, 0.13 lower than P6's 0.85; the alternative (sill 0.9, head 2.676, the arch's top at 3.01 under the eaves at 3.1) leaves 9 cm of brick under the eaves and is Jafar's to choose (could_not_settle)"
   },
   {
    "id": "D5",
@@ -9417,7 +9431,7 @@
   "A sealed double-glazed unit's four reflecting faces (about 0.14 at normal incidence) cannot be reached by Unreal's Specular 1.0 (F0 0.08): the replacement's pane under-reflects; the cure (an emissive sky term) is a PC tuning, listed in owed_on_pc.",
   "How the game's Lumen reflections and the street cube show on the pane (the box projection, the Fresnel hand-over) is not shown by the cloud: the cloud's pane reflects the proxies and the dome through Cycles.",
   "The rooms' contents were chosen from 44 Poly Haven models and 17 textures; none shows a period British room: no 1975 to 1995 photograph of a domestic interior was reached, so the rooms rest on the photographs' windows (nets, drapes, a pot plant, a dark room) and on the budgets, not on a room photograph.",
-  "Whether Jafar wants the kit for the whole street at the period height (the cottages' sills lowered by 0.176 m) is his: the ruling of 8 October is followed here for every row; the PC session widens SASH_KIT_ROWS.",
+  "Whether the cottages take the period height with the head kept (sill 0.7236 above the threshold: 0.13 under P6's 0.85) or with the sill kept (0.9, the head raised to 2.676 above the threshold, the arch left 9 cm of brick under the eaves) is Jafar's: the ruling of 8 October (1.68 m) is followed for every row with the head kept; the PC session widens SASH_KIT_ROWS.",
   "Six over six is not on the street and was not built.",
   "The backdrop rows (48 windows) take the same pieces with no pictures: their paint and lit pane are rules, not a table."
  ],

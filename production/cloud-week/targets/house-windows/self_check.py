@@ -179,6 +179,7 @@ def check_sites(t, R):
     n_back = sum(1 for q in out if "sash_jamb_l" in q["id"])
     R.add("sites", "the hill's rows carry %d windows by the same code (48 stated)" % n_back, n_back == t["backdrop"]["count_checked_by_self_check"] == 48, "")
     R.add("sites", "sill = head - 1676.4 on every site", all(abs((s["head_z_above_crown"] - s["sill_z_above_crown"]) - 1.6764) < 1e-3 for s in sites), "")
+    R.add("sites", "a cottage's arch clears the eaves: head 2.5 + rise 0.85/7 + ring 0.215 under 3.1", 2.5 + 0.85 / 7 + 0.215 < 3.1, "")
     R.add("sites", "upper heads at 5.9 and cottage heads at 2.5 above the crown (today's)", all(abs(s["head_z_above_crown"] - (5.9 if s["floor"] == "upper" else 2.5)) < 1e-6 for s in sites), "")
     R.add("sites", "the kit rows today are the parade's S22 and S11 only", all(s["kit_row_today"] == (s["block"] == "east_parade" and s["kind"] in ("S22", "S11")) for s in sites), "")
     bad_paint = [s["id"] for s in sites if s["kind"] == "RC" and s["paint"] not in ("white_upvc", "bronze")] + [s["id"] for s in sites if s["kind"] != "RC" and s["paint"] in ("white_upvc", "bronze")]
@@ -206,7 +207,7 @@ def check_sites(t, R):
         p = [s for s in sites if s["house"] == h][0]["paint"]
         paints[p] = paints.get(p, 0) + 1
     white = sum(v for k, v in paints.items() if k.startswith("white"))
-    R.add("sites", "SITE-04 paint: white 5 to 7 of 10, cream 2, olive 1, blue 1, bronze 1", 5 <= white <= 7 and paints.get("cream") == 2 and paints.get("olive") == 1 and paints.get("blue") == 1 and paints.get("bronze") == 1, str(paints))
+    R.add("sites", "SITE-04 paint: white 5 to 7 of 10, cream 1, brown 1, olive 1, blue 1, bronze 1", 5 <= white <= 7 and paints.get("cream") == 1 and paints.get("brown") == 1 and paints.get("olive") == 1 and paints.get("blue") == 1 and paints.get("bronze") == 1, str(paints))
     # the cards
     for s in sites:
         c = s["card"]

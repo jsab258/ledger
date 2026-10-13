@@ -13,6 +13,7 @@ PAINTS = {
     "cream":         {"srgb": [222, 204, 164], "lin": [0.73, 0.60, 0.37], "rough": 0.45, "note": "P3's cream-painted sashes (frame sampled 181, 163, 131 in the sun and shade of the photograph, so the paint is lighter), P2's cream render"},
     "olive":         {"srgb": [136, 140, 64], "lin": [0.246, 0.262, 0.052], "rough": 0.45, "note": "P12's two olive-green sashes (sampled 148, 153, 70); a painted window of a house that chose its own colour"},
     "blue":          {"srgb": [56, 92, 160], "lin": [0.040, 0.107, 0.352], "rough": 0.42, "note": "P2's blue sashes (sampled 61, 87, 136), the tenants' own paint on a terrace of one owner"},
+    "brown":         {"srgb": [84, 58, 42], "lin": [0.089, 0.042, 0.023], "rough": 0.42, "note": "P1's four dark-brown sashes and P3's red-brown frames (sampled 141, 131, 115 and 162, 129, 119 in the sun): an oxide or brown gloss, the second commonest painted colour after white"},
     "bronze":        {"srgb": [74, 60, 52], "lin": [0.05, 0.038, 0.03], "rough": 0.35, "note": "the street's frame_bronze (terrace-front.py): dark anodised aluminium; NOT seen in any reached photograph (D1), kept for the one metal-refit house"},
     "white_upvc":    {"srgb": [232, 231, 225], "lin": [0.80, 0.792, 0.762], "rough": 0.30, "note": "white replacement frame, satin: P6, P7, P11 show white in every case (4 of 4)"},
 }
