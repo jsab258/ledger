@@ -310,7 +310,7 @@ def finish(T):
     T["previews"] = [
         {"file": "p1-village-board-front-leaf.jpg", "source": "S1", "credit": "Walter Baxter, Geograph 3671864, CC BY-SA 2.0, 2013-09-14, turned 2.6 degrees and cropped to the board; all lettering and the picture blurred beyond reading (script)",
          "masked": ["the lettering and the hard-hat picture on the board's face (blurred by script)", "the tea room's name in the lettering (blurred)"], "looked_at_full_size": True, "no_people_no_drink_no_betting_no_names": True},
-        {"file": "p1-village-board-target-on-photo.jpg", "source": "S1", "credit": "overlay of this target's front drawing (red) on the same crop, the scale fitted on the height from the leaf's top edge to the left foot, measured edges in green",
+        {"file": "p1-village-board-target-on-photo.jpg", "source": "S1", "credit": "overlay of this target's front drawing (red; the battens, rail and hinge leaves behind the ply and the back leaf are drawn as well) on the same crop, the scale fitted on the height from the leaf's top edge to the left foot, measured edges in green",
          "masked": ["as p1"], "looked_at_full_size": True, "no_people_no_drink_no_betting_no_names": True},
         {"file": "p2-1978-notice-board.jpg", "source": "S2", "credit": "Alan Murray-Rust, Geograph 6913397, CC BY-SA 2.0, 1978-08-04, cropped to the board; the board's print, the bus's body and the tyre and the ground left of it blurred (script); no person is in the crop",
          "masked": ["the card's print and the operator's mark on it (blurred by script)", "the bus's lettering, the tyre and the ground left of the board (blurred)", "people (outside the crop)"], "looked_at_full_size": True, "no_people_no_drink_no_betting_no_names": True},

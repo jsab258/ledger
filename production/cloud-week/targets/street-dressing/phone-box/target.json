@@ -2721,17 +2721,14 @@
   "keep the foot gap open and the posts' feet 40 x 40 on the ground"
  ],
  "self_check": {
-  "line": "SELF-CHECK phone-box: 113 checks, 113 passed, 0 failed; negative controls 31 of 33 caught (offline)",
+  "line": "SELF-CHECK phone-box: 113 checks, 113 passed, 0 failed; negative controls 33 of 33 caught (offline)",
   "checks": 113,
   "passed": 113,
   "failed": 0,
   "controls": 33,
-  "controls_caught": 31,
+  "controls_caught": 33,
   "options": "offline",
   "failing": [],
-  "uncaught": [
-   "geometry: the part that closes face header front removed",
-   "geometry: the part that closes face handle band removed"
-  ]
+  "uncaught": []
  }
 }

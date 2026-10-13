@@ -222,6 +222,14 @@ def extra(T, rows):
                 rows.add("live", "live/P2/%s re-measured" % f["id"], abs(pos - f["px"]) <= 0.75, "pixels give %.2f, recorded %.2f" % (pos, f["px"]))
         else:
             rows.add("live", "live/P2/photograph present", False, "not found: %s" % p)
+        pr1 = os.path.join(pdir, "P1rot.jpg")
+        if os.path.exists(pr1):
+            g1 = L.load_gray(pr1)
+            for fid, f in A1.items():
+                pos, con, spread = L.edge_pos(g1, f["axis"], f["band"], f["win"], f.get("pol", "any"))
+                rows.add("live", "live/P1/%s re-measured (the arch's base)" % fid, abs(pos - f["px"]) <= 0.75, "pixels give %.2f, recorded %.2f" % (pos, f["px"]))
+        else:
+            rows.add("live", "live/P1/turned copy present for the arch's base", False, "not found: %s" % pr1)
         tmp = tempfile.mkdtemp()
         for sid, gid in (("S1", "3671864"), ("S2", "6913397")):
             pg = L.geograph_page(gid, tmp)
