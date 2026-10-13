@@ -19,4 +19,11 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
-(Entries start with the first unit that finishes after 13 October 2026.)
+### 13 Oct 2026, unit 7b follow-up: a finished research file set against a new design
+- Made: a section in COMBAT.md comparing its findings with Jafar's new combat rulings and design (39 rows, each adopt, adapt, ignore or not covered), the old comparison rows marked superseded and kept, the draft target list for the first combat test extended by 15 entries.
+- Method (setting-free): when a design replaces the document a finished study was written against, add a comparison section instead of rewriting the study: one row per design point, what the references do (cited to the study's own sections), a verdict, and where the design is silent say "not covered". Mark superseded old rows, never delete them. Extend a target list with new ids and never renumber, so every cross reference holds. List every point the design leaves unclear for its author. Read the design from its source, not from a summary.
+- Tools: a check script (no forbidden dashes or italics, table cell counts, every cited id defined, frames equal seconds times the frame rate, quotes under the length cap).
+- Target and check: the script above, run by the writer; no fresh review (ordered).
+- Cost (hours): about 0.4 of one helper's work, plus about 0.5 to find and read the design doc and brief the helper.
+- Failed and why: the first brief gave the helper only a summary of the design, because the design doc was thought to be unreadable; it was a Claude doc, found through the artifact list, and the helper was re-briefed mid-task. Lesson: when a source "cannot be found", list every place the owner keeps documents (Drive, the artifact list, the repository) before working from a summary.
+- Evidence: production/research/aaa-reference/COMBAT.md

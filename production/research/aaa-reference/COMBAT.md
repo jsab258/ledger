@@ -501,7 +501,7 @@ Fifteen new entries: 2 first, 9 rungs, 4 gaps. With the 17 above that is 32, and
 - A03 is the first test's way of backing off. J01 is its longer sibling.
 - A02: the 3 s hold before an NPC swings stays. F01 counts toward it when a man stares first (judgement; open, see the rulings section).
 
-### The entries added
+#### The entries added
 
 **First stage: the shove into a wall.**
 
@@ -539,7 +539,7 @@ Fifteen new entries: 2 first, 9 rungs, 4 gaps. With the 17 above that is 32, and
 
 **J03 gives up the chase.** Start: the run cycle. End: standing, bent, hands on knees, breath at the spent rate (0.75 a second, A02). 45 frames (1.5 s): slowed by f12, stopped f15, hands on knees f24, head up looking after the runner f36. Judgement. Blends from the run cycle over 4 frames; to idle over 8. Hit reaction: none. Witnesses: nothing new; the runner's flight slot is not undone. The rule that ends a chase, by judgement: the chaser stops when the runner is out of sight and more than 10 m ahead (KCD2's active-combat radius, 2.3, adapted) or after 60 s of hunting (K1's longest hunt time, 2.3, adapted). The chaser's top speed is 0.9 of the runner's (judgement), so a runner can escape.
 
-### The runs, as adjusted
+#### The runs, as adjusted
 
 **The first test.** The four runs of 5.4 stand. One run is added. Run 5, the wall: with a wall 0.6 m behind the second man, Tom shoves him (C01, G01, G02); the pair end 1.4 m apart, inside strike reach, and the second man is steady. With the second man reeling, the shove puts him down along the wall (C01, G01, D06). The lab test is a subset of this test: B01 (wind-up and strike), D03 (one hit reaction), C01 with G01 (the shove into a wall). Tom can be the man who goes down (D06, D07, D08): he gets up. Nothing in the test kills anyone.
 
@@ -549,7 +549,7 @@ Fifteen new entries: 2 first, 9 rungs, 4 gaps. With the 17 above that is 32, and
 
 **How two attackers stagger.** Each man keeps B01's mean gap of 2.0 s and its spread of plus or minus 0.5 s (KCD2's official mean gap; the narrow spread is judgement). KCD2's rule for more attackers (2.3: each gap grows by 0.8 of itself; an unverified reading) is not copied. It would give 3.6 s each for two and one blow from the pair every 1.8 s (3.6 / 2, derived), hardly more often than one man's 2.0 s, which contradicts "two against one is deadly" (R23). Instead the second man is offset by half a gap: his wind-up starts 1.0 s after the first man's (judgement), so the pair's blows come about once a second (2 / 2.0 s, derived) and, with the spread, never within 0.5 s (15 frames, judgement) of each other: the later man waits. The second man's wind-up is B01's unchanged, 20 frames, so the answer time of 5.1 holds for each blow. With no lock-on, the man at the side stays readable by sound (B01's cloth swish, f18 to f22) and by his stance. If the one-man floor of four blows holds for two men (judgement), an unguarded Tom is down about 3.0 s after the first blow (three gaps of 1.0 s), against 6.0 s for one man (three gaps of 2.0 s), both derived.
 
-### Measures added (they continue 5.4's numbering; items 1 to 9 do not change)
+#### Measures added (they continue 5.4's numbering; items 1 to 9 do not change)
 
 Thresholds are judgement unless marked, as in 5.4.
 
@@ -562,7 +562,7 @@ Thresholds are judgement unless marked, as in 5.4.
 16. **Outnumbered (gaps).** Over 20 blows from two attackers in the headless simulation: the mean spacing is 1.0 s, plus or minus 0.2 s (judgement); no two contact frames are closer than 15 frames (0.5 s); and each man's own mean gap is 2.0 s (B01). A fresh reviewer, shown the second man's strike from the side at 3 m in the game camera, says "he is about to hit" before contact in at least 9 of 10 showings (as item 2).
 17. **Names (all stages).** All 15 new clip names pass the content gate. The first test's two (G01, G02) join item 9's 17, which makes 19; the other 13 pass when they are built, 32 in all.
 
-### What stays for later, in the design's build order
+#### What stays for later, in the design's build order
 
 1. **The lower rungs** (after the first test): stare, square up, threaten, shove and grab, tied into perception and gossip. Drafted above as the rungs stage (F01 to F05, G03, G04, J01, J04).
 2. **The three gaps, in Jafar's order:** being outnumbered (H01, H02), running away (J02, J03), the police arriving. The last has no entry: an officer's own animations, and the arrest rules (a rule, not a clip). Then ordering a named man hurt and the other crew verbs (the crime verbs, not clips).
