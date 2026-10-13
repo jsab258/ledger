@@ -129,7 +129,8 @@ def run(work, assets, previews, samples, views=None, log=print, check_renders=Tr
 
     def cols(st):
         return {"l": os.path.join(gate, "col_l_%s.png" % st), "r": os.path.join(gate, "col_r_%s.png" % st)}
-    times = {}
+    tp_ = os.path.join(gate, "render_times.json")
+    times = json.load(open(tp_)) if (views and os.path.exists(tp_)) else {}              # a few views again: the others' times stay
     todo = views or [(c, s) for c in CAMS for s in states]
     if not ctx.lit and not views and ctx.has_room:
         todo = todo + [("STREET_SQUARE", "night_dark")]            # a shop that is dark at night: the street's own night picture, one view, as an extra

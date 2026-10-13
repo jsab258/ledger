@@ -1,0 +1,157 @@
+{
+ "schema": "ledger.cloud-week-42.shop-windows-check/1",
+ "shop": "empty_unit",
+ "made": "2026-10-13 17:57:40",
+ "target": "production/cloud-week/targets/shop-windows/target.json (status: target for unit 7 of cloud week 42, part 2; written 12 October 2026; failed its )",
+ "pass": 18,
+ "counted": 20,
+ "na": 4,
+ "pending": 0,
+ "seconds": 21.0,
+ "rows": [
+  {
+   "id": "GLB-01",
+   "name": "every normal map is a real tangent-space map",
+   "status": "pass",
+   "detail": "1 distinct normal maps in the 1 glbs (empty_unit_front.glb): RGB, red and green means within 14 levels of 128, blue mean at least 200, blue 160 or more on 85 per cent of pixels (a height map exported as a normal map is grey, its blue mean about 128: Rita's street review; 85 and not 95 because a knitted glove's map has steep slopes on a tenth of its pixels and is a true tangent-space map, mean (132, 127, 211))"
+  },
+  {
+   "id": "FRN-01",
+   "name": "the front's parts at their sizes",
+   "status": "pass",
+   "detail": "fascia, cornice, sill, stallriser, the pilaster's shaft and the window frame's transom and head measured on the built meshes against the 3.2 sizes: all within 1.5 mm. Variants: {'pilaster': 'panel', 'console': 'scroll', 'cornice': 'timber', 'stallriser': 'boarded', 'window_frame': 'T2', 'shop_door': 'T1', 'side_door': 'F1'}"
+  },
+  {
+   "id": "FRN-02",
+   "name": "window and door zones",
+   "status": "pass",
+   "detail": "window u [350.0, 3700.0], shop door [3700.0, 4706.0], side door [4706.0, 5650.0] against [[350.0, 3700.0], [3700.0, 4706.0], [4706.0, 5650.0]]; centres (street x) window 24.975, shop door 22.797, side door 21.822 against [24.975, 22.797, 21.822]"
+  },
+  {
+   "id": "FRN-03",
+   "name": "the shop door",
+   "status": "pass",
+   "detail": "T1: leaf 900 x 2040 at z 28; glass 871 to 1973 with one bar at 1423 (28 wide); lock rail 549 to 871; letter plate 250 x 40 at z 678 and clear of the glass; hinge on the viewer's L (the lever stile at u 4538, the hinge stile at u 3753); the bell's spring strip z 1950 to 2051, inside the leaf, on the top rail 90 mm in from the hanging stile's inner edge"
+  },
+  {
+   "id": "FRN-04",
+   "name": "the glass and the toplight layout",
+   "status": "pass",
+   "detail": "3 lights, 9 toplights of [324.7, 324.7, 324.7, '...'] (target 324.7), bar centres [388.7, 741.3, 1120.0, 1498.7, 1851.3, 2230.0, 2608.7, 2961.3] against [388.67, 741.33, 1120.0, 1498.67, 1851.33, 2230.0, 2608.67, 2961.33] (each within 2 mm), a bar on each of the 2 mullion lines, no toplight under 325; the three over-door toplights [283.3, 283.3, 283.3] (target 283.33); every 6 mm plate at d 30 to 36"
+  },
+  {
+   "id": "FRN-05",
+   "name": "paint colours",
+   "status": "pass",
+   "detail": "127 painted parts, each within 6 levels per channel of one of the target's paints (pilaster [46, 37, 30], console [46, 37, 30], cornice [46, 37, 30], fascia_board [46, 37, 30], stallriser [46, 37, 30], window_frame [170, 166, 156], shop_door [35, 36, 40], side_door [35, 36, 40]); the paints used: ['pilaster', 'shop_door', 'window_frame']"
+  },
+  {
+   "id": "FRN-06",
+   "name": "lobby",
+   "status": "n/a",
+   "detail": "no lobby in this shop's front (the grocer's and the launderette's check)"
+  },
+  {
+   "id": "FRN-07",
+   "name": "no opening in the front",
+   "status": "pass",
+   "detail": "the elevation drawn from the built meshes (u 0 to 6000, z 0 to 2850, 1 mm a pixel, every part's triangles, parts drawn 1 mm proud, the gate's two brick piers x 2.65 to 3.0 behind the pilasters drawn as the wall): 0 uncovered pixels of 17100000; the largest uncovered rectangle is 0 x 0 mm (limit 5 x 5). Without the piers the bay's outer strips (u 0 to 350 and 5650 to 6000) have 128492 uncovered pixels: the pilaster's shaft and core stop 30 mm short of the bay's edge, so the game's street facade has to close it (PC-04)"
+  },
+  {
+   "id": "FAS-01",
+   "name": "the fascia's sign in place",
+   "status": "pass",
+   "detail": "the 4.1 board empty_unit_basecolour/height/orm/wear (5410x550) is the fascia board's material (image in the glb: True); the mapping puts texture column 0 at the viewer's left edge u 295 and the top row at z 3400 (5410 x 550 mm, 1 px a mm); the board sits u [295.0, 5705.0], z [2850.0, 3400.0]"
+  },
+  {
+   "id": "FAS-02",
+   "name": "hanging signs",
+   "status": "n/a",
+   "detail": "this shop has no hanging sign in 4.1"
+  },
+  {
+   "id": "GLS-01",
+   "name": "nothing across the glass",
+   "status": "pass",
+   "detail": "in front of the window's glass (d over 36, over the window's u and z): only the window frame's own beads, bars and mullions, the sill, the stallriser, the pilasters and the shop's own fittings (letting); the lettering rows, the OPEN sign and the hours plate stand behind the glass (d 29 to 39)"
+  },
+  {
+   "id": "FAS-01n",
+   "name": "the fascia's normal map is a normal map",
+   "status": "pass",
+   "detail": "1 normalTexture(s) in the glb: fascia_empty_unit: RGB 5410x550, mean (127.9, 127.9, 256.0), blue 200+ on 100.00% (RGB, mean within 10 levels of 128, 128, 255, blue 200 or more on 99 per cent of pixels)"
+  },
+  {
+   "id": "FAS-01c",
+   "name": "the board reads by day",
+   "status": "n/a",
+   "detail": "the board carries no name (an empty unit's bare timber): its light patches are worn paint, not lettering"
+  },
+  {
+   "id": "GLS-02",
+   "name": "no glass row lies behind a bar, mullion or bead",
+   "status": "pass",
+   "detail": "a ray from the camera's eye to each ink point of the shop's glass rows (the row's alpha, every 2 mm) must meet no opaque part of the front first: STREET_SQUARE 7: 0 of 601 ink points behind nothing; STREET_30 7: 0 of 601 ink points behind nothing"
+  },
+  {
+   "id": "FRN-09",
+   "name": "the hall behind the side door",
+   "status": "pass",
+   "detail": "560 rays from STREET_SQUARE's eye through the side door's fanlight (u 450 to 1200, z 2130 to 2380): 507 meet the hall's own walls, floor or ceiling, 53 the door and its frame (frame_head 39, frame_jamb_R 14), 0 get through to the card: none may (try 1: the room's wall clock and pegboard showed)"
+  },
+  {
+   "id": "FAS-03",
+   "name": "textured primitives carry UVs",
+   "status": "pass",
+   "detail": "empty_unit_front.glb: 0 textured primitives without TEXCOORD_0, 0 negative texCoord (try 1: the three balls had none and pointed their maps at texCoord -1)"
+  },
+  {
+   "id": "FRN-08",
+   "name": "no backdrop through the front",
+   "status": "pass",
+   "detail": "the front alone (glass opaque, no hanging sign) against a white emissive backdrop, 1280 x 720, from each review camera: backdrop pixels the front's outline encloses (specks under 4 px not counted): STREET_SQUARE 17 px (largest 17) [the bay's outer sliver beside the right pilaster, which the gate's pier closes: N2]; STREET_30 18 px (largest 18) [the bay's outer sliver beside the right pilaster, which the gate's pier closes: N2]; CLOSE_35 0 px (largest 0); CLOSE_35_B 0 px (largest 0) (none allowed from CLOSE_35 and CLOSE_35_B, the review's cameras; the street cameras show only the bay's outer sliver, N2)"
+  },
+  {
+   "id": "FRN-10",
+   "name": "no two parts of the front share a visible face plane; nothing on the front is black",
+   "status": "fail",
+   "detail": "46 coplanar same-facing overlaps of more than 1 mm2 among the front's parts (hidden ones, behind the doors or inside the joinery: not a fault), 0 of them where a camera can see them. By day, in the four gate frames at 2560 x 1440, over the front's own pixels (a mask render: the glass, the two fanlights, the shop door's glass, the hall, the lettering rows and the OPEN sign are not the front; the mask eroded by 2 px; a dark patch counts when it is 35 mm wide on the front or more, a thin line of shade under the cornice or the sill does not): STREET_SQUARE 2842 of 736858 front pixels under luma 8, 423 of them in patches 8 px (35 mm) or wider (the darkest pixel 0.0); STREET_30 1951 of 615978 front pixels under luma 8, 0 of them in patches 8 px (35 mm) or wider (the darkest pixel 0.0); CLOSE_35 34 of 668338 front pixels under luma 8, 0 of them in patches 28 px (35 mm) or wider (the darkest pixel 5.1); CLOSE_35_B 4731 of 978343 front pixels under luma 8, 0 of them in patches 28 px (35 mm) or wider (the darkest pixel 0.1) (try 2: the two strips beside the side door were luma 0 to 3, about 12,000 pixels at STREET_SQUARE: F1's frame jambs, the added side jambs and the fillers stood in one plane, d 100)"
+  },
+  {
+   "id": "NEV-01",
+   "name": "no people, drink, betting, children",
+   "status": "pass",
+   "detail": "222 names and text strings against 51 content-blocklist words (no match) and 59 brand words (no match)"
+  },
+  {
+   "id": "NEV-02",
+   "name": "nothing after 1992",
+   "status": "pass",
+   "detail": "the front is timber, steel and glass of the street's own period: no model from outside the 3.2 kit, no modern phone, flat screen, LED lamp or barcode"
+  },
+  {
+   "id": "LIT-03",
+   "name": "the empty unit is a pale blank by day, not black",
+   "status": "fail",
+   "detail": "mean luma of the whitewashed lower lights at STREET_SQUARE: by day 175.0 (at least 150), at night 42.0 (at most 40; the gate lights the street with its two stand-in lamps and the whitewash is unlit)"
+  },
+  {
+   "id": "PRV-01",
+   "name": "the previews show nothing they must not",
+   "status": "n/a",
+   "detail": "the photograph previews of the target (P1 to P6), not this build's; this build's previews were looked at: no real firm's name, number, person, drink, gambling or child in them"
+  },
+  {
+   "id": "CAM-01",
+   "name": "the cameras are the named ones",
+   "status": "pass",
+   "detail": "STREET_SQUARE day eye 0.00 mm, aim 0.000 deg, field 0.00 deg; STREET_SQUARE night_lit eye 0.00 mm, aim 0.000 deg, field 0.00 deg; STREET_30 day eye 0.00 mm, aim 0.000 deg, field 0.00 deg; STREET_30 night_lit eye 0.00 mm, aim 0.000 deg, field 0.00 deg; CLOSE_35 day eye 0.00 mm, aim 0.000 deg, field 0.00 deg; CLOSE_35 night_lit eye 0.00 mm, aim 0.000 deg, field 0.00 deg; CLOSE_35_B day eye 0.00 mm, aim 0.000 deg, field 0.00 deg; CLOSE_35_B night_lit eye 0.00 mm, aim 0.000 deg, field 0.00 deg (limits 5 mm and 0.1 degree)"
+  },
+  {
+   "id": "X-PRV",
+   "name": "previews: JPEG, about 1600 px wide, under 500 KB",
+   "status": "pass",
+   "detail": "4 JPEGs of this shop in the previews folder (at least 4): empty_unit-close-35-day 116 KB 1600 px, empty_unit-close-35-night-lit 72 KB 1600 px, empty_unit-street-square-day 219 KB 1600 px, empty_unit-street-square-night-lit 132 KB 1600 px"
+  }
+ ]
+}

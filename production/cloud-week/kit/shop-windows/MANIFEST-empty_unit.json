@@ -1,0 +1,10 @@
+{
+ "made": "2026-10-13 17:57:40",
+ "what": "the files of the narrow-points build (13 Oct, from the try 2 reviews; v3); the three glbs and the three 4096 pictures are out of git (rebuilt by build_ritas.py) so this names the versions",
+ "files": {
+  "empty_unit_front.glb": {
+   "bytes": 6968488,
+   "sha256": "5492b6ffa0c26fb80039983aa7079e69d23e3e73cc6c50bff085cd29abf137e4"
+  }
+ }
+}

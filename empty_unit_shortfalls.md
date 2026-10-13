@@ -1,0 +1,4 @@
+- Nothing behind the glass: the whitewash is opaque, so the shop is a blank pale panel by day and a dim one at night; the interior is not modelled and none is owed.
+- Dark paints in shade: the bare timber (46, 37, 30) under the cornice and above the right console reads under luma 8 in one patch of 21 x 27 px (0.09 x 0.12 m) at STREET_SQUARE by day (FRN-10); the paint is the target's.
+- The lamp strength for this shop is 42,000 W against 50,000 for the others (LIT-03).
+- The 4.1 whitewash's brush strokes run across the bars (one anchor); a real whitewash would stop at each bar. No peeling or ladder marks.

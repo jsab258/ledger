@@ -161,7 +161,11 @@ def run_inner(shop, stage):
             print("NOTE", n)
     elif stage == "gate":
         import sw_gate_run as G
-        G.run(ctx.work, ASSETS, PREVIEWS, GATE_SAMPLES, ctx=ctx)
+        vw = [tuple(v.split(":")) for v in os.environ.get("LEDGER_GATE_VIEWS", "").split(",") if v]       # e.g. STREET_SQUARE:night_lit: only those frames again, the check renders kept
+        if vw:
+            G.run(ctx.work, ASSETS, PREVIEWS, GATE_SAMPLES, views=vw, check_renders=False, ctx=ctx)
+        else:
+            G.run(ctx.work, ASSETS, PREVIEWS, GATE_SAMPLES, ctx=ctx)
     elif stage == "checks":
         if rita:
             import check_ritas as C

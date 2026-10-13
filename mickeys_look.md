@@ -1,0 +1,2 @@
+- Street: STREET_SQUARE by day: the raised gilt letters on the slate board (read as MICKEY'S, not cut by anything), the clad pilasters, the cream tile stallriser with its pattern, the steel window and door (transom band, bars over the door), the oxblood side door.
+- Close: CLOSE_35 and CLOSE_35_B: the steel window's sections and the door's stiles, rails, beads and chrome plate; the tile pattern at 100 per cent (no stripes, no real maker's name on a tile).
