@@ -648,7 +648,14 @@ def layout_ironmonger(r):
     # a door mat? the target gives none: not built
 
 
-LAYOUTS = {"ironmonger": layout_ironmonger}
+def _lazy(mod, fn):
+    def f(r):
+        m = __import__(mod)
+        return getattr(m, fn)(r)
+    return f
+
+
+LAYOUTS = {"ironmonger": layout_ironmonger, "newsagent": _lazy("sw_shops_news", "room"), "tea_rooms": _lazy("sw_shops_tea", "room")}
 
 
 def build_scene(work, ctx):

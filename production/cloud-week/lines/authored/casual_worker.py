@@ -43,7 +43,7 @@ LINES = {
         "Tom. Heard of any work yet?",
         "Morning, Tom. Still jobless. Still cheerful. @m",
         "Hello, Tom. Cadge a fag?",
-        "Tom. Mornings, afternoons, I'm free for both.",
+        "Tom. Mornings or afternoons, I'm not fussy.",
         "Evening, Tom. I'm about if you need me. @e",
         "There's Tom. Say something nice.",
         "Tom. I'll carry anything. Honest.",

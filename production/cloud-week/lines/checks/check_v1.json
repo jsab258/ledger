@@ -2,11 +2,11 @@
  "made": "13 Oct 2026, cloud week 42, unit 12",
  "file_checked": "production/cloud-week/lines/lines.json and rules.json",
  "summary": {
-  "rows": 2491,
-  "pass": 2491,
+  "rows": 2500,
+  "pass": 2500,
   "fail": 0,
-  "seeded_faults": 54,
-  "seeded_faults_caught": 54,
+  "seeded_faults": 62,
+  "seeded_faults_caught": 62,
   "kinds": 13,
   "situations": 14,
   "lines": 1626,
@@ -10106,6 +10106,12 @@
    "detail": ""
   },
   {
+   "id": "claims.kept_lines_held_by_street_facts",
+   "what": "the 2 lines that say 'heard you ...' claim only what a StreetFacts.cs fact states, held by every named member of their kind (people.json)",
+   "pass": true,
+   "detail": ""
+  },
+  {
    "id": "cell.shopkeeper.greeting.stranger",
    "what": "shopkeeper has at least 12 lines for greeting.stranger",
    "pass": true,
@@ -15168,6 +15174,54 @@
    "what": "seeded fault caught: an invitation to tea in a pensioner's mouth",
    "pass": true,
    "detail": "by line.pensioner.greet-owner.01"
+  },
+  {
+   "id": "fault.a_standing_claim_the_street_has_been_hearing_about_him",
+   "what": "seeded fault caught: a standing claim: the street has been hearing about him",
+   "pass": true,
+   "detail": "by line.dock_worker.greet-owner.01"
+  },
+  {
+   "id": "fault.a_standing_claim_they_say_he_has_the_keys_to_the_lot",
+   "what": "seeded fault caught: a standing claim: they say he has the keys to the lot",
+   "pass": true,
+   "detail": "by line.tradesman.greet-owner.01"
+  },
+  {
+   "id": "fault.a_standing_claim_heard_you_on_a_line_no_street_fact_holds",
+   "what": "seeded fault caught: a standing claim: 'heard you' on a line no street fact holds",
+   "pass": true,
+   "detail": "by line.night_shift.greet-owner.01"
+  },
+  {
+   "id": "fault.a_standing_claim_what_he_has_done_in_the_town",
+   "what": "seeded fault caught: a standing claim: what he has done in the town",
+   "pass": true,
+   "detail": "by line.tradesman.greet-nowak.01"
+  },
+  {
+   "id": "fault.a_standing_claim_what_was_said_of_his_name_before",
+   "what": "seeded fault caught: a standing claim: what was said of his name before",
+   "pass": true,
+   "detail": "by line.shopkeeper.greet-tom.01"
+  },
+  {
+   "id": "fault.a_standing_claim_an_opening_nobody_set",
+   "what": "seeded fault caught: a standing claim: an opening nobody set",
+   "pass": true,
+   "detail": "by line.driver.greet-tom.01"
+  },
+  {
+   "id": "fault.a_standing_claim_a_window_the_speaker_may_not_have",
+   "what": "seeded fault caught: a standing claim: a window the speaker may not have",
+   "pass": true,
+   "detail": "by line.pensioner.crime-shape.01"
+  },
+  {
+   "id": "fault.a_kept_heard_you_line_that_no_longer_matches_its_street_fact",
+   "what": "seeded fault caught: a kept 'heard you' line that no longer matches its street fact",
+   "pass": true,
+   "detail": "by claims.kept_lines_held_by_street_facts"
   },
   {
    "id": "fault.a_street_name_the_atlas_marks_proposal",

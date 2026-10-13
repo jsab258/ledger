@@ -39,7 +39,7 @@ class GM:
             self.M.append(mi[k] if isinstance(mi, (list, tuple)) else mi)
             self.U.append(uv[k] if uv else None)
 
-    def box(self, x0, x1, y0, y1, z0, z1, mi=0, uv_front=None, front="-y"):
+    def box(self, x0, x1, y0, y1, z0, z1, mi=0, uv_front=None, front="-y", uv_other=None):
         """A box; `uv_front` = (u0, v0, u1, v1) gives the face on `front` (-y toward the room's camera by default) the picture's rectangle (u to the right as seen from the front, v up)."""
         V = [(x0, y0, z0), (x1, y0, z0), (x1, y1, z0), (x0, y1, z0), (x0, y0, z1), (x1, y0, z1), (x1, y1, z1), (x0, y1, z1)]
         F = [(0, 3, 2, 1), (4, 5, 6, 7), (0, 1, 5, 4), (1, 2, 6, 5), (2, 3, 7, 6), (3, 0, 4, 7)]
@@ -48,9 +48,54 @@ class GM:
             u0, v0, u1, v1 = uv_front
             if front == "-y":
                 uv[2] = [(u0, v0), (u1, v0), (u1, v1), (u0, v1)]
-            elif front == "+x":              # seen from +x: left is -y... the face (2, 3, 7, 6) runs y1 -> y0 along... use the right face
+            elif front == "+x":              # seen from +x (a card on the LEFT wall, facing the room): u runs along +y
                 uv[3] = [(u0, v0), (u1, v0), (u1, v1), (u0, v1)]
+            elif front == "-x":              # seen from -x (a card on the RIGHT wall): u runs along -y
+                uv[5] = [(u0, v0), (u1, v0), (u1, v1), (u0, v1)]
+        if uv_other is not None:             # every other face takes one point of the picture (a plain colour), not the corner
+            uo = [(uv_other[0], uv_other[1])] * 4
+            uv = [u if u is not None else uo for u in uv]
         self.add(V, F, mi, uv)
+
+    def sheet(self, c, w, h, t, tilt=0.0, yaw=0.0, mi=0, uv=None, uv_other=None, roll=0.0):
+        """A thin box w wide (x), h tall (z), t thick (y) centred at c, the face on -y carrying `uv`; leaned `tilt` degrees (the top toward +y, away from the camera), then `roll` about its own y, then turned `yaw` about the vertical."""
+        hx, hy, hz = w / 2.0, t / 2.0, h / 2.0
+        V0 = [(-hx, -hy, -hz), (hx, -hy, -hz), (hx, hy, -hz), (-hx, hy, -hz), (-hx, -hy, hz), (hx, -hy, hz), (hx, hy, hz), (-hx, hy, hz)]
+        ta, ra, ya = math.radians(tilt), math.radians(roll), math.radians(yaw)
+        V = []
+        for x, y, z in V0:
+            x, z = x * math.cos(ra) - z * math.sin(ra), x * math.sin(ra) + z * math.cos(ra)         # roll about y
+            y, z = y * math.cos(ta) - z * math.sin(ta), y * math.sin(ta) + z * math.cos(ta)         # tilt about x: the top (z > 0) goes toward +y
+            x, y = x * math.cos(ya) - y * math.sin(ya), x * math.sin(ya) + y * math.cos(ya)         # yaw about z
+            V.append((c[0] + x, c[1] + y, c[2] + z))
+        F = [(0, 3, 2, 1), (4, 5, 6, 7), (0, 1, 5, 4), (1, 2, 6, 5), (2, 3, 7, 6), (3, 0, 4, 7)]
+        uvs = [None] * 6
+        if uv is not None:
+            u0, v0, u1, v1 = uv
+            uvs[2] = [(u0, v0), (u1, v0), (u1, v1), (u0, v1)]
+        if uv_other is not None:
+            uo = [(uv_other[0], uv_other[1])] * 4
+            uvs = [u if u is not None else uo for u in uvs]
+        self.add(V, F, mi, uvs)
+
+    def band(self, cx, cy, z0, z1, r, a0, a1, mi=0, uv=None, n=8):
+        """A curved strip (a label on a jar): from angle a0 to a1 (degrees, 0 = toward -y, the camera; + toward +x), radius r about (cx, cy), z0 to z1; `uv` = (u0, v0, u1, v1) for the strip."""
+        V, F, U = [], [], []
+        for i in range(n + 1):
+            a = math.radians(a0 + (a1 - a0) * i / n)
+            x, y = cx + r * math.sin(a), cy - r * math.cos(a)
+            V.append((x, y, z0))
+            V.append((x, y, z1))
+        for i in range(n):
+            k = 2 * i
+            F.append((k, k + 2, k + 3, k + 1))
+            if uv:
+                u0, v0, u1, v1 = uv
+                ua, ub = u0 + (u1 - u0) * i / n, u0 + (u1 - u0) * (i + 1) / n
+                U.append([(ua, v0), (ub, v0), (ub, v1), (ua, v1)])
+            else:
+                U.append(None)
+        self.add(V, F, mi, U)
 
     def lathe(self, cx, cy, z0, profile, mi=0, n=16, label=None, mi_label=None, label_uv=None):
         """A solid of revolution about the vertical axis through (cx, cy): `profile` = [(radius, dz), ...] from the bottom up (a radius of 0 closes on the axis). `label` = (index range of the

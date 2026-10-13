@@ -98,7 +98,7 @@ OPINION = re.compile(r"\b(?:they|people|folk|folks|everyone|everybody) (?:say|sa
                      r"|\byour name'?s all over\b|\byou'?re famous\b|\bis it true what they say\b|\b(?:talking|talked) about you\b", re.I)
 # canon review, fault 5: Ada's tea is asked once and never to a stranger, and Ada speaks the shared pensioner lines
 TEA_INVITE = re.compile(r"\b(kettle|cuppa|come (?:in )?(?:for|to) tea|your tea|tea'?s (?:on|ready|poured)|pot'?s on|cup of tea)\b", re.I)
-# canon review, follow-up of 13 October: a canned line may not state a standing the simulation might not hold. Six kinds of claim, each its own pattern
+# canon review, follow-up of 13 October: a canned line may not state a standing the simulation might not hold. Seven kinds of claim (the last, the window, below), each its own pattern
 # (and its own planted fault): what the street has said, heard, waited for or felt about him; what is reported of him; what he has done; what was said
 # of his name before; an opening nobody set. 'heard you ...' passes only on the two lines whose claim a StreetFacts.cs fact holds (KEPT_CLAIMS).
 STANDING_CLAIMS = [

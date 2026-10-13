@@ -314,7 +314,7 @@ def inventory_rows(ctx, rows, assets, di, shop_texts, goods_note, pending=None):
     fixtures = json.load(open(os.path.join(ctx.rooms, "fixtures.json"))) if ctx.has_room else []
     ids_room = {p["model"] for p in placed if "model" in p}
     ids_disp = {i["model"] for i in di["items"]} if di else set()
-    models = sorted(m for m in ids_room | ids_disp if not m.startswith("script:") and "#" not in m)
+    models = sorted({m.split("#")[0] for m in ids_room | ids_disp if not m.startswith("script:")})
     scripted = sorted({m for m in ids_room | ids_disp if m.startswith("script:")} | {s["model"] for s in (di or {}).get("scripted", []) if s["model"].startswith("script:")})
     have = [a for a in models if os.path.exists(A.gltf_path(a, clean=False)) and inv["polyhaven"].get(a, {}).get("exists")]
     rows.add("INV-01", "inventory exists", len(have) == len(models), "%d of %d placed Poly Haven models have a 1k glTF in the fetch and an `exists` entry in the inventory" % (len(have), len(models)))

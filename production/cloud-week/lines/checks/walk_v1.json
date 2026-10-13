@@ -120,7 +120,7 @@
    {
     "t": 28.0,
     "id": "shopkeeper.greet-owner.03",
-    "text": "The new owner. We've been expecting you.",
+    "text": "The new owner. Anything you need, just ask.",
     "kind": "shopkeeper",
     "speaker": "marla",
     "situation": "greeting.owner",
@@ -132,7 +132,7 @@
     "waited": 0.0
    },
    {
-    "t": 31.6,
+    "t": 32.0,
     "id": "pensioner.farewell.05",
     "text": "I'll let you get on, dear.",
     "kind": "pensioner",
@@ -143,7 +143,7 @@
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
-    "waited": 0.6
+    "waited": 1.0
    },
    {
     "t": 44.2,
@@ -190,7 +190,7 @@
    {
     "t": 116.0,
     "id": "pensioner.greet-owner.01",
-    "text": "You'll be the new owner. I've heard so much.",
+    "text": "You'll be the new owner. How do you do, dear?",
     "kind": "pensioner",
     "speaker": "ada",
     "situation": "greeting.owner",
@@ -591,7 +591,7 @@
    {
     "t": 33.3,
     "id": "shopkeeper.greet-owner.03",
-    "text": "The new owner. We've been expecting you.",
+    "text": "The new owner. Anything you need, just ask.",
     "kind": "shopkeeper",
     "speaker": "rita",
     "situation": "greeting.owner",
@@ -633,7 +633,7 @@
    {
     "t": 115.0,
     "id": "pensioner.greet-owner.01",
-    "text": "You'll be the new owner. I've heard so much.",
+    "text": "You'll be the new owner. How do you do, dear?",
     "kind": "pensioner",
     "speaker": "ada",
     "situation": "greeting.owner",
@@ -829,7 +829,7 @@
    {
     "t": 576.7,
     "id": "pensioner.greet-owner.02",
-    "text": "So you're the new owner. We'd heard you were coming.",
+    "text": "So you're the new owner. Take your time, dear.",
     "kind": "pensioner",
     "speaker": "vesna",
     "situation": "greeting.owner",
@@ -969,7 +969,7 @@
    {
     "t": 1386.4,
     "id": "driver.greet-owner.07",
-    "text": "The new owner. They say you've the keys to the lot.",
+    "text": "The new owner. Say where, and I'll drive you.",
     "kind": "driver",
     "speaker": "ferko",
     "situation": "greeting.owner",
@@ -1243,7 +1243,7 @@
    {
     "t": 28.0,
     "id": "shopkeeper.greet-owner.03",
-    "text": "The new owner. We've been expecting you.",
+    "text": "The new owner. Anything you need, just ask.",
     "kind": "shopkeeper",
     "speaker": "marla",
     "situation": "greeting.owner",
@@ -1255,7 +1255,7 @@
     "waited": 0.0
    },
    {
-    "t": 31.6,
+    "t": 32.0,
     "id": "pensioner.farewell.05",
     "text": "I'll let you get on, dear.",
     "kind": "pensioner",
@@ -1266,7 +1266,7 @@
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
-    "waited": 0.6
+    "waited": 1.0
    },
    {
     "t": 44.2,
@@ -1313,7 +1313,7 @@
    {
     "t": 116.0,
     "id": "pensioner.greet-owner.01",
-    "text": "You'll be the new owner. I've heard so much.",
+    "text": "You'll be the new owner. How do you do, dear?",
     "kind": "pensioner",
     "speaker": "ada",
     "situation": "greeting.owner",
@@ -1537,7 +1537,7 @@
    {
     "t": 1497.4,
     "id": "casual_worker.greet-tom.04",
-    "text": "Tom. Is it true you've a rank to fill?",
+    "text": "Tom. Mornings or afternoons, I'm not fussy.",
     "kind": "casual_worker",
     "speaker": "tanja",
     "situation": "greeting.tom",
@@ -2072,11 +2072,11 @@
     2
    ],
    [
-    "You'll be the new owner. I've heard so much.",
+    "You'll be the new owner. How do you do, dear?",
     2
    ],
    [
-    "The new owner. We've been expecting you.",
+    "The new owner. Anything you need, just ask.",
     3
    ],
    [
@@ -2130,9 +2130,9 @@
   "attempts_not_played": 154,
   "not_played_by_reason": {
    "the chance roll failed": 138,
-   "shelf life": 5,
+   "shelf life": 6,
    "replaced while waiting by a higher priority": 5,
-   "a waiting line of equal or higher priority": 4,
+   "a waiting line of equal or higher priority": 3,
    "no eligible line": 2
   },
   "voice_drops": [
@@ -2207,17 +2207,17 @@
     "why": "replaced while waiting by a higher priority (ron.greet-nowak.02)"
    },
    {
-    "t": 1353.4,
+    "t": 1353.0,
     "situation": "farewell",
-    "speaker": "dario",
-    "id": "dock_worker.farewell.01",
-    "why": "a waiting line of equal or higher priority"
+    "speaker": "rita",
+    "id": "shopkeeper.farewell.04",
+    "why": "shelf life: would wait 3.3 s for the voice"
    },
    {
     "t": 1355.0,
     "situation": "farewell",
-    "speaker": "rita",
-    "id": "shopkeeper.farewell.04",
+    "speaker": "dario",
+    "id": "dock_worker.farewell.01",
     "why": "replaced while waiting by a higher priority (pensioner.greet-owner.05)"
    },
    {
@@ -2378,7 +2378,7 @@
    {
     "t": 115.0,
     "id": "pensioner.greet-owner.01",
-    "text": "You'll be the new owner. I've heard so much.",
+    "text": "You'll be the new owner. How do you do, dear?",
     "kind": "pensioner",
     "speaker": "ada",
     "situation": "greeting.owner",
@@ -2390,18 +2390,18 @@
     "waited": 0.0
    },
    {
-    "t": 119.3,
+    "t": 119.6,
     "id": "driver.greet-owner.07",
-    "text": "The new owner. They say you've the keys to the lot.",
+    "text": "The new owner. Say where, and I'll drive you.",
     "kind": "driver",
     "speaker": "ferko",
     "situation": "greeting.owner",
     "heard": true,
-    "dist": 5.7,
+    "dist": 5.1,
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
-    "waited": 0.0
+    "waited": 0.3
    },
    {
     "t": 127.7,
@@ -2420,7 +2420,7 @@
    {
     "t": 165.8,
     "id": "shopkeeper.greet-owner.03",
-    "text": "The new owner. We've been expecting you.",
+    "text": "The new owner. Anything you need, just ask.",
     "kind": "shopkeeper",
     "speaker": "victor",
     "situation": "greeting.owner",
@@ -2490,7 +2490,7 @@
    {
     "t": 302.6,
     "id": "shopkeeper.greet-owner.03",
-    "text": "The new owner. We've been expecting you.",
+    "text": "The new owner. Anything you need, just ask.",
     "kind": "shopkeeper",
     "speaker": "marta",
     "situation": "greeting.owner",
@@ -2714,7 +2714,7 @@
    {
     "t": 576.7,
     "id": "pensioner.greet-owner.02",
-    "text": "So you're the new owner. We'd heard you were coming.",
+    "text": "So you're the new owner. Take your time, dear.",
     "kind": "pensioner",
     "speaker": "vesna",
     "situation": "greeting.owner",
@@ -2726,18 +2726,18 @@
     "waited": 0.0
    },
    {
-    "t": 581.4,
+    "t": 581.0,
     "id": "pensioner.farewell.06",
     "text": "Goodbye, dear. Give my regards to nobody.",
     "kind": "pensioner",
     "speaker": "vesna",
     "situation": "farewell",
     "heard": false,
-    "dist": 7.8,
+    "dist": 7.2,
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
-    "waited": 1.1
+    "waited": 0.8
    },
    {
     "t": 591.5,
@@ -2868,7 +2868,7 @@
    {
     "t": 676.3,
     "id": "pensioner.greet-owner.01",
-    "text": "You'll be the new owner. I've heard so much.",
+    "text": "You'll be the new owner. How do you do, dear?",
     "kind": "pensioner",
     "speaker": "ada",
     "situation": "greeting.owner",
@@ -2880,7 +2880,7 @@
     "waited": 1.3
    },
    {
-    "t": 680.6,
+    "t": 680.9,
     "id": "shopkeeper.farewell.05",
     "text": "Cheerio, then.",
     "kind": "shopkeeper",
@@ -2891,7 +2891,7 @@
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
-    "waited": 2.6
+    "waited": 2.9
    },
    {
     "t": 703.2,
@@ -3050,7 +3050,7 @@
    {
     "t": 862.5,
     "id": "darren.greet-nowak.05",
-    "text": "Nowak! You've met half the street. I've met all.",
+    "text": "Nowak! Ask me who lives where. Go on.",
     "kind": "darren",
     "speaker": "sam",
     "situation": "greeting.nowak",
@@ -3414,7 +3414,7 @@
    {
     "t": 1349.0,
     "id": "shopkeeper.greet-owner.03",
-    "text": "The new owner. We've been expecting you.",
+    "text": "The new owner. Anything you need, just ask.",
     "kind": "shopkeeper",
     "speaker": "marla",
     "situation": "greeting.owner",
@@ -3426,7 +3426,7 @@
     "waited": 0.0
    },
    {
-    "t": 1352.6,
+    "t": 1353.0,
     "id": "ron.greet-nowak.02",
     "text": "Morning, boss. Gate's locked, rank's ready.",
     "kind": "ron",
@@ -3437,10 +3437,10 @@
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
-    "waited": 0.6
+    "waited": 1.0
    },
    {
-    "t": 1355.9,
+    "t": 1356.3,
     "id": "pensioner.greet-owner.05",
     "text": "Welcome, new owner. We're not as bad as we look.",
     "kind": "pensioner",
@@ -3451,7 +3451,7 @@
     "delivery": "normal",
     "weather": "dry",
     "sure": null,
-    "waited": 0.9
+    "waited": 1.3
    },
    {
     "t": 1386.4,
@@ -3610,7 +3610,7 @@
    {
     "t": 1578.0,
     "id": "pensioner.greet-owner.02",
-    "text": "So you're the new owner. We'd heard you were coming.",
+    "text": "So you're the new owner. Take your time, dear.",
     "kind": "pensioner",
     "speaker": "ada",
     "situation": "greeting.owner",
@@ -3848,7 +3848,7 @@
    {
     "t": 1773.4,
     "id": "shopkeeper.greet-owner.03",
-    "text": "The new owner. We've been expecting you.",
+    "text": "The new owner. Anything you need, just ask.",
     "kind": "shopkeeper",
     "speaker": "takeaway_m",
     "situation": "greeting.owner",
@@ -4000,14 +4000,14 @@
   },
   {
    "seed": 1996,
-   "lines_heard": 17,
-   "busiest_minute_without_crime_lines": 5,
-   "busiest_minute_heard": 5,
+   "lines_heard": 18,
+   "busiest_minute_without_crime_lines": 6,
+   "busiest_minute_heard": 6,
    "quiet_share": 0.6,
    "longest_gap_s": 555.5,
    "neighbour_min_gap_s": null,
    "heard_by_situation": {
-    "farewell": 3,
+    "farewell": 4,
     "greeting.nowak": 2,
     "greeting.owner": 8,
     "greeting.stranger": 2,
@@ -4332,14 +4332,14 @@
   },
   {
    "seed": 2015,
-   "lines_heard": 24,
+   "lines_heard": 25,
    "busiest_minute_without_crime_lines": 4,
    "busiest_minute_heard": 4,
    "quiet_share": 0.53,
    "longest_gap_s": 416.6,
    "neighbour_min_gap_s": null,
    "heard_by_situation": {
-    "asked_way": 1,
+    "asked_way": 2,
     "crime_noise": 2,
     "farewell": 6,
     "greeting.nowak": 2,

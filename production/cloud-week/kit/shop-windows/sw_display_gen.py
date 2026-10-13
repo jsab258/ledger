@@ -112,8 +112,8 @@ class GDisplay(RG.GRoom):
         self.items.append({"model": asset, "tier": tier, "scale": round(scale, 3), "ext": [round(float(x), 4) for x in ext], "objs": names})
         return ext, names
 
-    def gm_object(self, name, gm, mats, kind, model, tier="bed", scale=1.0, bevel=0.0):
-        ob = gm.to_object(name, mats, self.sc)
+    def gm_object(self, name, gm, mats, kind, model, tier="bed", scale=1.0, bevel=0.0, smooth=False):
+        ob = gm.to_object(name, mats, self.sc, smooth=smooth)
         ext = gm.extents()
         self.groups.append({"kind": kind, "model": model, "tier": tier, "objs": [ob.name]})
         if kind in ("scripted", "support"):
@@ -306,7 +306,14 @@ def layout_ironmonger(d):
         d.price_card(uc, 0.025, 0.0, k, uvs, pm)
 
 
-LAYOUTS = {"ironmonger": layout_ironmonger}
+def _lazy(mod, fn):
+    def f(d):
+        m = __import__(mod)
+        return getattr(m, fn)(d)
+    return f
+
+
+LAYOUTS = {"ironmonger": layout_ironmonger, "newsagent": _lazy("sw_shops_news", "display"), "tea_rooms": _lazy("sw_shops_tea", "display")}
 
 
 def build_display(work, out_dir, ctx, log=print):

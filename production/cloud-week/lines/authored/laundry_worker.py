@@ -30,7 +30,7 @@ LINES = {
         "The new owner, love. Don't be a stranger.",
     ],
     "greeting.nowak": [
-        "Mr Nowak. Pleased to see you, love.",
+        "Mr Nowak. Shirts, sheets, or just a chat?",
         "Morning, Mr Nowak. Mind the wet floor. @m",
         "Nowak. You look like a man needing shirts doing.",
         "Mr Nowak. Our best press, for you.",
