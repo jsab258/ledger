@@ -352,7 +352,7 @@ def main():
     # models inventory with marks
     MARKS = {
         "Television_01": ("'VTECH' logo on the front panel, a 'WARNING' label, a 'TRRA' plate: painted out to the case's grey; NOT USED (television_02 serves)", "looked at, not used"),
-        "television_02": ("a small rating plate on the back panel; 'PARAGON Viewing System' on the front bezel, left of the buttons (map at 1k, about x 272 to 300, y 450 to 560, lettered at 90 degrees: found by the review of 13 October, the writer had missed it): both painted out to the bezel's grey", "blank"),
+        "television_02": ("a small rating plate on the back panel; 'PARAGON Viewing System' on the front bezel, left of the buttons: both painted out to the bezel's grey (map at 1k, about x 272 to 300, y 450 to 560, lettered at 90 degrees: found by the review of 13 October; the first look had missed it)", "blank"),
         "wall_clock": ("'URBAN quartz' on the dial: painted out to the dial's white (a maker's name)", "blank"),
         "ceramic_vase_01": ("a barcode sticker on the body: painted out; NOT USED in a room (ceramic_vase_03 clean) ", "looked at, not used"),
         "ceramic_vase_03": ("none seen", "none"),
