@@ -90,11 +90,11 @@ GLASS = {
         "base_colour_room_linear": 0.03, "lace_albedo_factor": 0.6, "specular": 1.0, "f0": 0.08, "roughness": 0.03, "roughness_range": [0.02, 0.04], "metallic": 0.0, "day_emissive": 0.0,
         "cloud_stand_in": "Cycles Principled BSDF, NOT Glass BSDF: Base Color 0.03 (linear grey) with the net card's alpha as the mix, Specular IOR Level 1.0, Roughness 0.03, Transmission 0, Metallic 0, the room card (baked through `trace`) as Emission x (1 - Fresnel) x brightness; the opposite row and the sky dome are what it reflects (Cycles traces them; Lumen's reflections and the box-projected street cube are the game's)",
         "fresnel_two_face": {"90": 0.082, "30": 0.157, "24": 0.215, "18": 0.314, "16": 0.360, "10": 0.544, "8": 0.622},
-        "fresnel_note": "angle from the wall; float glass n 1.52, both faces, unpolarised, the reflections between the faces counted (Derived, recomputed by self_check.py: 1a's table is 0.02 to 0.03 higher at 16 to 30 degrees); Unreal's Specular 1 (F0 0.08, Schlick) gives 0.26 at 16 degrees, about three quarters of true: close enough",
+        "fresnel_note": "Unreal's Specular 1 (F0 0.08, Schlick) gives 0.26 at 16 degrees from the wall, about three quarters of the true two-face figure (0.36): close enough",
     },
     "waviness": {
         "what": "per-pane tilt, not a wave texture: each pane mesh is rotated by a seeded angle uniform in +-0.5 degrees about the vertical axis and +-0.3 degrees about the horizontal one (never zero, the spread of a window's panes at least 0.3 degrees)",
-        "photo": "P8 (Oxford rear, 1987): six panes of two original sashes read mean luma 86, 87, 99, 102, 105 (neighbouring panes differ by up to 19 levels, 10 per cent) and a smooth tone inside each pane (std 4 to 5 levels at 70 px a window): the glass is flat to the eye and each pane catches the sky differently",
+        "photo": "P8 (Oxford rear, 1987): the four panes of the two windows measured (the boxes of section 3.2) read mean luma 86, 100, 100 and 105 (19 levels apart, 18 per cent of the brightest); inside, three are flat to 1.2 to 1.4 levels (the central 60 per cent of the box) and the fourth, the right window's upper pane, carries a brighter patch (95th percentile 176): the glass is flat to the eye and each pane catches the sky differently",
         "no_wave_normal_map": True,
     },
     "dirt": "a 6 mm band round every pane's edge is roughened (roughness 0.35, base colour x 0.8): the putty line's dirt; the lowest 25 mm of each pane carries the same (water and dust on the bottom rail)",

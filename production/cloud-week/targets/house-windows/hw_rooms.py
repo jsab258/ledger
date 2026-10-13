@@ -29,7 +29,7 @@ FINISH = {
 # scripted flat forms (named); every one under the side/ceiling tolerated budget (0.06)
 FORMS = {
     "skirting": {"h": 0.15, "proud": 0.020, "surface": "side+back", "note": "painted white, on all three walls"},
-    "picture_rail": {"h": 0.040, "proud": 0.020, "z": 2.15, "surface": "side+back"},
+    "picture_rail": {"h": 0.040, "proud": 0.020, "z": 2.15, "surface": "side+back", "note": "a 40 mm timber rail painted white round the side and back walls at 2.15 m, 0.02 proud, with a dark shade line under it"},
     "coving": {"h": 0.055, "proud": 0.020, "surface": "ceiling edge", "note": "a cove drawn as a 55 mm band shaded like a cove, 0.02 proud (a real 55 mm cove is over the ceiling budget)"},
     "ceiling_rose": {"d": 0.30, "proud": 0.030, "surface": "ceiling", "note": "a plaster rose at the pendant's place: tolerated class on the ceiling (0.03 over 0.02, under 0.04)"},
     "bare_bulb": {"d": 0.06, "proud": 0.02, "surface": "ceiling", "note": "a flat glowing disc (a pendant of bare bulb on its flex: the flex is not drawn)"},

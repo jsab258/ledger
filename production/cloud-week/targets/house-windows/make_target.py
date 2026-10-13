@@ -167,7 +167,7 @@ def main():
             "room_family": s["family"], "w": room["w"], "h": room["h"], "d": room["d"], "camd": room["camd"], "side": s["side"],
             "centre_x": round(cx_card, 3), "x_low": x_low, "y_card_plane": y_card, "z_bottom_above_crown": floor_z, "z_top_above_crown": round(floor_z + room["h"], 3),
             "card_origin_cm": [round(x_low * 100, 1), round(y_card * 100, 1), round(floor_z * 100, 1)],
-            "room_size_cm": [room["w"] * 100, room["h"] * 100, room["d"] * 100], "cam_d_cm": room["camd"] * 100,
+            "room_size_cm": [round(room["w"] * 100, 1), round(room["h"] * 100, 1), round(room["d"] * 100, 1)], "cam_d_cm": round(room["camd"] * 100, 1),
             "window_in_card_m": {"x0": round(s["x_centre"] - 0.425 - x_low, 3), "x1": round(s["x_centre"] + 0.425 - x_low, 3),
                                  "z0": round(s["sill_z_above_crown"] - floor_z, 4), "z1": round(s["head_z_above_crown"] - floor_z, 4)},
             "window_offset_toward_picture_right_m": round(win_off_toward_picture_right, 3),
