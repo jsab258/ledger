@@ -4,14 +4,14 @@ House windows of Quay Street: twenty windows in ten houses (two over two, one ov
 
 **Status: written 13 October 2026, not yet reviewed.** Cloud week 42, part 2, unit 8, by the target writer, from sources reached that day. Nothing is built and nothing is committed. Every number below is in `target.json`; the checks that follow from it are its `checks` list and its `self_check` (not yet run).
 
-The lessons of unit 7's fresh review (TARGET-REVIEW.md of the shop windows) are applied from the start: every opening is covered above and around its parts (section 4.5); the toplights of the replacement are one transom and equal lights (4.3); no real firm's name is on any model's texture (every model's 1k base colour was looked at, section 7.6, and the checks include a final-texture check PIC-07); the night wash is the game's colour; the projection rule `trace` is the only source of what a room shows, with stand-off budgets derived again for these smaller rooms (3.3); the numbers are exact and the checks measurable (section 10); and every preview was looked at after it was written.
+The lessons of unit 7's fresh review (TARGET-REVIEW.md of the shop windows) are applied from the start: every opening is covered above and around its parts (section 4.5); the toplights of the replacement are one transom and equal lights (4.3); no real firm's name is on any model's texture (every model's 1k base colour was looked at, section 7.4, and the checks include a final-texture check PIC-07); the night wash is the game's colour; the projection rule `trace` is the only source of what a room shows, with stand-off budgets derived again for these smaller rooms (3.3); the numbers are exact and the checks measurable (section 10); and every preview was looked at after it was written.
 
 ## 0. Files, and how to read them
 
 | file | what it is |
 |---|---|
 | TARGET.md | this page (made by make_doc.py from target.json) |
-| target.json | the twenty sites, the kinds and their parts, the glass, the box's shade, the nets and drapes, the thirteen rooms with their objects and budgets, the inventory with each model's marks, the kit pieces' nodes, the gate, 44 checks, the photograph measurements, the overlay's edges, the lit table, `photographs_win`, `could_not_settle`, `owed_on_pc`, the self-check |
+| target.json | the twenty sites, the kinds and their parts, the glass, the box's shade, the nets and drapes, the thirteen rooms with their objects and budgets, the inventory with each model's marks, the kit pieces' nodes, the gate, 46 checks, the photograph measurements, the overlay's edges, the lit table, `photographs_win`, `could_not_settle`, `owed_on_pc`, the self-check |
 | target_drawing.py | draws target.json alone: each kind's elevation and sections, each room's picture layout and back wall, the row of twenty, and (with --photo) the 2/2 elevation laid on photograph P8; into a JSON of polygons (millimetres) and a folder of pictures |
 | self_check.py | tests the target against its own sources (it writes into target.json only with --write); 14 negative controls |
 | hw_common.py, hw_data.py, hw_rooms.py, hw_sites.py, hw_photos.py, hw_measure.py, hw_checks.py, make_target.py, make_doc.py, make_previews.py | author tools: the game's rule and the stand-off budgets; the glass, nets, paints; the rooms; the sites derived from terrace-front.py; the photographs, their crops and masks; the pane-to-frame measurement; the kit nodes, gate, checks; the builders of target.json, TARGET.md and the previews |
@@ -35,14 +35,14 @@ The street has **twenty house windows in ten houses**, and 48 more on the hill's
 - The hill: `backdrop_rise_approach_e`, `_w` and `_x` stand 2, 5 and 5 houses of CLIMB_HOUSE (two storeys, a 'plain' ground floor) through `plan_parts`: 48 windows by the same code, with a flat net card (one in three the lit `window_far_lit`). The north rise's framed windows (`_framed_window`, 125 m out) are two pixels of frame and stay flat cards.
 - **Six over six does not occur on the street** (no house is Georgian); two photographs show it on Georgian terraces (P10, 1983; P13, 1982). It is not built.
 
-**The twenty, by position.** *Kind by house* is what `_window_kind` gives the house; *built today* is what the recipe draws; *target* is what this unit makes. Every site gets the period opening 850 x 1676.4 (the ruling of 8 October: "1.68 m"), the head kept where it is, so the cottages' sills go from 1.0 to 0.8236 above the crown (0.7236 above the threshold; P6's ground sill stands 0.72 to 0.92 above the step, Photo ±0.1).
+**The twenty, by position.** *Kind by house* is what `_window_kind` gives the house; *built today* is what the recipe draws; *target* is what this unit makes. Every site gets the period opening 850 x 1676.4 (the ruling of 8 October: "1.68 m"), the head kept where it is, so the cottages' sills go from 1.0 to 0.8236 above the crown (0.7236 above the threshold). P6's ground bay window's sill stands 0.85 ±0.05 above its step (the door leaf 193 px = 1981 mm, the sill 83 px up): the cottages' sills are 0.13 lower than that, to keep the head and the arch clear of the eaves (D4; Jafar's to choose).
 
 | site | x | floor | kind by house | built today | target | paint | net | drape | room | lit 20:30 |
 |---|---|---|---|---|---|---|---|---|---|---|
 | east_parade_bay0_upper_w0 | 4.5 | upper | 2/2 | S22 kit | S22 | white_grimy (grimy) | N2/greyed | - | up_landing_1 | no |
 | east_parade_bay0_upper_w1 | 7.5 | upper | 2/2 | S22 kit | S22 | white_grimy (grimy) | N1/white | C2/cream | up_lounge_1 | yes |
-| east_parade_bay1_upper_w0 | 10.5 | upper | 1/1 | S11 kit | S11 | cream | N0 | B2/cream | up_landing_2 | no |
-| east_parade_bay1_upper_w1 | 13.5 | upper | 1/1 | S11 kit | S11 | cream | N1/white | C2/brown | up_bedroom_1 | no |
+| east_parade_bay1_upper_w0 | 10.5 | upper | 1/1 | S11 kit | S11 | brown | N0 | B2/cream | up_landing_2 | no |
+| east_parade_bay1_upper_w1 | 13.5 | upper | 1/1 | S11 kit | S11 | brown | N1/white | C2/brown | up_bedroom_1 | no |
 | east_parade_bay2_upper_w0 | 16.5 | upper | replacement | box replacement (frame_bronze) | RC | white_upvc | N1/greyed | C2/green | up_lounge_2 | no |
 | east_parade_bay2_upper_w1 | 19.5 | upper | replacement | box replacement (frame_bronze) | RC | white_upvc | N2/greyed | - | up_landing_1 | yes |
 | east_parade_bay3_upper_w0 | 22.5 | upper | 2/2 | S22 kit | S22 | white_flaking (flaking) | N1/yellowed | - | up_empty_1 | no |
@@ -218,6 +218,7 @@ The lab's kit has **41 nodes** in the S22 (1068 triangles, 72988 bytes) and 35 i
 | cream | [222, 204, 164] | [0.73, 0.6, 0.37] | 0.45 | P3's cream-painted sashes (frame sampled 181, 163, 131 in the sun and shade of the photograph, so the paint is lighter), P2's cream render |
 | olive | [136, 140, 64] | [0.246, 0.262, 0.052] | 0.45 | P12's two olive-green sashes (sampled 148, 153, 70); a painted window of a house that chose its own colour |
 | blue | [56, 92, 160] | [0.04, 0.107, 0.352] | 0.42 | P2's blue sashes (sampled 61, 87, 136), the tenants' own paint on a terrace of one owner |
+| brown | [84, 58, 42] | [0.089, 0.042, 0.023] | 0.42 | P1's four dark-brown sashes and P3's red-brown frames (sampled 141, 131, 115 and 162, 129, 119 in the sun): an oxide or brown gloss, the second commonest painted colour after white |
 | bronze | [74, 60, 52] | [0.05, 0.038, 0.03] | 0.35 | the street's frame_bronze (terrace-front.py): dark anodised aluminium; NOT seen in any reached photograph (D1), kept for the one metal-refit house |
 | white_upvc | [232, 231, 225] | [0.8, 0.792, 0.762] | 0.3 | white replacement frame, satin: P6, P7, P11 show white in every case (4 of 4) |
 
@@ -225,7 +226,7 @@ The lab's kit has **41 nodes** in the S22 (1068 triangles, 72988 bytes) and 35 i
 |---|---|---|---|
 | east_chandler_bay0 | RC | bronze | sound |
 | east_parade_bay0 | S22 | white_grimy | grimy |
-| east_parade_bay1 | S11 | cream | sound |
+| east_parade_bay1 | S11 | brown | sound |
 | east_parade_bay2 | RC | white_upvc | sound |
 | east_parade_bay3 | S22 | white_flaking | flaking |
 | east_parade_bay4 | RC | white_upvc | sound |
@@ -234,7 +235,7 @@ The lab's kit has **41 nodes** in the S22 (1068 triangles, 72988 bytes) and 35 i
 | west_south_bay1 | RC | white_upvc | sound |
 | west_south_bay2 | S22 | cream | sound |
 
-**Which the photographs support.** White paint is 55 per cent of the 60 windows; cream or ivory 12, dark or red-brown 13, olive 7, blue 8 (a council terrace painted by its tenants: P2). The 1980s and 1990s replacement is **white** in every photograph reached (P6, P7, P11): the brown or bronze anodised frame the street file draws for every replacement is not in one of them (D1). So the replacement is white satin by default and bronze for one house only, the ship chandler's (a metal-refit shop; Judgement, marked). A council replacement in the photographs is the Newburn casement (P11): a fixed light under a top-hung light, white, with nets and vertical drapes: it is the RC kind. **Condition:** `sound` is the paint as in the table; `grimy` multiplies the lower rail and sill by 0.85 and darkens the box's inside corners (the shade already does it) with a grime band 30 mm high along the sill; `flaking` (the unlet flat): 12 per cent of the area on the lower rails, the sill and the stiles' feet is flaked to grey primer (66, 60, 54) or bare timber (96, 66, 40).
+**Which the photographs support.** White paint is 55 per cent of the 60 windows; cream or ivory 12, dark brown or red-brown 13 (one house of ten is brown), olive 7, blue 8 (a council terrace painted by its tenants: P2). The 1980s and 1990s replacement is **white** in every photograph reached (P6, P7, P11): the brown or bronze anodised frame the street file draws for every replacement is not in one of them (D1). So the replacement is white satin by default and bronze for one house only, the ship chandler's (a metal-refit shop; Judgement, marked). A council replacement in the photographs is the Newburn casement (P11): a fixed light under a top-hung light, white, with nets and vertical drapes: it is the RC kind. **Condition:** `sound` is the paint as in the table; `grimy` multiplies the lower rail and sill by 0.85 and darkens the box's inside corners (the shade already does it) with a grime band 30 mm high along the sill; `flaking` (the unlet flat): 12 per cent of the area on the lower rails, the sill and the stiles' feet is flaked to grey primer (66, 60, 54) or bare timber (96, 66, 40).
 
 ### 4.3 The replacement casement (RC)
 
@@ -251,10 +252,10 @@ A fixed light under a top-hung light, no bars, in the same 850 x 1676.4 opening 
 | vent_sash_stile_R | [316.0, 361.0] | [80.5, 135.5] | [1246.0, 1612.4] | paint |
 | vent_sash_bottom_rail | [-316.0, 316.0] | [80.5, 135.5] | [1246.0, 1291.0] | paint |
 | vent_sash_top_rail | [-316.0, 316.0] | [80.5, 135.5] | [1567.4, 1612.4] | paint |
-| glass_lower | [-347.0, 347.0] | [112.5, 116.5] | [78.0, 1154.0] | glass_house |
-| glass_top | [-316.0, 316.0] | [112.5, 116.5] | [1291.0, 1567.4] | glass_house |
+| glass_lower | [-383.0, 383.0] | [112.5, 116.5] | [42.0, 1190.0] | glass_house |
+| glass_top | [-334.0, 334.0] | [112.5, 116.5] | [1273.0, 1585.4] | glass_house |
 
-Glass sightlines: lower [694.0, 1076.0], top [632.0, 276.4] (mm). The top light is hinged at its head and opens outward in the photographs (P11, P14: one stands open): a closed light is drawn; the open one is a variant the PC may add (not required).
+Glass sightlines: lower [730.0, 1112.0], top [632.0, 276.4] (mm). The top light is hinged at its head and opens outward in the photographs (P11, P14: one stands open): a closed light is drawn; the open one is a variant the PC may add (not required).
 
 ### 4.4 Sills, heads and arches, and what the kit does not carry
 
@@ -479,8 +480,8 @@ a window is lit at hour h when its place in the lit order is below round(share(h
 
 | node | material | x (mm) | y into the wall (mm) | z up (mm) | note |
 |---|---|---|---|---|---|
-| glass__lower | glass_house | [-347.0, 347.0] | [112.5, 116.5] | [78.0, 1154.0] | 4 mm, one pane drawn for the sealed unit |
-| glass__top | glass_house | [-316.0, 316.0] | [112.5, 116.5] | [1291.0, 1567.4] | 4 mm, one pane drawn for the sealed unit |
+| glass__lower | glass_house | [-383.0, 383.0] | [112.5, 116.5] | [42.0, 1190.0] | 4 mm, one pane drawn for the sealed unit |
+| glass__top | glass_house | [-334.0, 334.0] | [112.5, 116.5] | [1273.0, 1585.4] | 4 mm, one pane drawn for the sealed unit |
 | net__N1 | net_voile | [-450, 450] | [235, 236] | [60, 880] | a flat card, alpha = the weave and folds (NET_COMMON); one of N1, N2, N3 or none is switched on per house |
 | net__N2 | net_voile | [-450, 450] | [235, 236] | [60, 1630] | a flat card, alpha = the weave and folds (NET_COMMON); one of N1, N2, N3 or none is switched on per house |
 | net__N3 | net_voile | [-430, 430] | [235, 236] | [100, 500] | a flat card, alpha = the weave and folds (NET_COMMON); one of N1, N2, N3 or none is switched on per house |
@@ -536,7 +537,7 @@ what the cloud shows without Unreal: a house front built from the kit pieces, it
 
 ## 10. Checks (target.json `checks`; the cloud gate and the build run them)
 
-44 checks. Kinds of number: Read, Scaled, Photo, Derived, Judgement.
+46 checks. Kinds of number: Read, Scaled, Photo, Derived, Judgement.
 
 | id | name | measure | expected | tolerance | applies to | kind | source |
 |---|---|---|---|---|---|---|---|
@@ -552,6 +553,8 @@ what the cloud shows without Unreal: a house front built from the kit pieces, it
 | KIT-10 | the dark lines are wide enough | every shade step or gap that the box draws as a line (putty strip, parting bead gap, weld groove, gasket) | at least 6 mm wide (the putty strip 6.4, the parting bead gap 2.0 stays a geometric gap of 2 mm with its shade painted 0.10 over 6 mm of each side) | >= 6 mm | S22 S11 RC | Derived | 1a: 1 px = 5.9 mm at 10 m |
 | KIT-11 | budget | triangles and file size per kit glb | <= 6,000 triangles and <= 400,000 bytes | limit | S22 S11 RC | Judgement | push guard 1 MB |
 | KIT-12 | RC parts | the RC nodes' bounds against target.kinds.RC.parts_mm | every part within | +-0.5 mm | RC | Judgement | photographs P6, P7, P11 |
+| KIT-14 | equal lights, centred bars | the x extents of every pane node, the bar's centre, the RC's transom | S22: four panes of equal width (352.6 +-0.5), the bar and the putty strips centred on x = 0 (+-0.5); S11: two panes equal; RC: both lights centred on x = 0 (+-0.5), the transom's centre at 0.72 x 1676.4 = 1207.0 (+-1) | +-0.5 mm | S22 S11 RC | Photo | P8: the bar at 0.500 of the width; unit 7's review, narrow point 1 (unaligned toplights) |
+| KIT-15 | no opening in the front | rasterise the elevation drawn from the kit's nodes at 1 mm: every point of the opening 850 x 1676.4 lies on a part (frame, sash, lining, bead, glass sheet) | the largest uncovered square is at most 5 x 5 mm (the S22's 1.6 side clearance and the RC's 4 mm gap are the only gaps) | <= 5 mm | S22 S11 RC | Derived | unit 7's review, fault 1 (a 1.95 m x 0.45 m hole) |
 | KIT-13 | paint and material names | material names on the nodes | paint_<name> per `paints`, glass_house, net_voile, curtain, blind, pendant_shade | exact | all | Derived | HANDOVER.md step 3 |
 | MAT-01 | the pane material | the pane material's inputs in the build and in the cloud stand-in | specular 1.0 (F0 0.08; Cycles specular IOR level 1.0), roughness 0.03, metallic 0, transmission 0, base colour 0.03 where the net's alpha is 0 | +-0.02 (roughness 0.02 to 0.04) | all panes | Read | 1a step 1; unreal-look.json glass_roughness 0.02 |
 | MAT-02 | no day glow | the pane's emission by day | 0 (the net is not emissive by day: net_day_gain 0.0) | exact | all | Read | unreal-look.json net_day_gain |
@@ -582,7 +585,7 @@ what the cloud shows without Unreal: a house front built from the kit pieces, it
 | SITE-01 | the twenty openings | the derived list of terrace-front.py's windows re-derived live | 20 sites, centres and kinds as sites[]; the cottage windows' kind by house | +-1 mm | 20 sites | Read | terrace-front.py plan_street, _window_kind |
 | SITE-02 | no visible repeat | along each row, any two windows within three places | never the same (room, net kind, curtain) triple, never the same paint on neighbouring houses unless white | exact | sites | Judgement | variants |
 | SITE-03 | the mix | the street's twenty windows by net class | N0 4 to 5, N1 8 to 10, N2 3 to 5, N3 1; curtains (open beside a net, or drawn) and blinds 6 to 10 of the 20 | counts | 20 sites | Photo | tally |
-| SITE-04 | paint | houses by paint | white (any kind) 5 to 7 of 10, cream 2, olive 1, blue 1, bronze 1 | counts | 10 houses | Photo | paint_tally |
+| SITE-04 | paint | houses by paint | white (any kind) 5 to 7 of 10, cream 1, brown 1, olive 1, blue 1, bronze 1 | counts | 10 houses | Photo | paint_tally |
 | CONTENT-01 | the content rule | every string of target.json, every picture, every preview | no alcohol, gambling, child; no real firm's name; tobacco allowed | none | all | Derived | canon.md; CLAUDE.md |
 
 **Owed on the PC** (the cloud cannot show them):
@@ -600,7 +603,7 @@ what the cloud shows without Unreal: a house front built from the kit pieces, it
 | D1 | the replacement frame's colour | dark anodised bronze (frame_bronze) for every replacement (terrace-front.py _sash) | white in all four replacement windows reached (P6, P7, P11, and P6's ground bay): none brown or bronze | white satin (white_upvc) by default; bronze kept for the one metal-refit house (the ship chandler's, whose front is aluminium: Judgement, D06 'Hook shops receive metal frames'); not Jafar's ruling: the asset plan's |
 | D2 | the nets | one square mesh picture over the whole pane (net_curtain_a, _b: 7 to 10 mm squares, mean alpha 0.53), alternated by house | about half the windows have a voile on the lower sash only (47 of 60), the upper sash clear; full nets 22 per cent; bare 18 per cent; curtains 10; blinds 2 | six net and drape kinds, per house, with the mix of the photographs; the two held pictures are not used |
 | D3 | the pane | the net card is the pane: lit lace over a pale card, F0 0.04 (the 8 October note) | every bare window reads dark (0.19 to 0.36 of its frame) and the room shows; a net reads 0.6 to 0.97 of the frame with lines round it | glass over a dark room, the net a separate card (1a) |
-| D4 | the cottages' windows | all six drawn as 2/2 box sashes 1.5 high (the per-house kind is not read on the ground floor) | the ground windows of P1, P3, P4, P12 are the same sashes as the floor above; P6's ground sill stands 0.72 to 0.92 above the step (Photo: door leaf 195 px = 1.98 m) | the house's own kind and the period opening 1676.4 with the head kept (sill 0.7236 above the threshold) |
+| D4 | the cottages' windows | all six drawn as 2/2 box sashes 1.5 high (the per-house kind is not read on the ground floor); sill 0.9 above the threshold, head 2.4 (the 3 October rule: arches clear the eaves) | the ground windows of P1, P3, P4, P12 are the same kinds of sash as the floor above; P6's ground bay window's sill stands 0.85 +-0.05 above the step (Photo: the door leaf is 193 px = 1981 mm, the sill 83 px above the step) | the house's own kind and the period opening 1676.4 with the head kept at 2.5 above the crown: the sill 0.7236 above the threshold, 0.13 lower than P6's 0.85; the alternative (sill 0.9, head 2.676, the arch's top at 3.01 under the eaves at 3.1) leaves 9 cm of brick under the eaves and is Jafar's to choose (could_not_settle) |
 | D5 | six over six | none | P10 (Copenhagen Street, Georgian, 1983) and P13 (Prince Street, Hull, 1982) show it, on Georgian terraces; no house of Quay Street is Georgian | not built; listed as the sash kind a Georgian house would need |
 | D6 | the glazing bar | 22.2 mm (the lab's amended value) | P8 (Oxford, 1987): the bar is 2.3 px wide on a window 71.9 px wide = 27 mm (+-6) | 22.2 kept: inside the error |
 | D7 | the frame's visible width | 76.2 (3 in, the ruling) | P8, the BACK of a terrace (plain, no outer lining): the visible white jamb is 3.1 to 4.0 px of 71.9 = 37 to 47 mm; the lab's P6 (a front, Tottenham) 79 mm | 76.2 kept for the fronts (the ruling); a rear window narrower, not on this street |
@@ -618,7 +621,7 @@ what the cloud shows without Unreal: a house front built from the kit pieces, it
 - A sealed double-glazed unit's four reflecting faces (about 0.14 at normal incidence) cannot be reached by Unreal's Specular 1.0 (F0 0.08): the replacement's pane under-reflects; the cure (an emissive sky term) is a PC tuning, listed in owed_on_pc.
 - How the game's Lumen reflections and the street cube show on the pane (the box projection, the Fresnel hand-over) is not shown by the cloud: the cloud's pane reflects the proxies and the dome through Cycles.
 - The rooms' contents were chosen from 44 Poly Haven models and 17 textures; none shows a period British room: no 1975 to 1995 photograph of a domestic interior was reached, so the rooms rest on the photographs' windows (nets, drapes, a pot plant, a dark room) and on the budgets, not on a room photograph.
-- Whether Jafar wants the kit for the whole street at the period height (the cottages' sills lowered by 0.176 m) is his: the ruling of 8 October is followed here for every row; the PC session widens SASH_KIT_ROWS.
+- Whether the cottages take the period height with the head kept (sill 0.7236 above the threshold: 0.13 under P6's 0.85) or with the sill kept (0.9, the head raised to 2.676 above the threshold, the arch left 9 cm of brick under the eaves) is Jafar's: the ruling of 8 October (1.68 m) is followed for every row with the head kept; the PC session widens SASH_KIT_ROWS.
 - Six over six is not on the street and was not built.
 - The backdrop rows (48 windows) take the same pieces with no pictures: their paint and lit pane are rules, not a table.
 
