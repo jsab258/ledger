@@ -1,1 +1,0 @@
-- PC-02 as Rita's (the game's own lamps and footway pool); the game's whitewash material (the cloud's is an opaque textured pane).

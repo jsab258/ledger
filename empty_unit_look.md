@@ -1,2 +1,0 @@
-- Street: STREET_SQUARE by day and at night: the whitewash reads as whitewash (pale, streaked, not a lit window), the letting board askew, the number 7 on the glass, nothing glowing through the glass at night.
-- Close: CLOSE_35: the whitewash at 100 per cent against the bars (strokes crossing a bar), the fascia's wear, the black doors in their shade.

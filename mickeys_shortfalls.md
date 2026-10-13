@@ -1,4 +1,0 @@
-- Only the front: the room (approved, walked) and any window display are not built here, so Mickey's glass shows a flat card in the gate; what a street reviewer sees through it is not the shop.
-- The door is shut and the shop is shown lit at night from the card only: its real night (dark until Tom's key, then open to 3 am) needs the game's own states.
-- The gilt letters are plain gilt (no gilding wear); the tile pattern is the 4.1 print.
-- Rows that need the stand-in card to look like a room (LIT-02, LIT-05, LIT-08, DSP, ROOM, INV) are n/a here.

@@ -1,1 +1,0 @@
-- The real room's card through the game's own `trace` (PC-01), the game's night and the key's state, the glass, the wear layer; the sign's night lighting (the hours put it open to 3 am).
