@@ -7528,7 +7528,7 @@
     "licence": "CC0 (Poly Haven)",
     "gltf_1k": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/television_02/television_02_1k.gltf",
     "base_colour_maps_looked_at_1k": 1,
-    "marks": "a small rating plate on the back panel; 'PARAGON Viewing System' on the front bezel, left of the buttons (map at 1k, about x 272 to 300, y 450 to 560, lettered at 90 degrees: found by the review of 13 October, the writer had missed it): both painted out to the bezel's grey",
+    "marks": "a small rating plate on the back panel; 'PARAGON Viewing System' on the front bezel, left of the buttons: both painted out to the bezel's grey (map at 1k, about x 272 to 300, y 450 to 560, lettered at 90 degrees: found by the review of 13 October; the first look had missed it)",
     "status": "blank",
     "used_in_rooms": [
      "gf_front_1"

@@ -456,7 +456,7 @@ A window is lit at hour h when its place in the lit order is below round(share(h
 | sofa_03 | [2731.2, 925.1, 1118.3] | 8004 | - | looked at, not used | none (a cushion pattern square); 1.12 deep: NOT USED |
 | standing_picture_frame_01 | [200.8, 100.3, 249.7] | 1634 | - | looked at, not used | artwork is a modern canal photograph with a car of the 2010s: NOT USED |
 | standing_picture_frame_02 | [216.9, 102.3, 266.4] | 2986 | - | looked at, not used | artwork is a beach scene with small figures: NOT USED |
-| television_02 | [399.7, 350.2, 411.4] | 2310 | gf_front_1 | blank | a small rating plate on the back panel; 'PARAGON Viewing System' on the front bezel, left of the buttons (map at 1k, about x 272 to 300, y 450 to 560, lettered at 90 degrees: found by the review of 13 October, the writer had missed it): both painted out to the bezel's grey |
+| television_02 | [399.7, 350.2, 411.4] | 2310 | gf_front_1 | blank | a small rating plate on the back panel; 'PARAGON Viewing System' on the front bezel, left of the buttons: both painted out to the bezel's grey (map at 1k, about x 272 to 300, y 450 to 560, lettered at 90 degrees: found by the review of 13 October; the first look had missed it) |
 | throw_pillows_01 | [1021.6, 627.5, 450.2] | 6362 | - | looked at, not used | none |
 | vintage_cabinet_01 | [2021.8, 669.8, 2235.1] | 61096 | up_bedroom_1, up_lounge_2 | none | none (a cream paper sheet with a hexagon pattern on map a) |
 | vintage_day_bed | [1972.6, 854.8, 1127.3] | 2715 | - | looked at, not used | none; 0.855 deep: NOT USED |
