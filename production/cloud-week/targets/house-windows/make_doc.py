@@ -295,7 +295,7 @@ w("The stone sill (127 high, 50.8 proud, 76.2 wider each side than the opening),
 w()
 w("### 4.5 Nothing left open")
 w()
-w("Every opening is covered above and around its parts: the opening is 850 x 1676.4 and the frame's outer lining runs 65 mm beyond it each side behind the brick (S22/S11), or the RC's jambs fill it to the brick (60 face); the head is the lab's head lining (S22/S11) or the RC's head rail; nothing is left bare between the head and the stone arch (the arch's soffit and the brick return are the wall kit's, as the shopfront's were), and between the sill and the oak sill the sash's bottom rail runs to the stone sill. The self-check KIT rows confirm that every pane and every net lies inside the opening and that no RC member overlaps another; the drawing (target_drawing.py) shows the opening covered.")
+w("Every opening is covered above and around its parts: the opening is 850 x 1676.4 and the frame's outer lining runs 65 mm beyond it each side behind the brick (S22/S11), or the jambs of RC and RC2 fill it to the brick (60 face); the head is the lab's head lining (S22/S11) or the RC's head rail; nothing is left bare between the head and the stone arch (the arch's soffit and the brick return are the wall kit's, as the shopfront's were), and between the sill and the oak sill the sash's bottom rail runs to the stone sill. The self-check KIT rows confirm that every pane and every net lies inside the opening and that no RC member overlaps another; the drawing (target_drawing.py) shows the opening covered.")
 w()
 
 # ---------------------------------------------------------------------------------------------------------------------------
@@ -534,7 +534,7 @@ w("In `production/previews/cloud-week/refs/house-windows/` (JPEG, at most 1200 p
 w()
 rows = [[p["id"], p["preview"].split("/")[-1], "crop %s" % (p["crop"],), "; ".join(m["what"] for m in p["masks"]) or "none needed"] for p in t["sources"]["photographs"]]
 rows.append(["overlay", "p8-oxford-sunningwell-road-rear-1987-target-on-photo.jpg", "P8's left window with the S22 elevation laid on at the width scale (yellow: the opening; red: the sash members; green: the panes)", "none"])
-rows.append(["sheet", "measured-windows-sheet.jpg", "the 18 windows measured, outline red and pane green", "none"])
+rows.append(["sheet", "measured-windows-sheet.jpg", "the 18 windows measured, outline red and pane green (P1_a, P1_b and P1_e boxed without the stone head and sill and the brick column, as the review boxes them)", "none"])
 table(["ref", "file", "crop", "masked"], rows)
 open(os.path.join(HERE, "TARGET.md"), "w").write("\n".join(L) + "\n")
 print("TARGET.md written,", len(L), "lines,", sum(len(x) for x in L), "characters")
