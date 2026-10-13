@@ -10,6 +10,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(HERE))
 import sd_lib as L
 import sd_check as K
+import sd_place as PL
 
 V = "KX1"
 
@@ -19,12 +20,38 @@ def extra(T, rows):
     lo, hi = ps.bbox(only=[n for n in ps.names if n != "f_pull"])
     depth = hi[1] - lo[1]
     pl = T["placement"]
-    # the clear strip from the target's own numbers
-    kiosk_face = pl["stallriser_line_z_m"] * 1000.0 - depth
-    clear = kiosk_face - pl["kerb_back_z_m"] * 1000.0
-    rows.near("placement", "placement/clear strip is derived from the kiosk's own depth", clear, pl["clear_strip_mm"], 1.0)
-    rows.at_least("placement", "placement/the strip is at least a walking person", clear, pl["min_clear_mm"])
-    rows.near("placement", "placement/the stated face range matches", kiosk_face / 1000.0, pl["kiosk_face_z_m"][0], 0.001, unit="m")
+    pose = pl["poses"][0]
+    # the slot from the pose and the built parts (not from the target's own sentence)
+    prisms, base = PL.object_prisms(T, pose)
+    body = [q for q in prisms if q.part != "f_pull"]
+    from shapely.ops import unary_union
+    b = unary_union([q.poly for q in body]).bounds        # x0, z0, x1, z1 of the box without the pull
+    full = unary_union([q.poly for q in prisms]).bounds
+    rows.near("placement", "placement/the box's faces fall where the target states (z)", b[1], pl["kiosk_face_z_m"][0], 0.002, unit="m")
+    rows.near("placement", "placement/the box's far face falls where the target states (z)", b[3], pl["kiosk_face_z_m"][1], 0.002, unit="m")
+    rows.near("placement", "placement/the box is 890 deep on the street's z", (b[3] - b[1]) * 1000.0, depth, 1.5)
+    rows.near("placement", "placement/clear strip behind the door is derived from the parts and the stallriser line", (pl["stallriser_line_z_m"] - b[3]) * 1000.0, pl["clear_strip_mm"], 1.0)
+    rows.near("placement", "placement/105 mm remain between the kerb's back edge and the box's road face", (b[1] - pl["kerb_back_z_m"]) * 1000.0, pl["to_kerb_back_edge_mm"], 1.0)
+    rows.near("placement", "placement/the strip at the pull is stated", (pl["stallriser_line_z_m"] - full[3]) * 1000.0, pl["clear_strip_at_pull_mm"], 1.0)
+    rows.at_least("placement", "placement/the strip is at least a walking person", (pl["stallriser_line_z_m"] - full[3]) * 1000.0, pl["min_clear_mm"])
+    # C9: the place
+    rows.add("placement", "placement/C9 the kiosk stands at x 16.5 +-0.05, centre z 3.675 +-0.05, door to +z",
+             abs(pose["x_m"] - 16.5) <= 0.05 and abs(pose["z_m"] - 3.675) <= 0.05 and PL.direction_name(PL.front_direction(pose)) == "+z" and
+             abs(0.5 * (b[0] + b[2]) - 16.5) <= 0.05 and abs(0.5 * (b[1] + b[3]) - 3.675) <= 0.05,
+             "pose x %.3f z %.3f, yaw %.0f, front to %s; the built box's centre x %.3f z %.3f" % (pose["x_m"], pose["z_m"], pose["yaw_deg"], PL.direction_name(PL.front_direction(pose)), 0.5 * (b[0] + b[2]), 0.5 * (b[1] + b[3])))
+    rows.add("placement", "placement/the target's checks list C9", any(c["name"].startswith("C9") for c in T["checks"]), "")
+    rows.add("placement", "placement/no move is put to Jafar (no owed line asks for one)", not any(("move" in o["line"].lower() or "23.5" in o["line"]) for o in T["owed"]) and all(o["id"] != "O2" for o in T["owed"]), "owed: %s" % [o["id"] for o in T["owed"]])
+    # the town's own place for the kiosk lies beyond the door, outside the box, inside the strip
+    hc = os.path.join(L.REPO, pl["town_place"]["file"])
+    if os.path.exists(hc):
+        pk = json.load(open(hc))["places"][pl["town_place"]["place"]]
+        inside = full[0] <= pk["x_m"] <= full[2] and full[1] <= pk["z_m"] <= full[3]
+        rows.add("placement", "placement/the town's kiosk place (hook-cast places.kiosk) is outside the box", not inside and abs(pk["x_m"] - pl["town_place"]["x_m"]) < 0.01 and abs(pk["z_m"] - pl["town_place"]["z_m"]) < 0.01,
+                 "place (%.2f, %.2f); the box with its pull spans x %.3f to %.3f, z %.3f to %.3f" % (pk["x_m"], pk["z_m"], full[0], full[2], full[1], full[3]))
+        rows.add("placement", "placement/the place lies beyond the door and inside the strip, 0.10 m or more clear of the pull", pk["z_m"] - full[3] >= 0.10 and pk["z_m"] < pl["stallriser_line_z_m"] - 0.3 and abs(pk["x_m"] - 0.5 * (b[0] + b[2])) <= 0.5,
+                 "%.0f mm beyond the pull, %.0f mm from the stallriser line" % ((pk["z_m"] - full[3]) * 1000, (pl["stallriser_line_z_m"] - pk["z_m"]) * 1000))
+    else:
+        rows.add("placement", "placement/hook-cast.json is present", False, hc)
     # the pull stands 28 proud of the band, the band 10 proud of the frame, three hinges
     pull_lo, _ = ps.part_bbox("f_pull")
     band_lo, _ = ps.part_bbox("f_band")
@@ -65,23 +92,35 @@ def extra(T, rows):
         sc = json.load(open(sc_path))
         e3 = [f for f in sc["furniture"] if f.get("bom") == "E3_telephone_kiosk"][0]
         rows.add("reuse", "reuse/the scene's kiosk is the older proportions (plan 0.914, height 2.515)", abs(e3["plan_m"] * 1000 - 914) < 1 and abs(e3["height_m"] * 1000 - 2515) < 1, str((e3["plan_m"], e3["height_m"])))
-        rows.add("reuse", "reuse/the scene's setback leaves less than a walking person", (2000 - e3["setback_from_kerb_m"] * 1000 - e3["plan_m"] * 1000) < pl["min_clear_mm"], "%.0f mm" % (2000 - e3["setback_from_kerb_m"] * 1000 - e3["plan_m"] * 1000))
-        # Rita's bay: the scene's x lies within bay 2 (x 15 to 21); the target's does not
-        rows.add("placement", "placement/the old x stands in Rita's bay and the new x does not", 15.0 <= e3["x_m"] <= 21.0 and not (15.0 <= pl["x_centre_m"] <= 21.0), "old %.1f new %.1f" % (e3["x_m"], pl["x_centre_m"]))
-        rows.add("placement", "placement/the new x stands in bay 3 (x 21 to 27), the empty unit", 21.0 <= pl["x_centre_m"] - 0.445 and pl["x_centre_m"] + 0.445 <= 27.0, "%.2f to %.2f" % (pl["x_centre_m"] - 0.445, pl["x_centre_m"] + 0.445))
+        # the scene's set-back is to the kiosk's CENTRE: its own plinth faces leave more than a walking person behind
+        pz = [p for p in json.load(open(os.path.join(L.REPO, "production", "specs", "vignette-pieces.json")))["pieces"] if p["name"] == "kiosk_plinth"][0]
+        face = pz["z_m"] + pz["sz_m"] / 2.0
+        rows.add("placement", "placement/the scene's 0.55 m set-back is to the centre: its plinth leaves 0.68 m or more behind it", (pl["stallriser_line_z_m"] - face) >= 0.68 and abs(pz["z_m"] - (pl["kerb_back_z_m"] + e3["setback_from_kerb_m"])) < 0.005,
+                 "plinth centre z %.3f = kerb back %.3f + set-back %.2f; far face %.3f; %.0f mm behind it" % (pz["z_m"], pl["kerb_back_z_m"], e3["setback_from_kerb_m"], face, (pl["stallriser_line_z_m"] - face) * 1000))
+        rows.add("placement", "placement/the pose's x is the scene's x (the slot is kept)", abs(e3["x_m"] - pose["x_m"]) < 0.01 and abs(pz["z_m"] - pose["z_m"]) < 0.01, "scene x %.2f z %.3f, pose x %.2f z %.3f" % (e3["x_m"], pz["z_m"], pose["x_m"], pose["z_m"]))
 
 
 def extra_controls(T):
     def ch(t, key, val):
         t["placement"][key] = val
 
-    def bad_setback(t):
-        t["placement"]["stallriser_line_z_m"] = 3.125 + 0.55 + 0.89 + 0.0  # the scene's set-back
-        t["placement"]["kiosk_face_z_m"][0] = 3.125 + 0.55
+    old_slot = dict(x_m=23.5, z_m=4.53, yaw_deg=0.0)   # the first version's slot: x 23.5, the door to the road
+
+    def second_o1(t):
+        t["owed"].append({"id": "O1b", "line": "Move the phone box from before Rita's window to before the empty unit, 7 m up the street (east x 23.5)?", "recommended": "Yes, move it"})
     C = [
-        ("placement: the scene's 0.55 m set-back put back", bad_setback, "placement/the strip is at least a walking person"),
-        ("placement: the clear strip stated wrongly", lambda t: ch(t, "clear_strip_mm", 560.0), "placement/clear strip is derived"),
-        ("placement: the box moved back before Rita's window", lambda t: ch(t, "x_centre_m", 16.5), "placement/the new x stands in bay 3"),
+        PL.ctl("placement: the first version's slot (x 23.5) lies under the empty unit's awning and against its wall", "kiosk", "place/kiosk/clear of every street piece", **old_slot),
+        PL.ctl("placement: the first version's slot (x 23.5) stands across the empty unit's shop door", "kiosk", "place/kiosk/clear of every shop and house door zone", **old_slot),
+        PL.ctl("placement: the first version's slot (x 23.5) leaves under 0.68 m under the awning's valance", "kiosk", "place/kiosk/walking strip", **old_slot),
+        PL.ctl("placement: the first version's slot (x 23.5) leaves under 0.68 m at head height", "kiosk", "place/kiosk/head-height strip", **old_slot),
+        PL.ctl("placement: the door turned to the road again (yaw 0)", "kiosk", "place/kiosk/front faces", yaw_deg=0.0),
+        PL.ctl("placement: the box set in the carriageway (z 2.0)", "kiosk", "place/kiosk/feet lie in zone", z_m=2.0),
+        PL.ctl("placement: the box moved 0.5 m along the street (C9 asks x 16.5 +-0.05)", "kiosk", "placement/C9", x_m=17.0),
+        PL.ctl_copies_across("placement: a fence of copies across the footway leaves no walking strip", "kiosk", "place/kiosk/walking strip"),
+        ("placement: the clear strip stated as the first version's 960", lambda t: t["placement"].__setitem__("clear_strip_mm", 960.0), "placement/clear strip behind the door is derived"),
+        ("placement: the old wrong 0.56 m reason put back as the strip", lambda t: t["placement"].__setitem__("clear_strip_at_pull_mm", 560.0), "placement/the strip at the pull is stated"),
+        ("placement: the town's kiosk place moved into the box (z 4.1)", lambda t: t["placement"]["town_place"].__setitem__("z_m", 4.1), "placement/the town's kiosk place"),
+        ("owed: the move put to Jafar again", second_o1, "placement/no move is put to Jafar"),
         ("detail: the pull only 10 mm out", lambda t: K.shift_part(t, V, "f_pull", [0, 18, 0]), "detail/the pull stands 28 mm"),
         ("detail: a hinge removed", lambda t: K.drop_part(t, V, "f_hinge3"), "detail/three hinges"),
         ("detail: the header word changed", lambda t: t["text"].__setitem__("header_word", "Telephone Kiosk"), "detail/the header word"),

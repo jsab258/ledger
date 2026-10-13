@@ -14,7 +14,7 @@ PM = json.load(open(os.path.join(HERE, "photo_measurements.json")))
 F = PM["features"]
 Q, QI, QG = 435.0, 395.0, 343.0   # post outer half width, post inner, glazing half width (the 1990 kiosk is square)
 LID = 445.0
-Z_TOP, Z_SKIRT, Z_HEAD, Z_BAND1, Z_BAND0, Z_RAILT, Z_RAILB = 2192.0, 2092.0, 1822.0, 1051.0, 906.0, 240.0, 172.0
+Z_TOP, Z_SKIRT, Z_HEAD, Z_BAND1, Z_BAND0, Z_RAILT, Z_RAILB = 2192.0, 2092.0, 1822.0, 1051.0, 906.0, 231.0, 163.0   # the foot gap is P1's own 163 (48 px), the rail 68 high
 
 
 def kx_parts(door=True):
@@ -123,11 +123,11 @@ def build():
              "measure": {"kind": "extent", "axis": "z", "part": "lid_skirt_front"}},
             {"id": "N5", "what": "header height", "value": 270.0, "kind": "Photo", "source": "P1 rows cap_bottom 96.3 to header_bottom 176.0 (79.7 px) at 3.40 mm per px; error 15 mm", "tol": 15.0,
              "measure": {"kind": "extent", "axis": "z", "part": "f_header"}},
-            {"id": "N6", "what": "handle band height", "value": 145.0, "kind": "Photo", "source": "P1 rows band_top 402.6 to band_bottom 445.3 (42.7 px); error 12 mm", "tol": 12.0,
+            {"id": "N6", "what": "handle band height", "value": 145.0, "kind": "Photo", "source": "P1 rows band_top 402.6 to band_bottom 445.3 (42.7 px); error 12 mm. P1's middle band is BLACK (post-1991 livery), so only its height comes from P1; the panel's form (the full-width moulded panel with a pull) comes from S2", "tol": 12.0,
              "measure": {"kind": "extent", "axis": "z", "part": "f_band"}},
             {"id": "N7", "what": "band centre above the ground", "value": 978.5, "kind": "Photo", "source": "P1 band centre row 424.0, scale from the lid top (67.1) to the bottom rail's lower edge (661.2); error 20 mm", "tol": 20.0,
              "measure": {"kind": "centre_z", "part": "f_band"}},
-            {"id": "N8", "what": "gap between the bottom rail and the ground", "value": 172.0, "kind": "Photo", "source": "P1 post feet row about 709 (+-9) against rail_bottom 661.2: 48 px = 163 mm; 172 kept (+-35)", "tol": 35.0,
+            {"id": "N8", "what": "gap between the bottom rail and the ground", "value": 163.0, "kind": "Photo", "source": "P1: post feet row about 709 (+-9) against rail_bottom 661.15: 48 px at 3.41 mm per px = 163 mm, error 35 mm (the first version kept 172 with no source; the review of 13 October asked for P1's 163 or a named source, and 163 is used)", "tol": 35.0,
              "measure": {"kind": "edge", "axis": "z", "part": "f_rail_bottom", "side": "lo"}},
             {"id": "N9", "what": "clear glazing width", "value": 686.0, "kind": "Photo", "source": "P1 columns glass_l 437.2 to glass_r 638.2 (201 px) at 3.40 mm per px; error 14 mm", "tol": 14.0,
              "measure": {"kind": "gap", "axis": "x", "a": "f_stile_l", "b": "f_stile_r"}},
@@ -174,8 +174,8 @@ def finish(T):
     T["sources"] = [
         {"id": "S1", "url": "https://www.geograph.org.uk/photo/5269043", "read": "2026-10-13", "author": "David Hillas", "licence": "CC BY-SA 2.0 (creativecommons.org/licenses/by-sa/2.0, read on the page)",
          "taken": "2017-01-04", "kind": "photograph",
-         "shows": "a door-type KX100 in a village verge, head on, whole height, clear glass, post-1991 red-pink handle panel and a 'Coins' header; roof, header, band, lower pane and the four posts all show; the grass hides the foot",
-         "used": True, "not_used_for": "the livery (post-1991: the handle panel, the header's lettering, the printed logo, all masked in the preview), the interior (blurred), the ground",
+         "shows": "a door-type KX100 in a village verge, head on, whole height, clear glass, the middle band black with a separate pink pull standing beyond the left edge at band height (post-1991), a pink 'Coins' header with a handset pictogram; roof, header, band, lower pane and the four posts all show; the grass hides the foot",
+         "used": True, "not_used_for": "the livery (post-1991: the pink pull, the header's lettering and handset pictogram, the operator's printed logo and the notices, all painted out flat in the preview), the interior (painted out), the ground, the handle panel's form (P1's band is black: the form is S2's)",
          "period": "2017 photograph of a unit built 1985 to 1996; the structure is the same in 1990, the livery differs (1991 revamp), so it is used for geometry only"},
         {"id": "S2", "url": "https://www.geograph.org.uk/photo/5558709", "read": "2026-10-13", "author": "David Hillas", "licence": "CC BY-SA 2.0 (read on the page)", "taken": "2017-07-19", "kind": "photograph",
          "shows": "a door-type KX100, nearer and looking down: the lid's rolled lip, the black channel frame, the stainless post with one round fixing, the moulded handle panel with its rectangular pull and finger recess, mud on the lower pane, plants at the foot",
@@ -206,24 +206,31 @@ def finish(T):
          "used": True, "not_used_for": "its numbers (they disagree with P1 in six places, see the reuse table)", "period": "n/a"},
     ]
     T["previews"] = [
-        {"file": "p1-verge-kx100-front.jpg", "source": "S1", "credit": "David Hillas, Geograph 5269043, CC BY-SA 2.0, 2017-01-04, cropped to the kiosk; the printed logo, the header's lettering and the interior blurred",
-         "masked": ["the printed operator logo and the notices inside the glass (blurred)", "the header's lettering (painted out)"], "looked_at_full_size": True, "no_people_no_drink_no_betting_no_names": True},
+        {"file": "p1-verge-kx100-front.jpg", "source": "S1", "credit": "David Hillas, Geograph 5269043, CC BY-SA 2.0, 2017-01-04, cropped to the kiosk; the operator's printed logo, the notices and the whole interior of the upper pane, the header's lettering and handset pictogram, and the sticker on the lower pane painted out flat",
+         "masked": ["the whole upper pane inside the frame (flat fill by script: the operator's logo, the notices and the interior)", "the header's lettering and handset pictogram (flat pink)", "the sticker on the lower pane (flat fill)"], "looked_at_full_size": True, "no_people_no_drink_no_betting_no_names": True},
         {"file": "p1-verge-kx100-target-on-photo.jpg", "source": "S1", "credit": "overlay of this target's front drawing (red) on the same crop (the scale fitted on the height from the lid's top edge to the bottom rail's lower edge, the measured edges in green); same photograph and masks",
          "masked": ["as p1"], "looked_at_full_size": True, "no_people_no_drink_no_betting_no_names": True},
         {"file": "p2-handle-kx100-detail.jpg", "source": "S2", "credit": "David Hillas, Geograph 5558709, CC BY-SA 2.0, 2017-07-19, cropped to the handle panel, the stainless post and the lower pane",
          "masked": ["the sticker, the etched figure and the notices are outside the crop"], "looked_at_full_size": True, "no_people_no_drink_no_betting_no_names": True},
     ]
     N = {n["id"]: n for n in T["numbers"]}
-    T["night"] = {"lantern_linear": L.LANTERN_LINEAR, "note": "the street's only light is the lantern colour; the kiosk shows it on the stainless (a warm orange wash on the brushed steel) and the glass reflects it; the kiosk's own interior lamp is OFF in the sample (an unlit kiosk is the safe 1990 night; a lit one is one item for his taste page, owed line 2)"}
+    T["night"] = {"lantern_linear": L.LANTERN_LINEAR, "note": "the street's only light is the lantern colour; the kiosk shows it on the stainless (a warm orange wash on the brushed steel) and the glass reflects it; the kiosk's own interior lamp is OFF in the sample (an unlit kiosk is the safe 1990 night; a lit one is for his taste page later)"}
     T["placement"] = {
-        "slot": "east side, centre x 23.5 m, front (the door) facing the road, back 0.05 m clear of the stallriser line (z 4.975), set back 1.14 m from the kerb's back edge; the scene's E3 line (east x 16.5, 0.55 m from the kerb, 0.914 square) is replaced",
-        "scene_line": "furniture E3: east, x 16.5, setback 0.55 m, plan 0.914, height 2.515 (K6 proportions)",
-        "reasons": ["x 16.5 stands before Rita's window (bay 2 is x 15 to 21): the window is the model for every shopfront (RULINGS 2 Oct) and its lit pane at night is the proof's accent, so a kiosk must not stand in front of it",
-                    "with the scene's 0.55 m set-back the kiosk leaves 2.0 - 0.55 - 0.89 = 0.56 m of footway, narrower than a walking person (0.68 m, the number the tester's 29 September finding used)",
-                    "x 23.5 stands before bay 3, the whitewashed empty unit to let, where nothing is hidden; the kiosk's back to the shopfront leaves a clear strip from the kerb of 4.085 - 3.125 = 0.96 m",
-                    "clear of the lamp column at x 28 east (4.5 m), the pillar box at x 27 (3.5 m), the two dustbins at x 21.4 and 22.0 (1.1 m from their centres to the kiosk's face, they stand against the wall at 1.6 m, the kiosk's front is at 1.14 m)"],
-        "stallriser_line_z_m": 4.975, "kerb_back_z_m": 3.125, "kiosk_face_z_m": [4.085, 4.975], "clear_strip_mm": 960.0, "min_clear_mm": 680.0, "x_centre_m": 23.5,
-        "orientation": "the door faces -z in the street's frame (towards the road), the back panel towards the shopfront",
+        "slot": "east side, where the scene has it: centre x 16.5 m, centre z 3.675 m (the scene's 0.55 m set-back is to the kiosk's CENTRE from the kerb's back edge at z 3.125), the door facing the shopfront (+z, as the scene's kiosk_door at z 4.132 does) and the back sheet to the road; the box's faces at z 3.230 and 4.120 (890 deep), 105 mm from the kerb's back edge in front and 855 mm from the stallriser line (z 4.975) behind the door",
+        "scene_line": "furniture E3: east, x 16.5, setback 0.55 m (to the centre), plan 0.914, height 2.515 (K6 proportions): kiosk_plinth at z 3.675, faces at 3.218 and 4.132, door at z 4.132",
+        "reasons": [
+            "the slot is the scene's own and is kept: x 16.5, centre z 3.675. The first version moved the box to x 23.5 on two reasons that do not hold. (1) It read the scene's 0.55 m set-back as the distance to the kiosk's front face and so counted 2.0 - 0.55 - 0.89 = 0.56 m of footway; the 0.55 m is to the centre (vignette-pieces.json kiosk_plinth stands at z 3.675 with a 0.914 plan: faces at 3.218 and 4.132), so the strip between the kiosk and the stallriser face (4.975) is 0.843 m with the scene's box and 0.855 m with this target's 890 box, both over the 0.68 m a walker needs; there was no walking-width reason to move it. (2) It argued that a kiosk must not stand before Rita's window: that is an inference, not a ruling; the box stood there on 2 October when Jafar ruled both 'the KX100 phone box stays' and 'Rita's window is the model', so no ruling is read to forbid it",
+            "the move to x 23.5 also failed the street's own pieces: the box (x 23.055 to 23.945, height 2192 on a footway 0.07 to 0.09 above the crown) lay under the empty unit's awning (awning_02 at x 24.0, x 22.5 to 25.5, its sheet 2.35 m above the crown over the box's front edge, its valance hanging to 1.63 m between z 3.39 and 3.40), left 0.45 to 0.6 m of walkable strip at head height in front of it, and stood across the empty unit's shop-door slot (x 22.294 to 23.300); the town's place for the kiosk (hook-cast.json places.kiosk, x 16.5, z 4.3, 'beside kiosk_plinth') and the meetings that use it (kiosk/ritas_step, kiosk/fish_counter) would have been 5.5 m from Rita's step. All of that is why the slot stays, and the shared placement rows (sd_place.py) now test the pose against every piece of vignette-pieces.json and the shopfronts target's door zones",
+            "the town's place for the kiosk, hook-cast.json places.kiosk (x 16.5, z 4.3), lies 0.18 m beyond the door's face (4.120) and 0.15 m beyond the pull (4.148), inside the 855 mm strip: the people who meet there stand at the door, exactly as before; DECISIONS 30 September records that Marta steps onto Rita's step (x 18.0) so that her friendship with Alison at the kiosk still meets, 1.5 m away as before",
+            "the door faces the shops, as the scene's own kiosk_door does (z 4.132); the back sheet, with the payphone's back, faces the road: from the hook camera (x -3, looking up the street) the player sees the stainless back and the lid, not the livery; the clear glazing of the sides shows the interior",
+            "clear of the lamp column at x 28 east (11.5 m), the pillar box at x 27 (10.5 m), the fish market's board (x 14.45 after the A-board target, 1.6 m), the railing (x 10 to 12) and the awnings (x 10.5 to 13.5 and 22.5 to 25.5): the shared placement rows read each of them from the scene",
+        ],
+        "stallriser_line_z_m": 4.975, "kerb_back_z_m": 3.125, "kiosk_face_z_m": [3.230, 4.120], "clear_strip_mm": 855.0, "clear_strip_at_pull_mm": 827.0,
+        "to_kerb_back_edge_mm": 105.0, "min_clear_mm": 680.0, "x_centre_m": 16.5, "z_centre_m": 3.675,
+        "orientation": "the door faces +z in the street's frame (towards the shopfront), the back panel towards the road; the piece's own frame has the door at -y, so the pose's yaw is 180",
+        "town_place": {"file": "production/specs/hook-cast.json", "place": "kiosk", "x_m": 16.5, "z_m": 4.3},
+        "poses": [{"id": "kiosk", "variant": "KX1", "x_m": 16.5, "z_m": 3.675, "yaw_deg": 180.0, "zone": "east_footway", "front_faces": "+z",
+                   "replaces": ["E3_"], "measure_exclude": ["f_pull"], "clear_behind_mm": 855.0, "clear_tol_mm": 6.0}],
     }
     T["wear"] = [
         "tide mark: dust and splash grime on both lower panes from the bottom rail up to about 350 mm, darkest in the lowest 100 mm, a clean line above (S2)",
@@ -240,8 +247,10 @@ def finish(T):
         {"id": "W2", "what": "roof", "book": "the 29 September script and the research note: a flat stainless slab 50 mm thick, slightly proud", "photo": "P1 and S2: a folded lid with a skirt about 100 mm deep all round and a rolled lip", "chose": "lid plate 3 mm on four 3 mm skirts 100 deep"},
         {"id": "W3", "what": "header height", "book": "the script: 200 mm (1.93 to 2.13 m)", "photo": "P1: header from the lid's lower edge to the glazing, 270 mm", "chose": "270 mm"},
         {"id": "W4", "what": "the handle band's height above the ground", "book": "the script: 1.00 to 1.12 m (a chest-high band 120 mm)", "photo": "P1: band 906 to 1051 mm, 145 mm high", "chose": "906 to 1051"},
-        {"id": "W5", "what": "the foot", "book": "the script: panes begin 110 mm up and a floor plate stands inside", "photo": "P1: the bottom rail's lower edge 172 mm up, the posts alone reach the ground, no floor plate", "chose": "172 mm gap, no floor plate"},
+        {"id": "W5", "what": "the foot", "book": "the script: panes begin 110 mm up and a floor plate stands inside", "photo": "P1: the bottom rail's lower edge 163 mm up (48 px), the posts alone reach the ground, no floor plate", "chose": "163 mm gap, no floor plate"},
         {"id": "W6", "what": "the lower enclosure", "book": "none", "photo": "S3 shows a stainless housing over a step; kept as a Judgement box", "chose": "lower_enclosure box, flagged Judgement"},
+        {"id": "W7", "what": "the scene's set-back", "book": "the scene file: setback_from_kerb_m 0.55 and plan 0.914, read in the first version as 'the kiosk's front is 0.55 m from the kerb' (0.56 m of footway left)", "photo": "not a photograph: the scene's own kiosk_plinth stands at z 3.675 = 3.125 + 0.55 with a 0.914 plan, so 0.55 is to the CENTRE; the faces are at 3.218 and 4.132 and 0.843 m remains behind it", "chose": "the slot is kept (x 16.5, z 3.675); with the target's 890 box the strip behind is 0.855 m"},
+        {"id": "W8", "what": "P1's middle band", "book": "the first version's S1 row: a post-1991 red-pink handle panel", "photo": "P1's band is black; the only colour is a separate pink pull standing beyond the left edge at band height (about x 388 to 405, y 405 to 435 on the 1024 copy); S2's door has the full-width coloured panel", "chose": "the band's height comes from P1, the panel's form from S2"},
     ]
     T["variants_note"] = [
         "KX1 (the sample): the door kiosk. It stands in the street.",
@@ -256,9 +265,7 @@ def finish(T):
         "forbidden": ["any real operator's name or logo", "a crown", "a cypher", "a card or advertisement", "a price"],
     }
     T["owed"] = [
-        {"id": "O1", "line": "Move the phone box from before Rita's window to before the empty unit, 7 m up the street (east x 23.5)? It also gives walkers a 0.96 m strip against 0.56 m now.",
-         "recommended": "Yes, move it"},
-        {"id": "O2", "line": "May the phone box's header carry the plain word Telephone, with no logo, until the town mints the Meridian operator's mark?",
+        {"id": "O1", "line": "May the phone box's header carry the plain word Telephone, with no logo, until the town mints the Meridian operator's mark?",
          "recommended": "Yes, the plain word"},
     ]
     T["not_settled"] = [
@@ -288,6 +295,7 @@ def finish(T):
         {"name": "C5: no part floats and every join meets", "measure": "the contact graph of the meshes (touching within 2 mm)", "expect": "all parts reach the ground", "tol": "0 floating"},
         {"name": "C6: the back, lid and header are closed from the front, back and side at 0, 30 and 45 degrees", "measure": "rays at the stated faces", "expect": "0 get through", "tol": "exact"},
         {"name": "C7: the header word", "measure": "the text on the header", "expect": "Telephone", "tol": "exact"},
+        {"name": "C9: the place", "measure": "the built kiosk's centre in the street's frame and the way its door faces", "expect": "x 16.5, centre z 3.675, door to +z", "tol": "+-0.05 m each, exact direction"},
         {"name": "C8: no real mark", "measure": "any text or logo on the model", "expect": "none but the header word", "tol": "exact"},
     ]
     T["checks"] = C
@@ -303,7 +311,7 @@ def doc(T):
     w = out.append
     w("# Quay Street's telephone box: the exact target")
     w("")
-    w("**The phone box is the 1985-to-1991 stainless kind: 890 x 890 mm in plan and 2192 mm high, a folded stainless lid with a 100 mm skirt, four stainless corner posts 40 mm square, a 270 mm black header carrying only the word Telephone, glazed on three sides above and below a 145 mm band (the door's is a yellow moulded handle panel with a rectangular pull, the sides' black), a stainless back sheet with the payphone on it and a 172 mm open gap under the bottom rail; no operator's mark, no crown, no card advertisement; one box, moved from before Rita's window to before the empty unit (east x 23.5); it replaces the 29 September script's kiosk, whose numbers disagree with the photograph in six places; no period KX100 photograph was reached, so the geometry is measured on a 2017 photograph of a unit of the same kind.**")
+    w("**The phone box is the 1985-to-1991 stainless kind: 890 x 890 mm in plan and 2192 mm high, a folded stainless lid with a 100 mm skirt, four stainless corner posts 40 mm square, a 270 mm black header carrying only the word Telephone, glazed on three sides above and below a 145 mm band (the door's is a yellow moulded handle panel with a rectangular pull, the sides' black), a stainless back sheet with the payphone on it and a 163 mm open gap under the bottom rail; no operator's mark, no crown, no card advertisement; one box, standing where the scene has it (east x 16.5, centre z 3.675, the door to the shops, the back to the road: the first version\'s move to x 23.5 rested on a wrong number and is withdrawn); it replaces the 29 September script's kiosk, whose numbers disagree with the photograph in six places; no period KX100 photograph was reached, so the geometry is measured on a 2017 photograph of a unit of the same kind.**")
     w("")
     w("Cloud week 42, unit 13, family 1. Written 13 October 2026, not yet reviewed. `%s`" % sc)
     w("")
@@ -323,8 +331,8 @@ def doc(T):
         ["content rule (canon D18)", "what the rule forbids is out of image and text", "no cards or stickers, no drink container, no one in any preview; the data scan finds none"],
         ["NoAI, licences", "nothing marked NoAI; photographs free licences, measuring only, never placed or traced", "S1 to S3 are CC BY-SA 2.0 Geograph photographs used only to measure; no NoAI source; nothing is placed in the game"],
         ["RULINGS 1 Oct and 3 Oct (the look)", "the Hook sheet and KCD2 frames; wet, dark, glistening street; accent budget (art-direction R-B4: red boxes carry the colour)", "stainless, black and glass are neutral; the yellow handle panel is the one saturated patch and stays small (145 x 686 mm); the red accent stays with the pillar box"],
-        ["RULINGS 1 Oct (night)", "pools of lamp light, not one orange wash", "the lantern colour (1.0, 0.25, 0.0) linear only; the kiosk's own lamp is off in the sample (owed line O2 covers the lettering; a lit kiosk is a taste item for later)"],
-        ["RULINGS 8 Oct", "photographs win over books, element by element", "section 'Where the photographs win' below; W1 to W6"],
+        ["RULINGS 1 Oct (night)", "pools of lamp light, not one orange wash", "the lantern colour (1.0, 0.25, 0.0) linear only; the kiosk's own lamp is off in the sample (owed line O1 covers the lettering; a lit kiosk is a taste item for later)"],
+        ["RULINGS 8 Oct", "photographs win over books, element by element", "section 'Where the photographs win' below; W1 to W8"],
         ["RULINGS 13 Oct (RECIPE)", "a notebook entry per unit", "RECIPE.md carries unit 13's entry"],
     ] + D.COMMON_RULINGS[-2:]))
     w("")
@@ -338,7 +346,7 @@ def doc(T):
     w("")
     w(D.table(["existing thing", "what it is", "verdict", "why"], [
         ["tools/meshgen/blender/clutter/kx100_kiosk.py and production/assets/street/clutter/kx100-kiosk.glb (29 Sep)", "a scripted 0.89 x 0.89 x 2.18 kiosk with a 50 mm roof slab, header 200, band 1.00 to 1.12, panes 0.11 to 1.00 and 1.12 to 1.93", "REPLACED (rebuilt from this target; its helper functions are reused)", "its numbers disagree with P1 in six places (W2 to W5 and the floor plate, section W); it also letters the header in yellow and has no payphone"],
-        ["production/specs/vignette-scene.json, furniture E3", "a 0.914 square, 2.515 high kiosk with plinth and cap, east x 16.5", "REPLACED at the builder's swap", "K6 proportions (W1); the placement stands before Rita's window and leaves 0.56 m of footway"],
+        ["production/specs/vignette-scene.json, furniture E3", "a 0.914 square, 2.515 high kiosk with plinth and cap, east x 16.5", "REPLACED in size, parts and livery; its slot is KEPT", "K6 proportions (W1); the slot (east x 16.5, centre z 3.675, door to +z) is right: the set-back 0.55 m is to the kiosk's centre and leaves 0.843 m behind it"],
         ["production/research/street-clutter-1990, asset-plan 3 (A3 assemblies row)", "the KX100's frame, panes, band, door, handle panel, payphone, roof slab", "KEPT as the list of parts", "every named part is in the target"],
         ["Poly Haven models", "korean_public_payphone_01 and 520 others", "REJECTED", "no British kiosk; the payphone is post-mounted and Korean"],
         ["git branches (git log --all for phone box, kiosk, KX100)", "no other kiosk work", "none to reuse", "only the 29 September commit"],
@@ -352,10 +360,10 @@ def doc(T):
     w("")
     w("- **Four stainless posts** (40 x 40 box section, brushed, vertical edges r 3) stand on the ground at the corners and reach the lid's plate. They show 40 mm of stainless on each face.")
     w("- **The lid** is a folded stainless lid: a 3 mm plate over four 3 mm skirts 100 mm deep, its lower edge turned in 8 mm; it overhangs the posts by 10 mm each side (P1: 17 mm wider than the posts' 870).")
-    w("- **The front (the door)** is a leaf hung on three stainless pivot hinges on the right post: black header 270 high and 30 deep; two black stiles 52 wide; a bottom rail 68 high; the yellow handle panel 145 high between the stiles, 10 proud, corners r 8, with a rectangular pull 50 x 66 standing 28 proud at the left (lock) end; two panes of 4 mm toughened glass, upper 1051 to 1822 and lower 240 to 906 (each 4 mm into the frame all round).")
+    w("- **The front (the door)** is a leaf hung on three stainless pivot hinges on the right post: black header 270 high and 30 deep; two black stiles 52 wide; a bottom rail 68 high; the yellow handle panel 145 high between the stiles, 10 proud, corners r 8, with a rectangular pull 50 x 66 standing 28 proud at the left (lock) end; two panes of 4 mm toughened glass, upper 1051 to 1822 and lower 231 to 906 (each 4 mm into the frame all round).")
     w("- **The two sides** are fixed frames like the front with a plain black band (flush with the posts) in place of the yellow panel and a black fascia the header's height above.")
     w("- **The back** is one stainless sheet, 6 mm with its backing, from the ground to the lid. The payphone body (140 wide), keypad, handset on the left and a notice frame hang on its inner face above a stainless coin-vault housing.")
-    w("- **The foot** is open: only the posts and the back sheet reach the ground; the front and sides stop 172 mm up so litter blows through.")
+    w("- **The foot** is open: only the posts and the back sheet reach the ground; the front and sides stop 163 mm up so litter blows through.")
     w("- **Fixings**: round pan-head fixings 4 mm across on the posts beside the handle panel (S2 shows one) and on the lid's skirt corners; no bolts on the glazing (gasketed). Joints: the lid's skirts meet at mitred corners; the header butts the posts; the frames are channels with a gasket line (a 1 mm dark line round each pane).")
     w("")
     w("### Parts, sample variant KX1 (millimetres)")
@@ -393,7 +401,7 @@ def doc(T):
     for r in pl["reasons"]:
         w("- " + r)
     w("")
-    w("The scene's E3 line is not edited by this unit (it belongs to the scene's owner); the move is owed line O1.")
+    w("The scene's E3 line is not edited by this unit (it belongs to the scene's owner) and needs no change of place: the target replaces its size, parts and livery only. No move is asked of Jafar.")
     w("")
     w("### Lettering")
     w("")

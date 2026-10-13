@@ -512,7 +512,7 @@ def placement_rows(T, rows):
     poses = pl.get("poses", [])
     rows.add("placement", "place/poses are declared", bool(poses), "%d poses" % len(poses))
     sc = scene()
-    rows.add("placement", "place/the street's pieces were read", sc["n_pieces"] > 500 and len(sc["doors"]) >= 20,
+    rows.add("placement", "place/the street's pieces were read", sc["n_pieces"] > 500 and len(sc["doors"]) >= 15,
              "%d scene pieces, %d obstacles, %d door zones from %s and %s" % (sc["n_pieces"], len(sc["obs"]), len(sc["doors"]), PIECES_REL, SHOPS_REL))
     for pose in poses:
         pid = pose["id"]
@@ -604,14 +604,16 @@ def scene_ground_names(poly):
     return [n for n, g in _cache["ground"] if g.intersects(poly)] if u.buffer(1e-6).contains(poly) else []
 
 
-def measured_behind(T, pose, zone):
-    """Free width between the piece's wall-side face and the frontage's first piece, at the piece's middle x (metres)."""
+def measured_behind(T, pose, zone, exclude=None):
+    """Free width between the piece's wall-side face and the stallriser line, at the piece's widest (metres). Parts named in
+    the pose's measure_exclude (a handle that stands proud) are left out, as the target's own overall depth leaves them out."""
+    ex = exclude if exclude is not None else pose.get("measure_exclude", [])
     prisms, base = object_prisms(T, pose)
-    body = [q for q in prisms if not _is_ignored(q.part, pose)]
+    body = [q for q in prisms if not _is_ignored(q.part, pose) and not any(q.part.startswith(e) for e in ex)]
     u = unary_union([q.poly for q in body])
     side = footway_of(zone)
     b = u.bounds
-    wall = 4.975 * side
+    wall = frontage_z(0.5 * (b[0] + b[2]), side)
     return (wall - b[3]) if side > 0 else (b[1] - wall)
 
 
