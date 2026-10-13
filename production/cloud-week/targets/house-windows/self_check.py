@@ -666,10 +666,42 @@ def controls(t, photo_dir):
     def m12(x): x["kit_pieces"]["per_kind"]["S22"]["added_nodes"][[n["name"] for n in x["kit_pieces"]["per_kind"]["S22"]["added_nodes"]].index("net__N1")]["y_into_wall"] = [200, 201]
     def m13(x): x["summary"] = x["summary"] + " Dixons"
     def m14(x): x["rooms"]["pictures_by_family"]["UP"]["back_wall_rect_px_x0y0x1y1"][0] = 500.0
+    def m15(x):
+        for q in x["sites"]:
+            if q["house"] == "east_parade_bay1":
+                q["paint"] = "brown"
+    def m16(x): x["checks"] = [c for c in x["checks"] if c["id"] != "WB-04b"]
+    def m17(x):
+        o = x["rooms"]["lit_share"]["lit_order_of_the_non_always_lit_windows"]
+        o[0], o[-1] = o[-1], o[0]
+        x["rooms"]["lit_share"]["lit_by_hour"]["20:30"]["windows"] = ["west_south_bay2_gf_w0", "west_south_bay2_gf_w1"] + o[:5]
+    def m18(x): x["inventory"]["brand_blocklist"] = [b for b in x["inventory"]["brand_blocklist"] if b != "paragon"]
+    def m19(x): x["summary"] = x["summary"] + " The set has a Paragon Viewing System television."
+    def m20(x): x["inventory"]["polyhaven_models"]["television_02"]["marks"] = "a small rating plate on the back panel: blanked; no text on the front"
+    def m21(x): x["gate"]["bands"]["net_N1_N2_in_15_to_30_deg"]["D_over_L_max"] = 0.55
+    def m22(x): x["rooms"]["budget_rule"]["back"] = {"true": 0.40, "tolerated": 0.80}
+    def m23(x): x["photo_measurements"]["windows"]["P1_a"]["D_over_L"] = 0.47; x["photo_measurements"]["windows"]["P1_a"]["P_over_L"] = 0.87
+    def m24(x):
+        for q in x["kinds"]["RC2"]["parts_mm"]:
+            if q["name"] == "mullion":
+                q["x"] = [q["x"][0] + 10.0, q["x"][1] + 10.0]
+    def m25(x): x["rooms"]["rooms"]["gf_front_2"]["objects"][1]["model"] = "ArmChair_01"
+    def m26(x):
+        for c in x["checks"]:
+            if c["id"] == "NIGHT-01":
+                c["measure"] = "count of windows with pane median luma >= 100 (lit) and <= 30 (dark) at 20:30"
+    def m27(x):
+        for c in x["checks"]:
+            if c["id"] == "WB-08":
+                c["expected"] = c["expected"].replace("WB-04b and ", "")
     for n, f in (("a kit node moved 3 mm off the lab's glb", m1), ("a site's centre moved 0.2 m", m2), ("an object over the tolerated stand-off", m3), ("a band that no longer encloses the photographs' net windows", m4),
                  ("the old fault's D/L pulled inside the limit", m5), ("twelve windows lit at 20:30", m6), ("a model's marks entry emptied", m7), ("the stale sodium colour in the night wash", m8),
                  ("a required check removed", m9), ("an overlay edge 20 px off", m10), ("a blue replacement window", m11), ("a net plane inside the lower glass", m12),
-                 ("a real firm's name in the summary", m13), ("the back wall rectangle moved", m14)):
+                 ("a real firm's name in the summary", m13), ("the back wall rectangle moved", m14),
+                 ("a brown frame on a timber house (SITE-04: white 10 of 10)", m15), ("WB-04b removed (the line check)", m16), ("the lit order puts a landing first and lights it at 20:30", m17),
+                 ("paragon taken out of the brand blocklist", m18), ("the television's maker's name in the summary", m19), ("television_02's marks entry back to the rating plate only", m20),
+                 ("WB-04's limit back to 0.55", m21), ("the cottage back-wall rule back to 0.40 and 0.80 (the eye 0.9 m from its window)", m22), ("P1_a's row back to the stone-and-brick measure", m23),
+                 ("RC2's mullion 10 mm off centre", m24), ("ArmChair_01 back in gf_front_2", m25), ("NIGHT-01 back to an absolute 100", m26), ("WB-08 without WB-04b", m27)):
         mut(n, f, None)
     caught = 0
     out = []
@@ -708,7 +740,9 @@ def main():
     R = run_all(t, a.photos, a.previews, a.live)
     fails = [r for r in R.rows if not r["ok"]]
     n = len(R.rows)
-    line = "self_check: %d pass, %d fail" % (n - len(fails), len(fails))
+    have_photos = bool(a.photos) and all(os.path.exists(P.local_path(a.photos, p)) for p in {w[0] for w in M.WINDOWS.values()})
+    opts = (" --live" if a.live else "") + (" --previews" if a.previews else "") + (" --photos (the re-measure row counted)" if have_photos else " (offline: no photographs at hand, the re-measure row not counted)")
+    line = "self_check.py%s: %d pass, %d fail" % (opts, n - len(fails), len(fails))
     cc, cl = (0, [])
     if not a.no_controls:
         cc, cl = controls(t, a.photos)
@@ -720,7 +754,7 @@ def main():
             print("NOT CAUGHT:", c["mutation"])
     print(line)
     if a.write:
-        t["self_check"] = {"result": line, "rows": sorted(R.rows, key=lambda r: (r["group"], r["name"])), "controls": cl, "run": "13 October 2026"}
+        t["self_check"] = {"result": line, "options": opts.strip(), "rows": sorted(R.rows, key=lambda r: (r["group"], r["name"])), "controls": cl, "run": "13 October 2026, after the fixes"}
         json.dump(t, open(path, "w"), indent=1)
         print("written into target.json")
     sys.exit(1 if fails or (not a.no_controls and cc != len(cl)) else 0)
