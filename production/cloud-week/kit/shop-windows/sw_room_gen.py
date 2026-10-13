@@ -295,7 +295,7 @@ class GRoom(S.Room):
         return times
 
     # ------------------------------------------------------------------------------------------------ fixtures: the building blocks
-    def shelf_unit(self, fid, tiers, depth=None, bottom=0.0):
+    def shelf_unit(self, fid, tiers, depth=None, bottom=0.0, bottom_at=None):
         """The back-wall shelf unit: `tiers` = [(z of the board's TOP, x from, x to), ...]. A board is 25 mm; an upright (30 mm square) stands at every board's two ends from the floor (or `bottom`) to
         the highest board's top, so no board runs through one (a shelf stops at the upright's face: SO-07). Registers the fixtures. Returns the boards' records."""
         f = self.fxd[fid]
@@ -305,7 +305,7 @@ class GRoom(S.Room):
         xmin, xmax = xs[0], xs[-1]
         ztop = max(z for z, _, _ in tiers)
         for x in (xmin, xmax):
-            self.box("upright_%s_%.2f" % (fid, x), x - 0.015, x + 0.015, D - depth, D - 0.005, bottom, ztop, self.upright_m, fixture=fid)
+            self.box("upright_%s_%.2f" % (fid, x), x - 0.015, x + 0.015, D - depth, D - 0.005, (bottom_at or {}).get(x, bottom), ztop, self.upright_m, fixture=fid)
         for z, a, b in tiers:
             for x in (a, b):
                 if xmin < x < xmax:          # a board that begins inside the run stands on a post that stops under it
@@ -552,9 +552,10 @@ class GRoom(S.Room):
             return self.place(asset, (xc, yb, z), rot=rot, scale=scale, fixture=fid, anchor=("c", "max", "min"), tag=tag)
         return {"kind": asset, "w": w, "d": dd, "h": h, "build": build}
 
-    def tins_item(self, n_tins, fid, kind="tins", sizes=((0.052, 0.098), (0.058, 0.128), (0.068, 0.178))):
+    def tins_item(self, n_tins, fid, kind="tins", sizes=((0.052, 0.098), (0.058, 0.128), (0.068, 0.178)), max_h=0.32):
         rnd = self.rnd
-        r, h = rnd.choice(sizes)
+        ok = [sz for sz in sizes if n_tins * sz[1] <= max_h + 1e-9] or [min(sizes, key=lambda sz: sz[1])]
+        r, h = rnd.choice(ok)
         tins = [(r, h)] * n_tins
         labels = [rnd.randrange(16)] * n_tins
 
@@ -589,7 +590,7 @@ def layout_ironmonger(r):
               "FUSE WIRE", "BRASS CUP HOOKS", "PICTURE WIRE", "STRING", "SASH CORD", "PADLOCKS", "KEYS", "BOLTS", "CASTORS", "BRADS", "BEADING PINS"]
     r.drawer_wall("I-back-drawers", labels)
     # ---- the counter
-    cx0, cx1, cy0, cy1, ch = r.counter("I-back-counter")
+    cx0, cx1, cy0, cy1, ch = r.counter("I-back-counter", panels=True)
     rule = r.mat("brass_rule", rgb8(184, 150, 70), rough=0.28, metal=1.0)
     r.box("counter_rule", cx0 + 0.04, cx1 - 0.04, cy0 + 0.012, cy0 + 0.040, ch, ch + 0.002, rule, fixture="I-back-counter")
     # goods on the counter (back edge at the wall: the till stands at the right end, clear of the shelf tier at 1.6 above it: 0.62 + 1.0 = 1.62? the till is scaled to the target's 0.42)
@@ -608,7 +609,7 @@ def layout_ironmonger(r):
     sh = fx["I-back-shelves"]
     x0s, x1s = sh["x"]
     tiers = [(1.95, x0s, x1s), (1.6, x0s, x1s), (1.2, 1.3, x1s)]
-    r.shelf_unit("I-back-shelves", tiers)
+    r.shelf_unit("I-back-shelves", tiers, bottom_at={x0s: ch})          # the left upright stands on the counter (not through it)
     n_tin = next(g["n"] for g in rr["goods"] if g["model"] == "script:paint_tins")
     items = []
     # tins in stacks (the clearance of the tier decides the height: 1.6 -> 0.325, 1.95 -> 0.40, 1.2 -> 0.35)
@@ -645,7 +646,7 @@ def layout_ironmonger(r):
     rnd.shuffle(items)
     for z, a, b in tiers:
         clear = {1.95: 0.40, 1.6: 0.325, 1.2: 0.35}[z]
-        n, items = r.fit_row(items, a, b, D - 0.005, z, clear, 0.28 - 0.035, "I-back-shelves", "tier")
+        n, items = r.fit_row(items, a + 0.03, b - 0.03, D - 0.005, z, clear, 0.28 - 0.035, "I-back-shelves", "tier")
         r.fixtures.append({"fixture": "I-back-shelves", "name": "tier_fill_%.2f" % z, "ext": [a, b, D - 0.28, D - 0.005, z, z + 0.001], "n": n})
     if items:
         ctx_notes.append("shelves: %d pieces did not fit the three tiers: %s" % (len(items), sorted({i["kind"] for i in items})))
@@ -657,17 +658,18 @@ def layout_ironmonger(r):
     bs_ = 0.85
     e1 = r.place(bin_key, (fx0 + bd.x * bs_ / 2 + 0.02, D - 0.005, 0.0), rot=(0, 0, 0), scale=bs_, fixture="I-back-floor", anchor=("c", "max", "min"))
     jd = r.dims("metal_jerrycan_green", (0, 0, math.pi / 2))
-    xj = e1[1] + 0.06
-    for k in range(3):
-        r.place("metal_jerrycan_green", (xj + jd.x / 2, D - 0.02, 0.0), rot=(0, 0, math.pi / 2), scale=1.0, fixture="I-back-floor", anchor=("c", "max", "min"))
-        xj += jd.x + 0.02
-    bag_s = 0.75
+    xj = e1[1] + 0.05
+    r.place("metal_jerrycan_green", (xj + jd.x / 2, D - 0.02, 0.0), rot=(0, 0, math.pi / 2), scale=1.0, fixture="I-back-floor", anchor=("c", "max", "min"), tag="paraffin")
+    bag_s = 0.60
     bg = r.dims("cement_bag", (0, 0, 0))
     zz = 0.0
+    xbag = 2.55 - bg.x * bag_s / 2
     for k in range(3):
-        r.place("cement_bag", (fx1 - bg.x * bag_s / 2 - 0.01 + rnd.uniform(-0.01, 0.01), D - 0.005, zz), rot=(0, 0, rnd.uniform(-0.04, 0.04)), scale=bag_s, fixture="I-back-floor", anchor=("c", "max", "min"))
+        r.place("cement_bag", (xbag + rnd.uniform(-0.003, 0.003), D - 0.005, zz), rot=(0, 0, rnd.uniform(-0.03, 0.03)), scale=bag_s, fixture="I-back-floor", anchor=("c", "max", "min"))
         zz += bg.z * bag_s
-    ctx_notes.append("I-back-floor: the dustbins are the clean variant of the model's pair at 0.85; the cement bags at 0.75 (the model's bag is 0.70 long); the wooden step ladder is left out (it fits no part of a 1.3 m run that also holds the bins, the cans and the bags)")
+    # the second paraffin can stands on the top bag (a can 0.171 wide and 0.374 deep on a bag 0.277 by 0.42)
+    r.place("metal_jerrycan_green", (xbag, D - 0.03, zz), rot=(0, 0, math.pi / 2), scale=1.0, fixture="I-back-floor", anchor=("c", "max", "min"), tag="paraffin")
+    ctx_notes.append("I-back-floor: the dustbins are the clean variant of the model's pair at 0.85; the cement bags at 0.60 (the model's bag is 0.70 long: three at 0.75 and the bin and a can do not fit a 1.3 m run); two of the three paraffin cans: one on the floor, one on the bags (the third has no place in the run); the wooden step ladder is left out (it fits no part of the run)")
     # ---- the pegboards (counts raised: see the docstring)
     left_items = [("handsaw_wood", 2, "h"), ("bolt_cutters_01", 1, "h"), ("crowbar_01", 1, "v"), ("cross_pein_hammer", 3, "v"), ("wooden_hammer_01", 2, "v"), ("pipe_wrench", 2, "v"), ("adjustable_wrench", 3, "v"),
                   ("combination_wrench", 5, "v"), ("pliers", 4, "v"), ("tongue_groove_pliers", 3, "v"), ("screwdriver", 6, "v"), ("flathead_screwdriver", 5, "v"), ("ratchet_wrench", 3, "v"), ("hatchet", 2, "v"), ("screwdrivers_02", 2, "v")]
@@ -678,7 +680,7 @@ def layout_ironmonger(r):
     r.hang_tools("I-right-pegboard", "right", right_items, fx["I-right-pegboard"]["y"], fx["I-right-pegboard"]["z"], max_off=0.10)
     # the two wooden brooms hang on the wall itself past the end of the board (y 3.5 and 3.9): a broom's head is 0.113 thick, which on a board 0.02 off the wall would stand 0.137 out; at 0.82 and
     # hung on the wall it stands 0.093 (the side wall's tolerated 0.10)
-    for k, yb in enumerate((3.55, 3.95)):
+    for k, yb in enumerate((3.52, 3.95)):
         r.place("wooden_broom", (W / 2 - 0.002, yb, 0.06), rot=(0, 0, math.radians(-90)), scale=0.82, fixture="I-right-pegboard", anchor=("max", "c", "min"), tag="broom")
     ctx_notes.append("the brooms (2 of the room's pieces on the right wall) hang on the wall past the board's end at 0.82: the head is 0.113 thick")
     # a door mat? the target gives none: not built

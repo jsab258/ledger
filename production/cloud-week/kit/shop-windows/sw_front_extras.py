@@ -146,3 +146,90 @@ def late_empty_unit(self, fm, members, extra_objs):
             members[ob.name]["material"] = "whitewash"
         n += 1
     return n
+
+
+# ---------------------------------------------------------------------------------------------------------------------------------- Mickey's
+def _tile_pattern(path, px=256):
+    """The stallriser's printed tile (3.2 target: parts.stallriser.variants.tile_patterned): 6 in tiles in a 2 x 2 repeat of 304.8 mm: A cream with a mid-blue diamond whose corners touch the tile's edge midpoints
+    and a black dot at its centre; B black with a cream diamond; A B over B A. Joints 3 mm (a dark line). The picture is 2 px x 256 square, one repeat; v 0 at the bottom."""
+    from PIL import Image, ImageDraw
+    cream, blue, black = (222, 212, 184), (46, 68, 136), (30, 30, 32)
+    im = Image.new("RGB", (2 * px, 2 * px), black)
+    d = ImageDraw.Draw(im)
+    for r_ in range(2):
+        for c in range(2):
+            a_cell = (r_ + c) % 2 == 0
+            x0, y0 = c * px, r_ * px
+            d.rectangle([x0, y0, x0 + px - 1, y0 + px - 1], fill=cream if a_cell else black)
+            h = px / 2.0
+            diamond = [(x0 + h, y0), (x0 + px, y0 + h), (x0 + h, y0 + px), (x0, y0 + h)]
+            d.polygon(diamond, fill=blue if a_cell else cream)
+            if a_cell:
+                d.ellipse([x0 + h - 7, y0 + h - 7, x0 + h + 7, y0 + h + 7], fill=black)
+            d.rectangle([x0, y0, x0 + px - 1, y0 + px - 1], outline=(70, 66, 60), width=1)
+    im.save(path)
+
+
+def late_mickeys(self, fm, members, extra_objs):
+    """Mickey's: the stallriser's printed tile on its face (planar UVs, the picture is one 2 x 2 repeat of 609.6 mm; the skirting's faces take the black corner) and the applied letters MICKEY'S (4.1: `mickeys_letters`: Marcellus SC,
+    cap 0.33 m, tracking 0.03 em, 3 mm emboldened, 14 mm stand-off, gilt face and brass flanks, centred at board x 4055 mm, baseline 100 mm up the board)."""
+    import os
+    SF = _sf()
+    tp = os.path.join(self.scratch, "tile_pattern.png")
+    _tile_pattern(tp)
+    tm = SF.image_material("tile_patterned", tp, rough=0.25)
+    for ob in bpy.data.objects:
+        if ob.name == "sta_panel":
+            me = ob.data
+            uv = me.uv_layers.active or me.uv_layers.new(name="UVMap")
+            for poly in me.polygons:
+                zc = sum(me.vertices[i].co.z for i in poly.vertices) / len(poly.vertices) * 1000.0
+                for li in poly.loop_indices:
+                    co = me.vertices[me.loops[li].vertex_index].co
+                    if zc < 100.0:
+                        uv.data[li].uv = (0.02, 0.02)
+                    else:
+                        uv.data[li].uv = ((co.x * 1000.0 + 3000.0) / 609.6, (co.z * 1000.0) / 609.6)          # the picture is one 2 x 2 repeat: 609.6 mm
+            me.materials.clear()
+            me.materials.append(tm)
+            if ob.name in members:
+                members[ob.name]["material"] = "tile_patterned"
+    # the letters
+    from mathutils import Vector
+    font_dir = os.path.join(SF.REPO, "production", "fonts", "marcellus-sc")
+    ttf = sorted(f for f in os.listdir(font_dir) if f.lower().endswith((".ttf", ".otf")))[0]
+    cu = bpy.data.curves.new("mickeys_letters_curve", "FONT")
+    cu.body = "MICKEY’S"
+    cu.font = bpy.data.fonts.load(os.path.join(font_dir, ttf))
+    cu.size = 0.33 / 0.701
+    cu.space_character = 1.0 + 0.03
+    cu.extrude = 0.007
+    cu.offset = 0.003
+    cu.align_x = "CENTER"
+    cu.resolution_u = 6
+    ob = bpy.data.objects.new("mickeys_letters", cu)
+    bpy.context.scene.collection.objects.link(ob)
+    bpy.context.view_layer.objects.active = ob
+    ob.select_set(True)
+    bpy.ops.object.convert(target="MESH")
+    ob = bpy.context.view_layer.objects.active
+    ob.name = "sign_letters_mickeys"
+    me = ob.data
+    # local x along the text (centred), local y up from the baseline, local z the depth: turn so that the face looks at the street (-y)
+    for v in me.vertices:
+        x, y, z = v.co.x, v.co.y, v.co.z
+        v.co.x, v.co.y, v.co.z = x, -z, y
+    me.update()
+    ys = [v.co.y for v in me.vertices]
+    y_back = max(ys)
+    for v in me.vertices:
+        v.co.y += -0.120 - y_back - 0.0           # the back of the letters on the board's face (d 120): they stand out 14 mm
+        v.co.x += (295.0 + 4055.0 - 3000.0) / 1000.0
+        v.co.z += (2850.0 + 100.0) / 1000.0
+    me.update()
+    me.materials.clear()
+    gm = bs.make_material("brass_gilt", (200, 160, 70), 0.38, 0.85)
+    me.materials.append(gm)
+    members[ob.name] = SF.bbox_mm(ob)
+    members[ob.name].update({"material": "brass_gilt", "group": "applied_letters"})
+    extra_objs.append(ob)

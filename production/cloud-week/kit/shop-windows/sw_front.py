@@ -267,43 +267,68 @@ class Front:
         self.add("door_threshold", bs.prism_dz(th, slot[0], slot[1]), "terrazzo", bev=None)
         # leaf: 900 x 2040 at z 28, hinge on the viewer's RIGHT, lever on the LEFT
         lu0, lu1 = uc - 450.0, uc + 450.0                       # 1347, 2247
-        st = 115.0
         d0, d1 = 20.0, 70.0
-        self.add("door_leaf_stile_lever", bx(lu0, lu0 + st, d0, d1, z_foot, z_top), "door_paint")
-        self.add("door_leaf_stile_hinge", bx(lu1 - st, lu1, d0, d1, z_foot, z_top), "door_paint")
-        ru0, ru1 = lu0 + st, lu1 - st
-        rails = D["t1_rails_mm"]
-        self.add("door_rail_bottom", bx(ru0, ru1, d0, d1, rails["bottom_rail"][0], rails["bottom_rail"][1]), "door_paint")
-        self.add("door_rail_lock", bx(ru0, ru1, d0, d1, rails["lock_rail"][0], rails["lock_rail"][1]), "door_paint")
-        self.add("door_rail_top", bx(ru0, ru1, d0, d1, rails["top_rail"][0], rails["top_rail"][1]), "door_paint")
-        bar = rails["glazing_bar"]
-        self.add("door_glazing_bar", bx(ru0, ru1, d0, d1, bar["z"] - bar["width"] / 2, bar["z"] + bar["width"] / 2), "door_paint")
-        # lower panel: raised and fielded (raised_field_edge: flat margin 32, bevel 8 rising 10), tongues 10 into the rails and stiles
-        V, F = joinery.fielded_panel(ru0 - 10.0, rails["bottom_rail"][1] - 10.0, ru1 + 10.0, rails["lock_rail"][0] + 10.0, -26.0, 14.0, 24.0, 8.0, margin=32.0)
-        self.add("door_lower_panel", (V, F), "door_paint", bev=None)
-        # glass: two panes of 6 mm at d 40 to 46 in 12 rebates, an ovolo bead 14 x 11 round each (glazing_bead)
-        bead = [(p[0], -p[1]) for p in pr["glazing_bead"]["points"]]
-        panes = [(ru0, rails["lock_rail"][1], ru1, bar["z"] - bar["width"] / 2), (ru0, bar["z"] + bar["width"] / 2, ru1, rails["top_rail"][0])]
-        for k, (a, b, c, e) in enumerate(panes):
-            self.add("door_glass_%d" % k, bx(a - 10.0, c + 10.0, 40.0, 46.0, b - 8.0, e + 8.0), "glass", bev=None)
-            V, F = joinery.sweep_frame(bead, a, b, c, e, -46.0)
-            self.add("door_bead_%d" % k, (V, [tuple(int(i) for i in f) for f in F]), "door_paint", bev=None)
-        # furniture (brass): kick plate 770 x 170 with 8 screws, a 30 high foot strip 3 proud, letter plate 250 x 40 at z 678 centred, lever 240 x 40
-        # backplate at z 1000 with the keyhole at 950, three butts 100 x 75 on the hinge edge
-        self.add("door_kick_plate", bx(uc - 385.0, uc + 385.0, 70.0, 73.0, 28.0, 198.0), "brass", bev=None)
-        for k, (du, z) in enumerate(((-350, 55), (-350, 171), (0, 55), (0, 171), (350, 55), (350, 171), (-175, 113), (175, 113))):
-            self.add("door_kick_screw_%d" % k, cyl_d(uc + du, z, 73.0, 74.5, 4.0, 8), "steel", bev=None)
-        self.add("door_foot_strip", bx(lu0, lu1, 70.0, 76.0, 28.0, 58.0), "brass", bev=None)
-        lp = D["letter_plate"]
-        self.add("door_letter_plate", bx(uc - 125.0, uc + 125.0, 70.0, 73.0, lp["z_mm"] - 20.0, lp["z_mm"] + 20.0), "brass", bev=None)
-        self.add("door_letter_slot", bx(uc - 100.0, uc + 100.0, 73.0, 73.6, lp["z_mm"] - 6.0, lp["z_mm"] + 6.0), "steel", bev=None)
-        lx = lu0 + st / 2.0
-        self.add("door_lever_backplate", bx(lx - 20.0, lx + 20.0, 70.0, 73.0, 880.0, 1120.0), "brass", bev=None)
-        self.add("door_lever_rose", cyl_d(lx, 1000.0, 73.0, 80.0, 17.0, 16), "brass", bev=None)
-        self.add("door_lever_arm", bx(lx - 9.0, lx + 120.0, 80.0, 98.0, 991.0, 1009.0), "brass", bev=None)
-        self.add("door_keyhole", bx(lx - 4.0, lx + 4.0, 73.0, 73.6, 938.0, 962.0), "steel", bev=None)
-        for k, z in enumerate((178.0, 1048.0, 1918.0)):
-            self.add("door_butt_%d" % k, cyl_z(lu1 + 1.0, 62.0, z - 50.0, z + 50.0, 5.5, 10), "brass", bev=None)
+        if D["variant"] == "M1":
+            # M1 (Mickey's, 3.2 target: parts.shop_door.variants.M1): an aluminium-framed glass door 900 x 2040: 50 stiles, a 100 top rail, a 170 bottom rail, one pane of glass from z 198 to 1968, a 300 chrome D pull
+            # on the lever stile, the letter plate centred in the bottom rail (z 113, outside the glass), a rubber strip at the foot; powder-coated slate (the door's paint)
+            st = 50.0
+            self.mats.setdefault("chrome", bs.make_material("chrome", (170, 172, 174), 0.2, 1.0))
+            self.add("door_leaf_stile_lever", bx(lu0, lu0 + st, d0, d1, z_foot, z_top), "door_paint")
+            self.add("door_leaf_stile_hinge", bx(lu1 - st, lu1, d0, d1, z_foot, z_top), "door_paint")
+            ru0, ru1 = lu0 + st, lu1 - st
+            self.add("door_rail_bottom", bx(ru0, ru1, d0, d1, 28.0, 198.0), "door_paint")
+            self.add("door_rail_top", bx(ru0, ru1, d0, d1, 1968.0, 2068.0), "door_paint")
+            self.add("door_glass_0", bx(ru0 - 6.0, ru1 + 6.0, 40.0, 46.0, 198.0 - 6.0, 1968.0 + 6.0), "glass", bev=None)
+            for k, (a_, b_, c_, e_) in enumerate(((ru0, 198.0, ru0 + 12.0, 1968.0), (ru1 - 12.0, 198.0, ru1, 1968.0), (ru0 + 12.0, 198.0, ru1 - 12.0, 210.0), (ru0 + 12.0, 1956.0, ru1 - 12.0, 1968.0))):
+                self.add("door_bead_%d" % k, bx(a_, c_, 46.0, 58.0, b_, e_), "door_paint", bev=None)
+            lp = D["letter_plate"]
+            self.add("door_letter_plate", bx(uc - 125.0, uc + 125.0, 70.0, 73.0, lp["z_mm"] - 20.0, lp["z_mm"] + 20.0), "chrome", bev=None)
+            self.add("door_letter_slot", bx(uc - 100.0, uc + 100.0, 73.0, 73.6, lp["z_mm"] - 6.0, lp["z_mm"] + 6.0), "steel", bev=None)
+            lx = lu0 + st / 2.0
+            self.add("door_pull_post_0", cyl_d(lx, 800.0, 70.0, 108.0, 6.0, 10), "chrome", bev=None)
+            self.add("door_pull_post_1", cyl_d(lx, 1100.0, 70.0, 108.0, 6.0, 10), "chrome", bev=None)
+            self.add("door_pull_bar", cyl_z(lx, 108.0, 780.0, 1120.0, 11.0, 12), "chrome", bev=None)
+            self.add("door_foot_strip", bx(lu0, lu1, 70.0, 76.0, 28.0, 58.0), "steel", bev=None)
+            for k, z in enumerate((178.0, 1048.0, 1918.0)):
+                self.add("door_butt_%d" % k, cyl_z(lu1 + 1.0, 62.0, z - 50.0, z + 50.0, 5.5, 10), "chrome", bev=None)
+        else:
+            st = 115.0
+            d0, d1 = 20.0, 70.0
+            self.add("door_leaf_stile_lever", bx(lu0, lu0 + st, d0, d1, z_foot, z_top), "door_paint")
+            self.add("door_leaf_stile_hinge", bx(lu1 - st, lu1, d0, d1, z_foot, z_top), "door_paint")
+            ru0, ru1 = lu0 + st, lu1 - st
+            rails = D["t1_rails_mm"]
+            self.add("door_rail_bottom", bx(ru0, ru1, d0, d1, rails["bottom_rail"][0], rails["bottom_rail"][1]), "door_paint")
+            self.add("door_rail_lock", bx(ru0, ru1, d0, d1, rails["lock_rail"][0], rails["lock_rail"][1]), "door_paint")
+            self.add("door_rail_top", bx(ru0, ru1, d0, d1, rails["top_rail"][0], rails["top_rail"][1]), "door_paint")
+            bar = rails["glazing_bar"]
+            self.add("door_glazing_bar", bx(ru0, ru1, d0, d1, bar["z"] - bar["width"] / 2, bar["z"] + bar["width"] / 2), "door_paint")
+            # lower panel: raised and fielded (raised_field_edge: flat margin 32, bevel 8 rising 10), tongues 10 into the rails and stiles
+            V, F = joinery.fielded_panel(ru0 - 10.0, rails["bottom_rail"][1] - 10.0, ru1 + 10.0, rails["lock_rail"][0] + 10.0, -26.0, 14.0, 24.0, 8.0, margin=32.0)
+            self.add("door_lower_panel", (V, F), "door_paint", bev=None)
+            # glass: two panes of 6 mm at d 40 to 46 in 12 rebates, an ovolo bead 14 x 11 round each (glazing_bead)
+            bead = [(p[0], -p[1]) for p in pr["glazing_bead"]["points"]]
+            panes = [(ru0, rails["lock_rail"][1], ru1, bar["z"] - bar["width"] / 2), (ru0, bar["z"] + bar["width"] / 2, ru1, rails["top_rail"][0])]
+            for k, (a, b, c, e) in enumerate(panes):
+                self.add("door_glass_%d" % k, bx(a - 10.0, c + 10.0, 40.0, 46.0, b - 8.0, e + 8.0), "glass", bev=None)
+                V, F = joinery.sweep_frame(bead, a, b, c, e, -46.0)
+                self.add("door_bead_%d" % k, (V, [tuple(int(i) for i in f) for f in F]), "door_paint", bev=None)
+            # furniture (brass): kick plate 770 x 170 with 8 screws, a 30 high foot strip 3 proud, letter plate 250 x 40 at z 678 centred, lever 240 x 40
+            # backplate at z 1000 with the keyhole at 950, three butts 100 x 75 on the hinge edge
+            self.add("door_kick_plate", bx(uc - 385.0, uc + 385.0, 70.0, 73.0, 28.0, 198.0), "brass", bev=None)
+            for k, (du, z) in enumerate(((-350, 55), (-350, 171), (0, 55), (0, 171), (350, 55), (350, 171), (-175, 113), (175, 113))):
+                self.add("door_kick_screw_%d" % k, cyl_d(uc + du, z, 73.0, 74.5, 4.0, 8), "steel", bev=None)
+            self.add("door_foot_strip", bx(lu0, lu1, 70.0, 76.0, 28.0, 58.0), "brass", bev=None)
+            lp = D["letter_plate"]
+            self.add("door_letter_plate", bx(uc - 125.0, uc + 125.0, 70.0, 73.0, lp["z_mm"] - 20.0, lp["z_mm"] + 20.0), "brass", bev=None)
+            self.add("door_letter_slot", bx(uc - 100.0, uc + 100.0, 73.0, 73.6, lp["z_mm"] - 6.0, lp["z_mm"] + 6.0), "steel", bev=None)
+            lx = lu0 + st / 2.0
+            self.add("door_lever_backplate", bx(lx - 20.0, lx + 20.0, 70.0, 73.0, 880.0, 1120.0), "brass", bev=None)
+            self.add("door_lever_rose", cyl_d(lx, 1000.0, 73.0, 80.0, 17.0, 16), "brass", bev=None)
+            self.add("door_lever_arm", bx(lx - 9.0, lx + 120.0, 80.0, 98.0, 991.0, 1009.0), "brass", bev=None)
+            self.add("door_keyhole", bx(lx - 4.0, lx + 4.0, 73.0, 73.6, 938.0, 962.0), "steel", bev=None)
+            for k, z in enumerate((178.0, 1048.0, 1918.0)):
+                self.add("door_butt_%d" % k, cyl_z(lu1 + 1.0, 62.0, z - 50.0, z + 50.0, 5.5, 10), "brass", bev=None)
         # the leaf's stops behind its 3 mm clearances (left, right, head and foot) and the hall floor behind both doors: what stands behind a gap in the real door, so the front has no
         # see-through crack (FRN-07): 14 wide stops on the room side of the leaf's back face (d 4 to 20), a floor slab inside from the pilaster to the window frame
         self.add("door_stop_l", bx(u_in0, u_in0 + 14.0, 4.0, 20.0, 25.0, 2071.0), "door_paint", bev=None)

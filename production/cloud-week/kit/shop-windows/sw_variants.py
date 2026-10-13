@@ -36,7 +36,21 @@ class VBuilder(bs.Builder):
         if v == "flute":
             super().pilaster(tag)                 # the plinth, base ogee, backing core, capital and die tablet are the panel pilaster's (the flute elevation has the same members)
             return self._flute_shaft(tag)
+        if v == "clad":
+            return self._clad_pilaster(tag)
         raise NotImplementedError("pilaster variant " + v)
+
+    def _clad_pilaster(self, tag):
+        """The clad pier (Mickey's: a 1960s-80s flush steel-clad pier, no plinth, no capital): three sheets 350 wide and 140 proud (the profile `clad_plan`: a 4 x 4 chamfer on the front edges), z 0 to
+        1200, 1200 to 2400, 2400 to 2850, a 6 mm joint between them (3.2 target: parts.pilaster.variants.clad)."""
+        pil = self.P["pilaster"]
+        plan = [tuple(p) for p in pil["profiles"]["clad_plan"]["points"]]
+        cd = pil["variants"]["clad"]["dims"]
+        j = cd["joint_width"] / 2.0
+        edges = [0.0] + [v for z in cd["sheet_joints_z"] for v in (z - j, z + j)] + [2850.0]
+        for k in range(3):
+            self.add("pil%s_clad_%d" % (tag, k + 1), bs.prism_ud(plan, edges[2 * k], edges[2 * k + 1]), "oxblood")
+        return self
 
     def _flute_shaft(self, tag):
         """Replace the panel pilaster's shaft by the flute variant's: a bottom rail (z 600 to 740) and a top rail (2430 to 2540) at the shaft's face (d 140), and between them the five
@@ -77,9 +91,11 @@ class VBuilder(bs.Builder):
             return super().window_frame()
         if v == "T2":
             return self._window_frame_param(mullion_key="mullion_t2_plan", mullion_face=80.0, glaze_key="glazing_putty")
+        if v == "M1":
+            return self._window_frame_param(mullion_key="mullion_m1_plan", mullion_face=50.0, glaze_key="glazing_bead_gasket", jamb_key="jamb_m1_plan", transom_key="transom_m1")
         raise NotImplementedError("window frame variant " + v)
 
-    def _window_frame_param(self, mullion_key, mullion_face, glaze_key):
+    def _window_frame_param(self, mullion_key, mullion_face, glaze_key, jamb_key="jamb_t1_plan", transom_key="transom_t1"):
         """The kit's window_frame (T1) with the mullion section, the mullion face and the glazing section as parameters: jambs, seat, transom, head, toplight bars, glass and the six-sided
         joinery are the kit's own numbers and order; T2 differs in its 80 x 92 flat-faced quirk-bead mullions (and the bars carried up on them) and in putty fillets where T1 has ovolo beads."""
         W = self.P["window_frame"]
@@ -93,7 +109,7 @@ class VBuilder(bs.Builder):
         z_h0, z_h1 = d["head"]
         jf = d["jamb_face"]
         z_foot = z_seat0 - bs.SEAT_EMBED
-        jp = pr["jamb_t1_plan"]["points"]
+        jp = pr[jamb_key]["points"]
         jl = [(u0 + p[0], p[1]) for p in jp]
         jr = [(u1 - p[0], p[1]) for p in jp][::-1]
         self.add("win_jamb_l", bs.prism_ud(jl, z_seat0, z_h1), "white")
@@ -104,7 +120,7 @@ class VBuilder(bs.Builder):
             self.add(nm, bs.prism_ud(list(clip.exterior.coords)[:-1], z_foot, z_seat0), "white", bev=None)
         ui0, ui1 = u0 + jf, u1 - jf
         self.add("win_seat", bs.box(ui0, ui1, 0.0, 60.0, z_seat0, z_seat1), "white")
-        tz = [(p[0], p[1] + z_tr0) for p in pr["transom_t1"]["points"]]
+        tz = [(p[0], p[1] + z_tr0) for p in pr[transom_key]["points"]]
         self.add("win_transom", bs.prism_dz(tz, ui0, ui1), "white")
         hz = [(p[0], p[1] + z_h0) for p in pr["head_section"]["points"]]
         self.add("win_head", bs.prism_dz(hz, ui0, ui1), "white")

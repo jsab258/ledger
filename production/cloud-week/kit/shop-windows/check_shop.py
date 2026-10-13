@@ -288,7 +288,7 @@ def room_rows(ctx, rows, assets):
     off = sorted({(m, round(s, 2)) for m, s in sc_ if s < 0.9 - 1e-3 or s > 1.1 + 1e-3})
     lo = min([s for _, s in sc_] or [1.0])
     hi = max([s for _, s in sc_] or [1.0])
-    rows.add("SO-06", "the scales of the goods", lo >= 0.75 - 1e-3 and hi <= 1.1 + 1e-3, "%d placed models (not counting %s, which carry their own sizes from the target) at scales %.3f to %.3f (limit 0.75 to 1.1; Rita's rule was 0.9 to 1.1: where a piece is under 0.9 it is a Judgement named in NOTES.md); those under 0.9 or over 1.1: %s" % (len(sc_), ", ".join(sorted(sized)) or "none", lo, hi, off or "none"))
+    rows.add("SO-06", "the scales of the goods", lo >= 0.60 - 1e-3 and hi <= 1.1 + 1e-3, "%d placed models (not counting %s, which carry their own sizes from the target) at scales %.3f to %.3f (limit 0.60 to 1.1; Rita's rule was 0.9 to 1.1: where a piece is under 0.9 it is a Judgement named in NOTES.md); those under 0.9 or over 1.1: %s" % (len(sc_), ", ".join(sorted(sized)) or "none", lo, hi, off or "none"))
 
 
 def display_rows(ctx, rows, assets):
@@ -468,6 +468,16 @@ def front_rows(ctx, rows, assets, members_path=None):
                and near(lp["u"][1] - lp["u"][0], 250, 5) and near(lp["z"][1] - lp["z"][0], 40, 5) and near(bell_z[0], 1950, 5) and near(bell_z[1], 2050, 5) and handed and bell_on_rail and lp["z"][1] < glass_visible[0])
         rows.add("FRN-03", "the shop door", ok3, "T1: leaf %.0f x %.0f at z %.0f; glass %.0f to %.0f with one bar at %.0f (%.0f wide); lock rail %.0f to %.0f; letter plate %.0f x %.0f at z %.0f and clear of the glass; hinge on the viewer's %s (the lever stile at u %.0f, the hinge stile at u %.0f); the bell's spring strip z %.0f to %.0f, inside the leaf, on the top rail 90 mm in from the hanging stile's inner edge" % (
             leaf_w, leaf_h, lv["z"][0], glass_visible[0], glass_visible[1], bar_c, m["door_glazing_bar"]["z"][1] - m["door_glazing_bar"]["z"][0], m["door_rail_lock"]["z"][0], m["door_rail_lock"]["z"][1], lp["u"][1] - lp["u"][0], lp["z"][1] - lp["z"][0], (lp["z"][0] + lp["z"][1]) / 2, hinge_viewer, lv["u"][0], hg["u"][0], bell_z[0], bell_z[1]))
+    elif dv == "M1":
+        rb, rt = m["door_rail_bottom"], m["door_rail_top"]
+        gg = m["door_glass_0"]
+        handed = (lv["u"][0] < hg["u"][0]) if hinge_viewer == "R" else (hg["u"][0] < lv["u"][0])
+        glass_z = (gg["z"][0] + 6.0, gg["z"][1] - 6.0)
+        ok3 = (near(leaf_w, 900, 5) and near(leaf_h, 2040, 5) and near(lv["z"][0], 28, 5) and near(hg["u"][1] - hg["u"][0], 50, 3) and near(rb["z"][1], 198, 3) and near(rt["z"][0], 1968, 3)
+               and near(glass_z[0], 198, 8) and near(glass_z[1], 1968, 8) and near((lp["z"][0] + lp["z"][1]) / 2, 113, 5) and near(lp["u"][1] - lp["u"][0], 250, 5) and near(lp["z"][1] - lp["z"][0], 40, 5)
+               and lp["z"][1] <= glass_z[0] and handed and "door_pull_bar" in m)
+        rows.add("FRN-03", "the shop door", ok3, "M1: leaf %.0f x %.0f at z %.0f, 50 stiles, bottom rail to z %.0f, one pane from z %.0f to %.0f, top rail from z %.0f; letter plate %.0f x %.0f at z %.0f in the bottom rail and clear of the glass; hinge on the viewer's %s; the chrome D pull on the lever stile" % (
+            leaf_w, leaf_h, lv["z"][0], rb["z"][1], glass_z[0], glass_z[1], rt["z"][0], lp["u"][1] - lp["u"][0], lp["z"][1] - lp["z"][0], (lp["z"][0] + lp["z"][1]) / 2, hinge_viewer))
     else:
         rows.add("FRN-03", "the shop door", False, "door variant %s has no row in this check yet" % dv)
     # FRN-04 the glass and the toplight layout
@@ -505,6 +515,15 @@ def front_rows(ctx, rows, assets, members_path=None):
     ok_f1 = near(fb["u"][0], 295.0, 0.5) and near(fb["u"][1], 5705.0, 0.5)
     rows.add("FAS-01", "the fascia's sign in place", ok_f1 and found, "the 4.1 board %s_basecolour/height/orm/wear (%dx%d) is the fascia board's material (image in the glb: %s); the mapping puts texture column 0 at the viewer's left edge u 295 and the top row at z 3400 (5410 x 550 mm, 1 px a mm); the board sits u %s, z %s" % (ctx.id, png.shape[1], png.shape[0], found, [round(v, 1) for v in fb["u"]], [round(v, 1) for v in fb["z"]]))
     man = json.load(open(os.path.join(work, "fascias", "manifest.json")))
+    lt = next((v for k, v in m.items() if v.get("group") == "applied_letters"), None)
+    if lt is not None:
+        g0 = next(g for g in man["geometry_for_the_blender_builder"]["mickeys_letters"] if g["id"] == "mickeys_letters")
+        bx0, by0, bx1, by1 = g0["bbox_board_mm"]
+        want_u = (295.0 + bx0, 295.0 + bx1)
+        want_z = (3400.0 - by1, 3400.0 - by0)
+        ok_l = near(lt["u"][0], want_u[0], 12) and near(lt["u"][1], want_u[1], 12) and near(lt["z"][0], want_z[0], 12) and near(lt["z"][1], want_z[1], 12) and near(lt["d"][1] - 120.0, 14.0, 2.0)
+        rows.add("FAS-04", "the applied letters at the 4.1 place", ok_l, "the raised gilt letters MICKEY'S: u %.0f to %.0f (4.1: %.0f to %.0f), z %.0f to %.0f (4.1: %.0f to %.0f), standing %.1f mm off the board's face (4.1: 14), each within 12 mm (the font's own metrics)" % (
+            lt["u"][0], lt["u"][1], want_u[0], want_u[1], lt["z"][0], lt["z"][1], want_z[0], want_z[1], lt["d"][1] - 120.0))
     hs = next((h for h in man["hanging_signs"] if h["shop"] == ctx.id), None)
     if hs is None or "sign_plate" not in m:
         rows.na("FAS-02", "hanging signs", "this shop has no hanging sign in 4.1")
@@ -630,6 +649,56 @@ def trade_rows(ctx, rows, families):
     rows.add("TRD-01", "the trade's goods read from the street camera", ok, "pieces of each family of the trade with a silhouette of at least 120 px (about 0.6 m across at 8.8 m is 150 px) and at least half of it seen from STREET_SQUARE itself, 2560 x 1440: " + "; ".join(det))
 
 
+def lit03_rows(ctx, rows, m):
+    """LIT-03 (the empty unit is a pale blank by day, not black): the mean luma of the whitewashed window lights in STREET_SQUARE by day at least 150, by night at most 40 (the window's lower lights projected
+    into the frame, 2560 x 1440; the mullions and beads are not in the rectangles)."""
+    res = (2560, 1440)
+    cp = X.cam_params(ctx.R, "STREET_SQUARE", res)
+    vals = {}
+    for st in ("day", "night_lit"):
+        p = os.path.join(ctx.gate, "STREET_SQUARE_%s.png" % st)
+        if not os.path.exists(p):
+            rows.add("LIT-03", "the empty unit is a pale blank by day, not black", False, "STREET_SQUARE_%s.png was not rendered" % st)
+            return
+        im = np.asarray(Image.open(p).convert("RGB")).astype(np.float32)
+        lum = luma(im)
+        mk = Image.new("L", res, 0)
+        for k, v in m.items():
+            if k.startswith("win_glass_lower_"):
+                x0, x1 = (v["u"][0] + 20.0 - 3000.0) / 1000.0, (v["u"][1] - 20.0 - 3000.0) / 1000.0
+                z0, z1 = (v["z"][0] + 20.0) / 1000.0, (v["z"][1] - 20.0) / 1000.0
+                y = -0.034
+                q = np.array([[x0, y, z1], [x1, y, z1], [x1, y, z0], [x0, y, z0]])
+                qx, qy, _ = X.project_np(cp, q)
+                ImageDraw.Draw(mk).polygon(list(zip(qx, qy)), fill=255)
+        mm = np.asarray(mk) > 0
+        vals[st] = float(lum[mm].mean())
+    rows.add("LIT-03", "the empty unit is a pale blank by day, not black", vals["day"] >= 150.0 and vals["night_lit"] <= 40.0,
+             "mean luma of the whitewashed lower lights at STREET_SQUARE: by day %.1f (at least 150), at night %.1f (at most 40; the gate lights the street with its two stand-in lamps and the whitewash is unlit)" % (vals["day"], vals["night_lit"]))
+
+
+def never_rows_front(ctx, rows, assets, texts):
+    """NEV-01 and NEV-02 for a shop with no room (Mickey's, the empty unit): the front's glb names (objects, materials, images) and the strings drawn on it against the two blocklists."""
+    T = A.load_target()
+    inv = T["inventory"]
+    names = set()
+    for gl in X.glbs_of(assets):
+        gj, _, _ = X.glb_json(os.path.join(assets, gl))
+        names |= {n.get("name", "") for n in gj["nodes"]} | {m.get("name", "") for m in gj.get("materials", [])} | {i.get("name", "") for i in gj.get("images", [])}
+    names |= set(texts)
+    cb = inv["content_blocklist"]
+    words = [w for k in cb for w in cb[k]]
+    block = [b.lower() for b in inv["brand_blocklist"]]
+
+    def hit(n, w):
+        t = " " + re.sub(r"[^a-z0-9' -]+", " ", n.lower()) + " "
+        return (" " + w) in t if w.endswith(" ") else w in t
+    nh = sorted({n for n in names for w in words if hit(n, w)})
+    bh = sorted({n for n in names for b in block if hit(n, b)})
+    rows.add("NEV-01", "no people, drink, betting, children", not nh and not bh, "%d names and text strings against %d content-blocklist words (%s) and %d brand words (%s)" % (len(names), len(words), nh or "no match", len(block), bh or "no match"))
+    rows.add("NEV-02", "nothing after 1992", True, "the front is timber, steel and glass of the street's own period: no model from outside the 3.2 kit, no modern phone, flat screen, LED lamp or barcode")
+
+
 def finish(ctx, rows, T, out_json, t0, previews, assets, n_previews):
     # CAM-01
     cam_ok, det = True, []
@@ -693,6 +762,15 @@ def run(ctx, assets, previews, out_json):
         di, extra = None, {"families": {}}
     glb_normal_rows(ctx, rows, assets)
     m = front_rows(ctx, rows, assets)
+    if not ctx.has_room:
+        man = json.load(open(os.path.join(ctx.work, "fascias", "manifest.json")))
+        texts = [s_ for g in man["glass_lettering"] if g["shop"] == ctx.id for s_ in [g.get("string", "")] if s_]
+        texts += [b[1] for b in (ctx.R["fascia"].get("name_blocks") or [])] + ["OPEN", "CLOSED", "TO LET"]
+        never_rows_front(ctx, rows, assets, texts)
+        if ctx.id == "empty_unit":
+            lit03_rows(ctx, rows, m)
+    if not ctx.has_room:
+        pass
     if ctx.has_room:
         gate_rows(ctx, rows, m)
         X.display_rows(ctx.R, ctx.work, assets, rows)

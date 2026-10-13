@@ -257,6 +257,9 @@ def fascia_rows(R, work, assets, rows, front_png_day_sq, members):
         # 13 Oct, batch A: the lettering is whatever stands away from the ground's luma by more than 0.6 of it in either direction (light letters on a dark board, or dark on light), over the whole board
         sel_letters = inside & (np.abs(tluma - med) > med * 0.6) & (tu > 400) & (tu < 5000)
         sel_ground = inside & (np.abs(tluma - med) < med * 0.25) & (tu > 400) & (tu < 5000)
+    if not rita_ and not sel_letters.any():
+        rows.na("FAS-01c", "the board reads by day", "the board's picture carries no lettering (an empty unit's bare timber; Mickey's letters are applied in 3D and are measured by FAS-04)")
+        return
     rl = luma(im.reshape(-1, 3).reshape(im.shape))[ys.ravel(), xs.ravel()]
     ground = float(rl[sel_ground].mean()) if sel_ground.any() else 0.0
     light_letters = bool(sel_letters.any() and float(tluma[sel_letters].mean()) > med)
