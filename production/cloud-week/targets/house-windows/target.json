@@ -1,6 +1,6 @@
 {
- "summary": "House windows of Quay Street: twenty windows in ten houses (three kinds: two over two, one over one, a replacement casement), the 1a fix as numbers (glass over a dark room, the box shaded, its lines drawn), six kinds of net and drape, thirteen small rooms in the game's own `trace` rule at 2048 wide, the white-board check measured on 1979 to 1994 photographs.",
- "status": "written by the target writer on 13 October 2026 from sources reached that day; nothing is built or committed",
+ "summary": "House windows of Quay Street: twenty windows in ten houses, every frame white (Jafar's ruling of 3 October), four kinds (two over two, one over one, and two replacement casements: P7's and P6's), the 1a fix as numbers (glass over a dark room, the box shaded, its lines drawn), the net, curtain and blind kinds, thirteen small rooms in the game's own `trace` rule, the white-board check measured on 1979 to 1994 photographs the way the gate measures.",
+ "status": "fixes applied, not re-reviewed",
  "units": {
   "windows_mm": "kit frame: x across (0 at the window's middle, + toward the viewer's right), y INTO the wall from the brick face (0 at the face), z UP from the opening's bottom edge",
   "rooms_m": "room frame: x across from the room's centre (+ toward the PICTURE's right), y back from the card plane, z up from the floor",
@@ -396,63 +396,93 @@
   ]
  },
  "photo_measurements": {
-  "method": "The pane-to-frame measurements on the photographs (Photo kind). Each window: an outline box (jamb to jamb, head to sill top), the pane boxes (the glass or net\ninside the sash), its state, and the proportion w/h its true window would have (0.50 for the period sash; 0.33 for P9's tall arched ones). Luma is sRGB-coded\n0.2126 R + 0.7152 G + 0.0722 B (1a's measure). L = the outline's 90th percentile, P = the pane median, D = the outline's 5th percentile.\nThe angle from the wall is estimated from the window's apparent proportion: sin(angle) = (w_app / h_app) / a_true; its error is +-5 degrees (the true proportion varies\n0.40 to 0.62 between windows). The outline boxes are by eye on the photographs' own pixels (hw_photos.PHOTOS ids); a few include the dark reveal at their edge, so\nD is a floor: the tight outlines (P1) are the ones to compare with a render's D/L.",
+  "method": "The pane-to-frame measurements on the photographs (Photo kind). Each window: an outline box (jamb to jamb, head to sill top), the pane boxes (the glass or net\ninside the sash), its state, and the proportion w/h its true window would have (0.50 for the period sash; 0.33 for P9's tall arched ones). Luma is sRGB-coded\n0.2126 R + 0.7152 G + 0.0722 B (1a's measure).\n\nMEASURED THE WAY THE GATE MEASURES (TARGET-REVIEW of 13 October, fault 2; TARGET.md section 9): P = the pane boxes' median; L = the 90th percentile of the OUTLINE\nMINUS THE PANE BOXES (the joinery: the stile, rail and lining pixels, no brick, no stone); D = the outline's 5th percentile (joinery and pane together, no brick);\nspread = the pane's 95th minus 5th percentile. The first version of this file took L over the whole outline and drew P1's outlines to include the white-painted stone head and\nsill and a column of brick at the jamb: that made L 233 to 245 (the stone's paint, 248 to 254) and D/L 0.47 to 0.50 (the brick's own 119 over the stone), neither of which\nthe gate can read off a render. P1_a, P1_b and P1_e are now boxed without the stone and the brick; the other outlines are as they were and a few still include the dark reveal\nor a little stone at their edge, so for them D is a floor (and L, now taken from the joinery alone, is a little nearer the frame's own luma).\nThe angle from the wall is estimated from the window's apparent proportion: sin(angle) = (w_app / h_app) / a_true; its error is +-5 degrees (the true proportion varies\n0.40 to 0.62 between windows). The outline boxes are by eye on the photographs' own pixels (hw_photos.PHOTOS ids).\nP1_c's frame is dark brown and its outline still includes the white stone head and sill: its L is the stone's paint, so its row reads a bare dark room against white, as the\nbare band wants (fault 1's amendment makes every street frame white or cream: the bands apply to white and cream frames only).",
   "windows": {
    "P1_a": {
     "photo": "P1",
     "state": "net_full",
-    "aspect": 0.286,
-    "angle_deg": 34.8,
-    "L90": 233.6,
-    "P50": 202.0,
-    "D5": 117.3,
-    "P_over_L": 0.865,
-    "D_over_L": 0.502,
-    "pane_spread_5_95": 85.8,
-    "pane_px": 528,
-    "note": "upstairs, white frame, white voile both sashes"
+    "aspect": 0.314,
+    "angle_deg": 38.9,
+    "L90": 215.9,
+    "P50": 201.3,
+    "D5": 139.7,
+    "P_over_L": 0.932,
+    "D_over_L": 0.647,
+    "pane_spread_5_95": 76.1,
+    "pane_px": 540,
+    "joinery_px": 276,
+    "L_is": "p90 of the outline minus the pane boxes (the gate's joinery)",
+    "note": "upstairs, white frame, white voile both sashes; boxed without the stone head and sill and without the brick column (the review's box)",
+    "alt_top_rows_out": {
+     "outline": [
+      435,
+      399,
+      451,
+      447
+     ],
+     "panes": [
+      [
+       437,
+       402,
+       449,
+       444
+      ]
+     ],
+     "L90": 216.5,
+     "P50": 202.4,
+     "D5": 154.0,
+     "P_over_L": 0.935,
+     "D_over_L": 0.712,
+     "pane_spread_5_95": 67.9
+    }
    },
    "P1_b": {
     "photo": "P1",
     "state": "net_full",
-    "aspect": 0.258,
-    "angle_deg": 31.1,
-    "L90": 244.8,
-    "P50": 202.8,
-    "D5": 114.0,
-    "P_over_L": 0.828,
-    "D_over_L": 0.466,
-    "pane_spread_5_95": 87.0,
-    "pane_px": 414,
-    "note": "upstairs, white frame, white voile"
+    "aspect": 0.26,
+    "angle_deg": 31.3,
+    "L90": 218.7,
+    "P50": 204.5,
+    "D5": 141.7,
+    "P_over_L": 0.935,
+    "D_over_L": 0.648,
+    "pane_spread_5_95": 64.1,
+    "pane_px": 484,
+    "joinery_px": 166,
+    "L_is": "p90 of the outline minus the pane boxes (the gate's joinery)",
+    "note": "upstairs, white frame, white voile; boxed without the stone and the brick (the review's box)"
    },
    "P1_c": {
     "photo": "P1",
     "state": "bare_dark",
     "aspect": 0.189,
     "angle_deg": 22.2,
-    "L90": 228.5,
+    "L90": 247.4,
     "P50": 73.0,
     "D5": 27.3,
-    "P_over_L": 0.32,
-    "D_over_L": 0.12,
+    "P_over_L": 0.295,
+    "D_over_L": 0.111,
     "pane_spread_5_95": 102.0,
     "pane_px": 160,
-    "note": "upstairs, dark-brown frame, bare glass, dark room"
+    "joinery_px": 370,
+    "L_is": "p90 of the outline minus the pane boxes (the gate's joinery)",
+    "note": "upstairs, dark-brown frame, bare glass, dark room (the outline still includes the white stone: see the note at the top)"
    },
    "P1_e": {
     "photo": "P1",
     "state": "net_full",
-    "aspect": 0.3,
-    "angle_deg": 36.9,
-    "L90": 226.6,
-    "P50": 192.6,
-    "D5": 110.1,
-    "P_over_L": 0.85,
-    "D_over_L": 0.486,
-    "pane_spread_5_95": 110.9,
-    "pane_px": 506,
-    "note": "ground, white frame, white voile"
+    "aspect": 0.314,
+    "angle_deg": 38.9,
+    "L90": 215.3,
+    "P50": 193.1,
+    "D5": 111.4,
+    "P_over_L": 0.897,
+    "D_over_L": 0.517,
+    "pane_spread_5_95": 109.0,
+    "pane_px": 540,
+    "joinery_px": 276,
+    "L_is": "p90 of the outline minus the pane boxes (the gate's joinery)",
+    "note": "ground, white frame, voile on the lower sash and the upper sash clear and dark; boxed the same way as P1_a: from 5 rows under the stone head's end (y 484) to the stone sill's start (y 540), jamb to jamb (x 435 to 450)"
    },
    "P4_C": {
     "photo": "P4",
@@ -466,6 +496,8 @@
     "D_over_L": 0.142,
     "pane_spread_5_95": 173.0,
     "pane_px": 1496,
+    "joinery_px": 3251,
+    "L_is": "p90 of the outline minus the pane boxes (the gate's joinery)",
     "note": "upstairs, full white net (black and white print)"
    },
    "P4_G": {
@@ -473,13 +505,15 @@
     "state": "bare_dark",
     "aspect": 0.359,
     "angle_deg": 46.0,
-    "L90": 215.0,
+    "L90": 223.0,
     "P50": 41.0,
     "D5": 2.0,
-    "P_over_L": 0.191,
+    "P_over_L": 0.184,
     "D_over_L": 0.009,
     "pane_spread_5_95": 208.0,
     "pane_px": 1612,
+    "joinery_px": 4276,
+    "L_is": "p90 of the outline minus the pane boxes (the gate's joinery)",
     "note": "ground, bare, the room black, a pot plant"
    },
    "P4_E": {
@@ -487,13 +521,15 @@
     "state": "net_half",
     "aspect": 0.287,
     "angle_deg": 35.1,
-    "L90": 218.0,
+    "L90": 220.0,
     "P50": 122.0,
     "D5": 31.0,
-    "P_over_L": 0.56,
-    "D_over_L": 0.142,
+    "P_over_L": 0.555,
+    "D_over_L": 0.141,
     "pane_spread_5_95": 148.8,
     "pane_px": 646,
+    "joinery_px": 1892,
+    "L_is": "p90 of the outline minus the pane boxes (the gate's joinery)",
     "note": "ground, a net over the lower half"
    },
    "P3_a": {
@@ -501,13 +537,15 @@
     "state": "net_full",
     "aspect": 0.542,
     "angle_deg": 90.0,
-    "L90": 175.3,
+    "L90": 177.2,
     "P50": 105.6,
     "D5": 5.4,
-    "P_over_L": 0.602,
-    "D_over_L": 0.031,
+    "P_over_L": 0.596,
+    "D_over_L": 0.03,
     "pane_spread_5_95": 130.9,
     "pane_px": 1480,
+    "joinery_px": 3512,
+    "L_is": "p90 of the outline minus the pane boxes (the gate's joinery)",
     "note": "upstairs, cream frame, lower sash voile, near square"
    },
    "P3_b": {
@@ -515,13 +553,15 @@
     "state": "net_full",
     "aspect": 0.44,
     "angle_deg": 61.5,
-    "L90": 192.5,
+    "L90": 177.8,
     "P50": 162.0,
     "D5": 38.0,
-    "P_over_L": 0.842,
-    "D_over_L": 0.197,
+    "P_over_L": 0.911,
+    "D_over_L": 0.214,
     "pane_spread_5_95": 113.2,
     "pane_px": 1500,
+    "joinery_px": 2140,
+    "L_is": "p90 of the outline minus the pane boxes (the gate's joinery)",
     "note": "upstairs, red-brown frame, voile"
    },
    "P3_c": {
@@ -529,13 +569,15 @@
     "state": "net_full",
     "aspect": 0.39,
     "angle_deg": 51.3,
-    "L90": 170.7,
+    "L90": 168.0,
     "P50": 124.7,
     "D5": 26.5,
-    "P_over_L": 0.731,
-    "D_over_L": 0.155,
+    "P_over_L": 0.742,
+    "D_over_L": 0.158,
     "pane_spread_5_95": 116.0,
     "pane_px": 1890,
+    "joinery_px": 2010,
+    "L_is": "p90 of the outline minus the pane boxes (the gate's joinery)",
     "note": "ground, red-brown frame, voile"
    },
    "P3_d": {
@@ -543,13 +585,15 @@
     "state": "bare_dark",
     "aspect": 0.514,
     "angle_deg": 90.0,
-    "L90": 167.2,
+    "L90": 170.8,
     "P50": 60.7,
     "D5": 12.0,
-    "P_over_L": 0.363,
-    "D_over_L": 0.072,
+    "P_over_L": 0.356,
+    "D_over_L": 0.07,
     "pane_spread_5_95": 148.9,
     "pane_px": 1200,
+    "joinery_px": 4685,
+    "L_is": "p90 of the outline minus the pane boxes (the gate's joinery)",
     "note": "ground, cream frame, bare lower sash, dark room, near square"
    },
    "P3_e": {
@@ -557,13 +601,15 @@
     "state": "net_full",
     "aspect": 0.452,
     "angle_deg": 64.8,
-    "L90": 211.6,
+    "L90": 210.3,
     "P50": 167.4,
     "D5": 32.2,
-    "P_over_L": 0.791,
-    "D_over_L": 0.152,
+    "P_over_L": 0.796,
+    "D_over_L": 0.153,
     "pane_spread_5_95": 150.1,
     "pane_px": 1500,
+    "joinery_px": 1692,
+    "L_is": "p90 of the outline minus the pane boxes (the gate's joinery)",
     "note": "ground, white frame, voile"
    },
    "P3_f": {
@@ -571,13 +617,15 @@
     "state": "net_full",
     "aspect": 0.44,
     "angle_deg": 61.8,
-    "L90": 212.3,
+    "L90": 207.5,
     "P50": 190.6,
     "D5": 32.5,
-    "P_over_L": 0.897,
-    "D_over_L": 0.153,
+    "P_over_L": 0.918,
+    "D_over_L": 0.157,
     "pane_spread_5_95": 96.0,
     "pane_px": 1350,
+    "joinery_px": 1758,
+    "L_is": "p90 of the outline minus the pane boxes (the gate's joinery)",
     "note": "upstairs, white frame, voile"
    },
    "P9_a": {
@@ -585,13 +633,15 @@
     "state": "glass_bright",
     "aspect": 0.164,
     "angle_deg": 29.8,
-    "L90": 208.8,
+    "L90": 213.5,
     "P50": 155.0,
     "D5": 62.8,
-    "P_over_L": 0.742,
-    "D_over_L": 0.301,
+    "P_over_L": 0.726,
+    "D_over_L": 0.294,
     "pane_spread_5_95": 105.6,
     "pane_px": 1521,
+    "joinery_px": 1427,
+    "L_is": "p90 of the outline minus the pane boxes (the gate's joinery)",
     "note": "tall sash in shade, panes pale (sky), bars as dark lines"
    },
    "P9_b": {
@@ -599,13 +649,15 @@
     "state": "glass_bright",
     "aspect": 0.159,
     "angle_deg": 28.7,
-    "L90": 215.7,
+    "L90": 217.3,
     "P50": 166.3,
     "D5": 58.5,
-    "P_over_L": 0.771,
-    "D_over_L": 0.271,
+    "P_over_L": 0.765,
+    "D_over_L": 0.269,
     "pane_spread_5_95": 120.3,
     "pane_px": 1820,
+    "joinery_px": 1515,
+    "L_is": "p90 of the outline minus the pane boxes (the gate's joinery)",
     "note": "tall sash in shade"
    },
    "P9_c": {
@@ -613,13 +665,15 @@
     "state": "glass_bright",
     "aspect": 0.181,
     "angle_deg": 33.3,
-    "L90": 254.2,
+    "L90": 253.7,
     "P50": 251.9,
     "D5": 96.1,
-    "P_over_L": 0.991,
-    "D_over_L": 0.378,
+    "P_over_L": 0.993,
+    "D_over_L": 0.379,
     "pane_spread_5_95": 138.8,
     "pane_px": 1430,
+    "joinery_px": 1491,
+    "L_is": "p90 of the outline minus the pane boxes (the gate's joinery)",
     "note": "tall sash in sun, panes bright"
    },
    "P6_up": {
@@ -627,13 +681,15 @@
     "state": "glass_sky_room",
     "aspect": 0.646,
     "angle_deg": 90.0,
-    "L90": 251.9,
+    "L90": 253.9,
     "P50": 225.4,
     "D5": 72.2,
-    "P_over_L": 0.895,
-    "D_over_L": 0.287,
+    "P_over_L": 0.888,
+    "D_over_L": 0.285,
     "pane_spread_5_95": 174.9,
     "pane_px": 9510,
+    "joinery_px": 7234,
+    "L_is": "p90 of the outline minus the pane boxes (the gate's joinery)",
     "note": "replacement window: sky in the top light, dark room and a net edge below"
    },
    "P8_L": {
@@ -641,37 +697,53 @@
     "state": "glass_dark_room",
     "aspect": 0.53,
     "angle_deg": 90.0,
-    "L90": 164.4,
+    "L90": 171.9,
     "P50": 101.2,
     "D5": 93.5,
-    "P_over_L": 0.616,
-    "D_over_L": 0.569,
+    "P_over_L": 0.589,
+    "D_over_L": 0.544,
     "pane_spread_5_95": 19.4,
     "pane_px": 3596,
-    "note": "original 2/2, near square from below, panes blue-grey over a dark room"
+    "joinery_px": 5918,
+    "L_is": "p90 of the outline minus the pane boxes (the gate's joinery)",
+    "note": "original 2/2, near square from below, panes blue-grey over a dark room",
+    "pane_rgb_median": [
+     87.0,
+     102.0,
+     135.0
+    ],
+    "blue_minus_red": 48.0
    },
    "P8_R": {
     "photo": "P8",
     "state": "glass_dark_room",
     "aspect": 0.614,
     "angle_deg": 90.0,
-    "L90": 170.4,
+    "L90": 178.0,
     "P50": 86.8,
     "D5": 83.3,
-    "P_over_L": 0.51,
-    "D_over_L": 0.489,
+    "P_over_L": 0.488,
+    "D_over_L": 0.468,
     "pane_spread_5_95": 52.7,
     "pane_px": 2842,
-    "note": "original 2/2, near square from below"
+    "joinery_px": 5138,
+    "L_is": "p90 of the outline minus the pane boxes (the gate's joinery)",
+    "note": "original 2/2, near square from below",
+    "pane_rgb_median": [
+     77.0,
+     86.0,
+     123.0
+    ],
+    "blue_minus_red": 46.0
    }
   },
   "bands_by_state": {
    "bare_dark": {
     "n": 3,
-    "P_over_L_min": 0.191,
-    "P_over_L_max": 0.363,
-    "P_over_L_median": 0.32,
-    "D_over_L_median": 0.072,
+    "P_over_L_min": 0.184,
+    "P_over_L_max": 0.356,
+    "P_over_L_median": 0.295,
+    "D_over_L_median": 0.07,
     "angles_deg": [
      22.2,
      46.0,
@@ -680,10 +752,10 @@
    },
    "glass_bright": {
     "n": 3,
-    "P_over_L_min": 0.742,
-    "P_over_L_max": 0.991,
-    "P_over_L_median": 0.771,
-    "D_over_L_median": 0.301,
+    "P_over_L_min": 0.726,
+    "P_over_L_max": 0.993,
+    "P_over_L_median": 0.765,
+    "D_over_L_median": 0.294,
     "angles_deg": [
      28.7,
      29.8,
@@ -692,10 +764,10 @@
    },
    "glass_dark_room": {
     "n": 2,
-    "P_over_L_min": 0.51,
-    "P_over_L_max": 0.616,
-    "P_over_L_median": 0.563,
-    "D_over_L_median": 0.5289999999999999,
+    "P_over_L_min": 0.488,
+    "P_over_L_max": 0.589,
+    "P_over_L_median": 0.5385,
+    "D_over_L_median": 0.506,
     "angles_deg": [
      90.0,
      90.0
@@ -703,24 +775,24 @@
    },
    "glass_sky_room": {
     "n": 1,
-    "P_over_L_min": 0.895,
-    "P_over_L_max": 0.895,
-    "P_over_L_median": 0.895,
-    "D_over_L_median": 0.287,
+    "P_over_L_min": 0.888,
+    "P_over_L_max": 0.888,
+    "P_over_L_median": 0.888,
+    "D_over_L_median": 0.285,
     "angles_deg": [
      90.0
     ]
    },
    "net_full": {
     "n": 9,
-    "P_over_L_min": 0.602,
+    "P_over_L_min": 0.596,
     "P_over_L_max": 0.972,
-    "P_over_L_median": 0.842,
-    "D_over_L_median": 0.155,
+    "P_over_L_median": 0.911,
+    "D_over_L_median": 0.158,
     "angles_deg": [
-     31.1,
-     34.8,
-     36.9,
+     31.3,
+     38.9,
+     38.9,
      51.3,
      61.5,
      61.8,
@@ -731,10 +803,10 @@
    },
    "net_half": {
     "n": 1,
-    "P_over_L_min": 0.56,
-    "P_over_L_max": 0.56,
-    "P_over_L_median": 0.56,
-    "D_over_L_median": 0.142,
+    "P_over_L_min": 0.555,
+    "P_over_L_max": 0.555,
+    "P_over_L_median": 0.555,
+    "D_over_L_median": 0.141,
     "angles_deg": [
      35.1
     ]
@@ -744,9 +816,78 @@
    "P1": 119.1,
    "P8": 92.1
   },
+  "p8_four_panes_the_gates_way": {
+   "P50": 99.0,
+   "L90": 174.1,
+   "P_over_L": 0.569,
+   "pane_rgb_median": [
+    85.0,
+    100.0,
+    133.0
+   ],
+   "blue_minus_red": 48.0,
+   "note": "both windows' four panes together over the joinery of both outlines: the gate's own way for WB-03"
+  },
+  "boxes_of_the_first_version": {
+   "P1_a": {
+    "outline": [
+     433,
+     392,
+     451,
+     455
+    ],
+    "panes": [
+     [
+      438,
+      398,
+      449,
+      446
+     ]
+    ],
+    "P_over_L": 0.865,
+    "D_over_L": 0.502,
+    "note": "included the white-painted stone head and sill (L 234, the stone's paint reads 248 to 254) and a column of brick at the jamb (D 117, the brick's own median 119): D/L 0.47 to 0.50 was brick over painted stone, not the frame"
+   },
+   "P1_b": {
+    "outline": [
+     403,
+     396,
+     419,
+     458
+    ],
+    "panes": [
+     [
+      407,
+      402,
+      416,
+      448
+     ]
+    ],
+    "P_over_L": 0.828,
+    "D_over_L": 0.466
+   },
+   "P1_e": {
+    "outline": [
+     433,
+     485,
+     451,
+     545
+    ],
+    "panes": [
+     [
+      438,
+      492,
+      449,
+      538
+     ]
+    ],
+    "P_over_L": 0.85,
+    "D_over_L": 0.486
+   }
+  },
   "frame_to_brick_linear_ratio": {
-   "P1": 4.3,
-   "P8": 3.72
+   "P1": 3.75,
+   "P8": 4.1
   },
   "tally": {
    "n_windows_classified": 60,
@@ -842,7 +983,7 @@
    },
    "room": "up_bedroom_3",
    "family": "UP",
-   "paint": "bronze",
+   "paint": "white_upvc",
    "condition": "sound",
    "net": {
     "kind": "N0",
@@ -887,7 +1028,7 @@
     "window_offset_toward_picture_right_m": 0.0,
     "shared_by": null
    },
-   "lit_order": 6
+   "lit_order": 5
   },
   {
    "id": "east_chandler_bay0_upper_w1",
@@ -911,7 +1052,7 @@
    },
    "room": "up_landing_2",
    "family": "UP",
-   "paint": "bronze",
+   "paint": "white_upvc",
    "condition": "grimy",
    "net": {
     "kind": "N2",
@@ -953,7 +1094,7 @@
     "window_offset_toward_picture_right_m": 0.0,
     "shared_by": null
    },
-   "lit_order": 5
+   "lit_order": 16
   },
   {
    "id": "east_parade_bay0_upper_w0",
@@ -1019,7 +1160,7 @@
     "window_offset_toward_picture_right_m": 0.0,
     "shared_by": null
    },
-   "lit_order": 8
+   "lit_order": 11
   },
   {
    "id": "east_parade_bay0_upper_w1",
@@ -1088,7 +1229,7 @@
     "window_offset_toward_picture_right_m": 0.0,
     "shared_by": null
    },
-   "lit_order": 4
+   "lit_order": 2
   },
   {
    "id": "east_parade_bay1_upper_w0",
@@ -1112,7 +1253,7 @@
    },
    "room": "up_landing_2",
    "family": "UP",
-   "paint": "brown",
+   "paint": "white_fresh",
    "condition": "sound",
    "net": {
     "kind": "N0",
@@ -1157,7 +1298,7 @@
     "window_offset_toward_picture_right_m": 0.0,
     "shared_by": null
    },
-   "lit_order": 11
+   "lit_order": 12
   },
   {
    "id": "east_parade_bay1_upper_w1",
@@ -1181,7 +1322,7 @@
    },
    "room": "up_bedroom_1",
    "family": "UP",
-   "paint": "brown",
+   "paint": "white_fresh",
    "condition": "sound",
    "net": {
     "kind": "N1",
@@ -1226,7 +1367,7 @@
     "window_offset_toward_picture_right_m": 0.0,
     "shared_by": null
    },
-   "lit_order": 14
+   "lit_order": 9
   },
   {
    "id": "east_parade_bay2_upper_w0",
@@ -1295,7 +1436,7 @@
     "window_offset_toward_picture_right_m": 0.0,
     "shared_by": null
    },
-   "lit_order": 9
+   "lit_order": 3
   },
   {
    "id": "east_parade_bay2_upper_w1",
@@ -1361,7 +1502,7 @@
     "window_offset_toward_picture_right_m": 0.0,
     "shared_by": null
    },
-   "lit_order": 3
+   "lit_order": 13
   },
   {
    "id": "east_parade_bay3_upper_w0",
@@ -1508,7 +1649,7 @@
    "head_z_above_crown": 5.9,
    "sill_z_above_crown": 4.2236,
    "kind_by_house_in_terrace_front": "replacement",
-   "kind": "RC",
+   "kind": "RC2",
    "built_as_today": "box replacement (frame_bronze)",
    "kit_row_today": false,
    "opening_today": {
@@ -1562,7 +1703,7 @@
     "window_offset_toward_picture_right_m": 0.0,
     "shared_by": null
    },
-   "lit_order": 7
+   "lit_order": 10
   },
   {
    "id": "east_parade_bay4_upper_w1",
@@ -1577,7 +1718,7 @@
    "head_z_above_crown": 5.9,
    "sill_z_above_crown": 4.2236,
    "kind_by_house_in_terrace_front": "replacement",
-   "kind": "RC",
+   "kind": "RC2",
    "built_as_today": "box replacement (frame_bronze)",
    "kit_row_today": false,
    "opening_today": {
@@ -1628,7 +1769,7 @@
     "window_offset_toward_picture_right_m": 0.0,
     "shared_by": null
    },
-   "lit_order": 2
+   "lit_order": 14
   },
   {
    "id": "east_parade_bay5_upper_w0",
@@ -1652,7 +1793,7 @@
    },
    "room": "up_lounge_3",
    "family": "UP",
-   "paint": "olive",
+   "paint": "white_grimy",
    "condition": "sound",
    "net": {
     "kind": "N1",
@@ -1697,7 +1838,7 @@
     "window_offset_toward_picture_right_m": 0.0,
     "shared_by": null
    },
-   "lit_order": 13
+   "lit_order": 4
   },
   {
    "id": "east_parade_bay5_upper_w1",
@@ -1721,7 +1862,7 @@
    },
    "room": "up_landing_1",
    "family": "UP",
-   "paint": "olive",
+   "paint": "white_grimy",
    "condition": "sound",
    "net": {
     "kind": "N3",
@@ -1787,7 +1928,7 @@
    },
    "room": "gf_front_1",
    "family": "GF",
-   "paint": "blue",
+   "paint": "white_grimy",
    "condition": "grimy",
    "net": {
     "kind": "N1",
@@ -1832,7 +1973,7 @@
      "west_south_bay0_gf_w1"
     ]
    },
-   "lit_order": 16
+   "lit_order": 8
   },
   {
    "id": "west_south_bay0_gf_w1",
@@ -1856,7 +1997,7 @@
    },
    "room": "gf_front_1",
    "family": "GF",
-   "paint": "blue",
+   "paint": "white_grimy",
    "condition": "grimy",
    "net": {
     "kind": "N1",
@@ -1901,7 +2042,7 @@
      "west_south_bay0_gf_w1"
     ]
    },
-   "lit_order": 12
+   "lit_order": 7
   },
   {
    "id": "west_south_bay1_gf_w0",
@@ -1970,7 +2111,7 @@
      "west_south_bay1_gf_w1"
     ]
    },
-   "lit_order": 10
+   "lit_order": 6
   },
   {
    "id": "west_south_bay1_gf_w1",
@@ -2066,7 +2207,7 @@
    },
    "room": "gf_front_3",
    "family": "GF",
-   "paint": "cream",
+   "paint": "white_fresh",
    "condition": "sound",
    "net": {
     "kind": "N1",
@@ -2135,7 +2276,7 @@
    },
    "room": "gf_front_3",
    "family": "GF",
-   "paint": "cream",
+   "paint": "white_fresh",
    "condition": "sound",
    "net": {
     "kind": "N1",
@@ -3758,7 +3899,7 @@
    },
    "materials": {
     "default": "white_upvc",
-    "metal_refit": "bronze"
+    "metal_refit": "bronze (NOT USED: no house takes it until Jafar's page rules otherwise, D13)"
    },
    "parts_mm": [
     {
@@ -3942,6 +4083,290 @@
     ]
    },
    "transom_centre_z_mm": 1207.0
+  },
+  "RC2": {
+   "label": "replacement casement, the P6 form (Levenshulme, 1994): a fixed top light across over two lower lights, a side-hung casement beside a fixed light with a mullion at the middle, no bars",
+   "opening": {
+    "w": 850.0,
+    "h": 1676.4
+   },
+   "frame_face": 60.0,
+   "frame_depth": 70.0,
+   "frame_front_y": 72.5,
+   "transom": {
+    "centre_fraction": 0.66,
+    "face": 70.0,
+    "note": "P6's 0.66 (Photo): 0.66 x 1676.4 = 1106.4 above the opening's bottom"
+   },
+   "top_light": "one fixed pane across the whole width (no sash, no gap)",
+   "mullion": {
+    "face": 70.0,
+    "x_centre": 0.0,
+    "z_from": 60.0,
+    "note": "70 mm wide, centred on x = 0, from the sill rail's top (z 60) to the transom's underside (1071.4)"
+   },
+   "casement": {
+    "side": "left light",
+    "stile_face": 45.0,
+    "rail_face": 45.0,
+    "gap": 4.0,
+    "hinge": "side-hung on the jamb side: the hinge on the left jamb (the stile at x -361 to -316 is the hanging stile), the stile by the mullion the closing stile"
+   },
+   "fixed_light": "the right light: one fixed pane in the frame",
+   "glass_plane_y": 112.5,
+   "glass_mm": 4.0,
+   "unit_note": "as RC: a sealed unit 4-16-4 drawn as one pane (a known shortfall, listed)",
+   "gasket": {
+    "width": 3.0,
+    "luma_factor": 0.3
+   },
+   "weld_groove": {
+    "width": 2.0,
+    "luma_factor": 0.35
+   },
+   "photo_transom_fractions": {
+    "P6": 0.66
+   },
+   "materials": {
+    "default": "white_upvc"
+   },
+   "assigned_to": [
+    "east_parade_bay4"
+   ],
+   "parts_mm": [
+    {
+     "name": "frame_jamb_L",
+     "x": [
+      -425.0,
+      -365.0
+     ],
+     "y_into_wall": [
+      72.5,
+      142.5
+     ],
+     "z_up": [
+      60.0,
+      1616.4
+     ]
+    },
+    {
+     "name": "frame_jamb_R",
+     "x": [
+      365.0,
+      425.0
+     ],
+     "y_into_wall": [
+      72.5,
+      142.5
+     ],
+     "z_up": [
+      60.0,
+      1616.4
+     ]
+    },
+    {
+     "name": "frame_sill_rail",
+     "x": [
+      -425.0,
+      425.0
+     ],
+     "y_into_wall": [
+      72.5,
+      142.5
+     ],
+     "z_up": [
+      0.0,
+      60.0
+     ]
+    },
+    {
+     "name": "frame_head_rail",
+     "x": [
+      -425.0,
+      425.0
+     ],
+     "y_into_wall": [
+      72.5,
+      142.5
+     ],
+     "z_up": [
+      1616.4,
+      1676.4
+     ]
+    },
+    {
+     "name": "transom",
+     "x": [
+      -365.0,
+      365.0
+     ],
+     "y_into_wall": [
+      72.5,
+      142.5
+     ],
+     "z_up": [
+      1071.4,
+      1141.4
+     ]
+    },
+    {
+     "name": "mullion",
+     "x": [
+      -35.0,
+      35.0
+     ],
+     "y_into_wall": [
+      72.5,
+      142.5
+     ],
+     "z_up": [
+      60.0,
+      1071.4
+     ]
+    },
+    {
+     "name": "casement_stile_L",
+     "x": [
+      -361.0,
+      -316.0
+     ],
+     "y_into_wall": [
+      80.5,
+      135.5
+     ],
+     "z_up": [
+      64.0,
+      1067.4
+     ],
+     "note": "the hanging stile: the hinge is on the left jamb"
+    },
+    {
+     "name": "casement_stile_R",
+     "x": [
+      -84.0,
+      -39.0
+     ],
+     "y_into_wall": [
+      80.5,
+      135.5
+     ],
+     "z_up": [
+      64.0,
+      1067.4
+     ],
+     "note": "the closing stile, 4 mm from the mullion"
+    },
+    {
+     "name": "casement_bottom_rail",
+     "x": [
+      -316.0,
+      -84.0
+     ],
+     "y_into_wall": [
+      80.5,
+      135.5
+     ],
+     "z_up": [
+      64.0,
+      109.0
+     ]
+    },
+    {
+     "name": "casement_top_rail",
+     "x": [
+      -316.0,
+      -84.0
+     ],
+     "y_into_wall": [
+      80.5,
+      135.5
+     ],
+     "z_up": [
+      1022.4,
+      1067.4
+     ]
+    },
+    {
+     "name": "glass_casement",
+     "x": [
+      -334.0,
+      -66.0
+     ],
+     "y_into_wall": [
+      112.5,
+      116.5
+     ],
+     "z_up": [
+      91.0,
+      1040.4
+     ],
+     "material": "glass_house",
+     "note": "the sheet in the side-hung left light: 18 mm behind the sash's face on every side; the sightline is x -316.0 to -84.0, z 109.0 to 1022.4"
+    },
+    {
+     "name": "glass_fixed",
+     "x": [
+      17.0,
+      383.0
+     ],
+     "y_into_wall": [
+      112.5,
+      116.5
+     ],
+     "z_up": [
+      42.0,
+      1089.4
+     ],
+     "material": "glass_house",
+     "note": "the sheet of the fixed right light: 18 mm behind the frame's face on every side (the rebate); the sightline is x 35.0 to 365.0, z 60.0 to 1071.4"
+    },
+    {
+     "name": "glass_top",
+     "x": [
+      -383.0,
+      383.0
+     ],
+     "y_into_wall": [
+      112.5,
+      116.5
+     ],
+     "z_up": [
+      1123.4,
+      1634.4
+     ],
+     "material": "glass_house",
+     "note": "the fixed top light across the whole width: the sheet runs 18 mm behind the frame's face; the sightline is x -365.0 to 365.0, z 1141.4 to 1616.4"
+    }
+   ],
+   "glass_sightlines_mm": {
+    "casement": [
+     232.0,
+     913.4
+    ],
+    "fixed": [
+     330.0,
+     1011.4
+    ],
+    "top": [
+     730.0,
+     475.0
+    ]
+   },
+   "lower_light_openings_mm": {
+    "left": [
+     330.0,
+     1011.4
+    ],
+    "right": [
+     330.0,
+     1011.4
+    ]
+   },
+   "transom_centre_z_mm": 1106.4,
+   "mullion_z_mm": [
+    60.0,
+    1071.4
+   ]
   }
  },
  "paints": {
@@ -3957,7 +4382,7 @@
     0.78
    ],
    "rough": 0.42,
-   "note": "the street's paint_joinery as it stands (terrace-front.py MATERIALS) and the lab sash's paint: the kit pieces' default before a house's paint is set; no house of the twenty takes it unchanged"
+   "note": "the street's paint_joinery as it stands (terrace-front.py MATERIALS) and the lab sash's paint: the kit pieces' default; sound gloss white: east_parade_bay1 and west_south_bay2 take it as it is (the box shade's keep_paint rule applies to this paint only)"
   },
   "white_grimy": {
    "srgb": [
@@ -3971,7 +4396,7 @@
     0.62
    ],
    "rough": 0.48,
-   "note": "weathered 1990 gloss white, 1a's 0.72 to 0.80 less the dirt in the lower rails and the sill: the lower rail and sill at x 0.85, the rest 1.0"
+   "note": "weathered 1990 gloss white, 1a's 0.72 to 0.80 less the dirt in the lower rails and the sill: the lower rail and sill at x 0.85, the rest 1.0; east_parade_bay0, east_parade_bay5 and west_south_bay0"
   },
   "white_flaking": {
    "srgb": [
@@ -3985,7 +4410,7 @@
     0.53
    ],
    "rough": 0.55,
-   "note": "an unlet house's paint: 12 per cent of the area on the lower rails, sill and stiles' feet is flaked to grey primer (66, 60, 54) or bare timber (96, 66, 40)"
+   "note": "east_parade_bay3's paint (the unlet house): 12 per cent of the area on the lower rails, sill and stiles' feet is flaked to grey primer (66, 60, 54) or bare timber (96, 66, 40)"
   },
   "cream": {
    "srgb": [
@@ -3999,7 +4424,7 @@
     0.37
    ],
    "rough": 0.45,
-   "note": "P3's cream-painted sashes (frame sampled 181, 163, 131 in the sun and shade of the photograph, so the paint is lighter), P2's cream render"
+   "note": "NOT USED ON ANY HOUSE until Jafar's page rules otherwise (his ruling of 3 October is white frames; D13). Kept as data for the photographs' mix: P3's cream-painted sashes (frame sampled 181, 163, 131 in the sun and shade of the photograph, so the paint is lighter), P2's cream render"
   },
   "olive": {
    "srgb": [
@@ -4013,7 +4438,7 @@
     0.052
    ],
    "rough": 0.45,
-   "note": "P12's two olive-green sashes (sampled 148, 153, 70); a painted window of a house that chose its own colour"
+   "note": "NOT USED ON ANY HOUSE until Jafar's page rules otherwise (D13). Kept as data: P12's two olive-green sashes (sampled 148, 153, 70); a painted window of a house that chose its own colour"
   },
   "blue": {
    "srgb": [
@@ -4027,7 +4452,7 @@
     0.352
    ],
    "rough": 0.42,
-   "note": "P2's blue sashes (sampled 61, 87, 136), the tenants' own paint on a terrace of one owner"
+   "note": "NOT USED ON ANY HOUSE until Jafar's page rules otherwise (D13). Kept as data: P2's blue sashes (sampled 61, 87, 136), the tenants' own paint on a terrace of one owner"
   },
   "brown": {
    "srgb": [
@@ -4041,7 +4466,7 @@
     0.023
    ],
    "rough": 0.42,
-   "note": "P1's four dark-brown sashes and P3's red-brown frames (sampled 141, 131, 115 and 162, 129, 119 in the sun): an oxide or brown gloss, the second commonest painted colour after white"
+   "note": "NOT USED ON ANY HOUSE until Jafar's page rules otherwise (D13). Kept as data: P1's four dark-brown sashes and P3's red-brown frames (sampled 141, 131, 115 and 162, 129, 119 in the sun): an oxide or brown gloss, the second commonest painted colour after white"
   },
   "bronze": {
    "srgb": [
@@ -4055,7 +4480,7 @@
     0.03
    ],
    "rough": 0.35,
-   "note": "the street's frame_bronze (terrace-front.py): dark anodised aluminium; NOT seen in any reached photograph (D1), kept for the one metal-refit house"
+   "note": "NOT USED ON ANY HOUSE until Jafar's page rules otherwise (D13: the question of the chandler's bronze is on that line). The street's frame_bronze (terrace-front.py): dark anodised aluminium; NOT seen in any reached photograph (D1)"
   },
   "white_upvc": {
    "srgb": [
@@ -4069,7 +4494,7 @@
     0.762
    ],
    "rough": 0.3,
-   "note": "white replacement frame, satin: P6, P7, P11 show white in every case (4 of 4)"
+   "note": "white replacement frame, satin: P6, P7, P11 show white in every case (4 of 4); the four replacement houses (east_parade_bay2, east_parade_bay4, west_south_bay1, east_chandler_bay0)"
   }
  },
  "glass": {
@@ -4111,10 +4536,12 @@
  },
  "box_shade": {
   "what": "1a step 2 as numbers, put in the joinery's vertex colour (COLOR_0 red channel multiplies the paint; not the AO pin)",
+  "street_facing_faces": 1.0,
+  "street_facing_note": "faces whose normal points to the street (the outer lining's street face at y 114.3, the sash rails' fronts, the sill's top) take 1.0: they are L itself, and darkening them would darken the frame the gate measures (TARGET-REVIEW narrow point 4)",
   "lining_from_brick_edge_to_glass": {
    "at_brick_edge": 1.0,
    "at_glass": 0.6,
-   "law": "linear in depth from y = 0 to the glass plane"
+   "law": "linear in depth from y = 0 to the glass plane; applies ONLY to the faces that run into the wall: the reveal-facing sides of the linings, the beads, the pulley stiles and the sash stiles"
   },
   "track_faces": 0.5,
   "track_note": "the faces of the pulley-stile track between the parting bead and the staff bead",
@@ -4134,12 +4561,14 @@
   "parting_bead_gap": 0.1,
   "parting_bead_gap_width_mm": 2.0,
   "keep_paint": {
+   "applies_to": "white_fresh only",
    "albedo": [
     0.78,
     0.8
    ],
    "roughness": 0.4,
-   "try_once": 0.35
+   "try_once": 0.35,
+   "note": "1a's keep-the-paint figure is for the sound gloss white (white_fresh: albedo about 0.80, roughness 0.42 in `paints`); every other house takes its own paint from the `paints` table (white_grimy 0.66 at roughness 0.48, white_flaking 0.58 at 0.55, white_upvc 0.79 at 0.30), which governs, not this line"
   },
   "line_width_rule": "at least one pixel at 10 m: 6 mm (1 px = 5.9 mm at 10 m for 1440 lines at 46 degrees, 1a); every dark line of the box is at least 6 mm wide"
  },
@@ -4166,7 +4595,8 @@
    "plane_mm": {
     "S22": 254,
     "S11": 254,
-    "RC": 235
+    "RC": 235,
+    "RC2": 235
    },
    "lace_band": {
     "share_of_height": 0.3,
@@ -4193,7 +4623,8 @@
    "plane_mm": {
     "S22": 254,
     "S11": 254,
-    "RC": 235
+    "RC": 235,
+    "RC2": 235
    },
    "lace_band": {
     "share_of_height": 0.18,
@@ -4220,7 +4651,8 @@
    "plane_mm": {
     "S22": 254,
     "S11": 254,
-    "RC": 235
+    "RC": 235,
+    "RC2": 235
    },
    "lace_band": {
     "share_of_height": 0.0,
@@ -4301,6 +4733,24 @@
     ]
    },
    "night_lit": "colour x warm light x 0.35 transmission: the curtain glows its own colour, folds dark",
+   "night_lit_emission_linear": {
+    "cream": [
+     0.316,
+     0.189,
+     0.062
+    ],
+    "brown": [
+     0.417,
+     0.161,
+     0.044
+    ],
+    "green": [
+     0.172,
+     0.232,
+     0.063
+    ]
+   },
+   "night_lit_emission_note": "ABSOLUTE linear emission of the lit fabric (TARGET-REVIEW narrow point 5): the colour's linear albedo x the warm light (1.0, 0.714, 0.344), scaled so that the emission's luma is 0.207; seen through a square-on pane (two-face reflectance 0.082) the gate's pane median then reads 0.19 linear = sRGB 121, inside 100 to 140. Derived from the stated colours; a drawn curtain's transmission 0.35 is what the scale stands for. The lit set at 20:30 has no green drawn curtain (g > r would break r > g > b).",
    "share_photo": 0.05
   },
   "C2": {
@@ -4352,6 +4802,29 @@
     ]
    },
    "night_lit": "as C1",
+   "night_lit_emission_linear": {
+    "cream": [
+     0.316,
+     0.189,
+     0.062
+    ],
+    "brown": [
+     0.417,
+     0.161,
+     0.044
+    ],
+    "green": [
+     0.172,
+     0.232,
+     0.063
+    ],
+    "floral_cream": [
+     0.309,
+     0.191,
+     0.065
+    ]
+   },
+   "night_lit_emission_note": "as C1: the pair at the sides glows this; the net between them is lit as NET_COMMON night_lit says",
    "share_photo": 0.05
   }
  },
@@ -4378,6 +4851,11 @@
    ],
    "slat_gap_alpha": 0.25,
    "night_lit": "slat gaps glow warm: stripes of light at the 25 mm pitch (visible under 8 m)",
+   "night_lit_emission_linear": [
+    0.277,
+    0.198,
+    0.09
+   ],
    "share_photo": 0.01
   },
   "B2": {
@@ -4401,6 +4879,11 @@
    ],
    "opacity": 0.9,
    "night_lit": "an even warm sheet of colour x 0.5 transmission, a dark bottom batten",
+   "night_lit_emission_linear": [
+    0.305,
+    0.193,
+    0.06
+   ],
    "share_photo": 0.01
   },
   "B3": {
@@ -4425,12 +4908,18 @@
    ],
    "slat_gap_alpha": 0.35,
    "night_lit": "vertical stripes of warm light at the 89 mm pitch",
+   "night_lit_emission_linear": [
+    0.277,
+    0.198,
+    0.09
+   ],
    "share_photo": 0.01
   }
  },
  "rooms": {
   "visible_zone": {
-   "what": "which parts of the room each review camera sees through the glass rectangle (144 rays, hit points in the room frame: x across from the picture's left edge, y back from the card, z above the floor)",
+   "what": "which parts of the room each review camera sees through the glass rectangle (144 rays, hit points in the PICTURE frame: x measured from the PICTURE-LEFT WALL (not from the room's centre: the objects' x_across is from the centre, add half the room's width to compare), y back from the card, z above the floor; the eye stands by the window)",
+   "x_frame": "from the picture-left wall",
    "by_family": {
     "UP": {
      "H_ACROSS_0": {
@@ -4651,7 +5140,7 @@
     "GF": {
      "H_ACROSS_0": {
       "eye_in_picture_frame_m": [
-       1.7,
+       2.6,
        -8.9,
        1.25
       ],
@@ -4659,8 +5148,8 @@
       "surfaces_seen": {
        "back": {
         "x": [
-         2.48,
-         3.32
+         2.04,
+         3.16
         ],
         "y": [
          4.2,
@@ -4670,26 +5159,12 @@
          0.02,
          2.37
         ]
-       },
-       "right": {
-        "x": [
-         3.4,
-         3.4
-        ],
-        "y": [
-         2.83,
-         3.76
-        ],
-        "z": [
-         0.06,
-         2.33
-        ]
        }
       }
      },
      "H_ACROSS_30": {
       "eye_in_picture_frame_m": [
-       6.78,
+       7.68,
        -8.9,
        1.25
       ],
@@ -4697,8 +5172,8 @@
       "surfaces_seen": {
        "back": {
         "x": [
-         0.14,
-         1.11
+         0.12,
+         0.67
         ],
         "y": [
          4.2,
@@ -4711,23 +5186,23 @@
        },
        "left": {
         "x": [
-         0.0,
+         -0.0,
          0.0
         ],
         "y": [
-         4.19,
-         4.19
+         3.48,
+         4.16
         ],
         "z": [
          0.02,
-         2.37
+         2.36
         ]
        }
       }
      },
      "H_ALONG_15_NEAR": {
       "eye_in_picture_frame_m": [
-       7.3,
+       8.2,
        -1.77,
        1.25
       ],
@@ -4739,18 +5214,18 @@
          0.0
         ],
         "y": [
-         0.63,
-         1.04
+         0.52,
+         0.84
         ],
         "z": [
          0.02,
-         2.52
+         2.43
         ]
        },
        "floor": {
         "x": [
-         0.05,
-         0.76
+         0.01,
+         0.3
         ],
         "y": [
          0.75,
@@ -4765,7 +5240,7 @@
      },
      "H_ALONG_30_NEAR": {
       "eye_in_picture_frame_m": [
-       4.3,
+       5.2,
        -1.77,
        1.25
       ],
@@ -4773,12 +5248,12 @@
       "surfaces_seen": {
        "left": {
         "x": [
-         -0.0,
+         0.0,
          0.0
         ],
         "y": [
-         1.68,
-         3.64
+         1.14,
+         2.13
         ],
         "z": [
          0.02,
@@ -4787,12 +5262,12 @@
        },
        "floor": {
         "x": [
-         0.09,
-         2.3
+         0.05,
+         1.84
         ],
         "y": [
          0.75,
-         3.36
+         1.61
         ],
         "z": [
          -0.0,
@@ -4801,12 +5276,12 @@
        },
        "ceiling": {
         "x": [
-         0.05,
-         1.92
+         0.02,
+         1.2
         ],
         "y": [
          1.23,
-         3.4
+         1.72
         ],
         "z": [
          2.6,
@@ -4817,7 +5292,7 @@
      },
      "H_ALONG_15_ROAD": {
       "eye_in_picture_frame_m": [
-       11.4,
+       12.3,
        -2.87,
        1.25
       ],
@@ -4829,60 +5304,74 @@
          0.0
         ],
         "y": [
-         0.57,
-         0.87
+         0.51,
+         0.78
         ],
         "z": [
-         0.13,
-         2.26
+         0.16,
+         2.24
         ]
        }
       }
      },
      "H_UNDER": {
       "eye_in_picture_frame_m": [
-       1.7,
+       2.6,
        -1.07,
        1.25
       ],
       "rays": 144,
       "surfaces_seen": {
+       "back": {
+        "x": [
+         0.55,
+         3.11
+        ],
+        "y": [
+         4.2,
+         4.2
+        ],
+        "z": [
+         0.18,
+         2.47
+        ]
+       },
        "right": {
         "x": [
          3.4,
          3.4
         ],
         "y": [
-         0.22,
-         2.06
+         0.99,
+         3.05
         ],
         "z": [
-         0.02,
-         2.54
+         0.1,
+         2.49
         ]
        },
        "floor": {
         "x": [
-         2.49,
-         3.34
+         1.04,
+         3.38
         ],
         "y": [
          0.39,
-         1.9
+         2.94
         ],
         "z": [
-         0.0,
+         -0.0,
          0.0
         ]
        },
        "ceiling": {
         "x": [
-         2.65,
-         3.39
+         1.06,
+         3.38
         ],
         "y": [
          0.67,
-         1.93
+         2.89
         ],
         "z": [
          2.6,
@@ -4917,20 +5406,20 @@
    "UP": {
     "surfaces": {
      "back": {
-      "true_20px": 0.594,
-      "true_40px": 1.159
+      "true_20px": 0.617,
+      "true_40px": 1.203
      },
      "side": {
-      "true_20px": 0.035,
-      "true_40px": 0.068
+      "true_20px": 0.036,
+      "true_40px": 0.072
      },
      "floor": {
       "true_20px": null,
       "true_40px": null
      },
      "ceiling": {
-      "true_20px": 0.032,
-      "true_40px": 0.064
+      "true_20px": 0.034,
+      "true_40px": 0.067
      }
     },
     "window_above_floor_m": [
@@ -4939,25 +5428,26 @@
     ],
     "window_offsets_m": [
      0.0
-    ]
+    ],
+    "method": "eye at the window (xc = card_cx - win_off_x), mirror about the window, one pixel = atan(tan(vfov / 2) / 720) (the review's exact pixel angle)"
    },
    "GF": {
     "surfaces": {
      "back": {
-      "true_20px": 0.41,
-      "true_40px": 0.803
+      "true_20px": 0.387,
+      "true_40px": 0.723
      },
      "side": {
-      "true_20px": 0.03,
-      "true_40px": 0.061
+      "true_20px": 0.035,
+      "true_40px": 0.068
      },
      "floor": {
-      "true_20px": 0.018,
-      "true_40px": 0.037
+      "true_20px": 0.022,
+      "true_40px": 0.043
      },
      "ceiling": {
-      "true_20px": 0.021,
-      "true_40px": 0.042
+      "true_20px": 0.024,
+      "true_40px": 0.048
      }
     },
     "window_above_floor_m": [
@@ -4967,13 +5457,14 @@
     "window_offsets_m": [
      0.9,
      -0.9
-    ]
+    ],
+    "method": "eye at the window (xc = card_cx - win_off_x), mirror about the window, one pixel = atan(tan(vfov / 2) / 720) (the review's exact pixel angle)"
    }
   },
   "budget_rule": {
    "back": {
-    "true": 0.4,
-    "tolerated": 0.8
+    "true": 0.38,
+    "tolerated": 0.71
    },
    "side": {
     "true": 0.03,
@@ -5682,32 +6173,32 @@
     ],
     "objects": [
      {
-      "model": "drawer_cabinet",
+      "model": "wooden_bookshelf_worn",
       "surface": "back",
       "dims_mm": [
-       1141.1,
-       488.1,
-       1881.3
+       1374.0,
+       581.3,
+       2063.4
       ],
       "footprint_w_d_h_m": [
-       1.141,
-       0.488,
-       1.881
+       1.374,
+       0.581,
+       2.063
       ],
-      "stand_off_m": 0.488,
+      "stand_off_m": 0.581,
       "class": "tolerated",
       "place": {
        "x_across": [
-        -1.121,
-        0.021
+        -1.237,
+        0.137
        ],
        "y_back": [
-        3.712,
+        3.619,
         4.2
        ],
        "z": [
         0.0,
-        1.881
+        2.063
        ]
       },
       "on": null
@@ -6382,32 +6873,32 @@
       "on": null
      },
      {
-      "model": "ArmChair_01",
+      "model": "painted_wooden_bench",
       "surface": "back",
       "dims_mm": [
-       848.4,
-       765.8,
-       1065.1
+       1164.9,
+       496.5,
+       889.3
       ],
       "footprint_w_d_h_m": [
-       0.848,
-       0.766,
-       1.065
+       1.165,
+       0.496,
+       0.889
       ],
-      "stand_off_m": 0.766,
+      "stand_off_m": 0.496,
       "class": "tolerated",
       "place": {
        "x_across": [
-        -0.124,
-        0.724
+        -0.282,
+        0.882
        ],
        "y_back": [
-        3.434,
+        3.704,
         4.2
        ],
        "z": [
         0.0,
-        1.065
+        0.889
        ]
       },
       "on": null
@@ -6698,7 +7189,23 @@
   },
   "lights_by_state": {
    "day": "an overcast area light the size of the card on its plane (6500 K), strength set so the picture's mean luma meets the day standard; no tungsten",
-   "night_lit": "the pendant (a paper shade, a 60 W tungsten bulb 2700 K, linear (1.0, 0.714, 0.344)) at the ceiling rose, 0.30 below the ceiling, and in the front rooms a table lamp's glow on the back wall; a television glow (cool 6500 K, emissive screen) where tv_glow; landings and empty rooms: a bare 40 W bulb or none (empty: night_lit = night_dark)",
+   "night_lit": "the pendant (a paper shade, a 60 W tungsten bulb 2700 K, linear (1.0, 0.714, 0.344)) at the ceiling rose, 0.30 below the ceiling, and in the front rooms a table lamp's glow on the back wall; a television glow (cool 6500 K, emissive screen) where tv_glow; landings and empty rooms: a bare 40 W bulb or none (empty: night_lit = night_dark); a lit landing's emission is the absolute one of `landing_bulb`",
+   "landing_bulb": {
+    "what": "a landing's bare 40 W bulb: PIC-02 gives its picture a mean luma of 40, which behind the glass reads dark (the card's emission is picture x 0.7 x room_glow_gain_night 0.4); the lit landing therefore takes an ABSOLUTE warm emission floor on its card",
+    "disc_emission_linear": [
+     8.0,
+     5.7,
+     2.75
+    ],
+    "disc_note": "the glowing disc drawn in the picture (rooms.forms bare_bulb, d 0.06): HDR so that it clips to a warm white in the 8-bit picture",
+    "card_emission_floor_linear": [
+     0.28,
+     0.2,
+     0.096
+    ],
+    "card_floor_note": "a lit landing's card never emits less than this (linear, the warm light (1.0, 0.714, 0.344) at luma 0.207: r > g > b, g/r 0.71, b/r 0.34); square on through the pane (two-face reflectance 0.082) the gate's pane median then reads 0.19 linear = sRGB 121, inside 100 to 140. Judgement: NIGHT-01's second form (pane median at least 4 times the dark windows' with r > g > b) is the acceptance, this is the starting value"
+   },
+   "curtain_emission": "each curtain and blind kind carries its own absolute lit emission (`curtains.*.night_lit_emission_linear`, `blinds.*.night_lit_emission_linear`)",
    "night_dark": "the sodium wash through the window: linear (1.0, 0.25, 0.0) = production/specs/unreal-look.json lantern_linear_rgb (NOT the scene file's stale (1, 0.7055, 0)), at 6 per cent of night_lit's energy; nothing else"
   },
   "lit_share": {
@@ -6719,7 +7226,7 @@
     "00:00": 0.1,
     "01:00": 0.05
    },
-   "rule": "a window is lit at hour h when its place in the lit order is below round(share(h) x 20); the order is fixed (below) and never reshuffled, so a window lit at 23:00 is lit at 20:30; empty rooms are never lit; the two cottage windows of the always-lit house are lit from 18:00 to 23:00 whatever the share",
+   "rule": "a window is lit at hour h when its place in the lit order is below round(share(h) x 20); the order is fixed (below) and never reshuffled, so a window lit at 23:00 is lit at 20:30; empty rooms are never lit; the two cottage windows of the always-lit house are lit from 18:00 to 23:00 whatever the share. THE ORDER (TARGET-REVIEW narrow point 6, Judgement): in 1990 the evening's light is in the front room or the lounge and a landing is lit briefly; after the always-lit pair: the cottage front room west_south_bay1_gf_w1, then the three lounges, then a bedroom (the chandler's), then the other cottage front rooms, then the other bedrooms, then the landings",
    "by_day": "no window is lit by day; a lit room by day would be invisible in the glass's reflection",
    "lit_at_20_30": 7,
    "tolerance_at_20_30": 1,
@@ -6734,15 +7241,15 @@
      "n": 2,
      "windows": [
       "west_south_bay1_gf_w1",
-      "east_parade_bay4_upper_w1"
+      "east_parade_bay0_upper_w1"
      ]
     },
     "07:00": {
      "n": 3,
      "windows": [
       "west_south_bay1_gf_w1",
-      "east_parade_bay4_upper_w1",
-      "east_parade_bay2_upper_w1"
+      "east_parade_bay0_upper_w1",
+      "east_parade_bay2_upper_w0"
      ]
     },
     "08:00": {
@@ -6771,9 +7278,9 @@
       "west_south_bay2_gf_w0",
       "west_south_bay2_gf_w1",
       "west_south_bay1_gf_w1",
-      "east_parade_bay4_upper_w1",
-      "east_parade_bay2_upper_w1",
-      "east_parade_bay0_upper_w1"
+      "east_parade_bay0_upper_w1",
+      "east_parade_bay2_upper_w0",
+      "east_parade_bay5_upper_w0"
      ]
     },
     "20:00": {
@@ -6782,10 +7289,10 @@
       "west_south_bay2_gf_w0",
       "west_south_bay2_gf_w1",
       "west_south_bay1_gf_w1",
-      "east_parade_bay4_upper_w1",
-      "east_parade_bay2_upper_w1",
       "east_parade_bay0_upper_w1",
-      "east_chandler_bay0_upper_w1"
+      "east_parade_bay2_upper_w0",
+      "east_parade_bay5_upper_w0",
+      "east_chandler_bay0_upper_w0"
      ]
     },
     "20:30": {
@@ -6794,10 +7301,10 @@
       "west_south_bay2_gf_w0",
       "west_south_bay2_gf_w1",
       "west_south_bay1_gf_w1",
-      "east_parade_bay4_upper_w1",
-      "east_parade_bay2_upper_w1",
       "east_parade_bay0_upper_w1",
-      "east_chandler_bay0_upper_w1"
+      "east_parade_bay2_upper_w0",
+      "east_parade_bay5_upper_w0",
+      "east_chandler_bay0_upper_w0"
      ]
     },
     "21:00": {
@@ -6806,10 +7313,10 @@
       "west_south_bay2_gf_w0",
       "west_south_bay2_gf_w1",
       "west_south_bay1_gf_w1",
-      "east_parade_bay4_upper_w1",
-      "east_parade_bay2_upper_w1",
       "east_parade_bay0_upper_w1",
-      "east_chandler_bay0_upper_w1"
+      "east_parade_bay2_upper_w0",
+      "east_parade_bay5_upper_w0",
+      "east_chandler_bay0_upper_w0"
      ]
     },
     "22:00": {
@@ -6818,9 +7325,9 @@
       "west_south_bay2_gf_w0",
       "west_south_bay2_gf_w1",
       "west_south_bay1_gf_w1",
-      "east_parade_bay4_upper_w1",
-      "east_parade_bay2_upper_w1",
-      "east_parade_bay0_upper_w1"
+      "east_parade_bay0_upper_w1",
+      "east_parade_bay2_upper_w0",
+      "east_parade_bay5_upper_w0"
      ]
     },
     "23:00": {
@@ -6829,14 +7336,14 @@
       "west_south_bay2_gf_w0",
       "west_south_bay2_gf_w1",
       "west_south_bay1_gf_w1",
-      "east_parade_bay4_upper_w1"
+      "east_parade_bay0_upper_w1"
      ]
     },
     "00:00": {
      "n": 2,
      "windows": [
       "west_south_bay1_gf_w1",
-      "east_parade_bay4_upper_w1"
+      "east_parade_bay0_upper_w1"
      ]
     },
     "01:00": {
@@ -6848,21 +7355,21 @@
    },
    "lit_order_of_the_non_always_lit_windows": [
     "west_south_bay1_gf_w1",
-    "east_parade_bay4_upper_w1",
-    "east_parade_bay2_upper_w1",
     "east_parade_bay0_upper_w1",
-    "east_chandler_bay0_upper_w1",
+    "east_parade_bay2_upper_w0",
+    "east_parade_bay5_upper_w0",
     "east_chandler_bay0_upper_w0",
+    "west_south_bay1_gf_w0",
+    "west_south_bay0_gf_w1",
+    "west_south_bay0_gf_w0",
+    "east_parade_bay1_upper_w1",
     "east_parade_bay4_upper_w0",
     "east_parade_bay0_upper_w0",
-    "east_parade_bay2_upper_w0",
-    "west_south_bay1_gf_w0",
     "east_parade_bay1_upper_w0",
-    "west_south_bay0_gf_w1",
-    "east_parade_bay5_upper_w0",
-    "east_parade_bay1_upper_w1",
+    "east_parade_bay2_upper_w1",
+    "east_parade_bay4_upper_w1",
     "east_parade_bay5_upper_w1",
-    "west_south_bay0_gf_w0"
+    "east_chandler_bay0_upper_w1"
    ]
   }
  },
@@ -6942,11 +7449,9 @@
     "licence": "CC0 (Poly Haven)",
     "gltf_1k": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/ArmChair_01/ArmChair_01_1k.gltf",
     "base_colour_maps_looked_at_1k": 1,
-    "marks": "none",
-    "status": "none",
-    "used_in_rooms": [
-     "gf_front_2"
-    ]
+    "marks": "none; 0.77 deep, over the tolerated back-wall budget of 0.71 once the cottage eye stands at the window: NOT USED (painted_wooden_bench serves in gf_front_2)",
+    "status": "looked at, not used",
+    "used_in_rooms": []
    },
    "CoffeeTable_01": {
     "name": "Coffee Table 01",
@@ -7022,7 +7527,7 @@
     "licence": "CC0 (Poly Haven)",
     "gltf_1k": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/television_02/television_02_1k.gltf",
     "base_colour_maps_looked_at_1k": 1,
-    "marks": "a small rating plate on the back panel: blanked; no text on the front",
+    "marks": "a small rating plate on the back panel; 'PARAGON Viewing System' on the front bezel, left of the buttons (map at 1k, about x 272 to 300, y 450 to 560, lettered at 90 degrees: found by the review of 13 October, the writer had missed it): both painted out to the bezel's grey",
     "status": "blank",
     "used_in_rooms": [
      "gf_front_1"
@@ -7324,10 +7829,11 @@
     "licence": "CC0 (Poly Haven)",
     "gltf_1k": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/wooden_bookshelf_worn/wooden_bookshelf_worn_1k.gltf",
     "base_colour_maps_looked_at_1k": 1,
-    "marks": "none",
+    "marks": "none (looked at again at 1k on 13 October after the fix)",
     "status": "none",
     "used_in_rooms": [
      "gf_front_2",
+     "up_bedroom_2",
      "up_lounge_1"
     ]
    },
@@ -7539,11 +8045,9 @@
     "licence": "CC0 (Poly Haven)",
     "gltf_1k": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/drawer_cabinet/drawer_cabinet_1k.gltf",
     "base_colour_maps_looked_at_1k": 1,
-    "marks": "none",
-    "status": "none",
-    "used_in_rooms": [
-     "up_bedroom_2"
-    ]
+    "marks": "a 2010s piece (a black steel frame with open oak shelves and drawers); its navy side strip carries three rows of faint lettering-like marks (the review of 13 October; the writer's entry said none): NOT USED (wooden_bookshelf_worn serves in up_bedroom_2)",
+    "status": "looked at, not used",
+    "used_in_rooms": []
    },
    "vintage_cabinet_01": {
     "name": "Vintage Cabinet 01",
@@ -7680,9 +8184,10 @@
     "licence": "CC0 (Poly Haven)",
     "gltf_1k": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/painted_wooden_bench/painted_wooden_bench_1k.gltf",
     "base_colour_maps_looked_at_1k": 1,
-    "marks": "none",
+    "marks": "none (looked at again at 1k on 13 October after the fix)",
     "status": "none",
     "used_in_rooms": [
+     "gf_front_2",
      "gf_front_3"
     ]
    },
@@ -7849,6 +8354,7 @@
    }
   },
   "brand_blocklist": [
+   "paragon",
    "dixons",
    "currys",
    "comet",
@@ -7871,7 +8377,7 @@
    "ikea",
    "dulux"
   ],
-  "rule": "every model's base colour map was looked at at 1k on 13 October 2026 before it was named; a model with a mark is blanked in its map (the mark painted out to the surface's own colour) before it is used, or not used; every framed picture's artwork is replaced by a script-drawn print"
+  "rule": "every model's base colour map was looked at at 1k on 13 October 2026 before it was named; a model with a mark is blanked in its map (the mark painted out to the surface's own colour) before it is used, or not used; every framed picture's artwork is replaced by a script-drawn print; the base colour of every placed model is checked region by region against its marks entry before its room is rendered (PIC-07). The first look missed television_02's maker's name on its front bezel: the placed models' maps were looked at again at 100 per cent after the review (FIXES-APPLIED.md)"
  },
  "overlay": {
   "photo": "P8",
@@ -7969,7 +8475,8 @@
   "files": {
    "S22": "production/assets/cloud-week/house-windows/hw_S22.glb",
    "S11": "production/assets/cloud-week/house-windows/hw_S11.glb",
-   "RC": "production/assets/cloud-week/house-windows/hw_RC.glb"
+   "RC": "production/assets/cloud-week/house-windows/hw_RC.glb",
+   "RC2": "production/assets/cloud-week/house-windows/hw_RC2.glb"
   },
   "extra_files": {
    "room_card_gf": "production/assets/cloud-week/house-windows/hw_room_card_gf.glb (the cottages' shared room card, one per house, placed between its two windows)"
@@ -8635,6 +9142,232 @@
       "note": "a paper shade 340 across and 240 high, 0.55 behind the card, its top 0.30 below the ceiling; emissive only in a lit room; present where the room's `pendant` is true; the one real object in the room (the picture's ceiling carries its rose)"
      }
     ]
+   },
+   "RC2": {
+    "reused_nodes": 0,
+    "added_nodes": [
+     {
+      "name": "glass__casement",
+      "material": "glass_house",
+      "x": [
+       -334.0,
+       -66.0
+      ],
+      "y_into_wall": [
+       112.5,
+       116.5
+      ],
+      "z_up": [
+       91.0,
+       1040.4
+      ],
+      "note": "4 mm, one pane drawn for the sealed unit"
+     },
+     {
+      "name": "glass__fixed",
+      "material": "glass_house",
+      "x": [
+       17.0,
+       383.0
+      ],
+      "y_into_wall": [
+       112.5,
+       116.5
+      ],
+      "z_up": [
+       42.0,
+       1089.4
+      ],
+      "note": "4 mm, one pane drawn for the sealed unit"
+     },
+     {
+      "name": "glass__top",
+      "material": "glass_house",
+      "x": [
+       -383.0,
+       383.0
+      ],
+      "y_into_wall": [
+       112.5,
+       116.5
+      ],
+      "z_up": [
+       1123.4,
+       1634.4
+      ],
+      "note": "4 mm, one pane drawn for the sealed unit"
+     },
+     {
+      "name": "net__N1",
+      "material": "net_voile",
+      "x": [
+       -450,
+       450
+      ],
+      "y_into_wall": [
+       235,
+       236
+      ],
+      "z_up": [
+       60,
+       880
+      ],
+      "note": "a flat card, alpha = the weave and folds (NET_COMMON); one of N1, N2, N3 or none is switched on per house"
+     },
+     {
+      "name": "net__N2",
+      "material": "net_voile",
+      "x": [
+       -450,
+       450
+      ],
+      "y_into_wall": [
+       235,
+       236
+      ],
+      "z_up": [
+       60,
+       1630
+      ],
+      "note": "a flat card, alpha = the weave and folds (NET_COMMON); one of N1, N2, N3 or none is switched on per house"
+     },
+     {
+      "name": "net__N3",
+      "material": "net_voile",
+      "x": [
+       -430,
+       430
+      ],
+      "y_into_wall": [
+       235,
+       236
+      ],
+      "z_up": [
+       100,
+       500
+      ],
+      "note": "a flat card, alpha = the weave and folds (NET_COMMON); one of N1, N2, N3 or none is switched on per house"
+     },
+     {
+      "name": "curtain__C1_drawn",
+      "material": "curtain",
+      "x": [
+       -480,
+       480
+      ],
+      "y_into_wall": [
+       262,
+       263
+      ],
+      "z_up": [
+       0,
+       1780
+      ],
+      "note": "drawn across; colour per house"
+     },
+     {
+      "name": "curtain__C2_open_L",
+      "material": "curtain",
+      "x": [
+       -480,
+       -310
+      ],
+      "y_into_wall": [
+       262,
+       263
+      ],
+      "z_up": [
+       0,
+       1780
+      ],
+      "note": "drawn back, left"
+     },
+     {
+      "name": "curtain__C2_open_R",
+      "material": "curtain",
+      "x": [
+       310,
+       480
+      ],
+      "y_into_wall": [
+       262,
+       263
+      ],
+      "z_up": [
+       0,
+       1780
+      ],
+      "note": "drawn back, right"
+     },
+     {
+      "name": "blind__B1",
+      "material": "blind",
+      "x": [
+       -400,
+       400
+      ],
+      "y_into_wall": [
+       240,
+       241
+      ],
+      "z_up": [
+       660,
+       1650
+      ],
+      "note": "venetian blind"
+     },
+     {
+      "name": "blind__B2",
+      "material": "blind",
+      "x": [
+       -390,
+       390
+      ],
+      "y_into_wall": [
+       240,
+       241
+      ],
+      "z_up": [
+       700,
+       1660
+      ],
+      "note": "roller blind"
+     },
+     {
+      "name": "blind__B3",
+      "material": "blind",
+      "x": [
+       -420,
+       420
+      ],
+      "y_into_wall": [
+       240,
+       241
+      ],
+      "z_up": [
+       100,
+       1640
+      ],
+      "note": "vertical louvre blind"
+     },
+     {
+      "name": "pendant__shade",
+      "material": "pendant_shade",
+      "x": [
+       -170,
+       170
+      ],
+      "y_into_wall": [
+       650,
+       990
+      ],
+      "z_up": [
+       1536,
+       1776
+      ],
+      "note": "a paper shade 340 across and 240 high, 0.55 behind the card, its top 0.30 below the ceiling; emissive only in a lit room; present where the room's `pendant` is true; the one real object in the room (the picture's ceiling carries its rose)"
+     }
+    ]
    }
   },
   "materials": {
@@ -8752,7 +9485,7 @@
     "eye_above_footway_m": 1.6
    },
    "H_ALONG_15_ROAD": {
-    "what": "2.6 m from the wall (the kerb edge of the road), the window seen 15 degrees from the wall (9.7 m along)",
+    "what": "in the road, 1 m out from the kerb (2.6 m from the wall: the footway is 5.125 - 3.505 = 1.62 m wide), the window seen 15 degrees from the wall (9.7 m along)",
     "spec": [
      "along",
      15.0,
@@ -8787,18 +9520,31 @@
    "D": "the 5th percentile of the luma over the window's outline (joinery and pane pixels, no brick)",
    "spread": "the pane pixels' 95th minus 5th percentile",
    "angle": "the angle from the wall at which the window's centre is seen from the camera, from the scene's geometry (not from the picture)",
-   "window_state": "its net class (sites[].net.kind with N0 = bare) and its time (day, or night lit or dark)",
+   "window_state": "bare, net or draped (`window_states`: N0 with no curtain or blind is bare; any B1 to B3 or C1 is draped; C2 counts by its net) and its time (day, or night lit or dark)",
+   "line_profile": "for WB-04b: a horizontal luma profile across each stile-to-pane edge (through the pane's mid-height) and a vertical profile across each rail-to-pane edge (through the pane's mid-width), the pane's edges found from the Material Index pass (pane 1 against frame 2); the dip is the darkest run of at least 1 pixel next to the edge, its value over L",
    "bands_come_from": "photo_measurements.bands_by_state (Photo, +-5 degrees on the angle, outlines by eye)"
   },
+  "window_states": {
+   "bare": "N0 with no curtain and no blind (on the street: east_parade_bay3_upper_w1, the unlet flat's second window, the only one; the other three N0 sites carry a blind or a curtain)",
+   "net": "N1, N2 or N3 with no C1 and no B1 to B3; a C2 (curtains drawn back to the sides) counts by its net",
+   "draped": "any B1, B2, B3 or C1 (a blind or a drawn curtain over the pane: east_parade_bay1_upper_w0 B2, east_chandler_bay0_upper_w0 B1, west_south_bay1_gf_w1 C1, east_parade_bay4_upper_w0 C1, west_south_bay2_gf_w1 B3): NO P/L band; a pane spread of at least 20 levels only",
+   "why": "TARGET-REVIEW fault 2(b): a cream or white blind cannot read 0.10 to 0.45 of its frame (WB-02), a drawn brown curtain cannot read blue over red by 10 levels (WB-03); the bands were taken from white and cream frames and bare or net panes"
+  },
+  "frame_class": "the P/L and D/L bands apply to white and cream frames only: a bronze frame (linear 0.05) or a brown one (0.09) gives a dark L, so P/L of 1 or more is correct for them and still fails. Under fault 1's amendment every street frame is one of those (white_fresh, white_grimy, white_flaking, white_upvc)",
   "bands": {
    "net_N1_N2_in_15_to_30_deg": {
     "P_over_L": [
      0.55,
-     0.95
+     0.97
     ],
-    "D_over_L_max": 0.55,
+    "D_over_L_max": 0.72,
     "spread_min": 40,
-    "photo": "P1_a, P1_b, P1_e at 31 to 37 degrees: 0.87, 0.83, 0.85 (D/L 0.47 to 0.50); the nine net windows 0.60 to 0.97"
+    "photo": "P1_a, P1_b, P1_e at 31 to 39 degrees, boxed without the stone head and sill and without the brick column and measured the gate's way (L over the outline minus the pane boxes, D over the outline with no brick): P/L P1_a 0.93, P1_b 0.94, P1_e 0.90; D/L P1_a 0.65, P1_b 0.65, P1_e 0.52 (P1_a with its top rows out 0.71); pane spread 76, 64, 109; the nine net windows 0.60 to 0.97. No net window was measured inside WB-01's own range of 15 to 30 degrees (the three are at 31 to 39): the band is carried down to 15 to 30 as a Judgement. No median cap (the first version's cap of 0.92 would have failed the real net windows)"
+   },
+   "net_N1_N2_line_check": {
+    "dip_width_px_min": 1,
+    "dip_over_L_max": 0.6,
+    "photo": "1a section 5: photograph 9's inside corner and lining edge 105 to 125 against 220 to 250 (a profile across the lining, 0.5 of L); at P1's scale (a window 15 to 18 px wide) a 6 mm line cannot be resolved, so no outline percentile there can set a limit for it. The old fault (no line, a uniform pane against the paint) has no dip and fails"
    },
    "net_N3_cafe": {
     "P_over_L": [
@@ -8813,7 +9559,7 @@
      0.45
     ],
     "spread_min": 20,
-    "photo": "P1_c (22 degrees) 0.32; P4_G 0.19; P3_d 0.36"
+    "photo": "P1_c (22 degrees) 0.29; P4_G 0.18; P3_d 0.36"
    },
    "bare_N0_over_60_deg_from_across": {
     "P_over_L": [
@@ -8821,7 +9567,11 @@
      0.7
     ],
     "blue_over_red_min": 10,
-    "photo": "P8_L, P8_R (near square, from below, sky over a dark room): 0.62, 0.51; the pane's colour (87, 99, 135): blue over red 48"
+    "photo": "P8_L, P8_R (near square, from below, sky over a dark room): 0.59, 0.49; all four panes together over the joinery of both windows (the gate's way) 0.57, the pane's colour (85, 100, 133): blue over red 48 (the review reads 46, a mean; both inside the band)"
+   },
+   "draped_any_in_15_to_30_deg": {
+    "spread_min": 20,
+    "photo": "no band on P/L or D/L (a blind or a drawn curtain is its own sheet); the pane spread of at least 20 levels (1a section 5) is the one test"
    },
    "old_fault_to_fail": {
     "P_over_L": 0.85,
@@ -8839,7 +9589,7 @@
    "measure": "bounding box of the glass-plus-frame nodes' outer lining in x and z of each kit",
    "expected": "850.0 wide, 1676.4 high (the frame's outer lining at the brick line)",
    "tolerance": "+-0.5 mm",
-   "applies_to": "S22 S11 RC",
+   "applies_to": "S22 S11 RC RC2",
    "kind": "Read",
    "source": "lab target.json opening; ruling of 8 October"
   },
@@ -8850,7 +9600,7 @@
    "measure": "the bounding box of the whole piece in the kit frame",
    "expected": "x centred on 0 (+-1 mm), z min 0 (+-0.5 mm), nothing in front of the brick face (y into the wall min >= 0: the lab sash 108.3, RC 72.5)",
    "tolerance": "+-1 mm",
-   "applies_to": "S22 S11 RC",
+   "applies_to": "S22 S11 RC RC2",
    "kind": "Derived",
    "source": "HANDOVER.md pivot rule"
   },
@@ -8859,20 +9609,20 @@
    "group": "kit",
    "name": "glass planes",
    "measure": "the y (into the wall) of each pane node's front face",
-   "expected": "S22/S11: upper panes 142.0, lower panes 190.0; RC: both 112.5",
+   "expected": "S22/S11: upper panes 142.0, lower panes 190.0; RC and RC2: every pane 112.5",
    "tolerance": "+-1.0 mm",
-   "applies_to": "S22 S11 RC",
+   "applies_to": "S22 S11 RC RC2",
    "kind": "Read",
-   "source": "1a section 2; the lab glb; RC Judgement from the photographs' frames"
+   "source": "1a section 2; the lab glb; RC and RC2 Judgement from the photographs' frames"
   },
   {
    "id": "KIT-04",
    "group": "kit",
    "name": "one mesh a pane",
    "measure": "count of nodes named glass__*",
-   "expected": "S22 4, S11 2, RC 2",
+   "expected": "S22 4, S11 2, RC 2, RC2 3 (casement, fixed, top)",
    "tolerance": "exact",
-   "applies_to": "S22 S11 RC",
+   "applies_to": "S22 S11 RC RC2",
    "kind": "Derived",
    "source": "per-pane tilt needs per-pane meshes"
   },
@@ -8883,7 +9633,7 @@
    "measure": "the rotation of each glass node about the vertical and horizontal axes",
    "expected": "each within +-0.5 degrees vertical axis and +-0.3 degrees horizontal, none exactly zero, a window's panes spread at least 0.3 degrees",
    "tolerance": "exact bounds",
-   "applies_to": "S22 S11 RC",
+   "applies_to": "S22 S11 RC RC2",
    "kind": "Photo",
    "source": "P8: panes 86 to 105 mean luma, +-10 per cent; 1a step 3 0.5 to 1 degree"
   },
@@ -8892,9 +9642,9 @@
    "group": "kit",
    "name": "net cards",
    "measure": "the node `net__N1`, `N2`, `N3`: x and z extents and the y plane",
-   "expected": "N1 x +-450, z 60 to 880; N2 x +-450, z 60 to 1630; N3 x +-430, z 100 to 500; planes S22/S11 254, RC 235 behind the face",
+   "expected": "N1 x +-450, z 60 to 880; N2 x +-450, z 60 to 1630; N3 x +-430, z 100 to 500; planes S22/S11 254, RC and RC2 235 behind the face",
    "tolerance": "+-1 mm",
-   "applies_to": "S22 S11 RC",
+   "applies_to": "S22 S11 RC RC2",
    "kind": "Judgement",
    "source": "NETS; photographs P1 to P7"
   },
@@ -8905,7 +9655,7 @@
    "measure": "the net plane minus the pane's rear face",
    "expected": "S22/S11 lower pane: 254 - 190 = 64 mm or more; no net node crosses a joinery node",
    "tolerance": "no intersection",
-   "applies_to": "S22 S11 RC",
+   "applies_to": "S22 S11 RC RC2",
    "kind": "Derived",
    "source": "1a: nets behind the sashes"
   },
@@ -8925,11 +9675,11 @@
    "group": "kit",
    "name": "vertex colour on the joinery",
    "measure": "COLOR_0 on every joinery vertex; the red channel's values",
-   "expected": "present on all; min >= 0.25; lining faces 1.0 at the brick edge falling to 0.6 +-0.05 at the glass; track faces 0.50 +-0.08; inside corners within 8 mm: 0.30 +-0.10; putty strips 0.35 +-0.05; meeting rail underside 0.40 +-0.08",
+   "expected": "present on all; min >= 0.25; faces whose normal points to the street 1.0 (not darkened); the faces that run into the wall (the reveal-facing sides of the linings, beads, pulley stiles and sash stiles) 1.0 at the brick edge falling to 0.6 +-0.05 at the glass; track faces 0.50 +-0.08; inside corners within 8 mm: 0.30 +-0.10; putty strips 0.35 +-0.05; meeting rail underside 0.40 +-0.08",
    "tolerance": "as stated",
-   "applies_to": "S22 S11 RC",
+   "applies_to": "S22 S11 RC RC2",
    "kind": "Judgement",
-   "source": "1a step 2, BOX_SHADE"
+   "source": "1a step 2, BOX_SHADE; TARGET-REVIEW narrow point 4"
   },
   {
    "id": "KIT-10",
@@ -8938,7 +9688,7 @@
    "measure": "every shade step or gap that the box draws as a line (putty strip, parting bead gap, weld groove, gasket)",
    "expected": "at least 6 mm wide (the putty strip 6.4, the parting bead gap 2.0 stays a geometric gap of 2 mm with its shade painted 0.10 over 6 mm of each side)",
    "tolerance": ">= 6 mm",
-   "applies_to": "S22 S11 RC",
+   "applies_to": "S22 S11 RC RC2",
    "kind": "Derived",
    "source": "1a: 1 px = 5.9 mm at 10 m"
   },
@@ -8949,29 +9699,29 @@
    "measure": "triangles and file size per kit glb",
    "expected": "<= 6,000 triangles and <= 400,000 bytes",
    "tolerance": "limit",
-   "applies_to": "S22 S11 RC",
+   "applies_to": "S22 S11 RC RC2",
    "kind": "Judgement",
    "source": "push guard 1 MB"
   },
   {
    "id": "KIT-12",
    "group": "kit",
-   "name": "RC parts",
-   "measure": "the RC nodes' bounds against target.kinds.RC.parts_mm",
+   "name": "RC and RC2 parts",
+   "measure": "the RC and RC2 nodes' bounds against target.kinds.RC.parts_mm and target.kinds.RC2.parts_mm",
    "expected": "every part within",
    "tolerance": "+-0.5 mm",
-   "applies_to": "RC",
+   "applies_to": "RC RC2",
    "kind": "Judgement",
-   "source": "photographs P6, P7, P11"
+   "source": "photographs P6 (RC2), P7, P11 (RC)"
   },
   {
    "id": "KIT-14",
    "group": "kit",
    "name": "equal lights, centred bars",
    "measure": "the x extents of every pane node, the bar's centre, the RC's transom",
-   "expected": "S22: four panes of equal width (352.6 +-0.5), the bar and the putty strips centred on x = 0 (+-0.5); S11: two panes equal; RC: both lights centred on x = 0 (+-0.5), the transom's centre at 0.72 x 1676.4 = 1207.0 (+-1)",
+   "expected": "S22: four panes of equal width (352.6 +-0.5), the bar and the putty strips centred on x = 0 (+-0.5); S11: two panes equal; RC: both lights centred on x = 0 (+-0.5), the transom's centre at 0.72 x 1676.4 = 1207.0 (+-1); RC2: the top light, the transom and the mullion centred on x = 0 (+-0.5), the two lower lights' openings equal (330.0 +-0.5 each), the transom's centre at 0.66 x 1676.4 = 1106.4 (+-1), the mullion 70 wide from z 60 to 1071.4 (+-0.5)",
    "tolerance": "+-0.5 mm",
-   "applies_to": "S22 S11 RC",
+   "applies_to": "S22 S11 RC RC2",
    "kind": "Photo",
    "source": "P8: the bar at 0.500 of the width; unit 7's review, narrow point 1 (unaligned toplights)"
   },
@@ -8980,9 +9730,9 @@
    "group": "kit",
    "name": "no opening in the front",
    "measure": "rasterise the elevation drawn from the kit's nodes at 1 mm: every point of the opening 850 x 1676.4 lies on a part (frame, sash, lining, bead, glass sheet)",
-   "expected": "the largest uncovered square is at most 5 x 5 mm (the S22's 1.6 side clearance and the RC's 4 mm gap are the only gaps)",
+   "expected": "the largest uncovered square is at most 5 x 5 mm (the S22's 1.6 side clearance and the RC's and RC2's 4 mm gaps are the only gaps)",
    "tolerance": "<= 5 mm",
-   "applies_to": "S22 S11 RC",
+   "applies_to": "S22 S11 RC RC2",
    "kind": "Derived",
    "source": "unit 7's review, fault 1 (a 1.95 m x 0.45 m hole)"
   },
@@ -9045,62 +9795,73 @@
    "id": "WB-01",
    "group": "gate",
    "name": "net windows are darker than their frames",
-   "measure": "P/L of every net N1 or N2 window seen at 15 to 30 degrees from the wall (day, the gate's five views)",
-   "expected": "0.55 to 0.95 and the median of the set at most 0.92",
-   "tolerance": "bands",
+   "measure": "P/L of every net window (N1 or N2; a C2 counts by its net; not draped) seen at 15 to 30 degrees from the wall (day, the gate's five views); P over the pane's median, L over the joinery (the outline minus the pane); white and cream frames only (every street frame is one: frame_class)",
+   "expected": "0.55 to 0.97, no median cap",
+   "tolerance": "band",
    "applies_to": "GS_A GS_B",
    "kind": "Photo",
-   "source": "P1_a, P1_b, P1_e (31 to 37 degrees) 0.83 to 0.87; nine net windows 0.60 to 0.97"
+   "source": "P1_a, P1_b, P1_e boxed without the stone and the brick, measured the gate's way: 0.93, 0.94, 0.90 (at 31 to 39 degrees); the nine net windows 0.60 to 0.97; TARGET-REVIEW fault 2"
   },
   {
    "id": "WB-02",
    "group": "gate",
    "name": "bare windows are much darker",
-   "measure": "P/L of every bare (N0) window seen at 15 to 30 degrees from the wall, by day",
+   "measure": "P/L of every BARE window (N0 with no curtain and no blind: on the street east_parade_bay3_upper_w1 only) seen at 15 to 30 degrees from the wall, by day; draped windows have no P/L band",
    "expected": "0.10 to 0.45",
    "tolerance": "band",
    "applies_to": "GS_A GS_B",
    "kind": "Photo",
-   "source": "P1_c 0.32, P4_G 0.19, P3_d 0.36"
+   "source": "P1_c 0.29, P4_G 0.18, P3_d 0.36"
   },
   {
    "id": "WB-03",
    "group": "gate",
    "name": "bare windows from across, near square",
-   "measure": "P/L of every N0 window seen from H_ACROSS_0 by day (over 60 degrees), and the pane's blue minus red",
+   "measure": "P/L of every BARE window (as WB-02) seen from H_ACROSS_0 by day (over 60 degrees), and the pane's blue minus red; draped windows are not tested here",
    "expected": "0.35 to 0.70 and blue over red at least 10 levels",
    "tolerance": "bands",
    "applies_to": "GS_A",
    "kind": "Photo",
-   "source": "P8_L, P8_R: 0.62, 0.51; (87, 99, 135)"
+   "source": "P8_L, P8_R: 0.59, 0.49, all four panes together 0.57; (85, 100, 133)"
   },
   {
    "id": "WB-04",
    "group": "gate",
    "name": "the dark lines are present",
-   "measure": "D/L of every window (net or bare) seen at 15 to 30 degrees",
-   "expected": "at most 0.55",
+   "measure": "D/L of every bare and net window seen at 15 to 30 degrees: D the outline's 5th percentile (joinery and pane, no brick), L the joinery's 90th percentile; white and cream frames only; draped windows have no D/L band",
+   "expected": "at most 0.72",
    "tolerance": "limit",
    "applies_to": "GS_A GS_B",
    "kind": "Photo",
-   "source": "P1 tight outlines 0.47 to 0.50; 1a D/L <= 0.6; the fault was 0.85"
+   "source": "P1_a 0.65 (0.71 with its top rows out), P1_b 0.65, P1_e 0.52 measured the gate's way; the fault was 0.85; 1a's 0.6 is a profile across the lining (photograph 9), see WB-04b"
+  },
+  {
+   "id": "WB-04b",
+   "group": "gate",
+   "name": "the dark line round each pane",
+   "measure": "on a horizontal profile across each stile-to-pane edge and a vertical profile across each rail-to-pane edge of every bare and net window seen at 15 to 30 degrees (the gate's line_profile): the dip next to the edge",
+   "expected": "a dip at least 1 px wide to at most 0.60 of L",
+   "tolerance": "limit",
+   "applies_to": "GS_A GS_B",
+   "kind": "Photo",
+   "source": "1a section 5 and photograph 9 (the inside corner 105 to 125 against a lining of 220 to 250: 0.5); at P1's scale (15 to 18 px a window) a 6 mm line cannot be resolved, so the photographs measured here cannot set it; the old fault (no line) fails it"
   },
   {
    "id": "WB-05",
    "group": "gate",
    "name": "the pane is not one tone",
-   "measure": "the pane spread (95th minus 5th percentile) of every net window; of every bare window",
-   "expected": "net at least 40 levels; bare at least 20",
+   "measure": "the pane spread (95th minus 5th percentile) of every net window; of every bare window; of every draped window",
+   "expected": "net at least 40 levels; bare at least 20; draped at least 20",
    "tolerance": "limit",
    "applies_to": "GS_A GS_B",
    "kind": "Photo",
-   "source": "nets 85 to 173 on the photographs; 1a: at least 20; the fault 14"
+   "source": "nets 64 to 173 on the photographs (the three P1 windows 76, 64, 109 measured the gate's way); 1a: at least 20; the fault 14"
   },
   {
    "id": "WB-06",
    "group": "gate",
    "name": "something is behind the glass by day",
-   "measure": "for every N0, N3 or N1 window seen from H_ACROSS_0 by day: the clear pane's pixels (upper sash for N1, whole pane for N0)",
+   "measure": "for every bare, N3 or N1 window seen from H_ACROSS_0 by day (and a draped window whose blind leaves the upper sash clear: B1, B2): the clear pane's pixels (upper sash for N1, B1, B2; whole pane for a bare window)",
    "expected": "at least two tonal regions (the ceiling and the back wall, or the net's edge) whose medians differ by 10 levels or more, from the room picture through `trace`",
    "tolerance": "10 levels",
    "applies_to": "GS_A GS_B",
@@ -9122,8 +9883,8 @@
    "id": "WB-08",
    "group": "gate",
    "name": "the old fault fails",
-   "measure": "run WB-01 to WB-05 on a render with the old pane (a lit lace card, F0 0.04, no lines) in the same views",
-   "expected": "WB-04 and WB-05 and WB-02 must FAIL (D/L 0.85, spread 14, bare windows lighter than 0.45)",
+   "measure": "run WB-01 to WB-05 and WB-04b on a render with the old pane (a lit lace card, F0 0.04, no lines) in the same views",
+   "expected": "WB-04 and WB-04b and WB-05 and WB-02 must FAIL (D/L 0.85, no dip at the pane edges, spread 14, bare windows lighter than 0.45)",
    "tolerance": "must fail",
    "applies_to": "GS_A",
    "kind": "Derived",
@@ -9144,12 +9905,12 @@
    "id": "NIGHT-01",
    "group": "gate",
    "name": "lit and dark windows at night",
-   "measure": "count of windows with pane median luma >= 100 (lit) and <= 30 (dark) at 20:30 over the 20 street windows (GS_A and GS_B together, rendered from the one camera that sees each squarely)",
-   "expected": "7 lit (+-1), the rest dark; none between 30 and 100",
+   "measure": "at 20:30 over the 20 street windows (GS_A and GS_B together, rendered from the one camera that sees each squarely): a window is LIT when its pane median luma is at least 4 times the dark windows' median luma and the pane's mean linear colour has r > g > b; DARK when its pane luma is 8 to 30 (NIGHT-04). The absolute emissions of the curtains, blinds and the landing bulb (`night_lit_emission_linear`, `landing_bulb`) are set to read 100 to 140 and are the starting values, not the pass line",
+   "expected": "7 lit (+-1), the rest dark; none that is neither",
    "tolerance": "+-1",
    "applies_to": "all 20",
    "kind": "Judgement",
-   "source": "rooms.lit_share"
+   "source": "rooms.lit_share; TARGET-REVIEW narrow point 5 (the absolute 100 cannot be met behind a drawn brown curtain at 0.35 transmission, or by a bare 40 W landing bulb)"
   },
   {
    "id": "NIGHT-02",
@@ -9166,8 +9927,8 @@
    "id": "NIGHT-03",
    "group": "gate",
    "name": "the lit net glows its own colour",
-   "measure": "a lit net or curtain's mean colour (linear) ratio r:g:b",
-   "expected": "r > g > b, g/r 0.55 to 0.80, b/r 0.20 to 0.45 (tungsten 2700 K and the fabric)",
+   "measure": "a lit net's mean colour (linear) ratio r:g:b; a lit curtain's or blind's mean colour",
+   "expected": "net: r > g > b, g/r 0.55 to 0.80, b/r 0.20 to 0.45 (tungsten 2700 K and the fabric); curtain or blind: its own colour x that light (curtains.*.night_lit_emission_linear): r > g > b for the cream and brown curtains and the white and cream blinds (the brown curtain's g/r is 0.39); a green curtain's g > r is its own colour and none is lit at 20:30",
    "tolerance": "band",
    "applies_to": "lit windows",
    "kind": "Read",
@@ -9265,12 +10026,12 @@
    "id": "PIC-07",
    "group": "rooms",
    "name": "no marks",
-   "measure": "every picture searched by eye at full size, and the final base colour of every model used",
-   "expected": "no maker's name, brand, logo, barcode, person or child; every `marks` entry blanked or the model not used",
+   "measure": "every picture searched by eye at full size, and the final base colour of every model used; the base-colour maps of every placed model checked at 1k against its marks entry, region by region, before the room is rendered",
+   "expected": "no maker's name, brand, logo, barcode, person or child; every `marks` entry blanked or the model not used; no lettering readable at 100 per cent on any map of a placed model once its marks are painted out",
    "tolerance": "none",
    "applies_to": "all",
    "kind": "Derived",
-   "source": "TARGET-REVIEW of unit 7, fault 2"
+   "source": "TARGET-REVIEW of unit 7, fault 2; TARGET-REVIEW of unit 8, fault 3 (television_02's maker's name on its front bezel, missed by the first look)"
   },
   {
    "id": "PIC-08",
@@ -9321,11 +10082,11 @@
    "group": "sites",
    "name": "paint",
    "measure": "houses by paint",
-   "expected": "white (any kind) 5 to 7 of 10, cream 1, brown 1, olive 1, blue 1, bronze 1",
+   "expected": "white (white_fresh, white_grimy, white_flaking, white_upvc) 10 of 10 until Jafar's page rules otherwise",
    "tolerance": "counts",
    "applies_to": "10 houses",
-   "kind": "Photo",
-   "source": "paint_tally"
+   "kind": "Read",
+   "source": "RULINGS.md 3 October (windows with white frames) over the photographs' tally (white 55 per cent), D13"
   },
   {
    "id": "CONTENT-01",
@@ -9345,7 +10106,7 @@
    "what": "the replacement frame's colour",
    "street_file": "dark anodised bronze (frame_bronze) for every replacement (terrace-front.py _sash)",
    "photographs": "white in all four replacement windows reached (P6, P7, P11, and P6's ground bay): none brown or bronze",
-   "chosen": "white satin (white_upvc) by default; bronze kept for the one metal-refit house (the ship chandler's, whose front is aluminium: Judgement); that rests on the asset plan's D06 ('Hook shops receive metal frames'), not on a ruling of Jafar's"
+   "chosen": "white satin (white_upvc) for EVERY replacement house, the ship chandler's too: none is bronze. The first version kept bronze for the chandler (a metal-refit shop, the asset plan's D06 'Hook shops receive metal frames'): that is a question for Jafar, not decided here, and it now stands on D13's line (TARGET-REVIEW fault 1)"
   },
   {
    "id": "D2",
@@ -9358,7 +10119,7 @@
    "id": "D3",
    "what": "the pane",
    "street_file": "the net card is the pane: lit lace over a pale card, F0 0.04 (the 8 October note)",
-   "photographs": "every bare window reads dark (0.19 to 0.36 of its frame) and the room shows; a net reads 0.6 to 0.97 of the frame with lines round it",
+   "photographs": "every bare window reads dark (0.18 to 0.36 of its frame) and the room shows; a net reads 0.60 to 0.97 of the frame with lines round it",
    "chosen": "glass over a dark room, the net a separate card (1a)"
   },
   {
@@ -9400,7 +10161,7 @@
    "id": "D9",
    "what": "frame to wall ratio",
    "research": "WINDOWS-OTHER-DIRECTION: frames about 7 times the wall",
-   "photographs": "P1 4.3, P8 3.7 (linear, display values of film scans)",
+   "photographs": "P1 3.75, P8 4.1 (linear, display values of film scans; L now the joinery's 90th percentile)",
    "chosen": "the check's band is 3 to 9; the game's own albedos give 6.3"
   },
   {
@@ -9414,25 +10175,42 @@
    "id": "D11",
    "what": "the top light of the replacement",
    "street_file": "the transom at 0.72 of the opening (REPLACEMENT_TRANSOM)",
-   "photographs": "P6 0.66, P7 0.72, P11 0.75",
-   "chosen": "0.72 kept (inside the three)"
+   "photographs": "P6 0.66, P7 0.72, P11 0.75; P6 also shows the other FORM: a fixed top light across over two lower lights, a side-hung casement beside a fixed light, the mullion near the middle",
+   "chosen": "two forms are built: RC (P7's: a fixed light under a top-hung light, the transom at 0.72, kept, inside the three) on east_parade_bay2, east_chandler_bay0 and west_south_bay1, and RC2 (P6's, the transom at 0.66, a fixed top light, a 70 mm mullion at x 0, a side-hung left casement and a fixed right light) on east_parade_bay4 (TARGET-REVIEW narrow point 7)"
   },
   {
    "id": "D12",
    "what": "the white-board look at 15 to 30 degrees",
    "research_1a": "the panes should be darker than the frame by about 0.6 to 0.9",
-   "photographs": "net windows read 0.83 to 0.87 of the frame at 31 to 37 degrees: nets ARE nearly white; bare windows 0.19 to 0.36",
-   "chosen": "the bands above are by state; the fault is the missing lines and the uniform tone, not a bright net"
+   "photographs": "net windows measured the gate's way read 0.90 to 0.94 of the frame at 31 to 39 degrees (the first version's 0.83 to 0.87 took L from the white-painted stone and the brick at the jamb): nets ARE nearly white; bare windows 0.18 to 0.36; the dark line round each pane is a dip of 0.5 of L on a profile across the lining (photograph 9), not resolvable at P1's scale",
+   "chosen": "the bands above are by window state (bare, net, draped); the fault is the missing lines and the uniform tone, not a bright net: WB-04 at most 0.72 and the new WB-04b (the dip at the pane edges)"
+  },
+  {
+   "id": "D13",
+   "what": "the frame colour of the ten houses",
+   "street_file": "terrace-front.py draws every timber sash `frame_painted` white and every replacement `frame_bronze`",
+   "ruling": "RULINGS.md, 3 October: 'windows with white frames, sash bars, sky in the glass' (the proof view's bars); terrace-front.py records the approved Hook sheet the same way: 'every upstairs window is PALE - white frames over white nets'",
+   "photographs": "white 55 per cent of 60 windows, cream or ivory 12, dark or red-brown 13, blue 8, olive 7 (the first version of this target gave one house each to brown, olive, blue, cream and bronze); every replacement white in the four reached (D1)",
+   "chosen": "ALL TEN HOUSES WHITE (white_fresh 2, white_grimy 3, white_flaking 1, white_upvc 4): Jafar's standing ruling stands over the photographs' tally until he answers (OWED-05's first line; CLAUDE.md: if code must change a ruling, ask him first, and anything touching the look reaches him on one page). The cream, olive, blue, brown and bronze paints stay in `paints` as unused data. The question D1 left (the chandler's bronze: the asset plan's D06) is on the same line"
+  },
+  {
+   "id": "D14",
+   "what": "the segment under the arch",
+   "street_file": "brick fills the space between the flat sash head and the segmental brick arch (terrace-front.py: ARCH_FANLIGHT False, the 4 October decision)",
+   "photographs": "P8 shows that space filled by a cream-painted timber head that follows the arch",
+   "chosen": "BRICK is built: the 4 October decision stands (the segment is the wall kit's, not this unit's). If it changes to a painted segmental head it reaches Jafar's page first (CLAUDE.md: anything touching the look)"
   }
  ],
  "could_not_settle": [
   "No 1975 to 1995 night photograph of a terraced street was reached: the lit share by hour is a Judgement (anchored on the street's own one in three).",
-  "No period photograph of a brown or bronze anodised aluminium window on a house was reached: the bronze replacement is kept for one house only, marked Judgement.",
+  "No period photograph of a brown or bronze anodised aluminium window on a house was reached; and Jafar's ruling of 3 October is white frames: no house takes bronze, brown, olive, blue or cream. Whether the street takes the photographs' mix (white 55 per cent, one house each of the others) or the bronze chandler is his, on OWED-05's first line (D13).",
   "The photograph measurements are on 640 to 1024 px scans: a window is 15 to 100 px wide, so D (the darkest line) is a floor, and the angle from the wall is +-5 degrees from the window's proportion; the bands are wide for that reason.",
   "A sealed double-glazed unit's four reflecting faces (about 0.14 at normal incidence) cannot be reached by Unreal's Specular 1.0 (F0 0.08): the replacement's pane under-reflects; the cure (an emissive sky term) is a PC tuning, listed in owed_on_pc.",
   "How the game's Lumen reflections and the street cube show on the pane (the box projection, the Fresnel hand-over) is not shown by the cloud: the cloud's pane reflects the proxies and the dome through Cycles.",
-  "The rooms' contents were chosen from 44 Poly Haven models and 17 textures; none shows a period British room: no 1975 to 1995 photograph of a domestic interior was reached, so the rooms rest on the photographs' windows (nets, drapes, a pot plant, a dark room) and on the budgets, not on a room photograph.",
+  "The rooms' contents were chosen from 44 Poly Haven models and 9 textures; none shows a period British room: no 1975 to 1995 photograph of a domestic interior was reached, so the rooms rest on the photographs' windows (nets, drapes, a pot plant, a dark room) and on the budgets, not on a room photograph.",
   "Whether the cottages take the period height with the head kept (sill 0.7236 above the threshold: 0.13 under P6's 0.85) or with the sill kept (0.9, the head raised to 2.676 above the threshold, the arch left 9 cm of brick under the eaves) is Jafar's: the ruling of 8 October (1.68 m) is followed for every row with the head kept; the PC session widens SASH_KIT_ROWS.",
+  "Only one street window is BARE in the sense of the gate's window states (N0 with no curtain and no blind): east_parade_bay3_upper_w1, the unlet flat's. The other three N0 windows carry a blind or a drawn curtain (draped: no P/L band, a spread of at least 20 only), so WB-02 and WB-03 have a sample of one on the street.",
+  "No net window was measured inside WB-01's own range of 15 to 30 degrees: the three P1 windows are at 31 to 39. The band is carried down as a Judgement; at P1's scale the box's 6 mm dark lines cannot be resolved, so WB-04b (the dip at the pane edges) has no photograph's number, only 1a's profile across a lining (0.5 of L).",
   "Six over six is not on the street and was not built.",
   "The backdrop rows (48 windows) take the same pieces with no pictures: their paint and lit pane are rules, not a table."
  ],
@@ -9459,8 +10237,17 @@
   },
   {
    "id": "OWED-05",
-   "what": "Jafar's page: the house windows as a sample (the look): one page with the 15 and 30 degree frames, day and night, and the old frame beside",
-   "check": "nothing is multiplied before his yes (CLAUDE.md)"
+   "what": "Jafar's page: the house windows as a sample (the look): one page with the 15 and 30 degree frames, day and night, and the old frame beside, and two one-line questions with a recommendation (picks stored)",
+   "check": "nothing is multiplied before his yes (CLAUDE.md)",
+   "lines": [
+    "Window frames: all white as you ruled on 3 October (recommended), or the 1980s photographs' mix (white 55%, brown 13, cream 12, blue 8, olive 7: one house each)?",
+    "Cottage windows: head kept, sill 0.72 above the step (recommended), or sill 0.9 with 9 cm of brick under the eaves?"
+   ]
+  },
+  {
+   "id": "OWED-06",
+   "what": "1a step 3, the upper panes reflecting the street (a cube of the street box-projected onto the pane): deferred, not built in the cloud",
+   "check": "in the reverse view at least 2 of 3 upper panes show a horizontal edge with a step of at least 30 levels, moving when the camera moves 1 m"
   }
  ]
 }
