@@ -58,6 +58,8 @@ def measure(ps, spec):
         la, ha = ps.part_bbox(spec["a"])
         lb, hb = ps.part_bbox(spec["b"])
         return float((lb[ax] + hb[ax]) / 2 - (la[ax] + ha[ax]) / 2)
+    if k == "wire_min_z":
+        return float(min(ps.part_bbox(n)[0][2] for n in spec["parts"]))
     if k == "count":
         pre = spec["prefix"]
         return float(sum(1 for n in ps.names if n.startswith(pre)))

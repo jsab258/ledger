@@ -1,0 +1,1259 @@
+{
+ "family": "telegraph-pole",
+ "title": "Quay Street's telegraph pole with its wires",
+ "units": "millimetres; angles in degrees; z up from the pavement; the bracket faces -y here; the pivot is the pole's centre at the pavement; in the street the local +y points across the street, to the east parade",
+ "status": "written 13 October 2026, not yet reviewed",
+ "sample": "TP1",
+ "materials": {
+  "creosote_timber": {
+   "name": "creosoted pine, grey-brown, weathered",
+   "srgb": [
+    92,
+    78,
+    62
+   ],
+   "rough": 0.85,
+   "rough_words": "rough, checked",
+   "metal": false,
+   "note": "darker brown-black with tar at the foot (lowest 1.5 m), silvered grey above with vertical checks 100 to 400 long; a dark stain below the bracket where rain runs"
+  },
+  "galvanised": {
+   "name": "galvanised steel, dull",
+   "srgb": [
+    128,
+    130,
+    128
+   ],
+   "rough": 0.55,
+   "rough_words": "matt satin",
+   "metal": true,
+   "note": "steps, cap: white rust, never bright"
+  },
+  "iron_dark": {
+   "name": "bracket iron, black paint, rusted",
+   "srgb": [
+    30,
+    30,
+    32
+   ],
+   "rough": 0.55,
+   "rough_words": "semi-matt",
+   "metal": true,
+   "note": ""
+  },
+  "porcelain": {
+   "name": "porcelain knob, brown glaze, dirty",
+   "srgb": [
+    112,
+    80,
+    56
+   ],
+   "rough": 0.25,
+   "rough_words": "glazed",
+   "metal": false,
+   "note": "a brown glaze (period) darkened with soot; cracked glaze at the neck"
+  },
+  "wire_black": {
+   "name": "drop wire, black sheath",
+   "srgb": [
+    18,
+    18,
+    18
+   ],
+   "rough": 0.6,
+   "rough_words": "matt",
+   "metal": false,
+   "note": "the sheath chalks grey in sun, 6 mm across"
+  },
+  "wall_brick": {
+   "name": "soot-blackened brick (the street's)",
+   "srgb": [
+    78,
+    64,
+    58
+   ],
+   "rough": 0.9,
+   "rough_words": "rough",
+   "metal": false,
+   "note": "stand-in slabs for the two facades"
+  }
+ },
+ "variants": {
+  "TP1": {
+   "name": "TP1: the pole with its bracket, 6 knobs, 11 steps and four drop wires (two across the street, two to its own side) (the sample)",
+   "parts": [
+    {
+     "id": "pole",
+     "type": "cyl",
+     "p0": [
+      0,
+      0,
+      0
+     ],
+     "p1": [
+      0,
+      0,
+      8000.0
+     ],
+     "r0": 115.0,
+     "material": "creosote_timber",
+     "r1": 75.0,
+     "n": 20,
+     "note": "creosoted pine pole, 8.0 m above the ground, 230 across at the ground, 150 at the top; the buried 1.6 m is not modelled"
+    },
+    {
+     "id": "cap",
+     "type": "cyl",
+     "p0": [
+      0,
+      0,
+      8000.0
+     ],
+     "p1": [
+      0,
+      0,
+      8045.0
+     ],
+     "r0": 81.0,
+     "material": "galvanised",
+     "r1": 50.0,
+     "note": "galvanised cap, 45 high, 162 across at its foot, shed-roofed"
+    },
+    {
+     "id": "bracket",
+     "type": "box",
+     "c": [
+      0.0,
+      -89.5,
+      7755.0
+     ],
+     "s": [
+      300.0,
+      31.0,
+      170.0
+     ],
+     "material": "iron_dark",
+     "edge": "corners r 6",
+     "note": "distribution bracket 300 x 22 x 170, galvanised iron painted black, two bolts into the pole"
+    },
+    {
+     "id": "knob_11",
+     "type": "cyl",
+     "p0": [
+      -100.0,
+      -105.0,
+      7715.0
+     ],
+     "p1": [
+      -100.0,
+      -151.0,
+      7715.0
+     ],
+     "r0": 20.0,
+     "material": "porcelain",
+     "r1": 15.0,
+     "note": "porcelain insulator knob 40 across, 46 long"
+    },
+    {
+     "id": "knob_12",
+     "type": "cyl",
+     "p0": [
+      0.0,
+      -105.0,
+      7715.0
+     ],
+     "p1": [
+      0.0,
+      -151.0,
+      7715.0
+     ],
+     "r0": 20.0,
+     "material": "porcelain",
+     "r1": 15.0,
+     "note": "porcelain insulator knob 40 across, 46 long"
+    },
+    {
+     "id": "knob_13",
+     "type": "cyl",
+     "p0": [
+      100.0,
+      -105.0,
+      7715.0
+     ],
+     "p1": [
+      100.0,
+      -151.0,
+      7715.0
+     ],
+     "r0": 20.0,
+     "material": "porcelain",
+     "r1": 15.0,
+     "note": "porcelain insulator knob 40 across, 46 long"
+    },
+    {
+     "id": "knob_21",
+     "type": "cyl",
+     "p0": [
+      -100.0,
+      -105.0,
+      7800.0
+     ],
+     "p1": [
+      -100.0,
+      -151.0,
+      7800.0
+     ],
+     "r0": 20.0,
+     "material": "porcelain",
+     "r1": 15.0,
+     "note": "porcelain insulator knob 40 across, 46 long"
+    },
+    {
+     "id": "knob_22",
+     "type": "cyl",
+     "p0": [
+      0.0,
+      -105.0,
+      7800.0
+     ],
+     "p1": [
+      0.0,
+      -151.0,
+      7800.0
+     ],
+     "r0": 20.0,
+     "material": "porcelain",
+     "r1": 15.0,
+     "note": "porcelain insulator knob 40 across, 46 long"
+    },
+    {
+     "id": "knob_23",
+     "type": "cyl",
+     "p0": [
+      100.0,
+      -105.0,
+      7800.0
+     ],
+     "p1": [
+      100.0,
+      -151.0,
+      7800.0
+     ],
+     "r0": 20.0,
+     "material": "porcelain",
+     "r1": 15.0,
+     "note": "porcelain insulator knob 40 across, 46 long"
+    },
+    {
+     "id": "step_01",
+     "type": "cyl",
+     "p0": [
+      83.0,
+      0,
+      2400.0
+     ],
+     "p1": [
+      233.0,
+      0,
+      2400.0
+     ],
+     "r0": 8.0,
+     "material": "galvanised",
+     "note": "pole step: a 16 mm peg, 150 out of the pole, alternate sides"
+    },
+    {
+     "id": "step_02",
+     "type": "cyl",
+     "p0": [
+      -80.75,
+      0,
+      2850.0
+     ],
+     "p1": [
+      -230.75,
+      0,
+      2850.0
+     ],
+     "r0": 8.0,
+     "material": "galvanised",
+     "note": "pole step: a 16 mm peg, 150 out of the pole, alternate sides"
+    },
+    {
+     "id": "step_03",
+     "type": "cyl",
+     "p0": [
+      78.5,
+      0,
+      3300.0
+     ],
+     "p1": [
+      228.5,
+      0,
+      3300.0
+     ],
+     "r0": 8.0,
+     "material": "galvanised",
+     "note": "pole step: a 16 mm peg, 150 out of the pole, alternate sides"
+    },
+    {
+     "id": "step_04",
+     "type": "cyl",
+     "p0": [
+      -76.25,
+      0,
+      3750.0
+     ],
+     "p1": [
+      -226.25,
+      0,
+      3750.0
+     ],
+     "r0": 8.0,
+     "material": "galvanised",
+     "note": "pole step: a 16 mm peg, 150 out of the pole, alternate sides"
+    },
+    {
+     "id": "step_05",
+     "type": "cyl",
+     "p0": [
+      74.0,
+      0,
+      4200.0
+     ],
+     "p1": [
+      224.0,
+      0,
+      4200.0
+     ],
+     "r0": 8.0,
+     "material": "galvanised",
+     "note": "pole step: a 16 mm peg, 150 out of the pole, alternate sides"
+    },
+    {
+     "id": "step_06",
+     "type": "cyl",
+     "p0": [
+      -71.75,
+      0,
+      4650.0
+     ],
+     "p1": [
+      -221.75,
+      0,
+      4650.0
+     ],
+     "r0": 8.0,
+     "material": "galvanised",
+     "note": "pole step: a 16 mm peg, 150 out of the pole, alternate sides"
+    },
+    {
+     "id": "step_07",
+     "type": "cyl",
+     "p0": [
+      69.5,
+      0,
+      5100.0
+     ],
+     "p1": [
+      219.5,
+      0,
+      5100.0
+     ],
+     "r0": 8.0,
+     "material": "galvanised",
+     "note": "pole step: a 16 mm peg, 150 out of the pole, alternate sides"
+    },
+    {
+     "id": "step_08",
+     "type": "cyl",
+     "p0": [
+      -67.25,
+      0,
+      5550.0
+     ],
+     "p1": [
+      -217.25,
+      0,
+      5550.0
+     ],
+     "r0": 8.0,
+     "material": "galvanised",
+     "note": "pole step: a 16 mm peg, 150 out of the pole, alternate sides"
+    },
+    {
+     "id": "step_09",
+     "type": "cyl",
+     "p0": [
+      65.0,
+      0,
+      6000.0
+     ],
+     "p1": [
+      215.0,
+      0,
+      6000.0
+     ],
+     "r0": 8.0,
+     "material": "galvanised",
+     "note": "pole step: a 16 mm peg, 150 out of the pole, alternate sides"
+    },
+    {
+     "id": "step_10",
+     "type": "cyl",
+     "p0": [
+      -62.75,
+      0,
+      6450.0
+     ],
+     "p1": [
+      -212.75,
+      0,
+      6450.0
+     ],
+     "r0": 8.0,
+     "material": "galvanised",
+     "note": "pole step: a 16 mm peg, 150 out of the pole, alternate sides"
+    },
+    {
+     "id": "step_11",
+     "type": "cyl",
+     "p0": [
+      60.5,
+      0,
+      6900.0
+     ],
+     "p1": [
+      210.5,
+      0,
+      6900.0
+     ],
+     "r0": 8.0,
+     "material": "galvanised",
+     "note": "pole step: a 16 mm peg, 150 out of the pole, alternate sides"
+    },
+    {
+     "id": "facade_east",
+     "type": "box",
+     "c": [
+      3000.0,
+      9000.0,
+      4500.0
+     ],
+     "s": [
+      24000.0,
+      300.0,
+      9000.0
+     ],
+     "material": "wall_brick",
+     "note": "the east parade's front (a stand-in slab)"
+    },
+    {
+     "id": "facade_west",
+     "type": "box",
+     "c": [
+      3000.0,
+      -1550.0,
+      4250.0
+     ],
+     "s": [
+      24000.0,
+      300.0,
+      8500.0
+     ],
+     "material": "wall_brick",
+     "note": "the west block's front (a stand-in slab)"
+    },
+    {
+     "id": "anchor_w1",
+     "type": "box",
+     "c": [
+      -3000.0,
+      8805.0,
+      6100.0
+     ],
+     "s": [
+      80.0,
+      90.0,
+      100.0
+     ],
+     "material": "iron_dark",
+     "note": "wall bracket 80 x 90 x 100 with an insulator eye, on the eaves course"
+    },
+    {
+     "id": "anchor_w2",
+     "type": "box",
+     "c": [
+      2500.0,
+      8805.0,
+      6200.0
+     ],
+     "s": [
+      80.0,
+      90.0,
+      100.0
+     ],
+     "material": "iron_dark",
+     "note": "wall bracket 80 x 90 x 100 with an insulator eye, on the eaves course"
+    },
+    {
+     "id": "anchor_w3",
+     "type": "box",
+     "c": [
+      -4500.0,
+      -1355.0,
+      6500.0
+     ],
+     "s": [
+      80.0,
+      90.0,
+      100.0
+     ],
+     "material": "iron_dark",
+     "note": "wall bracket 80 x 90 x 100 with an insulator eye, on the eaves course"
+    },
+    {
+     "id": "anchor_w4",
+     "type": "box",
+     "c": [
+      3500.0,
+      -1355.0,
+      6600.0
+     ],
+     "s": [
+      80.0,
+      90.0,
+      100.0
+     ],
+     "material": "iron_dark",
+     "note": "wall bracket 80 x 90 x 100 with an insulator eye, on the eaves course"
+    },
+    {
+     "id": "w1",
+     "type": "wire",
+     "pts": [
+      [
+       0.0,
+       -151.0,
+       7715.0
+      ],
+      [
+       -600.0,
+       1631.2,
+       7212.8
+      ],
+      [
+       -1200.0,
+       3413.4,
+       6800.2
+      ],
+      [
+       -1800.0,
+       5195.6,
+       6477.2
+      ],
+      [
+       -2400.0,
+       6977.8,
+       6243.8
+      ],
+      [
+       -3000.0,
+       8760.0,
+       6100.0
+      ]
+     ],
+     "r": 3.0,
+     "material": "wire_black",
+     "note": "drop wire 6 across, black PVC over copper, across to the east parade",
+     "hangs": true
+    },
+    {
+     "id": "w2",
+     "type": "wire",
+     "pts": [
+      [
+       100.0,
+       -151.0,
+       7715.0
+      ],
+      [
+       580.0,
+       1631.2,
+       7239.2
+      ],
+      [
+       1060.0,
+       3413.4,
+       6849.8
+      ],
+      [
+       1540.0,
+       5195.6,
+       6546.8
+      ],
+      [
+       2020.0,
+       6977.8,
+       6330.2
+      ],
+      [
+       2500.0,
+       8760.0,
+       6200.0
+      ]
+     ],
+     "r": 3.0,
+     "material": "wire_black",
+     "note": "drop wire 6 across, black PVC over copper, across to the east parade",
+     "hangs": true
+    },
+    {
+     "id": "w3",
+     "type": "wire",
+     "pts": [
+      [
+       -100.0,
+       -151.0,
+       7800.0
+      ],
+      [
+       -980.0,
+       -382.8,
+       7450.4
+      ],
+      [
+       -1860.0,
+       -614.6,
+       7145.6
+      ],
+      [
+       -2740.0,
+       -846.4,
+       6885.6
+      ],
+      [
+       -3620.0,
+       -1078.2,
+       6670.4
+      ],
+      [
+       -4500.0,
+       -1310.0,
+       6500.0
+      ]
+     ],
+     "r": 3.0,
+     "material": "wire_black",
+     "note": "drop wire 6 across, black PVC over copper, along to the west block, a bay down the street",
+     "hangs": true
+    },
+    {
+     "id": "w4",
+     "type": "wire",
+     "pts": [
+      [
+       100.0,
+       -151.0,
+       7800.0
+      ],
+      [
+       780.0,
+       -382.8,
+       7483.2
+      ],
+      [
+       1460.0,
+       -614.6,
+       7204.8
+      ],
+      [
+       2140.0,
+       -846.4,
+       6964.8
+      ],
+      [
+       2820.0,
+       -1078.2,
+       6763.2
+      ],
+      [
+       3500.0,
+       -1310.0,
+       6600.0
+      ]
+     ],
+     "r": 3.0,
+     "material": "wire_black",
+     "note": "drop wire 6 across, black PVC over copper, to the west block, the other way",
+     "hangs": true
+    }
+   ],
+   "overall_exclude": [
+    "facade_east",
+    "facade_west",
+    "anchor_w1",
+    "anchor_w2",
+    "anchor_w3",
+    "anchor_w4",
+    "w1",
+    "w2",
+    "w3",
+    "w4"
+   ],
+   "overall": {
+    "w": 463.8,
+    "d": 266.0,
+    "h": 8045.0
+   },
+   "overall_tol": 6.0,
+   "contact_tol": 3.0,
+   "joins": [
+    [
+     "cap",
+     "pole"
+    ],
+    [
+     "bracket",
+     "pole"
+    ],
+    [
+     "knob_11",
+     "bracket"
+    ],
+    [
+     "knob_23",
+     "bracket"
+    ],
+    [
+     "step_01",
+     "pole"
+    ],
+    [
+     "step_11",
+     "pole"
+    ],
+    [
+     "w1",
+     "knob_12"
+    ],
+    [
+     "w1",
+     "anchor_w1"
+    ],
+    [
+     "w2",
+     "knob_13"
+    ],
+    [
+     "w2",
+     "anchor_w2"
+    ],
+    [
+     "w3",
+     "knob_21"
+    ],
+    [
+     "w3",
+     "anchor_w3"
+    ],
+    [
+     "w4",
+     "knob_23"
+    ],
+    [
+     "w4",
+     "anchor_w4"
+    ],
+    [
+     "anchor_w1",
+     "facade_east"
+    ],
+    [
+     "anchor_w3",
+     "facade_west"
+    ]
+   ],
+   "embeds": [
+    [
+     "step_01",
+     "pole",
+     9.0
+    ],
+    [
+     "step_02",
+     "pole",
+     9.0
+    ],
+    [
+     "step_03",
+     "pole",
+     9.0
+    ],
+    [
+     "step_04",
+     "pole",
+     9.0
+    ],
+    [
+     "step_05",
+     "pole",
+     9.0
+    ],
+    [
+     "step_06",
+     "pole",
+     9.0
+    ],
+    [
+     "step_07",
+     "pole",
+     9.0
+    ],
+    [
+     "step_08",
+     "pole",
+     9.0
+    ],
+    [
+     "step_09",
+     "pole",
+     9.0
+    ],
+    [
+     "step_10",
+     "pole",
+     9.0
+    ],
+    [
+     "step_11",
+     "pole",
+     9.0
+    ],
+    [
+     "bracket",
+     "pole",
+     20.0
+    ],
+    [
+     "knob_11",
+     "bracket",
+     10.0
+    ],
+    [
+     "knob_12",
+     "bracket",
+     10.0
+    ],
+    [
+     "knob_13",
+     "bracket",
+     10.0
+    ],
+    [
+     "knob_21",
+     "bracket",
+     10.0
+    ],
+    [
+     "knob_22",
+     "bracket",
+     10.0
+    ],
+    [
+     "knob_23",
+     "bracket",
+     10.0
+    ],
+    [
+     "cap",
+     "pole",
+     10.0
+    ],
+    [
+     "w1",
+     "knob_12",
+     6.0
+    ],
+    [
+     "w2",
+     "knob_13",
+     6.0
+    ],
+    [
+     "w3",
+     "knob_21",
+     6.0
+    ],
+    [
+     "w4",
+     "knob_23",
+     6.0
+    ],
+    [
+     "w1",
+     "anchor_w1",
+     6.0
+    ],
+    [
+     "w2",
+     "anchor_w2",
+     6.0
+    ],
+    [
+     "w3",
+     "anchor_w3",
+     6.0
+    ],
+    [
+     "w4",
+     "anchor_w4",
+     6.0
+    ]
+   ],
+   "overlap_allow": 6.0,
+   "faces": []
+  }
+ },
+ "drawing": {
+  "views": [
+   "front",
+   "left"
+  ],
+  "sections": [
+   {
+    "id": "z7800",
+    "axis": "z",
+    "at": 7800.0
+   }
+  ]
+ },
+ "numbers": [
+  {
+   "id": "N1",
+   "what": "pole height above the pavement (to the cap's foot)",
+   "value": 8000.0,
+   "kind": "Read",
+   "source": "Wikipedia 'Utility pole' (read raw 13 Oct): UK poles are typically 8 to 10 m long (a pole's length is marked on it); 8.0 m above the ground is the lowest of that range for a terraced street (error 500)",
+   "tol": 500.0,
+   "measure": {
+    "kind": "edge",
+    "axis": "z",
+    "part": "pole",
+    "side": "hi"
+   }
+  },
+  {
+   "id": "N2",
+   "what": "pole diameter at the ground",
+   "value": 230.0,
+   "kind": "Judgement",
+   "source": "230 across at the ground and 150 at the top, a stout tapered pine; P2 (Selborne) and P1 (Wilmott Close) both show a visibly tapered pole; error 30",
+   "tol": 30.0,
+   "measure": {
+    "kind": "extent",
+    "axis": "x",
+    "part": "pole"
+   }
+  },
+  {
+   "id": "N3",
+   "what": "step pitch",
+   "value": 450.0,
+   "kind": "Judgement",
+   "source": "pole steps every 450 mm on alternate sides from 2.4 m (Wikipedia 'Utility pole': the UK has standard brackets up the pole as hand and foot holds); P1's pegs read about 0.5 m apart; error 60",
+   "tol": 60.0,
+   "measure": {
+    "kind": "centre_dx",
+    "axis": "z",
+    "a": "step_01",
+    "b": "step_02"
+   }
+  },
+  {
+   "id": "N4",
+   "what": "lowest point of the across wires (at the east parade, their ends)",
+   "value": 6100.0,
+   "kind": "Judgement",
+   "source": "the wires land on the first-floor eaves brackets of the east parade at 6.1 and 6.2 m (above the 5.5 m a wire must keep over a road: the regulation was not reached on a page this session); error 300",
+   "tol": 300.0,
+   "measure": {
+    "kind": "wire_min_z",
+    "parts": [
+     "w1",
+     "w2"
+    ]
+   }
+  },
+  {
+   "id": "N5",
+   "what": "the pole's own height to the bracket's lower edge",
+   "value": 7670.0,
+   "kind": "Photo",
+   "source": "P1 (Wilmott Close): the bracket (the dark box at the top) lies in the top 8 percent of the pole; error 120",
+   "tol": 120.0,
+   "measure": {
+    "kind": "edge",
+    "axis": "z",
+    "part": "bracket",
+    "side": "lo"
+   }
+  }
+ ],
+ "photos": [],
+ "sources": [
+  {
+   "id": "S1",
+   "url": "https://www.geograph.org.uk/photo/2630310",
+   "read": "2026-10-13",
+   "author": "Basher Eyre",
+   "licence": "CC BY-SA 2.0 (read on the page)",
+   "taken": "2011-09-21",
+   "kind": "photograph",
+   "shows": "a tall slender creosoted pole on a pavement beside a road of brick houses, tapered, a small cap, a dark bracket box at the top from which about ten wires fan out and down to houses on both sides, and climbing pegs on alternate sides; a car with a number plate on the left (outside the crop)",
+   "used": true,
+   "not_used_for": "any measured number (no scale object, the pole's foot is out of frame); the car and its plate; the colours (a bright day)",
+   "period": "2011; the pole is a pre-1990 creosoted pine of the standard kind (they stand for 40 to 60 years)"
+  },
+  {
+   "id": "S2",
+   "url": "https://www.geograph.org.uk/photo/1385902",
+   "read": "2026-10-13",
+   "author": "Basher Eyre",
+   "licence": "CC BY-SA 2.0 (read on the page)",
+   "taken": "2009-06-21",
+   "kind": "photograph",
+   "shows": "a pole on the pavement in a terraced street (Percy Road): the pole stands level with the front wall of the terrace, wires leave its top to houses on both sides, the pole's top reaches above the first-floor windows' heads",
+   "used": true,
+   "not_used_for": "any number; the white car and its number plate (masked/outside the crop)",
+   "period": "2009; a terraced street of the same period as Quay Street"
+  },
+  {
+   "id": "S3",
+   "url": "https://www.geograph.org.uk/photo/2775748",
+   "read": "2026-10-13",
+   "author": "Basher Eyre",
+   "licence": "CC BY-SA 2.0 (read on the page)",
+   "taken": "2012-01-17",
+   "kind": "photograph",
+   "shows": "a pole with a cross-bracket and wires to a cottage's eaves in a village; the wire fans leave one bracket",
+   "used": false,
+   "not_used_for": "everything (looked at only)",
+   "period": "2012"
+  },
+  {
+   "id": "S4",
+   "url": "https://en.wikipedia.org/wiki/Utility_pole",
+   "read": "2026-10-13 (raw wikitext)",
+   "author": "Wikipedia contributors",
+   "licence": "CC BY-SA 4.0",
+   "taken": "n/a (a text)",
+   "kind": "book",
+   "shows": "UK poles typically 8 to 10 m long; marked with the owner, the length and the preservative; creosote was the traditional preservative; the UK sets brackets up the pole as hand and foot holds",
+   "used": true,
+   "not_used_for": "any picture, any owner's mark",
+   "period": "n/a"
+  },
+  {
+   "id": "S5",
+   "url": "https://api.polyhaven.com/assets?t=models",
+   "read": "2026-10-13",
+   "author": "Poly Haven artists",
+   "licence": "CC0 1.0",
+   "taken": "n/a (the list of 521 models)",
+   "kind": "model list",
+   "shows": "modular_electricity_poles (13119 x 1957 x 7000: a run of poles with crossarms on a wire layout, an electricity kind) and modular_electric_cables (2077 x 215 x 757); no British telephone pole",
+   "used": false,
+   "not_used_for": "everything: the crossarm electricity poles are not the street's telephone pole and no check of their lettering was needed",
+   "period": "n/a"
+  },
+  {
+   "id": "S6",
+   "url": "tools/meshgen/blender/clutter/telegraph_pole.py and production/assets/street/clutter/telegraph-pole.glb (this repository); production/specs (the street's stand)",
+   "read": "2026-10-13",
+   "author": "this project",
+   "licence": "own work",
+   "taken": "29 September 2026",
+   "kind": "own",
+   "shows": "an earlier pole: 8.5 m, 0.24 across at the foot and 0.17 at the top, steps from 2.4 m every 0.45 m, a steel ring with seven 1.6 m stub wires, a number plate; stands at the west kerb, x 12 (terrace-front.py)",
+   "used": true,
+   "not_used_for": "its ring and its stubs",
+   "period": "n/a"
+  },
+  {
+   "id": "S7",
+   "url": "https://api.geograph.org.uk/syndicator.php (terms telegraph pole, telegraph poles, wooden telegraph pole, overhead wires, poles and wires; takenyear 1975 to 1996 and without a year)",
+   "read": "2026-10-13",
+   "author": "Geograph contributors",
+   "licence": "CC BY-SA 2.0 (each page)",
+   "taken": "1975 to 1996 searched",
+   "kind": "search record",
+   "shows": "for 1975 to 1996 about 55 photographs with poles in railway and moorland scenes, none a street pole close up; for no year about 300 'Telegraph pole in ...' photographs of 2007 to 2022 of surviving creosoted poles in streets",
+   "used": false,
+   "not_used_for": "measuring",
+   "period": "n/a"
+  }
+ ],
+ "previews": [
+  {
+   "file": "p1-wilmott-close-pole-top.jpg",
+   "source": "S1",
+   "credit": "Basher Eyre, Geograph 2630310, CC BY-SA 2.0, 2011-09-21, cropped to the pole's upper two thirds; the car and its plate are outside the crop",
+   "masked": [
+    "the car and its number plate are outside the crop"
+   ],
+   "looked_at_full_size": true,
+   "no_people_no_drink_no_betting_no_names": true
+  }
+ ],
+ "checks": [
+  {
+   "name": "N1: pole height above the pavement (to the cap's foot)",
+   "measure": "measure it on the built mesh in millimetres (edge)",
+   "expect": "8000 mm",
+   "tol": "+-500 mm"
+  },
+  {
+   "name": "N2: pole diameter at the ground",
+   "measure": "measure it on the built mesh in millimetres (extent)",
+   "expect": "230 mm",
+   "tol": "+-30 mm"
+  },
+  {
+   "name": "N3: step pitch",
+   "measure": "measure it on the built mesh in millimetres (centre_dx)",
+   "expect": "450 mm",
+   "tol": "+-60 mm"
+  },
+  {
+   "name": "N4: lowest point of the across wires (at the east parade, their ends)",
+   "measure": "measure it on the built mesh in millimetres (wire_min_z)",
+   "expect": "6100 mm",
+   "tol": "+-300 mm"
+  },
+  {
+   "name": "N5: the pole's own height to the bracket's lower edge",
+   "measure": "measure it on the built mesh in millimetres (edge)",
+   "expect": "7670 mm",
+   "tol": "+-120 mm"
+  },
+  {
+   "name": "C1: each wire sags 1.5 to 3.5 percent of its span and ends on a knob and an anchor",
+   "measure": "the polyline's deepest drop below the chord over its length",
+   "expect": "1.5 to 3.5 percent",
+   "tol": "exact"
+  },
+  {
+   "name": "C2: the wires over the carriageway stay above 5.5 m",
+   "measure": "the lowest z of the across wires",
+   "expect": ">= 5500",
+   "tol": "exact"
+  },
+  {
+   "name": "C3: no part floats; every wire touches a knob and an anchor",
+   "measure": "the contact graph",
+   "expect": "connected",
+   "tol": "0 floating"
+  },
+  {
+   "name": "C4: no lettering, no plate",
+   "measure": "textures and text",
+   "expect": "none",
+   "tol": "exact"
+  }
+ ],
+ "owed": [],
+ "night": {
+  "lantern_linear": [
+   1.0,
+   0.25,
+   0.0
+  ],
+  "note": "the pole stands between the lamp columns at x 28 east and 38 west: its lower 4 m catch the lantern colour (1.0, 0.25, 0.0) on the road-side face; the wires vanish at night except where a lamp is behind them"
+ },
+ "placement": {
+  "slot": "west side, pole centre x 33.0 m, z -3.725 (0.60 m behind the kerb's back edge), the bracket facing the street's axis (+z in the street's frame), wires to the east parade (the bays at x 30 to 36) and to the west block; the earlier pole at x 12 west is dropped",
+  "x_m": 33.0,
+  "z_m": -3.725,
+  "kerb_back_z_m": -3.125,
+  "set_back_mm": 600.0,
+  "footway_mm": 2000.0,
+  "min_clear_mm": 1000.0,
+  "span_to_east_mm": 8850.0,
+  "to_own_side_mm": 1400.0,
+  "east_building_z_m": 5.125,
+  "lamp_columns": {
+   "east_x_m": 28.0,
+   "west_x_m": 38.0,
+   "mounting_m": 5.0
+  },
+  "reasons": [
+   "the earlier pole stood at x 12 on the west kerb, beside the poster wall at x 11.4 and 8 m from the lamp column at 18; x 33.0 is 5 m from both the lamp column at 28 east and at 38 west, in the span of the grocer's bay (east x 27 to 39)",
+   "the pole is set back 0.60 m so its 230 mm foot leaves 2.0 - 0.60 - 0.115 = 1.29 m of footway clear (at least 1.0 m)",
+   "its wires cross the street at 6.1 and 6.2 m at the east parade, never lower than 6.1 m: above the lamp columns' 5.0 m mounting height with 1.1 m to spare, and clear of the lamp column at x 28 (the wires land at x 30 and 35.5)",
+   "the wires carry no lettering or mark; the real poles' owner marks are left off (S4 lists them; none is copied)"
+  ]
+ },
+ "wear": [
+  "the pole: silver-grey weathered above 2 m with vertical checks, dark tar-brown and sticky below 1.5 m, a green-black damp stain at the foot, a pale rub where people lean; nails and staples (old notices, never legible) at 1.4 to 1.8 m; a split along 800 mm near the top",
+  "the steps: white-rust, bent a few degrees; the lowest two missing (a seed): the climbing pegs start at 2.4 m so nobody climbs from the pavement",
+  "the bracket and knobs: rust runs 100 to 300 below the bracket's bolts; bird lime on the cap and the bracket's top face; a cracked knob glaze",
+  "the wires: drooping unevenly (the sag seeds 100 to 300 mm), one slack; bird lime on the lowest span; none touching any wall except at the anchors",
+  "NOT shown: any owner's tag or number plate, any notice with lettering"
+ ],
+ "disagreements": [
+  {
+   "id": "W1",
+   "what": "the pole's top",
+   "book": "the 29 September script: a steel band and ring with seven 1.6 m stub wires fanning from just under the top",
+   "photo": "S1 and S2: a small capped top, a dark bracket box with insulator knobs, wires leaving from the knobs to the houses; no ring",
+   "chose": "cap, bracket with six knobs, four full wires to the buildings"
+  },
+  {
+   "id": "W2",
+   "what": "the height",
+   "book": "the script: 8.5 m",
+   "photo": "S2: the pole's top reaches above the terrace's first-floor window heads; S4: 8 to 10 m",
+   "chose": "8.0 m above the pavement (the buried length not modelled)"
+  },
+  {
+   "id": "W3",
+   "what": "the wires",
+   "book": "the script: the wires drawn by the street to each house (short stubs only)",
+   "photo": "S1: about ten wires reach well beyond the pole in a fan across the road",
+   "chose": "four modelled wires of real length with sag; the street may add more by the same rule (sag 1.5 to 3.5 percent of the span)"
+  }
+ ],
+ "variants_note": [
+  "TP1 (the sample): the pole with 4 wires (two across, two to its own side). One on the street.",
+  "wear states (materials and seeds): C0 sound; C1 worn (the sample); C2 leaning 2 degrees with one wire slack (a transform seed).",
+  "a pole with two more wires or one fewer is a seed on the wire list: the rule is each wire sags 1.5 to 3.5 percent of its span and keeps 5.5 m over the carriageway.",
+  "NOT written: a crossarm pole (the electricity kind), a stay wire, a transformer pole: none stands in the street."
+ ],
+ "not_settled": [
+  "no 1975 to 1995 street pole photograph was reached; S1 and S2 are 2009 and 2011 photographs of surviving poles; the pole's foot is out of frame in S1 and no scale object stands beside it in either, so no number is measured on pixels: the height (8.0 m) rests on the Wikipedia range, the rest is Judgement",
+  "the bracket's exact shape (S1 shows a dark box about 8 percent of the pole's height; modelled as a plate with six knobs: Judgement)",
+  "the minimum height of wires over a road (5.5 m is from memory: the regulation was not reached on a page)",
+  "how many wires a real terrace pole carried (S1 shows about ten): four are modelled, more are a seed",
+  "the pole's lean and the buried depth (not modelled)"
+ ],
+ "content_rule_note": "no notice, no person, no vehicle plate in any preview (a statement of the content rule).",
+ "builder_notes": [
+  "pole: a 20-sided tapered cylinder (230 at the ground, 150 at the top), UVs along its length with vertical checks in the height map; the cap and bracket separate meshes; the steps as pegs",
+  "wires: tubes of 6 mm along the polylines in target.json (each point listed), the sag a parabola; hang them as splines in the engine if it prefers; the two ends are on a knob tip and on the wall bracket's face",
+  "the two facades in the file are stand-ins for the street's own walls; the anchors bolt to the eaves course at the stated heights",
+  "no lettering, no plate, no mark"
+ ],
+ "self_check": {
+  "line": "SELF-CHECK telegraph-pole: 73 checks, 73 passed, 0 failed; negative controls 23 of 24 caught (offline)",
+  "checks": 73,
+  "passed": 73,
+  "failed": 0,
+  "controls": 24,
+  "controls_caught": 23,
+  "options": "offline",
+  "failing": [],
+  "uncaught": [
+   "geometry: a part pushed deep into its neighbour"
+  ]
+ }
+}
