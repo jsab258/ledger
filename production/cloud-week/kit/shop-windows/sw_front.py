@@ -551,6 +551,13 @@ class Front:
         self.add("hall_back", bx(u0 + t, u1 - t, -dd - t, -dd, z0, z1), "hall_plaster", bev=None)
         self.add("hall_floor", bx(u0 + t, u1 - t, -dd, 0.0, z0, z0 + 20.0), "hall_dark", bev=None)
 
+    # ----------------------------------------------------------------------------------------------- one shop's own alterations
+    def extras(self):
+        """Parts that belong to one shop's alterations (the newsagent's roller-shutter hood, rails and box sign; the tea rooms' flat panel sign; the empty unit's boards...): a method extras_<id> if the shop has one."""
+        fn = getattr(self, "extras_" + self.ctx.id, None)
+        if fn:
+            fn()
+
     # ----------------------------------------------------------------------------------------------- finishing: the builder's objects to metres, UVs, materials
     def finish(self):
         obs = bs.finish(self.B, self.mats, BAY_MID)
@@ -955,7 +962,7 @@ def tri_count(ob):
     return len(me.loop_triangles)
 
 
-def fascia_maps(base, out_dir):
+def fascia_maps(base, out_dir, shop="ritas"):
     """The fascia board's two derived maps (written beside the build, not over the 4.1 files):
     ritas_basecolour_worn.png  the 4.1 base colour with the wear darkened in: x (1 - 0.25 x the strongest of the wear map's three masks), as the build had it in Blender's node tree;
     ritas_normal.png           a tangent-space normal map from ritas_height.png (16-bit, mean 0.526; 1 px a mm): h in mm = (H - 32768) / 25600, n = normalize(-dh/dcolumn, +dh/drow, 1)
@@ -967,7 +974,7 @@ def fascia_maps(base, out_dir):
     wear = np.asarray(Image.open(base + "wear.png").convert("RGB")).astype(np.float32) / 255.0
     m = wear.max(axis=2)
     worn = np.clip(col * (1.0 - 0.25 * m)[..., None] + 0.5, 0, 255).astype(np.uint8)
-    col_path = os.path.join(out_dir, "ritas_basecolour_worn.png")
+    col_path = os.path.join(out_dir, "%s_basecolour_worn.png" % shop)
     Image.fromarray(worn).save(col_path)
     h = np.asarray(Image.open(base + "height.png")).astype(np.float32)
     hmm = (h - 32768.0) / 25600.0
@@ -976,25 +983,28 @@ def fascia_maps(base, out_dir):
     n = np.stack([-dx, dr, np.ones_like(hmm)], axis=-1)
     n /= np.linalg.norm(n, axis=-1, keepdims=True)
     rgb = np.clip(127.5 * (n + 1.0) + 0.5, 0, 255).astype(np.uint8)
-    nrm_path = os.path.join(out_dir, "ritas_normal.png")
+    nrm_path = os.path.join(out_dir, "%s_normal.png" % shop)
     Image.fromarray(rgb).save(nrm_path)
     return col_path, nrm_path, {"wear_mean_mask": float(m.mean()), "relief_mm": [float(hmm.min()), float(hmm.max())], "normal_mean_rgb": [float(v) for v in rgb.reshape(-1, 3).mean(axis=0)]}
 
 
 # ---------------------------------------------------------------------------------------------------------------- the build
-def build_front(out_dir, work_dir, fasc_dir, paper_dir, log=print):
-    """Builds the front; writes out_dir/ritas_front.glb and ritas_grille_night.glb and work_dir/front_members.json. Returns the info dict."""
+def build_front(out_dir, work_dir, fasc_dir, paper_dir, log=print, ctx=None):
+    """Builds the front; writes out_dir/<id>_front.glb (and <id>_grille_night.glb where the shop has a night lattice) and work_dir/front_members.json. Returns the info dict."""
+    ctx = ctx or sw_ctx.rita()
     bpy.ops.wm.read_factory_settings(use_empty=True)
     os.makedirs(out_dir, exist_ok=True)
     os.makedirs(work_dir, exist_ok=True)
     T = load_sw_target()
-    F = Front(work_dir, T)
+    F = Front(work_dir, T, ctx)
     F.kit_parts()
     door = F.shop_door()
     F.band()
-    F.grille_fixed()
+    if ctx.has_grille:
+        F.grille_fixed()
     F.side_door()
     F.hall()
+    F.extras()
     obs = F.finish()
     def srgb_of(ob):
         if not ob.data.materials or ob.data.materials[0] is None:
@@ -1010,10 +1020,10 @@ def build_front(out_dir, work_dir, fasc_dir, paper_dir, log=print):
     # (grey read as a normal points 55 degrees off the face and flips with the grain: the black streaks); a Mix node for the wear did not survive export either
     fb = F.B.get("fas_board")
     set_fascia_uvs(fb)
-    base = os.path.join(fasc_dir, "fascias", "ritas", "ritas_")
+    base = os.path.join(fasc_dir, "fascias", ctx.id, ctx.id + "_")
     exp_dir = os.path.join(work_dir, "fascia_export")
-    col_path, nrm_path, fa_info = fascia_maps(base, exp_dir)
-    fm = image_material("fascia_ritas", col_path, orm=base + "orm.png")
+    col_path, nrm_path, fa_info = fascia_maps(base, exp_dir, ctx.id)
+    fm = image_material("fascia_" + ctx.id, col_path, orm=base + "orm.png")
     nt = fm.node_tree
     pb = nt.nodes["Principled BSDF"]
     ni = nt.nodes.new("ShaderNodeTexImage")
@@ -1026,19 +1036,30 @@ def build_front(out_dir, work_dir, fasc_dir, paper_dir, log=print):
     nt.links.new(nmap.outputs["Normal"], pb.inputs["Normal"])
     fb.data.materials.clear()
     fb.data.materials.append(fm)
-    # the three balls and their bracket
-    parts, balls = make_balls_and_bracket(F, fasc_dir)
+    # the hanging sign (Rita's three balls on their bracket; the ironmonger's board on its chains) and its bracket
+    hsid = (ctx.R["fascia"].get("hanging_sign") or {}).get("id")
     sign_objs = []
+    if hsid == "ritas_three_balls":
+        parts, balls = make_balls_and_bracket(F, fasc_dir)
+    elif hsid == "ironmonger_hanging_board":
+        parts, balls = make_hanging_board(ctx, F, fasc_dir)
+    else:
+        parts, balls = [], []
     for matkey, ob in parts:
         to_metres(ob, F.mats[matkey])
         members[ob.name] = dict(bbox_mm(ob), material=F.mats[matkey].name, group="hanging_sign")
         sign_objs.append(ob)
     for ob in balls:
-        members[ob.name] = {"centre_m": [round(v, 4) for v in ob.location], "radius_m": 0.13, "group": "hanging_sign"}
+        if hsid == "ritas_three_balls":
+            members[ob.name] = {"centre_m": [round(v, 4) for v in ob.location], "radius_m": 0.13, "group": "hanging_sign"}
+        else:
+            members[ob.name] = dict(bbox_mm(ob), material=ob.data.materials[0].name, group="hanging_sign")
     # the glass lettering rows
-    rows = make_glass_rows(fasc_dir)
+    rows = make_glass_rows(ctx, fasc_dir)
     glass_rows = []
     for ob, info in rows:
+        if info.get("where") == "UNPLACED":
+            raise RuntimeError("glass row %s has no clear glass that holds it" % info["string"])
         members[ob.name] = dict(info, group="glass_rows")
         glass_rows.append(ob)
     # the OPEN sign (4.2: the plastic card, 200 x 110, face OPEN by day) inside the door glass at z 1500, hung by a suction cup
@@ -1049,21 +1070,23 @@ def build_front(out_dir, work_dir, fasc_dir, paper_dir, log=print):
     members[sign.name] = {"u": [uc - 100.0, uc + 100.0], "z": [1445.0, 1555.0], "d": [37.0, 37.0], "group": "door_sign", "image": spath}
     cup = bs.new_obj("door_sign_cup", *cyl_d(uc, 1548.0, 36.0, 38.0, 12.0, 12))
     to_metres(cup, F.mats["steel"])
-    # the lattice (night grille) as its own object
-    lat, nrivets = F.lattice()
-    to_metres(lat, F.mats["black"])
-    members["grille_lattice"] = dict(bbox_mm(lat), material="powder_black", group="grille_night", rivets=nrivets)
+    # the lattice (night grille) as its own object (Rita's only)
+    lat, nrivets = (F.lattice() if ctx.has_grille else (None, 0))
+    if lat is not None:
+        to_metres(lat, F.mats["black"])
+        members["grille_lattice"] = dict(bbox_mm(lat), material="powder_black", group="grille_night", rivets=nrivets)
     day_objs = [o for o in bpy.data.objects if o.type == "MESH" and o is not lat]
     # FRN-07: the elevation drawn from the built meshes (u 350 to 5650, z 0 to 2850, 1 mm a pixel): every triangle of every part of the front, seen from the street
     elevation_mask(day_objs, os.path.join(work_dir, "front_elevation_mask.png"))
     # export: the front (day state) and the lattice (night)
-    front_glb = os.path.join(out_dir, "ritas_front.glb")
-    grille_glb = os.path.join(out_dir, "ritas_grille_night.glb")
+    front_glb = os.path.join(out_dir, ctx.front_glb)
+    grille_glb = os.path.join(out_dir, ctx.grille_glb)
     _export(day_objs, front_glb)
-    _export([lat], grille_glb)
+    if lat is not None:
+        _export([lat], grille_glb)
     info = {
         "front_glb": front_glb, "front_bytes": os.path.getsize(front_glb), "front_triangles": sum(tri_count(o) for o in day_objs),
-        "grille_glb": grille_glb, "grille_bytes": os.path.getsize(grille_glb), "grille_triangles": tri_count(lat), "rivets": nrivets,
+        "grille_glb": grille_glb if lat is not None else None, "grille_bytes": os.path.getsize(grille_glb) if lat is not None else 0, "grille_triangles": tri_count(lat) if lat is not None else 0, "rivets": nrivets,
         "objects": len(day_objs), "uc_door": uc,
     }
     json.dump({"members": members, "info": info}, open(os.path.join(work_dir, "front_members.json"), "w"), indent=1)
