@@ -1021,7 +1021,7 @@ def so07_rows(work, rows, tol=0.002):
         g = group_of.get(n)
         return "%s(%s)" % (r.placed[g]["model"], n) if g is not None else n
     rows.add("SO-07", "no room mesh intersects another", not bad, "%d room meshes (fixtures, %d placed goods, tickets, notices), %d pairs with overlapping boxes tested (each mesh inset 1 mm, so a 2 mm contact is tolerated): %d pairs intersect%s (try 2: the till ran 0.12 m up through the z 1.35 board and the box on it)" % (
-        len(names), len(r.placed), pairs, len(bad), (" (" + "; ".join("%s x %s" % (lab(a), lab(b)) for a, b in bad[:8]) + ")") if bad else ""))
+        len(names), len(r.placed), pairs, len(bad), (" (" + "; ".join("%s x %s" % (lab(a), lab(b)) for a, b in bad[:40]) + ")") if bad else ""))
     return r
 
 

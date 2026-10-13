@@ -89,10 +89,10 @@ def room(r):
     # the jars: ten along the back of the counter, in front of the gantry
     gmj, gml, gmb = GM(), GM(), GM()
     jr, jh = 0.058, 0.20
-    x = cx0 + 0.62
+    x = cx0 + 0.72
     y = D - gd - 0.065
     for k in range(10):
-        xc = x + k * 0.145 + rnd.uniform(-0.004, 0.004)
+        xc = x + k * 0.135 + rnd.uniform(-0.002, 0.002)
         prof = [(0.0, 0.0), (jr * 0.92, 0.0), (jr, 0.006), (jr, jh * 0.80), (jr * 0.78, jh * 0.9), (jr * 0.66, jh * 0.94), (jr * 0.66, jh), (0.0, jh)]
         gmj.lathe(xc, y, ch, prof, mi=0, n=22, label=(1, 4), mi_label=0, label_uv=(jar_uv[k][0][0], jar_uv[k][0][1], jar_uv[k][0][2], jar_uv[k][0][3]))
         gml.lathe(xc, y, ch + jh, [(0.0, 0.0), (jr * 0.72, 0.0), (jr * 0.74, 0.004), (jr * 0.74, 0.030), (jr * 0.6, 0.032), (0.0, 0.032)], mi=0, n=22)
@@ -103,12 +103,12 @@ def room(r):
     r.placed_rec("N-back-counter", "script:sweet_jars", gmj.extents(), [o1.name, o2.name, o3.name], tag="jars", n=10)
     # the till at the right end, in front of the gantry
     till_s = next(g["size_m"] for g in rr["goods"] if g["model"] == "CashRegister_01") / max(r.dims("CashRegister_01"))
-    r.place("CashRegister_01", (cx1 - 0.40, D - gd - 0.01, ch), rot=(0, 0, 0), scale=till_s, fixture="N-back-counter", anchor=("c", "max", "min"))
+    r.place("CashRegister_01", (cx1 - 0.33, D - gd - 0.01, ch), rot=(0, 0, 0), scale=till_s, fixture="N-back-counter", anchor=("c", "max", "min"))
     # the stationery tray at the left end: a shallow tray, the three sets lying flat on it
     tray_m = r.mat("stationery_tray", rgb8(120, 84, 54), rough=0.6)
     tx0, tx1, ty0, ty1 = cx0 + 0.02, cx0 + 0.62, cy0 + 0.04, cy0 + 0.58
     r.box("stationery_tray_base", tx0, tx1, ty0, ty1, ch, ch + 0.004, tray_m, fixture="N-back-counter")
-    for nm, (a, b, c_, d_) in (("l", (tx0, tx0 + 0.006, ty0, ty1)), ("r", (tx1 - 0.006, tx1, ty0, ty1)), ("f", (tx0, tx1, ty0, ty0 + 0.006)), ("b", (tx0, tx1, ty1 - 0.006, ty1))):
+    for nm, (a, b, c_, d_) in (("l", (tx0, tx0 + 0.006, ty0, ty1)), ("r", (tx1 - 0.006, tx1, ty0, ty1)), ("f", (tx0 + 0.006, tx1 - 0.006, ty0, ty0 + 0.006)), ("b", (tx0 + 0.006, tx1 - 0.006, ty1 - 0.006, ty1))):
         r.box("stationery_tray_%s" % nm, a, b, c_, d_, ch + 0.004, ch + 0.016, tray_m, fixture="N-back-counter")
     pens = r.sub_template("stationery_supplies", "pens", lambda n: "pencilcup" not in n)
     cup = r.sub_template("stationery_supplies", "cup", lambda n: "pencilcup" in n)
@@ -118,11 +118,11 @@ def room(r):
         r.place(cup, (tx1 - 0.06, yy, ch + 0.004), rot=(0, 0, 0), scale=1.0, fixture="N-back-counter", anchor=("c", "c", "min"), tag="cup")
     # the four pads of office_notepads (the model is a kit of loose pads: the stacks, one each) on the counter beside the till
     pads = ["office_notepads_a4_stack", "office_notepads_yellow_pad", "office_notepads_note_stack", "office_notepads_sticky_stack"]
-    xp = cx0 + 0.70
+    xp = cx0 + 0.74
     for nm in pads:
         key = r.sub_template("office_notepads", nm, lambda n, nm=nm: n == nm)
         d = r.dims(key)
-        r.place(key, (xp + d.x / 2, cy0 + 0.06 + d.y / 2 + rnd.uniform(0, 0.02), ch), rot=(0, 0, 0), scale=1.0, fixture="N-back-counter", anchor=("c", "c", "min"))
+        r.place(key, (xp + d.x / 2, cy0 + 0.03 + d.y / 2, ch), rot=(0, 0, 0), scale=1.0, fixture="N-back-counter", anchor=("c", "c", "min"))
         xp += d.x + 0.03
         if nm == "office_notepads_yellow_pad":
             xp += 0.02
@@ -160,7 +160,7 @@ def room(r):
     r.box("screen_sill_r", xm + 0.15, px1 - 0.05, ys - t / 2, ys + t / 2, 1.0, 1.10, wood, fixture="N-back-pensions")
     r.box("screen_slot_edge_l", xm - 0.15, xm - 0.14, ys - t / 2 - 0.002, ys + t / 2 + 0.002, 1.0, 1.10, brass, fixture="N-back-pensions")
     r.box("screen_slot_edge_r", xm + 0.14, xm + 0.15, ys - t / 2 - 0.002, ys + t / 2 + 0.002, 1.0, 1.10, brass, fixture="N-back-pensions")
-    r.box("screen_slot_top", xm - 0.15, xm + 0.15, ys - t / 2 - 0.002, ys + t / 2 + 0.002, 1.095, 1.10, brass, fixture="N-back-pensions")
+    r.box("screen_slot_top", xm - 0.14, xm + 0.14, ys - t / 2 - 0.002, ys + t / 2 + 0.002, 1.095, 1.10, brass, fixture="N-back-pensions")
     gl = r.mat("screen_glass", (0.85, 0.9, 0.9), rough=0.02, glass=True)
     r.box("screen_glass", px0 + 0.05, px1 - 0.05, ys - 0.002, ys + 0.002, 1.10, 1.90, gl, fixture="N-back-pensions")
     hp = os.path.join(tex, "hours_card.png")
@@ -181,7 +181,7 @@ def room(r):
     arch = r.mat("architrave", rgb8(226, 224, 214), rough=0.5)
     r.box("architrave_l", dx0 - 0.06, dx0, D - 0.045, D - 0.005, 0.0, 2.06, arch, fixture="N-back-door")
     r.box("architrave_r", dx1, dx1 + 0.06, D - 0.045, D - 0.005, 0.0, 2.06, arch, fixture="N-back-door")
-    r.box("architrave_head", dx0 - 0.06, dx1 + 0.06, D - 0.045, D - 0.005, 2.0, 2.06, arch, fixture="N-back-door")
+    r.box("architrave_head", dx0, dx1, D - 0.045, D - 0.005, 2.0, 2.06, arch, fixture="N-back-door")
     r.cyl("door_knob", dx1 - 0.08, D - 0.055, 1.0, 0.022, 0.022, brass, axis="y", verts=14)
     r.fixtures.append({"fixture": "N-back-door", "name": "door_knob", "ext": [dx1 - 0.102, dx1 - 0.058, D - 0.066, D - 0.044, 0.978, 1.022]})
     # ---- the left wall's magazine rack: a board, five rows of a ledge and twelve covers
@@ -241,7 +241,7 @@ def room(r):
     op = gmp.to_object("postcards", [post_m], r.sc)
     r.placed_rec("N-right-racks", "script:postcard_rack", gmp.extents(), [op.name], tag="board", n=npost)
     ck_s = next(g["size_m"] for g in rr["goods"] if g["model"] == "wall_clock") / max(r.dims("wall_clock"))
-    r.place("wall_clock", (xr - 0.002, ry1 - 0.28, 1.86), rot=(0, 0, -math.pi / 2), scale=ck_s, fixture="N-right-racks", anchor=("max", "c", "c"), clock=r.next_clock(), tag="clock")
+    r.place("wall_clock", (xr - 0.0145, ry1 - 0.28, 1.86), rot=(0, 0, -math.pi / 2), scale=ck_s, fixture="N-right-racks", anchor=("max", "c", "c"), clock=r.next_clock(), tag="clock")
     # ---- the floor: the rubber mat at the door (the door's x is +1.2: its zone u 3700 to 4706)
     mat_m = r.mat("rubber_mat", rgb8(34, 34, 36), rough=0.9)
     r.box("door_mat", 0.72, 1.70, 0.14, 0.72, 0.0, 0.012, mat_m, fixture="N-floor")

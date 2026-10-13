@@ -68,49 +68,49 @@ def room(r):
     # ---- the counter
     cx0, cx1, cy0, cy1, ch = r.counter("T-back-counter", panels=True)
     sx0, sx1 = fx["T-back-shelf"]["x"]
-    r.shelf_unit("T-back-shelf", [(1.35, sx0, -0.35), (1.75, sx0, sx1)], bottom=ch)
+    r.shelf_unit("T-back-shelf", [(1.35, sx0, -0.60), (1.75, sx0, sx1)], bottom=ch)
     sd = fx["T-back-shelf"]["depth_m"]
     yb = D - sd - 0.02                       # in front of the shelf
     yc = D - 0.30                            # the middle of the counter's top
     # cake domes (glass over a cake on a stand plate), two
-    cakes = [("carrot_cake", cx0 + 0.30), ("strawberry_chocolate_cake", cx0 + 0.82)]
+    cakes = [("carrot_cake", cx0 + 0.17), ("strawberry_chocolate_cake", cx0 + 0.59)]
     for nm, xc in cakes:
         gm = GM()
-        gm.lathe(xc, yc, ch, [(0.0, 0.0), (0.05, 0.0), (0.06, 0.016), (0.17, 0.020), (0.17, 0.024), (0.0, 0.024)], mi=0, n=30)
+        gm.lathe(xc, yc, ch, [(0.0, 0.0), (0.05, 0.0), (0.06, 0.016), (0.15, 0.020), (0.15, 0.024), (0.0, 0.024)], mi=0, n=30)
         o = gm.to_object("cake_plate_%s" % nm, [china], r.sc, smooth=True)
         r.placed_rec("T-back-counter", "script:cake_dome", gm.extents(), [o.name], tag="plate")
         r.place(nm, (xc, yc, ch + 0.024), rot=(0, 0, rnd.uniform(0, 6.28)), scale=1.0, fixture="T-back-counter", anchor=("c", "c", "min"), tag="cake")
         dm = GM()
-        prof = [(0.150, 0.024), (0.150, 0.130)] + [(0.150 * math.cos(a), 0.130 + 0.135 * math.sin(a)) for a in [math.pi / 2 * k / 12.0 for k in range(1, 13)]]
+        prof = [(0.140, 0.024), (0.140, 0.130)] + [(0.140 * math.cos(a), 0.130 + 0.135 * math.sin(a)) for a in [math.pi / 2 * k / 12.0 for k in range(1, 13)]]
         dm.lathe(xc, yc, ch, prof, mi=0, n=30)
         o = dm.to_object("cake_dome_%s" % nm, [glass], r.sc, smooth=True)
         rim = GM()
-        rim.lathe(xc, yc, ch, [(0.152, 0.024), (0.152, 0.036), (0.148, 0.036), (0.148, 0.024)], mi=0, n=30)
+        rim.lathe(xc, yc, ch, [(0.142, 0.024), (0.142, 0.036), (0.138, 0.036), (0.138, 0.024)], mi=0, n=30)
         rim.lathe(xc, yc, ch, [(0.0, 0.262), (0.014, 0.262), (0.014, 0.278), (0.0, 0.278)], mi=0, n=14)
         o2 = rim.to_object("cake_dome_rim_%s" % nm, [steel], r.sc, smooth=True)
         r.placed_rec("T-back-counter", "script:cake_dome", dm.extents(), [o.name, o2.name], tag="dome", n=1)
     # a board with two rolls of hamburger_buns
-    x_b = cx0 + 1.34
+    x_b = cx0 + 0.80
     board_m = r.mat("bread_board", rgb8(176, 140, 92), rough=0.6)
-    r.box("bread_board", x_b, x_b + 0.46, yc - 0.16, yc + 0.16, ch, ch + 0.016, board_m, fixture="T-back-counter")
+    r.box("bread_board", x_b, x_b + 0.42, yc - 0.16, yc + 0.16, ch, ch + 0.016, board_m, fixture="T-back-counter")
     for k in range(2):
-        r.place("hamburger_buns", (x_b + 0.23 + rnd.uniform(-0.01, 0.01), yc - 0.07 + 0.14 * k, ch + 0.016), rot=(0, 0, 0), scale=1.0, fixture="T-back-counter", anchor=("c", "c", "min"), tag="rolls")
+        r.place("hamburger_buns", (x_b + 0.21 + rnd.uniform(-0.005, 0.005), yc - 0.07 + 0.14 * k, ch + 0.016), rot=(0, 0, 0), scale=1.0, fixture="T-back-counter", anchor=("c", "c", "min"), tag="rolls")
     # the tea set, put together: a teapot, the sugar bowl, two cups on their saucers (the kit's pieces are laid in rows; the cups are moved onto the saucers)
     pot = r.sub_template("tea_set_01", "pot", lambda n: "teapot" in n)
     sug = r.sub_template("tea_set_01", "sugar", lambda n: "sugar" in n)
     cups = r.compose("tea_set_01", "cupA", [(("cup_small_01",), (0.0, 0.2335, 0.013)), (("saucer_circular_04",), (0.0, 0.0, 0.0))])
     cups2 = r.compose("tea_set_01", "cupB", [(("cup_small_02",), (0.0, 0.2335 - 0.0, 0.013)), (("saucer_circular_03",), (0.0, 0.0, 0.0))])
-    xs = cx0 + 1.95
+    xs = cx0 + 1.37
     r.place(pot, (xs, yc - 0.02, ch), rot=(0, 0, 0.3), scale=1.0, fixture="T-back-counter", anchor=("c", "c", "min"), tag="teapot")
-    r.place(sug, (xs + 0.18, yc + 0.10, ch), rot=(0, 0, 0), scale=1.0, fixture="T-back-counter", anchor=("c", "c", "min"), tag="sugar")
-    r.place(cups, (xs + 0.30, yc - 0.12, ch), rot=(0, 0, 0.5), scale=1.0, fixture="T-back-counter", anchor=("c", "c", "min"), tag="cup")
-    r.place(cups2, (xs - 0.26, yc + 0.02, ch), rot=(0, 0, -0.4), scale=1.0, fixture="T-back-counter", anchor=("c", "c", "min"), tag="cup")
+    r.place(sug, (xs + 0.15, yc + 0.11, ch), rot=(0, 0, 0), scale=1.0, fixture="T-back-counter", anchor=("c", "c", "min"), tag="sugar")
+    r.place(cups, (xs + 0.27, yc - 0.12, ch), rot=(0, 0, 0.5), scale=1.0, fixture="T-back-counter", anchor=("c", "c", "min"), tag="cup")
+    r.place(cups2, (xs + 0.27, yc + 0.11, ch), rot=(0, 0, -0.4), scale=1.0, fixture="T-back-counter", anchor=("c", "c", "min"), tag="cup")
     # the kettle, the till, the urn
-    r.place("vintage_electric_kettle", (cx0 + 2.50, yc + 0.02, ch), rot=(0, 0, math.radians(200)), scale=1.0, fixture="T-back-counter", anchor=("c", "c", "min"), tag="kettle")
+    r.place("vintage_electric_kettle", (cx0 + 2.00, yc - 0.04, ch), rot=(0, 0, math.radians(200)), scale=1.0, fixture="T-back-counter", anchor=("c", "c", "min"), tag="kettle")
     till_s = next(g["size_m"] for g in rr["goods"] if g["model"] == "CashRegister_01") / max(r.dims("CashRegister_01"))
     # (the kettle is at x -0.05; the till and the urn follow it to the right under the upper board)
     # the urn: a stainless cylinder on a plinth, a lid with a knob, a tap with a lever, two side handles
-    ux = cx1 - 0.14
+    ux = cx1 - 0.15
     ug = GM()
     ug.lathe(ux, yc, ch, [(0.0, 0.0), (0.10, 0.0), (0.10, 0.03), (0.0, 0.03)], mi=0, n=26)
     ug.lathe(ux, yc, ch + 0.03, [(0.0, 0.0), (0.12, 0.0), (0.13, 0.02), (0.13, 0.36), (0.115, 0.40), (0.0, 0.40)], mi=0, n=26)
@@ -121,15 +121,15 @@ def room(r):
     ug.rod((ux - 0.08, yc - 0.19, ch + 0.17), (ux + 0.08, yc - 0.19, ch + 0.17), 0.006, 0, 8)
     o = ug.to_object("tea_urn", [steel], r.sc, smooth=True)
     r.placed_rec("T-back-counter", "script:tea_urn", ug.extents(), [o.name], tag="urn")
-    r.place("CashRegister_01", (cx1 - 0.58, D - sd - 0.01, ch), rot=(0, 0, 0), scale=till_s, fixture="T-back-counter", anchor=("c", "max", "min"))
+    r.place("CashRegister_01", (cx1 - 0.55, D - 0.01, ch), rot=(0, 0, 0), scale=till_s, fixture="T-back-counter", anchor=("c", "max", "min"))
     # ---- the shelf's goods: 24 cups and saucers (12 a board), three stacks of plates a board, the metal jug
     glaze = r.mat("cup_glaze", rgb8(238, 234, 222), rough=0.2)
-    for z, xa, xb, n_units, plates_at in ((1.35, sx0 + 0.04, -0.40, 12, (-0.68, -0.50)), (1.75, sx0 + 0.04, sx1 - 0.04, 12, (-0.75, -0.55, -0.35))):
+    for z, xa, xb, n_units, plates_at in ((1.35, sx0 + 0.04, -0.62, 10, (-0.88, -0.72)), (1.75, sx0 + 0.04, sx1 - 0.04, 14, (-0.32, -0.12, 0.08))):
         gm = GM()
         yb_ = D - sd + 0.085
-        pitch = 0.15
+        pitch = 0.15 if z < 1.5 else 0.145
         for k in range(n_units):
-            _cup_unit(gm, xa + 0.08 + k * pitch + rnd.uniform(-0.004, 0.004), yb_, z)
+            _cup_unit(gm, xa + 0.08 + k * pitch + rnd.uniform(-0.002, 0.002), yb_, z)
         o = gm.to_object("cups_%.2f" % z, [glaze], r.sc, smooth=True)
         r.placed_rec("T-back-shelf", "script:cups_saucers", gm.extents(), [o.name], tag="cups_%.2f" % z, n=n_units)
         pg = GM()
@@ -137,7 +137,7 @@ def room(r):
             _plate_stack(pg, xp, yb_, z, rnd.randint(4, 6), 0.095)
         o = pg.to_object("plates_%.2f" % z, [glaze], r.sc, smooth=True)
         r.placed_rec("T-back-shelf", "script:cups_saucers", pg.extents(), [o.name], tag="plates_%.2f" % z, n=0)
-    r.place("metal_jug", (sx1 - 0.25, D - sd + 0.10, 1.75), rot=(0, 0, 0.4), scale=1.0, fixture="T-back-shelf", anchor=("c", "c", "min"), tag="jug")
+    r.place("metal_jug", (sx1 - 0.13, D - sd + 0.10, 1.75), rot=(0, 0, 0.4), scale=1.0, fixture="T-back-shelf", anchor=("c", "c", "min"), tag="jug")
     # ---- the hatch (flat, 80 mm): frame, tiled recess, ledge, the roller flap half down
     hx0, hx1 = fx["T-back-hatch"]["x"]
     hz0, hz1 = fx["T-back-hatch"]["z"]

@@ -916,6 +916,8 @@ def make_glass_rows(ctx, fasc_dir):
         ink_c = (g["ink_box_in_tile_mm"][0] + g["ink_box_in_tile_mm"][2]) / 2.0
         base_from_bottom = g["place"]["tile_baseline_from_tile_bottom_mm"]
         xs, z_base, d, kind = places[rid]
+        if ctx.id == "empty_unit":
+            d = 37.0                  # the number is painted on the OUTSIDE of the glass, over the whitewash that is on its inside (batch A)
         if "|" in g["string"]:
             xs = R["front"]["centres_street_x_m"]["shop_door"]           # the hours plate at the shop door's centre (4.1's x is within 3 mm of it)
             if ctx.id == "ritas":
