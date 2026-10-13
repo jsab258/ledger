@@ -187,6 +187,18 @@ def scene():
                 doors.append(dd)
         except Exception:
             pass
+    # the drawn street's own small pieces on a plain wall: cottage window sills (50 mm proud, 75 thick) and doorsteps
+    for o in drawn_openings():
+        wall = 5.125 * o["side"]
+        za, zb = sorted((wall, wall - o["side"] * 0.05))
+        obs.append(Obs("sill of %s" % o["id"], "C13_sills_lintels", sbox(o["sill_x0"], za, o["sill_x1"], zb), o["y0"] - 0.075, o["y0"], "sill"))
+    for dd in doors:
+        st = dd.get("step")
+        if st:
+            wall = 5.125 * dd["side"]
+            cx = 0.5 * (dd["x0"] + dd["x1"])
+            za, zb = sorted((wall, wall - dd["side"] * st["depth_mm"] / 1000.0))
+            obs.append(Obs("doorstep of %s" % dd["id"], "C9_door_side", sbox(cx - st["w_mm"] / 2000.0, za, cx + st["w_mm"] / 2000.0, zb), 0.1, 0.1 + st["h_mm"] / 1000.0, "step"))
     sc = json.load(open(os.path.join(root, SCENE_REL)))
     walls = []
     for b in sc["blocks"]:
@@ -201,16 +213,33 @@ def scene():
 
 
 def houses_doors(T):
-    """Household doors of the front-doors target, when it lists them with street x (west cottages, flats, side doors)."""
+    """Household doors of the front-doors target (street.houses: x centre, side, the stand-in's opening width and step)."""
     out = []
-    for h in T.get("houses", []) if isinstance(T.get("houses"), list) else []:
-        x = h.get("street_x_m") or h.get("x_m")
+    for h in (T.get("street", {}) or {}).get("houses", []):
+        x = h.get("x_centre_m")
         side = h.get("side")
         if x is None or side not in ("east", "west"):
             continue
-        w = h.get("door_width_m", 0.838)
-        out.append({"id": "house/%s" % h.get("id"), "kind": "house_door", "side": 1 if side == "east" else -1,
-                    "x0": x - w / 2.0, "x1": x + w / 2.0, "source": "front-doors-all target houses[%s]" % h.get("id")})
+        w = (h.get("stand_in", {}).get("opening_w_mm") or 838.0) / 1000.0
+        out.append({"id": "house/%s" % h.get("house"), "kind": "house_door", "side": 1 if side == "east" else -1,
+                    "x0": x - w / 2.0, "x1": x + w / 2.0, "step": h.get("stand_in", {}).get("step"),
+                    "source": "front-doors-all target street.houses[%s] (x %.3f)" % (h.get("house"), x)})
+    return out
+
+
+def drawn_openings():
+    """What the DRAWN street has in a plain row's wall (the pieces file's coarse boxes have none of it): the household doors' steps
+    and the cottage windows' sills, from the front-doors and house-windows targets (read from terrace-front.py's plain-row rule)."""
+    out = []
+    root = repo()
+    p = os.path.join(root, "production", "cloud-week", "targets", "house-windows", "target.json")
+    if os.path.exists(p):
+        for s in json.load(open(p)).get("sites", []):
+            if s.get("floor") != "gf" or not s["block"].startswith("west_south"):
+                continue
+            w = s["opening_w_mm"] / 1000.0
+            out.append({"id": s["id"], "kind": "window", "side": -1, "x0": s["x_centre"] - w / 2.0, "x1": s["x_centre"] + w / 2.0,
+                        "y0": s["sill_z_above_crown"], "y1": s["head_z_above_crown"], "sill_x0": s["x_centre"] - w / 2.0 - 0.05, "sill_x1": s["x_centre"] + w / 2.0 + 0.05})
     return out
 
 

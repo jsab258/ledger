@@ -1306,6 +1306,16 @@
    "no_people_no_drink_no_betting_no_names": true
   },
   {
+   "file": "s8-si1984-1933-schedule-1.jpg",
+   "source": "S8",
+   "credit": "The Builders' Skips (Markings) Regulations 1984, SI 1984/1933, Schedule 1 (the made version's print page 5686, legislation.gov.uk, Open Government Licence v3.0), cropped to the diagram of the two marking plates and its notes (a) to (e)",
+   "masked": [
+    "nothing to mask: a printed statutory diagram, no person, no firm"
+   ],
+   "looked_at_full_size": true,
+   "no_people_no_drink_no_betting_no_names": true
+  },
+  {
    "file": "p1-grass-skip-target-on-photo.jpg",
    "source": "S1",
    "credit": "overlay of this target's side elevation (red) on the same crop, the scale fitted on the height from the rim's lower edge to the foot, measured edges in green; same masks",
@@ -1614,14 +1624,16 @@
   "keep the hexagonal profile exact: its widest line is at 793 and its bottom edge shorter than its top"
  ],
  "self_check": {
-  "line": "SELF-CHECK skip: 126 checks, 126 passed, 0 failed; negative controls 0 of 0 caught (offline)",
+  "line": "SELF-CHECK skip: 126 checks, 126 passed, 0 failed; negative controls 52 of 53 caught (offline)",
   "checks": 126,
   "passed": 126,
   "failed": 0,
-  "controls": 0,
-  "controls_caught": 0,
+  "controls": 53,
+  "controls_caught": 52,
   "options": "offline",
   "failing": [],
-  "uncaught": []
+  "uncaught": [
+   "detail: the firm named by a real firm"
+  ]
  }
 }

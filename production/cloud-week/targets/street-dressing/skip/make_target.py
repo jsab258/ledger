@@ -167,6 +167,8 @@ def finish(T):
     T["previews"] = [
         {"file": "p1-grass-skip-side-elevation.jpg", "source": "S1", "credit": "Ian Taylor, Geograph 6875634, CC BY-SA 2.0, 2021-06-15, turned 7.2 degrees and cropped to the skip; the stencilled firm's name and telephone number painted out; the walkers are outside the crop",
          "masked": ["the firm's name and telephone number (painted out)"], "looked_at_full_size": True, "no_people_no_drink_no_betting_no_names": True},
+        {"file": "s8-si1984-1933-schedule-1.jpg", "source": "S8", "credit": "The Builders' Skips (Markings) Regulations 1984, SI 1984/1933, Schedule 1 (the made version's print page 5686, legislation.gov.uk, Open Government Licence v3.0), cropped to the diagram of the two marking plates and its notes (a) to (e)",
+         "masked": ["nothing to mask: a printed statutory diagram, no person, no firm"], "looked_at_full_size": True, "no_people_no_drink_no_betting_no_names": True},
         {"file": "p1-grass-skip-target-on-photo.jpg", "source": "S1", "credit": "overlay of this target's side elevation (red) on the same crop, the scale fitted on the height from the rim's lower edge to the foot, measured edges in green; same masks",
          "masked": ["as p1"], "looked_at_full_size": True, "no_people_no_drink_no_betting_no_names": True},
     ]
@@ -273,7 +275,7 @@ SUMMARY = ("The skip is a 6-yard builder's skip with the hexagonal side profile 
 
 def story(T):
     return {
-        "no": "6", "title": "Quay Street's skip: the exact target", "summary": SUMMARY, "previews_list": "p1 (S1 turned and cropped, the firm's name painted out) and its target-on-photo overlay",
+        "no": "6", "title": "Quay Street's skip: the exact target", "summary": SUMMARY, "previews_list": "p1 (S1 turned and cropped, the firm's name painted out), its target-on-photo overlay, and s8 (Schedule 1 of the 1984 Regulations: the marking plate diagram)",
         "rulings": {"ruling_2oct": "'skip and pallets off until real': this target is the skip made real; it goes back to the street only after the gate, and the owed line asks for the yes", "sources_order": "no CC0 skip exists (S5); so own work by script from S1's profile",
                     "content": "no person, no drink container; an invented firm and number; the data scan finds none of what the rule forbids", "noai": "S1 to S3 are CC BY-SA 2.0 Geograph photographs used only to measure and look at; no NoAI source",
                     "look": "yellow paint, grime, dents and mud: a saturated patch in a grey street", "night": "its two amber lamps are the only lit things on it"},
