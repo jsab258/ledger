@@ -40,7 +40,7 @@ Cloud week 42, unit 13, family 9. Written 13 October 2026, not yet reviewed. `SE
 | S6 | https://api.polyhaven.com/assets?t=models and /info/standing_chalkboard_01 (this folder's polyhaven_checked_raw.json) | 2026-10-13 | ParzivalCG (Poly Haven) | CC0 1.0 | published 2021-12-24 | of 521 models only two are signs: standing_chalkboard_01 (an A-frame chalkboard 920 x 759 x 1509 mm, a cafe menu board; base colour checked at 100 percent: dark grey with chalk smudges and bare wood, no lettering) and WetFloorSign_01 (a yellow hazard sign 300 x 359 x 630 mm) | no | this board: the chalkboard is 1.5 m tall and a cafe's, not a fishmonger's 0.97 m painted board; it stays held for the tea room (the asset plan's line) | n/a |
 | S7 | production/specs/vignette-scene.json (held_props pavement_sign at east x 15.2, the railing note, the awning at x 12.0, the decals block) and production/specs/vignette-bill-of-materials.json (E12, G6) (this repository) | 2026-10-13 | this project | own work | n/a | the placeholder board 0.68 x 0.90 x 0.36 m at x 15.2, 1.1 m from the kerb face, its faces turned along the pavement; the awning over the fish market at x 12.0; the 29 September finding that a gap under 0.68 m is too narrow to walk; the board's text is to come from the gig-bill decals (G6) | YES | the board's size and place (both are replaced) and its text (the fish list replaces the gig bill) | n/a |
 | S8 | production/research/shop-window-interiors/FISHMONGER-2026-10-03.md (this repository) | 2026-10-13 | this project | own work | 3 October 2026 | the ONS cod fillet price of 1990 (574p/kg, about 2.60 a pound), prices per pound, hand-lettered tickets and whitewash lettering, the fish a 1990 shop sold | YES | any price except cod (no 1990 figure was found for the other fish: they are marked invented in text.lines) | 1990 figures |
-| S9 | production/specs/hook-cast.json (places fish_front, fish_counter; area fish_market hours) and RULINGS.md (3 Oct trades) (this repository) | 2026-10-13 | this project | own work | n/a | the fish market's hours (Monday to Saturday, opening 7.30, closing 14.00, Wednesday 13.00), its pavement spot at x 12.0, z 4.2 and a doorway about x 9.4; bay 1 is the fishmonger | YES | the board's design | n/a |
+| S9 | production/specs/hook-cast.json (places fish_front, fish_counter; area fish_market hours) and RULINGS.md (3 Oct trades) (this repository) | 2026-10-13 | this project | own work | n/a | the fish market's hours (Monday to Saturday, opening 7.30, closing 14.00, Wednesday 13.00), its pavement spot at x 12.0, z 4.2 and, in its note, a doorway about x 9.4 (replaced here by the shopfronts target's door slots: shop door x 10.294 to 11.300, side door x 9.35 to 10.294); bay 1 is the fishmonger | YES | the board's design | n/a |
 
 What was searched: Geograph's feed for sandwich board, pavement board, a-board, blackboard, menu and a score of street words for each year 1975 to 1996, then unfiltered. Two period photographs were found and read in full: S2 (1978, the one used) and S4 (1984, no board). Every other hit with a board in it was 2005 or later. Wikimedia Commons and archive.org were not asked (the container's access is limited and Commons rate-limits). Sketchfab was not reached; Poly Haven's list was read in full (S6).
 
@@ -81,6 +81,7 @@ Axes: x across the leaf (right is +x seen from the front leaf's face), y from th
 | f_hplate_l | box | zinc | -230 to -180 | -12 to 1 | 909 to 961 |  | hinge leaf, 50 x 52 x 3, two screws (Judgement) |
 | f_hplate_r | box | zinc | 180 to 230 | -12 to 1 | 909 to 961 |  |  |
 | f_eye | cyl | zinc | 296 to 312 | -91 to -81 | 588 to 598 |  | screw eye in the right edge, 12 mm proud, holds the chain |
+| f_eye_l | cyl | zinc | -312 to -296 | -91 to -81 | 588 to 598 |  | second screw eye in the left edge, level with the right one and the same size (S1 shows it, x -312 to -296); the chain does not use it |
 | r_main | box | ply_paint | -300 to 300 | 0 to 206 | 57 to 971 | arrises eased 2 mm; cut edges bare ply, one long strip of bare edge on the right | 12 mm plywood leaf, 600 wide, from the arch's top to the ridge; the painted face is the front |
 | r_foot_l | prism | ply_paint | -300 to -138 | 194 to 218 | -0 to 59 |  | left foot, 118 wide at the ground, the arch's flared side up to the flat top |
 | r_foot_r | prism | ply_paint | 138 to 300 | 194 to 218 | -0 to 59 |  | right foot, the left one mirrored |
@@ -90,6 +91,7 @@ Axes: x across the leaf (right is +x seen from the front leaf's face), y from th
 | r_hplate_l | box | zinc | -230 to -180 | -1 to 12 | 909 to 961 |  | hinge leaf, 50 x 52 x 3, two screws (Judgement) |
 | r_hplate_r | box | zinc | 180 to 230 | -1 to 12 | 909 to 961 |  |  |
 | r_eye | cyl | zinc | 296 to 312 | 81 to 91 | 588 to 598 |  | screw eye in the right edge, 12 mm proud, holds the chain |
+| r_eye_l | cyl | zinc | -312 to -296 | 81 to 91 | 588 to 598 |  | second screw eye in the left edge, level with the right one and the same size (S1 shows it, x -312 to -296); the chain does not use it |
 | hinge_pin_l | cyl | zinc | -232 to -178 | -4 to 4 | 964 to 972 |  | hinge knuckle on the ridge line, 8 mm |
 | hinge_pin_r | cyl | zinc | 178 to 232 | -4 to 4 | 964 to 972 |  |  |
 | chain | wire | steel | 310 to 314 | -88 to 88 | 349 to 593 |  | a slack chain between the two screw eyes, 5 mm links, hanging free |
@@ -120,24 +122,24 @@ Axes: x across the leaf (right is +x seen from the front leaf's face), y from th
 
 ### The numbers, with their sources and kinds (the self-check measures each back off the parts)
 
-| id | what | value | kind | source and method | tolerance |
-|---|---|---|---|---|---|
-| N1 | leaf width | 600 mm | Judgement | a 600 mm (2 ft) board; assumed, and it sets P1's scale (0.6124 px per mm from the leaf's width of 367.4 px); error 15 | +-15 |
-| N2 | leaf length along the slope | 990 mm | Photo | P1: leaf height 592.3 px (top edge to the foot's lower edge) = 967 mm projected; over the lean's cosine (0.978) with a 2.5 mm thickness term gives about 986; 990 kept (error 25) | +-25 |
-| N3 | ply thickness | 12 mm | Judgement | 12 mm plywood (P1's bare edge strip is about 6 px = 10 mm at the lean; the standard sheet is 12); error 3 | +-3 |
-| N4 | foot arch height | 58 mm | Photo | P1: from the feet (mean of two, 631.2 px) up to the arch top (596.9 px) is 34.3 px = 56 mm projected; error 6 | +-6 |
-| N5 | each foot's width at the ground | 118 mm | Photo | P1: the left foot 72.4 px and the right foot 73.9 px at 0.612 px per mm = 118 and 121 mm; error 8 | +-8 |
-| N6 | half width of the arch's flat top | 138 mm | Judgement | read by eye on a 3 times crop of P1 (the flat top ends about 85 px from the centre); not measured by the algorithm; error 15 | +-15 |
-| N7 | lean of each leaf off the vertical (degrees) | 12 deg | Judgement | 12 degrees, the usual set of a pavement board; P1 is a front view and cannot show the lean; error 3 | +-3 |
-| N8 | height to the ridge (top of the hinge knuckles) | 972.4 mm | Photo | P1: 592.3 px from the top edge to the lower foot edge = 967 mm projected (the front leaf's own top is 2.5 mm over the ridge line); the hinge knuckles 4 mm over; error 30 | +-30 |
-| N9 | depth of the standing board (foot to foot) | 435.1 mm | Judgement | from the lean and the length: 2 x (990 x sin 12 + 12 x cos 12) = 435; the scene's placeholder was 357 deep; error 40 | +-40 |
-| N10 | chain: from its lowest point up to the top of its eye | 249.5 mm | Photo | P1: the ring at y 272 and the chain's lower end at y 420, read by eye on a 4 times crop (+-8 px): 148 px = 242 mm below the eye; the eye's radius 5 and the chain's 2.5 added; error 40 | +-40 |
-| N11 | screw eye's height above the paving | 590 mm | Photo | P1: the ring at y 272 (read by eye) is 361 px above the left foot's lower edge = 590 mm; error 30 | +-30 |
-| N12 | distance between the two hinges | 410 mm | Judgement | two butt hinges 205 mm either side of the middle (hidden on the inner faces; typical); error 30 | +-30 |
-| N20 | AB2 leaf width | 508 mm | Judgement | 20 inches; P2's board is 60.6 px wide beside a bus tyre of about 128 px (taken as 1.0 m): about 0.47 m (+-15 percent), so the 508 mm board is the nearest standard; error 60 | +-60 |
-| N21 | AB2 leaf length | 762 mm | Judgement | 30 inches; P2's board is 91.3 px high (projected) = about 0.71 m of tyre-scaled height, 0.73 m along the slope; error 70 | +-70 |
-| N22 | AB2 frame strip width | 28 mm | Judgement | 28 mm softwood strip; P2's frame is about 3 px wide, below the pixel's reach; error 6 | +-6 |
-| N23 | AB2 frame depth | 18 mm | Judgement | 18 mm; error 4 | +-4 |
+| id | what | value | kind | source and method | source error (what the source can tell) | builder tolerance (what the check allows) |
+|---|---|---|---|---|---|---|
+| N1 | leaf width | 600 mm | Judgement | a 600 mm (2 ft) board, assumed: P1 shows the board on asphalt beside a grating with no object of known size, so a pavement board anywhere from 500 to 700 wide fits; it sets P1's scale (0.6124 px per mm from the leaf's width of 367.4 px); source error 100 (builder tolerance 15) | +-100 | +-15 |
+| N2 | leaf length along the slope | 990 mm | Photo, scaled on the assumed width | P1: leaf height 592.3 px (top edge to the foot's lower edge) = 967 mm projected; over the lean's cosine (0.978) with a 2.5 mm thickness term gives about 986; 990 kept (error 25); source error 17 percent of the value (the assumed width is 600 +-100), so +-168.3 | +-168.3 | +-25 |
+| N3 | ply thickness | 12 mm | Judgement | 12 mm plywood (P1's bare edge strip is about 6 px = 10 mm at the lean; the standard sheet is 12); error 3 |  | +-3 |
+| N4 | foot arch height | 58 mm | Photo, scaled on the assumed width | P1: from the feet (mean of two, 631.2 px) up to the arch top (596.9 px) is 34.3 px = 56 mm projected; builder tolerance 6; source error 17 percent of the value (the assumed width is 600 +-100), so +-9.9 | +-9.9 | +-6 |
+| N5 | each foot's width at the ground | 118 mm | Photo, scaled on the assumed width | P1: the left foot 72.4 px and the right foot 73.9 px at 0.612 px per mm = 118 and 121 mm; builder tolerance 8; source error 17 percent of the value (the assumed width is 600 +-100), so +-20.1 | +-20.1 | +-8 |
+| N6 | half width of the arch's flat top | 138 mm | Judgement | read by eye on a 3 times crop of P1 (the flat top ends about 85 px from the centre); not measured by the algorithm; error 15 |  | +-15 |
+| N7 | lean of each leaf off the vertical (degrees) | 12 deg | Judgement | 12 degrees, the usual set of a pavement board; P1 is a front view and cannot show the lean; error 3 |  | +-3 |
+| N8 | height to the ridge (top of the hinge knuckles) | 972.4 mm | Photo, scaled on the assumed width | P1: 592.3 px from the top edge to the lower foot edge = 967 mm projected (the front leaf's own top is 2.5 mm over the ridge line); the hinge knuckles 4 mm over; builder tolerance 30; source error 17 percent of the value (the assumed width is 600 +-100), so +-165.3 | +-165.3 | +-30 |
+| N9 | depth of the standing board (foot to foot) | 435.1 mm | Judgement | from the lean and the length: 2 x (990 x sin 12 + 12 x cos 12) = 435; the scene's placeholder was 357 deep; error 40 |  | +-40 |
+| N10 | chain: from its lowest point up to the top of its eye | 249.5 mm | Photo, scaled on the assumed width | P1: the ring at y 272 and the chain's lower end at y 420, read by eye on a 4 times crop (+-8 px): 148 px = 242 mm below the eye; the eye's radius 5 and the chain's 2.5 added; builder tolerance 40; source error 17 percent of the value (the assumed width is 600 +-100), so +-42.4 | +-42.4 | +-40 |
+| N11 | screw eye's height above the paving | 590 mm | Photo, scaled on the assumed width | P1: the ring at y 272 (read by eye) is 361 px above the left foot's lower edge = 590 mm; builder tolerance 30; source error 17 percent of the value (the assumed width is 600 +-100), so +-100.3 | +-100.3 | +-30 |
+| N12 | distance between the two hinges | 410 mm | Judgement | two butt hinges 205 mm either side of the middle (hidden on the inner faces; typical); error 30 |  | +-30 |
+| N20 | AB2 leaf width | 508 mm | Judgement | 20 inches; P2's board is 60.6 px wide beside a bus tyre of about 128 px (taken as 1.0 m): about 0.47 m (+-15 percent), so the 508 mm board is the nearest standard; error 60 |  | +-60 |
+| N21 | AB2 leaf length | 762 mm | Judgement | 30 inches; P2's board is 91.3 px high (projected) = about 0.71 m of tyre-scaled height, 0.73 m along the slope; error 70 |  | +-70 |
+| N22 | AB2 frame strip width | 28 mm | Judgement | 28 mm softwood strip; P2's frame is about 3 px wide, below the pixel's reach; error 6 |  | +-6 |
+| N23 | AB2 frame depth | 18 mm | Judgement | 18 mm; error 4 |  | +-4 |
 
 ### Photograph measurements (P1, S1)
 
@@ -194,12 +196,12 @@ each edge is the strongest grey-level step inside the recorded window, averaged 
 
 ### Where it stands on Quay Street
 
-**Slot:** east pavement outside the fish market (bay 1, x 9 to 15): centre x 14.45 m, centre z 4.600 m (1.60 m from the kerb face), the board's two faces looking up and down the pavement (the scene's yaw 90), its back leaf's feet 0.063 m clear of the stallriser line; it replaces the scene's line at x 15.2, 1.1 m from the kerb face
+**Slot:** east pavement outside the fish market (bay 1, x 9 to 15): centre x 14.45 m, centre z 4.600 m (1.60 m from the kerb face), the board's two faces looking up and down the pavement (the scene's yaw 90), its leaves' side edges 0.063 m clear of the stallriser line (measured to the screw eye's tip; the leaf's own edge is 0.075 m clear); it replaces the scene's line at x 15.2, 1.1 m from the kerb face
 
 - the scene's line stood at x 15.2 with its 0.68 m width across the pavement and its centre 1.1 m from the kerb face: it left 0.64 m on the kerb side and 0.54 m on the shop side of a 1.85 m footway, both under the 0.68 m of a walking person (the 29 September walk found the footway walled by a smaller obstruction), and its depth put it on the line of the party pilaster between the fish market and Rita's
 - against the stallriser the board leaves 1.16 m clear on the kerb side, over the 1.0 m this target requires; the board is a shopkeeper's, put where the pavement is widest beside the shop
 - x 14.45 is in front of the fish market's own window (bay 1 is x 9 to 15, RULINGS 3 Oct) and clear of Rita's (the pilaster face is 0.157 m beyond the board's end); the awning (x 10.5 to 13.5) is 0.73 m away and the pavement spot where the cast stands (x 12.0, z 4.2) is 2.5 m away, so nobody who waits at the fish market stands behind the board
-- the fish market's doorway is at about x 9.4 and the board stands 5 m from it, so no door is blocked; the railing by the gully (x 10 to 12) is 2.2 m away
+- the fish market's shop door is at x 10.294 to 11.300 (centre 10.797) and its side door at x 9.35 to 10.294 (the shopfronts target); the board (x 14.23 to 14.67) stands 2.9 m from the shop door, so no door is blocked; the railing by the gully (x 10 to 12) is 2.2 m away
 - the faces look along the pavement, as the scene had them: a board read by people walking up or down the street; the leaf's long side lies across the pavement
 - the board is out only in the market's hours (Monday to Saturday from 7.30, shut at 14.00, Wednesday 13.00); a night frame has no board
 

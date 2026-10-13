@@ -141,6 +141,16 @@ def drive_rows(T, rows, ps):
     run = math.sqrt(d * d - (R1 - R2) ** 2)
     for nm in ("chain_top", "chain_bot"):
         rows.near("drive", "drive/%s is the tangent run between the pitch circles (%.1f long)" % (nm, run), part(T, V, nm)["s"][0], run, 1.0)
+    # the run's place: the outer tangent of the two pitch circles (the tangent points are c + R n, n . (c2 - c1) = R1 - R2)
+    ux, uz = (c2[0] - c1[0]) / d, (c2[1] - c1[1]) / d
+    a_ = (R1 - R2) / d
+    b_ = math.sqrt(max(0.0, 1.0 - a_ * a_))
+    for nm, want_up in (("chain_top", True), ("chain_bot", False)):
+        cands = [(a_ * ux - e * b_ * uz, a_ * uz + e * b_ * ux) for e in (1.0, -1.0)]
+        nx, nz = [c for c in cands if (c[1] > 0) == want_up][0]
+        mid = ((c1[0] + R1 * nx + c2[0] + R2 * nx) / 2.0, (c1[1] + R1 * nz + c2[1] + R2 * nz) / 2.0)
+        pc = part(T, V, nm)["c"]
+        rows.near("drive", "drive/%s lies on the outer tangent of the two pitch circles (centre at x %.1f, z %.1f)" % (nm, mid[0], mid[1]), math.dist((pc[0], pc[2]), mid), 0.0, 1.5)
     # the whole chain's pitch length is a whole, even number of links within half a link
     tot = sum(p["s"][0] for p in chain)
     n_ = round(tot / D["pitch_mm"])
@@ -211,9 +221,9 @@ def parts_rows(T, rows, ps):
     # carrier
     dk = ps.part_bbox("carrier_deck")
     rows.add("carrier", "carrier/the platform is 340 x 130 at 780 and stands 80 mm or more over the rear mudguard", abs((dk[1][0] - dk[0][0]) - D["carrier"]["length_mm"]) < 1.0 and abs((dk[1][1] - dk[0][1]) - D["carrier"]["width_mm"]) < 1.0 and abs(dk[1][2] - D["carrier"]["top_mm"]) < 1.0 and dk[0][2] - ps.bbox(only=[n for n in ps.names if n.startswith("rw_guard")])[1][2] >= 80.0, "deck top %.0f; guard top %.0f" % (dk[1][2], ps.bbox(only=[n for n in ps.names if n.startswith("rw_guard")])[1][2]))
-    rails = [part(T, V, n) for n in ("carrier_rail_l", "carrier_rail_r", "carrier_cross_rear")]
-    stays = [part(T, V, n) for n in ("carrier_stay_l", "carrier_stay_r")]
-    rows.add("carrier", "carrier/two side rails, a rear cross rail and two stays, all 10 mm tube", all(abs(p["r0"] * 2 - D["carrier"]["tube_mm"]) < 0.01 for p in rails + stays), "")
+    rails = [p for p in T["variants"][V]["parts"] if p["id"] in ("carrier_rail_l", "carrier_rail_r", "carrier_cross_rear")]
+    stays = [p for p in T["variants"][V]["parts"] if p["id"] in ("carrier_stay_l", "carrier_stay_r")]
+    rows.add("carrier", "carrier/two side rails, a rear cross rail and two stays, all 10 mm tube", len(rails) == 3 and len(stays) == 2 and all(abs(p["r0"] * 2 - D["carrier"]["tube_mm"]) < 0.01 for p in rails + stays), "%d rails, %d stays" % (len(rails), len(stays)))
     rows.add("carrier", "carrier/each stay runs from the rail's rear end to the drop-out (axle height within 25 mm, |y| 57)", all(abs(p["p1"][2] - 340.0) < 25.0 and abs(abs(p["p1"][1]) - 57.0) < 1.0 and abs(p["p0"][2] - (D["carrier"]["top_mm"] - 9.0)) < 1.0 for p in stays), "")
     rows.add("carrier", "carrier/the platform is clear of the saddle (100 mm or more below it) and meets the seat stay at its front end", dk[1][2] + 100.0 <= ps.part_bbox("saddle")[0][2] and any(set(j) == {"carrier_deck", "seat_stay_l"} for j in T["variants"][V]["joins"]), "")
 
@@ -241,8 +251,8 @@ def extra_controls(T):
         ("drive: the chain strips 12 wide", lambda t: [p["s"].__setitem__(1, 12.0) for p in t["variants"][V]["parts"] if p["id"].startswith("chain_") and p["type"] == "box"], "drive/every chain strip is 8 wide"),
         ("drive: the sprocket 100 across", lambda t: part(t, V, "sprocket").__setitem__("r0", 50.0), "drive/the sprocket is 73 across"),
         ("drive: one wrap strip missing", lambda t: K.drop_part(t, V, "chain_c07"), "drive/the chain is 28 strips"),
-        ("drive: the top run moved 30 mm", lambda t: K.shift_part(t, V, "chain_top", [0, 0, 30.0]), "drive/chain_top is the tangent run"),
-        ("drive: the chain pulled 40 mm tighter (the ring teeth stated as 50)", lambda t: t["drive"].__setitem__("ring_teeth", 50), "drive/the chain's length is 102 links"),
+        ("drive: the top run moved 30 mm", lambda t: K.shift_part(t, V, "chain_top", [0, 0, 30.0]), "drive/chain_top lies on the outer tangent"),
+        ("drive: the ring's tooth count stated as 50 (the chain would be 40 mm longer)", lambda t: t["drive"].__setitem__("ring_teeth", 50), "drive/the chainring (180 across) is a 44 tooth ring"),
         ("drive: the chain inboard of the stay (y moved 25 mm)", lambda t: [p.__setitem__("c", [p["c"][0], p["c"][1] - 25.0, p["c"][2]]) for p in t["variants"][V]["parts"] if p["id"].startswith("chain_") and p["type"] == "box"], "drive/the chain, ring and sprocket run outboard"),
         ("drive: a wrap strip pushed 8 mm off its circle", lambda t: K.shift_part(t, V, "chain_s04", [-8.0, 0, 0]), "drive/every wrap strip lies on its pitch circle"),
         ("guard: the chainguard 30 deep", lambda t: part(t, V, "chainguard").__setitem__("s", [part(t, V, "chainguard")["s"][0], 30.0, 1.0]), "guard/the chainguard is 60 deep"),

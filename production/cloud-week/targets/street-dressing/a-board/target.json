@@ -438,6 +438,40 @@
      }
     },
     {
+     "id": "f_eye_l",
+     "type": "cyl",
+     "p0": [
+      -296.0,
+      -6.0,
+      605.0
+     ],
+     "p1": [
+      -312.0,
+      -6.0,
+      605.0
+     ],
+     "r0": 5.0,
+     "material": "zinc",
+     "note": "second screw eye in the left edge, level with the right one and the same size (S1 shows it, x -312 to -296); the chain does not use it",
+     "xf": {
+      "rot": [
+       0.0,
+       0.0,
+       -12.0
+      ],
+      "pivot": [
+       0.0,
+       0.0,
+       990.0
+      ],
+      "t": [
+       0.0,
+       0.0,
+       -21.6339
+      ]
+     }
+    },
+    {
      "id": "r_main",
      "type": "box",
      "c": [
@@ -793,6 +827,40 @@
      }
     },
     {
+     "id": "r_eye_l",
+     "type": "cyl",
+     "p0": [
+      -296.0,
+      6.0,
+      605.0
+     ],
+     "p1": [
+      -312.0,
+      6.0,
+      605.0
+     ],
+     "r0": 5.0,
+     "material": "zinc",
+     "note": "second screw eye in the left edge, level with the right one and the same size (S1 shows it, x -312 to -296); the chain does not use it",
+     "xf": {
+      "rot": [
+       0.0,
+       0.0,
+       12.0
+      ],
+      "pivot": [
+       0.0,
+       0.0,
+       990.0
+      ],
+      "t": [
+       0.0,
+       0.0,
+       -21.6339
+      ]
+     }
+    },
+    {
      "id": "hinge_pin_l",
      "type": "cyl",
      "p0": [
@@ -929,6 +997,8 @@
    "overall_exclude": [
     "f_eye",
     "r_eye",
+    "f_eye_l",
+    "r_eye_l",
     "chain"
    ],
    "joins": [
@@ -969,6 +1039,10 @@
      "f_main"
     ],
     [
+     "f_eye_l",
+     "f_main"
+    ],
+    [
      "r_foot_l",
      "r_main"
     ],
@@ -1002,6 +1076,10 @@
     ],
     [
      "r_eye",
+     "r_main"
+    ],
+    [
+     "r_eye_l",
      "r_main"
     ],
     [
@@ -1041,6 +1119,16 @@
     ],
     [
      "r_eye",
+     "r_main",
+     5.0
+    ],
+    [
+     "f_eye_l",
+     "f_main",
+     5.0
+    ],
+    [
+     "r_eye_l",
      "r_main",
      5.0
     ],
@@ -2124,28 +2212,31 @@
    "what": "leaf width",
    "value": 600.0,
    "kind": "Judgement",
-   "source": "a 600 mm (2 ft) board; assumed, and it sets P1's scale (0.6124 px per mm from the leaf's width of 367.4 px); error 15",
+   "source": "a 600 mm (2 ft) board, assumed: P1 shows the board on asphalt beside a grating with no object of known size, so a pavement board anywhere from 500 to 700 wide fits; it sets P1's scale (0.6124 px per mm from the leaf's width of 367.4 px); source error 100 (builder tolerance 15)",
    "tol": 15.0,
    "measure": {
     "kind": "local",
     "part": "f_main",
     "axis": "x",
     "what": "extent"
-   }
+   },
+   "source_error": 100.0
   },
   {
    "id": "N2",
    "what": "leaf length along the slope",
    "value": 990.0,
-   "kind": "Photo",
-   "source": "P1: leaf height 592.3 px (top edge to the foot's lower edge) = 967 mm projected; over the lean's cosine (0.978) with a 2.5 mm thickness term gives about 986; 990 kept (error 25)",
+   "kind": "Photo, scaled on the assumed width",
+   "source": "P1: leaf height 592.3 px (top edge to the foot's lower edge) = 967 mm projected; over the lean's cosine (0.978) with a 2.5 mm thickness term gives about 986; 990 kept (error 25); source error 17 percent of the value (the assumed width is 600 +-100), so +-168.3",
    "tol": 25.0,
    "measure": {
     "kind": "local",
     "part": "f_main",
     "axis": "z",
     "what": "hi"
-   }
+   },
+   "scaled_on": "N1",
+   "source_error": 168.3
   },
   {
    "id": "N3",
@@ -2165,22 +2256,24 @@
    "id": "N4",
    "what": "foot arch height",
    "value": 58.0,
-   "kind": "Photo",
-   "source": "P1: from the feet (mean of two, 631.2 px) up to the arch top (596.9 px) is 34.3 px = 56 mm projected; error 6",
+   "kind": "Photo, scaled on the assumed width",
+   "source": "P1: from the feet (mean of two, 631.2 px) up to the arch top (596.9 px) is 34.3 px = 56 mm projected; builder tolerance 6; source error 17 percent of the value (the assumed width is 600 +-100), so +-9.9",
    "tol": 6.0,
    "measure": {
     "kind": "local",
     "part": "f_main",
     "axis": "z",
     "what": "lo"
-   }
+   },
+   "scaled_on": "N1",
+   "source_error": 9.9
   },
   {
    "id": "N5",
    "what": "each foot's width at the ground",
    "value": 118.0,
-   "kind": "Photo",
-   "source": "P1: the left foot 72.4 px and the right foot 73.9 px at 0.612 px per mm = 118 and 121 mm; error 8",
+   "kind": "Photo, scaled on the assumed width",
+   "source": "P1: the left foot 72.4 px and the right foot 73.9 px at 0.612 px per mm = 118 and 121 mm; builder tolerance 8; source error 17 percent of the value (the assumed width is 600 +-100), so +-20.1",
    "tol": 8.0,
    "measure": {
     "kind": "local",
@@ -2192,7 +2285,9 @@
      "lo": -1.0,
      "hi": 1.0
     }
-   }
+   },
+   "scaled_on": "N1",
+   "source_error": 20.1
   },
   {
    "id": "N6",
@@ -2226,8 +2321,8 @@
    "id": "N8",
    "what": "height to the ridge (top of the hinge knuckles)",
    "value": 972.4,
-   "kind": "Photo",
-   "source": "P1: 592.3 px from the top edge to the lower foot edge = 967 mm projected (the front leaf's own top is 2.5 mm over the ridge line); the hinge knuckles 4 mm over; error 30",
+   "kind": "Photo, scaled on the assumed width",
+   "source": "P1: 592.3 px from the top edge to the lower foot edge = 967 mm projected (the front leaf's own top is 2.5 mm over the ridge line); the hinge knuckles 4 mm over; builder tolerance 30; source error 17 percent of the value (the assumed width is 600 +-100), so +-165.3",
    "tol": 30.0,
    "measure": {
     "kind": "bbox",
@@ -2235,9 +2330,13 @@
     "exclude": [
      "f_eye",
      "r_eye",
+     "f_eye_l",
+     "r_eye_l",
      "chain"
     ]
-   }
+   },
+   "scaled_on": "N1",
+   "source_error": 165.3
   },
   {
    "id": "N9",
@@ -2252,6 +2351,8 @@
     "exclude": [
      "f_eye",
      "r_eye",
+     "f_eye_l",
+     "r_eye_l",
      "chain"
     ]
    }
@@ -2260,28 +2361,32 @@
    "id": "N10",
    "what": "chain: from its lowest point up to the top of its eye",
    "value": 249.5,
-   "kind": "Photo",
-   "source": "P1: the ring at y 272 and the chain's lower end at y 420, read by eye on a 4 times crop (+-8 px): 148 px = 242 mm below the eye; the eye's radius 5 and the chain's 2.5 added; error 40",
+   "kind": "Photo, scaled on the assumed width",
+   "source": "P1: the ring at y 272 and the chain's lower end at y 420, read by eye on a 4 times crop (+-8 px): 148 px = 242 mm below the eye; the eye's radius 5 and the chain's 2.5 added; builder tolerance 40; source error 17 percent of the value (the assumed width is 600 +-100), so +-42.4",
    "tol": 40.0,
    "measure": {
     "kind": "span",
     "axis": "z",
     "a": "chain",
     "b": "f_eye"
-   }
+   },
+   "scaled_on": "N1",
+   "source_error": 42.4
   },
   {
    "id": "N11",
    "what": "screw eye's height above the paving",
    "value": 590.0,
-   "kind": "Photo",
-   "source": "P1: the ring at y 272 (read by eye) is 361 px above the left foot's lower edge = 590 mm; error 30",
+   "kind": "Photo, scaled on the assumed width",
+   "source": "P1: the ring at y 272 (read by eye) is 361 px above the left foot's lower edge = 590 mm; builder tolerance 30; source error 17 percent of the value (the assumed width is 600 +-100), so +-100.3",
    "tol": 30.0,
    "measure": {
     "kind": "centre",
     "axis": "z",
     "part": "f_eye"
-   }
+   },
+   "scaled_on": "N1",
+   "source_error": 100.3
   },
   {
    "id": "N12",
@@ -2903,7 +3008,7 @@
    "licence": "own work",
    "taken": "n/a",
    "kind": "own",
-   "shows": "the fish market's hours (Monday to Saturday, opening 7.30, closing 14.00, Wednesday 13.00), its pavement spot at x 12.0, z 4.2 and a doorway about x 9.4; bay 1 is the fishmonger",
+   "shows": "the fish market's hours (Monday to Saturday, opening 7.30, closing 14.00, Wednesday 13.00), its pavement spot at x 12.0, z 4.2 and, in its note, a doorway about x 9.4 (replaced here by the shopfronts target's door slots: shop door x 10.294 to 11.300, side door x 9.35 to 10.294); bay 1 is the fishmonger",
    "used": true,
    "not_used_for": "the board's design",
    "period": "n/a"
@@ -3040,7 +3145,7 @@
   "note": "the board is not out at night: the fish market shuts at 14.00 (13.00 on Wednesdays) and the board goes indoors; in a dusk shot it stands in the dark between lamp pools (the nearest lamp column is x 8 east, 6 m away) and its off-white face takes the lantern colour only as a faint wash on the face turned towards the lamp"
  },
  "placement": {
-  "slot": "east pavement outside the fish market (bay 1, x 9 to 15): centre x 14.45 m, centre z 4.600 m (1.60 m from the kerb face), the board's two faces looking up and down the pavement (the scene's yaw 90), its back leaf's feet 0.063 m clear of the stallriser line; it replaces the scene's line at x 15.2, 1.1 m from the kerb face",
+  "slot": "east pavement outside the fish market (bay 1, x 9 to 15): centre x 14.45 m, centre z 4.600 m (1.60 m from the kerb face), the board's two faces looking up and down the pavement (the scene's yaw 90), its leaves' side edges 0.063 m clear of the stallriser line (measured to the screw eye's tip; the leaf's own edge is 0.075 m clear); it replaces the scene's line at x 15.2, 1.1 m from the kerb face",
   "x_m": 14.45,
   "z_m": 4.6,
   "yaw_deg": 90,
@@ -3065,8 +3170,22 @@
    "z_m": 4.2,
    "min_m": 1.0
   },
-  "fish_door_x_m": 9.4,
+  "fish_door_x_m": 10.797,
+  "fish_door_w_m": 1.006,
+  "fish_side_door_x_m": 9.822,
+  "fish_side_door_w_m": 0.944,
   "door_gap_min_m": 2.0,
+  "poses": [
+   {
+    "id": "AB1",
+    "variant": "AB1",
+    "x_m": 14.45,
+    "z_m": 4.6,
+    "yaw_deg": 90.0,
+    "zone": "east_footway",
+    "front_faces": "+x"
+   }
+  ],
   "old": {
    "x_m": 15.2,
    "z_from_kerb_face_m": 1.1,
@@ -3077,7 +3196,7 @@
    "the scene's line stood at x 15.2 with its 0.68 m width across the pavement and its centre 1.1 m from the kerb face: it left 0.64 m on the kerb side and 0.54 m on the shop side of a 1.85 m footway, both under the 0.68 m of a walking person (the 29 September walk found the footway walled by a smaller obstruction), and its depth put it on the line of the party pilaster between the fish market and Rita's",
    "against the stallriser the board leaves 1.16 m clear on the kerb side, over the 1.0 m this target requires; the board is a shopkeeper's, put where the pavement is widest beside the shop",
    "x 14.45 is in front of the fish market's own window (bay 1 is x 9 to 15, RULINGS 3 Oct) and clear of Rita's (the pilaster face is 0.157 m beyond the board's end); the awning (x 10.5 to 13.5) is 0.73 m away and the pavement spot where the cast stands (x 12.0, z 4.2) is 2.5 m away, so nobody who waits at the fish market stands behind the board",
-   "the fish market's doorway is at about x 9.4 and the board stands 5 m from it, so no door is blocked; the railing by the gully (x 10 to 12) is 2.2 m away",
+   "the fish market's shop door is at x 10.294 to 11.300 (centre 10.797) and its side door at x 9.35 to 10.294 (the shopfronts target); the board (x 14.23 to 14.67) stands 2.9 m from the shop door, so no door is blocked; the railing by the gully (x 10 to 12) is 2.2 m away",
    "the faces look along the pavement, as the scene had them: a board read by people walking up or down the street; the leaf's long side lies across the pavement",
    "the board is out only in the market's hours (Monday to Saturday from 7.30, shut at 14.00, Wednesday 13.00); a night frame has no board"
   ]
@@ -3279,13 +3398,13 @@
   }
  ],
  "self_check": {
-  "line": "SELF-CHECK a-board: 165 checks, 165 passed, 0 failed; negative controls 39 of 39 caught (--live --previews)",
-  "checks": 165,
-  "passed": 165,
+  "line": "SELF-CHECK a-board: 170 checks, 170 passed, 0 failed; negative controls 0 of 0 caught (offline)",
+  "checks": 170,
+  "passed": 170,
   "failed": 0,
-  "controls": 39,
-  "controls_caught": 39,
-  "options": "--live --previews",
+  "controls": 0,
+  "controls_caught": 0,
+  "options": "offline",
   "failing": [],
   "uncaught": []
  }

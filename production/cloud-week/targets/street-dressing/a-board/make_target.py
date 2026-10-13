@@ -104,6 +104,8 @@ def leaf1(pre, side):
     P.append(B(pre + "hplate_l", -230.0, -180.0, yp0, yp1, LL1 - 60.0, LL1 - 8.0, "zinc", note="hinge leaf, 50 x 52 x 3, two screws (Judgement)"))
     P.append(B(pre + "hplate_r", 180.0, 230.0, yp0, yp1, LL1 - 60.0, LL1 - 8.0, "zinc"))
     P.append(CY(pre + "eye", (W1 / 2 - 4.0, ye, EYE_Z1), (W1 / 2 + 12.0, ye, EYE_Z1), 5.0, "zinc", note="screw eye in the right edge, 12 mm proud, holds the chain"))
+    P.append(CY(pre + "eye_l", (-(W1 / 2 - 4.0), ye, EYE_Z1), (-(W1 / 2 + 12.0), ye, EYE_Z1), 5.0, "zinc",
+                note="second screw eye in the left edge, level with the right one and the same size (S1 shows it, x -312 to -296); the chain does not use it"))
     return put(P, side, LL1)
 
 
@@ -169,10 +171,10 @@ def build():
     d2 = 2.0 * (LL2 * SA + TH2 * CA)
     h2 = LL2 * CA + 4.0
     joins1 = [["f_foot_l", "f_main"], ["f_foot_r", "f_main"], ["f_stile_l", "f_main"], ["f_stile_r", "f_main"], ["f_rail", "f_stile_l"], ["f_rail", "f_stile_r"], ["f_hplate_l", "f_main"], ["f_hplate_r", "f_main"],
-              ["f_eye", "f_main"], ["r_foot_l", "r_main"], ["r_foot_r", "r_main"], ["r_stile_l", "r_main"], ["r_stile_r", "r_main"], ["r_rail", "r_stile_l"], ["r_rail", "r_stile_r"],
-              ["r_hplate_l", "r_main"], ["r_hplate_r", "r_main"], ["r_eye", "r_main"], ["f_main", "r_main"], ["hinge_pin_l", "f_main"], ["hinge_pin_l", "r_main"], ["hinge_pin_r", "f_main"],
+              ["f_eye", "f_main"], ["f_eye_l", "f_main"], ["r_foot_l", "r_main"], ["r_foot_r", "r_main"], ["r_stile_l", "r_main"], ["r_stile_r", "r_main"], ["r_rail", "r_stile_l"], ["r_rail", "r_stile_r"],
+              ["r_hplate_l", "r_main"], ["r_hplate_r", "r_main"], ["r_eye", "r_main"], ["r_eye_l", "r_main"], ["f_main", "r_main"], ["hinge_pin_l", "f_main"], ["hinge_pin_l", "r_main"], ["hinge_pin_r", "f_main"],
               ["hinge_pin_r", "r_main"], ["chain", "f_eye"], ["chain", "r_eye"]]
-    embeds1 = [["f_eye", "f_main", 5.0], ["r_eye", "r_main", 5.0], ["hinge_pin_l", "f_main", 5.0], ["hinge_pin_l", "r_main", 5.0], ["hinge_pin_r", "f_main", 5.0], ["hinge_pin_r", "r_main", 5.0],
+    embeds1 = [["f_eye", "f_main", 5.0], ["r_eye", "r_main", 5.0], ["f_eye_l", "f_main", 5.0], ["r_eye_l", "r_main", 5.0], ["hinge_pin_l", "f_main", 5.0], ["hinge_pin_l", "r_main", 5.0], ["hinge_pin_r", "f_main", 5.0], ["hinge_pin_r", "r_main", 5.0],
                ["f_main", "r_main", 5.0], ["chain", "f_eye", 5.0], ["chain", "r_eye", 5.0]]
     joins2 = [["f_frame_l", "f_frame_t"], ["f_frame_r", "f_frame_t"], ["f_frame_b", "f_frame_l"], ["f_frame_b", "f_frame_r"], ["f_panel", "f_frame_l"], ["f_panel", "f_frame_t"],
               ["f_hplate_l", "f_frame_t"], ["f_hplate_r", "f_frame_t"], ["f_eye", "f_frame_r"], ["r_frame_l", "r_frame_t"], ["r_frame_r", "r_frame_t"], ["r_frame_b", "r_frame_l"], ["r_frame_b", "r_frame_r"],
@@ -197,7 +199,7 @@ def build():
         },
         "variants": {
             "AB1": {"name": "AB1: painted plywood board with a foot arch, fish list on both faces (the sample; the fish market's)", "parts": P1parts,
-                    "overall": {"w": W1, "d": round(d1, 1), "h": round(h1, 1)}, "overall_tol": 1.5, "overall_exclude": ["f_eye", "r_eye", "chain"],
+                    "overall": {"w": W1, "d": round(d1, 1), "h": round(h1, 1)}, "overall_tol": 1.5, "overall_exclude": ["f_eye", "r_eye", "f_eye_l", "r_eye_l", "chain"],
                     "joins": joins1, "embeds": embeds1,
                     "faces": [
                         face("front leaf outer face", (-W1 / 2, -TH1, ARCH_H), "F", LL1, W1, LL1 - ARCH_H, TH1 + 2.0, ["f_main"]),
@@ -220,15 +222,15 @@ def build():
     s_px = sL / W1
     hproj = (F1["foot_left_y"]["px"] - F1["top_y"]["px"]) / s_px
     T["numbers"] = [
-        {"id": "N1", "what": "leaf width", "value": W1, "kind": "Judgement", "source": "a 600 mm (2 ft) board; assumed, and it sets P1's scale (%.4f px per mm from the leaf's width of %.1f px); error 15" % (s_px, sL), "tol": 15.0, "measure": {"kind": "local", "part": "f_main", "axis": "x", "what": "extent"}},
+        {"id": "N1", "what": "leaf width", "value": W1, "kind": "Judgement", "source": "a 600 mm (2 ft) board, assumed: P1 shows the board on asphalt beside a grating with no object of known size, so a pavement board anywhere from 500 to 700 wide fits; it sets P1's scale (%.4f px per mm from the leaf's width of %.1f px); source error 100 (builder tolerance 15)" % (s_px, sL), "tol": 15.0, "measure": {"kind": "local", "part": "f_main", "axis": "x", "what": "extent"}},
         {"id": "N2", "what": "leaf length along the slope", "value": LL1, "kind": "Photo", "source": "P1: leaf height %.1f px (top edge to the foot's lower edge) = %.0f mm projected; over the lean's cosine (%.3f) with a 2.5 mm thickness term gives about 986; 990 kept (error 25)" % (F1["foot_left_y"]["px"] - F1["top_y"]["px"], hproj, CA), "tol": 25.0, "measure": {"kind": "local", "part": "f_main", "axis": "z", "what": "hi"}},
         {"id": "N3", "what": "ply thickness", "value": TH1, "kind": "Judgement", "source": "12 mm plywood (P1's bare edge strip is about 6 px = 10 mm at the lean; the standard sheet is 12); error 3", "tol": 3.0, "measure": {"kind": "local", "part": "f_main", "axis": "y", "what": "extent"}},
         {"id": "N4", "what": "foot arch height", "value": ARCH_H, "kind": "Photo", "source": "P1: from the feet (mean of two, %.1f px) up to the arch top (%.1f px) is %.1f px = %.0f mm projected; error 6" % ((F1["foot_left_y"]["px"] + F1["foot_right_y"]["px"]) / 2.0, F1["arch_top_y"]["px"], (F1["foot_left_y"]["px"] + F1["foot_right_y"]["px"]) / 2.0 - F1["arch_top_y"]["px"], ((F1["foot_left_y"]["px"] + F1["foot_right_y"]["px"]) / 2.0 - F1["arch_top_y"]["px"]) / s_px), "tol": 6.0, "measure": {"kind": "local", "part": "f_main", "axis": "z", "what": "lo"}},
         {"id": "N5", "what": "each foot's width at the ground", "value": FOOT_BASE, "kind": "Photo", "source": "P1: the left foot %.1f px and the right foot %.1f px at 0.612 px per mm = %.0f and %.0f mm; error 8" % (A1["arch_base_left_x"]["px"] - (F1["left_bot"]["px"]), F1["right_bot"]["px"] - A1["arch_base_right_x"]["px"], (A1["arch_base_left_x"]["px"] - F1["left_bot"]["px"]) / s_px, (F1["right_bot"]["px"] - A1["arch_base_right_x"]["px"]) / s_px), "tol": 8.0, "measure": {"kind": "local", "part": "f_foot_l", "axis": "x", "what": "extent", "where": {"axis": "z", "lo": -1.0, "hi": 1.0}}},
         {"id": "N6", "what": "half width of the arch's flat top", "value": ARCH_TOP_HALF, "kind": "Judgement", "source": "read by eye on a 3 times crop of P1 (the flat top ends about 85 px from the centre); not measured by the algorithm; error 15", "tol": 15.0, "measure": {"kind": "local", "part": "f_foot_r", "axis": "x", "what": "lo"}},
         {"id": "N7", "what": "lean of each leaf off the vertical (degrees)", "unit": "deg", "value": ALPHA, "kind": "Judgement", "source": "12 degrees, the usual set of a pavement board; P1 is a front view and cannot show the lean; error 3", "tol": 3.0, "measure": {"kind": "xf", "part": "f_main", "index": 2}},
-        {"id": "N8", "what": "height to the ridge (top of the hinge knuckles)", "value": round(h1, 1), "kind": "Photo", "source": "P1: %.1f px from the top edge to the lower foot edge = %.0f mm projected (the front leaf's own top is 2.5 mm over the ridge line); the hinge knuckles 4 mm over; error 30" % (F1["foot_left_y"]["px"] - F1["top_y"]["px"], hproj), "tol": 30.0, "measure": {"kind": "bbox", "axis": "z", "exclude": ["f_eye", "r_eye", "chain"]}},
-        {"id": "N9", "what": "depth of the standing board (foot to foot)", "value": round(d1, 1), "kind": "Judgement", "source": "from the lean and the length: 2 x (990 x sin 12 + 12 x cos 12) = 435; the scene's placeholder was 357 deep; error 40", "tol": 40.0, "measure": {"kind": "bbox", "axis": "y", "exclude": ["f_eye", "r_eye", "chain"]}},
+        {"id": "N8", "what": "height to the ridge (top of the hinge knuckles)", "value": round(h1, 1), "kind": "Photo", "source": "P1: %.1f px from the top edge to the lower foot edge = %.0f mm projected (the front leaf's own top is 2.5 mm over the ridge line); the hinge knuckles 4 mm over; error 30" % (F1["foot_left_y"]["px"] - F1["top_y"]["px"], hproj), "tol": 30.0, "measure": {"kind": "bbox", "axis": "z", "exclude": ["f_eye", "r_eye", "f_eye_l", "r_eye_l", "chain"]}},
+        {"id": "N9", "what": "depth of the standing board (foot to foot)", "value": round(d1, 1), "kind": "Judgement", "source": "from the lean and the length: 2 x (990 x sin 12 + 12 x cos 12) = 435; the scene's placeholder was 357 deep; error 40", "tol": 40.0, "measure": {"kind": "bbox", "axis": "y", "exclude": ["f_eye", "r_eye", "f_eye_l", "r_eye_l", "chain"]}},
         {"id": "N10", "what": "chain: from its lowest point up to the top of its eye", "value": CHAIN_DEPTH1 + 7.5, "kind": "Photo", "source": "P1: the ring at y 272 and the chain's lower end at y 420, read by eye on a 4 times crop (+-8 px): 148 px = %.0f mm below the eye; the eye's radius 5 and the chain's 2.5 added; error 40" % (148.0 / s_px), "tol": 40.0, "measure": {"kind": "span", "axis": "z", "a": "chain", "b": "f_eye"}},
         {"id": "N11", "what": "screw eye's height above the paving", "value": None, "kind": "Photo", "source": "", "tol": 30.0, "measure": {"kind": "centre", "axis": "z", "part": "f_eye"}},
         {"id": "N12", "what": "distance between the two hinges", "value": 410.0, "kind": "Judgement", "source": "two butt hinges 205 mm either side of the middle (hidden on the inner faces; typical); error 30", "tol": 30.0, "measure": {"kind": "centre_dx", "axis": "x", "a": "hinge_pin_l", "b": "hinge_pin_r"}},
@@ -243,6 +245,16 @@ def build():
         if n["id"] == "N11":
             n["value"] = round(ring_z, 0)
             n["source"] = "P1: the ring at y 272 (read by eye) is %.0f px above the left foot's lower edge = %.0f mm; error 30" % (F1["foot_left_y"]["px"] - 272.0, ring_z)
+    # source errors: the leaf's width (600, Judgement, a pavement board is 500 to 700 wide: +-100) is the unit that sets P1's scale, so every length
+    # read off P1 inherits at least that relative error (100/600 = 16.7 percent, written 17); the builder's tolerance (tol) stays its own field
+    for n in T["numbers"]:
+        if n["id"] == "N1":
+            n["source_error"] = 100.0
+        elif n["id"] in ("N2", "N4", "N5", "N8", "N10", "N11"):
+            n["scaled_on"] = "N1"
+            n["source_error"] = round(0.17 * n["value"], 1)
+            n["kind"] = "Photo, scaled on the assumed width"
+            n["source"] = n["source"].replace("; error ", "; builder tolerance ") + "; source error 17 percent of the value (the assumed width is 600 +-100), so +-%.1f" % n["source_error"]
     # photographs
     refs = {"left_top": ("x", "f_main", "lo"), "left_bot": ("x", "f_foot_l", "lo"), "right_top": ("x", "f_main", "hi"), "right_bot": ("x", "f_foot_r", "hi"),
             "top_y": ("y", "f_main", "hi"), "foot_left_y": ("y", "f_foot_l", "lo"), "foot_right_y": ("y", "f_foot_r", "lo"), "arch_top_y": ("y", "f_main", "lo")}
@@ -304,7 +316,7 @@ def finish(T):
          "shows": "the ONS cod fillet price of 1990 (574p/kg, about 2.60 a pound), prices per pound, hand-lettered tickets and whitewash lettering, the fish a 1990 shop sold",
          "used": True, "not_used_for": "any price except cod (no 1990 figure was found for the other fish: they are marked invented in text.lines)", "period": "1990 figures"},
         {"id": "S9", "url": "production/specs/hook-cast.json (places fish_front, fish_counter; area fish_market hours) and RULINGS.md (3 Oct trades) (this repository)", "read": "2026-10-13", "author": "this project", "licence": "own work", "taken": "n/a", "kind": "own",
-         "shows": "the fish market's hours (Monday to Saturday, opening 7.30, closing 14.00, Wednesday 13.00), its pavement spot at x 12.0, z 4.2 and a doorway about x 9.4; bay 1 is the fishmonger",
+         "shows": "the fish market's hours (Monday to Saturday, opening 7.30, closing 14.00, Wednesday 13.00), its pavement spot at x 12.0, z 4.2 and, in its note, a doorway about x 9.4 (replaced here by the shopfronts target's door slots: shop door x 10.294 to 11.300, side door x 9.35 to 10.294); bay 1 is the fishmonger",
          "used": True, "not_used_for": "the board's design", "period": "n/a"},
     ]
     T["previews"] = [
@@ -336,17 +348,18 @@ def finish(T):
     }
     T["night"] = {"lantern_linear": L.LANTERN_LINEAR, "note": "the board is not out at night: the fish market shuts at 14.00 (13.00 on Wednesdays) and the board goes indoors; in a dusk shot it stands in the dark between lamp pools (the nearest lamp column is x 8 east, 6 m away) and its off-white face takes the lantern colour only as a faint wash on the face turned towards the lamp"}
     pl = {
-        "slot": "east pavement outside the fish market (bay 1, x 9 to 15): centre x 14.45 m, centre z 4.600 m (1.60 m from the kerb face), the board's two faces looking up and down the pavement (the scene's yaw 90), its back leaf's feet 0.063 m clear of the stallriser line; it replaces the scene's line at x 15.2, 1.1 m from the kerb face",
+        "slot": "east pavement outside the fish market (bay 1, x 9 to 15): centre x 14.45 m, centre z 4.600 m (1.60 m from the kerb face), the board's two faces looking up and down the pavement (the scene's yaw 90), its leaves' side edges 0.063 m clear of the stallriser line (measured to the screw eye's tip; the leaf's own edge is 0.075 m clear); it replaces the scene's line at x 15.2, 1.1 m from the kerb face",
         "x_m": 14.45, "z_m": 4.600, "yaw_deg": 90, "kerb_face_z_m": 3.0, "kerb_back_z_m": 3.125, "stallriser_line_z_m": 4.975, "frontage_z_m": 5.125,
         "across_half_mm": 312.0, "along_half_mm": 217.6, "min_clear_mm": 1000.0, "walking_person_mm": 680.0,
         "pilaster_x_m": 15.0, "pilaster_half_mm": 175.0, "pilaster_gap_min_mm": 100.0,
-        "awning_x_m": [10.5, 13.5], "awning_gap_min_mm": 500.0, "fish_front": {"x_m": 12.0, "z_m": 4.2, "min_m": 1.0}, "fish_door_x_m": 9.4, "door_gap_min_m": 2.0,
+        "awning_x_m": [10.5, 13.5], "awning_gap_min_mm": 500.0, "fish_front": {"x_m": 12.0, "z_m": 4.2, "min_m": 1.0}, "fish_door_x_m": 10.797, "fish_door_w_m": 1.006, "fish_side_door_x_m": 9.822, "fish_side_door_w_m": 0.944, "door_gap_min_m": 2.0,
+        "poses": [{"id": "AB1", "variant": "AB1", "x_m": 14.45, "z_m": 4.600, "yaw_deg": 90.0, "zone": "east_footway", "front_faces": "+x"}],
         "old": {"x_m": 15.2, "z_from_kerb_face_m": 1.1, "across_mm": 681.1, "source": "vignette-scene.json held_props pavement_sign"},
         "reasons": [
             "the scene's line stood at x 15.2 with its 0.68 m width across the pavement and its centre 1.1 m from the kerb face: it left 0.64 m on the kerb side and 0.54 m on the shop side of a 1.85 m footway, both under the 0.68 m of a walking person (the 29 September walk found the footway walled by a smaller obstruction), and its depth put it on the line of the party pilaster between the fish market and Rita's",
             "against the stallriser the board leaves 1.16 m clear on the kerb side, over the 1.0 m this target requires; the board is a shopkeeper's, put where the pavement is widest beside the shop",
             "x 14.45 is in front of the fish market's own window (bay 1 is x 9 to 15, RULINGS 3 Oct) and clear of Rita's (the pilaster face is 0.157 m beyond the board's end); the awning (x 10.5 to 13.5) is 0.73 m away and the pavement spot where the cast stands (x 12.0, z 4.2) is 2.5 m away, so nobody who waits at the fish market stands behind the board",
-            "the fish market's doorway is at about x 9.4 and the board stands 5 m from it, so no door is blocked; the railing by the gully (x 10 to 12) is 2.2 m away",
+            "the fish market's shop door is at x 10.294 to 11.300 (centre 10.797) and its side door at x 9.35 to 10.294 (the shopfronts target); the board (x 14.23 to 14.67) stands 2.9 m from the shop door, so no door is blocked; the railing by the gully (x 10 to 12) is 2.2 m away",
             "the faces look along the pavement, as the scene had them: a board read by people walking up or down the street; the leaf's long side lies across the pavement",
             "the board is out only in the market's hours (Monday to Saturday from 7.30, shut at 14.00, Wednesday 13.00); a night frame has no board",
         ],

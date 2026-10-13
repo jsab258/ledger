@@ -13,6 +13,7 @@ sys.path.insert(0, os.path.dirname(HERE))
 import sd_lib as L
 import sd_check as K
 import sd_family as SF
+import sd_place as PL
 
 V = "AB1"
 LIVE = "--live" in sys.argv
@@ -24,6 +25,9 @@ def photos_dir():
     return os.path.join(L.REPO, "..", "ledger-scratch", "street-dressing", "a-board")
 
 
+EYES = ("f_eye", "r_eye", "f_eye_l", "r_eye_l")
+
+
 def world_local(ps, name):
     i = ps.index[name]
     W = np.vstack([pc.V for pc in ps.pieces[i]])
@@ -31,9 +35,12 @@ def world_local(ps, name):
 
 
 def tip(ps, name):
-    """The outer end of a screw eye in world coordinates: the vertices at the largest local x, averaged."""
+    """The outer end of a screw eye in world coordinates: the vertices furthest from the leaf's middle (largest local x for a right eye, smallest for a left one), averaged."""
     W, Lc = world_local(ps, name)
-    m = Lc[:, 0] >= Lc[:, 0].max() - 0.01
+    if name.endswith("_l"):
+        m = Lc[:, 0] <= Lc[:, 0].min() + 0.01
+    else:
+        m = Lc[:, 0] >= Lc[:, 0].max() - 0.01
     return W[m].mean(0)
 
 
@@ -90,10 +97,10 @@ def extra(T, rows):
     rows.near("detail", "detail/the back leaf stands the same (12 degrees)", lean_r, 12.0, 0.05, unit="deg")
     rows.near("detail", "detail/the leaves meet on the ridge line (their inner top edges, in y)", abs(topf[1] - topr[1]), 0.0, 0.6)
     rows.near("detail", "detail/the leaves meet on the ridge line (their inner top edges, in z)", abs(topf[2] - topr[2]), 0.0, 0.6)
-    flo, fhi = ps.bbox(only=[n for n in ps.names if n.startswith("f_") and n != "f_eye"])
-    rlo, rhi = ps.bbox(only=[n for n in ps.names if n.startswith("r_") and n != "r_eye"])
+    flo, fhi = ps.bbox(only=[n for n in ps.names if n.startswith("f_") and n not in EYES])
+    rlo, rhi = ps.bbox(only=[n for n in ps.names if n.startswith("r_") and n not in EYES])
     rows.near("detail", "detail/the two leaves mirror each other across y = 0", abs(flo[1] + rhi[1]) + abs(fhi[1] + rlo[1]), 0.0, 0.3)
-    same = all(np.allclose(np.sort(np.ptp(K.local_vertices(ps, "f_" + s), axis=0)), np.sort(np.ptp(K.local_vertices(ps, "r_" + s), axis=0)), atol=0.05) for s in ("main", "foot_l", "foot_r", "stile_l", "stile_r", "rail", "hplate_l", "hplate_r", "eye"))
+    same = all(np.allclose(np.sort(np.ptp(K.local_vertices(ps, "f_" + s), axis=0)), np.sort(np.ptp(K.local_vertices(ps, "r_" + s), axis=0)), atol=0.05) for s in ("main", "foot_l", "foot_r", "stile_l", "stile_r", "rail", "hplate_l", "hplate_r", "eye", "eye_l"))
     rows.add("detail", "detail/every part of the back leaf is the front leaf's size", same, "")
     lo, hi = ps.bbox()
     rows.near("detail", "detail/the board stands on the paving (lowest point z = 0)", lo[2], 0.0, 0.5)
@@ -119,6 +126,18 @@ def extra(T, rows):
     rows.add("photo", "photo/P1's two feet are of equal width within 3 px (the arch is centred)", abs(lf - rf) <= 3.0, "%.1f and %.1f px" % (lf, rf))
     rows.add("photo", "photo/P1's turned copy: the left and right edges are within 3 px of vertical", abs(F1["left_top"]["px"] - F1["left_bot"]["px"]) <= 3.0 and abs(F1["right_top"]["px"] - F1["right_bot"]["px"]) <= 3.0,
              "left %.1f and %.1f, right %.1f and %.1f" % (F1["left_top"]["px"], F1["left_bot"]["px"], F1["right_top"]["px"], F1["right_bot"]["px"]))
+    # ---- the second screw eye (S1 shows one in each edge): level with and the mirror of the right one, the chain on the right only
+    el_f, er_f = tip(ps, "f_eye_l"), tip(ps, "f_eye")
+    el_r, er_r = tip(ps, "r_eye_l"), tip(ps, "r_eye")
+    xlo, xhi = K.local_bbox(ps, "f_eye_l")
+    rlo_, rhi_ = K.local_bbox(ps, "f_eye")
+    rows.near("detail", "detail/the left screw eye runs from x -312 to -296 in the leaf's frame (the right one's mirror)", float(abs(xlo[0] + 312.0) + abs(xhi[0] + 296.0)), 0.0, 0.1)
+    rows.near("detail", "detail/the left eye is the right eye's mirror (same height, same depth in the edge)", float(abs(xlo[2] - rlo_[2]) + abs(xhi[2] - rhi_[2]) + abs(xlo[1] - rlo_[1]) + abs(xhi[1] - rhi_[1])), 0.0, 0.1)
+    rows.add("detail", "detail/the left eyes are level with the right ones (the tips at one height, z about 592)", abs(el_f[2] - er_f[2]) < 0.5 and abs(el_r[2] - er_r[2]) < 0.5,
+             "left tips z %.1f and %.1f, right tips z %.1f and %.1f" % (el_f[2], el_r[2], er_f[2], er_r[2]))
+    chp = [p for p in T["variants"]["AB1"]["parts"] if p["id"] == "chain"][0]["pts"]
+    rows.add("detail", "detail/the chain stays on the right eyes only (no chain point near a left eye)", min(float(np.linalg.norm(np.array(q, float) - t)) for q in chp for t in (el_f, el_r)) > 200.0,
+             "nearest chain point to a left tip %.0f mm" % min(float(np.linalg.norm(np.array(q, float) - t)) for q in chp for t in (el_f, el_r)))
     # ---- the chain: ends on the eyes, slack, hangs free
     ch = [p for p in T["variants"]["AB1"]["parts"] if p["id"] == "chain"][0]["pts"]
     P = np.array(ch, float)
@@ -193,7 +212,23 @@ def extra(T, rows):
     d = ((pl["x_m"] - ff["x_m"]) ** 2 + (pl["z_m"] - ff["z_m"]) ** 2) ** 0.5
     rows.near("placement", "placement/the cast's fish_front spot is the one in hook-cast.json", ff["x_m"], pl["fish_front"]["x_m"], 0.001, unit="m")
     rows.at_least("placement", "placement/the board is at least 1 m from where the cast stands outside the fish market", d, pl["fish_front"]["min_m"], unit="m")
-    rows.at_least("placement", "placement/the board is clear of the fish market's doorway (about x 9.4)", pl["x_m"] - pl["fish_door_x_m"], pl["door_gap_min_m"], unit="m")
+    shopsT = json.load(open(os.path.join(L.REPO, PL.SHOPS_REL)))
+    fish = [s for s in shopsT["shops"] if s["id"] == "fish_market"][0]
+    dc, sc_ = fish["centres_street_x_m"]["shop_door"], fish["centres_street_x_m"]["side_door"]
+    rows.near("placement", "placement/the fish market's shop door is the shopfronts target's (centre 10.797), not the cast's note (9.4)", pl["fish_door_x_m"], dc, 0.001, unit="m")
+    rows.near("placement", "placement/the fish market's side door is the shopfronts target's (centre 9.822)", pl["fish_side_door_x_m"], sc_, 0.001, unit="m")
+    door_edge = dc + pl["fish_door_w_m"] / 2.0
+    rows.at_least("placement", "placement/the board's near end is clear of the fish market's shop door edge (x %.3f)" % door_edge, x0 - door_edge, pl["door_gap_min_m"], unit="m")
+    rows.add("placement", "placement/the reasons name the shop door's x 10.294 to 11.300 and 2.9 m, and no longer 'about x 9.4' or '5 m'", "10.294 to 11.300" in " ".join(pl["reasons"]) and abs(round(x0 - door_edge, 1) - 2.9) < 1e-9 and "2.9 m from the shop door" in " ".join(pl["reasons"])
+             and "about x 9.4" not in " ".join(pl["reasons"]) and "stands 5 m from it" not in " ".join(pl["reasons"]), "gap %.2f m" % (x0 - door_edge))
+    rows.add("placement", "placement/the slot's wording says the leaves' side edges face the stallriser, not the feet", "side edges" in pl["slot"] and "back leaf's feet" not in pl["slot"], "")
+    n1 = [n for n in T["numbers"] if n["id"] == "N1"][0]
+    rows.add("numbers", "numbers/N1's source error is the pavement board's band (500 to 700 wide: at least +-100) and its kind is Judgement", n1["kind"] == "Judgement" and n1.get("source_error", 0) >= 100.0, "source error %s" % n1.get("source_error"))
+    scaled = [n["id"] for n in T["numbers"] if n.get("scaled_on") == "N1"]
+    rows.add("numbers", "numbers/N2, N4, N5, N8, N10 and N11 are marked scaled on the assumed width, each with a 17 percent source error and its own builder tolerance", scaled == ["N2", "N4", "N5", "N8", "N10", "N11"]
+             and all(abs(n["source_error"] - 0.17 * n["value"]) < 0.06 and "tol" in n and n["kind"] == "Photo, scaled on the assumed width" for n in T["numbers"] if n["id"] in scaled), str(scaled))
+    pose = pl["poses"][0]
+    rows.add("placement", "placement/the pose is the stated slot (x, z, yaw 90)", abs(pose["x_m"] - pl["x_m"]) < 1e-9 and abs(pose["z_m"] - pl["z_m"]) < 1e-9 and pose["yaw_deg"] == pl["yaw_deg"], "")
     rows.add("placement", "placement/the board is in bay 1 (x 9 to 15) of the east parade, the fishmonger's (RULINGS 3 Oct)", 9.0 <= x0 and x1 <= 15.0, "x %.2f to %.2f" % (x0, x1))
     sc = json.load(open(os.path.join(L.REPO, "production", "specs", "vignette-scene.json")))
     old = [i for i in sc["held_props"]["items"] if i.get("asset") == "pavement_sign"][0]
@@ -283,6 +318,24 @@ def extra_controls(T):
         ("placement: the board put where the cast stands", lambda t: t["placement"].__setitem__("x_m", 12.2), "placement/the board is at least 1 m from where the cast stands"),
         ("placement: the board in the middle of the pavement (the scene's old line)", lambda t: t["placement"].__setitem__("z_m", 4.1), "placement/clear walking width on the kerb side"),
         ("placement: the board against the stallriser", lambda t: t["placement"].__setitem__("z_m", 4.7), "placement/the board does not touch the stallriser line"),
+        ("detail: the left screw eye moved 10 mm along the edge", lambda t: K.shift_part(t, V, "f_eye_l", [10.0, 0, 0]), "detail/the left screw eye runs from x -312 to -296"),
+        ("detail: the left screw eye 40 mm lower than the right", lambda t: K.shift_part(t, V, "f_eye_l", [0, 0, -40.0]), "detail/the left eyes are level with the right ones"),
+        ("detail: the left screw eye set deeper in the edge than the right", lambda t: K.shift_part(t, V, "r_eye_l", [0, 3.0, 0]), "detail/the left eye is the right eye's mirror"),
+        ("detail: the chain hooked to the left eye as well", lambda t: chain_mut(t, lambda p: p["pts"].__setitem__(8, [float(v) for v in tip(K._ps_cache(t["variants"][V]["parts"]), "f_eye_l")])), "detail/the chain stays on the right eyes only"),
+        ("numbers: N1 given the old +-15 source error", lambda t: [n.__setitem__("source_error", 15.0) for n in t["numbers"] if n["id"] == "N1"], "numbers/N1's source error is the pavement board's band"),
+        ("numbers: N1 made a measured Photo number", lambda t: [n.__setitem__("kind", "Photo") for n in t["numbers"] if n["id"] == "N1"], "numbers/N2 source error covers"),
+        ("numbers: N5 marked plain Photo again", lambda t: [(n.__setitem__("kind", "Photo"), n.pop("scaled_on", None)) for n in t["numbers"] if n["id"] == "N5"], "numbers/N2, N4, N5, N8, N10 and N11 are marked scaled"),
+        ("placement: the fish market's door put back at the cast's x 9.4", lambda t: t["placement"].__setitem__("fish_door_x_m", 9.4), "placement/the fish market's shop door is the shopfronts target's"),
+        ("placement: the fish market's side door moved", lambda t: t["placement"].__setitem__("fish_side_door_x_m", 9.4), "placement/the fish market's side door is the shopfronts target's"),
+        ("placement: the board moved to 0.9 m from the shop door's edge", lambda t: t["placement"].__setitem__("x_m", 12.4), "placement/the board's near end is clear of the fish market's shop door edge"),
+        ("placement: the old 'about x 9.4 and 5 m' wording put back in the reasons", lambda t: t["placement"]["reasons"].append("the fish market's doorway is at about x 9.4 and the board stands 5 m from it"), "placement/the reasons name the shop door's"),
+        ("placement: the old 'back leaf's feet' wording put back", lambda t: t["placement"].__setitem__("slot", t["placement"]["slot"] + " its back leaf's feet 0.063 m clear"), "placement/the slot's wording says"),
+        ("placement: the pose moved off the stated slot", lambda t: PL.set_pose(t, "AB1", x_m=14.0), "placement/the pose is the stated slot"),
+        PL.ctl("placement (shared check): the board turned to face the road (yaw 0)", "AB1", "place/AB1/front faces", yaw_deg=0.0),
+        PL.ctl("placement (shared check): the board stood in the carriageway", "AB1", "place/AB1/feet lie in zone", z_m=2.5),
+        PL.ctl("placement (shared check): the board stood against the party pilaster", "AB1", "place/AB1/clear of every street piece", x_m=14.75),
+        PL.ctl("placement (shared check): the board stood in the shop door's approach", "AB1", "place/AB1/clear of every shop and house door zone", x_m=11.0),
+        PL.ctl("placement (shared check): the board stood mid-pavement (no 0.68 m either side)", "AB1", "place/AB1/walking strip", z_m=4.05),
         ("placement: the board's width wrong in the slot", lambda t: t["placement"].__setitem__("across_half_mm", 400.0), "placement/half the width used in the slot"),
     ]
 
