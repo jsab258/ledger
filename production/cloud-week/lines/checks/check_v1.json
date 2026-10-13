@@ -11225,7 +11225,7 @@
    "id": "pool.bumped@office_worker",
    "what": "bumped@office_worker keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 7 at dry morning stranger accent-limited=False never-police=True"
+   "detail": "worst 7 at dry morning stranger accent-limited=False never-police=False"
   },
   {
    "id": "pool.bumped@pensioner",
@@ -11303,7 +11303,7 @@
    "id": "pool.crime/face@office_worker",
    "what": "crime/face@office_worker keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 8 at dry morning None accent-limited=False never-police=True"
+   "detail": "worst 8 at dry morning None accent-limited=False never-police=False"
   },
   {
    "id": "pool.crime/face@pensioner",
@@ -11459,7 +11459,7 @@
    "id": "pool.crime/shape@office_worker",
    "what": "crime/shape@office_worker keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 8 at dry morning None accent-limited=False never-police=True"
+   "detail": "worst 8 at dry morning None accent-limited=False never-police=False"
   },
   {
    "id": "pool.crime/shape@pensioner",
@@ -11615,7 +11615,7 @@
    "id": "pool.farewell@office_worker",
    "what": "farewell@office_worker keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 6 at dry morning None accent-limited=False never-police=True"
+   "detail": "worst 6 at dry morning None accent-limited=False never-police=False"
   },
   {
    "id": "pool.farewell@pensioner",
@@ -11813,7 +11813,7 @@
    "id": "pool.greeting/stranger@office_worker",
    "what": "greeting/stranger@office_worker keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 7 at dry afternoon stranger accent-limited=False never-police=True"
+   "detail": "worst 7 at dry afternoon stranger accent-limited=False never-police=False"
   },
   {
    "id": "pool.greeting/stranger@pensioner",
@@ -11921,7 +11921,7 @@
    "id": "pool.greeting/tommy@office_worker",
    "what": "greeting/tommy@office_worker keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 6 at dry afternoon tommy accent-limited=False never-police=True"
+   "detail": "worst 6 at dry afternoon tommy accent-limited=False never-police=False"
   },
   {
    "id": "pool.greeting/tommy@pensioner",
@@ -11981,7 +11981,7 @@
    "id": "pool.rain/in@office_worker",
    "what": "rain/in@office_worker keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 7 at drizzle morning None accent-limited=False never-police=True"
+   "detail": "worst 7 at drizzle morning None accent-limited=False never-police=False"
   },
   {
    "id": "pool.rain/in@pensioner",
@@ -12059,7 +12059,7 @@
    "id": "pool.rain/starts@office_worker",
    "what": "rain/starts@office_worker keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 7 at drizzle morning None accent-limited=False never-police=True"
+   "detail": "worst 7 at drizzle morning None accent-limited=False never-police=False"
   },
   {
    "id": "pool.rain/starts@pensioner",
@@ -12137,7 +12137,7 @@
    "id": "pool.way/ask@office_worker",
    "what": "way/ask@office_worker keeps at least 6 lines in every weather and hour, standing, accent and never-police case",
    "pass": true,
-   "detail": "worst 8 at dry morning None accent-limited=False never-police=True"
+   "detail": "worst 8 at dry morning None accent-limited=False never-police=False"
   },
   {
    "id": "pool.way/ask@pensioner",
@@ -14915,7 +14915,7 @@
    "id": "content.canon_gate",
    "what": "tools/canon-gate.py is clean over production/cloud-week/lines/lines.json, production/cloud-week/lines/rules.json, production/cloud-week/lines/NOTES.md",
    "pass": true,
-   "detail": "canon-gate: clean - 0 finding(s) in 3 file(s), 3319 line(s) examined, 13 era term(s) and 45 brand token(s) screened"
+   "detail": "canon-gate: clean - 0 finding(s) in 3 file(s), 3325 line(s) examined, 13 era term(s) and 45 brand token(s) screened"
   },
   {
    "id": "content.notes_no_em_dash_or_italics",

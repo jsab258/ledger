@@ -25,7 +25,7 @@ Unit 11, cloud week 42, 13 October 2026. Written before any content, as CLAUDE.m
 2. Ron's years: his sheet's line says "Forty years on the docks", the talk card says "thirty years", his approved street lines say "thirty years on the quay". Not restated: each is cited where used, and answers avoid a number.
 3. The Tangs' takeaway has no bay: REGULARS.md puts it on the parade's empty unit, RULINGS.md (3 Oct, later) rules bay 3 empty and to let.
 4. Julie Kettlewell (tanja) is laid off by her sheet; hook-cast.json still puts her at the laundry counter seven to six.
-5. The trades line lists an ironmonger and a tea room on the west block; hook-cast.json has Hal's coin shop and the cafe there.
+5. The trades line lists an ironmonger and a tea room on the west block; hook-cast.json has Hal's coin shop and the cafe there. The built west row (RULINGS and DECISIONS of 3 Oct) is a tea room (x 24 to 30), an ironmonger (30 to 36) and the newsagent and tobacconist (36 to 42), so Hal's coin shop (x 39) has no unit of its own on it; no direction to it is written until Jafar places it.
 6. The empire roster (empire-roster.md 94 to 98) says Ferko drives the night cab; the regulars sheet makes Kevin Needham (ferko) the day driver and Terry Hodgson (dusan) the night one. The sheet outranks; the arm each belongs to is carried and marked.
 7. CASTING.md line 65 names Humberside CID; Ellis's own sheet names no force (Carol Ellis sheet, line 11: not decided in canon). The sheet stands, no force is named here.
 8. CASTING.md 76 says Mickey was a trawlerman until the fleet went; canon.md does not say it and CATALOGUE.md already lists it. Not used.
