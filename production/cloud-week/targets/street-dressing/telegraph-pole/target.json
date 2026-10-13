@@ -1024,7 +1024,7 @@
    "kind": "photograph",
    "shows": "a pole on the pavement in a terraced street (Percy Road): the pole stands level with the front wall of the terrace, wires leave its top to houses on both sides, the pole's top reaches above the first-floor windows' heads",
    "used": true,
-   "not_used_for": "any number; the white car and its number plate (masked/outside the crop)",
+   "not_used_for": "any number; the cars and their number plates (below the crop)",
    "period": "2009; a terraced street of the same period as Quay Street"
   },
   {
@@ -1097,9 +1097,9 @@
   {
    "file": "p1-wilmott-close-pole-top.jpg",
    "source": "S1",
-   "credit": "Basher Eyre, Geograph 2630310, CC BY-SA 2.0, 2011-09-21, cropped to the pole's upper two thirds; the car and its plate are outside the crop",
+   "credit": "Basher Eyre, Geograph 2630310, CC BY-SA 2.0, 2011-09-21, cropped to the pole and its wires; the cars at the foot of the picture and their plates are below the crop",
    "masked": [
-    "the car and its number plate are outside the crop"
+    "the cars and their number plates are below the crop (cut by script)"
    ],
    "looked_at_full_size": true,
    "no_people_no_drink_no_betting_no_names": true

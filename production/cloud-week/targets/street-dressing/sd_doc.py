@@ -85,6 +85,8 @@ COMMON_RULINGS = [
     ["RULINGS 1 Oct (night)", "pools of lamp light, not one orange wash", "the lantern colour (1.0, 0.25, 0.0) linear only; {night}"],
     ["RULINGS 8 Oct", "photographs win over books, element by element", "see 'Where the photographs win'"],
     ["RULINGS 13 Oct (RECIPE)", "a notebook entry per unit", "RECIPE.md carries unit 13's entry"],
+    ["RULINGS 16 Sep, 29 Sep (money, live talk)", "nothing bought without his yes; live talk names no real make, brand or shop and nothing after 1992", "nothing bought (the photographs and the model records are free to read); every name on a part or a card is invented; nothing in the target is dated after 1992"],
+    ["the rest of RULINGS.md", "read in full on 13 October for this unit (faces, voices, clothes, people, talk, story, combat, disk and git)", "none of them touches this object; the weather ruling (a grey range, never sunshine) governs how the game lights it, not the target"],
 ]
 
 

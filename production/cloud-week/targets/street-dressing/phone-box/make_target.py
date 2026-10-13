@@ -326,7 +326,7 @@ def doc(T):
         ["RULINGS 1 Oct (night)", "pools of lamp light, not one orange wash", "the lantern colour (1.0, 0.25, 0.0) linear only; the kiosk's own lamp is off in the sample (owed line O2 covers the lettering; a lit kiosk is a taste item for later)"],
         ["RULINGS 8 Oct", "photographs win over books, element by element", "section 'Where the photographs win' below; W1 to W6"],
         ["RULINGS 13 Oct (RECIPE)", "a notebook entry per unit", "RECIPE.md carries unit 13's entry"],
-    ]))
+    ] + D.COMMON_RULINGS[-2:]))
     w("")
     w("## Sources")
     w("")

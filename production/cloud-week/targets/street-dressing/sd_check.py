@@ -25,6 +25,27 @@ _geo_cache = {}
 
 
 # ------------------------------------------------------------------------------------------------ number measuring
+def local_vertices(ps, name):
+    """The vertices of one part brought back into its own frame (the inverse of its xf), millimetres."""
+    i = ps.index[name]
+    V = np.vstack([pc.V for pc in ps.pieces[i]])
+    xf = ps.parts[i].get("xf")
+    if xf:
+        R = L.rot(*xf.get("rot", [0, 0, 0]))
+        t = np.array(xf.get("t", [0, 0, 0]), float)
+        o = np.array(xf.get("pivot", [0, 0, 0]), float)
+        V = (V - o - t) @ R + o
+    return V
+
+
+def local_bbox(ps, name, where=None):
+    V = local_vertices(ps, name)
+    if where:
+        a = "xyz".index(where["axis"])
+        V = V[(V[:, a] >= where["lo"]) & (V[:, a] <= where["hi"])]
+    return V.min(0), V.max(0)
+
+
 def measure(ps, spec):
     """Measure one named quantity off the built parts. spec: {kind, ...}"""
     k = spec["kind"]
@@ -60,6 +81,21 @@ def measure(ps, spec):
         return float((lb[ax] + hb[ax]) / 2 - (la[ax] + ha[ax]) / 2)
     if k == "wire_min_z":
         return float(min(ps.part_bbox(n)[0][2] for n in spec["parts"]))
+    if k == "xf":  # an angle read off a part's own transform (degrees, absolute)
+        i = ps.index[spec["part"]]
+        return float(abs(ps.parts[i]["xf"]["rot"][int(spec.get("index", 0))]))
+    if k == "local_span":  # from the low edge of part a to the high edge of part b, each in its own frame
+        la, _ = local_bbox(ps, spec["a"], spec.get("where"))
+        _, hb = local_bbox(ps, spec["b"], spec.get("where"))
+        return float(hb[ax] - la[ax])
+    if k == "local":  # an extent, lo or hi of a part in its own (untransformed) frame; "where" keeps only vertices inside a window
+        lo, hi = local_bbox(ps, spec["part"], spec.get("where"))
+        what = spec.get("what", "extent")
+        if what == "lo":
+            return float(lo[ax])
+        if what == "hi":
+            return float(hi[ax])
+        return float(hi[ax] - lo[ax])
     if k == "count":
         pre = spec["prefix"]
         return float(sum(1 for n in ps.names if n.startswith(pre)))

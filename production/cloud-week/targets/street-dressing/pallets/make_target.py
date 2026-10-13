@@ -138,7 +138,9 @@ def finish(T):
         "PA2: two stacked flat pallets.",
         "conditions (materials and seeds): C0 new and pale (a few), C1 weathered (the sample), C2 one board broken and one missing. A leaning pallet's lean is 10 to 14 degrees by seed.",
     ]
-    T["owed"] = []
+    T["owed"] = [
+        {"id": "O1", "line": "Put the pallets back at the yard mouth, one leaning on the gable end and one flat before it, with no owner's mark on any board, now that they are real pallets?", "recommended": "Yes, put them back"},
+    ]
     T["not_settled"] = [
         "absolute size: S1 has no scale object, so the 1000 x 1200 x 144 is the European standard (Read), supported by S1's proportions (board length to width of the pallet 1.2), not measured",
         "the board width (85 mm, error 6) comes from a ratio on a perspective view",
@@ -172,7 +174,7 @@ SUMMARY = ("The pallets are the plain softwood stringer pallet, 1000 x 1200 x 14
 def story(T):
     return {
         "no": "5", "title": "Quay Street's pallets: the exact target", "summary": SUMMARY, "previews_list": "p1 (S1 cropped to the leaning pallets)",
-        "rulings": {"ruling_2oct": "'skip and pallets off until real': this target is the pallet made real (a form from a photograph, no mark), to go back into the scene only after the gate", "sources_order": "no CC0 pallet exists (S4); so own work by script",
+        "rulings": {"ruling_2oct": "'skip and pallets off until real': this target is the pallet made real (a form from a photograph, no mark), to go back into the scene only after the gate, and the owed line asks for the yes", "sources_order": "no CC0 pallet exists (S4); so own work by script",
                     "content": "no person, no drink, no betting; the data scan finds none of what the rule forbids", "noai": "S1 and S2 are CC BY-SA 2.0 Geograph photographs used only to measure and look at; no NoAI source",
                     "look": "weathered grey-brown timber and grime", "night": "the pallets read as pale slats and black gaps"},
         "searched": "What was searched: Poly Haven's model list (no pallet); Geograph's feed for `pallets`, `wooden pallets`, `stack of pallets`, `pallets yard` with years 1980 to 1995 and without a year (none before 2006 measurable). Wikimedia Commons was not asked.",
