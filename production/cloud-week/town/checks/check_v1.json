@@ -3,10 +3,10 @@
  "file_checked": "production/cloud-week/town/people.json",
  "summary": {
   "rows": 619,
-  "pass": 615,
-  "fail": 4,
+  "pass": 617,
+  "fail": 2,
   "seeded_faults": 34,
-  "seeded_faults_caught": 33
+  "seeded_faults_caught": 34
  },
  "rows": [
   {
@@ -414,8 +414,8 @@
   {
    "id": "rocco.mickey",
    "what": "rocco: Mickey is described only by regulars who knew him, in the approved lines",
-   "pass": false,
-   "detail": "['rocco.k19']"
+   "pass": true,
+   "detail": "[]"
   },
   {
    "id": "lena.identity",
@@ -3653,9 +3653,9 @@
   },
   {
    "id": "control.23",
-   "what": "seeded fault caught: an old name in a fact carried from the roster",
-   "pass": false,
-   "detail": "expected a failing row with 'content.old_names_carried'; failed rows: ['decisions.N-REWORDED', 'decisions.only_mine_new', 'rocco.mickey', 'content.old_names']"
+   "what": "seeded fault caught: an old name in a fact carried from a home",
+   "pass": true,
+   "detail": ""
   },
   {
    "id": "control.24",

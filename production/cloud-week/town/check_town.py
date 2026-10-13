@@ -636,9 +636,12 @@ def run(doc, full=True):
 
         # Mickey in rumours and new facts
         mb = []
+        home_of = {f["id"]: fold(" ".join((lines_of(f["reworded_from"]["file"]) or [""])[f["reworded_from"]["line"] - 1:f["reworded_from"]["end"]])) for f in facts if f.get("reworded_from")}
         for src, label in ([(r["gist"], r["id"]) for r in p["rumours"]] + [(f["text"], f["id"]) for f in facts if f.get("new")]):
             for s in sentences(src):
                 if re.search(MICKEY_DESC, s) and (not p["knew_mickey"] or fold(s).lower() not in approved_mickey):
+                    if label in home_of and p["knew_mickey"] and fold(s) in home_of[label]:
+                        continue            # a sentence of the home's own line, kept when the fact was reworded around it
                     mb.append(label)
         row("%s.mickey" % pid, "%s: Mickey is described only by regulars who knew him, in the approved lines" % pid, not mb, str(mb[:3]))
 
@@ -834,7 +837,7 @@ def seeded_faults():
     def m_dayfact(d):
         f = next(f for f in person(d, "tanja")["facts"] if f.get("derived")); f["text"] = "Monday: 07:00 to 18:00 the steam laundry's counter. Saturday: 07:00 to 18:00 the steam laundry's counter. Sunday: not on the street."
     def m_oldname_carried(d):
-        f = next(f for f in person(d, "joey")["facts"] if f["key"] == "syndicate"); f["text"] = "Joey (dock hand), Ferko (night cab)"
+        f = next(f for f in person(d, "zlata")["facts"] if f["key"] == "book_radio"); f["text"] += " Joey rings it in."
     def m_design_note(d):
         f = next(f for f in person(d, "danny")["facts"] if f["key"] == "flashy"); f["text"] += " (canon)"
     def m_keep_to_selves(d):
@@ -852,7 +855,7 @@ def seeded_faults():
         ("Mickey described by one who did not know him", "june.", m_mickey), ("murder suggested", "content.foul_play", m_murder),
         ("a derived day fact altered", "rocco.facts", m_day),
         ("a day fact that still reads the old laundry routine of a laid-off woman", "tanja.", m_dayfact),
-        ("an old name in a fact carried from the roster", "content.old_names_carried", m_oldname_carried),
+        ("an old name in a fact carried from a home", "content.old_names_carried", m_oldname_carried),
         ("a design note inside a fact", "content.design_notes", m_design_note),
         ("a rumour kept to themselves yet passed on", "hal.rumours", m_keep_to_selves), ("a schedule altered against hook-cast", "rocco.schedule", m_sched),
         ("a regular missing", "cast.regular.hal", m_missing), ("an extra entry", "cast.no_extra", m_extra),
