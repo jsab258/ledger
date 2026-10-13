@@ -176,10 +176,11 @@ Axes: x along the stringers (1000), y along the deck boards (1200), z up; the st
 
 ### Where it stands on Quay Street
 
-**Slot:** west side, in the yard mouth (x 21 to 24), behind the crowd-control barrier the scene puts across it: the leaning pallet against the gable end of the west_south block (its wall face at x 21.0, facing +x), centred at z -6.2; one pallet flat on the yard floor in front of its foot (street x 21.13 to 22.33)
+**Slot:** west side, in the yard mouth (x 21 to 24), behind the crowd-control barrier the scene puts across it, ON A YARD FLOOR OF SETTS AT 0.100 ABOVE THE CROWN (the footway's back level and the ground plots' top: a JUDGEMENT, because the scene models no floor there: handover H1 asks for it, to be built before the pallets return): the leaning pallet against the gable end of the west_south block (its wall face at x 21.0, facing +x), centred at z -6.2; one pallet flat on the yard floor in front of its foot (street x 21.39 to 22.59); the boards are plain, a choice for the no-real-marks rule (1990 pallets mostly carried owners' marks)
 
 - the scene's story is that the yard is shut (a barrier across the mouth, cones, a skip): the pallets behind the barrier are the yard's stuff, one event with the skip; the 2 October ruling took the pallet off the street until real, and this target is the 'real' (RULINGS 2 Oct): a decision for DECISIONS, not a question
 - the earlier slot (x 21.8 on the west pavement, a flat slab) is dropped: a flat pallet on the footway read as a slab; leaning on a wall it reads as a pallet (S1)
+- THE FLOOR: the first version put the pallets at z -5.7 to -6.7 behind the building line with no floor under them (the scene file calls the yard mouth 'a gap in the data': vignette-pieces.json has no piece under x 21.5 to 23.0, z -5.6 to -6.8, and its ground plots stop at x 21.0 and start at x 24.0), and its rows tested only the barrier line and the crates; the floor is now stated (setts at 0.100, a Judgement) and handed to the scene's owner (H1), and the shared placement rows check that every pallet foot lies on a modelled surface or on the floor the slot owes, at the stated level
 - the scene's two wooden crates stand on the pavement at z -4.3 (far edges at -4.76), the pallets inside the yard from z -5.7: 0.94 m clear; the self-check reads the crates' places from the scene and measures the clearance
 - the scene's large_pallet (2.00 x 1.10) is not a British pallet and is not used
 
@@ -189,6 +190,7 @@ Axes: x along the stringers (1000), y along the deck boards (1200), z up; the st
 |---|---|---|---|---|
 | W1 | the pallet's size and form | the scene file's held large_pallet 2.00 x 1.10 m and small_pallet (a slab) | S1: a 1000 x 1200 stringer pallet with seven boards, three stringers (a middle one at the middle of the boards), the usual look | 1000 x 1200 x 144, 7 top boards of 85, 3 stringers, 3 bottom boards |
 | W2 | where it stands | the scene: flat on the west pavement at x 21.8 | S1: leaning on a wall beside a door | leaning on the gable wall in the yard mouth, one flat at its foot |
+| W4 | the yard's floor | the scene file: the yard mouth 'is a gap in the data rather than a modelled object' (west_north's note); no piece under x 21.5 to 23.0, z -5.6 to -6.8 | n/a (a placement fact; S1 shows pallets leaning on a wall beside a door, on a paved ground) | a floor of setts at 0.100 above the crown, a Judgement, owed to the scene's owner (H1); the pallets do not return before it is built |
 | W3 | block or stringer | the asset plan's pallet 1,200 x 1,000 | S2 shows both stringer pallets and some with block feet; S1's is a stringer pallet | stringer pallet; a block-footed pallet is not written |
 
 ### Checks for the builder (target.json `checks`)
@@ -212,11 +214,16 @@ Axes: x along the stringers (1000), y along the deck boards (1200), z up; the st
 - one mesh per pallet by script: 7 + 3 boards and 3 stringers, boards arrised 1 mm, ends chamfered 15 on the underside; the nails are texture
 - the leaning pallet is the flat one rotated 78 degrees about its stringer axis (x) with its lowest edge on the ground; the transform is in the part xf of target.json
 - the gable wall in PA3 is a stand-in: the street's own wall carries the contact
-- no mark of any kind on any board
+- no mark of any kind on any board (texture.marks and texture.decals are empty)
+- stand the pallets at the pose in target.json (x 21.1247, z -6.2, yaw 90) on the owed yard floor at 0.100 above the crown; do not place them before the floor exists
 
 ## Owed to Jafar's page (one line each, with a recommendation)
 
 1. Put the pallets back at the yard mouth, one leaning on the gable end and one flat before it, with no owner's mark on any board, now that they are real pallets? (recommended: Yes, put them back)
+
+## Handovers (for the town or the scene's owner, not for his page)
+
+- H1: For the scene's owner: the yard mouth (x 21.0 to 24.0, between the two west blocks) has no floor in the data (vignette-scene.json west_north's note calls it 'a gap in the data rather than a modelled object'; vignette-pieces.json has no piece under x 21.5 to 23.0, z -5.6 to -6.8). Give it a floor of setts at the footway's back level, 0.100 above the crown (the level of the ground plots either side), from x 21.0 to 24.0 and from z -5.125 back to the blocks' depth (z -13.125), built before the pallets return.
 
 ## What the target could not settle
 
@@ -224,7 +231,8 @@ Axes: x along the stringers (1000), y along the deck boards (1200), z up; the st
 - the board width (85 mm, error 6) comes from a ratio on a perspective view
 - whether pallets of 1990 were mostly hire pallets with owners' marks (they were; the target leaves every mark off)
 - the exact yard-mouth clearance: it depends on the crates' places at x 22.4 and 23.1 and the barrier at 22.5, which the scene owns
+- the yard floor: not in the scene (its note calls the yard a gap in the data); level 0.100 and the setts are a Judgement and the floor is owed (H1)
 
 ## How the self-check is built
 
-`python self_check.py` (offline) rebuilds the parts' geometry from target.json and tests: the overall box against the printed numbers; every number measured back off the parts; no floating part, every part meeting a neighbour, every declared join, no part sinking into another beyond its allowance; each closed face shot with rays square on and leaning 30 and 45 degrees (fine across one direction and coarse along the other); the photograph's features predicted from the drawing with the scale fitted on the height only and compared with the pixels' measured edges; the text scanned for real makers and for what the content rule forbids; the lines for his page for em dashes and italics; the family's own rows (the board width over pitch against P1's measured edges, the board and stringer counts, the pallet's size against the standard, the lean from the transform, the contact with the wall and the ground, the pallet inside the yard mouth against the scene's barrier). `--live` re-reads the Geograph pages and re-measures the photographs' edges from the pixels; `--previews` checks the preview files. Each negative control is a deliberately wrong copy that must make its named row fail.
+`python self_check.py` (offline) rebuilds the parts' geometry from target.json and tests: the overall box against the printed numbers; every number measured back off the parts; no floating part, every part meeting a neighbour, every declared join, no part sinking into another beyond its allowance; each closed face shot with rays square on and leaning 30 and 45 degrees (fine across one direction and coarse along the other); the photograph's features predicted from the drawing with the scale fitted on the height only and compared with the pixels' measured edges; the text scanned for real makers and for what the content rule forbids; the lines for his page for em dashes and italics; the family's own rows (the board width over pitch against P1's measured edges, the board and stringer counts, the pallet's size against the standard and against the scene's large pallet read from its model, the lean from the transform, the contact with the wall and the ground, no mark in the texture spec or the materials' notes, the pallets in the yard mouth against the scene's barrier and crates, and every foot on a modelled surface or on the owed floor at its stated level). `--live` re-reads the Geograph pages and re-measures the photographs' edges from the pixels; `--previews` checks the preview files. Each negative control is a deliberately wrong copy that must make its named row fail.

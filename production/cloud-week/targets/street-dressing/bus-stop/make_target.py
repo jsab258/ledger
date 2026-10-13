@@ -14,6 +14,10 @@ PM = json.load(open(os.path.join(HERE, "photo_measurements.json")))["P1"]
 F = PM["features"]
 S_MM = 6.56   # mm per pixel on P1 (Judgement: the flag plate is taken as 300 mm wide)
 Z_TOP = 3000.0
+R_POLE = 44.5                    # the pole is 89 across (3 1/2 inch tube): P1's white pole is 13 to 14 px wide, 13.5 x 6.56 = 89 (the review of 13 October)
+D_FRONT = R_POLE - 38.0          # the whole front assembly (flag, case) moves this far toward the bus, so it still meets the pole's front face
+WHITE_T = 2310.0                 # where the white length begins (P1 row 174.8, the review's 2310)
+RING_B = 890.0                   # the black ring under the case ends here (P1 row 392.3)
 
 
 def z_of(row):
@@ -57,10 +61,11 @@ def times(spec):
 
 def pole_parts(case=True):
     P = []
-    P.append(CY("pole_foot", (0, 0, 0), (0, 0, BAND_B), 38.0, "paint_black", note="76 mm steel tube, black lower part"))
-    P.append(CY("pole_white", (0, 0, BAND_B), (0, 0, 2118.0), 38.0, "paint_white", note="white-painted length, hidden behind the case between its ends"))
-    P.append(CY("pole_upper", (0, 0, 2118.0), (0, 0, Z_TOP), 38.0, "paint_black", note="black upper length carrying the flag"))
-    P.append(CY("pole_cap", (0, 0, Z_TOP), (0, 0, Z_TOP + 8.0), 40.0, "paint_black", note="plug cap, 8 mm, slightly proud of the tube"))
+    P.append(CY("pole_foot", (0, 0, 0), (0, 0, BAND_B), R_POLE, "paint_black", note="89 mm steel tube (P1: the white pole is 13 to 14 px wide, 13.5 x 6.56 = 89), black lower part to 554"))
+    P.append(CY("pole_white", (0, 0, BAND_B), (0, 0, WHITE_T), R_POLE, "paint_white", note="white-painted length 554 to 2310 (P1: the white begins at row 174.8, about 2310, not 2118); the case hides part of it"))
+    P.append(CY("pole_ring", (0, 0, RING_B), (0, 0, CASE_B), R_POLE + 1.0, "paint_black", note="the black ring directly under the case, 890 to 1008 (P1 rows 376 to 392): a painted band, modelled as a 1 mm sleeve over the white length"))
+    P.append(CY("pole_upper", (0, 0, WHITE_T), (0, 0, Z_TOP), R_POLE, "paint_black", note="black upper length 2310 to 3000 carrying the flag"))
+    P.append(CY("pole_cap", (0, 0, Z_TOP), (0, 0, Z_TOP + 8.0), R_POLE + 2.0, "paint_black", note="plug cap, 8 mm, slightly proud of the tube"))
     P.append(CY("pole_collar", (0, 0, 0), (0, 0, 22.0), 95.0, "concrete", note="a small concrete collar round the foot, 22 mm proud of the paving"))
     # the flag: an enamel plate 300 x 285 on two clamps, a black border, rolled edge
     P.append(B("flag_plate", -150.0, 150.0, -48.0, -45.0, FLAG_B + 10.0, Z_TOP, "enamel_white", edge="corners r 20, edge rolled back 4 mm", note="old-style enamel plate, 3 mm steel"))
@@ -78,17 +83,37 @@ def pole_parts(case=True):
         P.append(B("case_bar_right", 110.0, 130.0, -98.0, -38.0, t0 + 20.0, t1 - 20.0, "case_green"))
         P.append(B("case_back", -110.0, 110.0, -44.0, -38.0, t0 + 20.0, t1 - 20.0, "case_green", note="back sheet, 6 mm with its lining"))
         P.append(B("case_glass", -112.0, 112.0, -98.0, -96.0, t0 + 18.0, t1 - 18.0, "glass", transparent=True, note="2 mm clear sheet in the front rebate (acrylic)"))
-        P.append(B("case_card", -100.0, 100.0, -96.0, -95.5, t0 + 40.0, t0 + 40.0 + 470.0, "paper", film=True, note="the printed timetable card, 200 x 470, behind the sheet"))
+        P.append(B("case_card", -100.0, 100.0, -96.0, -95.5, t0 + 24.0, t0 + 24.0 + 470.0, "paper", film=True, note="the printed timetable card, 200 x 470, behind the sheet, its top edge at 1502 (P1 row 299, just under the middle bar)"))
         P.append(B("case_lock", 112.0, 124.0, -104.0, -98.0, t0 + 400.0, t0 + 412.0, "galvanised", note="a round lock head on the right bar, 12 mm"))
-        P.append(CY("case_strap_top", (0, 0, t1 - 24.0), (0, 0, t1 - 12.0), 41.0, "galvanised", note="stainless clamp strap round the pole, 12 wide"))
-        P.append(CY("case_strap_bottom", (0, 0, t0 + 12.0), (0, 0, t0 + 24.0), 41.0, "galvanised"))
+        P.append(CY("case_strap_top", (0, 0, t1 - 24.0), (0, 0, t1 - 12.0), R_POLE + 3.0, "galvanised", note="stainless clamp strap round the pole, 12 wide"))
+        P.append(CY("case_strap_bottom", (0, 0, t0 + 12.0), (0, 0, t0 + 24.0), R_POLE + 3.0, "galvanised"))
+        # the case's middle bar (P1 row 284.5, about 1597, 2 to 3 px = 15 mm high, a small dark fixing at each end): 220 x 15 x 4 in the rebate behind the clear sheet
+        P.append(B("case_mid_bar", -110.0, 110.0, -94.0, -90.0, 1590.0, 1605.0, "case_green", note="the case's middle bar, 220 x 15 x 4, at 1590 to 1605, in the rebate behind the clear sheet (P1: a thin dark bar across the window at row 284.5)"))
+        for sd, x in (("l", -105.0), ("r", 105.0)):
+            P.append(CY("case_mid_head_%s" % sd, (x, -94.0, 1597.5), (x, -96.0, 1597.5), 4.0, "paint_black", note="round head 8 across, 2 proud, a fixing at the bar's end"))
+    # the flag's back face (+y... the pole side): Judgement, double-sided, the same border as the front (a stop flag is read from both directions)
+    P.append(B("flag_back_border_top", -138.0, 138.0, -45.0, -43.0, Z_TOP - 24.0, Z_TOP - 12.0, "enamel_black", note="back face (toward the pole): the same black border, 2 mm raised; Judgement (a flag is read from both directions)"))
+    P.append(B("flag_back_border_bottom", -138.0, 138.0, -45.0, -43.0, FLAG_B + 22.0, FLAG_B + 34.0, "enamel_black"))
+    P.append(B("flag_back_border_left", -138.0, -126.0, -45.0, -43.0, FLAG_B + 34.0, Z_TOP - 24.0, "enamel_black"))
+    P.append(B("flag_back_border_right", 126.0, 138.0, -45.0, -43.0, FLAG_B + 34.0, Z_TOP - 24.0, "enamel_black"))
+    # the front assembly stands D_FRONT further toward the bus, so that it still meets the (thicker) pole
+    for p in P:
+        if p["id"].startswith(("flag_", "case_")) and not p["id"].startswith("case_strap") and p["type"] == "box":
+            p["c"] = [p["c"][0], round(p["c"][1] - D_FRONT, 3), p["c"][2]]
+        elif p["id"].startswith("case_mid_head"):
+            p["p0"] = [p["p0"][0], p["p0"][1] - D_FRONT, p["p0"][2]]
+            p["p1"] = [p["p1"][0], p["p1"][1] - D_FRONT, p["p1"][2]]
     return P
 
 
 def build():
     P1 = pole_parts(True)
     P2 = pole_parts(False)
-    embeds = [["pole_collar", "pole_foot", 42.0], ["case_strap_top", "pole_white", 42.0], ["case_strap_bottom", "pole_white", 42.0], ["pole_cap", "pole_upper", 5.0]]
+    embeds = [["pole_collar", "pole_foot", 46.0], ["case_strap_top", "pole_white", 46.0], ["case_strap_bottom", "pole_white", 46.0], ["case_strap_top", "pole_upper", 46.0], ["pole_cap", "pole_upper", 5.0],
+              ["pole_ring", "pole_white", 46.0], ["pole_ring", "case_strap_bottom", 46.0], ["pole_ring", "case_bar_bottom", 6.0]]
+    _ex1 = ["pole_collar", "case_lock", "case_mid_head_l", "case_mid_head_r"]
+    _lo1, _hi1 = L.PartSet(P1).bbox(only=[p["id"] for p in P1 if p["id"] not in _ex1])
+    _lo2, _hi2 = L.PartSet(P2).bbox(only=[p["id"] for p in P2 if p["id"] != "pole_collar"])
     T = {
         "family": FAMILY,
         "title": "Quay Street's bus stop with its timetable",
@@ -107,24 +132,25 @@ def build():
             "concrete": {"name": "concrete collar", "srgb": [128, 126, 120], "rough": 0.9, "rough_words": "rough", "metal": False, "note": "cracked at the pole"},
         },
         "variants": {
-            "BS1": {"name": "BS1: pole, old-style flag and timetable case (the sample)", "parts": P1, "overall": {"w": 300.0, "d": 139.0, "h": 3008.0}, "overall_tol": 2.0, "overall_exclude": ["pole_collar", "case_lock"],
+            "BS1": {"name": "BS1: pole, old-style flag and timetable case (the sample)", "parts": P1, "overall": {"w": 300.0, "d": round(float(_hi1[1] - _lo1[1]), 1), "h": 3008.0}, "overall_tol": 2.0, "overall_exclude": ["pole_collar", "case_lock", "case_mid_head_l", "case_mid_head_r"],
                     "joins": [["pole_foot", "pole_white"], ["pole_white", "pole_upper"], ["pole_upper", "pole_cap"], ["flag_clamp_top", "pole_upper"], ["flag_clamp_top", "flag_plate"],
                               ["flag_clamp_bottom", "pole_upper"], ["flag_clamp_bottom", "flag_plate"], ["flag_border_top", "flag_plate"], ["case_bar_top", "pole_white"],
                               ["case_bar_bottom", "pole_white"], ["case_back", "case_bar_left"], ["case_glass", "case_bar_left"], ["case_card", "case_glass"], ["case_lock", "case_bar_right"],
-                              ["case_strap_top", "case_bar_top"], ["case_strap_bottom", "case_bar_bottom"], ["pole_collar", "pole_foot"]],
+                              ["case_strap_top", "case_bar_top"], ["case_strap_bottom", "case_bar_bottom"], ["pole_collar", "pole_foot"],
+                              ["case_mid_bar", "case_bar_left"], ["case_mid_head_l", "case_mid_bar"], ["case_mid_head_r", "case_mid_bar"], ["flag_back_border_top", "flag_plate"], ["flag_back_border_left", "flag_plate"]],
                     "embeds": embeds + [["case_back", "case_bar_left", 6.0], ["case_back", "case_bar_right", 6.0], ["case_glass", "case_bar_left", 4.0], ["case_glass", "case_bar_right", 4.0],
                                         ["case_glass", "case_bar_top", 4.0], ["case_glass", "case_bar_bottom", 4.0], ["case_back", "case_bar_top", 6.0], ["case_back", "case_bar_bottom", 6.0]],
                     "faces": [
-                        {"id": "flag plate", "o": [-150.0, -50.0, FLAG_B + 12.0], "u": [1, 0, 0], "v": [0, 0, 1], "n": [0, -1, 0], "nu": 300.0, "nv": Z_TOP - FLAG_B - 14.0, "depth": 8.0, "blockers": ["flag_plate"]},
+                        {"id": "flag plate", "o": [-150.0, -50.0 - D_FRONT, FLAG_B + 12.0], "u": [1, 0, 0], "v": [0, 0, 1], "n": [0, -1, 0], "nu": 300.0, "nv": Z_TOP - FLAG_B - 14.0, "depth": 8.0, "blockers": ["flag_plate"]},
                     ]},
-            "BS2": {"name": "BS2: pole and flag without a case (a second stop elsewhere; not placed today)", "parts": P2, "overall": {"w": 300.0, "d": 90.0, "h": 3008.0}, "overall_tol": 2.0, "overall_exclude": ["pole_collar"],
+            "BS2": {"name": "BS2: pole and flag without a case (a second stop elsewhere; not placed today)", "parts": P2, "overall": {"w": 300.0, "d": round(float(_hi2[1] - _lo2[1]), 1), "h": 3008.0}, "overall_tol": 2.0, "overall_exclude": ["pole_collar"],
                     "joins": [["pole_foot", "pole_white"], ["pole_upper", "pole_cap"], ["flag_clamp_top", "pole_upper"]], "embeds": embeds[:1] + embeds[3:], "faces": []},
         },
         "drawing": {"views": ["front", "left", "plan"], "sections": [{"id": "z1500", "axis": "z", "at": 1500.0}, {"id": "z2850", "axis": "z", "at": 2850.0}]},
         "numbers": [
             {"id": "N1", "what": "pole length above the paving to the cap's top", "value": 3008.0, "kind": "Judgement", "source": "a 3.0 m stop pole (the repository's research note and the 29 September script agree; P1's span flag top to foot gives 3.0 m only if the plate is 300 wide); error 150 mm", "tol": 150.0, "measure": {"kind": "bbox", "axis": "z", "parts": ["pole_foot", "pole_white", "pole_upper", "pole_cap"]}},
-            {"id": "N2", "what": "pole diameter", "value": 76.0, "kind": "Judgement", "source": "76 mm (3 inch) tube, the standard stop post; P1's pole is 7 to 8 px wide = 50 mm at 6.56 mm per px which is too coarse to read, so the standard is kept (+-10)", "tol": 10.0, "measure": {"kind": "extent", "axis": "x", "part": "pole_foot"}},
-            {"id": "N3", "what": "flag plate width", "value": 300.0, "kind": "Judgement", "source": "assumed 300 mm: it sets P1's scale (6.56 mm per px); P1 flag_left 526.0 to flag_right 571.7 = 45.7 px", "tol": 30.0, "measure": {"kind": "extent", "axis": "x", "part": "flag_plate"}},
+            {"id": "N2", "what": "pole diameter", "value": 2 * R_POLE, "kind": "Photo", "source": "P1: the white pole is 13 to 14 px wide on the 640 px copy (edges x 543.5 and 556.5 at rows 200 to 225; 543.5 and 557.5 at rows 395 to 410; my own edge finder gives 544.1 and 557.5), 13.5 px x 6.56 mm per px = 89 mm: a 3 1/2 inch (89 mm) tube; against the flag's 45.7 px that is 0.30 (+-0.03) while the first version built 76 / 300 = 0.25 (it had read the pole as 7 to 8 px = 50 mm and kept the 76 mm standard). The scale rests on the assumed plate width (N3)", "tol": 10.0, "measure": {"kind": "extent", "axis": "x", "part": "pole_foot"}},
+            {"id": "N3", "what": "flag plate width", "value": 300.0, "kind": "Judgement", "source": "assumed 300 mm: it sets P1's scale (6.56 mm per px); P1 flag_left 526.0 to flag_right 571.7 = 45.7 px. The photograph fixes only the RATIO of the pole to the plate: with a 76 mm pole the plate would be about 255 mm, outside this number's old +-30, so the source error is +-50 (a stop plate is 250 to 350 wide); N2, N4 to N7 and N10 are scaled on it", "tol": 30.0, "measure": {"kind": "extent", "axis": "x", "part": "flag_plate"}},
             {"id": "N4", "what": "flag plate height", "value": 285.0, "kind": "Photo", "source": "P1 flag_top 70.6 to flag_bottom 117.1 (46.5 px, includes the yellow lichen and clamp below the plate) at 6.56 mm per px = 305; the plate itself 285 (+-25)", "tol": 25.0, "measure": {"kind": "extent", "axis": "z", "part": "flag_plate"}},
             {"id": "N5", "what": "case height", "value": 875.0, "kind": "Photo", "source": "P1 case_top 240.8 to case_bottom 374.2 (133.4 px) at 6.56 mm per px; error 60", "tol": 60.0, "measure": {"kind": "extent", "axis": "z", "part": "case_bar_left", "plus": 40}},
             {"id": "N6", "what": "case bottom above the paving", "value": 1008.0, "kind": "Photo", "source": "P1 case_bottom 374.2 below flag_top 70.6: 303.6 px = 1992 mm below the flag's top at 3000 (+-130)", "tol": 130.0, "measure": {"kind": "edge", "axis": "z", "part": "case_bar_bottom", "side": "lo"}},

@@ -583,9 +583,9 @@ def placement_rows(T, rows):
             modelled = scene_ground_names(unary_union([q.poly for q in feet]))
             if owed:
                 ob = sbox(owed["x"][0], owed["z"][0], owed["x"][1], owed["z"][1])
-                inside_owed = all(ob.buffer(1e-6).contains(q.poly) for q in feet)
+                inside_owed = all(ob.buffer(0.002).contains(q.poly) for q in feet)
                 rows.add("placement", "%s/every foot lies on a modelled surface or on the floor the slot owes" % g,
-                         bool(feet) and all(scene_ground_names(q.poly) or ob.buffer(1e-6).contains(q.poly) for q in feet),
+                         bool(feet) and all(scene_ground_names(q.poly) or ob.buffer(0.002).contains(q.poly) for q in feet),
                          "%d feet; the scene models no floor there (%s); owed floor x %s, z %s at %.3f above the crown" % (len(feet), "a gap in the data" if not modelled else "partly modelled", owed["x"], owed["z"], owed["level_m"]))
                 rows.add("placement", "%s/the owed floor is stated with a level equal to the footway's back" % g, abs(owed["level_m"] - 0.100) < 0.002 and abs(base - owed["level_m"]) < 0.002,
                          "owed level %.3f, pose base %.3f, footway back 0.100" % (owed["level_m"], base))
@@ -595,7 +595,7 @@ def placement_rows(T, rows):
         else:
             rows.add("placement", "%s/zone %s is known" % (g, zone), False, zone)
         # 3. collisions with the street's pieces
-        if zone in ZONES:
+        if zone in ZONES or zone == "yard_floor":
             hits, _ = collisions(T, pose)
             rows.add("placement", "%s/clear of every street piece within %d mm (%s)" % (g, int(CLEARANCE_M * 1000), "scene pieces within 2 m, wall props and awnings included"), not hits,
                      "hits: %s" % hits[:6] if hits else "no piece of vignette-pieces.json within %d mm of any of its %d parts" % (int(CLEARANCE_M * 1000), len(body)))

@@ -67,45 +67,58 @@ Axes: x across the flag (right is +x seen from the front), y from the front (-y,
 
 | part | kind | material | x (mm) | y (mm) | z (mm) | edges | note |
 |---|---|---|---|---|---|---|---|
-| pole_foot | cyl | paint_black | -38 to 38 | -38 to 38 | 0 to 554 |  | 76 mm steel tube, black lower part |
-| pole_white | cyl | paint_white | -38 to 38 | -38 to 38 | 554 to 2118 |  | white-painted length, hidden behind the case between its ends |
-| pole_upper | cyl | paint_black | -38 to 38 | -38 to 38 | 2118 to 3000 |  | black upper length carrying the flag |
-| pole_cap | cyl | paint_black | -40 to 40 | -40 to 40 | 3000 to 3008 |  | plug cap, 8 mm, slightly proud of the tube |
+| pole_foot | cyl | paint_black | -44 to 44 | -44 to 44 | 0 to 554 |  | 89 mm steel tube (P1: the white pole is 13 to 14 px wide, 13.5 x 6.56 = 89), black lower part to 554 |
+| pole_white | cyl | paint_white | -44 to 44 | -44 to 44 | 554 to 2310 |  | white-painted length 554 to 2310 (P1: the white begins at row 174.8, about 2310, not 2118); the case hides part of it |
+| pole_ring | cyl | paint_black | -46 to 46 | -46 to 46 | 890 to 1008 |  | the black ring directly under the case, 890 to 1008 (P1 rows 376 to 392): a painted band, modelled as a 1 mm sleeve over the white length |
+| pole_upper | cyl | paint_black | -44 to 44 | -44 to 44 | 2310 to 3000 |  | black upper length 2310 to 3000 carrying the flag |
+| pole_cap | cyl | paint_black | -46 to 46 | -46 to 46 | 3000 to 3008 |  | plug cap, 8 mm, slightly proud of the tube |
 | pole_collar | cyl | concrete | -95 to 95 | -95 to 95 | 0 to 22 |  | a small concrete collar round the foot, 22 mm proud of the paving |
-| flag_plate | box | enamel_white | -150 to 150 | -48 to -45 | 2705 to 3000 | corners r 20, edge rolled back 4 mm | old-style enamel plate, 3 mm steel |
-| flag_border_top | box | enamel_black | -138 to 138 | -50 to -48 | 2976 to 2988 |  | black border 12 wide, 2 mm raised |
-| flag_border_bottom | box | enamel_black | -138 to 138 | -50 to -48 | 2717 to 2729 |  |  |
-| flag_border_left | box | enamel_black | -138 to -126 | -50 to -48 | 2729 to 2976 |  |  |
-| flag_border_right | box | enamel_black | 126 to 138 | -50 to -48 | 2729 to 2976 |  |  |
-| flag_clamp_top | box | galvanised | -34 to 34 | -48 to -36 | 2930 to 2950 |  | flat clamp bracket, two bolts |
-| flag_clamp_bottom | box | galvanised | -34 to 34 | -48 to -36 | 2735 to 2755 |  |  |
-| case_bar_top | box | case_green | -130 to 130 | -98 to -38 | 1863 to 1883 | corners r 4 | case frame 20 wide, 60 deep, folded sheet |
-| case_bar_bottom | box | case_green | -130 to 130 | -98 to -38 | 1008 to 1028 |  |  |
-| case_bar_left | box | case_green | -130 to -110 | -98 to -38 | 1028 to 1863 |  |  |
-| case_bar_right | box | case_green | 110 to 130 | -98 to -38 | 1028 to 1863 |  |  |
-| case_back | box | case_green | -110 to 110 | -44 to -38 | 1028 to 1863 |  | back sheet, 6 mm with its lining |
-| case_glass | box | glass | -112 to 112 | -98 to -96 | 1026 to 1865 |  | 2 mm clear sheet in the front rebate (acrylic) (transparent) |
-| case_card | box | paper | -100 to 100 | -96 to -96 | 1048 to 1518 |  | the printed timetable card, 200 x 470, behind the sheet (film) |
-| case_lock | box | galvanised | 112 to 124 | -104 to -98 | 1408 to 1420 |  | a round lock head on the right bar, 12 mm |
-| case_strap_top | cyl | galvanised | -41 to 41 | -41 to 41 | 1859 to 1871 |  | stainless clamp strap round the pole, 12 wide |
-| case_strap_bottom | cyl | galvanised | -41 to 41 | -41 to 41 | 1020 to 1032 |  |  |
+| flag_plate | box | enamel_white | -150 to 150 | -54 to -52 | 2705 to 3000 | corners r 20, edge rolled back 4 mm | old-style enamel plate, 3 mm steel |
+| flag_border_top | box | enamel_black | -138 to 138 | -56 to -54 | 2976 to 2988 |  | black border 12 wide, 2 mm raised |
+| flag_border_bottom | box | enamel_black | -138 to 138 | -56 to -54 | 2717 to 2729 |  |  |
+| flag_border_left | box | enamel_black | -138 to -126 | -56 to -54 | 2729 to 2976 |  |  |
+| flag_border_right | box | enamel_black | 126 to 138 | -56 to -54 | 2729 to 2976 |  |  |
+| flag_clamp_top | box | galvanised | -34 to 34 | -54 to -42 | 2930 to 2950 |  | flat clamp bracket, two bolts |
+| flag_clamp_bottom | box | galvanised | -34 to 34 | -54 to -42 | 2735 to 2755 |  |  |
+| case_bar_top | box | case_green | -130 to 130 | -104 to -44 | 1863 to 1883 | corners r 4 | case frame 20 wide, 60 deep, folded sheet |
+| case_bar_bottom | box | case_green | -130 to 130 | -104 to -44 | 1008 to 1028 |  |  |
+| case_bar_left | box | case_green | -130 to -110 | -104 to -44 | 1028 to 1863 |  |  |
+| case_bar_right | box | case_green | 110 to 130 | -104 to -44 | 1028 to 1863 |  |  |
+| case_back | box | case_green | -110 to 110 | -50 to -44 | 1028 to 1863 |  | back sheet, 6 mm with its lining |
+| case_glass | box | glass | -112 to 112 | -104 to -102 | 1026 to 1865 |  | 2 mm clear sheet in the front rebate (acrylic) (transparent) |
+| case_card | box | paper | -100 to 100 | -102 to -102 | 1032 to 1502 |  | the printed timetable card, 200 x 470, behind the sheet, its top edge at 1502 (P1 row 299, just under the middle bar) (film) |
+| case_lock | box | galvanised | 112 to 124 | -110 to -104 | 1408 to 1420 |  | a round lock head on the right bar, 12 mm |
+| case_strap_top | cyl | galvanised | -48 to 48 | -48 to 48 | 1859 to 1871 |  | stainless clamp strap round the pole, 12 wide |
+| case_strap_bottom | cyl | galvanised | -48 to 48 | -48 to 48 | 1020 to 1032 |  |  |
+| case_mid_bar | box | case_green | -110 to 110 | -100 to -96 | 1590 to 1605 |  | the case's middle bar, 220 x 15 x 4, at 1590 to 1605, in the rebate behind the clear sheet (P1: a thin dark bar across the window at row 284.5) |
+| case_mid_head_l | cyl | paint_black | -109 to -101 | -102 to -100 | 1594 to 1602 |  | round head 8 across, 2 proud, a fixing at the bar's end |
+| case_mid_head_r | cyl | paint_black | 101 to 109 | -102 to -100 | 1594 to 1602 |  | round head 8 across, 2 proud, a fixing at the bar's end |
+| flag_back_border_top | box | enamel_black | -138 to 138 | -52 to -50 | 2976 to 2988 |  | back face (toward the pole): the same black border, 2 mm raised; Judgement (a flag is read from both directions) |
+| flag_back_border_bottom | box | enamel_black | -138 to 138 | -52 to -50 | 2717 to 2729 |  |  |
+| flag_back_border_left | box | enamel_black | -138 to -126 | -52 to -50 | 2729 to 2976 |  |  |
+| flag_back_border_right | box | enamel_black | 126 to 138 | -52 to -50 | 2729 to 2976 |  |  |
 
 ### Parts, variant BS2: BS2: pole and flag without a case (a second stop elsewhere; not placed today) (millimetres)
 
 | part | kind | material | x (mm) | y (mm) | z (mm) | edges | note |
 |---|---|---|---|---|---|---|---|
-| pole_foot | cyl | paint_black | -38 to 38 | -38 to 38 | 0 to 554 |  | 76 mm steel tube, black lower part |
-| pole_white | cyl | paint_white | -38 to 38 | -38 to 38 | 554 to 2118 |  | white-painted length, hidden behind the case between its ends |
-| pole_upper | cyl | paint_black | -38 to 38 | -38 to 38 | 2118 to 3000 |  | black upper length carrying the flag |
-| pole_cap | cyl | paint_black | -40 to 40 | -40 to 40 | 3000 to 3008 |  | plug cap, 8 mm, slightly proud of the tube |
+| pole_foot | cyl | paint_black | -44 to 44 | -44 to 44 | 0 to 554 |  | 89 mm steel tube (P1: the white pole is 13 to 14 px wide, 13.5 x 6.56 = 89), black lower part to 554 |
+| pole_white | cyl | paint_white | -44 to 44 | -44 to 44 | 554 to 2310 |  | white-painted length 554 to 2310 (P1: the white begins at row 174.8, about 2310, not 2118); the case hides part of it |
+| pole_ring | cyl | paint_black | -46 to 46 | -46 to 46 | 890 to 1008 |  | the black ring directly under the case, 890 to 1008 (P1 rows 376 to 392): a painted band, modelled as a 1 mm sleeve over the white length |
+| pole_upper | cyl | paint_black | -44 to 44 | -44 to 44 | 2310 to 3000 |  | black upper length 2310 to 3000 carrying the flag |
+| pole_cap | cyl | paint_black | -46 to 46 | -46 to 46 | 3000 to 3008 |  | plug cap, 8 mm, slightly proud of the tube |
 | pole_collar | cyl | concrete | -95 to 95 | -95 to 95 | 0 to 22 |  | a small concrete collar round the foot, 22 mm proud of the paving |
-| flag_plate | box | enamel_white | -150 to 150 | -48 to -45 | 2705 to 3000 | corners r 20, edge rolled back 4 mm | old-style enamel plate, 3 mm steel |
-| flag_border_top | box | enamel_black | -138 to 138 | -50 to -48 | 2976 to 2988 |  | black border 12 wide, 2 mm raised |
-| flag_border_bottom | box | enamel_black | -138 to 138 | -50 to -48 | 2717 to 2729 |  |  |
-| flag_border_left | box | enamel_black | -138 to -126 | -50 to -48 | 2729 to 2976 |  |  |
-| flag_border_right | box | enamel_black | 126 to 138 | -50 to -48 | 2729 to 2976 |  |  |
-| flag_clamp_top | box | galvanised | -34 to 34 | -48 to -36 | 2930 to 2950 |  | flat clamp bracket, two bolts |
-| flag_clamp_bottom | box | galvanised | -34 to 34 | -48 to -36 | 2735 to 2755 |  |  |
+| flag_plate | box | enamel_white | -150 to 150 | -54 to -52 | 2705 to 3000 | corners r 20, edge rolled back 4 mm | old-style enamel plate, 3 mm steel |
+| flag_border_top | box | enamel_black | -138 to 138 | -56 to -54 | 2976 to 2988 |  | black border 12 wide, 2 mm raised |
+| flag_border_bottom | box | enamel_black | -138 to 138 | -56 to -54 | 2717 to 2729 |  |  |
+| flag_border_left | box | enamel_black | -138 to -126 | -56 to -54 | 2729 to 2976 |  |  |
+| flag_border_right | box | enamel_black | 126 to 138 | -56 to -54 | 2729 to 2976 |  |  |
+| flag_clamp_top | box | galvanised | -34 to 34 | -54 to -42 | 2930 to 2950 |  | flat clamp bracket, two bolts |
+| flag_clamp_bottom | box | galvanised | -34 to 34 | -54 to -42 | 2735 to 2755 |  |  |
+| flag_back_border_top | box | enamel_black | -138 to 138 | -52 to -50 | 2976 to 2988 |  | back face (toward the pole): the same black border, 2 mm raised; Judgement (a flag is read from both directions) |
+| flag_back_border_bottom | box | enamel_black | -138 to 138 | -52 to -50 | 2717 to 2729 |  |  |
+| flag_back_border_left | box | enamel_black | -138 to -126 | -52 to -50 | 2729 to 2976 |  |  |
+| flag_back_border_right | box | enamel_black | 126 to 138 | -52 to -50 | 2729 to 2976 |  |  |
 
 ### The numbers, with their sources and kinds (the self-check measures each back off the parts)
 

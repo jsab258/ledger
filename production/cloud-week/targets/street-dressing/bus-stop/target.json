@@ -131,9 +131,9 @@
       0,
       554.0
      ],
-     "r0": 38.0,
+     "r0": 44.5,
      "material": "paint_black",
-     "note": "76 mm steel tube, black lower part"
+     "note": "89 mm steel tube (P1: the white pole is 13 to 14 px wide, 13.5 x 6.56 = 89), black lower part to 554"
     },
     {
      "id": "pole_white",
@@ -146,11 +146,28 @@
      "p1": [
       0,
       0,
-      2118.0
+      2310.0
      ],
-     "r0": 38.0,
+     "r0": 44.5,
      "material": "paint_white",
-     "note": "white-painted length, hidden behind the case between its ends"
+     "note": "white-painted length 554 to 2310 (P1: the white begins at row 174.8, about 2310, not 2118); the case hides part of it"
+    },
+    {
+     "id": "pole_ring",
+     "type": "cyl",
+     "p0": [
+      0,
+      0,
+      890.0
+     ],
+     "p1": [
+      0,
+      0,
+      1008.0
+     ],
+     "r0": 45.5,
+     "material": "paint_black",
+     "note": "the black ring directly under the case, 890 to 1008 (P1 rows 376 to 392): a painted band, modelled as a 1 mm sleeve over the white length"
     },
     {
      "id": "pole_upper",
@@ -158,16 +175,16 @@
      "p0": [
       0,
       0,
-      2118.0
+      2310.0
      ],
      "p1": [
       0,
       0,
       3000.0
      ],
-     "r0": 38.0,
+     "r0": 44.5,
      "material": "paint_black",
-     "note": "black upper length carrying the flag"
+     "note": "black upper length 2310 to 3000 carrying the flag"
     },
     {
      "id": "pole_cap",
@@ -182,7 +199,7 @@
       0,
       3008.0
      ],
-     "r0": 40.0,
+     "r0": 46.5,
      "material": "paint_black",
      "note": "plug cap, 8 mm, slightly proud of the tube"
     },
@@ -208,7 +225,7 @@
      "type": "box",
      "c": [
       0.0,
-      -46.5,
+      -53.0,
       2852.5
      ],
      "s": [
@@ -225,7 +242,7 @@
      "type": "box",
      "c": [
       0.0,
-      -49.0,
+      -55.5,
       2982.0
      ],
      "s": [
@@ -242,7 +259,7 @@
      "type": "box",
      "c": [
       0.0,
-      -49.0,
+      -55.5,
       2723.0
      ],
      "s": [
@@ -257,7 +274,7 @@
      "type": "box",
      "c": [
       -132.0,
-      -49.0,
+      -55.5,
       2852.5
      ],
      "s": [
@@ -272,7 +289,7 @@
      "type": "box",
      "c": [
       132.0,
-      -49.0,
+      -55.5,
       2852.5
      ],
      "s": [
@@ -287,7 +304,7 @@
      "type": "box",
      "c": [
       0.0,
-      -42.0,
+      -48.5,
       2940.0
      ],
      "s": [
@@ -303,7 +320,7 @@
      "type": "box",
      "c": [
       0.0,
-      -42.0,
+      -48.5,
       2745.0
      ],
      "s": [
@@ -318,7 +335,7 @@
      "type": "box",
      "c": [
       0.0,
-      -68.0,
+      -74.5,
       1873.0
      ],
      "s": [
@@ -335,7 +352,7 @@
      "type": "box",
      "c": [
       0.0,
-      -68.0,
+      -74.5,
       1018.0
      ],
      "s": [
@@ -350,7 +367,7 @@
      "type": "box",
      "c": [
       -120.0,
-      -68.0,
+      -74.5,
       1445.5
      ],
      "s": [
@@ -365,7 +382,7 @@
      "type": "box",
      "c": [
       120.0,
-      -68.0,
+      -74.5,
       1445.5
      ],
      "s": [
@@ -380,7 +397,7 @@
      "type": "box",
      "c": [
       0.0,
-      -41.0,
+      -47.5,
       1445.5
      ],
      "s": [
@@ -396,7 +413,7 @@
      "type": "box",
      "c": [
       0.0,
-      -97.0,
+      -103.5,
       1445.5
      ],
      "s": [
@@ -413,8 +430,8 @@
      "type": "box",
      "c": [
       0.0,
-      -95.75,
-      1283.0
+      -102.25,
+      1267.0
      ],
      "s": [
       200.0,
@@ -423,14 +440,14 @@
      ],
      "material": "paper",
      "film": true,
-     "note": "the printed timetable card, 200 x 470, behind the sheet"
+     "note": "the printed timetable card, 200 x 470, behind the sheet, its top edge at 1502 (P1 row 299, just under the middle bar)"
     },
     {
      "id": "case_lock",
      "type": "box",
      "c": [
       118.0,
-      -101.0,
+      -107.5,
       1414.0
      ],
      "s": [
@@ -454,7 +471,7 @@
       0,
       1871.0
      ],
-     "r0": 41.0,
+     "r0": 47.5,
      "material": "galvanised",
      "note": "stainless clamp strap round the pole, 12 wide"
     },
@@ -471,19 +488,132 @@
       0,
       1032.0
      ],
-     "r0": 41.0,
+     "r0": 47.5,
      "material": "galvanised"
+    },
+    {
+     "id": "case_mid_bar",
+     "type": "box",
+     "c": [
+      0.0,
+      -98.5,
+      1597.5
+     ],
+     "s": [
+      220.0,
+      4.0,
+      15.0
+     ],
+     "material": "case_green",
+     "note": "the case's middle bar, 220 x 15 x 4, at 1590 to 1605, in the rebate behind the clear sheet (P1: a thin dark bar across the window at row 284.5)"
+    },
+    {
+     "id": "case_mid_head_l",
+     "type": "cyl",
+     "p0": [
+      -105.0,
+      -100.5,
+      1597.5
+     ],
+     "p1": [
+      -105.0,
+      -102.5,
+      1597.5
+     ],
+     "r0": 4.0,
+     "material": "paint_black",
+     "note": "round head 8 across, 2 proud, a fixing at the bar's end"
+    },
+    {
+     "id": "case_mid_head_r",
+     "type": "cyl",
+     "p0": [
+      105.0,
+      -100.5,
+      1597.5
+     ],
+     "p1": [
+      105.0,
+      -102.5,
+      1597.5
+     ],
+     "r0": 4.0,
+     "material": "paint_black",
+     "note": "round head 8 across, 2 proud, a fixing at the bar's end"
+    },
+    {
+     "id": "flag_back_border_top",
+     "type": "box",
+     "c": [
+      0.0,
+      -50.5,
+      2982.0
+     ],
+     "s": [
+      276.0,
+      2.0,
+      12.0
+     ],
+     "material": "enamel_black",
+     "note": "back face (toward the pole): the same black border, 2 mm raised; Judgement (a flag is read from both directions)"
+    },
+    {
+     "id": "flag_back_border_bottom",
+     "type": "box",
+     "c": [
+      0.0,
+      -50.5,
+      2723.0
+     ],
+     "s": [
+      276.0,
+      2.0,
+      12.0
+     ],
+     "material": "enamel_black"
+    },
+    {
+     "id": "flag_back_border_left",
+     "type": "box",
+     "c": [
+      -132.0,
+      -50.5,
+      2852.5
+     ],
+     "s": [
+      12.0,
+      2.0,
+      247.0
+     ],
+     "material": "enamel_black"
+    },
+    {
+     "id": "flag_back_border_right",
+     "type": "box",
+     "c": [
+      132.0,
+      -50.5,
+      2852.5
+     ],
+     "s": [
+      12.0,
+      2.0,
+      247.0
+     ],
+     "material": "enamel_black"
     }
    ],
    "overall": {
     "w": 300.0,
-    "d": 139.0,
+    "d": 152.0,
     "h": 3008.0
    },
    "overall_tol": 2.0,
    "overall_exclude": [
     "pole_collar",
-    "case_lock"
+    "case_lock",
+    "case_mid_head_l",
+    "case_mid_head_r"
    ],
    "joins": [
     [
@@ -553,28 +683,72 @@
     [
      "pole_collar",
      "pole_foot"
+    ],
+    [
+     "pole_ring",
+     "pole_foot"
+    ],
+    [
+     "case_mid_bar",
+     "case_bar_left"
+    ],
+    [
+     "case_mid_head_l",
+     "case_mid_bar"
+    ],
+    [
+     "case_mid_head_r",
+     "case_mid_bar"
+    ],
+    [
+     "flag_back_border_top",
+     "flag_plate"
+    ],
+    [
+     "flag_back_border_left",
+     "flag_plate"
     ]
    ],
    "embeds": [
     [
      "pole_collar",
      "pole_foot",
-     42.0
+     46.0
     ],
     [
      "case_strap_top",
      "pole_white",
-     42.0
+     46.0
     ],
     [
      "case_strap_bottom",
      "pole_white",
-     42.0
+     46.0
+    ],
+    [
+     "case_strap_top",
+     "pole_upper",
+     46.0
     ],
     [
      "pole_cap",
      "pole_upper",
      5.0
+    ],
+    [
+     "pole_ring",
+     "pole_white",
+     46.0
+    ],
+    [
+     "pole_ring",
+     "case_strap_bottom",
+     46.0
+    ],
+    [
+     "pole_ring",
+     "pole_foot",
+     6.0
     ],
     [
      "case_back",
@@ -666,9 +840,9 @@
       0,
       554.0
      ],
-     "r0": 38.0,
+     "r0": 44.5,
      "material": "paint_black",
-     "note": "76 mm steel tube, black lower part"
+     "note": "89 mm steel tube (P1: the white pole is 13 to 14 px wide, 13.5 x 6.56 = 89), black lower part to 554"
     },
     {
      "id": "pole_white",
@@ -681,11 +855,28 @@
      "p1": [
       0,
       0,
-      2118.0
+      2310.0
      ],
-     "r0": 38.0,
+     "r0": 44.5,
      "material": "paint_white",
-     "note": "white-painted length, hidden behind the case between its ends"
+     "note": "white-painted length 554 to 2310 (P1: the white begins at row 174.8, about 2310, not 2118); the case hides part of it"
+    },
+    {
+     "id": "pole_ring",
+     "type": "cyl",
+     "p0": [
+      0,
+      0,
+      890.0
+     ],
+     "p1": [
+      0,
+      0,
+      1008.0
+     ],
+     "r0": 45.5,
+     "material": "paint_black",
+     "note": "the black ring directly under the case, 890 to 1008 (P1 rows 376 to 392): a painted band, modelled as a 1 mm sleeve over the white length"
     },
     {
      "id": "pole_upper",
@@ -693,16 +884,16 @@
      "p0": [
       0,
       0,
-      2118.0
+      2310.0
      ],
      "p1": [
       0,
       0,
       3000.0
      ],
-     "r0": 38.0,
+     "r0": 44.5,
      "material": "paint_black",
-     "note": "black upper length carrying the flag"
+     "note": "black upper length 2310 to 3000 carrying the flag"
     },
     {
      "id": "pole_cap",
@@ -717,7 +908,7 @@
       0,
       3008.0
      ],
-     "r0": 40.0,
+     "r0": 46.5,
      "material": "paint_black",
      "note": "plug cap, 8 mm, slightly proud of the tube"
     },
@@ -743,7 +934,7 @@
      "type": "box",
      "c": [
       0.0,
-      -46.5,
+      -53.0,
       2852.5
      ],
      "s": [
@@ -760,7 +951,7 @@
      "type": "box",
      "c": [
       0.0,
-      -49.0,
+      -55.5,
       2982.0
      ],
      "s": [
@@ -777,7 +968,7 @@
      "type": "box",
      "c": [
       0.0,
-      -49.0,
+      -55.5,
       2723.0
      ],
      "s": [
@@ -792,7 +983,7 @@
      "type": "box",
      "c": [
       -132.0,
-      -49.0,
+      -55.5,
       2852.5
      ],
      "s": [
@@ -807,7 +998,7 @@
      "type": "box",
      "c": [
       132.0,
-      -49.0,
+      -55.5,
       2852.5
      ],
      "s": [
@@ -822,7 +1013,7 @@
      "type": "box",
      "c": [
       0.0,
-      -42.0,
+      -48.5,
       2940.0
      ],
      "s": [
@@ -838,7 +1029,7 @@
      "type": "box",
      "c": [
       0.0,
-      -42.0,
+      -48.5,
       2745.0
      ],
      "s": [
@@ -847,11 +1038,72 @@
       20.0
      ],
      "material": "galvanised"
+    },
+    {
+     "id": "flag_back_border_top",
+     "type": "box",
+     "c": [
+      0.0,
+      -50.5,
+      2982.0
+     ],
+     "s": [
+      276.0,
+      2.0,
+      12.0
+     ],
+     "material": "enamel_black",
+     "note": "back face (toward the pole): the same black border, 2 mm raised; Judgement (a flag is read from both directions)"
+    },
+    {
+     "id": "flag_back_border_bottom",
+     "type": "box",
+     "c": [
+      0.0,
+      -50.5,
+      2723.0
+     ],
+     "s": [
+      276.0,
+      2.0,
+      12.0
+     ],
+     "material": "enamel_black"
+    },
+    {
+     "id": "flag_back_border_left",
+     "type": "box",
+     "c": [
+      -132.0,
+      -50.5,
+      2852.5
+     ],
+     "s": [
+      12.0,
+      2.0,
+      247.0
+     ],
+     "material": "enamel_black"
+    },
+    {
+     "id": "flag_back_border_right",
+     "type": "box",
+     "c": [
+      132.0,
+      -50.5,
+      2852.5
+     ],
+     "s": [
+      12.0,
+      2.0,
+      247.0
+     ],
+     "material": "enamel_black"
     }
    ],
    "overall": {
     "w": 300.0,
-    "d": 90.0,
+    "d": 103.0,
     "h": 3008.0
    },
    "overall_tol": 2.0,
@@ -876,12 +1128,32 @@
     [
      "pole_collar",
      "pole_foot",
-     42.0
+     46.0
+    ],
+    [
+     "case_strap_top",
+     "pole_upper",
+     46.0
     ],
     [
      "pole_cap",
      "pole_upper",
      5.0
+    ],
+    [
+     "pole_ring",
+     "pole_white",
+     46.0
+    ],
+    [
+     "pole_ring",
+     "case_strap_bottom",
+     46.0
+    ],
+    [
+     "pole_ring",
+     "pole_foot",
+     6.0
     ]
    ],
    "faces": []
@@ -1720,14 +1992,20 @@
   "orientation: the local -y faces the bus (towards -x in the street's frame, yaw 90 degrees)"
  ],
  "self_check": {
-  "line": "SELF-CHECK bus-stop: 116 checks, 116 passed, 0 failed; negative controls 28 of 28 caught (--live --previews)",
-  "checks": 116,
-  "passed": 116,
-  "failed": 0,
-  "controls": 28,
-  "controls_caught": 28,
-  "options": "--live --previews",
-  "failing": [],
+  "line": "SELF-CHECK bus-stop: 109 checks, 104 passed, 5 failed; negative controls 0 of 0 caught (offline)",
+  "checks": 109,
+  "passed": 104,
+  "failed": 5,
+  "controls": 0,
+  "controls_caught": 0,
+  "options": "offline",
+  "failing": [
+   "geometry/BS1/declared joins meet",
+   "geometry/BS1/face flag plate closed",
+   "numbers/N2",
+   "place/poses are declared",
+   "reuse/the old pole (76 mm, 3.0 m) is kept"
+  ],
   "uncaught": []
  }
 }

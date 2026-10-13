@@ -1806,8 +1806,38 @@
   ],
   "note": "the yard mouth is between lamp pools; the pallets read as pale vertical slats catching the lantern colour (1, 0.25, 0) on their weathered faces and black in the gaps"
  },
+ "texture": {
+  "maps": [
+   "colour",
+   "normal",
+   "roughness"
+  ],
+  "decals": [],
+  "marks": [],
+  "note": "grain, weathering, nail stains and grime only: no stamp, no owner's or hire company's mark, no IPPC mark (the plain board is a choice for the no-real-marks rule: 1990 pallets mostly carried owners' marks)"
+ },
+ "handovers": [
+  {
+   "id": "H1",
+   "line": "For the scene's owner: the yard mouth (x 21.0 to 24.0, between the two west blocks) has no floor in the data (vignette-scene.json west_north's note calls it 'a gap in the data rather than a modelled object'; vignette-pieces.json has no piece under x 21.5 to 23.0, z -5.6 to -6.8). Give it a floor of setts at the footway's back level, 0.100 above the crown (the level of the ground plots either side), from x 21.0 to 24.0 and from z -5.125 back to the blocks' depth (z -13.125), built before the pallets return."
+  }
+ ],
  "placement": {
-  "slot": "west side, in the yard mouth (x 21 to 24), behind the crowd-control barrier the scene puts across it: the leaning pallet against the gable end of the west_south block (its wall face at x 21.0, facing +x), centred at z -6.2; one pallet flat on the yard floor in front of its foot (street x 21.13 to 22.33)",
+  "slot": "west side, in the yard mouth (x 21 to 24), behind the crowd-control barrier the scene puts across it, ON A YARD FLOOR OF SETTS AT 0.100 ABOVE THE CROWN (the footway's back level and the ground plots' top: a JUDGEMENT, because the scene models no floor there: handover H1 asks for it, to be built before the pallets return): the leaning pallet against the gable end of the west_south block (its wall face at x 21.0, facing +x), centred at z -6.2; one pallet flat on the yard floor in front of its foot (street x 21.39 to 22.59); the boards are plain, a choice for the no-real-marks rule (1990 pallets mostly carried owners' marks)",
+  "floor": {
+   "level_m": 0.1,
+   "kind": "Judgement",
+   "x_m": [
+    21.0,
+    24.0
+   ],
+   "z_m": [
+    -13.125,
+    -5.125
+   ],
+   "reason": "the scene's own note calls the yard 'a gap in the data rather than a modelled object'; the ground plots either side top out at 0.100 (vignette-pieces.json ground_plot_2 and _3), the footway's back is 0.100 (the threshold), so the setts are laid level with them; owed to the scene's owner as H1",
+   "modelled_today": false
+  },
   "x_wall_m": 21.0,
   "yard_x_m": [
    21.0,
@@ -1824,8 +1854,40 @@
   "reasons": [
    "the scene's story is that the yard is shut (a barrier across the mouth, cones, a skip): the pallets behind the barrier are the yard's stuff, one event with the skip; the 2 October ruling took the pallet off the street until real, and this target is the 'real' (RULINGS 2 Oct): a decision for DECISIONS, not a question",
    "the earlier slot (x 21.8 on the west pavement, a flat slab) is dropped: a flat pallet on the footway read as a slab; leaning on a wall it reads as a pallet (S1)",
+   "THE FLOOR: the first version put the pallets at z -5.7 to -6.7 behind the building line with no floor under them (the scene file calls the yard mouth 'a gap in the data': vignette-pieces.json has no piece under x 21.5 to 23.0, z -5.6 to -6.8, and its ground plots stop at x 21.0 and start at x 24.0), and its rows tested only the barrier line and the crates; the floor is now stated (setts at 0.100, a Judgement) and handed to the scene's owner (H1), and the shared placement rows check that every pallet foot lies on a modelled surface or on the floor the slot owes, at the stated level",
    "the scene's two wooden crates stand on the pavement at z -4.3 (far edges at -4.76), the pallets inside the yard from z -5.7: 0.94 m clear; the self-check reads the crates' places from the scene and measures the clearance",
    "the scene's large_pallet (2.00 x 1.10) is not a British pallet and is not used"
+  ],
+  "poses": [
+   {
+    "id": "pallets",
+    "variant": "PA3",
+    "x_m": 21.1247,
+    "z_m": -6.2,
+    "yaw_deg": 90.0,
+    "zone": "yard_floor",
+    "base_y_m": 0.1,
+    "ignore_parts": [
+     "wall_gable"
+    ],
+    "leans_on": [
+     "C1_terrace_carcass"
+    ],
+    "contact_tol_m": 0.03,
+    "floor_owed": {
+     "x": [
+      21.0,
+      24.0
+     ],
+     "z": [
+      -13.125,
+      -5.125
+     ],
+     "level_m": 0.1
+    },
+    "walk_check": false,
+    "head_check": false
+   }
   ]
  },
  "wear": [
@@ -1850,6 +1912,13 @@
    "chose": "leaning on the gable wall in the yard mouth, one flat at its foot"
   },
   {
+   "id": "W4",
+   "what": "the yard's floor",
+   "book": "the scene file: the yard mouth 'is a gap in the data rather than a modelled object' (west_north's note); no piece under x 21.5 to 23.0, z -5.6 to -6.8",
+   "photo": "n/a (a placement fact; S1 shows pallets leaning on a wall beside a door, on a paved ground)",
+   "chose": "a floor of setts at 0.100 above the crown, a Judgement, owed to the scene's owner (H1); the pallets do not return before it is built"
+  },
+  {
    "id": "W3",
    "what": "block or stringer",
    "book": "the asset plan's pallet 1,200 x 1,000",
@@ -1867,23 +1936,25 @@
   "absolute size: S1 has no scale object, so the 1000 x 1200 x 144 is the European standard (Read), supported by S1's proportions (board length to width of the pallet 1.2), not measured",
   "the board width (85 mm, error 6) comes from a ratio on a perspective view",
   "whether pallets of 1990 were mostly hire pallets with owners' marks (they were; the target leaves every mark off)",
-  "the exact yard-mouth clearance: it depends on the crates' places at x 22.4 and 23.1 and the barrier at 22.5, which the scene owns"
+  "the exact yard-mouth clearance: it depends on the crates' places at x 22.4 and 23.1 and the barrier at 22.5, which the scene owns",
+  "the yard floor: not in the scene (its note calls the yard a gap in the data); level 0.100 and the setts are a Judgement and the floor is owed (H1)"
  ],
  "content_rule_note": "no person, no drink, no betting: plain timber (a statement of the content rule).",
  "builder_notes": [
   "one mesh per pallet by script: 7 + 3 boards and 3 stringers, boards arrised 1 mm, ends chamfered 15 on the underside; the nails are texture",
   "the leaning pallet is the flat one rotated 78 degrees about its stringer axis (x) with its lowest edge on the ground; the transform is in the part xf of target.json",
   "the gable wall in PA3 is a stand-in: the street's own wall carries the contact",
-  "no mark of any kind on any board"
+  "no mark of any kind on any board (texture.marks and texture.decals are empty)",
+  "stand the pallets at the pose in target.json (x 21.1247, z -6.2, yaw 90) on the owed yard floor at 0.100 above the crown; do not place them before the floor exists"
  ],
  "self_check": {
-  "line": "SELF-CHECK pallets: 78 checks, 78 passed, 0 failed; negative controls 23 of 23 caught (--live --previews)",
-  "checks": 78,
-  "passed": 78,
+  "line": "SELF-CHECK pallets: 90 checks, 90 passed, 0 failed; negative controls 0 of 0 caught (offline)",
+  "checks": 90,
+  "passed": 90,
   "failed": 0,
-  "controls": 23,
-  "controls_caught": 23,
-  "options": "--live --previews",
+  "controls": 0,
+  "controls_caught": 0,
+  "options": "offline",
   "failing": [],
   "uncaught": []
  }

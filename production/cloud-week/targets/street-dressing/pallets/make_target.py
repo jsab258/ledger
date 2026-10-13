@@ -111,15 +111,22 @@ def finish(T):
     T["previews"] = [{"file": "p1-maiden-street-pallets-leaning.jpg", "source": "S1", "credit": "Brian Robert Marshall, Geograph 2660949, CC BY-SA 2.0, 2011-10-20, cropped to the leaning pallets (the fish boxes are outside the crop)",
                       "masked": ["the fish boxes and their printed names are outside the crop"], "looked_at_full_size": True, "no_people_no_drink_no_betting_no_names": True}]
     T["night"] = {"lantern_linear": L.LANTERN_LINEAR, "note": "the yard mouth is between lamp pools; the pallets read as pale vertical slats catching the lantern colour (1, 0.25, 0) on their weathered faces and black in the gaps"}
+    T["texture"] = {"maps": ["colour", "normal", "roughness"], "decals": [], "marks": [], "note": "grain, weathering, nail stains and grime only: no stamp, no owner's or hire company's mark, no IPPC mark (the plain board is a choice for the no-real-marks rule: 1990 pallets mostly carried owners' marks)"}
+    T["handovers"] = [{"id": "H1", "line": "For the scene's owner: the yard mouth (x 21.0 to 24.0, between the two west blocks) has no floor in the data (vignette-scene.json west_north's note calls it 'a gap in the data rather than a modelled object'; vignette-pieces.json has no piece under x 21.5 to 23.0, z -5.6 to -6.8). Give it a floor of setts at the footway's back level, 0.100 above the crown (the level of the ground plots either side), from x 21.0 to 24.0 and from z -5.125 back to the blocks' depth (z -13.125), built before the pallets return."}]
     T["placement"] = {
-        "slot": "west side, in the yard mouth (x 21 to 24), behind the crowd-control barrier the scene puts across it: the leaning pallet against the gable end of the west_south block (its wall face at x 21.0, facing +x), centred at z -6.2; one pallet flat on the yard floor in front of its foot (street x 21.13 to 22.33)",
+        "slot": "west side, in the yard mouth (x 21 to 24), behind the crowd-control barrier the scene puts across it, ON A YARD FLOOR OF SETTS AT 0.100 ABOVE THE CROWN (the footway's back level and the ground plots' top: a JUDGEMENT, because the scene models no floor there: handover H1 asks for it, to be built before the pallets return): the leaning pallet against the gable end of the west_south block (its wall face at x 21.0, facing +x), centred at z -6.2; one pallet flat on the yard floor in front of its foot (street x 21.39 to 22.59); the boards are plain, a choice for the no-real-marks rule (1990 pallets mostly carried owners' marks)",
+        "floor": {"level_m": 0.100, "kind": "Judgement", "x_m": [21.0, 24.0], "z_m": [-13.125, -5.125], "reason": "the scene's own note calls the yard 'a gap in the data rather than a modelled object'; the ground plots either side top out at 0.100 (vignette-pieces.json ground_plot_2 and _3), the footway's back is 0.100 (the threshold), so the setts are laid level with them; owed to the scene's owner as H1",
+                  "modelled_today": False},
         "x_wall_m": 21.0, "yard_x_m": [21.0, 24.0], "z_centre_m": -6.2, "frontage_z_m": -5.125, "barrier_z_m": [-5.0, -5.125], "local_to_street": "local +y points into the gable wall (street -x); local x runs across the yard mouth (street z)", "pallet_width_mm": PL,
         "reasons": [
             "the scene's story is that the yard is shut (a barrier across the mouth, cones, a skip): the pallets behind the barrier are the yard's stuff, one event with the skip; the 2 October ruling took the pallet off the street until real, and this target is the 'real' (RULINGS 2 Oct): a decision for DECISIONS, not a question",
             "the earlier slot (x 21.8 on the west pavement, a flat slab) is dropped: a flat pallet on the footway read as a slab; leaning on a wall it reads as a pallet (S1)",
+            "THE FLOOR: the first version put the pallets at z -5.7 to -6.7 behind the building line with no floor under them (the scene file calls the yard mouth 'a gap in the data': vignette-pieces.json has no piece under x 21.5 to 23.0, z -5.6 to -6.8, and its ground plots stop at x 21.0 and start at x 24.0), and its rows tested only the barrier line and the crates; the floor is now stated (setts at 0.100, a Judgement) and handed to the scene's owner (H1), and the shared placement rows check that every pallet foot lies on a modelled surface or on the floor the slot owes, at the stated level",
             "the scene's two wooden crates stand on the pavement at z -4.3 (far edges at -4.76), the pallets inside the yard from z -5.7: 0.94 m clear; the self-check reads the crates' places from the scene and measures the clearance",
             "the scene's large_pallet (2.00 x 1.10) is not a British pallet and is not used",
         ],
+        "poses": [{"id": "pallets", "variant": "PA3", "x_m": round(21.0 + WALL_Y / 1000.0, 4), "z_m": -6.2, "yaw_deg": 90.0, "zone": "yard_floor", "base_y_m": 0.100, "ignore_parts": ["wall_gable"], "leans_on": ["C1_terrace_carcass"], "contact_tol_m": 0.03,
+                   "floor_owed": {"x": [21.0, 24.0], "z": [-13.125, -5.125], "level_m": 0.100}, "walk_check": False, "head_check": False}],
     }
     T["wear"] = [
         "boards: weathered grey-brown on the faces, paler at freshly broken or sawn ends; one board split along 400 mm; one board missing on the flat pallet's top deck (a gap of 85 mm: a seed), edges rounded by use and grey with grime on the underside",
@@ -130,6 +137,7 @@ def finish(T):
     T["disagreements"] = [
         {"id": "W1", "what": "the pallet's size and form", "book": "the scene file's held large_pallet 2.00 x 1.10 m and small_pallet (a slab)", "photo": "S1: a 1000 x 1200 stringer pallet with seven boards, three stringers (a middle one at the middle of the boards), the usual look", "chose": "1000 x 1200 x 144, 7 top boards of 85, 3 stringers, 3 bottom boards"},
         {"id": "W2", "what": "where it stands", "book": "the scene: flat on the west pavement at x 21.8", "photo": "S1: leaning on a wall beside a door", "chose": "leaning on the gable wall in the yard mouth, one flat at its foot"},
+        {"id": "W4", "what": "the yard's floor", "book": "the scene file: the yard mouth 'is a gap in the data rather than a modelled object' (west_north's note); no piece under x 21.5 to 23.0, z -5.6 to -6.8", "photo": "n/a (a placement fact; S1 shows pallets leaning on a wall beside a door, on a paved ground)", "chose": "a floor of setts at 0.100 above the crown, a Judgement, owed to the scene's owner (H1); the pallets do not return before it is built"},
         {"id": "W3", "what": "block or stringer", "book": "the asset plan's pallet 1,200 x 1,000", "photo": "S2 shows both stringer pallets and some with block feet; S1's is a stringer pallet", "chose": "stringer pallet; a block-footed pallet is not written"},
     ]
     T["variants_note"] = [
@@ -146,13 +154,15 @@ def finish(T):
         "the board width (85 mm, error 6) comes from a ratio on a perspective view",
         "whether pallets of 1990 were mostly hire pallets with owners' marks (they were; the target leaves every mark off)",
         "the exact yard-mouth clearance: it depends on the crates' places at x 22.4 and 23.1 and the barrier at 22.5, which the scene owns",
+        "the yard floor: not in the scene (its note calls the yard a gap in the data); level 0.100 and the setts are a Judgement and the floor is owed (H1)",
     ]
     T["content_rule_note"] = "no person, no drink, no betting: plain timber (a statement of the content rule)."
     T["builder_notes"] = [
         "one mesh per pallet by script: 7 + 3 boards and 3 stringers, boards arrised 1 mm, ends chamfered 15 on the underside; the nails are texture",
         "the leaning pallet is the flat one rotated 78 degrees about its stringer axis (x) with its lowest edge on the ground; the transform is in the part xf of target.json",
         "the gable wall in PA3 is a stand-in: the street's own wall carries the contact",
-        "no mark of any kind on any board",
+        "no mark of any kind on any board (texture.marks and texture.decals are empty)",
+        "stand the pallets at the pose in target.json (x 21.1247, z -6.2, yaw 90) on the owed yard floor at 0.100 above the crown; do not place them before the floor exists",
     ]
     C = []
     for n in T["numbers"]:
@@ -192,7 +202,7 @@ def story(T):
             "**Fixings**: two ring-shank nails through each board into each stringer (not modelled: texture and decals); nail heads 6 mm.",
             "**PA3**: the leaning pallet rests on its lower edge on the ground and on the gable wall at its upper edge (12 degrees from the vertical); the flat pallet lies in front of its foot, touching it.",
         ],
-        "own_rows": "the board width over pitch against P1's measured edges, the board and stringer counts, the pallet's size against the standard, the lean from the transform, the contact with the wall and the ground, the pallet inside the yard mouth against the scene's barrier",
+        "own_rows": "the board width over pitch against P1's measured edges, the board and stringer counts, the pallet's size against the standard and against the scene's large pallet read from its model, the lean from the transform, the contact with the wall and the ground, no mark in the texture spec or the materials' notes, the pallets in the yard mouth against the scene's barrier and crates, and every foot on a modelled surface or on the owed floor at its stated level",
     }
 
 

@@ -11364,14 +11364,18 @@
   "the chain: strips of 8 x 6 mm on the pitch circles (88.9 and 36.6 radius) joined by two runs on the common tangents; build real links of 12.7 pitch along the same path (102 links); the chain, ring and sprocket lie in the plane y = 55, outboard of the chain stays at y = +-40"
  ],
  "self_check": {
-  "line": "SELF-CHECK bicycle: 136 checks, 136 passed, 0 failed; negative controls 0 of 0 caught (offline)",
+  "line": "SELF-CHECK bicycle: 136 checks, 136 passed, 0 failed; negative controls 55 of 58 caught (offline)",
   "checks": 136,
   "passed": 136,
   "failed": 0,
-  "controls": 0,
-  "controls_caught": 0,
+  "controls": 58,
+  "controls_caught": 55,
   "options": "offline",
   "failing": [],
-  "uncaught": []
+  "uncaught": [
+   "drive: the top run moved 30 mm",
+   "drive: the chain pulled 40 mm tighter (the ring teeth stated as 50)",
+   "carrier: one stay removed"
+  ]
  }
 }

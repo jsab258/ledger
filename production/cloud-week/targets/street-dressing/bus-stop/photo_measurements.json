@@ -162,6 +162,141 @@
      582,
      606
     ]
+   },
+   "pole_l": {
+    "px": 544.05,
+    "contrast": 28.6,
+    "spread": 0.5,
+    "id": "pole_l",
+    "axis": "x",
+    "band": [
+     200,
+     225
+    ],
+    "win": [
+     536,
+     550
+    ]
+   },
+   "pole_r": {
+    "px": 557.47,
+    "contrast": 37.8,
+    "spread": 0.07,
+    "id": "pole_r",
+    "axis": "x",
+    "band": [
+     200,
+     225
+    ],
+    "win": [
+     550,
+     564
+    ]
+   },
+   "white_top": {
+    "px": 174.77,
+    "contrast": 17.4,
+    "spread": 0.02,
+    "id": "white_top",
+    "axis": "y",
+    "band": [
+     540,
+     560
+    ],
+    "win": [
+     165,
+     185
+    ]
+   },
+   "ring_bottom": {
+    "px": 392.3,
+    "contrast": 21.5,
+    "spread": 0.24,
+    "id": "ring_bottom",
+    "axis": "y",
+    "band": [
+     540,
+     560
+    ],
+    "win": [
+     384,
+     400
+    ]
+   },
+   "ring_top": {
+    "px": 374.3,
+    "contrast": 20.7,
+    "spread": 0.38,
+    "id": "ring_top",
+    "axis": "y",
+    "band": [
+     540,
+     560
+    ],
+    "win": [
+     368,
+     384
+    ]
+   },
+   "pole_l2": {
+    "px": 543.58,
+    "contrast": 23.2,
+    "spread": 0.2,
+    "id": "pole_l2",
+    "axis": "x",
+    "band": [
+     395,
+     410
+    ],
+    "win": [
+     536,
+     550
+    ]
+   },
+   "pole_r2": {
+    "px": 556.88,
+    "contrast": 20.8,
+    "spread": 0.22,
+    "id": "pole_r2",
+    "axis": "x",
+    "band": [
+     395,
+     410
+    ],
+    "win": [
+     550,
+     566
+    ]
+   },
+   "mid_bar": {
+    "px": 283.18,
+    "contrast": 3.4,
+    "spread": 6.79,
+    "id": "mid_bar",
+    "axis": "y",
+    "band": [
+     540,
+     566
+    ],
+    "win": [
+     276,
+     292
+    ]
+   },
+   "card_top": {
+    "px": 302.28,
+    "contrast": 28.0,
+    "spread": 0.11,
+    "id": "card_top",
+    "axis": "y",
+    "band": [
+     540,
+     566
+    ],
+    "win": [
+     293,
+     305
+    ]
    }
   },
   "page": {
