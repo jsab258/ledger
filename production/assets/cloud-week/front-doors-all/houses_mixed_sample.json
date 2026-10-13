@@ -1,0 +1,257 @@
+{
+ "note": "A sample of the mixer (doors_street.mix_new_street, seed 1) on the twelve slots, ignoring the target's own table: kind, paint, condition and fittings mixed so that no two neighbours match (the check re-runs every street rule on it). The authority for today's houses is houses.json, which is the target's table.",
+ "houses": [
+  {
+   "house": "east_parade_bay0",
+   "side": "east",
+   "x_centre_m": 3.769,
+   "kind": "F3",
+   "paint": "deep_teal",
+   "paint_class": "dark_chroma",
+   "variants": {
+    "letter_plate": "LP1",
+    "handle": "HD3",
+    "latch": "LK0",
+    "knocker": "KN0",
+    "bell": "BL0",
+    "number": "NM3",
+    "scraper": "BS0",
+    "keyhole": "KH0"
+   },
+   "condition": "neglected",
+   "seed": 1,
+   "attempt": 274
+  },
+  {
+   "house": "east_parade_bay1",
+   "side": "east",
+   "x_centre_m": 9.769,
+   "kind": "F2",
+   "paint": "black",
+   "paint_class": "dark_neutral",
+   "variants": {
+    "letter_plate": "LP2",
+    "handle": "HD1",
+    "latch": "LK2",
+    "knocker": "KN0",
+    "bell": "BL0",
+    "number": "NM1",
+    "scraper": "BS0",
+    "keyhole": "KH1"
+   },
+   "condition": "kept",
+   "seed": 1,
+   "attempt": 274
+  },
+  {
+   "house": "east_parade_bay2",
+   "side": "east",
+   "x_centre_m": 20.178,
+   "kind": "F1",
+   "paint": "mustard",
+   "paint_class": "bright",
+   "variants": {
+    "letter_plate": "LP1",
+    "handle": "HD1",
+    "latch": "LK2",
+    "knocker": "KN0",
+    "bell": "BL0",
+    "number": "NM0",
+    "scraper": "BS0",
+    "keyhole": "KH1"
+   },
+   "condition": "tired",
+   "seed": 1,
+   "attempt": 274
+  },
+  {
+   "house": "east_parade_bay3",
+   "side": "east",
+   "x_centre_m": 21.769,
+   "kind": "F7",
+   "paint": "dark_green",
+   "paint_class": "dark_chroma",
+   "variants": {
+    "letter_plate": "LP0",
+    "handle": "HD4",
+    "latch": "LK0",
+    "knocker": "KN0",
+    "bell": "BL0",
+    "number": "NM0",
+    "scraper": "BS0",
+    "keyhole": "KH0"
+   },
+   "condition": "kept",
+   "seed": 1,
+   "attempt": 274
+  },
+  {
+   "house": "east_parade_bay4",
+   "side": "east",
+   "x_centre_m": 32.231,
+   "kind": "F5",
+   "paint": "council_turquoise",
+   "paint_class": "bright",
+   "variants": {
+    "letter_plate": "LP7",
+    "handle": "HD2b",
+    "latch": "LK0",
+    "knocker": "KN0",
+    "bell": "BL0",
+    "number": "NM0",
+    "scraper": "BS0",
+    "keyhole": "KH0"
+   },
+   "condition": "tired",
+   "seed": 1,
+   "attempt": 274
+  },
+  {
+   "house": "east_chandler_bay0",
+   "side": "east",
+   "x_centre_m": 45.231,
+   "kind": "F6",
+   "paint": "dark_green",
+   "paint_class": "dark_chroma",
+   "variants": {
+    "letter_plate": "LP4",
+    "handle": "HD2a",
+    "latch": "LK3",
+    "knocker": "KN0",
+    "bell": "BL0",
+    "number": "NM0",
+    "scraper": "BS0",
+    "keyhole": "KH0"
+   },
+   "condition": "kept",
+   "seed": 1,
+   "attempt": 274
+  },
+  {
+   "house": "west_south_bay2",
+   "side": "west",
+   "x_centre_m": 4.5,
+   "kind": "T2",
+   "paint": "black",
+   "paint_class": "dark_neutral",
+   "variants": {
+    "letter_plate": "LP5",
+    "handle": "HD3",
+    "latch": "LK0",
+    "knocker": "KN0",
+    "bell": "BL0",
+    "number": "NM6",
+    "scraper": "BS0",
+    "keyhole": "KH0"
+   },
+   "condition": "kept",
+   "seed": 1,
+   "attempt": 274
+  },
+  {
+   "house": "west_south_bay1",
+   "side": "west",
+   "x_centre_m": 13.5,
+   "kind": "T3",
+   "paint": "red",
+   "paint_class": "bright",
+   "variants": {
+    "letter_plate": "LP6",
+    "handle": "HD2c",
+    "latch": "LK0",
+    "knocker": "KN0",
+    "bell": "BL0",
+    "number": "NM0",
+    "scraper": "BS0",
+    "keyhole": "KH0"
+   },
+   "condition": "tired",
+   "seed": 1,
+   "attempt": 274
+  },
+  {
+   "house": "west_south_bay0",
+   "side": "west",
+   "x_centre_m": 19.5,
+   "kind": "T1",
+   "paint": "khaki",
+   "paint_class": "mid",
+   "variants": {
+    "letter_plate": "LP1",
+    "handle": "HD0",
+    "latch": "LK1",
+    "knocker": "KN0",
+    "bell": "BL1",
+    "number": "NM1",
+    "scraper": "BS1",
+    "keyhole": "KH0"
+   },
+   "condition": "tired",
+   "seed": 1,
+   "attempt": 274
+  },
+  {
+   "house": "west_north_bay2",
+   "side": "west",
+   "x_centre_m": 24.769,
+   "kind": "F4",
+   "paint": "navy",
+   "paint_class": "dark_neutral",
+   "variants": {
+    "letter_plate": "LP5",
+    "handle": "HD2b",
+    "latch": "LK0",
+    "knocker": "KN0",
+    "bell": "BL0",
+    "number": "NM0",
+    "scraper": "BS0",
+    "keyhole": "KH0"
+   },
+   "condition": "tired",
+   "seed": 1,
+   "attempt": 274
+  },
+  {
+   "house": "west_north_bay1",
+   "side": "west",
+   "x_centre_m": 35.231,
+   "kind": "F6",
+   "paint": "varnish",
+   "paint_class": "mid",
+   "variants": {
+    "letter_plate": "LP4",
+    "handle": "HD2a",
+    "latch": "LK3",
+    "knocker": "KN0",
+    "bell": "BL0",
+    "number": "NM0",
+    "scraper": "BS0",
+    "keyhole": "KH0"
+   },
+   "condition": "neglected",
+   "seed": 1,
+   "attempt": 274
+  },
+  {
+   "house": "west_north_bay0",
+   "side": "west",
+   "x_centre_m": 41.231,
+   "kind": "F5",
+   "paint": "navy",
+   "paint_class": "dark_neutral",
+   "variants": {
+    "letter_plate": "LP7",
+    "handle": "HD2b",
+    "latch": "LK0",
+    "knocker": "KN0",
+    "bell": "BL0",
+    "number": "NM0",
+    "scraper": "BS0",
+    "keyhole": "KH0"
+   },
+   "condition": "kept",
+   "seed": 1,
+   "attempt": 274
+  }
+ ]
+}

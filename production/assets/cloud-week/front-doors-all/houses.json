@@ -1,0 +1,1268 @@
+{
+ "houses": [
+  {
+   "house": "east_parade_bay0",
+   "side": "east",
+   "x_centre_m": 3.769,
+   "kind": "F1",
+   "frame_set": "F",
+   "door_glb": "door_F1.glb",
+   "paint": "maroon",
+   "paint_srgb": [
+    92,
+    26,
+    32
+   ],
+   "paint_class": "dark_chroma",
+   "frame_colour": "white_grimy",
+   "frame_srgb": [
+    208,
+    205,
+    192
+   ],
+   "condition": "tired",
+   "windows_modernised": false,
+   "furniture": [
+    {
+     "slot": "letter_plate",
+     "variant": "LP1",
+     "frame_mm": [
+      447.6,
+      188.3,
+      1627.0
+     ],
+     "mount_m": [
+      0.0,
+      0.1883,
+      1.672
+     ],
+     "glb": "LP1",
+     "mirror_x": false
+    },
+    {
+     "slot": "handle",
+     "variant": "HD1",
+     "frame_mm": [
+      447.6,
+      188.3,
+      797.0
+     ],
+     "mount_m": [
+      0.0,
+      0.1883,
+      0.842
+     ],
+     "glb": "HD1",
+     "mirror_x": false
+    },
+    {
+     "slot": "latch",
+     "variant": "LK2",
+     "frame_mm": [
+      799.9,
+      188.3,
+      1050.0
+     ],
+     "mount_m": [
+      0.3523,
+      0.1883,
+      1.095
+     ],
+     "glb": "LK2",
+     "mirror_x": false
+    },
+    {
+     "slot": "keyhole",
+     "variant": "KH1",
+     "frame_mm": [
+      811.4,
+      188.3,
+      1161.0
+     ],
+     "mount_m": [
+      0.3638,
+      0.1883,
+      1.206
+     ],
+     "glb": "KH1",
+     "mirror_x": false
+    }
+   ],
+   "variants": {
+    "letter_plate": "LP1",
+    "handle": "HD1",
+    "latch": "LK2",
+    "knocker": "KN0",
+    "bell": "BL0",
+    "number": "NM0",
+    "scraper": "BS0",
+    "keyhole": "KH1"
+   },
+   "why": "Mickey's side door, the four-panel door as built in 3.1 (the recipe already gave it four panels and a knob: a plain slab failed a review on 4 October); maroon is the sheet's deep red"
+  },
+  {
+   "house": "east_parade_bay1",
+   "side": "east",
+   "x_centre_m": 9.769,
+   "kind": "F2",
+   "frame_set": "F",
+   "door_glb": "door_F2.glb",
+   "paint": "black",
+   "paint_srgb": [
+    35,
+    36,
+    40
+   ],
+   "paint_class": "dark_neutral",
+   "frame_colour": "white",
+   "frame_srgb": [
+    226,
+    224,
+    214
+   ],
+   "condition": "kept",
+   "windows_modernised": false,
+   "furniture": [
+    {
+     "slot": "letter_plate",
+     "variant": "LP2",
+     "frame_mm": [
+      447.6,
+      188.3,
+      1560.0
+     ],
+     "mount_m": [
+      0.0,
+      0.1883,
+      1.605
+     ],
+     "glb": "LP2",
+     "mirror_x": false,
+     "adjusted_from_the_target": {
+      "v": 5.0,
+      "why": "the plate's foot (v 1510) lies 2.5 mm on the long panels' bolection lip (the rail shows 1512.5 to 1602.9): moved 5 mm up (v 1550, the foot 2.5 mm clear), inside the target's 8 mm tolerance"
+     }
+    },
+    {
+     "slot": "handle",
+     "variant": "HD1",
+     "frame_mm": [
+      447.6,
+      188.3,
+      608.0
+     ],
+     "mount_m": [
+      0.0,
+      0.1883,
+      0.653
+     ],
+     "glb": "HD1",
+     "mirror_x": false
+    },
+    {
+     "slot": "latch",
+     "variant": "LK2",
+     "frame_mm": [
+      799.9,
+      188.3,
+      1080.5
+     ],
+     "mount_m": [
+      0.3523,
+      0.1883,
+      1.1255
+     ],
+     "glb": "LK2",
+     "mirror_x": false
+    },
+    {
+     "slot": "number",
+     "variant": "NM1",
+     "frame_mm": [
+      447.6,
+      188.3,
+      1932.0
+     ],
+     "mount_m": [
+      0.0,
+      0.1883,
+      1.977
+     ],
+     "glb": "NM1",
+     "mirror_x": false
+    },
+    {
+     "slot": "keyhole",
+     "variant": "KH1",
+     "frame_mm": [
+      811.4,
+      188.3,
+      1198.1
+     ],
+     "mount_m": [
+      0.3638,
+      0.1883,
+      1.2431
+     ],
+     "glb": "KH1",
+     "mirror_x": false
+    }
+   ],
+   "variants": {
+    "letter_plate": "LP2",
+    "handle": "HD1",
+    "latch": "LK2",
+    "knocker": "KN0",
+    "bell": "BL0",
+    "number": "NM1",
+    "scraper": "BS0",
+    "keyhole": "KH1"
+   },
+   "why": "the fishmonger's flat, an old six-panel door as P2 shows; kept because a working shop keeps its own door"
+  },
+  {
+   "house": "east_parade_bay2",
+   "side": "east",
+   "x_centre_m": 20.178,
+   "kind": "F1",
+   "frame_set": "F",
+   "door_glb": "door_F1.glb",
+   "paint": "navy",
+   "paint_srgb": [
+    24,
+    38,
+    78
+   ],
+   "paint_class": "dark_neutral",
+   "frame_colour": "white",
+   "frame_srgb": [
+    226,
+    224,
+    214
+   ],
+   "condition": "kept",
+   "windows_modernised": true,
+   "furniture": [
+    {
+     "slot": "letter_plate",
+     "variant": "LP1",
+     "frame_mm": [
+      447.6,
+      188.3,
+      1627.0
+     ],
+     "mount_m": [
+      0.0,
+      0.1883,
+      1.672
+     ],
+     "glb": "LP1",
+     "mirror_x": false
+    },
+    {
+     "slot": "handle",
+     "variant": "HD1",
+     "frame_mm": [
+      447.6,
+      188.3,
+      797.0
+     ],
+     "mount_m": [
+      0.0,
+      0.1883,
+      0.842
+     ],
+     "glb": "HD1",
+     "mirror_x": false
+    },
+    {
+     "slot": "latch",
+     "variant": "LK2",
+     "frame_mm": [
+      799.9,
+      188.3,
+      1050.0
+     ],
+     "mount_m": [
+      0.3523,
+      0.1883,
+      1.095
+     ],
+     "glb": "LK2",
+     "mirror_x": false
+    },
+    {
+     "slot": "keyhole",
+     "variant": "KH1",
+     "frame_mm": [
+      811.4,
+      188.3,
+      1161.0
+     ],
+     "mount_m": [
+      0.3638,
+      0.1883,
+      1.206
+     ],
+     "glb": "KH1",
+     "mirror_x": false
+    }
+   ],
+   "variants": {
+    "letter_plate": "LP1",
+    "handle": "HD1",
+    "latch": "LK2",
+    "knocker": "KN0",
+    "bell": "BL0",
+    "number": "NM0",
+    "scraper": "BS0",
+    "keyhole": "KH1"
+   },
+   "why": "Rita's: the shopfront kit's own side door (a fanlight over it); four-panel as built, dark blue against the cream painted front (the 4 October reading of the sheet's third house)"
+  },
+  {
+   "house": "east_parade_bay3",
+   "side": "east",
+   "x_centre_m": 21.769,
+   "kind": "F4",
+   "frame_set": "F",
+   "door_glb": "door_F4.glb",
+   "paint": "brown",
+   "paint_srgb": [
+    74,
+    48,
+    34
+   ],
+   "paint_class": "dark_neutral",
+   "frame_colour": "white_grimy",
+   "frame_srgb": [
+    208,
+    205,
+    192
+   ],
+   "condition": "neglected",
+   "windows_modernised": false,
+   "furniture": [
+    {
+     "slot": "letter_plate",
+     "variant": "LP5",
+     "frame_mm": [
+      447.6,
+      188.3,
+      110.0
+     ],
+     "mount_m": [
+      0.0,
+      0.1883,
+      0.155
+     ],
+     "glb": "LP5",
+     "mirror_x": false
+    },
+    {
+     "slot": "handle",
+     "variant": "HD2b",
+     "frame_mm": [
+      123.6,
+      188.3,
+      1238.0
+     ],
+     "mount_m": [
+      -0.324,
+      0.1883,
+      1.283
+     ],
+     "glb": "HD2b",
+     "mirror_x": false
+    }
+   ],
+   "variants": {
+    "letter_plate": "LP5",
+    "handle": "HD2b",
+    "latch": "LK0",
+    "knocker": "KN0",
+    "bell": "BL0",
+    "number": "NM0",
+    "scraper": "BS0",
+    "keyhole": "KH0"
+   },
+   "why": "the empty unit to let (whitewashed): its flat is empty too; an old three-light glazed door, neglected, with a low plate in its bottom rail"
+  },
+  {
+   "house": "east_parade_bay4",
+   "side": "east",
+   "x_centre_m": 32.231,
+   "kind": "F6",
+   "frame_set": "F",
+   "door_glb": "door_F6.glb",
+   "paint": "council_turquoise",
+   "paint_srgb": [
+    30,
+    112,
+    128
+   ],
+   "paint_class": "bright",
+   "frame_colour": "white",
+   "frame_srgb": [
+    226,
+    224,
+    214
+   ],
+   "condition": "tired",
+   "windows_modernised": true,
+   "furniture": [
+    {
+     "slot": "letter_plate",
+     "variant": "LP4",
+     "frame_mm": [
+      451.9,
+      188.3,
+      931.1
+     ],
+     "mount_m": [
+      0.0043,
+      0.1883,
+      0.9761
+     ],
+     "glb": "LP4",
+     "mirror_x": false
+    },
+    {
+     "slot": "handle",
+     "variant": "HD2a",
+     "frame_mm": [
+      775.6,
+      188.3,
+      919.5
+     ],
+     "mount_m": [
+      0.328,
+      0.1883,
+      0.9645
+     ],
+     "glb": "HD2a",
+     "mirror_x": true
+    },
+    {
+     "slot": "latch",
+     "variant": "LK3",
+     "frame_mm": [
+      826.7,
+      188.3,
+      846.4
+     ],
+     "mount_m": [
+      0.3791,
+      0.1883,
+      0.8914
+     ],
+     "glb": "LK3",
+     "mirror_x": false
+    }
+   ],
+   "variants": {
+    "letter_plate": "LP4",
+    "handle": "HD2a",
+    "latch": "LK3",
+    "knocker": "KN0",
+    "bell": "BL0",
+    "number": "NM0",
+    "scraper": "BS0",
+    "keyhole": "KH0"
+   },
+   "why": "the launderette's flat, modernised (the windows target gave it replacement windows): a council-style flush door in the 1980s turquoise of D9's lower panel (D9's own door is half-glazed, a best reading), in the street frame F, an inward-opening 838 leaf; the fittings' places come from D5, an indoor landing door, and an outdoor flush door in a white frame is D4's middle door; the only bright door on the east side"
+  },
+  {
+   "house": "east_chandler_bay0",
+   "side": "east",
+   "x_centre_m": 45.231,
+   "kind": "F5",
+   "frame_set": "F",
+   "door_glb": "door_F5.glb",
+   "paint": "black",
+   "paint_srgb": [
+    35,
+    36,
+    40
+   ],
+   "paint_class": "dark_neutral",
+   "frame_colour": "white",
+   "frame_srgb": [
+    226,
+    224,
+    214
+   ],
+   "condition": "kept",
+   "windows_modernised": true,
+   "furniture": [
+    {
+     "slot": "letter_plate",
+     "variant": "LP7",
+     "frame_mm": [
+      453.5,
+      188.3,
+      782.0
+     ],
+     "mount_m": [
+      0.0059,
+      0.1883,
+      0.827
+     ],
+     "glb": "LP7",
+     "mirror_x": false
+    },
+    {
+     "slot": "handle",
+     "variant": "HD2b",
+     "frame_mm": [
+      102.5,
+      188.3,
+      1058.0
+     ],
+     "mount_m": [
+      -0.3451,
+      0.1883,
+      1.103
+     ],
+     "glb": "HD2b",
+     "mirror_x": false
+    }
+   ],
+   "variants": {
+    "letter_plate": "LP7",
+    "handle": "HD2b",
+    "latch": "LK0",
+    "knocker": "KN0",
+    "bell": "BL0",
+    "number": "NM0",
+    "scraper": "BS0",
+    "keyhole": "KH0"
+   },
+   "why": "the chandler's flat, modernised (replacement windows, a metal refit below): a flush door with a slit light as D2 and D4 show"
+  },
+  {
+   "house": "west_south_bay2",
+   "side": "west",
+   "x_centre_m": 4.5,
+   "kind": "T1",
+   "frame_set": "T",
+   "door_glb": "door_T1.glb",
+   "paint": "navy",
+   "paint_srgb": [
+    24,
+    38,
+    78
+   ],
+   "paint_class": "dark_neutral",
+   "frame_colour": "white_grimy",
+   "frame_srgb": [
+    208,
+    205,
+    192
+   ],
+   "condition": "tired",
+   "windows_modernised": false,
+   "furniture": [
+    {
+     "slot": "letter_plate",
+     "variant": "LP1",
+     "frame_mm": [
+      441.0,
+      188.3,
+      1627.0
+     ],
+     "mount_m": [
+      0.0,
+      0.1883,
+      1.945
+     ],
+     "glb": "LP1",
+     "mirror_x": false
+    },
+    {
+     "slot": "latch",
+     "variant": "LK1",
+     "frame_mm": [
+      780.4,
+      188.3,
+      1245.0
+     ],
+     "mount_m": [
+      0.3394,
+      0.1883,
+      1.563
+     ],
+     "glb": "LK1",
+     "mirror_x": false
+    },
+    {
+     "slot": "bell",
+     "variant": "BL1",
+     "frame_mm": [
+      859.4,
+      114.3,
+      1156.6
+     ],
+     "mount_m": [
+      0.4184,
+      0.1143,
+      1.4746
+     ],
+     "glb": "BL1",
+     "mirror_x": false
+    },
+    {
+     "slot": "number",
+     "variant": "NM1",
+     "frame_mm": [
+      441.0,
+      188.3,
+      1300.0
+     ],
+     "mount_m": [
+      0.0,
+      0.1883,
+      1.618
+     ],
+     "glb": "NM1_stacked",
+     "mirror_x": false
+    },
+    {
+     "slot": "scraper",
+     "variant": "BS1",
+     "frame_mm": [
+      -363.0,
+      -60.5,
+      -318.0
+     ],
+     "mount_m": [
+      -0.804,
+      -0.0605,
+      0.0
+     ],
+     "glb": "BS1",
+     "mirror_x": false
+    }
+   ],
+   "variants": {
+    "letter_plate": "LP1",
+    "handle": "HD0",
+    "latch": "LK1",
+    "knocker": "KN0",
+    "bell": "BL1",
+    "number": "NM1",
+    "scraper": "BS1",
+    "keyhole": "KH0"
+   },
+   "why": "the cottage nearest the quay, four-panel as built in 3.1 with its plain oblong bell push; dark blue; the one boot scraper, by the step (owed: no period photograph shows one here)"
+  },
+  {
+   "house": "west_south_bay1",
+   "side": "west",
+   "x_centre_m": 13.5,
+   "kind": "T3",
+   "frame_set": "T",
+   "door_glb": "door_T3.glb",
+   "paint": "white_gloss",
+   "paint_srgb": [
+    226,
+    224,
+    214
+   ],
+   "paint_class": "light",
+   "frame_colour": "white",
+   "frame_srgb": [
+    226,
+    224,
+    214
+   ],
+   "condition": "kept",
+   "windows_modernised": true,
+   "furniture": [
+    {
+     "slot": "letter_plate",
+     "variant": "LP6",
+     "frame_mm": [
+      441.0,
+      188.3,
+      886.1
+     ],
+     "mount_m": [
+      0.0,
+      0.1883,
+      1.2041
+     ],
+     "glb": "LP6",
+     "mirror_x": false
+    },
+    {
+     "slot": "handle",
+     "variant": "HD2c",
+     "frame_mm": [
+      791.6,
+      188.3,
+      920.0
+     ],
+     "mount_m": [
+      0.3506,
+      0.1883,
+      1.238
+     ],
+     "glb": "HD2c",
+     "mirror_x": true
+    }
+   ],
+   "variants": {
+    "letter_plate": "LP6",
+    "handle": "HD2c",
+    "latch": "LK0",
+    "knocker": "KN0",
+    "bell": "BL0",
+    "number": "NM0",
+    "scraper": "BS0",
+    "keyhole": "KH0"
+   },
+   "why": "the cottage with replacement windows: the white moulded door with a small flat-topped light that D4 shows next to its replacement windows"
+  },
+  {
+   "house": "west_south_bay0",
+   "side": "west",
+   "x_centre_m": 19.5,
+   "kind": "T2",
+   "frame_set": "T",
+   "door_glb": "door_T2.glb",
+   "paint": "maroon",
+   "paint_srgb": [
+    92,
+    26,
+    32
+   ],
+   "paint_class": "dark_chroma",
+   "frame_colour": "white",
+   "frame_srgb": [
+    226,
+    224,
+    214
+   ],
+   "condition": "tired",
+   "windows_modernised": false,
+   "furniture": [
+    {
+     "slot": "letter_plate",
+     "variant": "LP5",
+     "frame_mm": [
+      441.0,
+      188.3,
+      110.0
+     ],
+     "mount_m": [
+      0.0,
+      0.1883,
+      0.428
+     ],
+     "glb": "LP5",
+     "mirror_x": false
+    },
+    {
+     "slot": "handle",
+     "variant": "HD3",
+     "frame_mm": [
+      91.8,
+      188.3,
+      1246.6
+     ],
+     "mount_m": [
+      -0.3492,
+      0.1883,
+      1.5646
+     ],
+     "glb": "HD3",
+     "mirror_x": false
+    },
+    {
+     "slot": "number",
+     "variant": "NM6",
+     "frame_mm": [
+      441.0,
+      188.3,
+      1908.6
+     ],
+     "mount_m": [
+      0.0,
+      0.1883,
+      2.2266
+     ],
+     "glb": "NM6",
+     "mirror_x": false
+    }
+   ],
+   "variants": {
+    "letter_plate": "LP5",
+    "handle": "HD3",
+    "latch": "LK0",
+    "knocker": "KN0",
+    "bell": "BL0",
+    "number": "NM6",
+    "scraper": "BS0",
+    "keyhole": "KH0"
+   },
+   "why": "the cottage by the yard slot: the 1930s four-light glazed door of D3 with its fanlight (a plain pane over a band of leaded lozenges) and small dark numerals on its top rail; D3's own door is white, but west_south_bay1 beside it is white gloss, and two pale doors side by side break the neighbour rule (paint class), so this door is maroon (its neighbours white_gloss and deep_teal, the doors facing it navy and brown)"
+  },
+  {
+   "house": "west_north_bay2",
+   "side": "west",
+   "x_centre_m": 24.769,
+   "kind": "F7",
+   "frame_set": "F",
+   "door_glb": "door_F7.glb",
+   "paint": "deep_teal",
+   "paint_srgb": [
+    22,
+    64,
+    66
+   ],
+   "paint_class": "dark_chroma",
+   "frame_colour": "white_grimy",
+   "frame_srgb": [
+    208,
+    205,
+    192
+   ],
+   "condition": "neglected",
+   "windows_modernised": false,
+   "furniture": [
+    {
+     "slot": "handle",
+     "variant": "HD4",
+     "frame_mm": [
+      766.6,
+      188.3,
+      1010.0
+     ],
+     "mount_m": [
+      0.319,
+      0.1883,
+      1.055
+     ],
+     "glb": "HD4",
+     "mirror_x": false
+    }
+   ],
+   "variants": {
+    "letter_plate": "LP0",
+    "handle": "HD4",
+    "latch": "LK0",
+    "knocker": "KN0",
+    "bell": "BL0",
+    "number": "NM0",
+    "scraper": "BS0",
+    "keyhole": "KH0"
+   },
+   "why": "beside the yard slot, in a one-storey shop row: a service door to the back passage, ledged and braced, in the sheet's deep teal (owed line 3: if the PC wants flats in this row it takes F1 instead)"
+  },
+  {
+   "house": "west_north_bay1",
+   "side": "west",
+   "x_centre_m": 35.231,
+   "kind": "F3",
+   "frame_set": "F",
+   "door_glb": "door_F3.glb",
+   "paint": "dark_green",
+   "paint_srgb": [
+    28,
+    59,
+    41
+   ],
+   "paint_class": "dark_chroma",
+   "frame_colour": "white",
+   "frame_srgb": [
+    226,
+    224,
+    214
+   ],
+   "condition": "tired",
+   "windows_modernised": false,
+   "furniture": [
+    {
+     "slot": "letter_plate",
+     "variant": "LP1",
+     "frame_mm": [
+      447.6,
+      188.3,
+      1627.0
+     ],
+     "mount_m": [
+      0.0,
+      0.1883,
+      1.672
+     ],
+     "glb": "LP1",
+     "mirror_x": false
+    },
+    {
+     "slot": "handle",
+     "variant": "HD3",
+     "frame_mm": [
+      95.6,
+      188.3,
+      1265.0
+     ],
+     "mount_m": [
+      -0.352,
+      0.1883,
+      1.31
+     ],
+     "glb": "HD3",
+     "mirror_x": false
+    },
+    {
+     "slot": "number",
+     "variant": "NM3",
+     "frame_mm": [
+      447.6,
+      188.3,
+      1935.0
+     ],
+     "mount_m": [
+      0.0,
+      0.1883,
+      1.98
+     ],
+     "glb": "NM3",
+     "mirror_x": false
+    }
+   ],
+   "variants": {
+    "letter_plate": "LP1",
+    "handle": "HD3",
+    "latch": "LK0",
+    "knocker": "KN0",
+    "bell": "BL0",
+    "number": "NM3",
+    "scraper": "BS0",
+    "keyhole": "KH0"
+   },
+   "why": "a household door in the row: two long panels as D1's left door, a bar pull on the left stile"
+  },
+  {
+   "house": "west_north_bay0",
+   "side": "west",
+   "x_centre_m": 41.231,
+   "kind": "F1",
+   "frame_set": "F",
+   "door_glb": "door_F1.glb",
+   "paint": "maroon",
+   "paint_srgb": [
+    92,
+    26,
+    32
+   ],
+   "paint_class": "dark_chroma",
+   "frame_colour": "white",
+   "frame_srgb": [
+    226,
+    224,
+    214
+   ],
+   "condition": "kept",
+   "windows_modernised": false,
+   "furniture": [
+    {
+     "slot": "letter_plate",
+     "variant": "LP1",
+     "frame_mm": [
+      447.6,
+      188.3,
+      1627.0
+     ],
+     "mount_m": [
+      0.0,
+      0.1883,
+      1.672
+     ],
+     "glb": "LP1",
+     "mirror_x": false
+    },
+    {
+     "slot": "handle",
+     "variant": "HD1",
+     "frame_mm": [
+      447.6,
+      188.3,
+      797.0
+     ],
+     "mount_m": [
+      0.0,
+      0.1883,
+      0.842
+     ],
+     "glb": "HD1",
+     "mirror_x": false
+    },
+    {
+     "slot": "latch",
+     "variant": "LK2",
+     "frame_mm": [
+      799.9,
+      188.3,
+      1050.0
+     ],
+     "mount_m": [
+      0.3523,
+      0.1883,
+      1.095
+     ],
+     "glb": "LK2",
+     "mirror_x": false
+    },
+    {
+     "slot": "keyhole",
+     "variant": "KH1",
+     "frame_mm": [
+      811.4,
+      188.3,
+      1161.0
+     ],
+     "mount_m": [
+      0.3638,
+      0.1883,
+      1.206
+     ],
+     "glb": "KH1",
+     "mirror_x": false
+    }
+   ],
+   "variants": {
+    "letter_plate": "LP1",
+    "handle": "HD1",
+    "latch": "LK2",
+    "knocker": "KN0",
+    "bell": "BL0",
+    "number": "NM0",
+    "scraper": "BS0",
+    "keyhole": "KH1"
+   },
+   "why": "the north end of the row: the four-panel door as built"
+  }
+ ],
+ "hill": [
+  {
+   "id": "backdrop_rise_approach_e0",
+   "kind": "F1",
+   "door_glb": "door_F1.glb",
+   "paint": "navy",
+   "paint_srgb": [
+    24,
+    38,
+    78
+   ],
+   "paint_class": "dark_neutral",
+   "frame_colour": "white",
+   "condition": "kept",
+   "furniture": [],
+   "note": "seen at 44 m and more: kind and paint only; no fitting, no wear mask beyond the foot band"
+  },
+  {
+   "id": "backdrop_rise_approach_e1",
+   "kind": "F2",
+   "door_glb": "door_F2.glb",
+   "paint": "dark_green",
+   "paint_srgb": [
+    28,
+    59,
+    41
+   ],
+   "paint_class": "dark_chroma",
+   "frame_colour": "white",
+   "condition": "kept",
+   "furniture": [],
+   "note": "seen at 44 m and more: kind and paint only; no fitting, no wear mask beyond the foot band"
+  },
+  {
+   "id": "backdrop_rise_approach_w0",
+   "kind": "F3",
+   "door_glb": "door_F3.glb",
+   "paint": "brown",
+   "paint_srgb": [
+    74,
+    48,
+    34
+   ],
+   "paint_class": "dark_neutral",
+   "frame_colour": "white",
+   "condition": "kept",
+   "furniture": [],
+   "note": "seen at 44 m and more: kind and paint only; no fitting, no wear mask beyond the foot band"
+  },
+  {
+   "id": "backdrop_rise_approach_w1",
+   "kind": "F4",
+   "door_glb": "door_F4_kept.glb",
+   "paint": "deep_teal",
+   "paint_srgb": [
+    22,
+    64,
+    66
+   ],
+   "paint_class": "dark_chroma",
+   "frame_colour": "white",
+   "condition": "kept",
+   "furniture": [],
+   "note": "seen at 44 m and more: kind and paint only; no fitting, no wear mask beyond the foot band"
+  },
+  {
+   "id": "backdrop_rise_approach_w2",
+   "kind": "T1",
+   "door_glb": "door_T1.glb",
+   "paint": "black",
+   "paint_srgb": [
+    35,
+    36,
+    40
+   ],
+   "paint_class": "dark_neutral",
+   "frame_colour": "white",
+   "condition": "kept",
+   "furniture": [],
+   "note": "seen at 44 m and more: kind and paint only; no fitting, no wear mask beyond the foot band"
+  },
+  {
+   "id": "backdrop_rise_approach_w3",
+   "kind": "T2",
+   "door_glb": "door_T2.glb",
+   "paint": "maroon",
+   "paint_srgb": [
+    92,
+    26,
+    32
+   ],
+   "paint_class": "dark_chroma",
+   "frame_colour": "white",
+   "condition": "kept",
+   "furniture": [],
+   "note": "seen at 44 m and more: kind and paint only; no fitting, no wear mask beyond the foot band"
+  },
+  {
+   "id": "backdrop_rise_approach_w4",
+   "kind": "F1",
+   "door_glb": "door_F1.glb",
+   "paint": "navy",
+   "paint_srgb": [
+    24,
+    38,
+    78
+   ],
+   "paint_class": "dark_neutral",
+   "frame_colour": "white",
+   "condition": "kept",
+   "furniture": [],
+   "note": "seen at 44 m and more: kind and paint only; no fitting, no wear mask beyond the foot band"
+  },
+  {
+   "id": "backdrop_rise_approach_x0",
+   "kind": "F2",
+   "door_glb": "door_F2.glb",
+   "paint": "dark_green",
+   "paint_srgb": [
+    28,
+    59,
+    41
+   ],
+   "paint_class": "dark_chroma",
+   "frame_colour": "white",
+   "condition": "kept",
+   "furniture": [],
+   "note": "seen at 44 m and more: kind and paint only; no fitting, no wear mask beyond the foot band"
+  },
+  {
+   "id": "backdrop_rise_approach_x1",
+   "kind": "F3",
+   "door_glb": "door_F3.glb",
+   "paint": "brown",
+   "paint_srgb": [
+    74,
+    48,
+    34
+   ],
+   "paint_class": "dark_neutral",
+   "frame_colour": "white",
+   "condition": "kept",
+   "furniture": [],
+   "note": "seen at 44 m and more: kind and paint only; no fitting, no wear mask beyond the foot band"
+  },
+  {
+   "id": "backdrop_rise_approach_x2",
+   "kind": "F4",
+   "door_glb": "door_F4_kept.glb",
+   "paint": "deep_teal",
+   "paint_srgb": [
+    22,
+    64,
+    66
+   ],
+   "paint_class": "dark_chroma",
+   "frame_colour": "white",
+   "condition": "kept",
+   "furniture": [],
+   "note": "seen at 44 m and more: kind and paint only; no fitting, no wear mask beyond the foot band"
+  },
+  {
+   "id": "backdrop_rise_approach_x3",
+   "kind": "T1",
+   "door_glb": "door_T1.glb",
+   "paint": "black",
+   "paint_srgb": [
+    35,
+    36,
+    40
+   ],
+   "paint_class": "dark_neutral",
+   "frame_colour": "white",
+   "condition": "kept",
+   "furniture": [],
+   "note": "seen at 44 m and more: kind and paint only; no fitting, no wear mask beyond the foot band"
+  },
+  {
+   "id": "backdrop_rise_approach_x4",
+   "kind": "T2",
+   "door_glb": "door_T2.glb",
+   "paint": "maroon",
+   "paint_srgb": [
+    92,
+    26,
+    32
+   ],
+   "paint_class": "dark_chroma",
+   "frame_colour": "white",
+   "condition": "kept",
+   "furniture": [],
+   "note": "seen at 44 m and more: kind and paint only; no fitting, no wear mask beyond the foot band"
+  }
+ ],
+ "night": {
+  "lantern_colour_linear": [
+   1.0,
+   0.25,
+   0.0
+  ],
+  "note": "the game's lantern colour (linear red 1.0, green 0.25, blue 0.0); the cloud renders are overcast day only, so no light of this colour is made here"
+ },
+ "numbers": {
+  "note": "The forms are the target's (NM1 NM3 NM6); the digits are placeholders the town assigns (none is canon, none is a real address).",
+  "digits": {
+   "NM1:T1": "34",
+   "NM1:F2": "246",
+   "NM6:T2": "21",
+   "NM3:F3": "15"
+  }
+ },
+ "night_light": {
+  "lantern_colour_linear": [
+   1.0,
+   0.25,
+   0.0
+  ],
+  "note": "the game's lantern colour (linear red 1.0, green 0.25, blue 0.0); the cloud renders are overcast day only, so no light of this colour is made here"
+ },
+ "notes": "mount_m is the fitting's origin (its mounting point on the leaf's face; the bell push on the jamb's stop face; the scraper on the ground against the wall) in metres in the kind's own .glb frame; mirror_x: scale x by -1 (a lever built pointing toward a left-locking door's middle). The hill's doors take kind and paint only."
+}

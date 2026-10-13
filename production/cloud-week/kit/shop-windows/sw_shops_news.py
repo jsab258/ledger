@@ -6,6 +6,8 @@ Everything printed here is the project's own: invented papers, magazines, greeti
 import math
 import os
 
+import numpy as np
+
 import sw_assets as A
 import sw_gen as GEN
 from sw_gen import GM
@@ -281,6 +283,13 @@ def display(d):
     post_uv = GEN.card_art_atlas(os.path.join(tex, "postcards.png"), GEN.POSTCARD_WORDS, cols=4, rows=2, tile=(260, 180), postcard=True)
     pack_uv = GEN.pack_atlas(os.path.join(tex, "packs.png"))
     jar_uv = GEN.jar_atlas(os.path.join(tex, "jars.png"))
+    # the white of the printed goods is held at about 0.86 of full in the window (a sheet of newsprint is not paper white): under the gate's night spill the white card, paper and carton tops burnt
+    # 3.5 per cent of the close frames (PIC-05g; the room's pictures use the atlases at full white, they are lit differently)
+    from PIL import Image as _Im
+    for _nm in ("papers.png", "cards.png", "postcards.png", "packs.png"):
+        _p = os.path.join(tex, _nm)
+        _a = np.asarray(_Im.open(_p).convert("RGB")).astype(np.float32) * 0.86
+        _Im.fromarray(np.clip(_a, 0, 255).astype(np.uint8)).save(_p)
     mag_m = d.image_mat("magazines", os.path.join(tex, "magazines.png"), rough=0.5)
     pap_m = d.image_mat("papers", os.path.join(tex, "papers.png"), rough=0.7)
     card_m = d.image_mat("greeting_cards", os.path.join(tex, "cards.png"), rough=0.55)
@@ -289,7 +298,7 @@ def display(d):
     jar_m = d.image_mat("jars", os.path.join(tex, "jars.png"), rough=0.3)
     lid_m = d.mat("jar_lid", rgb8(190, 190, 186), rough=0.3, metal=0.9)
     wood = d.mat("stand_wood", rgb8(150, 108, 70), rough=0.55)
-    board = d.mat("slope_board", rgb8(196, 192, 182), rough=0.7)
+    board = d.mat("slope_board", rgb8(150, 146, 136), rough=0.7)
     wire = d.mat("rack_wire", rgb8(70, 70, 74), rough=0.4, metal=0.8)
     # ---- the two paper stands (a lower step, a higher step and a back board each) and the ten papers, folded once: three on the lower step, shingled 12 mm apart in depth, two on the higher step between
     # their gaps, so that every paper shows at least half to the far pavement

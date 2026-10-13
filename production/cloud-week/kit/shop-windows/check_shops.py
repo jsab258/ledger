@@ -139,7 +139,7 @@ def newsagent(ctx, rows, assets, di):
     jars = sum(p.get("n", 0) for p in placed if p.get("model") == "script:sweet_jars")
     rows.add("ROOM-03", "the counter's sweet jars", jars == 10, "%d sweet jars along the back of the counter (target 10)" % jars)
     have = counts_row(ctx, rows, di, {"cigarette_pack": 8, "script:cigarette_packs": 100, "stationery_supplies": 0}, "newsagent")
-    return {"supports": ["script:paper_stand", "script:carton_stand", "script:magazine_board", "script:table_laminate"], "texts": _texts(ctx, di),
+    return {"supports": ["script:paper_stand", "script:carton_stand", "script:magazine_board", "script:table_laminate", "script:crate"], "texts": _texts(ctx, di),
             "families": {"papers and magazines": ["script:newspapers", "script:magazines"], "tobacco": ["script:cigarette_cartons"], "sweets": ["script:sweet_jars"], "cards": ["script:card_rack", "script:postcard_rack"]},
             "era": "newspapers, magazines, cards, sweets and tobacco of a 1990 newsagent, every title and maker invented; no lottery, betting or drink; no barcode"}
 

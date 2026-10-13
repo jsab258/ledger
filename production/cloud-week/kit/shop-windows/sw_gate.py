@@ -183,6 +183,20 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
         if o.parent is None:
             o.location += Vector((ctx.window_cx_m, -0.025, 0.600))          # the display's local x is centred on the window zone (Rita's 0.975)
     lattice = load(grille_glb) if (night and grille_glb) else []
+    # a box sign lit by tubes (4.1: fascia `lit: tubes`, the newsagent's and the launderette's) glows at night with its own picture: the 4.1 board's emissive map on the sign's face material, at 0.5.
+    # The glb is the day state (an emissive map would light the sign by day), so the night's glow is put on here; the game's own is owed (PC-08)
+    em_path = os.path.join(ctx.fascias, "fascias", ctx.id, ctx.id + "_emissive.png")
+    if night and ctx.R["fascia"].get("lit") == "tubes" and os.path.exists(em_path):
+        for m in bpy.data.materials:
+            if m.name.startswith("fascia_" + ctx.id) and m.use_nodes:
+                nt_ = m.node_tree
+                pb = nt_.nodes.get("Principled BSDF")
+                if pb is None:
+                    continue
+                tx = nt_.nodes.new("ShaderNodeTexImage")
+                tx.image = bpy.data.images.load(em_path, check_existing=True)
+                nt_.links.new(tx.outputs["Color"], pb.inputs["Emission Color"])
+                pb.inputs["Emission Strength"].default_value = 0.5
     # empties from the importer carry the Y-up conversion; apply the display's offset on the roots only
     # glass: a mix of a clear pane (all the glass's reflectance) and a transparent one, 1.0 by day and 0.2 at night
     refl = (0.2 if night else 1.0) if glass_refl is None else glass_refl
@@ -443,7 +457,7 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
         rl.shape = "RECTANGLE"
         rl.size, rl.size_y = 3.2, 0.18
         rl.color = (1.0, 0.97, 0.92)
-        rl.energy = (extra or {}).get("spill_w", 60.0)
+        rl.energy = 0.0 if state == "night_dark" else (extra or {}).get("spill_w", 60.0)        # a shop that is dark at night (the ironmonger) spills nothing: its display is as dark as its room
         ro = bpy.data.objects.new("spill", rl)
         sc.collection.objects.link(ro)
         # centred at y 0.10 behind the wall face and z 2.30 (13 Oct, street review N1; try 1 had it at y -0.02, z 2.36, so its front edge stood 63 mm IN FRONT of the glass, its emitting face

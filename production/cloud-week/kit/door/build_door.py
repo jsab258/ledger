@@ -656,22 +656,21 @@ class Door:
             self.add("iron_keyhole_blank", V, Fc, plate_mat)
 
     def build_bell_push(self, kp):
-        """T1's fitting on the right jamb's stop (P1's dark oblong, 22 x 72.6): a period bell push, a dark oblong back with a round brass bezel and a
-        round dark button on it. Stands 0.4 into the stop's face."""
+        """T1's fitting on the right jamb's stop (P1's dark oblong, 22 x 72.6): ONE plain dark oblong, square-cornered (corner radius 1), 3 proud
+        of the stop's face, with a groove 14 wide x 2 high x 1 deep a little (8 mm) below its middle (the darker band P1 shows). The handover's fix
+        (13 October, from the 3.1 close review): the round brass bezel and the round dark button of the first build are deleted; the two-part push
+        read as a modern video doorbell. Stands 0.4 into the stop's face."""
         xk = kp["centre_x_mm"]
         z0k, z1k = kp["z_range_mm"]
         zm = 0.5 * (z0k + z1k)
-        w, h, r = kp["w_mm"], z1k - z0k, 6.0
+        w, h, r = kp["w_mm"], z1k - z0k, 1.0
         pts = []
         for (cx_, cz_, a0) in ((xk + w / 2 - r, z1k - r, 0), (xk - w / 2 + r, z1k - r, 90), (xk - w / 2 + r, z0k + r, 180), (xk + w / 2 - r, z0k + r, 270)):
-            pts += arc(cx_, cz_, r, a0, a0 + 90, 6)
+            pts += arc(cx_, cz_, r, a0, a0 + 90, 3)
         V, Fc = prism(pts, ("x", "z"), "y", self.FY0 - 3.0, self.FY0 + 0.4)
-        self.add("iron_bellpush", V, Fc, "steel_dark")
-        # the bezel (a ring, 17 across, rounded, 4.9 proud of the stop face) and the button (a dome of 11 across, 5.8 proud); both start 0.4 into the back
-        Vb, Fb = lathe([(8.5, 2.6), (8.5, 4.1), (7.7, 4.9), (6.7, 4.9), (6.0, 4.1), (6.0, 2.6)], 40, hollow=True)
-        self.add("iron_bellpush_bezel", place_axis_y(Vb, xk, self.FY0, zm), Fb, "brass")
-        Vd, Fd = lathe([(0.0, 2.6), (5.6, 2.6), (5.6, 3.8), (4.4, 5.0), (2.2, 5.6), (0.0, 5.8)], 40)
-        self.add("iron_bellpush_button", place_axis_y(Vd, xk, self.FY0, zm), Fd, "steel_dark")
+        ob = self.add("iron_bellpush", V, Fc, "steel_dark")
+        zg = zm - 8.0                                                      # the groove, 14 x 2, 1 deep, a little below the middle
+        cut(ob, *box(xk - 7.0, self.FY0 - 3.0 - 1.0, zg - 1.0, xk + 7.0, self.FY0 - 3.0 + 1.0, zg + 1.0))
 
     def build_letter_plate(self, lp, mat):
         X0, Z0, LY0 = self.X0, self.Z0, self.LY0

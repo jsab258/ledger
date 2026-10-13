@@ -193,13 +193,13 @@ def projection_rows(ctx, rows):
     c = (W / 2, 0.0, H / 2)
     u1, _ = G.trace(c, e1, (W, H, D), G.CAMD, side)
     u2, _ = G.trace(c, e2, (W, H, D), G.CAMD, side)
-    du = abs(u2 - u1) * PW
+    du = (u2 - u1) * PW                    # signed: the west shops' cards are mirrored, the target's value is negative for them
     exp = R["parallax_test"]["expected_du_px"]
     a = np.asarray(Image.open(os.path.join(gate, "card_CLOSE_35_day.png")).convert("RGB")).astype(np.float32)
     b = np.asarray(Image.open(os.path.join(gate, "card_CLOSE_35_B_day.png")).convert("RGB")).astype(np.float32)
     mad = float(np.abs(a - b).mean())
     rows.add("PRJ-02", "the room shifts with the eye", near(du, exp, 1.5) and mad >= 8.0,
-             "the card's centre lands %.1f px apart between CLOSE_35 and CLOSE_35_B (target %.2f, +-1.5); the mean absolute difference of the two baked cards is %.1f levels (at least 8). This runs on the gate's own `trace` bake: it proves the gate, not the game (owed on the PC: PC-01)" % (du, exp, mad))
+             "the card's centre lands %.1f px (signed) apart between CLOSE_35 and CLOSE_35_B (target %.2f, +-1.5); the mean absolute difference of the two baked cards is %.1f levels (at least 8). This runs on the gate's own `trace` bake: it proves the gate, not the game (owed on the PC: PC-01)" % (du, exp, mad))
     worst_all, mean_all, cnt = 0.0, [], 0
     pic = np.asarray(Image.open(X.picture(ctx.work, "day")).convert("RGB")).astype(np.float32) / 255.0
     chain = G.mips(G.lin(pic))
@@ -794,4 +794,4 @@ def run(ctx, assets, previews, out_json):
         lt = np.array([1.0, 0.25, 0.0])
         rows.add("LIT-06", "the sodium wash is the game's", float(np.abs(np.array(sod) - lt).max()) <= 0.01, "night_dark's sodium wash colour (linear) %s against unreal-look.json lantern_linear_rgb %s (the scene file's stale 1.0, 0.7055, 0.0 is not used)" % ([round(float(x), 3) for x in sod], lt.tolist()))
     rows.na("PRV-01", "the previews show nothing they must not", "the photograph previews of the target (P1 to P6), not this build's; this build's previews were looked at: no real firm's name, number, person, drink, gambling or child in them")
-    return finish(ctx, rows, T, out_json, t0, previews, assets, 8 if ctx.has_room else 4)
+    return finish(ctx, rows, T, out_json, t0, previews, assets, (7 + (0 if ctx.lit else 1)) if ctx.has_room else 4)        # four street frames, three room pictures, and a dark shop's night_dark street view

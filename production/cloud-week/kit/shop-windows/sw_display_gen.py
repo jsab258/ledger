@@ -122,7 +122,7 @@ class GDisplay(RG.GRoom):
 
     def crate(self, name, u0, u1, v0, v1, w0, w1, tier="bed"):
         """A plain timber crate (the boxes that stand for what Poly Haven has no model of): slats on the sides and a lid of boards, one mesh."""
-        wood = self.mat("crate_wood", rgb8(176, 140, 92), rough=0.8)
+        wood = self.mat("crate_wood", rgb8(150, 113, 72), rough=0.8)       # weathered deal (176, 140, 92 burnt under the gate's night spill: PIC-05g)
         gm = GM()
         x0, x1 = u0 - self.L / 2, u1 - self.L / 2
         gm.box(x0, x1, v0, v1, w0, w1 - 0.012, 0)
@@ -243,7 +243,7 @@ def layout_ironmonger(d):
     gm.box(X(0.14), X(1.04), 0.502, 0.518, 0.0, 0.74, 0)
     d.gm_object("pyramid_backing", gm, [board_m], "support", "script:backing_board")
     # ---- the hung card and the gloves
-    card_m = d.mat("hung_card", rgb8(190, 178, 150), rough=0.8)
+    card_m = d.mat("hung_card", rgb8(166, 154, 126), rough=0.8)
     gm = GM()
     cu0, cu1, cv0, cv1, cw = 0.20, 0.98, 0.06, 0.38, 0.62
     gm.box(X(cu0), X(cu1), cv0, cv1, cw, cw + 0.012, 0)
@@ -254,7 +254,7 @@ def layout_ironmonger(d):
         for lay in range(2):
             d.piece("garden_gloves_01", uc, 0.22, cw + 0.012 + lay * gd.z, rot=(0, 0, math.pi + rnd.uniform(-0.12, 0.12)), tier="hung_card")
     # ---- the front row: bulbs in two open trays of six, one row each, at 1.25 of the model's size (a bayonet bulb is 60 mm across), so no bulb stands behind another
-    tray_m = d.mat("bulb_tray", rgb8(176, 150, 106), rough=0.85)
+    tray_m = d.mat("bulb_tray", rgb8(150, 126, 88), rough=0.85)
     for t in range(2):
         gm = GM()
         xc, yb = X(0.30 + 0.25 * t), 0.20

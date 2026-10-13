@@ -1,0 +1,129 @@
+# Front doors for every house kind (queue unit 9, cloud week 42, part 2): build notes
+
+13 October 2026. Built by script from `production/cloud-week/targets/front-doors-all/target.json` (status "fixes applied, not re-reviewed"; where `FIXES-APPLIED.md` and the review differ, FIXES-APPLIED.md wins) on the passed 3.1 door's own script and method (`production/cloud-week/kit/door/build_door.py`). The target is untouched. Nothing is committed or pushed.
+
+## What was made
+
+One command, in this folder, about 12 seconds on four cores:
+
+`nice -n 15 /home/user/.bpyenv/bin/python build_doors.py`   (the cloud's Python is the one with bpy 5.2.2; `python3 build_doors.py` is the same file)
+
+| file | what |
+|---|---|
+| `build_doors.py` | the one command: kinds, furniture, street data, manifest |
+| `doors_kinds.py` | the ten kinds on 3.1's class `Door` (its frame, transom, glazing bead, step and sill kept as built; the leaf and glazing built here) |
+| `doors_furniture.py` | the 28 furniture variants and the stacked form of NM1, each its own part |
+| `doors_street.py` | the street as data (`houses_data`), the target's street rules (`rules`), and the mixer for new houses (`mix_new_street`) |
+| `doors_lib.py` | polygons, mitred sweeps round any polygon, lofts, a small stroke font for numerals |
+| `check_doors.py`, `check_controls.py` | the automatic check (511 rows) and its 52 wrong copies |
+| `render_doors.py` | the review pictures (a kind, with its house's paint, condition, frame and fittings, in front of 3.1's review wall) |
+| `checks/check_doors_v1.json` | every row of the check, with its measured value, expected value and note |
+| `build/` | the parts as `.npz` for the check (git-ignored) |
+
+Models, in `production/assets/cloud-week/front-doors-all/` (metres, z up, scale 1, the pivot at the base's centre on the ground, the wall face at y = 0, the street toward -y; every file under 1 MB, so none is excluded from git; the folder is 3.1 MB):
+
+* `door_T1.glb` to `door_F7.glb`, ten kinds in their frames, in the paint and condition of the kind's first street house; no fitting is in them. `door_F4_kept.glb` and `door_F7_kept.glb` are the same two kinds without the rotted notch (the hill's doors are kept).
+* `furniture/<ID>.glb`, 29 files: LP1 to LP7, HD1, HD2a, HD2b, HD2c, HD3, HD4, LK1 to LK3, KH1, KN1, KN2, BL1, BL2, NM1, NM1_stacked, NM2 to NM6, BS1. Each has its origin at its mounting point (the leaf's face; the bell push on the jamb's stop; the scraper on the ground against the wall) and stands 0.4 mm into what it sits on.
+* `houses.json`: the 12 household doors and the hill's 12: kind, paint, frame colour, condition, and every fitting with its mount point in the kind's own frame (`mount_m`, metres) and `mirror_x` for a lever that points the other way. `houses_mixed_sample.json`: the mixer's street for seed 1. `paints.json`: the 15 paints and 2 frame colours (sRGB and linear, roughness by condition). `conditions.json`: the three conditions as a wear parameter set. `manifest.json`: bytes, triangles, parts, materials and sha256 of every file.
+
+| kind | house (first) | paint | condition | triangles | bytes |
+|---|---|---|---|---|---|
+| T1 | west_south_bay2 | navy | tired | 6,520 | 272,756 |
+| T2 | west_south_bay0 | maroon | tired | 5,484 | 219,244 |
+| T3 | west_south_bay1 | white_gloss | kept | 4,096 | 158,696 |
+| F1 | east_parade_bay0 | maroon | tired | 4,226 | 197,580 |
+| F2 | east_parade_bay1 | black | kept | 5,584 | 256,556 |
+| F3 | west_north_bay1 | dark_green | tired | 2,242 | 111,132 |
+| F4 | east_parade_bay3 | brown | neglected | 1,886 | 103,320 |
+| F5 | east_chandler_bay0 | black | kept | 1,608 | 86,232 |
+| F6 | east_parade_bay4 | council_turquoise | tired | 5,972 | 260,024 |
+| F7 | west_north_bay2 | deep_teal | neglected | 4,112 | 179,796 |
+
+All ten kinds and all 29 fittings were built; none is left. The furniture files are 64 to 5,288 triangles and 4.8 to 163 KB each.
+
+## The fix first: the 3.1 bell push
+
+`door_T1.glb` (the 3.1 file, `production/assets/cloud-week/door/`) is rebuilt without the parts `iron_bellpush_bezel` and `iron_bellpush_button`. The oblong `iron_bellpush` stays, one part, 22 x 72.6, 3 proud, now square-cornered (corner radius 1, was 6) with the groove 14 wide, 2 high, 1 deep, 8 mm below its middle. Changed in `kit/door/build_door.py` (`build_bell_push`), `departures.py` (the text of D13) and `check_door.py` (the F7 rows: one part, depth, groove, corners; the old "round button" row is gone). Rebuild: `build_door.py --variant T1`; `check_door.py --variant T1 --version 3` gives 165 of 165 required rows (`kit/door/checks/check_v3.json`; the three extras that failed in v2, the iron sections at the plate, the lock and the muntin, still fail for the reasons NOTES.md of 3.1 gives). 9,066 triangles (was 9,898), 364,504 bytes. F1 is unchanged. In this kit the push is the furniture part BL1 (`furniture/BL1.glb`, 76 triangles), placed on west_south_bay2 only; no kind and no other variant carries a bell fitting.
+
+## The street as data, and the mixer
+
+`houses.json` is the target's table (target.json street.houses) with the mount points worked out; the check re-runs every street rule on it (neighbours differ in kind, paint, paint class where light or bright, and at least 2 of plate, handle, latch, number; facing doors within 4.6 m differ in paint class; at most 3 light or bright doors; all three conditions used; cottages take T kinds; the hill's rows have no two consecutive doors alike). `doors_street.mix_new_street(N, slots, seed)` is the script that mixes kind, paint, condition and fittings for houses that are not in the table yet, from the street's order, so that no two neighbours match: a seeded backtracking search over each frame set's kinds, the palette (with its classes) and each kind's own set of fittings. `houses_mixed_sample.json` is its street for seed 1 on today's twelve slots (found at the 274th try); the check asserts that every rule holds on it and that the same seed gives the same street. The paints and conditions travel as data: the kind's glb carries the first house's paint as a material named `paint_<id>` (base colour and roughness as the target gives them) and `paints.json` and `houses.json` give every other house's paint and roughness; the PC sets them per placement.
+
+## Part by part against the 3.1 door
+
+Kept as built (imported from `build_door.Door`, no line copied): the jambs rebated out of the solid (stop and rebate), the head cut to the soffit (T) or flat at 2400 (F), the weathered transom with its splayed nose, the glass slots, the glazing bead (T: quarter round, F: putty fillet) with its mitres, F's two stop beads, T's threshold, riser and the looped tread, F's timber sill. T1 and F1 leaves: the slab minus the four openings and their 12.7 grooves, the joint lines 0.8 x 0.8, the four floating panels, the four bolection sweeps (T1 46 on the face, F1 43, standing 4.8 outside each opening) and the four single sweeps inside, and for T1 the lock-rail band and the weatherboard. Triangle counts of every structural part of F1 equal 3.1's (the frame 1,280, the mouldings 2,112 and so on); only the leaf slab differs, by the cuts for fittings that are gone.
+
+Removed from every leaf: the slot through the muntin behind the plate, the bore for the lock, the recess for the knob's rose, the recess of the keyhole. Fittings are separate parts on the face; the plate carries its own dark liner (a 0.2 mm slab 0.3 in front of the face) so the gaps round its flap read as a slot and not as paint, and nothing in any leaf is open from any angle.
+
+| kind | leaf | what is new and why |
+|---|---|---|
+| T1 | 812.8 x 1948 x 50.8, four panels, bolection 46, band, weatherboard | kept; fittings LP1, LK1, BL1, NM1 stacked, BS1 are parts |
+| T2 | same size, four lights | stiles 94 and 69, top rail 78.4, bottom rail 205, bars 30 wide and 22 deep (the leaf is hollowed 28.8 behind them), each pane 3 mm in a 4 mm slot 13.5 behind the face under the 3.1 planted bead (10 x 8) as the target says, a pale net card 1.5 behind each pane (D3 shows nets; in the file as `net_*`, material `net_white`, a render aid the engine may drop); the fanlight's glass is a plain upper pane 144 high over a band 83 high of crossed lead came at a 145 pitch (5 whole lozenges, tips at the ends), a horizontal came at the band's head and one 40 above the foot, an upright under each lozenge point, came 6 wide and 3 proud (one united part `lead_came`, 17 bars, material `lead_came`) |
+| T3 | 812.8 x 1948 x 44, one moulded sheet | the two embossed panels are cut in the sheet by lofted cutters: from the outer outline down a 14 mm smoothstep cove 3 deep to a flat margin, from the inner outline (segmental head on the upper panel: crown 1646, springing 22 lower) a second cove 3 more to a field 6 below the border face; the small light (flat head, top corners r 20) is cut through and its pane sits in a rebate from the back under a bead (glazed from inside, as the target says) |
+| F1 | 838 x 1981 x 50.8 | kept; fittings LP1, HD1, LK2, KH1 are parts |
+| F2 | same, six panels | openings from the target (two small, two long, two small; lock rail 205.9, frieze 100), the 3.1 bolection at 43, joint lines at every rail; LP2, HD1, LK2, NM1, KH1 |
+| F3 | same, two long panels | the muntin runs the full height; each panel head is raked 50 mm lower at the stile than at the muntin; a stuck ovolo 20 wide and 6.5 proud (the target's profile) swept round the raked outline with the same mitring as the bolection |
+| F4 | same, three long lights | stiles 184 and 114.3, bars 36, lights 155.9 wide, panes in slots under the putty fillet (the F frame's glazing profile); bars 22 deep like T2's (Judgement, the target gives no depth) |
+| F5 | 838 x 1981 x 44, flush | the slit through the leaf with its pane in a rebate and a 15 mm square bead standing 4 proud on the face, planted OUTSIDE the slit's edge (Judgement: the target does not say which side), the hairline 1 wide, 0.6 deep, 6 in from the edge (one ring-shaped cutter) |
+| F6 | same size, 44, flush | the spyhole 14 across through the leaf with a glass disc 8 behind the face (no ring: none is given); the transom's reeded glass: a 2.8 base with vertical flutes of circular segments, pitch 6, depth 1.2, 4.0 in all (Judgement, as the target says) |
+| F7 | 838 x 1981 x 38, ledged and braced | six boards 139.67 wide, 22 thick, each with its V-joint chamfers (3 wide, 2 deep at each joint), a tongue 6 long on one edge and a groove on the other (0.2 apart, so the joint is closed from the front and at 60 degrees by the tongue), three ledges 16 thick behind (the target says 25: with the 22 boards that is 47, not the leaf's 38), two braces 15 thick from the foot of the hinge ledge to the head of the next, 18 nail heads (one united part, 9 across, 3 proud) |
+
+Every kind with a notch: a neglected door has the eroded notch in the lower arris at the hinge side (25 high, 130 wide, 3 deep: the target says 60 to 200 wide; 130 is the middle), cut from the leaf and lined with bare grey wood (`leaf_notch_bare`, 118, 110, 100; Judgement). F4 and F7 are neglected in the street and carry it; their kept copies do not.
+
+## The conditions
+
+kept, tired and neglected are materials (the door paint's roughness 0.35, 0.55, 0.65) and a parameter set (`conditions.json`: the paint-flake shares 0.03, 0.063, 0.4, fade, chips, bottom rail, kick marks, polish, frame, and what the unit 4.5 wear layer covers and does not), plus the notch as geometry. No vertex colour is written: a leaf is a few large flat faces, and a gradient across them could not carry a splash band; the layer's masks do the marks. The review pictures therefore show the roughness and the notch only, not wear.
+
+## The check
+
+`checks/check_doors_v1.json`, printed as "N of M rows pass" (about 4.5 minutes, 52 wrong copies in one more minute). Pass rule as the brief and 3.1: IoU at least 0.97, outline p95 at most 2 mm, worst at most 6 mm; profiles p95 at most 1.5, worst at most 3; overall dimensions within 1 mm unless the target sets another.
+
+* **A (54 rows)**: per kind, the front view by layer against `target_drawing.py`'s drawing (frame, transom glass with its bead, visible leaf: what shows from the street, the nearest part winning; IoU 0.994 to 0.998, p95 0.5, worst at most 1.0), the openings as the holes the leaf is cut with (sections of the leaf at set depths) against the drawn openings, the mouldings, the lead came and the nail heads (at 0.25 mm a pixel for thin or small parts), and the profiles (bolection, stuck ovolo, T3's cove and margin, the V joint, the reeded glass).
+* **B (the target's 162 records, each with its own id)**: PL 61 (counts, every opening's bounds, raked heads, members, framing, all measured on the leaf's holes), CV 31 (elevation: the union of every part's front view leaves no hole in the clear opening but the 10 mm foot gap; angle: stop edges, leaf edges and the transom's underside read from the parts and 19 real rays at 60 degrees grazing the stops' rear corners all land on the leaf; inward; F7's joints by rays through every joint at 0 and 60 degrees), FU 30 (each fitting's anchor part, its centre in the leaf frame and its size), BP 4, AD 7, PN 4, GL 3, WR 3, NM 3, PH 6 (every feature's fractions of the visible face measured on the mesh against the photograph's recorded boxes, within each box's own error), GA 10.
+* **C, my own**: DIM 140 (leaf and frame numbers, per kind), GLB 150 (per kind and per fitting: size under 1 MB, UVs on every primitive, no texture in any file so a height map cannot be exported as a normal map, named materials, closed parts, the pivot; and per kind and per house, kind plus its fittings, no two parts share a visible face plane: faces of different parts coplanar within 0.1 mm, facing the same way and overlapping by more than 1 mm2), WR 3 (the notches), MIX 2.
+* **Controls**: 52 wrong copies, each of which must make its named row fail (a bar moved 20 mm, three lights for four, a slit 50 mm wider, a light 60 mm lower, square panel heads, a leaf shifted 14 mm, set back 12, hung in front of its stops, 40 mm low, a panel left out, a board left out, a board with no tongue, a plate moved 40 mm, a lever on the wrong stile, a lock or a keyhole left out, a bezel or a button on the push, a push on every F1, two neighbours alike in paint, kind or fittings, facing doors in one class, a cottage given a flat kind, a house missing, a paint outside the palette, five bright doors, a cream frame, a changed black, alike hill doors, wear shares changed, no neglected house, the older night yellow in a text, a maker's name in a text, a came expected 10 wide, a reed pitch expected 9, no came built, no flutes built, three photograph boxes moved, the transom missing, a leaf slab shifted, the bolection's profile 36 wide, a second part on the leaf's face planes, a leaf 6 mm high, a neglected door with no notch). A crash is not a catch. RESULT_CONTROLS
+
+RESULT_ROWS
+
+## Where the target is wrong or contradicts itself (built to the target, the departure written here)
+
+1. **PL-T3-members, border 65.** T3's `border` has no feature in the target's own outlines: the leaf's edge to the outer outline is 119.9, the flat margin between the outer and the inner outline is 62.5 at the sides (182.4 less 119.9) and 75.9 at the foot of the upper panel. Built to the outlines (they are the photograph's rows, checked by PL-T3-upper_panel and PL-T3-upper_panel-inner); the row measures the side margin and fails by 0.5 against its 2.0. Evidence: the row in check_doors_v1.json.
+2. **The drawing's mouldings ring.** `target_drawing.py` draws each panel's moulding from the opening's edge inward by the width (46 or 43). The 3.1 build, which passed its reviews, stands the bolection 4.8 outside the opening's edge (its lap over the framing) and so it covers 4.8 outside to 41.2 (or 38.2) inside. Against the literal ring IoU is 0.82, 0.81 and 0.80 (T1, F1, F2; extras A3:*:mouldings_literal); against the ring grown by the lap it is above 0.97. The required row uses the lap.
+3. **T3's profile list against its drawing.** `mouldings.outside.profile_dh` puts the second cove at d 76 to 90, 13.5 mm further in than the inner outline that the drawing, the photograph's rows and PL-T3-upper_panel-inner give (d 62.5). Built to the drawing and the photograph: a cove 14 mm inside each outline. The profile row compares the outer cove and the margin (d to 60) and the field's depth of 6.
+4. **F7's thickness.** boards 22 and ledges 25 make 47; the leaf is 38. Ledges built 16 (braces 15).
+5. **BS1.** The standard's point list has the scroll's tip on the blade's side (x negative where x is outward from the blade's end), so the scroll curls inward over the blade; the words say it curls outward. Built as the point list gives it (the check, `self_check.py` and the profile compare the list); flipping it is one sign in `scraper()`. The size 330 long needs the standards 140 either side of the middle: the bars (25 wide, inside the list's x 0 to 25) then tuck 10 mm over the blade's ends, which are 300 apart at their tips. The blade's height above the ground (110 to 135) and the feet running back to the wall are Judgement.
+6. **The reeded section.** `reeded_section` draws a 4.0 base with the flutes on top (5.2 in all); the glass table says 4.0 thick. Built 2.8 + 1.2 = 4.0.
+7. **The brief's "planted-stop frame variants".** FIXES-APPLIED.md deletes frame FF6 and the frame change (F6 stands in frame F, stops in front, an inward-opening 838 leaf lapping 20.4): only frame sets T and F exist. The brief's "25 furniture variants" is 28 in the target (8 slots), plus the stacked form of NM1 that T1's two digits need.
+8. **Levers.** The target's FU rows give a lever's place as u, v and draw the lever from there to one side; measured here at the rose's centre (the mount point) and the rose's size, not the bounding box of rose and bar.
+
+## Judgements the target left to me
+
+Numbers the target lacks, none invented quietly: the lever's neck, bar depth (14) and rounded end; HD3's two posts (6 across, 28 from the ends); HD4's posts and the thumb piece's size (the target gives 25 x 35); HD1's rose (a dished disc 76 across, 2 proud, in place of 3.1's recess) and its material (black paint, as the target says, not 3.1's iron); KN1's ring (outside 95, tube 12) and lug, KN2's lugs and strike plate, BL2's plate (60 across) and knob profile, NM5's rim (9 wide) and ornament (an oval); the keyhole's raised plate (0.8 proud, a dark plate with the pale blank 0.8 higher: the target's "2 mm sunk" is not built because no leaf is cut); LP1's missing pivot bosses (3.1 gave F1's plate two; the target's LP1 has none and LP2 has two); T2's bars 22 deep and the slots 6.4 into the framing; F4's and F5's slot depth; the T3 bead and rebate; the notch's width (130) and its liner colour; the net card's colour (200, 198, 190); the lens (a disc 14 across, 3 thick); the stroke font of the numerals (strokes 6 wide on NM1, 3.5 on NM6, 7 on the stacked pair, rounded ends, a 7-segment look: no real typeface) and its digits.
+
+## House numbers: placeholders
+
+The target fixes the forms of the numbers (NM1, NM3, NM6) and says the digits are the town's, none canon. The kit needs digits to draw: T1 "34" (stacked), F2 "246", T2 "21", F3 "15", all placeholders in `doors_furniture.NUMBERS`, `houses.json` "numbers" says so, and none is a number from a photograph (P1's 69 and P2's 178 are avoided). The review pictures therefore show these four fictional numbers (very small in the street views, legible in the close views). DECISIONS.md carries it, marked for Jafar.
+
+## Known shortfalls, in plain words
+
+* The wear is not on the doors: only the roughness and the notch. The marks (flaking, fade, crazing, kick marks, splash, polish rings, a split panel) come from the 4.5 layer on the PC, and its crazing, kick marks and polish rings are not covered by the layer (target section 7).
+* The keyhole is a raised dark plate with a pale blank, not a recess: from the front it reads as the photograph shows; in raking light it will stand proud instead of sunk.
+* The nets, the dark closing face and the dark hall behind every glazed kind are render aids: the glb has one pale card per T2 pane (`net_*`) and nothing else behind the glass; the engine needs its own dark hall (3.1's note), and its own glass (the cloud's glass lets shadow rays through so that the nets are lit; the engine's will not).
+* The scroll of the scraper curls inward (the point list), the target's words say outward.
+* House numbers are placeholders.
+* No hinge is built (3.1 built none: inward-opening doors, hinges inside); no wired or frosted glass, no knocker, black iron plate, bell pull, painted number on the glass is placed on any house today (the reserve variants are built and placed nowhere; the lion's head KN3 is not offered and not built).
+* The hill's 12 doors are the kinds as built (with their step or sill); the PC drops the step and the fittings there.
+* The street frames (hook_day, reverse_day, street_night, row_east, row_west of the target's gate) are not rendered: they need the street scene. The gate's seven views a kind are the cameras of target.json (the 3.1 views, lowered or raised to each kind's fittings).
+* Rita's door (east_parade_bay2) is given kind F1 as the target says; the shopfront kit's own F1 (mirrored, trimmed at the transom) is the shop family's. The two are the same 3.1 model.
+
+## Renders and the two fresh reviews
+
+RESULT_RENDERS
+
+## Owed to the PC
+
+Import the kinds and the fittings by the held-props route (HANDOVER.md, "How a piece gets into the game"); place each fitting at `mount_m` in its kind's frame (a placement is the mesh's bounding box centre for held props: use the origin given here, which is the fitting's mount point, and read the note in `houses.json`); mirror the levers marked `mirror_x`; set each house's paint and roughness from `houses.json` and `paints.json`; the wear layer's masks per condition (`conditions.json`), the glass, a dark hall behind every door, a water bar or draught board behind the foot gap, the numbers (the town's digits), the knocker and bell pull reserve parts if ever placed. Rita's door slot takes F1 in the shopfront kit's fashion.
+
+## HANDOVER line
+
+RESULT_HANDOVER

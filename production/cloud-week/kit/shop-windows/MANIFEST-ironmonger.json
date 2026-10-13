@@ -1,0 +1,26 @@
+{
+ "made": "2026-10-13 15:18:19",
+ "what": "the files of the narrow-points build (13 Oct, from the try 2 reviews; v3); the three glbs and the three 4096 pictures are out of git (rebuilt by build_ritas.py) so this names the versions",
+ "files": {
+  "ironmonger_front.glb": {
+   "bytes": 8561360,
+   "sha256": "c43977dbd7824df5720eacca067a55467481039793bdc616260147b14b5c2b7f"
+  },
+  "ironmonger_display.glb": {
+   "bytes": 3444012,
+   "sha256": "7c0bcdc4b8e52ae03ca1d027fead1efc0a0b64b10f06719ec7d9d26083cc9987"
+  },
+  "ironmonger_day.png": {
+   "bytes": 7577664,
+   "sha256": "eaa0e93268e031e6d298e8b127a2d9233f55337a938aee78107307df4a8284dc"
+  },
+  "ironmonger_night_lit.png": {
+   "bytes": 7096551,
+   "sha256": "fec98d8df3e0805f971bcba647ffd96a3ea80eaad5b65b84907a4bdd4aba1d75"
+  },
+  "ironmonger_night_dark.png": {
+   "bytes": 5059821,
+   "sha256": "f7118907c7f85702b9b1f7c2f2638adafb168d5bcea7b37f0d61791a98ca3a67"
+  }
+ }
+}

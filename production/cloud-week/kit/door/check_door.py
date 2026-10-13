@@ -800,9 +800,22 @@ def check_F(m, rep):
         rep.within("F7:h", khi[2] - klo[2] - 0.0, kp["h_mm"], 5.0)
         rep.within("F7:centre_x", 0.5 * (klo[0] + khi[0]), kp["centre_x_mm"], 5.0)
         rep.within("F7:centre_z", 0.5 * (klo[2] + khi[2]), 0.5 * sum(kp["z_range_mm"]), 5.0)
-        bz = m.bbox_of("iron_bellpush_button")
-        rep.add("F7:round_face", abs((bz[1][0] - bz[0][0]) - (bz[1][2] - bz[0][2])) < 0.5 and 8 <= (bz[1][0] - bz[0][0]) <= 20, {"button_w_mm": round(float(bz[1][0] - bz[0][0]), 2), "button_h_mm": round(float(bz[1][2] - bz[0][2]), 2)},
-                "a round button 8-20 across (D13)", tol=0.5)
+        # the handover's fix (13 October): ONE plain dark oblong, square-cornered, 3 proud, with a groove 14 x 2 x 1 below its middle; no bezel, button, ring or lens
+        bells = m.names("iron_bellpush")
+        rep.add("F7:one_part", bells == ["iron_bellpush"], bells, "exactly one part, named iron_bellpush: no bezel and no button (the two-part push read as a modern video doorbell)")
+        rep.within("F7:depth", khi[1] - klo[1], 3.4, 0.5, "the oblong's depth: 3 proud of the stop's face and 0.4 into it")
+        Vb = m.M["iron_bellpush"][0] * 1000.0
+        zg = 0.5 * (klo[2] + khi[2]) - 8.0
+        front_y = Vb[:, 1].min()
+        groove_pts = Vb[(np.abs(Vb[:, 1] - (front_y + 1.0)) < 1e-3) & (np.abs(Vb[:, 2] - zg) <= 1.2)]
+        gx = (float(groove_pts[:, 0].max() - groove_pts[:, 0].min()) if len(groove_pts) else 0.0)
+        gz = (float(groove_pts[:, 2].max() - groove_pts[:, 2].min()) if len(groove_pts) else 0.0)
+        rep.add("F7:groove", len(groove_pts) >= 4 and abs(gx - 14.0) <= 0.5 and abs(gz - 2.0) <= 0.5, {"w_mm": round(gx, 2), "h_mm": round(gz, 2), "points": int(len(groove_pts))},
+                "a groove 14 wide x 2 high x 1 deep, 8 mm below the middle", tol=0.5)
+        sec = m.region(("iron_bellpush",), 1, front_y + 2.0, (0, 2))                  # the section behind the groove: the oblong's plan outline
+        bx = sec.bounds
+        r_est = math.sqrt(max((((bx[2] - bx[0]) * (bx[3] - bx[1])) - sec.area), 0.0) / (4.0 * (1.0 - math.pi / 4.0)))
+        rep.add("F7:square_corners", r_est <= 1.2, {"corner_radius_mm": round(r_est, 2)}, "corner radius at most 1 mm (the first build had 6: a pill, read as a video doorbell)", tol=0.2)
         rep.add("F7:no_keep", not m.names("iron_keep"), m.names("iron_keep"), "no keep part (D13)")
     else:
         rep.add("F7", None, "n/a", "F1: no jamb fitting (D12)")

@@ -152,12 +152,12 @@ def apply(T):
     # 5d. the jamb fitting
     F1p = T["variants"]["flat_door_over_shop"]["parts"]
     F1p["ironmongery"]["keep"]["present"] = False
-    T["ironmongery"]["keep"]["kind"] = ("a period bell push: a dark oblong back 22 x 72.6, a round brass bezel 17 mm across and a round dark button 10 mm across standing 5 mm proud; "
-                                        "never a keep (a keep on the outside face of an inward-opening door's stop takes no bolt)")
+    T["ironmongery"]["keep"]["kind"] = ("a plain dark oblong bell push, one part, 22 x 72.6, 3 proud, square-cornered, with a 14 x 2 x 1 groove a little below its middle; "
+                                        "never a keep (a keep on the outside face of an inward-opening door's stop takes no bolt) and never a bezel or button")
     dep("D12:keep:F1", "F1 has no jamb fitting (target.json: a dark steel keep, 22 x 72.6, on the right jamb's stop)",
         "P2 right jamb at the keep's height (rows 515-547, x 508-530): bare painted timber with only the bead line; the 'grey service box' the target means is at rows 293-370 (1.33-1.51 m up), "
         "a modern fitting left out; and a keep on the outside face of the stop of an inward-opening door takes no bolt", "P2")
-    dep("D13:bell_push:T1", "T1's jamb fitting is a period bell push: dark oblong back 22 x 72.6 (as P1), round brass bezel and a round button (target.json: a dark steel box keep with an 8 x 50 slot)",
+    dep("D13:bell_push:T1", "T1's jamb fitting is a plain dark oblong bell push, one part, 22 x 72.6, square-cornered, with a 14 x 2 x 1 groove a little below its middle (13 October: the bezel and the button of try 2 are deleted; target.json: a dark steel box keep with an 8 x 50 slot)",
         "P1 16x crop, cols 271.9-276.25 x rows 300.3-314.4: a dark upright oblong 22 x 72.6 on the right jamb's stop face, lighter speck near its middle; on the outside face of an inward-opening "
         "door's stop it can only be a bell push", "P1")
     # 5e. F1's threshold

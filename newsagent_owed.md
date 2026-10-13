@@ -1,0 +1,3 @@
+- PC-01 to PC-07 as Rita's.
+- PC-08 (new): the box sign's night glow in the packaged game (the 4.1 emissive map on the sign's face material, the game's own strength), and the shut-up variant's lowered shutter if the game wants it.
+- The shop's pictures at 128 samples; the wear layer on the joinery.
