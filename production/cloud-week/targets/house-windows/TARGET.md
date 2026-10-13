@@ -339,7 +339,7 @@ All are **cards** (two triangles each) behind the glass, in front of the room's 
 
 ### 7.1 The format
 
-Each room is built by script from CC0 models in Blender (Cycles), rendered to the shop rooms' picture format: <room_id>_<state>.png with <room_id>.json beside them (room, w, h, d, camera_d, pixels, states, made_by, samples); 8-bit sRGB PNG; Cycles 128 samples, denoised; masters on F:/LedgerTools/house-rooms. Three states: `day`, `night_lit`, `night_dark`. The render camera stands on the room's centre line d = W in front of the card, framing the card rectangle W x H exactly; the game's `trace` is imported, not rewritten. **Brightness** (the game's emissive scale): Day 0.12 (a front room by day is a dim ceiling and a dark wall; the shops' 0.15 is for a lit display), night 0.7 as the shops (shop-interiors.json); the pane composite measured in the gate decides. **Picture standards:** mean luma day 105, night_lit 70, night_dark 15, within ±15 per cent. Judgement, scaled from the approved pawnbroker pictures (119.5, 79.8, 17.7 measured 12 October) by the rooms' smaller windows and fewer lights: the checks' floors are 0.7 of these.
+Each room is built by script from CC0 models in Blender (Cycles), rendered to the shop rooms' picture format: <room_id>_<state>.png with <room_id>.json beside them (room, w, h, d, camera_d, pixels, states, made_by, samples); 8-bit sRGB PNG; Cycles 128 samples, denoised; masters on F:/LedgerTools/house-rooms. Three states: `day`, `night_lit`, `night_dark`. The render camera stands on the room's centre line d = W in front of the card, framing the card rectangle W x H exactly; the game's `trace` is imported, not rewritten. **Brightness** (the game's emissive scale): Day 0.12 (a front room by day is a dim ceiling and a dark wall; the shops' 0.15 is for a lit display), night 0.7 as the shops (shop-interiors.json); the pane composite measured in the gate decides. **Picture standards** (Judgement): mean luma day 105, night_lit 70, night_dark 15, within ±15 per cent. Scaled from the approved pawnbroker pictures (119.5, 79.8, 17.7 measured 12 October) by the rooms' smaller windows and fewer lights: the checks' floors are 0.7 of these.
 
 **Lights per state.** Day: an overcast area light the size of the card on its plane (6500 K), strength set so the picture's mean luma meets the day standard; no tungsten. Night, lit: the pendant (a paper shade, a 60 W tungsten bulb 2700 K, linear (1.0, 0.714, 0.344)) at the ceiling rose, 0.30 below the ceiling, and in the front rooms a table lamp's glow on the back wall; a television glow (cool 6500 K, emissive screen) where tv_glow; landings and empty rooms: a bare 40 W bulb or none (empty: night_lit = night_dark). Night, dark: the sodium wash through the window: linear (1.0, 0.25, 0.0) = production/specs/unreal-look.json lantern_linear_rgb (NOT the scene file's stale (1, 0.7055, 0)), at 6 per cent of night_lit's energy; nothing else.
 
@@ -458,7 +458,7 @@ A window is lit at hour h when its place in the lit order is below round(share(h
 - RC: `production/assets/cloud-week/house-windows/hw_RC.glb`
 - room_card_gf: `production/assets/cloud-week/house-windows/hw_room_card_gf.glb` (the cottages' shared room card, one per house, placed between its two windows)
 
-**Budget:** 6000 triangles and 400000 bytes each. The lab's 2/2 is 2,000 or so triangles; nets, curtains and blinds are cards (2 triangles each); the push guard allows 1 MB a model in git.
+**Budget:** 6000 triangles and 400000 bytes each. The lab's 2/2 is 1068 triangles and 72988 bytes; nets, curtains and blinds are cards (2 triangles each); the push guard allows 1 MB a model in git.
 
 **S22: added nodes** (the lab's 41 nodes are reused as they are; the RC's parts are in section 4.3):
 
@@ -554,7 +554,7 @@ What the cloud shows without Unreal: a house front built from the kit pieces, it
 - **GS_A:** east_parade bays 1, 2, 3 and neighbours (bay 0 and 4 as plain blocks): the S11, RC and S22 houses; the unlet house; the wall kit's brick, sills and arches (stand-ins from the street file's materials are enough).
 - **GS_B:** west_south bays 0, 1, 2 (the three cottages) with the door, the plinth and the wall, and one house of the east parade opposite as proxy.
 
-**Views:** GS_A: H_ACROSS_0, H_ACROSS_30, H_ALONG_15_NEAR, H_ALONG_30_NEAR, H_ALONG_15_ROAD by day and by night (20:30), H_UNDER by day; GS_B: from the east footway's kerb edge (H_ACROSS_0, H_ACROSS_30), and along the cottages' own footway (H_ALONG_15_NEAR, H_ALONG_30_NEAR, H_ALONG_15_ROAD), by day and by night; 22 renders.
+**Views:** GS_A: H_ACROSS_0, H_ACROSS_30, H_ALONG_15_NEAR, H_ALONG_30_NEAR, H_ALONG_15_ROAD by day and by night (20:30), H_UNDER by day; GS_B: from the east footway's kerb edge (H_ACROSS_0, H_ACROSS_30), and along the cottages' own footway (H_ALONG_15_NEAR, H_ALONG_30_NEAR, H_ALONG_15_ROAD), by day and by night, and H_UNDER by day; 22 renders (11 + 11).
 
 **What is measured** (from the Material Index and Object Index passes, never by eye):
 
@@ -568,7 +568,7 @@ What the cloud shows without Unreal: a house front built from the kit pieces, it
 
 **Bands** (from the photographs, section 3.2; the check numbers of section 10 quote them; P is the pane median, L the frame's 90th percentile, D the outline's 5th percentile):
 
-- **net_N1_N2_in_15_to_30_deg:** P/L 0.55 to 0.95; D/L at most 0.55; pane spread at least 40 levels. Photographs: P1_a, P1_b, P1_e at 31 to 37 degrees: 0.83, 0.87, 0.85 (D/L 0.47 to 0.50); the nine net windows 0.60 to 0.97.
+- **net_N1_N2_in_15_to_30_deg:** P/L 0.55 to 0.95; D/L at most 0.55; pane spread at least 40 levels. Photographs: P1_a, P1_b, P1_e at 31 to 37 degrees: 0.87, 0.83, 0.85 (D/L 0.47 to 0.50); the nine net windows 0.60 to 0.97.
 - **net_N3_cafe:** P/L 0.35 to 0.75. Photographs: P4_E (a net over the lower half, 35 degrees): 0.56.
 - **bare_N0_in_15_to_30_deg:** P/L 0.1 to 0.45; pane spread at least 20 levels. Photographs: P1_c (22 degrees) 0.32; P4_G 0.19; P3_d 0.36.
 - **bare_N0_over_60_deg_from_across:** P/L 0.35 to 0.7; pane blue minus red at least 10 levels. Photographs: P8_L, P8_R (near square, from below, sky over a dark room): 0.62, 0.51; the pane's colour (87, 99, 135): blue over red 48.

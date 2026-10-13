@@ -8780,7 +8780,7 @@
     "eye_above_footway_m": 1.6
    }
   },
-  "views": "GS_A: H_ACROSS_0, H_ACROSS_30, H_ALONG_15_NEAR, H_ALONG_30_NEAR, H_ALONG_15_ROAD by day and by night (20:30), H_UNDER by day; GS_B: from the east footway's kerb edge (H_ACROSS_0, H_ACROSS_30), and along the cottages' own footway (H_ALONG_15_NEAR, H_ALONG_30_NEAR, H_ALONG_15_ROAD), by day and by night; 22 renders",
+  "views": "GS_A: H_ACROSS_0, H_ACROSS_30, H_ALONG_15_NEAR, H_ALONG_30_NEAR, H_ALONG_15_ROAD by day and by night (20:30), H_UNDER by day; GS_B: from the east footway's kerb edge (H_ACROSS_0, H_ACROSS_30), and along the cottages' own footway (H_ALONG_15_NEAR, H_ALONG_30_NEAR, H_ALONG_15_ROAD), by day and by night, and H_UNDER by day; 22 renders (11 + 11)",
   "measure": {
    "P": "the median sRGB luma of a window's pane pixels (material index 1 and 3 inside the window's outline: glass and net together as the eye sees them)",
    "L": "the 90th percentile of the luma of the window's joinery pixels (material index 2: the sash members, linings, beads, sill)",
@@ -8798,7 +8798,7 @@
     ],
     "D_over_L_max": 0.55,
     "spread_min": 40,
-    "photo": "P1_a, P1_b, P1_e at 31 to 37 degrees: 0.83, 0.87, 0.85 (D/L 0.47 to 0.50); the nine net windows 0.60 to 0.97"
+    "photo": "P1_a, P1_b, P1_e at 31 to 37 degrees: 0.87, 0.83, 0.85 (D/L 0.47 to 0.50); the nine net windows 0.60 to 0.97"
    },
    "net_N3_cafe": {
     "P_over_L": [
@@ -9462,5 +9462,2255 @@
    "what": "Jafar's page: the house windows as a sample (the look): one page with the 15 and 30 degree frames, day and night, and the old frame beside",
    "check": "nothing is multiplied before his yes (CLAUDE.md)"
   }
- ]
+ ],
+ "self_check": {
+  "result": "self_check: 362 pass, 0 fail; negative controls: 14 of 14 caught",
+  "rows": [
+   {
+    "group": "budget",
+    "name": "GF back: rule tolerated 0.800 <= computed 0.803",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "budget",
+    "name": "GF back: rule true 0.400 <= computed 0.410",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "budget",
+    "name": "GF ceiling: rule tolerated 0.040 <= computed 0.042",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "budget",
+    "name": "GF ceiling: rule true 0.020 <= computed 0.021",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "budget",
+    "name": "GF side: rule tolerated 0.060 <= computed 0.061",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "budget",
+    "name": "GF side: rule true 0.030 <= computed 0.030",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "budget",
+    "name": "UP back: rule tolerated 0.800 <= computed 1.159",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "budget",
+    "name": "UP back: rule true 0.400 <= computed 0.594",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "budget",
+    "name": "UP ceiling: rule tolerated 0.040 <= computed 0.064",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "budget",
+    "name": "UP ceiling: rule true 0.020 <= computed 0.032",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "budget",
+    "name": "UP side: rule tolerated 0.060 <= computed 0.068",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "budget",
+    "name": "UP side: rule true 0.030 <= computed 0.035",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "budget",
+    "name": "the computed GF back-wall budget recomputes (0.41 / 0.80)",
+    "ok": true,
+    "detail": "{'true_20px': 0.41, 'true_40px': 0.803}"
+   },
+   {
+    "group": "cards",
+    "name": "GF back wall rectangle in the 3072-wide picture is (848.8, 649.1, 2223.2, 1700.1)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "cards",
+    "name": "GF: from the render camera a card point shows its own pixel (the game's rule imported)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "cards",
+    "name": "UP back wall rectangle in the 1536-wide picture is (460.8, 419.7, 1075.2, 979.2)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "cards",
+    "name": "UP: from the render camera a card point shows its own pixel (the game's rule imported)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "cards",
+    "name": "a cottage's card is shared by its two windows",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "cards",
+    "name": "an upper card's floor is the slab (3.5) + 0.25 and its ceiling the eaves 6.3",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "cards",
+    "name": "every window sits 0.3 m or more inside its card (the parallax margin: 0.08 m of depth x tan 75 degrees = 0.30 m)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "cards",
+    "name": "the card's plane stands 16 mm behind the nets and clear of the box's back",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "KIT-06 quotes the net cards' dimensions",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "MAT-01 quotes the pane's numbers",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "NIGHT-01 quotes 7 lit",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "PIC-01 quotes both picture sizes",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "PIC-04 quotes the back wall rectangles of the target ((460.8, 419.7, 1075.2, 979.2), (848.8, 649.1, 2223.2, 1700.1))",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "every check has its nine fields filled",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "ids unique (46 checks)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "kinds of number are the five named",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "checks",
+    "name": "the brief's checks are present (pane darker than frame, dark lines, something behind the glass, lit and dark share)",
+    "ok": true,
+    "detail": "set()"
+   },
+   {
+    "group": "checks",
+    "name": "the white-board check can fail (WB-08 present and the old fault outside its bands)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "content",
+    "name": "no alcohol, gambling or child word in the target outside its own prohibitions",
+    "ok": true,
+    "detail": "[]"
+   },
+   {
+    "group": "derived",
+    "name": "MAT-04: Unreal's Specular 1 (F0 0.08, Schlick) at 16 degrees from the wall is 0.26 (0.263)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "derived",
+    "name": "two-face reflectance at 10 degrees from the wall recomputes (0.544)",
+    "ok": true,
+    "detail": "stated 0.544"
+   },
+   {
+    "group": "derived",
+    "name": "two-face reflectance at 16 degrees from the wall recomputes (0.360)",
+    "ok": true,
+    "detail": "stated 0.360"
+   },
+   {
+    "group": "derived",
+    "name": "two-face reflectance at 18 degrees from the wall recomputes (0.314)",
+    "ok": true,
+    "detail": "stated 0.314"
+   },
+   {
+    "group": "derived",
+    "name": "two-face reflectance at 24 degrees from the wall recomputes (0.215)",
+    "ok": true,
+    "detail": "stated 0.215"
+   },
+   {
+    "group": "derived",
+    "name": "two-face reflectance at 30 degrees from the wall recomputes (0.157)",
+    "ok": true,
+    "detail": "stated 0.157"
+   },
+   {
+    "group": "derived",
+    "name": "two-face reflectance at 8 degrees from the wall recomputes (0.622)",
+    "ok": true,
+    "detail": "stated 0.622"
+   },
+   {
+    "group": "derived",
+    "name": "two-face reflectance at 90 degrees from the wall recomputes (0.082)",
+    "ok": true,
+    "detail": "stated 0.082"
+   },
+   {
+    "group": "inventory",
+    "name": "every framed picture used has its artwork replaced",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "inventory",
+    "name": "every model in the inventory has a marks entry",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "inventory",
+    "name": "every model used is in the inventory (18 used of 44 looked at)",
+    "ok": true,
+    "detail": "set()"
+   },
+   {
+    "group": "inventory",
+    "name": "every model's licence is CC0 and its 1k base colour was looked at",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "inventory",
+    "name": "gf_front_1: Sofa_01 is in the inventory with its marks line and a usable status",
+    "ok": true,
+    "detail": "none"
+   },
+   {
+    "group": "inventory",
+    "name": "gf_front_1: hanging_picture_frame_02 is in the inventory with its marks line and a usable status",
+    "ok": true,
+    "detail": "replace_artwork"
+   },
+   {
+    "group": "inventory",
+    "name": "gf_front_1: hanging_picture_frame_03 is in the inventory with its marks line and a usable status",
+    "ok": true,
+    "detail": "replace_artwork"
+   },
+   {
+    "group": "inventory",
+    "name": "gf_front_1: side_table_01 is in the inventory with its marks line and a usable status",
+    "ok": true,
+    "detail": "none"
+   },
+   {
+    "group": "inventory",
+    "name": "gf_front_1: television_02 is in the inventory with its marks line and a usable status",
+    "ok": true,
+    "detail": "blank"
+   },
+   {
+    "group": "inventory",
+    "name": "gf_front_2: ArmChair_01 is in the inventory with its marks line and a usable status",
+    "ok": true,
+    "detail": "none"
+   },
+   {
+    "group": "inventory",
+    "name": "gf_front_2: ornate_mirror_01 is in the inventory with its marks line and a usable status",
+    "ok": true,
+    "detail": "none"
+   },
+   {
+    "group": "inventory",
+    "name": "gf_front_2: potted_plant_01 is in the inventory with its marks line and a usable status",
+    "ok": true,
+    "detail": "none"
+   },
+   {
+    "group": "inventory",
+    "name": "gf_front_2: wooden_bookshelf_worn is in the inventory with its marks line and a usable status",
+    "ok": true,
+    "detail": "none"
+   },
+   {
+    "group": "inventory",
+    "name": "gf_front_3: hanging_picture_frame_01 is in the inventory with its marks line and a usable status",
+    "ok": true,
+    "detail": "replace_artwork"
+   },
+   {
+    "group": "inventory",
+    "name": "gf_front_3: mantel_clock_01 is in the inventory with its marks line and a usable status",
+    "ok": true,
+    "detail": "none"
+   },
+   {
+    "group": "inventory",
+    "name": "gf_front_3: painted_wooden_bench is in the inventory with its marks line and a usable status",
+    "ok": true,
+    "detail": "none"
+   },
+   {
+    "group": "inventory",
+    "name": "gf_front_3: painted_wooden_cabinet is in the inventory with its marks line and a usable status",
+    "ok": true,
+    "detail": "none"
+   },
+   {
+    "group": "inventory",
+    "name": "gf_front_3: vintage_oil_lamp is in the inventory with its marks line and a usable status",
+    "ok": true,
+    "detail": "none"
+   },
+   {
+    "group": "inventory",
+    "name": "no blocklisted name outside a marks entry",
+    "ok": true,
+    "detail": "[]"
+   },
+   {
+    "group": "inventory",
+    "name": "no excluded model (children, brand) is used",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "inventory",
+    "name": "television_02's plate is blanked where used",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "inventory",
+    "name": "up_bedroom_1: hanging_picture_frame_03 is in the inventory with its marks line and a usable status",
+    "ok": true,
+    "detail": "replace_artwork"
+   },
+   {
+    "group": "inventory",
+    "name": "up_bedroom_1: vintage_cabinet_01 is in the inventory with its marks line and a usable status",
+    "ok": true,
+    "detail": "none"
+   },
+   {
+    "group": "inventory",
+    "name": "up_bedroom_2: drawer_cabinet is in the inventory with its marks line and a usable status",
+    "ok": true,
+    "detail": "none"
+   },
+   {
+    "group": "inventory",
+    "name": "up_bedroom_2: hanging_picture_frame_01 is in the inventory with its marks line and a usable status",
+    "ok": true,
+    "detail": "replace_artwork"
+   },
+   {
+    "group": "inventory",
+    "name": "up_bedroom_2: ornate_mirror_01 is in the inventory with its marks line and a usable status",
+    "ok": true,
+    "detail": "none"
+   },
+   {
+    "group": "inventory",
+    "name": "up_bedroom_3: Shelf_01 is in the inventory with its marks line and a usable status",
+    "ok": true,
+    "detail": "none"
+   },
+   {
+    "group": "inventory",
+    "name": "up_bedroom_3: hanging_picture_frame_03 is in the inventory with its marks line and a usable status",
+    "ok": true,
+    "detail": "replace_artwork"
+   },
+   {
+    "group": "inventory",
+    "name": "up_bedroom_3: wall_clock is in the inventory with its marks line and a usable status",
+    "ok": true,
+    "detail": "blank"
+   },
+   {
+    "group": "inventory",
+    "name": "up_landing_1: hanging_picture_frame_01 is in the inventory with its marks line and a usable status",
+    "ok": true,
+    "detail": "replace_artwork"
+   },
+   {
+    "group": "inventory",
+    "name": "up_landing_1: wall_clock is in the inventory with its marks line and a usable status",
+    "ok": true,
+    "detail": "blank"
+   },
+   {
+    "group": "inventory",
+    "name": "up_landing_2: Shelf_01 is in the inventory with its marks line and a usable status",
+    "ok": true,
+    "detail": "none"
+   },
+   {
+    "group": "inventory",
+    "name": "up_landing_2: hanging_picture_frame_02 is in the inventory with its marks line and a usable status",
+    "ok": true,
+    "detail": "replace_artwork"
+   },
+   {
+    "group": "inventory",
+    "name": "up_lounge_1: hanging_picture_frame_03 is in the inventory with its marks line and a usable status",
+    "ok": true,
+    "detail": "replace_artwork"
+   },
+   {
+    "group": "inventory",
+    "name": "up_lounge_1: ornate_mirror_01 is in the inventory with its marks line and a usable status",
+    "ok": true,
+    "detail": "none"
+   },
+   {
+    "group": "inventory",
+    "name": "up_lounge_1: wooden_bookshelf_worn is in the inventory with its marks line and a usable status",
+    "ok": true,
+    "detail": "none"
+   },
+   {
+    "group": "inventory",
+    "name": "up_lounge_2: hanging_picture_frame_01 is in the inventory with its marks line and a usable status",
+    "ok": true,
+    "detail": "replace_artwork"
+   },
+   {
+    "group": "inventory",
+    "name": "up_lounge_2: mantel_clock_01 is in the inventory with its marks line and a usable status",
+    "ok": true,
+    "detail": "none"
+   },
+   {
+    "group": "inventory",
+    "name": "up_lounge_2: vintage_cabinet_01 is in the inventory with its marks line and a usable status",
+    "ok": true,
+    "detail": "none"
+   },
+   {
+    "group": "inventory",
+    "name": "up_lounge_3: Shelf_01 is in the inventory with its marks line and a usable status",
+    "ok": true,
+    "detail": "none"
+   },
+   {
+    "group": "inventory",
+    "name": "up_lounge_3: hanging_picture_frame_02 is in the inventory with its marks line and a usable status",
+    "ok": true,
+    "detail": "replace_artwork"
+   },
+   {
+    "group": "inventory",
+    "name": "up_lounge_3: wall_clock is in the inventory with its marks line and a usable status",
+    "ok": true,
+    "detail": "blank"
+   },
+   {
+    "group": "inventory",
+    "name": "wall_clock's dial is blanked where used",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "kit",
+    "name": "KIT-14 RC: both lights and the transom centred on x = 0",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "kit",
+    "name": "KIT-14 S11: 2 panes of equal width ([714.6, 714.6])",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "kit",
+    "name": "KIT-14 S22: 4 panes of equal width ([352.6, 352.6, 352.6, 352.6])",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "kit",
+    "name": "KIT-14 S22: in each sash the two panes mirror each other about x = 0 (the bar's centre)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "kit",
+    "name": "KIT-15 RC: the opening is covered (largest uncovered square 4 mm, at most 5)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "kit",
+    "name": "KIT-15 S11: the opening is covered (largest uncovered square 0 mm, at most 5)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "kit",
+    "name": "KIT-15 S22: the opening is covered (largest uncovered square 0 mm, at most 5)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "kit",
+    "name": "RC: blind__B1 behind the glass by 40 mm or more and in front of the card (270)",
+    "ok": true,
+    "detail": "[240, 241]"
+   },
+   {
+    "group": "kit",
+    "name": "RC: blind__B2 behind the glass by 40 mm or more and in front of the card (270)",
+    "ok": true,
+    "detail": "[240, 241]"
+   },
+   {
+    "group": "kit",
+    "name": "RC: blind__B3 behind the glass by 40 mm or more and in front of the card (270)",
+    "ok": true,
+    "detail": "[240, 241]"
+   },
+   {
+    "group": "kit",
+    "name": "RC: curtain__C1_drawn behind the glass by 40 mm or more and in front of the card (270)",
+    "ok": true,
+    "detail": "[262, 263]"
+   },
+   {
+    "group": "kit",
+    "name": "RC: curtain__C2_open_L behind the glass by 40 mm or more and in front of the card (270)",
+    "ok": true,
+    "detail": "[262, 263]"
+   },
+   {
+    "group": "kit",
+    "name": "RC: curtain__C2_open_R behind the glass by 40 mm or more and in front of the card (270)",
+    "ok": true,
+    "detail": "[262, 263]"
+   },
+   {
+    "group": "kit",
+    "name": "RC: every pane inside the opening",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "kit",
+    "name": "RC: glass sightlines {'lower': [730.0, 1112.0], 'top': [632.0, 276.4]}",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "kit",
+    "name": "RC: net__N1 behind the glass by 40 mm or more and in front of the card (270)",
+    "ok": true,
+    "detail": "[235, 236]"
+   },
+   {
+    "group": "kit",
+    "name": "RC: net__N1 clears the joinery's back face (142.5)",
+    "ok": true,
+    "detail": "[235, 236]"
+   },
+   {
+    "group": "kit",
+    "name": "RC: net__N2 behind the glass by 40 mm or more and in front of the card (270)",
+    "ok": true,
+    "detail": "[235, 236]"
+   },
+   {
+    "group": "kit",
+    "name": "RC: net__N2 clears the joinery's back face (142.5)",
+    "ok": true,
+    "detail": "[235, 236]"
+   },
+   {
+    "group": "kit",
+    "name": "RC: net__N3 behind the glass by 40 mm or more and in front of the card (270)",
+    "ok": true,
+    "detail": "[235, 236]"
+   },
+   {
+    "group": "kit",
+    "name": "RC: net__N3 clears the joinery's back face (142.5)",
+    "ok": true,
+    "detail": "[235, 236]"
+   },
+   {
+    "group": "kit",
+    "name": "RC: no two members overlap ([])",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "kit",
+    "name": "RC: pane meshes 2",
+    "ok": true,
+    "detail": "['glass__lower', 'glass__top']"
+   },
+   {
+    "group": "kit",
+    "name": "RC: the pendant is inside the room (270 + 4200 deep) and below the ceiling (z 2076.4)",
+    "ok": true,
+    "detail": "{'name': 'pendant__shade', 'material': 'pendant_shade', 'x': [-170, 170], 'y_into_wall': [650, 990], 'z_up': [1536, 1776], 'note': \"a paper shade 340 across and 240 high, 0.55 behind the card, its top 0.30 below the ceiling; emissive only in a lit room; present where the room's `pendant` is true; the one real object in the room (the picture's ceiling carries its rose)\"}"
+   },
+   {
+    "group": "kit",
+    "name": "RC: the transom's centre is 0.72 of the opening and between the photographs' 0.66 and 0.75",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "kit",
+    "name": "S11: blind__B1 behind the glass by 40 mm or more and in front of the card (270)",
+    "ok": true,
+    "detail": "[240, 241]"
+   },
+   {
+    "group": "kit",
+    "name": "S11: blind__B2 behind the glass by 40 mm or more and in front of the card (270)",
+    "ok": true,
+    "detail": "[240, 241]"
+   },
+   {
+    "group": "kit",
+    "name": "S11: blind__B3 behind the glass by 40 mm or more and in front of the card (270)",
+    "ok": true,
+    "detail": "[240, 241]"
+   },
+   {
+    "group": "kit",
+    "name": "S11: curtain__C1_drawn behind the glass by 40 mm or more and in front of the card (270)",
+    "ok": true,
+    "detail": "[262, 263]"
+   },
+   {
+    "group": "kit",
+    "name": "S11: curtain__C2_open_L behind the glass by 40 mm or more and in front of the card (270)",
+    "ok": true,
+    "detail": "[262, 263]"
+   },
+   {
+    "group": "kit",
+    "name": "S11: curtain__C2_open_R behind the glass by 40 mm or more and in front of the card (270)",
+    "ok": true,
+    "detail": "[262, 263]"
+   },
+   {
+    "group": "kit",
+    "name": "S11: every pane inside the opening",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "kit",
+    "name": "S11: net__N1 behind the glass by 40 mm or more and in front of the card (270)",
+    "ok": true,
+    "detail": "[254, 255]"
+   },
+   {
+    "group": "kit",
+    "name": "S11: net__N1 clears the joinery's back face (250.8)",
+    "ok": true,
+    "detail": "[254, 255]"
+   },
+   {
+    "group": "kit",
+    "name": "S11: net__N2 behind the glass by 40 mm or more and in front of the card (270)",
+    "ok": true,
+    "detail": "[254, 255]"
+   },
+   {
+    "group": "kit",
+    "name": "S11: net__N2 clears the joinery's back face (250.8)",
+    "ok": true,
+    "detail": "[254, 255]"
+   },
+   {
+    "group": "kit",
+    "name": "S11: net__N3 behind the glass by 40 mm or more and in front of the card (270)",
+    "ok": true,
+    "detail": "[254, 255]"
+   },
+   {
+    "group": "kit",
+    "name": "S11: net__N3 clears the joinery's back face (250.8)",
+    "ok": true,
+    "detail": "[254, 255]"
+   },
+   {
+    "group": "kit",
+    "name": "S11: pane meshes 2",
+    "ok": true,
+    "detail": "['glass__lower', 'glass__upper']"
+   },
+   {
+    "group": "kit",
+    "name": "S11: the pendant is inside the room (270 + 4200 deep) and below the ceiling (z 2076.4)",
+    "ok": true,
+    "detail": "{'name': 'pendant__shade', 'material': 'pendant_shade', 'x': [-170, 170], 'y_into_wall': [650, 990], 'z_up': [1536, 1776], 'note': \"a paper shade 340 across and 240 high, 0.55 behind the card, its top 0.30 below the ceiling; emissive only in a lit room; present where the room's `pendant` is true; the one real object in the room (the picture's ceiling carries its rose)\"}"
+   },
+   {
+    "group": "kit",
+    "name": "S22: blind__B1 behind the glass by 40 mm or more and in front of the card (270)",
+    "ok": true,
+    "detail": "[240, 241]"
+   },
+   {
+    "group": "kit",
+    "name": "S22: blind__B2 behind the glass by 40 mm or more and in front of the card (270)",
+    "ok": true,
+    "detail": "[240, 241]"
+   },
+   {
+    "group": "kit",
+    "name": "S22: blind__B3 behind the glass by 40 mm or more and in front of the card (270)",
+    "ok": true,
+    "detail": "[240, 241]"
+   },
+   {
+    "group": "kit",
+    "name": "S22: curtain__C1_drawn behind the glass by 40 mm or more and in front of the card (270)",
+    "ok": true,
+    "detail": "[262, 263]"
+   },
+   {
+    "group": "kit",
+    "name": "S22: curtain__C2_open_L behind the glass by 40 mm or more and in front of the card (270)",
+    "ok": true,
+    "detail": "[262, 263]"
+   },
+   {
+    "group": "kit",
+    "name": "S22: curtain__C2_open_R behind the glass by 40 mm or more and in front of the card (270)",
+    "ok": true,
+    "detail": "[262, 263]"
+   },
+   {
+    "group": "kit",
+    "name": "S22: every pane inside the opening",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "kit",
+    "name": "S22: net__N1 behind the glass by 40 mm or more and in front of the card (270)",
+    "ok": true,
+    "detail": "[254, 255]"
+   },
+   {
+    "group": "kit",
+    "name": "S22: net__N1 clears the joinery's back face (250.8)",
+    "ok": true,
+    "detail": "[254, 255]"
+   },
+   {
+    "group": "kit",
+    "name": "S22: net__N2 behind the glass by 40 mm or more and in front of the card (270)",
+    "ok": true,
+    "detail": "[254, 255]"
+   },
+   {
+    "group": "kit",
+    "name": "S22: net__N2 clears the joinery's back face (250.8)",
+    "ok": true,
+    "detail": "[254, 255]"
+   },
+   {
+    "group": "kit",
+    "name": "S22: net__N3 behind the glass by 40 mm or more and in front of the card (270)",
+    "ok": true,
+    "detail": "[254, 255]"
+   },
+   {
+    "group": "kit",
+    "name": "S22: net__N3 clears the joinery's back face (250.8)",
+    "ok": true,
+    "detail": "[254, 255]"
+   },
+   {
+    "group": "kit",
+    "name": "S22: pane meshes 4",
+    "ok": true,
+    "detail": "['glass__lower_L', 'glass__lower_R', 'glass__upper_L', 'glass__upper_R']"
+   },
+   {
+    "group": "kit",
+    "name": "S22: the pendant is inside the room (270 + 4200 deep) and below the ceiling (z 2076.4)",
+    "ok": true,
+    "detail": "{'name': 'pendant__shade', 'material': 'pendant_shade', 'x': [-170, 170], 'y_into_wall': [650, 990], 'z_up': [1536, 1776], 'note': \"a paper shade 340 across and 240 high, 0.55 behind the card, its top 0.30 below the ceiling; emissive only in a lit room; present where the room's `pendant` is true; the one real object in the room (the picture's ceiling carries its rose)\"}"
+   },
+   {
+    "group": "kit",
+    "name": "every dark line of the box is at least 6 mm wide in the lab's putty strips (the bar's putty 6.4)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "kit",
+    "name": "the box shade's numbers are in range",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "kit",
+    "name": "the gathered voile covers 1 - (1 - 0.40)^2 = 0.64 as stated",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "lit",
+    "name": "NIGHT-05: a smaller lit set is a subset of every larger one (the order is never reshuffled)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "lit",
+    "name": "at 20:30 seven lit of twenty (35 per cent)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "lit",
+    "name": "empty rooms never lit",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "lit",
+    "name": "no window is lit by day (the table has no hour between 09:00 and 16:59)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "lit",
+    "name": "the always-lit pair is the street's NET_LIT_ALWAYS house (west_south bay 2) and lit 18:00 to 23:00",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "lit",
+    "name": "the lit table's shares are the stated ones",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "overlay",
+    "name": "edge 'glazing bar centre': drawing 340.8 px, photograph 340.8 px (tolerance 1.5)",
+    "ok": true,
+    "detail": "stated in target.json: 340.75"
+   },
+   {
+    "group": "overlay",
+    "name": "edge 'glazing bar centre': target.json's stated prediction is the drawing's",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "overlay",
+    "name": "edge 'glazing bar width': drawing 1.9 px, photograph 2.3 px (tolerance 1.0)",
+    "ok": true,
+    "detail": "stated in target.json: 1.88"
+   },
+   {
+    "group": "overlay",
+    "name": "edge 'glazing bar width': target.json's stated prediction is the drawing's",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "overlay",
+    "name": "edge 'head's outer top edge': drawing 288.8 px, photograph 293.9 px (tolerance 7.0)",
+    "ok": true,
+    "detail": "stated in target.json: 288.8"
+   },
+   {
+    "group": "overlay",
+    "name": "edge 'head's outer top edge': target.json's stated prediction is the drawing's",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "overlay",
+    "name": "edge 'lower glass bottom edge': drawing 419.2 px, photograph 422.3 px (tolerance 7.0)",
+    "ok": true,
+    "detail": "stated in target.json: 419.2"
+   },
+   {
+    "group": "overlay",
+    "name": "edge 'lower glass bottom edge': target.json's stated prediction is the drawing's",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "overlay",
+    "name": "edge 'meeting rail centre': drawing 359.0 px, photograph 362.6 px (tolerance 7.0)",
+    "ok": true,
+    "detail": "stated in target.json: 359.0"
+   },
+   {
+    "group": "overlay",
+    "name": "edge 'meeting rail centre': target.json's stated prediction is the drawing's",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "overlay",
+    "name": "edge 'upper glass top edge': drawing 294.5 px, photograph 298.0 px (tolerance 7.0)",
+    "ok": true,
+    "detail": "stated in target.json: 294.5"
+   },
+   {
+    "group": "overlay",
+    "name": "edge 'upper glass top edge': target.json's stated prediction is the drawing's",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "overlay",
+    "name": "height over width on the photograph against the opening's 1.972 (foreshortening 0.964, 15 degrees up = 0.966)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "overlay",
+    "name": "scale fitted on the width: 850 mm = outline width",
+    "ok": true,
+    "detail": "0.08459"
+   },
+   {
+    "group": "photo",
+    "name": "NETS shares are the tally's",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "photo",
+    "name": "bare band encloses the bare windows (n=3)",
+    "ok": true,
+    "detail": "[0.32, 0.191, 0.363]"
+   },
+   {
+    "group": "photo",
+    "name": "bare from across band encloses P8's panes (n=2)",
+    "ok": true,
+    "detail": "[0.616, 0.51]"
+   },
+   {
+    "group": "photo",
+    "name": "cafe band encloses the half net",
+    "ok": true,
+    "detail": "[0.56]"
+   },
+   {
+    "group": "photo",
+    "name": "frame to wall ratios inside WB-07's band 3.0 to 9.0",
+    "ok": true,
+    "detail": "[4.3, 3.72]"
+   },
+   {
+    "group": "photo",
+    "name": "net D/L limit holds on the tight outlines (P1)",
+    "ok": true,
+    "detail": "[0.502, 0.466, 0.486]"
+   },
+   {
+    "group": "photo",
+    "name": "net bands enclose the net windows at 40 degrees or less (n=3)",
+    "ok": true,
+    "detail": "[0.865, 0.828, 0.85]"
+   },
+   {
+    "group": "photo",
+    "name": "net shares match the tally within 0.01",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "photo",
+    "name": "net spread minimum under every net window's spread",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "photo",
+    "name": "net tally adds to 60",
+    "ok": true,
+    "detail": "{'lower_sash_voile': 28, 'full_height_net': 13, 'cafe_net': 1, 'curtains_drawn_or_open': 6, 'blind': 1, 'bare_dark_room': 11}"
+   },
+   {
+    "group": "photo",
+    "name": "the 19 window measurements recompute from the photographs",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "photo",
+    "name": "the old fault (D/L 0.85) is outside the D/L limit; its spread 14 under the minimum",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "P10: at most 1200 px and 300 KB",
+    "ok": true,
+    "detail": "(1152, 795) 164545"
+   },
+   {
+    "group": "previews",
+    "name": "P11: at most 1200 px and 300 KB",
+    "ok": true,
+    "detail": "(1120, 512) 120155"
+   },
+   {
+    "group": "previews",
+    "name": "P12 mask 'notice board on a post' reads flat grey",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "P12 mask 'oval plate on the white door (a house number's place)' reads flat grey",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "P12 mask 'street-name plate' reads flat grey",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "P12: at most 1200 px and 300 KB",
+    "ok": true,
+    "detail": "(1152, 480) 164073"
+   },
+   {
+    "group": "previews",
+    "name": "P13: at most 1200 px and 300 KB",
+    "ok": true,
+    "detail": "(249, 930) 47155"
+   },
+   {
+    "group": "previews",
+    "name": "P14: at most 1200 px and 300 KB",
+    "ok": true,
+    "detail": "(682, 572) 73946"
+   },
+   {
+    "group": "previews",
+    "name": "P1: at most 1200 px and 300 KB",
+    "ok": true,
+    "detail": "(1110, 525) 98071"
+   },
+   {
+    "group": "previews",
+    "name": "P2 mask 'street-name sign' reads flat grey",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "P2: at most 1200 px and 300 KB",
+    "ok": true,
+    "detail": "(1150, 229) 74148"
+   },
+   {
+    "group": "previews",
+    "name": "P3: at most 1200 px and 300 KB",
+    "ok": true,
+    "detail": "(1168, 540) 129082"
+   },
+   {
+    "group": "previews",
+    "name": "P4: at most 1200 px and 300 KB",
+    "ok": true,
+    "detail": "(742, 1200) 143063"
+   },
+   {
+    "group": "previews",
+    "name": "P5: at most 1200 px and 300 KB",
+    "ok": true,
+    "detail": "(962, 728) 120026"
+   },
+   {
+    "group": "previews",
+    "name": "P6: at most 1200 px and 300 KB",
+    "ok": true,
+    "detail": "(620, 824) 121467"
+   },
+   {
+    "group": "previews",
+    "name": "P7 mask 'small plate on the dark door (a house number's place)' reads flat grey",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "P7 mask 'street-name plate' reads flat grey",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "previews",
+    "name": "P7: at most 1200 px and 300 KB",
+    "ok": true,
+    "detail": "(1068, 588) 83175"
+   },
+   {
+    "group": "previews",
+    "name": "P8: at most 1200 px and 300 KB",
+    "ok": true,
+    "detail": "(1200, 600) 78715"
+   },
+   {
+    "group": "previews",
+    "name": "P9: at most 1200 px and 300 KB",
+    "ok": true,
+    "detail": "(700, 1000) 122420"
+   },
+   {
+    "group": "previews",
+    "name": "the overlay of the drawing on P8 exists (<= 1200 px, <= 300 KB)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "read",
+    "name": "GLAZING_BAR / FRAME_T of the box sash (the cottages' 55 mm frame)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "read",
+    "name": "NET_LIT_EMIT_NIGHT 1.2 and NET_EMIT_NIGHT 0.05",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "read",
+    "name": "NET_LIT_EVERY = 3 as the lit table's anchor",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "read",
+    "name": "REPLACEMENT_TRANSOM 0.72",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "read",
+    "name": "S11 glass planes 142 and 190 behind the face (1a)",
+    "ok": true,
+    "detail": "[142.0, 144.5] [189.6, 192.1]"
+   },
+   {
+    "group": "read",
+    "name": "S11 lab glb nodes unchanged",
+    "ok": true,
+    "detail": "35 nodes, 860 triangles, 60604 bytes"
+   },
+   {
+    "group": "read",
+    "name": "S11 no triangle budget breach",
+    "ok": true,
+    "detail": "860 tris"
+   },
+   {
+    "group": "read",
+    "name": "S22 glass planes 142 and 190 behind the face (1a)",
+    "ok": true,
+    "detail": "[142.0, 144.5] [189.6, 192.1]"
+   },
+   {
+    "group": "read",
+    "name": "S22 lab glb nodes unchanged",
+    "ok": true,
+    "detail": "41 nodes, 1068 triangles, 72988 bytes"
+   },
+   {
+    "group": "read",
+    "name": "S22 no triangle budget breach",
+    "ok": true,
+    "detail": "1068 tris"
+   },
+   {
+    "group": "read",
+    "name": "glass_roughness 0.02 sits inside the pane's range",
+    "ok": true,
+    "detail": "0.02"
+   },
+   {
+    "group": "read",
+    "name": "horns 76.2",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "read",
+    "name": "interior_lit colour from window_practicals",
+    "ok": true,
+    "detail": "gamma (1, 0.86, 0.62)"
+   },
+   {
+    "group": "read",
+    "name": "lab frame head_visible_mm",
+    "ok": true,
+    "detail": "44.5"
+   },
+   {
+    "group": "read",
+    "name": "lab frame outer_lining_margin_mm",
+    "ok": true,
+    "detail": "42.9"
+   },
+   {
+    "group": "read",
+    "name": "lab frame reveal_mm",
+    "ok": true,
+    "detail": "114.3"
+   },
+   {
+    "group": "read",
+    "name": "lab opening 850 x 1676.4",
+    "ok": true,
+    "detail": "[850.0, 1676.4]"
+   },
+   {
+    "group": "read",
+    "name": "lab sash bottom_rail_mm",
+    "ok": true,
+    "detail": "101.6"
+   },
+   {
+    "group": "read",
+    "name": "lab sash glazing_bar_width_mm",
+    "ok": true,
+    "detail": "22.2"
+   },
+   {
+    "group": "read",
+    "name": "lab sash meeting_rail_depth_mm",
+    "ok": true,
+    "detail": "38.1"
+   },
+   {
+    "group": "read",
+    "name": "lab sash stile_width_mm",
+    "ok": true,
+    "detail": "50.8"
+   },
+   {
+    "group": "read",
+    "name": "lab sash thickness_mm",
+    "ok": true,
+    "detail": "34.9"
+   },
+   {
+    "group": "read",
+    "name": "lab sash top_rail_mm",
+    "ok": true,
+    "detail": "50.8"
+   },
+   {
+    "group": "read",
+    "name": "net_day_gain 0.0 and room_glow_gain_night 0.4 as stated",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "read",
+    "name": "the night wash is unreal-look.json's lantern_linear_rgb (1.0, 0.25, 0.0)",
+    "ok": true,
+    "detail": "[1.0, 0.25, 0.0]"
+   },
+   {
+    "group": "read",
+    "name": "the scene file's stale (1, 0.7055, 0) is named only as not used",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "every room is used by a site and every site's room exists",
+    "ok": true,
+    "detail": "set()"
+   },
+   {
+    "group": "rooms",
+    "name": "gf_front_1: a pendant means a ceiling rose",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "gf_front_1: every object inside the room",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "gf_front_1: form ceiling_rose within the tolerated budget of its surface (0.04)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "gf_front_1: form coving within the tolerated budget of its surface (0.04)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "gf_front_1: form fire_surround_flat within the tolerated budget of its surface (0.06)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "gf_front_1: form picture_rail within the tolerated budget of its surface (0.06)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "gf_front_1: form skirting within the tolerated budget of its surface (0.06)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "gf_front_1: nothing over the tolerated budget",
+    "ok": true,
+    "detail": "[]"
+   },
+   {
+    "group": "rooms",
+    "name": "gf_front_1: nothing overlaps on the back wall",
+    "ok": true,
+    "detail": "[]"
+   },
+   {
+    "group": "rooms",
+    "name": "gf_front_1: picture size",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "gf_front_2: a pendant means a ceiling rose",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "gf_front_2: every object inside the room",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "gf_front_2: form ceiling_rose within the tolerated budget of its surface (0.04)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "gf_front_2: form coving within the tolerated budget of its surface (0.04)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "gf_front_2: form internal_door_flat within the tolerated budget of its surface (0.06)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "gf_front_2: form picture_rail within the tolerated budget of its surface (0.06)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "gf_front_2: form skirting within the tolerated budget of its surface (0.06)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "gf_front_2: nothing over the tolerated budget",
+    "ok": true,
+    "detail": "[]"
+   },
+   {
+    "group": "rooms",
+    "name": "gf_front_2: nothing overlaps on the back wall",
+    "ok": true,
+    "detail": "[]"
+   },
+   {
+    "group": "rooms",
+    "name": "gf_front_2: picture size",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "gf_front_3: a pendant means a ceiling rose",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "gf_front_3: every object inside the room",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "gf_front_3: form ceiling_rose within the tolerated budget of its surface (0.04)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "gf_front_3: form coving within the tolerated budget of its surface (0.04)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "gf_front_3: form fire_surround_flat within the tolerated budget of its surface (0.06)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "gf_front_3: form picture_rail within the tolerated budget of its surface (0.06)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "gf_front_3: form skirting within the tolerated budget of its surface (0.06)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "gf_front_3: nothing over the tolerated budget",
+    "ok": true,
+    "detail": "[]"
+   },
+   {
+    "group": "rooms",
+    "name": "gf_front_3: nothing overlaps on the back wall",
+    "ok": true,
+    "detail": "[]"
+   },
+   {
+    "group": "rooms",
+    "name": "gf_front_3: picture size",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "no upper-room piece of furniture is needed below 1.4 m: every upper object's top is above 1.4 m or it is a wall-hung piece",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "the bedroom variants are three different rooms",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "the lounge variants are three different rooms",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "the upper room's back wall is seen from across only above 1.4 m (computed 1.78)",
+    "ok": true,
+    "detail": "[1.78, 2.41]"
+   },
+   {
+    "group": "rooms",
+    "name": "the upper room's ceiling is seen from across over its whole depth",
+    "ok": true,
+    "detail": "[0.85, 4.16]"
+   },
+   {
+    "group": "rooms",
+    "name": "thirteen rooms: 3 lounges, 3 bedrooms, 2 landings, 2 empty, 3 cottage front rooms",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_bedroom_1: a pendant means a ceiling rose",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_bedroom_1: every object inside the room",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_bedroom_1: form ceiling_rose within the tolerated budget of its surface (0.04)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_bedroom_1: form coving within the tolerated budget of its surface (0.04)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_bedroom_1: form picture_rail within the tolerated budget of its surface (0.06)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_bedroom_1: form skirting within the tolerated budget of its surface (0.06)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_bedroom_1: nothing over the tolerated budget",
+    "ok": true,
+    "detail": "[]"
+   },
+   {
+    "group": "rooms",
+    "name": "up_bedroom_1: nothing overlaps on the back wall",
+    "ok": true,
+    "detail": "[]"
+   },
+   {
+    "group": "rooms",
+    "name": "up_bedroom_1: picture size",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_bedroom_2: a pendant means a ceiling rose",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_bedroom_2: every object inside the room",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_bedroom_2: form ceiling_rose within the tolerated budget of its surface (0.04)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_bedroom_2: form coving within the tolerated budget of its surface (0.04)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_bedroom_2: form picture_rail within the tolerated budget of its surface (0.06)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_bedroom_2: form skirting within the tolerated budget of its surface (0.06)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_bedroom_2: nothing over the tolerated budget",
+    "ok": true,
+    "detail": "[]"
+   },
+   {
+    "group": "rooms",
+    "name": "up_bedroom_2: nothing overlaps on the back wall",
+    "ok": true,
+    "detail": "[]"
+   },
+   {
+    "group": "rooms",
+    "name": "up_bedroom_2: picture size",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_bedroom_3: a pendant means a ceiling rose",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_bedroom_3: every object inside the room",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_bedroom_3: form ceiling_rose within the tolerated budget of its surface (0.04)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_bedroom_3: form coving within the tolerated budget of its surface (0.04)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_bedroom_3: form picture_rail within the tolerated budget of its surface (0.06)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_bedroom_3: form skirting within the tolerated budget of its surface (0.06)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_bedroom_3: nothing over the tolerated budget",
+    "ok": true,
+    "detail": "[]"
+   },
+   {
+    "group": "rooms",
+    "name": "up_bedroom_3: nothing overlaps on the back wall",
+    "ok": true,
+    "detail": "[]"
+   },
+   {
+    "group": "rooms",
+    "name": "up_bedroom_3: picture size",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_empty_1: every object inside the room",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_empty_1: form bare_bulb within the tolerated budget of its surface (0.04)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_empty_1: form chimney_breast_flat within the tolerated budget of its surface (0.06)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_empty_1: form coving within the tolerated budget of its surface (0.04)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_empty_1: form picture_ghost within the tolerated budget of its surface (0.06)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_empty_1: form skirting within the tolerated budget of its surface (0.06)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_empty_1: nothing over the tolerated budget",
+    "ok": true,
+    "detail": "[]"
+   },
+   {
+    "group": "rooms",
+    "name": "up_empty_1: nothing overlaps on the back wall",
+    "ok": true,
+    "detail": "[]"
+   },
+   {
+    "group": "rooms",
+    "name": "up_empty_1: picture size",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_empty_2: every object inside the room",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_empty_2: form bare_bulb within the tolerated budget of its surface (0.04)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_empty_2: form coving within the tolerated budget of its surface (0.04)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_empty_2: form radiator_flat within the tolerated budget of its surface (0.06)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_empty_2: form skirting within the tolerated budget of its surface (0.06)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_empty_2: nothing over the tolerated budget",
+    "ok": true,
+    "detail": "[]"
+   },
+   {
+    "group": "rooms",
+    "name": "up_empty_2: nothing overlaps on the back wall",
+    "ok": true,
+    "detail": "[]"
+   },
+   {
+    "group": "rooms",
+    "name": "up_empty_2: picture size",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_landing_1: every object inside the room",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_landing_1: form bare_bulb within the tolerated budget of its surface (0.04)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_landing_1: form coving within the tolerated budget of its surface (0.04)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_landing_1: form internal_door_flat within the tolerated budget of its surface (0.06)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_landing_1: form picture_rail within the tolerated budget of its surface (0.06)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_landing_1: form skirting within the tolerated budget of its surface (0.06)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_landing_1: form stair_flat within the tolerated budget of its surface (0.06)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_landing_1: nothing over the tolerated budget",
+    "ok": true,
+    "detail": "[]"
+   },
+   {
+    "group": "rooms",
+    "name": "up_landing_1: nothing overlaps on the back wall",
+    "ok": true,
+    "detail": "[]"
+   },
+   {
+    "group": "rooms",
+    "name": "up_landing_1: picture size",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_landing_2: every object inside the room",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_landing_2: form bare_bulb within the tolerated budget of its surface (0.04)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_landing_2: form coving within the tolerated budget of its surface (0.04)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_landing_2: form picture_rail within the tolerated budget of its surface (0.06)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_landing_2: form radiator_flat within the tolerated budget of its surface (0.06)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_landing_2: form skirting within the tolerated budget of its surface (0.06)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_landing_2: nothing over the tolerated budget",
+    "ok": true,
+    "detail": "[]"
+   },
+   {
+    "group": "rooms",
+    "name": "up_landing_2: nothing overlaps on the back wall",
+    "ok": true,
+    "detail": "[]"
+   },
+   {
+    "group": "rooms",
+    "name": "up_landing_2: picture size",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_lounge_1: a pendant means a ceiling rose",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_lounge_1: every object inside the room",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_lounge_1: form ceiling_rose within the tolerated budget of its surface (0.04)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_lounge_1: form coving within the tolerated budget of its surface (0.04)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_lounge_1: form picture_rail within the tolerated budget of its surface (0.06)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_lounge_1: form skirting within the tolerated budget of its surface (0.06)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_lounge_1: nothing over the tolerated budget",
+    "ok": true,
+    "detail": "[]"
+   },
+   {
+    "group": "rooms",
+    "name": "up_lounge_1: nothing overlaps on the back wall",
+    "ok": true,
+    "detail": "[]"
+   },
+   {
+    "group": "rooms",
+    "name": "up_lounge_1: picture size",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_lounge_2: a pendant means a ceiling rose",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_lounge_2: every object inside the room",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_lounge_2: form ceiling_rose within the tolerated budget of its surface (0.04)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_lounge_2: form coving within the tolerated budget of its surface (0.04)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_lounge_2: form picture_rail within the tolerated budget of its surface (0.06)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_lounge_2: form skirting within the tolerated budget of its surface (0.06)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_lounge_2: nothing over the tolerated budget",
+    "ok": true,
+    "detail": "[]"
+   },
+   {
+    "group": "rooms",
+    "name": "up_lounge_2: nothing overlaps on the back wall",
+    "ok": true,
+    "detail": "[]"
+   },
+   {
+    "group": "rooms",
+    "name": "up_lounge_2: picture size",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_lounge_3: a pendant means a ceiling rose",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_lounge_3: every object inside the room",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_lounge_3: form ceiling_rose within the tolerated budget of its surface (0.04)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_lounge_3: form coving within the tolerated budget of its surface (0.04)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_lounge_3: form picture_rail within the tolerated budget of its surface (0.06)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_lounge_3: form skirting within the tolerated budget of its surface (0.06)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "rooms",
+    "name": "up_lounge_3: nothing over the tolerated budget",
+    "ok": true,
+    "detail": "[]"
+   },
+   {
+    "group": "rooms",
+    "name": "up_lounge_3: nothing overlaps on the back wall",
+    "ok": true,
+    "detail": "[]"
+   },
+   {
+    "group": "rooms",
+    "name": "up_lounge_3: picture size",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "sites",
+    "name": "SITE-03 curtains and blinds 6 to 10",
+    "ok": true,
+    "detail": "9"
+   },
+   {
+    "group": "sites",
+    "name": "SITE-03 mix: N0 4-5, N1 8-10, N2 3-5, N3 1",
+    "ok": true,
+    "detail": "{'N0': 4, 'N2': 5, 'N1': 10, 'N3': 1}"
+   },
+   {
+    "group": "sites",
+    "name": "SITE-04 paint: white 5 to 7 of 10, cream 1, brown 1, olive 1, blue 1, bronze 1",
+    "ok": true,
+    "detail": "{'bronze': 1, 'white_grimy': 1, 'brown': 1, 'white_upvc': 3, 'white_flaking': 1, 'olive': 1, 'blue': 1, 'cream': 1}"
+   },
+   {
+    "group": "sites",
+    "name": "a cottage's arch clears the eaves: head 2.5 + rise 0.85/7 + ring 0.215 under 3.1",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "sites",
+    "name": "every site's centre and kind equal terrace-front.py's as it stands",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "sites",
+    "name": "kinds: 6 two-over-two, 6 one-over-one, 8 replacement",
+    "ok": true,
+    "detail": "{'S22': 6, 'S11': 6, 'RC': 8}"
+   },
+   {
+    "group": "sites",
+    "name": "no (room, net, drape) triple repeats within three places on the east row",
+    "ok": true,
+    "detail": "[]"
+   },
+   {
+    "group": "sites",
+    "name": "no (room, net, drape) triple repeats within three places on the west row",
+    "ok": true,
+    "detail": "[]"
+   },
+   {
+    "group": "sites",
+    "name": "paint fits the kind (a replacement is white or bronze; a timber sash is painted)",
+    "ok": true,
+    "detail": "[]"
+   },
+   {
+    "group": "sites",
+    "name": "sill = head - 1676.4 on every site",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "sites",
+    "name": "ten houses",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "sites",
+    "name": "the hill's rows carry 48 windows by the same code (48 stated)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "sites",
+    "name": "the kit rows today are the parade's S22 and S11 only",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "group": "sites",
+    "name": "twenty sites",
+    "ok": true,
+    "detail": "20 derived live"
+   },
+   {
+    "group": "sites",
+    "name": "upper heads at 5.9 and cottage heads at 2.5 above the crown (today's)",
+    "ok": true,
+    "detail": ""
+   }
+  ],
+  "controls": [
+   {
+    "mutation": "a kit node moved 3 mm off the lab's glb",
+    "caught": true,
+    "first_failing_row": "S22 lab glb nodes unchanged"
+   },
+   {
+    "mutation": "a site's centre moved 0.2 m",
+    "caught": true,
+    "first_failing_row": "every site's centre and kind equal terrace-front.py's as it stands"
+   },
+   {
+    "mutation": "an object over the tolerated stand-off",
+    "caught": true,
+    "first_failing_row": "up_lounge_1: nothing over the tolerated budget"
+   },
+   {
+    "mutation": "a band that no longer encloses the photographs' net windows",
+    "caught": true,
+    "first_failing_row": "net bands enclose the net windows at 40 degrees or less (n=3)"
+   },
+   {
+    "mutation": "the old fault's D/L pulled inside the limit",
+    "caught": true,
+    "first_failing_row": "the old fault (D/L 0.85) is outside the D/L limit; its spread 14 under the minimum"
+   },
+   {
+    "mutation": "twelve windows lit at 20:30",
+    "caught": true,
+    "first_failing_row": "at 20:30 seven lit of twenty (35 per cent)"
+   },
+   {
+    "mutation": "a model's marks entry emptied",
+    "caught": true,
+    "first_failing_row": "up_lounge_3: wall_clock is in the inventory with its marks line and a usable status"
+   },
+   {
+    "mutation": "the stale sodium colour in the night wash",
+    "caught": true,
+    "first_failing_row": "the night wash is unreal-look.json's lantern_linear_rgb (1.0, 0.25, 0.0)"
+   },
+   {
+    "mutation": "a required check removed",
+    "caught": true,
+    "first_failing_row": "the brief's checks are present (pane darker than frame, dark lines, something behind the glass, lit and dark share)"
+   },
+   {
+    "mutation": "an overlay edge 20 px off",
+    "caught": true,
+    "first_failing_row": "edge 'meeting rail centre': drawing 359.0 px, photograph 382.6 px (tolerance 7.0)"
+   },
+   {
+    "mutation": "a blue replacement window",
+    "caught": true,
+    "first_failing_row": "kinds: 6 two-over-two, 6 one-over-one, 8 replacement"
+   },
+   {
+    "mutation": "a net plane inside the lower glass",
+    "caught": true,
+    "first_failing_row": "S22: net__N1 behind the glass by 40 mm or more and in front of the card (270)"
+   },
+   {
+    "mutation": "a real firm's name in the summary",
+    "caught": true,
+    "first_failing_row": "no blocklisted name outside a marks entry"
+   },
+   {
+    "mutation": "the back wall rectangle moved",
+    "caught": true,
+    "first_failing_row": "UP back wall rectangle in the 1536-wide picture is (460.8, 419.7, 1075.2, 979.2)"
+   }
+  ],
+  "run": "13 October 2026"
+ }
 }

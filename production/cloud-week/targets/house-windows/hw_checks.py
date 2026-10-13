@@ -79,7 +79,7 @@ def gate(target):
                   "room_cards": "for every window and every camera the card's emission picture is computed per pixel through `tools/ue/make_interior_material.py` `trace` (imported, not rewritten) from the room's picture and set as the card's emission; a lit room has its net and curtain cards emissive as NET_COMMON says; a dark one is lit by the sodium wash only",
                   "passes": "Cycles passes: Material Index (pane = 1 glass_house, frame = 2 paint_*, net/curtain/blind = 3, brick/wall = 4, card = 5), Object Index per window (id), Z; the masks come from these, never by eye"},
         "cameras": cams,
-        "views": "GS_A: H_ACROSS_0, H_ACROSS_30, H_ALONG_15_NEAR, H_ALONG_30_NEAR, H_ALONG_15_ROAD by day and by night (20:30), H_UNDER by day; GS_B: from the east footway's kerb edge (H_ACROSS_0, H_ACROSS_30), and along the cottages' own footway (H_ALONG_15_NEAR, H_ALONG_30_NEAR, H_ALONG_15_ROAD), by day and by night; 22 renders",
+        "views": "GS_A: H_ACROSS_0, H_ACROSS_30, H_ALONG_15_NEAR, H_ALONG_30_NEAR, H_ALONG_15_ROAD by day and by night (20:30), H_UNDER by day; GS_B: from the east footway's kerb edge (H_ACROSS_0, H_ACROSS_30), and along the cottages' own footway (H_ALONG_15_NEAR, H_ALONG_30_NEAR, H_ALONG_15_ROAD), by day and by night, and H_UNDER by day; 22 renders (11 + 11)",
         "measure": {
             "P": "the median sRGB luma of a window's pane pixels (material index 1 and 3 inside the window's outline: glass and net together as the eye sees them)",
             "L": "the 90th percentile of the luma of the window's joinery pixels (material index 2: the sash members, linings, beads, sill)",
@@ -90,7 +90,7 @@ def gate(target):
             "bands_come_from": "photo_measurements.bands_by_state (Photo, +-5 degrees on the angle, outlines by eye)",
         },
         "bands": {
-            "net_N1_N2_in_15_to_30_deg": {"P_over_L": [0.55, 0.95], "D_over_L_max": 0.55, "spread_min": 40, "photo": "P1_a, P1_b, P1_e at 31 to 37 degrees: 0.83, 0.87, 0.85 (D/L 0.47 to 0.50); the nine net windows 0.60 to 0.97"},
+            "net_N1_N2_in_15_to_30_deg": {"P_over_L": [0.55, 0.95], "D_over_L_max": 0.55, "spread_min": 40, "photo": "P1_a, P1_b, P1_e at 31 to 37 degrees: 0.87, 0.83, 0.85 (D/L 0.47 to 0.50); the nine net windows 0.60 to 0.97"},
             "net_N3_cafe": {"P_over_L": [0.35, 0.75], "photo": "P4_E (a net over the lower half, 35 degrees): 0.56"},
             "bare_N0_in_15_to_30_deg": {"P_over_L": [0.10, 0.45], "spread_min": 20, "photo": "P1_c (22 degrees) 0.32; P4_G 0.19; P3_d 0.36"},
             "bare_N0_over_60_deg_from_across": {"P_over_L": [0.35, 0.70], "blue_over_red_min": 10, "photo": "P8_L, P8_R (near square, from below, sky over a dark room): 0.62, 0.51; the pane's colour (87, 99, 135): blue over red 48"},
