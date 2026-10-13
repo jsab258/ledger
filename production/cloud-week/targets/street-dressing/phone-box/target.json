@@ -2721,14 +2721,19 @@
   "keep the foot gap open and the posts' feet 40 x 40 on the ground"
  ],
  "self_check": {
-  "line": "SELF-CHECK phone-box: 113 checks, 113 passed, 0 failed; negative controls 33 of 33 caught (offline)",
-  "checks": 113,
+  "line": "SELF-CHECK phone-box: 117 checks, 113 passed, 4 failed; negative controls 33 of 33 caught (--live --previews)",
+  "checks": 117,
   "passed": 113,
-  "failed": 0,
+  "failed": 4,
   "controls": 33,
   "controls_caught": 33,
-  "options": "offline",
-  "failing": [],
+  "options": "--live --previews",
+  "failing": [
+   "live/P1/photograph present",
+   "previews/p1-verge-kx100-front.jpg exists",
+   "previews/p1-verge-kx100-target-on-photo.jpg exists",
+   "previews/p2-handle-kx100-detail.jpg exists"
+  ],
   "uncaught": []
  }
 }

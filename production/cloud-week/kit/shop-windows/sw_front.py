@@ -283,7 +283,9 @@ class Front:
         self.add("hall_floor_behind_doors", bx(slot[0] - 944.0, slot[1], -160.0, 4.0, 0.0, 58.0), "terrazzo", bev=None)
         # the bell (target 4.2): a spring strip 20 x 3, 220 long, on the INSIDE of the top rail, 90 from the hanging stile; the bell hung 80 below
         bd = D["bell"]
-        ub = lu1 - 90.0
+        # 13 Oct, from the try 2 reviews (close 9): the strip stood 90 mm in from the leaf's edge, which is ON the hinge stile (115 wide), so the bell hid behind it. The target puts it on
+        # the top rail, 90 mm in from the hanging stile's inner edge: u = leaf edge - stile - 90 (model x -0.958)
+        ub = lu1 - st - 90.0
         # the strip spans z 1950 to 2050 and is 220 long (target 4.2): a quarter ellipse, 171 into the room and 100 down (arc length 220)
         a_h, b_v = 171.0, 100.0
         cen = (20.0, 2050.0 - b_v)
@@ -456,9 +458,13 @@ class Front:
                 bm.free()
             me.update()
             out.append(o)
-        # trim at the shop transom (z 2400) and to the slot (the door's frame is 1000 wide, the slot 944): the fillers hide the 28 either side
+        # trim at the shop transom (z 2400) and at the fillers' INNER faces (13 Oct, from the try 2 reviews, street 1 and close 2: try 2 clipped F1 at the slot's edges, which left F1's own
+        # frame jambs (front face at d 100) standing in the same plane as the fillers and the added side_jamb boxes, and Cycles draws coincident faces black: two black strips 53 mm wide
+        # beside the side door; in the game the same glb would z-fight). The fillers' inner faces are 24.4 in from the slot's edges (u 374.4 and 1269.6), so F1's white jambs now stand at
+        # u 374.4 to 423.4 and 1220.6 to 1269.6 and the oxblood fillers at 350 to 374.4 and 1269.6 to 1294 with no overlap
         zcut = 2.400
-        lo, hi = (s[0] - BAY_MID) / 1000.0, (s[1] - BAY_MID) / 1000.0
+        fil = 0.0244
+        lo, hi = (s[0] - BAY_MID) / 1000.0 + fil, (s[1] - BAY_MID) / 1000.0 - fil
         for o in out:
             clip_object(o, Vector((0, 0, zcut)), Vector((0, 0, 1)))
             clip_object(o, Vector((lo, 0, 0)), Vector((-1, 0, 0)))
@@ -471,13 +477,10 @@ class Front:
                     slot.material = self.mats["buttermilk"]
                 elif nm.startswith("paint_white"):
                     slot.material = self.mats["white"]
-        # 24.4 filler strips (the pilaster return, the pier's colour) each side, d 0 to 100, z 25 to 2400
+        # 24.4 filler strips (the pilaster return, the pier's colour) each side, d 0 to 100, z 0 to 2400 (13 Oct: from the footway, since F1's stone threshold now stops at the fillers'
+        # inner faces; F1's own jambs are the side door's jambs: the added side_jamb boxes are gone)
         for nm, (a, b) in (("l", (s[0], s[0] + 24.4)), ("r", (s[1] - 24.4, s[1]))):
-            self.add("side_filler_" + nm, bx(a, b, 0.0, 100.0, 25.0, 2400.0), "oxblood", bev=None)
-        # F1's own frame jambs, put back (13 Oct, from the try 1 close review, fault 5): the leaf (u 403 to 1241) sits between fillers that end at 374.4 and 1269.6, which left two open
-        # slots 28.6 wide and 100 deep onto the unlit space behind the front. White joinery (226, 224, 214), d 0 to 100, z 25 to 2400: 838 + 2 x 28.6 + 2 x 24.4 = 944
-        for nm, (a, b) in (("l", (s[0] + 24.4, s[0] + 24.4 + 28.6)), ("r", (s[1] - 24.4 - 28.6, s[1] - 24.4))):
-            self.add("side_jamb_" + nm, bx(a, b, 0.0, 100.0, 25.0, 2400.0), "white", bev=None)
+            self.add("side_filler_" + nm, bx(a, b, 0.0, 100.0, 0.0, 2400.0), "oxblood", bev=None)
         self.extra += out
         # the sealing strip where the sill's end stands 3 short of the pilaster's plinth (the kit's meets row), so no crack shows
         win = self.R["front"]["zones_u_mm"]["window"]

@@ -2488,14 +2488,18 @@
   "orientation: the local -y is the way the sitter faces; in the street's frame -y points -x (south, towards the basin)"
  ],
  "self_check": {
-  "line": "SELF-CHECK bench: 95 checks, 95 passed, 0 failed; negative controls 24 of 24 caught (offline)",
-  "checks": 95,
+  "line": "SELF-CHECK bench: 98 checks, 95 passed, 3 failed; negative controls 24 of 24 caught (--live --previews)",
+  "checks": 98,
   "passed": 95,
-  "failed": 0,
+  "failed": 3,
   "controls": 24,
   "controls_caught": 24,
-  "options": "offline",
-  "failing": [],
+  "options": "--live --previews",
+  "failing": [
+   "live/P1/photograph present",
+   "previews/p1-poole-bench-back.jpg exists",
+   "previews/p1-poole-bench-target-on-photo.jpg exists"
+  ],
   "uncaught": []
  }
 }

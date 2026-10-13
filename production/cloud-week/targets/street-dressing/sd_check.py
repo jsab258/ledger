@@ -493,11 +493,11 @@ def main(family, tdir, extra=None, extra_controls=None, ctl_spec=None, doc_check
     if "--photos" in argv:
         photos_dir = argv[argv.index("--photos") + 1]
     elif live:
-        photos_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(tdir)))), "ledger-scratch", "street-dressing", family)
+        photos_dir = os.path.join(os.path.dirname(L.REPO), "ledger-scratch", "street-dressing", family)
     tpath = os.path.join(tdir, "target.json")
     T = json.load(open(tpath))
     options = "offline" if not (live or previews) else " ".join(o for o in ("--live" if live else "", "--previews" if previews else "") if o)
-    kw = dict(extra=extra, live=live, previews=previews, photos_dir=photos_dir, doc_check=doc_check, tdir=tdir)
+    kw = dict(extra=extra, live=live, previews=previews, photos_dir=photos_dir, doc_check=doc_check, tdir=tdir, previews_dir=os.path.join(L.PREVIEWS, family))
     rows = all_rows(T, **kw)
     ctl = []
     if "--no-controls" not in argv:

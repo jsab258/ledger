@@ -1877,14 +1877,16 @@
   "no mark of any kind on any board"
  ],
  "self_check": {
-  "line": "SELF-CHECK pallets: 75 checks, 75 passed, 0 failed; negative controls 23 of 23 caught (offline)",
-  "checks": 75,
+  "line": "SELF-CHECK pallets: 76 checks, 75 passed, 1 failed; negative controls 23 of 23 caught (--live --previews)",
+  "checks": 76,
   "passed": 75,
-  "failed": 0,
+  "failed": 1,
   "controls": 23,
   "controls_caught": 23,
-  "options": "offline",
-  "failing": [],
+  "options": "--live --previews",
+  "failing": [
+   "previews/p1-maiden-street-pallets-leaning.jpg exists"
+  ],
   "uncaught": []
  }
 }
