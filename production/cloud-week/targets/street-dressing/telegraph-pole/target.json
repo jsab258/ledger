@@ -1418,13 +1418,13 @@
   "no lettering, no plate, no mark"
  ],
  "self_check": {
-  "line": "SELF-CHECK telegraph-pole: 95 checks, 95 passed, 0 failed; negative controls 33 of 33 caught (offline)",
-  "checks": 95,
-  "passed": 95,
+  "line": "SELF-CHECK telegraph-pole: 99 checks, 99 passed, 0 failed; negative controls 33 of 33 caught (--live --previews)",
+  "checks": 99,
+  "passed": 99,
   "failed": 0,
   "controls": 33,
   "controls_caught": 33,
-  "options": "offline",
+  "options": "--live --previews",
   "failing": [],
   "uncaught": []
  }
