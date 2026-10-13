@@ -187,7 +187,7 @@ def draw_row(t, path):
         cx = (s["x_centre"] - x0) * sc + 10
         up = s["side"] > 0
         y0 = 40 if up else 290
-        kcol = {"S22": (236, 235, 230), "S11": (225, 222, 205), "RC": (200, 205, 215)}[s["kind"]]
+        kcol = {"S22": (236, 235, 230), "S11": (225, 222, 205), "RC": (200, 205, 215), "RC2": (205, 210, 220)}[s["kind"]]
         dr.rectangle([cx - 0.425 * sc, y0, cx + 0.425 * sc, y0 + 1.676 * sc * 2], fill=(30, 34, 44), outline=kcol if s["paint"] != "bronze" else (110, 90, 70), width=3)
         nk = s["net"]["kind"]
         if nk != "N0":
@@ -243,7 +243,7 @@ def main():
     t = json.load(open(os.path.join(HERE, "target.json")))
     os.makedirs(a.out_dir, exist_ok=True)
     drawing = {"units": "millimetres; elevations (x across, z up) and sections (x or y, y or z) in the kit frame", "kinds": {}}
-    for kind in ("S22", "S11", "RC"):
+    for kind in ("S22", "S11", "RC", "RC2"):
         drawing["kinds"][kind] = {"elevation": elevation(t, kind), "hsection_z300": hsection(t, kind, 300), "hsection_z1000": hsection(t, kind, 1000), "vsection_x_minus150": vsection(t, kind, -150.0)}
         draw_elev(t, kind, os.path.join(a.out_dir, "E-%s-elevation.png" % kind))
         draw_sections(t, kind, os.path.join(a.out_dir, "S-%s-sections.png" % kind))
