@@ -46,7 +46,7 @@ L = []
 w = L.append
 w("# NOTES: town content (unit 11, cloud week 42)")
 w("")
-w("Written 13 October 2026 for Jafar's order of 12 October: for every principal and regular in canon, the authored facts the talk draws on, their schedule, who they talk to, five rumours, and a newcomer's ten likeliest questions answered from those facts. Third person throughout. Canon outranks all of it; anything new is marked and sits in DECISIONS.md as six entries, each ending \"Marked for Jafar.\" Nothing here is in the game or on a page of his yet.")
+w("Written 13 October 2026 for Jafar's order of 12 October: for every principal and regular in canon, the authored facts the talk draws on, their schedule, who they talk to, five rumours, and a newcomer's ten likeliest questions answered from those facts. Third person throughout. Canon outranks all of it; anything new is marked and sits in DECISIONS.md as seven entries (the first six when the files were made, a seventh for the facts reworded after the canon review of 13 October), each ending \"Marked for Jafar.\" Nothing here is in the game or on a page of his yet.")
 w("")
 w("## What was made (production/cloud-week/town/)")
 w("")
@@ -65,16 +65,17 @@ w("  - Beliefs (%d): %d unknown, %d true, %d false, %d partly, each against cano
 w("- **Rumours:** %d, five a person. %d are one of eleven pooled stories the street passes round (the heart, the nephew, the funeral, June, the fire as the street has it, the thin trade, the door, the man at the landing, Hal and Rita, the radio, and the arrival seen); %d are specific to a person (listed below)." % (nr, pooled, len(specific)))
 w("- **Answers:** %d, ten a person but Tom's. Kinds: %d plain answers, %d partial, %d pointing to someone, %d deflections, %d honest don't-knows. Every answer is under thirty words and cites the fact ids it draws on." % (nq, kinds["answers"], kinds["partly"], kinds["points_to"], kinds["deflect"], kinds["dont_know"]))
 seeded = ("%d seeded faults, %d caught" % (chk["summary"]["seeded_faults"], chk["summary"]["seeded_faults_caught"])) if chk else "not run"
-w("- **Check:** %s. It covers the cast (each of the 44, nobody else), every citation, every derived fact and schedule re-derived from hook-cast.json, the ties and their hours a week recomputed, the rumours' limits, each answer's facts, words and length, the gates, and DECISIONS.md. It also damages a copy of people.json thirty ways (a changed quote, a wrong line, a secret told, a real brand, drink, a year after 1992, Tom's name, the fire's truth, murder, a missing or extra person and so on) and requires each to fail a row: %s." % (result, seeded))
+ndam = {30: "thirty"}.get(chk["summary"]["seeded_faults"], str(chk["summary"]["seeded_faults"])) if chk else "thirty"
+w("- **Check:** %s. It covers the cast (each of the 44, nobody else), every citation, every derived fact and schedule re-derived from hook-cast.json, the ties and their hours a week recomputed, the rumours' limits, each answer's facts, words and length, the gates, and DECISIONS.md. It also damages a copy of people.json %s ways (a changed quote, a wrong line, a secret told, a real brand, drink, a year after 1992, Tom's name, the fire's truth, murder, a missing or extra person a day fact that disagrees with its schedule, and so on) and requires each to fail a row: %s." % (result, ndam, seeded))
 w("")
 w("## Where the files do not settle things (homes that disagree, for the PC session; none is settled here)")
 w("")
 w("1. The old prototype cards (a pub, a bar, gambling debts, Ada a teacher, other ages and trades) still sit in Tier2Setup.cs, SecretsSetup.cs, CastSetup.cs and tier2-batch-1.json, with ids that now mean other people (the old 'vesna' is a nurse). REGULARS.md already says its sheets replace them. Nothing is drawn from them except two sentences the approved fire design itself uses.")
 w("2. Ron's years on the docks: his sheet's line says forty, his card thirty, his street lines thirty on the quay. No answer gives a number.")
 w("3. The Tangs' takeaway has no unit: REGULARS.md puts it on the parade's empty bay, RULINGS.md (3 Oct, later) rules bay 3 empty and to let. Their schedule says so.")
-w("4. Julie Kettlewell is laid off by her sheet and still at the laundry counter in hook-cast.json. Albert Suggitt mends nets 'some mornings' by his sheet and is on the docks all day in hook-cast.json. Both schedules are written afresh and say they replace the routine.")
+w("4. Julie Kettlewell is laid off by her sheet and still at the laundry counter in hook-cast.json. Albert Suggitt mends nets 'some mornings' by his sheet and is on the docks all day in hook-cast.json. Both schedules are written afresh and say they replace the routine. Their 'where to find' facts (Julie's and Albert's k20) are derived from those proposed schedules, not from the routine they replace, and the check compares every such fact with its schedule (review fault 6).")
 w("5. Doreen Harland's early shift starts at six, before the laundry counter opens at eight. Kept as hook-cast.json has it, since a works runs before its counter; the check names the exception.")
-w("6. The trades line lists an ironmonger and a tea room on the west block; hook-cast.json has Hal's coin shop and the cafe there.")
+w("6. The trades line lists an ironmonger and a tea room on the west block; hook-cast.json has Hal's coin shop and the cafe there. For Jafar's page: the built west row is a tea room (x 24 to 30), an ironmonger (30 to 36) and the newsagent and tobacconist (36 to 42); Hal's coin shop (hook-cast.json x 39) and Grace's caff have no unit of their own on it, and the newsagent holds the pension counter (hook-cast.json x 32). Hal's trade and his facts stay as the casting sheet has them; no direction to his shop is written until Jafar places it (review fault 4, T13).")
 w("7. The empire roster makes Ferko the night cab; the sheet makes Kevin Needham the day driver and Terry Hodgson the night one. The sheet outranks; the arm Kevin belongs to is carried as a secret.")
 w("8. CASTING.md names a force for Carol Ellis; her sheet says canon names none. No force is named here. CASTING.md says Mickey was a trawlerman until the fleet went; canon does not, so it is not used.")
 w("9. Sheila's card says the fish shop is two doors up; the street's bays put it next door. No answer says which.")
@@ -99,7 +100,7 @@ chk_hand = [
     "Era: poll-tax letters, pagers, phone boxes, the evening paper, the radio; no year after 1992 anywhere in the text; no real brand, club, programme, paper, song or public figure (RealWorld.cs's lists and the Humber-side towns are scanned). Real places in carried text were avoided by choosing fragments; the one that remains is the New Territories in Peter Tang's row (his sheet's own words), and his answers say only 'I came over in 1968'.",
     "Names: the old names (Lena, Rocco, Sam and the rest) appear only as ids. 'Father Walsh' and 'Father Emil' are kept apart; the heads are Agar, Jensen and Cammack.",
     "The regulars stand as written (RULINGS 115): names, ages, trades and sample lines are word for word from REGULARS.md; the three changes of routine come from its own notes (laid off; mornings only; Grace and the Tangs need routines).",
-    "Mickey's people never go to the police about one of their own (RULINGS 111) and Rita, Hal, the pawn's back-room hand, the customs officer and the scrap dealer never go at all (the Ellis design): carried as secrets, contradicted nowhere.",
+    "Mickey's people never go to the police about one of their own (RULINGS 111) and Rita, Hal, the pawn's back-room hand, the customs officer and the scrap dealer never go at all (the Ellis design): carried as secrets, contradicted nowhere. Each holds only the sentence about themselves: the Ellis design's paragraph naming the others is no one's fact but the designer's (review fault 1).",
     "The outfit's man stays unnamed and has no entry (canon; REGULARS.md); the street's own word for him is 'a man who hangs about the ferry landing at night'.",
     "The first week's designs are not contradicted: the six who see him come (Ron, Sheila, the dispatcher, a day driver, Ada, the sign painter) are exactly the six with that sighting; Sheila keeps the key; the cab office's hours are seven to three; nothing says Ada asks a stranger in.",
     "Religion is present and never mocked: Father Walsh's seal is kept and Nora's and Winifred's chapel work is plain.",
@@ -111,11 +112,11 @@ w("")
 w("## Who knew Mickey (group N-MICKEY: new, for Jafar)")
 w("")
 w("Only these %d hold the two approved lines about him (\"Mickey kept his business to himself...\", \"Mickey kept Ron on...\"): %s." % (len(knew), "; ".join("%s (%s)" % (p["name"], p["id"]) for p in knew)))
-w("The rule used: those who worked for him (the dispatcher and the two drivers), Ron, Sheila, Darren, Ada, Father Walsh, and those over forty who keep a shop, the cafe, the laundry's floor, the pension counter or the priest's house on or beside Quay Street. Nobody else describes him; asked what he was like, they say they never really knew him.")
+w("The rule used: those who worked for him (the dispatcher and the two drivers), Ron, Sheila, Darren, Ada, Father Walsh, and those over forty who keep a shop, the cafe, the laundry's floor, the pension counter or the priest's house, or work at Father Walsh's chapel, on or beside Quay Street (the chapel was added after the canon review, which found Winifred Duggleby among the sixteen with no clause that covered her; review T12). Nobody else describes him; asked what he was like, they say they never really knew him.")
 w("")
 w("## Every new fact, by person, one line each (for Jafar's check)")
 w("")
-w("Groups: N-LIVES is a small belief, sighting or trade fact where canon and the sheets are silent; N-RIVALS is the same for the three heads, the detective and the Fixer. Each follows the line named after it.")
+w("Groups: N-LIVES is a small belief, sighting or trade fact where canon and the sheets are silent; N-RIVALS is the same for the three heads, the detective and the Fixer; N-REWORDED is a fact that was word for word from a home until the canon review of 13 October and is now worded for its person alone (no design note, no old name, no other person's secret in it). Each follows the line named after it.")
 w("")
 cur = None
 for p, f in new:
@@ -168,7 +169,7 @@ w("- **The street's plain facts:** stay in StreetFacts.cs. To adopt: add each pe
 w("- **What each person knows, believes and saw:** a proposal with no home. To adopt: one authored facts file per person beside the casting sheets (id, text, source or 'new', secret), read by the same code that reads the cards' Hard Facts; the secret ones never reach the plain-fallback path (TalkLadder already refuses a card's own secrets).")
 w("- **Rumours:** town-news.json and Core/TownNews.cs hold one sample story; RULINGS 29 Sep says ten more wait until he meets it in the game. Jafar's order of 12 October asks for five a person, so these are written, not wired: adopt a few at a time, after he has heard the sample, each with its limits.")
 w("- **Newcomer answers:** the ten a person are written answers for the fresh-question bench: each lists its facts, so the PC session can score the live talk against them (answer, partial, don't-know) and use the don't-knows as the honest 'that's all I know' cases. They are not new lines for the game.")
-w("- **DECISIONS and approvals:** the six entries are for Jafar's page; nothing here has an approval file, and CATALOGUE.md needs a line for production/cloud-week/town when the session takes it.")
+w("- **DECISIONS and approvals:** the seven entries are for Jafar's page; nothing here has an approval file, and CATALOGUE.md needs a line for production/cloud-week/town when the session takes it.")
 w("")
 w("## Limits of the check")
 w("")

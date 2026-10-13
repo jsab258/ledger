@@ -57,7 +57,7 @@ PEOPLE.append(regular(
         W("mondays", "REG", "calls on Rita's on Mondays", "every Monday at eleven, at Rita's"),
     ],
     rumours=[
-        pool("halrita", ["self"], ["sam", "rita"], ["row", "row_seen"], "saw it himself; he and Rita keep it to themselves", limits=["L6", "L1"]),
+        pool("trade", ["self"], ["rita", "sam"], ["trade"], "sees it from his shop"),
         pool("heart", ["sam"], ["sam", "rita"], ["died_heart"], "heard it from Darren"),
         pool("nephew", ["sam"], ["rita"], ["will"], "heard it from Darren", limits=["L7"]),
         pool("fire", ["sam"], ["rita"], ["fire"], "street talk, by way of Darren", limits=["L2", "L1"]),

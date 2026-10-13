@@ -204,7 +204,7 @@ PEOPLE.append(regular(
     ],
     questions=[
         Q("Who are you?", "answers", "Lily Tang. I'm the front of the takeaway, and I keep its books.", ["job"], "firsts: Who are you?"),
-        Q("What do you do here?", "answers", "I'm the takeaway's front and its books. Warm with regulars, sharp with anyone who's rude.", ["job", "manner1", "manner2"], "firsts: What do you do here?"),
+        Q("What do you do here?", "answers", "Front of the shop and the books. Same as last week, is it?", ["job", "line"], "firsts: What do you do here?"),
         Q("Do you remember what I had?", "answers", "Same as last week? I remember. Everybody thinks I don't.", ["line"], "invented: a stranger at a takeaway counter"),
         Q("Who keeps the takeaway?", "answers", "My husband and I keep the takeaway on the parade.", ["with_husband"], "invented: a stranger at a takeaway counter"),
         Q("How did Mickey die?", "answers", std("died_heart", sty, tag), ["died_heart"], "firsts: How did Mickey die?"),

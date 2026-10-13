@@ -30,8 +30,8 @@ PEOPLE.append(person(
         W("sergeant", "FIRE", "she was the detective sergeant on it.", "last November, the fire and the days after"),
     ],
     rumours=[
-        pool("fire", ["self"], ["noor"], ["fire", "on_the_fire"], "first hand: the file's own words", limits=["L2", "L1"],
-             gist="The importer's warehouse at the far end of the old warehouse row burned down last November; it started in two places and nobody was charged."),
+        rumour("The importer's warehouse at the far end of the old warehouse row burned down last November; it started in two places and nobody was charged.", "true", TB_FIRE_PAPER,
+               "first hand: the file's own words", ["self"], ["noor"], ["fire", "on_the_fire"], ["L2", "L1"]),
         rumour("The fire's file was marked undetected, and the sergeant on it keeps asking.", "true", H("FIRE", "she was the detective sergeant on it. The file was marked undetected, and she keeps asking"), "first hand: her own file",
                ["self"], ["noor", "filip"], ["on_the_fire"], ["L2"]),
         rumour("The watchman's times on the night of the fire do not fit the brigade's.", "true", H("FIRE", "the watchman's times do not fit the brigade's"), "first hand: she has compared them",
@@ -40,7 +40,7 @@ PEOPLE.append(person(
         pool("trade", ["street"], ["noor"], ["trade"], "heard it on the street"),
     ],
     questions=[
-        Q("Who are you?", "answers", "DS Carol Ellis, CID. I'm in plain clothes.", ["job"], "firsts: Who are you?"),
+        Q("Who are you?", "answers", "DS Carol Ellis, CID.", ["job"], "firsts: Who are you?"),
         Q("What do you do?", "answers", "I ask questions, and I write the answers down. Paper doesn't get tired.", ["write_down"], "firsts: What do you do here?"),
         Q("What happened at the warehouse fire?", "partly", "The importer's warehouse on the old row, last November. Started in two places. Nobody was charged. I was the sergeant on it, and I keep asking.", ["fire", "on_the_fire"], "fresh: What happened at the warehouse fire?"),
         Q("How did Mickey die?", "answers", "His heart, the doctor said. Ron found him at the office early one morning, when he came on at the rank.", ["died_heart"], "firsts: How did Mickey die?"),
@@ -90,8 +90,8 @@ PEOPLE.append(person(
     ],
     rumours=[
         pool("heart", ["fixer"], ["fixer"], ["died_heart"], "heard it from the Fixer"),
-        pool("fire", ["street"], ["fixer"], ["fire", "read_fire"], "the paper's own word; he repeats nothing else", limits=["L2", "L1"],
-             gist="The importer's warehouse at the far end of the old warehouse row burned down last November; the paper called it arson and nobody was charged."),
+        rumour("The importer's warehouse at the far end of the old warehouse row burned down last November; the paper called it arson and nobody was charged.", "true", TB_FIRE_PAPER,
+               "the paper's own word; he repeats nothing else", ["street"], ["fixer"], ["fire", "read_fire"], ["L2", "L1"]),
         pool("trade", ["fixer"], ["fixer"], ["trade"], "heard it from the Fixer"),
         rumour("Mickey died three weeks before his nephew came to Quay Street.", "true", H("SF", "Mickey died three weeks before the new owner, his nephew, came to Quay Street."), "a plain fact, held by the whole street",
                ["street"], ["fixer"], ["died_when"], ["L7"]),
@@ -211,7 +211,7 @@ PEOPLE.append(person(
     ],
     questions=[
         Q("Who are you?", "answers", "Danny Cammack, mate. Always in a hurry. Somebody's got to be.", ["hurry"], "firsts: Who are you?"),
-        Q("What do you do?", "answers", "I head the new crew, mate. Flashy and reckless, they say. Loud money.", ["flashy"], "firsts: What do you do here?"),
+        Q("What do you do?", "deflect", "Bit of this, bit of that, mate. Always in a hurry.", ["hurry"], "firsts: What do you do here?"),
         Q("What is this place?", "answers", "Mickey's, mate. The cab office on Quay Street. Old men and their arrangements.", ["office", "old_men"], "firsts: What is this place?"),
         Q("How did Mickey die?", "answers", "His heart, I heard. Ron found him at the office early one morning, when he came on at the rank.", ["died_heart"], "firsts: How did Mickey die?"),
         Q("What happened at the warehouse fire?", "partly", "Importer's warehouse, last November. Paper said arson. Nobody was charged.", ["fire"], "fresh: What happened at the warehouse fire?"),
@@ -256,7 +256,7 @@ PEOPLE.append(person(
     ],
     rumours=[
         pool("heart", ["street"], ["aldous", "sera", "danny"], ["died_heart"], "street talk; the doctor's word"),
-        pool("nephew", ["street"], ["aldous", "sera", "danny"], ["will"], "street talk and the will", limits=["L7"]),
+        pool("nephew", ["street"], ["aldous", "sera", "danny"], ["will"], "street talk", limits=["L7"]),
         pool("fire", ["street"], ["aldous", "sera", "danny"], ["fire"], "the paper's word and street talk", limits=["L2", "L1"]),
         pool("trade", ["street"], ["aldous", "sera", "danny"], ["trade"], "street talk", limits=["L5"]),
         rumour("Mickey's, the minicab office, is on Quay Street in the Hook, with the rank outside.", "true", H("SF", "Mickey's, the minicab office, is on Quay Street in the Hook, with the rank outside."), "a plain fact",

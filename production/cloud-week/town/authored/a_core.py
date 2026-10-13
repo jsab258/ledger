@@ -7,7 +7,9 @@ PLACES = {}
 # =============================================================== RON KIRBY (rocco)
 PEOPLE.append(person(
     "rocco", "Ron Kirby", "Ron", "principal", 58,
-    role=("S:rocco", "A docker until the dock labour scheme ended in 1989. Mickey kept him on the door and the rank."),
+    role=("S:rocco", "A docker until the dock labour scheme ended in 1989. Mickey kept him on the door and the rank.",
+          "A docker until 1989. Mickey kept him on the door and the rank.",
+          "Reworded from his sheet's line 9: it names the dock labour scheme's end, which explains why the docks went, and the outline keeps that underneath, never explained (story-outline lines 20 to 22; limit L5). Review T3."),
     identity=("CASTING", "**Ron Kirby** | 58"),
     street=STREET_ALL + MICKEY2, knew_mickey=True,
     knows=[
@@ -71,7 +73,7 @@ PEOPLE.append(person(
         K("flat_things", "DAY1", "Your flat's upstairs, over the office. His things are still in it. I didn't have the heart."),
         K("books_know", "S:lena", "I know what every fare cost and who never paid it."),
         K("arrangements", "WEEK", "Take it over, then? Mickey's arrangements and everything that comes with them, yours.", secret=True, via="her words on day 7, over the book"),
-        K("knows_name", "NAMES", "Mickey's own people, Sheila, Ron and Darren, know it from the start", via="his name, by the name ladder (what-they-call-him, design A)"),
+        N("knows_name", "N-REWORDED", "I have known the new owner's name from the start; I will not use it until I trust him.", "Reworded from the what-they-call-him design (game-design/what-they-call-him-2026-09-29.md): the line is a note about three people, in the design's voice, not what Sheila knows. Review T1."),
         K("row", "NEWS", "Hal and Rita had words in the pawn, and nobody knows what about.", via="day 1, heard at Rita's step in the evening from the pawn's back-room hand"),
         D("day", "day"),
     ],
@@ -122,9 +124,9 @@ PEOPLE.append(person(
         K("owing", "OUT", "Darren Milner is already on the pavement, friendly and owing."),
         K("landing_man", "ASK", "to the street, a man who hangs about the ferry landing at night", via="the street's own word for him"),
         K("breakfast_man", "ASK", "He has his breakfast at the cafe on weekdays, where Darren starts his day, and the two know each other a little.", secret=True, via="the outfit's man at the landing, never named"),
-        K("watchman", "FIRE", "His secret is that he slipped off home on his break the night of the fire and lied in his report, and Darren knows it.", secret=True),
+        N("watchman", "N-REWORDED", "The night watchman slipped off home on his break the night of the fire and lied in his report; Darren knows it.", "Reworded from the fire design (game-design/warehouse-fire-2026-09-29.md): the design's line is a note ('His secret is that...') written about Darren, not in his knowledge. Review T1.", secret=True),
         K("row", "NEWS", "Hal and Rita had words in the pawn, and nobody knows what about.", via="day 1, Monday at eleven, at Rita's: the town's sample story; he was there"),
-        K("knows_name", "NAMES", "Mickey's own people, Sheila, Ron and Darren, know it from the start", via="his name, by the name ladder (what-they-call-him, design A)"),
+        N("knows_name", "N-REWORDED", "I have known the new owner's name from the start, as Mickey's own people do.", "Reworded from the what-they-call-him design (game-design/what-they-call-him-2026-09-29.md): the line is a note about three people, in the design's voice, not what Darren knows. Review T1."),
         D("day", "day"),
     ],
     believes=[
@@ -161,17 +163,19 @@ PEOPLE.append(person(
 # =============================================================== TOM NOWAK (tom): what the town knows of him
 PEOPLE.append(person(
     "tom", "Tom Nowak", "the new owner", "principal", 32,
-    role=("CANON", "Tom has never been to the Hook: he is a stranger to everyone there, known only as Mickey's nephew by name (Jafar, 2026-09-23)."),
+    role=("CANON", "Tom has never been to the Hook: he is a stranger to everyone there, known only as Mickey's nephew by name (Jafar, 2026-09-23).",
+          "He has never been to the Hook: a stranger to everyone there, known only as Mickey's nephew by name.",
+          "Reworded from canon's premise: the citation (Jafar, 2026-09-23) is a design note and must not be part of what the town knows. Review T1."),
     identity=("CASTING", "**Tom Nowak** | 32"),
     street=["died_when", "will", "flat", "funeral"], knew_mickey=False, tom_exception=True,
     internal_id_note="No internal id found for the player; 'tom' is proposed (the sheet says only that Novak became Nowak on 24 September).",
     knows=[
-        K("life_unsaid", "CANON", "His life before the Hook is left unsaid: nobody in the game asks and he never tells (Jafar, 2026-09-28)."),
+        N("life_unsaid", "N-REWORDED", "Nobody knows his life before the Hook; nobody asks and he never tells.", "Reworded from canon's premise: the citation (Jafar, 2026-09-28) and 'in the game' are design notes and must not be part of what the town knows. Review T1."),
         K("same_things", "S:tom", "One suitcase: he is seen in the same few things again and again, which the town will notice."),
     ],
     believes=[
-        BN("heir_rich", "N-LIVES", "Some on the street suppose the new owner has come into more than a cab office that has made little since the docks went.",
-           "A street guess, a small hope or envy; canon's own picture is a half-dead outfit and uncollectable debts.", "false", TB_TRADE),
+        BN("heir_rich", "N-LIVES", "Some on the street suppose the new owner has come into money.",
+           "A street guess, a small hope or envy; canon's own picture is a half-dead outfit and a book of uncollectable debts, so the guess is false. Reworded after the review (T2): the earlier text said he had come into more than a cab office, which canon's premise (an outfit and a book of debts as well) makes true.", "false", TB_TRADE),
         BN("will_sell", "N-LIVES", "Some on the street suppose the new owner will sell up and go.",
            "A street guess; nothing in canon or the story settles what he will do (the week's end is the player's answer).", "unknown",
            H("WEEK", "Wind it down, take it over, or refuse to say".replace("Wind it down, take it over, or refuse to say", "wind it down, take it over, or refuse to say"))),

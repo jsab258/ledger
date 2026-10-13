@@ -35,6 +35,10 @@
   "N-MICKEY": {
    "title": "Which regulars knew Mickey, and so may say the two approved lines about him",
    "decisions_key": "which regulars knew Mickey"
+  },
+  "N-REWORDED": {
+   "title": "Facts reworded after the canon review of 13 October, so that each holds only what its person could know, with no design note, old name or other person's secret in it",
+   "decisions_key": "reworded after the canon review"
   }
  },
  "limits": {
@@ -270,12 +274,13 @@
    "tier": "principal",
    "age": 58,
    "role": {
-    "text": "A docker until the dock labour scheme ended in 1989. Mickey kept him on the door and the rank.",
+    "text": "A docker until 1989. Mickey kept him on the door and the rank.",
     "src": {
      "file": "production/casting/ron-kirby/SHEET.md",
      "line": 9,
      "end": 9
-    }
+    },
+    "reworded": true
    },
    "identity_src": {
     "file": "production/casting/CASTING.md",
@@ -446,14 +451,16 @@
     {
      "key": "job",
      "kind": "knows",
-     "text": "A docker until the dock labour scheme ended in 1989. Mickey kept him on the door and the rank.",
-     "src": {
+     "text": "A docker until 1989. Mickey kept him on the door and the rank.",
+     "new": "N-REWORDED",
+     "why": "Reworded from his sheet's line 9: it names the dock labour scheme's end, which explains why the docks went, and the outline keeps that underneath, never explained (story-outline lines 20 to 22; limit L5). Review T3.",
+     "reworded_from": {
       "file": "production/casting/ron-kirby/SHEET.md",
       "line": 9,
       "end": 9
      },
      "secret": false,
-     "via": "who and what they are, as their home gives it",
+     "via": "who and what they are, reworded from the home's line",
      "id": "rocco.k19"
     },
     {
@@ -561,7 +568,8 @@
      "derived": {
       "file": "production/specs/hook-cast.json",
       "line": 303,
-      "how": "day"
+      "how": "day",
+      "from": "the final schedule of this entry"
      },
      "id": "rocco.k28"
     },
@@ -1136,8 +1144,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "saw it himself",
@@ -1684,13 +1692,9 @@
      "key": "knows_name",
      "kind": "knows",
      "secret": false,
-     "text": "Mickey's own people, Sheila, Ron and Darren, know it from the start",
-     "src": {
-      "file": "game-design/what-they-call-him-2026-09-29.md",
-      "line": 36,
-      "end": 36
-     },
-     "via": "his name, by the name ladder (what-they-call-him, design A)",
+     "text": "I have known the new owner's name from the start; I will not use it until I trust him.",
+     "new": "N-REWORDED",
+     "why": "Reworded from the what-they-call-him design (game-design/what-they-call-him-2026-09-29.md): the line is a note about three people, in the design's voice, not what Sheila knows. Review T1.",
      "id": "lena.k29"
     },
     {
@@ -1714,7 +1718,8 @@
      "derived": {
       "file": "production/specs/hook-cast.json",
       "line": 368,
-      "how": "day"
+      "how": "day",
+      "from": "the final schedule of this entry"
      },
      "id": "lena.k31"
     },
@@ -2218,8 +2223,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from Ron, who found him",
@@ -2726,12 +2731,9 @@
      "key": "watchman",
      "kind": "knows",
      "secret": true,
-     "text": "His secret is that he slipped off home on his break the night of the fire and lied in his report, and Darren knows it.",
-     "src": {
-      "file": "game-design/warehouse-fire-2026-09-29.md",
-      "line": 13,
-      "end": 15
-     },
+     "text": "The night watchman slipped off home on his break the night of the fire and lied in his report; Darren knows it.",
+     "new": "N-REWORDED",
+     "why": "Reworded from the fire design (game-design/warehouse-fire-2026-09-29.md): the design's line is a note ('His secret is that...') written about Darren, not in his knowledge. Review T1.",
      "id": "sam.k26"
     },
     {
@@ -2751,13 +2753,9 @@
      "key": "knows_name",
      "kind": "knows",
      "secret": false,
-     "text": "Mickey's own people, Sheila, Ron and Darren, know it from the start",
-     "src": {
-      "file": "game-design/what-they-call-him-2026-09-29.md",
-      "line": 36,
-      "end": 36
-     },
-     "via": "his name, by the name ladder (what-they-call-him, design A)",
+     "text": "I have known the new owner's name from the start, as Mickey's own people do.",
+     "new": "N-REWORDED",
+     "why": "Reworded from the what-they-call-him design (game-design/what-they-call-him-2026-09-29.md): the line is a note about three people, in the design's voice, not what Darren knows. Review T1.",
      "id": "sam.k28"
     },
     {
@@ -2768,7 +2766,8 @@
      "derived": {
       "file": "production/specs/hook-cast.json",
       "line": 621,
-      "how": "day"
+      "how": "day",
+      "from": "the final schedule of this entry"
      },
      "id": "sam.k29"
     },
@@ -4044,8 +4043,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from Ron, who found him",
@@ -4214,12 +4213,13 @@
    "tier": "principal",
    "age": 32,
    "role": {
-    "text": "Tom has never been to the Hook: he is a stranger to everyone there, known only as Mickey's nephew by name (Jafar, 2026-09-23).",
+    "text": "He has never been to the Hook: a stranger to everyone there, known only as Mickey's nephew by name.",
     "src": {
      "file": "canon.md",
      "line": 73,
      "end": 74
-    }
+    },
+    "reworded": true
    },
    "identity_src": {
     "file": "production/casting/CASTING.md",
@@ -4263,26 +4263,25 @@
     {
      "key": "job",
      "kind": "knows",
-     "text": "Tom has never been to the Hook: he is a stranger to everyone there, known only as Mickey's nephew by name (Jafar, 2026-09-23).",
-     "src": {
+     "text": "He has never been to the Hook: a stranger to everyone there, known only as Mickey's nephew by name.",
+     "new": "N-REWORDED",
+     "why": "Reworded from canon's premise: the citation (Jafar, 2026-09-23) is a design note and must not be part of what the town knows. Review T1.",
+     "reworded_from": {
       "file": "canon.md",
       "line": 73,
       "end": 74
      },
      "secret": false,
-     "via": "who and what they are, as their home gives it",
+     "via": "who and what they are, reworded from the home's line",
      "id": "tom.k05"
     },
     {
      "key": "life_unsaid",
      "kind": "knows",
      "secret": false,
-     "text": "His life before the Hook is left unsaid: nobody in the game asks and he never tells (Jafar, 2026-09-28).",
-     "src": {
-      "file": "canon.md",
-      "line": 75,
-      "end": 76
-     },
+     "text": "Nobody knows his life before the Hook; nobody asks and he never tells.",
+     "new": "N-REWORDED",
+     "why": "Reworded from canon's premise: the citation (Jafar, 2026-09-28) and 'in the game' are design notes and must not be part of what the town knows. Review T1.",
      "id": "tom.k06"
     },
     {
@@ -4301,9 +4300,9 @@
      "key": "heir_rich",
      "kind": "believes",
      "secret": false,
-     "text": "Some on the street suppose the new owner has come into more than a cab office that has made little since the docks went.",
+     "text": "Some on the street suppose the new owner has come into money.",
      "new": "N-LIVES",
-     "why": "A street guess, a small hope or envy; canon's own picture is a half-dead outfit and uncollectable debts.",
+     "why": "A street guess, a small hope or envy; canon's own picture is a half-dead outfit and a book of uncollectable debts, so the guess is false. Reworded after the review (T2): the earlier text said he had come into more than a cab office, which canon's premise (an outfit and a book of debts as well) makes true.",
      "truth": "false",
      "truth_basis": {
       "src": {
@@ -4844,7 +4843,8 @@
      "derived": {
       "file": "production/specs/hook-cast.json",
       "line": 888,
-      "how": "day"
+      "how": "day",
+      "from": "the final schedule of this entry"
      },
      "id": "ada.k25"
     },
@@ -5491,8 +5491,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from Sheila",
@@ -5542,17 +5542,17 @@
     },
     {
      "id": "ada.r3",
-     "gist": "The importer's warehouse at the far end of the old warehouse row burned down last November; the paper called it arson, nobody was charged, and the street says the owner had it done for the insurance.",
-     "truth": "partly",
+     "gist": "The importer's warehouse at the far end of the old warehouse row burned down last November; the paper called it arson and nobody was charged.",
+     "truth": "true",
      "truth_basis": {
       "src": {
        "file": "game-design/warehouse-fire-2026-09-29.md",
-       "line": 37,
-       "end": 39
+       "line": 36,
+       "end": 37
       },
-      "note": "The paper's 'arson' and 'nobody charged' stand; the owner's guilt is the street's talk, false against the story: the home's lines 48 to 56 say what is true and it is never said here (RULINGS: the truth is never the street's)."
+      "note": "The paper's word and the silence of the courts are plain street facts and true; nothing of the street's talk about the owner is repeated here."
      },
-     "sure": "street talk; she says she does not repeat what she is not sure of",
+     "sure": "the paper's word; she does not repeat the rest",
      "heard_from": [
       "street"
      ],
@@ -5952,7 +5952,8 @@
      "derived": {
       "file": "production/specs/hook-cast.json",
       "line": 571,
-      "how": "day"
+      "how": "day",
+      "from": "the final schedule of this entry"
      },
      "id": "june.k21"
     },
@@ -6121,8 +6122,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from Father Walsh",
@@ -6578,13 +6579,9 @@
      "key": "confessor",
      "kind": "knows",
      "secret": true,
-     "text": "Father Walsh's card changes to hearing Mickey's confession for twenty years, and keeping the last year's.",
-     "src": {
-      "file": "game-design/warehouse-fire-2026-09-29.md",
-      "line": 28,
-      "end": 29
-     },
-     "via": "sealed: never said, never passed on",
+     "text": "Father Walsh heard Mickey's confession for twenty years, the last year's with it.",
+     "new": "N-REWORDED",
+     "why": "Reworded from the fire design (game-design/warehouse-fire-2026-09-29.md): the design's line is a note about his card ('Father Walsh's card changes to...'), not in his knowledge. Sealed: never said, never passed on. Review T1.",
      "id": "emil.k23"
     },
     {
@@ -6608,7 +6605,8 @@
      "derived": {
       "file": "production/specs/hook-cast.json",
       "line": 1450,
-      "how": "day"
+      "how": "day",
+      "from": "the final schedule of this entry"
      },
      "id": "emil.k25"
     },
@@ -6934,8 +6932,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from his housekeeper, who had it from the street",
@@ -7068,7 +7066,7 @@
      "id": "emil.q1",
      "q": "Who are you?",
      "kind": "answers",
-     "a": "Father Walsh, son. The Irish-born parish priest. Father Walsh to the street.",
+     "a": "Father Walsh, son. I've the parish here.",
      "uses": [
       "emil.k19"
      ],
@@ -7137,10 +7135,9 @@
      "id": "emil.q7",
      "q": "Did Mickey have any enemies?",
      "kind": "deflect",
-     "a": "I don't ask where people have been, son. What's said to me at my chapel stays there.",
+     "a": "I don't ask where people have been, son. I ask whether they're all right.",
      "uses": [
-      "emil.b01",
-      "emil.k23"
+      "emil.b01"
      ],
      "bench": "fresh: Did Mickey have any enemies?",
      "new": "N-ANSWERS"
@@ -7190,7 +7187,7 @@
    "tier": "principal",
    "age": 30,
    "role": {
-    "text": "a reporter on the local paper; grammar school, first of her family at college",
+    "text": "a reporter on the local paper",
     "src": {
      "file": "production/casting/CASTING.md",
      "line": 72,
@@ -7335,7 +7332,7 @@
     {
      "key": "job",
      "kind": "knows",
-     "text": "a reporter on the local paper; grammar school, first of her family at college",
+     "text": "a reporter on the local paper",
      "src": {
       "file": "production/casting/CASTING.md",
       "line": 72,
@@ -7439,7 +7436,8 @@
      "derived": {
       "file": "production/specs/hook-cast.json",
       "line": 998,
-      "how": "day"
+      "how": "day",
+      "from": "the final schedule of this entry"
      },
      "id": "noor.k25"
     },
@@ -8073,8 +8071,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from Sheila",
@@ -8225,7 +8223,7 @@
      "id": "noor.q5",
      "q": "What do people say about me?",
      "kind": "partly",
-     "a": "Only that Mickey's nephew has come and left the office to you, with a letter. I like to hear a thing twice.",
+     "a": "Only that Mickey's nephew has come, and Mickey left you the office. I like to hear a thing twice.",
      "uses": [
       "noor.k04",
       "noor.k19"
@@ -8641,14 +8639,14 @@
     {
      "id": "ellis.r1",
      "gist": "The importer's warehouse at the far end of the old warehouse row burned down last November; it started in two places and nobody was charged.",
-     "truth": "partly",
+     "truth": "true",
      "truth_basis": {
       "src": {
        "file": "game-design/warehouse-fire-2026-09-29.md",
-       "line": 37,
-       "end": 39
+       "line": 36,
+       "end": 37
       },
-      "note": "The paper's 'arson' and 'nobody charged' stand; the owner's guilt is the street's talk, false against the story: the home's lines 48 to 56 say what is true and it is never said here (RULINGS: the truth is never the street's)."
+      "note": "The paper's word and the silence of the courts are plain street facts and true; nothing of the street's talk about the owner is repeated here."
      },
      "sure": "first hand: the file's own words",
      "heard_from": [
@@ -8728,8 +8726,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it on the street; the doctor's word",
@@ -8779,7 +8777,7 @@
      "id": "ellis.q1",
      "q": "Who are you?",
      "kind": "answers",
-     "a": "DS Carol Ellis, CID. I'm in plain clothes.",
+     "a": "DS Carol Ellis, CID.",
      "uses": [
       "ellis.k06"
      ],
@@ -9146,8 +9144,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from the Fixer",
@@ -9168,14 +9166,14 @@
     {
      "id": "aldous.r2",
      "gist": "The importer's warehouse at the far end of the old warehouse row burned down last November; the paper called it arson and nobody was charged.",
-     "truth": "partly",
+     "truth": "true",
      "truth_basis": {
       "src": {
        "file": "game-design/warehouse-fire-2026-09-29.md",
-       "line": 37,
-       "end": 39
+       "line": 36,
+       "end": 37
       },
-      "note": "The paper's 'arson' and 'nobody charged' stand; the owner's guilt is the street's talk, false against the story: the home's lines 48 to 56 say what is true and it is never said here (RULINGS: the truth is never the street's)."
+      "note": "The paper's word and the silence of the courts are plain street facts and true; nothing of the street's talk about the owner is repeated here."
      },
      "sure": "the paper's own word; he repeats nothing else",
      "heard_from": [
@@ -9544,13 +9542,9 @@
      "key": "her_people",
      "kind": "knows",
      "secret": true,
-     "text": "Joey (dock hand), Ferko (night cab)",
-     "src": {
-      "file": "game-design/empire-roster.md",
-      "line": 96,
-      "end": 96
-     },
-     "via": "the dockside syndicate's people on the street (empire roster, faction table); the sheet makes Ferko the day driver",
+     "text": "Lee Drewery on the quay and Kevin Needham on Mickey's rank are the Widow's people on the street.",
+     "new": "N-REWORDED",
+     "why": "Reworded from the empire roster's faction table (game-design/empire-roster.md), which names the Widow's two people by their old studio names (Joey, Ferko): canon keeps old names as ids, never what the player sees or hears. The roster's 'night cab' against the sheet's day driver stays item 7 of NOTES.md for Jafar. Review fault 7.",
      "id": "sera.k14"
     },
     {
@@ -9710,8 +9704,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from the Fixer",
@@ -10023,12 +10017,9 @@
      "key": "flashy",
      "kind": "knows",
      "secret": false,
-     "text": "Heads the new crew: flashy and reckless (canon); loud money (CASTING.md).",
-     "src": {
-      "file": "production/casting/danny-cammack/SHEET.md",
-      "line": 11,
-      "end": 11
-     },
+     "text": "Heads the new crew: flashy, reckless, loud money.",
+     "new": "N-REWORDED",
+     "why": "Reworded from his sheet's line ('flashy and reckless (canon); loud money (CASTING.md)'): the citations inside the fact were design notes, and the talk could have read them aloud. Review T1.",
      "id": "danny.k07"
     },
     {
@@ -10071,13 +10062,9 @@
      "key": "fence",
      "kind": "knows",
      "secret": true,
-     "text": "Rita (the back-room fence)",
-     "src": {
-      "file": "game-design/empire-roster.md",
-      "line": 98,
-      "end": 98
-     },
-     "via": "the new crew's person on the street (empire roster, faction table)",
+     "text": "Rita Welburn fences for the new crew from her back room.",
+     "new": "N-REWORDED",
+     "why": "Reworded from the empire roster's faction table (game-design/empire-roster.md), whose entry reads 'Rita (the back-room fence)': the fact now holds her full name in a plain sentence, as the Widow's people do. Review fault 7, for consistency.",
      "id": "danny.k11"
     },
     {
@@ -10215,8 +10202,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from the Fixer",
@@ -10354,10 +10341,10 @@
     {
      "id": "danny.q2",
      "q": "What do you do?",
-     "kind": "answers",
-     "a": "I head the new crew, mate. Flashy and reckless, they say. Loud money.",
+     "kind": "deflect",
+     "a": "Bit of this, bit of that, mate. Always in a hurry.",
      "uses": [
-      "danny.k07"
+      "danny.k08"
      ],
      "bench": "firsts: What do you do here?",
      "new": "N-ANSWERS"
@@ -10536,12 +10523,9 @@
      "key": "brokers",
      "kind": "knows",
      "secret": false,
-     "text": "Brokers between the old-money machine, the dockside syndicate and the new crew (canon).",
-     "src": {
-      "file": "production/casting/the-fixer/SHEET.md",
-      "line": 12,
-      "end": 12
-     },
+     "text": "Brokers between the old-money machine, the dockside syndicate and the new crew.",
+     "new": "N-REWORDED",
+     "why": "Reworded from his sheet's line, which ends '(canon)', a design note the talk could have read aloud. Review T1.",
      "id": "fixer.k08"
     },
     {
@@ -10770,8 +10754,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "street talk; the doctor's word",
@@ -10802,7 +10786,7 @@
        "end": 45
       }
      },
-     "sure": "street talk and the will",
+     "sure": "street talk",
      "heard_from": [
       "street"
      ],
@@ -11568,8 +11552,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "street talk; the doctor's word",
@@ -12057,7 +12041,8 @@
      "derived": {
       "file": "production/specs/hook-cast.json",
       "line": 458,
-      "how": "day"
+      "how": "day",
+      "from": "the final schedule of this entry"
      },
      "id": "zlata.k25"
     },
@@ -12279,8 +12264,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from the day driver",
@@ -12747,13 +12732,9 @@
      "key": "syndicate",
      "kind": "knows",
      "secret": true,
-     "text": "Joey (dock hand), Ferko (night cab)",
-     "src": {
-      "file": "game-design/empire-roster.md",
-      "line": 96,
-      "end": 96
-     },
-     "via": "the dockside syndicate's people on the street (empire roster); the sheet makes Kevin the day driver",
+     "text": "Lee Drewery on the quay and Kevin Needham on Mickey's rank are the Widow's people on the street.",
+     "new": "N-REWORDED",
+     "why": "Reworded from the empire roster's faction table (game-design/empire-roster.md), which names the Widow's two people by their old studio names (Joey, Ferko): canon keeps old names as ids, never what the player sees or hears. The roster's 'night cab' against the sheet's day driver stays item 7 of NOTES.md for Jafar. Review fault 7.",
      "id": "ferko.k23"
     },
     {
@@ -12764,7 +12745,8 @@
      "derived": {
       "file": "production/specs/hook-cast.json",
       "line": 501,
-      "how": "day"
+      "how": "day",
+      "from": "the final schedule of this entry"
      },
      "id": "ferko.k24"
     },
@@ -12983,8 +12965,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from the dispatcher",
@@ -13125,11 +13107,10 @@
      "id": "ferko.q2",
      "q": "What do you do here?",
      "kind": "answers",
-     "a": "I drive the day shift on the rank. I know every short cut, and I moan about my car.",
+     "a": "Day shift on the rank. I know every short cut there is.",
      "uses": [
       "ferko.k19",
-      "ferko.k21",
-      "ferko.k22"
+      "ferko.k21"
      ],
      "bench": "firsts: What do you do here?",
      "new": "N-ANSWERS"
@@ -13439,7 +13420,8 @@
      "derived": {
       "file": "production/specs/hook-cast.json",
       "line": 540,
-      "how": "day"
+      "how": "day",
+      "from": "the final schedule of this entry"
      },
      "id": "dusan.k22"
     },
@@ -13600,8 +13582,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from Ron, who found him",
@@ -14054,7 +14036,8 @@
      "derived": {
       "file": "production/specs/hook-cast.json",
       "line": 1132,
-      "how": "day"
+      "how": "day",
+      "from": "the final schedule of this entry"
      },
      "id": "marla.k22"
     },
@@ -14306,8 +14289,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from Ada, who watches the street",
@@ -14724,13 +14707,9 @@
      "key": "syndicate",
      "kind": "knows",
      "secret": true,
-     "text": "Joey (dock hand), Ferko (night cab)",
-     "src": {
-      "file": "game-design/empire-roster.md",
-      "line": 96,
-      "end": 96
-     },
-     "via": "the dockside syndicate's people on the street (empire roster)",
+     "text": "Lee Drewery on the quay and Kevin Needham on Mickey's rank are the Widow's people on the street.",
+     "new": "N-REWORDED",
+     "why": "Reworded from the empire roster's faction table (game-design/empire-roster.md), which names the Widow's two people by their old studio names (Joey, Ferko): canon keeps old names as ids, never what the player sees or hears. The roster's 'night cab' against the sheet's day driver stays item 7 of NOTES.md for Jafar. Review fault 7.",
      "id": "joey.k19"
     },
     {
@@ -14741,7 +14720,8 @@
      "derived": {
       "file": "production/specs/hook-cast.json",
       "line": 1199,
-      "how": "day"
+      "how": "day",
+      "from": "the final schedule of this entry"
      },
      "id": "joey.k20"
     },
@@ -15062,8 +15042,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from Ron, who found him",
@@ -15235,7 +15215,7 @@
      "id": "joey.q4",
      "q": "Who's the big man on the rank?",
      "kind": "answers",
-     "a": "Ron Kirby. He keeps Mickey's door and the rank. I'm careful with Ron.",
+     "a": "Ron Kirby. He keeps Mickey's door and the rank. I keep on his right side.",
      "uses": [
       "joey.k21",
       "joey.k18"
@@ -15519,25 +15499,18 @@
      "key": "fence",
      "kind": "knows",
      "secret": true,
-     "text": "Rita (the back-room fence)",
-     "src": {
-      "file": "game-design/empire-roster.md",
-      "line": 98,
-      "end": 98
-     },
-     "via": "the new crew's person on the street (empire roster, faction table)",
+     "text": "Rita Welburn fences for the new crew from her back room.",
+     "new": "N-REWORDED",
+     "why": "Reworded from the empire roster's faction table (game-design/empire-roster.md), whose entry reads 'Rita (the back-room fence)': the fact now holds her full name in a plain sentence, as the Widow's people do. Review fault 7, for consistency.",
      "id": "rita.k22"
     },
     {
      "key": "never_police",
      "kind": "knows",
      "secret": true,
-     "text": "Not Rita: the empire roster makes her the new crew's fence, and a fence does not ask the police into her shop, so her own window goes unreported.",
-     "src": {
-      "file": "game-design/ellis-2026-09-29.md",
-      "line": 15,
-      "end": 17
-     },
+     "text": "Rita fences for the new crew, so she never asks the police into her shop, not even for her own window.",
+     "new": "N-REWORDED",
+     "why": "Reworded from the Ellis design (game-design/ellis-2026-09-29.md line 18), which carries a design note about the empire roster inside the fact. Review T1.",
      "id": "rita.k23"
     },
     {
@@ -15574,7 +15547,8 @@
      "derived": {
       "file": "production/specs/hook-cast.json",
       "line": 1242,
-      "how": "day"
+      "how": "day",
+      "from": "the final schedule of this entry"
      },
      "id": "rita.k26"
     },
@@ -15836,31 +15810,27 @@
    "rumours": [
     {
      "id": "rita.r1",
-     "gist": "Hal and Rita had words in the pawn, and nobody knows what about.",
-     "truth": "unknown",
+     "gist": "June, Mickey's daughter, came back for the funeral, is still in town, and wants nothing from the office.",
+     "truth": "true",
      "truth_basis": {
       "src": {
-       "file": "game-design/town-news-sample-2026-09-29.md",
-       "line": 10,
-       "end": 10
-      },
-      "note": "Told as the town sample tells it: only what was seen; nobody can say why."
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 49,
+       "end": 49
+      }
      },
-     "sure": "saw it herself; she and Hal keep it to themselves",
+     "sure": "heard it on her step in the evening",
      "heard_from": [
-      "self"
+      "joey"
      ],
      "would_pass_to": [
-      "victor"
+      "victor",
+      "tibor"
      ],
      "based_on": [
-      "rita.k24",
-      "rita.s01"
+      "rita.k06"
      ],
-     "limits": [
-      "L6",
-      "L1"
-     ],
+     "limits": [],
      "new": "N-RUMOURS"
     },
     {
@@ -15870,8 +15840,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from the dock hand on her step",
@@ -16268,13 +16238,9 @@
      "key": "never_police",
      "kind": "knows",
      "secret": true,
-     "text": "**Some never go at all**, whatever they see or suffer, because their trade keeps them from it: Rita, the customs officer (the machine's stamp, the roster says), Hal, the pawn's back-room hand, the scrap dealer, and the outfit's man.",
-     "src": {
-      "file": "game-design/ellis-2026-09-29.md",
-      "line": 18,
-      "end": 21
-     },
-     "via": "his trade keeps him from the police (the Ellis design)",
+     "text": "Wayne never goes to the police, whatever he sees or suffers; his trade keeps him from it.",
+     "new": "N-REWORDED",
+     "why": "Reworded from the Ellis design (game-design/ellis-2026-09-29.md line 18), keeping only the sentence about this person: the design's paragraph names other people's arms, which this person could not know. Review fault 1.",
      "id": "victor.k19"
     },
     {
@@ -16311,7 +16277,8 @@
      "derived": {
       "file": "production/specs/hook-cast.json",
       "line": 1297,
-      "how": "day"
+      "how": "day",
+      "from": "the final schedule of this entry"
      },
      "id": "victor.k22"
     },
@@ -16559,8 +16526,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from Sheila on Rita's step",
@@ -16971,13 +16938,9 @@
      "key": "never_police",
      "kind": "knows",
      "secret": true,
-     "text": "**Some never go at all**, whatever they see or suffer, because their trade keeps them from it: Rita, the customs officer (the machine's stamp, the roster says), Hal, the pawn's back-room hand, the scrap dealer, and the outfit's man.",
-     "src": {
-      "file": "game-design/ellis-2026-09-29.md",
-      "line": 18,
-      "end": 21
-     },
-     "via": "his trade keeps him from the police (the Ellis design)",
+     "text": "Hal never goes to the police, whatever he sees or suffers; his trade keeps him from it.",
+     "new": "N-REWORDED",
+     "why": "Reworded from the Ellis design (game-design/ellis-2026-09-29.md line 18), keeping only the sentence about this person: the design's paragraph names other people's arms, which this person could not know. Review fault 1.",
      "id": "hal.k21"
     },
     {
@@ -17014,7 +16977,8 @@
      "derived": {
       "file": "production/specs/hook-cast.json",
       "line": 1343,
-      "how": "day"
+      "how": "day",
+      "from": "the final schedule of this entry"
      },
      "id": "hal.k24"
     },
@@ -17272,31 +17236,28 @@
    "rumours": [
     {
      "id": "hal.r1",
-     "gist": "Hal and Rita had words in the pawn, and nobody knows what about.",
-     "truth": "unknown",
+     "gist": "Mickey's has not made much since the docks went; trade has been thin.",
+     "truth": "true",
      "truth_basis": {
       "src": {
-       "file": "game-design/town-news-sample-2026-09-29.md",
-       "line": 10,
-       "end": 10
-      },
-      "note": "Told as the town sample tells it: only what was seen; nobody can say why."
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 63,
+       "end": 63
+      }
      },
-     "sure": "saw it himself; he and Rita keep it to themselves",
+     "sure": "sees it from his shop",
      "heard_from": [
       "self"
      ],
      "would_pass_to": [
-      "sam",
-      "rita"
+      "rita",
+      "sam"
      ],
      "based_on": [
-      "hal.k22",
-      "hal.s01"
+      "hal.k11"
      ],
      "limits": [
-      "L6",
-      "L1"
+      "L5"
      ],
      "new": "N-RUMOURS"
     },
@@ -17307,8 +17268,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from Darren",
@@ -17697,26 +17658,18 @@
      "key": "stamp",
      "kind": "knows",
      "secret": true,
-     "text": "Tibor (the customs stamp)",
-     "src": {
-      "file": "game-design/empire-roster.md",
-      "line": 97,
-      "end": 97
-     },
-     "via": "the old-money machine's person on the street (empire roster, faction table)",
+     "text": "Susan Coverdale is the old-money machine's stamp at customs.",
+     "new": "N-REWORDED",
+     "why": "Reworded from the empire roster's faction table (game-design/empire-roster.md), which names her by her old studio name: canon keeps old names as ids, never what the player sees or hears. Review fault 7.",
      "id": "tibor.k19"
     },
     {
      "key": "never_police",
      "kind": "knows",
      "secret": true,
-     "text": "**Some never go at all**, whatever they see or suffer, because their trade keeps them from it: Rita, the customs officer (the machine's stamp, the roster says), Hal, the pawn's back-room hand, the scrap dealer, and the outfit's man.",
-     "src": {
-      "file": "game-design/ellis-2026-09-29.md",
-      "line": 18,
-      "end": 21
-     },
-     "via": "her trade keeps her from the police (the Ellis design)",
+     "text": "Susan never goes to the police, whatever she sees or suffers; her trade keeps her from it.",
+     "new": "N-REWORDED",
+     "why": "Reworded from the Ellis design (game-design/ellis-2026-09-29.md line 18), keeping only the sentence about this person: the design's paragraph names other people's arms, which this person could not know. Review fault 1.",
      "id": "tibor.k20"
     },
     {
@@ -17727,7 +17680,8 @@
      "derived": {
       "file": "production/specs/hook-cast.json",
       "line": 1408,
-      "how": "day"
+      "how": "day",
+      "from": "the final schedule of this entry"
      },
      "id": "tibor.k21"
     },
@@ -17888,8 +17842,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from the dock hand on Rita's step",
@@ -18342,7 +18296,8 @@
      "derived": {
       "file": "production/specs/hook-cast.json",
       "line": 1558,
-      "how": "day"
+      "how": "day",
+      "from": "the final schedule of this entry"
      },
      "id": "vesna.k22"
     },
@@ -18611,8 +18566,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from Father Walsh",
@@ -19050,7 +19005,8 @@
      "derived": {
       "file": "production/specs/hook-cast.json",
       "line": 1657,
-      "how": "day"
+      "how": "day",
+      "from": "the final schedule of this entry"
      },
      "id": "magda.k21"
     },
@@ -19238,8 +19194,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from Ada, who watches the street",
@@ -19711,7 +19667,8 @@
      "derived": {
       "file": "production/specs/hook-cast.json",
       "line": 1768,
-      "how": "day"
+      "how": "day",
+      "from": "the final schedule of this entry"
      },
      "id": "zora.k24"
     },
@@ -19886,8 +19843,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from Ada",
@@ -20319,11 +20276,12 @@
      "key": "day",
      "kind": "knows",
      "secret": false,
-     "text": "Monday: 07:00 to 18:00 the steam laundry's counter. Saturday: 07:00 to 18:00 the steam laundry's counter. Sunday: not on the street.",
+     "text": "Monday: 09:00 to 10:00 by the kiosk on Quay Street, then 10:00 to 11:00 the pavement outside the steam laundry, then 11:00 to 12:00 the newsagent's counter, where the pensions are paid. Saturday: 11:00 to 13:00 the open market. Sunday: not on the street.",
      "derived": {
       "file": "production/specs/hook-cast.json",
       "line": 1875,
-      "how": "day"
+      "how": "day",
+      "from": "the final schedule of this entry (the proposal that replaces the routine)"
      },
      "id": "tanja.k20"
     },
@@ -20494,8 +20452,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from Ada",
@@ -20924,7 +20882,8 @@
      "derived": {
       "file": "production/specs/hook-cast.json",
       "line": 1902,
-      "how": "day"
+      "how": "day",
+      "from": "the final schedule of this entry"
      },
      "id": "katarina.k22"
     },
@@ -21131,8 +21090,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from Darren at the market",
@@ -21554,7 +21513,8 @@
      "derived": {
       "file": "production/specs/hook-cast.json",
       "line": 2150,
-      "how": "day"
+      "how": "day",
+      "from": "the final schedule of this entry"
      },
      "id": "stipe.k19"
     },
@@ -21709,8 +21669,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from Ron on the quay",
@@ -22141,11 +22101,12 @@
      "key": "day",
      "kind": "knows",
      "secret": false,
-     "text": "Monday: 06:00 to 17:00 the dock gate, then 17:00 to 18:00 the quay at the bottom of Quay Street. Saturday: not on the street. Sunday: not on the street.",
+     "text": "Monday: 06:00 to 12:00 the dock gate, then 17:00 to 18:00 the quay at the bottom of Quay Street. Saturday: not on the street. Sunday: not on the street.",
      "derived": {
       "file": "production/specs/hook-cast.json",
       "line": 2187,
-      "how": "day"
+      "how": "day",
+      "from": "the final schedule of this entry (the proposal that replaces the routine)"
      },
      "id": "fabjan.k20"
     },
@@ -22376,8 +22337,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from Ron on the quay",
@@ -22810,7 +22771,8 @@
      "derived": {
       "file": "production/specs/hook-cast.json",
       "line": 2321,
-      "how": "day"
+      "how": "day",
+      "from": "the final schedule of this entry"
      },
      "id": "tomas.k20"
     },
@@ -23053,8 +23015,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from Ron at the cafe",
@@ -23489,7 +23451,8 @@
      "derived": {
       "file": "production/specs/hook-cast.json",
       "line": 2404,
-      "how": "day"
+      "how": "day",
+      "from": "the final schedule of this entry"
      },
      "id": "luka.k20"
     },
@@ -23639,8 +23602,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from Ron at the cafe",
@@ -24055,7 +24018,8 @@
      "derived": {
       "file": "production/specs/hook-cast.json",
       "line": 2443,
-      "how": "day"
+      "how": "day",
+      "from": "the final schedule of this entry"
      },
      "id": "bruno.k19"
     },
@@ -24184,8 +24148,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from the ticket clerk at the landing",
@@ -24618,7 +24582,8 @@
      "derived": {
       "file": "production/specs/hook-cast.json",
       "line": 2484,
-      "how": "day"
+      "how": "day",
+      "from": "the final schedule of this entry"
      },
      "id": "petra.k20"
     },
@@ -24830,8 +24795,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from Ron on Friday evening",
@@ -24916,9 +24881,9 @@
        "end": 54
       }
      },
-     "sure": "knows him by sight from the landing",
+     "sure": "street talk",
      "heard_from": [
-      "self"
+      "noor"
      ],
      "would_pass_to": [
       "noor",
@@ -25270,7 +25235,8 @@
      "derived": {
       "file": "production/specs/hook-cast.json",
       "line": 2529,
-      "how": "day"
+      "how": "day",
+      "from": "the final schedule of this entry"
      },
      "id": "dario.k20"
     },
@@ -25433,8 +25399,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from Darren",
@@ -25518,9 +25484,9 @@
        "end": 54
       }
      },
-     "sure": "knows him by sight from the landing",
+     "sure": "street talk",
      "heard_from": [
-      "self"
+      "sam"
      ],
      "would_pass_to": [
       "sam",
@@ -25573,7 +25539,7 @@
      "id": "dario.q2",
      "q": "What do you do here?",
      "kind": "answers",
-     "a": "I'm a ferryman. I'm weather-wise, they say.",
+     "a": "I'm a ferryman. I watch the weather; it's the job.",
      "uses": [
       "dario.k17",
       "dario.k18"
@@ -25867,7 +25833,8 @@
      "derived": {
       "file": "production/specs/hook-cast.json",
       "line": 2574,
-      "how": "day"
+      "how": "day",
+      "from": "the final schedule of this entry"
      },
      "id": "sanja.k20"
     },
@@ -26079,8 +26046,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from Ron at the fish counter",
@@ -26545,7 +26512,8 @@
      "derived": {
       "file": "production/specs/hook-cast.json",
       "line": 2635,
-      "how": "day"
+      "how": "day",
+      "from": "the final schedule of this entry"
      },
      "id": "hana.k23"
     },
@@ -26804,8 +26772,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from Ada on her step",
@@ -27226,7 +27194,8 @@
      "derived": {
       "file": "production/specs/hook-cast.json",
       "line": 2710,
-      "how": "day"
+      "how": "day",
+      "from": "the final schedule of this entry"
      },
      "id": "franjo.k19"
     },
@@ -27515,8 +27484,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from Ron at the cafe",
@@ -27913,7 +27882,8 @@
      "derived": {
       "file": "production/specs/hook-cast.json",
       "line": 2793,
-      "how": "day"
+      "how": "day",
+      "from": "the final schedule of this entry"
      },
      "id": "danica.k19"
     },
@@ -28231,8 +28201,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from Darren",
@@ -28678,13 +28648,9 @@
      "key": "never_police",
      "kind": "knows",
      "secret": true,
-     "text": "**Some never go at all**, whatever they see or suffer, because their trade keeps them from it: Rita, the customs officer (the machine's stamp, the roster says), Hal, the pawn's back-room hand, the scrap dealer, and the outfit's man.",
-     "src": {
-      "file": "game-design/ellis-2026-09-29.md",
-      "line": 18,
-      "end": 21
-     },
-     "via": "his trade keeps him from the police (the Ellis design)",
+     "text": "Dennis never goes to the police, whatever he sees or suffers; his trade keeps him from it.",
+     "new": "N-REWORDED",
+     "why": "Reworded from the Ellis design (game-design/ellis-2026-09-29.md line 18), keeping only the sentence about this person: the design's paragraph names other people's arms, which this person could not know. Review fault 1.",
      "id": "drago.k21"
     },
     {
@@ -28695,7 +28661,8 @@
      "derived": {
       "file": "production/specs/hook-cast.json",
       "line": 2924,
-      "how": "day"
+      "how": "day",
+      "from": "the final schedule of this entry"
      },
      "id": "drago.k22"
     },
@@ -28897,8 +28864,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from Ron at the cafe",
@@ -29313,13 +29280,9 @@
      "key": "slipped",
      "kind": "knows",
      "secret": true,
-     "text": "His secret is that he slipped off home on his break the night of the fire and lied in his report, and Darren knows it.",
-     "src": {
-      "file": "game-design/warehouse-fire-2026-09-29.md",
-      "line": 13,
-      "end": 15
-     },
-     "via": "the approved fire design",
+     "text": "I slipped off home on my break the night of the fire and swore in my report I had done my rounds.",
+     "new": "N-REWORDED",
+     "why": "Reworded from the fire design (game-design/warehouse-fire-2026-09-29.md): the design's line is a note about him ('His secret is that...') and carries the design's words, not his own. Review T1.",
      "id": "filip.k21"
     },
     {
@@ -29330,7 +29293,8 @@
      "derived": {
       "file": "production/specs/hook-cast.json",
       "line": 2956,
-      "how": "day"
+      "how": "day",
+      "from": "the final schedule of this entry"
      },
      "id": "filip.k22"
     },
@@ -29533,8 +29497,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from Darren",
@@ -30190,8 +30154,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "heard it from Ron, who has his tea at the cafe",
@@ -30805,8 +30769,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "customers at the counter",
@@ -31251,13 +31215,9 @@
      "key": "with_husband",
      "kind": "knows",
      "secret": false,
-     "text": "keeps the takeaway on the parade with his wife",
-     "src": {
-      "file": "production/casting/regulars/REGULARS.md",
-      "line": 116,
-      "end": 116
-     },
-     "via": "her husband's row: the two keep the takeaway together",
+     "text": "keeps the takeaway on the parade with her husband",
+     "new": "N-REWORDED",
+     "why": "Reworded from her husband's row on the contact sheet (REGULARS.md row 29: 'keeps the takeaway on the parade with his wife'): the row's pronoun is his, so it was wrong for her. Review T10.",
      "id": "takeaway_f.k21"
     },
     {
@@ -31415,8 +31375,8 @@
      "truth_basis": {
       "src": {
        "file": "RULINGS.md",
-       "line": 108,
-       "end": 108
+       "line": 109,
+       "end": 109
       }
      },
      "sure": "customers at the counter",
@@ -31555,11 +31515,10 @@
      "id": "takeaway_f.q2",
      "q": "What do you do here?",
      "kind": "answers",
-     "a": "I'm the takeaway's front and its books. Warm with regulars, sharp with anyone who's rude.",
+     "a": "Front of the shop and the books. Same as last week, is it?",
      "uses": [
       "takeaway_f.k17",
-      "takeaway_f.k19",
-      "takeaway_f.k20"
+      "takeaway_f.k18"
      ],
      "bench": "firsts: What do you do here?",
      "new": "N-ANSWERS"

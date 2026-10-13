@@ -160,6 +160,21 @@ def render_day(pid):
     return "Monday: %s. Saturday: %s. Sunday: %s." % (fmt(hk_segments(pid, "mon")), fmt(hk_segments(pid, "sat")), fmt(hk_segments(pid, "sun")))
 
 
+def render_day_stored(sc, proposed):
+    """The 'where to find' sentence rendered from the schedule an entry CARRIES (the home's routine or the proposal that replaces it)."""
+    sd = stored_days(sc)
+
+    def said(pl):
+        if pl in HK["places"]:
+            return HK["places"][pl]["said"]
+        return proposed[pl]["said"]
+
+    def fmt(segs):
+        bits = ["%s to %s %s" % (hhmm(a), hhmm(b) if b < 24 else "24:00", said(pl)) for a, b, pl in segs if pl != "off"]
+        return ", then ".join(bits) if bits else "not on the street"
+    return "Monday: %s. Saturday: %s. Sunday: %s." % (fmt(sd["mon"]), fmt(sd["sat"]), fmt(sd["sun"]))
+
+
 def hk_ties():
     lines = lines_of("production/specs/hook-cast.json")
     start = next(i for i, l in enumerate(lines) if l.startswith(' "ties": ['))
@@ -381,7 +396,9 @@ def run(doc, full=True):
                 n_der += 1
                 d = f["derived"]
                 if d["how"] == "day":
-                    ok = f["text"] == render_day(pid) and lines_of(d["file"])[d["line"] - 1].strip() == '"id": "%s",' % pid
+                    ok = f["text"] == render_day_stored(p["schedule"], doc["proposed_places"]) and lines_of(d["file"])[d["line"] - 1].strip() == '"id": "%s",' % pid
+                    if ok and not p["schedule"].get("overrides"):
+                        ok = f["text"] == render_day(pid)       # a person whose schedule is the home's own: the home's routine, word for word
                 elif d["how"] == "hours":
                     ok = f["text"] == render_hours(d["area"]) and lines_of(d["file"])[d["line"] - 1].startswith('  "%s": {' % d["area"])
                 else:
@@ -404,6 +421,12 @@ def run(doc, full=True):
             if f["kind"] == "saw" and not f.get("when"):
                 bad.append("%s saw without when" % f["id"])
         row("%s.facts" % pid, "%s: %d facts: %d cite a line that holds their words, %d derived and equal to the home, %d new and marked" % (pid, len(facts), n_src, n_der, n_new), not bad, "; ".join(bad[:4]))
+
+        # the 'where to find' fact is the person's own schedule (review fault 6: two were still the old routines)
+        day_f = [f for f in facts if f.get("derived") and f["derived"].get("how") == "day"]
+        if day_f:
+            row("%s.day_schedule" % pid, "%s: the 'where to find' fact says what the person's own schedule says, not the routine it replaced" % pid,
+                all(f["text"] == render_day_stored(p["schedule"], doc["proposed_places"]) for f in day_f))
 
         # who_ facts equal hook-cast 'called'
         wb = []
@@ -530,6 +553,8 @@ def run(doc, full=True):
                             rbad.append("%s %s %s never shares a place" % (r["id"], k, who))
             if not r["would_pass_to"]:
                 rbad.append("%s passes to nobody" % r["id"])
+            if re.search(r"keeps? it to (himself|herself|themselves)", r["sure"], re.I):
+                rbad.append("%s says it is kept to themselves yet lists people to pass it to" % r["id"])
             if not r["based_on"] or any(x not in fids for x in r["based_on"]):
                 rbad.append("%s rests on facts that are not theirs" % r["id"])
             else:
@@ -662,6 +687,11 @@ def run(doc, full=True):
     year_bad = ["%s %s: %s" % (pid, where, m.group(0)) for pid, where, t in allw + carried_texts for m in yr.finditer(t) if int(m.group(0)) > 1992]
     row("content.era", "no year after 1992 in any text", not year_bad, "; ".join(year_bad[:6]))
     rx_rows("content.old_names", "no old name (Lena, Rocco, Sam and the rest) in written text: they survive only as ids", re.compile(OLD_NAMES), allw)
+    # review fault 7: old names stood in facts carried from the empire roster, which the talk draws on and a model can say aloud
+    rx_rows("content.old_names_carried", "no old name in any fact carried from a home either (the roster's Joey, Ferko and Tibor stood in four facts)", re.compile(OLD_NAMES), carried_texts)
+    # review T1: citations and design notes inside fact texts
+    DESIGN_NOTE = re.compile(r"\((?:canon|Jafar|CASTING\.md|REGULARS\.md|RULINGS)[^)]*\)|\b(?:the roster says|empire roster|the Ellis design|the fire design)\b|\bHis secret is\b|\bFather Walsh's card\b|\*\*")
+    rx_rows("content.design_notes", "no design note, citation or markdown inside a fact the talk draws on ('(canon)', '(Jafar, ...)', 'the roster says', '**')", DESIGN_NOTE, carried_texts + written_texts)
     tomrx = re.compile(r"\b(Tom|Tommy|Nowak)\b")
     rx_rows("content.tom_name", "Tom's name appears only in Ron's, Sheila's, Darren's and Tom's own written text (the ladder)", tomrx, allw,
             extra_ok=lambda pid, t, m: pid in ("rocco", "lena", "sam", "tom"))
@@ -801,6 +831,14 @@ def seeded_faults():
         q(d, "ada", 9)["uses"] = ["ada.k05"]
     def m_hours(d):
         person(d, "rita")["schedule"]["weekday"][0]["place"] = "ritas_counter"
+    def m_dayfact(d):
+        f = next(f for f in person(d, "tanja")["facts"] if f.get("derived")); f["text"] = "Monday: 07:00 to 18:00 the steam laundry's counter. Saturday: 07:00 to 18:00 the steam laundry's counter. Sunday: not on the street."
+    def m_oldname_carried(d):
+        f = next(f for f in person(d, "joey")["facts"] if f["key"] == "syndicate"); f["text"] = "Joey (dock hand), Ferko (night cab)"
+    def m_design_note(d):
+        f = next(f for f in person(d, "danny")["facts"] if f["key"] == "flashy"); f["text"] += " (canon)"
+    def m_keep_to_selves(d):
+        person(d, "hal")["rumours"][0]["sure"] = "sees it from his shop; he and Rita keep it to themselves"
     return [
         ("a sourced fact's words changed", "rocco.facts", m_text), ("a citation pointed at the wrong line", "rocco.facts", m_line),
         ("a new fact with no such group", "ada.facts", m_group), ("a fact with no source and no mark", "ada.facts", m_unmarked),
@@ -812,7 +850,11 @@ def seeded_faults():
         ("children in a rumour", "content.children", m_child), ("a year after 1992", "content.era", m_year),
         ("Tom's name in Ada's answer", "content.tom_name", m_tom), ("the fire's truth in an answer", "content.fire_truth", m_fire_truth),
         ("Mickey described by one who did not know him", "june.", m_mickey), ("murder suggested", "content.foul_play", m_murder),
-        ("a derived day fact altered", "rocco.facts", m_day), ("a schedule altered against hook-cast", "rocco.schedule", m_sched),
+        ("a derived day fact altered", "rocco.facts", m_day),
+        ("a day fact that still reads the old laundry routine of a laid-off woman", "tanja.", m_dayfact),
+        ("an old name in a fact carried from the roster", "content.old_names_carried", m_oldname_carried),
+        ("a design note inside a fact", "content.design_notes", m_design_note),
+        ("a rumour kept to themselves yet passed on", "hal.rumours", m_keep_to_selves), ("a schedule altered against hook-cast", "rocco.schedule", m_sched),
         ("a regular missing", "cast.regular.hal", m_missing), ("an extra entry", "cast.no_extra", m_extra),
         ("a tie's weight altered", "rocco.ties", m_weight), ("a question written for Tom", "content.tom_unwritten", m_tom_q),
         ("a teacher outside Philip", "content.nobody_teaches", m_teach), ("an old name in an answer", "content.old_names", m_old_name),

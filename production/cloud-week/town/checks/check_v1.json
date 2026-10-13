@@ -2,11 +2,11 @@
  "made": "13 Oct 2026, cloud week 42, unit 11",
  "file_checked": "production/cloud-week/town/people.json",
  "summary": {
-  "rows": 578,
-  "pass": 578,
-  "fail": 0,
-  "seeded_faults": 30,
-  "seeded_faults_caught": 30
+  "rows": 619,
+  "pass": 615,
+  "fail": 4,
+  "seeded_faults": 34,
+  "seeded_faults_caught": 33
  },
  "rows": [
   {
@@ -310,6 +310,12 @@
    "detail": "1 entries"
   },
   {
+   "id": "decisions.N-REWORDED",
+   "what": "DECISIONS.md has one entry for N-REWORDED, ending 'Marked for Jafar.'",
+   "pass": false,
+   "detail": "0 entries"
+  },
+  {
    "id": "decisions.N-RIVALS",
    "what": "DECISIONS.md has one entry for N-RIVALS, ending 'Marked for Jafar.'",
    "pass": true,
@@ -330,8 +336,8 @@
   {
    "id": "decisions.only_mine_new",
    "what": "every unit 11 line in DECISIONS.md belongs to a group",
-   "pass": true,
-   "detail": "6 lines, 6 groups"
+   "pass": false,
+   "detail": "6 lines, 7 groups"
   },
   {
    "id": "decisions.append_only",
@@ -353,7 +359,13 @@
   },
   {
    "id": "rocco.facts",
-   "what": "rocco: 45 facts: 43 cite a line that holds their words, 1 derived and equal to the home, 1 new and marked",
+   "what": "rocco: 45 facts: 42 cite a line that holds their words, 1 derived and equal to the home, 2 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "rocco.day_schedule",
+   "what": "rocco: the 'where to find' fact says what the person's own schedule says, not the routine it replaced",
    "pass": true,
    "detail": ""
   },
@@ -402,8 +414,8 @@
   {
    "id": "rocco.mickey",
    "what": "rocco: Mickey is described only by regulars who knew him, in the approved lines",
-   "pass": true,
-   "detail": "[]"
+   "pass": false,
+   "detail": "['rocco.k19']"
   },
   {
    "id": "lena.identity",
@@ -419,7 +431,13 @@
   },
   {
    "id": "lena.facts",
-   "what": "lena: 46 facts: 44 cite a line that holds their words, 1 derived and equal to the home, 1 new and marked",
+   "what": "lena: 46 facts: 43 cite a line that holds their words, 1 derived and equal to the home, 2 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "lena.day_schedule",
+   "what": "lena: the 'where to find' fact says what the person's own schedule says, not the routine it replaced",
    "pass": true,
    "detail": ""
   },
@@ -485,7 +503,13 @@
   },
   {
    "id": "sam.facts",
-   "what": "sam: 59 facts: 57 cite a line that holds their words, 1 derived and equal to the home, 1 new and marked",
+   "what": "sam: 59 facts: 55 cite a line that holds their words, 1 derived and equal to the home, 3 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "sam.day_schedule",
+   "what": "sam: the 'where to find' fact says what the person's own schedule says, not the routine it replaced",
    "pass": true,
    "detail": ""
   },
@@ -551,7 +575,7 @@
   },
   {
    "id": "tom.facts",
-   "what": "tom: 10 facts: 8 cite a line that holds their words, 0 derived and equal to the home, 2 new and marked",
+   "what": "tom: 10 facts: 6 cite a line that holds their words, 0 derived and equal to the home, 4 new and marked",
    "pass": true,
    "detail": ""
   },
@@ -606,6 +630,12 @@
   {
    "id": "ada.facts",
    "what": "ada: 42 facts: 39 cite a line that holds their words, 1 derived and equal to the home, 2 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "ada.day_schedule",
+   "what": "ada: the 'where to find' fact says what the person's own schedule says, not the routine it replaced",
    "pass": true,
    "detail": ""
   },
@@ -676,6 +706,12 @@
    "detail": ""
   },
   {
+   "id": "june.day_schedule",
+   "what": "june: the 'where to find' fact says what the person's own schedule says, not the routine it replaced",
+   "pass": true,
+   "detail": ""
+  },
+  {
    "id": "june.who",
    "what": "june: what they know of who each tie is equals hook-cast.json's description",
    "pass": true,
@@ -737,7 +773,13 @@
   },
   {
    "id": "emil.facts",
-   "what": "emil: 31 facts: 29 cite a line that holds their words, 1 derived and equal to the home, 1 new and marked",
+   "what": "emil: 31 facts: 28 cite a line that holds their words, 1 derived and equal to the home, 2 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "emil.day_schedule",
+   "what": "emil: the 'where to find' fact says what the person's own schedule says, not the routine it replaced",
    "pass": true,
    "detail": ""
   },
@@ -804,6 +846,12 @@
   {
    "id": "noor.facts",
    "what": "noor: 40 facts: 38 cite a line that holds their words, 1 derived and equal to the home, 1 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "noor.day_schedule",
+   "what": "noor: the 'where to find' fact says what the person's own schedule says, not the routine it replaced",
    "pass": true,
    "detail": ""
   },
@@ -989,7 +1037,7 @@
   },
   {
    "id": "sera.facts",
-   "what": "sera: 16 facts: 15 cite a line that holds their words, 0 derived and equal to the home, 1 new and marked",
+   "what": "sera: 16 facts: 14 cite a line that holds their words, 0 derived and equal to the home, 2 new and marked",
    "pass": true,
    "detail": ""
   },
@@ -1049,7 +1097,7 @@
   },
   {
    "id": "danny.facts",
-   "what": "danny: 13 facts: 13 cite a line that holds their words, 0 derived and equal to the home, 0 new and marked",
+   "what": "danny: 13 facts: 11 cite a line that holds their words, 0 derived and equal to the home, 2 new and marked",
    "pass": true,
    "detail": ""
   },
@@ -1109,7 +1157,7 @@
   },
   {
    "id": "fixer.facts",
-   "what": "fixer: 15 facts: 15 cite a line that holds their words, 0 derived and equal to the home, 0 new and marked",
+   "what": "fixer: 15 facts: 14 cite a line that holds their words, 0 derived and equal to the home, 1 new and marked",
    "pass": true,
    "detail": ""
   },
@@ -1234,6 +1282,12 @@
    "detail": ""
   },
   {
+   "id": "zlata.day_schedule",
+   "what": "zlata: the 'where to find' fact says what the person's own schedule says, not the routine it replaced",
+   "pass": true,
+   "detail": ""
+  },
+  {
    "id": "zlata.who",
    "what": "zlata: what they know of who each tie is equals hook-cast.json's description",
    "pass": true,
@@ -1295,7 +1349,13 @@
   },
   {
    "id": "ferko.facts",
-   "what": "ferko: 30 facts: 28 cite a line that holds their words, 1 derived and equal to the home, 1 new and marked",
+   "what": "ferko: 30 facts: 27 cite a line that holds their words, 1 derived and equal to the home, 2 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "ferko.day_schedule",
+   "what": "ferko: the 'where to find' fact says what the person's own schedule says, not the routine it replaced",
    "pass": true,
    "detail": ""
   },
@@ -1366,6 +1426,12 @@
    "detail": ""
   },
   {
+   "id": "dusan.day_schedule",
+   "what": "dusan: the 'where to find' fact says what the person's own schedule says, not the routine it replaced",
+   "pass": true,
+   "detail": ""
+  },
+  {
    "id": "dusan.who",
    "what": "dusan: what they know of who each tie is equals hook-cast.json's description",
    "pass": true,
@@ -1432,6 +1498,12 @@
    "detail": ""
   },
   {
+   "id": "marla.day_schedule",
+   "what": "marla: the 'where to find' fact says what the person's own schedule says, not the routine it replaced",
+   "pass": true,
+   "detail": ""
+  },
+  {
    "id": "marla.who",
    "what": "marla: what they know of who each tie is equals hook-cast.json's description",
    "pass": true,
@@ -1493,7 +1565,13 @@
   },
   {
    "id": "joey.facts",
-   "what": "joey: 28 facts: 27 cite a line that holds their words, 1 derived and equal to the home, 0 new and marked",
+   "what": "joey: 28 facts: 26 cite a line that holds their words, 1 derived and equal to the home, 1 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "joey.day_schedule",
+   "what": "joey: the 'where to find' fact says what the person's own schedule says, not the routine it replaced",
    "pass": true,
    "detail": ""
   },
@@ -1559,7 +1637,13 @@
   },
   {
    "id": "rita.facts",
-   "what": "rita: 32 facts: 29 cite a line that holds their words, 2 derived and equal to the home, 1 new and marked",
+   "what": "rita: 32 facts: 27 cite a line that holds their words, 2 derived and equal to the home, 3 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "rita.day_schedule",
+   "what": "rita: the 'where to find' fact says what the person's own schedule says, not the routine it replaced",
    "pass": true,
    "detail": ""
   },
@@ -1625,7 +1709,13 @@
   },
   {
    "id": "victor.facts",
-   "what": "victor: 27 facts: 25 cite a line that holds their words, 2 derived and equal to the home, 0 new and marked",
+   "what": "victor: 27 facts: 24 cite a line that holds their words, 2 derived and equal to the home, 1 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "victor.day_schedule",
+   "what": "victor: the 'where to find' fact says what the person's own schedule says, not the routine it replaced",
    "pass": true,
    "detail": ""
   },
@@ -1691,7 +1781,13 @@
   },
   {
    "id": "hal.facts",
-   "what": "hal: 29 facts: 27 cite a line that holds their words, 2 derived and equal to the home, 0 new and marked",
+   "what": "hal: 29 facts: 26 cite a line that holds their words, 2 derived and equal to the home, 1 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "hal.day_schedule",
+   "what": "hal: the 'where to find' fact says what the person's own schedule says, not the routine it replaced",
    "pass": true,
    "detail": ""
   },
@@ -1757,7 +1853,13 @@
   },
   {
    "id": "tibor.facts",
-   "what": "tibor: 25 facts: 24 cite a line that holds their words, 1 derived and equal to the home, 0 new and marked",
+   "what": "tibor: 25 facts: 22 cite a line that holds their words, 1 derived and equal to the home, 2 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "tibor.day_schedule",
+   "what": "tibor: the 'where to find' fact says what the person's own schedule says, not the routine it replaced",
    "pass": true,
    "detail": ""
   },
@@ -1828,6 +1930,12 @@
    "detail": ""
   },
   {
+   "id": "vesna.day_schedule",
+   "what": "vesna: the 'where to find' fact says what the person's own schedule says, not the routine it replaced",
+   "pass": true,
+   "detail": ""
+  },
+  {
    "id": "vesna.who",
    "what": "vesna: what they know of who each tie is equals hook-cast.json's description",
    "pass": true,
@@ -1890,6 +1998,12 @@
   {
    "id": "magda.facts",
    "what": "magda: 24 facts: 23 cite a line that holds their words, 1 derived and equal to the home, 0 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "magda.day_schedule",
+   "what": "magda: the 'where to find' fact says what the person's own schedule says, not the routine it replaced",
    "pass": true,
    "detail": ""
   },
@@ -1960,6 +2074,12 @@
    "detail": ""
   },
   {
+   "id": "zora.day_schedule",
+   "what": "zora: the 'where to find' fact says what the person's own schedule says, not the routine it replaced",
+   "pass": true,
+   "detail": ""
+  },
+  {
    "id": "zora.who",
    "what": "zora: what they know of who each tie is equals hook-cast.json's description",
    "pass": true,
@@ -2022,6 +2142,12 @@
   {
    "id": "tanja.facts",
    "what": "tanja: 23 facts: 22 cite a line that holds their words, 1 derived and equal to the home, 0 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "tanja.day_schedule",
+   "what": "tanja: the 'where to find' fact says what the person's own schedule says, not the routine it replaced",
    "pass": true,
    "detail": ""
   },
@@ -2092,6 +2218,12 @@
    "detail": ""
   },
   {
+   "id": "katarina.day_schedule",
+   "what": "katarina: the 'where to find' fact says what the person's own schedule says, not the routine it replaced",
+   "pass": true,
+   "detail": ""
+  },
+  {
    "id": "katarina.who",
    "what": "katarina: what they know of who each tie is equals hook-cast.json's description",
    "pass": true,
@@ -2154,6 +2286,12 @@
   {
    "id": "stipe.facts",
    "what": "stipe: 23 facts: 22 cite a line that holds their words, 1 derived and equal to the home, 0 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "stipe.day_schedule",
+   "what": "stipe: the 'where to find' fact says what the person's own schedule says, not the routine it replaced",
    "pass": true,
    "detail": ""
   },
@@ -2224,6 +2362,12 @@
    "detail": ""
   },
   {
+   "id": "fabjan.day_schedule",
+   "what": "fabjan: the 'where to find' fact says what the person's own schedule says, not the routine it replaced",
+   "pass": true,
+   "detail": ""
+  },
+  {
    "id": "fabjan.who",
    "what": "fabjan: what they know of who each tie is equals hook-cast.json's description",
    "pass": true,
@@ -2286,6 +2430,12 @@
   {
    "id": "tomas.facts",
    "what": "tomas: 24 facts: 22 cite a line that holds their words, 1 derived and equal to the home, 1 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "tomas.day_schedule",
+   "what": "tomas: the 'where to find' fact says what the person's own schedule says, not the routine it replaced",
    "pass": true,
    "detail": ""
   },
@@ -2356,6 +2506,12 @@
    "detail": ""
   },
   {
+   "id": "luka.day_schedule",
+   "what": "luka: the 'where to find' fact says what the person's own schedule says, not the routine it replaced",
+   "pass": true,
+   "detail": ""
+  },
+  {
    "id": "luka.who",
    "what": "luka: what they know of who each tie is equals hook-cast.json's description",
    "pass": true,
@@ -2418,6 +2574,12 @@
   {
    "id": "bruno.facts",
    "what": "bruno: 22 facts: 21 cite a line that holds their words, 1 derived and equal to the home, 0 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "bruno.day_schedule",
+   "what": "bruno: the 'where to find' fact says what the person's own schedule says, not the routine it replaced",
    "pass": true,
    "detail": ""
   },
@@ -2488,6 +2650,12 @@
    "detail": ""
   },
   {
+   "id": "petra.day_schedule",
+   "what": "petra: the 'where to find' fact says what the person's own schedule says, not the routine it replaced",
+   "pass": true,
+   "detail": ""
+  },
+  {
    "id": "petra.who",
    "what": "petra: what they know of who each tie is equals hook-cast.json's description",
    "pass": true,
@@ -2550,6 +2718,12 @@
   {
    "id": "dario.facts",
    "what": "dario: 24 facts: 23 cite a line that holds their words, 1 derived and equal to the home, 0 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "dario.day_schedule",
+   "what": "dario: the 'where to find' fact says what the person's own schedule says, not the routine it replaced",
    "pass": true,
    "detail": ""
   },
@@ -2620,6 +2794,12 @@
    "detail": ""
   },
   {
+   "id": "sanja.day_schedule",
+   "what": "sanja: the 'where to find' fact says what the person's own schedule says, not the routine it replaced",
+   "pass": true,
+   "detail": ""
+  },
+  {
    "id": "sanja.who",
    "what": "sanja: what they know of who each tie is equals hook-cast.json's description",
    "pass": true,
@@ -2682,6 +2862,12 @@
   {
    "id": "hana.facts",
    "what": "hana: 28 facts: 25 cite a line that holds their words, 2 derived and equal to the home, 1 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "hana.day_schedule",
+   "what": "hana: the 'where to find' fact says what the person's own schedule says, not the routine it replaced",
    "pass": true,
    "detail": ""
   },
@@ -2752,6 +2938,12 @@
    "detail": ""
   },
   {
+   "id": "franjo.day_schedule",
+   "what": "franjo: the 'where to find' fact says what the person's own schedule says, not the routine it replaced",
+   "pass": true,
+   "detail": ""
+  },
+  {
    "id": "franjo.who",
    "what": "franjo: what they know of who each tie is equals hook-cast.json's description",
    "pass": true,
@@ -2818,6 +3010,12 @@
    "detail": ""
   },
   {
+   "id": "danica.day_schedule",
+   "what": "danica: the 'where to find' fact says what the person's own schedule says, not the routine it replaced",
+   "pass": true,
+   "detail": ""
+  },
+  {
    "id": "danica.who",
    "what": "danica: what they know of who each tie is equals hook-cast.json's description",
    "pass": true,
@@ -2879,7 +3077,13 @@
   },
   {
    "id": "drago.facts",
-   "what": "drago: 26 facts: 24 cite a line that holds their words, 1 derived and equal to the home, 1 new and marked",
+   "what": "drago: 26 facts: 23 cite a line that holds their words, 1 derived and equal to the home, 2 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "drago.day_schedule",
+   "what": "drago: the 'where to find' fact says what the person's own schedule says, not the routine it replaced",
    "pass": true,
    "detail": ""
   },
@@ -2945,7 +3149,13 @@
   },
   {
    "id": "filip.facts",
-   "what": "filip: 25 facts: 24 cite a line that holds their words, 1 derived and equal to the home, 0 new and marked",
+   "what": "filip: 25 facts: 23 cite a line that holds their words, 1 derived and equal to the home, 1 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "filip.day_schedule",
+   "what": "filip: the 'where to find' fact says what the person's own schedule says, not the routine it replaced",
    "pass": true,
    "detail": ""
   },
@@ -3131,7 +3341,7 @@
   },
   {
    "id": "takeaway_f.facts",
-   "what": "takeaway_f: 23 facts: 22 cite a line that holds their words, 0 derived and equal to the home, 1 new and marked",
+   "what": "takeaway_f: 23 facts: 21 cite a line that holds their words, 0 derived and equal to the home, 2 new and marked",
    "pass": true,
    "detail": ""
   },
@@ -3179,13 +3389,13 @@
   },
   {
    "id": "content.gate_written",
-   "what": "tools/content-gate.py finds nothing in the written text: new facts, rumours, answers (679 texts)",
+   "what": "tools/content-gate.py finds nothing in the written text: new facts, rumours, answers (701 texts)",
    "pass": true,
    "detail": ""
   },
   {
    "id": "content.gate_carried",
-   "what": "tools/content-gate.py finds nothing in the text carried word for word from the homes (1089 texts)",
+   "what": "tools/content-gate.py finds nothing in the text carried word for word from the homes (1067 texts)",
    "pass": true,
    "detail": ""
   },
@@ -3197,25 +3407,25 @@
   },
   {
    "id": "content.children",
-   "what": "no children, schools or children's words in written text (1109 texts)",
+   "what": "no children, schools or children's words in written text (1131 texts)",
    "pass": true,
    "detail": ""
   },
   {
    "id": "content.children_carried",
-   "what": "no children's words in carried text (1089 texts)",
+   "what": "no children's words in carried text (1067 texts)",
    "pass": true,
    "detail": ""
   },
   {
    "id": "content.real_names",
-   "what": "no real brand, place, public figure or later-than-1992 word in written text (RealWorld.cs's lists plus Humber-side towns) (1109 texts)",
+   "what": "no real brand, place, public figure or later-than-1992 word in written text (RealWorld.cs's lists plus Humber-side towns) (1131 texts)",
    "pass": true,
    "detail": ""
   },
   {
    "id": "content.real_names_carried",
-   "what": "carried text names no real brand or place from the lists (1089 texts)",
+   "what": "carried text names no real brand or place from the lists (1067 texts)",
    "pass": true,
    "detail": ""
   },
@@ -3227,19 +3437,31 @@
   },
   {
    "id": "content.old_names",
-   "what": "no old name (Lena, Rocco, Sam and the rest) in written text: they survive only as ids (1109 texts)",
+   "what": "no old name (Lena, Rocco, Sam and the rest) in written text: they survive only as ids (1131 texts)",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "content.old_names_carried",
+   "what": "no old name in any fact carried from a home either (the roster's Joey, Ferko and Tibor stood in four facts) (1067 texts)",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "content.design_notes",
+   "what": "no design note, citation or markdown inside a fact the talk draws on ('(canon)', '(Jafar, ...)', 'the roster says', '**') (1768 texts)",
    "pass": true,
    "detail": ""
   },
   {
    "id": "content.tom_name",
-   "what": "Tom's name appears only in Ron's, Sheila's, Darren's and Tom's own written text (the ladder) (1109 texts)",
+   "what": "Tom's name appears only in Ron's, Sheila's, Darren's and Tom's own written text (the ladder) (1131 texts)",
    "pass": true,
    "detail": ""
   },
   {
    "id": "content.foul_play",
-   "what": "nothing suggests Mickey died other than of his heart (1109 texts)",
+   "what": "nothing suggests Mickey died other than of his heart (1131 texts)",
    "pass": true,
    "detail": ""
   },
@@ -3271,7 +3493,7 @@
    "id": "content.canon_gate",
    "what": "tools/canon-gate.py is clean over production/cloud-week/town/people.json, production/cloud-week/town/HOMES.md, production/cloud-week/town/NOTES.md",
    "pass": true,
-   "detail": "canon-gate: clean - 0 finding(s) in 3 file(s), 31919 line(s) examined, 13 era term(s) and 45 brand token(s) screened"
+   "detail": "canon-gate: clean - 0 finding(s) in 3 file(s), 31878 line(s) examined, 13 era term(s) and 45 brand token(s) screened"
   },
   {
    "id": "shape.homes_file",
@@ -3295,7 +3517,7 @@
    "id": "shape.counts",
    "what": "44 entries, 5 rumours each, 10 answers each but Tom's",
    "pass": true,
-   "detail": "new facts: 29"
+   "detail": "new facts: 51"
   },
   {
    "id": "control.01",
@@ -3425,54 +3647,78 @@
   },
   {
    "id": "control.22",
-   "what": "seeded fault caught: a schedule altered against hook-cast",
+   "what": "seeded fault caught: a day fact that still reads the old laundry routine of a laid-off woman",
    "pass": true,
    "detail": ""
   },
   {
    "id": "control.23",
-   "what": "seeded fault caught: a regular missing",
-   "pass": true,
-   "detail": ""
+   "what": "seeded fault caught: an old name in a fact carried from the roster",
+   "pass": false,
+   "detail": "expected a failing row with 'content.old_names_carried'; failed rows: ['decisions.N-REWORDED', 'decisions.only_mine_new', 'rocco.mickey', 'content.old_names']"
   },
   {
    "id": "control.24",
-   "what": "seeded fault caught: an extra entry",
+   "what": "seeded fault caught: a design note inside a fact",
    "pass": true,
    "detail": ""
   },
   {
    "id": "control.25",
-   "what": "seeded fault caught: a tie's weight altered",
+   "what": "seeded fault caught: a rumour kept to themselves yet passed on",
    "pass": true,
    "detail": ""
   },
   {
    "id": "control.26",
-   "what": "seeded fault caught: a question written for Tom",
+   "what": "seeded fault caught: a schedule altered against hook-cast",
    "pass": true,
    "detail": ""
   },
   {
    "id": "control.27",
-   "what": "seeded fault caught: a teacher outside Philip",
+   "what": "seeded fault caught: a regular missing",
    "pass": true,
    "detail": ""
   },
   {
    "id": "control.28",
-   "what": "seeded fault caught: an old name in an answer",
+   "what": "seeded fault caught: an extra entry",
    "pass": true,
    "detail": ""
   },
   {
    "id": "control.29",
-   "what": "seeded fault caught: a don't-know that cites a fact",
+   "what": "seeded fault caught: a tie's weight altered",
    "pass": true,
    "detail": ""
   },
   {
    "id": "control.30",
+   "what": "seeded fault caught: a question written for Tom",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "control.31",
+   "what": "seeded fault caught: a teacher outside Philip",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "control.32",
+   "what": "seeded fault caught: an old name in an answer",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "control.33",
+   "what": "seeded fault caught: a don't-know that cites a fact",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "control.34",
    "what": "seeded fault caught: a pawn counter open at three in the morning",
    "pass": true,
    "detail": ""

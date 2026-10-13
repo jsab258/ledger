@@ -33,7 +33,8 @@ PEOPLE.append(person(
     rumours=[
         pool("heart", ["lena"], ["emil", "marla"], ["died_heart"], "heard it from Sheila"),
         pool("arrive", ["self"], ["noor", "emil", "lena"], ["arrive", "will"], "saw it herself from her window"),
-        pool("fire", ["street"], ["magda", "hana"], ["fire"], "street talk; she says she does not repeat what she is not sure of", limits=["L2", "L1"]),
+        rumour("The importer's warehouse at the far end of the old warehouse row burned down last November; the paper called it arson and nobody was charged.", "true", TB_FIRE_PAPER,
+               "the paper's word; she does not repeat the rest", ["street"], ["magda", "hana"], ["fire"], ["L2", "L1"]),
         pool("june", ["emil"], ["noor", "vesna"], ["june"], "heard it from Father Walsh, who sees her at the chapel"),
         pool("door", ["lena"], ["noor", "magda"], ["door"], "heard it from Sheila, who keeps the key"),
     ],
@@ -105,7 +106,7 @@ PEOPLE.append(person(
         K("called", "HK", "Father Walsh, who says mass and calls on the old"),
         K("in_case", "S:emil", "I'm not here to ask you anything. I'm here in case you want to say something."),
         K("sit", "S:emil", "Sit a minute. Nobody's going to mind you sitting a minute."),
-        K("confessor", "FIRE", "Father Walsh's card changes to hearing Mickey's confession for twenty years, and keeping the last year's.", secret=True, via="sealed: never said, never passed on"),
+        N("confessor", "N-REWORDED", "Father Walsh heard Mickey's confession for twenty years, the last year's with it.", "Reworded from the fire design (game-design/warehouse-fire-2026-09-29.md): the design's line is a note about his card ('Father Walsh's card changes to...'), not in his knowledge. Sealed: never said, never passed on. Review T1.", secret=True),
         K("sealed", "FIRE", "Father Walsh heard him confess it, and the seal of confession keeps him silent for good, so the book is the only way to the truth.", secret=True, via="sealed: the fire's truth is never the street's"),
         D("day", "day"),
     ],
@@ -125,13 +126,13 @@ PEOPLE.append(person(
         pool("trade", ["ada"], ["vesna", "ada"], ["trade"], "heard it from the street"),
     ],
     questions=[
-        Q("Who are you?", "answers", "Father Walsh, son. The Irish-born parish priest. Father Walsh to the street.", ["job"], "firsts: Who are you?"),
+        Q("Who are you?", "answers", "Father Walsh, son. I've the parish here.", ["job"], "firsts: Who are you?"),
         Q("What do you do?", "answers", "I say mass and I call on the old. I stop for everybody.", ["called", "round"], "firsts: What do you do here?"),
         Q("Who's the priest round here?", "answers", "I am, son. Father Walsh.", ["job"], "fresh: Who's the priest round here?"),
         Q("How did Mickey die?", "answers", "His heart, the doctor said. Ron found him at the office early one morning.", ["died_heart"], "firsts: How did Mickey die?"),
         Q("Sorry I missed the funeral.", "answers", "It was at my chapel, before you came. Sit a minute. Nobody's going to mind you sitting.", ["funeral", "funeral_led", "sit"], "firsts: Sorry I missed the funeral."),
         Q("What was Mickey like?", "answers", "Mickey kept his business to himself. You'd not hear it from him on the street.", ["mickey_counsel"], "firsts: What was Mickey like?"),
-        Q("Did Mickey have any enemies?", "deflect", "I don't ask where people have been, son. What's said to me at my chapel stays there.", ["all_right", "confessor"], "fresh: Did Mickey have any enemies?"),
+        Q("Did Mickey have any enemies?", "deflect", "I don't ask where people have been, son. I ask whether they're all right.", ["all_right"], "fresh: Did Mickey have any enemies?"),
         Q("What happened at the warehouse fire?", "deflect", "The paper called it arson, and nobody was charged. Beyond that, son, I've nothing to say.", ["fire", "sealed"], "fresh: What happened at the warehouse fire?"),
         Q("Is June still about?", "answers", "She is. She came back for the funeral and she's still in town. She wants nothing from the office.", ["june"], "fresh: Is June still about?"),
         Q("Who can I trust?", "partly", "I'm not here to ask you anything, son. I'm here in case you want to say something.", ["in_case"], "firsts: Who can I trust?"),
@@ -141,7 +142,7 @@ PEOPLE.append(person(
 # =============================================================== ALISON SEDMAN (noor)
 PEOPLE.append(person(
     "noor", "Alison Sedman", "Alison", "principal", 30,
-    role=("CASTING", "a reporter on the local paper; grammar school, first of her family at college"),
+    role=("CASTING", "a reporter on the local paper"),
     identity=("CASTING", "**Alison Sedman** | 30"),
     street=STREET_ALL, knew_mickey=False,
     knows=[
@@ -174,7 +175,7 @@ PEOPLE.append(person(
         Q("What do you do?", "answers", "I listen. I'm not writing anything yet. People forget there's a difference.", ["not_writing"], "firsts: What do you do here?"),
         Q("What happened at the warehouse fire?", "partly", "The importer's warehouse on the old row, last November. The paper called it arson. Nobody was charged. I'm not writing anything yet.", ["fire", "not_writing"], "fresh: What happened at the warehouse fire?"),
         Q("How did Mickey die?", "answers", "His heart, the doctor said. Ron found him at the office early one morning, when he came on at the rank.", ["died_heart"], "firsts: How did Mickey die?"),
-        Q("What do people say about me?", "partly", "Only that Mickey's nephew has come and left the office to you, with a letter. I like to hear a thing twice.", ["will", "twice"], "fresh: What do people say about me?"),
+        Q("What do people say about me?", "partly", "Only that Mickey's nephew has come, and Mickey left you the office. I like to hear a thing twice.", ["will", "twice"], "fresh: What do people say about me?"),
         Q("Who was Mickey closest to?", "dont_know", "I couldn't tell you. That's all I know.", [], "fresh: Who was Mickey closest to?"),
         Q("What's the cafe like?", "answers", "It's over the road, in the shops across from the north end of the parade. Half past six till ten at night, and eight till twelve on a Sunday.", ["cafe"], "fresh: What's the cafe like?"),
         Q("Who's the priest round here?", "partly", "Father Walsh, I think. Mickey's funeral was at his chapel.", ["funeral"], "fresh: Who's the priest round here?"),

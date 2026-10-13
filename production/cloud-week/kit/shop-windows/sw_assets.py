@@ -63,6 +63,17 @@ EXTRA_BLANK = {
                    "fill": "the body's black", "reads": "'DEP' (the German registered-design mark), printed mirrored below the first plate; the target's box for 'DEP' is 8 px above it"}],
     "hand_plane_no4": [{"map": "hand_plane_no4_diff_1k.jpg", "boxes": [[804, 272, 847, 292]],
                         "fill": "the casting's brown", "reads": "a small stamped plate, five letters, mirrored, 5 px high (a maker's or pattern stamp)"}],
+    # batch A (13 Oct, 2026): found at 1k on the ironmonger's models, every map at 1:1 (the target's list lacks them)
+    "wooden_hammer_01": [{"map": "wooden_hammer_01_diff_1k.jpg", "boxes": [[340, 232, 392, 292]],
+                          "fill": "the head's grey", "reads": "a maker's logo stamped on the head (a letter P in a rounded frame with a registered-mark sign)"}],
+    "trowel_01": [{"map": "trowel_01_diff_1k.jpg", "boxes": [[672, 585, 752, 625]],
+                   "fill": "the blade's grey-pink", "reads": "a stamped word on the blade, mirrored ('Yokis' or 'Yoks': a maker's name)"}],
+    "ratchet_wrench": [{"map": "ratchet_wrench_diff_1k.jpg", "boxes": [[210, 548, 440, 578]],
+                        "fill": "the steel's pale grey", "reads": "an engraved line of three words and a year (a maker's inscription and '2016': after 1992)"}],
+    "small_oil_can_01": [{"map": "small_oil_can_01_diff_1k.jpg", "boxes": [[538, 150, 630, 245]],
+                          "fill": "the can's red", "reads": "a flame hazard diamond in the EU's modern (CLP) form: after 1992"}],
+    "sledgehammer_01": [{"map": "sledgehammer_01_diff_1k.jpg", "boxes": [[14, 400, 104, 596]],
+                         "fill": "the handle's yellow", "reads": "a warning label: a column of small print and 'WARN...' (modern safety text)"}],
 }
 
 

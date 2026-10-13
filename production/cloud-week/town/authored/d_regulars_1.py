@@ -67,7 +67,7 @@ PEOPLE.append(regular(
     ],
     questions=[
         Q("Who are you?", "answers", "Kevin Needham. I'm the day driver on Mickey's rank.", ["job"], "firsts: Who are you?"),
-        Q("What do you do here?", "answers", "I drive the day shift on the rank. I know every short cut, and I moan about my car.", ["job", "manner1", "manner2"], "firsts: What do you do here?"),
+        Q("What do you do here?", "answers", "Day shift on the rank. I know every short cut there is.", ["job", "manner1"], "firsts: What do you do here?"),
         Q("How many drivers are there?", "answers", std("drivers", sty, tag), ["drivers"], "firsts: How many drivers are there?"),
         Q("Which cars are still on the road?", "answers", "Two on the rank: mine by day and the night driver's.", ["drivers", "job"], "held: Which cars are still on the road?"),
         Q("What's the traffic like?", "answers", "Traffic on the bridge again. I went round by the market.", ["line"], "invented: a driver's likely small talk"),
@@ -166,7 +166,7 @@ PEOPLE.append(regular(
         Q("Who are you?", "answers", "Lee Drewery. Casual days on the quay, when there are any.", ["job"], "firsts: Who are you?"),
         Q("Is there any work going?", "answers", "Casual again. If they want me. They mostly don't.", ["line"], "invented: a stranger asks a man on the quay"),
         Q("What do you do here?", "answers", "I take casual days on the quay when there are any.", ["job"], "firsts: What do you do here?"),
-        Q("Who's the big man on the rank?", "answers", "Ron Kirby. He keeps Mickey's door and the rank. I'm careful with Ron.", ["who_rocco", "manner1"], "held: Who's the lad hanging about by the rank?"),
+        Q("Who's the big man on the rank?", "answers", "Ron Kirby. He keeps Mickey's door and the rank. I keep on his right side.", ["who_rocco", "manner1"], "held: Who's the lad hanging about by the rank?"),
         Q("What is this place?", "answers", std("office", sty, tag), ["office"], "firsts: What is this place?"),
         Q("How did Mickey die?", "answers", std("died_heart", sty, tag), ["died_heart"], "firsts: How did Mickey die?"),
         Q("Where can I get something to eat?", "answers", std("cafe", sty, tag), ["cafe"], "firsts: Where can I get something to eat?"),
@@ -192,7 +192,7 @@ PEOPLE.append(regular(
     ],
     saw=[W("row_seen", *ROW, "day 1, Monday at eleven, in her own pawn")],
     rumours=[
-        pool("halrita", ["self"], ["victor"], ["row", "row_seen"], "saw it herself; she and Hal keep it to themselves", limits=["L6", "L1"]),
+        pool("june", ["joey"], ["victor", "tibor"], ["june"], "heard it on her step in the evening"),
         pool("heart", ["joey"], ["victor", "joey"], ["died_heart"], "heard it from the dock hand on her step"),
         pool("nephew", ["joey"], ["victor", "tibor"], ["will"], "heard it on her step in the evening", limits=["L7"]),
         pool("fire", ["street"], ["victor", "joey"], ["fire"], "street talk", limits=["L2", "L1"]),
