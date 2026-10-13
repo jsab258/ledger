@@ -1,6 +1,6 @@
 # Quay Street's milk crates: the exact target
 
-**The milk crates are a stack of three 408 x 298 x 264 mm plastic crates (the measured box of the CC0 crate on Poly Haven, whose lattice sides and printed storage name are not used) built by script with a 28 mm rim, a 24 mm base rail, ribs and slots, a 66 mm name band carrying only the invented COPPER ROW DAIRY, stacking lugs 9 mm high and a pitch of 264, red, with six empty glass pint bottles in the top crate because the grocer and the tea room took a daily delivery (a Judgement: no float is drawn); the stack stands against the grocer's shopfront at east x 38.0 (the scene's wooden yard crates stay); no 1975 to 1995 crate photograph was reached and the one photograph (2021, oblique) gives form only, so the slots, rim and band are judged.**
+**The milk crates are a stack of three 408 x 298 x 264 mm plastic crates (the measured box of the CC0 crate on Poly Haven, whose lattice sides and printed storage name are not used) built by script with a 28 mm rim, a 24 mm base rail, ribs and slots, a 66 mm name band carrying only the invented COPPER ROW DAIRY, stacking lugs 9 mm high and a pitch of 264, red, with six empty glass pint bottles in the top crate because the grocer and the tea room took a daily delivery (a Judgement: no float is drawn); the stack stands against the grocer's window at east x 37.30, 0.14 m clear of its shop door (the first version stood it across the door at x 38.0; the scene's wooden yard crates stay); no 1975 to 1995 crate photograph was reached and the one photograph (2021, oblique) gives form only, so the slots, rim and band are judged.**
 
 Cloud week 42, unit 13, family 4. Written 13 October 2026, not yet reviewed. `SELF-CHECK milk-crates: 80 checks, 80 passed, 0 failed; negative controls 26 of 26 caught (--live --previews)`
 
@@ -208,7 +208,7 @@ Axes: x along the crate's length (the dairy band faces -y), y across, z up from 
 
 | id | plain name | sRGB | roughness | metal | note |
 |---|---|---|---|---|---|
-| crate_plastic | moulded crate plastic, faded | 168, 40, 36 | 0.50 (semi-gloss) | not metal | the sample crate is red (the 1990 range: red, blue, yellow, green, orange as variants); UV-faded to a lighter, chalky red on the top rim; grime in every slot; NO printed brand (the CC0 texture's 'GALLER STORAGE' print is not used) |
+| crate_plastic | moulded crate plastic, faded | 168, 40, 36 | 0.50 (semi-gloss) | not metal | the sample crate is red: a JUDGEMENT (a dairy chose one colour for all its crates and dairies used many: red, blue, yellow, green, orange; the red was first seen on the rejected Poly Haven crate and S2's photograph shows blue crates, which stay the first variant); UV-faded to a lighter, chalky red on the top rim; grime in every slot; NO printed brand (the CC0 texture's 'GALLER STORAGE' print is not used) |
 | glass | clear glass, milk-filmed | 210, 218, 214 | 0.05 (smooth) | not metal | a faint milky film on the inside, a dull ring where the cap sat; embossed dairy name on the shoulder |
 
 ### Wear
@@ -223,21 +223,22 @@ Axes: x along the crate's length (the dairy band faces -y), y across, z up from 
 
 - MC3 (the sample): three crates, six empty pint bottles in the top one, one colour (red).
 - MC1: a single crate, empty (a spare for the yard or a doorstep).
-- colours: red (the sample), blue, yellow, green, orange (a dairy's crates are all one colour); fade and grime as wear.
+- colours: red (the sample, a Judgement), blue (S2's photograph), yellow, green, orange (a dairy's crates are all one colour); fade and grime as wear.
 - a crate on its side or two stacked with bottles in the lower one (a seed, not a mesh): the builder may place the MC1 mesh as it likes.
 
 ### Where it stands on Quay Street
 
-**Slot:** east side, bay 5 (the grocer, x 33 to 39): one stack of three crates against the shopfront at the grocer's side-door end, x 38.0, back 0.05 m clear of the stallriser line (z 4.975), long side facing the road; a second, single crate (MC1) is the street's spare, not placed
+**Slot:** east side, bay 5 (the grocer, x 33 to 39): one stack of three crates against the window's stallriser, centre x 37.30 (the stack's x 37.096 to 37.504, 0.14 m from the door jamb at x 37.644; the grocer has NO side door: its shop door is the 1006 mm at the high-x end, x 37.644 to 38.650, in a 600 mm recessed lobby), back 0.05 m clear of the stallriser line (z 4.975), long side facing the road; a second, single crate (MC1) is the street's spare, not placed
 
 - crates stand at the shop that sells milk: the grocer (bay 5) takes a daily delivery; the stack stands 50 mm clear of the stallriser line (z 4.975) so it never leans on the glass, its 298 mm width taking 4.627 to 4.925 of the footway and leaving 1.50 m clear from the kerb's back edge (3.125)
-- it stands at the shop's side-door end (x 38.0) beside the litter and bin traffic of the east parade's end, 4 m from the chandler's door at x 40
+- THE FIRST VERSION STOOD IT ACROSS THE SHOP DOOR (x 38.0, 'the grocer's side-door end'): the grocer has no side door (terrace-front.py BAY_WITHOUT_SIDE_DOOR = 5); its shop door is the outer 1006 mm at the high-x end, x 37.644 to 38.650 (centre 38.147), in a 600 mm recessed lobby (shopfronts target, shops[grocer]), and the stack (x 37.796 to 38.204) stood in the lobby's mouth; the placement rows tested only that it lay inside x 33 to 39 and the strip to the kerb. At x 37.30 it stands against the window's stallriser (x 33.35 to 37.644), 0.14 m from the door's jamb; the shared placement rows now test it against the shopfronts target's door zones and every piece of the scene
+- it stands at the shop's door end, clear of the door, beside the litter and bin traffic of the east parade's end, 6.4 m from the chandler's shop door (x 43.70 to 44.71; the chandler's doors are at x 43.70 to 45.65)
 - the scene's yard-mouth crates are wooden and stay (one family's yard stuff); these are the grocer's
 
 ### Lettering and text
 
-- Dairy: %s (invented; the Copper Row district's name): raised capitals 18 mm tall, 2 mm proud, centred on each long wall's band; the second line on the band's lower half 6 mm tall: PROPERTY OF THE DAIRY, then the warning line.
-- Bottles: COPPER ROW DAIRY embossed on the shoulder, 6 mm capitals, 2 mm proud.
+- Dairy: COPPER ROW DAIRY (a fictional placeholder until the town mints one): a SEPARATE swappable layer (a normal and colour decal, not mesh), blank in any picture for his page: capitals 18 mm tall, centred on each long wall's band; the second line on the band's lower half 6 mm tall: PROPERTY OF THE DAIRY, then the warning line.
+- Bottles: the same name on the shoulder in the same kind of layer, 6 mm capitals.
 
 ### Where the photographs win over the books
 
@@ -264,7 +265,8 @@ Axes: x along the crate's length (the dairy band faces -y), y across, z up from 
 | C2: three crates stacked, six bottles | count crates and bottles | 3 and 6 | exact |
 | C3: the walls closed where they should be | rays at the front band, the rim and the base rail at 0, 30 and 45 degrees | 0 get through | exact |
 | C4: no part floats, every join meets | the contact graph | all parts reach the ground | 0 floating |
-| C5: the text | the front band's text | COPPER ROW DAIRY only | exact |
+| C5: the text | the lettering layer (a swappable decal, not mesh) | the placeholder dairy only, blank in pictures for his page | exact |
+| C7: the stack clear of the shop door | the stack's x range against the grocer's shop door zone | x 37.096 to 37.504, 0.14 m from the jamb at 37.644 | +-0.05 m |
 | C6: the CC0 model's lettering is not in the base colour | the crate colour map at 100 percent | no GALLER or STORAGE | exact |
 
 ### For the builder
@@ -272,20 +274,26 @@ Axes: x along the crate's length (the dairy band faces -y), y across, z up from 
 - build the crate by script in one mesh: floor plate with 36 drain slots cut (a mask or real holes), four walls as ribs and slots (the gaps between the ribs are open), rim, base rail with four recesses under the corners for the lugs, name band with the raised text
 - stack by instancing the crate at z 0, 264, 528 (no scale), rotate each crate by a seed of 0 to 2 degrees about z (not more: they interlock)
 - bottles: glass, a body 128 and neck 56 with a lip ring; six in the top crate in a 4 x 3 grid of 100 mm cells (six of the twelve cells)
-- texture: our own colour map for the crate; the CC0 model's texture is NOT used (its lettering)
+- texture: our own colour map for the crate; the CC0 model's texture is NOT used (its lettering); the dairy's name is a separate swappable decal layer (normal and colour), blank in any picture for his page
+- stand the stack at x 37.30, z 4.776 (its centre), 0.14 m clear of the grocer's door jamb; never in front of the lobby (x 37.644 to 38.650)
 
 ## Owed to Jafar's page (one line each, with a recommendation)
 
 None.
 
+## Handovers (for the town or the scene's owner, not for his page)
+
+- H1: For the town: mint the dairy that supplies the grocer and the tea room (its name for the crates' bands and the bottles' shoulders; now the placeholder 'Copper Row Dairy' in a swappable lettering layer, never shown on Jafar's page), within canon's naming rules.
+
 ## What the target could not settle
 
 - no photograph of a 1975 to 1995 crate was reached; P1 is a 2021 oblique view, so the slot layout, the rim depth (28 mm, error 12) and the name band (66 mm, error 12) are judged; the box is Poly Haven's measured 298 x 408 x 264
 - whether a 1990 12-pint crate is 264 high (the CC0 record, a storage crate tagged milk crate) or nearer 200: the bottles then stand fully inside (their tops 70 mm below the rim); one number for the builder to confirm against a period crate if one is ever reached
+- the stack's lettering layer is not yet textured (a decal on the band and the shoulders): the dairy is a placeholder (handover H1)
 - the crate's slot sizes and the floor's drain slots (36 slots 20 x 8 are a Judgement written as a texture mask, not geometry)
 - whether a milk float served Quay Street: stated as a Judgement; the empties are the only sign of it
 - the pint bottle's exact shape (body 64 across, neck 28, 184 high: Judgement)
 
 ## How the self-check is built
 
-`python self_check.py` (offline) rebuilds the parts' geometry from target.json and tests: the overall box against the printed numbers; every number measured back off the parts; no floating part, every part meeting a neighbour, every declared join, no part sinking into another beyond its allowance; each closed face shot with rays square on and leaning 30 and 45 degrees (fine across one direction and coarse along the other); the photograph's features predicted from the drawing with the scale fitted on the height only and compared with the pixels' measured edges; the text scanned for real makers and for what the content rule forbids; the lines for his page for em dashes and italics; the family's own rows (the crate's box against the CC0 record read live, the stack pitch, the bottles inside the top crate, the dairy's name, the bay's slot against the scene's shop bays and the clear strip). `--live` re-reads the Geograph pages and re-measures the photographs' edges from the pixels; `--previews` checks the preview files. Each negative control is a deliberately wrong copy that must make its named row fail.
+`python self_check.py` (offline) rebuilds the parts' geometry from target.json and tests: the overall box against the printed numbers; every number measured back off the parts; no floating part, every part meeting a neighbour, every declared join, no part sinking into another beyond its allowance; each closed face shot with rays square on and leaning 30 and 45 degrees (fine across one direction and coarse along the other); the photograph's features predicted from the drawing with the scale fitted on the height only and compared with the pixels' measured edges; the text scanned for real makers and for what the content rule forbids; the lines for his page for em dashes and italics; the family's own rows (the crate's box against the CC0 record read live, the stack pitch, the bottles inside the top crate, the dairy's name as a placeholder in its own layer, the stack against the street's pieces and the shopfronts' door zones (the grocer's door), the clear strip). `--live` re-reads the Geograph pages and re-measures the photographs' edges from the pixels; `--previews` checks the preview files. Each negative control is a deliberately wrong copy that must make its named row fail.

@@ -185,7 +185,7 @@ def extra_controls(T):
         ("placement: the skip put at x 30", lambda t: t["placement"].__setitem__("x_m", 30.0), "placement/the skip's x range covers the yard mouth"),
         ("placement: the lane stated 1.5 m", lambda t: t["placement"].__setitem__("lane_mm", 1500.0), "placement/the near lane keeps"),
         ("detail: a third lug", lambda t: t["variants"][V]["parts"].append({"id": "lug_f3", "type": "box", "c": [0, -860, 1100], "s": [80, 25, 60], "material": "skip_paint"}), "detail/four lugs"),
-        ("detail: the firm named by a real firm", lambda t: t["text"].__setitem__("hire_firm", "SPEEDY SKIP HIRE"), "detail/the firm and number are invented ones"),
+        ("detail: the firm named by a real firm", lambda t: t["text"].__setitem__("hire_firm", "SPEEDY SKIP HIRE"), "detail/the firm is the placeholder and the number is a British one"),
         ("photograph: the rib 60 mm too high", lambda t: [K.shift_part(t, V, "rib_f", [0, 0, 60]), K.shift_part(t, V, "rib_b", [0, 0, 60])], "photo/P1/rim_line_y"),
         ("photograph: the profile 15 percent too short", lambda t: [p.__setitem__("poly", [[q[0] * 0.85, q[1]] for q in p["poly"]]) for p in t["variants"][V]["parts"] if p["id"] in ("side_f", "side_b")], "photo/P1/tip_left_x"),
     ]

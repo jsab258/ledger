@@ -9,6 +9,7 @@ sys.path.insert(0, os.path.dirname(HERE))
 import sd_lib as L
 import sd_check as K
 import sd_family as SF
+import sd_place as PL
 
 V = "MC3"
 LIVE = "--live" in sys.argv
@@ -63,6 +64,17 @@ def extra(T, rows):
     rows.near("placement", "placement/the clear strip derived from the crate's own width", clear, pl["clear_strip_mm"], 1.0)
     rows.at_least("placement", "placement/the strip is at least a metre", clear, pl["min_clear_mm"])
     rows.add("placement", "placement/the stack stands in the grocer's bay (x 33 to 39)", pl["shop_bay"]["x0"] <= pl["x_m"] - 0.204 and pl["x_m"] + 0.204 <= pl["shop_bay"]["x1"], "x %.2f" % pl["x_m"])
+    pose = pl["poses"][0]
+    rows.add("placement", "placement/the pose is the stated slot (centre z is the stallriser line less the gap and half the width)", abs(pose["x_m"] - pl["x_m"]) < 1e-6 and abs(pose["z_m"] - (pl["stallriser_z_m"] - pl["gap_to_wall_mm"] / 1000.0 - wdepth / 2000.0)) < 0.002, "pose x %.3f z %.3f" % (pose["x_m"], pose["z_m"]))
+    prisms, base = PL.object_prisms(T, pose)
+    from shapely.ops import unary_union
+    sb = unary_union([q.poly for q in prisms]).bounds
+    doors = {d["id"]: d for d in PL.scene()["doors"]}
+    gd = doors["grocer/shop_door"]
+    rows.add("placement", "placement/the grocer has no side door and the stack stands 0.10 to 0.20 m from its shop door's jamb (the door's x range from the shopfronts target)", "grocer/side_door" not in doors and gd["x1"] > sb[2] and 0.10 <= gd["x0"] - sb[2] <= 0.20, "stack x %.3f to %.3f; door x %.3f to %.3f; gap %.3f" % (sb[0], sb[2], gd["x0"], gd["x1"], gd["x0"] - sb[2]))
+    rows.add("placement", "placement/the slot's text names no side door at the grocer's", "side-door" not in pl["slot"].replace("has NO side door", "") and "side door at" not in pl["slot"], "")
+    lay = T["text"]["layer"]
+    rows.add("detail", "detail/the dairy's name is a swappable decal layer, not mesh, blank in pictures for his page", "not mesh" in lay["kind"] and lay["swappable"] and lay["blank_in_pictures_for_his_page"] and not any(("text" in n or "letter" in n or "name" in n) for n in ps.names), lay["kind"])
     sc = json.load(open(os.path.join(L.REPO, "production", "specs", "vignette-scene.json")))
     yard = [i for i in sc["held_props"]["items"] if i.get("asset") == "wooden_crate_01"]
     rows.add("reuse", "reuse/the scene's two wooden crates stand at the yard mouth (west), not here", len(yard) == 2 and all(i["side"] == "west" for i in yard), "%d" % len(yard))
@@ -86,6 +98,16 @@ def extra_controls(T):
         ("detail: a bottle pushed through the wall", lambda t: K.shift_part(t, V, "c3_bottle2", [330, 0, 0]), "detail/every bottle stands inside"),
         ("detail: a rib moved so the slot is 60", lambda t: K.shift_part(t, V, "c1_rib_f1", [28, 0, 0]), "detail/the slot between ribs"),
         ("detail: the dairy named by a real firm", lambda t: t["text"].__setitem__("dairy", "UNIGATE"), "detail/the band text names only the invented dairy"),
+        PL.ctl("placement: the first version's x 38.0 (across the grocer's shop door)", "stack", "place/stack/clear of every shop and house door zone", x_m=38.0),
+        PL.ctl("placement: the first version's x 38.0 and the door's jamb gap", "stack", "placement/the grocer has no side door and the stack stands", x_m=38.0),
+        PL.ctl("placement: the stack pushed into the stallriser and glass (z 5.05)", "stack", "place/stack/clear of every street piece", z_m=5.05),
+        PL.ctl("placement: the stack in the carriageway (z 2.0)", "stack", "place/stack/feet lie in zone", z_m=2.0),
+        PL.ctl("placement: the long side turned to the shop (yaw 180)", "stack", "place/stack/front faces", yaw_deg=180.0),
+        PL.ctl_copies_across("placement: a fence of stacks across the footway leaves no walking strip", "stack", "place/stack/walking strip"),
+        ("placement: the slot sentence says the side-door end again", lambda t: t["placement"].__setitem__("slot", t["placement"]["slot"] + " at the grocer's side door at x 38.0"), "placement/the slot's text names no side door"),
+        ("placement: the stated x moved off the pose", lambda t: t["placement"].__setitem__("x_m", 38.0), "placement/the pose is the stated slot"),
+        ("detail: the dairy's name made mesh", lambda t: t["text"]["layer"].__setitem__("kind", "raised mesh letters"), "detail/the dairy's name is a swappable decal layer"),
+        ("detail: a text part added to the crate", lambda t: t["variants"][V]["parts"].append({"id": "c1_text_band", "type": "box", "c": [0, -150, 150], "s": [200, 2, 18], "material": "crate_plastic"}), "detail/the dairy's name is a swappable decal layer"),
         ("placement: the stack set 600 mm from the wall", lambda t: t["placement"].__setitem__("gap_to_wall_mm", 600.0), "placement/the clear strip derived"),
         ("placement: the stack moved to the fish market's bay", lambda t: t["placement"].__setitem__("x_m", 12.0), "placement/the stack stands in the grocer's bay"),
         ("numbers: the stack pitch 20 mm short", lambda t: [K.shift_part(t, V, p["id"], [0, 0, -20]) for p in t["variants"][V]["parts"] if p["id"].startswith("c2_") or p["id"].startswith("c3_")], "numbers/N4"),

@@ -354,7 +354,12 @@ def build():
     n7 = [n for n in T["numbers"] if n["id"] == "N7"][0]
     n7["value"] = 340.0
     n7["what"] = "crank span: the two arms' outer ends along x (two cranks of 170, crossing at the spindle)"
-    T["lean"] = {"deg": lean, "wall_y_mm": round(wall_y, 1)}
+    T["drive"] = {"pitch_mm": PITCH, "ring_teeth": N_RING, "sprocket_teeth": N_SPR, "links": 102, "chain_width_mm": CH_W, "chain_thickness_mm": CH_T, "chain_y_mm": CH_Y, "stay_y_mm": STAY_Y,
+                  "ring_pitch_radius_mm": round(R_RING, 2), "sprocket_pitch_radius_mm": round(R_SPR, 2), "guard": {"depth_mm": GUARD_DEPTH, "thickness_mm": GUARD_T, "over_chain_mm": GUARD_GAP, "front_behind_ring_front_mm": 40.0},
+                  "rims": {"width_mm": RIM_W, "depth_mm": RIM_D, "outer_face_radius_mm": R - TS}, "brakes": {"lever_mm": LEVER_L, "rod_mm": ROD_D, "stirrup_radius_mm": 270.0, "rim_inner_radius_mm": R - TS - RIM_D, "bridge_radius_mm": 360.0},
+                  "mudguard_stays": {"per_guard": 2, "diameter_mm": 5.0}, "carrier": {"length_mm": 340.0, "width_mm": CARRIER_W, "top_mm": CARRIER_Z, "tube_mm": 10.0, "stays": 2}, "reflector_mm": 60.0,
+                  "source": "the review of 13 October (TARGET-REVIEW.md, bicycle fault 1); every number a Judgement unless S1 or S3 shows otherwise (none reads at the size seen)"}
+    T["lean"] = {"deg": lean, "wall_y_mm": round(wall_y, 1), "toward": "-y, the rider's left (the roll [0, 0, +12] tips the top toward -y)", "touching": "grip_l"}
     return T
 
 
@@ -362,8 +367,8 @@ def finish(T):
     T["sources"] = [
         {"id": "S1", "url": "https://www.geograph.org.uk/photo/2932507", "read": "2026-10-13", "author": "Jeremy Bolwell", "licence": "CC BY-SA 2.0 (read on the page)", "taken": "2012-05-06", "kind": "photograph",
          "shows": "a rusted gent's roadster leaning on a stone wall in a ruined building: a diamond frame with a level top tube, two big spoked wheels with mudguards, swept-back bars, a sprung saddle, a rear carrier; the rear wheel nearer the camera so the perspective is strong",
-         "used": True, "not_used_for": "any number (the camera is oblique and close, the picture low in contrast); the rust is a wear state, not the sample's",
-         "period": "2012; a roadster of the 1950s to 1970s kind, the type an old man or a dock worker still rode in 1990"},
+         "used": True, "not_used_for": "any number (the camera is oblique and close, the picture low in contrast); the rust is a wear state, not the sample's; the layout of the missing parts (no brake rod, chain or carrier reads in the 430 px crop, a rusted dark machine)",
+         "period": "2012, and an INTERIOR: the machine rests in a ruined chapel room, on its page 'maybe 50 years' (the Pant y Celyn Baptist ruin), so it dates the type, a roadster of the 1950s or before, not the street; the roadster for 1990 stays a Judgement (an older rider's bicycle, plausible in a port town); the alternative, named and not written, is a 1980s utility frame (a town bicycle on 26 x 1 3/8 wheels with cable callipers and a rear rack)"},
         {"id": "S2", "url": "https://www.geograph.org.uk/photo/4155634", "read": "2026-10-13", "author": "DS Pugh", "licence": "CC BY-SA 2.0 (read on the page)", "taken": "2014-09-01", "kind": "photograph",
          "shows": "a modern road bicycle leaning with its front tyre against a dry-stone wall: shows how a bicycle leans on a wall (front wheel and bar end against the stone, the rear wheel on the ground at a lean of about 10 to 15 degrees); a pannier and a bottle (brands masked)",
          "used": True, "not_used_for": "the bicycle's form (modern: 700c wheels, derailleur, drop frame) and any number", "period": "2014; used only for the leaning pose"},
@@ -382,18 +387,23 @@ def finish(T):
         {"file": "p1-ruin-roadster-leaning.jpg", "source": "S1", "credit": "Jeremy Bolwell, Geograph 2932507, CC BY-SA 2.0, 2012-05-06, cropped to the bicycle", "masked": ["nothing to mask: no person, no lettering"], "looked_at_full_size": True, "no_people_no_drink_no_betting_no_names": True},
     ]
     T["night"] = {"lantern_linear": L.LANTERN_LINEAR, "note": "the bicycle stands against the blank wall between lamp pools; the chrome catches the lantern colour (1.0, 0.25, 0.0) as thin glints on the rims and bars, the black frame vanishes"}
+    wall_y = T["lean"]["wall_y_mm"]
     T["placement"] = {
-        "slot": "west side, against the blank soot-brick wall of the west_south block (the plain ground floor: no shopfront), centre x 15.0 m, the bicycle parallel to the wall with its handlebar end touching it, leaning 12 degrees, its tyres 0.34 m from the wall at the ground (the wall at z -5.125)",
+        "slot": "west side, against the soot-brick wall of the west_south block (the plain ground floor: no shopfront), the bicycle parallel to the wall facing +x (up the street), its LEFT grip end touching the brick, leaning 12 degrees toward the wall (the first version leaned it away from the wall: the wall stood on the side the top tips away from), its tyres 0.60 m from the wall at the ground; the rear tyre's back at x 14.12, the front tyre's front at x 15.88 (centre x 15.0), the grip's contact at x 15.15 on brick between the cottage door at x 13.5 (the doorstep to x 14.0) and the cottage window at x 15.9 (its sill from x 15.425); the wall at z -5.125",
         "x_m": 15.0, "wall_z_m": -5.125, "footway_mm": 2000.0, "min_clear_mm": 1000.0, "length_mm": T["variants"]["BI1"]["overall"]["w"],
+        "openings_named": {"door": {"id": "west_south_bay1", "x": [13.081, 13.919], "step_to_x": 14.0, "step_depth_mm": 352.5}, "window": {"id": "west_south_bay0_gf_w1", "x": [15.475, 16.325], "sill_x": [15.425, 16.375], "sill_above_crown_m": 0.8236},
+                           "source": "the DRAWN street: terrace-front.py's plain-row rule (a household door at bay start + 1.5 m, windows at + 3.3 and + 5.1, the west rows turned: street x = the bay's high end less the local x), as the front-doors-all target (street.houses) and the house-windows target (sites) list them; the scene file's own coarse boxes put a door at x 16.5 and a window at x 14.1 (vignette-pieces.json west_south_door2), which the drawn street does not use"},
         "reasons": [
-            "the blank west wall is where the street's small things lean (the poster wall of the scene, x 11.4); a bicycle there blocks no shopfront and no door (the side door is at x 25.5)",
-            "leaning, it takes a footway depth of its roll: a 12 degree lean puts the bar end and pedal 0.36 m from the tyres' line, leaving 1.64 m of the 2.0 m footway clear",
+            "the soot-brick wall of the cottages is where small things lean (the poster wall of the scene, x 11.4); it is NOT blank at x 14.1 to 15.9: the drawn plain row has a household door at x 13.5 (opening 13.08 to 13.92, a doorstep 0.998 wide and 0.35 m deep to x 14.0), a cottage window at x 15.9 (opening 15.475 to 16.325, sill 0.82 m above the crown, its stone sill 50 mm proud from x 15.425) and another at x 17.7; the first version's 'no door (the side door is at x 25.5)' read x 25.5 on the west_north block and missed all of it",
+            "the slot keeps the grip's contact on brick: the left grip's end touches the wall at x 15.15, 0.28 m from the window's sill and 1.15 m from the doorstep's edge; both tyres stand clear of the door: the rear tyre's back (x 14.12) is 0.2 m past the door's approach (x 13.92) and 0.12 m past the doorstep's end (x 14.0), and the tyres stand 0.6 m out, 0.25 m beyond the step's front edge (0.35 m)",
+            "leaning, it takes a footway depth of its roll: a 12 degree lean puts the left grip end 0.60 m from the tyres' line and the right pedal and grip 0.18 m on the other side, so the bicycle takes 0.78 m of the 2.0 m footway and leaves 1.22 m clear on the kerb side (the first version's 0.34 m and 1.64 m came from the same wall on the wrong side)",
             "it is an adult's bicycle, ambient dressing that belongs to no one on the street's list of residents",
         ],
+        "poses": [{"id": "bicycle", "variant": "BI2", "x_m": 14.45, "z_m": round(-5.125 - wall_y / 1000.0, 4), "yaw_deg": 0.0, "zone": "west_footway", "ignore_parts": ["wall"], "leans_on": ["C1_terrace_carcass"], "contact_tol_m": 0.03, "head_check": False}],
     }
     T["wear"] = [
         "enamel chipped to red-brown rust at the dropouts, the head tube's lower end, the seat-stay bridge and the mudguard stays; paint dulled, a few small dents in the mudguards",
-        "chrome gone to dull grey with orange pitting on the bars, rims and spokes; the chain brown with oil and rust (not modelled)",
+        "chrome gone to dull grey with orange pitting on the bars, rims and spokes; the chain brown with oil and rust, a line of oil spots below the lower run",
         "tyres hard, cracked at the sidewalls, one slightly soft (flat at the ground by 8 mm: a seed), grey dust bloom",
         "the saddle cracked and shiny at the nose; the grips worn smooth at their ends",
         "a wet street under it: darkness on the lowest 150 mm of the tyres and a grit splash on the mudguard",
@@ -401,10 +411,12 @@ def finish(T):
     ]
     T["disagreements"] = [
         {"id": "W1", "what": "which bicycle", "book": "the research notes list none; the brief asks for a bicycle against a wall", "photo": "S1 shows an old roadster leaning on a wall (the type of the period's older riders); S2 shows the leaning pose with a modern bicycle", "chose": "the roadster, upright geometry from the tube lengths and angles, the leaning pose from S2"},
-        {"id": "W2", "what": "the lean", "book": "none", "photo": "S2: the rear tyre on the ground, the front tyre and the bar end on the wall, a lean of about 12 degrees", "chose": "12 degrees, the wall touching the right grip's end"},
+        {"id": "W3", "what": "the missing parts", "book": "the first version: a frame, wheels, bars, saddle, cranks and bell only; 'the carrier, lamp and chain guard are textures; the chain is not modelled'", "photo": "S1's own row lists a rear carrier; a street bicycle always shows brakes, a chain and rims (the review of 13 October); none reads at the 430 px of the crop, so every added number is the review's Judgement", "chose": "the chain, sprocket, chainguard, rims, rod brakes, mudguard stays, carrier and reflector are geometry, each with a row"},
+        {"id": "W4", "what": "the wall's side", "book": "the first version leaned the bicycle toward -y and put the wall on the +y side, against the right grip", "photo": "n/a (arithmetic): the roll [0, 0, +12] tips a point (0, 0, 1000) to y -208, so the top moves toward -y and only a wall on the -y side can hold it", "chose": "the wall on the -y side, the left grip's end against it (found while checking the slot's neighbours; the review did not list it)"},
+        {"id": "W2", "what": "the lean", "book": "none", "photo": "S2: the rear tyre on the ground, the front tyre and the bar end on the wall, a lean of about 12 degrees", "chose": "12 degrees, the wall touching the left grip's end"},
     ]
     T["variants_note"] = [
-        "BI2 (the sample): the roadster leaning 12 degrees on the wall.",
+        "BI2 (the sample): the roadster leaning 12 degrees toward the wall, its left grip end against the brick.",
         "BI1: the same upright (for a bicycle held by a figure or standing on a stand).",
         "a ten-speed with drop bars is the second kind of adult bicycle of 1990: not written (its frame would be a new target); one kind only, as the street needs one bicycle.",
         "conditions (materials): C0 sound, C1 worn (the sample's wear), C2 rusted solid (S1's state, a derelict leaning for years).",
@@ -414,15 +426,17 @@ def finish(T):
         "no 1975 to 1995 bicycle photograph was measurable and S1 and S2 are oblique and low in contrast: every number is Judgement (a gent's roadster's usual geometry), checked for internal consistency and against ranges, not against pixels",
         "the 26 x 1 3/8 wheel's exact tyre diameter (660 mm is from memory; the page that gives the ISO 590 bead seat was not reached)",
         "whether the street's bicycle should be a roadster or a ten-speed (the roadster is chosen because S1 is a street-leaning roadster)",
-        "the rear carrier, lamp and chain guard are not modelled (they are textures and decals); the chain is not modelled",
-        "the lean's wall contact is by the handlebar end (S2 shows the front tyre against the wall): either is a seed",
+        "added after the review of 13 October (each a Judgement from its list, none readable in S1 or S3 at the size they are seen): the chain on its pitch circles, the 18 tooth sprocket, the chainguard, the rims as their own ring, rod brakes (two 120 mm levers, two 8 mm rods, a stirrup under each rim), two 5 mm stays on each mudguard, the 340 x 130 carrier at 780 and the 60 mm red reflector; the lamp is not modelled (a dynamo lamp, a texture and decal if wanted); the chain's links are lumped in strips (each says how many links it stands for)",
+        "the brake type: rod brakes with stirrups under the rims are the review's first choice and fit a roadster; side-pull callipers with a 60 mm reach are the cable alternative (a 1980s town bicycle) and are not written",
+        "the lean's wall contact is by the left grip end (S2 shows the front tyre against the wall): either is a seed",
     ]
     T["content_rule_note"] = "an adult's bicycle only: no small frame, no stabilisers, no child seat, no toy (a statement of the content rule)."
     T["builder_notes"] = [
         "build by script: the tubes as cylinders from the end points in target.json (a part's p0 and p1), the tyres as one torus of section 38 (the 16 boxes are the engine's approximation), the 36 spokes (8 drawn) in the real wheel; the mudguards as one swept strip per wheel",
         "BI2 is BI1 with the part transform (a roll of 12 degrees about the x axis through the tyre contacts) and the wall; the builder places the bicycle with the transform",
         "no maker's badge, no transfer, no lettering of any kind",
-        "the right pedal and the right grip end are the two points that can touch the wall",
+        "the left grip end is the point that touches the wall (the lean tips the top toward -y, the rider's left; the first version put the wall on the other side); stand the sample at the pose in target.json (yaw 0, x 14.45, z from the wall less the grip's reach)",
+        "the chain: strips of 8 x 6 mm on the pitch circles (88.9 and 36.6 radius) joined by two runs on the common tangents; build real links of 12.7 pitch along the same path (102 links); the chain, ring and sprocket lie in the plane y = 55, outboard of the chain stays at y = +-40",
     ]
     C = []
     for n in T["numbers"]:
@@ -432,12 +446,15 @@ def finish(T):
         {"name": "C2: no part floats; the bicycle touches the ground and the wall", "measure": "the contact graph", "expect": "connected", "tol": "0 floating"},
         {"name": "C3: the frame's tube angles", "measure": "seat tube 72 degrees, head tube 68 degrees", "expect": "72 and 68", "tol": "+-2 degrees"},
         {"name": "C4: no lettering, no badge", "measure": "textures and text", "expect": "none", "tol": "exact"},
+        {"name": "C5: the drive", "measure": "chain 8 x 6 on the pitch circles of the 44 tooth ring (88.9) and the 18 tooth sprocket (36.6, 73 across), 102 links of 12.7 (within half a link), outboard of the stays", "expect": "as stated", "tol": "+-1.5 mm"},
+        {"name": "C6: the chainguard, rims, brakes, stays, carrier and reflector are present with their numbers", "measure": "guard 60 deep 1 thick over the top run; two 25 x 10 rim rings; two 120 levers, two 8 rods, two stirrups under the rims; two 5 mm stays per mudguard; carrier 340 x 130 at 780; reflector 60", "expect": "as stated", "tol": "see numbers"},
+        {"name": "C7: the contact on brick", "measure": "the left grip's end touches the wall at a street x outside every drawn opening (door, doorstep, window and its sill)", "expect": "x 15.15 on brick", "tol": "0.1 m clear"},
     ]
     T["checks"] = C
     return T
 
 
-SUMMARY = ("The bicycle is an adult's gent's roadster (26 x 1 3/8 wheels 660 mm over the tyre, a 1097 mm wheelbase, a level top tube on a 72 degree seat tube and a 68 degree head tube, swept-back bars 790 over the grips, a sprung saddle at 1035, mudguards, a plain bell, 170 mm cranks) in the enamel-chipped, dull-chromed state of a street bicycle, no badge or lettering, shown leaning 12 degrees on the blank west wall at x 15.0 with its right grip end against the brick; "
+SUMMARY = ("The bicycle is an adult's gent's roadster (26 x 1 3/8 wheels 660 mm over the tyre, a 1097 mm wheelbase, a level top tube on a 72 degree seat tube and a 68 degree head tube, swept-back bars 790 over the grips, a sprung saddle at 1035, mudguards with their stays and a red reflector, a plain bell, 170 mm cranks, a chain on an 18 tooth rear sprocket under a chainguard, rims as their own rings, rod brakes with 120 mm bar levers and stirrups under the rims, and a rear carrier 340 x 130 at 780) in the enamel-chipped, dull-chromed state of a street bicycle, no badge or lettering, shown leaning 12 degrees toward the soot-brick wall of the cottages (centre x 15.0, its left grip end on brick between the door at x 13.5 and the window at x 15.9: the wall is not blank, and the first version's lean was away from its wall); "
            "no period photograph was measurable (the two street photographs are oblique and low in contrast), so every number is Judgement within stated ranges and the target is checked for internal consistency, the tube angles and the ranges, not against pixels; an adult's bicycle only.")
 
 
@@ -453,16 +470,18 @@ def story(T):
             ["vignette-scene.json, the asset plan, the research notes", "no bicycle anywhere", "NONE to reuse", "this is a new prop"],
             ["git branches (git log --all for bicycle, bike)", "none", "none to reuse", ""],
         ],
-        "axes": "Axes: x forward (the front wheel at +x), y to the rider's right, z up from the ground at the tyres' contact. Cylinders for tubes, spokes and the hub, boxes for the tyre segments, the saddle, the cranks and the pedals; BI2 adds a transform and a wall.",
+        "axes": "Axes: x forward (the front wheel at +x), y to the rider's right, z up from the ground at the tyres' contact. Cylinders for tubes, spokes and the hub, boxes for the tyre and rim segments, the chain strips, the saddle, the cranks and the pedals; BI2 adds a transform that tips the top toward -y and a wall on that side.",
         "assembly": [
             "**Wheels**: 26 x 1 3/8, 660 over the tyre (a ring of 16 segments 38 x 38), a hub 44 across and 100 long, spokes 2.4 across (8 drawn of 36), mudguards 60 wide and 2 thick 8 mm over the tyre round the top 140 degrees.",
             "**Frame**: seat tube 28 across, 560 from the bottom bracket centre, 72 degrees; level top tube 28 across, 570 long; down tube 30 across; head tube 36 across and 150 long at 68 degrees; chain stays 16 across and 450 long, seat stays 16 across; the bottom bracket 300 up (30 below the axles).",
             "**Fork**: two blades 22 across with 45 rake at the foot, a crown 24 x 124 x 24.",
             "**Cockpit**: a stem 22 across rising 170 along the steering axis, a bar of 22 across, 380 straight between swept-back ends to 580 over the bends and 790 over the 105 mm grips, a bell 52 across.",
             "**Saddle and post**: a post 22 across to z 985, a saddle 280 x 180 x 50 at 985 to 1035.",
-            "**Drive**: a spindle 24 across, a chainring 180 across, cranks 170, pedals 100 x 105 x 24 (the chain, the chain guard, the carrier and the lamp are textures or not modelled).",
+            "**Drive**: a spindle 24 across, a chainring 180 across (44 teeth, pitch circle 177.8), cranks 170, pedals 100 x 105 x 24; an 18 tooth sprocket 73 across on the rear hub; a chain 8 wide and 6 thick on the pitch circles (88.9 and 36.6 radius) with two runs on the common tangents (446.9 long) and 26 wrap strips, 102 links of 12.7 in all, in the plane y = 55, outboard of the chain stays at y = +-40; a chainguard of sheet steel 60 deep and 1 thick, 13 over the top run, from the sprocket's centre to 40 mm behind the chainring's front, on a clip to the right chain stay and a strap to the seat tube.",
+            "**Rims and brakes**: each wheel has its own rim ring of 16 segments, 25 wide and 10 deep (radial) inside the tyre (outer face 292); rod brakes: two bar levers 120 long clamped under the grips (the left works the front), two rods 8 across running to a stirrup under each rim (a crossbar 56 wide at radius 270 with two arms to the fork blades and the seat stays, a bridge above the mudguard, two pads against the rim's inner face at 281); Judgement, the review's list.",
+            "**Mudguard stays, reflector and carrier**: two 5 mm stays per mudguard to the drop-outs; a red reflector 60 across on the rear mudguard's tail; a rear carrier of 10 mm tube with a 340 x 130 platform at 780 over the rear wheel, its two stays running to the drop-outs (S1's own row lists a carrier; no number reads in the photograph).",
         ],
-        "own_rows": "the tube angles from the parts' own end points, the ranges for a roadster, the lean and the wall contact, the footway clearance",
+        "own_rows": "the tube angles from the parts' own end points, the ranges for a roadster, the drive (pitch circles, tangent runs, 102 links, the plane outboard of the stays), the chainguard, rims, rod brakes, mudguard stays, carrier and reflector with their numbers, the lean toward the wall and the wall contact, the contact on brick clear of every drawn opening, the slot against the street's pieces and door zones",
     }
 
 
