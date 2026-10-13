@@ -3398,13 +3398,13 @@
   }
  ],
  "self_check": {
-  "line": "SELF-CHECK a-board: 194 checks, 194 passed, 0 failed; negative controls 58 of 58 caught (--live --previews)",
-  "checks": 194,
-  "passed": 194,
+  "line": "SELF-CHECK a-board: 171 checks, 171 passed, 0 failed; negative controls 58 of 58 caught (offline)",
+  "checks": 171,
+  "passed": 171,
   "failed": 0,
   "controls": 58,
   "controls_caught": 58,
-  "options": "--live --previews",
+  "options": "offline",
   "failing": [],
   "uncaught": []
  }
