@@ -250,6 +250,12 @@ def fascia_rows(R, work, assets, rows, front_png_day_sq, members):
     tluma = tl[tj, ti]
     med = float(np.median(tl))
     rita_ = ctx().id == "ritas"
+    if not (ctx().R["fascia"].get("name_blocks") or []):
+        rows.na("FAS-01c", "the board reads by day", "the board carries no name (an empty unit's bare timber): its light patches are worn paint, not lettering")
+        return
+    if any(v.get("group") == "applied_letters" for v in members.values()):
+        rows.na("FAS-01c", "the board reads by day", "the lettering is applied in 3D (raised gilt letters): measured by FAS-04 against the 4.1 place, not read from the board's picture")
+        return
     if rita_:
         sel_letters = inside & (tluma > med * 1.8) & (tu > 1500) & (tu < 3900)
         sel_ground = inside & (np.abs(tluma - med) < med * 0.25) & (tu > 400) & (tu < 5000)
@@ -301,7 +307,7 @@ def glass_rows_check(R, work, assets, rows, members):
     for cam in ("STREET_SQUARE", "STREET_30"):
         cp = cam_params(R, cam)
         for g in man["glass_lettering"]:
-            if g["shop"] != ctx().id or (ctx().id == "ritas" and g["row"] not in (7, 8, 9)):
+            if g["shop"] != ctx().id or "row" not in g or (ctx().id == "ritas" and g["row"] not in (7, 8, 9)):
                 continue
             keys = [k for k in members if k.startswith("glass_row_%d_" % g["row"])]
             if not keys:

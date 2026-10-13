@@ -122,6 +122,10 @@ class VBuilder(bs.Builder):
         self.add("win_seat", bs.box(ui0, ui1, 0.0, 60.0, z_seat0, z_seat1), "white")
         tz = [(p[0], p[1] + z_tr0) for p in pr[transom_key]["points"]]
         self.add("win_transom", bs.prism_dz(tz, ui0, ui1), "white")
+        if transom_key != "transom_t1":
+            # M1's transom is a 50 high box; the elevation keeps 2.2's 80 high band (2400 to 2480), "the box carrying a 30 mm snap-on cover plate on its top" (3.2 target, transom_m1's note)
+            z_box = z_tr0 + max(p[1] for p in pr[transom_key]["points"])
+            self.add("win_transom_cover", bs.box(ui0, ui1, 0.0, 60.0, z_box, z_tr1), "white")
         hz = [(p[0], p[1] + z_h0) for p in pr["head_section"]["points"]]
         self.add("win_head", bs.prism_dz(hz, ui0, ui1), "white")
         mp = pr[mullion_key]["points"]

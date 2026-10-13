@@ -374,13 +374,13 @@ def glb_normal_rows(ctx, rows, assets):
             a = np.asarray(im.convert("RGB")).astype(np.float32)
             mean = a.reshape(-1, 3).mean(axis=0)
             blue = float((a[..., 2] >= 160).mean())
-            good = im.mode in ("RGB", "RGBA") and np.abs(mean - np.array([128, 128, 255])).max() <= 14 and blue >= 0.99
+            good = im.mode in ("RGB", "RGBA") and np.abs(mean[:2] - 128.0).max() <= 14 and mean[2] >= 200.0 and blue >= 0.95
             if not good:
                 bad += 1
                 det.append("%s %s: %s mean (%.0f, %.0f, %.0f) blue 160+ on %.2f%%" % (nm, m["name"], im.mode, mean[0], mean[1], mean[2], blue * 100))
         ntot += len(seen)
         ok &= bad == 0
-    rows.add("GLB-01", "every normal map is a real tangent-space map", ok, "%d distinct normal maps in the %d glbs (%s): RGB, mean within 14 levels of (128, 128, 255), blue 160 or more on 99 per cent of pixels%s" % (ntot, len(X.glbs_of(assets)), ", ".join(X.glbs_of(assets)), ("; NOT: " + "; ".join(det[:5])) if det else ""))
+    rows.add("GLB-01", "every normal map is a real tangent-space map", ok, "%d distinct normal maps in the %d glbs (%s): RGB, red and green means within 14 levels of 128, blue mean at least 200, blue 160 or more on 95 per cent of pixels (a height map exported as a normal map is grey: Rita's street review)%s" % (ntot, len(X.glbs_of(assets)), ", ".join(X.glbs_of(assets)), ("; NOT: " + "; ".join(det[:5])) if det else ""))
 
 
 # ------------------------------------------------------------------------------------------------------------- the front
@@ -389,8 +389,9 @@ def paint_rows(ctx, rows, m):
     pc = fr["paint_srgb"]
     pal = {k: tuple(v) for k, v in pc.items() if isinstance(v, list)}
     bad, n, used = [], 0, set()
+    sign_parts = ("panel_sign_", "box_sign", "letting_board", "hood_", "rail_shutter")          # the shop's own signs and the shutter's steel: not the front's paints (4.1 names their returns)
     for k, v in m.items():
-        if v.get("base_srgb") and str(v.get("material", "")).startswith("paint_"):
+        if v.get("base_srgb") and str(v.get("material", "")).startswith("paint_") and not k.startswith(sign_parts):
             n += 1
             d = {role: max(abs(a - b) for a, b in zip(v["base_srgb"], rgb)) for role, rgb in pal.items()}
             role = min(d, key=d.get)
@@ -484,7 +485,7 @@ def front_rows(ctx, rows, assets, members_path=None):
     u0 = win_u[0]
     bars = sorted([(v["u"][0] - u0, v["u"][1] - u0) for k, v in m.items() if k.startswith("win_bar_") or k.startswith("win_mbar_")])
     centres = [(a + b) / 2 for a, b in bars]
-    want = sorted(gl["toplight_bar_centres"] + (gl["mullion_centres"] if gl.get("toplights_per_light", 1) > 1 else []))
+    want = sorted(gl["toplight_bar_centres"] + gl["mullion_centres"])          # each mullion is carried up through the toplight row as a bar of its own width (D6)
     jf = gl["jamb_face"]
     edges = [jf] + [x for a, b in bars for x in (a, b)] + [(win_u[1] - u0) - jf]
     panes = [edges[2 * i + 1] - edges[2 * i] for i in range(len(edges) // 2)]

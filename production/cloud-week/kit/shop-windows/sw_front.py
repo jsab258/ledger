@@ -398,7 +398,7 @@ class Front:
         self.add("fanlight_bead", (V, [tuple(int(i) for i in f) for f in F]), "door_paint", bev=None)
         # three toplights over the shop door: two 28 bars (toplight_bar_plan) at 1641.33 and 1952.67, glass and beads as the window's
         t = D["toplights_over_shop_door"]
-        bp = wp["toplight_bar_plan"]["points"]
+        bp = wp["mullion_m1_plan"]["points"] if D["variant"] == "M1" else wp["toplight_bar_plan"]["points"]          # (M1: the mullion carried up, 50 wide: 3.2's note; the T1 bar is 28)
         for k, bar in enumerate(t["bars"]):
             self.add("band_bar_%d" % k, bs.prism_ud([(bar["centre"] + p[0], max(p[1], 1.0)) for p in bp], 2474.0, 2793.0), "white")
         for k, (a, b) in enumerate(t["panes"]):
