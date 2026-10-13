@@ -2721,13 +2721,13 @@
   "keep the foot gap open and the posts' feet 40 x 40 on the ground"
  ],
  "self_check": {
-  "line": "SELF-CHECK phone-box: 133 checks, 133 passed, 0 failed; negative controls 33 of 33 caught (--live --previews)",
-  "checks": 133,
-  "passed": 133,
+  "line": "SELF-CHECK phone-box: 113 checks, 113 passed, 0 failed; negative controls 0 of 0 caught (offline)",
+  "checks": 113,
+  "passed": 113,
   "failed": 0,
-  "controls": 33,
-  "controls_caught": 33,
-  "options": "--live --previews",
+  "controls": 0,
+  "controls_caught": 0,
+  "options": "offline",
   "failing": [],
   "uncaught": []
  }
