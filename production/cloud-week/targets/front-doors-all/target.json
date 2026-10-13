@@ -1,7 +1,7 @@
 {
  "family": "front-doors-all",
  "title": "Front doors for every house kind (cloud week 42, unit 9)",
- "summary": "Front doors for every house kind of Quay Street: from the passed 3.1 door (T1 cottage four-panel, F1 flat four-panel, its bell push fixed to one plain dark oblong), 10 door kinds (cottage T1 T2 T3, flat F1 to F7) fitted to the street's 12 household doors by house, 8 furniture slots with 24 variants (letter plates, handles, rim night latches, knockers, bells, numbers, a boot scraper), 16 paints and 3 conditions, a street order in which no two neighbours match, and a gate of 7 views a kind plus the street rows.",
+ "summary": "Front doors for every house kind of Quay Street: from the passed 3.1 door (T1 cottage four-panel, F1 flat four-panel, its bell push fixed to one plain dark oblong), 10 door kinds (cottage T1 T2 T3, flat F1 to F7) fitted to the street's 12 household doors by house, 7 furniture slots with 25 variants (letter plates, handles, rim night latches, knockers, bells, numbers, a boot scraper), 16 paints and 3 conditions, a street order in which no two neighbours match, and a gate of 7 views a kind plus the street rows.",
  "status": "WRITTEN 13 October 2026, not yet reviewed",
  "units": "mm; leaf frame u across from the leaf's left edge seen from outside, v up from its bottom; frame frame x across the opening from the left reveal, z up from the threshold top (the 3.1 axes)",
  "axes": {
@@ -877,66 +877,66 @@
     "t": 50.8,
     "construction": "framed",
     "lock_side": "right",
-    "stile_left": 85.5,
-    "stile_right": 85.5,
-    "top_rail": 77.3,
-    "bottom_rail": 190.2,
-    "lock_rail": 208.0,
-    "frieze_rail": 101.0,
-    "muntin": 109.8,
+    "stile_left": 101.7,
+    "stile_right": 101.7,
+    "top_rail": 96.9,
+    "bottom_rail": 188.2,
+    "lock_rail": 205.9,
+    "frieze_rail": 100.0,
+    "muntin": 104.4,
     "openings": [
      {
       "id": "bottom_l",
       "type": "panel",
-      "u0": 85.5,
-      "u1": 364.1,
-      "v0": 190.2,
-      "v1": 511.1,
+      "u0": 101.7,
+      "u1": 366.8,
+      "v0": 188.2,
+      "v1": 505.8,
       "moulding": "bolection_outside"
      },
      {
       "id": "bottom_r",
       "type": "panel",
-      "u0": 473.9,
-      "u1": 752.5,
-      "v0": 190.2,
-      "v1": 511.1,
+      "u0": 471.2,
+      "u1": 736.3,
+      "v0": 188.2,
+      "v1": 505.8,
       "moulding": "bolection_outside"
      },
      {
       "id": "long_l",
       "type": "panel",
-      "u0": 85.5,
-      "u1": 364.1,
-      "v0": 719.1,
-      "v1": 1523.4,
+      "u0": 101.7,
+      "u1": 366.8,
+      "v0": 711.7,
+      "v1": 1507.7,
       "moulding": "bolection_outside"
      },
      {
       "id": "long_r",
       "type": "panel",
-      "u0": 473.9,
-      "u1": 752.5,
-      "v0": 719.1,
-      "v1": 1523.4,
+      "u0": 471.2,
+      "u1": 736.3,
+      "v0": 711.7,
+      "v1": 1507.7,
       "moulding": "bolection_outside"
      },
      {
       "id": "small_upper_l",
       "type": "panel",
-      "u0": 85.5,
-      "u1": 364.1,
-      "v0": 1624.4,
-      "v1": 1903.7,
+      "u0": 101.7,
+      "u1": 366.8,
+      "v0": 1607.7,
+      "v1": 1884.1,
       "moulding": "bolection_outside"
      },
      {
       "id": "small_upper_r",
       "type": "panel",
-      "u0": 473.9,
-      "u1": 752.5,
-      "v0": 1624.4,
-      "v1": 1903.7,
+      "u0": 471.2,
+      "u1": 736.3,
+      "v0": 1607.7,
+      "v1": 1884.1,
       "moulding": "bolection_outside"
      }
     ]
@@ -1009,7 +1009,7 @@
    "photographs": [
     "P2"
    ],
-   "measured_fractions_of_height": {
+   "fractions_of_visible_height": {
     "top_rail": 0.039,
     "small_upper_panels": 0.141,
     "frieze_rail": 0.051,
@@ -1017,6 +1017,11 @@
     "lock_rail": 0.105,
     "bottom_panels": 0.162,
     "bottom_rail": 0.096
+   },
+   "fractions_of_visible_width": {
+    "stile": 0.102,
+    "muntin": 0.131,
+    "moulding": 0.054
    },
    "parts_vs_3_1": [
     [
@@ -1503,24 +1508,24 @@
   },
   "F7": {
    "name": "ledged and braced service door (Hasluck; no period photograph read)",
-   "frame_set": "F, no transom glass change",
+   "frame_set": "F",
    "family": "service door",
    "leaf": {
-    "w": 762.0,
+    "w": 838.0,
     "h": 1981.0,
     "t": 38.0,
     "construction": "ledged and braced matchboarding",
     "lock_side": "right",
-    "board_w": 127.0,
+    "board_w": 139.67,
     "boards": 6,
     "board_edges_u": [
      0.0,
-     127.0,
-     254.0,
-     381.0,
-     508.0,
-     635.0,
-     762.0
+     139.67,
+     279.33,
+     419.0,
+     558.67,
+     698.33,
+     838.0
     ],
     "board_t": 22.0,
     "joint": "tongued and grooved with a V joint 6 wide, 2 deep",
@@ -1545,75 +1550,75 @@
      "proud": 3.0,
      "at": [
       [
-       63.5,
+       69.8,
        170.0
       ],
       [
-       190.5,
+       209.5,
        170.0
       ],
       [
-       317.5,
+       349.2,
        170.0
       ],
       [
-       444.5,
+       488.8,
        170.0
       ],
       [
-       571.5,
+       628.5,
        170.0
       ],
       [
-       698.5,
+       768.2,
        170.0
       ],
       [
-       63.5,
+       69.8,
        990.0
       ],
       [
-       190.5,
+       209.5,
        990.0
       ],
       [
-       317.5,
+       349.2,
        990.0
       ],
       [
-       444.5,
+       488.8,
        990.0
       ],
       [
-       571.5,
+       628.5,
        990.0
       ],
       [
-       698.5,
+       768.2,
        990.0
       ],
       [
-       63.5,
+       69.8,
        1811.0
       ],
       [
-       190.5,
+       209.5,
        1811.0
       ],
       [
-       317.5,
+       349.2,
        1811.0
       ],
       [
-       444.5,
+       488.8,
        1811.0
       ],
       [
-       571.5,
+       628.5,
        1811.0
       ],
       [
-       698.5,
+       768.2,
        1811.0
       ]
      ],
@@ -1645,7 +1650,7 @@
     "leaf": null
    },
    "photographs": [],
-   "sources": "Read: Hasluck pp.312-317, Figs. 1015-1039: boards 3 to 7 in wide (127 mm = 5 in used), 3/4 to 1 1/4 in thick (22.2 used), grooved and tongued, V joint; ledges nailed with wrought nails driven from the face and clenched; hook-and-plate hinges inside for an inward door. Sizes of ledges, nail heads and leaf: Judgement (no photograph of such a door on these streets was reached).",
+   "sources": "Read: Hasluck pp.312-317, Figs. 1015-1039: boards 3 to 7 in wide (139.7 mm = 5.5 in used, six across 838), 3/4 to 1 1/4 in thick (22.2 used), grooved and tongued, V joint; ledges nailed with wrought nails driven from the face and clenched; hook-and-plate hinges inside for an inward door. Sizes of ledges, nail heads and leaf: Judgement (no photograph of such a door on these streets was reached).",
    "parts_vs_3_1": [
     [
      "frame_*, glass_fanlight, sill",
@@ -1655,7 +1660,7 @@
     [
      "leaf_frame, panel_*, moulding_*",
      "changed",
-     "six matchboards 127 wide, V-jointed, 22 thick, three ledges and two braces behind (not visible), nail heads in rows on the face"
+     "six matchboards 139.7 wide, V-jointed, 22 thick, three ledges and two braces behind (not visible), nail heads in rows on the face"
     ],
     [
      "iron_letter_plate, iron_knob_*, iron_keyhole_*, iron_lock_*",
@@ -1821,7 +1826,7 @@
     "place": {
      "F2": {
       "u": "leaf centre",
-      "v": 1561.0
+      "v": 1545.0
      }
     },
     "src": "3.1 option_six_panel (P2: 195 x 70 at 0.788 of the height)"
@@ -2017,7 +2022,7 @@
      },
      "F2": {
       "u": "leaf centre",
-      "v": 604.2
+      "v": 598.0
      }
     },
     "src": "3.1 as built (P2 8x crop)"
@@ -2150,7 +2155,7 @@
     "roughness": 0.6,
     "place": {
      "F7": {
-      "u": 692.0,
+      "u": 738.0,
       "v": 1000.0
      }
     },
@@ -2205,7 +2210,7 @@
      },
      "F2": {
       "u": "46.3 from the stop face, right",
-      "v": 1081.6
+      "v": 1070.5
      }
     },
     "src": "3.1 as built (P2: collar 37, scalloped)"
@@ -2459,11 +2464,32 @@
   "letter_plate": 7,
   "handle": 6,
   "latch": 2,
-  "knocker": 3,
+  "knocker": 2,
   "bell": 2,
   "number": 5,
   "scraper": 1
  },
+ "furniture_placed_today": [
+  "BL1",
+  "BS1",
+  "HD1",
+  "HD2a",
+  "HD2b",
+  "HD2c",
+  "HD3",
+  "HD4",
+  "LK1",
+  "LK2",
+  "LP1",
+  "LP2",
+  "LP4",
+  "LP5",
+  "LP6",
+  "LP7",
+  "NM1",
+  "NM3",
+  "NM4"
+ ],
  "paints": [
   {
    "id": "black",
@@ -2810,21 +2836,21 @@
       "variant": "LP2",
       "place": {
        "u": "leaf centre",
-       "v": 1561.0
+       "v": 1545.0
       }
      },
      "handle": {
       "variant": "HD1",
       "place": {
        "u": "leaf centre",
-       "v": 604.2
+       "v": 598.0
       }
      },
      "latch": {
       "variant": "LK2",
       "place": {
        "u": "46.3 from the stop face, right",
-       "v": 1081.6
+       "v": 1070.5
       }
      },
      "knocker": {
@@ -3325,7 +3351,7 @@
      "handle": {
       "variant": "HD4",
       "place": {
-       "u": 692.0,
+       "u": 738.0,
        "v": 1000.0
       }
      },
@@ -3675,7 +3701,7 @@
   }
  },
  "owed_for_jafar": [
-  "Door colours: dark doors as the Hook sheet shows, with two lighter ones from 1980s photographs (one white, one council turquoise)? Yes, two (recommended), or all dark?",
+  "Door colours: dark doors as the Hook sheet shows, with three lighter ones from 1980s photographs (cream, white, council turquoise)? Yes, three (recommended), or all dark?",
   "Door surrounds: all white as you ruled for windows on 3 October (recommended), or the painted surrounds the 1980s Hull streets show, as on the windows line?",
   "The west shop row has one storey: its three side doors become a service door and two household doors (recommended), or flats in its roof with household doors on all three?"
  ],
@@ -4420,12 +4446,12 @@
      "loc": [
       0.33,
       -1.2,
-      1.44
+      1.25
      ],
      "target": [
       0.25,
       0.19,
-      1.44
+      1.25
      ],
      "lens": 50
     },
@@ -4520,12 +4546,12 @@
      "loc": [
       0.33,
       -1.2,
-      0.68
+      1.25
      ],
      "target": [
       0.25,
       0.19,
-      0.68
+      1.25
      ],
      "lens": 50
     },
@@ -4584,6 +4610,20 @@
       0.11
      ],
      "lens": 50
+    },
+    {
+     "name": "close_foot",
+     "loc": [
+      0.1,
+      -1.0,
+      0.25
+     ],
+     "target": [
+      0.0,
+      0.19,
+      0.2
+     ],
+     "lens": 50
     }
    ],
    "T3": [
@@ -4620,12 +4660,12 @@
      "loc": [
       0.33,
       -1.2,
-      0.85
+      0.83
      ],
      "target": [
       0.25,
       0.19,
-      0.85
+      0.83
      ],
      "lens": 50
     },
@@ -4720,12 +4760,12 @@
      "loc": [
       0.33,
       -1.2,
-      1.35
+      1.26
      ],
      "target": [
       0.25,
       0.19,
-      1.35
+      1.26
      ],
      "lens": 50
     },
@@ -4820,12 +4860,12 @@
      "loc": [
       0.33,
       -1.2,
-      1.31
+      1.52
      ],
      "target": [
       0.25,
       0.19,
-      1.31
+      1.52
      ],
      "lens": 50
     },
@@ -4876,12 +4916,12 @@
      "loc": [
       0.1,
       -1.0,
-      1.57
+      1.55
      ],
      "target": [
       0.0,
       0.19,
-      1.57
+      1.55
      ],
      "lens": 50
     }
@@ -4920,12 +4960,12 @@
      "loc": [
       0.33,
       -1.2,
-      1.61
+      1.6
      ],
      "target": [
       0.25,
       0.19,
-      1.61
+      1.6
      ],
      "lens": 50
     },
@@ -5020,12 +5060,12 @@
      "loc": [
       0.33,
       -1.2,
-      0.67
+      1.24
      ],
      "target": [
       0.25,
       0.19,
-      0.67
+      1.24
      ],
      "lens": 50
     },
@@ -5084,6 +5124,20 @@
       0.11
      ],
      "lens": 50
+    },
+    {
+     "name": "close_foot",
+     "loc": [
+      0.1,
+      -1.0,
+      0.25
+     ],
+     "target": [
+      0.0,
+      0.19,
+      0.2
+     ],
+     "lens": 50
     }
    ],
    "F5": [
@@ -5120,12 +5174,12 @@
      "loc": [
       0.33,
       -1.2,
-      0.96
+      1.1
      ],
      "target": [
       0.25,
       0.19,
-      0.96
+      1.1
      ],
      "lens": 50
     },
@@ -5220,12 +5274,12 @@
      "loc": [
       0.33,
       -1.2,
-      0.92
+      0.91
      ],
      "target": [
       0.25,
       0.19,
-      0.92
+      0.91
      ],
      "lens": 50
     },
@@ -5376,12 +5430,12 @@
      "loc": [
       0.1,
       -1.0,
-      1.01
+      1.02
      ],
      "target": [
       0.0,
       0.19,
-      1.01
+      1.02
      ],
      "lens": 50
     }
@@ -5491,6 +5545,2575 @@
    "the knockers, bell pulls, black iron plates, frosted and wired glass are listed and not placed"
   ]
  },
+ "checks": [
+  {
+   "id": "PL-T1-count",
+   "group": "PL",
+   "name": "T1: number of leaf openings",
+   "kind": "T1",
+   "what": "count the panel, light, slit and small-light openings cut in the leaf",
+   "expect": 4,
+   "tol": 0,
+   "src": "kind spec",
+   "type": "count",
+   "types": [
+    "panel"
+   ]
+  },
+  {
+   "id": "PL-T1-top_left",
+   "group": "PL",
+   "name": "T1: opening top_left",
+   "kind": "T1",
+   "what": "bounds of the opening in the leaf frame: u0, u1, v0, v1",
+   "expect": [
+    114.3,
+    346.4,
+    901.3,
+    1821.0
+   ],
+   "tol": 3.0,
+   "src": "kind spec (photograph fractions for T2 T3 F4 F5 F6, 3.1 for T1 F1 F2 F3)",
+   "type": "opening_bounds",
+   "opening": "top_left"
+  },
+  {
+   "id": "PL-T1-top_right",
+   "group": "PL",
+   "name": "T1: opening top_right",
+   "kind": "T1",
+   "what": "bounds of the opening in the leaf frame: u0, u1, v0, v1",
+   "expect": [
+    466.4,
+    698.5,
+    901.3,
+    1821.0
+   ],
+   "tol": 3.0,
+   "src": "kind spec (photograph fractions for T2 T3 F4 F5 F6, 3.1 for T1 F1 F2 F3)",
+   "type": "opening_bounds",
+   "opening": "top_right"
+  },
+  {
+   "id": "PL-T1-bottom_left",
+   "group": "PL",
+   "name": "T1: opening bottom_left",
+   "kind": "T1",
+   "what": "bounds of the opening in the leaf frame: u0, u1, v0, v1",
+   "expect": [
+    114.3,
+    346.4,
+    192.8,
+    672.7
+   ],
+   "tol": 3.0,
+   "src": "kind spec (photograph fractions for T2 T3 F4 F5 F6, 3.1 for T1 F1 F2 F3)",
+   "type": "opening_bounds",
+   "opening": "bottom_left"
+  },
+  {
+   "id": "PL-T1-bottom_right",
+   "group": "PL",
+   "name": "T1: opening bottom_right",
+   "kind": "T1",
+   "what": "bounds of the opening in the leaf frame: u0, u1, v0, v1",
+   "expect": [
+    466.4,
+    698.5,
+    192.8,
+    672.7
+   ],
+   "tol": 3.0,
+   "src": "kind spec (photograph fractions for T2 T3 F4 F5 F6, 3.1 for T1 F1 F2 F3)",
+   "type": "opening_bounds",
+   "opening": "bottom_right"
+  },
+  {
+   "id": "PL-T1-members",
+   "group": "PL",
+   "name": "T1: stiles, rails, muntin and bars",
+   "kind": "T1",
+   "what": "member widths on the face, mm",
+   "expect": {
+    "stile_left": 114.3,
+    "stile_right": 114.3,
+    "top_rail": 127.0,
+    "bottom_rail": 192.8,
+    "lock_rail": 228.6,
+    "muntin": 120.0
+   },
+   "tol": 2.0,
+   "src": "kind spec",
+   "type": "members"
+  },
+  {
+   "id": "PL-T1-framing",
+   "group": "PL",
+   "name": "T1: framing between openings",
+   "kind": "T1",
+   "what": "no two openings overlap and each lies inside the leaf with at least 20 mm of framing to the edge (the spyhole and slit are inside)",
+   "expect": {
+    "min_framing_mm": 20.0
+   },
+   "tol": 0.0,
+   "src": "construction",
+   "type": "framing"
+  },
+  {
+   "id": "PL-T2-count",
+   "group": "PL",
+   "name": "T2: number of leaf openings",
+   "kind": "T2",
+   "what": "count the panel, light, slit and small-light openings cut in the leaf",
+   "expect": 4,
+   "tol": 0,
+   "src": "kind spec",
+   "type": "count",
+   "types": [
+    "light"
+   ]
+  },
+  {
+   "id": "PL-T2-light1",
+   "group": "PL",
+   "name": "T2: opening light1",
+   "kind": "T2",
+   "what": "bounds of the opening in the leaf frame: u0, u1, v0, v1",
+   "expect": [
+    114.3,
+    698.5,
+    205.0,
+    598.6
+   ],
+   "tol": 3.0,
+   "src": "kind spec (photograph fractions for T2 T3 F4 F5 F6, 3.1 for T1 F1 F2 F3)",
+   "type": "opening_bounds",
+   "opening": "light1"
+  },
+  {
+   "id": "PL-T2-light2",
+   "group": "PL",
+   "name": "T2: opening light2",
+   "kind": "T2",
+   "what": "bounds of the opening in the leaf frame: u0, u1, v0, v1",
+   "expect": [
+    114.3,
+    698.5,
+    628.6,
+    1022.3
+   ],
+   "tol": 3.0,
+   "src": "kind spec (photograph fractions for T2 T3 F4 F5 F6, 3.1 for T1 F1 F2 F3)",
+   "type": "opening_bounds",
+   "opening": "light2"
+  },
+  {
+   "id": "PL-T2-light3",
+   "group": "PL",
+   "name": "T2: opening light3",
+   "kind": "T2",
+   "what": "bounds of the opening in the leaf frame: u0, u1, v0, v1",
+   "expect": [
+    114.3,
+    698.5,
+    1052.3,
+    1445.9
+   ],
+   "tol": 3.0,
+   "src": "kind spec (photograph fractions for T2 T3 F4 F5 F6, 3.1 for T1 F1 F2 F3)",
+   "type": "opening_bounds",
+   "opening": "light3"
+  },
+  {
+   "id": "PL-T2-light4",
+   "group": "PL",
+   "name": "T2: opening light4",
+   "kind": "T2",
+   "what": "bounds of the opening in the leaf frame: u0, u1, v0, v1",
+   "expect": [
+    114.3,
+    698.5,
+    1475.9,
+    1869.6
+   ],
+   "tol": 3.0,
+   "src": "kind spec (photograph fractions for T2 T3 F4 F5 F6, 3.1 for T1 F1 F2 F3)",
+   "type": "opening_bounds",
+   "opening": "light4"
+  },
+  {
+   "id": "PL-T2-members",
+   "group": "PL",
+   "name": "T2: stiles, rails, muntin and bars",
+   "kind": "T2",
+   "what": "member widths on the face, mm",
+   "expect": {
+    "stile_left": 114.3,
+    "stile_right": 114.3,
+    "top_rail": 78.4,
+    "bottom_rail": 205.0,
+    "bar": 30.0
+   },
+   "tol": 2.0,
+   "src": "kind spec",
+   "type": "members"
+  },
+  {
+   "id": "PL-T2-framing",
+   "group": "PL",
+   "name": "T2: framing between openings",
+   "kind": "T2",
+   "what": "no two openings overlap and each lies inside the leaf with at least 20 mm of framing to the edge (the spyhole and slit are inside)",
+   "expect": {
+    "min_framing_mm": 20.0
+   },
+   "tol": 0.0,
+   "src": "construction",
+   "type": "framing"
+  },
+  {
+   "id": "PL-T3-count",
+   "group": "PL",
+   "name": "T3: number of leaf openings",
+   "kind": "T3",
+   "what": "count the panel, light, slit and small-light openings cut in the leaf",
+   "expect": 3,
+   "tol": 0,
+   "src": "kind spec",
+   "type": "count",
+   "types": [
+    "arched_light",
+    "embossed_panel"
+   ]
+  },
+  {
+   "id": "PL-T3-upper_panel",
+   "group": "PL",
+   "name": "T3: opening upper_panel",
+   "kind": "T3",
+   "what": "bounds of the opening in the leaf frame: u0, u1, v0, v1",
+   "expect": [
+    140.5,
+    706.6,
+    981.1,
+    1806.3
+   ],
+   "tol": 3.0,
+   "src": "kind spec (photograph fractions for T2 T3 F4 F5 F6, 3.1 for T1 F1 F2 F3)",
+   "type": "opening_bounds",
+   "opening": "upper_panel"
+  },
+  {
+   "id": "PL-T3-small_light",
+   "group": "PL",
+   "name": "T3: opening small_light",
+   "kind": "T3",
+   "what": "bounds of the opening in the leaf frame: u0, u1, v0, v1",
+   "expect": [
+    320.6,
+    513.6,
+    1082.9,
+    1537.7
+   ],
+   "tol": 3.0,
+   "src": "kind spec (photograph fractions for T2 T3 F4 F5 F6, 3.1 for T1 F1 F2 F3)",
+   "type": "opening_bounds",
+   "opening": "small_light"
+  },
+  {
+   "id": "PL-T3-lower_panel",
+   "group": "PL",
+   "name": "T3: opening lower_panel",
+   "kind": "T3",
+   "what": "bounds of the opening in the leaf frame: u0, u1, v0, v1",
+   "expect": [
+    234.8,
+    642.3,
+    324.9,
+    736.4
+   ],
+   "tol": 3.0,
+   "src": "kind spec (photograph fractions for T2 T3 F4 F5 F6, 3.1 for T1 F1 F2 F3)",
+   "type": "opening_bounds",
+   "opening": "lower_panel"
+  },
+  {
+   "id": "PL-T3-members",
+   "group": "PL",
+   "name": "T3: stiles, rails, muntin and bars",
+   "kind": "T3",
+   "what": "member widths on the face, mm",
+   "expect": {
+    "border": 65.0
+   },
+   "tol": 2.0,
+   "src": "kind spec",
+   "type": "members"
+  },
+  {
+   "id": "PL-T3-framing",
+   "group": "PL",
+   "name": "T3: framing between openings",
+   "kind": "T3",
+   "what": "no two openings overlap and each lies inside the leaf with at least 20 mm of framing to the edge (the spyhole and slit are inside)",
+   "expect": {
+    "min_framing_mm": 20.0
+   },
+   "tol": 0.0,
+   "src": "construction",
+   "type": "framing"
+  },
+  {
+   "id": "PL-F1-count",
+   "group": "PL",
+   "name": "F1: number of leaf openings",
+   "kind": "F1",
+   "what": "count the panel, light, slit and small-light openings cut in the leaf",
+   "expect": 4,
+   "tol": 0,
+   "src": "kind spec",
+   "type": "count",
+   "types": [
+    "panel"
+   ]
+  },
+  {
+   "id": "PL-F1-top_left",
+   "group": "PL",
+   "name": "F1: opening top_left",
+   "kind": "F1",
+   "what": "bounds of the opening in the leaf frame: u0, u1, v0, v1",
+   "expect": [
+    114.3,
+    359.0,
+    901.3,
+    1854.0
+   ],
+   "tol": 3.0,
+   "src": "kind spec (photograph fractions for T2 T3 F4 F5 F6, 3.1 for T1 F1 F2 F3)",
+   "type": "opening_bounds",
+   "opening": "top_left"
+  },
+  {
+   "id": "PL-F1-top_right",
+   "group": "PL",
+   "name": "F1: opening top_right",
+   "kind": "F1",
+   "what": "bounds of the opening in the leaf frame: u0, u1, v0, v1",
+   "expect": [
+    479.0,
+    723.7,
+    901.3,
+    1854.0
+   ],
+   "tol": 3.0,
+   "src": "kind spec (photograph fractions for T2 T3 F4 F5 F6, 3.1 for T1 F1 F2 F3)",
+   "type": "opening_bounds",
+   "opening": "top_right"
+  },
+  {
+   "id": "PL-F1-bottom_left",
+   "group": "PL",
+   "name": "F1: opening bottom_left",
+   "kind": "F1",
+   "what": "bounds of the opening in the leaf frame: u0, u1, v0, v1",
+   "expect": [
+    114.3,
+    359.0,
+    192.8,
+    672.7
+   ],
+   "tol": 3.0,
+   "src": "kind spec (photograph fractions for T2 T3 F4 F5 F6, 3.1 for T1 F1 F2 F3)",
+   "type": "opening_bounds",
+   "opening": "bottom_left"
+  },
+  {
+   "id": "PL-F1-bottom_right",
+   "group": "PL",
+   "name": "F1: opening bottom_right",
+   "kind": "F1",
+   "what": "bounds of the opening in the leaf frame: u0, u1, v0, v1",
+   "expect": [
+    479.0,
+    723.7,
+    192.8,
+    672.7
+   ],
+   "tol": 3.0,
+   "src": "kind spec (photograph fractions for T2 T3 F4 F5 F6, 3.1 for T1 F1 F2 F3)",
+   "type": "opening_bounds",
+   "opening": "bottom_right"
+  },
+  {
+   "id": "PL-F1-members",
+   "group": "PL",
+   "name": "F1: stiles, rails, muntin and bars",
+   "kind": "F1",
+   "what": "member widths on the face, mm",
+   "expect": {
+    "stile_left": 114.3,
+    "stile_right": 114.3,
+    "top_rail": 127.0,
+    "bottom_rail": 192.8,
+    "lock_rail": 228.6,
+    "muntin": 120.0
+   },
+   "tol": 2.0,
+   "src": "kind spec",
+   "type": "members"
+  },
+  {
+   "id": "PL-F1-framing",
+   "group": "PL",
+   "name": "F1: framing between openings",
+   "kind": "F1",
+   "what": "no two openings overlap and each lies inside the leaf with at least 20 mm of framing to the edge (the spyhole and slit are inside)",
+   "expect": {
+    "min_framing_mm": 20.0
+   },
+   "tol": 0.0,
+   "src": "construction",
+   "type": "framing"
+  },
+  {
+   "id": "PL-F2-count",
+   "group": "PL",
+   "name": "F2: number of leaf openings",
+   "kind": "F2",
+   "what": "count the panel, light, slit and small-light openings cut in the leaf",
+   "expect": 6,
+   "tol": 0,
+   "src": "kind spec",
+   "type": "count",
+   "types": [
+    "panel"
+   ]
+  },
+  {
+   "id": "PL-F2-bottom_l",
+   "group": "PL",
+   "name": "F2: opening bottom_l",
+   "kind": "F2",
+   "what": "bounds of the opening in the leaf frame: u0, u1, v0, v1",
+   "expect": [
+    101.7,
+    366.8,
+    188.2,
+    505.8
+   ],
+   "tol": 3.0,
+   "src": "kind spec (photograph fractions for T2 T3 F4 F5 F6, 3.1 for T1 F1 F2 F3)",
+   "type": "opening_bounds",
+   "opening": "bottom_l"
+  },
+  {
+   "id": "PL-F2-bottom_r",
+   "group": "PL",
+   "name": "F2: opening bottom_r",
+   "kind": "F2",
+   "what": "bounds of the opening in the leaf frame: u0, u1, v0, v1",
+   "expect": [
+    471.2,
+    736.3,
+    188.2,
+    505.8
+   ],
+   "tol": 3.0,
+   "src": "kind spec (photograph fractions for T2 T3 F4 F5 F6, 3.1 for T1 F1 F2 F3)",
+   "type": "opening_bounds",
+   "opening": "bottom_r"
+  },
+  {
+   "id": "PL-F2-long_l",
+   "group": "PL",
+   "name": "F2: opening long_l",
+   "kind": "F2",
+   "what": "bounds of the opening in the leaf frame: u0, u1, v0, v1",
+   "expect": [
+    101.7,
+    366.8,
+    711.7,
+    1507.7
+   ],
+   "tol": 3.0,
+   "src": "kind spec (photograph fractions for T2 T3 F4 F5 F6, 3.1 for T1 F1 F2 F3)",
+   "type": "opening_bounds",
+   "opening": "long_l"
+  },
+  {
+   "id": "PL-F2-long_r",
+   "group": "PL",
+   "name": "F2: opening long_r",
+   "kind": "F2",
+   "what": "bounds of the opening in the leaf frame: u0, u1, v0, v1",
+   "expect": [
+    471.2,
+    736.3,
+    711.7,
+    1507.7
+   ],
+   "tol": 3.0,
+   "src": "kind spec (photograph fractions for T2 T3 F4 F5 F6, 3.1 for T1 F1 F2 F3)",
+   "type": "opening_bounds",
+   "opening": "long_r"
+  },
+  {
+   "id": "PL-F2-small_upper_l",
+   "group": "PL",
+   "name": "F2: opening small_upper_l",
+   "kind": "F2",
+   "what": "bounds of the opening in the leaf frame: u0, u1, v0, v1",
+   "expect": [
+    101.7,
+    366.8,
+    1607.7,
+    1884.1
+   ],
+   "tol": 3.0,
+   "src": "kind spec (photograph fractions for T2 T3 F4 F5 F6, 3.1 for T1 F1 F2 F3)",
+   "type": "opening_bounds",
+   "opening": "small_upper_l"
+  },
+  {
+   "id": "PL-F2-small_upper_r",
+   "group": "PL",
+   "name": "F2: opening small_upper_r",
+   "kind": "F2",
+   "what": "bounds of the opening in the leaf frame: u0, u1, v0, v1",
+   "expect": [
+    471.2,
+    736.3,
+    1607.7,
+    1884.1
+   ],
+   "tol": 3.0,
+   "src": "kind spec (photograph fractions for T2 T3 F4 F5 F6, 3.1 for T1 F1 F2 F3)",
+   "type": "opening_bounds",
+   "opening": "small_upper_r"
+  },
+  {
+   "id": "PL-F2-members",
+   "group": "PL",
+   "name": "F2: stiles, rails, muntin and bars",
+   "kind": "F2",
+   "what": "member widths on the face, mm",
+   "expect": {
+    "stile_left": 101.7,
+    "stile_right": 101.7,
+    "top_rail": 96.9,
+    "bottom_rail": 188.2,
+    "lock_rail": 205.9,
+    "muntin": 104.4,
+    "frieze_rail": 100.0
+   },
+   "tol": 2.0,
+   "src": "kind spec",
+   "type": "members"
+  },
+  {
+   "id": "PL-F2-framing",
+   "group": "PL",
+   "name": "F2: framing between openings",
+   "kind": "F2",
+   "what": "no two openings overlap and each lies inside the leaf with at least 20 mm of framing to the edge (the spyhole and slit are inside)",
+   "expect": {
+    "min_framing_mm": 20.0
+   },
+   "tol": 0.0,
+   "src": "construction",
+   "type": "framing"
+  },
+  {
+   "id": "PL-F3-count",
+   "group": "PL",
+   "name": "F3: number of leaf openings",
+   "kind": "F3",
+   "what": "count the panel, light, slit and small-light openings cut in the leaf",
+   "expect": 2,
+   "tol": 0,
+   "src": "kind spec",
+   "type": "count",
+   "types": [
+    "panel"
+   ]
+  },
+  {
+   "id": "PL-F3-long_l",
+   "group": "PL",
+   "name": "F3: opening long_l",
+   "kind": "F3",
+   "what": "bounds of the opening in the leaf frame: u0, u1, v0, v1",
+   "expect": [
+    114.3,
+    359.0,
+    192.8,
+    1854.0
+   ],
+   "tol": 3.0,
+   "src": "kind spec (photograph fractions for T2 T3 F4 F5 F6, 3.1 for T1 F1 F2 F3)",
+   "type": "opening_bounds",
+   "opening": "long_l"
+  },
+  {
+   "id": "PL-F3-long_r",
+   "group": "PL",
+   "name": "F3: opening long_r",
+   "kind": "F3",
+   "what": "bounds of the opening in the leaf frame: u0, u1, v0, v1",
+   "expect": [
+    479.0,
+    723.7,
+    192.8,
+    1854.0
+   ],
+   "tol": 3.0,
+   "src": "kind spec (photograph fractions for T2 T3 F4 F5 F6, 3.1 for T1 F1 F2 F3)",
+   "type": "opening_bounds",
+   "opening": "long_r"
+  },
+  {
+   "id": "PL-F3-members",
+   "group": "PL",
+   "name": "F3: stiles, rails, muntin and bars",
+   "kind": "F3",
+   "what": "member widths on the face, mm",
+   "expect": {
+    "stile_left": 114.3,
+    "stile_right": 114.3,
+    "top_rail": 127.0,
+    "bottom_rail": 192.8,
+    "muntin": 120.0
+   },
+   "tol": 2.0,
+   "src": "kind spec",
+   "type": "members"
+  },
+  {
+   "id": "PL-F3-framing",
+   "group": "PL",
+   "name": "F3: framing between openings",
+   "kind": "F3",
+   "what": "no two openings overlap and each lies inside the leaf with at least 20 mm of framing to the edge (the spyhole and slit are inside)",
+   "expect": {
+    "min_framing_mm": 20.0
+   },
+   "tol": 0.0,
+   "src": "construction",
+   "type": "framing"
+  },
+  {
+   "id": "PL-F4-count",
+   "group": "PL",
+   "name": "F4: number of leaf openings",
+   "kind": "F4",
+   "what": "count the panel, light, slit and small-light openings cut in the leaf",
+   "expect": 3,
+   "tol": 0,
+   "src": "kind spec",
+   "type": "count",
+   "types": [
+    "light"
+   ]
+  },
+  {
+   "id": "PL-F4-light1",
+   "group": "PL",
+   "name": "F4: opening light1",
+   "kind": "F4",
+   "what": "bounds of the opening in the leaf frame: u0, u1, v0, v1",
+   "expect": [
+    170.0,
+    329.3,
+    200.0,
+    1876.6
+   ],
+   "tol": 3.0,
+   "src": "kind spec (photograph fractions for T2 T3 F4 F5 F6, 3.1 for T1 F1 F2 F3)",
+   "type": "opening_bounds",
+   "opening": "light1"
+  },
+  {
+   "id": "PL-F4-light2",
+   "group": "PL",
+   "name": "F4: opening light2",
+   "kind": "F4",
+   "what": "bounds of the opening in the leaf frame: u0, u1, v0, v1",
+   "expect": [
+    369.3,
+    528.7,
+    200.0,
+    1876.6
+   ],
+   "tol": 3.0,
+   "src": "kind spec (photograph fractions for T2 T3 F4 F5 F6, 3.1 for T1 F1 F2 F3)",
+   "type": "opening_bounds",
+   "opening": "light2"
+  },
+  {
+   "id": "PL-F4-light3",
+   "group": "PL",
+   "name": "F4: opening light3",
+   "kind": "F4",
+   "what": "bounds of the opening in the leaf frame: u0, u1, v0, v1",
+   "expect": [
+    568.7,
+    728.0,
+    200.0,
+    1876.6
+   ],
+   "tol": 3.0,
+   "src": "kind spec (photograph fractions for T2 T3 F4 F5 F6, 3.1 for T1 F1 F2 F3)",
+   "type": "opening_bounds",
+   "opening": "light3"
+  },
+  {
+   "id": "PL-F4-members",
+   "group": "PL",
+   "name": "F4: stiles, rails, muntin and bars",
+   "kind": "F4",
+   "what": "member widths on the face, mm",
+   "expect": {
+    "stile_left": 170.0,
+    "stile_right": 110.0,
+    "top_rail": 104.4,
+    "bottom_rail": 200.0,
+    "bar": 40.0
+   },
+   "tol": 2.0,
+   "src": "kind spec",
+   "type": "members"
+  },
+  {
+   "id": "PL-F4-framing",
+   "group": "PL",
+   "name": "F4: framing between openings",
+   "kind": "F4",
+   "what": "no two openings overlap and each lies inside the leaf with at least 20 mm of framing to the edge (the spyhole and slit are inside)",
+   "expect": {
+    "min_framing_mm": 20.0
+   },
+   "tol": 0.0,
+   "src": "construction",
+   "type": "framing"
+  },
+  {
+   "id": "PL-F5-count",
+   "group": "PL",
+   "name": "F5: number of leaf openings",
+   "kind": "F5",
+   "what": "count the panel, light, slit and small-light openings cut in the leaf",
+   "expect": 1,
+   "tol": 0,
+   "src": "kind spec",
+   "type": "count",
+   "types": [
+    "slit_light"
+   ]
+  },
+  {
+   "id": "PL-F5-slit",
+   "group": "PL",
+   "name": "F5: opening slit",
+   "kind": "F5",
+   "what": "bounds of the opening in the leaf frame: u0, u1, v0, v1",
+   "expect": [
+    320.8,
+    524.1,
+    914.9,
+    1806.1
+   ],
+   "tol": 3.0,
+   "src": "kind spec (photograph fractions for T2 T3 F4 F5 F6, 3.1 for T1 F1 F2 F3)",
+   "type": "opening_bounds",
+   "opening": "slit"
+  },
+  {
+   "id": "PL-F5-members",
+   "group": "PL",
+   "name": "F5: stiles, rails, muntin and bars",
+   "kind": "F5",
+   "what": "member widths on the face, mm",
+   "expect": {},
+   "tol": 2.0,
+   "src": "kind spec",
+   "type": "members"
+  },
+  {
+   "id": "PL-F5-framing",
+   "group": "PL",
+   "name": "F5: framing between openings",
+   "kind": "F5",
+   "what": "no two openings overlap and each lies inside the leaf with at least 20 mm of framing to the edge (the spyhole and slit are inside)",
+   "expect": {
+    "min_framing_mm": 20.0
+   },
+   "tol": 0.0,
+   "src": "construction",
+   "type": "framing"
+  },
+  {
+   "id": "PL-F6-count",
+   "group": "PL",
+   "name": "F6: number of leaf openings",
+   "kind": "F6",
+   "what": "count the panel, light, slit and small-light openings cut in the leaf",
+   "expect": 1,
+   "tol": 0,
+   "src": "kind spec",
+   "type": "count",
+   "types": [
+    "spyhole"
+   ]
+  },
+  {
+   "id": "PL-F6-spyhole",
+   "group": "PL",
+   "name": "F6: opening spyhole",
+   "kind": "F6",
+   "what": "bounds of the opening in the leaf frame: u0, u1, v0, v1",
+   "expect": [
+    374.0,
+    388.0,
+    1502.0,
+    1516.0
+   ],
+   "tol": 3.0,
+   "src": "kind spec (photograph fractions for T2 T3 F4 F5 F6, 3.1 for T1 F1 F2 F3)",
+   "type": "opening_bounds",
+   "opening": "spyhole"
+  },
+  {
+   "id": "PL-F6-members",
+   "group": "PL",
+   "name": "F6: stiles, rails, muntin and bars",
+   "kind": "F6",
+   "what": "member widths on the face, mm",
+   "expect": {},
+   "tol": 2.0,
+   "src": "kind spec",
+   "type": "members"
+  },
+  {
+   "id": "PL-F6-framing",
+   "group": "PL",
+   "name": "F6: framing between openings",
+   "kind": "F6",
+   "what": "no two openings overlap and each lies inside the leaf with at least 20 mm of framing to the edge (the spyhole and slit are inside)",
+   "expect": {
+    "min_framing_mm": 20.0
+   },
+   "tol": 0.0,
+   "src": "construction",
+   "type": "framing"
+  },
+  {
+   "id": "PL-F7-count",
+   "group": "PL",
+   "name": "F7: number of leaf openings",
+   "kind": "F7",
+   "what": "count the panel, light, slit and small-light openings cut in the leaf",
+   "expect": 0,
+   "tol": 0,
+   "src": "kind spec",
+   "type": "count",
+   "types": []
+  },
+  {
+   "id": "PL-F7-members",
+   "group": "PL",
+   "name": "F7: stiles, rails, muntin and bars",
+   "kind": "F7",
+   "what": "member widths on the face, mm",
+   "expect": {},
+   "tol": 2.0,
+   "src": "kind spec",
+   "type": "members"
+  },
+  {
+   "id": "CV-T1-elevation",
+   "group": "CV",
+   "name": "T1: no see-through slot in elevation",
+   "kind": "T1",
+   "what": "inside the clear opening (jamb to jamb, sill to head) the frame, leaf, glass and transom cover everything except the leaf's 1.6 mm margins, the 10 mm foot gap and the glass itself",
+   "expect": {
+    "max_hole_mm2": 0.0,
+    "foot_gap_mm": 10.0,
+    "margin_mm": 1.6
+   },
+   "tol": 0.0,
+   "src": "3.1 NOTES (the dark hall behind the door is a render aid, the engine needs its own dark hall)",
+   "type": "coverage_elevation"
+  },
+  {
+   "id": "CV-T1-angle",
+   "group": "CV",
+   "name": "T1: no see-through slot from an angle",
+   "kind": "T1",
+   "what": "a ray at 60 degrees from the normal, in the plan section through each jamb and the leaf's edge, meets the stop, the leaf or the jamb: the 1.6 mm margin is closed behind by the stop (22 wide, 74 deep) or by a planted stop (F6)",
+   "expect": {
+    "angle_deg": 60.0,
+    "margin_mm": 1.6,
+    "stop_overlap_mm": 20.4,
+    "planted_stop_behind": false
+   },
+   "tol": 0.0,
+   "src": "3.1 frame (rebate 22 x 53, stop 74)",
+   "type": "coverage_angle"
+  },
+  {
+   "id": "CV-T2-elevation",
+   "group": "CV",
+   "name": "T2: no see-through slot in elevation",
+   "kind": "T2",
+   "what": "inside the clear opening (jamb to jamb, sill to head) the frame, leaf, glass and transom cover everything except the leaf's 1.6 mm margins, the 10 mm foot gap and the glass itself",
+   "expect": {
+    "max_hole_mm2": 0.0,
+    "foot_gap_mm": 10.0,
+    "margin_mm": 1.6
+   },
+   "tol": 0.0,
+   "src": "3.1 NOTES (the dark hall behind the door is a render aid, the engine needs its own dark hall)",
+   "type": "coverage_elevation"
+  },
+  {
+   "id": "CV-T2-angle",
+   "group": "CV",
+   "name": "T2: no see-through slot from an angle",
+   "kind": "T2",
+   "what": "a ray at 60 degrees from the normal, in the plan section through each jamb and the leaf's edge, meets the stop, the leaf or the jamb: the 1.6 mm margin is closed behind by the stop (22 wide, 74 deep) or by a planted stop (F6)",
+   "expect": {
+    "angle_deg": 60.0,
+    "margin_mm": 1.6,
+    "stop_overlap_mm": 20.4,
+    "planted_stop_behind": false
+   },
+   "tol": 0.0,
+   "src": "3.1 frame (rebate 22 x 53, stop 74)",
+   "type": "coverage_angle"
+  },
+  {
+   "id": "CV-T3-elevation",
+   "group": "CV",
+   "name": "T3: no see-through slot in elevation",
+   "kind": "T3",
+   "what": "inside the clear opening (jamb to jamb, sill to head) the frame, leaf, glass and transom cover everything except the leaf's 1.6 mm margins, the 10 mm foot gap and the glass itself",
+   "expect": {
+    "max_hole_mm2": 0.0,
+    "foot_gap_mm": 10.0,
+    "margin_mm": 1.6
+   },
+   "tol": 0.0,
+   "src": "3.1 NOTES (the dark hall behind the door is a render aid, the engine needs its own dark hall)",
+   "type": "coverage_elevation"
+  },
+  {
+   "id": "CV-T3-angle",
+   "group": "CV",
+   "name": "T3: no see-through slot from an angle",
+   "kind": "T3",
+   "what": "a ray at 60 degrees from the normal, in the plan section through each jamb and the leaf's edge, meets the stop, the leaf or the jamb: the 1.6 mm margin is closed behind by the stop (22 wide, 74 deep) or by a planted stop (F6)",
+   "expect": {
+    "angle_deg": 60.0,
+    "margin_mm": 1.6,
+    "stop_overlap_mm": 20.4,
+    "planted_stop_behind": false
+   },
+   "tol": 0.0,
+   "src": "3.1 frame (rebate 22 x 53, stop 74)",
+   "type": "coverage_angle"
+  },
+  {
+   "id": "CV-F1-elevation",
+   "group": "CV",
+   "name": "F1: no see-through slot in elevation",
+   "kind": "F1",
+   "what": "inside the clear opening (jamb to jamb, sill to head) the frame, leaf, glass and transom cover everything except the leaf's 1.6 mm margins, the 10 mm foot gap and the glass itself",
+   "expect": {
+    "max_hole_mm2": 0.0,
+    "foot_gap_mm": 10.0,
+    "margin_mm": 1.6
+   },
+   "tol": 0.0,
+   "src": "3.1 NOTES (the dark hall behind the door is a render aid, the engine needs its own dark hall)",
+   "type": "coverage_elevation"
+  },
+  {
+   "id": "CV-F1-angle",
+   "group": "CV",
+   "name": "F1: no see-through slot from an angle",
+   "kind": "F1",
+   "what": "a ray at 60 degrees from the normal, in the plan section through each jamb and the leaf's edge, meets the stop, the leaf or the jamb: the 1.6 mm margin is closed behind by the stop (22 wide, 74 deep) or by a planted stop (F6)",
+   "expect": {
+    "angle_deg": 60.0,
+    "margin_mm": 1.6,
+    "stop_overlap_mm": 20.4,
+    "planted_stop_behind": false
+   },
+   "tol": 0.0,
+   "src": "3.1 frame (rebate 22 x 53, stop 74)",
+   "type": "coverage_angle"
+  },
+  {
+   "id": "CV-F2-elevation",
+   "group": "CV",
+   "name": "F2: no see-through slot in elevation",
+   "kind": "F2",
+   "what": "inside the clear opening (jamb to jamb, sill to head) the frame, leaf, glass and transom cover everything except the leaf's 1.6 mm margins, the 10 mm foot gap and the glass itself",
+   "expect": {
+    "max_hole_mm2": 0.0,
+    "foot_gap_mm": 10.0,
+    "margin_mm": 1.6
+   },
+   "tol": 0.0,
+   "src": "3.1 NOTES (the dark hall behind the door is a render aid, the engine needs its own dark hall)",
+   "type": "coverage_elevation"
+  },
+  {
+   "id": "CV-F2-angle",
+   "group": "CV",
+   "name": "F2: no see-through slot from an angle",
+   "kind": "F2",
+   "what": "a ray at 60 degrees from the normal, in the plan section through each jamb and the leaf's edge, meets the stop, the leaf or the jamb: the 1.6 mm margin is closed behind by the stop (22 wide, 74 deep) or by a planted stop (F6)",
+   "expect": {
+    "angle_deg": 60.0,
+    "margin_mm": 1.6,
+    "stop_overlap_mm": 20.4,
+    "planted_stop_behind": false
+   },
+   "tol": 0.0,
+   "src": "3.1 frame (rebate 22 x 53, stop 74)",
+   "type": "coverage_angle"
+  },
+  {
+   "id": "CV-F3-elevation",
+   "group": "CV",
+   "name": "F3: no see-through slot in elevation",
+   "kind": "F3",
+   "what": "inside the clear opening (jamb to jamb, sill to head) the frame, leaf, glass and transom cover everything except the leaf's 1.6 mm margins, the 10 mm foot gap and the glass itself",
+   "expect": {
+    "max_hole_mm2": 0.0,
+    "foot_gap_mm": 10.0,
+    "margin_mm": 1.6
+   },
+   "tol": 0.0,
+   "src": "3.1 NOTES (the dark hall behind the door is a render aid, the engine needs its own dark hall)",
+   "type": "coverage_elevation"
+  },
+  {
+   "id": "CV-F3-angle",
+   "group": "CV",
+   "name": "F3: no see-through slot from an angle",
+   "kind": "F3",
+   "what": "a ray at 60 degrees from the normal, in the plan section through each jamb and the leaf's edge, meets the stop, the leaf or the jamb: the 1.6 mm margin is closed behind by the stop (22 wide, 74 deep) or by a planted stop (F6)",
+   "expect": {
+    "angle_deg": 60.0,
+    "margin_mm": 1.6,
+    "stop_overlap_mm": 20.4,
+    "planted_stop_behind": false
+   },
+   "tol": 0.0,
+   "src": "3.1 frame (rebate 22 x 53, stop 74)",
+   "type": "coverage_angle"
+  },
+  {
+   "id": "CV-F4-elevation",
+   "group": "CV",
+   "name": "F4: no see-through slot in elevation",
+   "kind": "F4",
+   "what": "inside the clear opening (jamb to jamb, sill to head) the frame, leaf, glass and transom cover everything except the leaf's 1.6 mm margins, the 10 mm foot gap and the glass itself",
+   "expect": {
+    "max_hole_mm2": 0.0,
+    "foot_gap_mm": 10.0,
+    "margin_mm": 1.6
+   },
+   "tol": 0.0,
+   "src": "3.1 NOTES (the dark hall behind the door is a render aid, the engine needs its own dark hall)",
+   "type": "coverage_elevation"
+  },
+  {
+   "id": "CV-F4-angle",
+   "group": "CV",
+   "name": "F4: no see-through slot from an angle",
+   "kind": "F4",
+   "what": "a ray at 60 degrees from the normal, in the plan section through each jamb and the leaf's edge, meets the stop, the leaf or the jamb: the 1.6 mm margin is closed behind by the stop (22 wide, 74 deep) or by a planted stop (F6)",
+   "expect": {
+    "angle_deg": 60.0,
+    "margin_mm": 1.6,
+    "stop_overlap_mm": 20.4,
+    "planted_stop_behind": false
+   },
+   "tol": 0.0,
+   "src": "3.1 frame (rebate 22 x 53, stop 74)",
+   "type": "coverage_angle"
+  },
+  {
+   "id": "CV-F5-elevation",
+   "group": "CV",
+   "name": "F5: no see-through slot in elevation",
+   "kind": "F5",
+   "what": "inside the clear opening (jamb to jamb, sill to head) the frame, leaf, glass and transom cover everything except the leaf's 1.6 mm margins, the 10 mm foot gap and the glass itself",
+   "expect": {
+    "max_hole_mm2": 0.0,
+    "foot_gap_mm": 10.0,
+    "margin_mm": 1.6
+   },
+   "tol": 0.0,
+   "src": "3.1 NOTES (the dark hall behind the door is a render aid, the engine needs its own dark hall)",
+   "type": "coverage_elevation"
+  },
+  {
+   "id": "CV-F5-angle",
+   "group": "CV",
+   "name": "F5: no see-through slot from an angle",
+   "kind": "F5",
+   "what": "a ray at 60 degrees from the normal, in the plan section through each jamb and the leaf's edge, meets the stop, the leaf or the jamb: the 1.6 mm margin is closed behind by the stop (22 wide, 74 deep) or by a planted stop (F6)",
+   "expect": {
+    "angle_deg": 60.0,
+    "margin_mm": 1.6,
+    "stop_overlap_mm": 20.4,
+    "planted_stop_behind": false
+   },
+   "tol": 0.0,
+   "src": "3.1 frame (rebate 22 x 53, stop 74)",
+   "type": "coverage_angle"
+  },
+  {
+   "id": "CV-F6-elevation",
+   "group": "CV",
+   "name": "F6: no see-through slot in elevation",
+   "kind": "F6",
+   "what": "inside the clear opening (jamb to jamb, sill to head) the frame, leaf, glass and transom cover everything except the leaf's 1.6 mm margins, the 10 mm foot gap and the glass itself",
+   "expect": {
+    "max_hole_mm2": 0.0,
+    "foot_gap_mm": 10.0,
+    "margin_mm": 1.6
+   },
+   "tol": 0.0,
+   "src": "3.1 NOTES (the dark hall behind the door is a render aid, the engine needs its own dark hall)",
+   "type": "coverage_elevation"
+  },
+  {
+   "id": "CV-F6-angle",
+   "group": "CV",
+   "name": "F6: no see-through slot from an angle",
+   "kind": "F6",
+   "what": "a ray at 60 degrees from the normal, in the plan section through each jamb and the leaf's edge, meets the stop, the leaf or the jamb: the 1.6 mm margin is closed behind by the stop (22 wide, 74 deep) or by a planted stop (F6)",
+   "expect": {
+    "angle_deg": 60.0,
+    "margin_mm": 1.6,
+    "stop_overlap_mm": 0.0,
+    "planted_stop_behind": true
+   },
+   "tol": 0.0,
+   "src": "3.1 frame (rebate 22 x 53, stop 74)",
+   "type": "coverage_angle"
+  },
+  {
+   "id": "CV-F7-elevation",
+   "group": "CV",
+   "name": "F7: no see-through slot in elevation",
+   "kind": "F7",
+   "what": "inside the clear opening (jamb to jamb, sill to head) the frame, leaf, glass and transom cover everything except the leaf's 1.6 mm margins, the 10 mm foot gap and the glass itself",
+   "expect": {
+    "max_hole_mm2": 0.0,
+    "foot_gap_mm": 10.0,
+    "margin_mm": 1.6
+   },
+   "tol": 0.0,
+   "src": "3.1 NOTES (the dark hall behind the door is a render aid, the engine needs its own dark hall)",
+   "type": "coverage_elevation"
+  },
+  {
+   "id": "CV-F7-angle",
+   "group": "CV",
+   "name": "F7: no see-through slot from an angle",
+   "kind": "F7",
+   "what": "a ray at 60 degrees from the normal, in the plan section through each jamb and the leaf's edge, meets the stop, the leaf or the jamb: the 1.6 mm margin is closed behind by the stop (22 wide, 74 deep) or by a planted stop (F6)",
+   "expect": {
+    "angle_deg": 60.0,
+    "margin_mm": 1.6,
+    "stop_overlap_mm": 20.4,
+    "planted_stop_behind": false
+   },
+   "tol": 0.0,
+   "src": "3.1 frame (rebate 22 x 53, stop 74)",
+   "type": "coverage_angle"
+  },
+  {
+   "id": "CV-F7-joints",
+   "group": "CV",
+   "name": "F7: board joints are tongued and grooved",
+   "kind": "F7",
+   "what": "no through-gap between boards from the front or at 60 degrees: the tongue is at least 6 mm",
+   "expect": {
+    "tongue_mm": 6.0,
+    "v_joint_depth": 2.0
+   },
+   "tol": 0.5,
+   "src": "Hasluck p.316",
+   "type": "joints"
+  },
+  {
+   "id": "FU-F1-letter_plate-LP1",
+   "group": "FU",
+   "name": "F1: letter_plate LP1",
+   "kind": "F1",
+   "what": "centre of the fitting in the leaf frame (u, v) and its outer size",
+   "expect": {
+    "u": "leaf centre",
+    "v": 1617.0,
+    "size": [
+     76.0,
+     242.0
+    ],
+    "place": {
+     "u": "leaf centre",
+     "v": 1617.0
+    }
+   },
+   "tol": 8.0,
+   "src": "3.1 as built (P1: 76 x 242, centre 1617)",
+   "type": "furniture",
+   "slot": "letter_plate",
+   "variant": "LP1"
+  },
+  {
+   "id": "FU-F1-handle-HD1",
+   "group": "FU",
+   "name": "F1: handle HD1",
+   "kind": "F1",
+   "what": "centre of the fitting in the leaf frame (u, v) and its outer size",
+   "expect": {
+    "u": "leaf centre",
+    "v": 787.0,
+    "size": null,
+    "place": {
+     "u": "leaf centre",
+     "v": 787.0
+    }
+   },
+   "tol": 8.0,
+   "src": "3.1 as built (P2 8x crop)",
+   "type": "furniture",
+   "slot": "handle",
+   "variant": "HD1"
+  },
+  {
+   "id": "FU-F1-latch-LK2",
+   "group": "FU",
+   "name": "F1: latch LK2",
+   "kind": "F1",
+   "what": "centre of the fitting in the leaf frame (u, v) and its outer size",
+   "expect": {
+    "u": "46.3 from the stop face, right",
+    "v": 1040.0,
+    "size": [
+     37.0,
+     37.0
+    ],
+    "place": {
+     "u": "46.3 from the stop face, right",
+     "v": 1040.0
+    }
+   },
+   "tol": 8.0,
+   "src": "3.1 as built (P2: collar 37, scalloped)",
+   "type": "furniture",
+   "slot": "latch",
+   "variant": "LK2"
+  },
+  {
+   "id": "FU-F1-number-NM1",
+   "group": "FU",
+   "name": "F1: number NM1",
+   "kind": "F1",
+   "what": "centre of the fitting in the leaf frame (u, v) and its outer size",
+   "expect": {
+    "u": "leaf centre",
+    "v": 1917.0,
+    "size": [
+     51.0,
+     56.0
+    ],
+    "place": {
+     "v": 1917.0,
+     "u": "leaf centre"
+    }
+   },
+   "tol": 8.0,
+   "src": "3.1 (P1 stacked on the muntin, P2 in a row on the top rail: 56 high)",
+   "type": "furniture",
+   "slot": "number",
+   "variant": "NM1"
+  },
+  {
+   "id": "FU-F2-letter_plate-LP2",
+   "group": "FU",
+   "name": "F2: letter_plate LP2",
+   "kind": "F2",
+   "what": "centre of the fitting in the leaf frame (u, v) and its outer size",
+   "expect": {
+    "u": "leaf centre",
+    "v": 1545.0,
+    "size": [
+     195.0,
+     70.0
+    ],
+    "place": {
+     "u": "leaf centre",
+     "v": 1545.0
+    }
+   },
+   "tol": 8.0,
+   "src": "3.1 option_six_panel (P2: 195 x 70 at 0.788 of the height)",
+   "type": "furniture",
+   "slot": "letter_plate",
+   "variant": "LP2"
+  },
+  {
+   "id": "FU-F2-handle-HD1",
+   "group": "FU",
+   "name": "F2: handle HD1",
+   "kind": "F2",
+   "what": "centre of the fitting in the leaf frame (u, v) and its outer size",
+   "expect": {
+    "u": "leaf centre",
+    "v": 598.0,
+    "size": null,
+    "place": {
+     "u": "leaf centre",
+     "v": 598.0
+    }
+   },
+   "tol": 8.0,
+   "src": "3.1 as built (P2 8x crop)",
+   "type": "furniture",
+   "slot": "handle",
+   "variant": "HD1"
+  },
+  {
+   "id": "FU-F2-latch-LK2",
+   "group": "FU",
+   "name": "F2: latch LK2",
+   "kind": "F2",
+   "what": "centre of the fitting in the leaf frame (u, v) and its outer size",
+   "expect": {
+    "u": "46.3 from the stop face, right",
+    "v": 1070.5,
+    "size": [
+     37.0,
+     37.0
+    ],
+    "place": {
+     "u": "46.3 from the stop face, right",
+     "v": 1070.5
+    }
+   },
+   "tol": 8.0,
+   "src": "3.1 as built (P2: collar 37, scalloped)",
+   "type": "furniture",
+   "slot": "latch",
+   "variant": "LK2"
+  },
+  {
+   "id": "FU-F2-number-NM1",
+   "group": "FU",
+   "name": "F2: number NM1",
+   "kind": "F2",
+   "what": "centre of the fitting in the leaf frame (u, v) and its outer size",
+   "expect": {
+    "u": "leaf centre",
+    "v": 1943.0,
+    "size": [
+     51.0,
+     56.0
+    ],
+    "place": {
+     "v": 1943.0,
+     "u": "leaf centre"
+    }
+   },
+   "tol": 8.0,
+   "src": "3.1 (P1 stacked on the muntin, P2 in a row on the top rail: 56 high)",
+   "type": "furniture",
+   "slot": "number",
+   "variant": "NM1"
+  },
+  {
+   "id": "FU-F4-letter_plate-LP5",
+   "group": "FU",
+   "name": "F4: letter_plate LP5",
+   "kind": "F4",
+   "what": "centre of the fitting in the leaf frame (u, v) and its outer size",
+   "expect": {
+    "u": "leaf centre",
+    "v": 100.0,
+    "size": [
+     250.0,
+     50.0
+    ],
+    "place": {
+     "u": "leaf centre",
+     "v": 100.0
+    }
+   },
+   "tol": 8.0,
+   "src": "Photo D1 right door (rows 659 to 662.5 of a 150 px leaf: centre 83 above the foot, 46 high) and D4 black door (a 10 x 3 px plate at the foot, 90): centre 100 chosen to sit mid-rail (+-20)",
+   "type": "furniture",
+   "slot": "letter_plate",
+   "variant": "LP5"
+  },
+  {
+   "id": "FU-F4-handle-HD2b",
+   "group": "FU",
+   "name": "F4: handle HD2b",
+   "kind": "F4",
+   "what": "centre of the fitting in the leaf frame (u, v) and its outer size",
+   "expect": {
+    "u": 95.0,
+    "v": 1228.0,
+    "size": null,
+    "place": {
+     "u": 95.0,
+     "v": 1228.0
+    }
+   },
+   "tol": 8.0,
+   "src": "Photo D2: a small pale handle at the left stile of the middle door, 0.557 of the visible height (about 1092, +-24); the left door's at about 1228 (+-30)",
+   "type": "furniture",
+   "slot": "handle",
+   "variant": "HD2b"
+  },
+  {
+   "id": "FU-F6-letter_plate-LP4",
+   "group": "FU",
+   "name": "F6: letter_plate LP4",
+   "kind": "F6",
+   "what": "centre of the fitting in the leaf frame (u, v) and its outer size",
+   "expect": {
+    "u": 385.7,
+    "v": 915.6,
+    "size": [
+     250.0,
+     70.0
+    ],
+    "place": {
+     "u": 385.7,
+     "v": 915.6
+    }
+   },
+   "tol": 8.0,
+   "src": "Photo D5: 107 x 30 px at 2.35 mm a pixel = 250 x 70, centre at 0.506 of the leaf's width and 912 above its foot (+-15)",
+   "type": "furniture",
+   "slot": "letter_plate",
+   "variant": "LP4"
+  },
+  {
+   "id": "FU-F6-handle-HD2a",
+   "group": "FU",
+   "name": "F6: handle HD2a",
+   "kind": "F6",
+   "what": "centre of the fitting in the leaf frame (u, v) and its outer size",
+   "expect": {
+    "u": 697.5,
+    "v": 903.7,
+    "size": null,
+    "place": {
+     "u": 697.5,
+     "v": 903.7
+    }
+   },
+   "tol": 8.0,
+   "src": "Photo D5: lever 45 px = 106 at 2.35 mm a pixel, centre 902 above the foot (+-15), on the right stile",
+   "type": "furniture",
+   "slot": "handle",
+   "variant": "HD2a"
+  },
+  {
+   "id": "FU-F5-letter_plate-LP7",
+   "group": "FU",
+   "name": "F5: letter_plate LP7",
+   "kind": "F5",
+   "what": "centre of the fitting in the leaf frame (u, v) and its outer size",
+   "expect": {
+    "u": 413.2,
+    "v": 819.9,
+    "size": [
+     265.0,
+     50.0
+    ],
+    "place": {
+     "u": 413.2,
+     "v": 819.9
+    }
+   },
+   "tol": 8.0,
+   "src": "Photo D2 middle door: 11 x 2 px at 23.8 mm a pixel = 262 x 48 (+-24), centre about 830",
+   "type": "furniture",
+   "slot": "letter_plate",
+   "variant": "LP7"
+  },
+  {
+   "id": "FU-F5-handle-HD2b",
+   "group": "FU",
+   "name": "F5: handle HD2b",
+   "kind": "F5",
+   "what": "centre of the fitting in the leaf frame (u, v) and its outer size",
+   "expect": {
+    "u": 72.4,
+    "v": 1087.2,
+    "size": null,
+    "place": {
+     "u": 72.4,
+     "v": 1087.2
+    }
+   },
+   "tol": 8.0,
+   "src": "Photo D2: a small pale handle at the left stile of the middle door, 0.557 of the visible height (about 1092, +-24); the left door's at about 1228 (+-30)",
+   "type": "furniture",
+   "slot": "handle",
+   "variant": "HD2b"
+  },
+  {
+   "id": "FU-T1-letter_plate-LP1",
+   "group": "FU",
+   "name": "T1: letter_plate LP1",
+   "kind": "T1",
+   "what": "centre of the fitting in the leaf frame (u, v) and its outer size",
+   "expect": {
+    "u": "leaf centre",
+    "v": 1617.0,
+    "size": [
+     76.0,
+     242.0
+    ],
+    "place": {
+     "u": "leaf centre",
+     "v": 1617.0
+    }
+   },
+   "tol": 8.0,
+   "src": "3.1 as built (P1: 76 x 242, centre 1617)",
+   "type": "furniture",
+   "slot": "letter_plate",
+   "variant": "LP1"
+  },
+  {
+   "id": "FU-T1-latch-LK1",
+   "group": "FU",
+   "name": "T1: latch LK1",
+   "kind": "T1",
+   "what": "centre of the fitting in the leaf frame (u, v) and its outer size",
+   "expect": {
+    "u": "46.6 from the stop face, right",
+    "v": 1235.0,
+    "size": [
+     43.5,
+     43.5
+    ],
+    "place": {
+     "u": "46.6 from the stop face, right",
+     "v": 1235.0
+    }
+   },
+   "tol": 8.0,
+   "src": "3.1 as built (P1: collar 43.5, 8.4 px; the 3.1 name for it was cylinder lock)",
+   "type": "furniture",
+   "slot": "latch",
+   "variant": "LK1"
+  },
+  {
+   "id": "FU-T1-bell-BL1",
+   "group": "FU",
+   "name": "T1: bell BL1",
+   "kind": "T1",
+   "what": "centre of the fitting in the leaf frame (u, v) and its outer size",
+   "expect": {
+    "u": null,
+    "v": null,
+    "size": [
+     22.0,
+     72.6
+    ],
+    "place": {
+     "x": 859.4,
+     "z_range": [
+      1120.3,
+      1192.9
+     ],
+     "on": "the right jamb's stop face (3.1 as built: x 859.4, z 1120.3 to 1192.9)"
+    }
+   },
+   "tol": 8.0,
+   "src": "Photo P1 16x crop rows 300.3 to 314.4: a dark-grey oblong 22 x 72.6, no bright element, a darker band a little below its middle; 3.1 review v2 (close) and the handover's fix: the two-part push is deleted",
+   "type": "furniture",
+   "slot": "bell",
+   "variant": "BL1"
+  },
+  {
+   "id": "FU-T1-number-NM1",
+   "group": "FU",
+   "name": "T1: number NM1",
+   "kind": "T1",
+   "what": "centre of the fitting in the leaf frame (u, v) and its outer size",
+   "expect": {
+    "u": "leaf centre",
+    "v": null,
+    "size": [
+     51.0,
+     56.0
+    ],
+    "place": {
+     "stacked": "two digits 39 x 72 on the muntin, v 1207 to 1277.6 and 1300 to 1373",
+     "u": "leaf centre"
+    }
+   },
+   "tol": 8.0,
+   "src": "3.1 (P1 stacked on the muntin, P2 in a row on the top rail: 56 high)",
+   "type": "furniture",
+   "slot": "number",
+   "variant": "NM1"
+  },
+  {
+   "id": "FU-T1-scraper-BS1",
+   "group": "FU",
+   "name": "T1: scraper BS1",
+   "kind": "T1",
+   "what": "centre of the fitting in the leaf frame (u, v) and its outer size",
+   "expect": {
+    "u": null,
+    "v": null,
+    "size": [
+     330.0,
+     130.0,
+     200.0
+    ],
+    "place": {
+     "x_from_jamb": "left, 150 clear of the step's end",
+     "z": 0.0
+    }
+   },
+   "tol": 8.0,
+   "src": "Photo D10 (2014, said why: iron fittings of this kind were never renewed); sizes are Judgement, the photograph has no scale in its plane (+-25 per cent)",
+   "type": "furniture",
+   "slot": "scraper",
+   "variant": "BS1"
+  },
+  {
+   "id": "FU-T3-letter_plate-LP6",
+   "group": "FU",
+   "name": "T3: letter_plate LP6",
+   "kind": "T3",
+   "what": "centre of the fitting in the leaf frame (u, v) and its outer size",
+   "expect": {
+    "u": "leaf centre",
+    "v": 865.3,
+    "size": [
+     270.0,
+     50.0
+    ],
+    "place": {
+     "u": "leaf centre",
+     "v": 865.3
+    }
+   },
+   "tol": 8.0,
+   "src": "Photo D4 right door: 12 x 3.1 px at 21.7 mm a pixel = 260 x 67, centre 0.448 of the visible height (+-25)",
+   "type": "furniture",
+   "slot": "letter_plate",
+   "variant": "LP6"
+  },
+  {
+   "id": "FU-T3-handle-HD2c",
+   "group": "FU",
+   "name": "T3: handle HD2c",
+   "kind": "T3",
+   "what": "centre of the fitting in the leaf frame (u, v) and its outer size",
+   "expect": {
+    "u": 757.0,
+    "v": 823.0,
+    "size": null,
+    "place": {
+     "u": 757.0,
+     "v": 823.0
+    }
+   },
+   "tol": 8.0,
+   "src": "Photo D4 right door: a dark 2 x 4 px mark at the right edge, 0.43 of the visible height (+-35); lever size Judgement",
+   "type": "furniture",
+   "slot": "handle",
+   "variant": "HD2c"
+  },
+  {
+   "id": "FU-T2-letter_plate-LP5",
+   "group": "FU",
+   "name": "T2: letter_plate LP5",
+   "kind": "T2",
+   "what": "centre of the fitting in the leaf frame (u, v) and its outer size",
+   "expect": {
+    "u": "leaf centre",
+    "v": 100.0,
+    "size": [
+     250.0,
+     50.0
+    ],
+    "place": {
+     "u": "leaf centre",
+     "v": 100.0
+    }
+   },
+   "tol": 8.0,
+   "src": "Photo D1 right door (rows 659 to 662.5 of a 150 px leaf: centre 83 above the foot, 46 high) and D4 black door (a 10 x 3 px plate at the foot, 90): centre 100 chosen to sit mid-rail (+-20)",
+   "type": "furniture",
+   "slot": "letter_plate",
+   "variant": "LP5"
+  },
+  {
+   "id": "FU-T2-handle-HD3",
+   "group": "FU",
+   "name": "T2: handle HD3",
+   "kind": "T2",
+   "what": "centre of the fitting in the leaf frame (u, v) and its outer size",
+   "expect": {
+    "u": 67.0,
+    "v": 1242.8,
+    "size": [
+     25.0,
+     270.0
+    ],
+    "place": {
+     "u": 67.0,
+     "v": 1242.8
+    }
+   },
+   "tol": 8.0,
+   "src": "Photo D3: a dark vertical handle on the left stile, rows 498.25 to 524.25 of a 190 px visible leaf = 264 long, v 1111 to 1375 (+-30); D1 left door shows a vertical metal strip on its left stile",
+   "type": "furniture",
+   "slot": "handle",
+   "variant": "HD3"
+  },
+  {
+   "id": "FU-T2-number-NM4",
+   "group": "FU",
+   "name": "T2: number NM4",
+   "kind": "T2",
+   "what": "centre of the fitting in the leaf frame (u, v) and its outer size",
+   "expect": {
+    "u": null,
+    "v": null,
+    "size": null,
+    "place": {
+     "on": "the transom glass, centred"
+    }
+   },
+   "tol": 8.0,
+   "src": "Judgement: a fanlight number is standard on such houses; no period photograph read shows one at a readable size",
+   "type": "furniture",
+   "slot": "number",
+   "variant": "NM4"
+  },
+  {
+   "id": "FU-F7-handle-HD4",
+   "group": "FU",
+   "name": "F7: handle HD4",
+   "kind": "F7",
+   "what": "centre of the fitting in the leaf frame (u, v) and its outer size",
+   "expect": {
+    "u": 738.0,
+    "v": 1000.0,
+    "size": null,
+    "place": {
+     "u": 738.0,
+     "v": 1000.0
+    }
+   },
+   "tol": 8.0,
+   "src": "Judgement: the usual iron thumb latch for a ledged door; Hasluck draws only the hinges",
+   "type": "furniture",
+   "slot": "handle",
+   "variant": "HD4"
+  },
+  {
+   "id": "FU-F3-letter_plate-LP1",
+   "group": "FU",
+   "name": "F3: letter_plate LP1",
+   "kind": "F3",
+   "what": "centre of the fitting in the leaf frame (u, v) and its outer size",
+   "expect": {
+    "u": "leaf centre",
+    "v": 1617.0,
+    "size": [
+     76.0,
+     242.0
+    ],
+    "place": {
+     "u": "leaf centre",
+     "v": 1617.0
+    }
+   },
+   "tol": 8.0,
+   "src": "3.1 as built (P1: 76 x 242, centre 1617)",
+   "type": "furniture",
+   "slot": "letter_plate",
+   "variant": "LP1"
+  },
+  {
+   "id": "FU-F3-handle-HD3",
+   "group": "FU",
+   "name": "F3: handle HD3",
+   "kind": "F3",
+   "what": "centre of the fitting in the leaf frame (u, v) and its outer size",
+   "expect": {
+    "u": 67.0,
+    "v": 1255.0,
+    "size": [
+     25.0,
+     270.0
+    ],
+    "place": {
+     "u": 67.0,
+     "v": 1255.0
+    }
+   },
+   "tol": 8.0,
+   "src": "Photo D3: a dark vertical handle on the left stile, rows 498.25 to 524.25 of a 190 px visible leaf = 264 long, v 1111 to 1375 (+-30); D1 left door shows a vertical metal strip on its left stile",
+   "type": "furniture",
+   "slot": "handle",
+   "variant": "HD3"
+  },
+  {
+   "id": "FU-F3-number-NM3",
+   "group": "FU",
+   "name": "F3: number NM3",
+   "kind": "F3",
+   "what": "centre of the fitting in the leaf frame (u, v) and its outer size",
+   "expect": {
+    "u": "leaf centre",
+    "v": 1925.0,
+    "size": null,
+    "place": {
+     "v": 1925.0,
+     "u": "leaf centre"
+    }
+   },
+   "tol": 8.0,
+   "src": "Photo D6: a white numeral painted on a blue door (size Judgement, 60 +-15)",
+   "type": "furniture",
+   "slot": "number",
+   "variant": "NM3"
+  },
+  {
+   "id": "BP-form",
+   "group": "BP",
+   "name": "bell push: one plain part",
+   "kind": "T1",
+   "what": "the T1 push is exactly one mesh part named iron_bellpush, 22 x 72.6 x 3 proud, corner radius at most 2 mm, no part named bezel, button, ring, lens, led, camera or speaker, no metallic ring, nothing bright",
+   "expect": {
+    "parts": 1,
+    "size": [
+     22.0,
+     72.6
+    ],
+    "proud": 3.0,
+    "corner_r_max": 2.0,
+    "forbidden": [
+     "bezel",
+     "button",
+     "ring",
+     "lens",
+     "led",
+     "camera",
+     "speaker",
+     "any second part",
+     "rounded pill corners above 2 mm",
+     "any bright or lit element"
+    ]
+   },
+   "tol": 0.5,
+   "src": "P1 16x crop; 3.1 review v2 close; HANDOVER 3.1 fix",
+   "type": "bell_form"
+  },
+  {
+   "id": "BP-none-elsewhere",
+   "group": "BP",
+   "name": "no push on any other kind",
+   "kind": null,
+   "what": "no part of any other kind is named iron_bellpush* or carries a bell",
+   "expect": {
+    "kinds_with_bell": [
+     "T1"
+    ]
+   },
+   "tol": 0,
+   "src": "target",
+   "type": "bell_kinds"
+  },
+  {
+   "id": "BP-no-modern",
+   "group": "BP",
+   "name": "no two-part modern push on any variant",
+   "kind": null,
+   "what": "on every kind and variant no part of a bell fitting beyond the one oblong; no part name or material of the 'modern video doorbell' family",
+   "expect": {
+    "max_parts_per_bell": 1
+   },
+   "tol": 0,
+   "src": "3.1 review v2 close: the two-part push reads as a modern video doorbell",
+   "type": "bell_modern"
+  },
+  {
+   "id": "BP-houses",
+   "group": "BP",
+   "name": "the push is placed on one house only",
+   "kind": null,
+   "what": "the houses whose bell is BL1",
+   "expect": {
+    "houses": [
+     "west_south_bay2"
+    ]
+   },
+   "tol": 0,
+   "src": "house table",
+   "type": "bell_houses"
+  },
+  {
+   "id": "AD-adjacent-east",
+   "group": "AD",
+   "name": "no two neighbours alike on the east side",
+   "kind": null,
+   "what": "each consecutive pair of doors differs in kind, in paint and in at least 2 of letter plate, handle, latch, number",
+   "expect": [
+    "east_parade_bay0",
+    "east_parade_bay1",
+    "east_parade_bay2",
+    "east_parade_bay3",
+    "east_parade_bay4",
+    "east_chandler_bay0"
+   ],
+   "tol": 0,
+   "src": "Jafar 4 Oct: every house its own door; the brief",
+   "type": "adjacent",
+   "side": "east"
+  },
+  {
+   "id": "AD-adjacent-west",
+   "group": "AD",
+   "name": "no two neighbours alike on the west side",
+   "kind": null,
+   "what": "each consecutive pair of doors differs in kind, in paint and in at least 2 of letter plate, handle, latch, number",
+   "expect": [
+    "west_south_bay2",
+    "west_south_bay1",
+    "west_south_bay0",
+    "west_north_bay2",
+    "west_north_bay1",
+    "west_north_bay0"
+   ],
+   "tol": 0,
+   "src": "Jafar 4 Oct: every house its own door; the brief",
+   "type": "adjacent",
+   "side": "west"
+  },
+  {
+   "id": "AD-opposite",
+   "group": "AD",
+   "name": "doors facing within 4.6 m differ in paint class",
+   "kind": null,
+   "what": "paint class (dark_neutral, dark_chroma, mid, light, bright) differs",
+   "expect": [
+    [
+     "east_parade_bay0",
+     "west_south_bay2",
+     0.731
+    ],
+    [
+     "east_parade_bay1",
+     "west_south_bay1",
+     3.731
+    ],
+    [
+     "east_parade_bay2",
+     "west_south_bay0",
+     0.678
+    ],
+    [
+     "east_parade_bay2",
+     "west_north_bay2",
+     4.591
+    ],
+    [
+     "east_parade_bay3",
+     "west_south_bay0",
+     2.269
+    ],
+    [
+     "east_parade_bay3",
+     "west_north_bay2",
+     3.0
+    ],
+    [
+     "east_parade_bay4",
+     "west_north_bay1",
+     3.0
+    ],
+    [
+     "east_chandler_bay0",
+     "west_north_bay0",
+     4.0
+    ]
+   ],
+   "tol": 0,
+   "src": "the brief",
+   "type": "opposite"
+  },
+  {
+   "id": "AD-coverage",
+   "group": "AD",
+   "name": "every household door of the street has a kind",
+   "kind": null,
+   "what": "the 12 houses derived from terrace-front.py all appear, east_parade_bay5 has none",
+   "expect": [
+    "east_parade_bay0",
+    "east_parade_bay1",
+    "east_parade_bay2",
+    "east_parade_bay3",
+    "east_parade_bay4",
+    "east_chandler_bay0",
+    "west_south_bay2",
+    "west_south_bay1",
+    "west_south_bay0",
+    "west_north_bay2",
+    "west_north_bay1",
+    "west_north_bay0"
+   ],
+   "tol": 0,
+   "src": "terrace-front.py",
+   "type": "houses"
+  },
+  {
+   "id": "AD-frame-set",
+   "group": "AD",
+   "name": "a kind sits in its frame set",
+   "kind": null,
+   "what": "cottages (west_south) take T kinds, every other house takes F kinds",
+   "expect": {
+    "west_south": [
+     "T1",
+     "T2",
+     "T3"
+    ]
+   },
+   "tol": 0,
+   "src": "frame sets",
+   "type": "frame_set"
+  },
+  {
+   "id": "AD-kinds-used",
+   "group": "AD",
+   "name": "every kind is used at least once",
+   "kind": null,
+   "what": "10 kinds",
+   "expect": [
+    "F1",
+    "F2",
+    "F3",
+    "F4",
+    "F5",
+    "F6",
+    "F7",
+    "T1",
+    "T2",
+    "T3"
+   ],
+   "tol": 0,
+   "src": "the brief: every house kind",
+   "type": "kinds_used"
+  },
+  {
+   "id": "AD-backdrop",
+   "group": "AD",
+   "name": "the hill's 12 doors: no neighbours alike",
+   "kind": null,
+   "what": "kind and paint differ between consecutive doors of a row",
+   "expect": [
+    {
+     "id": "backdrop_rise_approach_e0",
+     "kind": "F1",
+     "paint": "navy"
+    },
+    {
+     "id": "backdrop_rise_approach_e1",
+     "kind": "F2",
+     "paint": "dark_green"
+    },
+    {
+     "id": "backdrop_rise_approach_w0",
+     "kind": "F3",
+     "paint": "brown"
+    },
+    {
+     "id": "backdrop_rise_approach_w1",
+     "kind": "F4",
+     "paint": "deep_teal"
+    },
+    {
+     "id": "backdrop_rise_approach_w2",
+     "kind": "T1",
+     "paint": "black"
+    },
+    {
+     "id": "backdrop_rise_approach_w3",
+     "kind": "T2",
+     "paint": "maroon"
+    },
+    {
+     "id": "backdrop_rise_approach_w4",
+     "kind": "F1",
+     "paint": "navy"
+    },
+    {
+     "id": "backdrop_rise_approach_x0",
+     "kind": "F2",
+     "paint": "dark_green"
+    },
+    {
+     "id": "backdrop_rise_approach_x1",
+     "kind": "F3",
+     "paint": "brown"
+    },
+    {
+     "id": "backdrop_rise_approach_x2",
+     "kind": "F4",
+     "paint": "deep_teal"
+    },
+    {
+     "id": "backdrop_rise_approach_x3",
+     "kind": "T1",
+     "paint": "black"
+    },
+    {
+     "id": "backdrop_rise_approach_x4",
+     "kind": "T2",
+     "paint": "maroon"
+    }
+   ],
+   "tol": 0,
+   "src": "backdrop rule",
+   "type": "backdrop"
+  },
+  {
+   "id": "PN-palette",
+   "group": "PN",
+   "name": "every door paint is in the palette",
+   "kind": null,
+   "what": "paint ids",
+   "expect": [
+    "black",
+    "dark_green",
+    "maroon",
+    "navy",
+    "brown",
+    "deep_teal",
+    "cream",
+    "white_gloss",
+    "council_turquoise",
+    "olive",
+    "khaki",
+    "mustard",
+    "bright_blue",
+    "lime",
+    "red",
+    "varnish"
+   ],
+   "tol": 0,
+   "src": "palette",
+   "type": "palette"
+  },
+  {
+   "id": "PN-frames",
+   "group": "PN",
+   "name": "frames are white or grimed white",
+   "kind": null,
+   "what": "frame colour ids",
+   "expect": [
+    "white",
+    "white_grimy"
+   ],
+   "tol": 0,
+   "src": "Jafar 3 Oct: windows with white frames",
+   "type": "frames"
+  },
+  {
+   "id": "PN-light-doors",
+   "group": "PN",
+   "name": "at most 3 of 12 doors are light or bright",
+   "kind": null,
+   "what": "paint class light or bright",
+   "expect": 3,
+   "tol": 0,
+   "src": "the Hook sheet's dark doors; owed line 1",
+   "type": "light_count"
+  },
+  {
+   "id": "PN-srgb",
+   "group": "PN",
+   "name": "paint values are sRGB triples in range and the dark classics are 3.1's",
+   "kind": null,
+   "what": "the 6 colours of 3.1 keep their numbers",
+   "expect": {
+    "black": [
+     35,
+     36,
+     40
+    ],
+    "dark_green": [
+     28,
+     59,
+     41
+    ],
+    "maroon": [
+     92,
+     26,
+     32
+    ],
+    "navy": [
+     24,
+     38,
+     78
+    ],
+    "brown": [
+     74,
+     48,
+     34
+    ],
+    "red": [
+     201,
+     41,
+     32
+    ]
+   },
+   "tol": 0,
+   "src": "3.1 door_colours",
+   "type": "srgb"
+  },
+  {
+   "id": "GL-types",
+   "group": "GL",
+   "name": "glass types used exist",
+   "kind": null,
+   "what": "every glass key named by a kind",
+   "expect": [
+    "frosted",
+    "leaded_diamond",
+    "lens_14",
+    "plain_3mm",
+    "reeded_4mm",
+    "wired"
+   ],
+   "tol": 0,
+   "src": "glass table",
+   "type": "glass_keys"
+  },
+  {
+   "id": "GL-reeded",
+   "group": "GL",
+   "name": "reeded glass: 6 mm flutes, 1.2 deep",
+   "kind": "F6",
+   "what": "pitch and depth",
+   "expect": {
+    "pitch": 6.0,
+    "depth": 1.2
+   },
+   "tol": 0.1,
+   "src": "D5",
+   "type": "glass_values",
+   "glass": "reeded_4mm"
+  },
+  {
+   "id": "GL-leaded",
+   "group": "GL",
+   "name": "leaded light: came 6 wide, diamonds 95 x 70",
+   "kind": "T2",
+   "what": "came and diamond size",
+   "expect": {
+    "came_w": 6.0,
+    "diamond": [
+     95.0,
+     70.0
+    ]
+   },
+   "tol": 0.1,
+   "src": "D3, scaled",
+   "type": "glass_values",
+   "glass": "leaded_diamond"
+  },
+  {
+   "id": "WR-order",
+   "group": "WR",
+   "name": "conditions order",
+   "kind": null,
+   "what": "paint_flake share kept < tired < neglected",
+   "expect": [
+    0.03,
+    0.063,
+    0.4
+   ],
+   "tol": 0,
+   "src": "wear target paint_flake range and neglected 0.40",
+   "type": "wear_order"
+  },
+  {
+   "id": "WR-wear-target",
+   "group": "WR",
+   "name": "numbers equal the wear target's",
+   "kind": null,
+   "what": "paint_flake density range, typical and neglected share; handle_wear halo p50",
+   "expect": {
+    "flake_low": 0.03,
+    "typical": 0.063,
+    "neglected": 0.4,
+    "halo_p50_m": 0.17
+   },
+   "tol": 0,
+   "src": "production/cloud-week/targets/wear/target.json",
+   "type": "wear_numbers"
+  },
+  {
+   "id": "WR-houses",
+   "group": "WR",
+   "name": "every house has a condition; the street has all three",
+   "kind": null,
+   "what": "kept, tired, neglected counts",
+   "expect": {
+    "kept": 5,
+    "tired": 5,
+    "neglected": 2
+   },
+   "tol": 0,
+   "src": "house table",
+   "type": "wear_houses"
+  },
+  {
+   "id": "PH-T2-D3",
+   "group": "PH",
+   "name": "T2 against photograph D3",
+   "kind": "T2",
+   "what": "the kind's features as fractions of its visible face against the fractions measured in the photograph's recorded boxes",
+   "expect": null,
+   "tol": "the measurement's own error plus 8 mm",
+   "src": "Photo D3",
+   "type": "photo",
+   "photo": "D3"
+  },
+  {
+   "id": "PH-T3-D4",
+   "group": "PH",
+   "name": "T3 against photograph D4",
+   "kind": "T3",
+   "what": "the kind's features as fractions of its visible face against the fractions measured in the photograph's recorded boxes",
+   "expect": null,
+   "tol": "the measurement's own error plus 8 mm",
+   "src": "Photo D4",
+   "type": "photo",
+   "photo": "D4"
+  },
+  {
+   "id": "PH-F5-D2",
+   "group": "PH",
+   "name": "F5 against photograph D2",
+   "kind": "F5",
+   "what": "the kind's features as fractions of its visible face against the fractions measured in the photograph's recorded boxes",
+   "expect": null,
+   "tol": "the measurement's own error plus 8 mm",
+   "src": "Photo D2",
+   "type": "photo",
+   "photo": "D2"
+  },
+  {
+   "id": "PH-F6-D5",
+   "group": "PH",
+   "name": "F6 against photograph D5",
+   "kind": "F6",
+   "what": "the kind's features as fractions of its visible face against the fractions measured in the photograph's recorded boxes",
+   "expect": null,
+   "tol": "the measurement's own error plus 8 mm",
+   "src": "Photo D5",
+   "type": "photo",
+   "photo": "D5"
+  },
+  {
+   "id": "PH-F4-D2",
+   "group": "PH",
+   "name": "F4 against photograph D2",
+   "kind": "F4",
+   "what": "the kind's features as fractions of its visible face against the fractions measured in the photograph's recorded boxes",
+   "expect": null,
+   "tol": "the measurement's own error plus 8 mm",
+   "src": "Photo D2",
+   "type": "photo",
+   "photo": "D2"
+  },
+  {
+   "id": "PH-T2-D1",
+   "group": "PH",
+   "name": "T2 against photograph D1",
+   "kind": "T2",
+   "what": "the kind's features as fractions of its visible face against the fractions measured in the photograph's recorded boxes",
+   "expect": null,
+   "tol": "the measurement's own error plus 8 mm",
+   "src": "Photo D1",
+   "type": "photo",
+   "photo": "D1"
+  },
+  {
+   "id": "NM-maker",
+   "group": "NM",
+   "name": "no maker's name in any text or data",
+   "kind": null,
+   "what": "whole-word blocklist over every string in target.json",
+   "expect": [],
+   "tol": 0,
+   "src": "brief: no real maker's names or marks",
+   "type": "blocklist"
+  },
+  {
+   "id": "NM-night",
+   "group": "NM",
+   "name": "night light is the lantern colour",
+   "kind": null,
+   "what": "(1.0, 0.25, 0.0) linear present, (1, 0.7055, 0) absent",
+   "expect": [
+    1.0,
+    0.25,
+    0.0
+   ],
+   "tol": 0,
+   "src": "Jafar 13 Oct lesson",
+   "type": "night"
+  },
+  {
+   "id": "NM-dash",
+   "group": "NM",
+   "name": "no em dash or italic marker in the lines for Jafar",
+   "kind": null,
+   "what": "owed lines",
+   "expect": null,
+   "tol": 0,
+   "src": "Jafar 13 Oct lesson",
+   "type": "owed_text"
+  },
+  {
+   "id": "GA-T1-views",
+   "group": "GA",
+   "name": "T1: the gate's views",
+   "kind": "T1",
+   "what": "front, street, close, low, front_head, front_foot, close_plate (and close_foot for a low plate), cameras as 3.1's views json with the close height at the kind's furniture",
+   "expect": 7,
+   "tol": 0,
+   "src": "kit/door/views_T1.json, views_F1.json",
+   "type": "views"
+  },
+  {
+   "id": "GA-T2-views",
+   "group": "GA",
+   "name": "T2: the gate's views",
+   "kind": "T2",
+   "what": "front, street, close, low, front_head, front_foot, close_plate (and close_foot for a low plate), cameras as 3.1's views json with the close height at the kind's furniture",
+   "expect": 8,
+   "tol": 0,
+   "src": "kit/door/views_T1.json, views_F1.json",
+   "type": "views"
+  },
+  {
+   "id": "GA-T3-views",
+   "group": "GA",
+   "name": "T3: the gate's views",
+   "kind": "T3",
+   "what": "front, street, close, low, front_head, front_foot, close_plate (and close_foot for a low plate), cameras as 3.1's views json with the close height at the kind's furniture",
+   "expect": 7,
+   "tol": 0,
+   "src": "kit/door/views_T1.json, views_F1.json",
+   "type": "views"
+  },
+  {
+   "id": "GA-F1-views",
+   "group": "GA",
+   "name": "F1: the gate's views",
+   "kind": "F1",
+   "what": "front, street, close, low, front_head, front_foot, close_plate (and close_foot for a low plate), cameras as 3.1's views json with the close height at the kind's furniture",
+   "expect": 7,
+   "tol": 0,
+   "src": "kit/door/views_T1.json, views_F1.json",
+   "type": "views"
+  },
+  {
+   "id": "GA-F2-views",
+   "group": "GA",
+   "name": "F2: the gate's views",
+   "kind": "F2",
+   "what": "front, street, close, low, front_head, front_foot, close_plate (and close_foot for a low plate), cameras as 3.1's views json with the close height at the kind's furniture",
+   "expect": 7,
+   "tol": 0,
+   "src": "kit/door/views_T1.json, views_F1.json",
+   "type": "views"
+  },
+  {
+   "id": "GA-F3-views",
+   "group": "GA",
+   "name": "F3: the gate's views",
+   "kind": "F3",
+   "what": "front, street, close, low, front_head, front_foot, close_plate (and close_foot for a low plate), cameras as 3.1's views json with the close height at the kind's furniture",
+   "expect": 7,
+   "tol": 0,
+   "src": "kit/door/views_T1.json, views_F1.json",
+   "type": "views"
+  },
+  {
+   "id": "GA-F4-views",
+   "group": "GA",
+   "name": "F4: the gate's views",
+   "kind": "F4",
+   "what": "front, street, close, low, front_head, front_foot, close_plate (and close_foot for a low plate), cameras as 3.1's views json with the close height at the kind's furniture",
+   "expect": 8,
+   "tol": 0,
+   "src": "kit/door/views_T1.json, views_F1.json",
+   "type": "views"
+  },
+  {
+   "id": "GA-F5-views",
+   "group": "GA",
+   "name": "F5: the gate's views",
+   "kind": "F5",
+   "what": "front, street, close, low, front_head, front_foot, close_plate (and close_foot for a low plate), cameras as 3.1's views json with the close height at the kind's furniture",
+   "expect": 7,
+   "tol": 0,
+   "src": "kit/door/views_T1.json, views_F1.json",
+   "type": "views"
+  },
+  {
+   "id": "GA-F6-views",
+   "group": "GA",
+   "name": "F6: the gate's views",
+   "kind": "F6",
+   "what": "front, street, close, low, front_head, front_foot, close_plate (and close_foot for a low plate), cameras as 3.1's views json with the close height at the kind's furniture",
+   "expect": 7,
+   "tol": 0,
+   "src": "kit/door/views_T1.json, views_F1.json",
+   "type": "views"
+  },
+  {
+   "id": "GA-F7-views",
+   "group": "GA",
+   "name": "F7: the gate's views",
+   "kind": "F7",
+   "what": "front, street, close, low, front_head, front_foot, close_plate (and close_foot for a low plate), cameras as 3.1's views json with the close height at the kind's furniture",
+   "expect": 7,
+   "tol": 0,
+   "src": "kit/door/views_T1.json, views_F1.json",
+   "type": "views"
+  }
+ ],
  "disagreements_photographs_win": [
   {
    "id": "W1",

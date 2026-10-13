@@ -40,7 +40,7 @@ PHOTOS = {
            "preview": "d4-barnoldswick-frederick-street-1990-three-doors.jpg"},
     "D5": {"gid": None, "title": "Hazlehead I, Provost Graham Avenue (SC 1141987)", "author": "Miles Glendinning (Tower Block Archive, Edinburgh College of Art)",
            "licence": "CC BY 4.0", "taken": "1987",
-           "url": "https://commons.wikimedia.org/wiki/File:Hazlehead_I,_Provost_Graham_Avenue_(SC_1141987).png", "size_px": [4000, 2646],
+           "url": "https://commons.wikimedia.org/wiki/File:Hazlehead_I,_Provost_Graham_Avenue_(SC_1141987).png", "size_px": [1920, 1270], "original_size_px": [4000, 2646],
            "period": "the period (1987); a flush door of a council flat's landing, the same leaf the council fitted to its houses",
            "shows": "an olive-green flush door with an oblong letter plate at its middle, a lever handle on the right stile, a spyhole above the plate, white frame with a reeded transom and reeded sidelight",
            "used_for": "F6 council flush door, the chrome-look oblong plate, the lever handle, reeded glass",
@@ -236,7 +236,7 @@ BACKDROP_KINDS = ["F1", "F2", "F3", "F4", "T1", "T2"]
 BACKDROP_PAINTS = ["black", "maroon", "navy", "dark_green", "brown", "deep_teal"]
 
 OWED = [
-    "Door colours: dark doors as the Hook sheet shows, with two lighter ones from 1980s photographs (one white, one council turquoise)? Yes, two (recommended), or all dark?",
+    "Door colours: dark doors as the Hook sheet shows, with three lighter ones from 1980s photographs (cream, white, council turquoise)? Yes, three (recommended), or all dark?",
     "Door surrounds: all white as you ruled for windows on 3 October (recommended), or the painted surrounds the 1980s Hull streets show, as on the windows line?",
     "The west shop row has one storey: its three side doors become a service door and two household doors (recommended), or flats in its roof with household doors on all three?",
 ]

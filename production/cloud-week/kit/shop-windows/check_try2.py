@@ -510,7 +510,7 @@ def visibility(R, work, assets, di, group_of):
     """Per group, the best share over STREET_SQUARE and CLOSE_35 of its silhouette that an object-index render shows."""
     import bpy
     import mathutils
-    res = CHECK_RES
+    res = (1920, 1080)                    # thin pieces (the spectacles' rims) are under a pixel wide at 1280
     best = np.zeros(len(di["groups"]))
     for cam in ("STREET_SQUARE", "CLOSE_35"):
         bpy.ops.wm.read_factory_settings(use_empty=True)
@@ -590,28 +590,38 @@ def visibility(R, work, assets, di, group_of):
         sc.render.image_settings.color_depth = "8"
         bpy.ops.render.render(write_still=True)
         img = np.asarray(Image.open(path).convert("RGB")).astype(np.float32) / 255.0
-        cp = cam_params(R, cam, res)
-        deps = bpy.context.evaluated_depsgraph_get()
+        # each piece's whole silhouette: the same render with only that piece drawn (white), so that the visible share and the silhouette are counted by the same rasteriser
+        white = flat((1, 1, 1))
+        all_disp = [o for o in disp if o.type == "MESH"]
         for gi, g in enumerate(di["groups"]):
             if g["kind"] != "piece":
                 continue
-            # silhouette area: every triangle of the group's meshes projected and filled
-            m = Image.new("L", res, 0)
-            dr = ImageDraw.Draw(m)
-            for nm in g["objs"]:
+            names = set(g["objs"])
+            for o in bpy.data.objects:
+                if o.type == "MESH":
+                    o.hide_render = o.name not in names
+            for nm in names:
                 ob = bpy.data.objects.get(nm)
-                if ob is None:
-                    continue
-                V, T, _ = mesh_world(ob, deps)
-                x, y, z = project_np(cp, V)
-                for t in T:
-                    if (z[t] > 0.05).all():
-                        dr.polygon([(x[t[0]], y[t[0]]), (x[t[1]], y[t[1]]), (x[t[2]], y[t[2]])], fill=255)
-            area = int((np.asarray(m) > 0).sum())
+                if ob is not None:
+                    ob.data.materials.clear()
+                    ob.data.materials.append(white)
+            sp = os.path.join(work, "gate", "check_silhouette_tmp.png")
+            sc.render.filepath = sp
+            bpy.ops.render.render(write_still=True)
+            sil = np.asarray(Image.open(sp).convert("L")) > 128
+            area = int(sil.sum())
+            for nm in names:
+                ob = bpy.data.objects.get(nm)
+                if ob is not None:
+                    ob.data.materials.clear()
+                    ob.data.materials.append(mats[gi])
             c = np.array(cols[gi])
             vis = int((np.abs(img - c[None, None, :]).max(axis=2) < 0.02).sum())
             if area > 20:
                 best[gi] = max(best[gi], min(1.0, vis / float(area)))
+        for o in bpy.data.objects:
+            if o.type == "MESH":
+                o.hide_render = False
     return best
 
 

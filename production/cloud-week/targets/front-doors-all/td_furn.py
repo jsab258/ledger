@@ -25,7 +25,7 @@ def furniture(A):
     kn = fir["knob"]
     kh = fir["old_keyhole"]
     opt = A["variants"]["option_six_panel"]
-    H31 = 1981.0
+    H31 = 1960.6   # the visible height of frame set F: 3.1's option fractions are of the visible face
     f5 = d2_f5_fractions()
     f4 = d4_t3_fractions()
     f6 = d5_fractions()
@@ -80,7 +80,7 @@ def furniture(A):
                 "place": {"T2": {"u": 67.0, "v": round(1927.6 * 0.5 * ((633.75 - 524.25) / 190.0 + (633.75 - 498.25) / 190.0), 1)}, "F3": {"u": 67.0, "v": 1255.0}},
                 "src": "Photo D3: a dark vertical handle on the left stile, rows 498.25 to 524.25 of a 190 px visible leaf = 264 long, v 1111 to 1375 (+-30); D1 left door shows a vertical metal strip on its left stile"},
         "HD4": {"name": "thumb latch on a ledged door", "plate": [38.0, 190.0], "plate_t": 3.0, "bar": [20.0, 150.0], "thumb_piece": "a 25 x 35 pressed thumb piece", **STEEL_DARK,
-                "place": {"F7": {"u": 762.0 - 70.0, "v": 1000.0}}, "src": "Judgement: the usual iron thumb latch for a ledged door; Hasluck draws only the hinges"},
+                "place": {"F7": {"u": 838.0 - 100.0, "v": 1000.0}}, "src": "Judgement: the usual iron thumb latch for a ledged door; Hasluck draws only the hinges"},
     }
     F["latch"] = {
         "LK0": {"name": "none"},

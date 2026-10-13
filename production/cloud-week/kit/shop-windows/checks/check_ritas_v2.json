@@ -1,11 +1,11 @@
 {
  "schema": "ledger.cloud-week-42.shop-windows-ritas-check/1",
- "made": "2026-10-13 03:14:41",
+ "made": "2026-10-13 03:18:19",
  "target": "production/cloud-week/targets/shop-windows/target.json (status: target for unit 7 of cloud week 42, part 2; written 12 October 2026; failed its )",
  "pass": 48,
  "counted": 55,
  "na": 3,
- "seconds": 65.0,
+ "seconds": 82.3,
  "rows": [
   {
    "id": "PIC-01",
@@ -107,7 +107,7 @@
    "id": "DSP-02",
    "name": "real geometry in the display",
    "status": "pass",
-   "detail": "168 nodes, all meshes; materials with an alpha cut-out or blend: none; the price cards are 3 mm thick boxes; 182602 triangles"
+   "detail": "168 nodes, all meshes; materials with an alpha cut-out or blend: none; the price cards are 3 mm thick boxes; 183002 triangles"
   },
   {
    "id": "INV-01",
@@ -293,7 +293,7 @@
    "id": "DSP-03",
    "name": "no display mesh intersects another; every piece shows",
    "status": "fail",
-   "detail": "168 display meshes, 14 pairs with overlapping boxes tested (each mesh inset 1 mm, so a 2 mm contact is tolerated): 0 pairs intersect; the share of each piece's silhouette seen from CLOSE_35 or STREET_SQUARE (an object-index pass, the frame's bars and the other pieces in front): 33 pieces, lowest 0.00, 4 under 0.5: round_spectacles 0.17, vintage_pocket_watch 0.00, vintage_pocket_watch 0.38, magnifying_glass_01 0.00"
+   "detail": "168 display meshes, 14 pairs with overlapping boxes tested (each mesh inset 1 mm, so a 2 mm contact is tolerated): 0 pairs intersect; the share of each piece's silhouette seen from CLOSE_35 or STREET_SQUARE (an object-index pass, the frame's bars and the other pieces in front): 33 pieces, lowest 0.23, 1 under 0.5: round_spectacles 0.23"
   },
   {
    "id": "DSP-04",

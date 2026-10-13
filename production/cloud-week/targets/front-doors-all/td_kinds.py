@@ -249,20 +249,21 @@ def build_kinds(A):
         ],
     }
 
-    # ------------------------------------------------------------------ F2 (six panels, P2 via 3.1's option)
+    # ------------------------------------------------------------------ F2 (six panels, P2 via 3.1's option; its fractions are of the VISIBLE face 797.2 x 1960.6)
     opt = A["variants"]["option_six_panel"]
     fh = opt["fractions_of_visible_height"]
     fw = opt["fractions_of_visible_width"]
-    H, W = fl["height_mm"], fl["width_mm"]
-    bot_rail = fh["bottom_rail"] * H
-    bot_panel = fh["bottom_panels"] * H
-    lock_rail = fh["lock_rail"] * H
-    long_panel = fh["long_panels"] * H
-    frieze = fh["frieze_rail"] * H
-    small_up = fh["small_upper_panels"] * H
-    top_rail2 = fh["top_rail"] * H
-    stile2 = fw["stile"] * W
-    muntin2 = fw["muntin"] * W
+    VW, VH = VIS["F"]
+    W, H = fl["width_mm"], fl["height_mm"]
+    bot_rail = fh["bottom_rail"] * VH
+    bot_panel = fh["bottom_panels"] * VH
+    lock_rail = fh["lock_rail"] * VH
+    long_panel = fh["long_panels"] * VH
+    frieze = fh["frieze_rail"] * VH
+    small_up = fh["small_upper_panels"] * VH
+    top_rail2 = fh["top_rail"] * VH + LAP
+    stile2 = fw["stile"] * VW + LAP
+    muntin2 = fw["muntin"] * VW
     pw = (W - 2 * stile2 - muntin2) / 2.0
     cols = [(stile2, stile2 + pw), (stile2 + pw + muntin2, W - stile2)]
     rows = []
@@ -283,7 +284,7 @@ def build_kinds(A):
         "mouldings": {"outside": {"kind": "bolection", "width_on_face": 43.0, "profile_dh": bol_f["profile_dh_mm"], "src": "3.1 F1 as built (P2, 43)"}},
         "glass": {"transom": "plain_3mm", "leaf": None},
         "photographs": ["P2"],
-        "measured_fractions_of_height": fh,
+        "fractions_of_visible_height": fh, "fractions_of_visible_width": fw,
         "parts_vs_3_1": [
             ("frame_*, glass_fanlight, timber sill", "kept", "frame set F, the 49 mm jambs, the weathered transom, the sill"),
             ("leaf_frame, panel_*, moulding_bolection_*", "changed", "six panels (two small, two long, two small) from 3.1's option_six_panel fractions of P2; the same bolection profile at 43"),
@@ -381,7 +382,7 @@ def build_kinds(A):
     }
 
     # ------------------------------------------------------------------ F7 (ledged and braced service door; Hasluck)
-    w7 = 762.0
+    w7 = fl["width_mm"]
     bw = w7 / 6.0
     boards = [_r(i * bw, 2) for i in range(7)]
     ledges = [[100.0, 240.0], [920.0, 1060.0], [1741.0, 1881.0]]
@@ -390,17 +391,17 @@ def build_kinds(A):
         for i in range(6):
             nails.append([_r(i * bw + bw / 2.0, 1), _r((lv[0] + lv[1]) / 2.0, 1)])
     K["F7"] = {
-        "name": "ledged and braced service door (Hasluck; no period photograph read)", "frame_set": "F, no transom glass change", "family": "service door",
+        "name": "ledged and braced service door (Hasluck; no period photograph read)", "frame_set": "F", "family": "service door",
         "leaf": {"w": w7, "h": H, "t": 38.0, "construction": "ledged and braced matchboarding", "lock_side": "right", "board_w": _r(bw, 2), "boards": 6, "board_edges_u": boards,
                  "board_t": 22.0, "joint": "tongued and grooved with a V joint 6 wide, 2 deep", "ledges_v": ledges, "ledge_t": 25.0, "braces": "two, back, from the foot of the hinge ledge to the head of the lock ledge",
                  "nail_heads": {"dia": 9.0, "proud": 3.0, "at": nails, "note": "one head per board at each ledge, driven from the face and clenched behind (Hasluck p.316)"}, "openings": []},
         "mouldings": {"outside": {"kind": "v_joint", "profile": v_joint_profile()}},
         "glass": {"transom": "plain_3mm", "leaf": None},
         "photographs": [],
-        "sources": "Read: Hasluck pp.312-317, Figs. 1015-1039: boards 3 to 7 in wide (127 mm = 5 in used), 3/4 to 1 1/4 in thick (22.2 used), grooved and tongued, V joint; ledges nailed with wrought nails driven from the face and clenched; hook-and-plate hinges inside for an inward door. Sizes of ledges, nail heads and leaf: Judgement (no photograph of such a door on these streets was reached).",
+        "sources": "Read: Hasluck pp.312-317, Figs. 1015-1039: boards 3 to 7 in wide (139.7 mm = 5.5 in used, six across 838), 3/4 to 1 1/4 in thick (22.2 used), grooved and tongued, V joint; ledges nailed with wrought nails driven from the face and clenched; hook-and-plate hinges inside for an inward door. Sizes of ledges, nail heads and leaf: Judgement (no photograph of such a door on these streets was reached).",
         "parts_vs_3_1": [
             ("frame_*, glass_fanlight, sill", "kept", "frame set F; a service door also takes the transom light"),
-            ("leaf_frame, panel_*, moulding_*", "changed", "six matchboards 127 wide, V-jointed, 22 thick, three ledges and two braces behind (not visible), nail heads in rows on the face"),
+            ("leaf_frame, panel_*, moulding_*", "changed", "six matchboards 139.7 wide, V-jointed, 22 thick, three ledges and two braces behind (not visible), nail heads in rows on the face"),
             ("iron_letter_plate, iron_knob_*, iron_keyhole_*, iron_lock_*", "removed", "a service door has no letter plate; HD4, a thumb latch, on the lock side"),
         ],
     }

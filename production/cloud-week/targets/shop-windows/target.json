@@ -2771,12 +2771,12 @@
         1.25
        ],
        [
-        1.65,
-        1.89
+        2.14,
+        2.38
        ],
        [
-        2.51,
-        2.75
+        2.68,
+        2.92
        ]
       ],
       "note": "the approved display's ring trays: 0.24 x 0.16, velvet, 6 x 4 gold and silver rings each (24), a ticket in front",
@@ -2805,12 +2805,12 @@
         1.53
        ],
        [
-        2.09,
-        2.35
+        2.4,
+        2.66
        ],
        [
-        2.77,
-        3.03
+        2.94,
+        3.2
        ]
       ],
       "note": "the approved display's watch pads: 0.26 x 0.16, velvet, 2 x 4 wrist and pocket watches modelled by script (the Poly Haven pocket watches below lie on two of the pads, two each, and take two of the pad's slots)",
@@ -2835,8 +2835,8 @@
         0.84
        ],
        [
-        1.91,
-        2.07
+        1.82,
+        1.98
        ]
       ],
       "note": "the approved display's chains: 18 gold links in an arc, 0.14 long, a ticket in front",
@@ -2877,8 +2877,8 @@
       "n": 1,
       "tier": "bed",
       "zone": [
-       2.37,
-       2.49,
+       2.0,
+       2.12,
        0.04,
        0.22,
        0.0,
@@ -2892,8 +2892,8 @@
       "n": 1,
       "tier": "bed",
       "zone": [
-       3.05,
-       3.2,
+       1.65,
+       1.8,
        0.04,
        0.22,
        0.0,
@@ -2922,8 +2922,8 @@
       "n": 2,
       "tier": "bed",
       "zone": [
-       2.09,
-       2.35,
+       1.27,
+       1.53,
        0.04,
        0.2,
        0.016,

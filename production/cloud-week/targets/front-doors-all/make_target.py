@@ -105,6 +105,13 @@ def backdrop_table():
     return out
 
 
+def furn_name(furn, var):
+    for cat in furn.values():
+        if var in cat:
+            return cat[var].get("name")
+    return None
+
+
 def views(kind, frame):
     base = load_json(VIEWS_T1 if frame == "T" else VIEWS_F1)
     out = copy.deepcopy(base)
@@ -130,13 +137,14 @@ def main():
     for h in resolved:
         uses.setdefault(h["kind"], []).append(h["house"])
 
+    N_VARIANTS = sum(1 for slot, cat in furn.items() for k, v in cat.items() if v.get("name") != "none" and v.get("offered", True))
     T = {}
     T["family"] = "front-doors-all"
     T["title"] = "Front doors for every house kind (cloud week 42, unit 9)"
     T["summary"] = ("Front doors for every house kind of Quay Street: from the passed 3.1 door (T1 cottage four-panel, F1 flat four-panel, its bell push fixed to one plain dark oblong), "
-                    "10 door kinds (cottage T1 T2 T3, flat F1 to F7) fitted to the street's 12 household doors by house, 8 furniture slots with 24 variants "
+                    "10 door kinds (cottage T1 T2 T3, flat F1 to F7) fitted to the street's 12 household doors by house, 7 furniture slots with %d variants "
                     "(letter plates, handles, rim night latches, knockers, bells, numbers, a boot scraper), 16 paints and 3 conditions, a street order in which no two neighbours "
-                    "match, and a gate of 7 views a kind plus the street rows.")
+                    "match, and a gate of 7 views a kind plus the street rows." % N_VARIANTS)
     T["status"] = "WRITTEN 13 October 2026, not yet reviewed"
     T["units"] = "mm; leaf frame u across from the leaf's left edge seen from outside, v up from its bottom; frame frame x across the opening from the left reveal, z up from the threshold top (the 3.1 axes)"
     T["axes"] = {"leaf": "u, v as above (structural leaf, including the 20.4 that laps behind each stop and the head)", "frame": "x, z as target 3.1: x 0 at the left brick reveal, z 0 at the top of the threshold",
@@ -153,7 +161,8 @@ def main():
     T["kind_use"] = uses
     T["glass"] = FU.GLASS
     T["furniture"] = furn
-    T["furniture_counts"] = {slot: len([k for k in cat if not (cat[k].get("name") == "none")]) for slot, cat in furn.items()}
+    T["furniture_counts"] = {slot: len([k for k in cat if cat[k].get("name") != "none" and cat[k].get("offered", True)]) for slot, cat in furn.items()}
+    T["furniture_placed_today"] = sorted({d2["variant"] for h in resolved for d2 in h["furniture"].values() if furn_name(furn, d2["variant"]) != "none"})
     T["paints"] = D.PALETTE
     T["frame_colours"] = D.FRAME_COLOURS
     T["conditions"] = D.CONDITIONS
@@ -188,20 +197,30 @@ def main():
         fr = "FF6" if k == "F6" else spec["frame_set"][0]
         base = "T" if fr == "T" else "F"
         v = copy.deepcopy(load_json(VIEWS_T1 if base == "T" else VIEWS_F1))
-        # close view at the kind's own furniture heights
-        zs = []
-        for slot, var in [(s, h) for h in [kk for kk in resolved if kk["kind"] == k][:1] for s, h in [(s2, d2["variant"]) for s2, d2 in h["furniture"].items()]]:
-            pl = furn[slot][var].get("place", {}).get(k)
-            if pl and isinstance(pl.get("v"), (int, float)):
-                zs.append(pl["v"] / 1000.0 + 0.01)
-        close_z = r(sum(zs) / len(zs), 2) if zs else 1.2
+        # close view at the kind's own furniture: the handle and latch heights when they stand above 0.7 m, else the plate; a foot view for a low plate
+        hz, plate_z = [], None
+        low_plate = False
+        h0 = [kk for kk in resolved if kk["kind"] == k][0]
+        for slot, d2 in h0["furniture"].items():
+            pl = furn[slot][d2["variant"]].get("place", {}).get(k)
+            if not pl or not isinstance(pl.get("v"), (int, float)):
+                continue
+            if slot == "letter_plate":
+                plate_z = pl["v"] / 1000.0
+                low_plate = pl["v"] < 300.0
+            elif pl["v"] >= 700.0:
+                hz.append(pl["v"] / 1000.0)
+        close_z = r(sum(hz) / len(hz) + 0.01, 2) if hz else r((plate_z or 1.2) + 0.01, 2)
         for vw in v:
             if vw["name"] == "close":
                 vw["target"][2] = close_z
                 vw["loc"][2] = close_z
             if vw["name"] == "close_plate":
-                vw["target"][2] = r(zs[0], 2) if zs else 1.2
-                vw["loc"][2] = r(zs[0], 2) if zs else 1.2
+                zz = r((plate_z if plate_z is not None else close_z) + 0.01, 2)
+                vw["target"][2] = zz
+                vw["loc"][2] = zz
+        if low_plate:
+            v.append({"name": "close_foot", "loc": [0.1, -1.0, 0.25], "target": [0.0, 0.19, 0.2], "lens": 50})
         gate["views"][k] = v
     gate["street_views"] = [
         {"name": "hook_day", "from": "vignette-scene.json cameras cam_A (x 4 east footway, looking up +x), condition overcast_day", "sees": "the west cottages' near doors and the east parade's side doors in perspective"},
@@ -222,6 +241,8 @@ def main():
     ]
     gate["near_misses_to_report"] = ["F7 has no photograph", "the knockers, bell pulls, black iron plates, frosted and wired glass are listed and not placed"]
     T["gate"] = gate
+    import td_checks
+    T["checks"] = td_checks.build_checks(T)
     T["disagreements_photographs_win"] = [
         {"id": "W1", "what": "the leaf width of a council flush door", "scene_or_book": "the scene's side door 0.838 x 1.981 (SCENE-SLOTS)", "photograph": "D5: 0.389 of the height, a 762 leaf shown whole in a wide white frame", "chosen": "F6: 762, frame set FF6"},
         {"id": "W2", "what": "the letter plate on every household door", "scene_or_book": "the scene's 0.25 x 0.04 at 1.0 on every side door (west_north and east_chandler included)", "photograph": "D1, D4: a low plate at the foot; D2: a plate under a slit at 0.83; D5: 250 x 70 at 0.91; D4 right: 260 x 67 at 0.87; a service door has none", "chosen": "per kind (LP1 to LP7); none on F7"},
