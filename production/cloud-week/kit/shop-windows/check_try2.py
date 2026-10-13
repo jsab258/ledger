@@ -493,13 +493,13 @@ def display_rows(R, work, assets, rows):
     front_row = [i for i, g in enumerate(di["groups"]) if (g["kind"] == "piece" and g.get("tier") == "bed") or g["kind"] == "scripted"]
     other = [i for i, g in enumerate(di["groups"]) if g["kind"] == "piece" and i not in front_row]
     # a front-row piece whose whole silhouette is under 20 px at STREET_SQUARE (a chain: 0.14 m long and 4 mm wide, a line under one pixel at 8.76 m) cannot be shown from the far pavement by any
-    # arrangement: it is judged from CLOSE_35, and named
+    # arrangement: it is judged from the better of the two close cameras (a glazing bar stands over a 4 mm chain from one of them), and named
     tiny = [i for i in front_row if areas["STREET_SQUARE"][i] <= 20]
-    low_front = [(di["groups"][i]["model"], round(float(sq[i]), 2)) for i in front_row if i not in tiny and sq[i] < 0.5] + [(di["groups"][i]["model"] + " (from CLOSE_35)", round(float(per_cam["CLOSE_35"][i]), 2)) for i in tiny if per_cam["CLOSE_35"][i] < 0.5]
+    low_front = [(di["groups"][i]["model"], round(float(sq[i]), 2)) for i in front_row if i not in tiny and sq[i] < 0.5] + [(di["groups"][i]["model"] + " (from the close cameras)", round(float(max(per_cam["CLOSE_35"][i], per_cam["CLOSE_35_B"][i])), 2)) for i in tiny if max(per_cam["CLOSE_35"][i], per_cam["CLOSE_35_B"][i]) < 0.5]
     low = [(di["groups"][i]["model"], round(float(vis[i]), 2)) for i in other if vis[i] < 0.5]
     rows.add("DSP-03", "no display mesh intersects another; every piece shows", not bad and not low and not low_front,
-             "%d display meshes, %d pairs with overlapping boxes tested (each mesh inset 1 mm, so a 2 mm contact is tolerated): %d pairs intersect%s; the share of each piece's silhouette seen (an object-index pass, the frame's bars and the other pieces in front): the %d pieces of the front row (the bed's pieces and the scripted trays, pads and chains) from STREET_SQUARE itself: lowest %.2f among the %d large enough to be seen there (%d are under 20 px: %s, judged from CLOSE_35, lowest %.2f), %d under 0.5%s; the other %d pieces from CLOSE_35 or STREET_SQUARE: lowest %.2f, %d under 0.5%s"
-             % (len(names), pairs, len(bad), (" (" + "; ".join("%s x %s" % (a, b) for a, b, _ in bad_l[:8]) + ")") if bad else "", len(front_row), min([float(sq[i]) for i in front_row if i not in tiny] or [0]), len(front_row) - len(tiny), len(tiny), ", ".join(sorted({di["groups"][i]["model"] for i in tiny})) or "none", min([float(per_cam["CLOSE_35"][i]) for i in tiny] or [0]), len(low_front),
+             "%d display meshes, %d pairs with overlapping boxes tested (each mesh inset 1 mm, so a 2 mm contact is tolerated): %d pairs intersect%s; the share of each piece's silhouette seen (an object-index pass, the frame's bars and the other pieces in front): the %d pieces of the front row (the bed's pieces and the scripted trays, pads and chains) from STREET_SQUARE itself: lowest %.2f among the %d large enough to be seen there (%d are under 20 px: %s, judged from the better of CLOSE_35 and CLOSE_35_B, lowest %.2f), %d under 0.5%s; the other %d pieces from CLOSE_35 or STREET_SQUARE: lowest %.2f, %d under 0.5%s"
+             % (len(names), pairs, len(bad), (" (" + "; ".join("%s x %s" % (a, b) for a, b, _ in bad_l[:8]) + ")") if bad else "", len(front_row), min([float(sq[i]) for i in front_row if i not in tiny] or [0]), len(front_row) - len(tiny), len(tiny), ", ".join(sorted({di["groups"][i]["model"] for i in tiny})) or "none", min([float(max(per_cam["CLOSE_35"][i], per_cam["CLOSE_35_B"][i])) for i in tiny] or [0]), len(low_front),
                 (": " + ", ".join("%s %.2f" % kv for kv in low_front[:8])) if low_front else "", len(other), min([float(vis[i]) for i in other] or [0]), len(low), (": " + ", ".join("%s %.2f" % kv for kv in low[:8])) if low else ""))
     # DSP-04
     L = di["length_m"]
@@ -527,13 +527,13 @@ def display_rows(R, work, assets, rows):
 
 
 def visibility(R, work, assets, di, group_of):
-    """Per group, the best share over STREET_SQUARE and CLOSE_35 of its silhouette that an object-index render shows."""
+    """Per camera (STREET_SQUARE, CLOSE_35, CLOSE_35_B), per group, the share of its silhouette that an object-index render shows (and, under "areas", the silhouette in pixels)."""
     import bpy
     import mathutils
     res = (1920, 1080)                    # thin pieces (the spectacles' rims) are under a pixel wide at 1280
     per_cam = {}
     areas = {}
-    for cam in ("STREET_SQUARE", "CLOSE_35"):
+    for cam in ("STREET_SQUARE", "CLOSE_35", "CLOSE_35_B"):
         best = np.zeros(len(di["groups"]))
         per_cam[cam] = best
         areas[cam] = np.zeros(len(di["groups"]))
