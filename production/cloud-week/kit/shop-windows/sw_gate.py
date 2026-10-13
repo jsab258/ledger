@@ -344,6 +344,21 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
     plane("footway", [(-xs, kerb_y, 0.0), (xs, kerb_y, 0.0), (xs, 0.0, 0.0), (-xs, 0.0, 0.0)], paving)
     plane("road", [(-xs, -3.0 - Y_WALL, -FOOT), (xs, -3.0 - Y_WALL, -FOOT), (xs, kerb_y, -FOOT), (-xs, kerb_y, -FOOT)], road)
     plane("far_footway", [(-xs, -9.0 - Y_WALL, 0.0), (xs, -9.0 - Y_WALL, 0.0), (xs, -3.0 - Y_WALL, 0.0), (-xs, -3.0 - Y_WALL, 0.0)], paving)
+
+    def block(name, x0, x1, y0, y1, z0, z1, m):
+        """A closed box in the model frame (vertices in world coordinates, so the brick shader's object coordinates are the wall's own)."""
+        v = [(x0, y0, z0), (x1, y0, z0), (x1, y1, z0), (x0, y1, z0), (x0, y0, z1), (x1, y0, z1), (x1, y1, z1), (x0, y1, z1)]
+        f = [(0, 3, 2, 1), (4, 5, 6, 7), (0, 1, 5, 4), (1, 2, 6, 5), (2, 3, 7, 6), (3, 0, 4, 7)]
+        me2 = bpy.data.meshes.new(name)
+        me2.from_pydata(v, [], f)
+        o = bpy.data.objects.new(name, me2)
+        sc.collection.objects.link(o)
+        o.data.materials.append(m)
+        return o
+    # a brick pier behind each pilaster (13 Oct, street review N2): the pilaster's shaft and core stop at x 2.970 and the street model's wall opening is the whole bay, so the outer
+    # 30 to 54 mm of the bay was open to the sky at STREET_30; the game's street facade has to close the same gap (owed on the PC)
+    for k, (xa, xb) in enumerate(PIERS["x"]):
+        block("pier_%d" % k, xa, xb, PIERS["y"][0], PIERS["y"][1], PIERS["z"][0], PIERS["z"][1], brick)
     # --- the camera
     eye = to_model(cam_def["eye_street_m"])
     aim = to_model(cam_def["aim_street_m"])
@@ -362,7 +377,7 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
     cam_rec = {"camera": cam_name, "state": state, "eye_street_m": [BAY_MID_X - co_.location.x, co_.location.y + Y_WALL, co_.location.z + FOOT],
                "defined_eye_street_m": list(cam_def["eye_street_m"]), "aim_street_m": list(cam_def["aim_street_m"]),
                "aim_error_deg": round(math.degrees(fwd.angle(to_aim)), 4), "vfov_deg": round(math.degrees(cam.angle_y), 4), "defined_vfov_deg": VFOV[cam_name],
-               "resolution": list(RES)}
+               "resolution": list(res)}
     json.dump(cam_rec, open(os.path.splitext(out_png)[0] + ".camera.json", "w"), indent=1)
     # --- light: day = an overcast sky; night = sodium lamps (linear 1.0, 0.25, 0.0) and the display's spill (a rect light in the window head, tipped 62 degrees down)
     w = bpy.data.worlds.new("w")
@@ -401,19 +416,60 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
         rl.energy = (extra or {}).get("spill_w", 60.0)
         ro = bpy.data.objects.new("spill", rl)
         sc.collection.objects.link(ro)
-        ro.location = (0.975, -0.02, 2.36)
+        # centred at y 0.10 behind the wall face and z 2.30 (13 Oct, street review N1; try 1 had it at y -0.02, z 2.36, so its front edge stood 63 mm IN FRONT of the glass, its emitting face
+        # was seen from the street and it lit the window frame from in front: the burnt bar, the glowing mullions, the bright pavement). Now the whole rect, tipped as before, stands 50 mm or
+        # more behind the glass's inner face, and the light itself is invisible to the camera, to glossy rays and to transmission rays
+        ro.location = SPILL_POS
+        ro.visible_camera = False
+        ro.visible_glossy = False
+        ro.visible_transmission = False
         # an area light shines along its own -Z; tipped about x by -28 degrees it shines down and out toward the street: 62 degrees below the horizontal, as the spec's rect light
         ro.rotation_euler = (math.radians(-28.0), 0.0, 0.0)
         # lighting channel 1 (the game's): the spill lights the display, the front and the street but not the night grille's lattice (the bars would flare)
         recv = bpy.data.collections.new("spill_receivers")
         sc.collection.children.link(recv)
         for o in list(bpy.data.objects):
-            if o.type == "MESH" and o not in lattice and o.name != "card":
-                for c in list(o.users_collection):
-                    if c is not recv:
-                        pass
-                recv.objects.link(o)
+            if o.type == "MESH" and o not in lattice and o.name != "card" and not o.name.startswith(SPILL_OFF):
+                recv.objects.link(o)          # the window frame, the door frame and the band stand out of the spill's channel, with the lattice (the game's lighting channel)
         ro.light_linking.receiver_collection = recv
+    # --- the glass mask (a check's render, 13 Oct): every pixel where the window's glass is the first thing the camera sees white, everything else (frame, mullions, beads, lattice, display,
+    # wall) black: the window-glass pixels without the frame
+    if mode == "mask_glass":
+        def flat(c):
+            m = bpy.data.materials.new("flat")
+            m.use_nodes = True
+            t = m.node_tree
+            for n in list(t.nodes):
+                t.nodes.remove(n)
+            e = t.nodes.new("ShaderNodeEmission")
+            e.inputs["Color"].default_value = (*c, 1.0)
+            o2 = t.nodes.new("ShaderNodeOutputMaterial")
+            t.links.new(e.outputs[0], o2.inputs[0])
+            return m
+        white, black = flat((1, 1, 1)), flat((0, 0, 0))
+        for o in bpy.data.objects:
+            if o.type == "MESH":
+                o.data.materials.clear()
+                o.data.materials.append(white if o.name.startswith("win_glass_lower") else black)
+            elif o.type == "LIGHT":
+                o.hide_render = True
+        sc.world.node_tree.nodes["Background"].inputs["Color"].default_value = (0, 0, 0, 1)
+        sc.world.node_tree.nodes["Background"].inputs["Strength"].default_value = 0.0
+        sc.render.engine = "CYCLES"
+        sc.cycles.device = "CPU"
+        sc.cycles.samples = 1
+        sc.cycles.use_denoising = False
+        sc.cycles.use_adaptive_sampling = False
+        sc.cycles.filter_width = 0.01
+        sc.view_settings.view_transform = "Standard"
+        sc.render.resolution_x, sc.render.resolution_y = res
+        sc.render.resolution_percentage = 100
+        sc.render.image_settings.file_format = "PNG"
+        sc.render.image_settings.color_mode = "RGB"
+        sc.render.filepath = out_png
+        t0 = time.time()
+        bpy.ops.render.render(write_still=True)
+        return round(time.time() - t0, 1)
     # --- render
     sc.render.engine = "CYCLES"
     sc.cycles.device = "CPU"
@@ -426,7 +482,7 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
     sc.cycles.transmission_bounces = 8
     sc.cycles.sample_clamp_indirect = 10.0
     sc.view_settings.view_transform = "Standard"
-    sc.render.resolution_x, sc.render.resolution_y = RES
+    sc.render.resolution_x, sc.render.resolution_y = res
     sc.render.resolution_percentage = 100
     sc.render.image_settings.file_format = "PNG"
     sc.render.image_settings.color_mode = "RGB"
