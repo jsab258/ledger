@@ -4,7 +4,7 @@ from .common import *  # noqa: F401,F403
 PEOPLE = []
 PLACES = {}
 ROW = ("NEWS", "Everybody in the pawn then saw it: Rita and Hal themselves, Darren Milner, the pawn's back-room hand, its appraiser, its clerk, and the locksmith who works its counter in the mornings.")
-NEVER = ("ELLIS", "**Some never go at all**, whatever they see or suffer, because their trade keeps them from it: Rita, the customs officer (the machine's stamp, the roster says), Hal, the pawn's back-room hand, the scrap dealer, and the outfit's man.")
+NEVER_WHY = "Reworded from the Ellis design (game-design/ellis-2026-09-29.md line 18), keeping only the sentence about this person: the design's paragraph names other people's arms, which this person could not know. Review fault 1."
 
 # ---------------------------------------------------------------- 7 Wayne Harrison (victor)
 sty, tag = "brisk", "mate"
@@ -13,7 +13,7 @@ PEOPLE.append(regular(
     line_basis=NOTE("His own account of his job; the story says only that he is the pawn's back-room hand."),
     manner=("always carrying something",),
     knows=[
-        K("never_police", *NEVER, secret=True, via="his trade keeps him from the police (the Ellis design)"),
+        N("never_police", "N-REWORDED", "Wayne never goes to the police, whatever he sees or suffers; his trade keeps him from it.", NEVER_WHY, secret=True),
         K("row", "NEWS", "Hal and Rita had words in the pawn, and nobody knows what about.", via="day 1, Monday at eleven: the town's sample story; he was there"),
         D("my_hours", "hours", "ritas"), D("day", "day"),
     ],
@@ -47,7 +47,7 @@ PEOPLE.append(regular(
     line_basis=NOTE("His own account of why he keeps the shop; canon says only that it sells no coins and why is not settled."),
     manner=("remembers everyone's business",),
     knows=[
-        K("never_police", *NEVER, secret=True, via="his trade keeps him from the police (the Ellis design)"),
+        N("never_police", "N-REWORDED", "Hal never goes to the police, whatever he sees or suffers; his trade keeps him from it.", NEVER_WHY, secret=True),
         K("row", "NEWS", "Hal and Rita had words in the pawn, and nobody knows what about.", via="day 1, Monday at eleven, in the pawn: the town's sample story; he was a party to it"),
         D("my_hours", "hours", "hals"), D("day", "day"),
     ],
@@ -82,8 +82,8 @@ sty, tag = "formal", ""
 PEOPLE.append(regular(
     "tibor", "Susan", knew=False, line_as="believes", line_truth="true", line_basis=TB_TRADE, manner=("off duty never quite off duty",),
     knows=[
-        K("stamp", "EMP", "Tibor (the customs stamp)", secret=True, via="the old-money machine's person on the street (empire roster, faction table)"),
-        K("never_police", *NEVER, secret=True, via="her trade keeps her from the police (the Ellis design)"),
+        N("stamp", "N-REWORDED", "Susan Coverdale is the old-money machine's stamp at customs.", "Reworded from the empire roster's faction table (game-design/empire-roster.md), which names her by her old studio name: canon keeps old names as ids, never what the player sees or hears. Review fault 7.", secret=True),
+        N("never_police", "N-REWORDED", "Susan never goes to the police, whatever she sees or suffers; her trade keeps her from it.", NEVER_WHY, secret=True),
         D("day", "day"),
     ],
     believes=[],

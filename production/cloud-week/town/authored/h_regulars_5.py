@@ -3,7 +3,7 @@ from .common import *  # noqa: F401,F403
 
 PEOPLE = []
 PLACES = {}
-NEVER = ("ELLIS", "**Some never go at all**, whatever they see or suffer, because their trade keeps them from it: Rita, the customs officer (the machine's stamp, the roster says), Hal, the pawn's back-room hand, the scrap dealer, and the outfit's man.")
+NEVER_WHY = "Reworded from the Ellis design (game-design/ellis-2026-09-29.md line 18), keeping only the sentence about this person: the design's paragraph names other people's arms, which this person could not know. Review fault 1."
 AWAY = ("FIRE", "He had slipped off home, and he swore in his report that he had done his rounds.")
 WHY_NEW = "No routine for this person in hook-cast.json (REGULARS.md: 'Grace and the Tangs need theirs'); proposed from the contact sheet and the shop hours."
 
@@ -42,7 +42,7 @@ PEOPLE.append(regular(
     "drago", "Dennis", knew=False, manner=("buys anything",),
     knows=[
         K("fittings", "FIRE", "A scrap dealer bought fittings stripped from the burned building.", secret=True, via="the town's own fact about the scrap dealer; when he stripped them is left open by the fire design"),
-        K("never_police", *NEVER, secret=True, via="his trade keeps him from the police (the Ellis design)"),
+        N("never_police", "N-REWORDED", "Dennis never goes to the police, whatever he sees or suffers; his trade keeps him from it.", NEVER_WHY, secret=True),
         D("day", "day"),
     ],
     believes=[
@@ -80,7 +80,7 @@ PEOPLE.append(regular(
     manner=("glad of company", "swears he misses nothing"),
     knows=[
         K("walks_row", "FIRE", "The watchman walks the whole row for the warehouses still standing."),
-        K("slipped", "FIRE", "His secret is that he slipped off home on his break the night of the fire and lied in his report, and Darren knows it.", secret=True, via="the approved fire design"),
+        N("slipped", "N-REWORDED", "I slipped off home on my break the night of the fire and swore in my report I had done my rounds.", "Reworded from the fire design (game-design/warehouse-fire-2026-09-29.md): the design's line is a note about him ('His secret is that...') and carries the design's words, not his own. Review T1.", secret=True),
         D("day", "day"),
     ],
     believes=[],
@@ -188,7 +188,7 @@ sty, tag = "brisk", "love"
 PEOPLE.append(regular(
     "takeaway_f", "Lily", knew=False, manner=("warm with regulars", "sharp with anyone who's rude"),
     knows=[
-        K("with_husband", "REG", "keeps the takeaway on the parade with his wife", via="her husband's row: the two keep the takeaway together"),
+        N("with_husband", "N-REWORDED", "keeps the takeaway on the parade with her husband", "Reworded from her husband's row on the contact sheet (REGULARS.md row 29: 'keeps the takeaway on the parade with his wife'): the row's pronoun is his, so it was wrong for her. Review T10."),
     ],
     believes=[
         BN("customers_known", "N-LIVES", "Regulars are remembered, and a customer who thinks she forgets is mistaken.",

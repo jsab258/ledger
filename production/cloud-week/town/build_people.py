@@ -34,6 +34,8 @@ GROUPS = {
                   "decisions_key": "ten likeliest questions"},
     "N-MICKEY": {"title": "Which regulars knew Mickey, and so may say the two approved lines about him",
                  "decisions_key": "which regulars knew Mickey"},
+    "N-REWORDED": {"title": "Facts reworded after the canon review of 13 October, so that each holds only what its person could know, with no design note, old name or other person's secret in it",
+                   "decisions_key": "reworded after the canon review"},
 }
 
 OUT = Path(__file__).resolve().parent / "people.json"
@@ -93,6 +95,21 @@ def build_person(p, sf, proposed_places):
         keymap[f["key"]] = f["id"]
         facts.append(f)
 
+    # schedule: derived from the home when there is a routine, else the proposal
+    sched = T.derive_schedule(pid)
+    overridden = False
+    if p["schedule"] is not None:
+        if sched is not None:
+            # a sheet outranks hook-cast: the proposal replaces the home's routine, and says so
+            overridden = True
+            home = sched
+            sched = dict(p["schedule"])
+            sched["overrides"] = {"file": T.ALIASES["HK"], "line": home["source"]["line"], "why": p["extra"].get("override_why", "")}
+        else:
+            sched = dict(p["schedule"])
+    if sched is None:
+        raise SystemExit("no schedule for " + pid)
+
     # 1. the street's plain facts this person holds (StreetFacts.cs)
     ids = list(p["street"])
     for sid in ids:
@@ -103,8 +120,14 @@ def build_person(p, sf, proposed_places):
             fact["src"] = src_dict(T.ALIASES["SF"], text)   # the person's own words for a fact about them
         add(fact)
     # 1b. who they are, in the home's own words (the role cell or line)
-    ralias, rquote = p["role"]
-    add({"key": "job", "kind": "knows", "text": rquote, "src": src_dict(T.path_of(ralias), rquote), "secret": False, "via": "who and what they are, as their home gives it"})
+    ralias, rquote, *rrest = p["role"]
+    if rrest:
+        # reworded after the canon review: the home's line stays cited as what it was reworded from; the new text is marked and says why
+        rtext, rwhy = rrest
+        add({"key": "job", "kind": "knows", "text": rtext, "new": "N-REWORDED", "why": rwhy, "reworded_from": src_dict(T.path_of(ralias), rquote),
+             "secret": False, "via": "who and what they are, reworded from the home's line"})
+    else:
+        add({"key": "job", "kind": "knows", "text": rquote, "src": src_dict(T.path_of(ralias), rquote), "secret": False, "via": "who and what they are, as their home gives it"})
     # 2. the rest, in the order written (knows, then who they talk to, then believes and saw)
     ties_early = T.derive_ties(pid) if T.hk_person(pid) else []
 
@@ -141,8 +164,8 @@ def build_person(p, sf, proposed_places):
         elif "derived" in f:
             how = f["derived"]
             if how == "day":
-                out["text"] = T.render_day_fact(pid)
-                out["derived"] = {"file": T.ALIASES["HK"], "line": T.hk_person_line(pid), "how": "day"}
+                out["text"] = T.render_day_from_schedule(sched)
+                out["derived"] = {"file": T.ALIASES["HK"], "line": T.hk_person_line(pid), "how": "day", "from": "the final schedule of this entry" + (" (the proposal that replaces the routine)" if overridden else "")}
             elif how == "hours":
                 out["text"] = T.render_hours(f["arg"])
                 out["derived"] = {"file": T.ALIASES["HK"], "line": hk_area_line(f["arg"]), "how": "hours", "area": f["arg"]}
@@ -158,23 +181,11 @@ def build_person(p, sf, proposed_places):
     # the person's identity and role, copied from their home
     ialias, iquote = p["identity"]
     ident = src_dict(T.path_of(ialias), iquote)
-    ralias, rquote = p["role"]
-    role = {"text": rquote, "src": src_dict(T.path_of(ralias), rquote)}
+    ralias, rquote, *rrest = p["role"]
+    role = {"text": rrest[0] if rrest else rquote, "src": src_dict(T.path_of(ralias), rquote)}
+    if rrest:
+        role["reworded"] = True
 
-    # schedule: derived from the home when there is a routine, else the proposal
-    sched = T.derive_schedule(pid)
-    overridden = False
-    if p["schedule"] is not None:
-        if sched is not None:
-            # a sheet outranks hook-cast: the proposal replaces the home's routine, and says so
-            overridden = True
-            home = sched
-            sched = dict(p["schedule"])
-            sched["overrides"] = {"file": T.ALIASES["HK"], "line": home["source"]["line"], "why": p["extra"].get("override_why", "")}
-        else:
-            sched = dict(p["schedule"])
-    if sched is None:
-        raise SystemExit("no schedule for " + pid)
     # ties
     ties = T.derive_ties(pid) if T.hk_person(pid) else []
     if overridden:

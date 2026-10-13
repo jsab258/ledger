@@ -135,7 +135,7 @@ PEOPLE.append(person(
         K("no_surprises", "S:sera", "I don't like surprises, love. I've had enough of them for one life."),
         K("what_you_do", "S:sera", "I'm not interested in what you are. I'm interested in what you'll do."),
         K("receives", "S:sera", "She hardly does: people come to her. Sits facing the door."),
-        K("her_people", "EMP", "Joey (dock hand), Ferko (night cab)", secret=True, via="the dockside syndicate's people on the street (empire roster, faction table); the sheet makes Ferko the day driver"),
+        N("her_people", "N-REWORDED", "Lee Drewery on the quay and Kevin Needham on Mickey's rank are the Widow's people on the street.", "Reworded from the empire roster's faction table (game-design/empire-roster.md), which names the Widow's two people by their old studio names (Joey, Ferko): canon keeps old names as ids, never what the player sees or hears. The roster's 'night cab' against the sheet's day driver stays item 7 of NOTES.md for Jafar. Review fault 7.", secret=True),
     ],
     believes=[
         BN("show_me", "N-RIVALS", "Whoever has inherited Mickey's has yet to show her what he will do; she is interested in that, not in what he is.",
@@ -187,11 +187,11 @@ PEOPLE.append(person(
     street=["died_when", "died_heart", "fire", "office", "trade"], knew_mickey=False,
     internal_id_note="'danny' is the internal id (the old name Danny Ro survives only as an id).",
     knows=[
-        K("flashy", "S:danny", "Heads the new crew: flashy and reckless (canon); loud money (CASTING.md)."),
+        N("flashy", "N-REWORDED", "Heads the new crew: flashy, reckless, loud money.", "Reworded from his sheet's line ('flashy and reckless (canon); loud money (CASTING.md)'): the citations inside the fact were design notes, and the talk could have read them aloud. Review T1."),
         K("hurry", "S:danny", "Always in a hurry, me. Somebody's got to be."),
         K("stood_next", "S:danny", "You want to watch who you stand next to round here. You're stood next to me."),
         K("moves", "S:danny", "Fast. Takes up room, talks with his hands, never quite still; sits on tables rather than chairs."),
-        K("fence", "EMP", "Rita (the back-room fence)", secret=True, via="the new crew's person on the street (empire roster, faction table)"),
+        N("fence", "N-REWORDED", 'Rita Welburn fences for the new crew from her back room.', "Reworded from the empire roster's faction table (game-design/empire-roster.md), whose entry reads 'Rita (the back-room fence)': the fact now holds her full name in a plain sentence, as the Widow's people do. Review fault 7, for consistency.", secret=True),
     ],
     believes=[
         B("old_men", "S:danny", "Old men and their arrangements. It's 1990, mate. Nobody asks permission any more.", "unknown",
@@ -241,7 +241,7 @@ PEOPLE.append(person(
     street=["died_when", "died_heart", "fire", "will", "office", "trade"], knew_mickey=False,
     internal_id_note="No internal id found; 'fixer' is proposed (the sheet folder is the-fixer).",
     knows=[
-        K("brokers", "S:fixer", "Brokers between the old-money machine, the dockside syndicate and the new crew (canon)."),
+        N("brokers", "N-REWORDED", "Brokers between the old-money machine, the dockside syndicate and the new crew.", "Reworded from his sheet's line, which ends '(canon)', a design note the talk could have read aloud. Review T1."),
         K("of_the_town", "S:fixer", "Of the town; nobody can say which side he started on, which is the point of him."),
         K("percentage", "S:fixer", "I don't take sides. I take a percentage. It's a more honest arrangement."),
         K("first", "S:fixer", "Everybody wants the same thing. They just want it first."),

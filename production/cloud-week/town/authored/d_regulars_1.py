@@ -46,7 +46,7 @@ sty, tag = "warm", "mate"
 PEOPLE.append(regular(
     "ferko", "Kevin", knew=True, manner=("knows every short cut", "moans about his car"),
     knows=[
-        K("syndicate", "EMP", "Joey (dock hand), Ferko (night cab)", secret=True, via="the dockside syndicate's people on the street (empire roster); the sheet makes Kevin the day driver"),
+        N("syndicate", "N-REWORDED", "Lee Drewery on the quay and Kevin Needham on Mickey's rank are the Widow's people on the street.", "Reworded from the empire roster's faction table (game-design/empire-roster.md), which names the Widow's two people by their old studio names (Joey, Ferko): canon keeps old names as ids, never what the player sees or hears. The roster's 'night cab' against the sheet's day driver stays item 7 of NOTES.md for Jafar. Review fault 7.", secret=True),
         D("day", "day"),
     ],
     believes=[
@@ -149,7 +149,7 @@ sty, tag = "warm", "mate"
 PEOPLE.append(regular(
     "joey", "Lee", knew=False, line_as="believes", line_truth="true", line_basis=TB_TRADE, manner=("careful with Ron",),
     knows=[
-        K("syndicate", "EMP", "Joey (dock hand), Ferko (night cab)", secret=True, via="the dockside syndicate's people on the street (empire roster)"),
+        N("syndicate", "N-REWORDED", "Lee Drewery on the quay and Kevin Needham on Mickey's rank are the Widow's people on the street.", "Reworded from the empire roster's faction table (game-design/empire-roster.md), which names the Widow's two people by their old studio names (Joey, Ferko): canon keeps old names as ids, never what the player sees or hears. The roster's 'night cab' against the sheet's day driver stays item 7 of NOTES.md for Jafar. Review fault 7.", secret=True),
         D("day", "day"),
     ],
     believes=[],
@@ -181,8 +181,8 @@ sty, tag = "formal", ""
 PEOPLE.append(regular(
     "rita", "Rita", knew=True, manner=("never says what a thing is worth until she has to",),
     knows=[
-        K("fence", "EMP", "Rita (the back-room fence)", secret=True, via="the new crew's person on the street (empire roster, faction table)"),
-        K("never_police", "ELLIS", "Not Rita: the empire roster makes her the new crew's fence, and a fence does not ask the police into her shop, so her own window goes unreported.", secret=True),
+        N("fence", "N-REWORDED", 'Rita Welburn fences for the new crew from her back room.', "Reworded from the empire roster's faction table (game-design/empire-roster.md), whose entry reads 'Rita (the back-room fence)': the fact now holds her full name in a plain sentence, as the Widow's people do. Review fault 7, for consistency.", secret=True),
+        N("never_police", "N-REWORDED", "Rita fences for the new crew, so she never asks the police into her shop, not even for her own window.", "Reworded from the Ellis design (game-design/ellis-2026-09-29.md line 18), which carries a design note about the empire roster inside the fact. Review T1.", secret=True),
         K("row", "NEWS", "Hal and Rita had words in the pawn, and nobody knows what about.", via="day 1, Monday at eleven, in her own pawn: the town's sample story"),
         D("my_hours", "hours", "ritas"), D("day", "day"),
     ],

@@ -301,15 +301,20 @@ def render_hours(area):
     return "%s: %s" % (a["names"][0], "; ".join(parts))
 
 
-def render_day_fact(pid):
-    """One sentence per weekday kind, from the routines (the derived 'where to find' fact)."""
-    sched = derive_schedule(pid)
-
+def render_day_from_schedule(sched):
+    """One sentence per weekday kind, from a schedule as it will be stored: the FINAL schedule of the person (the home's routine, or the
+    proposal that replaces it), never the home's routine alone. After the canon review (13 October) found two day facts that still read the
+    old laundry and dock routines, the 'where to find' fact is always derived from the schedule the entry carries."""
     def fmt(segs):
         bits = ["%s to %s %s" % (s["from"], s["to"], s["said"]) for s in segs if s["place"] != "off"]
         return ", then ".join(bits) if bits else "not on the street"
 
     return "Monday: %s. Saturday: %s. Sunday: %s." % (fmt(sched["weekday"]), fmt(sched["saturday"]), fmt(sched["sunday"]))
+
+
+def render_day_fact(pid):
+    """The home's routine rendered the same way (kept for the check of people whose schedule is the home's own)."""
+    return render_day_from_schedule(derive_schedule(pid))
 
 
 # --- the small authoring language ---------------------------------------------
