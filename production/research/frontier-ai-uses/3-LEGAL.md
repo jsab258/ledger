@@ -11,7 +11,8 @@ The full note is notes/HF-legal.md.
 Jafar has read this note and accepts the legal risk of one exception: **the AAA study opens the files of Kingdom Come: Deliverance II and Mafia: The Old Country** (route B of production/research/aaa-reference/KIT.md). The terms:
 - **Study only.** Nothing from either game enters LEDGER or git. Only our own written findings and numbers, in our own words.
 - **KCD2 through Warhorse's official modding tools** wherever they cover the need.
-- **Not covered:** breaking encryption or copy protection (a key), taking anything into the game, and any other game. Those stay as below, and need a new ruling.
+- **The method it covers is the one in his own study doc** ("LEDGER AAA Reference Study", 11 October, read on 13 October): the games' files through FModel with the game's key entered by him, a time-boxed code read where the files are silent, and recorded play. The doc carries "Legal risk: accepted by Jafar on 11 October 2026" beside its study-only guardrail. A correction: an earlier line here, written before the doc was found, said a key was not covered; his doc shows it is part of the method he accepted.
+- **Not covered:** taking anything from either game into LEDGER or git, and any other game. Those stay as below, and need a new ruling.
 - Everything below stays true as research. The ruling is his choice to take the risk, not a finding that it is gone.
 
 ## The rule of thumb
