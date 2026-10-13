@@ -1,0 +1,30 @@
+{
+ "made": "2026-10-13 03:06:51",
+ "what": "the files the try 2 reviews are to look at; the three glbs and the three 4096 pictures are out of git (rebuilt by build_ritas.py) so this names the versions",
+ "files": {
+  "ritas_front.glb": {
+   "bytes": 9065372,
+   "sha256": "23893a0e90c9e2c3a9a08a2df16fd2ec99fd0bdaa030248306a1c7f62b43a30b"
+  },
+  "ritas_grille_night.glb": {
+   "bytes": 1503204,
+   "sha256": "73f5f0a23bbd81788810b6724ec6d7f685d50432cf59e0dd750cd47770e8251b"
+  },
+  "ritas_display.glb": {
+   "bytes": 9659780,
+   "sha256": "70b2bd3f97502bcb98c91cf472c87a8dee7d55cebb5e9d42cd7819aae4a97f52"
+  },
+  "pawnbroker_day.png": {
+   "bytes": 7913268,
+   "sha256": "cc60f6840f284a8c08b963e32109245a4ae3e7f03c34a18aefaff5267e608933"
+  },
+  "pawnbroker_night_lit.png": {
+   "bytes": 7359921,
+   "sha256": "d0578025fcca4356db4e3fc34f81fb9a63e8c0991df4a1b05bab04c01c5d31ba"
+  },
+  "pawnbroker_night_dark.png": {
+   "bytes": 5347494,
+   "sha256": "d34a22311c27ea110e148b161dcdee1eabfc67dcf52dd0800e91fa4f7dc53afe"
+  }
+ }
+}
