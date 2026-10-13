@@ -1,5 +1,7 @@
 # Combat — spec and plan
 
+> **REPLACED (Jafar, 12 October 2026).** This spec is replaced by his design "LEDGER Combat: Final State" (the builder imports it as game-design/combat-design.md) and by the combat rulings in RULINGS.md (12 October). The file stays: its record of what the Core built is still the reference. Where it disagrees with the new design or the rulings, they win. Notably: fighting must look and feel AAA; Tom cannot die; guns are in the final game, rare, built after melee works.
+
 > **STATUS: SPEC.** The design for combat, phases 1-3b. Stable reference:
 > build state lives in `roadmap.md`, not here. A spec that disagrees
 > with the roadmap is out of date about what got built, not about what

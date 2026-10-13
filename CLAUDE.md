@@ -33,6 +33,7 @@ canon.md (outranks everything), CHARTER.md, RULINGS.md, PLAN.md, NOW.md, CATALOG
 - The approval pages' answers are read into the repository nightly, and read before any summary.
 - FINDINGS.md: open faults only, at most twenty. No notes-only commits except the day's summary, whose commit runs the backup.
 - Audits in production/audits/; each finding ends as a ruling, a rule or a list item.
+- RECIPE.md (repository root) is a notebook, not a project: no lesson we learn is lost, so that one day the process can make a whole AAA game. Every unit that finishes or is set aside adds a few lines to it in the same commit: what was made; the method in setting-free words; the tools; the target and the check; the cost in hours; what failed and why; the evidence file. Anything specific to 1990 or Meridian stays in data, never in the method. No separate recipe work, no recipe tests.
 
 ## One home per fact; reuse first
 

@@ -13,10 +13,11 @@ His binding rulings; the later stands; canon.md outranks them.
 - 3 Oct: The proof view is built to the Hook sheet, not cleaned; to his page only beside it. Bars: the wet street dark, glistening, mirroring sky and buildings, its puddles water; the hill built, not hazed (lower, softer, varied, trees, mist); windows with white frames, sash bars, sky in the glass.
 - 4 Oct: The friends' build: his PC and own account, a shortcut, his key capped at five dollars an evening, no relay; the twenty basics; nothing a friend sees unfinished; Sheila's face whole when she talks; no debug text.
 - 29 Sep: No new systems until the slice is worth playing; what was ruled for after the route (townspeople, microphone, the ending's signs, regulars) and the sweep's larger items wait for a place in PLAN.md.
+- 13 Oct: RECIPE.md (repository root) is a notebook, not a project: no lesson we learn is lost, so that one day the process can make a whole AAA game. Every unit that finishes or is set aside adds a few lines to it in the same commit: what was made; the method in setting-free words; the tools; the target and the check; the cost in hours; what failed and why; the evidence file. Anything specific to 1990 or Meridian stays in data, never in the method. No separate recipe work, no recipe tests (CLAUDE.md carries the rule).
 
 ## Sources, licences and money
 
-- 3 Oct: Nothing marked NoAI (Fab's "Allows usage with AI: No", such tags elsewhere, a "no AI" licence) is used, even as a reference; a clause only against AI training (Unreal's, Mixamo's, CLO's) is fine while nothing we send trains a model. Sources and licences in THIRD-PARTY.md. Out: NoAI Megascans, Epic's MetaHuman garments, Game Animation Sample, construction presets.
+- 3 Oct, narrowed 13 Oct: Nothing marked NoAI (Fab's "Allows usage with AI: No", such tags elsewhere, a "no AI" licence) is used, even as a reference, except content Epic itself publishes on Fab (the Game Animation Sample, the MetaHuman garments, Quixel Megascans): that may be used inside the game even when tagged NoAI, because our AI only places and sets it up and never trains on it. NoAI-tagged content from any other seller stays excluded. A clause only against AI training (Unreal's, Mixamo's, CLO's) is fine while nothing we send trains a model. Sources and licences in THIRD-PARTY.md. Out: construction presets and any other seller's NoAI content.
 - 3 Oct: Sources in order: free assets that fit (Poly Haven, ambientCG, CC0 Sketchfab scans with his token, unmarked CC-BY with credit); else our own, in Blender from real photographs and generated textures, as kits with variation; buying, commissioning or hiring only by his ruling.
 - 3 Oct: Every asset family is made by the asset plan (production/research/asset-plan), its kits and sources, never improvised; replacements where a source is out.
 - 24 Sep: Nothing ships off the allowlist; a new tool enters only by a record naming its weights licence; free allowlisted, non-NoAI content downloaded without asking, named in the summary.
@@ -71,14 +72,14 @@ His binding rulings; the later stands; canon.md outranks them.
 ## Clothes
 
 - 3 Oct: Clothes are the one exception to the visual bar; tailoring waits for the tools. Their floor: plain, period-plausible, no modern giveaways (contrast-stitched slim jeans, trainers), no clipping or holes, nobody frozen stiff; judged on it, not the Hook sheet: passers-by at eight metres, Tom's talkers close up.
-- 3 Oct: People wear only gated garments from CC0, unmarked CC-BY with credit, or Blender; none bought or commissioned. 8 Oct: the white base layer stays through phase 1, reported failed; the lab's, not this session's.
+- 3 Oct: People wear only gated garments from CC0, unmarked CC-BY with credit, or Blender; none bought or commissioned. 13 Oct: Epic's MetaHuman garments are tried first; Marvelous Designer only if those fail. 8 Oct: the white base layer stays through phase 1, reported failed; the lab's, not this session's.
 - 2 Oct: Stopped: Marvelous draping, procedural tailoring, fitting every garment to six bodies; production/art/clothing/RUBRIC.md is the bar when tailoring resumes; clothing work never opens Unreal. 8 Oct: no more draping of tailored jackets in Blender (drafting by code works); an outfit stays an outfit until the character is assembled (saving bakes it). Garment reviews first count body points showing through; every target is tested against its body or model and its source before building.
 - 30 Sep: Game clothes are skinned meshes, only loose parts simulated; shoulders judged in Unreal.
 - 29 Sep: Clothes on people are his to approve, in the game's camera.
 
 ## People and the street's life
 
-- 3 Oct: People's poses come from MetaHuman's movement clips and Mixamo.
+- 3 Oct: People's poses come from MetaHuman's movement clips and Mixamo. 13 Oct: the walk is rebuilt on Epic's Game Animation Sample with motion matching.
 - 30 Sep: Townspeople after the route: measure 0, 5, 10 and 20 packaged; fix the walkers' feet; one approved in the game before twenty.
 - 23 Sep: After a deed, near people look, some gather and drift back; witnesses talk quieter for an hour.
 - D25: Everyone perceives, remembers and gossips (owed at stage 2). D29: half-recognition, lying and having heard of Tom show in posture first.
@@ -126,6 +127,12 @@ His binding rulings; the later stands; canon.md outranks them.
 - D13: Meridian's map is drawn from canon as data, with testable layout rules. 5 Oct: the September atlas (atlas-01) is the town's map, updated to the built street (48 m, its climb, its bend east behind the parade at the far end; his Hook sheet).
 - 6 Oct: phase 1's items run in parallel by helpers, the week's usage spent about twice as fast.
 - D26: Sound is a lane, CC0 only.
+- 12 Oct, combat: Fighting is good to do and costly to have done: weighty, readable and learnable; a skilled player wins most fair one-on-ones; the cost comes afterwards (injuries, witnesses, police, feuds).
+- 12 Oct, combat: Tom does not get better at fighting. His power grows through crew, weapons and reputation, and two against one is deadly.
+- 12 Oct, combat: Fighting must look and feel AAA. This changes D24 for fighting only (canon.md edited); LEDGER is still not a shooter.
+- 12 Oct, combat: Guns are in the final game, rare (a sawn-off, an old revolver, armed police only when a gun is involved), built only after melee works.
+- 12 Oct, combat: Tom cannot die. He can be beaten, stabbed or shot; he wakes in hospital or on the pavement with the injuries, the bill and a street that knows he lost.
+- 12 Oct, combat design: his doc "LEDGER Combat: Final State" (the builder imports it as game-design/combat-design.md) replaces game-design/combat-spec.md, which stays as the record of what the Core built. Combat is a ladder, not a mode (stare, square up, threaten, shove or grab, strike, weapon out, weapon used, kill), each rung an act the town perceives at its own weight; most confrontations end before a blow; the street is a weapon (nothing to do with drink); tiers: fists, improvised, carried, rare firearms; fights end by backing off, running, going down, police arriving or people stepping in; finishing a man who is down is a quiet decision, never a move; no lock-on, no combat music, no health bar, a minimal HUD as a settings switch; the combat animation source gets a lab test before building; the first combat test (two men, one shove and one strike with hit reactions, in the game camera) comes after the walk passes.
 
 ## Disk, git and backup
 

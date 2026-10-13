@@ -135,7 +135,7 @@ by Kenney (kenney.nl), CC0."
 
 | | |
 |---|---|
-| **What** | The cast's faces and bodies (MH_RoccoP2, MH_LenaS4, MH_SamS6 and the street's people), made in MetaHuman Creator from Epic's presets and the project's own measurements, the plain garment and the hair and grooms that come with the engine's own MetaHuman plugin. EPIC'S FAB GARMENT PACKS (boots, casual sneakers, flats, jeans, slim jeans, sweater, T-shirt variants) WERE REMOVED ON 3 OCTOBER: each is marked on Fab "Allows usage with AI: No" (NoAI), and by Jafar's ruling nothing NoAI is used |
+| **What** | The cast's faces and bodies (MH_RoccoP2, MH_LenaS4, MH_SamS6 and the street's people), made in MetaHuman Creator from Epic's presets and the project's own measurements, the plain garment and the hair and grooms that come with the engine's own MetaHuman plugin. EPIC'S FAB GARMENT PACKS (boots, casual sneakers, flats, jeans, slim jeans, sweater, T-shirt variants) WERE REMOVED ON 3 OCTOBER: each is marked on Fab "Allows usage with AI: No" (NoAI), and by Jafar's ruling nothing NoAI was used. On 13 October his ruling narrowed this: content Epic itself publishes on Fab may be used inside the game even when NoAI-tagged (our AI only places and sets it up, never trains on it), so these garments are tried first again; none is re-imported yet, and each gets its own row here when it is |
 | **Licence** | The Unreal Engine EULA and the Epic Content License's MetaHuman addendum (read from his PC 3 October, production/research/terms-2026-10-03): Unreal-only content, used and shared only with Unreal Engine; never put in a database for, nor used to train or test, an AI (EULA 6(e)). The MetaHuman files stay out of this public repository and live on Jafar's PC (F:/LedgerTools) |
 | **Obligation** | Credited on the credits page; shipped only inside the packaged Unreal game |
 
@@ -143,7 +143,7 @@ by Kenney (kenney.nl), CC0."
 
 | | |
 |---|---|
-| **What** | The idles and, since 6 October, the walk loops, starts and stops (UEFNAnimPreset/Locomotion) that come with the engine's own MetaHuman plugin (/MetaHumanCharacter/Optional/Animation), where the game uses them. Not Epic's Game Animation Sample on Fab, which is marked NoAI and is never used (3 October) |
+| **What** | The idles and, since 6 October, the walk loops, starts and stops (UEFNAnimPreset/Locomotion) that come with the engine's own MetaHuman plugin (/MetaHumanCharacter/Optional/Animation), where the game uses them. Epic's Game Animation Sample on Fab is marked NoAI by Epic and was never used before 13 October; his ruling of that day allows it inside the game, and the walk is to be rebuilt on it with motion matching: not yet imported, and its row goes here when it is |
 | **Licence** | Epic's "UE-Only Content" terms under the Unreal Engine EULA: allowed in a product that requires the engine; the licence allowlist admits Epic's Unreal-only content for animation only (entry 8, 30 September) |
 | **Obligation** | Credited on the credits page |
 

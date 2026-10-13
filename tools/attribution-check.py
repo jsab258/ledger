@@ -837,7 +837,10 @@ NEVER_SHIP = (
     # Ron's jacket draped in Marvelous Designer's 14-day trial: evaluation only (its terms,
     # section 3.1.1; DECISIONS.md, 1 and 2 October); DefaultGame.ini never cooks it.
     "/Content/Ledger/Cloth/ron_md_jacket/",
-    # The NoAI ruling of 3 October removed every Fab and Megascans item.
+    # The NoAI ruling of 3 October removed every Fab and Megascans item. NARROWED 13 October: content Epic itself
+    # publishes on Fab (Megascans, the MetaHuman garments, the Game Animation Sample) is allowed. Until the builder
+    # imports it and names Epic's folders as exceptions here, each with its THIRD-PARTY.md row, a package holding
+    # these paths still fails: the safe way round.
     "/Content/Fab/", "Megascans", "Quixel",
 )
 
