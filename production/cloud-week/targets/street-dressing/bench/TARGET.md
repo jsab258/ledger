@@ -2,7 +2,7 @@
 
 **The council bench is 1800 mm long on three timber supports (a flared slab leg 100 mm thick under each end 146 mm in from the slat end, a 50 mm centre leg, a seat bearer and a back post raked 10 degrees), with five iroko seat slats and five back slats each 63 x 32 mm and 23.5 mm apart, bolted with domed coach-bolt heads, the seat 440 high and the back's top at 854; it does not stand on the 2.0 m footway (the scene file says so and the arithmetic agrees: it needs about 2.4 m) but on the quay apron south of the street at x -9.0, facing the basin, where the reverse view sees its back; no period bench photograph was measurable, so the slat proportions are measured on a 2011 photograph of the back of a council bench against the light and every absolute size is judged (the bench's length sets the scale).**
 
-Cloud week 42, unit 13, family 3. Written 13 October 2026, not yet reviewed. `SELF-CHECK bench: 93 checks, 93 passed, 0 failed; negative controls 24 of 24 caught (offline)`
+Cloud week 42, unit 13, family 3. Written 13 October 2026, not yet reviewed. `SELF-CHECK bench: 95 checks, 95 passed, 0 failed; negative controls 24 of 24 caught (offline)`
 
 ## Files in this folder
 
@@ -23,6 +23,8 @@ Cloud week 42, unit 13, family 3. Written 13 October 2026, not yet reviewed. `SE
 | RULINGS 1 Oct (night) | pools of lamp light, not one orange wash | the lantern colour (1.0, 0.25, 0.0) linear only; the bench stands outside the lamp pools |
 | RULINGS 8 Oct | photographs win over books, element by element | see 'Where the photographs win' |
 | RULINGS 13 Oct (RECIPE) | a notebook entry per unit | RECIPE.md carries unit 13's entry |
+| RULINGS 16 Sep, 29 Sep (money, live talk) | nothing bought without his yes; live talk names no real make, brand or shop and nothing after 1992 | nothing bought (the photographs and the model records are free to read); every name on a part or a card is invented; nothing in the target is dated after 1992 |
+| the rest of RULINGS.md | read in full on 13 October for this unit (faces, voices, clothes, people, talk, story, combat, disk and git) | none of them touches this object; the weather ruling (a grey range, never sunshine) governs how the game lights it, not the target |
 
 ## Sources
 

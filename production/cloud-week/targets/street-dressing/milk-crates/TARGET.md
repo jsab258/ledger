@@ -2,7 +2,7 @@
 
 **The milk crates are a stack of three 408 x 298 x 264 mm plastic crates (the measured box of the CC0 crate on Poly Haven, whose lattice sides and printed storage name are not used) built by script with a 28 mm rim, a 24 mm base rail, ribs and slots, a 66 mm name band carrying only the invented COPPER ROW DAIRY, stacking lugs 9 mm high and a pitch of 264, red, with six empty glass pint bottles in the top crate because the grocer and the tea room took a daily delivery (a Judgement: no float is drawn); the stack stands against the grocer's shopfront at east x 38.0 (the scene's wooden yard crates stay); no 1975 to 1995 crate photograph was reached and the one photograph (2021, oblique) gives form only, so the slots, rim and band are judged.**
 
-Cloud week 42, unit 13, family 4. Written 13 October 2026, not yet reviewed. `SELF-CHECK milk-crates: 76 checks, 75 passed, 1 failed; negative controls 18 of 26 caught (offline)`
+Cloud week 42, unit 13, family 4. Written 13 October 2026, not yet reviewed. `SELF-CHECK milk-crates: 76 checks, 76 passed, 0 failed; negative controls 26 of 26 caught (offline)`
 
 ## Files in this folder
 
@@ -23,6 +23,8 @@ Cloud week 42, unit 13, family 4. Written 13 October 2026, not yet reviewed. `SE
 | RULINGS 1 Oct (night) | pools of lamp light, not one orange wash | the lantern colour (1.0, 0.25, 0.0) linear only; the crates read near black |
 | RULINGS 8 Oct | photographs win over books, element by element | see 'Where the photographs win' |
 | RULINGS 13 Oct (RECIPE) | a notebook entry per unit | RECIPE.md carries unit 13's entry |
+| RULINGS 16 Sep, 29 Sep (money, live talk) | nothing bought without his yes; live talk names no real make, brand or shop and nothing after 1992 | nothing bought (the photographs and the model records are free to read); every name on a part or a card is invented; nothing in the target is dated after 1992 |
+| the rest of RULINGS.md | read in full on 13 October for this unit (faces, voices, clothes, people, talk, story, combat, disk and git) | none of them touches this object; the weather ruling (a grey range, never sunshine) governs how the game lights it, not the target |
 
 ## Sources
 

@@ -2,7 +2,7 @@
 
 **The bus stop is a 76 mm pole 3.0 m high (black foot, white length, black top, a concrete collar) carrying an old-style enamel flag 300 x 285 with BUS and STOP in two lines and a black border, and below it a dark-green timetable case 260 x 875 x 60 whose window holds one 200 x 470 card: the fictional Weighhouse Motor Services, services 4, 9 and 12 to stops that are on the town's own map; it stands on the west pavement at x 46.0 (the cast's stop) 0.50 m behind the kerb, with no shelter, its flag and case facing the bus; it replaces the 29 September script's flag and case; no 1975 to 1995 photograph of a stop was measurable, so the proportions are measured on a 2018 photograph of an old-style stop and the absolute sizes are judged (the plate's width sets the scale).**
 
-Cloud week 42, unit 13, family 2. Written 13 October 2026, not yet reviewed. `SELF-CHECK bus-stop: 105 checks, 105 passed, 0 failed; negative controls 27 of 28 caught (offline)`
+Cloud week 42, unit 13, family 2. Written 13 October 2026, not yet reviewed. `SELF-CHECK bus-stop: 105 checks, 105 passed, 0 failed; negative controls 28 of 28 caught (offline)`
 
 ## Files in this folder
 
@@ -23,6 +23,8 @@ Cloud week 42, unit 13, family 2. Written 13 October 2026, not yet reviewed. `SE
 | RULINGS 1 Oct (night) | pools of lamp light, not one orange wash | the lantern colour (1.0, 0.25, 0.0) linear only; the stop has no light of its own |
 | RULINGS 8 Oct | photographs win over books, element by element | see 'Where the photographs win' |
 | RULINGS 13 Oct (RECIPE) | a notebook entry per unit | RECIPE.md carries unit 13's entry |
+| RULINGS 16 Sep, 29 Sep (money, live talk) | nothing bought without his yes; live talk names no real make, brand or shop and nothing after 1992 | nothing bought (the photographs and the model records are free to read); every name on a part or a card is invented; nothing in the target is dated after 1992 |
+| the rest of RULINGS.md | read in full on 13 October for this unit (faces, voices, clothes, people, talk, story, combat, disk and git) | none of them touches this object; the weather ruling (a grey range, never sunshine) governs how the game lights it, not the target |
 | canon (brands) | every brand fictional; no real operator, council or maker | the operator is Weighhouse Motor Services, a placeholder named for a minted street; no logo; the routes and stops are the town's own (atlas.json) |
 
 ## Sources

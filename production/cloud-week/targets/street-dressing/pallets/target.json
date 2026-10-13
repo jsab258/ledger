@@ -1766,7 +1766,13 @@
    "tol": "exact"
   }
  ],
- "owed": [],
+ "owed": [
+  {
+   "id": "O1",
+   "line": "Put the pallets back at the yard mouth, one leaning on the gable end and one flat before it, with no owner's mark on any board, now that they are real pallets?",
+   "recommended": "Yes, put them back"
+  }
+ ],
  "photo_ratio": {
   "photo": "P1",
   "board_px": [

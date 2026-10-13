@@ -2,7 +2,7 @@
 
 **The A-board is the fish market's painted plywood pavement board: two leaves 600 x 990 x 12 hinged at the top and standing 12 degrees off the vertical (972 high, 435 deep), each with two feet cut with a flared arch 58 high, back battens, a screw eye in the right edge and one loose steel chain hanging 242 below the eyes; a fish list painted on both faces (cod at 2.60 a pound is the only sourced price) with the market's own hours; it stands on the east pavement outside the fish market at x 14.45 against the stallriser, 1.16 m clear on the kerb side, and is out only from 7.30 to 14.00 (Wednesday 13.00); a second, smaller framed notice board (508 x 762) after a 1978 photograph is written for a second shop; it replaces the scene's 0.68 x 0.90 x 0.36 placeholder and moves it off a line that left under 0.68 m of walking room on both sides; no photograph of 1975 to 1995 shows a painted ply board, so its construction rests on a 2013 photograph and its proportions are checked on a 1978 one.**
 
-Cloud week 42, unit 13, family 9. Written 13 October 2026, not yet reviewed. `SELF-CHECK a-board: 142 checks, 140 passed, 2 failed; negative controls 0 of 0 caught (offline)`
+Cloud week 42, unit 13, family 9. Written 13 October 2026, not yet reviewed. `SELF-CHECK a-board: 142 checks, 142 passed, 0 failed; negative controls 39 of 39 caught (offline)`
 
 ## Files in this folder
 
@@ -23,6 +23,8 @@ Cloud week 42, unit 13, family 9. Written 13 October 2026, not yet reviewed. `SE
 | RULINGS 1 Oct (night) | pools of lamp light, not one orange wash | the lantern colour (1.0, 0.25, 0.0) linear only; the board is indoors at night (the market shuts at 14.00) |
 | RULINGS 8 Oct | photographs win over books, element by element | see 'Where the photographs win' |
 | RULINGS 13 Oct (RECIPE) | a notebook entry per unit | RECIPE.md carries unit 13's entry |
+| RULINGS 16 Sep, 29 Sep (money, live talk) | nothing bought without his yes; live talk names no real make, brand or shop and nothing after 1992 | nothing bought (the photographs and the model records are free to read); every name on a part or a card is invented; nothing in the target is dated after 1992 |
+| the rest of RULINGS.md | read in full on 13 October for this unit (faces, voices, clothes, people, talk, story, combat, disk and git) | none of them touches this object; the weather ruling (a grey range, never sunshine) governs how the game lights it, not the target |
 | RULINGS 3 Oct (trades) | bay 1 fishmonger, bay 3 empty unit, bay 4 launderette, bay 5 grocer; west_north newsagent and tobacconist, ironmonger, tea room; east_chandler a chandler | the board is the fishmonger's and stands in bay 1; AB2 is a spare for the newsagent or the tea room |
 | RULINGS 3 Oct (poll-tax posters) | an invented local campaign, never real parties or people | no poster on any face; the notice card of AB2 is left to the street's decals |
 

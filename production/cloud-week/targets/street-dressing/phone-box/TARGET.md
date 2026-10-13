@@ -2,7 +2,7 @@
 
 **The phone box is the 1985-to-1991 stainless kind: 890 x 890 mm in plan and 2192 mm high, a folded stainless lid with a 100 mm skirt, four stainless corner posts 40 mm square, a 270 mm black header carrying only the word Telephone, glazed on three sides above and below a 145 mm band (the door's is a yellow moulded handle panel with a rectangular pull, the sides' black), a stainless back sheet with the payphone on it and a 172 mm open gap under the bottom rail; no operator's mark, no crown, no card advertisement; one box, moved from before Rita's window to before the empty unit (east x 23.5); it replaces the 29 September script's kiosk, whose numbers disagree with the photograph in six places; no period KX100 photograph was reached, so the geometry is measured on a 2017 photograph of a unit of the same kind.**
 
-Cloud week 42, unit 13, family 1. Written 13 October 2026, not yet reviewed. `SELF-CHECK phone-box: 113 checks, 112 passed, 1 failed; negative controls 0 of 0 caught (offline)`
+Cloud week 42, unit 13, family 1. Written 13 October 2026, not yet reviewed. `SELF-CHECK phone-box: 113 checks, 113 passed, 0 failed; negative controls 33 of 33 caught (offline)`
 
 ## Files in this folder
 
@@ -24,6 +24,8 @@ Cloud week 42, unit 13, family 1. Written 13 October 2026, not yet reviewed. `SE
 | RULINGS 1 Oct (night) | pools of lamp light, not one orange wash | the lantern colour (1.0, 0.25, 0.0) linear only; the kiosk's own lamp is off in the sample (owed line O2 covers the lettering; a lit kiosk is a taste item for later) |
 | RULINGS 8 Oct | photographs win over books, element by element | section 'Where the photographs win' below; W1 to W6 |
 | RULINGS 13 Oct (RECIPE) | a notebook entry per unit | RECIPE.md carries unit 13's entry |
+| RULINGS 16 Sep, 29 Sep (money, live talk) | nothing bought without his yes; live talk names no real make, brand or shop and nothing after 1992 | nothing bought (the photographs and the model records are free to read); every name on a part or a card is invented; nothing in the target is dated after 1992 |
+| the rest of RULINGS.md | read in full on 13 October for this unit (faces, voices, clothes, people, talk, story, combat, disk and git) | none of them touches this object; the weather ruling (a grey range, never sunshine) governs how the game lights it, not the target |
 
 ## Sources
 
@@ -60,7 +62,7 @@ Axes: x across the front (right is +x seen from the front), y from the door (-y)
 - **Four stainless posts** (40 x 40 box section, brushed, vertical edges r 3) stand on the ground at the corners and reach the lid's plate. They show 40 mm of stainless on each face.
 - **The lid** is a folded stainless lid: a 3 mm plate over four 3 mm skirts 100 mm deep, its lower edge turned in 8 mm; it overhangs the posts by 10 mm each side (P1: 17 mm wider than the posts' 870).
 - **The front (the door)** is a leaf hung on three stainless pivot hinges on the right post: black header 270 high and 30 deep; two black stiles 52 wide; a bottom rail 68 high; the yellow handle panel 145 high between the stiles, 10 proud, corners r 8, with a rectangular pull 50 x 66 standing 28 proud at the left (lock) end; two panes of 4 mm toughened glass, upper 1051 to 1822 and lower 240 to 906 (each 4 mm into the frame all round).
-- **The two sides** are fixed frames like the front with a plain black band (10 proud) in place of the yellow panel and a black fascia the header's height above.
+- **The two sides** are fixed frames like the front with a plain black band (flush with the posts) in place of the yellow panel and a black fascia the header's height above.
 - **The back** is one stainless sheet, 6 mm with its backing, from the ground to the lid. The payphone body (140 wide), keypad, handset on the left and a notice frame hang on its inner face above a stainless coin-vault housing.
 - **The foot** is open: only the posts and the back sheet reach the ground; the front and sides stop 172 mm up so litter blows through.
 - **Fixings**: round pan-head fixings 4 mm across on the posts beside the handle panel (S2 shows one) and on the lid's skirt corners; no bolts on the glazing (gasketed). Joints: the lid's skirts meet at mitred corners; the header butts the posts; the frames are channels with a gasket line (a 1 mm dark line round each pane).
@@ -97,14 +99,14 @@ Axes: x across the front (right is +x seen from the front), y from the door (-y)
 | sl_stile_f | box | black_plastic | -435 to -415 | -395 to -343 | 240 to 1822 |  |  |
 | sl_stile_b | box | black_plastic | -435 to -415 | 343 to 395 | 240 to 1822 |  |  |
 | sl_rail_bottom | box | black_plastic | -435 to -415 | -395 to 395 | 172 to 240 |  |  |
-| sl_band | box | black_plastic | -445 to -415 | -343 to 343 | 906 to 1051 |  | plain black band, 10 proud |
+| sl_band | box | black_plastic | -435 to -415 | -343 to 343 | 906 to 1051 |  | plain black band, flush with the posts |
 | sl_glass_up | box | glass | -428 to -424 | -347 to 347 | 1047 to 1826 |  |  (transparent) |
 | sl_glass_lo | box | glass | -428 to -424 | -347 to 347 | 236 to 910 |  |  (transparent) |
 | sr_header | box | black_plastic | 405 to 435 | -395 to 395 | 1822 to 2092 |  | black fascia round the side, same height as the header |
 | sr_stile_f | box | black_plastic | 415 to 435 | -395 to -343 | 240 to 1822 |  |  |
 | sr_stile_b | box | black_plastic | 415 to 435 | 343 to 395 | 240 to 1822 |  |  |
 | sr_rail_bottom | box | black_plastic | 415 to 435 | -395 to 395 | 172 to 240 |  |  |
-| sr_band | box | black_plastic | 415 to 445 | -343 to 343 | 906 to 1051 |  | plain black band, 10 proud |
+| sr_band | box | black_plastic | 415 to 435 | -343 to 343 | 906 to 1051 |  | plain black band, flush with the posts |
 | sr_glass_up | box | glass | 424 to 428 | -347 to 347 | 1047 to 1826 |  |  (transparent) |
 | sr_glass_lo | box | glass | 424 to 428 | -347 to 347 | 236 to 910 |  |  (transparent) |
 | back_panel | box | stainless | -435 to 435 | 429 to 435 | 0 to 2092 |  | single sheet back (Mk2), 6 mm with its backing |

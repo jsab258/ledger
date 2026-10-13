@@ -532,17 +532,17 @@
      "id": "sl_band",
      "type": "box",
      "c": [
-      -430.0,
+      -425.0,
       0.0,
       978.5
      ],
      "s": [
-      30.0,
+      20.0,
       686.0,
       145.0
      ],
      "material": "black_plastic",
-     "note": "plain black band, 10 proud"
+     "note": "plain black band, flush with the posts"
     },
     {
      "id": "sl_glass_up",
@@ -641,17 +641,17 @@
      "id": "sr_band",
      "type": "box",
      "c": [
-      430.0,
+      425.0,
       0.0,
       978.5
      ],
      "s": [
-      30.0,
+      20.0,
       686.0,
       145.0
      ],
      "material": "black_plastic",
-     "note": "plain black band, 10 proud"
+     "note": "plain black band, flush with the posts"
     },
     {
      "id": "sr_glass_up",
@@ -1411,17 +1411,17 @@
      "id": "sl_band",
      "type": "box",
      "c": [
-      -430.0,
+      -425.0,
       0.0,
       978.5
      ],
      "s": [
-      30.0,
+      20.0,
       686.0,
       145.0
      ],
      "material": "black_plastic",
-     "note": "plain black band, 10 proud"
+     "note": "plain black band, flush with the posts"
     },
     {
      "id": "sl_glass_up",
@@ -1520,17 +1520,17 @@
      "id": "sr_band",
      "type": "box",
      "c": [
-      430.0,
+      425.0,
       0.0,
       978.5
      ],
      "s": [
-      30.0,
+      20.0,
       686.0,
       145.0
      ],
      "material": "black_plastic",
-     "note": "plain black band, 10 proud"
+     "note": "plain black band, flush with the posts"
     },
     {
      "id": "sr_glass_up",

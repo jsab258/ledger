@@ -2,7 +2,7 @@
 
 **The pallets are the plain softwood stringer pallet, 1000 x 1200 x 144 mm (seven 85 x 22 top boards 67.5 apart, three 95 x 100 stringers, three 100 x 22 bottom boards), unmarked: the sample is one leaning 12 degrees on the gable wall of the west block in the yard mouth with one flat at its foot (variants: one flat, two stacked), which replaces the flat slab the 2 October ruling took off the street; the board proportion is measured on a 2011 photograph of a leaning pallet (width over pitch 0.545, spread 0.06) because no period pallet photograph exists in the feed; the size is the European standard, not measured.**
 
-Cloud week 42, unit 13, family 5. Written 13 October 2026, not yet reviewed. `SELF-CHECK pallets: 75 checks, 73 passed, 2 failed; negative controls 0 of 0 caught (offline)`
+Cloud week 42, unit 13, family 5. Written 13 October 2026, not yet reviewed. `SELF-CHECK pallets: 75 checks, 75 passed, 0 failed; negative controls 23 of 23 caught (offline)`
 
 ## Files in this folder
 
@@ -15,7 +15,7 @@ Cloud week 42, unit 13, family 5. Written 13 October 2026, not yet reviewed. `SE
 
 | ruling | what it says | this target |
 |---|---|---|
-| RULINGS 2 Oct | no cars until real; skip and pallets off until real; the KX100 phone box stays | 'skip and pallets off until real': this target is the pallet made real (a form from a photograph, no mark), to go back into the scene only after the gate |
+| RULINGS 2 Oct | no cars until real; skip and pallets off until real; the KX100 phone box stays | 'skip and pallets off until real': this target is the pallet made real (a form from a photograph, no mark), to go back into the scene only after the gate, and the owed line asks for the yes |
 | RULINGS 3 Oct (sources order) | free assets that fit first (Poly Haven, ambientCG, CC0), else our own in Blender from real photographs | no CC0 pallet exists (S4); so own work by script |
 | content rule (canon D18) | what the rule forbids is out of image and text | no person, no drink, no betting; the data scan finds none of what the rule forbids |
 | NoAI and licences | nothing marked NoAI; photographs only free licences, for measuring, never placed in the game or traced | S1 and S2 are CC BY-SA 2.0 Geograph photographs used only to measure and look at; no NoAI source |
@@ -23,6 +23,8 @@ Cloud week 42, unit 13, family 5. Written 13 October 2026, not yet reviewed. `SE
 | RULINGS 1 Oct (night) | pools of lamp light, not one orange wash | the lantern colour (1.0, 0.25, 0.0) linear only; the pallets read as pale slats and black gaps |
 | RULINGS 8 Oct | photographs win over books, element by element | see 'Where the photographs win' |
 | RULINGS 13 Oct (RECIPE) | a notebook entry per unit | RECIPE.md carries unit 13's entry |
+| RULINGS 16 Sep, 29 Sep (money, live talk) | nothing bought without his yes; live talk names no real make, brand or shop and nothing after 1992 | nothing bought (the photographs and the model records are free to read); every name on a part or a card is invented; nothing in the target is dated after 1992 |
+| the rest of RULINGS.md | read in full on 13 October for this unit (faces, voices, clothes, people, talk, story, combat, disk and git) | none of them touches this object; the weather ruling (a grey range, never sunshine) governs how the game lights it, not the target |
 
 ## Sources
 
@@ -214,7 +216,7 @@ Axes: x along the stringers (1000), y along the deck boards (1200), z up; the st
 
 ## Owed to Jafar's page (one line each, with a recommendation)
 
-None.
+1. Put the pallets back at the yard mouth, one leaning on the gable end and one flat before it, with no owner's mark on any board, now that they are real pallets? (recommended: Yes, put them back)
 
 ## What the target could not settle
 
