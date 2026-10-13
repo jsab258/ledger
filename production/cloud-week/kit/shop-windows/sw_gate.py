@@ -434,7 +434,7 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
         ro.light_linking.receiver_collection = recv
     # --- the glass mask (a check's render, 13 Oct): every pixel where the window's glass is the first thing the camera sees white, everything else (frame, mullions, beads, lattice, display,
     # wall) black: the window-glass pixels without the frame
-    if mode == "mask_glass":
+    if mode in ("mask_glass", "mask_glass_open"):
         def flat(c):
             m = bpy.data.materials.new("flat")
             m.use_nodes = True
@@ -451,6 +451,8 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
             if o.type == "MESH":
                 o.data.materials.clear()
                 o.data.materials.append(white if o.name.startswith("win_glass_lower") else black)
+                if mode == "mask_glass_open" and o in lattice:
+                    o.hide_render = True          # the glass as it is where the lattice's gaps are: the lattice left out
             elif o.type == "LIGHT":
                 o.hide_render = True
         sc.world.node_tree.nodes["Background"].inputs["Color"].default_value = (0, 0, 0, 1)

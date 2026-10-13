@@ -576,10 +576,11 @@ def visibility(R, work, assets, di, group_of):
         sc.cycles.use_denoising = False
         sc.cycles.use_adaptive_sampling = False
         sc.cycles.filter_width = 0.01
-        sc.view_settings.view_transform = "Standard"
+        sc.view_settings.view_transform = "Raw"
         sc.view_settings.look = "None"
         sc.render.resolution_x, sc.render.resolution_y = res
         sc.render.resolution_percentage = 100
+        bpy.context.view_layer.update()
         path = os.path.join(work, "gate", "check_%s_object_index.png" % cam)
         sc.render.filepath = path
         sc.render.image_settings.file_format = "PNG"

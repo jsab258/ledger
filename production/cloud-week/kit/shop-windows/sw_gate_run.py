@@ -113,6 +113,9 @@ def run(work, assets, previews, samples, views=None, log=print, check_renders=Tr
                 t = G.render_view(cam, R["cameras"][cam], st, os.path.join(gate, "card_%s_%s.png" % (cam, st)), os.path.join(gate, "check_%s_%s_mask.png" % (cam, st)), front, grille, disp, HDRI,
                                   samples=1, extra=extra, res=CHECK_RES, mode="mask_glass", column_pngs=cols(st))
                 times["check_%s_%s_mask" % (cam, st)] = t
+                if st != "day":
+                    t = G.render_view(cam, R["cameras"][cam], st, os.path.join(gate, "card_%s_%s.png" % (cam, st)), os.path.join(gate, "check_%s_%s_maskopen.png" % (cam, st)), front, grille, disp, HDRI,
+                                      samples=1, extra=extra, res=CHECK_RES, mode="mask_glass_open", column_pngs=cols(st))
                 log("check renders %s %s done" % (cam, st))
         json.dump(times, open(os.path.join(gate, "render_times.json"), "w"), indent=1)
     # the review set: STREET_SQUARE and CLOSE_35, day and night_lit

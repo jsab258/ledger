@@ -2,7 +2,7 @@
  "schema": "ledger-shop-windows-target/1",
  "family": "shop-windows",
  "summary_line": "Shop windows: ten units as built (twelve not found); eight rooms of 104 checked CC0 models and 51 named scripted forms, rendered 4096 wide to the game's own `trace` rule, stock only where that rule can show it and the near 0.55 m a real display; the fish scans wait on one login.",
- "status": "target for unit 7 of cloud week 42, part 2; written 12 October 2026 by the target writer; its fresh review (TARGET-REVIEW.md) failed it with 3 faults and 15 narrow points, every exact amendment is applied: FIXES APPLIED, NOT RE-REVIEWED (Jafar's 11 October rule: no more polishing of targets); nothing built, nothing committed",
+ "status": "target for unit 7 of cloud week 42, part 2; written 12 October 2026; failed its review (3 faults, 15 narrow points), fixes applied 12 October (not re-reviewed); BUILT 13 October; the build failed both fresh reviews at try 1 (street view: 2 faults, 5 narrow points; close view: 5 faults, 13 narrow points); try 2 amendments from those reviews applied 13 October (section 13, marked '13 Oct, from the try 1 reviews'); not re-reviewed; nothing committed",
  "units": {
   "length": "metres (frames: street, card, picture, room, display: see this folder's TARGET.md, section 3); front parts in millimetres in the 2.2 bay frame (u, d, z)",
   "colour": "sRGB 0 to 255",
@@ -1906,7 +1906,23 @@
      "console (scroll, two; both present)",
      "fascia_board (5410 x 550 x 120 proud, bed mould 40) carrying the 4.1 board ritas_basecolour/height/orm/wear.png",
      "cornice (5892 x 150 x 215 deep, broken forward 85 over each console; 12 Oct ruling: 150 mm as built)"
-    ]
+    ],
+    "hall_behind_side_door": {
+     "added": "13 Oct, from the try 1 reviews",
+     "what": "a closed hall behind the side door (the door leads to the stair for the flat above, not into the shop): u 350 to 1294, from the frame's back face (d 0) back 0.50 m, z 25 to 2420, plaster walls, ceiling and back wall at about half the room's brightness (sRGB 150, 142, 124), a darker floor, no light of its own (unlit at night); in the front's glb and so in the gate",
+     "why_not_1_2_m": "the review words the hall 1.2 m deep; the card stands 0.58 behind the wall face (d -580), so a box deeper than that would cut through the card and the room's wall clock and pegboard would show inside the hall: the hall's back wall stands 0.08 m in front of the card",
+     "check": "FRN-09: every ray from STREET_SQUARE's eye through the side door's fanlight meets the hall or the door frame, none reaches the card"
+    },
+    "side_door_frame_jambs": {
+     "added": "13 Oct, from the try 1 reviews",
+     "what": "F1's own frame jambs put back: 28.6 mm each side (838 + 2 x 28.6 + 2 x 24.4 = 944), d 0 to 100, z 25 to 2400, white joinery (226, 224, 214); try 1 left two open slots 28.6 wide and 100 deep between the leaf and the fillers",
+     "check": "FRN-08: the front alone against a white backdrop from each review camera shows no backdrop inside its outline"
+    },
+    "bay_edge_piers": {
+     "added": "13 Oct, from the try 1 reviews",
+     "what": "the gate stands a brick pier behind each pilaster (x_m 2.65 to 3.0 either side, y 0 to 0.30 behind the wall face, z 0 to 3.56, in the wall's brick) because the pilaster's shaft and core stop at x 2.970 and the street model's wall opening is the whole bay; the game's street facade has to close the same gap (owed on the PC: PC-04)",
+     "check": "FRN-07 over u 0 to 6000"
+    }
    },
    "door": {
     "variant": "T1",
@@ -1977,7 +1993,11 @@
       "bell_diameter": 70,
       "drop": 80
      },
-     "material": "steel (60, 60, 62) rough 0.5 metal 0.7; brass (160, 120, 55) rough 0.38 metal 1.0"
+     "material": "steel (60, 60, 62) rough 0.5 metal 0.7; brass (160, 120, 55) rough 0.38 metal 1.0",
+     "profile_try2": {
+      "added": "13 Oct, from the try 1 reviews",
+      "what": "a crown loop, a dome to a flared lip, 70 mm across the lip, 55 high, a 3 mm wall (hollow), the clapper showing under the lip"
+     }
     },
     "sign": "the plastic OPEN / CLOSED sign from 4.2 (the paper unit) on the inside of the door's glass at z 1500, hung by a suction cup: closed when the shop is shut; the hours plate (4.1) on the glass beside it",
     "fanlight": {
@@ -2104,6 +2124,14 @@
       214
      ],
      "source": "2.2 parts.window_frame.dims.head (2790 to 2850)"
+    },
+    "wear": {
+     "added": "13 Oct, from the try 1 reviews",
+     "applied_by": "the game's seeded wear layer (D53), look development in Unreal: owed on the PC",
+     "foot_grime": "to 150 mm: paint 20 per cent darker, roughness +0.15",
+     "lever": "a band 150 mm round the lever, 10 per cent darker",
+     "chips": "chipped edges on the bottom rail, the lock rail and the sill's nose (chip mask 3 per cent)",
+     "why": "P1, the dated photograph that D1 rests on, shows dirt at the foot, chipped rails and grime round the handle; the shop door, its frame and the window joinery are even, clean gloss in the gate"
     }
    },
    "glass": {
@@ -2122,7 +2150,28 @@
      "JEWELLERY",
      "LOANS",
      "5"
-    ]
+    ],
+    "lettering_places": {
+     "added": "13 Oct, from the try 1 reviews",
+     "rows": {
+      "WATCHES": {
+       "x_street_m_of_ink_centre": 18.132,
+       "u_mm": 2868
+      },
+      "JEWELLERY": {
+       "x_street_m_of_ink_centre": 17.025,
+       "u_mm": 3975
+      },
+      "LOANS": {
+       "x_street_m_of_ink_centre": 15.918,
+       "u_mm": 5082
+      }
+     },
+     "baseline_above_footway_mm": 2250,
+     "where": "at the head of the three main lights, the ink centred on each light, at 4.1's sizes (WATCHES 715, JEWELLERY 904, LOANS 490 mm wide tiles): the cap top is at about 2336, below the transom's glass edge at 2400, and each row fits inside its light's 1037 mm of clear glass; the toplights stay clear glass",
+     "check": "GLS-02: at STREET_SQUARE and STREET_30 no ink pixel of a glass row lies behind a bar, mullion or bead",
+     "note": "the 4.1 rows were drawn one toplight wide (715, 904, 490 mm) and the target never said where on the glass they go; the 3.2 toplight rule puts two 28 mm bars across any row laid over three toplights, which read 'W TCHES', 'JEW ELLERY', 'OANS' from the pavement"
+    }
    },
    "fascia": {
     "board": "fascias/ritas/ritas_basecolour.png, _height.png, _orm.png, _wear.png (5410 x 550 at 1 px/mm), _emissive.png",
@@ -2660,17 +2709,17 @@
       {
        "x": 0.0,
        "y": 1.0,
-       "z_below_ceiling": 0.045
+       "z_below_ceiling": 0.025
       },
       {
        "x": 0.0,
        "y": 2.0,
-       "z_below_ceiling": 0.045
+       "z_below_ceiling": 0.025
       },
       {
        "x": 0.0,
        "y": 3.0,
-       "z_below_ceiling": 0.045
+       "z_below_ceiling": 0.025
       }
      ],
      "tube_length_m": 1.5,
@@ -2836,7 +2885,7 @@
        0.03
       ],
       "size_m": 0.12,
-      "note": "among the trays; tobacco is allowed; a plain metal case (size 0.12: the model is 0.32 long, the approved loop sized it 0.08)"
+      "note": "among the trays; tobacco is allowed; a plain metal case (size 0.12, flagged: the model is 0.32 long, the approved loop sized it 0.08)"
      },
      {
       "model": "magnifying_glass_01",
@@ -3303,12 +3352,17 @@
      },
      "free_run_max_m": 0.2,
      "return_walls": {
-      "what": "at each end of the window zone a wall from the back of the glass to the card plane (0.61 deep), over the card's full height (street z 0.65 to 3.05), plaster (0.95, 0.86, 0.66) above the dado line, brown dado (0.42, 0.27, 0.17) below it (1.0 m above the room's floor = street z 1.65); part of the display glb, so the game has it too"
+      "what": "at each end of the window zone a wall from the back of the glass to the card plane (0.61 deep), over the card's full height (street z 0.65 to 3.05), plaster (0.95, 0.86, 0.66) above the dado line, brown dado (0.42, 0.27, 0.17) below it (1.0 m above the room's floor = street z 1.65); part of the display glb, so the game has it too",
+      "why": "from CLOSE_35_B the glass from street x 15.40 to 16.12 looked past the card's low-x edge (15.35) into the 0.61 m gap between the glass and the card: 0.72 m of the far light's 1.04 m showed a black slab (the gate's reveal, base colour 0.02); LIT-02 measured CLOSE_35 only"
      },
      "furniture": {
       "velvet": "Principled BSDF, sheen weight 0.8, sheen roughness 0.3; base colour varied +-5 per cent at 0.05 m; ambientCG Fabric034 normal map (CC0) at strength 0.2, tile 0.25 m",
       "bevel_mm": 4,
       "posts": "12 mm round rods, black lacquer"
+     },
+     "frame_prints": {
+      "added": "13 Oct, from the try 1 reviews",
+      "what": "the frames' prints are crops of a CC0 Poly Haven HDRI of a harbour (Lake Pier, polyhaven.com/a/lake_pier, Alexander Scholten, CC0), tone-mapped, saturation 0.7, a slight warm cast, paper grain, a 6 mm white mount, no person; the five hung frames on the pledge board carry five different crops; catalogue line owed (CATALOGUE.md is outside this unit's folders): 'lake_pier HDRI, CC0, Poly Haven: frame prints, Rita's shop'"
      }
     }
    },
@@ -15845,7 +15899,7 @@
   {
    "id": "PIC-05",
    "name": "nothing burnt",
-   "what": "share of pixels with any channel at 250 or above",
+   "what": "share of pixels with any channel at 250 or above [13 Oct, from the try 1 reviews: measured on the render before the highlight shoulder]",
    "expected": "<= 0.01 in every picture",
    "tolerance": "none",
    "applies_to": [
@@ -16347,7 +16401,7 @@
   {
    "id": "FRN-07",
    "name": "no opening in the front",
-   "what": "on the elevation drawn from target.json (target_drawing.front_polys), every point between the pilasters' inner edges (u 350 to 5650) from z 0 to 2850 lies on a part: stallriser, sill, window frame, glass, door (threshold, jambs, stop, leaf), fanlight, transom, toplight, panel, head, hood; Rita's: the band above the doors is door.fanlight (u 1344 to 2250, z 2131 to 2400), door.transom (u 350 to 2300, z 2400 to 2480), door.toplights_over_shop_door (three of 283.3, bars at 1641.3 and 1952.7, z 2480 to 2790), door.panel_over_side_door (844 wide field in a 944 slot, z 2480 to 2790) and door.head (u 350 to 2300, z 2790 to 2850)",
+   "what": "on the elevation drawn from target.json (target_drawing.front_polys), every point between the pilasters' inner edges (u 350 to 5650) from z 0 to 2850 lies on a part: stallriser, sill, window frame, glass, door (threshold, jambs, stop, leaf), fanlight, transom, toplight, panel, head, hood; Rita's: the band above the doors is door.fanlight (u 1344 to 2250, z 2131 to 2400), door.transom (u 350 to 2300, z 2400 to 2480), door.toplights_over_shop_door (three of 283.3, bars at 1641.3 and 1952.7, z 2480 to 2790), door.panel_over_side_door (844 wide field in a 944 slot, z 2480 to 2790) and door.head (u 350 to 2300, z 2790 to 2850) [13 Oct, from the try 1 reviews: over u 0 to 6000, the gate's piers drawn as the wall]",
    "expected": "the largest uncovered rectangle is at most 5 x 5 mm",
    "tolerance": "5 x 5 mm",
    "applies_to": [
@@ -16487,7 +16541,7 @@
   {
    "id": "LIT-05",
    "name": "the display is lit at night",
-   "what": "in STREET_SQUARE at night, for each of the six lit shops, the display zone (the window lights' lowest 0.85 m, over the bed: z 0.70 to 1.55 above the crown, across the window zone) has a mean luma of at least 45, with the spec's spill modelled in the gate (the 350 lm rect light in the window head, tipped 62 degrees down, lighting channel 1: shop-interiors.json pawnbroker.lit_note); LIT-01 and LIT-02 are room-only and cannot see a dark window bed in a lit shop",
+   "what": "in STREET_SQUARE at night, for each of the six lit shops, the display zone (the window lights' lowest 0.85 m, over the bed: z 0.70 to 1.55 above the crown, across the window zone) has a mean luma of at least 45, with the spec's spill modelled in the gate (the 350 lm rect light in the window head, tipped 62 degrees down, lighting channel 1: shop-interiors.json pawnbroker.lit_note); LIT-01 and LIT-02 are room-only and cannot see a dark window bed in a lit shop [13 Oct, from the try 1 reviews: on the glass only, the mullions, frame, beads and lattice masked]",
    "expected": ">= 45 for chandler, grocer, mickeys, newsagent, ritas, tea_rooms",
    "tolerance": "none",
    "applies_to": [
@@ -16559,6 +16613,202 @@
    ],
    "kind": "camera",
    "how": "read the render's camera"
+  },
+  {
+   "id": "FAS-01n",
+   "name": "the fascia's normal map is a normal map",
+   "what": "every normalTexture in the front's glb is RGB, mean within 10 levels of (128, 128, 255), blue 200 or more on 99 per cent of pixels",
+   "expected": "every normalTexture in the front's glb is RGB, mean within 10 levels of (128, 128, 255), blue 200 or more on 99 per cent of pixels",
+   "tolerance": "none",
+   "applies_to": [
+    "ritas"
+   ],
+   "kind": "gate",
+   "how": "check_try2.py, run by build_ritas.py checks",
+   "added": "13 Oct, from the try 1 reviews",
+   "from": "street F1"
+  },
+  {
+   "id": "FAS-01c",
+   "name": "the board reads by day",
+   "what": "STREET_SQUARE by day: the board's ground luma within 15 per cent of the stallriser's and letters to ground 2.0 or more",
+   "expected": "STREET_SQUARE by day: the board's ground luma within 15 per cent of the stallriser's and letters to ground 2.0 or more",
+   "tolerance": "none",
+   "applies_to": [
+    "ritas"
+   ],
+   "kind": "gate",
+   "how": "check_try2.py, run by build_ritas.py checks",
+   "added": "13 Oct, from the try 1 reviews",
+   "from": "street F1"
+  },
+  {
+   "id": "FAS-03",
+   "name": "textured primitives carry UVs",
+   "what": "every textured primitive carries TEXCOORD_0 and every texCoord is 0 or more",
+   "expected": "every textured primitive carries TEXCOORD_0 and every texCoord is 0 or more",
+   "tolerance": "none",
+   "applies_to": [
+    "ritas"
+   ],
+   "kind": "gate",
+   "how": "check_try2.py, run by build_ritas.py checks",
+   "added": "13 Oct, from the try 1 reviews",
+   "from": "street N4"
+  },
+  {
+   "id": "GLS-02",
+   "name": "no glass row lies behind a bar, mullion or bead",
+   "what": "at STREET_SQUARE and STREET_30 no ink pixel of a glass row lies behind a bar, mullion or bead",
+   "expected": "at STREET_SQUARE and STREET_30 no ink pixel of a glass row lies behind a bar, mullion or bead",
+   "tolerance": "none",
+   "applies_to": [
+    "ritas"
+   ],
+   "kind": "gate",
+   "how": "check_try2.py, run by build_ritas.py checks",
+   "added": "13 Oct, from the try 1 reviews",
+   "from": "street F2"
+  },
+  {
+   "id": "LIT-07",
+   "name": "the night spill stays behind the glass",
+   "what": "head band at 250 or above under 1 per cent; mullion fronts darker than the display glass beside them; the pavement pool no brighter than the lit glass",
+   "expected": "head band at 250 or above under 1 per cent; mullion fronts darker than the display glass beside them; the pavement pool no brighter than the lit glass",
+   "tolerance": "none",
+   "applies_to": [
+    "ritas"
+   ],
+   "kind": "gate",
+   "how": "check_try2.py, run by build_ritas.py checks",
+   "added": "13 Oct, from the try 1 reviews",
+   "from": "street N1"
+  },
+  {
+   "id": "FRN-08",
+   "name": "no backdrop through the front",
+   "what": "the front alone against a white emissive backdrop from each review camera: no backdrop pixel inside its outline",
+   "expected": "the front alone against a white emissive backdrop from each review camera: no backdrop pixel inside its outline",
+   "tolerance": "none",
+   "applies_to": [
+    "ritas"
+   ],
+   "kind": "gate",
+   "how": "check_try2.py, run by build_ritas.py checks",
+   "added": "13 Oct, from the try 1 reviews",
+   "from": "close fault 5"
+  },
+  {
+   "id": "FRN-09",
+   "name": "the hall behind the side door",
+   "what": "every ray through the side door's fanlight from STREET_SQUARE meets the hall",
+   "expected": "every ray through the side door's fanlight from STREET_SQUARE meets the hall",
+   "tolerance": "none",
+   "applies_to": [
+    "ritas"
+   ],
+   "kind": "gate",
+   "how": "check_try2.py, run by build_ritas.py checks",
+   "added": "13 Oct, from the try 1 reviews",
+   "from": "street N3"
+  },
+  {
+   "id": "DSP-03",
+   "name": "no display mesh intersects another; every piece shows",
+   "what": "no display mesh intersects another (BVH, 2 mm tolerance); every piece shows at least half its silhouette from CLOSE_35 or STREET_SQUARE (object-index pass)",
+   "expected": "no display mesh intersects another (BVH, 2 mm tolerance); every piece shows at least half its silhouette from CLOSE_35 or STREET_SQUARE (object-index pass)",
+   "tolerance": "none",
+   "applies_to": [
+    "ritas"
+   ],
+   "kind": "gate",
+   "how": "check_try2.py, run by build_ritas.py checks",
+   "added": "13 Oct, from the try 1 reviews",
+   "from": "close fault 1"
+  },
+  {
+   "id": "DSP-04",
+   "name": "no free run along a tier over 0.20 m",
+   "what": "on the bed, the step and each tier no free run along the window longer than 0.20 m",
+   "expected": "on the bed, the step and each tier no free run along the window longer than 0.20 m",
+   "tolerance": "none",
+   "applies_to": [
+    "ritas"
+   ],
+   "kind": "gate",
+   "how": "check_try2.py, run by build_ritas.py checks",
+   "added": "13 Oct, from the try 1 reviews",
+   "from": "close fault 2"
+  },
+  {
+   "id": "LIT-02b",
+   "name": "no black void in the rendered frames",
+   "what": "LIT-02 on the rendered CLOSE_35_B and STREET_30 frames with the glass reflection off: at most 1 per cent of the window-glass pixels under luma 12",
+   "expected": "LIT-02 on the rendered CLOSE_35_B and STREET_30 frames with the glass reflection off: at most 1 per cent of the window-glass pixels under luma 12",
+   "tolerance": "none",
+   "applies_to": [
+    "ritas"
+   ],
+   "kind": "gate",
+   "how": "check_try2.py, run by build_ritas.py checks",
+   "added": "13 Oct, from the try 1 reviews",
+   "from": "close fault 3"
+  },
+  {
+   "id": "PIC-05g",
+   "name": "nothing burnt in the gate's frames",
+   "what": "at most 1 per cent of pixels at 250 or above in the gate's rendered review frames",
+   "expected": "at most 1 per cent of pixels at 250 or above in the gate's rendered review frames",
+   "tolerance": "none",
+   "applies_to": [
+    "ritas"
+   ],
+   "kind": "gate",
+   "how": "check_try2.py, run by build_ritas.py checks",
+   "added": "13 Oct, from the try 1 reviews",
+   "from": "close fault 4"
+  },
+  {
+   "id": "SO-06",
+   "name": "the stock wall's scales",
+   "what": "stock-wall pieces scaled 0.9 to 1.1; television_02 at 1.0",
+   "expected": "stock-wall pieces scaled 0.9 to 1.1; television_02 at 1.0",
+   "tolerance": "none",
+   "applies_to": [
+    "ritas"
+   ],
+   "kind": "gate",
+   "how": "check_try2.py, run by build_ritas.py checks",
+   "added": "13 Oct, from the try 1 reviews",
+   "from": "close narrow 3"
+  },
+  {
+   "id": "ROOM-01",
+   "name": "the left board is covered",
+   "what": "at least 60 per cent of the left board covered with goods at real size",
+   "expected": "at least 60 per cent of the left board covered with goods at real size",
+   "tolerance": "none",
+   "applies_to": [
+    "ritas"
+   ],
+   "kind": "gate",
+   "how": "check_try2.py, run by build_ritas.py checks",
+   "added": "13 Oct, from the try 1 reviews",
+   "from": "close narrow 2"
+  },
+  {
+   "id": "ROOM-02",
+   "name": "the right board is covered",
+   "what": "at least 60 per cent of the right board covered with goods at real size",
+   "expected": "at least 60 per cent of the right board covered with goods at real size",
+   "tolerance": "none",
+   "applies_to": [
+    "ritas"
+   ],
+   "kind": "gate",
+   "how": "check_try2.py, run by build_ritas.py checks",
+   "added": "13 Oct, from the try 1 reviews",
+   "from": "close narrow 2"
   }
  ],
  "disagreements_photographs_win": [
@@ -16973,6 +17223,18 @@
    "for": "the glass, TSR, exposure",
    "what": "the game's glass reflection, the card's motion vectors under TSR, the exposure and the frame time",
    "why": "named in gate_in_the_cloud.what_it_cannot_show"
+  },
+  {
+   "id": "PC-04",
+   "for": "FRN-07, street review N2",
+   "what": "in the packaged game at STREET_30 no sky pixel shows inside Rita's bay outline: the street facade closes the 30 to 54 mm beside each pilaster (the gate stands a brick pier behind each pilaster; the game's street model has to)",
+   "why": "the pilaster's shaft and core stop at x 2.970 and the wall opening is the whole bay; added 13 Oct, from the try 1 reviews"
+  },
+  {
+   "id": "PC-05",
+   "for": "close narrow 9, 11, 1",
+   "what": "wear on the joinery from the D53 layer (foot grime, lever band, chips); the final pictures at 128 samples; the display lit by the game's own light through the game's glass",
+   "why": "the gate's wear-free joinery, 64-sample pictures and stand-in glass; added 13 Oct, from the try 1 reviews"
   }
  ],
  "previews": {

@@ -1,4 +1,4 @@
-"""The checks of target.json (section 10) that apply to Rita's shop, run on what the build made: one row each, written to checks/check_ritas_v1.json.
+"""The checks of target.json (section 10) that apply to Rita's shop, run on what the build made: one row each, written to checks/check_ritas_v2.json (try 1's checks/check_ritas_v1.json stays as the record).
 
     python build_ritas.py checks        # prints "N of M rows pass"
 
@@ -21,6 +21,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import sw_assets as A  # noqa: E402
 import sw_gate as G  # noqa: E402
+import check_try2 as X  # noqa: E402
 
 W, H, D = 5.3, 2.4, 4.5
 PW, PH = 4096, 1855
@@ -137,11 +138,16 @@ def picture_rows(R, work, rows):
     nd = means["night_dark"]
     rows.add("PIC-03", "night_dark is dark, not black", 12.4 <= nd <= 40.0, "night_dark mean %.1f (12.4 to 40; the approved 17.7)" % nd)
     det, ok = [], True
+    raw_dir = os.path.join(rooms, "raw")
     for s, a in ims.items():
-        burnt = float((a.max(axis=2) >= 250).mean())
+        rp = os.path.join(raw_dir, "pawnbroker_%s_raw.png" % s)
+        # 13 Oct (close review narrow 10): measured on the render BEFORE the highlight shoulder (try 1 measured the picture after it, where 255 had become 242 and the row could not fail)
+        ar = np.asarray(Image.open(rp).convert("RGB")) if os.path.exists(rp) else a
+        burnt = float((ar.max(axis=2) >= 250).mean())
+        after = float((a.max(axis=2) >= 250).mean())
         ok &= burnt <= 0.01
-        det.append("%s %.4f" % (s, burnt))
-    rows.add("PIC-05", "nothing burnt", ok, "share of pixels with a channel at 250 or above: " + ", ".join(det) + " (limit 0.01)")
+        det.append("%s %.4f before the shoulder (%.4f after it)" % (s, burnt, after))
+    rows.add("PIC-05", "nothing burnt", ok, "share of pixels with a channel at 250 or above, on the render before the highlight shoulder (a Judgement: above level 232 the picture is compressed, 255 becomes 242; the raw renders are in rooms/raw): " + ", ".join(det) + " (limit 0.01)")
     # the flat pass
     flat, sod = flat_pass(work)
     masks = surface_masks(flat)
@@ -307,8 +313,10 @@ def room_rows(R, T, work, rows, assets):
     rows.add("INV-02", "nothing denied is placed", not denied, "placed models checked against inventory.denied (%d ids): %s" % (len(inv["denied"]), denied or "none denied"))
     notin = [a for a in allids if a not in inv["polyhaven"]]
     rows.add("INV-03", "every model is allowed", not notin, "%d models placed, all in inventory.polyhaven%s; scripted: counter_jewellery and pledge_tickets (inventory.scripted)" % (len(allids), ("; NOT IN IT: %s" % notin) if notin else ""))
-    sc_ok = {"script:counter_jewellery", "script:pledge_tickets"} <= set(inv["scripted"])
-    rows.add("INV-04", "scripted goods are the listed ones and carry a why", sc_ok, "scripted in this build: counter_jewellery (rings, watch discs, chains on velvet) and pledge_tickets (%d tickets); no fish, crab or prawn" % fixtures_count(fixtures, "pledge_tickets"))
+    mine = {"script:counter_jewellery", "script:pledge_tickets", "script:ring_tray", "script:watch_pad", "script:chain", "script:watch_chain_cards"}
+    sc_ok = mine <= set(inv["scripted"]) and all(inv["scripted"][k].get("why") for k in mine)
+    rows.add("INV-04", "scripted goods are the listed ones and carry a why", sc_ok, "scripted in this build: counter_jewellery (rings, watch discs, chains on the raked velvet), pledge_tickets (%d tickets), ring_tray, watch_pad and chain (the approved display's front row: %s) and watch_chain_cards (%d on the pledge board); each is in inventory.scripted with its why; no fish, crab or prawn" % (
+        fixtures_count(fixtures, "pledge_tickets"), json.dumps(di.get("scripted_counts")), fixtures_count(fixtures, "watch_chain_cards")))
     # INV-05 by script: names and text against the brand blocklist
     block = [b.lower() for b in inv["brand_blocklist"]]
     names = set()
@@ -418,7 +426,7 @@ def front_rows(R, T, work, rows, assets):
         lights, len(panes), [round(p, 1) for p in panes][:3] + ["..."], gl["toplight_width"], [round(c_, 1) for c_ in centres], want, len(mullc), min(panes), [round(p, 1) for p in bpanes]))
     # FRN-05 paint colours
     pc = fr["paint_srgb"]
-    roles = {"oxblood": (pc["pilaster"], ("pilL_", "pilR_", "conL_", "conR_", "fas_", "cor_", "sta_")), "white joinery": (pc["window_frame"], ("win_", "door_leaf_stile", "door_rail", "door_jamb", "band_", "sil_")), "side door": (pc["side_door"], ("leaf_frame", "moulding_", "panel_bottom", "panel_top"))}
+    roles = {"oxblood": (pc["pilaster"], ("pilL_", "pilR_", "conL_", "conR_", "fas_", "cor_", "sta_")), "white joinery": (pc["window_frame"], ("win_", "door_leaf_stile", "door_rail", "door_jamb", "band_", "sil_", "side_jamb")), "side door": (pc["side_door"], ("leaf_frame", "moulding_", "panel_bottom", "panel_top"))}
     bad, n = [], 0
     for role, (rgb, prefixes) in roles.items():
         for k, v in m.items():
@@ -428,19 +436,9 @@ def front_rows(R, T, work, rows, assets):
                     bad.append((k, v["base_srgb"], rgb))
     rows.add("FRN-05", "paint colours", not bad, "%d painted parts: oxblood %s, gloss white yellowed %s, buttermilk %s; within 6 levels per channel%s" % (n, pc["pilaster"], pc["window_frame"], pc["side_door"], ("; OFF: %s" % bad[:4]) if bad else ""))
     rows.na("FRN-06", "lobby", "Rita's front is flush: no lobby (the check is the grocer's and the launderette's)")
-    # FRN-07 elevation
-    mask = np.asarray(Image.open(os.path.join(work, "front_elevation_mask.png"))) > 0
-    mask = ndimage.binary_dilation(mask, iterations=1)      # parts drawn 1 mm proud of the raster's seams
-    e = ~mask
-    lab, nc = ndimage.label(e)
-    big = 0
-    wh = (0, 0)
-    for s in ndimage.find_objects(lab):
-        hh, ww = s[0].stop - s[0].start, s[1].stop - s[1].start
-        if hh * ww > big:
-            big, wh = hh * ww, (ww, hh)
-    ok7 = wh[0] <= 5 and wh[1] <= 5
-    rows.add("FRN-07", "no opening in the front", ok7, "the elevation drawn from the built meshes (u 350 to 5650, z 0 to 2850, 1 mm a pixel, every part's triangles, parts drawn 1 mm proud): %d uncovered pixels of %d; the largest uncovered rectangle is %d x %d mm (limit 5 x 5). The band over the doors (fanlight, transom, three toplights, panel over the side door, head) is built" % (int(e.sum()), e.size, wh[0], wh[1]))
+    # FRN-07 elevation (13 Oct: u 0 to 6000, with the gate's brick piers drawn as the wall behind the pilasters; try 1 drew u 350 to 5650 and could not see the bay's outer 30 to 54 mm)
+    ok7, wh, n_unc, n_tot, outer = X.frn07_rows(R, work, rows)
+    rows.add("FRN-07", "no opening in the front", ok7, "the elevation drawn from the built meshes (u 0 to 6000, z 0 to 2850, 1 mm a pixel, every part's triangles, parts drawn 1 mm proud, the gate's two brick piers x 2.65 to 3.0 behind the pilasters drawn as the wall): %d uncovered pixels of %d; the largest uncovered rectangle is %d x %d mm (limit 5 x 5). Without the piers the bay's outer strips (u 0 to 350 and 5650 to 6000) have %d uncovered pixels: the pilaster's shaft and core stop 30 mm short of the bay's edge, so the game's street facade has to close it (PC-04). The band over the doors (fanlight, transom, three toplights, panel over the side door, head) is built; the side door's hall is left out of the drawing so that it cannot hide a gap behind the door" % (n_unc, n_tot, wh[0], wh[1], outer))
     # FAS-01 / FAS-02
     fb = m["fas_board"]
     fasc = os.path.join(work, "fascias", "fascias", "ritas")
@@ -479,6 +477,12 @@ def front_rows(R, T, work, rows, assets):
     ok_g = (near(tr["z"][1] - tr["z"][0], 40, 1) and near(tr["d"][1] - tr["d"][0], 40, 1) and near(tr["z"][0], 2400, 1) and near(ch["z"][0], 600, 1) and near((tr["d"][0] + tr["d"][1]) / 2 - 36, 100, 1)
             and near(lat["d"][0], 136, 1) and lat["d"][1] <= 144 and "grille_lattice" not in json.dumps([n.get("name") for n in gj["nodes"]]) and lat["rivets"] > 500)
     rows.add("LIT-04", "Rita's grille", ok_g, "top rail 40 x 40 at z %.0f to %.0f and bottom channel at z %.0f, both powder black, with 4 fixing plates; the lattice plane at d %.0f to %.0f (the glass front is d 36: 100 in front), flat bars 20 x 4 at 45 degrees on a 120 diamond (two layers of 2 mm), %d rivets, in its own model (ritas_grille_night.glb, %d triangles) so BY DAY only the rail, the channel and the plates stand (the day front has no lattice)" % (tr["z"][0], tr["z"][1], ch["z"][0], lat["d"][0], lat["d"][1], lat["rivets"], fm["info"]["grille_triangles"]))
+    # the try 2 rows that look at the built front (13 Oct)
+    X.fascia_rows(R, work, assets, rows, os.path.join(work, "gate", "STREET_SQUARE_day.png"), m)
+    X.glass_rows_check(R, work, assets, rows, m)
+    X.hall_check(R, work, assets, rows, m)
+    X.uv_rows(assets, rows)
+    X.backdrop_rows(R, assets, work, rows)
 
 
 # ------------------------------------------------------------------------------------------------------------- the gate renders
@@ -542,21 +546,10 @@ def gate_rows(R, work, rows, means, lum_pics):
     rows.add("LIT-02", "no black void in the street view", d_ok, "composite luma over the glass lights: by day STREET_SQUARE %.1f, STREET_30 %.1f, CLOSE_35 %.1f (at least 33); at night (lit) %.1f, %.1f, %.1f (at least 45)" % (
         comp[("STREET_SQUARE", "day")], comp[("STREET_30", "day")], comp[("CLOSE_35", "day")], comp[("STREET_SQUARE", "night_lit")], comp[("STREET_30", "night_lit")], comp[("CLOSE_35", "night_lit")]))
     rows.na("LIT-03", "the empty unit is a pale blank by day", "the empty unit's check, not Rita's")
-    # LIT-05 the display lit at night, from the render
-    p = os.path.join(gate, "STREET_SQUARE_night_lit.png")
-    if os.path.exists(p):
-        cam = R["cameras"]["STREET_SQUARE"]
-        rec = {"eye_street_m": cam["eye_street_m"], "aim_street_m": cam["aim_street_m"], "vfov": G.VFOV["STREET_SQUARE"]}
-        corners = [(win_x[0], -0.033, 0.60), (win_x[1], -0.033, 0.60), (win_x[1], -0.033, 1.45), (win_x[0], -0.033, 1.45)]
-        px = project(rec, corners)
-        im = np.asarray(Image.open(p).convert("RGB")).astype(np.float32)
-        mk = Image.new("L", (im.shape[1], im.shape[0]), 0)
-        ImageDraw.Draw(mk).polygon(px, fill=255)
-        mm = np.asarray(mk) > 0
-        yv = luma(im)[mm].mean()
-        rows.add("LIT-05", "the display is lit at night", yv >= 45, "STREET_SQUARE at night, the display zone (the window lights' lowest 0.85 m over the bed: z 0.60 to 1.45 above the footway = 0.70 to 1.55 above the crown, across the window zone; %d px) in the rendered picture, with the spill modelled (a rect light in the window head, tipped 62 degrees down, strength set in the gate): mean luma %.1f (at least 45). Lumen's own light on the display is owed on the PC (PC-02)" % (int(mm.sum()), yv))
-    else:
-        rows.add("LIT-05", "the display is lit at night", False, "STREET_SQUARE_night_lit.png was not rendered")
+    # LIT-05 and LIT-07 on the glass only (13 Oct)
+    lp = os.path.join(gate, "gate_lights.json")
+    spill_w = json.load(open(lp)).get("spill_w") if os.path.exists(lp) else "?"
+    X.night_rows(R, work, rows, spill_w)
     return comp, dark
 
 
@@ -570,6 +563,10 @@ def run(work, assets, previews, out_json):
     room_rows(R, T, work, rows, assets)
     front_rows(R, T, work, rows, assets)
     gate_rows(R, work, rows, means, lum_pics)
+    X.display_rows(R, work, assets, rows)
+    X.lit02b_rows(R, work, rows)
+    X.gate_frame_rows(R, work, rows)
+    X.board_rows(R, work, rows)
     lt = np.array([1.0, 0.25, 0.0])
     rows.add("LIT-06", "the sodium wash is the game's", float(np.abs(np.array(sod) - lt).max()) <= 0.01, "night_dark's sodium wash colour (linear) %s against unreal-look.json lantern_linear_rgb %s (the scene file's stale 1.0, 0.7055, 0.0 is not used)" % ([round(float(x), 3) for x in sod], lt.tolist()))
     rows.na("PRV-01", "the previews show nothing they must not", "the photograph previews of the target (P1 to P6), not this build's; this build's previews were looked at: no real firm's name, number, person, drink, gambling or child in them")
@@ -599,6 +596,7 @@ def run(work, assets, previews, out_json):
            "pass": npass, "counted": len(counted), "na": len(rows.rows) - len(counted), "seconds": round(time.time() - t0, 1), "rows": rows.rows}
     os.makedirs(os.path.dirname(out_json), exist_ok=True)
     json.dump(out, open(out_json, "w"), indent=1)
+    X.manifest(HERE, assets, work, os.path.join(HERE, "MANIFEST.json"))
     print("%d of %d rows pass" % (npass, len(counted)))
     for r in counted:
         if r["status"] != "pass":
