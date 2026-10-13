@@ -1321,14 +1321,18 @@
   "keep the hexagonal profile exact: its widest line is at 793 and its bottom edge shorter than its top"
  ],
  "self_check": {
-  "line": "SELF-CHECK skip: 76 checks, 76 passed, 0 failed; negative controls 25 of 25 caught (offline)",
-  "checks": 76,
+  "line": "SELF-CHECK skip: 79 checks, 76 passed, 3 failed; negative controls 25 of 25 caught (--live --previews)",
+  "checks": 79,
   "passed": 76,
-  "failed": 0,
+  "failed": 3,
   "controls": 25,
   "controls_caught": 25,
-  "options": "offline",
-  "failing": [],
+  "options": "--live --previews",
+  "failing": [
+   "live/P1/photograph present",
+   "previews/p1-grass-skip-side-elevation.jpg exists",
+   "previews/p1-grass-skip-target-on-photo.jpg exists"
+  ],
   "uncaught": []
  }
 }

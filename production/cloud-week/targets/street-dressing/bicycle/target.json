@@ -5758,14 +5758,16 @@
   "the right pedal and the right grip end are the two points that can touch the wall"
  ],
  "self_check": {
-  "line": "SELF-CHECK bicycle: 68 checks, 68 passed, 0 failed; negative controls 23 of 23 caught (offline)",
-  "checks": 68,
+  "line": "SELF-CHECK bicycle: 69 checks, 68 passed, 1 failed; negative controls 23 of 23 caught (--live --previews)",
+  "checks": 69,
   "passed": 68,
-  "failed": 0,
+  "failed": 1,
   "controls": 23,
   "controls_caught": 23,
-  "options": "offline",
-  "failing": [],
+  "options": "--live --previews",
+  "failing": [
+   "previews/p1-ruin-roadster-leaning.jpg exists"
+  ],
   "uncaught": []
  }
 }

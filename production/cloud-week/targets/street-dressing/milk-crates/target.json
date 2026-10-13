@@ -3210,14 +3210,16 @@
   "texture: our own colour map for the crate; the CC0 model's texture is NOT used (its lettering)"
  ],
  "self_check": {
-  "line": "SELF-CHECK milk-crates: 76 checks, 76 passed, 0 failed; negative controls 26 of 26 caught (offline)",
-  "checks": 76,
-  "passed": 76,
-  "failed": 0,
+  "line": "SELF-CHECK milk-crates: 78 checks, 77 passed, 1 failed; negative controls 26 of 26 caught (--live --previews)",
+  "checks": 78,
+  "passed": 77,
+  "failed": 1,
   "controls": 26,
   "controls_caught": 26,
-  "options": "offline",
-  "failing": [],
+  "options": "--live --previews",
+  "failing": [
+   "previews/p1-pavement-two-crates-stacked.jpg exists"
+  ],
   "uncaught": []
  }
 }
