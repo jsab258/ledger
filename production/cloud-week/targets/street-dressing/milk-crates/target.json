@@ -3255,16 +3255,14 @@
   "stand the stack at x 37.30, z 4.776 (its centre), 0.14 m clear of the grocer's door jamb; never in front of the lobby (x 37.644 to 38.650)"
  ],
  "self_check": {
-  "line": "SELF-CHECK milk-crates: 96 checks, 96 passed, 0 failed; negative controls 38 of 39 caught (--live --previews)",
+  "line": "SELF-CHECK milk-crates: 96 checks, 96 passed, 0 failed; negative controls 39 of 39 caught (--live --previews)",
   "checks": 96,
   "passed": 96,
   "failed": 0,
   "controls": 39,
-  "controls_caught": 38,
+  "controls_caught": 39,
   "options": "--live --previews",
   "failing": [],
-  "uncaught": [
-   "owed: the placeholders' handover to the town removed"
-  ]
+  "uncaught": []
  }
 }

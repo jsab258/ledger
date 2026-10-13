@@ -3,7 +3,20 @@
 By the fixer, from TARGET-REVIEW.md (FAIL: 7 of 9 families, 11 faults, 32 narrow points; the bus stop and the A-board passed with narrow points). Not re-reviewed. Nothing built, nothing committed. All paths are in this folder (production/cloud-week/targets/street-dressing/) unless a line says otherwise. Every target.json "status" is "fixes applied, not re-reviewed".
 
 **Self-check after the fixes** (each family's self_check.py, the options named; the line stored in each target.json and printed in each TARGET.md is the `--live --previews` one):
-@@COUNTS@@
+| family | offline (rows, controls caught) | `--live --previews` (rows, controls caught) |
+|---|---|---|
+| phone box | 134 pass, 0 fail, 42 of 42 | 154 pass, 0 fail, 42 of 42 |
+| telegraph pole | 96 pass, 0 fail, 33 of 33 | 99 pass, 0 fail, 33 of 33 |
+| bench | 110 pass, 0 fail, 33 of 33 | 127 pass, 0 fail, 33 of 33 |
+| skip | 127 pass, 0 fail, 54 of 54 | 141 pass, 0 fail, 54 of 54 |
+| bicycle | 139 pass, 0 fail, 58 of 58 | 142 pass, 0 fail, 58 of 58 |
+| milk crates | 92 pass, 0 fail, 39 of 39 | 96 pass, 0 fail, 39 of 39 |
+| pallets | 91 pass, 0 fail, 36 of 36 | 94 pass, 0 fail, 36 of 36 |
+| bus stop | 149 pass, 0 fail, 44 of 44 | 164 pass, 0 fail, 44 of 44 |
+| A-board | 171 pass, 0 fail, 58 of 58 | 194 pass, 0 fail, 58 of 58 |
+| all nine | 1,109 rows, 397 of 397 controls | 1,211 rows, 397 of 397 controls |
+
+The first versions had 823 rows offline, 917 live and 245 controls. The photograph rows read the pictures in the scratch folder beside the repository (the default of `--live`; `--photos DIR` points elsewhere). Controls added or changed this pass: every new row has at least one wrong copy that fails it by name (the old placements put back, the left eye moved, the old fish door, a stamp in the texture, the missing middle bar, a placeholder handover removed, and the rest), and the controls that did not catch on the first runs (bicycle 3, bus stop 3, pallets 5, A-board 2, crates 1, skip 1 and the bench and pole one each on earlier runs) were mended by making the row fail on a missing part instead of raising, or by naming the row the change really breaks.
 
 ## Shared code (the review's "across the set")
 

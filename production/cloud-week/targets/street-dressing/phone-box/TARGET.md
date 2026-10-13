@@ -2,7 +2,7 @@
 
 **The phone box is the 1985-to-1991 stainless kind: 890 x 890 mm in plan and 2192 mm high, a folded stainless lid with a 100 mm skirt, four stainless corner posts 40 mm square, a 270 mm black header carrying only the word Telephone, glazed on three sides above and below a 145 mm band (the door's is a yellow moulded handle panel with a rectangular pull, the sides' black), a stainless back sheet with the payphone on it and a 163 mm open gap under the bottom rail; no operator's mark, no crown, no card advertisement; one box, standing where the scene has it (east x 16.5, centre z 3.675, the door to the shops, the back to the road: the first version's move to x 23.5 rested on a wrong number and is withdrawn); it replaces the 29 September script's kiosk, whose numbers disagree with the photograph in six places; no period KX100 photograph was reached, so the geometry is measured on a 2017 photograph of a unit of the same kind.**
 
-Cloud week 42, unit 13, family 1. Written 13 October 2026; the fixes the review asked for are applied, not re-reviewed. `SELF-CHECK phone-box: 133 checks, 133 passed, 0 failed; negative controls 42 of 42 caught (offline)`
+Cloud week 42, unit 13, family 1. Written 13 October 2026; the fixes the review asked for are applied, not re-reviewed. `SELF-CHECK phone-box: 154 checks, 154 passed, 0 failed; negative controls 42 of 42 caught (--live --previews)`
 
 ## Files in this folder
 

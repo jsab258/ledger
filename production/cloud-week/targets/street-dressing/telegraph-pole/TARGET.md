@@ -2,7 +2,7 @@
 
 **The telegraph pole is a creosoted pine pole 8.0 m above the pavement, 230 mm across at the ground tapering to 150, with a galvanised cap, a distribution bracket of six porcelain knobs on its street face just under the top, eleven climbing pegs every 450 mm on alternate sides from 2.4 m, and four black drop wires of real length (two across the street to the east parade's eaves course at 6.1 m, two down to the west row's eaves course at 3.2 m, each sagging about 3 percent of its span); it is OFF THE STREET: it came off on 3 October because the Hook sheet has no pole and no wires across the sky, and this target does not put it back; the slot it would take is west x 32.4, z -3.725 (0.32 m clear of the west shops' litter bin), and putting it back is one owed line for Jafar with a recommendation of No; it replaces the 29 September pole's ring and stubs, which the photographs do not show; no period street-pole photograph exists in the feed and the two 2009 and 2011 photographs have no scale, so the height rests on a written range and every other number is judged, checked for consistency only.**
 
-Cloud week 42, unit 13, family 8. Written 13 October 2026; the fixes the review asked for are applied, not re-reviewed. `SELF-CHECK telegraph-pole: 95 checks, 95 passed, 0 failed; negative controls 33 of 33 caught (offline)`
+Cloud week 42, unit 13, family 8. Written 13 October 2026; the fixes the review asked for are applied, not re-reviewed. `SELF-CHECK telegraph-pole: 99 checks, 99 passed, 0 failed; negative controls 33 of 33 caught (--live --previews)`
 
 ## Files in this folder
 
