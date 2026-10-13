@@ -72,6 +72,8 @@ EXTRA_BLANK = {
                         "fill": "the steel's pale grey", "reads": "an engraved line of three words and a year (a maker's inscription and '2016': after 1992)"}],
     "small_oil_can_01": [{"map": "small_oil_can_01_diff_1k.jpg", "boxes": [[538, 150, 630, 245]],
                           "fill": "the can's red", "reads": "a flame hazard diamond in the EU's modern (CLP) form: after 1992"}],
+    "stationery_supplies": [{"map": "stationery_supplies_diff_1k.jpg", "boxes": [[244, 142, 344, 166], [200, 364, 312, 388], [524, 314, 652, 338]],
+                             "fill": "each band's own colour (the stripes' yellow, the pencil's yellow, the red)", "reads": "'Haven Penworks' and the grade (2H, BUDGET, 6B) printed on three pencils (a maker's name)"}],
     "sledgehammer_01": [{"map": "sledgehammer_01_diff_1k.jpg", "boxes": [[14, 400, 104, 596]],
                          "fill": "the handle's yellow", "reads": "a warning label: a column of small print and 'WARN...' (modern safety text)"}],
 }
@@ -79,7 +81,10 @@ EXTRA_BLANK = {
 
 # Target boxes tightened where the target's box is wider than the print and straddles two surfaces (the fill would then be a median of two
 # colours): {(model, map): {target box: tighter box that still holds every glyph}}. Looked at 100 per cent beside the original.
-BOX_FIX = {("vintage_pocket_watch", "vintage_pocket_watch_diff_1k.jpg"): {(620, 630, 765, 790): [640, 664, 694, 762]}}
+BOX_FIX = {("vintage_pocket_watch", "vintage_pocket_watch_diff_1k.jpg"): {(620, 630, 765, 790): [640, 664, 694, 762]},
+           # batch A (13 Oct): the target's one box [0, 20, 840, 420] over the stationery map's four coloured pencil bands cannot pass its own script test (the four bands' colours differ by up to 40 from one ring
+           # colour); the four lettered places are boxed one each (this one, and three in EXTRA_BLANK), each inside one band
+           ("stationery_supplies", "stationery_supplies_diff_1k.jpg"): {(0, 20, 840, 420): [398, 100, 500, 124]}}
 
 
 # Where the ring just outside a box is mostly another surface than the print's own, the target's stated sampled fill is used instead of the ring's median:

@@ -4000,14 +4000,14 @@
   },
   {
    "seed": 1996,
-   "lines_heard": 18,
-   "busiest_minute_without_crime_lines": 6,
-   "busiest_minute_heard": 6,
+   "lines_heard": 17,
+   "busiest_minute_without_crime_lines": 5,
+   "busiest_minute_heard": 5,
    "quiet_share": 0.6,
    "longest_gap_s": 555.5,
    "neighbour_min_gap_s": null,
    "heard_by_situation": {
-    "farewell": 4,
+    "farewell": 3,
     "greeting.nowak": 2,
     "greeting.owner": 8,
     "greeting.stranger": 2,

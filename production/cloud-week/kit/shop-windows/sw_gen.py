@@ -78,6 +78,28 @@ class GM:
             uvs = [u if u is not None else uo for u in uvs]
         self.add(V, F, mi, uvs)
 
+    def cloth(self, x0, x1, z_top, drop, y0, amp, wave, scallop, nz=10, mi=0, thick=0.003):
+        """A hanging curtain as a displaced grid: gathered into folds (y = y0 + amp x sin(2 pi x / wave), the folds deeper toward the hem), the top straight, the hem scalloped (`scallop` = the arcs' width,
+        0.03 high). Faces toward -y (the street); the back face is a copy `thick` behind it so that the cloth has a thickness."""
+        nx = max(8, int(round((x1 - x0) / (wave / 6.0))))
+        V, F = [], []
+        for j in range(nz + 1):
+            for i in range(nx + 1):
+                x = x0 + (x1 - x0) * i / nx
+                t = j / float(nz)
+                hem = 0.03 * abs(math.sin(math.pi * (x - x0) / scallop))
+                z = z_top - (drop + 0.03 - hem) * t
+                y = y0 + amp * (0.35 + 0.65 * t) * math.sin(2 * math.pi * (x - x0) / wave)
+                V.append((x, y, z))
+        for j in range(nz):
+            for i in range(nx):
+                a = j * (nx + 1) + i
+                F.append((a, a + 1, a + nx + 2, a + nx + 1))
+        n0 = len(V)
+        V2 = [(x, y + thick, z) for (x, y, z) in V]
+        F2 = [tuple(n0 + k for k in reversed(f)) for f in F]
+        self.add(V + V2, F + F2, mi)
+
     def band(self, cx, cy, z0, z1, r, a0, a1, mi=0, uv=None, n=8):
         """A curved strip (a label on a jar): from angle a0 to a1 (degrees, 0 = toward -y, the camera; + toward +x), radius r about (cx, cy), z0 to z1; `uv` = (u0, v0, u1, v1) for the strip."""
         V, F, U = [], [], []

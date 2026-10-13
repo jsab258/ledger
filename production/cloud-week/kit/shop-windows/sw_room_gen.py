@@ -93,6 +93,29 @@ class GRoom(S.Room):
         self.templates[key] = (keep, lo, hi)
         return key
 
+    def compose(self, asset, tag, parts):
+        """A template put together from a kit model's loose pieces (the tea set is a row of cups, a row of saucers, a teapot ...): `parts` = [((name fragments), (dx, dy, dz)), ...]; each mesh whose name holds
+        one of the fragments is copied and moved by the offset. Registered as `asset#tag`."""
+        key = "%s#%s" % (asset, tag)
+        if key in self.templates:
+            return key
+        meshes, lo, hi = self.template(asset)
+        out = []
+        for frags, off in parts:
+            for m in meshes:
+                if any(f in m.name for f in frags):
+                    c = m.copy()
+                    c.name = "%s_%s_%d" % (m.name, tag, len(out))
+                    self.coll_t.objects.link(c)
+                    c.matrix_world = Matrix.Translation(Vector(off)) @ m.matrix_world
+                    out.append(c)
+        bpy.context.view_layer.update()
+        pts = [c.matrix_world @ Vector(co) for c in out for co in c.bound_box]
+        lo = Vector((min(p.x for p in pts), min(p.y for p in pts), min(p.z for p in pts)))
+        hi = Vector((max(p.x for p in pts), max(p.y for p in pts), max(p.z for p in pts)))
+        self.templates[key] = (out, lo, hi)
+        return key
+
     # ------------------------------------------------------------------------------------------------ the shell
     def floor_material(self):
         rr = self.RR
@@ -105,7 +128,7 @@ class GRoom(S.Room):
         if k > 0.85:
             tint = tuple(t * 0.85 / k for t in tint)
         kind = {"tea_rooms": "chequer", "newsagent": "tiles"}.get(self.ctx.id, "boards")
-        m = self.texmat("floor_" + self.ctx.id, asset, 1.2 if kind == "boards" else 0.6, tint)
+        m = self.texmat("floor_" + self.ctx.id, asset, 1.2 if kind == "boards" else (1.6 if kind == "chequer" else 0.6), tint)
         if kind in ("chequer", "tiles"):
             # a 300 mm chequer (the target's "cream and brown 300 mm" / "grey and blue vinyl tile 300 mm"): a checker node's two colours times the texture's grain (its mean taken out)
             nt = m.node_tree
@@ -116,7 +139,7 @@ class GRoom(S.Room):
             geo = nt.nodes.new("ShaderNodeNewGeometry")
             chk = nt.nodes.new("ShaderNodeTexChecker")
             chk.inputs["Scale"].default_value = 1.0 / 0.3
-            c1, c2 = ((rgb8(*(176, 156, 118)), rgb8(*(110, 74, 46))) if kind == "chequer" else (rgb8(*(124, 126, 128)), rgb8(*(92, 106, 136))))
+            c1, c2 = ((rgb8(*(184, 164, 126)), rgb8(*(126, 88, 58))) if kind == "chequer" else (rgb8(*(124, 126, 128)), rgb8(*(92, 106, 136))))
             chk.inputs["Color1"].default_value = (*c1, 1.0)
             chk.inputs["Color2"].default_value = (*c2, 1.0)
             nt.links.new(geo.outputs["Position"], chk.inputs["Vector"])
@@ -213,7 +236,7 @@ class GRoom(S.Room):
         em = P["diff_emit"] if state in ("day", "night_lit") else 0.0
         self.diff_m.node_tree.nodes["Principled BSDF"].inputs["Emission Strength"].default_value = em
         if getattr(self, "pilot", None) is not None:
-            self.pilot.data.energy = P.get("pilot", 0.0) if state == "night_dark" else 0.0
+            self.pilot.data.energy = P.get("pilot", getattr(self, "pilot_w", 0.0)) if state == "night_dark" else 0.0
 
     def calibrate(self, work, log=print, res=(768, 348), samples=24):
         """Light strengths so each state's mean luma meets the approved pictures' (119.5, 79.8, 17.7): the tubes on night_lit, the sky on day, the sodium wash on night_dark."""

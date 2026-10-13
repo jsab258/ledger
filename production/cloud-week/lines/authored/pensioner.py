@@ -35,7 +35,7 @@ LINES = {
         "Nowak. I'll remember it now. My memory's not what it was.",
         "Mr Nowak. Have you found the newsagent's yet?",
         "Good afternoon, Mr Nowak. Mind the kerb. @a",
-        "Mr Nowak. Don't be a stranger, now.",
+        "Mr Nowak. Keep out of the draughts, now.",
         "Nowak. Isn't it dreadful out? @wet",
         "Mr Nowak. You've found your feet, then.",
     ],
