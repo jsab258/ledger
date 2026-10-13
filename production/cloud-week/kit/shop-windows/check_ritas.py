@@ -1,4 +1,4 @@
-"""The checks of target.json (section 10) that apply to Rita's shop, run on what the build made: one row each, written to checks/check_ritas_v2.json (try 1's checks/check_ritas_v1.json stays as the record).
+"""The checks of target.json (section 10) that apply to Rita's shop, run on what the build made: one row each, written to checks/check_ritas_v3.json (try 2's check_ritas_v2.json and try 1's check_ritas_v1.json stay as the record).
 
     python build_ritas.py checks        # prints "N of M rows pass"
 

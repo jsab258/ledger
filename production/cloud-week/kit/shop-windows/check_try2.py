@@ -1078,13 +1078,15 @@ def glass_night_rows(R, work, rows):
         if nr.shape[:2] != fr.shape[:2]:
             nr = np.asarray(Image.open(pn).convert("RGB").resize((w2, h2), Image.BILINEAR)).astype(np.float32)
             mk = np.asarray(Image.open(pm).convert("L").resize((w2, h2), Image.NEAREST)) > 128
+        from scipy import ndimage as _nd
+        mk = _nd.binary_erosion(mk, iterations=2)               # the mask's edge pixels (the lattice's bars, the frame) are antialiased differently in a 2560 frame reduced by 2 and a native 1280 render
         d = np.abs(luma(fr) - luma(nr))
         p95 = float(np.percentile(d[mk], 95)) if mk.any() else -1.0
         mean_d = float(d[mk].mean()) if mk.any() else -1.0
         ok &= 0 <= p95 <= 15.0
         n += 1
         det.append("%s p95 %.1f (mean %.1f, %d glass px)" % (cam, p95, mean_d, int(mk.sum())))
-    rows.add("GLS-03", "the night glass does not double what is behind it", ok and n == 4, "at night, p95 of |gate frame minus the render with the glass's reflection off| (luma, levels) over the glass mask: " + "; ".join(det) +
+    rows.add("GLS-03", "the night glass does not double what is behind it", ok and n == 4, "at night, p95 of |gate frame minus the render with the glass's reflection off| (luma, levels) over the glass mask eroded by 2 px: " + "; ".join(det) +
              " (limit 15; try 2: 32.9 at STREET_30 and 17.2 at STREET_SQUARE: the stand-in glass mixed a Transparent and a Glass BSDF, which bent each ray at one face of the closed 6 mm slab and not the other, so everything behind it came two or three times; now a Glossy BSDF, GGX 0.02, weighted 0.2 x Fresnel at IOR 1.5, nothing refracted)")
 
 
@@ -1135,7 +1137,7 @@ def manifest(HERE_, assets, work, out_path):
         files.append(os.path.join(assets, nm))
     for st in ("day", "night_lit", "night_dark"):
         files.append(os.path.join(work, "rooms", "pawnbroker_%s.png" % st))
-    out = {"made": __import__("time").strftime("%Y-%m-%d %H:%M:%S"), "what": "the files the try 2 reviews are to look at; the three glbs and the three 4096 pictures are out of git (rebuilt by build_ritas.py) so this names the versions",
+    out = {"made": __import__("time").strftime("%Y-%m-%d %H:%M:%S"), "what": "the files of the narrow-points build (13 Oct, from the try 2 reviews; v3); the three glbs and the three 4096 pictures are out of git (rebuilt by build_ritas.py) so this names the versions",
            "files": {}}
     for p in files:
         if os.path.exists(p):
