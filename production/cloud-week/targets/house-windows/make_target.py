@@ -74,27 +74,29 @@ SITE_PLAN = {
     # (block, bay, index): room, net, extra, paint, condition, always_lit
     ("east_parade", 0, 0): dict(room="up_landing_1", net=("N2", "greyed"), extra=None, paint="white_grimy", cond="grimy"),
     ("east_parade", 0, 1): dict(room="up_lounge_1", net=("N1", "white"), extra=("C2", "cream"), paint="white_grimy", cond="grimy"),
-    ("east_parade", 1, 0): dict(room="up_landing_2", net=("N0", None), extra=("B2", "cream"), paint="brown", cond="sound"),
-    ("east_parade", 1, 1): dict(room="up_bedroom_1", net=("N1", "white"), extra=("C2", "brown"), paint="brown", cond="sound"),
+    ("east_parade", 1, 0): dict(room="up_landing_2", net=("N0", None), extra=("B2", "cream"), paint="white_fresh", cond="sound"),
+    ("east_parade", 1, 1): dict(room="up_bedroom_1", net=("N1", "white"), extra=("C2", "brown"), paint="white_fresh", cond="sound"),
     ("east_parade", 2, 0): dict(room="up_lounge_2", net=("N1", "greyed"), extra=("C2", "green"), paint="white_upvc", cond="sound"),
     ("east_parade", 2, 1): dict(room="up_landing_1", net=("N2", "greyed"), extra=None, paint="white_upvc", cond="sound"),
     ("east_parade", 3, 0): dict(room="up_empty_1", net=("N1", "yellowed"), extra=None, paint="white_flaking", cond="flaking", torn_net=True),
     ("east_parade", 3, 1): dict(room="up_empty_2", net=("N0", None), extra=None, paint="white_flaking", cond="flaking"),
     ("east_parade", 4, 0): dict(room="up_bedroom_2", net=("N2", "white"), extra=("C1", "green"), paint="white_upvc", cond="sound"),
     ("east_parade", 4, 1): dict(room="up_landing_2", net=("N1", "yellowed"), extra=None, paint="white_upvc", cond="grimy"),
-    ("east_parade", 5, 0): dict(room="up_lounge_3", net=("N1", "white"), extra=("C2", "floral_cream"), paint="olive", cond="sound"),
-    ("east_parade", 5, 1): dict(room="up_landing_1", net=("N3", "white"), extra=None, paint="olive", cond="sound"),
-    ("east_chandler", 0, 0): dict(room="up_bedroom_3", net=("N0", None), extra=("B1", "white"), paint="bronze", cond="sound"),
-    ("east_chandler", 0, 1): dict(room="up_landing_2", net=("N2", "yellowed"), extra=None, paint="bronze", cond="grimy"),
-    ("west_south", 2, 0): dict(room="gf_front_3", net=("N1", "white"), extra=None, paint="cream", cond="sound", always_lit=True),
-    ("west_south", 2, 1): dict(room="gf_front_3", net=("N1", "white"), extra=("B3", "white"), paint="cream", cond="sound", always_lit=True),
+    ("east_parade", 5, 0): dict(room="up_lounge_3", net=("N1", "white"), extra=("C2", "floral_cream"), paint="white_grimy", cond="sound"),
+    ("east_parade", 5, 1): dict(room="up_landing_1", net=("N3", "white"), extra=None, paint="white_grimy", cond="sound"),
+    ("east_chandler", 0, 0): dict(room="up_bedroom_3", net=("N0", None), extra=("B1", "white"), paint="white_upvc", cond="sound"),
+    ("east_chandler", 0, 1): dict(room="up_landing_2", net=("N2", "yellowed"), extra=None, paint="white_upvc", cond="grimy"),
+    ("west_south", 2, 0): dict(room="gf_front_3", net=("N1", "white"), extra=None, paint="white_fresh", cond="sound", always_lit=True),
+    ("west_south", 2, 1): dict(room="gf_front_3", net=("N1", "white"), extra=("B3", "white"), paint="white_fresh", cond="sound", always_lit=True),
     ("west_south", 1, 0): dict(room="gf_front_2", net=("N2", "white"), extra=None, paint="white_upvc", cond="sound"),
     ("west_south", 1, 1): dict(room="gf_front_2", net=("N0", None), extra=("C1", "brown"), paint="white_upvc", cond="sound"),
-    ("west_south", 0, 0): dict(room="gf_front_1", net=("N1", "white"), extra=None, paint="blue", cond="grimy"),
-    ("west_south", 0, 1): dict(room="gf_front_1", net=("N1", "white"), extra=None, paint="blue", cond="grimy"),
+    ("west_south", 0, 0): dict(room="gf_front_1", net=("N1", "white"), extra=None, paint="white_grimy", cond="grimy"),
+    ("west_south", 0, 1): dict(room="gf_front_1", net=("N1", "white"), extra=None, paint="white_grimy", cond="grimy"),
 }
 KIND_OF_PAINT_OK = {"S22": ("white_fresh", "white_grimy", "white_flaking", "cream", "olive", "blue", "brown"), "S11": ("white_fresh", "white_grimy", "white_flaking", "cream", "olive", "blue", "brown"),
-                    "RC": ("white_upvc", "bronze")}
+                    "RC": ("white_upvc", "bronze"), "RC2": ("white_upvc", "bronze")}
+# the houses that take the P6 replacement form (RC2) instead of P7's (RC); every other replacement house keeps RC
+RC2_HOUSES = {("east_parade", 4)}
 # a house's frame paint follows the kind: the street's _window_kind(house) decides the kind; a replacement cannot be painted blue or olive
 KIND_NAME = {"2/2": "S22", "1/1": "S11", "replacement": "RC"}
 
@@ -122,6 +124,8 @@ def main():
         plan = SITE_PLAN[key]
         file_kind = tf._window_kind(blk, bay)
         kind = KIND_NAME[file_kind]
+        if kind == "RC" and (blk, bay) in RC2_HOUSES:
+            kind = "RC2"
         side = 1 if blk.startswith("east") else -1
         cx = round((s["x_min"] + s["x_max"]) / 2.0, 3)
         built_as = ("S22 kit" if s["kit_nodes"] and kind == "S22" else "S11 kit" if s["kit_nodes"] else
@@ -135,7 +139,7 @@ def main():
         fam = "UP" if floor == "upper" else "GF"
         room = H.ROOMS[fam]
         paint = plan["paint"]
-        assert paint in KIND_OF_PAINT_OK[kind] or (kind == "RC" and paint in ("white_upvc", "bronze")), (key, kind, paint)
+        assert paint in KIND_OF_PAINT_OK[kind], (key, kind, paint)
         sites.append({
             "id": site_id(blk, bay, floor, idx), "block": blk, "bay": bay, "floor": floor, "index": idx, "side": side, "x_centre": cx,
             "opening_w_mm": 850.0, "opening_h_mm": H.WIN_H_PERIOD * 1000.0, "head_z_above_crown": head_z, "sill_z_above_crown": sill_z,
@@ -173,9 +177,11 @@ def main():
             "window_offset_toward_picture_right_m": round(win_off_toward_picture_right, 3),
             "shared_by": [t["id"] for t in houses[s["house"]]] if s["family"] == "GF" else None,
         }
-    # lit order: eligible windows (not empty, not always-lit) by crc32 of their id
-    elig = [s for s in sites if not s["room"].startswith("up_empty") and not s["always_lit"]]
-    elig.sort(key=lambda s: zlib.crc32(s["id"].encode()))
+    # lit order: the fixed list of hw_data.LIT_ORDER (the review's narrow point 6), checked against the eligible windows (not empty, not always-lit)
+    elig_ids = sorted(s["id"] for s in sites if not s["room"].startswith("up_empty") and not s["always_lit"])
+    assert sorted(D.LIT_ORDER) == elig_ids, (set(D.LIT_ORDER) ^ set(elig_ids))
+    by_id = {s["id"]: s for s in sites}
+    elig = [by_id[i] for i in D.LIT_ORDER]
     for i, s in enumerate(elig):
         s["lit_order"] = i + 1
     for s in sites:
@@ -227,7 +233,50 @@ def main():
     kinds["RC"]["glass_sightlines_mm"] = {"lower": [round(ww - 2 * f, 1), round(zc - t2 - f, 1)],
                                           "top": [round(ww - 2 * (f + gap + stile), 1), round(hh - f - gap - stile - (zc + t2 + gap + stile), 1)]}
     kinds["RC"]["transom_centre_z_mm"] = round(zc, 1)
+    # ---- RC2: the P6 form (narrow point 7): a fixed top light over a side-hung casement (left) and a fixed light (right), a 70 mm mullion at x 0
+    r2 = D.RC2
+    kinds["RC2"] = {"label": r2["label"], **{k2: v for k2, v in r2.items() if k2 != "label"}}
+    h2 = r2["opening"]["h"]
+    w2 = r2["opening"]["w"]
+    f2 = r2["frame_face"]
+    y0 = r2["frame_front_y"]
+    y1 = y0 + r2["frame_depth"]
+    zc2 = round(r2["transom"]["centre_fraction"] * h2, 1)               # 1106.4
+    t2b = r2["transom"]["face"] / 2.0
+    tz0, tz1 = round(zc2 - t2b, 1), round(zc2 + t2b, 1)                   # 1071.4, 1141.4
+    mh = r2["mullion"]["face"] / 2.0
+    st2, g2 = r2["casement"]["stile_face"], r2["casement"]["gap"]
+    sy0, sy1 = y0 + 8, y0 + 63
+    cx0, cx1 = -w2 / 2 + f2 + g2, -mh - g2                                # the casement's outer edges: -361 and -39
+    cz0, cz1 = f2 + g2, tz0 - g2                                          # 64 and 1067.4
+    kinds["RC2"]["parts_mm"] = [
+        {"name": "frame_jamb_L", "x": [-w2 / 2, -w2 / 2 + f2], "y_into_wall": [y0, y1], "z_up": [f2, h2 - f2]},
+        {"name": "frame_jamb_R", "x": [w2 / 2 - f2, w2 / 2], "y_into_wall": [y0, y1], "z_up": [f2, h2 - f2]},
+        {"name": "frame_sill_rail", "x": [-w2 / 2, w2 / 2], "y_into_wall": [y0, y1], "z_up": [0, f2]},
+        {"name": "frame_head_rail", "x": [-w2 / 2, w2 / 2], "y_into_wall": [y0, y1], "z_up": [h2 - f2, h2]},
+        {"name": "transom", "x": [-w2 / 2 + f2, w2 / 2 - f2], "y_into_wall": [y0, y1], "z_up": [tz0, tz1]},
+        {"name": "mullion", "x": [-mh, mh], "y_into_wall": [y0, y1], "z_up": [f2, tz0]},
+        {"name": "casement_stile_L", "x": [cx0, cx0 + st2], "y_into_wall": [sy0, sy1], "z_up": [cz0, cz1], "note": "the hanging stile: the hinge is on the left jamb"},
+        {"name": "casement_stile_R", "x": [cx1 - st2, cx1], "y_into_wall": [sy0, sy1], "z_up": [cz0, cz1], "note": "the closing stile, 4 mm from the mullion"},
+        {"name": "casement_bottom_rail", "x": [cx0 + st2, cx1 - st2], "y_into_wall": [sy0, sy1], "z_up": [cz0, cz0 + r2["casement"]["rail_face"]]},
+        {"name": "casement_top_rail", "x": [cx0 + st2, cx1 - st2], "y_into_wall": [sy0, sy1], "z_up": [round(cz1 - r2["casement"]["rail_face"], 1), cz1]},
+        {"name": "glass_casement", "x": [cx0 + st2 - 18, cx1 - st2 + 18], "y_into_wall": [r2["glass_plane_y"], r2["glass_plane_y"] + 4.0], "z_up": [round(cz0 + r2["casement"]["rail_face"] - 18, 1), round(cz1 - r2["casement"]["rail_face"] + 18, 1)],
+         "material": "glass_house", "note": "the sheet in the side-hung left light: 18 mm behind the sash's face on every side; the sightline is x %s to %s, z %s to %s" % (cx0 + st2, cx1 - st2, cz0 + r2["casement"]["rail_face"], round(cz1 - r2["casement"]["rail_face"], 1))},
+        {"name": "glass_fixed", "x": [mh - 18, w2 / 2 - f2 + 18], "y_into_wall": [r2["glass_plane_y"], r2["glass_plane_y"] + 4.0], "z_up": [f2 - 18, round(tz0 + 18, 1)], "material": "glass_house",
+         "note": "the sheet of the fixed right light: 18 mm behind the frame's face on every side (the rebate); the sightline is x %s to %s, z %s to %s" % (mh, w2 / 2 - f2, f2, tz0)},
+        {"name": "glass_top", "x": [-w2 / 2 + f2 - 18, w2 / 2 - f2 + 18], "y_into_wall": [r2["glass_plane_y"], r2["glass_plane_y"] + 4.0], "z_up": [round(tz1 - 18, 1), round(h2 - f2 + 18, 1)], "material": "glass_house",
+         "note": "the fixed top light across the whole width: the sheet runs 18 mm behind the frame's face; the sightline is x %s to %s, z %s to %s" % (-w2 / 2 + f2, w2 / 2 - f2, tz1, round(h2 - f2, 1))},
+    ]
+    for p_ in kinds["RC2"]["parts_mm"]:
+        for ax in ("x", "y_into_wall", "z_up"):
+            p_[ax] = [round(float(v), 1) for v in p_[ax]]
+    kinds["RC2"]["glass_sightlines_mm"] = {"casement": [round(cx1 - st2 - (cx0 + st2), 1), round(cz1 - r2["casement"]["rail_face"] - (cz0 + r2["casement"]["rail_face"]), 1)],
+                                           "fixed": [round(w2 / 2 - f2 - mh, 1), round(tz0 - f2, 1)], "top": [round(w2 - 2 * f2, 1), round(h2 - f2 - tz1, 1)]}
+    kinds["RC2"]["lower_light_openings_mm"] = {"left": [round(-mh - (-w2 / 2 + f2), 1), round(tz0 - f2, 1)], "right": [round(w2 / 2 - f2 - mh, 1), round(tz0 - f2, 1)]}
+    kinds["RC2"]["transom_centre_z_mm"] = zc2
+    kinds["RC2"]["mullion_z_mm"] = [f2, tz0]
     # ---------- budgets ----------------------------------------------------------------------------------------------------
+    # the eye stands by the WINDOW (hw_common.budgets_for: narrow point 1), so each cottage window is run at its own offset in the card
     budgets = {}
     for fam, (sill_above_floor, head_above_floor, offs) in {"UP": (4.2236 - 3.75, 5.9 - 3.75, [0.0]), "GF": (H.WIN_H_PERIOD and (2.5 - H.WIN_H_PERIOD - 0.45), 2.5 - 0.45, [0.9, -0.9])}.items():
         best = None
@@ -241,8 +290,9 @@ def main():
                     for kk in b[c]:
                         if b[c][kk] is not None and (best[c][kk] is None or b[c][kk] < best[c][kk]):
                             best[c][kk] = b[c][kk]
-        budgets[fam] = {"surfaces": best, "window_above_floor_m": [round(sill_above_floor, 4), round(head_above_floor, 4)], "window_offsets_m": offs}
-    # what shows of each room from the review cameras (computed through the game's rule's geometry)
+        budgets[fam] = {"surfaces": best, "window_above_floor_m": [round(sill_above_floor, 4), round(head_above_floor, 4)], "window_offsets_m": offs,
+                        "method": "eye at the window (xc = card_cx - win_off_x), mirror about the window, one pixel = atan(tan(vfov / 2) / 720) (the review's exact pixel angle)"}
+    # what shows of each room from the review cameras (computed through the game's rule's geometry); x is measured from the PICTURE-LEFT WALL (not from the room's centre)
     vz = {}
     names = ["back", "left", "right", "floor", "ceiling"]
     for fam, (sill_above_floor, head_above_floor, off) in {"UP": (4.2236 - 3.75, 5.9 - 3.75, 0.0), "GF": (2.5 - H.WIN_H_PERIOD - 0.45, 2.05, 0.9)}.items():
@@ -250,7 +300,7 @@ def main():
         rect = H.window_in_picture(room, off, sill_above_floor, head_above_floor)
         vz[fam] = {}
         for cam in H.STAND_OFF_CAMERAS:
-            e = H.eye_in_picture(H.eye_street(H.CAMERAS[cam]["spec"], 1, 0.0), 1, 0.0, room)
+            e = H.eye_in_picture(H.eye_street(H.CAMERAS[cam]["spec"], 1, 0.0 - off), 1, 0.0, room)       # the eye by the window: xc = card_cx - win_off_x
             hp, sid, G, Pp = H.see_through(e, rect, room)
             rec = {}
             for i, nm in enumerate(names):
@@ -302,7 +352,7 @@ def main():
     # models inventory with marks
     MARKS = {
         "Television_01": ("'VTECH' logo on the front panel, a 'WARNING' label, a 'TRRA' plate: painted out to the case's grey; NOT USED (television_02 serves)", "looked at, not used"),
-        "television_02": ("a small rating plate on the back panel: blanked; no text on the front", "blank"),
+        "television_02": ("a small rating plate on the back panel; 'PARAGON Viewing System' on the front bezel, left of the buttons (map at 1k, about x 272 to 300, y 450 to 560, lettered at 90 degrees: found by the review of 13 October, the writer had missed it): both painted out to the bezel's grey", "blank"),
         "wall_clock": ("'URBAN quartz' on the dial: painted out to the dial's white (a maker's name)", "blank"),
         "ceramic_vase_01": ("a barcode sticker on the body: painted out; NOT USED in a room (ceramic_vase_03 clean) ", "looked at, not used"),
         "ceramic_vase_03": ("none seen", "none"),
@@ -318,10 +368,10 @@ def main():
         "book_encyclopedia_set_01": ("spines read 'ENCYCLOPEDIA' and volume letters: a generic word, no firm; NOT USED in a room", "looked at, not used"),
         "ornate_mirror_01": ("none", "none"), "mantel_clock_01": ("none (a plain dial)", "none"), "alarm_clock_01": ("none (a plain dial with numerals)", "looked at, not used"),
         "Sofa_01": ("none", "none"), "sofa_02": ("none; 0.818 deep, over the tolerated back-wall budget: NOT USED", "looked at, not used"), "sofa_03": ("none (a cushion pattern square); 1.12 deep: NOT USED", "looked at, not used"),
-        "ArmChair_01": ("none", "none"), "side_table_01": ("an ornamental gold script-like band on the top edge of the map: decoration, no text read; kept", "none"),
-        "CoffeeTable_01": ("none; free-standing: NOT USED", "looked at, not used"), "Shelf_01": ("none", "none"), "wooden_bookshelf_worn": ("none", "none"),
+        "ArmChair_01": ("none; 0.77 deep, over the tolerated back-wall budget of 0.71 once the cottage eye stands at the window: NOT USED (painted_wooden_bench serves in gf_front_2)", "looked at, not used"), "side_table_01": ("an ornamental gold script-like band on the top edge of the map: decoration, no text read; kept", "none"),
+        "CoffeeTable_01": ("none; free-standing: NOT USED", "looked at, not used"), "Shelf_01": ("none", "none"), "wooden_bookshelf_worn": ("none (looked at again at 1k on 13 October after the fix)", "none"),
         "vintage_cabinet_01": ("none (a cream paper sheet with a hexagon pattern on map a)", "none"), "painted_wooden_cabinet": ("none (knobs only)", "none"),
-        "drawer_cabinet": ("none", "none"), "painted_wooden_bench": ("none", "none"), "potted_plant_01": ("none", "none"), "potted_plant_02": ("none", "looked at, not used"),
+        "drawer_cabinet": ("a 2010s piece (a black steel frame with open oak shelves and drawers); its navy side strip carries three rows of faint lettering-like marks (the review of 13 October; the writer's entry said none): NOT USED (wooden_bookshelf_worn serves in up_bedroom_2)", "looked at, not used"), "painted_wooden_bench": ("none (looked at again at 1k on 13 October after the fix)", "none"), "potted_plant_01": ("none", "none"), "potted_plant_02": ("none", "looked at, not used"),
         "vintage_oil_lamp": ("none", "none"), "throw_pillows_01": ("none", "looked at, not used"), "wicker_basket_01": ("none", "looked at, not used"), "old_bed_frame": ("none; its headboard is under the visible zone: NOT USED", "looked at, not used"),
         "vintage_day_bed": ("none; 0.855 deep: NOT USED", "looked at, not used"), "dining_table": ("none; free-standing: NOT USED", "looked at, not used"), "dining_chair_02": ("none; free-standing: NOT USED", "looked at, not used"),
         "WoodenChair_01": ("none; free-standing: NOT USED", "looked at, not used"), "round_wooden_table_01": ("none; free-standing: NOT USED", "looked at, not used"),
@@ -344,6 +394,7 @@ def main():
     # ---------- the photographs -------------------------------------------------------------------------------------------
     rows, brick = M.measure_all(a.photos)
     bands = M.summarise(rows)
+    extra = M.measure_extra(a.photos)
     gp = json.load(open(os.path.join(HERE, "geograph_pages_read.json")))
     photos = []
     for pid, ph in P.PHOTOS.items():
@@ -353,8 +404,8 @@ def main():
                        "preview": "production/previews/cloud-week/refs/house-windows/" + __import__("make_previews").preview_name(pid),
                        "crop": list(ph["crop"]), "masks": ph["masks"]})
     target = {
-        "summary": "House windows of Quay Street: twenty windows in ten houses (three kinds: two over two, one over one, a replacement casement), the 1a fix as numbers (glass over a dark room, the box shaded, its lines drawn), six kinds of net and drape, thirteen small rooms in the game's own `trace` rule at 2048 wide, the white-board check measured on 1979 to 1994 photographs.",
-        "status": "written by the target writer on 13 October 2026 from sources reached that day; nothing is built or committed",
+        "summary": "House windows of Quay Street: twenty windows in ten houses, every frame white (Jafar's ruling of 3 October), four kinds (two over two, one over one, and two replacement casements: P7's and P6's), the 1a fix as numbers (glass over a dark room, the box shaded, its lines drawn), the net, curtain and blind kinds, thirteen small rooms in the game's own `trace` rule, the white-board check measured on 1979 to 1994 photographs the way the gate measures.",
+        "status": "fixes applied, not re-reviewed",
         "units": {"windows_mm": "kit frame: x across (0 at the window's middle, + toward the viewer's right), y INTO the wall from the brick face (0 at the face), z UP from the opening's bottom edge",
                   "rooms_m": "room frame: x across from the room's centre (+ toward the PICTURE's right), y back from the card plane, z up from the floor", "street_m": "x along the street, y across (east +), z above the road crown (footway = crown + 0.10)",
                   "kinds_of_number": ["Read", "Scaled", "Photo", "Derived", "Judgement"]},
@@ -370,7 +421,10 @@ def main():
             "libraries": "Poly Haven API (api.polyhaven.com assets and files), 13 October 2026: every model and texture named exists, CC0; the 1k base colour of each looked at (inventory).",
             "unreached": ["Wikimedia Commons (not asked: Geograph's feed answered)", "archive.org (not asked)", "any 1975 to 1995 night photograph of a terrace (none found: no Geograph result before 1996 for night, dusk or lit windows)", "any period photograph of a 1980s brown anodised aluminium house window (none among the 14 photographs; none searched by image: Geograph is searchable by words only)",
                           "Epic's pages (not needed: the engine facts come from the repository's notes)"]},
-        "photo_measurements": {"method": M.__doc__, "windows": rows, "bands_by_state": bands, "brick_median_luma": brick,
+        "photo_measurements": {"method": M.__doc__, "windows": rows, "bands_by_state": bands, "brick_median_luma": brick, "p8_four_panes_the_gates_way": extra["P8_four_panes"],
+                               "boxes_of_the_first_version": {"P1_a": {"outline": [433, 392, 451, 455], "panes": [[438, 398, 449, 446]], "P_over_L": 0.865, "D_over_L": 0.502, "note": "included the white-painted stone head and sill (L 234, the stone's paint reads 248 to 254) and a column of brick at the jamb (D 117, the brick's own median 119): D/L 0.47 to 0.50 was brick over painted stone, not the frame"},
+                                                              "P1_b": {"outline": [403, 396, 419, 458], "panes": [[407, 402, 416, 448]], "P_over_L": 0.828, "D_over_L": 0.466},
+                                                              "P1_e": {"outline": [433, 485, 451, 545], "panes": [[438, 492, 449, 538]], "P_over_L": 0.85, "D_over_L": 0.486}},
                                "frame_to_brick_linear_ratio": {"P1": round(M.to_lin(np.median([r["L90"] for r in rows.values() if r["photo"] == "P1"])) / M.to_lin(brick["P1"]), 2),
                                                                "P8": round(M.to_lin(np.median([r["L90"] for r in rows.values() if r["photo"] == "P8"])) / M.to_lin(brick["P8"]), 2)},
                                "tally": {"n_windows_classified": 60, "by_net": {"lower_sash_voile": 28, "full_height_net": 13, "cafe_net": 1, "curtains_drawn_or_open": 6, "blind": 1, "bare_dark_room": 11}, "unclear_not_counted": 5,
@@ -386,18 +440,19 @@ def main():
                      "count_checked_by_self_check": 48, "hill_framed_windows": "the north rise's framed windows (`_framed_window`, 125 m out: two pixels of frame) stay flat cards: not kit pieces"},
         "kinds": kinds, "paints": D.PAINTS,
         "glass": D.GLASS, "box_shade": D.BOX_SHADE, "nets": D.NETS, "net_common": D.NET_COMMON, "curtains": D.CURTAINS, "blinds": D.BLINDS,
-        "rooms": {"visible_zone": {"what": "which parts of the room each review camera sees through the glass rectangle (144 rays, hit points in the room frame: x across from the picture's left edge, y back from the card, z above the floor)", "by_family": vz, "reading": "an upper room is seen from the street as its ceiling and the top 0.6 m of its back wall (from across) or the first 0.5 m of one side wall (along the street, near): so its picture's detail is ceiling, cornice, picture rail, wall tops and tall furniture tops; a cottage's front room is seen at eye level: the whole back wall and the side walls"}, "families": H.ROOMS, "budgets_computed": budgets, "budget_rule": R.BUDGET, "pictures_by_family": pictures, "finishes": R.FINISH, "forms": R.FORMS, "rooms": rooms,
+        "rooms": {"visible_zone": {"what": "which parts of the room each review camera sees through the glass rectangle (144 rays, hit points in the PICTURE frame: x measured from the PICTURE-LEFT WALL (not from the room's centre: the objects' x_across is from the centre, add half the room's width to compare), y back from the card, z above the floor; the eye stands by the window)", "x_frame": "from the picture-left wall", "by_family": vz, "reading": "an upper room is seen from the street as its ceiling and the top 0.6 m of its back wall (from across) or the first 0.5 m of one side wall (along the street, near): so its picture's detail is ceiling, cornice, picture rail, wall tops and tall furniture tops; a cottage's front room is seen at eye level: the whole back wall and the side walls"}, "families": H.ROOMS, "budgets_computed": budgets, "budget_rule": R.BUDGET, "pictures_by_family": pictures, "finishes": R.FINISH, "forms": R.FORMS, "rooms": rooms,
                   "cards": {"camera_rule": "the render camera stands on the room's centre line d = W in front of the card, framing the card rectangle W x H exactly; the game's `trace` is imported, not rewritten",
                             "picture_names": "<room_id>_<state>.png with <room_id>.json beside them (room, w, h, d, camera_d, pixels, states, made_by, samples); 8-bit sRGB PNG; Cycles 128 samples, denoised; masters on F:/LedgerTools/house-rooms",
                             "states": ["day", "night_lit", "night_dark"], "brightness": {"day": 0.12, "night": 0.7},
                             "brightness_note": "day 0.12 (a front room by day is a dim ceiling and a dark wall; the shops' 0.15 is for a lit display), night 0.7 as the shops (shop-interiors.json); the pane composite measured in the gate decides"},
                   "picture_standards": {"day_mean_luma": 105.0, "night_lit_mean_luma": 70.0, "night_dark_mean_luma": 15.0, "tolerance": 0.15, "floor_factor": 0.7,
                                         "note": "Judgement, scaled from the approved pawnbroker pictures (119.5, 79.8, 17.7 measured 12 October) by the rooms' smaller windows and fewer lights: the checks' floors are 0.7 of these"},
-                  "lights_by_state": {"day": "an overcast area light the size of the card on its plane (6500 K), strength set so the picture's mean luma meets the day standard; no tungsten", "night_lit": "the pendant (a paper shade, a 60 W tungsten bulb 2700 K, linear (1.0, 0.714, 0.344)) at the ceiling rose, 0.30 below the ceiling, and in the front rooms a table lamp's glow on the back wall; a television glow (cool 6500 K, emissive screen) where tv_glow; landings and empty rooms: a bare 40 W bulb or none (empty: night_lit = night_dark)",
+                  "lights_by_state": {"day": "an overcast area light the size of the card on its plane (6500 K), strength set so the picture's mean luma meets the day standard; no tungsten", "night_lit": "the pendant (a paper shade, a 60 W tungsten bulb 2700 K, linear (1.0, 0.714, 0.344)) at the ceiling rose, 0.30 below the ceiling, and in the front rooms a table lamp's glow on the back wall; a television glow (cool 6500 K, emissive screen) where tv_glow; landings and empty rooms: a bare 40 W bulb or none (empty: night_lit = night_dark); a lit landing's emission is the absolute one of `landing_bulb`",
+                                      "landing_bulb": D.LANDING_BULB, "curtain_emission": "each curtain and blind kind carries its own absolute lit emission (`curtains.*.night_lit_emission_linear`, `blinds.*.night_lit_emission_linear`)",
                                       "night_dark": "the sodium wash through the window: linear (1.0, 0.25, 0.0) = production/specs/unreal-look.json lantern_linear_rgb (NOT the scene file's stale (1, 0.7055, 0)), at 6 per cent of night_lit's energy; nothing else"},
                   "lit_share": {**D.LIT_SHARE, "lit_by_hour": lit_table, "lit_order_of_the_non_always_lit_windows": [s["id"] for s in elig]}},
-        "inventory": {"polyhaven_models": inventory, "polyhaven_textures": textures, "brand_blocklist": ["dixons", "currys", "comet", "rumbelows", "vtech", "ray homes", "celine", "lorex", "ingrid", "radolier", "hotpoint", "kenwood", "ekco", "anglian", "royal mail", "post office", "tesco", "woolworth", "sainsbury", "ikea", "dulux"],
-                      "rule": "every model's base colour map was looked at at 1k on 13 October 2026 before it was named; a model with a mark is blanked in its map (the mark painted out to the surface's own colour) before it is used, or not used; every framed picture's artwork is replaced by a script-drawn print"},
+        "inventory": {"polyhaven_models": inventory, "polyhaven_textures": textures, "brand_blocklist": ["paragon", "dixons", "currys", "comet", "rumbelows", "vtech", "ray homes", "celine", "lorex", "ingrid", "radolier", "hotpoint", "kenwood", "ekco", "anglian", "royal mail", "post office", "tesco", "woolworth", "sainsbury", "ikea", "dulux"],
+                      "rule": "every model's base colour map was looked at at 1k on 13 October 2026 before it was named; a model with a mark is blanked in its map (the mark painted out to the surface's own colour) before it is used, or not used; every framed picture's artwork is replaced by a script-drawn print; the base colour of every placed model is checked region by region against its marks entry before its room is rendered (PIC-07). The first look missed television_02's maker's name on its front bezel: the placed models' maps were looked at again at 100 per cent after the review (FIXES-APPLIED.md)"},
     }
     ow = (376.7 - 304.8) / 850.0
     target["overlay"] = {

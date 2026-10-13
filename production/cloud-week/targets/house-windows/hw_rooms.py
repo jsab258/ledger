@@ -4,9 +4,11 @@ Objects are placed by their footprint (w across, d deep, h high, from the Poly H
 stand on and their stand-off from it (the depth of what sticks out). The class follows from the budgets of hw_common (true: reads true at 20 pixels
 of slide; tolerated: 40 pixels; a stand-off over the tolerated budget is not drawn)."""
 
-# budgets used as the RULE (the smaller of the two room families' computed ones, rounded down); the computed tables are in target.json
+# budgets used as the RULE (the smaller of the two room families' computed ones, rounded down); the computed tables are in target.json.
+# The back wall's figures are the review's (narrow point 1): the cottage rooms' eyes stand at the window as the camera table says, GF back 0.381 true and 0.712 tolerated
+# by the review's own slide measure (this file's recomputation, hw_common.budgets_for, gives 0.387 and 0.723: the rule is the smaller)
 BUDGET = {
-    "back": {"true": 0.40, "tolerated": 0.80},
+    "back": {"true": 0.38, "tolerated": 0.71},
     "side": {"true": 0.03, "tolerated": 0.06},
     "ceiling": {"true": 0.02, "tolerated": 0.04},
     "floor": {"true": 0.018, "tolerated": 0.037},
@@ -76,7 +78,7 @@ ROOMS = {
     "up_bedroom_2": {"family": "UP", "type": "bedroom", "variant": 2, "walls": "emulsion_cream", "ceiling": "ceiling_white", "floor": "boards",
                      "forms": ["skirting", "picture_rail", "coving", "ceiling_rose"],
                      "objects": [
-                         {"model": "drawer_cabinet", "surface": "back", "x": -0.55, "z0": 0.0},
+                         {"model": "wooden_bookshelf_worn", "surface": "back", "x": -0.55, "z0": 0.0},
                          {"model": "ornate_mirror_01", "surface": "back", "x": 0.60, "z0": 1.25},
                          {"model": "hanging_picture_frame_01", "surface": "left", "y": 2.2, "z0": 1.30},
                      ], "pendant": True},
@@ -119,7 +121,7 @@ ROOMS = {
                    "forms": ["skirting", "picture_rail", "coving", "ceiling_rose", "internal_door_flat"],
                    "objects": [
                        {"model": "wooden_bookshelf_worn", "surface": "back", "x": -1.00, "z0": 0.0},
-                       {"model": "ArmChair_01", "surface": "back", "x": 0.30, "z0": 0.0},
+                       {"model": "painted_wooden_bench", "surface": "back", "x": 0.30, "z0": 0.0},
                        {"model": "potted_plant_01", "surface": "back", "x": 1.30, "z0": 0.0},
                        {"model": "ornate_mirror_01", "surface": "right", "y": 2.1, "z0": 1.10},
                    ], "pendant": True, "tv_glow": False},

@@ -9,7 +9,7 @@ def kit_pieces(target):
     sites = target["sites"]
     nets = D.NETS
     nodes_extra = {}
-    for kind in ("S22", "S11", "RC"):
+    for kind in ("S22", "S11", "RC", "RC2"):
         plane = {k: nets[k]["plane_mm"][kind] for k in ("N1", "N2", "N3")}
         nodes = []
         if kind == "S22":
@@ -23,7 +23,7 @@ def kit_pieces(target):
             for n in [n for n in target["kinds"]["S11"]["lab_nodes"] if n["name"].startswith("glass__")]:
                 nodes.append({"name": n["name"].replace("glass__", "glass__").replace("_glass", ""), "material": "glass_house", "x": n["x"], "y_into_wall": n["y_into_wall"], "z_up": n["z_up"], "note": "the lab's sheet, one pane a sash"})
         else:
-            for p in target["kinds"]["RC"]["parts_mm"]:
+            for p in target["kinds"][kind]["parts_mm"]:
                 if p.get("material") == "glass_house":
                     nodes.append({"name": "glass__" + p["name"].replace("glass_", ""), "material": "glass_house", "x": p["x"], "y_into_wall": p["y_into_wall"], "z_up": p["z_up"], "note": "4 mm, one pane drawn for the sealed unit"})
         for k in ("N1", "N2", "N3"):
@@ -45,9 +45,9 @@ def kit_pieces(target):
         "pivot": "the opening's bottom-edge centre on the brick face: (0, 0, 0); the street toward -y; z up; metres, scale 1",
         "placement": {"east": "translate (x_centre, +5.125, sill_z_above_crown); the street is at -y, no turn", "west": "turn 180 degrees about z, then translate (x_centre, -5.125, sill_z_above_crown)",
                       "sill_z": "above the crown: the site's `sill_z_above_crown` (the opening's bottom edge); the stone sill and the arch ring belong to the wall kit"},
-        "files": {k: "%s/hw_%s.glb" % (PIECE_DIR, k) for k in ("S22", "S11", "RC")},
+        "files": {k: "%s/hw_%s.glb" % (PIECE_DIR, k) for k in ("S22", "S11", "RC", "RC2")},
         "extra_files": {"room_card_gf": "%s/hw_room_card_gf.glb (the cottages' shared room card, one per house, placed between its two windows)" % PIECE_DIR},
-        "per_kind": {kind: {"reused_nodes": (len(target["kinds"][kind].get("lab_nodes", [])) if kind != "RC" else 0), "added_nodes": nodes_extra[kind]} for kind in nodes_extra},
+        "per_kind": {kind: {"reused_nodes": (len(target["kinds"][kind].get("lab_nodes", [])) if kind in ("S22", "S11") else 0), "added_nodes": nodes_extra[kind]} for kind in nodes_extra},
         "materials": {"paint_<paint name>": "per house, colour from `paints`; roughness per paint; vertex colour R multiplies (BOX_SHADE)", "glass_house": "the pane material (GLASS.pane): one per pane id so each pane's tilt is its own node",
                       "net_voile": "alpha-textured card: the weave and folds (NET_COMMON), colour white, greyed or yellowed per house", "curtain": "colour per house (CURTAINS), folds as a normal and a brightness map, opacity 0.97",
                       "blind": "slat texture with the gap alpha (BLINDS)", "pendant_shade": "paper, emissive in night_lit only", "room_card": "plain quad; the game's M_LedgerInterior takes CardOrigin, RoomSize, CamD, Side, three textures and Night, LitOn, Brightness: the quad has no UVs that matter"},
