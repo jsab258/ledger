@@ -3899,40 +3899,42 @@
     {
      "name": "glass_lower",
      "x": [
-      -347.0,
-      347.0
+      -383.0,
+      383.0
      ],
      "y_into_wall": [
       112.5,
       116.5
      ],
      "z_up": [
-      78.0,
-      1154.0
+      42.0,
+      1190.0
      ],
-     "material": "glass_house"
+     "material": "glass_house",
+     "note": "the sheet: it runs 18 mm behind the frame's face on every side (the rebate); what shows is the sightline x +-365, z 60 to 1172"
     },
     {
      "name": "glass_top",
      "x": [
-      -316.0,
-      316.0
+      -334.0,
+      334.0
      ],
      "y_into_wall": [
       112.5,
       116.5
      ],
      "z_up": [
-      1291.0,
-      1567.4
+      1273.0,
+      1585.4
      ],
-     "material": "glass_house"
+     "material": "glass_house",
+     "note": "the sheet in the top-hung sash: 18 mm behind the sash's face on every side; the sightline is x +-316, z 1291 to 1567.4"
     }
    ],
    "glass_sightlines_mm": {
     "lower": [
-     694.0,
-     1076.0
+     730.0,
+     1112.0
     ],
     "top": [
      632.0,
@@ -4885,14 +4887,16 @@
     "h": 2.55,
     "d": 4.2,
     "camd": 2.8,
-    "floor_z": 3.75
+    "floor_z": 3.75,
+    "pic_w": 1536
    },
    "GF": {
     "w": 3.4,
     "h": 2.6,
     "d": 4.2,
     "camd": 3.4,
-    "floor_z": 0.45
+    "floor_z": 0.45,
+    "pic_w": 3072
    }
   },
   "budgets_computed": {
@@ -4972,13 +4976,13 @@
   },
   "pictures_by_family": {
    "UP": {
-    "w_px": 2048,
-    "h_px": 1865,
+    "w_px": 1536,
+    "h_px": 1399,
     "back_wall_rect_px_x0y0x1y1": [
-     614.4,
-     559.5,
-     1433.6,
-     1305.6
+     460.8,
+     419.7,
+     1075.2,
+     979.2
     ],
     "back_wall_uv": [
      0.3,
@@ -4986,13 +4990,13 @@
     ]
    },
    "GF": {
-    "w_px": 2048,
-    "h_px": 1566,
+    "w_px": 3072,
+    "h_px": 2349,
     "back_wall_rect_px_x0y0x1y1": [
-     565.9,
-     432.7,
-     1482.1,
-     1133.4
+     848.8,
+     649.1,
+     2223.2,
+     1700.1
     ],
     "back_wall_uv": [
      0.2763,
@@ -5310,8 +5314,8 @@
     ],
     "camd_m": 2.8,
     "picture_px": [
-     2048,
-     1865
+     1536,
+     1399
     ]
    },
    "up_lounge_2": {
@@ -5432,8 +5436,8 @@
     ],
     "camd_m": 2.8,
     "picture_px": [
-     2048,
-     1865
+     1536,
+     1399
     ]
    },
    "up_lounge_3": {
@@ -5554,8 +5558,8 @@
     ],
     "camd_m": 2.8,
     "picture_px": [
-     2048,
-     1865
+     1536,
+     1399
     ]
    },
    "up_bedroom_1": {
@@ -5644,8 +5648,8 @@
     ],
     "camd_m": 2.8,
     "picture_px": [
-     2048,
-     1865
+     1536,
+     1399
     ]
    },
    "up_bedroom_2": {
@@ -5766,8 +5770,8 @@
     ],
     "camd_m": 2.8,
     "picture_px": [
-     2048,
-     1865
+     1536,
+     1399
     ]
    },
    "up_bedroom_3": {
@@ -5888,8 +5892,8 @@
     ],
     "camd_m": 2.8,
     "picture_px": [
-     2048,
-     1865
+     1536,
+     1399
     ]
    },
    "up_landing_1": {
@@ -5981,8 +5985,8 @@
     ],
     "camd_m": 2.8,
     "picture_px": [
-     2048,
-     1865
+     1536,
+     1399
     ]
    },
    "up_landing_2": {
@@ -6072,8 +6076,8 @@
     ],
     "camd_m": 2.8,
     "picture_px": [
-     2048,
-     1865
+     1536,
+     1399
     ]
    },
    "up_empty_1": {
@@ -6100,8 +6104,8 @@
     ],
     "camd_m": 2.8,
     "picture_px": [
-     2048,
-     1865
+     1536,
+     1399
     ]
    },
    "up_empty_2": {
@@ -6127,8 +6131,8 @@
     ],
     "camd_m": 2.8,
     "picture_px": [
-     2048,
-     1865
+     1536,
+     1399
     ]
    },
    "gf_front_1": {
@@ -6312,8 +6316,8 @@
     ],
     "camd_m": 3.4,
     "picture_px": [
-     2048,
-     1566
+     3072,
+     2349
     ]
    },
    "gf_front_2": {
@@ -6466,8 +6470,8 @@
     ],
     "camd_m": 3.4,
     "picture_px": [
-     2048,
-     1566
+     3072,
+     2349
     ]
    },
    "gf_front_3": {
@@ -6650,8 +6654,8 @@
     ],
     "camd_m": 3.4,
     "picture_px": [
-     2048,
-     1566
+     3072,
+     2349
     ]
    }
   },
@@ -8415,16 +8419,16 @@
       "name": "glass__lower",
       "material": "glass_house",
       "x": [
-       -347.0,
-       347.0
+       -383.0,
+       383.0
       ],
       "y_into_wall": [
        112.5,
        116.5
       ],
       "z_up": [
-       78.0,
-       1154.0
+       42.0,
+       1190.0
       ],
       "note": "4 mm, one pane drawn for the sealed unit"
      },
@@ -8432,16 +8436,16 @@
       "name": "glass__top",
       "material": "glass_house",
       "x": [
-       -316.0,
-       316.0
+       -334.0,
+       334.0
       ],
       "y_into_wall": [
        112.5,
        116.5
       ],
       "z_up": [
-       1291.0,
-       1567.4
+       1273.0,
+       1585.4
       ],
       "note": "4 mm, one pane drawn for the sealed unit"
      },
@@ -8946,6 +8950,28 @@
    "source": "photographs P6, P7, P11"
   },
   {
+   "id": "KIT-14",
+   "group": "kit",
+   "name": "equal lights, centred bars",
+   "measure": "the x extents of every pane node, the bar's centre, the RC's transom",
+   "expected": "S22: four panes of equal width (352.6 +-0.5), the bar and the putty strips centred on x = 0 (+-0.5); S11: two panes equal; RC: both lights centred on x = 0 (+-0.5), the transom's centre at 0.72 x 1676.4 = 1207.0 (+-1)",
+   "tolerance": "+-0.5 mm",
+   "applies_to": "S22 S11 RC",
+   "kind": "Photo",
+   "source": "P8: the bar at 0.500 of the width; unit 7's review, narrow point 1 (unaligned toplights)"
+  },
+  {
+   "id": "KIT-15",
+   "group": "kit",
+   "name": "no opening in the front",
+   "measure": "rasterise the elevation drawn from the kit's nodes at 1 mm: every point of the opening 850 x 1676.4 lies on a part (frame, sash, lining, bead, glass sheet)",
+   "expected": "the largest uncovered square is at most 5 x 5 mm (the S22's 1.6 side clearance and the RC's 4 mm gap are the only gaps)",
+   "tolerance": "<= 5 mm",
+   "applies_to": "S22 S11 RC",
+   "kind": "Derived",
+   "source": "unit 7's review, fault 1 (a 1.95 m x 0.45 m hole)"
+  },
+  {
    "id": "KIT-13",
    "group": "kit",
    "name": "paint and material names",
@@ -9159,7 +9185,7 @@
    "group": "rooms",
    "name": "size and states",
    "measure": "each room's three PNGs",
-   "expected": "2048 x 1865 (UP) or 2048 x 1566 (GF), 8-bit sRGB, named <room>_<state>.png, with <room>.json",
+   "expected": "1536 x 1399 (UP) or 3072 x 2349 (GF), 8-bit sRGB, named <room>_<state>.png, with <room>.json",
    "tolerance": "exact",
    "applies_to": "13 rooms x 3 states = 39",
    "kind": "Derived",
@@ -9192,7 +9218,7 @@
    "group": "rooms",
    "name": "the back wall lands where the rule puts it",
    "measure": "the back wall's corners in the picture by edge detection",
-   "expected": "UP: (614, 559) to (1434, 1306); GF: (566, 433) to (1482, 1133)",
+   "expected": "UP (1536 wide): (461, 420) to (1075, 979); GF (3072 wide): (849, 649) to (2223, 1700)",
    "tolerance": "+-8 px",
    "applies_to": "all",
    "kind": "Derived",

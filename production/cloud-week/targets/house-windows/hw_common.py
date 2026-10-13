@@ -50,8 +50,8 @@ WIN_W = 0.85                      # the opening
 WIN_H_PERIOD = 1.6764             # 5 ft 6 in (ruling 8 October)
 
 ROOMS = {
-    "UP": {"w": 2.8, "h": 2.55, "d": 4.2, "camd": 2.8, "floor_z": 3.75},
-    "GF": {"w": 3.4, "h": 2.60, "d": 4.2, "camd": 3.4, "floor_z": 0.45},
+    "UP": {"w": 2.8, "h": 2.55, "d": 4.2, "camd": 2.8, "floor_z": 3.75, "pic_w": 1536},
+    "GF": {"w": 3.4, "h": 2.60, "d": 4.2, "camd": 3.4, "floor_z": 0.45, "pic_w": 3072},
 }
 
 

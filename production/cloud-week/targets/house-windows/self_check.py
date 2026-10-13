@@ -174,6 +174,10 @@ def check_sites(t, R):
         kc[s["kind"]] += 1
     R.add("sites", "kinds: 6 two-over-two, 6 one-over-one, 8 replacement", kc == {"S22": 6, "S11": 6, "RC": 8}, str(kc))
     R.add("sites", "ten houses", len(t["houses"]) == 10, "")
+    out = []
+    tf._north_approach(out)
+    n_back = sum(1 for q in out if "sash_jamb_l" in q["id"])
+    R.add("sites", "the hill's rows carry %d windows by the same code (48 stated)" % n_back, n_back == t["backdrop"]["count_checked_by_self_check"] == 48, "")
     R.add("sites", "sill = head - 1676.4 on every site", all(abs((s["head_z_above_crown"] - s["sill_z_above_crown"]) - 1.6764) < 1e-3 for s in sites), "")
     R.add("sites", "upper heads at 5.9 and cottage heads at 2.5 above the crown (today's)", all(abs(s["head_z_above_crown"] - (5.9 if s["floor"] == "upper" else 2.5)) < 1e-6 for s in sites), "")
     R.add("sites", "the kit rows today are the parade's S22 and S11 only", all(s["kit_row_today"] == (s["block"] == "east_parade" and s["kind"] in ("S22", "S11")) for s in sites), "")
@@ -227,8 +231,8 @@ def check_sites(t, R):
         R.add("cards", "%s: from the render camera a card point shows its own pixel (the game's rule imported)" % fam, ok, "")
     pic = t["rooms"]["pictures_by_family"]
     for fam, room in H.ROOMS.items():
-        bw = H.back_wall_px(room, 2048)
-        R.add("cards", "%s back wall rectangle in the picture is %s" % (fam, bw), list(bw) == pic[fam]["back_wall_rect_px_x0y0x1y1"] and pic[fam]["h_px"] == int(round(2048 * room["h"] / room["w"])), "")
+        bw = H.back_wall_px(room, room["pic_w"])
+        R.add("cards", "%s back wall rectangle in the %d-wide picture is %s" % (fam, room["pic_w"], bw), list(bw) == pic[fam]["back_wall_rect_px_x0y0x1y1"] and pic[fam]["h_px"] == int(round(room["pic_w"] * room["h"] / room["w"])), "")
     # lit table
     lt = t["rooms"]["lit_share"]["lit_by_hour"]
     R.add("lit", "at 20:30 seven lit of twenty (35 per cent)", lt["20:30"]["n"] == 7 and abs(lt["20:30"]["n"] / 20.0 - 0.35) < 0.001, "")
@@ -293,7 +297,7 @@ def check_rooms(t, R):
         for o in r["objects"]:
             m = t["inventory"]["polyhaven_models"].get(o["model"])
             R.add("inventory", "%s: %s is in the inventory with its marks line and a usable status" % (rid, o["model"]), m is not None and bool(m["marks"]) and m["status"].split(" ")[0] in ("none", "blank", "replace_artwork"), str(m["status"] if m else None))
-        R.add("rooms", "%s: picture size" % rid, r["picture_px"] == [2048, t["rooms"]["pictures_by_family"][r["family"]]["h_px"]], "")
+        R.add("rooms", "%s: picture size" % rid, r["picture_px"] == [H.ROOMS[r["family"]]["pic_w"], t["rooms"]["pictures_by_family"][r["family"]]["h_px"]], "")
         # a room with a pendant has an eligible place for it: the ceiling rose
         if r["pendant"]:
             R.add("rooms", "%s: a pendant means a ceiling rose" % rid, "ceiling_rose" in r["forms"], "")
@@ -376,15 +380,74 @@ def check_checks(t, R):
     # the numbers the checks quote are the data's
     chk = {c["id"]: c for c in cs}
     R.add("checks", "KIT-06 quotes the net cards' dimensions", all(s in chk["KIT-06"]["expected"] for s in ("N1 x +-450, z 60 to 880", "N2 x +-450, z 60 to 1630", "N3 x +-430, z 100 to 500")), "")
-    R.add("checks", "PIC-04 quotes the back wall rectangles of the target", "(614, 559) to (1434, 1306)" in chk["PIC-04"]["expected"] and "(566, 433) to (1482, 1133)" in chk["PIC-04"]["expected"], "")
+    bwu = H.back_wall_px(H.ROOMS["UP"], 1536)
+    bwg = H.back_wall_px(H.ROOMS["GF"], 3072)
+    R.add("checks", "PIC-04 quotes the back wall rectangles of the target (%s, %s)" % (bwu, bwg), "(%d, %d) to (%d, %d)" % tuple(round(v) for v in bwu) in chk["PIC-04"]["expected"] and "(%d, %d) to (%d, %d)" % tuple(round(v) for v in bwg) in chk["PIC-04"]["expected"], "")
     R.add("checks", "NIGHT-01 quotes 7 lit", "7 lit" in chk["NIGHT-01"]["expected"], "")
-    R.add("checks", "PIC-01 quotes both picture heights", "1865" in chk["PIC-01"]["expected"] and "1566" in chk["PIC-01"]["expected"], "")
+    R.add("checks", "PIC-01 quotes both picture sizes", "1536 x 1399" in chk["PIC-01"]["expected"] and "3072 x 2349" in chk["PIC-01"]["expected"], "")
     # glass rules in the checks are the data's
     g = t["glass"]["pane"]
     R.add("checks", "MAT-01 quotes the pane's numbers", "0.03" in chk["MAT-01"]["expected"] and g["specular"] == 1.0 and g["roughness"] == 0.03, "")
 
 
+def largest_empty_square(mask):
+    """side (cells) of the largest all-False square in a boolean matrix (True = covered)."""
+    Hh, W = mask.shape
+    prev = np.zeros(W + 1, int)
+    best = 0
+    for y in range(Hh):
+        cur = np.zeros(W + 1, int)
+        row = ~mask[y]
+        for x in range(1, W + 1):
+            if row[x - 1]:
+                cur[x] = min(prev[x], cur[x - 1], prev[x - 1]) + 1
+                if cur[x] > best:
+                    best = cur[x]
+        prev = cur
+    return int(best)
+
+
+def coverage(t, kind):
+    k = t["kinds"][kind]
+    rects = []
+    if kind in ("S22", "S11"):
+        for n in k["lab_nodes"]:
+            if not n["name"].startswith("glass__"):
+                rects.append((n["x"], n["z_up"]))
+        for n in t["kit_pieces"]["per_kind"][kind]["added_nodes"]:
+            if n["name"].startswith("glass__"):
+                rects.append((n["x"], n["z_up"]))
+    else:
+        for p in k["parts_mm"]:
+            rects.append((p["x"], p["z_up"]))
+    M = np.zeros((1677, 851), bool)
+    for x, z in rects:
+        x0, x1 = max(0, int(round(x[0] + 425))), min(851, int(round(x[1] + 425)))
+        z0, z1 = max(0, int(round(z[0]))), min(1677, int(round(z[1])))
+        if x1 > x0 and z1 > z0:
+            M[z0:z1, x0:x1] = True
+    return M
+
+
 def check_kit(t, R):
+    for kind in ("S22", "S11", "RC"):
+        M = coverage(t, kind)
+        sq = largest_empty_square(M)
+        R.add("kit", "KIT-15 %s: the opening is covered (largest uncovered square %d mm, at most 5)" % (kind, sq), sq <= 5, "")
+    # equal lights and centred bars
+    kp = t["kit_pieces"]["per_kind"]
+    for kind, expect in (("S22", 4), ("S11", 2)):
+        pn = [n for n in kp[kind]["added_nodes"] if n["name"].startswith("glass__")]
+        widths = [n["x"][1] - n["x"][0] for n in pn]
+        R.add("kit", "KIT-14 %s: %d panes of equal width (%s)" % (kind, expect, [round(v, 1) for v in widths]), len(pn) == expect and max(widths) - min(widths) <= 0.5, "")
+        if kind == "S22":
+            rows_ = {}
+            for n in pn:
+                rows_.setdefault(tuple(n["z_up"]), []).append(n)
+            ok = all(len(v) == 2 and abs(sorted(v, key=lambda q: q["x"][0])[0]["x"][0] + sorted(v, key=lambda q: q["x"][0])[1]["x"][1]) <= 0.5 and abs(sorted(v, key=lambda q: q["x"][0])[0]["x"][1] + sorted(v, key=lambda q: q["x"][0])[1]["x"][0]) <= 0.5 for v in rows_.values())
+            R.add("kit", "KIT-14 S22: in each sash the two panes mirror each other about x = 0 (the bar's centre)", ok and len(rows_) == 2, "")
+    rcp = {p["name"]: p for p in t["kinds"]["RC"]["parts_mm"]}
+    R.add("kit", "KIT-14 RC: both lights and the transom centred on x = 0", all(abs(rcp[n]["x"][0] + rcp[n]["x"][1]) <= 0.5 for n in ("glass_lower", "glass_top", "transom", "vent_sash_bottom_rail")), "")
     kp = t["kit_pieces"]
     for kind in ("S22", "S11", "RC"):
         added = kp["per_kind"][kind]["added_nodes"]

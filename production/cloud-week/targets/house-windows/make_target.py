@@ -219,12 +219,13 @@ def main():
         {"name": "vent_sash_stile_R", "x": [ww / 2 - f - gap - stile, ww / 2 - f - gap], "y_into_wall": [rc["frame_front_y"] + 8, rc["frame_front_y"] + 63], "z_up": [round(zc + t2 + gap, 1), round(hh - f - gap, 1)]},
         {"name": "vent_sash_bottom_rail", "x": [-ww / 2 + f + gap + stile, ww / 2 - f - gap - stile], "y_into_wall": [rc["frame_front_y"] + 8, rc["frame_front_y"] + 63], "z_up": [round(zc + t2 + gap, 1), round(zc + t2 + gap + stile, 1)]},
         {"name": "vent_sash_top_rail", "x": [-ww / 2 + f + gap + stile, ww / 2 - f - gap - stile], "y_into_wall": [rc["frame_front_y"] + 8, rc["frame_front_y"] + 63], "z_up": [round(hh - f - gap - stile, 1), round(hh - f - gap, 1)]},
-        {"name": "glass_lower", "x": [-ww / 2 + f + 18, ww / 2 - f - 18], "y_into_wall": [rc["glass_plane_y"], rc["glass_plane_y"] + 4.0], "z_up": [f + 18, round(zc - t2 - 18, 1)], "material": "glass_house"},
-        {"name": "glass_top", "x": [round(-ww / 2 + f + gap + stile + 0, 1), round(ww / 2 - f - gap - stile, 1)], "y_into_wall": [rc["glass_plane_y"], rc["glass_plane_y"] + 4.0],
-         "z_up": [round(zc + t2 + gap + stile, 1), round(hh - f - gap - stile, 1)], "material": "glass_house"},
+        {"name": "glass_lower", "x": [-ww / 2 + f - 18, ww / 2 - f + 18], "y_into_wall": [rc["glass_plane_y"], rc["glass_plane_y"] + 4.0], "z_up": [f - 18, round(zc - t2 + 18, 1)], "material": "glass_house",
+         "note": "the sheet: it runs 18 mm behind the frame's face on every side (the rebate); what shows is the sightline x +-365, z 60 to 1172"},
+        {"name": "glass_top", "x": [round(-ww / 2 + f + gap + stile - 18, 1), round(ww / 2 - f - gap - stile + 18, 1)], "y_into_wall": [rc["glass_plane_y"], rc["glass_plane_y"] + 4.0],
+         "z_up": [round(zc + t2 + gap + stile - 18, 1), round(hh - f - gap - stile + 18, 1)], "material": "glass_house", "note": "the sheet in the top-hung sash: 18 mm behind the sash's face on every side; the sightline is x +-316, z 1291 to 1567.4"},
     ]
-    kinds["RC"]["glass_sightlines_mm"] = {"lower": [round(kinds["RC"]["parts_mm"][9]["x"][1] - kinds["RC"]["parts_mm"][9]["x"][0], 1), round(kinds["RC"]["parts_mm"][9]["z_up"][1] - kinds["RC"]["parts_mm"][9]["z_up"][0], 1)],
-                                          "top": [round(kinds["RC"]["parts_mm"][10]["x"][1] - kinds["RC"]["parts_mm"][10]["x"][0], 1), round(kinds["RC"]["parts_mm"][10]["z_up"][1] - kinds["RC"]["parts_mm"][10]["z_up"][0], 1)]}
+    kinds["RC"]["glass_sightlines_mm"] = {"lower": [round(ww - 2 * f, 1), round(zc - t2 - f, 1)],
+                                          "top": [round(ww - 2 * (f + gap + stile), 1), round(hh - f - gap - stile - (zc + t2 + gap + stile), 1)]}
     kinds["RC"]["transom_centre_z_mm"] = round(zc, 1)
     # ---------- budgets ----------------------------------------------------------------------------------------------------
     budgets = {}
@@ -260,7 +261,7 @@ def main():
     # picture geometry
     pictures = {}
     for fam, room in H.ROOMS.items():
-        wpx = 2048
+        wpx = room["pic_w"]
         pictures[fam] = {"w_px": wpx, "h_px": int(round(wpx * room["h"] / room["w"])), "back_wall_rect_px_x0y0x1y1": H.back_wall_px(room, wpx),
                          "back_wall_uv": [round(v, 4) for v in H.back_wall_rect_uv(room)]}
     # ---------- the rooms --------------------------------------------------------------------------------------------------
