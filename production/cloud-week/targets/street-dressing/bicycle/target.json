@@ -1,7 +1,7 @@
 {
  "family": "bicycle",
  "title": "Quay Street's bicycle against a wall",
- "units": "millimetres; angles in degrees; z up; x forward (the front wheel at +x); y to the rider's right; the pivot is the rear wheel's ground contact",
+ "units": "millimetres; angles in degrees; z up; x forward (the front wheel at +x); y to the rider's right; the pivot is the rear wheel's ground contact; BI2 leans toward -y, the rider's left, where its wall stands",
  "status": "written 13 October 2026, not yet reviewed",
  "sample": "BI2",
  "materials": {
@@ -39,7 +39,7 @@
    "rough": 0.8,
    "rough_words": "matt",
    "metal": false,
-   "note": "a pale grey bloom of dust on the sidewalls; the rim (not separate) is dull steel in the 2 mm inner edge"
+   "note": "a pale grey bloom of dust on the sidewalls; the rim is its own ring inside it (steel)"
   },
   "saddle_black": {
    "name": "saddle black leather-look, cracked",
@@ -63,7 +63,31 @@
    "rough": 0.7,
    "rough_words": "matt",
    "metal": false,
-   "note": ""
+   "note": "also the brake pads"
+  },
+  "chain_dark": {
+   "name": "chain, brown with oil and rust",
+   "srgb": [
+    62,
+    46,
+    34
+   ],
+   "rough": 0.6,
+   "rough_words": "matt",
+   "metal": true,
+   "note": "the plates rust-brown, the rollers oily black; a line of oil spots on the right chain stay below it"
+  },
+  "reflector_red": {
+   "name": "rear reflector, red plastic, scratched",
+   "srgb": [
+    150,
+    18,
+    22
+   ],
+   "rough": 0.3,
+   "rough_words": "glossy, scratched",
+   "metal": false,
+   "note": "the only saturated colour on the bicycle: 60 mm across"
   },
   "wall_brick": {
    "name": "soot-blackened brick (the street's)",
@@ -417,6 +441,342 @@
      ],
      "material": "tyre",
      "note": "tyre and rim segment (16 round the wheel), section 38 x 38"
+    },
+    {
+     "id": "rw_rim1",
+     "type": "box",
+     "c": [
+      287.0,
+      0.0,
+      330.0
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -90.0,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement"
+    },
+    {
+     "id": "rw_rim2",
+     "type": "box",
+     "c": [
+      265.15,
+      0.0,
+      439.83
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -112.5,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement"
+    },
+    {
+     "id": "rw_rim3",
+     "type": "box",
+     "c": [
+      202.94,
+      0.0,
+      532.94
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -135.0,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement"
+    },
+    {
+     "id": "rw_rim4",
+     "type": "box",
+     "c": [
+      109.83,
+      0.0,
+      595.15
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -157.5,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement"
+    },
+    {
+     "id": "rw_rim5",
+     "type": "box",
+     "c": [
+      0.0,
+      0.0,
+      617.0
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -180.0,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement"
+    },
+    {
+     "id": "rw_rim6",
+     "type": "box",
+     "c": [
+      -109.83,
+      0.0,
+      595.15
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -202.5,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement"
+    },
+    {
+     "id": "rw_rim7",
+     "type": "box",
+     "c": [
+      -202.94,
+      0.0,
+      532.94
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -225.0,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement"
+    },
+    {
+     "id": "rw_rim8",
+     "type": "box",
+     "c": [
+      -265.15,
+      0.0,
+      439.83
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -247.5,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement"
+    },
+    {
+     "id": "rw_rim9",
+     "type": "box",
+     "c": [
+      -287.0,
+      0.0,
+      330.0
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -270.0,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement"
+    },
+    {
+     "id": "rw_rim10",
+     "type": "box",
+     "c": [
+      -265.15,
+      0.0,
+      220.17
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -292.5,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement"
+    },
+    {
+     "id": "rw_rim11",
+     "type": "box",
+     "c": [
+      -202.94,
+      0.0,
+      127.06
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -315.0,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement"
+    },
+    {
+     "id": "rw_rim12",
+     "type": "box",
+     "c": [
+      -109.83,
+      0.0,
+      64.85
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -337.5,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement"
+    },
+    {
+     "id": "rw_rim13",
+     "type": "box",
+     "c": [
+      -0.0,
+      0.0,
+      43.0
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -360.0,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement"
+    },
+    {
+     "id": "rw_rim14",
+     "type": "box",
+     "c": [
+      109.83,
+      0.0,
+      64.85
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -382.5,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement"
+    },
+    {
+     "id": "rw_rim15",
+     "type": "box",
+     "c": [
+      202.94,
+      0.0,
+      127.06
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -405.0,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement"
+    },
+    {
+     "id": "rw_rim16",
+     "type": "box",
+     "c": [
+      265.15,
+      0.0,
+      220.17
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -427.5,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement"
     },
     {
      "id": "rw_hub",
@@ -908,6 +1268,342 @@
      "note": "tyre and rim segment (16 round the wheel), section 38 x 38"
     },
     {
+     "id": "fw_rim1",
+     "type": "box",
+     "c": [
+      1383.84,
+      0.0,
+      330.0
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -90.0,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement"
+    },
+    {
+     "id": "fw_rim2",
+     "type": "box",
+     "c": [
+      1361.99,
+      0.0,
+      439.83
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -112.5,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement"
+    },
+    {
+     "id": "fw_rim3",
+     "type": "box",
+     "c": [
+      1299.78,
+      0.0,
+      532.94
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -135.0,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement"
+    },
+    {
+     "id": "fw_rim4",
+     "type": "box",
+     "c": [
+      1206.67,
+      0.0,
+      595.15
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -157.5,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement"
+    },
+    {
+     "id": "fw_rim5",
+     "type": "box",
+     "c": [
+      1096.84,
+      0.0,
+      617.0
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -180.0,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement"
+    },
+    {
+     "id": "fw_rim6",
+     "type": "box",
+     "c": [
+      987.01,
+      0.0,
+      595.15
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -202.5,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement"
+    },
+    {
+     "id": "fw_rim7",
+     "type": "box",
+     "c": [
+      893.9,
+      0.0,
+      532.94
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -225.0,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement"
+    },
+    {
+     "id": "fw_rim8",
+     "type": "box",
+     "c": [
+      831.69,
+      0.0,
+      439.83
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -247.5,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement"
+    },
+    {
+     "id": "fw_rim9",
+     "type": "box",
+     "c": [
+      809.84,
+      0.0,
+      330.0
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -270.0,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement"
+    },
+    {
+     "id": "fw_rim10",
+     "type": "box",
+     "c": [
+      831.69,
+      0.0,
+      220.17
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -292.5,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement"
+    },
+    {
+     "id": "fw_rim11",
+     "type": "box",
+     "c": [
+      893.9,
+      0.0,
+      127.06
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -315.0,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement"
+    },
+    {
+     "id": "fw_rim12",
+     "type": "box",
+     "c": [
+      987.01,
+      0.0,
+      64.85
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -337.5,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement"
+    },
+    {
+     "id": "fw_rim13",
+     "type": "box",
+     "c": [
+      1096.84,
+      0.0,
+      43.0
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -360.0,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement"
+    },
+    {
+     "id": "fw_rim14",
+     "type": "box",
+     "c": [
+      1206.67,
+      0.0,
+      64.85
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -382.5,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement"
+    },
+    {
+     "id": "fw_rim15",
+     "type": "box",
+     "c": [
+      1299.78,
+      0.0,
+      127.06
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -405.0,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement"
+    },
+    {
+     "id": "fw_rim16",
+     "type": "box",
+     "c": [
+      1361.99,
+      0.0,
+      220.17
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -427.5,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement"
+    },
+    {
      "id": "fw_hub",
      "type": "cyl",
      "p0": [
@@ -1343,29 +2039,63 @@
      "type": "cyl",
      "p0": [
       449.0,
-      -55.0,
+      -40.0,
       300.0
      ],
      "p1": [
       0.0,
-      -55.0,
+      -40.0,
       330.0
      ],
      "r0": 8.0,
      "material": "paint_black",
-     "note": "chain stay 16, 450 long"
+     "note": "chain stay 16, 450 long, 40 off the centre line (80 apart): the chain runs outboard of the right one"
     },
     {
      "id": "seat_stay_l",
      "type": "cyl",
      "p0": [
       275.9504831500294,
-      -55.0,
+      -40.0,
       832.5916491252859
      ],
      "p1": [
       0.0,
-      -55.0,
+      -40.0,
+      330.0
+     ],
+     "r0": 8.0,
+     "material": "paint_black",
+     "note": "seat stay 16"
+    },
+    {
+     "id": "chain_stay_r",
+     "type": "cyl",
+     "p0": [
+      449.0,
+      40.0,
+      300.0
+     ],
+     "p1": [
+      0.0,
+      40.0,
+      330.0
+     ],
+     "r0": 8.0,
+     "material": "paint_black",
+     "note": "chain stay 16, 450 long, 40 off the centre line (80 apart): the chain runs outboard of the right one"
+    },
+    {
+     "id": "seat_stay_r",
+     "type": "cyl",
+     "p0": [
+      275.9504831500294,
+      40.0,
+      832.5916491252859
+     ],
+     "p1": [
+      0.0,
+      40.0,
       330.0
      ],
      "r0": 8.0,
@@ -1388,40 +2118,6 @@
      "r0": 11.0,
      "material": "paint_black",
      "note": "fork blade 22, rake 45 at the foot"
-    },
-    {
-     "id": "chain_stay_r",
-     "type": "cyl",
-     "p0": [
-      449.0,
-      55.0,
-      300.0
-     ],
-     "p1": [
-      0.0,
-      55.0,
-      330.0
-     ],
-     "r0": 8.0,
-     "material": "paint_black",
-     "note": "chain stay 16, 450 long"
-    },
-    {
-     "id": "seat_stay_r",
-     "type": "cyl",
-     "p0": [
-      275.9504831500294,
-      55.0,
-      832.5916491252859
-     ],
-     "p1": [
-      0.0,
-      55.0,
-      330.0
-     ],
-     "r0": 8.0,
-     "material": "paint_black",
-     "note": "seat stay 16"
     },
     {
      "id": "fork_r",
@@ -1450,7 +2146,7 @@
      ],
      "s": [
       16.0,
-      120.0,
+      90.0,
       20.0
      ],
      "material": "paint_black",
@@ -1721,6 +2417,1138 @@
       24.0
      ],
      "material": "steel"
+    },
+    {
+     "id": "sprocket",
+     "type": "cyl",
+     "p0": [
+      0.0,
+      48.0,
+      330.0
+     ],
+     "p1": [
+      0.0,
+      58.0,
+      330.0
+     ],
+     "r0": 36.5,
+     "material": "steel",
+     "note": "rear sprocket: 18 teeth, 73 across (pitch circle 73.1), 10 thick, on the hub's drive end; Judgement (the review's 18 tooth, 73 mm)"
+    },
+    {
+     "id": "chain_top",
+     "type": "box",
+     "c": [
+      221.36,
+      55.0,
+      377.71
+     ],
+     "s": [
+      446.93,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      -2.869922554388641,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain run (top): 446.9 long = 35.2 links of 12.7, 8 wide, 6 thick, on the pitch circles' common tangent; Judgement"
+    },
+    {
+     "id": "chain_bot",
+     "type": "box",
+     "c": [
+      213.04,
+      55.0,
+      253.26
+     ],
+     "s": [
+      446.93,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      10.515011108141785,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain run (bot): 446.9 long = 35.2 links of 12.7, 8 wide, 6 thick, on the pitch circles' common tangent; Judgement"
+    },
+    {
+     "id": "chain_c01",
+     "type": "box",
+     "c": [
+      443.44,
+      55.0,
+      211.81
+     ],
+     "s": [
+      21.41,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      3.608406334480014,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the chainring: 1.7 links of 12.7 in this strip; Judgement"
+    },
+    {
+     "id": "chain_c02",
+     "type": "box",
+     "c": [
+      464.66,
+      55.0,
+      213.03
+     ],
+     "s": [
+      21.41,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      -10.204803212843652,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the chainring: 1.7 links of 12.7 in this strip; Judgement"
+    },
+    {
+     "id": "chain_c03",
+     "type": "box",
+     "c": [
+      484.97,
+      55.0,
+      219.29
+     ],
+     "s": [
+      21.41,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      -24.018012760167228,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the chainring: 1.7 links of 12.7 in this strip; Judgement"
+    },
+    {
+     "id": "chain_c04",
+     "type": "box",
+     "c": [
+      503.2,
+      55.0,
+      230.21
+     ],
+     "s": [
+      21.41,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      -37.83122230749085,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the chainring: 1.7 links of 12.7 in this strip; Judgement"
+    },
+    {
+     "id": "chain_c05",
+     "type": "box",
+     "c": [
+      518.29,
+      55.0,
+      245.17
+     ],
+     "s": [
+      21.41,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      -51.64443185481432,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the chainring: 1.7 links of 12.7 in this strip; Judgement"
+    },
+    {
+     "id": "chain_c06",
+     "type": "box",
+     "c": [
+      529.38,
+      55.0,
+      263.3
+     ],
+     "s": [
+      21.41,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      -65.45764140213821,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the chainring: 1.7 links of 12.7 in this strip; Judgement"
+    },
+    {
+     "id": "chain_c07",
+     "type": "box",
+     "c": [
+      535.82,
+      55.0,
+      283.55
+     ],
+     "s": [
+      21.41,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      -79.27085094946159,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the chainring: 1.7 links of 12.7 in this strip; Judgement"
+    },
+    {
+     "id": "chain_c08",
+     "type": "box",
+     "c": [
+      537.24,
+      55.0,
+      304.75
+     ],
+     "s": [
+      21.41,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      -93.08406049678523,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the chainring: 1.7 links of 12.7 in this strip; Judgement"
+    },
+    {
+     "id": "chain_c09",
+     "type": "box",
+     "c": [
+      533.55,
+      55.0,
+      325.68
+     ],
+     "s": [
+      21.41,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      -106.89727004410891,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the chainring: 1.7 links of 12.7 in this strip; Judgement"
+    },
+    {
+     "id": "chain_c10",
+     "type": "box",
+     "c": [
+      524.97,
+      55.0,
+      345.13
+     ],
+     "s": [
+      21.41,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      -120.71047959143228,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the chainring: 1.7 links of 12.7 in this strip; Judgement"
+    },
+    {
+     "id": "chain_c11",
+     "type": "box",
+     "c": [
+      512.0,
+      55.0,
+      361.96
+     ],
+     "s": [
+      21.41,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      -134.52368913875603,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the chainring: 1.7 links of 12.7 in this strip; Judgement"
+    },
+    {
+     "id": "chain_c12",
+     "type": "box",
+     "c": [
+      495.39,
+      55.0,
+      375.21
+     ],
+     "s": [
+      21.41,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      -148.33689868607973,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the chainring: 1.7 links of 12.7 in this strip; Judgement"
+    },
+    {
+     "id": "chain_c13",
+     "type": "box",
+     "c": [
+      476.09,
+      55.0,
+      384.11
+     ],
+     "s": [
+      21.41,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      -162.15010823340316,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the chainring: 1.7 links of 12.7 in this strip; Judgement"
+    },
+    {
+     "id": "chain_c14",
+     "type": "box",
+     "c": [
+      455.22,
+      55.0,
+      388.15
+     ],
+     "s": [
+      21.41,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      -175.96331778072698,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the chainring: 1.7 links of 12.7 in this strip; Judgement"
+    },
+    {
+     "id": "chain_s01",
+     "type": "box",
+     "c": [
+      -6.19,
+      55.0,
+      365.77
+     ],
+     "s": [
+      8.84,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      170.18778301488342,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement"
+    },
+    {
+     "id": "chain_s02",
+     "type": "box",
+     "c": [
+      -14.59,
+      55.0,
+      363.24
+     ],
+     "s": [
+      8.84,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      156.30319415342748,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement"
+    },
+    {
+     "id": "chain_s03",
+     "type": "box",
+     "c": [
+      -22.14,
+      55.0,
+      358.77
+     ],
+     "s": [
+      8.84,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      142.4186052919718,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement"
+    },
+    {
+     "id": "chain_s04",
+     "type": "box",
+     "c": [
+      -28.4,
+      55.0,
+      352.61
+     ],
+     "s": [
+      8.84,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      128.5340164305162,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement"
+    },
+    {
+     "id": "chain_s05",
+     "type": "box",
+     "c": [
+      -32.99,
+      55.0,
+      345.14
+     ],
+     "s": [
+      8.84,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      114.64942756906031,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement"
+    },
+    {
+     "id": "chain_s06",
+     "type": "box",
+     "c": [
+      -35.66,
+      55.0,
+      336.78
+     ],
+     "s": [
+      8.84,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      100.7648387076045,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement"
+    },
+    {
+     "id": "chain_s07",
+     "type": "box",
+     "c": [
+      -36.25,
+      55.0,
+      328.02
+     ],
+     "s": [
+      8.84,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      86.8802498461487,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement"
+    },
+    {
+     "id": "chain_s08",
+     "type": "box",
+     "c": [
+      -34.71,
+      55.0,
+      319.38
+     ],
+     "s": [
+      8.84,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      72.99566098469286,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement"
+    },
+    {
+     "id": "chain_s09",
+     "type": "box",
+     "c": [
+      -31.15,
+      55.0,
+      311.36
+     ],
+     "s": [
+      8.84,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      59.11107212323721,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement"
+    },
+    {
+     "id": "chain_s10",
+     "type": "box",
+     "c": [
+      -25.77,
+      55.0,
+      304.43
+     ],
+     "s": [
+      8.84,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      45.22648326178116,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement"
+    },
+    {
+     "id": "chain_s11",
+     "type": "box",
+     "c": [
+      -18.88,
+      55.0,
+      299.0
+     ],
+     "s": [
+      8.84,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      31.341894400325558,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement"
+    },
+    {
+     "id": "chain_s12",
+     "type": "box",
+     "c": [
+      -10.89,
+      55.0,
+      295.37
+     ],
+     "s": [
+      8.84,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      17.4573055388699,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement"
+    },
+    {
+     "id": "chainguard",
+     "type": "box",
+     "c": [
+      248.85,
+      55.0,
+      392.11
+     ],
+     "s": [
+      499.63,
+      60.0,
+      1.0
+     ],
+     "rot": [
+      0,
+      -2.869922554388641,
+      0
+     ],
+     "material": "paint_black",
+     "edge": "edges rolled 3 mm",
+     "note": "chainguard: sheet steel 60 deep, 1 thick, from the sprocket's centre (x 0) to x 499 (40 mm behind the chainring's front), 13 over the chain's pitch line; Judgement (the review's numbers)"
+    },
+    {
+     "id": "chainguard_clip",
+     "type": "box",
+     "c": [
+      15.0,
+      40.0,
+      358.182
+     ],
+     "s": [
+      14.0,
+      8.0,
+      44.368
+     ],
+     "material": "paint_black",
+     "note": "clip 14 x 8 from the right chain stay up to the guard's rear end"
+    },
+    {
+     "id": "chainguard_strap",
+     "type": "cyl",
+     "p0": [
+      495.0,
+      36.0,
+      403.62974875121716
+     ],
+     "p1": [
+      431.8270474397202,
+      10.0,
+      383.62974875121716
+     ],
+     "r0": 3.0,
+     "material": "paint_black",
+     "note": "strap rod 6 across from the guard's front end to the seat tube"
+    },
+    {
+     "id": "fw_stirrup_bar",
+     "type": "cyl",
+     "p0": [
+      971.2439617679142,
+      -28.0,
+      569.0102885981468
+     ],
+     "p1": [
+      971.2439617679142,
+      28.0,
+      569.0102885981468
+     ],
+     "r0": 3.0,
+     "material": "steel",
+     "note": "stirrup crossbar 6 across, 56 wide, under the rim at radius 270 (the rim's inner face is 282), at 117.7 degrees on the wheel; Judgement"
+    },
+    {
+     "id": "fw_stirrup_arm_l",
+     "type": "cyl",
+     "p0": [
+      971.2439617679142,
+      -28.0,
+      569.0102885981468
+     ],
+     "p1": [
+      929.378991069475,
+      -55.0,
+      648.680384797529
+     ],
+     "r0": 3.0,
+     "material": "steel",
+     "note": "stirrup arm 6 across from the crossbar's end to the frame member"
+    },
+    {
+     "id": "fw_stirrup_arm_r",
+     "type": "cyl",
+     "p0": [
+      971.2439617679142,
+      28.0,
+      569.0102885981468
+     ],
+     "p1": [
+      929.378991069475,
+      55.0,
+      648.680384797529
+     ],
+     "r0": 3.0,
+     "material": "steel",
+     "note": "stirrup arm 6 across from the crossbar's end to the frame member"
+    },
+    {
+     "id": "fw_brake_bridge",
+     "type": "box",
+     "c": [
+      929.379,
+      0.0,
+      648.68
+     ],
+     "s": [
+      16.0,
+      110.0,
+      16.0
+     ],
+     "material": "paint_black",
+     "note": "brake bridge 16 x 16 between the two members at radius 360, above the mudguard"
+    },
+    {
+     "id": "fw_pad_l",
+     "type": "box",
+     "c": [
+      969.38,
+      -12.0,
+      572.55
+     ],
+     "s": [
+      40.0,
+      14.0,
+      14.0
+     ],
+     "rot": [
+      0,
+      -207.72098788911734,
+      0
+     ],
+     "material": "grip_black",
+     "note": "brake pad 40 x 14 x 14 on the stirrup, against the rim's inner face (rod brake); Judgement"
+    },
+    {
+     "id": "fw_pad_r",
+     "type": "box",
+     "c": [
+      969.38,
+      12.0,
+      572.55
+     ],
+     "s": [
+      40.0,
+      14.0,
+      14.0
+     ],
+     "rot": [
+      0,
+      -207.72098788911734,
+      0
+     ],
+     "material": "grip_black",
+     "note": "brake pad 40 x 14 x 14 on the stirrup, against the rim's inner face (rod brake); Judgement"
+    },
+    {
+     "id": "rw_stirrup_bar",
+     "type": "cyl",
+     "p0": [
+      129.94632468449876,
+      -28.0,
+      566.6726699494279
+     ],
+     "p1": [
+      129.94632468449876,
+      28.0,
+      566.6726699494279
+     ],
+     "r0": 3.0,
+     "material": "steel",
+     "note": "stirrup crossbar 6 across, 56 wide, under the rim at radius 270 (the rim's inner face is 282), at 61.2 degrees on the wheel; Judgement"
+    },
+    {
+     "id": "rw_stirrup_arm_l",
+     "type": "cyl",
+     "p0": [
+      129.94632468449876,
+      -28.0,
+      566.6726699494279
+     ],
+     "p1": [
+      173.26176624599833,
+      -40.0,
+      645.5635599325706
+     ],
+     "r0": 3.0,
+     "material": "steel",
+     "note": "stirrup arm 6 across from the crossbar's end to the frame member"
+    },
+    {
+     "id": "rw_stirrup_arm_r",
+     "type": "cyl",
+     "p0": [
+      129.94632468449876,
+      28.0,
+      566.6726699494279
+     ],
+     "p1": [
+      173.26176624599833,
+      40.0,
+      645.5635599325706
+     ],
+     "r0": 3.0,
+     "material": "steel",
+     "note": "stirrup arm 6 across from the crossbar's end to the frame member"
+    },
+    {
+     "id": "rw_brake_bridge",
+     "type": "box",
+     "c": [
+      173.262,
+      0.0,
+      645.564
+     ],
+     "s": [
+      16.0,
+      80.0,
+      16.0
+     ],
+     "material": "paint_black",
+     "note": "brake bridge 16 x 16 between the two members at radius 360, above the mudguard"
+    },
+    {
+     "id": "rw_pad_l",
+     "type": "box",
+     "c": [
+      131.87,
+      -12.0,
+      570.18
+     ],
+     "s": [
+      40.0,
+      14.0,
+      14.0
+     ],
+     "rot": [
+      0,
+      -151.2307903161246,
+      0
+     ],
+     "material": "grip_black",
+     "note": "brake pad 40 x 14 x 14 on the stirrup, against the rim's inner face (rod brake); Judgement"
+    },
+    {
+     "id": "rw_pad_r",
+     "type": "box",
+     "c": [
+      131.87,
+      12.0,
+      570.18
+     ],
+     "s": [
+      40.0,
+      14.0,
+      14.0
+     ],
+     "rot": [
+      0,
+      -151.2307903161246,
+      0
+     ],
+     "material": "grip_black",
+     "note": "brake pad 40 x 14 x 14 on the stirrup, against the rim's inner face (rod brake); Judgement"
+    },
+    {
+     "id": "brake_lever_l",
+     "type": "cyl",
+     "p0": [
+      695.2673622693244,
+      -330.0,
+      996.2129044016398
+     ],
+     "p1": [
+      793.5656075840034,
+      -330.0,
+      927.3837320395143
+     ],
+     "r0": 6.0,
+     "material": "steel",
+     "note": "bar lever 120 long, 12 across, clamped under the grip's inner end; the left works the front brake, the right the rear; Judgement"
+    },
+    {
+     "id": "brake_rod_f",
+     "type": "cyl",
+     "p0": [
+      793.5656075840034,
+      -330.0,
+      927.3837320395143
+     ],
+     "p1": [
+      929.378991069475,
+      -55.0,
+      648.680384797529
+     ],
+     "r0": 4.0,
+     "material": "steel",
+     "note": "brake rod 8 across from the lever's tip to the stirrup's joint on the fork blade; Judgement"
+    },
+    {
+     "id": "brake_lever_r",
+     "type": "cyl",
+     "p0": [
+      695.2673622693244,
+      330.0,
+      996.2129044016398
+     ],
+     "p1": [
+      793.5656075840034,
+      330.0,
+      927.3837320395143
+     ],
+     "r0": 6.0,
+     "material": "steel",
+     "note": "bar lever 120 long, 12 across, clamped under the grip's inner end; the left works the front brake, the right the rear; Judgement"
+    },
+    {
+     "id": "brake_rod_r",
+     "type": "cyl",
+     "p0": [
+      793.5656075840034,
+      330.0,
+      927.3837320395143
+     ],
+     "p1": [
+      173.26176624599833,
+      40.0,
+      645.5635599325706
+     ],
+     "r0": 4.0,
+     "material": "steel",
+     "note": "brake rod 8 across from the lever's tip to the stirrup's joint on the seat stay; Judgement"
+    },
+    {
+     "id": "fw_guard_stay_l",
+     "type": "cyl",
+     "p0": [
+      1422.264948938409,
+      -28.0,
+      449.4823077465532
+     ],
+     "p1": [
+      1096.838873863232,
+      -57.0,
+      330.0
+     ],
+     "r0": 2.5,
+     "material": "paint_black",
+     "note": "mudguard stay 5 across from the guard's front end to the drop-out; Judgement"
+    },
+    {
+     "id": "fw_guard_stay_r",
+     "type": "cyl",
+     "p0": [
+      1422.264948938409,
+      28.0,
+      449.4823077465532
+     ],
+     "p1": [
+      1096.838873863232,
+      57.0,
+      330.0
+     ],
+     "r0": 2.5,
+     "material": "paint_black",
+     "note": "mudguard stay 5 across from the guard's front end to the drop-out; Judgement"
+    },
+    {
+     "id": "rw_guard_stay_l",
+     "type": "cyl",
+     "p0": [
+      -326.7802946614703,
+      -28.0,
+      449.97086754614537
+     ],
+     "p1": [
+      0.0,
+      -57.0,
+      330.0
+     ],
+     "r0": 2.5,
+     "material": "paint_black",
+     "note": "mudguard stay 5 across from the guard's rear end to the drop-out; Judgement"
+    },
+    {
+     "id": "rw_guard_stay_r",
+     "type": "cyl",
+     "p0": [
+      -326.7802946614703,
+      28.0,
+      449.97086754614537
+     ],
+     "p1": [
+      0.0,
+      57.0,
+      330.0
+     ],
+     "r0": 2.5,
+     "material": "paint_black",
+     "note": "mudguard stay 5 across from the guard's rear end to the drop-out; Judgement"
+    },
+    {
+     "id": "rw_reflector",
+     "type": "cyl",
+     "p0": [
+      -232.64910438573781,
+      0.0,
+      588.0435352000796
+     ],
+     "p1": [
+      -238.64910438573781,
+      0.0,
+      588.0435352000796
+     ],
+     "r0": 30.0,
+     "material": "reflector_red",
+     "note": "rear reflector 60 across, 6 thick, on the rear mudguard's tail, facing back; Judgement"
+    },
+    {
+     "id": "carrier_deck",
+     "type": "box",
+     "c": [
+      69.0,
+      0.0,
+      778.0
+     ],
+     "s": [
+      340.0,
+      130.0,
+      4.0
+     ],
+     "material": "paint_black",
+     "note": "carrier platform 340 x 130, a 4 mm sheet on the tube frame, top at 780; Judgement"
+    },
+    {
+     "id": "carrier_rail_l",
+     "type": "cyl",
+     "p0": [
+      -101.0,
+      -65.0,
+      771.0
+     ],
+     "p1": [
+      239.0,
+      -65.0,
+      771.0
+     ],
+     "r0": 5.0,
+     "material": "paint_black",
+     "note": "carrier side rail, 10 mm tube, 340 long"
+    },
+    {
+     "id": "carrier_rail_r",
+     "type": "cyl",
+     "p0": [
+      -101.0,
+      65.0,
+      771.0
+     ],
+     "p1": [
+      239.0,
+      65.0,
+      771.0
+     ],
+     "r0": 5.0,
+     "material": "paint_black",
+     "note": "carrier side rail, 10 mm tube, 340 long"
+    },
+    {
+     "id": "carrier_cross_rear",
+     "type": "cyl",
+     "p0": [
+      -101.0,
+      -65.0,
+      771.0
+     ],
+     "p1": [
+      -101.0,
+      65.0,
+      771.0
+     ],
+     "r0": 5.0,
+     "material": "paint_black",
+     "note": "carrier rear cross rail, 10 mm tube"
+    },
+    {
+     "id": "carrier_stay_l",
+     "type": "cyl",
+     "p0": [
+      -101.0,
+      -65.0,
+      771.0
+     ],
+     "p1": [
+      -42.0,
+      -57.0,
+      340.0
+     ],
+     "r0": 5.0,
+     "material": "paint_black",
+     "note": "carrier stay, 10 mm tube, from the rail's rear end to the drop-out; Judgement"
+    },
+    {
+     "id": "carrier_stay_r",
+     "type": "cyl",
+     "p0": [
+      -101.0,
+      65.0,
+      771.0
+     ],
+     "p1": [
+      -42.0,
+      57.0,
+      340.0
+     ],
+     "r0": 5.0,
+     "material": "paint_black",
+     "note": "carrier stay, 10 mm tube, from the rail's rear end to the drop-out; Judgement"
     }
    ],
    "overall": {
@@ -1786,6 +3614,170 @@
     [
      "pedal_r",
      "crank_r"
+    ],
+    [
+     "rw_rim1",
+     "rw_tyre1"
+    ],
+    [
+     "fw_rim1",
+     "fw_tyre1"
+    ],
+    [
+     "rw_spoke1",
+     "rw_rim2"
+    ],
+    [
+     "fw_spoke1",
+     "fw_rim2"
+    ],
+    [
+     "sprocket",
+     "rw_hub"
+    ],
+    [
+     "chain_bot",
+     "chain_c01"
+    ],
+    [
+     "chain_c14",
+     "chain_top"
+    ],
+    [
+     "chain_top",
+     "chain_s01"
+    ],
+    [
+     "chain_s12",
+     "chain_bot"
+    ],
+    [
+     "chain_c07",
+     "chainring"
+    ],
+    [
+     "chain_s06",
+     "sprocket"
+    ],
+    [
+     "chainguard",
+     "chainguard_clip"
+    ],
+    [
+     "chainguard_clip",
+     "chain_stay_r"
+    ],
+    [
+     "chainguard_strap",
+     "chainguard"
+    ],
+    [
+     "chainguard_strap",
+     "seat_tube"
+    ],
+    [
+     "brake_lever_l",
+     "grip_l"
+    ],
+    [
+     "brake_lever_r",
+     "grip_r"
+    ],
+    [
+     "brake_rod_f",
+     "brake_lever_l"
+    ],
+    [
+     "brake_rod_r",
+     "brake_lever_r"
+    ],
+    [
+     "brake_rod_f",
+     "fork_l"
+    ],
+    [
+     "brake_rod_r",
+     "seat_stay_r"
+    ],
+    [
+     "fw_stirrup_arm_l",
+     "fork_l"
+    ],
+    [
+     "fw_stirrup_arm_r",
+     "fork_r"
+    ],
+    [
+     "fw_stirrup_bar",
+     "fw_stirrup_arm_l"
+    ],
+    [
+     "fw_pad_l",
+     "fw_stirrup_bar"
+    ],
+    [
+     "fw_brake_bridge",
+     "fork_l"
+    ],
+    [
+     "rw_stirrup_arm_l",
+     "seat_stay_l"
+    ],
+    [
+     "rw_stirrup_arm_r",
+     "seat_stay_r"
+    ],
+    [
+     "rw_stirrup_bar",
+     "rw_stirrup_arm_l"
+    ],
+    [
+     "rw_pad_l",
+     "rw_stirrup_bar"
+    ],
+    [
+     "rw_brake_bridge",
+     "seat_stay_l"
+    ],
+    [
+     "fw_guard_stay_l",
+     "fw_guard1"
+    ],
+    [
+     "fw_guard_stay_r",
+     "fw_guard1"
+    ],
+    [
+     "rw_guard_stay_l",
+     "rw_guard5"
+    ],
+    [
+     "rw_guard_stay_r",
+     "rw_guard5"
+    ],
+    [
+     "rw_reflector",
+     "rw_guard5"
+    ],
+    [
+     "carrier_deck",
+     "carrier_rail_l"
+    ],
+    [
+     "carrier_rail_l",
+     "carrier_cross_rear"
+    ],
+    [
+     "carrier_stay_l",
+     "carrier_cross_rear"
+    ],
+    [
+     "carrier_stay_r",
+     "carrier_cross_rear"
+    ],
+    [
+     "carrier_deck",
+     "seat_stay_l"
     ]
    ],
    "embeds": [
@@ -2014,7 +4006,7 @@
    "faces": []
   },
   "BI2": {
-   "name": "BI2: the roadster leaning 12 degrees against a brick wall, handlebar end and pedal against it (the sample)",
+   "name": "BI2: the roadster leaning 12 degrees toward a brick wall, its left grip end against it (the sample)",
    "parts": [
     {
      "id": "rw_tyre1",
@@ -2606,6 +4598,614 @@
      ],
      "material": "tyre",
      "note": "tyre and rim segment (16 round the wheel), section 38 x 38",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_rim1",
+     "type": "box",
+     "c": [
+      287.0,
+      0.0,
+      330.0
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -90.0,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_rim2",
+     "type": "box",
+     "c": [
+      265.15,
+      0.0,
+      439.83
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -112.5,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_rim3",
+     "type": "box",
+     "c": [
+      202.94,
+      0.0,
+      532.94
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -135.0,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_rim4",
+     "type": "box",
+     "c": [
+      109.83,
+      0.0,
+      595.15
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -157.5,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_rim5",
+     "type": "box",
+     "c": [
+      0.0,
+      0.0,
+      617.0
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -180.0,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_rim6",
+     "type": "box",
+     "c": [
+      -109.83,
+      0.0,
+      595.15
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -202.5,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_rim7",
+     "type": "box",
+     "c": [
+      -202.94,
+      0.0,
+      532.94
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -225.0,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_rim8",
+     "type": "box",
+     "c": [
+      -265.15,
+      0.0,
+      439.83
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -247.5,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_rim9",
+     "type": "box",
+     "c": [
+      -287.0,
+      0.0,
+      330.0
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -270.0,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_rim10",
+     "type": "box",
+     "c": [
+      -265.15,
+      0.0,
+      220.17
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -292.5,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_rim11",
+     "type": "box",
+     "c": [
+      -202.94,
+      0.0,
+      127.06
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -315.0,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_rim12",
+     "type": "box",
+     "c": [
+      -109.83,
+      0.0,
+      64.85
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -337.5,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_rim13",
+     "type": "box",
+     "c": [
+      -0.0,
+      0.0,
+      43.0
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -360.0,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_rim14",
+     "type": "box",
+     "c": [
+      109.83,
+      0.0,
+      64.85
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -382.5,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_rim15",
+     "type": "box",
+     "c": [
+      202.94,
+      0.0,
+      127.06
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -405.0,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_rim16",
+     "type": "box",
+     "c": [
+      265.15,
+      0.0,
+      220.17
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -427.5,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement",
      "xf": {
       "rot": [
        0,
@@ -3520,6 +6120,614 @@
      ],
      "material": "tyre",
      "note": "tyre and rim segment (16 round the wheel), section 38 x 38",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_rim1",
+     "type": "box",
+     "c": [
+      1383.84,
+      0.0,
+      330.0
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -90.0,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_rim2",
+     "type": "box",
+     "c": [
+      1361.99,
+      0.0,
+      439.83
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -112.5,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_rim3",
+     "type": "box",
+     "c": [
+      1299.78,
+      0.0,
+      532.94
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -135.0,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_rim4",
+     "type": "box",
+     "c": [
+      1206.67,
+      0.0,
+      595.15
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -157.5,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_rim5",
+     "type": "box",
+     "c": [
+      1096.84,
+      0.0,
+      617.0
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -180.0,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_rim6",
+     "type": "box",
+     "c": [
+      987.01,
+      0.0,
+      595.15
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -202.5,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_rim7",
+     "type": "box",
+     "c": [
+      893.9,
+      0.0,
+      532.94
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -225.0,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_rim8",
+     "type": "box",
+     "c": [
+      831.69,
+      0.0,
+      439.83
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -247.5,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_rim9",
+     "type": "box",
+     "c": [
+      809.84,
+      0.0,
+      330.0
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -270.0,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_rim10",
+     "type": "box",
+     "c": [
+      831.69,
+      0.0,
+      220.17
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -292.5,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_rim11",
+     "type": "box",
+     "c": [
+      893.9,
+      0.0,
+      127.06
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -315.0,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_rim12",
+     "type": "box",
+     "c": [
+      987.01,
+      0.0,
+      64.85
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -337.5,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_rim13",
+     "type": "box",
+     "c": [
+      1096.84,
+      0.0,
+      43.0
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -360.0,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_rim14",
+     "type": "box",
+     "c": [
+      1206.67,
+      0.0,
+      64.85
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -382.5,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_rim15",
+     "type": "box",
+     "c": [
+      1299.78,
+      0.0,
+      127.06
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -405.0,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_rim16",
+     "type": "box",
+     "c": [
+      1361.99,
+      0.0,
+      220.17
+     ],
+     "s": [
+      114.2,
+      25.0,
+      10.0
+     ],
+     "rot": [
+      0,
+      -427.5,
+      0
+     ],
+     "material": "steel",
+     "note": "rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement",
      "xf": {
       "rot": [
        0,
@@ -4365,17 +7573,17 @@
      "type": "cyl",
      "p0": [
       449.0,
-      -55.0,
+      -40.0,
       300.0
      ],
      "p1": [
       0.0,
-      -55.0,
+      -40.0,
       330.0
      ],
      "r0": 8.0,
      "material": "paint_black",
-     "note": "chain stay 16, 450 long",
+     "note": "chain stay 16, 450 long, 40 off the centre line (80 apart): the chain runs outboard of the right one",
      "xf": {
       "rot": [
        0,
@@ -4399,12 +7607,80 @@
      "type": "cyl",
      "p0": [
       275.9504831500294,
-      -55.0,
+      -40.0,
       832.5916491252859
      ],
      "p1": [
       0.0,
-      -55.0,
+      -40.0,
+      330.0
+     ],
+     "r0": 8.0,
+     "material": "paint_black",
+     "note": "seat stay 16",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "chain_stay_r",
+     "type": "cyl",
+     "p0": [
+      449.0,
+      40.0,
+      300.0
+     ],
+     "p1": [
+      0.0,
+      40.0,
+      330.0
+     ],
+     "r0": 8.0,
+     "material": "paint_black",
+     "note": "chain stay 16, 450 long, 40 off the centre line (80 apart): the chain runs outboard of the right one",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "seat_stay_r",
+     "type": "cyl",
+     "p0": [
+      275.9504831500294,
+      40.0,
+      832.5916491252859
+     ],
+     "p1": [
+      0.0,
+      40.0,
       330.0
      ],
      "r0": 8.0,
@@ -4444,74 +7720,6 @@
      "r0": 11.0,
      "material": "paint_black",
      "note": "fork blade 22, rake 45 at the foot",
-     "xf": {
-      "rot": [
-       0,
-       0,
-       12.0
-      ],
-      "t": [
-       0,
-       0,
-       0
-      ],
-      "pivot": [
-       0,
-       0,
-       0
-      ]
-     }
-    },
-    {
-     "id": "chain_stay_r",
-     "type": "cyl",
-     "p0": [
-      449.0,
-      55.0,
-      300.0
-     ],
-     "p1": [
-      0.0,
-      55.0,
-      330.0
-     ],
-     "r0": 8.0,
-     "material": "paint_black",
-     "note": "chain stay 16, 450 long",
-     "xf": {
-      "rot": [
-       0,
-       0,
-       12.0
-      ],
-      "t": [
-       0,
-       0,
-       0
-      ],
-      "pivot": [
-       0,
-       0,
-       0
-      ]
-     }
-    },
-    {
-     "id": "seat_stay_r",
-     "type": "cyl",
-     "p0": [
-      275.9504831500294,
-      55.0,
-      832.5916491252859
-     ],
-     "p1": [
-      0.0,
-      55.0,
-      330.0
-     ],
-     "r0": 8.0,
-     "material": "paint_black",
-     "note": "seat stay 16",
      "xf": {
       "rot": [
        0,
@@ -4574,7 +7782,7 @@
      ],
      "s": [
       16.0,
-      120.0,
+      90.0,
       20.0
      ],
      "material": "paint_black",
@@ -5136,11 +8344,2146 @@
      }
     },
     {
+     "id": "sprocket",
+     "type": "cyl",
+     "p0": [
+      0.0,
+      48.0,
+      330.0
+     ],
+     "p1": [
+      0.0,
+      58.0,
+      330.0
+     ],
+     "r0": 36.5,
+     "material": "steel",
+     "note": "rear sprocket: 18 teeth, 73 across (pitch circle 73.1), 10 thick, on the hub's drive end; Judgement (the review's 18 tooth, 73 mm)",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "chain_top",
+     "type": "box",
+     "c": [
+      221.36,
+      55.0,
+      377.71
+     ],
+     "s": [
+      446.93,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      -2.869922554388641,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain run (top): 446.9 long = 35.2 links of 12.7, 8 wide, 6 thick, on the pitch circles' common tangent; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "chain_bot",
+     "type": "box",
+     "c": [
+      213.04,
+      55.0,
+      253.26
+     ],
+     "s": [
+      446.93,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      10.515011108141785,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain run (bot): 446.9 long = 35.2 links of 12.7, 8 wide, 6 thick, on the pitch circles' common tangent; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "chain_c01",
+     "type": "box",
+     "c": [
+      443.44,
+      55.0,
+      211.81
+     ],
+     "s": [
+      21.41,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      3.608406334480014,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the chainring: 1.7 links of 12.7 in this strip; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "chain_c02",
+     "type": "box",
+     "c": [
+      464.66,
+      55.0,
+      213.03
+     ],
+     "s": [
+      21.41,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      -10.204803212843652,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the chainring: 1.7 links of 12.7 in this strip; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "chain_c03",
+     "type": "box",
+     "c": [
+      484.97,
+      55.0,
+      219.29
+     ],
+     "s": [
+      21.41,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      -24.018012760167228,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the chainring: 1.7 links of 12.7 in this strip; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "chain_c04",
+     "type": "box",
+     "c": [
+      503.2,
+      55.0,
+      230.21
+     ],
+     "s": [
+      21.41,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      -37.83122230749085,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the chainring: 1.7 links of 12.7 in this strip; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "chain_c05",
+     "type": "box",
+     "c": [
+      518.29,
+      55.0,
+      245.17
+     ],
+     "s": [
+      21.41,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      -51.64443185481432,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the chainring: 1.7 links of 12.7 in this strip; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "chain_c06",
+     "type": "box",
+     "c": [
+      529.38,
+      55.0,
+      263.3
+     ],
+     "s": [
+      21.41,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      -65.45764140213821,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the chainring: 1.7 links of 12.7 in this strip; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "chain_c07",
+     "type": "box",
+     "c": [
+      535.82,
+      55.0,
+      283.55
+     ],
+     "s": [
+      21.41,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      -79.27085094946159,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the chainring: 1.7 links of 12.7 in this strip; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "chain_c08",
+     "type": "box",
+     "c": [
+      537.24,
+      55.0,
+      304.75
+     ],
+     "s": [
+      21.41,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      -93.08406049678523,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the chainring: 1.7 links of 12.7 in this strip; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "chain_c09",
+     "type": "box",
+     "c": [
+      533.55,
+      55.0,
+      325.68
+     ],
+     "s": [
+      21.41,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      -106.89727004410891,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the chainring: 1.7 links of 12.7 in this strip; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "chain_c10",
+     "type": "box",
+     "c": [
+      524.97,
+      55.0,
+      345.13
+     ],
+     "s": [
+      21.41,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      -120.71047959143228,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the chainring: 1.7 links of 12.7 in this strip; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "chain_c11",
+     "type": "box",
+     "c": [
+      512.0,
+      55.0,
+      361.96
+     ],
+     "s": [
+      21.41,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      -134.52368913875603,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the chainring: 1.7 links of 12.7 in this strip; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "chain_c12",
+     "type": "box",
+     "c": [
+      495.39,
+      55.0,
+      375.21
+     ],
+     "s": [
+      21.41,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      -148.33689868607973,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the chainring: 1.7 links of 12.7 in this strip; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "chain_c13",
+     "type": "box",
+     "c": [
+      476.09,
+      55.0,
+      384.11
+     ],
+     "s": [
+      21.41,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      -162.15010823340316,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the chainring: 1.7 links of 12.7 in this strip; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "chain_c14",
+     "type": "box",
+     "c": [
+      455.22,
+      55.0,
+      388.15
+     ],
+     "s": [
+      21.41,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      -175.96331778072698,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the chainring: 1.7 links of 12.7 in this strip; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "chain_s01",
+     "type": "box",
+     "c": [
+      -6.19,
+      55.0,
+      365.77
+     ],
+     "s": [
+      8.84,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      170.18778301488342,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "chain_s02",
+     "type": "box",
+     "c": [
+      -14.59,
+      55.0,
+      363.24
+     ],
+     "s": [
+      8.84,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      156.30319415342748,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "chain_s03",
+     "type": "box",
+     "c": [
+      -22.14,
+      55.0,
+      358.77
+     ],
+     "s": [
+      8.84,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      142.4186052919718,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "chain_s04",
+     "type": "box",
+     "c": [
+      -28.4,
+      55.0,
+      352.61
+     ],
+     "s": [
+      8.84,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      128.5340164305162,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "chain_s05",
+     "type": "box",
+     "c": [
+      -32.99,
+      55.0,
+      345.14
+     ],
+     "s": [
+      8.84,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      114.64942756906031,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "chain_s06",
+     "type": "box",
+     "c": [
+      -35.66,
+      55.0,
+      336.78
+     ],
+     "s": [
+      8.84,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      100.7648387076045,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "chain_s07",
+     "type": "box",
+     "c": [
+      -36.25,
+      55.0,
+      328.02
+     ],
+     "s": [
+      8.84,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      86.8802498461487,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "chain_s08",
+     "type": "box",
+     "c": [
+      -34.71,
+      55.0,
+      319.38
+     ],
+     "s": [
+      8.84,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      72.99566098469286,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "chain_s09",
+     "type": "box",
+     "c": [
+      -31.15,
+      55.0,
+      311.36
+     ],
+     "s": [
+      8.84,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      59.11107212323721,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "chain_s10",
+     "type": "box",
+     "c": [
+      -25.77,
+      55.0,
+      304.43
+     ],
+     "s": [
+      8.84,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      45.22648326178116,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "chain_s11",
+     "type": "box",
+     "c": [
+      -18.88,
+      55.0,
+      299.0
+     ],
+     "s": [
+      8.84,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      31.341894400325558,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "chain_s12",
+     "type": "box",
+     "c": [
+      -10.89,
+      55.0,
+      295.37
+     ],
+     "s": [
+      8.84,
+      8.0,
+      6.0
+     ],
+     "rot": [
+      0,
+      17.4573055388699,
+      0
+     ],
+     "material": "chain_dark",
+     "note": "chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "chainguard",
+     "type": "box",
+     "c": [
+      248.85,
+      55.0,
+      392.11
+     ],
+     "s": [
+      499.63,
+      60.0,
+      1.0
+     ],
+     "rot": [
+      0,
+      -2.869922554388641,
+      0
+     ],
+     "material": "paint_black",
+     "edge": "edges rolled 3 mm",
+     "note": "chainguard: sheet steel 60 deep, 1 thick, from the sprocket's centre (x 0) to x 499 (40 mm behind the chainring's front), 13 over the chain's pitch line; Judgement (the review's numbers)",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "chainguard_clip",
+     "type": "box",
+     "c": [
+      15.0,
+      40.0,
+      358.182
+     ],
+     "s": [
+      14.0,
+      8.0,
+      44.368
+     ],
+     "material": "paint_black",
+     "note": "clip 14 x 8 from the right chain stay up to the guard's rear end",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "chainguard_strap",
+     "type": "cyl",
+     "p0": [
+      495.0,
+      36.0,
+      403.62974875121716
+     ],
+     "p1": [
+      431.8270474397202,
+      10.0,
+      383.62974875121716
+     ],
+     "r0": 3.0,
+     "material": "paint_black",
+     "note": "strap rod 6 across from the guard's front end to the seat tube",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_stirrup_bar",
+     "type": "cyl",
+     "p0": [
+      971.2439617679142,
+      -28.0,
+      569.0102885981468
+     ],
+     "p1": [
+      971.2439617679142,
+      28.0,
+      569.0102885981468
+     ],
+     "r0": 3.0,
+     "material": "steel",
+     "note": "stirrup crossbar 6 across, 56 wide, under the rim at radius 270 (the rim's inner face is 282), at 117.7 degrees on the wheel; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_stirrup_arm_l",
+     "type": "cyl",
+     "p0": [
+      971.2439617679142,
+      -28.0,
+      569.0102885981468
+     ],
+     "p1": [
+      929.378991069475,
+      -55.0,
+      648.680384797529
+     ],
+     "r0": 3.0,
+     "material": "steel",
+     "note": "stirrup arm 6 across from the crossbar's end to the frame member",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_stirrup_arm_r",
+     "type": "cyl",
+     "p0": [
+      971.2439617679142,
+      28.0,
+      569.0102885981468
+     ],
+     "p1": [
+      929.378991069475,
+      55.0,
+      648.680384797529
+     ],
+     "r0": 3.0,
+     "material": "steel",
+     "note": "stirrup arm 6 across from the crossbar's end to the frame member",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_brake_bridge",
+     "type": "box",
+     "c": [
+      929.379,
+      0.0,
+      648.68
+     ],
+     "s": [
+      16.0,
+      110.0,
+      16.0
+     ],
+     "material": "paint_black",
+     "note": "brake bridge 16 x 16 between the two members at radius 360, above the mudguard",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_pad_l",
+     "type": "box",
+     "c": [
+      969.38,
+      -12.0,
+      572.55
+     ],
+     "s": [
+      40.0,
+      14.0,
+      14.0
+     ],
+     "rot": [
+      0,
+      -207.72098788911734,
+      0
+     ],
+     "material": "grip_black",
+     "note": "brake pad 40 x 14 x 14 on the stirrup, against the rim's inner face (rod brake); Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_pad_r",
+     "type": "box",
+     "c": [
+      969.38,
+      12.0,
+      572.55
+     ],
+     "s": [
+      40.0,
+      14.0,
+      14.0
+     ],
+     "rot": [
+      0,
+      -207.72098788911734,
+      0
+     ],
+     "material": "grip_black",
+     "note": "brake pad 40 x 14 x 14 on the stirrup, against the rim's inner face (rod brake); Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_stirrup_bar",
+     "type": "cyl",
+     "p0": [
+      129.94632468449876,
+      -28.0,
+      566.6726699494279
+     ],
+     "p1": [
+      129.94632468449876,
+      28.0,
+      566.6726699494279
+     ],
+     "r0": 3.0,
+     "material": "steel",
+     "note": "stirrup crossbar 6 across, 56 wide, under the rim at radius 270 (the rim's inner face is 282), at 61.2 degrees on the wheel; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_stirrup_arm_l",
+     "type": "cyl",
+     "p0": [
+      129.94632468449876,
+      -28.0,
+      566.6726699494279
+     ],
+     "p1": [
+      173.26176624599833,
+      -40.0,
+      645.5635599325706
+     ],
+     "r0": 3.0,
+     "material": "steel",
+     "note": "stirrup arm 6 across from the crossbar's end to the frame member",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_stirrup_arm_r",
+     "type": "cyl",
+     "p0": [
+      129.94632468449876,
+      28.0,
+      566.6726699494279
+     ],
+     "p1": [
+      173.26176624599833,
+      40.0,
+      645.5635599325706
+     ],
+     "r0": 3.0,
+     "material": "steel",
+     "note": "stirrup arm 6 across from the crossbar's end to the frame member",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_brake_bridge",
+     "type": "box",
+     "c": [
+      173.262,
+      0.0,
+      645.564
+     ],
+     "s": [
+      16.0,
+      80.0,
+      16.0
+     ],
+     "material": "paint_black",
+     "note": "brake bridge 16 x 16 between the two members at radius 360, above the mudguard",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_pad_l",
+     "type": "box",
+     "c": [
+      131.87,
+      -12.0,
+      570.18
+     ],
+     "s": [
+      40.0,
+      14.0,
+      14.0
+     ],
+     "rot": [
+      0,
+      -151.2307903161246,
+      0
+     ],
+     "material": "grip_black",
+     "note": "brake pad 40 x 14 x 14 on the stirrup, against the rim's inner face (rod brake); Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_pad_r",
+     "type": "box",
+     "c": [
+      131.87,
+      12.0,
+      570.18
+     ],
+     "s": [
+      40.0,
+      14.0,
+      14.0
+     ],
+     "rot": [
+      0,
+      -151.2307903161246,
+      0
+     ],
+     "material": "grip_black",
+     "note": "brake pad 40 x 14 x 14 on the stirrup, against the rim's inner face (rod brake); Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "brake_lever_l",
+     "type": "cyl",
+     "p0": [
+      695.2673622693244,
+      -330.0,
+      996.2129044016398
+     ],
+     "p1": [
+      793.5656075840034,
+      -330.0,
+      927.3837320395143
+     ],
+     "r0": 6.0,
+     "material": "steel",
+     "note": "bar lever 120 long, 12 across, clamped under the grip's inner end; the left works the front brake, the right the rear; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "brake_rod_f",
+     "type": "cyl",
+     "p0": [
+      793.5656075840034,
+      -330.0,
+      927.3837320395143
+     ],
+     "p1": [
+      929.378991069475,
+      -55.0,
+      648.680384797529
+     ],
+     "r0": 4.0,
+     "material": "steel",
+     "note": "brake rod 8 across from the lever's tip to the stirrup's joint on the fork blade; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "brake_lever_r",
+     "type": "cyl",
+     "p0": [
+      695.2673622693244,
+      330.0,
+      996.2129044016398
+     ],
+     "p1": [
+      793.5656075840034,
+      330.0,
+      927.3837320395143
+     ],
+     "r0": 6.0,
+     "material": "steel",
+     "note": "bar lever 120 long, 12 across, clamped under the grip's inner end; the left works the front brake, the right the rear; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "brake_rod_r",
+     "type": "cyl",
+     "p0": [
+      793.5656075840034,
+      330.0,
+      927.3837320395143
+     ],
+     "p1": [
+      173.26176624599833,
+      40.0,
+      645.5635599325706
+     ],
+     "r0": 4.0,
+     "material": "steel",
+     "note": "brake rod 8 across from the lever's tip to the stirrup's joint on the seat stay; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_guard_stay_l",
+     "type": "cyl",
+     "p0": [
+      1422.264948938409,
+      -28.0,
+      449.4823077465532
+     ],
+     "p1": [
+      1096.838873863232,
+      -57.0,
+      330.0
+     ],
+     "r0": 2.5,
+     "material": "paint_black",
+     "note": "mudguard stay 5 across from the guard's front end to the drop-out; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "fw_guard_stay_r",
+     "type": "cyl",
+     "p0": [
+      1422.264948938409,
+      28.0,
+      449.4823077465532
+     ],
+     "p1": [
+      1096.838873863232,
+      57.0,
+      330.0
+     ],
+     "r0": 2.5,
+     "material": "paint_black",
+     "note": "mudguard stay 5 across from the guard's front end to the drop-out; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_guard_stay_l",
+     "type": "cyl",
+     "p0": [
+      -326.7802946614703,
+      -28.0,
+      449.97086754614537
+     ],
+     "p1": [
+      0.0,
+      -57.0,
+      330.0
+     ],
+     "r0": 2.5,
+     "material": "paint_black",
+     "note": "mudguard stay 5 across from the guard's rear end to the drop-out; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_guard_stay_r",
+     "type": "cyl",
+     "p0": [
+      -326.7802946614703,
+      28.0,
+      449.97086754614537
+     ],
+     "p1": [
+      0.0,
+      57.0,
+      330.0
+     ],
+     "r0": 2.5,
+     "material": "paint_black",
+     "note": "mudguard stay 5 across from the guard's rear end to the drop-out; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "rw_reflector",
+     "type": "cyl",
+     "p0": [
+      -232.64910438573781,
+      0.0,
+      588.0435352000796
+     ],
+     "p1": [
+      -238.64910438573781,
+      0.0,
+      588.0435352000796
+     ],
+     "r0": 30.0,
+     "material": "reflector_red",
+     "note": "rear reflector 60 across, 6 thick, on the rear mudguard's tail, facing back; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "carrier_deck",
+     "type": "box",
+     "c": [
+      69.0,
+      0.0,
+      778.0
+     ],
+     "s": [
+      340.0,
+      130.0,
+      4.0
+     ],
+     "material": "paint_black",
+     "note": "carrier platform 340 x 130, a 4 mm sheet on the tube frame, top at 780; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "carrier_rail_l",
+     "type": "cyl",
+     "p0": [
+      -101.0,
+      -65.0,
+      771.0
+     ],
+     "p1": [
+      239.0,
+      -65.0,
+      771.0
+     ],
+     "r0": 5.0,
+     "material": "paint_black",
+     "note": "carrier side rail, 10 mm tube, 340 long",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "carrier_rail_r",
+     "type": "cyl",
+     "p0": [
+      -101.0,
+      65.0,
+      771.0
+     ],
+     "p1": [
+      239.0,
+      65.0,
+      771.0
+     ],
+     "r0": 5.0,
+     "material": "paint_black",
+     "note": "carrier side rail, 10 mm tube, 340 long",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "carrier_cross_rear",
+     "type": "cyl",
+     "p0": [
+      -101.0,
+      -65.0,
+      771.0
+     ],
+     "p1": [
+      -101.0,
+      65.0,
+      771.0
+     ],
+     "r0": 5.0,
+     "material": "paint_black",
+     "note": "carrier rear cross rail, 10 mm tube",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "carrier_stay_l",
+     "type": "cyl",
+     "p0": [
+      -101.0,
+      -65.0,
+      771.0
+     ],
+     "p1": [
+      -42.0,
+      -57.0,
+      340.0
+     ],
+     "r0": 5.0,
+     "material": "paint_black",
+     "note": "carrier stay, 10 mm tube, from the rail's rear end to the drop-out; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "id": "carrier_stay_r",
+     "type": "cyl",
+     "p0": [
+      -101.0,
+      65.0,
+      771.0
+     ],
+     "p1": [
+      -42.0,
+      57.0,
+      340.0
+     ],
+     "r0": 5.0,
+     "material": "paint_black",
+     "note": "carrier stay, 10 mm tube, from the rail's rear end to the drop-out; Judgement",
+     "xf": {
+      "rot": [
+       0,
+       0,
+       12.0
+      ],
+      "t": [
+       0,
+       0,
+       0
+      ],
+      "pivot": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
      "id": "wall",
      "type": "box",
      "c": [
       700.0,
-      279.356,
+      -699.34,
       1175.0
      ],
      "s": [
@@ -5149,14 +10492,14 @@
       2450.0
      ],
      "material": "wall_brick",
-     "note": "the wall (a stand-in slab)"
+     "note": "the wall (a stand-in slab) on the side the bicycle leans toward (-y)"
     }
    ],
    "overlap_allow": 6.0,
    "contact_tol": 3.0,
    "joins": [
     [
-     "grip_r",
+     "grip_l",
      "wall"
     ]
    ],
@@ -5511,6 +10854,105 @@
    "variant": "BI1"
   },
   {
+   "id": "N8",
+   "what": "rear sprocket diameter (18 teeth)",
+   "value": 73.0,
+   "kind": "Judgement",
+   "source": "the review of 13 October: an 18 tooth sprocket 73 mm across (12.7 pitch: pitch circle 73.2); S1 shows a rusted wheel in which no sprocket reads; error 3",
+   "tol": 3.0,
+   "measure": {
+    "kind": "extent",
+    "axis": "z",
+    "part": "sprocket"
+   },
+   "variant": "BI1"
+  },
+  {
+   "id": "N9",
+   "what": "chainguard depth across the bicycle",
+   "value": 60.0,
+   "kind": "Judgement",
+   "source": "the review: sheet steel 60 deep, 1 thick; no chainguard reads in S1; error 5",
+   "tol": 5.0,
+   "measure": {
+    "kind": "extent",
+    "axis": "y",
+    "part": "chainguard"
+   },
+   "variant": "BI1"
+  },
+  {
+   "id": "N10",
+   "what": "rim width",
+   "value": 25.0,
+   "kind": "Judgement",
+   "source": "the review: rims 25 wide, 10 deep, as their own ring (a 26 x 1 3/8 steel rim is about 22 to 25 wide); S1's rims read as thin rings; error 3",
+   "tol": 3.0,
+   "measure": {
+    "kind": "extent",
+    "axis": "y",
+    "part": "fw_rim1"
+   },
+   "variant": "BI1"
+  },
+  {
+   "id": "N11",
+   "what": "carrier platform length",
+   "value": 340.0,
+   "kind": "Judgement",
+   "source": "the review: a 340 x 130 platform of 10 mm tube at 780 over the rear wheel; S1's own row lists a rear carrier but at 430 px no number reads; error 20",
+   "tol": 20.0,
+   "measure": {
+    "kind": "extent",
+    "axis": "x",
+    "part": "carrier_deck"
+   },
+   "variant": "BI1"
+  },
+  {
+   "id": "N12",
+   "what": "carrier platform width",
+   "value": 130.0,
+   "kind": "Judgement",
+   "source": "the review (130); error 15",
+   "tol": 15.0,
+   "measure": {
+    "kind": "extent",
+    "axis": "y",
+    "part": "carrier_deck"
+   },
+   "variant": "BI1"
+  },
+  {
+   "id": "N13",
+   "what": "carrier platform top above the ground",
+   "value": 780.0,
+   "kind": "Judgement",
+   "source": "the review (780 over the rear wheel, 120 over the mudguard's top at 668); error 30",
+   "tol": 30.0,
+   "measure": {
+    "kind": "edge",
+    "axis": "z",
+    "part": "carrier_deck",
+    "side": "hi"
+   },
+   "variant": "BI1"
+  },
+  {
+   "id": "N14",
+   "what": "rear reflector diameter",
+   "value": 60.0,
+   "kind": "Judgement",
+   "source": "the review: a red reflector 60 across on the rear mudguard; error 3",
+   "tol": 3.0,
+   "measure": {
+    "kind": "extent",
+    "axis": "z",
+    "part": "rw_reflector"
+   },
+   "variant": "BI1"
+  },
+  {
    "id": "N7",
    "what": "crank span: the two arms' outer ends along x (two cranks of 170, crossing at the spindle)",
    "value": 340.0,
@@ -5657,6 +11099,48 @@
    "tol": "+-50 mm"
   },
   {
+   "name": "N8: rear sprocket diameter (18 teeth)",
+   "measure": "measure it on the built mesh in millimetres (extent)",
+   "expect": "73 mm",
+   "tol": "+-3 mm"
+  },
+  {
+   "name": "N9: chainguard depth across the bicycle",
+   "measure": "measure it on the built mesh in millimetres (extent)",
+   "expect": "60 mm",
+   "tol": "+-5 mm"
+  },
+  {
+   "name": "N10: rim width",
+   "measure": "measure it on the built mesh in millimetres (extent)",
+   "expect": "25 mm",
+   "tol": "+-3 mm"
+  },
+  {
+   "name": "N11: carrier platform length",
+   "measure": "measure it on the built mesh in millimetres (extent)",
+   "expect": "340 mm",
+   "tol": "+-20 mm"
+  },
+  {
+   "name": "N12: carrier platform width",
+   "measure": "measure it on the built mesh in millimetres (extent)",
+   "expect": "130 mm",
+   "tol": "+-15 mm"
+  },
+  {
+   "name": "N13: carrier platform top above the ground",
+   "measure": "measure it on the built mesh in millimetres (edge)",
+   "expect": "780 mm",
+   "tol": "+-30 mm"
+  },
+  {
+   "name": "N14: rear reflector diameter",
+   "measure": "measure it on the built mesh in millimetres (extent)",
+   "expect": "60 mm",
+   "tol": "+-3 mm"
+  },
+  {
    "name": "N7: crank span: the two arms' outer ends along x (two cranks of 170, crossing at the spindle)",
    "measure": "measure it on the built mesh in millimetres (span)",
    "expect": "340 mm",
@@ -5690,7 +11174,7 @@
  "owed": [],
  "lean": {
   "deg": 12.0,
-  "wall_y_mm": 179.4
+  "wall_y_mm": -599.3
  },
  "night": {
   "lantern_linear": [
@@ -5758,14 +11242,17 @@
   "the right pedal and the right grip end are the two points that can touch the wall"
  ],
  "self_check": {
-  "line": "SELF-CHECK bicycle: 71 checks, 71 passed, 0 failed; negative controls 23 of 23 caught (--live --previews)",
-  "checks": 71,
-  "passed": 71,
-  "failed": 0,
-  "controls": 23,
-  "controls_caught": 23,
-  "options": "--live --previews",
-  "failing": [],
+  "line": "SELF-CHECK bicycle: 79 checks, 77 passed, 2 failed; negative controls 0 of 0 caught (offline)",
+  "checks": 79,
+  "passed": 77,
+  "failed": 2,
+  "controls": 0,
+  "controls_caught": 0,
+  "options": "offline",
+  "failing": [
+   "place/poses are declared",
+   "lean/the bicycle's furthest part just reaches the wall"
+  ],
   "uncaught": []
  }
 }

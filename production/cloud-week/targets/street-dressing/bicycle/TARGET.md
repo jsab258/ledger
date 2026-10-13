@@ -2,7 +2,7 @@
 
 **The bicycle is an adult's gent's roadster (26 x 1 3/8 wheels 660 mm over the tyre, a 1097 mm wheelbase, a level top tube on a 72 degree seat tube and a 68 degree head tube, swept-back bars 790 over the grips, a sprung saddle at 1035, mudguards, a plain bell, 170 mm cranks) in the enamel-chipped, dull-chromed state of a street bicycle, no badge or lettering, shown leaning 12 degrees on the blank west wall at x 15.0 with its right grip end against the brick; no period photograph was measurable (the two street photographs are oblique and low in contrast), so every number is Judgement within stated ranges and the target is checked for internal consistency, the tube angles and the ranges, not against pixels; an adult's bicycle only.**
 
-Cloud week 42, unit 13, family 7. Written 13 October 2026, not yet reviewed. `SELF-CHECK bicycle: 71 checks, 71 passed, 0 failed; negative controls 23 of 23 caught (--live --previews)`
+Cloud week 42, unit 13, family 7. Written 13 October 2026, not yet reviewed. `SELF-CHECK bicycle: 72 checks, 70 passed, 2 failed; negative controls 0 of 0 caught (offline)`
 
 ## Files in this folder
 
@@ -80,6 +80,22 @@ Axes: x forward (the front wheel at +x), y to the rider's right, z up from the g
 | rw_tyre14 | box | tyre | 55 to 183 | -19 to 19 | 1 to 84 |  | tyre and rim segment (16 round the wheel), section 38 x 38 |
 | rw_tyre15 | box | tyre | 163 to 277 | -19 to 19 | 53 to 167 |  | tyre and rim segment (16 round the wheel), section 38 x 38 |
 | rw_tyre16 | box | tyre | 246 to 329 | -19 to 19 | 147 to 275 |  | tyre and rim segment (16 round the wheel), section 38 x 38 |
+| rw_rim1 | box | steel | 282 to 292 | -12 to 12 | 273 to 387 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| rw_rim2 | box | steel | 239 to 292 | -12 to 12 | 385 to 494 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| rw_rim3 | box | steel | 159 to 247 | -12 to 12 | 489 to 577 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| rw_rim4 | box | steel | 55 to 164 | -12 to 12 | 569 to 622 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| rw_rim5 | box | steel | -57 to 57 | -12 to 12 | 612 to 622 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| rw_rim6 | box | steel | -164 to -55 | -12 to 12 | 569 to 622 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| rw_rim7 | box | steel | -247 to -159 | -12 to 12 | 489 to 577 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| rw_rim8 | box | steel | -292 to -239 | -12 to 12 | 385 to 494 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| rw_rim9 | box | steel | -292 to -282 | -12 to 12 | 273 to 387 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| rw_rim10 | box | steel | -292 to -239 | -12 to 12 | 166 to 275 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| rw_rim11 | box | steel | -247 to -159 | -12 to 12 | 83 to 171 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| rw_rim12 | box | steel | -164 to -55 | -12 to 12 | 38 to 91 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| rw_rim13 | box | steel | -57 to 57 | -12 to 12 | 38 to 48 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| rw_rim14 | box | steel | 55 to 164 | -12 to 12 | 38 to 91 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| rw_rim15 | box | steel | 159 to 247 | -12 to 12 | 83 to 171 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| rw_rim16 | box | steel | 239 to 292 | -12 to 12 | 166 to 275 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
 | rw_hub | cyl | steel | -22 to 22 | -50 to 50 | 308 to 352 |  | hub 44 across, 100 long |
 | rw_spoke1 | cyl | steel | 22 to 268 | -1 to 1 | 338 to 442 |  | spoke 2.4 across (8 drawn of 36) |
 | rw_spoke2 | cyl | steel | 8 to 112 | -1 to 1 | 352 to 598 |  | spoke 2.4 across (8 drawn of 36) |
@@ -105,6 +121,22 @@ Axes: x forward (the front wheel at +x), y to the rider's right, z up from the g
 | fw_tyre14 | box | tyre | 1151 to 1280 | -19 to 19 | 1 to 84 |  | tyre and rim segment (16 round the wheel), section 38 x 38 |
 | fw_tyre15 | box | tyre | 1260 to 1374 | -19 to 19 | 53 to 167 |  | tyre and rim segment (16 round the wheel), section 38 x 38 |
 | fw_tyre16 | box | tyre | 1343 to 1425 | -19 to 19 | 147 to 275 |  | tyre and rim segment (16 round the wheel), section 38 x 38 |
+| fw_rim1 | box | steel | 1379 to 1389 | -12 to 12 | 273 to 387 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| fw_rim2 | box | steel | 1336 to 1388 | -12 to 12 | 385 to 494 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| fw_rim3 | box | steel | 1256 to 1344 | -12 to 12 | 489 to 577 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| fw_rim4 | box | steel | 1152 to 1261 | -12 to 12 | 569 to 622 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| fw_rim5 | box | steel | 1040 to 1154 | -12 to 12 | 612 to 622 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| fw_rim6 | box | steel | 932 to 1042 | -12 to 12 | 569 to 622 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| fw_rim7 | box | steel | 850 to 938 | -12 to 12 | 489 to 577 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| fw_rim8 | box | steel | 805 to 858 | -12 to 12 | 385 to 494 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| fw_rim9 | box | steel | 805 to 815 | -12 to 12 | 273 to 387 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| fw_rim10 | box | steel | 805 to 858 | -12 to 12 | 166 to 275 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| fw_rim11 | box | steel | 850 to 938 | -12 to 12 | 83 to 171 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| fw_rim12 | box | steel | 932 to 1042 | -12 to 12 | 38 to 91 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| fw_rim13 | box | steel | 1040 to 1154 | -12 to 12 | 38 to 48 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| fw_rim14 | box | steel | 1152 to 1261 | -12 to 12 | 38 to 91 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| fw_rim15 | box | steel | 1256 to 1344 | -12 to 12 | 83 to 171 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| fw_rim16 | box | steel | 1336 to 1388 | -12 to 12 | 166 to 275 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
 | fw_hub | cyl | steel | 1075 to 1119 | -50 to 50 | 308 to 352 |  | hub 44 across, 100 long |
 | fw_spoke1 | cyl | steel | 1119 to 1365 | -1 to 1 | 338 to 442 |  | spoke 2.4 across (8 drawn of 36) |
 | fw_spoke2 | cyl | steel | 1105 to 1209 | -1 to 1 | 352 to 598 |  | spoke 2.4 across (8 drawn of 36) |
@@ -128,13 +160,13 @@ Axes: x forward (the front wheel at +x), y to the rider's right, z up from the g
 | top_tube | cyl | paint_black | 276 to 846 | -14 to 14 | 819 to 854 |  | top tube 28, 570 long, level |
 | down_tube | cyl | paint_black | 439 to 912 | -15 to 15 | 289 to 712 |  | down tube 30 |
 | head_tube | cyl | paint_black | 829 to 919 | -18 to 18 | 694 to 846 |  | head tube 36 across, 150 long, 68 degrees |
-| chain_stay_l | cyl | paint_black | -1 to 450 | -63 to -47 | 292 to 338 |  | chain stay 16, 450 long |
-| seat_stay_l | cyl | paint_black | -7 to 283 | -63 to -47 | 326 to 836 |  | seat stay 16 |
+| chain_stay_l | cyl | paint_black | -1 to 450 | -48 to -32 | 292 to 338 |  | chain stay 16, 450 long, 40 off the centre line (80 apart): the chain runs outboard of the right one |
+| seat_stay_l | cyl | paint_black | -7 to 283 | -48 to -32 | 326 to 836 |  | seat stay 16 |
+| chain_stay_r | cyl | paint_black | -1 to 450 | 32 to 48 | 292 to 338 |  | chain stay 16, 450 long, 40 off the centre line (80 apart): the chain runs outboard of the right one |
+| seat_stay_r | cyl | paint_black | -7 to 283 | 32 to 48 | 326 to 836 |  | seat stay 16 |
 | fork_l | cyl | paint_black | 892 to 1107 | -69 to -47 | 325 to 706 |  | fork blade 22, rake 45 at the foot |
-| chain_stay_r | cyl | paint_black | -1 to 450 | 47 to 63 | 292 to 338 |  | chain stay 16, 450 long |
-| seat_stay_r | cyl | paint_black | -7 to 283 | 47 to 63 | 326 to 836 |  | seat stay 16 |
 | fork_r | cyl | paint_black | 892 to 1107 | 47 to 69 | 325 to 706 |  | fork blade 22, rake 45 at the foot |
-| seat_bridge | box | paint_black | 268 to 284 | -60 to 60 | 823 to 843 |  | seat-stay bridge |
+| seat_bridge | box | paint_black | 268 to 284 | -45 to 45 | 823 to 843 |  | seat-stay bridge |
 | fork_crown | box | paint_black | 890 to 914 | -62 to 62 | 671 to 695 |  | fork crown |
 | seat_post | cyl | steel | 220 to 287 | -11 to 11 | 829 to 988 |  | seat post 22 |
 | saddle | box | saddle_black | 81 to 361 | -90 to 90 | 985 to 1035 | nose r 30, edges r 8 | saddle 280 x 180 x 50, leather-look, springs not modelled |
@@ -151,8 +183,67 @@ Axes: x forward (the front wheel at +x), y to the rider's right, z up from the g
 | crank_l | box | steel | 279 to 459 | -70 to -58 | 290 to 310 |  | left crank arm 170 long |
 | pedal_r | box | steel | 549 to 649 | 70 to 175 | 288 to 312 |  | pedal 100 x 105 x 24, rubber blocks not modelled |
 | pedal_l | box | steel | 249 to 349 | -175 to -70 | 288 to 312 |  |  |
+| sprocket | cyl | steel | -36 to 36 | 48 to 58 | 294 to 366 |  | rear sprocket: 18 teeth, 73 across (pitch circle 73.1), 10 thick, on the hub's drive end; Judgement (the review's 18 tooth, 73 mm) |
+| chain_top | box | chain_dark | -2 to 445 | 51 to 59 | 364 to 392 |  | chain run (top): 446.9 long = 35.2 links of 12.7, 8 wide, 6 thick, on the pitch circles' common tangent; Judgement |
+| chain_bot | box | chain_dark | -7 to 433 | 51 to 59 | 210 to 297 |  | chain run (bot): 446.9 long = 35.2 links of 12.7, 8 wide, 6 thick, on the pitch circles' common tangent; Judgement |
+| chain_c01 | box | chain_dark | 433 to 454 | 51 to 59 | 208 to 215 |  | chain on the chainring: 1.7 links of 12.7 in this strip; Judgement |
+| chain_c02 | box | chain_dark | 454 to 476 | 51 to 59 | 208 to 218 |  | chain on the chainring: 1.7 links of 12.7 in this strip; Judgement |
+| chain_c03 | box | chain_dark | 474 to 496 | 51 to 59 | 212 to 226 |  | chain on the chainring: 1.7 links of 12.7 in this strip; Judgement |
+| chain_c04 | box | chain_dark | 493 to 513 | 51 to 59 | 221 to 239 |  | chain on the chainring: 1.7 links of 12.7 in this strip; Judgement |
+| chain_c05 | box | chain_dark | 509 to 527 | 51 to 59 | 235 to 255 |  | chain on the chainring: 1.7 links of 12.7 in this strip; Judgement |
+| chain_c06 | box | chain_dark | 522 to 537 | 51 to 59 | 252 to 274 |  | chain on the chainring: 1.7 links of 12.7 in this strip; Judgement |
+| chain_c07 | box | chain_dark | 531 to 541 | 51 to 59 | 272 to 295 |  | chain on the chainring: 1.7 links of 12.7 in this strip; Judgement |
+| chain_c08 | box | chain_dark | 534 to 541 | 51 to 59 | 294 to 316 |  | chain on the chainring: 1.7 links of 12.7 in this strip; Judgement |
+| chain_c09 | box | chain_dark | 528 to 540 | 51 to 59 | 315 to 337 |  | chain on the chainring: 1.7 links of 12.7 in this strip; Judgement |
+| chain_c10 | box | chain_dark | 517 to 533 | 51 to 59 | 334 to 356 |  | chain on the chainring: 1.7 links of 12.7 in this strip; Judgement |
+| chain_c11 | box | chain_dark | 502 to 522 | 51 to 59 | 352 to 372 |  | chain on the chainring: 1.7 links of 12.7 in this strip; Judgement |
+| chain_c12 | box | chain_dark | 485 to 506 | 51 to 59 | 367 to 383 |  | chain on the chainring: 1.7 links of 12.7 in this strip; Judgement |
+| chain_c13 | box | chain_dark | 465 to 487 | 51 to 59 | 378 to 390 |  | chain on the chainring: 1.7 links of 12.7 in this strip; Judgement |
+| chain_c14 | box | chain_dark | 444 to 466 | 51 to 59 | 384 to 392 |  | chain on the chainring: 1.7 links of 12.7 in this strip; Judgement |
+| chain_s01 | box | chain_dark | -11 to -1 | 51 to 59 | 362 to 369 |  | chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement |
+| chain_s02 | box | chain_dark | -20 to -9 | 51 to 59 | 359 to 368 |  | chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement |
+| chain_s03 | box | chain_dark | -27 to -17 | 51 to 59 | 354 to 364 |  | chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement |
+| chain_s04 | box | chain_dark | -34 to -23 | 51 to 59 | 347 to 358 |  | chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement |
+| chain_s05 | box | chain_dark | -38 to -28 | 51 to 59 | 340 to 350 |  | chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement |
+| chain_s06 | box | chain_dark | -39 to -32 | 51 to 59 | 332 to 342 |  | chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement |
+| chain_s07 | box | chain_dark | -39 to -33 | 51 to 59 | 323 to 333 |  | chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement |
+| chain_s08 | box | chain_dark | -39 to -31 | 51 to 59 | 314 to 324 |  | chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement |
+| chain_s09 | box | chain_dark | -36 to -26 | 51 to 59 | 306 to 317 |  | chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement |
+| chain_s10 | box | chain_dark | -31 to -21 | 51 to 59 | 299 to 310 |  | chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement |
+| chain_s11 | box | chain_dark | -24 to -14 | 51 to 59 | 294 to 304 |  | chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement |
+| chain_s12 | box | chain_dark | -16 to -6 | 51 to 59 | 291 to 300 |  | chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement |
+| chainguard | box | paint_black | -1 to 498 | 25 to 85 | 379 to 405 | edges rolled 3 mm | chainguard: sheet steel 60 deep, 1 thick, from the sprocket's centre (x 0) to x 499 (40 mm behind the chainring's front), 13 over the chain's pitch line; Judgement (the review's numbers) |
+| chainguard_clip | box | paint_black | 8 to 22 | 36 to 44 | 336 to 380 |  | clip 14 x 8 from the right chain stay up to the guard's rear end |
+| chainguard_strap | cyl | paint_black | 430 to 496 | 7 to 39 | 381 to 407 |  | strap rod 6 across from the guard's front end to the seat tube |
+| fw_stirrup_bar | cyl | steel | 968 to 974 | -28 to 28 | 566 to 572 |  | stirrup crossbar 6 across, 56 wide, under the rim at radius 270 (the rim's inner face is 282), at 117.7 degrees on the wheel; Judgement |
+| fw_stirrup_arm_l | cyl | steel | 927 to 974 | -58 to -25 | 567 to 650 |  | stirrup arm 6 across from the crossbar's end to the frame member |
+| fw_stirrup_arm_r | cyl | steel | 927 to 974 | 25 to 58 | 567 to 650 |  | stirrup arm 6 across from the crossbar's end to the frame member |
+| fw_brake_bridge | box | paint_black | 921 to 937 | -55 to 55 | 641 to 657 |  | brake bridge 16 x 16 between the two members at radius 360, above the mudguard |
+| fw_pad_l | box | grip_black | 948 to 990 | -19 to -5 | 557 to 588 |  | brake pad 40 x 14 x 14 on the stirrup, against the rim's inner face (rod brake); Judgement |
+| fw_pad_r | box | grip_black | 948 to 990 | 5 to 19 | 557 to 588 |  | brake pad 40 x 14 x 14 on the stirrup, against the rim's inner face (rod brake); Judgement |
+| rw_stirrup_bar | cyl | steel | 127 to 133 | -28 to 28 | 564 to 570 |  | stirrup crossbar 6 across, 56 wide, under the rim at radius 270 (the rim's inner face is 282), at 61.2 degrees on the wheel; Judgement |
+| rw_stirrup_arm_l | cyl | steel | 127 to 176 | -43 to -25 | 565 to 647 |  | stirrup arm 6 across from the crossbar's end to the frame member |
+| rw_stirrup_arm_r | cyl | steel | 127 to 176 | 25 to 43 | 565 to 647 |  | stirrup arm 6 across from the crossbar's end to the frame member |
+| rw_brake_bridge | box | paint_black | 165 to 181 | -40 to 40 | 638 to 654 |  | brake bridge 16 x 16 between the two members at radius 360, above the mudguard |
+| rw_pad_l | box | grip_black | 111 to 153 | -19 to -5 | 554 to 586 |  | brake pad 40 x 14 x 14 on the stirrup, against the rim's inner face (rod brake); Judgement |
+| rw_pad_r | box | grip_black | 111 to 153 | 5 to 19 | 554 to 586 |  | brake pad 40 x 14 x 14 on the stirrup, against the rim's inner face (rod brake); Judgement |
+| brake_lever_l | cyl | steel | 692 to 797 | -336 to -324 | 922 to 1001 |  | bar lever 120 long, 12 across, clamped under the grip's inner end; the left works the front brake, the right the rear; Judgement |
+| brake_rod_f | cyl | steel | 790 to 933 | -333 to -52 | 646 to 930 |  | brake rod 8 across from the lever's tip to the stirrup's joint on the fork blade; Judgement |
+| brake_lever_r | cyl | steel | 692 to 797 | 324 to 336 | 922 to 1001 |  | bar lever 120 long, 12 across, clamped under the grip's inner end; the left works the front brake, the right the rear; Judgement |
+| brake_rod_r | cyl | steel | 171 to 796 | 36 to 334 | 642 to 931 |  | brake rod 8 across from the lever's tip to the stirrup's joint on the seat stay; Judgement |
+| fw_guard_stay_l | cyl | paint_black | 1096 to 1423 | -59 to -26 | 328 to 452 |  | mudguard stay 5 across from the guard's front end to the drop-out; Judgement |
+| fw_guard_stay_r | cyl | paint_black | 1096 to 1423 | 26 to 59 | 328 to 452 |  | mudguard stay 5 across from the guard's front end to the drop-out; Judgement |
+| rw_guard_stay_l | cyl | paint_black | -328 to 1 | -59 to -26 | 328 to 452 |  | mudguard stay 5 across from the guard's rear end to the drop-out; Judgement |
+| rw_guard_stay_r | cyl | paint_black | -328 to 1 | 26 to 59 | 328 to 452 |  | mudguard stay 5 across from the guard's rear end to the drop-out; Judgement |
+| rw_reflector | cyl | reflector_red | -239 to -233 | -30 to 30 | 558 to 618 |  | rear reflector 60 across, 6 thick, on the rear mudguard's tail, facing back; Judgement |
+| carrier_deck | box | paint_black | -101 to 239 | -65 to 65 | 776 to 780 |  | carrier platform 340 x 130, a 4 mm sheet on the tube frame, top at 780; Judgement |
+| carrier_rail_l | cyl | paint_black | -101 to 239 | -70 to -60 | 766 to 776 |  | carrier side rail, 10 mm tube, 340 long |
+| carrier_rail_r | cyl | paint_black | -101 to 239 | 60 to 70 | 766 to 776 |  | carrier side rail, 10 mm tube, 340 long |
+| carrier_cross_rear | cyl | paint_black | -106 to -96 | -65 to 65 | 766 to 776 |  | carrier rear cross rail, 10 mm tube |
+| carrier_stay_l | cyl | paint_black | -106 to -37 | -70 to -52 | 339 to 772 |  | carrier stay, 10 mm tube, from the rail's rear end to the drop-out; Judgement |
+| carrier_stay_r | cyl | paint_black | -106 to -37 | 52 to 70 | 339 to 772 |  | carrier stay, 10 mm tube, from the rail's rear end to the drop-out; Judgement |
 
-### Parts, variant BI2: BI2: the roadster leaning 12 degrees against a brick wall, handlebar end and pedal against it (the sample) (millimetres)
+### Parts, variant BI2: BI2: the roadster leaning 12 degrees toward a brick wall, its left grip end against it (the sample) (millimetres)
 
 | part | kind | material | x (mm) | y (mm) | z (mm) | edges | note |
 |---|---|---|---|---|---|---|---|
@@ -172,6 +263,22 @@ Axes: x forward (the front wheel at +x), y to the rider's right, z up from the g
 | rw_tyre14 | box | tyre | 55 to 183 | -36 to 18 | -3 to 86 |  | tyre and rim segment (16 round the wheel), section 38 x 38 |
 | rw_tyre15 | box | tyre | 163 to 277 | -53 to 8 | 48 to 168 |  | tyre and rim segment (16 round the wheel), section 38 x 38 |
 | rw_tyre16 | box | tyre | 246 to 329 | -76 to -12 | 139 to 273 |  | tyre and rim segment (16 round the wheel), section 38 x 38 |
+| rw_rim1 | box | steel | 282 to 292 | -93 to -45 | 264 to 381 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| rw_rim2 | box | steel | 239 to 292 | -115 to -68 | 374 to 486 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| rw_rim3 | box | steel | 159 to 247 | -132 to -89 | 476 to 567 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| rw_rim4 | box | steel | 55 to 164 | -141 to -106 | 554 to 611 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| rw_rim5 | box | steel | -57 to 57 | -142 to -115 | 596 to 611 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| rw_rim6 | box | steel | -164 to -55 | -141 to -106 | 554 to 611 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| rw_rim7 | box | steel | -247 to -159 | -132 to -89 | 476 to 567 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| rw_rim8 | box | steel | -292 to -239 | -115 to -68 | 374 to 486 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| rw_rim9 | box | steel | -292 to -282 | -93 to -45 | 264 to 381 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| rw_rim10 | box | steel | -292 to -239 | -69 to -22 | 159 to 271 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| rw_rim11 | box | steel | -247 to -159 | -48 to -5 | 79 to 170 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| rw_rim12 | box | steel | -164 to -55 | -31 to 4 | 35 to 92 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| rw_rim13 | box | steel | -57 to 57 | -22 to 4 | 35 to 50 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| rw_rim14 | box | steel | 55 to 164 | -31 to 4 | 35 to 92 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| rw_rim15 | box | steel | 159 to 247 | -48 to -5 | 79 to 170 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| rw_rim16 | box | steel | 239 to 292 | -69 to -22 | 159 to 271 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
 | rw_hub | cyl | steel | -22 to 22 | -122 to -15 | 291 to 355 |  | hub 44 across, 100 long |
 | rw_spoke1 | cyl | steel | 22 to 268 | -93 to -69 | 331 to 432 |  | spoke 2.4 across (8 drawn of 36) |
 | rw_spoke2 | cyl | steel | 8 to 112 | -125 to -72 | 344 to 585 |  | spoke 2.4 across (8 drawn of 36) |
@@ -197,6 +304,22 @@ Axes: x forward (the front wheel at +x), y to the rider's right, z up from the g
 | fw_tyre14 | box | tyre | 1151 to 1280 | -36 to 18 | -3 to 86 |  | tyre and rim segment (16 round the wheel), section 38 x 38 |
 | fw_tyre15 | box | tyre | 1260 to 1374 | -53 to 8 | 48 to 168 |  | tyre and rim segment (16 round the wheel), section 38 x 38 |
 | fw_tyre16 | box | tyre | 1343 to 1425 | -76 to -12 | 139 to 273 |  | tyre and rim segment (16 round the wheel), section 38 x 38 |
+| fw_rim1 | box | steel | 1379 to 1389 | -93 to -45 | 264 to 381 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| fw_rim2 | box | steel | 1336 to 1388 | -115 to -68 | 374 to 486 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| fw_rim3 | box | steel | 1256 to 1344 | -132 to -89 | 476 to 567 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| fw_rim4 | box | steel | 1152 to 1261 | -141 to -106 | 554 to 611 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| fw_rim5 | box | steel | 1040 to 1154 | -142 to -115 | 596 to 611 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| fw_rim6 | box | steel | 932 to 1042 | -141 to -106 | 554 to 611 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| fw_rim7 | box | steel | 850 to 938 | -132 to -89 | 476 to 567 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| fw_rim8 | box | steel | 805 to 858 | -115 to -68 | 374 to 486 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| fw_rim9 | box | steel | 805 to 815 | -93 to -45 | 264 to 381 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| fw_rim10 | box | steel | 805 to 858 | -69 to -22 | 159 to 271 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| fw_rim11 | box | steel | 850 to 938 | -48 to -5 | 79 to 170 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| fw_rim12 | box | steel | 932 to 1042 | -31 to 4 | 35 to 92 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| fw_rim13 | box | steel | 1040 to 1154 | -22 to 4 | 35 to 50 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| fw_rim14 | box | steel | 1152 to 1261 | -31 to 4 | 35 to 92 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| fw_rim15 | box | steel | 1256 to 1344 | -48 to -5 | 79 to 170 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
+| fw_rim16 | box | steel | 1336 to 1388 | -69 to -22 | 159 to 271 |  | rim segment (16 round the wheel): 25 wide, 10 deep, dull steel, the tyre's seat; Judgement |
 | fw_hub | cyl | steel | 1075 to 1119 | -122 to -15 | 291 to 355 |  | hub 44 across, 100 long |
 | fw_spoke1 | cyl | steel | 1119 to 1365 | -93 to -69 | 331 to 432 |  | spoke 2.4 across (8 drawn of 36) |
 | fw_spoke2 | cyl | steel | 1105 to 1209 | -125 to -72 | 344 to 585 |  | spoke 2.4 across (8 drawn of 36) |
@@ -220,13 +343,13 @@ Axes: x forward (the front wheel at +x), y to the rider's right, z up from the g
 | top_tube | cyl | paint_black | 276 to 846 | -189 to -159 | 800 to 835 |  | top tube 28, 570 long, level |
 | down_tube | cyl | paint_black | 439 to 912 | -160 to -48 | 282 to 697 |  | down tube 30 |
 | head_tube | cyl | paint_black | 829 to 919 | -192 to -128 | 678 to 829 |  | head tube 36 across, 150 long, 68 degrees |
-| chain_stay_l | cyl | paint_black | -1 to 450 | -130 to -108 | 274 to 319 |  | chain stay 16, 450 long |
-| seat_stay_l | cyl | paint_black | -7 to 283 | -235 to -115 | 307 to 807 |  | seat stay 16 |
+| chain_stay_l | cyl | paint_black | -1 to 450 | -116 to -94 | 277 to 322 |  | chain stay 16, 450 long, 40 off the centre line (80 apart): the chain runs outboard of the right one |
+| seat_stay_l | cyl | paint_black | -7 to 283 | -220 to -100 | 310 to 810 |  | seat stay 16 |
+| chain_stay_r | cyl | paint_black | -1 to 450 | -37 to -15 | 294 to 339 |  | chain stay 16, 450 long, 40 off the centre line (80 apart): the chain runs outboard of the right one |
+| seat_stay_r | cyl | paint_black | -7 to 283 | -142 to -22 | 327 to 827 |  | seat stay 16 |
 | fork_l | cyl | paint_black | 892 to 1107 | -213 to -114 | 305 to 679 |  | fork blade 22, rake 45 at the foot |
-| chain_stay_r | cyl | paint_black | -1 to 450 | -23 to -1 | 297 to 342 |  | chain stay 16, 450 long |
-| seat_stay_r | cyl | paint_black | -7 to 283 | -127 to -7 | 330 to 830 |  | seat stay 16 |
 | fork_r | cyl | paint_black | 892 to 1107 | -100 to -1 | 329 to 703 |  | fork blade 22, rake 45 at the foot |
-| seat_bridge | box | paint_black | 268 to 284 | -234 to -112 | 792 to 837 |  | seat-stay bridge |
+| seat_bridge | box | paint_black | 268 to 284 | -219 to -127 | 795 to 834 |  | seat-stay bridge |
 | fork_crown | box | paint_black | 890 to 914 | -205 to -79 | 643 to 692 |  | fork crown |
 | seat_post | cyl | steel | 220 to 287 | -216 to -162 | 811 to 967 |  | seat post 22 |
 | saddle | box | saddle_black | 81 to 361 | -303 to -117 | 945 to 1031 | nose r 30, edges r 8 | saddle 280 x 180 x 50, leather-look, springs not modelled |
@@ -243,7 +366,66 @@ Axes: x forward (the front wheel at +x), y to the rider's right, z up from the g
 | crank_l | box | steel | 279 to 459 | -133 to -117 | 269 to 291 |  | left crank arm 170 long |
 | pedal_r | box | steel | 549 to 649 | 4 to 111 | 296 to 342 |  | pedal 100 x 105 x 24, rubber blocks not modelled |
 | pedal_l | box | steel | 249 to 349 | -236 to -128 | 245 to 291 |  |  |
-| wall | box | wall_brick | -600 to 2000 | 179 to 379 | -50 to 2400 |  | the wall (a stand-in slab) |
+| sprocket | cyl | steel | -36 to 36 | -29 to -4 | 297 to 371 |  | rear sprocket: 18 teeth, 73 across (pitch circle 73.1), 10 thick, on the hub's drive end; Judgement (the review's 18 tooth, 73 mm) |
+| chain_top | box | chain_dark | -2 to 445 | -32 to -18 | 366 to 396 |  | chain run (top): 446.9 long = 35.2 links of 12.7, 8 wide, 6 thick, on the pitch circles' common tangent; Judgement |
+| chain_bot | box | chain_dark | -7 to 433 | -12 to 14 | 216 to 303 |  | chain run (bot): 446.9 long = 35.2 links of 12.7, 8 wide, 6 thick, on the pitch circles' common tangent; Judgement |
+| chain_c01 | box | chain_dark | 433 to 454 | 5 to 14 | 214 to 223 |  | chain on the chainring: 1.7 links of 12.7 in this strip; Judgement |
+| chain_c02 | box | chain_dark | 454 to 476 | 5 to 14 | 214 to 225 |  | chain on the chainring: 1.7 links of 12.7 in this strip; Judgement |
+| chain_c03 | box | chain_dark | 474 to 496 | 3 to 14 | 218 to 234 |  | chain on the chainring: 1.7 links of 12.7 in this strip; Judgement |
+| chain_c04 | box | chain_dark | 493 to 513 | 0 to 12 | 227 to 246 |  | chain on the chainring: 1.7 links of 12.7 in this strip; Judgement |
+| chain_c05 | box | chain_dark | 509 to 527 | -3 to 9 | 240 to 262 |  | chain on the chainring: 1.7 links of 12.7 in this strip; Judgement |
+| chain_c06 | box | chain_dark | 522 to 537 | -7 to 5 | 257 to 281 |  | chain on the chainring: 1.7 links of 12.7 in this strip; Judgement |
+| chain_c07 | box | chain_dark | 531 to 541 | -11 to 1 | 277 to 300 |  | chain on the chainring: 1.7 links of 12.7 in this strip; Judgement |
+| chain_c08 | box | chain_dark | 534 to 541 | -16 to -3 | 298 to 321 |  | chain on the chainring: 1.7 links of 12.7 in this strip; Judgement |
+| chain_c09 | box | chain_dark | 528 to 540 | -20 to -8 | 318 to 342 |  | chain on the chainring: 1.7 links of 12.7 in this strip; Judgement |
+| chain_c10 | box | chain_dark | 517 to 533 | -24 to -12 | 338 to 360 |  | chain on the chainring: 1.7 links of 12.7 in this strip; Judgement |
+| chain_c11 | box | chain_dark | 502 to 522 | -27 to -16 | 355 to 376 |  | chain on the chainring: 1.7 links of 12.7 in this strip; Judgement |
+| chain_c12 | box | chain_dark | 485 to 506 | -30 to -19 | 370 to 387 |  | chain on the chainring: 1.7 links of 12.7 in this strip; Judgement |
+| chain_c13 | box | chain_dark | 465 to 487 | -31 to -21 | 380 to 394 |  | chain on the chainring: 1.7 links of 12.7 in this strip; Judgement |
+| chain_c14 | box | chain_dark | 444 to 466 | -32 to -22 | 387 to 396 |  | chain on the chainring: 1.7 links of 12.7 in this strip; Judgement |
+| chain_s01 | box | chain_dark | -11 to -1 | -27 to -18 | 365 to 374 |  | chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement |
+| chain_s02 | box | chain_dark | -20 to -9 | -27 to -17 | 361 to 372 |  | chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement |
+| chain_s03 | box | chain_dark | -27 to -17 | -26 to -16 | 357 to 368 |  | chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement |
+| chain_s04 | box | chain_dark | -34 to -23 | -25 to -14 | 350 to 362 |  | chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement |
+| chain_s05 | box | chain_dark | -38 to -28 | -23 to -13 | 343 to 355 |  | chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement |
+| chain_s06 | box | chain_dark | -39 to -32 | -21 to -11 | 335 to 346 |  | chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement |
+| chain_s07 | box | chain_dark | -39 to -33 | -19 to -10 | 327 to 338 |  | chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement |
+| chain_s08 | box | chain_dark | -39 to -31 | -18 to -8 | 318 to 330 |  | chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement |
+| chain_s09 | box | chain_dark | -36 to -26 | -16 to -6 | 310 to 322 |  | chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement |
+| chain_s10 | box | chain_dark | -31 to -21 | -15 to -4 | 303 to 315 |  | chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement |
+| chain_s11 | box | chain_dark | -24 to -14 | -13 to -3 | 298 to 309 |  | chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement |
+| chain_s12 | box | chain_dark | -16 to -6 | -12 to -3 | 295 to 305 |  | chain on the sprocket: 0.7 links of 12.7 in this strip; Judgement |
+| chainguard | box | paint_black | -1 to 498 | -60 to 4 | 376 to 414 | edges rolled 3 mm | chainguard: sheet steel 60 deep, 1 thick, from the sprocket's centre (x 0) to x 499 (40 mm behind the chainring's front), 13 over the chain's pitch line; Judgement (the review's numbers) |
+| chainguard_clip | box | paint_black | 8 to 22 | -44 to -27 | 336 to 381 |  | clip 14 x 8 from the right chain stay up to the guard's rear end |
+| chainguard_strap | cyl | paint_black | 430 to 496 | -73 to -46 | 375 to 405 |  | strap rod 6 across from the guard's front end to the seat tube |
+| fw_stirrup_bar | cyl | steel | 968 to 974 | -146 to -90 | 548 to 565 |  | stirrup crossbar 6 across, 56 wide, under the rim at radius 270 (the rim's inner face is 282), at 117.7 degrees on the wheel; Judgement |
+| fw_stirrup_arm_l | cyl | steel | 927 to 974 | -191 to -143 | 549 to 625 |  | stirrup arm 6 across from the crossbar's end to the frame member |
+| fw_stirrup_arm_r | cyl | steel | 927 to 974 | -94 to -78 | 561 to 647 |  | stirrup arm 6 across from the crossbar's end to the frame member |
+| fw_brake_bridge | box | paint_black | 921 to 937 | -190 to -79 | 615 to 654 |  | brake bridge 16 x 16 between the two members at radius 360, above the mudguard |
+| fw_pad_l | box | grip_black | 948 to 990 | -141 to -121 | 541 to 574 |  | brake pad 40 x 14 x 14 on the stirrup, against the rim's inner face (rod brake); Judgement |
+| fw_pad_r | box | grip_black | 948 to 990 | -117 to -97 | 546 to 579 |  | brake pad 40 x 14 x 14 on the stirrup, against the rim's inner face (rod brake); Judgement |
+| rw_stirrup_bar | cyl | steel | 127 to 133 | -146 to -90 | 546 to 563 |  | stirrup crossbar 6 across, 56 wide, under the rim at radius 270 (the rim's inner face is 282), at 61.2 degrees on the wheel; Judgement |
+| rw_stirrup_arm_l | cyl | steel | 127 to 176 | -176 to -142 | 547 to 625 |  | stirrup arm 6 across from the crossbar's end to the frame member |
+| rw_stirrup_arm_r | cyl | steel | 127 to 176 | -98 to -87 | 559 to 641 |  | stirrup arm 6 across from the crossbar's end to the frame member |
+| rw_brake_bridge | box | paint_black | 165 to 181 | -175 to -93 | 615 to 648 |  | brake bridge 16 x 16 between the two members at radius 360, above the mudguard |
+| rw_pad_l | box | grip_black | 111 to 153 | -140 to -120 | 538 to 572 |  | brake pad 40 x 14 x 14 on the stirrup, against the rim's inner face (rod brake); Judgement |
+| rw_pad_r | box | grip_black | 111 to 153 | -117 to -97 | 543 to 577 |  | brake pad 40 x 14 x 14 on the stirrup, against the rim's inner face (rod brake); Judgement |
+| brake_lever_l | cyl | steel | 692 to 797 | -536 to -510 | 834 to 911 |  | bar lever 120 long, 12 across, clamped under the grip's inner end; the left works the front brake, the right the rear; Judgement |
+| brake_rod_f | cyl | steel | 790 to 933 | -518 to -186 | 620 to 842 |  | brake rod 8 across from the lever's tip to the stirrup's joint on the fork blade; Judgement |
+| brake_lever_r | cyl | steel | 692 to 797 | 110 to 136 | 971 to 1048 |  | bar lever 120 long, 12 across, clamped under the grip's inner end; the left works the front brake, the right the rear; Judgement |
+| brake_rod_r | cyl | steel | 171 to 796 | -99 to 134 | 636 to 979 |  | brake rod 8 across from the lever's tip to the stirrup's joint on the seat stay; Judgement |
+| fw_guard_stay_l | cyl | paint_black | 1096 to 1423 | -127 to -118 | 309 to 436 |  | mudguard stay 5 across from the guard's front end to the drop-out; Judgement |
+| fw_guard_stay_r | cyl | paint_black | 1096 to 1423 | -69 to -10 | 332 to 448 |  | mudguard stay 5 across from the guard's front end to the drop-out; Judgement |
+| rw_guard_stay_l | cyl | paint_black | -328 to 1 | -127 to -118 | 309 to 437 |  | mudguard stay 5 across from the guard's rear end to the drop-out; Judgement |
+| rw_guard_stay_r | cyl | paint_black | -328 to 1 | -69 to -10 | 332 to 448 |  | mudguard stay 5 across from the guard's rear end to the drop-out; Judgement |
+| rw_reflector | cyl | reflector_red | -239 to -233 | -152 to -92 | 545 to 605 |  | rear reflector 60 across, 6 thick, on the rear mudguard's tail, facing back; Judgement |
+| carrier_deck | box | paint_black | -101 to 239 | -226 to -98 | 746 to 776 |  | carrier platform 340 x 130, a 4 mm sheet on the tube frame, top at 780; Judgement |
+| carrier_rail_l | cyl | paint_black | -101 to 239 | -229 to -219 | 736 to 746 |  | carrier side rail, 10 mm tube, 340 long |
+| carrier_rail_r | cyl | paint_black | -101 to 239 | -102 to -92 | 763 to 773 |  | carrier side rail, 10 mm tube, 340 long |
+| carrier_cross_rear | cyl | paint_black | -106 to -96 | -225 to -96 | 736 to 773 |  | carrier rear cross rail, 10 mm tube |
+| carrier_stay_l | cyl | paint_black | -106 to -37 | -229 to -122 | 319 to 742 |  | carrier stay, 10 mm tube, from the rail's rear end to the drop-out; Judgement |
+| carrier_stay_r | cyl | paint_black | -106 to -37 | -102 to -10 | 343 to 769 |  | carrier stay, 10 mm tube, from the rail's rear end to the drop-out; Judgement |
+| wall | box | wall_brick | -600 to 2000 | -799 to -599 | -50 to 2400 |  | the wall (a stand-in slab) on the side the bicycle leans toward (-y) |
 
 ### The numbers, with their sources and kinds (the self-check measures each back off the parts)
 
@@ -255,6 +437,13 @@ Axes: x forward (the front wheel at +x), y to the rider's right, z up from the g
 | N4 | handlebar grips above the ground | 1024.2 mm | Judgement | roadster bars stand about as high as the saddle or just above it; error 40 | +-40 |
 | N5 | bottom bracket height | 300 mm | Judgement | a roadster's bottom bracket is about 300 mm up (30 mm below the axles); error 15 | +-15 |
 | N6 | handlebar width over the grips | 790 mm | Judgement | swept-back roadster bars are 560 to 620 between the bends and about 790 over the grips' ends; error 50 | +-50 |
+| N8 | rear sprocket diameter (18 teeth) | 73 mm | Judgement | the review of 13 October: an 18 tooth sprocket 73 mm across (12.7 pitch: pitch circle 73.2); S1 shows a rusted wheel in which no sprocket reads; error 3 | +-3 |
+| N9 | chainguard depth across the bicycle | 60 mm | Judgement | the review: sheet steel 60 deep, 1 thick; no chainguard reads in S1; error 5 | +-5 |
+| N10 | rim width | 25 mm | Judgement | the review: rims 25 wide, 10 deep, as their own ring (a 26 x 1 3/8 steel rim is about 22 to 25 wide); S1's rims read as thin rings; error 3 | +-3 |
+| N11 | carrier platform length | 340 mm | Judgement | the review: a 340 x 130 platform of 10 mm tube at 780 over the rear wheel; S1's own row lists a rear carrier but at 430 px no number reads; error 20 | +-20 |
+| N12 | carrier platform width | 130 mm | Judgement | the review (130); error 15 | +-15 |
+| N13 | carrier platform top above the ground | 780 mm | Judgement | the review (780 over the rear wheel, 120 over the mudguard's top at 668); error 30 | +-30 |
+| N14 | rear reflector diameter | 60 mm | Judgement | the review: a red reflector 60 across on the rear mudguard; error 3 | +-3 |
 | N7 | crank span: the two arms' outer ends along x (two cranks of 170, crossing at the spindle) | 340 mm | Judgement | 170 mm, the usual crank; error 6 | +-6 |
 
 ### Materials and colours
@@ -263,9 +452,11 @@ Axes: x forward (the front wheel at +x), y to the rider's right, z up from the g
 |---|---|---|---|---|---|
 | paint_black | black enamel, chipped and rusting at the welds | 24, 26, 26 | 0.45 (semi-gloss) | metal | frame, forks, mudguards: chipped to red-brown rust at the dropouts, the lower head tube and the mudguard stays |
 | steel | chrome-plated steel gone dull | 150, 152, 150 | 0.40 (dull satin) | metal | bars, stem, cranks, hubs, spokes: pitted with orange rust spots, never mirror bright |
-| tyre | black rubber tyre, cracked, grey-white dust | 30, 30, 30 | 0.80 (matt) | not metal | a pale grey bloom of dust on the sidewalls; the rim (not separate) is dull steel in the 2 mm inner edge |
+| tyre | black rubber tyre, cracked, grey-white dust | 30, 30, 30 | 0.80 (matt) | not metal | a pale grey bloom of dust on the sidewalls; the rim is its own ring inside it (steel) |
 | saddle_black | saddle black leather-look, cracked | 34, 30, 28 | 0.55 (semi-matt) | not metal | cracked and shiny at the nose, a worn nose edge |
-| grip_black | grips black rubber, worn | 22, 22, 22 | 0.70 (matt) | not metal |  |
+| grip_black | grips black rubber, worn | 22, 22, 22 | 0.70 (matt) | not metal | also the brake pads |
+| chain_dark | chain, brown with oil and rust | 62, 46, 34 | 0.60 (matt) | metal | the plates rust-brown, the rollers oily black; a line of oil spots on the right chain stay below it |
+| reflector_red | rear reflector, red plastic, scratched | 150, 18, 22 | 0.30 (glossy, scratched) | not metal | the only saturated colour on the bicycle: 60 mm across |
 | wall_brick | soot-blackened brick (the street's) | 78, 64, 58 | 0.90 (rough) | not metal | a stand-in |
 
 ### Wear
@@ -309,6 +500,13 @@ Axes: x forward (the front wheel at +x), y to the rider's right, z up from the g
 | N4: handlebar grips above the ground | measure it on the built mesh in millimetres (edge) | 1024 mm | +-40 mm |
 | N5: bottom bracket height | measure it on the built mesh in millimetres (centre) | 300 mm | +-15 mm |
 | N6: handlebar width over the grips | measure it on the built mesh in millimetres (span) | 790 mm | +-50 mm |
+| N8: rear sprocket diameter (18 teeth) | measure it on the built mesh in millimetres (extent) | 73 mm | +-3 mm |
+| N9: chainguard depth across the bicycle | measure it on the built mesh in millimetres (extent) | 60 mm | +-5 mm |
+| N10: rim width | measure it on the built mesh in millimetres (extent) | 25 mm | +-3 mm |
+| N11: carrier platform length | measure it on the built mesh in millimetres (extent) | 340 mm | +-20 mm |
+| N12: carrier platform width | measure it on the built mesh in millimetres (extent) | 130 mm | +-15 mm |
+| N13: carrier platform top above the ground | measure it on the built mesh in millimetres (edge) | 780 mm | +-30 mm |
+| N14: rear reflector diameter | measure it on the built mesh in millimetres (extent) | 60 mm | +-3 mm |
 | N7: crank span: the two arms' outer ends along x (two cranks of 170, crossing at the spindle) | measure it on the built mesh in millimetres (span) | 340 mm | +-6 mm |
 | C1: both wheels the same diameter, on the ground | the tyres' bounding boxes | 660 mm, z 0 | +-10 mm |
 | C2: no part floats; the bicycle touches the ground and the wall | the contact graph | connected | 0 floating |

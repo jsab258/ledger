@@ -129,9 +129,8 @@ def _seg(id, a, b, y, w, t, mat, off=0.0, **kw):
     return d
 
 
-def drive():
-    """The chain (geometry on the pitch circles), the rear sprocket, the chainguard and its fixings."""
-    P = []
+def chain_geometry():
+    """The pitch-circle geometry of the drive, in one place (the self-check recomputes it from the parts)."""
     c1, c2 = BB, (0.0, Z_AXLE)
     d = math.hypot(c1[0] - c2[0], c1[1] - c2[1])
     u = ((c1[0] - c2[0]) / d, (c1[1] - c2[1]) / d)
@@ -140,17 +139,28 @@ def drive():
     cc = math.sqrt(1 - k * k)
     n_top = (k * u[0] + cc * perp[0], k * u[1] + cc * perp[1])
     n_bot = (k * u[0] - cc * perp[0], k * u[1] - cc * perp[1])
-    th_u = math.atan2(u[1], u[0])
     th_top = math.atan2(n_top[1], n_top[0])
     th_bot = math.atan2(n_bot[1], n_bot[0])
-    P.append(CY("sprocket", (0.0, CH_Y - 7.0, Z_AXLE), (0.0, CH_Y + 3.0, Z_AXLE), 36.5, "steel", note="rear sprocket: 18 teeth, 73 across (pitch circle %.1f), 10 thick, on the hub's drive end" % (2 * R_SPR)))
+    if th_top < th_bot:
+        th_top += 2 * math.pi
+    return dict(c1=c1, c2=c2, d=d, n_top=n_top, n_bot=n_bot, th_top=th_top, th_bot=th_bot,
+                run=math.sqrt(d * d - (R_RING - R_SPR) ** 2), ring_span=th_top - th_bot, spr_span=2 * math.pi - (th_top - th_bot))
+
+
+def drive():
+    """The chain (geometry on the pitch circles), the rear sprocket, the chainguard and its fixings."""
+    P = []
+    G = chain_geometry()
+    c1, c2 = G["c1"], G["c2"]
+    P.append(CY("sprocket", (0.0, CH_Y - 7.0, Z_AXLE), (0.0, CH_Y + 3.0, Z_AXLE), 36.5, "steel",
+                note="rear sprocket: 18 teeth, 73 across (pitch circle %.1f), 10 thick, on the hub's drive end; Judgement (the review's 18 tooth, 73 mm)" % (2 * R_SPR)))
     runs = {}
-    for nm, n in (("top", n_top), ("bot", n_bot)):
+    for nm, n in (("top", G["n_top"]), ("bot", G["n_bot"])):
         a = (c2[0] + R_SPR * n[0], c2[1] + R_SPR * n[1])
         b = (c1[0] + R_RING * n[0], c1[1] + R_RING * n[1])
         runs[nm] = (a, b)
-        P.append(_seg("chain_%s" % nm, a, b, CH_Y, CH_W, CH_T, "chain_dark", note="chain run (%s): %.1f long, %d links of 12.7, 8 wide, 6 thick, on the pitch circles' common tangent" % (nm, math.dist(a, b), round(math.dist(a, b) / PITCH))))
-    # wraps: the ring's far side (193 degrees) and the sprocket's far side (167 degrees), as short strips on the pitch circles
+        P.append(_seg("chain_%s" % nm, a, b, CH_Y, CH_W, CH_T, "chain_dark", note="chain run (%s): %.1f long = %.1f links of 12.7, 8 wide, 6 thick, on the pitch circles' common tangent; Judgement" % (nm, math.dist(a, b), math.dist(a, b) / PITCH)))
+
     def wrap(tag, cen, rad, a0, a1, n):
         out = []
         for j in range(n):
@@ -158,53 +168,124 @@ def drive():
             t1 = a0 + (a1 - a0) * (j + 1) / n
             p0 = (cen[0] + rad * math.cos(t0), cen[1] + rad * math.sin(t0))
             p1 = (cen[0] + rad * math.cos(t1), cen[1] + rad * math.sin(t1))
-            tm = (t0 + t1) / 2.0
-            # the strip along the chord, its thickness across it: the chord's outward normal is the left normal when the arc runs clockwise (a1 < a0)
-            out.append(_seg("chain_%s%02d" % (tag, j + 1), p0, p1, CH_Y, CH_W, CH_T, "chain_dark", off=0.0,
-                            note="chain on the %s: %d links of 12.7 in this strip" % ("chainring" if tag == "c" else "sprocket", round(rad * abs(a1 - a0) / n / PITCH))))
+            out.append(_seg("chain_%s%02d" % (tag, j + 1), p0, p1, CH_Y, CH_W, CH_T, "chain_dark",
+                            note="chain on the %s: %.1f links of 12.7 in this strip; Judgement" % ("chainring" if tag == "c" else "sprocket", rad * abs(a1 - a0) / n / PITCH)))
         return out
-    P += wrap("c", c1, R_RING, th_bot, th_top, 14) if False else []
-    # ring: from the bottom tangent round through the far side (th_u) to the top tangent
-    ring_a0 = th_bot
-    ring_a1 = th_top
-    if ring_a1 < ring_a0:
-        ring_a1 += 2 * math.pi
-    # the far side of the ring is the side of u: go from th_bot up through th_u to th_top
-    span = th_top - th_bot
-    if span < 0:
-        span += 2 * math.pi
-    P += wrap("c", c1, R_RING, th_bot, th_bot + 2 * math.pi - (2 * math.pi - span) if False else th_bot + (2 * math.pi - ((th_bot - th_top) % (2 * math.pi))), 14)
-    # sprocket: from the top tangent through the far side (th_u + 180) to the bottom tangent
-    s0 = th_top
-    s1 = th_bot + 2 * math.pi if th_bot < th_top else th_bot
-    P += wrap("s", c2, R_SPR, s0, s1, 12)
-    # the chainguard: sheet steel over the top run, 60 deep, 1 thick, from 40 mm behind the chainring's front to the sprocket's centre, 13 over the pitch line
+    P += wrap("c", c1, R_RING, G["th_bot"], G["th_top"], 14)
+    P += wrap("s", c2, R_SPR, G["th_top"], G["th_bot"] + 2 * math.pi, 12)
+    # the chainguard: sheet steel over the top run, 60 deep, 1 thick, from the sprocket's centre to 40 mm behind the chainring's front, 13 over the pitch line
     ta, tb = runs["top"]
-    ux, uz = _unit((tb[0] - ta[0], tb[1] - ta[1]))
     x_front = BB[0] + 90.0 - 40.0
-    x_back = 0.0
+
     def on_run(x):
         t = (x - ta[0]) / (tb[0] - ta[0])
         return (x, ta[1] + (tb[1] - ta[1]) * t)
-    ga, gb = on_run(x_back), on_run(x_front)
-    P.append(_seg("chainguard", ga, gb, CH_Y, GUARD_DEPTH, GUARD_T, "paint_black", off=GUARD_GAP, edge="edges rolled 3 mm", note="chainguard: sheet steel 60 deep, 1 thick, from x %.0f (40 mm behind the chainring's front) to the sprocket's centre, %d over the chain's pitch line" % (x_front, GUARD_GAP)))
-    # its fixings: a clip down to the right chain stay at the rear, a strap rod to the seat tube at the front
-    gz_rear = ga[1] + GUARD_GAP * math.cos(math.atan2(uz, ux)) - GUARD_T / 2.0
-    stay_top = Z_AXLE - 30.0 * (14.0 / 449.0) + 8.0
-    P.append(B("chainguard_clip", 8.0, 22.0, STAY_Y - 6.0, STAY_Y + 6.0, stay_top - 1.0, gz_rear + 1.0, "paint_black", note="clip: 14 x 12, from the right chain stay up to the guard's rear end"))
-    sx = BB[0] - 20.0 / math.tan(SEAT)
-    P.append(CY("chainguard_strap", (x_front - 14.0, CH_Y - 22.0, on_run(x_front)[1] + GUARD_GAP - 4.0), (BB[0] - (360.0 - BB[1]) * 0.0 - (BB[0] - SEAT_TOP[0]) * (390.0 - BB[1]) / (SEAT_TOP[1] - BB[1]) + 10.0, 9.0, 390.0), 3.0, "paint_black", note="strap rod 6 across from the guard's front to the seat tube"))
+    ga, gb = on_run(0.0), on_run(x_front)
+    P.append(_seg("chainguard", ga, gb, CH_Y, GUARD_DEPTH, GUARD_T, "paint_black", off=GUARD_GAP, edge="edges rolled 3 mm",
+                  note="chainguard: sheet steel 60 deep, 1 thick, from the sprocket's centre (x 0) to x %.0f (40 mm behind the chainring's front), %d over the chain's pitch line; Judgement (the review's numbers)" % (x_front, GUARD_GAP)))
+    stay_top = Z_AXLE - 30.0 * (15.0 / 449.0) + 8.0
+    gz = on_run(15.0)[1] + GUARD_GAP - GUARD_T
+    P.append(B("chainguard_clip", 8.0, 22.0, STAY_Y - 4.0, STAY_Y + 4.0, stay_top - 1.0, gz + 1.0, "paint_black", note="clip 14 x 8 from the right chain stay up to the guard's rear end"))
+    zf = on_run(x_front)[1] + GUARD_GAP - GUARD_T
+    seat_x = BB[0] - (zf - 20.0 - BB[1]) / math.tan(SEAT)
+    P.append(CY("chainguard_strap", (x_front - 4.0, 36.0, zf), (seat_x + 10.0, 10.0, zf - 20.0), 3.0, "paint_black", note="strap rod 6 across from the guard's front end to the seat tube"))
+    return P
+
+
+def stirrup(tag, cx, m0, m1, y_m):
+    """A rod brake's stirrup under the rim: the frame member (m0 to m1, at y = +-y_m) meets the wheel's 360 radius at a point M; the stirrup's
+    crossbar (6 across, 56 wide) lies under the rim at radius 270 on the same radius line; two arms run from its ends to the member on each
+    side; a bridge joins the two members at M, above the tyre and its mudguard (radius 360); two pads 40 x 14 x 14 sit on the crossbar against the rim's inner face (282)."""
+    P = []
+    a = (m0[0] - cx, m0[1] - Z_AXLE)
+    b = (m1[0] - cx, m1[1] - Z_AXLE)
+    dx, dz = b[0] - a[0], b[1] - a[1]
+    Ln = math.hypot(dx, dz)
+    dx, dz = dx / Ln, dz / Ln
+    B_ = 2 * (a[0] * dx + a[1] * dz)
+    C_ = a[0] ** 2 + a[1] ** 2 - 360.0 ** 2
+    disc = B_ * B_ - 4 * C_
+    t = (-B_ + math.sqrt(disc)) / 2.0
+    if t < 0 or t > Ln:
+        t = (-B_ - math.sqrt(disc)) / 2.0
+    M = (a[0] + t * dx, a[1] + t * dz)
+    ang = math.atan2(M[1], M[0])
+    ca, sa = math.cos(ang), math.sin(ang)
+    Mx, Mz = cx + M[0], Z_AXLE + M[1]
+    Cx, Cz = cx + 270.0 * ca, Z_AXLE + 270.0 * sa
+    P.append(CY("%s_stirrup_bar" % tag, (Cx, -28.0, Cz), (Cx, 28.0, Cz), 3.0, "steel", note="stirrup crossbar 6 across, 56 wide, under the rim at radius 270 (the rim's inner face is 282), at %.1f degrees on the wheel; Judgement" % math.degrees(ang)))
+    for sd, y in (("l", -1.0), ("r", 1.0)):
+        P.append(CY("%s_stirrup_arm_%s" % (tag, sd), (Cx, y * 28.0, Cz), (Mx, y * y_m, Mz), 3.0, "steel", note="stirrup arm 6 across from the crossbar's end to the frame member"))
+    P.append(B("%s_brake_bridge" % tag, Mx - 8.0, Mx + 8.0, -y_m, y_m, Mz - 8.0, Mz + 8.0, "paint_black", note="brake bridge 16 x 16 between the two members at radius 360, above the mudguard"))
+    for sd, y in (("l", -12.0), ("r", 12.0)):
+        pr = 274.0
+        Px, Pz = cx + pr * ca, Z_AXLE + pr * sa
+        P.append({"id": "%s_pad_%s" % (tag, sd), "type": "box", "c": [round(Px, 2), y, round(Pz, 2)], "s": [40.0, 14.0, 14.0], "rot": [0, -(math.degrees(ang) + 90.0), 0], "material": "grip_black",
+                  "note": "brake pad 40 x 14 x 14 on the stirrup, against the rim's inner face (rod brake); Judgement"})
+    return P, (Mx, Mz, y_m)
+
+
+def brakes():
+    """Roadster rod brakes: two 120 mm bar levers, two 8 mm rods, a stirrup under each rim (the review's list)."""
+    P = []
+    pf, mf = stirrup("fw", FX, HT2, (FX, Z_AXLE), 55.0)
+    pr, mr = stirrup("rw", 0.0, SEAT_TOP, (0.0, Z_AXLE), STAY_Y)
+    P += pf + pr
+    ang = math.radians(-35.0)
+    for sd, y in (("l", -1.0), ("r", 1.0)):
+        gx, gz = STEM_TOP[0] - 87.0, STEM_TOP[1] + 13.0
+        p0 = (gx, y * 330.0, gz - 14.0)
+        p1 = (gx + LEVER_L * math.cos(ang), y * 330.0, gz - 14.0 + LEVER_L * math.sin(ang))
+        P.append(CY("brake_lever_%s" % sd, p0, p1, 6.0, "steel", note="bar lever 120 long, 12 across, clamped under the grip's inner end; the left works the front brake, the right the rear; Judgement"))
+        tgt = mf if sd == "l" else mr
+        P.append(CY("brake_rod_%s" % ("f" if sd == "l" else "r"), p1, (tgt[0], y * tgt[2], tgt[1]), ROD_D / 2.0, "steel", note="brake rod 8 across from the lever's tip to the stirrup's joint on the %s; Judgement" % ("fork blade" if sd == "l" else "seat stay")))
+    return P
+
+
+def guards_extra():
+    """Two 5 mm stays per mudguard to the drop-outs, and the red reflector on the rear mudguard."""
+    P = []
+    rg = R + 8.0
+    for tag, cx, a0, a1, which in (("fw", FX, 20.0, 150.0, "lo"), ("rw", 0.0, 20.0, 160.0, "hi")):
+        # the free end of the end strip: the strip is a flat plate tangent at its middle, so its end lies on the tangent, off the circle
+        n_ = 5
+        j = 0 if which == "lo" else n_ - 1
+        am = math.radians(a0 + (j + 0.5) * (a1 - a0) / n_)
+        chord = 2 * rg * math.tan(math.radians((a1 - a0) / n_ / 2)) + 2.0
+        sgn = -1.0 if which == "lo" else 1.0
+        gx = cx + rg * math.cos(am) + sgn * (chord / 2.0 - 2.0) * (-math.sin(am))
+        gz = Z_AXLE + rg * math.sin(am) + sgn * (chord / 2.0 - 2.0) * math.cos(am)
+        for sd, y in (("l", -1.0), ("r", 1.0)):
+            P.append(CY("%s_guard_stay_%s" % (tag, sd), (gx, y * 28.0, gz), (cx, y * 57.0, Z_AXLE), 2.5, "paint_black", note="mudguard stay 5 across from the guard's %s end to the drop-out; Judgement" % ("front" if tag == "fw" else "rear")))
+    am = math.radians(20.0 + 4.5 * (160.0 - 20.0) / 5.0)
+    chord = 2 * rg * math.tan(math.radians((160.0 - 20.0) / 5 / 2)) + 2.0
+    rx = rg * math.cos(am) - (chord / 2.0 - 2.0) * (-math.sin(am))
+    rz = Z_AXLE + rg * math.sin(am) - (chord / 2.0 - 2.0) * math.cos(am)
+    P.append(CY("rw_reflector", (rx + 1.0, 0.0, rz), (rx - 5.0, 0.0, rz), 30.0, "reflector_red", note="rear reflector 60 across, 6 thick, on the rear mudguard's tail, facing back; Judgement"))
+    return P
+
+
+def carrier():
+    """The rear carrier S1's own row lists: a 340 x 130 platform of 10 mm tube at 780 over the rear wheel, two stays to the drop-outs."""
+    P = []
+    x0, x1 = CARRIER_X
+    z0 = CARRIER_Z
+    hw = CARRIER_W / 2.0
+    P.append(B("carrier_deck", x0, x1, -hw, hw, z0 - 4.0, z0, "paint_black", note="carrier platform 340 x 130, a 4 mm sheet on the tube frame, top at 780; Judgement"))
+    for sd, y in (("l", -hw), ("r", hw)):
+        P.append(CY("carrier_rail_%s" % sd, (x0, y, z0 - 9.0), (x1, y, z0 - 9.0), 5.0, "paint_black", note="carrier side rail, 10 mm tube, 340 long"))
+    P.append(CY("carrier_cross_rear", (x0, -hw, z0 - 9.0), (x0, hw, z0 - 9.0), 5.0, "paint_black", note="carrier rear cross rail, 10 mm tube"))
+    for sd, y in (("l", -1.0), ("r", 1.0)):
+        P.append(CY("carrier_stay_%s" % sd, (x0, y * hw, z0 - 9.0), (-42.0, y * 57.0, Z_AXLE + 10.0), 5.0, "paint_black", note="carrier stay, 10 mm tube, from the rail's rear end to the drop-out; Judgement"))
     return P
 
 
 def extras():
-    P = []
-    P += drive()
-    return P
+    return drive() + brakes() + guards_extra() + carrier()
 
 
 def build():
-    P1 = bike()
+    P1 = bike() + extras()
     # the leaning variant: the same parts rolled 12 degrees about the line of the two tyre contacts (the x axis at the ground) toward +y, with a wall
     lean = 12.0
     P2 = []
@@ -213,31 +294,42 @@ def build():
         q["xf"] = {"rot": [0, 0, lean], "t": [0, 0, 0], "pivot": [0, 0, 0]}
         P2.append(q)
     ps2 = L.PartSet(P2)
-    wall_y = float(max(ps2.part_bbox(n)[1][1] for n in ("grip_r", "bar_sweep_r", "pedal_r")))
-    P2.append(B("wall", -600.0, 2000.0, wall_y, wall_y + 200.0, -50.0, 2400.0, "wall_brick", note="the wall (a stand-in slab)"))
+    # the roll [0, 0, +12] tips the top toward -y (a point (0, 0, 1000) goes to y -208): the bicycle leans toward -y, so the wall stands on the -y side and
+    # the LEFT grip end is what touches it (the first version put the wall on the +y side, against the right grip: the bicycle leaned away from it)
+    wall_y = float(min(ps2.part_bbox(n)[0][1] for n in ("grip_l", "bar_sweep_l", "pedal_l")))
+    P2.append(B("wall", -600.0, 2000.0, wall_y - 200.0, wall_y, -50.0, 2400.0, "wall_brick", note="the wall (a stand-in slab) on the side the bicycle leans toward (-y)"))
     ps1 = L.PartSet(P1)
     lo, hi = ps1.bbox()
     T = {
         "family": FAMILY, "title": "Quay Street's bicycle against a wall",
-        "units": "millimetres; angles in degrees; z up; x forward (the front wheel at +x); y to the rider's right; the pivot is the rear wheel's ground contact",
+        "units": "millimetres; angles in degrees; z up; x forward (the front wheel at +x); y to the rider's right; the pivot is the rear wheel's ground contact; BI2 leans toward -y, the rider's left, where its wall stands",
         "status": "written 13 October 2026, not yet reviewed", "sample": "BI2",
         "materials": {
             "paint_black": {"name": "black enamel, chipped and rusting at the welds", "srgb": [24, 26, 26], "rough": 0.45, "rough_words": "semi-gloss", "metal": True, "note": "frame, forks, mudguards: chipped to red-brown rust at the dropouts, the lower head tube and the mudguard stays"},
             "steel": {"name": "chrome-plated steel gone dull", "srgb": [150, 152, 150], "rough": 0.4, "rough_words": "dull satin", "metal": True, "note": "bars, stem, cranks, hubs, spokes: pitted with orange rust spots, never mirror bright"},
-            "tyre": {"name": "black rubber tyre, cracked, grey-white dust", "srgb": [30, 30, 30], "rough": 0.8, "rough_words": "matt", "metal": False, "note": "a pale grey bloom of dust on the sidewalls; the rim (not separate) is dull steel in the 2 mm inner edge"},
+            "tyre": {"name": "black rubber tyre, cracked, grey-white dust", "srgb": [30, 30, 30], "rough": 0.8, "rough_words": "matt", "metal": False, "note": "a pale grey bloom of dust on the sidewalls; the rim is its own ring inside it (steel)"},
             "saddle_black": {"name": "saddle black leather-look, cracked", "srgb": [34, 30, 28], "rough": 0.55, "rough_words": "semi-matt", "metal": False, "note": "cracked and shiny at the nose, a worn nose edge"},
-            "grip_black": {"name": "grips black rubber, worn", "srgb": [22, 22, 22], "rough": 0.7, "rough_words": "matt", "metal": False, "note": ""},
+            "grip_black": {"name": "grips black rubber, worn", "srgb": [22, 22, 22], "rough": 0.7, "rough_words": "matt", "metal": False, "note": "also the brake pads"},
+            "chain_dark": {"name": "chain, brown with oil and rust", "srgb": [62, 46, 34], "rough": 0.6, "rough_words": "matt", "metal": True, "note": "the plates rust-brown, the rollers oily black; a line of oil spots on the right chain stay below it"},
+            "reflector_red": {"name": "rear reflector, red plastic, scratched", "srgb": [150, 18, 22], "rough": 0.3, "rough_words": "glossy, scratched", "metal": False, "note": "the only saturated colour on the bicycle: 60 mm across"},
             "wall_brick": {"name": "soot-blackened brick (the street's)", "srgb": [78, 64, 58], "rough": 0.9, "rough_words": "rough", "metal": False, "note": "a stand-in"},
         },
         "variants": {
             "BI1": {"name": "BI1: an adult's roadster standing upright (a stand-in for a bicycle held up by its rider)", "parts": P1, "overall": {"w": round(float(hi[0] - lo[0]), 1), "d": round(float(hi[1] - lo[1]), 1), "h": round(float(hi[2] - lo[2]), 1)}, "overall_tol": 2.0, "contact_tol": 3.0,
-                    "joins": [["seat_tube", "top_tube"], ["top_tube", "head_tube"], ["down_tube", "head_tube"], ["down_tube", "seat_tube"], ["rw_hub", "chain_stay_l"], ["fw_hub", "fork_l"], ["rw_tyre2", "rw_spoke1"], ["fw_tyre2", "fw_spoke1"], ["rw_hub", "rw_spoke1"], ["bar_mid", "stem"], ["grip_r", "bar_sweep_r"], ["saddle", "seat_post"], ["crank_r", "bb_spindle"], ["pedal_r", "crank_r"]],
+                    "joins": [["seat_tube", "top_tube"], ["top_tube", "head_tube"], ["down_tube", "head_tube"], ["down_tube", "seat_tube"], ["rw_hub", "chain_stay_l"], ["fw_hub", "fork_l"], ["rw_tyre2", "rw_spoke1"], ["fw_tyre2", "fw_spoke1"], ["rw_hub", "rw_spoke1"], ["bar_mid", "stem"], ["grip_r", "bar_sweep_r"], ["saddle", "seat_post"], ["crank_r", "bb_spindle"], ["pedal_r", "crank_r"],
+                              ["rw_rim1", "rw_tyre1"], ["fw_rim1", "fw_tyre1"], ["rw_spoke1", "rw_rim2"], ["fw_spoke1", "fw_rim2"], ["sprocket", "rw_hub"], ["chain_bot", "chain_c01"], ["chain_c14", "chain_top"], ["chain_top", "chain_s01"], ["chain_s12", "chain_bot"],
+                              ["chain_c07", "chainring"], ["chain_s06", "sprocket"], ["chainguard", "chainguard_clip"], ["chainguard_clip", "chain_stay_r"], ["chainguard_strap", "chainguard"], ["chainguard_strap", "seat_tube"],
+                              ["brake_lever_l", "grip_l"], ["brake_lever_r", "grip_r"], ["brake_rod_f", "brake_lever_l"], ["brake_rod_r", "brake_lever_r"], ["brake_rod_f", "fork_l"], ["brake_rod_r", "seat_stay_r"],
+                              ["fw_stirrup_arm_l", "fork_l"], ["fw_stirrup_arm_r", "fork_r"], ["fw_stirrup_bar", "fw_stirrup_arm_l"], ["fw_pad_l", "fw_stirrup_bar"], ["fw_brake_bridge", "fork_l"],
+                              ["rw_stirrup_arm_l", "seat_stay_l"], ["rw_stirrup_arm_r", "seat_stay_r"], ["rw_stirrup_bar", "rw_stirrup_arm_l"], ["rw_pad_l", "rw_stirrup_bar"], ["rw_brake_bridge", "seat_stay_l"],
+                              ["fw_guard_stay_l", "fw_guard1"], ["fw_guard_stay_r", "fw_guard1"], ["rw_guard_stay_l", "rw_guard5"], ["rw_guard_stay_r", "rw_guard5"], ["rw_reflector", "rw_guard5"],
+                              ["carrier_deck", "carrier_rail_l"], ["carrier_rail_l", "carrier_cross_rear"], ["carrier_stay_l", "carrier_cross_rear"], ["carrier_stay_r", "carrier_cross_rear"], ["carrier_deck", "seat_stay_l"]],
                     "embeds": [["seat_tube", "top_tube", 14.0], ["seat_tube", "down_tube", 14.0], ["head_tube", "top_tube", 16.0], ["head_tube", "down_tube", 16.0], ["head_tube", "fork_crown", 12.0], ["head_tube", "stem", 12.0], ["seat_tube", "seat_post", 12.0], ["seat_tube", "seat_bridge", 12.0], ["seat_tube", "chain_stay_l", 8.0], ["seat_tube", "chain_stay_r", 8.0],
                                ["down_tube", "chain_stay_l", 8.0], ["down_tube", "chain_stay_r", 8.0], ["chain_stay_l", "bb_spindle", 12.0], ["chain_stay_r", "bb_spindle", 12.0], ["down_tube", "bb_spindle", 12.0], ["seat_tube", "bb_spindle", 12.0], ["rw_hub", "chain_stay_l", 22.0], ["rw_hub", "chain_stay_r", 22.0], ["rw_hub", "seat_stay_l", 22.0], ["rw_hub", "seat_stay_r", 22.0],
                                ["fw_hub", "fork_l", 22.0], ["fw_hub", "fork_r", 22.0], ["bar_mid", "stem", 12.0], ["bar_mid", "bar_sweep_l", 12.0], ["bar_mid", "bar_sweep_r", 12.0], ["bell", "bar_mid", 12.0], ["grip_l", "bar_sweep_l", 12.0], ["grip_r", "bar_sweep_r", 12.0], ["crank_r", "chainring", 12.0], ["crank_r", "bb_spindle", 12.0], ["crank_l", "bb_spindle", 12.0],
                                ["pedal_r", "crank_r", 12.0], ["pedal_l", "crank_l", 12.0], ["seat_bridge", "seat_stay_l", 8.0], ["top_tube", "stem", 8.0], ["down_tube", "fork_crown", 9.0], ["fork_l", "fork_crown", 9.0], ["fork_r", "fork_crown", 9.0], ["seat_bridge", "seat_stay_r", 8.0], ["fork_crown", "fork_l", 12.0], ["fork_crown", "fork_r", 12.0], ["saddle", "seat_post", 12.0], ["seat_post", "top_tube", 12.0], ["stem", "head_tube", 12.0]],
                     "overlap_allow": 6.0, "faces": []},
-            "BI2": {"name": "BI2: the roadster leaning 12 degrees against a brick wall, handlebar end and pedal against it (the sample)", "parts": P2, "overlap_allow": 6.0, "contact_tol": 3.0, "joins": [["grip_r", "wall"]], "embeds": "SAME_AS_BI1", "faces": []},
+            "BI2": {"name": "BI2: the roadster leaning 12 degrees toward a brick wall, its left grip end against it (the sample)", "parts": P2, "overlap_allow": 6.0, "contact_tol": 3.0, "joins": [["grip_l", "wall"]], "embeds": "SAME_AS_BI1", "faces": []},
         },
         "drawing": {"views": ["front", "left", "plan"], "sections": [{"id": "y0", "axis": "y", "at": 0.0}, {"id": "x449", "axis": "x", "at": 449.0}]},
         "numbers": [
@@ -247,13 +339,21 @@ def build():
             {"id": "N4", "what": "handlebar grips above the ground", "value": round(STEM_TOP[1] + 13.0 + 14.0, 1), "kind": "Judgement", "source": "roadster bars stand about as high as the saddle or just above it; error 40", "tol": 40.0, "measure": {"kind": "edge", "axis": "z", "part": "grip_r", "side": "hi"}, "variant": "BI1"},
             {"id": "N5", "what": "bottom bracket height", "value": 300.0, "kind": "Judgement", "source": "a roadster's bottom bracket is about 300 mm up (30 mm below the axles); error 15", "tol": 15.0, "measure": {"kind": "centre", "axis": "z", "part": "bb_spindle"}, "variant": "BI1"},
             {"id": "N6", "what": "handlebar width over the grips", "value": 790.0, "kind": "Judgement", "source": "swept-back roadster bars are 560 to 620 between the bends and about 790 over the grips' ends; error 50", "tol": 50.0, "measure": {"kind": "span", "axis": "y", "a": "grip_l", "b": "grip_r"}, "variant": "BI1"},
+            {"id": "N8", "what": "rear sprocket diameter (18 teeth)", "value": 73.0, "kind": "Judgement", "source": "the review of 13 October: an 18 tooth sprocket 73 mm across (12.7 pitch: pitch circle 73.2); S1 shows a rusted wheel in which no sprocket reads; error 3", "tol": 3.0, "measure": {"kind": "extent", "axis": "z", "part": "sprocket"}, "variant": "BI1"},
+            {"id": "N9", "what": "chainguard depth across the bicycle", "value": 60.0, "kind": "Judgement", "source": "the review: sheet steel 60 deep, 1 thick; no chainguard reads in S1; error 5", "tol": 5.0, "measure": {"kind": "extent", "axis": "y", "part": "chainguard"}, "variant": "BI1"},
+            {"id": "N10", "what": "rim width", "value": RIM_W, "kind": "Judgement", "source": "the review: rims 25 wide, 10 deep, as their own ring (a 26 x 1 3/8 steel rim is about 22 to 25 wide); S1's rims read as thin rings; error 3", "tol": 3.0, "measure": {"kind": "extent", "axis": "y", "part": "fw_rim1"}, "variant": "BI1"},
+            {"id": "N11", "what": "carrier platform length", "value": 340.0, "kind": "Judgement", "source": "the review: a 340 x 130 platform of 10 mm tube at 780 over the rear wheel; S1's own row lists a rear carrier but at 430 px no number reads; error 20", "tol": 20.0, "measure": {"kind": "extent", "axis": "x", "part": "carrier_deck"}, "variant": "BI1"},
+            {"id": "N12", "what": "carrier platform width", "value": CARRIER_W, "kind": "Judgement", "source": "the review (130); error 15", "tol": 15.0, "measure": {"kind": "extent", "axis": "y", "part": "carrier_deck"}, "variant": "BI1"},
+            {"id": "N13", "what": "carrier platform top above the ground", "value": CARRIER_Z, "kind": "Judgement", "source": "the review (780 over the rear wheel, 120 over the mudguard's top at 668); error 30", "tol": 30.0, "measure": {"kind": "edge", "axis": "z", "part": "carrier_deck", "side": "hi"}, "variant": "BI1"},
+            {"id": "N14", "what": "rear reflector diameter", "value": 60.0, "kind": "Judgement", "source": "the review: a red reflector 60 across on the rear mudguard; error 3", "tol": 3.0, "measure": {"kind": "extent", "axis": "z", "part": "rw_reflector"}, "variant": "BI1"},
             {"id": "N7", "what": "crank length", "value": 170.0, "kind": "Judgement", "source": "170 mm, the usual crank; error 6", "tol": 6.0, "measure": {"kind": "span", "axis": "x", "a": "crank_l", "b": "crank_r"}, "variant": "BI1"},
         ],
         "photos": [], "sources": [], "previews": [], "checks": [], "owed": [],
     }
     T["variants"]["BI2"]["embeds"] = T["variants"]["BI1"]["embeds"]
-    T["numbers"][6]["value"] = 340.0
-    T["numbers"][6]["what"] = "crank span: the two arms' outer ends along x (two cranks of 170, crossing at the spindle)"
+    n7 = [n for n in T["numbers"] if n["id"] == "N7"][0]
+    n7["value"] = 340.0
+    n7["what"] = "crank span: the two arms' outer ends along x (two cranks of 170, crossing at the spindle)"
     T["lean"] = {"deg": lean, "wall_y_mm": round(wall_y, 1)}
     return T
 
