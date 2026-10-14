@@ -73,7 +73,7 @@ def net_look(scale=None):
     """A second render aid, only in the scene (never in a file): the T2 net cards (material net_voile, a plain white card in the file) get the look of a gathered net: vertical folds
     that read as nets behind glass and not as white boards. 14 Oct (doors try 3, street review point 2): the folds are RANDOM, 30 to 70 mm apart (the first aid's repeated every 48 mm and
     read as a pleated blind), each with a brightness of 0.78 plus or minus 0.11 against a white card, and the whole is scaled by NET_SCALE so the lights read 0.85 of the transom bar's
-    white (they read 0.95 to 1.0 of it, brighter than the white frame, before). The strip is a 1 x 2048 picture across the card's width (Generated coordinates), the same random
+    white (they read 0.95 to 1.0 of it, brighter than the white frame, before). The folds are the stops of a colour ramp across the card's width (Generated coordinates; a generated picture is not saved with the .blend and rendered black the first time), the same random
     sequence every run (seed 14). The PC builds the real folded translucent net from net_voile."""
     import numpy as _np
     scale = NET_SCALE if scale is None else scale
@@ -87,34 +87,29 @@ def net_look(scale=None):
         while centres[-1] < width_mm + 70.0:
             centres.append(centres[-1] + rng.uniform(30.0, 70.0))
             vals.append(0.78 + rng.uniform(-0.11, 0.11))
-        xs = _np.linspace(0.0, width_mm, 2048)
-        idx = _np.clip(_np.searchsorted(centres, xs, side="right") - 1, 0, len(centres) - 2)
-        t = (xs - _np.array(centres)[idx]) / (_np.array(centres)[idx + 1] - _np.array(centres)[idx])
-        t = 0.5 - 0.5 * _np.cos(_np.pi * t)                                         # a smooth ease between neighbouring folds' brightness
-        line = (1.0 - t) * _np.array(vals)[idx] + t * _np.array(vals)[idx + 1]
-        line = _np.clip(line * scale, 0.0, 1.0)
-        img = bpy.data.images.new("net_folds", 2048, 1, float_buffer=True)
-        img.colorspace_settings.name = "Non-Color"
-        px = _np.zeros((1, 2048, 4), dtype=_np.float32)
-        px[0, :, 0] = px[0, :, 1] = px[0, :, 2] = line
-        px[0, :, 3] = 1.0
-        img.pixels.foreach_set(px.ravel())
-        img.update()
+        keep = [i for i, c in enumerate(centres) if c <= width_mm]
         nt = m.node_tree
         b = nt.nodes["Principled BSDF"]
         base = tuple(b.inputs["Base Color"].default_value)
         tc = nt.nodes.new("ShaderNodeTexCoord")
-        tex = nt.nodes.new("ShaderNodeTexImage")
-        tex.image = img
-        tex.interpolation = "Linear"
-        tex.extension = "EXTEND"
-        nt.links.new(tc.outputs["Generated"], tex.inputs["Vector"])
+        sep = nt.nodes.new("ShaderNodeSeparateXYZ")
+        nt.links.new(tc.outputs["Generated"], sep.inputs["Vector"])
+        ramp = nt.nodes.new("ShaderNodeValToRGB")                               # a colour ramp across the card's width: one stop per fold, eased between (a generated picture would not survive the .blend)
+        ramp.color_ramp.interpolation = "EASE"
+        els = ramp.color_ramp.elements
+        for n_, i in enumerate(keep):
+            v = float(_np.clip(vals[i] * scale, 0.0, 1.0))
+            pos = min(1.0, max(0.0, centres[i] / width_mm))
+            e = els[n_] if n_ < len(els) else els.new(pos)
+            e.position = pos
+            e.color = (v, v, v, 1.0)
+        nt.links.new(sep.outputs["X"], ramp.inputs["Fac"])
         mix = nt.nodes.new("ShaderNodeMix")
         mix.data_type = "RGBA"
         mix.blend_type = "MULTIPLY"
         mix.inputs[0].default_value = 1.0
         mix.inputs[6].default_value = base
-        nt.links.new(tex.outputs["Color"], mix.inputs[7])
+        nt.links.new(ramp.outputs["Color"], mix.inputs[7])
         nt.links.new(mix.outputs[2], b.inputs["Base Color"])
 
 

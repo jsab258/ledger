@@ -264,6 +264,10 @@ class Room:
                 if o not in keep:
                     bpy.data.objects.remove(o, do_unlink=True)
             meshes = keep
+        elif audit["dropped"]:
+            # nothing would be left (a crate whose one material is blended): the model stays whole, as its glTF has it
+            audit["kept_whole"] = audit["dropped"]
+            audit["dropped"] = []
         if asset == "filmstrip_projector_8mm":
             meshes = self.projector_fix(meshes)
         for o in meshes:
