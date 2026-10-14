@@ -318,3 +318,39 @@ def jar(gm, cx, cy, z0, r, h, mi_glass_fill, mi_label, label_uv, mi_lid, n=20):
     prof = [(0.0, 0.0), (r * 0.90, 0.0), (r, 0.004), (r, h * 0.20), (r, h * 0.62), (r, h * 0.80), (r * 0.86, h * 0.86), (r * 0.80, h * 0.88)]
     gm.lathe(cx, cy, z0, prof, mi=mi_glass_fill, n=n, label=(3, 4), mi_label=mi_label, label_uv=label_uv)
     gm.lathe(cx, cy, z0 + h * 0.86, [(0.0, 0.0), (r * 0.84, 0.0), (r * 0.86, h * 0.02), (r * 0.86, h * 0.12), (r * 0.80, h * 0.14), (0.0, h * 0.14)], mi=mi_lid, n=n)
+
+
+# ---------------------------------------------------------------------------------------------------------------------------------- floor decals
+def worn_path_png(path, size=(1024, 768), seed=5, shift=0.0, tilt=0.0):
+    """A darker worn path on a floor, as a soft RGBA decal (alpha only; colour (40, 42, 44)): an ellipse-shaped core, streaks along the walking direction from a blurred noise; `shift` moves the core
+    sideways (-1 to 1 of the half width) at the far end and `tilt` is not used (a path to a counter at one side is a shifted core). One picture a shop (the launderette's, the grocer's)."""
+    rnd = np.random.default_rng(seed)
+    w, h = size
+    yy, xx = np.mgrid[0:h, 0:w].astype(np.float32)
+    u = (xx / w - 0.5) * 2.0
+    v = (yy / h - 0.5) * 2.0
+    uc = u - shift * (v * 0.5 + 0.5)
+    core = np.clip(1.0 - (uc ** 2 / 0.55 + v ** 2 / 0.95), 0.0, 1.0) ** 0.8
+    streak = rnd.normal(0, 1, (h, w)).astype(np.float32)
+    streak = np.asarray(Image.fromarray(((streak - streak.min()) / (streak.max() - streak.min()) * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(9)), np.float32) / 255.0
+    a = np.clip(core * (0.55 + 0.9 * (streak - 0.5)), 0.0, 1.0) * 0.55
+    rgba = np.zeros((h, w, 4), np.uint8)
+    rgba[..., 0], rgba[..., 1], rgba[..., 2] = 40, 42, 44
+    rgba[..., 3] = (a * 255).astype(np.uint8)
+    Image.fromarray(rgba, "RGBA").save(path)
+
+
+def floor_decal(r, name, png, x0, x1, y0, y1, z=0.0015, fixture=None):
+    """A flat decal quad on the floor (z a millimetre or two up) with the picture's alpha; registered as a fixture when `fixture` is given."""
+    m = r.image_mat(name, png, rough=0.8, alpha=True)
+    me = bpy.data.meshes.new(name)
+    me.from_pydata([(x0, y0, z), (x1, y0, z), (x1, y1, z), (x0, y1, z)], [], [(0, 1, 2, 3)])
+    uvl = me.uv_layers.new(name="UVMap")
+    for loop, (a, b) in zip(me.loops, ((0, 0), (1, 0), (1, 1), (0, 1))):
+        uvl.data[loop.index].uv = (a, b)
+    ob = bpy.data.objects.new(name, me)
+    r.sc.collection.objects.link(ob)
+    ob.data.materials.append(m)
+    if fixture:
+        r.fixtures.append({"fixture": fixture, "name": name, "ext": [x0, x1, y0, y1, 0.0, z]})
+    return ob
