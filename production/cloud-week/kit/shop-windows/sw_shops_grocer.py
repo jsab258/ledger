@@ -162,7 +162,7 @@ def room(r):
     tin_kinds = [(0.0375, 0.100), (0.0425, 0.110), (0.045, 0.125), (0.0375, 0.078), (0.040, 0.095)]
     row_t = [D - 0.052, D - 0.140]
     row_p = [D - 0.035, D - 0.095]
-    plan = {0.45: [("tins", xa, xb)], 0.85: [("baskets", xa, xa + 0.78), ("tins", xa + 0.80, xb)], 1.25: [("tins", xa, xa + 1.30), ("packets", xa + 1.32, xb)],
+    plan = {0.45: [("tins", xa, xb)], 0.85: [("baskets", xa, xa + 0.78), ("tins", xa + 0.80, xb)], 1.25: [("packets", xa, xb)],
             1.65: [("packets", xa, xa + 1.30), ("tins", xa + 1.32, xb)], 2.05: [("tins", xa, xa + 1.30), ("packets", xa + 1.32, xb)]}
     for z in tiers:
         gt, gp = GM(), GM()
@@ -186,11 +186,10 @@ def room(r):
     bsc = 0.8
     r.place("wicker_basket_01", (xa + 0.01 + 0.153, D - 0.005, zb), rot=(0, 0, 0), scale=bsc, fixture="G-back-gantry", anchor=("c", "max", "min"), tag="basket")
     r.place("wicker_basket_01", (xa + 0.01 + 0.153 + 0.32, D - 0.005, zb), rot=(0, 0, 0), scale=bsc, fixture="G-back-gantry", anchor=("c", "max", "min"), tag="basket")
-    bun_s = 0.7
-    bh = r.dims("wicker_basket_01").z * bsc
+    bun_s = 0.6
     for k, xc in enumerate((xa + 0.01 + 0.153, xa + 0.01 + 0.153 + 0.32)):
-        r.place("hamburger_buns", (xc, D - 0.005 - 0.118, zb + bh * 0.55), rot=(0, 0, 0), scale=bun_s, fixture="G-back-gantry", anchor=("c", "c", "min"), tag="rolls")
-    r.place("hamburger_buns", (xa + 0.80 - 0.02, D - 0.070, zb), rot=(0, 0, 0), scale=bun_s, fixture="G-back-gantry", anchor=("c", "c", "min"), tag="rolls")
+        r.place("hamburger_buns", (xc, D - 0.005 - 0.118, zb + 0.024), rot=(0, 0, 0), scale=bun_s, fixture="G-back-gantry", anchor=("c", "c", "min"), tag="rolls")
+    r.place("hamburger_buns", (xa + 0.01 + 0.153 + 0.32, D - 0.005 - 0.118, zb + 0.024 + 0.045), rot=(0, 0, 0), scale=bun_s, fixture="G-back-gantry", anchor=("c", "c", "min"), tag="rolls")
     # three crates of onions on the floor under the first board
     cs = 0.7
     cd = r.dims("plastic_crate_02")
@@ -203,18 +202,18 @@ def room(r):
                 r.place("yellow_onion", (cx_ + (ix - 1.5) * 0.077, cy_ + (iy - 1.0) * 0.074, zt), rot=(0, 0, rnd.uniform(0, 6.28)), scale=1.0, fixture="G-back-gantry", anchor=("c", "c", "min"), tag="onion")
         for iy in range(2):
             for ix in range(3):
-                r.place("yellow_onion", (cx_ + (ix - 1.0) * 0.077, cy_ + (iy - 0.5) * 0.074, zt + 0.060), rot=(0, 0, rnd.uniform(0, 6.28)), scale=0.96, fixture="G-back-gantry", anchor=("c", "c", "min"), tag="onion")
+                r.place("yellow_onion", (cx_ + (ix - 1.0) * 0.077, cy_ + (iy - 0.5) * 0.074, zt + 0.078), rot=(0, 0, rnd.uniform(0, 6.28)), scale=0.92, fixture="G-back-gantry", anchor=("c", "c", "min"), tag="onion")
     # ---- the counter, the till, the scale
     cx0, cx1, cy0, cy1, ch = r.counter("G-back-counter", panels=True)
     till_s = next(g["size_m"] for g in rr["goods"] if g["model"] == "CashRegister_01") / max(r.dims("CashRegister_01"))
-    r.place("CashRegister_01", (cx1 - 0.40, D - 0.02, ch), rot=(0, 0, 0), scale=till_s, fixture="G-back-counter", anchor=("c", "max", "min"))
+    r.place("CashRegister_01", (cx1 - 0.30, D - 0.02, ch), rot=(0, 0, 0), scale=till_s, fixture="G-back-counter", anchor=("c", "max", "min"))
     sp = os.path.join(tex, "scale_dial.png")
     _scale_picture(sp)
     sm = r.image_mat("scale_dial", sp, rough=0.45)
     enamel = r.mat("scale_enamel", rgb8(222, 218, 204), rough=0.3)
     brass = r.brass_m
     gm = GM()
-    sx_, sy_ = cx0 + 1.0, D - 0.30
+    sx_, sy_ = cx1 - 0.78, D - 0.30
     gm.box(sx_ - 0.14, sx_ + 0.14, sy_ - 0.17, sy_ + 0.17, ch, ch + 0.045, 0)                         # the enamel base
     gm.box(sx_ - 0.05, sx_ + 0.05, sy_ - 0.04, sy_ + 0.04, ch + 0.045, ch + 0.30, 0)                   # the column
     gm.box(sx_ - 0.115, sx_ + 0.115, sy_ - 0.05, sy_ + 0.05, ch + 0.30, ch + 0.53, 1, uv_front=(0.0, 0.0, 1.0, 1.0), uv_other=(0.02, 0.02))       # the head, the dial on its front
@@ -224,7 +223,8 @@ def room(r):
     r.placed_rec("G-back-counter", "script:counter_scale", gm.extents(), [o.name], tag="scale", n=1)
     # ---- the shelves over the counter: jars, two rows deep, and bottles
     sx0, sx1 = cx0 + 0.03, cx1 - 0.03
-    r.shelf_unit("G-back-shelves-right", [(1.40, sx0, sx1), (1.78, sx0, sx1)], depth=fx["G-back-shelves-right"]["depth_m"], bottom=ch)
+    sx_low = cx1 - 0.98                                   # the lower board ends where the scale and the till begin: they stand under the upper board only (as the tea rooms' till)
+    r.shelf_unit("G-back-shelves-right", [(1.40, sx0, sx_low), (1.78, sx0, sx1)], depth=fx["G-back-shelves-right"]["depth_m"], bottom=ch)
     jl = os.path.join(tex, "jar_labels.png")
     juv = GB.jar_labels(jl, [(p_, m_, c1, c2) for p_, m_, c1, c2 in JAR_DESIGNS], tile=(256, 256), cols=3)
     jar_lab = r.image_mat("jar_labels", jl, rough=0.5)
@@ -235,13 +235,14 @@ def room(r):
     n_jar = n_bot = 0
     for z in (1.40, 1.78):
         zt = z
+        sx_end = sx_low if z < 1.5 else sx1
         gjs = [GM() for _ in JAR_DESIGNS]
         gbs = [GM() for _ in BOTTLE_DESIGNS]
         cj = [0] * len(JAR_DESIGNS)
         cb = [0] * len(BOTTLE_DESIGNS)
         x = sx0 + 0.03
         fill = 0
-        while x < sx1 - 0.08:
+        while x < sx_end - 0.08:
             if fill % 3 == 2:
                 bi = rnd.randrange(len(BOTTLE_DESIGNS))
                 rb, hb = 0.030, rnd.choice((0.19, 0.21))
@@ -250,7 +251,7 @@ def room(r):
                 x += 2 * rb + 0.012
             else:
                 for row_y in (D - 0.05, D - 0.128):
-                    if x + 0.075 > sx1 - 0.03:
+                    if x + 0.075 > sx_end - 0.03:
                         break
                     ji = rnd.randrange(len(JAR_DESIGNS))
                     contents_uv, label_uv = juv[ji]
@@ -289,8 +290,10 @@ def room(r):
         xa_ = xw if side == "left" else xw - dep
         xb_ = xw + dep if side == "left" else xw
         r.box("%s_back" % fid, xw if side == "left" else xw - 0.006, xw + 0.006 if side == "left" else xw, y0, y1, z0, z1, back, fixture=fid)
+        xa_ = xw + 0.006 if side == "left" else xw - dep
+        xb_ = xw + dep if side == "left" else xw - 0.006
         for z in tz:
-            r.box("%s_board_%.2f" % (fid, z), xa_ if side == "left" else xa_, xb_ if side == "left" else xb_, y0, y1, z - 0.022, z, wood, fixture=fid)
+            r.box("%s_board_%.2f" % (fid, z), xa_, xb_, y0 + 0.03, y1 - 0.03, z - 0.022, z, wood, fixture=fid)
         for yy in (y0 + 0.015, y1 - 0.015):
             r.box("%s_post_%.2f" % (fid, yy), xa_, xb_, yy - 0.015, yy + 0.015, z0, tz[-1], wood, fixture=fid)
         gm = GM()
