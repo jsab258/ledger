@@ -581,6 +581,7 @@ def display_rows(R, work, assets, rows):
     # the silhouette visibility: object-index pass from STREET_SQUARE and CLOSE_35
     per_cam = visibility(R, work, assets, di, group_of)
     areas = per_cam.pop("areas")
+    parts = per_cam.pop("parts", {})
     _LAST["vis"] = (per_cam, areas, di)          # for the trade's-goods row (check_shop.py TRD-01)
     vis = np.maximum(per_cam["STREET_SQUARE"], per_cam["CLOSE_35"])
     sq = per_cam["STREET_SQUARE"]
@@ -593,10 +594,20 @@ def display_rows(R, work, assets, rows):
     tiny = [i for i in front_row if areas["STREET_SQUARE"][i] <= 20]
     low_front = [(di["groups"][i]["model"] + ((" [" + di["groups"][i]["objs"][0] + "]") if di["groups"][i]["model"].startswith("script:") and di["groups"][i]["objs"] else ""), round(float(sq[i]), 2)) for i in front_row if i not in tiny and sq[i] < 0.5] + [(di["groups"][i]["model"] + " (from the close cameras)", round(float(max(per_cam["CLOSE_35"][i], per_cam["CLOSE_35_B"][i])), 2)) for i in tiny if max(per_cam["CLOSE_35"][i], per_cam["CLOSE_35_B"][i]) < 0.5]
     low = [(di["groups"][i]["model"], round(float(vis[i]), 2)) for i in other if vis[i] < 0.5]
+    # the parts (the brooms' bristle heads): from STREET_SQUARE itself at least half of the part's own silhouette (non-Rita shops)
+    part_txt, part_bad = [], []
+    for gi_, (sh_, ar_) in sorted((parts.get("STREET_SQUARE") or {}).items()):
+        mdl = di["groups"][gi_]["model"]
+        part_txt.append("%s part '%s' %.2f of %d px" % (mdl, PARTS[mdl][0], sh_, ar_))
+        if sh_ < PARTS[mdl][1] or ar_ < 20:
+            part_bad.append("%s %.2f" % (mdl, sh_))
+    low = low + [("part: " + b_, 0.0) for b_ in part_bad]
     rows.add("DSP-03", "no display mesh intersects another; every piece shows", not bad and not low and not low_front,
              "%d display meshes, %d pairs with overlapping boxes tested (each mesh inset 1 mm, so a 2 mm contact is tolerated): %d pairs intersect%s; the share of each piece's silhouette seen (an object-index pass, the frame's bars and the other pieces in front): the %d pieces of the front row (the bed's pieces and the scripted trays, pads and chains) from STREET_SQUARE itself: lowest %.2f among the %d large enough to be seen there (%d are under 20 px: %s, judged from the better of CLOSE_35 and CLOSE_35_B, lowest %.2f), %d under 0.5%s; the other %d pieces from CLOSE_35 or STREET_SQUARE: lowest %.2f, %d under 0.5%s"
              % (len(names), pairs, len(bad), (" (" + "; ".join("%s x %s" % (a, b) for a, b, _ in bad_l[:8]) + ")") if bad else "", len(front_row), min([float(sq[i]) for i in front_row if i not in tiny] or [0]), len(front_row) - len(tiny), len(tiny), ", ".join(sorted({di["groups"][i]["model"] for i in tiny})) or "none", min([float(max(per_cam["CLOSE_35"][i], per_cam["CLOSE_35_B"][i])) for i in tiny] or [0]), len(low_front),
                 (": " + ", ".join("%s %.2f" % kv for kv in low_front[:8])) if low_front else "", len(other), min([float(vis[i]) for i in other] or [0]), len(low), (": " + ", ".join("%s %.2f" % kv for kv in low[:8])) if low else ""))
+    if part_txt and hasattr(rows, "rows") and rows.rows and rows.rows[-1]["id"] == "DSP-03":
+        rows.rows[-1]["detail"] += "; try 2 (the ironmonger's street review, narrow 3: the brooms' heads): the parts measured on their own from STREET_SQUARE, at least 0.5 of the part's own silhouette seen: " + "; ".join(part_txt)
     # DSP-04
     L = di["length_m"]
     out, ok = [], True
@@ -627,6 +638,11 @@ def display_rows(R, work, assets, rows):
     rows.add("DSP-04", "no free run along a tier over 0.20 m", ok, ("the longest stretch of the bed's front strip (u 0.14 to 3.20), the step and each tier with nothing on it: " if ctx().id == "ritas" else "the longest stretch of the bed (the window's length less 0.10 at each end) and of each tier with nothing on it (the crates and trays count as what stands there): ") + "; ".join(out) + " (limit 0.20)")
 
 
+# 14 Oct, try 2 (the ironmonger's street review, narrow 3; the newsagent's close review 1): a part of a piece measured on its own as well as the piece: {model: (a word in the part's material name, the least share of the part's own
+# silhouette that STREET_SQUARE must show)}. The brooms' bristle heads stand up against the wall: they must be at least half seen, as the review asked, and not carried by the white handles.
+PARTS = {"plastic_broom": ("bristle", 0.5)}
+
+
 def visibility(R, work, assets, di, group_of):
     """Per camera (STREET_SQUARE, CLOSE_35, CLOSE_35_B), per group, the share of its silhouette that an object-index render shows (and, under "areas", the silhouette in pixels)."""
     import bpy
@@ -634,6 +650,7 @@ def visibility(R, work, assets, di, group_of):
     res = (1920, 1080)                    # thin pieces (the spectacles' rims) are under a pixel wide at 1280
     per_cam = {}
     areas = {}
+    parts_out = {}
     for cam in ("STREET_SQUARE", "CLOSE_35", "CLOSE_35_B"):
         best = np.zeros(len(di["groups"]))
         per_cam[cam] = best
@@ -664,11 +681,37 @@ def visibility(R, work, assets, di, group_of):
         mats = {gi: flat(c) for gi, c in cols.items()}
         black = flat((0, 0, 0))
         sil_tris = {gi: [] for gi in range(len(di["groups"]))}
+        NG = len(di["groups"])
+        part_cols, part_mats, part_objs = {}, {}, {}
         for o in disp:
             if o.type != "MESH":
                 continue
             gi = group_of.get(o.name)
             o.data = o.data.copy()          # two copies of one model share a mesh in the glb: each needs its own to take its own colour
+            key_ = PARTS.get(di["groups"][gi]["model"]) if gi is not None else None
+            slots_ = [i for i, m_ in enumerate(o.data.materials) if m_ and key_ and key_[0] in m_.name.lower()] if key_ else []
+            if slots_ and ctx().id != "ritas":
+                # the part's faces take a colour of their own, and a copy of the object with only those faces stands by for the part's whole silhouette
+                import bmesh
+                gi2 = NG + 1 + gi
+                part_cols[gi] = ((gi2 + 1) % 17 / 17.0 + 0.03, ((gi2 + 1) // 17) % 17 / 17.0 + 0.03, ((gi2 + 1) // 289) % 17 / 17.0 + 0.03)
+                part_mats[gi] = flat(part_cols[gi])
+                for p_ in o.data.polygons:
+                    p_.material_index = 1 if p_.material_index in slots_ else 0
+                o.data.materials.clear()
+                o.data.materials.append(mats[gi])
+                o.data.materials.append(part_mats[gi])
+                o2 = o.copy()
+                o2.data = o.data.copy()
+                sc.collection.objects.link(o2)
+                bm = bmesh.new()
+                bm.from_mesh(o2.data)
+                bmesh.ops.delete(bm, geom=[f_ for f_ in bm.faces if f_.material_index != 1], context="FACES")
+                bm.to_mesh(o2.data)
+                bm.free()
+                o2.hide_render = True
+                part_objs[gi] = o2
+                continue
             o.data.materials.clear()
             o.data.materials.append(mats[gi] if gi is not None else black)
         for o in list(front):
@@ -745,10 +788,27 @@ def visibility(R, work, assets, di, group_of):
             areas[cam][gi] = area
             if area > 20:
                 best[gi] = max(best[gi], min(1.0, vis / float(area)))
+        # the parts: the share of each part's own silhouette (the part alone, drawn white) that the index render shows in the part's own colour
+        for gi, o2 in part_objs.items():
+            for o in bpy.data.objects:
+                if o.type == "MESH":
+                    o.hide_render = o is not o2
+            o2.data.materials.clear()
+            o2.data.materials.append(white)
+            sp = os.path.join(work, "gate", "check_silhouette_tmp.png")
+            sc.render.filepath = sp
+            bpy.ops.render.render(write_still=True)
+            area = int((np.asarray(Image.open(sp).convert("L")) > 128).sum())
+            c = np.array(part_cols[gi])
+            vis = int((np.abs(img - c[None, None, :]).max(axis=2) < 0.02).sum())
+            parts_out.setdefault(cam, {})[gi] = (min(1.0, vis / float(area)) if area > 0 else 0.0, area)
         for o in bpy.data.objects:
             if o.type == "MESH":
                 o.hide_render = False
+        for o2 in part_objs.values():
+            o2.hide_render = True
     per_cam["areas"] = areas
+    per_cam["parts"] = parts_out
     return per_cam
 
 
@@ -1177,6 +1237,21 @@ def frn10_rows(R, work, assets, rows, members):
         mk = _nd.binary_erosion(mk, iterations=2)               # an edge pixel is half something else
         lum = luma(im)
         dk = mk & (lum < 8)
+        if ctx().id != "ritas" and not vis:
+            # 14 Oct, try 2 (the ironmonger's street review, narrow 9): a part painted darker than luma 40 (the black side door, F1's paint 30, 30, 32) is black in shade by its own paint where the geometry test (a) finds
+            # no visible overlap: the pixels inside the projected boxes of such parts are not counted (a corner of the side door in the shade of the transom hood read 6.0)
+            cpx = cam_params(R, cam, (im.shape[1], im.shape[0]))
+            for nm_, mb_ in members.items():
+                bs_ = mb_.get("base_srgb") if isinstance(mb_, dict) else None
+                if not bs_ or luma(np.array(bs_, np.float32)) >= 40.0 or "u" not in mb_:
+                    continue
+                cs_ = np.array([[(u_ - 3000.0) / 1000.0, -d_ / 1000.0, z_ / 1000.0] for u_ in mb_["u"] for d_ in mb_["d"] for z_ in mb_["z"]])
+                px_, py_, zc_ = project_np(cpx, cs_)
+                if np.any(zc_ <= 0.1):
+                    continue
+                x0_, x1_ = int(max(0, px_.min() - 2)), int(min(im.shape[1], px_.max() + 3))
+                y0_, y1_ = int(max(0, py_.min() - 2)), int(min(im.shape[0], py_.max() + 3))
+                dk[y0_:y1_, x0_:x1_] = False
         n_raw = int(dk.sum())
         # a black AREA is the fault (the strips beside the side door were 53 mm wide and 2.8 m high); a line of shade under the cornice or the sill (about 25 mm at STREET_SQUARE) is light and
         # shadow, not a missing face. Only dark patches that survive an opening by a square of 35 mm on the front count: k px at this camera (its focal length in px over its distance to the wall)
@@ -1215,6 +1290,7 @@ def dsp05_float_rows(R, work, assets, rows):
         data[ob.name] = {"V": V, "T": T_, "lo": V.min(axis=0), "hi": V.max(axis=0), "bvh": BVHTree.FromPolygons(V.tolist(), T_.tolist(), epsilon=0.0)}
     kinds = ("piece", "scripted", "ticket")
     floating, leaning, n_tested, n_sheet = [], [], 0, 0
+    unsupported, n_lean = [], 0
     rng = np.random.default_rng(3)
     # per group (a piece is all its meshes: a lantern's glass is part of the lantern)
     by_group = {}
@@ -1271,7 +1347,13 @@ def dsp05_float_rows(R, work, assets, rows):
             return False
         hgt = zhi - zlo
         # the lowest and highest 3 mm first (a sample of the whole flank could miss a small foot), then the flanks
-        if not (touches(surface_samples(V, T_, zlo, False, 0.003)) or touches(surface_samples(V, T_, zhi, True, 0.003)) or touches(surface_samples(V, T_, zlo, False, max(0.003, 0.5 * hgt))) or touches(surface_samples(V, T_, zhi, True, max(0.003, 0.25 * hgt)))):
+        if ctx().id == "ritas":
+            rested = touches(surface_samples(V, T_, zlo, False, 0.003)) or touches(surface_samples(V, T_, zhi, True, 0.003)) or touches(surface_samples(V, T_, zlo, False, max(0.003, 0.5 * hgt))) or touches(surface_samples(V, T_, zhi, True, max(0.003, 0.25 * hgt)))
+        else:
+            # 14 Oct, try 2 (the brief's step 0 e): no display piece's lowest point may be more than 2 mm above the support under it: the piece's lowest 3 mm lie within 2 mm of another part (it stands on it), or its
+            # highest quarter does (it hangs from it); the flank allowance of batch B (a sphere nestled on spheres) is gone
+            rested = touches(surface_samples(V, T_, zlo, False, 0.003)) or touches(surface_samples(V, T_, zhi, True, 0.003)) or touches(surface_samples(V, T_, zhi, True, max(0.003, 0.25 * hgt)))
+        if not rested:
             floating.append("%s(%s) lowest %.3f" % (di["groups"][gi]["model"], nms[0], zlo))
         # a thin sheet's lean (a single-mesh group)
         if len(nms) == 1:
@@ -1287,9 +1369,23 @@ def dsp05_float_rows(R, work, assets, rows):
                     tilt = math.degrees(math.asin(float(np.clip(n_[2], -1, 1))))          # + : the face looks up: the top leans back
                     if tilt < -3.0:
                         leaning.append("%s(%s) %.1f deg" % (di["groups"][gi]["model"], nms[0], tilt))
-    rows.add("DSP-05", "nothing floats; sheets lean back", not floating and not leaning,
-             "%d display pieces, scripted goods and price cards: each rests on or hangs from something (a point on its lowest half, or its highest quarter, within 2 mm of another part of the display): %d float%s; %d thin sheets measured by their principal axes: %d lean toward the glass by more than 3 degrees%s (the kit's GM.sheet had the sign the wrong way until 14 Oct: the newsagent's magazines and papers)" % (
-                 n_tested, len(floating), (" (" + "; ".join(floating[:10]) + ")") if floating else "", n_sheet, len(leaning), (" (" + "; ".join(leaning[:10]) + ")") if leaning else ""))
+                    if ctx().id != "ritas" and tilt > 3.0:
+                        # 14 Oct, try 2 (the brief's step 0 e): a sheet that leans back more than 3 degrees must have its top within 5 mm of a support behind it (the board, the stand, the wall): from the sheet's highest 3 mm a
+                        # ray toward +y (the back) must meet another part of the display within 5 mm
+                        n_lean += 1
+                        top = surface_samples(V, T_, zhi, True, 0.003)
+                        best_ = 1e9
+                        for p_ in top[:200]:
+                            for d2 in near_objs:
+                                hit_ = d2["bvh"].ray_cast(tuple(p_), (0.0, 1.0, 0.0), 0.05)
+                                if hit_[0] is not None:
+                                    best_ = min(best_, hit_[3])
+                        if best_ > 0.005:
+                            unsupported.append("%s(%s) top %.0f mm from the support behind (leans %.1f deg)" % (di["groups"][gi]["model"], nms[0], best_ * 1000.0 if best_ < 1e8 else -1, tilt))
+    rows.add("DSP-05", "nothing floats; sheets lean back and rest on what is behind them", not floating and not leaning and not unsupported,
+             "%d display pieces, scripted goods and price cards: each rests on or hangs from something (a point on its lowest half, or its highest quarter, within 2 mm of another part of the display): %d float%s; %d thin sheets measured by their principal axes: %d lean toward the glass by more than 3 degrees%s (the kit's GM.sheet had the sign the wrong way until 14 Oct: the newsagent's magazines and papers)%s" % (
+                 n_tested, len(floating), (" (" + "; ".join(floating[:10]) + ")") if floating else "", n_sheet, len(leaning), (" (" + "; ".join(leaning[:10]) + ")") if leaning else "",
+                 ("; try 2 (the brief's step 0 e): every piece's lowest 3 mm rest on a part (or its top quarter hangs from one), and the %d sheets that lean back by more than 3 degrees have their top within 5 mm of a support behind: %d do not%s" % (n_lean, len(unsupported), (" (" + "; ".join(unsupported[:8]) + ")") if unsupported else "")) if ctx().id != "ritas" else ""))
 
 
 FURNITURE_H = {"round_wooden_table_02": (0.72, 0.76, "a table top at 0.72 to 0.76 m"), "painted_wooden_chair_01": (0.80, 0.96, "a cafe chair 0.80 to 0.96 m high overall (the seat at 0.44 to 0.47)")}

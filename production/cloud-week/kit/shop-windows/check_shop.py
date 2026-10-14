@@ -129,8 +129,18 @@ def picture_rows(ctx, rows):
     # degrees down; the row: the picture's top front corner columns (x 0 to 60 and 4036 to 4096, rows 0 to 200) read at most 1.5 times the picture's mean
     ln = lum["night_dark"]
     cl, cr = float(ln[0:200, 0:60].mean()), float(ln[0:200, PW - 60:PW].mean())
-    rows.add("PIC-03", "night_dark is dark, not black, and has no hot corners", 12.4 <= nd <= 40.0 and max(cl, cr) <= 1.5 * nd,
-             "night_dark mean %.1f (12.4 to 40; the approved 17.7); the top front corner columns (x 0 to 60 and 4036 to 4096, rows 0 to 200) read %.1f and %.1f against 1.5 x the mean = %.1f (the wash light was the card's full width at 0.9 of the height: the pawnbroker's corners read 66, the tea room's 61, the ironmonger's 98)" % (nd, cl, cr, 1.5 * nd))
+    street_ok, street_txt = True, ""
+    if ctx.id != "ritas" and ctx.has_room:
+        # 14 Oct, try 2 (the brief's step 0 b; the ironmonger's street review, narrow 2): and in the STREET_SQUARE night_dark gate frame no toplight strip is brighter than the brick above the fascia
+        import check_try3 as X3
+        try:
+            mem_ = json.load(open(os.path.join(ctx.work, "front_members.json")))["members"]
+            street_ok, street_txt = X3.pic03_toplight_text(ctx, R, mem_)
+        except Exception as ex_:                                 # noqa: BLE001
+            street_ok, street_txt = False, "the street clause could not be measured: %s" % ex_
+        street_txt = "; " + street_txt
+    rows.add("PIC-03", "night_dark is dark, not black, and has no hot corners", 12.4 <= nd <= 40.0 and max(cl, cr) <= 1.5 * nd and street_ok,
+             "night_dark mean %.1f (12.4 to 40; the approved 17.7); the top front corner columns (x 0 to 60 and 4036 to 4096, rows 0 to 200) read %.1f and %.1f against 1.5 x the mean = %.1f (the wash light was the card's full width at 0.9 of the height: the pawnbroker's corners read 66, the tea room's 61, the ironmonger's 98)%s" % (nd, cl, cr, 1.5 * nd, street_txt))
     det, ok = [], True
     for s, a in ims.items():
         rp = os.path.join(rooms, "raw", "%s_%s_raw.png" % (ctx.picture_name, s))
@@ -910,6 +920,15 @@ def run(ctx, assets, previews, out_json):
         di, extra = None, {"families": {}}
     glb_normal_rows(ctx, rows, assets)
     m = front_rows(ctx, rows, assets)
+    if ctx.id != "ritas":
+        import check_try3 as X3
+        X3.frn13_rows(ctx, ctx.R, assets, rows, m)
+        X3.sign01_rows(ctx, rows)
+        if ctx.has_room:
+            X3.dsp09_rows(ctx, assets, rows, di)
+            X3.dsp10_rows(ctx, assets, rows, di)
+            X3.inv07_rows(ctx, assets, rows, di)
+            X3.flt01_rows(ctx, rows)
     if not ctx.has_room:
         man = json.load(open(os.path.join(ctx.work, "fascias", "manifest.json")))
         texts = [s_ for g in man["glass_lettering"] if g["shop"] == ctx.id for s_ in [g.get("string", "")] if s_]
