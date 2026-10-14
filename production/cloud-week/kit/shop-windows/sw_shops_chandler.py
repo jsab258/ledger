@@ -50,12 +50,12 @@ def room(r):
     """The chandler's room (target `shops.chandler.room`: fixtures C-*). What the target leaves open, and what this does:
 
     shelves C-back-shelves: tall shelving 0.30 deep, five tiers (board tops 0.4, 0.8, 1.2, 1.6, 2.0), from x -1.95 to 0.2 (the target's -2.6 to 0.2 is shared with the marker buoy at the left end, which stands
-    against the wall at x -2.6 to -2.0: the shelves start where it ends). Floor level: four pairs of rubber_boots at 0.6 of their size; 0.4: oil_tin x5, small_oil_can_01 x4, cleaner_tin_01 x4; 0.8 and 1.2: paint tins
+    against the wall at x -2.6 to -2.0: the shelves start where it ends). Floor level: two pairs of rubber_boots at their own size (two pairs); 0.4: oil_tin x5, small_oil_can_01 x4, cleaner_tin_01 x4; 0.8 and 1.2: paint tins
     (lathe, a rim and a wire bail, atlas labels: marine varnish, antifouling, deck paint, white spirit; makers PENHALE, TREGENNA, WESTHAVEN), two deep; 1.2 also four Lantern_01 (glass kept) and three signal_flashlight;
     1.6: six coils of rope standing on edge (swept tube, ambientCG Rope001 picture in five colours); 2.0: ten twine reels and more tins.
     counter C-back-counter (x 0.4 to 2.6, 0.6 deep, panelled, a brass edge, a chart drawer): CashRegister_01 at 0.42 (mark blanked), three seadogs_compass, the hurricane lamp (Lantern_01, lit at night: a warm
     point light 2200 K and a small flame).
-    hooks C-back-hooks: a timber board over the counter (x 0.4 to 2.5, z 1.35 to 2.2, 0.18) carrying life_jacket x3 at 0.6, one lifebuoy at 0.65 and one sou'wester: the target's 4, 2 and 3 do not fit 2.1 m without
+    hooks C-back-hooks: a timber board over the counter (x 0.4 to 2.5, z 1.35 to 2.2, 0.18) carrying life_jacket x2 at their own size and one lifebuoy at 0.9: the target's 4, 2 and 3 do not fit 2.1 m without
     one hanging through another (short, named in NOTES.md).
     left wall C-left-charts: six invented chart sheets and a tide-table card (paper, script) and a board with a flat coil of rope. right wall C-right-board: a pegboard 1.6 x 1.1 with 24 pieces of hardware (shackles,
     single blocks, horn cleats, chain), flat.
@@ -92,11 +92,11 @@ def room(r):
     tiers = fx["C-back-shelves"]["tiers"]
     r.shelf_unit("C-back-shelves", [(z, sx0 + 0.015, sx1 - 0.015) for z in tiers], depth=fx["C-back-shelves"]["depth_m"])
     xa, xb = sx0 + 0.04, sx1 - 0.04
-    # floor level: four pairs of boots at 0.6 of their size
-    bsc = 0.6
+    # floor level: two pairs of boots at their own size (the target's four do not fit 2.2 m at real size; a boot at 0.6 is a child's)
+    bsc = 1.0
     bw = r.dims("rubber_boots").x * bsc
     xb0 = xa
-    for k in range(4):
+    for k in range(2):
         r.place("rubber_boots", (xb0 + bw / 2 + k * (bw + 0.004), D - 0.02, 0.0), rot=(0, 0, 0), scale=bsc, fixture="C-back-shelves", anchor=("c", "max", "min"), tag="boots")
     # 0.4: oil tins, oil cans, cleaner tins in a row
     x = xa
@@ -215,39 +215,21 @@ def room(r):
         flame_m.node_tree.nodes["Principled BSDF"].inputs["Emission Strength"].default_value = 30.0 if on else 0.0
         lo.data.energy = P.get("lamp", 6.0) if on else 0.0
     r.set_state = set_state
-    # ---- the hooks board over the counter: life jackets, a lifebuoy, sou'westers on pegs
+    # ---- the hooks board over the counter: two life jackets and a lifebuoy at their own size (the target's 4, 2 and 3 sou'westers do not fit 2.2 m without one hanging through another)
     hx0, hx1 = fx["C-back-hooks"]["x"]
+    hx1 = 2.60
     wood = r.mat("hooks_board", rgb8(112, 76, 46), rough=0.6)
     r.box("hooks_board", hx0, hx1, D - 0.030, D - 0.005, 2.04, 2.20, wood, fixture="C-back-hooks")
-    pegs = []
     gm = GM()
-    jx = [hx0 + 0.21, hx0 + 0.66, hx0 + 1.11]
-    jsc = 0.6
-    for k, xc in enumerate(jx):
+    for k, xc in enumerate((0.76, 1.50)):
         gm.rod((xc, D - 0.030, 2.12), (xc, D - 0.075, 2.12), 0.007, 0, 8)
-        pegs.append(xc)
-        jh = r.dims("life_jacket").z * jsc
-        r.place("life_jacket", (xc, D - 0.075 - 0.0, 2.12 - 0.02), rot=(0, 0, 0), scale=jsc, fixture="C-back-hooks", anchor=("c", "max", "max"), tag="jacket")
-    lsc = 0.65
-    lbx = hx0 + 1.60
+        r.place("life_jacket", (xc, D - 0.075, 2.12 - 0.02), rot=(0, 0, 0), scale=1.0, fixture="C-back-hooks", anchor=("c", "max", "max"), tag="jacket")
+    lsc = 0.9
+    lbx = 2.24
     gm.rod((lbx, D - 0.030, 2.12), (lbx, D - 0.065, 2.12), 0.007, 0, 8)
     r.place("lifebuoy", (lbx, D - 0.065, 2.12), rot=(0, 0, 0), scale=lsc, fixture="C-back-hooks", anchor=("c", "max", "max"), tag="lifebuoy")
-    # sou'westers hang from pegs at the right end
-    sg = GM()
-    sw_m = [r.mat("oilskin_yellow", rgb8(230, 186, 28), rough=0.32), r.mat("oilskin_seam", rgb8(150, 110, 20), rough=0.5)]
-    for k, xc in enumerate((hx1 - 0.07,)):
-        gm.rod((xc, D - 0.030, 2.12), (xc, D - 0.070, 2.12), 0.006, 0, 8)
     o = gm.to_object("hooks_pegs", [brass], r.sc)
     r.fixture_rec("C-back-hooks", "hooks_pegs", gm.extents())
-    cord_m = r.mat("hat_cord", rgb8(60, 52, 44), rough=0.8)
-    cg_ = GM()
-    for k, xc in enumerate((hx1 - 0.07,)):
-        GB.souwester(sg, xc, D - 0.30, 1.78, s=1.0, mi=0, mi_seam=1, face=-1.0)
-        cg_.rod((xc, D - 0.0735, 2.114), (xc, D - 0.300, 1.78 + 0.145), 0.0018, 0, 6)         # the strap from the peg to the crown
-    o = sg.to_object("sou_westers", sw_m, r.sc, smooth=True)
-    r.placed_rec("C-back-hooks", "script:oilskin_sou_wester", sg.extents(), [o.name], tag="sou_westers", n=1)
-    o = cg_.to_object("hat_cords", [cord_m], r.sc)
-    r.fixture_rec("C-back-hooks", "hat_cords", cg_.extents())
     # ---- the left wall: six chart sheets, a tide table card, a board with a flat coil of rope
     xl, xr = -W / 2, W / 2
     titles = ["HARBOUR\nAPPROACHES No.1", "THE WESTERN\nSOUNDS", "NORTH CHANNEL\nTO THE BAR", "INSHORE WATERS\nSOUTH COAST", "THE ESTUARY\nAND ROADS", "OFFSHORE BANKS\nSHEET 4", "TIDE TABLE\nFOR THE MONTH"]
@@ -296,7 +278,7 @@ def room(r):
     o = hw.to_object("rigging_hardware", [block_wood, steel], r.sc)
     r.placed_rec("C-right-board", "script:shackles_blocks", hw.extents(), [o.name], tag="hardware", n=n_hw)
     r.rows["counts"] = {"paint_tins": n_tins, "hardware": n_hw}
-    r.notes.append("%d paint tins (target 40), 24 pieces of rigging on the pegboard, life jackets 3 of 4 (0.6), lifebuoy 1 of 2 (0.65), sou'westers 1 of 3 on the hooks board (no room for more without one through another); the hurricane lamp is lit in night_lit only" % n_tins)
+    r.notes.append("%d paint tins (target 40), 24 pieces of rigging on the pegboard, life jackets 2 of 4, lifebuoy 1 of 2 (0.9), sou'westers 0 of 3 on the hooks board, boots 2 of 4 pairs (no room for more without one through another); the hurricane lamp is lit in night_lit only" % n_tins)
     r.texts = list(GEN.TEXTS)
     return r
 

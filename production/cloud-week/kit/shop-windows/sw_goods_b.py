@@ -713,6 +713,7 @@ def settle_down(d, names, max_drop=0.06, step=0.0005, touch=0.0012):
         return 0.0
     P = np.array(pts)
     lo, hi = P.min(axis=0), P.max(axis=0)
+    P = P[P[:, 2] <= lo[2] + 0.5 * (hi[2] - lo[2])]                    # the lower half: what DSP-05 looks at
     if len(P) > 1500:
         P = P[np.random.default_rng(1).choice(len(P), 1500, replace=False)]
     trees = []

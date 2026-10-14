@@ -218,10 +218,10 @@ def grocer(ctx, rows, assets, di):
     lt = _sum(placed, "script:tins", "G-left-tins")
     rp = _sum(placed, "script:packets", "G-right-tins")
     rows.add("ROOM-03", "the side units", lt >= 40 and rp >= 30, "the left unit (0.10 deep, four tiers): %d tins (target 40); the right unit: %d dry-goods packets standing on edge (target 30; the target's tea and sugar are out: sugar, flour, oats, rice, pasta, custard, dried fruit)" % (lt, rp))
-    ncr = sum(1 for p in placed if p.get("model") == "plastic_crate_02")
+    ncr = sum(1 for p in placed if p.get("model") == "plastic_crate_03")
     non = sum(1 for p in placed if p.get("model") == "yellow_onion")
-    rows.add("ROOM-04", "the floor crates", ncr == 3 and non >= 36, "%d plastic_crate_02 on the floor under the gantry's first board, loaded with %d yellow_onion (the target loads them with potatoes: Sketchfab scans, Jafar's login)" % (ncr, non))
-    have = counts_row(ctx, rows, di, {}, "grocer")
+    rows.add("ROOM-04", "the floor crates", ncr == 3 and non >= 36, "%d plastic_crate_03 (the target's crate_02 is 0.41 deep: over the gantry's 0.30 rule at its own size) on the floor under the gantry's first board, loaded with %d yellow_onion (the target loads them with potatoes: Sketchfab scans, Jafar's login)" % (ncr, non))
+    have = counts_row(ctx, rows, di, {"plastic_crate_02": 3}, "grocer")
     _pending(rows, "SCN-01", "scanned produce", "cabbage x4, potato x20, satsuma x12, pear x6 (the target's script:cabbage_potato_satsuma): Sketchfab ffishAsia CC0 scans, the download needs Jafar's login (his Needs-you item 3): pending, not failed; nothing is hand-modelled in their place (the window carries apples, lemons, onions and bananas from Poly Haven and 30 scripted tomatoes the target lists)")
     return {"supports": ["script:crate", "script:backing_board"], "texts": _texts(ctx, di),
             "families": {"fruit and vegetables": ["food_apple_01", "lemon", "yellow_onion", "bananas", "script:tomatoes"], "tins and jars": ["script:tin_pyramids", "script:jars"], "crates and baskets": ["plastic_crate_02", "plastic_crate_03", "wicker_basket_02"]},
@@ -242,7 +242,7 @@ def chandler(ctx, rows, assets, di):
     rows.add("ROOM-02", "the walls' boards", hw == 24 and ch == 7, "the pegboard: %d pieces of rigging (shackles, blocks, cleats, chain) flat on a 1.6 x 1.1 board; the left wall: %d chart sheets and a tide table, and a board with a coil of rope laid flat" % (hw, ch))
     lamp = any(p.get("model") == "Lantern_01" and p.get("tag") == "hurricane_lamp" for p in placed)
     rows.add("ROOM-03", "the counter and its lamp", lamp and any(p.get("model") == "CashRegister_01" for p in placed) and sum(1 for p in placed if p.get("model") == "seadogs_compass") == 3, "the counter's till, three compasses and the hurricane lamp (Lantern_01, lit in night_lit only: a warm point light and a small flame)")
-    have = counts_row(ctx, rows, di, {"life_jacket": 4, "lifebuoy": 2, "script:oilskin_sou_wester": 3}, "chandler")
+    have = counts_row(ctx, rows, di, {"life_jacket": 4, "lifebuoy": 2, "script:oilskin_sou_wester": 3, "rubber_boots": 4}, "chandler")
     rows.na("NIT-01", "the woven mesh screens", "the target's night furniture (woven galvanised mesh over the lower lights when the shop is shut) is out of the lit night view the street file uses and is not in the day glb: not built (named in NOTES.md)")
     return {"supports": ["script:crate", "script:backing_board"], "texts": _texts(ctx, di),
             "families": {"rope and cordage": ["script:rope_coils"], "life-saving": ["life_jacket", "lifebuoy"], "lamps": ["Lantern_01", "wooden_lantern_01"], "boots and oilskins": ["rubber_boots", "script:oilskin_sou_wester"], "paint": ["script:paint_tin_pyramid"]},

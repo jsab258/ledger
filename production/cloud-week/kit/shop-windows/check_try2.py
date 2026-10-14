@@ -1206,7 +1206,7 @@ def dsp05_float_rows(R, work, assets, rows):
         V, T_, N = mesh_world(ob, deps)
         if len(V) == 0 or len(T_) == 0:
             continue
-        data[ob.name] = {"V": V, "T": T_, "bvh": BVHTree.FromPolygons(V.tolist(), T_.tolist(), epsilon=0.0)}
+        data[ob.name] = {"V": V, "T": T_, "lo": V.min(axis=0), "hi": V.max(axis=0), "bvh": BVHTree.FromPolygons(V.tolist(), T_.tolist(), epsilon=0.0)}
     kinds = ("piece", "scripted", "ticket")
     floating, leaning, n_tested, n_sheet = [], [], 0, 0
     rng = np.random.default_rng(3)
@@ -1229,14 +1229,14 @@ def dsp05_float_rows(R, work, assets, rows):
         if len(tri) == 0:
             return np.zeros((0, 3))
         pts = [tri.reshape(-1, 3)]
-        k = int(min(60, max(8, 600 // len(tri))))
+        k = int(min(400, max(8, 2000 // len(tri))))
         for _ in range(k):
             w = rng.random((len(tri), 3))
             w /= w.sum(axis=1, keepdims=True)
             pts.append((tri * w[:, :, None]).sum(axis=1))
         P = np.concatenate(pts)
-        if len(P) > 150:
-            P = P[rng.choice(len(P), 150, replace=False)]
+        if len(P) > 1500:
+            P = P[rng.choice(len(P), 1500, replace=False)]
         return P
     for gi, nms in by_group.items():
         n_tested += 1
@@ -1251,10 +1251,13 @@ def dsp05_float_rows(R, work, assets, rows):
         zlo, zhi = float(V[:, 2].min()), float(V[:, 2].max())
         own = set(nms)
 
+        glo, ghi = V.min(axis=0) - 0.003, V.max(axis=0) + 0.003
+        near_objs = [d2 for nm2, d2 in data.items() if nm2 not in own and np.all(d2["V"].max(axis=0) >= glo) and np.all(d2["V"].min(axis=0) <= ghi)]
+
         def touches(pts):
             for p_ in pts:
-                for nm2, d2 in data.items():
-                    if nm2 in own:
+                for d2 in near_objs:
+                    if np.any(p_ < d2["lo"] - 0.002) or np.any(p_ > d2["hi"] + 0.002):
                         continue
                     hit = d2["bvh"].find_nearest(tuple(p_))
                     if hit[0] is not None and hit[3] <= 0.002:
