@@ -668,6 +668,24 @@ def rest_z(d, x, y, R, ring=8, spread=0.75):
     return 0.0 if best is None else best
 
 
+def hit_up(d, x, y, z0, zmax=3.0):
+    """The height of the first surface above (x, y, z0) of the display's frame (a ray cast up; the hidden templates at the origin are skipped), or None: where a card's cord is tied to the underside of a jacket's
+    hem or the lowest turn of a coil."""
+    import bpy
+    bpy.context.view_layer.update()
+    dg = bpy.context.evaluated_depsgraph_get()
+    zc = z0
+    for _ in range(8):
+        hit, loc, nrm, idx, ob, mw = d.sc.ray_cast(dg, (x, y, zc), (0.0, 0.0, 1.0), distance=zmax)
+        if not hit:
+            return None
+        if d.coll_t in ob.users_collection or ob.hide_render:
+            zc = loc.z + 1e-4
+            continue
+        return float(loc.z)
+    return None
+
+
 def ground_piece(d, names, z_target=0.0, top=False):
     """Move a placed piece (its object names) straight down or up so that its lowest vertex (its highest, with `top`: a jacket hung under a rail) is at `z_target`: for a piece that was turned about x or y (a
     leaning lifebuoy), whose bounding box is lower than its mesh."""

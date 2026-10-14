@@ -103,8 +103,6 @@ def room(r):
     row = []
     row += [("oil_tin", 1.0)] * 5 + [("small_oil_can_01", 1.0)] * 4 + [("cleaner_tin_01", 1.0)] * 4
     rnd.shuffle(row)
-    j_ = max(j for j, (a_, _) in enumerate(row) if a_ == "cleaner_tin_01")
-    row.append(row.pop(j_))                      # if the board is one tin short it is a cleaner tin that stays off it, not an oil can (the target counts four of those)
     for asset, sc in row:
         d_ = r.dims(asset)
         if x + d_.x * sc > xb:
@@ -379,7 +377,7 @@ def display(d):
         GB.rope_png(pth, c, which=1, size=512)
         rm.append(d.image_mat("rope_%d" % i, pth, rough=0.9))
     rope_r = 0.0095
-    hung = ((1.82, 0.070, 3.2, 2, 0), (2.082, 0.050, 2.0, 1, 2), (2.62, 0.070, 3.2, 2, 1))
+    hung = ((1.82, 0.088, 2.6, 2, 0), (2.082, 0.050, 2.0, 1, 2), (2.62, 0.088, 2.6, 2, 1))
     coil_bottom, coil_front = {}, {}
     pg = GM()
     peg_top = rail2_w + 0.008
@@ -390,7 +388,7 @@ def display(d):
         cy = rail2_v - 0.045
         g = GM()
         rout = GB.rope_coil(g, (X(uc), cy, zc), r_in, turns, rope_r, axis="y", mi=0, layers=lay)
-        coil_bottom[k] = zc - rout + 0.001
+        coil_bottom[k] = min(v[2] for v in g.V) + 0.001                 # the lowest turn of a spiral is not at the outer radius
         coil_front[k] = cy - rope_r
         d.gm_object("rope_coil_%d" % k, g, [rm[ci]], "scripted", "script:rope_coils", tier="rail", smooth=True)
     d.gm_object("coil_pegs", pg, [rail_m], "support", "script:crate")
@@ -423,15 +421,17 @@ def display(d):
         d.price_card(uc, vv, 0.0, k, uvs, pm)
 
     def hung_card(k, uc, vv, z_top):
-        """A card 70 x 50 mm on a 12 mm cord from `z_top` (the hem, the rail, the coil's lowest turn), the face toward the street: one mesh, a ticket for the checks."""
+        """A card 70 x 50 mm on a 30 mm cord from `z_top` (the hem, the rail, the coil's lowest turn), the face toward the street: one mesh, a ticket for the checks."""
         gmh = GM()
         x = X(uc)
-        gmh.rod((x, vv, z_top), (x, vv, z_top - 0.012), 0.0012, 1, 6)
-        gmh.box(x - 0.035, x + 0.035, vv - 0.002, vv + 0.002, z_top - 0.062, z_top - 0.012, 0, uv_front=uvs[k])
+        gmh.rod((x, vv, z_top), (x, vv, z_top - 0.030), 0.0012, 1, 6)
+        gmh.box(x - 0.035, x + 0.035, vv - 0.002, vv + 0.002, z_top - 0.080, z_top - 0.030, 0, uv_front=uvs[k])
         ob = gmh.to_object("hung_card_%d" % k, pm, d.sc)
         d.groups.append({"kind": "ticket", "model": "script:price_cards", "objs": [ob.name]})
 
-    hung_card(1, 1.30, 0.345, jacket_hem + 0.001)
-    hung_card(2, 2.62, coil_front[2] - 0.003, coil_bottom[2])
+    hz1 = GB.hit_up(d, X(1.12), 0.40, 0.30)                  # under the left panel's hem (the jacket is open between its two panels): found by a ray
+    hung_card(1, 1.12, 0.40, (hz1 if hz1 is not None else jacket_hem) - 0.0015)
+    hz2 = GB.hit_up(d, X(2.62), coil_front[2] + 0.004, 0.90)   # the coil's lowest turn, found by a ray (the card hangs just inside its front face)
+    hung_card(2, 2.62, coil_front[2] + 0.004 - 0.0005 if hz2 is not None else coil_front[2] - 0.003, (hz2 if hz2 is not None else coil_bottom[2]) - 0.0015)
     hung_card(3, 2.44, rail2_v - 0.004, rail2_w - 0.010)
     d.display_texts = list(GEN.TEXTS) + [t.replace("\n", " ") for t in texts]

@@ -242,7 +242,7 @@ def chandler(ctx, rows, assets, di):
     rows.add("ROOM-02", "the walls' boards", hw == 24 and ch == 7, "the pegboard: %d pieces of rigging (shackles, blocks, cleats, chain) flat on a 1.6 x 1.1 board; the left wall: %d chart sheets and a tide table, and a board with a coil of rope laid flat" % (hw, ch))
     lamp = any(p.get("model") == "Lantern_01" and p.get("tag") == "hurricane_lamp" for p in placed)
     rows.add("ROOM-03", "the counter and its lamp", lamp and any(p.get("model") == "CashRegister_01" for p in placed) and sum(1 for p in placed if p.get("model") == "seadogs_compass") == 3, "the counter's till, three compasses and the hurricane lamp (Lantern_01, lit in night_lit only: a warm point light and a small flame)")
-    have = counts_row(ctx, rows, di, {"life_jacket": 4, "lifebuoy": 2, "script:oilskin_sou_wester": 3, "rubber_boots": 4}, "chandler")
+    have = counts_row(ctx, rows, di, {"life_jacket": 4, "lifebuoy": 2, "script:oilskin_sou_wester": 3, "rubber_boots": 4, "small_oil_can_01": 4}, "chandler")
     # NIT-01 (batch B: built, in a glb of its own like Rita's grille): three panels of woven galvanised mesh, wire 2 mm, mesh 12 mm, z 0.70 to 1.55, one in each lower light, inside the glass, not in the day front
     try:
         fm = json.load(open(os.path.join(ctx.work, "front_members.json")))
