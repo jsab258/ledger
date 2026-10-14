@@ -450,6 +450,15 @@ def backdrop_rows(R, assets, work, rows):
             for sl in o.material_slots:
                 if sl.material and sl.material.name.lower().startswith("glass"):
                     sl.material = solid
+        # (batch B) a bronze or chrome part reflected the white backdrop in single-sample speckles that counted as holes (the grocer's M2 bars, CLOSE_35_B): every material of the front is matt here, so that only a
+        # part's own silhouette can hide the backdrop
+        for m_ in bpy.data.materials:
+            if m_.use_nodes:
+                pb_ = m_.node_tree.nodes.get("Principled BSDF")
+                if pb_ is not None:
+                    pb_.inputs["Metallic"].default_value = 0.0
+                    pb_.inputs["Roughness"].default_value = 1.0
+                    pb_.inputs["Specular IOR Level"].default_value = 0.0
         me = bpy.data.meshes.new("bd")
         me.from_pydata([(-30, 3.0, -8), (30, 3.0, -8), (30, 3.0, 30), (-30, 3.0, 30)], [], [(0, 1, 2, 3)])
         bd = bpy.data.objects.new("bd", me)
@@ -1313,7 +1322,7 @@ def frn11_rows(glb, members, rows, hs):
     if cores:
         near_edge = min(float(-data[n][1][1]) for n in cores)            # the model's y is -d: the near edge is the smallest d, the largest y
     rows.add("FRN-11", "no sign passes through the front", not bad and len(sign) > 0,
-             "%d parts of the hanging sign (%s) against %d other front parts: %d pairs with overlapping boxes tested (each mesh inset 1 mm, so a 2 mm contact is tolerated), %d pairs intersect%s; the board's (or box's) near edge stands %s out from the wall (the cornice projects 0.300; the rule: at least 0.33)" % (
+             "%d parts of the hanging sign (%s) against %d other front parts: %d pairs with overlapping boxes tested (each mesh inset 1 mm, so a 2 mm contact is tolerated), %d pairs intersect%s; the board's (or box's) near edge stands %s out from the wall (the cornice projects 0.300; a board hung from an arm: at least 0.33; a box fixed to the brick above the cornice has its back edge at the wall)" % (
                 len(sign), hs.get("id", "?"), len(other), pairs, len(bad), (" (" + "; ".join("%s x %s" % p_ for p_ in bad[:12]) + ")") if bad else "", ("%.3f m" % near_edge) if near_edge is not None else "?"))
 
 

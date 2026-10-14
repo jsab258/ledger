@@ -593,7 +593,7 @@ def front_rows(ctx, rows, assets, members_path=None):
     panes = [edges[2 * i + 1] - edges[2 * i] for i in range(len(edges) // 2)]
     lights = len([k for k in m if k.startswith("win_glass_lower_")])
     mullc = sorted([(v["u"][0] + v["u"][1]) / 2 - u0 for k, v in m.items() if k.startswith("win_mullion_")])
-    mbarc = sorted([c_ for (a, b), c_ in zip(bars, centres) if near(b - a, gl["mullion_face"], 1)])
+    mbarc = sorted([c_ for (a, b), c_ in zip(bars, centres) if near(b - a, gl["mullion_face"], 1) and any(near(c_, m_, 2) for m_ in mullc)])          # (batch B: M2's bars are all 28 wide, so the width alone cannot tell a mullion's bar from a toplight bar)
     ok4 = (len(centres) == len(want) and all(near(a, b, 2) for a, b in zip(centres, want)) and len(panes) == gl["toplights"] and all(near(p, gl["toplight_width"], 1) for p in panes) and min(panes) >= 250
            and lights == len(mullc) + 1 and len(mbarc) == len(mullc) and all(near(a, b, 2) for a, b in zip(mbarc, mullc))
            and all(near(v["d"][0], 30, 0.5) and near(v["d"][1], 36, 0.6) for k, v in m.items() if k.startswith(("win_glass_", "band_toplight_glass_"))))
@@ -646,7 +646,7 @@ def front_rows(ctx, rows, assets, members_path=None):
         corn_top = m["cor_cornice"]["z"][1] / 1000.0
         fa_ok = all(k in m for k in ("sign_face_a", "sign_face_b"))
         ok_s = (near(mount_x, mt["x_street_m"], 0.010) and near(top, mt["arm_height_m"], 0.010) and near(top - bot, bh_, 0.010) and near(proj, bw_ + 0.008, 0.012) and bot >= corn_top + 0.04 and fa_ok
-                and near(m["sign_rail_top_p"]["u"][1] - m["sign_rail_top_m"]["u"][0], bt_, 0.004 * 1000))
+                and near((m["sign_rail_top_p"]["u"][1] - m["sign_rail_top_m"]["u"][0]) / 1000.0, bt_, 0.004))
         rows.add("FAS-02", "hanging signs", ok_s, "%s: the box's mounting plates at street x %.3f (4.1: %.3f), the box z %.3f to %.3f (4.1: %.3f high, top at %.3f), %.3f out from the wall (4.1: %.2f, with the plates' 8 mm), %.3f thick (%.2f), its lowest part %.3f above the cornice's top (%.3f), face a and face b each a quad with its 4.1 map (%s)" % (
             hs["id"], mount_x, mt["x_street_m"], bot, top, bh_, mt["arm_height_m"], proj, bw_, (m["sign_rail_top_p"]["u"][1] - m["sign_rail_top_m"]["u"][0]) / 1000.0, bt_, bot - corn_top, corn_top, "present" if fa_ok else "MISSING"))
     else:

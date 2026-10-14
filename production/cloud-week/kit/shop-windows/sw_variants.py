@@ -212,6 +212,8 @@ class VBuilder(bs.Builder):
             if clip.is_empty or clip.geom_type != "Polygon":
                 continue                 # (M2's jamb is 40 deep: nothing of it stands beyond d 60.5)
             self.add(nm, bs.prism_ud(list(clip.exterior.coords)[:-1], z_foot, z_seat0), "white", bev=None)
+        if jamb_key is None:
+            jf = float(gl.get("jamb_face", jf))        # (batch B) M2's jamb is the 28 bar cut square: the frame's inside is 28 in, not the kit's 50 (the glass stood 22 mm off the jamb: FRN-07's 20 x 2246 strip)
         ui0, ui1 = u0 + jf, u1 - jf
         self.add("win_seat", bs.box(ui0, ui1, 0.0, 60.0, z_seat0, z_seat1), "white")
         tz = [(p[0], p[1] + z_tr0) for p in pr[transom_key]["points"]]

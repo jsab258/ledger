@@ -275,7 +275,8 @@ class Front:
         self.add("door_frame_head", bx(u_in0, u_in1, 0.0, 100.0, 2071.0, 2131.0), "door_paint")
         # threshold: terrazzo, the full frame width, threshold_section (d, z)
         th = [(p[0], p[1]) for p in pr["threshold_section"]["points"]]
-        self.add("door_threshold", bs.prism_dz(th, slot[0], slot[1]), "terrazzo", bev=None)
+        eps_ = 2.0 if lob else 0.0                 # (batch B) a lobby's floor parts stop 2 mm short of the slot's edges: their end faces were in the plane of the jamb's and the lining's (FRN-10)
+        self.add("door_threshold", bs.prism_dz(th, slot[0] + eps_, slot[1] - eps_), "terrazzo", bev=None)
         # leaf: 900 x 2040 at z 28, hinge on the viewer's RIGHT, lever on the LEFT
         lu0, lu1 = uc - 450.0, uc + 450.0                       # 1347, 2247
         d0, d1 = 20.0, 70.0
@@ -357,7 +358,7 @@ class Front:
         self.add("door_stop_foot", bx(u_in0, u_in1, 4.0, 20.0, 25.0, 40.0), "door_paint", bev=None)
         if lob:
             # (batch B) with a lobby the slab behind the shop door goes back with the door ("door_" prefix); the side door's own stays at the wall
-            self.add("door_hall_floor", bx(slot[0], slot[1], -160.0, 4.0, 0.0, 58.0), "terrazzo", bev=None)
+            self.add("door_hall_floor", bx(slot[0] + (4.0 if lob else 0.0), slot[1] - (4.0 if lob else 0.0), -160.0, 4.0, 0.0, 58.0), "terrazzo", bev=None)
             if slot_side:
                 self.add("hall_floor_behind_side", bx(slot_side[0], slot_side[1], -160.0, 4.0, 0.0, 58.0), "terrazzo", bev=None)
         elif slot_side:
@@ -1029,7 +1030,8 @@ def make_glass_rows(ctx, fasc_dir):
         xs, z_base, d, kind = places[rid]
         if ctx.id == "empty_unit":
             d = 37.0                  # the number is painted on the OUTSIDE of the glass, over the whitewash that is on its inside (batch A)
-        if ctx.lobby_depth and (kind in ("door", "fanlight") or "|" in g["string"]):
+        deep_fan = bool(ctx.lobby_depth >= 400 and kind == "fanlight")
+        if ctx.lobby_depth and not deep_fan and (kind in ("door", "fanlight") or "|" in g["string"]):
             d -= ctx.lobby_depth      # (batch B) the lettering that stands on the door and its fanlight goes back with the door into the lobby
         if "|" in g["string"]:
             xs = R["front"]["centres_street_x_m"]["shop_door"]           # the hours plate at the shop door's centre (4.1's x is within 3 mm of it)
@@ -1042,6 +1044,13 @@ def make_glass_rows(ctx, fasc_dir):
         u0 = u_ink - ink_c * sc_
         z0 = z_base - base_from_bottom * sc_
         w, h = w * sc_, h * sc_
+        if deep_fan:
+            # (batch B) a 0.6 m lobby hides its recessed fanlight from STREET_30 (the window's jamb and the lobby's return stand in the way: GLS-02 read 1764 of 1891 ink points hidden). The street number goes on the
+            # middle of the three toplights over the lobby, at the frame line (z 2480 to 2790), ink centred; named in NOTES.md
+            ib = g["ink_box_in_tile_mm"]
+            ink_cy = (ib[1] + ib[3]) / 2.0 * sc_                  # from the tile's top
+            z0 = 2635.0 - (h - ink_cy)
+            d = 33.0
         ob = quad_obj("glass_row_%d_%s" % (rid, g["string"].split(" ")[0].lower()), u0, u0 + w, z0, z0 + h, d)
         path = os.path.join(fasc_dir, g["files"]["rgba"]["file"])
         m = image_material("glass_row_%d" % rid, path, alpha=True, rough=0.3)
