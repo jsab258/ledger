@@ -282,3 +282,39 @@ def towel_box(gm, c, w, h, t, yaw_deg, mi, uvr, vband=(0.44, 0.56)):
     uv = [[q(0, 0), q(1, 0), q(1, 1), q(0, 1)], [q(0, 0), q(1, 0), q(1, 1), q(0, 1)], [q(0, b0), q(1, b0), q(1, b1), q(0, b1)],
           [q(0, b0), q(1, b0), q(1, b1), q(0, b1)], [q(1, b0), q(0, b0), q(0, b1), q(1, b1)], [q(0, b0), q(1, b0), q(1, b1), q(0, b1)]]
     gm.add(V, F, mi, uv)
+
+
+# ---------------------------------------------------------------------------------------------------------------------------------- bottles with a label whose text faces the street
+def bottle_atlas(path, tiles, tile=(512, 256)):
+    """Labels for bottles made by `bottle` (a lathe wraps its label once round, ring 0 at +x, so the street faces u = 0.75): `tiles` = [(maker, product, colour_rgb, band_rgb)]: a paper label (cream) with a band top
+    and foot in `band_rgb`, the maker in Alfa Slab One and the product (one or two lines) in Oswald in `colour_rgb`, drawn twice (at u 0.75 and 0.25: the two faces of the bottle) inside 40 per cent of the width.
+    Returns {index: (u0, v0, u1, v1)}; every string is added to GEN.TEXTS."""
+    tw, th = tile
+    im = Image.new("RGB", (tw, th * len(tiles)), (200, 200, 200))
+    dd = ImageDraw.Draw(im)
+    out = {}
+    for k, (maker, prod, colr, band) in enumerate(tiles):
+        y0 = k * th
+        dd.rectangle([0, y0, tw - 1, y0 + th - 1], fill=(240, 236, 220))
+        dd.rectangle([0, y0, tw - 1, y0 + 26], fill=band)
+        dd.rectangle([0, y0 + th - 26, tw - 1, y0 + th - 1], fill=band)
+        for cxm in (int(tw * 0.75), int(tw * 0.25)):
+            f1 = fit_text(dd, maker, "alfa-slab-one", int(tw * 0.40), 44)
+            dd.text((cxm - dd.textlength(maker, font=f1) / 2, y0 + 40), maker, font=f1, fill=colr)
+            yy = y0 + 40 + f1.size + 14
+            for ln in prod.split("\n"):
+                f2 = fit_text(dd, ln, "oswald", int(tw * 0.40), 34)
+                dd.text((cxm - dd.textlength(ln, font=f2) / 2, yy), ln, font=f2, fill=(40, 40, 60))
+                yy += f2.size + 4
+        GEN.TEXTS.extend([maker] + prod.split("\n"))
+        out[k] = (0.0, 1.0 - (y0 + th) / (th * len(tiles)), 1.0, 1.0 - y0 / (th * len(tiles)))
+    im.filter(ImageFilter.GaussianBlur(0.5)).save(path)
+    return out
+
+
+def jar(gm, cx, cy, z0, r, h, mi_glass_fill, mi_label, label_uv, mi_lid, n=20):
+    """A screw-lid jar (a lathe): the foot, the body with the contents (material `mi_glass_fill`, a flat colour), a paper label (`mi_label`, `label_uv` the picture's rectangle, one wrap) over the lower two thirds of the
+    body, a shoulder, a lid in `mi_lid` (a rim and a flat top). British preserve jars are straight-sided with a gold or white metal lid."""
+    prof = [(0.0, 0.0), (r * 0.90, 0.0), (r, 0.004), (r, h * 0.20), (r, h * 0.62), (r, h * 0.80), (r * 0.86, h * 0.86), (r * 0.80, h * 0.88)]
+    gm.lathe(cx, cy, z0, prof, mi=mi_glass_fill, n=n, label=(3, 4), mi_label=mi_label, label_uv=label_uv)
+    gm.lathe(cx, cy, z0 + h * 0.86, [(0.0, 0.0), (r * 0.84, 0.0), (r * 0.86, h * 0.02), (r * 0.86, h * 0.12), (r * 0.80, h * 0.14), (0.0, h * 0.14)], mi=mi_lid, n=n)
