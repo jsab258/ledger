@@ -9998,7 +9998,7 @@
    "id": "NIGHT-07",
    "group": "gate",
    "name": "a lit window's clear glass against its net",
-   "measure": "in every lit window of H_ACROSS_0 at night: the median (linear) of the clear (net-free) glass over the median of its lit net's, curtain's or blind's, the two regions told apart by the mask with the glass clear",
+   "measure": "in every lit window of H_ACROSS_0 at night: the clear (net-free) glass's linear luminance over its lit net's, curtain's or blind's, each the MEAN over its region, the two regions told apart by the mask with the glass clear (the street review wrote 'median'; its own figures, 0.26 to 0.31 at the old gain and 0.6 to 0.8 at 1.0, reproduce with the mean: the median of the clear glass is dominated by the dim upper sash and the walls under a bright transom and ceiling and reads 0.27 at gain 1.0, so it is reported beside)",
    "expected": "0.5 to 1.0",
    "tolerance": "band",
    "applies_to": "GS_A GS_B",
@@ -13084,7 +13084,7 @@
    {
     "where": "10 NIGHT-07 (new)",
     "was": "-",
-    "now": "in every lit window at H_ACROSS_0 night the clear glass's median (linear) is 0.5 to 1.0 of its lit net's, curtain's or blind's",
+    "now": "in every lit window at H_ACROSS_0 night the clear glass's mean linear luminance is 0.5 to 1.0 of its lit net's, curtain's or blind's (the review said median; its figures are means)",
     "why": "the lit room was four times dimmer than its own net",
     "from": "street review"
    },

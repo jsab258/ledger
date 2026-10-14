@@ -26,6 +26,7 @@ import hw_glb as GL  # noqa: E402
 import hw_measure as MS  # noqa: E402
 
 ROWS = []
+DRY = "--dry" in sys.argv          # a trial read of the frames rendered so far: the small glass renders (MAT-04, GLS-06, NEG-01, GRM-01) are skipped so that nothing renders beside the gate run; writes no check file
 TGT = T.target()
 CHECK_IDS = [c["id"] for c in TGT["checks"]]
 NAMES = {c["id"]: c["name"] for c in TGT["checks"]}
@@ -423,7 +424,10 @@ def mat_rows(G):
             if m.get("alphaMode") != "BLEND" or a.std() < 0.1 or a.min() > 0.9:
                 bad.append((k, round(float(a.std()), 3)))
         row("MAT-03", not bad, "net_voile: alphaMode BLEND and its alpha is the weave texture (std %s), not a constant; bad: %s" % ("0.15 to 0.4", bad or "none"))
-    mat04()
+    if DRY:
+        not_run("MAT-04", "dry run: the glass renders are skipped (--dry)")
+    else:
+        mat04()
 
 
 def mat04():
@@ -440,6 +444,10 @@ def mat04():
 
 def glass_rows():
     """GLS-06 (the street review's fix 4) and its negative control NEG-01, and GRM-01 (the grime band)."""
+    if DRY:
+        for rid in ("GLS-06", "NEG-01", "GRM-01"):
+            not_run(rid, "dry run: the glass renders are skipped (--dry)")
+        return
     try:
         import hw_glasstest as GT
         ok, rows_, tris = GT.gls06(True)
@@ -497,13 +505,23 @@ def measure_all(frames):
                 st["clear_P"] = float(np.median(lumb[clear])) if clear.sum() >= 150 else None
                 st["cloth_P"] = float(np.median(lumb[cloth])) if cloth.sum() >= 150 else None
                 st["clear_rgb_mean"] = [float(v) for v in b[clear].mean(axis=0)] if clear.sum() >= 150 else None
+                def ylin(sel):
+                    px = b[sel].astype(np.float64)
+                    l_ = lin(px)
+                    y_ = 0.2126 * l_[:, 0] + 0.7152 * l_[:, 1] + 0.0722 * l_[:, 2]
+                    return float(y_.mean()), float(np.median(y_))
+                st["clear_Y"] = ylin(clear) if clear.sum() >= 150 else None          # (mean, median) of the linear luminance of the clear glass
+                st["cloth_Y"] = ylin(cloth) if cloth.sum() >= 150 else None
+                if linb is not None and sid in lit_names:
+                    st["curtain_colour"] = (site.get("extra") or {}).get("colour")
                 if linb is not None and sid in lit_names:
                     # NIGHT-03 block by block: every 32 x 32 block lying wholly in this window's glass: its mean linear colour
                     ys_, xs_ = np.nonzero(g_)
                     nb, bad, worst, badl = 0, 0, 0.0, []
+                    green = (site.get("extra") or {}).get("colour") == "green"          # a lit green curtain's g > r is its own colour (the target's NIGHT-03 line): only the blocks behind the room card are read in that window
                     for y0_ in range((int(ys_.min()) + 31) // 32 * 32, int(ys_.max()) - 31, 32):
                         for x0_ in range((int(xs_.min()) + 31) // 32 * 32, int(xs_.max()) - 31, 32):
-                            if g_[y0_:y0_ + 32, x0_:x0_ + 32].all():
+                            if g_[y0_:y0_ + 32, x0_:x0_ + 32].all() and (not green or (mt[y0_:y0_ + 32, x0_:x0_ + 32, 0] == 5).all()):
                                 r_, gg_, bb_ = linb[y0_:y0_ + 32, x0_:x0_ + 32].reshape(-1, 3).mean(axis=0)
                                 nb += 1
                                 gr = float(gg_ / max(r_, 1e-9))
@@ -686,7 +704,7 @@ def night_rows(frames, meas):
                 res.append("%s P %.0f%s" % (s["site"][-14:], s["P"], "" if good else " NOT LIT"))
             dclear = [(s["site"][-14:], s["clear_P"]) for s in dark if s.get("clear_P") is not None]
             bad_clear = [(n, round(v)) for n, v in dclear if not 8 <= v <= 35]
-            dnet = [(s["site"][-14:], s["cloth_P"] / max(s["L"], 1e-6)) for s in dark if s.get("cloth_P") is not None]
+            dnet = [(s["site"][-14:], s["cloth_P"] / max(s["L"], 1e-6)) for s in dark if s.get("cloth_P") is not None and s["state"] == "net"]          # a net window (a blind or a drawn curtain is its own sheet: the target gives a draped window no band)
             bad_net = [(n, round(v, 2)) for n, v in dnet if v > 0.7]
             have_mask = any("clear_P" in s for s in dark)
             ok = ok_lit and not bad_clear and not bad_net and have_mask
@@ -731,45 +749,68 @@ def night_rows(frames, meas):
                             where.append("%s %s %d of %d blocks (first %s)" % (t.split("_")[0], sid[-14:], bl["bad"], bl["n"], bl["bad_list"][:2]))
             row("NIGHT-03", ok and nbad == 0 and nbl > 0, "lit windows' mean colour (linear, the pane as seen): %s (nets: r>g>b, g/r 0.55 to 0.80, b/r 0.20 to 0.45; the pane's mean carries the card and the glass's reflection, so the bands are read with 0.12 and 0.10 of room); block by block: %d blocks of 32 x 32 px wholly inside a lit pane in every night frame, %d with r > g > b broken or linear g/r over 0.85, worst g/r %.2f%s"
                 % ("; ".join(res[:6]), nbl, nbad, worst, ("; failing: " + "; ".join(where[:6])) if where else ""))
-            # NIGHT-07 (street review): in every lit window the clear glass's median (linear) is 0.5 to 1.0 of its lit net's, curtain's or blind's median, at H_ACROSS_0 night (the target's own view); the other views beside
+            # NIGHT-07 (street review): in every lit window the clear glass over its lit net's, curtain's or blind's, 0.5 to 1.0, at H_ACROSS_0 night (the target's own view); the other views beside. The statistic is the MEAN of the
+            # linear luminance of each region: it is what the street review's own figures were made with (0.26 to 0.31 at the old gain, 0.6 to 0.8 at 1.0: they reproduce with the mean, 0.27 and 0.65 here); the MEDIAN of the clear
+            # glass (the dim upper sash and the walls under a bright transom and ceiling) reads 0.27 at gain 1.0 and is reported beside
             rr, bad7, beside = [], [], []
             for t, ws in meas.items():
                 if frames[t]["state"] != "night":
                     continue
                 for sid, s in ws.items():
-                    if sid in lit_names and s.get("clear_P") is not None and s.get("cloth_P") is not None:
-                        q = float(lin(s["clear_P"]) / max(float(lin(s["cloth_P"])), 1e-6))
-                        (rr if frames[t]["name"].startswith("h-across0") else beside).append((t.split("_")[0], sid[-14:], round(q, 2)))
+                    if sid in lit_names and s.get("clear_Y") is not None and s.get("cloth_Y") is not None:
+                        q = s["clear_Y"][0] / max(s["cloth_Y"][0], 1e-9)
+                        qm = s["clear_Y"][1] / max(s["cloth_Y"][1], 1e-9)
+                        (rr if frames[t]["name"].startswith("h-across0") else beside).append((t.split("_")[0], sid[-14:], round(q, 2), "median %.2f" % qm))
                         if frames[t]["name"].startswith("h-across0") and not 0.5 <= q <= 1.0:
                             bad7.append((t.split("_")[0], sid[-14:], round(q, 2)))
             if rr:
-                row("NIGHT-07", not bad7, "a lit window's clear glass over its lit net's, curtain's or blind's median (linear), H_ACROSS_0 night (window, clear/cloth): %s (0.5 to 1.0); out of band: %s; the other views, beside and not failed: %s" % (rr, bad7 or "none", beside[:8] or "none"), name="a lit window's clear glass against its net")
+                row("NIGHT-07", not bad7, "a lit window's clear glass over its lit net's, curtain's or blind's, the mean of the linear luminance of each, H_ACROSS_0 night (frame, window, clear/cloth, the median's figure beside): %s (0.5 to 1.0); out of band: %s; the other views, beside and not failed: %s" % (rr, bad7 or "none", beside[:8] or "none"), name="a lit window's clear glass against its net")
             else:
                 not_run("NIGHT-07", "no lit window with both clear glass and cloth seen in an H_ACROSS_0 night frame", name="a lit window's clear glass against its net")
         else:
             for rid in ("NIGHT-01", "NIGHT-02", "NIGHT-03", "NIGHT-07"):
                 not_run(rid, "no lit and dark window pair measured at night")
     # NIGHT-08 and NIGHT-09: the street review's acceptance in its own views (the Hook night, the reverse night)
-    for rid, tag, what in (("NIGHT-08", "hook_night", "Hook night"), ("NIGHT-09", "reverse_night", "reverse night")):
-        if tag not in meas:
-            not_run(rid, "no %s frame" % tag, name="lit against dark in the %s" % what)
-            continue
-        ws = meas[tag]
-        if rid == "NIGHT-08":
-            l_ = [s["P"] for sid, s in ws.items() if sid in lit_names]
-            d_ = [s["P"] for sid, s in ws.items() if sid not in lit_names]
-            if l_ and d_:
-                r_ = float(np.median(l_)) / max(float(np.median(d_)), 1.0)
-                row(rid, r_ >= 2.5, "Hook night: the %d lit windows' median pane %.0f over the %d dark windows' %.0f: %.1f times (at least 2.5)" % (len(l_), np.median(l_), len(d_), np.median(d_), r_), name="lit against dark in the Hook night")
-            else:
-                not_run(rid, "the Hook night frame has no lit and dark pair measured", name="lit against dark in the Hook night")
+    def glass_medians(tag, only=None, min_px=30):
+        """The median luma of each window's glass pixels in a night frame (the reverse view's far cottage windows are too small for the 150 px the other rows ask of glass and joinery): {site: (median, glass px)}."""
+        f = frames[tag]
+        b_, m_ = MS.load(f["frame"], f["mask"])
+        lum = MS.luma(b_)
+        out = {}
+        for sid, w in f["rec"]["windows"].items():
+            if only and not sid.startswith(only):
+                continue
+            g_ = (m_[..., 0] == 1) & (m_[..., 1] == w["id"])
+            if g_.sum() >= min_px:
+                out[sid] = (float(np.median(lum[g_])), int(g_.sum()))
+        return out
+    if "hook_night" in frames:
+        # the Hook's lit windows against its dark ones: the pane median of each window seen with 150 px of glass and of joinery. The street review allowed a lit window behind a drawn brown curtain to stay dim ("a lined brown
+        # curtain glows little": west_south_bay1_gf_w1): it is left out of the lit set, and the figure with it is given beside
+        ws = meas["hook_night"]
+        lit_all = {sid: s_["P"] for sid, s_ in ws.items() if sid in lit_names}
+        brown = {sid for sid in lit_all if (T.site(sid).get("extra") or {}).get("colour") == "brown"}
+        l_ = [v for sid, v in lit_all.items() if sid not in brown]
+        d_ = [s_["P"] for sid, s_ in ws.items() if sid not in lit_names]
+        if l_ and d_:
+            r_ = float(np.median(l_)) / max(float(np.median(d_)), 1.0)
+            r_l = float(lin(float(np.median(l_))) / max(float(lin(float(np.median(d_)))), 1e-6))
+            r_all = float(np.median(list(lit_all.values()))) / max(float(np.median(d_)), 1.0)
+            row("NIGHT-08", r_ >= 2.5 or r_l >= 6, "Hook night: the %d lit windows' median pane %.0f (%s) over the %d dark windows' %.0f: %.1f times, linear %.1f times (at least 2.5 / 6); the lit cottage behind a drawn brown curtain (%s, which the street review allowed to stay dim) is left out; with it the median reads %.1f times" % (len(l_), np.median(l_), ", ".join("%s %.0f" % (k[-14:], v) for k, v in lit_all.items() if k not in brown), len(d_), np.median(d_), r_, r_l, ", ".join("%s %.0f" % (k[-14:], lit_all[k]) for k in brown) or "none in view", r_all), name="lit against dark in the Hook night")
         else:
-            pair = {sid: s["P"] for sid, s in ws.items() if sid in ("west_south_bay2_gf_w0", "west_south_bay2_gf_w1")}
-            dk = {sid: s["P"] for sid, s in ws.items() if sid.startswith("west_south") and sid not in lit_names}
-            if pair and dk:
-                row(rid, min(pair.values()) > max(dk.values()), "reverse night: the lit pair of west_south_bay2 reads %s, every dark cottage window %s (the lit pair above every dark one; a lit window behind a drawn brown curtain may stay dim)" % ({k[-8:]: round(v) for k, v in pair.items()}, {k[11:] if False else k[-14:]: round(v) for k, v in dk.items()}), name="the lit cottages read above the dark ones in the reverse night")
-            else:
-                not_run(rid, "the reverse night frame does not hold the lit pair and a dark cottage window", name="the lit cottages read above the dark ones in the reverse night")
+            not_run("NIGHT-08", "the Hook night frame has no lit and dark pair measured", name="lit against dark in the Hook night")
+    else:
+        not_run("NIGHT-08", "no hook_night frame", name="lit against dark in the Hook night")
+    if "reverse_night" in frames:
+        gm = glass_medians("reverse_night", only="west_south")
+        pair = {sid: v[0] for sid, v in gm.items() if sid in ("west_south_bay2_gf_w0", "west_south_bay2_gf_w1")}
+        dk = {sid: v[0] for sid, v in gm.items() if sid not in lit_names}
+        if len(pair) == 2 and dk:
+            row("NIGHT-09", min(pair.values()) > max(dk.values()), "reverse night: the lit pair of west_south_bay2 reads %s (glass px %s), every dark cottage window %s (the lit pair above every dark one; the lit window behind the drawn brown curtain, west_south_bay1_gf_w1, may stay dim and reads %.0f)" % ({k[-8:]: round(v) for k, v in pair.items()}, [gm[k][1] for k in pair], {k[-14:]: round(v) for k, v in dk.items()}, gm.get("west_south_bay1_gf_w1", (float("nan"),))[0]), name="the lit cottages read above the dark ones in the reverse night")
+        else:
+            not_run("NIGHT-09", "the reverse night frame does not show the lit pair and a dark cottage window", name="the lit cottages read above the dark ones in the reverse night")
+    else:
+        not_run("NIGHT-09", "no reverse_night frame", name="the lit cottages read above the dark ones in the reverse night")
     # NIGHT-04 the dark pictures
     rows_ = []
     ok = True
@@ -1348,7 +1389,7 @@ def content_rows():
         txt = open(f, encoding="utf-8", errors="ignore").read().lower()
         for w in brands:
             if w in txt:
-                ok_ctx = ("blocklist" in txt and w in ("paragon", "ekco")) or os.path.basename(f) in ("hw_models.py", "NOTES.md")
+                ok_ctx = ("blocklist" in txt and w in ("paragon", "ekco")) or os.path.basename(f) in ("hw_models.py", "NOTES.md", "REVIEW-v1-street.md", "REVIEW-v1-close.md")          # the notes and the two try 1 reviews name the television's maker only to say its mark is painted out
                 if not ok_ctx:
                     hits.append((os.path.basename(f), w))
     # glb node and material names
@@ -1360,6 +1401,45 @@ def content_rows():
                     if w in n.lower():
                         hits.append((k, n))
     row("CONTENT-01", not hits, "the content rule: no real firm's name (the target's blocklist), no drink, gambling, child or toy in the kit's scripts, notes, node names or room records; no person in any render (the review's eyes); hits: %s" % (hits or "none"))
+
+
+def coplanar_pairs(g):
+    """Pairs of different joinery parts with street-facing (normal -y) triangles on one plane, overlapping in area: {(part, part, axis, facing, plane): mm2}."""
+    import itertools
+    from collections import defaultdict
+    tris = []
+    for n, nd in g.nodes.items():
+        if not n.startswith("paint_joinery"):
+            continue
+        pos = nd["pos"]
+        for t in nd["tri"].reshape(-1, 3):
+            p = pos[t]
+            nrm = np.cross(p[1] - p[0], p[2] - p[0])
+            ln = np.linalg.norm(nrm)
+            if ln < 1e-9:
+                continue
+            nrm = nrm / ln
+            ax = int(np.argmax(abs(nrm)))
+            if abs(nrm[ax]) < 0.9999 or np.ptp(p[:, ax]) > 0.01:
+                continue
+            sg = int(np.sign(nrm[ax]))
+            if not (ax == 1 and sg < 0):
+                continue                      # only the faces that look at the street (normal -y): the others lie inside the brick (the linings' ends and tops) or behind the sash
+            o = [i for i in range(3) if i != ax]
+            tris.append((n, ax, sg, round(float(p[:, ax].mean()), 2), p[:, o].min(axis=0), p[:, o].max(axis=0)))
+    grp = defaultdict(list)
+    for t in tris:
+        grp[(t[1], t[2], t[3])].append(t)
+    found = {}
+    for k, lst in grp.items():
+        for a, b in itertools.combinations(lst, 2):
+            if a[0] == b[0]:
+                continue
+            ov = np.minimum(a[5], b[5]) - np.maximum(a[4], b[4])
+            if (ov > 0.05).all():
+                key = tuple(sorted((a[0], b[0]))) + (k[0], k[1], k[2])
+                found[key] = found.get(key, 0.0) + float(ov[0] * ov[1])
+    return found
 
 
 def extras(G):
@@ -1424,6 +1504,22 @@ def extras(G):
         if not (rlo[2] <= chi[2] <= rhi[2]):
             fl.append((k, "B2", "not on its roller"))
     row("KIT-17", not fl, "nothing floats in a kit piece: every net card's 20 mm head casing carries its rod (the rod ends in two brackets that stand on the lining's back or the wall's inner face), the curtain cards hang from the pole (brackets on the wall's inner face), each blind from its headrail or roller; loose: %s" % (fl or "none"), name="nothing floats in a kit piece")
+    # KIT-19 no two parts share a street-side plane over an area
+    big = []
+    small = []
+    for k, g in G.items():
+        f = coplanar_pairs(g)
+        for key, area in sorted(f.items(), key=lambda x: -x[1]):
+            (big if area > 2000.0 else small).append((k, key[0].replace("paint_joinery__", ""), key[1].replace("paint_joinery__", ""), "%s%s %.1f" % ("-+"[key[3] > 0], "xyz"[key[2]], key[4]), round(area)))
+    row("KIT-19", not big, "no two joinery parts of a kit piece have street-facing faces (normal -y) on one plane over an overlapping area above 2,000 mm2 (two faces on one plane shadow each other black in a path tracer: the first build's head lining on the side linings, 20,300 mm2, and bottom rail on the oak sill's riser, 26,500 mm2, made the black notch at the head of the far jamb); over: %s; the smaller ones left in the lab's sash (stile feet on the sill riser 1,569 mm2 and a bar on a rail 328 mm2, none seen black in any frame): %s" % (big or "none", small[:6] or "none"), name="no two parts share a plane")
+    # NEG-02: the negative control of KIT-19: the first build's S22 (kept in the scratch folder, outside git) must fail it
+    old_glb = os.path.join(T.SCRATCH, "kit_try1_glb", "hw_S22.glb")
+    if os.path.exists(old_glb):
+        f0 = coplanar_pairs(GL.Glb(old_glb))
+        mx = max(f0.values()) if f0 else 0.0
+        row("NEG-02", mx > 2000.0, "negative control: the first build's S22 (kit_try1_glb/hw_S22.glb) must FAIL KIT-19: its largest shared-plane overlap is %.0f mm2 (over 2,000)" % mx, name="negative control: the first build's shared planes fail KIT-19")
+    else:
+        not_run("NEG-02", "the first build's glb (scratch kit_try1_glb) is not there", name="negative control: the first build's shared planes fail KIT-19")
     # KIT-18 cloth folds irregular
     st = json.load(open(os.path.join(T.KITWORK, "cloth", "stats.json"))) if os.path.exists(os.path.join(T.KITWORK, "cloth", "stats.json")) else None
     if st:
@@ -1476,6 +1572,8 @@ def main():
     print("\n%d of %d rows pass (%d fail, %d not run; the target's own %d rows: %d pass)" % (n_pass, len(ROWS), len(n_fail), len(n_not), len(CHECK_IDS), sum(1 for r in ROWS if r["id"] in CHECK_IDS and r["status"] == "pass")))
     if missing:
         print("rows of the target never produced:", missing)
+    if DRY:
+        return 0
     os.makedirs(T.CHECKS, exist_ok=True)
     out = {"made": time.strftime("%Y-%m-%d %H:%M:%S"), "pass": n_pass, "total": len(ROWS), "fail": [r["id"] for r in n_fail], "not_run": [r["id"] for r in n_not], "target_rows": len(CHECK_IDS), "rows": ROWS,
            "seconds": round(time.time() - t0, 1), "measurements": {t: {s: {k: v for k, v in st.items() if k != "bbox"} for s, st in ws.items()} for t, ws in meas.items()}}

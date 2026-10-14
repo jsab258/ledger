@@ -45,6 +45,9 @@ def _map_wall(gm, i0, f):
         gm.V[i] = tuple(float(c) for c in f(*gm.V[i]))
 
 
+FILL_W = (20.0, 30.0)          # the low fill (day, night_lit): found with qroom.py, 1280 x 580, 16 samples (see NOTES.md)
+
+
 # ---------------------------------------------------------------------------------------------------------------------------------- the room
 def room(r):
     """The chandler's room (target `shops.chandler.room`: fixtures C-*). What the target leaves open, and what this does:
@@ -280,6 +283,7 @@ def room(r):
     r.rows["counts"] = {"paint_tins": n_tins, "hardware": n_hw}
     r.notes.append("%d paint tins (target 40), 24 pieces of rigging on the pegboard, life jackets 2 of 4, lifebuoy 1 of 2 (0.9), sou'westers 0 of 3 on the hooks board, boots 2 of 4 pairs (no room for more without one through another); the hurricane lamp is lit in night_lit only" % n_tins)
     r.texts = list(GEN.TEXTS)
+    GB.add_fill(r, (sx0 + 2.6) / 2, 4.6, 0.40, D - 2.4, FILL_W)          # the low bounce under the shelving's boards (see sw_goods_b.add_fill; DADO_LIFT in sw_room_gen)
     return r
 
 

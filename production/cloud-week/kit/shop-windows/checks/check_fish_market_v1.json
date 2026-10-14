@@ -1,13 +1,13 @@
 {
  "schema": "ledger.cloud-week-42.shop-windows-check/1",
  "shop": "fish_market",
- "made": "2026-10-14 09:58:31",
+ "made": "2026-10-14 15:03:18",
  "target": "production/cloud-week/targets/shop-windows/target.json (status: target for unit 7 of cloud week 42, part 2; written 12 October 2026; failed its )",
- "pass": 65,
- "counted": 65,
+ "pass": 66,
+ "counted": 66,
  "na": 4,
  "pending": 2,
- "seconds": 136.1,
+ "seconds": 187.9,
  "rows": [
   {
    "id": "PIC-01",
@@ -416,6 +416,12 @@
    "name": "the sodium wash is the game's",
    "status": "pass",
    "detail": "night_dark's sodium wash colour (linear) [1.0, 0.25, 0.0] against unreal-look.json lantern_linear_rgb [1.0, 0.25, 0.0] (the scene file's stale 1.0, 0.7055, 0.0 is not used)"
+  },
+  {
+   "id": "GLS-05",
+   "name": "the gate glass is not a mirror at shallow views",
+   "status": "pass",
+   "detail": "the kit's own gate glass (sw_gate.make_glass) as a closed 6 mm slab over a bright card in a black world, the card's luma through the glass against the same view without it, at 15, 20, 35 and 50 degrees from the wall: night: 15 deg 0.91, 20 deg 0.92, 35 deg 0.91, 50 deg 0.96; day: 15 deg 0.80, 20 deg 0.86, 35 deg 0.92, 50 deg 0.94 (limit 0.5 at every angle; a Fresnel mix without a back-face guard read 0.002 at 20 degrees in the house windows' gate)"
   },
   {
    "id": "PRV-01",

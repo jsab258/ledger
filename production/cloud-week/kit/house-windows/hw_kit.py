@@ -669,6 +669,27 @@ def finish_joinery(kind, joinery, extra_track=True):
     return corners
 
 
+# Two faces on one plane over an overlapping area shadow each other black (or flicker between their shades) in a path tracer. The lab sash's head lining lies on the side linings' street-facing plane (y 114.3), its bottom rail on the oak
+# sill's riser (y 185.7), the head's parting and staff beads on the side beads' planes; the RC and RC2 weld strips lie on their stiles' fronts (y 80.5). The close review found the first as a black notch at the head of the far jamb
+# (35 x 35 mm, 548 px at the tight close view) and put it on the stand-in wall; it was the kit (the same pixels with the wall's opening cut 2 mm larger, none with the head lining 0.5 mm proud). Each such part is moved toward the
+# street by 0.5 mm (0.3 mm for a weld strip) after the shade is made: no visible change, no shared plane (KIT-19 reads the exported glb).
+NUDGE = {"S22": ("head_outer_lining", "lower_bottom_rail", "head_parting_bead", "head_staff_bead"), "S11": ("head_outer_lining", "lower_bottom_rail", "head_parting_bead", "head_staff_bead"), "RC": ("weld_",), "RC2": ("weld_",)}
+
+
+def separate_coplanar(kind, joinery, log=print):
+    moved = []
+    for o in joinery:
+        short = o.name.split(".")[0].replace("paint_joinery__", "")
+        for key in NUDGE.get(kind, ()):
+            if short == key or (key.endswith("_") and short.startswith(key)):
+                o.location.y -= (0.0003 if key.endswith("_") else 0.0005)
+                moved.append(o)
+    if moved:
+        bpy.context.view_layer.update()
+        apply_all(moved)
+    log("%s: %d parts moved toward the street so that no two share a plane: %s" % (kind, len(moved), ", ".join(sorted(o.name.split(".")[0].replace("paint_joinery__", "") for o in moved))))
+
+
 def build_kind(kind, out_path, log=print):
     reset()
     cloth = CL.build_all(os.path.join(T.KITWORK, "cloth"))
@@ -678,6 +699,7 @@ def build_kind(kind, out_path, log=print):
     else:
         joinery, panes = rc_parts(kind, mats)
     corners = finish_joinery(kind, joinery)
+    separate_coplanar(kind, joinery, log)
     dress = add_dressing(kind, mats, cloth, "UP")
     log("%s: %d joinery nodes, %d panes, %d dressing nodes, %d inside corners" % (kind, len(joinery), len(panes), len(dress), len(corners)))
     export(out_path, [o for o in bpy.data.objects if o.type == "MESH"])

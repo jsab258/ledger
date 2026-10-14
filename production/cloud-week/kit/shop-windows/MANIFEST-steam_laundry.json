@@ -1,5 +1,5 @@
 {
- "made": "2026-10-14 12:36:20",
+ "made": "2026-10-14 14:57:01",
  "what": "the files of the narrow-points build (13 Oct, from the try 2 reviews; v3); the three glbs and the three 4096 pictures are out of git (rebuilt by build_ritas.py) so this names the versions",
  "files": {
   "steam_laundry_front.glb": {
