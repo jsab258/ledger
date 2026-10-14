@@ -65,7 +65,7 @@ class GM:
         V = []
         for x, y, z in V0:
             x, z = x * math.cos(ra) - z * math.sin(ra), x * math.sin(ra) + z * math.cos(ra)         # roll about y
-            y, z = y * math.cos(ta) - z * math.sin(ta), y * math.sin(ta) + z * math.cos(ta)         # tilt about x: the top (z > 0) goes toward +y
+            y, z = y * math.cos(ta) + z * math.sin(ta), -y * math.sin(ta) + z * math.cos(ta)        # tilt about x: the top (z > 0) goes toward +y (14 Oct, newsagent close review, fault 1: the sign was the other way, so every leaning sheet leaned toward the glass)
             x, y = x * math.cos(ya) - y * math.sin(ya), x * math.sin(ya) + y * math.cos(ya)         # yaw about z
             V.append((c[0] + x, c[1] + y, c[2] + z))
         F = [(0, 3, 2, 1), (4, 5, 6, 7), (0, 1, 5, 4), (1, 2, 6, 5), (2, 3, 7, 6), (3, 0, 4, 7)]

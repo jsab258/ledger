@@ -1175,6 +1175,74 @@ def frn10_rows(R, work, assets, rows, members):
              " (try 2: the two strips beside the side door were luma 0 to 3, about 12,000 pixels at STREET_SQUARE: F1's frame jambs, the added side jambs and the fillers stood in one plane, d 100)")
 
 
+def dsp06_rows(R, work, assets, rows):
+    """DSP-06 (newsagent close review, fault 1, 14 Oct 2026: the magazines hung in the air under a board that leaned toward the glass; the review called its row DSP-05, a number the ironmonger's review had
+    already given to 'every model keeps its parts'): nothing in the near metre floats, and a sheet leans back. For every piece, scripted good and price card of the display glb: (a) its lowest vertices (within
+    3 mm of its lowest point) or its highest vertices lie within 2 mm of another part of the display (not of its own group): it rests on something or hangs from something; (b) a thin sheet (its thinnest extent under
+    12 mm, the other two over 40 mm) whose face looks toward the street does not lean forward by more than 3 degrees (the face normal's tilt, from the principal axes of its vertices): its top is nearer the back
+    than its foot. Lying-flat sheets (the face looking more than 53 degrees up or down) are not leans."""
+    import bpy
+    from mathutils.bvhtree import BVHTree
+    di = json.load(open(os.path.join(work, "display_work", "display_items.json")))
+    bpy.ops.wm.read_factory_settings(use_empty=True)
+    objs = load_glb_objects(display_glb(assets))
+    deps = bpy.context.evaluated_depsgraph_get()
+    group_of = {}
+    for gi, g in enumerate(di["groups"]):
+        for nm in g["objs"]:
+            group_of[nm] = gi
+    data = {}
+    for ob in objs:
+        if ob.type != "MESH":
+            continue
+        V, T_, N = mesh_world(ob, deps)
+        if len(V) == 0 or len(T_) == 0:
+            continue
+        data[ob.name] = {"V": V, "bvh": BVHTree.FromPolygons(V.tolist(), T_.tolist(), epsilon=0.0)}
+    kinds = ("piece", "scripted", "ticket")
+    floating, leaning, n_tested, n_sheet = [], [], 0, 0
+    for nm, dd in data.items():
+        gi = group_of.get(nm)
+        if gi is None or di["groups"][gi]["kind"] not in kinds:
+            continue
+        n_tested += 1
+        V = dd["V"]
+        zlo, zhi = float(V[:, 2].min()), float(V[:, 2].max())
+        pts_lo = V[V[:, 2] <= zlo + 0.003]
+        pts_hi = V[V[:, 2] >= zhi - 0.003]
+
+        def touches(pts):
+            if len(pts) > 24:
+                pts = pts[np.linspace(0, len(pts) - 1, 24).astype(int)]
+            for p_ in pts:
+                for nm2, d2 in data.items():
+                    if nm2 == nm or group_of.get(nm2) == gi:
+                        continue
+                    hit = d2["bvh"].find_nearest(tuple(p_))
+                    if hit[0] is not None and hit[3] <= 0.002:
+                        return True
+            return False
+        if not (touches(pts_lo) or touches(pts_hi)):
+            floating.append("%s(%s) lowest %.3f" % (di["groups"][gi]["model"], nm, zlo))
+        # a thin sheet's lean
+        lo_, hi_ = V.min(axis=0), V.max(axis=0)
+        C = np.cov((V - V.mean(axis=0)).T)
+        w_, vec = np.linalg.eigh(C)
+        ext = np.sqrt(np.maximum(w_, 0)) * math.sqrt(12.0)           # the extents of a box along its principal axes
+        if ext[0] < 0.012 and ext[1] > 0.04:
+            n_ = vec[:, 0]
+            if n_[1] > 0:
+                n_ = -n_
+            if abs(n_[2]) <= 0.8 and n_[1] < -0.05:
+                n_sheet += 1
+                tilt = math.degrees(math.asin(float(np.clip(n_[2], -1, 1))))          # + : the face looks up: the top leans back
+                if tilt < -3.0:
+                    leaning.append("%s(%s) %.1f deg" % (di["groups"][gi]["model"], nm, tilt))
+    rows.add("DSP-06", "nothing floats; sheets lean back", not floating and not leaning,
+             "%d display pieces, scripted goods and price cards: each rests on or hangs from something (a vertex of its lowest or highest 3 mm within 2 mm of another part of the display): %d float%s; %d thin sheets measured by their principal axes: %d lean toward the glass by more than 3 degrees%s (the kit's GM.sheet had the sign the wrong way until 14 Oct: the newsagent's magazines and papers)" % (
+                 n_tested, len(floating), (" (" + "; ".join(floating[:10]) + ")") if floating else "", n_sheet, len(leaning), (" (" + "; ".join(leaning[:10]) + ")") if leaning else ""))
+
+
 def frn11_rows(glb, members, rows, hs):
     """FRN-11 (the ironmonger's street review, narrow point 1, 14 Oct 2026): no part of a hanging sign passes through any other part of the front (the cornice, a pilaster's capital, a console, the fascia). The front glb is
     loaded, every mesh inset 1 mm along its normals (a 2 mm contact is tolerated) and each sign part (names `sign_*`) tested against every other front part whose box overlaps it by a BVH overlap. The signs are in the

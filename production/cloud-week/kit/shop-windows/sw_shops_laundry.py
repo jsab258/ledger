@@ -391,7 +391,7 @@ def display(d):
     d.gm_object("service_card", gm, [cm], "scripted", "script:paper_card_service_washes", tier="stand")
     gm = GM()
     for uc in (1.81, 2.27):
-        gm.box(X(uc) - 0.01, X(uc) + 0.01, 0.510, 0.530, z0, 0.60, 0)
+        gm.box(X(uc) - 0.01, X(uc) + 0.01, 0.508, 0.528, z0, 0.60, 0)
     d.gm_object("service_card_posts", gm, [post_m], "support", "script:crate")
     # ---- the detergents: four large boxes on a low step at the back, in front three packets, two washing-up bottles and a bleach bottle
     designs = [("HOLME", "SOAP FLAKES", "for woollens", (60, 110, 170), (244, 240, 224), (220, 70, 60), "drop"),

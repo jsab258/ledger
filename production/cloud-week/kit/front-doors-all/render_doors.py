@@ -66,7 +66,7 @@ def glass_passes_shadow_rays():
         nt.links.new(mix.outputs["Shader"], out.inputs["Surface"])
 
 
-NET_SCALE = 0.88                         # the nets' brightness against the first try 3 render's, tuned so the four lights read 0.85 (0.80 to 0.90) of the transom bar's face (street review of 14 Oct, point 2)
+NET_SCALE = 0.70                         # the nets' brightness against a white card, tuned so the four lights read 0.85 (0.80 to 0.90) of the transom bar's face (street review of 14 Oct, point 2); 0.88 read 0.954
 
 
 def net_look(scale=None):
