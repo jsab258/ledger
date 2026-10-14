@@ -2,7 +2,7 @@
  "schema": "ledger-shop-windows-target/1",
  "family": "shop-windows",
  "summary_line": "Shop windows: ten units as built (twelve not found); eight rooms of 104 checked CC0 models and 51 named scripted forms, rendered 4096 wide to the game's own `trace` rule, stock only where that rule can show it and the near 0.55 m a real display; the fish scans wait on one login.",
- "status": "target for unit 7 of cloud week 42, part 2; written 12 October 2026; failed its review (3 faults, 15 narrow points), fixes applied 12 October (not re-reviewed); BUILT 13 October; the build failed both fresh reviews at try 1 (street view: 2 faults, 5 narrow points; close view: 5 faults, 13 narrow points); try 2 amendments from those reviews applied 13 October (section 13, marked '13 Oct, from the try 1 reviews'); try 3 narrow points from the try 2 reviews (both PASS: street 0 faults and 6 narrow points, close 0 faults and 11 narrow points) applied 13 October (section 13, marked '13 Oct, from the try 2 reviews'); no further review ordered; nothing committed [13 Oct, batch A: the second stage built the ironmonger, the newsagent and tobacconist, the tea rooms and the fronts of Mickey's and the empty unit (production/cloud-week/kit/shop-windows/NOTES.md, Batch A; section 13, rows A1 to A14); not yet reviewed]",
+ "status": "target for unit 7 of cloud week 42, part 2; written 12 October 2026; failed its review (3 faults, 15 narrow points), fixes applied 12 October (not re-reviewed); BUILT 13 October; the build failed both fresh reviews at try 1 (street view: 2 faults, 5 narrow points; close view: 5 faults, 13 narrow points); try 2 amendments from those reviews applied 13 October (section 13, marked '13 Oct, from the try 1 reviews'); try 3 narrow points from the try 2 reviews (both PASS: street 0 faults and 6 narrow points, close 0 faults and 11 narrow points) applied 13 October (section 13, marked '13 Oct, from the try 2 reviews'); no further review ordered; nothing committed [13 Oct, batch A: the second stage built the ironmonger, the newsagent and tobacconist, the tea rooms and the fronts of Mickey's and the empty unit (production/cloud-week/kit/shop-windows/NOTES.md, Batch A; section 13, rows A1 to A14); not yet reviewed] [14 Oct, batch B: the second batch of the second stage built the launderette, the grocer, the chandler and the fish market (production/cloud-week/kit/shop-windows/NOTES.md, Batch B; section 13, rows B1 to B13); the fish and the grocer's cabbage, potato, satsuma and pear are pending (Jafar's Sketchfab login); not yet reviewed]",
  "units": {
   "length": "metres (frames: street, card, picture, room, display: see this folder's TARGET.md, section 3); front parts in millimetres in the 2.2 bay frame (u, d, z)",
   "colour": "sRGB 0 to 255",
@@ -1107,7 +1107,7 @@
     "rule": "terrace-front.py 2405-2417: x from bay start + 0.35 to bay end - 0.35, z 0.65 to 3.05, y +5.875; the empty unit has none (bay 3 of 6 is skipped)"
    },
    "keeps": "the research (FISHMONGER-2026-10-03.md, Picture Sheffield t13140 and t13138), the white-tile walls and red quarry floor of the 3 Oct code (shop-room.py 257, 287)",
-   "changes": "no hand-made fish (the 3 Oct failure): the fish are CC0 scans or the window shows none; the slab and ice are real meshes in the display; the chiller counter goes against the back wall (it smeared as a black panel across the floor); the white slab no longer burns out at night (the room is dark at night)",
+   "changes": "no hand-made fish (the 3 Oct failure): the fish are CC0 scans or the window shows none; the slab and ice are real meshes in the display; the chiller counter goes against the back wall (it smeared as a black panel across the floor); the white slab no longer burns out at night (the room is dark at night) [14 Oct, batch B: the chiller with eight trays of ice and a pilot lamp, no fish (B10); a sloped slab, ice, six trays, lemons and tickets, the fish pending (B11); a dark shop's gate (B13)]",
    "notes": "The old timber pilasters and consoles stay, repainted pale to match the new board; the window and door were replaced in aluminium.",
    "room": {
     "w": 5.3,
@@ -4628,7 +4628,7 @@
     "rule": "terrace-front.py 2405-2417: x from bay start + 0.35 to bay end - 0.35, z 0.65 to 3.05, y +5.875; the empty unit has none (bay 3 of 6 is skipped)"
    },
    "keeps": "the 3 Oct decision (a launderette with a service counter: the Steam Laundry), the real-room finding that the dryers and washers must stand against walls",
-   "changes": "no slab laundry, no dryer stack standing off the wall: machines stand against the BACK wall only; the side walls carry notices; the near metre is a real display of folded laundry and detergent boxes with fictional labels",
+   "changes": "no slab laundry, no dryer stack standing off the wall: machines stand against the BACK wall only; the side walls carry notices; the near metre is a real display of folded laundry and detergent boxes with fictional labels [14 Oct, batch B: 4.1's hours plate on the shop door and the OPEN card by hours (B1); scripted washers and dryers with two running lamps (B2); the shelf of parcels and a cork notice board (B3); folded towels, baskets, detergents and the SERVICE WASHES card in the window (B4); a dark shop's gate (B13)]",
    "notes": "The lit box sign (fascia target: 5200 x 480 x 150, bronze returns) stands on the old cream board between the consoles.",
    "room": {
     "w": 5.3,
@@ -5571,7 +5571,7 @@
     "rule": "terrace-front.py 2405-2417: x from bay start + 0.35 to bay end - 0.35, z 0.65 to 3.05, y +5.875; the empty unit has none (bay 3 of 6 is skipped)"
    },
    "keeps": "the 3 Oct label atlas (production/assets/shop-goods/labels.jpg and .json: 32 fictional products in our OFL fonts) and its tin, packet, jar and bottle shapes",
-   "changes": "stock only on the back wall (0.25 deep) and on side shelves 0.10 deep (tins only); the near metre is a real tiered stand of produce and tins with scanned fruit; the printed tiles are on bevelled shapes, never plain blocks; the lobby's 0.6 recess takes nothing from the room",
+   "changes": "stock only on the back wall (0.25 deep) and on side shelves 0.10 deep (tins only); the near metre is a real tiered stand of produce and tins with scanned fruit; the printed tiles are on bevelled shapes, never plain blocks; the lobby's 0.6 recess takes nothing from the room [14 Oct, batch B: the recessed lobby and the number 11 (B5); no drink, crates of onions for potatoes, a counter lamp (B6); a stepped window of jars, tin pyramids, crates of fruit and 14 cards, the scanned goods pending (B7); a lit shop's gate and room means (B13)]",
    "notes": "The fascia target's three-slab glass board (bottle green, cream letters) fixes this front's date. The consoles are plain blocks; the window is 4294 wide.",
    "room": {
     "w": 5.3,
@@ -6711,7 +6711,7 @@
     "rule": "terrace-front.py 2405-2417: x from bay start + 0.35 to bay end - 0.35, z 0.65 to 3.05, y +5.875; the empty unit has none (bay 3 of 6 is skipped)"
    },
    "keeps": "the 3 Oct trade list (buoys, lifebuoy, life jacket, lanterns, boots, oil, crates) and the CC0 set in fetch_polyhaven.py",
-   "changes": "NO explosives-marked drum (Barrel_01 is out); the buoy stands flat against the back wall at a scaled height; nothing hangs from the ceiling; rope is twisted by script with ambientCG Rope textures (no CC0 model): coils stand on shelves",
+   "changes": "NO explosives-marked drum (Barrel_01 is out); the buoy stands flat against the back wall at a scaled height; nothing hangs from the ceiling; rope is twisted by script with ambientCG Rope textures (no CC0 model): coils stand on shelves [14 Oct, batch B: the room's counts at real size, the shelving from x -1.95 (B8); the window at real size with hung jackets, hats and coils, 10 cards, and the mesh screens built (B9); a lit shop's gate and room means (B13)]",
    "notes": "D06 gave the Hook's shops a metal refit; R05's plain glazed tile under the glass (terrace-front.py SHOPFRONT_REFITS).",
    "room": {
     "w": 5.3,
