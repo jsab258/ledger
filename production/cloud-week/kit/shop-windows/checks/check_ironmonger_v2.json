@@ -1,13 +1,13 @@
 {
  "schema": "ledger.cloud-week-42.shop-windows-check/1",
  "shop": "ironmonger",
- "made": "2026-10-14 22:46:31",
+ "made": "2026-10-14 22:51:44",
  "target": "production/cloud-week/targets/shop-windows/target.json (status: target for unit 7 of cloud week 42, part 2; written 12 October 2026; failed its )",
  "pass": 73,
  "counted": 74,
  "na": 6,
  "pending": 0,
- "seconds": 178.3,
+ "seconds": 174.3,
  "rows": [
   {
    "id": "PIC-01",
@@ -349,7 +349,7 @@
    "id": "FLT-01",
    "name": "no large flat tone in the window",
    "status": "fail",
-   "detail": "day frames, 9 x 9 px standard deviation under 1, the largest connected patch over the glass: STREET_SQUARE: largest uniform patch 2599 px = 0.91 per cent of 284800 glass px (x 947 to 1020, y 758 to 831, luma 33); STREET_30: largest uniform patch 3796 px = 2.06 per cent of 183909 glass px (x 1139 to 1184, y 735 to 822, luma 41) (limit 1.0 per cent for this shop)"
+   "detail": "day frames, 9 x 9 px standard deviation under 1, the largest connected patch over the glass: STREET_SQUARE: largest uniform patch 2599 px = 0.91 per cent of 284800 glass px (x 947 to 1020, y 758 to 831, luma 33); by what shows there (per cent of the glass): display's pieces 0.91, room and return walls 0.75; STREET_30: largest uniform patch 3796 px = 2.06 per cent of 183909 glass px (x 1139 to 1184, y 735 to 822, luma 41); by what shows there (per cent of the glass): display's pieces 0.67, room and return walls 2.06 (limit 1.0 per cent for this shop)"
   },
   {
    "id": "DSP-11",

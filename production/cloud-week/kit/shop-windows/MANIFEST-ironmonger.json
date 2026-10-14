@@ -1,5 +1,5 @@
 {
- "made": "2026-10-14 22:46:31",
+ "made": "2026-10-14 22:51:44",
  "what": "the ironmonger's batch A build, try 2 (14 Oct, from the try 1 reviews; first built 13 Oct): the files named here are the models and the three 4096 room pictures; those over 1 MB are out of git, so this names their versions; rebuilt by `build_shop.py --shop ironmonger`",
  "files": {
   "ironmonger_front.glb": {
