@@ -1,13 +1,13 @@
 {
  "schema": "ledger.cloud-week-42.shop-windows-check/1",
  "shop": "chandler",
- "made": "2026-10-14 17:43:15",
+ "made": "2026-10-14 18:15:26",
  "target": "production/cloud-week/targets/shop-windows/target.json (status: target for unit 7 of cloud week 42, part 2; written 12 October 2026; failed its )",
- "pass": 66,
+ "pass": 67,
  "counted": 68,
  "na": 4,
  "pending": 0,
- "seconds": 134.0,
+ "seconds": 152.7,
  "rows": [
   {
    "id": "PIC-01",
@@ -25,7 +25,7 @@
    "id": "PIC-03",
    "name": "night_dark is dark, not black, and has no hot corners",
    "status": "pass",
-   "detail": "night_dark mean 14.4 (12.4 to 40; the approved 17.7); the top front corner columns (x 0 to 60 and 4036 to 4096, rows 0 to 200) read 3.9 and 4.1 against 1.5 x the mean = 21.6 (the wash light was the card's full width at 0.9 of the height: the pawnbroker's corners read 66, the tea room's 61, the ironmonger's 98)"
+   "detail": "night_dark mean 16.6 (12.4 to 40; the approved 17.7); the top front corner columns (x 0 to 60 and 4036 to 4096, rows 0 to 200) read 4.7 and 5.0 against 1.5 x the mean = 24.9 (the wash light was the card's full width at 0.9 of the height: the pawnbroker's corners read 66, the tea room's 61, the ironmonger's 98)"
   },
   {
    "id": "PIC-05",
@@ -318,8 +318,8 @@
   {
    "id": "LIT-01",
    "name": "lit shops lit at night, dark shops dark",
-   "status": "fail",
-   "detail": "STREET_SQUARE at night, the room-only composite (picture x 0.7, glass reflection off) over the glass lights: lit 69.1 (at least 45); the same shop dark (night_dark) 9.9 (a dark shop reads 10 to 35); difference 59.2 (at least 25)"
+   "status": "pass",
+   "detail": "STREET_SQUARE at night, the room-only composite (picture x 0.7, glass reflection off) over the glass lights: lit 69.1 (at least 45); the same shop dark (night_dark) 11.5 (a dark shop reads 10 to 35); difference 57.6 (at least 25)"
   },
   {
    "id": "LIT-02",
@@ -439,7 +439,7 @@
    "id": "X-PRV",
    "name": "previews: JPEG, about 1600 px wide, under 500 KB",
    "status": "pass",
-   "detail": "7 JPEGs of this shop in the previews folder (at least 7): chandler-close-35-day 211 KB 1600 px, chandler-close-35-night-lit 203 KB 1600 px, chandler-room-day 165 KB 1600 px, chandler-room-night-dark 79 KB 1600 px, chandler-room-night-lit 149 KB 1600 px, chandler-street-square-day 246 KB 1600 px, chandler-street-square-night-lit 172 KB 1600 px"
+   "detail": "7 JPEGs of this shop in the previews folder (at least 7): chandler-close-35-day 211 KB 1600 px, chandler-close-35-night-lit 203 KB 1600 px, chandler-room-day 165 KB 1600 px, chandler-room-night-dark 84 KB 1600 px, chandler-room-night-lit 149 KB 1600 px, chandler-street-square-day 246 KB 1600 px, chandler-street-square-night-lit 172 KB 1600 px"
   }
  ]
 }

@@ -1,5 +1,5 @@
 {
- "made": "2026-10-14 17:43:15",
+ "made": "2026-10-14 18:15:26",
  "what": "the files of the narrow-points build (13 Oct, from the try 2 reviews; v3); the three glbs and the three 4096 pictures are out of git (rebuilt by build_ritas.py) so this names the versions",
  "files": {
   "chandler_front.glb": {
@@ -19,8 +19,8 @@
    "sha256": "16fd0c950b8160f7d88fb28c13894db8356f9e3a2ae91a608a0d1e567b3c4a08"
   },
   "chandler_night_dark.png": {
-   "bytes": 5254439,
-   "sha256": "14ca050ad516649f75330f16d2c59fc8ced8ec6b69a52cd647216aa78d2af182"
+   "bytes": 5366096,
+   "sha256": "4ef5d2b5a5996288dff2e792aa6b5de6e438a68e40725af5cd46e4239a038009"
   }
  }
 }

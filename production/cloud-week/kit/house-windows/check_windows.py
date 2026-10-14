@@ -482,6 +482,26 @@ def frames_index():
     return out
 
 
+def block_colours(lin_img, glass, mt, green, bs):
+    """The blocks bs x bs px lying wholly inside the window's glass: the mean linear colour of each must have r > g > b and g/r at most 0.85 (14 October, the close review's fix 2: an olive band round a clipped ceiling light).
+    {n, bad, worst_g_over_r, bad_list}. In a window with a green curtain only the blocks behind the room card (the mask with the glass clear: 5) are read; a block that sees past the card's edge is not read."""
+    ys_, xs_ = np.nonzero(glass)
+    nb, bad, worst, badl = 0, 0, 0.0, []
+    for y0_ in range((int(ys_.min()) + bs - 1) // bs * bs, int(ys_.max()) - bs + 1, bs):
+        for x0_ in range((int(xs_.min()) + bs - 1) // bs * bs, int(xs_.max()) - bs + 1, bs):
+            blk = mt[y0_:y0_ + bs, x0_:x0_ + bs, 0]
+            behind_room = ((blk == 5) | (blk == 3)).all()          # the room card or the cloth: a block that sees past the card's edge (the world's dusk landscape: the gate's card is 3.4 m wide and a near oblique view runs off it) is not the room
+            if glass[y0_:y0_ + bs, x0_:x0_ + bs].all() and behind_room and (not green or (blk == 5).all()):
+                r_, gg_, bb_ = lin_img[y0_:y0_ + bs, x0_:x0_ + bs].reshape(-1, 3).mean(axis=0)
+                nb += 1
+                gr = float(gg_ / max(r_, 1e-9))
+                if not (r_ > gg_ > bb_ and gr <= 0.85):
+                    bad += 1
+                    badl.append((x0_, y0_, round(gr, 2), round(float(bb_ / max(r_, 1e-9)), 2)))
+                worst = max(worst, gr)
+    return {"n": nb, "bad": bad, "worst_g_over_r": round(worst, 3), "bad_list": badl[:12]}
+
+
 def measure_all(frames):
     """Per frame per window: the stats (pane px, P, L, D, spread, line profile), with the window's state and angle."""
     out = {}
@@ -491,6 +511,7 @@ def measure_all(frames):
         mt = np.asarray(Image.open(f["maskT"]).convert("RGB")) if os.path.exists(f["maskT"]) else None
         lumb = MS.luma(b) if mt is not None else None
         linb = lin(b) if (f["state"] == "night" and mt is not None) else None
+        ro_lin = None
         for sid, w in f["rec"]["windows"].items():
             site = T.site(sid)
             st = MS.stats_for(b, m, w["id"])
@@ -515,21 +536,14 @@ def measure_all(frames):
                 if linb is not None and sid in lit_names:
                     st["curtain_colour"] = (site.get("extra") or {}).get("colour")
                 if linb is not None and sid in lit_names:
-                    # NIGHT-03 block by block: every 32 x 32 block lying wholly in this window's glass: its mean linear colour
-                    ys_, xs_ = np.nonzero(g_)
-                    nb, bad, worst, badl = 0, 0, 0.0, []
+                    # NIGHT-03 block by block: every 32 x 32 block lying wholly in this window's glass: its mean linear colour; on the beauty frame, and on the reflection-off frame (16 x 16 at its half size) that holds the room's own
+                    # colour without the stand-in sky's reflection in the glass
                     green = (site.get("extra") or {}).get("colour") == "green"          # a lit green curtain's g > r is its own colour (the target's NIGHT-03 line): only the blocks behind the room card are read in that window
-                    for y0_ in range((int(ys_.min()) + 31) // 32 * 32, int(ys_.max()) - 31, 32):
-                        for x0_ in range((int(xs_.min()) + 31) // 32 * 32, int(xs_.max()) - 31, 32):
-                            if g_[y0_:y0_ + 32, x0_:x0_ + 32].all() and (not green or (mt[y0_:y0_ + 32, x0_:x0_ + 32, 0] == 5).all()):
-                                r_, gg_, bb_ = linb[y0_:y0_ + 32, x0_:x0_ + 32].reshape(-1, 3).mean(axis=0)
-                                nb += 1
-                                gr = float(gg_ / max(r_, 1e-9))
-                                if not (r_ > gg_ > bb_ and gr <= 0.85):
-                                    bad += 1
-                                    badl.append((x0_, y0_, round(gr, 2), round(float(bb_ / max(r_, 1e-9)), 2)))
-                                worst = max(worst, gr)
-                    st["blocks"] = {"n": nb, "bad": bad, "worst_g_over_r": round(worst, 3), "bad_list": badl[:12]}
+                    st["blocks"] = block_colours(linb, g_, mt, green, 32)
+                    if os.path.exists(f["ro"]):
+                        if ro_lin is None:
+                            ro_lin = lin(np.asarray(Image.open(f["ro"]).convert("RGB")))
+                        st["blocks_ro"] = block_colours(ro_lin, g_[::2, ::2], mt[::2, ::2], green, 16)
             st["line"] = MS.line_profile(b, m, w["id"], st["L"])
             st["angle"] = w["angle_deg"]
             st["state"] = MS.window_state(site)
@@ -736,19 +750,26 @@ def night_rows(frames, meas):
                 ok &= good
                 res.append("%s g/r %.2f b/r %.2f" % (s["site"][-14:], g_ / r, b_ / r))
             nbl, nbad, worst, where = 0, 0, 0.0, []
+            nb_b, nbad_b, where_b = 0, 0, []
             for t, ws in meas.items():
                 if frames[t]["state"] != "night":
                     continue
                 for sid, s in ws.items():
-                    bl = s.get("blocks")
+                    bl_b = s.get("blocks")
+                    bl = s.get("blocks_ro") or bl_b
+                    if bl_b and bl_b["n"]:
+                        nb_b += bl_b["n"]
+                        nbad_b += bl_b["bad"]
+                        if bl_b["bad"]:
+                            where_b.append("%s %s %d of %d blocks (worst g/r %.2f)" % (t.split("_")[0], sid[-14:], bl_b["bad"], bl_b["n"], bl_b["worst_g_over_r"]))
                     if bl and bl["n"]:
                         nbl += bl["n"]
                         nbad += bl["bad"]
                         worst = max(worst, bl["worst_g_over_r"])
                         if bl["bad"]:
                             where.append("%s %s %d of %d blocks (first %s)" % (t.split("_")[0], sid[-14:], bl["bad"], bl["n"], bl["bad_list"][:2]))
-            row("NIGHT-03", ok and nbad == 0 and nbl > 0, "lit windows' mean colour (linear, the pane as seen): %s (nets: r>g>b, g/r 0.55 to 0.80, b/r 0.20 to 0.45; the pane's mean carries the card and the glass's reflection, so the bands are read with 0.12 and 0.10 of room); block by block: %d blocks of 32 x 32 px wholly inside a lit pane in every night frame, %d with r > g > b broken or linear g/r over 0.85, worst g/r %.2f%s"
-                % ("; ".join(res[:6]), nbl, nbad, worst, ("; failing: " + "; ".join(where[:6])) if where else ""))
+            row("NIGHT-03", ok and nbad == 0 and nbl > 0, "lit windows' mean colour (linear, the pane as seen): %s (nets: r>g>b, g/r 0.55 to 0.80, b/r 0.20 to 0.45; the pane's mean carries the card and the glass's reflection, so the bands are read with 0.12 and 0.10 of room); block by block on the reflection-off night frames (the room's own colour, without the stand-in sky's neutral reflection in the glass; 16 px at their half size = 32 px): %d blocks wholly inside a lit pane in every night frame, %d with r > g > b broken or linear g/r over 0.85, worst g/r %.2f%s; on the beauty frames, beside: %d blocks of 32 px, %d over (reflection of the night sky at the glass's edge): %s"
+                % ("; ".join(res[:6]), nbl, nbad, worst, ("; failing: " + "; ".join(where[:6])) if where else "", nb_b, nbad_b, "; ".join(where_b[:4]) or "none"))
             # NIGHT-07 (street review): in every lit window the clear glass over its lit net's, curtain's or blind's, 0.5 to 1.0, at H_ACROSS_0 night (the target's own view); the other views beside. The statistic is the MEAN of the
             # linear luminance of each region: it is what the street review's own figures were made with (0.26 to 0.31 at the old gain, 0.6 to 0.8 at 1.0: they reproduce with the mean, 0.27 and 0.65 here); the MEDIAN of the clear
             # glass (the dim upper sash and the walls under a bright transom and ceiling) reads 0.27 at gain 1.0 and is reported beside
