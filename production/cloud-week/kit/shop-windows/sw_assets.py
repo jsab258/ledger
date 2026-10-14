@@ -31,7 +31,10 @@ RES = "1k"
 CURRENT = "ritas"             # the shop this process builds (build_shop.py sets it): model_ids, fetch, blank and verify work on that shop's room and display
 # the Poly Haven textures each shop's room lays (the target's room.floor names them: Rita's lino and the tea room's chequer share a map)
 TEXTURES_OF = {"ritas": ["old_linoleum_flooring_01", "painted_plaster_wall"], "ironmonger": ["old_wooden_floor_03", "painted_plaster_wall"],
-               "newsagent": ["rubber_tiles", "painted_plaster_wall"], "tea_rooms": ["old_linoleum_flooring_01", "painted_plaster_wall"]}
+               "newsagent": ["rubber_tiles", "painted_plaster_wall"], "tea_rooms": ["old_linoleum_flooring_01", "painted_plaster_wall"],
+               # batch B (14 October): the launderette's grey vinyl and white tile dado, the grocer's brown lino, the chandler's oiled boards, the fish market's quarry floor and white tiled walls (and the marble slab)
+               "steam_laundry": ["rubber_tiles", "painted_plaster_wall", "long_white_tiles"], "grocer": ["linoleum_brown", "painted_plaster_wall"],
+               "chandler": ["old_wooden_floor_02", "painted_plaster_wall"], "fish_market": ["terracotta_floor_tiles", "long_white_tiles", "marble_01"]}
 
 
 def set_shop(shop_id):
@@ -74,6 +77,9 @@ EXTRA_BLANK = {
                           "fill": "the can's red", "reads": "a flame hazard diamond in the EU's modern (CLP) form: after 1992"}],
     "stationery_supplies": [{"map": "stationery_supplies_diff_1k.jpg", "boxes": [[244, 142, 344, 166], [200, 364, 312, 388], [524, 314, 652, 338]],
                              "fill": "each band's own colour (the stripes' yellow, the pencil's yellow, the red)", "reads": "'Haven Penworks' and the grade (2H, BUDGET, 6B) printed on three pencils (a maker's name)"}],
+    # batch B (14 Oct, 2026): the chandler's rubber boots carry the two MICKY badges on the DIRTY variant's map as well (the target's boxes are for the clean map only)
+    "rubber_boots": [{"map": "rubber_boots_dirty_diff_1k.jpg", "boxes": [[446, 48, 506, 74], [648, 398, 706, 424]],
+                      "fill": "the boot's dark green", "reads": "MICKY (two badges) on the dirty variant's map, at 8 x: a rounded frame round the word"}],
     "sledgehammer_01": [{"map": "sledgehammer_01_diff_1k.jpg", "boxes": [[14, 400, 104, 596]],
                          "fill": "the handle's yellow", "reads": "a warning label: a column of small print and 'WARN...' (modern safety text)"}],
 }
@@ -82,6 +88,9 @@ EXTRA_BLANK = {
 # Target boxes tightened where the target's box is wider than the print and straddles two surfaces (the fill would then be a median of two
 # colours): {(model, map): {target box: tighter box that still holds every glyph}}. Looked at 100 per cent beside the original.
 BOX_FIX = {("vintage_pocket_watch", "vintage_pocket_watch_diff_1k.jpg"): {(620, 630, 765, 790): [640, 664, 694, 762]},
+           # batch B: the lifebuoy's second box ('PH . SA . 20', rotated) overlaps the third (the white band) by 6 rows, so the strip took the band's grey and failed INV-06's ring test; it starts below the
+           # overlap and runs 23 rows lower to take the last letters ('GIT' at 3 x), which stood past its foot
+           ("lifebuoy", "lifebuoy_diff_1k.jpg"): {(630, 690, 782, 902): [630, 697, 782, 925]},
            # batch A (13 Oct): the target's one box [0, 20, 840, 420] over the stationery map's four coloured pencil bands cannot pass its own script test (the four bands' colours differ by up to 40 from one ring
            # colour); the four lettered places are boxed one each (this one, and three in EXTRA_BLANK), each inside one band
            ("stationery_supplies", "stationery_supplies_diff_1k.jpg"): {(0, 20, 840, 420): [398, 100, 500, 124]}}
