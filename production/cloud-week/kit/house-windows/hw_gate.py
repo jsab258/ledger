@@ -1,16 +1,16 @@
-"""The gate in the cloud (target section 3, last paragraph): what the game will show from each review camera, without Unreal.
+"""The gate in the cloud for the house windows (target section 9): what the game will show from a review camera, without Unreal.
 
-Used by build_shop.py (stage `gate`); written for Rita's and generalised on 13 October (every shop's frames, sides and positions come from sw_ctx.Ctx; for Rita's the frames are the earlier ones). For each camera and state:
-  1. the card picture is baked through tools/ue/make_interior_material.py's `trace` (imported, not rewritten): for every pixel of the card the card point and the eye go
-     through `trace`, and the room picture is sampled at the returned (u, v), bilinear with mips; the card's emission is that picture times the state's brightness
-     (day 0.15, night 0.7);
-  2. the front (ritas_front.glb, with the night lattice at night), the display (ritas_display.glb) and the glass are rendered in Blender at 2560 x 1440 from the camera;
-     the card is a flat quad behind them whose emission is the baked picture. The glass is a plain transmissive surface (a mix of a clear pane and a transparent one:
-     all of the pane's reflectance by day, 0.2 of it at night: the look file's glass_specular_night); the game's own glass is the game's.
-     13 Oct, from the try 2 reviews: at night the pane is REFLECTION ONLY (a Glossy BSDF, GGX, roughness 0.02, weighted 0.2 x Fresnel at IOR 1.5; nothing is refracted), because the
-     night mix of a Transparent and a Glass BSDF bent each ray at one face of the closed 6 mm slab and not the other, so everything behind the glass was drawn two or three times.
-Frames: the front model's (x_m to the viewer's right = (u - 3000) / 1000, y_m = Y - 5.295 with Y the distance from the street's centreline toward the shops, z_m = street z - 0.10), the card at y_m 0.58, x_m -2.65..2.65,
-z_m 0.55..2.95. Rita's (east) x_m = 18 - street x; the west shops' x_m = street x - the bay's middle.
+Rewritten 14 October for the house windows from the shop kit's sw_gate.py (copied that day, shop-windows/sw_gate.py, md5 08e00d19...): what is kept is the method (the room picture baked for the camera through
+tools/ue/make_interior_material.py's `trace`, imported and never rewritten; the card as an emission quad; the night glass as reflection only; the stand-in lamps hidden from the camera and from glossy
+rays) and the baking code (uv_map, mips, sample_mips, bake_card); what is new is the street, the houses with the kit pieces in the wall, and the measuring masks.
+
+For each camera and state: (1) every window seen at 11 degrees or more from its wall gets its card baked through `trace` from this eye (a window under that sees the reveal and the frame only: no ray reaches
+the card); (2) the street, the two rows, the twenty kit pieces and the cards are built in Blender and rendered with Cycles at 2560 x 1440; (3) a flat-colour mask render says, per pixel, what it is
+(R: 1 glass, 2 joinery, 3 net or curtain or blind, 4 brick, 5 card; G: the window's number) for the measurements of target 9.
+
+The pane (target 5.1, GLASS.pane.cloud_stand_in): Cycles Principled, not a Glass BSDF: here a Mix of a Transparent BSDF and a Glossy GGX (roughness 0.03) weighted by the dielectric Fresnel of
+F0 0.08 (IOR 1.789: Unreal's Specular 1.0), 1.0 by day and 0.2 at night (unreal-look.json glass_specular_night); the room card, the nets, the curtains and the blinds are seen through it as the room is seen
+through a pane (1 - Fresnel); its roughness is raised to 0.35 in the 6 mm dirt band and the lowest 25 mm (the pane's COLOR_0). The game's own glass (Lumen, the street cube) is owed on the PC.
 """
 import importlib.util
 import json
@@ -26,32 +26,20 @@ from scipy import ndimage
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, "..", "..", "..", ".."))
 sys.path.insert(0, HERE)
-import sw_ctx  # noqa: E402
+import hw_t as T  # noqa: E402
+import hw_ctx as C  # noqa: E402
 
-# the game's rule, imported
 _spec = importlib.util.spec_from_file_location("make_interior_material", os.path.join(REPO, "tools", "ue", "make_interior_material.py"))
 MIM = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(MIM)
 trace = MIM.trace
 
-W, H, D = 5.3, 2.4, 4.5
-CAMD = 5.3
-# the spill's receivers: the window frame and the door frame stand OUT of the display's light channel, as the game has it (shop-interiors.json lit_note: "the window bars are not on that
-# channel, so they no longer flare"; try 1 read "the window bars" as the night lattice only, 13 Oct, close review fault 4)
-SPILL_OFF = ("win_", "frame_", "door_jamb_", "door_frame_head", "band_", "sil_sill")
-SPILL_POS = (0.975, 0.10, 2.30)        # the stand-in rect light, model frame (Rita's x; the other shops' is their window zone's centre): 0.10 behind the wall face, z 2.30 (street review N1): the whole rect stands 50 mm or more behind the glass
-PIERS = {"x": ((-3.0, -2.65), (2.65, 3.0)), "y": (0.0, 0.30), "z": (0.0, 3.56)}     # the brick piers behind the pilasters (sw_front.PIERS_X; street review N2)
-STRIP_AT = ((0.20, 0.377), (0.24, 0.727))     # the two strip lights' (v, w) in the display's frame (close review 1): 8 mm under the middle and the top tier boards' front edges
-STRIP_W = 0.0                                  # their strength in Blender watts: set from gate_lights.json (strip_w) by the gate stage
-CARD_X0, CARD_Y, CARD_BOTTOM = 15.35, 5.875, 0.65         # Rita's (the other shops': sw_ctx.Ctx.card_*)
-CARD_BOTTOM_M = CARD_BOTTOM - 0.10          # the card's bottom in the front model's z (above the footway)
-BAY_MID_X = 18.0
-Y_WALL = 5.295
-FOOT = 0.10
-BRIGHTNESS = {"day": 0.15, "night_lit": 0.7, "night_dark": 0.7}
-VFOV = {"STREET_SQUARE": 39.0, "STREET_30": 39.0, "CLOSE_35": 60.0, "CLOSE_35_B": 60.0}
+BRIGHTNESS = {"day": 0.12, "night_lit": 0.7 * 0.4, "night_dark": 0.7}       # the game's emissive scale for the card (target 7.1 and 9: night_lit = 0.7 x room_glow_gain_night 0.4)
+WARM = (1.0, 0.714, 0.344)
+SODIUM = (1.0, 0.25, 0.0)
 RES = tuple(int(v) for v in os.environ.get("LEDGER_GATE_RES", "2560x1440").split("x"))
-CARD_PX = (2560, 1161)           # the card is 5.3 x 2.4 m: 483 px a metre
+MIN_BAKE_ANGLE = 11.0
+CAT = {"glass": 1, "joinery": 2, "cloth": 3, "brick": 4, "card": 5}
 
 
 def lin(c):
@@ -64,42 +52,27 @@ def srgb(l):
     return np.where(l <= 0.0031308, l * 12.92, 1.055 * l ** (1 / 2.4) - 0.055)
 
 
-def eye_card(eye_street, ctx=None):
-    ctx = ctx or sw_ctx.rita()
-    return ctx.eye_card(eye_street)
-
-
-def to_model(p, ctx=None):
-    """street (x, y, z above the crown) -> the front model's frame (x_m to the viewer's right, y_m out from the wall toward the street, z_m above the footway)."""
-    ctx = ctx or sw_ctx.rita()
-    return ctx.to_model(p)
-
-
-# ------------------------------------------------------------------------------------------------------------- the bake
+# ------------------------------------------------------------------------------------------------------------- the bake (the shop gate's, generalised)
 def _bake_rows(args):
-    j0, j1, ex, ey, ez = args[:5]
-    side = args[5] if len(args) > 5 else 1
-    nw, nh = CARD_PX
+    j0, j1, ex, ey, ez, W, H, D, camd, side, nw, nh = args
     out = np.empty((j1 - j0, nw, 2), np.float32)
     for j in range(j0, j1):
         zc = H - (j + 0.5) / nh * H
         for i in range(nw):
-            xc = (i + 0.5) / nw * W if side < 0 else W - (i + 0.5) / nw * W            # column 0 is the viewer's LEFT: the card's HIGH x on an east card, its LOW x on a west one
-            u, v = trace((xc, 0.0, zc), (ex, ey, ez), (W, H, D), CAMD, side)
+            xc = (i + 0.5) / nw * W if side < 0 else W - (i + 0.5) / nw * W         # column 0 is the viewer's LEFT: the card's HIGH x on an east card, its LOW x on a west one
+            u, v = trace((xc, 0.0, zc), (ex, ey, ez), (W, H, D), camd, side)
             out[j - j0, i, 0] = u
             out[j - j0, i, 1] = v
     return j0, out
 
 
-def uv_map(eye_street, jobs=4, ctx=None):
+def uv_map(eye_card, size, camd, side, nw, nh, jobs=3):
     """(u, v) of the room picture for every card pixel, through the game's `trace` (the Python function, called per pixel)."""
     from multiprocessing import Pool
-    ctx = ctx or sw_ctx.rita()
-    ex, ey, ez = ctx.eye_card(eye_street)
-    nh = CARD_PX[1]
-    step = 24
-    chunks = [(j, min(nh, j + step), ex, ey, ez, ctx.trace_side) for j in range(0, nh, step)]
-    uv = np.empty((nh, CARD_PX[0], 2), np.float32)
+    W, H, D = size
+    step = 16
+    chunks = [(j, min(nh, j + step), eye_card[0], eye_card[1], eye_card[2], W, H, D, camd, side, nw, nh) for j in range(0, nh, step)]
+    uv = np.empty((nh, nw, 2), np.float32)
     with Pool(jobs) as p:
         for j0, o in p.imap_unordered(_bake_rows, chunks):
             uv[j0:j0 + o.shape[0]] = o
@@ -107,7 +80,6 @@ def uv_map(eye_street, jobs=4, ctx=None):
 
 
 def mips(img):
-    """A box-filtered mip chain of a float image (h, w, 3)."""
     chain = [img]
     while min(chain[-1].shape[:2]) > 8:
         a = chain[-1]
@@ -118,7 +90,6 @@ def mips(img):
 
 
 def sample_mips(chain, uv, base_wh):
-    """Bilinear sample with mips (trilinear between two levels by the per-pixel footprint). uv in 0..1 (v down)."""
     pw, ph = base_wh
     du_dx = np.gradient(uv[..., 0], axis=1) * pw
     dv_dx = np.gradient(uv[..., 1], axis=1) * ph
@@ -141,570 +112,675 @@ def sample_mips(chain, uv, base_wh):
     return out
 
 
-def bake_card(eye_street, picture_png, brightness, out_png, uv=None, jobs=4, ctx=None):
-    """The card's emission picture for one camera and state: the room picture (sRGB) sampled through trace with mips; written as 8-bit sRGB WITHOUT the brightness
-    (the render's emission strength carries it) and returned together with the linear-light composite (picture x brightness)."""
-    if uv is None:
-        uv = uv_map(eye_street, jobs, ctx)
+def bake_card(eye_card, size, camd, side, picture_png, out_png, nw, nh, jobs=3):
+    """The card's emission picture for one eye: the room picture (sRGB) sampled through trace with mips, written as 8-bit sRGB WITHOUT the brightness (the card's emission strength carries it)."""
+    uv = uv_map(eye_card, size, camd, side, nw, nh, jobs)
     pic = np.asarray(Image.open(picture_png).convert("RGB")).astype(np.float32) / 255.0
     chain = mips(lin(pic))
     lin_img = sample_mips(chain, uv, (pic.shape[1], pic.shape[0]))
-    srgb8 = (srgb(lin_img) * 255.0 + 0.5).astype(np.uint8)
-    Image.fromarray(srgb8).save(out_png)
-    return uv, lin_img
+    Image.fromarray((srgb(lin_img) * 255.0 + 0.5).astype(np.uint8)).save(out_png)
+    return lin_img
 
 
-def composite_luma(lin_img, brightness):
-    """Rec.709 luma (0..255) of the card picture x brightness, tone-mapped Standard (the sRGB curve), glass reflection off."""
-    c = srgb(np.clip(lin_img * brightness, 0, 1)) * 255.0
-    return 0.2126 * c[..., 0] + 0.7152 * c[..., 1] + 0.0722 * c[..., 2]
+def eye_in_card_frame(site, eye):
+    """The eye in the card frame `trace` takes: x from the card's low-x edge, y out from the card plane (negative for the east viewer), z above the card's bottom."""
+    c = site["card"]
+    return (eye[0] - c["x_low"], eye[1] - site["side"] * abs(c["y_card_plane"]), eye[2] - c["z_bottom_above_crown"])
 
 
-# ------------------------------------------------------------------------------------------------------------- the render
-def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_glb, display_glb, hdri, samples=64, log=print, extra=None, res=None, glass_refl=None, mode="beauty", column_pngs=None, groups=None, ctx=None):
+# ------------------------------------------------------------------------------------------------------------- the scene
+def build_and_render(view_name, cam, state, out_png, bake_dir, samples=48, res=None, mode="beauty", glass_refl=None, extra=None, log=print):
+    """Build the street with the twenty windows and render one view. `cam`: {eye (street), yaw/pitch or aim, vfov}. state: 'day' or 'night' (20:30: the lit windows by the table, the rest dark).
+    mode: 'beauty' (the render), 'mask' (flat colours: glass 1, joinery 2, cloth 3, brick 4, card 5 in R, the window's number in G). Returns the seconds and the record (windows in view, angles)."""
     import bpy
-    from mathutils import Vector, Matrix
-    ctx = ctx or sw_ctx.rita()
-    to_model = ctx.to_model                                    # (the module's own to_model is Rita's; every use below is this shop's)
-    CARD_Y_ = ctx.card_y
-    YC = ctx.ym(CARD_Y_)                                       # the card's y in the front model (+0.58)
-    CARD_BOTTOM_M = ctx.card_bottom - sw_ctx.FOOT
+    from mathutils import Vector, Matrix, Euler
+    res = res or RES
+    extra = extra or {}
+    night = state != "day"
+    t0 = time.time()
     bpy.ops.wm.read_factory_settings(use_empty=True)
     sc = bpy.context.scene
-    night = state != "day"
-    # --- the front, the display, the lattice
-    def load(path):
-        before = set(bpy.data.objects)
-        bpy.ops.import_scene.gltf(filepath=path)
-        return [o for o in bpy.data.objects if o not in before]
-    front = load(front_glb)
-    disp = load(display_glb) if display_glb else []
-    for o in disp:
-        if o.parent is None:
-            o.location += Vector((ctx.window_cx_m, -0.025, 0.600))          # the display's local x is centred on the window zone (Rita's 0.975)
-    lattice = load(grille_glb) if (night and grille_glb) else []
-    # a box sign lit by tubes (4.1: fascia `lit: tubes`, the newsagent's and the launderette's) glows at night with its own picture: the 4.1 board's emissive map on the sign's face material, at 0.5.
-    # The glb is the day state (an emissive map would light the sign by day), so the night's glow is put on here; the game's own is owed (PC-08)
-    em_path = os.path.join(ctx.fascias, "fascias", ctx.id, ctx.id + "_emissive.png")
-    if night and ctx.R["fascia"].get("lit") == "tubes" and os.path.exists(em_path):
-        for m in bpy.data.materials:
-            if m.name.startswith("fascia_" + ctx.id) and m.use_nodes:
-                nt_ = m.node_tree
-                pb = nt_.nodes.get("Principled BSDF")
-                if pb is None:
-                    continue
-                tx = nt_.nodes.new("ShaderNodeTexImage")
-                tx.image = bpy.data.images.load(em_path, check_existing=True)
-                nt_.links.new(tx.outputs["Color"], pb.inputs["Emission Color"])
-                pb.inputs["Emission Strength"].default_value = 0.5
-    # 14 Oct (batch B): the launderette's projecting box sign (4.1 `steam_laundry_box`, lit "tubes") glows at night the same way: each face's own emissive map (4.1 signs/<id>/<id>_face_a_emissive.png, _b_) on that
-    # face's material, at 0.5. The room behind the glass is dark at night, the box sign is not: the lit sign over a dark shop is the launderette's real night
-    hs_ = ctx.R["fascia"].get("hanging_sign")
-    if night and ctx.R["fascia"].get("lit") == "tubes" and hs_ and "box" in str(hs_.get("kind", "")):
-        for fk in ("a", "b"):
-            ep_ = os.path.join(ctx.fascias, "signs", hs_["id"], "%s_face_%s_emissive.png" % (hs_["id"], fk))
-            if not os.path.exists(ep_):
-                continue
-            for m in bpy.data.materials:
-                if m.name.startswith("sign_face_" + fk) and m.use_nodes:
-                    pb = m.node_tree.nodes.get("Principled BSDF")
-                    if pb is None:
-                        continue
-                    tx = m.node_tree.nodes.new("ShaderNodeTexImage")
-                    tx.image = bpy.data.images.load(ep_, check_existing=True)
-                    m.node_tree.links.new(tx.outputs["Color"], pb.inputs["Emission Color"])
-                    pb.inputs["Emission Strength"].default_value = 0.5
-    # empties from the importer carry the Y-up conversion; apply the display's offset on the roots only
-    # glass: a mix of a clear pane (all the glass's reflectance) and a transparent one, 1.0 by day and 0.2 at night
-    refl = (0.2 if night else 1.0) if glass_refl is None else glass_refl
-    res = res or RES
-    gm = bpy.data.materials.new("gate_glass")
-    gm.use_nodes = True
-    nt = gm.node_tree
-    for n in list(nt.nodes):
-        nt.nodes.remove(n)
-    out = nt.nodes.new("ShaderNodeOutputMaterial")
-    mixn = nt.nodes.new("ShaderNodeMixShader")
-    tr = nt.nodes.new("ShaderNodeBsdfTransparent")
-    if night:
-        # reflection only (13 Oct, from the try 2 reviews, street 2 and close 3): Mix(Transparent, Glossy GGX roughness 0.02, white) with the factor 0.2 x Fresnel(IOR 1.5), so the pane
-        # returns 0.2 of its own reflectance and refracts nothing. glass_refl 0 (the checks' reflection-off render) makes the factor 0
-        fr = nt.nodes.new("ShaderNodeFresnel")
-        fr.inputs["IOR"].default_value = 1.5
-        mul = nt.nodes.new("ShaderNodeMath")
-        mul.operation = "MULTIPLY"
-        mul.inputs[1].default_value = refl
-        gl = nt.nodes.new("ShaderNodeBsdfGlossy")
-        gl.distribution = "GGX"
-        gl.inputs["Roughness"].default_value = 0.02
-        gl.inputs["Color"].default_value = (1.0, 1.0, 1.0, 1.0)
-        nt.links.new(fr.outputs["Fac"], mul.inputs[0])
-        nt.links.new(mul.outputs["Value"], mixn.inputs[0])
-        nt.links.new(tr.outputs[0], mixn.inputs[1])
-        nt.links.new(gl.outputs[0], mixn.inputs[2])
-        nt.links.new(mixn.outputs[0], out.inputs[0])
-    else:
-        mixn.inputs[0].default_value = refl
-        gl = nt.nodes.new("ShaderNodeBsdfGlass")
-        gl.inputs["IOR"].default_value = 1.5
-        gl.inputs["Roughness"].default_value = 0.02
-        gl.inputs["Color"].default_value = (0.97, 0.99, 0.98, 1.0)
-        nt.links.new(tr.outputs[0], mixn.inputs[1])
-        nt.links.new(gl.outputs[0], mixn.inputs[2])
-        # by day Cycles' glass stops the sky's shadow rays, so the display got no direct sky light (close review, narrow 1, tested there): for a shadow ray the pane is clear, as real
-        # glass is to the sky's light. Camera, reflection and refraction rays still meet the glass as before
-        lpn = nt.nodes.new("ShaderNodeLightPath")
-        tr2 = nt.nodes.new("ShaderNodeBsdfTransparent")
-        mix2 = nt.nodes.new("ShaderNodeMixShader")
-        nt.links.new(lpn.outputs["Is Shadow Ray"], mix2.inputs[0])
-        nt.links.new(mixn.outputs[0], mix2.inputs[1])
-        nt.links.new(tr2.outputs[0], mix2.inputs[2])
-        nt.links.new(mix2.outputs[0], out.inputs[0])
-    for o in front + disp:
-        if o.type == "MESH":
-            for slot in o.material_slots:
-                if slot.material and slot.material.name.lower().startswith("glass") and "row" not in slot.material.name.lower():
-                    slot.material = gm
-    # the door's OPEN sign by day, CLOSED at night (the card is turned over). 14 Oct (batch B, from the tea rooms' street review): a lit shop is open, so the card is turned only in a shop's DARK night
-    # picture (night_dark); in the lit night frames (and a dark shop's night_lit test frames) it reads OPEN. Rita's gate keeps its rule (her approved previews show CLOSED)
-    turn_sign = night if ctx.id == "ritas" else (state == "night_dark")
-    for o in front:
-        if o.type == "MESH" and o.name.startswith("door_sign_open"):
-            for slot in o.material_slots:
-                m = slot.material
-                if m and turn_sign:
-                    for n in m.node_tree.nodes:
-                        if n.type == "TEX_IMAGE":
-                            n.image = bpy.data.images.load(os.path.join(ctx.paper, "K03b", "K03b_A_basecolour.png"), check_existing=True)
-    # --- the card: emission = the baked picture x the state's brightness; it does not light the scene (the game's card is unlit; Lumen's light is owed on the PC)
-    me = bpy.data.meshes.new("card")
-    x0, x1, z0, z1, yc = -W / 2, W / 2, 0.55, 2.95, YC
-    me.from_pydata([(x0, yc, z0), (x1, yc, z0), (x1, yc, z1), (x0, yc, z1)], [], [(0, 1, 2, 3)])
-    uv = me.uv_layers.new(name="UVMap")
-    for loop, (a, b) in zip(me.loops, ((0, 0), (1, 0), (1, 1), (0, 1))):
-        uv.data[loop.index].uv = (a, b)
-    card = bpy.data.objects.new("card", me)
-    sc.collection.objects.link(card)
-    cm = bpy.data.materials.new("card_emission")
-    cm.use_nodes = True
-    cnt = cm.node_tree
-    for n in list(cnt.nodes):
-        cnt.nodes.remove(n)
-    ti = cnt.nodes.new("ShaderNodeTexImage")
-    ti.image = bpy.data.images.load(card_png, check_existing=True)
-    ti.image.colorspace_settings.name = "sRGB"
-    ti.interpolation = "Linear"
-    em = cnt.nodes.new("ShaderNodeEmission")
-    em.inputs["Strength"].default_value = BRIGHTNESS[state]
-    co = cnt.nodes.new("ShaderNodeOutputMaterial")
-    cnt.links.new(ti.outputs["Color"], em.inputs["Color"])
-    cnt.links.new(em.outputs[0], co.inputs[0])
-    me.materials.append(cm)
-    card.visible_diffuse = False
-    card.visible_glossy = False
-    card.visible_shadow = False
-    # --- reveals between the wall and the card so a grazing ray finds a surface: top and under the bed are dark and matt; the SIDES (and the display's two return walls) are an emission of
-    # the room picture's own side-wall front column (picture u 0 to 8 px for the left wall, 4088 to 4096 for the right) at the same height, times the state's brightness, so the wall
-    # meets the card without a step (13 Oct, close review fault 3: from CLOSE_35_B a third of the window was a black slab, the 0.61 m gap beside the card's edge)
-    dark = bpy.data.materials.new("reveal")
-    dark.use_nodes = True
-    dark.node_tree.nodes["Principled BSDF"].inputs["Base Color"].default_value = (0.02, 0.02, 0.02, 1)
+    lit_names = set(T.lit_at("20:30")) if night else set()
+    sites = T.sites()
+    rec = {"view": view_name, "state": state, "windows": {}}
 
-    def wall_material(side):
-        m = bpy.data.materials.new("side_wall_" + side)
+    # ---------------------------------------------------------------- materials
+    def new_mat(name, rgb, rough=0.8, emit=None, emit_strength=0.0):
+        m = bpy.data.materials.new(name)
+        m.use_nodes = True
+        p = m.node_tree.nodes["Principled BSDF"]
+        p.inputs["Base Color"].default_value = (*rgb, 1.0)
+        p.inputs["Roughness"].default_value = rough
+        if emit is not None:
+            p.inputs["Emission Color"].default_value = (*emit, 1.0)
+            p.inputs["Emission Strength"].default_value = emit_strength
+        return m
+
+    def flat(name, rgb):
+        m = bpy.data.materials.new(name)
         m.use_nodes = True
         t = m.node_tree
         for n in list(t.nodes):
             t.nodes.remove(n)
-        if not column_pngs:
-            return dark
-        geo = t.nodes.new("ShaderNodeNewGeometry")
-        sep = t.nodes.new("ShaderNodeSeparateXYZ")
-        mth = t.nodes.new("ShaderNodeMath")          # v = (z - card bottom) / card height
-        mth.operation = "MULTIPLY_ADD"
-        mth.inputs[1].default_value = 1.0 / H
-        mth.inputs[2].default_value = -CARD_BOTTOM_M / H
-        com = t.nodes.new("ShaderNodeCombineXYZ")
-        com.inputs["X"].default_value = 0.5
-        tex = t.nodes.new("ShaderNodeTexImage")
-        tex.image = bpy.data.images.load(column_pngs[side], check_existing=True)
-        tex.image.colorspace_settings.name = "sRGB"
-        tex.interpolation = "Linear"
-        tex.extension = "EXTEND"
-        emn = t.nodes.new("ShaderNodeEmission")
-        emn.inputs["Strength"].default_value = BRIGHTNESS[state]
-        outn = t.nodes.new("ShaderNodeOutputMaterial")
-        t.links.new(geo.outputs["Position"], sep.inputs["Vector"])
-        t.links.new(sep.outputs["Z"], mth.inputs[0])
-        t.links.new(mth.outputs[0], com.inputs["Y"])
-        t.links.new(com.outputs["Vector"], tex.inputs["Vector"])
-        t.links.new(tex.outputs["Color"], emn.inputs["Color"])
-        t.links.new(emn.outputs[0], outn.inputs[0])
+        e = t.nodes.new("ShaderNodeEmission")
+        e.inputs["Color"].default_value = (*rgb, 1.0)
+        o = t.nodes.new("ShaderNodeOutputMaterial")
+        t.links.new(e.outputs[0], o.inputs[0])
         return m
-    wall_l, wall_r = wall_material("l"), wall_material("r")
 
-    def slab(name, a0, a1, b0, b1, c0, c1, mat=None):
-        bpy.ops.mesh.primitive_cube_add(size=1, location=((a0 + a1) / 2, (b0 + b1) / 2, (c0 + c1) / 2))
-        o = bpy.context.object
-        o.name = name
-        o.scale = (a1 - a0, b1 - b0, c1 - c0)
-        o.data.materials.append(mat or dark)
-        return o
-    ycard = yc
-    slab("reveal_l", -W / 2 - 0.012, -W / 2, 0.0, ycard + 0.02, 0.0, 2.97, wall_l)
-    slab("reveal_r", W / 2, W / 2 + 0.012, 0.0, ycard + 0.02, 0.0, 2.97, wall_r)
-    slab("reveal_top", -W / 2, W / 2, 0.0, ycard + 0.02, 2.95, 2.97)
-    slab("reveal_floor", -W / 2, W / 2, 0.02, ycard + 0.02, 0.0, 0.55)
-    for o in disp:
-        if o.type == "MESH" and o.name.startswith("return_wall_"):
-            o.data.materials.clear()
-            o.data.materials.append(wall_l if o.name.startswith("return_wall_l") else wall_r)
-    # --- the street: wall, footway, road, far footway
-    brick = bpy.data.materials.new("brick")
-    brick.use_nodes = True
-    bn = brick.node_tree
-    bp = bn.nodes["Principled BSDF"]
-    tc = bn.nodes.new("ShaderNodeTexCoord")
-    sp = bn.nodes.new("ShaderNodeSeparateXYZ")
-    cb = bn.nodes.new("ShaderNodeCombineXYZ")
-    br = bn.nodes.new("ShaderNodeTexBrick")
-    bn.links.new(tc.outputs["Object"], sp.inputs["Vector"])
-    bn.links.new(sp.outputs["X"], cb.inputs["X"])
-    bn.links.new(sp.outputs["Z"], cb.inputs["Y"])
-    bn.links.new(cb.outputs["Vector"], br.inputs["Vector"])
+    brick = new_mat("brick", (0.5, 0.3, 0.22), 0.92)
+    nt = brick.node_tree
+    bp = nt.nodes["Principled BSDF"]
+    tc = nt.nodes.new("ShaderNodeTexCoord")
+    sp = nt.nodes.new("ShaderNodeSeparateXYZ")
+    cb = nt.nodes.new("ShaderNodeCombineXYZ")
+    br = nt.nodes.new("ShaderNodeTexBrick")
+    nt.links.new(tc.outputs["Object"], sp.inputs["Vector"])
+    nt.links.new(sp.outputs["X"], cb.inputs["X"])
+    nt.links.new(sp.outputs["Z"], cb.inputs["Y"])
+    nt.links.new(cb.outputs["Vector"], br.inputs["Vector"])
     br.offset = 0.5
     br.inputs["Scale"].default_value = 1.0
     br.inputs["Brick Width"].default_value = 0.215
     br.inputs["Row Height"].default_value = 0.075
     br.inputs["Mortar Size"].default_value = 0.010
     br.inputs["Mortar Smooth"].default_value = 0.2
-    br.inputs["Color1"].default_value = (*lin(np.array([0.50, 0.30, 0.22])), 1.0)
-    br.inputs["Color2"].default_value = (*lin(np.array([0.43, 0.25, 0.18])), 1.0)
-    br.inputs["Mortar"].default_value = (*lin(np.array([0.58, 0.55, 0.50])), 1.0)
-    bn.links.new(br.outputs["Color"], bp.inputs["Base Color"])
-    bp.inputs["Roughness"].default_value = 0.92
-    paving = bpy.data.materials.new("paving")
-    paving.use_nodes = True
-    paving.node_tree.nodes["Principled BSDF"].inputs["Base Color"].default_value = (*lin(np.array([0.50, 0.50, 0.48])), 1.0)
-    paving.node_tree.nodes["Principled BSDF"].inputs["Roughness"].default_value = 0.85
-    road = bpy.data.materials.new("road")
-    road.use_nodes = True
-    road.node_tree.nodes["Principled BSDF"].inputs["Base Color"].default_value = (*lin(np.array([0.22, 0.22, 0.22])), 1.0)
-    road.node_tree.nodes["Principled BSDF"].inputs["Roughness"].default_value = 0.9
-    def plane(name, v, m):
-        me2 = bpy.data.meshes.new(name)
-        me2.from_pydata(v, [], [(0, 1, 2, 3)])
-        o = bpy.data.objects.new(name, me2)
-        sc.collection.objects.link(o)
-        o.data.materials.append(m)
-        return o
-    xs = 14.0
-    # wall face at y 0: left and right of the bay (viewer's left = -x_m), above the cornice; the shop's own opening stays open behind the front
-    plane("wall_l", [(-xs, 0.0, 0.0), (-3.0, 0.0, 0.0), (-3.0, 0.0, 12.0), (-xs, 0.0, 12.0)], brick)
-    plane("wall_r", [(3.0, 0.0, 0.0), (xs, 0.0, 0.0), (xs, 0.0, 12.0), (3.0, 0.0, 12.0)], brick)
-    plane("wall_top", [(-3.0, 0.0, 3.56), (3.0, 0.0, 3.56), (3.0, 0.0, 12.0), (-3.0, 0.0, 12.0)], brick)
-    kerb_y = 3.63 - sw_ctx.WALL_Y
-    plane("footway", [(-xs, kerb_y, 0.0), (xs, kerb_y, 0.0), (xs, 0.0, 0.0), (-xs, 0.0, 0.0)], paving)
-    plane("road", [(-xs, -3.0 - sw_ctx.WALL_Y, -FOOT), (xs, -3.0 - sw_ctx.WALL_Y, -FOOT), (xs, kerb_y, -FOOT), (-xs, kerb_y, -FOOT)], road)
-    plane("far_footway", [(-xs, -9.0 - sw_ctx.WALL_Y, 0.0), (xs, -9.0 - sw_ctx.WALL_Y, 0.0), (xs, -3.0 - sw_ctx.WALL_Y, 0.0), (-xs, -3.0 - sw_ctx.WALL_Y, 0.0)], paving)
+    br.inputs["Color1"].default_value = (*lin([0.50, 0.30, 0.22]), 1.0)
+    br.inputs["Color2"].default_value = (*lin([0.43, 0.25, 0.18]), 1.0)
+    br.inputs["Mortar"].default_value = (*lin([0.58, 0.55, 0.50]), 1.0)
+    nt.links.new(br.outputs["Color"], bp.inputs["Base Color"])
+    paving = new_mat("paving", tuple(lin([0.50, 0.50, 0.48])), 0.85)
+    road = new_mat("road", tuple(lin([0.22, 0.22, 0.22])), 0.9)
+    stone = new_mat("stone", tuple(lin([0.72, 0.70, 0.64])), 0.85)
+    roof = new_mat("roof", tuple(lin([0.2, 0.2, 0.22])), 0.7)
+    dark = new_mat("carcass", (0.015, 0.015, 0.015), 1.0)
+    shopfront = new_mat("shopfront", tuple(lin([0.08, 0.1, 0.09])), 0.5)
+    post = new_mat("lamp_post", tuple(lin([0.05, 0.05, 0.06])), 0.6)
+    if mode == "mask":
+        mk = {k: flat("mk_" + k, (v / 255.0, 0, 0)) for k, v in CAT.items()}
 
-    def block(name, x0, x1, y0, y1, z0, z1, m):
-        """A closed box in the model frame (vertices in world coordinates, so the brick shader's object coordinates are the wall's own)."""
-        v = [(x0, y0, z0), (x1, y0, z0), (x1, y1, z0), (x0, y1, z0), (x0, y0, z1), (x1, y0, z1), (x1, y1, z1), (x0, y1, z1)]
+    # ---------------------------------------------------------------- helpers
+    def bl(p):
+        return (-p[0], p[1], p[2])
+
+    def blk(name, x0, x1, y0, y1, z0, z1, m):
+        """A closed box in STREET coordinates (x0 < x1 in the street's x), built in Blender's (x negated)."""
+        xa, xb = -x1, -x0
+        v = [(xa, y0, z0), (xb, y0, z0), (xb, y1, z0), (xa, y1, z0), (xa, y0, z1), (xb, y0, z1), (xb, y1, z1), (xa, y1, z1)]
         f = [(0, 3, 2, 1), (4, 5, 6, 7), (0, 1, 5, 4), (1, 2, 6, 5), (2, 3, 7, 6), (3, 0, 4, 7)]
-        me2 = bpy.data.meshes.new(name)
-        me2.from_pydata(v, [], f)
-        o = bpy.data.objects.new(name, me2)
+        me = bpy.data.meshes.new(name)
+        me.from_pydata(v, [], f)
+        o = bpy.data.objects.new(name, me)
         sc.collection.objects.link(o)
         o.data.materials.append(m)
         return o
-    # a brick pier behind each pilaster (13 Oct, street review N2): the pilaster's shaft and core stop at x 2.970 and the street model's wall opening is the whole bay, so the outer
-    # 30 to 54 mm of the bay was open to the sky at STREET_30; the game's street facade has to close the same gap (owed on the PC)
-    for k, (xa, xb) in enumerate(PIERS["x"]):
-        block("pier_%d" % k, xa, xb, PIERS["y"][0], PIERS["y"][1], PIERS["z"][0], PIERS["z"][1], brick)
-    # --- the camera
-    eye = to_model(cam_def["eye_street_m"])
-    aim = to_model(cam_def["aim_street_m"])
-    cam = bpy.data.cameras.new("cam")
-    cam.sensor_fit = "VERTICAL"
-    cam.angle_y = math.radians(VFOV[cam_name])
-    cam.clip_start, cam.clip_end = 0.05, 100.0
-    co_ = bpy.data.objects.new("cam", cam)
-    sc.collection.objects.link(co_)
-    co_.location = Vector(eye)
-    co_.rotation_euler = (Vector(aim) - Vector(eye)).to_track_quat("-Z", "Y").to_euler()
-    sc.camera = co_
-    bpy.context.view_layer.update()
-    fwd = co_.matrix_world.to_quaternion() @ Vector((0.0, 0.0, -1.0))
-    to_aim = (Vector(aim) - Vector(eye)).normalized()
-    cam_rec = {"camera": cam_name, "state": state, "eye_street_m": [ctx.x_of_u(co_.location.x * 1000.0 + 3000.0), ctx.sgn * (co_.location.y + sw_ctx.WALL_Y), co_.location.z + FOOT],
-               "defined_eye_street_m": list(cam_def["eye_street_m"]), "aim_street_m": list(cam_def["aim_street_m"]),
-               "aim_error_deg": round(math.degrees(fwd.angle(to_aim)), 4), "vfov_deg": round(math.degrees(cam.angle_y), 4), "defined_vfov_deg": VFOV[cam_name],
-               "resolution": list(res)}
-    json.dump(cam_rec, open(os.path.splitext(out_png)[0] + ".camera.json", "w"), indent=1)
-    # --- light: day = an overcast sky; night = sodium lamps (linear 1.0, 0.25, 0.0) and the display's spill (a rect light in the window head, tipped 62 degrees down)
-    w = bpy.data.worlds.new("w")
-    sc.world = w
-    w.use_nodes = True
-    wn = w.node_tree
-    bg = wn.nodes["Background"]
-    if not night and hdri and os.path.exists(hdri):
-        env = wn.nodes.new("ShaderNodeTexEnvironment")
-        env.image = bpy.data.images.load(hdri, check_existing=True)
-        wn.links.new(env.outputs["Color"], bg.inputs["Color"])
-        bg.inputs["Strength"].default_value = 1.0
-    elif not night:
-        bg.inputs["Color"].default_value = (0.62, 0.68, 0.78, 1)
-        bg.inputs["Strength"].default_value = 1.0
-    else:
-        bg.inputs["Color"].default_value = (0.004, 0.005, 0.009, 1)
-        bg.inputs["Strength"].default_value = 1.0
-    if night:
-        for lx in ctx.lamp_xs():
-            sp = bpy.data.lights.new("lamp_%g" % lx, "SPOT")
-            sp.color = (1.0, 0.25, 0.0)
-            sp.energy = (extra or {}).get("lamp_w", 4000.0)
-            sp.spot_size = math.radians(92)
-            sp.spot_blend = 0.5
-            sp.shadow_soft_size = 0.15
-            lo = bpy.data.objects.new("lamp", sp)
-            sc.collection.objects.link(lo)
-            if (extra or {}).get("lamp_glossy") is False:
-                lo.visible_glossy = False          # the stand-in lamp's own highlight in the night glass (GLS-03 read 19.9 at the tea rooms' STREET_30; with the lamps out of glossy rays 14.4): the lamps still light the street and the display
-            lo.location = Vector(to_model((lx, ctx.sgn * -4.1, 4.78)))
-            lo.rotation_euler = (Vector(to_model((lx, ctx.sgn * -4.1, 0.0))) - lo.location).to_track_quat("-Z", "Y").to_euler()
-        # the display's spill: 350 lm rect light in the window head, tipped 62 degrees down (lighting channel 1: the window bars are not on it; here it lights the display and what is in front)
-        rl = bpy.data.lights.new("spill", "AREA")
-        rl.shape = "RECTANGLE"
-        rl.size, rl.size_y = 3.2, 0.18
-        rl.color = (1.0, 0.97, 0.92)
-        rl.energy = 0.0 if state == "night_dark" else (extra or {}).get("spill_w", 60.0)        # a shop that is dark at night (the ironmonger) spills nothing: its display is as dark as its room
-        ro = bpy.data.objects.new("spill", rl)
-        sc.collection.objects.link(ro)
-        # centred at y 0.10 behind the wall face and z 2.30 (13 Oct, street review N1; try 1 had it at y -0.02, z 2.36, so its front edge stood 63 mm IN FRONT of the glass, its emitting face
-        # was seen from the street and it lit the window frame from in front: the burnt bar, the glowing mullions, the bright pavement). Now the whole rect, tipped as before, stands 50 mm or
-        # more behind the glass's inner face, and the light itself is invisible to the camera, to glossy rays and to transmission rays
-        ro.location = (ctx.window_cx_m, SPILL_POS[1], SPILL_POS[2])
-        ro.visible_camera = False
-        ro.visible_glossy = False
-        ro.visible_transmission = False
-        # an area light shines along its own -Z; tipped about x by -28 degrees it shines down and out toward the street: 62 degrees below the horizontal, as the spec's rect light
-        ro.rotation_euler = (math.radians(-28.0), 0.0, 0.0)
-        # lighting channel 1 (the game's): the spill lights the display, the front and the street but not the night grille's lattice (the bars would flare)
-        recv = bpy.data.collections.new("spill_receivers")
-        sc.collection.children.link(recv)
-        # the spill's channel holds the DISPLAY and nothing else (13 Oct, street review N1 condition 3: the pavement pool no brighter than the lit glass). With the spill behind the glass
-        # its light still goes out through the night glass (0.8 transparent) and made a pool on the pavement in front of the window as bright as the lamps' own; in the game the pavement's
-        # pool is the game's own light (owed on the PC, PC-02). The window frame, the door frame, the band, the front, the street and the lattice are not on the channel
-        for o in list(bpy.data.objects):
-            if o.type == "MESH" and o in disp and o.name != "card" and not o.name.startswith(("return_wall_",)):
-                recv.objects.link(o)
-        # 13 Oct, from the try 2 reviews (street 5): the gate's footway plane, and nothing else, goes on the channel, so the spill's light reaches the pavement through the glass as a pool
-        # (the window frame, mullions, band, front and lattice stay off it; the lattice still casts its diamond shadow into the pool). The pool is the gate's stand-in: the game's own is
-        # owed (PC-02)
-        recv.objects.link(bpy.data.objects["footway"])
-        # 14 Oct (batch B, from the ironmonger's close review, fault 1): the stand-in lamps' pools on the far footway and the road were reflected by the night glass as a burnt orange bar across the glass
-        # (both close frames; GLS-03's p95 could not see it). The road and the far footway are left out of glossy rays at night: the glass reflects the dark street there and nothing else changes. Default
-        # for every shop but Rita's (her gate and her numbers stay as they were); `{"street_glossy": true}` in gate_lights_extra.json puts the reflection back
-        sg_ = (extra or {}).get("street_glossy")
-        if sg_ is None:
-            sg_ = bool(ctx is not None and ctx.id == "ritas")
-        if not sg_:
-            for _n in ("road", "far_footway"):
-                if _n in bpy.data.objects:
-                    bpy.data.objects[_n].visible_glossy = False
-        for _nm in [x for x in os.environ.get("LEDGER_GATE_NOGLOSSY", "").split(",") if x]:        # a test knob: these objects (or lights) are left out of glossy rays
-            if _nm in bpy.data.objects:
-                bpy.data.objects[_nm].visible_glossy = False
-        if (extra or {}).get("footway_glossy") is False:
-            # the pool of the spill on the pavement is the gate's stand-in (PC-02): where its reflection in the lower glass made GLS-03 read 19.9 (the tea rooms, STREET_30; the limit is 15) the
-            # footway is left out of glossy rays, so the glass reflects the dark street there and nothing else changes
-            bpy.data.objects["footway"].visible_glossy = False
-        ro.light_linking.receiver_collection = recv
-        # 13 Oct, from the try 2 reviews (close 1): two strip lights in the display, each a rect 3.20 x 0.02 m, 8 mm under the front edge of a tier board (middle tier at v 0.20, w 0.377;
-        # top tier at v 0.24, w 0.727), facing down and tipped 30 degrees toward the back, 3000 K, on the display's channel, invisible to the camera, glossy and transmission rays.
-        # The display's local (x, y, w) is the model frame's (0.975 + x, -0.025 + y, 0.600 + w). Strength: Blender watts, set so that LIT-08 holds (the game's lumens are owed: PC-02)
-        sw = (extra or {}).get("strip_w", STRIP_W)
-        strips = (extra or {}).get("strip_at", STRIP_AT if ctx.id == "ritas" else [])
-        if sw and not (extra or {}).get("no_strips"):
-            for (yv, wv) in strips:
-                sl = bpy.data.lights.new("strip_%g" % wv, "AREA")
-                sl.shape = "RECTANGLE"
-                sl.size, sl.size_y = 3.2, 0.02
-                sl.color = (1.0, 1.0, 1.0)
-                sl.use_temperature = True
-                sl.temperature = 3000.0
-                sl.energy = sw
-                so = bpy.data.objects.new("strip_%g" % wv, sl)
-                sc.collection.objects.link(so)
-                so.location = (ctx.window_cx_m, -0.025 + yv, 0.600 + wv)
-                so.rotation_euler = (math.radians(30.0), 0.0, 0.0)
-                so.visible_camera = False
-                so.visible_glossy = False
-                so.visible_transmission = False
-                so.light_linking.receiver_collection = recv
-    # --- the glass mask (a check's render, 13 Oct): every pixel where the window's glass is the first thing the camera sees white, everything else (frame, mullions, beads, lattice, display,
-    # wall) black: the window-glass pixels without the frame
-    if mode in ("mask_front", "mask_pieces"):
-        # 13 Oct, from the try 2 reviews. mask_front: white = the front's opaque parts that are not glass (the glass, the lettering rows, the OPEN sign, the hall, the display, the street and
-        # the card are black): FRN-10's pixel test (nothing on the front under luma 8, outside the glass, the two fanlights and the shop door's glass). mask_pieces: one flat colour a
-        # display piece (`groups`: object name -> group index), white for the room (the card, the reveals, the return walls), black for everything else, the glass left out: LIT-08
-        def flat3(c):
-            m = bpy.data.materials.new("flat")
-            m.use_nodes = True
-            t = m.node_tree
-            for n in list(t.nodes):
-                t.nodes.remove(n)
-            e = t.nodes.new("ShaderNodeEmission")
-            e.inputs["Color"].default_value = (*c, 1.0)
-            o2 = t.nodes.new("ShaderNodeOutputMaterial")
-            t.links.new(e.outputs[0], o2.inputs[0])
-            return m
-        black3 = flat3((0, 0, 0))
-        white3 = flat3((1, 1, 1))
-        pal = {}
-        for o in list(bpy.data.objects):
-            if o.type == "MESH":
-                is_glass = any(sl.material is not None and ("glass" in sl.material.name.lower()) for sl in o.material_slots) or "glass" in o.name.lower()
-                o.data.materials.clear()
-                if mode == "mask_front":
-                    ok_front = o in front and not is_glass and not o.name.startswith(("glass_row", "door_sign", "hall_", "grille_lattice"))
-                    o.data.materials.append(white3 if ok_front else black3)
+
+    def wedge(name, x0, x1, y_eave, y_back, z_eave, z_ridge, m):
+        """A roof: a prism from the eaves to the ridge (street x, y)."""
+        xa, xb = -x1, -x0
+        v = [(xa, y_eave, z_eave), (xb, y_eave, z_eave), (xb, y_back, z_eave), (xa, y_back, z_eave), (xa, (y_eave + y_back) / 2, z_ridge), (xb, (y_eave + y_back) / 2, z_ridge)]
+        f = [(0, 3, 2, 1), (0, 1, 5, 4), (1, 2, 5), (2, 3, 4, 5)[::-1], (3, 0, 4), (2, 3, 4, 5)]
+        me = bpy.data.meshes.new(name)
+        me.from_pydata(v, [], [(0, 3, 2, 1), (0, 1, 5, 4), (1, 2, 5), (3, 4, 5, 2), (0, 4, 3)])
+        o = bpy.data.objects.new(name, me)
+        sc.collection.objects.link(o)
+        o.data.materials.append(m)
+        return o
+
+    def cat(o, key, m_real):
+        o.data.materials.clear()
+        o.data.materials.append(mk[key] if mode == "mask" else m_real)
+
+    X0, X1 = -3.0, 50.0
+
+    # ---------------------------------------------------------------- the street
+    g = blk("road", X0, X1, -3.38, 3.38, -0.6, 0.0, road)
+    cat(g, "brick", road)
+    for nm, ya, yb in (("footway_E", 3.38, 12.0), ("footway_W", -12.0, -3.38)):
+        o = blk(nm, X0, X1, ya, yb, -0.6, 0.10, paving)
+        cat(o, "brick", paving)
+    # ---------------------------------------------------------------- the east parade: one slab a floor, piers between the openings
+    ups = [s for s in sites if s["side"] > 0]
+    gfs = [s for s in sites if s["side"] < 0]
+    yo, yi = C.WALL_E, C.WALL_E + C.WALL_T
+    z_gf_top, z_sill, z_head, z_eave = 3.65, ups[0]["sill_z_above_crown"], ups[0]["head_z_above_crown"], 6.3
+    o = blk("e_ground", 3.0, 46.0, yo, yi, 0.1, z_gf_top, shopfront)
+    cat(o, "brick", shopfront)
+    o = blk("e_stringcourse", 3.0, 46.0, yo - 0.03, yi, 3.5, 3.65, stone)
+    cat(o, "brick", stone)
+    xs = sorted(s["x_centre"] for s in ups)
+    cuts = [3.0]
+    for x in xs:
+        cuts += [x - 0.425, x + 0.425]
+    cuts.append(46.0)
+    for k in range(0, len(cuts), 2):
+        a, b = cuts[k], cuts[k + 1]
+        if b - a > 1e-6:
+            o = blk("e_pier_%d" % k, a, b, yo, yi, z_gf_top, z_eave, brick)
+            cat(o, "brick", brick)
+    for x in xs:
+        o = blk("e_under_sill_%g" % x, x - 0.425, x + 0.425, yo, yi, z_gf_top, z_sill - 0.127, brick)
+        cat(o, "brick", brick)
+        o = blk("e_stone_sill_%g" % x, x - 0.5012, x + 0.5012, yo - 0.0508, yi, z_sill - 0.127, z_sill, stone)
+        cat(o, "brick", stone)
+        o = blk("e_head_%g" % x, x - 0.425, x + 0.425, yo, yi, z_head, z_eave, brick)
+        cat(o, "brick", brick)
+    o = wedge("e_roof", 2.7, 46.3, yo - 0.3, yo + 8.0, z_eave, z_eave + 0.5 * 8.0 * math.tan(math.radians(35.0)), roof)
+    cat(o, "brick", roof)
+    # ---------------------------------------------------------------- the west cottages (x 3 to 21), the west_north shops beyond (stand-ins)
+    wy_o, wy_i = C.WALL_W, C.WALL_W - C.WALL_T
+    gz_sill, gz_head, gz_eave = gfs[0]["sill_z_above_crown"], gfs[0]["head_z_above_crown"], 3.1
+    o = blk("w_below", 3.0, 21.0, wy_i, wy_o, 0.1, gz_sill, brick)
+    cat(o, "brick", brick)
+    o = blk("w_above", 3.0, 21.0, wy_i, wy_o, gz_head, gz_eave, brick)
+    cat(o, "brick", brick)
+    wx = sorted(s["x_centre"] for s in gfs)
+    cuts = [3.0]
+    doors = [4.5, 13.5, 19.5]
+    for x in sorted(wx + doors):
+        hw = 0.45 if x in doors else 0.425
+        cuts += [x - hw, x + hw]
+    cuts.append(21.0)
+    for k in range(0, len(cuts), 2):
+        a, b = cuts[k], cuts[k + 1]
+        if b - a > 1e-6:
+            o = blk("w_pier_%d" % k, a, b, wy_i, wy_o, gz_sill, gz_head, brick)
+            cat(o, "brick", brick)
+    for x in doors:
+        o = blk("w_door_%g" % x, x - 0.45, x + 0.45, wy_i, wy_o + 0.02, 0.1, 2.0, shopfront)
+        cat(o, "brick", shopfront)
+        o = blk("w_door_head_%g" % x, x - 0.45, x + 0.45, wy_i, wy_o, 2.0, gz_sill + 1.68, brick)
+        cat(o, "brick", brick)
+    for x in wx:
+        o = blk("w_stone_sill_%g" % x, x - 0.5012, x + 0.5012, wy_i, wy_o - 0.0508 + 0.0, gz_sill - 0.127, gz_sill, stone)
+        cat(o, "brick", stone)
+    o = wedge("w_roof", 2.7, 21.3, wy_o + 0.3, wy_o - 5.0, gz_eave, gz_eave + 0.5 * 5.0 * math.tan(math.radians(40.0)), roof)
+    cat(o, "brick", roof)
+    o = blk("wn_shops", 21.0, 46.0, wy_i - 8.0, wy_o, 0.1, 3.5, brick)
+    cat(o, "brick", brick)
+    o = blk("far_end_e", 46.0, 48.0, yo, yi + 8.0, 0.1, 7.0, brick)
+    cat(o, "brick", brick)
+    # ---------------------------------------------------------------- the lamp columns (stand-ins): dark posts, the light itself hidden from the camera and from glossy rays
+    lamps = []
+    for lx in (8.0, 18.0, 28.0, 38.0):
+        o = blk("lamp_post_%g" % lx, lx - 0.06, lx + 0.06, -3.84, -3.72, 0.1, 4.55, post)
+        cat(o, "brick", post)
+        o = blk("lamp_head_%g" % lx, lx - 0.18, lx + 0.18, -3.96, -3.60, 4.55, 4.85, post)
+        cat(o, "brick", post)
+        lamps.append(lx)
+
+    # ---------------------------------------------------------------- the kit pieces in the walls
+    def load_kit(kind):
+        before = set(bpy.data.objects)
+        bpy.ops.import_scene.gltf(filepath=os.path.join(T.ASSETS, {"S22": "hw_S22.glb", "S11": "hw_S11.glb", "RC": "hw_RC.glb", "RC2": "hw_RC2.glb"}[kind]))
+        new = [o for o in bpy.data.objects if o not in before]
+        for o in new:
+            o.hide_render = True
+            o.hide_viewport = True
+        return [o for o in new if o.type == "MESH"]
+    templates = {}
+    P = T.paints()
+    glass_gate = bpy.data.materials.new("glass_gate")
+    glass_gate.use_nodes = True
+    gnt = glass_gate.node_tree
+    for n in list(gnt.nodes):
+        gnt.nodes.remove(n)
+    gout = gnt.nodes.new("ShaderNodeOutputMaterial")
+    gmix = gnt.nodes.new("ShaderNodeMixShader")
+    gtr = gnt.nodes.new("ShaderNodeBsdfTransparent")
+    ggl = gnt.nodes.new("ShaderNodeBsdfGlossy")
+    ggl.distribution = "GGX"
+    ggl.inputs["Color"].default_value = (1.0, 1.0, 1.0, 1.0)
+    gfr = gnt.nodes.new("ShaderNodeFresnel")
+    gfr.inputs["IOR"].default_value = 1.789          # F0 = ((n-1)/(n+1))^2 = 0.08: Unreal's Specular 1.0
+    gmul = gnt.nodes.new("ShaderNodeMath")
+    gmul.operation = "MULTIPLY"
+    refl = (0.2 if night else 1.0) if glass_refl is None else glass_refl
+    gmul.inputs[1].default_value = refl
+    gat = gnt.nodes.new("ShaderNodeAttribute")
+    gat.attribute_name = "Color"
+    gsep = gnt.nodes.new("ShaderNodeSeparateColor")
+    gdirt = gnt.nodes.new("ShaderNodeMapRange")          # R 1.0 clean .. 0.8 band: roughness 0.03 .. 0.35
+    gdirt.inputs["From Min"].default_value = 1.0
+    gdirt.inputs["From Max"].default_value = 0.8
+    gdirt.inputs["To Min"].default_value = 0.03
+    gdirt.inputs["To Max"].default_value = 0.35
+    gdirt.clamp = True
+    gnt.links.new(gat.outputs["Color"], gsep.inputs["Color"])
+    gnt.links.new(gsep.outputs["Red"], gdirt.inputs["Value"])
+    gnt.links.new(gdirt.outputs["Result"], ggl.inputs["Roughness"])
+    gnt.links.new(gfr.outputs["Fac"], gmul.inputs[0])
+    gnt.links.new(gmul.outputs["Value"], gmix.inputs["Fac"])
+    gnt.links.new(gtr.outputs[0], gmix.inputs[1])
+    gnt.links.new(ggl.outputs[0], gmix.inputs[2])
+    gnt.links.new(gmix.outputs[0], gout.inputs[0])
+
+    cam_eye = cam["eye"]
+    window_ids = {s["id"]: i + 1 for i, s in enumerate(sites)}
+    baked = {}
+
+    def bake_for(site):
+        """The baked card of a window (or of a cottage house) for this eye and state; None when the window is seen too near the wall's plane to see the room."""
+        ang = C.angle_from_wall_deg(site, cam_eye)
+        key = site["card"].get("shared_by") and tuple(site["card"]["shared_by"]) or (site["id"],)
+        if key in baked:
+            return baked[key]
+        res_ = None
+        if ang >= MIN_BAKE_ANGLE and C.eye_in_front(site, cam_eye):
+            lit = site["id"] in lit_names
+            st = "day" if not night else ("night_lit" if lit else "night_dark")
+            if site["room"].startswith("up_empty") and st == "night_lit":
+                st = "night_dark"
+            pic = os.path.join(T.ROOMS, "%s_%s.png" % (site["room"], st))
+            if os.path.exists(pic):
+                c = site["card"]
+                W_, H_, D_, camd = c["w"], c["h"], c["d"], c["camd"]
+                nw = 768 if c["room_family"] == "UP" else 1024
+                nh = int(round(nw * H_ / W_))
+                out = os.path.join(bake_dir, "card_%s_%s_%s.png" % (view_name, st, site["id"] if len(key) == 1 else key[0]))
+                if not os.path.exists(out):
+                    os.makedirs(bake_dir, exist_ok=True)
+                    bake_card(eye_in_card_frame(site, cam_eye), (W_, H_, D_), camd, c["side"], pic, out, nw, nh)
+                res_ = (out, st)
+        baked[key] = res_
+        return res_
+    kit_cache = {}
+    for site in sites:
+        kind = site["kind"]
+        if kind not in kit_cache:
+            kit_cache[kind] = load_kit(kind)
+        tmpl = kit_cache[kind]
+        wid = window_ids[site["id"]]
+        X, Y, Z, turn = C.placement(site)
+        root = bpy.data.objects.new("win_" + site["id"], None)
+        sc.collection.objects.link(root)
+        root.location = (X, Y, Z)
+        root.rotation_euler = (0.0, 0.0, math.radians(turn))
+        ang = C.angle_from_wall_deg(site, cam_eye)
+        rec["windows"][site["id"]] = {"id": wid, "angle_deg": round(ang, 2), "in_front": C.eye_in_front(site, cam_eye), "kind": kind, "room": site["room"]}
+        net = site["net"]["kind"]
+        extra_k = (site.get("extra") or {}).get("kind")
+        torn = site["net"].get("torn")
+        paint = P[site["paint"]]
+        lit = site["id"] in lit_names
+        show = {"net__" + net} if net != "N0" else set()
+        if torn:
+            show = {"net__N1_torn", "net_rod__N1", "net_bracket__N1_L", "net_bracket__N1_R"}
+        elif net != "N0":
+            show |= {"net_rod__" + net, "net_bracket__%s_L" % net, "net_bracket__%s_R" % net}
+        if extra_k in ("C1",):
+            show |= {"curtain__C1_drawn", "curtain_pole", "curtain_finial__L", "curtain_finial__R", "curtain_bracket__L", "curtain_bracket__R"}
+        if extra_k in ("C2",):
+            show |= {"curtain__C2_open_L", "curtain__C2_open_R", "curtain_pole", "curtain_finial__L", "curtain_finial__R", "curtain_bracket__L", "curtain_bracket__R"}
+        if extra_k == "B1":
+            show |= {"blind__B1", "blind_headrail__B1"}
+        if extra_k == "B2":
+            show |= {"blind__B2", "blind_roller__B2"}
+        if extra_k == "B3":
+            show |= {"blind__B3", "blind_headrail__B3"}
+        room = T.room(site["room"])
+        if site["card"]["room_family"] == "UP" and room["pendant"]:
+            show.add("pendant__shade")
+        mats_w = {}
+        for o in tmpl:
+            nm = o.name
+            base = nm.split(".")[0]
+            is_dress = base.startswith(("net__", "net_rod__", "net_bracket__", "curtain", "blind", "pendant__"))
+            if is_dress and base not in show:
+                continue
+            if base == "room__card" or base == "pendant__shade_gf":
+                continue
+            c = o.copy()
+            sc.collection.objects.link(c)
+            c.parent = root
+            c.matrix_parent_inverse = Matrix.Identity(4)
+            c.hide_render = False
+            c.hide_viewport = False
+            c.pass_index = wid
+            c.name = "%s|%s" % (site["id"], base)
+            for i, sl in enumerate(c.material_slots):
+                m0 = sl.material
+                if m0 is None:
+                    continue
+                mn = m0.name.split(".")[0]
+                if mode == "mask":
+                    key = "glass" if mn.startswith("glass") else ("joinery" if mn.startswith("paint_") or base.startswith(("net_rod", "net_bracket", "curtain_pole", "curtain_finial", "curtain_bracket")) else "cloth")
+                    sl.material = mk[key]
+                    continue
+                if mn.startswith("glass"):
+                    sl.material = glass_gate
+                elif mn.startswith("paint_"):
+                    key = ("paint", site["paint"], site["condition"], base in ("paint_joinery__lower_bottom_rail", "paint_joinery__oak_sill", "paint_joinery__frame_sill_rail"), m0.name)
+                    if key not in mats_w:
+                        m = m0.copy()
+                        pb = m.node_tree.nodes["Principled BSDF"]
+                        col = list(paint["lin"])
+                        if site["condition"] == "grimy" and key[3]:
+                            col = [v * 0.85 for v in col]
+                        mixn = next((n for n in m.node_tree.nodes if n.type == "MIX"), None)
+                        if mixn is not None:
+                            mixn.inputs[7].default_value = (*col, 1.0)
+                        else:
+                            pb.inputs["Base Color"].default_value = (*col, 1.0)
+                        pb.inputs["Roughness"].default_value = paint["rough"]
+                        if site["condition"] == "flaking":
+                            flake_paint(m, col)
+                        mats_w[key] = m
+                    sl.material = mats_w[key]
+                elif mn in ("net_voile", "curtain", "blind"):
+                    kk = (mn, base, lit)
+                    if kk not in mats_w:
+                        m = m0.copy()
+                        pb = m.node_tree.nodes["Principled BSDF"]
+                        if mn == "net_voile":
+                            col = {"white": (238, 238, 232), "greyed": (208, 208, 200), "yellowed": (222, 206, 158)}[site["net"]["colour"] or "white"]
+                        elif mn == "curtain":
+                            cname = (site["extra"] or {}).get("colour", "cream")
+                            col = tuple(T.target()["curtains"]["C1" if base.startswith("curtain__C1") else "C2"]["colours"][cname])
+                        else:
+                            col = tuple(T.target()["blinds"][extra_k]["colour"]) if extra_k else (226, 224, 214)
+                        cl = [float(v) for v in T.srgb_to_lin(col)]
+                        # the colour factor: the glTF importer's Mix node holds it; set it by finding the Mix node's constant
+                        for nd in m.node_tree.nodes:
+                            if nd.type == "MIX" and nd.data_type == "RGBA":
+                                try:
+                                    nd.inputs[7].default_value = (*cl, 1.0)
+                                    nd.inputs[6].default_value = nd.inputs[6].default_value
+                                except Exception:
+                                    pass
+                        if night:
+                            if lit:
+                                if mn == "net_voile":
+                                    em, sv = tuple(WARM[k_] * cl[k_] for k_ in range(3)), 0.48 * 1.0
+                                    em = tuple(cl[k_] * WARM[k_] for k_ in range(3))
+                                    sv = 0.48
+                                elif mn == "curtain":
+                                    cname = (site["extra"] or {}).get("colour", "cream")
+                                    em = tuple(T.target()["curtains"]["C1"]["night_lit_emission_linear"][cname])
+                                    sv = 1.0
+                                else:
+                                    em = tuple(T.target()["blinds"][extra_k]["night_lit_emission_linear"])
+                                    sv = 1.0
+                            else:
+                                em, sv = tuple(cl[k_] * SODIUM[k_] for k_ in range(3)), 0.02
+                            pb.inputs["Emission Color"].default_value = (*em, 1.0)
+                            pb.inputs["Emission Strength"].default_value = sv
+                        mats_w[kk] = m
+                    sl.material = mats_w[kk]
+                elif mn == "pendant_shade":
+                    m = m0.copy()
+                    pb = m.node_tree.nodes["Principled BSDF"]
+                    if night and lit:
+                        pb.inputs["Emission Color"].default_value = (*WARM, 1.0)
+                        pb.inputs["Emission Strength"].default_value = 3.0
+                    sl.material = m
+        # the room card of this window: the kit's own room__card for an upper window; a cottage house's card is built once below
+        if site["card"]["room_family"] == "UP":
+            cardo = None
+            for o in tmpl:
+                if o.name.split(".")[0] == "room__card":
+                    cardo = o.copy()
+                    sc.collection.objects.link(cardo)
+                    cardo.parent = root
+                    cardo.matrix_parent_inverse = Matrix.Identity(4)
+                    cardo.hide_render = False
+                    cardo.hide_viewport = False
+                    cardo.pass_index = wid
+                    cardo.name = site["id"] + "|room__card"
+            bk = bake_for(site)
+            if cardo is not None:
+                cardo.data = cardo.data.copy()
+                cardo.data.materials.clear()
+                if mode == "mask":
+                    cardo.data.materials.append(mk["card"])
                 else:
-                    if is_glass:
-                        o.hide_render = True
-                        continue
-                    if o.name == "card" or o.name.startswith(("reveal_", "return_wall_")):
-                        o.data.materials.append(white3)
-                    elif o in disp and groups and o.name in groups:
-                        gi = groups[o.name]
-                        if gi not in pal:
-                            pal[gi] = flat3(((gi + 1) % 17 / 17.0 + 0.03, ((gi + 1) // 17) % 17 / 17.0 + 0.03, ((gi + 1) // 289) % 17 / 17.0 + 0.03))
-                        o.data.materials.append(pal[gi])
-                    else:
-                        o.data.materials.append(black3)
-            elif o.type == "LIGHT":
-                o.hide_render = True
-        sc.world.node_tree.nodes["Background"].inputs["Color"].default_value = (0, 0, 0, 1)
-        sc.world.node_tree.nodes["Background"].inputs["Strength"].default_value = 0.0
-        sc.render.engine = "CYCLES"
-        sc.cycles.device = "CPU"
+                    cardo.data.materials.append(card_material(bpy, bk, site, lit, night))
+                cardo.visible_diffuse = False
+                cardo.visible_glossy = False
+                cardo.visible_shadow = False
+        # the shared cottage cards are made after the loop
+
+    # the cottages' shared room cards (one a house)
+    done = set()
+    for site in gfs:
+        key = tuple(site["card"]["shared_by"])
+        if key in done:
+            continue
+        done.add(key)
+        mates = [s for s in gfs if s["id"] in key]
+        bk = bake_for(site)
+        lit = any(s["id"] in lit_names for s in mates)
+        c = site["card"]
+        W_, H_ = c["w"], c["h"]
+        xl, xh = c["x_low"], c["x_low"] + W_
+        zb, zt = c["z_bottom_above_crown"], c["z_bottom_above_crown"] + H_
+        ypl = c["y_card_plane"]
+        ypl = -abs(ypl)
+        v = [(-xh, ypl, zb), (-xl, ypl, zb), (-xl, ypl, zt), (-xh, ypl, zt)]
+        # west card: the viewer (east) looks along -y; his left is the HIGH Blender x... the picture's column 0 (viewer's left) is at the high street x = the low Blender x here: u increases from -xh to -xl
+        me = bpy.data.meshes.new("card_" + key[0])
+        me.from_pydata(v, [], [(0, 1, 2, 3)])
+        uvl = me.uv_layers.new(name="UVMap")
+        uvs = ((1, 0), (0, 0), (0, 1), (1, 1))
+        for li, vi in zip(me.loops, range(4)):
+            uvl.data[li.index].uv = uvs[vi]
+        o = bpy.data.objects.new("card_" + key[0], me)
+        sc.collection.objects.link(o)
+        o.pass_index = window_ids[key[0]]
+        me.materials.append(mk["card"] if mode == "mask" else card_material(bpy, bk, site, lit, night))
+        o.visible_diffuse = False
+        o.visible_glossy = False
+        o.visible_shadow = False
+        # the pendant in the cottage's front room, at the room's centre
+        if T.room(site["room"])["pendant"]:
+            pm = new_mat("pendant_gf", tuple(lin([0.93, 0.89, 0.77])), 0.9, emit=WARM if (night and lit) else None, emit_strength=3.0 if (night and lit) else 0.0)
+            xcm = (xl + xh) / 2
+            n = 24
+            verts, faces = [], []
+            z0p, z1p = c["z_bottom_above_crown"] + 1.686 + 0.3736 - 0.3736, c["z_bottom_above_crown"] + 1.926 + 0.3736 - 0.3736
+            z0p, z1p = zt - 0.30 - 0.24, zt - 0.30
+            yc = ypl - 0.55
+            for i in range(n):
+                a = 2 * math.pi * i / n
+                verts.append((-xcm + 0.17 * math.cos(a), yc + 0.17 * math.sin(a), z0p))
+                verts.append((-xcm + 0.105 * math.cos(a), yc + 0.105 * math.sin(a), z1p))
+            for i in range(n):
+                j = (i + 1) % n
+                faces.append((2 * i, 2 * j, 2 * j + 1, 2 * i + 1))
+            me2 = bpy.data.meshes.new("pendant_gf_" + key[0])
+            me2.from_pydata(verts, [], faces)
+            op = bpy.data.objects.new("pendant_gf_" + key[0], me2)
+            sc.collection.objects.link(op)
+            me2.materials.append(mk["cloth"] if mode == "mask" else pm)
+
+    # ---------------------------------------------------------------- world and lights
+    world = bpy.data.worlds.new("w")
+    sc.world = world
+    world.use_nodes = True
+    wn = world.node_tree
+    bg = wn.nodes["Background"]
+    sky_s = float(extra.get("sky_strength", 1.0))
+    env = wn.nodes.new("ShaderNodeTexEnvironment")
+    if os.path.exists(T.SKY_HDRI):
+        env.image = bpy.data.images.load(T.SKY_HDRI, check_existing=True)
+        wn.links.new(env.outputs["Color"], bg.inputs["Color"])
+    bg.inputs["Strength"].default_value = sky_s * (0.15 if night else 1.0)
+    if mode == "mask":
+        bg.inputs["Strength"].default_value = 0.0
+        wn.links.remove(bg.inputs["Color"].links[0]) if bg.inputs["Color"].links else None
+        bg.inputs["Color"].default_value = (0, 0, 0, 1)
+    if night and mode != "mask":
+        for lx in lamps:
+            spl = bpy.data.lights.new("lamp_%g" % lx, "SPOT")
+            spl.color = SODIUM
+            spl.energy = float(extra.get("lamp_w", 4000.0))
+            spl.spot_size = math.radians(92)
+            spl.spot_blend = 0.5
+            spl.shadow_soft_size = 0.15
+            lo = bpy.data.objects.new("lamp_light_%g" % lx, spl)
+            sc.collection.objects.link(lo)
+            lo.location = (-lx, -3.78, 4.52)
+            lo.rotation_euler = Euler((0.0, 0.0, 0.0))
+            lo.visible_camera = False          # no lit stand-in lamp is ever seen (unit 7's night fault)
+            lo.visible_glossy = False
+            lo.visible_transmission = False
+        # the stand-in street's pools must not be reflected in the night glass as a burnt bar (unit 7's close reviews: the lamps' pool on the far footway and the road): road and both footways are out of glossy rays at night
+        for nm in ("road", "footway_E", "footway_W"):
+            bpy.data.objects[nm].visible_glossy = False
+        for nm in [x for x in os.environ.get("LEDGER_GATE_NOGLOSSY", "").split(",") if x]:
+            if nm in bpy.data.objects:
+                bpy.data.objects[nm].visible_glossy = False
+
+    # ---------------------------------------------------------------- the camera
+    camd = bpy.data.cameras.new("cam")
+    camd.sensor_fit = "VERTICAL"
+    camd.angle_y = math.radians(cam["vfov"])
+    camd.clip_start, camd.clip_end = 0.05, 300.0
+    co = bpy.data.objects.new("cam", camd)
+    sc.collection.objects.link(co)
+    eye_b = Vector(bl(cam["eye"]))
+    if "aim" in cam:
+        d_b = Vector(bl(cam["aim"])) - eye_b
+    else:
+        yaw, pitch = math.radians(cam["yaw"]), math.radians(cam["pitch"])
+        d_s = (math.cos(yaw) * math.cos(pitch), math.sin(yaw) * math.cos(pitch), -math.sin(pitch))
+        d_b = Vector((-d_s[0], d_s[1], d_s[2]))
+    co.location = eye_b
+    co.rotation_euler = d_b.to_track_quat("-Z", "Y").to_euler()
+    sc.camera = co
+    json.dump({"view": view_name, "state": state, "eye_street_m": list(cam["eye"]), "vfov_deg": cam["vfov"], "resolution": list(res), "direction_blender": list(d_b.normalized())},
+              open(os.path.splitext(out_png)[0] + ".camera.json", "w"), indent=1)
+    # ---------------------------------------------------------------- render
+    sc.render.engine = "CYCLES"
+    sc.cycles.device = "CPU"
+    sc.render.resolution_x, sc.render.resolution_y = res
+    sc.render.resolution_percentage = 100
+    sc.render.image_settings.file_format = "PNG"
+    sc.render.image_settings.color_mode = "RGB"
+    sc.render.image_settings.color_depth = "8"
+    sc.render.filepath = out_png
+    if mode == "mask":
         sc.cycles.samples = 1
         sc.cycles.use_denoising = False
         sc.cycles.use_adaptive_sampling = False
         sc.cycles.filter_width = 0.01
         sc.view_settings.view_transform = "Raw"
         sc.view_settings.look = "None"
-        sc.render.resolution_x, sc.render.resolution_y = res
-        sc.render.resolution_percentage = 100
-        sc.render.image_settings.file_format = "PNG"
-        sc.render.image_settings.color_mode = "RGB"
-        sc.render.image_settings.color_depth = "8"
-        sc.render.filepath = out_png
-        t0 = time.time()
-        bpy.ops.render.render(write_still=True)
-        return round(time.time() - t0, 1)
-    if mode == "mask_room":
-        # what the window's glass shows: the room (the card, the reveals, the display's return walls) red, the display's pieces and furniture blue, everything else black, the glass itself
-        # not drawn (13 Oct, LIT-02b: a black void in the room is a fault; the display's own dark things, black plastic and velvet at night, are not)
-        def flat2(c):
-            m = bpy.data.materials.new("flat")
-            m.use_nodes = True
-            t = m.node_tree
-            for n in list(t.nodes):
-                t.nodes.remove(n)
-            e = t.nodes.new("ShaderNodeEmission")
-            e.inputs["Color"].default_value = (*c, 1.0)
-            o2 = t.nodes.new("ShaderNodeOutputMaterial")
-            t.links.new(e.outputs[0], o2.inputs[0])
-            return m
-        red, blue, black2 = flat2((1, 0, 0)), flat2((0, 0, 1)), flat2((0, 0, 0))
-        for o in bpy.data.objects:
-            if o.type == "MESH":
-                o.data.materials.clear()
-                if o.name.startswith("win_glass_lower"):
-                    o.hide_render = True
-                    continue
-                if o.name == "card" or o.name.startswith(("reveal_", "return_wall_")):
-                    o.data.materials.append(red)
-                elif o in disp:
-                    o.data.materials.append(blue)
-                else:
-                    o.data.materials.append(black2)
-            elif o.type == "LIGHT":
-                o.hide_render = True
-        sc.world.node_tree.nodes["Background"].inputs["Color"].default_value = (0, 0, 0, 1)
-        sc.world.node_tree.nodes["Background"].inputs["Strength"].default_value = 0.0
-        sc.render.engine = "CYCLES"
-        sc.cycles.device = "CPU"
-        sc.cycles.samples = 1
-        sc.cycles.use_denoising = False
-        sc.cycles.use_adaptive_sampling = False
-        sc.cycles.filter_width = 0.01
-        sc.view_settings.view_transform = "Raw"
-        sc.render.resolution_x, sc.render.resolution_y = res
-        sc.render.resolution_percentage = 100
-        sc.render.image_settings.file_format = "PNG"
-        sc.render.image_settings.color_mode = "RGB"
-        sc.render.filepath = out_png
-        t0 = time.time()
-        bpy.ops.render.render(write_still=True)
-        return round(time.time() - t0, 1)
-    if mode in ("mask_glass", "mask_glass_open"):
-        def flat(c):
-            m = bpy.data.materials.new("flat")
-            m.use_nodes = True
-            t = m.node_tree
-            for n in list(t.nodes):
-                t.nodes.remove(n)
-            e = t.nodes.new("ShaderNodeEmission")
-            e.inputs["Color"].default_value = (*c, 1.0)
-            o2 = t.nodes.new("ShaderNodeOutputMaterial")
-            t.links.new(e.outputs[0], o2.inputs[0])
-            return m
-        white, black = flat((1, 1, 1)), flat((0, 0, 0))
-        for o in bpy.data.objects:
-            if o.type == "MESH":
-                o.data.materials.clear()
-                o.data.materials.append(white if o.name.startswith("win_glass_lower") else black)
-                if mode == "mask_glass_open" and o in lattice:
-                    o.hide_render = True          # the glass as it is where the lattice's gaps are: the lattice left out
-            elif o.type == "LIGHT":
-                o.hide_render = True
-        sc.world.node_tree.nodes["Background"].inputs["Color"].default_value = (0, 0, 0, 1)
-        sc.world.node_tree.nodes["Background"].inputs["Strength"].default_value = 0.0
-        sc.render.engine = "CYCLES"
-        sc.cycles.device = "CPU"
-        sc.cycles.samples = 1
-        sc.cycles.use_denoising = False
-        sc.cycles.use_adaptive_sampling = False
-        sc.cycles.filter_width = 0.01
+        # window number into G: every object of a window carries it as its pass index: the mask render writes it through the emission colour of a per-window material
+        for o in list(bpy.data.objects):
+            if o.type == "MESH" and o.pass_index > 0:
+                for i, sl in enumerate(o.material_slots):
+                    m0 = sl.material
+                    if m0 is None or not m0.name.startswith("mk_"):
+                        continue
+                    key = (m0.name, o.pass_index)
+                    nm = "%s_w%d" % (m0.name, o.pass_index)
+                    m2 = bpy.data.materials.get(nm)
+                    if m2 is None:
+                        m2 = m0.copy()
+                        m2.name = nm
+                        e = next(n for n in m2.node_tree.nodes if n.type == "EMISSION")
+                        col = list(e.inputs["Color"].default_value)
+                        col[1] = o.pass_index / 255.0
+                        e.inputs["Color"].default_value = col
+                    sl.material = m2
+    else:
+        sc.cycles.samples = samples
+        sc.cycles.use_denoising = True
+        sc.cycles.denoiser = "OPENIMAGEDENOISE"
+        sc.cycles.use_adaptive_sampling = True
+        sc.cycles.adaptive_threshold = 0.02
+        sc.cycles.max_bounces = 8
+        sc.cycles.transmission_bounces = 8
+        sc.cycles.transparent_max_bounces = 24
+        sc.cycles.sample_clamp_indirect = 10.0
         sc.view_settings.view_transform = "Standard"
-        sc.render.resolution_x, sc.render.resolution_y = res
-        sc.render.resolution_percentage = 100
-        sc.render.image_settings.file_format = "PNG"
-        sc.render.image_settings.color_mode = "RGB"
-        sc.render.filepath = out_png
-        t0 = time.time()
-        bpy.ops.render.render(write_still=True)
-        return round(time.time() - t0, 1)
-    # --- render
-    sc.render.engine = "CYCLES"
-    sc.cycles.device = "CPU"
-    sc.cycles.samples = samples
-    sc.cycles.use_denoising = True
-    sc.cycles.denoiser = "OPENIMAGEDENOISE"
-    sc.cycles.use_adaptive_sampling = True
-    sc.cycles.adaptive_threshold = 0.02
-    sc.cycles.max_bounces = 8
-    sc.cycles.transmission_bounces = 8
-    sc.cycles.sample_clamp_indirect = 10.0
-    sc.view_settings.view_transform = "Standard"
-    sc.render.resolution_x, sc.render.resolution_y = res
-    sc.render.resolution_percentage = 100
-    sc.render.image_settings.file_format = "PNG"
-    sc.render.image_settings.color_mode = "RGB"
-    sc.render.filepath = out_png
-    t0 = time.time()
+        sc.view_settings.look = "None"
+    t1 = time.time()
     bpy.ops.render.render(write_still=True)
-    return round(time.time() - t0, 1)
+    return round(time.time() - t1, 1), rec
+
+
+def flake_paint(m, col):
+    """white_flaking (target 4.2): about 12 per cent of the area of the lower 250 mm of the frame (the lower rails, the sill, the stiles' feet) flaked to grey primer (66, 60, 54) or bare timber (96, 66, 40)."""
+    nt = m.node_tree
+    pb = nt.nodes["Principled BSDF"]
+    geo = nt.nodes.new("ShaderNodeNewGeometry")
+    sep = nt.nodes.new("ShaderNodeSeparateXYZ")
+    nz = nt.nodes.new("ShaderNodeTexNoise")
+    nz.inputs["Scale"].default_value = 38.0
+    nz.inputs["Detail"].default_value = 4.0
+    rmp = nt.nodes.new("ShaderNodeMapRange")
+    rmp.inputs["From Min"].default_value = 0.56
+    rmp.inputs["From Max"].default_value = 0.60
+    low = nt.nodes.new("ShaderNodeMath")
+    low.operation = "LESS_THAN"
+    low.inputs[1].default_value = 0.25
+    both = nt.nodes.new("ShaderNodeMath")
+    both.operation = "MULTIPLY"
+    kind = nt.nodes.new("ShaderNodeTexNoise")
+    kind.inputs["Scale"].default_value = 9.0
+    krp = nt.nodes.new("ShaderNodeMapRange")
+    krp.inputs["From Min"].default_value = 0.45
+    krp.inputs["From Max"].default_value = 0.55
+    primer = nt.nodes.new("ShaderNodeMix")
+    primer.data_type = "RGBA"
+    primer.inputs[6].default_value = (*T.srgb_to_lin((66, 60, 54)), 1.0)
+    primer.inputs[7].default_value = (*T.srgb_to_lin((96, 66, 40)), 1.0)
+    cur = pb.inputs["Base Color"].links[0].from_socket if pb.inputs["Base Color"].links else None
+    fl = nt.nodes.new("ShaderNodeMix")
+    fl.data_type = "RGBA"
+    nt.links.new(geo.outputs["Position"], sep.inputs["Vector"])
+    nt.links.new(geo.outputs["Position"], nz.inputs["Vector"])
+    nt.links.new(geo.outputs["Position"], kind.inputs["Vector"])
+    nt.links.new(nz.outputs["Fac"], rmp.inputs["Value"])
+    nt.links.new(sep.outputs["Z"], low.inputs[0])
+    nt.links.new(rmp.outputs["Result"], both.inputs[0])
+    nt.links.new(low.outputs["Value"], both.inputs[1])
+    nt.links.new(kind.outputs["Fac"], krp.inputs["Value"])
+    nt.links.new(krp.outputs["Result"], primer.inputs[0])
+    nt.links.new(both.outputs["Value"], fl.inputs[0])
+    if cur is not None:
+        nt.links.new(cur, fl.inputs[6])
+    else:
+        fl.inputs[6].default_value = (*col, 1.0)
+    nt.links.new(primer.outputs[2], fl.inputs[7])
+    nt.links.new(fl.outputs[2], pb.inputs["Base Color"])
+
+
+def card_material(bpy, bk, site, lit, night):
+    """The card's emission: the baked picture (sRGB) x the state's brightness; a lit landing never emits less than the target's floor (landing_bulb); no bake (the window is seen under 11 degrees from its
+    wall: no ray reaches the card): a plain dark matt."""
+    m = bpy.data.materials.new("card_" + site["id"])
+    m.use_nodes = True
+    nt = m.node_tree
+    for n in list(nt.nodes):
+        nt.nodes.remove(n)
+    out = nt.nodes.new("ShaderNodeOutputMaterial")
+    em = nt.nodes.new("ShaderNodeEmission")
+    nt.links.new(em.outputs[0], out.inputs[0])
+    if bk is None:
+        em.inputs["Color"].default_value = (0.02, 0.02, 0.02, 1.0)
+        em.inputs["Strength"].default_value = 1.0
+        return m
+    path, st = bk
+    ti = nt.nodes.new("ShaderNodeTexImage")
+    ti.image = bpy.data.images.load(path, check_existing=True)
+    ti.image.colorspace_settings.name = "sRGB"
+    ti.interpolation = "Linear"
+    ti.extension = "EXTEND"
+    nt.links.new(ti.outputs["Color"], em.inputs["Color"])
+    em.inputs["Strength"].default_value = BRIGHTNESS[st]
+    if st == "night_lit" and T.room(site["room"])["type"] == "landing":
+        fl = T.target()["rooms"]["lights_by_state"]["landing_bulb"]["card_emission_floor_linear"]
+        mx = nt.nodes.new("ShaderNodeVectorMath")
+        mx.operation = "MAXIMUM"
+        mu = nt.nodes.new("ShaderNodeVectorMath")
+        mu.operation = "SCALE"
+        mu.inputs["Scale"].default_value = BRIGHTNESS[st]
+        mx.inputs[1].default_value = fl
+        nt.links.new(ti.outputs["Color"], mu.inputs[0])
+        nt.links.new(mu.outputs["Vector"], mx.inputs[0])
+        nt.links.new(mx.outputs["Vector"], em.inputs["Color"])
+        em.inputs["Strength"].default_value = 1.0
+    return m

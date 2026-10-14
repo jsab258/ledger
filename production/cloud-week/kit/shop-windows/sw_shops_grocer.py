@@ -381,7 +381,7 @@ def display(d):
     the same footprint; what this does (each a Judgement in NOTES.md):
     levels: the bed (the first tier, w 0); step A, a timber bank 0.18 high at the back (v 0.38 to 0.55) under the jars (u 1.55 to 3.15); step B, 0.36 high (v 0.45 to 0.55), three plinths under the three
     tin pyramids (28 tins each: 7 + 6 + ... + 1, one tin deep, a backing board behind each).
-    bed, left to right: three plastic_crate_02 at 0.6 (apples heaped: 40 in all), a wicker_basket_02 with two sets of rolls (hamburger_buns), two plastic_crate_03 at 0.9 with the lemons (12), a low timber tray of 15
+    bed, left to right: three plastic_crate_02 at 0.9 (apples heaped: 40 in all), a wicker_basket_02 with two sets of rolls (hamburger_buns at 0.9), two plastic_crate_03 at 0.9 with the lemons (12), a low timber tray of 15
     onions, a tray of 30 tomatoes (script: glossy red flattened spheres with a calyx, one try), a crate of two bunches of bananas at 0.9 (the third does not fit at real size: two bunches fill the crate's 0.5 depth); every Poly Haven piece at 0.9 to 1.1 of its real size (DSP-06).
     PENDING, Sketchfab scans (Jafar's login): cabbage x4, potato x20, satsuma x12, pear x6 (the target's script:cabbage_potato_satsuma): not modelled, no stand-in; the window carries what has a CC0 model.
     price cards: 14, in front of each group, the project's own lettering: no drink, no brand."""

@@ -1,16 +1,14 @@
-"""The gate stage: bake the card for each review camera and state, render, write the review set to the previews. See sw_gate.py for the method.
+"""The gate stage: calibrate the stand-in sky and lamps, render the review views and the measuring frames, the masks, the reflection-off night frames, the review previews.
 
-13 October, batch A: written for any shop (sw_ctx.Ctx): the room pictures are <picture name>_<state>.png, the frames and checks' renders go under the shop's own gate folder, the previews are named
-<shop>-<view>-<state>-2026-10-13.jpg (Rita's keep the `-v3` of her third build). A shop that is dark at night (the ironmonger) is also rendered from STREET_SQUARE in night_dark, as an extra review picture.
-A shop with no room (Mickey's, whose real room is already walked; the empty unit) is rendered over a stand-in card: a flat dim picture for Mickey's (the real room is owed to the PC), no card for the empty unit.
+Written 14 October for the house windows from the shop kit's sw_gate_run.py (copied that day, md5 75b34a4d...): what is kept is the shape (bake, render, previews, the check renders beside the frames); the views,
+the calibration and the masks are the house windows'. One render at a time (the machine is shared): `python3 build_windows.py gate [name ...]` renders what is missing.
 
-Try 3 (13 October, from the try 2 reviews): the review pictures are named `...-v3-2026-10-13.jpg` (v1 and v2 stay as the record); the night glass is reflection only; the footway is on the
-spill's channel; two strip lights light the display's tiers at night (`strip_w` in gate_lights.json); two more check renders: the front's mask by day (FRN-10's pixel test) and the display
-pieces' object-index mask at night from the two close cameras (LIT-08).
-
-Try 2 (13 October): the review pictures are named `...-v2-2026-10-13.jpg` (the try 1 files stay as the record); the room picture's side-wall front columns are baked for the gate's
-reveals and the display's return walls; and the checks' own renders are made here (a no-reflection beauty and a glass mask for every camera and state, at 1280 x 720)."""
+Frames (GATE folder, outside git): frame_<name>_<state>.png (2560 x 1440 beauty), mask_<name>_<state>.png (flat colours: R 1 glass, 2 joinery, 3 cloth, 4 brick, 5 card; G the window's number), and for
+the night frames refloff_<name>_night.png (1280 x 720, the glass's reflection off: the check for a band the lamps' pools put in the night glass, unit 7's close review) and the camera JSON beside each.
+The review set goes to production/previews/cloud-week/house-windows/hw-<view>-<state>-2026-10-13.jpg (about 1600 px, under 500 KB).
+"""
 import json
+import math
 import os
 import sys
 import time
@@ -20,19 +18,138 @@ from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-import sw_assets as A  # noqa: E402
-import sw_gate as G  # noqa: E402
-import sw_ctx  # noqa: E402
+import hw_t as T  # noqa: E402
+import hw_ctx as C  # noqa: E402
+import hw_gate as G  # noqa: E402
 
-DATE = "2026-10-13"
-TAG = "-v3"                  # Rita's third build's tag; the other shops' previews carry none
-CAMS = ["STREET_SQUARE", "STREET_30", "CLOSE_35", "CLOSE_35_B"]
-STATES = ["day", "night_lit"]
-REVIEW = [("STREET_SQUARE", "day"), ("STREET_SQUARE", "night_lit"), ("CLOSE_35", "day"), ("CLOSE_35", "night_lit")]
-HDRI = "/home/user/cache/hdri/bethnal_green_entrance_2k.hdr"
-CHECK_RES = (1280, 720)
-RES_FRAME = (2560, 1440)
-CHECK_SAMPLES = 16
+CLOSE_SITE = "east_parade_bay0_upper_w1"
+# name -> (camera key or (H name, site id), states)
+FRAMES = [
+    ("hook", "cam_hook", ("day", "night")),
+    ("reverse", "cam_reverse", ("day", "night")),
+    ("cam-a", "cam_A", ("day", "night")),
+    ("close", ("H_ALONG_30_NEAR", CLOSE_SITE), ("day", "night")),
+    ("h-across0-bay3w1", ("H_ACROSS_0", "east_parade_bay3_upper_w1"), ("day",)),
+    ("h-along15-bay3w1", ("H_ALONG_15_NEAR", "east_parade_bay3_upper_w1"), ("day",)),
+    ("h-along30-bay1w1", ("H_ALONG_30_NEAR", "east_parade_bay1_upper_w1"), ("day",)),
+    ("h-across0-bay2w0", ("H_ACROSS_0", "east_parade_bay2_upper_w0"), ("day", "night")),
+    ("h-along30-gf2w1", ("H_ALONG_30_NEAR", "west_south_bay2_gf_w1"), ("day", "night")),
+    ("h-under-bay1w0", ("H_UNDER", "east_parade_bay1_upper_w0"), ("day",)),
+]
+SAMPLES = int(os.environ.get("LEDGER_GATE_SAMPLES", "40"))
+
+
+def camera_of(key):
+    if isinstance(key, str):
+        return C.view_cameras()[key]
+    name, sid = key
+    return C.h_camera(name, T.site(sid))
+
+
+def lights_path():
+    return os.path.join(T.GATE, "gate_lights.json")
+
+
+def calibrate(log=print):
+    """sky_strength: a Lambertian grey card (albedo 0.18) facing the street reads linear 0.18 +- 0.01 in the render's own pixels (target 9); lamp_w: the paving under the near lamp reads sRGB 150 +- 20."""
+    import bpy
+    from mathutils import Vector
+    os.makedirs(T.GATE, exist_ok=True)
+    lp = lights_path()
+    if os.path.exists(lp):
+        return json.load(open(lp))
+
+    def scene(night, strength, lamp_w=0.0):
+        bpy.ops.wm.read_factory_settings(use_empty=True)
+        sc = bpy.context.scene
+        w = bpy.data.worlds.new("w")
+        sc.world = w
+        w.use_nodes = True
+        wn = w.node_tree
+        env = wn.nodes.new("ShaderNodeTexEnvironment")
+        env.image = bpy.data.images.load(T.SKY_HDRI, check_existing=True)
+        wn.links.new(env.outputs["Color"], wn.nodes["Background"].inputs["Color"])
+        wn.nodes["Background"].inputs["Strength"].default_value = strength * (0.15 if night else 1.0)
+        sc.render.engine = "CYCLES"
+        sc.cycles.device = "CPU"
+        sc.cycles.samples = 24
+        sc.cycles.use_denoising = False
+        sc.render.resolution_x = sc.render.resolution_y = 64
+        sc.view_settings.view_transform = "Standard"
+        sc.render.image_settings.file_format = "PNG"
+        return sc
+
+    def read(path):
+        a = np.asarray(Image.open(path).convert("RGB")).astype(np.float32) / 255.0
+        c = a[24:40, 24:40].mean(axis=(0, 1))
+        return float(np.mean(G.lin(c))), float(np.mean(c) * 255.0)
+
+    s = 1.0
+    out = os.path.join(T.GATE, "cal.png")
+    for it in range(3):
+        rs = []
+        for ny in (-1.0, 1.0):
+            sc = scene(False, s)
+            m = bpy.data.materials.new("grey")
+            m.use_nodes = True
+            m.node_tree.nodes["Principled BSDF"].inputs["Base Color"].default_value = (0.18, 0.18, 0.18, 1)
+            m.node_tree.nodes["Principled BSDF"].inputs["Roughness"].default_value = 1.0
+            bpy.ops.mesh.primitive_plane_add(size=2.0, location=(0, 0, 0), rotation=(math.radians(90.0 * (-ny)), 0, 0))
+            pl = bpy.context.object
+            pl.data.materials.append(m)
+            cd = bpy.data.cameras.new("c")
+            cd.angle = math.radians(20)
+            co = bpy.data.objects.new("c", cd)
+            sc.collection.objects.link(co)
+            co.location = (0, 3.0 * ny, 0)
+            co.rotation_euler = (math.radians(90.0), 0, math.radians(0 if ny < 0 else 180.0))
+            sc.camera = co
+            sc.render.filepath = out
+            bpy.ops.render.render(write_still=True)
+            rs.append(read(out)[0])
+        r = float(np.mean(rs))
+        log("   sky strength %.3f: grey card reads %.4f linear" % (s, r))
+        if abs(r - 0.18) < 0.006:
+            break
+        s *= 0.18 / max(r, 1e-4)
+    # lamps
+    lamp_w = 4000.0
+    for it in range(4):
+        sc = scene(True, s)
+        m = bpy.data.materials.new("pav")
+        m.use_nodes = True
+        m.node_tree.nodes["Principled BSDF"].inputs["Base Color"].default_value = (*G.lin([0.5, 0.5, 0.48]), 1)
+        m.node_tree.nodes["Principled BSDF"].inputs["Roughness"].default_value = 0.85
+        bpy.ops.mesh.primitive_plane_add(size=14.0, location=(0, 0, 0.10))
+        bpy.context.object.data.materials.append(m)
+        sp = bpy.data.lights.new("l", "SPOT")
+        sp.color = (1.0, 0.25, 0.0)
+        sp.energy = lamp_w
+        sp.spot_size = math.radians(92)
+        sp.spot_blend = 0.5
+        sp.shadow_soft_size = 0.15
+        lo = bpy.data.objects.new("l", sp)
+        sc.collection.objects.link(lo)
+        lo.location = (0, 0, 4.52)
+        cd = bpy.data.cameras.new("c")
+        cd.angle = math.radians(8)
+        co = bpy.data.objects.new("c", cd)
+        sc.collection.objects.link(co)
+        co.location = (0, 0, 9.0)
+        co.rotation_euler = (0, 0, 0)
+        sc.camera = co
+        sc.render.filepath = out
+        bpy.ops.render.render(write_still=True)
+        a = np.asarray(Image.open(out).convert("RGB")).astype(np.float32)
+        c = a[24:40, 24:40].mean(axis=(0, 1))
+        luma = 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]
+        log("   lamp %.0f W: the paving under the lamp reads sRGB luma %.0f (colour %s)" % (lamp_w, luma, [round(float(v)) for v in c]))
+        if abs(luma - 150.0) < 8:
+            break
+        lamp_w *= (G.lin(np.array([150.0 / 255.0]))[0] / max(float(G.lin(np.array([luma / 255.0]))[0]), 1e-5))
+    res = {"sky_strength": round(float(s), 4), "lamp_w": round(float(lamp_w), 1), "lamp_height_m": 4.52, "note": "calibrated by hw_gate_run.calibrate (grey card 0.18; paving under the lamp sRGB luma 150)"}
+    json.dump(res, open(lp, "w"), indent=1)
+    return res
 
 
 def jpeg_under(im, path, kb=480, width=1600):
@@ -48,164 +165,48 @@ def jpeg_under(im, path, kb=480, width=1600):
     return os.path.getsize(path)
 
 
-def side_columns(picture_png, out_l, out_r, w=8):
-    """The room picture's own side-wall front columns (u 0 to 8 px for the left wall, 4088 to 4096 for the right), one value a row, as 16-px-wide 8-bit sRGB strips: the gate's reveals
-    and the display's return walls take them as emission at the same height (close review fault 3: the wall meets the card without a step)."""
-    a = np.asarray(Image.open(picture_png).convert("RGB")).astype(np.float32)
-    for sl, path in ((slice(0, w), out_l), (slice(a.shape[1] - w, a.shape[1]), out_r)):
-        col = a[:, sl, :].mean(axis=1)                      # (rows, 3) in sRGB levels
-        strip = np.repeat(col[:, None, :], 16, axis=1)
-        Image.fromarray(np.clip(strip + 0.5, 0, 255).astype(np.uint8)).save(path)
-
-
-def room_picture(ctx, state):
-    return os.path.join(ctx.rooms, "%s_%s.png" % (ctx.picture_name, state))
-
-
-def bake_all(work, log=print, ctx=None, states=None):
-    ctx = ctx or sw_ctx.rita()
-    R = ctx.R
-    rooms = ctx.rooms
-    gate = ctx.gate
-    states = states or STATES
-    os.makedirs(gate, exist_ok=True)
-    stats = {}
-    for st in states:
-        pic = room_picture(ctx, st)
-        side_columns(pic, os.path.join(gate, "col_l_%s.png" % st), os.path.join(gate, "col_r_%s.png" % st))
-    for cam in CAMS:
-        eye = R["cameras"][cam]["eye_street_m"]
-        t0 = time.time()
-        uvp = os.path.join(gate, "uv_%s.npy" % cam)
-        if os.path.exists(uvp):
-            uv = np.load(uvp)
-        else:
-            uv = G.uv_map(eye, ctx=ctx)
-            np.save(uvp, uv)
-        stats[cam] = {"uv_s": round(time.time() - t0, 1)}
+def run(names=None, samples=None, log=print):
+    cal = calibrate(log)
+    extra = {"sky_strength": cal["sky_strength"], "lamp_w": cal["lamp_w"]}
+    os.makedirs(T.GATE, exist_ok=True)
+    os.makedirs(T.PREVIEWS, exist_ok=True)
+    cards = os.path.join(T.GATE, "cards")
+    tp = os.path.join(T.GATE, "render_times.json")
+    times = json.load(open(tp)) if os.path.exists(tp) else {}
+    recs_p = os.path.join(T.GATE, "gate_frames.json")
+    recs = json.load(open(recs_p)) if os.path.exists(recs_p) else {}
+    for name, key, states in FRAMES:
+        if names and name not in names:
+            continue
+        cam = camera_of(key)
         for st in states:
-            if st == "night_dark" and cam != "STREET_SQUARE":
-                continue                      # a dark shop's own night picture is one extra view, from STREET_SQUARE
-            pic = room_picture(ctx, st)
-            out = os.path.join(gate, "card_%s_%s.png" % (cam, st))
-            _, lin_img = G.bake_card(eye, pic, G.BRIGHTNESS[st], out, uv=uv, ctx=ctx)
-            stats[cam][st] = {"card": out}
-        log("baked %s in %.0f s" % (cam, time.time() - t0))
-    json.dump(stats, open(os.path.join(gate, "bake_stats.json"), "w"), indent=1)
-    return stats
-
-
-def standin_card_pictures(ctx, log=print):
-    """Mickey's (front only; its real room is already built and walked): the card behind the glass is a flat dim picture, so that the gate shows the front and its glass over something and no more. The
-    three states' pictures are one dim warm grey (day 118, night_lit 80, night_dark 18: the means the approved rooms' pictures are held to); they are written to the shop's rooms folder as
-    <picture name>_<state>.png at 4096 x 1855 and are NOT a room: the real one is owed to the PC."""
-    os.makedirs(ctx.rooms, exist_ok=True)
-    out = {}
-    for st, v in (("day", 118), ("night_lit", 80), ("night_dark", 18)):
-        p = room_picture(ctx, st)
-        Image.fromarray(np.full((1855, 4096, 3), (v, int(v * 0.93), int(v * 0.82)), np.uint8)).save(p)
-        out[st] = p
-    return out
-
-
-def run(work, assets, previews, samples, views=None, log=print, check_renders=True, ctx=None):
-    ctx = ctx or sw_ctx.rita()
-    R = ctx.R
-    gate = ctx.gate
-    os.makedirs(gate, exist_ok=True)
-    os.makedirs(previews, exist_ok=True)
-    tag = TAG if ctx.id == "ritas" else ""
-    states = list(STATES)
-    if not ctx.has_room:
-        standin_card_pictures(ctx, log)            # Mickey's and the empty unit: a flat stand-in card (see standin_card_pictures)
-    stats = bake_all(work, log, ctx=ctx, states=states + (["night_dark"] if (not ctx.lit and ctx.has_room) else []))
-    front = os.path.join(assets, ctx.front_glb)
-    disp = os.path.join(assets, ctx.display_glb) if ctx.has_room else None
-    grille = os.path.join(assets, ctx.grille_glb) if ctx.has_grille else None
-    lp = os.path.join(gate, "gate_lights.json")
-    if not os.path.exists(lp):
-        json.dump({"lamp_w": 50000, "spill_w": 175, "strip_w": 0.0}, open(lp, "w"))      # Blender watts, set by eye (see NOTES.md)
-    extra = json.load(open(lp))
-    xp = os.path.join(ctx.work, "gate_lights_extra.json")             # what a shop's gate needs beyond the strengths (e.g. {"lamp_glossy": false}); kept outside gate/ so a rebuilt gate keeps it
-    if os.path.exists(xp):
-        extra.update(json.load(open(xp)))
-
-    def cols(st):
-        return {"l": os.path.join(gate, "col_l_%s.png" % st), "r": os.path.join(gate, "col_r_%s.png" % st)}
-    tp_ = os.path.join(gate, "render_times.json")
-    times = json.load(open(tp_)) if (views and os.path.exists(tp_)) else {}              # a few views again: the others' times stay
-    todo = views or [(c, s) for c in CAMS for s in states]
-    if not ctx.lit and not views and ctx.has_room:
-        todo = todo + [("STREET_SQUARE", "night_dark")]            # a shop that is dark at night: the street's own night picture, one view, as an extra
-    for cam, st in todo:
-        out = os.path.join(gate, "%s_%s.png" % (cam, st))
-        t = G.render_view(cam, R["cameras"][cam], st, os.path.join(gate, "card_%s_%s.png" % (cam, st)), out, front, grille, disp, HDRI, samples=samples, extra=extra, column_pngs=cols(st), ctx=ctx)
-        times["%s_%s" % (cam, st)] = t
-        log("render %s %s: %.0f s" % (cam, st, t))
-        json.dump(times, open(os.path.join(gate, "render_times.json"), "w"), indent=1)
-    if check_renders and not ctx.has_room:
-        for cam in CAMS:
-            card = os.path.join(gate, "card_%s_day.png" % cam)
-            G.render_view(cam, R["cameras"][cam], "day", card, os.path.join(gate, "check_%s_day_frontmask.png" % cam), front, grille, disp, HDRI,
-                          samples=1, extra=extra, res=RES_FRAME, mode="mask_front", column_pngs=cols("day"), ctx=ctx)
-            log("front mask %s done" % cam)
-        check_renders = False
-    if check_renders:
-        # the checks' own renders: LIT-02 on the rendered frames with the glass's reflection off, and the glass mask (the window's glass pixels without frame, mullions, beads, lattice)
-        for cam in CAMS:
-            for st in states:
-                card = os.path.join(gate, "card_%s_%s.png" % (cam, st))
-                t = G.render_view(cam, R["cameras"][cam], st, card, os.path.join(gate, "check_%s_%s_norefl.png" % (cam, st)), front, grille, disp, HDRI,
-                                  samples=CHECK_SAMPLES, extra=extra, res=CHECK_RES, glass_refl=0.0, column_pngs=cols(st), ctx=ctx)
-                times["check_%s_%s_norefl" % (cam, st)] = t
-                if st != "day":
-                    # GLS-03: the same frame (same size, same samples, same seed) with the glass's reflection off, so that the difference is the glass and nothing else
-                    t = G.render_view(cam, R["cameras"][cam], st, card, os.path.join(gate, "check_%s_%s_norefl_full.png" % (cam, st)), front, grille, disp, HDRI,
-                                      samples=samples, extra=extra, res=RES_FRAME, glass_refl=0.0, column_pngs=cols(st), ctx=ctx)
-                    times["check_%s_%s_norefl_full" % (cam, st)] = t
-                t = G.render_view(cam, R["cameras"][cam], st, card, os.path.join(gate, "check_%s_%s_mask.png" % (cam, st)), front, grille, disp, HDRI,
-                                  samples=1, extra=extra, res=CHECK_RES, mode="mask_glass", column_pngs=cols(st), ctx=ctx)
-                times["check_%s_%s_mask" % (cam, st)] = t
-                t = G.render_view(cam, R["cameras"][cam], st, card, os.path.join(gate, "check_%s_%s_room.png" % (cam, st)), front, grille, disp, HDRI,
-                                  samples=1, extra=extra, res=CHECK_RES, mode="mask_room", column_pngs=cols(st), ctx=ctx)
-                if st != "day":
-                    if grille:
-                        t = G.render_view(cam, R["cameras"][cam], st, card, os.path.join(gate, "check_%s_%s_maskopen.png" % (cam, st)), front, grille, disp, HDRI,
-                                          samples=1, extra=extra, res=CHECK_RES, mode="mask_glass_open", column_pngs=cols(st), ctx=ctx)
-                else:
-                    # FRN-10's pixel test: the front's opaque parts, white, at the frames' own size
-                    G.render_view(cam, R["cameras"][cam], st, card, os.path.join(gate, "check_%s_%s_frontmask.png" % (cam, st)), front, grille, disp, HDRI,
-                                  samples=1, extra=extra, res=RES_FRAME, mode="mask_front", column_pngs=cols(st), ctx=ctx)
-                if st != "day" and cam in ("CLOSE_35", "CLOSE_35_B"):
-                    # LIT-08: one colour a display piece, the room white, the lattice drawn (black)
-                    di = json.load(open(os.path.join(ctx.display_work, "display_items.json")))
-                    groups = {nm: gi for gi, g in enumerate(di["groups"]) for nm in g["objs"]}
-                    G.render_view(cam, R["cameras"][cam], st, card, os.path.join(gate, "check_%s_%s_pieces.png" % (cam, st)), front, grille, disp, HDRI,
-                                  samples=1, extra=extra, res=RES_FRAME, mode="mask_pieces", column_pngs=cols(st), groups=groups, ctx=ctx)
-                log("check renders %s %s done" % (cam, st))
-        json.dump(times, open(os.path.join(gate, "render_times.json"), "w"), indent=1)
-    # the review set: STREET_SQUARE and CLOSE_35, day and night_lit
-    for cam, st in REVIEW:
-        p = os.path.join(gate, "%s_%s.png" % (cam, st))
-        if os.path.exists(p):
-            nm = "%s-%s-%s%s-%s.jpg" % (ctx.id, cam.lower().replace("_", "-"), st.replace("_", "-"), tag, DATE)
-            jpeg_under(Image.open(p), os.path.join(previews, nm))
-    if not ctx.lit:
-        p = os.path.join(gate, "STREET_SQUARE_night_dark.png")
-        if os.path.exists(p):
-            jpeg_under(Image.open(p), os.path.join(previews, "%s-street-square-night-dark%s-%s.jpg" % (ctx.id, tag, DATE)))
-    # the three pictures reduced, and (Rita's only: an approved room exists) the before-and-after for Jafar
-    for st in (("day", "night_lit", "night_dark") if ctx.has_room else ()):
-        p = room_picture(ctx, st)
-        if os.path.exists(p):
-            jpeg_under(Image.open(p), os.path.join(previews, "%s-room-%s%s-%s.jpg" % (ctx.id, st.replace("_", "-"), tag, DATE)))
-    new = room_picture(ctx, "day")
-    old = os.path.join(A.REPO, "production", "art", "shop-rooms", "pawnbroker_day.png") if ctx.id == "ritas" else None
-    if old and os.path.exists(new) and os.path.exists(old):
-        a = Image.open(old).convert("RGB").resize((1400, 634), Image.LANCZOS)
-        b = Image.open(new).convert("RGB").resize((1400, 634), Image.LANCZOS)
-        sheet = Image.new("RGB", (1400, 634 * 2 + 12), (20, 20, 20))
-        sheet.paste(a, (0, 0))
-        sheet.paste(b, (0, 634 + 12))
-        jpeg_under(sheet, os.path.join(previews, "ritas-room-before-after%s-%s.jpg" % (tag, DATE)), width=1400)
+            fr = os.path.join(T.GATE, "frame_%s_%s.png" % (name, st))
+            mk = os.path.join(T.GATE, "mask_%s_%s.png" % (name, st))
+            ro = os.path.join(T.GATE, "refloff_%s_%s.png" % (name, st))
+            tag = "%s_%s" % (name, st)
+            if not os.path.exists(fr):
+                t, rec = G.build_and_render(name, cam, st, fr, cards, samples=samples or SAMPLES, extra=extra, log=log)
+                times[tag] = t
+                recs[tag] = rec
+                log("frame %s: %.0f s" % (tag, t))
+                json.dump(times, open(tp, "w"), indent=1)
+                json.dump(recs, open(recs_p, "w"), indent=1)
+            if not os.path.exists(mk):
+                t, rec = G.build_and_render(name, cam, st, mk, cards, mode="mask", extra=extra, log=log)
+                times["mask_" + tag] = t
+                json.dump(times, open(tp, "w"), indent=1)
+            if st == "night" and not os.path.exists(ro):
+                t, rec = G.build_and_render(name, cam, st, ro, cards, samples=16, res=(1280, 720), glass_refl=0.0, extra=extra, log=log)
+                times["refloff_" + tag] = t
+                json.dump(times, open(tp, "w"), indent=1)
+            if name in ("hook", "reverse", "cam-a", "close"):
+                pst = "night_lit" if st == "night" else st
+                jp = os.path.join(T.PREVIEWS, "hw-%s-%s-%s.jpg" % (name, pst, T.DATE))
+                if not os.path.exists(jp):
+                    sz = jpeg_under(Image.open(fr), jp)
+                    log("preview %s: %d KB" % (os.path.basename(jp), sz // 1024))
     return times
+
+
+if __name__ == "__main__":
+    run(sys.argv[1:] or None)
