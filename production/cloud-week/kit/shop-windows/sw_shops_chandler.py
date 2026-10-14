@@ -55,7 +55,7 @@ def room(r):
     1.6: six coils of rope standing on edge (swept tube, ambientCG Rope001 picture in five colours); 2.0: ten twine reels and more tins.
     counter C-back-counter (x 0.4 to 2.6, 0.6 deep, panelled, a brass edge, a chart drawer): CashRegister_01 at 0.42 (mark blanked), three seadogs_compass, the hurricane lamp (Lantern_01, lit at night: a warm
     point light 2200 K and a small flame).
-    hooks C-back-hooks: a timber board over the counter (x 0.4 to 2.5, z 1.35 to 2.2, 0.18) carrying life_jacket x3 at 0.7, one lifebuoy at 0.8 and two sou'westers: the target's 4, 2 and 3 do not fit 2.1 m without
+    hooks C-back-hooks: a timber board over the counter (x 0.4 to 2.5, z 1.35 to 2.2, 0.18) carrying life_jacket x3 at 0.6, one lifebuoy at 0.65 and one sou'wester: the target's 4, 2 and 3 do not fit 2.1 m without
     one hanging through another (short, named in NOTES.md).
     left wall C-left-charts: six invented chart sheets and a tide-table card (paper, script) and a board with a flat coil of rope. right wall C-right-board: a pegboard 1.6 x 1.1 with 24 pieces of hardware (shackles,
     single blocks, horn cleats, chain), flat.
@@ -88,7 +88,7 @@ def room(r):
     bs = 1.5 / r.dims("ocean_buoy").z
     r.place("ocean_buoy", (-2.6 + 1.067 * bs / 2 + 0.01, D - 0.01, 0.0), rot=(0, 0, 0), scale=bs, fixture="C-floor-buoy", anchor=("c", "max", "min"), tag="buoy")
     # ---- the shelves
-    sx0, sx1 = -1.95, fx["C-back-shelves"]["x"][1]
+    sx0, sx1 = -1.95, fx["C-back-shelves"]["x"][1] + 0.10          # (to 0.30: four pairs of boots at 0.6 of their size need 2.16 m)
     tiers = fx["C-back-shelves"]["tiers"]
     r.shelf_unit("C-back-shelves", [(z, sx0 + 0.015, sx1 - 0.015) for z in tiers], depth=fx["C-back-shelves"]["depth_m"])
     xa, xb = sx0 + 0.04, sx1 - 0.04
@@ -153,8 +153,8 @@ def room(r):
         g = gm_by.setdefault(ci, GM())
         Rin = rnd.uniform(0.05, 0.075)
         rho, turns = 0.0095, 3.2
-        Rout = Rin + 2 * rho * turns + rho
-        GB.rope_coil(g, (x, D - 0.150, tiers[3] + Rout), Rin, turns, rho, axis="y", mi=0, layers=4)
+        Rout = Rin + 0.4 * rho * 3 + 2 * rho * turns + rho
+        GB.rope_coil(g, (x, D - 0.150, tiers[3] + Rout + 0.0005), Rin, turns, rho, axis="y", mi=0, layers=4)
         cnt_by[ci] = cnt_by.get(ci, 0) + 1
         x += 0.30
     for ci, g in gm_by.items():
@@ -167,21 +167,36 @@ def room(r):
     o = gm.to_object("twine_reels", [reel_wood, twine_m], r.sc)
     r.placed_rec("C-back-shelves", "script:twine_reels", gm.extents(), [o.name], tag="reels", n=10)
     # ---- the counter
-    cx0, cx1, cy0, cy1, ch = r.counter("C-back-counter", panels=True)
+    # the counter, built here: its top overhangs the panelled front by 0.032 so that the brass edge, the drawer and its pull stand inside the 0.60 rule
+    cx0, cx1 = fx["C-back-counter"]["x"]
+    ch = fx["C-back-counter"]["z"][1]
+    cy0 = D - fx["C-back-counter"]["depth_m"]
+    cy1 = D - 0.005
+    r.box("counter_base", cx0, cx1, cy0 + 0.032, cy1, 0.0, ch - 0.03, r.wood_m, fixture="C-back-counter")
+    pm_ = r.mat("counter_panel_chandler", rgb8(112, 70, 42), rough=0.5)
+    rail_ = r.mat("counter_rail_chandler", rgb8(84, 50, 30), rough=0.5)
+    r.box("counter_plinth", cx0, cx1, cy0 + 0.020, cy0 + 0.032, 0.0, 0.10, rail_, fixture="C-back-counter")
+    r.box("counter_rail", cx0, cx1, cy0 + 0.020, cy0 + 0.032, ch - 0.12, ch - 0.03, rail_, fixture="C-back-counter")
+    npan = max(2, int(round((cx1 - cx0) / 0.55)))
+    wpan = (cx1 - cx0) / npan
+    for k in range(npan):
+        r.box("counter_panel_%d" % k, cx0 + k * wpan + 0.05, cx0 + (k + 1) * wpan - 0.05, cy0 + 0.020, cy0 + 0.032, 0.16, ch - 0.17, pm_, fixture="C-back-counter")
+    top_m = r.mat("counter_top_chandler", rgb8(120, 80, 48), rough=0.38)
+    r.box("counter_top", cx0, cx1, cy0, cy1, ch - 0.03, ch, top_m, fixture="C-back-counter")
     brass = r.brass_m
-    r.box("counter_brass_edge", cx0, cx1, cy0 - 0.006, cy0 + 0.004, ch - 0.016, ch - 0.002, brass, fixture="C-back-counter")
+    r.box("counter_brass_edge", cx0, cx1, cy0, cy0 + 0.010, ch, ch + 0.004, brass, fixture="C-back-counter")
     drawer_m = r.mat("chart_drawer", rgb8(130, 86, 50), rough=0.5)
-    r.box("chart_drawer_front", cx0 + 0.55, cx0 + 1.35, cy0 - 0.012, cy0 - 0.001, 0.58, 0.84, drawer_m, fixture="C-back-counter")
-    r.box("chart_drawer_pull", cx0 + 0.89, cx0 + 1.01, cy0 - 0.022, cy0 - 0.012, 0.69, 0.73, brass, fixture="C-back-counter")
+    r.box("chart_drawer_front", cx0 + 0.66, cx0 + 0.99, cy0 + 0.012, cy0 + 0.020, 0.55, 0.80, drawer_m, fixture="C-back-counter")
+    r.box("chart_drawer_pull", cx0 + 0.78, cx0 + 0.87, cy0 + 0.004, cy0 + 0.012, 0.66, 0.69, brass, fixture="C-back-counter")
     till_s = next(g["size_m"] for g in rr["goods"] if g["model"] == "CashRegister_01") / max(r.dims("CashRegister_01"))
     r.place("CashRegister_01", (cx1 - 0.32, D - 0.02, ch), rot=(0, 0, 0), scale=till_s, fixture="C-back-counter", anchor=("c", "max", "min"))
     for k, xc in enumerate((cx0 + 0.25, cx0 + 0.50, cx0 + 1.60)):
         r.place("seadogs_compass", (xc, D - 0.25 - 0.05 * k, ch), rot=(0, 0, rnd.uniform(-0.6, 0.6)), scale=1.0, fixture="C-back-counter", anchor=("c", "c", "min"), tag="compass")
     lx, ly = cx0 + 1.05, D - 0.30
-    ext = r.place("Lantern_01", (lx, ly, ch), rot=(0, 0, 0), scale=1.3, fixture="C-back-counter", anchor=("c", "c", "min"), tag="hurricane_lamp")
+    ext = r.place("Lantern_01", (lx, ly, ch), rot=(0, 0, 0), scale=1.1, fixture="C-back-counter", anchor=("c", "c", "min"), tag="hurricane_lamp")
     flame_m = r.mat("lamp_flame", rgb8(255, 190, 90), rough=0.4, emit=(1.0, 0.62, 0.22), emit_strength=0.0)
     gm = GM()
-    gm.lathe(lx, ly, ch + 0.07, [(0.0, 0.0), (0.006, 0.01), (0.007, 0.03), (0.003, 0.05), (0.0, 0.06)], mi=0, n=10)
+    gm.lathe(lx, ly, ch + 0.100, [(0.0, 0.0), (0.0045, 0.008), (0.005, 0.020), (0.0025, 0.030), (0.0, 0.036)], mi=0, n=10)
     o = gm.to_object("lamp_flame", [flame_m], r.sc, smooth=True)
     r.fixture_rec("C-back-counter", "lamp_flame", gm.extents())
     ll = bpy.data.lights.new("lamp_light", "POINT")
@@ -190,7 +205,7 @@ def room(r):
     ll.shadow_soft_size = 0.02
     lo = bpy.data.objects.new("lamp_light", ll)
     r.sc.collection.objects.link(lo)
-    lo.location = (lx, ly - 0.03, ch + 0.10)
+    lo.location = (lx, ly - 0.03, ch + 0.115)
     r.lamp = lo
     orig_set_state = r.set_state
 
@@ -206,28 +221,33 @@ def room(r):
     r.box("hooks_board", hx0, hx1, D - 0.030, D - 0.005, 2.04, 2.20, wood, fixture="C-back-hooks")
     pegs = []
     gm = GM()
-    jx = [hx0 + 0.30, hx0 + 0.80, hx0 + 1.30]
-    jsc = 0.7
+    jx = [hx0 + 0.21, hx0 + 0.66, hx0 + 1.11]
+    jsc = 0.6
     for k, xc in enumerate(jx):
         gm.rod((xc, D - 0.030, 2.12), (xc, D - 0.075, 2.12), 0.007, 0, 8)
         pegs.append(xc)
         jh = r.dims("life_jacket").z * jsc
         r.place("life_jacket", (xc, D - 0.075 - 0.0, 2.12 - 0.02), rot=(0, 0, 0), scale=jsc, fixture="C-back-hooks", anchor=("c", "max", "max"), tag="jacket")
-    lsc = 0.8
-    lbx = hx0 + 1.80
+    lsc = 0.65
+    lbx = hx0 + 1.60
     gm.rod((lbx, D - 0.030, 2.12), (lbx, D - 0.065, 2.12), 0.007, 0, 8)
-    r.place("lifebuoy", (lbx, D - 0.065, 2.12), rot=(math.pi / 2, 0, 0), scale=lsc, fixture="C-back-hooks", anchor=("c", "max", "max"), tag="lifebuoy")
+    r.place("lifebuoy", (lbx, D - 0.065, 2.12), rot=(0, 0, 0), scale=lsc, fixture="C-back-hooks", anchor=("c", "max", "max"), tag="lifebuoy")
     # sou'westers hang from pegs at the right end
     sg = GM()
     sw_m = [r.mat("oilskin_yellow", rgb8(214, 170, 30), rough=0.35), r.mat("oilskin_seam", rgb8(150, 110, 20), rough=0.5)]
-    for k, xc in enumerate((hx1 - 0.18, hx1 - 0.02)):
+    for k, xc in enumerate((hx1 - 0.07,)):
         gm.rod((xc, D - 0.030, 2.12), (xc, D - 0.070, 2.12), 0.006, 0, 8)
     o = gm.to_object("hooks_pegs", [brass], r.sc)
     r.fixture_rec("C-back-hooks", "hooks_pegs", gm.extents())
-    for k, xc in enumerate((hx1 - 0.16, hx1 - 0.02)):
-        GB.souwester(sg, xc, D - 0.08, 1.72, s=1.0, mi=0, mi_seam=1, face=-1.0)
+    cord_m = r.mat("hat_cord", rgb8(60, 52, 44), rough=0.8)
+    cg_ = GM()
+    for k, xc in enumerate((hx1 - 0.07,)):
+        GB.souwester(sg, xc, D - 0.20, 1.78, s=1.0, mi=0, mi_seam=1, face=-1.0)
+        cg_.rod((xc, D - 0.0735, 2.114), (xc, D - 0.200, 1.78 + 0.145), 0.0018, 0, 6)         # the strap from the peg to the crown
     o = sg.to_object("sou_westers", sw_m, r.sc, smooth=True)
-    r.placed_rec("C-back-hooks", "script:oilskin_sou_wester", sg.extents(), [o.name], tag="sou_westers", n=2)
+    r.placed_rec("C-back-hooks", "script:oilskin_sou_wester", sg.extents(), [o.name], tag="sou_westers", n=1)
+    o = cg_.to_object("hat_cords", [cord_m], r.sc)
+    r.fixture_rec("C-back-hooks", "hat_cords", cg_.extents())
     # ---- the left wall: six chart sheets, a tide table card, a board with a flat coil of rope
     xl, xr = -W / 2, W / 2
     titles = ["HARBOUR\nAPPROACHES No.1", "THE WESTERN\nSOUNDS", "NORTH CHANNEL\nTO THE BAR", "INSHORE WATERS\nSOUTH COAST", "THE ESTUARY\nAND ROADS", "OFFSHORE BANKS\nSHEET 4", "TIDE TABLE\nFOR THE MONTH"]
@@ -258,7 +278,7 @@ def room(r):
                (1.12, "shackle", [0.20, 0.55]), (1.12, "chain", [0.95, 1.25, 1.50])]
 
     def to_wall(x_, y_, z_):
-        return (top + y_, 2.8 - x_, z_)          # local (u, -d, z) -> the right wall: out of the board is -x; u runs along -y from the viewer's right
+        return (top - 0.006 + y_, 2.8 - x_, z_)          # local (u, -d, z) -> the right wall: out of the board is -x; u runs along -y from the viewer's right
     for z, kind, us in rows_hw:
         for uu in us:
             i0 = len(hw.V)
@@ -276,7 +296,7 @@ def room(r):
     o = hw.to_object("rigging_hardware", [block_wood, steel], r.sc)
     r.placed_rec("C-right-board", "script:shackles_blocks", hw.extents(), [o.name], tag="hardware", n=n_hw)
     r.rows["counts"] = {"paint_tins": n_tins, "hardware": n_hw}
-    r.notes.append("%d paint tins (target 40), 24 pieces of rigging on the pegboard, life jackets 3 of 4, lifebuoy 1 of 2, sou'westers 2 of 3 on the hooks board (no room for more without one through another); the hurricane lamp is lit in night_lit only" % n_tins)
+    r.notes.append("%d paint tins (target 40), 24 pieces of rigging on the pegboard, life jackets 3 of 4 (0.6), lifebuoy 1 of 2 (0.65), sou'westers 1 of 3 on the hooks board (no room for more without one through another); the hurricane lamp is lit in night_lit only" % n_tins)
     r.texts = list(GEN.TEXTS)
     return r
 
