@@ -340,7 +340,8 @@ def _lazy(mod, fn):
     return f
 
 
-LAYOUTS = {"ironmonger": layout_ironmonger, "newsagent": _lazy("sw_shops_news", "display"), "tea_rooms": _lazy("sw_shops_tea", "display")}
+LAYOUTS = {"ironmonger": layout_ironmonger, "newsagent": _lazy("sw_shops_news", "display"), "tea_rooms": _lazy("sw_shops_tea", "display"), "steam_laundry": _lazy("sw_shops_laundry", "display"),
+           "grocer": _lazy("sw_shops_grocer", "display"), "chandler": _lazy("sw_shops_chandler", "display"), "fish_market": _lazy("sw_shops_fish", "display")}
 
 
 def build_display(work, out_dir, ctx, log=print):

@@ -765,7 +765,8 @@ def _lazy(mod, fn):
     return f
 
 
-LAYOUTS = {"ironmonger": layout_ironmonger, "newsagent": _lazy("sw_shops_news", "room"), "tea_rooms": _lazy("sw_shops_tea", "room")}
+LAYOUTS = {"ironmonger": layout_ironmonger, "newsagent": _lazy("sw_shops_news", "room"), "tea_rooms": _lazy("sw_shops_tea", "room"), "steam_laundry": _lazy("sw_shops_laundry", "room"),
+           "grocer": _lazy("sw_shops_grocer", "room"), "chandler": _lazy("sw_shops_chandler", "room"), "fish_market": _lazy("sw_shops_fish", "room")}
 
 
 def build_scene(work, ctx):
