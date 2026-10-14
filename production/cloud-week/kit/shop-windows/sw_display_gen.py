@@ -65,7 +65,7 @@ class GDisplay(RG.GRoom):
             md.segments = 2
             md.limit_method = "ANGLE"
             md.angle_limit = math.radians(30.0)
-        self.box_uvs(ob)
+        self.box_uvs(ob, getattr(self, "uv_tile", 0.25))
         self.struct(ob, kind, [x0, x1, y0, y1, z0, z1])
         return ob
 
@@ -86,13 +86,20 @@ class GDisplay(RG.GRoom):
         bm.to_mesh(me)
         bm.free()
 
-    def start(self, bed_rgb, wall_rgb, dado_rgb):
+    def start(self, bed_rgb, wall_rgb, dado_rgb, bed_png=None, board_png=None):
+        """`bed_png` / `board_png` (try 2, 14 Oct): the painted top of the bed and the bed's timber edge as pictures (a painted plywood, a bare deal) in place of a flat base-colour factor."""
         L = self.L
-        bed_m = self.mat("bed_paint", rgb8(*bed_rgb), rough=0.62)
-        board_m = self.mat("bed_board", rgb8(70, 44, 28), rough=0.7)
+        if bed_png:
+            bed_m = self.image_mat("bed_paint", bed_png, rough=0.62)
+            board_m = self.image_mat("bed_board", board_png, rough=0.7) if board_png else self.mat("bed_board", rgb8(70, 44, 28), rough=0.7)
+            self.uv_tile = 0.8
+        else:
+            bed_m = self.mat("bed_paint", rgb8(*bed_rgb), rough=0.62)
+            board_m = self.mat("bed_board", rgb8(70, 44, 28), rough=0.7)
         self.bed_top = bed_m
         self.solid("bed", -L / 2, L / 2, 0.0, DEPTH, -0.026, -0.006, board_m, "bed", bevel=0.0)
         self.solid("bed_top", -L / 2 + 0.01, L / 2 - 0.01, 0.01, DEPTH - 0.01, -0.006, 0.0, bed_m, "bed_top", bevel=0.0)
+        self.uv_tile = 0.25
         plaster = self.mat("return_plaster", rgb8(*wall_rgb), rough=0.9)
         dado = self.mat("return_dado", rgb8(*dado_rgb), rough=0.9)
         ya, yb = -0.005, CARD_PLANE_LOCAL_Y
@@ -237,16 +244,60 @@ class GDisplay(RG.GRoom):
         Image.fromarray(out.astype(np.uint8)).save(path)
         return path
 
+    def hang_cords(self, pairs, name="hung_cords", r=0.0015):
+        """Cords from `pairs` = [((x, v, w) lower end, (x, v, w) upper end)] as one mesh: a cord ends INSIDE the part it ties to (the card's top, the rod's axis), so that every end is within 2 mm of a solid part."""
+        wire = self.mat("wire", rgb8(60, 60, 62), rough=0.5, metal=0.7)
+        gm = GM()
+        for a, b in pairs:
+            gm.rod(a, b, r, 0, 6)
+        ob = gm.to_object(name, [wire], self.sc)
+        self.struct(ob, "cords", gm.extents())
+        self.cord_ends = getattr(self, "cord_ends", []) + [[list(map(float, a)), list(map(float, b))] for a, b in pairs]
+        return ob
+
+    def lean_rot(self, asset, phi_deg, head_z=0.10, long_axis=(1.0, 0.0, 0.0), toward=(1.0, 0.0)):
+        """The Euler rotation that stands a model on the END of its handle with its head up, the handle leaning `phi_deg` from the vertical toward `toward` (x, y), and the head's long axis (`long_axis`, the model's own)
+        lying across the lean: the head is the part of the model below `head_z` (its z 0 end), the handle's end the vertex farthest from the head's centre."""
+        meshes, lo, hi = self.template(asset)
+        pts = np.array([tuple(m.matrix_world @ v.co) for m in meshes for v in m.data.vertices])
+        head = pts[pts[:, 2] < head_z]
+        H = Vector(head.mean(0))
+        E = Vector(pts[int(np.argmax(np.linalg.norm(pts - np.array(H), axis=1)))])
+        n = math.hypot(*toward)
+        sp, cp = math.sin(math.radians(phi_deg)), math.cos(math.radians(phi_deg))
+        T = Vector((toward[0] / n * sp, toward[1] / n * sp, cp))
+        R1 = (H - E).normalized().rotation_difference(T).to_matrix()
+        hx = R1 @ Vector(long_axis)
+        across = Vector((-toward[1] / n, toward[0] / n, 0.0))               # horizontal and square to the lean
+        hp = hx - T * hx.dot(T)
+        hp.normalize()
+        ang = math.atan2(T.dot(hp.cross(across)), hp.dot(across))
+        if ang > math.pi / 2:
+            ang -= math.pi
+        elif ang < -math.pi / 2:
+            ang += math.pi
+        R = Matrix.Rotation(ang, 3, T) @ R1
+        e = R.to_euler("XYZ")
+        return (e.x, e.y, e.z)
+
+    @staticmethod
+    def euler_of(*mats):
+        """The Euler (XYZ) of the product of 3 x 3 rotations given left to right (the last is applied first)."""
+        R = Matrix.Identity(3)
+        for m in mats:
+            R = R @ m
+        e = R.to_euler("XYZ")
+        return (e.x, e.y, e.z)
+
     def wood_strips(self, name, n, rgb, var=0.08, size=(1024, 64), stencils=None, seed=1, asset="plywood"):
         """A picture of `n` plank strips (each `size`, the grain along the strip) cut from a Poly Haven wood map at random places and tinted to `rgb` with +-`var` of its own (every plank a little different), then
-        `stencils` = [(strip index, [(text, font, size px, y px)...])...] stencilled across the planks in black. Returns (path, [(u0, v0, u1, v1) per strip]) (v 0 at the bottom)."""
+        `stencils` = [(strip index, [(text, font name, size px, x px, y px)...])...] stencilled in black paint with a little wear (a stencil's bridges are left out). Returns (path, [(u0, v0, u1, v1) per strip]) (v 0 at the bottom)."""
         rng = np.random.default_rng(seed)
         a = self.poly_map(asset)
         lum = (0.2126 * a[..., 0] + 0.7152 * a[..., 1] + 0.0722 * a[..., 2])
         ratio = lum / float(lum.mean())
         W, H = size
         atlas = Image.new("RGB", (W, H * n))
-        uvs = []
         for k in range(n):
             y0 = int(rng.integers(0, 1024 - H))
             x0 = int(rng.integers(0, 1024 - 512))
@@ -256,68 +307,86 @@ class GDisplay(RG.GRoom):
             strip = np.clip(tint[None, None, :] * (1.0 + 0.9 * (crop - 1.0))[..., None], 0, 255)
             atlas.paste(Image.fromarray(strip.astype(np.uint8)), (0, k * H))
         for (k, lines) in (stencils or []):
-            d_ = ImageDraw.Draw(atlas)
-            for (text, fnt, px, yy, xx) in lines:
+            for (text, fnt, px, xx, yy) in lines:
                 f = GEN.font(fnt, px)
-                # a stencil: the letters in flat black with a little wear, a few bridges left out
+                if xx == "c":                                   # centred on the part of the strip a plank shows (`span` of it, default 0.42)
+                    xx = W * 0.42 / 2.0 - f.getlength(text) / 2.0
                 tmp = Image.new("L", (W, H), 0)
                 ImageDraw.Draw(tmp).text((xx, yy), text, font=f, fill=255)
-                m = np.asarray(tmp).astype(np.float32) / 255.0
-                wear = (rng.random(m.shape) > 0.10).astype(np.float32)
-                m = m * wear
+                m = np.asarray(tmp).astype(np.float32) / 255.0 * (rng.random((H, W)) > 0.10).astype(np.float32)
                 cur = np.asarray(atlas.crop((0, k * H, W, (k + 1) * H))).astype(np.float32)
                 cur = cur * (1 - 0.88 * m[..., None]) + np.array([22, 20, 18], np.float32)[None, None, :] * 0.88 * m[..., None]
                 atlas.paste(Image.fromarray(np.clip(cur, 0, 255).astype(np.uint8)), (0, k * H))
-            uvs_k = None
         path = os.path.join(self.tex, name + ".png")
         atlas.save(path)
-        for k in range(n):
-            uvs.append((0.0, 1.0 - (k + 1) / n, 1.0, 1.0 - k / n))
-        return path, uvs
+        return path, [(0.0, 1.0 - (k + 1) / n, 1.0, 1.0 - k / n) for k in range(n)]
 
-    def planked_box(self, name, x0, x1, y0, y1, z0, z1, mats, strips, plank_h=0.12, tier="bed", stencil_row=None, nails=True):
-        """A timber box built of planks (the stepped crate, the trays): horizontal planks `plank_h` high on the front face with 3 mm grooves between them that show the core 2 mm deeper, each plank its own strip of the
-        wood atlas (`strips` = [(u0, v0, u1, v1)], tinted a little differently), the same on the two ends, lid boards along the top, and a nail head near each end of every plank. One mesh, two materials
-        (`mats` = [wood, nails]). `stencil_row` = (row index, strip index): that plank of the front carries a stencilled strip."""
+    @staticmethod
+    def _span(length, h, strip_aspect=16.0):
+        """The share of a strip's width a board `length` long and `h` high takes so that a picture pixel is square (the strips are 16 : 1)."""
+        return min(1.0, length / (h * strip_aspect))
+
+    def planked_box(self, name, x0, x1, y0, y1, z0, z1, mats, strips, n_plain, plank_h=0.12, tier="bed", stencil=None, nails=True, seed=None):
+        """A timber box built of planks (the stepped crate): horizontal planks `plank_h` high on the front face with 3 mm grooves between them that show the core 2 mm deeper, each plank its own strip of the wood
+        atlas (`strips[:n_plain]`, tinted a little differently), the two ends planked the same, lid boards along the top, and a nail head near each end of every plank. One mesh, two materials (`mats` = [wood,
+        nails]). `stencil` = (plank index from the bottom, strip index): that plank of the front carries a stencilled strip (its own picture, whole)."""
         gm = GM()
         g, t = 0.003, 0.012
-        core = (x0 + 0.003, x1 - 0.003, y0 + 0.002, y1 - 0.002, z0, z1 - t)
-        gm.box(*core, mi=0, uv_front=strips[0], uv_other=(strips[0][0] + 0.01, strips[0][1] + 0.01))
+        gm.box(x0 + 0.003, x1 - 0.003, y0 + 0.002, y1 - 0.002, z0, z1 - t, 0, uv_front=strips[0], uv_other=(0.5, strips[0][1] + 0.01))
         nj = max(1, int(round((z1 - z0) / plank_h)))
         ph = (z1 - z0) / nj
-        rnd = random.Random(int(abs(x0 * 1000) + abs(z1 * 100)))
-        ns = len(strips)
-        nail_pos = []
+        rnd = random.Random(seed if seed is not None else int(abs(x0 * 1000) + abs(z1 * 100)))
+        nails_at = []
+        sp = self._span(x1 - x0, ph)
         for j in range(nj):
             za, zb = z0 + j * ph + (g / 2 if j else 0.0), z0 + (j + 1) * ph - g / 2
-            k = rnd.randrange(ns - 2) if not (stencil_row is not None and stencil_row[0] == j) else stencil_row[1]
-            u0, v0, u1, v1 = strips[k]
-            span = min(1.0, (x1 - x0) / (plank_h * 16.0)) if k < ns - 2 or True else 1.0
-            uo = rnd.uniform(0.0, max(0.0, 1.0 - span)) if not (stencil_row is not None and stencil_row[0] == j) else 0.0
-            ua, ub = (u0 + uo, u0 + uo + span) if not (stencil_row is not None and stencil_row[0] == j) else (u0, u1)
-            gm.box(x0, x1, y0, y0 + t, za, zb, mi=0, uv_front=(ua, v0, ub, v1), uv_other=(u0 + 0.02, v0 + 0.01))
-            for xn in (x0 + 0.014, x1 - 0.014):
-                nail_pos.append((xn, y0, (za + zb) / 2))
-        # the two ends: the same planks across the depth
+            if stencil is not None and stencil[0] == j:
+                u0, v0, u1, v1 = strips[stencil[1]]
+                uvf = (u0, v0, u0 + sp, v1)
+            else:
+                u0, v0, u1, v1 = strips[rnd.randrange(n_plain)]
+                uo = rnd.uniform(0.0, max(0.0, 1.0 - sp))
+                uvf = (u0 + uo, v0, u0 + uo + sp, v1)
+            gm.box(x0, x1, y0, y0 + t, za, zb, 0, uv_front=uvf, uv_other=(u0 + 0.02, 0.5 * (v0 + v1)))
+            for xn in (x0 + 0.016, x1 - 0.016):
+                nails_at.append((xn, y0, (za + zb) / 2))
+        sd = self._span(y1 - y0, ph)
         for (xa, xb) in ((x0, x0 + t), (x1 - t, x1)):
             for j in range(nj):
                 za, zb = z0 + j * ph + (g / 2 if j else 0.0), z0 + (j + 1) * ph - g / 2
-                k = rnd.randrange(ns - 2)
-                u0, v0, u1, v1 = strips[k]
-                gm.box(xa, xb, y0 + 0.012, y1, za, zb, mi=0, uv_front=None, uv_ends=(u0, v0, u0 + min(1.0, (y1 - y0) / (plank_h * 16.0)), v1), uv_other=(u0 + 0.02, v0 + 0.01))
-        # lid boards along the top, 0.10 wide across the depth
+                u0, v0, u1, v1 = strips[rnd.randrange(n_plain)]
+                gm.box(xa, xb, y0 + t, y1, za, zb, 0, uv_ends=(u0, v0, u0 + sd, v1), uv_other=(u0 + 0.02, 0.5 * (v0 + v1)))
         nb = max(1, int(round((y1 - y0) / 0.10)))
         bw = (y1 - y0) / nb
-        for b in range(nb):
-            ya, yb = y0 + b * bw + (g / 2 if b else 0.0), y0 + (b + 1) * bw - g / 2
-            k = rnd.randrange(ns - 2)
-            u0, v0, u1, v1 = strips[k]
-            gm.box(x0, x1, ya, yb, z1 - t, z1, mi=0, uv_top=(u0, v0, u0 + min(1.0, (x1 - x0) / (plank_h * 16.0)), v1), uv_other=(u0 + 0.02, v0 + 0.01))
+        for b_ in range(nb):
+            ya, yb = y0 + b_ * bw + (g / 2 if b_ else 0.0), y0 + (b_ + 1) * bw - g / 2
+            u0, v0, u1, v1 = strips[rnd.randrange(n_plain)]
+            gm.box(x0, x1, ya, yb, z1 - t, z1, 0, uv_top=(u0, v0, u0 + sp, v1), uv_other=(u0 + 0.02, 0.5 * (v0 + v1)))
         if nails:
-            for (xn, yn, zn) in nail_pos:
-                gm.lathe(xn, yn - 0.0012, zn - 0.0035, [(0.0, 0.0), (0.0034, 0.0), (0.0034, 0.0016), (0.0, 0.0016)], mi=1, n=8) if False else gm.cylinder(xn, yn - 0.0015, zn - 0.0030, zn + 0.0030, 0.0030, mi=1, n=8)
+            for (xn, yn, zn) in nails_at:
+                gm.rod((xn, yn - 0.0016, zn), (xn, yn, zn), 0.0032, 1, 8)
         ob, ext = self.gm_object(name, gm, mats, "support", "script:crate", tier)
         return ob, ext
+
+    def tray_box(self, name, xc, y0, y1, w, h, mat, strips, n_plain, tier="bed", model="script:crate"):
+        """A shallow open tray (the bulb trays, the trowel trays): a floor 4 mm thick and four boards 4 mm thick `h` high, each face its own piece of the wood atlas. One mesh. Returns the extents."""
+        gm = GM()
+        rnd = random.Random(int(abs(xc * 1000) + y0 * 100))
+
+        def uvs(length, hh):
+            u0, v0, u1, v1 = strips[rnd.randrange(n_plain)]
+            sp = self._span(length, hh)
+            uo = rnd.uniform(0.0, max(0.0, 1.0 - sp))
+            return (u0 + uo, v0, u0 + uo + sp, v1)
+
+        x0, x1 = xc - w / 2, xc + w / 2
+        t = 0.004
+        gm.box(x0, x1, y0, y1, 0.0, t, 0, uv_front=uvs(w, t), uv_top=uvs(w, t), uv_other=(0.5, strips[0][1] + 0.01))
+        gm.box(x0, x1, y0, y0 + t, 0.0, h, 0, uv_front=uvs(w, h), uv_top=uvs(w, t), uv_other=(0.5, strips[0][1] + 0.01))
+        gm.box(x0, x1, y1 - t, y1, 0.0, h, 0, uv_front=uvs(w, h), uv_top=uvs(w, t), uv_other=(0.5, strips[0][1] + 0.01))
+        for (xa, xb) in ((x0, x0 + t), (x1 - t, x1)):
+            gm.box(xa, xb, y0 + t, y1 - t, 0.0, h, 0, uv_top=uvs(y1 - y0, t), uv_ends=uvs(y1 - y0, h), uv_other=(0.5, strips[0][1] + 0.01))
+        return self.gm_object(name, gm, [mat], "support", model, tier)
 
     # ---------------------------------------------------------------------------------------------- the export
     def finish(self, out_dir, log=print):

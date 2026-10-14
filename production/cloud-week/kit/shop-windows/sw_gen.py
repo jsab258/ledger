@@ -290,6 +290,40 @@ def tin_labels(path):
     return out
 
 
+CLEANER_TEXTS = [("HARTSIDE", "SCOURING POWDER", "500 g"), ("ELMSTEAD", "BRASS POLISH", "250 ml"), ("COLDWELL", "WASHING SODA", "1 kg"), ("BRANTHAM", "DISINFECTANT", "1 litre")]
+
+
+def cleaner_labels(path):
+    """The four cleaner tins' labels (14 Oct, try 2; ironmonger close review, narrow 5: "blank red cylinders"): four designs in the project's own makers, each a 1024 x 320 strip that wraps once round a tin
+    88 mm high and 0.276 round, so one pixel is 0.27 mm both ways (the text is not stretched), the name on the front panel (512 px) and again on the back. Returns [(u0, v0, u1, v1)] (v 0 at the bottom)."""
+    W, TH = 1024, 320
+    cols = [((70, 100, 160), (240, 232, 210), (240, 232, 210)), ((150, 110, 40), (30, 26, 22), (40, 30, 20)), ((226, 222, 206), (150, 36, 30), (30, 50, 100)), ((40, 96, 74), (240, 236, 214), (232, 214, 150))]
+    im = Image.new("RGB", (W, TH * 4), (200, 200, 200))
+    d = ImageDraw.Draw(im)
+    f1, f2, f3 = font("alfa-slab-one", 62), font("oswald", 50), font("oswald", 36)
+    rng = np.random.default_rng(9)
+    out = []
+    for k, ((maker, what, detail), (bg, ink, ink2)) in enumerate(zip(CLEANER_TEXTS, cols)):
+        y0 = k * TH
+        d.rectangle([0, y0, W - 1, y0 + TH - 1], fill=bg)
+        d.rectangle([0, y0 + 14, W - 1, y0 + 24], fill=ink)
+        d.rectangle([0, y0 + TH - 26, W - 1, y0 + TH - 16], fill=ink)
+        for rep in (0, 1):
+            cx = 256 + 512 * rep
+            for txt, f, yy, col in ((maker, f1, 44, ink), (what, f2, 138, ink2), (detail, f3, 224, ink2)):
+                tw = d.textlength(txt, font=f)
+                sc = min(1.0, 400.0 / max(tw, 1.0))
+                tile = Image.new("RGBA", (int(tw) + 8, int(f.size * 1.5)), (0, 0, 0, 0))
+                ImageDraw.Draw(tile).text((4, 0), txt, font=f, fill=col + (255,))
+                if sc < 1.0:
+                    tile = tile.resize((max(1, int(tile.width * sc)), tile.height), Image.LANCZOS)
+                im.paste(tile, (cx - tile.width // 2, y0 + yy), tile)
+        out.append((0.0, 1.0 - (y0 + TH) / (TH * 4), 1.0, 1.0 - y0 / (TH * 4)))
+    arr = np.asarray(im, "float32") + rng.normal(0.0, 2.2, (TH * 4, W, 1)).astype("float32")
+    Image.fromarray(np.clip(arr, 0, 255).astype("uint8")).filter(ImageFilter.GaussianBlur(0.5)).save(path)
+    return out
+
+
 def card_atlas(path, texts, cols=4, tile=(256, 128), font_name="patrick-hand", bg=(236, 230, 210), ink=(40, 36, 60), size=44, jitter=True):
     """A picture of hand-lettered cards (one text each, centred on two lines at most). Returns {index: (u0, v0, u1, v1)} (v 0 at the bottom).
     14 Oct (batch B, from the tea rooms' close review, narrow 4: "the window card is a flat, perfect board ... a typeface whose repeated letters are identical"): with `jitter` every letter is drawn on its own,

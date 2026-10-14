@@ -90,6 +90,28 @@ class GRoom(S.Room):
                     n.inputs["Emission Strength"].default_value = 0.0
         return out
 
+    def place(self, asset, ref, *a, **kw):
+        """The base class's place; a cleaner tin (Poly Haven's model has its whole label region blanked: "blank red cylinders", the ironmonger's close review, narrow 5) gets a printed label band of the project's
+        own makers, one of four designs in turn, as a child of the model's root so that it turns, scales and moves with it (try 2, 14 Oct)."""
+        ext = super().place(asset, ref, *a, **kw)
+        if asset == "cleaner_tin_01" and getattr(self, "cleaner_labels", True):
+            root = bpy.data.objects[self.last_objs[0]].parent
+            if not hasattr(self, "_cl_uv"):
+                path = os.path.join(self.tex, "cleaner_labels.png")
+                self._cl_uv = GEN.cleaner_labels(path)
+                self._cl_mat = self.image_mat("cleaner_label", path, rough=0.5)
+                self._cl_n = 0
+            gm = GM()
+            gm.band(0.0, 0.0, 0.0085, 0.1085, 0.0443, -90.0, 270.0, mi=0, uv=self._cl_uv[self._cl_n % 4], n=36)
+            self._cl_n += 1
+            ob = gm.to_object("cleaner_label_%d" % self._cl_n, [self._cl_mat], self.sc, smooth=True)
+            ob.parent = root
+            ob.matrix_parent_inverse = Matrix.Identity(4)
+            self.last_objs.append(ob.name)
+            if self.placed and self.placed[-1].get("model") == asset:
+                self.placed[-1]["objs"] = list(self.last_objs)
+        return ext
+
     # ------------------------------------------------------------------------------------------------ bookkeeping
     def fixture_rec(self, fid, name, ext, **kw):
         rec = {"fixture": fid, "name": name, "ext": [round(v, 4) for v in ext]}
