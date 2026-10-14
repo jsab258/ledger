@@ -388,7 +388,7 @@ def _crate_bed(d, ext, top, name, shrink=(0.04, 0.04), rgb=(96, 128, 70)):
 def display(d):
     """The grocer's window (target `shops.grocer.display`, 14 item rows; bed 4.294 x 0.55; 1.45 high at most). The target's three-tier stand and its zones overlap in volume and give the crates and the pyramids
     the same footprint; what this does (each a Judgement in NOTES.md):
-    levels: the bed (the first tier, w 0); step A, a timber bank 0.18 high at the back (v 0.38 to 0.55) under the jars (u 1.55 to 3.15); step B, 0.36 high (v 0.45 to 0.55), three plinths under the three
+    levels: the bed (the first tier, w 0); step A, a timber bank 0.18 high at the back (v 0.35 to 0.55) under the jars (u 1.625 to 3.15); step B, 0.36 high (v 0.45 to 0.55; the middle one stands on step A), three plinths under the three
     tin pyramids (28 tins each: 7 + 6 + ... + 1, one tin deep, a backing board behind each).
     bed, left to right: three plastic_crate_02 at 0.9 (apples heaped: 40 in all), a wicker_basket_02 with two sets of rolls (hamburger_buns at 0.9), two plastic_crate_03 at 0.9 with the lemons (12), a low timber tray of 15
     onions, a tray of 30 tomatoes (script: glossy red flattened spheres with a calyx, one try), a crate of two bunches of bananas at 0.9 (the third does not fit at real size: two bunches fill the crate's 0.5 depth); every Poly Haven piece at 0.9 to 1.1 of its real size (DSP-06).
@@ -407,13 +407,13 @@ def display(d):
     timber = d.mat("stand_timber", rgb8(140, 100, 62), rough=0.7)
     # ---- the stand: step A (jars) and three plinths (pyramids)
     gm = GM()
-    gm.box(X(1.55), X(3.15), 0.38, 0.55, 0.0, 0.18, 0)
+    gm.box(X(1.625), X(3.15), 0.35, 0.55, 0.0, 0.18, 0)
     ob, _ = d.gm_object("tiered_stand_a", gm, [timber], "scripted", "script:tiered_stand")
     GB.chamfer(ob, 0.003, 2)
     py_us = (0.50, 2.30, 3.75)               # the pyramids' centres
     for k, uc in enumerate(py_us):
         gm = GM()
-        gm.box(X(uc - 0.37), X(uc + 0.37), 0.45, 0.55, 0.0, 0.36, 0)
+        gm.box(X(uc - 0.37), X(uc + 0.37), 0.45, 0.55, 0.18 if uc == 2.30 else 0.0, 0.36, 0)           # the middle plinth stands ON step A (it was cut through it)
         ob, _ = d.gm_object("tiered_stand_b%d" % k, gm, [timber], "scripted", "script:tiered_stand")
         GB.chamfer(ob, 0.003, 2)
     # ---- the pyramids: 28 tins each, one deep, a backing board
@@ -445,14 +445,14 @@ def display(d):
     gjs = [GM() for _ in JAR_DESIGNS]
     for k in range(18):
         ji = k % len(JAR_DESIGNS)
-        GB.jar(gjs[ji], X(1.62 + k * 0.083), 0.465, 0.18, 0.0375, 0.115, 0, 1, juv[ji][1], 2, n=20)
+        GB.jar(gjs[ji], X(1.68 + k * 0.083), 0.405, 0.18, 0.0375, 0.115, 0, 1, juv[ji][1], 2, n=20)
     for ji, gmj in enumerate(gjs):
         fill_m = d.mat("jar_fill_%d" % ji, rgb8(*JAR_DESIGNS[ji][2]), rough=0.18)
         d.gm_object("jars_%d" % ji, gmj, [fill_m, jar_lab, lid_m], "scripted", "script:jars", tier="stand", smooth=True)
     # ---- apples in three crates at 0.9 of their size: 14, 13 and 13 (40)
     cs = 0.9
     apple_n = [14, 13, 13]
-    for k, uc in enumerate((0.38, 0.88, 1.38)):
+    for k, uc in enumerate((0.36, 0.86, 1.36)):
         ext, _ = d.piece("plastic_crate_02", uc, 0.205, 0.0, rot=(0, 0, 0), scale=cs, tier="bed", tris=None)
         _crate_bed(d, ext, 0.145, "apple_bed_%d" % k)
         cx_, cy_ = (ext[0] + ext[1]) / 2 + L / 2, (ext[2] + ext[3]) / 2
@@ -460,17 +460,17 @@ def display(d):
         pos = [(ix, iy, 0) for iy in range(3) for ix in range(4)] + [(0.5, 0.5, 1), (2.5, 0.5, 1)]
         for (ix, iy, lay) in sorted(pos[:apple_n[k]], key=lambda p_: p_[2]):
             ax, ay = cx_ + (ix - 1.5) * 0.098, cy_ + (iy - 1.0) * 0.098
-            az = GB.rest_z(d, ax - L / 2, ay, 0.047)
+            az = GB.rest_z(d, ax - L / 2, ay, 0.047) + (0.02 if lay else 0.0)           # an apple of the second layer starts 20 mm high and settles down onto the four under it
             _, nm_ = d.piece("food_apple_01", ax, ay, az, rot=(0, 0, rnd.uniform(0, 6.28)), scale=rnd.uniform(0.96, 1.0), tier="apples", tris=None)
             if lay:
                 GB.settle_down(d, nm_)
     # ---- wicker_basket_02 with rolls across its rim, two crate_03 with lemons (all at their own size, DSP-06)
-    ext, bn_ = d.piece("wicker_basket_02", 1.80, 0.18, 0.0, rot=(0, 0, 0), scale=1.0, tier="bed", tris=None)
-    _, nm_ = d.piece("hamburger_buns", 1.80, 0.18, ext[5] + 0.001, rot=(0, 0, 0), scale=0.9, tier="basket", tris=None)
+    ext, bn_ = d.piece("wicker_basket_02", 1.78, 0.18, 0.0, rot=(0, 0, 0), scale=1.0, tier="bed", tris=None)
+    _, nm_ = d.piece("hamburger_buns", 1.78, 0.18, ext[5] + 0.001, rot=(0, 0, 0), scale=0.9, tier="basket", tris=None)
     GB.settle_down(d, nm_, max_drop=0.05)
     for k, uc in enumerate((2.19, 2.64)):
         ext, _ = d.piece("plastic_crate_03", uc, 0.14, 0.0, rot=(0, 0, 0), scale=0.9, tier="bed", tris=None)
-        _crate_bed(d, ext, 0.135, "lemon_bed_%d" % k)
+        _crate_bed(d, ext, 0.135, "lemon_bed_%d" % k, shrink=(0.05, 0.06))
         cx_, cy_ = (ext[0] + ext[1]) / 2 + L / 2, (ext[2] + ext[3]) / 2
         for j in range(6):
             ix, iy = j % 3, j // 3
@@ -500,10 +500,10 @@ def display(d):
         gm.lathe(cx, cy, cz, [(0.0, 0.0)] + [(rx * math.cos(t), hz * (1.0 + math.sin(t))) for t in ts] + [(0.0, 2 * hz)], mi=0, n=14)
         gm.lathe(cx, cy, cz + 2 * hz - 0.002, [(0.0, 0.0), (0.012, 0.0), (0.014, 0.003), (0.006, 0.006), (0.0, 0.006)], mi=1, n=8)
     d.gm_object("tomatoes", gm, [tom, calyx], "scripted", "script:tomatoes", tier="tray", smooth=True)
-    d.crate("banana_crate", 3.74, 4.29, 0.02, 0.52, 0.0, 0.12)
+    d.crate("banana_crate", 3.74, 4.29, 0.04, 0.44, 0.0, 0.12)
     bd = d.dims("bananas")
-    d.piece("bananas", 4.015, 0.145, 0.12, rot=(0, 0, 0), scale=1.0 if False else 0.9, tier="crate", tris=None)
-    d.piece("bananas", 4.015, 0.385, 0.12, rot=(0, 0, 0), scale=0.9, tier="crate", tris=None)
+    d.piece("bananas", 4.015, 0.150, 0.12, rot=(0, 0, 0), scale=1.0 if False else 0.9, tier="crate", tris=None)
+    d.piece("bananas", 4.015, 0.355, 0.12, rot=(0, 0, 0), scale=0.9, tier="crate", tris=None)
     # ---- the price cards (14)
     texts = ["APPLES\n29p lb", "ONIONS\n19p lb", "LEMONS\n8p each", "TOMATOES\n45p lb", "BANANAS\n32p lb", "ROLLS\n6 for 55p", "BEANS\n21p", "SOUP\n18p", "PEAS\n19p", "SARDINES\n29p", "JAM\n59p", "HONEY\n69p", "MARMALADE\n55p", "SALMON\n79p"]
     path = os.path.join(tex, "price_cards.png")

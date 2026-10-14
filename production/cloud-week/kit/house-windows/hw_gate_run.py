@@ -36,6 +36,8 @@ FRAMES = [
     ("h-along30-gf2w1", ("H_ALONG_30_NEAR", "west_south_bay2_gf_w1"), ("day", "night")),
     ("h-under-bay1w0", ("H_UNDER", "east_parade_bay1_upper_w0"), ("day",)),
 ]
+# WB-08: the first build's pane (an opaque pale card, F0 0.04, no box shade) in the same view as the bare window at 15 degrees; its mask is that frame's own
+OLD_FAULT = ("old-fault", "h-along15-bay3w1", "east_parade_bay3_upper_w1")
 SAMPLES = int(os.environ.get("LEDGER_GATE_SAMPLES", "40"))
 
 
@@ -205,7 +207,49 @@ def run(names=None, samples=None, log=print):
                 if not os.path.exists(jp):
                     sz = jpeg_under(Image.open(fr), jp)
                     log("preview %s: %d KB" % (os.path.basename(jp), sz // 1024))
+    if not names or "old-fault" in names:
+        old_fault(cal, extra, cards, times, tp, samples, log)
     return times
+
+
+def old_fault(cal, extra, cards, times, tp, samples, log=print):
+    """WB-08: render the view of the bare window at 15 degrees with the old pane (no reflection, pale and opaque, no box shade) and measure it by the same mask; writes old_fault.json beside the frames."""
+    import hw_measure as MS
+    name, base, sid = OLD_FAULT
+    key = next(k for n, k, st in FRAMES if n == base)
+    mk = os.path.join(T.GATE, "mask_%s_day.png" % base)
+    op = os.path.join(T.GATE, "old_fault.json")
+    fr = os.path.join(T.GATE, "frame_%s_day.png" % name)
+    if os.path.exists(op):
+        return
+    if not os.path.exists(mk):
+        log("old fault: the mask of %s is not rendered yet (python3 build_windows.py gate %s)" % (base, base))
+        return
+    ex = dict(extra)
+    ex["old_fault"] = True
+    if not os.path.exists(fr):
+        t, rec = G.build_and_render(name, camera_of(key), "day", fr, cards, samples=min(samples or SAMPLES, 24), extra=ex, log=log)
+        times["old_fault_day"] = t
+        json.dump(times, open(tp, "w"), indent=1)
+        log("frame old_fault_day: %.0f s" % t)
+    b, m = MS.load(fr, mk)
+    recs = json.load(open(os.path.join(T.GATE, "gate_frames.json")))
+    w = recs["%s_day" % base]["windows"]
+    out = {"view": base, "site": sid, "windows": {}}
+    for s_id, wi in w.items():
+        st = MS.stats_for(b, m, wi["id"])
+        if st is None:
+            continue
+        st["line"] = MS.line_profile(b, m, wi["id"], st["L"])
+        st["angle"] = wi["angle_deg"]
+        out["windows"][s_id] = {k: st[k] for k in ("P", "L", "D", "spread", "P_over_L", "D_over_L", "line", "angle")}
+    if sid not in out["windows"]:
+        log("old fault: the window %s is not measured in the frame" % sid)
+        return
+    t = out["windows"][sid]
+    out.update({k: t[k] for k in ("P_over_L", "D_over_L", "spread", "line")})
+    json.dump(out, open(op, "w"), indent=1)
+    log("old fault: P/L %.2f D/L %.2f spread %.0f line %s" % (t["P_over_L"], t["D_over_L"], t["spread"], t["line"]))
 
 
 if __name__ == "__main__":

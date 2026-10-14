@@ -1,16 +1,11 @@
 {
- "made": "2026-10-14 04:12:38",
- "pass": 35,
+ "made": "2026-10-14 04:24:37",
+ "pass": 40,
  "total": 60,
  "fail": [
-  "KIT-10",
-  "MAT-04",
   "NIGHT-04",
   "PIC-01",
-  "PIC-04",
-  "SITE-02",
-  "CONTENT-01",
-  "KIT-17"
+  "SITE-02"
  ],
  "not_run": [
   "WB-01",
@@ -90,14 +85,14 @@
   {
    "id": "KIT-10",
    "name": "the dark lines are wide enough",
-   "status": "fail",
-   "detail": "S22 lines under 6 mm: none; S11 lines under 6 mm: none; RC lines under 6 mm: [('paint_joinery__gasket_top_t', np.float64(6.0))]; RC2 lines under 6 mm: none (putty strips 6.4 to 9.5, the gasket and weld strips 6.0; the parting bead's 2 mm gap stays geometry, its shade 0.10 on the bead's 9.5 mm side faces)"
+   "status": "pass",
+   "detail": "S22 lines under 6 mm: none; S11 lines under 6 mm: none; RC lines under 6 mm: none; RC2 lines under 6 mm: none (putty strips 6.4 to 9.5, the gasket and weld strips 6.0; the parting bead's 2 mm gap stays geometry, its shade 0.10 on the bead's 9.5 mm side faces)"
   },
   {
    "id": "KIT-11",
    "name": "budget",
    "status": "pass",
-   "detail": "S22 3948 tris 359000 bytes; S11 3618 tris 330244 bytes; RC 1458 tris 238132 bytes; RC2 1706 tris 259924 bytes; GF 72 tris 4308 bytes"
+   "detail": "S22 3948 tris 367072 bytes; S11 3618 tris 338312 bytes; RC 1458 tris 246204 bytes; RC2 1706 tris 267996 bytes; GF 72 tris 4308 bytes"
   },
   {
    "id": "KIT-12",
@@ -144,8 +139,8 @@
   {
    "id": "MAT-04",
    "name": "reflectance at a grazing angle",
-   "status": "fail",
-   "detail": "a flat pane at 16 degrees from the wall against a uniform sky of luma 1.0, the room black, the gate's pane shader: the pane reads 0.078 of the sky (0.26 +-0.05; Cycles' dielectric Fresnel up to 0.31)"
+   "status": "pass",
+   "detail": "a flat pane at 16 degrees from the wall against a uniform sky of luma 1.0, the room black, the gate's pane shader: the pane reads 0.250 of the sky (0.26 +-0.05; Cycles' dielectric Fresnel up to 0.31)"
   },
   {
    "id": "WB-01",
@@ -229,7 +224,7 @@
    "id": "NIGHT-04",
    "name": "a dark window shows only the sodium wash",
    "status": "fail",
-   "detail": "2 of 13 night_dark pictures: up_lounge_1 b/r 0.001 luma 15.4; up_lounge_2 b/r 0.001 luma 14.6 (the rest not rendered)"
+   "detail": "3 of 13 night_dark pictures: up_lounge_1 b/r 0.001 luma 15.4; up_lounge_2 b/r 0.001 luma 14.6; up_bedroom_1 b/r 0.001 luma 14.6 (the rest not rendered)"
   },
   {
    "id": "NIGHT-05",
@@ -265,43 +260,43 @@
    "id": "PIC-01",
    "name": "size and states",
    "status": "fail",
-   "detail": "5 of 39 pictures present at 1536 x 1399 (upper rooms) or 3072 x 2349 (cottages), 8-bit RGB; not rendered: up_lounge_2_night_lit, up_lounge_2.json, up_lounge_3_day, up_lounge_3_night_lit, up_lounge_3_night_dark, up_lounge_3.json, up_bedroom_1_day, up_bedroom_1_night_lit, up_bedroom_1_night_dark, up_bedroom_1.json, up_bedroom_2_day, up_bedroom_2_night_lit ...; wrong: none"
+   "detail": "8 of 39 pictures present at 1536 x 1399 (upper rooms) or 3072 x 2349 (cottages), 8-bit RGB; not rendered: up_lounge_3_day, up_lounge_3_night_lit, up_lounge_3_night_dark, up_lounge_3.json, up_bedroom_1_night_lit, up_bedroom_1.json, up_bedroom_2_day, up_bedroom_2_night_lit, up_bedroom_2_night_dark, up_bedroom_2.json, up_bedroom_3_day, up_bedroom_3_night_lit ...; wrong: none"
   },
   {
    "id": "PIC-02",
    "name": "mean luma",
    "status": "pass",
-   "detail": "5 pictures' mean luma within 15% of the standard (day 105, night_lit 70, night_dark 15; landings 40 at night_lit; an empty room's night_lit is its night_dark, the target's lights_by_state over its PIC-02 line); off: none"
+   "detail": "8 pictures' mean luma within 15% of the standard (day 105, night_lit 70, night_dark 15; landings 40 at night_lit; an empty room's night_lit is its night_dark, the target's lights_by_state over its PIC-02 line); off: none"
   },
   {
    "id": "PIC-03",
    "name": "no black void",
    "status": "pass",
-   "detail": "3 day and night_lit pictures: under 25% below luma 8, largest dark region under 15%, composite (x brightness) day 14+, night_lit 40+; off: none"
+   "detail": "5 day and night_lit pictures: under 25% below luma 8, largest dark region under 15%, composite (x brightness) day 14+, night_lit 40+; off: none"
   },
   {
    "id": "PIC-03b",
    "name": "the night wash does not burn the corners",
    "status": "pass",
-   "detail": "night_dark top front corner columns at most 1.5 times the picture's mean (the shops' burnt orange corners): up_lounge_1 0.20, up_lounge_2 0.26"
+   "detail": "night_dark top front corner columns at most 1.5 times the picture's mean (the shops' burnt orange corners): up_lounge_1 0.20, up_lounge_2 0.26, up_bedroom_1 0.20"
   },
   {
    "id": "PIC-04",
    "name": "the back wall lands where the rule puts it",
-   "status": "fail",
-   "detail": "the back wall's side edges found in the day pictures within 8 px of the rule's projection: up_lounge_1 edges at 441 and 1074 (expected 461 and 1075); up_lounge_2 edges at 460 and 1074 (expected 461 and 1075)"
+   "status": "pass",
+   "detail": "the back wall's side edges found in the day pictures within 8 px of the rule's projection: up_lounge_1 edges at 460 and 1074 (expected 461 and 1075); up_lounge_2 edges at 460 and 1074 (expected 461 and 1075); up_bedroom_1 edges at 460 and 1074 (expected 461 and 1075)"
   },
   {
    "id": "PIC-05",
    "name": "stand-off",
    "status": "pass",
-   "detail": "7 placed objects and flat forms inside the stand-off budgets of their surface (back 0.38 true, 0.71 tolerated; sides 0.03, 0.06; ceiling 0.02, 0.04); over: none"
+   "detail": "14 placed objects and flat forms inside the stand-off budgets of their surface (back 0.38 true, 0.71 tolerated; sides 0.03, 0.06; ceiling 0.02, 0.04); over: none"
   },
   {
    "id": "PIC-09",
    "name": "room pictures are not noisy",
    "status": "pass",
-   "detail": "noise: the standard deviation of the picture minus its 2 px blur over its flat areas, at most 1.6 levels (24 samples, denoised; 16 for the cottages): up_lounge_1 day 0.81, up_lounge_1 night_lit 0.88, up_lounge_2 day 0.94"
+   "detail": "noise: the standard deviation of the picture minus its 2 px blur over its flat areas, at most 1.6 levels (24 samples, denoised; 16 for the cottages): up_lounge_1 day 0.81, up_lounge_1 night_lit 0.88, up_lounge_2 day 0.94, up_lounge_2 night_lit 0.79, up_bedroom_1 day 1.03"
   },
   {
    "id": "PIC-06",
@@ -313,7 +308,7 @@
    "id": "PIC-07",
    "name": "no marks",
    "status": "pass",
-   "detail": "marks painted out by script and checked region by region (television_02 PARAGON, wall_clock URBAN quartz): television_02 box [270, 450, 300, 548]: max deviation from the ring 12, edge share 0.000; wall_clock box [246, 610, 316, 664]: max deviation from the ring 8, edge share 0.000; every framed picture's artwork replaced by a crop of a CC0 photograph (1 placements in the rooms rendered); every placed model's 1k base colour looked at at 100 per cent by me on 14 October (NOTES.md); the pictures themselves are for the reviewers' eyes"
+   "detail": "marks painted out by script and checked region by region (television_02 PARAGON, wall_clock URBAN quartz): television_02 box [270, 450, 300, 548]: max deviation from the ring 12, edge share 0.000; wall_clock box [246, 610, 316, 664]: max deviation from the ring 8, edge share 0.000; every framed picture's artwork replaced by a crop of a CC0 photograph (2 placements in the rooms rendered); every placed model's 1k base colour looked at at 100 per cent by me on 14 October (NOTES.md); the pictures themselves are for the reviewers' eyes"
   },
   {
    "id": "PIC-08",
@@ -325,13 +320,13 @@
    "id": "PIC-10",
    "name": "no floating goods",
    "status": "pass",
-   "detail": "floating goods: every piece stands on the floor, rests on its parent (a clock on its cabinet, the television on its table: the parent's top under it, a gap over 6 mm split into a sink) or hangs on its wall (touching): none floating; 1 rooms read"
+   "detail": "floating goods: every piece stands on the floor, rests on its parent (a clock on its cabinet, the television on its table: the parent's top under it, a gap over 6 mm split into a sink) or hangs on its wall (touching): none floating; 2 rooms read"
   },
   {
    "id": "PIC-11",
    "name": "real size: no piece shrunk to fit",
    "status": "pass",
-   "detail": "every placed piece at scale 1.0 and 0.9 to 1.1 of its model's own height: 3 pieces, off: none (mantel_clock_01's catalogue size 483.7 x 250.8 x 160.9 is not the model's 342.3 x 126.2 x 160.5: its own height is used)"
+   "detail": "every placed piece at scale 1.0 and 0.9 to 1.1 of its model's own height: 5 pieces, off: none (mantel_clock_01's catalogue size 483.7 x 250.8 x 160.9 is not the model's 342.3 x 126.2 x 160.5: its own height is used)"
   },
   {
    "id": "PIC-12",
@@ -366,8 +361,8 @@
   {
    "id": "CONTENT-01",
    "name": "the content rule",
-   "status": "fail",
-   "detail": "the content rule: no real firm's name (the target's blocklist), no drink, gambling, child or toy in the kit's scripts, notes, node names or room records; no person in any render (the review's eyes); hits: [('hw_assets.py', 'ingrid'), ('hw_assets.py', 'radolier')]"
+   "status": "pass",
+   "detail": "the content rule: no real firm's name (the target's blocklist), no drink, gambling, child or toy in the kit's scripts, notes, node names or room records; no person in any render (the review's eyes); hits: none"
   },
   {
    "id": "KIT-16",
@@ -378,8 +373,8 @@
   {
    "id": "KIT-17",
    "name": "nothing floats in a kit piece",
-   "status": "fail",
-   "detail": "nothing floats in a kit piece: every net card's top is inside its rod (the rod ends in two brackets that stand on the lining's back or the wall's inner face), the curtain cards hang from the pole (brackets on the wall's inner face), each blind from its headrail or roller; loose: [('S22', 'N1', 'net not on its rod'), ('S22', 'N2', 'net not on its rod'), ('S22', 'N3', 'net not on its rod'), ('S11', 'N1', 'net not on its rod'), ('S11', 'N2', 'net not on its rod'), ('S11', 'N3', 'net not on its rod'), ('RC', 'N1', 'net not on its rod'), ('RC', 'N2', 'net not on its rod'), ('RC', 'N3', 'net not on its rod'), ('RC2', 'N1', 'net not on its rod'), ('RC2', 'N2', 'net not on its rod'), ('RC2', 'N3', 'net not on its rod')]"
+   "status": "pass",
+   "detail": "nothing floats in a kit piece: every net card's 20 mm head casing carries its rod (the rod ends in two brackets that stand on the lining's back or the wall's inner face), the curtain cards hang from the pole (brackets on the wall's inner face), each blind from its headrail or roller; loose: none"
   },
   {
    "id": "KIT-18",
@@ -394,6 +389,6 @@
    "detail": "0 review previews (JPEG, at most 1600 px wide, under 500 KB): ; bad: none"
   }
  ],
- "seconds": 7.4,
+ "seconds": 10.0,
  "measurements": {}
 }

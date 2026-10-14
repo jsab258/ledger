@@ -346,7 +346,7 @@ def display(d):
     tan = math.tan(math.radians(12.0))
     z_f, z_b = 0.03, 0.03 + 0.52 * tan
     x0, x1 = X(0.02), X(L - 0.02)
-    v0, v1 = 0.02, 0.54
+    v0, v1 = 0.02, 0.52                     # the slab ends 4 mm short of the laminate pad (0.524), so that the two do not pass through each other (DSP-03)
     V = [(x0, v0, 0.0), (x1, v0, 0.0), (x1, v1, 0.0), (x0, v1, 0.0), (x0, v0, z_f), (x1, v0, z_f), (x1, v1, z_b + 0.0), (x0, v1, z_b + 0.0)]
     z_at = lambda v: z_f + (v - v0) * tan
     V[6] = (x1, v1, z_at(v1))
@@ -438,8 +438,8 @@ def display(d):
     for k in range(14):
         uc = 0.22 + 0.22 * k
         vc = 0.10 + 0.0 * k + (0.0 if k % 2 == 0 else 0.34)
-        z0 = z_at(vc) + 0.015
-        sg.rod((X(uc), vc, z0 - 0.002), (X(uc), vc, z0 + 0.100), 0.0012, 0, 6)
+        z0 = z_at(vc) + 0.0296                # the stake stands ON the ice bed (its top is 0.0282 to 0.030 over the slab), not in it (DSP-03)
+        sg.rod((X(uc), vc, z0 - 0.0006), (X(uc), vc, z0 + 0.100), 0.0012, 0, 6)
         cg.sheet((X(uc), vc - 0.0024, z0 + 0.100 + 0.0125 - 0.003), 0.040, 0.025, 0.002, tilt=6.0, mi=0, uv=tuv[k], uv_other=(tuv[k][0] + 0.01, tuv[k][1] + 0.01))
     d.gm_object("ticket_stakes", sg, [stake_m], "support", "script:price_stakes")
     d.gm_object("tickets", cg, [tm], "scripted", "script:price_stakes", tier="slab")

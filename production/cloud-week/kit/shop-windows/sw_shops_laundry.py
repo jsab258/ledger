@@ -422,8 +422,9 @@ def display(d):
         # lie over the lip, their feet 1 mm above its top (a sheet over the edge), so that no cloth passes through the wicker (DSP-03)
         rin = 0.072
         rout = 0.165
-        zt = GB.rest_z(d, bx, by, 0.002, ring=4) + 0.0016     # the cloth stands on the basket's floor (found by a ray: the weave's floor face)
-        zl = ext[5] + 0.0012
+        # the cloth stands on the basket's floor: the highest point of the weave under its foot (the floor is not flat: its bumps rise 15 mm), found by rays
+        zt = max(GB.rest_z(d, bx + 0.065 * math.cos(a_), by + 0.065 * math.sin(a_), 0.002, ring=4) for a_ in [2 * math.pi * i / 10 for i in range(10)] + [0.0]) + 0.0015
+        zl = ext[5] + 0.012
         GB.heap(gm, bx, by, zt, rin, rin, 0.15, seed=3 + k, mi=0, amp=1.2)
         GB.heap(gm, bx - 0.30 * rout, by + 0.15 * rout, zl, rout * 0.9, rout * 0.9, 0.085, seed=7 + k, mi=1, amp=1.2)
         GB.heap(gm, bx + 0.45 * rout, by - 0.10 * rout, zl + 0.03, rout * 0.55, rout * 0.55, 0.07, seed=11 + k, mi=2, amp=1.2)

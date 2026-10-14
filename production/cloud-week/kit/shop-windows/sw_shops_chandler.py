@@ -309,11 +309,11 @@ def display(d):
     rail_m = d.mat("rail_timber", rgb8(120, 84, 54), rough=0.6)
     rail_w, rail_v = 1.45, 0.42
     gm = GM()
-    gm.rod((X(0.90), rail_v, rail_w), (X(2.50), rail_v, rail_w), 0.014, 0, 12)
-    for xx in (0.95, 2.45):
+    gm.rod((X(0.90), rail_v, rail_w), (X(2.78), rail_v, rail_w), 0.014, 0, 12)
+    for xx in (0.95, 2.74):
         gm.rod((X(xx), rail_v, rail_w + 0.012), (X(xx), rail_v, 1.55), 0.002, 0, 6)
     d.gm_object("rail", gm, [rail_m], "support", "script:crate")
-    for k, uc in enumerate((1.30, 2.05)):
+    for k, uc in enumerate((1.30, 2.40)):          # the wooden lantern's handle (to w 0.53) stands in the gap between the jackets, whose hems hang at 0.445
         _, nm_ = d.piece("life_jacket", uc, rail_v, 0.5, rot=(0, 0, 0), scale=1.0, tier="rail", tris=None)
         GB.ground_piece(d, nm_, rail_w - 0.013, top=True)
     sg = GM()
@@ -321,13 +321,13 @@ def display(d):
     strap = GM()
     rail2_w, rail2_v, hs = 1.28, 0.12, 0.85
     gm2 = GM()
-    gm2.rod((X(1.15), rail2_v, rail2_w), (X(2.20), rail2_v, rail2_w), 0.010, 0, 12)
-    for xx in (1.18, 2.17):
+    gm2.rod((X(1.15), rail2_v, rail2_w), (X(2.55), rail2_v, rail2_w), 0.010, 0, 12)
+    for xx in (1.18, 2.52):
         gm2.rod((X(xx), rail2_v, rail2_w + 0.008), (X(xx), rail2_v, 1.55), 0.002, 0, 6)
     d.gm_object("rail_front", gm2, [rail_m], "support", "script:crate")
     crown_top = (0.04 + 0.112) * hs
     hat_z = rail2_w - 0.012 - 0.035 - crown_top
-    for uc in (1.45, 1.90):
+    for uc in (1.45, 2.30):
         GB.souwester(sg, X(uc), rail2_v, hat_z, s=hs, mi=0, mi_seam=1, face=-1.0)
         strap.rod((X(uc), rail2_v, rail2_w - 0.008), (X(uc), rail2_v, hat_z + crown_top + 0.001), 0.0022, 0, 6)
     d.gm_object("sou_westers", sg, sw_m, "scripted", "script:oilskin_sou_wester", tier="rail", smooth=True)
@@ -366,7 +366,7 @@ def display(d):
     d.gm_object("paint_tin_pyramid", gm, [metal, tin_label], "scripted", "script:paint_tin_pyramid", tier="bed")
     back_m = d.mat("pyramid_board", rgb8(150, 140, 120), rough=0.8)
     gm = GM()
-    gm.box(X(u_c - 0.31), X(u_c + 0.31), 0.50, 0.515, 0.0, 0.54, 0)
+    gm.box(X(u_c - 0.295), X(u_c + 0.295), 0.50, 0.515, 0.0, 0.54, 0)
     d.gm_object("pyramid_backing", gm, [back_m], "support", "script:backing_board")
     # ---- price cards, each in front of its goods
     texts = ["LIFEBUOY\n\u00a312.50", "JACKETS\n\u00a39.95", "ROPE\n85p a metre", "BOOTS\n\u00a36.75", "LAMPS\n\u00a34.20", "COMPASS\n\u00a35.50", "OIL\n\u00a31.60", "PAINT\n\u00a33.45", "SOU'WESTERS\n\u00a32.95", "BLOWTORCH\n\u00a37.25"]
@@ -374,7 +374,7 @@ def display(d):
     uvs = GEN.card_atlas(path, texts, cols=4, tile=(256, 128), size=40)
     pm = [d.image_mat("price_cards", path, rough=0.8), d.mat("stake", rgb8(60, 60, 62), rough=0.5, metal=0.7)]
     fu = {a: [u for (aa, u, e) in placed_f if aa == a] for a in {x[0] for x in placed_f}}
-    spots = [(0.45, 0.02), (1.45, 0.20), (2.40, 0.22), (1.40, 0.28), (fu["Lantern_01"][0], 0.03), (fu["seadogs_compass"][0], 0.03), (fu["oil_tin"][1], 0.03), (3.05, 0.03), (1.90, 0.20), (fu["brass_blowtorch"][0], 0.03)]
+    spots = [(0.45, 0.02), (1.45, 0.20), (2.62, 0.22), (1.40, 0.28), (fu["Lantern_01"][0], 0.03), (fu["seadogs_compass"][0], 0.03), (fu["oil_tin"][1], 0.03), (3.28, 0.03), (2.30, 0.20), (fu["brass_blowtorch"][0], 0.03)]
     for k, (uc, vv) in enumerate(spots):
         d.price_card(uc, vv, 0.0 if vv < 0.1 else 0.0, k, uvs, pm)
     d.display_texts = list(GEN.TEXTS) + [t.replace("\n", " ") for t in texts]

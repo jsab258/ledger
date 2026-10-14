@@ -450,7 +450,8 @@ def mat04():
         mb.node_tree.nodes["Principled BSDF"].inputs["Specular IOR Level"].default_value = 0.0
         mb.node_tree.nodes["Principled BSDF"].inputs["Roughness"].default_value = 1.0
         bk.data.materials.append(mb)
-        bk.location = (0, 3.0, 0)
+        # behind the pane for the camera's own ray, clear of the reflected ray (which leaves to +x): the card spans x -39..2 at y 6
+        bk.location = (-18.5, 6.0, 0)
         cd = bpy.data.cameras.new("c")
         cd.angle = math.radians(12)
         co = bpy.data.objects.new("c", cd)
