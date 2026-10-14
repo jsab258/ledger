@@ -30,7 +30,7 @@ TEXTURES = ["old_linoleum_flooring_01", "painted_plaster_wall"]       # Rita's r
 RES = "1k"
 CURRENT = "ritas"             # the shop this process builds (build_shop.py sets it): model_ids, fetch, blank and verify work on that shop's room and display
 # the Poly Haven textures each shop's room lays (the target's room.floor names them: Rita's lino and the tea room's chequer share a map)
-TEXTURES_OF = {"ritas": ["old_linoleum_flooring_01", "painted_plaster_wall"], "ironmonger": ["old_wooden_floor_03", "painted_plaster_wall"],
+TEXTURES_OF = {"ritas": ["old_linoleum_flooring_01", "painted_plaster_wall"], "ironmonger": ["old_wooden_floor_03", "painted_plaster_wall", "plywood"],
                "newsagent": ["rubber_tiles", "painted_plaster_wall"], "tea_rooms": ["old_linoleum_flooring_01", "painted_plaster_wall"],
                # batch B (14 October): the launderette's grey vinyl and white tile dado, the grocer's brown lino, the chandler's oiled boards, the fish market's quarry floor and white tiled walls (and the marble slab)
                "steam_laundry": ["rubber_tiles", "painted_plaster_wall", "long_white_tiles"], "grocer": ["linoleum_brown", "painted_plaster_wall"],
@@ -97,7 +97,7 @@ EXTRA_BLANK_T2 = {
                    "reads": "a word stamped on the wooden handle, mirrored ('YOS...': a maker's name; the first box was for the blade's)"}],
     "CashRegister_01": [{"map": "CashRegister_01_diff_1k.jpg", "boxes": [[500, 228, 520, 248]], "fill": "the readout panel's dark grey (sampled 52, 52, 52)",
                          "reads": "a Y glyph left of the readout (it reads as a yen sign in the room picture)"}],
-    "wall_clock": [{"map": "wall_clock_diff_1k.jpg", "boxes": [[272, 612, 286, 616]], "fill": "the dial's white",
+    "wall_clock": [{"map": "wall_clock_diff_1k.jpg", "boxes": [[270, 610, 288, 617]], "fill": "the dial's white",
                     "reads": "a 5 px dash left where the U of URBAN was"}],
 }
 POST_RECOLOUR = {}          # {model: function (H, W, 3 float array of the ORIGINAL base-colour map) -> recoloured array}: a model's own look changed where a reviewer found it of the wrong period (applied after the blanking)

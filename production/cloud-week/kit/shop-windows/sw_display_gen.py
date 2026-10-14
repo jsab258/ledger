@@ -185,6 +185,14 @@ class GDisplay(RG.GRoom):
         self.items.append({"model": asset, "tier": tier, "scale": round(scale, 3), "ext": [round(float(x), 4) for x in ext], "objs": names})
         return ext, names
 
+    def piece_x(self, asset, x_max, v, w, rot=(0.0, 0.0, 0.0), scale=1.0, tier="bed", tris=TRIS, tag=None):
+        """Like `piece`, but the piece's bounding box has its +x edge at `x_max` (display frame, centred on the window) and its middle at v: a thing that leans on the return wall."""
+        ext = self.place(asset, (x_max, v, w), rot=rot, scale=scale, fixture="display", anchor=("max", "c", "min"), tris=tris, tag=tag)
+        names = list(self.last_objs)
+        self.groups.append({"kind": "piece", "model": asset, "tier": tier, "objs": names})
+        self.items.append({"model": asset, "tier": tier, "scale": round(scale, 3), "ext": [round(float(x), 4) for x in ext], "objs": names})
+        return ext, names
+
     def gm_object(self, name, gm, mats, kind, model, tier="bed", scale=1.0, bevel=0.0, smooth=False):
         ob = gm.to_object(name, mats, self.sc, smooth=smooth)
         ext = gm.extents()
@@ -431,38 +439,42 @@ class GDisplay(RG.GRoom):
 
 # ---------------------------------------------------------------------------------------------------------------------------------- the ironmonger
 def layout_ironmonger(d):
-    """The ironmonger's window (target `shops.ironmonger.display`, 14 item rows). The bed is painted deal in the shop's own dark green. The zones of the target overlap in volume and add up to more than
-    the window's 3.35 m x 0.55 m takes at full size (the two toolboxes, the two cans, three brooms, the pump, the sledgehammer, the sprinkler, the crate of tins), so every piece has a place of its own on a
-    surface that exists, and where the whole could not stand at its zone the piece moved or shrank (each one is in NOTES.md, under the ironmonger's Judgements):
+    """The ironmonger's window (target `shops.ironmonger.display`, 14 item rows), try 2 (14 Oct 2026: both fresh reviews of try 1, the brief's step 0 f). Every good now stands at its own size (DSP-06: 0.9 to 1.1;
+    try 1 shrank the toolboxes, cans, pump, sledge and brooms to 0.80 to 0.85 and swelled the bulbs to 1.25), so what the 3.35 m window cannot take beside the rest is moved, not shrunk (each move is in NOTES.md).
+    u runs along the window from its left edge, v is the depth from the glass, w the height above the bed. Every support is a picture (a painted plywood, a deal plank map from Poly Haven's plywood, CC0), never a flat factor.
 
-    pyramid: 36 tins, a triangular stack 8 high (8 + 7 + ... + 1), one tin deep, against a painted backing board (u 0.14 to 1.04, v 0.50 to 0.52); the tin is 0.095 across and 0.086 high so that the
-    apex is 0.69 (the zone's 0.70).
-    gloves: 6 lying in three stacks of two on a card 0.78 x 0.32 hung on four cords from the window head at w 0.62 (the target's `hung card`), in front of the pyramid's upper rows (v 0.06 to 0.38).
-    lightbulbs: two open trays of six, one row each, in front of the pyramid (u 0.18 to 0.67), at 1.25 of the model's size, so no bulb stands behind another.
-    trowels: 4, two pairs on two shallow trays 60 mm high (the sill hides the lowest 40 mm of what lies on the bed from the far pavement), the upper trowel of a pair 0.08 behind the lower.
-    toolboxes: 2 at 0.85 of their size, side by side at the back (u 1.08 to 1.80), lids up as modelled; the sprinkler in front of the second.
-    crate: a stepped crate (u 1.85 to 2.71): the front step 0.35 high carries the four cleaner tins and the blowtorch, the rear step 0.45 high the four oil tins, so each tin shows above the one before.
-    front row: two watering cans at 0.85 (spout along the window), the pump, the sledgehammer against the right return wall's side; three plastic brooms at 0.80, heads 85 mm apart, leaning on the right
-    return wall.
-    price cards: 12, at the front edge in front of each group, the project's own hand lettering."""
+    pyramid: 36 tins, a triangular stack 8 high, one tin deep, u 0.20 to 0.98 at v 0.45, against a backing board of painted green plywood (u 0.14 to 1.04, v 0.502 to 0.518, 0.74 high).
+    gloves: 6, three stacks of two on a deal shelf 0.78 x 0.32 hung on four cords from a 12 mm black iron rod fixed to the back of the transom (the rod at v 0.012, w 1.794 touches the transom's underside), the
+    shelf's underside at w 0.76, over the pyramid's apex (0.69).
+    lightbulbs: 12 in two open deal trays of six at their own size (0.10 high, 0.06 across; the pitch 0.064), glass and B22 caps (sw_room.bulb_b22).
+    trowels: 4, two pairs on two shallow trays 60 mm high; toolboxes: 2 side by side at the back at 1.0; crate: a stepped crate of nailed planks (a stencilled plank on each step) u 1.92 to 2.70, the front step
+    0.35 high with four labelled cleaner tins and the blowtorch, the rear step 0.45 high with four oil tins; cans: 2 watering cans in front of the crate at 1.0; sprinkler, tyre pump and the sledgehammer (head down,
+    its handle against the right return wall) in the front row; brooms: 3, their handle ends on the bed, heads up against the right return wall (the handle 13 degrees from the vertical), heads 0.11 apart.
+    price cards: 11 (try 1's TINS 99p is gone, TORCH is BLOWLAMP), each at the front edge before its goods."""
     ctx = d.ctx
     rr = d.RR
-    sh = d.R["display"]
     walls = rr["walls"]
     wall_rgb = RG._rgb(walls["above"])
     dado_rgb = RG._rgb(walls["dado"])
-    d.start((30, 62, 44), wall_rgb, dado_rgb)
+    d.tex_limit = 1024
+    # the bed and the backing board are painted plywood: the green is the shop's own (30, 62, 44); the backing board is a shade darker so the tins' labels stand out (the street review, narrow 4: luma 25 to 45)
+    bed_png = d.painted_png("bed_green", "plywood", (30, 62, 44), grain=0.6)
+    board_png = d.painted_png("bed_edge", "plywood", (92, 62, 40), grain=0.8)
+    back_png = d.painted_png("backing_ply", "plywood", (26, 54, 38), grain=0.6)
+    d.start((30, 62, 44), wall_rgb, dado_rgb, bed_png=bed_png, board_png=board_png)
     rnd = d.rnd
     L = d.L
     X = lambda u: u - L / 2
     metal, label = d.tin_materials()
-    n_py = 36
+    # the deal planks: ten plain strips and two with a stencil ("HARTSIDE" on the front step, "PAINTS & OILS" on the rear one, in black paint)
+    deal_png, strips = d.wood_strips("deal_strips", 12, (150, 113, 72), var=0.08, seed=4,
+                                     stencils=[(10, [("HARTSIDE", "oswald", 50, "c", 4)]), (11, [("PAINTS & OILS", "oswald", 44, "c", 8)])])
+    deal_m = d.image_mat("deal", deal_png, rough=0.8)
+    nail_m = d.mat("nail_iron", rgb8(70, 68, 66), rough=0.5, metal=0.8)
     # ---- the pyramid and its backing board
     r_t, h_t = 0.0475, 0.086
     u_c = 0.59
     gm = GM()
-    k = 0
-    tins_ext = None
     layers = 8
     for row in range(layers):
         nrow = layers - row
@@ -471,66 +483,73 @@ def layout_ironmonger(d):
             cx = x_start + (i + 0.5) * 2 * r_t * 1.02
             prof = [(0.0, 0.0), (r_t * 0.94, 0.0), (r_t, 0.004), (r_t, h_t - 0.010), (r_t * 1.035, h_t - 0.010), (r_t * 1.035, h_t - 0.002), (r_t * 0.9, h_t - 0.002), (r_t * 0.9, h_t - 0.006), (0.0, h_t - 0.006)]
             gm.lathe(cx, 0.45, row * h_t, prof, mi=0, n=16, label=(2, 3), mi_label=1, label_uv=d.tin_uv[(row + i) % 16])
-            k += 1
-    ob_py, ext_py = d.gm_object("tin_pyramid", gm, [metal, label], "scripted", "script:paint_tin_pyramid")
-    board_m = d.mat("backing_board", rgb8(150, 150, 140), rough=0.75)
+    d.gm_object("tin_pyramid", gm, [metal, label], "scripted", "script:paint_tin_pyramid")
+    board_m = d.image_mat("backing_board", back_png, rough=0.75)
     gm = GM()
-    gm.box(X(0.14), X(1.04), 0.502, 0.518, 0.0, 0.74, 0)
+    gm.box(X(0.14), X(1.04), 0.502, 0.518, 0.0, 0.74, 0, uv_front=(0.0, 0.0, 1.6, 1.3), uv_top=(0.0, 0.0, 1.6, 0.04), uv_ends=(0.0, 0.0, 0.04, 1.3), uv_other=(0.3, 0.3))
     d.gm_object("pyramid_backing", gm, [board_m], "support", "script:backing_board")
-    # ---- the hung card and the gloves
-    card_m = d.mat("hung_card", rgb8(166, 154, 126), rough=0.8)
+    # ---- the hung shelf and the gloves: a deal shelf on four cords from a black iron rod under the transom
+    sh_png, sh_strips = d.wood_strips("shelf_strips", 3, (138, 116, 86), var=0.05, seed=8)
+    shelf_m = d.image_mat("hung_shelf", sh_png, rough=0.8)
+    cu0, cu1, cv0, cv1, cw = 0.20, 0.98, 0.06, 0.38, 0.76
+    sp_ = d._span(cu1 - cu0, 0.012)
     gm = GM()
-    cu0, cu1, cv0, cv1, cw = 0.20, 0.98, 0.06, 0.38, 0.62
-    gm.box(X(cu0), X(cu1), cv0, cv1, cw, cw + 0.012, 0)
-    d.gm_object("hung_card", gm, [card_m], "support", "script:hung_card")
-    d.cords(([(X(cu0) + 0.01, cv0 + 0.01), (X(cu1) - 0.01, cv0 + 0.01), (X(cu0) + 0.01, cv1 - 0.01), (X(cu1) - 0.01, cv1 - 0.01)], cw + 0.012), 1.75)
+    gm.box(X(cu0), X(cu1), cv0, cv1, cw, cw + 0.012, 0, uv_front=(0.0, sh_strips[0][1], min(1.0, sp_), sh_strips[0][3]), uv_top=(0.0, sh_strips[1][1], 1.0, sh_strips[1][3]), uv_other=(0.5, sh_strips[2][1] + 0.01))
+    d.gm_object("hung_card", gm, [shelf_m], "support", "script:hung_card")
+    iron = d.mat("iron_rod", rgb8(34, 34, 36), rough=0.45, metal=0.8)
+    rod_w, rod_v, rod_r = 1.794, 0.012, 0.006
+    gm = GM()
+    gm.rod((X(0.18), rod_v, rod_w), (X(1.00), rod_v, rod_w), rod_r, 0, 12)
+    for xa, xb in ((X(0.18) - 0.014, X(0.18)), (X(1.00), X(1.00) + 0.014)):  # the rod's end caps: a short thicker sleeve each end
+        gm.rod((xa, rod_v, rod_w), (xb, rod_v, rod_w), rod_r * 1.5, 0, 12)
+    d.gm_object("hang_rod", gm, [iron], "support", "script:hang_rod")
+    cx_ = [X(cu0) + 0.012, X(cu1) - 0.012]
+    pairs = []
+    for xx in cx_:
+        for vv in (cv0 + 0.012, cv1 - 0.012):
+            pairs.append(((xx, vv, cw + 0.009), (xx, rod_v, rod_w)))        # lower end 3 mm inside the shelf, upper end on the rod's axis
+    d.hang_cords(pairs)
     gd = d.dims("garden_gloves_01", (0, 0, 0))
     for i, uc in enumerate((0.34, 0.59, 0.84)):
         for lay in range(2):
             d.piece("garden_gloves_01", uc, 0.22, cw + 0.012 + lay * gd.z, rot=(0, 0, math.pi + rnd.uniform(-0.12, 0.12)), tier="hung_card")
-    # ---- the front row: bulbs in two open trays of six, one row each, at 1.25 of the model's size (a bayonet bulb is 60 mm across), so no bulb stands behind another
-    tray_m = d.mat("bulb_tray", rgb8(150, 126, 88), rough=0.85)
+    # ---- the bulbs: two open trays of six at their own size, the bulbs standing on the tray's floor 0.064 apart (the model is 0.06 across)
     for t in range(2):
-        gm = GM()
-        xc, yb = X(0.30 + 0.25 * t), 0.20
-        tw, td = 0.24, 0.06
-        gm.box(xc - tw / 2, xc + tw / 2, yb - td, yb, 0.0, 0.004, 0)
-        gm.box(xc - tw / 2, xc + tw / 2, yb - td, yb - td + 0.003, 0.0, 0.028, 0)
-        gm.box(xc - tw / 2, xc + tw / 2, yb - 0.003, yb, 0.0, 0.028, 0)
-        gm.box(xc - tw / 2, xc - tw / 2 + 0.003, yb - td, yb, 0.0, 0.028, 0)
-        gm.box(xc + tw / 2 - 0.003, xc + tw / 2, yb - td, yb, 0.0, 0.028, 0)
-        d.gm_object("bulb_tray_%d" % t, gm, [tray_m], "support", "script:bulb_tray")
+        xc = X(0.32 + 0.42 * t)
+        d.tray_box("bulb_tray_%d" % t, xc, 0.125, 0.195, 0.40, 0.028, deal_m, strips, 10, model="script:bulb_tray")
         for i in range(6):
-            d.piece("lightbulb_01", 0.30 + 0.25 * t - 0.095 + i * 0.038, yb - td / 2, 0.004, scale=1.25, tier="bulb_tray")
-    # ---- trowels: two pairs on two shallow display trays (60 mm high: the sill hides the lowest 40 mm of anything lying on the bed from the far pavement), one in front of the pyramid, one in front of the
-    # first toolbox; the upper trowel of a pair lies 0.08 behind the lower and 0.05 higher, so the lower one shows whole
-    for i, uc in enumerate((0.865, 1.27)):
-        d.crate("trowel_tray_%d" % i, uc - 0.18, uc + 0.18, 0.035, 0.235, 0.0, 0.06)
+            d.piece("lightbulb_01", 0.32 + 0.42 * t - 0.16 + i * 0.064, 0.160, 0.004, tier="bulb_tray")
+    # ---- trowels: two pairs on two shallow trays 60 mm high (the sill hides the lowest 40 mm of what lies on the bed from the far pavement)
+    for i, uc in enumerate((1.18, 1.58)):
+        d.tray_box("trowel_tray_%d" % i, X(uc), 0.035, 0.235, 0.36, 0.06, deal_m, strips, 10)
         for lay in range(2):
             d.piece("trowel_01", uc, 0.095 + 0.08 * lay, 0.06 + lay * 0.05, rot=(0, 0, math.pi / 2), yaw=rnd.uniform(-0.04, 0.04), tier="tray" if lay == 0 else "trowels")
-    # ---- the toolboxes at the back, lids up, at 0.85 of their size (the window's 3.35 m cannot take both at full size beside the rest; recorded in NOTES.md)
-    for i, uc in enumerate((1.254, 1.634)):
-        d.piece("metal_toolbox", uc, 0.405, 0.0, rot=(0, 0, 0), scale=0.85)
-    # ---- the stepped crate: a front step (0.35 high) for the cleaner tins and the blowtorch, a rear step (0.45 high) for the oil tins, so every tin shows above the one before it
-    d.crate("tin_crate_front", 1.85, 2.71, 0.28, 0.42, 0.0, 0.35)
-    d.crate("tin_crate_rear", 1.85, 2.71, 0.42, 0.54, 0.0, 0.45)
+    # ---- the toolboxes at the back at their own size, lids up as modelled
+    for i, uc in enumerate((1.26, 1.68)):
+        d.piece("metal_toolbox", uc, 0.40, 0.0, rot=(0, 0, 0))
+    # ---- the stepped crate of nailed planks: the front step (0.35 high) for the cleaner tins and the blowtorch, the rear step (0.45 high) for the oil tins
+    d.planked_box("tin_crate_front", X(1.92), X(2.70), 0.28, 0.42, 0.0, 0.35, [deal_m, nail_m], strips, 10, stencil=(1, 10), seed=21)
+    d.planked_box("tin_crate_rear", X(1.92), X(2.70), 0.42, 0.54, 0.0, 0.45, [deal_m, nail_m], strips, 10, stencil=(3, 11), seed=22)
     for i in range(4):
-        d.piece("oil_tin", 1.935 + i * 0.16, 0.48, 0.45, rot=(0, 0, math.pi / 2), tier="crate")
+        d.piece("oil_tin", 2.06 + i * 0.165, 0.48, 0.45, rot=(0, 0, math.pi / 2), tier="crate")
     for i in range(4):
-        d.piece("cleaner_tin_01", 1.93 + i * 0.10, 0.35, 0.35, tier="crate")
-    d.piece("brass_blowtorch", 2.58, 0.35, 0.35, rot=(0, 0, math.pi / 2), tier="crate")
-    # ---- the sprinkler in front of the second toolbox, the garden pieces in the front row
-    d.piece("garden_sprinkler_01", 1.635, 0.155, 0.0, rot=(0, 0, 0))
-    for i, uc in enumerate((2.05, 2.47)):
-        d.piece("watering_can_metal_01", uc, 0.14, 0.0, rot=(0, 0, math.pi / 2), scale=0.85, yaw=rnd.uniform(-0.05, 0.05))
-    d.piece("tire_pump", 3.0, 0.09, 0.0, rot=(0, 0, 0))
-    d.piece("sledgehammer_01", 3.2575, 0.09, 0.0, rot=(0, 0, 0), size=0.85)
-    # ---- the three plastic brooms leaning on the right return wall, heads side by side 85 mm apart, at 0.80 of their size
-    for i, uc in enumerate((3.1185, 3.0335, 2.9485)):
-        d.piece("plastic_broom", uc, 0.35, 0.0, rot=(0, 0, -math.pi / 2), scale=0.80, tier="bed")
-    # ---- the price cards: each in front of its goods, at the front edge of the bed (u in metres from the window's left edge)
-    cards = [("TINS\n99p", 0.80), ("OIL\n\u00a31.15", 1.83), ("BULBS\n40p", 0.40), ("TROWELS\n\u00a32.45", 1.06), ("GLOVES\n\u00a31.30", 0.17), ("CANS\n\u00a33.95", 2.05), ("PUMP\n\u00a34.50", 3.0), ("SPRINKLER\n\u00a33.75", 1.635),
-             ("PAINT\n\u00a32.99", 0.60), ("TOOL BOXES\n\u00a36.95", 1.445), ("BROOMS\n\u00a32.25", 2.785), ("TORCH\n\u00a38.50", 2.69)]
+        d.piece("cleaner_tin_01", 2.00 + i * 0.10, 0.35, 0.35, tier="crate")
+    d.piece("brass_blowtorch", 2.55, 0.35, 0.35, rot=(0, 0, 0), tier="crate")
+    # ---- the front row: two watering cans in front of the crate (spouts along the window), the sprinkler, the pump, the sledgehammer
+    for i, uc in enumerate((2.00, 2.48)):
+        d.piece("watering_can_metal_01", uc, 0.14, 0.0, rot=(0, 0, math.pi / 2), yaw=rnd.uniform(-0.05, 0.05))
+    d.piece("garden_sprinkler_01", 2.90, 0.16, 0.0, rot=(0, 0, 0))
+    d.piece("tire_pump", 3.145, 0.15, 0.0, rot=(0, 0, math.pi / 2))
+    wall_x = L / 2
+    rot_s = d.euler_of(Matrix.Rotation(math.radians(5.0), 3, "Y"), Matrix.Rotation(math.pi / 2, 3, "Z"), Matrix.Rotation(math.pi, 3, "X"))
+    ext_s, _ = d.piece_x("sledgehammer_01", wall_x - 0.004, 0.14, 0.0, rot=rot_s)
+    # ---- three plastic brooms standing on their handle ends, heads up against the right return wall (heads 0.11 apart, the first touching it)
+    rot_b = d.lean_rot("plastic_broom", 13.0)
+    for k in range(3):
+        d.piece_x("plastic_broom", wall_x - 0.004 - 0.11 * k, 0.32, 0.0, rot=rot_b, tier="bed")
+    # ---- the price cards, each in front of its goods at the front edge of the bed
+    cards = [("OIL\n\u00a31.15", 2.24), ("BULBS\n40p", 0.37), ("TROWELS\n\u00a32.45", 1.18), ("GLOVES\n\u00a31.30", 0.17), ("CANS\n\u00a33.95", 2.00), ("PUMP\n\u00a34.50", 3.145), ("SPRINKLER\n\u00a33.75", 2.90),
+             ("PAINT\n\u00a32.99", 0.74), ("TOOL BOXES\n\u00a36.95", 1.58), ("BROOMS\n\u00a32.25", 3.03), ("BLOWLAMP\n\u00a38.50", 2.62)]
     path = os.path.join(d.tex, "price_cards.png")
     uvs = GEN.card_atlas(path, [c[0] for c in cards], cols=4, tile=(256, 128), size=46)
     pm = [d.image_mat("price_cards", path, rough=0.8), d.mat("stake", rgb8(60, 60, 62), rough=0.5, metal=0.7)]
