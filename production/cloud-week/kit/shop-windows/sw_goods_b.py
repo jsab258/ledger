@@ -751,3 +751,64 @@ def settle_down(d, names, max_drop=0.06, step=0.0005, touch=0.0012):
         d.items[-1]["ext"][4] = round(d.items[-1]["ext"][4] - drop, 4)
         d.items[-1]["ext"][5] = round(d.items[-1]["ext"][5] - drop, 4)
     return drop
+
+
+# ---------------------------------------------------------------------------------------------------------------------------------- the fishmonger's slab, ice and trays
+def rot_x(gm, i0, pivot, deg):
+    """Rotate the vertices of `gm` from index `i0` on about the x axis through `pivot` (y, z) by `deg` degrees (positive: a point further back (+y) goes higher), as a tray laid on a sloping slab."""
+    a = math.radians(deg)
+    py, pz = pivot
+    for i in range(i0, len(gm.V)):
+        x, y, z = gm.V[i]
+        dy, dz = y - py, z - pz
+        gm.V[i] = (x, py + dy * math.cos(a) - dz * math.sin(a), pz + dy * math.sin(a) + dz * math.cos(a))
+
+
+def ice_png(path, size=512, seed=4):
+    """Crushed ice, a picture by script: pale blue-white with cloudy mottling, small bright facets and a few grey-blue cracks (no CC0 photograph of ice is in the set: ambientCG Ice002 is a frozen lake). Tone: kept under 205
+    so that the ice does not burn under the gate's night spill."""
+    rnd = np.random.default_rng(seed)
+    base = np.zeros((size, size, 3), np.float32)
+    base[:] = (196, 210, 220)
+    cloud = rnd.normal(0, 1, (size // 8, size // 8)).astype(np.float32)
+    cloud = np.asarray(Image.fromarray(((cloud - cloud.min()) / (cloud.max() - cloud.min()) * 255).astype(np.uint8)).resize((size, size), Image.BICUBIC), np.float32) / 255.0
+    base *= (0.82 + 0.20 * cloud)[..., None]
+    img = Image.fromarray(np.clip(base, 0, 255).astype(np.uint8))
+    d = ImageDraw.Draw(img)
+    for _ in range(260):
+        x, y = rnd.integers(0, size), rnd.integers(0, size)
+        pts = [(x + rnd.integers(-18, 18), y + rnd.integers(-18, 18)) for _ in range(3)]
+        c = int(rnd.integers(0, 2))
+        d.polygon(pts, fill=(222, 232, 238) if c else (150, 170, 188))
+    for _ in range(40):
+        x, y = rnd.integers(0, size), rnd.integers(0, size)
+        d.line([(x, y), (x + rnd.integers(-60, 60), y + rnd.integers(-60, 60))], fill=(134, 156, 176), width=1)
+    img.filter(ImageFilter.GaussianBlur(0.7)).save(path)
+
+
+def ice_chunk(gm, c, s, seed, mi=0, uv=None):
+    """A chunk of crushed ice: a random convex-ish polyhedron (an irregular octahedron with moved corners), `s` across, one of a few shapes by `seed`; UVs from a tile of the ice picture (`uv` = (u0, v0, u1, v1))."""
+    rnd = random.Random(seed)
+    cx, cy, cz = c
+    pts = [(1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1)]
+    V = [(cx + s * 0.5 * (p[0] * rnd.uniform(0.6, 1.2)), cy + s * 0.5 * (p[1] * rnd.uniform(0.6, 1.2)), cz + s * 0.5 * (p[2] * rnd.uniform(0.5, 1.0))) for p in pts]
+    F = [(0, 2, 4), (2, 1, 4), (1, 3, 4), (3, 0, 4), (2, 0, 5), (1, 2, 5), (3, 1, 5), (0, 3, 5)]
+    U = None
+    if uv:
+        u0, v0, u1, v1 = uv
+        tri = [(u0, v0), (u1, v0), ((u0 + u1) / 2, v1)]
+        U = [tri for _ in F]
+    gm.add(V, F, mi, U)
+
+
+def enamel_tray(gm, cx, cy, z0, w=0.37, d=0.30, h=0.05, mi=0, mi_rim=0):
+    """A white enamel tray (a box open on top: a floor 3 mm and four walls 3 mm, rounded rim as a rod along each top edge) centred at (cx, cy) on a floor z0. One mesh; the rim rods are thicker than the walls."""
+    t = 0.003
+    gm.box(cx - w / 2, cx + w / 2, cy - d / 2, cy + d / 2, z0, z0 + t, mi)
+    gm.box(cx - w / 2, cx + w / 2, cy - d / 2, cy - d / 2 + t, z0, z0 + h, mi)
+    gm.box(cx - w / 2, cx + w / 2, cy + d / 2 - t, cy + d / 2, z0, z0 + h, mi)
+    gm.box(cx - w / 2, cx - w / 2 + t, cy - d / 2, cy + d / 2, z0, z0 + h, mi)
+    gm.box(cx + w / 2 - t, cx + w / 2, cy - d / 2, cy + d / 2, z0, z0 + h, mi)
+    r_ = 0.004
+    for (a, b) in (((cx - w / 2, cy - d / 2), (cx + w / 2, cy - d / 2)), ((cx - w / 2, cy + d / 2), (cx + w / 2, cy + d / 2)), ((cx - w / 2, cy - d / 2), (cx - w / 2, cy + d / 2)), ((cx + w / 2, cy - d / 2), (cx + w / 2, cy + d / 2))):
+        gm.rod((a[0], a[1], z0 + h), (b[0], b[1], z0 + h), r_, mi_rim, 8)

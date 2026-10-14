@@ -1253,7 +1253,8 @@ def dsp06_rows(R, work, assets, rows):
                         return True
             return False
         hgt = zhi - zlo
-        if not (touches(surface_samples(V, T_, zlo, False, max(0.003, 0.35 * hgt))) or touches(surface_samples(V, T_, zhi, True, max(0.003, 0.15 * hgt)))):
+        # the lowest and highest 3 mm first (a sample of the whole flank could miss a small foot), then the flanks
+        if not (touches(surface_samples(V, T_, zlo, False, 0.003)) or touches(surface_samples(V, T_, zhi, True, 0.003)) or touches(surface_samples(V, T_, zlo, False, max(0.003, 0.35 * hgt))) or touches(surface_samples(V, T_, zhi, True, max(0.003, 0.15 * hgt)))):
             floating.append("%s(%s) lowest %.3f" % (di["groups"][gi]["model"], nms[0], zlo))
         # a thin sheet's lean (a single-mesh group)
         if len(nms) == 1:

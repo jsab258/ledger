@@ -35,8 +35,26 @@ def main(argv):
     ap = argparse.ArgumentParser()
     ap.add_argument("models", nargs="+")
     ap.add_argument("--regions", action="store_true")
+    ap.add_argument("--pairs", action="store_true", help="two models' first clean maps side by side in one 2048 x 1024 picture (marks_pair_<n>.png), for a quick look at many models")
     a = ap.parse_args(argv)
     os.makedirs(VIEW, exist_ok=True)
+    if a.pairs:
+        ims = []
+        for m in a.models:
+            ms = maps_of(m)
+            if ms:
+                ims.append((m, Image.open(ms[0]).convert("RGB")))
+        for k in range(0, len(ims), 2):
+            grp = ims[k:k + 2]
+            sheet = Image.new("RGB", (sum(im.width for _, im in grp), max(im.height for _, im in grp)), (255, 0, 255))
+            x = 0
+            for _, im in grp:
+                sheet.paste(im, (x, 0))
+                x += im.width
+            out = os.path.join(VIEW, "marks_pair_%d.png" % (k // 2))
+            sheet.save(out)
+            print(out, [m for m, _ in grp])
+        return
     for m in a.models:
         ms = maps_of(m)
         if not ms:
