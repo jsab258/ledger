@@ -1105,6 +1105,8 @@ def pic_rows():
             std = {"day": tgt["day_mean_luma"], "night_lit": tgt["night_lit_mean_luma"], "night_dark": tgt["night_dark_mean_luma"]}[s]
             if R["type"] == "landing" and s == "night_lit":
                 std = 40.0
+            if R["family"] == "GF" and s == "night_lit" and "night_lit_mean_luma_gf" in tgt:
+                std = tgt["night_lit_mean_luma_gf"]          # 14 Oct, from the try 2 reviews (close review): the cottages' front rooms are relit (PIC-14); their standard is the relit pictures' mean
             if R["type"] == "empty" and s == "night_lit":
                 std = tgt["night_dark_mean_luma"]
             cnt += 1
@@ -1112,7 +1114,7 @@ def pic_rows():
             ok &= good
             if not good:
                 res.append("%s %s %.1f (want %.0f)" % (rid, s, m, std))
-    row("PIC-02", cnt > 0 and ok, "%d pictures' mean luma within 15%% of the standard (day 105, night_lit 70, night_dark 15; landings 40 at night_lit; an empty room's night_lit is its night_dark, the target's lights_by_state over its PIC-02 line); off: %s" % (cnt, res or "none"), status=None if cnt else "not_run")
+    row("PIC-02", cnt > 0 and ok, "%d pictures' mean luma within 15%% of the standard (day 105, night_lit 70 (the cottages' front rooms: the relit pictures' mean, picture_standards.night_lit_mean_luma_gf), night_dark 15; landings 40 at night_lit; an empty room's night_lit is its night_dark, the target's lights_by_state over its PIC-02 line); off: %s" % (cnt, res or "none"), status=None if cnt else "not_run")
     # PIC-03 and the corner columns
     res, ok, cnt = [], True, 0
     for rid in rooms:
