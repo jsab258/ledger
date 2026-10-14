@@ -418,11 +418,15 @@ def display(d):
         gm = GM()
         bx = (ext[0] + ext[1]) / 2
         by = (ext[2] + ext[3]) / 2
-        rxy = 0.5 * min(ext[1] - ext[0], ext[3] - ext[2]) * 0.80
-        zt = ext[5] - 0.03
-        GB.heap(gm, bx, by, zt, rxy, rxy, 0.12, seed=3 + k, mi=0, amp=1.4)
-        GB.heap(gm, bx - 0.45 * rxy, by + 0.2 * rxy, zt + 0.04, rxy * 0.6, rxy * 0.6, 0.10, seed=7 + k, mi=1, amp=1.4)
-        GB.heap(gm, bx + 0.42 * rxy, by - 0.1 * rxy, zt + 0.03, rxy * 0.55, rxy * 0.55, 0.09, seed=11 + k, mi=2, amp=1.4)
+        # the basket's opening is 0.13 in radius (the weave's inner face) under a flat rim lip out to 0.225: the first lump of cloth stands on the basket's floor inside the opening (radius 0.085 at the foot), the next two
+        # lie over the lip, their feet 1 mm above its top (a sheet over the edge), so that no cloth passes through the wicker (DSP-03)
+        rin = 0.072
+        rout = 0.165
+        zt = GB.rest_z(d, bx, by, 0.002, ring=4) + 0.0016     # the cloth stands on the basket's floor (found by a ray: the weave's floor face)
+        zl = ext[5] + 0.0012
+        GB.heap(gm, bx, by, zt, rin, rin, 0.15, seed=3 + k, mi=0, amp=1.2)
+        GB.heap(gm, bx - 0.30 * rout, by + 0.15 * rout, zl, rout * 0.9, rout * 0.9, 0.085, seed=7 + k, mi=1, amp=1.2)
+        GB.heap(gm, bx + 0.45 * rout, by - 0.10 * rout, zl + 0.03, rout * 0.55, rout * 0.55, 0.07, seed=11 + k, mi=2, amp=1.2)
         d.gm_object("laundry_in_basket_%d" % k, gm, cloth[k], "scripted", "script:laundry_in_basket", tier="basket", smooth=True)
     # ---- the SERVICE WASHES card on two posts, behind the baskets
     cpth = os.path.join(tex, "service_card.png")
@@ -487,7 +491,7 @@ def display(d):
     bm_ = d.image_mat("bottle_labels", bp, rough=0.5)
     plastic = [d.mat("bottle_plastic_g", rgb8(60, 130, 80), rough=0.3), d.mat("bottle_plastic_y", rgb8(220, 180, 60), rough=0.3), d.mat("bottle_plastic_b", rgb8(60, 100, 170), rough=0.3), d.mat("bottle_cap", rgb8(236, 232, 220), rough=0.4)]
     # a washing-up bottle 0.20 tall, r 0.032; a bleach bottle 0.24 tall, r 0.04
-    for k, (uc, vv, hh, rr_, bi, pi_) in enumerate(((3.10, 0.20, 0.20, 0.032, 0, 0), (3.20, 0.20, 0.20, 0.032, 1, 1), (3.27, 0.31, 0.24, 0.040, 2, 2))):
+    for k, (uc, vv, hh, rr_, bi, pi_) in enumerate(((3.135, 0.20, 0.20, 0.032, 0, 0), (3.205, 0.20, 0.20, 0.032, 1, 1), (3.285, 0.245, 0.24, 0.040, 2, 2))):
         gm = GM()
         GB.bottle(gm, X(uc), vv, z0, rr_, hh, mi=0, mi_cap=1, label=(3, 4), label_mi=2, label_uv=buv[bi], n=24)
         d.gm_object("detergent_bottle_%d" % k, gm, [plastic[pi_], plastic[3], bm_], "scripted", "script:detergent_boxes", tier="board", smooth=True)

@@ -376,6 +376,15 @@ def room(r):
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------- the window
+def _crate_bed(d, ext, top, name, shrink=(0.04, 0.04), rgb=(96, 128, 70)):
+    """A bed of shredded green display paper inside a Poly Haven crate (a greengrocer's way of filling a crate to the brim without a hundred apples): a solid block from the crate's floor to `top`, inside its
+    walls. The crates are real size (0.229 and 0.239 high, DSP-06); with the fruit on the crate's floor the fruit stood a hand's breadth under the rim and the crates read empty from the pavement."""
+    gm = GM()
+    gm.box(ext[0] + shrink[0], ext[1] - shrink[0], ext[2] + shrink[1], ext[3] - shrink[1], ext[4] + 0.012, top, 0)
+    m = d.mat("crate_bed_paper", rgb8(*rgb), rough=0.9)
+    d.gm_object(name, gm, [m], "support", "script:crate", "bed")
+
+
 def display(d):
     """The grocer's window (target `shops.grocer.display`, 14 item rows; bed 4.294 x 0.55; 1.45 high at most). The target's three-tier stand and its zones overlap in volume and give the crates and the pyramids
     the same footprint; what this does (each a Judgement in NOTES.md):
@@ -445,6 +454,7 @@ def display(d):
     apple_n = [14, 13, 13]
     for k, uc in enumerate((0.38, 0.88, 1.38)):
         ext, _ = d.piece("plastic_crate_02", uc, 0.205, 0.0, rot=(0, 0, 0), scale=cs, tier="bed", tris=None)
+        _crate_bed(d, ext, 0.145, "apple_bed_%d" % k)
         cx_, cy_ = (ext[0] + ext[1]) / 2 + L / 2, (ext[2] + ext[3]) / 2
         zf = ext[4] + 0.018
         pos = [(ix, iy, 0) for iy in range(3) for ix in range(4)] + [(0.5, 0.5, 1), (2.5, 0.5, 1)]
@@ -460,6 +470,7 @@ def display(d):
     GB.settle_down(d, nm_, max_drop=0.05)
     for k, uc in enumerate((2.19, 2.64)):
         ext, _ = d.piece("plastic_crate_03", uc, 0.14, 0.0, rot=(0, 0, 0), scale=0.9, tier="bed", tris=None)
+        _crate_bed(d, ext, 0.135, "lemon_bed_%d" % k)
         cx_, cy_ = (ext[0] + ext[1]) / 2 + L / 2, (ext[2] + ext[3]) / 2
         for j in range(6):
             ix, iy = j % 3, j // 3

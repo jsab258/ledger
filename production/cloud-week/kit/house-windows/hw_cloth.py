@@ -9,6 +9,7 @@ Textures are packed in three atlases (net_voile, curtain, blind) so that each ma
 All maps are written as PNG (base colour with alpha) and JPEG (the normal map: a real RGB tangent-space normal map, blue about 0.9).
 """
 import json
+import math
 import os
 
 import numpy as np
@@ -39,6 +40,7 @@ def pleats(width_mm, npx, pitch_rng, depth_rng, rng, shear=0.0):
         tt = t + skew * np.sin(2 * np.pi * t) / (2 * np.pi) * 2.0
         h[m] = d * 0.5 * (1 - np.cos(2 * np.pi * np.clip(tt, 0, 1)))
         idx[m] = i
+    pleats.gain = rng.uniform(0.55, 1.35, len(b))[idx]
     pleats.last = {"pitch_min": float(min(pitches)), "pitch_max": float(max(pitches)), "pitch_std": float(np.std(pitches)), "depth_std": float(np.std(depths)), "n": len(pitches)}
     return h, idx
 
@@ -69,9 +71,21 @@ def net_card(kind, width_mm, height_mm, seed, lace_share, torn=False):
     X = np.arange(nx)[None, :].repeat(nz, 0).astype(float)
     shear_px = (zz[:, None] - 0.5) * 2.0 * (1.2 + rng.uniform(-0.4, 0.4))           # about 8 mm over the card: not ruler-straight
     h = np.empty((nz, nx))
+    gain1 = pleats.gain.copy()
+    gain = np.empty((nz, nx))
+    sway_a = rng.uniform(1.0, 2.2)                                   # px: the gather's lines are not ruler-straight (about 5 to 10 mm over the card)
+    sway_ph = rng.uniform(0, 6.28)
     for j in range(nz):
-        xs = np.clip(np.arange(nx) - shear_px[j, 0], 0, nx - 1)
+        sh = shear_px[j, 0] + sway_a * math.sin(2 * math.pi * zz[j] * 1.3 + sway_ph)
+        xs = np.clip(np.arange(nx) - sh, 0, nx - 1)
         h[j] = np.interp(xs, np.arange(nx), h1)
+        gain[j] = np.interp(xs, np.arange(nx), gain1)
+    # a second, finer ripple (15 to 25 mm) across the pleats, its phase and strength drawn at random: no two pleats alike
+    xmm = (np.arange(nx) + 0.5) * NET_MM_PER_PX
+    rip = 0.0
+    for k in range(3):
+        rip = rip + rng.uniform(0.3, 1.0) * np.sin(2 * np.pi * xmm / rng.uniform(15.0, 26.0) + rng.uniform(0, 6.28))
+    h += (2.2 * rip[None, :] * (0.5 + 0.5 * zz)[:, None])
     h *= (0.78 + 0.34 * zz)[:, None]
     h += (_blur(rng.normal(0, 1, (nz, nx)), 3) * 1.6)
     h = np.clip(h, 0.0, None)
@@ -79,7 +93,7 @@ def net_card(kind, width_mm, height_mm, seed, lace_share, torn=False):
     hn = h / hmax
     # brightness: lit from the left: the slope shades the folds, the valleys are darker; +-22 per cent
     gx = np.gradient(_blur(h, 0.8), axis=1)
-    bright = 1.0 + 0.22 * np.clip(gx / (np.abs(gx).max() + 1e-6) * 1.6, -1, 1) - 0.07 * (1 - hn)
+    bright = 1.0 + 0.19 * gain * np.clip(gx / (np.abs(gx).max() + 1e-6) * 1.6, -1, 1) - 0.06 * (1 - hn)
     # coverage: one layer 0.40, folds overlapping where the net is gathered: 0.40 + a share of the pleat's depth, its mean 0.64
     alpha = 0.55 + 0.36 * hn ** 1.2 + _blur(rng.normal(0, 0.02, (nz, nx)), 0.8)
     # the lace band at the foot (share of the height): a diamond lattice, a 60 mm repeat, coverage 0.86 on average
@@ -214,7 +228,7 @@ def save_rgba(arr, path):
     Image.fromarray(a, "RGBA").save(path, optimize=True)
 
 
-def save_rgb_jpg(arr, path, q=88):
+def save_rgb_jpg(arr, path, q=80):
     a = np.clip(arr * 255 + 0.5, 0, 255).astype(np.uint8)
     Image.fromarray(a, "RGB").save(path, quality=q, subsampling=0, optimize=True)
 
