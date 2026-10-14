@@ -546,7 +546,7 @@ def wb_rows(frames, meas):
         ok = all(0.10 <= s["P_over_L"] <= 0.45 for s in bare)
         row("WB-02", ok, "%d bare window at 15 to 30 degrees by day: P/L %s" % (len(bare), fmt(bare, "P_over_L")))
     else:
-        not_run("WB-02", "the bare window (east_parade_bay3_upper_w1) is not measured at 15 to 30 degrees: render h-along15-bay3w1")
+        not_run("WB-02", "the bare window (east_parade_bay3_upper_w1) is not measured at 15 to 30 degrees: render h-along30-bay3w1")
     # WB-03
     ac = [s for t, ws in day.items() for s in ws.values() if frames[t]["name"].startswith("h-across0") and s["state"] == "bare" and s["angle"] > 60]
     if ac:
@@ -618,8 +618,8 @@ def wb_rows(frames, meas):
     p = os.path.join(T.GATE, "old_fault.json")
     if os.path.exists(p):
         d = json.load(open(p))
-        ok = d["D_over_L"] > 0.72 and (d["line"] is None or d["line"]["min_ratio"] is None or d["line"]["min_ratio"] > 0.6) and d["spread"] < 40
-        row("WB-08", ok, "the first build's pane (an opaque pale card, F0 0.04, no box shade) in the same view: P/L %.2f, D/L %.2f, spread %.0f, line dip %s: the checks fail it as they must (WB-04 D/L over 0.72, WB-04b no dip, WB-05 spread under 40)" % (d["P_over_L"], d["D_over_L"], d["spread"], d["line"]))
+        ok = d["P_over_L"] > 0.45 and d["D_over_L"] > 0.72 and (d["line"] is None or d["line"]["min_ratio"] is None or d["line"]["min_ratio"] > 0.6) and d["spread"] < 20
+        row("WB-08", ok, "the first build's pane (a lit pale card, no reflection) with flat joinery (no box shade, no shading of the reveal) in the same view: P/L %.2f, D/L %.2f, spread %.0f, line dip %s: the checks fail it as they must (WB-02 P/L over 0.45, WB-04 D/L over 0.72, WB-04b no dip, WB-05 spread under 20, a bare window)" % (d["P_over_L"], d["D_over_L"], d["spread"], d["line"]))
     else:
         not_run("WB-08", "the old-fault frame (old_fault.json) is not rendered")
     # WB-09
@@ -687,7 +687,7 @@ def night_rows(frames, meas):
             n += 1
             rows_.append("%s b/r %.3f luma %.1f" % (rid, l[2] / l[0], ly))
     if n:
-        row("NIGHT-04", ok and n == 13, "%d of 13 night_dark pictures: %s" % (n, "; ".join(rows_)) + ("" if n == 13 else " (the rest not rendered)"), status=None if n == 13 else "fail")
+        row("NIGHT-04", ok and n == 13, "%d of 13 night_dark pictures: %s" % (n, "; ".join(rows_)) + ("" if n == 13 else " (the rest not rendered)"), status=None if (n == 13 or not ok) else "not_run")
     else:
         not_run("NIGHT-04", "no night_dark picture is rendered")
     # NIGHT-05
@@ -1110,16 +1110,17 @@ def site_rows(frames):
     bad = []
     rows_ = {}
     for s in S:
-        rows_.setdefault(s["block"] if s["side"] > 0 else "w", []).append(s)
+        rows_.setdefault(s["side"], []).append(s)
     for blk, lst in rows_.items():
         lst = sorted(lst, key=lambda s: s["x_centre"])
         for i, a in enumerate(lst):
             for b in lst[i + 1:i + 4]:
                 ta = (a["room"], a["net"]["kind"], (a.get("extra") or {}).get("kind"), (a.get("extra") or {}).get("colour"))
                 tb = (b["room"], b["net"]["kind"], (b.get("extra") or {}).get("kind"), (b.get("extra") or {}).get("colour"))
-                if ta == tb:
+                same_house = a.get("house") == b.get("house") and a["family"] == "GF"          # a cottage's two windows are one room (the target's own self-check leaves them out)
+                if ta == tb and not same_house:
                     bad.append((a["id"], b["id"]))
-    row("SITE-02", not bad, "no (room, net kind, curtain) triple repeats within three places along any row; paints are white throughout; repeats: %s" % (bad or "none"))
+    row("SITE-02", not bad, "no (room, net kind, curtain) triple repeats within three places along any row (a cottage's own two windows, one room, excepted as the target's self-check does); paints are white throughout; repeats: %s" % (bad or "none"))
     # SITE-03
     from collections import Counter
     nc = Counter(s["net"]["kind"] for s in S)

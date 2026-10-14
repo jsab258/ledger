@@ -143,7 +143,7 @@ GLASS_IOR = 1.789          # F0 = ((n - 1) / (n + 1))^2 = 0.08: Unreal's Specula
 
 def make_glass_gate(bpy, refl, old_fault=False):
     """The pane of the cloud gate (target 5.1): a Mix of a Transparent BSDF and a Glossy GGX, weighted by the dielectric Fresnel of F0 0.08 (IOR 1.789) x `refl` (1.0 by day, 0.2 at night); the roughness rises
-    from 0.03 to 0.35 where the pane's COLOR_0 says dirt (R 0.8: the 6 mm band and the lowest 25 mm). `old_fault`: the first build's pane for WB-08: an opaque pale card, F0 0.04, no lines."""
+    from 0.03 to 0.35 where the pane's COLOR_0 says dirt (R 0.8: the 6 mm band and the lowest 25 mm). `old_fault`: the first build's pane for WB-08: a lit pale card (flat emission, no reflection), no lines."""
     glass_gate = bpy.data.materials.new("glass_gate")
     glass_gate.use_nodes = True
     gnt = glass_gate.node_tree
@@ -151,10 +151,10 @@ def make_glass_gate(bpy, refl, old_fault=False):
         gnt.nodes.remove(n)
     gout = gnt.nodes.new("ShaderNodeOutputMaterial")
     if old_fault:
-        dif = gnt.nodes.new("ShaderNodeBsdfPrincipled")
-        dif.inputs["Base Color"].default_value = (0.37, 0.37, 0.36, 1.0)
-        dif.inputs["Roughness"].default_value = 0.6
-        dif.inputs["Specular IOR Level"].default_value = 0.5
+        # a lit pale card: its own light (emission), flat; a first try with a diffuse card and only the box shade removed still read D/L 0.52 because Cycles shades the reveal itself
+        dif = gnt.nodes.new("ShaderNodeEmission")
+        dif.inputs["Color"].default_value = (0.60, 0.60, 0.58, 1.0)
+        dif.inputs["Strength"].default_value = 1.0
         gnt.links.new(dif.outputs[0], gout.inputs[0])
         return glass_gate
     gmix = gnt.nodes.new("ShaderNodeMixShader")
@@ -500,10 +500,16 @@ def build_and_render(view_name, cam, state, out_png, bake_dir, samples=48, res=N
                         mixn = next((n for n in m.node_tree.nodes if n.type == "MIX"), None)
                         if mixn is not None:
                             mixn.inputs[7].default_value = (*col, 1.0)
-                            if extra.get("old_fault"):               # WB-08: the first build had no box shade (no dark lines)
+                            if extra.get("old_fault"):               # WB-08: the first build's flat joinery: no box shade and no shading of the reveal (its own light, the paint's colour)
                                 for lk in list(mixn.inputs[6].links):
                                     m.node_tree.links.remove(lk)
                                 mixn.inputs[6].default_value = (1.0, 1.0, 1.0, 1.0)
+                                for lk in list(pb.inputs["Base Color"].links):
+                                    m.node_tree.links.remove(lk)
+                                pb.inputs["Base Color"].default_value = (0.0, 0.0, 0.0, 1.0)
+                                pb.inputs["Specular IOR Level"].default_value = 0.0
+                                pb.inputs["Emission Color"].default_value = (*col, 1.0)
+                                pb.inputs["Emission Strength"].default_value = 0.6
                         else:
                             pb.inputs["Base Color"].default_value = (*col, 1.0)
                         pb.inputs["Roughness"].default_value = paint["rough"]

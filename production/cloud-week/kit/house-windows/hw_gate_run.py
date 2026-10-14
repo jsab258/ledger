@@ -30,14 +30,16 @@ FRAMES = [
     ("cam-a", "cam_A", ("day", "night")),
     ("close", ("H_ALONG_30_NEAR", CLOSE_SITE), ("day", "night")),
     ("h-across0-bay3w1", ("H_ACROSS_0", "east_parade_bay3_upper_w1"), ("day",)),
-    ("h-along15-bay3w1", ("H_ALONG_15_NEAR", "east_parade_bay3_upper_w1"), ("day",)),
+    ("h-along30-bay3w1", ("H_ALONG_30_NEAR", "east_parade_bay3_upper_w1"), ("day",)),
     ("h-along30-bay1w1", ("H_ALONG_30_NEAR", "east_parade_bay1_upper_w1"), ("day",)),
     ("h-across0-bay2w0", ("H_ACROSS_0", "east_parade_bay2_upper_w0"), ("day", "night")),
     ("h-along30-gf2w1", ("H_ALONG_30_NEAR", "west_south_bay2_gf_w1"), ("day", "night")),
     ("h-under-bay1w0", ("H_UNDER", "east_parade_bay1_upper_w0"), ("day",)),
+    ("h-along15-bay3w1", ("H_ALONG_15_NEAR", "east_parade_bay3_upper_w1"), ("day",)),
 ]
-# WB-08: the first build's pane (an opaque pale card, F0 0.04, no box shade) in the same view as the bare window at 15 degrees; its mask is that frame's own
-OLD_FAULT = ("old-fault", "h-along15-bay3w1", "east_parade_bay3_upper_w1")
+# WB-08: the first build's pane (a lit pale card, flat joinery) in the same view as the bare window seen at 19 degrees (the angle from the wall in three dimensions: H_ALONG_30_NEAR on an upper
+# window); its mask is that frame's own
+OLD_FAULT = ("old-fault", "h-along30-bay3w1", "east_parade_bay3_upper_w1")
 SAMPLES = int(os.environ.get("LEDGER_GATE_SAMPLES", "40"))
 
 

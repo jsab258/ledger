@@ -376,11 +376,11 @@ def room(r):
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------- the window
-def _crate_bed(d, ext, top, name, shrink=(0.04, 0.04), rgb=(96, 128, 70)):
+def _crate_bed(d, ext, top, name, shrink=(0.04, 0.04), rgb=(96, 128, 70), z0=0.012):
     """A bed of shredded green display paper inside a Poly Haven crate (a greengrocer's way of filling a crate to the brim without a hundred apples): a solid block from the crate's floor to `top`, inside its
     walls. The crates are real size (0.229 and 0.239 high, DSP-06); with the fruit on the crate's floor the fruit stood a hand's breadth under the rim and the crates read empty from the pavement."""
     gm = GM()
-    gm.box(ext[0] + shrink[0], ext[1] - shrink[0], ext[2] + shrink[1], ext[3] - shrink[1], ext[4] + 0.012, top, 0)
+    gm.box(ext[0] + shrink[0], ext[1] - shrink[0], ext[2] + shrink[1], ext[3] - shrink[1], ext[4] + z0, top, 0)
     m = d.mat("crate_bed_paper", rgb8(*rgb), rough=0.9)
     d.gm_object(name, gm, [m], "support", "script:crate", "bed")
 
@@ -407,7 +407,7 @@ def display(d):
     timber = d.mat("stand_timber", rgb8(140, 100, 62), rough=0.7)
     # ---- the stand: step A (jars) and three plinths (pyramids)
     gm = GM()
-    gm.box(X(1.625), X(3.15), 0.35, 0.55, 0.0, 0.18, 0)
+    gm.box(X(1.625), X(3.15), 0.33, 0.55, 0.0, 0.18, 0)
     ob, _ = d.gm_object("tiered_stand_a", gm, [timber], "scripted", "script:tiered_stand")
     GB.chamfer(ob, 0.003, 2)
     py_us = (0.50, 2.30, 3.75)               # the pyramids' centres
@@ -444,7 +444,7 @@ def display(d):
     lid_m = d.mat("jar_lid", rgb8(196, 160, 60), rough=0.35, metal=0.8)
     gjs = [GM() for _ in JAR_DESIGNS]
     for k in range(18):
-        ji = k % len(JAR_DESIGNS)
+        ji = (k // 3) % len(JAR_DESIGNS)               # three jars of a product together, so that its card stands before it
         GB.jar(gjs[ji], X(1.68 + k * 0.083), 0.405, 0.18, 0.0375, 0.115, 0, 1, juv[ji][1], 2, n=20)
     for ji, gmj in enumerate(gjs):
         fill_m = d.mat("jar_fill_%d" % ji, rgb8(*JAR_DESIGNS[ji][2]), rough=0.18)
@@ -470,15 +470,14 @@ def display(d):
     GB.settle_down(d, nm_, max_drop=0.05)
     for k, uc in enumerate((2.19, 2.64)):
         ext, _ = d.piece("plastic_crate_03", uc, 0.14, 0.0, rot=(0, 0, 0), scale=0.9, tier="bed", tris=None)
-        _crate_bed(d, ext, 0.135, "lemon_bed_%d" % k, shrink=(0.05, 0.06))
+        _crate_bed(d, ext, 0.135, "lemon_bed_%d" % k, shrink=(0.08, 0.05), z0=0.0675)          # crate_03 has a cross bar at 0.064 under its floor grid: the bed rests on it, under the lemons
         cx_, cy_ = (ext[0] + ext[1]) / 2 + L / 2, (ext[2] + ext[3]) / 2
         for j in range(6):
             ix, iy = j % 3, j // 3
             lx, ly = cx_ + (ix - 1.0) * 0.095, cy_ + (iy - 0.5) * 0.075
-            _, nm_ = d.piece("lemon", lx, ly, GB.rest_z(d, lx - L / 2, ly, 0.034) + 0.004, rot=(0, 0, rnd.uniform(0, 6.28)), scale=1.0, tier="lemons", tris=None)
-            GB.settle_down(d, nm_)
+            d.piece("lemon", lx, ly, 0.1352, rot=(0, 0, rnd.uniform(0, 6.28)), scale=1.0, tier="lemons", tris=None)          # on the bed (a flat top at 0.135)
     # ---- onions in a low tray (15), tomatoes in a tray (30, script), bananas on a crate (three bunches at their own size)
-    d.crate("onion_tray", 2.88, 3.24, 0.04, 0.34, 0.0, 0.07)
+    d.crate("onion_tray", 2.88, 3.24, 0.04, 0.32, 0.0, 0.07)
     for j in range(15):
         ix, iy = j % 5, j // 5
         ox, oy = 2.88 + 0.036 + ix * 0.0725, 0.0825 + iy * 0.080
@@ -502,15 +501,18 @@ def display(d):
     d.gm_object("tomatoes", gm, [tom, calyx], "scripted", "script:tomatoes", tier="tray", smooth=True)
     d.crate("banana_crate", 3.74, 4.29, 0.04, 0.44, 0.0, 0.12)
     bd = d.dims("bananas")
-    d.piece("bananas", 4.015, 0.150, 0.12, rot=(0, 0, 0), scale=1.0 if False else 0.9, tier="crate", tris=None)
-    d.piece("bananas", 4.015, 0.355, 0.12, rot=(0, 0, 0), scale=0.9, tier="crate", tris=None)
+    d.piece("bananas", 4.015, 0.135, 0.12, rot=(0, 0, 0), scale=0.9, tier="crate", tris=None)
+    d.piece("bananas", 4.015, 0.338, 0.12, rot=(0, 0, 0), scale=0.9, tier="crate", tris=None)
     # ---- the price cards (14)
-    texts = ["APPLES\n29p lb", "ONIONS\n19p lb", "LEMONS\n8p each", "TOMATOES\n45p lb", "BANANAS\n32p lb", "ROLLS\n6 for 55p", "BEANS\n21p", "SOUP\n18p", "PEAS\n19p", "SARDINES\n29p", "JAM\n59p", "HONEY\n69p", "MARMALADE\n55p", "SALMON\n79p"]
+    # (14 Oct, from the tea rooms' close review, narrow 2: "the price cards stand before the wrong goods": the first set stood before whatever was nearest) each card stands before the goods it prices: the three
+    # apple crates, the rolls, the two lemon crates (one card between them), the onions, the tomatoes, the bananas, and one card for each of the six jars' products (three jars of a product together on step A)
+    texts = ["APPLES\n29p lb", "COOKERS\n24p lb", "EATING\n32p lb", "ROLLS\n6 for 55p", "LEMONS\n8p each", "ONIONS\n19p lb", "TOMATOES\n45p lb", "BANANAS\n32p lb",
+             "STRAWBERRY\nJAM 59p", "MARMALADE\n55p", "HONEY\n69p", "PICCALILLI\n49p", "PICKLED\nONIONS 65p", "BLACKCURRANT\nJAM 59p"]
     path = os.path.join(tex, "price_cards.png")
     uvs = GEN.card_atlas(path, texts, cols=4, tile=(256, 128), size=42)
     pm = [d.image_mat("price_cards", path, rough=0.8), d.mat("stake", rgb8(60, 60, 62), rough=0.5, metal=0.7)]
-    spots = [(0.38, 0.0, 0.0), (0.88, 0.0, 0.0), (2.19, 0.0, 0.0), (3.06, 0.0, 0.0), (3.50, 0.0, 0.0), (4.10, 0.0, 0.0), (1.12, 0.0, 0.0), (1.80, 0.0, 0.0), (2.64, 0.0, 0.0),
-             (1.70, 0.40, 0.18), (2.10, 0.40, 0.18), (2.50, 0.40, 0.18), (2.90, 0.40, 0.18), (0.20, 0.0, 0.0)]
+    spots = [(0.36, 0.0, 0.0), (0.86, 0.0, 0.0), (1.36, 0.0, 0.0), (1.78, 0.0, 0.0), (2.415, 0.0, 0.0), (3.06, 0.0, 0.0), (3.495, 0.0, 0.0), (4.015, 0.0, 0.0)]
+    spots += [(1.68 + (3 * p + 1) * 0.083, 0.35, 0.18) for p in range(6)]
     for k, (uc, vv, wz) in enumerate(spots):
         d.price_card(uc, 0.02 if vv == 0.0 else vv, wz, k, uvs, pm)
     d.display_texts = list(GEN.TEXTS) + [t.replace("\n", " ") for t in texts]
