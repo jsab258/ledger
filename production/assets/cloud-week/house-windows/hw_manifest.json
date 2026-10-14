@@ -1,0 +1,1274 @@
+{
+ "made_by": "production/cloud-week/kit/house-windows/build_windows.py",
+ "frame": "kit frame in metres: x across (the viewer's right), y into the wall, z up; pivot the opening's bottom-edge centre on the brick face",
+ "placement": {
+  "east": "translate (x_centre, +5.125, sill_z_above_crown); the street is at -y, no turn",
+  "west": "turn 180 degrees about z, then translate (x_centre, -5.125, sill_z_above_crown)",
+  "sill_z": "above the crown: the site's `sill_z_above_crown` (the opening's bottom edge); the stone sill and the arch ring belong to the wall kit"
+ },
+ "paint_note": "each glb carries its kind's default paint (S22 and S11 paint_white_fresh, RC and RC2 paint_white_upvc); the house's own paint is set on the slot by name from `paints`",
+ "glass_note": "glass_house: base colour 0.03, roughness 0.03, metallic 0, KHR_materials_specular colour 2.0 (Cycles Specular IOR Level 1.0, F0 0.08), opaque; COLOR_0 on each pane is the dirt mask (1.0 clean, 0.8 the 6 mm band and the lowest 25 mm)",
+ "cottage_note": "a cottage's two windows share one room card and one pendant: hw_room_card_gf.glb, centred between them; the window pieces' own room__card and pendant__shade are not placed on a cottage",
+ "sites": [
+  {
+   "id": "east_chandler_bay0_upper_w0",
+   "kind": "RC",
+   "glb": "hw_RC.glb",
+   "street_x_centre": 41.5,
+   "side": 1,
+   "sill_z_above_crown": 4.2236,
+   "paint": "white_upvc",
+   "paint_srgb": [
+    232,
+    231,
+    225
+   ],
+   "paint_roughness": 0.3,
+   "condition": "sound",
+   "switch_on": [
+    "blind__B1",
+    "blind_headrail__B1",
+    "pendant__shade"
+   ],
+   "net_colour": null,
+   "drape": {
+    "kind": "B1",
+    "colour": "white"
+   },
+   "room": "up_bedroom_3",
+   "card": {
+    "room_family": "UP",
+    "w": 2.8,
+    "h": 2.55,
+    "d": 4.2,
+    "camd": 2.8,
+    "side": 1,
+    "centre_x": 41.5,
+    "x_low": 40.1,
+    "y_card_plane": 5.395,
+    "z_bottom_above_crown": 3.75,
+    "z_top_above_crown": 6.3,
+    "card_origin_cm": [
+     4010.0,
+     539.5,
+     375.0
+    ],
+    "room_size_cm": [
+     280.0,
+     255.0,
+     420.0
+    ],
+    "cam_d_cm": 280.0,
+    "window_in_card_m": {
+     "x0": 0.975,
+     "x1": 1.825,
+     "z0": 0.4736,
+     "z1": 2.15
+    },
+    "window_offset_toward_picture_right_m": 0.0,
+    "shared_by": null
+   },
+   "lit_at_20_30": true,
+   "room_card_node": "room__card"
+  },
+  {
+   "id": "east_chandler_bay0_upper_w1",
+   "kind": "RC",
+   "glb": "hw_RC.glb",
+   "street_x_centre": 44.5,
+   "side": 1,
+   "sill_z_above_crown": 4.2236,
+   "paint": "white_upvc",
+   "paint_srgb": [
+    232,
+    231,
+    225
+   ],
+   "paint_roughness": 0.3,
+   "condition": "grimy",
+   "switch_on": [
+    "net__N2",
+    "net_rod__N2",
+    "net_bracket__N2_L",
+    "net_bracket__N2_R"
+   ],
+   "net_colour": "yellowed",
+   "drape": null,
+   "room": "up_landing_2",
+   "card": {
+    "room_family": "UP",
+    "w": 2.8,
+    "h": 2.55,
+    "d": 4.2,
+    "camd": 2.8,
+    "side": 1,
+    "centre_x": 44.5,
+    "x_low": 43.1,
+    "y_card_plane": 5.395,
+    "z_bottom_above_crown": 3.75,
+    "z_top_above_crown": 6.3,
+    "card_origin_cm": [
+     4310.0,
+     539.5,
+     375.0
+    ],
+    "room_size_cm": [
+     280.0,
+     255.0,
+     420.0
+    ],
+    "cam_d_cm": 280.0,
+    "window_in_card_m": {
+     "x0": 0.975,
+     "x1": 1.825,
+     "z0": 0.4736,
+     "z1": 2.15
+    },
+    "window_offset_toward_picture_right_m": 0.0,
+    "shared_by": null
+   },
+   "lit_at_20_30": false,
+   "room_card_node": "room__card"
+  },
+  {
+   "id": "east_parade_bay0_upper_w0",
+   "kind": "S22",
+   "glb": "hw_S22.glb",
+   "street_x_centre": 4.5,
+   "side": 1,
+   "sill_z_above_crown": 4.2236,
+   "paint": "white_grimy",
+   "paint_srgb": [
+    214,
+    212,
+    205
+   ],
+   "paint_roughness": 0.48,
+   "condition": "grimy",
+   "switch_on": [
+    "net__N2",
+    "net_rod__N2",
+    "net_bracket__N2_L",
+    "net_bracket__N2_R"
+   ],
+   "net_colour": "greyed",
+   "drape": null,
+   "room": "up_landing_1",
+   "card": {
+    "room_family": "UP",
+    "w": 2.8,
+    "h": 2.55,
+    "d": 4.2,
+    "camd": 2.8,
+    "side": 1,
+    "centre_x": 4.5,
+    "x_low": 3.1,
+    "y_card_plane": 5.395,
+    "z_bottom_above_crown": 3.75,
+    "z_top_above_crown": 6.3,
+    "card_origin_cm": [
+     310.0,
+     539.5,
+     375.0
+    ],
+    "room_size_cm": [
+     280.0,
+     255.0,
+     420.0
+    ],
+    "cam_d_cm": 280.0,
+    "window_in_card_m": {
+     "x0": 0.975,
+     "x1": 1.825,
+     "z0": 0.4736,
+     "z1": 2.15
+    },
+    "window_offset_toward_picture_right_m": 0.0,
+    "shared_by": null
+   },
+   "lit_at_20_30": false,
+   "room_card_node": "room__card"
+  },
+  {
+   "id": "east_parade_bay0_upper_w1",
+   "kind": "S22",
+   "glb": "hw_S22.glb",
+   "street_x_centre": 7.5,
+   "side": 1,
+   "sill_z_above_crown": 4.2236,
+   "paint": "white_grimy",
+   "paint_srgb": [
+    214,
+    212,
+    205
+   ],
+   "paint_roughness": 0.48,
+   "condition": "grimy",
+   "switch_on": [
+    "net__N1",
+    "net_rod__N1",
+    "net_bracket__N1_L",
+    "net_bracket__N1_R",
+    "curtain__C2_open_L",
+    "curtain__C2_open_R",
+    "curtain_pole",
+    "curtain_finial__L",
+    "curtain_finial__R",
+    "curtain_bracket__L",
+    "curtain_bracket__R",
+    "pendant__shade"
+   ],
+   "net_colour": "white",
+   "drape": {
+    "kind": "C2",
+    "colour": "cream"
+   },
+   "room": "up_lounge_1",
+   "card": {
+    "room_family": "UP",
+    "w": 2.8,
+    "h": 2.55,
+    "d": 4.2,
+    "camd": 2.8,
+    "side": 1,
+    "centre_x": 7.5,
+    "x_low": 6.1,
+    "y_card_plane": 5.395,
+    "z_bottom_above_crown": 3.75,
+    "z_top_above_crown": 6.3,
+    "card_origin_cm": [
+     610.0,
+     539.5,
+     375.0
+    ],
+    "room_size_cm": [
+     280.0,
+     255.0,
+     420.0
+    ],
+    "cam_d_cm": 280.0,
+    "window_in_card_m": {
+     "x0": 0.975,
+     "x1": 1.825,
+     "z0": 0.4736,
+     "z1": 2.15
+    },
+    "window_offset_toward_picture_right_m": 0.0,
+    "shared_by": null
+   },
+   "lit_at_20_30": true,
+   "room_card_node": "room__card"
+  },
+  {
+   "id": "east_parade_bay1_upper_w0",
+   "kind": "S11",
+   "glb": "hw_S11.glb",
+   "street_x_centre": 10.5,
+   "side": 1,
+   "sill_z_above_crown": 4.2236,
+   "paint": "white_fresh",
+   "paint_srgb": [
+    234,
+    233,
+    229
+   ],
+   "paint_roughness": 0.42,
+   "condition": "sound",
+   "switch_on": [
+    "blind__B2",
+    "blind_roller__B2"
+   ],
+   "net_colour": null,
+   "drape": {
+    "kind": "B2",
+    "colour": "cream"
+   },
+   "room": "up_landing_2",
+   "card": {
+    "room_family": "UP",
+    "w": 2.8,
+    "h": 2.55,
+    "d": 4.2,
+    "camd": 2.8,
+    "side": 1,
+    "centre_x": 10.5,
+    "x_low": 9.1,
+    "y_card_plane": 5.395,
+    "z_bottom_above_crown": 3.75,
+    "z_top_above_crown": 6.3,
+    "card_origin_cm": [
+     910.0,
+     539.5,
+     375.0
+    ],
+    "room_size_cm": [
+     280.0,
+     255.0,
+     420.0
+    ],
+    "cam_d_cm": 280.0,
+    "window_in_card_m": {
+     "x0": 0.975,
+     "x1": 1.825,
+     "z0": 0.4736,
+     "z1": 2.15
+    },
+    "window_offset_toward_picture_right_m": 0.0,
+    "shared_by": null
+   },
+   "lit_at_20_30": false,
+   "room_card_node": "room__card"
+  },
+  {
+   "id": "east_parade_bay1_upper_w1",
+   "kind": "S11",
+   "glb": "hw_S11.glb",
+   "street_x_centre": 13.5,
+   "side": 1,
+   "sill_z_above_crown": 4.2236,
+   "paint": "white_fresh",
+   "paint_srgb": [
+    234,
+    233,
+    229
+   ],
+   "paint_roughness": 0.42,
+   "condition": "sound",
+   "switch_on": [
+    "net__N1",
+    "net_rod__N1",
+    "net_bracket__N1_L",
+    "net_bracket__N1_R",
+    "curtain__C2_open_L",
+    "curtain__C2_open_R",
+    "curtain_pole",
+    "curtain_finial__L",
+    "curtain_finial__R",
+    "curtain_bracket__L",
+    "curtain_bracket__R",
+    "pendant__shade"
+   ],
+   "net_colour": "white",
+   "drape": {
+    "kind": "C2",
+    "colour": "brown"
+   },
+   "room": "up_bedroom_1",
+   "card": {
+    "room_family": "UP",
+    "w": 2.8,
+    "h": 2.55,
+    "d": 4.2,
+    "camd": 2.8,
+    "side": 1,
+    "centre_x": 13.5,
+    "x_low": 12.1,
+    "y_card_plane": 5.395,
+    "z_bottom_above_crown": 3.75,
+    "z_top_above_crown": 6.3,
+    "card_origin_cm": [
+     1210.0,
+     539.5,
+     375.0
+    ],
+    "room_size_cm": [
+     280.0,
+     255.0,
+     420.0
+    ],
+    "cam_d_cm": 280.0,
+    "window_in_card_m": {
+     "x0": 0.975,
+     "x1": 1.825,
+     "z0": 0.4736,
+     "z1": 2.15
+    },
+    "window_offset_toward_picture_right_m": 0.0,
+    "shared_by": null
+   },
+   "lit_at_20_30": false,
+   "room_card_node": "room__card"
+  },
+  {
+   "id": "east_parade_bay2_upper_w0",
+   "kind": "RC",
+   "glb": "hw_RC.glb",
+   "street_x_centre": 16.5,
+   "side": 1,
+   "sill_z_above_crown": 4.2236,
+   "paint": "white_upvc",
+   "paint_srgb": [
+    232,
+    231,
+    225
+   ],
+   "paint_roughness": 0.3,
+   "condition": "sound",
+   "switch_on": [
+    "net__N1",
+    "net_rod__N1",
+    "net_bracket__N1_L",
+    "net_bracket__N1_R",
+    "curtain__C2_open_L",
+    "curtain__C2_open_R",
+    "curtain_pole",
+    "curtain_finial__L",
+    "curtain_finial__R",
+    "curtain_bracket__L",
+    "curtain_bracket__R",
+    "pendant__shade"
+   ],
+   "net_colour": "greyed",
+   "drape": {
+    "kind": "C2",
+    "colour": "green"
+   },
+   "room": "up_lounge_2",
+   "card": {
+    "room_family": "UP",
+    "w": 2.8,
+    "h": 2.55,
+    "d": 4.2,
+    "camd": 2.8,
+    "side": 1,
+    "centre_x": 16.5,
+    "x_low": 15.1,
+    "y_card_plane": 5.395,
+    "z_bottom_above_crown": 3.75,
+    "z_top_above_crown": 6.3,
+    "card_origin_cm": [
+     1510.0,
+     539.5,
+     375.0
+    ],
+    "room_size_cm": [
+     280.0,
+     255.0,
+     420.0
+    ],
+    "cam_d_cm": 280.0,
+    "window_in_card_m": {
+     "x0": 0.975,
+     "x1": 1.825,
+     "z0": 0.4736,
+     "z1": 2.15
+    },
+    "window_offset_toward_picture_right_m": 0.0,
+    "shared_by": null
+   },
+   "lit_at_20_30": true,
+   "room_card_node": "room__card"
+  },
+  {
+   "id": "east_parade_bay2_upper_w1",
+   "kind": "RC",
+   "glb": "hw_RC.glb",
+   "street_x_centre": 19.5,
+   "side": 1,
+   "sill_z_above_crown": 4.2236,
+   "paint": "white_upvc",
+   "paint_srgb": [
+    232,
+    231,
+    225
+   ],
+   "paint_roughness": 0.3,
+   "condition": "sound",
+   "switch_on": [
+    "net__N2",
+    "net_rod__N2",
+    "net_bracket__N2_L",
+    "net_bracket__N2_R"
+   ],
+   "net_colour": "greyed",
+   "drape": null,
+   "room": "up_landing_1",
+   "card": {
+    "room_family": "UP",
+    "w": 2.8,
+    "h": 2.55,
+    "d": 4.2,
+    "camd": 2.8,
+    "side": 1,
+    "centre_x": 19.5,
+    "x_low": 18.1,
+    "y_card_plane": 5.395,
+    "z_bottom_above_crown": 3.75,
+    "z_top_above_crown": 6.3,
+    "card_origin_cm": [
+     1810.0,
+     539.5,
+     375.0
+    ],
+    "room_size_cm": [
+     280.0,
+     255.0,
+     420.0
+    ],
+    "cam_d_cm": 280.0,
+    "window_in_card_m": {
+     "x0": 0.975,
+     "x1": 1.825,
+     "z0": 0.4736,
+     "z1": 2.15
+    },
+    "window_offset_toward_picture_right_m": 0.0,
+    "shared_by": null
+   },
+   "lit_at_20_30": false,
+   "room_card_node": "room__card"
+  },
+  {
+   "id": "east_parade_bay3_upper_w0",
+   "kind": "S22",
+   "glb": "hw_S22.glb",
+   "street_x_centre": 22.5,
+   "side": 1,
+   "sill_z_above_crown": 4.2236,
+   "paint": "white_flaking",
+   "paint_srgb": [
+    205,
+    202,
+    192
+   ],
+   "paint_roughness": 0.55,
+   "condition": "flaking",
+   "switch_on": [
+    "net__N1_torn",
+    "net_rod__N1",
+    "net_bracket__N1_L",
+    "net_bracket__N1_R"
+   ],
+   "net_colour": "yellowed",
+   "drape": null,
+   "room": "up_empty_1",
+   "card": {
+    "room_family": "UP",
+    "w": 2.8,
+    "h": 2.55,
+    "d": 4.2,
+    "camd": 2.8,
+    "side": 1,
+    "centre_x": 22.5,
+    "x_low": 21.1,
+    "y_card_plane": 5.395,
+    "z_bottom_above_crown": 3.75,
+    "z_top_above_crown": 6.3,
+    "card_origin_cm": [
+     2110.0,
+     539.5,
+     375.0
+    ],
+    "room_size_cm": [
+     280.0,
+     255.0,
+     420.0
+    ],
+    "cam_d_cm": 280.0,
+    "window_in_card_m": {
+     "x0": 0.975,
+     "x1": 1.825,
+     "z0": 0.4736,
+     "z1": 2.15
+    },
+    "window_offset_toward_picture_right_m": 0.0,
+    "shared_by": null
+   },
+   "lit_at_20_30": false,
+   "room_card_node": "room__card"
+  },
+  {
+   "id": "east_parade_bay3_upper_w1",
+   "kind": "S22",
+   "glb": "hw_S22.glb",
+   "street_x_centre": 25.5,
+   "side": 1,
+   "sill_z_above_crown": 4.2236,
+   "paint": "white_flaking",
+   "paint_srgb": [
+    205,
+    202,
+    192
+   ],
+   "paint_roughness": 0.55,
+   "condition": "flaking",
+   "switch_on": [],
+   "net_colour": null,
+   "drape": null,
+   "room": "up_empty_2",
+   "card": {
+    "room_family": "UP",
+    "w": 2.8,
+    "h": 2.55,
+    "d": 4.2,
+    "camd": 2.8,
+    "side": 1,
+    "centre_x": 25.5,
+    "x_low": 24.1,
+    "y_card_plane": 5.395,
+    "z_bottom_above_crown": 3.75,
+    "z_top_above_crown": 6.3,
+    "card_origin_cm": [
+     2410.0,
+     539.5,
+     375.0
+    ],
+    "room_size_cm": [
+     280.0,
+     255.0,
+     420.0
+    ],
+    "cam_d_cm": 280.0,
+    "window_in_card_m": {
+     "x0": 0.975,
+     "x1": 1.825,
+     "z0": 0.4736,
+     "z1": 2.15
+    },
+    "window_offset_toward_picture_right_m": 0.0,
+    "shared_by": null
+   },
+   "lit_at_20_30": false,
+   "room_card_node": "room__card"
+  },
+  {
+   "id": "east_parade_bay4_upper_w0",
+   "kind": "RC2",
+   "glb": "hw_RC2.glb",
+   "street_x_centre": 28.5,
+   "side": 1,
+   "sill_z_above_crown": 4.2236,
+   "paint": "white_upvc",
+   "paint_srgb": [
+    232,
+    231,
+    225
+   ],
+   "paint_roughness": 0.3,
+   "condition": "sound",
+   "switch_on": [
+    "net__N2",
+    "net_rod__N2",
+    "net_bracket__N2_L",
+    "net_bracket__N2_R",
+    "curtain__C1_drawn",
+    "curtain_pole",
+    "curtain_finial__L",
+    "curtain_finial__R",
+    "curtain_bracket__L",
+    "curtain_bracket__R",
+    "pendant__shade"
+   ],
+   "net_colour": "white",
+   "drape": {
+    "kind": "C1",
+    "colour": "green"
+   },
+   "room": "up_bedroom_2",
+   "card": {
+    "room_family": "UP",
+    "w": 2.8,
+    "h": 2.55,
+    "d": 4.2,
+    "camd": 2.8,
+    "side": 1,
+    "centre_x": 28.5,
+    "x_low": 27.1,
+    "y_card_plane": 5.395,
+    "z_bottom_above_crown": 3.75,
+    "z_top_above_crown": 6.3,
+    "card_origin_cm": [
+     2710.0,
+     539.5,
+     375.0
+    ],
+    "room_size_cm": [
+     280.0,
+     255.0,
+     420.0
+    ],
+    "cam_d_cm": 280.0,
+    "window_in_card_m": {
+     "x0": 0.975,
+     "x1": 1.825,
+     "z0": 0.4736,
+     "z1": 2.15
+    },
+    "window_offset_toward_picture_right_m": 0.0,
+    "shared_by": null
+   },
+   "lit_at_20_30": false,
+   "room_card_node": "room__card"
+  },
+  {
+   "id": "east_parade_bay4_upper_w1",
+   "kind": "RC2",
+   "glb": "hw_RC2.glb",
+   "street_x_centre": 31.5,
+   "side": 1,
+   "sill_z_above_crown": 4.2236,
+   "paint": "white_upvc",
+   "paint_srgb": [
+    232,
+    231,
+    225
+   ],
+   "paint_roughness": 0.3,
+   "condition": "grimy",
+   "switch_on": [
+    "net__N1",
+    "net_rod__N1",
+    "net_bracket__N1_L",
+    "net_bracket__N1_R"
+   ],
+   "net_colour": "yellowed",
+   "drape": null,
+   "room": "up_landing_2",
+   "card": {
+    "room_family": "UP",
+    "w": 2.8,
+    "h": 2.55,
+    "d": 4.2,
+    "camd": 2.8,
+    "side": 1,
+    "centre_x": 31.5,
+    "x_low": 30.1,
+    "y_card_plane": 5.395,
+    "z_bottom_above_crown": 3.75,
+    "z_top_above_crown": 6.3,
+    "card_origin_cm": [
+     3010.0,
+     539.5,
+     375.0
+    ],
+    "room_size_cm": [
+     280.0,
+     255.0,
+     420.0
+    ],
+    "cam_d_cm": 280.0,
+    "window_in_card_m": {
+     "x0": 0.975,
+     "x1": 1.825,
+     "z0": 0.4736,
+     "z1": 2.15
+    },
+    "window_offset_toward_picture_right_m": 0.0,
+    "shared_by": null
+   },
+   "lit_at_20_30": false,
+   "room_card_node": "room__card"
+  },
+  {
+   "id": "east_parade_bay5_upper_w0",
+   "kind": "S11",
+   "glb": "hw_S11.glb",
+   "street_x_centre": 34.5,
+   "side": 1,
+   "sill_z_above_crown": 4.2236,
+   "paint": "white_grimy",
+   "paint_srgb": [
+    214,
+    212,
+    205
+   ],
+   "paint_roughness": 0.48,
+   "condition": "sound",
+   "switch_on": [
+    "net__N1",
+    "net_rod__N1",
+    "net_bracket__N1_L",
+    "net_bracket__N1_R",
+    "curtain__C2_open_L",
+    "curtain__C2_open_R",
+    "curtain_pole",
+    "curtain_finial__L",
+    "curtain_finial__R",
+    "curtain_bracket__L",
+    "curtain_bracket__R",
+    "pendant__shade"
+   ],
+   "net_colour": "white",
+   "drape": {
+    "kind": "C2",
+    "colour": "floral_cream"
+   },
+   "room": "up_lounge_3",
+   "card": {
+    "room_family": "UP",
+    "w": 2.8,
+    "h": 2.55,
+    "d": 4.2,
+    "camd": 2.8,
+    "side": 1,
+    "centre_x": 34.5,
+    "x_low": 33.1,
+    "y_card_plane": 5.395,
+    "z_bottom_above_crown": 3.75,
+    "z_top_above_crown": 6.3,
+    "card_origin_cm": [
+     3310.0,
+     539.5,
+     375.0
+    ],
+    "room_size_cm": [
+     280.0,
+     255.0,
+     420.0
+    ],
+    "cam_d_cm": 280.0,
+    "window_in_card_m": {
+     "x0": 0.975,
+     "x1": 1.825,
+     "z0": 0.4736,
+     "z1": 2.15
+    },
+    "window_offset_toward_picture_right_m": 0.0,
+    "shared_by": null
+   },
+   "lit_at_20_30": true,
+   "room_card_node": "room__card"
+  },
+  {
+   "id": "east_parade_bay5_upper_w1",
+   "kind": "S11",
+   "glb": "hw_S11.glb",
+   "street_x_centre": 37.5,
+   "side": 1,
+   "sill_z_above_crown": 4.2236,
+   "paint": "white_grimy",
+   "paint_srgb": [
+    214,
+    212,
+    205
+   ],
+   "paint_roughness": 0.48,
+   "condition": "sound",
+   "switch_on": [
+    "net__N3",
+    "net_rod__N3",
+    "net_bracket__N3_L",
+    "net_bracket__N3_R"
+   ],
+   "net_colour": "white",
+   "drape": null,
+   "room": "up_landing_1",
+   "card": {
+    "room_family": "UP",
+    "w": 2.8,
+    "h": 2.55,
+    "d": 4.2,
+    "camd": 2.8,
+    "side": 1,
+    "centre_x": 37.5,
+    "x_low": 36.1,
+    "y_card_plane": 5.395,
+    "z_bottom_above_crown": 3.75,
+    "z_top_above_crown": 6.3,
+    "card_origin_cm": [
+     3610.0,
+     539.5,
+     375.0
+    ],
+    "room_size_cm": [
+     280.0,
+     255.0,
+     420.0
+    ],
+    "cam_d_cm": 280.0,
+    "window_in_card_m": {
+     "x0": 0.975,
+     "x1": 1.825,
+     "z0": 0.4736,
+     "z1": 2.15
+    },
+    "window_offset_toward_picture_right_m": 0.0,
+    "shared_by": null
+   },
+   "lit_at_20_30": false,
+   "room_card_node": "room__card"
+  },
+  {
+   "id": "west_south_bay0_gf_w0",
+   "kind": "S11",
+   "glb": "hw_S11.glb",
+   "street_x_centre": 17.7,
+   "side": -1,
+   "sill_z_above_crown": 0.8236,
+   "paint": "white_grimy",
+   "paint_srgb": [
+    214,
+    212,
+    205
+   ],
+   "paint_roughness": 0.48,
+   "condition": "grimy",
+   "switch_on": [
+    "net__N1",
+    "net_rod__N1",
+    "net_bracket__N1_L",
+    "net_bracket__N1_R"
+   ],
+   "net_colour": "white",
+   "drape": null,
+   "room": "gf_front_1",
+   "card": {
+    "room_family": "GF",
+    "w": 3.4,
+    "h": 2.6,
+    "d": 4.2,
+    "camd": 3.4,
+    "side": -1,
+    "centre_x": 16.8,
+    "x_low": 15.1,
+    "y_card_plane": -5.395,
+    "z_bottom_above_crown": 0.45,
+    "z_top_above_crown": 3.05,
+    "card_origin_cm": [
+     1510.0,
+     -539.5,
+     45.0
+    ],
+    "room_size_cm": [
+     340.0,
+     260.0,
+     420.0
+    ],
+    "cam_d_cm": 340.0,
+    "window_in_card_m": {
+     "x0": 2.175,
+     "x1": 3.025,
+     "z0": 0.3736,
+     "z1": 2.05
+    },
+    "window_offset_toward_picture_right_m": 0.9,
+    "shared_by": [
+     "west_south_bay0_gf_w0",
+     "west_south_bay0_gf_w1"
+    ]
+   },
+   "lit_at_20_30": false,
+   "room_card_node": "hw_room_card_gf.glb"
+  },
+  {
+   "id": "west_south_bay0_gf_w1",
+   "kind": "S11",
+   "glb": "hw_S11.glb",
+   "street_x_centre": 15.9,
+   "side": -1,
+   "sill_z_above_crown": 0.8236,
+   "paint": "white_grimy",
+   "paint_srgb": [
+    214,
+    212,
+    205
+   ],
+   "paint_roughness": 0.48,
+   "condition": "grimy",
+   "switch_on": [
+    "net__N1",
+    "net_rod__N1",
+    "net_bracket__N1_L",
+    "net_bracket__N1_R"
+   ],
+   "net_colour": "white",
+   "drape": null,
+   "room": "gf_front_1",
+   "card": {
+    "room_family": "GF",
+    "w": 3.4,
+    "h": 2.6,
+    "d": 4.2,
+    "camd": 3.4,
+    "side": -1,
+    "centre_x": 16.8,
+    "x_low": 15.1,
+    "y_card_plane": -5.395,
+    "z_bottom_above_crown": 0.45,
+    "z_top_above_crown": 3.05,
+    "card_origin_cm": [
+     1510.0,
+     -539.5,
+     45.0
+    ],
+    "room_size_cm": [
+     340.0,
+     260.0,
+     420.0
+    ],
+    "cam_d_cm": 340.0,
+    "window_in_card_m": {
+     "x0": 0.375,
+     "x1": 1.225,
+     "z0": 0.3736,
+     "z1": 2.05
+    },
+    "window_offset_toward_picture_right_m": -0.9,
+    "shared_by": [
+     "west_south_bay0_gf_w0",
+     "west_south_bay0_gf_w1"
+    ]
+   },
+   "lit_at_20_30": false,
+   "room_card_node": "hw_room_card_gf.glb"
+  },
+  {
+   "id": "west_south_bay1_gf_w0",
+   "kind": "RC",
+   "glb": "hw_RC.glb",
+   "street_x_centre": 11.7,
+   "side": -1,
+   "sill_z_above_crown": 0.8236,
+   "paint": "white_upvc",
+   "paint_srgb": [
+    232,
+    231,
+    225
+   ],
+   "paint_roughness": 0.3,
+   "condition": "sound",
+   "switch_on": [
+    "net__N2",
+    "net_rod__N2",
+    "net_bracket__N2_L",
+    "net_bracket__N2_R"
+   ],
+   "net_colour": "white",
+   "drape": null,
+   "room": "gf_front_2",
+   "card": {
+    "room_family": "GF",
+    "w": 3.4,
+    "h": 2.6,
+    "d": 4.2,
+    "camd": 3.4,
+    "side": -1,
+    "centre_x": 10.8,
+    "x_low": 9.1,
+    "y_card_plane": -5.395,
+    "z_bottom_above_crown": 0.45,
+    "z_top_above_crown": 3.05,
+    "card_origin_cm": [
+     910.0,
+     -539.5,
+     45.0
+    ],
+    "room_size_cm": [
+     340.0,
+     260.0,
+     420.0
+    ],
+    "cam_d_cm": 340.0,
+    "window_in_card_m": {
+     "x0": 2.175,
+     "x1": 3.025,
+     "z0": 0.3736,
+     "z1": 2.05
+    },
+    "window_offset_toward_picture_right_m": 0.9,
+    "shared_by": [
+     "west_south_bay1_gf_w0",
+     "west_south_bay1_gf_w1"
+    ]
+   },
+   "lit_at_20_30": false,
+   "room_card_node": "hw_room_card_gf.glb"
+  },
+  {
+   "id": "west_south_bay1_gf_w1",
+   "kind": "RC",
+   "glb": "hw_RC.glb",
+   "street_x_centre": 9.9,
+   "side": -1,
+   "sill_z_above_crown": 0.8236,
+   "paint": "white_upvc",
+   "paint_srgb": [
+    232,
+    231,
+    225
+   ],
+   "paint_roughness": 0.3,
+   "condition": "sound",
+   "switch_on": [
+    "curtain__C1_drawn",
+    "curtain_pole",
+    "curtain_finial__L",
+    "curtain_finial__R",
+    "curtain_bracket__L",
+    "curtain_bracket__R"
+   ],
+   "net_colour": null,
+   "drape": {
+    "kind": "C1",
+    "colour": "brown"
+   },
+   "room": "gf_front_2",
+   "card": {
+    "room_family": "GF",
+    "w": 3.4,
+    "h": 2.6,
+    "d": 4.2,
+    "camd": 3.4,
+    "side": -1,
+    "centre_x": 10.8,
+    "x_low": 9.1,
+    "y_card_plane": -5.395,
+    "z_bottom_above_crown": 0.45,
+    "z_top_above_crown": 3.05,
+    "card_origin_cm": [
+     910.0,
+     -539.5,
+     45.0
+    ],
+    "room_size_cm": [
+     340.0,
+     260.0,
+     420.0
+    ],
+    "cam_d_cm": 340.0,
+    "window_in_card_m": {
+     "x0": 0.375,
+     "x1": 1.225,
+     "z0": 0.3736,
+     "z1": 2.05
+    },
+    "window_offset_toward_picture_right_m": -0.9,
+    "shared_by": [
+     "west_south_bay1_gf_w0",
+     "west_south_bay1_gf_w1"
+    ]
+   },
+   "lit_at_20_30": true,
+   "room_card_node": "hw_room_card_gf.glb"
+  },
+  {
+   "id": "west_south_bay2_gf_w0",
+   "kind": "S22",
+   "glb": "hw_S22.glb",
+   "street_x_centre": 6.3,
+   "side": -1,
+   "sill_z_above_crown": 0.8236,
+   "paint": "white_fresh",
+   "paint_srgb": [
+    234,
+    233,
+    229
+   ],
+   "paint_roughness": 0.42,
+   "condition": "sound",
+   "switch_on": [
+    "net__N1",
+    "net_rod__N1",
+    "net_bracket__N1_L",
+    "net_bracket__N1_R"
+   ],
+   "net_colour": "white",
+   "drape": null,
+   "room": "gf_front_3",
+   "card": {
+    "room_family": "GF",
+    "w": 3.4,
+    "h": 2.6,
+    "d": 4.2,
+    "camd": 3.4,
+    "side": -1,
+    "centre_x": 7.2,
+    "x_low": 5.5,
+    "y_card_plane": -5.395,
+    "z_bottom_above_crown": 0.45,
+    "z_top_above_crown": 3.05,
+    "card_origin_cm": [
+     550.0,
+     -539.5,
+     45.0
+    ],
+    "room_size_cm": [
+     340.0,
+     260.0,
+     420.0
+    ],
+    "cam_d_cm": 340.0,
+    "window_in_card_m": {
+     "x0": 0.375,
+     "x1": 1.225,
+     "z0": 0.3736,
+     "z1": 2.05
+    },
+    "window_offset_toward_picture_right_m": -0.9,
+    "shared_by": [
+     "west_south_bay2_gf_w0",
+     "west_south_bay2_gf_w1"
+    ]
+   },
+   "lit_at_20_30": true,
+   "room_card_node": "hw_room_card_gf.glb"
+  },
+  {
+   "id": "west_south_bay2_gf_w1",
+   "kind": "S22",
+   "glb": "hw_S22.glb",
+   "street_x_centre": 8.1,
+   "side": -1,
+   "sill_z_above_crown": 0.8236,
+   "paint": "white_fresh",
+   "paint_srgb": [
+    234,
+    233,
+    229
+   ],
+   "paint_roughness": 0.42,
+   "condition": "sound",
+   "switch_on": [
+    "net__N1",
+    "net_rod__N1",
+    "net_bracket__N1_L",
+    "net_bracket__N1_R",
+    "blind__B3",
+    "blind_headrail__B3"
+   ],
+   "net_colour": "white",
+   "drape": {
+    "kind": "B3",
+    "colour": "white"
+   },
+   "room": "gf_front_3",
+   "card": {
+    "room_family": "GF",
+    "w": 3.4,
+    "h": 2.6,
+    "d": 4.2,
+    "camd": 3.4,
+    "side": -1,
+    "centre_x": 7.2,
+    "x_low": 5.5,
+    "y_card_plane": -5.395,
+    "z_bottom_above_crown": 0.45,
+    "z_top_above_crown": 3.05,
+    "card_origin_cm": [
+     550.0,
+     -539.5,
+     45.0
+    ],
+    "room_size_cm": [
+     340.0,
+     260.0,
+     420.0
+    ],
+    "cam_d_cm": 340.0,
+    "window_in_card_m": {
+     "x0": 2.175,
+     "x1": 3.025,
+     "z0": 0.3736,
+     "z1": 2.05
+    },
+    "window_offset_toward_picture_right_m": 0.9,
+    "shared_by": [
+     "west_south_bay2_gf_w0",
+     "west_south_bay2_gf_w1"
+    ]
+   },
+   "lit_at_20_30": true,
+   "room_card_node": "hw_room_card_gf.glb"
+  }
+ ]
+}

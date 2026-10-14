@@ -8,6 +8,7 @@ a wire line under it.
 Textures are packed in three atlases (net_voile, curtain, blind) so that each material is one image set; the card's UVs say which part of the atlas it takes. The sizes keep a kit glb under 400 KB.
 All maps are written as PNG (base colour with alpha) and JPEG (the normal map: a real RGB tangent-space normal map, blue about 0.9).
 """
+import json
 import os
 
 import numpy as np
@@ -25,16 +26,20 @@ def pleats(width_mm, npx, pitch_rng, depth_rng, rng, shear=0.0):
         b.append(b[-1] + rng.uniform(*pitch_rng))
     h = np.zeros(npx)
     idx = np.zeros(npx, int)
+    pitches, depths = [], []
     for i in range(len(b) - 1):
         m = (xs >= b[i]) & (xs < b[i + 1])
         if not m.any():
             continue
         t = (xs[m] - b[i]) / (b[i + 1] - b[i])
         d = rng.uniform(*depth_rng)
+        pitches.append(b[i + 1] - b[i])
+        depths.append(d)
         skew = rng.uniform(-0.28, 0.28)
         tt = t + skew * np.sin(2 * np.pi * t) / (2 * np.pi) * 2.0
         h[m] = d * 0.5 * (1 - np.cos(2 * np.pi * np.clip(tt, 0, 1)))
         idx[m] = i
+    pleats.last = {"pitch_min": float(min(pitches)), "pitch_max": float(max(pitches)), "pitch_std": float(np.std(pitches)), "depth_std": float(np.std(depths)), "n": len(pitches)}
     return h, idx
 
 
@@ -58,6 +63,7 @@ def net_card(kind, width_mm, height_mm, seed, lace_share, torn=False):
     nx = int(round(width_mm / NET_MM_PER_PX))
     nz = int(round(height_mm / NET_MM_PER_PX))
     h1, idx = pleats(width_mm, nx, (30.0, 70.0), (7.0, 14.0), rng)
+    fold_stats = dict(pleats.last, rng=[30.0, 70.0])
     # the pleats run down the net, a little askew and deeper toward the hem (a net hangs from its gathers and spreads at the foot)
     zz = (np.arange(nz) + 0.5) / nz
     X = np.arange(nx)[None, :].repeat(nz, 0).astype(float)
@@ -120,7 +126,7 @@ def net_card(kind, width_mm, height_mm, seed, lace_share, torn=False):
     nrm = normal_map(h, NET_MM_PER_PX, NET_MM_PER_PX, 0.5)
     g = np.clip(bright, 0, 1)
     rgba = np.stack([g, g, g, alpha], axis=-1)
-    return rgba, nrm, {"mean_alpha": float(alpha[head_px + 1:nz - band if band else nz].mean()), "mean_alpha_lace": float(alpha[nz - band:].mean()) if band else None,
+    return rgba, nrm, {"fold": fold_stats, "mean_alpha": float(alpha[head_px + 1:nz - band if band else nz].mean()), "mean_alpha_lace": float(alpha[nz - band:].mean()) if band else None,
                       "pitches_mm": [30.0, 70.0], "size_px": [nx, nz]}
 
 
@@ -131,6 +137,7 @@ def curtain_card(width_mm, height_mm, seed, pelmet_mm=60.0):
     nx = int(round(width_mm / 5.0))
     nz = 96
     h1, idx = pleats(width_mm, nx, (55.0, 95.0), (12.0, 28.0), rng)
+    fold_stats = dict(pleats.last, rng=[55.0, 95.0])
     zz = (np.arange(nz) + 0.5) / nz
     h = np.empty((nz, nx))
     for j in range(nz):
@@ -149,7 +156,7 @@ def curtain_card(width_mm, height_mm, seed, pelmet_mm=60.0):
     bright = _blur(np.clip(bright, 0.3, 1.2) / 1.2, 0.4)
     nrm = normal_map(h, 5.0, height_mm / nz, 0.45)
     g = np.clip(bright, 0, 1)
-    return np.stack([g, g, g, np.clip(alpha, 0, 1)], axis=-1), nrm, {"size_px": [nx, nz], "pitches_mm": [55.0, 95.0]}
+    return np.stack([g, g, g, np.clip(alpha, 0, 1)], axis=-1), nrm, {"fold": fold_stats, "size_px": [nx, nz], "pitches_mm": [55.0, 95.0]}
 
 
 def blind_b1(width_mm=800.0, height_mm=990.0, seed=4):
@@ -260,6 +267,7 @@ def build_all(out_dir, seed0=20):
     out["blind"] = {"rects": rects}
     out["stats"] = stats
     out["dir"] = out_dir
+    json.dump({k: dict(v["fold"]) for k, v in stats.items()}, open(os.path.join(out_dir, "stats.json"), "w"), indent=1)
     return out
 
 

@@ -1,0 +1,399 @@
+{
+ "made": "2026-10-14 04:12:38",
+ "pass": 35,
+ "total": 60,
+ "fail": [
+  "KIT-10",
+  "MAT-04",
+  "NIGHT-04",
+  "PIC-01",
+  "PIC-04",
+  "SITE-02",
+  "CONTENT-01",
+  "KIT-17"
+ ],
+ "not_run": [
+  "WB-01",
+  "WB-02",
+  "WB-03",
+  "WB-04",
+  "WB-04b",
+  "WB-05",
+  "WB-06",
+  "WB-07",
+  "WB-08",
+  "WB-09",
+  "NIGHT-01",
+  "NIGHT-02",
+  "NIGHT-03",
+  "GLS-04",
+  "GLS-05",
+  "FRM-01",
+  "PRV-01"
+ ],
+ "target_rows": 47,
+ "rows": [
+  {
+   "id": "KIT-01",
+   "name": "the opening",
+   "status": "pass",
+   "detail": "S22 850.00 x 1676.40; S11 850.00 x 1676.40; RC 850.00 x 1676.40; RC2 850.00 x 1676.40 (S22/S11: the outer linings' inner faces 764.2 apart + 2 x the lab's 42.9 margin = the brick opening; head outer lining top to oak sill underside)"
+  },
+  {
+   "id": "KIT-02",
+   "name": "pivot",
+   "status": "pass",
+   "detail": "S22 x centre 0.00, z min 0.00, y min 108.3; S11 x centre 0.00, z min 0.00, y min 108.3; RC x centre 0.00, z min 0.00, y min 72.5; RC2 x centre 0.00, z min 0.00, y min 72.5 (room__card excluded: the target puts it 473.6 below the opening's bottom)"
+  },
+  {
+   "id": "KIT-03",
+   "name": "glass planes",
+   "status": "pass",
+   "detail": "S22 lower_L 189.6; S22 lower_R 189.6; S22 upper_L 142.0; S22 upper_R 142.0; S11 lower 189.6; S11 upper 142.0; RC lower 112.5; RC top 112.5; RC2 casement 112.5; RC2 fixed 112.5; RC2 top 112.5"
+  },
+  {
+   "id": "KIT-04",
+   "name": "one mesh a pane",
+   "status": "pass",
+   "detail": "panes {'S22': 4, 'S11': 2, 'RC': 2, 'RC2': 3}"
+  },
+  {
+   "id": "KIT-05",
+   "name": "pane tilt",
+   "status": "pass",
+   "detail": "S22 pitch [-0.18, -0.07, 0.24, 0.28] yaw [-0.18, 0.28, 0.37, -0.19]; S11 pitch [0.11, -0.27] yaw [-0.48, 0.2]; RC pitch [0.12, -0.24] yaw [0.45, -0.18]; RC2 pitch [-0.27, -0.11, 0.2] yaw [-0.14, 0.22, 0.2]"
+  },
+  {
+   "id": "KIT-06",
+   "name": "net cards",
+   "status": "pass",
+   "detail": "S22 N1 ok; S22 N2 ok; S22 N3 ok; S11 N1 ok; S11 N2 ok; S11 N3 ok; RC N1 ok; RC N2 ok; RC N3 ok; RC2 N1 ok; RC2 N2 ok; RC2 N3 ok"
+  },
+  {
+   "id": "KIT-07",
+   "name": "net inside the box",
+   "status": "pass",
+   "detail": "S22 plane 254 - lower pane front 190.0 = 64.0 mm (rear face 192.1: 61.9); S22 crossings none; S11 plane 254 - lower pane front 190.0 = 64.0 mm (rear face 192.1: 61.9); S11 crossings none; RC crossings none; RC2 crossings none"
+  },
+  {
+   "id": "KIT-08",
+   "name": "the room card",
+   "status": "pass",
+   "detail": "S22 ok; S11 ok; RC ok; RC2 ok; GF card ok (3.4 x 2.6, floor 373.6 below, ceiling 2226.4 above) (the baked picture's UV 0..1, the card's world origin from sites[].card in the manifest)"
+  },
+  {
+   "id": "KIT-09",
+   "name": "vertex colour on the joinery",
+   "status": "pass",
+   "detail": "S22: rules hold; corner vertices 1095, track 276, meeting rail 6 | S11: rules hold; corner vertices 1095, track 276, meeting rail 6 | RC: rules hold; corner vertices 72, track 0, meeting rail 0 | RC2: rules hold; corner vertices 96, track 0, meeting rail 0"
+  },
+  {
+   "id": "KIT-10",
+   "name": "the dark lines are wide enough",
+   "status": "fail",
+   "detail": "S22 lines under 6 mm: none; S11 lines under 6 mm: none; RC lines under 6 mm: [('paint_joinery__gasket_top_t', np.float64(6.0))]; RC2 lines under 6 mm: none (putty strips 6.4 to 9.5, the gasket and weld strips 6.0; the parting bead's 2 mm gap stays geometry, its shade 0.10 on the bead's 9.5 mm side faces)"
+  },
+  {
+   "id": "KIT-11",
+   "name": "budget",
+   "status": "pass",
+   "detail": "S22 3948 tris 359000 bytes; S11 3618 tris 330244 bytes; RC 1458 tris 238132 bytes; RC2 1706 tris 259924 bytes; GF 72 tris 4308 bytes"
+  },
+  {
+   "id": "KIT-12",
+   "name": "RC and RC2 parts",
+   "status": "pass",
+   "detail": "RC 11 parts; RC2 13 parts"
+  },
+  {
+   "id": "KIT-13",
+   "name": "paint and material names",
+   "status": "pass",
+   "detail": "material names on every node of the four kits: all in the target's list (paint_<name>, glass_house, net_voile, curtain, blind, pendant_shade, room_card)"
+  },
+  {
+   "id": "KIT-14",
+   "name": "equal lights, centred bars",
+   "status": "pass",
+   "detail": "S22 pane widths [352.6, 352.6, 352.6, 352.6], bar centres off by 0.00; S11 two panes equal; RC centres [np.float64(0.0), np.float64(0.02), np.float64(0.01)] transom 1207.0 (1207.0); RC2 lower openings 330.0 and 330.0, transom centre 1106.4 (1106.4), mullion 70 wide z 60.0 to 1071.4"
+  },
+  {
+   "id": "KIT-15",
+   "name": "no opening in the front",
+   "status": "pass",
+   "detail": "S22 largest uncovered square 0 mm; S11 largest uncovered square 0 mm; RC largest uncovered square 3 mm; RC2 largest uncovered square 3 mm (the opening 850 x 1676.4 rasterised at 1 mm from the glb's triangles)"
+  },
+  {
+   "id": "MAT-01",
+   "name": "the pane material",
+   "status": "pass",
+   "detail": "glb glass_house: roughness 0.03, metallic 0, base 0.03, no transmission, KHR specular colour factor 2.0 (Cycles Specular IOR Level 1.0, F0 0.08), opaque; bad: none; the gate's pane: Fresnel IOR 1.789 gives F0 0.0800"
+  },
+  {
+   "id": "MAT-02",
+   "name": "no day glow",
+   "status": "pass",
+   "detail": "no emission on the glb's pane (day) and none in the gate's pane shader; bad: none"
+  },
+  {
+   "id": "MAT-03",
+   "name": "the alpha is wired",
+   "status": "pass",
+   "detail": "net_voile: alphaMode BLEND and its alpha is the weave texture (std 0.15 to 0.4), not a constant; bad: none"
+  },
+  {
+   "id": "MAT-04",
+   "name": "reflectance at a grazing angle",
+   "status": "fail",
+   "detail": "a flat pane at 16 degrees from the wall against a uniform sky of luma 1.0, the room black, the gate's pane shader: the pane reads 0.078 of the sky (0.26 +-0.05; Cycles' dielectric Fresnel up to 0.31)"
+  },
+  {
+   "id": "WB-01",
+   "name": "net windows are darker than their frames",
+   "status": "not_run",
+   "detail": "not run: no day frame with its mask is rendered (python3 build_windows.py gate)"
+  },
+  {
+   "id": "WB-02",
+   "name": "bare windows are much darker",
+   "status": "not_run",
+   "detail": "not run: no day frame with its mask is rendered (python3 build_windows.py gate)"
+  },
+  {
+   "id": "WB-03",
+   "name": "bare windows from across, near square",
+   "status": "not_run",
+   "detail": "not run: no day frame with its mask is rendered (python3 build_windows.py gate)"
+  },
+  {
+   "id": "WB-04",
+   "name": "the dark lines are present",
+   "status": "not_run",
+   "detail": "not run: no day frame with its mask is rendered (python3 build_windows.py gate)"
+  },
+  {
+   "id": "WB-04b",
+   "name": "the dark line round each pane",
+   "status": "not_run",
+   "detail": "not run: no day frame with its mask is rendered (python3 build_windows.py gate)"
+  },
+  {
+   "id": "WB-05",
+   "name": "the pane is not one tone",
+   "status": "not_run",
+   "detail": "not run: no day frame with its mask is rendered (python3 build_windows.py gate)"
+  },
+  {
+   "id": "WB-06",
+   "name": "something is behind the glass by day",
+   "status": "not_run",
+   "detail": "not run: no day frame with its mask is rendered (python3 build_windows.py gate)"
+  },
+  {
+   "id": "WB-07",
+   "name": "the frame is brighter than the wall",
+   "status": "not_run",
+   "detail": "not run: no day frame with its mask is rendered (python3 build_windows.py gate)"
+  },
+  {
+   "id": "WB-08",
+   "name": "the old fault fails",
+   "status": "not_run",
+   "detail": "not run: no day frame with its mask is rendered (python3 build_windows.py gate)"
+  },
+  {
+   "id": "WB-09",
+   "name": "the window under 10 degrees",
+   "status": "not_run",
+   "detail": "not run: no day frame with its mask is rendered (python3 build_windows.py gate)"
+  },
+  {
+   "id": "NIGHT-01",
+   "name": "lit and dark windows at night",
+   "status": "not_run",
+   "detail": "not run: no night frame with its mask is rendered"
+  },
+  {
+   "id": "NIGHT-02",
+   "name": "lit against dark",
+   "status": "not_run",
+   "detail": "not run: no night frame with its mask is rendered"
+  },
+  {
+   "id": "NIGHT-03",
+   "name": "the lit net glows its own colour",
+   "status": "not_run",
+   "detail": "not run: no night frame with its mask is rendered"
+  },
+  {
+   "id": "NIGHT-04",
+   "name": "a dark window shows only the sodium wash",
+   "status": "fail",
+   "detail": "2 of 13 night_dark pictures: up_lounge_1 b/r 0.001 luma 15.4; up_lounge_2 b/r 0.001 luma 14.6 (the rest not rendered)"
+  },
+  {
+   "id": "NIGHT-05",
+   "name": "the lit order is nested",
+   "status": "pass",
+   "detail": "the set lit at 23:00 (4) is inside the set lit at 20:30 (7) but for the always-lit pair; no empty room is ever lit"
+  },
+  {
+   "id": "NIGHT-06",
+   "name": "the 20:30 count",
+   "status": "pass",
+   "detail": "seven windows lit at 20:30 (target 7 +-1): 7"
+  },
+  {
+   "id": "GLS-04",
+   "name": "no bright band in the night glass",
+   "status": "not_run",
+   "detail": "not run: no night frame with its reflection-off render"
+  },
+  {
+   "id": "GLS-05",
+   "name": "no lit stand-in lamp in view",
+   "status": "not_run",
+   "detail": "not run: no night frame"
+  },
+  {
+   "id": "FRM-01",
+   "name": "no see-through slot at any camera",
+   "status": "not_run",
+   "detail": "not run: no frame"
+  },
+  {
+   "id": "PIC-01",
+   "name": "size and states",
+   "status": "fail",
+   "detail": "5 of 39 pictures present at 1536 x 1399 (upper rooms) or 3072 x 2349 (cottages), 8-bit RGB; not rendered: up_lounge_2_night_lit, up_lounge_2.json, up_lounge_3_day, up_lounge_3_night_lit, up_lounge_3_night_dark, up_lounge_3.json, up_bedroom_1_day, up_bedroom_1_night_lit, up_bedroom_1_night_dark, up_bedroom_1.json, up_bedroom_2_day, up_bedroom_2_night_lit ...; wrong: none"
+  },
+  {
+   "id": "PIC-02",
+   "name": "mean luma",
+   "status": "pass",
+   "detail": "5 pictures' mean luma within 15% of the standard (day 105, night_lit 70, night_dark 15; landings 40 at night_lit; an empty room's night_lit is its night_dark, the target's lights_by_state over its PIC-02 line); off: none"
+  },
+  {
+   "id": "PIC-03",
+   "name": "no black void",
+   "status": "pass",
+   "detail": "3 day and night_lit pictures: under 25% below luma 8, largest dark region under 15%, composite (x brightness) day 14+, night_lit 40+; off: none"
+  },
+  {
+   "id": "PIC-03b",
+   "name": "the night wash does not burn the corners",
+   "status": "pass",
+   "detail": "night_dark top front corner columns at most 1.5 times the picture's mean (the shops' burnt orange corners): up_lounge_1 0.20, up_lounge_2 0.26"
+  },
+  {
+   "id": "PIC-04",
+   "name": "the back wall lands where the rule puts it",
+   "status": "fail",
+   "detail": "the back wall's side edges found in the day pictures within 8 px of the rule's projection: up_lounge_1 edges at 441 and 1074 (expected 461 and 1075); up_lounge_2 edges at 460 and 1074 (expected 461 and 1075)"
+  },
+  {
+   "id": "PIC-05",
+   "name": "stand-off",
+   "status": "pass",
+   "detail": "7 placed objects and flat forms inside the stand-off budgets of their surface (back 0.38 true, 0.71 tolerated; sides 0.03, 0.06; ceiling 0.02, 0.04); over: none"
+  },
+  {
+   "id": "PIC-09",
+   "name": "room pictures are not noisy",
+   "status": "pass",
+   "detail": "noise: the standard deviation of the picture minus its 2 px blur over its flat areas, at most 1.6 levels (24 samples, denoised; 16 for the cottages): up_lounge_1 day 0.81, up_lounge_1 night_lit 0.88, up_lounge_2 day 0.94"
+  },
+  {
+   "id": "PIC-06",
+   "name": "parallax",
+   "status": "pass",
+   "detail": "marker at the picture centre baked from two eyes 2.0 m apart: seen at card columns 95.5 and 51.0, predicted by trace 96 and 51: error 5.3 px of 2048 (limit 20); proves the gate's bake, not the game"
+  },
+  {
+   "id": "PIC-07",
+   "name": "no marks",
+   "status": "pass",
+   "detail": "marks painted out by script and checked region by region (television_02 PARAGON, wall_clock URBAN quartz): television_02 box [270, 450, 300, 548]: max deviation from the ring 12, edge share 0.000; wall_clock box [246, 610, 316, 664]: max deviation from the ring 8, edge share 0.000; every framed picture's artwork replaced by a crop of a CC0 photograph (1 placements in the rooms rendered); every placed model's 1k base colour looked at at 100 per cent by me on 14 October (NOTES.md); the pictures themselves are for the reviewers' eyes"
+  },
+  {
+   "id": "PIC-08",
+   "name": "the room is lit as the table says",
+   "status": "pass",
+   "detail": "the picture each of the 20 windows uses: day by day; at 20:30 night_lit for the seven lit windows, night_dark for the rest (the gate's own rule `card_state`); wrong: none"
+  },
+  {
+   "id": "PIC-10",
+   "name": "no floating goods",
+   "status": "pass",
+   "detail": "floating goods: every piece stands on the floor, rests on its parent (a clock on its cabinet, the television on its table: the parent's top under it, a gap over 6 mm split into a sink) or hangs on its wall (touching): none floating; 1 rooms read"
+  },
+  {
+   "id": "PIC-11",
+   "name": "real size: no piece shrunk to fit",
+   "status": "pass",
+   "detail": "every placed piece at scale 1.0 and 0.9 to 1.1 of its model's own height: 3 pieces, off: none (mantel_clock_01's catalogue size 483.7 x 250.8 x 160.9 is not the model's 342.3 x 126.2 x 160.5: its own height is used)"
+  },
+  {
+   "id": "PIC-12",
+   "name": "models keep their glass and every part",
+   "status": "pass",
+   "detail": "every placed model keeps all the meshes of its glTF (the glass kept as a see-through material, not alpha-blended): all kept"
+  },
+  {
+   "id": "SITE-01",
+   "name": "the twenty openings",
+   "status": "pass",
+   "detail": "terrace-front.py's windows re-derived live (the target's hw_sites.derive, read only): 20 sites, centres within 1 mm of sites[]; the gate stands every kit piece at its site (x_centre, sill, side); off: none"
+  },
+  {
+   "id": "SITE-02",
+   "name": "no visible repeat",
+   "status": "fail",
+   "detail": "no (room, net kind, curtain) triple repeats within three places along any row; paints are white throughout; repeats: [('west_south_bay0_gf_w1', 'west_south_bay0_gf_w0')]"
+  },
+  {
+   "id": "SITE-03",
+   "name": "the mix",
+   "status": "pass",
+   "detail": "net classes N0 4, N1 10, N2 5, N3 1; curtains and blinds 9 of 20"
+  },
+  {
+   "id": "SITE-04",
+   "name": "paint",
+   "status": "pass",
+   "detail": "paints by window: {'white_upvc': 8, 'white_grimy': 6, 'white_fresh': 4, 'white_flaking': 2}; every house white (Jafar's ruling of 3 October)"
+  },
+  {
+   "id": "CONTENT-01",
+   "name": "the content rule",
+   "status": "fail",
+   "detail": "the content rule: no real firm's name (the target's blocklist), no drink, gambling, child or toy in the kit's scripts, notes, node names or room records; no person in any render (the review's eyes); hits: [('hw_assets.py', 'ingrid'), ('hw_assets.py', 'radolier')]"
+  },
+  {
+   "id": "KIT-16",
+   "name": "export: real normal maps, UVs, no bump",
+   "status": "pass",
+   "detail": "every normalTexture in the four glbs is a real RGB normal map (blue over 0.7, red and green about 0.5), no bump in any exported material, every textured primitive has TEXCOORD_0 and no texCoord is negative; bad: none"
+  },
+  {
+   "id": "KIT-17",
+   "name": "nothing floats in a kit piece",
+   "status": "fail",
+   "detail": "nothing floats in a kit piece: every net card's top is inside its rod (the rod ends in two brackets that stand on the lining's back or the wall's inner face), the curtain cards hang from the pole (brackets on the wall's inner face), each blind from its headrail or roller; loose: [('S22', 'N1', 'net not on its rod'), ('S22', 'N2', 'net not on its rod'), ('S22', 'N3', 'net not on its rod'), ('S11', 'N1', 'net not on its rod'), ('S11', 'N2', 'net not on its rod'), ('S11', 'N3', 'net not on its rod'), ('RC', 'N1', 'net not on its rod'), ('RC', 'N2', 'net not on its rod'), ('RC', 'N3', 'net not on its rod'), ('RC2', 'N1', 'net not on its rod'), ('RC2', 'N2', 'net not on its rod'), ('RC2', 'N3', 'net not on its rod')]"
+  },
+  {
+   "id": "KIT-18",
+   "name": "net and curtain folds vary",
+   "status": "pass",
+   "detail": "folds are not a regular corrugation: N1 pitch 30 to 69 mm (sd 11.3), depth sd 1.8; N2 pitch 34 to 70 mm (sd 12.8), depth sd 1.8; N3 pitch 32 to 70 mm (sd 12.0), depth sd 1.8; N1_torn pitch 31 to 64 mm (sd 9.7), depth sd 1.8; C1 pitch 59 to 91 mm (sd 9.9), depth sd 4.6"
+  },
+  {
+   "id": "PRV-01",
+   "name": "the review set is in production/previews",
+   "status": "not_run",
+   "detail": "0 review previews (JPEG, at most 1600 px wide, under 500 KB): ; bad: none"
+  }
+ ],
+ "seconds": 7.4,
+ "measurements": {}
+}
