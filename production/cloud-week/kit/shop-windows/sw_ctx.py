@@ -49,6 +49,8 @@ class Ctx:
         self.zones = R["front"]["zones_u_mm"]
         self.door_end = R["front"]["door_end_viewer"]       # "L" or "R": which end of the bay the doors are at, seen from the street
         self.variants = R["front"]["variants"]
+        lob = R["front"].get("lobby") or {}
+        self.lobby_depth = float(lob["depth"]) if lob.get("kind") == "recessed" else 0.0     # a recessed lobby (the launderette 300, the grocer 600): the door frame stands that far behind the frame line
         self.has_room = bool(R.get("needs_room"))
         self.card = R.get("card")
         if self.card:
