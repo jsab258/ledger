@@ -122,10 +122,69 @@ def bake_card(eye_card, size, camd, side, picture_png, out_png, nw, nh, jobs=3):
     return lin_img
 
 
+def card_state(site, night, lit_names):
+    """Which picture a window's card shows (PIC-08): day by day; at night the lit windows their night_lit picture, the others night_dark; an unlet (empty) room is never lit."""
+    if not night:
+        return "day"
+    st = "night_lit" if site["id"] in lit_names else "night_dark"
+    if site["room"].startswith("up_empty") and st == "night_lit":
+        st = "night_dark"
+    return st
+
+
 def eye_in_card_frame(site, eye):
     """The eye in the card frame `trace` takes: x from the card's low-x edge, y out from the card plane (negative for the east viewer), z above the card's bottom."""
     c = site["card"]
     return (eye[0] - c["x_low"], eye[1] - site["side"] * abs(c["y_card_plane"]), eye[2] - c["z_bottom_above_crown"])
+
+
+GLASS_IOR = 1.789          # F0 = ((n - 1) / (n + 1))^2 = 0.08: Unreal's Specular 1.0
+
+
+def make_glass_gate(bpy, refl, old_fault=False):
+    """The pane of the cloud gate (target 5.1): a Mix of a Transparent BSDF and a Glossy GGX, weighted by the dielectric Fresnel of F0 0.08 (IOR 1.789) x `refl` (1.0 by day, 0.2 at night); the roughness rises
+    from 0.03 to 0.35 where the pane's COLOR_0 says dirt (R 0.8: the 6 mm band and the lowest 25 mm). `old_fault`: the first build's pane for WB-08: an opaque pale card, F0 0.04, no lines."""
+    glass_gate = bpy.data.materials.new("glass_gate")
+    glass_gate.use_nodes = True
+    gnt = glass_gate.node_tree
+    for n in list(gnt.nodes):
+        gnt.nodes.remove(n)
+    gout = gnt.nodes.new("ShaderNodeOutputMaterial")
+    if old_fault:
+        dif = gnt.nodes.new("ShaderNodeBsdfPrincipled")
+        dif.inputs["Base Color"].default_value = (0.37, 0.37, 0.36, 1.0)
+        dif.inputs["Roughness"].default_value = 0.6
+        dif.inputs["Specular IOR Level"].default_value = 0.5
+        gnt.links.new(dif.outputs[0], gout.inputs[0])
+        return glass_gate
+    gmix = gnt.nodes.new("ShaderNodeMixShader")
+    gtr = gnt.nodes.new("ShaderNodeBsdfTransparent")
+    ggl = gnt.nodes.new("ShaderNodeBsdfGlossy")
+    ggl.distribution = "GGX"
+    ggl.inputs["Color"].default_value = (1.0, 1.0, 1.0, 1.0)
+    gfr = gnt.nodes.new("ShaderNodeFresnel")
+    gfr.inputs["IOR"].default_value = GLASS_IOR
+    gmul = gnt.nodes.new("ShaderNodeMath")
+    gmul.operation = "MULTIPLY"
+    gmul.inputs[1].default_value = refl
+    gat = gnt.nodes.new("ShaderNodeAttribute")
+    gat.attribute_name = "Color"
+    gsep = gnt.nodes.new("ShaderNodeSeparateColor")
+    gdirt = gnt.nodes.new("ShaderNodeMapRange")
+    gdirt.inputs["From Min"].default_value = 1.0
+    gdirt.inputs["From Max"].default_value = 0.8
+    gdirt.inputs["To Min"].default_value = 0.03
+    gdirt.inputs["To Max"].default_value = 0.35
+    gdirt.clamp = True
+    gnt.links.new(gat.outputs["Color"], gsep.inputs["Color"])
+    gnt.links.new(gsep.outputs["Red"], gdirt.inputs["Value"])
+    gnt.links.new(gdirt.outputs["Result"], ggl.inputs["Roughness"])
+    gnt.links.new(gfr.outputs["Fac"], gmul.inputs[0])
+    gnt.links.new(gmul.outputs["Value"], gmix.inputs["Fac"])
+    gnt.links.new(gtr.outputs[0], gmix.inputs[1])
+    gnt.links.new(ggl.outputs[0], gmix.inputs[2])
+    gnt.links.new(gmix.outputs[0], gout.inputs[0])
+    return glass_gate
 
 
 # ------------------------------------------------------------------------------------------------------------- the scene
@@ -332,40 +391,8 @@ def build_and_render(view_name, cam, state, out_png, bake_dir, samples=48, res=N
         return [o for o in new if o.type == "MESH"]
     templates = {}
     P = T.paints()
-    glass_gate = bpy.data.materials.new("glass_gate")
-    glass_gate.use_nodes = True
-    gnt = glass_gate.node_tree
-    for n in list(gnt.nodes):
-        gnt.nodes.remove(n)
-    gout = gnt.nodes.new("ShaderNodeOutputMaterial")
-    gmix = gnt.nodes.new("ShaderNodeMixShader")
-    gtr = gnt.nodes.new("ShaderNodeBsdfTransparent")
-    ggl = gnt.nodes.new("ShaderNodeBsdfGlossy")
-    ggl.distribution = "GGX"
-    ggl.inputs["Color"].default_value = (1.0, 1.0, 1.0, 1.0)
-    gfr = gnt.nodes.new("ShaderNodeFresnel")
-    gfr.inputs["IOR"].default_value = 1.789          # F0 = ((n-1)/(n+1))^2 = 0.08: Unreal's Specular 1.0
-    gmul = gnt.nodes.new("ShaderNodeMath")
-    gmul.operation = "MULTIPLY"
     refl = (0.2 if night else 1.0) if glass_refl is None else glass_refl
-    gmul.inputs[1].default_value = refl
-    gat = gnt.nodes.new("ShaderNodeAttribute")
-    gat.attribute_name = "Color"
-    gsep = gnt.nodes.new("ShaderNodeSeparateColor")
-    gdirt = gnt.nodes.new("ShaderNodeMapRange")          # R 1.0 clean .. 0.8 band: roughness 0.03 .. 0.35
-    gdirt.inputs["From Min"].default_value = 1.0
-    gdirt.inputs["From Max"].default_value = 0.8
-    gdirt.inputs["To Min"].default_value = 0.03
-    gdirt.inputs["To Max"].default_value = 0.35
-    gdirt.clamp = True
-    gnt.links.new(gat.outputs["Color"], gsep.inputs["Color"])
-    gnt.links.new(gsep.outputs["Red"], gdirt.inputs["Value"])
-    gnt.links.new(gdirt.outputs["Result"], ggl.inputs["Roughness"])
-    gnt.links.new(gfr.outputs["Fac"], gmul.inputs[0])
-    gnt.links.new(gmul.outputs["Value"], gmix.inputs["Fac"])
-    gnt.links.new(gtr.outputs[0], gmix.inputs[1])
-    gnt.links.new(ggl.outputs[0], gmix.inputs[2])
-    gnt.links.new(gmix.outputs[0], gout.inputs[0])
+    glass_gate = make_glass_gate(bpy, refl, old_fault=bool(extra.get("old_fault")))
 
     cam_eye = cam["eye"]
     window_ids = {s["id"]: i + 1 for i, s in enumerate(sites)}
@@ -380,9 +407,7 @@ def build_and_render(view_name, cam, state, out_png, bake_dir, samples=48, res=N
         res_ = None
         if ang >= MIN_BAKE_ANGLE and C.eye_in_front(site, cam_eye):
             lit = site["id"] in lit_names
-            st = "day" if not night else ("night_lit" if lit else "night_dark")
-            if site["room"].startswith("up_empty") and st == "night_lit":
-                st = "night_dark"
+            st = card_state(site, night, lit_names)
             pic = os.path.join(T.ROOMS, "%s_%s.png" % (site["room"], st))
             if os.path.exists(pic):
                 c = site["card"]
@@ -475,6 +500,10 @@ def build_and_render(view_name, cam, state, out_png, bake_dir, samples=48, res=N
                         mixn = next((n for n in m.node_tree.nodes if n.type == "MIX"), None)
                         if mixn is not None:
                             mixn.inputs[7].default_value = (*col, 1.0)
+                            if extra.get("old_fault"):               # WB-08: the first build had no box shade (no dark lines)
+                                for lk in list(mixn.inputs[6].links):
+                                    m.node_tree.links.remove(lk)
+                                mixn.inputs[6].default_value = (1.0, 1.0, 1.0, 1.0)
                         else:
                             pb.inputs["Base Color"].default_value = (*col, 1.0)
                         pb.inputs["Roughness"].default_value = paint["rough"]

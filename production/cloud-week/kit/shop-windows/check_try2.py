@@ -316,8 +316,11 @@ def glass_rows_check(R, work, assets, rows, members):
             a = np.asarray(Image.open(os.path.join(fasc, g["files"]["rgba"]["file"])).convert("RGBA"))[..., 3]
             jj, ii = np.nonzero(a[::2, ::2] > 128)
             jj, ii = jj * 2, ii * 2
-            u = mem["u_mm"][0] + ii + 0.5
-            z = mem["z_mm"][1] - jj - 0.5
+            # 14 Oct (batch B): a row shrunk to fit a light (ROW_SCALE) is drawn at that scale about its ink centre and baseline, so an ink pixel's offset is its pixel count times the scale (the fish market's two rows at 0.86 were
+            # read as 16 per cent wider than they are and "hidden behind the jamb"); 1.0 for every row that was not shrunk (Rita's, the batch A shops')
+            sc_ = (mem["u_mm"][1] - mem["u_mm"][0]) / float(a.shape[1])
+            u = mem["u_mm"][0] + ii * sc_ + 0.5
+            z = mem["z_mm"][1] - jj * sc_ - 0.5
             pts = np.stack([(u - 3000.0) / 1000.0, np.full(len(u), -mem["d_mm"] / 1000.0), z / 1000.0], axis=1)
             blocked = 0
             by = {}
@@ -502,8 +505,11 @@ def backdrop_rows(R, assets, work, rows):
         sc.render.filepath = path
         sc.render.image_settings.file_format = "PNG"
         bpy.ops.render.render(write_still=True)
-        a = np.asarray(Image.open(path).convert("L"))
-        white = a > 128
+        # 14 Oct (batch B): one sample a pixel, the white backdrop's light reaches the front's parts as single-pixel fireflies of a tan or grey that a luma test (> 128) took for backdrop (the grocer's CLOSE_35_B: two
+        # specks of 4 px that were noise). The backdrop is an emission of 1.0 under the standard view transform: it is 255 in every channel; a pixel counts as backdrop only when it is 250 or more in all three.
+        rgb_ = np.asarray(Image.open(path).convert("RGB"))
+        a = rgb_.min(axis=2)
+        white = a >= 250
         front = ~white
         holes = ndimage.binary_fill_holes(front) & white              # backdrop pixels the front's outline encloses
         lab, nl = ndimage.label(holes)
