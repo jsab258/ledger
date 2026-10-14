@@ -1,13 +1,13 @@
 {
  "schema": "ledger.cloud-week-42.shop-windows-check/1",
  "shop": "steam_laundry",
- "made": "2026-10-14 05:30:50",
+ "made": "2026-10-14 12:36:20",
  "target": "production/cloud-week/targets/shop-windows/target.json (status: target for unit 7 of cloud week 42, part 2; written 12 October 2026; failed its )",
- "pass": 66,
+ "pass": 68,
  "counted": 69,
  "na": 3,
  "pending": 0,
- "seconds": 80.7,
+ "seconds": 96.3,
  "rows": [
   {
    "id": "PIC-01",
@@ -19,19 +19,19 @@
    "id": "PIC-02",
    "name": "no black void in the picture",
    "status": "pass",
-   "detail": "day: mean 121.8 (floor 83.7), share under 12 0.0050, largest dark region 0.0005 of the area; night_lit: mean 78.6 (floor 55.9), share under 12 0.0160, largest dark region 0.0018 of the area"
+   "detail": "day: mean 121.8 (floor 83.7), share under 12 0.0022, largest dark region 0.0001 of the area; night_lit: mean 78.6 (floor 55.9), share under 12 0.0072, largest dark region 0.0009 of the area"
   },
   {
    "id": "PIC-03",
    "name": "night_dark is dark, not black, and has no hot corners",
    "status": "pass",
-   "detail": "night_dark mean 20.8 (12.4 to 40; the approved 17.7); the top front corner columns (x 0 to 60 and 4036 to 4096, rows 0 to 200) read 13.4 and 10.7 against 1.5 x the mean = 31.2 (the wash light was the card's full width at 0.9 of the height: the pawnbroker's corners read 66, the tea room's 61, the ironmonger's 98)"
+   "detail": "night_dark mean 17.3 (12.4 to 40; the approved 17.7); the top front corner columns (x 0 to 60 and 4036 to 4096, rows 0 to 200) read 5.4 and 4.9 against 1.5 x the mean = 26.0 (the wash light was the card's full width at 0.9 of the height: the pawnbroker's corners read 66, the tea room's 61, the ironmonger's 98)"
   },
   {
    "id": "PIC-05",
    "name": "nothing burnt",
    "status": "pass",
-   "detail": "share of pixels with a channel at 250 or above, on the render before the highlight shoulder (a Judgement: above level 232 the picture is compressed, 255 becomes 242; the raw renders are in rooms/raw): day 0.0005 before the shoulder (0.0000 after it), night_lit 0.0005 before the shoulder (0.0000 after it), night_dark 0.0018 before the shoulder (0.0000 after it) (limit 0.01)"
+   "detail": "share of pixels with a channel at 250 or above, on the render before the highlight shoulder (a Judgement: above level 232 the picture is compressed, 255 becomes 242; the raw renders are in rooms/raw): day 0.0005 before the shoulder (0.0000 after it), night_lit 0.0005 before the shoulder (0.0000 after it), night_dark 0.0002 before the shoulder (0.0000 after it) (limit 0.01)"
   },
   {
    "id": "PIC-04",
@@ -43,13 +43,13 @@
    "id": "PIC-06",
    "name": "each surface has texture",
    "status": "pass",
-   "detail": "standard deviation of luma (mean of day and night_lit), levels: back 42.8, floor 11.4, left 26.9, right 26.6 (at least 6)"
+   "detail": "standard deviation of luma (mean of day and night_lit), levels: back 39.7, floor 11.4, left 26.9, right 26.6 (at least 6)"
   },
   {
    "id": "X-NOISE",
    "name": "picture noise after denoising",
    "status": "pass",
-   "detail": "high-pass standard deviation of the quietest 32 x 400 patch of the ceiling above the back wall (x 2560, y 306): 0.39 levels (limit 2.0); 48 samples a pixel (the target says 128: cut for the cloud's four cores, denoised); for the record the back wall's top strip, which carries the plaster's own grain, reads 1.84 (x 1060)"
+   "detail": "high-pass standard deviation of the quietest 32 x 400 patch of the ceiling above the back wall (x 2460, y 306): 0.39 levels (limit 2.0); 48 samples a pixel (the target says 128: cut for the cloud's four cores, denoised); for the record the back wall's top strip, which carries the plaster's own grain, reads 1.84 (x 1060)"
   },
   {
    "id": "PRJ-01",
@@ -61,7 +61,7 @@
    "id": "PRJ-02",
    "name": "the room shifts with the eye",
    "status": "pass",
-   "detail": "the card's centre lands 1322.1 px (signed) apart between CLOSE_35 and CLOSE_35_B (target 1321.93, +-1.5); the mean absolute difference of the two baked cards is 24.9 levels (at least 8). This runs on the gate's own `trace` bake: it proves the gate, not the game (owed on the PC: PC-01)"
+   "detail": "the card's centre lands 1322.1 px (signed) apart between CLOSE_35 and CLOSE_35_B (target 1321.93, +-1.5); the mean absolute difference of the two baked cards is 24.5 levels (at least 8). This runs on the gate's own `trace` bake: it proves the gate, not the game (owed on the PC: PC-01)"
   },
   {
    "id": "PRJ-03",
@@ -79,7 +79,7 @@
    "id": "SO-02",
    "name": "side wall stand-off",
    "status": "pass",
-   "detail": "4 placed goods and fixtures on the side walls: greatest stand-off 0.066 (flat 0.05, tolerated 0.10)"
+   "detail": "5 placed goods and fixtures on the side walls: greatest stand-off 0.066 (flat 0.05, tolerated 0.10)"
   },
   {
    "id": "SO-03",
@@ -91,7 +91,7 @@
    "id": "SO-04",
    "name": "nothing in the middle of the room",
    "status": "pass",
-   "detail": "20 pieces and fixtures checked against the back and side walls; none farther than 0.60 m from every wall"
+   "detail": "21 pieces and fixtures checked against the back and side walls; none farther than 0.60 m from every wall"
   },
   {
    "id": "SO-05",
@@ -132,8 +132,8 @@
   {
    "id": "ROOM-02",
    "name": "the dryers' two running lamps",
-   "status": "fail",
-   "detail": "None running lamps, each on a dryer's control strip at None, orange and emissive in night_dark only with a small warm point light beside each (the target's `night_dark`: two orange lamps, small, 2000 K); the other four are dull discs"
+   "status": "pass",
+   "detail": "2 running lamps, each on a dryer's control strip at [[0.847, 3.923, 0.76], [2.28, 3.923, 1.64]], orange and emissive in night_dark only with a small warm point light beside each (the target's `night_dark`: two orange lamps, small, 2000 K); the other four are dull discs"
   },
   {
    "id": "ROOM-03",
@@ -181,7 +181,7 @@
    "id": "INV-05",
    "name": "no maker marks",
    "status": "pass",
-   "detail": "script: 381 object, material, image and text names against the 59 blocklist words: none found. By eye: every base-colour map of every placed model on contact sheets at 512 px and again at 100 per cent (the marks found are in blanking_report.json and NOTES.md), the label atlases (the project's own fictional makers), and the three room pictures and the gate's frames at full size (see the notes)"
+   "detail": "script: 382 object, material, image and text names against the 59 blocklist words: none found. By eye: every base-colour map of every placed model on contact sheets at 512 px and again at 100 per cent (the marks found are in blanking_report.json and NOTES.md), the label atlases (the project's own fictional makers), and the three room pictures and the gate's frames at full size (see the notes)"
   },
   {
    "id": "INV-06",
@@ -193,7 +193,7 @@
    "id": "NEV-01",
    "name": "no people, drink, betting, children",
    "status": "pass",
-   "detail": "381 names and text strings against 51 content-blocklist words (the ones ending in a space as whole words): no match"
+   "detail": "382 names and text strings against 51 content-blocklist words (the ones ending in a space as whole words): no match"
   },
   {
    "id": "NEV-02",
@@ -289,7 +289,7 @@
    "id": "FAS-01c",
    "name": "the board reads by day",
    "status": "fail",
-   "detail": "STREET_SQUARE by day: the board's ground luma 127.3 (not black: at least 12), the dark letters (25th percentile of the lettering's pixels) 68.1: letters to ground 1.87 (at least 2.0). The stallriser's luma 169.0 is written beside it (75 per cent of the ground's); for Rita's the two had to agree within 15 per cent because both were one paint, which is not asked of a shop whose stallriser is another material"
+   "detail": "STREET_SQUARE by day: the board's ground luma 126.7 (not black: at least 12), the dark letters (25th percentile of the lettering's pixels) 67.4: letters to ground 1.88 (at least 2.0). The stallriser's luma 168.9 is written beside it (75 per cent of the ground's); for Rita's the two had to agree within 15 per cent because both were one paint, which is not asked of a shop whose stallriser is another material"
   },
   {
    "id": "GLS-02",
@@ -319,19 +319,19 @@
    "id": "FRN-10",
    "name": "no two parts of the front share a visible face plane; nothing on the front is black",
    "status": "pass",
-   "detail": "56 coplanar same-facing overlaps of more than 1 mm2 among the front's parts (hidden ones, behind the doors or inside the joinery: not a fault), 0 of them where a camera can see them. By day, in the four gate frames at 2560 x 1440, over the front's own pixels (a mask render: the glass, the two fanlights, the shop door's glass, the hall, the lettering rows and the OPEN sign are not the front; the mask eroded by 2 px; a dark patch counts when it is 35 mm wide on the front or more, a thin line of shade under the cornice or the sill does not): STREET_SQUARE 37 of 166347 front pixels under luma 8, 0 of them in patches 5 px (35 mm) or wider (the darkest pixel 1.4); STREET_30 48 of 96489 front pixels under luma 8, 0 of them in patches 5 px (35 mm) or wider (the darkest pixel 3.6); CLOSE_35 2552 of 203807 front pixels under luma 8, 0 of them in patches 14 px (35 mm) or wider (the darkest pixel 0.2); CLOSE_35_B 1008 of 140301 front pixels under luma 8, 0 of them in patches 14 px (35 mm) or wider (the darkest pixel 1.1) (try 2: the two strips beside the side door were luma 0 to 3, about 12,000 pixels at STREET_SQUARE: F1's frame jambs, the added side jambs and the fillers stood in one plane, d 100)"
+   "detail": "56 coplanar same-facing overlaps of more than 1 mm2 among the front's parts (hidden ones, behind the doors or inside the joinery: not a fault), 0 of them where a camera can see them. By day, in the four gate frames at 2560 x 1440, over the front's own pixels (a mask render: the glass, the two fanlights, the shop door's glass, the hall, the lettering rows and the OPEN sign are not the front; the mask eroded by 2 px; a dark patch counts when it is 35 mm wide on the front or more, a thin line of shade under the cornice or the sill does not): STREET_SQUARE 3695 of 689175 front pixels under luma 8, 0 of them in patches 8 px (35 mm) or wider (the darkest pixel 0.9); STREET_30 1860 of 405305 front pixels under luma 8, 0 of them in patches 8 px (35 mm) or wider (the darkest pixel 0.9); CLOSE_35 12883 of 840938 front pixels under luma 8, 0 of them in patches 28 px (35 mm) or wider (the darkest pixel 0.0); CLOSE_35_B 5094 of 578784 front pixels under luma 8, 0 of them in patches 28 px (35 mm) or wider (the darkest pixel 0.0) (try 2: the two strips beside the side door were luma 0 to 3, about 12,000 pixels at STREET_SQUARE: F1's frame jambs, the added side jambs and the fillers stood in one plane, d 100)"
   },
   {
    "id": "LIT-01",
    "name": "lit shops lit at night, dark shops dark",
    "status": "pass",
-   "detail": "this shop is dark at night (lit_at_night false: vignette-pieces lit_names omits east_parade_interior4; its box sign glows (4.1 emissive) but the room is dark): STREET_SQUARE at night, the room-only composite over the glass lights reads 18.4 (a dark shop reads 10 to 35); the same room lit (night_lit, the state the tests and the lit-room pictures use) reads 75.4, so the difference is 56.9 (at least 25)"
+   "detail": "this shop is dark at night (lit_at_night false: vignette-pieces lit_names omits east_parade_interior4; its box sign glows (4.1 emissive) but the room is dark): STREET_SQUARE at night, the room-only composite over the glass lights reads 14.8 (a dark shop reads 10 to 35); the same room lit (night_lit, the state the tests and the lit-room pictures use) reads 76.1, so the difference is 61.2 (at least 25)"
   },
   {
    "id": "LIT-02",
    "name": "no black void in the street view",
    "status": "pass",
-   "detail": "composite luma over the glass lights: by day STREET_SQUARE 47.7, STREET_30 45.4, CLOSE_35 46.3 (at least 33); at night (the lit room) 75.4, 74.4, 63.8 (at least 45)"
+   "detail": "composite luma over the glass lights: by day STREET_SQUARE 48.0, STREET_30 45.4, CLOSE_35 46.2 (at least 33); at night (the lit room) 76.1, 74.5, 63.5 (at least 45)"
   },
   {
    "id": "LIT-03",
@@ -343,31 +343,31 @@
    "id": "LIT-05",
    "name": "the display is lit at night",
    "status": "pass",
-   "detail": "STREET_SQUARE at night, on the GLASS ONLY as the review words it (the mullions, the frame and the beads are not glass and are masked out): the display zone (z 0.60 to 1.45 above the footway across the window zone, 34580 glass px) mean luma 71.9 (at least 45; Rita's try 1 measured 45.4 with the glowing mullions inside its zone). The shop has no night grille: the glass is what the street sees. The spill is the gate's stand-in (a rect light 0.10 behind the wall face at z 2.30, 70 Blender watts, invisible to the camera, on the display's channel and the gate's footway): Lumen's own light on the display is owed on the PC (PC-02)"
+   "detail": "STREET_SQUARE at night, on the GLASS ONLY as the review words it (the mullions, the frame and the beads are not glass and are masked out): the display zone (z 0.60 to 1.45 above the footway across the window zone, 137592 glass px) mean luma 72.0 (at least 45; Rita's try 1 measured 45.4 with the glowing mullions inside its zone). The shop has no night grille: the glass is what the street sees. The spill is the gate's stand-in (a rect light 0.10 behind the wall face at z 2.30, 70 Blender watts, invisible to the camera, on the display's channel and the gate's footway): Lumen's own light on the display is owed on the PC (PC-02)"
   },
   {
    "id": "LIT-07",
    "name": "the night spill stays behind the glass",
    "status": "pass",
-   "detail": "STREET_SQUARE: head band at 250 or above 0.0000 (under 0.01) ok; mullion fronts 4.3 (p95 5.9) against the glass 71.9 ok; the pavement pool in front of the window 89.2 (written, not a condition: see below); STREET_30: head band at 250 or above 0.0000 (under 0.01) ok; mullion fronts 10.7 (p95 37.7) against the glass 73.3 ok; the pavement pool in front of the window 89.0 (written, not a condition: see below) (try 1: head band 0.32 and 0.35, mullion fronts p95 228, pavement 113 against the glass 66.8). The third condition (the pavement pool no brighter than the lit glass) is STRUCK (13 Oct, from the try 2 street review, 5: it compared a pale pavement with a window whose glass shows dark velvet and black plastic and could not be met by any spill that lights the bed through the glass); the gate's footway is on the spill's channel again, so the pool is the gate's stand-in and the game's own is owed (PC-02)"
+   "detail": "STREET_SQUARE: head band at 250 or above 0.0000 (under 0.01) ok; mullion fronts 4.2 (p95 5.0) against the glass 72.0 ok; the pavement pool in front of the window 90.2 (written, not a condition: see below); STREET_30: head band at 250 or above 0.0000 (under 0.01) ok; mullion fronts 11.1 (p95 56.4) against the glass 73.6 ok; the pavement pool in front of the window 90.0 (written, not a condition: see below) (try 1: head band 0.32 and 0.35, mullion fronts p95 228, pavement 113 against the glass 66.8). The third condition (the pavement pool no brighter than the lit glass) is STRUCK (13 Oct, from the try 2 street review, 5: it compared a pale pavement with a window whose glass shows dark velvet and black plastic and could not be met by any spill that lights the bed through the glass); the gate's footway is on the spill's channel again, so the pool is the gate's stand-in and the game's own is owed (PC-02)"
   },
   {
    "id": "GLS-04",
    "name": "no bright band in the night glass",
    "status": "pass",
-   "detail": "at night, at every camera, the largest connected patch of window-glass pixels 40 or more levels brighter than the same frame with the glass's reflection off is under 0.1 per cent of the glass (a p95 cannot see a band: GLS-03 passed the ironmonger's burnt orange bar at 10.0): STREET_SQUARE: largest patch 1 px = 0.0064 per cent of 15604 glass px (3 patches in all, 3 px 40 levels brighter than the render with the reflection off); STREET_30: largest patch 1 px = 0.0103 per cent of 9724 glass px (3 patches in all, 3 px 40 levels brighter than the render with the reflection off); CLOSE_35: largest patch 1 px = 0.0007 per cent of 144449 glass px (2 patches in all, 2 px 40 levels brighter than the render with the reflection off); CLOSE_35_B: largest patch 1 px = 0.0007 per cent of 148356 glass px (1 patches in all, 1 px 40 levels brighter than the render with the reflection off) (the gate leaves the road and the far footway out of glossy rays by default, so the glass reflects the dark street and not the stand-in lamps' pools)"
+   "detail": "at night, at every camera, the largest connected patch of window-glass pixels 40 or more levels brighter than the same frame with the glass's reflection off is under 0.1 per cent of the glass (a p95 cannot see a band: GLS-03 passed the ironmonger's burnt orange bar at 10.0): STREET_SQUARE: largest patch 0 px = 0.0000 per cent of 283376 glass px (0 patches in all, 0 px 40 levels brighter than the render with the reflection off); STREET_30: largest patch 0 px = 0.0000 per cent of 183664 glass px (0 patches in all, 0 px 40 levels brighter than the render with the reflection off); CLOSE_35: largest patch 0 px = 0.0000 per cent of 2410734 glass px (0 patches in all, 0 px 40 levels brighter than the render with the reflection off); CLOSE_35_B: largest patch 8 px = 0.0003 per cent of 2478226 glass px (6 patches in all, 17 px 40 levels brighter than the render with the reflection off) (the gate leaves the road and the far footway out of glossy rays by default, so the glass reflects the dark street and not the stand-in lamps' pools)"
   },
   {
    "id": "GLS-03",
    "name": "the night glass does not double what is behind it",
    "status": "pass",
-   "detail": "at night, p95 of |gate frame minus the render with the glass's reflection off| (luma, levels), the frame against a render of the same size, samples and seed with the glass's reflection off, over the glass mask eroded by 2 px at 1280 (4 at 2560): STREET_SQUARE p95 8.1 (mean 2.2, 15604 glass px); STREET_30 p95 9.0 (mean 2.2, 9724 glass px); CLOSE_35 p95 10.0 (mean 2.6, 144449 glass px); CLOSE_35_B p95 9.4 (mean 2.8, 148356 glass px) (limit 15; try 2: 32.9 at STREET_30 and 17.2 at STREET_SQUARE: the stand-in glass mixed a Transparent and a Glass BSDF, which bent each ray at one face of the closed 6 mm slab and not the other, so everything behind it came two or three times; now a Glossy BSDF, GGX 0.02, weighted 0.2 x Fresnel at IOR 1.5, nothing refracted)"
+   "detail": "at night, p95 of |gate frame minus the render with the glass's reflection off| (luma, levels), the frame against a render of the same size, samples and seed with the glass's reflection off, over the glass mask eroded by 2 px at 1280 (4 at 2560): STREET_SQUARE p95 2.4 (mean 0.8, 283376 glass px); STREET_30 p95 2.7 (mean 1.0, 183664 glass px); CLOSE_35 p95 9.4 (mean 2.1, 2410734 glass px); CLOSE_35_B p95 8.9 (mean 2.3, 2478226 glass px) (limit 15; try 2: 32.9 at STREET_30 and 17.2 at STREET_SQUARE: the stand-in glass mixed a Transparent and a Glass BSDF, which bent each ray at one face of the closed 6 mm slab and not the other, so everything behind it came two or three times; now a Glossy BSDF, GGX 0.02, weighted 0.2 x Fresnel at IOR 1.5, nothing refracted)"
   },
   {
    "id": "LIT-08",
    "name": "the display's goods are lit at night",
    "status": "pass",
-   "detail": "at night_lit, each display piece's mean luma over the lattice's gaps against the room's mean luma in a 24 px ring round it: CLOSE_35: 6 pieces seen against the room, lowest ratio wicker_basket_01 0.83 (31 against 38), script:folded_towels 1.36 (80 against 59), script:detergent_boxes 1.52 (75 against 49), 0 under 0.6; median ratio 2.14; CLOSE_35_B: 10 pieces seen against the room, lowest ratio script:detergent_boxes 0.94 (68 against 73), wicker_basket_01 1.05 (43 against 41), script:detergent_boxes 1.17 (84 against 71), 0 under 0.6; median ratio 1.59 (limit 0.6; try 2, CLOSE_35_B: the alarm clock's dial 33 against a room of 95, the cassette player 26, the mantel clock 25; the two strip lights under the tier boards are the fix; PIC-05g stays at 0.01 or under)"
+   "detail": "at night_lit, each display piece's mean luma over the lattice's gaps against the room's mean luma in a 24 px ring round it: CLOSE_35: 6 pieces seen against the room, lowest ratio wicker_basket_01 0.77 (29 against 38), script:folded_towels 1.43 (80 against 56), script:detergent_boxes 1.55 (75 against 48), 0 under 0.6; median ratio 2.17; CLOSE_35_B: 10 pieces seen against the room, lowest ratio script:detergent_boxes 0.94 (69 against 73), wicker_basket_01 1.01 (40 against 40), script:detergent_boxes 1.10 (82 against 75), 0 under 0.6; median ratio 1.54 (limit 0.6; try 2, CLOSE_35_B: the alarm clock's dial 33 against a room of 95, the cassette player 26, the mantel clock 25; the two strip lights under the tier boards are the fix; PIC-05g stays at 0.01 or under)"
   },
   {
    "id": "DSP-03",
@@ -402,14 +402,14 @@
   {
    "id": "LIT-02b",
    "name": "no black void in the rendered frames",
-   "status": "fail",
-   "detail": "window-glass pixels (the glass mask: no frame, mullion, bead or lattice) under luma 12, in frames rendered with the glass's reflection off, where the glass shows the room: CLOSE_35_B day: room share 0.0122 (of 628297 glass px, the room shows in 68 per cent of them), largest patch 0.0022, all glass 0.0123 [share and patch: OVER 1 per cent]; CLOSE_35_B night_lit: room share 0.0130 (of 628297 glass px, the room shows in 68 per cent of them), largest patch 0.0025, all glass 0.0243 [share and patch: OVER 1 per cent]; STREET_30 day: room share 0.0216 (of 48395 glass px, the room shows in 76 per cent of them), largest patch 0.0052, all glass 0.0218 [patch]; STREET_30 night_lit: room share 0.0210 (of 48395 glass px, the room shows in 76 per cent of them), largest patch 0.0058, all glass 0.0234 [patch]; STREET_SQUARE day: room share 0.0290 (of 73892 glass px, the room shows in 77 per cent of them), largest patch 0.0051, all glass 0.0290 [patch]; STREET_SQUARE night_lit: room share 0.0338 (of 73892 glass px, the room shows in 77 per cent of them), largest patch 0.0059, all glass 0.0346 [patch]; CLOSE_35 day: room share 0.0110 (of 611273 glass px, the room shows in 73 per cent of them), largest patch 0.0016, all glass 0.0110 [reported]; CLOSE_35 night_lit: room share 0.0108 (of 611273 glass px, the room shows in 73 per cent of them), largest patch 0.0015, all glass 0.0200 [reported] (limits: 0.01 on the largest patch at STREET_SQUARE and STREET_30, 0.01 on both the share and the patch at CLOSE_35_B; try 1's black slab at CLOSE_35_B's far light was about a third of the window)"
+   "status": "pass",
+   "detail": "window-glass pixels (the glass mask: no frame, mullion, bead or lattice) under luma 12, in frames rendered with the glass's reflection off, where the glass shows the room: CLOSE_35_B day: room share 0.0056 (of 628297 glass px, the room shows in 68 per cent of them), largest patch 0.0009, all glass 0.0058 [share and patch]; CLOSE_35_B night_lit: room share 0.0019 (of 628297 glass px, the room shows in 68 per cent of them), largest patch 0.0004, all glass 0.0132 [share and patch]; STREET_30 day: room share 0.0078 (of 48395 glass px, the room shows in 76 per cent of them), largest patch 0.0016, all glass 0.0079 [patch]; STREET_30 night_lit: room share 0.0015 (of 48395 glass px, the room shows in 76 per cent of them), largest patch 0.0002, all glass 0.0039 [patch]; STREET_SQUARE day: room share 0.0105 (of 73892 glass px, the room shows in 77 per cent of them), largest patch 0.0018, all glass 0.0105 [patch]; STREET_SQUARE night_lit: room share 0.0029 (of 73892 glass px, the room shows in 77 per cent of them), largest patch 0.0004, all glass 0.0037 [patch]; CLOSE_35 day: room share 0.0054 (of 611273 glass px, the room shows in 73 per cent of them), largest patch 0.0017, all glass 0.0054 [reported]; CLOSE_35 night_lit: room share 0.0017 (of 611273 glass px, the room shows in 73 per cent of them), largest patch 0.0004, all glass 0.0109 [reported] (limits: 0.01 on the largest patch at STREET_SQUARE and STREET_30, 0.01 on both the share and the patch at CLOSE_35_B; try 1's black slab at CLOSE_35_B's far light was about a third of the window)"
   },
   {
    "id": "PIC-05g",
    "name": "nothing burnt in the gate's frames",
    "status": "pass",
-   "detail": "share of pixels with a channel at 250 or above in the eight rendered frames (limit 0.01; try 1: night frames 0.033 and 0.031): STREET_SQUARE day 0.0001, STREET_SQUARE night_lit 0.0003, STREET_30 day 0.0000, STREET_30 night_lit 0.0001, CLOSE_35 day 0.0001, CLOSE_35 night_lit 0.0034, CLOSE_35_B day 0.0019, CLOSE_35_B night_lit 0.0073"
+   "detail": "share of pixels with a channel at 250 or above in the eight rendered frames (limit 0.01; try 1: night frames 0.033 and 0.031): STREET_SQUARE day 0.0000, STREET_SQUARE night_lit 0.0003, STREET_30 day 0.0000, STREET_30 night_lit 0.0001, CLOSE_35 day 0.0002, CLOSE_35 night_lit 0.0035, CLOSE_35_B day 0.0023, CLOSE_35_B night_lit 0.0071"
   },
   {
    "id": "SO-07",
@@ -439,7 +439,7 @@
    "id": "X-PRV",
    "name": "previews: JPEG, about 1600 px wide, under 500 KB",
    "status": "pass",
-   "detail": "8 JPEGs of this shop in the previews folder (at least 8): steam_laundry-close-35-day 134 KB 1280 px, steam_laundry-close-35-night-lit 114 KB 1280 px, steam_laundry-room-day 159 KB 1600 px, steam_laundry-room-night-dark 77 KB 1600 px, steam_laundry-room-night-lit 138 KB 1600 px, steam_laundry-street-square-day 169 KB 1280 px, steam_laundry-street-square-night-dark 103 KB 1280 px, steam_laundry-street-square-night-lit 120 KB 1280 px"
+   "detail": "8 JPEGs of this shop in the previews folder (at least 8): steam_laundry-close-35-day 202 KB 1600 px, steam_laundry-close-35-night-lit 171 KB 1600 px, steam_laundry-room-day 159 KB 1600 px, steam_laundry-room-night-dark 77 KB 1600 px, steam_laundry-room-night-lit 138 KB 1600 px, steam_laundry-street-square-day 242 KB 1600 px, steam_laundry-street-square-night-dark 148 KB 1600 px, steam_laundry-street-square-night-lit 169 KB 1600 px"
   }
  ]
 }
