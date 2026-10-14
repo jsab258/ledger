@@ -184,7 +184,7 @@ class HRoom(S.Room):
         if key == "wallpaper_stripe":
             return self.stripe_mat(base, fin["stripe_alt"], fin["stripe_period_mm"] / 1000.0)
         tile = {"wallpaper_floral": 0.55, "boards": 1.3, "carpet_brown": 1.0, "lino": 0.9, "ceiling_white": 1.2, "stripped_paper": 1.1, "peeling_paint": 1.3}.get(key, 1.5)
-        mode = "bw" if key in ("wallpaper_floral", "stripped_paper", "carpet_brown") else "rgb"
+        mode = "rgb" if key == "peeling_paint" else "bw"
         if key == "ceiling_white":
             base = [v * (0.92 if self.R["type"] in ("lounge", "bedroom", "front_room", "landing") else 1.0) for v in base]
         return self.pattern_mat("fin_" + key, tex, tile, base, rough=rough, mode=mode)
@@ -262,7 +262,7 @@ class HRoom(S.Room):
         x0, x1 = (-W / 2, -W / 2 + pr) if left else (W / 2 - pr, W / 2)
         yc = 2.2
         w, h = spec["w"], spec["h"]
-        tile = self.mat("fire_tile", rgb8(188, 150, 96), rough=0.35)
+        tile = self.mat("fire_tile", rgb8(136, 104, 72), rough=0.35)
         dark = self.mat("grate_dark", (0.012, 0.011, 0.01), rough=0.7)
         iron = self.mat("grate_iron", (0.03, 0.03, 0.032), rough=0.45, metal=0.8)
         self.box("fire_surround", x0, x1, yc - w / 2, yc + w / 2, 0.0, h, tile)
@@ -371,6 +371,25 @@ class HRoom(S.Room):
                 if m is None or not m.use_nodes:
                     continue
                 low = m.name.lower()
+                if low.startswith("ornate_mirror") and not m.get("hw_mirror"):
+                    # the mirror reflected the day's area light and the dark world: a white or black arch (14 October): its roughness is kept at 0.4 or more and its metal at most 0.5, a dim old mirror
+                    nt = m.node_tree
+                    p = nt.nodes["Principled BSDF"]
+                    for lk in list(nt.links):
+                        if lk.to_socket == p.inputs["Roughness"]:
+                            mx = nt.nodes.new("ShaderNodeMath")
+                            mx.operation = "MAXIMUM"
+                            mx.inputs[1].default_value = 0.42
+                            nt.links.new(lk.from_socket, mx.inputs[0])
+                            nt.links.new(mx.outputs["Value"], p.inputs["Roughness"])
+                    for lk in list(nt.links):
+                        if lk.to_socket == p.inputs["Metallic"]:
+                            mn = nt.nodes.new("ShaderNodeMath")
+                            mn.operation = "MINIMUM"
+                            mn.inputs[1].default_value = 0.45
+                            nt.links.new(lk.from_socket, mn.inputs[0])
+                            nt.links.new(mn.outputs["Value"], p.inputs["Metallic"])
+                    m["hw_mirror"] = True
                 if "leaves" in low and not m.get("hw_alpha"):
                     nt = m.node_tree
                     p = nt.nodes["Principled BSDF"]
@@ -516,7 +535,7 @@ class HRoom(S.Room):
             if hasattr(self, "lamp"):
                 lx, lz = (self.lamp[0] + self.lamp[1]) / 2, self.lamp[5] - 0.2
             elif hasattr(self, "tv"):
-                lx, lz = (self.tv[0] + self.tv[1]) / 2 + 0.7, 1.1
+                lx, lz = (self.tv[0] + self.tv[1]) / 2 - 0.75, 1.3
             else:
                 lx, lz = 0.9, 1.2
             self.L_lamp.location = (lx, D - 0.35, lz)
@@ -582,12 +601,12 @@ class HRoom(S.Room):
         if self.R.get("tv_glow") and hasattr(self, "tv"):
             # the television's screen: a cool emissive card on the front of the set, shown in night_lit only
             x0, x1, y0, y1, z0, z1 = self.tv
-            m = self.mat("tv_screen", TV_COOL, rough=0.2, emit=TV_COOL, emit_strength=2.0)
+            m = self.mat("tv_screen", (0.05, 0.06, 0.09), rough=0.2, emit=TV_COOL, emit_strength=0.45)
             self.tv_screen = self.box("tv_screen", (x0 + x1) / 2 - 0.12, (x0 + x1) / 2 + 0.12, y0 - 0.002, y0 - 0.0005, z0 + 0.09, z0 + 0.26, m)
         return self
 
 
-DEFAULT_P = {"day": 600.0, "pend": 120.0, "pend_bare": 40.0, "lamp": 4.0, "tv": 6.0, "wash": 60.0}
+DEFAULT_P = {"day": 38.0, "pend": 34.0, "pend_bare": 14.0, "lamp": 4.0, "tv": 6.0, "wash": 4.2}
 TARGET_MEAN = {"day": 105.0, "night_lit": 70.0, "night_dark": 15.0}
 LANDING_MEAN = 40.0
 
@@ -598,9 +617,9 @@ def luma_stats(path):
     return float(y.mean())
 
 
-def calibrate(r, work, log=print, res=None, samples=16):
+def calibrate(r, work, log=print, res=None, samples=8):
     """The light strengths so each state's mean luma meets the picture standard (day 105, night_lit 70 (landings 40), night_dark 15), by a few small renders."""
-    res = res or (int(r.pix[0] / 3), int(r.pix[1] / 3))
+    res = res or (int(r.pix[0] / 4), int(r.pix[1] / 4))
     P = dict(DEFAULT_P)
     tmp = os.path.join(work, "cal.png")
     bare = r.R["type"] in ("landing", "empty")
@@ -627,7 +646,7 @@ def calibrate(r, work, log=print, res=None, samples=16):
     return P
 
 
-def render_room(rid, out_dir, samples=48, log=print, states=STATES, work=None, scale=1.0):
+def render_room(rid, out_dir, samples=48, log=print, states=STATES, work=None, scale=1.0, quick=False):
     """Build the room, calibrate, render the three states (the empty rooms' night_lit is their night_dark), write the pictures and <room>.json. Returns the times."""
     work = work or os.path.join(T.SCRATCH, "work", rid)
     os.makedirs(work, exist_ok=True)
@@ -635,7 +654,7 @@ def render_room(rid, out_dir, samples=48, log=print, states=STATES, work=None, s
     t0 = time.time()
     r = HRoom(rid, work).build()
     log("%s built in %.0f s" % (rid, time.time() - t0))
-    P = calibrate(r, work, log)
+    P = dict(DEFAULT_P) if quick else calibrate(r, work, log)
     times = {}
     res = (int(r.pix[0] * scale), int(r.pix[1] * scale))
     rec = {"room": rid, "w": r.W, "h": r.H, "d": r.D, "camera_d": r.camd, "pixels": list(r.pix), "states": {}, "made_by": "production/cloud-week/kit/house-windows/build_windows.py (hw_roomgen.py)",
@@ -668,4 +687,6 @@ if __name__ == "__main__":
     out = sys.argv[2] if len(sys.argv) > 2 else os.path.join(T.ROOMS)
     samples = int(sys.argv[3]) if len(sys.argv) > 3 else 48
     scale = float(sys.argv[4]) if len(sys.argv) > 4 else 1.0
-    render_room(rid, out, samples=samples, scale=scale)
+    quick = "--quick" in sys.argv
+    sts = tuple(a.split("=")[1].split(",") for a in sys.argv if a.startswith("--states="))
+    render_room(rid, out, samples=samples, scale=scale, quick=quick, states=sts[0] if sts else STATES)

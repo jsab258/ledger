@@ -185,7 +185,7 @@ def room(r):
     for k in range(8):
         xc = cx0 + 0.05 + tpitch * (k + 0.5)
         GB.enamel_tray(gt, xc, tray_y, 0.78, w=tw, d=td, h=0.05, mi=0, mi_rim=0)
-        GB.ice_mound(gi, xc, tray_y, 0.781, 0.145, 0.120, 0.045, 150, 11 + k, mi=0)
+        GB.ice_mound(gi, xc, tray_y, 0.781, 0.140, 0.115, 0.045, 260, 11 + k, mi=0)
     o1 = gt.to_object("trays", [enamel], r.sc)
     ip_r = os.path.join(tex, "ice.png")
     GB.ice_png(ip_r)
@@ -411,7 +411,7 @@ def display(d):
         d.gm_object("tray_%d" % k, gt, [enamel], "scripted", "script:enamel_trays", tier="slab")
         gh = GM()
         gh_i0 = len(gh.V)
-        GB.ice_mound(gh, X(uc), vc, zc + 0.003, 0.165, 0.115, 0.040, 170, 21 + k, mi=0)
+        GB.ice_mound(gh, X(uc), vc, zc + 0.003, 0.160, 0.110, 0.042, 380, 21 + k, mi=0)
         GB.rot_x(gh, gh_i0, (vc, zc), 12.0)
         d.gm_object("tray_ice_%d" % k, gh, [ice_m], "scripted", "script:slab_and_ice", tier="slab", smooth=False)
     # ---- eight lemons between and beside the trays (resting on the ice bed)

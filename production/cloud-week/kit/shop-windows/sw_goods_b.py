@@ -804,7 +804,7 @@ def ice_chunk(gm, c, s, seed, mi=0, uv=None):
 
 def ice_mound(gm, cx, cy, z0, rx, ry, h, n, seed, mi=0):
     """A mound of crushed ice built of `n` faceted chunks (14 Oct: the first mounds were smooth heaps in one flat blue, which read as jelly): centres scattered over an ellipse (half axes rx, ry) on a floor z0, the
-    height of the dome 1 - r^2 of `h`, each chunk 16 to 34 mm across with its own corners, never below the floor (a chunk's lowest corner is 0.5 of its size under its centre at most), the outer chunks smaller; the picture
+    height of the dome 1 - r^2 of `h`, each chunk 22 to 44 mm across with its own corners, never below the floor (a chunk's lowest corner is 0.5 of its size under its centre at most), the outer chunks smaller; the picture
     of the ice (`ice_png`) is the material, UV tiles by chunk. Returns the number of chunks."""
     rnd = random.Random(seed)
     cnt = 0
@@ -813,7 +813,7 @@ def ice_mound(gm, cx, cy, z0, rx, ry, h, n, seed, mi=0):
         r_ = math.sqrt(rnd.random()) * (0.5 if k % 5 == 0 else 1.0)
         px, py = r_ * math.cos(a), r_ * math.sin(a)
         dome = max(0.0, 1.0 - r_ * r_)
-        sz = rnd.uniform(0.016, 0.034) * (0.7 + 0.3 * dome)
+        sz = rnd.uniform(0.022, 0.044) * (0.75 + 0.25 * dome)
         cs_ = seed * 7 + k
         rr_ = random.Random(cs_)
         zf_ = 0.5 + 0.5 * [rr_.random() for _ in range(18)][17]              # the chunk's lowest corner is 0.5 * sz * zf_ under its centre (ice_chunk's 18th draw)
