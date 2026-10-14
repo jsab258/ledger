@@ -1,5 +1,5 @@
 {
- "made": "2026-10-13 17:24:38",
+ "made": "2026-10-14 00:47:56",
  "what": "the files of the narrow-points build (13 Oct, from the try 2 reviews; v3); the three glbs and the three 4096 pictures are out of git (rebuilt by build_ritas.py) so this names the versions",
  "files": {
   "newsagent_front.glb": {
@@ -7,8 +7,8 @@
    "sha256": "9f64227c434fe82da804b464ebbd3045cf947b1a02f35568a4e0b101ce450698"
   },
   "newsagent_display.glb": {
-   "bytes": 912688,
-   "sha256": "098c7866a078efaa8522be479528dd0576c605317faf7272c5b2ae6347795591"
+   "bytes": 904800,
+   "sha256": "eede62bd9adc0bee3dcf1082bc6e164e7bdb2b428cfa9e9c4b5705fca0762c4e"
   },
   "newsagent_day.png": {
    "bytes": 7368829,
