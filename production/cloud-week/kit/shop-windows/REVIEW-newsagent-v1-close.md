@@ -38,7 +38,7 @@ Measured, all in my scratchpad (nothing in the repository or in SCRATCH was chan
     - The head spill (v about 0.07, w 1.65) reaches row 1's centre (v 0.33, w 0.20) only through the board: the ray crosses the board's plane at v 0.315.
     - The builder's judgement N10 blames the navy and green covers. Lifting them 1.35 times treated the wrong cause.
 - **Cause:**
-  - `sw_gen.py` line 68, `GM.sheet`: `y, z = y*cos(t) - z*sin(t), y*sin(t) + z*cos(t)` sends a sheet's top to -y (toward the glass). Its own docstring (line 61) says "the top toward +y, away from the camera".
+  - `sw_gen.py` line 68, `GM.sheet`: `y, z = y*cos(t) - z*sin(t), y*sin(t) + z*cos(t)` sends a sheet's top to -y (toward the glass). Its own docstring (line 61) and the comment on that very line say "the top toward +y".
   - `sw_shops_news.py` computes every centre for a back lean:
     - line 325: `vc = foot_v - 0.01 + hh/2*sin(lean)`;
     - line 387: the board's centre at `vb + blen/2*sb`;
@@ -50,7 +50,7 @@ Measured, all in my scratchpad (nothing in the repository or in SCRATCH was chan
 - **Exact fix:**
   1. `sw_gen.py` line 68: `y, z = y*math.cos(ta) + z*math.sin(ta), -y*math.sin(ta) + z*math.cos(ta)`, so that a positive tilt sends the top to +y, as the docstring says. The other caller in another shop (`sw_shops_tea.py` 265, the menu card, tilt 12) then leans back too. Run its `scenecheck`.
   2. `sw_shops_news.py` line 396: `zc = 0.004 + s0*cb + off*sb`. The offset runs along the board's front normal (-cos, +sin) in (v, w). With `off` 0.0095 + 0.0045 x row, row 0 clears the 12 mm board by 2 mm.
-  3. Line 383 to 384: `vb = 0.18` (the foot 10 mm behind the plinth's back face at v 0.17; at 0.17 the foot cuts 5 mm into the plinth) and `blen = 0.56`. The top edge is then at v 0.54, w 0.43, inside the 0.55 window. Row 2 still fits (it reaches 0.545 of 0.56 along the slope).
+  3. Lines 382 and 384: `vb = 0.18` (the foot 10 mm behind the plinth's back face at v 0.17; at 0.17 the foot cuts 5 mm into the plinth) and `blen = 0.56`. The top edge is then at v 0.54, w 0.43, inside the 0.55 window. Row 2 still fits (it reaches 0.545 of 0.56 along the slope).
   4. The papers, line 318 to 325: each paper's top edge rests 2 mm off what is behind it:
      - the riser at v 0.24 (top at v 0.238), or the back board at v 0.37 (top at v 0.368);
      - the feet stay 12 mm apart in depth;
@@ -122,10 +122,10 @@ Measured, all in my scratchpad (nothing in the repository or in SCRATCH was chan
    - "NEW LIBRARY OPENS ON" (…FRIDAY): CLOSE_35 day (685-790, 1205-1255).
    - A player reads them as unfinished.
    - Fix: the paper generator shrinks the headline type in 2 px steps until every word fits in three lines. A check compares the drawn words with `TEXTS`.
-2. **"MERIDIAN MORNING STAR"** (CLOSE_35 day, about 200-330, 1030-1070) carries the title of a real national daily, the Morning Star.
+2. **"MERIDIAN MORNING STAR"** (CLOSE_35 day, about 330-535, 1050-1080) carries the title of a real national daily, the Morning Star.
    - Fix: rename it, for example THE MERIDIAN COURIER (test the name against the brand blocklist), and add "MORNING STAR" to the blocklist.
 3. **The cartons read as big packets.**
-   - Each says "20 CIGARETTES", and the bottom band says only "HEALTH WARNING" (CLOSE_35 day 175-760, 850-1000).
+   - Each says "20 CIGARETTES", and the bottom band says only "HEALTH WARNING" (CLOSE_35 day 175-745, 785-975).
    - Their faces are 200 x 100 mm. A carton of 200 shows about 280 x 90.
    - Fix:
      - "200 CIGARETTES";
@@ -144,7 +144,7 @@ Measured, all in my scratchpad (nothing in the repository or in SCRATCH was chan
    - Add DSP-05 (fault 1, fix 5).
    - DSP-03's detail names "the scripted trays, pads and chains" of Rita's front row: word it for this shop.
    - `MANIFEST-newsagent.json`'s "what" is Rita's sentence ("the narrow-points build … v3 … rebuilt by build_ritas.py"). Write this shop's: "the newsagent's batch A build, 13 Oct; rebuilt by `build_shop.py --shop newsagent`".
-7. **The till's readout keeps a "Y" glyph left of the amount.** In the room picture it reads as a yen sign: "¥ 0 2 1 3.7 7 0" at 200 per cent, about (1835-1850, 830-850).
+7. **The till's readout keeps a "Y" glyph left of the amount.** In the room picture it reads as a yen sign: "¥ 0 2 1 3.7 7 0" at 200 per cent, about (1865-1882, 838-852).
    - Fix: paint it out as the $ was, box (500, 228, 514, 248) of `CashRegister_01_diff_1k.jpg`, and the matching boxes of its normal and ARM maps.
 8. **48 samples, not 128** (named). Owed on the PC before his page.
 9. **Each named change must be in NOTES** (the papers 0.22 wide, the pads at 0.6, no curl or fold). The curl and the fold are missing from NOTES and from the target's A9. Write them there; fault 2's fix 3 then removes them.
@@ -201,7 +201,7 @@ Nothing else is legible. There is no real firm's name or mark, no barcode, no dr
 
 - **Against the target's floors:**
   - Every frame is far above the composite floors (day 33, night_lit 45).
-  - The stallriser in the same frames reads 140 by day and 48 at night. So the lit room is 1.6 to 1.7 times the wall beside it at night, and the day room is readable under the stand-in reflection.
+  - The stallriser below the glass reads about 128 by day and 46 at night (medians). So at night the lit room is 1.6 to 1.8 times the wall beside it, and by day the room is readable under the stand-in reflection.
 - **Whole-frame PIC-05g:** 0.0031, 0.0070, 0.0047 and 0.0088, the check's own numbers. At night about two thirds of that is shared (a) and the pads (narrow 4).
 - **Black:**
   - By day the largest patch under luma 8 is the gantry upright's shade in the room (252 px at 374-384, 420-496).
