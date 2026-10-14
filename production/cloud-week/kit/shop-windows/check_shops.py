@@ -193,4 +193,82 @@ def steam_laundry(ctx, rows, assets, di):
             "era": "a 1990 launderette: front-loading machines, powder and soap flakes in printed card packets and plastic bottles of the period, wicker baskets, brown-paper parcels, towels (every maker invented); no modern phone, no flat screen, no barcode, no plastic modern packaging"}
 
 
-SHOPS.update({"steam_laundry": steam_laundry})
+
+def _sum(placed, model, fixture=None):
+    return sum(p.get("n", 0) for p in placed if p.get("model") == model and (fixture is None or p.get("fixture") == fixture))
+
+
+def _pending(rows, cid, name, detail):
+    rows.add(cid, name, False, detail, status="pending")
+
+
+def grocer(ctx, rows, assets, di):
+    """ROOM rows for the grocer (batch B): the gantry, the counter, the shelves over it, the two side units, the crates; the counts against the target (named exceptions); the scanned produce pending."""
+    RR = ctx.R["room"]
+    rooms = ctx.rooms
+    placed = json.load(open(os.path.join(rooms, "placed.json")))
+    tg = _sum(placed, "script:tins", "G-back-gantry")
+    pg = _sum(placed, "script:packets", "G-back-gantry")
+    boards = sorted({p["tag"] for p in placed if p.get("fixture") == "G-back-gantry" and p.get("model") in ("script:tins", "script:packets")})
+    rows.add("ROOM-01", "the gantry is full", tg >= 160 and pg >= 90 and len([b for b in boards if b.startswith("tins_")]) >= 4, "%d tins and %d packets on the five boards of the gantry (target 160 and 90; the rows are two deep and the boards are filled along their length), the crates on the floor under the first board, two baskets and the rolls on the second" % (tg, pg))
+    jars = _sum(placed, "script:jars", "G-back-shelves-right")
+    bots = _sum(placed, "script:bottles", "G-back-shelves-right")
+    rows.add("ROOM-02", "the counter and the shelves over it", jars >= 24 and bots >= 12 and any(p.get("model") == "script:counter_scale" for p in placed) and any(p.get("model") == "CashRegister_01" for p in placed),
+             "the counter with its till and its scale; %d jars and %d bottles on the two boards over it (target 24 and 12; washing-up liquid, brown sauce, malt vinegar, salad cream: no drink)" % (jars, bots))
+    lt = _sum(placed, "script:tins", "G-left-tins")
+    rp = _sum(placed, "script:packets", "G-right-tins")
+    rows.add("ROOM-03", "the side units", lt >= 40 and rp >= 30, "the left unit (0.10 deep, four tiers): %d tins (target 40); the right unit: %d dry-goods packets standing on edge (target 30; the target's tea and sugar are out: sugar, flour, oats, rice, pasta, custard, dried fruit)" % (lt, rp))
+    ncr = sum(1 for p in placed if p.get("model") == "plastic_crate_02")
+    non = sum(1 for p in placed if p.get("model") == "yellow_onion")
+    rows.add("ROOM-04", "the floor crates", ncr == 3 and non >= 36, "%d plastic_crate_02 on the floor under the gantry's first board, loaded with %d yellow_onion (the target loads them with potatoes: Sketchfab scans, Jafar's login)" % (ncr, non))
+    have = counts_row(ctx, rows, di, {}, "grocer")
+    _pending(rows, "SCN-01", "scanned produce", "cabbage x4, potato x20, satsuma x12, pear x6 (the target's script:cabbage_potato_satsuma): Sketchfab ffishAsia CC0 scans, the download needs Jafar's login (his Needs-you item 3): pending, not failed; nothing is hand-modelled in their place (the window carries apples, lemons, onions and bananas from Poly Haven and 30 scripted tomatoes the target lists)")
+    return {"supports": ["script:crate", "script:backing_board"], "texts": _texts(ctx, di),
+            "families": {"fruit and vegetables": ["food_apple_01", "lemon", "yellow_onion", "bananas", "script:tomatoes"], "tins and jars": ["script:tin_pyramids", "script:jars"], "crates and baskets": ["plastic_crate_02", "plastic_crate_03", "wicker_basket_02"]},
+            "era": "a 1990 grocer's: tins, packets, jars and fresh produce, every maker invented; no drink, no lottery or betting slip, no barcode, no modern packaging"}
+
+
+def chandler(ctx, rows, assets, di):
+    """ROOM rows for the ship chandler (batch B): the shelving's goods, the counter, the hooks board, the charts, the pegboard of rigging; the counts against the target (named exceptions)."""
+    RR = ctx.R["room"]
+    rooms = ctx.rooms
+    placed = json.load(open(os.path.join(rooms, "placed.json")))
+    tins = _sum(placed, "script:paint_tins")
+    coils = _sum(placed, "script:rope_coils")
+    reels = _sum(placed, "script:twine_reels")
+    rows.add("ROOM-01", "the shelving's goods", tins >= 40 and coils == 6 and reels == 10, "%d paint tins (target 40; two deep on two boards and one more), %d coils of rope standing on edge (swept tubes, ambientCG Rope001 in five colours), %d twine reels; oil tins, cans, cleaner tins, boots, flashlights and lanterns from Poly Haven (counts below)" % (tins, coils, reels))
+    hw = _sum(placed, "script:shackles_blocks")
+    ch = _sum(placed, "script:chart_posters")
+    rows.add("ROOM-02", "the walls' boards", hw == 24 and ch == 7, "the pegboard: %d pieces of rigging (shackles, blocks, cleats, chain) flat on a 1.6 x 1.1 board; the left wall: %d chart sheets and a tide table, and a board with a coil of rope laid flat" % (hw, ch))
+    lamp = any(p.get("model") == "Lantern_01" and p.get("tag") == "hurricane_lamp" for p in placed)
+    rows.add("ROOM-03", "the counter and its lamp", lamp and any(p.get("model") == "CashRegister_01" for p in placed) and sum(1 for p in placed if p.get("model") == "seadogs_compass") == 3, "the counter's till, three compasses and the hurricane lamp (Lantern_01, lit in night_lit only: a warm point light and a small flame)")
+    have = counts_row(ctx, rows, di, {"life_jacket": 4, "lifebuoy": 2, "script:oilskin_sou_wester": 3}, "chandler")
+    rows.na("NIT-01", "the woven mesh screens", "the target's night furniture (woven galvanised mesh over the lower lights when the shop is shut) is out of the lit night view the street file uses and is not in the day glb: not built (named in NOTES.md)")
+    return {"supports": ["script:crate", "script:backing_board"], "texts": _texts(ctx, di),
+            "families": {"rope and cordage": ["script:rope_coils"], "life-saving": ["life_jacket", "lifebuoy"], "lamps": ["Lantern_01", "wooden_lantern_01"], "boots and oilskins": ["rubber_boots", "script:oilskin_sou_wester"], "paint": ["script:paint_tin_pyramid"]},
+            "era": "a 1990 ship chandler's: rope, twine, paint, lamps, life jackets, a lifebuoy, boots, oilskins, charts; no explosives drum, no ship model, no modern phone or GPS, no LED lamp"}
+
+
+def fish_market(ctx, rows, assets, di):
+    """ROOM rows for the fishmonger (batch B): the chiller with its trays of ice, the shelf, the door, the board, the drain; the fish pending."""
+    RR = ctx.R["room"]
+    rooms = ctx.rooms
+    placed = json.load(open(os.path.join(rooms, "placed.json")))
+    fixtures = json.load(open(os.path.join(rooms, "fixtures.json")))
+    nt = _sum(placed, "script:enamel_trays")
+    glass = any(f.get("name") == "chiller_glass" for f in fixtures)
+    rows.add("ROOM-01", "the chiller", nt == 8 and glass, "the serve-over chiller (3.0 x 0.6 x 1.0): a sloping glass front, a well, %d white enamel trays each with a mound of ice (no fish: pending), a laminate top and a stainless edge" % nt)
+    ntn = _sum(placed, "script:tins_and_jars")
+    rows.add("ROOM-02", "the shelf", ntn >= 24, "%d tins and jars on the two boards (target 24), labels of the project's own makers (SALTHOUSE, TIDEMARK, FENWICK, BRIGHTWATER)" % ntn)
+    names = {f.get("name") for f in fixtures}
+    rows.add("ROOM-03", "the door, the board, the drain", {"door_slab", "door_lever", "drain_grating", "wet_patch"} <= names and any(p.get("model") == "script:price_board_chalk" for p in placed) and any(p.get("model") == "garden_hose_wall_mounted_01" for p in placed),
+             "the cold-room door (a seal, a plastic-faced leaf, a chrome lever, three hinges), the hose on its bracket, the blackboard (chalk: COD, HADDOCK, PLAICE, KIPPERS), the stainless drain grating and the hosed patch, the wet quarry floor")
+    have = counts_row(ctx, rows, di, {}, "fish_market")
+    _pending(rows, "SCN-01", "the fish", "cod x4, mackerel x8, herring x6, plaice x4, crab x5, prawns x60 (script:fish_on_ice): Sketchfab ffishAsia CC0 scans, the download needs Jafar's login (his Needs-you item 3): pending, not failed; NONE is modelled by hand (the 3 October failure): the trays and the slab carry ice, lemons and tickets only")
+    _pending(rows, "SCN-02", "the trade's goods read from the street", "the fishmonger's own goods (fish, crab, prawns) cannot read from STREET_SQUARE until the scans are in: pending, not failed; the slab, the ice, the trays and the tickets are measured by TRD-01")
+    return {"supports": ["script:crate", "script:price_stakes", "script:chiller_pad"], "texts": _texts(ctx, di),
+            "families": {"the slab and its trays": ["script:slab_and_ice", "script:enamel_trays"], "tickets": ["script:price_stakes"]},
+            "era": "a 1990 fishmonger's: a marble slab, ice, enamel trays, tickets in pounds per lb, tinned fish; no plastic modern packaging, no barcode, no drink"}
+
+
+SHOPS.update({"steam_laundry": steam_laundry, "grocer": grocer, "chandler": chandler, "fish_market": fish_market})
