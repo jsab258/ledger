@@ -1186,7 +1186,7 @@ def frn10_rows(R, work, assets, rows, members):
 
 def dsp05_float_rows(R, work, assets, rows):
     """DSP-05 (newsagent close review, fault 1, 14 Oct 2026: the magazines hung in the air under a board that leaned toward the glass; the coordinator's numbering: DSP-05 is this row, DSP-06 the size row, DSP-07 'every model keeps its parts'): nothing in the near metre floats, and a sheet leans back. For every piece, scripted good and price card of the display glb: (a) a point of its lower
-    35 per cent of the height (a sphere on spheres touches with its flank) or of its upper 15 per cent lies within 2 mm of another part of the display (not of its own group): it rests on something or hangs from something; (b) a thin sheet (its thinnest extent under
+    half of the height (a sphere on spheres, a curved bunch on two others, touch with a flank) or of its upper quarter lies within 2 mm of another part of the display (not of its own group): it rests on something or hangs from something; (b) a thin sheet (its thinnest extent under
     12 mm, the other two over 40 mm) whose face looks toward the street does not lean forward by more than 3 degrees (the face normal's tilt, from the principal axes of its vertices): its top is nearer the back
     than its foot. Lying-flat sheets (the face looking more than 53 degrees up or down) are not leans."""
     import bpy
@@ -1262,7 +1262,7 @@ def dsp05_float_rows(R, work, assets, rows):
             return False
         hgt = zhi - zlo
         # the lowest and highest 3 mm first (a sample of the whole flank could miss a small foot), then the flanks
-        if not (touches(surface_samples(V, T_, zlo, False, 0.003)) or touches(surface_samples(V, T_, zhi, True, 0.003)) or touches(surface_samples(V, T_, zlo, False, max(0.003, 0.35 * hgt))) or touches(surface_samples(V, T_, zhi, True, max(0.003, 0.15 * hgt)))):
+        if not (touches(surface_samples(V, T_, zlo, False, 0.003)) or touches(surface_samples(V, T_, zhi, True, 0.003)) or touches(surface_samples(V, T_, zlo, False, max(0.003, 0.5 * hgt))) or touches(surface_samples(V, T_, zhi, True, max(0.003, 0.25 * hgt)))):
             floating.append("%s(%s) lowest %.3f" % (di["groups"][gi]["model"], nms[0], zlo))
         # a thin sheet's lean (a single-mesh group)
         if len(nms) == 1:
@@ -1279,7 +1279,7 @@ def dsp05_float_rows(R, work, assets, rows):
                     if tilt < -3.0:
                         leaning.append("%s(%s) %.1f deg" % (di["groups"][gi]["model"], nms[0], tilt))
     rows.add("DSP-05", "nothing floats; sheets lean back", not floating and not leaning,
-             "%d display pieces, scripted goods and price cards: each rests on or hangs from something (a point on its lowest 35 per cent, or its highest 15 per cent, within 2 mm of another part of the display): %d float%s; %d thin sheets measured by their principal axes: %d lean toward the glass by more than 3 degrees%s (the kit's GM.sheet had the sign the wrong way until 14 Oct: the newsagent's magazines and papers)" % (
+             "%d display pieces, scripted goods and price cards: each rests on or hangs from something (a point on its lowest half, or its highest quarter, within 2 mm of another part of the display): %d float%s; %d thin sheets measured by their principal axes: %d lean toward the glass by more than 3 degrees%s (the kit's GM.sheet had the sign the wrong way until 14 Oct: the newsagent's magazines and papers)" % (
                  n_tested, len(floating), (" (" + "; ".join(floating[:10]) + ")") if floating else "", n_sheet, len(leaning), (" (" + "; ".join(leaning[:10]) + ")") if leaning else ""))
 
 
