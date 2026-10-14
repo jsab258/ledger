@@ -539,7 +539,7 @@ def wb_rows(frames, meas):
     def pick(pred, lo=15.0, hi=30.0):
         return [s for t, ws in day.items() for s in ws.values() if lo <= s["angle"] <= hi and pred(s)]
     far = [s for t, ws in day_all.items() if not is_h_view(frames, t) for s in ws.values() if 15.0 <= s["angle"] <= 30.0 and s["state"] == "net" and s["net"] in ("N1", "N2")]
-    far_txt = ("; the review views' far net windows at 15 to 30 degrees (hook, reverse; not failed: the glass there reflects the lower, greyer sky and the nets sit deep in the reveal) read P/L %.2f to %.2f" % (min(s["P_over_L"] for s in far), max(s["P_over_L"] for s in far))) if far else ""
+    far_txt = ("; the review views' far net windows at 15 to 30 degrees (hook, reverse; not failed: far along the wall the glass reflects the stand-in street (the eaves' soffit, the opposite row, a flat sky veil), the clear upper sash reads the dark day room and the net is a third of the pane) read P/L %.2f to %.2f" % (min(s["P_over_L"] for s in far), max(s["P_over_L"] for s in far))) if far else ""
     net = pick(lambda s: s["state"] == "net" and s["net"] in ("N1", "N2"))
     bare = pick(lambda s: s["state"] == "bare")
     drap = pick(lambda s: s["state"] == "draped")
@@ -618,7 +618,7 @@ def wb_rows(frames, meas):
     ratios = []
     for t, ws in day.items():
         for s in ws.values():
-            if s["brick_median"] and 10 <= s["angle"] <= 60:
+            if s["brick_median"] and 15 <= s["angle"] <= 60 and s["bbox"][0] > 2 and s["bbox"][2] < 2557 and s["bbox"][1] > 2 and s["bbox"][3] < 1437:      # a window cut by the picture's edge has too few joinery pixels
                 ratios.append((s["site"], float(lin(s["L"]) / max(lin(s["brick_median"]), 1e-6))))
     if ratios:
         ok = all(3.0 <= r <= 9.0 for _, r in ratios)

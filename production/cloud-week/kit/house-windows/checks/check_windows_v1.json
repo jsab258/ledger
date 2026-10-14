@@ -1,19 +1,15 @@
 {
- "made": "2026-10-14 09:47:32",
- "pass": 52,
+ "made": "2026-10-14 12:26:46",
+ "pass": 55,
  "total": 60,
  "fail": [
   "WB-01",
   "WB-03",
-  "WB-06",
   "WB-07",
   "NIGHT-01",
-  "NIGHT-02",
-  "GLS-05"
+  "NIGHT-02"
  ],
- "not_run": [
-  "WB-08"
- ],
+ "not_run": [],
  "target_rows": 47,
  "rows": [
   {
@@ -134,7 +130,7 @@
    "id": "WB-01",
    "name": "net windows are darker than their frames",
    "status": "fail",
-   "detail": "2 net windows at 15 to 30 degrees by day in the target's measuring views: P/L epbay0_w1 0.25 (close 19 deg), epbay1_w1 0.23 (h-along30-bay1w1 19 deg)  (outside 0.55 to 0.97: ['east_parade_bay0_upper_w1', 'east_parade_bay1_upper_w1']); the review views' far net windows at 15 to 30 degrees (hook, reverse; not failed: the glass there reflects the lower, greyer sky and the nets sit deep in the reveal) read P/L 0.24 to 0.34"
+   "detail": "4 net windows at 15 to 30 degrees by day in the target's measuring views: P/L epbay0_w1 0.25 (close 19 deg), epbay1_w1 0.23 (h-along30-bay1w1 19 deg), epbay0_w1 0.36 (close2 22 deg), epbay3_w0 0.30 (h-along15-bay3w1 19 deg)  (outside 0.55 to 0.97: ['east_parade_bay0_upper_w1', 'east_parade_bay1_upper_w1', 'east_parade_bay0_upper_w1', 'east_parade_bay3_upper_w0']); the review views' far net windows at 15 to 30 degrees (hook, reverse; not failed: far along the wall the glass reflects the stand-in street (the eaves' soffit, the opposite row, a flat sky veil), the clear upper sash reads the dark day room and the net is a third of the pane) read P/L 0.24 to 0.33"
   },
   {
    "id": "WB-02",
@@ -152,61 +148,61 @@
    "id": "WB-04",
    "name": "the dark lines are present",
    "status": "pass",
-   "detail": "3 bare and net windows at 15 to 30 degrees: D/L epbay0_w1 0.07 (close 19 deg), epbay1_w1 0.06 (h-along30-bay1w1 19 deg), epbay3_w1 0.07 (h-along30-bay3w1 19 deg)"
+   "detail": "5 bare and net windows at 15 to 30 degrees: D/L epbay0_w1 0.07 (close 19 deg), epbay1_w1 0.06 (h-along30-bay1w1 19 deg), epbay0_w1 0.06 (close2 22 deg), epbay3_w0 0.07 (h-along15-bay3w1 19 deg), epbay3_w1 0.07 (h-along30-bay3w1 19 deg)"
   },
   {
    "id": "WB-04b",
    "name": "the dark line round each pane",
    "status": "pass",
-   "detail": "dip at the pane edges over L: ay0_upper_w1 0.16 (8 edges), ay1_upper_w1 0.13 (6 edges), ay3_upper_w1 0.15 (8 edges)"
+   "detail": "dip at the pane edges over L: ay0_upper_w1 0.16 (8 edges), ay1_upper_w1 0.13 (6 edges), ay0_upper_w1 0.15 (8 edges), ay3_upper_w0 0.08 (7 edges), ay3_upper_w1 0.15 (8 edges)"
   },
   {
    "id": "WB-05",
    "name": "the pane is not one tone",
    "status": "pass",
-   "detail": "net 2 windows spread 182/179 (min 40); bare 1 windows spread 182 (min 20)"
+   "detail": "net 4 windows spread 182/179/167/183 (min 40); bare 1 windows spread 182 (min 20); draped 2 windows spread 54/51 (min 20)"
   },
   {
    "id": "WB-06",
    "name": "something is behind the glass by day",
-   "status": "fail",
-   "detail": "ay3_upper_w0 band medians span 18 levels; ay3_upper_w1 band medians span 24 levels; ay4_upper_w1 band medians span 22 levels; ay1_upper_w0 band medians span 6 levels; ay1_upper_w1 band medians span 15 levels; ay2_upper_w0 band medians span 28 levels; ay3_upper_w0 band medians span 22 levels"
+   "status": "pass",
+   "detail": "ay3_upper_w0 band medians span 18 levels; ay3_upper_w1 band medians span 24 levels; ay1_upper_w1 band medians span 15 levels; ay2_upper_w0 band medians span 28 levels"
   },
   {
    "id": "WB-07",
    "name": "the frame is brighter than the wall",
    "status": "fail",
-   "detail": "frame L over the brick beside it (linear): 10 windows, median 4.73, range 3.00 to 7.26 (band 3.0 to 9.0)"
+   "detail": "frame L over the brick beside it (linear): 6 windows, median 3.89, range 3.00 to 7.34 (band 3.0 to 9.0)"
   },
   {
    "id": "WB-08",
    "name": "the old fault fails",
-   "status": "not_run",
-   "detail": "not run: the old-fault frame (old_fault.json) is not rendered"
+   "status": "pass",
+   "detail": "the first build's pane (a lit pale card, no reflection) with flat joinery (no box shade, no shading of the reveal) in the same view: P/L 0.84, D/L 0.83, spread 1, line dip {'min_ratio': 0.821089506149292, 'edges': 8}: the checks fail it as they must (WB-02 P/L over 0.45, WB-04 D/L over 0.72, WB-04b no dip, WB-05 spread under 20, a bare window)"
   },
   {
    "id": "WB-09",
    "name": "the window under 10 degrees",
    "status": "pass",
-   "detail": "2 windows under 10 degrees (the Hook camera cam_A): pane luma at most the lining's: ay2_upper_w0 P 101 L 179, ay4_upper_w1 P 87 L 149"
+   "detail": "3 windows under 10 degrees (the Hook camera cam_A): pane luma at most the lining's: ay4_upper_w1 P 87 L 149, ay2_upper_w0 P 101 L 179, ay4_upper_w0 P 107 L 222"
   },
   {
    "id": "NIGHT-01",
    "name": "lit and dark windows at night",
    "status": "fail",
-   "detail": "1 lit and 1 dark windows measured (not all twenty are in a frame: the review cameras show the Hook, the reverse view, cam_A and the close views): dark median 41; lit: _bay0_upper_w1 P 95; a dark window brighter than 4 times the dark median: none"
+   "detail": "2 lit and 4 dark windows measured (not all twenty are in a frame: the review cameras show the Hook, the reverse view, cam_A and the close views): dark median 67; lit: _bay2_upper_w0 P 115, uth_bay2_gf_w0 P 57; a dark window brighter than 4 times the dark median: none"
   },
   {
    "id": "NIGHT-02",
    "name": "lit against dark",
    "status": "fail",
-   "detail": "median lit pane luma 95 over the dark windows' 41: 2.3 times (linear 5.1 times; at least 4 / 10)"
+   "detail": "median lit pane luma 86 over the dark windows' 67: 1.3 times (linear 1.9 times; at least 4 / 10)"
   },
   {
    "id": "NIGHT-03",
    "name": "the lit net glows its own colour",
    "status": "pass",
-   "detail": "lit windows' mean colour (linear, the pane as seen): _bay0_upper_w1 g/r 0.75 b/r 0.44 (nets: r>g>b, g/r 0.55 to 0.80, b/r 0.20 to 0.45; the pane's mean carries the card and the glass's reflection, so the bands are read with 0.12 and 0.10 of room)"
+   "detail": "lit windows' mean colour (linear, the pane as seen): _bay2_upper_w0 g/r 0.78 b/r 0.42; uth_bay2_gf_w0 g/r 0.67 b/r 0.32 (nets: r>g>b, g/r 0.55 to 0.80, b/r 0.20 to 0.45; the pane's mean carries the card and the glass's reflection, so the bands are read with 0.12 and 0.10 of room)"
   },
   {
    "id": "NIGHT-04",
@@ -230,19 +226,19 @@
    "id": "GLS-04",
    "name": "no bright band in the night glass",
    "status": "pass",
-   "detail": "night frames against the reflection-off render: hook_night largest orange patch 0.0000% of the glass (grey sky patch 1.04%, a real reflection); reverse_night largest orange patch 0.0000% of the glass (grey sky patch 0.00%, a real reflection); cam-a_night largest orange patch 0.0000% of the glass (grey sky patch 0.00%, a real reflection); close_night largest orange patch 0.0000% of the glass (grey sky patch 0.00%, a real reflection) (the largest connected patch of window glass 40 or more levels brighter than the reflection-off render and sodium-coloured must be under 0.1% of the glass)"
+   "detail": "night frames against the reflection-off render: close_night largest orange patch 0.0000% of the glass (grey sky patch 0.00%, a real reflection); h-across0-bay2w0_night largest orange patch 0.0000% of the glass (grey sky patch 5.74%, a real reflection); hook_night largest orange patch 0.0000% of the glass (grey sky patch 1.03%, a real reflection); reverse_night largest orange patch 0.0000% of the glass (grey sky patch 0.00%, a real reflection); cam-a_night largest orange patch 0.0000% of the glass (grey sky patch 0.00%, a real reflection); close2_night largest orange patch 0.0000% of the glass (grey sky patch 0.00%, a real reflection); h-along30-gf2w1_night largest orange patch 0.0000% of the glass (grey sky patch 0.36%, a real reflection) (the largest connected patch of window glass 40 or more levels brighter than the reflection-off render and sodium-coloured must be under 0.1% of the glass)"
   },
   {
    "id": "GLS-05",
    "name": "no lit stand-in lamp in view",
-   "status": "fail",
-   "detail": "no lit stand-in lamp is seen (the lamp lights are out of camera, glossy and transmission rays): burnt orange pixels (R 250+, B under 140) in 4 night frames: [('cam-a_night', 31)]"
+   "status": "pass",
+   "detail": "no lit stand-in lamp is seen (the lamp lights are out of camera, glossy and transmission rays): burnt orange pixels (R 250+, B under 140) outside the joinery and the brick in 7 night frames: none (on lit window paint in the lamp pool, not counted: [('hook_night', 1), ('cam-a_night', 30), ('h-along30-gf2w1_night', 7367)])"
   },
   {
    "id": "FRM-01",
    "name": "no see-through slot at any camera",
    "status": "pass",
-   "detail": "no see-through slot: in 12 frames' masks the background shows inside no window's outline box (more than 3 pixels): none"
+   "detail": "no see-through slot: in 19 frames' masks the background shows inside no window's outline box (more than 3 pixels): none"
   },
   {
    "id": "PIC-01",
@@ -374,1011 +370,11 @@
    "id": "PRV-01",
    "name": "the review set is in production/previews",
    "status": "pass",
-   "detail": "8 review previews (JPEG, at most 1600 px wide, under 500 KB): hw-cam-a-day-2026-10-13.jpg, hw-cam-a-night_lit-2026-10-13.jpg, hw-close-day-2026-10-13.jpg, hw-close-night_lit-2026-10-13.jpg, hw-hook-day-2026-10-13.jpg, hw-hook-night_lit-2026-10-13.jpg, hw-reverse-day-2026-10-13.jpg, hw-reverse-night_lit-2026-10-13.jpg; bad: none"
+   "detail": "10 review previews (JPEG, at most 1600 px wide, under 500 KB): hw-cam-a-day-2026-10-13.jpg, hw-cam-a-night_lit-2026-10-13.jpg, hw-close-day-2026-10-13.jpg, hw-close-night_lit-2026-10-13.jpg, hw-close2-day-2026-10-13.jpg, hw-close2-night_lit-2026-10-13.jpg, hw-hook-day-2026-10-13.jpg, hw-hook-night_lit-2026-10-13.jpg, hw-reverse-day-2026-10-13.jpg, hw-reverse-night_lit-2026-10-13.jpg; bad: none"
   }
  ],
- "seconds": 107.5,
+ "seconds": 119.6,
  "measurements": {
-  "hook_day": {
-   "east_parade_bay0_upper_w0": {
-    "pane_px": 18422,
-    "joinery_px": 7835,
-    "P": 105.93579864501953,
-    "L": 202.283203125,
-    "D": 28.986799240112305,
-    "spread": 91.79540252685547,
-    "pane_rgb_mean": [
-     95.89952231028118,
-     96.63505591141028,
-     99.52947562696775
-    ],
-    "P_over_L": 0.5237004210357347,
-    "D_over_L": 0.14329810281973854,
-    "line": {
-     "min_ratio": 0.044492077082395554,
-     "edges": 8
-    },
-    "angle": 39.95,
-    "state": "net",
-    "site": "east_parade_bay0_upper_w0",
-    "net": "N2",
-    "extra": null,
-    "frame": "hook_day",
-    "brick_median": 96.4157943725586
-   },
-   "east_parade_bay0_upper_w1": {
-    "pane_px": 7393,
-    "joinery_px": 3860,
-    "P": 108.5105972290039,
-    "L": 194.0,
-    "D": 28.97239875793457,
-    "spread": 91.46080017089844,
-    "pane_rgb_mean": [
-     88.35168402542946,
-     87.39970242120926,
-     89.26579196537266
-    ],
-    "P_over_L": 0.5593329754072366,
-    "D_over_L": 0.149342261638838,
-    "line": {
-     "min_ratio": 0.09719381481409073,
-     "edges": 7
-    },
-    "angle": 31.71,
-    "state": "net",
-    "site": "east_parade_bay0_upper_w1",
-    "net": "N1",
-    "extra": "C2",
-    "frame": "hook_day",
-    "brick_median": 98.13099670410156
-   },
-   "east_parade_bay1_upper_w0": {
-    "pane_px": 3588,
-    "joinery_px": 2025,
-    "P": 87.28679656982422,
-    "L": 202.13156127929688,
-    "D": 27.47132110595703,
-    "spread": 96.82160186767578,
-    "pane_rgb_mean": [
-     82.5170011148272,
-     79.54375696767,
-     79.93088071348942
-    ],
-    "P_over_L": 0.4318316052049635,
-    "D_over_L": 0.13590812306643354,
-    "line": {
-     "min_ratio": 0.15121635794639587,
-     "edges": 5
-    },
-    "angle": 25.98,
-    "state": "draped",
-    "site": "east_parade_bay1_upper_w0",
-    "net": "N0",
-    "extra": "B2",
-    "frame": "hook_day",
-    "brick_median": 99.85020446777344
-   },
-   "east_parade_bay1_upper_w1": {
-    "pane_px": 1816,
-    "joinery_px": 1352,
-    "P": 57.291900634765625,
-    "L": 189.61077880859375,
-    "D": 29.184219360351562,
-    "spread": 100.50900268554688,
-    "pane_rgb_mean": [
-     75.02863436123349,
-     69.14041850220265,
-     67.87224669603525
-    ],
-    "P_over_L": 0.3021552940964397,
-    "D_over_L": 0.15391645740673918,
-    "line": {
-     "min_ratio": 0.19246479868888855,
-     "edges": 5
-    },
-    "angle": 21.88,
-    "state": "net",
-    "site": "east_parade_bay1_upper_w1",
-    "net": "N1",
-    "extra": "C2",
-    "frame": "hook_day",
-    "brick_median": 102.21240234375
-   },
-   "east_parade_bay2_upper_w0": {
-    "pane_px": 1326,
-    "joinery_px": 925,
-    "P": 53.127197265625,
-    "L": 217.64813232421875,
-    "D": 36.417198181152344,
-    "spread": 97.81028747558594,
-    "pane_rgb_mean": [
-     71.31146304675717,
-     66.6447963800905,
-     63.72322775263952
-    ],
-    "P_over_L": 0.24409672942418942,
-    "D_over_L": 0.16732143663380303,
-    "line": {
-     "min_ratio": 0.13143324851989746,
-     "edges": 5
-    },
-    "angle": 18.84,
-    "state": "net",
-    "site": "east_parade_bay2_upper_w0",
-    "net": "N1",
-    "extra": "C2",
-    "frame": "hook_day",
-    "brick_median": 107.36600494384766
-   },
-   "east_parade_bay2_upper_w1": {
-    "pane_px": 829,
-    "joinery_px": 633,
-    "P": 57.280799865722656,
-    "L": 212.7454376220703,
-    "D": 40.674400329589844,
-    "spread": 79.18416595458984,
-    "pane_rgb_mean": [
-     73.77563329312424,
-     67.27985524728588,
-     64.32689987937273
-    ],
-    "P_over_L": 0.2692457262819361,
-    "D_over_L": 0.19118812033866273,
-    "line": {
-     "min_ratio": 0.14188317954540253,
-     "edges": 5
-    },
-    "angle": 16.52,
-    "state": "net",
-    "site": "east_parade_bay2_upper_w1",
-    "net": "N2",
-    "extra": null,
-    "frame": "hook_day",
-    "brick_median": 108.656005859375
-   },
-   "east_parade_bay3_upper_w0": {
-    "pane_px": 243,
-    "joinery_px": 482,
-    "P": 64.11799621582031,
-    "L": 152.69879150390625,
-    "D": 40.28048324584961,
-    "spread": 73.67678833007812,
-    "pane_rgb_mean": [
-     75.41975308641975,
-     65.31687242798354,
-     61.22222222222222
-    ],
-    "P_over_L": 0.419898517757294,
-    "D_over_L": 0.26379045209941415,
-    "line": {
-     "min_ratio": 0.11020387709140778,
-     "edges": 5
-    },
-    "angle": 14.69,
-    "state": "net",
-    "site": "east_parade_bay3_upper_w0",
-    "net": "N1",
-    "extra": null,
-    "frame": "hook_day",
-    "brick_median": 107.5156021118164
-   },
-   "west_south_bay1_gf_w0": {
-    "pane_px": 2232,
-    "joinery_px": 2567,
-    "P": 65.77619934082031,
-    "L": 169.07620239257812,
-    "D": 31.25320053100586,
-    "spread": 54.77660369873047,
-    "pane_rgb_mean": [
-     64.78673835125448,
-     58.736559139784944,
-     57.6671146953405
-    ],
-    "P_over_L": 0.3890328645310741,
-    "D_over_L": 0.1848468328998722,
-    "line": {
-     "min_ratio": 0.16370369493961334,
-     "edges": 5
-    },
-    "angle": 13.48,
-    "state": "net",
-    "site": "west_south_bay1_gf_w0",
-    "net": "N2",
-    "extra": null,
-    "frame": "hook_day",
-    "brick_median": 83.66919708251953
-   },
-   "west_south_bay1_gf_w1": {
-    "pane_px": 4100,
-    "joinery_px": 3818,
-    "P": 55.53349685668945,
-    "L": 173.07620239257812,
-    "D": 32.59735107421875,
-    "spread": 47.71986389160156,
-    "pane_rgb_mean": [
-     59.87658536585366,
-     55.858048780487806,
-     54.54560975609756
-    ],
-    "P_over_L": 0.32086154011356355,
-    "D_over_L": 0.18834103489444598,
-    "line": {
-     "min_ratio": 0.15210294723510742,
-     "edges": 5
-    },
-    "angle": 15.27,
-    "state": "draped",
-    "site": "west_south_bay1_gf_w1",
-    "net": "N0",
-    "extra": "C1",
-    "frame": "hook_day",
-    "brick_median": 84.15339660644531
-   }
-  },
-  "hook_night": {
-   "east_parade_bay0_upper_w0": {
-    "pane_px": 18422,
-    "joinery_px": 7835,
-    "P": 70.85040283203125,
-    "L": 85.35299682617188,
-    "D": 33.56159973144531,
-    "spread": 40.00978469848633,
-    "pane_rgb_mean": [
-     68.8972424275323,
-     65.28460536315275,
-     64.41059602649007
-    ],
-    "P_over_L": 0.8300868799759157,
-    "D_over_L": 0.3932093890012575,
-    "line": {
-     "min_ratio": 0.31119704246520996,
-     "edges": 8
-    },
-    "angle": 39.95,
-    "state": "net",
-    "site": "east_parade_bay0_upper_w0",
-    "net": "N2",
-    "extra": null,
-    "frame": "hook_night",
-    "brick_median": 36.95920181274414
-   },
-   "east_parade_bay0_upper_w1": {
-    "pane_px": 7393,
-    "joinery_px": 3860,
-    "P": 82.40399932861328,
-    "L": 84.7781982421875,
-    "D": 40.05099868774414,
-    "spread": 97.02700805664062,
-    "pane_rgb_mean": [
-     109.62275125118356,
-     95.38766400649263,
-     75.40849452184499
-    ],
-    "P_over_L": 0.9719951713671503,
-    "D_over_L": 0.4724209704637705,
-    "line": {
-     "min_ratio": 0.4321134090423584,
-     "edges": 7
-    },
-    "angle": 31.71,
-    "state": "net",
-    "site": "east_parade_bay0_upper_w1",
-    "net": "N1",
-    "extra": "C2",
-    "frame": "hook_night",
-    "brick_median": 37.746604919433594
-   },
-   "east_parade_bay1_upper_w0": {
-    "pane_px": 3588,
-    "joinery_px": 2025,
-    "P": 53.053802490234375,
-    "L": 85.89372253417969,
-    "D": 24.37639808654785,
-    "spread": 59.51033401489258,
-    "pane_rgb_mean": [
-     61.56298773690078,
-     51.513377926421406,
-     45.210144927536234
-    ],
-    "P_over_L": 0.6176679846320862,
-    "D_over_L": 0.28379720155739846,
-    "line": {
-     "min_ratio": 0.33415713906288147,
-     "edges": 5
-    },
-    "angle": 25.98,
-    "state": "draped",
-    "site": "east_parade_bay1_upper_w0",
-    "net": "N0",
-    "extra": "B2",
-    "frame": "hook_night",
-    "brick_median": 38.606197357177734
-   },
-   "east_parade_bay1_upper_w1": {
-    "pane_px": 1816,
-    "joinery_px": 1352,
-    "P": 48.786800384521484,
-    "L": 80.41798400878906,
-    "D": 29.27560043334961,
-    "spread": 33.86445236206055,
-    "pane_rgb_mean": [
-     50.359030837004404,
-     45.113436123348016,
-     43.28193832599119
-    ],
-    "P_over_L": 0.6066652998810498,
-    "D_over_L": 0.36404295375211115,
-    "line": {
-     "min_ratio": 0.34362712502479553,
-     "edges": 5
-    },
-    "angle": 21.88,
-    "state": "net",
-    "site": "east_parade_bay1_upper_w1",
-    "net": "N1",
-    "extra": "C2",
-    "frame": "hook_night",
-    "brick_median": 39.46580123901367
-   },
-   "east_parade_bay2_upper_w0": {
-    "pane_px": 1326,
-    "joinery_px": 925,
-    "P": 74.16250610351562,
-    "L": 92.49739837646484,
-    "D": 35.264198303222656,
-    "spread": 90.05181121826172,
-    "pane_rgb_mean": [
-     87.12141779788838,
-     79.43438914027149,
-     54.40950226244344
-    ],
-    "P_over_L": 0.8017793733146297,
-    "D_over_L": 0.3812452990266516,
-    "line": {
-     "min_ratio": 0.34016308188438416,
-     "edges": 5
-    },
-    "angle": 18.84,
-    "state": "net",
-    "site": "east_parade_bay2_upper_w0",
-    "net": "N1",
-    "extra": "C2",
-    "frame": "hook_night",
-    "brick_median": 42.083900451660156
-   },
-   "east_parade_bay2_upper_w1": {
-    "pane_px": 829,
-    "joinery_px": 633,
-    "P": 32.97359848022461,
-    "L": 89.60972595214844,
-    "D": 18.615859985351562,
-    "spread": 41.92132568359375,
-    "pane_rgb_mean": [
-     41.8962605548854,
-     33.57418576598311,
-     29.562123039806995
-    ],
-    "P_over_L": 0.3679689691031139,
-    "D_over_L": 0.20774374419237066,
-    "line": {
-     "min_ratio": 0.16163647174835205,
-     "edges": 5
-    },
-    "angle": 16.52,
-    "state": "net",
-    "site": "east_parade_bay2_upper_w1",
-    "net": "N2",
-    "extra": null,
-    "frame": "hook_night",
-    "brick_median": 42.47500228881836
-   },
-   "east_parade_bay3_upper_w0": {
-    "pane_px": 243,
-    "joinery_px": 482,
-    "P": 31.13640022277832,
-    "L": 62.413978576660156,
-    "D": 23.716442108154297,
-    "spread": 25.477201461791992,
-    "pane_rgb_mean": [
-     37.91358024691358,
-     33.39917695473251,
-     30.152263374485596
-    ],
-    "P_over_L": 0.49886901833272723,
-    "D_over_L": 0.37998606480476976,
-    "line": {
-     "min_ratio": 0.24932876229286194,
-     "edges": 5
-    },
-    "angle": 14.69,
-    "state": "net",
-    "site": "east_parade_bay3_upper_w0",
-    "net": "N1",
-    "extra": null,
-    "frame": "hook_night",
-    "brick_median": 41.90019989013672
-   },
-   "west_south_bay1_gf_w0": {
-    "pane_px": 2232,
-    "joinery_px": 2567,
-    "P": 31.97760009765625,
-    "L": 71.07220458984375,
-    "D": 16.529159545898438,
-    "spread": 36.51580047607422,
-    "pane_rgb_mean": [
-     41.44444444444444,
-     31.315412186379927,
-     27.22132616487455
-    ],
-    "P_over_L": 0.44993116904419006,
-    "D_over_L": 0.23256854970642718,
-    "line": {
-     "min_ratio": 0.1644468456506729,
-     "edges": 5
-    },
-    "angle": 13.48,
-    "state": "net",
-    "site": "west_south_bay1_gf_w0",
-    "net": "N2",
-    "extra": null,
-    "frame": "hook_night",
-    "brick_median": 33.687599182128906
-   },
-   "west_south_bay1_gf_w1": {
-    "pane_px": 4100,
-    "joinery_px": 3818,
-    "P": 54.657798767089844,
-    "L": 103.47319030761719,
-    "D": 31.348800659179688,
-    "spread": 58.82640075683594,
-    "pane_rgb_mean": [
-     85.90926829268292,
-     48.702439024390245,
-     26.86219512195122
-    ],
-    "P_over_L": 0.5282315023301858,
-    "D_over_L": 0.302965440284409,
-    "line": {
-     "min_ratio": 0.26129087805747986,
-     "edges": 5
-    },
-    "angle": 15.27,
-    "state": "draped",
-    "site": "west_south_bay1_gf_w1",
-    "net": "N0",
-    "extra": "C1",
-    "frame": "hook_night",
-    "brick_median": 45.27149963378906
-   }
-  },
-  "reverse_day": {
-   "east_parade_bay2_upper_w0": {
-    "pane_px": 180,
-    "joinery_px": 775,
-    "P": 100.63780212402344,
-    "L": 178.61500549316406,
-    "D": 91.38027954101562,
-    "spread": 32.10578155517578,
-    "pane_rgb_mean": [
-     104.95555555555555,
-     101.36111111111111,
-     100.48333333333333
-    ],
-    "P_over_L": 0.563434196618352,
-    "D_over_L": 0.5116047181406207,
-    "line": {
-     "min_ratio": 0.5602675676345825,
-     "edges": 3
-    },
-    "angle": 9.2,
-    "state": "net",
-    "site": "east_parade_bay2_upper_w0",
-    "net": "N1",
-    "extra": "C2",
-    "frame": "reverse_day",
-    "brick_median": 111.72820281982422
-   },
-   "east_parade_bay2_upper_w1": {
-    "pane_px": 587,
-    "joinery_px": 1182,
-    "P": 99.0,
-    "L": 186.63458251953125,
-    "D": 83.19816589355469,
-    "spread": 33.22216033935547,
-    "pane_rgb_mean": [
-     98.80579216354344,
-     97.43781942078364,
-     97.30494037478705
-    ],
-    "P_over_L": 0.530448315974022,
-    "D_over_L": 0.4457810807107414,
-    "line": {
-     "min_ratio": 0.4546124041080475,
-     "edges": 2
-    },
-    "angle": 10.62,
-    "state": "net",
-    "site": "east_parade_bay2_upper_w1",
-    "net": "N2",
-    "extra": null,
-    "frame": "reverse_day",
-    "brick_median": 109.87779998779297
-   },
-   "east_parade_bay3_upper_w0": {
-    "pane_px": 521,
-    "joinery_px": 1797,
-    "P": 69.63379669189453,
-    "L": 146.92379760742188,
-    "D": 43.60319137573242,
-    "spread": 67.24939727783203,
-    "pane_rgb_mean": [
-     73.42034548944338,
-     65.14971209213051,
-     61.15163147792706
-    ],
-    "P_over_L": 0.47394498254091527,
-    "D_over_L": 0.29677419237582925,
-    "line": {
-     "min_ratio": 0.24674829840660095,
-     "edges": 3
-    },
-    "angle": 12.53,
-    "state": "net",
-    "site": "east_parade_bay3_upper_w0",
-    "net": "N1",
-    "extra": null,
-    "frame": "reverse_day",
-    "brick_median": 106.00379943847656
-   },
-   "east_parade_bay3_upper_w1": {
-    "pane_px": 2483,
-    "joinery_px": 3439,
-    "P": 50.271602630615234,
-    "L": 152.13304138183594,
-    "D": 29.393600463867188,
-    "spread": 62.16748046875,
-    "pane_rgb_mean": [
-     58.26661296818365,
-     49.56141763995167,
-     45.67297623842126
-    ],
-    "P_over_L": 0.3304449984960168,
-    "D_over_L": 0.1932098392097002,
-    "line": {
-     "min_ratio": 0.21682864427566528,
-     "edges": 3
-    },
-    "angle": 15.23,
-    "state": "bare",
-    "site": "east_parade_bay3_upper_w1",
-    "net": "N0",
-    "extra": null,
-    "frame": "reverse_day",
-    "brick_median": 103.57859802246094
-   },
-   "west_south_bay0_gf_w0": {
-    "pane_px": 770,
-    "joinery_px": 844,
-    "P": 39.24009704589844,
-    "L": 131.47573852539062,
-    "D": 19.665550231933594,
-    "spread": 66.81745147705078,
-    "pane_rgb_mean": [
-     45.86883116883117,
-     40.14415584415585,
-     37.824675324675326
-    ],
-    "P_over_L": 0.2984588448485527,
-    "D_over_L": 0.14957550687677468,
-    "line": {
-     "min_ratio": 0.10961718112230301,
-     "edges": 5
-    },
-    "angle": 18.33,
-    "state": "net",
-    "site": "west_south_bay0_gf_w0",
-    "net": "N1",
-    "extra": null,
-    "frame": "reverse_day",
-    "brick_median": 84.30699920654297
-   },
-   "west_south_bay0_gf_w1": {
-    "pane_px": 528,
-    "joinery_px": 698,
-    "P": 44.421199798583984,
-    "L": 132.2126007080078,
-    "D": 27.642650604248047,
-    "spread": 58.953189849853516,
-    "pane_rgb_mean": [
-     49.63257575757576,
-     45.45643939393939,
-     43.46590909090909
-    ],
-    "P_over_L": 0.3359831026748231,
-    "D_over_L": 0.20907727747748475,
-    "line": {
-     "min_ratio": 0.16304346919059753,
-     "edges": 5
-    },
-    "angle": 16.92,
-    "state": "net",
-    "site": "west_south_bay0_gf_w1",
-    "net": "N1",
-    "extra": null,
-    "frame": "reverse_day",
-    "brick_median": 88.0426025390625
-   },
-   "west_south_bay1_gf_w0": {
-    "pane_px": 439,
-    "joinery_px": 495,
-    "P": 49.77020263671875,
-    "L": 166.51344299316406,
-    "D": 31.923259735107422,
-    "spread": 50.41278839111328,
-    "pane_rgb_mean": [
-     58.981776765375855,
-     51.62414578587699,
-     48.874715261959
-    ],
-    "P_over_L": 0.29889600348220524,
-    "D_over_L": 0.19171581081545458,
-    "line": {
-     "min_ratio": 0.22505691647529602,
-     "edges": 5
-    },
-    "angle": 14.34,
-    "state": "net",
-    "site": "west_south_bay1_gf_w0",
-    "net": "N2",
-    "extra": null,
-    "frame": "reverse_day",
-    "brick_median": 85.3884048461914
-   },
-   "west_south_bay1_gf_w1": {
-    "pane_px": 372,
-    "joinery_px": 373,
-    "P": 58.45209884643555,
-    "L": 167.69635009765625,
-    "D": 35.693878173828125,
-    "spread": 66.19969177246094,
-    "pane_rgb_mean": [
-     67.49462365591398,
-     61.07258064516129,
-     59.556451612903224
-    ],
-    "P_over_L": 0.3485591595308817,
-    "D_over_L": 0.2128482710150946,
-    "line": {
-     "min_ratio": 0.23545056581497192,
-     "edges": 5
-    },
-    "angle": 13.46,
-    "state": "draped",
-    "site": "west_south_bay1_gf_w1",
-    "net": "N0",
-    "extra": "C1",
-    "frame": "reverse_day",
-    "brick_median": 91.81880187988281
-   }
-  },
-  "reverse_night": {
-   "east_parade_bay2_upper_w0": {
-    "pane_px": 180,
-    "joinery_px": 775,
-    "P": 65.23069763183594,
-    "L": 80.91699981689453,
-    "D": 47.82229995727539,
-    "spread": 19.828266143798828,
-    "pane_rgb_mean": [
-     68.92777777777778,
-     62.66111111111111,
-     52.016666666666666
-    ],
-    "P_over_L": 0.8061433046139277,
-    "D_over_L": 0.5910043633042689,
-    "line": {
-     "min_ratio": 0.5380575060844421,
-     "edges": 3
-    },
-    "angle": 9.2,
-    "state": "net",
-    "site": "east_parade_bay2_upper_w0",
-    "net": "N1",
-    "extra": "C2",
-    "frame": "reverse_night",
-    "brick_median": 44.04059982299805
-   },
-   "east_parade_bay2_upper_w1": {
-    "pane_px": 587,
-    "joinery_px": 1182,
-    "P": 42.35300064086914,
-    "L": 78.11393737792969,
-    "D": 31.01255989074707,
-    "spread": 20.687936782836914,
-    "pane_rgb_mean": [
-     43.93867120954003,
-     40.31856899488927,
-     38.64395229982964
-    ],
-    "P_over_L": 0.5421951838883435,
-    "D_over_L": 0.397016984826953,
-    "line": {
-     "min_ratio": 0.4232151508331299,
-     "edges": 2
-    },
-    "angle": 10.62,
-    "state": "net",
-    "site": "east_parade_bay2_upper_w1",
-    "net": "N2",
-    "extra": null,
-    "frame": "reverse_night",
-    "brick_median": 42.759803771972656
-   },
-   "east_parade_bay3_upper_w0": {
-    "pane_px": 521,
-    "joinery_px": 1797,
-    "P": 34.49340057373047,
-    "L": 59.91307830810547,
-    "D": 22.11052894592285,
-    "spread": 23.506601333618164,
-    "pane_rgb_mean": [
-     35.18809980806142,
-     31.59692898272553,
-     28.904030710172744
-    ],
-    "P_over_L": 0.5757240580486741,
-    "D_over_L": 0.3690434471121405,
-    "line": {
-     "min_ratio": 0.3968115448951721,
-     "edges": 3
-    },
-    "angle": 12.53,
-    "state": "net",
-    "site": "east_parade_bay3_upper_w0",
-    "net": "N1",
-    "extra": null,
-    "frame": "reverse_night",
-    "brick_median": 41.25320053100586
-   },
-   "east_parade_bay3_upper_w1": {
-    "pane_px": 2483,
-    "joinery_px": 3439,
-    "P": 28.633800506591797,
-    "L": 62.435638427734375,
-    "D": 15.846399307250977,
-    "spread": 26.499380111694336,
-    "pane_rgb_mean": [
-     30.776077325815546,
-     27.311316955296014,
-     24.339105920257754
-    ],
-    "P_over_L": 0.4586130810487949,
-    "D_over_L": 0.253803752252686,
-    "line": {
-     "min_ratio": 0.3372272849082947,
-     "edges": 3
-    },
-    "angle": 15.23,
-    "state": "bare",
-    "site": "east_parade_bay3_upper_w1",
-    "net": "N0",
-    "extra": null,
-    "frame": "reverse_night",
-    "brick_median": 40.11280059814453
-   },
-   "west_south_bay0_gf_w0": {
-    "pane_px": 770,
-    "joinery_px": 844,
-    "P": 49.460899353027344,
-    "L": 117.33899688720703,
-    "D": 28.999370574951172,
-    "spread": 56.51457214355469,
-    "pane_rgb_mean": [
-     81.5025974025974,
-     44.127272727272725,
-     23.54805194805195
-    ],
-    "P_over_L": 0.42152140946434025,
-    "D_over_L": 0.24714179722217183,
-    "line": {
-     "min_ratio": 0.24125142395496368,
-     "edges": 5
-    },
-    "angle": 18.33,
-    "state": "net",
-    "site": "west_south_bay0_gf_w0",
-    "net": "N1",
-    "extra": null,
-    "frame": "reverse_night",
-    "brick_median": 57.2073974609375
-   },
-   "west_south_bay0_gf_w1": {
-    "pane_px": 528,
-    "joinery_px": 698,
-    "P": 32.47099685668945,
-    "L": 75.00946807861328,
-    "D": 21.094100952148438,
-    "spread": 34.47087860107422,
-    "pane_rgb_mean": [
-     43.884469696969695,
-     31.166666666666668,
-     24.670454545454547
-    ],
-    "P_over_L": 0.43289197601905927,
-    "D_over_L": 0.28121917795818624,
-    "line": {
-     "min_ratio": 0.19117319583892822,
-     "edges": 5
-    },
-    "angle": 16.92,
-    "state": "net",
-    "site": "west_south_bay0_gf_w1",
-    "net": "N1",
-    "extra": null,
-    "frame": "reverse_night",
-    "brick_median": 46.165199279785156
-   },
-   "west_south_bay1_gf_w0": {
-    "pane_px": 439,
-    "joinery_px": 495,
-    "P": 25.180999755859375,
-    "L": 70.06300354003906,
-    "D": 13.304519653320312,
-    "spread": 32.898338317871094,
-    "pane_rgb_mean": [
-     32.91116173120729,
-     25.23006833712984,
-     22.444191343963553
-    ],
-    "P_over_L": 0.35940508518834957,
-    "D_over_L": 0.18989365258537838,
-    "line": {
-     "min_ratio": 0.20673106610774994,
-     "edges": 5
-    },
-    "angle": 14.34,
-    "state": "net",
-    "site": "west_south_bay1_gf_w0",
-    "net": "N2",
-    "extra": null,
-    "frame": "reverse_night",
-    "brick_median": 33.25320053100586
-   },
-   "west_south_bay1_gf_w1": {
-    "pane_px": 372,
-    "joinery_px": 373,
-    "P": 51.47150421142578,
-    "L": 83.6507568359375,
-    "D": 32.642799377441406,
-    "spread": 38.77455520629883,
-    "pane_rgb_mean": [
-     76.93010752688173,
-     46.46236559139785,
-     31.362903225806452
-    ],
-    "P_over_L": 0.6153142680152408,
-    "D_over_L": 0.39022718517016,
-    "line": {
-     "min_ratio": 0.5150748491287231,
-     "edges": 5
-    },
-    "angle": 13.46,
-    "state": "draped",
-    "site": "west_south_bay1_gf_w1",
-    "net": "N0",
-    "extra": "C1",
-    "frame": "reverse_night",
-    "brick_median": 46.495201110839844
-   }
-  },
-  "cam-a_day": {
-   "west_south_bay0_gf_w0": {
-    "pane_px": 4273,
-    "joinery_px": 2069,
-    "P": 16.91860008239746,
-    "L": 150.8603973388672,
-    "D": 7.715199947357178,
-    "spread": 50.84760284423828,
-    "pane_rgb_mean": [
-     26.377720571027382,
-     24.42803650830798,
-     22.78726889772993
-    ],
-    "P_over_L": 0.112147391766405,
-    "D_over_L": 0.05114132060799934,
-    "line": {
-     "min_ratio": 0.03977186977863312,
-     "edges": 5
-    },
-    "angle": 33.67,
-    "state": "net",
-    "site": "west_south_bay0_gf_w0",
-    "net": "N1",
-    "extra": null,
-    "frame": "cam-a_day",
-    "brick_median": 78.80039978027344
-   },
-   "west_south_bay0_gf_w1": {
-    "pane_px": 6918,
-    "joinery_px": 3085,
-    "P": 11.072199821472168,
-    "L": 153.7191925048828,
-    "D": 6.787400245666504,
-    "spread": 48.84759521484375,
-    "pane_rgb_mean": [
-     20.37351835790691,
-     18.733593524139923,
-     18.05131540907777
-    ],
-    "P_over_L": 0.0720287404653161,
-    "D_over_L": 0.04415454007443414,
-    "line": {
-     "min_ratio": 0.03950190171599388,
-     "edges": 5
-    },
-    "angle": 37.48,
-    "state": "net",
-    "site": "west_south_bay0_gf_w1",
-    "net": "N1",
-    "extra": null,
-    "frame": "cam-a_day",
-    "brick_median": 77.9407958984375
-   }
-  },
-  "cam-a_night": {
-   "west_south_bay0_gf_w0": {
-    "pane_px": 4273,
-    "joinery_px": 2069,
-    "P": 39.896202087402344,
-    "L": 140.02479553222656,
-    "D": 17.46225929260254,
-    "spread": 76.38680267333984,
-    "pane_rgb_mean": [
-     74.47601216943599,
-     42.315469225368595,
-     23.300725485607302
-    ],
-    "P_over_L": 0.2849224091758825,
-    "D_over_L": 0.12470833630736221,
-    "line": {
-     "min_ratio": 0.19169747829437256,
-     "edges": 5
-    },
-    "angle": 33.67,
-    "state": "net",
-    "site": "west_south_bay0_gf_w0",
-    "net": "N1",
-    "extra": null,
-    "frame": "cam-a_night",
-    "brick_median": 52.321197509765625
-   },
-   "west_south_bay0_gf_w1": {
-    "pane_px": 6918,
-    "joinery_px": 3085,
-    "P": 31.317399978637695,
-    "L": 89.1731185913086,
-    "D": 11.180999755859375,
-    "spread": 49.84402847290039,
-    "pane_rgb_mean": [
-     44.76712922810061,
-     28.895779126915293,
-     22.23807458803122
-    ],
-    "P_over_L": 0.35119776535089237,
-    "D_over_L": 0.12538531715037662,
-    "line": {
-     "min_ratio": 0.12142673879861832,
-     "edges": 5
-    },
-    "angle": 37.48,
-    "state": "net",
-    "site": "west_south_bay0_gf_w1",
-    "net": "N1",
-    "extra": null,
-    "frame": "cam-a_night",
-    "brick_median": 41.62459945678711
-   }
-  },
   "close_day": {
    "east_parade_bay0_upper_w1": {
     "pane_px": 27409,
@@ -1458,8 +454,7 @@
     "net": "N1",
     "extra": "C2",
     "frame": "close_night",
-    "brick_median": 39.46580123901367,
-    "lit": true
+    "brick_median": 39.46580123901367
    },
    "east_parade_bay1_upper_w0": {
     "pane_px": 4356,
@@ -1485,8 +480,7 @@
     "net": "N0",
     "extra": "B2",
     "frame": "close_night",
-    "brick_median": 39.46580123901367,
-    "lit": false
+    "brick_median": 39.46580123901367
    }
   },
   "h-across0-bay3w1_day": {
@@ -1885,6 +879,1624 @@
     "extra": null,
     "frame": "h-across0-bay2w0_day",
     "brick_median": 94.3436050415039
+   }
+  },
+  "h-across0-bay2w0_night": {
+   "east_parade_bay1_upper_w0": {
+    "pane_px": 15401,
+    "joinery_px": 2326,
+    "P": 81.98680114746094,
+    "L": 100.21260070800781,
+    "D": 38.70600128173828,
+    "spread": 29.060203552246094,
+    "pane_rgb_mean": [
+     82.01305110057788,
+     76.32445945068503,
+     73.58587104733459
+    ],
+    "P_over_L": 0.8181286641422282,
+    "D_over_L": 0.3862388662531273,
+    "line": {
+     "min_ratio": 0.29277554154396057,
+     "edges": 3
+    },
+    "angle": 51.45,
+    "state": "draped",
+    "site": "east_parade_bay1_upper_w0",
+    "net": "N0",
+    "extra": "B2",
+    "frame": "h-across0-bay2w0_night",
+    "brick_median": 36.03139877319336,
+    "lit": false
+   },
+   "east_parade_bay1_upper_w1": {
+    "pane_px": 43541,
+    "joinery_px": 14721,
+    "P": 43.26239776611328,
+    "L": 99.49740600585938,
+    "D": 32.8411979675293,
+    "spread": 40.64299392700195,
+    "pane_rgb_mean": [
+     56.731218851197724,
+     47.6362738568246,
+     45.070186720562226
+    ],
+    "P_over_L": 0.4348093031045007,
+    "D_over_L": 0.3300708961758791,
+    "line": {
+     "min_ratio": 0.2059691995382309,
+     "edges": 6
+    },
+    "angle": 62.43,
+    "state": "net",
+    "site": "east_parade_bay1_upper_w1",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "h-across0-bay2w0_night",
+    "brick_median": 35.24399948120117,
+    "lit": false
+   },
+   "east_parade_bay2_upper_w0": {
+    "pane_px": 42286,
+    "joinery_px": 19364,
+    "P": 115.02299499511719,
+    "L": 98.28479766845703,
+    "D": 34.417198181152344,
+    "spread": 105.02479553222656,
+    "pane_rgb_mean": [
+     110.46381781204181,
+     98.46140566617792,
+     72.73506597928392
+    ],
+    "P_over_L": 1.1703030145427264,
+    "D_over_L": 0.3501782472733116,
+    "line": {
+     "min_ratio": 0.24115633964538574,
+     "edges": 8
+    },
+    "angle": 68.72,
+    "state": "net",
+    "site": "east_parade_bay2_upper_w0",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "h-across0-bay2w0_night",
+    "brick_median": 35.59700012207031,
+    "lit": true
+   },
+   "east_parade_bay2_upper_w1": {
+    "pane_px": 42004,
+    "joinery_px": 18090,
+    "P": 57.918601989746094,
+    "L": 98.49739074707031,
+    "D": 42.909400939941406,
+    "spread": 23.14960479736328,
+    "pane_rgb_mean": [
+     62.304828111608415,
+     55.59860965622322,
+     52.89505761356061
+    ],
+    "P_over_L": 0.5880216881934897,
+    "D_over_L": 0.43563997598807147,
+    "line": {
+     "min_ratio": 0.2174798846244812,
+     "edges": 6
+    },
+    "angle": 62.43,
+    "state": "net",
+    "site": "east_parade_bay2_upper_w1",
+    "net": "N2",
+    "extra": null,
+    "frame": "h-across0-bay2w0_night",
+    "brick_median": 35.456600189208984,
+    "lit": false
+   },
+   "east_parade_bay3_upper_w0": {
+    "pane_px": 15128,
+    "joinery_px": 2599,
+    "P": 75.20339965820312,
+    "L": 82.28079986572266,
+    "D": 31.56559944152832,
+    "spread": 13.345008850097656,
+    "pane_rgb_mean": [
+     77.99180327868852,
+     73.01355103120042,
+     71.11786092014808
+    ],
+    "P_over_L": 0.9139847908738196,
+    "D_over_L": 0.38363262745429666,
+    "line": {
+     "min_ratio": 0.28547853231430054,
+     "edges": 3
+    },
+    "angle": 51.45,
+    "state": "net",
+    "site": "east_parade_bay3_upper_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "h-across0-bay2w0_night",
+    "brick_median": 35.959197998046875,
+    "lit": false
+   }
+  },
+  "hook_day": {
+   "east_parade_bay0_upper_w0": {
+    "pane_px": 18422,
+    "joinery_px": 7835,
+    "P": 105.93579864501953,
+    "L": 202.283203125,
+    "D": 29.037200927734375,
+    "spread": 91.7416000366211,
+    "pane_rgb_mean": [
+     95.90283356855933,
+     96.63885571599175,
+     99.53229833894257
+    ],
+    "P_over_L": 0.5237004210357347,
+    "D_over_L": 0.14354726679798008,
+    "line": {
+     "min_ratio": 0.04802771657705307,
+     "edges": 8
+    },
+    "angle": 39.95,
+    "state": "net",
+    "site": "east_parade_bay0_upper_w0",
+    "net": "N2",
+    "extra": null,
+    "frame": "hook_day",
+    "brick_median": 96.4157943725586
+   },
+   "east_parade_bay0_upper_w1": {
+    "pane_px": 7393,
+    "joinery_px": 3860,
+    "P": 108.5105972290039,
+    "L": 194.0,
+    "D": 28.97239875793457,
+    "spread": 91.46080017089844,
+    "pane_rgb_mean": [
+     88.35344244555661,
+     87.40362505072366,
+     89.26714459623969
+    ],
+    "P_over_L": 0.5593329754072366,
+    "D_over_L": 0.149342261638838,
+    "line": {
+     "min_ratio": 0.09719381481409073,
+     "edges": 7
+    },
+    "angle": 31.71,
+    "state": "net",
+    "site": "east_parade_bay0_upper_w1",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "hook_day",
+    "brick_median": 98.13099670410156
+   },
+   "east_parade_bay1_upper_w0": {
+    "pane_px": 3588,
+    "joinery_px": 2025,
+    "P": 87.28679656982422,
+    "L": 202.13156127929688,
+    "D": 27.47132110595703,
+    "spread": 96.82160186767578,
+    "pane_rgb_mean": [
+     82.52146042363434,
+     79.54877369007804,
+     79.93366778149387
+    ],
+    "P_over_L": 0.4318316052049635,
+    "D_over_L": 0.13590812306643354,
+    "line": {
+     "min_ratio": 0.15121635794639587,
+     "edges": 5
+    },
+    "angle": 25.98,
+    "state": "draped",
+    "site": "east_parade_bay1_upper_w0",
+    "net": "N0",
+    "extra": "B2",
+    "frame": "hook_day",
+    "brick_median": 99.85020446777344
+   },
+   "east_parade_bay1_upper_w1": {
+    "pane_px": 1816,
+    "joinery_px": 1352,
+    "P": 57.310298919677734,
+    "L": 189.61077880859375,
+    "D": 29.25320053100586,
+    "spread": 100.50900268554688,
+    "pane_rgb_mean": [
+     75.03579295154185,
+     69.15638766519824,
+     67.88160792951543
+    ],
+    "P_over_L": 0.302252325947834,
+    "D_over_L": 0.15428026146412313,
+    "line": {
+     "min_ratio": 0.19246479868888855,
+     "edges": 5
+    },
+    "angle": 21.88,
+    "state": "net",
+    "site": "east_parade_bay1_upper_w1",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "hook_day",
+    "brick_median": 102.21240234375
+   },
+   "east_parade_bay2_upper_w0": {
+    "pane_px": 1326,
+    "joinery_px": 925,
+    "P": 53.127197265625,
+    "L": 217.91896057128906,
+    "D": 36.417198181152344,
+    "spread": 97.81028747558594,
+    "pane_rgb_mean": [
+     71.31749622926094,
+     66.65309200603318,
+     63.72850678733032
+    ],
+    "P_over_L": 0.24379336761862536,
+    "D_over_L": 0.16711349065580267,
+    "line": {
+     "min_ratio": 0.1312699019908905,
+     "edges": 5
+    },
+    "angle": 18.84,
+    "state": "net",
+    "site": "east_parade_bay2_upper_w0",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "hook_day",
+    "brick_median": 107.36600494384766
+   },
+   "east_parade_bay2_upper_w1": {
+    "pane_px": 829,
+    "joinery_px": 633,
+    "P": 57.280799865722656,
+    "L": 212.7454376220703,
+    "D": 40.674400329589844,
+    "spread": 79.18416595458984,
+    "pane_rgb_mean": [
+     73.77804583835947,
+     67.27261761158022,
+     64.32689987937273
+    ],
+    "P_over_L": 0.2692457262819361,
+    "D_over_L": 0.19118812033866273,
+    "line": {
+     "min_ratio": 0.14188317954540253,
+     "edges": 5
+    },
+    "angle": 16.52,
+    "state": "net",
+    "site": "east_parade_bay2_upper_w1",
+    "net": "N2",
+    "extra": null,
+    "frame": "hook_day",
+    "brick_median": 108.66919708251953
+   },
+   "east_parade_bay3_upper_w0": {
+    "pane_px": 243,
+    "joinery_px": 482,
+    "P": 64.11799621582031,
+    "L": 152.69879150390625,
+    "D": 40.28048324584961,
+    "spread": 73.67678833007812,
+    "pane_rgb_mean": [
+     75.40329218106996,
+     65.30864197530865,
+     61.22222222222222
+    ],
+    "P_over_L": 0.419898517757294,
+    "D_over_L": 0.26379045209941415,
+    "line": {
+     "min_ratio": 0.11020387709140778,
+     "edges": 5
+    },
+    "angle": 14.69,
+    "state": "net",
+    "site": "east_parade_bay3_upper_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "hook_day",
+    "brick_median": 107.5156021118164
+   },
+   "west_south_bay1_gf_w0": {
+    "pane_px": 2232,
+    "joinery_px": 2567,
+    "P": 65.81230163574219,
+    "L": 170.07620239257812,
+    "D": 31.465801239013672,
+    "spread": 55.285888671875,
+    "pane_rgb_mean": [
+     65.29838709677419,
+     59.196236559139784,
+     58.06362007168459
+    ],
+    "P_over_L": 0.386957732533509,
+    "D_over_L": 0.18501001784119558,
+    "line": {
+     "min_ratio": 0.16316568851470947,
+     "edges": 5
+    },
+    "angle": 13.48,
+    "state": "net",
+    "site": "west_south_bay1_gf_w0",
+    "net": "N2",
+    "extra": null,
+    "frame": "hook_day",
+    "brick_median": 83.9448013305664
+   },
+   "west_south_bay1_gf_w1": {
+    "pane_px": 4100,
+    "joinery_px": 3818,
+    "P": 56.20859909057617,
+    "L": 173.935791015625,
+    "D": 33.180999755859375,
+    "spread": 48.534400939941406,
+    "pane_rgb_mean": [
+     60.35048780487805,
+     56.28121951219512,
+     54.88951219512195
+    ],
+    "P_over_L": 0.323157176348638,
+    "D_over_L": 0.19076579674667796,
+    "line": {
+     "min_ratio": 0.1554631143808365,
+     "edges": 5
+    },
+    "angle": 15.27,
+    "state": "draped",
+    "site": "west_south_bay1_gf_w1",
+    "net": "N0",
+    "extra": "C1",
+    "frame": "hook_day",
+    "brick_median": 84.62000274658203
+   }
+  },
+  "hook_night": {
+   "east_parade_bay0_upper_w0": {
+    "pane_px": 18422,
+    "joinery_px": 7835,
+    "P": 70.85040283203125,
+    "L": 85.35299682617188,
+    "D": 33.56159973144531,
+    "spread": 40.0131950378418,
+    "pane_rgb_mean": [
+     68.91151883617414,
+     65.29573336228422,
+     64.41672999674303
+    ],
+    "P_over_L": 0.8300868799759157,
+    "D_over_L": 0.3932093890012575,
+    "line": {
+     "min_ratio": 0.31119704246520996,
+     "edges": 8
+    },
+    "angle": 39.95,
+    "state": "net",
+    "site": "east_parade_bay0_upper_w0",
+    "net": "N2",
+    "extra": null,
+    "frame": "hook_night",
+    "brick_median": 36.95920181274414
+   },
+   "east_parade_bay0_upper_w1": {
+    "pane_px": 7393,
+    "joinery_px": 3860,
+    "P": 82.33580017089844,
+    "L": 84.78501892089844,
+    "D": 40.05099868774414,
+    "spread": 97.02461242675781,
+    "pane_rgb_mean": [
+     109.62762072230488,
+     95.393886108481,
+     75.4090355741918
+    ],
+    "P_over_L": 0.9711126000657612,
+    "D_over_L": 0.4723829657349062,
+    "line": {
+     "min_ratio": 0.43207865953445435,
+     "edges": 7
+    },
+    "angle": 31.71,
+    "state": "net",
+    "site": "east_parade_bay0_upper_w1",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "hook_night",
+    "brick_median": 37.75579833984375
+   },
+   "east_parade_bay1_upper_w0": {
+    "pane_px": 3588,
+    "joinery_px": 2025,
+    "P": 53.053802490234375,
+    "L": 85.89372253417969,
+    "D": 24.37639808654785,
+    "spread": 59.46600341796875,
+    "pane_rgb_mean": [
+     61.59085841694537,
+     51.52870680044593,
+     45.21544035674471
+    ],
+    "P_over_L": 0.6176679846320862,
+    "D_over_L": 0.28379720155739846,
+    "line": {
+     "min_ratio": 0.3424836993217468,
+     "edges": 5
+    },
+    "angle": 25.98,
+    "state": "draped",
+    "site": "east_parade_bay1_upper_w0",
+    "net": "N0",
+    "extra": "B2",
+    "frame": "hook_night",
+    "brick_median": 38.606197357177734
+   },
+   "east_parade_bay1_upper_w1": {
+    "pane_px": 1816,
+    "joinery_px": 1352,
+    "P": 48.84379959106445,
+    "L": 80.41798400878906,
+    "D": 29.27560043334961,
+    "spread": 33.81330108642578,
+    "pane_rgb_mean": [
+     50.370044052863435,
+     45.125,
+     43.284691629955944
+    ],
+    "P_over_L": 0.6073740866934217,
+    "D_over_L": 0.36404295375211115,
+    "line": {
+     "min_ratio": 0.34362712502479553,
+     "edges": 5
+    },
+    "angle": 21.88,
+    "state": "net",
+    "site": "east_parade_bay1_upper_w1",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "hook_night",
+    "brick_median": 39.46580123901367
+   },
+   "east_parade_bay2_upper_w0": {
+    "pane_px": 1326,
+    "joinery_px": 925,
+    "P": 74.16250610351562,
+    "L": 92.49739837646484,
+    "D": 35.25239944458008,
+    "spread": 90.06401062011719,
+    "pane_rgb_mean": [
+     87.11915535444948,
+     79.42383107088989,
+     54.41101055806938
+    ],
+    "P_over_L": 0.8017793733146297,
+    "D_over_L": 0.3811177402104073,
+    "line": {
+     "min_ratio": 0.34016308188438416,
+     "edges": 5
+    },
+    "angle": 18.84,
+    "state": "net",
+    "site": "east_parade_bay2_upper_w0",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "hook_night",
+    "brick_median": 42.11280059814453
+   },
+   "east_parade_bay2_upper_w1": {
+    "pane_px": 829,
+    "joinery_px": 633,
+    "P": 32.91859817504883,
+    "L": 89.63780212402344,
+    "D": 18.615859985351562,
+    "spread": 41.92132568359375,
+    "pane_rgb_mean": [
+     41.92882991556092,
+     33.582629674306396,
+     29.558504221954163
+    ],
+    "P_over_L": 0.3672401307821274,
+    "D_over_L": 0.20767867511515442,
+    "line": {
+     "min_ratio": 0.16158583760261536,
+     "edges": 5
+    },
+    "angle": 16.52,
+    "state": "net",
+    "site": "east_parade_bay2_upper_w1",
+    "net": "N2",
+    "extra": null,
+    "frame": "hook_night",
+    "brick_median": 42.47500228881836
+   },
+   "east_parade_bay3_upper_w0": {
+    "pane_px": 243,
+    "joinery_px": 482,
+    "P": 31.13640022277832,
+    "L": 62.421199798583984,
+    "D": 23.716442108154297,
+    "spread": 25.256319046020508,
+    "pane_rgb_mean": [
+     37.91358024691358,
+     33.390946502057616,
+     30.14814814814815
+    ],
+    "P_over_L": 0.4988113064671443,
+    "D_over_L": 0.37994210596208855,
+    "line": {
+     "min_ratio": 0.24929991364479065,
+     "edges": 5
+    },
+    "angle": 14.69,
+    "state": "net",
+    "site": "east_parade_bay3_upper_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "hook_night",
+    "brick_median": 41.90019989013672
+   },
+   "west_south_bay1_gf_w0": {
+    "pane_px": 2232,
+    "joinery_px": 2567,
+    "P": 32.2328987121582,
+    "L": 71.70999908447266,
+    "D": 16.827999114990234,
+    "spread": 37.26348876953125,
+    "pane_rgb_mean": [
+     41.663978494623656,
+     31.622759856630825,
+     27.517473118279568
+    ],
+    "P_over_L": 0.4494895987125676,
+    "D_over_L": 0.23466740105751857,
+    "line": {
+     "min_ratio": 0.16298425197601318,
+     "edges": 5
+    },
+    "angle": 13.48,
+    "state": "net",
+    "site": "west_south_bay1_gf_w0",
+    "net": "N2",
+    "extra": null,
+    "frame": "hook_night",
+    "brick_median": 33.90019989013672
+   },
+   "west_south_bay1_gf_w1": {
+    "pane_px": 4100,
+    "joinery_px": 3818,
+    "P": 55.07440185546875,
+    "L": 107.92372131347656,
+    "D": 31.630268096923828,
+    "spread": 59.613800048828125,
+    "pane_rgb_mean": [
+     86.78853658536585,
+     49.18243902439024,
+     27.121463414634146
+    ],
+    "P_over_L": 0.5103085881879384,
+    "D_over_L": 0.29307985039776535,
+    "line": {
+     "min_ratio": 0.2505158483982086,
+     "edges": 5
+    },
+    "angle": 15.27,
+    "state": "draped",
+    "site": "west_south_bay1_gf_w1",
+    "net": "N0",
+    "extra": "C1",
+    "frame": "hook_night",
+    "brick_median": 45.478797912597656
+   }
+  },
+  "reverse_day": {
+   "east_parade_bay2_upper_w0": {
+    "pane_px": 180,
+    "joinery_px": 775,
+    "P": 100.63780212402344,
+    "L": 178.6851348876953,
+    "D": 91.38027954101562,
+    "spread": 32.10578155517578,
+    "pane_rgb_mean": [
+     104.95,
+     101.36111111111111,
+     100.48333333333333
+    ],
+    "P_over_L": 0.5632130629516267,
+    "D_over_L": 0.5114039262328602,
+    "line": {
+     "min_ratio": 0.5600476861000061,
+     "edges": 3
+    },
+    "angle": 9.2,
+    "state": "net",
+    "site": "east_parade_bay2_upper_w0",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "reverse_day",
+    "brick_median": 111.79119873046875
+   },
+   "east_parade_bay2_upper_w1": {
+    "pane_px": 587,
+    "joinery_px": 1182,
+    "P": 99.0,
+    "L": 186.63458251953125,
+    "D": 83.19816589355469,
+    "spread": 33.22216033935547,
+    "pane_rgb_mean": [
+     98.80579216354344,
+     97.42930153321976,
+     97.30834752981261
+    ],
+    "P_over_L": 0.530448315974022,
+    "D_over_L": 0.4457810807107414,
+    "line": {
+     "min_ratio": 0.4546124041080475,
+     "edges": 2
+    },
+    "angle": 10.62,
+    "state": "net",
+    "site": "east_parade_bay2_upper_w1",
+    "net": "N2",
+    "extra": null,
+    "frame": "reverse_day",
+    "brick_median": 109.90280151367188
+   },
+   "east_parade_bay3_upper_w0": {
+    "pane_px": 521,
+    "joinery_px": 1797,
+    "P": 69.63379669189453,
+    "L": 146.94900512695312,
+    "D": 43.61402130126953,
+    "spread": 67.24939727783203,
+    "pane_rgb_mean": [
+     73.42226487523992,
+     65.14587332053743,
+     61.14971209213052
+    ],
+    "P_over_L": 0.4738636823824432,
+    "D_over_L": 0.29679698248783803,
+    "line": {
+     "min_ratio": 0.24670596420764923,
+     "edges": 3
+    },
+    "angle": 12.53,
+    "state": "net",
+    "site": "east_parade_bay3_upper_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "reverse_day",
+    "brick_median": 106.00379943847656
+   },
+   "east_parade_bay3_upper_w1": {
+    "pane_px": 2483,
+    "joinery_px": 3439,
+    "P": 50.27680206298828,
+    "L": 152.13304138183594,
+    "D": 29.393600463867188,
+    "spread": 62.16118240356445,
+    "pane_rgb_mean": [
+     58.26661296818365,
+     49.56302859444221,
+     45.67297623842126
+    ],
+    "P_over_L": 0.33047917537387195,
+    "D_over_L": 0.1932098392097002,
+    "line": {
+     "min_ratio": 0.21682864427566528,
+     "edges": 3
+    },
+    "angle": 15.23,
+    "state": "bare",
+    "site": "east_parade_bay3_upper_w1",
+    "net": "N0",
+    "extra": null,
+    "frame": "reverse_day",
+    "brick_median": 103.58779907226562
+   },
+   "west_south_bay0_gf_w0": {
+    "pane_px": 770,
+    "joinery_px": 844,
+    "P": 40.0,
+    "L": 136.34376525878906,
+    "D": 19.621379852294922,
+    "spread": 66.91818237304688,
+    "pane_rgb_mean": [
+     46.26103896103896,
+     40.4987012987013,
+     38.12337662337662
+    ],
+    "P_over_L": 0.29337608451752434,
+    "D_over_L": 0.14391108984743312,
+    "line": {
+     "min_ratio": 0.10570339858531952,
+     "edges": 5
+    },
+    "angle": 18.33,
+    "state": "net",
+    "site": "west_south_bay0_gf_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "reverse_day",
+    "brick_median": 84.606201171875
+   },
+   "west_south_bay0_gf_w1": {
+    "pane_px": 528,
+    "joinery_px": 698,
+    "P": 44.669898986816406,
+    "L": 134.69029235839844,
+    "D": 27.970699310302734,
+    "spread": 59.21051025390625,
+    "pane_rgb_mean": [
+     49.99810606060606,
+     45.833333333333336,
+     43.77272727272727
+    ],
+    "P_over_L": 0.33164898675810967,
+    "D_over_L": 0.20766677999239386,
+    "line": {
+     "min_ratio": 0.16004420816898346,
+     "edges": 5
+    },
+    "angle": 16.92,
+    "state": "net",
+    "site": "west_south_bay0_gf_w1",
+    "net": "N1",
+    "extra": null,
+    "frame": "reverse_day",
+    "brick_median": 88.48680114746094
+   },
+   "west_south_bay1_gf_w0": {
+    "pane_px": 439,
+    "joinery_px": 495,
+    "P": 50.05900192260742,
+    "L": 170.0304718017578,
+    "D": 32.255802154541016,
+    "spread": 51.26850128173828,
+    "pane_rgb_mean": [
+     59.394077448747154,
+     51.9749430523918,
+     49.11617312072893
+    ],
+    "P_over_L": 0.2944119450598966,
+    "D_over_L": 0.18970600865090081,
+    "line": {
+     "min_ratio": 0.2191513180732727,
+     "edges": 5
+    },
+    "angle": 14.34,
+    "state": "net",
+    "site": "west_south_bay1_gf_w0",
+    "net": "N2",
+    "extra": null,
+    "frame": "reverse_day",
+    "brick_median": 85.19019317626953
+   },
+   "west_south_bay1_gf_w1": {
+    "pane_px": 372,
+    "joinery_px": 373,
+    "P": 58.51369857788086,
+    "L": 170.28480529785156,
+    "D": 35.56288146972656,
+    "spread": 66.46331787109375,
+    "pane_rgb_mean": [
+     67.92204301075269,
+     61.44086021505376,
+     59.85215053763441
+    ],
+    "P_over_L": 0.3436225473877857,
+    "D_over_L": 0.20884353954847695,
+    "line": {
+     "min_ratio": 0.22724752128124237,
+     "edges": 5
+    },
+    "angle": 13.46,
+    "state": "draped",
+    "site": "west_south_bay1_gf_w1",
+    "net": "N0",
+    "extra": "C1",
+    "frame": "reverse_day",
+    "brick_median": 91.95919799804688
+   }
+  },
+  "reverse_night": {
+   "east_parade_bay2_upper_w0": {
+    "pane_px": 180,
+    "joinery_px": 775,
+    "P": 65.23069763183594,
+    "L": 80.84880065917969,
+    "D": 47.82229995727539,
+    "spread": 19.824657440185547,
+    "pane_rgb_mean": [
+     68.93888888888888,
+     62.638888888888886,
+     52.022222222222226
+    ],
+    "P_over_L": 0.8068233183423179,
+    "D_over_L": 0.5915028988354644,
+    "line": {
+     "min_ratio": 0.5385113954544067,
+     "edges": 3
+    },
+    "angle": 9.2,
+    "state": "net",
+    "site": "east_parade_bay2_upper_w0",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "reverse_night",
+    "brick_median": 44.04979705810547
+   },
+   "east_parade_bay2_upper_w1": {
+    "pane_px": 587,
+    "joinery_px": 1182,
+    "P": 42.35300064086914,
+    "L": 78.11393737792969,
+    "D": 31.01255989074707,
+    "spread": 20.687936782836914,
+    "pane_rgb_mean": [
+     43.95059625212947,
+     40.32708688245315,
+     38.65758091993186
+    ],
+    "P_over_L": 0.5421951838883435,
+    "D_over_L": 0.397016984826953,
+    "line": {
+     "min_ratio": 0.4232151508331299,
+     "edges": 2
+    },
+    "angle": 10.62,
+    "state": "net",
+    "site": "east_parade_bay2_upper_w1",
+    "net": "N2",
+    "extra": null,
+    "frame": "reverse_night",
+    "brick_median": 42.759803771972656
+   },
+   "east_parade_bay3_upper_w0": {
+    "pane_px": 521,
+    "joinery_px": 1797,
+    "P": 34.49340057373047,
+    "L": 59.909400939941406,
+    "D": 22.11052894592285,
+    "spread": 23.506601333618164,
+    "pane_rgb_mean": [
+     35.20537428023032,
+     31.600767754318618,
+     28.90978886756238
+    ],
+    "P_over_L": 0.575759397232327,
+    "D_over_L": 0.36906609979439525,
+    "line": {
+     "min_ratio": 0.39683589339256287,
+     "edges": 3
+    },
+    "angle": 12.53,
+    "state": "net",
+    "site": "east_parade_bay3_upper_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "reverse_night",
+    "brick_median": 41.25320053100586
+   },
+   "east_parade_bay3_upper_w1": {
+    "pane_px": 2483,
+    "joinery_px": 3439,
+    "P": 28.633800506591797,
+    "L": 62.435638427734375,
+    "D": 15.846399307250977,
+    "spread": 26.50659942626953,
+    "pane_rgb_mean": [
+     30.777285541683447,
+     27.308900523560208,
+     24.339105920257754
+    ],
+    "P_over_L": 0.4586130810487949,
+    "D_over_L": 0.253803752252686,
+    "line": {
+     "min_ratio": 0.3372272849082947,
+     "edges": 3
+    },
+    "angle": 15.23,
+    "state": "bare",
+    "site": "east_parade_bay3_upper_w1",
+    "net": "N0",
+    "extra": null,
+    "frame": "reverse_night",
+    "brick_median": 40.11280059814453
+   },
+   "west_south_bay0_gf_w0": {
+    "pane_px": 770,
+    "joinery_px": 844,
+    "P": 50.03969955444336,
+    "L": 120.1288833618164,
+    "D": 29.0539493560791,
+    "spread": 58.00410079956055,
+    "pane_rgb_mean": [
+     82.54805194805195,
+     44.64545454545455,
+     23.714285714285715
+    ],
+    "P_over_L": 0.41655010979939516,
+    "D_over_L": 0.2418564839945399,
+    "line": {
+     "min_ratio": 0.23624959588050842,
+     "edges": 5
+    },
+    "angle": 18.33,
+    "state": "net",
+    "site": "west_south_bay0_gf_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "reverse_night",
+    "brick_median": 57.293601989746094
+   },
+   "west_south_bay0_gf_w1": {
+    "pane_px": 528,
+    "joinery_px": 698,
+    "P": 32.54319763183594,
+    "L": 78.05158233642578,
+    "D": 21.073749542236328,
+    "spread": 35.479461669921875,
+    "pane_rgb_mean": [
+     44.30492424242424,
+     31.481060606060606,
+     24.833333333333332
+    ],
+    "P_over_L": 0.4169447518893976,
+    "D_over_L": 0.2699977234465553,
+    "line": {
+     "min_ratio": 0.1837220937013626,
+     "edges": 5
+    },
+    "angle": 16.92,
+    "state": "net",
+    "site": "west_south_bay0_gf_w1",
+    "net": "N1",
+    "extra": null,
+    "frame": "reverse_night",
+    "brick_median": 46.194000244140625
+   },
+   "west_south_bay1_gf_w0": {
+    "pane_px": 439,
+    "joinery_px": 495,
+    "P": 25.343801498413086,
+    "L": 71.60891723632812,
+    "D": 13.615399360656738,
+    "spread": 33.75794219970703,
+    "pane_rgb_mean": [
+     33.31435079726651,
+     25.567198177676538,
+     22.690205011389523
+    ],
+    "P_over_L": 0.3539196300758455,
+    "D_over_L": 0.19013552901131525,
+    "line": {
+     "min_ratio": 0.2022680938243866,
+     "edges": 5
+    },
+    "angle": 14.34,
+    "state": "net",
+    "site": "west_south_bay1_gf_w0",
+    "net": "N2",
+    "extra": null,
+    "frame": "reverse_night",
+    "brick_median": 33.19020080566406
+   },
+   "west_south_bay1_gf_w1": {
+    "pane_px": 372,
+    "joinery_px": 373,
+    "P": 52.36259841918945,
+    "L": 83.84264373779297,
+    "D": 32.85540008544922,
+    "spread": 39.886474609375,
+    "pane_rgb_mean": [
+     78.26344086021506,
+     47.12096774193548,
+     31.690860215053764
+    ],
+    "P_over_L": 0.6245341998392454,
+    "D_over_L": 0.39186980062556515,
+    "line": {
+     "min_ratio": 0.5274976491928101,
+     "edges": 5
+    },
+    "angle": 13.46,
+    "state": "draped",
+    "site": "west_south_bay1_gf_w1",
+    "net": "N0",
+    "extra": "C1",
+    "frame": "reverse_night",
+    "brick_median": 46.29840087890625
+   }
+  },
+  "cam-a_day": {
+   "west_south_bay0_gf_w0": {
+    "pane_px": 4273,
+    "joinery_px": 2069,
+    "P": 17.0,
+    "L": 156.93179321289062,
+    "D": 7.715199947357178,
+    "spread": 50.87648391723633,
+    "pane_rgb_mean": [
+     26.50854200795694,
+     24.52656213433185,
+     22.855136906154925
+    ],
+    "P_over_L": 0.10832731629427142,
+    "D_over_L": 0.04916275911593572,
+    "line": {
+     "min_ratio": 0.03823317214846611,
+     "edges": 5
+    },
+    "angle": 33.67,
+    "state": "net",
+    "site": "west_south_bay0_gf_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "cam-a_day",
+    "brick_median": 79.29840087890625
+   },
+   "west_south_bay0_gf_w1": {
+    "pane_px": 6918,
+    "joinery_px": 3085,
+    "P": 11.072199821472168,
+    "L": 159.2165985107422,
+    "D": 6.371039867401123,
+    "spread": 48.84759521484375,
+    "pane_rgb_mean": [
+     20.470945359930617,
+     18.810205261636312,
+     18.112604799074877
+    ],
+    "P_over_L": 0.0695417432920798,
+    "D_over_L": 0.0400149226085324,
+    "line": {
+     "min_ratio": 0.03813798353075981,
+     "edges": 5
+    },
+    "angle": 37.48,
+    "state": "net",
+    "site": "west_south_bay0_gf_w1",
+    "net": "N1",
+    "extra": null,
+    "frame": "cam-a_day",
+    "brick_median": 78.2439956665039
+   }
+  },
+  "cam-a_night": {
+   "west_south_bay0_gf_w0": {
+    "pane_px": 4273,
+    "joinery_px": 2069,
+    "P": 40.245201110839844,
+    "L": 141.1036834716797,
+    "D": 17.529998779296875,
+    "spread": 78.00988006591797,
+    "pane_rgb_mean": [
+     75.53919962555581,
+     42.84530774631406,
+     23.467119120056168
+    ],
+    "P_over_L": 0.28521722552279993,
+    "D_over_L": 0.12423487713426876,
+    "line": {
+     "min_ratio": 0.19023174047470093,
+     "edges": 5
+    },
+    "angle": 33.67,
+    "state": "net",
+    "site": "west_south_bay0_gf_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "cam-a_night",
+    "brick_median": 52.300899505615234
+   },
+   "west_south_bay0_gf_w1": {
+    "pane_px": 6918,
+    "joinery_px": 3085,
+    "P": 31.633800506591797,
+    "L": 95.1895980834961,
+    "D": 11.188220024108887,
+    "spread": 50.83319854736328,
+    "pane_rgb_mean": [
+     45.481063891298064,
+     29.240387395200926,
+     22.36744723908644
+    ],
+    "P_over_L": 0.33232413145440565,
+    "D_over_L": 0.11753616203206443,
+    "line": {
+     "min_ratio": 0.11375193297863007,
+     "edges": 5
+    },
+    "angle": 37.48,
+    "state": "net",
+    "site": "west_south_bay0_gf_w1",
+    "net": "N1",
+    "extra": null,
+    "frame": "cam-a_night",
+    "brick_median": 41.62459945678711
+   }
+  },
+  "close2_day": {
+   "east_parade_bay0_upper_w1": {
+    "pane_px": 117447,
+    "joinery_px": 56410,
+    "P": 67.57080078125,
+    "L": 188.92779541015625,
+    "D": 11.212599754333496,
+    "spread": 167.44239807128906,
+    "pane_rgb_mean": [
+     93.89488024385467,
+     93.05122310488987,
+     95.34216284792289
+    ],
+    "P_over_L": 0.35765410078784826,
+    "D_over_L": 0.05934859785978711,
+    "line": {
+     "min_ratio": 0.15309447050094604,
+     "edges": 8
+    },
+    "angle": 21.94,
+    "state": "net",
+    "site": "east_parade_bay0_upper_w1",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "close2_day",
+    "brick_median": 100.70980072021484
+   },
+   "east_parade_bay1_upper_w0": {
+    "pane_px": 726,
+    "joinery_px": 2481,
+    "P": 52.17449951171875,
+    "L": 114.49340057373047,
+    "D": 19.87932014465332,
+    "spread": 53.41570281982422,
+    "pane_rgb_mean": [
+     49.209366391184574,
+     43.637741046831955,
+     40.86914600550964
+    ],
+    "P_over_L": 0.45569874988663533,
+    "D_over_L": 0.17362852395891246,
+    "line": {
+     "min_ratio": 0.4853624701499939,
+     "edges": 2
+    },
+    "angle": 14.75,
+    "state": "draped",
+    "site": "east_parade_bay1_upper_w0",
+    "net": "N0",
+    "extra": "B2",
+    "frame": "close2_day",
+    "brick_median": 79.94080352783203
+   }
+  },
+  "close2_night": {
+   "east_parade_bay0_upper_w1": {
+    "pane_px": 117447,
+    "joinery_px": 56410,
+    "P": 122.46420288085938,
+    "L": 84.69400024414062,
+    "D": 29.552400588989258,
+    "spread": 118.89860534667969,
+    "pane_rgb_mean": [
+     116.60868306555297,
+     104.64892249269883,
+     81.56634907660477
+    ],
+    "P_over_L": 1.4459607826745886,
+    "D_over_L": 0.3489314532765121,
+    "line": {
+     "min_ratio": 0.23343095183372498,
+     "edges": 8
+    },
+    "angle": 21.94,
+    "state": "net",
+    "site": "east_parade_bay0_upper_w1",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "close2_night",
+    "brick_median": 38.67839813232422
+   },
+   "east_parade_bay1_upper_w0": {
+    "pane_px": 726,
+    "joinery_px": 2481,
+    "P": 33.62059783935547,
+    "L": 48.19020080566406,
+    "D": 25.267601013183594,
+    "spread": 13.78339958190918,
+    "pane_rgb_mean": [
+     38.56060606060606,
+     30.77961432506887,
+     24.666666666666668
+    ],
+    "P_over_L": 0.6976646139105495,
+    "D_over_L": 0.5243306853001067,
+    "line": {
+     "min_ratio": 0.5214172601699829,
+     "edges": 2
+    },
+    "angle": 14.75,
+    "state": "draped",
+    "site": "east_parade_bay1_upper_w0",
+    "net": "N0",
+    "extra": "B2",
+    "frame": "close2_night",
+    "brick_median": 29.538000106811523
+   }
+  },
+  "h-along30-gf2w1_day": {
+   "west_south_bay1_gf_w0": {
+    "pane_px": 8410,
+    "joinery_px": 9080,
+    "P": 57.70600128173828,
+    "L": 175.07620239257812,
+    "D": 30.85634994506836,
+    "spread": 52.963401794433594,
+    "pane_rgb_mean": [
+     62.43293697978597,
+     55.34114149821641,
+     53.75873959571938
+    ],
+    "P_over_L": 0.32960505478832897,
+    "D_over_L": 0.17624525505687133,
+    "line": {
+     "min_ratio": 0.15646672248840332,
+     "edges": 5
+    },
+    "angle": 13.6,
+    "state": "net",
+    "site": "west_south_bay1_gf_w0",
+    "net": "N2",
+    "extra": null,
+    "frame": "h-along30-gf2w1_day",
+    "brick_median": 80.085205078125
+   },
+   "west_south_bay1_gf_w1": {
+    "pane_px": 28755,
+    "joinery_px": 20148,
+    "P": 50.00400161743164,
+    "L": 181.07620239257812,
+    "D": 25.755800247192383,
+    "spread": 54.34100341796875,
+    "pane_rgb_mean": [
+     51.9943661971831,
+     49.39833072509129,
+     48.591062423926275
+    ],
+    "P_over_L": 0.276148941477255,
+    "D_over_L": 0.14223735591357892,
+    "line": {
+     "min_ratio": 0.1995866894721985,
+     "edges": 5
+    },
+    "angle": 18.83,
+    "state": "draped",
+    "site": "west_south_bay1_gf_w1",
+    "net": "N0",
+    "extra": "C1",
+    "frame": "h-along30-gf2w1_day",
+    "brick_median": 78.79119873046875
+   },
+   "west_south_bay2_gf_w0": {
+    "pane_px": 621005,
+    "joinery_px": 193001,
+    "P": 61.072200775146484,
+    "L": 187.65098571777344,
+    "D": 25.931798934936523,
+    "spread": 68.12840270996094,
+    "pane_rgb_mean": [
+     62.25018800170691,
+     59.02947480294039,
+     56.680933325818636
+    ],
+    "P_over_L": 0.325456328095174,
+    "D_over_L": 0.13819164783891877,
+    "line": {
+     "min_ratio": 0.14538052678108215,
+     "edges": 5
+    },
+    "angle": 61.96,
+    "state": "net",
+    "site": "west_south_bay2_gf_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "h-along30-gf2w1_day",
+    "brick_median": 74.93160247802734
+   },
+   "west_south_bay2_gf_w1": {
+    "pane_px": 113606,
+    "joinery_px": 63641,
+    "P": 34.2848014831543,
+    "L": 192.8636016845703,
+    "D": 9.072199821472168,
+    "spread": 50.77539825439453,
+    "pane_rgb_mean": [
+     37.04115099554601,
+     32.870675844585676,
+     31.631568755171383
+    ],
+    "P_over_L": 0.1777670912691308,
+    "D_over_L": 0.04703946074962247,
+    "line": {
+     "min_ratio": 0.03777177259325981,
+     "edges": 7
+    },
+    "angle": 30.0,
+    "state": "draped",
+    "site": "west_south_bay2_gf_w1",
+    "net": "N1",
+    "extra": "B3",
+    "frame": "h-along30-gf2w1_day",
+    "brick_median": 76.15339660644531
+   }
+  },
+  "h-along30-gf2w1_night": {
+   "west_south_bay1_gf_w0": {
+    "pane_px": 8410,
+    "joinery_px": 9080,
+    "P": 30.624601364135742,
+    "L": 74.06300354003906,
+    "D": 15.253199577331543,
+    "spread": 39.65619659423828,
+    "pane_rgb_mean": [
+     40.91700356718193,
+     29.904280618311535,
+     25.227824019024972
+    ],
+    "P_over_L": 0.4134939159951815,
+    "D_over_L": 0.20594897382315233,
+    "line": {
+     "min_ratio": 0.18481020629405975,
+     "edges": 5
+    },
+    "angle": 13.6,
+    "state": "net",
+    "site": "west_south_bay1_gf_w0",
+    "net": "N2",
+    "extra": null,
+    "frame": "h-along30-gf2w1_night",
+    "brick_median": 31.04060173034668
+   },
+   "west_south_bay1_gf_w1": {
+    "pane_px": 28755,
+    "joinery_px": 20148,
+    "P": 81.76719665527344,
+    "L": 111.74359893798828,
+    "D": 31.98780059814453,
+    "spread": 82.08999633789062,
+    "pane_rgb_mean": [
+     116.79766997043993,
+     71.78786298035125,
+     39.36546687532603
+    ],
+    "P_over_L": 0.7317394233977541,
+    "D_over_L": 0.2862606977236884,
+    "line": {
+     "min_ratio": 0.19331935048103333,
+     "edges": 5
+    },
+    "angle": 18.83,
+    "state": "draped",
+    "site": "west_south_bay1_gf_w1",
+    "net": "N0",
+    "extra": "C1",
+    "frame": "h-along30-gf2w1_night",
+    "brick_median": 43.68220138549805
+   },
+   "west_south_bay2_gf_w0": {
+    "pane_px": 621005,
+    "joinery_px": 193001,
+    "P": 57.127201080322266,
+    "L": 112.68460083007812,
+    "D": 22.119199752807617,
+    "spread": 129.77880859375,
+    "pane_rgb_mean": [
+     95.07412339675204,
+     78.02175344803987,
+     54.1168654036602
+    ],
+    "P_over_L": 0.5069654651966757,
+    "D_over_L": 0.19629301244241965,
+    "line": {
+     "min_ratio": 0.12091980874538422,
+     "edges": 5
+    },
+    "angle": 61.96,
+    "state": "net",
+    "site": "west_south_bay2_gf_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "h-along30-gf2w1_night",
+    "brick_median": 53.225399017333984,
+    "lit": true
+   },
+   "west_south_bay2_gf_w1": {
+    "pane_px": 113606,
+    "joinery_px": 63641,
+    "P": 123.15019226074219,
+    "L": 163.43060302734375,
+    "D": 48.7333984375,
+    "spread": 92.9048080444336,
+    "pane_rgb_mean": [
+     147.59348978046935,
+     111.39707409819904,
+     73.40033977078676
+    ],
+    "P_over_L": 0.753532018970387,
+    "D_over_L": 0.29819016472298254,
+    "line": {
+     "min_ratio": 0.22005914151668549,
+     "edges": 7
+    },
+    "angle": 30.0,
+    "state": "draped",
+    "site": "west_south_bay2_gf_w1",
+    "net": "N1",
+    "extra": "B3",
+    "frame": "h-along30-gf2w1_night",
+    "brick_median": 57.13479995727539
+   }
+  },
+  "h-under-bay1w0_day": {
+   "east_parade_bay0_upper_w1": {
+    "pane_px": 6389,
+    "joinery_px": 8697,
+    "P": 40.606201171875,
+    "L": 161.9907989501953,
+    "D": 19.828001022338867,
+    "spread": 81.38459777832031,
+    "pane_rgb_mean": [
+     58.906245108780716,
+     48.506965096259194,
+     44.715761465018
+    ],
+    "P_over_L": 0.2506697999826492,
+    "D_over_L": 0.12240202005815813,
+    "line": {
+     "min_ratio": 0.5908681154251099,
+     "edges": 2
+    },
+    "angle": 10.07,
+    "state": "net",
+    "site": "east_parade_bay0_upper_w1",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "h-under-bay1w0_day",
+    "brick_median": 110.57859802246094
+   },
+   "east_parade_bay1_upper_w0": {
+    "pane_px": 13672,
+    "joinery_px": 13174,
+    "P": 18.402801513671875,
+    "L": 202.56959533691406,
+    "D": 12.0,
+    "spread": 86.4390869140625,
+    "pane_rgb_mean": [
+     33.8755119953189,
+     27.85342305441779,
+     25.755851375073142
+    ],
+    "P_over_L": 0.0908468098732404,
+    "D_over_L": 0.059238899994056765,
+    "line": {
+     "min_ratio": 0.07677559554576874,
+     "edges": 6
+    },
+    "angle": 13.39,
+    "state": "draped",
+    "site": "east_parade_bay1_upper_w0",
+    "net": "N0",
+    "extra": "B2",
+    "frame": "h-under-bay1w0_day",
+    "brick_median": 107.7322006225586
+   },
+   "east_parade_bay1_upper_w1": {
+    "pane_px": 6377,
+    "joinery_px": 8709,
+    "P": 47.881797790527344,
+    "L": 181.1580352783203,
+    "D": 21.755800247192383,
+    "spread": 113.5208511352539,
+    "pane_rgb_mean": [
+     70.47781088286028,
+     59.64419005802101,
+     55.64889446448173
+    ],
+    "P_over_L": 0.26430954451986977,
+    "D_over_L": 0.12009293550665903,
+    "line": {
+     "min_ratio": 0.6087767481803894,
+     "edges": 2
+    },
+    "angle": 10.07,
+    "state": "net",
+    "site": "east_parade_bay1_upper_w1",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "h-under-bay1w0_day",
+    "brick_median": 109.21640014648438
+   }
+  },
+  "h-along15-bay3w1_day": {
+   "east_parade_bay3_upper_w0": {
+    "pane_px": 29410,
+    "joinery_px": 16778,
+    "P": 53.349002838134766,
+    "L": 175.06820678710938,
+    "D": 12.49739933013916,
+    "spread": 182.60520935058594,
+    "pane_rgb_mean": [
+     94.73713022781367,
+     92.97517851071065,
+     94.60159809588575
+    ],
+    "P_over_L": 0.3047326742942509,
+    "D_over_L": 0.07138588758915287,
+    "line": {
+     "min_ratio": 0.08035839349031448,
+     "edges": 7
+    },
+    "angle": 19.45,
+    "state": "net",
+    "site": "east_parade_bay3_upper_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "h-along15-bay3w1_day",
+    "brick_median": 104.57859802246094
+   },
+   "east_parade_bay3_upper_w1": {
+    "pane_px": 3639,
+    "joinery_px": 5204,
+    "P": 53.26239776611328,
+    "L": 158.18814086914062,
+    "D": 32.249202728271484,
+    "spread": 80.66539764404297,
+    "pane_rgb_mean": [
+     63.68342951360264,
+     54.2855179994504,
+     50.225061830173125
+    ],
+    "P_over_L": 0.33670284936324024,
+    "D_over_L": 0.2038661213861112,
+    "line": {
+     "min_ratio": 0.17832310497760773,
+     "edges": 5
+    },
+    "angle": 12.94,
+    "state": "bare",
+    "site": "east_parade_bay3_upper_w1",
+    "net": "N0",
+    "extra": null,
+    "frame": "h-along15-bay3w1_day",
+    "brick_median": 101.89620208740234
+   },
+   "east_parade_bay4_upper_w0": {
+    "pane_px": 567,
+    "joinery_px": 3055,
+    "P": 106.84640502929688,
+    "L": 222.40296936035156,
+    "D": 85.28440856933594,
+    "spread": 98.81266021728516,
+    "pane_rgb_mean": [
+     109.31040564373897,
+     108.8694885361552,
+     109.4320987654321
+    ],
+    "P_over_L": 0.4804180687721731,
+    "D_over_L": 0.38346794026455944,
+    "line": {
+     "min_ratio": 0.1968417912721634,
+     "edges": 3
+    },
+    "angle": 9.23,
+    "state": "draped",
+    "site": "east_parade_bay4_upper_w0",
+    "net": "N2",
+    "extra": "C1",
+    "frame": "h-along15-bay3w1_day",
+    "brick_median": 107.93159484863281
    }
   }
  }
