@@ -161,6 +161,57 @@ def composite_luma(lin_img, brightness):
 
 
 # ------------------------------------------------------------------------------------------------------------- the render
+def make_glass(night, refl):
+    """The gate's glass material (a closed slab of the front's glass is what it covers): by night Mix(Transparent, Glossy GGX 0.02) with the factor `refl` x Fresnel(IOR 1.5), by day Mix(Transparent, Glass BSDF) with the factor
+    `refl` and a clear pane for shadow rays. (14 Oct, batch B, from the house windows' street review: a closed slab with a Fresnel mix turns into a mirror on its BACK face (Cycles' Fresnel node inverts the IOR on a back face,
+    so every ray past 42 degrees from the normal is totally reflected) for views under about 56 degrees from the wall: here the night factor is capped by `refl` (0.2), and the day pane is a Glass BSDF, which is physical on both
+    faces; GLS-05 renders the material over a bright card at 15, 20, 35 and 50 degrees and holds it.)"""
+    import bpy
+    gm = bpy.data.materials.new("gate_glass")
+    gm.use_nodes = True
+    nt = gm.node_tree
+    for n in list(nt.nodes):
+        nt.nodes.remove(n)
+    out = nt.nodes.new("ShaderNodeOutputMaterial")
+    mixn = nt.nodes.new("ShaderNodeMixShader")
+    tr = nt.nodes.new("ShaderNodeBsdfTransparent")
+    if night:
+        # reflection only (13 Oct, from the try 2 reviews, street 2 and close 3): Mix(Transparent, Glossy GGX roughness 0.02, white) with the factor 0.2 x Fresnel(IOR 1.5), so the pane
+        # returns 0.2 of its own reflectance and refracts nothing. glass_refl 0 (the checks' reflection-off render) makes the factor 0
+        fr = nt.nodes.new("ShaderNodeFresnel")
+        fr.inputs["IOR"].default_value = 1.5
+        mul = nt.nodes.new("ShaderNodeMath")
+        mul.operation = "MULTIPLY"
+        mul.inputs[1].default_value = refl
+        gl = nt.nodes.new("ShaderNodeBsdfGlossy")
+        gl.distribution = "GGX"
+        gl.inputs["Roughness"].default_value = 0.02
+        gl.inputs["Color"].default_value = (1.0, 1.0, 1.0, 1.0)
+        nt.links.new(fr.outputs["Fac"], mul.inputs[0])
+        nt.links.new(mul.outputs["Value"], mixn.inputs[0])
+        nt.links.new(tr.outputs[0], mixn.inputs[1])
+        nt.links.new(gl.outputs[0], mixn.inputs[2])
+        nt.links.new(mixn.outputs[0], out.inputs[0])
+    else:
+        mixn.inputs[0].default_value = refl
+        gl = nt.nodes.new("ShaderNodeBsdfGlass")
+        gl.inputs["IOR"].default_value = 1.5
+        gl.inputs["Roughness"].default_value = 0.02
+        gl.inputs["Color"].default_value = (0.97, 0.99, 0.98, 1.0)
+        nt.links.new(tr.outputs[0], mixn.inputs[1])
+        nt.links.new(gl.outputs[0], mixn.inputs[2])
+        # by day Cycles' glass stops the sky's shadow rays, so the display got no direct sky light (close review, narrow 1, tested there): for a shadow ray the pane is clear, as real
+        # glass is to the sky's light. Camera, reflection and refraction rays still meet the glass as before
+        lpn = nt.nodes.new("ShaderNodeLightPath")
+        tr2 = nt.nodes.new("ShaderNodeBsdfTransparent")
+        mix2 = nt.nodes.new("ShaderNodeMixShader")
+        nt.links.new(lpn.outputs["Is Shadow Ray"], mix2.inputs[0])
+        nt.links.new(mixn.outputs[0], mix2.inputs[1])
+        nt.links.new(tr2.outputs[0], mix2.inputs[2])
+        nt.links.new(mix2.outputs[0], out.inputs[0])
+    return gm
+
+
 def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_glb, display_glb, hdri, samples=64, log=print, extra=None, res=None, glass_refl=None, mode="beauty", column_pngs=None, groups=None, ctx=None):
     import bpy
     from mathutils import Vector, Matrix
@@ -218,48 +269,7 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
     # glass: a mix of a clear pane (all the glass's reflectance) and a transparent one, 1.0 by day and 0.2 at night
     refl = (0.2 if night else 1.0) if glass_refl is None else glass_refl
     res = res or RES
-    gm = bpy.data.materials.new("gate_glass")
-    gm.use_nodes = True
-    nt = gm.node_tree
-    for n in list(nt.nodes):
-        nt.nodes.remove(n)
-    out = nt.nodes.new("ShaderNodeOutputMaterial")
-    mixn = nt.nodes.new("ShaderNodeMixShader")
-    tr = nt.nodes.new("ShaderNodeBsdfTransparent")
-    if night:
-        # reflection only (13 Oct, from the try 2 reviews, street 2 and close 3): Mix(Transparent, Glossy GGX roughness 0.02, white) with the factor 0.2 x Fresnel(IOR 1.5), so the pane
-        # returns 0.2 of its own reflectance and refracts nothing. glass_refl 0 (the checks' reflection-off render) makes the factor 0
-        fr = nt.nodes.new("ShaderNodeFresnel")
-        fr.inputs["IOR"].default_value = 1.5
-        mul = nt.nodes.new("ShaderNodeMath")
-        mul.operation = "MULTIPLY"
-        mul.inputs[1].default_value = refl
-        gl = nt.nodes.new("ShaderNodeBsdfGlossy")
-        gl.distribution = "GGX"
-        gl.inputs["Roughness"].default_value = 0.02
-        gl.inputs["Color"].default_value = (1.0, 1.0, 1.0, 1.0)
-        nt.links.new(fr.outputs["Fac"], mul.inputs[0])
-        nt.links.new(mul.outputs["Value"], mixn.inputs[0])
-        nt.links.new(tr.outputs[0], mixn.inputs[1])
-        nt.links.new(gl.outputs[0], mixn.inputs[2])
-        nt.links.new(mixn.outputs[0], out.inputs[0])
-    else:
-        mixn.inputs[0].default_value = refl
-        gl = nt.nodes.new("ShaderNodeBsdfGlass")
-        gl.inputs["IOR"].default_value = 1.5
-        gl.inputs["Roughness"].default_value = 0.02
-        gl.inputs["Color"].default_value = (0.97, 0.99, 0.98, 1.0)
-        nt.links.new(tr.outputs[0], mixn.inputs[1])
-        nt.links.new(gl.outputs[0], mixn.inputs[2])
-        # by day Cycles' glass stops the sky's shadow rays, so the display got no direct sky light (close review, narrow 1, tested there): for a shadow ray the pane is clear, as real
-        # glass is to the sky's light. Camera, reflection and refraction rays still meet the glass as before
-        lpn = nt.nodes.new("ShaderNodeLightPath")
-        tr2 = nt.nodes.new("ShaderNodeBsdfTransparent")
-        mix2 = nt.nodes.new("ShaderNodeMixShader")
-        nt.links.new(lpn.outputs["Is Shadow Ray"], mix2.inputs[0])
-        nt.links.new(mixn.outputs[0], mix2.inputs[1])
-        nt.links.new(tr2.outputs[0], mix2.inputs[2])
-        nt.links.new(mix2.outputs[0], out.inputs[0])
+    gm = make_glass(night, refl)
     for o in front + disp:
         if o.type == "MESH":
             for slot in o.material_slots:

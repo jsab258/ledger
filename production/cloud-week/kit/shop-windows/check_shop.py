@@ -930,5 +930,6 @@ def run(ctx, assets, previews, out_json):
         X.so07_rows(ctx.work, rows)
         lt = np.array([1.0, 0.25, 0.0])
         rows.add("LIT-06", "the sodium wash is the game's", float(np.abs(np.array(sod) - lt).max()) <= 0.01, "night_dark's sodium wash colour (linear) %s against unreal-look.json lantern_linear_rgb %s (the scene file's stale 1.0, 0.7055, 0.0 is not used)" % ([round(float(x), 3) for x in sod], lt.tolist()))
+    X.glass_angle_rows(rows)                    # (14 Oct, batch B) GLS-05: the gate glass is not a mirror at shallow views (seconds)
     rows.na("PRV-01", "the previews show nothing they must not", "the photograph previews of the target (P1 to P6), not this build's; this build's previews were looked at: no real firm's name, number, person, drink, gambling or child in them")
     return finish(ctx, rows, T, out_json, t0, previews, assets, (7 + (0 if ctx.lit else 1)) if ctx.has_room else 4)        # four street frames, three room pictures, and a dark shop's night_dark street view

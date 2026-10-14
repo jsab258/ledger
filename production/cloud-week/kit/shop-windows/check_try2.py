@@ -279,7 +279,7 @@ def fascia_rows(R, work, assets, rows, front_png_day_sq, members):
     if rita_:
         su0, su1, sd, sz0, sz1 = 2400.0, 5550.0, 0.135, 0.10, 0.45
     else:
-        sp_ = members["sta_panel"]
+        sp_ = members.get("sta_panel") or members.get("sta_slab_0") or members.get("sta_backing")          # (14 Oct, batch B) the grocer's stallriser is slabs (sta_slab_*), not a tile panel
         wu = ctx().window_u
         su0, su1, sd, sz0, sz1 = wu[0] + 100.0, wu[1] - 100.0, sp_["d"][1] / 1000.0, max(0.10, sp_["z"][0] / 1000.0 + 0.10), min(0.45, sp_["z"][1] / 1000.0 - 0.05)
     st = np.array([[(su0 - 3000) / 1000.0, -sd, sz1], [(su1 - 3000) / 1000.0, -sd, sz1], [(su1 - 3000) / 1000.0, -sd, sz0], [(su0 - 3000) / 1000.0, -sd, sz0]])
@@ -1515,3 +1515,87 @@ def manifest(HERE_, assets, work, out_path):
             out["files"][os.path.basename(p)] = {"bytes": os.path.getsize(p), "sha256": h.hexdigest()}
     json.dump(out, open(out_path, "w"), indent=1)
     return out
+
+
+def glass_angle_rows(rows):
+    """GLS-05 (14 Oct, batch B, from the house windows' street review, fault 1: a gate glass made as a closed slab with a Fresnel mix is a total mirror on its BACK face for any view under about 56 degrees from the
+    wall, a white card behind it read 0.002 at 20 degrees against 0.66 through one plane): the kit's own gate glass (`sw_gate.make_glass`, night and day) on a closed 6 mm slab, rendered at 15, 20, 35 and 50 degrees
+    from the wall's plane over a bright card in a black world (so that a mirror reads black), against the same view with no glass: the card must keep at least half its luma at every angle."""
+    import bpy
+    import math
+    import mathutils
+    import sw_gate as G
+    out, ok = [], True
+    for night, refl, label in ((True, 0.2, "night"), (False, 1.0, "day")):
+        vals = []
+        for ang in (15.0, 20.0, 35.0, 50.0):
+            res = []
+            for with_glass in (False, True):
+                bpy.ops.wm.read_factory_settings(use_empty=True)
+                sc = bpy.context.scene
+                sc.render.engine = "CYCLES"
+                sc.cycles.device = "CPU"
+                sc.cycles.samples = 16
+                sc.cycles.use_denoising = False
+                sc.view_settings.view_transform = "Standard"
+                sc.view_settings.look = "None"
+                sc.render.resolution_x, sc.render.resolution_y = 96, 96
+                sc.render.resolution_percentage = 100
+                sc.render.image_settings.file_format = "PNG"
+                w = bpy.data.worlds.new("w")
+                w.use_nodes = True
+                w.node_tree.nodes["Background"].inputs["Color"].default_value = (0, 0, 0, 1)
+                w.node_tree.nodes["Background"].inputs["Strength"].default_value = 0.0
+                sc.world = w
+                # the card: a plane 6 x 6 m, emission 0.5, 0.5 m behind the slab
+                me = bpy.data.meshes.new("card")
+                me.from_pydata([(-3, 0.5, -3), (3, 0.5, -3), (3, 0.5, 3), (-3, 0.5, 3)], [], [(0, 1, 2, 3)])
+                ob = bpy.data.objects.new("card", me)
+                sc.collection.objects.link(ob)
+                m = bpy.data.materials.new("cardm")
+                m.use_nodes = True
+                for n in list(m.node_tree.nodes):
+                    m.node_tree.nodes.remove(n)
+                e = m.node_tree.nodes.new("ShaderNodeEmission")
+                e.inputs["Strength"].default_value = 0.5
+                o2 = m.node_tree.nodes.new("ShaderNodeOutputMaterial")
+                m.node_tree.links.new(e.outputs[0], o2.inputs[0])
+                me.materials.append(m)
+                if with_glass:
+                    # a closed slab 1.2 x 1.2 m, 6 mm thick (d 0.000 to 0.006 toward the card), the front's glass panes' build
+                    v = [(-0.6, 0.0, -0.6), (0.6, 0.0, -0.6), (0.6, 0.0, 0.6), (-0.6, 0.0, 0.6), (-0.6, 0.006, -0.6), (0.6, 0.006, -0.6), (0.6, 0.006, 0.6), (-0.6, 0.006, 0.6)]
+                    f = [(0, 3, 2, 1), (4, 5, 6, 7), (0, 1, 5, 4), (1, 2, 6, 5), (2, 3, 7, 6), (3, 0, 4, 7)]
+                    gme = bpy.data.meshes.new("slab")
+                    gme.from_pydata(v, [], f)
+                    import bmesh
+                    bm_ = bmesh.new()
+                    bm_.from_mesh(gme)
+                    bmesh.ops.recalc_face_normals(bm_, faces=bm_.faces)          # outward normals: a slab with its normals inward is a glass seen from inside
+                    bm_.to_mesh(gme)
+                    bm_.free()
+                    gob = bpy.data.objects.new("slab", gme)
+                    sc.collection.objects.link(gob)
+                    gme.materials.append(G.make_glass(night, refl))
+                cam = bpy.data.cameras.new("c")
+                cam.lens = 50.0
+                co = bpy.data.objects.new("c", cam)
+                sc.collection.objects.link(co)
+                a = math.radians(ang)
+                co.location = (3.0 * math.cos(a), -3.0 * math.sin(a), 0.0)
+                d = mathutils.Vector((0, 0, 0)) - co.location
+                co.rotation_euler = d.to_track_quat("-Z", "Y").to_euler()
+                sc.camera = co
+                path = os.path.join(os.environ.get("TMPDIR", "/tmp"), "gls05_%s_%d_%d.png" % (label, int(ang), int(with_glass)))
+                sc.render.filepath = path
+                bpy.ops.render.render(write_still=True)
+                a8 = np.asarray(Image.open(path).convert("RGB")).astype(float)
+                res.append(float(a8[38:58, 38:58].mean()))
+                try:
+                    os.remove(path)
+                except OSError:
+                    pass
+            vals.append((ang, res[1] / max(res[0], 1e-6)))
+        out.append((label, vals))
+        ok &= all(r >= 0.5 for _, r in vals)
+    rows.add("GLS-05", "the gate glass is not a mirror at shallow views", ok,
+             "the kit's own gate glass (sw_gate.make_glass) as a closed 6 mm slab over a bright card in a black world, the card's luma through the glass against the same view without it, at 15, 20, 35 and 50 degrees from the wall: %s (limit 0.5 at every angle; a Fresnel mix without a back-face guard read 0.002 at 20 degrees in the house windows' gate)" % "; ".join("%s: %s" % (lb, ", ".join("%d deg %.2f" % (a_, r_) for a_, r_ in vs)) for lb, vs in out))

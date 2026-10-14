@@ -14264,7 +14264,7 @@
     ]
    },
    "script:bottles": {
-    "why": "bottles with atlas tiles (washing-up liquid, brown sauce, orange squash, vinegar)",
+    "why": "bottles with atlas tiles (washing-up liquid, brown sauce, salad cream [14 Oct, batch B: the target's orange squash is a drink and is out], vinegar)",
     "shops": [
      "grocer"
     ]
@@ -14542,6 +14542,12 @@
      "tea_rooms"
     ],
     "added": "13 Oct, batch A"
+   },
+   "script:counter_lamp": {
+    "why": "[14 Oct, batch B] a small brass counter lamp with an opal shade (a lathe base and a shade, 0.8 Blender watts under it): the night_dark picture's one warm light with a fitting, not a glow from nowhere (tea rooms close review 10); no CC0 lamp of the size",
+    "shops": [
+     "grocer"
+    ]
    }
   },
   "denied": {
