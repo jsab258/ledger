@@ -354,3 +354,288 @@ def floor_decal(r, name, png, x0, x1, y0, y1, z=0.0015, fixture=None):
     if fixture:
         r.fixtures.append({"fixture": fixture, "name": name, "ext": [x0, x1, y0, y1, 0.0, z]})
     return ob
+
+
+# ---------------------------------------------------------------------------------------------------------------------------------- the chandler's rope, tins, hats and hardware
+ROPE001 = os.environ.get("LEDGER_ROPE001", "/home/user/ledger-scratch/polyhaven/_acg/Rope001/Rope001_1K-JPG_Color.jpg")
+ROPE002 = os.environ.get("LEDGER_ROPE002", "/home/user/ledger-scratch/polyhaven/_acg/Rope002/Rope002_1K-JPG_Color.jpg")
+
+
+def fetch_ropes(log=print):
+    """ambientCG Rope001 and Rope002 (CC0) colour maps (the target's twisted rope and twine textures) into SCRATCH/polyhaven/_acg: fetched once; only the colour map is kept."""
+    import subprocess
+    import zipfile
+    for nid, path in (("Rope001", ROPE001), ("Rope002", ROPE002)):
+        if os.path.exists(path):
+            continue
+        d = os.path.dirname(path)
+        os.makedirs(d, exist_ok=True)
+        zp = os.path.join(d, "f.zip")
+        subprocess.check_call(["curl", "-sS", "-L", "-m", "180", "-o", zp, "https://ambientcg.com/get?file=%s_1K-JPG.zip" % nid])
+        with zipfile.ZipFile(zp) as z:
+            z.extract("%s_1K-JPG_Color.jpg" % nid, d)
+        os.remove(zp)
+        log("fetched ambientCG %s colour map" % nid)
+
+
+def rope_png(path, colour, which=1, size=512):
+    """A rope's picture for one colour: the luminance of ambientCG Rope001 (manila fibre) or Rope002 (the finer twist) times `colour` (rgb 0-255), cropped to `size` px square (the picture repeats along the rope)."""
+    fetch_ropes()
+    src = np.asarray(Image.open(ROPE001 if which == 1 else ROPE002).convert("RGB"), np.float32) / 255.0
+    lum = 0.2126 * src[..., 0] + 0.7152 * src[..., 1] + 0.0722 * src[..., 2]
+    lum = lum / max(float(lum.mean()), 1e-6)
+    crop = lum[:size, :size] if lum.shape[0] >= size and lum.shape[1] >= size else np.resize(lum, (size, size))
+    img = np.clip(crop[..., None] * np.array(colour, np.float32)[None, None, :], 0, 255).astype(np.uint8)
+    Image.fromarray(img).save(path)
+
+
+def rope_coil(gm, c, R_in, turns, rho, axis="z", mi=0, uv_len=0.12, seg_per_turn=40, sides=8, layers=1):
+    """A coil of rope: a tube of radius `rho` swept along a flat spiral (inner radius `R_in`, `turns` turns, one rope-diameter more radius a turn), centred on `c`, lying in the plane perpendicular to `axis` ('z': flat on
+    a surface; 'y': standing on edge facing the street, as on a shelf; 'x': flat against a side wall). UVs: u along the rope (one picture repeat every `uv_len` m), v round it. `layers` > 1 stacks that many spirals one on
+    another (each a rope diameter higher, the inner radius a little larger). Returns the coil's outer radius."""
+    cx, cy, cz = c
+    n_tot = int(turns * seg_per_turn)
+    V, F, U = [], [], []
+    L_acc = 0.0
+    prev = None
+    R_out = R_in
+    for ly in range(layers):
+        base = len(V)
+        for i in range(n_tot + 1):
+            phi = 2 * math.pi * i / seg_per_turn
+            rad = R_in + ly * 0.4 * rho + (2.0 * rho * 1.0) * phi / (2 * math.pi)
+            R_out = max(R_out, rad)
+            h = ly * 1.7 * rho
+            if axis == "z":
+                p = (cx + rad * math.cos(phi), cy + rad * math.sin(phi), cz + h)
+                t = (-math.sin(phi), math.cos(phi), 0.0)
+                nrm = (0.0, 0.0, 1.0)
+            elif axis == "y":
+                p = (cx + rad * math.cos(phi), cy + h, cz + rad * math.sin(phi))
+                t = (-math.sin(phi), 0.0, math.cos(phi))
+                nrm = (0.0, 1.0, 0.0)
+            else:
+                p = (cx + h, cy + rad * math.cos(phi), cz + rad * math.sin(phi))
+                t = (0.0, -math.sin(phi), math.cos(phi))
+                nrm = (1.0, 0.0, 0.0)
+            e1 = nrm
+            e2 = (t[1] * nrm[2] - t[2] * nrm[1], t[2] * nrm[0] - t[0] * nrm[2], t[0] * nrm[1] - t[1] * nrm[0])
+            if prev is not None:
+                L_acc += math.dist(p, prev)
+            prev = p
+            for k in range(sides + 1):
+                a = 2 * math.pi * k / sides
+                V.append((p[0] + rho * (math.cos(a) * e1[0] + math.sin(a) * e2[0]), p[1] + rho * (math.cos(a) * e1[1] + math.sin(a) * e2[1]), p[2] + rho * (math.cos(a) * e1[2] + math.sin(a) * e2[2])))
+                U.append((L_acc / uv_len, k / float(sides)))
+        for i in range(n_tot):
+            for k in range(sides):
+                a = base + i * (sides + 1) + k
+                b = a + 1
+                c_ = a + (sides + 1) + 1
+                d_ = a + (sides + 1)
+                F.append((a, d_, c_, b))
+    # one Blender face per quad with its own UVs
+    off = len(gm.V)
+    gm.V.extend(V)
+    for f in F:
+        gm.F.append(tuple(off + i for i in f))
+        gm.M.append(mi)
+        gm.U.append([U[i] for i in f])
+    return R_out + rho
+
+
+def twine_reel(gm, cx, cy, z0, r=0.045, h=0.11, mi_wood=0, mi_twine=1, uv_len=0.06, n=18):
+    """A reel of twine: a wooden core with two flanges, the twine wound between them (a cylinder with the rope picture repeated round it)."""
+    gm.lathe(cx, cy, z0, [(0.0, 0.0), (r * 1.05, 0.0), (r * 1.05, 0.006), (r * 0.55, 0.006), (r * 0.55, h - 0.006), (r * 1.05, h - 0.006), (r * 1.05, h), (0.0, h)], mi=mi_wood, n=n)
+    # the twine: a band cylinder (UV round it, along it)
+    V, F, U = [], [], []
+    for k in range(n + 1):
+        a = 2 * math.pi * k / n
+        for zz in (z0 + 0.006, z0 + h - 0.006):
+            V.append((cx + r * 0.98 * math.cos(a), cy + r * 0.98 * math.sin(a), zz))
+            U.append((k * 2 * math.pi * r / n / uv_len, 0.0 if zz < z0 + h / 2 else (h - 0.012) / uv_len))
+    off = len(gm.V)
+    gm.V.extend(V)
+    for k in range(n):
+        a = off + 2 * k
+        f = (a, a + 2, a + 3, a + 1)
+        gm.F.append(f)
+        gm.M.append(mi_twine)
+        gm.U.append([U[f[0] - off], U[f[1] - off], U[f[2] - off], U[f[3] - off]])
+
+
+def paint_tin(gm, cx, cy, z0, r, h, luv, n=16, mi_metal=0, mi_label=1, bail=True):
+    """A paint tin: a lid rim, the body, a chime; the label on the wall (as tin_stack); a wire bail (a half ring over the top, held in two ears)."""
+    prof = [(0.0, 0.0), (r * 0.94, 0.0), (r, 0.004), (r, h - 0.010), (r * 1.035, h - 0.010), (r * 1.035, h - 0.002), (r * 0.90, h - 0.002), (r * 0.90, h - 0.006), (0.0, h - 0.006)]
+    gm.lathe(cx, cy, z0, prof, mi=mi_metal, n=n, label=(2, 3), mi_label=mi_label, label_uv=luv)
+    if bail:
+        gm.torus((cx, cy, z0 + h - 0.006), r * 0.98, 0.0022, mi_metal, axis="y", nm=14, nn=4)       # a ring over the lid: the bail (half of it is hidden in the lid and the other half stands as a loop)
+
+
+def souwester(gm, cx, cy, z0, s=1.0, mi=0, mi_seam=1, n=24, face=-1.0):
+    """A sou'wester (oilskin): a crown of six panels (a rounded dome, seams as thin dark bands), a brim that is short at the front and long at the back (the back drooping), a chin tie. Built about the vertical axis
+    through (cx, cy), the front toward -y (`face` -1). The pattern is the target's `script:oilskin_sou_wester`: panels, brim, no CC0 model (the model in the library is a boonie hat)."""
+    r_c, h_c = 0.095 * s, 0.105 * s
+    V, F = [], []
+    rings = []
+    nlat = 7
+    for j in range(nlat + 1):
+        phi = (math.pi / 2) * j / nlat
+        idx = []
+        for i in range(n):
+            th = 2 * math.pi * i / n
+            rad = r_c * math.cos(phi)
+            idx.append(len(V))
+            V.append((cx + rad * math.cos(th), cy + rad * math.sin(th), z0 + 0.04 * s + h_c * math.sin(phi)))
+        rings.append(idx)
+    for j in range(nlat):
+        for i in range(n):
+            i2 = (i + 1) % n
+            F.append((rings[j][i], rings[j][i2], rings[j + 1][i2], rings[j + 1][i]))
+    gm.add(V, F, mi)
+    # the brim: a ring from the crown's foot outward, drooping at the back (y > cy when the front is -y)
+    nb = 5
+    V, F = [], []
+    ringsb = []
+    for j in range(nb + 1):
+        t = j / float(nb)
+        idx = []
+        for i in range(n):
+            th = 2 * math.pi * i / n
+            back = max(0.0, math.sin(th) * (-face))                    # 1 at the back
+            ext = (1.0 + 0.55 * back + 0.15) if True else 1.0
+            rad = r_c * (1.0 + t * (0.45 + 0.9 * back))
+            z = z0 + 0.04 * s - t * (0.012 + 0.10 * back) * s
+            idx.append(len(V))
+            V.append((cx + rad * math.cos(th), cy + rad * math.sin(th), z))
+        ringsb.append(idx)
+    for j in range(nb):
+        for i in range(n):
+            i2 = (i + 1) % n
+            F.append((ringsb[j][i], ringsb[j][i2], ringsb[j + 1][i2], ringsb[j + 1][i]))
+    # a lower face (so the brim has a thickness): the same ring 3 mm under it
+    base = len(gm.V)
+    gm.add(V, F, mi)
+    V2 = [(x, y, z - 0.003) for (x, y, z) in V]
+    gm.add(V2, [tuple(reversed(f)) for f in F], mi)
+    # the seams of the crown: six thin dark bands up the dome
+    for k in range(6):
+        th = 2 * math.pi * k / 6.0 + math.pi / 6.0
+        pts = []
+        for j in range(nlat + 1):
+            phi = (math.pi / 2) * j / nlat * 0.98
+            pts.append((cx + (r_c + 0.0012) * math.cos(phi) * math.cos(th), cy + (r_c + 0.0012) * math.cos(phi) * math.sin(th), z0 + 0.04 * s + h_c * math.sin(phi)))
+        for a, b in zip(pts[:-1], pts[1:]):
+            gm.rod(a, b, 0.0016 * s, mi_seam, 5)
+
+
+def shackle(gm, cx, cy, z, s=1.0, mi=0, face_y=True):
+    """A bow shackle seen from the front, lying flat on a wall (the ring in the xz plane): a U of steel rod (a torus half, two straight legs) and a pin across the open end with a head. `s` scales it."""
+    R, rr = 0.022 * s, 0.0045 * s
+    for k in range(13):
+        a = math.pi + math.pi * k / 12.0
+        a2 = math.pi + math.pi * (k + 1) / 12.0
+        if k < 12:
+            gm.rod((cx + R * math.cos(a), cy, z + R * math.sin(a)), (cx + R * math.cos(a2), cy, z + R * math.sin(a2)), rr, mi, 7)
+    for sx in (-1, 1):
+        gm.rod((cx + sx * R, cy, z), (cx + sx * R, cy, z + 0.030 * s), rr, mi, 7)
+    gm.rod((cx - R - 0.005 * s, cy, z + 0.030 * s), (cx + R + 0.006 * s, cy, z + 0.030 * s), 0.0042 * s, mi, 7)
+    gm.rod((cx - R - 0.0045 * s, cy, z + 0.030 * s), (cx - R - 0.010 * s, cy, z + 0.030 * s), 0.0065 * s, mi, 8)
+
+
+def wooden_block(gm, cx, cy, z, s=1.0, mi_wood=0, mi_steel=1):
+    """A single sheave block, flat on a wall: a rounded wooden shell (a box with a lathe-turned feel: an elongated hexagon), a steel sheave disc in the middle, a steel strap and eye at the head."""
+    w, h, t = 0.034 * s, 0.075 * s, 0.026 * s
+    pts = [(-w, -h * 0.55), (-w * 1.1, 0.0), (-w, h * 0.55), (0.0, h), (w, h * 0.55), (w * 1.1, 0.0), (w, -h * 0.55), (0.0, -h)]
+    V, F = [], []
+    for sgn in (0, 1):
+        for (px, pz) in pts:
+            V.append((cx + px, cy - sgn * t, z + pz))
+    n = len(pts)
+    F.append(tuple(range(n))[::-1] if False else tuple(range(n)))
+    F.append(tuple(n + i for i in range(n))[::-1])
+    for i in range(n):
+        j = (i + 1) % n
+        F.append((i, n + i, n + j, j))
+    gm.add(V, F, mi_wood)
+    gm.rod((cx, cy - t * 1.0 - 0.0005, z), (cx, cy - t * 1.0 - 0.003, z), w * 0.55, mi_steel, 14)
+    gm.torus((cx, cy - t * 0.5, z + h), 0.011 * s, 0.0028 * s, mi_steel, axis="y", nm=12, nn=5)
+
+
+def horn_cleat(gm, cx, cy, z, s=1.0, mi=0):
+    """A horn cleat flat on a wall: a base bar with two horns reaching out to either side (boxes), two screw heads."""
+    L, w, d = 0.075 * s, 0.014 * s, 0.012 * s
+    gm.box(cx - L * 0.5, cx + L * 0.5, cy - d, cy, z - w * 0.5, z + w * 0.5, mi)
+    gm.box(cx - L, cx - L * 0.5, cy - d * 1.6, cy - d * 0.6, z - w * 0.35, z + w * 0.35, mi)
+    gm.box(cx + L * 0.5, cx + L, cy - d * 1.6, cy - d * 0.6, z - w * 0.35, z + w * 0.35, mi)
+    for sx in (-0.5, 0.5):
+        gm.rod((cx + sx * L * 0.5, cy - d, z), (cx + sx * L * 0.5, cy - d - 0.002, z), 0.004 * s, mi, 8)
+
+
+def chain_run(gm, x, y, z_top, n, s=1.0, mi=0):
+    """A short run of chain hung flat on a wall: `n` links (alternate links edge-on), each an oval torus 22 x 12 mm."""
+    for k in range(n):
+        zc = z_top - k * 0.017 * s
+        if k % 2 == 0:
+            gm.torus((x, y, zc), 0.007 * s, 0.0021 * s, mi, axis="y", nm=10, nn=5)
+        else:
+            gm.rod((x, y - 0.0035 * s, zc + 0.008 * s), (x, y - 0.0035 * s, zc - 0.008 * s), 0.0026 * s, mi, 6)
+
+
+def chart_atlas(path, titles, tile=(256, 340), cols=3, seed=7):
+    """Invented sea charts and a tide-table card: each tile a sheet of paper with a coast drawn from noise (no real coast), pale sea, soundings, a compass rose, a border, a title in the project's own place names. The
+    last title that starts with 'TIDE' is drawn as a table of times and heights. Returns {index: (u0, v0, u1, v1)}; strings are added to GEN.TEXTS."""
+    from sw_gen import font
+    rnd = random.Random(seed)
+    tw, th = tile
+    rows = (len(titles) + cols - 1) // cols
+    im = Image.new("RGB", (tw * cols, th * rows), (200, 200, 200))
+    d = ImageDraw.Draw(im)
+    out = {}
+    for k, title in enumerate(titles):
+        c, r = k % cols, k // cols
+        x0, y0 = c * tw, r * th
+        paper = (232, 224, 200)
+        d.rectangle([x0, y0, x0 + tw - 1, y0 + th - 1], fill=paper, outline=(90, 80, 60), width=2)
+        if title.startswith("TIDE"):
+            f = font("oswald", 26)
+            d.text((x0 + 14, y0 + 12), title, font=f, fill=(30, 40, 80))
+            fs = font("oswald", 17)
+            for i in range(14):
+                yy = y0 + 56 + i * 20
+                d.line([(x0 + 10, yy + 18), (x0 + tw - 10, yy + 18)], fill=(150, 140, 120), width=1)
+                d.text((x0 + 14, yy), "%02d.%02d" % (rnd.randrange(0, 12), rnd.choice((5, 10, 25, 40, 55))), font=fs, fill=(40, 40, 60))
+                d.text((x0 + 90, yy), "%.1f m" % rnd.uniform(0.6, 5.4), font=fs, fill=(40, 40, 60))
+                d.text((x0 + 170, yy), "HW" if i % 2 == 0 else "LW", font=fs, fill=(150, 40, 40))
+            GEN.TEXTS.extend([title, "HW", "LW"])
+        else:
+            m = 18
+            d.rectangle([x0 + m, y0 + 46, x0 + tw - m, y0 + th - 18], fill=(196, 214, 218), outline=(60, 70, 90), width=2)
+            # a coast: a polygon from a noisy line across the chart; land in buff
+            pts = [(x0 + m, y0 + 46 + rnd.randrange(30, 120))]
+            for i in range(1, 9):
+                pts.append((x0 + m + i * (tw - 2 * m) / 8.0, y0 + 46 + rnd.randrange(30, 150)))
+            land = pts + [(x0 + tw - m, y0 + 46), (x0 + m, y0 + 46)]
+            d.polygon(land, fill=(222, 206, 160))
+            d.line(pts, fill=(80, 70, 50), width=2)
+            for i in range(30):
+                px, py = x0 + m + 10 + rnd.randrange(tw - 2 * m - 20), y0 + 46 + 170 + rnd.randrange(th - 46 - 18 - 190) if th > 260 else y0 + 150
+                if py > y0 + 46 + 40 + 100:
+                    d.text((px, py), str(rnd.randrange(2, 38)), font=font("oswald", 11), fill=(60, 80, 110))
+            # a compass rose
+            cx, cy = x0 + tw - 62, y0 + th - 66
+            d.ellipse([cx - 28, cy - 28, cx + 28, cy + 28], outline=(120, 40, 40), width=2)
+            d.polygon([(cx, cy - 34), (cx + 6, cy), (cx, cy + 34), (cx - 6, cy)], fill=(150, 50, 50))
+            d.polygon([(cx - 34, cy), (cx, cy - 6), (cx + 34, cy), (cx, cy + 6)], fill=(90, 90, 110))
+            d.text((cx - 4, cy - 50), "N", font=font("oswald", 14), fill=(120, 40, 40))
+            for gx in range(1, 4):
+                d.line([(x0 + m + gx * (tw - 2 * m) / 4.0, y0 + 46), (x0 + m + gx * (tw - 2 * m) / 4.0, y0 + th - 18)], fill=(150, 170, 176), width=1)
+            f = fit_text(d, title.split("\n")[0], "alfa-slab-one", tw - 30, 24)
+            d.text((x0 + (tw - d.textlength(title.split("\n")[0], font=f)) / 2, y0 + 10), title.split("\n")[0], font=f, fill=(30, 40, 80))
+            if "\n" in title:
+                f2 = fit_text(d, title.split("\n")[1], "oswald", tw - 30, 16)
+                d.text((x0 + (tw - d.textlength(title.split("\n")[1], font=f2)) / 2, y0 + 28), title.split("\n")[1], font=f2, fill=(60, 60, 90))
+            GEN.TEXTS.extend(title.split("\n"))
+        out[k] = (x0 / (tw * cols), 1.0 - (y0 + th) / (th * rows), (x0 + tw) / (tw * cols), 1.0 - y0 / (th * rows))
+    im.save(path)
+    return out
