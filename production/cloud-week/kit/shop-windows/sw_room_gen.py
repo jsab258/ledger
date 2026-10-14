@@ -52,6 +52,11 @@ def tex_mean_lin(asset):
     return _lin(a).reshape(-1, 3).mean(axis=0)
 
 
+# batch B (14 October): the metres one repeat of each floor texture covers in the new rooms (the launderette's rubber tile, the grocer's lino, the chandler's boards, the fish market's quarry tile), set by eye
+FLOOR_TILE_M = {"steam_laundry": 1.0, "grocer": 1.2, "chandler": 1.2, "fish_market": 0.9}
+WALL_TILE_M = {"steam_laundry": 0.9, "fish_market": 0.9}          # the white glazed tile of the launderette's dado and the fish market's walls
+
+
 class GRoom(S.Room):
     BOARD_T = S.BOARD_T
 
@@ -141,7 +146,7 @@ class GRoom(S.Room):
         if k > 0.85:
             tint = tuple(t * 0.85 / k for t in tint)
         kind = {"tea_rooms": "chequer", "newsagent": "tiles"}.get(self.ctx.id, "boards")
-        m = self.texmat("floor_" + self.ctx.id, asset, 1.2 if kind == "boards" else (1.6 if kind == "chequer" else 0.6), tint)
+        m = self.texmat("floor_" + self.ctx.id, asset, FLOOR_TILE_M.get(self.ctx.id, 1.2 if kind == "boards" else (1.6 if kind == "chequer" else 0.6)), tint)
         if kind in ("chequer", "tiles"):
             # a 300 mm chequer (the target's "cream and brown 300 mm" / "grey and blue vinyl tile 300 mm"): a checker node's two colours times the texture's grain (its mean taken out)
             nt = m.node_tree
@@ -173,21 +178,37 @@ class GRoom(S.Room):
 
     def shell(self):
         rr = self.RR
-        wall_rgb = _rgb(rr["walls"]["above"])
-        dado_rgb = _rgb(rr["walls"]["dado"])
-        self.dado_top = float(re.search(r"to z ([0-9.]+)", rr["walls"]["dado"]).group(1))
+        above_txt, dado_txt = rr["walls"]["above"], rr["walls"]["dado"]
+        has_rgb = re.search(r"\((\d+),\s*(\d+),\s*(\d+)\)", above_txt)
+        # (batch B) a tiled dado (the launderette's white glazed tile to 1.5 m) or tiled walls to the ceiling (the fish market's): the Poly Haven tile named in the walls' text
+        tile_asset = None
+        if "tile" in (above_txt + " " + dado_txt).lower():
+            mm = re.search(r"Poly Haven ([a-z0-9_]+)", above_txt + " " + dado_txt)
+            tile_asset = mm.group(1) if mm else None
+        all_tile = tile_asset is not None and not has_rgb
+        wall_rgb = _rgb(above_txt) if has_rgb else (224, 224, 216)
+        dado_rgb = _rgb(dado_txt) if re.search(r"\((\d+),\s*(\d+),\s*(\d+)\)", dado_txt) else (228, 228, 220)
+        mt = re.search(r"to z ([0-9.]+)", dado_txt)
+        self.dado_top = float(mt.group(1)) if mt else (H if all_tile else 1.0)
         ceil_rgb = _rgb(rr["ceiling"])
         pm = tex_mean_lin("painted_plaster_wall")
 
-        def tint_for(rgb):
-            t = _lin(rgb) / np.maximum(pm, 1e-3)
-            k = float((t * pm).max())
+        def tint_for(rgb, mean=None):
+            mean = pm if mean is None else mean
+            t = _lin(rgb) / np.maximum(mean, 1e-3)
+            k = float((t * mean).max())
             if k > 0.82:
                 t = t * 0.82 / k
             return tuple(float(v) for v in np.clip(t, 0.02, 1.6))
         self.floor_m = self.floor_material()
-        wall_m = self.texmat("plaster_wall", "painted_plaster_wall", 1.5, tint_for(wall_rgb))
-        dado_m = self.texmat("plaster_dado", "painted_plaster_wall", 1.5, tint_for(dado_rgb))
+        if tile_asset:
+            tm = tex_mean_lin(tile_asset)
+            tile_m = WALL_TILE_M.get(self.ctx.id, 0.9)
+            dado_m = self.texmat("tile_dado", tile_asset, tile_m, tint_for(dado_rgb, tm))
+            wall_m = dado_m if all_tile else self.texmat("plaster_wall", "painted_plaster_wall", 1.5, tint_for(wall_rgb))
+        else:
+            wall_m = self.texmat("plaster_wall", "painted_plaster_wall", 1.5, tint_for(wall_rgb))
+            dado_m = self.texmat("plaster_dado", "painted_plaster_wall", 1.5, tint_for(dado_rgb))
         ceil_m = self.mat("ceiling", rgb8(*ceil_rgb), rough=0.9)
         self.wall_m, self.dado_m = wall_m, dado_m
         self.box("floor", -W / 2, W / 2, 0, D, -0.02, 0.0, self.floor_m)
@@ -196,9 +217,11 @@ class GRoom(S.Room):
         for sgn, nm in ((-1, "left"), (1, "right")):
             x0, x1 = (-W / 2 - 0.1, -W / 2) if sgn < 0 else (W / 2, W / 2 + 0.1)
             self.box("wall_%s_dado" % nm, x0, x1, 0, D, 0.0, dt, dado_m)
-            self.box("wall_%s_up" % nm, x0, x1, 0, D, dt, H, wall_m)
+            if dt < H - 1e-6:
+                self.box("wall_%s_up" % nm, x0, x1, 0, D, dt, H, wall_m)
         self.box("wall_back_dado", -W / 2, W / 2, D, D + 0.1, 0.0, dt, dado_m)
-        self.box("wall_back_up", -W / 2, W / 2, D, D + 0.1, dt, H, wall_m)
+        if dt < H - 1e-6:
+            self.box("wall_back_up", -W / 2, W / 2, D, D + 0.1, dt, H, wall_m)
         # ceiling battens (T12 in slim fittings): fitting 0.010 + opal diffuser 0.015 = 0.025 below the ceiling (as Rita's)
         lt = rr["lights"]
         self.tube_len = lt.get("tube_length_m", 1.5)
@@ -236,7 +259,10 @@ class GRoom(S.Room):
         self.L_tube = []
         for k, t in enumerate(self.RR["lights"]["tubes"]):
             self.L_tube.append(area("tube_light_%d" % k, (t["x"], t["y"], H - 0.03), (0.0, 0.0, 0.0), self.tube_len, 0.09, (1.0, 0.89, 0.76)))
-        self.L_sod = area("sodium", (0.0, -0.04, H * 0.9), (math.pi / 2 - 0.3, 0.0, 0.0), W, 0.5, (1.0, 0.25, 0.0))
+        # 14 October (batch B, from the ironmonger's street review, narrow point 2; a shared-kit fix): the wash was the card's full width at 0.9 of the height, so its two ends touched the side walls at the
+        # ceiling and every night_dark picture had two hot orange top corners (the toplights of the street view glowed). Street light through a window falls on the floor and the lower back wall: the
+        # light is now (W - 1.0) x 0.5 m (4.3 m for the 5.3 m card), centred, at 0.6 of the height, tipped 30 degrees below the horizontal; the strength is calibrated again to night_dark's mean.
+        self.L_sod = area("sodium", (0.0, -0.04, H * 0.6), (math.radians(60.0), 0.0, 0.0), W - 1.0, 0.5, (1.0, 0.25, 0.0))
         self.sodium_rgb = tuple(self.L_sod.data.color)
         self.L_back = None
 
