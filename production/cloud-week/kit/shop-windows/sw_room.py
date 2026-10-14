@@ -225,6 +225,19 @@ class Room:
             if o.type != "MESH":
                 bpy.data.objects.remove(o, do_unlink=True)
 
+        # 14 October (batch B, from the ironmonger's close review, fault 2; a shared-kit change): the glass of a good (a bulb's envelope, a lantern's chimney, a lens, a clock's cover) is kept, as a
+        # see-through Principled material (transmission 1, nothing alpha-blended: DSP-02 still holds), where the room class asks for it (`keep_glass`: the generated shops; Rita's room is unchanged). A material
+        # that is blended and not glass (foliage and labels cut out by an opacity map that is not in the 1k set) is still left out. The audit says, per model, how many of its meshes there are and what
+        # was dropped (DSP-05 reads it).
+        audit = {"source_meshes": len(meshes), "glass_kept": [], "dropped": []}
+        if getattr(self, "keep_glass", False):
+            for o in meshes:
+                for sl in o.material_slots:
+                    m0 = sl.material
+                    if m0 is not None and any(g in m0.name.lower() for g in GLASSY) and not any(k in m0.name.lower() for k in KEEP_BLEND.get(asset, ())):
+                        audit["glass_kept"].append("%s:%s" % (o.name, m0.name))
+                        sl.material = self.see_through(m0)
+
         def is_glassy(m):
             if m is not None and any(k in m.name.lower() for k in KEEP_BLEND.get(asset, ())):
                 m.surface_render_method = "DITHERED"          # a model whose blended material is real geometry (the brooms' bristles), kept: dithered, as the display's alpha materials are
@@ -235,8 +248,10 @@ class Room:
         for o in meshes:
             gidx = [i for i, ms in enumerate(o.material_slots) if is_glassy(ms.material)]
             if gidx and len(gidx) == len(o.material_slots):
+                audit["dropped"].append("%s (all %d materials blended or glass: %s)" % (o.name, len(gidx), ", ".join(ms.material.name for ms in o.material_slots if ms.material)))
                 continue
             if gidx:
+                audit["dropped"].append("%s (faces of %s cut out)" % (o.name, ", ".join(o.material_slots[i].material.name for i in gidx)))
                 bm = bmesh.new()
                 bm.from_mesh(o.data)
                 dead = [f for f in bm.faces if f.material_index in gidx]
@@ -277,8 +292,32 @@ class Room:
         pts = [o.matrix_world @ Vector(c) for o in meshes for c in o.bound_box]
         lo = Vector((min(p.x for p in pts), min(p.y for p in pts), min(p.z for p in pts)))
         hi = Vector((max(p.x for p in pts), max(p.y for p in pts), max(p.z for p in pts)))
+        audit["kept_meshes"] = len(meshes)
+        self.__dict__.setdefault("audit", {})[asset] = audit
         self.templates[key] = (meshes, lo, hi)
         return self.templates[key]
+
+    def see_through(self, m0):
+        """The material that stands for a good's glass (see `template`): Principled, base colour white, roughness 0.05, IOR 1.5, transmission 1, alpha 1 (not blended). In the room's own pictures the shadow-ray
+        trick of `mat(glass=True)` is added (lesson 19: a lamp's light reaches what stands under a pane); for a glb (the display) `shadow_trick` is False and the plain Principled is what is exported."""
+        key = "pane_see_through" + ("_st" if getattr(self, "shadow_trick", False) else "")
+        if key in self.mats:
+            return self.mats[key]
+        if getattr(self, "shadow_trick", False):
+            m = self.mat(key, (1.0, 1.0, 1.0), rough=0.05, glass=True)
+            m.node_tree.nodes["Principled BSDF"].inputs["IOR"].default_value = 1.5
+            m.node_tree.nodes["Principled BSDF"].inputs["Roughness"].default_value = 0.05
+            return m
+        m = bpy.data.materials.new(key)
+        m.use_nodes = True
+        p = m.node_tree.nodes["Principled BSDF"]
+        p.inputs["Base Color"].default_value = (1.0, 1.0, 1.0, 1.0)
+        p.inputs["Roughness"].default_value = 0.05
+        p.inputs["IOR"].default_value = 1.5
+        p.inputs["Transmission Weight"].default_value = 1.0
+        p.inputs["Alpha"].default_value = 1.0
+        self.mats[key] = m
+        return m
 
     # ------------------------------------------------------------------------------------------------ the projector's lead (13 Oct, from the try 2 reviews, close 11)
     PLUG_END_Y = 0.2185          # the lead's tube ends here (world y of the template): beyond it the model's own plug head, a continental round two-pin one

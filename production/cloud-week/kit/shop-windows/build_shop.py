@@ -130,6 +130,7 @@ def run_inner(shop, stage):
             json.dump(getattr(r, "notes", []), open(os.path.join(rooms, "layout_notes.json"), "w"), indent=1)
             json.dump(getattr(r, "rows", {}), open(os.path.join(rooms, "rows.json"), "w"), indent=1)
             json.dump(getattr(r, "texts", []), open(os.path.join(rooms, "texts.json"), "w"), indent=1)
+            json.dump(getattr(r, "audit", {}), open(os.path.join(rooms, "mesh_audit.json"), "w"), indent=1)       # per placed model: its meshes in the glTF, what was kept, the glass kept, what was dropped (DSP-05)
         # the masters' copies beside the glbs (out of git: .git/info/exclude lists the folder); on the PC the masters go to F:/LedgerTools/shop-rooms
         dst = os.path.join(ASSETS, "rooms")
         os.makedirs(dst, exist_ok=True)
@@ -150,6 +151,7 @@ def run_inner(shop, stage):
         r = RG.build_scene(sdir, ctx)
         json.dump(r.placed, open(os.path.join(sdir, "placed.json"), "w"))
         json.dump(r.fixtures, open(os.path.join(sdir, "fixtures.json"), "w"))
+        json.dump(getattr(r, "audit", {}), open(os.path.join(sdir, "mesh_audit.json"), "w"), indent=1)
         keep, ctx.rooms = ctx.rooms, sdir
         rows = CS.Rows()
         CS.room_rows(ctx, rows, ASSETS)

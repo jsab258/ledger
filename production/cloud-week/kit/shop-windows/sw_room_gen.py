@@ -59,6 +59,8 @@ WALL_TILE_M = {"steam_laundry": 0.9, "fish_market": 0.9}          # the white gl
 
 class GRoom(S.Room):
     BOARD_T = S.BOARD_T
+    keep_glass = True           # batch B (14 Oct, ironmonger close review 2): the glass of a good stays, as a see-through material (sw_room.Room.template); Rita's room (sw_room.Room) is unchanged
+    shadow_trick = True         # the room's pictures: a pane lets a lamp's light through to what stands under it (the display, which is exported to a glb, sets this False)
 
     def __init__(self, work, ctx, seed=7):
         A.set_shop(ctx.id)
