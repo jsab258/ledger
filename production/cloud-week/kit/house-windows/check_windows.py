@@ -584,12 +584,13 @@ def wb_rows(frames, meas):
     net = pick(lambda s: s["state"] == "net" and s["net"] in ("N1", "N2"))
     bare = pick(lambda s: s["state"] == "bare")
     drap = pick(lambda s: s["state"] == "draped")
+    SMALL = 5000                  # glass pixels: under it a window is far or foreshortened (seen incidentally from the opposite footway); its P, L and edges are read from a few hundred pixels and are marked *
     def fmt(lst, key):
-        return ", ".join("%s %.2f (%s %.0f deg)" % (s["site"].replace("east_parade_", "ep").replace("_upper", ""), s[key], s["frame"].split("_")[0], s["angle"]) for s in lst[:8]) + (" ..." if len(lst) > 8 else "")
+        return ", ".join("%s %.2f%s (%s %.0f deg)" % (s["site"].replace("east_parade_", "ep").replace("_upper", ""), s[key], "*" if s["pane_px"] < SMALL else "", s["frame"].split("_")[0], s["angle"]) for s in lst[:12]) + (" ..." if len(lst) > 12 else "") + ("  (* under %d glass pixels: seen far or edge-on, read from a few hundred pixels)" % SMALL if any(s["pane_px"] < SMALL for s in lst[:12]) else "")
     # WB-01
     if net:
         ok = all(0.55 <= s["P_over_L"] <= 0.97 for s in net)
-        row("WB-01", ok, "%d net windows at 15 to 30 degrees by day in the target's measuring views: P/L %s" % (len(net), fmt(net, "P_over_L")) + ("" if ok else "  (outside 0.55 to 0.97: %s)" % [s["site"] for s in net if not 0.55 <= s["P_over_L"] <= 0.97]) + far_txt)
+        row("WB-01", ok, "%d net windows at 15 to 30 degrees by day in the target's measuring views: P/L %s" % (len(net), fmt(net, "P_over_L")) + ("" if ok else "  (outside 0.55 to 0.97: %s)" % [(s["site"], s["frame"].split("_")[0], round(s["P_over_L"], 3), s["pane_px"]) for s in net if not 0.55 <= s["P_over_L"] <= 0.97]) + far_txt)
     else:
         not_run("WB-01", "no net window measured at 15 to 30 degrees by day")
     # WB-02
@@ -613,7 +614,7 @@ def wb_rows(frames, meas):
         row("WB-04", ok, "%d bare and net windows at 15 to 30 degrees: D/L %s" % (len(both), fmt(both, "D_over_L")))
         good = [s for s in both if s["line"] and s["line"]["min_ratio"] is not None]
         ok = bool(good) and all(s["line"]["min_ratio"] <= 0.60 for s in good)
-        row("WB-04b", ok, "dip at the pane edges over L: %s" % ", ".join("%s %.2f (%d edges)" % (s["site"][-12:], s["line"]["min_ratio"], s["line"]["edges"]) for s in good[:8]))
+        row("WB-04b", ok, "dip at the pane edges over L (at most 0.60): %s%s" % (", ".join("%s %.2f (%d edges, %s, %d glass px)" % (s["site"][-12:], s["line"]["min_ratio"], s["line"]["edges"], s["frame"].split("_")[0], s["pane_px"]) for s in good[:16]), "" if ok else "; over: %s" % [(s["site"], s["frame"].split("_")[0], round(s["line"]["min_ratio"], 2), s["line"]["edges"]) for s in good if s["line"]["min_ratio"] > 0.60]))
     else:
         not_run("WB-04", "no bare or net window at 15 to 30 degrees")
         not_run("WB-04b", "no bare or net window at 15 to 30 degrees")
@@ -664,12 +665,12 @@ def wb_rows(frames, meas):
     for t, ws in day.items():
         for s in ws.values():
             if s["brick_median"] and 15 <= s["angle"] <= 60 and s["bbox"][0] > 2 and s["bbox"][2] < 2557 and s["bbox"][1] > 2 and s["bbox"][3] < 1437:      # a window cut by the picture's edge has too few joinery pixels
-                ratios.append((s["site"], float(lin(s["L"]) / max(lin(s["brick_median"]), 1e-6)), floors[T.site(s["site"])["paint"]]))
+                ratios.append((s["site"], float(lin(s["L"]) / max(lin(s["brick_median"]), 1e-6)), floors[T.site(s["site"])["paint"]], t, s["joinery_px"]))
     if ratios:
-        ok = all(fl <= r <= 9.0 for _, r, fl in ratios)
-        vals = [r for _, r, _ in ratios]
-        low = sorted(set((sid, round(r, 2), fl) for sid, r, fl in ratios if r < fl + 0.4))[:4]
-        row("WB-07", ok, "frame L over the brick beside it (linear): %d windows, median %.2f, range %.2f to %.2f (band: floor 3.0 for white_fresh and white_upvc, 2.5 for white_grimy and white_flaking, ceiling 9.0); nearest the floor (site, ratio, floor): %s" % (len(ratios), float(np.median(vals)), min(vals), max(vals), low))
+        ok = all(fl <= r <= 9.0 for _, r, fl, _, _ in ratios)
+        vals = [r for _, r, _, _, _ in ratios]
+        low = sorted(set((sid, round(r, 2), fl, t_.split("_")[0], jp_) for sid, r, fl, t_, jp_ in ratios if r < fl + 0.4))[:8]
+        row("WB-07", ok, "frame L over the brick beside it (linear): %d windows, median %.2f, range %.2f to %.2f (band: floor 3.0 for white_fresh and white_upvc, 2.5 for white_grimy and white_flaking, ceiling 9.0); nearest the floor (site, ratio, floor, frame, joinery pixels): %s" % (len(ratios), float(np.median(vals)), min(vals), max(vals), low))
     else:
         not_run("WB-07", "no window with brick beside it measured")
     # WB-08
