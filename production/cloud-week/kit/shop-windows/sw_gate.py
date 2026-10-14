@@ -484,6 +484,16 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
         # (the window frame, mullions, band, front and lattice stay off it; the lattice still casts its diamond shadow into the pool). The pool is the gate's stand-in: the game's own is
         # owed (PC-02)
         recv.objects.link(bpy.data.objects["footway"])
+        # 14 Oct (batch B, from the ironmonger's close review, fault 1): the stand-in lamps' pools on the far footway and the road were reflected by the night glass as a burnt orange bar across the glass
+        # (both close frames; GLS-03's p95 could not see it). The road and the far footway are left out of glossy rays at night: the glass reflects the dark street there and nothing else changes. Default
+        # for every shop but Rita's (her gate and her numbers stay as they were); `{"street_glossy": true}` in gate_lights_extra.json puts the reflection back
+        sg_ = (extra or {}).get("street_glossy")
+        if sg_ is None:
+            sg_ = bool(ctx is not None and ctx.id == "ritas")
+        if not sg_:
+            for _n in ("road", "far_footway"):
+                if _n in bpy.data.objects:
+                    bpy.data.objects[_n].visible_glossy = False
         for _nm in [x for x in os.environ.get("LEDGER_GATE_NOGLOSSY", "").split(",") if x]:        # a test knob: these objects (or lights) are left out of glossy rays
             if _nm in bpy.data.objects:
                 bpy.data.objects[_nm].visible_glossy = False

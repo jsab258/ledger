@@ -1180,6 +1180,7 @@ def glass_night_rows(R, work, rows):
     (2560 x 1440) is reduced to the check render's 1280 x 720 by averaging 2 x 2; luma; the glass mask is the check's own."""
     gate = os.path.join(work, "gate")
     det, ok, n = [], True, 0
+    patches4 = []
     for cam in ("STREET_SQUARE", "STREET_30", "CLOSE_35", "CLOSE_35_B"):
         pf = os.path.join(gate, "%s_night_lit.png" % cam)
         pn_full = os.path.join(gate, "check_%s_night_lit_norefl_full.png" % cam)
@@ -1209,6 +1210,18 @@ def glass_night_rows(R, work, rows):
         ok &= 0 <= p95 <= 15.0
         n += 1
         det.append("%s p95 %.1f (mean %.1f, %d glass px)" % (cam, p95, mean_d, int(mk.sum())))
+        # GLS-04 (14 Oct, batch B, from the ironmonger's close review, fault 1: a burnt orange bar, the reflection of the gate's stand-in lamp pool on the far footway, about 2 per cent of the glass, passed a p95 of 10): the
+        # largest connected patch of glass pixels that are 40 or more levels brighter than the reflection-off render
+        bright = mk & ((luma(fr) - luma(nr)) >= 40.0)
+        lab_, nlab = _nd.label(bright)
+        big = int(np.bincount(lab_.ravel())[1:].max()) if nlab else 0
+        share = big / float(max(int(mk.sum()), 1))
+        ok4 = share < 0.001
+        patches4.append((ok4, "%s: largest patch %d px = %.4f per cent of %d glass px (%d patches in all, %d px 40 levels brighter than the render with the reflection off)" % (cam, big, 100.0 * share, int(mk.sum()), nlab, int(bright.sum()))))
+    if ctx().id != "ritas":            # Rita's check keeps its 55 rows (her gate was built before the finding)
+        rows.add("GLS-04", "no bright band in the night glass", len(patches4) == 4 and all(p_[0] for p_ in patches4),
+                 "at night, at every camera, the largest connected patch of window-glass pixels 40 or more levels brighter than the same frame with the glass's reflection off is under 0.1 per cent of the glass (a p95 cannot see a band: GLS-03 passed the ironmonger's burnt orange bar at 10.0): " + "; ".join(p_[1] for p_ in patches4) +
+                 " (the gate leaves the road and the far footway out of glossy rays by default, so the glass reflects the dark street and not the stand-in lamps' pools)")
     rows.add("GLS-03", "the night glass does not double what is behind it", ok and n == 4, "at night, p95 of |gate frame minus the render with the glass's reflection off| (luma, levels), the frame against a render of the same size, samples and seed with the glass's reflection off, over the glass mask eroded by 2 px at 1280 (4 at 2560): " + "; ".join(det) +
              " (limit 15; try 2: 32.9 at STREET_30 and 17.2 at STREET_SQUARE: the stand-in glass mixed a Transparent and a Glass BSDF, which bent each ray at one face of the closed 6 mm slab and not the other, so everything behind it came two or three times; now a Glossy BSDF, GGX 0.02, weighted 0.2 x Fresnel at IOR 1.5, nothing refracted)")
 

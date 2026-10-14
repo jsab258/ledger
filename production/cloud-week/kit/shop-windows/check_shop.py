@@ -316,6 +316,39 @@ def display_rows(ctx, rows, assets):
     return di
 
 
+# What a model may drop (14 Oct, batch B): the meshes a Judgement in NOTES.md names, per model, as {model: (name fragment, the Judgement's one line)}. Anything else the template drops fails DSP-05.
+KNOWN_DROPS = {}
+
+
+def dsp05_rows(ctx, rows, di):
+    """DSP-05 (ironmonger close review, fault 2, 14 Oct): every placed model keeps all the meshes of its glTF, unless a Judgement in NOTES.md names the one it drops. The room's and the display's template audits
+    (mesh_audit.json beside the room's pictures; `mesh_audit` in display_items.json) say, per model, the meshes in its glTF, the meshes kept, the glass kept (as a see-through material, not blended) and what was dropped."""
+    placed = json.load(open(os.path.join(ctx.rooms, "placed.json"))) if ctx.has_room else []
+    audit = {}
+    ap = os.path.join(ctx.rooms, "mesh_audit.json")
+    if os.path.exists(ap):
+        audit.update(json.load(open(ap)))
+    for k_, v_ in (di or {}).get("mesh_audit", {}).items():
+        a0 = audit.get(k_)
+        if a0 is None or len(v_.get("dropped", [])) > len(a0.get("dropped", [])):
+            audit[k_] = v_
+    models = sorted({str(p["model"]).split("#")[0] for p in placed if "model" in p and not str(p["model"]).startswith("script:")} | {str(i["model"]).split("#")[0] for i in (di or {}).get("items", [])})
+    missing, lines, bad = [], [], []
+    for m_ in models:
+        a_ = audit.get(m_)
+        if a_ is None:
+            missing.append(m_)
+            continue
+        drops = [d_ for d_ in a_.get("dropped", []) if not (m_ in KNOWN_DROPS and KNOWN_DROPS[m_][0] in d_)]
+        if drops:
+            bad.append((m_, drops))
+        lines.append("%s %d of %d meshes%s%s" % (m_, a_.get("source_meshes", 0) - len(a_.get("dropped", [])), a_.get("source_meshes", 0), (", glass kept: %d" % len(a_["glass_kept"])) if a_.get("glass_kept") else "",
+                                                 (", dropped: %s" % "; ".join(a_["dropped"])) if a_.get("dropped") else ""))
+    rows.add("DSP-05", "every placed model keeps all its parts", not bad and not missing,
+             "%d placed Poly Haven models against their glTF's meshes (the template's audit): %s%s%s (a loose-pieces model that is split on purpose, like the tea set, is judged as a whole; glass parts are kept as a see-through Principled material, transmission 1, alpha 1, nothing blended)" % (
+                 len(models), "; ".join(lines) or "none", ("; UNAUDITED: %s" % missing) if missing else "", ("; DROPPED WITHOUT A JUDGEMENT: %s" % bad) if bad else ""))
+
+
 # ------------------------------------------------------------------------------------------------------------- the inventory and the never-list
 def inventory_rows(ctx, rows, assets, di, shop_texts, goods_note, pending=None):
     T = A.load_target()
@@ -769,6 +802,7 @@ def run(ctx, assets, previews, out_json):
         projection_rows(ctx, rows)
         room_rows(ctx, rows, assets)
         di = display_rows(ctx, rows, assets)
+        dsp05_rows(ctx, rows, di)
         extra = shop_rows(ctx, rows, assets, di)
         inventory_rows(ctx, rows, assets, di, extra.get("texts", []), extra)
     else:
