@@ -1,13 +1,13 @@
 {
  "schema": "ledger.cloud-week-42.shop-windows-check/1",
  "shop": "empty_unit",
- "made": "2026-10-13 19:47:54",
+ "made": "2026-10-14 01:03:28",
  "target": "production/cloud-week/targets/shop-windows/target.json (status: target for unit 7 of cloud week 42, part 2; written 12 October 2026; failed its )",
- "pass": 18,
+ "pass": 19,
  "counted": 20,
  "na": 4,
  "pending": 0,
- "seconds": 17.5,
+ "seconds": 16.1,
  "rows": [
   {
    "id": "GLB-01",
@@ -132,8 +132,8 @@
   {
    "id": "LIT-03",
    "name": "the empty unit is a pale blank by day, not black",
-   "status": "fail",
-   "detail": "mean luma of the whitewashed lower lights at STREET_SQUARE: by day 175.0 (at least 150), at night 42.0 (at most 40; the gate lights the street with its two stand-in lamps and the whitewash is unlit)"
+   "status": "pass",
+   "detail": "mean luma of the whitewashed lower lights at STREET_SQUARE: by day 175.0 (at least 150), at night 38.6 (at most 40; the gate lights the street with its two stand-in lamps and the whitewash is unlit)"
   },
   {
    "id": "PRV-01",
@@ -151,7 +151,7 @@
    "id": "X-PRV",
    "name": "previews: JPEG, about 1600 px wide, under 500 KB",
    "status": "pass",
-   "detail": "4 JPEGs of this shop in the previews folder (at least 4): empty_unit-close-35-day 116 KB 1600 px, empty_unit-close-35-night-lit 72 KB 1600 px, empty_unit-street-square-day 219 KB 1600 px, empty_unit-street-square-night-lit 132 KB 1600 px"
+   "detail": "4 JPEGs of this shop in the previews folder (at least 4): empty_unit-close-35-day 116 KB 1600 px, empty_unit-close-35-night-lit 69 KB 1600 px, empty_unit-street-square-day 219 KB 1600 px, empty_unit-street-square-night-lit 128 KB 1600 px"
   }
  ]
 }

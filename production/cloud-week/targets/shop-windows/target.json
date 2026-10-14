@@ -2,7 +2,7 @@
  "schema": "ledger-shop-windows-target/1",
  "family": "shop-windows",
  "summary_line": "Shop windows: ten units as built (twelve not found); eight rooms of 104 checked CC0 models and 51 named scripted forms, rendered 4096 wide to the game's own `trace` rule, stock only where that rule can show it and the near 0.55 m a real display; the fish scans wait on one login.",
- "status": "target for unit 7 of cloud week 42, part 2; written 12 October 2026; failed its review (3 faults, 15 narrow points), fixes applied 12 October (not re-reviewed); BUILT 13 October; the build failed both fresh reviews at try 1 (street view: 2 faults, 5 narrow points; close view: 5 faults, 13 narrow points); try 2 amendments from those reviews applied 13 October (section 13, marked '13 Oct, from the try 1 reviews'); try 3 narrow points from the try 2 reviews (both PASS: street 0 faults and 6 narrow points, close 0 faults and 11 narrow points) applied 13 October (section 13, marked '13 Oct, from the try 2 reviews'); no further review ordered; nothing committed",
+ "status": "target for unit 7 of cloud week 42, part 2; written 12 October 2026; failed its review (3 faults, 15 narrow points), fixes applied 12 October (not re-reviewed); BUILT 13 October; the build failed both fresh reviews at try 1 (street view: 2 faults, 5 narrow points; close view: 5 faults, 13 narrow points); try 2 amendments from those reviews applied 13 October (section 13, marked '13 Oct, from the try 1 reviews'); try 3 narrow points from the try 2 reviews (both PASS: street 0 faults and 6 narrow points, close 0 faults and 11 narrow points) applied 13 October (section 13, marked '13 Oct, from the try 2 reviews'); no further review ordered; nothing committed [13 Oct, batch A: the second stage built the ironmonger, the newsagent and tobacconist, the tea rooms and the fronts of Mickey's and the empty unit (production/cloud-week/kit/shop-windows/NOTES.md, Batch A; section 13, rows A1 to A14); not yet reviewed]",
  "units": {
   "length": "metres (frames: street, card, picture, room, display: see this folder's TARGET.md, section 3); front parts in millimetres in the 2.2 bay frame (u, d, z)",
   "colour": "sRGB 0 to 255",
@@ -531,7 +531,7 @@
     "rule": "terrace-front.py 2405-2417: x from bay start + 0.35 to bay end - 0.35, z 0.65 to 3.05, y +5.875; the empty unit has none (bay 3 of 6 is skipped)"
    },
    "keeps": "everything of the room: production/specs/mickeys-office.json, shop-room.py's mickeys branch, room_3d, its lamps and brightness values (spec entry unchanged)",
-   "changes": "only the front is unit 7's: the A2 painted-steel refit assembled from the 3.2 parts, the 4.1 board with the raised gilt letters, the glass rows",
+   "changes": "only the front is unit 7's: the A2 painted-steel refit assembled from the 3.2 parts, the 4.1 board with the raised gilt letters, the glass rows [13 Oct, batch A: the A2 steel refit, the tile pattern and the raised letters; a stand-in card behind the glass (A12)]",
    "notes": "The approved sheet's front: slate blue-grey frame on a patterned tile, the piers and fascia painted as a unit. The old board stays under.",
    "cameras": {
     "STREET_SQUARE": {
@@ -4061,7 +4061,7 @@
    "night_furniture": "dark; the whitewash tile (glass/empty_unit/window_whitewash, 3250 x 1800 mm) over every pane and the door's glass; no grille",
    "card": null,
    "keeps": "everything the street already draws: every pane whitewashed from inside, no interior card (terrace-front.py skips bay 3), the 4.1 letting board and whitewash",
-   "changes": "the front only: the unit's bare timber front assembled from the 3.2 parts (left console clipped off, paint gone), the whitewash tile from 4.1",
+   "changes": "the front only: the unit's bare timber front assembled from the 3.2 parts (left console clipped off, paint gone), the whitewash tile from 4.1 [13 Oct, batch A: the whitewash, the letting board, the number on the glass; no card (A13)]",
    "notes": "The left console (high street x, viewer's left: u 55 to 295) was clipped off and never put back (fascia-01 spec, bay x 26.825). The street draws this front bare.",
    "cameras": {
     "STREET_SQUARE": {
@@ -7883,7 +7883,7 @@
     "rule": "terrace-front.py 2405-2417: x from bay start + 0.35 to bay end - 0.35, z 0.65 to 3.05, y -5.875; the empty unit has none (bay 3 of 6 is skipped)"
    },
    "keeps": "the research (Formica tables, a menu board, a half-height cafe curtain, steamed glass) and the 3 Oct food models (carrot cake, strawberry cake, tea set)",
-   "changes": "NO Gothic chairs, NO empty frames, NO free tables in the picture (they smeared): tables and chairs are real and only in the window; the room is the counter, hatch and shelves on the back wall and flat boards; the cafe curtain hides the outer lights",
+   "changes": "NO Gothic chairs, NO empty frames, NO free tables in the picture (they smeared): tables and chairs are real and only in the window; the room is the counter, hatch and shelves on the back wall and flat boards; the cafe curtain hides the outer lights [13 Oct, batch A: two cake domes, the tea set put together, the shelf and the till (A10); the table at 0.50 m, the chairs clear of it, the curtain (A11)]",
    "notes": "A 1980s caff: the brown acrylic panel on the old board (fascia target), the timber painted brown and cream.",
    "room": {
     "w": 5.3,
@@ -9032,7 +9032,7 @@
     "rule": "terrace-front.py 2405-2417: x from bay start + 0.35 to bay end - 0.35, z 0.65 to 3.05, y -5.875; the empty unit has none (bay 3 of 6 is skipped)"
    },
    "keeps": "the 3 Oct tools and cleaners set (fetch_polyhaven.py ironmonger), the research's drawer wall, the 4.1 hanging board and 'PARAFFIN' on the fascia",
-   "changes": "tools hang FLAT on pegboards on the side walls (they stood on side shelves 0.4 off the wall and smeared); modern aerosols and cleaners with real-brand look-alikes are dropped; paint tins are the project's labelled tins; the drawer wall is a flat front",
+   "changes": "tools hang FLAT on pegboards on the side walls (they stood on side shelves 0.4 off the wall and smeared); modern aerosols and cleaners with real-brand look-alikes are dropped; paint tins are the project's labelled tins; the drawer wall is a flat front [13 Oct, batch A: the window at 0.85 and 0.80 sizes with a stepped crate and trays (A5); the room's tiers, floor run and pegboard counts (A3, A4); EST. 1884 in a toplight and the hanging board's faces (A1, A2); a dark shop's gate (A6)]",
    "notes": "The street's recipe has a metal refit here (SHOPFRONT_REFITS west_north 1); the traditional sign-written board in the fascia target is better matched by an original front, so this target keeps it timber. Reported.",
    "room": {
     "w": 5.3,
@@ -10400,7 +10400,7 @@
     "rule": "terrace-front.py 2405-2417: x from bay start + 0.35 to bay end - 0.35, z 0.65 to 3.05, y -5.875; the empty unit has none (bay 3 of 6 is skipped)"
    },
    "keeps": "the 3 Oct trade (papers, sweets, cigarettes behind the counter, a pension counter; no pools coupons, no lottery, no drink); Pinner 1989 (Geograph 3403654, 5945841) for the lit shop and the dark glass",
-   "changes": "no gold ribbon across the window (a stale card in the engine: the build's check looks for any card in front of the glass); magazines are real thin meshes in the display and flat covers in the room; the cigarette gantry is a back-wall unit 0.12 deep",
+   "changes": "no gold ribbon across the window (a stale card in the engine: the build's check looks for any card in front of the glass); magazines are real thin meshes in the display and flat covers in the room; the cigarette gantry is a back-wall unit 0.12 deep [13 Oct, batch A: about 265 fictional packs on the gantry, no sliding glass (A7); the steel hood, rails and the lit box sign, its night glow put on in the gate (A8); the window's stands, board, plinth and pots (A9)]",
    "notes": "The lit box sign (fascia target, 5220 x 470 x 140, powder-black returns) stands on the old CREAM board (the fascia target's old_board colour; the board's edges, ends and bed mould are cream like its face), the piers, consoles and cornice dove grey; the steel hood under it over window and door.",
    "conflict": "hook-cast.json places 'Hals_shop' (keeper hal, hours 10 to 18, Wed 10 to 13) at street x 39, which is inside the newsagent's bay (x 36 to 42): either the coin shop is the newsagent's neighbour (there is none) or one of them is not on the street. Not resolved: the newsagent is built as ruled (3 Oct).",
    "room": {
@@ -14485,6 +14485,63 @@
     "shops": [
      "ritas"
     ]
+   },
+   "script:backing_board": {
+    "why": "a painted deal board standing behind the tin pyramid (0.90 x 0.74 x 0.016): a support, not a good",
+    "shops": [
+     "ironmonger"
+    ],
+    "added": "13 Oct, batch A"
+   },
+   "script:hung_card": {
+    "why": "a card 0.78 x 0.32 hung on four cords from the window head that carries the six gloves (Rita's lesson: nothing floats): a support",
+    "shops": [
+     "ironmonger"
+    ],
+    "added": "13 Oct, batch A"
+   },
+   "script:bulb_tray": {
+    "why": "an open cardboard tray of six bulbs (0.24 x 0.06 in the window, 0.19 x 0.125 on the room's shelf): a support",
+    "shops": [
+     "ironmonger"
+    ],
+    "added": "13 Oct, batch A"
+   },
+   "script:crate": {
+    "why": "a plain timber crate, step, tray or plinth (slats on the sides, boards on the lid): the boxes that stand for what Poly Haven has no model of; a support",
+    "shops": [
+     "ironmonger",
+     "newsagent"
+    ],
+    "added": "13 Oct, batch A"
+   },
+   "script:paper_stand": {
+    "why": "a stepped timber-and-card stand for folded newspapers (a lower step, a higher step, a back board): a support",
+    "shops": [
+     "newsagent"
+    ],
+    "added": "13 Oct, batch A"
+   },
+   "script:carton_stand": {
+    "why": "a timber stand with a shelf at w 0.46 for the cigarette cartons: a support",
+    "shops": [
+     "newsagent"
+    ],
+    "added": "13 Oct, batch A"
+   },
+   "script:magazine_board": {
+    "why": "a sloping board leaning 40 degrees that carries the magazines: a support",
+    "shops": [
+     "newsagent"
+    ],
+    "added": "13 Oct, batch A"
+   },
+   "script:table_laminate": {
+    "why": "a 12 mm laminate disc on the cafe table's wooden top (the target: 'a laminate top replaces the wood'): a support",
+    "shops": [
+     "tea_rooms"
+    ],
+    "added": "13 Oct, batch A"
    }
   },
   "denied": {
@@ -17370,6 +17427,18 @@
    "for": "close review 1, LIT-08",
    "what": "the game's display entry (shop-interiors.json, pawnbroker display lights) takes the same two strip lights (rect 3.20 x 0.02 m, 8 mm under the front edge of the middle tier at v 0.20, w 0.377 and the top tier at v 0.24, w 0.727, tipped 30 degrees toward the back, 3000 K, the display's channel), their strength in lumens measured on the PC with PC-02 so that the goods read at 0.6 of the room's luma at night",
    "why": "the gate's strength is in Blender watts set by eye; added 13 Oct, from the try 2 reviews"
+  },
+  {
+   "id": "PC-08",
+   "for": "newsagent box sign",
+   "what": "the lit box sign's night glow in the packaged game: the 4.1 emissive map on the sign's face material at the game's own strength (the glb is the day state; the gate puts 0.5 on it at night); the shut-up variant's lowered shutter if the game wants it",
+   "why": "the cloud gate's stand-in; added 13 Oct, batch A"
+  },
+  {
+   "id": "PC-09",
+   "for": "ironmonger, empty unit (dark shops)",
+   "what": "a dark shop's night in the packaged game: the glass shows its dark room and nothing spills (the gate's extra night_dark view has the spill off); the game's own lamps and footway pool as PC-02",
+   "why": "named in the gate's notes; added 13 Oct, batch A"
   }
  ],
  "previews": {
