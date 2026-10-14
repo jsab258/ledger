@@ -131,7 +131,7 @@ def room(r):
     shrimp, anchovy, salmon paste, pickled herring), one row, in the project's own makers' names (SALTHOUSE, TIDEMARK, FENWICK, BRIGHTWATER).
     door F-back-door: the cold-room door 0.9 x 2.0, white plastic-faced in a grey rubber seal, a chrome lever and three hinges, flat (70 mm). hose F-back-hose: garden_hose_wall_mounted_01.
     left board F-left-board: a blackboard 0.8 x 0.6 (chalk: TODAY'S FISH, COD, HADDOCK, PLAICE, KIPPERS and the prices). right F-right-clock: the clock and a printed price chart.
-    floor: terracotta_floor_tiles, wet (roughness 0.16), a stainless grating 0.3 x 0.3 flush (decal) and a hosed dark patch. The chiller's glow lamp (night_dark): a small warm point light."""
+    floor: terracotta_floor_tiles, wet (roughness 0.16), a stainless grating 0.3 x 0.3 flush (decal) and a hosed dark patch. The chiller's pilot lamp (an amber indicator lens on its front, with a warm point light 0.02 m before it) is the night_dark picture's one warm point."""
     _setup()
     import sw_room_gen as RG
     import bpy
@@ -290,16 +290,29 @@ def room(r):
     r.sc.collection.objects.link(ob)
     ob.data.materials.append(gm_)
     r.fixtures.append({"fixture": "F-floor-drain", "name": "drain_grating", "ext": [x0_, x1_, y0_, y1_, 0.0, zf]})
-    # the chiller's glow lamp (night_dark)
-    ld = bpy.data.lights.new("chiller_glow", "POINT")
+    # the chiller's pilot lamp (night_dark). 14 Oct (the tea rooms' close review, 10): a point light with no fitting is a glow from nowhere; the light now stands 0.02 m in front of a 10 mm amber indicator
+    # lens on the chiller's front (emissive in night_dark only), at the left end under the rail, 0.5 W
+    lens_m = r.mat("chiller_pilot_lens", rgb8(255, 160, 60), rough=0.3, emit=(1.0, 0.55, 0.15), emit_strength=0.0)
+    lx_ = cx0 + 0.14
+    lgm = GM()
+    lgm.rod((lx_, cy0 + 0.030, 0.73), (lx_, cy0 + 0.0235, 0.73), 0.005, 0, 14)
+    lo_ = lgm.to_object("chiller_pilot_lens", [lens_m], r.sc, smooth=True)
+    r.fixture_rec("F-back-counter", "chiller_pilot_lens", lgm.extents())
+    ld = bpy.data.lights.new("chiller_pilot", "POINT")
     ld.energy = 0.0
-    ld.color = (1.0, 0.72, 0.45)
-    ld.shadow_soft_size = 0.03
-    po_ = bpy.data.objects.new("chiller_glow", ld)
+    ld.color = (1.0, 0.62, 0.30)
+    ld.shadow_soft_size = 0.008
+    po_ = bpy.data.objects.new("chiller_pilot", ld)
     r.sc.collection.objects.link(po_)
-    po_.location = (0.30, cy0 + 0.30, 0.95)
+    po_.location = (lx_, cy0 + 0.0035, 0.73)
     r.pilot = po_
-    r.pilot_w = 4.0
+    r.pilot_w = 0.5
+    orig_ss_ = r.set_state
+
+    def set_state_(state, P, _o=orig_ss_, _m=lens_m):
+        _o(state, P)
+        _m.node_tree.nodes["Principled BSDF"].inputs["Emission Strength"].default_value = 30.0 if state == "night_dark" else 0.0
+    r.set_state = set_state_
     r.rows["counts"] = {"tins": n_tin, "jars": n_jar}
     r.notes.append("%d tins and %d jars on the shelves (target 24); eight trays of ice, no fish (pending: Sketchfab scans, Jafar's login); the floor is wet (roughness 0.16)" % (n_tin, n_jar))
     r.texts = list(GEN.TEXTS)
