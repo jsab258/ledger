@@ -733,7 +733,7 @@ def layout_ironmonger(r):
         def bulb_tray(xc, yb, z, t=t):
             tray = r.mat("bulb_tray", rgb8(176, 150, 106), rough=0.85)
             gm = GM()
-            tw, td = 0.19, 0.125
+            tw, td = 0.206, 0.140                                      # 14 Oct, try 2: bulbs at their own size (0.06 across) 0.064 apart, two rows of three
             gm.box(xc - tw / 2, xc + tw / 2, yb - td, yb, z, z + 0.004, 0)
             gm.box(xc - tw / 2, xc + tw / 2, yb - td, yb - td + 0.003, z, z + 0.028, 0)
             gm.box(xc - tw / 2, xc + tw / 2, yb - 0.003, yb, z, z + 0.028, 0)
@@ -743,8 +743,8 @@ def layout_ironmonger(r):
             r.placed_rec("I-back-shelves", "script:bulb_tray", gm.extents(), [ob.name], tag="tray")
             for i in range(3):
                 for j in range(2):
-                    r.place("lightbulb_01", (xc - 0.06 + i * 0.06, yb - 0.04 - j * 0.05, z + 0.004), rot=(0, 0, 0), scale=1.0, fixture="I-back-shelves", anchor=("c", "c", "min"))
-        items.append({"kind": "bulbs", "w": 0.19, "d": 0.125, "h": 0.105, "build": bulb_tray})
+                    r.place("lightbulb_01", (xc - 0.064 + i * 0.064, yb - 0.038 - j * 0.064, z + 0.004), rot=(0, 0, 0), scale=1.0, fixture="I-back-shelves", anchor=("c", "c", "min"))
+        items.append({"kind": "bulbs", "w": 0.206, "d": 0.140, "h": 0.105, "build": bulb_tray})
     # fill: the tall tier first so the bulky pieces go where there is room; each tier is filled left to right from what is left
     rnd.shuffle(items)
     # the low tier (z 1.2, over the bins and the bags, 1.3 m) first and to 85 per cent of its length, so that it is not the dregs of the other two (18 per cent at the first try), then the high ones,
@@ -760,34 +760,31 @@ def layout_ironmonger(r):
     fx0, fx1 = fl["x"]
     bin_key = r.sub_template("metal_trash_can", "clean", lambda n: "rust" not in n)
     bd = r.dims(bin_key)
-    bs_ = 0.85
-    e1 = r.place(bin_key, (fx0 + bd.x * bs_ / 2 + 0.02, D - 0.005, 0.0), rot=(0, 0, 0), scale=bs_, fixture="I-back-floor", anchor=("c", "max", "min"))
-    jd = r.dims("metal_jerrycan_green", (0, 0, math.pi / 2))
-    xj = e1[1] + 0.05
-    r.place("metal_jerrycan_green", (xj + jd.x / 2, D - 0.02, 0.0), rot=(0, 0, math.pi / 2), scale=1.0, fixture="I-back-floor", anchor=("c", "max", "min"), tag="paraffin")
-    bag_s = 0.60
+    bs_ = 0.90
+    e1 = r.place(bin_key, (fx0 + bd.x * bs_ / 2 + 0.005, D - 0.005, 0.0), rot=(0, 0, 0), scale=bs_, fixture="I-back-floor", anchor=("c", "max", "min"))
+    bag_s = 0.90                                                                  # 14 Oct, try 2 (DSP-06: own size, 0.9 to 1.1): the bags were 0.60 and the bin 0.85
     bg = r.dims("cement_bag", (0, 0, 0))
     zz = 0.0
-    xbag = 2.55 - bg.x * bag_s / 2
+    xbag = e1[1] + 0.012 + bg.x * bag_s / 2
     for k in range(3):
         r.place("cement_bag", (xbag + rnd.uniform(-0.003, 0.003), D - 0.005, zz), rot=(0, 0, rnd.uniform(-0.03, 0.03)), scale=bag_s, fixture="I-back-floor", anchor=("c", "max", "min"))
         zz += bg.z * bag_s
-    # the second paraffin can stands on the top bag (a can 0.171 wide and 0.374 deep on a bag 0.277 by 0.42)
-    r.place("metal_jerrycan_green", (xbag, D - 0.03, zz), rot=(0, 0, math.pi / 2), scale=1.0, fixture="I-back-floor", anchor=("c", "max", "min"), tag="paraffin")
-    ctx_notes.append("I-back-floor: the dustbins are the clean variant of the model's pair at 0.85; the cement bags at 0.60 (the model's bag is 0.70 long: three at 0.75 and the bin and a can do not fit a 1.3 m run); two of the three paraffin cans: one on the floor, one on the bags (the third has no place in the run); the wooden step ladder is left out (it fits no part of the run)")
+    # two of the three paraffin cans stand side by side on the top bag (a can 0.171 wide and 0.374 deep, at its own size, on a bag 0.416 by 0.63); the third has no place in the 1.3 m run
+    for k, dx in enumerate((-0.095, 0.095)):
+        r.place("metal_jerrycan_green", (xbag + dx, D - 0.03, zz), rot=(0, 0, math.pi / 2), scale=1.0, fixture="I-back-floor", anchor=("c", "max", "min"), tag="paraffin")
+    ctx_notes.append("I-back-floor (try 2): the dustbin (the clean variant of the model's pair), the three cement bags in a stack and the paraffin cans all at 0.9 of their size or more, not shrunk to 0.85 and 0.60 (DSP-06): 1.3 m takes the bin (0.76), the bags (0.42) and nothing else on the floor, so two of the three paraffin cans stand on the top bag and the third has no place; the wooden step ladder is left out (it fits no part of the run)")
     # ---- the pegboards (counts raised: see the docstring)
     left_items = [("handsaw_wood", 2, "h"), ("bolt_cutters_01", 1, "v"), ("crowbar_01", 1, "v"), ("cross_pein_hammer", 3, "v"), ("wooden_hammer_01", 2, "v"), ("pipe_wrench", 2, "v"), ("adjustable_wrench", 3, "v"),
                   ("combination_wrench", 5, "v"), ("pliers", 4, "v"), ("tongue_groove_pliers", 3, "v"), ("screwdriver", 6, "v"), ("flathead_screwdriver", 5, "v"), ("ratchet_wrench", 3, "v"), ("hatchet", 2, "v"), ("screwdrivers_02", 2, "v")]
     r.pegboard_panels("I-left-pegboard", "left")
-    r.hang_tools("I-left-pegboard", "left", left_items, fx["I-left-pegboard"]["y"], fx["I-left-pegboard"]["z"])
-    right_items = [("trowel_01", 8, "v"), ("garden_gloves_01", 8, "v"), ("dustpan", 4, "v"), ("mousetrap", 14, "v")]
+    r.hang_tools("I-left-pegboard", "left", left_items, fx["I-left-pegboard"]["y"], fx["I-left-pegboard"]["z"], max_off=0.14, min_scale=0.9)
+    right_items = [("trowel_01", 8, "v"), ("garden_gloves_01", 8, "v"), ("dustpan", 4, "v"), ("mousetrap", 14, "v"), ("wooden_broom", 1, "v")]
     r.pegboard_panels("I-right-pegboard", "right")
-    r.hang_tools("I-right-pegboard", "right", right_items, fx["I-right-pegboard"]["y"], fx["I-right-pegboard"]["z"], max_off=0.10)
-    # the two wooden brooms hang on the wall itself past the end of the board (y 3.5 and 3.9): a broom's head is 0.113 thick, which on a board 0.02 off the wall would stand 0.137 out; at 0.82 and
-    # hung on the wall it stands 0.093 (the side wall's tolerated 0.10)
-    for k, yb in enumerate((3.52, 3.95)):
-        r.place("wooden_broom", (W / 2 - 0.002, yb, 0.06), rot=(0, 0, math.radians(-90)), scale=0.82, fixture="I-right-pegboard", anchor=("max", "c", "min"), tag="broom")
-    ctx_notes.append("the brooms (2 of the room's pieces on the right wall) hang on the wall past the board's end at 0.82: the head is 0.113 thick")
+    r.hang_tools("I-right-pegboard", "right", right_items, fx["I-right-pegboard"]["y"], fx["I-right-pegboard"]["z"], max_off=0.14, min_scale=0.9)
+    # the two wooden brooms (try 2, DSP-06: at their own size, 0.49 across their heads): one hangs from the board's top line at its end (the tall ones hang in columns), the other on the wall itself past the board's
+    # end (the board stops at y 3.3 and the shelf unit's end stands from y 4.22: 0.92 m, room for one head 0.49 wide and not two); a broom's head is 0.113 thick, so it stands 0.133 off the wall with the board
+    r.place("wooden_broom", (W / 2 - 0.002, 3.56, 0.06), rot=(0, 0, math.radians(-90)), scale=1.0, fixture="I-right-pegboard", anchor=("max", "c", "min"), tag="broom")
+    ctx_notes.append("the brooms (2 of the room's pieces on the right wall) at their own size: one hangs from the board's top line at its end, one on the wall past the board's end (the head is 0.113 thick); SO-02 tolerates a good on a pegboard up to 0.135 (try 2: a trowel, a dustpan or a broom at its own size stands 0.115 to 0.133 off a 20 mm board)")
     # a door mat? the target gives none: not built
 
 

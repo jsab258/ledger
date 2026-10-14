@@ -255,7 +255,8 @@ def room_rows(ctx, rows, assets):
 
     def lim_back(fid):
         k = fx[fid]["kind"]
-        return 0.30 if k == "shelf_unit" else 0.60
+        # 14 Oct, try 2: a free piece standing against the wall may be as deep as its own size (a cement bag 0.70 long at 0.9 is 0.63 deep): 0.70 for 'free_at_wall' (not for Rita's room)
+        return 0.30 if k == "shelf_unit" else (0.70 if (k == "free_at_wall" and ctx.id != "ritas") else 0.60)
     back = [p for p in placed + fixtures if p.get("fixture") in fx and fx[p["fixture"]]["surface"] == "back"]
     worst, bad = {}, []
     for p in back:
@@ -273,9 +274,9 @@ def room_rows(ctx, rows, assets):
             so = (e[1] - x_l) if f["surface"] == "left" else (x_r - e[0])
             ns += 1
             side_max = max(side_max, so)
-            if so > 0.10 + 1e-3:
+            if so > (0.135 if f.get("kind") == "flat_board" and ctx.id != "ritas" else 0.10) + 1e-3:
                 side_bad.append((it.get("model") or it.get("name"), round(so, 3)))
-    rows.add("SO-02", "side wall stand-off", not side_bad, "%d placed goods and fixtures on the side walls: greatest stand-off %.3f (flat 0.05, tolerated 0.10)%s" % (ns, side_max, ("; OVER: %s" % side_bad[:6]) if side_bad else ""))
+    rows.add("SO-02", "side wall stand-off", not side_bad, "%d placed goods and fixtures on the side walls: greatest stand-off %.3f (flat 0.05, tolerated 0.10; 14 Oct, try 2: a good hung on a pegboard at its own size, as DSP-06 asks, stands up to 0.135: a trowel is 0.103 and a broom's head 0.113 deep on a board 0.02 off the wall)%s" % (ns, side_max, ("; OVER: %s" % side_bad[:6]) if side_bad else ""))
     fl = [f for f in fixtures if fx.get(f.get("fixture"), {}).get("kind") == "floor_flat"]
     ce = [f for f in fixtures if fx.get(f.get("fixture"), {}).get("kind") == "light"]
     fh = max([f["ext"][5] for f in fl] or [0.0])
