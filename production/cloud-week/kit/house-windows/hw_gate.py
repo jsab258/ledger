@@ -244,8 +244,20 @@ def build_and_render(view_name, cam, state, out_png, bake_dir, samples=48, res=N
     gfs = [s for s in sites if s["side"] < 0]
     yo, yi = C.WALL_E, C.WALL_E + C.WALL_T
     z_gf_top, z_sill, z_head, z_eave = 3.65, ups[0]["sill_z_above_crown"], ups[0]["head_z_above_crown"], 6.3
-    o = blk("e_ground", 3.0, 46.0, yo, yi, 0.1, z_gf_top, shopfront)
+    # the ground floor (the shops' own, the wall kit's and unit 7's: stand-ins): stallriser, window, door, pilasters and a fascia a bay
+    fascia_m = new_mat("fascia", tuple(lin([0.62, 0.58, 0.48])), 0.6)
+    glass_dark = new_mat("shop_glass", (0.01, 0.012, 0.014), 0.05)
+    o = blk("e_ground_back", 3.0, 46.0, yo + 0.06, yi, 0.1, z_gf_top, shopfront)
     cat(o, "brick", shopfront)
+    bx = 3.0
+    while bx < 45.9:
+        be = min(bx + 6.0, 46.0)
+        for nm, a, b, z0_, z1_, yy, m_ in (("stall", bx + 0.3, be - 0.3, 0.1, 0.62, yo - 0.02, shopfront), ("win", bx + 0.55, bx + 4.2, 0.62, 2.75, yo + 0.03, glass_dark),
+                                           ("door", bx + 4.45, bx + 5.45, 0.1, 2.55, yo + 0.03, glass_dark), ("pil_l", bx, bx + 0.3, 0.1, 2.8, yo - 0.05, shopfront), ("pil_r", be - 0.3, be, 0.1, 2.8, yo - 0.05, shopfront),
+                                           ("fascia", bx, be, 2.8, 3.5, yo - 0.06, fascia_m)):
+            o = blk("e_%s_%g" % (nm, bx), a, b, yy, yo + 0.07, z0_, z1_, m_)
+            cat(o, "brick", m_)
+        bx += 6.0
     o = blk("e_stringcourse", 3.0, 46.0, yo - 0.03, yi, 3.5, 3.65, stone)
     cat(o, "brick", stone)
     xs = sorted(s["x_centre"] for s in ups)
@@ -476,7 +488,7 @@ def build_and_render(view_name, cam, state, out_png, bake_dir, samples=48, res=N
                             col = {"white": (238, 238, 232), "greyed": (208, 208, 200), "yellowed": (222, 206, 158)}[site["net"]["colour"] or "white"]
                         elif mn == "curtain":
                             cname = (site["extra"] or {}).get("colour", "cream")
-                            col = tuple(T.target()["curtains"]["C1" if base.startswith("curtain__C1") else "C2"]["colours"][cname])
+                            col = tuple(T.target()["curtains"][extra_k if extra_k in ("C1", "C2") else "C1"]["colours"][cname])
                         else:
                             col = tuple(T.target()["blinds"][extra_k]["colour"]) if extra_k else (226, 224, 214)
                         cl = [float(v) for v in T.srgb_to_lin(col)]
@@ -496,7 +508,7 @@ def build_and_render(view_name, cam, state, out_png, bake_dir, samples=48, res=N
                                     sv = 0.48
                                 elif mn == "curtain":
                                     cname = (site["extra"] or {}).get("colour", "cream")
-                                    em = tuple(T.target()["curtains"]["C1"]["night_lit_emission_linear"][cname])
+                                    em = tuple(T.target()["curtains"][extra_k if extra_k in ("C1", "C2") else "C1"]["night_lit_emission_linear"][cname])
                                     sv = 1.0
                                 else:
                                     em = tuple(T.target()["blinds"][extra_k]["night_lit_emission_linear"])

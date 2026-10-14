@@ -1059,6 +1059,52 @@ def make_glass_rows(ctx, fasc_dir):
     return out
 
 
+def make_mesh_screens(ctx, members, F):
+    """The chandler's night furniture (target `night_furniture`, from the Hull chandler photograph P4): woven galvanised mesh screens inside the three lower lights, wire 2 mm, mesh 12 mm, z 0.70 to 1.55 above the
+    footway, one panel to a light, in place when the shop is shut. A panel is a flat steel border (14 x 3.4 mm) round the light's glass (14 mm in from each edge) and 2 x 2 mm wires every 12 mm: the verticals stand in two
+    depths in turn (d 24.0 to 26.0 and d 19.6 to 21.6) and the horizontals between them (d 21.8 to 23.8), so that the weave reads over and under; the panel stands just BEHIND the glass (the glass is d 30 to 36; the panel d 19.6 to 26.0). One object a
+    panel, in a glb of its own (`<shop>_night_mesh.glb`): it is not part of the day front, and the lit night view has it out of the way (the photograph shows it over the lower lights only)."""
+    out = []
+    panels = sorted(k for k in members if k.startswith("win_glass_lower_"))
+    z0, z1 = 700.0, 1550.0
+    pitch, wire = 12.0, 2.0
+    for pi_, nm in enumerate(panels):
+        g = members[nm]
+        u0, u1 = g["u"][0] + 14.0, g["u"][1] - 14.0
+        V, Fc = [], []
+
+        def box(a0, a1, d0, d1, c0, c1):
+            base = len(V)
+            for (u, d, z) in ((a0, d0, c0), (a1, d0, c0), (a1, d1, c0), (a0, d1, c0), (a0, d0, c1), (a1, d0, c1), (a1, d1, c1), (a0, d1, c1)):
+                V.append((u, -d, z))
+            for f in ((0, 3, 2, 1), (4, 5, 6, 7), (0, 1, 5, 4), (1, 2, 6, 5), (2, 3, 7, 6), (3, 0, 4, 7)):
+                Fc.append(tuple(base + i for i in f))
+
+        bw = 14.0
+        box(u0, u0 + bw, 19.6, 26.0, z0, z1)
+        box(u1 - bw, u1, 19.6, 26.0, z0, z1)
+        box(u0 + bw, u1 - bw, 19.6, 26.0, z0, z0 + bw)
+        box(u0 + bw, u1 - bw, 19.6, 26.0, z1 - bw, z1)
+        ni = int((u1 - u0 - 2 * bw - wire) // pitch)
+        ux = u0 + bw + ((u1 - u0 - 2 * bw) - ni * pitch) / 2.0
+        for k in range(ni + 1):
+            u = ux + k * pitch
+            if k % 2 == 0:
+                box(u - wire / 2, u + wire / 2, 24.0, 26.0, z0 + bw, z1 - bw)
+            else:
+                box(u - wire / 2, u + wire / 2, 19.6, 21.6, z0 + bw, z1 - bw)
+        nj = int((z1 - z0 - 2 * bw - wire) // pitch)
+        zx = z0 + bw + ((z1 - z0 - 2 * bw) - nj * pitch) / 2.0
+        for j in range(nj + 1):
+            z = zx + j * pitch
+            box(u0 + bw, u1 - bw, 21.8, 23.8, z - wire / 2, z + wire / 2)
+        ob = bs.new_obj("night_mesh_%d" % pi_, np.array(V, float), Fc)
+        to_metres(ob, F.mats["steel"])
+        members[ob.name] = dict(bbox_mm(ob), material="galvanised_steel", group="night_mesh", wire_mm=wire, pitch_mm=pitch, wires=[ni + 1, nj + 1])
+        out.append(ob)
+    return out
+
+
 def to_metres(ob, mat=None):
     """An object built in mm in the bay frame: to metres at the bay's middle, UVs by cube projection, smooth by angle, one material."""
     M = Matrix.Scale(0.001, 4) @ Matrix.Translation((-BAY_MID, 0.0, 0.0))
@@ -1223,7 +1269,9 @@ def build_front(out_dir, work_dir, fasc_dir, paper_dir, log=print, ctx=None):
     if lat is not None:
         to_metres(lat, F.mats["black"])
         members["grille_lattice"] = dict(bbox_mm(lat), material="powder_black", group="grille_night", rivets=nrivets)
-    day_objs = [o for o in bpy.data.objects if o.type == "MESH" and o is not lat]
+    # the chandler's night furniture (14 Oct, batch B): the woven galvanised mesh screens, their own glb like Rita's grille (not in the day front)
+    mesh_objs = make_mesh_screens(ctx, members, F) if ctx.has_mesh else []
+    day_objs = [o for o in bpy.data.objects if o.type == "MESH" and o is not lat and o not in mesh_objs]
     # FRN-07: the elevation drawn from the built meshes (u 350 to 5650, z 0 to 2850, 1 mm a pixel): every triangle of every part of the front, seen from the street
     elevation_mask(day_objs, os.path.join(work_dir, "front_elevation_mask.png"))
     # export: the front (day state) and the lattice (night)
@@ -1232,7 +1280,11 @@ def build_front(out_dir, work_dir, fasc_dir, paper_dir, log=print, ctx=None):
     _export(day_objs, front_glb)
     if lat is not None:
         _export([lat], grille_glb)
+    mesh_glb = os.path.join(out_dir, ctx.mesh_glb)
+    if mesh_objs:
+        _export(mesh_objs, mesh_glb)
     info = {
+        "mesh_glb": mesh_glb if mesh_objs else None, "mesh_bytes": os.path.getsize(mesh_glb) if mesh_objs else 0, "mesh_triangles": sum(tri_count(o) for o in mesh_objs),
         "front_glb": front_glb, "front_bytes": os.path.getsize(front_glb), "front_triangles": sum(tri_count(o) for o in day_objs),
         "grille_glb": grille_glb if lat is not None else None, "grille_bytes": os.path.getsize(grille_glb) if lat is not None else 0, "grille_triangles": tri_count(lat) if lat is not None else 0, "rivets": nrivets,
         "objects": len(day_objs), "uc_door": uc,

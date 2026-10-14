@@ -73,6 +73,7 @@ class Ctx:
         self.front_glb = "%s_front.glb" % shop_id
         self.display_glb = "%s_display.glb" % shop_id
         self.grille_glb = "%s_grille_night.glb" % shop_id
+        self.mesh_glb = "%s_night_mesh.glb" % shop_id
         self.work = WORK_ROOT if shop_id == "ritas" else os.path.join(WORK_ROOT, shop_id)       # Rita's keeps the places the earlier tries used
         self.fascias = os.path.join(self.work, "fascias")
         self.paper = os.path.join(WORK_ROOT, "paper")        # the OPEN / CLOSED sign (4.2) is the same for every shop
@@ -81,6 +82,7 @@ class Ctx:
         self.display_work = os.path.join(self.work, "display_work")
         nf = (R.get("night_furniture") or "").lower()
         self.has_grille = "lattice" in nf
+        self.has_mesh = "mesh" in nf and "lattice" not in nf              # the chandler's woven galvanised mesh screens (batch B)
         w = self.zones["window"]
         self.window_u = (float(w[0]), float(w[1]))
         self.window_cx_m = ((w[0] + w[1]) / 2.0 - BAY_MID_U) / 1000.0     # the window zone's centre in the front model's x (Rita's 0.975)

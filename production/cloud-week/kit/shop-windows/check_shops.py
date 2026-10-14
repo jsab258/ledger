@@ -243,7 +243,28 @@ def chandler(ctx, rows, assets, di):
     lamp = any(p.get("model") == "Lantern_01" and p.get("tag") == "hurricane_lamp" for p in placed)
     rows.add("ROOM-03", "the counter and its lamp", lamp and any(p.get("model") == "CashRegister_01" for p in placed) and sum(1 for p in placed if p.get("model") == "seadogs_compass") == 3, "the counter's till, three compasses and the hurricane lamp (Lantern_01, lit in night_lit only: a warm point light and a small flame)")
     have = counts_row(ctx, rows, di, {"life_jacket": 4, "lifebuoy": 2, "script:oilskin_sou_wester": 3, "rubber_boots": 4}, "chandler")
-    rows.na("NIT-01", "the woven mesh screens", "the target's night furniture (woven galvanised mesh over the lower lights when the shop is shut) is out of the lit night view the street file uses and is not in the day glb: not built (named in NOTES.md)")
+    # NIT-01 (batch B: built, in a glb of its own like Rita's grille): three panels of woven galvanised mesh, wire 2 mm, mesh 12 mm, z 0.70 to 1.55, one in each lower light, inside the glass, not in the day front
+    try:
+        fm = json.load(open(os.path.join(ctx.work, "front_members.json")))
+        mem = fm["members"]
+        pan = sorted(k for k in mem if k.startswith("night_mesh_"))
+        glass = sorted((mem[k]["u"], mem[k]["z"], mem[k]["d"]) for k in mem if k.startswith("win_glass_lower_"))
+        inside = len(pan) == len(glass) == 3 and all(mem[p]["u"][0] >= g[0][0] and mem[p]["u"][1] <= g[0][1] and abs(mem[p]["z"][0] - 700.0) < 1.5 and abs(mem[p]["z"][1] - 1550.0) < 1.5 and mem[p]["d"][1] < g[2][0] + 0.5
+                                                      for p, g in zip(sorted(pan, key=lambda k: mem[k]["u"][0]), sorted(glass, key=lambda g_: g_[0][0])))
+        wires_ok = all(abs(mem[p]["wire_mm"] - 2.0) < 1e-6 and abs(mem[p]["pitch_mm"] - 12.0) < 1e-6 for p in pan)
+        mg = fm["info"].get("mesh_glb")
+        gl_ok = bool(mg) and os.path.exists(mg) and fm["info"].get("mesh_bytes", 0) < 1024 * 1024
+        import struct
+        with open(os.path.join(assets, ctx.front_glb), "rb") as fh:
+            fh.seek(12)
+            ln, _t = struct.unpack("<II", fh.read(8))
+            front_names = fh.read(ln).decode("utf8", "ignore")
+        apart = "night_mesh" not in front_names
+        rows.add("NIT-01", "the woven mesh screens", inside and wires_ok and gl_ok and apart,
+                 "%d panels (one in each lower light, u inside the glass, z 700 to 1550, d 19.6 to 26: behind the glass, which is d 30 to 36), wire 2 mm, mesh 12 mm (%s wires across and up), in %s (%d triangles, %d bytes; under 1 MB, in git) and not in the day front glb: %s" % (
+                     len(pan), ", ".join("%d x %d" % tuple(mem[p]["wires"]) for p in pan), os.path.basename(mg or "no glb"), fm["info"].get("mesh_triangles", 0), fm["info"].get("mesh_bytes", 0), "in place when the shop is shut; the lit night view does not use it"))
+    except Exception as e:
+        rows.add("NIT-01", "the woven mesh screens", False, "the mesh screens could not be read from the build: %s" % e)
     return {"supports": ["script:crate", "script:backing_board"], "texts": _texts(ctx, di),
             "families": {"rope and cordage": ["script:rope_coils"], "life-saving": ["life_jacket", "lifebuoy"], "lamps": ["Lantern_01", "wooden_lantern_01"], "boots and oilskins": ["rubber_boots", "script:oilskin_sou_wester"], "paint": ["script:paint_tin_pyramid"]},
             "era": "a 1990 ship chandler's: rope, twine, paint, lamps, life jackets, a lifebuoy, boots, oilskins, charts; no explosives drum, no ship model, no modern phone or GPS, no LED lamp"}

@@ -1,10 +1,10 @@
 {
- "made": "2026-10-13 10:43:20",
+ "made": "2026-10-14 04:01:34",
  "what": "the files of the narrow-points build (13 Oct, from the try 2 reviews; v3); the three glbs and the three 4096 pictures are out of git (rebuilt by build_ritas.py) so this names the versions",
  "files": {
   "ritas_front.glb": {
    "bytes": 9061428,
-   "sha256": "34007a6332c3652b307f86ba0061bb7e4af79b5f3f1c1ff3a79c4c807a84cef4"
+   "sha256": "41ea60775f41fc7906ad0e324bfcbca62d1aa6a37139a1b262f17e0cc6ffc5f1"
   },
   "ritas_grille_night.glb": {
    "bytes": 1503204,
