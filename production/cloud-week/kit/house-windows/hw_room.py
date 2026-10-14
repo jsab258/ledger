@@ -278,7 +278,7 @@ class Room:
             self.placed.append({"fixture": fixture, "model": asset, "ext": [round(v, 4) for v in ext], "scale": round(scale, 4), "rot_deg": [round(math.degrees(r), 1) for r in rot], "objs": list(self.last_objs), "tag": tag, "clock": list(clock) if clock else None})
         return ext
 
-    def render(self, path, samples, res, state=None):
+    def render(self, path, samples, res, state=None, exr=False):
         sc = self.sc
         sc.render.engine = "CYCLES"
         sc.cycles.device = "CPU"
@@ -298,8 +298,8 @@ class Room:
         sc.view_settings.exposure = 0.0
         sc.render.resolution_x, sc.render.resolution_y = res
         sc.render.resolution_percentage = 100
-        sc.render.image_settings.file_format = "PNG"
+        sc.render.image_settings.file_format = "OPEN_EXR" if exr else "PNG"      # exr: the scene-linear float picture, for the lit pictures' highlight roll-off before the 8-bit write (14 October)
         sc.render.image_settings.color_mode = "RGB"
-        sc.render.image_settings.color_depth = "8"
+        sc.render.image_settings.color_depth = "32" if exr else "8"
         sc.render.filepath = path
         bpy.ops.render.render(write_still=True)

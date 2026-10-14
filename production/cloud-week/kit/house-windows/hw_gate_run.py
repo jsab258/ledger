@@ -5,7 +5,8 @@ the calibration and the masks are the house windows'. One render at a time (the 
 
 Frames (GATE folder, outside git): frame_<name>_<state>.png (2560 x 1440 beauty), mask_<name>_<state>.png (flat colours: R 1 glass, 2 joinery, 3 cloth, 4 brick, 5 card; G the window's number), and for
 the night frames refloff_<name>_night.png (1280 x 720, the glass's reflection off: the check for a band the lamps' pools put in the night glass, unit 7's close review) and the camera JSON beside each.
-The review set goes to production/previews/cloud-week/house-windows/hw-<view>-<state>-2026-10-13.jpg (about 1600 px, under 500 KB).
+The review set goes to production/previews/cloud-week/house-windows/hw-<view>-<state>-<T.DATE2>.jpg (about 1600 px, under 500 KB); the try 1 pictures (2026-10-13) stay.
+Try 2 (14 October): maskT_<name>_<state>.png is the mask with the glass clear (what lies behind each pane pixel: the cloth 3, the room card 5), for the rows that tell the clear glass from the net (NIGHT-01, NIGHT-07).
 """
 import json
 import math
@@ -36,7 +37,16 @@ FRAMES = [
     ("h-across0-bay2w0", ("H_ACROSS_0", "east_parade_bay2_upper_w0"), ("day", "night")),
     ("h-along30-gf2w1", ("H_ALONG_30_NEAR", "west_south_bay2_gf_w1"), ("day", "night")),
     ("h-under-bay1w0", ("H_UNDER", "east_parade_bay1_upper_w0"), ("day",)),
-    ("h-along15-bay3w1", ("H_ALONG_15_NEAR", "east_parade_bay3_upper_w1"), ("day",)),
+    ("h-along15-bay3w1", ("H_ALONG_15_NEAR", "east_parade_bay3_upper_w1"), ("day", "night")),
+    # the target's 14 frames not rendered in try 1 (GS_A: H_ACROSS_30 day and night, H_ALONG_15_NEAR night above, H_ALONG_15_ROAD day and night; GS_B, the cottages from the east footway and along their own: H_ACROSS_0,
+    # H_ACROSS_30, H_ALONG_15_NEAR, H_ALONG_15_ROAD day and night, H_UNDER day)
+    ("h-across30-bay2w0", ("H_ACROSS_30", "east_parade_bay2_upper_w0"), ("day", "night")),
+    ("h-along15road-bay3w1", ("H_ALONG_15_ROAD", "east_parade_bay3_upper_w1"), ("day", "night")),
+    ("h-across0-gf2w1", ("H_ACROSS_0", "west_south_bay2_gf_w1"), ("day", "night")),
+    ("h-across30-gf2w1", ("H_ACROSS_30", "west_south_bay2_gf_w1"), ("day", "night")),
+    ("h-along15-gf2w1", ("H_ALONG_15_NEAR", "west_south_bay2_gf_w1"), ("day", "night")),
+    ("h-along15road-gf2w1", ("H_ALONG_15_ROAD", "west_south_bay2_gf_w1"), ("day", "night")),
+    ("h-under-gf2w1", ("H_UNDER", "west_south_bay2_gf_w1"), ("day",)),
 ]
 # WB-08: the first build's pane (a lit pale card, flat joinery) in the same view as the bare window seen at 19 degrees (the angle from the wall in three dimensions: H_ALONG_30_NEAR on an upper
 # window); its mask is that frame's own
@@ -195,6 +205,7 @@ def run(names=None, samples=None, log=print):
         for st in states:
             fr = os.path.join(T.GATE, "frame_%s_%s.png" % (name, st))
             mk = os.path.join(T.GATE, "mask_%s_%s.png" % (name, st))
+            mkt = os.path.join(T.GATE, "maskT_%s_%s.png" % (name, st))
             ro = os.path.join(T.GATE, "refloff_%s_%s.png" % (name, st))
             tag = "%s_%s" % (name, st)
             if not os.path.exists(fr):
@@ -208,13 +219,17 @@ def run(names=None, samples=None, log=print):
                 t, rec = G.build_and_render(name, cam, st, mk, cards, mode="mask", extra=extra, log=log)
                 times["mask_" + tag] = t
                 json.dump(times, open(tp, "w"), indent=1)
+            if not os.path.exists(mkt):
+                t, rec = G.build_and_render(name, cam, st, mkt, cards, mode="maskT", extra=extra, log=log)
+                times["maskT_" + tag] = t
+                json.dump(times, open(tp, "w"), indent=1)
             if st == "night" and not os.path.exists(ro):
                 t, rec = G.build_and_render(name, cam, st, ro, cards, samples=16, res=(1280, 720), glass_refl=0.0, extra=extra, log=log)
                 times["refloff_" + tag] = t
                 json.dump(times, open(tp, "w"), indent=1)
             if name in ("hook", "reverse", "cam-a", "close", "close2"):
                 pst = "night_lit" if st == "night" else st
-                jp = os.path.join(T.PREVIEWS, "hw-%s-%s-%s.jpg" % (name, pst, T.DATE))
+                jp = os.path.join(T.PREVIEWS, "hw-%s-%s-%s.jpg" % (name, pst, T.DATE2))
                 if not os.path.exists(jp):
                     sz = jpeg_under(Image.open(fr), jp)
                     log("preview %s: %d KB" % (os.path.basename(jp), sz // 1024))

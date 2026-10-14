@@ -7,7 +7,8 @@
   "sill_z": "above the crown: the site's `sill_z_above_crown` (the opening's bottom edge); the stone sill and the arch ring belong to the wall kit"
  },
  "paint_note": "each glb carries its kind's default paint (S22 and S11 paint_white_fresh, RC and RC2 paint_white_upvc); the house's own paint is set on the slot by name from `paints`",
- "glass_note": "glass_house: base colour 0.03, roughness 0.03, metallic 0, KHR_materials_specular colour 2.0 (Cycles Specular IOR Level 1.0, F0 0.08), opaque; COLOR_0 on each pane is the dirt mask (1.0 clean, 0.8 the 6 mm band and the lowest 25 mm)",
+ "glass_note": "glass_house: base colour 0.03, roughness 0.03, metallic 0, KHR_materials_specular colour 2.0 (Cycles Specular IOR Level 1.0, F0 0.08), opaque; COLOR_0 on each pane is the dirt mask (1.0 clean, 0.8 the 6 mm band and the lowest 25 mm). Every pane is a closed slab 2.5 mm thick (a front and a back face): the pane the PC builds is one surface whose reflectance is the FRONT face's alone (F0 0.08 stands for both faces, target 5.1); the cloud gate's pane is Fresnel x (1 - Backfacing) for the same reason (14 Oct, from the try 1 reviews)",
+ "grime_note": "a window whose condition is grimy carries the target 4.2 grime band: the lowest 30 mm of paint_joinery__lower_bottom_rail (RC and RC2: paint_joinery__frame_sill_rail), measured up from the part's own lowest point, and the top faces of paint_joinery__oak_sill at x 0.75 of the paint, on top of the x 0.85 those parts already take; sites[].grime_band lists them. It is the house's condition, not the kit piece's, so it is not baked into COLOR_0 (the glb carries the default paint of every house of its kind)",
  "cottage_note": "a cottage's two windows share one room card and one pendant: hw_room_card_gf.glb, centred between them; the window pieces' own room__card and pendant__shade are not placed on a cottage",
  "sites": [
   {
@@ -69,7 +70,8 @@
     "shared_by": null
    },
    "lit_at_20_30": true,
-   "room_card_node": "room__card"
+   "room_card_node": "room__card",
+   "grime_band": null
   },
   {
    "id": "east_chandler_bay0_upper_w1",
@@ -128,7 +130,14 @@
     "shared_by": null
    },
    "lit_at_20_30": false,
-   "room_card_node": "room__card"
+   "room_card_node": "room__card",
+   "grime_band": {
+    "parts": [
+     "paint_joinery__frame_sill_rail (its lowest 30 mm)"
+    ],
+    "height_mm": 30,
+    "factor": 0.75
+   }
   },
   {
    "id": "east_parade_bay0_upper_w0",
@@ -187,7 +196,15 @@
     "shared_by": null
    },
    "lit_at_20_30": false,
-   "room_card_node": "room__card"
+   "room_card_node": "room__card",
+   "grime_band": {
+    "parts": [
+     "paint_joinery__lower_bottom_rail (its lowest 30 mm)",
+     "paint_joinery__oak_sill (top faces)"
+    ],
+    "height_mm": 30,
+    "factor": 0.75
+   }
   },
   {
    "id": "east_parade_bay0_upper_w1",
@@ -257,7 +274,15 @@
     "shared_by": null
    },
    "lit_at_20_30": true,
-   "room_card_node": "room__card"
+   "room_card_node": "room__card",
+   "grime_band": {
+    "parts": [
+     "paint_joinery__lower_bottom_rail (its lowest 30 mm)",
+     "paint_joinery__oak_sill (top faces)"
+    ],
+    "height_mm": 30,
+    "factor": 0.75
+   }
   },
   {
    "id": "east_parade_bay1_upper_w0",
@@ -317,7 +342,8 @@
     "shared_by": null
    },
    "lit_at_20_30": false,
-   "room_card_node": "room__card"
+   "room_card_node": "room__card",
+   "grime_band": null
   },
   {
    "id": "east_parade_bay1_upper_w1",
@@ -387,7 +413,8 @@
     "shared_by": null
    },
    "lit_at_20_30": false,
-   "room_card_node": "room__card"
+   "room_card_node": "room__card",
+   "grime_band": null
   },
   {
    "id": "east_parade_bay2_upper_w0",
@@ -457,7 +484,8 @@
     "shared_by": null
    },
    "lit_at_20_30": true,
-   "room_card_node": "room__card"
+   "room_card_node": "room__card",
+   "grime_band": null
   },
   {
    "id": "east_parade_bay2_upper_w1",
@@ -516,7 +544,8 @@
     "shared_by": null
    },
    "lit_at_20_30": false,
-   "room_card_node": "room__card"
+   "room_card_node": "room__card",
+   "grime_band": null
   },
   {
    "id": "east_parade_bay3_upper_w0",
@@ -575,7 +604,8 @@
     "shared_by": null
    },
    "lit_at_20_30": false,
-   "room_card_node": "room__card"
+   "room_card_node": "room__card",
+   "grime_band": null
   },
   {
    "id": "east_parade_bay3_upper_w1",
@@ -629,7 +659,8 @@
     "shared_by": null
    },
    "lit_at_20_30": false,
-   "room_card_node": "room__card"
+   "room_card_node": "room__card",
+   "grime_band": null
   },
   {
    "id": "east_parade_bay4_upper_w0",
@@ -698,7 +729,8 @@
     "shared_by": null
    },
    "lit_at_20_30": false,
-   "room_card_node": "room__card"
+   "room_card_node": "room__card",
+   "grime_band": null
   },
   {
    "id": "east_parade_bay4_upper_w1",
@@ -757,7 +789,14 @@
     "shared_by": null
    },
    "lit_at_20_30": false,
-   "room_card_node": "room__card"
+   "room_card_node": "room__card",
+   "grime_band": {
+    "parts": [
+     "paint_joinery__frame_sill_rail (its lowest 30 mm)"
+    ],
+    "height_mm": 30,
+    "factor": 0.75
+   }
   },
   {
    "id": "east_parade_bay5_upper_w0",
@@ -827,7 +866,8 @@
     "shared_by": null
    },
    "lit_at_20_30": true,
-   "room_card_node": "room__card"
+   "room_card_node": "room__card",
+   "grime_band": null
   },
   {
    "id": "east_parade_bay5_upper_w1",
@@ -886,7 +926,8 @@
     "shared_by": null
    },
    "lit_at_20_30": false,
-   "room_card_node": "room__card"
+   "room_card_node": "room__card",
+   "grime_band": null
   },
   {
    "id": "west_south_bay0_gf_w0",
@@ -948,7 +989,15 @@
     ]
    },
    "lit_at_20_30": false,
-   "room_card_node": "hw_room_card_gf.glb"
+   "room_card_node": "hw_room_card_gf.glb",
+   "grime_band": {
+    "parts": [
+     "paint_joinery__lower_bottom_rail (its lowest 30 mm)",
+     "paint_joinery__oak_sill (top faces)"
+    ],
+    "height_mm": 30,
+    "factor": 0.75
+   }
   },
   {
    "id": "west_south_bay0_gf_w1",
@@ -1010,7 +1059,15 @@
     ]
    },
    "lit_at_20_30": false,
-   "room_card_node": "hw_room_card_gf.glb"
+   "room_card_node": "hw_room_card_gf.glb",
+   "grime_band": {
+    "parts": [
+     "paint_joinery__lower_bottom_rail (its lowest 30 mm)",
+     "paint_joinery__oak_sill (top faces)"
+    ],
+    "height_mm": 30,
+    "factor": 0.75
+   }
   },
   {
    "id": "west_south_bay1_gf_w0",
@@ -1072,7 +1129,8 @@
     ]
    },
    "lit_at_20_30": false,
-   "room_card_node": "hw_room_card_gf.glb"
+   "room_card_node": "hw_room_card_gf.glb",
+   "grime_band": null
   },
   {
    "id": "west_south_bay1_gf_w1",
@@ -1139,7 +1197,8 @@
     ]
    },
    "lit_at_20_30": true,
-   "room_card_node": "hw_room_card_gf.glb"
+   "room_card_node": "hw_room_card_gf.glb",
+   "grime_band": null
   },
   {
    "id": "west_south_bay2_gf_w0",
@@ -1201,7 +1260,8 @@
     ]
    },
    "lit_at_20_30": true,
-   "room_card_node": "hw_room_card_gf.glb"
+   "room_card_node": "hw_room_card_gf.glb",
+   "grime_band": null
   },
   {
    "id": "west_south_bay2_gf_w1",
@@ -1268,7 +1328,8 @@
     ]
    },
    "lit_at_20_30": true,
-   "room_card_node": "hw_room_card_gf.glb"
+   "room_card_node": "hw_room_card_gf.glb",
+   "grime_band": null
   }
  ]
 }

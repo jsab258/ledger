@@ -51,7 +51,7 @@ BOTTLE_DESIGNS = [("FERNSIDE", "WASHING-UP\nLIQUID", (40, 110, 70), (70, 150, 90
 BOTTLE_COLOURS = [(66, 150, 96), (70, 34, 22), (124, 112, 70), (232, 226, 200)]          # the bottle's own colour: green plastic, brown glass, pale brown glass, cream glass
 
 
-FILL_W = 20.0               # the low fill under the gantry's boards (day and night_lit): found with qroom.py, 1280 x 580, 16 samples (see NOTES.md)
+FILL_W = (20.0, 30.0)               # the low fill under the gantry's boards (day and night_lit): found with qroom.py, 1280 x 580, 16 samples (see NOTES.md)
 
 
 def _setup():
@@ -380,11 +380,18 @@ def room(r):
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------- the window
-def _crate_bed(d, ext, top, name, shrink=(0.04, 0.04), rgb=(96, 128, 70), z0=0.012):
+def _crate_bed(d, ext, top, name, shrink=(0.04, 0.04), rgb=(96, 128, 70), z0=0.012, top_back=None):
     """A bed of shredded green display paper inside a Poly Haven crate (a greengrocer's way of filling a crate to the brim without a hundred apples): a solid block from the crate's floor to `top`, inside its
     walls. The crates are real size (0.229 and 0.239 high, DSP-06); with the fruit on the crate's floor the fruit stood a hand's breadth under the rim and the crates read empty from the pavement."""
     gm = GM()
-    gm.box(ext[0] + shrink[0], ext[1] - shrink[0], ext[2] + shrink[1], ext[3] - shrink[1], ext[4] + z0, top, 0)
+    if top_back is None:
+        gm.box(ext[0] + shrink[0], ext[1] - shrink[0], ext[2] + shrink[1], ext[3] - shrink[1], ext[4] + z0, top, 0)
+    else:
+        # (14 Oct) a sloping bed, high at the back: the rear rows of fruit stand above the front rows and show from the street (DSP-03: 31 apples and 6 lemons read under half seen on a flat bed)
+        x0, x1, y0, y1, zb = ext[0] + shrink[0], ext[1] - shrink[0], ext[2] + shrink[1], ext[3] - shrink[1], ext[4] + z0
+        V = [(x0, y0, zb), (x1, y0, zb), (x1, y1, zb), (x0, y1, zb), (x0, y0, top), (x1, y0, top), (x1, y1, top_back), (x0, y1, top_back)]
+        F = [(0, 3, 2, 1), (4, 5, 6, 7), (0, 1, 5, 4), (1, 2, 6, 5), (2, 3, 7, 6), (3, 0, 4, 7)]
+        gm.add(V, F, 0, None)
     m = d.mat("crate_bed_paper", rgb8(*rgb), rough=0.9)
     d.gm_object(name, gm, [m], "support", "script:crate", "bed")
 
@@ -411,14 +418,15 @@ def display(d):
     timber = d.mat("stand_timber", rgb8(140, 100, 62), rough=0.7)
     # ---- the stand: step A (jars) and three plinths (pyramids)
     gm = GM()
-    gm.box(X(1.625), X(3.15), 0.33, 0.55, 0.0, 0.18, 0)
-    ob, _ = d.gm_object("tiered_stand_a", gm, [timber], "scripted", "script:tiered_stand")
+    SA = 0.23                      # step A's height (14 Oct: 0.18 left the jars under the lemon crates' rims from the pavement, 0.45 to 0.50 seen)
+    gm.box(X(1.625), X(3.15), 0.33, 0.55, 0.0, SA, 0)
+    ob, _ = d.gm_object("tiered_stand_a", gm, [timber], "support", "script:tiered_stand")          # the stand the goods stand on: a support (the sill and the goods hide most of it)
     GB.chamfer(ob, 0.003, 2)
     py_us = (0.50, 2.30, 3.75)               # the pyramids' centres
     for k, uc in enumerate(py_us):
         gm = GM()
-        gm.box(X(uc - 0.37), X(uc + 0.37), 0.45, 0.55, 0.18 if uc == 2.30 else 0.0, 0.36, 0)           # the middle plinth stands ON step A (it was cut through it)
-        ob, _ = d.gm_object("tiered_stand_b%d" % k, gm, [timber], "scripted", "script:tiered_stand")
+        gm.box(X(uc - 0.37), X(uc + 0.37), 0.45, 0.55, SA if uc == 2.30 else 0.0, 0.36, 0)           # the middle plinth stands ON step A (it was cut through it)
+        ob, _ = d.gm_object("tiered_stand_b%d" % k, gm, [timber], "support", "script:tiered_stand")
         GB.chamfer(ob, 0.003, 2)
     # ---- the pyramids: 28 tins each, one deep, a backing board
     tp = os.path.join(tex, "food_tins.png")
@@ -449,7 +457,7 @@ def display(d):
     gjs = [GM() for _ in JAR_DESIGNS]
     for k in range(18):
         ji = (k // 3) % len(JAR_DESIGNS)               # three jars of a product together, so that its card stands before it
-        GB.jar(gjs[ji], X(1.68 + k * 0.083), 0.405, 0.18, 0.0375, 0.115, 0, 1, juv[ji][1], 2, n=20)
+        GB.jar(gjs[ji], X(1.68 + k * 0.083), 0.405, SA, 0.0375, 0.115, 0, 1, juv[ji][1], 2, n=20)
     for ji, gmj in enumerate(gjs):
         fill_m = d.mat("jar_fill_%d" % ji, rgb8(*JAR_DESIGNS[ji][2]), rough=0.18)
         d.gm_object("jars_%d" % ji, gmj, [fill_m, jar_lab, lid_m], "scripted", "script:jars", tier="stand", smooth=True)
@@ -460,16 +468,17 @@ def display(d):
     for k, uc in enumerate((0.36, 0.86, 1.36)):
         ext, cn_ = d.piece("plastic_crate_02", uc, 0.205, 0.0, rot=(0, 0, 0), scale=cs, tier="bed", tris=None)
         crate02_names.extend(cn_)
-        _crate_bed(d, ext, 0.145, "apple_bed_%d" % k)
+        _crate_bed(d, ext, ext[5] - 0.030, "apple_bed_%d" % k, top_back=ext[5] + 0.090)          # the apples' centres at the rim in front, 0.05 higher at the back
         cx_, cy_ = (ext[0] + ext[1]) / 2 + L / 2, (ext[2] + ext[3]) / 2
         zf = ext[4] + 0.018
         pos = [(ix, iy, 0) for iy in range(3) for ix in range(4)] + [(0.5, 0.5, 1), (2.5, 0.5, 1)]
+        if k == 0:
+            pos[8] = (1.5, 1.5, 1)          # the back-left apple of the first crate stood behind the window's left jamb from CLOSE_35_B (DSP-03 0.10): on the heap's top instead
         for (ix, iy, lay) in sorted(pos[:apple_n[k]], key=lambda p_: p_[2]):
             ax, ay = cx_ + (ix - 1.5) * 0.098, cy_ + (iy - 1.0) * 0.098
-            az = GB.rest_z(d, ax - L / 2, ay, 0.047) + (0.02 if lay else 0.0)           # an apple of the second layer starts 20 mm high and settles down onto the four under it
+            az = GB.rest_z(d, ax - L / 2, ay, 0.047) + 0.02           # every apple starts 20 mm high and settles down onto the sloping bed or the apples under it
             _, nm_ = d.piece("food_apple_01", ax, ay, az, rot=(0, 0, rnd.uniform(0, 6.28)), scale=rnd.uniform(0.96, 1.0), tier="apples", tris=None)
-            if lay:
-                GB.settle_down(d, nm_)
+            GB.settle_down(d, nm_, max_drop=0.05)
     # ---- wicker_basket_02 with rolls across its rim, two crate_03 with lemons (all at their own size, DSP-06)
     d.tone(crate02_names, 1.45)                # the red crates read 0.49 of the room at CLOSE_35_B at night (LIT-08): a lighter plastic
     ext, bn_ = d.piece("wicker_basket_02", 1.78, 0.18, 0.0, rot=(0, 0, 0), scale=1.0, tier="bed", tris=None)
@@ -477,12 +486,13 @@ def display(d):
     GB.settle_down(d, nm_, max_drop=0.05)
     for k, uc in enumerate((2.19, 2.64)):
         ext, _ = d.piece("plastic_crate_03", uc, 0.14, 0.0, rot=(0, 0, 0), scale=0.9, tier="bed", tris=None)
-        _crate_bed(d, ext, 0.135, "lemon_bed_%d" % k, shrink=(0.08, 0.05), z0=0.0675)          # crate_03 has a cross bar at 0.064 under its floor grid: the bed rests on it, under the lemons
+        _crate_bed(d, ext, ext[5] - 0.034, "lemon_bed_%d" % k, shrink=(0.08, 0.05), z0=0.0675, top_back=ext[5] + 0.002)          # crate_03 has a cross bar at 0.064 under its floor grid: the bed rests on it, under the lemons; sloped, the lemons' centres at the rim in front
         cx_, cy_ = (ext[0] + ext[1]) / 2 + L / 2, (ext[2] + ext[3]) / 2
         for j in range(6):
             ix, iy = j % 3, j // 3
             lx, ly = cx_ + (ix - 1.0) * 0.095, cy_ + (iy - 0.5) * 0.075
-            d.piece("lemon", lx, ly, 0.1352, rot=(0, 0, rnd.uniform(0, 6.28)), scale=1.0, tier="lemons", tris=None)          # on the bed (a flat top at 0.135)
+            _, ln_ = d.piece("lemon", lx, ly, GB.rest_z(d, lx - L / 2, ly, 0.026) + 0.006, rot=(0, 0, rnd.uniform(0, 6.28)), scale=1.0, tier="lemons", tris=None)          # on the sloping bed: started 6 mm high and settled down onto it
+            GB.settle_down(d, ln_, max_drop=0.02)
     # ---- onions in a low tray (15), tomatoes in a tray (30, script), bananas on a crate (three bunches at their own size)
     d.crate("onion_tray", 2.88, 3.24, 0.04, 0.32, 0.0, 0.07)
     for j in range(15):
@@ -519,7 +529,7 @@ def display(d):
     uvs = GEN.card_atlas(path, texts, cols=4, tile=(256, 128), size=42)
     pm = [d.image_mat("price_cards", path, rough=0.8), d.mat("stake", rgb8(60, 60, 62), rough=0.5, metal=0.7)]
     spots = [(0.36, 0.0, 0.0), (0.86, 0.0, 0.0), (1.36, 0.0, 0.0), (1.78, 0.0, 0.0), (2.415, 0.0, 0.0), (3.06, 0.0, 0.0), (3.495, 0.0, 0.0), (4.015, 0.0, 0.0)]
-    spots += [(1.68 + (3 * p + 1) * 0.083, 0.35, 0.18) for p in range(6)]
+    spots += [(1.68 + (3 * p + 1) * 0.083, 0.35, SA) for p in range(6)]
     for k, (uc, vv, wz) in enumerate(spots):
         d.price_card(uc, 0.02 if vv == 0.0 else vv, wz, k, uvs, pm)
     d.display_texts = list(GEN.TEXTS) + [t.replace("\n", " ") for t in texts]

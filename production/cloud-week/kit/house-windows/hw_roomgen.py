@@ -43,6 +43,32 @@ TV_COOL = (0.62, 0.74, 1.0)
 PAINT_WHITE = (0.70, 0.68, 0.62)
 
 
+ROLL_KNEE, ROLL_TOP = 0.60, 0.85       # linear: below the knee a pixel is as rendered; above it the largest channel eases toward 0.85 (sRGB 237) and never reaches it; the three channels scale together, so the hue stays tungsten
+
+
+def roll_off(lin):
+    """Roll the highlights off before the 8-bit write: scale all three channels together by m'/m, m the pixel's largest channel in scene-linear, m' = knee + (top - knee) x (1 - exp(-(m - knee) / (top - knee))) above the knee
+    (the close review asked for 'over 0.85 scaled to 0.85'; this is the same ceiling reached smoothly, so no plateau: no channel of a lit picture reaches 250, PIC-13)."""
+    m = lin.max(axis=2, keepdims=True)
+    over = m > ROLL_KNEE
+    m2 = np.where(over, ROLL_KNEE + (ROLL_TOP - ROLL_KNEE) * (1.0 - np.exp(-(m - ROLL_KNEE) / (ROLL_TOP - ROLL_KNEE))), m)
+    return lin * (m2 / np.maximum(m, 1e-9))
+
+
+def read_exr(path):
+    img = bpy.data.images.load(path, check_existing=False)
+    w, h = img.size
+    a = np.array(img.pixels[:], np.float32).reshape(h, w, img.channels)[..., :3]
+    bpy.data.images.remove(img)
+    return np.ascontiguousarray(a[::-1])               # Blender's rows run bottom to top
+
+
+def write_rolled(lin_img, path):
+    r = roll_off(np.maximum(lin_img, 0.0))
+    s = np.where(r <= 0.0031308, r * 12.92, 1.055 * np.clip(r, 0, None) ** (1 / 2.4) - 0.055)
+    Image.fromarray(np.clip(s * 255.0 + 0.5, 0, 255).astype(np.uint8)).save(path)
+
+
 def lin_of(v):
     v = np.asarray(v, np.float32) / 255.0
     return np.where(v <= 0.04045, v / 12.92, ((v + 0.055) / 1.055) ** 2.4)
@@ -671,6 +697,15 @@ class HRoom(S.Room):
             self.tv_screen.hide_render = not lit
 
     def render(self, path, samples, res, state=None):
+        """A night_lit picture is rendered to a float EXR and written as 8-bit only after the highlight roll-off (14 October, from the try 1 close review, fault 2: the ceiling round the rose clipped (255, 253, 178), so
+        the hue went yellow and the card's gain then made it olive). The other states are written as before."""
+        if state == "night_lit" and self.lit_possible():
+            exr = os.path.splitext(path)[0] + ".exr"
+            super().render(exr, samples, res, exr=True)
+            lin_img = read_exr(exr)
+            os.remove(exr)
+            write_rolled(lin_img, path)
+            return
         super().render(path, samples, res)
 
     def build(self):
@@ -709,7 +744,7 @@ def calibrate(r, work, log=print, res=None, samples=8):
 
     def measure(state):
         r.set_state(state, P)
-        r.render(tmp, samples, res)
+        r.render(tmp, samples, res, state=state)
         return luma_stats(tmp)
 
     def tune(keys, state, tgt, iters=4):
@@ -754,7 +789,7 @@ def render_room(rid, out_dir, samples=24, log=print, states=RENDER_ORDER, work=N
                 continue
         r.set_state(s, P)
         t1 = time.time()
-        r.render(path, samples, res)
+        r.render(path, samples, res, state=s)
         times[s] = round(time.time() - t1, 1)
         rec["states"][s] = os.path.basename(path)
         log("render %s %s: %.0f s, mean luma %.1f" % (rid, s, times[s], luma_stats(path)))
@@ -767,7 +802,59 @@ def render_room(rid, out_dir, samples=24, log=print, states=RENDER_ORDER, work=N
     return times
 
 
+def rebake_lit(rid, out_dir, samples=24, log=print, work=None):
+    """14 October, from the try 1 close review (fault 2): re-render ONLY the room's night_lit picture with the highlight roll-off; the day and night_dark pictures, the placement and the room's JSON are kept (the room is built
+    again by the same script and seed, so every object stands where it stood: `<room>.placed.json` is not written). The pendant's (and the lamp's and the television's) strength is tuned again so the ROLLED-OFF picture meets the
+    standard (mean luma 70, a landing 40, within 15 per cent): the fill is raised, the peak is not (the roll-off ceiling holds it). Returns the seconds."""
+    work = work or os.path.join(T.SCRATCH, "work", rid)
+    os.makedirs(work, exist_ok=True)
+    jp = os.path.join(out_dir, rid + ".json")
+    rec = json.load(open(jp))
+    t0 = time.time()
+    r = HRoom(rid, work).build()
+    if not r.lit_possible():
+        log("%s: an empty room, its night_lit is its night_dark: kept" % rid)
+        return 0.0
+    if r.R["family"] == "GF":
+        samples = min(samples, 16)
+    P = {k: v for k, v in rec["light_params"].items() if k != "measured"}
+    bare = r.R["type"] in ("landing", "empty")
+    keys = ["pend_bare" if bare else "pend"] + (["lamp", "tv"] if not bare else [])
+    tgt = LANDING_MEAN if bare else TARGET_MEAN["night_lit"]
+    res_q = (int(r.pix[0] / 4), int(r.pix[1] / 4))
+    tmp = os.path.join(work, "cal_lit.png")
+    for it in range(5):
+        r.set_state("night_lit", P)
+        r.render(tmp, 8, res_q, state="night_lit")
+        m = luma_stats(tmp)
+        log("   rebake %s night_lit %s %.4g -> rolled-off mean %.1f (target %.1f)" % (rid, keys[0], P[keys[0]], m, tgt))
+        if abs(m - tgt) / tgt < 0.04:
+            break
+        f = (tgt / max(m, 0.5)) ** 2.2
+        for k in keys:
+            P[k] = float(np.clip(P[k] * f, 1e-3, 1e6))
+    path = os.path.join(out_dir, "%s_night_lit.png" % rid)
+    r.set_state("night_lit", P)
+    t1 = time.time()
+    r.render(path, samples, (int(r.pix[0]), int(r.pix[1])), state="night_lit")
+    dt = round(time.time() - t1, 1)
+    mean = luma_stats(path)
+    a = np.asarray(Image.open(path).convert("RGB"))
+    log("render %s night_lit (rolled off): %.0f s, mean luma %.1f, pixels with a channel at 250+: %.4f%%" % (rid, dt, mean, 100.0 * float((a >= 250).any(axis=2).mean())))
+    P["measured"] = dict(rec["light_params"].get("measured", {}))
+    P["measured"]["night_lit"] = mean
+    rec["light_params"] = {k: (round(v, 4) if not isinstance(v, dict) else v) for k, v in P.items()}
+    rec["lit_rolloff"] = {"knee_linear": ROLL_KNEE, "top_linear": ROLL_TOP, "what": "14 Oct: the night_lit picture was re-rendered to a float picture and rolled off before the 8-bit write (hw_roomgen.roll_off); day and night_dark are unchanged"}
+    rec.setdefault("render_s", {})["night_lit"] = dt
+    json.dump(rec, open(jp, "w"), indent=1)
+    return time.time() - t0
+
+
 if __name__ == "__main__":
+    if "--rebake-lit" in sys.argv:
+        args = [a for a in sys.argv[1:] if not a.startswith("--")]
+        rebake_lit(args[0], args[1] if len(args) > 1 else T.ROOMS, samples=int(args[2]) if len(args) > 2 else 24)
+        sys.exit(0)
     rid = sys.argv[1]
     out = sys.argv[2] if len(sys.argv) > 2 else os.path.join(T.ROOMS)
     samples = int(sys.argv[3]) if len(sys.argv) > 3 else 48

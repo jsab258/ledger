@@ -23,7 +23,8 @@ LAB_GLB = {"S22": os.path.join(REPO, "production", "assets", "sash-window", "sas
            "S11": os.path.join(REPO, "production", "assets", "sash-window", "sash_window_1over1.glb")}
 SHARED_HDRI = "/home/user/ledger-scratch/polyhaven/_hdri"       # read only: another builder's cache of Poly Haven HDRIs (CC0); never written here
 SKY_HDRI = os.path.join(REPO, "ledger", "Assets", "Resources", "Sky", "polyhaven", "belfast_open_field_2k.hdr")
-DATE = "2026-10-13"          # the date the brief gives for the preview names
+DATE = "2026-10-13"          # the date the brief gives for the try 1 preview names (they stay)
+DATE2 = "2026-10-14-v2"      # the try 2 previews (14 October, after the try 1 reviews): hw-<view>-<state>-2026-10-14-v2.jpg
 MM = 0.001
 
 _T = None

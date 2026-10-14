@@ -1,6 +1,6 @@
 {
  "summary": "House windows of Quay Street: twenty windows in ten houses, every frame white (Jafar's ruling of 3 October), four kinds (two over two, one over one, and two replacement casements: P7's and P6's), the 1a fix as numbers (glass over a dark room, the box shaded, its lines drawn), the net, curtain and blind kinds, thirteen small rooms in the game's own `trace` rule, the white-board check measured on 1979 to 1994 photographs the way the gate measures.",
- "status": "fixes applied, not re-reviewed",
+ "status": "built (unit 8, 14 October 2026); changes after the build from the two try 1 reviews applied 14 October 2026 (changes_after_the_build, TARGET.md section 14); the changed rows are not re-reviewed",
  "units": {
   "windows_mm": "kit frame: x across (0 at the window's middle, + toward the viewer's right), y INTO the wall from the brick face (0 at the face), z UP from the opening's bottom edge",
   "rooms_m": "room frame: x across from the room's centre (+ toward the PICTURE's right), y back from the card plane, z up from the floor",
@@ -4522,7 +4522,8 @@
     "10": 0.544,
     "8": 0.622
    },
-   "fresnel_note": "Unreal's Specular 1 (F0 0.08, Schlick) gives 0.26 at 16 degrees from the wall, about three quarters of the true two-face figure (0.36): close enough"
+   "fresnel_note": "Unreal's Specular 1 (F0 0.08, Schlick) gives 0.26 at 16 degrees from the wall, about three quarters of the true two-face figure (0.36): close enough",
+   "cloud_stand_in_14_oct": "the gate's pane is a Mix of a Transparent BSDF and a Glossy GGX (roughness 0.03) weighted by the dielectric Fresnel of F0 0.08 (IOR 1.789) x (1 - Backfacing): the kit's panes are closed 2.5 mm slabs (a front and a back face), the back face is pure Transparent and the front face stands for both faces, as the game's pane does (Specular 1.0, F0 0.08 for both faces of a single pane)"
   },
   "waviness": {
    "what": "per-pane tilt, not a wave texture: each pane mesh is rotated by a seeded angle uniform in +-0.5 degrees about the vertical axis and +-0.3 degrees about the horizontal one (never zero, the spread of a window's panes at least 0.3 degrees)",
@@ -7192,7 +7193,7 @@
    "day": "an overcast area light the size of the card on its plane (6500 K), strength set so the picture's mean luma meets the day standard; no tungsten",
    "night_lit": "the pendant (a paper shade, a 60 W tungsten bulb 2700 K, linear (1.0, 0.714, 0.344)) at the ceiling rose, 0.30 below the ceiling, and in the front rooms a table lamp's glow on the back wall; a television glow (cool 6500 K, emissive screen) where tv_glow; landings and empty rooms: a bare 40 W bulb or none (empty: night_lit = night_dark); a lit landing's emission is the absolute one of `landing_bulb`",
    "landing_bulb": {
-    "what": "a landing's bare 40 W bulb: PIC-02 gives its picture a mean luma of 40, which behind the glass reads dark (the card's emission is picture x 0.7 x room_glow_gain_night 0.4); the lit landing therefore takes an ABSOLUTE warm emission floor on its card",
+    "what": "a landing's bare 40 W bulb: PIC-02 gives its picture a mean luma of 40, which behind the glass reads dark (the card's emission is picture x 1.0 from 14 Oct, from the try 1 reviews; it was x 0.7 x room_glow_gain_night 0.4); the lit landing therefore takes an ABSOLUTE warm emission floor on its card",
     "disc_emission_linear": [
      8.0,
      5.7,
@@ -7207,7 +7208,9 @@
     "card_floor_note": "a lit landing's card never emits less than this (linear, the warm light (1.0, 0.714, 0.344) at luma 0.207: r > g > b, g/r 0.71, b/r 0.34); square on through the pane (two-face reflectance 0.082) the gate's pane median then reads 0.19 linear = sRGB 121, inside 100 to 140. Judgement: NIGHT-01's second form (pane median at least 4 times the dark windows' with r > g > b) is the acceptance, this is the starting value"
    },
    "curtain_emission": "each curtain and blind kind carries its own absolute lit emission (`curtains.*.night_lit_emission_linear`, `blinds.*.night_lit_emission_linear`)",
-   "night_dark": "the sodium wash through the window: linear (1.0, 0.25, 0.0) = production/specs/unreal-look.json lantern_linear_rgb (NOT the scene file's stale (1, 0.7055, 0)), at 6 per cent of night_lit's energy; nothing else"
+   "night_dark": "the sodium wash through the window: linear (1.0, 0.25, 0.0) = production/specs/unreal-look.json lantern_linear_rgb (NOT the scene file's stale (1, 0.7055, 0)), at 6 per cent of night_lit's energy; nothing else",
+   "night_lit_pictures": "14 Oct, from the try 1 reviews: a night_lit picture is rendered to a float picture and rolled off before the 8-bit write (the pixel's largest channel in linear eases from a knee of 0.60 toward 0.85 and never reaches it; the three channels scale together); mean 70 +-15 per cent (landings 40); PIC-13: at most 0.1 per cent of the pixels with a channel at 250 or more",
+   "lit_card_gain": "14 Oct, from the try 1 reviews: a lit room's card is the night_lit picture x 1.0 (a dark room's card x 0.7); it was x 0.7 x room_glow_gain_night 0.4 = 0.28, which put the room seen through clear glass at a quarter of its own net (NIGHT-07). The PC's M_LedgerInterior Brightness for a lit house room at night follows; OWED-04 measures it"
   },
   "lit_share": {
    "source": "Judgement. production/research/evening-light-1990 gives no share (its windows line: 'whitish fluorescent from shops, warm tungsten behind house curtains', marked its own inference); the street already lights one in three at 20:30 (terrace-front.py NET_LIT_EVERY = 3) and two cottage windows always (NET_LIT_ALWAYS). No 1975 to 1995 night photograph of a terrace was reached (no Geograph result before 1996 for night, dusk or lit windows). Kept near the street's one in three; the rest of the day follows habit (lights on at dusk, out by midnight).",
@@ -9424,7 +9427,7 @@
    "opposite_row_proxies": "boxes at the street file's numbers: east parade eaves 6.3 above the crown, pitch 35 degrees, depth 8; west cottages eaves 3.1 above the crown, pitch 40; the hill and sky as the dome",
    "street": "road 6 m crowned 0.075, footways 2 m at crown + 0.10, kerb 0.125 up; the four lamp columns at x 8, 18, 28, 38 (stand-ins)",
    "sky": "the overcast dome (Poly Haven belfast_open_field_2k, CC0, the scene file's own), sun off; the world's strength is calibrated so that a Lambertian grey card (albedo 0.18) facing the street reads linear 0.18 +- 0.01 (sRGB 118 +- 4) in the render's own pixels",
-   "night": "dome x 0.15 (unreal-look.json sky_seen_gain_night), the four lamps: point lights (linear (1.0, 0.25, 0.0) = lantern_linear_rgb) at 4.78 m, power set so the paving under the near lamp reads sRGB 150 +- 20; the lit windows by the table at 20:30 (`rooms.lit_share.lit_by_hour`): lit room card (night_lit picture x 0.7 x room_glow_gain_night 0.4), lit net emissive 0.48; the rest night_dark",
+   "night": "dome x 0.15 (unreal-look.json sky_seen_gain_night), the four lamps: point lights (linear (1.0, 0.25, 0.0) = lantern_linear_rgb) at 4.78 m, power set so the paving under the near lamp reads sRGB 150 +- 20; the lit windows by the table at 20:30 (`rooms.lit_share.lit_by_hour`): lit room card (night_lit picture x 1.0; 14 Oct, from the try 1 reviews: it was x 0.7 x room_glow_gain_night 0.4), lit net emissive 0.48; the rest night_dark",
    "room_cards": "for every window and every camera the card's emission picture is computed per pixel through `tools/ue/make_interior_material.py` `trace` (imported, not rewritten) from the room's picture and set as the card's emission; a lit room has its net and curtain cards emissive as NET_COMMON says; a dark one is lit by the sodium wash only",
    "passes": "Cycles passes: Material Index (pane = 1 glass_house, frame = 2 paint_*, net/curtain/blind = 3, brick/wall = 4, card = 5), Object Index per window (id), Z; the masks come from these, never by eye"
   },
@@ -9565,10 +9568,11 @@
    "bare_N0_over_60_deg_from_across": {
     "P_over_L": [
      0.35,
-     0.7
+     0.9
     ],
-    "blue_over_red_min": 10,
-    "photo": "P8_L, P8_R (near square, from below, sky over a dark room): 0.59, 0.49; all four panes together over the joinery of both windows (the gate's way) 0.57, the pane's colour (85, 100, 133): blue over red 48 (the review reads 46, a mean; both inside the band)"
+    "photo": "P8_L, P8_R (near square, from below, sky over a dark room): 0.59, 0.49; all four panes together over the joinery of both windows (the gate's way) 0.57, the pane's colour (85, 100, 133): blue over red 48 (the review reads 46, a mean; both inside the band)",
+    "blue_minus_red_min": -3,
+    "changed": "14 Oct, from the try 1 reviews: was P/L 0.35 to 0.70 and blue over red at least 10 (P8, a clear blue sky); the game's sky is the overcast dome, neutral: 0.35 to 0.90 (P3_d 0.36, P8 0.49 to 0.59, P6_up 0.89 with sky in its glass) and blue minus red at least -3"
    },
    "draped_any_in_15_to_30_deg": {
     "spread_min": 20,
@@ -9785,12 +9789,23 @@
    "id": "MAT-04",
    "group": "glass",
    "name": "reflectance at a grazing angle",
-   "measure": "render a flat pane at 16 degrees from the wall against a uniform sky of luma 1.0 with the room black",
-   "expected": "the pane's luma 0.26 of the sky with F0 0.08 (Schlick at 74 degrees from the normal: Unreal's own figure for Specular 1, 1a section 2); Cycles' dielectric Fresnel at specular level 1.0 may read up to 0.31",
-   "tolerance": "+-0.05",
+   "measure": "render the kit's own slab pane (the glb's glass__lower node: a closed 2.5 mm slab, a front and a back face) with the pane shader at 16 degrees from the wall: (a) against a uniform sky of luma 1.0 with the room black; (b) against the same sky with the room a uniform card of 1.0 behind it",
+   "expected": "(a) the pane's luma 0.26 of the sky with F0 0.08 (Schlick at 74 degrees from the normal: Unreal's own figure for Specular 1, 1a section 2); Cycles' dielectric Fresnel at specular level 1.0 may read up to 0.31; (b) 1.0 of the sky and the card: what the pane reflects and what it passes add up to the whole, no light is lost in the slab (the back face is not a mirror)",
+   "tolerance": "+-0.05 each",
    "applies_to": "the pane material",
    "kind": "Derived",
-   "source": "1a Fresnel table: true two-face 0.38, Unreal 0.26"
+   "source": "1a Fresnel table: true two-face 0.38, Unreal 0.26; 14 Oct, from the try 1 reviews: redone on the slab, not on a single plane (a single plane passed a pane whose back face was a total mirror; reading (a) alone cannot see that mirror, reading (b) does); negative control NEG-01"
+  },
+  {
+   "id": "GLS-06",
+   "group": "glass",
+   "name": "the glass passes the room at every angle from the wall",
+   "measure": "render the kit's own glass__lower node, exported as it is (a closed 2.5 mm slab: a front and a back face), with the pane shader at 15, 20, 35, 50 and 70 degrees from the wall in front of an emission card of 0.5 under a black sky",
+   "expected": "the card through the pane reads at least (1 - F_front(angle)) of its own, less 0.03 (F_front: the dielectric Fresnel of the one front face at IOR 1.789: 0.29 at 15 degrees from the wall, 0.21 at 20, 0.11 at 35, 0.09 at 50, 0.08 at 70); the first build read 0.00 at 15 to 50 degrees (its back face was a total mirror past the critical angle)",
+   "tolerance": "limit",
+   "applies_to": "the pane material",
+   "kind": "Derived",
+   "source": "14 Oct, from the try 1 reviews: street review F1 fix 4 (15, 20, 35, 50 degrees), close review fault 1 fix 3 (at least 0.75 of itself at 20 and 70 degrees: met); the negative control NEG-01 makes the back face a mirror again and must fail this row and MAT-04"
   },
   {
    "id": "WB-01",
@@ -9819,11 +9834,11 @@
    "group": "gate",
    "name": "bare windows from across, near square",
    "measure": "P/L of every BARE window (as WB-02) seen from H_ACROSS_0 by day (over 60 degrees), and the pane's blue minus red; draped windows are not tested here",
-   "expected": "0.35 to 0.70 and blue over red at least 10 levels",
+   "expected": "0.35 to 0.90 and blue minus red at least -3 levels (the pane is no warmer than the neutral overcast dome it reflects)",
    "tolerance": "bands",
    "applies_to": "GS_A",
    "kind": "Photo",
-   "source": "P8_L, P8_R: 0.59, 0.49, all four panes together 0.57; (85, 100, 133)"
+   "source": "P8_L, P8_R: 0.59, 0.49, all four panes together 0.57; (85, 100, 133); 14 Oct, from the try 1 reviews (street review N1, close review): the old band 0.35 to 0.70 and blue over red 10 came from P8, a clear blue sky; the game's sky is the overcast dome (the scene file's, the Hook sheet), neutral; P3_d 0.36, P8 0.49 to 0.59, P6_up 0.89 with sky in its glass"
   },
   {
    "id": "WB-04",
@@ -9874,11 +9889,11 @@
    "group": "gate",
    "name": "the frame is brighter than the wall",
    "measure": "L (linear) over the brick's median (linear) beside the window, by day",
-   "expected": "3.0 to 9.0",
+   "expected": "3.0 to 9.0 for white_fresh and white_upvc; 2.5 to 9.0 for white_grimy and white_flaking",
    "tolerance": "band",
    "applies_to": "GS_A GS_B",
    "kind": "Photo",
-   "source": "P1 3.75 and P8 4.1 on photographs (film contrast; L the joinery's 90th percentile); the game's albedos give 0.82/0.13 = 6.3; the concept sheet's 7 is outside the photographs"
+   "source": "P1 3.75 and P8 4.1 on photographs (film contrast; L the joinery's 90th percentile); the game's albedos give 0.82/0.13 = 6.3; the concept sheet's 7 is outside the photographs; 14 Oct, from the try 1 reviews (street review N2, close review): the floor 3.0 sits at 0.8 of the lowest photograph (P1, 3.75) taken for sound white; 2.5 is 3.0 x 0.66 / 0.82 for the grimy paint, rounded up so that a dull frame still reads clearly above its brick (the close review's 2.2 for white_flaking alone is 3.0 x 0.58 / 0.81; the street review's 2.5 is used for both dull paints and the close review's figure passes too)"
   },
   {
    "id": "WB-08",
@@ -9903,37 +9918,59 @@
    "source": "P13: a white slit beside a dark void; 1a"
   },
   {
+   "id": "JNR-01",
+   "group": "gate",
+   "name": "no black joinery by day",
+   "measure": "by day, in every window of every day frame: the joinery pixels (material index 2) inside the window's outline whose luma is under 10",
+   "expected": "none: at most 0.1 per cent of the window's joinery pixels (the anti-aliased edge between the mask and the beauty frame); the first build's black notch at the head of the far jamb was 0.9 per cent of one window's joinery",
+   "tolerance": "limit",
+   "applies_to": "GS_A GS_B",
+   "kind": "Derived",
+   "source": "14 Oct, from the try 1 reviews: close review narrow point 1 (the stand-in wall's opening cut exactly at the kit's lining planes, so faces shared the brick's planes: a joinery face that got no light, about 35 x 35 mm)"
+  },
+  {
+   "id": "GRM-01",
+   "group": "kit",
+   "name": "the grime band on grimy windows",
+   "measure": "the kit's own bottom rail (paint_joinery__lower_bottom_rail) painted as a grimy house's, square on under a uniform sky: the luma of its lowest 30 mm over that of the 30 mm above them; the same for a sound house",
+   "expected": "grimy 0.68 to 0.85 (the band x 0.75 on top of the rail's x 0.85); sound 0.97 or more (a sound house's rail is clean)",
+   "tolerance": "band",
+   "applies_to": "grimy windows (east_parade_bay0, west_south_bay0)",
+   "kind": "Judgement",
+   "source": "14 Oct, from the try 1 reviews: close review narrow point 3 (target 4.2 says a grime band 30 mm high along the sill; only the x 0.85 was built); the factor 0.75 is the close review's, a Judgement within the box shade and above KIT-09's floor of 0.25. The band is the gate's by the house's condition and is listed per site in hw_manifest.json for the PC (the glb carries the default paint of every house of its kind, so a band baked into its COLOR_0 would dirty the sound houses)"
+  },
+  {
    "id": "NIGHT-01",
    "group": "gate",
    "name": "lit and dark windows at night",
-   "measure": "at 20:30 over the 20 street windows (GS_A and GS_B together, rendered from the one camera that sees each squarely): a window is LIT when its pane median luma is at least 4 times the dark windows' median luma and the pane's mean linear colour has r > g > b; DARK when its pane luma is 8 to 30 (NIGHT-04). The absolute emissions of the curtains, blinds and the landing bulb (`night_lit_emission_linear`, `landing_bulb`) are set to read 100 to 140 and are the starting values, not the pass line",
+   "measure": "at 20:30 over the 20 street windows (GS_A and GS_B together, rendered from the one camera that sees each squarely): a window is LIT when its pane median luma is at least 2.5 times the dark windows' median luma and the pane's mean linear colour has r > g > b; DARK when its CLEAR (net-free) glass reads 8 to 35 (NIGHT-04) and its net, if it has one, reads at most 0.7 of its own frame's L at night (the game's own night sky light, sky_light_gain_night 0.15, lights a dark window's net as it lights the frame). The clear glass and the net are told apart by the mask with the glass clear. The absolute emissions of the curtains, blinds and the landing bulb (`night_lit_emission_linear`, `landing_bulb`) are starting values, not the pass line",
    "expected": "7 lit (+-1), the rest dark; none that is neither",
    "tolerance": "+-1",
    "applies_to": "all 20",
    "kind": "Judgement",
-   "source": "rooms.lit_share; TARGET-REVIEW narrow point 5 (the absolute 100 cannot be met behind a drawn brown curtain at 0.35 transmission, or by a bare 40 W landing bulb)"
+   "source": "rooms.lit_share; TARGET-REVIEW narrow point 5; 14 Oct, from the try 1 reviews (street review F2 cause 3): the dark band 8 to 30 counted a net window's net, which no net window can meet (a dark net reads 0.51 to 0.64 of its frame under the night sky light, the clear glass of a dark room 16 to 17); the close review's wording, per window against its own frame (dark P/L at most 0.70, lit P/L at least 1.0 with r > g > b), is reported beside the street rule and not failed"
   },
   {
    "id": "NIGHT-02",
    "group": "gate",
    "name": "lit against dark",
-   "measure": "the median pane luma of the lit windows over that of the dark windows, night",
-   "expected": "at least 4 (linear at least 10)",
+   "measure": "the median pane luma of the lit windows over that of the dark windows, night; the pane against the pane (the clear glass and the net together as seen), like for like",
+   "expected": "at least 2.5 (linear at least 6)",
    "tolerance": "limit",
    "applies_to": "GS_A GS_B",
    "kind": "Judgement",
-   "source": "NIGHT-2026-10-08.md: real lit windows are 10 to 100 times the lit paving; the game's gain gives 0.4"
+   "source": "NIGHT-2026-10-08.md: real lit windows are 10 to 100 times the lit paving (the game's exposure: OWED-07); 14 Oct, from the try 1 reviews (street review F2 cause 3, close review): the old 4 rested on a dark pane with no lit net in it; with the game's own night sky light on a dark net, and the lit card at x 1.0, the street review expects 2.6 to 2.8; the close review asks 2.0 against each window's own frame"
   },
   {
    "id": "NIGHT-03",
    "group": "gate",
    "name": "the lit net glows its own colour",
-   "measure": "a lit net's mean colour (linear) ratio r:g:b; a lit curtain's or blind's mean colour",
-   "expected": "net: r > g > b, g/r 0.55 to 0.80, b/r 0.20 to 0.45 (tungsten 2700 K and the fabric); curtain or blind: its own colour x that light (curtains.*.night_lit_emission_linear): r > g > b for the cream and brown curtains and the white and cream blinds (the brown curtain's g/r is 0.39); a green curtain's g > r is its own colour and none is lit at 20:30",
+   "measure": "a lit net's mean colour (linear) ratio r:g:b; a lit curtain's or blind's mean colour; and, block by block, every 32 x 32 px block lying wholly inside a lit pane in every night frame",
+   "expected": "net: r > g > b, g/r 0.55 to 0.80, b/r 0.20 to 0.45 (tungsten 2700 K and the fabric); curtain or blind: its own colour x that light (curtains.*.night_lit_emission_linear): r > g > b for the cream and brown curtains and the white and cream blinds (the brown curtain's g/r is 0.39); a green curtain's g > r is its own colour and none is lit at 20:30; every 32 x 32 block of a lit pane: r > g > b and linear g/r at most 0.85",
    "tolerance": "band",
    "applies_to": "lit windows",
    "kind": "Read",
-   "source": "interior_lit (1.0, 0.714, 0.344)"
+   "source": "interior_lit (1.0, 0.714, 0.344); 14 Oct, from the try 1 reviews (close review fault 2): a row that averages the whole pane missed an olive band round a clipped ceiling light (g/r 1.0, 17 per cent of the lit window's glass at the tight close view)"
   },
   {
    "id": "NIGHT-04",
@@ -9956,6 +9993,17 @@
    "applies_to": "table",
    "kind": "Derived",
    "source": "lit_share.rule"
+  },
+  {
+   "id": "NIGHT-07",
+   "group": "gate",
+   "name": "a lit window's clear glass against its net",
+   "measure": "in every lit window of H_ACROSS_0 at night: the median (linear) of the clear (net-free) glass over the median of its lit net's, curtain's or blind's, the two regions told apart by the mask with the glass clear",
+   "expected": "0.5 to 1.0",
+   "tolerance": "band",
+   "applies_to": "GS_A GS_B",
+   "kind": "Judgement",
+   "source": "14 Oct, from the try 1 reviews: street review F2 cause 2: with the lit card at x 0.28 (picture x 0.7 x 0.4) the room seen through clear glass read 0.26 to 0.31 of the lit net, which glows 0.48 from the same light that lights the room; with the card at x 1.0 the clear glass reads 0.6 to 0.8 of the net (street review); the PC's M_LedgerInterior Brightness for a lit house room at night follows (OWED-04 measures it)"
   },
   {
    "id": "PIC-01",
@@ -10044,6 +10092,17 @@
    "applies_to": "20 sites",
    "kind": "Derived",
    "source": "lit_share"
+  },
+  {
+   "id": "PIC-13",
+   "group": "pictures",
+   "name": "no clipped highlights in a lit room picture",
+   "measure": "in every night_lit picture, the share of pixels with any channel at 250 or more",
+   "expected": "at most 0.1 per cent: the highlights are rolled off before the 8-bit write (the pixel's largest channel in linear eases from a knee of 0.60 toward 0.85 and never reaches it; the three channels scale together, so the hue stays tungsten)",
+   "tolerance": "limit",
+   "applies_to": "the 11 lit rooms (an empty room's night_lit is its night_dark)",
+   "kind": "Derived",
+   "source": "14 Oct, from the try 1 reviews: close review fault 2: every lit picture clipped round the ceiling light (red at 250 or more on 0.55 to 2.8 per cent of the pixels; the ceiling near the rose read (255, 253, 178)), so the hue went yellow and the card's gain then made it olive; 17 per cent of the lit window's glass at the tight close view"
   },
   {
    "id": "SITE-01",
@@ -10249,6 +10308,11 @@
    "id": "OWED-06",
    "what": "1a step 3, the upper panes reflecting the street (a cube of the street box-projected onto the pane): deferred, not built in the cloud",
    "check": "in the reverse view at least 2 of 3 upper panes show a horizontal edge with a step of at least 30 levels, moving when the camera moves 1 m"
+  },
+  {
+   "id": "OWED-07",
+   "what": "the game's night exposure: the research's 'real lit windows are 10 to 100 times the lit paving' (NIGHT-2026-10-08.md) is the game's exposure, not the cloud's stand-in sky and lamps; the cloud's absolute night levels are stand-ins",
+   "check": "the lit windows against the lit paving in the packaged game's night frames (14 Oct, from the try 1 close review)"
   }
  ],
  "self_check": {
@@ -12938,5 +13002,122 @@
    }
   ],
   "run": "13 October 2026, after the fixes"
+ },
+ "changes_after_the_build": {
+  "made": "14 October 2026",
+  "by": "changes_after_build.py in this folder (re-run it after any regeneration by make_target.py and make_doc.py)",
+  "reviews": [
+   "production/cloud-week/kit/house-windows/REVIEW-v1-street.md",
+   "production/cloud-week/kit/house-windows/REVIEW-v1-close.md"
+  ],
+  "changes": [
+   {
+    "where": "7.1 and 9 (gate.scene.night, rooms.lights_by_state.night_lit and landing_bulb)",
+    "was": "a lit room's card is the night_lit picture x 0.7 x room_glow_gain_night 0.4 = 0.28",
+    "now": "a lit room's card is the night_lit picture x 1.0 (a dark room's card stays x 0.7); the PC's M_LedgerInterior Brightness for a lit house room at night follows (OWED-04 measures it)",
+    "why": "the same light passes through the net and lights the room, so the room seen through clear glass cannot be a quarter of the net: the clear glass read 0.26 to 0.31 of the lit net with 0.28 against a dark room's 0.7 (street review F2 cause 2)",
+    "from": "street review"
+   },
+   {
+    "where": "7.1 (the night_lit pictures)",
+    "was": "the night_lit picture is the 8-bit render as it came, clipped at the ceiling light",
+    "now": "the night_lit picture is rendered to a float picture and rolled off before the 8-bit write: the largest channel of a pixel eases from linear 0.60 toward 0.85 (sRGB 237) and never reaches it, the three channels scale together; the mean stays 70 +-15 per cent (landings 40); PIC-13 holds the clip at 0.1 per cent",
+    "why": "the ceiling round the rose clipped to (255, 253, 178): red clipped, so the hue went yellow, and the gain then made it olive (close review fault 2)",
+    "from": "close review"
+   },
+   {
+    "where": "5.1 (the pane in the cloud)",
+    "was": "Cycles Principled BSDF with Specular IOR Level 1.0",
+    "now": "the gate's pane is a Mix of a Transparent BSDF and a Glossy GGX (roughness 0.03) weighted by the dielectric Fresnel of F0 0.08 (IOR 1.789) x (1 - Backfacing): the kit's panes are closed 2.5 mm slabs (a front and a back face), the back face is pure Transparent and the front face stands for both faces, as the game's pane does (Specular 1.0, F0 0.08 for both faces of a single pane)",
+    "why": "Cycles' Fresnel node inverts the IOR on a back face, so past the critical angle (34 degrees from the normal: any view under 56 degrees from the wall) the back face was a total mirror and nothing passed the pane: by day every pane was a mirror and no net, curtain or room showed; at night the back face mirrored the sky at 0.2 into every pane (both reviews, fault 1)",
+    "from": "both reviews"
+   },
+   {
+    "where": "10 MAT-04",
+    "was": "a flat single plane at 16 degrees against a sky, the room black",
+    "now": "the kit's own slab, two readings (reflection 0.26 +-0.05, and reflection plus transmission 1.0 +-0.05)",
+    "why": "the single plane passed the mirror",
+    "from": "both reviews"
+   },
+   {
+    "where": "10 GLS-06 (new)",
+    "was": "-",
+    "now": "the kit's own slab at 15, 20, 35, 50 and 70 degrees from the wall in front of an emission card of 0.5: the card reads at least (1 - F_front) of its own, less 0.03",
+    "why": "no row could see a pane that blocks the room",
+    "from": "both reviews"
+   },
+   {
+    "where": "10 WB-03",
+    "was": "0.35 to 0.70 and blue over red at least 10 levels",
+    "now": "0.35 to 0.90 and blue minus red at least -3 levels",
+    "why": "the band came from P8, a clear blue sky; the game's sky is overcast and neutral",
+    "from": "both reviews (the street review's numbers are used)"
+   },
+   {
+    "where": "10 WB-07",
+    "was": "3.0 to 9.0",
+    "now": "3.0 to 9.0 for white_fresh and white_upvc; 2.5 to 9.0 for white_grimy and white_flaking",
+    "why": "the floor sat at 0.8 of the lowest sound-white photograph and the dull paints are darker on purpose",
+    "from": "both reviews (2.5 is the street review's; the close review's 2.2 is for white_flaking alone and also passes)"
+   },
+   {
+    "where": "10 NIGHT-01",
+    "was": "DARK when its pane luma is 8 to 30; LIT when at least 4 times the dark median",
+    "now": "DARK when the CLEAR glass reads 8 to 35 and a dark window's net at most 0.7 of its own frame's L; LIT when the pane median is at least 2.5 times the dark median with r > g > b",
+    "why": "no net window can hold the old band: its net is lit by the game's own night sky light",
+    "from": "street review (the close review's per-window wording, dark P/L at most 0.70 and lit P/L at least 1.0, is reported beside)"
+   },
+   {
+    "where": "10 NIGHT-02",
+    "was": "at least 4 (linear at least 10)",
+    "now": "at least 2.5 (linear at least 6), the pane against the pane",
+    "why": "the old 4 rested on a dark pane with no lit net in it",
+    "from": "street review (the close review asks 2.0 against each window's own frame)"
+   },
+   {
+    "where": "10 NIGHT-03",
+    "was": "the lit pane's mean colour",
+    "now": "the mean, and every 32 x 32 block of a lit pane: r > g > b and linear g/r at most 0.85",
+    "why": "a mean hid an olive band round a clipped ceiling light",
+    "from": "close review"
+   },
+   {
+    "where": "10 NIGHT-07 (new)",
+    "was": "-",
+    "now": "in every lit window at H_ACROSS_0 night the clear glass's median (linear) is 0.5 to 1.0 of its lit net's, curtain's or blind's",
+    "why": "the lit room was four times dimmer than its own net",
+    "from": "street review"
+   },
+   {
+    "where": "10 PIC-13 (new)",
+    "was": "-",
+    "now": "no night_lit picture has more than 0.1 per cent of its pixels with a channel at 250 or more",
+    "why": "every lit picture clipped round the ceiling light",
+    "from": "close review"
+   },
+   {
+    "where": "10 JNR-01 (new), GRM-01 (new)",
+    "was": "-",
+    "now": "no joinery pixel under luma 10 inside a window outline by day; the grime band's 0.75 on a grimy window's lowest 30 mm of bottom rail",
+    "why": "the black notch at the head of the far jamb; target 4.2's grime band was not built",
+    "from": "close review"
+   },
+   {
+    "where": "10 OWED-07 (new)",
+    "was": "-",
+    "now": "the game's night exposure: 'real lit windows are 10 to 100 times the lit paving' is the game's, not the cloud's",
+    "why": "the cloud's absolute night levels are stand-ins",
+    "from": "close review"
+   },
+   {
+    "where": "status",
+    "was": "fixes applied, not re-reviewed",
+    "now": "built (unit 8, 14 October 2026); changes after the build from the two try 1 reviews applied 14 October 2026 (changes_after_the_build, TARGET.md section 14); the changed rows are not re-reviewed",
+    "why": "",
+    "from": "-"
+   }
+  ],
+  "check_only_rows": "Rows made only in the check (not in the target's list, because they test the build and the reviewers' own acceptance, not the target): NEG-01 (the negative control: the back-face mirror must fail GLS-06 and MAT-04), ACC-01 and ACC-02 (the street review's acceptance by day in cam_A and the Hook), NIGHT-08 and NIGHT-09 (its acceptance at night in the Hook and the reverse view).",
+  "note": "the self_check result below is the 13 October one (424 rows); it does not know the changed rows"
  }
 }

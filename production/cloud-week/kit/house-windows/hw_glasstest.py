@@ -156,6 +156,72 @@ def mat04(backface_fix=True, angle=16.0):
     return ok, v, e, tris
 
 
+def grime_test(condition="grimy", glb_kind="S22"):
+    """GRM-01 (14 October, the close review's narrow point 3): the kit's own `paint_joinery__lower_bottom_rail`, painted by the gate's own `make_paint` for a house of this condition, seen square on under a uniform sky: the luma of
+    its lowest 30 mm over that of the 30 mm above them. A grimy window reads 0.75 (the band x 0.75), a sound one 1.0. Returns (ratio, rows used)."""
+    import bpy
+    import hw_gate as HG
+    from mathutils import Vector
+    bpy.ops.wm.read_factory_settings(use_empty=True)
+    sc = bpy.context.scene
+    bpy.ops.import_scene.gltf(filepath=os.path.join(T.ASSETS, "hw_%s.glb" % glb_kind))
+    rail = None
+    for o in list(bpy.data.objects):
+        if o.name.split(".")[0] == "paint_joinery__lower_bottom_rail":
+            rail = o
+        else:
+            bpy.data.objects.remove(o, do_unlink=True)
+    bpy.context.view_layer.update()
+    zs = [(rail.matrix_world @ v.co).z for v in rail.data.vertices]
+    zmin = min(zs)
+    m0 = rail.data.materials[0]
+    paint = T.paints()["white_grimy"]
+    gr = ("paint_joinery__lower_bottom_rail", zmin, 0.0) if condition == "grimy" else None
+    m = HG.make_paint(m0, paint, condition, True, False, gr)
+    rail.data.materials.clear()
+    rail.data.materials.append(m)
+    w = bpy.data.worlds.new("w")
+    sc.world = w
+    w.use_nodes = True
+    w.node_tree.nodes["Background"].inputs["Color"].default_value = (1, 1, 1, 1)
+    w.node_tree.nodes["Background"].inputs["Strength"].default_value = 1.0
+    cd = bpy.data.cameras.new("c")
+    cd.type = "ORTHO"
+    cd.ortho_scale = 0.9
+    co = bpy.data.objects.new("c", cd)
+    sc.collection.objects.link(co)
+    zc = (zmin + max(zs)) / 2
+    co.location = (0.0, -2.0, zc)
+    co.rotation_euler = (math.radians(90.0), 0, 0)
+    sc.camera = co
+    W, H = 450, 200
+    sc.render.engine = "CYCLES"
+    sc.cycles.device = "CPU"
+    sc.cycles.samples = 24
+    sc.cycles.use_denoising = False
+    sc.render.resolution_x, sc.render.resolution_y = W, H
+    sc.view_settings.view_transform = "Raw"
+    sc.render.image_settings.file_format = "OPEN_EXR"
+    sc.render.image_settings.color_depth = "32"
+    out = os.path.join(T.GATE, "grime_%s.exr" % condition)
+    sc.render.filepath = out
+    bpy.ops.render.render(write_still=True)
+    img = bpy.data.images.load(out, check_existing=False)
+    a = np.array(img.pixels[:], np.float32).reshape(img.size[1], img.size[0], img.channels)[..., :3].mean(axis=2)[::-1]
+    bpy.data.images.remove(img)
+    os.remove(out)
+    mm_per_px = 900.0 / W
+    def rows(z0_mm, z1_mm):                         # kit z in mm (from the opening's bottom edge) to image rows (row 0 on top)
+        z_top = (zc + 0.5 * H * mm_per_px / 1000.0)
+        r0 = int(round((z_top - z1_mm / 1000.0) * 1000.0 / mm_per_px))
+        r1 = int(round((z_top - z0_mm / 1000.0) * 1000.0 / mm_per_px))
+        return slice(r0, r1)
+    z0 = zmin * 1000.0
+    band = a[rows(z0 + 3, z0 + 28), 150:300]
+    above = a[rows(z0 + 33, z0 + 58), 150:300]
+    return float(np.median(band) / max(float(np.median(above)), 1e-9)), (float(np.median(band)), float(np.median(above)))
+
+
 if __name__ == "__main__":
     for fix in (True, False):
         ok, rows, tris = gls06(fix)
@@ -163,3 +229,4 @@ if __name__ == "__main__":
         for r in rows:
             print("   %2d deg: card reads %.3f of its own (need %.3f; F_front %.3f)" % r)
         print("   MAT-04:", mat04(fix))
+    print("GRM-01 grimy:", grime_test("grimy"), "sound:", grime_test("sound"))

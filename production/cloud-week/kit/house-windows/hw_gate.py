@@ -533,33 +533,10 @@ def build_and_render(view_name, cam, state, out_png, bake_dir, samples=48, res=N
                     grime = site["condition"] == "grimy" and base in GRIME_PARTS
                     key = ("paint", site["paint"], site["condition"], base in ("paint_joinery__lower_bottom_rail", "paint_joinery__oak_sill", "paint_joinery__frame_sill_rail"), m0.name, (site["id"], base) if grime else None)
                     if key not in mats_w:
-                        m = m0.copy()
-                        pb = m.node_tree.nodes["Principled BSDF"]
-                        col = list(paint["lin"])
-                        if site["condition"] == "grimy" and key[3]:
-                            col = [v * 0.85 for v in col]
-                        mixn = next((n for n in m.node_tree.nodes if n.type == "MIX"), None)
-                        if mixn is not None:
-                            mixn.inputs[7].default_value = (*col, 1.0)
-                            if extra.get("old_fault"):               # WB-08: the first build's flat joinery: no box shade and no shading of the reveal (its own light, the paint's colour)
-                                for lk in list(mixn.inputs[6].links):
-                                    m.node_tree.links.remove(lk)
-                                mixn.inputs[6].default_value = (1.0, 1.0, 1.0, 1.0)
-                                for lk in list(pb.inputs["Base Color"].links):
-                                    m.node_tree.links.remove(lk)
-                                pb.inputs["Base Color"].default_value = (0.0, 0.0, 0.0, 1.0)
-                                pb.inputs["Specular IOR Level"].default_value = 0.0
-                                pb.inputs["Emission Color"].default_value = (*col, 1.0)
-                                pb.inputs["Emission Strength"].default_value = 0.6
-                        else:
-                            pb.inputs["Base Color"].default_value = (*col, 1.0)
-                        pb.inputs["Roughness"].default_value = paint["rough"]
-                        if site["condition"] == "flaking":
-                            flake_paint(m, col)
+                        gr = None
                         if grime:
-                            zmin = min((o.matrix_world @ v.co).z for v in o.data.vertices)
-                            grime_band(m, base, zmin, Z)
-                        mats_w[key] = m
+                            gr = (base, min((o.matrix_world @ v.co).z for v in o.data.vertices), Z)
+                        mats_w[key] = make_paint(m0, paint, site["condition"], key[3], bool(extra.get("old_fault")), gr)
                     sl.material = mats_w[key]
                 elif mn in ("net_voile", "curtain", "blind"):
                     kk = (mn, base, lit)
@@ -799,11 +776,42 @@ def build_and_render(view_name, cam, state, out_png, bake_dir, samples=48, res=N
     return round(time.time() - t1, 1), rec
 
 
-GRIME_PARTS = ("paint_joinery__lower_bottom_rail", "paint_joinery__oak_sill")
+def make_paint(m0, paint, condition, is_sill_part, old_fault=False, grime=None):
+    """A window's paint from the kit's `paint_*` material (a copy): the house's colour and roughness; the grimy x 0.85 on the lower rail and sill; flaking; the grime band (`grime` = (part name, the part's lowest kit z in
+    metres, the window's sill height in the street)); `old_fault` WB-08's flat emissive joinery."""
+    m = m0.copy()
+    pb = m.node_tree.nodes["Principled BSDF"]
+    col = list(paint["lin"])
+    if condition == "grimy" and is_sill_part:
+        col = [v * 0.85 for v in col]
+    mixn = next((n for n in m.node_tree.nodes if n.type == "MIX"), None)
+    if mixn is not None:
+        mixn.inputs[7].default_value = (*col, 1.0)
+        if old_fault:               # WB-08: the first build's flat joinery: no box shade and no shading of the reveal (its own light, the paint's colour)
+            for lk in list(mixn.inputs[6].links):
+                m.node_tree.links.remove(lk)
+            mixn.inputs[6].default_value = (1.0, 1.0, 1.0, 1.0)
+            for lk in list(pb.inputs["Base Color"].links):
+                m.node_tree.links.remove(lk)
+            pb.inputs["Base Color"].default_value = (0.0, 0.0, 0.0, 1.0)
+            pb.inputs["Specular IOR Level"].default_value = 0.0
+            pb.inputs["Emission Color"].default_value = (*col, 1.0)
+            pb.inputs["Emission Strength"].default_value = 0.6
+    else:
+        pb.inputs["Base Color"].default_value = (*col, 1.0)
+    pb.inputs["Roughness"].default_value = paint["rough"]
+    if condition == "flaking":
+        flake_paint(m, col)
+    if grime:
+        grime_band(m, grime[0], grime[1], grime[2])
+    return m
+
+
+GRIME_PARTS = ("paint_joinery__lower_bottom_rail", "paint_joinery__oak_sill", "paint_joinery__frame_sill_rail")      # the box sashes' bottom rail and oak sill; the replacement casements' sill rail
 
 
 def grime_band(m, base, z_lo_kit, root_z):
-    """Target 4.2's grime band (the close review's narrow point 3): on a grimy window the lowest 30 mm of the bottom rail (the kit's own z from the part's lowest point; `root_z` is the window's sill height in the street) and the oak
+    """Target 4.2's grime band (the close review's narrow point 3): on a grimy window the lowest 30 mm of the bottom rail or, on a replacement casement, of its sill rail (the kit's own z from the part's lowest point; `root_z` is the window's sill height in the street) and the oak
     sill's top faces are x 0.75 of the paint, on top of the x 0.85 the lower rail and sill already carry. Only grimy windows: a sound house's bottom rail is clean (the glb carries the default paint of every house of its kind,
     so the band is the gate's, by the house's condition, and is listed in hw_manifest.json for the PC)."""
     import bpy

@@ -283,7 +283,8 @@ class GRoom(S.Room):
         if getattr(self, "pilot", None) is not None:
             self.pilot.data.energy = P.get("pilot", getattr(self, "pilot_w", 0.0)) if state == "night_dark" else 0.0
         if getattr(self, "fill", None) is not None:
-            self.fill.data.energy = P.get("fill", getattr(self, "fill_w", 0.0)) if state in ("day", "night_lit") else 0.0          # (14 Oct, batch B) the low front fill of a room with a dark dado
+            fw_ = getattr(self, "fill_w", 0.0)
+            self.fill.data.energy = P.get("fill_nl" if state == "night_lit" else "fill", fw_[1] if (state == "night_lit" and isinstance(fw_, tuple)) else (fw_[0] if isinstance(fw_, tuple) else fw_)) if state in ("day", "night_lit") else 0.0          # (14 Oct, batch B) the low front fill of a room with a dark dado: one strength by day, one at night_lit
 
     def calibrate(self, work, log=print, res=(768, 348), samples=24):
         """Light strengths so each state's mean luma meets the approved pictures' (119.5, 79.8, 17.7): the tubes on night_lit, the sky on day, the sodium wash on night_dark."""
