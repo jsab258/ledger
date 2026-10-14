@@ -104,15 +104,15 @@
    "paint": "white_gloss",
    "frame_colour": "white",
    "condition": "kept",
-   "glb_bytes": 171936,
-   "triangles": 4174,
+   "glb_bytes": 187064,
+   "triangles": 4518,
    "materials": [
     "glass",
     "paint_white",
     "paint_white_gloss",
     "stone_step"
    ],
-   "sha256": "2fe2df0cf64c0c74e6841d90b891e764e2b1ad7a07102dbd9340d2cce7fcde0a",
+   "sha256": "624891160d032fa33fd43d54ac59937bf72f816251af4c89bb7804c1e343c344",
    "notes": {
     "kind": "T3"
    },
@@ -489,7 +489,7 @@
     "chrome_nickel",
     "slot_interior"
    ],
-   "sha256": "0efe88ae8b6f8e063d7ea40228e13372ffbca0b250a60dea36ad4fcf1b5a7240"
+   "sha256": "51245f02d120d7bb3a9100309954ecd3baa7819ad79660828ba716681ec4c194"
   },
   "LP3": {
    "glb_bytes": 16224,
@@ -518,7 +518,7 @@
     "chrome_nickel",
     "slot_interior"
    ],
-   "sha256": "3b8b142a5dde7f8a4837e8c0fd7b548c6f269ffdabf2018721fa6cc748c35a06"
+   "sha256": "08fb6b5ce79850beb3e82bd5cf8c0e52a7f1d18a9d0aca8468ad57cbb4133e75"
   },
   "LP5": {
    "glb_bytes": 6828,
@@ -587,7 +587,7 @@
    "materials": [
     "chrome_nickel"
    ],
-   "sha256": "4beb5b5f1cc0dc51390fdddab9c04f78a85b176ccd2c0d17b58231862d869b24"
+   "sha256": "c9cc366aa1e165ee9a6f1209cd650e463898af3b12370b76e8f2390ced3e94aa"
   },
   "HD2b": {
    "glb_bytes": 87840,
@@ -603,7 +603,7 @@
     "chrome_nickel",
     "slot_interior"
    ],
-   "sha256": "ced5311bc41f8bbc54f709bceeec353d6341721808e8b8d866285df9ed3b717a"
+   "sha256": "00ea3bfc3ec9e8e5d9c423bb5f85949e0da71bbfddd5c984d530f025ce6f65d0"
   },
   "HD2c": {
    "glb_bytes": 87840,
@@ -619,7 +619,7 @@
     "chrome_nickel",
     "slot_interior"
    ],
-   "sha256": "89278a907842cdc343784c619ad6c1b50a3a33e491c4174f039679b7f78618c2"
+   "sha256": "c2bc0907bbff36c45b0a5ba3d351bdcd5ebae83485e8dfbf2b2085b8096ac757"
   },
   "HD3": {
    "glb_bytes": 53492,
@@ -632,11 +632,11 @@
    "materials": [
     "steel_dark"
    ],
-   "sha256": "c15142a75cc042e9a455c0c514748f72af446a24cfc9b8886c33622ed8c18c98"
+   "sha256": "2e4e30d576d4d2ddbf810a55999af425bacdd826f0cd52365655e52033a93940"
   },
   "HD4": {
-   "glb_bytes": 62168,
-   "triangles": 1672,
+   "glb_bytes": 73676,
+   "triangles": 1968,
    "parts": [
     "iron_latch_bow",
     "iron_latch_plate",
@@ -649,7 +649,7 @@
     "slot_interior",
     "steel_dark"
    ],
-   "sha256": "5101f2353aa4b513195f90f0927f848ffffb950c1274ae7d7c98a7ec01160838"
+   "sha256": "efc86dbed8ed051c38ea1f5742dc85e6a8ca2166439e739c68f1eeb836b8e885"
   },
   "LK1": {
    "glb_bytes": 70164,
@@ -660,7 +660,7 @@
    "materials": [
     "chrome_nickel"
    ],
-   "sha256": "9b8ea7913a5f4a1e48bc82113ab53495287fc803d5577ede8ab285485291eb2e"
+   "sha256": "80fb66c276088c6f5f9a25fab62a9eb7c67535c42a9df0f4103e13a1f2047f09"
   },
   "LK2": {
    "glb_bytes": 89496,
@@ -672,7 +672,7 @@
    "materials": [
     "chrome_nickel"
    ],
-   "sha256": "730f46484e09b1a1b71529ba1bde293fcbb1d0f43533a56d29f1c65720ca8a6e"
+   "sha256": "c796e3bae017f149cfbb28f2a2f39ba848ec53f9c15fc409fe22b5ecc5bfcc3b"
   },
   "LK3": {
    "glb_bytes": 12112,
@@ -696,7 +696,7 @@
     "chrome_nickel",
     "steel_dark"
    ],
-   "sha256": "d09cfcf9cadfe6bfcdf7c326eb711f93cd7fa87af552f3edecfa20b730e736c5"
+   "sha256": "70c859c45ca20db20364ba674581700afa9138242ae796139dac9bf6e9205cbb"
   },
   "KN1": {
    "glb_bytes": 59152,
@@ -771,26 +771,26 @@
    "sha256": "89847e149ebd6612444016b64e5b2365264892d3f18e5fc936795d8c08e4ed92"
   },
   "NM2": {
-   "glb_bytes": 27312,
-   "triangles": 632,
+   "glb_bytes": 26232,
+   "triangles": 612,
    "parts": [
     "iron_numerals"
    ],
    "materials": [
     "cast_iron"
    ],
-   "sha256": "06345f3fe2868af14fd54ba192b3e5a49365728ff6b44ace79ba32c42d53a247"
+   "sha256": "590092d89b6c4a25b9482e097d6770401e2380d0475f814fd66cdb64a35c1204"
   },
   "NM3": {
-   "glb_bytes": 28780,
-   "triangles": 680,
+   "glb_bytes": 28324,
+   "triangles": 668,
    "parts": [
     "iron_numerals"
    ],
    "materials": [
     "paint_numeral_white"
    ],
-   "sha256": "96a2d10efcf2fa25f27effb2d2c0e6fff8781fb4b7dc325bb6f744a4bf6e44ca"
+   "sha256": "3ed9e17e510f12a4888559011c4cb9fb261b9f65ecd857b2668917fc10563b6a"
   },
   "NM4": {
    "glb_bytes": 14708,
@@ -829,8 +829,8 @@
    "sha256": "3babe133f9c1ad7a235fc6a28cb3a98e860383add4c3bc19c9c71522f6cd01ab"
   },
   "BS1": {
-   "glb_bytes": 41116,
-   "triangles": 652,
+   "glb_bytes": 65208,
+   "triangles": 1404,
    "parts": [
     "iron_scraper_blade",
     "iron_scraper_foot_l",
@@ -841,7 +841,7 @@
    "materials": [
     "cast_iron"
    ],
-   "sha256": "3e50dc3711936e835b625ce2dd2109e48ad8e0416d7efe79c9ae4bc844a9d4be"
+   "sha256": "b9a2fce7e7bb63a13d1fbc66c8025bd45024d1f18e5d90a7dd5c1e9069221cf2"
   }
  }
 }

@@ -17,6 +17,7 @@ import sys
 
 import numpy as np
 from shapely.geometry import LineString, Point, Polygon
+from shapely.geometry import box as sbox
 from shapely.ops import unary_union
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -37,11 +38,24 @@ def srgb(c):
     return [int(round(v)) for v in c]
 
 
+CHROME_USERS = (("letter_plate", "LP2"), ("letter_plate", "LP4"), ("handle", "HD2a"), ("handle", "HD2b"), ("handle", "HD2c"), ("latch", "LK1"), ("latch", "LK2"))
+
+
+def chrome_srgb(N):
+    """The one colour of the material chrome_nickel, read from the target (14 Oct, doors try 3: it was typed here as (170, 170, 168), a second home beside the target's seven entries; the
+    close review found it reading at half P2's brightness and set (196, 197, 196)). The seven fittings that use it must agree, or the build stops."""
+    F = N["furniture"]
+    cols = {tuple(F[slot][vid]["srgb"]) for slot, vid in CHROME_USERS}
+    if len(cols) != 1:
+        raise ValueError("the target gives chrome_nickel more than one colour: %s" % sorted(cols))
+    return [int(c) for c in cols.pop()]
+
+
 def make_mats(N):
     F = N["furniture"]
     return {
         "brass": bd.make_material("brass", F["letter_plate"]["LP1"]["srgb"], 0.4, 1.0),
-        "chrome_nickel": bd.make_material("chrome_nickel", [170, 170, 168], 0.35, 1.0),
+        "chrome_nickel": bd.make_material("chrome_nickel", chrome_srgb(N), 0.35, 1.0),
         "steel_dark": bd.make_material("steel_dark", [40, 40, 42], 0.6, 1.0),
         "cast_iron": bd.make_material("cast_iron", [30, 30, 32], 0.65, 1.0),
         "aluminium_pale": bd.make_material("aluminium_pale", [190, 190, 185], 0.45, 1.0),
@@ -300,8 +314,14 @@ def thumb_latch(ps, d):
         z = zc + sgn * d["post_gap"] / 2.0
         V, F = lathe_y([(0.0, 1.0), (6.5, 1.0), (6.5, bt + 1.2), (4.2, bt + 3.0), (3.6, bt + 6.0), (3.6, bt + so), (0.0, bt + so)], 20, 0.0, z)       # from inside the plate: no face shared with its back
         ps.add("iron_latch_post_" + tag, V, F, "steel_dark")
-    tl, tw, tt, ang = d["thumb"]["length"], d["thumb"]["width"], 2.4, math.radians(d["thumb"]["angle_deg"])
-    V, F = bd.box(-tw / 2, -tt / 2, 0.0, tw / 2, tt / 2, tl)
+    # 14 Oct (doors try 3, close review narrow point 1): the thumb lever leaves the plate pointing out at the street and rising `rise_deg` above the horizontal (75 degrees to the face for
+    # 15), 45 long: a neck 14 wide and, over its last 20 mm, a round pad 20 across (a thumb presses it down). The first build's stood upright (17 degrees off the face): a fin.
+    tl, tw, tt = d["thumb"]["length"], d["thumb"]["width"], 2.4
+    pr = d["thumb"]["pad_dia"] / 2.0
+    ang = math.radians(90.0 - d["thumb"]["rise_deg"])                      # the angle from the vertical (along +z): 75 for a rise of 15
+    lever = unary_union([sbox(-tw / 2, 0.0, tw / 2, tl - pr), Point(0.0, tl - pr).buffer(pr, resolution=12)])
+    pts = L.dedupe(list(lever.exterior.coords)[:-1])
+    V, F = bd.prism(L.ccw(pts), ("x", "z"), "y", -tt / 2, tt / 2)
     V = np.asarray(V, float)
     y = V[:, 1] * math.cos(ang) - V[:, 2] * math.sin(ang)
     z = V[:, 2] * math.cos(ang) + V[:, 1] * math.sin(ang)

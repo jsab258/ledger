@@ -438,6 +438,7 @@ class KindDoor(bd.Door):
         step_d, step_w = 6.0, 6.0
         prof_cove = quarter_cove(0.0, 0.0, step_d, step_w)                                  # (d, depth): the outer cove, 0 to 6 over 6 mm
         prof_cove2 = quarter_cove(0.0, step_d, 2 * step_d, step_w)                          # the inner cove, 6 to 12 over 6 mm
+        quirk = spec["mouldings"]["outside"].get("quirk")                                  # the groove outside each outline (target.json kinds.T3.mouldings.outside.quirk)
         for oid in ("upper_panel", "lower_panel"):
             o = by_id[oid]
             outer = L.ccw(L.rect_pts(self.uabs(o["u0"]), self.vabs(o["v0"]), self.uabs(o["u1"]), self.vabs(o["v1"])))
@@ -451,6 +452,12 @@ class KindDoor(bd.Door):
                 end_d, end_h = prof[-1]
                 V, Fc = L.loft_rings(rings)
                 bd.cut(ob, V, Fc)
+                # 14 Oct (doors try 3, street review narrow point 1): a quirk, a square-bottomed groove outside each outline, in the higher surface, its inner edge a tenth of a millimetre
+                # off the outline (so a sliver of the arris stays between it and the cove), all the way round and following the upper panel's segmental head: it gives the left-hand outlines the shadow line the flat sky cannot
+                if quirk:
+                    gap, gw, gd = quirk["gap_to_outline"], quirk["width"], quirk["depth"]
+                    V, Fc = L.annulus_loft(L.offset_poly(poly, -(gap + gw)), L.offset_poly(poly, -gap), self.LY0 + top - 1.0, self.LY0 + top + gd)
+                    bd.cut(ob, V, Fc)
         light = by_id["small_light"]
         lp = L.round_top_rect_pts(self.uabs(light["u0"]), self.vabs(light["v0"]), self.uabs(light["u1"]), self.vabs(light["v1"]), light["corner_r"])
         self.cut_poly(ob, lp, self.LY0 - 1.0, self.LY1 + 1.0)

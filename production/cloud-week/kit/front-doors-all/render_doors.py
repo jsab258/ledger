@@ -66,46 +66,55 @@ def glass_passes_shadow_rays():
         nt.links.new(mix.outputs["Shader"], out.inputs["Surface"])
 
 
-def net_look():
-    """A second render aid, only in the scene (never in a file): the T2 net cards (material net_voile, a plain white card in the file) get the look of a gathered net: vertical folds, three
-    gathers of 48, 37.7 and 83 mm (the windows target's NET_COMMON: wavelength 40 to 55 mm, brightness modulation 0.22), so that they read as nets behind glass and not as white boards. The first
-    build's nets were a flat grey card that read as slate (the street review's point 1). The PC builds the real folded translucent net from net_voile."""
-    import math as _m
+NET_SCALE = 0.88                         # the nets' brightness against the first try 3 render's, tuned so the four lights read 0.85 (0.80 to 0.90) of the transom bar's face (street review of 14 Oct, point 2)
+
+
+def net_look(scale=None):
+    """A second render aid, only in the scene (never in a file): the T2 net cards (material net_voile, a plain white card in the file) get the look of a gathered net: vertical folds
+    that read as nets behind glass and not as white boards. 14 Oct (doors try 3, street review point 2): the folds are RANDOM, 30 to 70 mm apart (the first aid's repeated every 48 mm and
+    read as a pleated blind), each with a brightness of 0.78 plus or minus 0.11 against a white card, and the whole is scaled by NET_SCALE so the lights read 0.85 of the transom bar's
+    white (they read 0.95 to 1.0 of it, brighter than the white frame, before). The strip is a 1 x 2048 picture across the card's width (Generated coordinates), the same random
+    sequence every run (seed 14). The PC builds the real folded translucent net from net_voile."""
+    import numpy as _np
+    scale = NET_SCALE if scale is None else scale
     for m in bpy.data.materials:
         if not m.name.startswith("net_voile") or not m.use_nodes:
             continue
+        users = [o for o in bpy.data.objects if o.type == "MESH" and any(sl.material == m for sl in o.material_slots)]
+        width_mm = 1000.0 * max([o.dimensions.x for o in users] or [0.6])
+        rng = _np.random.default_rng(14)
+        centres, vals = [0.0], [0.78 + rng.uniform(-0.11, 0.11)]
+        while centres[-1] < width_mm + 70.0:
+            centres.append(centres[-1] + rng.uniform(30.0, 70.0))
+            vals.append(0.78 + rng.uniform(-0.11, 0.11))
+        xs = _np.linspace(0.0, width_mm, 2048)
+        idx = _np.clip(_np.searchsorted(centres, xs, side="right") - 1, 0, len(centres) - 2)
+        t = (xs - _np.array(centres)[idx]) / (_np.array(centres)[idx + 1] - _np.array(centres)[idx])
+        t = 0.5 - 0.5 * _np.cos(_np.pi * t)                                         # a smooth ease between neighbouring folds' brightness
+        line = (1.0 - t) * _np.array(vals)[idx] + t * _np.array(vals)[idx + 1]
+        line = _np.clip(line * scale, 0.0, 1.0)
+        img = bpy.data.images.new("net_folds", 2048, 1, float_buffer=True)
+        img.colorspace_settings.name = "Non-Color"
+        px = _np.zeros((1, 2048, 4), dtype=_np.float32)
+        px[0, :, 0] = px[0, :, 1] = px[0, :, 2] = line
+        px[0, :, 3] = 1.0
+        img.pixels.foreach_set(px.ravel())
+        img.update()
         nt = m.node_tree
         b = nt.nodes["Principled BSDF"]
         base = tuple(b.inputs["Base Color"].default_value)
         tc = nt.nodes.new("ShaderNodeTexCoord")
-        sep = nt.nodes.new("ShaderNodeSeparateXYZ")
-        nt.links.new(tc.outputs["Object"], sep.inputs["Vector"])
-        def math(op, a_=None, b_=None):
-            n = nt.nodes.new("ShaderNodeMath")
-            n.operation = op
-            for i_, v_ in enumerate((a_, b_)):
-                if v_ is None:
-                    continue
-                if isinstance(v_, (int, float)):
-                    n.inputs[i_].default_value = v_
-                else:
-                    nt.links.new(v_, n.inputs[i_])
-            return n.outputs[0]
-        x = sep.outputs["X"]
-        total = None
-        for wl, ph, amp in ((0.048, 0.0, 0.07), (0.0377, 1.3, 0.05), (0.083, 2.4, 0.04)):      # three gathers: 48, 37.7 and 83 mm, so the folds are not a regular corrugation
-            w = math("MULTIPLY", math("SINE", math("ADD", math("MULTIPLY", x, 2.0 * _m.pi / wl), ph)), amp)
-            total = w if total is None else math("ADD", total, w)
-        mad = math("ADD", total, 0.78)                         # the net's mean brightness against a white card: a voile passes light and shows the dark hall a little
-        cc = nt.nodes.new("ShaderNodeCombineColor")
-        for i in range(3):
-            nt.links.new(mad, cc.inputs[i])
+        tex = nt.nodes.new("ShaderNodeTexImage")
+        tex.image = img
+        tex.interpolation = "Linear"
+        tex.extension = "EXTEND"
+        nt.links.new(tc.outputs["Generated"], tex.inputs["Vector"])
         mix = nt.nodes.new("ShaderNodeMix")
         mix.data_type = "RGBA"
         mix.blend_type = "MULTIPLY"
         mix.inputs[0].default_value = 1.0
         mix.inputs[6].default_value = base
-        nt.links.new(cc.outputs[0], mix.inputs[7])
+        nt.links.new(tex.outputs["Color"], mix.inputs[7])
         nt.links.new(mix.outputs[2], b.inputs["Base Color"])
 
 

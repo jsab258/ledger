@@ -154,13 +154,16 @@ def draw_kind(T, k):
     L["inner_outlines"] = inner
     # mouldings: a ring of the moulding's width inside each panel opening
     mw = spec["mouldings"]["outside"].get("width_on_face")
+    lap = spec["mouldings"]["outside"].get("lap_over_framing_mm", 0.0) if spec["mouldings"]["outside"].get("kind") == "bolection" else 0.0
     inner_outlines = L["inner_outlines"]
     rings = []
     for o in lf["openings"]:
         if o["type"] == "panel" and mw:
+            # 14 Oct (doors try 3, from the try 2 reviews): a bolection ring stands `lap` outside the opening's edge (3.1's build) and reaches mw less lap inside it
             outer = ops[o["id"]]
-            inner = outer.buffer(-mw, join_style=2)
-            rings.append(outer.difference(inner) if not inner.is_empty else outer)
+            inner = outer.buffer(-(mw - lap), join_style=2)
+            ring_out = outer.buffer(lap, join_style=2) if lap else outer
+            rings.append(ring_out.difference(inner) if not inner.is_empty else ring_out)
         if o["type"] == "embossed_panel":
             for outer in [ops[o["id"]]] + ([inner_outlines[o["id"]]] if o["id"] in inner_outlines else []):      # a 14 mm cove at each of the two outlines
                 core = outer.buffer(-14.0, join_style=2)
@@ -242,7 +245,7 @@ def sections(T):
     out["bolection_T1_46"] = Polygon([(d, h) for d, h in pr] + [(4.8, -16.95 * 0 - 17.0)]) if False else Polygon([(d, h) for d, h in pr])
     out["stuck_ovolo_F3"] = Polygon([(d, h) for d, h in T["kinds"]["F3"]["mouldings"]["outside"]["profile_dh"]])
     ep = T["kinds"]["T3"]["mouldings"]["outside"]["profile_dh"]
-    out["embossed_step_T3"] = Polygon([(d, -h) for d, h in ep] + [(ep[-1][0], -8.0), (0.0, -8.0)])
+    out["embossed_step_T3"] = Polygon([(d, -h) for d, h in ep] + [(ep[-1][0], -16.0), (0.0, -16.0)])      # closes 16 below the face: the field is 12 deep (14 Oct, doors try 3; it closed at -8 and so crossed the 12 deep profile)
     rs = T["glass"]["reeded_4mm"]
     pts = [[0.0, 4.0]]
     n = int(round(24.0 / rs["flute_pitch"]))

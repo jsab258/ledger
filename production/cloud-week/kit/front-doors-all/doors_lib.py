@@ -139,6 +139,29 @@ def sweep_poly(profile, pts, y0=0.0):
     return V, F
 
 
+def annulus_loft(outer, inner, y0, y1):
+    """A closed ring-shaped solid (the cutter of a groove) between two counter-clockwise (x, z) rings of the same vertex count, from y0 to y1 (y1 > y0; mm): returns (V, F)
+    with the faces turned outward (the signed volume is checked, so the boolean sees a proper solid)."""
+    n = len(outer)
+    if len(inner) != n:
+        raise ValueError("annulus_loft: the two rings need the same vertex count (%d, %d)" % (n, len(inner)))
+    rings = [(outer, y0), (inner, y0), (inner, y1), (outer, y1)]
+    V = np.array([(x, y, z) for pts, y in rings for (x, z) in pts], float)
+    F = []
+    for r in range(4):
+        s = (r + 1) % 4
+        for i in range(n):
+            j = (i + 1) % n
+            F.append((r * n + i, r * n + j, s * n + j, s * n + i))
+    vol = 0.0
+    for f in F:
+        a, b, c, d = (V[k] for k in f)
+        vol += float(a @ np.cross(b, c) + a @ np.cross(c, d))
+    if vol < 0:
+        F = [tuple(reversed(f)) for f in F]
+    return V, F
+
+
 def loft_rings(rings, cap=True):
     """A closed solid through horizontal rings: rings = [(pts (x, z) counter-clockwise, y), ...], all the same vertex count. The first and last are capped."""
     n = len(rings[0][0])
@@ -170,7 +193,7 @@ _G = {
     "3": [_arc(0.5, 0.75, 0.40, 0.25, 150, -90, 12) + _arc(0.5, 0.25, 0.44, 0.25, 90, -150, 12)],
     "4": [[(0.66, 1.0), (0.04, 0.30), (0.96, 0.30)], [(0.66, 1.0), (0.66, 0.0)]],
     "5": [[(0.88, 1.0), (0.18, 1.0), (0.12, 0.56)] + _arc(0.47, 0.31, 0.43, 0.31, 115, -150, 14)],
-    "6": [_arc(0.52, 0.52, 0.43, 0.46, 50, 200, 14), _arc(0.5, 0.30, 0.42, 0.30, 0, 360, 24)],
+    "6": [_arc(0.50, 0.52, 0.42, 0.46, 50, 180, 14) + [(0.08, 0.30)], _arc(0.5, 0.30, 0.42, 0.30, 0, 360, 24)],       # 14 Oct (try 3, close review 5): the stem runs straight down into the bowl's leftmost point (0.08, 0.30): no nick where the two met
     "7": [[(0.06, 1.0), (0.94, 1.0), (0.36, 0.0)]],
     "8": [_arc(0.5, 0.75, 0.34, 0.25, 0, 360, 22), _arc(0.5, 0.25, 0.42, 0.25, 0, 360, 24)],
 }

@@ -307,7 +307,7 @@ def check_drawings(N, mod, rep, overlays):
     # the openings: holes in the slab (T3: at three depths), against the drawn openings
     spec = mod.spec
     # the openings are THROUGH holes: sections at depth 5 (T3: the outer pockets at 0.1, the small light at 20, below the field's 12); a keyhole's blind pocket (2.2 deep) is not an opening
-    depth_sets = [("t3", 0.1, ("upper_panel", "lower_panel")), ("t3", 20.0, ("small_light",))] if k == "T3" else [("all", 5.0, None)]
+    depth_sets = [("t3", 3.2, ("upper_panel", "lower_panel")), ("t3", 20.0, ("small_light",))] if k == "T3" else [("all", 5.0, None)]
     got = []
     for tag, dy, ids in depth_sets:
         for h in mod.holes(mod.LY0 + dy):
@@ -342,13 +342,10 @@ def check_drawings(N, mod, rep, overlays):
         rep.add("A3:%s:mouldings" % k, c["ok"], {x: c[x] for x in ("iou", "p95_mm", "max_mm")}, "IoU >= 0.97, p95 <= 2, worst <= 6",
                 "the moulding rings against the drawn ring grown by the moulding's lap over the framing (%.1f): the target's ring starts at the opening's edge" % lap, group="A", kind=k)
         if lap:
-            lit = []
-            for o in spec["leaf"]["openings"]:
-                outer = D["openings"][o["id"]]
-                lit.append(outer.difference(outer.buffer(-mo["width_on_face"], join_style=2)))
-            c = verdict(compare(a, raster_geom(unary_union(lit), fr3), MMPX))
+            # 14 Oct (try 3): target_drawing.py now draws the ring with the lap (it was owed the change by both try 2 reviews), so the drawing's own ring is the comparison
+            c = verdict(compare(a, raster_geom(D["mouldings"], fr3), MMPX))
             rep.add("A3:%s:mouldings_literal" % k, c["ok"], {x: c[x] for x in ("iou", "p95_mm", "max_mm")}, "IoU >= 0.97, p95 <= 2, worst <= 6",
-                    "EXTRA: the same against the drawing's ring exactly as drawn (from the opening's edge in): the 3.1 build's moulding stands 4.8 outside the opening's edge, so this one differs by that lap",
+                    "EXTRA: the same against the drawing's ring exactly as drawn (target_drawing.py draws the ring %.1f outside the opening's edge since the try 2 reviews)" % lap,
                     group="A", extra=True, kind=k)
     if k == "T2":
         fr4 = frame_for([[fs["glass_opening_x"][0], fs["glass_opening_z"][0]], [fs["glass_opening_x"][1], fs["glass_opening_z"][1]]], 5.0, 0.25)
@@ -488,8 +485,10 @@ def interior_holes(mod):
     out, inner = {}, {}
     if mod.kind == "T3":
         cand = {"upper_panel": None, "lower_panel": None}
-        outer_h = mod.holes(mod.LY0 + 0.1)
-        inner_h = mod.holes(mod.LY0 + 6.1)                       # the margin lies 6 below the face: the inner pockets start below it
+        # 14 Oct (try 3): a quirk groove 3 deep lies outside each outline (in the face, and in the margin), so a section at 0.1 below the face would take the groove's outer edge for the pocket:
+        # the pockets are read below the grooves, at 3.2 (outer) and 9.2 (inner), where the quarter-circle coves stand 0.89 inside the outline (well inside the 3 mm opening tolerance)
+        outer_h = mod.holes(mod.LY0 + 3.2)
+        inner_h = mod.holes(mod.LY0 + 9.2)                       # the margin lies 6 below the face and its quirk 3 deeper: the inner pockets are read below it
         light_h = mod.holes(mod.LY0 + 20.0)                      # the field lies 12 below the face: only the small light is a hole at 20
         for o in ops:
             c = Point(mod.X0 + 0.5 * (o["u0"] + o["u1"]), mod.Z0 + 0.5 * (o["v0"] + o["v1"]))
@@ -770,7 +769,7 @@ def row_FU(N, kind, mod_house, rep):
     lf = spec["leaf"]
     fs = mod_house.fs
     for c in N["checks"]:
-        if c["group"] != "FU" or c["kind"] != kind or c.get("type") == "kind_fixing":
+        if c["group"] != "FU" or c["kind"] != kind or c.get("type") in ("kind_fixing", "grip_gap", "thumb_reach", "scraper_facets"):
             continue
         slot, var = c["slot"], c["variant"]
         got = fitting_centre(mod_house, slot, var)
@@ -1198,6 +1197,8 @@ def mesh_features(N, k, ph, mod):
 
 def row_GA(N, rep, tgt_checks, renders):
     for c in tgt_checks:
+        if c.get("type") != "views":
+            continue
         k = c["kind"]
         views = N["gate"]["views"][k]
         names = [v["name"] for v in views]
@@ -1615,11 +1616,14 @@ def row_t3_street_dip(N, rep, picture, label="v2"):
 
 
 def row_t2_nets_lit(N, rep, picture):
-    """The street review's narrow point 1: T2's nets read as slate-grey boards (about half the jamb's white) where D3's are pale. On the street picture the four lights' glass area reads at
-    least 75 per cent of the right jamb's white (the median brightness over the lights, less their bars, against the median over the jamb's face)."""
+    """GA-T2-nets-lit (street review of 14 October, point 2; the first form, 'at least 75 per cent of the jamb's white', let the nets come out brighter than the frame): on the street
+    picture the four lights' median brightness (less their bars) is 0.80 to 0.90 of the transom bar's front face (D3's nets read 0.84 to 0.87 of its stile's white)."""
     from scipy.ndimage import map_coordinates
+    c = [x for x in N["checks"] if x["id"] == "GA-T2-nets-lit"][0]
+    lo_, hi_ = c["expect"]["ratio_of_transom_bar"]
+    want = "%.2f to %.2f of the transom bar's face" % (lo_, hi_)
     if not os.path.exists(picture):
-        rep.add("GA-T2-nets-lit", False, "no picture %s" % picture, ">= 0.75 of the jamb's white", group="GA", kind="T2")
+        rep.add("GA-T2-nets-lit", False, "no picture %s" % picture, want, group="GA", kind="T2")
         return
     Y, W, H = luma(picture)
     fs = N["frame_sets"]["T"]
@@ -1635,13 +1639,156 @@ def row_t2_nets_lit(N, rep, picture):
                 pts.append(((X0 + u - px) / 1000.0, (LY0 + 14.0) / 1000.0, (Z0 + v - pz) / 1000.0))
     q = camera_px(view, np.array(pts), W, H)
     nets = float(np.median(map_coordinates(Y, [q[:, 1], q[:, 0]], order=1)))
-    jx0, jx1 = fs["jamb_x"]["right"]
-    jp = np.array([((jx0 + 12.0 + (jx1 - jx0 - 24.0) * a / 5.0 - px) / 1000.0, fs["frame_front_y"] / 1000.0, (z - pz) / 1000.0) for a in range(6) for z in (700.0, 900.0, 1100.0, 1300.0, 1500.0)])
-    jq = camera_px(view, jp, W, H)
-    jamb = float(np.median(map_coordinates(Y, [jq[:, 1], jq[:, 0]], order=1)))
-    ratio = nets / jamb
-    rep.add("GA-T2-nets-lit", ratio >= 0.75, {"nets_median": round(nets, 1), "jamb_white_median": round(jamb, 1), "ratio": round(ratio, 3)}, ">= 0.75 of the jamb's white",
-            "T2's four lights, on the street picture, read at least 75 per cent of the right jamb's white (D3's nets are pale beside its white stiles) [measured on %s]" % os.path.basename(picture), group="GA", kind="T2")
+    z0, z1 = fs["transom_z"]
+    xa, xb = fs["stop_edges_x"]
+    tp = np.array([((xa + 60.0 + (xb - xa - 120.0) * a / 11.0 - px) / 1000.0, fs["frame_front_y"] / 1000.0, (z0 + (z1 - z0) * f - pz) / 1000.0) for a in range(12) for f in (0.3, 0.5, 0.7)])
+    tq = camera_px(view, tp, W, H)
+    bar = float(np.median(map_coordinates(Y, [tq[:, 1], tq[:, 0]], order=1)))
+    ratio = nets / bar
+    rep.add("GA-T2-nets-lit", lo_ <= ratio <= hi_, {"nets_median": round(nets, 1), "transom_bar_median": round(bar, 1), "ratio": round(ratio, 3)}, want,
+            "T2's four lights, on the street picture, read 0.80 to 0.90 of the transom bar's front face: pale like D3's nets, and a little darker than the white frame [measured on %s]" % os.path.basename(picture), group="GA", kind="T2")
+
+
+# ------------------------------------------------------------------ new in try 3: the second fresh reviews of 14 October (street and close)
+def row_try3_FU(N, kind, mod_house, rep):
+    """The close review's points 1, 2 and 6 as rows, on the built parts of a house: the grip's clear gap (FU-*-grip_gap), the thumb lever's reach (FU-F7-thumb), the scraper's scrolls (FU-T1-scraper-facets)."""
+    LY0 = mod_house.LY0
+    for c in N["checks"]:
+        if c["group"] != "FU" or c["kind"] != kind or c.get("type") not in ("grip_gap", "thumb_reach", "scraper_facets"):
+            continue
+        t, rid, ex = c["type"], c["id"], c["expect"]
+        M = mod_house.M
+        if t in ("grip_gap", "thumb_reach"):
+            grip = "fit:handle:iron_pull_bar" if c["variant"] == "HD3" else "fit:handle:iron_latch_bow"
+            plate = "fit:handle:iron_latch_plate"
+            if grip not in M:
+                rep.add(rid, False, "no %s placed" % grip, ex, c["what"], group="FU", kind=kind)
+                continue
+            G = M[grip][0] * 1000.0
+            face = float((M[plate][0] * 1000.0)[:, 1].min()) if c["variant"] == "HD4" else LY0              # the leaf's face (HD3) or the plate's front face (HD4)
+            if t == "grip_gap":
+                gap = face - float(G[:, 1].max())
+                rep.add(rid, gap >= ex["min_gap"] - 1e-6 and abs(gap - ex["gap"]) <= c["tol"], {"gap_mm": round(gap, 2)}, ex, c["what"], group="FU", kind=kind)
+            else:
+                th = "fit:handle:iron_latch_thumb"
+                if th not in M:
+                    rep.add(rid, False, "no thumb lever", ex, c["what"], group="FU", kind=kind)
+                    continue
+                T_ = M[th][0] * 1000.0
+                P_ = M[plate][0] * 1000.0
+                out_ = face - float(T_[:, 1].min())
+                slot_z = 0.5 * (float(P_[:, 2].min()) + float(P_[:, 2].max())) + N["furniture"]["handle"]["HD4"]["slot_z"]
+                rise = float(T_[:, 2].max()) - slot_z
+                over = T_[(T_[:, 1] >= G[:, 1].min()) & (T_[:, 1] <= G[:, 1].max())]
+                clear = float(over[:, 2].min() - G[:, 2].max()) if len(over) else 99.0
+                rep.add(rid, out_ >= ex["out_min"] and rise <= ex["rise_max"] and clear >= ex["clear_over_bow_min"],
+                        {"out_mm": round(out_, 1), "rise_above_slot_mm": round(rise, 1), "clear_over_bow_mm": round(clear, 1)}, ex, c["what"], group="FU", kind=kind)
+        else:
+            names = [n for n in M if n.startswith("fit:scraper:iron_scraper_standard_r")]
+            if not names:
+                rep.add(rid, False, "no standard placed", ex, c["what"], group="FU", kind=kind)
+                continue
+            V, F = M[names[0]]
+            y_mid = float(V[:, 1].min() + V[:, 1].max()) * 500.0
+            reg = mod_house.region(names[0].replace("fit:scraper:", "fit:scraper:"), 1, y_mid, (0, 2))
+            polys = [reg] if reg.geom_type == "Polygon" else [g for g in reg.geoms if g.geom_type == "Polygon"]
+            ring = max(polys, key=lambda g: g.area).exterior.coords
+            segs = [math.hypot(b_[0] - a_[0], b_[1] - a_[1]) for a_, b_ in zip(list(ring)[:-1], list(ring)[1:])]
+            n_long = sum(1 for d_ in segs if d_ > ex["max_facet_mm"])
+            tp_ = N["furniture"]["scraper"]["BS1"]["standard_profile_xz"]
+            n_target = sum(1 for a_, b_ in zip(tp_, tp_[1:] + tp_[:1]) if math.hypot(b_[0] - a_[0], b_[1] - a_[1]) > ex["max_facet_mm"])
+            rep.add(rid, n_long == n_target, {"segments_over_5mm_built": n_long, "straight_sides_in_the_target": n_target, "longest_mm": round(max(segs), 1)}, ex, c["what"] + " (the long segments are the bar's and the lip's straight sides, as many as the target's own list has)", group="FU", kind=kind)
+
+
+def depth_along(reg, line_pts, LY0):
+    """Depth below the face (mm) of the front surface of a section region (coordinates c, y) at each coordinate c in line_pts: the least y of the region on the vertical line there."""
+    out = []
+    for c in line_pts:
+        seg = reg.intersection(LineString([(c, LY0 - 30.0), (c, LY0 + 80.0)]))
+        ys = [p[1] for g in ([seg] if hasattr(seg, "coords") else list(getattr(seg, "geoms", []))) for p in g.coords] if not seg.is_empty else []
+        out.append(min(ys) - LY0 if ys else None)
+    return out
+
+
+def row_quirk(N, mod, rep):
+    """PL-T3-quirk (street review of 14 Oct, point 1): in six sections the surface just outside each outline is a groove 3 below the surface it cuts, 5 wide, and beyond it the surface is back at its level."""
+    c = [x for x in N["checks"] if x["id"] == "PL-T3-quirk"][0]
+    q = N["kinds"]["T3"]["mouldings"]["outside"]["quirk"]
+    ex = c["expect"]
+    ops = {o["id"]: o for o in N["kinds"]["T3"]["leaf"]["openings"]}
+    lo, up = ops["lower_panel"], ops["upper_panel"]
+    gap, gw, gd = q["gap_to_outline"], ex["width"], ex["depth"]
+    LY0 = mod.LY0
+    # (label, axis of the section plane, its position, the section axes, the coordinate of the outline across the groove, the direction away from the outline, the surface the groove cuts)
+    zl = mod.Z0 + 0.5 * (lo["v0"] + lo["v1"])
+    xm = mod.X0 + 0.5 * (lo["u0"] + lo["u1"])
+    probes = [("lower_outer_left", 2, zl, (0, 1), mod.X0 + lo["u0"], -1.0, 0.0), ("lower_inner_left", 2, zl, (0, 1), mod.X0 + lo["inner"]["u0"], -1.0, 6.0),
+              ("lower_outer_foot", 0, xm, (2, 1), mod.Z0 + lo["v0"], -1.0, 0.0), ("lower_inner_foot", 0, xm, (2, 1), mod.Z0 + lo["inner"]["v0"], -1.0, 6.0),
+              ("upper_outer_head", 0, mod.X0 + 0.5 * (up["u0"] + up["u1"]), (2, 1), mod.Z0 + up["v1"], +1.0, 0.0),
+              ("upper_inner_crown", 0, mod.X0 + 0.5 * (up["inner"]["u0"] + up["inner"]["u1"]), (2, 1), mod.Z0 + up["inner"]["v1"], +1.0, 6.0)]
+    res, ok = {}, True
+    for label, axis, pos, axes, edge, sgn, level in probes:
+        reg = mod.region("leaf_frame", axis, pos, axes)
+        if reg.is_empty:
+            res[label] = "no section"
+            ok = False
+            continue
+        xs = [edge + sgn * (gap + k * 0.05) for k in range(-40, int((gw + 8.0) / 0.05))]
+        d = depth_along(reg, xs, LY0)
+        inside = [x_ for x_, d_ in zip(xs, d) if d_ is not None and abs(d_ - (level + gd)) <= 0.3]
+        width = (max(inside) - min(inside)) if inside else 0.0
+        beyond = depth_along(reg, [edge + sgn * (gap + gw + 3.0)], LY0)[0]
+        mid = depth_along(reg, [edge + sgn * (gap + gw / 2.0)], LY0)[0]
+        good = mid is not None and abs(mid - (level + gd)) <= c["tol"] and abs(width - gw) <= c["tol"] and beyond is not None and abs(beyond - level) <= 0.3
+        res[label] = {"floor_depth": None if mid is None else round(mid, 2), "width": round(width, 2), "surface_beyond": None if beyond is None else round(beyond, 2)}
+        ok &= bool(good)
+    rep.add("PL-T3-quirk", ok and len(res) == ex["sections"], res, "groove %.1f wide and %.1f deep below the surface it cuts (face 0, margin 6), in %d sections" % (gw, gd, ex["sections"]),
+            c["what"], group="PL", kind="T3")
+
+
+def srgb_of_linear(c):
+    return 255.0 * (12.92 * c if c <= 0.0031308 else 1.055 * (c ** (1.0 / 2.4)) - 0.055)
+
+
+def row_chrome(N, rep, glb_dirs=None, want=None):
+    """MAT-chrome_nickel (close review 4): the material chrome_nickel has the target's colour in every furniture file that uses it and in door_F6.glb (the spyhole ring)."""
+    c = [x for x in N["checks"] if x["id"] == "MAT-chrome_nickel"][0]
+    want = want or c["expect"]["srgb"]
+    files = [os.path.join(ASSET, "furniture", "%s.glb" % v) for v in ("LP2", "LP4", "HD2a", "HD2b", "HD2c", "LK1", "LK2")] + [os.path.join(ASSET, "door_F6.glb")]
+    got, ok = {}, True
+    for f in files:
+        _, js = cd.read_glb(f)
+        mats = [m for m in js.get("materials", []) if m.get("name", "").startswith("chrome_nickel")]
+        if not mats:
+            got[os.path.basename(f)] = "no chrome_nickel"
+            ok = False
+            continue
+        bc = mats[0]["pbrMetallicRoughness"]["baseColorFactor"][:3]
+        srgb = [round(srgb_of_linear(x), 1) for x in bc]
+        got[os.path.basename(f)] = srgb
+        ok &= all(abs(a - b) <= c["tol"] for a, b in zip(srgb, want))
+    rep.add("MAT-chrome_nickel", ok, got, want, c["what"], group="MAT", kind="all")
+
+
+def row_makers_frozen(N, rep, texts=None):
+    """TG-makers-frozen (street review 3, close review 7): the first-draft makers refuse to run without --first-draft (so cannot put the old numbers back into target.json). With `texts` (a control)
+    only their text is read; otherwise make_target.py is also run, and target.json must come out byte for byte as it was."""
+    import hashlib
+    import subprocess
+    c = [x for x in N["checks"] if x["id"] == "TG-makers-frozen"][0]
+    files = c["expect"]["files"]
+    txt = texts or {f: open(os.path.join(TARGET_DIR, f), encoding="utf-8").read() for f in files}
+    guard = all(c["expect"]["guard"] in txt.get(f, "") and "--first-draft" in txt.get(f, "") for f in files)
+    got = {"guard_in_text": guard}
+    ok = guard
+    if texts is None and guard:
+        tj = os.path.join(TARGET_DIR, "target.json")
+        h0 = hashlib.sha256(open(tj, "rb").read()).hexdigest()
+        r = subprocess.run([sys.executable, "-I", os.path.join(TARGET_DIR, "make_target.py")], capture_output=True, text=True, cwd=TARGET_DIR)
+        h1 = hashlib.sha256(open(tj, "rb").read()).hexdigest()
+        got.update({"exit_code": r.returncode, "says_frozen": "frozen" in r.stderr + r.stdout, "target_json_unchanged": h0 == h1})
+        ok = r.returncode != 0 and "frozen" in r.stderr + r.stdout and h0 == h1
+    rep.add("TG-makers-frozen", ok, got, c["expect"], c["what"], group="TG", kind="all")
 
 
 def lab_of_srgb(rgb):
@@ -1711,7 +1858,7 @@ def run(args):
     rep.adapt += [
         "Frame sets T and F only (the target's FIXES-APPLIED.md: the planted-stop frame FF6 and its frame_change are gone; F6 stands in frame F, an inward-opening 838 leaf).",
         "A1: the drawing's frame, transom glass and visible leaf are compared as what shows from the street (the nearest part wins), because a pane is let 6 mm into its frame's slot and a leaf laps 20.4 behind its stops; the glazing bead counts as glass (it stands on the pane inside the opening).",
-        "A3 mouldings: the drawing's ring (target_drawing.py, which is not this unit's file and is not changed) starts at the opening's edge and runs 46 (T1) or 43 (F1, F2) inward; the 3.1 build's bolection stands 4.8 outside the opening's edge (its lap over the framing) and so reaches 41.2 or 38.2 in. Since the try 1 reviews the target states that lap (kinds.*.mouldings.outside.lap_over_framing_mm 4.8) and the row compares with the ring grown by it; the literal ring stays an extra, failing only for that reason (the drawing script is owed the same change).",
+        "A3 mouldings: the 3.1 build's bolection stands 4.8 outside the opening's edge (its lap over the framing) and so reaches 41.2 or 38.2 in from it (T1 46, F1 and F2 43 wide). The target states that lap (kinds.*.mouldings.outside.lap_over_framing_mm 4.8) and, since the try 2 reviews (14 Oct, try 3), target_drawing.py draws the ring with it: the required row compares with the ring grown by it, and the literal extra with the drawing's own ring, and both pass.",
         "T3 (changed 13 Oct, from the try 1 reviews): the target's profile is two steps 6 mm deep over 6 mm across (the margin 6 below the face, the field 12), the second cove at d 62.5 to 68.5, built to it; the first target's coves (3 deep over 14, the second at d 76 to 90) dipped 1 to 3 per cent in the street view against D4's 14 to 40.",
         "PL-T3-members (changed 13 Oct): the target's border is now 62.5, the flat margin between the outer and the inner outline at the sides.",
         "F7 (changed 13 Oct): the target's leaf is now 47 thick (boards 22, ledges 25, braces 25); the first build had thin 16 mm ledges (the leaf 38).",
@@ -1743,6 +1890,9 @@ def run(args):
         row_PL(N, mod, rep, holes, inner)
         row_CV(N, mod, rep)
         row_FU(N, k, houses_mods[k], rep)
+        row_try3_FU(N, k, houses_mods[k], rep)
+        if k == "T3":
+            row_quirk(N, mod, rep)
         row_DIM(N, mod, rep)
         row_GLB(N, mod, rep, os.path.join(ASSET, "door_%s.glb" % k))
         meshes_k, _ = cd.read_glb(os.path.join(ASSET, "door_%s.glb" % k))
@@ -1783,6 +1933,8 @@ def run(args):
         row_t3_street_dip(N, rep, os.path.join(args.renders, "T3-street-v%d-%s.jpg" % (ver, date)))
         row_t2_nets_lit(N, rep, os.path.join(args.renders, "T2-street-v%d-%s.jpg" % (ver, date)))
         load_furniture_checks(rep, N, furn_cache)
+        row_chrome(N, rep)
+        row_makers_frozen(N, rep)
         # the notch of a neglected door, and the kept copies: built to prove the condition parameter
         notch_rows(N, rep)
     out = {"model": "production/assets/cloud-week/front-doors-all/", "target": "production/cloud-week/targets/front-doors-all/target.json", "pass_rule": PASS, "adaptations": rep.adapt, "rows": rep.rows,

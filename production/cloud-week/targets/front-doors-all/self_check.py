@@ -12,6 +12,7 @@ Prints a result line naming the options and both counts; exits 1 on any failure 
 import argparse
 import copy
 import json
+import math
 import os
 import re
 import sys
@@ -398,9 +399,9 @@ def check_street(T, R, live):
         lk, hd = f6[0]["furniture"]["latch"], f6[0]["furniture"]["handle"]
         ok = lk["variant"] == "LK3" and lk["place"] and hd["place"] and lk["place"]["v"] < hd["place"]["v"] and abs(lk["place"]["u"] - hd["place"]["u"]) < 120.0
     R.add("street", "F6 has the small dark lock under its lever (D5: LK3, lower than the lever HD2a and within 120 mm of it across)", ok, "")
-    kh = [h for h in hs if h["kind"] in ("F1", "F2")]
-    R.add("street", "every F1 and F2 door keeps 3.1's plugged keyhole with a place, and no other kind has one", all(h["furniture"]["keyhole"]["variant"] == "KH1" and h["furniture"]["keyhole"]["place"] for h in kh)
-          and all(h["furniture"]["keyhole"]["variant"] == "KH0" for h in hs if h["kind"] not in ("F1", "F2")), str(len(kh)))
+    kh = [h for h in hs if h["kind"] in ("F1", "F2", "T2", "F3")]
+    R.add("street", "every F1 and F2 door keeps 3.1's plugged keyhole with a place, T2 and F3 carry one below the bar pull (13 Oct, from the try 1 reviews), and no other kind has one", all(h["furniture"]["keyhole"]["variant"] == "KH1" and h["furniture"]["keyhole"]["place"] for h in kh)
+          and all(h["furniture"]["keyhole"]["variant"] == "KH0" for h in hs if h["kind"] not in ("F1", "F2", "T2", "F3")), str(len(kh)))
     t2 = [h for h in hs if h["kind"] == "T2"]
     lf = T["kinds"]["T2"]["leaf"]
     nm = t2[0]["furniture"]["number"] if t2 else None
@@ -580,15 +581,37 @@ def check_geometry(T, R):
     pts = bs["standard_profile_xz"]
     zmax = max(p[1] for p in pts)
     R.add("geom", "BS1: the standard's profile is a point list (%d points) of a bar 25 wide with a scroll of radius 35 reaching %.0f high; the blade has an underside notch" % (len(pts), zmax),
-          len(pts) >= 12 and close(pts[1][0] - pts[0][0], 25.0, 0.1) and close(zmax, bs["size"][2], 1.5) and close(max(p[0] for p in pts) - min(p[0] for p in pts), 62.0, 3.0) and bs["blade_underside_notch"]["depth"] < bs["blade"][1], "")
+          len(pts) >= 12 and close(abs(pts[1][0] - pts[0][0]), 25.0, 0.1) and close(zmax, bs["size"][2], 1.5) and close(max(p[0] for p in pts) - min(p[0] for p in pts), 62.0, 3.0) and bs["blade_underside_notch"]["depth"] < bs["blade"][1], "")
+    # 14 Oct (doors try 3, close review 6): the scrolls have a point every 7.5 degrees: no facet of either spiral is longer than 5 mm (the bar's and the lip's straight sides are not facets)
+    scroll = pts[3:-1]
+    facets = [math.hypot(b_[0] - a_[0], b_[1] - a_[1]) for a_, b_ in zip(scroll[:-1], scroll[1:]) if not (a_[0] == 35.0 and b_[0] == 35.0)]
+    R.add("geom", "BS1: no facet of the scroll is longer than %.1f mm (longest %.2f)" % (bs["scroll"]["max_facet_mm"], max(facets)), max(facets) <= bs["scroll"]["max_facet_mm"], "")
     # sections
     S = TD.sections(T)
     ep = T["kinds"]["T3"]["mouldings"]["outside"]["profile_dh"]
     h_at = lambda d: min(h for dd, h in ep if abs(dd - d) < 1e-6)
     R.add("geom", "sections: the stuck ovolo is 20 wide and 6.5 proud", close(S["stuck_ovolo_F3"].bounds[2], 20.0, 0.05) and close(S["stuck_ovolo_F3"].bounds[3], 6.5, 0.05), "")
     R.add("geom", "sections: the reeded glass flutes are 6 mm apart and 1.2 deep", close(T["glass"]["reeded_4mm"]["flute_pitch"], 6.0, 0.01) and close(T["glass"]["reeded_4mm"]["flute_depth"], 1.2, 0.01), "")
-    R.add("geom", "sections: the moulded panel's edge is two coves 14 wide and 3 deep each (the field 6 below the border face) round a flat raised margin of 62", close(max(h for _, h in ep), 6.0, 0.01)
-          and close(h_at(14.0), 3.0, 0.01) and close(h_at(76.0), 3.0, 0.01) and close(h_at(90.0), 6.0, 0.01) and close(S["embossed_step_T3"].bounds[1], -8.0, 0.01), "")
+    R.add("geom", "sections: the moulded panel's edge is two quarter-circle coves 6 mm across and 6 deep (the margin 6 below the face, the field 12) round a flat raised margin 62.5 wide (13 Oct, from the try 1 reviews)",
+          close(max(h for _, h in ep), 12.0, 0.01) and close(h_at(6.0), 6.0, 0.01) and close(h_at(62.5), 6.0, 0.01) and close(h_at(68.5), 12.0, 0.01) and close(S["embossed_step_T3"].bounds[1], -16.0, 0.01), "")
+    # 14 Oct (doors try 3): the quirk, the chrome colour, the grips' clear gap, the thumb lever, the frozen makers
+    qk = T["kinds"]["T3"]["mouldings"]["outside"].get("quirk") or {}
+    R.add("geom", "T3: a quirk groove 5 wide and 3 deep, its inner edge 0.1 off each outline, so a sliver of the arris stays (street review, 14 Oct)",
+          close(qk.get("width", 0), 5.0, 0.01) and close(qk.get("depth", 0), 3.0, 0.01) and 0.0 < qk.get("gap_to_outline", -1) <= 0.2, str(qk.get("gap_to_outline")))
+    chrome = {tuple(T["furniture"][sl][v]["srgb"]) for sl, v in (("letter_plate", "LP2"), ("letter_plate", "LP4"), ("handle", "HD2a"), ("handle", "HD2b"), ("handle", "HD2c"), ("latch", "LK1"), ("latch", "LK2"))}
+    R.add("geom", "chrome_nickel is one colour (196, 197, 196) in the seven fittings that use it (close review 4)", chrome == {(196, 197, 196)} and T["chrome_nickel"]["srgb"] == [196, 197, 196], str(sorted(chrome)))
+    hd3, hd4 = T["furniture"]["handle"]["HD3"], T["furniture"]["handle"]["HD4"]
+    R.add("geom", "the grips stand 30 clear (axis 39.5 off the face or plate, a grip 19 across): HD3 and HD4 (close review 2); HD3 stands 49 proud",
+          close(hd3["stand_off"] - hd3["grip_dia"] / 2.0, hd3["clear_gap_behind_grip"], 0.01) and close(hd4["stand_off"] - hd4["grip_dia"] / 2.0, hd4["clear_gap_behind_grip"], 0.01)
+          and close(hd3["clear_gap_behind_grip"], 30.0, 0.01) and close(hd4["clear_gap_behind_grip"], 30.0, 0.01) and close(hd3["proud"], hd3["stand_off"] + hd3["grip_dia"] / 2.0, 0.01), "")
+    th = hd4["thumb"]
+    out_ = th["length"] * math.cos(math.radians(th["rise_deg"]))
+    rise_ = th["length"] * math.sin(math.radians(th["rise_deg"]))
+    R.add("geom", "HD4's thumb lever leaves the plate pointing out and up: 75 degrees to the face (15 above the horizontal), 45 long, so about %.0f out and %.0f up, with a pad 20 across (close review 1)" % (out_, rise_),
+          close(th["rise_deg"], 15.0, 0.01) and close(th["leaves_the_face_at_deg"], 90.0 - th["rise_deg"], 0.01) and out_ >= 40.0 and rise_ <= 15.0 and close(th["pad_dia"], 20.0, 0.01), "")
+    mk = T.get("_makers_text") or {f_: open(os.path.join(HERE, f_), encoding="utf-8").read() for f_ in ("make_target.py", "make_doc.py")}      # a control passes its own texts in
+    guard_ok = all("is frozen" in mk[f_] and "--first-draft" in mk[f_] for f_ in ("make_target.py", "make_doc.py"))
+    R.add("checks", "make_target.py and make_doc.py are frozen (they refuse without --first-draft): target.json is the one home (street review 3, close review 7)", guard_ok, "")
 
 
 # ------------------------------------------------------------------------------------------------ 5. the checks list, evaluated
@@ -1019,6 +1042,15 @@ def controls(T, photo_dir, live, previews):
     mut("a photograph record with nothing to compare (PH-F6-D5 expect null)", lambda x: [c.update({"expect": None}) for c in x["checks"] if c["id"] == "PH-F6-D5"], row="PH-F6-D5")
     mut("owed line 2 without Railway Street's mustard frames", lambda x: x["owed_for_jafar"].__setitem__(1, "Door surrounds: all white as you ruled for windows on 3 October (recommended), or the painted surrounds the 1980s Hull streets show, as on the windows line?"), row="owed line 2 names")
     mut("the boot scraper's standard without its profile", lambda x: x["furniture"]["scraper"]["BS1"].update({"standard_profile_xz": [[0.0, 0.0], [25.0, 0.0], [25.0, 100.0]]}), row="BS1: the standard's profile")
+    # ---- controls for the try 3 rows (14 Oct): each wrong copy must make its own row fail
+    mut("T3: no quirk (a groove 0 wide)", lambda x: x["kinds"]["T3"]["mouldings"]["outside"]["quirk"].update({"width": 0.0}), row="T3: a quirk groove")
+    mut("T3: the quirk's inner edge 1 mm off the outline", lambda x: x["kinds"]["T3"]["mouldings"]["outside"]["quirk"].update({"gap_to_outline": 1.0}), row="T3: a quirk groove")
+    mut("chrome_nickel back at (170, 170, 168) in one fitting", lambda x: x["furniture"]["letter_plate"]["LP2"].update({"srgb": [170, 170, 168]}), row="chrome_nickel is one colour")
+    mut("HD3's stand-off back at 30 (20.5 clear behind the grip)", lambda x: x["furniture"]["handle"]["HD3"].update({"stand_off": 30.0}), row="the grips stand 30 clear")
+    mut("HD4's clear gap recorded as 20", lambda x: x["furniture"]["handle"]["HD4"].update({"clear_gap_behind_grip": 20.0}), row="the grips stand 30 clear")
+    mut("HD4's thumb lever upright (75 degrees above the horizontal)", lambda x: x["furniture"]["handle"]["HD4"]["thumb"].update({"rise_deg": 75.0, "leaves_the_face_at_deg": 15.0}), row="HD4's thumb lever leaves the plate")
+    mut("BS1's scroll back to a point every 30 degrees", lambda x: x["furniture"]["scraper"]["BS1"].update({"standard_profile_xz": [[25.0, 0.0], [0.0, 0.0], [0.0, 154.0], [0.0, 169.0], [5.8, 185.8], [18.8, 197.0], [35.0, 200.0], [49.8, 194.7], [59.5, 183.2], [62.0, 169.0], [57.2, 156.2], [47.2, 147.9], [35.0, 146.0], [35.0, 158.0], [41.2, 158.3], [46.8, 162.2], [50.0, 169.0], [49.1, 177.2], [43.8, 184.3], [35.0, 188.0], [24.8, 186.6], [16.2, 179.8], [12.0, 169.0], [25.0, 154.0]]}), row="no facet of the scroll")
+    mut("the makers without their guard", lambda x: x.update({"_makers_text": {"make_target.py": "def main(): pass\nif __name__ == '__main__': main()", "make_doc.py": "def main(): pass"}}), row="make_target.py and make_doc.py are frozen")
     return sum(1 for c in out if c["caught"]), out
 
 

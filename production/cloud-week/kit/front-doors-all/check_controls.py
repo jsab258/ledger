@@ -537,5 +537,108 @@ def run_controls(N, H, mods, houses_mods, furn_cache, C):
     ctl("odd and even mixed on the west side", "AD-numbers", lambda: extra(None, {"NM1:T1": "17", "NM1:F2": "14", "NM6:T2": "22", "NM3:F3": "29"}))
     ctl("the west numbers falling from the quay", "AD-numbers", lambda: extra(None, {"NM1:T1": "29", "NM1:F2": "14", "NM6:T2": "21", "NM3:F3": "17"}))
 
+    # ---- try 3 (14 Oct): the rows the second fresh reviews asked for, each with a wrong copy that must fail it
+    def t3_house(kind):
+        rec = copy.deepcopy([h for h in H["houses"] if h["kind"] == kind][0])
+        return C.assemble(N, mods[kind], rec, furn_cache)
+
+    def grip_close():
+        m = t3_house("T2")
+        V, F = m.M["fit:handle:iron_pull_bar"]
+        m.M["fit:handle:iron_pull_bar"] = (V + np.array([0.0, 0.0095, 0.0]), F)         # the grip 9.5 mm nearer the face: 20.5 clear, the first build's stand-off
+        rep = new()
+        C.row_try3_FU(N, "T2", m, rep)
+        return rep
+    ctl("T2: the bar pull's grip 9.5 mm nearer the face (20.5 clear, the first build)", "FU-T2-grip_gap", grip_close)
+
+    def bow_close():
+        m = t3_house("F7")
+        V, F = m.M["fit:handle:iron_latch_bow"]
+        m.M["fit:handle:iron_latch_bow"] = (V + np.array([0.0, 0.0095, 0.0]), F)
+        rep = new()
+        C.row_try3_FU(N, "F7", m, rep)
+        return rep
+    ctl("F7: the thumb latch's bow 9.5 mm nearer the plate", "FU-F7-grip_gap", bow_close)
+
+    def thumb_flat():
+        m = t3_house("F7")
+        py = float(m.M["fit:handle:iron_latch_plate"][0][:, 1].min())
+        V, F = m.M["fit:handle:iron_latch_thumb"]
+        V2 = V.copy()
+        V2[:, 1] = py - 0.005 + (V[:, 1] - V[:, 1].mean()) * 0.1                        # an upright lever: 5 mm out from the plate (the first build's reached 13.7)
+        m.M["fit:handle:iron_latch_thumb"] = (V2, F)
+        rep = new()
+        C.row_try3_FU(N, "F7", m, rep)
+        return rep
+    ctl("F7: an upright thumb lever (5 mm out from the plate)", "FU-F7-thumb", thumb_flat)
+
+    def thumb_high():
+        m = t3_house("F7")
+        V, F = m.M["fit:handle:iron_latch_thumb"]
+        m.M["fit:handle:iron_latch_thumb"] = (V + np.array([0.0, 0.0, 0.020]), F)       # the lever 20 mm higher: it rises over 15 above its slot and lands on the bow
+        rep = new()
+        C.row_try3_FU(N, "F7", m, rep)
+        return rep
+    ctl("F7: the thumb lever 20 mm higher (rises more than 15 above its slot)", "FU-F7-thumb", thumb_high)
+
+    def scraper_old():
+        Nx = copy.deepcopy(N)
+        Nx["furniture"]["scraper"]["BS1"]["standard_profile_xz"] = [[25.0, 0.0], [0.0, 0.0], [0.0, 154.0], [0.0, 169.0], [5.8, 185.8], [18.8, 197.0], [35.0, 200.0], [49.8, 194.7], [59.5, 183.2], [62.0, 169.0],
+                                                                    [57.2, 156.2], [47.2, 147.9], [35.0, 146.0], [35.0, 158.0], [41.2, 158.3], [46.8, 162.2], [50.0, 169.0], [49.1, 177.2], [43.8, 184.3], [35.0, 188.0],
+                                                                    [24.8, 186.6], [16.2, 179.8], [12.0, 169.0], [25.0, 154.0]]
+        m = t3_house("T1")
+        rep = new()
+        C.row_try3_FU(Nx, "T1", m, rep)
+        return rep
+    ctl("T1: the scraper's scroll as the first target had it (a point every 30 degrees, 16 mm facets), 7.5 degrees built", "FU-T1-scraper-facets", scraper_old)
+
+    def quirk_wide():
+        Nx = copy.deepcopy(N)
+        [c.update({"expect": dict(c["expect"], width=8.0)}) for c in Nx["checks"] if c["id"] == "PL-T3-quirk"]
+        rep = new()
+        C.row_quirk(Nx, mods["T3"], rep)
+        return rep
+    ctl("T3: a quirk 8 wide expected, 5 built", "PL-T3-quirk", quirk_wide)
+
+    def quirk_deep():
+        Nx = copy.deepcopy(N)
+        [c.update({"expect": dict(c["expect"], depth=5.0)}) for c in Nx["checks"] if c["id"] == "PL-T3-quirk"]
+        rep = new()
+        C.row_quirk(Nx, mods["T3"], rep)
+        return rep
+    ctl("T3: a quirk 5 deep expected, 3 built", "PL-T3-quirk", quirk_deep)
+
+    def quirk_none():
+        Nx = copy.deepcopy(N)
+        Nx["kinds"]["T3"]["mouldings"]["outside"]["quirk"]["gap_to_outline"] = 4.0     # the probes read 4 mm further out: off the groove
+        rep = new()
+        C.row_quirk(Nx, mods["T3"], rep)
+        return rep
+    ctl("T3: the quirk expected 4 mm off the outline", "PL-T3-quirk", quirk_none)
+
+    def chrome_old():
+        rep = new()
+        C.row_chrome(N, rep, want=[170, 170, 168])
+        return rep
+    ctl("chrome_nickel expected at (170, 170, 168), (196, 197, 196) built", "MAT-chrome_nickel", chrome_old)
+
+    def no_guard():
+        rep = new()
+        C.row_makers_frozen(N, rep, texts={"make_target.py": "def main(): pass\nif __name__ == '__main__': main()\n", "make_doc.py": "def main(): pass\n"})
+        return rep
+    ctl("the target's makers without their guard", "TG-makers-frozen", no_guard)
+
+    def dip_v2():
+        rep = new()
+        C.row_t3_street_dip(N, rep, os.path.join(v1, "T3-street-v2-2026-10-13.jpg"))
+        return rep
+    ctl("T3: the second build's street picture (left-hand outlines 1 to 2 per cent)", "PL-T3-street-dip", dip_v2)
+
+    def nets_v2():
+        rep = new()
+        C.row_t2_nets_lit(N, rep, os.path.join(v1, "T2-street-v2-2026-10-13.jpg"))
+        return rep
+    ctl("T2: the second build's street picture (the nets read 0.95 to 1.0 of the transom bar)", "GA-T2-nets-lit", nets_v2)
+
     caught = sum(1 for r in rows if r["caught"])
     return {"run": len(rows), "caught": caught, "rows": rows}

@@ -295,10 +295,15 @@ def build(T):
 def main():
     T = load_json(TARGET_JSON)
     txt = build(T)
-    with open(os.path.join(HERE, "TARGET.md"), "w") as f:
+    with open(os.path.join(HERE, "TARGET.first-draft.md"), "w") as f:       # never TARGET.md (see the guard below)
         f.write(txt)
     print("wrote TARGET.md", len(txt))
 
 
 if __name__ == "__main__":
+    # 14 Oct 2026 (doors try 3): FROZEN. target.json is the one home of this target's numbers since the review fixes of 13 October were made in it directly (and by
+    # kit/front-doors-all/target_changes_try2.py and target_changes_try3.py); this maker still holds the FIRST draft, so running it would put the old numbers back
+    # (a regenerated file differs from target.json in over 1,600 places). It refuses unless --first-draft is given; with it the output is written to target.first-draft.json.
+    if "--first-draft" not in sys.argv:
+        sys.exit("%s is frozen: target.json is the home of this target since the 13 October review fixes; pass --first-draft to write the first draft to target.first-draft.json (TARGET.first-draft.md for make_doc.py)" % os.path.basename(__file__))
     main()

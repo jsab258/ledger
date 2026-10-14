@@ -2,7 +2,7 @@
  "family": "front-doors-all",
  "title": "Front doors for every house kind (cloud week 42, unit 9)",
  "summary": "Front doors for every house kind of Quay Street: from the passed 3.1 door (T1 cottage four-panel, F1 flat four-panel, its bell push fixed to one plain dark oblong), 10 door kinds (cottage T1 T2 T3, flat F1 to F7) fitted to the street's 12 household doors by house, 8 furniture slots with 28 variants (letter plates, handles, rim night latches, plugged keyholes, knockers, bells, numbers, a boot scraper), 15 paints and 3 conditions, a street order in which no two neighbours match, and a gate of 7 views a kind plus the street rows.",
- "status": "built; the try 1 reviews' corrections applied 13 Oct 2026 (see changes_after_the_build); try 2 awaiting its second fresh review",
+ "status": "built; the try 1 reviews' corrections (13 Oct) and the try 2 reviews' narrow points (14 Oct) applied (see changes_after_the_build); fixes applied, not re-reviewed (Jafar, 11 October)",
  "units": "mm; leaf frame u across from the leaf's left edge seen from outside, v up from its bottom; frame frame x across the opening from the left reveal, z up from the threshold top (the 3.1 axes)",
  "axes": {
   "leaf": "u, v as above (structural leaf, including the 20.4 that laps behind each stop and the head)",
@@ -667,7 +667,14 @@
        12.0
       ]
      ],
-     "note": "each moulded panel has TWO outlines (D4): an outer and an inner outline, a margin of about 62.5 between them at the sides (the border); the margin is a flat raised border with a quirked (quarter-circle) cove at each line, each step 6 mm deep over 6 mm across, a quarter-circle cove whose top meets the face at a vertical tangent (steeper than 45 degrees: 13 Oct, from the try 1 reviews; the first numbers, two coves 3 mm deep over 14, dipped 1 to 3 per cent in the street view against D4's 14 to 40): 6 mm down at the outer line to the margin, 6 mm more at the inner line to the field, which is 12 below the border face; the outlines and the 44 mm leaf are as they were; the upper panel's inner outline has a segmental head (crown v 1646, springing 22 lower) under a flat outer top; no applied mouldings"
+     "note": "each moulded panel has TWO outlines (D4): an outer and an inner outline, a margin of about 62.5 between them at the sides (the border); the margin is a flat raised border with a quirked (quarter-circle) cove at each line, each step 6 mm deep over 6 mm across, a quarter-circle cove whose top meets the face at a vertical tangent (steeper than 45 degrees: 13 Oct, from the try 1 reviews; the first numbers, two coves 3 mm deep over 14, dipped 1 to 3 per cent in the street view against D4's 14 to 40): 6 mm down at the outer line to the margin, 6 mm more at the inner line to the field, which is 12 below the border face; the outlines and the 44 mm leaf are as they were; the upper panel's inner outline has a segmental head (crown v 1646, springing 22 lower) under a flat outer top; no applied mouldings; 14 Oct, from the try 2 reviews: a quirk, a square-bottomed groove 5 wide and 3 deep outside every outline (see `quirk`), because the left-hand outlines dipped 1 to 2 per cent in the street view",
+     "quirk": {
+      "width": 5.0,
+      "depth": 3.0,
+      "gap_to_outline": 0.1,
+      "where": "outside each of the four outlines (the outer and the inner outline of both panels), cut into the higher surface (the face at the outer outline, the margin 6 below the face at the inner outline), square-bottomed, all the way round and following the upper panel's segmental head; its inner edge 0.1 mm off the outline, so a sliver of the arris stays between it and the cove",
+      "src": "street review of 14 Oct, narrow point 1: tested in the reviewer's own light, 5 x 3 grooves lifted the left-hand outlines from 3.0 and 2.2 per cent to 17.0 and 14.3 and the right-hand ones to 12.9 and 11.3"
+     }
     }
    },
    "glass": {
@@ -1903,9 +1910,9 @@
     "flap": "sprung, two pivot bosses",
     "material": "nickel or chrome-look",
     "srgb": [
-     170,
-     170,
-     168
+     196,
+     197,
+     196
     ],
     "metal": 1.0,
     "roughness": 0.35,
@@ -1915,7 +1922,7 @@
       "v": 1545.0
      }
     },
-    "src": "3.1 option_six_panel (P2: 195 x 70 at 0.788 of the height); 13 Oct, from the try 1 reviews: P2's plate is chrome-coloured, not brass (close review 12(h))"
+    "src": "3.1 option_six_panel (P2: 195 x 70 at 0.788 of the height); 13 Oct, from the try 1 reviews: P2's plate is chrome-coloured, not brass (close review 12(h)); 14 Oct, from the try 2 reviews (close review 4): chrome_nickel is sRGB (196, 197, 196), roughness 0.35 (170, 170, 168 is linear 0.40 against measured chromium's 0.55: the plates read at half P2's brightness)"
    },
    "LP3": {
     "name": "black iron plate, horizontal (reserve, not placed)",
@@ -1951,9 +1958,9 @@
     "flap": "hinged behind, the opening 238 x 58",
     "material": "nickel or chrome-look",
     "srgb": [
-     170,
-     170,
-     168
+     196,
+     197,
+     196
     ],
     "metal": 1.0,
     "roughness": 0.35,
@@ -1963,7 +1970,7 @@
       "v": 921.1
      }
     },
-    "src": "Photo D5 (an indoor landing door: the place only, as fractions of its face): 107 x 30 px at 2.34 mm a pixel = 250 x 70 (the size is Judgement), centre at 0.505 of the face's width and 0.470 of its height"
+    "src": "Photo D5 (an indoor landing door: the place only, as fractions of its face): 107 x 30 px at 2.34 mm a pixel = 250 x 70 (the size is Judgement), centre at 0.505 of the face's width and 0.470 of its height; 14 Oct, from the try 2 reviews (close review 4): chrome_nickel is sRGB (196, 197, 196), roughness 0.35 (170, 170, 168 is linear 0.40 against measured chromium's 0.55: the plates read at half P2's brightness)"
    },
    "LP5": {
     "name": "pale low plate in the bottom rail",
@@ -2124,9 +2131,9 @@
     "rose_proud": 6.0,
     "material": "nickel or chrome-look",
     "srgb": [
-     170,
-     170,
-     168
+     196,
+     197,
+     196
     ],
     "metal": 1.0,
     "roughness": 0.35,
@@ -2136,7 +2143,7 @@
       "v": 909.5
      }
     },
-    "src": "Photo D5 (an indoor landing door: the place only): lever 45 px = 105 at 2.34 mm a pixel, centre at 0.911 of the face's width and 0.457 of its height, on the right stile; 13 Oct, from the try 1 reviews: the bar tapers from 16 at the neck to 12 at the end and its last 25 mm curve back 9 toward the door (close review 5); the round rose is kept (D5 shows it)",
+    "src": "Photo D5 (an indoor landing door: the place only): lever 45 px = 105 at 2.34 mm a pixel, centre at 0.911 of the face's width and 0.457 of its height, on the right stile; 13 Oct, from the try 1 reviews: the bar tapers from 16 at the neck to 12 at the end and its last 25 mm curve back 9 toward the door (close review 5); the round rose is kept (D5 shows it); 14 Oct, from the try 2 reviews (close review 4): chrome_nickel is sRGB (196, 197, 196), roughness 0.35 (170, 170, 168 is linear 0.40 against measured chromium's 0.55: the plates read at half P2's brightness)",
     "lever_taper_mm": [
      16.0,
      12.0
@@ -2158,9 +2165,9 @@
     "rose_proud": 6.0,
     "material": "nickel or chrome-look",
     "srgb": [
-     170,
-     170,
-     168
+     196,
+     197,
+     196
     ],
     "metal": 1.0,
     "roughness": 0.35,
@@ -2174,7 +2181,7 @@
       "v": 1228.0
      }
     },
-    "src": "Photo D2: a small pale handle at the left stile of the middle door, v 1048 (the review's number, 0.535 of the visible height; the leaf's own box gives 1054; +-24); the left door's at about 1228 (+-30); 13 Oct, from the try 1 reviews: a backplate 40 x 170 with a keyhole 57 below the lever's centre (sashlock furniture: the street review's dated 1990 photograph of a lever on a long backplate, point 2) in place of the round rose; the bar tapers 16 to 12 and curves back (close review 5)",
+    "src": "Photo D2: a small pale handle at the left stile of the middle door, v 1048 (the review's number, 0.535 of the visible height; the leaf's own box gives 1054; +-24); the left door's at about 1228 (+-30); 13 Oct, from the try 1 reviews: a backplate 40 x 170 with a keyhole 57 below the lever's centre (sashlock furniture: the street review's dated 1990 photograph of a lever on a long backplate, point 2) in place of the round rose; the bar tapers 16 to 12 and curves back (close review 5); 14 Oct, from the try 2 reviews (close review 4): chrome_nickel is sRGB (196, 197, 196), roughness 0.35 (170, 170, 168 is linear 0.40 against measured chromium's 0.55: the plates read at half P2's brightness)",
     "lever_taper_mm": [
      16.0,
      12.0
@@ -2210,9 +2217,9 @@
     "rose_proud": 5.0,
     "material": "nickel or chrome-look",
     "srgb": [
-     170,
-     170,
-     168
+     196,
+     197,
+     196
     ],
     "metal": 1.0,
     "roughness": 0.35,
@@ -2222,7 +2229,7 @@
       "v": 910.0
      }
     },
-    "src": "Photo D4 right door: a dark mark at columns 577 to 578.5, rows 388 to 396, ON the door (the first box lay on the reveal), v 910 (the review's number; the box gives 921; +-32); lever size Judgement; 13 Oct, from the try 1 reviews: a backplate 40 x 170 with a keyhole 57 below the lever's centre (sashlock furniture: the street review's dated 1990 photograph of a lever on a long backplate, point 2) in place of the round rose; the bar tapers 16 to 12 and curves back (close review 5)",
+    "src": "Photo D4 right door: a dark mark at columns 577 to 578.5, rows 388 to 396, ON the door (the first box lay on the reveal), v 910 (the review's number; the box gives 921; +-32); lever size Judgement; 13 Oct, from the try 1 reviews: a backplate 40 x 170 with a keyhole 57 below the lever's centre (sashlock furniture: the street review's dated 1990 photograph of a lever on a long backplate, point 2) in place of the round rose; the bar tapers 16 to 12 and curves back (close review 5); 14 Oct, from the try 2 reviews (close review 4): chrome_nickel is sRGB (196, 197, 196), roughness 0.35 (170, 170, 168 is linear 0.40 against measured chromium's 0.55: the plates read at half P2's brightness)",
     "lever_taper_mm": [
      16.0,
      12.0
@@ -2248,12 +2255,12 @@
     "place_note": "u, v is the centre of the lever's rose (HD2b, HD2c: of its boss on the backplate): the pivot and the fitting's mount point; the bar points toward the door's middle from there (13 Oct, from the try 1 reviews)"
    },
    "HD3": {
-    "name": "vertical bar pull on the lock stile: a round grip on two posts that flare into roses",
+    "name": "vertical bar pull on the lock stile: a round grip on two posts that flare into roses, 30 clear behind the grip",
     "size": [
      25.0,
      270.0
     ],
-    "proud": 39.5,
+    "proud": 49.0,
     "material": "dark steel",
     "srgb": [
      40,
@@ -2272,10 +2279,11 @@
       "v": 1255.0
      }
     },
-    "src": "Photo D3: a dark vertical handle on the left stile, rows 498.25 to 524.25 of a 191.5 px visible leaf = 262 long (+-30), centred on the visible lock stile (u 57.2: the stile is 94.0 structural, 73.6 visible); D1 left door shows a vertical metal strip on its left stile; 13 Oct, from the try 1 reviews (close review 3): the grip is 19 across with domed ends, 270 long overall; the posts flare into roses 25 across; the stand-off is 30 (face to the grip's axis, so the grip stands 39.5 proud; the first number was 35 for a flat bar)",
+    "src": "Photo D3: a dark vertical handle on the left stile, rows 498.25 to 524.25 of a 191.5 px visible leaf = 262 long (+-30), centred on the visible lock stile (u 57.2: the stile is 94.0 structural, 73.6 visible); D1 left door shows a vertical metal strip on its left stile; 13 Oct, from the try 1 reviews (close review 3): the grip is 19 across with domed ends, 270 long overall; the posts flare into roses 25 across; the stand-off is 30 (face to the grip's axis, so the grip stands 39.5 proud; the first number was 35 for a flat bar); 14 Oct, from the try 2 reviews (close review 2): 'stand-off' means the clear gap behind the grip, 30 (a hand needs 30 to 40): the grip's axis stands 39.5 off the face and the grip 49 proud (the first numbers read it as face to axis, 30, leaving 20.5 clear); the posts are lengthened to match",
     "grip_dia": 19.0,
-    "stand_off": 30.0,
-    "rose_dia": 25.0
+    "stand_off": 39.5,
+    "rose_dia": 25.0,
+    "clear_gap_behind_grip": 30.0
    },
    "HD4": {
     "name": "thumb latch on a ledged door: a plate with cusped ends, a round bow on two posts, a flat thumb lever through a slot in the head",
@@ -2284,8 +2292,8 @@
      190.0
     ],
     "plate_t": 3.0,
-    "bar": "replaced by the bow: a round bar 19 across, 150 long with domed ends, bowed 4, its axis 30 off the plate, on posts 120 apart",
-    "thumb_piece": "a flat lever 14 wide and 45 long that rises through a slot in the plate's head at 15 degrees (13 Oct, from the try 1 reviews; was a 25 x 35 pressed piece)",
+    "bar": "replaced by the bow: a round bar 19 across, 150 long with domed ends, bowed 4, 30 clear behind it (its axis 39.5 off the plate), on posts 120 apart",
+    "thumb_piece": "a flat lever 14 wide and 45 long that leaves the plate through the slot in its head pointing out at the street and rising 15 degrees above the horizontal (75 degrees to the face), its last 20 mm rounded into a pad 20 across; its end is about 43 out and 12 above the slot (14 Oct, from the try 2 reviews; the first build stood it upright, 17 degrees off the face)",
     "material": "dark steel",
     "srgb": [
      40,
@@ -2300,7 +2308,7 @@
       "v": 1000.0
      }
     },
-    "src": "Judgement: the usual iron thumb latch for a ledged door; Hasluck draws only the hinges; 13 Oct, from the try 1 reviews (close review 4): cusped plate ends, a 19 round bow standing 30 off on posts 120 apart, a thumb lever 14 x 45 at 15 degrees",
+    "src": "Judgement: the usual iron thumb latch for a ledged door; Hasluck draws only the hinges; 13 Oct, from the try 1 reviews (close review 4): cusped plate ends, a 19 round bow standing 30 off on posts 120 apart, a thumb lever 14 x 45 at 15 degrees; 14 Oct, from the try 2 reviews (close review 2): the bow's axis stands 39.5 off the plate (30 clear behind it); 14 Oct, from the try 2 reviews (close review 1): the thumb lever leaves the plate at 75 degrees to the face, 15 above the horizontal, 45 long, with a 20 pad",
     "plate_ends": "cusped (arrow-shaped) at both ends",
     "slot": [
      16.0,
@@ -2311,13 +2319,16 @@
     "bow_sag": 4.0,
     "bow_centre_z": 0.0,
     "grip_dia": 19.0,
-    "stand_off": 30.0,
+    "stand_off": 39.5,
     "post_gap": 120.0,
     "thumb": {
      "length": 45.0,
      "width": 14.0,
-     "angle_deg": 15.0
-    }
+     "pad_dia": 20.0,
+     "rise_deg": 15.0,
+     "leaves_the_face_at_deg": 75.0
+    },
+    "clear_gap_behind_grip": 30.0
    }
   },
   "latch": {
@@ -2332,9 +2343,9 @@
     "keyway": "vertical 3 x 9",
     "material": "nickel or chrome-look",
     "srgb": [
-     170,
-     170,
-     168
+     196,
+     197,
+     196
     ],
     "metal": 1.0,
     "roughness": 0.35,
@@ -2344,7 +2355,7 @@
       "v": 1235.0
      }
     },
-    "src": "3.1 as built (P1: collar 43.5, 8.4 px)"
+    "src": "3.1 as built (P1: collar 43.5, 8.4 px); 14 Oct, from the try 2 reviews (close review 4): chrome_nickel is sRGB (196, 197, 196), roughness 0.35 (170, 170, 168 is linear 0.40 against measured chromium's 0.55: the plates read at half P2's brightness)"
    },
    "LK2": {
     "name": "rim night latch, knurled collar (the escutcheon), 3.1 F1",
@@ -2355,9 +2366,9 @@
     "keyway": "vertical 3 x 9",
     "material": "nickel or chrome-look",
     "srgb": [
-     170,
-     170,
-     168
+     196,
+     197,
+     196
     ],
     "metal": 1.0,
     "roughness": 0.35,
@@ -2371,7 +2382,7 @@
       "v": 1070.5
      }
     },
-    "src": "3.1 as built (P2: collar 37, scalloped)"
+    "src": "3.1 as built (P2: collar 37, scalloped); 14 Oct, from the try 2 reviews (close review 4): chrome_nickel is sRGB (196, 197, 196), roughness 0.35 (170, 170, 168 is linear 0.40 against measured chromium's 0.55: the plates read at half P2's brightness)"
    },
    "LK3": {
     "name": "rim night latch, bare dark cylinder face under the lever, no collar",
@@ -2712,36 +2723,144 @@
       169.0
      ],
      [
-      5.8,
-      185.8
+      0.63,
+      173.52
      ],
      [
-      18.8,
+      1.84,
+      177.89
+     ],
+     [
+      3.59,
+      182.01
+     ],
+     [
+      5.84,
+      185.83
+     ],
+     [
+      8.55,
+      189.29
+     ],
+     [
+      11.67,
+      192.33
+     ],
+     [
+      15.11,
+      194.92
+     ],
+     [
+      18.83,
       197.0
+     ],
+     [
+      22.75,
+      198.56
+     ],
+     [
+      26.8,
+      199.59
+     ],
+     [
+      30.91,
+      200.07
      ],
      [
       35.0,
       200.0
      ],
      [
-      49.8,
-      194.7
+      39.0,
+      199.4
      ],
      [
-      59.5,
-      183.2
+      42.85,
+      198.3
+     ],
+     [
+      46.48,
+      196.72
+     ],
+     [
+      49.83,
+      194.69
+     ],
+     [
+      52.86,
+      192.27
+     ],
+     [
+      55.51,
+      189.51
+     ],
+     [
+      57.74,
+      186.45
+     ],
+     [
+      59.54,
+      183.17
+     ],
+     [
+      60.87,
+      179.72
+     ],
+     [
+      61.72,
+      176.16
+     ],
+     [
+      62.1,
+      172.57
      ],
      [
       62.0,
       169.0
      ],
      [
-      57.2,
-      156.2
+      61.44,
+      165.52
      ],
      [
-      47.2,
-      147.9
+      60.44,
+      162.18
+     ],
+     [
+      59.02,
+      159.05
+     ],
+     [
+      57.23,
+      156.17
+     ],
+     [
+      55.1,
+      153.58
+     ],
+     [
+      52.68,
+      151.32
+     ],
+     [
+      50.02,
+      149.43
+     ],
+     [
+      47.17,
+      147.93
+     ],
+     [
+      44.18,
+      146.83
+     ],
+     [
+      41.13,
+      146.14
+     ],
+     [
+      38.05,
+      145.87
      ],
      [
       35.0,
@@ -2752,36 +2871,144 @@
       158.0
      ],
      [
-      41.2,
-      158.3
+      36.48,
+      157.76
      ],
      [
-      46.8,
-      162.2
+      38.02,
+      157.73
+     ],
+     [
+      39.59,
+      157.91
+     ],
+     [
+      41.17,
+      158.32
+     ],
+     [
+      42.71,
+      158.95
+     ],
+     [
+      44.19,
+      159.81
+     ],
+     [
+      45.58,
+      160.88
+     ],
+     [
+      46.84,
+      162.17
+     ],
+     [
+      47.93,
+      163.64
+     ],
+     [
+      48.84,
+      165.29
+     ],
+     [
+      49.54,
+      167.09
      ],
      [
       50.0,
       169.0
      ],
      [
-      49.1,
-      177.2
+      50.2,
+      171.0
      ],
      [
-      43.8,
+      50.13,
+      173.05
+     ],
+     [
+      49.78,
+      175.12
+     ],
+     [
+      49.15,
+      177.17
+     ],
+     [
+      48.22,
+      179.15
+     ],
+     [
+      47.02,
+      181.02
+     ],
+     [
+      45.55,
+      182.75
+     ],
+     [
+      43.83,
       184.3
+     ],
+     [
+      41.89,
+      185.63
+     ],
+     [
+      39.75,
+      186.71
+     ],
+     [
+      37.44,
+      187.51
      ],
      [
       35.0,
       188.0
      ],
      [
-      24.8,
-      186.6
+      32.48,
+      188.17
      ],
      [
-      16.2,
-      179.8
+      29.91,
+      188.0
+     ],
+     [
+      27.35,
+      187.48
+     ],
+     [
+      24.83,
+      186.61
+     ],
+     [
+      22.42,
+      185.4
+     ],
+     [
+      20.15,
+      183.85
+     ],
+     [
+      18.08,
+      181.99
+     ],
+     [
+      16.24,
+      179.83
+     ],
+     [
+      14.67,
+      177.42
+     ],
+     [
+      13.43,
+      174.78
+     ],
+     [
+      12.53,
+      171.96
      ],
      [
       12.0,
@@ -2806,7 +3033,24 @@
       "z": 0.0
      }
     },
-    "src": "Photo D10 (2014, said why: iron fittings of this kind were never renewed): scrolled standards and a blade with a notched underside; every size and the profile are Judgement, the photograph has no scale in its plane (+-25 per cent)"
+    "src": "Photo D10 (2014, said why: iron fittings of this kind were never renewed): scrolled standards and a blade with a notched underside; every size and the profile are Judgement, the photograph has no scale in its plane (+-25 per cent)",
+    "scroll": {
+     "centre": [
+      35.0,
+      169.0
+     ],
+     "outer_radius": [
+      35.0,
+      23.0
+     ],
+     "inner_radius": [
+      11.0,
+      23.0
+     ],
+     "step_deg": 7.5,
+     "max_facet_mm": 5.0,
+     "note": "14 Oct, from the try 2 reviews (close review 6): a point every 7.5 degrees on both spirals (it was every 30), so no facet of the scroll is longer than 5 mm"
+    }
    }
   }
  },
@@ -6414,8 +6658,23 @@
     "outlines": 16
    },
    "tol": 0.0,
-   "src": "street review of 13 Oct, fault 1 (D4's outlines dip 14 to 40 per cent in the same flat overcast light; the first build's dipped 1 to 3)",
+   "src": "street review of 13 Oct, fault 1 (D4's outlines dip 14 to 40 per cent in the same flat overcast light; the first build's dipped 1 to 3); 14 Oct, from the try 2 reviews: the row stays at 10 per cent for every outline (the close review's 10 and 3 per cent split is not taken: the street view is where the lines are seen, and the street review's grooves give 11 to 17)",
    "type": "street_dip"
+  },
+  {
+   "id": "PL-T3-quirk",
+   "group": "PL",
+   "name": "T3: a quirk groove 5 wide and 3 deep outside the outlines",
+   "kind": "T3",
+   "what": "in sections of the leaf (across the lower panel's left edge, its foot, the upper panel's head, and each panel's inner outline) the surface just outside the outline is a flat groove 3 below the surface it cuts (the face at the outer outline, the margin at the inner), 5 wide within 0.6, and beyond it the surface is back at its level",
+   "expect": {
+    "width": 5.0,
+    "depth": 3.0,
+    "sections": 6
+   },
+   "tol": 0.6,
+   "src": "street review 1 (14 Oct)",
+   "type": "quirk"
   },
   {
    "id": "PL-F1-count",
@@ -8033,6 +8292,21 @@
    "variant": "BS1"
   },
   {
+   "id": "FU-T1-scraper-facets",
+   "group": "FU",
+   "name": "T1: the scraper's scrolls are smooth",
+   "kind": "T1",
+   "slot": "scraper",
+   "variant": "BS1",
+   "what": "no straight facet of either scroll's spiral is longer than 5 mm in the built standard (the cut section of the part, outline segments between the scroll's two ends)",
+   "expect": {
+    "max_facet_mm": 5.0
+   },
+   "tol": 0.0,
+   "src": "close review 6 (14 Oct)",
+   "type": "scraper_facets"
+  },
+  {
    "id": "FU-T3-letter_plate-LP6",
    "group": "FU",
    "name": "T3: letter_plate LP6",
@@ -8126,6 +8400,22 @@
    "variant": "HD3"
   },
   {
+   "id": "FU-T2-grip_gap",
+   "group": "FU",
+   "name": "T2: the bar pull's grip stands clear of the face",
+   "kind": "T2",
+   "slot": "handle",
+   "variant": "HD3",
+   "what": "the clear gap behind the grip: from the face (the plate's face for HD4) to the grip's nearest surface, measured on the built parts",
+   "expect": {
+    "gap": 30.0,
+    "min_gap": 28.0
+   },
+   "tol": 1.0,
+   "src": "close review 2 (14 Oct): at least 28, as designed 30 (a hand needs 30 to 40)",
+   "type": "grip_gap"
+  },
+  {
    "id": "FU-T2-keyhole-KH1",
    "group": "FU",
    "name": "T2: keyhole KH1",
@@ -8215,6 +8505,39 @@
    "variant": "HD4"
   },
   {
+   "id": "FU-F7-grip_gap",
+   "group": "FU",
+   "name": "F7: the thumb latch's bow stands clear of its plate",
+   "kind": "F7",
+   "slot": "handle",
+   "variant": "HD4",
+   "what": "the clear gap behind the grip: from the face (the plate's face for HD4) to the grip's nearest surface, measured on the built parts",
+   "expect": {
+    "gap": 30.0,
+    "min_gap": 28.0
+   },
+   "tol": 1.0,
+   "src": "close review 2 (14 Oct): at least 28, as designed 30 (a hand needs 30 to 40)",
+   "type": "grip_gap"
+  },
+  {
+   "id": "FU-F7-thumb",
+   "group": "FU",
+   "name": "F7: the thumb lever reaches out and does not stand upright",
+   "kind": "F7",
+   "slot": "handle",
+   "variant": "HD4",
+   "what": "the thumb lever's end stands at least 40 out from the plate's face and rises at most 15 above the slot's centre; it clears the bow by at least 2 where it passes over it",
+   "expect": {
+    "out_min": 40.0,
+    "rise_max": 15.0,
+    "clear_over_bow_min": 2.0
+   },
+   "tol": 0.0,
+   "src": "close review 1 (14 Oct): the first build's reached 13.7 out",
+   "type": "thumb_reach"
+  },
+  {
    "id": "FU-F3-letter_plate-LP1",
    "group": "FU",
    "name": "F3: letter_plate LP1",
@@ -8261,6 +8584,22 @@
    "type": "furniture",
    "slot": "handle",
    "variant": "HD3"
+  },
+  {
+   "id": "FU-F3-grip_gap",
+   "group": "FU",
+   "name": "F3: the bar pull's grip stands clear of the face",
+   "kind": "F3",
+   "slot": "handle",
+   "variant": "HD3",
+   "what": "the clear gap behind the grip: from the face (the plate's face for HD4) to the grip's nearest surface, measured on the built parts",
+   "expect": {
+    "gap": 30.0,
+    "min_gap": 28.0
+   },
+   "tol": 1.0,
+   "src": "close review 2 (14 Oct): at least 28, as designed 30 (a hand needs 30 to 40)",
+   "type": "grip_gap"
   },
   {
    "id": "FU-F3-keyhole-KH1",
@@ -9424,6 +9763,56 @@
    "tol": 0,
    "src": "kit/door/views_T1.json, views_F1.json",
    "type": "views"
+  },
+  {
+   "id": "GA-T2-nets-lit",
+   "group": "GA",
+   "name": "T2: the nets read a little darker than the white frame",
+   "kind": "T2",
+   "what": "on the street picture the four lights' median brightness (less their bars) is 0.80 to 0.90 of the transom bar's front face (D3's nets read 0.84 to 0.87 of the stile's white)",
+   "expect": {
+    "ratio_of_transom_bar": [
+     0.8,
+     0.9
+    ]
+   },
+   "tol": 0.0,
+   "src": "street review 2 (14 Oct): the nets read 0.95 to 1.0 of the transom bar, brighter than the white frame; in place of 'at least 0.75 of the jamb'",
+   "type": "nets_lit"
+  },
+  {
+   "id": "MAT-chrome_nickel",
+   "group": "MAT",
+   "name": "chrome_nickel is one colour, the target's",
+   "kind": "all",
+   "what": "the base colour of the material chrome_nickel in every furniture file and in door_F6.glb (the spyhole ring) is the target's chrome_nickel srgb",
+   "expect": {
+    "srgb": [
+     196,
+     197,
+     196
+    ]
+   },
+   "tol": 2.0,
+   "src": "close review 4 (14 Oct); the kit typed (170, 170, 168) in a second place",
+   "type": "chrome_colour"
+  },
+  {
+   "id": "TG-makers-frozen",
+   "group": "TG",
+   "name": "the target's first-draft makers cannot overwrite target.json",
+   "kind": "all",
+   "what": "make_target.py and make_doc.py hold the guard (they exit with 'frozen' unless --first-draft is given) and running make_target.py leaves target.json byte for byte as it was",
+   "expect": {
+    "guard": "is frozen",
+    "files": [
+     "make_target.py",
+     "make_doc.py"
+    ]
+   },
+   "tol": 0.0,
+   "src": "street review 3 and close review 7 (14 Oct): the makers hold the first draft's numbers and would undo the review fixes (a regenerated file differs from target.json in over 1,600 places); frozen rather than rewritten, because target.json is the home since the 13 October fixes were made in it directly",
+   "type": "makers_frozen"
   }
  ],
  "disagreements_photographs_win": [
@@ -14402,6 +14791,66 @@
    "change": "glass: base colour (235, 238, 236) for every clear pane; reeded glass its own material glass_reeded; T2's net cards take the windows' net material net_voile (white 238, 238, 232)",
    "why": "street review 1 and 6, close review 7",
    "date": "13 Oct, from the try 1 reviews"
+  },
+  {
+   "change": "chrome_nickel (LP2, LP4, HD2a, HD2b, HD2c, LK1, LK2 and F6's spyhole ring) is sRGB (196, 197, 196), roughness 0.35, in place of (170, 170, 168)",
+   "why": "close review 4: the chrome-look parts read at about half the brightness of P2's plate (ratio to the black door 2.3 against P2's 3.7 to 4.1); (170, 170, 168) is linear 0.40, measured chromium 0.55",
+   "date": "14 Oct, from the try 2 reviews"
+  },
+  {
+   "change": "HD3: the grip's axis 39.5 off the face (stand_off), 49 proud, the clear gap behind the grip 30; HD4: the bow's axis 39.5 off the plate, 30 clear behind it",
+   "why": "close review 2: 'stand-off' is the clear gap behind the grip; the first build read it as face to axis and left 20.5 clear, too tight for a hand (30 to 40)",
+   "date": "14 Oct, from the try 2 reviews"
+  },
+  {
+   "change": "HD4: the thumb lever leaves the plate at 75 degrees to the face (15 above the horizontal), 45 long, its last 20 mm a pad 20 across; it reaches at least 40 out and rises at most 15 above its slot",
+   "why": "close review 1: it stood upright above the plate (13.7 out, 17 degrees off the face) like a fin; a thumb lever points at the street and is pressed down",
+   "date": "14 Oct, from the try 2 reviews"
+  },
+  {
+   "change": "T3: a quirk, a groove 5 wide and 3 deep outside each of the four outlines of both panels (the head's arc included), its inner edge 0.1 off the outline; PL-T3-street-dip stays at 10 per cent",
+   "why": "street review 1 (left-hand outlines dip 1 to 2 per cent against D4's 22 and 5; tested 11 to 17 with the grooves); the close review's 3 (a 3 x 3 quirk on the outer outlines only, a 10 and 3 per cent split) is superseded by the street review's, the view the lines are seen from",
+   "date": "14 Oct, from the try 2 reviews"
+  },
+  {
+   "change": "BS1: both spirals of the scroll resampled every 7.5 degrees (a point list of 78 points; it was 24): no facet longer than 5 mm",
+   "why": "close review 6: the scrolls read as 8 to 10 straight facets of 16 to 18 mm",
+   "date": "14 Oct, from the try 2 reviews"
+  },
+  {
+   "change": "new rows: FU-T2-grip_gap, FU-F3-grip_gap, FU-F7-grip_gap, FU-F7-thumb, FU-T1-scraper-facets, PL-T3-quirk, GA-T2-nets-lit (0.80 to 0.90 of the transom bar), MAT-chrome_nickel, TG-makers-frozen",
+   "why": "the reviews' tests for their points",
+   "date": "14 Oct, from the try 2 reviews"
+  },
+  {
+   "change": "the target's makers (make_target.py, make_doc.py) are frozen with a guard; target_drawing.py draws the bolection ring with its lap and the T3 section closes at 16 deep",
+   "why": "street review 3, close review 7: the makers hold the first draft and would undo the fixes (1,659 differences); the three literal moulding extras failed only because the drawing's ring started at the opening's edge",
+   "date": "14 Oct, from the try 2 reviews"
+  },
+  {
+   "change": "T2's nets (a render aid, not in any file): random folds 30 to 70 mm apart, brightness 0.78 plus or minus 0.11, scaled so the lights read 0.85 of the transom bar's face",
+   "why": "street review 2: they read 0.95 to 1.0 of the transom bar (brighter than the white frame) and the folds repeated every 48 mm like a pleated blind",
+   "date": "14 Oct, from the try 2 reviews"
   }
- ]
+ ],
+ "chrome_nickel": {
+  "srgb": [
+   196,
+   197,
+   196
+  ],
+  "roughness": 0.35,
+  "metal": 1.0,
+  "used_by": [
+   "LP2",
+   "LP4",
+   "HD2a",
+   "HD2b",
+   "HD2c",
+   "LK1",
+   "LK2",
+   "the spyhole ring of F6"
+  ],
+  "note": "one material, so one colour; the kit's make_mats reads it from the seven fittings' srgb and stops if they differ; judge it beside P2 in the game's light"
+ }
 }
