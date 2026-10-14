@@ -96,9 +96,9 @@ def ironmonger(ctx, rows, assets, di):
     rows.add("ROOM-04", "the drawer wall", nd == 60, "%d drawer fronts in 6 columns x 10 rows (target 60), each with a brass label holder carrying a hand-lettered card and a ring pull" % nd)
     have = counts_row(ctx, rows, di, {"wooden_ladder": 1, "script:paint_tins": 1, "watering_can_metal_01": 1, "metal_jerrycan_green": 1}, "ironmonger")
     return {
-        "supports": ["script:backing_board", "script:hung_card", "script:bulb_tray", "script:crate"],
-        "texts": ["EST. 1884", "16", "OPEN", "CLOSED", "NAILS", "SCREWS", "HINGES", "WASHERS", "NUTS & BOLTS", "RAWLPLUGS", "TINS 99p", "OIL 1.15", "BULBS 40p", "TROWELS 2.45", "GLOVES 1.30", "CANS 3.95", "PUMP 4.50", "SPRINKLER 3.75",
-                  "PAINT 2.99", "TOOL BOXES 6.95", "BROOMS 2.25", "TORCH 8.50", "BRANTHAM GLOSS PAINT", "COLDWELL EMULSION", "HARTSIDE WHITE SPIRIT", "ELMSTEAD WOOD PRESERVER", "PARAFFIN", "BITUMEN PAINT", "UNDERCOAT", "METAL PRIMER", "THINNERS"],
+        "supports": ["script:backing_board", "script:hung_card", "script:bulb_tray", "script:crate", "script:hang_rod"],
+        "texts": ["EST. 1884", "16", "OPEN", "CLOSED", "NAILS", "SCREWS", "HINGES", "WASHERS", "NUTS & BOLTS", "RAWLPLUGS", "OIL 1.15", "BULBS 40p", "TROWELS 2.45", "GLOVES 1.30", "CANS 3.95", "PUMP 4.50", "SPRINKLER 3.75",
+                  "PAINT 2.99", "TOOL BOXES 6.95", "BROOMS 2.25", "BLOWLAMP 8.50", "HARTSIDE", "PAINTS & OILS", "HARTSIDE SCOURING POWDER", "ELMSTEAD BRASS POLISH", "COLDWELL WASHING SODA", "BRANTHAM DISINFECTANT", "500 g", "250 ml", "1 kg", "1 litre", "BRANTHAM GLOSS PAINT", "COLDWELL EMULSION", "HARTSIDE WHITE SPIRIT", "ELMSTEAD WOOD PRESERVER", "PARAFFIN", "BITUMEN PAINT", "UNDERCOAT", "METAL PRIMER", "THINNERS"],
         "families": {"paint tins": ["script:paint_tin_pyramid"], "garden": ["watering_can_metal_01", "trowel_01", "garden_sprinkler_01", "plastic_broom", "garden_gloves_01"], "tool boxes and tools": ["metal_toolbox", "sledgehammer_01", "tire_pump", "brass_blowtorch"]},
         "era": "the goods are a 1990 ironmonger's: tins, oils, tool boxes, watering cans, trowels, brooms, a tyre pump, a blowtorch (no cordless drill, no plastic modern packaging, no barcode, no LED lamp)",
     }

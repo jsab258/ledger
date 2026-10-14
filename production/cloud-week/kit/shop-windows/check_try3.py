@@ -394,3 +394,31 @@ def inv07_rows(ctx, assets, rows, di):
     rows.add("INV-07", "no maker's mark in the pictures the build uses", n_box > 0 and not bad,
              "%d blanking boxes of %d placed models read in %d pictures actually used (the display glb's own images and the room's clean maps): in each box the luma's standard deviation is at most 1.6 times its ring's plus 5%s (the pump's roundel, the trowels' stamped word, the till's glyph and the clock's dash were found at 100 per cent by the close review; INV-06 reads the source maps)" % (
                  n_box, len(models), n_img, ("; STILL MARKED: " + "; ".join(bad[:8])) if bad else "; none marked"))
+
+
+# --------------------------------------------------------------------------------------------------------------------------------------------- DSP-11
+def dsp11_rows(ctx, rows, di):
+    """DSP-11 (the ironmonger's street review, narrow 4: the pyramid's backing board was primer grey, luma 86 to 111, the palest flat field in the left light): the board's VISIBLE pixels (the object-index render of the
+    display from STREET_SQUARE, the front's bars and the goods in front of it drawn black) read luma 25 to 45 in the day gate frame, so the tins' coloured labels stand out against it."""
+    gi = next((i for i, g in enumerate(di["groups"]) if g["model"] == "script:backing_board"), None)
+    if gi is None:
+        rows.na("DSP-11", "the backing board is dark", "this display has no backing board")
+        return
+    pi = os.path.join(ctx.gate, "check_STREET_SQUARE_object_index.png")
+    pf = os.path.join(ctx.gate, "STREET_SQUARE_day.png")
+    if not (os.path.exists(pi) and os.path.exists(pf)):
+        rows.add("DSP-11", "the backing board is dark", False, "the object-index render or the day frame is missing")
+        return
+    idx = np.asarray(Image.open(pi).convert("RGB")).astype(np.float32) / 255.0
+    fr = luma(np.asarray(Image.open(pf).convert("RGB")).astype(np.float32))
+    c = np.array(((gi + 1) % 17 / 17.0 + 0.03, ((gi + 1) // 17) % 17 / 17.0 + 0.03, ((gi + 1) // 289) % 17 / 17.0 + 0.03))
+    mk = np.abs(idx - c[None, None, :]).max(axis=2) < 0.02
+    mk = np.asarray(Image.fromarray((mk * 255).astype(np.uint8)).resize((fr.shape[1], fr.shape[0]), Image.NEAREST)) > 128
+    mk = _nd.binary_erosion(mk, iterations=3)
+    n = int(mk.sum())
+    if n < 200:
+        rows.add("DSP-11", "the backing board is dark", False, "only %d visible pixels of the backing board at STREET_SQUARE" % n)
+        return
+    v = fr[mk]
+    rows.add("DSP-11", "the backing board is dark", 25.0 <= float(v.mean()) <= 45.0,
+             "the pyramid's backing board, %d visible pixels (an object-index render from STREET_SQUARE, eroded 3 px) in the day gate frame: mean luma %.1f (p5 %.1f, p95 %.1f); wanted 25 to 45 (try 1: 86 to 111, primer grey)" % (n, float(v.mean()), float(np.percentile(v, 5)), float(np.percentile(v, 95))))

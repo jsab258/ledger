@@ -1410,7 +1410,8 @@ def dsp05_float_rows(R, work, assets, rows):
                  ("; try 2 (the brief's step 0 e): every piece's lowest 3 mm rest on a part (or its top quarter hangs from one), and the %d sheets that lean back by more than 3 degrees have their top within 5 mm of a support behind: %d do not%s" % (n_lean, len(unsupported), (" (" + "; ".join(unsupported[:8]) + ")") if unsupported else "")) if ctx().id != "ritas" else ""))
 
 
-FURNITURE_H = {"round_wooden_table_02": (0.72, 0.76, "a table top at 0.72 to 0.76 m"), "painted_wooden_chair_01": (0.80, 0.96, "a cafe chair 0.80 to 0.96 m high overall (the seat at 0.44 to 0.47)")}
+FURNITURE_H = {"round_wooden_table_02": (0.72, 0.76, "a table top at 0.72 to 0.76 m"), "painted_wooden_chair_01": (0.80, 0.96, "a cafe chair 0.80 to 0.96 m high overall (the seat at 0.44 to 0.47)"),
+              "tea_set_01#pot": (0.12, 0.16, "a teapot 0.12 to 0.16 m high (the brief's step 0 f)")}
 
 
 def dsp06_size_rows(R, work, rows):

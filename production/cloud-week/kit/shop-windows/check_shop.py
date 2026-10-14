@@ -765,6 +765,21 @@ def gate_rows(ctx, rows, m):
     else:
         rows.add("LIT-01", "lit shops lit at night, dark shops dark", 10 <= dark <= 35 and lit - dark >= 25,
                  "this shop is dark at night (lit_at_night false: %s): STREET_SQUARE at night, the room-only composite over the glass lights reads %.1f (a dark shop reads 10 to 35); the same room lit (night_lit, the state the tests and the lit-room pictures use) reads %.1f, so the difference is %.1f (at least 25)" % (ctx.R.get("lit_why", ""), dark, lit, lit - dark))
+    if ctx.id != "ritas" and not ctx.lit:
+        # 14 Oct, try 2 (the ironmonger's close review, narrow 8: the dark shop's own night was not shown at close range; the brief): LIT-01's dark range also at the two close cameras
+        vals_c, det_c = [], []
+        for cam in ("CLOSE_35", "CLOSE_35_B"):
+            up = os.path.join(gate, "uv_%s.npy" % cam)
+            if not os.path.exists(up):
+                continue
+            uvc = np.load(up)
+            lin_c = G.sample_mips(G.mips(G.lin(pic)), uvc, (pic.shape[1], pic.shape[0]))
+            insc = inside_of(np.array(ctx.to_model(R["cameras"][cam]["eye_street_m"])))
+            v_ = float(G.composite_luma(lin_c, 0.7)[insc].mean())
+            vals_c.append(v_)
+            det_c.append("%s %.1f" % (cam, v_))
+        rows.add("LIT-01c", "the dark shop's night at the close cameras", len(vals_c) == 2 and all(10 <= v_ <= 35 for v_ in vals_c),
+                 "night_dark, the room-only composite (picture x 0.7, glass reflection off) over the glass lights at the two close cameras: %s (a dark shop reads 10 to 35; the review measured 11.0 and 12.6 on try 1)" % ", ".join(det_c))
     d_ok = all(comp[(c, "day")] >= 33 for c in ("STREET_SQUARE", "STREET_30", "CLOSE_35")) and all(comp[(c, "night_lit")] >= 45 for c in ("STREET_SQUARE", "STREET_30", "CLOSE_35"))
     rows.add("LIT-02", "no black void in the street view", d_ok, "composite luma over the glass lights: by day STREET_SQUARE %.1f, STREET_30 %.1f, CLOSE_35 %.1f (at least 33); at night (the lit room) %.1f, %.1f, %.1f (at least 45)" % (
         comp[("STREET_SQUARE", "day")], comp[("STREET_30", "day")], comp[("CLOSE_35", "day")], comp[("STREET_SQUARE", "night_lit")], comp[("STREET_30", "night_lit")], comp[("CLOSE_35", "night_lit")]))
@@ -929,6 +944,8 @@ def run(ctx, assets, previews, out_json):
             X3.dsp10_rows(ctx, assets, rows, di)
             X3.inv07_rows(ctx, assets, rows, di)
             X3.flt01_rows(ctx, rows)
+            if ctx.id == "ironmonger":
+                X3.dsp11_rows(ctx, rows, di)
     if not ctx.has_room:
         man = json.load(open(os.path.join(ctx.work, "fascias", "manifest.json")))
         texts = [s_ for g in man["glass_lettering"] if g["shop"] == ctx.id for s_ in [g.get("string", "")] if s_]
