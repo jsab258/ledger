@@ -557,7 +557,8 @@ def layout_ironmonger(d):
     # ---- three plastic brooms standing on their handle ends, heads up against the right return wall (heads 0.11 apart, the first touching it)
     rot_b = d.lean_rot("plastic_broom", 13.0)
     for k in range(3):
-        d.piece_x("plastic_broom", wall_x - 0.004 - 0.11 * k, 0.32, 0.0, rot=rot_b, tier="bed")
+        _, nms_b = d.piece_x("plastic_broom", wall_x - 0.004 - 0.11 * k, 0.32, 0.0, rot=rot_b, tier="bed")
+        d.tone(nms_b, 0.80)                                              # the white handles burnt under the gate's night spill (the close review, narrow 4): the model's picture at 0.80, as Rita's T16
     # ---- the price cards, each in front of its goods at the front edge of the bed
     cards = [("OIL\n\u00a31.15", 2.24), ("BULBS\n40p", 0.37), ("TROWELS\n\u00a32.45", 1.18), ("GLOVES\n\u00a31.30", 0.17), ("CANS\n\u00a33.95", 2.00), ("PUMP\n\u00a34.50", 3.145), ("SPRINKLER\n\u00a33.75", 2.90),
              ("PAINT\n\u00a32.99", 0.74), ("TOOL BOXES\n\u00a36.95", 1.58), ("BROOMS\n\u00a32.25", 3.03), ("BLOWLAMP\n\u00a38.50", 2.62)]
