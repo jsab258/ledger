@@ -265,12 +265,14 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
             for slot in o.material_slots:
                 if slot.material and slot.material.name.lower().startswith("glass") and "row" not in slot.material.name.lower():
                     slot.material = gm
-    # the door's OPEN sign by day, CLOSED at night (the card is turned over)
+    # the door's OPEN sign by day, CLOSED at night (the card is turned over). 14 Oct (batch B, from the tea rooms' street review): a lit shop is open, so the card is turned only in a shop's DARK night
+    # picture (night_dark); in the lit night frames (and a dark shop's night_lit test frames) it reads OPEN. Rita's gate keeps its rule (her approved previews show CLOSED)
+    turn_sign = night if ctx.id == "ritas" else (state == "night_dark")
     for o in front:
         if o.type == "MESH" and o.name.startswith("door_sign"):
             for slot in o.material_slots:
                 m = slot.material
-                if m and night:
+                if m and turn_sign:
                     for n in m.node_tree.nodes:
                         if n.type == "TEX_IMAGE":
                             n.image = bpy.data.images.load(os.path.join(ctx.paper, "K03b", "K03b_A_basecolour.png"), check_existing=True)

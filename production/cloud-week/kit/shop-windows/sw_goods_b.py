@@ -504,8 +504,8 @@ def souwester(gm, cx, cy, z0, s=1.0, mi=0, mi_seam=1, n=24, face=-1.0):
             th = 2 * math.pi * i / n
             back = max(0.0, math.sin(th) * (-face))                    # 1 at the back
             ext = (1.0 + 0.55 * back + 0.15) if True else 1.0
-            rad = r_c * (1.0 + t * (0.30 + 0.55 * back))
-            z = z0 + 0.04 * s - t * (0.012 + 0.10 * back) * s
+            rad = r_c * (1.0 + t * (0.30 + 1.45 * back))
+            z = z0 + 0.04 * s - t * (-0.012 + 0.20 * back) * s          # the front brim a little upturned, the back brim long and drooping (a sou'wester's neck flap)
             idx.append(len(V))
             V.append((cx + rad * math.cos(th), cy + rad * math.sin(th), z))
         ringsb.append(idx)

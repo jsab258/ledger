@@ -339,8 +339,8 @@ def word_hit(n, w, brand=False):
 KNOWN_DROPS = {}
 
 
-def dsp05_rows(ctx, rows, di):
-    """DSP-05 (ironmonger close review, fault 2, 14 Oct): every placed model keeps all the meshes of its glTF, unless a Judgement in NOTES.md names the one it drops. The room's and the display's template audits
+def dsp07_rows(ctx, rows, di):
+    """DSP-07 (ironmonger close review, fault 2, 14 Oct; named DSP-05 there): every placed model keeps all the meshes of its glTF, unless a Judgement in NOTES.md names the one it drops. The room's and the display's template audits
     (mesh_audit.json beside the room's pictures; `mesh_audit` in display_items.json) say, per model, the meshes in its glTF, the meshes kept, the glass kept (as a see-through material, not blended) and what was dropped."""
     placed = json.load(open(os.path.join(ctx.rooms, "placed.json"))) if ctx.has_room else []
     audit = {}
@@ -363,7 +363,7 @@ def dsp05_rows(ctx, rows, di):
             bad.append((m_, drops))
         lines.append("%s %d of %d meshes%s%s" % (m_, a_.get("source_meshes", 0) - len(a_.get("dropped", [])), a_.get("source_meshes", 0), (", glass kept: %d" % len(a_["glass_kept"])) if a_.get("glass_kept") else "",
                                                  (", dropped: %s" % "; ".join(a_["dropped"])) if a_.get("dropped") else ""))
-    rows.add("DSP-05", "every placed model keeps all its parts", not bad and not missing,
+    rows.add("DSP-07", "every placed model keeps all its parts", not bad and not missing,
              "%d placed Poly Haven models against their glTF's meshes (the template's audit): %s%s%s (a loose-pieces model that is split on purpose, like the tea set, is judged as a whole; glass parts are kept as a see-through Principled material, transmission 1, alpha 1, nothing blended)" % (
                  len(models), "; ".join(lines) or "none", ("; UNAUDITED: %s" % missing) if missing else "", ("; DROPPED WITHOUT A JUDGEMENT: %s" % bad) if bad else ""))
 
@@ -883,7 +883,7 @@ def run(ctx, assets, previews, out_json):
         projection_rows(ctx, rows)
         room_rows(ctx, rows, assets)
         di = display_rows(ctx, rows, assets)
-        dsp05_rows(ctx, rows, di)
+        dsp07_rows(ctx, rows, di)
         extra = shop_rows(ctx, rows, assets, di)
         inventory_rows(ctx, rows, assets, di, extra.get("texts", []), extra)
     else:
@@ -902,7 +902,7 @@ def run(ctx, assets, previews, out_json):
     if ctx.has_room:
         gate_rows(ctx, rows, m)
         X.display_rows(ctx.R, ctx.work, assets, rows)
-        X.dsp06_rows(ctx.R, ctx.work, assets, rows)
+        X.dsp05_float_rows(ctx.R, ctx.work, assets, rows)
         trade_rows(ctx, rows, extra.get("families", {}))
         X.lit02b_rows(ctx.R, ctx.work, rows)
         X.gate_frame_rows(ctx.R, ctx.work, rows)

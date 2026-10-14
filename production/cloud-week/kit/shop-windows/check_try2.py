@@ -1184,9 +1184,8 @@ def frn10_rows(R, work, assets, rows, members):
              " (try 2: the two strips beside the side door were luma 0 to 3, about 12,000 pixels at STREET_SQUARE: F1's frame jambs, the added side jambs and the fillers stood in one plane, d 100)")
 
 
-def dsp06_rows(R, work, assets, rows):
-    """DSP-06 (newsagent close review, fault 1, 14 Oct 2026: the magazines hung in the air under a board that leaned toward the glass; the review called its row DSP-05, a number the ironmonger's review had
-    already given to 'every model keeps its parts'): nothing in the near metre floats, and a sheet leans back. For every piece, scripted good and price card of the display glb: (a) a point of its lower
+def dsp05_float_rows(R, work, assets, rows):
+    """DSP-05 (newsagent close review, fault 1, 14 Oct 2026: the magazines hung in the air under a board that leaned toward the glass; the coordinator's numbering: DSP-05 is this row, DSP-06 the size row, DSP-07 'every model keeps its parts'): nothing in the near metre floats, and a sheet leans back. For every piece, scripted good and price card of the display glb: (a) a point of its lower
     35 per cent of the height (a sphere on spheres touches with its flank) or of its upper 15 per cent lies within 2 mm of another part of the display (not of its own group): it rests on something or hangs from something; (b) a thin sheet (its thinnest extent under
     12 mm, the other two over 40 mm) whose face looks toward the street does not lean forward by more than 3 degrees (the face normal's tilt, from the principal axes of its vertices): its top is nearer the back
     than its foot. Lying-flat sheets (the face looking more than 53 degrees up or down) are not leans."""
@@ -1279,7 +1278,7 @@ def dsp06_rows(R, work, assets, rows):
                     tilt = math.degrees(math.asin(float(np.clip(n_[2], -1, 1))))          # + : the face looks up: the top leans back
                     if tilt < -3.0:
                         leaning.append("%s(%s) %.1f deg" % (di["groups"][gi]["model"], nms[0], tilt))
-    rows.add("DSP-06", "nothing floats; sheets lean back", not floating and not leaning,
+    rows.add("DSP-05", "nothing floats; sheets lean back", not floating and not leaning,
              "%d display pieces, scripted goods and price cards: each rests on or hangs from something (a point on its lowest 35 per cent, or its highest 15 per cent, within 2 mm of another part of the display): %d float%s; %d thin sheets measured by their principal axes: %d lean toward the glass by more than 3 degrees%s (the kit's GM.sheet had the sign the wrong way until 14 Oct: the newsagent's magazines and papers)" % (
                  n_tested, len(floating), (" (" + "; ".join(floating[:10]) + ")") if floating else "", n_sheet, len(leaning), (" (" + "; ".join(leaning[:10]) + ")") if leaning else ""))
 

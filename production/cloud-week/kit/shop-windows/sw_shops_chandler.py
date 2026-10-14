@@ -234,7 +234,7 @@ def room(r):
     r.place("lifebuoy", (lbx, D - 0.065, 2.12), rot=(0, 0, 0), scale=lsc, fixture="C-back-hooks", anchor=("c", "max", "max"), tag="lifebuoy")
     # sou'westers hang from pegs at the right end
     sg = GM()
-    sw_m = [r.mat("oilskin_yellow", rgb8(214, 170, 30), rough=0.35), r.mat("oilskin_seam", rgb8(150, 110, 20), rough=0.5)]
+    sw_m = [r.mat("oilskin_yellow", rgb8(230, 186, 28), rough=0.32), r.mat("oilskin_seam", rgb8(150, 110, 20), rough=0.5)]
     for k, xc in enumerate((hx1 - 0.07,)):
         gm.rod((xc, D - 0.030, 2.12), (xc, D - 0.070, 2.12), 0.006, 0, 8)
     o = gm.to_object("hooks_pegs", [brass], r.sc)
@@ -242,8 +242,8 @@ def room(r):
     cord_m = r.mat("hat_cord", rgb8(60, 52, 44), rough=0.8)
     cg_ = GM()
     for k, xc in enumerate((hx1 - 0.07,)):
-        GB.souwester(sg, xc, D - 0.20, 1.78, s=1.0, mi=0, mi_seam=1, face=-1.0)
-        cg_.rod((xc, D - 0.0735, 2.114), (xc, D - 0.200, 1.78 + 0.145), 0.0018, 0, 6)         # the strap from the peg to the crown
+        GB.souwester(sg, xc, D - 0.30, 1.78, s=1.0, mi=0, mi_seam=1, face=-1.0)
+        cg_.rod((xc, D - 0.0735, 2.114), (xc, D - 0.300, 1.78 + 0.145), 0.0018, 0, 6)         # the strap from the peg to the crown
     o = sg.to_object("sou_westers", sw_m, r.sc, smooth=True)
     r.placed_rec("C-back-hooks", "script:oilskin_sou_wester", sg.extents(), [o.name], tag="sou_westers", n=1)
     o = cg_.to_object("hat_cords", [cord_m], r.sc)
@@ -334,12 +334,12 @@ def display(d):
         _, nm_ = d.piece("life_jacket", uc, rail_v, 0.5, rot=(0, 0, 0), scale=0.7, tier="rail", tris=None)
         GB.ground_piece(d, nm_, rail_w - 0.013, top=True)
     sg = GM()
-    sw_m = [d.mat("oilskin_yellow", rgb8(214, 170, 30), rough=0.35), d.mat("oilskin_seam", rgb8(150, 110, 20), rough=0.5)]
+    sw_m = [d.mat("oilskin_yellow", rgb8(230, 186, 28), rough=0.32), d.mat("oilskin_seam", rgb8(150, 110, 20), rough=0.5)]
     strap = GM()
     hat_z = rail_w - 0.30
     for uc in (1.41, 1.83):
-        GB.souwester(sg, X(uc), 0.20, hat_z, s=1.0, mi=0, mi_seam=1, face=-1.0)
-        strap.rod((X(uc), rail_v, rail_w - 0.012), (X(uc), 0.20, hat_z + 0.04 + 0.105 + 0.001), 0.0022, 0, 6)
+        GB.souwester(sg, X(uc), 0.12, hat_z, s=0.85, mi=0, mi_seam=1, face=-1.0)
+        strap.rod((X(uc), rail_v, rail_w - 0.012), (X(uc), 0.12, hat_z + 0.04 * 0.85 + 0.105 * 0.85 + 0.001), 0.0022, 0, 6)
     d.gm_object("sou_westers", sg, sw_m, "scripted", "script:oilskin_sou_wester", tier="rail", smooth=True)
     d.gm_object("sou_wester_straps", strap, [d.mat("strap", rgb8(60, 52, 44), rough=0.8)], "support", "script:crate")
     # ---- the bed: boots, lanterns, compasses, oil tins, cans, blowtorch
