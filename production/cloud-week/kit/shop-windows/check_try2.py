@@ -1198,46 +1198,73 @@ def dsp06_rows(R, work, assets, rows):
         V, T_, N = mesh_world(ob, deps)
         if len(V) == 0 or len(T_) == 0:
             continue
-        data[ob.name] = {"V": V, "bvh": BVHTree.FromPolygons(V.tolist(), T_.tolist(), epsilon=0.0)}
+        data[ob.name] = {"V": V, "T": T_, "bvh": BVHTree.FromPolygons(V.tolist(), T_.tolist(), epsilon=0.0)}
     kinds = ("piece", "scripted", "ticket")
     floating, leaning, n_tested, n_sheet = [], [], 0, 0
+    rng = np.random.default_rng(3)
+    # per group (a piece is all its meshes: a lantern's glass is part of the lantern)
+    by_group = {}
     for nm, dd in data.items():
         gi = group_of.get(nm)
-        if gi is None or di["groups"][gi]["kind"] not in kinds:
-            continue
+        if gi is not None and di["groups"][gi]["kind"] in kinds:
+            by_group.setdefault(gi, []).append(nm)
+
+    def surface_samples(V, T_, zsel, up):
+        """Points on the triangles that lie within 3 mm of the lowest (or highest) level of the group: the vertices and random points inside the triangles."""
+        tri = V[T_]
+        if up:
+            m = tri[:, :, 2].min(axis=1) >= zsel - 0.003
+        else:
+            m = tri[:, :, 2].max(axis=1) <= zsel + 0.003
+        tri = tri[m]
+        if len(tri) == 0:
+            return np.zeros((0, 3))
+        pts = [tri.reshape(-1, 3)]
+        w = rng.random((len(tri), 3))
+        w /= w.sum(axis=1, keepdims=True)
+        pts.append((tri * w[:, :, None]).sum(axis=1))
+        P = np.concatenate(pts)
+        if len(P) > 60:
+            P = P[rng.choice(len(P), 60, replace=False)]
+        return P
+    for gi, nms in by_group.items():
         n_tested += 1
-        V = dd["V"]
+        Vs, Ts, off = [], [], 0
+        for nm in nms:
+            V = data[nm]["V"]
+            Vs.append(V)
+            Ts.append(data[nm]["T"] + off)
+            off += len(V)
+        V = np.concatenate(Vs)
+        T_ = np.concatenate(Ts)
         zlo, zhi = float(V[:, 2].min()), float(V[:, 2].max())
-        pts_lo = V[V[:, 2] <= zlo + 0.003]
-        pts_hi = V[V[:, 2] >= zhi - 0.003]
+        own = set(nms)
 
         def touches(pts):
-            if len(pts) > 24:
-                pts = pts[np.linspace(0, len(pts) - 1, 24).astype(int)]
             for p_ in pts:
                 for nm2, d2 in data.items():
-                    if nm2 == nm or group_of.get(nm2) == gi:
+                    if nm2 in own:
                         continue
                     hit = d2["bvh"].find_nearest(tuple(p_))
                     if hit[0] is not None and hit[3] <= 0.002:
                         return True
             return False
-        if not (touches(pts_lo) or touches(pts_hi)):
-            floating.append("%s(%s) lowest %.3f" % (di["groups"][gi]["model"], nm, zlo))
-        # a thin sheet's lean
-        lo_, hi_ = V.min(axis=0), V.max(axis=0)
-        C = np.cov((V - V.mean(axis=0)).T)
-        w_, vec = np.linalg.eigh(C)
-        ext = np.sqrt(np.maximum(w_, 0)) * math.sqrt(12.0)           # the extents of a box along its principal axes
-        if ext[0] < 0.012 and ext[1] > 0.04:
-            n_ = vec[:, 0]
-            if n_[1] > 0:
-                n_ = -n_
-            if abs(n_[2]) <= 0.8 and n_[1] < -0.05:
-                n_sheet += 1
-                tilt = math.degrees(math.asin(float(np.clip(n_[2], -1, 1))))          # + : the face looks up: the top leans back
-                if tilt < -3.0:
-                    leaning.append("%s(%s) %.1f deg" % (di["groups"][gi]["model"], nm, tilt))
+        if not (touches(surface_samples(V, T_, zlo, False)) or touches(surface_samples(V, T_, zhi, True))):
+            floating.append("%s(%s) lowest %.3f" % (di["groups"][gi]["model"], nms[0], zlo))
+        # a thin sheet's lean (a single-mesh group)
+        if len(nms) == 1:
+            C = np.cov((V - V.mean(axis=0)).T)
+            w_, vec = np.linalg.eigh(C)
+            ext = np.sqrt(np.maximum(w_, 0)) * math.sqrt(12.0)           # the extents of a box along its principal axes
+            if ext[0] < 0.012 and ext[1] > 0.04:
+                n_ = vec[:, 0]
+                if n_[1] > 0:
+                    n_ = -n_
+                if abs(n_[2]) <= 0.8 and n_[1] < -0.05:
+                    n_sheet += 1
+                    tilt = math.degrees(math.asin(float(np.clip(n_[2], -1, 1))))          # + : the face looks up: the top leans back
+                    if tilt < -3.0:
+                        leaning.append("%s(%s) %.1f deg" % (di["groups"][gi]["model"], nms[0], tilt))
     rows.add("DSP-06", "nothing floats; sheets lean back", not floating and not leaning,
              "%d display pieces, scripted goods and price cards: each rests on or hangs from something (a vertex of its lowest or highest 3 mm within 2 mm of another part of the display): %d float%s; %d thin sheets measured by their principal axes: %d lean toward the glass by more than 3 degrees%s (the kit's GM.sheet had the sign the wrong way until 14 Oct: the newsagent's magazines and papers)" % (
                  n_tested, len(floating), (" (" + "; ".join(floating[:10]) + ")") if floating else "", n_sheet, len(leaning), (" (" + "; ".join(leaning[:10]) + ")") if leaning else ""))
