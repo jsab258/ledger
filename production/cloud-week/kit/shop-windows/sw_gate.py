@@ -212,6 +212,36 @@ def make_glass(night, refl):
     return gm
 
 
+DOOR_PARTS = ("door_leaf", "door_hall_floor", "hall_", "lobby_", "door_threshold", "door_jamb", "door_frame", "side_")
+
+
+def reveal_specs(ctx, front_objs, ycard):
+    """The slabs of the floor under the card, [(name, x0, x1, y0, y1, z0, z1)] in the front model's frame (14 Oct, try 2; the brief's step 0 h and the coordinator's correction of the same day). One slab across the whole card
+    stood in a recessed doorway and showed through the door's glass as a dark block (the grocer's street review, the launderette's). The floor under the card is built over the WINDOW zone only (from y 0.02: the display's
+    bed hides it) and, over each DOOR zone (the shop door's, the side door's), only from behind THAT shop's own door: the deepest back face of the front's door leaf, door hall floor, lobby floor and hall
+    parts that stand in the zone (read from the front's objects, each shop's own: no fixed number), 5 mm clear of it. `front_objs` are objects with .type, .name, .bound_box and .matrix_world (the gate's imported front,
+    or the check's)."""
+    from mathutils import Vector
+    W_ = W
+    wx = [(ctx.window_u[0] - 3000.0) / 1000.0, (ctx.window_u[1] - 3000.0) / 1000.0]
+    out = [("reveal_floor_window", max(wx[0], -W_ / 2), min(wx[1], W_ / 2), 0.02, ycard + 0.02, 0.0, 0.55)]
+    for zn in ("shop_door", "side_door"):
+        zz = ctx.zones.get(zn)
+        if not zz:
+            continue
+        xa, xb = (zz[0] - 3000.0) / 1000.0, (zz[1] - 3000.0) / 1000.0
+        back = 0.0
+        for o in front_objs:
+            if o.type != "MESH" or not o.name.startswith(DOOR_PARTS):
+                continue
+            pts = [o.matrix_world @ Vector(c) for c in o.bound_box]
+            if max(p.x for p in pts) < xa + 0.01 or min(p.x for p in pts) > xb - 0.01:
+                continue
+            back = max(back, max(p.y for p in pts))
+        out.append(("reveal_floor_" + zn, max(xa, -W_ / 2), min(xb, W_ / 2), max(back + 0.005, 0.02), ycard + 0.02, 0.0, 0.55))
+    return out
+
+
 def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_glb, display_glb, hdri, samples=64, log=print, extra=None, res=None, glass_refl=None, mode="beauty", column_pngs=None, groups=None, ctx=None):
     import bpy
     from mathutils import Vector, Matrix
@@ -389,14 +419,8 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
     slab("reveal_r", W / 2, W / 2 + 0.012, 0.0, ycard + 0.02, 0.0, 2.97, wall_r)
     slab("reveal_top", -W / 2, W / 2, 0.0, ycard + 0.02, 2.95, 2.97)
     if (extra or {}).get("reveal_zones", ctx.id != "ritas"):
-        # 14 Oct, try 2 (the grocer's street review, the brief's step 0 h): one slab across the whole card stood in a recessed doorway and showed through the door's glass as a dark block. The floor under the card
-        # is now built over the WINDOW zone only (from y 0.02: the display's bed and the bed's back edge hide it), and over a door zone only from behind the front's own hall or lobby floor (y 0.47)
-        wx_ = [(ctx.window_u[0] - 3000.0) / 1000.0, (ctx.window_u[1] - 3000.0) / 1000.0]
-        slab("reveal_floor_window", max(wx_[0], -W / 2), min(wx_[1], W / 2), 0.02, ycard + 0.02, 0.0, 0.55)
-        for zn_ in ("shop_door", "side_door"):
-            zz_ = ctx.zones.get(zn_)
-            if zz_:
-                slab("reveal_floor_" + zn_, max((zz_[0] - 3000.0) / 1000.0, -W / 2), min((zz_[1] - 3000.0) / 1000.0, W / 2), 0.47, ycard + 0.02, 0.0, 0.55)
+        for (nm_, xa_, xb_, ya_, yb_, za_, zb_) in reveal_specs(ctx, front, ycard):
+            slab(nm_, xa_, xb_, ya_, yb_, za_, zb_)
     else:
         slab("reveal_floor", -W / 2, W / 2, 0.02, ycard + 0.02, 0.0, 0.55)
     for o in disp:
