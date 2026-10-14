@@ -93,9 +93,9 @@ def _scale_picture(path):
 def room(r):
     """The grocer's room (target `shops.grocer.room`: fixtures G-*). What the target leaves open, and what this does:
 
-    gantry G-back-gantry (x -2.6 to 0.1, 0.25 deep): five tiers (board tops 0.45, 0.85, 1.25, 1.65, 2.05). Floor: three plastic_crate_02 at 0.7 of their size (0.284 deep: inside the 0.30 rule) loaded with
+    gantry G-back-gantry (x -2.6 to 0.1, 0.25 deep): five tiers (board tops 0.45, 0.85, 1.25, 1.65, 2.05). Floor: three plastic_crate_03 at their own size (0.265 deep: inside the 0.30 rule; crate_02 is 0.41 deep) loaded with
     yellow_onion (the target loads them with potatoes, which are Sketchfab scans waiting for Jafar's login: onions are a CC0 model and a grocer's crate holds either); 0.45: tins two deep along the whole run; 0.85:
-    two wicker_basket_01 at 0.8 of their size with hamburger_buns at 0.7 (two sets in the baskets, the third on the board), then tins; 1.25: tins and packets; 1.65: packets and tins; 2.05: tins and packets.
+    two wicker_basket_01 and three sets of hamburger_buns at 0.9 (two sets lie across the baskets' rims, the third on the board), then tins; 1.25: tins and packets; 1.65: packets and tins; 2.05: tins and packets.
     The tins (12 designs) and packets (12) are the project's own makers' (HOLMFIELD, PENNYWELL, DALTREY, KINGSMEAD, ASHBY; MEADOWBANK, STANWICK, FERNLEY, TRENTHAM, OAKHAM, LANGDALE): no drink on any label.
     counter G-back-counter (x 0.2 to 2.6, 0.6 deep, 1.0 high, panelled): CashRegister_01 at 0.42 with its dial maker mark blanked, a counter scale (script: a brass and enamel scale with a dial picture).
     shelves G-back-shelves-right (x 0.2 to 2.6, 0.20 deep, tiers 1.40 and 1.78) ON the counter's top: jars (six products, two rows deep) and bottles (washing-up liquid, brown sauce, malt vinegar, salad cream: the
@@ -162,7 +162,7 @@ def room(r):
     tin_kinds = [(0.0375, 0.100), (0.0425, 0.110), (0.045, 0.125), (0.0375, 0.078), (0.040, 0.095)]
     row_t = [D - 0.052, D - 0.140]
     row_p = [D - 0.035, D - 0.095]
-    plan = {0.45: [("tins", xa, xb)], 0.85: [("baskets", xa, xa + 0.78), ("tins", xa + 0.80, xb)], 1.25: [("packets", xa, xb)],
+    plan = {0.45: [("tins", xa, xb)], 0.85: [("baskets", xa, xa + 1.10), ("tins", xa + 1.12, xb)], 1.25: [("packets", xa, xb)],
             1.65: [("packets", xa, xa + 1.30), ("tins", xa + 1.32, xb)], 2.05: [("tins", xa, xa + 1.30), ("packets", xa + 1.32, xb)]}
     for z in tiers:
         gt, gp = GM(), GM()
@@ -181,28 +181,30 @@ def room(r):
             o = gp.to_object("gantry_packets_%.2f" % z, [pack_m], r.sc)
             GB.chamfer(o, 0.0025, 2)
             r.placed_rec("G-back-gantry", "script:packets", gp.extents(), [o.name], tag="packets_%.2f" % z, n=npk)
-    # baskets with rolls on the 0.85 board
+    # baskets with rolls on the 0.85 board (wicker_basket_01 at 0.9, hamburger_buns at 0.9: real size; the rolls lie across the baskets' rims, the third set beside them on the board)
     zb = 0.85
-    bsc = 0.8
-    r.place("wicker_basket_01", (xa + 0.01 + 0.153, D - 0.005, zb), rot=(0, 0, 0), scale=bsc, fixture="G-back-gantry", anchor=("c", "max", "min"), tag="basket")
-    r.place("wicker_basket_01", (xa + 0.01 + 0.153 + 0.32, D - 0.005, zb), rot=(0, 0, 0), scale=bsc, fixture="G-back-gantry", anchor=("c", "max", "min"), tag="basket")
-    bun_s = 0.6
-    for k, xc in enumerate((xa + 0.01 + 0.153, xa + 0.01 + 0.153 + 0.32)):
-        r.place("hamburger_buns", (xc, D - 0.005 - 0.118, zb + 0.024), rot=(0, 0, 0), scale=bun_s, fixture="G-back-gantry", anchor=("c", "c", "min"), tag="rolls")
-    r.place("hamburger_buns", (xa + 0.01 + 0.153 + 0.32, D - 0.005 - 0.118, zb + 0.024 + 0.045), rot=(0, 0, 0), scale=bun_s, fixture="G-back-gantry", anchor=("c", "c", "min"), tag="rolls")
-    # three crates of onions on the floor under the first board
-    cs = 0.7
-    cd = r.dims("plastic_crate_02")
-    for k, xc in enumerate((gx0 + 0.30, gx0 + 0.78, gx0 + 1.26)):
-        ext = r.place("plastic_crate_02", (xc, D - 0.005, 0.0), rot=(0, 0, 0), scale=cs, fixture="G-back-gantry", anchor=("c", "max", "min"), tag="crate")
-        zt = ext[4] + 0.02
+    bsc = 0.9
+    bh = r.dims("wicker_basket_01").z * bsc
+    bw_ = r.dims("wicker_basket_01").x * bsc
+    bxs = [xa + 0.01 + bw_ / 2, xa + 0.02 + bw_ * 1.5]
+    for xc in bxs:
+        r.place("wicker_basket_01", (xc, D - 0.005, zb), rot=(0, 0, 0), scale=bsc, fixture="G-back-gantry", anchor=("c", "max", "min"), tag="basket")
+    bun_s = 0.9
+    for xc in bxs:
+        r.place("hamburger_buns", (xc, D - 0.005 - 0.1325, zb + bh + 0.001), rot=(0, 0, 0), scale=bun_s, fixture="G-back-gantry", anchor=("c", "c", "min"), tag="rolls")
+    r.place("hamburger_buns", (xa + 0.03 + bw_ * 2 + 0.19, D - 0.075, zb), rot=(0, 0, 0), scale=bun_s, fixture="G-back-gantry", anchor=("c", "c", "min"), tag="rolls")
+    # three crates of onions on the floor under the first board (plastic_crate_03 at its own size: crate_02 is 0.41 deep and the gantry's goods stand at most 0.30 off the wall)
+    cs = 1.0
+    for k, xc in enumerate((gx0 + 0.30, gx0 + 0.86, gx0 + 1.42)):
+        ext = r.place("plastic_crate_03", (xc, D - 0.005, 0.0), rot=(0, 0, 0), scale=cs, fixture="G-back-gantry", anchor=("c", "max", "min"), tag="crate")
+        zt = ext[4] + 0.034
         cx_, cy_ = (ext[0] + ext[1]) / 2, (ext[2] + ext[3]) / 2
         for iy in range(3):
             for ix in range(4):
-                r.place("yellow_onion", (cx_ + (ix - 1.5) * 0.077, cy_ + (iy - 1.0) * 0.074, zt), rot=(0, 0, rnd.uniform(0, 6.28)), scale=1.0, fixture="G-back-gantry", anchor=("c", "c", "min"), tag="onion")
+                r.place("yellow_onion", (cx_ + (ix - 1.5) * 0.085, cy_ + (iy - 1.0) * 0.075, zt), rot=(0, 0, rnd.uniform(0, 6.28)), scale=1.0, fixture="G-back-gantry", anchor=("c", "c", "min"), tag="onion")
         for iy in range(2):
             for ix in range(3):
-                r.place("yellow_onion", (cx_ + (ix - 1.0) * 0.077, cy_ + (iy - 0.5) * 0.074, zt + 0.078), rot=(0, 0, rnd.uniform(0, 6.28)), scale=0.92, fixture="G-back-gantry", anchor=("c", "c", "min"), tag="onion")
+                r.place("yellow_onion", (cx_ + (ix - 1.0) * 0.085, cy_ + (iy - 0.5) * 0.075, zt + 0.080), rot=(0, 0, rnd.uniform(0, 6.28)), scale=0.92, fixture="G-back-gantry", anchor=("c", "c", "min"), tag="onion")
     # ---- the counter, the till, the scale
     cx0, cx1, cy0, cy1, ch = r.counter("G-back-counter", panels=True)
     till_s = next(g["size_m"] for g in rr["goods"] if g["model"] == "CashRegister_01") / max(r.dims("CashRegister_01"))
@@ -363,8 +365,8 @@ def display(d):
     the same footprint; what this does (each a Judgement in NOTES.md):
     levels: the bed (the first tier, w 0); step A, a timber bank 0.18 high at the back (v 0.38 to 0.55) under the jars (u 1.55 to 3.15); step B, 0.36 high (v 0.45 to 0.55), three plinths under the three
     tin pyramids (28 tins each: 7 + 6 + ... + 1, one tin deep, a backing board behind each).
-    bed, left to right: three plastic_crate_02 at 0.6 (apples heaped: 40 in all), a wicker_basket_02 with two sets of rolls (hamburger_buns), two plastic_crate_03 at 0.75 with the lemons (12), a low timber tray of 15
-    onions, a tray of 30 tomatoes (script: glossy red flattened spheres with a calyx, one try), a low crate of three bunches of bananas at 0.8.
+    bed, left to right: three plastic_crate_02 at 0.6 (apples heaped: 40 in all), a wicker_basket_02 with two sets of rolls (hamburger_buns), two plastic_crate_03 at 0.9 with the lemons (12), a low timber tray of 15
+    onions, a tray of 30 tomatoes (script: glossy red flattened spheres with a calyx, one try), a crate of three bunches of bananas at 0.9; every Poly Haven piece at 0.9 to 1.1 of its real size (DSP-06).
     PENDING, Sketchfab scans (Jafar's login): cabbage x4, potato x20, satsuma x12, pear x6 (the target's script:cabbage_potato_satsuma): not modelled, no stand-in; the window carries what has a CC0 model.
     price cards: 14, in front of each group, the project's own lettering: no drink, no brand."""
     _setup()
@@ -436,53 +438,53 @@ def display(d):
             _, nm_ = d.piece("food_apple_01", ax, ay, az, rot=(0, 0, rnd.uniform(0, 6.28)), scale=rnd.uniform(0.96, 1.0), tier="apples", tris=None)
             if lay:
                 GB.settle_down(d, nm_)
-    # ---- wicker_basket_02 with rolls, two crate_03 with lemons
-    ext, _ = d.piece("wicker_basket_02", 1.80, 0.18, 0.0, rot=(0, 0, 0), scale=0.85, tier="bed", tris=None)
-    d.piece("hamburger_buns", 1.80, 0.18, ext[5] - 0.07, rot=(0, 0, 0), scale=0.6, tier="basket", tris=None)
-    for k, uc in enumerate((2.15, 2.55)):
-        ext, _ = d.piece("plastic_crate_03", uc, 0.14, 0.0, rot=(0, 0, 0), scale=0.75, tier="bed", tris=None)
+    # ---- wicker_basket_02 with rolls across its rim, two crate_03 with lemons (all at their own size, DSP-06)
+    ext, bn_ = d.piece("wicker_basket_02", 1.80, 0.18, 0.0, rot=(0, 0, 0), scale=1.0, tier="bed", tris=None)
+    _, nm_ = d.piece("hamburger_buns", 1.80, 0.18, ext[5] + 0.001, rot=(0, 0, 0), scale=0.9, tier="basket", tris=None)
+    GB.settle_down(d, nm_, max_drop=0.05)
+    for k, uc in enumerate((2.19, 2.64)):
+        ext, _ = d.piece("plastic_crate_03", uc, 0.14, 0.0, rot=(0, 0, 0), scale=0.9, tier="bed", tris=None)
         cx_, cy_ = (ext[0] + ext[1]) / 2 + L / 2, (ext[2] + ext[3]) / 2
         for j in range(6):
             ix, iy = j % 3, j // 3
             lx, ly = cx_ + (ix - 1.0) * 0.095, cy_ + (iy - 0.5) * 0.075
             _, nm_ = d.piece("lemon", lx, ly, GB.rest_z(d, lx - L / 2, ly, 0.034) + 0.004, rot=(0, 0, rnd.uniform(0, 6.28)), scale=1.0, tier="lemons", tris=None)
             GB.settle_down(d, nm_)
-    # ---- onions in a low tray (15: five by three), tomatoes in a tray (30, script), bananas on a crate (three bunches at 0.7)
-    d.crate("onion_tray", 2.78, 3.24, 0.04, 0.28, 0.0, 0.07)
+    # ---- onions in a low tray (15), tomatoes in a tray (30, script), bananas on a crate (three bunches at their own size)
+    d.crate("onion_tray", 2.88, 3.24, 0.04, 0.34, 0.0, 0.07)
     for j in range(15):
         ix, iy = j % 5, j // 5
-        ox, oy = 2.78 + 0.065 + ix * 0.085, 0.085 + iy * 0.075
-        d.piece("yellow_onion", ox, oy, GB.rest_z(d, ox - L / 2, oy, 0.036), rot=(0, 0, rnd.uniform(0, 6.28)), scale=1.0, tier="onions", tris=None)
-    d.crate("tomato_tray", 3.28, 3.80, 0.04, 0.28, 0.0, 0.06)
+        ox, oy = 2.88 + 0.036 + ix * 0.0725, 0.0825 + iy * 0.080
+        d.piece("yellow_onion", ox, oy, GB.rest_z(d, ox - L / 2, oy, 0.036) if False else 0.07, rot=(0, 0, rnd.uniform(0, 6.28)), scale=1.0, tier="onions", tris=None)
+    d.crate("tomato_tray", 3.27, 3.72, 0.04, 0.30, 0.0, 0.06)
     tom = d.mat("tomato", rgb8(196, 40, 30), rough=0.22)
     calyx = d.mat("tomato_calyx", rgb8(70, 120, 50), rough=0.6)
     gm = GM()
     hz = 0.026
     for j in range(30):
         lay, k = divmod(j, 20)
-        ix, iy = k % 5, k // 5
+        ix, iy = k % 4, k // 4
         if lay == 0:
-            cx, cy, cz = X(3.28 + 0.065 + ix * 0.10), 0.085 + iy * 0.052, 0.06
+            cx, cy, cz = X(3.27 + 0.06 + ix * 0.105), 0.075 + iy * 0.052, 0.06
         else:
-            cx, cy, cz = X(3.28 + 0.115 + (ix % 4) * 0.10), 0.11 + (iy % 2) * 0.052, 0.06 + 0.040
+            cx, cy, cz = X(3.27 + 0.11 + (ix % 3) * 0.105), 0.10 + (iy % 3) * 0.052, 0.06 + 0.040
         rx = 0.042 + rnd.uniform(-0.003, 0.003)
         ts = [-math.pi / 2 + math.pi * t / 8.0 for t in range(1, 8)]
         gm.lathe(cx, cy, cz, [(0.0, 0.0)] + [(rx * math.cos(t), hz * (1.0 + math.sin(t))) for t in ts] + [(0.0, 2 * hz)], mi=0, n=14)
         gm.lathe(cx, cy, cz + 2 * hz - 0.002, [(0.0, 0.0), (0.012, 0.0), (0.014, 0.003), (0.006, 0.006), (0.0, 0.006)], mi=1, n=8)
     d.gm_object("tomatoes", gm, [tom, calyx], "scripted", "script:tomatoes", tier="tray", smooth=True)
-    d.crate("banana_crate", 3.85, 4.28, 0.04, 0.30, 0.0, 0.12)
-    bs = 0.7
+    d.crate("banana_crate", 3.74, 4.29, 0.02, 0.52, 0.0, 0.12)
     bd = d.dims("bananas")
-    d.piece("bananas", 4.065, 0.105, 0.12, rot=(0, 0, 0), scale=bs, tier="crate", tris=None)
-    d.piece("bananas", 4.065, 0.225, 0.12, rot=(0, 0, 0), scale=bs, tier="crate", tris=None)
-    _, nm_ = d.piece("bananas", 4.065, 0.165, 0.24, rot=(0, 0, 0), scale=bs, tier="bananas_top", tris=None)
-    GB.settle_down(d, nm_, max_drop=0.10)
+    d.piece("bananas", 4.015, 0.145, 0.12, rot=(0, 0, 0), scale=1.0 if False else 0.9, tier="crate", tris=None)
+    d.piece("bananas", 4.015, 0.385, 0.12, rot=(0, 0, 0), scale=0.9, tier="crate", tris=None)
+    _, nm_ = d.piece("bananas", 4.015, 0.265, 0.30, rot=(0, 0, 0), scale=0.9, tier="bananas_top", tris=None)
+    GB.settle_down(d, nm_, max_drop=0.12)
     # ---- the price cards (14)
     texts = ["APPLES\n29p lb", "ONIONS\n19p lb", "LEMONS\n8p each", "TOMATOES\n45p lb", "BANANAS\n32p lb", "ROLLS\n6 for 55p", "BEANS\n21p", "SOUP\n18p", "PEAS\n19p", "SARDINES\n29p", "JAM\n59p", "HONEY\n69p", "MARMALADE\n55p", "SALMON\n79p"]
     path = os.path.join(tex, "price_cards.png")
     uvs = GEN.card_atlas(path, texts, cols=4, tile=(256, 128), size=42)
     pm = [d.image_mat("price_cards", path, rough=0.8), d.mat("stake", rgb8(60, 60, 62), rough=0.5, metal=0.7)]
-    spots = [(0.38, 0.0, 0.0), (0.88, 0.0, 0.0), (2.15, 0.0, 0.0), (3.01, 0.0, 0.0), (3.54, 0.0, 0.0), (4.06, 0.0, 0.0), (1.12, 0.0, 0.0), (1.80, 0.0, 0.0), (2.55, 0.0, 0.0),
+    spots = [(0.38, 0.0, 0.0), (0.88, 0.0, 0.0), (2.19, 0.0, 0.0), (3.06, 0.0, 0.0), (3.50, 0.0, 0.0), (4.10, 0.0, 0.0), (1.12, 0.0, 0.0), (1.80, 0.0, 0.0), (2.64, 0.0, 0.0),
              (1.70, 0.40, 0.18), (2.10, 0.40, 0.18), (2.50, 0.40, 0.18), (2.90, 0.40, 0.18), (0.20, 0.0, 0.0)]
     for k, (uc, vv, wz) in enumerate(spots):
         d.price_card(uc, 0.02 if vv == 0.0 else vv, wz, k, uvs, pm)

@@ -303,11 +303,12 @@ def room(r):
 
 # ---------------------------------------------------------------------------------------------------------------------------------- the window
 def display(d):
-    """The chandler's window (target `shops.chandler.display`, 12 item rows; bed 3.35 x 0.55; 1.55 high at most). What this does (each a Judgement in NOTES.md):
-    lifebuoy leaning on its edge against a timber chock at the glass side (u 0.2 to 1.0); two life jackets and two sou'westers hang from a timber rail at w 1.40 on two cords from the window head (u 1.0 to 2.0:
-    jackets behind, hats in front); boots x3 (0.6), Lantern_01 x2, wooden_lantern_01, seadogs_compass x2, oil_tin x4, small_oil_can_01 x3 and the blowtorch on the bed; five coils of rope (natural, blue, orange,
-    white, green: swept tubes with ambientCG Rope001), a pyramid of 21 paint tins (6 + 5 + ... + 1). The woven galvanised mesh screens of the night (target `night`) are a night furniture: not in the day glb, not in the lit
-    night view. Nothing hangs from the ceiling: the rail hangs from the window's head."""
+    """The chandler's window (target `shops.chandler.display`, 12 item rows; bed 3.35 x 0.55; 1.55 high at most). Every Poly Haven piece stands at its real size (DSP-06: a boot at 0.5 is a child's); the target's
+    twelve zones overlap in volume and add up to more than 3.35 x 0.55 at that size, so (each a Judgement in NOTES.md):
+    the lifebuoy leans on its edge at the left (u 0.05 to 0.85, its foot on the bed, its top toward the glass); two life jackets hang from a timber rail at w 1.45 (u 0.95 to 2.45) on two cords from the window head,
+    two sou'westers from a second rail in front of them at w 1.28; FRONT ROW (v 0.13, u 0.92 to 3.30): oil_tin x4, seadogs_compass x2, Lantern_01 x2, small_oil_can_01 x3, the blowtorch; BACK ROW (v 0.40): ONE
+    pair of rubber_boots (the target's 3 do not fit 0.9 m at real size), wooden_lantern_01, four coils of rope (two big on timber crates 60 mm high so that they read from the far pavement, a small one on each; the
+    fifth does not fit), a pyramid of 21 paint tins (6 + 5 + ... + 1). The woven galvanised mesh screens of the night (target `night`) are night furniture: not in the day glb and out of the lit night view."""
     _setup()
     import sw_room_gen as RG
     rr = d.RR
@@ -320,67 +321,61 @@ def display(d):
     GEN.TEXTS.clear()
     GB.fetch_ropes()
     # ---- lifebuoy leaning on its edge (its foot on the bed, its top toward the glass)
-    ext, nm_ = d.piece("lifebuoy", 0.62, 0.22, 0.0, rot=(math.radians(-12), 0, 0), scale=1.0, tier="bed", tris=None)
+    ext, nm_ = d.piece("lifebuoy", 0.45, 0.24, 0.0, rot=(math.radians(-12), 0, 0), scale=1.0, tier="bed", tris=None)
     GB.ground_piece(d, nm_, 0.0)
-    # ---- the rail with the jackets and hats: a timber rail at w 1.40 on two cords from the window head; the jackets hang from it (their tops under the rod), the hats on straps
-    rail_w, rail_v = 1.40, 0.40
+    # ---- the rails: jackets behind, hats in front (hung from the window head on cords)
     rail_m = d.mat("rail_timber", rgb8(120, 84, 54), rough=0.6)
+    rail_w, rail_v = 1.45, 0.42
     gm = GM()
-    gm.rod((X(0.95), rail_v, rail_w), (X(2.05), rail_v, rail_w), 0.014, 0, 12)
-    for xx in (0.98, 2.02):
+    gm.rod((X(0.90), rail_v, rail_w), (X(2.50), rail_v, rail_w), 0.014, 0, 12)
+    for xx in (0.95, 2.45):
         gm.rod((X(xx), rail_v, rail_w + 0.012), (X(xx), rail_v, 1.55), 0.002, 0, 6)
     d.gm_object("rail", gm, [rail_m], "support", "script:crate")
-    for k, uc in enumerate((1.20, 1.62)):
-        _, nm_ = d.piece("life_jacket", uc, rail_v, 0.5, rot=(0, 0, 0), scale=0.7, tier="rail", tris=None)
+    for k, uc in enumerate((1.30, 2.05)):
+        _, nm_ = d.piece("life_jacket", uc, rail_v, 0.5, rot=(0, 0, 0), scale=1.0, tier="rail", tris=None)
         GB.ground_piece(d, nm_, rail_w - 0.013, top=True)
     sg = GM()
     sw_m = [d.mat("oilskin_yellow", rgb8(230, 186, 28), rough=0.32), d.mat("oilskin_seam", rgb8(150, 110, 20), rough=0.5)]
     strap = GM()
     rail2_w, rail2_v, hs = 1.28, 0.12, 0.85
     gm2 = GM()
-    gm2.rod((X(1.15), rail2_v, rail2_w), (X(1.95), rail2_v, rail2_w), 0.010, 0, 12)
-    for xx in (1.18, 1.92):
+    gm2.rod((X(1.15), rail2_v, rail2_w), (X(2.20), rail2_v, rail2_w), 0.010, 0, 12)
+    for xx in (1.18, 2.17):
         gm2.rod((X(xx), rail2_v, rail2_w + 0.008), (X(xx), rail2_v, 1.55), 0.002, 0, 6)
     d.gm_object("rail_front", gm2, [rail_m], "support", "script:crate")
     crown_top = (0.04 + 0.105) * hs
     hat_z = rail2_w - 0.012 - 0.035 - crown_top
-    for uc in (1.40, 1.78):
+    for uc in (1.45, 1.90):
         GB.souwester(sg, X(uc), rail2_v, hat_z, s=hs, mi=0, mi_seam=1, face=-1.0)
         strap.rod((X(uc), rail2_v, rail2_w - 0.008), (X(uc), rail2_v, hat_z + crown_top + 0.001), 0.0022, 0, 6)
     d.gm_object("sou_westers", sg, sw_m, "scripted", "script:oilskin_sou_wester", tier="rail", smooth=True)
     d.gm_object("sou_wester_straps", strap, [d.mat("strap", rgb8(60, 52, 44), rough=0.8)], "support", "script:crate")
-    # ---- the bed: boots, lanterns, compasses, oil tins, cans, blowtorch
-    for k, uc in enumerate((0.35, 0.75, 1.15)):
-        d.piece("rubber_boots", uc, 0.42, 0.0, rot=(0, 0, 0), scale=0.5, tier="bed", tris=None)
-    for k, uc in enumerate((1.35, 1.60)):
-        d.piece("Lantern_01", uc, 0.34, 0.0, rot=(0, 0, rnd.uniform(-0.3, 0.3)), scale=1.0, tier="bed", tris=None)
-    d.piece("wooden_lantern_01", 1.95, 0.32, 0.0, rot=(0, 0, 0.3), scale=1.0, tier="bed", tris=None)
-    for k, uc in enumerate((2.45, 2.70)):
-        d.piece("seadogs_compass", uc, 0.18, 0.0, rot=(0, 0, rnd.uniform(-0.6, 0.6)), scale=1.0, tier="bed", tris=None)
-    for k, uc in enumerate((0.35, 0.50, 0.65, 0.80)):
-        d.piece("oil_tin", uc, 0.14, 0.0, rot=(0, 0, math.pi / 2), scale=1.0, tier="bed", tris=None)
-    for k, uc in enumerate((1.35, 1.65, 1.95)):
-        d.piece("small_oil_can_01", uc, 0.12, 0.0, rot=(0, 0, 0), scale=1.0, tier="bed", tris=None)
-    d.piece("brass_blowtorch", 0.98, 0.14, 0.0, rot=(0, 0, math.pi / 2), scale=1.0, tier="bed", tris=None)
-    # ---- coils of rope: two big on the bed, two small on them, one small in front
+    # ---- the front row (v 0.13): oil tins, compasses, lanterns, cans, the blowtorch
+    front = [("oil_tin", math.pi / 2, 1.0)] * 4 + [("seadogs_compass", 0.0, 1.0)] * 2 + [("Lantern_01", 0.0, 1.0)] * 2 + [("small_oil_can_01", 0.0, 1.0)] * 3 + [("brass_blowtorch", math.pi / 2, 1.0)]
+    placed_f = GB.row_pack(d, front, 0.92, 3.31, 0.13, gap=0.018, rnd=rnd, yaw_jitter=0.05)
+    # ---- the back row (v 0.40): the boots, the wooden lantern
+    placed_b = GB.row_pack(d, [("rubber_boots", 0.0, 1.0), ("wooden_lantern_01", 0.0, 1.0)], 0.92, 2.08, 0.40, gap=0.03)
+    # ---- two big coils of rope on crates 60 mm high, a small one on each; the pyramid of paint tins beside them
     rm = []
     for i, c in enumerate(ROPE_COLOURS):
         pth = os.path.join(tex, "rope_%d.png" % i)
         GB.rope_png(pth, c, which=1, size=512)
         rm.append(d.image_mat("rope_%d" % i, pth, rough=0.9))
-    coils = [(2.22, 0.36, 0.088, 2.4, 2, 0.0, 0), (2.58, 0.36, 0.088, 2.4, 2, 0.0, 1), (2.22, 0.36, 0.0918, 1.8, 1, 0.0338, 2), (2.58, 0.36, 0.0918, 1.8, 1, 0.0338, 3), (2.40, 0.10, 0.050, 1.8, 1, 0.0, 4)]
-    for k, (uc, vc, Rin, turns, lay, zc, ci) in enumerate(coils):
+    for k, (uc, ci_big, ci_small) in enumerate(((2.26, 0, 2), (2.59, 1, 3))):
+        d.crate("coil_crate_%d" % k, uc - 0.16, uc + 0.16, 0.26, 0.54, 0.0, 0.06)
         g = GM()
-        GB.rope_coil(g, (X(uc), vc, zc + 0.0095), Rin, turns, 0.0095, axis="z", mi=0, layers=lay)
-        d.gm_object("rope_coil_%d" % k, g, [rm[ci]], "scripted", "script:rope_coils", tier="bed", smooth=True)
-    # ---- the pyramid of 21 paint tins
+        GB.rope_coil(g, (X(uc), 0.40, 0.06 + 0.0095), 0.088, 2.4, 0.0095, axis="z", mi=0, layers=2)
+        d.gm_object("rope_coil_%d" % (2 * k), g, [rm[ci_big]], "scripted", "script:rope_coils", tier="crate", smooth=True)
+        g = GM()
+        GB.rope_coil(g, (X(uc), 0.40, 0.06 + 0.0338 + 0.0095), 0.0918, 1.8, 0.0095, axis="z", mi=0, layers=1)
+        d.gm_object("rope_coil_%d" % (2 * k + 1), g, [rm[ci_small]], "scripted", "script:rope_coils", tier="crate", smooth=True)
     tp = os.path.join(tex, "marine_tins.png")
     tuv = GB.tin_atlas(tp, TIN_DESIGNS, tile=(256, 128), cols=4)
     tin_label = d.image_mat("marine_tin_labels", tp, rough=0.5)
     metal = d.mat("tin_metal", rgb8(168, 168, 164), rough=0.35, metal=0.85)
     r_t, h_t = 0.0475, 0.086
     gm = GM()
-    u_c = 3.03
+    u_c = 3.05
     for row in range(6):
         nrow = 6 - row
         x_start = X(u_c) - nrow * 2 * r_t * 1.02 / 2
@@ -391,12 +386,13 @@ def display(d):
     gm = GM()
     gm.box(X(u_c - 0.31), X(u_c + 0.31), 0.50, 0.515, 0.0, 0.54, 0)
     d.gm_object("pyramid_backing", gm, [back_m], "support", "script:backing_board")
-    # ---- price cards
-    texts = ["LIFEBUOY\n£12.50", "JACKETS\n£9.95", "ROPE\n85p a metre", "BOOTS\n£6.75", "LAMPS\n£4.20", "COMPASS\n£5.50", "OIL\n£1.60", "PAINT\n£3.45", "SOU'WESTERS\n£2.95", "BLOWTORCH\n£7.25"]
+    # ---- price cards, each in front of its goods
+    texts = ["LIFEBUOY\n\u00a312.50", "JACKETS\n\u00a39.95", "ROPE\n85p a metre", "BOOTS\n\u00a36.75", "LAMPS\n\u00a34.20", "COMPASS\n\u00a35.50", "OIL\n\u00a31.60", "PAINT\n\u00a33.45", "SOU'WESTERS\n\u00a32.95", "BLOWTORCH\n\u00a37.25"]
     path = os.path.join(tex, "price_cards.png")
     uvs = GEN.card_atlas(path, texts, cols=4, tile=(256, 128), size=40)
     pm = [d.image_mat("price_cards", path, rough=0.8), d.mat("stake", rgb8(60, 60, 62), rough=0.5, metal=0.7)]
-    spots = [(0.35, 0.03), (1.50, 0.50), (2.40, 0.03), (0.35, 0.03), (1.47, 0.03), (2.58, 0.03), (0.65, 0.03), (3.03, 0.03), (1.72, 0.50), (0.98, 0.03)]
+    fu = {a: [u for (aa, u, e) in placed_f if aa == a] for a in {x[0] for x in placed_f}}
+    spots = [(0.45, 0.02), (1.45, 0.20), (2.40, 0.22), (1.40, 0.28), (fu["Lantern_01"][0], 0.03), (fu["seadogs_compass"][0], 0.03), (fu["oil_tin"][1], 0.03), (3.05, 0.03), (1.90, 0.20), (fu["brass_blowtorch"][0], 0.03)]
     for k, (uc, vv) in enumerate(spots):
-        d.price_card(uc, vv, 0.0, k, uvs, pm)
+        d.price_card(uc, vv, 0.0 if vv < 0.1 else 0.0, k, uvs, pm)
     d.display_texts = list(GEN.TEXTS) + [t.replace("\n", " ") for t in texts]

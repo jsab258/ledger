@@ -1283,6 +1283,35 @@ def dsp05_float_rows(R, work, assets, rows):
                  n_tested, len(floating), (" (" + "; ".join(floating[:10]) + ")") if floating else "", n_sheet, len(leaning), (" (" + "; ".join(leaning[:10]) + ")") if leaning else ""))
 
 
+FURNITURE_H = {"round_wooden_table_02": (0.72, 0.76, "a table top at 0.72 to 0.76 m"), "painted_wooden_chair_01": (0.80, 0.96, "a cafe chair 0.80 to 0.96 m high overall (the seat at 0.44 to 0.47)")}
+
+
+def dsp06_size_rows(R, work, rows):
+    """DSP-06 (tea rooms street review, 14 Oct 2026; the coordinator's numbering: DSP-05 is the floating-goods row): every Poly Haven piece of the display stands at 0.9 to 1.1 of its real height (the models are
+    real-size scans: a piece scaled evenly to 0.5 is a child's boot, a child's table), and the furniture (a table, a chair) at the standard British heights. The tea rooms' table was shrunk to a 0.50 m top (0.47 m
+    high) and its chairs to 0.75: child-size furniture under a full-size tea set, which also breaks the no-children rule. A model scaled on its width or depth axes only (a flattening) keeps its real height and is
+    not counted here: a scripted piece is not either (its sizes are from the target)."""
+    di = json.load(open(os.path.join(work, "display_work", "display_items.json")))
+    bad, n = [], 0
+    furn = []
+    for it in di["items"]:
+        m = str(it["model"]).split("#")[0]
+        if m.startswith("script:"):
+            continue
+        n += 1
+        sc = float(it.get("scale", 1.0))
+        if sc < 0.9 - 1e-3 or sc > 1.1 + 1e-3:
+            bad.append("%s %.2f" % (m, sc))
+        if m in FURNITURE_H:
+            h = it["ext"][5] - it["ext"][4]
+            lo, hi, why = FURNITURE_H[m]
+            furn.append("%s %.2f m high (%s)" % (m, h, why))
+            if not (lo - 0.02 <= h <= hi + 0.02):
+                bad.append("%s %.2f m high, wanted %s" % (m, h, why))
+    rows.add("DSP-06", "display pieces at their real size", not bad, "%d Poly Haven pieces of the display: scale 0.9 to 1.1 of the model's real size (the models are real-size scans)%s; furniture: %s%s" % (
+        n, ("; OUT OF RANGE: " + ", ".join(sorted(set(bad)))) if bad else "", "; ".join(furn) or "none in this display", " (the tea rooms' table was 0.47 m high and its chairs at 0.75 in batch A)"))
+
+
 def frn11_rows(glb, members, rows, hs):
     """FRN-11 (the ironmonger's street review, narrow point 1, 14 Oct 2026): no part of a hanging sign passes through any other part of the front (the cornice, a pilaster's capital, a console, the fascia). The front glb is
     loaded, every mesh inset 1 mm along its normals (a 2 mm contact is tolerated) and each sign part (names `sign_*`) tested against every other front part whose box overlaps it by a BVH overlap. The signs are in the

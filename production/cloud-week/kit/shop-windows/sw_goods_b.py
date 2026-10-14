@@ -713,8 +713,8 @@ def settle_down(d, names, max_drop=0.06, step=0.0005, touch=0.0012):
         return 0.0
     P = np.array(pts)
     lo, hi = P.min(axis=0), P.max(axis=0)
-    if len(P) > 300:
-        P = P[np.random.default_rng(1).choice(len(P), 300, replace=False)]
+    if len(P) > 1500:
+        P = P[np.random.default_rng(1).choice(len(P), 1500, replace=False)]
     trees = []
     for ob in bpy.data.objects:
         if ob.type != "MESH" or ob.name in own or d.coll_t in ob.users_collection or ob.hide_render:
@@ -812,3 +812,19 @@ def enamel_tray(gm, cx, cy, z0, w=0.37, d=0.30, h=0.05, mi=0, mi_rim=0):
     r_ = 0.004
     for (a, b) in (((cx - w / 2, cy - d / 2), (cx + w / 2, cy - d / 2)), ((cx - w / 2, cy + d / 2), (cx + w / 2, cy + d / 2)), ((cx - w / 2, cy - d / 2), (cx - w / 2, cy + d / 2)), ((cx + w / 2, cy - d / 2), (cx + w / 2, cy + d / 2))):
         gm.rod((a[0], a[1], z0 + h), (b[0], b[1], z0 + h), r_, mi_rim, 8)
+
+
+def row_pack(d, items, u0, u1, v, gap=0.02, w=0.0, tier="bed", yaw_jitter=0.0, rnd=None):
+    """Put Poly Haven pieces side by side along the window from u0 toward u1 on one row (the footprint of each after its turn: `d.dims`), centred on depth `v`, standing on height `w`. `items` = [(asset, rot_z, scale), ...].
+    Raises when the row does not fit (a layout is a table of widths written down first: lesson 25). Returns the list of (asset, u_centre, ext)."""
+    out = []
+    u = u0
+    for asset, rz, sc in items:
+        dm = d.dims(asset, (0, 0, rz))
+        wd = dm.x * sc
+        if u + wd > u1 + 1e-6:
+            raise ValueError("row_pack: %s does not fit (%.3f + %.3f > %.3f)" % (asset, u, wd, u1))
+        ext, nm = d.piece(asset, u + wd / 2.0, v, w, rot=(0, 0, rz + (rnd.uniform(-yaw_jitter, yaw_jitter) if rnd else 0.0)), scale=sc, tier=tier, tris=None)
+        out.append((asset, u + wd / 2.0, ext))
+        u += wd + gap
+    return out

@@ -11,7 +11,7 @@
  "adaptations": [
   "Frame sets T and F only (the target's FIXES-APPLIED.md: the planted-stop frame FF6 and its frame_change are gone; F6 stands in frame F, an inward-opening 838 leaf).",
   "A1: the drawing's frame, transom glass and visible leaf are compared as what shows from the street (the nearest part wins), because a pane is let 6 mm into its frame's slot and a leaf laps 20.4 behind its stops; the glazing bead counts as glass (it stands on the pane inside the opening).",
-  "A3 mouldings: the drawing's ring (target_drawing.py, which is not this unit's file and is not changed) starts at the opening's edge and runs 46 (T1) or 43 (F1, F2) inward; the 3.1 build's bolection stands 4.8 outside the opening's edge (its lap over the framing) and so reaches 41.2 or 38.2 in. Since the try 1 reviews the target states that lap (kinds.*.mouldings.outside.lap_over_framing_mm 4.8) and the row compares with the ring grown by it; the literal ring stays an extra, failing only for that reason (the drawing script is owed the same change).",
+  "A3 mouldings: the 3.1 build's bolection stands 4.8 outside the opening's edge (its lap over the framing) and so reaches 41.2 or 38.2 in from it (T1 46, F1 and F2 43 wide). The target states that lap (kinds.*.mouldings.outside.lap_over_framing_mm 4.8) and, since the try 2 reviews (14 Oct, try 3), target_drawing.py draws the ring with it: the required row compares with the ring grown by it, and the literal extra with the drawing's own ring, and both pass.",
   "T3 (changed 13 Oct, from the try 1 reviews): the target's profile is two steps 6 mm deep over 6 mm across (the margin 6 below the face, the field 12), the second cove at d 62.5 to 68.5, built to it; the first target's coves (3 deep over 14, the second at d 76 to 90) dipped 1 to 3 per cent in the street view against D4's 14 to 40.",
   "PL-T3-members (changed 13 Oct): the target's border is now 62.5, the flat margin between the outer and the inner outline at the sides.",
   "F7 (changed 13 Oct): the target's leaf is now 47 thick (boards 22, ledges 25, braces 25); the first build had thin 16 mm ledges (the leaf 38).",
@@ -414,11 +414,11 @@
   {
    "id": "FU-T1-scraper-facets",
    "group": "FU",
-   "ok": false,
+   "ok": true,
    "measured": {
-    "segments_over_5mm_built": 12,
-    "straight_sides_in_the_target": 6,
-    "longest_mm": 76.9
+    "segments_over_5mm_built": 5,
+    "straight_sides_in_the_target": 5,
+    "longest_mm": 168.8
    },
    "expected": {
     "max_facet_mm": 5.0
@@ -1822,36 +1822,36 @@
   {
    "id": "PL-T3-quirk",
    "group": "PL",
-   "ok": false,
+   "ok": true,
    "measured": {
     "lower_outer_left": {
      "floor_depth": 3.0,
-     "width": 6.05,
+     "width": 5.0,
      "surface_beyond": 0.0
     },
     "lower_inner_left": {
      "floor_depth": 9.0,
-     "width": 6.05,
+     "width": 5.0,
      "surface_beyond": 6.0
     },
     "lower_outer_foot": {
      "floor_depth": 3.0,
-     "width": 6.0,
+     "width": 5.0,
      "surface_beyond": 0.0
     },
     "lower_inner_foot": {
      "floor_depth": 9.0,
-     "width": 6.0,
+     "width": 5.0,
      "surface_beyond": 6.0
     },
     "upper_outer_head": {
      "floor_depth": 3.0,
-     "width": 6.05,
+     "width": 5.0,
      "surface_beyond": 0.0
     },
     "upper_inner_crown": {
      "floor_depth": 9.0,
-     "width": 6.05,
+     "width": 5.0,
      "surface_beyond": 6.0
     }
    },
@@ -7400,8 +7400,10 @@
     "previews_street_close": [
      "T2-close-v1-2026-10-13.jpg",
      "T2-close-v2-2026-10-13.jpg",
+     "T2-close-v3-2026-10-14.jpg",
      "T2-street-v1-2026-10-13.jpg",
-     "T2-street-v2-2026-10-13.jpg"
+     "T2-street-v2-2026-10-13.jpg",
+     "T2-street-v3-2026-10-14.jpg"
     ]
    },
    "expected": 8,
@@ -7425,8 +7427,10 @@
     "previews_street_close": [
      "T3-close-v1-2026-10-13.jpg",
      "T3-close-v2-2026-10-13.jpg",
+     "T3-close-v3-2026-10-14.jpg",
      "T3-street-v1-2026-10-13.jpg",
-     "T3-street-v2-2026-10-13.jpg"
+     "T3-street-v2-2026-10-13.jpg",
+     "T3-street-v3-2026-10-14.jpg"
     ]
    },
    "expected": 7,
@@ -7500,6 +7504,7 @@
     "previews_street_close": [
      "F3-close-v1-2026-10-13.jpg",
      "F3-close-v2-2026-10-13.jpg",
+     "F3-close-v3-2026-10-14.jpg",
      "F3-street-v1-2026-10-13.jpg",
      "F3-street-v2-2026-10-13.jpg"
     ]
@@ -7601,6 +7606,7 @@
     "previews_street_close": [
      "F7-close-v1-2026-10-13.jpg",
      "F7-close-v2-2026-10-13.jpg",
+     "F7-close-v3-2026-10-14.jpg",
      "F7-street-v1-2026-10-13.jpg",
      "F7-street-v2-2026-10-13.jpg"
     ]
@@ -7614,37 +7620,33 @@
    "group": "PL",
    "ok": false,
    "measured": {
-    "face_brightness": 172.6,
-    "least_dip": 0.007,
+    "face_brightness": 172.5,
+    "least_dip": 0.093,
     "by_orientation": {
-     "foot_and_top_outlines_least": 0.207,
-     "right_hand_outlines_least": 0.084,
-     "left_hand_outlines_least": 0.007
+     "foot_and_top_outlines_least": 0.255,
+     "right_hand_outlines_least": 0.093,
+     "left_hand_outlines_least": 0.117
     },
     "outlines_under_the_limit": [
-     "lower_panel_inner_left",
-     "lower_panel_outer_left",
-     "lower_panel_outer_right",
-     "upper_panel_inner_left",
-     "upper_panel_outer_left"
+     "lower_panel_outer_right"
     ],
     "dips": {
-     "upper_panel_outer_left": 0.011,
-     "upper_panel_outer_right": 0.1,
-     "upper_panel_outer_foot": 0.207,
-     "upper_panel_outer_top": 0.346,
-     "upper_panel_inner_left": 0.018,
-     "upper_panel_inner_right": 0.121,
-     "upper_panel_inner_foot": 0.225,
-     "upper_panel_inner_top": 0.386,
-     "lower_panel_outer_left": 0.013,
-     "lower_panel_outer_right": 0.084,
-     "lower_panel_outer_foot": 0.22,
-     "lower_panel_outer_top": 0.32,
-     "lower_panel_inner_left": 0.007,
-     "lower_panel_inner_right": 0.106,
-     "lower_panel_inner_foot": 0.223,
-     "lower_panel_inner_top": 0.311
+     "upper_panel_outer_left": 0.117,
+     "upper_panel_outer_right": 0.105,
+     "upper_panel_outer_foot": 0.292,
+     "upper_panel_outer_top": 0.31,
+     "upper_panel_inner_left": 0.117,
+     "upper_panel_inner_right": 0.119,
+     "upper_panel_inner_foot": 0.319,
+     "upper_panel_inner_top": 0.37,
+     "lower_panel_outer_left": 0.175,
+     "lower_panel_outer_right": 0.093,
+     "lower_panel_outer_foot": 0.255,
+     "lower_panel_outer_top": 0.293,
+     "lower_panel_inner_left": 0.13,
+     "lower_panel_inner_right": 0.119,
+     "lower_panel_inner_foot": 0.275,
+     "lower_panel_inner_top": 0.274
     }
    },
    "expected": {
@@ -7652,20 +7654,20 @@
     "outlines": 16
    },
    "kind": "T3",
-   "note": "on the street picture (camera 3.5 m out, 2 m along, eye 1.6 m; 1600 x 1200), across each of the 16 outlines of the two panels (the outer and the inner outline, both sides and top and foot, at each panel's middle) the brightness changes by at least 10 per cent of the leaf face's brightness within 4 px of where the outline projects: (the greatest less the least of a 4-sample band averaged along 15 px) divided by the median of the leaf face [measured on T3-street-v2-2026-10-13.jpg]"
+   "note": "on the street picture (camera 3.5 m out, 2 m along, eye 1.6 m; 1600 x 1200), across each of the 16 outlines of the two panels (the outer and the inner outline, both sides and top and foot, at each panel's middle) the brightness changes by at least 10 per cent of the leaf face's brightness within 4 px of where the outline projects: (the greatest less the least of a 4-sample band averaged along 15 px) divided by the median of the leaf face [measured on T3-street-v3-2026-10-14.jpg]"
   },
   {
    "id": "GA-T2-nets-lit",
    "group": "GA",
-   "ok": false,
+   "ok": true,
    "measured": {
-    "nets_median": 183.3,
-    "transom_bar_median": 187.5,
-    "ratio": 0.978
+    "nets_median": 160.9,
+    "transom_bar_median": 187.8,
+    "ratio": 0.857
    },
    "expected": "0.80 to 0.90 of the transom bar's face",
    "kind": "T2",
-   "note": "T2's four lights, on the street picture, read 0.80 to 0.90 of the transom bar's front face: pale like D3's nets, and a little darker than the white frame [measured on T2-street-v2-2026-10-13.jpg]"
+   "note": "T2's four lights, on the street picture, read 0.80 to 0.90 of the transom bar's front face: pale like D3's nets, and a little darker than the white frame [measured on T2-street-v3-2026-10-14.jpg]"
   },
   {
    "id": "GLB:fitting:BL1",
@@ -9427,7 +9429,7 @@
   {
    "id": "MAT-chrome_nickel",
    "group": "MAT",
-   "ok": false,
+   "ok": true,
    "measured": {
     "LP2.glb": [
      196.0,
@@ -9465,9 +9467,9 @@
      196.0
     ],
     "door_F6.glb": [
-     170.0,
-     170.0,
-     168.0
+     196.0,
+     197.0,
+     196.0
     ]
    },
    "expected": [
@@ -9481,11 +9483,11 @@
   {
    "id": "TG-makers-frozen",
    "group": "TG",
-   "ok": false,
+   "ok": true,
    "measured": {
     "guard_in_text": true,
     "exit_code": 1,
-    "says_frozen": false,
+    "says_frozen": true,
     "target_json_unchanged": true
    },
    "expected": {
@@ -9553,14 +9555,9 @@
  ],
  "summary": {
   "required_run": 645,
-  "required_passed": 639,
+  "required_passed": 644,
   "required_failed": [
-   "FU-T1-scraper-facets",
-   "PL-T3-quirk",
-   "PL-T3-street-dip",
-   "GA-T2-nets-lit",
-   "MAT-chrome_nickel",
-   "TG-makers-frozen"
+   "PL-T3-street-dip"
   ],
   "extras_run": 61,
   "extras_passed": 42,
@@ -9586,7 +9583,7 @@
    "A3:F7:handle:HD4"
   ]
  },
- "seconds": 298.4,
+ "seconds": 282.8,
  "controls": {
   "run": 85,
   "caught": 85,

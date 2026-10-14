@@ -903,6 +903,7 @@ def run(ctx, assets, previews, out_json):
         gate_rows(ctx, rows, m)
         X.display_rows(ctx.R, ctx.work, assets, rows)
         X.dsp05_float_rows(ctx.R, ctx.work, assets, rows)
+        X.dsp06_size_rows(ctx.R, ctx.work, rows)
         trade_rows(ctx, rows, extra.get("families", {}))
         X.lit02b_rows(ctx.R, ctx.work, rows)
         X.gate_frame_rows(ctx.R, ctx.work, rows)
