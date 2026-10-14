@@ -583,6 +583,23 @@ def front_rows(ctx, rows, assets, members_path=None):
             "kick panel" if dv == "M2" else "bottom rail", hinge_viewer, "bronze" if dv == "M2" else "chrome", "; a raised field on the kick panel" if dv == "M2" else ""))
     else:
         rows.add("FRN-03", "the shop door", False, "door variant %s has no row in this check yet" % dv)
+    # FRN-03 (hours plate, 14 Oct, from the tea rooms' street review N2): where 4.1 drew an hours plate for the shop (a small panel), it is inside the door's glass under the OPEN card, behind the glass, the card's own depth
+    try:
+        man_h = json.load(open(os.path.join(work, "fascias", "manifest.json")))
+        hp_want = [p for p in man_h.get("small_panels", []) if p.get("id") == "hours_plate." + ctx.id]
+    except Exception:
+        hp_want = []
+    if hp_want:
+        hpm = m.get("door_sign_hours_plate")
+        card = m.get("door_sign_open")
+        gg_ = m["door_glass_0"]
+        okh = bool(hpm and card)
+        if okh:
+            uc_ = (hpm["u"][0] + hpm["u"][1]) / 2.0
+            okh = (near(uc_, (card["u"][0] + card["u"][1]) / 2.0, 3) and near(hpm["u"][1] - hpm["u"][0], hp_want[0]["size_mm"][0], 2) and near(hpm["z"][1] - hpm["z"][0], hp_want[0]["size_mm"][1], 2)
+                   and hpm["z"][1] <= card["z"][0] - 40 and hpm["z"][0] >= gg_["z"][0] + 6 and hpm["u"][0] >= gg_["u"][0] + 6 and hpm["u"][1] <= gg_["u"][1] - 6 and near(hpm["d"][0], card["d"][0], 1) and hpm["d"][0] < gg_["d"][0])
+        rows.add("FRN-12", "the hours plate on the door's glass", okh, "4.1's hours_plate.%s (%s, %.0f x %.0f): %s; inside the glass at the card's depth, under the OPEN card (its top at z %s, the card's foot at z %.0f), inside the pane" % (
+            ctx.id, "; ".join(hp_want[0].get("lines", [])), hp_want[0]["size_mm"][0], hp_want[0]["size_mm"][1], "present" if hpm else "MISSING", [round(v) for v in hpm["z"]] if hpm else None, card["z"][0] if card else 0))
     # FRN-04 the glass and the toplight layout
     u0 = win_u[0]
     bars = sorted([(v["u"][0] - u0, v["u"][1] - u0) for k, v in m.items() if k.startswith("win_bar_") or k.startswith("win_mbar_")])

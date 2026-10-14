@@ -219,15 +219,15 @@ def room(r):
     hx0, hx1 = fx["C-back-hooks"]["x"]
     hx1 = 2.60
     wood = r.mat("hooks_board", rgb8(112, 76, 46), rough=0.6)
-    r.box("hooks_board", hx0, hx1, D - 0.030, D - 0.005, 2.04, 2.20, wood, fixture="C-back-hooks")
+    r.box("hooks_board", hx0, hx1, D - 0.030, D - 0.005, 2.04, 2.28, wood, fixture="C-back-hooks")
     gm = GM()
     for k, xc in enumerate((0.76, 1.50)):
         gm.rod((xc, D - 0.030, 2.12), (xc, D - 0.075, 2.12), 0.007, 0, 8)
         r.place("life_jacket", (xc, D - 0.075, 2.12 - 0.02), rot=(0, 0, 0), scale=1.0, fixture="C-back-hooks", anchor=("c", "max", "max"), tag="jacket")
     lsc = 0.9
     lbx = 2.24
-    gm.rod((lbx, D - 0.030, 2.12), (lbx, D - 0.065, 2.12), 0.007, 0, 8)
-    r.place("lifebuoy", (lbx, D - 0.065, 2.12), rot=(0, 0, 0), scale=lsc, fixture="C-back-hooks", anchor=("c", "max", "max"), tag="lifebuoy")
+    gm.rod((lbx, D - 0.030, 2.20), (lbx, D - 0.065, 2.20), 0.007, 0, 8)
+    r.place("lifebuoy", (lbx, D - 0.065, 2.20), rot=(0, 0, 0), scale=lsc, fixture="C-back-hooks", anchor=("c", "max", "max"), tag="lifebuoy")
     o = gm.to_object("hooks_pegs", [brass], r.sc)
     r.fixture_rec("C-back-hooks", "hooks_pegs", gm.extents())
     # ---- the left wall: six chart sheets, a tide table card, a board with a flat coil of rope

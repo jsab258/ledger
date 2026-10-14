@@ -226,16 +226,16 @@ def room(r):
         ld.shadow_soft_size = 0.01
         lo = bpy.data.objects.new("running_lamp_%d" % k, ld)
         r.sc.collection.objects.link(lo)
-        lo.location = (lx, ly - 0.03, lz)
+        lo.location = (lx, ly - 0.05, lz)
         r.run_lamps.append(lo)
-    r.run_lamp_w = 5.0
+    r.run_lamp_w = 0.9
     r.rows["running_lamps"] = {"n": len(lamps), "at": [[round(a, 3), round(b, 3), round(c, 3)] for a, b, c in lamps], "lit_in": "night_dark only"}
     orig_set_state = r.set_state
 
     def set_state(state, P, _o=orig_set_state):
         _o(state, P)
         on = state == "night_dark"
-        mats[M_LAMP_ON].node_tree.nodes["Principled BSDF"].inputs["Emission Strength"].default_value = 40.0 if on else 0.0
+        mats[M_LAMP_ON].node_tree.nodes["Principled BSDF"].inputs["Emission Strength"].default_value = 7.0 if on else 0.0
         for lo_ in r.run_lamps:
             lo_.data.energy = P.get("run_lamp", r.run_lamp_w) if on else 0.0
     r.set_state = set_state

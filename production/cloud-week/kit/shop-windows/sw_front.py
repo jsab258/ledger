@@ -1208,6 +1208,16 @@ def build_front(out_dir, work_dir, fasc_dir, paper_dir, log=print, ctx=None):
         members[sign.name] = {"u": [uc - 100.0, uc + 100.0], "z": [1445.0, 1555.0], "d": [37.0 - rec, 37.0 - rec], "group": "door_sign", "image": spath}
         cup = bs.new_obj("door_sign_cup", *cyl_d(uc, 1548.0, 36.0 - rec, 38.0 - rec, 12.0, 12))
         to_metres(cup, F.mats["steel"])
+        # (batch B, from the tea rooms' street review N2) 4.1's hours plate (a small panel, 300 x 190, drawn for the shops that have one: the launderette's engraved plate, the cafe's card) inside the same glass,
+        # under the OPEN card (top z 1380, 65 mm clear of the card's foot), behind the glass like the card; named door_sign_ so the glass and front checks treat it as the card is treated
+        man_ = json.load(open(os.path.join(fasc_dir, "manifest.json")))
+        hp_ = [p for p in man_.get("small_panels", []) if p.get("id") == "hours_plate." + ctx.id]
+        if hp_:
+            hpath = os.path.join(fasc_dir, hp_[0]["files"]["basecolour"]["file"])
+            pw_, ph_ = hp_[0]["size_mm"]
+            hp = quad_obj("door_sign_hours_plate", uc - pw_ / 2.0, uc + pw_ / 2.0, 1380.0 - ph_, 1380.0, 37.0 - rec)
+            hp.data.materials.append(image_material("door_hours_plate", hpath, alpha=False, rough=0.45))
+            members[hp.name] = {"u": [uc - pw_ / 2.0, uc + pw_ / 2.0], "z": [1380.0 - ph_, 1380.0], "d": [37.0 - rec, 37.0 - rec], "group": "door_sign", "image": hpath, "lines": hp_[0].get("lines")}
     # the lattice (night grille) as its own object (Rita's only)
     lat, nrivets = (F.lattice() if ctx.has_grille else (None, 0))
     if lat is not None:

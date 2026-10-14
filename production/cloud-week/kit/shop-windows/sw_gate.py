@@ -269,7 +269,7 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
     # picture (night_dark); in the lit night frames (and a dark shop's night_lit test frames) it reads OPEN. Rita's gate keeps its rule (her approved previews show CLOSED)
     turn_sign = night if ctx.id == "ritas" else (state == "night_dark")
     for o in front:
-        if o.type == "MESH" and o.name.startswith("door_sign"):
+        if o.type == "MESH" and o.name.startswith("door_sign_open"):
             for slot in o.material_slots:
                 m = slot.material
                 if m and turn_sign:
