@@ -336,10 +336,17 @@ def display(d):
     sg = GM()
     sw_m = [d.mat("oilskin_yellow", rgb8(230, 186, 28), rough=0.32), d.mat("oilskin_seam", rgb8(150, 110, 20), rough=0.5)]
     strap = GM()
-    hat_z = rail_w - 0.30
-    for uc in (1.41, 1.83):
-        GB.souwester(sg, X(uc), 0.12, hat_z, s=0.85, mi=0, mi_seam=1, face=-1.0)
-        strap.rod((X(uc), rail_v, rail_w - 0.012), (X(uc), 0.12, hat_z + 0.04 * 0.85 + 0.105 * 0.85 + 0.001), 0.0022, 0, 6)
+    rail2_w, rail2_v, hs = 1.28, 0.12, 0.85
+    gm2 = GM()
+    gm2.rod((X(1.15), rail2_v, rail2_w), (X(1.95), rail2_v, rail2_w), 0.010, 0, 12)
+    for xx in (1.18, 1.92):
+        gm2.rod((X(xx), rail2_v, rail2_w + 0.008), (X(xx), rail2_v, 1.55), 0.002, 0, 6)
+    d.gm_object("rail_front", gm2, [rail_m], "support", "script:crate")
+    crown_top = (0.04 + 0.105) * hs
+    hat_z = rail2_w - 0.012 - 0.035 - crown_top
+    for uc in (1.40, 1.78):
+        GB.souwester(sg, X(uc), rail2_v, hat_z, s=hs, mi=0, mi_seam=1, face=-1.0)
+        strap.rod((X(uc), rail2_v, rail2_w - 0.008), (X(uc), rail2_v, hat_z + crown_top + 0.001), 0.0022, 0, 6)
     d.gm_object("sou_westers", sg, sw_m, "scripted", "script:oilskin_sou_wester", tier="rail", smooth=True)
     d.gm_object("sou_wester_straps", strap, [d.mat("strap", rgb8(60, 52, 44), rough=0.8)], "support", "script:crate")
     # ---- the bed: boots, lanterns, compasses, oil tins, cans, blowtorch
