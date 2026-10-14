@@ -1177,8 +1177,8 @@ def frn10_rows(R, work, assets, rows, members):
 
 def dsp06_rows(R, work, assets, rows):
     """DSP-06 (newsagent close review, fault 1, 14 Oct 2026: the magazines hung in the air under a board that leaned toward the glass; the review called its row DSP-05, a number the ironmonger's review had
-    already given to 'every model keeps its parts'): nothing in the near metre floats, and a sheet leans back. For every piece, scripted good and price card of the display glb: (a) its lowest vertices (within
-    3 mm of its lowest point) or its highest vertices lie within 2 mm of another part of the display (not of its own group): it rests on something or hangs from something; (b) a thin sheet (its thinnest extent under
+    already given to 'every model keeps its parts'): nothing in the near metre floats, and a sheet leans back. For every piece, scripted good and price card of the display glb: (a) a point of its lower
+    35 per cent of the height (a sphere on spheres touches with its flank) or of its upper 15 per cent lies within 2 mm of another part of the display (not of its own group): it rests on something or hangs from something; (b) a thin sheet (its thinnest extent under
     12 mm, the other two over 40 mm) whose face looks toward the street does not lean forward by more than 3 degrees (the face normal's tilt, from the principal axes of its vertices): its top is nearer the back
     than its foot. Lying-flat sheets (the face looking more than 53 degrees up or down) are not leans."""
     import bpy
@@ -1209,23 +1209,26 @@ def dsp06_rows(R, work, assets, rows):
         if gi is not None and di["groups"][gi]["kind"] in kinds:
             by_group.setdefault(gi, []).append(nm)
 
-    def surface_samples(V, T_, zsel, up):
-        """Points on the triangles that lie within 3 mm of the lowest (or highest) level of the group: the vertices and random points inside the triangles."""
+    def surface_samples(V, T_, zsel, up, band):
+        """Points on the triangles that lie in the lowest (or highest) `band` metres of the group (a nestled apple rests on its neighbours with its lower flank, not with its lowest point): the vertices and
+        random points inside the triangles."""
         tri = V[T_]
         if up:
-            m = tri[:, :, 2].min(axis=1) >= zsel - 0.003
+            m = tri[:, :, 2].min(axis=1) >= zsel - band
         else:
-            m = tri[:, :, 2].max(axis=1) <= zsel + 0.003
+            m = tri[:, :, 2].max(axis=1) <= zsel + band
         tri = tri[m]
         if len(tri) == 0:
             return np.zeros((0, 3))
         pts = [tri.reshape(-1, 3)]
-        w = rng.random((len(tri), 3))
-        w /= w.sum(axis=1, keepdims=True)
-        pts.append((tri * w[:, :, None]).sum(axis=1))
+        k = int(min(60, max(8, 600 // len(tri))))
+        for _ in range(k):
+            w = rng.random((len(tri), 3))
+            w /= w.sum(axis=1, keepdims=True)
+            pts.append((tri * w[:, :, None]).sum(axis=1))
         P = np.concatenate(pts)
-        if len(P) > 60:
-            P = P[rng.choice(len(P), 60, replace=False)]
+        if len(P) > 150:
+            P = P[rng.choice(len(P), 150, replace=False)]
         return P
     for gi, nms in by_group.items():
         n_tested += 1
@@ -1249,7 +1252,8 @@ def dsp06_rows(R, work, assets, rows):
                     if hit[0] is not None and hit[3] <= 0.002:
                         return True
             return False
-        if not (touches(surface_samples(V, T_, zlo, False)) or touches(surface_samples(V, T_, zhi, True))):
+        hgt = zhi - zlo
+        if not (touches(surface_samples(V, T_, zlo, False, max(0.003, 0.35 * hgt))) or touches(surface_samples(V, T_, zhi, True, max(0.003, 0.15 * hgt)))):
             floating.append("%s(%s) lowest %.3f" % (di["groups"][gi]["model"], nms[0], zlo))
         # a thin sheet's lean (a single-mesh group)
         if len(nms) == 1:
@@ -1266,7 +1270,7 @@ def dsp06_rows(R, work, assets, rows):
                     if tilt < -3.0:
                         leaning.append("%s(%s) %.1f deg" % (di["groups"][gi]["model"], nms[0], tilt))
     rows.add("DSP-06", "nothing floats; sheets lean back", not floating and not leaning,
-             "%d display pieces, scripted goods and price cards: each rests on or hangs from something (a vertex of its lowest or highest 3 mm within 2 mm of another part of the display): %d float%s; %d thin sheets measured by their principal axes: %d lean toward the glass by more than 3 degrees%s (the kit's GM.sheet had the sign the wrong way until 14 Oct: the newsagent's magazines and papers)" % (
+             "%d display pieces, scripted goods and price cards: each rests on or hangs from something (a point on its lowest 35 per cent, or its highest 15 per cent, within 2 mm of another part of the display): %d float%s; %d thin sheets measured by their principal axes: %d lean toward the glass by more than 3 degrees%s (the kit's GM.sheet had the sign the wrong way until 14 Oct: the newsagent's magazines and papers)" % (
                  n_tested, len(floating), (" (" + "; ".join(floating[:10]) + ")") if floating else "", n_sheet, len(leaning), (" (" + "; ".join(leaning[:10]) + ")") if leaning else ""))
 
 

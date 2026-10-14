@@ -430,8 +430,12 @@ def display(d):
         cx_, cy_ = (ext[0] + ext[1]) / 2 + L / 2, (ext[2] + ext[3]) / 2
         zf = ext[4] + 0.018
         pos = [(ix, iy, 0) for iy in range(3) for ix in range(4)] + [(0.5, 0.5, 1), (2.5, 0.5, 1)]
-        for (ix, iy, lay) in pos[:apple_n[k]]:
-            d.piece("food_apple_01", cx_ + (ix - 1.5) * 0.098, cy_ + (iy - 1.0) * 0.098, zf + (0.0, 0.070)[lay], rot=(0, 0, rnd.uniform(0, 6.28)), scale=rnd.uniform(0.94, 1.02), tier="apples", tris=None)
+        for (ix, iy, lay) in sorted(pos[:apple_n[k]], key=lambda p_: p_[2]):
+            ax, ay = cx_ + (ix - 1.5) * 0.098, cy_ + (iy - 1.0) * 0.098
+            az = GB.rest_z(d, ax - L / 2, ay, 0.047)
+            _, nm_ = d.piece("food_apple_01", ax, ay, az, rot=(0, 0, rnd.uniform(0, 6.28)), scale=rnd.uniform(0.96, 1.0), tier="apples", tris=None)
+            if lay:
+                GB.settle_down(d, nm_)
     # ---- wicker_basket_02 with rolls, two crate_03 with lemons
     ext, _ = d.piece("wicker_basket_02", 1.80, 0.18, 0.0, rot=(0, 0, 0), scale=0.85, tier="bed", tris=None)
     d.piece("hamburger_buns", 1.80, 0.18, ext[5] - 0.07, rot=(0, 0, 0), scale=0.6, tier="basket", tris=None)
@@ -440,12 +444,15 @@ def display(d):
         cx_, cy_ = (ext[0] + ext[1]) / 2 + L / 2, (ext[2] + ext[3]) / 2
         for j in range(6):
             ix, iy = j % 3, j // 3
-            d.piece("lemon", cx_ + (ix - 1.0) * 0.095, cy_ + (iy - 0.5) * 0.075, ext[4] + 0.015, rot=(0, 0, rnd.uniform(0, 6.28)), scale=1.0, tier="lemons", tris=None)
+            lx, ly = cx_ + (ix - 1.0) * 0.095, cy_ + (iy - 0.5) * 0.075
+            _, nm_ = d.piece("lemon", lx, ly, GB.rest_z(d, lx - L / 2, ly, 0.034) + 0.004, rot=(0, 0, rnd.uniform(0, 6.28)), scale=1.0, tier="lemons", tris=None)
+            GB.settle_down(d, nm_)
     # ---- onions in a low tray (15: five by three), tomatoes in a tray (30, script), bananas on a crate (three bunches at 0.7)
     d.crate("onion_tray", 2.78, 3.24, 0.04, 0.28, 0.0, 0.07)
     for j in range(15):
         ix, iy = j % 5, j // 5
-        d.piece("yellow_onion", 2.78 + 0.065 + ix * 0.085, 0.085 + iy * 0.075, 0.07, rot=(0, 0, rnd.uniform(0, 6.28)), scale=1.0, tier="onions", tris=None)
+        ox, oy = 2.78 + 0.065 + ix * 0.085, 0.085 + iy * 0.075
+        d.piece("yellow_onion", ox, oy, GB.rest_z(d, ox - L / 2, oy, 0.036), rot=(0, 0, rnd.uniform(0, 6.28)), scale=1.0, tier="onions", tris=None)
     d.crate("tomato_tray", 3.28, 3.80, 0.04, 0.28, 0.0, 0.06)
     tom = d.mat("tomato", rgb8(196, 40, 30), rough=0.22)
     calyx = d.mat("tomato_calyx", rgb8(70, 120, 50), rough=0.6)
@@ -468,7 +475,8 @@ def display(d):
     bd = d.dims("bananas")
     d.piece("bananas", 4.065, 0.105, 0.12, rot=(0, 0, 0), scale=bs, tier="crate", tris=None)
     d.piece("bananas", 4.065, 0.225, 0.12, rot=(0, 0, 0), scale=bs, tier="crate", tris=None)
-    d.piece("bananas", 4.065, 0.165, 0.12 + bd.z * bs * 0.78, rot=(0, 0, 0), scale=bs, tier="bananas_top", tris=None)
+    _, nm_ = d.piece("bananas", 4.065, 0.165, 0.24, rot=(0, 0, 0), scale=bs, tier="bananas_top", tris=None)
+    GB.settle_down(d, nm_, max_drop=0.10)
     # ---- the price cards (14)
     texts = ["APPLES\n29p lb", "ONIONS\n19p lb", "LEMONS\n8p each", "TOMATOES\n45p lb", "BANANAS\n32p lb", "ROLLS\n6 for 55p", "BEANS\n21p", "SOUP\n18p", "PEAS\n19p", "SARDINES\n29p", "JAM\n59p", "HONEY\n69p", "MARMALADE\n55p", "SALMON\n79p"]
     path = os.path.join(tex, "price_cards.png")

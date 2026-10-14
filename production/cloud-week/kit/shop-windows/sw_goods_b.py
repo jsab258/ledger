@@ -639,3 +639,113 @@ def chart_atlas(path, titles, tile=(256, 340), cols=3, seed=7):
         out[k] = (x0 / (tw * cols), 1.0 - (y0 + th) / (th * rows), (x0 + tw) / (tw * cols), 1.0 - y0 / (th * rows))
     im.save(path)
     return out
+
+
+# ---------------------------------------------------------------------------------------------------------------------------------- resting goods (DSP-06: nothing floats)
+def rest_z(d, x, y, R, ring=8, spread=0.75):
+    """The height at which a roundish good of radius `R` standing at (x, y) of the display's frame comes to rest on what is already placed (the bed, a crate's floor, the goods under it): rays are cast down at its
+    centre and at `ring` points round it (at `spread` x R); a point at distance rho from the centre of a sphere of radius R is R - sqrt(R^2 - rho^2) above its foot, so the foot rests at the highest of
+    (hit - that rise). Nothing hit: the bed (0)."""
+    import bpy
+    bpy.context.view_layer.update()
+    dg = bpy.context.evaluated_depsgraph_get()
+    rho = spread * R
+    rise = R - math.sqrt(max(R * R - rho * rho, 0.0))
+    pts = [(x, y, 0.0)] + [(x + rho * math.cos(2 * math.pi * k / ring), y + rho * math.sin(2 * math.pi * k / ring), rise) for k in range(ring)]
+    best = None
+    for (px, py, under) in pts:
+        z0 = 3.0
+        for _ in range(8):
+            hit, loc, nrm, idx, ob, mw = d.sc.ray_cast(dg, (px, py, z0), (0.0, 0.0, -1.0))
+            if not hit:
+                break
+            if d.coll_t in ob.users_collection or ob.hide_render:          # the hidden templates of the models, at the origin, are not part of the display
+                z0 = loc.z - 1e-4
+                continue
+            z = loc.z - under
+            best = z if best is None else max(best, z)
+            break
+    return 0.0 if best is None else best
+
+
+def ground_piece(d, names, z_target=0.0):
+    """Move a placed piece (its object names) straight down or up so that its lowest vertex is at `z_target`: for a piece that was turned about x or y (a leaning lifebuoy), whose bounding box is lower than its mesh."""
+    import bpy
+    bpy.context.view_layer.update()
+    dg = bpy.context.evaluated_depsgraph_get()
+    lo = 1e9
+    for n in names:
+        ob = bpy.data.objects[n]
+        ev = ob.evaluated_get(dg)
+        me = ev.to_mesh()
+        mw = ob.matrix_world
+        lo = min(lo, min((mw @ v.co).z for v in me.vertices))
+        ev.to_mesh_clear()
+    dz = z_target - lo
+    for r_ in {bpy.data.objects[n].parent for n in names if bpy.data.objects[n].parent is not None}:
+        r_.location.z += dz
+    if getattr(d, "items", None):
+        d.items[-1]["ext"][4] = round(d.items[-1]["ext"][4] + dz, 4)
+        d.items[-1]["ext"][5] = round(d.items[-1]["ext"][5] + dz, 4)
+    return dz
+
+
+def settle_down(d, names, max_drop=0.06, step=0.0005, touch=0.0012):
+    """Lower a placed piece (its object names) until it touches what is under it: the piece's mesh vertices (a sample of 300) are tested against the other parts of the display (not the hidden templates, not
+    itself) with a nearest-surface query; it stops when one is within `touch` (1.2 mm), or after `max_drop`. For a roundish good set on others (a nestled apple) whose resting height the sphere model of
+    `rest_z` only approximates. Returns the drop in metres."""
+    import bpy
+    from mathutils.bvhtree import BVHTree
+    bpy.context.view_layer.update()
+    dg = bpy.context.evaluated_depsgraph_get()
+    own = set(names)
+    pts = []
+    for n in names:
+        ob = bpy.data.objects[n]
+        ev = ob.evaluated_get(dg)
+        me = ev.to_mesh()
+        mw = ob.matrix_world
+        pts.extend([tuple(mw @ v.co) for v in me.vertices])
+        ev.to_mesh_clear()
+    if not pts:
+        return 0.0
+    P = np.array(pts)
+    lo, hi = P.min(axis=0), P.max(axis=0)
+    if len(P) > 300:
+        P = P[np.random.default_rng(1).choice(len(P), 300, replace=False)]
+    trees = []
+    for ob in bpy.data.objects:
+        if ob.type != "MESH" or ob.name in own or d.coll_t in ob.users_collection or ob.hide_render:
+            continue
+        ev = ob.evaluated_get(dg)
+        me = ev.to_mesh()
+        mw = ob.matrix_world
+        V = [tuple(mw @ v.co) for v in me.vertices]
+        me.calc_loop_triangles()
+        T = [tuple(t.vertices) for t in me.loop_triangles]
+        ev.to_mesh_clear()
+        if not V or not T:
+            continue
+        Va = np.array(V)
+        if np.any(Va.max(axis=0) < lo - 0.05) or np.any(Va.min(axis=0) > hi + 0.05):
+            continue
+        trees.append(BVHTree.FromPolygons(V, T, epsilon=0.0))
+    drop = 0.0
+    while drop < max_drop:
+        best = 1e9
+        for p_ in P:
+            q = (p_[0], p_[1], p_[2] - drop)
+            for t_ in trees:
+                hit = t_.find_nearest(q)
+                if hit[0] is not None and hit[3] < best:
+                    best = hit[3]
+        if best <= touch:
+            break
+        drop += max(step, min(best - touch, 0.004) * 0.9)
+    roots = {bpy.data.objects[n].parent for n in names if bpy.data.objects[n].parent is not None}
+    for r_ in roots:
+        r_.location.z -= drop
+    if getattr(d, "items", None) and d.items and d.items[-1]["objs"] == list(names):
+        d.items[-1]["ext"][4] = round(d.items[-1]["ext"][4] - drop, 4)
+        d.items[-1]["ext"][5] = round(d.items[-1]["ext"][5] - drop, 4)
+    return drop
