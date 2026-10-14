@@ -319,28 +319,29 @@ def display(d):
     tex = d.tex
     GEN.TEXTS.clear()
     GB.fetch_ropes()
-    # ---- lifebuoy on a chock
-    ext, _ = d.piece("lifebuoy", 0.62, 0.20, 0.0, rot=(math.radians(-12), 0, 0), scale=1.0, tier="bed", tris=None)
-    chock = d.mat("chock", rgb8(120, 84, 54), rough=0.7)
-    gm = GM()
-    gm.box(X(0.62) - 0.10, X(0.62) + 0.10, 0.23, 0.36, 0.0, 0.05, 0)
-    ob, _ = d.gm_object("lifebuoy_chock", gm, [chock], "support", "script:crate")
-    # ---- the rail with the jackets and hats
-    rail_w = 1.40
+    # ---- lifebuoy leaning on its edge (its foot on the bed, its top toward the glass)
+    ext, nm_ = d.piece("lifebuoy", 0.62, 0.22, 0.0, rot=(math.radians(-12), 0, 0), scale=1.0, tier="bed", tris=None)
+    GB.ground_piece(d, nm_, 0.0)
+    # ---- the rail with the jackets and hats: a timber rail at w 1.40 on two cords from the window head; the jackets hang from it (their tops under the rod), the hats on straps
+    rail_w, rail_v = 1.40, 0.40
     rail_m = d.mat("rail_timber", rgb8(120, 84, 54), rough=0.6)
     gm = GM()
-    gm.rod((X(0.95), 0.34, rail_w), (X(2.05), 0.34, rail_w), 0.014, 0, 12)
+    gm.rod((X(0.95), rail_v, rail_w), (X(2.05), rail_v, rail_w), 0.014, 0, 12)
     for xx in (0.98, 2.02):
-        gm.rod((X(xx), 0.34, rail_w), (X(xx), 0.34, 1.55), 0.002, 0, 6)
+        gm.rod((X(xx), rail_v, rail_w + 0.012), (X(xx), rail_v, 1.55), 0.002, 0, 6)
     d.gm_object("rail", gm, [rail_m], "support", "script:crate")
     for k, uc in enumerate((1.20, 1.62)):
-        jh = d.dims("life_jacket").z * 0.7
-        d.piece("life_jacket", uc, 0.40, rail_w - jh + 0.02, rot=(0, 0, 0), scale=0.7, tier="rail", tris=None)
+        _, nm_ = d.piece("life_jacket", uc, rail_v, 0.5, rot=(0, 0, 0), scale=0.7, tier="rail", tris=None)
+        GB.ground_piece(d, nm_, rail_w - 0.013, top=True)
     sg = GM()
     sw_m = [d.mat("oilskin_yellow", rgb8(214, 170, 30), rough=0.35), d.mat("oilskin_seam", rgb8(150, 110, 20), rough=0.5)]
-    for uc in (1.30, 1.72):
-        GB.souwester(sg, X(uc), 0.20, rail_w - 0.20, s=1.0, mi=0, mi_seam=1, face=-1.0)
+    strap = GM()
+    hat_z = rail_w - 0.30
+    for uc in (1.41, 1.83):
+        GB.souwester(sg, X(uc), 0.20, hat_z, s=1.0, mi=0, mi_seam=1, face=-1.0)
+        strap.rod((X(uc), rail_v, rail_w - 0.012), (X(uc), 0.20, hat_z + 0.04 + 0.105 + 0.001), 0.0022, 0, 6)
     d.gm_object("sou_westers", sg, sw_m, "scripted", "script:oilskin_sou_wester", tier="rail", smooth=True)
+    d.gm_object("sou_wester_straps", strap, [d.mat("strap", rgb8(60, 52, 44), rough=0.8)], "support", "script:crate")
     # ---- the bed: boots, lanterns, compasses, oil tins, cans, blowtorch
     for k, uc in enumerate((0.35, 0.75, 1.15)):
         d.piece("rubber_boots", uc, 0.42, 0.0, rot=(0, 0, 0), scale=0.5, tier="bed", tris=None)
@@ -360,10 +361,10 @@ def display(d):
         pth = os.path.join(tex, "rope_%d.png" % i)
         GB.rope_png(pth, c, which=1, size=512)
         rm.append(d.image_mat("rope_%d" % i, pth, rough=0.9))
-    coils = [(2.22, 0.36, 0.16, 0.0, 0), (2.58, 0.36, 0.16, 0.0, 1), (2.22, 0.36, 0.09, 0.034, 2), (2.58, 0.36, 0.09, 0.034, 3), (2.40, 0.10, 0.085, 0.0, 4)]
-    for k, (uc, vc, Rin, zc, ci) in enumerate(coils):
+    coils = [(2.22, 0.36, 0.088, 2.4, 2, 0.0, 0), (2.58, 0.36, 0.088, 2.4, 2, 0.0, 1), (2.22, 0.36, 0.100, 1.8, 1, 0.0352, 2), (2.58, 0.36, 0.100, 1.8, 1, 0.0352, 3), (2.40, 0.10, 0.050, 1.8, 1, 0.0, 4)]
+    for k, (uc, vc, Rin, turns, lay, zc, ci) in enumerate(coils):
         g = GM()
-        Ro = GB.rope_coil(g, (X(uc), vc, 0.0 + zc + 0.0095), Rin * 0.55, 2.4 if Rin > 0.12 else 1.8, 0.0095, axis="z", mi=0, layers=2 if Rin > 0.12 else 1)
+        GB.rope_coil(g, (X(uc), vc, zc + 0.0095), Rin, turns, 0.0095, axis="z", mi=0, layers=lay)
         d.gm_object("rope_coil_%d" % k, g, [rm[ci]], "scripted", "script:rope_coils", tier="bed", smooth=True)
     # ---- the pyramid of 21 paint tins
     tp = os.path.join(tex, "marine_tins.png")

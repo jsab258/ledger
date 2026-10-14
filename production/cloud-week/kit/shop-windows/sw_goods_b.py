@@ -668,18 +668,20 @@ def rest_z(d, x, y, R, ring=8, spread=0.75):
     return 0.0 if best is None else best
 
 
-def ground_piece(d, names, z_target=0.0):
-    """Move a placed piece (its object names) straight down or up so that its lowest vertex is at `z_target`: for a piece that was turned about x or y (a leaning lifebuoy), whose bounding box is lower than its mesh."""
+def ground_piece(d, names, z_target=0.0, top=False):
+    """Move a placed piece (its object names) straight down or up so that its lowest vertex (its highest, with `top`: a jacket hung under a rail) is at `z_target`: for a piece that was turned about x or y (a
+    leaning lifebuoy), whose bounding box is lower than its mesh."""
     import bpy
     bpy.context.view_layer.update()
     dg = bpy.context.evaluated_depsgraph_get()
-    lo = 1e9
+    lo = -1e9 if top else 1e9
     for n in names:
         ob = bpy.data.objects[n]
         ev = ob.evaluated_get(dg)
         me = ev.to_mesh()
         mw = ob.matrix_world
-        lo = min(lo, min((mw @ v.co).z for v in me.vertices))
+        zs = [(mw @ v.co).z for v in me.vertices]
+        lo = max(lo, max(zs)) if top else min(lo, min(zs))
         ev.to_mesh_clear()
     dz = z_target - lo
     for r_ in {bpy.data.objects[n].parent for n in names if bpy.data.objects[n].parent is not None}:
