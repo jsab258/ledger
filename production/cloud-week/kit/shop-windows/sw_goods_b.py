@@ -215,3 +215,70 @@ def ladder_towels(path, colours, tile=(256, 64), seed=2):
         a[k * th:(k + 1) * th] = blk
     Image.fromarray(np.clip(a, 0, 255).astype(np.uint8)).save(path)
     return {k: (0.0, 1.0 - (k + 1) / len(colours), 1.0, 1.0 - k / len(colours)) for k in range(len(colours))}
+
+
+# ---------------------------------------------------------------------------------------------------------------------------------- folded towels from a real weave
+FABRIC020 = os.environ.get("LEDGER_FABRIC020", "/home/user/ledger-scratch/polyhaven/_acg/Fabric020/Fabric020_1K-JPG_Color.jpg")
+
+
+def fetch_fabric020(log=print):
+    """ambientCG Fabric020 (CC0) colour map into SCRATCH/polyhaven/_acg (the target's towel weave): fetched once; only the colour map is kept."""
+    import subprocess
+    import zipfile
+    if os.path.exists(FABRIC020):
+        return FABRIC020
+    d = os.path.dirname(FABRIC020)
+    os.makedirs(d, exist_ok=True)
+    zp = os.path.join(d, "f.zip")
+    subprocess.check_call(["curl", "-sS", "-L", "-m", "180", "-o", zp, "https://ambientcg.com/get?file=Fabric020_1K-JPG.zip"])
+    with zipfile.ZipFile(zp) as z:
+        z.extract("Fabric020_1K-JPG_Color.jpg", d)
+    os.remove(zp)
+    log("fetched ambientCG Fabric020 colour map")
+    return FABRIC020
+
+
+def towel_atlas(path, bases, tile=256, seed=2):
+    """One square tile per towel colour: the woven grain of ambientCG Fabric020 (its luminance, mean 1) times the colour, two darker border stripes near the short ends (at 8 and 90 per cent). `bases` = [rgb, ...];
+    returns {index: (u0, v0, u1, v1)} (v up). The weave's own blue is taken out (only its luminance is used), so each tile is the colour asked for."""
+    fetch_fabric020()
+    src = np.asarray(Image.open(FABRIC020).convert("RGB"), np.float32) / 255.0
+    lum = (0.2126 * src[..., 0] + 0.7152 * src[..., 1] + 0.0722 * src[..., 2])
+    lum = lum / max(float(lum.mean()), 1e-6)
+    n = len(bases)
+    cols = 4
+    rows = (n + cols - 1) // cols
+    atlas = np.zeros((rows * tile, cols * tile, 3), np.float32)
+    rng = np.random.default_rng(seed)
+    out = {}
+    for k, c in enumerate(bases):
+        r_, c_ = k // cols, k % cols
+        oy, ox = int(rng.integers(0, 1024 - tile)), int(rng.integers(0, 1024 - tile))
+        g = lum[oy:oy + tile, ox:ox + tile]
+        g = 0.55 + 0.45 * g                          # a softer weave (the map is strong at this size)
+        blk = np.empty((tile, tile, 3), np.float32)
+        blk[:] = np.array(c, np.float32)
+        blk *= g[..., None]
+        for x0 in (int(tile * 0.08), int(tile * 0.90)):
+            blk[:, x0:x0 + 7] *= 0.72
+        atlas[r_ * tile:(r_ + 1) * tile, c_ * tile:(c_ + 1) * tile] = blk
+        out[k] = (c_ * tile / (cols * tile), 1.0 - (r_ + 1) * tile / (rows * tile), (c_ + 1) * tile / (cols * tile), 1.0 - r_ * tile / (rows * tile))
+    Image.fromarray(np.clip(atlas, 0, 255).astype(np.uint8)).save(path)
+    return out
+
+
+def towel_box(gm, c, w, h, t, yaw_deg, mi, uvr, vband=(0.44, 0.56)):
+    """A folded towel: a box w (x) by t (y) by h (z) centred on c, turned `yaw_deg` about the vertical, every face with the atlas tile `uvr` (the long faces take the tile's middle band, the top the whole tile)."""
+    hx, hy, hz = w / 2.0, t / 2.0, h / 2.0
+    L = [(-hx, -hy, -hz), (hx, -hy, -hz), (hx, hy, -hz), (-hx, hy, -hz), (-hx, -hy, hz), (hx, -hy, hz), (hx, hy, hz), (-hx, hy, hz)]
+    ya = math.radians(yaw_deg)
+    V = [(c[0] + x * math.cos(ya) - y * math.sin(ya), c[1] + x * math.sin(ya) + y * math.cos(ya), c[2] + z) for x, y, z in L]
+    F = [(0, 3, 2, 1), (4, 5, 6, 7), (0, 1, 5, 4), (1, 2, 6, 5), (2, 3, 7, 6), (3, 0, 4, 7)]
+    u0, v0, u1, v1 = uvr
+
+    def q(a, b):
+        return (u0 + (u1 - u0) * a, v0 + (v1 - v0) * b)
+    b0, b1 = vband
+    uv = [[q(0, 0), q(1, 0), q(1, 1), q(0, 1)], [q(0, 0), q(1, 0), q(1, 1), q(0, 1)], [q(0, b0), q(1, b0), q(1, b1), q(0, b1)],
+          [q(0, b0), q(1, b0), q(1, b1), q(0, b1)], [q(1, b0), q(0, b0), q(0, b1), q(1, b1)], [q(0, b0), q(1, b0), q(1, b1), q(0, b1)]]
+    gm.add(V, F, mi, uv)

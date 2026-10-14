@@ -324,7 +324,7 @@ def room(r):
 def display(d):
     """The launderette's window (target `shops.steam_laundry.display`, 6 item rows; bed 3.35 x 0.55; "SERVICE WASHES" is lettered on the glass, 4.1): a 20 mm laminate bed cover (script:laundry_shelf_board), and on it
     left to right five stacks of folded towels (0.30 x 0.45 footprint, 6 to 9 towels of 0.05, each stack leaning 1 to 3 degrees, mixed colours, the folded edge and a coloured border to the street), two wicker baskets
-    (wicker_basket_01 at its own size, a heap of laundry in each), the hand-lettered SERVICE WASHES card on two posts behind the baskets, and ten detergent items on the right (four large boxes on a low step at the back, in
+    (wicker_basket_01 at its own size, a heap of laundry in each), the hand-lettered SERVICE WASHES card on two posts behind the baskets (in the right-hand light: the mullion stood across it in the middle), and ten detergent items on the right (four large boxes on a low step at the back, in
     front three packets, two washing-up bottles and a bleach bottle; every maker invented: HOLME, BRIGHTWELL, FERNSIDE, LINDEN, ASHDOWN, MEADOWS). Whites are toned (0.85): pure white packaging burns under the gate's night
     spill (PIC-05g). The shop is dark at night, so nothing here is lit by the shop."""
     _setup()
@@ -348,11 +348,11 @@ def display(d):
     base = [(176, 104, 96), (96, 128, 150), (206, 180, 124), (108, 140, 112), (184, 142, 152), (160, 122, 92)]
     cols = []
     for c in base:
-        cols.append((c, tuple(int(v * 0.78) for v in c)))
-        cols.append((tuple(min(255, int(v * 1.12)) for v in c), tuple(int(v * 0.86) for v in c)))
-    tp = os.path.join(tex, "towel_edges.png")
-    tuv = GB.ladder_towels(tp, cols)
-    tm = d.image_mat("towel_edges", tp, rough=0.95)
+        cols.append(c)
+        cols.append(tuple(min(255, int(v * 1.14)) for v in c))
+    tp = os.path.join(tex, "towel_tiles.png")
+    tuv = GB.towel_atlas(tp, cols)
+    tm = d.image_mat("towel_tiles", tp, rough=0.95)
     stacks = [(0.17, 8, 0), (0.47, 6, 1), (0.77, 9, 2), (1.07, 7, 3), (1.37, 6, 4)]
     gm = GM()
     for si, (uc, n, bi) in enumerate(stacks):
@@ -362,14 +362,14 @@ def display(d):
             uv = tuv[bi * 2 + (k % 2)]
             off = math.tan(math.radians(lean)) * (z0 + 0.05 * k)
             xj = rnd.uniform(-0.004, 0.004)
-            gm.sheet((X(uc) + off + xj, 0.31 + rnd.uniform(-0.004, 0.004), z0 + 0.05 * k + 0.0245), 0.30, 0.049, 0.45, tilt=0.0, yaw=yaw + rnd.uniform(-1.2, 1.2), mi=0, uv=uv, uv_other=(uv[0] + 0.5 * (uv[2] - uv[0]), uv[1] + 0.5 * (uv[3] - uv[1])))
+            GB.towel_box(gm, (X(uc) + off + xj, 0.31 + rnd.uniform(-0.004, 0.004), z0 + 0.05 * k + 0.0245), 0.30, 0.049, 0.45, yaw + rnd.uniform(-1.2, 1.2), 0, uv)
     ob, _ = d.gm_object("folded_towels", gm, [tm], "scripted", "script:folded_towels", tier="board")
     GB.chamfer(ob, 0.012, 3, angle=20.0)
     # ---- two wicker baskets with laundry heaped in each (three lumps of cloth in two or three colours: sheets and a towel)
     cloth = [[d.mat("laundry_a1", rgb8(176, 196, 210), rough=0.95), d.mat("laundry_a2", rgb8(226, 214, 190), rough=0.95), d.mat("laundry_a3", rgb8(176, 104, 96), rough=0.95)],
              [d.mat("laundry_b1", rgb8(214, 176, 124), rough=0.95), d.mat("laundry_b2", rgb8(150, 176, 154), rough=0.95), d.mat("laundry_b3", rgb8(216, 206, 196), rough=0.95)]]
     for k, uc in enumerate((1.95, 2.37)):
-        ext, names = d.piece("wicker_basket_01", uc, 0.30, z0, rot=(0, 0, rnd.uniform(0, 6.28)), scale=1.0, tier="board", tris=None)
+        ext, names = d.piece("wicker_basket_01", uc, 0.26, z0, rot=(0, 0, rnd.uniform(0, 6.28)), scale=1.0, tier="board", tris=None)
         gm = GM()
         bx = (ext[0] + ext[1]) / 2
         by = (ext[2] + ext[3]) / 2
@@ -386,11 +386,11 @@ def display(d):
     cm = d.image_mat("service_card", cpth, rough=0.8)
     post_m = d.mat("easel_wood", rgb8(120, 84, 54), rough=0.7)
     gm = GM()
-    gm.box(X(1.32), X(2.02), 0.455, 0.458, 0.52, 0.70, 0, uv_front=cuv[0])
+    gm.box(X(1.76), X(2.32), 0.505, 0.508, 0.52, 0.70, 0, uv_front=cuv[0])
     d.gm_object("service_card", gm, [cm], "scripted", "script:paper_card_service_washes", tier="stand")
     gm = GM()
-    for uc in (1.38, 1.96):
-        gm.box(X(uc) - 0.01, X(uc) + 0.01, 0.46, 0.48, z0, 0.60, 0)
+    for uc in (1.81, 2.27):
+        gm.box(X(uc) - 0.01, X(uc) + 0.01, 0.510, 0.530, z0, 0.60, 0)
     d.gm_object("service_card_posts", gm, [post_m], "support", "script:crate")
     # ---- the detergents: four large boxes on a low step at the back, in front three packets, two washing-up bottles and a bleach bottle
     designs = [("HOLME", "SOAP FLAKES", "for woollens", (60, 110, 170), (244, 240, 224), (220, 70, 60), "drop"),
