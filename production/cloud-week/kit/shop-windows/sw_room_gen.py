@@ -284,7 +284,10 @@ class GRoom(S.Room):
         P = dict(S.DEFAULT_P)
         P["sodium_ratio"] = 0.12
         tmp = os.path.join(work, "cal.png")
-        tgt_mean = S.TARGET_MEAN
+        # 14 Oct (batch B): a room with a dark dado and a dark floor (the grocer's bottle green over brown lino, the chandler's green over oiled boards) reaches the approved day mean (119.5) only by burning its
+        # upper walls and its orange goods (PIC-05 read 0.039 against 0.01); the row's own floor for the means is 0.7 of the approved ones (PIC-02), so these two are lit to a day mean of 100 and a night_lit mean of 70
+        tgt_mean = dict(S.TARGET_MEAN)
+        tgt_mean.update(MEAN_OVERRIDE.get(self.ctx.id, {}))
 
         def measure(state):
             self.set_state(state, P)
@@ -763,6 +766,9 @@ def _lazy(mod, fn):
         m = __import__(mod)
         return getattr(m, fn)(r)
     return f
+
+
+MEAN_OVERRIDE = {"grocer": {"day": 100.0, "night_lit": 70.0}, "chandler": {"day": 100.0, "night_lit": 70.0}}
 
 
 LAYOUTS = {"ironmonger": layout_ironmonger, "newsagent": _lazy("sw_shops_news", "room"), "tea_rooms": _lazy("sw_shops_tea", "room"), "steam_laundry": _lazy("sw_shops_laundry", "room"),

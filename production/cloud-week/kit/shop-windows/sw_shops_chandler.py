@@ -103,6 +103,8 @@ def room(r):
     row = []
     row += [("oil_tin", 1.0)] * 5 + [("small_oil_can_01", 1.0)] * 4 + [("cleaner_tin_01", 1.0)] * 4
     rnd.shuffle(row)
+    j_ = max(j for j, (a_, _) in enumerate(row) if a_ == "cleaner_tin_01")
+    row.append(row.pop(j_))                      # if the board is one tin short it is a cleaner tin that stays off it, not an oil can (the target counts four of those)
     for asset, sc in row:
         d_ = r.dims(asset)
         if x + d_.x * sc > xb:
@@ -313,16 +315,20 @@ def display(d):
     for xx in (0.95, 2.74):
         gm.rod((X(xx), rail_v, rail_w + 0.012), (X(xx), rail_v, 1.55), 0.002, 0, 6)
     d.gm_object("rail", gm, [rail_m], "support", "script:crate")
+    jackets_names = []
+    jacket_hem = 0.445
     for k, uc in enumerate((1.30, 2.40)):          # the wooden lantern's handle (to w 0.53) stands in the gap between the jackets, whose hems hang at 0.445
         _, nm_ = d.piece("life_jacket", uc, rail_v, 0.5, rot=(0, 0, 0), scale=1.0, tier="rail", tris=None)
         GB.ground_piece(d, nm_, rail_w - 0.013, top=True)
+        jackets_names.extend(nm_)
+        jacket_hem = d.items[-1]["ext"][4]
     sg = GM()
     sw_m = [d.mat("oilskin_yellow", rgb8(230, 186, 28), rough=0.32), d.mat("oilskin_seam", rgb8(150, 110, 20), rough=0.5)]
     strap = GM()
     rail2_w, rail2_v, hs = 1.28, 0.12, 0.85
     gm2 = GM()
-    gm2.rod((X(1.15), rail2_v, rail2_w), (X(2.55), rail2_v, rail2_w), 0.010, 0, 12)
-    for xx in (1.18, 2.52):
+    gm2.rod((X(1.15), rail2_v, rail2_w), (X(2.95), rail2_v, rail2_w), 0.010, 0, 12)
+    for xx in (1.18, 2.92):
         gm2.rod((X(xx), rail2_v, rail2_w + 0.008), (X(xx), rail2_v, 1.55), 0.002, 0, 6)
     d.gm_object("rail_front", gm2, [rail_m], "support", "script:crate")
     crown_top = (0.04 + 0.112) * hs
@@ -332,25 +338,62 @@ def display(d):
         strap.rod((X(uc), rail2_v, rail2_w - 0.008), (X(uc), rail2_v, hat_z + crown_top + 0.001), 0.0022, 0, 6)
     d.gm_object("sou_westers", sg, sw_m, "scripted", "script:oilskin_sou_wester", tier="rail", smooth=True)
     d.gm_object("sou_wester_straps", strap, [d.mat("strap", rgb8(60, 52, 44), rough=0.8)], "support", "script:crate")
-    # ---- the front row (v 0.13): oil tins, compasses, lanterns, cans, the blowtorch
-    front = [("oil_tin", math.pi / 2, 1.0)] * 4 + [("seadogs_compass", 0.0, 1.0)] * 2 + [("Lantern_01", 0.0, 1.0)] * 2 + [("small_oil_can_01", 0.0, 1.0)] * 3 + [("brass_blowtorch", math.pi / 2, 1.0)]
-    placed_f = GB.row_pack(d, front, 0.92, 3.31, 0.13, gap=0.018, rnd=rnd, yaw_jitter=0.05)
+    # ---- the front row (v 0.13), each piece at a place of its own (14 Oct: the window's mullions, at u 1.10 to 1.15 and 2.20 to 2.25, stood across the second oil tin and the first can, DSP-03 read 0.44; the pieces
+    # stand clear of them): oil tins, the compasses on a riser 80 mm high (flat on the bed they lie under the sill's 40 mm: 0.22), two lanterns, two oil cans (the third does not fit between the mullion and the blowtorch)
+    # and the blowtorch
+    placed_f = []
+    names_by = {}
+
+    def _at(asset, u0, rz, w=0.0, v=0.13):
+        dm = d.dims(asset, (0, 0, rz))
+        ext, nm = d.piece(asset, u0 + dm.x / 2.0, v, w, rot=(0, 0, rz + rnd.uniform(-0.05, 0.05)), scale=1.0, tier="bed", tris=None)
+        placed_f.append((asset, u0 + dm.x / 2.0, ext))
+        names_by.setdefault(asset, []).extend(nm)
+        return u0 + dm.x
+
+    for u0 in (0.88, 1.19, 1.36, 1.53):
+        _at("oil_tin", u0, math.pi / 2)
+    d.crate("compass_riser", 1.69, 1.88, 0.05, 0.20, 0.0, 0.08)
+    _at("seadogs_compass", 1.70, 0.0, w=0.08)
+    _at("seadogs_compass", 1.79, 0.0, w=0.08)
+    _at("Lantern_01", 1.89, 0.0)
+    _at("Lantern_01", 2.02, 0.0)
+    _at("small_oil_can_01", 2.29, 0.0)
+    _at("small_oil_can_01", 2.575, 0.0)
+    _at("brass_blowtorch", 2.855, math.pi / 2)
     # ---- the back row (v 0.40): the boots, the wooden lantern
     placed_b = GB.row_pack(d, [("rubber_boots", 0.0, 1.0), ("wooden_lantern_01", 0.0, 1.0)], 0.92, 2.08, 0.40, gap=0.03)
-    # ---- two big coils of rope on crates 60 mm high, a small one on each; the pyramid of paint tins beside them
+    # the night rows pull against each other (lesson 26): the orange jackets burnt in the red channel under the gate's spill (PIC-05g 0.06) and the dark goods read 0.32 to 0.49 of the room (LIT-08, limit 0.6): the
+    # jackets' picture is toned down (0.62) and the lanterns' (1.5), the boots' (1.4) and the oil tins' (1.3) up, in the display's copy of their textures
+    import bpy
+    boots_names = [o.name for o in bpy.data.objects if o.type == "MESH" and o.name.startswith("rubber_boots") and not o.hide_render and d.coll_t not in o.users_collection]
+    d.tone(jackets_names, 0.62)
+    d.tone(names_by.get("Lantern_01", []), 1.5)
+    d.tone(names_by.get("oil_tin", []), 1.3)
+    d.tone(boots_names, 1.4)
+    # ---- rope coils HUNG on the front rail, as a chandler hangs them (14 Oct: coils lying flat on crates behind the cans were a sliver from the pavement, DSP-03 read 0.18 to 0.46): two big (2 layers) and a small
+    # (1 layer) between the sou'westers, the rail through each coil's hole and the hole's top edge on the rail; the pyramid of paint tins beside them
     rm = []
     for i, c in enumerate(ROPE_COLOURS):
         pth = os.path.join(tex, "rope_%d.png" % i)
         GB.rope_png(pth, c, which=1, size=512)
         rm.append(d.image_mat("rope_%d" % i, pth, rough=0.9))
-    for k, (uc, ci_big, ci_small) in enumerate(((2.26, 0, 2), (2.59, 1, 3))):
-        d.crate("coil_crate_%d" % k, uc - 0.16, uc + 0.16, 0.26, 0.54, 0.0, 0.06)
+    rope_r = 0.0095
+    hung = ((1.82, 0.070, 3.2, 2, 0), (2.082, 0.050, 2.0, 1, 2), (2.62, 0.070, 3.2, 2, 1))
+    coil_bottom, coil_front = {}, {}
+    pg = GM()
+    peg_top = rail2_w + 0.008
+    for k, (uc, r_in, turns, lay, ci) in enumerate(hung):
+        # a wooden peg 8 mm in radius stands out of the rail's front toward the glass; the coil hangs on it, its hole's top edge on the peg (the rail itself runs along u and cannot pass through a hole)
+        pg.rod((X(uc), rail2_v - 0.0095, rail2_w), (X(uc), rail2_v - 0.062, rail2_w), 0.008, 0, 10)
+        zc = peg_top - (r_in - 0.5 * rope_r) - 0.0004
+        cy = rail2_v - 0.045
         g = GM()
-        GB.rope_coil(g, (X(uc), 0.40, 0.06 + 0.0095), 0.088, 2.4, 0.0095, axis="z", mi=0, layers=2)
-        d.gm_object("rope_coil_%d" % (2 * k), g, [rm[ci_big]], "scripted", "script:rope_coils", tier="crate", smooth=True)
-        g = GM()
-        GB.rope_coil(g, (X(uc), 0.40, 0.06 + 0.0338 + 0.0095), 0.0918, 1.8, 0.0095, axis="z", mi=0, layers=1)
-        d.gm_object("rope_coil_%d" % (2 * k + 1), g, [rm[ci_small]], "scripted", "script:rope_coils", tier="crate", smooth=True)
+        rout = GB.rope_coil(g, (X(uc), cy, zc), r_in, turns, rope_r, axis="y", mi=0, layers=lay)
+        coil_bottom[k] = zc - rout + 0.001
+        coil_front[k] = cy - rope_r
+        d.gm_object("rope_coil_%d" % k, g, [rm[ci]], "scripted", "script:rope_coils", tier="rail", smooth=True)
+    d.gm_object("coil_pegs", pg, [rail_m], "support", "script:crate")
     tp = os.path.join(tex, "marine_tins.png")
     tuv = GB.tin_atlas(tp, TIN_DESIGNS, tile=(256, 128), cols=4)
     tin_label = d.image_mat("marine_tin_labels", tp, rough=0.5)
@@ -368,13 +411,27 @@ def display(d):
     gm = GM()
     gm.box(X(u_c - 0.295), X(u_c + 0.295), 0.50, 0.515, 0.0, 0.54, 0)
     d.gm_object("pyramid_backing", gm, [back_m], "support", "script:backing_board")
-    # ---- price cards, each in front of its goods
-    texts = ["LIFEBUOY\n\u00a312.50", "JACKETS\n\u00a39.95", "ROPE\n85p a metre", "BOOTS\n\u00a36.75", "LAMPS\n\u00a34.20", "COMPASS\n\u00a35.50", "OIL\n\u00a31.60", "PAINT\n\u00a33.45", "SOU'WESTERS\n\u00a32.95", "BLOWTORCH\n\u00a37.25"]
+    # ---- price cards, each before the goods it prices (14 Oct, tea rooms close review narrow 2): a stake card on the bed before the goods on the bed (the lifebuoy, the oil tins, the compasses, the lamps, the cans, the
+    # paint, the blowtorch), a card on a cord from the goods that hang (the jackets' hem, the sou'westers' rail, the big rope coil)
+    texts = ["LIFEBUOY\n\u00a312.50", "JACKETS\n\u00a39.95", "ROPE\n85p a metre", "SOU'WESTERS\n\u00a32.95", "LAMPS\n\u00a34.20", "COMPASS\n\u00a35.50", "OIL TINS\n\u00a31.60", "OIL CANS\n\u00a31.35", "PAINT\n\u00a33.45", "BLOWTORCH\n\u00a37.25"]
     path = os.path.join(tex, "price_cards.png")
     uvs = GEN.card_atlas(path, texts, cols=4, tile=(256, 128), size=40)
     pm = [d.image_mat("price_cards", path, rough=0.8), d.mat("stake", rgb8(60, 60, 62), rough=0.5, metal=0.7)]
     fu = {a: [u for (aa, u, e) in placed_f if aa == a] for a in {x[0] for x in placed_f}}
-    spots = [(0.45, 0.02), (1.45, 0.20), (2.62, 0.22), (1.40, 0.28), (fu["Lantern_01"][0], 0.03), (fu["seadogs_compass"][0], 0.03), (fu["oil_tin"][1], 0.03), (3.28, 0.03), (2.30, 0.20), (fu["brass_blowtorch"][0], 0.03)]
-    for k, (uc, vv) in enumerate(spots):
-        d.price_card(uc, vv, 0.0 if vv < 0.1 else 0.0, k, uvs, pm)
+    spots = {0: (0.45, 0.02), 4: (fu["Lantern_01"][0], 0.03), 5: (fu["seadogs_compass"][0], 0.03), 6: (fu["oil_tin"][1], 0.03), 7: (fu["small_oil_can_01"][0], 0.03), 8: (3.28, 0.03), 9: (fu["brass_blowtorch"][0], 0.03)}
+    for k, (uc, vv) in spots.items():
+        d.price_card(uc, vv, 0.0, k, uvs, pm)
+
+    def hung_card(k, uc, vv, z_top):
+        """A card 70 x 50 mm on a 12 mm cord from `z_top` (the hem, the rail, the coil's lowest turn), the face toward the street: one mesh, a ticket for the checks."""
+        gmh = GM()
+        x = X(uc)
+        gmh.rod((x, vv, z_top), (x, vv, z_top - 0.012), 0.0012, 1, 6)
+        gmh.box(x - 0.035, x + 0.035, vv - 0.002, vv + 0.002, z_top - 0.062, z_top - 0.012, 0, uv_front=uvs[k])
+        ob = gmh.to_object("hung_card_%d" % k, pm, d.sc)
+        d.groups.append({"kind": "ticket", "model": "script:price_cards", "objs": [ob.name]})
+
+    hung_card(1, 1.30, 0.345, jacket_hem + 0.001)
+    hung_card(2, 2.62, coil_front[2] - 0.003, coil_bottom[2])
+    hung_card(3, 2.44, rail2_v - 0.004, rail2_w - 0.010)
     d.display_texts = list(GEN.TEXTS) + [t.replace("\n", " ") for t in texts]
