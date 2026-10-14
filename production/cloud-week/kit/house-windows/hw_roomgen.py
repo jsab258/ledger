@@ -699,6 +699,8 @@ def render_room(rid, out_dir, samples=24, log=print, states=RENDER_ORDER, work=N
     os.makedirs(out_dir, exist_ok=True)
     t0 = time.time()
     r = HRoom(rid, work).build()
+    if r.R["family"] == "GF":
+        samples = min(samples, 16)          # four times the pixels of an upper room: the denoised noise per pixel is the same at 16 samples (PIC-09 measures it)
     log("%s built in %.0f s" % (rid, time.time() - t0))
     P = dict(DEFAULT_P) if quick else calibrate(r, work, log)
     times = {}

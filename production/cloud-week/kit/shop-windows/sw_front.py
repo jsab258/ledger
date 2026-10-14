@@ -809,7 +809,18 @@ def make_hanging_board(ctx, front, fasc_dir):
         parts.append(("black_iron", bs.new_obj("sign_bolt_%d" % k, *cyl_d(uc + du, z_arm + dz, 8.0, 14.0, 6.0, 8))))
     arm_end = proj - 40.0
     parts.append(("black_iron", bs.new_obj("sign_arm", *bx(uc - 4.0, uc + 4.0, 8.0, arm_end, z_arm - 10.0, z_arm + 10.0))))
-    brace = polyline_strip([(8.0, foot + 40.0), (200.0 * k_, foot + 90.0), (380.0 * k_, foot + 130.0), (max(arm_end * 0.55, 380.0 * k_ + 40.0), z_arm - 10.0)], uc - 3.0, uc + 3.0, 20.0)
+    # 14 Oct (batch B, the chandler's board 0.80 wide on an arm 1.09 long): the stretched brace's upper end ran through the first ring (FRN-10 saw a coplanar patch where the brace's flank and the ring's facet meet):
+    # the brace is shortened, by the same factor on its three waypoints and its end, until it passes under the first ring's foot with 4 mm to spare (a board that did not need it, the ironmonger's, is unchanged)
+    dh0_ = (proj - bw) + 60.0
+    kb = k_
+    for _ in range(14):
+        end_ = max(arm_end * 0.55 * kb / k_, 380.0 * kb + 40.0)
+        wp_ = [(8.0, foot + 40.0), (200.0 * kb, foot + 90.0), (380.0 * kb, foot + 130.0), (end_, z_arm - 10.0)]
+        zmax_ = max(float(np.interp(dd, [w[0] for w in wp_], [w[1] for w in wp_])) for dd in np.linspace(dh0_ - 22.0, dh0_ + 22.0, 9))
+        if zmax_ < z_arm - 26.0 - 16.0 - 3.0 - 4.0 or kb < 0.3:
+            break
+        kb *= 0.92
+    brace = polyline_strip(wp_, uc - 3.0, uc + 3.0, 20.0)
     parts.append(("black_iron", bs.new_obj("sign_brace", *brace)))
     r0 = 55.0
     pts = [((300.0 + (r0 * (1 - t / 4.0)) * math.cos(t * 1.1)) * k_, foot + 50.0 + (r0 * (1 - t / 4.0)) * math.sin(t * 1.1)) for t in np.linspace(0.0, 4.0, 18)]

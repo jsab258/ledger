@@ -450,10 +450,13 @@ def build_and_render(view_name, cam, state, out_png, bake_dir, samples=48, res=N
             c.hide_viewport = False
             c.pass_index = wid
             c.name = "%s|%s" % (site["id"], base)
+            rec["windows"][site["id"]].setdefault("objects", []).append(base)
             for i, sl in enumerate(c.material_slots):
                 m0 = sl.material
                 if m0 is None:
                     continue
+                sl.link = "OBJECT"                     # the meshes are shared by every window of a kind: each window's materials are its own, on its object
+                sl.material = m0
                 mn = m0.name.split(".")[0]
                 if mode == "mask":
                     key = "glass" if mn.startswith("glass") else ("joinery" if mn.startswith("paint_") or base.startswith(("net_rod", "net_bracket", "curtain_pole", "curtain_finial", "curtain_bracket")) else "cloth")
@@ -676,6 +679,7 @@ def build_and_render(view_name, cam, state, out_png, bake_dir, samples=48, res=N
         sc.cycles.use_denoising = False
         sc.cycles.use_adaptive_sampling = False
         sc.cycles.filter_width = 0.01
+        sc.render.dither_intensity = 0.0
         sc.view_settings.view_transform = "Raw"
         sc.view_settings.look = "None"
         # window number into G: every object of a window carries it as its pass index: the mask render writes it through the emission colour of a per-window material
@@ -685,6 +689,7 @@ def build_and_render(view_name, cam, state, out_png, bake_dir, samples=48, res=N
                     m0 = sl.material
                     if m0 is None or not m0.name.startswith("mk_"):
                         continue
+                    sl.link = "OBJECT"
                     key = (m0.name, o.pass_index)
                     nm = "%s_w%d" % (m0.name, o.pass_index)
                     m2 = bpy.data.materials.get(nm)
