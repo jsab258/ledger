@@ -282,8 +282,12 @@ def tin_labels(path):
     return out
 
 
-def card_atlas(path, texts, cols=4, tile=(256, 128), font_name="patrick-hand", bg=(236, 230, 210), ink=(40, 36, 60), size=44):
-    """A picture of hand-lettered cards (one text each, centred on two lines at most). Returns {index: (u0, v0, u1, v1)} (v 0 at the bottom)."""
+def card_atlas(path, texts, cols=4, tile=(256, 128), font_name="patrick-hand", bg=(236, 230, 210), ink=(40, 36, 60), size=44, jitter=True):
+    """A picture of hand-lettered cards (one text each, centred on two lines at most). Returns {index: (u0, v0, u1, v1)} (v 0 at the bottom).
+    14 Oct (batch B, from the tea rooms' close review, narrow 4: "the window card is a flat, perfect board ... a typeface whose repeated letters are identical"): with `jitter` every letter is drawn on its own,
+    turned by up to 2 degrees, off the baseline by up to 3 per cent of the size, 4 per cent in size and a little paler or darker in its ink, and the paper carries a fibre grain of 4 levels, so that no two of a word's
+    letters are the same and a card is not a perfect board."""
+    import numpy as np
     rows = (len(texts) + cols - 1) // cols
     W, H = cols * tile[0], rows * tile[1]
     im = Image.new("RGB", (W, H), bg)
@@ -291,6 +295,14 @@ def card_atlas(path, texts, cols=4, tile=(256, 128), font_name="patrick-hand", b
     f = font(font_name, size)
     out = {}
     rnd = random.Random(5)
+    nrng = np.random.default_rng(5)
+    fonts = {}
+
+    def fnt(sz):
+        if sz not in fonts:
+            fonts[sz] = font(font_name, sz)
+        return fonts[sz]
+
     for k, txt in enumerate(texts):
         c, r = k % cols, k // cols
         x0, y0 = c * tile[0], r * tile[1]
@@ -300,10 +312,33 @@ def card_atlas(path, texts, cols=4, tile=(256, 128), font_name="patrick-hand", b
         lh = f.size * 1.15
         y = y0 + (tile[1] - lh * len(lines)) / 2.0
         for ln in lines:
-            tw = d.textlength(ln, font=f)
-            d.text((x0 + (tile[0] - tw) / 2.0 + rnd.uniform(-2, 2), y), ln, font=f, fill=ink)
+            if not jitter:
+                tw = d.textlength(ln, font=f)
+                d.text((x0 + (tile[0] - tw) / 2.0 + rnd.uniform(-2, 2), y), ln, font=f, fill=ink)
+            else:
+                adv = [d.textlength(ch, font=f) for ch in ln]
+                tw = sum(adv)
+                x = x0 + (tile[0] - tw) / 2.0 + rnd.uniform(-2, 2)
+                for ch, a_ in zip(ln, adv):
+                    if ch != " ":
+                        fz = max(8, int(round(size * rnd.uniform(0.96, 1.04))))
+                        g = fnt(fz)
+                        pad = int(size * 0.5)
+                        tmp = Image.new("L", (int(a_ + 2 * pad) + 2, int(size * 1.6) + 2 * pad), 0)
+                        ImageDraw.Draw(tmp).text((pad, pad), ch, font=g, fill=255)
+                        tmp = tmp.rotate(rnd.uniform(-2.0, 2.0), resample=Image.BICUBIC, expand=False, center=(pad + a_ / 2.0, pad + size * 0.6))
+                        pale = rnd.uniform(0.0, 0.12)
+                        col = tuple(int(i_ * (1 - pale) + s_ * pale) for i_, s_ in zip(ink, shade))
+                        im.paste(Image.new("RGB", tmp.size, col), (int(x - pad), int(y - pad + rnd.uniform(-0.03, 0.03) * size)), tmp)
+                    x += a_
             y += lh
         out[k] = (x0 / W, 1.0 - (y0 + tile[1]) / H, (x0 + tile[0]) / W, 1.0 - y0 / H)
+    if jitter:
+        # the paper's grain: a fibre noise of +-4 levels over the whole atlas (soft, 1 px)
+        g = nrng.normal(0.0, 1.0, (H, W)).astype("float32")
+        g = np.asarray(Image.fromarray(np.clip(g * 40 + 128, 0, 255).astype("uint8")).filter(ImageFilter.GaussianBlur(0.8)), "float32") - 128.0
+        arr = np.asarray(im, "float32") + (g / 40.0 * 4.0)[..., None]
+        im = Image.fromarray(np.clip(arr, 0, 255).astype("uint8"))
     im.save(path)
     return out
 

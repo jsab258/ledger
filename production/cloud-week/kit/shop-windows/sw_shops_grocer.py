@@ -351,7 +351,7 @@ def room(r):
     shade_m = r.mat("counter_lamp_shade", rgb8(236, 226, 200), rough=0.6, emit=(1.0, 0.78, 0.45), emit_strength=0.0)
     lg = GM()
     lg.lathe(lx_, ly_, ch, [(0.0, 0.0), (0.060, 0.0), (0.060, 0.010), (0.032, 0.018), (0.013, 0.030), (0.011, 0.150), (0.016, 0.158), (0.0, 0.160)], mi=0, n=24)
-    lg.lathe(lx_, ly_, ch, [(0.044, 0.178), (0.102, 0.282), (0.105, 0.282), (0.047, 0.180)], mi=1, n=28)
+    lg.lathe(lx_, ly_, ch, [(0.108, 0.176), (0.052, 0.282), (0.055, 0.282), (0.111, 0.178)], mi=1, n=28)
     lo_ = lg.to_object("counter_lamp", [lamp_brass, shade_m], r.sc, smooth=True)
     r.placed_rec("G-back-counter", "script:counter_lamp", lg.extents(), [lo_.name], tag="counter_lamp", n=1)
     ld = bpy.data.lights.new("counter_lamp_light", "POINT")
