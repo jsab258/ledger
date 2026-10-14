@@ -336,7 +336,18 @@ def flt01_rows(ctx, rows):
         mean_l = float(im[lab == (int(np.argmax(sizes)) + 1)].mean()) if nl else 0.0
         n += 1
         ok &= share <= lim
-        det.append("%s: largest uniform patch %d px = %.2f per cent of %d glass px (x %d to %d, y %d to %d, luma %.0f)" % (cam, big, 100.0 * share, int(mk.sum()), xs.min(), xs.max(), ys.min(), ys.max(), mean_l))
+        # 14 Oct, try 2: what the patch is, from the check's own mask_room render (red: the room's card, reveals and return walls; blue: the display's pieces): the largest flat patch among each, so a reader sees the room's flat tones apart from the display's
+        split = ""
+        pr = os.path.join(ctx.gate, "check_%s_day_room.png" % cam)
+        if os.path.exists(pr):
+            rm = np.asarray(Image.open(pr).convert("RGB").resize((im.shape[1], im.shape[0]), Image.NEAREST)).astype(int)
+            parts = []
+            for nm_, sel in (("display's pieces", (rm[..., 2] > 128) & (rm[..., 0] < 128)), ("room and return walls", (rm[..., 0] > 128) & (rm[..., 2] < 128))):
+                lb2, n2 = _nd.label(flat & sel)
+                sz2 = int(np.bincount(lb2.ravel())[1:].max()) if n2 else 0
+                parts.append("%s %.2f" % (nm_, 100.0 * sz2 / float(max(int(mk.sum()), 1))))
+            split = "; by what shows there (per cent of the glass): " + ", ".join(parts)
+        det.append("%s: largest uniform patch %d px = %.2f per cent of %d glass px (x %d to %d, y %d to %d, luma %.0f)%s" % (cam, big, 100.0 * share, int(mk.sum()), xs.min(), xs.max(), ys.min(), ys.max(), mean_l, split))
     rows.add("FLT-01", "no large flat tone in the window", ok and n == 2, "day frames, 9 x 9 px standard deviation under 1, the largest connected patch over the glass: " + "; ".join(det) + " (limit %.1f per cent for this shop)" % (100.0 * lim))
 
 

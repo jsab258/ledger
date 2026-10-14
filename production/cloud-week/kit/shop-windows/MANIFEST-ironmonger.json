@@ -1,26 +1,26 @@
 {
- "made": "2026-10-13 22:53:22",
- "what": "the files of the narrow-points build (13 Oct, from the try 2 reviews; v3); the three glbs and the three 4096 pictures are out of git (rebuilt by build_ritas.py) so this names the versions",
+ "made": "2026-10-14 22:46:31",
+ "what": "the ironmonger's batch A build, try 2 (14 Oct, from the try 1 reviews; first built 13 Oct): the files named here are the models and the three 4096 room pictures; those over 1 MB are out of git, so this names their versions; rebuilt by `build_shop.py --shop ironmonger`",
  "files": {
   "ironmonger_front.glb": {
-   "bytes": 8561360,
-   "sha256": "c43977dbd7824df5720eacca067a55467481039793bdc616260147b14b5c2b7f"
+   "bytes": 8686676,
+   "sha256": "5e7bd00486497f50d07aa0ab44efa4af582e040232c07cfde5b32d14c3d4243c"
   },
   "ironmonger_display.glb": {
-   "bytes": 3444016,
-   "sha256": "0803daaae8c4b53f7b16296a6059558951fed7201b5bff1a84d086d7cf6f5e35"
+   "bytes": 25672236,
+   "sha256": "dedec6f7a525d0d59ab58d4d474b8fc8d96eea65b342124ff7e72535e666a252"
   },
   "ironmonger_day.png": {
-   "bytes": 7577664,
-   "sha256": "eaa0e93268e031e6d298e8b127a2d9233f55337a938aee78107307df4a8284dc"
+   "bytes": 7651685,
+   "sha256": "f5622cc2f022a3cb43601c67847a7d4674ae0accf5b64f812d081a84671a3da8"
   },
   "ironmonger_night_lit.png": {
-   "bytes": 7096551,
-   "sha256": "fec98d8df3e0805f971bcba647ffd96a3ea80eaad5b65b84907a4bdd4aba1d75"
+   "bytes": 7153269,
+   "sha256": "3d7d6817289b5a96601ad7963702c72167157e9e608cad4cba626b7a41331e95"
   },
   "ironmonger_night_dark.png": {
-   "bytes": 5167334,
-   "sha256": "b1eb34e2b085671b787b04dc72eb87559b34c44fb803af2eda75661ba20d1b8d"
+   "bytes": 5268313,
+   "sha256": "9f9d1e86fa2e6bc87ab7627d0c345fa1b5c7673e722586bc574308b7a0f61b3b"
   }
  }
 }
