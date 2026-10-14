@@ -946,6 +946,11 @@ def run(ctx, assets, previews, out_json):
             X3.flt01_rows(ctx, rows)
             if ctx.id == "ironmonger":
                 X3.dsp11_rows(ctx, rows, di)
+            if ctx.id == "newsagent":
+                X3.prt_rows(ctx, rows)
+                X3.news_rows(ctx, ctx.R, assets, rows, di, m)
+            if ctx.id == "tea_rooms":
+                X3.cur_rows(ctx, assets, rows, di)
     if not ctx.has_room:
         man = json.load(open(os.path.join(ctx.work, "fascias", "manifest.json")))
         texts = [s_ for g in man["glass_lettering"] if g["shop"] == ctx.id for s_ in [g.get("string", "")] if s_]

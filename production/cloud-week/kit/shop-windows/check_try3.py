@@ -213,6 +213,10 @@ def dsp09_rows(ctx, assets, rows, di):
     bed) and the bed's own parts must have a base-colour PICTURE in the glb (a painted plywood, a plank map): a colour factor alone reads as a CG panel. The return walls take the room's plaster in the gate; cords, rods
     and stakes are wire, not supports."""
     mats = _glb_materials_of_nodes(X.display_glb(assets))
+    gj, _, _ = X.glb_json(X.display_glb(assets))
+    metal = {m_.get("name", ""): m_.get("pbrMetallicRoughness", {}).get("metallicFactor", 1.0) for m_ in gj.get("materials", [])}   # (glTF: an absent factor is 1.0)
+    transm = {m_.get("name", "") for m_ in gj.get("materials", []) if "KHR_materials_transmission" in (m_.get("extensions") or {})}
+    PLAIN = ("china", "cast_black", "suction_pvc", "stake")          # a glazed plate, a black cast base, a clear PVC disc: one colour by nature, not a board that reads as a CG panel
     by_name = {}
     for gi, g in enumerate(di["groups"]):
         if g["kind"] == "support":
@@ -229,9 +233,10 @@ def dsp09_rows(ctx, assets, rows, di):
         if mdl in ("script:hang_rod",):
             continue
         n += 1
-        if not all(has for _, has in ms):
-            flat.append("%s(%s: %s)" % (mdl, nm, ", ".join(m_ for m_, has in ms if not has)))
-    rows.add("DSP-09", "every display support has a picture", not flat and n > 0, "%d support meshes (crates, trays, shelves, boards, the bed and its top) read from the glb: each carries a base-colour picture%s (a flat factor reads as a CG panel: the ironmonger's crate was 85,931 px at sd under 1.5 at CLOSE_35_B)" % (n, ("; FLAT: " + "; ".join(flat[:8])) if flat else ""))
+        flat_ms = [m_ for m_, has in ms if not has and metal.get(m_, 0.0) < 0.5 and m_ not in transm and m_ not in PLAIN]       # metal, glass and a plain glaze are one colour by nature (the rule is for boards and timber)
+        if flat_ms:
+            flat.append("%s(%s: %s)" % (mdl, nm, ", ".join(flat_ms)))
+    rows.add("DSP-09", "every display support has a picture", not flat and n > 0, "%d support meshes (crates, trays, shelves, boards, the bed and its top) read from the glb: each carries a base-colour picture%s, except metal, glass and plain china, black cast and clear plastic, which are one colour by nature (a flat factor on a board reads as a CG panel: the ironmonger's crate was 85,931 px at sd under 1.5 at CLOSE_35_B)" % (n, ("; FLAT: " + "; ".join(flat[:8])) if flat else ""))
 
 
 def dsp10_rows(ctx, assets, rows, di):
@@ -260,6 +265,8 @@ def dsp10_rows(ctx, assets, rows, di):
         if nm not in data:
             continue
         V, T_, _ = data[nm]
+        Vu, inv = np.unique(np.round(V, 5), axis=0, return_inverse=True)           # the exported mesh has its own vertices a face (flat shading): weld them, so a cord is one piece again
+        V, T_ = Vu, inv.reshape(-1)[T_]
         n = len(V)
         a = np.concatenate([T_[:, 0], T_[:, 1], T_[:, 2]])
         b = np.concatenate([T_[:, 1], T_[:, 2], T_[:, 0]])
@@ -422,3 +429,239 @@ def dsp11_rows(ctx, rows, di):
     v = fr[mk]
     rows.add("DSP-11", "the backing board is dark", 25.0 <= float(v.mean()) <= 45.0,
              "the pyramid's backing board, %d visible pixels (an object-index render from STREET_SQUARE, eroded 3 px) in the day gate frame: mean luma %.1f (p5 %.1f, p95 %.1f); wanted 25 to 45 (try 1: 86 to 111, primer grey)" % (n, float(v.mean()), float(np.percentile(v, 5)), float(np.percentile(v, 95))))
+
+
+# --------------------------------------------------------------------------------------------------------------------------------------------- PRT-01 to PRT-04 (the printed goods)
+ATLAS_GRID = {"magazines": (6, 4), "papers": (2, 4), "cards": (5, 2), "postcards": (3, 4), "cartons": (2, 3), "jar_labels": (2, 5)}
+
+
+def _prints_json(ctx):
+    out = {}
+    for p in (os.path.join(ctx.work, "display_work", "prints_used.json"), os.path.join(ctx.rooms, "prints_used_room.json"), os.path.join(ctx.work, "rooms_scene", "prints_used_room.json")):
+        if os.path.exists(p):
+            j = json.load(open(p))
+            for k, v in j.get("used", {}).items():
+                out[k] = v
+            out.setdefault("__fit__", {}).update(j.get("fit", {}))
+            out.setdefault("__head__", {}).update(j.get("headlines", {}))
+            out.setdefault("__post__", {}).update(j.get("postcards", {}))
+            out.setdefault("__subj__", {}).update(j.get("subjects", {}))
+    return out
+
+
+def prt_rows(ctx, rows):
+    """PRT-01 to PRT-04 (the newsagent's close review, fault 2; the brief's step 0 i): the printed goods are made from photographs and script, not repeated vector clip-art.
+    PRT-01 no two covers (magazines, newspapers, greetings cards, postcards of one kind) share a picture;
+    PRT-02 no printed good's flat tone is more than 40 per cent of its area (each tile of each atlas: the pixels whose 7 x 7 neighbourhood has a luma standard deviation under 1.5);
+    PRT-03 the postcards' captions name what their photographs show (the photograph's own words, `sw_prints.PHOTOS`, are in the caption);
+    PRT-04 each newspaper's headline is drawn whole: the lines the generator set, joined, are the headline (no word lost to the edge: the close review's 'RAIN FORECAST FOR THE ...')."""
+    pj = _prints_json(ctx)
+    used = {k: v for k, v in pj.items() if not k.startswith("__")}
+    kinds = {}
+    for k, v in used.items():
+        kinds.setdefault(k.split(":")[0], []).append((k, v))
+    dup = []
+    for kd, lst in kinds.items():
+        seen = {}
+        for k, v in lst:
+            if v in seen:
+                dup.append("%s and %s: %s" % (seen[v], k, v))
+            seen[v] = k
+    n_pic = len(set(used.values()))
+    rows.add("PRT-01", "no two covers share a picture", bool(used) and not dup,
+             "%d printed goods (%s), %d distinct photographs (crops of Poly Haven's CC0 HDRIs, tone-mapped, no person): within each kind no two share one%s" % (len(used), ", ".join("%d %s" % (len(v), k) for k, v in sorted(kinds.items())), n_pic, ("; SHARED: " + "; ".join(dup[:6])) if dup else ""))
+    det, ok, n = [], True, 0
+    for tex_dir in (os.path.join(ctx.work, "display_work", "tex"), os.path.join(ctx.work, "rooms_scene", "tex")):
+        if not os.path.isdir(tex_dir):
+            continue
+        for nm, (cols, rws) in ATLAS_GRID.items():
+            p = os.path.join(tex_dir, nm + ".png")
+            if not os.path.exists(p):
+                continue
+            a = luma(np.asarray(Image.open(p).convert("RGB")).astype(np.float32))
+            h, w = a.shape
+            tw, th = w // cols, h // rws
+            worst = 0.0
+            for r_ in range(rws):
+                for c_ in range(cols):
+                    t = a[r_ * th:(r_ + 1) * th, c_ * tw:(c_ + 1) * tw]
+                    m1 = _nd.uniform_filter(t, 7)
+                    m2 = _nd.uniform_filter(t * t, 7)
+                    sd = np.sqrt(np.maximum(m2 - m1 * m1, 0.0))
+                    worst = max(worst, float((sd < 1.5).mean()))
+            n += 1
+            ok &= worst <= 0.40
+            det.append("%s/%s %.2f" % (os.path.basename(os.path.dirname(tex_dir)).replace("_work", ""), nm, worst))
+    rows.add("PRT-02", "no printed good is mostly a flat tone", ok and n > 0, "each tile of %d atlases: the largest share of flat pixels (7 x 7 luma sd under 1.5) in any tile: %s (limit 0.40; try 1's eight flat pictures)" % (n, ", ".join(det)))
+    post, subj = pj.get("__post__", {}), pj.get("__subj__", {})
+    bad = []
+    for cap, pid in post.items():
+        sw = subj.get(pid, "")
+        if sw and sw.lower() not in cap.lower():
+            bad.append("'%s' over %s (%s)" % (cap, pid, sw))
+    rows.add("PRT-03", "the postcards' captions match their photographs", bool(post) and not bad, "%d postcards: each caption holds the words of what its photograph shows%s (try 1: THE HARBOUR AT DUSK was a bed of flowers in daylight, MERIDIAN FROM THE HILL a duck)" % (len(post), ("; MISMATCH: " + "; ".join(bad)) if bad else ""))
+    fit, head = pj.get("__fit__", {}), pj.get("__head__", {})
+    bad = [nm for nm, ls in fit.items() if " ".join(ls) != head.get(nm)]
+    rows.add("PRT-04", "the headlines are whole", bool(fit) and not bad, "%d newspapers: the headline's lines as set, joined, are the headline%s (try 1: RAIN FORECAST FOR THE ... and NEW LIBRARY OPENS ON ... lost their last word)" % (len(fit), ("; CUT: " + "; ".join(bad)) if bad else ""))
+
+
+# --------------------------------------------------------------------------------------------------------------------------------------------- CUR-01 (the tea rooms' curtains)
+def _index_mask(ctx, cam, gi, shape):
+    pi = os.path.join(ctx.gate, "check_%s_object_index.png" % cam)
+    if not os.path.exists(pi):
+        return None
+    idx = np.asarray(Image.open(pi).convert("RGB")).astype(np.float32) / 255.0
+    c = np.array(((gi + 1) % 17 / 17.0 + 0.03, ((gi + 1) // 17) % 17 / 17.0 + 0.03, ((gi + 1) // 289) % 17 / 17.0 + 0.03))
+    mk = np.abs(idx - c[None, None, :]).max(axis=2) < 0.02
+    return np.asarray(Image.fromarray((mk * 255).astype(np.uint8)).resize((shape[1], shape[0]), Image.NEAREST)) > 128
+
+
+def cur_rows(ctx, assets, rows, di):
+    """CUR-01 (the tea rooms' close review, fault 3 (f); the street review N3): (a) each curtain's head touches its rod (the nearest cloth vertex to the rod within 2 mm); (b) no face of the cloth is flat-shaded
+    (the exported mesh shares its vertices: fewer than one vertex a triangle; a flat-shaded export has three a triangle); (c) in the close day frames the share of 32 px blocks inside the cloth with a luma standard
+    deviation under 0.8 is under 2 per cent; (d) at STREET_SQUARE night_lit each curtain's mean luma is at least 0.8 of the glass above it (a lit cafe's cotton glows from behind)."""
+    import bpy
+    from mathutils.bvhtree import BVHTree
+    curt = [(gi, g) for gi, g in enumerate(di["groups"]) if g["model"] == "script:cafe_curtain" and g["kind"] == "scripted"]
+    rods = [(gi, g) for gi, g in enumerate(di["groups"]) if g["model"] == "script:cafe_curtain" and g["kind"] == "support"]
+    if not curt:
+        rows.na("CUR-01", "the curtains are cloth", "this display has no curtain")
+        return
+    bpy.ops.wm.read_factory_settings(use_empty=True)
+    objs = X.load_glb_objects(X.display_glb(assets))
+    deps = bpy.context.evaluated_depsgraph_get()
+    mesh = {}
+    for ob in objs:
+        if ob.type == "MESH":
+            V, T_, N = X.mesh_world(ob, deps)
+            if len(V) and len(T_):
+                mesh[ob.name] = (V, T_)
+    gaps, vt = [], []
+    rod_bvh = []
+    for gi, g in rods:
+        for nm in g["objs"]:
+            if nm in mesh and nm.startswith("curtain_rod"):
+                V, T_ = mesh[nm]
+                rod_bvh.append(BVHTree.FromPolygons(V.tolist(), T_.tolist(), epsilon=0.0))
+    for gi, g in curt:
+        for nm in g["objs"]:
+            if nm not in mesh:
+                continue
+            V, T_ = mesh[nm]
+            vt.append(len(V) / float(len(T_)))
+            top = V[V[:, 2] > V[:, 2].max() - 0.03]
+            best = 1e9
+            for p_ in top[::3]:
+                for bv in rod_bvh:
+                    hit = bv.find_nearest(tuple(p_))
+                    if hit[0] is not None:
+                        best = min(best, hit[3])
+            gaps.append(best)
+    ok_a = bool(gaps) and max(gaps) <= 0.002
+    ok_b = bool(vt) and max(vt) < 1.0
+    # (c) and (d) from the gate's frames and the index renders
+    det_c, ok_c, det_d, ok_d = [], True, [], True
+    for cam in ("CLOSE_35", "CLOSE_35_B"):
+        pf = os.path.join(ctx.gate, "%s_day.png" % cam)
+        if not os.path.exists(pf):
+            ok_c = False
+            continue
+        lum = luma(np.asarray(Image.open(pf).convert("RGB")).astype(np.float32))
+        flat_n, tot_n = 0, 0
+        for gi, g in curt:
+            mk = _index_mask(ctx, cam, gi, lum.shape)
+            if mk is None:
+                continue
+            for y in range(0, lum.shape[0] - 32, 32):
+                for x in range(0, lum.shape[1] - 32, 32):
+                    if mk[y:y + 32, x:x + 32].all():
+                        tot_n += 1
+                        if lum[y:y + 32, x:x + 32].std() < 0.8:
+                            flat_n += 1
+        share = flat_n / float(max(tot_n, 1))
+        ok_c &= tot_n > 0 and share < 0.02
+        det_c.append("%s %d of %d blocks (%.2f per cent)" % (cam, flat_n, tot_n, 100.0 * share))
+    pf = os.path.join(ctx.gate, "STREET_SQUARE_night_lit.png")
+    pm = os.path.join(ctx.gate, "check_STREET_SQUARE_night_lit_mask.png")
+    if os.path.exists(pf) and os.path.exists(pm):
+        lum = luma(np.asarray(Image.open(pf).convert("RGB")).astype(np.float32))
+        glass = np.asarray(Image.open(pm).convert("L").resize((lum.shape[1], lum.shape[0]), Image.NEAREST)) > 128
+        for gi, g in curt:
+            mk = _index_mask(ctx, "STREET_SQUARE", gi, lum.shape)
+            if mk is None or mk.sum() < 500:
+                ok_d = False
+                continue
+            ys, xs = np.nonzero(mk)
+            y0, y1, x0, x1 = ys.min(), ys.max(), xs.min(), xs.max()
+            band = np.zeros_like(mk)
+            band[max(0, y0 - (y1 - y0)):max(0, y0 - 4), x0:x1 + 1] = True
+            band &= glass & ~mk
+            cur_l = float(lum[mk].mean())
+            room_l = float(lum[band].mean()) if band.any() else 0.0
+            ratio = cur_l / max(room_l, 1e-6)
+            ok_d &= ratio >= 0.8
+            det_d.append("%s %.1f against %.1f above it (%.2f)" % (g["objs"][0], cur_l, room_l, ratio))
+    else:
+        ok_d = False
+    rows.add("CUR-01", "the curtains are cloth, hung from the rod, lit from behind", ok_a and ok_b and ok_c and ok_d,
+             "(a) the cloth's head to its rod: nearest %.1f mm (at most 2); (b) vertices a triangle in the exported cloth %s (under 1: smooth-shaded; a flat-shaded export has 3); (c) close day frames, 32 px blocks inside the cloth with a luma sd under 0.8: %s (under 2 per cent); (d) STREET_SQUARE night_lit, each curtain against the glass above it: %s (at least 0.8)" % (
+                 (max(gaps) * 1000.0) if gaps else -1, ", ".join("%.2f" % v for v in vt), "; ".join(det_c), "; ".join(det_d)))
+
+
+# --------------------------------------------------------------------------------------------------------------------------------------------- DSP-12, DSP-13 (the newsagent's racks and board)
+def news_rows(ctx, R, assets, rows, di, members):
+    """DSP-12 (the newsagent's street review, narrow 2: the postcard rack's pole stood on the mullion's edge): from STREET_SQUARE no rack's pole projects within 10 px (of 2560 x 1440) of a mullion or a jamb: the pole's
+    silhouette (the vertices of the rack's frame between w 0.05 and 0.45, where only the pole is) and each `win_mullion_*` / `win_jamb*` member's projected box are separated by at least 10 px.
+    DSP-13 (the street review, narrow 1: "a bare grey band shows above the covers"): along the sloping board no more than 20 mm of bare board shows above the top row of covers (the highest cover vertex against the board's
+    top edge, measured along the board's slope)."""
+    import bpy
+    bpy.ops.wm.read_factory_settings(use_empty=True)
+    objs = X.load_glb_objects(X.display_glb(assets))
+    deps = bpy.context.evaluated_depsgraph_get()
+    mesh = {}
+    for ob in objs:
+        if ob.type == "MESH":
+            V, T_, N = X.mesh_world(ob, deps)
+            if len(V):
+                mesh[ob.name] = V
+    off = np.array([ctx.window_cx_m, -0.025, 0.600])
+    cp = X.cam_params(R, "STREET_SQUARE", (2560, 1440))
+
+    def px_x(P):
+        x, y, zc = X.project_np(cp, P)
+        return float(x.min()), float(x.max())
+    stops = []
+    for k, v in members.items():
+        if k.startswith(("win_mullion_", "win_jamb", "frame_jamb", "pil")) and "u" in v:
+            cs = np.array([[(u_ - 3000.0) / 1000.0, -d_ / 1000.0, z_ / 1000.0] for u_ in v["u"] for d_ in v["d"] for z_ in v["z"]])
+            stops.append((k, px_x(cs)))
+    det, ok, n = [], True, 0
+    for g in di["groups"]:
+        if g["model"] in ("script:postcard_rack", "script:card_rack") and g["kind"] == "support":
+            for nm in g["objs"]:
+                V = mesh.get(nm)
+                if V is None:
+                    continue
+                pole = V[(V[:, 2] > 0.05) & (V[:, 2] < 0.45)]
+                if not len(pole):
+                    continue
+                a, b = px_x(pole + off)
+                gap = min([max(sa - b, a - sb) for _, (sa, sb) in stops] or [999.0])
+                n += 1
+                ok &= gap >= 10.0
+                det.append("%s pole at x %.0f to %.0f px, %.0f px from the nearest mullion or jamb" % (g["model"].replace("script:", ""), a, b, gap))
+    rows.add("DSP-12", "no rack's pole stands on a mullion", ok and n > 0, "STREET_SQUARE (2560 x 1440): " + "; ".join(det) + " (at least 10 px; try 1: the postcard rack's pole 0.8 px behind the mullion's edge)")
+    board = next((mesh[nm] for g in di["groups"] if g["model"] == "script:magazine_board" for nm in g["objs"] if nm in mesh), None)
+    covers = [mesh[nm] for g in di["groups"] if g["model"] == "script:magazines" for nm in g["objs"] if nm in mesh]
+    if board is None or not covers:
+        rows.add("DSP-13", "no bare board above the covers", False, "the board or the covers are missing from the glb")
+        return
+    lean = math.radians(35.0)
+    sb_, cb_ = math.sin(lean), math.cos(lean)
+    mid = board[:, 0].mean()
+    sl = lambda P: (P[:, 1] * sb_ + P[:, 2] * cb_)                      # the coordinate along the board's up-slope (v and w in the display frame)
+    # the slab's own vertices: those on the slope (not the cheeks' foot and back points): the board's top edge is the largest along-slope coordinate among vertices above w 0.3
+    top_board = float(sl(board[board[:, 2] > 0.30]).max())
+    top_cov = max(float(sl(c).max()) for c in covers)
+    bare = top_board - top_cov
+    rows.add("DSP-13", "no bare board above the covers", bare <= 0.020 + 1e-6, "along the board's slope the board's top edge stands %.1f mm above the highest cover vertex (at most 20 mm; try 1: a third row hidden behind the board and a grey band of about 130 mm showed); %d covers" % (bare * 1000.0, len(covers)))

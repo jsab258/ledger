@@ -45,6 +45,7 @@ OPENING_GAP = 0.002             # the stand-in wall's openings are cut 2 mm larg
 GRIME_BAND_M = 0.030            # target 4.2: a grime band 30 mm high along the sill on grimy windows ...
 GRIME_BAND_FACTOR = 0.75        # ... at x 0.75 (the close review's number, a Judgement within the box shade, above KIT-09's floor of 0.25)
 CAT = {"glass": 1, "joinery": 2, "cloth": 3, "brick": 4, "card": 5}
+EMULSION = {"lin": (0.72, 0.70, 0.64), "rough": 0.9}      # the RC and RC2 reveal boards' paint (hw_kit.REVEAL)
 
 
 def lin(c):
@@ -117,12 +118,93 @@ def sample_mips(chain, uv, base_wh):
     return out
 
 
-def bake_card(eye_card, size, camd, side, picture_png, out_png, nw, nh, jobs=3):
-    """The card's emission picture for one eye: the room picture (sRGB) sampled through trace with mips, written as 8-bit sRGB WITHOUT the brightness (the card's emission strength carries it)."""
+# The pendant shade (14 Oct, from the try 2 reviews, close review "Outside this view" item 2): the paper drum stood 0.55 m behind the opaque room card as a mesh and could never be seen. It is drawn into the card's bake instead, the way `trace`
+# draws the room: for each card pixel the eye's ray is tested against the shade's truncated cone BEFORE the room box; where it hits first, the shade is written. Target section 8: radius 0.170 m at its foot, 0.105 m at its top, 0.24 m high, its axis
+# 0.55 m behind the card on the room's centre line, its top 0.30 m below the ceiling (it is open below: seen from underneath, the ray meets its inside; the top is a cap).
+SHADE = {"rf": 0.170, "rt": 0.105, "h": 0.24, "y": 0.55, "below_ceiling": 0.30}
+PAPER = (0.93, 0.89, 0.77)                 # the shade's paper (target 7.1)
+CEILING_ALBEDO = 0.72                      # the ceiling's own reflectance, to read the room's light off the picture's ceiling
+SHADE_LIT_MAX = 0.85                       # the lit shade is WARM scaled so that its largest channel is 0.85 (the roll-off's ceiling: sRGB 237). The review wrote 'emissive WARM x 3.0', which is the game's own exposure: in the cloud's 8-bit
+#                                          Standard view WARM x 3.0 = (3.0, 2.14, 1.03) clips to a white disc, the olive/white fault of the first build again, so the cloud draws it at the picture's ceiling and NIGHT-03 reads it as it reads the rest
+
+
+def shade_hit(eye_card, size, side, nw, nh, ss=2):
+    """The share of each card pixel (nh x nw, ss x ss samples a pixel) whose eye ray meets the pendant shade before the room box (trace's own `t`). Vectorised numpy, the same frame `trace` uses: o = (x across from the picture's left, height, depth),
+    v = the unit direction in that frame; the room box's hit distance is trace's `t`."""
+    W, H, D = size
+    ex, ey, ez = eye_card
+    xa, za = W / 2.0, SHADE["y"]
+    hf, ht = H - SHADE["below_ceiling"] - SHADE["h"], H - SHADE["below_ceiling"]
+    rf, rt = SHADE["rf"], SHADE["rt"]
+    k = (rt - rf) / (ht - hf)
+    cov = np.zeros((nh, nw), np.float32)
+    jj, ii = np.meshgrid(np.arange(nh, dtype=np.float64), np.arange(nw, dtype=np.float64), indexing="ij")
+    for a in range(ss):
+        for b in range(ss):
+            fx, fy = (a + 0.5) / ss, (b + 0.5) / ss
+            xo = (ii + fx) / nw * W                      # the card point's x in the picture-left frame (trace's o.x)
+            zc = H - (jj + fy) / nh * H                  # its height
+            xc = xo if side < 0 else W - xo              # the card point's own x (the bake's column rule)
+            # trace: dir = normalise(P - C), P = (xc, 0, zc); o = (W - xc if side > 0 else xc, zc, 0); v = (-dx * side, dz, dy * side)
+            dx, dy, dz = xc - ex, 0.0 - ey, zc - ez
+            n = np.sqrt(dx * dx + dy * dy + dz * dz)
+            dx, dy, dz = dx / n, dy / n, dz / n
+            ox = (W - xc) if side > 0 else xc
+            oh = zc
+            vx, vh, vz = -dx * side, dz, dy * side
+            # the room box (trace's t)
+            with np.errstate(divide="ignore", invalid="ignore"):
+                tx = np.where(vx > 0, (W - ox) / np.where(vx > 0, vx, 1.0), (0 - ox) / np.minimum(vx, -1e-5))
+                ty = np.where(vh > 0, (H - oh) / np.where(vh > 0, vh, 1.0), (0 - oh) / np.minimum(vh, -1e-5))
+                tz = (D - 0.0) / np.maximum(vz, 1e-5)
+            t_room = np.maximum(0.0, np.minimum(np.minimum(tx, ty), tz))
+            # the cone: (x - xa)^2 + (z - za)^2 = (rf + k (h - hf))^2, hf <= h <= ht; a two-sided surface
+            dX, dZ = ox - xa, 0.0 - za
+            r0 = rf + k * (oh - hf)
+            A = vx * vx + vz * vz - (k * vh) ** 2
+            B = 2.0 * (dX * vx + dZ * vz - k * vh * r0)
+            C = dX * dX + dZ * dZ - r0 * r0
+            disc = B * B - 4.0 * A * C
+            t_best = np.full(t_room.shape, np.inf)
+            with np.errstate(divide="ignore", invalid="ignore"):
+                sq = np.sqrt(np.maximum(disc, 0.0))
+                for sg in (-1.0, 1.0):
+                    t = (-B + sg * sq) / (2.0 * A)
+                    h = oh + vh * t
+                    ok = (disc >= 0) & (np.abs(A) > 1e-9) & (t > 1e-6) & (h >= hf) & (h <= ht)
+                    t_best = np.where(ok & (t < t_best), t, t_best)
+                # the cap at the top (seen from inside, through the open foot)
+                tc = (ht - oh) / np.where(np.abs(vh) > 1e-9, vh, 1e-9)
+                xc_, zc_ = ox + vx * tc - xa, 0.0 + vz * tc - za
+                okc = (tc > 1e-6) & (xc_ * xc_ + zc_ * zc_ <= rt * rt)
+                t_best = np.where(okc & (tc < t_best), tc, t_best)
+            cov += (t_best < t_room).astype(np.float32)
+    return cov / float(ss * ss)
+
+
+def shade_colour(state, lit, pic_lin):
+    """The shade's colour in the card's own pre-gain units (the card's strength x BRIGHTNESS[state] then carries it): lit (night_lit in a room with a lamp) the warm light scaled to 0.85 in its largest channel; otherwise the paper lit by the room's
+    own light: the paper (0.93, 0.89, 0.77) x the picture's ceiling light (the mean linear colour of the picture's top tenth over its middle 40 per cent, divided by the ceiling's albedo), by day white, in the night_dark picture the sodium wash."""
+    if state == "night_lit" and lit:
+        return np.array(WARM, np.float32) * (SHADE_LIT_MAX / max(WARM))
+    h, w = pic_lin.shape[:2]
+    band = pic_lin[: max(int(h * 0.10), 4), int(w * 0.30):int(w * 0.70)].reshape(-1, 3).mean(axis=0)
+    return np.minimum(np.array(PAPER, np.float32) * (band / CEILING_ALBEDO), 1.0)
+
+
+def bake_card(eye_card, size, camd, side, picture_png, out_png, nw, nh, jobs=3, shade=None):
+    """The card's emission picture for one eye: the room picture (sRGB) sampled through trace with mips, written as 8-bit sRGB WITHOUT the brightness (the card's emission strength carries it). `shade` (14 Oct, from the try 2 reviews): None,
+    or {"state": ..., "lit": bool}: the pendant shade is drawn over the room where the eye's ray meets it before the room box (shade_hit), in shade_colour's colour."""
     uv = uv_map(eye_card, size, camd, side, nw, nh, jobs)
     pic = np.asarray(Image.open(picture_png).convert("RGB")).astype(np.float32) / 255.0
-    chain = mips(lin(pic))
+    plin = lin(pic)
+    chain = mips(plin)
     lin_img = sample_mips(chain, uv, (pic.shape[1], pic.shape[0]))
+    if shade is not None:
+        cov = shade_hit(eye_card, size, side, nw, nh)
+        if cov.any():
+            col = shade_colour(shade["state"], shade["lit"], plin)
+            lin_img = lin_img * (1.0 - cov[..., None]) + col[None, None, :] * cov[..., None]
     Image.fromarray((srgb(lin_img) * 255.0 + 0.5).astype(np.uint8)).save(out_png)
     return lin_img
 
@@ -281,6 +363,7 @@ def build_and_render(view_name, cam, state, out_png, bake_dir, samples=48, res=N
     post = new_mat("lamp_post", tuple(lin([0.05, 0.05, 0.06])), 0.6)
     if mode == "mask":
         mk = {k: flat("mk_" + k, (v / 255.0, 0, 0)) for k, v in CAT.items()}
+        mk["curtain"] = flat("mk_curtain", (CAT["cloth"] / 255.0, 0, 1.0 / 255.0))          # 14 Oct, try 3: a curtain card is cloth (R 3) with B 1, so that NIGHT-10 can read the curtain's own pixels apart from the net's
         clear_glass = bpy.data.materials.new("clear_glass_mask")
         clear_glass.use_nodes = True
         for n_ in list(clear_glass.node_tree.nodes):
@@ -457,7 +540,8 @@ def build_and_render(view_name, cam, state, out_png, bake_dir, samples=48, res=N
                 out = os.path.join(bake_dir, "card_%s_%s_%s.png" % (view_name, st, site["id"] if len(key) == 1 else key[0]))
                 if not os.path.exists(out):
                     os.makedirs(bake_dir, exist_ok=True)
-                    bake_card(eye_in_card_frame(site, cam_eye), (W_, H_, D_), camd, c["side"], pic, out, nw, nh)
+                    shade_ = {"state": st, "lit": lit and st == "night_lit"} if T.room(site["room"])["pendant"] else None
+                    bake_card(eye_in_card_frame(site, cam_eye), (W_, H_, D_), camd, c["side"], pic, out, nw, nh, shade=shade_)
                 res_ = (out, st)
         baked[key] = res_
         return res_
@@ -495,17 +579,14 @@ def build_and_render(view_name, cam, state, out_png, bake_dir, samples=48, res=N
             show |= {"blind__B2", "blind_roller__B2"}
         if extra_k == "B3":
             show |= {"blind__B3", "blind_headrail__B3"}
-        room = T.room(site["room"])
-        if site["card"]["room_family"] == "UP" and room["pendant"]:
-            show.add("pendant__shade")
         mats_w = {}
         for o in tmpl:
             nm = o.name
             base = nm.split(".")[0]
-            is_dress = base.startswith(("net__", "net_rod__", "net_bracket__", "curtain", "blind", "pendant__"))
+            is_dress = base.startswith(("net__", "net_rod__", "net_bracket__", "curtain", "blind"))
             if is_dress and base not in show:
                 continue
-            if base == "room__card" or base == "pendant__shade_gf":
+            if base == "room__card":
                 continue
             c = o.copy()
             sc.collection.objects.link(c)
@@ -524,19 +605,23 @@ def build_and_render(view_name, cam, state, out_png, bake_dir, samples=48, res=N
                 sl.material = m0
                 mn = m0.name.split(".")[0]
                 if mode == "mask":
-                    key = "glass" if mn.startswith("glass") else ("joinery" if mn.startswith("paint_") or base.startswith(("net_rod", "net_bracket", "curtain_pole", "curtain_finial", "curtain_bracket")) else "cloth")
+                    key = "glass" if mn.startswith("glass") else ("joinery" if mn.startswith("paint_") or base.startswith(("net_rod", "net_bracket", "curtain_pole", "curtain_finial", "curtain_bracket")) else ("curtain" if base.startswith("curtain__") else "cloth"))
                     sl.material = clear_glass if (maskT and key == "glass") else mk[key]
                     continue
                 if mn.startswith("glass"):
                     sl.material = glass_gate
                 elif mn.startswith("paint_"):
-                    grime = site["condition"] == "grimy" and base in GRIME_PARTS
+                    emu = mn == "paint_white_emulsion"          # the RC and RC2 reveal boards (14 Oct, from the try 2 reviews): the wall's own white emulsion, not the house's window paint, never grimy or flaking
+                    grime = site["condition"] == "grimy" and base in GRIME_PARTS and not emu
                     key = ("paint", site["paint"], site["condition"], base in ("paint_joinery__lower_bottom_rail", "paint_joinery__oak_sill", "paint_joinery__frame_sill_rail"), m0.name, (site["id"], base) if grime else None)
                     if key not in mats_w:
                         gr = None
                         if grime:
                             gr = (base, min((o.matrix_world @ v.co).z for v in o.data.vertices), Z)
-                        mats_w[key] = make_paint(m0, paint, site["condition"], key[3], bool(extra.get("old_fault")), gr)
+                        if emu:
+                            mats_w[key] = make_paint(m0, EMULSION, "sound", False, False, None)
+                        else:
+                            mats_w[key] = make_paint(m0, paint, site["condition"], key[3], bool(extra.get("old_fault")), gr)
                     sl.material = mats_w[key]
                 elif mn in ("net_voile", "curtain", "blind"):
                     kk = (mn, base, lit)
@@ -576,15 +661,10 @@ def build_and_render(view_name, cam, state, out_png, bake_dir, samples=48, res=N
                                 em, sv = tuple(cl[k_] * SODIUM[k_] for k_ in range(3)), 0.02
                             pb.inputs["Emission Color"].default_value = (*em, 1.0)
                             pb.inputs["Emission Strength"].default_value = sv
+                            if lit and mn == "curtain":
+                                curtain_fold_emission(m, em)
                         mats_w[kk] = m
                     sl.material = mats_w[kk]
-                elif mn == "pendant_shade":
-                    m = m0.copy()
-                    pb = m.node_tree.nodes["Principled BSDF"]
-                    if night and lit:
-                        pb.inputs["Emission Color"].default_value = (*WARM, 1.0)
-                        pb.inputs["Emission Strength"].default_value = 3.0
-                    sl.material = m
         # the room card of this window: the kit's own room__card for an upper window; a cottage house's card is built once below
         if site["card"]["room_family"] == "UP":
             cardo = None
@@ -642,27 +722,7 @@ def build_and_render(view_name, cam, state, out_png, bake_dir, samples=48, res=N
         o.visible_diffuse = False
         o.visible_glossy = False
         o.visible_shadow = False
-        # the pendant in the cottage's front room, at the room's centre
-        if T.room(site["room"])["pendant"]:
-            pm = new_mat("pendant_gf", tuple(lin([0.93, 0.89, 0.77])), 0.9, emit=WARM if (night and lit) else None, emit_strength=3.0 if (night and lit) else 0.0)
-            xcm = (xl + xh) / 2
-            n = 24
-            verts, faces = [], []
-            z0p, z1p = c["z_bottom_above_crown"] + 1.686 + 0.3736 - 0.3736, c["z_bottom_above_crown"] + 1.926 + 0.3736 - 0.3736
-            z0p, z1p = zt - 0.30 - 0.24, zt - 0.30
-            yc = ypl - 0.55
-            for i in range(n):
-                a = 2 * math.pi * i / n
-                verts.append((-xcm + 0.17 * math.cos(a), yc + 0.17 * math.sin(a), z0p))
-                verts.append((-xcm + 0.105 * math.cos(a), yc + 0.105 * math.sin(a), z1p))
-            for i in range(n):
-                j = (i + 1) % n
-                faces.append((2 * i, 2 * j, 2 * j + 1, 2 * i + 1))
-            me2 = bpy.data.meshes.new("pendant_gf_" + key[0])
-            me2.from_pydata(verts, [], faces)
-            op = bpy.data.objects.new("pendant_gf_" + key[0], me2)
-            sc.collection.objects.link(op)
-            me2.materials.append(mk["cloth"] if mode == "mask" else pm)
+        # (14 Oct, from the try 2 reviews: no separate pendant mesh; the shade is drawn into the card's bake)
 
     # ---------------------------------------------------------------- world and lights
     world = bpy.data.worlds.new("w")
@@ -774,6 +834,37 @@ def build_and_render(view_name, cam, state, out_png, bake_dir, samples=48, res=N
     t1 = time.time()
     bpy.ops.render.render(write_still=True)
     return round(time.time() - t1, 1), rec
+
+
+CURTAIN_MAP_MEAN = 0.758         # the mean of the curtain atlas's fold map (hw_cloth.curtain_card: 0.57 to 0.95 at the 5th to 95th percentile: the target's brightness modulation of 0.25)
+
+
+def curtain_fold_emission(m, em):
+    """14 Oct, from the try 2 reviews (street 8): a lit curtain's emission is multiplied by the curtain's own fold brightness map (the +-25 per cent its base colour carries by day: the atlas's grey, read as stored, not linearised, over its
+    mean), so that the folds read dark at night as the target asks (C2 'folds dark'), where the constant emission read two flat bars. The mean of the emission stays the target's `night_lit_emission_linear`."""
+    import bpy
+    nt = m.node_tree
+    pb = nt.nodes["Principled BSDF"]
+    src = next((n for n in nt.nodes if n.type == "TEX_IMAGE" and n.outputs["Alpha"].is_linked), None)          # the base colour map: its alpha feeds the pane's Alpha
+    if src is None or src.image is None:
+        return False
+    img = bpy.data.images.get("curtain_fold_map")
+    if img is None:
+        img = src.image.copy()
+        img.name = "curtain_fold_map"
+        img.colorspace_settings.name = "Non-Color"
+    t = nt.nodes.new("ShaderNodeTexImage")
+    t.image = img
+    t.interpolation = src.interpolation
+    t.extension = src.extension
+    mix = nt.nodes.new("ShaderNodeMix")
+    mix.data_type = "RGBA"
+    mix.blend_type = "MULTIPLY"
+    mix.inputs[0].default_value = 1.0
+    mix.inputs[7].default_value = (em[0] / CURTAIN_MAP_MEAN, em[1] / CURTAIN_MAP_MEAN, em[2] / CURTAIN_MAP_MEAN, 1.0)
+    nt.links.new(t.outputs["Color"], mix.inputs[6])
+    nt.links.new(mix.outputs[2], pb.inputs["Emission Color"])
+    return True
 
 
 def make_paint(m0, paint, condition, is_sill_part, old_fault=False, grime=None):

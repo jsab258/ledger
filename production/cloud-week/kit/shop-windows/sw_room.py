@@ -456,6 +456,17 @@ class Room:
         corners = [E @ Vector((x, y, z)) * scale for x in (lo.x, hi.x) for y in (lo.y, hi.y) for z in (lo.z, hi.z)]
         mn = Vector((min(c.x for c in corners), min(c.y for c in corners), min(c.z for c in corners)))
         mx = Vector((max(c.x for c in corners), max(c.y for c in corners), max(c.z for c in corners)))
+        if getattr(self, "exact_bbox", False) and any(abs(r_) > 1e-6 for r_ in rot[:2]):
+            # 14 Oct, try 2 (DSP-05: a piece's lowest point within 2 mm of its support): a model turned about x or y (a broom leaned on a wall) has its true lowest vertex above the rotated box's corner by a few
+            # millimetres; the anchor is taken on the vertices themselves
+            key_ = (asset, tris)
+            tv = self.__dict__.setdefault("_tvert", {})
+            if key_ not in tv:
+                tv[key_] = np.array([tuple(m_.matrix_world @ v_.co) for m_ in meshes for v_ in m_.data.vertices], np.float64)
+            Em = np.array(E)
+            P = (tv[key_] @ Em.T) * scale
+            mn = Vector(P.min(axis=0))
+            mx = Vector(P.max(axis=0))
         off = Vector()
         for i in range(3):
             a = anchor[i]

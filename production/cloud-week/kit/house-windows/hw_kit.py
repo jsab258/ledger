@@ -4,7 +4,7 @@ Kit frame (target section 8): metres in the glb, z up in Blender (the glb is glT
 right), y INTO the wall from the brick face (0 at the face), z UP from the opening's bottom edge; the pivot is the opening's bottom-edge centre on the brick face; the street is at -y.
 
 S22 and S11 are the lab's checked sash (production/assets/sash-window/sash_window.glb and _1over1.glb, 41 and 35 nodes), imported and not redrawn: their glass sheets become one node a pane (the 2/2's
-split at the bar), each pane tilted by a seeded angle (target 5.2), every joinery vertex gets its colour (the box shade, 5.4), and the nets, drapes, blinds, pendant and room card are added. RC and RC2 are
+split at the bar), each pane tilted by a seeded angle (target 5.2), every joinery vertex gets its colour (the box shade, 5.4), and the nets, drapes, blinds and room card are added (the pendant shade is drawn into the card's bake, from 14 Oct). RC and RC2 are
 built from the target's parts tables (4.3), bevelled 1.5 mm, with the gasket line and the welded-corner grooves as strips.
 
 The lessons of the shops' reviews, applied from the start (14 October): nothing is left open; the glass is a part (a pane node each, never a stand-in); a net or curtain has varied folds with soft normals
@@ -32,6 +32,11 @@ EPS = 0.3                      # mm: two faces closer than this touch
 BAND = 8.0                     # mm: an inside corner's reach (box shade)
 Y_GLASS = {"S22": {"upper": 142.0, "lower": 190.0}, "S11": {"upper": 142.0, "lower": 190.0}, "RC": {"all": 112.5}, "RC2": {"all": 112.5}}
 DEFAULT_PAINT = {"S22": "white_fresh", "S11": "white_fresh", "RC": "white_upvc", "RC2": "white_upvc"}
+# 14 Oct, from the try 2 reviews (close review, outside this view, item 1): the RC and RC2 frames end at 142.5 mm into the wall and had no inner reveal, so a ray under about 30 degrees from the wall passed the frame's back and met the stand-in
+# wall's brick on the reveal, seen through the glass beside the far jamb (7,678 of 28,912 glass pixels at the worst). Four painted lining boards, y 142.5 to 268 (short of the card at 270): two jamb linings at x +-412.5 to +-425, z 0 to 1676.4; a head
+# lining at z 1663.9 to 1676.4; a window board at z 0 to 25; white emulsion, linear (0.72, 0.70, 0.64), roughness 0.9; box shade 1.0 at 142.5 falling to 0.6 at 268.
+REVEAL = {"y0": 142.5, "y1": 268.0, "colour_lin": (0.72, 0.70, 0.64), "rough": 0.9, "shade_front": 1.0, "shade_back": 0.6,
+          "boards": [("reveal_jamb_L", -425.0, -412.5, 0.0, 1676.4), ("reveal_jamb_R", 412.5, 425.0, 0.0, 1676.4), ("reveal_head", -412.5, 412.5, 1663.9, 1676.4), ("reveal_board", -412.5, 412.5, 0.0, 25.0)]}
 GLB_NAMES = {"S22": "hw_S22.glb", "S11": "hw_S11.glb", "RC": "hw_RC.glb", "RC2": "hw_RC2.glb", "GF": "hw_room_card_gf.glb"}
 
 
@@ -51,7 +56,7 @@ def principled(m):
 
 
 def make_mats(kind, cloth):
-    """The kit's materials, named as the target says (7: paint_<name>, glass_house, net_voile, curtain, blind, pendant_shade, room_card)."""
+    """The kit's materials, named as the target says (7: paint_<name>, glass_house, net_voile, curtain, blind, room_card; from 14 Oct also paint_white_emulsion, the RC and RC2 reveal boards; the pendant_shade material is gone with the node)."""
     P = T.paints()
     pn = DEFAULT_PAINT.get(kind, "white_fresh")
     mats = {}
@@ -107,13 +112,14 @@ def make_mats(kind, cloth):
     mats["net"] = tex_mat("net_voile", os.path.join(d, "net_voile_basecolour.png"), os.path.join(d, "net_voile_normal.jpg"), srgb8_to_lin((238, 238, 232)), 0.9)
     mats["curtain"] = tex_mat("curtain", os.path.join(d, "curtain_basecolour.png"), os.path.join(d, "curtain_normal.jpg"), srgb8_to_lin((214, 198, 166)), 0.85)
     mats["blind"] = tex_mat("blind", os.path.join(d, "blind_basecolour.png"), None, srgb8_to_lin((226, 224, 214)), 0.5)
-    ps = bpy.data.materials.new("pendant_shade")
-    ps.use_nodes = True
-    p = principled(ps)
-    p.inputs["Base Color"].default_value = (*srgb8_to_lin((236, 226, 196)), 1.0)
-    p.inputs["Roughness"].default_value = 0.9
-    ps.use_backface_culling = False
-    mats["shade"] = ps
+    # 14 Oct, from the try 2 reviews (close review, outside this view, item 1): the painted white emulsion of the RC and RC2 inner reveal (the lining boards the lab's S22 and S11 carry to 250.8 and these two kinds lacked)
+    em = bpy.data.materials.new("paint_white_emulsion")
+    em.use_nodes = True
+    p = principled(em)
+    p.inputs["Base Color"].default_value = (*REVEAL["colour_lin"], 1.0)
+    p.inputs["Roughness"].default_value = REVEAL["rough"]
+    p.inputs["Metallic"].default_value = 0.0
+    mats["emulsion"] = em
     rc = bpy.data.materials.new("room_card")
     rc.use_nodes = True
     principled(rc).inputs["Base Color"].default_value = (0.5, 0.5, 0.5, 1.0)
@@ -475,7 +481,7 @@ def tilts(names, kind):
 
 # ---------------------------------------------------------------------------------------------------------------------------- the common nodes: nets, curtains, blinds, pendant, room card
 def add_dressing(kind, mats, cloth, family="UP"):
-    """Nets (a card each, hung from its own rod with brackets), curtains (cards on a pole with finials and brackets), blinds (cards from a headrail), the pendant shade and the room card."""
+    """Nets (a card each, hung from its own rod with brackets), curtains (cards on a pole with finials and brackets), blinds (cards from a headrail) and the room card."""
     Pl = 235.0 if kind in ("RC", "RC2") else 254.0
     nets = T.target()["nets"]
     objs = []
@@ -536,8 +542,8 @@ def add_dressing(kind, mats, cloth, family="UP"):
     for o, k in ((h1, "B1"), (h3, "B3"), (rl, "B2")):
         solid_uv(o, k)
         objs.append(o)
-    # the pendant: a paper drum shade 340 across and 240 high, its centre 550 mm behind the card (y 820), top 300 below the ceiling (the one real object in the room)
-    objs.append(pendant(mats["shade"], 0.0, 820.0, 1536.0, 1776.0))
+    # the pendant shade is NOT a node any more (14 Oct, from the try 2 reviews, close review outside this view item 2): it stood 0.55 m behind the opaque card and could never be seen; it is drawn into the card's bake, the way `trace`
+    # draws the room (hw_gate.shade_hit), and the PC's interior material does the same test
     # the room card
     if family == "UP":
         o = mesh_from("room__card", [(-1400, 270.0, -473.6), (1400, 270.0, -473.6), (1400, 270.0, 2076.4), (-1400, 270.0, 2076.4)], [(0, 1, 2, 3)], mats["card"], [(0, 0), (1, 0), (1, 1), (0, 1)])
@@ -545,19 +551,26 @@ def add_dressing(kind, mats, cloth, family="UP"):
     return objs
 
 
-def pendant(mat, xc, yc, z0, z1, rb=170.0, rt=105.0, n=24):
-    verts, faces = [], []
-    for i in range(n):
-        a = 2 * math.pi * i / n
-        verts.append((xc + rb * math.cos(a), yc + rb * math.sin(a), z0))
-        verts.append((xc + rt * math.cos(a), yc + rt * math.sin(a), z1))
-    for i in range(n):
-        j = (i + 1) % n
-        faces.append((2 * i, 2 * j, 2 * j + 1, 2 * i + 1))
-    faces.append(tuple(2 * i + 1 for i in reversed(range(n))))          # the top (the cord's cap)
-    ob = mesh_from("pendant__shade", verts, faces, mat)
-    smooth(ob, 40.0)
-    return ob
+def add_reveal(kind, mats, log=print):
+    """The four lining boards of the RC and RC2 inner reveal (REVEAL, above): boxes with no bevel, white emulsion, COLOR_0 = the box shade 1.0 at y 142.5 falling linearly to 0.6 at y 268 on every vertex, UVs on every primitive; nothing shares a
+    street-facing plane with another part (their fronts at y 142.5 abut each other along edges only, and lie behind the frame's own back faces)."""
+    y0, y1 = REVEAL["y0"], REVEAL["y1"]
+    out = []
+    for nm, x0, x1, z0, z1 in REVEAL["boards"]:
+        o = box_mm("paint_joinery__" + nm, x0, x1, y0, y1, z0, z1, mats["emulsion"])
+        me = o.data
+        attr = me.color_attributes.new("Color", "FLOAT_COLOR", "CORNER")
+        me.attributes.active_color = attr
+        for poly in me.polygons:
+            for li, vi in zip(poly.loop_indices, poly.vertices):
+                y = me.vertices[vi].co.y / MM
+                v = REVEAL["shade_front"] + (REVEAL["shade_back"] - REVEAL["shade_front"]) * (y - y0) / (y1 - y0)
+                attr.data[li].color = (v, v, v, 1.0)
+        uv_box(o)
+        smooth(o, 32.0)
+        out.append(o)
+    log("%s: %d reveal boards (y %.1f to %.1f)" % (kind, len(out), y0, y1))
+    return out
 
 
 # ---------------------------------------------------------------------------------------------------------------------------- the kinds
@@ -700,6 +713,8 @@ def build_kind(kind, out_path, log=print):
         joinery, panes = rc_parts(kind, mats)
     corners = finish_joinery(kind, joinery)
     separate_coplanar(kind, joinery, log)
+    if kind in ("RC", "RC2"):
+        add_reveal(kind, mats, log)          # after the corner bands and the nudge: the boards abut the frame's back faces and must not make inside-corner bands on it
     dress = add_dressing(kind, mats, cloth, "UP")
     log("%s: %d joinery nodes, %d panes, %d dressing nodes, %d inside corners" % (kind, len(joinery), len(panes), len(dress), len(corners)))
     export(out_path, [o for o in bpy.data.objects if o.type == "MESH"])
@@ -709,15 +724,13 @@ def build_kind(kind, out_path, log=print):
 
 def build_gf_card(out_path, log=print):
     """The cottages' shared room card: 3.4 x 2.6 m on the card plane, centred between the house's two windows (x 0), floor 373.6 below the opening's bottom, ceiling 2226.4 above it, and the pendant at
-    the room's centre (the window kits' own pendant nodes are switched off on a cottage)."""
+    the room's centre (14 Oct, from the try 2 reviews: the pendant shade is drawn into the card's bake, not a node)."""
     reset()
     cloth = CL.build_all(os.path.join(T.KITWORK, "cloth"))
     mats = make_mats("S22", cloth)
     o = mesh_from("room__card_gf", [(-1700, 270.0, -373.6), (1700, 270.0, -373.6), (1700, 270.0, 2226.4), (-1700, 270.0, 2226.4)], [(0, 1, 2, 3)], mats["card"], [(0, 0), (1, 0), (1, 1), (0, 1)])
-    p = pendant(mats["shade"], 0.0, 820.0, 1686.0, 1926.0)
-    p.name = "pendant__shade_gf"
-    export(out_path, [o, p])
-    return {"kind": "GF", "triangles": sum(tris(x) for x in (o, p)), "nodes": 2, "path": out_path}
+    export(out_path, [o])
+    return {"kind": "GF", "triangles": tris(o), "nodes": 1, "path": out_path}
 
 
 def export(path, objs):

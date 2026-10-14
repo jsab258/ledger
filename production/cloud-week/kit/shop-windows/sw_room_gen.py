@@ -201,6 +201,31 @@ class GRoom(S.Room):
             nt.links.new(mix.outputs[2], p.inputs["Base Color"])
         return m
 
+    def matchboard_mat(self, rgb):
+        """Vertical matchboard, a 1980s cafe's dado (the tea rooms' street review N4): boards 89 mm wide (8 to the 0.712 m tile of the picture), a V-joint 3 mm wide at 0.6 of the paint's value, the painted plaster map's
+        grain at 0.3 over the boards, each board a little different (+-3 per cent). Laid in world metres (box projection), so the boards run up the back wall and up the side walls."""
+        n = 1024
+        f = os.path.join(A.POLY, "painted_plaster_wall", "1k", "textures")
+        pm = next(os.path.join(f, x) for x in sorted(os.listdir(f)) if "_diff_" in x and x.endswith(".jpg"))
+        g = np.asarray(Image.open(pm).convert("L").resize((n, n))).astype(np.float32)
+        ratio = 1.0 + 0.3 * (g / float(g.mean()) - 1.0)
+        rng = np.random.default_rng(17)
+        img = np.zeros((n, n, 3), np.float32)
+        bw = n // 8
+        for k in range(8):
+            tint = 1.0 + rng.uniform(-0.03, 0.03)
+            img[:, k * bw:(k + 1) * bw] = np.array(rgb, np.float32)[None, None, :] * tint
+        img *= ratio[..., None]
+        xs = np.arange(n)
+        d_ = np.minimum(xs % bw, bw - (xs % bw)).astype(np.float32)                         # distance to the nearest joint, px
+        joint = np.clip(d_ / 2.2, 0.0, 1.0)                                                # a joint of about 4.4 px (3 mm): 0.6 at the middle
+        shade = 0.6 + 0.4 * joint
+        shade = np.where(xs % bw == 1, 1.12, shade)                                        # a pale edge beside the joint (the bevel's lit side)
+        img *= shade[None, :, None]
+        path = os.path.join(self.tex, "matchboard.png")
+        Image.fromarray(np.clip(img, 0, 255).astype(np.uint8)).save(path)
+        return self.image_mat("matchboard_dado", path, tile_m=8 * 0.089, rough=0.55)
+
     def shell(self):
         rr = self.RR
         above_txt, dado_txt = rr["walls"]["above"], rr["walls"]["dado"]
@@ -239,6 +264,8 @@ class GRoom(S.Room):
             wall_m = self.texmat("plaster_wall", "painted_plaster_wall", 1.5, tint_for(wall_rgb))
             dado_m = self.texmat("plaster_dado", "painted_plaster_wall", 1.5, tint_for(dado_rgb))
         ceil_m = self.mat("ceiling", rgb8(*ceil_rgb), rough=0.9)
+        if self.ctx.id == "tea_rooms":
+            dado_m = self.matchboard_mat(dado_rgb)                # 14 Oct, try 2 (the tea rooms' street review N4: "the brown dado behind the table is a flat field", 4 to 5.5 per cent of the glass)
         self.wall_m, self.dado_m = wall_m, dado_m
         self.box("floor", -W / 2, W / 2, 0, D, -0.02, 0.0, self.floor_m)
         self.box("ceiling", -W / 2, W / 2, 0, D, H, H + 0.02, ceil_m)
@@ -251,6 +278,13 @@ class GRoom(S.Room):
         self.box("wall_back_dado", -W / 2, W / 2, D, D + 0.1, 0.0, dt, dado_m)
         if dt < H - 1e-6:
             self.box("wall_back_up", -W / 2, W / 2, D, D + 0.1, dt, H, wall_m)
+        if self.ctx.id == "tea_rooms":
+            # a 45 mm dado rail in the same brown at the dado's top, 12 mm proud of the boards, on the back wall and both side walls
+            rail_m = self.mat("dado_rail_t", rgb8(*dado_rgb), rough=0.45)
+            self.box("dado_rail_back_a", 0.52, 1.19, D - 0.012, D, dt, dt + 0.045, rail_m)                 # where the counter, the shelf's uprights and the hatch's frame do not stand
+            self.box("dado_rail_back_b", 2.41, W / 2 - 0.012, D - 0.012, D, dt, dt + 0.045, rail_m)
+            self.box("dado_rail_left", -W / 2, -W / 2 + 0.012, 0, D - 0.012, dt, dt + 0.045, rail_m)
+            self.box("dado_rail_right", W / 2 - 0.012, W / 2, 0, D - 0.012, dt, dt + 0.045, rail_m)
         # ceiling battens (T12 in slim fittings): fitting 0.010 + opal diffuser 0.015 = 0.025 below the ceiling (as Rita's)
         lt = rr["lights"]
         self.tube_len = lt.get("tube_length_m", 1.5)

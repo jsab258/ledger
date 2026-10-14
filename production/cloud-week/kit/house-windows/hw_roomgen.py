@@ -43,6 +43,8 @@ TV_COOL = (0.62, 0.74, 1.0)
 PAINT_WHITE = (0.70, 0.68, 0.62)
 
 
+WASH_SIZE, WASH_RATIO = (1.8, 0.30), 0.14
+FILL_SIZE = (1.6, 2.4)                              # the lit lounges' and bedrooms' fill light (metres across, deep): a soft room-wide area light under the ceiling's centre
 ROLL_KNEE, ROLL_TOP = 0.60, 0.85       # linear: below the knee a pixel is as rendered; above it the largest channel eases toward 0.85 (sRGB 237) and never reaches it; the three channels scale together, so the hue stays tungsten
 
 
@@ -631,6 +633,15 @@ class HRoom(S.Room):
         bare = self.R["type"] in ("landing", "empty")
         self.L_pend.location = (0.0, 0.55, H - (0.10 if bare else 0.40))
         self.L_pend.visible_camera = False
+        # 14 Oct, from the try 2 close review (narrow point 1): the pendant's point light made the ceiling round the rose a flat plateau at the roll-off's ceiling (34 per cent of that band at luma 200 or more in the close views); in the six lit lounges and bedrooms
+        # the pendant is halved and the picture's mean is made up by a room-wide fill: a soft area light under the ceiling's centre, shining down (it lights the walls, the furniture and the floor and leaves the ceiling round the rose to the pendant's falloff)
+        self.L_fill = None
+        self.L_back = None
+        if self.R["family"] == "UP" and self.R["type"] in ("lounge", "bedroom"):
+            self.L_fill = area("fill", (0.0, D * 0.5, H - 0.06), (0.0, 0.0, 0.0), FILL_SIZE[0], FILL_SIZE[1], WARM)
+            # and the back wall's own wash, a small share of the fill (WASH_RATIO): a street window sees the back wall's upper part and the ceiling, and a down-facing fill leaves the wall's top to the halved pendant (a lit lounge's clear
+            # glass would then read under half of its net: NIGHT-07); a soft strip of light under the ceiling, 1.2 m in front of the back wall, shining at it
+            self.L_back = area("wash_back", (0.0, D - 1.2, H - 0.25), (math.pi / 2.0, 0.0, 0.0), WASH_SIZE[0], WASH_SIZE[1], WARM)
         # a table lamp's glow on the back wall in the front rooms; the television's cool glow where tv_glow
         self.L_lamp = None
         if self.R["family"] == "GF":
@@ -682,6 +693,9 @@ class HRoom(S.Room):
         self.L_day.data.energy = P["day"] if state == "day" else 0.0
         bare = self.R["type"] in ("landing", "empty")
         self.L_pend.data.energy = P["pend_bare" if bare else "pend"] if lit else 0.0
+        if self.L_fill is not None:
+            self.L_fill.data.energy = P.get("fill", 0.0) if lit else 0.0
+            self.L_back.data.energy = P.get("fill", 0.0) * WASH_RATIO if lit else 0.0
         if self.L_lamp is not None:
             self.L_lamp.data.energy = P["lamp"] if lit else 0.0
         if self.L_tv is not None:
@@ -850,7 +864,87 @@ def rebake_lit(rid, out_dir, samples=24, log=print, work=None):
     return time.time() - t0
 
 
+PEND_CAP = 13.5                 # try 3: the pendant's point light is halved, and at most this (the ceiling round the rose stays under the roll-off's knee: at 17 the close view's band had 12 per cent of its pixels over luma 200, at 13.4 four)
+GF_BOX = (849.0 / 3072.0, 649.0 / 2349.0, 2223.0 / 3072.0, 1700.0 / 2349.0)     # the close review's back wall box of a cottage picture (x0, y0, x1, y1 as fractions of the picture)
+GF_BOX_AIM = 0.15               # the aim for its mean linear luminance (PIC-14 asks at least 0.12; the lit net glows 0.306)
+
+
+def box_mean_Y(path, box=GF_BOX):
+    a = np.asarray(Image.open(path).convert("RGB"))
+    l_ = lin_of(a)
+    Y = 0.2126 * l_[..., 0] + 0.7152 * l_[..., 1] + 0.0722 * l_[..., 2]
+    h, w = Y.shape
+    return float(Y[int(round(box[1] * h)):int(round(box[3] * h)), int(round(box[0] * w)):int(round(box[2] * w))].mean())
+
+
+def relight_v3(rid, out_dir, samples=24, log=print, work=None):
+    """14 October, from the try 2 close review (narrow point 1 and the row rulings): re-render ONLY a lit room's night_lit picture with new lights, keeping the day and night_dark pictures, the placement and the stored light parameters of everything else.
+    The lit lounges and bedrooms (six): the pendant is halved (and at most PEND_CAP) and a room-wide fill (`fill`, an area light under the ceiling's centre, with WASH_RATIO of its power as a strip on the back wall's top) makes up the mean 70 (within 3 per cent).
+    The cottages' front rooms (three): the table lamp's glow on the back wall (`lamp`) is raised, the pendant is not, until the back wall box [848.8, 649.1, 2223.2, 1700.1] reads GF_BOX_AIM linear (PIC-14: at least 0.12). The picture is rolled off before the 8-bit write as before."""
+    work = work or os.path.join(T.SCRATCH, "work", rid)
+    os.makedirs(work, exist_ok=True)
+    jp = os.path.join(out_dir, rid + ".json")
+    rec = json.load(open(jp))
+    t0 = time.time()
+    r = HRoom(rid, work).build()
+    if not r.lit_possible():
+        log("%s: an empty room, its night_lit is its night_dark: kept" % rid)
+        return 0.0
+    gf = r.R["family"] == "GF"
+    if gf:
+        samples = min(samples, 16)
+    P = {k: v for k, v in rec["light_params"].items() if k != "measured"}
+    v2 = {k: P[k] for k in ("pend", "lamp") if k in P}
+    res_q = (int(r.pix[0] / 4), int(r.pix[1] / 4))
+    tmp = os.path.join(work, "cal_lit_v3.png")
+    if gf:
+        key, tgt = "lamp", GF_BOX_AIM
+        P["lamp"] = v2["lamp"] * 8.0
+        measure = lambda path: box_mean_Y(path)
+    else:
+        key, tgt = "fill", TARGET_MEAN["night_lit"]
+        P["pend"] = min(0.5 * v2["pend"], PEND_CAP)
+        P["fill"] = 15.0 * v2["pend"] / 26.5
+        measure = luma_stats
+    hist = []
+    for it in range(6):
+        r.set_state("night_lit", P)
+        r.render(tmp, 8, res_q, state="night_lit")
+        m = measure(tmp)
+        log("   relight %s night_lit %s %.4g -> %s %.4f (aim %.4g)" % (rid, key, P[key], "box mean Y" if gf else "mean luma", m, tgt))
+        hist.append((P[key], m))
+        if abs(m - tgt) / tgt < (0.04 if gf else 0.03):
+            break
+        if len(hist) == 1:
+            P[key] = P[key] * (tgt / max(m, 1e-3)) ** (1.0 if gf else 1.0)
+        else:
+            (f0, m0), (f1, m1) = hist[-2], hist[-1]
+            P[key] = float(max(f1 + (tgt - m1) * (f1 - f0) / (m1 - m0), 0.05 * f1)) if abs(m1 - m0) > 1e-9 else P[key] * 1.2
+    path = os.path.join(out_dir, "%s_night_lit.png" % rid)
+    r.set_state("night_lit", P)
+    t1 = time.time()
+    r.render(path, samples, (int(r.pix[0]), int(r.pix[1])), state="night_lit")
+    dt = round(time.time() - t1, 1)
+    mean = luma_stats(path)
+    a = np.asarray(Image.open(path).convert("RGB"))
+    extra = ", back wall box mean linear %.4f" % box_mean_Y(path) if gf else ""
+    log("render %s night_lit (try 3 lights): %.0f s, mean luma %.1f%s, pixels with a channel at 250+: %.4f%%" % (rid, dt, mean, extra, 100.0 * float((a >= 250).any(axis=2).mean())))
+    P["measured"] = dict(rec["light_params"].get("measured", {}))
+    P["measured"]["night_lit"] = mean
+    rec["light_params"] = {k: (round(v, 4) if not isinstance(v, dict) else v) for k, v in P.items()}
+    rec["relit_try3"] = {"what": "14 Oct, from the try 2 close review: only the night_lit picture was re-rendered with new lights (hw_roomgen.relight_v3); the day and night_dark pictures and the placement are as before",
+                         "was": v2, "now": {k: round(P[k], 4) for k in ("pend", "lamp", "fill") if k in P}, "mean_luma": round(mean, 2), "back_wall_box_mean_Y": round(box_mean_Y(path), 4) if gf else None,
+                         "wash_ratio": WASH_RATIO if not gf else None, "fill_size_m": list(FILL_SIZE) if not gf else None, "render_s": dt}
+    rec.setdefault("render_s", {})["night_lit"] = dt
+    json.dump(rec, open(jp, "w"), indent=1)
+    return time.time() - t0
+
+
 if __name__ == "__main__":
+    if "--relight-v3" in sys.argv:
+        args = [a for a in sys.argv[1:] if not a.startswith("--")]
+        relight_v3(args[0], args[1] if len(args) > 1 else T.ROOMS, samples=int(args[2]) if len(args) > 2 else 24)
+        sys.exit(0)
     if "--rebake-lit" in sys.argv:
         args = [a for a in sys.argv[1:] if not a.startswith("--")]
         rebake_lit(args[0], args[1] if len(args) > 1 else T.ROOMS, samples=int(args[2]) if len(args) > 2 else 24)

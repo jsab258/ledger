@@ -32,6 +32,7 @@ HDRI_DIR = os.path.join(SCRATCH, "polyhaven", "_hdri")
 TEXT_DIR = os.path.join(SCRATCH, "shop-windows", "prints")
 
 USED = {}                  # {good's id: photo id}: written to prints_used.json beside each shop's pictures, read by the checks
+FIT = {}                   # {paper's masthead: [the headline's lines]} as drawn: the check joins them and compares with the headline (every word whole)
 TEXTS = []                 # every string drawn (the brand-blocklist check reads them)
 
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------- the photographs
@@ -410,6 +411,7 @@ def newspaper_front(idx, size=(580, 380), seed=0):
         d.text((m, yy), ln, font=hf, fill=ink)
         yy += int(hf.size * 1.04)
     TEXTS.append(head)
+    FIT[name] = list(hl)
     sf, sl = _fit(d, sub, "evening-paper", "OldStandard-Italic.ttf", hw, 17, 11, 3, step=1)
     yy += 4
     for ln in sl:
@@ -432,7 +434,7 @@ def newspaper_front(idx, size=(580, 380), seed=0):
     cw = (w - 2 * m - gut * (ncol - 1)) / ncol
     bf = fnt("evening-paper", 8, "OldStandard-Regular.ttf")
     hf2 = fnt("libre-franklin", 9)
-    txt = body_text(260, seed=idx * 7 + 1)
+    txt = body_text(700, seed=idx * 7 + 1)
     heads = ["NATURAL NOTES", "FROM THE PARISH", "THE WEATHER", "LOCAL NEWS", "ON THE FARMS", "THE QUAY"]
     words = txt.split()
     wi = 0
@@ -451,6 +453,8 @@ def newspaper_front(idx, size=(580, 380), seed=0):
                 line = t
                 wi += 1
             if not line:
+                if wi >= len(words):
+                    break
                 wi += 1
                 continue
             d.text((x, yy), line, font=bf, fill=(36, 36, 40))
@@ -469,8 +473,8 @@ def newspaper_front(idx, size=(580, 380), seed=0):
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------- cards
 CARDS = [
     ("BIRTHDAY GREETINGS", "garden_oak", "gilt"), ("BEST WISHES", "park_gold", "red"), ("GET WELL SOON", "garden_shrubs", "gilt"), ("THANK YOU", "hills_wide", "gilt"),
-    ("HAPPY ANNIVERSARY", "park_birch", "red"), ("WITH SYMPATHY", "meadow_wood", "gilt"), ("CONGRATULATIONS", "hills_ridge", "red"), ("GOOD LUCK", "field_wide", "gilt"),
-    ("HAPPY RETIREMENT", "lakeshore", "gilt"), ("NEW HOME", "farmhouse_reeds", "red"),
+    ("HAPPY ANNIVERSARY", "farmhouse_oak", "red"), ("WITH SYMPATHY", "wood_ledge", "gilt"), ("CONGRATULATIONS", "hills_ridge", "red"), ("GOOD LUCK", "jetty_hills", "gilt"),
+    ("HAPPY RETIREMENT", "lakeshore", "gilt"), ("NEW HOME", "garden_lawn", "red"),
 ]
 CARD_LINES = {"BIRTHDAY GREETINGS": "With love on your birthday", "BEST WISHES": "With all good wishes", "GET WELL SOON": "Thinking of you", "THANK YOU": "With many thanks",
               "HAPPY ANNIVERSARY": "To mark the day", "WITH SYMPATHY": "With deepest sympathy", "CONGRATULATIONS": "On your good news", "GOOD LUCK": "Every good wish",
@@ -508,11 +512,10 @@ def greeting_card(idx, size=(230, 320), seed=0):
 
 
 POSTCARDS = [
-    ("GREETINGS FROM MERIDIAN", "lake_harbour"), ("THE HARBOUR WALL", "pier_posts"), ("MERIDIAN QUAY", "lake_pier"), ("THE CLIFF PATH", "cliff_mist"),
-    ("THE BEACH HUTS", "beach_huts"), ("SUNRISE OVER THE BAY", "beach_sunrise"), ("THE HEADLAND SEATS", "headland_seats"), ("THE ISLAND IN THE BAY", "headland_island"),
+    ("GREETINGS FROM MERIDIAN: THE HARBOUR WALL", "lake_harbour"), ("POSTS IN THE BAY", "pier_posts"), ("MERIDIAN QUAY: THE PIER AND THE MASTS", "lake_pier"), ("MIST ON THE CAPE", "cliff_mist"),
+    ("THE BEACH HUTS", "beach_huts"), ("THE BAY AT SUNRISE", "beach_sunrise"), ("SEATS ON THE HEADLAND", "headland_seats"), ("THE ISLAND IN THE BAY", "headland_island"),
+    ("THE FALLS IN THE WOOD", "falls"), ("THE JETTY", "jetty"), ("BALES AT HARVEST", "hay_bales"), ("A VALLEY IN AUTUMN", "hills_valley"),
 ]
-POSTCARD_CAPTION = {"lake_harbour": "the harbour wall", "pier_posts": "posts in the bay", "lake_pier": "the pier and the masts", "cliff_mist": "mist on the cape", "beach_huts": "the beach huts",
-                    "beach_sunrise": "the bay at sunrise", "headland_seats": "seats on the headland", "headland_island": "the island in the bay"}
 
 
 def postcard(idx, size=(405, 280), seed=0):
@@ -559,12 +562,13 @@ def card_atlas(path, n=10, size=(230, 320), cols=5):
     return atlas(path, [greeting_card(i, size) for i in range(n)], cols)
 
 
-def postcard_atlas(path, n=8, size=(405, 280), cols=2):
+def postcard_atlas(path, n=12, size=(405, 280), cols=3):
     return atlas(path, [postcard(i, size) for i in range(n)], cols)
 
 
 def write_used(path):
-    json.dump({"used": USED, "photos": {k: list(v) for k, v in PHOTOS.items() if k in set(USED.values())}}, open(path, "w"), indent=1)
+    json.dump({"used": USED, "fit": FIT, "headlines": {p_[0]: p_[1] for p_ in PAPERS}, "postcards": {c_: p_ for c_, p_ in POSTCARDS}, "subjects": {k: v[4] for k, v in PHOTOS.items()},
+               "photos": {k: list(v) for k, v in PHOTOS.items() if k in set(USED.values())}}, open(path, "w"), indent=1)
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------- cartons (200 cigarettes), sweets, jar labels
@@ -672,3 +676,79 @@ def jar_atlases(content_path, label_path, n=10):
     cont = atlas(content_path, [sweets_texture(i) for i in range(n)], 1)
     lab = atlas(label_path, [jar_label(i) for i in range(n)], 2)
     return cont, lab
+
+
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------- the tea rooms' cork and notices
+def cork_png(path, size=512, seed=6):
+    """A granular cork (the tea rooms' close review, narrow 7: "a flat orange slab"): granules of a few pixels (2 mm at 0.3 m to the 512 px), two tones, (176, 132, 88) and (150, 108, 70), each granule a rounded lump with
+    a dark seam, specks of lighter and darker; the map is a plain tile."""
+    from scipy.spatial import cKDTree
+    rng = np.random.default_rng(seed)
+    n = size
+    m = int(n * n / 14.0)
+    pts = np.column_stack([rng.uniform(0, n, m), rng.uniform(0, n, m)])
+    P = np.concatenate([pts + [dx, dy] for dx in (-n, 0, n) for dy in (-n, 0, n)])
+    tree = cKDTree(P)
+    yy, xx = np.mgrid[0:n, 0:n]
+    dist, ids = tree.query(np.column_stack([xx.ravel() + 0.5, yy.ravel() + 0.5]), k=2)
+    d1, d2 = dist[:, 0].reshape(n, n), dist[:, 1].reshape(n, n)
+    cell = ids[:, 0].reshape(n, n) % m
+    mix = rng.uniform(0, 1, m)
+    a, b = np.array((176, 132, 88), np.float32), np.array((150, 108, 70), np.float32)
+    base = (a[None, :] * mix[:, None] + b[None, :] * (1 - mix[:, None]))[cell]
+    shade = 0.70 + 0.30 * np.sqrt(np.clip((d2 - d1) / 3.0, 0, 1))[..., None] + 0.08 * np.clip(1.0 - d1 / 5.0, 0, 1)[..., None]
+    arr = base * shade + rng.normal(0, 3.0, (n, n, 1))
+    Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8)).save(path)
+    return path
+
+
+NOTICES = [("TABLES\nBOOKED", "Please ask at the counter", (240, 236, 222)), ("TEAS FROM\n25p", "All day, every day", (226, 236, 240)), ("OPEN\n6.30 - 10", "Six days; Sundays 8 - 12", (244, 238, 206)),
+           ("CAKES\nMADE HERE", "Fresh each morning", (240, 226, 224)), ("THANK\nYOU", "For calling in", (232, 238, 226)), ("LUNCH\n12 - 2", "Soup, rolls and cakes", (240, 236, 222))]
+
+
+def notice_sheet(idx, size=(256, 160), seed=0):
+    """A notice for a cork board: a coloured sheet of paper with grain, the heading hand-lettered (a letter at a time, a degree or two out), a line of small print under it; the project's own wording."""
+    head, small, ground = NOTICES[idx % len(NOTICES)]
+    w, h = size
+    rnd = random.Random(900 + idx)
+    im = Image.new("RGB", size, ground)
+    d = ImageDraw.Draw(im)
+    f = fnt("patrick-hand", 40)
+    lines = head.split("\n")
+    y = 14
+    for ln in lines:
+        adv = [d.textlength(ch, font=f) for ch in ln]
+        x = (w - sum(adv)) / 2.0
+        for ch, a_ in zip(ln, adv):
+            if ch != " ":
+                tile = Image.new("L", (int(a_ + 20), 70), 0)
+                ImageDraw.Draw(tile).text((10, 6), ch, font=f, fill=255)
+                tile = tile.rotate(rnd.uniform(-3, 3), resample=Image.BICUBIC, center=(10 + a_ / 2, 40))
+                im.paste(Image.new("RGB", tile.size, (30, 30, 56)), (int(x - 10), int(y + rnd.uniform(-2, 2))), tile)
+            x += a_
+        y += 44
+    f2 = fnt("evening-paper", 14, "OldStandard-Italic.ttf")
+    tw = d.textlength(small, font=f2)
+    d.text(((w - tw) / 2, h - 26), small, font=f2, fill=(60, 56, 70))
+    d.rectangle((3, 3, w - 4, h - 4), outline=tuple(int(c * 0.82) for c in ground), width=1)
+    TEXTS.extend([head.replace("\n", " "), small])
+    arr = np.asarray(im).astype(np.float32) + np.random.default_rng(70 + idx).normal(0, 2.2, (h, w, 1)).astype(np.float32)
+    return Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8))
+
+
+def notice_atlas(path, n=6, size=(256, 160), cols=3):
+    return atlas(path, [notice_sheet(i, size) for i in range(n)], cols)
+
+
+def menu_card_png(path, text="TEAS FROM 25p", size=(300, 100)):
+    """The small card under the chalk menu (the tea rooms' close review, narrow 6): paper (235, 232, 222), ink (25, 25, 50), one line of at most 14 characters, big."""
+    w, h = size
+    im = Image.new("RGB", size, (235, 232, 222))
+    d = ImageDraw.Draw(im)
+    f, ls = _fit(d, text, "oswald", None, w - 24, 60, 18, 1, step=2)
+    tw = d.textlength(ls[0], font=f)
+    d.text(((w - tw) / 2, (h - f.size * 1.2) / 2), ls[0], font=f, fill=(25, 25, 50))
+    arr = np.asarray(im).astype(np.float32) + np.random.default_rng(81).normal(0, 2.0, (h, w, 1)).astype(np.float32)
+    Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8)).save(path)
+    TEXTS.append(text)
+    return path

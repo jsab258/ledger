@@ -1,9 +1,14 @@
 """check_windows.py: every check of target.json `checks` that applies to built things and renders (KIT-, MAT-, WB-, NIGHT-, PIC-, SITE-, CONTENT-), plus the rows the shops' fresh reviews asked of every later
 kit (a bright band in the night glass, a wash that burns the corners, a model that drops its glass, a floating piece, a piece at the wrong size, a see-through slot, a normal map that is a height map, a
-texture without UVs). Prints "N of M rows pass" and writes checks/check_windows_v2.json (the try 2 check, 14 October, after the try 1 reviews; check_windows_v1.json stays as the record).
+texture without UVs). Prints "N of M rows pass" and writes checks/check_windows_v3.json (the try 3 check, 14 October, after the try 2 reviews; check_windows_v1.json and check_windows_v2.json stay as the record).
 
 Try 2 adds the rows the two try 1 reviews asked for: GLS-06 and a negative control NEG-01 (the kit's own slab pane), MAT-04 on the slab, NIGHT-07 (a lit window's clear glass against its net), NIGHT-01, NIGHT-02 and NIGHT-03 measured as they
 asked, PIC-13 (no clipped highlights in a lit room picture), JNR-01 (no black joinery in a window outline by day), GRM-01 (the grime band), and the reviewers' acceptance rows for the review views (ACC-01, ACC-02, NIGHT-08, NIGHT-09).
+
+Try 3 (14 October, after the two try 2 reviews, REVIEW-v2-street.md and REVIEW-v2-close.md) re-words WB-01, WB-02, WB-04b, WB-07, NIGHT-01, NIGHT-02 and NIGHT-07 as the reviews ruled (a window cut by the picture's edge is
+never measured; WB-07's brick ring leaves out the stone sill and head; WB-02 is read on a reflection-off day frame as well; NIGHT-02 is reported in the cloud against 2.5 and held at linear 6 for the PC) and adds GLS-07 (no glass pixel
+sees brick) with its negative control NEG-04, KIT-20 and KIT-21 (the RC and RC2 inner reveal; no separate pendant node), NIGHT-10 (a lit curtain's folds), NIGHT-11 and PIC-15 (no flat lit ceiling), PIC-14 (the cottage rooms' back wall) and BAK-01 (the pendant
+shade drawn in the card's bake).
 
 A row whose inputs are not built is NOT counted as a pass: it is listed as `not run` with what is missing (the count M always includes it). Run with /home/user/.bpyenv/bin/python.
 """
@@ -26,6 +31,8 @@ import hw_glb as GL  # noqa: E402
 import hw_measure as MS  # noqa: E402
 
 ROWS = []
+VERSION = "v3"
+GATE_ONLY = "--gate-only" in sys.argv        # a fast trial of the rows that read the gate frames and their masks (no kit, picture or glass rows, no file written)
 DRY = "--dry" in sys.argv          # a trial read of the frames rendered so far: the small glass renders (MAT-04, GLS-06, NEG-01, GRM-01) are skipped so that nothing renders beside the gate run; writes no check file
 TGT = T.target()
 CHECK_IDS = [c["id"] for c in TGT["checks"]]
@@ -162,7 +169,7 @@ def kit_rows(G):
         for nm in ("N1", "N2", "N3"):
             nlo, nhi = g.bbox("net__" + nm)
             for n in g.nodes:
-                if n.startswith("paint_joinery__"):
+                if n.startswith("paint_joinery__") and "reveal_" not in n:          # 14 Oct, from the try 2 reviews: the RC and RC2 reveal boards (y 142.5 to 268, x +-412.5 to +-425) stand where the net's outer 25 to 37.5 mm hangs; that strip lies behind the jambs and the wall from the street and is clipped by the board, so the board is not a crossing
                     jlo, jhi = g.bbox(n)
                     if jlo[1] < plane < jhi[1] and jlo[0] < nhi[0] and jhi[0] > nlo[0] and jlo[2] < nhi[2] and jhi[2] > nlo[2]:
                         crossed.append((nm, n))
@@ -236,14 +243,14 @@ def kit_rows(G):
         res.append("%s %d parts" % (k, len(TGT["kinds"][k]["parts_mm"])))
     row("KIT-12", ok, "; ".join(res))
     # KIT-13 material names
-    allowed = {"glass_house", "net_voile", "curtain", "blind", "pendant_shade", "room_card"} | {"paint_" + p for p in P}
+    allowed = {"glass_house", "net_voile", "curtain", "blind", "pendant_shade", "room_card", "paint_white_emulsion"} | {"paint_" + p for p in P}          # paint_white_emulsion: the RC and RC2 reveal boards (14 Oct, from the try 2 reviews)
     bad = []
     for k, g in G.items():
         for n, nd in g.nodes.items():
             for m in nd["mat"]:
                 if m not in allowed:
                     bad.append((k, n, m))
-    row("KIT-13", not bad, "material names on every node of the four kits: %s" % (bad or "all in the target's list (paint_<name>, glass_house, net_voile, curtain, blind, pendant_shade, room_card)"))
+    row("KIT-13", not bad, "material names on every node of the four kits: %s" % (bad or "all in the target's list (paint_<name>, glass_house, net_voile, curtain, blind, room_card; paint_white_emulsion on the reveal boards)"))
     # KIT-14 equal lights, centred bars
     res, ok = [], True
     if "S22" in G:
@@ -303,6 +310,13 @@ def kit09(G):
             if np.isnan(col).any():
                 issues.append("%s: vertices without COLOR_0" % n)
                 continue
+            if "reveal_" in n:
+                # 14 Oct, from the try 2 reviews (close review, outside this view, item 1): the RC and RC2 reveal boards' box shade is 1.0 at y 142.5 falling linearly to 0.6 at y 268, on every vertex
+                exp_ = 1.0 - 0.4 * (nd["pos"][:, 1] - 142.5) / (268.0 - 142.5)
+                # the colour array is per vertex of the exported primitive (the position array's order)
+                if np.abs(col - exp_).max() > 0.02:
+                    issues.append("%s: reveal shade off by %.2f" % (n, np.abs(col - exp_).max()))
+                continue
             tri = nd["tri"]
             nn = g.tri_normals(n)
             pos = nd["pos"]
@@ -353,7 +367,7 @@ def kit09(G):
         # the deepest plain side vertices of the frame (at or behind the glass plane) read 0.6 +- 0.05
         deep = []
         for n, nd in g.nodes.items():
-            if n.startswith("paint_joinery__") and not any(s in n for s in ("putty", "gasket", "weld", "parting")):
+            if n.startswith("paint_joinery__") and not any(s in n for s in ("putty", "gasket", "weld", "parting", "reveal_")):
                 col = nd["col"][:, 0]
                 nn = g.tri_normals(n)
                 pos = nd["pos"]
@@ -478,7 +492,9 @@ def frames_index():
         fr = os.path.join(T.GATE, "frame_%s.png" % tag)
         mk = os.path.join(T.GATE, "mask_%s.png" % tag)
         if os.path.exists(fr) and os.path.exists(mk):
-            out[tag] = {"name": name, "state": st, "frame": fr, "mask": mk, "rec": rec, "ro": os.path.join(T.GATE, "refloff_%s.png" % tag), "maskT": os.path.join(T.GATE, "maskT_%s.png" % tag)}
+            cj = os.path.join(T.GATE, "frame_%s.camera.json" % tag)
+            out[tag] = {"name": name, "state": st, "frame": fr, "mask": mk, "rec": rec, "ro": os.path.join(T.GATE, "refloff_%s.png" % tag), "maskT": os.path.join(T.GATE, "maskT_%s.png" % tag),
+                        "eye": (json.load(open(cj)).get("eye_street_m") if os.path.exists(cj) else None)}
     return out
 
 
@@ -523,6 +539,9 @@ def measure_all(frames):
                 clear = g_ & (mt[..., 0] == 5) & (mt[..., 1] == w["id"])
                 cloth = g_ & (mt[..., 0] == 3) & (mt[..., 1] == w["id"])
                 st["clear_px"], st["cloth_px"] = int(clear.sum()), int(cloth.sum())
+                # 14 Oct, from the try 2 reviews (close review, outside this view, item 1; GLS-07): what lies behind the glass pixels that is brick (4: the stand-in street, the wall's reveal) or the world (0)
+                st["brick_behind_px"] = int((g_ & (mt[..., 0] == 4)).sum())
+                st["world_behind_px"] = int((g_ & (mt[..., 0] == 0)).sum())
                 st["clear_P"] = float(np.median(lumb[clear])) if clear.sum() >= 150 else None
                 st["cloth_P"] = float(np.median(lumb[cloth])) if cloth.sum() >= 150 else None
                 st["clear_rgb_mean"] = [float(v) for v in b[clear].mean(axis=0)] if clear.sum() >= 150 else None
@@ -551,13 +570,25 @@ def measure_all(frames):
             st["net"] = site["net"]["kind"]
             st["extra"] = (site.get("extra") or {}).get("kind")
             st["frame"] = tag
-            # brick beside the window: the brick pixels of a ring round its box
             x0, y0, x1, y1 = st["bbox"]
-            mx, my = int((x1 - x0) * 1.0) + 8, int((y1 - y0) * 0.5) + 8
-            sub = m[max(y0 - my, 0):y1 + my, max(x0 - mx, 0):x1 + mx]
-            bsub = b[max(y0 - my, 0):y1 + my, max(x0 - mx, 0):x1 + mx]
+            # 14 Oct, from the try 2 reviews (street 5, one rule for every per-window row): a window whose outline touches the picture's edge (x 2 or less or 2557 or more, y 2 or less or 1437 or more at 2560 x 1440) is not measured
+            hh_, ww_ = b.shape[:2]
+            st["cut"] = bool(x0 <= 2 or x1 >= ww_ - 3 or y0 <= 2 or y1 >= hh_ - 3)
+            # the window's own footway (street 6): the camera stands on the same side of the street as the window's wall
+            st["own_footway"] = bool(f.get("eye") and f["eye"][1] * site["side"] > 0)
+            # brick beside the window: the brick pixels of a ring round its box. 14 Oct, from the try 2 reviews (street 4): the ring takes only the rows y0 to y1 of the window's outline, one window width each side; the stone sill and head
+            # (material 4 with G 0 as the brick is, but pale stone) lay under and over the window and lifted a small far window's ring; the first ring took half a window's height more above and below
+            mx = max(x1 - x0, 1)
+            sub = m[y0:y1 + 1, max(x0 - mx, 0):x1 + mx + 1]
+            bsub = b[y0:y1 + 1, max(x0 - mx, 0):x1 + mx + 1]
             br = (sub[..., 0] == 4) & (sub[..., 1] == 0)
             st["brick_median"] = float(np.median(MS.luma(bsub)[br])) if br.sum() > 200 else None
+            if f["state"] == "day" and os.path.exists(f["ro"]):
+                # 14 Oct, from the try 2 reviews (close, WB-02): the day frame with the glass's reflection off (1280 x 720): the room and its cloth through the glass alone, read against the mask at its half size
+                rob = np.asarray(Image.open(f["ro"]).convert("RGB"))
+                ros = MS.stats_for(rob, m[::2, ::2], w["id"])
+                if ros:
+                    st["ro_P_over_L"], st["ro_pane_px"] = ros["P_over_L"], ros["pane_px"]
             out.setdefault(tag, {})[sid] = st
     return out
 
@@ -578,7 +609,8 @@ def wb_rows(frames, meas):
                 not_run(rid, "no day frame with its mask is rendered (python3 build_windows.py gate)")
         return
     def pick(pred, lo=15.0, hi=30.0):
-        return [s for t, ws in day.items() for s in ws.values() if lo <= s["angle"] <= hi and pred(s)]
+        # 14 Oct, from the try 2 reviews (street 5): a window cut by the picture's edge is not measured, in any per-window row
+        return [s for t, ws in day.items() for s in ws.values() if lo <= s["angle"] <= hi and not s["cut"] and pred(s)]
     far = [s for t, ws in day_all.items() if not is_h_view(frames, t) for s in ws.values() if 15.0 <= s["angle"] <= 30.0 and s["state"] == "net" and s["net"] in ("N1", "N2")]
     far_txt = ("; the review views' far net windows at 15 to 30 degrees (hook, reverse; reported beside, not failed: far along the wall the net is a third of the pane and the clear upper sash reads the dark day room) read P/L %.2f to %.2f" % (min(s["P_over_L"] for s in far), max(s["P_over_L"] for s in far))) if far else ""
     net = pick(lambda s: s["state"] == "net" and s["net"] in ("N1", "N2"))
@@ -587,20 +619,42 @@ def wb_rows(frames, meas):
     SMALL = 5000                  # glass pixels: under it a window is far or foreshortened (seen incidentally from the opposite footway); its P, L and edges are read from a few hundred pixels and are marked *
     def fmt(lst, key):
         return ", ".join("%s %.2f%s (%s %.0f deg)" % (s["site"].replace("east_parade_", "ep").replace("_upper", ""), s[key], "*" if s["pane_px"] < SMALL else "", s["frame"].split("_")[0], s["angle"]) for s in lst[:12]) + (" ..." if len(lst) > 12 else "") + ("  (* under %d glass pixels: seen far or edge-on, read from a few hundred pixels)" % SMALL if any(s["pane_px"] < SMALL for s in lst[:12]) else "")
-    # WB-01
+    # WB-01. 14 Oct, from the try 2 reviews (street 7, close WB-01): the floor of a window with a net on its lower sash only (N1) is 0.50 (0.9 x P4_E's 0.555, the one photographed net on a lower half); a full-height net (N2) stays at 0.55;
+    # a tolerance of 0.03 under the floor (the gate's own repeatability: the same bare window reads 0.476 in the 2560 x 1440 frame and 0.509 in a 1280 x 720 one); a window with under 5,000 glass pixels is reported, not failed
+    TOL1 = 0.03
     if net:
-        ok = all(0.55 <= s["P_over_L"] <= 0.97 for s in net)
-        row("WB-01", ok, "%d net windows at 15 to 30 degrees by day in the target's measuring views: P/L %s" % (len(net), fmt(net, "P_over_L")) + ("" if ok else "  (outside 0.55 to 0.97: %s)" % [(s["site"], s["frame"].split("_")[0], round(s["P_over_L"], 3), s["pane_px"]) for s in net if not 0.55 <= s["P_over_L"] <= 0.97]) + far_txt)
+        flo = lambda s: 0.50 if s["net"] == "N1" else 0.55
+        read1 = [s for s in net if s["pane_px"] >= SMALL]
+        rep1 = [s for s in net if s["pane_px"] < SMALL]
+        bad1 = [s for s in read1 if not (flo(s) - TOL1 <= s["P_over_L"] <= 0.97)]
+        under = [s for s in read1 if s["P_over_L"] < flo(s)]
+        ok = bool(read1) and not bad1
+        row("WB-01", ok, "%d net windows (not cut by the picture's edge) at 15 to 30 degrees by day in the target's measuring views, %d of them with at least %d glass pixels and read: P/L %s; band 0.55 to 0.97 for a full-height net (N2), 0.50 to 0.97 for a net on the lower sash only (N1), each with a tolerance of %.2f under the floor; outside: %s; under the strict floor but inside the tolerance: %s; under %d glass pixels, reported and not failed: %s"
+            % (len(net), len(read1), SMALL, fmt(net, "P_over_L"), TOL1, [(s["site"], s["frame"].split("_")[0], round(s["P_over_L"], 3), s["pane_px"]) for s in bad1] or "none",
+               [(s["site"][-12:], s["net"], round(s["P_over_L"], 3)) for s in under if s not in bad1] or "none", SMALL, [(s["site"][-12:], round(s["P_over_L"], 3), s["pane_px"]) for s in rep1] or "none") + far_txt)
     else:
         not_run("WB-01", "no net window measured at 15 to 30 degrees by day")
-    # WB-02
+    # WB-02. 14 Oct, from the try 2 reviews: (street 6) an upper window seen from its own footway at 15 to 30 degrees reads 0.10 to 0.55 (the stand-in dome's reflection adds 0.06 to 0.09 to the room, which reads 0.42), other cases 0.10 to 0.45;
+    # (close review) read on a DAY frame with the glass's reflection off as well, 0.10 to 0.45, the beauty reading beside: the two reviews measured the same figures (0.423 off, 0.509 on) and both fixes are applied; a window with under 5,000 glass pixels is reported, not failed
     if bare:
-        ok = all(0.10 <= s["P_over_L"] <= 0.45 for s in bare)
-        row("WB-02", ok, "%d bare window at 15 to 30 degrees by day: P/L %s" % (len(bare), fmt(bare, "P_over_L")))
+        read2 = [s for s in bare if s["pane_px"] >= SMALL]
+        rep2 = [s for s in bare if s["pane_px"] < SMALL]
+        hi2 = lambda s: 0.55 if (s["own_footway"] and T.site(s["site"])["floor"] == "upper") else 0.45
+        bad2 = [s for s in read2 if not 0.10 <= s["P_over_L"] <= hi2(s)]
+        miss = [s for s in read2 if s.get("ro_P_over_L") is None]
+        badr = [s for s in read2 if s.get("ro_P_over_L") is not None and not 0.10 <= s["ro_P_over_L"] <= 0.45]
+        txt = "%d bare window(s) (not cut) at 15 to 30 degrees by day, %d with at least %d glass pixels and read: beauty P/L %s (band 0.10 to 0.55 for an upper window seen from its own footway, 0.10 to 0.45 otherwise; outside: %s); on the day frame with the glass's reflection off (the room alone) %s (band 0.10 to 0.45; outside: %s); under %d glass pixels, reported and not failed: %s" % (
+            len(bare), len(read2), SMALL, fmt(bare, "P_over_L"), [(s["site"], round(s["P_over_L"], 3)) for s in bad2] or "none",
+            ", ".join("%s %.3f (%s, %d px)" % (s["site"][-12:], s["ro_P_over_L"], s["frame"].split("_")[0], s["ro_pane_px"]) for s in read2 if s.get("ro_P_over_L") is not None) or "none rendered",
+            [(s["site"], round(s["ro_P_over_L"], 3)) for s in badr] or "none", SMALL, [(s["site"][-12:], round(s["P_over_L"], 3), s["pane_px"]) for s in rep2] or "none")
+        if read2 and miss:
+            not_run("WB-02", "the day reflection-off frame (refloff_<view>_day.png) of %s is not rendered (python3 build_windows.py gate); %s" % ([s["frame"] for s in miss], txt))
+        else:
+            row("WB-02", bool(read2) and not bad2 and not badr, txt)
     else:
         not_run("WB-02", "the bare window (east_parade_bay3_upper_w1) is not measured at 15 to 30 degrees: render h-along30-bay3w1")
     # WB-03
-    ac = [s for t, ws in day.items() for s in ws.values() if frames[t]["name"].startswith("h-across0") and s["state"] == "bare" and s["angle"] > 60]
+    ac = [s for t, ws in day.items() for s in ws.values() if frames[t]["name"].startswith("h-across0") and s["state"] == "bare" and s["angle"] > 60 and not s["cut"]]
     if ac:
         # 14 Oct, from the try 1 reviews: the band's P/L is 0.35 to 0.90 and blue minus red at least -3 (the target's band came from P8, a clear blue sky; the game's sky is the overcast dome, neutral, and the pane is no warmer than it)
         ok = all(0.35 <= s["P_over_L"] <= 0.90 and s["pane_rgb_mean"][2] - s["pane_rgb_mean"][0] >= -3 for s in ac)
@@ -612,9 +666,10 @@ def wb_rows(frames, meas):
     if both:
         ok = all(s["D_over_L"] <= 0.72 for s in both)
         row("WB-04", ok, "%d bare and net windows at 15 to 30 degrees: D/L %s" % (len(both), fmt(both, "D_over_L")))
-        good = [s for s in both if s["line"] and s["line"]["min_ratio"] is not None]
+        # 14 Oct, from the try 2 reviews (street 5, close WB-04b): only a window not cut by the picture's edge (pick) and with at least 3 pane edges profiled is read: a window half behind the near reveal or the net has too few edges to find its dark line
+        good = [s for s in both if s["line"] and s["line"]["min_ratio"] is not None and s["line"]["edges"] >= 3]
         ok = bool(good) and all(s["line"]["min_ratio"] <= 0.60 for s in good)
-        row("WB-04b", ok, "dip at the pane edges over L (at most 0.60): %s%s" % (", ".join("%s %.2f (%d edges, %s, %d glass px)" % (s["site"][-12:], s["line"]["min_ratio"], s["line"]["edges"], s["frame"].split("_")[0], s["pane_px"]) for s in good[:16]), "" if ok else "; over: %s" % [(s["site"], s["frame"].split("_")[0], round(s["line"]["min_ratio"], 2), s["line"]["edges"]) for s in good if s["line"]["min_ratio"] > 0.60]))
+        row("WB-04b", ok, "dip at the pane edges over L (at most 0.60), windows not cut by the picture's edge and with at least 3 edges profiled (%d of %d): %s%s" % (len(good), len(both), ", ".join("%s %.2f (%d edges, %s, %d glass px)" % (s["site"][-12:], s["line"]["min_ratio"], s["line"]["edges"], s["frame"].split("_")[0], s["pane_px"]) for s in good[:16]), "" if ok else "; over: %s" % [(s["site"], s["frame"].split("_")[0], round(s["line"]["min_ratio"], 2), s["line"]["edges"]) for s in good if s["line"]["min_ratio"] > 0.60]))
     else:
         not_run("WB-04", "no bare or net window at 15 to 30 degrees")
         not_run("WB-04b", "no bare or net window at 15 to 30 degrees")
@@ -633,7 +688,7 @@ def wb_rows(frames, meas):
     # WB-06
     # a window cut by the picture's edge (the neighbours at the sides of an H_ACROSS_0 frame show a sliver) is not measured
     cand = [s for t, ws in day.items() for s in ws.values() if frames[t]["name"].startswith("h-across0") and (s["state"] == "bare" or s["net"] in ("N3", "N1") or s["extra"] in ("B1", "B2"))
-            and s["bbox"][0] > 2 and s["bbox"][2] < 2557]
+            and not s["cut"]]
     if cand:
         res = []
         ok = True
@@ -657,20 +712,24 @@ def wb_rows(frames, meas):
         row("WB-06", ok, "; ".join(res))
     else:
         not_run("WB-06", "no H_ACROSS_0 day frame")
-    # WB-07
-    # 14 Oct, from the try 1 reviews: the floor is 3.0 for white_fresh and white_upvc and 2.5 for white_grimy and white_flaking (3.0 x 0.66 / 0.82 = 2.4, rounded up so that a dull frame still reads clearly above its brick); the
-    # ceiling stays 9.0. The street review's 2.5 is used for both dull paints; the close review's 2.2 (3.0 x 0.58 / 0.81, flaking only) would also pass.
-    floors = {"white_fresh": 3.0, "white_upvc": 3.0, "white_grimy": 2.5, "white_flaking": 2.5}
+    # WB-07. 14 Oct, from the try 2 reviews: (street 4) the brick ring takes only the rows of the window's own outline, one window width each side (the stone sill and head, material 4 with G 0 like the brick, lifted a small far window's ring from 97-101
+    # to 107-112); the floor of each paint is 3.0 x its linear albedo / 0.82: 3.0 for white_fresh and white_upvc, 2.4 for white_grimy (0.66) and 2.2 for white_flaking (0.60); the ceiling stays 9.0; (close) read only windows with at least 5,000 joinery
+    # pixels (a far window's joinery is mostly the reveal-facing faces, shaded to 0.6 by design); the smaller ones are listed beside and not failed
+    floors = {"white_fresh": 3.0, "white_upvc": 3.0, "white_grimy": 2.4, "white_flaking": 2.2}
     ratios = []
     for t, ws in day.items():
         for s in ws.values():
-            if s["brick_median"] and 15 <= s["angle"] <= 60 and s["bbox"][0] > 2 and s["bbox"][2] < 2557 and s["bbox"][1] > 2 and s["bbox"][3] < 1437:      # a window cut by the picture's edge has too few joinery pixels
+            if s["brick_median"] and 15 <= s["angle"] <= 60 and not s["cut"]:
                 ratios.append((s["site"], float(lin(s["L"]) / max(lin(s["brick_median"]), 1e-6)), floors[T.site(s["site"])["paint"]], t, s["joinery_px"]))
     if ratios:
-        ok = all(fl <= r <= 9.0 for _, r, fl, _, _ in ratios)
-        vals = [r for _, r, _, _, _ in ratios]
-        low = sorted(set((sid, round(r, 2), fl, t_.split("_")[0], jp_) for sid, r, fl, t_, jp_ in ratios if r < fl + 0.4))[:8]
-        row("WB-07", ok, "frame L over the brick beside it (linear): %d windows, median %.2f, range %.2f to %.2f (band: floor 3.0 for white_fresh and white_upvc, 2.5 for white_grimy and white_flaking, ceiling 9.0); nearest the floor (site, ratio, floor, frame, joinery pixels): %s" % (len(ratios), float(np.median(vals)), min(vals), max(vals), low))
+        read7 = [r_ for r_ in ratios if r_[4] >= 5000]
+        rep7 = [r_ for r_ in ratios if r_[4] < 5000]
+        ok = bool(read7) and all(fl <= r <= 9.0 for _, r, fl, _, _ in read7)
+        vals = [r for _, r, _, _, _ in read7]
+        low = sorted(set((sid, round(r, 2), fl, t_.split("_")[0], jp_) for sid, r, fl, t_, jp_ in read7 if r < fl + 0.4))[:8]
+        small = sorted(set((sid[-12:], round(r, 2), fl, t_.split("_")[0], jp_) for sid, r, fl, t_, jp_ in rep7))
+        row("WB-07", ok, "frame L over the brick beside it (linear; the brick ring is the window's own rows, one window width each side, no sill, no head): %d windows with at least 5,000 joinery pixels read, median %.2f, range %.2f to %.2f (band: floor 3.0 for white_fresh and white_upvc, 2.4 for white_grimy, 2.2 for white_flaking, ceiling 9.0; windows cut by the picture's edge are not measured); nearest the floor (site, ratio, floor, frame, joinery pixels): %s; under 5,000 joinery pixels, reported and not failed (%d, lowest %s): %s"
+            % (len(read7), float(np.median(vals)) if vals else 0.0, min(vals) if vals else 0.0, max(vals) if vals else 0.0, low, len(rep7), min((x[1] for x in rep7), default="-"), small[:6]))
     else:
         not_run("WB-07", "no window with brick beside it measured")
     # WB-08
@@ -703,18 +762,21 @@ def night_rows(frames, meas):
         lit, dark = [], []
         for t, ws in nf.items():
             for sid, s in ws.items():
-                if s["angle"] < 45.0:
-                    continue                      # the target: 'rendered from the one camera that sees each squarely' (H_ACROSS_0 and 30); at 15 to 30 degrees the glass reflects the night sky and the lit room is seen through a slit
+                if s["angle"] < 45.0 or s["cut"]:
+                    continue                      # (a window cut by the picture's edge is not measured: 14 Oct, from the try 2 reviews, street 5) the target: 'rendered from the one camera that sees each squarely' (H_ACROSS_0 and 30); at 15 to 30 degrees the glass reflects the night sky and the lit room is seen through a slit
                 s["lit"] = sid in lit_names
                 (lit if s["lit"] else dark).append(s)
         if lit and dark:
             dm = float(np.median([s["P"] for s in dark]))
-            # NIGHT-01 (street review): LIT = pane median at least 2.5 times the dark windows' and r > g > b. DARK = the CLEAR (net-free) glass reads 8 to 35, and a dark window's net reads at most 0.7 of its own frame's L at night.
+            dmax = float(max(s["P"] for s in dark))
+            # NIGHT-01 (street review; 14 Oct, from the try 2 reviews, street 2): LIT = pane median at least 1.5 times the dark windows' median (the geometric midpoint of 1 and NIGHT-02's 2.5, rounded down: the old 2.5 was NIGHT-02's own
+            # ratio of the two medians, so about half of any set standing at that limit fell under it by construction) AND above every dark window's pane median, with r > g > b. DARK = the CLEAR (net-free) glass reads 8 to 35, and a dark window's net
+            # reads at most 0.7 of its own frame's L at night.
             res = []
             ok_lit = True
             for s in lit:
                 rgb = s["pane_rgb_mean"]
-                good = s["P"] >= 2.5 * dm and rgb[0] > rgb[1] > rgb[2]
+                good = s["P"] >= 1.5 * dm and s["P"] > dmax and rgb[0] > rgb[1] > rgb[2]
                 ok_lit &= good
                 res.append("%s P %.0f%s" % (s["site"][-14:], s["P"], "" if good else " NOT LIT"))
             dclear = [(s["site"][-14:], s["clear_P"]) for s in dark if s.get("clear_P") is not None]
@@ -726,10 +788,12 @@ def night_rows(frames, meas):
             # the close review's wording, reported beside (per window against its own frame): dark P/L at most 0.70, lit P/L at least 1.0 with r > g > b
             cr_dark = [s for s in dark if s["P"] / max(s["L"], 1e-6) <= 0.70]
             cr_lit = [s for s in lit if s["P"] / max(s["L"], 1e-6) >= 1.0 and s["pane_rgb_mean"][0] > s["pane_rgb_mean"][1] > s["pane_rgb_mean"][2]]
-            row("NIGHT-01", ok, "%d lit and %d dark windows measured (night frames of the target's views, windows seen at 45 degrees or more); dark median pane %.0f; lit (pane at least 2.5 times the dark median, r > g > b): %s; dark windows' CLEAR glass (8 to 35) %s, out of band: %s; dark windows' net over its frame's L (at most 0.7) %s, over: %s; the close review's own wording, beside and not failed: dark P/L at most 0.70 in %d of %d, lit P/L at least 1.0 with r > g > b in %d of %d"
-                % (len(lit), len(dark), dm, ", ".join(res[:6]), ", ".join("%s %.0f" % (n, v) for n, v in dclear[:8]) or "none measured", bad_clear or "none",
+            row("NIGHT-01", ok, "%d lit and %d dark windows measured (night frames of the target's views, windows seen at 45 degrees or more, not cut by the picture's edge); dark median pane %.0f, the brightest dark window %.0f; lit (pane at least 1.5 times the dark median (the line %.0f) and above every dark window, r > g > b): %s; dark windows' CLEAR glass (8 to 35) %s, out of band: %s; dark windows' net over its frame's L (at most 0.7) %s, over: %s; the close review's own wording, beside and not failed: dark P/L at most 0.70 in %d of %d, lit P/L at least 1.0 with r > g > b in %d of %d"
+                % (len(lit), len(dark), dm, dmax, 1.5 * dm, ", ".join(res[:9]), ", ".join("%s %.0f" % (n, v) for n, v in dclear[:8]) or "none measured", bad_clear or "none",
                    ", ".join("%s %.2f" % (n, v) for n, v in dnet[:8]) or "no dark window with a net", bad_net or "none", len(cr_dark), len(dark), len(cr_lit), len(lit)))
-            # NIGHT-02: lit at least 2.5 times dark (linear at least 6), the pane median of the lit windows over the pane median of the dark ones; like for like beside it
+            # NIGHT-02: lit at least 2.5 times dark (linear at least 6), the pane median of the lit windows over the pane median of the dark ones; like for like beside it. 14 Oct, from the try 2 reviews (street 3): in the cloud the row is REPORTED against 2.5,
+            # not failed (the dark side is the cloth the gate's stand-in lamps light, so the dark level follows their power while the lit glow does not; the game's exposure is OWED-07); on the PC it stands at linear 6 or more (2.5 in sRGB), measured in the
+            # packaged game under the game's lamps and exposure. It passes where the cloud's set does read 2.5 or more.
             lm = float(np.median([s["P"] for s in lit]))
             ratio = lm / max(dm, 1.0)
             ratio_l = float(lin(lm) / max(float(lin(dm)), 1e-6))
@@ -738,7 +802,13 @@ def night_rows(frames, meas):
                 return float(np.median(v)) if v else None
             lc, dc, ln, dn = med(lit, "clear_P"), med(dark, "clear_P"), med(lit, "cloth_P"), med(dark, "cloth_P")
             like = "clear glass lit %s over dark %s; cloth lit %s over dark %s" % tuple("-" if v is None else "%.0f" % v for v in (lc, dc, ln, dn))
-            row("NIGHT-02", ratio >= 2.5 or ratio_l >= 6, "median lit pane luma %.0f over the dark windows' %.0f: %.1f times (linear %.1f times; at least 2.5 / 6; the pane against the pane, the clear glass and the cloth in it as seen); like for like, beside: %s" % (lm, dm, ratio, ratio_l, like))
+            par_l = [s["P"] for s in lit if s["site"].startswith("east_")]
+            par_d = [s["P"] for s in dark if s["site"].startswith("east_")]
+            par_txt = ("; the parade's windows alone (%d lit over %d dark) %.2f times" % (len(par_l), len(par_d), float(np.median(par_l)) / max(float(np.median(par_d)), 1.0))) if par_l and par_d else ""
+            n2_ok = ratio >= 2.5 or ratio_l >= 6
+            row("NIGHT-02", n2_ok, ("median lit pane luma %.0f over the dark windows' %.0f: %.2f times (linear %.1f times; the limit 2.5 / linear 6; the pane against the pane, the clear glass and the cloth in it as seen)%s; like for like, beside: %s" % (lm, dm, ratio, ratio_l, par_txt, like))
+                + ("" if n2_ok else "; REPORTED, not failed in the cloud (a stand-in's limit: the dark windows' cloth is lit by the gate's stand-in lamps, so the dark level follows their power; the research's 10 to 100 times the lit paving is the game's exposure, OWED-07): on the PC the row stands at linear 6 or more, measured in the packaged game"),
+                status="pass" if n2_ok else "reported", extra={"reported_only_in_the_cloud": True, "ratio": round(ratio, 3), "ratio_linear": round(ratio_l, 2)})
             # NIGHT-03: the lit nets' and curtains' colours, the pane's mean colour (the target's), AND block by block: every 32 px block wholly in a lit pane (every night frame) has r > g > b and linear g/r at most 0.85
             res, ok = [], True
             for s in lit:
@@ -769,7 +839,18 @@ def night_rows(frames, meas):
                         worst = max(worst, bl["worst_g_over_r"])
                         if bl["bad"]:
                             where.append("%s %s %d of %d blocks (first %s)" % (t.split("_")[0], sid[-14:], bl["bad"], bl["n"], bl["bad_list"][:2]))
-            row("NIGHT-03", ok and nbad == 0 and nbl > 0, "lit windows' mean colour (linear, the pane as seen): %s (nets: r>g>b, g/r 0.55 to 0.80, b/r 0.20 to 0.45; the pane's mean carries the card and the glass's reflection, so the bands are read with 0.12 and 0.10 of room); block by block on the reflection-off night frames (the room's own colour, without the stand-in sky's neutral reflection in the glass; 16 px at their half size = 32 px): %d blocks wholly inside a lit pane in every night frame, %d with r > g > b broken or linear g/r over 0.85, worst g/r %.2f%s; on the beauty frames, beside: %d blocks of 32 px, %d over (reflection of the night sky at the glass's edge): %s"
+            # 14 Oct, from the try 2 reviews (street 8): the lit green curtain (east_parade_bay2_upper_w0's open pair; its g > r is its own colour) is read against r and g of the curtain's own colour x the warm light (target: g/r 1.35 +-0.12, b under r), not against 0.85
+            g_ok, g_txt = True, "the lit green curtain's strips not read (frame not rendered)"
+            gp = os.path.join(T.GATE, "frame_%s.png" % GREEN_BARS[0])
+            if os.path.exists(gp):
+                a_ = np.asarray(Image.open(gp).convert("RGB")).astype(np.float64)
+                v_ = np.concatenate([a_[y0 + 2:y1 - 1, x0 + 2:x1 - 1].reshape(-1, 3) for x0, y0, x1, y1 in GREEN_BARS[2]])
+                l_ = lin(v_).mean(axis=0)
+                em_ = TGT["curtains"]["C2"]["night_lit_emission_linear"]["green"]
+                g_ok = abs(l_[1] / l_[0] - em_[1] / em_[0]) <= 0.12 and l_[2] < l_[0]
+                g_txt = "the lit green curtain's strips (east_parade_bay2_upper_w0, the review's boxes): linear g/r %.2f (the colour x the warm light: %.2f +-0.12), b/r %.2f (under 1)" % (l_[1] / l_[0], em_[1] / em_[0], l_[2] / l_[0])
+            ok &= g_ok
+            row("NIGHT-03", ok and nbad == 0 and nbl > 0, g_txt + "; lit windows' mean colour (linear, the pane as seen): %s (nets: r>g>b, g/r 0.55 to 0.80, b/r 0.20 to 0.45; the pane's mean carries the card and the glass's reflection, so the bands are read with 0.12 and 0.10 of room); block by block on the reflection-off night frames (the room's own colour, without the stand-in sky's neutral reflection in the glass; 16 px at their half size = 32 px): %d blocks wholly inside a lit pane in every night frame, %d with r > g > b broken or linear g/r over 0.85, worst g/r %.2f%s; on the beauty frames, beside: %d blocks of 32 px, %d over (reflection of the night sky at the glass's edge): %s"
                 % ("; ".join(res[:6]), nbl, nbad, worst, ("; failing: " + "; ".join(where[:6])) if where else "", nb_b, nbad_b, "; ".join(where_b[:4]) or "none"))
             # NIGHT-07 (street review): in every lit window the clear glass over its lit net's, curtain's or blind's, 0.5 to 1.0, at H_ACROSS_0 night (the target's own view); the other views beside. The statistic is the MEAN of the
             # linear luminance of each region: it is what the street review's own figures were made with (0.26 to 0.31 at the old gain, 0.6 to 0.8 at 1.0: they reproduce with the mean, 0.27 and 0.65 here); the MEDIAN of the clear
@@ -779,6 +860,8 @@ def night_rows(frames, meas):
                 if frames[t]["state"] != "night":
                     continue
                 for sid, s in ws.items():
+                    if s["cut"]:
+                        continue
                     if sid in lit_names and s.get("clear_Y") is not None and s.get("cloth_Y") is not None:
                         q = s["clear_Y"][0] / max(s["cloth_Y"][0], 1e-9)
                         qm = s["clear_Y"][1] / max(s["cloth_Y"][1], 1e-9)
@@ -1101,6 +1184,7 @@ def pic_rows():
     pic07()
     pic08()
     pic13(rooms)
+    pic14_15(rooms)
     pic_extra(rooms)
 
 
@@ -1551,6 +1635,7 @@ def extras(G):
         row("NEG-02", mx > 2000.0, "negative control: the first build's S22 (kit_try1_glb/hw_S22.glb) must FAIL KIT-19: its largest shared-plane overlap is %.0f mm2 (over 2,000)" % mx, name="negative control: the first build's shared planes fail KIT-19")
     else:
         not_run("NEG-02", "the first build's glb (scratch kit_try1_glb) is not there", name="negative control: the first build's shared planes fail KIT-19")
+    kit20_21(G)
     # KIT-18 cloth folds irregular
     st = json.load(open(os.path.join(T.KITWORK, "cloth", "stats.json"))) if os.path.exists(os.path.join(T.KITWORK, "cloth", "stats.json")) else None
     if st:
@@ -1564,22 +1649,287 @@ def extras(G):
         not_run("KIT-18", "cloth stats not written", name="net and curtain folds vary")
 
 
+# ================================================================================================================ try 3 (14 October, after the two try 2 reviews)
+def brick_behind_dir(gdir, tags):
+    """For each window of the given frames of a gate folder: (glass pixels with brick behind them in the mask with the glass clear (code 4), the window's glass pixels, frame, window). The way the close review measured it."""
+    rp = os.path.join(gdir, "gate_frames.json")
+    out = []
+    if not os.path.exists(rp):
+        return out
+    recs = json.load(open(rp))
+    for tag in tags:
+        fp, mp, tp = (os.path.join(gdir, "%s_%s.png" % (k, tag)) for k in ("frame", "mask", "maskT"))
+        if tag not in recs or not (os.path.exists(mp) and os.path.exists(tp)):
+            continue
+        m = np.asarray(Image.open(mp).convert("RGB"))
+        mt = np.asarray(Image.open(tp).convert("RGB"))
+        for sid, w in recs[tag]["windows"].items():
+            g_ = (m[..., 0] == 1) & (m[..., 1] == w["id"])
+            if g_.sum() < 150:
+                continue
+            out.append((int((g_ & (mt[..., 0] == 4)).sum()), int(g_.sum()), tag.split("_")[0], sid))
+    return out
+
+
+def gls07(frames, meas):
+    """GLS-07 (the close review, outside this view, item 1): no glass pixel of any window sees brick (clear-glass mask code 4) in any gate frame. The RC and RC2 frames ended at 142.5 mm into the wall with no inner reveal, so a ray under about 30 degrees
+    from the wall passed the frame's back and met the stand-in wall's brick on the reveal: 7,678 of 28,912 glass pixels of west_south_bay1_gf_w1 at the worst (h-along30-gf2w1 day), half of one small cottage window in the Hook. Allowed: at most 0.05 per cent of a
+    window's glass pixels and at most 10 pixels (a pixel at the pane's anti-aliased edge)."""
+    n, bad, worst = 0, [], []
+    for t, ws in meas.items():
+        for sid, s in ws.items():
+            if "brick_behind_px" not in s:
+                continue
+            n += 1
+            worst.append((s["brick_behind_px"], s["pane_px"], t.split("_")[0], sid))
+            if s["brick_behind_px"] > max(10, 0.0005 * s["pane_px"]):
+                bad.append((t.split("_")[0], sid, s["brick_behind_px"], s["pane_px"]))
+    worst.sort(reverse=True)
+    if n:
+        row("GLS-07", not bad, "no glass pixel of any window sees brick: %d windows in the gate frames (the clear-glass mask, code 4 behind the glass; at most 0.05 per cent of a window's glass and 10 pixels); over: %s; the most (brick px, glass px, frame, window): %s" % (n, bad[:8] or "none", worst[:4]), name="no glass pixel sees brick")
+    else:
+        not_run("GLS-07", "no frame with its clear-glass mask (maskT_) is rendered", name="no glass pixel sees brick")
+    # NEG-04: the negative control: the try 2 frames (kept in the scratch folder gate_try2, outside git), measured the same way, must FAIL it
+    old = os.path.join(T.SCRATCH, "gate_try2")
+    r = brick_behind_dir(old, ["h-along30-gf2w1_day", "hook_day", "h-along15road-bay3w1_day"])
+    if r:
+        r.sort(reverse=True)
+        fails = [x for x in r if x[0] > max(10, 0.0005 * x[1])]
+        row("NEG-04", bool(fails) and r[0][0] >= 1000, "negative control: the try 2 gate frames (RC and RC2 with no inner reveal) must FAIL GLS-07: %d windows over the limit in %d read; the worst %s of %s glass pixels (%s, %s)" % (len(fails), len(r), r[0][0], r[0][1], r[0][2], r[0][3]), name="negative control: the try 2 frames fail GLS-07")
+    else:
+        not_run("NEG-04", "the try 2 frames (scratch gate_try2) are not there", name="negative control: the try 2 frames fail GLS-07")
+
+
+def pane_components(m, wid, min_px=2000):
+    """The connected glass components (panes) of one window in a mask: [(bool mask, bbox)]."""
+    g_ = (m[..., 0] == 1) & (m[..., 1] == wid)
+    lab, nl = ndimage.label(g_)
+    out = []
+    for i in range(1, nl + 1):
+        sel = lab == i
+        if sel.sum() >= min_px:
+            ys, xs = np.nonzero(sel)
+            out.append((sel, (int(xs.min()), int(ys.min()), int(xs.max()), int(ys.max()))))
+    return out
+
+
+def plateau_stats(L, sel, erode=5, win=15):
+    """A pane's local spread (the median over its interior, eroded by `erode` px, of the standard deviation of the luma over win x win px) and the share of its pixels within 3 levels of its 90th percentile (the close review's measure)."""
+    er = ndimage.binary_erosion(sel, iterations=erode)
+    if er.sum() < 200:
+        er = sel
+    mu, mu2 = ndimage.uniform_filter(L, win), ndimage.uniform_filter(L * L, win)
+    sd = np.sqrt(np.maximum(mu2 - mu * mu, 0.0))
+    p90 = float(np.percentile(L[sel], 90))
+    return float(np.median(sd[er])), float((np.abs(L[sel] - p90) <= 3.0).mean()), p90
+
+
+def night11(frames):
+    """NIGHT-11 (the close review, narrow point 1): a lit ceiling seen through an upper sash is not a flat warm plateau: each upper pane of a lit window in the close views at night has a local spread (the standard deviation of the luma over 15 px, the median
+    over the pane's interior) of at least 2 levels and under 25 per cent of its pixels within 3 levels of its own 90th percentile (the try 2 close2's upper-right pane read 0.75 and 48 per cent)."""
+    res, bad = [], []
+    for tag in ("close_night", "close2_night"):
+        if tag not in frames:
+            continue
+        f = frames[tag]
+        b, m = MS.load(f["frame"], f["mask"])
+        L = MS.luma(b)
+        for sid, w in f["rec"]["windows"].items():
+            if not sid == "east_parade_bay0_upper_w1":
+                continue
+            comps = pane_components(m, w["id"], 2000)
+            if not comps:
+                continue
+            ymid = float(np.mean([bb[1] + bb[3] for _, bb in comps])) / 2.0
+            for sel, bb in comps:
+                if (bb[1] + bb[3]) / 2.0 > ymid:
+                    continue                       # the window's lower panes carry the net (folds); the upper ones show the ceiling
+                sp, near, p90 = plateau_stats(L, sel)
+                res.append((tag.split("_")[0], bb, round(sp, 2), round(near, 2)))
+                if sp < 2.0 or near >= 0.25:
+                    bad.append((tag.split("_")[0], bb, round(sp, 2), round(near, 2)))
+    if res:
+        row("NIGHT-11", not bad, "the lit ceiling in the upper panes of the close views at night is not a flat plateau: local spread (median 15 px standard deviation of the luma) at least 2 levels and under 25 per cent of the pane within 3 levels of its 90th percentile; the panes (frame, box, spread, share): %s; failing: %s" % (res, bad or "none"), name="the lit ceiling seen through an upper sash is not a flat plateau")
+    else:
+        not_run("NIGHT-11", "no close night frame with its mask", name="the lit ceiling seen through an upper sash is not a flat plateau")
+
+
+GREEN_BARS = ("h-across0-bay2w0_night", "east_parade_bay2_upper_w0", [(1203, 668, 1211, 725), (1347, 668, 1354, 725)])          # the street review's boxes: the two strips of the lit green curtain beside the lower light, 2560 frame
+
+
+def bar_spread(img_png, boxes, erode=2):
+    """(p95 - p5) / median of the luma over the boxes, each eroded by `erode` px (the strips' anti-aliased edges are the frame's and the brick's, not the cloth's)."""
+    L = MS.luma(np.asarray(Image.open(img_png).convert("RGB")))
+    vals = []
+    for x0, y0, x1, y1 in boxes:
+        vals.append(L[y0 + erode:y1 - erode + 1, x0 + erode:x1 - erode + 1].ravel())
+    v = np.concatenate(vals)
+    return float((np.percentile(v, 95) - np.percentile(v, 5)) / max(np.median(v), 1e-6)), float(np.median(v)), int(v.size)
+
+
+def night10(frames, meas):
+    """NIGHT-10 (the street review, narrow point 8): the lit green curtain's two strips beside the lower light read two flat lime bars (luma 113 to 142 over their edges, flat inside); a lit curtain's emission carries the curtain's own fold brightness
+    map (the target's C2: 'folds dark', brightness modulation 0.25). Read on the review's own boxes, eroded 2 px: (p95 - p5) / median of the luma at least 0.08 on the v3 frame; the try 2 frame (scratch gate_try2) reads under 0.05 (the negative control)."""
+    tag, sid, boxes = GREEN_BARS
+    cur = os.path.join(T.GATE, "frame_%s.png" % tag)
+    old = os.path.join(T.SCRATCH, "gate_try2", "frame_%s.png" % tag)
+    if not os.path.exists(cur):
+        not_run("NIGHT-10", "the frame %s is not rendered" % tag, name="a lit curtain's folds read")
+        return
+    sp, med, npx = bar_spread(cur, boxes)
+    txt = "the lit green curtain's strips (east_parade_bay2_upper_w0, H_ACROSS_0 night, the review's two boxes, eroded 2 px, %d px): (p95 - p5) / median of the luma %.3f at median luma %.0f (at least 0.08)" % (npx, sp, med)
+    if os.path.exists(old):
+        sp0, med0, _ = bar_spread(old, boxes)
+        txt += "; the try 2 frame read %.3f (negative control: under 0.05)" % sp0
+        row("NIGHT-10", sp >= 0.08 and sp0 < 0.05, txt, name="a lit curtain's folds read")
+    else:
+        row("NIGHT-10", sp >= 0.08, txt + "; the try 2 frame is not there", name="a lit curtain's folds read")
+
+
+def pic14_15(rooms):
+    """PIC-14 (the close review, item 3: the cottage rooms' back wall) and PIC-15 (narrow point 1: the lit ceiling near the rose is no plateau).
+    PIC-14: in each of the three cottage night_lit pictures the back wall the clear upper sash shows (the box [848.8, 649.1, 2223.2, 1700.1] of the 3072 x 2349 picture, the review's) has a mean linear luminance of at least 0.12 (it read 0.040 to 0.048), the lit net's glow being 0.306.
+    PIC-15: in each of the six lit lounge and bedroom pictures the ceiling band within about 0.6 m of the rose that the close views see through the upper sash (x 177 to 807, y 39 to 123 of 1536 x 1399) has under 15 per cent of its pixels at luma 200 or more (it read 34 per cent), a local
+    spread of at least 2 levels and under 25 per cent of its pixels within 3 levels of its 90th percentile (it read 0.75 and 48 per cent in the close view)."""
+    res, ok, cnt = [], True, 0
+    for rid, R in rooms.items():
+        if R["family"] != "GF":
+            continue
+        p = room_files(rid)["night_lit"]
+        if not os.path.exists(p):
+            continue
+        a = np.asarray(Image.open(p).convert("RGB"))
+        l_ = lin(a)
+        Y = 0.2126 * l_[..., 0] + 0.7152 * l_[..., 1] + 0.0722 * l_[..., 2]
+        box = Y[649:1700, 849:2223]
+        cnt += 1
+        good = float(box.mean()) >= 0.12
+        ok &= good
+        res.append("%s %.3f" % (rid, float(box.mean())))
+    if cnt:
+        row("PIC-14", ok and cnt == 3, "the cottage night_lit pictures' back wall (the review's box) mean linear luminance, at least 0.12: %s (before: 0.040 to 0.048)" % ", ".join(res), name="the cottage rooms' back wall is lit", status=None if cnt == 3 else "not_run")
+    else:
+        not_run("PIC-14", "no cottage night_lit picture", name="the cottage rooms' back wall is lit")
+    res, ok, cnt = [], True, 0
+    for rid, R in rooms.items():
+        if R["family"] != "UP" or R["type"] not in ("lounge", "bedroom"):
+            continue
+        p = room_files(rid)["night_lit"]
+        if not os.path.exists(p):
+            continue
+        a = np.asarray(Image.open(p).convert("RGB"))
+        L = MS.luma(a)
+        band = L[39:124, 177:808]
+        hot = float((band >= 200).mean())
+        sel = np.zeros(L.shape, bool)
+        sel[39:124, 177:808] = True
+        sp, near, p90 = plateau_stats(L, sel, erode=0)
+        cnt += 1
+        good = hot < 0.15 and sp >= 2.0 and near < 0.25
+        ok &= good
+        res.append("%s hot %.2f spread %.1f near %.2f%s" % (rid, hot, sp, near, "" if good else " FAIL"))
+    if cnt:
+        row("PIC-15", ok and cnt == 6, "the lit ceiling near the rose in the six lounge and bedroom pictures is no plateau: the share at luma 200 or more under 15 per cent, local spread at least 2 levels, under 25 per cent within 3 levels of the 90th percentile: %s (before, up_lounge_1: 34 per cent hot)" % "; ".join(res), name="the lit ceiling near the rose is no plateau", status=None if cnt == 6 else "not_run")
+    else:
+        not_run("PIC-15", "no lounge or bedroom night_lit picture", name="the lit ceiling near the rose is no plateau")
+
+
+def bak01(frames):
+    """BAK-01 (the close review, outside this view, item 2): the pendant shade is drawn into the card's bake. In the baked card of a lit window seen from across (H_ACROSS_0 night east_parade_bay2_upper_w0 and the Hook's lit lounge) the card pixels whose eye ray meets the shade
+    (hw_gate.shade_hit, the same ray test as trace's) are in the lit shade's colour (the warm light scaled to 0.85: sRGB 237, 203, 149), and some of them lie in the opening the glass shows."""
+    import hw_gate as HG
+    import hw_ctx as CX
+    import hw_gate_run as GR
+    res, ok, n = [], True, 0
+    for tag, view_key, sid in (("h-across0-bay2w0_night", ("H_ACROSS_0", "east_parade_bay2_upper_w0"), "east_parade_bay2_upper_w0"), ("hook_night", "cam_hook", "east_parade_bay0_upper_w1")):
+        p = os.path.join(T.GATE, "cards", "card_%s_night_lit_%s.png" % (tag.rsplit("_", 1)[0], sid))
+        if not os.path.exists(p):
+            res.append("%s: no baked card" % tag)
+            ok = False
+            continue
+        site = T.site(sid)
+        c = site["card"]
+        cam = GR.camera_of(view_key)
+        im = np.asarray(Image.open(p).convert("RGB"))
+        nh, nw = im.shape[:2]
+        cov = HG.shade_hit(HG.eye_in_card_frame(site, cam["eye"]), (c["w"], c["h"], c["d"]), c["side"], nw, nh)
+        full = cov >= 0.99
+        # the opening the glass shows on the card: the window's own 850 x 1676.4 mm
+        xs0, xs1 = (c["w"] / 2 - 0.425) / c["w"] * nw, (c["w"] / 2 + 0.425) / c["w"] * nw
+        zb = c["z_bottom_above_crown"]
+        want = np.array(HG.srgb(HG.shade_colour("night_lit", True, np.zeros((8, 8, 3), np.float32))) * 255.0)
+        n += 1
+        if full.sum() < 50:
+            ok = False
+            res.append("%s: the shade covers %d card px" % (tag, int(full.sum())))
+            continue
+        d = np.abs(im[full].astype(float) - want[None, :]).max(axis=1)
+        share = float((d <= 6).mean())
+        in_open = int(full[:, int(max(xs0, 0)):int(min(xs1, nw))].sum())
+        good = share >= 0.9 and in_open > 0
+        ok &= good
+        res.append("%s: %d card px wholly under the shade, %.0f per cent in the shade's colour %s, %d of them inside the window's opening" % (tag, int(full.sum()), 100 * share, [int(v) for v in want], in_open))
+    if n:
+        row("BAK-01", ok and n == 2, "the pendant shade is drawn into the card's bake (the eye's ray against the shade's cone before the room box): %s" % "; ".join(res), name="the pendant shade is drawn into the card's bake", status=None if n == 2 else "fail")
+    else:
+        not_run("BAK-01", "no baked lit card: %s" % "; ".join(res), name="the pendant shade is drawn into the card's bake")
+
+
+def kit20_21(G):
+    """KIT-20 (close review, outside this view, item 1): the RC and RC2 inner reveal, four painted lining boards at the review's sizes (mm): two jamb linings at x +-412.5 to +-425, z 0 to 1676.4; a head lining x +-412.5, z 1663.9 to 1676.4; a window board x +-412.5, z 0 to 25; each from y 142.5 to 268, in
+    paint_white_emulsion (linear (0.72, 0.70, 0.64), roughness 0.9), with UVs. KIT-21 (item 2): no glb carries a pendant node (the shade is drawn into the card's bake)."""
+    spec = [("reveal_jamb_L", -425.0, -412.5, 0.0, 1676.4), ("reveal_jamb_R", 412.5, 425.0, 0.0, 1676.4), ("reveal_head", -412.5, 412.5, 1663.9, 1676.4), ("reveal_board", -412.5, 412.5, 0.0, 25.0)]
+    res, ok = [], True
+    for k in ("RC", "RC2"):
+        if k not in G:
+            ok = False
+            res.append("%s not built" % k)
+            continue
+        g = G[k]
+        for nm, x0, x1, z0, z1 in spec:
+            node = "paint_joinery__" + nm
+            if node not in g.nodes:
+                ok = False
+                res.append("%s %s missing" % (k, nm))
+                continue
+            lo, hi = g.bbox(node)
+            d = float(max(np.abs(lo - np.array([x0, 142.5, z0])).max(), np.abs(hi - np.array([x1, 268.0, z1])).max()))
+            mats = g.nodes[node]["mat"]
+            mj = g.material("paint_white_emulsion") if "paint_white_emulsion" in [m["name"] for m in g.j["materials"]] else None
+            good_m = mats == ["paint_white_emulsion"] and mj is not None and np.allclose(mj["pbrMetallicRoughness"]["baseColorFactor"][:3], [0.72, 0.70, 0.64], atol=0.01) and abs(mj["pbrMetallicRoughness"]["roughnessFactor"] - 0.9) < 0.02
+            good_uv = not np.isnan(g.nodes[node]["uv"]).any()
+            good = d <= 0.5 and good_m and good_uv
+            ok &= good
+            if not good:
+                res.append("%s %s off by %.2f mm, material %s, uv %s" % (k, nm, d, mats, good_uv))
+        res.append("%s %d boards" % (k, sum(1 for nm, *_ in spec if "paint_joinery__" + nm in g.nodes)))
+    row("KIT-20", ok, "RC and RC2 carry the inner reveal: four lining boards (two jamb linings 12.5 mm at x +-412.5 to +-425, a head lining 12.5 mm at z 1663.9 to 1676.4, a window board 25 mm at z 0 to 25), each y 142.5 to 268, white emulsion (0.72, 0.70, 0.64) roughness 0.9, with UVs: %s" % ("; ".join(res)), name="RC and RC2 carry the inner reveal")
+    pend = []
+    for k, g in G.items():
+        pend += [(k, n) for n in g.nodes if "pendant" in n.lower()]
+    gfp = os.path.join(T.ASSETS, "hw_room_card_gf.glb")
+    if os.path.exists(gfp):
+        pend += [("GF", n) for n in GL.Glb(gfp).nodes if "pendant" in n.lower()]
+    row("KIT-21", not pend and bool(G), "no glb carries a pendant node (the shade is drawn into the card's bake: it stood 0.55 m behind the opaque card and could not be seen); found: %s" % (pend or "none"), name="no separate pendant node")
+
+
 def preview_rows():
-    files = sorted(glob.glob(os.path.join(T.PREVIEWS, "hw-*-%s.jpg" % T.DATE2)))
-    v1 = sorted(glob.glob(os.path.join(T.PREVIEWS, "hw-*-%s.jpg" % T.DATE)))
+    files = sorted(glob.glob(os.path.join(T.PREVIEWS, "hw-*-%s.jpg" % T.DATE3)))
+    v1 = sorted(glob.glob(os.path.join(T.PREVIEWS, "hw-*-%s.jpg" % T.DATE)) + glob.glob(os.path.join(T.PREVIEWS, "hw-*-%s.jpg" % T.DATE2)))
     bad = []
     for f in files + v1:
         im = Image.open(f)
         if im.width > 1600 or os.path.getsize(f) > 500 * 1024:
             bad.append((os.path.basename(f), im.size, os.path.getsize(f) // 1024))
-    row("PRV-01", bool(files) and not bad, "%d review previews of try 2 (JPEG, at most 1600 px wide, under 500 KB): %s; the %d try 1 pictures stay beside them; bad: %s" % (len(files), ", ".join(os.path.basename(f) for f in files), len(v1), bad or "none"), name="the review set is in production/previews", status=None if files else "not_run")
+    row("PRV-01", bool(files) and not bad, "%d review previews of try 3 (JPEG, at most 1600 px wide, under 500 KB): %s; the %d try 1 and try 2 pictures stay beside them; bad: %s" % (len(files), ", ".join(os.path.basename(f) for f in files), len(v1), bad or "none"), name="the review set is in production/previews", status=None if files else "not_run")
 
 
 def main():
     t0 = time.time()
     G = glbs()
-    kit_rows(G)
-    mat_rows(G)
+    if not GATE_ONLY:
+        kit_rows(G)
+        mat_rows(G)
     frames = frames_index()
     meas = measure_all(frames) if frames else {}
     wb_rows(frames, meas)
@@ -1588,27 +1938,41 @@ def main():
     lamp_row(frames)
     slot_row(frames)
     jnr_row(frames)
+    gls07(frames, meas)
+    night11(frames)
+    night10(frames, meas)
+    bak01(frames)
     acc_rows(meas)
+    if GATE_ONLY:
+        return finish(t0, meas, write=False)
     glass_rows()
     pic_rows()
     site_rows(frames)
     content_rows()
     extras(G)
     preview_rows()
+    return finish(t0, meas, write=not DRY)
+
+
+def finish(t0, meas, write=True):
     n_pass = sum(1 for r in ROWS if r["status"] == "pass")
     n_fail = [r for r in ROWS if r["status"] == "fail"]
     n_not = [r for r in ROWS if r["status"] == "not_run"]
+    n_rep = [r for r in ROWS if r["status"] == "reported"]
     got = {r["id"] for r in ROWS}
     missing = [c for c in CHECK_IDS if c not in got]
-    print("\n%d of %d rows pass (%d fail, %d not run; the target's own %d rows: %d pass)" % (n_pass, len(ROWS), len(n_fail), len(n_not), len(CHECK_IDS), sum(1 for r in ROWS if r["id"] in CHECK_IDS and r["status"] == "pass")))
+    print("\n%d of %d rows pass (%d fail, %d not run, %d reported and not failed; the target's own %d rows: %d pass)" % (n_pass, len(ROWS), len(n_fail), len(n_not), len(n_rep), len(CHECK_IDS), sum(1 for r in ROWS if r["id"] in CHECK_IDS and r["status"] == "pass")))
+    for r in n_fail + n_not + n_rep:
+        print("  %s %s: %s" % (r["status"].upper(), r["id"], r["detail"][:260]))
     if missing:
         print("rows of the target never produced:", missing)
-    if DRY:
+    outp = next((a.split("=", 1)[1] for a in sys.argv if a.startswith("--out=")), None)          # a trial's own file (the rows with their full details), so that a trial writes nothing into the checks folder
+    if not write and not outp:
         return 0
     os.makedirs(T.CHECKS, exist_ok=True)
-    out = {"made": time.strftime("%Y-%m-%d %H:%M:%S"), "pass": n_pass, "total": len(ROWS), "fail": [r["id"] for r in n_fail], "not_run": [r["id"] for r in n_not], "target_rows": len(CHECK_IDS), "rows": ROWS,
+    out = {"made": time.strftime("%Y-%m-%d %H:%M:%S"), "pass": n_pass, "total": len(ROWS), "fail": [r["id"] for r in n_fail], "not_run": [r["id"] for r in n_not], "reported": [r["id"] for r in n_rep], "target_rows": len(CHECK_IDS), "rows": ROWS,
            "seconds": round(time.time() - t0, 1), "measurements": {t: {s: {k: v for k, v in st.items() if k != "bbox"} for s, st in ws.items()} for t, ws in meas.items()}}
-    json.dump(out, open(os.path.join(T.CHECKS, "check_windows_v2.json"), "w"), indent=1, default=float)
+    json.dump(out, open(outp or os.path.join(T.CHECKS, "check_windows_%s.json" % VERSION), "w"), indent=1, default=float)
     return 0 if not n_fail and not n_not else 1
 
 

@@ -171,9 +171,13 @@ def room(r):
     mg.box(mx0 + 0.02, mx1 - 0.02, D - 0.0325, D - 0.0305, mz0 + 0.14, mz1 - 0.08, 0, uv_front=muv[0])
     r.fixtures.append({"fixture": "T-back-menu", "name": "menu_chalk", "ext": [mx0 + 0.02, mx1 - 0.02, D - 0.0325, D - 0.0305, mz0 + 0.14, mz1 - 0.08]})
     mo = mg.to_object("menu_chalk", [mm], r.sc)
+    import sw_prints as PR
+    PR.TEXTS.clear()
+    mcp = PR.menu_card_png(os.path.join(tex, "menu_card.png"))                      # try 2 (the close review, narrow 6): paper (235, 232, 222), ink (25, 25, 50), one line of 14 characters at most
+    mcm = r.image_mat("menu_card_paper", mcp, rough=0.8)
     pg = GM()
-    pg.box(mx0 + 0.07, mx1 - 0.07, D - 0.0325, D - 0.0305, mz0 + 0.01, mz0 + 0.10, 0, uv_front=muv[2])
-    po = pg.to_object("menu_card", [mm], r.sc)
+    pg.box(mx0 + 0.07, mx1 - 0.07, D - 0.0325, D - 0.0305, mz0 + 0.01, mz0 + 0.10, 0, uv_front=(0.0, 0.0, 1.0, 1.0))
+    po = pg.to_object("menu_card", [mcm], r.sc)
     r.fixtures.append({"fixture": "T-back-menu", "name": "menu_card", "ext": [mx0 + 0.07, mx1 - 0.07, D - 0.0325, D - 0.0305, mz0 + 0.01, mz0 + 0.10]})
     # ---- the left wall: two frames and the clock; the right wall: a frame and a notice board
     xl, xr = -W / 2, W / 2
@@ -183,17 +187,27 @@ def room(r):
     ck_s = next(g["size_m"] for g in rr["goods"] if g["model"] == "wall_clock") / max(r.dims("wall_clock"))
     r.place("wall_clock", (xl + 0.022, 2.95, 1.78), rot=(0, 0, math.pi / 2), scale=ck_s, fixture="T-left-frames", anchor=("min", "c", "c"), clock=r.next_clock(), tag="clock")
     r.place("hanging_picture_frame_01", (xr - 0.022, 2.30, 1.58), rot=(0, 0, -math.pi / 2), scale=1.0, fixture="T-right-frames", anchor=("max", "c", "c"), tag="frame")
-    cork = r.mat("cork", rgb8(170, 126, 84), rough=0.9)
-    r.box("notice_board", xr - 0.034, xr - 0.012, 1.15, 1.80, 1.30, 1.95, cork, fixture="T-right-frames")
+    # the cork notice board (try 2, the close review narrow 7: "a flat orange slab"): a granular cork made by script, a 20 x 15 mm pine frame, a pin in each notice
+    cork_p = PR.cork_png(os.path.join(tex, "cork.png"))
+    cork = r.image_mat("cork", cork_p, tile_m=0.30, rough=0.95)
+    pine = r.mat("pine_frame", rgb8(200, 160, 110), rough=0.5)
+    bx0, bx1, bz0, bz1 = 1.15, 1.80, 1.30, 1.95
+    r.box("notice_board", xr - 0.030, xr - 0.012, bx0 + 0.02, bx1 - 0.02, bz0 + 0.02, bz1 - 0.02, cork, fixture="T-right-frames")
+    r.box("notice_frame_top", xr - 0.034, xr - 0.011, bx0, bx1, bz1 - 0.02, bz1, pine, fixture="T-right-frames")
+    r.box("notice_frame_bottom", xr - 0.034, xr - 0.011, bx0, bx1, bz0, bz0 + 0.02, pine, fixture="T-right-frames")
+    r.box("notice_frame_front", xr - 0.034, xr - 0.011, bx0, bx0 + 0.02, bz0 + 0.02, bz1 - 0.02, pine, fixture="T-right-frames")
+    r.box("notice_frame_back", xr - 0.034, xr - 0.011, bx1 - 0.02, bx1, bz0 + 0.02, bz1 - 0.02, pine, fixture="T-right-frames")
     np_ = os.path.join(tex, "notices.png")
-    nuv = GEN.card_atlas(np_, ["TABLES\nBOOKED", "TEAS FROM\n25p", "OPEN\n6.30 - 10", "CAKES\nMADE HERE", "THANK\nYOU", "LUNCH\n12 - 2"], cols=3, tile=(256, 160), size=34)
-    GEN.TEXTS.extend(["TABLES BOOKED", "TEAS FROM 25p", "OPEN 6.30 - 10", "CAKES MADE HERE", "THANK YOU", "LUNCH 12 - 2"])
+    nuv = PR.notice_atlas(np_, 6)
     nm_ = r.image_mat("notices", np_, rough=0.8)
     ng = GM()
+    pin_cols = [rgb8(190, 40, 40), rgb8(40, 80, 170), rgb8(220, 190, 50), rgb8(40, 130, 70)]
     for k, (yy, zz) in enumerate(((1.28, 1.74), (1.52, 1.74), (1.28, 1.48), (1.52, 1.48), (1.66, 1.62), (1.38, 1.60))):
-        ng.box(xr - 0.0385, xr - 0.0345, yy - 0.08 + 0.0 * k, yy + 0.08 - (0.03 if k == 4 else 0.0), zz - 0.05, zz + 0.05, 0, uv_front=nuv[k % 6], front="-x")
+        ng.box(xr - 0.0338, xr - 0.0300, yy - 0.08 + 0.0 * k, yy + 0.08 - (0.03 if k == 4 else 0.0), zz - 0.05, zz + 0.05, 0, uv_front=nuv[k % 6], front="-x")
+        r.cyl("pin_%d" % k, xr - 0.0338 - 0.002, yy - (0.015 if k == 4 else 0.0), zz + 0.04, 0.003, 0.004, r.mat("pin_%d" % k, pin_cols[k % 4], rough=0.3), axis="x", verts=10)
     no = ng.to_object("notices", [nm_], r.sc)
     r.placed_rec("T-right-frames", "script:window_card_menu", ng.extents(), [no.name], tag="notices", n=6)
+    GEN.TEXTS.extend(list(PR.TEXTS))
     # ---- the counter's pilot lamp: a warm point light for night_dark (the target's `night_dark`: the counter's pilot lamp)
     ld = bpy.data.lights.new("pilot", "POINT")
     ld.energy = 0.0
@@ -201,9 +215,13 @@ def room(r):
     ld.shadow_soft_size = 0.05
     po_ = bpy.data.objects.new("pilot", ld)
     r.sc.collection.objects.link(po_)
-    po_.location = (cx0 + 0.10, D - 0.30, ch + 0.20)
+    # try 2 (the close review, narrow 10: "a hot glow on the plaster with no fitting to cast it"): a 10 mm amber indicator lens on the tea urn's plinth, emission 2700 K, the light 0.02 m in front of it at 0.5 W
+    lens_m = r.mat("pilot_lens", rgb8(255, 150, 40), rough=0.2, emit=(1.0, 0.6, 0.2), emit_strength=3.0)
+    lens_x, lens_y, lens_z = ux, yc - 0.101, ch + 0.015
+    r.cyl("pilot_lens", lens_x, lens_y, lens_z, 0.005, 0.004, lens_m, axis="y", verts=14)
+    po_.location = (lens_x, lens_y - 0.02, lens_z)
     r.pilot = po_
-    r.pilot_w = 6.0
+    r.pilot_w = 0.5
     r.notes.append("two cake domes (a cake each: the target counts one dome), glass over the cakes with the shadow-ray trick; the tea set's loose pieces put together by `compose`; the pilot lamp is a point light in night_dark only")
     r.texts = list(GEN.TEXTS)
     return r
@@ -211,60 +229,103 @@ def room(r):
 
 # ---------------------------------------------------------------------------------------------------------------------------------- the window
 def display(d):
-    """The tea rooms' window (target `shops.tea_rooms.display`, 10 item rows; bed 3.35 x 0.55): the café curtain on its brass rod over the two outer lights (z 1.50 above the footway, so w 0.90 above the bed;
-    it hangs 0.55 to w 0.35), the table set for tea in the middle light (u 1.16 to 2.19), the cakes under the curtain's hem on the bed, the potted plant in the right light, the hand-lettered card on the
-    glass. What the target left open: the table is scaled to 0.50 m (the target asks 0.55, which leaves no air at the glass and none at the back), the chairs to 0.75 (a cafe pair for a window 0.55 deep: at the table's sides, their front legs under its edge), the
-    cakes on the bed under the curtain (the carrot cake on a two-tier china stand, the strawberry cake on a plain plate), a sugar bowl and a menu stand."""
+    """The tea rooms' window (target `shops.tea_rooms.display`, 10 item rows; bed 3.35 x 0.55), try 2 (14 Oct 2026: both fresh reviews of try 1; the brief's step 0 e, f, g, i and the tea rooms' list): the café curtain on its
+    brass rod over the two outer lights (the rod at w 0.90, the cloth hangs 0.55), the table set for tea in the middle light, the cakes under the curtain's hem on the bed, the potted plant in the right light, the
+    hand-lettered card on the glass. Everything at its own size (DSP-06):
+    the table: a SCRIPTED Formica café table (the research's: a 1980s caff, not a walnut occasional table): a round laminate top 0.50 across, 25 mm thick (its surface at w 0.74), a 3 mm aluminium edge band, a 50 mm chrome
+    column and a black cast base of four arms 0.40 across turned 45 degrees (so its tips stand clear of the chairs' front legs); the chairs: the model at 1.0 (0.956 high, the seat 0.453), left at u 1.215 (rot +90) and right
+    at u 2.135 (rot -90), both at v 0.32, FACING the table, each seat's front edge 0.06 m under the table's rim; the teapot, cups and sugar bowl stand on the top at their own size; the menu stand is a tent card
+    (two sheets leaning toward each other);
+    the curtains: cream cotton (a weave picture, translucent: transmission 0.3, sheen) gathered in folds of random width and depth, a scalloped head on tabs folded over a brass rod (9 mm), a turned hem, brass end
+    brackets (a 16 mm socket on a 70 mm arm, its plate on the back of the jamb or the mullion);
+    the window card: 0.60 x 0.38 bowed 1.5 mm, hand lettering with a per-letter jitter on a paper with a grain, held by two clear PVC suction cups (30 mm, flat on the glass) with a steel hook each;
+    the price cards: before their goods, none within 0.10 m of a chair or the table: CAKES 40p and HOME MADE at the carrot cake (u 0.50 and 0.30), TEAS 25p at u 0.80, GATEAU 45p at the strawberry cake's plate (u 2.62)."""
     _setup()
+    from mathutils import Matrix
     import sw_room_gen as RG
     rr = d.RR
     walls = rr["walls"]
-    d.start((122, 96, 64), RG._rgb(walls["above"]), RG._rgb(walls["dado"]))      # a dark stained deal bed: the first (176, 144, 100) burnt under the gate's night spill (PIC-05g read 0.028)
+    d.tex_limit = 1024
+    tex = d.tex
+    bed_png = d.painted_png("bed_deal", "plywood", (122, 96, 64), grain=1.0)
+    d.start((122, 96, 64), RG._rgb(walls["above"]), RG._rgb(walls["dado"]), bed_png=bed_png, board_png=d.painted_png("bed_edge_t", "plywood", (92, 62, 40), grain=0.8))
     rnd = d.rnd
     L = d.L
     X = lambda u: u - L / 2
-    tex = d.tex
     GEN.TEXTS.clear()
     china = d.mat("china", rgb8(208, 204, 194), rough=0.25)      # toned: pure white china burns under the gate's night spill (PIC-05g)
     steel = d.mat("stainless", rgb8(190, 192, 194), rough=0.28, metal=1.0)
-    brass = d.mat("brass", rgb8(160, 120, 55), rough=0.3, metal=1.0)
-    # the table (a cafe table 0.55 across), its laminate top, two chairs, the tea set in pieces
-    ts = 0.50 / max(d.dims("round_wooden_table_02").x, d.dims("round_wooden_table_02").y)
+    brass = d.mat("brass", rgb8(160, 120, 55), rough=0.45, metal=1.0)
+    chrome = d.mat("chrome", rgb8(200, 200, 205), rough=0.25, metal=1.0)
+    cast = d.mat("cast_black", rgb8(28, 28, 30), rough=0.5)
+    alum = d.mat("alu_edge", rgb8(196, 198, 200), rough=0.3, metal=1.0)
+    # ---- the table: a scripted Formica cafe table at real height (surface 0.74)
     tu, tv = 1.675, 0.27
-    d.piece("round_wooden_table_02", tu, tv, 0.0, rot=(0, 0, 0), scale=ts, tier="bed", tris=None)
-    d.tone(d.last_objs, 2.2)                    # the walnut's pedestal read 0.18 to 0.25 of the room at night (LIT-08): a pale-stained oak
-    tab_ext = d.items[-1]["ext"]
-    top_z = tab_ext[5]
-    lam = d.mat("laminate", rgb8(160, 142, 106), rough=0.35)
+    xt = X(tu)
+    top_surface = 0.74
+    lam_png = GEN.formica_png(os.path.join(tex, "formica.png"), (142, 126, 94))                  # toned to (142, 126, 94): the laminate burnt under the spill (PIC-05g read 0.0100 at CLOSE_35_B)
+    lam = d.image_mat("laminate", lam_png, rough=0.35)
     lg = GM()
     rt = 0.25
-    lg.lathe(X(tu), tv, top_z, [(0.0, 0.0), (rt, 0.0), (rt, 0.008), (rt - 0.004, 0.012), (0.0, 0.012)], mi=0, n=36)
-    d.gm_object("table_laminate", lg, [lam], "support", "script:table_laminate", smooth=True)
-    top_z += 0.012
-    cs = 0.75
-    d.piece("painted_wooden_chair_01", tu - 0.462, tv, 0.0, rot=(0, 0, -math.pi / 2), scale=cs, tier="bed", tris=None)
+    z0_, z1_ = top_surface - 0.025, top_surface
+    nseg = 48
+    ring_t = [(xt + (rt - 0.003) * math.cos(2 * math.pi * k / nseg), tv + (rt - 0.003) * math.sin(2 * math.pi * k / nseg)) for k in range(nseg)]
+    V_ = [(xt, tv, z1_)] + [(x, y, z1_) for x, y in ring_t] + [(xt, tv, z0_)] + [(x, y, z0_) for x, y in ring_t]
+    F_, U_ = [], []
+    for k in range(nseg):
+        k2 = (k + 1) % nseg
+        F_.append((0, 1 + k, 1 + k2))                                                   # the top (faces up): a fan, the picture laid flat over it
+        U_.append([(0.5, 0.5), (0.5 + (ring_t[k][0] - xt) / 0.5, 0.5 + (ring_t[k][1] - tv) / 0.5), (0.5 + (ring_t[k2][0] - xt) / 0.5, 0.5 + (ring_t[k2][1] - tv) / 0.5)])
+        F_.append((nseg + 1, nseg + 2 + k2, nseg + 2 + k))                              # the underside
+        U_.append([(0.5, 0.5)] * 3)
+        F_.append((1 + k, nseg + 2 + k, nseg + 2 + k2, 1 + k2))                         # the side
+        U_.append([(k / float(nseg), 0.0), (k / float(nseg), 0.05), ((k + 1) / float(nseg), 0.05), ((k + 1) / float(nseg), 0.0)])
+    lg.add(V_, F_, 0, U_)
+    eg = GM()
+    eg.lathe(xt, tv, z0_, [(rt - 0.003, 0.0), (rt, 0.0), (rt, 0.025), (rt - 0.003, 0.025)], mi=0, n=nseg)           # the 3 mm aluminium edge band
+    d.gm_object("table_laminate", lg, [lam], "support", "script:table_laminate", smooth=False)
+    d.gm_object("table_edge", eg, [alum], "support", "script:table_laminate", smooth=True)
+    cg = GM()
+    cg.lathe(xt, tv, 0.03, [(0.0, 0.0), (0.025, 0.0), (0.025, top_surface - 0.025 - 0.03), (0.0, top_surface - 0.025 - 0.03)], mi=0, n=20)
+    d.gm_object("table_column", cg, [chrome], "support", "script:table_column", smooth=True)
+    bg = GM()
+    bg.lathe(xt, tv, 0.0, [(0.0, 0.0), (0.05, 0.0), (0.045, 0.03), (0.0, 0.03)], mi=0, n=20)
+    for ang in (45.0, 135.0):                                    # two crossed bars: four arms 0.40 across, 30 mm high, turned 45 degrees
+        a_ = math.radians(ang)
+        c_, s_ = math.cos(a_), math.sin(a_)
+        hl, hw = 0.20, 0.022
+        pts = [(-hl, -hw), (hl, -hw), (hl, hw), (-hl, hw)]
+        V = [(xt + x * c_ - y * s_, tv + x * s_ + y * c_, z) for z in (0.0, 0.030) for (x, y) in pts]
+        bg.add(V, [(0, 3, 2, 1), (4, 5, 6, 7), (0, 1, 5, 4), (1, 2, 6, 5), (2, 3, 7, 6), (3, 0, 4, 7)], 0)
+    d.gm_object("table_base", bg, [cast], "support", "script:table_base")
+    top_z = top_surface
+    # ---- the chairs at their own size, facing the table
+    d.piece("painted_wooden_chair_01", 1.215, 0.32, 0.0, rot=(0, 0, math.pi / 2), tier="bed", tris=None)
     d.tone(d.last_objs, 0.78)                   # the white paint burnt on the seats under the gate's night spill (PIC-05g)
-    d.piece("painted_wooden_chair_01", tu + 0.462, tv, 0.0, rot=(0, 0, math.pi / 2), scale=cs, tier="bed", tris=None)
+    d.piece("painted_wooden_chair_01", 2.135, 0.32, 0.0, rot=(0, 0, -math.pi / 2), tier="bed", tris=None)
+    d.tone(d.last_objs, 0.78)
     pot = d.sub_template("tea_set_01", "pot", lambda n: "teapot" in n)
-    sug = d.sub_template("tea_set_01", "sugar", lambda n: "sugar" in n)
     cupa = d.compose("tea_set_01", "cupA", [(("cup_small_01",), (0.0, 0.2335, 0.013)), (("saucer_circular_04",), (0.0, 0.0, 0.0))])
     cupb = d.compose("tea_set_01", "cupB", [(("cup_small_02",), (0.0, 0.2335, 0.013)), (("saucer_circular_03",), (0.0, 0.0, 0.0))])
     d.piece(pot, tu - 0.05, tv + 0.0, top_z, rot=(0, 0, 0.3), tier="table", tris=None)
     d.piece(cupa, tu + 0.12, tv - 0.12, top_z, rot=(0, 0, 0.5), tier="table", tris=None)
     d.piece(cupb, tu + 0.10, tv + 0.12, top_z, rot=(0, 0, -0.4), tier="table", tris=None)
-    # the sugar bowl and the menu stand (script: small lathe and card)
     sg = GM()
     sg.lathe(X(tu - 0.16), tv + 0.14, top_z, [(0.0, 0.0), (0.025, 0.0), (0.040, 0.012), (0.042, 0.040), (0.030, 0.046), (0.0, 0.046)], mi=0, n=18)
     sg.lathe(X(tu - 0.16), tv + 0.14, top_z + 0.046, [(0.0, 0.0), (0.032, 0.0), (0.030, 0.012), (0.004, 0.018), (0.0, 0.026)], mi=0, n=18)
     d.gm_object("sugar_bowl", sg, [china], "scripted", "script:sugar_bowl_menu", tier="table", smooth=True)
+    # the menu stand: a tent card, TEAS FROM 25p, two sheets leaning toward each other, the foot on the top
     mp = os.path.join(tex, "menu_stand.png")
     muv = GEN.card_atlas(mp, ["TEAS\nFROM 25p"], cols=1, tile=(256, 160), size=40, bg=(206, 200, 180))
     GEN.TEXTS.extend(["TEAS FROM 25p"])
     mm = d.image_mat("menu_stand", mp, rough=0.8)
     mg = GM()
-    mg.sheet((X(tu - 0.10), tv - 0.19, top_z + 0.045), 0.070, 0.050, 0.002, tilt=12.0, mi=0, uv=muv[0], uv_other=(muv[0][0] + 0.01, muv[0][1] + 0.01))
+    hc = 0.050 / 2 * math.cos(math.radians(12.0)) + 0.0005
+    yc_ = tv - 0.19
+    mg.sheet((X(tu - 0.10), yc_, top_z + hc), 0.070, 0.050, 0.002, tilt=12.0, mi=0, uv=muv[0], uv_other=(muv[0][0] + 0.01, muv[0][1] + 0.01))
+    mg.sheet((X(tu - 0.10), yc_ + 2 * 0.025 * math.sin(math.radians(12.0)), top_z + hc), 0.070, 0.050, 0.002, tilt=-12.0, mi=0, uv=muv[0], uv_other=(muv[0][0] + 0.01, muv[0][1] + 0.01))
     d.gm_object("menu_stand", mg, [mm], "scripted", "script:sugar_bowl_menu", tier="table")
-    # the carrot cake on a two-tier china stand; the strawberry cake on a plate
+    # ---- the carrot cake on a two-tier china stand; the strawberry cake on a plate; the plant
     ug = GM()
     ux = X(0.40)
     ug.lathe(ux, 0.32, 0.0, [(0.0, 0.0), (0.12, 0.0), (0.12, 0.012), (0.03, 0.02), (0.012, 0.055), (0.012, 0.09), (0.02, 0.095), (0.16, 0.105), (0.16, 0.115), (0.0, 0.115)], mi=0, n=30)
@@ -276,37 +337,48 @@ def display(d):
     d.gm_object("cake_plate", pg, [china], "support", "script:cake_stand", smooth=True)
     d.piece("strawberry_chocolate_cake", 2.62, 0.30, 0.024, rot=(0, 0, 0.7), tier="plate", tris=None)
     d.piece("potted_plant_04", 3.10, 0.28, 0.0, rot=(0, 0, 0.3), tier="bed", tris=None)
-    # the café curtain: a brass rod at w 0.90 and two panels (cream cotton gathered in folds, a scalloped hem) hung 0.55, over the two outer lights (u 0.05 to 1.09 and 2.27 to 3.30)
-    rod_w = 0.90
-    cur_m = d.mat("cafe_curtain", rgb8(208, 200, 178), rough=0.9)
-    for side, (ua, ub) in (("l", (0.04, 1.10)), ("r", (2.26, 3.31))):
+    # ---- the cafe curtains: a brass rod at w 0.90 and two cotton panels hung 0.55, over the two outer lights (u 0.04 to 1.10 and 2.26 to 3.31)
+    rod_w, rod_v = 0.90, 0.075
+    weave = GEN.weave_png(os.path.join(tex, "cotton_weave.png"), (199, 192, 172))
+    cur_m = d.image_mat("cafe_curtain", weave, rough=0.85)
+    pb = [n_ for n_ in cur_m.node_tree.nodes if n_.type == "BSDF_PRINCIPLED"][0]
+    for nm_, val in (("Transmission Weight", 0.3), ("Sheen Weight", 0.4)):
+        if nm_ in pb.inputs:
+            pb.inputs[nm_].default_value = val
+    for si, (side, (ua, ub)) in enumerate((("l", (0.04, 1.10)), ("r", (2.26, 3.31)))):
         g = GM()
-        g.rod((X(ua - 0.01), 0.07, rod_w + 0.012), (X(ub + 0.01), 0.07, rod_w + 0.012), 0.008, 0, 10)
-        for xx in (ua - 0.01, ub + 0.01):
-            g.rod((X(xx), 0.07, rod_w + 0.012), (X(xx), 0.07, rod_w + 0.012 + 0.04), 0.004, 0, 6)
+        g.rod((X(ua - 0.012), rod_v, rod_w), (X(ub + 0.012), rod_v, rod_w), 0.009, 0, 12)
+        for xx, sgn in ((ua - 0.012, -1), (ub + 0.012, 1)):         # the end brackets: a 16 mm socket round the rod's end, a 70 mm arm along v to the plate on the back of the jamb or the mullion
+            g.rod((X(xx) + sgn * 0.004, rod_v, rod_w), (X(xx) + sgn * 0.016, rod_v, rod_w), 0.0105, 0, 12)
+            g.rod((X(xx) + sgn * 0.016, rod_v, rod_w), (X(xx) + sgn * 0.016, 0.006, rod_w), 0.004, 0, 8)
+            g.box(X(xx) + sgn * 0.016 - 0.015, X(xx) + sgn * 0.016 + 0.015, 0.0, 0.006, rod_w - 0.03, rod_w + 0.03, 0)
         d.gm_object("curtain_rod_" + side, g, [brass], "support", "script:cafe_curtain")
         cg = GM()
-        cg.cloth(X(ua), X(ub), rod_w - 0.01, 0.55, 0.075, 0.016, 0.085, 0.10, nz=10, mi=0)
-        d.gm_object("curtain_" + side, cg, [cur_m], "scripted", "script:cafe_curtain", tier="curtain")
-    # the hand-lettered card on the glass's inside (BREAKFASTS, LUNCHES, TEAS), on two suction cups
+        GEN.cafe_curtain(cg, X(ua), X(ub), rod_v, rod_w, 0.55 - 0.016, 31 + si)
+        ob_, _ = d.gm_object("curtain_" + side, cg, [cur_m], "scripted", "script:cafe_curtain", tier="curtain", smooth=True)
+    # ---- the hand-lettered card on the glass's inside (BREAKFASTS, LUNCHES, TEAS), on two clear suction cups with a steel hook each
     cp = os.path.join(tex, "window_card.png")
     cuv = GEN.card_atlas(cp, ["BREAKFASTS\nLUNCHES\nTEAS"], cols=1, tile=(512, 320), size=58, bg=(206, 200, 180))
     GEN.TEXTS.extend(["BREAKFASTS", "LUNCHES", "TEAS"])
-    cm = d.image_mat("window_card", cp, rough=0.7)
+    cm = d.image_mat("window_card", cp, rough=0.85)
     wg = GM()
-    wg.box(X(2.50), X(3.10), 0.040, 0.044, 0.90, 1.28, 0, uv_front=cuv[0])
+    wg.csheet((X(2.80), 0.0185, 1.09), 0.60, 0.38, 0.003, tilt=0.0, bow=0.0015, nx=12, nz=4, mi=0, uv=cuv[0], uv_other=(cuv[0][0] + 0.01, cuv[0][1] + 0.01))
     d.gm_object("window_card_menu", wg, [cm], "scripted", "script:window_card_menu", tier="glass")
-    cupm = d.mat("suction", rgb8(60, 60, 62), rough=0.4)
-    sc_ = GM()
+    pvc = d.mat("suction_pvc", rgb8(230, 230, 230), rough=0.2, glass=True)
+    hook_m = d.mat("hook_steel", rgb8(150, 152, 154), rough=0.35, metal=1.0)
+    sc_, hk = GM(), GM()
     for xx in (2.55, 3.05):
-        sc_.cylinder(X(xx), 0.020, 1.24, 1.27, 0.014, 0, 10)
-        sc_.rod((X(xx), 0.02, 1.255), (X(xx), 0.0395, 1.255), 0.003, 0, 6)
-    d.gm_object("window_card_cups", sc_, [cupm], "support", "script:window_card_menu")
-    # the price cards
-    texts = ["CAKES 40p", "TEAS 25p", "TOAST 30p", "HOME MADE"]
+        # a clear disc 30 mm across and 3 mm thick flat on the glass (its axis along v), 12 mm under the card's top edge; the hook runs from its middle to the card
+        zc = 1.28 - 0.012
+        sc_.rod((X(xx), 0.0, zc), (X(xx), 0.003, zc), 0.015, 0, 20)           # a clear disc 30 mm across and 3 mm thick, its axis along v, flat on the glass
+        hk.rod((X(xx), 0.003, zc), (X(xx), 0.0170, zc), 0.0015, 0, 6)
+    d.gm_object("window_card_cups", sc_, [pvc], "support", "script:window_card_menu")
+    d.gm_object("window_card_hooks", hk, [hook_m], "support", "script:window_card_menu")
+    # ---- the price cards, each before its goods and none within 0.10 m of a chair or the table
+    texts = ["CAKES 40p", "TEAS 25p", "GATEAU 45p", "HOME MADE"]
     path = os.path.join(tex, "price_cards.png")
     uvs = GEN.card_atlas(path, texts, cols=2, tile=(256, 128), size=46, bg=(206, 200, 180))
     pm = [d.image_mat("price_cards", path, rough=0.8), d.mat("stake", rgb8(60, 60, 62), rough=0.5, metal=0.7)]
-    for k, uc in enumerate((0.70, 2.00, 2.90, 1.25)):
+    for k, uc in enumerate((0.50, 0.80, 2.62, 0.30)):
         d.price_card(uc, 0.02, 0.0, k, uvs, pm)
     d.display_texts = list(GEN.TEXTS) + [t for t in texts]

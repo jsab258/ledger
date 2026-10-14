@@ -802,3 +802,177 @@ def jar_atlas(path, seed=11):
         out[k] = ((x0 / W, 1.0 - (y0 + 160) / H, (x0 + 256) / W, 1.0 - y0 / H), (x0 / W, 1.0 - (y0 + 256) / H, (x0 + 256) / W, 1.0 - (y0 + 160) / H))
     im.save(path)
     return out
+
+
+def glass_jar(gl, ct, lid, lab, cx, cy, z0, r=0.058, h=0.20, uv_content=None, uv_label=None, wall=0.002, fill=0.80, n=22):
+    """A sweet jar of glass (14 Oct, try 2; the newsagent's close review, fault 2: "opaque lathes with a flat sweets pattern on the outside"): into the collectors `gl` (the glass shell, 2 mm thick, closed: the outer wall
+    up and the inner wall down, the kit's goods-glass material), `ct` (the contents, a lathe at 0.94 of the inner radius filled to `fill` of the height with a domed top, the sweets picture `uv_content` wrapped once
+    round it), `lid` (a screw lid, metal) and `lab` (the paper label on the OUTSIDE of the glass, a band of -42 to 42 degrees). Everything stands on z0 at (cx, cy)."""
+    outer = [(0.0, 0.0), (r * 0.92, 0.0), (r, 0.006), (r, h * 0.80), (r * 0.78, h * 0.9), (r * 0.66, h * 0.94), (r * 0.66, h)]
+    inner = [(r * 0.66 - wall, h), (r * 0.66 - wall, h * 0.94), (r * 0.78 - wall, h * 0.9), (r - wall, h * 0.80), (r - wall, 0.006 + wall), (r * 0.92 - wall, wall), (0.0, wall)]
+    gl.lathe(cx, cy, z0, outer + inner, mi=0, n=n)
+    rc = 0.94 * (r - wall)
+    H = fill * h
+    prof = [(0.0, 0.0), (rc, 0.0), (rc, H - wall), (rc * 0.72, H - wall + 0.010), (rc * 0.35, H - wall + 0.016), (0.0, H - wall + 0.018)]
+    ct.lathe(cx, cy, z0 + wall, prof, mi=0, n=n, label=(1, 2), mi_label=0, label_uv=uv_content)
+    lid.lathe(cx, cy, z0 + h, [(0.0, 0.0), (r * 0.72, 0.0), (r * 0.74, 0.004), (r * 0.74, 0.030), (r * 0.6, 0.032), (0.0, 0.032)], mi=0, n=n)
+    lab.band(cx, cy, z0 + 0.055, z0 + 0.135, r + 0.0012, -42, 42, 0, uv=uv_label, n=10)
+
+
+# ---------------------------------------------------------------------------------------------------------------------------------- the tea rooms' cloth and laminate (14 Oct, try 2)
+def weave_png(path, rgb, size=512, seed=3):
+    """A cotton weave as a picture (the café curtain's, the tea rooms' close review fault 3: "a flat colour (208, 200, 178), no weave"): `rgb` with a plain weave of 6 px threads (+-5 levels), slubs along the
+    threads and a slow mottling (+-3), so it reads as cloth at 100 per cent."""
+    rng = np.random.default_rng(seed)
+    n = size
+    yy, xx = np.mgrid[0:n, 0:n]
+    warp = np.sin(2 * math.pi * xx / 6.0)
+    weft = np.sin(2 * math.pi * yy / 6.0)
+    chk = ((xx // 6 + yy // 6) % 2).astype(np.float32)
+    weave = np.where(chk > 0, warp, weft) * 4.0
+    slub_h = np.repeat(rng.normal(0, 1.6, (n, 1)), n, axis=1)
+    slub_v = np.repeat(rng.normal(0, 1.6, (1, n)), n, axis=0)
+    mott = np.asarray(Image.fromarray(np.clip(rng.normal(128, 40, (n // 8, n // 8)), 0, 255).astype("uint8")).resize((n, n), Image.BICUBIC), "float32") - 128.0
+    g = weave + slub_h + slub_v + mott / 40.0 * 3.0
+    arr = np.clip(np.array(rgb, np.float32)[None, None, :] + g[..., None], 0, 255)
+    Image.fromarray(arr.astype("uint8")).save(path)
+    return path
+
+
+def formica_png(path, rgb, size=512, seed=4):
+    """A plain laminate (a 1980s café's Formica): `rgb` with a fine grain of +-3 levels and sparse darker and paler flecks of a few pixels, the way a speckled laminate reads."""
+    rng = np.random.default_rng(seed)
+    n = size
+    arr = np.array(rgb, np.float32)[None, None, :] + rng.normal(0, 1.6, (n, n, 1))
+    for sign, count in ((-1, 260), (1, 200)):
+        for _ in range(count):
+            x, y = rng.integers(0, n), rng.integers(0, n)
+            r = int(rng.integers(1, 3))
+            arr[max(0, y - r):y + r, max(0, x - r):x + r] += sign * rng.uniform(10, 22)
+    Image.fromarray(np.clip(arr, 0, 255).astype("uint8")).save(path)
+    return path
+
+
+def cafe_curtain(cloth, x0, x1, y_rod, z_rod, drop, seed, rod_r=0.009, tab_w=0.025, arc_w=0.10, arc_depth=0.035, thick=0.002, hem=0.030):
+    """A café curtain panel into the collector `cloth` (the tea rooms' close review, fault 3: "corrugated plastic sheet, not cotton"; the street review N3): cream cotton hanging from a rod of radius `rod_r` at (y_rod, z_rod) from
+    x0 to x1, `drop` m long.
+      * the head: tabs `tab_w` wide, each a 60 mm strip folded over the rod (inner radius 11 mm: 2 mm clear of the rod), the cloth's top edge scalloped between them in arcs `arc_w` wide and `arc_depth` deep (the arcs bulge
+        DOWN, the points up at the tabs);
+      * the gather: a smooth fold of random width (60 to 110 mm), each fold with its own depth (0.6 to 1.2 of 26 mm at the hem, none at the head), at least 16 vertices a fold, 1.6 times fullness, and a small sag between tabs;
+      * the hem: straight, a 30 mm turned hem (a second layer 3 mm proud on the front);
+      * one closed shell, so that the checks see one piece; UVs for a 0.08 m weave tile.
+    Returns the panel's width in folds."""
+    rng = random.Random(seed)
+    # fold boundaries
+    xs_b = [x0]
+    while xs_b[-1] < x1 - 0.05:
+        xs_b.append(xs_b[-1] + rng.uniform(0.06, 0.11))
+    xs_b[-1] = x1
+    amps = [rng.uniform(0.6, 1.2) for _ in xs_b[:-1]]
+    cols = []                                           # (x, s) per column
+    for k in range(len(xs_b) - 1):
+        for i in range(16):
+            p = i / 16.0
+            cols.append((xs_b[k] + (xs_b[k + 1] - xs_b[k]) * p, math.sin(2 * math.pi * p) * amps[k]))
+    cols.append((x1, 0.0))
+    pitch = tab_w + arc_w
+    n_tab = max(1, int(round((x1 - x0 - tab_w) / pitch)) + 1)
+    cs = [x0 + tab_w / 2.0 + (x1 - x0 - tab_w) * i / max(n_tab - 1, 1) for i in range(n_tab)]       # tab centres, the end tabs at the ends
+
+    def head_drop(x):
+        for i in range(len(cs) - 1):
+            a, b = cs[i] + tab_w / 2.0, cs[i + 1] - tab_w / 2.0
+            if a <= x <= b:
+                return arc_depth * math.sin(math.pi * (x - a) / max(b - a, 1e-6))
+        return 0.0
+    z_head = z_rod - 0.016
+    y_head = y_rod - 0.0115
+    nz = 18
+    hem_z = z_head - drop
+
+    def amp(t):
+        s_ = min(max(t / 0.15, 0.0), 1.0)
+        return 0.026 * (s_ * s_ * (3 - 2 * s_)) + 0.003 * t
+
+    def sag(x):
+        return 0.0
+    V, F, U = [], [], []
+    ncol = len(cols)
+
+    def grid(dy, offz=0.0):
+        base = len(V)
+        for j in range(nz + 1):
+            t = j / float(nz)
+            for (x, s) in cols:
+                zt = z_head - head_drop(x)
+                z = zt + (hem_z - zt) * t
+                V.append((x, y_head + amp(t) * s + dy, z + offz))
+        return base
+    fb = grid(0.0)
+    bb = grid(thick)
+    for j in range(nz):
+        for i in range(ncol - 1):
+            a, b = fb + j * ncol + i, fb + j * ncol + i + 1
+            c, d = fb + (j + 1) * ncol + i + 1, fb + (j + 1) * ncol + i
+            F.append((a, d, c, b))                                 # the front faces -y
+            x0_, x1_ = cols[i][0], cols[i + 1][0]
+            zz0, zz1 = (z_head - (z_head - hem_z) * j / nz), (z_head - (z_head - hem_z) * (j + 1) / nz)
+            U.append([(x0_ / 0.08, zz0 / 0.08), (x0_ / 0.08, zz1 / 0.08), (x1_ / 0.08, zz1 / 0.08), (x1_ / 0.08, zz0 / 0.08)])
+            a2, b2 = bb + j * ncol + i, bb + j * ncol + i + 1
+            c2, d2 = bb + (j + 1) * ncol + i + 1, bb + (j + 1) * ncol + i
+            F.append((a2, b2, c2, d2))
+            U.append([(x0_ / 0.08, zz0 / 0.08), (x1_ / 0.08, zz0 / 0.08), (x1_ / 0.08, zz1 / 0.08), (x0_ / 0.08, zz1 / 0.08)])
+    # the edges: top, bottom, left, right join the two faces (one closed shell)
+    def join(fa, fb_, ba, bb_):
+        F.append((fa, fb_, bb_, ba))
+        U.append([(0.0, 0.0)] * 4)
+    for i in range(ncol - 1):
+        join(fb + i, fb + i + 1, bb + i, bb + i + 1)                                      # the top edge
+        join(fb + nz * ncol + i + 1, fb + nz * ncol + i, bb + nz * ncol + i + 1, bb + nz * ncol + i)        # the hem's foot
+    for j in range(nz):
+        join(fb + (j + 1) * ncol, fb + j * ncol, bb + (j + 1) * ncol, bb + j * ncol)
+        join(fb + j * ncol + ncol - 1, fb + (j + 1) * ncol + ncol - 1, bb + j * ncol + ncol - 1, bb + (j + 1) * ncol + ncol - 1)
+    # the turned hem: a strip 30 mm high and 3 mm proud on the front, following the folds
+    hb = len(V)
+    for j in range(4):
+        t0 = (hem_z + hem * (1 - j / 3.0))
+        for (x, s) in cols:
+            V.append((x, y_head + amp(1.0) * s - 0.003, t0))
+    for j in range(3):
+        for i in range(ncol - 1):
+            a, b = hb + j * ncol + i, hb + j * ncol + i + 1
+            c, d = hb + (j + 1) * ncol + i + 1, hb + (j + 1) * ncol + i
+            F.append((a, d, c, b))
+            x0_, x1_ = cols[i][0], cols[i + 1][0]
+            U.append([(x0_ / 0.08, 0.0), (x0_ / 0.08, 0.1), (x1_ / 0.08, 0.1), (x1_ / 0.08, 0.0)])
+    # the tabs: each a ribbon over the rod
+    for cx in cs:
+        for a_ in (cx - tab_w / 2.0, cx + tab_w / 2.0):
+            pass
+        path = [(y_rod - 0.0125, z_rod - 0.018)] + [(y_rod + 0.0125 * math.cos(math.radians(th)), z_rod + 0.0125 * math.sin(math.radians(th))) for th in range(180, -1, -15)] + [(y_rod + 0.0125, z_rod - 0.018)]
+        inner = [(y_rod - 0.0110, z_rod - 0.018)] + [(y_rod + 0.0110 * math.cos(math.radians(th)), z_rod + 0.0110 * math.sin(math.radians(th))) for th in range(180, -1, -15)] + [(y_rod + 0.0110, z_rod - 0.018)]
+        tb = len(V)
+        for (yy, zz) in path:
+            V.append((cx - tab_w / 2.0, yy, zz))
+            V.append((cx + tab_w / 2.0, yy, zz))
+        for (yy, zz) in inner:
+            V.append((cx - tab_w / 2.0, yy, zz))
+            V.append((cx + tab_w / 2.0, yy, zz))
+        npth = len(path)
+        for k in range(npth - 1):
+            F.append((tb + 2 * k, tb + 2 * k + 1, tb + 2 * k + 3, tb + 2 * k + 2))           # the outer surface
+            U.append([(0.0, 0.0)] * 4)
+            ib = tb + 2 * npth
+            F.append((ib + 2 * k, ib + 2 * k + 2, ib + 2 * k + 3, ib + 2 * k + 1))           # the inner surface
+            U.append([(0.0, 0.0)] * 4)
+        for end in (0, npth - 1):                                                          # the two ends
+            ib = tb + 2 * npth
+            F.append((tb + 2 * end, tb + 2 * end + 1, ib + 2 * end + 1, ib + 2 * end))
+            U.append([(0.0, 0.0)] * 4)
+        for side in (0, 1):                                                                # the two sides (an x face along the path)
+            ib = tb + 2 * npth
+            for k in range(npth - 1):
+                F.append((tb + 2 * k + side, ib + 2 * k + side, ib + 2 * k + 2 + side, tb + 2 * k + 2 + side))
+                U.append([(0.0, 0.0)] * 4)
+    cloth.add(V, F, 0, U)
+    return len(xs_b) - 1

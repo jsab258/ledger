@@ -38,6 +38,7 @@ rgb8 = S.rgb8
 
 
 class GDisplay(RG.GRoom):
+    exact_bbox = True           # try 2: a turned model is anchored by its vertices, not by its rotated box's corners (sw_room.Room.place)
     shadow_trick = False        # a glb carries the plain Principled glass (transmission 1, alpha 1), not the room's shadow-ray node tree
 
     def __init__(self, work, ctx):
@@ -376,7 +377,7 @@ class GDisplay(RG.GRoom):
         ob, ext = self.gm_object(name, gm, mats, "support", "script:crate", tier)
         return ob, ext
 
-    def tray_box(self, name, xc, y0, y1, w, h, mat, strips, n_plain, tier="bed", model="script:crate"):
+    def tray_box(self, name, xc, y0, y1, w, h, mat, strips, n_plain, tier="bed", model="script:crate", solid=False):
         """A shallow open tray (the bulb trays, the trowel trays): a floor 4 mm thick and four boards 4 mm thick `h` high, each face its own piece of the wood atlas. One mesh. Returns the extents."""
         gm = GM()
         rnd = random.Random(int(abs(xc * 1000) + y0 * 100))
@@ -389,6 +390,11 @@ class GDisplay(RG.GRoom):
 
         x0, x1 = xc - w / 2, xc + w / 2
         t = 0.004
+        if solid:                                   # a display block (the trowels lie on its top: the sill hides what lies lower than 60 mm from the far pavement); two steps, the rear one 40 mm higher
+            ym = (y0 + y1) / 2.0
+            gm.box(x0, x1, y0, ym, 0.0, h, 0, uv_front=uvs(w, h), uv_top=uvs(w, ym - y0), uv_ends=uvs(ym - y0, h), uv_other=(0.5, strips[0][1] + 0.01))
+            gm.box(x0, x1, ym, y1, 0.0, h + 0.04, 0, uv_front=uvs(w, h), uv_top=uvs(w, y1 - ym), uv_ends=uvs(y1 - ym, h), uv_other=(0.5, strips[0][1] + 0.01))
+            return self.gm_object(name, gm, [mat], "support", model, tier)
         gm.box(x0, x1, y0, y1, 0.0, t, 0, uv_front=uvs(w, t), uv_top=uvs(w, t), uv_other=(0.5, strips[0][1] + 0.01))
         gm.box(x0, x1, y0, y0 + t, 0.0, h, 0, uv_front=uvs(w, h), uv_top=uvs(w, t), uv_other=(0.5, strips[0][1] + 0.01))
         gm.box(x0, x1, y1 - t, y1, 0.0, h, 0, uv_front=uvs(w, h), uv_top=uvs(w, t), uv_other=(0.5, strips[0][1] + 0.01))
@@ -400,9 +406,10 @@ class GDisplay(RG.GRoom):
     def finish(self, out_dir, log=print):
         lim = getattr(self, "tex_limit", 512)
         for im in bpy.data.images:
-            if im.size[0] > lim and im.name not in ("Render Result",):
+            if max(im.size) > lim and im.name not in ("Render Result",):
                 try:
-                    im.scale(lim, lim)
+                    k_ = lim / float(max(im.size))                  # (14 Oct, try 2) the picture keeps its shape: the printed goods' atlases are not square
+                    im.scale(max(1, int(round(im.size[0] * k_))), max(1, int(round(im.size[1] * k_))))
                 except Exception:
                     pass
         # no alpha cut-out or blend anywhere in the display (DSP-02: real geometry)
@@ -444,10 +451,10 @@ def layout_ironmonger(d):
     u runs along the window from its left edge, v is the depth from the glass, w the height above the bed. Every support is a picture (a painted plywood, a deal plank map from Poly Haven's plywood, CC0), never a flat factor.
 
     pyramid: 36 tins, a triangular stack 8 high, one tin deep, u 0.20 to 0.98 at v 0.45, against a backing board of painted green plywood (u 0.14 to 1.04, v 0.502 to 0.518, 0.74 high).
-    gloves: 6, three stacks of two on a deal shelf 0.78 x 0.32 hung on four cords from a 12 mm black iron rod fixed to the back of the transom (the rod at v 0.012, w 1.794 touches the transom's underside), the
-    shelf's underside at w 0.76, over the pyramid's apex (0.69).
+    gloves: 6, three stacks of two on a deal shelf 0.78 x 0.32 (u 0.20 to 0.98, v 0.06 to 0.38) hung on four cords from a 12 mm black iron rod fixed to the back of the transom (the rod at v 0.012, w 1.794 touches the
+    transom's underside), the shelf's underside at w 0.76, over the pyramid's apex (0.69) and its backing board (0.74).
     lightbulbs: 12 in two open deal trays of six at their own size (0.10 high, 0.06 across; the pitch 0.064), glass and B22 caps (sw_room.bulb_b22).
-    trowels: 4, two pairs on two shallow trays 60 mm high; toolboxes: 2 side by side at the back at 1.0; crate: a stepped crate of nailed planks (a stencilled plank on each step) u 1.92 to 2.70, the front step
+    trowels: 4, two pairs on two solid stepped blocks (60 mm high at the front, 100 mm at the rear: the sill hides what lies lower; try 1's open trays had the trowels floating); toolboxes: 2 side by side at the back at 1.0; crate: a stepped crate of nailed planks (a stencilled plank on each step) u 1.92 to 2.70, the front step
     0.35 high with four labelled cleaner tins and the blowtorch, the rear step 0.45 high with four oil tins; cans: 2 watering cans in front of the crate at 1.0; sprinkler, tyre pump and the sledgehammer (head down,
     its handle against the right return wall) in the front row; brooms: 3, their handle ends on the bed, heads up against the right return wall (the handle 13 degrees from the vertical), heads 0.11 apart.
     price cards: 11 (try 1's TINS 99p is gone, TORCH is BLOWLAMP), each at the front edge before its goods."""
@@ -503,16 +510,20 @@ def layout_ironmonger(d):
     for xa, xb in ((X(0.18) - 0.014, X(0.18)), (X(1.00), X(1.00) + 0.014)):  # the rod's end caps: a short thicker sleeve each end
         gm.rod((xa, rod_v, rod_w), (xb, rod_v, rod_w), rod_r * 1.5, 0, 12)
     d.gm_object("hang_rod", gm, [iron], "support", "script:hang_rod")
-    cx_ = [X(cu0) + 0.012, X(cu1) - 0.012]
     pairs = []
-    for xx in cx_:
+    for xx in (X(cu0) + 0.012, X(cu1) - 0.012):
         for vv in (cv0 + 0.012, cv1 - 0.012):
-            pairs.append(((xx, vv, cw + 0.009), (xx, rod_v, rod_w)))        # lower end 3 mm inside the shelf, upper end on the rod's axis
+            lo_ = np.array((xx, vv, cw + 0.012 - 0.0005))                    # the lower end 0.5 mm inside the shelf's top
+            hi_ = np.array((xx, rod_v, rod_w))
+            u_ = (hi_ - lo_) / np.linalg.norm(hi_ - lo_)
+            pairs.append((tuple(lo_), tuple(hi_ - u_ * (rod_r - 0.0005))))   # the upper end 0.5 mm inside the rod's surface
     d.hang_cords(pairs)
+    # six gloves, three stacks of two on the shelf; the upper glove of a stack sinks 2 mm into the lower (a rule's contact is 2 mm: a glove's lumpy top is not a plane)
     gd = d.dims("garden_gloves_01", (0, 0, 0))
     for i, uc in enumerate((0.34, 0.59, 0.84)):
+        yaw_ = math.pi + 0.07 * (i - 1)                                   # the two of a stack lie the same way, so the upper nests on the lower
         for lay in range(2):
-            d.piece("garden_gloves_01", uc, 0.22, cw + 0.012 + lay * gd.z, rot=(0, 0, math.pi + rnd.uniform(-0.12, 0.12)), tier="hung_card")
+            d.piece("garden_gloves_01", uc, 0.22, cw + 0.012 + lay * (gd.z - 0.002), rot=(0, 0, yaw_), tier="hung_card")
     # ---- the bulbs: two open trays of six at their own size, the bulbs standing on the tray's floor 0.064 apart (the model is 0.06 across)
     for t in range(2):
         xc = X(0.32 + 0.42 * t)
@@ -521,9 +532,9 @@ def layout_ironmonger(d):
             d.piece("lightbulb_01", 0.32 + 0.42 * t - 0.16 + i * 0.064, 0.160, 0.004, tier="bulb_tray")
     # ---- trowels: two pairs on two shallow trays 60 mm high (the sill hides the lowest 40 mm of what lies on the bed from the far pavement)
     for i, uc in enumerate((1.18, 1.58)):
-        d.tray_box("trowel_tray_%d" % i, X(uc), 0.035, 0.235, 0.36, 0.06, deal_m, strips, 10)
+        d.tray_box("trowel_tray_%d" % i, X(uc), 0.035, 0.235, 0.36, 0.06, deal_m, strips, 10, solid=True)
         for lay in range(2):
-            d.piece("trowel_01", uc, 0.095 + 0.08 * lay, 0.06 + lay * 0.05, rot=(0, 0, math.pi / 2), yaw=rnd.uniform(-0.04, 0.04), tier="tray" if lay == 0 else "trowels")
+            d.piece("trowel_01", uc, 0.085 + 0.10 * lay, 0.06 + lay * 0.04, rot=(0, 0, math.pi / 2), yaw=rnd.uniform(-0.03, 0.03), tier="tray" if lay == 0 else "trowels")
     # ---- the toolboxes at the back at their own size, lids up as modelled
     for i, uc in enumerate((1.26, 1.68)):
         d.piece("metal_toolbox", uc, 0.40, 0.0, rot=(0, 0, 0))
@@ -534,7 +545,7 @@ def layout_ironmonger(d):
         d.piece("oil_tin", 2.06 + i * 0.165, 0.48, 0.45, rot=(0, 0, math.pi / 2), tier="crate")
     for i in range(4):
         d.piece("cleaner_tin_01", 2.00 + i * 0.10, 0.35, 0.35, tier="crate")
-    d.piece("brass_blowtorch", 2.55, 0.35, 0.35, rot=(0, 0, 0), tier="crate")
+    d.piece("brass_blowtorch", 2.55, 0.35, 0.35, rot=(0, 0, math.pi / 2), tier="crate")
     # ---- the front row: two watering cans in front of the crate (spouts along the window), the sprinkler, the pump, the sledgehammer
     for i, uc in enumerate((2.00, 2.48)):
         d.piece("watering_can_metal_01", uc, 0.14, 0.0, rot=(0, 0, math.pi / 2), yaw=rnd.uniform(-0.05, 0.05))
@@ -578,3 +589,44 @@ def build_display(work, out_dir, ctx, log=print):
     json.dump(info, open(os.path.join(work, "display_items.json"), "w"), indent=1)
     log("display: %d pieces of %d models, %d scripted, %d triangles, %d bytes" % (info["pieces"], len(info["models"]), len(info["scripted"]), tri, info["bytes"]))
     return info
+
+
+# ---------------------------------------------------------------------------------------------------------------------------------- helpers for printed goods and glass (try 2, 14 Oct 2026)
+def _tex_box(self, gm, x0, x1, y0, y1, z0, z1, strips, n_plain, rnd, mi=0):
+    """A box of timber or painted board with a picture on every face (DSP-09: no flat factor on a support): the front, the top and the ends each take a piece of one of the wood atlas's strips."""
+    def uvs(length, hh):
+        u0, v0, u1, v1 = strips[rnd.randrange(n_plain)]
+        sp = self._span(length, max(hh, 0.004))
+        uo = rnd.uniform(0.0, max(0.0, 1.0 - sp))
+        return (u0 + uo, v0, u0 + uo + sp, v1)
+    gm.box(x0, x1, y0, y1, z0, z1, mi, uv_front=uvs(x1 - x0, z1 - z0), uv_top=uvs(x1 - x0, y1 - y0), uv_ends=uvs(y1 - y0, z1 - z0), uv_other=(0.5, strips[0][1] + 0.01))
+
+
+def _lean_fit(self, make, xc, tilt, foot_w, top_v, dz=0.001, dv=0.001):
+    """A leaning sheet placed so that its LOWEST point stands `dz` above the support under it (`foot_w`) and its HIGHEST back point `dv` short of the support behind it (`top_v`): `make(c)` returns the GM of the sheet
+    centred at c = (x, v, w) (a first try at the origin gives the extents; the translation then puts both contacts right: they are independent, a translation in v and one in w). Returns the GM."""
+    g0 = make((xc, 0.0, 0.0))
+    e = g0.extents()
+    return make((xc, (top_v - dv) - e[3], (foot_w + dz) - e[4]))
+
+
+def _wire_pocket(self, gm, centre, ang_deg, width, depth, r=0.001):
+    """A wire pocket of a spinner rack (the newsagent's close review, narrow 5): a 2 mm rod bent in a U in the horizontal plane at `centre` = (x, y, z): the front bar across `width` and the two side bars `depth` back toward the
+    pole; `ang_deg` is the face's angle (0 = facing -y, the street; + toward +x)."""
+    a = math.radians(ang_deg)
+    tx, ty = math.cos(a), math.sin(a)                      # the tangent
+    rx, ry = math.sin(a), -math.cos(a)                     # outward
+    cx, cy, cz = centre
+    hw = width / 2.0
+    p0 = (cx - tx * hw, cy - ty * hw, cz)
+    p1 = (cx + tx * hw, cy + ty * hw, cz)
+    q0 = (p0[0] - rx * depth, p0[1] - ry * depth, cz)
+    q1 = (p1[0] - rx * depth, p1[1] - ry * depth, cz)
+    gm.rod(p0, p1, r, 0, 6)
+    gm.rod(p0, q0, r, 0, 6)
+    gm.rod(p1, q1, r, 0, 6)
+
+
+GDisplay.tex_box = _tex_box
+GDisplay.lean_fit = _lean_fit
+GDisplay.wire_pocket = _wire_pocket

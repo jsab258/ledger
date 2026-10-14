@@ -5,7 +5,7 @@ the calibration and the masks are the house windows'. One render at a time (the 
 
 Frames (GATE folder, outside git): frame_<name>_<state>.png (2560 x 1440 beauty), mask_<name>_<state>.png (flat colours: R 1 glass, 2 joinery, 3 cloth, 4 brick, 5 card; G the window's number), and for
 the night frames refloff_<name>_night.png (1280 x 720, the glass's reflection off: the check for a band the lamps' pools put in the night glass, unit 7's close review) and the camera JSON beside each.
-The review set goes to production/previews/cloud-week/house-windows/hw-<view>-<state>-<T.DATE2>.jpg (about 1600 px, under 500 KB); the try 1 pictures (2026-10-13) stay.
+The review set goes to production/previews/cloud-week/house-windows/hw-<view>-<state>-<T.DATE3>.jpg (about 1600 px, under 500 KB); the try 1 (2026-10-13) and try 2 (2026-10-14-v2) pictures stay.
 Try 2 (14 October): maskT_<name>_<state>.png is the mask with the glass clear (what lies behind each pane pixel: the cloth 3, the room card 5), for the rows that tell the clear glass from the net (NIGHT-01, NIGHT-07).
 """
 import json
@@ -52,6 +52,8 @@ FRAMES = [
 # window); its mask is that frame's own
 OLD_FAULT = ("old-fault", "h-along30-bay3w1", "east_parade_bay3_upper_w1")
 SAMPLES = int(os.environ.get("LEDGER_GATE_SAMPLES", "40"))
+# 14 Oct, from the try 2 close review (WB-02): the day frames of the bare window at 15 to 30 degrees are also rendered with the glass's reflection off (1280 x 720, 16 samples), so that the room alone can be read
+REFLOFF_DAY = ("h-along30-bay3w1",)
 
 
 def camera_of(key):
@@ -223,13 +225,13 @@ def run(names=None, samples=None, log=print):
                 t, rec = G.build_and_render(name, cam, st, mkt, cards, mode="maskT", extra=extra, log=log)
                 times["maskT_" + tag] = t
                 json.dump(times, open(tp, "w"), indent=1)
-            if st == "night" and not os.path.exists(ro):
+            if (st == "night" or (st == "day" and name in REFLOFF_DAY)) and not os.path.exists(ro):
                 t, rec = G.build_and_render(name, cam, st, ro, cards, samples=16, res=(1280, 720), glass_refl=0.0, extra=extra, log=log)
                 times["refloff_" + tag] = t
                 json.dump(times, open(tp, "w"), indent=1)
             if name in ("hook", "reverse", "cam-a", "close", "close2"):
                 pst = "night_lit" if st == "night" else st
-                jp = os.path.join(T.PREVIEWS, "hw-%s-%s-%s.jpg" % (name, pst, T.DATE2))
+                jp = os.path.join(T.PREVIEWS, "hw-%s-%s-%s.jpg" % (name, pst, T.DATE3))
                 if not os.path.exists(jp):
                     sz = jpeg_under(Image.open(fr), jp)
                     log("preview %s: %d KB" % (os.path.basename(jp), sz // 1024))

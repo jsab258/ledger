@@ -47,17 +47,24 @@ def room(r):
     rnd = r.rnd
     tex = r.tex
     GEN.TEXTS.clear()
-    # ---- the pictures made by script
-    mag_uv = GEN.cover_atlas(os.path.join(tex, "magazines.png"), "magazine")
-    card_uv = GEN.card_art_atlas(os.path.join(tex, "cards.png"), GEN.CARD_WORDS)
-    post_uv = GEN.card_art_atlas(os.path.join(tex, "postcards.png"), GEN.POSTCARD_WORDS, cols=4, rows=2, tile=(260, 180), postcard=True)
+    # ---- the pictures: photographs and script (sw_prints; the same library as the window's)
+    import sw_prints as PR
+    PR.TEXTS.clear()
+    PR.USED.clear()
+    PR.FIT.clear()
+    mag_uv = PR.magazine_atlas(os.path.join(tex, "magazines.png"), 24)
+    card_uv = PR.card_atlas(os.path.join(tex, "cards.png"), 10)
+    post_uv = PR.postcard_atlas(os.path.join(tex, "postcards.png"), 12)
     pack_uv = GEN.pack_atlas(os.path.join(tex, "packs.png"))
-    jar_uv = GEN.jar_atlas(os.path.join(tex, "jars.png"))
+    jc_uv, jl_uv = PR.jar_atlases(os.path.join(tex, "sweets.png"), os.path.join(tex, "jar_labels.png"), 10)
+    PR.write_used(os.path.join(r.work, "prints_used_room.json"))
     mag_m = r.image_mat("magazines", os.path.join(tex, "magazines.png"), rough=0.5)
     card_m = r.image_mat("greeting_cards", os.path.join(tex, "cards.png"), rough=0.55)
     post_m = r.image_mat("postcards", os.path.join(tex, "postcards.png"), rough=0.55)
     pack_m = r.image_mat("packs", os.path.join(tex, "packs.png"), rough=0.4)
-    jar_m = r.image_mat("jars", os.path.join(tex, "jars.png"), rough=0.3)
+    sweets_m = r.image_mat("sweets", os.path.join(tex, "sweets.png"), rough=0.35)
+    jlab_m = r.image_mat("jar_labels", os.path.join(tex, "jar_labels.png"), rough=0.6)
+    glass_m = r.mat("jar_glass", (0.96, 0.98, 0.98), rough=0.05, glass=True)
     lid_m = r.mat("jar_lid", rgb8(190, 190, 186), rough=0.3, metal=0.9)
     # ---- the counter and what stands on it
     cx0, cx1, cy0, cy1, ch = r.counter("N-back-counter", panels=True)
@@ -88,21 +95,18 @@ def room(r):
         r.placed_rec("N-back-gantry", "script:cigarette_packs", gm.extents(), [ob.name], tag="gantry_%.2f" % z, n=n_here)
         npacks += n_here
     r.notes.append("gantry: %d fictional packs on the three boards (the target's 100 + 8 fill a third of the length); the Poly Haven cigarette_pack is not used; no sliding glass front" % npacks)
-    # the jars: ten along the back of the counter, in front of the gantry
-    gmj, gml, gmb = GM(), GM(), GM()
-    jr, jh = 0.058, 0.20
+    # the jars: ten of glass along the back of the counter, in front of the gantry (try 2: 2 mm shell in the kit's goods-glass material, the sweets inside, a lid, the paper label on the outside of the glass)
+    gl, ct, ld, lb = GM(), GM(), GM(), GM()
     x = cx0 + 0.72
     y = D - gd - 0.065
     for k in range(10):
         xc = x + k * 0.135 + rnd.uniform(-0.002, 0.002)
-        prof = [(0.0, 0.0), (jr * 0.92, 0.0), (jr, 0.006), (jr, jh * 0.80), (jr * 0.78, jh * 0.9), (jr * 0.66, jh * 0.94), (jr * 0.66, jh), (0.0, jh)]
-        gmj.lathe(xc, y, ch, prof, mi=0, n=22, label=(1, 4), mi_label=0, label_uv=(jar_uv[k][0][0], jar_uv[k][0][1], jar_uv[k][0][2], jar_uv[k][0][3]))
-        gml.lathe(xc, y, ch + jh, [(0.0, 0.0), (jr * 0.72, 0.0), (jr * 0.74, 0.004), (jr * 0.74, 0.030), (jr * 0.6, 0.032), (0.0, 0.032)], mi=0, n=22)
-        gmb.band(xc, y, ch + 0.055, ch + 0.135, jr + 0.0012, -42, 42, 0, uv=jar_uv[k][1], n=10)
-    o1 = gmj.to_object("sweet_jars", [jar_m], r.sc, smooth=True)
-    o2 = gml.to_object("sweet_jar_lids", [lid_m], r.sc, smooth=True)
-    o3 = gmb.to_object("sweet_jar_labels", [jar_m], r.sc)
-    r.placed_rec("N-back-counter", "script:sweet_jars", gmj.extents(), [o1.name, o2.name, o3.name], tag="jars", n=10)
+        GEN.glass_jar(gl, ct, ld, lb, xc, y, ch, uv_content=jc_uv[k], uv_label=jl_uv[k], n=22)
+    o1 = gl.to_object("sweet_jars", [glass_m], r.sc, smooth=True)
+    o2 = ct.to_object("sweet_jar_sweets", [sweets_m], r.sc, smooth=True)
+    o3 = ld.to_object("sweet_jar_lids", [lid_m], r.sc, smooth=True)
+    o4 = lb.to_object("sweet_jar_labels", [jlab_m], r.sc)
+    r.placed_rec("N-back-counter", "script:sweet_jars", gl.extents(), [o1.name, o2.name, o3.name, o4.name], tag="jars", n=10)
     # the till at the right end, in front of the gantry
     till_s = next(g["size_m"] for g in rr["goods"] if g["model"] == "CashRegister_01") / max(r.dims("CashRegister_01"))
     r.place("CashRegister_01", (cx1 - 0.33, D - gd - 0.01, ch), rot=(0, 0, 0), scale=till_s, fixture="N-back-counter", anchor=("c", "max", "min"))
@@ -176,7 +180,7 @@ def room(r):
     r.fixtures.append({"fixture": "N-back-pensions", "name": "hours_cards", "ext": [round(v, 4) for v in hc.extents()]})
     # ---- the stockroom door (flat, 40 mm): the slab, two raised panels, an architrave and a brass knob
     dx0, dx1 = fx["N-back-door"]["x"]
-    paint = r.mat("door_paint", rgb8(40, 52, 90), rough=0.4)
+    paint = r.mat("door_paint", rgb8(96, 110, 140), rough=0.4)               # try 2 (the street review, narrow 3): (40, 52, 90) read as a flat near-black slab through the glass
     r.box("door_slab", dx0, dx1, D - 0.04, D - 0.005, 0.0, 2.0, paint, fixture="N-back-door")
     r.box("door_panel_a", dx0 + 0.10, dx1 - 0.10, D - 0.048, D - 0.04, 0.12, 0.90, paint, fixture="N-back-door")
     r.box("door_panel_b", dx0 + 0.10, dx1 - 0.10, D - 0.048, D - 0.04, 1.05, 1.88, paint, fixture="N-back-door")
@@ -248,104 +252,143 @@ def room(r):
     mat_m = r.mat("rubber_mat", rgb8(34, 34, 36), rough=0.9)
     r.box("door_mat", 0.72, 1.70, 0.14, 0.72, 0.0, 0.012, mat_m, fixture="N-floor")
     r.notes.append("the stock-room door, the pension screen, the gantry and both walls' racks are scripts from the target's dimensions; every printed thing is the project's own (sw_gen.TEXTS)")
-    r.texts = list(GEN.TEXTS)
+    r.texts = list(GEN.TEXTS) + list(PR.TEXTS)
     # the hours card text is added to the list the checks read
     return r
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------- the window
 def display(d):
-    """The newsagent's window (target `shops.newsagent.display`, 8 item rows; bed 3.35 x 0.55, the 4.2/4.4 window board SB1 not built here: it is a card on the glass, the build's glass rows are the lettering).
-    The zones of the target overlap (the newspapers' u 0.1 to 1.2 under the cartons' u 0.2 to 0.9; the magazines' u 1.3 to 2.3 over the notepads' u 1.0 to 1.7; the postcard rack's v 0.35 to 0.5 over the
-    magazines'), so every piece has a place of its own on a surface that exists:
-    the newspapers: ten, in two shingled rows of five on two low ramps in front (u 0.10 to 0.62 and 0.66 to 1.18, v 0.05 to 0.28; the ramp rises 0.12 toward the back and leans each row 20 degrees to the
-    street), folded once so that the masthead and the headline show; the stationery sets (2) lie flat in front of the cartons' stand and the pads (3) at the right of the ramps.
-    the cartons: six, in three stacks of two on the shelf of a timber stand (shelf at w 0.40, four legs to the bed; u 0.20 to 0.88, v 0.34 to 0.50).
-    the magazines: twelve, not 24 (the zone is 1.0 wide: 24 at 0.19 across would be five rows deep and would hide each other), on a sloping board (u 1.30 to 2.20, v 0.20 to 0.46, leaning 60 degrees), four across,
-    three rows each showing at least 0.7 of its height.
-    the sweet jars: six on the bed in two rows of three (u 2.45 to 2.88, v 0.12 to 0.32), the spinner card rack at u 3.12 (a pole from the bed with four faces of four cards, w 0.30 to 1.10), the postcard rack
-    at u 2.30 (a pole from the bed with three rings of eight postcards, w 0.50 to 1.20)."""
+    """The newsagent's window (target `shops.newsagent.display`, 8 item rows; bed 3.35 x 0.55), try 2 (14 Oct 2026: both fresh reviews of try 1; the brief's step 0 e, f, i). Every printed good is made from a photograph
+    (sw_prints), every sheet is bent (GM.csheet), leans BACK and rests on what is behind it (DSP-05), every support has a picture (DSP-09), every Poly Haven piece is at its own size (DSP-06). u along the window, v the
+    depth from the glass, w the height above the bed:
+    the newspapers: eight, the visible half of a folded tabloid (0.29 x 0.19, the top edge a fold, bent 6 mm over its height), two to a step and four to a stand on two stands (u 0.10 to 0.68 and 0.70 to 1.28; a lower
+    step v 0.04 to 0.24 high 0.055 and an upper step v 0.24 to 0.37 high 0.24, a back board over it); each leans 18 degrees back with its foot on the step and its top 1 mm from the riser or the back board;
+    the cartons: six of 280 x 90 x 50 mm on the shelf of a timber stand (u 0.20 to 0.88, v 0.39 to 0.55, shelf w 0.46), two columns of three, their fronts to the street;
+    the magazines: twelve distinct covers on the front face of a sloping board (u 1.30 to 2.20) with side cheeks, leaning 35 degrees (try 1: 40; the pads at their own size need a plinth 0.225 deep, which moves the
+    board's foot back to v 0.235, and the top must stay under 0.56): each cover 2 mm off the board along its normal, each lower row 4.5 mm further out, so no row is behind the board; in front, a plinth 0.06 high
+    (u 1.29 to 2.22, v 0.01 to 0.235) with the pens' pot and the three pads at 1.0 of their size;
+    the sweet jars: six of glass (2 mm shell, the sweets inside, a lid), two rows of three (u 2.50 to 2.85);
+    the postcard rack at u 2.38 (try 1: 2.30: its pole stood on the mullion's edge) and the card spinner at u 3.12: chrome wire, a wire pocket for each face (a 2 mm rod bent in a U, 20 mm deep, 0.8 of the card's width),
+    three cards deep, the two behind each front card 6 mm apart and 15 mm higher."""
     _setup()
+    import random as _random
+    from mathutils import Matrix, Vector
+    import sw_prints as PR
+    import sw_room_gen as RG
     rr = d.RR
     walls = rr["walls"]
-    import sw_room_gen as RG
     wall_rgb = RG._rgb(walls["above"])
     dado_rgb = RG._rgb(walls["dado"])
-    d.start((150, 152, 150), wall_rgb, dado_rgb)
+    d.tex_limit = 2048
+    tex = d.tex
+    bed_png = d.painted_png("bed_grey", "plywood", (150, 152, 150), grain=0.55)
+    edge_png = d.painted_png("bed_edge", "plywood", (92, 62, 40), grain=0.8)
+    d.start((150, 152, 150), wall_rgb, dado_rgb, bed_png=bed_png, board_png=edge_png)
     rnd = d.rnd
     L = d.L
     X = lambda u: u - L / 2
-    tex = d.tex
     GEN.TEXTS.clear()
-    mag_uv = GEN.cover_atlas(os.path.join(tex, "magazines.png"), "magazine")
-    paper_uv = GEN.cover_atlas(os.path.join(tex, "papers.png"), "paper", cols=3, rows=2)
-    card_uv = GEN.card_art_atlas(os.path.join(tex, "cards.png"), GEN.CARD_WORDS)
-    post_uv = GEN.card_art_atlas(os.path.join(tex, "postcards.png"), GEN.POSTCARD_WORDS, cols=4, rows=2, tile=(260, 180), postcard=True)
-    pack_uv = GEN.pack_atlas(os.path.join(tex, "packs.png"))
-    jar_uv = GEN.jar_atlas(os.path.join(tex, "jars.png"))
-    # the white of the printed goods is held at about 0.86 of full in the window (a sheet of newsprint is not paper white): under the gate's night spill the white card, paper and carton tops burnt
-    # 3.5 per cent of the close frames (PIC-05g; the room's pictures use the atlases at full white, they are lit differently)
+    PR.TEXTS.clear()
+    PR.USED.clear()
+    PR.FIT.clear()
+    # ---- the pictures: photographs and script (sw_prints)
+    mag_p, pap_p, card_p, post_p, cart_p = [os.path.join(tex, n) for n in ("magazines.png", "papers.png", "cards.png", "postcards.png", "cartons.png")]
+    mag_uv = PR.magazine_atlas(mag_p, 24)
+    pap_uv = PR.paper_atlas(pap_p, 8)
+    card_uv = PR.card_atlas(card_p, 10)
+    post_uv = PR.postcard_atlas(post_p, 12)
+    cart_uv = PR.carton_atlas(cart_p, 6)
+    jc_uv, jl_uv = PR.jar_atlases(os.path.join(tex, "sweets.png"), os.path.join(tex, "jar_labels.png"), 10)
+    PR.write_used(os.path.join(d.work, "prints_used.json"))
+    # the white of the printed goods is held at about 0.86 of full in the window (newsprint is not paper white): under the gate's night spill the white card, paper and carton tops burnt (PIC-05g)
     from PIL import Image as _Im
-    # and the magazines' dark covers (navy, green, dark red) are lifted 1.35 times: they read 0.60 of the room round them at night (LIT-08) at the spill this shop's gate now has
-    for _nm, _k in (("papers.png", 0.86), ("cards.png", 0.86), ("postcards.png", 0.86), ("packs.png", 0.86), ("magazines.png", 1.35)):
-        _p = os.path.join(tex, _nm)
+    for _p, _k in ((pap_p, 0.86), (card_p, 0.86), (post_p, 0.90), (cart_p, 0.88)):
         _a = np.asarray(_Im.open(_p).convert("RGB")).astype(np.float32) * _k
         _Im.fromarray(np.clip(_a, 0, 255).astype(np.uint8)).save(_p)
-    mag_m = d.image_mat("magazines", os.path.join(tex, "magazines.png"), rough=0.5)
-    pap_m = d.image_mat("papers", os.path.join(tex, "papers.png"), rough=0.7)
-    card_m = d.image_mat("greeting_cards", os.path.join(tex, "cards.png"), rough=0.55)
-    post_m = d.image_mat("postcards", os.path.join(tex, "postcards.png"), rough=0.55)
-    pack_m = d.image_mat("packs", os.path.join(tex, "packs.png"), rough=0.4)
-    jar_m = d.image_mat("jars", os.path.join(tex, "jars.png"), rough=0.3)
+    mag_m = d.image_mat("magazines", mag_p, rough=0.45)
+    pap_m = d.image_mat("papers", pap_p, rough=0.75)
+    card_m = d.image_mat("greeting_cards", card_p, rough=0.55)
+    post_m = d.image_mat("postcards", post_p, rough=0.55)
+    cart_m = d.image_mat("cartons", cart_p, rough=0.5)
+    sweets_m = d.image_mat("sweets", os.path.join(tex, "sweets.png"), rough=0.35)
+    jlab_m = d.image_mat("jar_labels", os.path.join(tex, "jar_labels.png"), rough=0.6)
+    glass_m = d.mat("jar_glass", (0.96, 0.98, 0.98), rough=0.05, glass=True)
     lid_m = d.mat("jar_lid", rgb8(190, 190, 186), rough=0.3, metal=0.9)
-    wood = d.mat("stand_wood", rgb8(150, 108, 70), rough=0.55)
-    board = d.mat("slope_board", rgb8(150, 146, 136), rough=0.7)
-    wire = d.mat("rack_wire", rgb8(70, 70, 74), rough=0.4, metal=0.8)
-    # ---- the two paper stands (a lower step, a higher step and a back board each) and the ten papers, folded once: three on the lower step, shingled 12 mm apart in depth, two on the higher step between
-    # their gaps, so that every paper shows at least half to the far pavement
+    chrome = d.mat("chrome_wire", rgb8(200, 200, 205), rough=0.25, metal=1.0)
+    # supports: painted board (grey) and deal, both from the plywood map
+    grey_png, grey_strips = d.wood_strips("news_grey", 6, (150, 146, 136), var=0.04, seed=12)
+    deal_png, deal_strips = d.wood_strips("news_deal", 6, (150, 108, 70), var=0.06, seed=13)
+    grey_m = d.image_mat("stand_grey", grey_png, rough=0.7)
+    deal_m = d.image_mat("stand_wood", deal_png, rough=0.55)
+    # ---- the two paper stands (a lower step, a higher step, a back board) and the eight papers, two to a step
+    stands = []
     for ri, u0 in enumerate((0.10, 0.70)):
         gm = GM()
         x0, x1 = X(u0), X(u0 + 0.58)
-        gm.box(x0, x1, 0.04, 0.24, 0.0, 0.06, 0)            # the lower step
-        gm.box(x0, x1, 0.24, 0.37, 0.0, 0.24, 0)            # the upper step
-        gm.box(x0, x1, 0.37, 0.382, 0.24, 0.46, 0)          # the back board over it
-        d.gm_object("paper_stand_%d" % ri, gm, [board], "support", "script:paper_stand")
-    lean = 18.0
-    for pi in range(10):
-        ri, k = divmod(pi, 5)
-        u0 = (0.10, 0.70)[ri]
-        if k < 3:
-            xc = X(u0 + 0.15 + k * 0.16) + rnd.uniform(-0.004, 0.004)
-            foot_v, foot_w = 0.150 - 0.012 * k, 0.06
-        else:
-            xc = X(u0 + 0.23 + (k - 3) * 0.16) + rnd.uniform(-0.004, 0.004)
-            foot_v, foot_w = 0.295 - 0.012 * (k - 3), 0.24
-        hh = 0.20
-        zc = foot_w + hh / 2 * math.cos(math.radians(lean)) + 0.003
-        vc = foot_v - 0.01 + hh / 2 * math.sin(math.radians(lean))
-        gm = GM()
-        tile = paper_uv[pi % 6]
-        top = (tile[0], tile[1] + (tile[3] - tile[1]) * 0.38, tile[2], tile[3])
-        gm.sheet((xc, vc, zc), 0.22, hh, 0.004, tilt=lean + rnd.uniform(-1.0, 1.0), yaw=rnd.uniform(-1.0, 1.0), mi=0, uv=top, uv_other=(tile[0] + 0.01, tile[1] + 0.01))
-        d.gm_object("newspaper_%d" % pi, gm, [pap_m], "scripted", "script:newspapers", tier="bed" if k < 3 else "step")
-    # ---- the stand with the cartons
+        d.tex_box(gm, x0, x1, 0.04, 0.24, 0.0, 0.055, grey_strips, 6, rnd)           # the lower step (55 mm: a paper's top then stands under the riser's top edge)
+        d.tex_box(gm, x0, x1, 0.24, 0.37, 0.0, 0.24, grey_strips, 6, rnd)            # the upper step
+        d.tex_box(gm, x0, x1, 0.37, 0.382, 0.24, 0.46, grey_strips, 6, rnd)          # the back board over it
+        d.gm_object("paper_stand_%d" % ri, gm, [grey_m], "support", "script:paper_stand")
+        stands.append(u0)
+    for ri, u0 in enumerate(stands):
+        for st in range(2):
+            for col in range(2):
+                k = ri * 4 + st * 2 + col
+                xc = X(u0 + 0.145 + 0.29 * col) + rnd.uniform(-0.003, 0.003)
+                lean = 18.0 + rnd.uniform(-1.0, 1.0)
+                yaw = rnd.uniform(-1.0, 1.0)
+                foot_w = 0.055 if st == 0 else 0.24
+                top_v = 0.24 if st == 0 else 0.37
+                tile = pap_uv[k]
+                make = lambda c, tile=tile, lean=lean, yaw=yaw: _csheet(c, 0.29, 0.19, 0.004, lean, yaw, 0.002, 0.006, 10, 6, mi=0, uv=tile, uv_other=(tile[0] + 0.01, tile[1] + 0.01), fold_top=True, curl=0.002)
+                gm = d.lean_fit(make, xc, lean, foot_w, top_v)
+                d.gm_object("newspaper_%d" % k, gm, [pap_m], "scripted", "script:newspapers", tier="bed" if st == 0 else "step")
+    # ---- the stand with the cartons: a timber shelf on four legs, six cartons of 280 x 90 x 50 in two columns of three, fronts to the street
     sx0, sx1, sv0, sv1, sw = X(0.20), X(0.88), 0.39, 0.55, 0.46
     gm = GM()
     for xx in (sx0 + 0.015, sx1 - 0.015):
         for vv in (sv0 + 0.015, sv1 - 0.015):
-            gm.box(xx - 0.015, xx + 0.015, vv - 0.015, vv + 0.015, 0.0, sw, 0)
-    gm.box(sx0, sx1, sv0, sv1, sw, sw + 0.02, 0)
-    d.gm_object("carton_stand", gm, [wood], "support", "script:carton_stand")
-    cg = GM()
-    k = 0
-    for col in range(3):
-        for lay in range(2):
-            kk = rnd.randrange(len(pack_uv))
-            cg.box(sx0 + 0.04 + col * 0.215, sx0 + 0.04 + col * 0.215 + 0.20, sv0 + 0.04, sv0 + 0.04 + 0.055, sw + 0.02 + lay * 0.10, sw + 0.02 + (lay + 1) * 0.10 - 0.001, 0, uv_front=pack_uv[kk], uv_other=(pack_uv[kk][0] + 0.01, pack_uv[kk][1] + 0.01))
-    d.gm_object("cigarette_cartons", cg, [pack_m], "scripted", "script:cigarette_cartons", tier="stand")
-    # ---- the plinth along the front of the magazine board (60 mm high: the sill hides the lowest 40 mm of the bed from the far pavement, and a pad lies 30 mm high): two pots of pens and three pads
-    d.crate("stationery_plinth", 1.36, 2.20, 0.03, 0.17, 0.0, 0.06)
-    from mathutils import Matrix, Vector
+            d.tex_box(gm, xx - 0.015, xx + 0.015, vv - 0.015, vv + 0.015, 0.0, sw, deal_strips, 6, rnd)
+    d.tex_box(gm, sx0, sx1, sv0, sv1, sw, sw + 0.02, deal_strips, 6, rnd)
+    d.gm_object("carton_stand", gm, [deal_m], "support", "script:carton_stand")
+    xmid = (sx0 + sx1) / 2
+    for col in range(2):
+        for lay in range(3):
+            kk = col * 3 + lay
+            cg = GM()
+            x0 = xmid - 0.285 + col * 0.290
+            z0 = sw + 0.02 + lay * 0.09
+            cg.box(x0, x0 + 0.28, sv0 + 0.04, sv0 + 0.09, z0, z0 + 0.0895, 0, uv_front=cart_uv[kk], uv_other=(cart_uv[kk][0] + 0.01, cart_uv[kk][1] + 0.01))
+            d.gm_object("carton_%d" % kk, cg, [cart_m], "scripted", "script:cigarette_cartons", tier="stand")
+    # ---- the magazine board (a slab leaning 35 degrees back with a side cheek at each end), the plinth in front of it, the twelve covers
+    mx0, mx1 = X(1.30), X(2.20)
+    lean_b = 35.0
+    vb, blen = 0.235, 0.56
+    cb, sb = math.cos(math.radians(lean_b)), math.sin(math.radians(lean_b))
+    gm = GM()
+    gm.sheet(((mx0 + mx1) / 2, vb + blen / 2 * sb, 0.004 + blen / 2 * cb), mx1 - mx0, blen, 0.012, tilt=lean_b, mi=0, uv=grey_strips[0], uv_other=(0.5, grey_strips[0][1] + 0.01))
+    for xa in (mx0, mx1 - 0.012):                                  # the cheeks: triangles under the board's ends, sunk 3 mm into it (one mesh, so no overlap to test)
+        vf, vt, wt, vbk = vb - 0.004, vb + blen * sb - 0.006, 0.004 + blen * cb - 0.004, 0.55
+        gm.add([(xa, vf, 0.0), (xa + 0.012, vf, 0.0), (xa + 0.012, vt, wt), (xa, vt, wt), (xa, vbk, 0.0), (xa + 0.012, vbk, 0.0)],
+               [(0, 3, 2, 1), (0, 1, 5, 4), (1, 2, 5), (0, 4, 3), (3, 4, 5, 2)], 0, [[(0.5, grey_strips[1][1] + 0.01)] * n_ for n_ in (4, 4, 3, 3, 4)])
+    d.gm_object("magazine_board", gm, [grey_m], "support", "script:magazine_board")
+    plg = GM()
+    d.tex_box(plg, X(1.29), X(2.22), 0.01, 0.235, 0.0, 0.06, deal_strips, 6, rnd)
+    d.gm_object("stationery_plinth", plg, [deal_m], "support", "script:crate")
+    for row in range(3):
+        for i in range(4):
+            kk = row * 4 + i
+            xc = (mx0 + mx1) / 2 + (i - 1.5) * 0.225
+            s0 = 0.015 + row * 0.14 + 0.125
+            off = 0.008 + 0.0045 * (2 - row)                          # from the board's middle: half its 12 mm, then the cover's middle plane 2 mm off its face; each LOWER row (row 0, the nearer to the street) 4.5 mm further out: it hides the foot of the row above and its own top rests 1.5 mm from that foot
+            zc = 0.004 + s0 * cb + off * sb
+            vc = vb + s0 * sb - off * cb
+            tile = mag_uv[kk]
+            gm = GM()
+            gm.csheet((xc, vc, zc), 0.19, 0.25, 0.003, tilt=lean_b, yaw=rnd.uniform(-0.8, 0.8), bow=0.003, bend=0.0, nx=6, nz=4, mi=0, uv=tile, uv_other=(tile[0] + 0.01, tile[1] + 0.01))
+            d.gm_object("magazine_%d" % kk, gm, [mag_m], "scripted", "script:magazines", tier="board")
+    # ---- on the plinth: a pot of pens, then the yellow pad, the A4 stack and the note stack, each at its own size
     meshes_t, lo_t, hi_t = d.template("stationery_supplies")
     cupm = [m for m in meshes_t if "pencilcup" in m.name][0]
     cpts = [cupm.matrix_world @ Vector(c) for c in cupm.bound_box]
@@ -353,92 +396,77 @@ def display(d):
     ccy = (min(p.y for p in cpts) + max(p.y for p in cpts)) / 2
     cfloor = min(p.z for p in cpts) + 0.004
     pen_names = ["pen_blue", "pen_fancy", "pen_red", "pencil_new_a", "pencil_new_b", "pencil_old", "pencil_used"]
-    pots = []
-    for pot in range(2):
-        parts = [(("pencilcup",), Matrix.Identity(4))]
-        order = pen_names if pot == 0 else pen_names[3:] + pen_names[:3]
-        for i, nm in enumerate(order):
-            m = [mm for mm in meshes_t if mm.name.endswith(nm)][0]
-            pts = [m.matrix_world @ Vector(c) for c in m.bound_box]
-            piv = Vector((min(p.x for p in pts), (min(p.y for p in pts) + max(p.y for p in pts)) / 2, (min(p.z for p in pts) + max(p.z for p in pts)) / 2))
-            phi = 2 * math.pi * i / 7 + 0.9 * pot
-            base = Vector((ccx + 0.017 * math.cos(phi), ccy + 0.017 * math.sin(phi), cfloor))
-            ax = Vector((-math.sin(phi), math.cos(phi), 0.0))
-            lean_ = math.radians(5.0 + 2.0 * (i % 3))
-            xf = Matrix.Translation(base) @ Matrix.Rotation(lean_, 4, ax) @ Matrix.Rotation(-math.pi / 2, 4, "Y") @ Matrix.Translation(-piv)
-            parts.append(((nm,), xf))
-        pots.append(d.compose("stationery_supplies", "pot%d" % pot, parts))
-    d.piece(pots[0], 1.43, 0.10, 0.06, rot=(0, 0, 0), tier="plinth", tris=None)
-    x_pad = 1.43 + 0.05 + 0.03
+    parts = [(("pencilcup",), Matrix.Identity(4))]
+    for i, nm in enumerate(pen_names):
+        m = [mm for mm in meshes_t if mm.name.endswith(nm)][0]
+        pts = [m.matrix_world @ Vector(c) for c in m.bound_box]
+        piv = Vector((min(p.x for p in pts), (min(p.y for p in pts) + max(p.y for p in pts)) / 2, (min(p.z for p in pts) + max(p.z for p in pts)) / 2))
+        phi = 2 * math.pi * i / 7
+        base = Vector((ccx + 0.017 * math.cos(phi), ccy + 0.017 * math.sin(phi), cfloor))
+        ax = Vector((-math.sin(phi), math.cos(phi), 0.0))
+        xf = Matrix.Translation(base) @ Matrix.Rotation(math.radians(5.0 + 2.0 * (i % 3)), 4, ax) @ Matrix.Rotation(-math.pi / 2, 4, "Y") @ Matrix.Translation(-piv)
+        parts.append(((nm,), xf))
+    pot = d.compose("stationery_supplies", "pot0", parts)
+    x_pad = 1.30
     for nm in ("office_notepads_yellow_pad", "office_notepads_a4_stack", "office_notepads_note_stack"):
         key = d.sub_template("office_notepads", nm, lambda n, nm=nm: n == nm)
         rt = (0, 0, math.pi / 2) if "note_stack" not in nm else (0, 0, 0)
         dd = d.dims(key, rt)
-        sc_ = 0.6
-        d.piece(key, x_pad + dd.x * sc_ / 2, 0.10, 0.06, rot=rt, scale=sc_, tier="plinth", tag=nm, tris=None)
-        x_pad += dd.x * sc_ + 0.03
-    d.piece(pots[1], x_pad + 0.05, 0.10, 0.06, rot=(0, 0, 0), tier="plinth", tris=None)
-    # ---- the magazines on a sloping board (leaning 40 degrees from the vertical, 0.58 long)
-    mx0, mx1, vb = X(1.30), X(2.20), 0.17
-    lean_b = 40.0
-    blen = 0.58
-    gm = GM()
-    cb, sb = math.cos(math.radians(lean_b)), math.sin(math.radians(lean_b))
-    gm.sheet(((mx0 + mx1) / 2, vb + blen / 2 * sb, 0.004 + blen / 2 * cb), mx1 - mx0, blen, 0.012, tilt=lean_b, mi=0)
-    d.gm_object("magazine_board", gm, [board], "support", "script:magazine_board")
-    mg = GM()
-    for row in range(3):
-        for i in range(4):
-            kk = (row * 4 + i * 5) % len(mag_uv)
-            xc = (mx0 + mx1) / 2 + (i - 1.5) * 0.225
-            s0 = 0.015 + row * 0.14 + 0.125
-            off = 0.0095 + 0.0045 * row                                 # each row 4.5 mm in front of the one above: they do not touch
-            zc = 0.004 + s0 * cb - off * sb
-            vc = vb + s0 * sb + off * cb * -1.0
-            mg.sheet((xc, vc, zc), 0.19, 0.25, 0.003, tilt=lean_b, yaw=rnd.uniform(-1.5, 1.5), mi=0, uv=mag_uv[kk], uv_other=(mag_uv[kk][0] + 0.01, mag_uv[kk][1] + 0.01))
-    d.gm_object("magazines", mg, [mag_m], "scripted", "script:magazines", tier="board")
-    # ---- the sweet jars
-    gmj, gml, gmb = GM(), GM(), GM()
-    jr, jh = 0.058, 0.20
+        _, nms_ = d.piece(key, x_pad + dd.x / 2, 0.01 + dd.y / 2 + 0.004, 0.06, rot=rt, tier="plinth", tag=nm, tris=None)
+        d.tone(nms_, 0.86)                                       # the pads burnt at night (the newsagent's close review, narrow 4): their white and yellow held at 0.86 like the printed whites
+        x_pad += dd.x + 0.006
+    d.piece(pot, x_pad + 0.045, 0.10, 0.06, rot=(0, 0, 0), tier="plinth", tris=None)
+    # ---- the sweet jars: glass, the sweets inside, a lid, the paper label outside
+    gl, ct, ld, lb = GM(), GM(), GM(), GM()
     for k in range(6):
         row, col = divmod(k, 3)
         xc = X(2.50 + col * 0.14 + (0.07 if row else 0.0))
         yc = 0.20 + row * 0.12
-        prof = [(0.0, 0.0), (jr * 0.92, 0.0), (jr, 0.006), (jr, jh * 0.80), (jr * 0.78, jh * 0.9), (jr * 0.66, jh * 0.94), (jr * 0.66, jh), (0.0, jh)]
-        gmj.lathe(xc, yc, 0.0, prof, mi=0, n=22, label=(1, 4), mi_label=0, label_uv=jar_uv[k][0])
-        gml.lathe(xc, yc, jh, [(0.0, 0.0), (jr * 0.72, 0.0), (jr * 0.74, 0.004), (jr * 0.74, 0.030), (jr * 0.6, 0.032), (0.0, 0.032)], mi=0, n=22)
-        gmb.band(xc, yc, 0.055, 0.135, jr + 0.0012, -42, 42, 0, uv=jar_uv[k][1], n=10)
-    d.gm_object("sweet_jars", gmj, [jar_m], "scripted", "script:sweet_jars", tier="bed", smooth=True)
-    d.gm_object("sweet_jar_lids", gml, [lid_m], "support", "script:sweet_jars", smooth=True)
-    d.gm_object("sweet_jar_labels", gmb, [jar_m], "support", "script:sweet_jars")
-    # ---- the spinner rack (greetings cards) and the postcard rack
-    for name, u, vc, w0, w1, n_face, rows_, tile_m_, uvs, cw_, ch_ in (("card_rack", 3.12, 0.36, 0.30, 1.10, 4, 4, card_m, card_uv, 0.115, 0.16), ("postcard_rack", 2.30, 0.42, 0.50, 1.20, 8, 3, post_m, post_uv, 0.135, 0.094)):
+        GEN.glass_jar(gl, ct, ld, lb, xc, yc, 0.0, uv_content=jc_uv[k], uv_label=jl_uv[k], n=24)
+    d.gm_object("sweet_jar_glass", gl, [glass_m], "scripted", "script:sweet_jars", tier="bed", smooth=True)
+    d.gm_object("sweet_jar_sweets", ct, [sweets_m], "support", "script:sweet_jars", smooth=True)
+    d.gm_object("sweet_jar_lids", ld, [lid_m], "support", "script:sweet_jars", smooth=True)
+    d.gm_object("sweet_jar_labels", lb, [jlab_m], "support", "script:sweet_jars")
+    # ---- the postcard rack (u 2.38) and the card spinner (u 3.12): chrome wire, a pocket for each face, three cards deep
+    for name, u, vc, w0, w1, n_face, tiers, uvs, tile_m_, cw_, ch_, rad in (("card_rack", 3.12, 0.36, 0.30, 1.10, 4, 4, card_uv, card_m, 0.115, 0.16, 0.09), ("postcard_rack", 2.38, 0.42, 0.50, 1.20, 8, 3, post_uv, post_m, 0.135, 0.094, 0.12)):
         xc = X(u)
         g = GM()
         g.rod((xc, vc, 0.0), (xc, vc, w1 + 0.05), 0.006, 0, 8)
         g.cylinder(xc, vc, 0.0, 0.012, 0.12, 0, 20)
-        rad = 0.09 if n_face == 4 else 0.12
-        for ri in range(rows_ + 1):
-            zr = w0 + (w1 - w0 - ch_) * ri / max(rows_ - 1, 1) if ri < rows_ else w1 + 0.010
-            g.torus((xc, vc, zr - 0.004), rad, 0.0018, 0, axis="z", nm=24, nn=5)
-        d.gm_object(name + "_frame", g, [wire], "support", "script:" + name)
         cgm = GM()
         cnt = 0
-        for ri in range(rows_):
-            zr = w0 + (w1 - w0 - ch_) * ri / max(rows_ - 1, 1)
+        zr_list = [w0 + (w1 - w0 - ch_) * ri / max(tiers - 1, 1) for ri in range(tiers)]
+        for ri, zr in enumerate(zr_list):
+            g.torus((xc, vc, zr - 0.002), rad, 0.0018, 0, axis="z", nm=24, nn=5)
+            for sp in range(4):
+                a_ = math.radians(90 * sp)
+                g.rod((xc, vc, zr - 0.002), (xc + math.sin(a_) * rad, vc - math.cos(a_) * rad, zr - 0.002), 0.0015, 0, 6)
             for fi in range(n_face):
-                ang = 2 * math.pi * fi / n_face + 0.2 * ri
-                kk = (ri * n_face + fi) % len(uvs)
-                # a card standing on edge on the ring, face outward, leaned 8 degrees back
-                cgm.sheet((xc + math.sin(ang) * rad, vc - math.cos(ang) * rad, zr + ch_ / 2), cw_ if n_face == 4 else cw_ * 0.8, ch_, 0.003, tilt=8.0 * 0.0, yaw=-math.degrees(ang), mi=0, uv=uvs[kk], uv_other=(uvs[kk][0] + 0.01, uvs[kk][1] + 0.01))
-                cnt += 1
+                ang = 360.0 * fi / n_face + 11.0 * ri
+                a_ = math.radians(ang)
+                ox, oy = math.sin(a_), -math.cos(a_)
+                pw = 0.8 * (cw_ if n_face == 4 else cw_ * 0.8)
+                d.wire_pocket(g, (xc + ox * rad, vc + oy * rad, zr - 0.0005), ang, pw, 0.020)
+                for dep in range(3):                                  # three cards: the front one, two behind it 6 mm apart and 15 mm higher
+                    rr_ = rad - 0.0045 - 0.006 * dep
+                    kk = (ri * n_face * 3 + fi * 3 + dep) % len(uvs)
+                    cwid = cw_ if n_face == 4 else cw_ * 0.8
+                    cgm.sheet((xc + ox * rr_, vc + oy * rr_, zr + ch_ / 2 + 0.0075 * dep + 0.0005), cwid, ch_ + 0.015 * dep, 0.003, tilt=0.0, yaw=ang, mi=0, uv=uvs[kk], uv_other=(uvs[kk][0] + 0.01, uvs[kk][1] + 0.01))
+                    cnt += 1
+        d.gm_object(name + "_frame", g, [chrome], "support", "script:" + name)
         d.gm_object(name, cgm, [tile_m_], "scripted", "script:" + ("card_rack" if n_face == 4 else "postcard_rack"), tier="rack")
     # ---- the price cards (hand cards on the bed's front edge)
-    cards = [("PAPERS\nORDERED", 0.40), ("SWEETS\n2oz 25p", 2.69), ("CARDS\nFROM 25p", 3.12), ("MAGAZINES", 1.95), ("STATIONERY", 1.50), ("PENS & PADS", 1.75)]
+    cards = [("PAPERS\nORDERED", 0.40), ("SWEETS\n2oz 25p", 2.69), ("CARDS\nFROM 25p", 3.12), ("MAGAZINES", 1.50), ("STATIONERY", 2.10), ("PENS & PADS", 1.80)]
     texts = [c[0] for c in cards]
     path = os.path.join(tex, "price_cards.png")
     uvs = GEN.card_atlas(path, texts, cols=3, tile=(256, 128), size=46)
     pm = [d.image_mat("price_cards", path, rough=0.8), d.mat("stake", rgb8(60, 60, 62), rough=0.5, metal=0.7)]
     for k, (_, uc) in enumerate(cards):
         d.price_card(uc, 0.02, 0.0, k, uvs, pm)
-    d.display_texts = list(GEN.TEXTS) + [t.replace("\n", " ") for t in texts]
+    d.display_texts = list(GEN.TEXTS) + list(PR.TEXTS) + [t.replace("\n", " ") for t in texts]
+
+
+def _csheet(c, w, h, t, tilt, yaw, bow_, bend_, nx, nz, mi=0, uv=None, uv_other=None, fold_top=False, curl=0.0):
+    g = GM()
+    g.csheet(c, w, h, t, tilt=tilt, yaw=yaw, bow=bow_, bend=bend_, nx=nx, nz=nz, mi=mi, uv=uv, uv_other=uv_other, fold_top=fold_top, curl=curl)
+    return g

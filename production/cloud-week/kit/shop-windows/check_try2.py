@@ -259,6 +259,15 @@ def fascia_rows(R, work, assets, rows, front_png_day_sq, members):
     if rita_:
         sel_letters = inside & (tluma > med * 1.8) & (tu > 1500) & (tu < 3900)
         sel_ground = inside & (np.abs(tluma - med) < med * 0.25) & (tu > 400) & (tu < 5000)
+    elif ctx().id == "newsagent":
+        # 14 Oct, try 2 (the newsagent's street review, narrow 4: "FAS-01c fails on its mask, not on the board"): for a box sign the letters are separated from the ground BY COLOUR, not by luma or alpha: the cream
+        # of the letters and rules (green at least 0.75 of red, red over 150) against the red ground (green under half of red), each texture pixel to the nearer; the limit of 2.0 stays. By luma the letters' edge
+        # pixels fell into the ground's mask (the ground's median read 97.9 against a true 80.9: the check's 1.87 for a board that reads at 2.29)
+        cream_ = (base[..., 1] >= 0.75 * base[..., 0]) & (base[..., 0] > 150)
+        red_ = (base[..., 1] < 0.5 * base[..., 0]) & (base[..., 0] > 100)
+        er_ = ndimage.binary_erosion(cream_, iterations=2) if False else cream_
+        sel_letters = inside & cream_[tj, ti] & (tu > 400) & (tu < 5000)
+        sel_ground = inside & red_[tj, ti] & (tu > 400) & (tu < 5000)
     else:
         # 13 Oct, batch A: the lettering is whatever stands away from the ground's luma by more than 0.6 of it in either direction (light letters on a dark board, or dark on light), over the whole board
         sel_letters = inside & (np.abs(tluma - med) > med * 0.6) & (tu > 400) & (tu < 5000)
@@ -696,17 +705,20 @@ def visibility(R, work, assets, di, group_of):
                 gi2 = NG + 1 + gi
                 part_cols[gi] = ((gi2 + 1) % 17 / 17.0 + 0.03, ((gi2 + 1) // 17) % 17 / 17.0 + 0.03, ((gi2 + 1) // 289) % 17 / 17.0 + 0.03)
                 part_mats[gi] = flat(part_cols[gi])
-                for p_ in o.data.polygons:
-                    p_.material_index = 1 if p_.material_index in slots_ else 0
+                orig_ = [p_.material_index for p_ in o.data.polygons]          # (clearing the slots resets every face's index: keep the original ones first)
                 o.data.materials.clear()
                 o.data.materials.append(mats[gi])
                 o.data.materials.append(part_mats[gi])
+                for p_, k_ in zip(o.data.polygons, orig_):
+                    p_.material_index = 1 if k_ in slots_ else 0
                 o2 = o.copy()
                 o2.data = o.data.copy()
                 sc.collection.objects.link(o2)
                 bm = bmesh.new()
                 bm.from_mesh(o2.data)
                 bmesh.ops.delete(bm, geom=[f_ for f_ in bm.faces if f_.material_index != 1], context="FACES")
+                for f_ in bm.faces:
+                    f_.material_index = 0
                 bm.to_mesh(o2.data)
                 bm.free()
                 o2.hide_render = True
@@ -1375,6 +1387,19 @@ def dsp05_float_rows(R, work, assets, rows):
             # 14 Oct, try 2 (the brief's step 0 e): no display piece's lowest point may be more than 2 mm above the support under it: the piece's lowest 3 mm lie within 2 mm of another part (it stands on it), or its
             # highest quarter does (it hangs from it); the flank allowance of batch B (a sphere nestled on spheres) is gone
             rested = touches(surface_samples(V, T_, zlo, False, 0.003)) or touches(surface_samples(V, T_, zhi, True, 0.003)) or touches(surface_samples(V, T_, zhi, True, max(0.003, 0.25 * hgt)))
+        if not rested and ctx().id != "ritas":
+            # a tiny contact patch (a hook's end on a card, a stake's foot) is missed by random samples of the piece: the other parts' own vertices that lie within 2 mm of the piece, in its lowest 3 mm or its highest quarter
+            sb_ = BVHTree.FromPolygons(V.tolist(), T_.tolist(), epsilon=0.0)
+            for d2 in near_objs:
+                Vn = d2["V"]
+                sel_ = Vn[np.all((Vn >= glo) & (Vn <= ghi), axis=1)]
+                for v_ in sel_[:4000]:
+                    hit = sb_.find_nearest(tuple(v_))
+                    if hit[0] is not None and hit[3] <= 0.002 and (hit[0][2] <= zlo + 0.003 or hit[0][2] >= zhi - max(0.003, 0.25 * hgt)):
+                        rested = True
+                        break
+                if rested:
+                    break
         if not rested:
             floating.append("%s(%s) lowest %.3f" % (di["groups"][gi]["model"], nms[0], zlo))
         # a thin sheet's lean (a single-mesh group)
@@ -1436,6 +1461,13 @@ def dsp06_size_rows(R, work, rows):
             furn.append("%s %.2f m high (%s)" % (m, h, why))
             if not (lo - 0.02 <= h <= hi + 0.02):
                 bad.append("%s %.2f m high, wanted %s" % (m, h, why))
+    # a scripted table (the tea rooms' Formica cafe table, try 2): its top surface is the highest point of the laminate part (0.72 to 0.76 m above the floor it stands on, the bed's top)
+    for sc_ in di.get("scripted", []):
+        if sc_.get("model") == "script:table_laminate" and sc_["w"][1] > 0.5:
+            furn.append("scripted table top %.3f m (a table top at 0.72 to 0.76 m)" % sc_["w"][1])
+            if not (0.72 - 1e-3 <= sc_["w"][1] <= 0.76 + 1e-3):
+                bad.append("scripted table top %.3f" % sc_["w"][1])
+            break
     rows.add("DSP-06", "display pieces at their real size", not bad, "%d Poly Haven pieces of the display: scale 0.9 to 1.1 of the model's real size (the models are real-size scans)%s; furniture: %s%s" % (
         n, ("; OUT OF RANGE: " + ", ".join(sorted(set(bad)))) if bad else "", "; ".join(furn) or "none in this display", " (the tea rooms' table was 0.47 m high and its chairs at 0.75 in batch A)"))
 
@@ -1448,6 +1480,11 @@ def dsp08_chairs_rows(R, work, assets, rows):
     di = json.load(open(os.path.join(work, "display_work", "display_items.json")))
     chairs = [it for it in di["items"] if "chair" in str(it["model"]).lower() and not str(it["model"]).startswith("script:")]
     tables = [it for it in di["items"] if "table" in str(it["model"]).lower() and not str(it["model"]).startswith("script:")]
+    for sc_ in di.get("scripted", []):          # 14 Oct, try 2: a scripted table (the tea rooms' Formica cafe table) is a table too
+        if sc_.get("model") == "script:table_laminate" and sc_["w"][1] > 0.5:
+            Lm = di["length_m"]
+            tables.append({"model": "script:table_laminate", "ext": [sc_["u"][0] - Lm / 2.0, sc_["u"][1] - Lm / 2.0, sc_["v"][0], sc_["v"][1], sc_["w"][0], sc_["w"][1]]})
+            break
     if not chairs:
         return
     bpy.ops.wm.read_factory_settings(use_empty=True)
@@ -1586,6 +1623,7 @@ def lit08_rows(R, work, rows):
     di = json.load(open(os.path.join(work, "display_work", "display_items.json")))
     gate = os.path.join(work, "gate")
     det, ok, worst_all = [], True, []
+    furniture = set()
     for cam in ("CLOSE_35", "CLOSE_35_B"):
         pf = os.path.join(gate, "%s_night_lit.png" % cam)
         pp = os.path.join(gate, "check_%s_night_lit_pieces.png" % cam)
@@ -1600,6 +1638,9 @@ def lit08_rows(R, work, rows):
         res_ = []
         for gi, g in enumerate(di["groups"]):
             if g["kind"] not in ("piece", "scripted"):
+                continue
+            if ctx().id != "ritas" and any(k_ in str(g["model"]).lower() for k_ in ("table", "chair")):
+                furniture.add(str(g["model"]))            # 14 Oct, try 2 (the tea rooms' street review N7): furniture (a table's base, a chair) is not goods: a table is judged by its top surface (the laminate, a support not measured here)
                 continue
             c = np.array(((gi + 1) % 17 / 17.0 + 0.03, ((gi + 1) // 17) % 17 / 17.0 + 0.03, ((gi + 1) // 289) % 17 / 17.0 + 0.03))
             m = np.abs(idx - c[None, None, :]).max(axis=2) < 0.012
@@ -1616,7 +1657,7 @@ def lit08_rows(R, work, rows):
         worst_all += [(r_[0], cam, r_[1]) for r_ in res_[:3]]
         det.append("%s: %d pieces seen against the room, lowest ratio %s, %d under 0.6%s; median ratio %.2f" % (cam, len(res_), ", ".join("%s %.2f (%.0f against %.0f)" % (r_[1], r_[0], r_[2], r_[3]) for r_ in res_[:3]), len(low),
                                                                                                     (" (" + ", ".join("%s %.2f" % (r_[1], r_[0]) for r_ in low[:8]) + ")") if low else "", float(np.median([r_[0] for r_ in res_])) if res_ else 0.0))
-    rows.add("LIT-08", "the display's goods are lit at night", ok, "at night_lit, each display piece's mean luma over the lattice's gaps against the room's mean luma in a 24 px ring round it: " + "; ".join(det) +
+    rows.add("LIT-08", "the display's goods are lit at night", ok, "at night_lit, each display piece's mean luma over the lattice's gaps against the room's mean luma in a 24 px ring round it: " + "; ".join(det) + ((" (furniture not measured as goods: %s)" % ", ".join(sorted(furniture))) if furniture else "") +
              " (limit 0.6; try 2, CLOSE_35_B: the alarm clock's dial 33 against a room of 95, the cassette player 26, the mantel clock 25; the two strip lights under the tier boards are the fix; PIC-05g stays at 0.01 or under)")
 
 

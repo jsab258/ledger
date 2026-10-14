@@ -397,10 +397,16 @@ FABRIC_DIR = os.path.join(POLY, "_acg", "Fabric034")
 # per model: the print's box in the 1024 px artwork map (u0, v0, u1, v1 in 0..1, v up, read from the model's UVs) and the quad's size in metres (to size the 6 mm mount)
 PRINT_MAP = {"standing_picture_frame_01": ((0.165, 0.002, 0.835, 0.998), (0.132, 0.186)),
              "standing_picture_frame_02": ((0.143, 0.005, 0.861, 0.995), (0.135, 0.185)),
-             "hanging_picture_frame_02": ((0.007, 0.223, 0.993, 0.801), (0.605, 0.354))}
+             "hanging_picture_frame_02": ((0.007, 0.223, 0.993, 0.801), (0.605, 0.354)),
+             # 14 Oct, try 2 (the tea rooms' close review, narrow 5: frames 01 and 03 both carried the flat invented print, stretched in the tall one): frame 01 a portrait print 0.514 x 0.762, frame 03 an oval
+             # 0.256 x 0.354 (its mesh is the oval: the print needs no mask), each a crop of a DIFFERENT CC0 HDRI of the coast (below), not lake_pier, which frame 02 shows
+             "hanging_picture_frame_01": ((0.165, 0.002, 0.835, 0.998), (0.514, 0.762)),
+             "hanging_picture_frame_03": ((0.144, 0.003, 0.857, 0.994), (0.256, 0.354))}
+PRINT_HDRI_OF = {"hanging_picture_frame_01": "white_cliff_top", "hanging_picture_frame_03": "dalkey_view"}
 # the views (yaw degrees from the HDRI's centre, pitch, horizontal field): the hanging frame has five (the five frames on the pledge board differ), the standing ones one each
 PRINT_VIEWS = {"hanging_picture_frame_02": [(-30, -3, 62), (22, -2, 56), (150, -2, 56), (4, 8, 66), (-160, -1, 56)],
-               "standing_picture_frame_01": [(-12, -2, 38)], "standing_picture_frame_02": [(30, -1, 36)]}
+               "standing_picture_frame_01": [(-12, -2, 38)], "standing_picture_frame_02": [(30, -1, 36)],
+               "hanging_picture_frame_01": [(90, 4, 40)], "hanging_picture_frame_03": [(180, 3, 44)]}
 
 
 def fetch_print_sources(log=print):
@@ -457,7 +463,8 @@ def _rect_view(env, yaw_deg, pitch_deg, hfov_deg, out_w, out_h):
 def harbour_print(dst, asset, variant=0, seed=1):
     """The frame's print: a harbour view cropped from the HDRI to the print's own shape, tone-mapped, desaturated to 0.7, warmed a little, with paper grain and a 6 mm white mount,
     laid into the 1024 px artwork map where the model's UVs put the print (the rest of the map is white card). Falls back to the painted print if the HDRI is not there."""
-    if not os.path.exists(PRINT_HDRI):
+    hd_path = os.path.join(POLY, "_hdri", PRINT_HDRI_OF[asset] + "_2k.hdr") if asset in PRINT_HDRI_OF else PRINT_HDRI
+    if not os.path.exists(hd_path):
         return False
     box, quad = PRINT_MAP[asset]
     yaw, pitch, hfov = PRINT_VIEWS[asset][variant % len(PRINT_VIEWS[asset])]
@@ -467,7 +474,7 @@ def harbour_print(dst, asset, variant=0, seed=1):
     pw, ph = c1 - c0, r1 - r0
     mount_px = max(2, int(round(0.006 / quad[0] * pw)))
     iw, ih = pw - 2 * mount_px, ph - 2 * mount_px
-    env = _load_hdri(PRINT_HDRI)
+    env = _load_hdri(hd_path)
     view = _rect_view(env, yaw, pitch, hfov, iw, ih)
     lum = 0.2126 * view[..., 0] + 0.7152 * view[..., 1] + 0.0722 * view[..., 2]
     view = view * (0.22 / max(float(np.median(lum)), 1e-4))               # middle grey from the median
@@ -512,7 +519,7 @@ def blank(ids=None, log=print):
                 if boxes == [[0, 0, 1024, 1024]]:
                     kind = {"hanging_picture_frame_02": 0, "standing_picture_frame_01": 1, "standing_picture_frame_02": 2}.get(a, 0)
                     if a in PRINT_MAP and harbour_print(dst, a, 0):
-                        rows = [{"box": boxes[0], "whole_map": True, "replaced_by": "harbour_print: a crop of the CC0 Poly Haven HDRI %s (yaw %d, pitch %d, field %d)" % ((HDRI_ID,) + PRINT_VIEWS[a][0])}]
+                        rows = [{"box": boxes[0], "whole_map": True, "replaced_by": "harbour_print: a crop of the CC0 Poly Haven HDRI %s (yaw %d, pitch %d, field %d)" % ((PRINT_HDRI_OF.get(a, HDRI_ID),) + PRINT_VIEWS[a][0])}]
                         for k in range(1, len(PRINT_VIEWS[a])):          # the hanging frame's other four prints (the five frames on the pledge board differ)
                             harbour_print(os.path.splitext(dst)[0] + "_v%d.jpg" % k, a, k)
                     else:

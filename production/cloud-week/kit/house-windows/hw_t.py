@@ -25,6 +25,7 @@ SHARED_HDRI = "/home/user/ledger-scratch/polyhaven/_hdri"       # read only: ano
 SKY_HDRI = os.path.join(REPO, "ledger", "Assets", "Resources", "Sky", "polyhaven", "belfast_open_field_2k.hdr")
 DATE = "2026-10-13"          # the date the brief gives for the try 1 preview names (they stay)
 DATE2 = "2026-10-14-v2"      # the try 2 previews (14 October, after the try 1 reviews): hw-<view>-<state>-2026-10-14-v2.jpg
+DATE3 = "2026-10-14-v3"      # the try 3 previews (14 October, after the try 2 reviews): hw-<view>-<state>-2026-10-14-v3.jpg
 MM = 0.001
 
 _T = None
