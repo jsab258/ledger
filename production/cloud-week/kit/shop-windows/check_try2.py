@@ -855,6 +855,28 @@ def lit02b_rows(R, work, rows):
             n = int(mk.sum())
             lum = luma(im)
             dark = lum < 12
+            picture_note = ""
+            if ctx().id != "ritas":
+                # 14 Oct, try 2 (the ironmonger's street review, narrow 9): a dark patch counts as a void only where the picture under it (the card as baked for this camera and state, at full brightness) averages under luma 40:
+                # the target's dark-green dado reads 85 to 105 at full brightness, it is paint in shade, not a void. The card pixel under each frame pixel comes from the camera's ray to the card plane (check_try3.card_luma_map)
+                import check_try3 as X3
+                cm_ = X3.card_luma_map(ctx(), R, cam, st, lum.shape)
+                if cm_ is not None:
+                    from scipy import ndimage as _nd0
+                    lab0, nl0 = _nd0.label(_nd0.binary_dilation(dark & room, iterations=2))
+                    keep = np.zeros_like(dark)
+                    paint = 0
+                    for l0 in range(1, nl0 + 1):
+                        sel = lab0 == l0
+                        vals = cm_[sel & ~np.isnan(cm_)]
+                        if len(vals) and float(vals.mean()) >= 40.0:
+                            paint += int((sel & dark & room).sum())
+                            continue
+                        keep |= sel
+                    dark = dark & keep
+                    picture_note = ", %d dark px over a picture of luma 40 or more (paint in shade) not counted" % paint
+                else:
+                    picture_note = ", the card's baked picture was not found: every dark pixel counted"
             share_room = float((dark & room).sum()) / max(n, 1)
             share_all = float((dark & mk).sum()) / max(n, 1)
             # the largest connected patch of those dark room pixels (a slab is one patch; the brown dado seen at the day card's 0.15 is a scatter of small ones)
@@ -870,8 +892,8 @@ def lit02b_rows(R, work, rows):
                 tested = "patch"
             else:
                 tested = "reported"
-            det.append("%s %s: room share %.4f (of %d glass px, the room shows in %.0f per cent of them), largest patch %.4f, all glass %.4f [%s%s]" % (
-                cam, st, share_room, n, 100.0 * float(room.sum()) / max(n, 1), big, share_all, tested, "" if (good_slab and (good_share or cam != "CLOSE_35_B")) else ": OVER 1 per cent"))
+            det.append("%s %s: room share %.4f (of %d glass px, the room shows in %.0f per cent of them), largest patch %.4f, all glass %.4f%s [%s%s]" % (
+                cam, st, share_room, n, 100.0 * float(room.sum()) / max(n, 1), big, share_all, picture_note, tested, "" if (good_slab and (good_share or cam != "CLOSE_35_B")) else ": OVER 1 per cent"))
     rows.add("LIT-02b", "no black void in the rendered frames", ok, "window-glass pixels (the glass mask: no frame, mullion, bead or lattice) under luma 12, in frames rendered with the glass's reflection off, where the glass shows the room: " + "; ".join(det) + " (limits: 0.01 on the largest patch at STREET_SQUARE and STREET_30, 0.01 on both the share and the patch at CLOSE_35_B; try 1's black slab at CLOSE_35_B's far light was about a third of the window)")
 
 
@@ -1556,6 +1578,10 @@ def lit08_rows(R, work, rows):
     """LIT-08 (close review 1): at night_lit from CLOSE_35 and CLOSE_35_B, each display piece's mean luma over the lattice's gaps at least 0.6 of the room's mean luma seen round it. A piece's pixels
     are those an object-index render (the lattice drawn, the glass left out) shows as the piece; 'round it' is the ring of room pixels (the card, the reveals, the return walls) within 24 px of it."""
     from scipy import ndimage as _nd
+    if ctx().id != "ritas" and not ctx().lit:
+        # 14 Oct, try 2 (the ironmonger's street review, narrow 9): a lit display at night is a state a shop that is dark at night never has (target 5.8: lit_at_night false); the row applies only to shops with lit_at_night true
+        rows.na("LIT-08", "the display's goods are lit at night", "this shop is dark at night (lit_at_night false: %s): night_lit is the tests' state, not the game's night, so the row does not apply (the review's rule change)" % ctx().R.get("lit_why", ""))
+        return
     di = json.load(open(os.path.join(work, "display_work", "display_items.json")))
     gate = os.path.join(work, "gate")
     det, ok, worst_all = [], True, []

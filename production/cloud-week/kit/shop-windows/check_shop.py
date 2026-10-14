@@ -870,11 +870,11 @@ def finish(ctx, rows, T, out_json, t0, previews, assets, n_previews):
             cam_ok &= d_eye <= 5.0 and rec["aim_error_deg"] <= 0.1 and d_fov <= 0.1
             det.append("%s %s eye %.2f mm, aim %.3f deg, field %.2f deg" % (cam, st, d_eye, rec["aim_error_deg"], d_fov))
     rows.add("CAM-01", "the cameras are the named ones", cam_ok and len(det) > 0, "; ".join(det[:8]) + " (limits 5 mm and 0.1 degree)")
-    pv = sorted(f for f in os.listdir(previews) if f.startswith(ctx.id + "-") and f.endswith(".jpg")) if os.path.isdir(previews) else []
+    pv = sorted(f for f in os.listdir(previews) if f.startswith(ctx.id + "-") and f.endswith(".jpg") and (ctx.id == "ritas" or f.endswith("-2026-10-14-v2.jpg"))) if os.path.isdir(previews) else []      # try 2 (14 Oct): this build's own pictures only; the 13 October v1 pictures stay as the record
     sizes = {f: os.path.getsize(os.path.join(previews, f)) for f in pv}
     widths = {f: Image.open(os.path.join(previews, f)).size[0] for f in sizes}
     ok_p = len(sizes) >= n_previews and all(s <= 500 * 1024 for s in sizes.values()) and all(w <= 1700 for w in widths.values())
-    rows.add("X-PRV", "previews: JPEG, about 1600 px wide, under 500 KB", ok_p, "%d JPEGs of this shop in the previews folder (at least %d): %s" % (len(sizes), n_previews, ", ".join("%s %d KB %d px" % (f.replace("-2026-10-13.jpg", ""), s // 1024, widths[f]) for f, s in sizes.items())))
+    rows.add("X-PRV", "previews: JPEG, about 1600 px wide, under 500 KB", ok_p, "%d JPEGs of this shop in the previews folder (at least %d): %s" % (len(sizes), n_previews, ", ".join("%s %d KB %d px" % (f.replace("-2026-10-13.jpg", "").replace("-2026-10-14-v2.jpg", ""), s // 1024, widths[f]) for f, s in sizes.items())))
     counted = [r for r in rows.rows if r["status"] not in ("n/a", "pending")]
     npass = sum(1 for r in counted if r["status"] == "pass")
     pend = [r for r in rows.rows if r["status"] == "pending"]
@@ -952,4 +952,4 @@ def run(ctx, assets, previews, out_json):
         rows.add("LIT-06", "the sodium wash is the game's", float(np.abs(np.array(sod) - lt).max()) <= 0.01, "night_dark's sodium wash colour (linear) %s against unreal-look.json lantern_linear_rgb %s (the scene file's stale 1.0, 0.7055, 0.0 is not used)" % ([round(float(x), 3) for x in sod], lt.tolist()))
     X.glass_angle_rows(rows)                    # (14 Oct, batch B) GLS-05: the gate glass is not a mirror at shallow views (seconds)
     rows.na("PRV-01", "the previews show nothing they must not", "the photograph previews of the target (P1 to P6), not this build's; this build's previews were looked at: no real firm's name, number, person, drink, gambling or child in them")
-    return finish(ctx, rows, T, out_json, t0, previews, assets, (7 + (0 if ctx.lit else 1)) if ctx.has_room else 4)        # four street frames, three room pictures, and a dark shop's night_dark street view
+    return finish(ctx, rows, T, out_json, t0, previews, assets, ((9 if ctx.id != "ritas" else 7 + (0 if ctx.lit else 1)) if ctx.has_room else 4))        # four street frames, three room pictures, and a dark shop's night_dark street view
