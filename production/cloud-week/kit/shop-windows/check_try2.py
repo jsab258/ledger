@@ -1661,14 +1661,15 @@ def lit08_rows(R, work, rows):
              " (limit 0.6; try 2, CLOSE_35_B: the alarm clock's dial 33 against a room of 95, the cassette player 26, the mantel clock 25; the two strip lights under the tier boards are the fix; PIC-05g stays at 0.01 or under)")
 
 
-def manifest(HERE_, assets, work, out_path):
+def manifest(HERE_, assets, work, out_path, what=None):
     files = []
     for nm in glbs_of(assets):
         files.append(os.path.join(assets, nm))
     if ctx().has_room:
         for st in ("day", "night_lit", "night_dark"):
             files.append(picture(work, st))
-    out = {"made": __import__("time").strftime("%Y-%m-%d %H:%M:%S"), "what": "the files of the narrow-points build (13 Oct, from the try 2 reviews; v3); the three glbs and the three 4096 pictures are out of git (rebuilt by build_ritas.py) so this names the versions",
+    # 14 Oct, try 2 (close review of the ironmonger, narrow 9): a shop's manifest says what THAT shop's build is, not Rita's sentence (Rita's own is unchanged: `what` is None for her)
+    out = {"made": __import__("time").strftime("%Y-%m-%d %H:%M:%S"), "what": what or "the files of the narrow-points build (13 Oct, from the try 2 reviews; v3); the three glbs and the three 4096 pictures are out of git (rebuilt by build_ritas.py) so this names the versions",
            "files": {}}
     for p in files:
         if os.path.exists(p):

@@ -531,7 +531,7 @@
     "rule": "terrace-front.py 2405-2417: x from bay start + 0.35 to bay end - 0.35, z 0.65 to 3.05, y +5.875; the empty unit has none (bay 3 of 6 is skipped)"
    },
    "keeps": "everything of the room: production/specs/mickeys-office.json, shop-room.py's mickeys branch, room_3d, its lamps and brightness values (spec entry unchanged)",
-   "changes": "only the front is unit 7's: the A2 painted-steel refit assembled from the 3.2 parts, the 4.1 board with the raised gilt letters, the glass rows [13 Oct, batch A: the A2 steel refit, the tile pattern and the raised letters; a stand-in card behind the glass (A12)]",
+   "changes": "only the front is unit 7's: the A2 painted-steel refit assembled from the 3.2 parts, the 4.1 board with the raised gilt letters, the glass rows [13 Oct, batch A: the A2 steel refit, the tile pattern and the raised letters; a stand-in card behind the glass (A12)] [14 Oct, from the try 1 reviews (batch A try 2): rebuilt for the shared gate fixes only (the reveal floor behind each door, no glossy street lamps, the door sign by hours, FRN-10 and FRN-13), T2-16]",
    "notes": "The approved sheet's front: slate blue-grey frame on a patterned tile, the piers and fascia painted as a unit. The old board stays under.",
    "cameras": {
     "STREET_SQUARE": {
@@ -4061,7 +4061,7 @@
    "night_furniture": "dark; the whitewash tile (glass/empty_unit/window_whitewash, 3250 x 1800 mm) over every pane and the door's glass; no grille",
    "card": null,
    "keeps": "everything the street already draws: every pane whitewashed from inside, no interior card (terrace-front.py skips bay 3), the 4.1 letting board and whitewash",
-   "changes": "the front only: the unit's bare timber front assembled from the 3.2 parts (left console clipped off, paint gone), the whitewash tile from 4.1 [13 Oct, batch A: the whitewash, the letting board, the number on the glass; no card (A13)]",
+   "changes": "the front only: the unit's bare timber front assembled from the 3.2 parts (left console clipped off, paint gone), the whitewash tile from 4.1 [13 Oct, batch A: the whitewash, the letting board, the number on the glass; no card (A13)] [14 Oct, from the try 1 reviews (batch A try 2): rebuilt for the shared gate fixes only (the reveal floor, no glossy street lamps, FRN-10), T2-16]",
    "notes": "The left console (high street x, viewer's left: u 55 to 295) was clipped off and never put back (fascia-01 spec, bay x 26.825). The street draws this front bare.",
    "cameras": {
     "STREET_SQUARE": {
@@ -7883,7 +7883,7 @@
     "rule": "terrace-front.py 2405-2417: x from bay start + 0.35 to bay end - 0.35, z 0.65 to 3.05, y -5.875; the empty unit has none (bay 3 of 6 is skipped)"
    },
    "keeps": "the research (Formica tables, a menu board, a half-height cafe curtain, steamed glass) and the 3 Oct food models (carrot cake, strawberry cake, tea set)",
-   "changes": "NO Gothic chairs, NO empty frames, NO free tables in the picture (they smeared): tables and chairs are real and only in the window; the room is the counter, hatch and shelves on the back wall and flat boards; the cafe curtain hides the outer lights [13 Oct, batch A: two cake domes, the tea set put together, the shelf and the till (A10); the table at 0.50 m, the chairs clear of it, the curtain (A11)]",
+   "changes": "NO Gothic chairs, NO empty frames, NO free tables in the picture (they smeared): tables and chairs are real and only in the window; the room is the counter, hatch and shelves on the back wall and flat boards; the cafe curtain hides the outer lights [13 Oct, batch A: two cake domes, the tea set put together, the shelf and the till (A10); the table at 0.50 m, the chairs clear of it, the curtain (A11)] [14 Oct, from the try 1 reviews (batch A try 2): a scripted Formica cafe table and the chairs at 1.0 facing it, price cards before their goods, cotton cafe curtains with a scalloped head, a bowed window card on clear suction cups, a matchboard dado with a rail, a granular cork board, frames 01 and 03 of different CC0 crops, the pilot lamp with a lens, the hours card on the door, OPEN lit at night (T2-5, T2-6, T2-11 to T2-14)]",
    "notes": "A 1980s caff: the brown acrylic panel on the old board (fascia target), the timber painted brown and cream.",
    "room": {
     "w": 5.3,
@@ -9032,7 +9032,7 @@
     "rule": "terrace-front.py 2405-2417: x from bay start + 0.35 to bay end - 0.35, z 0.65 to 3.05, y -5.875; the empty unit has none (bay 3 of 6 is skipped)"
    },
    "keeps": "the 3 Oct tools and cleaners set (fetch_polyhaven.py ironmonger), the research's drawer wall, the 4.1 hanging board and 'PARAFFIN' on the fascia",
-   "changes": "tools hang FLAT on pegboards on the side walls (they stood on side shelves 0.4 off the wall and smeared); modern aerosols and cleaners with real-brand look-alikes are dropped; paint tins are the project's labelled tins; the drawer wall is a flat front [13 Oct, batch A: the window at 0.85 and 0.80 sizes with a stepped crate and trays (A5); the room's tiers, floor run and pegboard counts (A3, A4); EST. 1884 in a toplight and the hanging board's faces (A1, A2); a dark shop's gate (A6)]",
+   "changes": "tools hang FLAT on pegboards on the side walls (they stood on side shelves 0.4 off the wall and smeared); modern aerosols and cleaners with real-brand look-alikes are dropped; paint tins are the project's labelled tins; the drawer wall is a flat front [13 Oct, batch A: the window at 0.85 and 0.80 sizes with a stepped crate and trays (A5); the room's tiers, floor run and pegboard counts (A3, A4); EST. 1884 in a toplight and the hanging board's faces (A1, A2); a dark shop's gate (A6)] [14 Oct, from the try 1 reviews (batch A try 2): every good at 0.9 to 1.1 of its size, brooms heads up on the wall, a painted-plywood backing board, a nailed stencilled crate, the glove shelf on cords from an iron rod, four labelled cleaner tins, B22 glass bulbs, an ash-shafted sledgehammer, the flake off the S of TOOLS, the hanging sign out to 0.84, an hours plate on the door, the room's bins and bags at 0.9 and its tools at their own size (T2-1 to T2-5, T2-15)]",
    "notes": "The street's recipe has a metal refit here (SHOPFRONT_REFITS west_north 1); the traditional sign-written board in the fascia target is better matched by an original front, so this target keeps it timber. Reported.",
    "room": {
     "w": 5.3,
@@ -10400,7 +10400,7 @@
     "rule": "terrace-front.py 2405-2417: x from bay start + 0.35 to bay end - 0.35, z 0.65 to 3.05, y -5.875; the empty unit has none (bay 3 of 6 is skipped)"
    },
    "keeps": "the 3 Oct trade (papers, sweets, cigarettes behind the counter, a pension counter; no pools coupons, no lottery, no drink); Pinner 1989 (Geograph 3403654, 5945841) for the lit shop and the dark glass",
-   "changes": "no gold ribbon across the window (a stale card in the engine: the build's check looks for any card in front of the glass); magazines are real thin meshes in the display and flat covers in the room; the cigarette gantry is a back-wall unit 0.12 deep [13 Oct, batch A: about 265 fictional packs on the gantry, no sliding glass (A7); the steel hood, rails and the lit box sign, its night glow put on in the gate (A8); the window's stands, board, plinth and pots (A9)]",
+   "changes": "no gold ribbon across the window (a stale card in the engine: the build's check looks for any card in front of the glass); magazines are real thin meshes in the display and flat covers in the room; the cigarette gantry is a back-wall unit 0.12 deep [13 Oct, batch A: about 265 fictional packs on the gantry, no sliding glass (A7); the steel hood, rails and the lit box sign, its night glow put on in the gate (A8); the window's stands, board, plinth and pots (A9)] [14 Oct, from the try 1 reviews (batch A try 2): A9 rewritten (eight folded, bent papers; six cartons of 200; twelve distinct covers on the board's front face at 35 degrees; pads at 1.0 on a deeper plinth); every printed good from CC0 photographs and script, MERIDIAN MORNING GAZETTE and QUAYSIDE MODELLER; glass jars; wire-pocket racks, the postcard rack at u 2.38; the stockroom door (96, 110, 140); FAS-01c by colour; PC-10 (T2-7 to T2-10)]",
    "notes": "The lit box sign (fascia target, 5220 x 470 x 140, powder-black returns) stands on the old CREAM board (the fascia target's old_board colour; the board's edges, ends and bed mould are cream like its face), the piers, consoles and cornice dove grey; the steel hood under it over window and door.",
    "conflict": "hook-cast.json places 'Hals_shop' (keeper hal, hours 10 to 18, Wed 10 to 13) at street x 39, which is inside the newsagent's bay (x 36 to 42): either the coin shop is the newsagent's neighbour (there is none) or one of them is not on the street. Not resolved: the newsagent is built as ruled (3 Oct).",
    "room": {
@@ -15414,7 +15414,12 @@
    "rizla",
    "post office",
    "royal mail",
-   "bt "
+   "bt ",
+   "morning star",
+   "model railway news"
+  ],
+  "brand_blocklist_added": [
+   "14 Oct, from the try 1 reviews (newsagent street review 6): 'morning star' (the title of a real British national daily: the paper MERIDIAN MORNING STAR is now MERIDIAN MORNING GAZETTE) and 'model railway news' (a real British magazine's title: MODEL RAILWAY NEWS is now QUAYSIDE MODELLER) are in brand_blocklist above"
   ],
   "content_blocklist": {
    "alcohol": [
@@ -17445,6 +17450,18 @@
    "for": "ironmonger, empty unit (dark shops)",
    "what": "a dark shop's night in the packaged game: the glass shows its dark room and nothing spills (the gate's extra night_dark view has the spill off); the game's own lamps and footway pool as PC-02",
    "why": "named in the gate's notes; added 13 Oct, batch A"
+  },
+  {
+   "id": "PC-10",
+   "for": "newsagent street review 5 (glass lettering at night)",
+   "what": "at night in the packaged game, from STREET_SQUARE, each glass lettering row's ink (the shop's trade line, the hours plate, the number on the fanlight) against the glass round it differs by a luma ratio of 1.3 or more either way (the gate's lit-by-stand-in-lamps reads 1.03 to 1.42 at night against 3 to 7.7 by day); if the game does not give it, 4.1's glass art takes a 3 mm dark keyline (25, 25, 30) round every letter (the signwriter's outline) so that the letters read against a lit room as well as a dark one [14 Oct, from the try 1 reviews]",
+   "why": "the gate's letters are lit only by its assumed lamps and cannot judge the game's lit street and lamps (the same case as PC-06 on the fascia); added 14 Oct, from the try 1 reviews"
+  },
+  {
+   "id": "PC-11",
+   "for": "tea rooms street review N1 (the door's sign)",
+   "what": "the game's door sign follows the shop's hours at the hour shown: a shop open past the night view's hour (20:00: the tea rooms to 22:00) shows OPEN in its lit night, a shop shut at that hour (the newsagent to 17:30, the ironmonger to 17:30) shows CLOSED, every shut-up night_dark shows CLOSED [14 Oct, from the try 1 reviews]",
+   "why": "the cloud gate swaps the glb's sign by a rule written from the target's hours (sw_gate.py, SIGN-01); the game's own sign is owed; added 14 Oct, from the try 1 reviews"
   }
  ],
  "previews": {

@@ -897,7 +897,9 @@ def finish(ctx, rows, T, out_json, t0, previews, assets, n_previews):
            "pass": npass, "counted": len(counted), "na": sum(1 for r in rows.rows if r["status"] == "n/a"), "pending": len(pend), "seconds": round(time.time() - t0, 1), "rows": rows.rows}
     os.makedirs(os.path.dirname(out_json), exist_ok=True)
     json.dump(out, open(out_json, "w"), indent=1)
-    X.manifest(HERE, assets, ctx.work, os.path.join(HERE, "MANIFEST-%s.json" % ctx.id))
+    X.manifest(HERE, assets, ctx.work, os.path.join(HERE, "MANIFEST-%s.json" % ctx.id),
+               what="the %s's batch A build, try 2 (14 Oct, from the try 1 reviews; first built 13 Oct): the files named here are the models%s; those over 1 MB are out of git, so this names their versions; rebuilt by `build_shop.py --shop %s`"
+               % (ctx.id.replace("_", " "), (" and the three 4096 room pictures" if ctx.has_room else ""), ctx.id))
     print("%s: %d of %d rows pass (%d pending, %d n/a)" % (ctx.id, npass, len(counted), len(pend), out["na"]))
     for r in counted:
         if r["status"] != "pass":

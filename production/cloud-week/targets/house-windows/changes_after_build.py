@@ -21,7 +21,7 @@ MARK = "14 Oct, from the try 1 reviews"
 MARK3 = "14 Oct, from the try 2 reviews"
 SEC = "## 14. Changes after the build"
 SEC3 = "### 14.2 Changes after the build, second round"
-GF_NIGHT_LIT_MEAN = None         # the cottages' front rooms' night_lit mean luma standard (the relit pictures' mean, +-15 per cent), filled in when the pictures are rendered
+GF_NIGHT_LIT_MEAN = 91.0         # the cottages' front rooms' night_lit mean luma standard (the relit pictures' mean, +-15 per cent), filled in when the pictures are rendered
 
 STATUS_JSON = "built (unit 8, 14 October 2026); changes after the build from the two try 1 reviews and, in the second round, from the two try 2 reviews (which passed with narrow points) applied 14 October 2026 (changes_after_the_build, TARGET.md section 14); the second round's changed rows are not re-reviewed"
 

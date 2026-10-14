@@ -7311,7 +7311,9 @@
    "night_dark_mean_luma": 15.0,
    "tolerance": 0.15,
    "floor_factor": 0.7,
-   "note": "Judgement, scaled from the approved pawnbroker pictures (119.5, 79.8, 17.7 measured 12 October) by the rooms' smaller windows and fewer lights: the checks' floors are 0.7 of these"
+   "note": "Judgement, scaled from the approved pawnbroker pictures (119.5, 79.8, 17.7 measured 12 October) by the rooms' smaller windows and fewer lights: the checks' floors are 0.7 of these",
+   "night_lit_mean_luma_gf": 91.0,
+   "night_lit_mean_luma_gf_note": "14 Oct, from the try 2 reviews: the cottages' front rooms' night_lit pictures are relit (the table lamp's glow raised, PIC-14); their standard is the relit pictures' mean, +-15 per cent"
   },
   "lights_by_state": {
    "day": "an overcast area light the size of the card on its plane (6500 K), strength set so the picture's mean luma meets the day standard; no tungsten",
