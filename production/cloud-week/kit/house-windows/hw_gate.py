@@ -34,11 +34,16 @@ MIM = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(MIM)
 trace = MIM.trace
 
-BRIGHTNESS = {"day": 0.12, "night_lit": 0.7 * 0.4, "night_dark": 0.7}       # the game's emissive scale for the card (target 7.1 and 9: night_lit = 0.7 x room_glow_gain_night 0.4)
+BRIGHTNESS = {"day": 0.12, "night_lit": 1.0, "night_dark": 0.7}       # the game's emissive scale for the card (target 7.1 and 9; 14 Oct, from the try 1 reviews: a lit room's card is the night_lit picture x 1.0, no longer x 0.7 x 0.4 = 0.28, which put the room seen through clear glass at a quarter of its own net)
 WARM = (1.0, 0.714, 0.344)
 SODIUM = (1.0, 0.25, 0.0)
 RES = tuple(int(v) for v in os.environ.get("LEDGER_GATE_RES", "2560x1440").split("x"))
 MIN_BAKE_ANGLE = 11.0
+COTTAGE_LAMP_SCALE = 0.5        # 14 Oct, from the try 1 reviews (N3): the two lamps in front of the west cottages (x 8 and 18) burnt 11.2 per cent of west_south_bay2_gf_w1's joinery to flat orange; cut until no window's joinery is over 2 per cent
+COTTAGE_LAMPS = (8.0, 18.0)
+OPENING_GAP = 0.002             # the stand-in wall's openings are cut 2 mm larger each side and at the head than the kit's linings (the close review's narrow point 1: faces sharing the brick's planes left a black notch at the far jamb's head)
+GRIME_BAND_M = 0.030            # target 4.2: a grime band 30 mm high along the sill on grimy windows ...
+GRIME_BAND_FACTOR = 0.75        # ... at x 0.75 (the close review's number, a Judgement within the box shade, above KIT-09's floor of 0.25)
 CAT = {"glass": 1, "joinery": 2, "cloth": 3, "brick": 4, "card": 5}
 
 
@@ -141,9 +146,12 @@ def eye_in_card_frame(site, eye):
 GLASS_IOR = 1.789          # F0 = ((n - 1) / (n + 1))^2 = 0.08: Unreal's Specular 1.0
 
 
-def make_glass_gate(bpy, refl, old_fault=False):
-    """The pane of the cloud gate (target 5.1): a Mix of a Transparent BSDF and a Glossy GGX, weighted by the dielectric Fresnel of F0 0.08 (IOR 1.789) x `refl` (1.0 by day, 0.2 at night); the roughness rises
-    from 0.03 to 0.35 where the pane's COLOR_0 says dirt (R 0.8: the 6 mm band and the lowest 25 mm). `old_fault`: the first build's pane for WB-08: a lit pale card (flat emission, no reflection), no lines."""
+def make_glass_gate(bpy, refl, old_fault=False, backface_fix=True):
+    """The pane of the cloud gate (target 5.1): a Mix of a Transparent BSDF and a Glossy GGX, weighted by the dielectric Fresnel of F0 0.08 (IOR 1.789) x `refl` (1.0 by day, 0.2 at night) x (1 - Backfacing); the roughness rises
+    from 0.03 to 0.35 where the pane's COLOR_0 says dirt (R 0.8: the 6 mm band and the lowest 25 mm). `old_fault`: the first build's pane for WB-08: a lit pale card (flat emission, no reflection), no lines.
+    `backface_fix` (14 Oct, from the try 1 reviews, fault 1): the kit's panes are closed slabs 2.5 mm thick (a front face and a back face); Cycles' Fresnel node inverts the IOR on a back face, so past the critical angle (34 degrees from
+    the normal, any view under 56 degrees from the wall) the back face was a total mirror and nothing passed the pane. The back face is now fully transparent and the front face stands for both, as the target's 5.1 says (F0 0.08
+    for both faces of a single pane). `backface_fix=False` is the negative control of GLS-06 and MAT-04 (it must fail both)."""
     glass_gate = bpy.data.materials.new("glass_gate")
     glass_gate.use_nodes = True
     gnt = glass_gate.node_tree
@@ -180,7 +188,19 @@ def make_glass_gate(bpy, refl, old_fault=False):
     gnt.links.new(gsep.outputs["Red"], gdirt.inputs["Value"])
     gnt.links.new(gdirt.outputs["Result"], ggl.inputs["Roughness"])
     gnt.links.new(gfr.outputs["Fac"], gmul.inputs[0])
-    gnt.links.new(gmul.outputs["Value"], gmix.inputs["Fac"])
+    if backface_fix:
+        ggeo = gnt.nodes.new("ShaderNodeNewGeometry")
+        ginv = gnt.nodes.new("ShaderNodeMath")                 # 1 - Backfacing: 1 on the front face, 0 on the back face
+        ginv.operation = "SUBTRACT"
+        ginv.inputs[0].default_value = 1.0
+        gfac = gnt.nodes.new("ShaderNodeMath")                 # Fresnel x refl x (1 - Backfacing)
+        gfac.operation = "MULTIPLY"
+        gnt.links.new(ggeo.outputs["Backfacing"], ginv.inputs[1])
+        gnt.links.new(gmul.outputs["Value"], gfac.inputs[0])
+        gnt.links.new(ginv.outputs["Value"], gfac.inputs[1])
+        gnt.links.new(gfac.outputs["Value"], gmix.inputs["Fac"])
+    else:
+        gnt.links.new(gmul.outputs["Value"], gmix.inputs["Fac"])
     gnt.links.new(gtr.outputs[0], gmix.inputs[1])
     gnt.links.new(ggl.outputs[0], gmix.inputs[2])
     gnt.links.new(gmix.outputs[0], gout.inputs[0])
@@ -195,6 +215,9 @@ def build_and_render(view_name, cam, state, out_png, bake_dir, samples=48, res=N
     from mathutils import Vector, Matrix, Euler
     res = res or RES
     extra = extra or {}
+    maskT = mode == "maskT"          # the mask with the glass clear: what lies BEHIND each pane pixel (3 net, curtain or blind; 5 the room card; 2 joinery): the clear glass and the cloth told apart (NIGHT-07)
+    if maskT:
+        mode = "mask"
     night = state != "day"
     t0 = time.time()
     bpy.ops.wm.read_factory_settings(use_empty=True)
@@ -227,6 +250,7 @@ def build_and_render(view_name, cam, state, out_png, bake_dir, samples=48, res=N
         t.links.new(e.outputs[0], o.inputs[0])
         return m
 
+    P_SOFFIT = list(T.paints()["white_grimy"]["lin"])
     brick = new_mat("brick", (0.5, 0.3, 0.22), 0.92)
     nt = brick.node_tree
     bp = nt.nodes["Principled BSDF"]
@@ -257,6 +281,13 @@ def build_and_render(view_name, cam, state, out_png, bake_dir, samples=48, res=N
     post = new_mat("lamp_post", tuple(lin([0.05, 0.05, 0.06])), 0.6)
     if mode == "mask":
         mk = {k: flat("mk_" + k, (v / 255.0, 0, 0)) for k, v in CAT.items()}
+        clear_glass = bpy.data.materials.new("clear_glass_mask")
+        clear_glass.use_nodes = True
+        for n_ in list(clear_glass.node_tree.nodes):
+            clear_glass.node_tree.nodes.remove(n_)
+        ct_ = clear_glass.node_tree.nodes.new("ShaderNodeBsdfTransparent")
+        co_ = clear_glass.node_tree.nodes.new("ShaderNodeOutputMaterial")
+        clear_glass.node_tree.links.new(ct_.outputs[0], co_.inputs[0])
 
     # ---------------------------------------------------------------- helpers
     def bl(p):
@@ -322,7 +353,7 @@ def build_and_render(view_name, cam, state, out_png, bake_dir, samples=48, res=N
     xs = sorted(s["x_centre"] for s in ups)
     cuts = [3.0]
     for x in xs:
-        cuts += [x - 0.425, x + 0.425]
+        cuts += [x - (0.425 + OPENING_GAP), x + (0.425 + OPENING_GAP)]
     cuts.append(46.0)
     for k in range(0, len(cuts), 2):
         a, b = cuts[k], cuts[k + 1]
@@ -330,32 +361,37 @@ def build_and_render(view_name, cam, state, out_png, bake_dir, samples=48, res=N
             o = blk("e_pier_%d" % k, a, b, yo, yi, z_gf_top, z_eave, brick)
             cat(o, "brick", brick)
     for x in xs:
-        o = blk("e_under_sill_%g" % x, x - 0.425, x + 0.425, yo, yi, z_gf_top, z_sill - 0.127, brick)
+        o = blk("e_under_sill_%g" % x, x - (0.425 + OPENING_GAP), x + (0.425 + OPENING_GAP), yo, yi, z_gf_top, z_sill - 0.127, brick)
         cat(o, "brick", brick)
         o = blk("e_stone_sill_%g" % x, x - 0.5012, x + 0.5012, yo - 0.0508, yi, z_sill - 0.127, z_sill, stone)
         cat(o, "brick", stone)
-        o = blk("e_head_%g" % x, x - 0.425, x + 0.425, yo, yi, z_head, z_eave, brick)
+        o = blk("e_head_%g" % x, x - (0.425 + OPENING_GAP), x + (0.425 + OPENING_GAP), yo, yi, z_head + OPENING_GAP, z_eave, brick)
         cat(o, "brick", brick)
     o = wedge("e_roof", 2.7, 46.3, yo - 0.3, yo + 8.0, z_eave, z_eave + 0.5 * 8.0 * math.tan(math.radians(35.0)), roof)
     cat(o, "brick", roof)
+    # the eaves' underside (the close review's narrow point 2): the stand-in's 0.3 m overhang was roofing in shade and showed pure black in the top of the upper panes by day; a soffit board in the house's grimy white
+    # (linear 0.66, roughness 0.48), lit by the street as a painted soffit is; its top 5 mm stands inside the roof's prism so that no two faces share a plane
+    soffit = new_mat("soffit", tuple(P_SOFFIT), 0.48)
+    o = blk("e_soffit", 2.7, 46.3, yo - 0.3, yo, z_eave - 0.025, z_eave + 0.005, soffit)
+    cat(o, "brick", soffit)
     # ---------------------------------------------------------------- the west cottages (x 3 to 21), the west_north shops beyond (stand-ins)
     wy_o, wy_i = C.WALL_W, C.WALL_W - C.WALL_T
     gz_sill, gz_head, gz_eave = gfs[0]["sill_z_above_crown"], gfs[0]["head_z_above_crown"], 3.1
     o = blk("w_below", 3.0, 21.0, wy_i, wy_o, 0.1, gz_sill - 0.127, brick)
     cat(o, "brick", brick)
-    o = blk("w_above", 3.0, 21.0, wy_i, wy_o, gz_head, gz_eave, brick)
+    o = blk("w_above", 3.0, 21.0, wy_i, wy_o, gz_head + OPENING_GAP, gz_eave, brick)
     cat(o, "brick", brick)
     wx = sorted(s["x_centre"] for s in gfs)
     cuts = [3.0]
     doors = [4.5, 13.5, 19.5]
     for x in sorted(wx + doors):
-        hw = 0.45 if x in doors else 0.425
+        hw = 0.45 if x in doors else 0.425 + OPENING_GAP
         cuts += [x - hw, x + hw]
     cuts.append(21.0)
     for k in range(0, len(cuts), 2):
         a, b = cuts[k], cuts[k + 1]
         if b - a > 1e-6:
-            o = blk("w_pier_%d" % k, a, b, wy_i, wy_o, gz_sill - 0.127, gz_head, brick)
+            o = blk("w_pier_%d" % k, a, b, wy_i, wy_o, gz_sill - 0.127, gz_head + OPENING_GAP, brick)
             cat(o, "brick", brick)
     for x in doors:
         o = blk("w_door_%g" % x, x - 0.45, x + 0.45, wy_i, wy_o + 0.02, 0.1, 2.0, shopfront)
@@ -369,6 +405,8 @@ def build_and_render(view_name, cam, state, out_png, bake_dir, samples=48, res=N
         cat(o, "brick", stone)
     o = wedge("w_roof", 2.7, 21.3, wy_o + 0.3, wy_o - 5.0, gz_eave, gz_eave + 0.5 * 5.0 * math.tan(math.radians(40.0)), roof)
     cat(o, "brick", roof)
+    o = blk("w_soffit", 2.7, 21.3, wy_o, wy_o + 0.3, gz_eave - 0.025, gz_eave + 0.005, soffit)
+    cat(o, "brick", soffit)
     o = blk("wn_shops", 21.0, 46.0, wy_i - 8.0, wy_o, 0.1, 3.5, brick)
     cat(o, "brick", brick)
     o = blk("far_end_e", 46.0, 48.0, yo, yi + 8.0, 0.1, 7.0, brick)
@@ -487,12 +525,13 @@ def build_and_render(view_name, cam, state, out_png, bake_dir, samples=48, res=N
                 mn = m0.name.split(".")[0]
                 if mode == "mask":
                     key = "glass" if mn.startswith("glass") else ("joinery" if mn.startswith("paint_") or base.startswith(("net_rod", "net_bracket", "curtain_pole", "curtain_finial", "curtain_bracket")) else "cloth")
-                    sl.material = mk[key]
+                    sl.material = clear_glass if (maskT and key == "glass") else mk[key]
                     continue
                 if mn.startswith("glass"):
                     sl.material = glass_gate
                 elif mn.startswith("paint_"):
-                    key = ("paint", site["paint"], site["condition"], base in ("paint_joinery__lower_bottom_rail", "paint_joinery__oak_sill", "paint_joinery__frame_sill_rail"), m0.name)
+                    grime = site["condition"] == "grimy" and base in GRIME_PARTS
+                    key = ("paint", site["paint"], site["condition"], base in ("paint_joinery__lower_bottom_rail", "paint_joinery__oak_sill", "paint_joinery__frame_sill_rail"), m0.name, (site["id"], base) if grime else None)
                     if key not in mats_w:
                         m = m0.copy()
                         pb = m.node_tree.nodes["Principled BSDF"]
@@ -517,6 +556,9 @@ def build_and_render(view_name, cam, state, out_png, bake_dir, samples=48, res=N
                         pb.inputs["Roughness"].default_value = paint["rough"]
                         if site["condition"] == "flaking":
                             flake_paint(m, col)
+                        if grime:
+                            zmin = min((o.matrix_world @ v.co).z for v in o.data.vertices)
+                            grime_band(m, base, zmin, Z)
                         mats_w[key] = m
                     sl.material = mats_w[key]
                 elif mn in ("net_voile", "curtain", "blind"):
@@ -665,7 +707,7 @@ def build_and_render(view_name, cam, state, out_png, bake_dir, samples=48, res=N
         for lx in lamps:
             spl = bpy.data.lights.new("lamp_%g" % lx, "SPOT")
             spl.color = SODIUM
-            spl.energy = float(extra.get("lamp_w", 4000.0))
+            spl.energy = float(extra.get("lamp_w", 4000.0)) * (float(extra.get("cottage_lamp_scale", COTTAGE_LAMP_SCALE)) if lx in COTTAGE_LAMPS else 1.0)
             spl.spot_size = math.radians(92)
             spl.spot_blend = 0.5
             spl.shadow_soft_size = 0.15
@@ -755,6 +797,49 @@ def build_and_render(view_name, cam, state, out_png, bake_dir, samples=48, res=N
     t1 = time.time()
     bpy.ops.render.render(write_still=True)
     return round(time.time() - t1, 1), rec
+
+
+GRIME_PARTS = ("paint_joinery__lower_bottom_rail", "paint_joinery__oak_sill")
+
+
+def grime_band(m, base, z_lo_kit, root_z):
+    """Target 4.2's grime band (the close review's narrow point 3): on a grimy window the lowest 30 mm of the bottom rail (the kit's own z from the part's lowest point; `root_z` is the window's sill height in the street) and the oak
+    sill's top faces are x 0.75 of the paint, on top of the x 0.85 the lower rail and sill already carry. Only grimy windows: a sound house's bottom rail is clean (the glb carries the default paint of every house of its kind,
+    so the band is the gate's, by the house's condition, and is listed in hw_manifest.json for the PC)."""
+    import bpy
+    nt = m.node_tree
+    pb = nt.nodes["Principled BSDF"]
+    geo = nt.nodes.new("ShaderNodeNewGeometry")
+    sep = nt.nodes.new("ShaderNodeSeparateXYZ")
+    msk = nt.nodes.new("ShaderNodeMath")
+    if base == "paint_joinery__oak_sill":
+        nt.links.new(geo.outputs["Normal"], sep.inputs["Vector"])
+        msk.operation = "GREATER_THAN"
+        msk.inputs[1].default_value = 0.5
+    else:
+        nt.links.new(geo.outputs["Position"], sep.inputs["Vector"])
+        msk.operation = "LESS_THAN"
+        msk.inputs[1].default_value = root_z + z_lo_kit + GRIME_BAND_M
+    nt.links.new(sep.outputs["Z"], msk.inputs[0])
+    fac = nt.nodes.new("ShaderNodeMath")                    # 1 - (1 - 0.75) x mask
+    fac.operation = "MULTIPLY_ADD"
+    fac.inputs[1].default_value = -(1.0 - GRIME_BAND_FACTOR)
+    fac.inputs[2].default_value = 1.0
+    nt.links.new(msk.outputs["Value"], fac.inputs[0])
+    grey = nt.nodes.new("ShaderNodeCombineColor")
+    for nm in ("Red", "Green", "Blue"):
+        nt.links.new(fac.outputs["Value"], grey.inputs[nm])
+    mul = nt.nodes.new("ShaderNodeMix")
+    mul.data_type = "RGBA"
+    mul.blend_type = "MULTIPLY"
+    mul.inputs[0].default_value = 1.0
+    cur = pb.inputs["Base Color"].links[0].from_socket if pb.inputs["Base Color"].links else None
+    if cur is not None:
+        nt.links.new(cur, mul.inputs[6])
+    else:
+        mul.inputs[6].default_value = pb.inputs["Base Color"].default_value
+    nt.links.new(grey.outputs["Color"], mul.inputs[7])
+    nt.links.new(mul.outputs[2], pb.inputs["Base Color"])
 
 
 def flake_paint(m, col):

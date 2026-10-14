@@ -51,7 +51,7 @@ BOTTLE_DESIGNS = [("FERNSIDE", "WASHING-UP\nLIQUID", (40, 110, 70), (70, 150, 90
 BOTTLE_COLOURS = [(66, 150, 96), (70, 34, 22), (124, 112, 70), (232, 226, 200)]          # the bottle's own colour: green plastic, brown glass, pale brown glass, cream glass
 
 
-FILL_W = 200.0               # the low fill under the gantry's boards (day and night_lit): found with qroom.py, 1280 x 580, 16 samples (see NOTES.md)
+FILL_W = 30.0               # the low fill under the gantry's boards (day and night_lit): found with qroom.py, 1280 x 580, 16 samples (see NOTES.md)
 
 
 def _setup():
