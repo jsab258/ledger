@@ -814,9 +814,13 @@ def ice_mound(gm, cx, cy, z0, rx, ry, h, n, seed, mi=0):
         px, py = r_ * math.cos(a), r_ * math.sin(a)
         dome = max(0.0, 1.0 - r_ * r_)
         sz = rnd.uniform(0.016, 0.034) * (0.7 + 0.3 * dome)
-        cz = z0 + sz * 0.5 + 0.0008 + h * dome * rnd.uniform(0.35, 1.0)
+        cs_ = seed * 7 + k
+        rr_ = random.Random(cs_)
+        zf_ = 0.5 + 0.5 * [rr_.random() for _ in range(18)][17]              # the chunk's lowest corner is 0.5 * sz * zf_ under its centre (ice_chunk's 18th draw)
+        bottom = z0 + 0.0006 + h * dome * rnd.uniform(0.0, 0.9)            # a chunk stands on the floor or on others; the low ones touch the floor
+        cz = bottom + sz * 0.5 * zf_
         t = (k % 4) * 0.25
-        ice_chunk(gm, (cx + px * rx, cy + py * ry, cz), sz, seed=seed * 7 + k, mi=mi, uv=(t, 0.2, t + 0.2, 0.7))
+        ice_chunk(gm, (cx + px * rx, cy + py * ry, cz), sz, seed=cs_, mi=mi, uv=(t, 0.2, t + 0.2, 0.7))
         cnt += 1
     return cnt
 
