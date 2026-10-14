@@ -86,6 +86,90 @@ class GM:
             uvs = [u if u is not None else uo for u in uvs]
         self.add(V, F, mi, uvs)
 
+    def csheet(self, c, w, h, t, tilt=0.0, yaw=0.0, roll=0.0, bow=0.0, bend=0.0, nx=8, nz=6, mi=0, uv=None, uv_other=None, fold_top=False, curl=0.0):
+        """A bent sheet of paper or card (14 Oct, try 2; the newsagent's close review, fault 2: the papers were rigid 4 mm boxes, 12 triangles each, "no fold or curl"): w wide (x), h tall (z), t thick (y), centred at c,
+        its face on -y carrying `uv` = (u0, v0, u1, v1). It bows across its width (`bow` m: the middle stands that far toward the front, -y, of its edges: a magazine's 3 mm), bends over its height (`bend` m: the
+        top stands that far toward the back, +y, of the foot, along a smooth curve: a paper's 4 to 8 mm) and its top corners curl (`curl` m toward the front at each end of the top edge); `fold_top` rounds the top
+        edge into a half-round of radius t/2 (a folded sheet's fold). nx x nz quads a face. Then leaned `tilt` degrees (the top toward +y), `roll` about its own y and turned `yaw`, as `sheet`."""
+        def off(x, z):
+            a = (2.0 * x / w)
+            b = (z / h + 0.5)
+            return -bow * (1.0 - a * a) + bend * b * b - curl * (abs(a) ** 3) * (b ** 3)
+        xs = [-w / 2 + w * i / nx for i in range(nx + 1)]
+        zs = [-h / 2 + h * j / nz for j in range(nz + 1)]
+        V0, F0, U0, M0 = [], [], [], []
+        ft = [[len(V0)]]
+        # front grid, then back grid
+        for side, yy in ((0, -t / 2.0), (1, t / 2.0)):
+            base = len(V0)
+            for j, z in enumerate(zs):
+                for i, x in enumerate(xs):
+                    V0.append((x, yy + off(x, z), z))
+            for j in range(nz):
+                for i in range(nx):
+                    a_, b_ = base + j * (nx + 1) + i, base + j * (nx + 1) + i + 1
+                    c_, d_ = base + (j + 1) * (nx + 1) + i + 1, base + (j + 1) * (nx + 1) + i
+                    if side == 0:
+                        F0.append((a_, b_, c_, d_))
+                        if uv is not None:
+                            u0, v0, u1, v1 = uv
+                            U0.append([(u0 + (u1 - u0) * (xs[i] / w + .5), v0 + (v1 - v0) * (zs[j] / h + .5)), (u0 + (u1 - u0) * (xs[i + 1] / w + .5), v0 + (v1 - v0) * (zs[j] / h + .5)),
+                                       (u0 + (u1 - u0) * (xs[i + 1] / w + .5), v0 + (v1 - v0) * (zs[j + 1] / h + .5)), (u0 + (u1 - u0) * (xs[i] / w + .5), v0 + (v1 - v0) * (zs[j + 1] / h + .5))])
+                        else:
+                            U0.append(None)
+                    else:
+                        F0.append((a_, d_, c_, b_))
+                        U0.append([(uv_other[0], uv_other[1])] * 4 if uv_other else None)
+                    M0.append(mi)
+        nf = (nx + 1) * (nz + 1)
+        fr = lambda i, j: j * (nx + 1) + i
+        bk = lambda i, j: nf + j * (nx + 1) + i
+        uo = [(uv_other[0], uv_other[1])] * 4 if uv_other else None
+        # the left, right and bottom edges
+        for j in range(nz):
+            F0.append((fr(0, j), fr(0, j + 1), bk(0, j + 1), bk(0, j)))
+            F0.append((fr(nx, j), bk(nx, j), bk(nx, j + 1), fr(nx, j + 1)))
+            U0 += [uo, uo]
+            M0 += [mi, mi]
+        for i in range(nx):
+            F0.append((fr(i, 0), bk(i, 0), bk(i + 1, 0), fr(i + 1, 0)))
+            U0.append(uo)
+            M0.append(mi)
+        # the top edge: flat, or a half-round from the front to the back (a fold)
+        if not fold_top:
+            for i in range(nx):
+                F0.append((fr(i, nz), fr(i + 1, nz), bk(i + 1, nz), bk(i, nz)))
+                U0.append(uo)
+                M0.append(mi)
+        else:
+            nseg = 6
+            arc = []
+            for i in range(nx + 1):
+                row = []
+                for k in range(1, nseg):
+                    th = math.pi * k / nseg                    # from the front (th 0) over the top (pi/2) to the back (pi)
+                    x, z = xs[i], zs[nz]
+                    y_front = -t / 2.0 + off(x, z)
+                    row.append(len(V0))
+                    V0.append((x, y_front + (t / 2.0) * (1.0 - math.cos(th)), z + (t / 2.0) * math.sin(th)))
+                arc.append(row)
+            for i in range(nx):
+                ring_a = [fr(i, nz)] + arc[i] + [bk(i, nz)]
+                ring_b = [fr(i + 1, nz)] + arc[i + 1] + [bk(i + 1, nz)]
+                for k in range(nseg):
+                    F0.append((ring_a[k], ring_b[k], ring_b[k + 1], ring_a[k + 1]))
+                    U0.append(uo)
+                    M0.append(mi)
+        # the leaning, rolling and turning of `sheet`
+        ta, ra, ya = math.radians(tilt), math.radians(roll), math.radians(yaw)
+        V = []
+        for x, y, z in V0:
+            x, z = x * math.cos(ra) - z * math.sin(ra), x * math.sin(ra) + z * math.cos(ra)
+            y, z = y * math.cos(ta) + z * math.sin(ta), -y * math.sin(ta) + z * math.cos(ta)
+            x, y = x * math.cos(ya) - y * math.sin(ya), x * math.sin(ya) + y * math.cos(ya)
+            V.append((c[0] + x, c[1] + y, c[2] + z))
+        self.add(V, F0, M0, U0)
+
     def cloth(self, x0, x1, z_top, drop, y0, amp, wave, scallop, nz=10, mi=0, thick=0.003):
         """A hanging curtain as a displaced grid: gathered into folds (y = y0 + amp x sin(2 pi x / wave), the folds deeper toward the hem), the top straight, the hem scalloped (`scallop` = the arcs' width,
         0.03 high). Faces toward -y (the street); the back face is a copy `thick` behind it so that the cloth has a thickness."""

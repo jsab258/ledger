@@ -112,10 +112,22 @@ def font_file(folder, name, size):
     return ImageFont.truetype(os.path.join(FONTS, folder, name), size)
 
 
+WEIGHT = {"josefin-sans": 700, "jost": 500, "archivo": 800, "oswald": 500, "libre-franklin": 700, "fraunces": 700}       # the variable faces' default is their thinnest or their regular: the weight a masthead or a cover line wants
+
+
 def fnt(folder, size, name=None):
-    if name:
-        return font_file(folder, name, size)
-    return GEN.font(folder, size)
+    f = font_file(folder, name, size) if name else GEN.font(folder, size)
+    if not name and folder in WEIGHT:
+        try:
+            axes = f.get_variation_axes()
+            vals = []
+            for ax in axes:
+                nm = ax["name"] if isinstance(ax["name"], str) else ax["name"].decode()
+                vals.append(min(max(WEIGHT[folder], ax["minimum"]), ax["maximum"]) if "eight" in nm else ax["default"])
+            f.set_variation_by_axes(vals)
+        except Exception:                                    # noqa: BLE001
+            pass
+    return f
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------- sources
@@ -299,7 +311,7 @@ def magazine_cover(idx, size=(384, 512), seed=0):
     rnd = random.Random(1000 + idx)
     ph = photo(pid, w, h, seed=seed + idx, mono=mono, contrast=1.12)
     im = pil(ph)
-    im = _gradient(im, 0, int(h * 0.26), 0.62, 0.0)
+    im = _gradient(im, 0, int(h * 0.27), 0.70, 0.0)
     im = _gradient(im, int(h * 0.60), h, 0.0, 0.70)
     d = ImageDraw.Draw(im)
     # the masthead: the title, as large as fits the width in one line (two for a long one), in the cover's own face
@@ -553,3 +565,110 @@ def postcard_atlas(path, n=8, size=(405, 280), cols=2):
 
 def write_used(path):
     json.dump({"used": USED, "photos": {k: list(v) for k, v in PHOTOS.items() if k in set(USED.values())}}, open(path, "w"), indent=1)
+
+
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------- cartons (200 cigarettes), sweets, jar labels
+def carton_front(idx, size=(560, 180)):
+    """The front of a carton of 200 (280 x 90 mm at 2 px a mm): the maker's block (a fictional maker, sw_gen.PACK_BRANDS), 200 CIGARETTES, and the 1990 band along the foot in 2.5 mm type: MIDDLE TAR as defined
+    by H.M. Government, and the Government health warning (the newsagent's close review, narrow 3: "20 CIGARETTES" and a band reading only HEALTH WARNING)."""
+    brand, kind, bg, ink, accent = GEN.PACK_BRANDS[idx % len(GEN.PACK_BRANDS)]
+    w, h = size
+    im = Image.new("RGB", size, bg)
+    d = ImageDraw.Draw(im)
+    d.rectangle((0, 0, w - 1, 22), fill=accent)
+    d.rectangle((0, 28, w - 1, 31), fill=ink)
+    f1 = fnt("alfa-slab-one", 56)
+    f1, l1 = _fit(d, brand, "alfa-slab-one", None, w - 60, 56, 24, 1, step=2)
+    tw = d.textlength(l1[0], font=f1)
+    d.text(((w - tw) / 2, 40), l1[0], font=f1, fill=ink)
+    f2 = fnt("oswald", 28)
+    tw = d.textlength(kind, font=f2)
+    d.text(((w - tw) / 2, 40 + int(f1.size * 1.15)), kind, font=f2, fill=ink)
+    f3 = fnt("jost", 24)
+    t3 = "200 CIGARETTES"
+    d.text((20, 6), t3, font=f3, fill=bg if sum(accent) < 500 else ink)
+    d.text((w - 20 - d.textlength("25 x 8", font=f3), 6), "25 x 8", font=f3, fill=bg if sum(accent) < 500 else ink)
+    band_y = h - 34
+    d.rectangle((0, band_y, w - 1, h - 1), fill=(240, 238, 230))
+    f4 = fnt("libre-franklin", 11)
+    d.text((8, band_y + 3), "MIDDLE TAR  As defined by H.M. Government.", font=f4, fill=(20, 20, 24))
+    d.text((8, band_y + 18), "DANGER: Government Health WARNING: CIGARETTES CAN SERIOUSLY DAMAGE YOUR HEALTH", font=f4, fill=(20, 20, 24))
+    TEXTS.extend([brand, kind, t3, "MIDDLE TAR As defined by H.M. Government.", "DANGER: Government Health WARNING: CIGARETTES CAN SERIOUSLY DAMAGE YOUR HEALTH"])
+    arr = np.asarray(im).astype(np.float32) + np.random.default_rng(80 + idx).normal(0, 1.8, (h, w, 1)).astype(np.float32)
+    return Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8))
+
+
+def carton_atlas(path, n=6, size=(560, 180), cols=2):
+    return atlas(path, [carton_front(i, size) for i in range(n)], cols)
+
+
+JARS = [("HUMBUGS", "stripes", (238, 236, 228), (34, 26, 26)), ("PEAR DROPS", "dots", (206, 220, 120), (150, 170, 60)), ("MINT IMPERIALS", "dots", (240, 242, 238), (210, 218, 212)),
+        ("FRUIT DROPS", "mix", (204, 60, 48), (236, 190, 56)), ("TOFFEES", "dots", (150, 96, 50), (100, 60, 30)), ("SHERBET LEMONS", "dots", (240, 212, 70), (212, 176, 42)),
+        ("ACID DROPS", "mix", (232, 182, 58), (186, 62, 60)), ("BARLEY SUGAR", "dots", (228, 172, 70), (194, 124, 40)), ("CHERRY LIPS", "dots", (194, 40, 52), (136, 22, 32)),
+        ("LIQUORICE MIXED", "mix", (34, 30, 34), (206, 84, 94))]
+
+
+def sweets_texture(idx, size=(512, 192)):
+    """The contents of a sweet jar as one picture (u wraps round the jar, v up it): single sweets, each a rounded lump about 28 px across (a Voronoi cell shaded toward its middle, a highlight up and to the left, a dark
+    seam where two meet), in the jar's own colours: humbugs black and white striped across each lump, the rest one colour with a few paler or darker, `mix` three colours."""
+    from scipy.spatial import cKDTree
+    name, kind, c1, c2 = JARS[idx % len(JARS)]
+    w, h = size
+    rng = np.random.default_rng(500 + idx)
+    n = int(w * h / (27 * 27))
+    pts = np.column_stack([rng.uniform(0, w, n), rng.uniform(0, h, n)])
+    # the picture wraps in u: three copies of the points
+    P = np.concatenate([pts - [w, 0], pts, pts + [w, 0]])
+    tree = cKDTree(P)
+    yy, xx = np.mgrid[0:h, 0:w]
+    q = np.column_stack([xx.ravel() + 0.5, yy.ravel() + 0.5])
+    dist, ids = tree.query(q, k=2)
+    d1, d2 = dist[:, 0].reshape(h, w), dist[:, 1].reshape(h, w)
+    cell = ids[:, 0].reshape(h, w) % n
+    cols = [np.array(c1, np.float32), np.array(c2, np.float32)]
+    if kind == "mix":
+        cols = [np.array(c1, np.float32), np.array(c2, np.float32), np.array((230, 228, 220), np.float32) * 0.9]
+    pick = rng.integers(0, len(cols), n)
+    tint = rng.uniform(0.86, 1.08, n)
+    base = (np.stack(cols)[pick] * tint[:, None])[cell]
+    if kind == "stripes":
+        ang = rng.uniform(0, math.pi, n)[cell]
+        u = (xx * np.cos(ang) + yy * np.sin(ang)) / 5.0
+        stripe = (np.floor(u) % 2).astype(np.float32)[..., None]
+        base = np.array(c1, np.float32) * (1 - stripe) + np.array(c2, np.float32) * stripe
+    edge = np.clip((d2 - d1) / 5.0, 0, 1)[..., None]                       # a seam where two lumps meet
+    mid = np.clip(1.0 - d1 / 15.0, 0, 1)[..., None]
+    shade = 0.62 + 0.38 * np.sqrt(edge) + 0.22 * mid
+    cx = P[ids[:, 0]][:, 0].reshape(h, w)
+    cy = P[ids[:, 0]][:, 1].reshape(h, w)
+    hl = np.exp(-(((xx - (cx - 4)) ** 2 + (yy - (cy - 4)) ** 2) / 14.0))[..., None] * 0.30
+    img = np.clip(base * shade + 255 * hl, 0, 255)
+    return Image.fromarray(img.astype(np.uint8))
+
+
+def jar_label(idx, size=(256, 128)):
+    """A jar's paper label: the sweet's name over the weight and price, in a serif on cream with a thin rule; the project's own wording."""
+    name, kind, c1, c2 = JARS[idx % len(JARS)]
+    w, h = size
+    im = Image.new("RGB", size, (240, 234, 214))
+    d = ImageDraw.Draw(im)
+    d.rectangle((4, 4, w - 5, h - 5), outline=(120, 40, 36), width=2)
+    f, ls = _fit(d, name, "old-standard-tt", None, w - 30, 30, 14, 2, step=2)
+    y = 14
+    for ln in ls:
+        tw = d.textlength(ln, font=f)
+        d.text(((w - tw) / 2, y), ln, font=f, fill=(120, 40, 36))
+        y += int(f.size * 1.05)
+    f2 = fnt("evening-paper", 16, "OldStandard-Italic.ttf")
+    t2 = "2 oz 25p   4 oz 48p"
+    tw = d.textlength(t2, font=f2)
+    d.text(((w - tw) / 2, h - 34), t2, font=f2, fill=(60, 50, 44))
+    TEXTS.extend([name, t2])
+    return im
+
+
+def jar_atlases(content_path, label_path, n=10):
+    """The sweets' pictures (one 512 x 192 strip each, stacked) and the labels (256 x 128, two columns); returns ({i: uv}, {i: uv})."""
+    cont = atlas(content_path, [sweets_texture(i) for i in range(n)], 1)
+    lab = atlas(label_path, [jar_label(i) for i in range(n)], 2)
+    return cont, lab
