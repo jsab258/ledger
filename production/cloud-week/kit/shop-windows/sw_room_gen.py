@@ -190,6 +190,10 @@ class GRoom(S.Room):
         all_tile = tile_asset is not None and not has_rgb
         wall_rgb = _rgb(above_txt) if has_rgb else (224, 224, 216)
         dado_rgb = _rgb(dado_txt) if re.search(r"\((\d+),\s*(\d+),\s*(\d+)\)", dado_txt) else (228, 228, 220)
+        # 14 Oct (batch B): a bottle-green dado of luma 40 to 45 (the grocer's (36, 61, 49), the chandler's (30, 62, 44)) lies in the shadow of every board above it at luma 17 and under, and the gate's day card (0.15) shows
+        # that as black (LIT-02b read 0.07 of the grocer's window glass under luma 12 at STREET_SQUARE by day): the paint is lifted 1.35 times in sRGB, still a bottle green ((36, 61, 49) -> (49, 82, 66))
+        k_ = DADO_LIFT.get(self.ctx.id, 1.0)
+        dado_rgb = tuple(min(255, int(round(c * k_))) for c in dado_rgb)
         mt = re.search(r"to z ([0-9.]+)", dado_txt)
         self.dado_top = float(mt.group(1)) if mt else (H if all_tile else 1.0)
         ceil_rgb = _rgb(rr["ceiling"])
@@ -278,6 +282,8 @@ class GRoom(S.Room):
         self.diff_m.node_tree.nodes["Principled BSDF"].inputs["Emission Strength"].default_value = em
         if getattr(self, "pilot", None) is not None:
             self.pilot.data.energy = P.get("pilot", getattr(self, "pilot_w", 0.0)) if state == "night_dark" else 0.0
+        if getattr(self, "fill", None) is not None:
+            self.fill.data.energy = P.get("fill", getattr(self, "fill_w", 0.0)) if state in ("day", "night_lit") else 0.0          # (14 Oct, batch B) the low front fill of a room with a dark dado
 
     def calibrate(self, work, log=print, res=(768, 348), samples=24):
         """Light strengths so each state's mean luma meets the approved pictures' (119.5, 79.8, 17.7): the tubes on night_lit, the sky on day, the sodium wash on night_dark."""
@@ -768,6 +774,7 @@ def _lazy(mod, fn):
     return f
 
 
+DADO_LIFT = {"grocer": 1.35, "chandler": 1.35}
 MEAN_OVERRIDE = {"grocer": {"day": 100.0, "night_lit": 70.0}, "chandler": {"day": 100.0, "night_lit": 70.0}}
 
 

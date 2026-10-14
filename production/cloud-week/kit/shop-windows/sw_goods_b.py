@@ -870,3 +870,25 @@ def row_pack(d, items, u0, u1, v, gap=0.02, w=0.0, tier="bed", yaw_jitter=0.0, r
         out.append((asset, u + wd / 2.0, ext))
         u += wd + gap
     return out
+
+
+def add_fill(r, xc, width, z, y, w, rx_deg=90.0):
+    """A low soft fill (an invisible area light `width` x 0.5 m at height z, y metres into the room, facing the back wall; strength `w` in Blender watts; lit in the day and night_lit states only): the light a lit
+    floor and the street throw back under the boards of a gantry, which the three ceiling tubes cannot reach (the shadow bands under each board of the grocer's gantry read luma 17 against 28 the gate's day card needs,
+    LIT-02b). It is a bounce, not a lamp: it is never in a picture, and its strength is `r.fill_w`."""
+    import bpy
+    import math
+    ld = bpy.data.lights.new("low_fill", "AREA")
+    ld.shape = "RECTANGLE"
+    ld.size = width
+    ld.size_y = 0.5
+    ld.color = (1.0, 0.97, 0.92)
+    ld.energy = 0.0
+    ob = bpy.data.objects.new("low_fill", ld)
+    r.sc.collection.objects.link(ob)
+    ob.location = (xc, y, z)
+    ob.rotation_euler = (math.radians(rx_deg), 0.0, 0.0)
+    r.fill = ob
+    r.fill_w = w
+    return ob
+
