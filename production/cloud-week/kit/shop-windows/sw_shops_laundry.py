@@ -331,7 +331,7 @@ def display(d):
     import sw_room_gen as RG
     rr = d.RR
     walls = rr["walls"]
-    d.start((118, 120, 124), RG._rgb(walls["above"]), RG._rgb(walls["dado"]))         # the bed: a mid grey (the cover is laminate)
+    d.start((118, 120, 124), RG._rgb(walls["above"]), (210, 208, 198))         # the bed: a mid grey (the cover is laminate); the dado is the white tile, toned (the target gives no colour for it)
     rnd = d.rnd
     L = d.L
     X = lambda u: u - L / 2
@@ -345,33 +345,40 @@ def display(d):
     GB.chamfer(ob, 0.003, 2)
     z0 = 0.02
     # ---- five stacks of folded towels
-    cols = [((196, 70, 62), (236, 226, 200)), ((58, 108, 150), (226, 226, 220)), ((220, 190, 90), (120, 70, 40)), ((70, 130, 96), (230, 226, 206)), ((200, 130, 150), (236, 230, 220)),
-            ((226, 214, 190), (70, 100, 150)), ((150, 90, 60), (226, 210, 180)), ((100, 120, 160), (236, 232, 222)), ((90, 150, 140), (230, 226, 210))]
+    base = [(176, 104, 96), (96, 128, 150), (206, 180, 124), (108, 140, 112), (184, 142, 152), (160, 122, 92)]
+    cols = []
+    for c in base:
+        cols.append((c, tuple(int(v * 0.78) for v in c)))
+        cols.append((tuple(min(255, int(v * 1.12)) for v in c), tuple(int(v * 0.86) for v in c)))
     tp = os.path.join(tex, "towel_edges.png")
     tuv = GB.ladder_towels(tp, cols)
     tm = d.image_mat("towel_edges", tp, rough=0.95)
-    stacks = [(0.17, 8), (0.48, 6), (0.79, 9), (1.10, 7), (1.41, 6)]
+    stacks = [(0.17, 8, 0), (0.47, 6, 1), (0.77, 9, 2), (1.07, 7, 3), (1.37, 6, 4)]
     gm = GM()
-    for si, (uc, n) in enumerate(stacks):
+    for si, (uc, n, bi) in enumerate(stacks):
         lean = rnd.uniform(1.0, 3.0) * rnd.choice((-1, 1))
         yaw = rnd.uniform(-2.5, 2.5)
         for k in range(n):
-            ci = (si * 2 + k) % len(cols)
-            uv = tuv[ci]
+            uv = tuv[bi * 2 + (k % 2)]
             off = math.tan(math.radians(lean)) * (z0 + 0.05 * k)
             xj = rnd.uniform(-0.004, 0.004)
             gm.sheet((X(uc) + off + xj, 0.31 + rnd.uniform(-0.004, 0.004), z0 + 0.05 * k + 0.0245), 0.30, 0.049, 0.45, tilt=0.0, yaw=yaw + rnd.uniform(-1.2, 1.2), mi=0, uv=uv, uv_other=(uv[0] + 0.5 * (uv[2] - uv[0]), uv[1] + 0.5 * (uv[3] - uv[1])))
-    d.gm_object("folded_towels", gm, [tm], "scripted", "script:folded_towels", tier="board")
-    # ---- two wicker baskets with a heap of laundry in each
-    cloth = [d.mat("laundry_a", rgb8(170, 190, 206), rough=0.95), d.mat("laundry_b", rgb8(216, 176, 120), rough=0.95)]
+    ob, _ = d.gm_object("folded_towels", gm, [tm], "scripted", "script:folded_towels", tier="board")
+    GB.chamfer(ob, 0.012, 3, angle=20.0)
+    # ---- two wicker baskets with laundry heaped in each (three lumps of cloth in two or three colours: sheets and a towel)
+    cloth = [[d.mat("laundry_a1", rgb8(176, 196, 210), rough=0.95), d.mat("laundry_a2", rgb8(226, 214, 190), rough=0.95), d.mat("laundry_a3", rgb8(176, 104, 96), rough=0.95)],
+             [d.mat("laundry_b1", rgb8(214, 176, 124), rough=0.95), d.mat("laundry_b2", rgb8(150, 176, 154), rough=0.95), d.mat("laundry_b3", rgb8(216, 206, 196), rough=0.95)]]
     for k, uc in enumerate((1.95, 2.37)):
         ext, names = d.piece("wicker_basket_01", uc, 0.30, z0, rot=(0, 0, rnd.uniform(0, 6.28)), scale=1.0, tier="board", tris=None)
         gm = GM()
         bx = (ext[0] + ext[1]) / 2
         by = (ext[2] + ext[3]) / 2
         rxy = 0.5 * min(ext[1] - ext[0], ext[3] - ext[2]) * 0.80
-        GB.heap(gm, bx, by, ext[5] - 0.02, rxy, rxy, 0.11, seed=3 + k, mi=0)
-        d.gm_object("laundry_in_basket_%d" % k, gm, [cloth[k]], "scripted", "script:laundry_in_basket", tier="basket", smooth=True)
+        zt = ext[5] - 0.03
+        GB.heap(gm, bx, by, zt, rxy, rxy, 0.12, seed=3 + k, mi=0, amp=1.4)
+        GB.heap(gm, bx - 0.45 * rxy, by + 0.2 * rxy, zt + 0.04, rxy * 0.6, rxy * 0.6, 0.10, seed=7 + k, mi=1, amp=1.4)
+        GB.heap(gm, bx + 0.42 * rxy, by - 0.1 * rxy, zt + 0.03, rxy * 0.55, rxy * 0.55, 0.09, seed=11 + k, mi=2, amp=1.4)
+        d.gm_object("laundry_in_basket_%d" % k, gm, cloth[k], "scripted", "script:laundry_in_basket", tier="basket", smooth=True)
     # ---- the SERVICE WASHES card on two posts, behind the baskets
     cpth = os.path.join(tex, "service_card.png")
     cuv = GEN.card_atlas(cpth, ["SERVICE WASHES\nLEAVE IT WITH US"], cols=1, tile=(768, 240), size=70, bg=(232, 226, 204), ink=(150, 30, 40))

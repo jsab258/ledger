@@ -55,7 +55,6 @@ def packet_atlas(path, designs, tile=(180, 280), cols=4, seed=3):
         d.rectangle([x0, y0 + th - 20, x0 + tw - 1, y0 + th - 8], fill=accent)
         f = fit_text(d, maker, "alfa-slab-one", tw - 16, 32)
         d.text((x0 + (tw - d.textlength(maker, font=f)) / 2, y0 + 34), maker, font=f, fill=fg)
-        f2 = fit_text(d, product, "oswald", tw - 18, 22)
         lines = product.split("\n")
         yy = y0 + 34 + f.size + 8
         for ln in lines:
@@ -171,19 +170,18 @@ def bottle(gm, cx, cy, z0, r, h, mi=0, mi_cap=None, label=None, label_mi=None, l
         gm.lathe(cx, cy, z0 + h * 0.90, [(0.0, 0.0), (r * 0.36, 0.0), (r * 0.36, h * 0.10), (r * 0.30, h * 0.115), (0.0, h * 0.115)], mi=mi_cap, n=n)
 
 
-def heap(gm, cx, cy, z0, rx, ry, rz, seed=1, mi=0, nlat=7, nlon=18):
-    """A heap of soft cloth (a mound): the upper half of an ellipsoid whose radius is varied by a smooth noise (folds), the foot on z0. One closed surface."""
+def heap(gm, cx, cy, z0, rx, ry, rz, seed=1, mi=0, nlat=8, nlon=22, amp=1.0):
+    """A heap of soft cloth (a mound): the upper half of an ellipsoid whose radius is varied by a smooth noise (folds; `amp` scales the folds), the foot on z0. One closed surface."""
     rnd = random.Random(seed)
-    ph = [rnd.uniform(0, 6.28) for _ in range(6)]
+    ph = [rnd.uniform(0, 6.28) for _ in range(8)]
     V, F = [], []
-    pole = None
     for j in range(nlat + 1):
         phi = (math.pi / 2) * j / nlat
         for i in range(nlon):
             th = 2 * math.pi * i / nlon
-            nz = 1.0 + 0.10 * math.sin(3 * th + ph[0]) * math.cos(phi * 2 + ph[1]) + 0.07 * math.sin(5 * th + ph[2] + 2 * phi) + 0.05 * math.sin(2 * th + ph[3] - phi * 3)
-            rr = nz * (1.0 if j > 0 else 1.0)
-            V.append((cx + rx * rr * math.cos(phi) * math.cos(th), cy + ry * rr * math.cos(phi) * math.sin(th), z0 + rz * rr * math.sin(phi)))
+            nz = 1.0 + amp * (0.16 * math.sin(3 * th + ph[0]) * math.cos(phi * 2 + ph[1]) + 0.11 * math.sin(5 * th + ph[2] + 2 * phi) + 0.09 * math.sin(2 * th + ph[3] - phi * 3)
+                              + 0.07 * math.sin(7 * th + ph[4] + 4 * phi) + 0.06 * math.cos(4 * th - 3 * phi + ph[5]))
+            V.append((cx + rx * nz * math.cos(phi) * math.cos(th), cy + ry * nz * math.cos(phi) * math.sin(th), z0 + rz * nz * math.sin(phi)))
     for j in range(nlat):
         for i in range(nlon):
             a = j * nlon + i
@@ -193,14 +191,13 @@ def heap(gm, cx, cy, z0, rx, ry, rz, seed=1, mi=0, nlat=7, nlon=18):
             F.append((a, b, c, d))
     top = list(range(nlat * nlon, (nlat + 1) * nlon))
     F.append(tuple(top[::-1]))
-    # the base ring closes on the floor: a flat cap
     F.append(tuple(range(nlon)))
     gm.add(V, F, mi)
 
 
 def ladder_towels(path, colours, tile=(256, 64), seed=2):
-    """A picture of folded towels' edges: `colours` = [(rgb, border_rgb)]: each tile is the towel's colour with a woven grain, a border band near each short end and a darker fold line along the top;
-    returns {index: (u0, v0, u1, v1)}."""
+    """A picture of folded towels' edges: `colours` = [(rgb, border_rgb)]: each tile is the towel's colour with a woven grain, a narrow border stripe near each short end (in `border_rgb`) and a darker fold line
+    along the top and the foot; returns {index: (u0, v0, u1, v1)}."""
     rnd = np.random.default_rng(seed)
     tw, th = tile
     H = th * len(colours)
@@ -208,14 +205,13 @@ def ladder_towels(path, colours, tile=(256, 64), seed=2):
     for k, (c, b) in enumerate(colours):
         blk = np.empty((th, tw, 3), np.float32)
         blk[:] = c
-        blk += rnd.normal(0, 4.0, blk.shape)
-        yy = np.arange(th)[:, None]
-        grain = 3.0 * np.sin(np.arange(tw)[None, :] * 1.7)[..., None]
+        blk += rnd.normal(0, 3.0, blk.shape)
+        grain = 3.0 * np.sin(np.arange(tw)[None, :] * 1.7)[..., None] + 2.0 * np.sin(np.arange(th)[:, None] * 2.3)[..., None]
         blk += grain
-        for x0 in (18, tw - 30):
-            blk[:, x0:x0 + 10] = np.array(b, np.float32)
-        blk[:5] *= 0.82
-        blk[-4:] *= 0.9
+        for x0 in (int(tw * 0.10), int(tw * 0.88)):
+            blk[:, x0:x0 + 6] = np.array(b, np.float32) + rnd.normal(0, 3.0, (th, 6, 3))
+        blk[:6] *= 0.80
+        blk[-5:] *= 0.88
         a[k * th:(k + 1) * th] = blk
     Image.fromarray(np.clip(a, 0, 255).astype(np.uint8)).save(path)
     return {k: (0.0, 1.0 - (k + 1) / len(colours), 1.0, 1.0 - k / len(colours)) for k in range(len(colours))}
