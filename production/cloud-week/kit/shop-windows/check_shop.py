@@ -305,7 +305,9 @@ def room_rows(ctx, rows, assets):
     off = sorted({(m, round(s, 2)) for m, s in sc_ if s < 0.9 - 1e-3 or s > 1.1 + 1e-3})
     lo = min([s for _, s in sc_] or [1.0])
     hi = max([s for _, s in sc_] or [1.0])
-    rows.add("SO-06", "the scales of the goods", lo >= 0.60 - 1e-3 and hi <= 1.1 + 1e-3, "%d placed models (not counting %s, which carry their own sizes from the target) at scales %.3f to %.3f (limit 0.60 to 1.1; Rita's rule was 0.9 to 1.1: where a piece is under 0.9 it is a Judgement named in NOTES.md); those under 0.9 or over 1.1: %s" % (len(sc_), ", ".join(sorted(sized)) or "none", lo, hi, off or "none"))
+    # 14 Oct (the tea rooms' close review, fault 1; the coordinator): the limit was 0.60 to 1.1, which let child-size furniture through. It is now 0.9 to 1.1 of the model's real size, as Rita's rule was and as DSP-06 is for the display;
+    # a piece that needs to be smaller is not a scaled model but another model, or it is set aside and named. A model that carries a size of its own from the target (the till, the clock, the buoy) is exempt and named.
+    rows.add("SO-06", "the scales of the goods", lo >= 0.90 - 1e-3 and hi <= 1.1 + 1e-3, "%d placed models (not counting %s, which carry their own sizes from the target) at scales %.3f to %.3f (limit 0.9 to 1.1 of real size, as DSP-06; before 14 Oct 0.60 to 1.1); those under 0.9 or over 1.1: %s" % (len(sc_), ", ".join(sorted(sized)) or "none", lo, hi, off or "none"))
 
 
 def display_rows(ctx, rows, assets):
@@ -921,6 +923,7 @@ def run(ctx, assets, previews, out_json):
         X.display_rows(ctx.R, ctx.work, assets, rows)
         X.dsp05_float_rows(ctx.R, ctx.work, assets, rows)
         X.dsp06_size_rows(ctx.R, ctx.work, rows)
+        X.dsp08_chairs_rows(ctx.R, ctx.work, assets, rows)
         trade_rows(ctx, rows, extra.get("families", {}))
         X.lit02b_rows(ctx.R, ctx.work, rows)
         X.gate_frame_rows(ctx.R, ctx.work, rows)

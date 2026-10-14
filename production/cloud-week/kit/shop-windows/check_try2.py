@@ -1315,6 +1315,48 @@ def dsp06_size_rows(R, work, rows):
         n, ("; OUT OF RANGE: " + ", ".join(sorted(set(bad)))) if bad else "", "; ".join(furn) or "none in this display", " (the tea rooms' table was 0.47 m high and its chairs at 0.75 in batch A)"))
 
 
+def dsp08_chairs_rows(R, work, assets, rows):
+    """DSP-08 (the tea rooms' close review, fault 2, 14 Oct 2026; the coordinator): every chair of the display faces its table. The tea rooms' two chairs stood with their backs to the table (their two rotations swapped).
+    A chair's back is the side where its upper part (the top third of its height) lies from its seat's middle (the band of the height between 0.35 and 0.60 of it); it faces the other way. Its table is the nearest
+    piece whose model name holds 'table'; the chair passes when the angle between its facing and the way to the table's middle is under 60 degrees. A shop with no chair has no row (this is not counted there)."""
+    import bpy
+    di = json.load(open(os.path.join(work, "display_work", "display_items.json")))
+    chairs = [it for it in di["items"] if "chair" in str(it["model"]).lower() and not str(it["model"]).startswith("script:")]
+    tables = [it for it in di["items"] if "table" in str(it["model"]).lower() and not str(it["model"]).startswith("script:")]
+    if not chairs:
+        return
+    bpy.ops.wm.read_factory_settings(use_empty=True)
+    objs = load_glb_objects(display_glb(assets))
+    deps = bpy.context.evaluated_depsgraph_get()
+    byname = {}
+    for ob in objs:
+        if ob.type == "MESH":
+            V, T_, N = mesh_world(ob, deps)
+            if len(V):
+                byname[ob.name] = V
+    bad, seen = [], []
+    for it in chairs:
+        V = np.vstack([byname[n] for n in it["objs"] if n in byname])
+        z0, z1 = float(V[:, 2].min()), float(V[:, 2].max())
+        h = max(z1 - z0, 1e-6)
+        top = V[V[:, 2] > z0 + 0.67 * h][:, :2].mean(axis=0)
+        seat = V[(V[:, 2] > z0 + 0.35 * h) & (V[:, 2] < z0 + 0.60 * h)][:, :2].mean(axis=0)
+        face = seat - top
+        nf = float(np.linalg.norm(face))
+        cc = np.array([(it["ext"][0] + it["ext"][1]) / 2.0, (it["ext"][2] + it["ext"][3]) / 2.0])
+        if not tables:
+            bad.append("a chair at u %.2f has no table in the display" % cc[0])
+            continue
+        tb = min(tables, key=lambda t: np.hypot((t["ext"][0] + t["ext"][1]) / 2.0 - cc[0], (t["ext"][2] + t["ext"][3]) / 2.0 - cc[1]))
+        tc = np.array([(tb["ext"][0] + tb["ext"][1]) / 2.0, (tb["ext"][2] + tb["ext"][3]) / 2.0])
+        to = tc - cc
+        ang = float(np.degrees(np.arccos(np.clip(np.dot(face, to) / max(nf * np.linalg.norm(to), 1e-9), -1.0, 1.0))))
+        seen.append("%s at u %.2f faces %.0f degrees off its table" % (it["model"], cc[0], ang))
+        if ang > 60.0:
+            bad.append("%s at u %.2f faces %.0f degrees away from its table" % (it["model"], cc[0], ang))
+    rows.add("DSP-08", "each chair faces its table", not bad, "%d chairs, each measured from the built glb: %s%s" % (len(chairs), "; ".join(seen) or "none", ("; FAULT: " + "; ".join(bad)) if bad else ""))
+
+
 def frn11_rows(glb, members, rows, hs):
     """FRN-11 (the ironmonger's street review, narrow point 1, 14 Oct 2026): no part of a hanging sign passes through any other part of the front (the cornice, a pilaster's capital, a console, the fascia). The front glb is
     loaded, every mesh inset 1 mm along its normals (a 2 mm contact is tolerated) and each sign part (names `sign_*`) tested against every other front part whose box overlaps it by a BVH overlap. The signs are in the

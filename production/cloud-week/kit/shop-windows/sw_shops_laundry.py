@@ -116,6 +116,33 @@ def _worn_path(path, size=(1024, 768), seed=5):
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------- the room
+def _cork_png(path, w=1024, h=683, seed=11):
+    """A cork board's picture by script: two tones ((176, 132, 88) and (150, 108, 70)) in soft patches, a 2 mm grain (1024 px over 0.9 m is 0.9 mm a pixel), pale and dark flecks, a few pin holes."""
+    import numpy as np
+    from PIL import Image, ImageFilter
+    rng = np.random.default_rng(seed)
+    a = np.array((176, 132, 88), float)
+    b = np.array((150, 108, 70), float)
+    lo = Image.fromarray((rng.random((h // 8, w // 8)) * 255).astype("uint8")).resize((w, h), Image.BICUBIC).filter(ImageFilter.GaussianBlur(6))
+    m = np.asarray(lo, float) / 255.0
+    m = np.clip((m - 0.35) * 3.0, 0.0, 1.0)[..., None]
+    img = a * (1 - m) + b * m
+    gr = rng.normal(0.0, 1.0, (h, w))
+    gr = np.asarray(Image.fromarray(np.clip(gr * 40 + 128, 0, 255).astype("uint8")).filter(ImageFilter.GaussianBlur(1.0)), float) - 128.0
+    img = img + gr[..., None] * 0.9
+    fl = rng.random((h, w))
+    dark = (fl < 0.012)[..., None]
+    pale = (fl > 0.992)[..., None]
+    img = np.where(dark, img * 0.62, img)
+    img = np.where(pale, np.minimum(img * 1.25 + 14, 255), img)
+    im = Image.fromarray(np.clip(img, 0, 255).astype("uint8")).filter(ImageFilter.GaussianBlur(0.6))
+    d = ImageDraw.Draw(im)
+    for _ in range(26):
+        x, y = int(rng.integers(8, w - 8)), int(rng.integers(8, h - 8))
+        d.ellipse([x - 1, y - 1, x + 1, y + 1], fill=(96, 66, 40))
+    im.save(path)
+
+
 def _machine(gb, gc, cx, w, y_f, y_b, z0, kind, plinth, lamp_on=False):
     """One front-loading washer or tumble dryer: a cabinet, a control strip (a drawer and a dial and a blank coin plate for the washer; two dials, a coin plate and a lamp for the dryer), a round door (a rubber seal,
     a chrome ring, a smoked glass dome). `y_f` is the cabinet's front face; nothing stands more than 0.033 in front of it. Returns the lamp's centre (x, y, z) for a dryer."""
@@ -278,17 +305,34 @@ def room(r):
         r.placed_rec("L-back-shelves", "script:wrapped_parcels", gm.extents(), [o.name], tag="parcels_%.2f" % z, n=9)
     # ---- the left wall: the cork board and three cards
     xl, xr = -W / 2, W / 2
-    cork = r.mat("cork", rgb8(170, 126, 84), rough=0.9)
-    r.box("cork_board", xl + 0.002, xl + 0.030, 1.60, 2.50, 1.25, 1.85, cork, fixture="L-left-notices")
+    # 14 Oct (the tea rooms' close review, narrow 7: "the cork notice board is a flat orange slab"): a granular cork picture made by script (two tones, a 2 mm grain), a 20 x 15 mm pine frame, a coloured pin in each card
+    cork_p = os.path.join(tex, "cork.png")
+    _cork_png(cork_p)
+    cork = r.image_mat("cork", cork_p, rough=0.95)
+    pine = r.mat("cork_frame_pine", rgb8(200, 160, 110), rough=0.6)
+    cg_ = GM()
+    cg_.box(xl + 0.002, xl + 0.030, 1.60, 2.50, 1.25, 1.85, 0, uv_front=(0.0, 0.0, 1.0, 1.0), front="+x", uv_other=(0.01, 0.01))
+    fx_ = xl + 0.002
+    cg_.box(fx_, xl + 0.045, 1.58, 1.60, 1.23, 1.87, 1)
+    cg_.box(fx_, xl + 0.045, 2.50, 2.52, 1.23, 1.87, 1)
+    cg_.box(fx_, xl + 0.045, 1.60, 2.50, 1.23, 1.25, 1)
+    cg_.box(fx_, xl + 0.045, 1.60, 2.50, 1.85, 1.87, 1)
+    cob = cg_.to_object("cork_board", [cork, pine], r.sc)
+    r.fixture_rec("L-left-notices", "cork_board", cg_.extents())
     npth = os.path.join(tex, "notices.png")
     ntxt = ["PRICES\nWASH  90p\nDRY  20p\nSOAP  15p\nSERVICE\n35p a lb", "PLEASE\nREMOVE YOUR\nWASH AT ONCE\nAND TAKE CARE\nOF THE DOORS", "SERVICE\nWASHES\nLEAVE IT WITH US\nREADY NEXT DAY"]
     nuv = GEN.card_atlas(npth, ntxt, cols=3, tile=(256, 340), size=34, bg=(232, 226, 204), ink=(30, 40, 80))
     GEN.TEXTS.extend(["PRICES", "WASH 90p", "DRY 20p", "SOAP 15p", "SERVICE", "35p a lb", "PLEASE", "REMOVE YOUR", "WASH AT ONCE", "AND TAKE CARE", "OF THE DOORS", "SERVICE", "WASHES", "LEAVE IT WITH US", "READY NEXT DAY"])
     nm_ = r.image_mat("notices", npth, rough=0.8)
     ng = GM()
-    for k, yc in enumerate((1.80, 2.05, 2.30)):
-        ng.box(xl + 0.0300, xl + 0.0322, yc - 0.105, yc + 0.105, 1.34, 1.72, 0, uv_front=nuv[k], front="+x", uv_other=(nuv[k][0] + 0.01, nuv[k][1] + 0.01))
+    pg = GM()
+    for k, (yc, zlo) in enumerate(((1.80, 1.33), (2.05, 1.35), (2.30, 1.32))):
+        ng.box(xl + 0.0300, xl + 0.0322, yc - 0.105, yc + 0.105, zlo, zlo + 0.38, 0, uv_front=nuv[k], front="+x", uv_other=(nuv[k][0] + 0.01, nuv[k][1] + 0.01))
+        pg.rod((xl + 0.0322, yc, zlo + 0.345), (xl + 0.0362, yc, zlo + 0.345), 0.0032, k, 12)
     no = ng.to_object("notices", [nm_], r.sc)
+    pins_m = [r.mat("pin_%s" % n_, rgb8(*c_), rough=0.35) for n_, c_ in (("red", (196, 48, 40)), ("blue", (48, 78, 168)), ("yellow", (226, 188, 48)))]
+    pgo = pg.to_object("notice_pins", pins_m, r.sc, smooth=True)
+    r.fixture_rec("L-left-notices", "notice_pins", pg.extents())
     r.placed_rec("L-left-notices", "script:paper_notices", ng.extents(), [no.name], tag="notices", n=3)
     # ---- the right wall: the care chart and the clock
     cp = os.path.join(tex, "care_chart.png")
