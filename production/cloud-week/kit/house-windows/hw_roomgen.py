@@ -92,6 +92,7 @@ class HRoom(S.Room):
         self.sc.collection.children.link(self.coll_t)
         self.coll_t.hide_render = True
         self.lit_flame = []
+        self.parents = {}
         self.tv_screen = None
         self.bulb_disc = None
 
@@ -445,6 +446,45 @@ class HRoom(S.Room):
                     ob.data.materials[i] = m2
         self.print_log.append(rec)
 
+    def support_z(self, parent_objs, x, y):
+        """The height of the parent's own surface under (x, y): a ray cast down from just under the ceiling, the first hit on one of the parent's meshes (None: nothing of it there)."""
+        dg = bpy.context.evaluated_depsgraph_get()
+        origin = Vector((x, y, self.H - 0.02))
+        d = Vector((0.0, 0.0, -1.0))
+        for _ in range(12):
+            ok, loc, nrm, idx, ob, mat = self.sc.ray_cast(dg, origin, d)
+            if not ok:
+                return None
+            if ob.name in parent_objs:
+                return loc.z
+            origin = loc + d * 0.001
+        return None
+
+    def rest_on(self, parent, cx, cy, w, dpt):
+        """Where a piece that stands on another piece (a clock on a cabinet, the television on its table) rests: the x of its centre that puts it on the flattest part of the parent's top
+        (the lowest gap under its footprint, then the nearest to the target's x), and the height that rests it there. A gap of more than 6 mm is split: the base sinks into the crest by half of it,
+        so nothing floats. Returns (x, z, record)."""
+        objs, pext = parent
+        bpy.context.view_layer.update()
+        lo, hi = pext[0] + w / 2, pext[1] - w / 2
+        cands = sorted(set([round(v, 3) for v in np.arange(lo, hi + 1e-9, 0.02)] + [min(max(cx, lo), hi)])) if hi > lo else [cx]
+        best = None
+        for c in cands:
+            hs = [self.support_z(objs, gx, gy) for gx in np.linspace(c - w / 2 + 0.01, c + w / 2 - 0.01, 7) for gy in np.linspace(cy - dpt / 2 + 0.02, cy + dpt / 2 - 0.02, 3)]
+            miss = sum(1 for h in hs if h is None)
+            hv = [h for h in hs if h is not None]
+            if not hv:
+                continue
+            gap = max(hv) - min(hv)
+            score = gap + 0.004 * abs(c - cx) + 0.2 * miss
+            if best is None or score < best[0]:
+                best = (score, c, max(hv), gap, miss)
+        if best is None:
+            return cx, 0.0, {"on": None, "gap_mm": None}
+        _, c, ztop, gap, miss = best
+        z = ztop - (0.5 * gap if gap > 0.006 else 0.0)
+        return c, z, {"gap_mm": round(gap * 1000, 1), "z_top_m": round(ztop, 4), "z_base_m": round(z, 4), "sink_mm": round((ztop - z) * 1000, 1), "points_off_the_parent": miss}
+
     def objects(self, frame_counter):
         W, H, D = self.W, self.H, self.D
         for k, o in enumerate(self.R["objects"]):
@@ -461,14 +501,19 @@ class HRoom(S.Room):
                 cx = (-W / 2 + (pl["x_from_wall"][0] + pl["x_from_wall"][1]) / 2) if sgn > 0 else (W / 2 - (pl["x_from_wall"][0] + pl["x_from_wall"][1]) / 2)
                 cy = (pl["y_back"][0] + pl["y_back"][1]) / 2
             z0 = pl["z"][0]
+            rest = None
+            if o.get("on") and o["on"] in self.parents:
+                dx, dy, dz = self.dims(asset, rot)
+                cx, z0, rest = self.rest_on(self.parents[o["on"]], cx, cy, dx, dy)
             ext = self.place(asset, (cx, cy, z0), rot=rot, scale=1.0, fixture="obj%d" % k, anchor=("c", "c", "min"))
             objs = list(self.last_objs)
+            self.parents[asset] = (objs, ext)
             self.fix_material_quirks(asset, objs)
             if asset.startswith("hanging_picture_frame"):
                 idx = frame_counter.setdefault("n", 0)
                 frame_counter["n"] = idx + 1
                 self.swap_print(objs, asset, frame_counter.get("base", 0) + idx)
-            self.placed[-1].update({"surface": surf, "class": o["class"], "stand_off_m": o["stand_off_m"], "on": o.get("on"), "wall": pl.get("wall"),
+            self.placed[-1].update({"support": rest, "surface": surf, "class": o["class"], "stand_off_m": o["stand_off_m"], "on": o.get("on"), "wall": pl.get("wall"),
                                     "target_ext": [pl["x_across"][0], pl["x_across"][1], pl["y_back"][0], pl["y_back"][1], pl["z"][0], pl["z"][1]] if surf == "back" else None,
                                     "target_dims_mm": o["dims_mm"]})
             if asset == "television_02":
