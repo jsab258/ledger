@@ -80,6 +80,9 @@ EXTRA_BLANK = {
     # batch B (14 Oct, 2026): the chandler's rubber boots carry the two MICKY badges on the DIRTY variant's map as well (the target's boxes are for the clean map only)
     "rubber_boots": [{"map": "rubber_boots_dirty_diff_1k.jpg", "boxes": [[446, 48, 506, 74], [648, 398, 706, 424]],
                       "fill": "the boot's dark green", "reads": "MICKY (two badges) on the dirty variant's map, at 8 x: a rounded frame round the word"}],
+    # batch B (14 Oct): looked at 100 per cent, the signal lamp's green casing carries a line of worn dark lettering at map x 75 to 217, y 556 to 575 (a maker's or model name, scuffed so that no word can be read, but the strokes are there)
+    "signal_flashlight": [{"map": "signal_flashlight_diff_1k.jpg", "boxes": [[70, 550, 226, 582]],
+                           "fill": "the casing's own dark green", "reads": "a scuffed line of lettering on the casing (not legible as a word at 6 x; a maker's mark by its place and form)"}],
     "sledgehammer_01": [{"map": "sledgehammer_01_diff_1k.jpg", "boxes": [[14, 400, 104, 596]],
                          "fill": "the handle's yellow", "reads": "a warning label: a column of small print and 'WARN...' (modern safety text)"}],
 }

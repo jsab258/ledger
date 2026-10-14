@@ -102,7 +102,7 @@ def room(r):
     target's "squash" is a drink and is out).
     left wall G-left-tins and right wall G-right-tins (0.10 deep, 4 tiers z 0.70 to 1.75, y 1.0 to 3.0): tins on the left, dry-goods packets on the right (the target's "tea" packets are out: a label of a drink).
     the clock: on the right wall above the right unit (the gantry has no clear wall above its top tier: 0.35 between the top board and the ceiling is less than the clock's 0.30 plus its hang).
-    floor: brown linoleum (linoleum_brown), a darker worn path to the counter (decal). The till's glow lamp (night_dark): a small warm point light over the till."""
+    floor: brown linoleum (linoleum_brown), a darker worn path to the counter (decal). The counter lamp (a small brass lamp with an opal shade at the counter's left end) is the night_dark picture's one warm point of light."""
     _setup()
     import sw_room_gen as RG
     import bpy
@@ -344,15 +344,31 @@ def room(r):
     wp = os.path.join(tex, "worn_path.png")
     GB.worn_path_png(wp, shift=0.6, seed=9)
     GB.floor_decal(r, "worn_path", wp, -0.5, 2.2, 0.5, 3.8, fixture="G-floor")
-    ld = bpy.data.lights.new("till_glow", "POINT")
+    # the counter lamp (14 Oct, from the tea rooms' close review 10: a point light with no fitting is a glow from nowhere): a small brass lamp with an opal shade stands on the counter's left end; it is lit in
+    # night_dark only, by a 15 W-class warm point light under its shade (0.4 W in the picture's units) and the shade's own glow
+    lx_, ly_ = cx0 + 0.45, D - 0.30
+    lamp_brass = r.brass_m
+    shade_m = r.mat("counter_lamp_shade", rgb8(236, 226, 200), rough=0.6, emit=(1.0, 0.78, 0.45), emit_strength=0.0)
+    lg = GM()
+    lg.lathe(lx_, ly_, ch, [(0.0, 0.0), (0.060, 0.0), (0.060, 0.010), (0.032, 0.018), (0.013, 0.030), (0.011, 0.150), (0.016, 0.158), (0.0, 0.160)], mi=0, n=24)
+    lg.lathe(lx_, ly_, ch, [(0.044, 0.178), (0.102, 0.282), (0.105, 0.282), (0.047, 0.180)], mi=1, n=28)
+    lo_ = lg.to_object("counter_lamp", [lamp_brass, shade_m], r.sc, smooth=True)
+    r.placed_rec("G-back-counter", "script:counter_lamp", lg.extents(), [lo_.name], tag="counter_lamp", n=1)
+    ld = bpy.data.lights.new("counter_lamp_light", "POINT")
     ld.energy = 0.0
-    ld.color = (1.0, 0.72, 0.45)
-    ld.shadow_soft_size = 0.04
-    po_ = bpy.data.objects.new("till_glow", ld)
+    ld.color = (1.0, 0.72, 0.42)
+    ld.shadow_soft_size = 0.015
+    po_ = bpy.data.objects.new("counter_lamp_light", ld)
     r.sc.collection.objects.link(po_)
-    po_.location = (cx1 - 0.40, D - 0.30, ch + 0.50)
+    po_.location = (lx_, ly_ - 0.01, ch + 0.200)
     r.pilot = po_
-    r.pilot_w = 5.0
+    r.pilot_w = 0.8
+    orig_ss_ = r.set_state
+
+    def set_state_(state, P, _o=orig_ss_, _m=shade_m):
+        _o(state, P)
+        _m.node_tree.nodes["Principled BSDF"].inputs["Emission Strength"].default_value = 6.0 if state == "night_dark" else 0.0
+    r.set_state = set_state_
     r.rows["counts"] = {"gantry_tins": n_tins, "gantry_packets": n_pk, "jars": n_jar, "bottles": n_bot, "left_tins": n_left, "right_packets": n_right}
     r.notes.append("tins %d and packets %d on the gantry (target 160 and 90), %d jars and %d bottles on the counter's shelves (24 and 12), %d tins on the left unit (40) and %d packets on the right (30): the units are filled, not counted out; no drink on any label" % (n_tins, n_pk, n_jar, n_bot, n_left, n_right))
     r.texts = list(GEN.TEXTS)
