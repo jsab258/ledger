@@ -22,7 +22,7 @@ sys.path.insert(0, HERE)
 import bpy  # noqa: E402
 import bmesh  # noqa: E402
 from mathutils import Vector, Matrix, Euler  # noqa: E402
-import sw_assets as A  # noqa: E402
+import hw_assets as A  # noqa: E402
 
 REPO = A.REPO
 W, H, D = 5.3, 2.4, 4.5

@@ -802,6 +802,25 @@ def ice_chunk(gm, c, s, seed, mi=0, uv=None):
     gm.add(V, F, mi, U)
 
 
+def ice_mound(gm, cx, cy, z0, rx, ry, h, n, seed, mi=0):
+    """A mound of crushed ice built of `n` faceted chunks (14 Oct: the first mounds were smooth heaps in one flat blue, which read as jelly): centres scattered over an ellipse (half axes rx, ry) on a floor z0, the
+    height of the dome 1 - r^2 of `h`, each chunk 16 to 34 mm across with its own corners, never below the floor (a chunk's lowest corner is 0.5 of its size under its centre at most), the outer chunks smaller; the picture
+    of the ice (`ice_png`) is the material, UV tiles by chunk. Returns the number of chunks."""
+    rnd = random.Random(seed)
+    cnt = 0
+    for k in range(n):
+        a = rnd.uniform(0.0, 2.0 * math.pi)
+        r_ = math.sqrt(rnd.random()) * (0.5 if k % 5 == 0 else 1.0)
+        px, py = r_ * math.cos(a), r_ * math.sin(a)
+        dome = max(0.0, 1.0 - r_ * r_)
+        sz = rnd.uniform(0.016, 0.034) * (0.7 + 0.3 * dome)
+        cz = z0 + sz * 0.5 + 0.0008 + h * dome * rnd.uniform(0.35, 1.0)
+        t = (k % 4) * 0.25
+        ice_chunk(gm, (cx + px * rx, cy + py * ry, cz), sz, seed=seed * 7 + k, mi=mi, uv=(t, 0.2, t + 0.2, 0.7))
+        cnt += 1
+    return cnt
+
+
 def enamel_tray(gm, cx, cy, z0, w=0.37, d=0.30, h=0.05, mi=0, mi_rim=0):
     """A white enamel tray (a box open on top: a floor 3 mm and four walls 3 mm, rounded rim as a rod along each top edge) centred at (cx, cy) on a floor z0. One mesh; the rim rods are thicker than the walls."""
     t = 0.003

@@ -185,9 +185,11 @@ def room(r):
     for k in range(8):
         xc = cx0 + 0.05 + tpitch * (k + 0.5)
         GB.enamel_tray(gt, xc, tray_y, 0.78, w=tw, d=td, h=0.05, mi=0, mi_rim=0)
-        GB.heap(gi, xc, tray_y, 0.781, 0.150, 0.125, 0.045, seed=11 + k, mi=0, amp=0.8)
+        GB.ice_mound(gi, xc, tray_y, 0.781, 0.145, 0.120, 0.045, 150, 11 + k, mi=0)
     o1 = gt.to_object("trays", [enamel], r.sc)
-    o2 = gi.to_object("tray_ice", [ice_m], r.sc, smooth=True)
+    ip_r = os.path.join(tex, "ice.png")
+    GB.ice_png(ip_r)
+    o2 = gi.to_object("tray_ice", [r.image_mat("ice_chunks", ip_r, rough=0.22)], r.sc, smooth=False)
     ext = [min(gt.extents()[0], gi.extents()[0]), max(gt.extents()[1], gi.extents()[1]), gt.extents()[2], gt.extents()[3], 0.78, max(gt.extents()[5], gi.extents()[5])]
     r.placed_rec("F-back-counter", "script:enamel_trays", ext, [o1.name, o2.name], tag="trays", n=8)
     # ---- the shelves on the counter's top: tins and jars, one row
@@ -409,9 +411,9 @@ def display(d):
         d.gm_object("tray_%d" % k, gt, [enamel], "scripted", "script:enamel_trays", tier="slab")
         gh = GM()
         gh_i0 = len(gh.V)
-        GB.heap(gh, X(uc), vc, zc + 0.004, 0.17, 0.13, 0.040, seed=21 + k, mi=0, amp=0.7)
+        GB.ice_mound(gh, X(uc), vc, zc + 0.003, 0.165, 0.115, 0.040, 170, 21 + k, mi=0)
         GB.rot_x(gh, gh_i0, (vc, zc), 12.0)
-        d.gm_object("tray_ice_%d" % k, gh, [d.mat("tray_ice", rgb8(176, 196, 208), rough=0.22)], "scripted", "script:slab_and_ice", tier="slab", smooth=True)
+        d.gm_object("tray_ice_%d" % k, gh, [ice_m], "scripted", "script:slab_and_ice", tier="slab", smooth=False)
     # ---- eight lemons between and beside the trays (resting on the ice bed)
     for k in range(8):
         lu = 0.56 + 0.52 * (k % 5) + (0.0 if k < 5 else 0.26 * (k - 4))
