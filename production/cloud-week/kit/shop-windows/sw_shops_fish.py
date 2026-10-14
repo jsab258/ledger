@@ -359,13 +359,13 @@ def display(d):
     gm.add(V, F, 0, U)
     # the lip: a bar 40 mm over the surface at the front
     gm.box(x0, x1, v0, v0 + 0.018, z_f, z_f + 0.040, 0, uv_front=(0.0, 0.0, 0.2, 0.05), uv_other=(0.1, 0.1))
-    ob, _ = d.gm_object("slab", gm, [slab_m], "scripted", "script:slab_and_ice")
+    ob, _ = d.gm_object("slab", gm, [slab_m], "support", "script:slab_and_ice")          # the table the goods stand on: a support (the sill and the trays hide most of it from the far pavement; DSP-03 is for goods)
     GB.chamfer(ob, 0.002, 2)
     # ---- the ice bed (lumpy, peaks at 0.03) and chunks in the gaps between the trays; one mesh
     ip = os.path.join(tex, "ice.png")
     GB.ice_png(ip)
     ice_m = d.image_mat("ice", ip, rough=0.22)
-    tray_us = [0.30 + 0.52 * k for k in range(6)]                 # six trays 0.40 wide at a 0.52 pitch (u 0.10 to 3.22)
+    tray_us = [0.25, 0.66, 1.25, 1.86, 2.30, 2.90]                 # six trays 0.40 wide, placed in the lights (the mullions stand at u 0.825 to 0.875, 1.65 to 1.70 and 2.475 to 2.525: a tray under a mullion showed 0.47 of its ice from STREET_SQUARE, DSP-03)
     tray_v0, tray_v1 = 0.12, 0.42
     nx, ny = 70, 11
     gi = GM()
@@ -398,7 +398,7 @@ def display(d):
         ice_chunk_u = ((k % 4) * 0.25, 0.0, (k % 4) * 0.25 + 0.2, 0.5)
         GB.ice_chunk(gi, (X(u), v, z_at(v) + 0.020 + 0.0 * sz), sz, seed=k % 4 + 7 * (k % 7), mi=0, uv=(ice_chunk_u[0], ice_chunk_u[1] + 0.2, ice_chunk_u[2], ice_chunk_u[3] + 0.2))
         n_chunks += 1
-    d.gm_object("ice_bed", gi, [ice_m], "scripted", "script:slab_and_ice", tier="slab", smooth=False)
+    d.gm_object("ice_bed", gi, [ice_m], "support", "script:slab_and_ice", tier="slab", smooth=False)          # the bed the trays stand in (support)
     # ---- six trays laid on the slope, each with a mound of ice
     tw, td = 0.40, 0.30
     enamel = d.mat("enamel", rgb8(210, 212, 208), rough=0.2)
@@ -415,10 +415,8 @@ def display(d):
         GB.rot_x(gh, gh_i0, (vc, zc), 12.0)
         d.gm_object("tray_ice_%d" % k, gh, [ice_m], "scripted", "script:slab_and_ice", tier="slab", smooth=False)
     # ---- eight lemons between and beside the trays (resting on the ice bed)
-    for k in range(8):
-        lu = 0.56 + 0.52 * (k % 5) + (0.0 if k < 5 else 0.26 * (k - 4))
-        lu = min(lu, L - 0.14)
-        lv = 0.48 if k % 2 == 0 else 0.07
+    # (each in a light of the window, clear of the mullions at u 0.825 to 0.875, 1.65 to 1.70 and 2.475 to 2.525 and of the trays: a lemon behind a mullion showed 0.49 of itself, DSP-03; two lay on one another at u 1.60 before)
+    for k, (lu, lv) in enumerate([(0.55, 0.48), (0.20, 0.07), (1.00, 0.47), (1.52, 0.27), (1.95, 0.48), (2.20, 0.07), (2.60, 0.27), (3.22, 0.30)]):
         lz = GB.rest_z(d, X(lu), lv, 0.034)
         _, nm_ = d.piece("lemon", lu, lv, lz + 0.003, rot=(0, 0, rnd.uniform(0, 6.28)), scale=1.0, tier="slab", tris=None)
         GB.settle_down(d, nm_, max_drop=0.03)
@@ -426,7 +424,7 @@ def display(d):
     lam = d.mat("chiller_pad", rgb8(206, 208, 204), rough=0.3)
     gm = GM()
     gm.box(X(0.0), X(L), 0.524, 0.549, 0.0, 0.30, 0)
-    ob, _ = d.gm_object("chiller_pad", gm, [lam], "scripted", "script:chiller_pad")
+    ob, _ = d.gm_object("chiller_pad", gm, [lam], "support", "script:chiller_pad")          # the back panel behind the goods (support)
     GB.chamfer(ob, 0.002, 2)
     # ---- fourteen tickets on 100 mm stakes, prices per lb in hand lettering
     names = ["COD\n2.60 lb", "HADDOCK\n2.45 lb", "PLAICE\n2.90 lb", "KIPPERS\n1.80 lb", "WHITING\n1.60 lb", "SKATE\n2.20 lb", "HERRING\n1.20 lb", "MACKEREL\n1.10 lb", "CRAB\n3.40 lb", "PRAWNS\n4.80 lb", "COCKLES\n1.00 pt", "SMOKED COD\n2.90 lb", "LEMONS\n8p each", "ICE\nFREE"]

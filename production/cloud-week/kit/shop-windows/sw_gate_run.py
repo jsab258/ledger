@@ -137,6 +137,15 @@ def run(work, assets, previews, samples, views=None, log=print, check_renders=Tr
     todo = views or [(c, s) for c in CAMS for s in states]
     if not ctx.lit and not views and ctx.has_room:
         todo = todo + [("STREET_SQUARE", "night_dark")]            # a shop that is dark at night: the street's own night picture, one view, as an extra
+    if views and not check_renders and ctx.has_room and os.environ.get("LEDGER_GATE_PIECES"):
+        # (14 Oct, batch B) a spill test (two night frames, 8 samples) that also reads LIT-08: the display pieces' object-index mask of the two close night views (one sample, cheap)
+        di = json.load(open(os.path.join(ctx.display_work, "display_items.json")))
+        groups = {nm: gi for gi, g in enumerate(di["groups"]) for nm in g["objs"]}
+        for cam in ("CLOSE_35", "CLOSE_35_B"):
+            card = os.path.join(gate, "card_%s_night_lit.png" % cam)
+            G.render_view(cam, R["cameras"][cam], "night_lit", card, os.path.join(gate, "check_%s_night_lit_pieces.png" % cam), front, grille, disp, HDRI,
+                          samples=1, extra=extra, res=RES_FRAME, mode="mask_pieces", column_pngs=cols("night_lit"), groups=groups, ctx=ctx)
+            log("pieces %s done" % cam)
     for cam, st in todo:
         out = os.path.join(gate, "%s_%s.png" % (cam, st))
         t = G.render_view(cam, R["cameras"][cam], st, os.path.join(gate, "card_%s_%s.png" % (cam, st)), out, front, grille, disp, HDRI, samples=samples, extra=extra, column_pngs=cols(st), ctx=ctx)

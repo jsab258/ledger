@@ -118,6 +118,11 @@ class GDisplay(RG.GRoom):
                 if pb is None or not pb.inputs["Base Color"].links:
                     continue
                 src = pb.inputs["Base Color"].links[0].from_node
+                if src.type in ("MIX", "MIX_RGB"):                  # (14 Oct) the importer multiplies a model's picture by its colour factor through a Mix node (the grocer's red crates): follow it to the picture
+                    for inp_ in src.inputs:
+                        if inp_.is_linked and inp_.links[0].from_node.type == "TEX_IMAGE":
+                            src = inp_.links[0].from_node
+                            break
                 if src.type != "TEX_IMAGE" or src.image is None or src.image.name in done:
                     continue
                 im = src.image
@@ -126,6 +131,37 @@ class GDisplay(RG.GRoom):
                 im.pixels.foreach_get(a)
                 a = a.reshape(-1, 4)
                 a[:, :3] = _np.clip(a[:, :3] * k, 0.0, 1.0)
+                im.pixels.foreach_set(a.reshape(-1))
+                im.update()
+
+    def tone_metal(self, obj_names, f):
+        """Scale the metallic channel (blue of the ARM picture) of the named objects' materials by `f` once per image: a brass or black-iron model whose metal reflects only a dark night room reads as black
+        against the lit room behind it (the chandler's storm lanterns: LIT-08 0.32 to 0.45 with their base colour lifted 2 times); f under 1 lets the diffuse colour show. The model's own texture is changed (CC0)."""
+        import numpy as _np
+        done = self.__dict__.setdefault("_metal_toned", set())
+        for nm in obj_names:
+            ob = bpy.data.objects.get(nm)
+            if ob is None:
+                continue
+            for sl in ob.material_slots:
+                m = sl.material
+                if not m or not m.use_nodes:
+                    continue
+                pb = m.node_tree.nodes.get("Principled BSDF")
+                if pb is None or not pb.inputs["Metallic"].links:
+                    continue
+                sep = pb.inputs["Metallic"].links[0].from_node
+                if not sep.inputs or not sep.inputs[0].links:
+                    continue
+                src = sep.inputs[0].links[0].from_node
+                if src.type != "TEX_IMAGE" or src.image is None or src.image.name in done:
+                    continue
+                im = src.image
+                done.add(im.name)
+                a = _np.empty(len(im.pixels), dtype=_np.float32)
+                im.pixels.foreach_get(a)
+                a = a.reshape(-1, 4)
+                a[:, 2] = _np.clip(a[:, 2] * f, 0.0, 1.0)
                 im.pixels.foreach_set(a.reshape(-1))
                 im.update()
 

@@ -287,10 +287,14 @@ def room(r):
 def display(d):
     """The chandler's window (target `shops.chandler.display`, 12 item rows; bed 3.35 x 0.55; 1.55 high at most). Every Poly Haven piece stands at its real size (DSP-06: a boot at 0.5 is a child's); the target's
     twelve zones overlap in volume and add up to more than 3.35 x 0.55 at that size, so (each a Judgement in NOTES.md):
-    the lifebuoy leans on its edge at the left (u 0.05 to 0.85, its foot on the bed, its top toward the glass); two life jackets hang from a timber rail at w 1.45 (u 0.95 to 2.45) on two cords from the window head,
-    two sou'westers from a second rail in front of them at w 1.28; FRONT ROW (v 0.13, u 0.92 to 3.30): oil_tin x4, seadogs_compass x2, Lantern_01 x2, small_oil_can_01 x3, the blowtorch; BACK ROW (v 0.40): ONE
-    pair of rubber_boots (the target's 3 do not fit 0.9 m at real size), wooden_lantern_01, four coils of rope (two big on timber crates 60 mm high so that they read from the far pavement, a small one on each; the
-    fifth does not fit), a pyramid of 21 paint tins (6 + 5 + ... + 1). The woven galvanised mesh screens of the night (target `night`) are night furniture: not in the day glb and out of the lit night view."""
+    the lifebuoy leans on its edge at the left (u 0.05 to 0.85, its foot on the bed, its top toward the glass); two life jackets hang from a timber rail at w 1.45 (u 1.30 and 2.40, the rail from u 0.95 to 2.95) on
+    cords from the window head, two sou'westers from a second rail in front of them (u 1.45 and 2.30); FRONT ROW (v 0.13, each piece placed in a light of the window, clear of the mullions at u 1.10 to 1.15 and 2.20 to
+    2.25): oil_tin x4, seadogs_compass x2 (on a low riser), Lantern_01 x2, small_oil_can_01 x2 (the target's 3 do not fit), the blowtorch; BACK ROW (v 0.40): ONE pair of rubber_boots (the target's 3 do not fit 0.9 m at
+    real size), wooden_lantern_01, THREE rope coils hung on 8 mm pegs standing out of the second rail (two big of 2.6 turns and a small one of 2 turns: coils lying flat were a sliver from the far pavement, DSP-03 0.18
+    to 0.46; the target's fifth and fourth do not fit), a pyramid of 21 paint tins (6 + 5 + ... + 1) with a backing board; ten price cards, each before its goods (a card on a stake before bed goods, a card on a 30 mm
+    cord tied to the hung goods). Toned for the night frames (the gate's spill burns the red channel of orange and red goods and the dark ones read dark against the lit room: PIC-05g, LIT-08): jackets 0.40, buoy
+    0.62, Lantern_01 base 4.5 and metal 0.15, oil tins 1.5, boots 1.6, compasses 2.0. The woven galvanised mesh screens of the night (target `night`) are night furniture (`make_mesh_screens` in sw_front.py): not in the day glb
+    and out of the lit night view."""
     _setup()
     import sw_room_gen as RG
     rr = d.RR
@@ -305,6 +309,7 @@ def display(d):
     # ---- lifebuoy leaning on its edge (its foot on the bed, its top toward the glass)
     ext, nm_ = d.piece("lifebuoy", 0.45, 0.24, 0.0, rot=(math.radians(-12), 0, 0), scale=1.0, tier="bed", tris=None)
     GB.ground_piece(d, nm_, 0.0)
+    buoy_names = list(nm_)
     # ---- the rails: jackets behind, hats in front (hung from the window head on cords)
     rail_m = d.mat("rail_timber", rgb8(120, 84, 54), rough=0.6)
     rail_w, rail_v = 1.45, 0.42
@@ -321,7 +326,7 @@ def display(d):
         jackets_names.extend(nm_)
         jacket_hem = d.items[-1]["ext"][4]
     sg = GM()
-    sw_m = [d.mat("oilskin_yellow", rgb8(230, 186, 28), rough=0.32), d.mat("oilskin_seam", rgb8(150, 110, 20), rough=0.5)]
+    sw_m = [d.mat("oilskin_yellow", rgb8(176, 138, 20), rough=0.32), d.mat("oilskin_seam", rgb8(150, 110, 20), rough=0.5)]
     strap = GM()
     rail2_w, rail2_v, hs = 1.28, 0.12, 0.85
     gm2 = GM()
@@ -365,10 +370,13 @@ def display(d):
     # jackets' picture is toned down (0.62) and the lanterns' (1.5), the boots' (1.4) and the oil tins' (1.3) up, in the display's copy of their textures
     import bpy
     boots_names = [o.name for o in bpy.data.objects if o.type == "MESH" and o.name.startswith("rubber_boots") and not o.hide_render and d.coll_t not in o.users_collection]
-    d.tone(jackets_names, 0.62)
-    d.tone(names_by.get("Lantern_01", []), 1.5)
-    d.tone(names_by.get("oil_tin", []), 1.3)
-    d.tone(boots_names, 1.4)
+    d.tone(jackets_names, 0.40)
+    d.tone(buoy_names, 0.62)
+    d.tone(names_by.get("Lantern_01", []), 4.5)
+    d.tone_metal(names_by.get("Lantern_01", []), 0.15)
+    d.tone(names_by.get("oil_tin", []), 1.5)
+    d.tone(boots_names, 1.6)
+    d.tone(names_by.get("seadogs_compass", []), 2.0)
     # ---- rope coils HUNG on the front rail, as a chandler hangs them (14 Oct: coils lying flat on crates behind the cans were a sliver from the pavement, DSP-03 read 0.18 to 0.46): two big (2 layers) and a small
     # (1 layer) between the sou'westers, the rail through each coil's hole and the hole's top edge on the rail; the pyramid of paint tins beside them
     rm = []
@@ -377,7 +385,7 @@ def display(d):
         GB.rope_png(pth, c, which=1, size=512)
         rm.append(d.image_mat("rope_%d" % i, pth, rough=0.9))
     rope_r = 0.0095
-    hung = ((1.82, 0.088, 2.6, 2, 0), (2.082, 0.050, 2.0, 1, 2), (2.62, 0.088, 2.6, 2, 1))
+    hung = ((1.82, 0.088, 2.6, 2, 0), (2.082, 0.050, 2.0, 1, 2), (2.62, 0.088, 2.6, 2, 3))
     coil_bottom, coil_front = {}, {}
     pg = GM()
     peg_top = rail2_w + 0.008

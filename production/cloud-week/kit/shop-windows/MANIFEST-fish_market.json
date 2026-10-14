@@ -1,0 +1,26 @@
+{
+ "made": "2026-10-14 09:58:31",
+ "what": "the files of the narrow-points build (13 Oct, from the try 2 reviews; v3); the three glbs and the three 4096 pictures are out of git (rebuilt by build_ritas.py) so this names the versions",
+ "files": {
+  "fish_market_front.glb": {
+   "bytes": 9612520,
+   "sha256": "aa67f7fc15d6974fccfba1e98be733f079ee74e6a8ec6494a2ecac53ba4a24c5"
+  },
+  "fish_market_display.glb": {
+   "bytes": 2520472,
+   "sha256": "03b9bcbe402e1a53fb9b17a57950a1d71af204394bd02ac733e91145dccfbbde"
+  },
+  "fishmonger_day.png": {
+   "bytes": 6949355,
+   "sha256": "4ebee42ab6c640e2526df145b5d9c7d975effc989d5564c8677a42aabdb9c0d8"
+  },
+  "fishmonger_night_lit.png": {
+   "bytes": 6439989,
+   "sha256": "dfd778daf8d119403e16d578b6ddd12b930005aa2440baa6f42d98ac2beea7b7"
+  },
+  "fishmonger_night_dark.png": {
+   "bytes": 5327069,
+   "sha256": "3f0400bc32f77ac10d4ca53a367f3abe8bc7bf9dc96efd0e1181ffc4742e345e"
+  }
+ }
+}

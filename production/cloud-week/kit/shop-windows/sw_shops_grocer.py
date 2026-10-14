@@ -452,8 +452,10 @@ def display(d):
     # ---- apples in three crates at 0.9 of their size: 14, 13 and 13 (40)
     cs = 0.9
     apple_n = [14, 13, 13]
+    crate02_names = []
     for k, uc in enumerate((0.36, 0.86, 1.36)):
-        ext, _ = d.piece("plastic_crate_02", uc, 0.205, 0.0, rot=(0, 0, 0), scale=cs, tier="bed", tris=None)
+        ext, cn_ = d.piece("plastic_crate_02", uc, 0.205, 0.0, rot=(0, 0, 0), scale=cs, tier="bed", tris=None)
+        crate02_names.extend(cn_)
         _crate_bed(d, ext, 0.145, "apple_bed_%d" % k)
         cx_, cy_ = (ext[0] + ext[1]) / 2 + L / 2, (ext[2] + ext[3]) / 2
         zf = ext[4] + 0.018
@@ -465,6 +467,7 @@ def display(d):
             if lay:
                 GB.settle_down(d, nm_)
     # ---- wicker_basket_02 with rolls across its rim, two crate_03 with lemons (all at their own size, DSP-06)
+    d.tone(crate02_names, 1.45)                # the red crates read 0.49 of the room at CLOSE_35_B at night (LIT-08): a lighter plastic
     ext, bn_ = d.piece("wicker_basket_02", 1.78, 0.18, 0.0, rot=(0, 0, 0), scale=1.0, tier="bed", tris=None)
     _, nm_ = d.piece("hamburger_buns", 1.78, 0.18, ext[5] + 0.001, rot=(0, 0, 0), scale=0.9, tier="basket", tris=None)
     GB.settle_down(d, nm_, max_drop=0.05)

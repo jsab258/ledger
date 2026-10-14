@@ -29,6 +29,7 @@ FRAMES = [
     ("reverse", "cam_reverse", ("day", "night")),
     ("cam-a", "cam_A", ("day", "night")),
     ("close", ("H_ALONG_30_NEAR", CLOSE_SITE), ("day", "night")),
+    ("close2", ("CLOSE_2", CLOSE_SITE), ("day", "night")),
     ("h-across0-bay3w1", ("H_ACROSS_0", "east_parade_bay3_upper_w1"), ("day",)),
     ("h-along30-bay3w1", ("H_ALONG_30_NEAR", "east_parade_bay3_upper_w1"), ("day",)),
     ("h-along30-bay1w1", ("H_ALONG_30_NEAR", "east_parade_bay1_upper_w1"), ("day",)),
@@ -47,6 +48,14 @@ def camera_of(key):
     if isinstance(key, str):
         return C.view_cameras()[key]
     name, sid = key
+    if name == "CLOSE_2":
+        # a tighter close view than the target's five (H_ALONG_30_NEAR stands 5.4 m from an upper window): 1.5 m off the wall, 1.6 m along it, eye 1.7 m above the crown, the window's centre as the aim, 30 degrees of view:
+        # the window fills about four fifths of the picture's height (the net, the curtain and the frame at close range)
+        site = T.site(sid)
+        s_ = site["side"]
+        wy = C.wall_y(site)
+        cx, cz = site["x_centre"], site["sill_z_above_crown"] + 0.838
+        return {"eye": (cx - 1.6, wy - s_ * 1.5, C.EYE_Z), "aim": (cx, wy, cz), "vfov": 30.0, "note": "close view of the window at 1.5 m from the wall and 1.6 m along it"}
     return C.h_camera(name, T.site(sid))
 
 
@@ -203,7 +212,7 @@ def run(names=None, samples=None, log=print):
                 t, rec = G.build_and_render(name, cam, st, ro, cards, samples=16, res=(1280, 720), glass_refl=0.0, extra=extra, log=log)
                 times["refloff_" + tag] = t
                 json.dump(times, open(tp, "w"), indent=1)
-            if name in ("hook", "reverse", "cam-a", "close"):
+            if name in ("hook", "reverse", "cam-a", "close", "close2"):
                 pst = "night_lit" if st == "night" else st
                 jp = os.path.join(T.PREVIEWS, "hw-%s-%s-%s.jpg" % (name, pst, T.DATE))
                 if not os.path.exists(jp):

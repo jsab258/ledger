@@ -341,7 +341,7 @@ def build_and_render(view_name, cam, state, out_png, bake_dir, samples=48, res=N
     # ---------------------------------------------------------------- the west cottages (x 3 to 21), the west_north shops beyond (stand-ins)
     wy_o, wy_i = C.WALL_W, C.WALL_W - C.WALL_T
     gz_sill, gz_head, gz_eave = gfs[0]["sill_z_above_crown"], gfs[0]["head_z_above_crown"], 3.1
-    o = blk("w_below", 3.0, 21.0, wy_i, wy_o, 0.1, gz_sill, brick)
+    o = blk("w_below", 3.0, 21.0, wy_i, wy_o, 0.1, gz_sill - 0.127, brick)
     cat(o, "brick", brick)
     o = blk("w_above", 3.0, 21.0, wy_i, wy_o, gz_head, gz_eave, brick)
     cat(o, "brick", brick)
@@ -355,7 +355,7 @@ def build_and_render(view_name, cam, state, out_png, bake_dir, samples=48, res=N
     for k in range(0, len(cuts), 2):
         a, b = cuts[k], cuts[k + 1]
         if b - a > 1e-6:
-            o = blk("w_pier_%d" % k, a, b, wy_i, wy_o, gz_sill, gz_head, brick)
+            o = blk("w_pier_%d" % k, a, b, wy_i, wy_o, gz_sill - 0.127, gz_head, brick)
             cat(o, "brick", brick)
     for x in doors:
         o = blk("w_door_%g" % x, x - 0.45, x + 0.45, wy_i, wy_o + 0.02, 0.1, 2.0, shopfront)
@@ -363,7 +363,9 @@ def build_and_render(view_name, cam, state, out_png, bake_dir, samples=48, res=N
         o = blk("w_door_head_%g" % x, x - 0.45, x + 0.45, wy_i, wy_o, 2.0, gz_sill + 1.68, brick)
         cat(o, "brick", brick)
     for x in wx:
-        o = blk("w_stone_sill_%g" % x, x - 0.5012, x + 0.5012, wy_i, wy_o - 0.0508 + 0.0, gz_sill - 0.127, gz_sill, stone)
+        # the stone sill stands 50.8 mm proud of the face toward the street (the east row's is yo - 0.0508; here the street is at larger y). A first version put it 50.8 mm INTO the wall and its top shared the plane of the
+        # wall's own top face under the window: a black strip along every cottage sill (shadow on coplanar faces). The wall under the windows stops at the sill's underside and the stone sill is its own block.
+        o = blk("w_stone_sill_%g" % x, x - 0.5012, x + 0.5012, wy_i, wy_o + 0.0508, gz_sill - 0.127, gz_sill, stone)
         cat(o, "brick", stone)
     o = wedge("w_roof", 2.7, 21.3, wy_o + 0.3, wy_o - 5.0, gz_eave, gz_eave + 0.5 * 5.0 * math.tan(math.radians(40.0)), roof)
     cat(o, "brick", roof)
@@ -748,6 +750,8 @@ def build_and_render(view_name, cam, state, out_png, bake_dir, samples=48, res=N
         sc.cycles.sample_clamp_indirect = 10.0
         sc.view_settings.view_transform = "Standard"
         sc.view_settings.look = "None"
+    if extra.get("post"):                       # an experiment's hook (the builder's own tests): a function of bpy called before the render
+        extra["post"](bpy)
     t1 = time.time()
     bpy.ops.render.render(write_still=True)
     return round(time.time() - t1, 1), rec
