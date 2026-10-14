@@ -1291,6 +1291,15 @@ def pic13(rooms):
                 res.append("%s %.4f%%" % (rid, 100 * share))
             elif share > 0.001:
                 beside.append("%s %s %.2f%%" % (rid, st, 100 * share))
+    # NEG-03: the negative control of PIC-13: the first build's lit pictures (kept in the scratch folder rooms_try1_lit, outside git) must FAIL it
+    old_dir = os.path.join(T.SCRATCH, "rooms_try1_lit")
+    olds = sorted(glob.glob(os.path.join(old_dir, "*_night_lit.png")))
+    if olds:
+        shares = {os.path.basename(f)[:-len("_night_lit.png")]: float((np.asarray(Image.open(f).convert("RGB")) >= 250).any(axis=2).mean()) for f in olds}
+        nfail = sum(1 for v in shares.values() if v > 0.001)
+        row("NEG-03", nfail >= 8, "negative control: the first build's %d night_lit pictures must FAIL PIC-13: %d of them have more than 0.1 per cent of their pixels clipped (%s)" % (len(shares), nfail, ", ".join("%s %.2f%%" % (k, 100 * v) for k, v in list(shares.items())[:5])), name="negative control: the first build's clipped lit pictures fail PIC-13")
+    else:
+        not_run("NEG-03", "the first build's lit pictures (scratch rooms_try1_lit) are not there", name="negative control: the first build's clipped lit pictures fail PIC-13")
     row("PIC-13", cnt > 0 and ok, "no clipped highlights: the share of pixels with a channel at 250 or more in each of %d night_lit pictures, at most 0.1 per cent (the highlight roll-off before the 8-bit write): %s; beside, not failed: day and night_dark pictures over 0.1 per cent: %s" % (cnt, ", ".join(res), ", ".join(beside[:10]) or "none"), name="no clipped highlights in a lit room picture", status=None if cnt else "not_run")
 
 
