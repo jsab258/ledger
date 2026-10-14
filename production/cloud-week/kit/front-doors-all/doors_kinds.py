@@ -117,6 +117,9 @@ class KindDoor(bd.Door):
         self.mats["net"] = bd.make_material("net_voile", [238, 238, 232], 0.9)
         self.mats["timber_bare"] = bd.make_material("timber_bare", [118, 110, 100], 0.85)
         self.mats["iron_black"] = bd.make_material("cast_iron", [30, 30, 32], 0.65, 1.0)
+        # 14 Oct (doors try 3): F6's spyhole ring is the same chrome_nickel as the fittings: the target's one colour (the 3.1 base made it (170, 170, 168), a second home for the number)
+        import doors_furniture as _DF
+        self.mats["chrome_nickel"] = bd.make_material("chrome_nickel", _DF.chrome_srgb(N), 0.35, 1.0)
         self.lap = self.P["mouldings"]["outside_bolection"]["lap_over_framing_mm"]
         self.below = self.P["mouldings"]["outside_bolection"]["panel_face_below_framing_mm"]
         self.leaf_entry = None

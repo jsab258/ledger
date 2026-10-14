@@ -1692,11 +1692,24 @@ def row_try3_FU(N, kind, mod_house, rep):
             y_mid = float(V[:, 1].min() + V[:, 1].max()) * 500.0
             reg = mod_house.region(names[0].replace("fit:scraper:", "fit:scraper:"), 1, y_mid, (0, 2))
             polys = [reg] if reg.geom_type == "Polygon" else [g for g in reg.geoms if g.geom_type == "Polygon"]
-            ring = max(polys, key=lambda g: g.area).exterior.coords
-            segs = [math.hypot(b_[0] - a_[0], b_[1] - a_[1]) for a_, b_ in zip(list(ring)[:-1], list(ring)[1:])]
-            n_long = sum(1 for d_ in segs if d_ > ex["max_facet_mm"])
+            ring = list(max(polys, key=lambda g: g.area).exterior.coords)[:-1]
             tp_ = N["furniture"]["scraper"]["BS1"]["standard_profile_xz"]
-            n_target = sum(1 for a_, b_ in zip(tp_, tp_[1:] + tp_[:1]) if math.hypot(b_[0] - a_[0], b_[1] - a_[1]) > ex["max_facet_mm"])
+
+            def runs(pts):
+                """The ring's segments with every straight run merged (a mesh splits a long straight side into pieces; a facet of a curve turns by degrees, a straight run by none)."""
+                n_ = len(pts)
+                keep = []
+                for i_ in range(n_):
+                    p0, p1, p2 = pts[i_ - 1], pts[i_], pts[(i_ + 1) % n_]
+                    a1 = math.atan2(p1[1] - p0[1], p1[0] - p0[0])
+                    a2 = math.atan2(p2[1] - p1[1], p2[0] - p1[0])
+                    turn = abs((a2 - a1 + math.pi) % (2 * math.pi) - math.pi)
+                    if turn > math.radians(0.5):
+                        keep.append(p1)
+                return [math.hypot(b_[0] - a_[0], b_[1] - a_[1]) for a_, b_ in zip(keep, keep[1:] + keep[:1])]
+            segs = runs(ring)
+            n_long = sum(1 for d_ in segs if d_ > ex["max_facet_mm"])
+            n_target = sum(1 for d_ in runs([tuple(q_) for q_ in tp_]) if d_ > ex["max_facet_mm"])
             rep.add(rid, n_long == n_target, {"segments_over_5mm_built": n_long, "straight_sides_in_the_target": n_target, "longest_mm": round(max(segs), 1)}, ex, c["what"] + " (the long segments are the bar's and the lip's straight sides, as many as the target's own list has)", group="FU", kind=kind)
 
 
@@ -1733,10 +1746,10 @@ def row_quirk(N, mod, rep):
             res[label] = "no section"
             ok = False
             continue
-        xs = [edge + sgn * (gap + k * 0.05) for k in range(-40, int((gw + 8.0) / 0.05))]
+        xs = [edge + sgn * (gap + 0.025 + k * 0.05) for k in range(int((gw + 8.0) / 0.05))]      # from the groove's inner edge outward (the cove inside the outline also passes through the floor's depth)
         d = depth_along(reg, xs, LY0)
         inside = [x_ for x_, d_ in zip(xs, d) if d_ is not None and abs(d_ - (level + gd)) <= 0.3]
-        width = (max(inside) - min(inside)) if inside else 0.0
+        width = (max(inside) - min(inside) + 0.05) if inside else 0.0
         beyond = depth_along(reg, [edge + sgn * (gap + gw + 3.0)], LY0)[0]
         mid = depth_along(reg, [edge + sgn * (gap + gw / 2.0)], LY0)[0]
         good = mid is not None and abs(mid - (level + gd)) <= c["tol"] and abs(width - gw) <= c["tol"] and beyond is not None and abs(beyond - level) <= 0.3
@@ -1784,7 +1797,7 @@ def row_makers_frozen(N, rep, texts=None):
     if texts is None and guard:
         tj = os.path.join(TARGET_DIR, "target.json")
         h0 = hashlib.sha256(open(tj, "rb").read()).hexdigest()
-        r = subprocess.run([sys.executable, "-I", os.path.join(TARGET_DIR, "make_target.py")], capture_output=True, text=True, cwd=TARGET_DIR)
+        r = subprocess.run([sys.executable, "-B", os.path.join(TARGET_DIR, "make_target.py")], capture_output=True, text=True, cwd=TARGET_DIR)
         h1 = hashlib.sha256(open(tj, "rb").read()).hexdigest()
         got.update({"exit_code": r.returncode, "says_frozen": "frozen" in r.stderr + r.stdout, "target_json_unchanged": h0 == h1})
         ok = r.returncode != 0 and "frozen" in r.stderr + r.stdout and h0 == h1
