@@ -208,7 +208,7 @@ def room(r):
         r.mat("machine_dark", rgb8(26, 28, 30), rough=0.5),
         r.mat("machine_steel", rgb8(196, 198, 200), rough=0.22, metal=1.0),
         r.mat("machine_rubber", rgb8(34, 36, 38), rough=0.7),
-        r.mat("machine_smoked", rgb8(22, 28, 34), rough=0.04),
+        r.mat("machine_smoked", rgb8(72, 80, 90), rough=0.06),         # smoked glass over the drum: lifted from (22, 28, 34), whose mirror took the floor and went under luma 12 in the window (LIT-02b)
         r.mat("lamp_off", rgb8(122, 62, 28), rough=0.4),
         r.mat("lamp_on", rgb8(255, 130, 40), rough=0.4, emit=(1.0, 0.36, 0.06), emit_strength=0.0),
         r.mat("machine_plinth", rgb8(70, 72, 74), rough=0.6),
@@ -386,7 +386,7 @@ def display(d):
     lam = d.mat("laminate_cover", rgb8(150, 152, 156), rough=0.35)
     gm = GM()
     gm.box(X(0.0), X(L), 0.0, 0.55, 0.0, 0.02, 0)
-    ob, _ = d.gm_object("laundry_shelf_board", gm, [lam], "scripted", "script:laundry_shelf_board")
+    ob, _ = d.gm_object("laundry_shelf_board", gm, [lam], "support", "script:laundry_shelf_board")
     GB.chamfer(ob, 0.003, 2)
     z0 = 0.02
     # ---- five stacks of folded towels

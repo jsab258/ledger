@@ -208,16 +208,31 @@ class HRoom(S.Room):
         self.paint_dim = self.mat("paint_white_dim", tuple(0.8 * v for v in PAINT_WHITE), rough=0.55)
         self.shade_m = self.mat("form_shade", (0.05, 0.04, 0.035), rough=0.9)
 
-    def _wall_band(self, nm, z0, z1, proud, mat, back=True, sides=True, y0=0.0):
+    def _wall_band(self, nm, z0, z1, proud, mat, back=True, sides=True, y0=0.0, gap=False):
         """A flat band on the back and side walls (from y0 to the back wall), `proud` off the surface: the scripted forms of target 7.2."""
         W, D = self.W, self.D
         out = []
+        gb, gr = (self.door_gap() if gap else (None, None))        # a doorway has no skirting: a band that ran behind the door's leaf stood on the same plane and shadowed it black
         if back:
-            out.append(self.box(nm + "_back", -W / 2 + proud, W / 2 - proud, D - proud, D, z0, z1, mat))
+            segs = [(-W / 2 + proud, W / 2 - proud)] if gb is None else [(-W / 2 + proud, gb[0]), (gb[1], W / 2 - proud)]
+            for k, (a, b) in enumerate(segs):
+                out.append(self.box(nm + "_back" + ("" if k == 0 else "_%d" % k), a, b, D - proud, D, z0, z1, mat))
         if sides:
             out.append(self.box(nm + "_left", -W / 2, -W / 2 + proud, y0, D - proud, z0, z1, mat))
-            out.append(self.box(nm + "_right", W / 2 - proud, W / 2, y0, D - proud, z0, z1, mat))
+            segs = [(y0, D - proud)] if gr is None else [(y0, gr[0]), (gr[1], D - proud)]
+            for k, (a, b) in enumerate(segs):
+                out.append(self.box(nm + "_right" + ("" if k == 0 else "_%d" % k), W / 2 - proud, W / 2, a, b, z0, z1, mat))
         return out
+
+    def door_gap(self):
+        """The doorway's width on the back wall (x range) and on the right wall (y range), or None."""
+        if "internal_door_flat" not in self.R["forms"]:
+            return None, None
+        w = T.target()["rooms"]["forms"]["internal_door_flat"]["w"]
+        if self.R["type"] == "landing":
+            xc = -0.55 if self.R["variant"] == 1 else 0.55
+            return (xc - w / 2, xc + w / 2), None
+        return None, (1.7 - w / 2, 1.7 + w / 2)
 
     def forms(self):
         W, H, D = self.W, self.H, self.D
@@ -226,7 +241,7 @@ class HRoom(S.Room):
         for f in R["forms"]:
             spec = F[f]
             if f == "skirting":
-                self._wall_band("skirting", 0.0, spec["h"], spec["proud"], self.paint)
+                self._wall_band("skirting", 0.0, spec["h"], spec["proud"], self.paint, gap=True)
                 self.forms_rec.append({"form": f, "surface": "side+back", "proud": spec["proud"]})
             elif f == "picture_rail":
                 z = spec["z"]
@@ -319,25 +334,47 @@ class HRoom(S.Room):
         self.box("radiator", x0, x1, yc - w / 2, yc + w / 2, 0.15, 0.15 + h, rad)
         self.forms_rec.append({"form": "radiator_flat", "surface": "right", "proud": pr})
 
+    def _prism_yz(self, name, pts, x0, x1, mat):
+        """A board drawn in the side wall's plane: the polygon `pts` (y, z) extruded across x0..x1."""
+        n = len(pts)
+        verts = [(x0, y, z) for y, z in pts] + [(x1, y, z) for y, z in pts]
+        faces = [tuple(range(n - 1, -1, -1)), tuple(range(n, 2 * n))]
+        for k in range(n):
+            faces.append((k, (k + 1) % n, n + (k + 1) % n, n + k))
+        me = bpy.data.meshes.new(name)
+        me.from_pydata(verts, [], faces)
+        me.update()
+        o = bpy.data.objects.new(name, me)
+        self.sc.collection.objects.link(o)
+        o.data.materials.append(mat)
+        for poly in me.polygons:
+            poly.use_smooth = False
+        return o
+
     def _stair(self, spec):
-        W, D = self.W, self.D
+        """The flight along the left wall, rising toward the back wall at 36 degrees: a stringer (a 0.30 board along the slope, cut vertical where it meets the floor, ending at the back wall), a handrail 0.9
+        above the floor at the foot and a newel and balusters (30 mm boards, the stringer's own 0.03 proud), the rail ending under the ceiling where the flight goes on through the stairwell. A first
+        version had the slope the wrong way (rising toward the window) and ran through the picture rail and the ceiling."""
+        W, D, H = self.W, self.D, self.H
         pr = spec["proud"]
         wood = self.mat("stair_paint", (0.5, 0.46, 0.38), rough=0.5)
-        ang = math.radians(36.0)
+        rail_m = self.mat("stair_rail", (0.30, 0.22, 0.15), rough=0.45)
+        t = math.tan(math.radians(36.0))
         x0, x1 = -W / 2, -W / 2 + pr
-        # the stringer (a 0.28 tall board along the flight's slope) and the handrail 0.9 above the nosings, both rising with y toward the back
-        y_a, y_b = 1.0, 3.7
-        run = y_b - y_a
-        rise = run * math.tan(ang)
-        for nm, zoff, hgt in (("stringer", 0.0, 0.28), ("handrail", 0.9, 0.06)):
-            ln = run / math.cos(ang)
-            bpy.ops.mesh.primitive_cube_add(size=1.0, location=((x0 + x1) / 2, (y_a + y_b) / 2, rise / 2 + zoff - 0.2 + (0.2 if nm == "stringer" else 0)))
-            o = bpy.context.object
-            o.name = "stair_" + nm
-            o.scale = (pr, ln, hgt)
-            o.rotation_euler = (-ang, 0.0, 0.0)
-            o.data.materials.append(wood)
-        self.forms_rec.append({"form": "stair_flat", "surface": "left", "proud": pr})
+        ya, yb = 1.4, D - 0.03
+        zline = lambda y: (y - ya) * t
+        # three front planes (26, 29 and 30 mm proud) so no two faces share a plane (coplanar boards shadow each other black)
+        self._prism_yz("stair_stringer", [(ya, 0.0), (yb, zline(yb)), (yb, zline(yb) + 0.30), (ya, 0.30)], x0, x0 + 0.026, wood)
+        ye = 3.45                                                  # the rail ends here, under the coving
+        self._prism_yz("stair_handrail", [(ya, 0.87), (ye, zline(ye) + 0.87), (ye, zline(ye) + 0.93), (ya, 0.93)], x0, x1, rail_m)
+        self.box("stair_newel", x0, x1, ya - 0.09, ya, 0.0, 1.02, rail_m)
+        y = ya + 0.14
+        k = 0
+        while y < ye - 0.02:
+            self.box("stair_baluster_%d" % k, x0, x0 + 0.029, y, y + 0.032, zline(y) + 0.20, zline(y + 0.032) + 0.90, wood)
+            y += 0.14
+            k += 1
+        self.forms_rec.append({"form": "stair_flat", "surface": "left", "proud": pr, "balusters": k})
 
     def _chimney(self, spec):
         W, D = self.W, self.D
