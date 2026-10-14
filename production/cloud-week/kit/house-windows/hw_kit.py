@@ -152,6 +152,7 @@ def box_mm(name, x0, x1, y0, y1, z0, z1, mat, bevel=0.0):
     v = [(x0, y0, z0), (x1, y0, z0), (x1, y1, z0), (x0, y1, z0), (x0, y0, z1), (x1, y0, z1), (x1, y1, z1), (x0, y1, z1)]
     f = [(0, 3, 2, 1), (4, 5, 6, 7), (0, 1, 5, 4), (1, 2, 6, 5), (2, 3, 7, 6), (3, 0, 4, 7)]
     ob = mesh_from(name, v, f, mat)
+    ob["hw_box"] = True
     if bevel > 0:
         bm = bmesh.new()
         bm.from_mesh(ob.data)
@@ -235,6 +236,8 @@ def import_lab(kind):
 
 def is_box(o):
     """A mesh that is an axis-aligned box (its vertices are all corners of its bounding box): the nodes whose contacts the inside-corner band is built on."""
+    if o.get("hw_box"):
+        return True
     lo, hi = bbox_mm(o)
     for v in o.data.vertices:
         p = o.matrix_world @ v.co

@@ -472,10 +472,10 @@ def paint_tin(gm, cx, cy, z0, r, h, luv, n=16, mi_metal=0, mi_label=1, bail=True
         gm.torus((cx, cy, z0 + h - 0.006), r * 0.98, 0.0022, mi_metal, axis="y", nm=14, nn=4)       # a ring over the lid: the bail (half of it is hidden in the lid and the other half stands as a loop)
 
 
-def souwester(gm, cx, cy, z0, s=1.0, mi=0, mi_seam=1, n=24, face=-1.0):
+def souwester(gm, cx, cy, z0, s=1.0, mi=0, mi_seam=1, n=36, face=-1.0):
     """A sou'wester (oilskin): a crown of six panels (a rounded dome, seams as thin dark bands), a brim that is short at the front and long at the back (the back drooping), a chin tie. Built about the vertical axis
     through (cx, cy), the front toward -y (`face` -1). The pattern is the target's `script:oilskin_sou_wester`: panels, brim, no CC0 model (the model in the library is a boonie hat)."""
-    r_c, h_c = 0.095 * s, 0.105 * s
+    r_c, h_c = 0.098 * s, 0.112 * s
     V, F = [], []
     rings = []
     nlat = 7
@@ -502,10 +502,10 @@ def souwester(gm, cx, cy, z0, s=1.0, mi=0, mi_seam=1, n=24, face=-1.0):
         idx = []
         for i in range(n):
             th = 2 * math.pi * i / n
-            back = max(0.0, math.sin(th) * (-face))                    # 1 at the back
+            back = max(0.0, math.sin(th) * (-face)) ** 2               # 1 at the back, a broad lobe (the neck flap), 0 over the front and the sides
             ext = (1.0 + 0.55 * back + 0.15) if True else 1.0
-            rad = r_c * (1.0 + t * (0.30 + 1.45 * back))
-            z = z0 + 0.04 * s - t * (-0.012 + 0.20 * back) * s          # the front brim a little upturned, the back brim long and drooping (a sou'wester's neck flap)
+            rad = r_c * (1.0 + t * (0.30 + 1.15 * back))
+            z = z0 + 0.04 * s - t * (0.010 + 0.19 * back) * s            # a brim all round that dips a little, the back lobe long and drooping (a sou'wester's neck flap)
             idx.append(len(V))
             V.append((cx + rad * math.cos(th), cy + rad * math.sin(th), z))
         ringsb.append(idx)

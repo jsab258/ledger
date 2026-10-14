@@ -35,6 +35,7 @@ import hw_models as M  # noqa: E402
 A.POLY = T.POLY
 rgb8 = S.rgb8
 STATES = ("day", "night_lit", "night_dark")
+RENDER_ORDER = ("day", "night_dark", "night_lit")          # night_dark before night_lit: an empty room's night_lit is its night_dark
 S.KEEP_BLEND["vintage_oil_lamp"] = ("flame",)        # the lamp's flame is a card with its own material: kept, and lit in night_lit only
 WARM = (1.0, 0.714, 0.344)                          # the pendant's 2700 K tungsten, linear (target 7.1)
 SODIUM = (1.0, 0.25, 0.0)                           # the game's lantern_linear_rgb (unreal-look.json), not the scene file's stale (1, 0.7055, 0)
@@ -691,7 +692,7 @@ def calibrate(r, work, log=print, res=None, samples=8):
     return P
 
 
-def render_room(rid, out_dir, samples=48, log=print, states=STATES, work=None, scale=1.0, quick=False):
+def render_room(rid, out_dir, samples=24, log=print, states=RENDER_ORDER, work=None, scale=1.0, quick=False):
     """Build the room, calibrate, render the three states (the empty rooms' night_lit is their night_dark), write the pictures and <room>.json. Returns the times."""
     work = work or os.path.join(T.SCRATCH, "work", rid)
     os.makedirs(work, exist_ok=True)
@@ -734,4 +735,4 @@ if __name__ == "__main__":
     scale = float(sys.argv[4]) if len(sys.argv) > 4 else 1.0
     quick = "--quick" in sys.argv
     sts = tuple(a.split("=")[1].split(",") for a in sys.argv if a.startswith("--states="))
-    render_room(rid, out, samples=samples, scale=scale, quick=quick, states=sts[0] if sts else STATES)
+    render_room(rid, out, samples=samples, scale=scale, quick=quick, states=sts[0] if sts else RENDER_ORDER)

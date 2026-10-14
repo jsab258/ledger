@@ -325,10 +325,10 @@ def display(d):
     for xx in (1.18, 2.17):
         gm2.rod((X(xx), rail2_v, rail2_w + 0.008), (X(xx), rail2_v, 1.55), 0.002, 0, 6)
     d.gm_object("rail_front", gm2, [rail_m], "support", "script:crate")
-    crown_top = (0.04 + 0.105) * hs
+    crown_top = (0.04 + 0.112) * hs
     hat_z = rail2_w - 0.012 - 0.035 - crown_top
     for uc in (1.45, 1.90):
-        GB.souwester(sg, X(uc), rail2_v, hat_z, s=hs, mi=0, mi_seam=1, face=1.0)
+        GB.souwester(sg, X(uc), rail2_v, hat_z, s=hs, mi=0, mi_seam=1, face=-1.0)
         strap.rod((X(uc), rail2_v, rail2_w - 0.008), (X(uc), rail2_v, hat_z + crown_top + 0.001), 0.0022, 0, 6)
     d.gm_object("sou_westers", sg, sw_m, "scripted", "script:oilskin_sou_wester", tier="rail", smooth=True)
     d.gm_object("sou_wester_straps", strap, [d.mat("strap", rgb8(60, 52, 44), rough=0.8)], "support", "script:crate")
