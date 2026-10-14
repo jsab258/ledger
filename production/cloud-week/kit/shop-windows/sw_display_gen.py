@@ -17,7 +17,7 @@ import random
 import sys
 
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageDraw
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -220,12 +220,112 @@ class GDisplay(RG.GRoom):
         self.struct(ob, "cords", gm.extents())
         return ob
 
+    # ---------------------------------------------------------------------------------------------- timber that is not a flat colour (14 Oct, try 2: ironmonger close review narrow 1 and street 4, 5)
+    def poly_map(self, asset, kind="diff"):
+        folder = os.path.join(A.POLY, asset, "1k", "textures")
+        f = next(os.path.join(folder, x) for x in sorted(os.listdir(folder)) if "_%s_" % kind in x)
+        return np.asarray(Image.open(f).convert("RGB")).astype(np.float32)
+
+    def painted_png(self, name, asset, rgb, grain=0.55):
+        """A Poly Haven wood map painted in one colour: the paint's colour times the wood's own luma variation about its mean, softened by `grain` (a painted board still shows its grain, less than bare wood). Written to the
+        display's texture folder (a 1k PNG): the glb carries it as a plain base-colour image."""
+        a = self.poly_map(asset)
+        lum = (0.2126 * a[..., 0] + 0.7152 * a[..., 1] + 0.0722 * a[..., 2])
+        k = 1.0 + grain * (lum / float(lum.mean()) - 1.0)
+        out = np.clip(np.array(rgb, np.float32)[None, None, :] * k[..., None], 0, 255)
+        path = os.path.join(self.tex, name + ".png")
+        Image.fromarray(out.astype(np.uint8)).save(path)
+        return path
+
+    def wood_strips(self, name, n, rgb, var=0.08, size=(1024, 64), stencils=None, seed=1, asset="plywood"):
+        """A picture of `n` plank strips (each `size`, the grain along the strip) cut from a Poly Haven wood map at random places and tinted to `rgb` with +-`var` of its own (every plank a little different), then
+        `stencils` = [(strip index, [(text, font, size px, y px)...])...] stencilled across the planks in black. Returns (path, [(u0, v0, u1, v1) per strip]) (v 0 at the bottom)."""
+        rng = np.random.default_rng(seed)
+        a = self.poly_map(asset)
+        lum = (0.2126 * a[..., 0] + 0.7152 * a[..., 1] + 0.0722 * a[..., 2])
+        ratio = lum / float(lum.mean())
+        W, H = size
+        atlas = Image.new("RGB", (W, H * n))
+        uvs = []
+        for k in range(n):
+            y0 = int(rng.integers(0, 1024 - H))
+            x0 = int(rng.integers(0, 1024 - 512))
+            crop = ratio[y0:y0 + H, x0:x0 + 512]
+            crop = np.asarray(Image.fromarray((crop * 100).astype(np.uint8)).resize((W, H), Image.BILINEAR)).astype(np.float32) / 100.0
+            tint = np.array(rgb, np.float32) * (1.0 + var * rng.uniform(-1, 1))
+            strip = np.clip(tint[None, None, :] * (1.0 + 0.9 * (crop - 1.0))[..., None], 0, 255)
+            atlas.paste(Image.fromarray(strip.astype(np.uint8)), (0, k * H))
+        for (k, lines) in (stencils or []):
+            d_ = ImageDraw.Draw(atlas)
+            for (text, fnt, px, yy, xx) in lines:
+                f = GEN.font(fnt, px)
+                # a stencil: the letters in flat black with a little wear, a few bridges left out
+                tmp = Image.new("L", (W, H), 0)
+                ImageDraw.Draw(tmp).text((xx, yy), text, font=f, fill=255)
+                m = np.asarray(tmp).astype(np.float32) / 255.0
+                wear = (rng.random(m.shape) > 0.10).astype(np.float32)
+                m = m * wear
+                cur = np.asarray(atlas.crop((0, k * H, W, (k + 1) * H))).astype(np.float32)
+                cur = cur * (1 - 0.88 * m[..., None]) + np.array([22, 20, 18], np.float32)[None, None, :] * 0.88 * m[..., None]
+                atlas.paste(Image.fromarray(np.clip(cur, 0, 255).astype(np.uint8)), (0, k * H))
+            uvs_k = None
+        path = os.path.join(self.tex, name + ".png")
+        atlas.save(path)
+        for k in range(n):
+            uvs.append((0.0, 1.0 - (k + 1) / n, 1.0, 1.0 - k / n))
+        return path, uvs
+
+    def planked_box(self, name, x0, x1, y0, y1, z0, z1, mats, strips, plank_h=0.12, tier="bed", stencil_row=None, nails=True):
+        """A timber box built of planks (the stepped crate, the trays): horizontal planks `plank_h` high on the front face with 3 mm grooves between them that show the core 2 mm deeper, each plank its own strip of the
+        wood atlas (`strips` = [(u0, v0, u1, v1)], tinted a little differently), the same on the two ends, lid boards along the top, and a nail head near each end of every plank. One mesh, two materials
+        (`mats` = [wood, nails]). `stencil_row` = (row index, strip index): that plank of the front carries a stencilled strip."""
+        gm = GM()
+        g, t = 0.003, 0.012
+        core = (x0 + 0.003, x1 - 0.003, y0 + 0.002, y1 - 0.002, z0, z1 - t)
+        gm.box(*core, mi=0, uv_front=strips[0], uv_other=(strips[0][0] + 0.01, strips[0][1] + 0.01))
+        nj = max(1, int(round((z1 - z0) / plank_h)))
+        ph = (z1 - z0) / nj
+        rnd = random.Random(int(abs(x0 * 1000) + abs(z1 * 100)))
+        ns = len(strips)
+        nail_pos = []
+        for j in range(nj):
+            za, zb = z0 + j * ph + (g / 2 if j else 0.0), z0 + (j + 1) * ph - g / 2
+            k = rnd.randrange(ns - 2) if not (stencil_row is not None and stencil_row[0] == j) else stencil_row[1]
+            u0, v0, u1, v1 = strips[k]
+            span = min(1.0, (x1 - x0) / (plank_h * 16.0)) if k < ns - 2 or True else 1.0
+            uo = rnd.uniform(0.0, max(0.0, 1.0 - span)) if not (stencil_row is not None and stencil_row[0] == j) else 0.0
+            ua, ub = (u0 + uo, u0 + uo + span) if not (stencil_row is not None and stencil_row[0] == j) else (u0, u1)
+            gm.box(x0, x1, y0, y0 + t, za, zb, mi=0, uv_front=(ua, v0, ub, v1), uv_other=(u0 + 0.02, v0 + 0.01))
+            for xn in (x0 + 0.014, x1 - 0.014):
+                nail_pos.append((xn, y0, (za + zb) / 2))
+        # the two ends: the same planks across the depth
+        for (xa, xb) in ((x0, x0 + t), (x1 - t, x1)):
+            for j in range(nj):
+                za, zb = z0 + j * ph + (g / 2 if j else 0.0), z0 + (j + 1) * ph - g / 2
+                k = rnd.randrange(ns - 2)
+                u0, v0, u1, v1 = strips[k]
+                gm.box(xa, xb, y0 + 0.012, y1, za, zb, mi=0, uv_front=None, uv_ends=(u0, v0, u0 + min(1.0, (y1 - y0) / (plank_h * 16.0)), v1), uv_other=(u0 + 0.02, v0 + 0.01))
+        # lid boards along the top, 0.10 wide across the depth
+        nb = max(1, int(round((y1 - y0) / 0.10)))
+        bw = (y1 - y0) / nb
+        for b in range(nb):
+            ya, yb = y0 + b * bw + (g / 2 if b else 0.0), y0 + (b + 1) * bw - g / 2
+            k = rnd.randrange(ns - 2)
+            u0, v0, u1, v1 = strips[k]
+            gm.box(x0, x1, ya, yb, z1 - t, z1, mi=0, uv_top=(u0, v0, u0 + min(1.0, (x1 - x0) / (plank_h * 16.0)), v1), uv_other=(u0 + 0.02, v0 + 0.01))
+        if nails:
+            for (xn, yn, zn) in nail_pos:
+                gm.lathe(xn, yn - 0.0012, zn - 0.0035, [(0.0, 0.0), (0.0034, 0.0), (0.0034, 0.0016), (0.0, 0.0016)], mi=1, n=8) if False else gm.cylinder(xn, yn - 0.0015, zn - 0.0030, zn + 0.0030, 0.0030, mi=1, n=8)
+        ob, ext = self.gm_object(name, gm, mats, "support", "script:crate", tier)
+        return ob, ext
+
     # ---------------------------------------------------------------------------------------------- the export
     def finish(self, out_dir, log=print):
+        lim = getattr(self, "tex_limit", 512)
         for im in bpy.data.images:
-            if im.size[0] > 512 and im.name not in ("Render Result",):
+            if im.size[0] > lim and im.name not in ("Render Result",):
                 try:
-                    im.scale(512, 512)
+                    im.scale(lim, lim)
                 except Exception:
                     pass
         # no alpha cut-out or blend anywhere in the display (DSP-02: real geometry)

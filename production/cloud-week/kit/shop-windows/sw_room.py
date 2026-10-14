@@ -293,6 +293,8 @@ class Room:
                     bpy.ops.object.modifier_apply(modifier=md.name)
         if asset == "filmstrip_projector_8mm":
             meshes = meshes + self.bs1363_plug()
+        if asset == "lightbulb_01" and getattr(self, "b22", False):
+            meshes = self.bulb_b22(meshes)
         pts = [o.matrix_world @ Vector(c) for o in meshes for c in o.bound_box]
         lo = Vector((min(p.x for p in pts), min(p.y for p in pts), min(p.z for p in pts)))
         hi = Vector((max(p.x for p in pts), max(p.y for p in pts), max(p.z for p in pts)))
@@ -382,6 +384,52 @@ class Room:
             blk("plug_pin_sleeve_%d" % k, xp - 0.002, xp + 0.002, yl - 0.00318, yl + 0.00318, 0.025, 0.034, black)
             blk("plug_pin_%d" % k, xp - 0.002, xp + 0.002, yl - 0.00318, yl + 0.00318, 0.034, 0.0427, brass)
         return made
+
+    def bulb_b22(self, meshes):
+        """14 Oct, try 2 (ironmonger close review, fault 2: 'the cap is an Edison screw. A British ironmonger of 1990 sold bayonet-cap bulbs (B22): lesson 12's foreign fitting again'): the model's screw cap (every face of its
+        base material below z 0.010, the thread and the foot) is cut and a B22 bayonet cap is scripted on: a plain brass sleeve 22 mm across and 20 mm long, two 2.5 mm pins standing 2 mm out at 180 degrees, 9 mm above the
+        cap's foot, a black insulator disc on the foot carrying two brass solder contacts. World coordinates of the template (the bulb's axis is z; its glass and its filament are the model's own)."""
+        for o in meshes:
+            if not o.name.startswith("lightbulb_01"):
+                continue
+            mi = [i for i, ms in enumerate(o.material_slots) if ms.material and ms.material.name.endswith("_base")]
+            if not mi:
+                continue
+            bm = bmesh.new()
+            bm.from_mesh(o.data)
+            dead = []
+            for f in bm.faces:
+                if f.material_index != mi[0]:
+                    continue
+                c_ = f.calc_center_median()
+                if c_.z < 0.0100 or (c_.z < 0.0150 and math.hypot(c_.x, c_.y) > 0.0070):          # the thread and the foot, and the screw cap's rim round the glass's neck
+                    dead.append(f)
+            bmesh.ops.delete(bm, geom=dead, context="FACES")
+            bm.to_mesh(o.data)
+            bm.free()
+        brass = self.mat("b22_brass", rgb8(176, 140, 70), rough=0.3, metal=1.0)
+        black = self.mat("b22_insulator", rgb8(24, 22, 20), rough=0.5)
+        made = []
+
+        def cyl(name, r, z0, z1, m, x=0.0, y=0.0, axis="z", verts=24):
+            if axis == "z":
+                bpy.ops.mesh.primitive_cylinder_add(vertices=verts, radius=r, depth=z1 - z0, location=(x, y, (z0 + z1) / 2.0))
+            else:                           # a radial pin along x from x0 to x1 (given as z0, z1)
+                bpy.ops.mesh.primitive_cylinder_add(vertices=verts, radius=r, depth=abs(z1 - z0), location=((z0 + z1) / 2.0, y, x), rotation=(0.0, math.pi / 2, 0.0))
+            o_ = bpy.context.object
+            o_.name = name
+            o_.data.materials.append(m)
+            for c in list(o_.users_collection):
+                c.objects.unlink(o_)
+            self.coll_t.objects.link(o_)
+            made.append(o_)
+        cyl("b22_sleeve", 0.011, -0.0100, 0.0104, brass, verts=28)
+        cyl("b22_collar", 0.0128, 0.0098, 0.0112, brass, verts=28)
+        cyl("b22_insulator", 0.0086, -0.0108, -0.0100, black, verts=24)
+        for k, sx in enumerate((-1, 1)):
+            cyl("b22_contact_%d" % k, 0.0022, -0.0114, -0.0107, brass, x=sx * 0.0042, verts=14)
+            cyl("b22_pin_%d" % k, 0.00125, 0.0105 if sx > 0 else -0.0132, 0.0132 if sx > 0 else -0.0105, brass, x=-0.0010, verts=10, axis="x")
+        return meshes + made
 
     def dims(self, asset, rot=(0.0, 0.0, 0.0), tris=None):
         meshes, lo, hi = self.template(asset, tris)

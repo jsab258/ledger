@@ -39,11 +39,19 @@ class GM:
             self.M.append(mi[k] if isinstance(mi, (list, tuple)) else mi)
             self.U.append(uv[k] if uv else None)
 
-    def box(self, x0, x1, y0, y1, z0, z1, mi=0, uv_front=None, front="-y", uv_other=None):
-        """A box; `uv_front` = (u0, v0, u1, v1) gives the face on `front` (-y toward the room's camera by default) the picture's rectangle (u to the right as seen from the front, v up)."""
+    def box(self, x0, x1, y0, y1, z0, z1, mi=0, uv_front=None, front="-y", uv_other=None, uv_top=None, uv_ends=None):
+        """A box; `uv_front` = (u0, v0, u1, v1) gives the face on `front` (-y toward the room's camera by default) the picture's rectangle (u to the right as seen from the front, v up).
+        14 Oct (try 2): `uv_top` the same for the top face (u along x, v along y), `uv_ends` for the two end faces (+x and -x; u along y)."""
         V = [(x0, y0, z0), (x1, y0, z0), (x1, y1, z0), (x0, y1, z0), (x0, y0, z1), (x1, y0, z1), (x1, y1, z1), (x0, y1, z1)]
         F = [(0, 3, 2, 1), (4, 5, 6, 7), (0, 1, 5, 4), (1, 2, 6, 5), (2, 3, 7, 6), (3, 0, 4, 7)]
         uv = [None] * 6
+        if uv_top is not None:
+            u0_, v0_, u1_, v1_ = uv_top
+            uv[1] = [(u0_, v0_), (u1_, v0_), (u1_, v1_), (u0_, v1_)]
+        if uv_ends is not None:
+            u0_, v0_, u1_, v1_ = uv_ends
+            uv[3] = [(u0_, v0_), (u1_, v0_), (u1_, v1_), (u0_, v1_)]
+            uv[5] = [(u0_, v0_), (u1_, v0_), (u1_, v1_), (u0_, v1_)]
         if uv_front is not None:
             u0, v0, u1, v1 = uv_front
             if front == "-y":

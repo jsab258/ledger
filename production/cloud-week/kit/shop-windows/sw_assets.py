@@ -88,6 +88,43 @@ EXTRA_BLANK = {
 }
 
 
+# 14 Oct, try 2 (the first reviews of the ironmonger, the newsagent and the tea rooms; the brief's step 0 d): marks that survived the first blanking, found by the reviewers at 100 per cent; the exact boxes, in pixels of
+# the 1k base-colour map. Applied to every shop's models but Rita's (her numbers stay as they were; the models' files are shared, so her pictures take the cleaner maps when they are next rendered).
+EXTRA_BLANK_T2 = {
+    "tire_pump": [{"map": "tire_pump_diff_1k.jpg", "boxes": [[570, 893, 624, 957]], "fill": "the label plate's light grey",
+                   "reads": "a roundel reading QUALITY / POLYLUFT round a three-pointed emblem (the maker's mark; the first blanking box stopped 13 px above it)"}],
+    "trowel_01": [{"map": "trowel_01_diff_1k.jpg", "boxes": [[838, 795, 922, 828]], "fill": "the handle's own wood",
+                   "reads": "a word stamped on the wooden handle, mirrored ('YOS...': a maker's name; the first box was for the blade's)"}],
+    "CashRegister_01": [{"map": "CashRegister_01_diff_1k.jpg", "boxes": [[500, 228, 520, 248]], "fill": "the readout panel's dark grey (sampled 52, 52, 52)",
+                         "reads": "a Y glyph left of the readout (it reads as a yen sign in the room picture)"}],
+    "wall_clock": [{"map": "wall_clock_diff_1k.jpg", "boxes": [[272, 612, 286, 616]], "fill": "the dial's white",
+                    "reads": "a 5 px dash left where the U of URBAN was"}],
+}
+POST_RECOLOUR = {}          # {model: function (H, W, 3 float array of the ORIGINAL base-colour map) -> recoloured array}: a model's own look changed where a reviewer found it of the wrong period (applied after the blanking)
+
+
+def _recolour_sledgehammer(a):
+    """14 Oct, try 2 (ironmonger street review, narrow 7): the model's fibreglass-yellow shaft and black rubber grips read as a modern DIY-shed tool. The shaft goes to ash (sRGB 190, 150, 100) keeping the map's own
+    luma variation as grain, the two grips to leather brown (112, 74, 44) the same way; the head (dark, rusted, in the upper right of the map) stays black."""
+    a = a.astype(np.float32).copy()
+    lum = 0.2126 * a[..., 0] + 0.7152 * a[..., 1] + 0.0722 * a[..., 2]
+    yellow = (a[..., 0] > 150) & (a[..., 1] > 120) & (a[..., 2] < 110) & (a[..., 0] - a[..., 2] > 90)
+    ref = float(np.median(lum[yellow]))
+    ash = np.array([190.0, 150.0, 100.0], np.float32)
+    a[yellow] = np.clip(ash[None, :] * (lum[yellow] / ref)[:, None], 0, 255)
+    brown = np.array([112.0, 74.0, 44.0], np.float32)
+    for (x0, y0, x1, y1) in ((236, 492, 524, 1024), (526, 696, 752, 1024)):
+        sub = a[y0:y1, x0:x1]
+        l = lum[y0:y1, x0:x1]
+        dark = l < 110
+        rg = float(np.median(l[dark]))
+        sub[dark] = np.clip(brown[None, :] * (l[dark] / rg)[:, None], 0, 255)
+    return a
+
+
+POST_RECOLOUR["sledgehammer_01"] = _recolour_sledgehammer
+
+
 # Target boxes tightened where the target's box is wider than the print and straddles two surfaces (the fill would then be a median of two
 # colours): {(model, map): {target box: tighter box that still holds every glyph}}. Looked at 100 per cent beside the original.
 BOX_FIX = {("vintage_pocket_watch", "vintage_pocket_watch_diff_1k.jpg"): {(620, 630, 765, 790): [640, 664, 694, 762]},
@@ -114,7 +151,10 @@ def entries(T, a):
         fix = BOX_FIX.get((a, e["map"]), {})
         e["boxes"] = [fix.get(tuple(b), b) for b in e["boxes"]]
         out.append(e)
-    return out + list(EXTRA_BLANK.get(a, []))
+    out = out + list(EXTRA_BLANK.get(a, []))
+    if CURRENT != "ritas":
+        out = out + list(EXTRA_BLANK_T2.get(a, []))
+    return out
 
 
 def load_target():
@@ -481,6 +521,10 @@ def blank(ids=None, log=print):
                 else:
                     fills = {k[1]: v for k, v in FILL_OVERRIDE.items() if k[0] == a}
                     rows = blank_map(src, dst, boxes, seed=int(hashlib.md5(a.encode()).hexdigest()[:6], 16), fills=fills)
+                if a in POST_RECOLOUR and CURRENT != "ritas":
+                    arr_ = np.asarray(Image.open(dst).convert("RGB")).astype(np.float32)
+                    Image.fromarray(np.clip(POST_RECOLOUR[a](arr_) + 0.5, 0, 255).astype(np.uint8)).save(dst, quality=98, subsampling=0)
+                    rows = rows + [{"recoloured": "the model's look changed (%s)" % POST_RECOLOUR[a].__name__}]
                 rep.append({"map": mp, "clean": clean_name, "rows": rows})
                 for im in g["images"]:
                     if os.path.basename(im["uri"]) == mp:
@@ -527,6 +571,8 @@ def verify(log=print):
                 rows.append({"id": "INV-06 %s %s (whole map)" % (a, b["map"]), "ok": h1 != h2 and points, "detail": "hash differs: %s; glTF points at the print: %s" % (h1 != h2, points)})
                 continue
             arr0 = np.asarray(Image.open(orig).convert("RGB")).astype(np.float32)
+            if a in POST_RECOLOUR and CURRENT != "ritas":
+                arr0 = POST_RECOLOUR[a](arr0)           # the ring is the original's colour as the recolour left it
             arr1 = np.asarray(Image.open(clean).convert("RGB")).astype(np.float32)
             g = json.load(open(gltf_path(a), encoding="utf-8"))
             points = any(os.path.basename(i["uri"]) == os.path.basename(clean) for i in g["images"])

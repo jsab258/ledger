@@ -277,7 +277,9 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
                     slot.material = gm
     # the door's OPEN sign by day, CLOSED at night (the card is turned over). 14 Oct (batch B, from the tea rooms' street review): a lit shop is open, so the card is turned only in a shop's DARK night
     # picture (night_dark); in the lit night frames (and a dark shop's night_lit test frames) it reads OPEN. Rita's gate keeps its rule (her approved previews show CLOSED)
-    turn_sign = night if ctx.id == "ritas" else (state == "night_dark")
+    # 14 Oct, try 2 (tea rooms street review N1, the brief's step 0 g): the sign follows the shop's HOURS: in a lit night frame a shop whose hours run past the night hour (sw_ctx.NIGHT_HOUR: the tea rooms to 22:00) reads
+    # OPEN, a shop whose hours say shut (the newsagent at 17:30, the ironmonger) reads CLOSED; the shut-up night_dark picture reads CLOSED for every shop
+    turn_sign = night if ctx.id == "ritas" else ((state == "night_dark") or (night and not ctx.open_at_night))
     for o in front:
         if o.type == "MESH" and o.name.startswith("door_sign_open"):
             for slot in o.material_slots:
@@ -348,7 +350,29 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
         t.links.new(sep.outputs["Z"], mth.inputs[0])
         t.links.new(mth.outputs[0], com.inputs["Y"])
         t.links.new(com.outputs["Vector"], tex.inputs["Vector"])
-        t.links.new(tex.outputs["Color"], emn.inputs["Color"])
+        mod_png = column_pngs.get("mod")
+        if mod_png and os.path.exists(mod_png):
+            # 14 Oct, try 2 (ironmonger close review, narrow 1: the return walls were one flat tone along their depth): the column's colour is multiplied by the room's own plaster map (Poly Haven painted_plaster_wall,
+            # 1.5 m a tile, the room's tile) as a modulation of +-8 per cent about 1.0 (a grey picture of 0.5 +- 0.04, the emission's strength doubled to match)
+            mp_ = t.nodes.new("ShaderNodeMapping")
+            mp_.inputs["Scale"].default_value = (1.0 / 1.5,) * 3
+            t.links.new(geo.outputs["Position"], mp_.inputs["Vector"])
+            tm_ = t.nodes.new("ShaderNodeTexImage")
+            tm_.image = bpy.data.images.load(mod_png, check_existing=True)
+            tm_.image.colorspace_settings.name = "Non-Color"
+            tm_.projection = "BOX"
+            tm_.projection_blend = 0.2
+            t.links.new(mp_.outputs["Vector"], tm_.inputs["Vector"])
+            mx_ = t.nodes.new("ShaderNodeMix")
+            mx_.data_type = "RGBA"
+            mx_.blend_type = "MULTIPLY"
+            mx_.inputs[0].default_value = 1.0
+            t.links.new(tex.outputs["Color"], mx_.inputs[6])
+            t.links.new(tm_.outputs["Color"], mx_.inputs[7])
+            t.links.new(mx_.outputs[2], emn.inputs["Color"])
+            emn.inputs["Strength"].default_value = BRIGHTNESS[state] * 2.0
+        else:
+            t.links.new(tex.outputs["Color"], emn.inputs["Color"])
         t.links.new(emn.outputs[0], outn.inputs[0])
         return m
     wall_l, wall_r = wall_material("l"), wall_material("r")
@@ -364,11 +388,30 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
     slab("reveal_l", -W / 2 - 0.012, -W / 2, 0.0, ycard + 0.02, 0.0, 2.97, wall_l)
     slab("reveal_r", W / 2, W / 2 + 0.012, 0.0, ycard + 0.02, 0.0, 2.97, wall_r)
     slab("reveal_top", -W / 2, W / 2, 0.0, ycard + 0.02, 2.95, 2.97)
-    slab("reveal_floor", -W / 2, W / 2, 0.02, ycard + 0.02, 0.0, 0.55)
+    if (extra or {}).get("reveal_zones", ctx.id != "ritas"):
+        # 14 Oct, try 2 (the grocer's street review, the brief's step 0 h): one slab across the whole card stood in a recessed doorway and showed through the door's glass as a dark block. The floor under the card
+        # is now built over the WINDOW zone only (from y 0.02: the display's bed and the bed's back edge hide it), and over a door zone only from behind the front's own hall or lobby floor (y 0.47)
+        wx_ = [(ctx.window_u[0] - 3000.0) / 1000.0, (ctx.window_u[1] - 3000.0) / 1000.0]
+        slab("reveal_floor_window", max(wx_[0], -W / 2), min(wx_[1], W / 2), 0.02, ycard + 0.02, 0.0, 0.55)
+        for zn_ in ("shop_door", "side_door"):
+            zz_ = ctx.zones.get(zn_)
+            if zz_:
+                slab("reveal_floor_" + zn_, max((zz_[0] - 3000.0) / 1000.0, -W / 2), min((zz_[1] - 3000.0) / 1000.0, W / 2), 0.47, ycard + 0.02, 0.0, 0.55)
+    else:
+        slab("reveal_floor", -W / 2, W / 2, 0.02, ycard + 0.02, 0.0, 0.55)
     for o in disp:
         if o.type == "MESH" and o.name.startswith("return_wall_"):
             o.data.materials.clear()
             o.data.materials.append(wall_l if o.name.startswith("return_wall_l") else wall_r)
+    # 14 Oct, try 2 (ironmonger close review, narrow 3: through the shop door's glass the room's right wall was the side hall's plaster, a flat grey slab): the face of the side hall's wall that looks into the shop
+    # carries the shop's own finishes in the glb (hall_face_dado, hall_face_plaster) and in the gate the room picture's wall column, as the return walls take it
+    if column_pngs and (extra or {}).get("hall_faces", ctx.id != "ritas"):
+        sd_z, sh_z = ctx.zones.get("side_door"), ctx.zones.get("shop_door")
+        hall_side = "r" if (sd_z and sh_z and sd_z[0] >= sh_z[1] - 1.0) else "l"
+        for o in front:
+            if o.type == "MESH" and o.name.startswith("hall_face_"):
+                o.data.materials.clear()
+                o.data.materials.append(wall_r if hall_side == "r" else wall_l)
     # --- the street: wall, footway, road, far footway
     brick = bpy.data.materials.new("brick")
     brick.use_nodes = True
@@ -450,7 +493,7 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
     cam_rec = {"camera": cam_name, "state": state, "eye_street_m": [ctx.x_of_u(co_.location.x * 1000.0 + 3000.0), ctx.sgn * (co_.location.y + sw_ctx.WALL_Y), co_.location.z + FOOT],
                "defined_eye_street_m": list(cam_def["eye_street_m"]), "aim_street_m": list(cam_def["aim_street_m"]),
                "aim_error_deg": round(math.degrees(fwd.angle(to_aim)), 4), "vfov_deg": round(math.degrees(cam.angle_y), 4), "defined_vfov_deg": VFOV[cam_name],
-               "resolution": list(res)}
+               "resolution": list(res), "door_sign": ("CLOSED" if turn_sign else "OPEN") if ctx.id != "empty_unit" else None}
     json.dump(cam_rec, open(os.path.splitext(out_png)[0] + ".camera.json", "w"), indent=1)
     # --- light: day = an overcast sky; night = sodium lamps (linear 1.0, 0.25, 0.0) and the display's spill (a rect light in the window head, tipped 62 degrees down)
     w = bpy.data.worlds.new("w")

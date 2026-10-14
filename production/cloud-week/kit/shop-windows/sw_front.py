@@ -624,6 +624,26 @@ class Front:
         self.add("hall_ceiling", bx(u0 + t, u1 - t, -dd, 0.0, z1 - t, z1), "hall_plaster", bev=None)
         self.add("hall_back", bx(u0 + t, u1 - t, -dd - t, -dd, z0, z1), "hall_plaster", bev=None)
         self.add("hall_floor", bx(u0 + t, u1 - t, -dd, 0.0, z0, z0 + 20.0), "hall_dark", bev=None)
+        # 14 Oct, try 2 (ironmonger close review, narrow 3: through the shop door's glass the face of the hall's wall that looks into the shop was the hall's grey plaster, "a flat grey slab where the shop should be"):
+        # that face carries the shop's own finishes: two thin veneers 2 mm proud of it, the room's plaster colour above the dado line and the dado's colour below it (target `room.walls`; the dado's height is the room's
+        # own, the card's bottom 0.55 above the footway added). The gate paints the same two faces with the room picture's wall column (sw_gate: hall_face_*). Rita's is unchanged
+        rw = ((self.R.get("room") or {}).get("walls")) if self.ctx.id != "ritas" else None
+        if rw:
+            import re
+            ma, md = re.search(r"\((\d+),\s*(\d+),\s*(\d+)\)", rw.get("above", "")), re.search(r"\((\d+),\s*(\d+),\s*(\d+)\)", rw.get("dado", ""))
+            mt = re.search(r"to z ([0-9.]+)", rw.get("dado", ""))
+            if ma and md:
+                self.mats["hall_face_plaster"] = bs.make_material("hall_face_plaster", tuple(int(v) for v in ma.groups()), 0.9, 0.0)
+                self.mats["hall_face_dado"] = bs.make_material("hall_face_dado", tuple(int(v) for v in md.groups()), 0.9, 0.0)
+                zd = (float(mt.group(1)) if mt else 1.0) * 1000.0 + 550.0
+                sh_ = self.R["front"]["zones_u_mm"]["shop_door"]
+                if s[0] >= sh_[1] - 1.0:          # the side door is to the right of the shop door: its hall's left wall looks into the shop
+                    ua, ub = u0 - 2.0, u0
+                else:
+                    ua, ub = u1, u1 + 2.0
+                zf = z0 + 33.0                  # above the door floor's 58 mm
+                self.add("hall_face_dado", bx(ua, ub, -dd, -4.0, zf, zd), "hall_face_dado", bev=None)
+                self.add("hall_face_plaster", bx(ua, ub, -dd, -4.0, zd, z1), "hall_face_plaster", bev=None)
 
     # ----------------------------------------------------------------------------------------------- one shop's own alterations
     def extras(self):
@@ -1046,8 +1066,8 @@ def make_glass_rows(ctx, fasc_dir):
             d -= ctx.lobby_depth      # (batch B) the lettering that stands on the door and its fanlight goes back with the door into the lobby
         if "|" in g["string"]:
             xs = R["front"]["centres_street_x_m"]["shop_door"]           # the hours plate at the shop door's centre (4.1's x is within 3 mm of it)
-            if ctx.id == "ritas":
-                # Rita's hours plate: the door's lower pane (the glazing bar at 1423 crosses 4.1's z 1.38)
+            if ctx.id == "ritas" or g.get("hours_like_ritas"):
+                # Rita's hours plate: the door's lower pane (the glazing bar at 1423 crosses 4.1's z 1.38); 14 Oct, try 2: a shop whose hours row was made like hers (sw_hours) stands where hers does
                 z_base = 1040.0 + base_from_bottom
                 d = 39.0
         u_ink = BAY_MID + (ctx.mid_x - xs) * 1000.0 if not ctx.west else BAY_MID + (xs - ctx.mid_x) * 1000.0      # u from the viewer's left
@@ -1147,6 +1167,9 @@ def tri_count(ob):
     return len(me.loop_triangles)
 
 
+FASCIA_REPAINT = {"ironmonger": [(676, 164, 728, 196)]}       # the boxes (map x0, y0, x1, y1) repainted in the copy of a board's worn base colour (see fascia_maps)
+
+
 def fascia_maps(base, out_dir, shop="ritas"):
     """The fascia board's two derived maps (written beside the build, not over the 4.1 files):
     ritas_basecolour_worn.png  the 4.1 base colour with the wear darkened in: x (1 - 0.25 x the strongest of the wear map's three masks), as the build had it in Blender's node tree;
@@ -1159,6 +1182,27 @@ def fascia_maps(base, out_dir, shop="ritas"):
     wear = np.asarray(Image.open(base + "wear.png").convert("RGB")).astype(np.float32) / 255.0
     m = wear.max(axis=2)
     worn = np.clip(col * (1.0 - 0.25 * m)[..., None] + 0.5, 0, 255).astype(np.uint8)
+    # 14 Oct, try 2 (ironmonger street review, narrow 6: a blue-grey paint flake sat on the top of the S of TOOLS, so the word read "TOOLS-hat"): the flake's region is repainted in this COPY (the 4.1 file is never
+    # changed): each row takes the ground's own colour from the pixels just left and right of the box (letters excluded), and the grain of the clean ground 30 rows above is laid over it
+    for (bx0, by0, bx1, by1) in FASCIA_REPAINT.get(shop, []):
+        from scipy import ndimage as _nd
+        w_ = worn.astype(np.float32)
+        lum_ = 0.2126 * w_[..., 0] + 0.7152 * w_[..., 1] + 0.0722 * w_[..., 2]
+        gr_ = np.zeros((by1 - by0, 3), np.float32)
+        for k_, yy in enumerate(range(by0, by1)):
+            ring = np.concatenate([w_[yy, bx0 - 26:bx0 - 4], w_[yy, bx1 + 4:bx1 + 26]])
+            rl = np.concatenate([lum_[yy, bx0 - 26:bx0 - 4], lum_[yy, bx1 + 4:bx1 + 26]])
+            ok_ = (rl > 150) & (ring[:, 0] - ring[:, 2] < 70)
+            gr_[k_] = np.median(ring[ok_], axis=0) if ok_.sum() >= 6 else np.median(ring, axis=0)
+        reg = w_[by0:by1, bx0:bx1]
+        dist = np.abs(reg - gr_[:, None, :]).max(axis=2)
+        letter = (lum_[by0:by1, bx0:bx1] < 72) | ((reg[..., 0] > 190) & (reg[..., 1] < 130))          # the letter's black and its red shade stay
+        flake = _nd.binary_dilation((dist > 38) & ~letter, iterations=1) & ~letter
+        up = w_[by0 - 30:by1 - 30, bx0:bx1]
+        grain = np.clip(up - np.median(up, axis=1, keepdims=True), -8, 8)
+        reg[flake] = (gr_[:, None, :] + grain)[flake]
+        w_[by0:by1, bx0:bx1] = reg
+        worn = np.clip(w_ + 0.5, 0, 255).astype(np.uint8)
     col_path = os.path.join(out_dir, "%s_basecolour_worn.png" % shop)
     Image.fromarray(worn).save(col_path)
     h = np.asarray(Image.open(base + "height.png")).astype(np.float32)
@@ -1305,7 +1349,7 @@ def build_front(out_dir, work_dir, fasc_dir, paper_dir, log=print, ctx=None):
     return info
 
 
-HALL_NAMES = ("hall_wall_l", "hall_wall_r", "hall_ceiling", "hall_back", "hall_floor")
+HALL_NAMES = ("hall_wall_l", "hall_wall_r", "hall_ceiling", "hall_back", "hall_floor", "hall_face_dado", "hall_face_plaster")
 
 
 def elevation_mask(objs, path, u0=0.0, u1=6000.0, z0=0.0, z1=2850.0):

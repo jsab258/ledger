@@ -26,6 +26,31 @@ import sw_ctx  # noqa: E402
 
 DATE = "2026-10-13"
 TAG = "-v3"                  # Rita's third build's tag; the other shops' previews carry none
+DATE2 = "2026-10-14"         # try 2 (14 October): the previews of every shop but Rita's are `<shop>-<view>-<state>-2026-10-14-v2.jpg` (the 13 October v1 pictures stay as the record)
+TAG2 = "-v2"
+NIGHT_DARK_CAMS = ("STREET_SQUARE", "CLOSE_35")     # try 2: the shut-up night is rendered from the street square and from CLOSE_35 for every shop with a room (a dark shop's own night, a lit shop's shut shop)
+
+
+def pname(ctx, stem):
+    """The preview's file name: Rita's `<stem>-v3-2026-10-13.jpg`, every other shop's `<stem>-2026-10-14-v2.jpg`."""
+    if ctx.id == "ritas":
+        return "%s%s-%s.jpg" % (stem, TAG, DATE)
+    return "%s-%s%s.jpg" % (stem, DATE2, TAG2)
+
+
+def plaster_modulation(path):
+    """The return walls' plaster modulation (ironmonger close review, narrow 1): the room's own plaster map (Poly Haven painted_plaster_wall, 1k) as a grey picture of 0.5 +- 0.04 (a modulation of +-8 per cent about
+    1.0 once the emission is doubled), written once beside the gate's frames."""
+    if os.path.exists(path):
+        return path
+    folder = os.path.join(A.POLY, "painted_plaster_wall", "1k", "textures")
+    f = next(os.path.join(folder, x) for x in sorted(os.listdir(folder)) if "_diff_" in x)
+    a = np.asarray(Image.open(f).convert("L")).astype(np.float32)
+    m = float(a.mean())
+    sd = max(float(a.std()), 1.0)
+    mod = np.clip(1.0 + 0.08 * np.clip((a - m) / (2.0 * sd), -1.0, 1.0), 0.92, 1.08) * 0.5
+    Image.fromarray(np.clip(mod * 255.0 + 0.5, 0, 255).astype(np.uint8)).save(path)
+    return path
 CAMS = ["STREET_SQUARE", "STREET_30", "CLOSE_35", "CLOSE_35_B"]
 STATES = ["day", "night_lit"]
 REVIEW = [("STREET_SQUARE", "day"), ("STREET_SQUARE", "night_lit"), ("CLOSE_35", "day"), ("CLOSE_35", "night_lit")]
@@ -84,8 +109,8 @@ def bake_all(work, log=print, ctx=None, states=None):
             np.save(uvp, uv)
         stats[cam] = {"uv_s": round(time.time() - t0, 1)}
         for st in states:
-            if st == "night_dark" and cam != "STREET_SQUARE":
-                continue                      # a dark shop's own night picture is one extra view, from STREET_SQUARE
+            if st == "night_dark" and cam not in (NIGHT_DARK_CAMS if ctx.id != "ritas" else ("STREET_SQUARE",)):
+                continue                      # a dark shop's own night picture is an extra view (try 2: from STREET_SQUARE and CLOSE_35)
             pic = room_picture(ctx, st)
             out = os.path.join(gate, "card_%s_%s.png" % (cam, st))
             _, lin_img = G.bake_card(eye, pic, G.BRIGHTNESS[st], out, uv=uv, ctx=ctx)
@@ -118,7 +143,8 @@ def run(work, assets, previews, samples, views=None, log=print, check_renders=Tr
     states = list(STATES)
     if not ctx.has_room:
         standin_card_pictures(ctx, log)            # Mickey's and the empty unit: a flat stand-in card (see standin_card_pictures)
-    stats = bake_all(work, log, ctx=ctx, states=states + (["night_dark"] if (not ctx.lit and ctx.has_room) else []))
+    nd_extra = ctx.has_room and (ctx.id != "ritas" or not ctx.lit)           # the shut-up night's frames (try 2: every shop with a room but Rita's; a dark shop of any build)
+    stats = bake_all(work, log, ctx=ctx, states=states + (["night_dark"] if nd_extra else []))
     front = os.path.join(assets, ctx.front_glb)
     disp = os.path.join(assets, ctx.display_glb) if ctx.has_room else None
     grille = os.path.join(assets, ctx.grille_glb) if ctx.has_grille else None
@@ -130,13 +156,22 @@ def run(work, assets, previews, samples, views=None, log=print, check_renders=Tr
     if os.path.exists(xp):
         extra.update(json.load(open(xp)))
 
+    mod_png = plaster_modulation(os.path.join(gate, "plaster_mod.png")) if ctx.id != "ritas" else None
+
     def cols(st):
-        return {"l": os.path.join(gate, "col_l_%s.png" % st), "r": os.path.join(gate, "col_r_%s.png" % st)}
+        d_ = {"l": os.path.join(gate, "col_l_%s.png" % st), "r": os.path.join(gate, "col_r_%s.png" % st)}
+        if mod_png:
+            d_["mod"] = mod_png
+        return d_
     tp_ = os.path.join(gate, "render_times.json")
     times = json.load(open(tp_)) if (views and os.path.exists(tp_)) else {}              # a few views again: the others' times stay
     todo = views or [(c, s) for c in CAMS for s in states]
-    if not ctx.lit and not views and ctx.has_room:
-        todo = todo + [("STREET_SQUARE", "night_dark")]            # a shop that is dark at night: the street's own night picture, one view, as an extra
+    if not views and ctx.has_room:
+        if ctx.id == "ritas":
+            if not ctx.lit:
+                todo = todo + [("STREET_SQUARE", "night_dark")]
+        else:
+            todo = todo + [(c_, "night_dark") for c_ in NIGHT_DARK_CAMS]       # try 2: the shut-up night, from the street square and from CLOSE_35
     if views and not check_renders and ctx.has_room and os.environ.get("LEDGER_GATE_PIECES"):
         # (14 Oct, batch B) a spill test (two night frames, 8 samples) that also reads LIT-08: the display pieces' object-index mask of the two close night views (one sample, cheap)
         di = json.load(open(os.path.join(ctx.display_work, "display_items.json")))
@@ -197,17 +232,23 @@ def run(work, assets, previews, samples, views=None, log=print, check_renders=Tr
     for cam, st in REVIEW:
         p = os.path.join(gate, "%s_%s.png" % (cam, st))
         if os.path.exists(p):
-            nm = "%s-%s-%s%s-%s.jpg" % (ctx.id, cam.lower().replace("_", "-"), st.replace("_", "-"), tag, DATE)
+            nm = pname(ctx, "%s-%s-%s" % (ctx.id, cam.lower().replace("_", "-"), st.replace("_", "-"))) if ctx.id != "ritas" else "%s-%s-%s%s-%s.jpg" % (ctx.id, cam.lower().replace("_", "-"), st.replace("_", "-"), tag, DATE)
             jpeg_under(Image.open(p), os.path.join(previews, nm))
-    if not ctx.lit:
-        p = os.path.join(gate, "STREET_SQUARE_night_dark.png")
-        if os.path.exists(p):
-            jpeg_under(Image.open(p), os.path.join(previews, "%s-street-square-night-dark%s-%s.jpg" % (ctx.id, tag, DATE)))
+    if ctx.id == "ritas":
+        if not ctx.lit:
+            p = os.path.join(gate, "STREET_SQUARE_night_dark.png")
+            if os.path.exists(p):
+                jpeg_under(Image.open(p), os.path.join(previews, "%s-street-square-night-dark%s-%s.jpg" % (ctx.id, tag, DATE)))
+    elif ctx.has_room:
+        for cam in NIGHT_DARK_CAMS:
+            p = os.path.join(gate, "%s_night_dark.png" % cam)
+            if os.path.exists(p):
+                jpeg_under(Image.open(p), os.path.join(previews, pname(ctx, "%s-%s-night-dark" % (ctx.id, cam.lower().replace("_", "-")))))
     # the three pictures reduced, and (Rita's only: an approved room exists) the before-and-after for Jafar
     for st in (("day", "night_lit", "night_dark") if ctx.has_room else ()):
         p = room_picture(ctx, st)
         if os.path.exists(p):
-            jpeg_under(Image.open(p), os.path.join(previews, "%s-room-%s%s-%s.jpg" % (ctx.id, st.replace("_", "-"), tag, DATE)))
+            jpeg_under(Image.open(p), os.path.join(previews, ("%s-room-%s%s-%s.jpg" % (ctx.id, st.replace("_", "-"), tag, DATE)) if ctx.id == "ritas" else pname(ctx, "%s-room-%s" % (ctx.id, st.replace("_", "-")))))
     new = room_picture(ctx, "day")
     old = os.path.join(A.REPO, "production", "art", "shop-rooms", "pawnbroker_day.png") if ctx.id == "ritas" else None
     if old and os.path.exists(new) and os.path.exists(old):

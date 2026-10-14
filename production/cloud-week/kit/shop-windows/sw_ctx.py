@@ -23,6 +23,7 @@ BAY_MID_U = 3000.0
 WALL_Y = 5.295            # |street y| of the wall face (d 0): the kit's glass back face (d 30) stands at the street model's 5.265
 FOOT = 0.10               # the footway is the crown + 0.10
 DATE = "2026-10-13"
+NIGHT_HOUR = 20.0         # 14 Oct (try 2): the night views are an evening's: a shop whose hours run past 20:00 (the tea rooms to 22:00, Mickey's to 3 am) is open in them; one that shuts earlier is shut (the card turns to CLOSED)
 
 _T = None
 
@@ -69,6 +70,10 @@ class Ctx:
         elif not self.has_room:
             self.picture_name = "%s_standin" % shop_id             # Mickey's (its real room is owed to the PC) and the empty unit: a flat stand-in card for the gate (sw_gate_run.standin_card_pictures)
         self.lit = bool(R.get("lit_at_night"))
+        self.rita = shop_id == "ritas"                       # Rita's gate and her numbers stay as they were: every try 2 switch (14 Oct) defaults off for her
+        hrs_ = R.get("hours") or {}
+        self.close_hour = float(max((v[1] for k_, v in hrs_.items() if k_ in ("mon", "tue", "wed", "thu", "fri", "sat") and v), default=0.0))
+        self.open_at_night = self.close_hour > NIGHT_HOUR     # the door sign follows the shop's hours (tea rooms street review N1): OPEN in the lit night frames where the hours run past the night hour, CLOSED where they do not
         # file names
         self.front_glb = "%s_front.glb" % shop_id
         self.display_glb = "%s_display.glb" % shop_id

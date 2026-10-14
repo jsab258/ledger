@@ -80,6 +80,8 @@ def run_inner(shop, stage):
             subprocess.run(cmd, check=True)
     elif stage == "front":
         import sw_front as F
+        import sw_hours
+        sw_hours.ensure(ctx)              # 14 Oct, try 2: a shop with no hours sign gets Rita's hours row re-lettered with its own hours (the ironmonger's)
         F.build_front(ASSETS, ctx.work, ctx.fascias, ctx.paper, ctx=ctx)
     elif stage == "display":
         if rita:
