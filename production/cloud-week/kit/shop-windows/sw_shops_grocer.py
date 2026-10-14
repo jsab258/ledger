@@ -483,7 +483,7 @@ def display(d):
         ox, oy = 2.88 + 0.036 + ix * 0.0725, 0.0825 + iy * 0.080
         d.piece("yellow_onion", ox, oy, GB.rest_z(d, ox - L / 2, oy, 0.036) if False else 0.07, rot=(0, 0, rnd.uniform(0, 6.28)), scale=1.0, tier="onions", tris=None)
     d.crate("tomato_tray", 3.27, 3.72, 0.04, 0.30, 0.0, 0.06)
-    tom = d.mat("tomato", rgb8(196, 40, 30), rough=0.22)
+    toms = [d.mat("tomato_a", rgb8(190, 38, 28), rough=0.30), d.mat("tomato_b", rgb8(206, 56, 36), rough=0.30), d.mat("tomato_c", rgb8(172, 34, 26), rough=0.30), d.mat("tomato_d", rgb8(214, 78, 40), rough=0.30)]
     calyx = d.mat("tomato_calyx", rgb8(70, 120, 50), rough=0.6)
     gm = GM()
     hz = 0.026
@@ -494,11 +494,11 @@ def display(d):
             cx, cy, cz = X(3.27 + 0.06 + ix * 0.105), 0.075 + iy * 0.052, 0.06
         else:
             cx, cy, cz = X(3.27 + 0.11 + (ix % 3) * 0.105), 0.10 + (iy % 3) * 0.052, 0.06 + 0.040
-        rx = 0.042 + rnd.uniform(-0.003, 0.003)
+        rx = 0.042 * rnd.uniform(0.92, 1.06)
         ts = [-math.pi / 2 + math.pi * t / 8.0 for t in range(1, 8)]
-        gm.lathe(cx, cy, cz, [(0.0, 0.0)] + [(rx * math.cos(t), hz * (1.0 + math.sin(t))) for t in ts] + [(0.0, 2 * hz)], mi=0, n=14)
-        gm.lathe(cx, cy, cz + 2 * hz - 0.002, [(0.0, 0.0), (0.012, 0.0), (0.014, 0.003), (0.006, 0.006), (0.0, 0.006)], mi=1, n=8)
-    d.gm_object("tomatoes", gm, [tom, calyx], "scripted", "script:tomatoes", tier="tray", smooth=True)
+        gm.lathe(cx, cy, cz, [(0.0, 0.0)] + [(rx * math.cos(t), hz * (1.0 + math.sin(t))) for t in ts] + [(0.0, 2 * hz)], mi=j % 4, n=14)
+        gm.lathe(cx, cy, cz + 2 * hz - 0.002, [(0.0, 0.0), (0.012, 0.0), (0.014, 0.003), (0.006, 0.006), (0.0, 0.006)], mi=4, n=8)
+    d.gm_object("tomatoes", gm, toms + [calyx], "scripted", "script:tomatoes", tier="tray", smooth=True)
     d.crate("banana_crate", 3.74, 4.29, 0.04, 0.44, 0.0, 0.12)
     bd = d.dims("bananas")
     d.piece("bananas", 4.015, 0.135, 0.12, rot=(0, 0, 0), scale=0.9, tier="crate", tris=None)
