@@ -197,6 +197,23 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
                 tx.image = bpy.data.images.load(em_path, check_existing=True)
                 nt_.links.new(tx.outputs["Color"], pb.inputs["Emission Color"])
                 pb.inputs["Emission Strength"].default_value = 0.5
+    # 14 Oct (batch B): the launderette's projecting box sign (4.1 `steam_laundry_box`, lit "tubes") glows at night the same way: each face's own emissive map (4.1 signs/<id>/<id>_face_a_emissive.png, _b_) on that
+    # face's material, at 0.5. The room behind the glass is dark at night, the box sign is not: the lit sign over a dark shop is the launderette's real night
+    hs_ = ctx.R["fascia"].get("hanging_sign")
+    if night and ctx.R["fascia"].get("lit") == "tubes" and hs_ and "box" in str(hs_.get("kind", "")):
+        for fk in ("a", "b"):
+            ep_ = os.path.join(ctx.fascias, "signs", hs_["id"], "%s_face_%s_emissive.png" % (hs_["id"], fk))
+            if not os.path.exists(ep_):
+                continue
+            for m in bpy.data.materials:
+                if m.name.startswith("sign_face_" + fk) and m.use_nodes:
+                    pb = m.node_tree.nodes.get("Principled BSDF")
+                    if pb is None:
+                        continue
+                    tx = m.node_tree.nodes.new("ShaderNodeTexImage")
+                    tx.image = bpy.data.images.load(ep_, check_existing=True)
+                    m.node_tree.links.new(tx.outputs["Color"], pb.inputs["Emission Color"])
+                    pb.inputs["Emission Strength"].default_value = 0.5
     # empties from the importer carry the Y-up conversion; apply the display's offset on the roots only
     # glass: a mix of a clear pane (all the glass's reflectance) and a transparent one, 1.0 by day and 0.2 at night
     refl = (0.2 if night else 1.0) if glass_refl is None else glass_refl

@@ -158,7 +158,7 @@ def lobby_parts(self):
     self.mats.setdefault("lobby_floor_placeholder", bs.make_material("lobby_floor_placeholder", (120, 110, 100), 0.4, 0.0))
     # floor and nosing
     self.add("lobby_floor", SF.bx(u0, u1, 70.0 - rec, 100.0, 0.0, 25.0), "lobby_floor_placeholder", bev=None)
-    self.add("lobby_nosing", SF.bx(u0, u1, 70.0, 100.0, 25.0, 31.0), "brass", bev=1.0)        # brass, 30 x 6, at the frame line (the shop's own lobby entry says brass for both lobbies)
+    self.add("lobby_nosing", SF.bx(u0, u1, 71.0, 101.0, 25.0, 31.0), "brass", bev=1.0)        # brass, 30 x 6, at the frame line (the shop's own lobby entry says brass for both lobbies)
     # soffit between the returns (the lining's 20 on the pier side, the window-side return's 28 on the other)
     s_a, s_b = sorted((up - sgn * t, uw + sgn * band_w))
     self.add("lobby_soffit", SF.bx(s_a, s_b, d_back, 100.0, 2372.0, 2400.0), "white", bev=None)

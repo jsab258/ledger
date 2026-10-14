@@ -159,3 +159,38 @@ def tea_rooms(ctx, rows, assets, di):
 
 
 SHOPS.update({"newsagent": newsagent, "tea_rooms": tea_rooms})
+
+
+def steam_laundry(ctx, rows, assets, di):
+    """ROOM rows for the launderette (batch B): the washers and the dryers at the target's counts and sizes, the two running lamps (lit in night_dark only), the shelves' parcels, the notices; the counts against the target."""
+    RR = ctx.R["room"]
+    rooms = ctx.rooms
+    placed = json.load(open(os.path.join(rooms, "placed.json")))
+    fixtures = json.load(open(os.path.join(rooms, "fixtures.json")))
+    rj = json.load(open(os.path.join(rooms, "rows.json"))) if os.path.exists(os.path.join(rooms, "rows.json")) else {}
+    nw = sum(p.get("n", 0) for p in placed if p.get("model") == "script:washing_machine")
+    nd = sum(p.get("n", 0) for p in placed if p.get("model") == "script:tumble_dryer")
+    wp = next((p for p in placed if p.get("model") == "script:washing_machine"), None)
+    dp = next((p for p in placed if p.get("model") == "script:tumble_dryer"), None)
+    ok_sz = bool(wp and dp) and abs((wp["ext"][1] - wp["ext"][0]) - 2.4) <= 0.03 and abs(wp["ext"][5] - 0.85) <= 0.01 and abs((dp["ext"][1] - dp["ext"][0]) - 2.1) <= 0.1 and abs(dp["ext"][5] - 1.73) <= 0.02
+    rows.add("ROOM-01", "the washers and the dryers", nw == 4 and nd == 6 and ok_sz, "%d washers in a row 0.60 wide x 0.85 high (the run measures %.2f x %.2f), %d dryers in three stacks of two (0.69 wide, 0.85 high each, %.2f high in all, run %.2f wide), the door's ring 0.032 proud of the cabinet: nothing stands more than 0.60 off the wall (SO-01)" % (
+        nw, (wp["ext"][1] - wp["ext"][0]) if wp else -1, wp["ext"][5] if wp else -1, nd, dp["ext"][5] if dp else -1, (dp["ext"][1] - dp["ext"][0]) if dp else -1))
+    lamps = rj.get("running_lamps", {})
+    on_dryer = all(dp and dp["ext"][0] <= a[0] <= dp["ext"][1] and 0.0 <= a[2] <= dp["ext"][5] and a[1] < dp["ext"][3] for a in lamps.get("at", []))
+    rows.add("ROOM-02", "the dryers' two running lamps", lamps.get("n") == 2 and on_dryer, "%s running lamps, each on a dryer's control strip at %s, orange and emissive in night_dark only with a small warm point light beside each (the target's `night_dark`: two orange lamps, small, 2000 K); the other four are dull discs" % (lamps.get("n"), lamps.get("at")))
+    np_ = sum(p.get("n", 0) for p in placed if p.get("model") == "script:wrapped_parcels")
+    tiers = sorted({p["tag"] for p in placed if p.get("model") == "script:wrapped_parcels"})
+    sh = [f for f in fixtures if f.get("name", "").startswith("shelf_L-back-shelves")]
+    up = [f for f in fixtures if f.get("name", "").startswith("upright_L-back-shelves")]
+    ok_up = bool(up) and all(abs(f["ext"][4] - 0.85) < 0.002 for f in up)
+    rows.add("ROOM-03", "the shelves and their parcels", np_ == 18 and len(tiers) == 2 and len(sh) == 2 and ok_up, "%d wrapped parcels on %d boards (z %s), each with a cross of string and a numbered tag; the two boards (0.30 deep) are carried by uprights that stand ON the washers' tops (z %.2f) and end inside their footprint" % (
+        np_, len(sh), [t.split("_")[1] for t in tiers], min([f["ext"][4] for f in up] or [-1])))
+    nn = sum(p.get("n", 0) for p in placed if p.get("model") == "script:paper_notices")
+    rows.add("ROOM-04", "the notices", nn == 3 and any(f.get("name") == "care_chart" for f in fixtures) and any(f.get("name") == "cork_board" for f in fixtures), "a cork board 0.9 x 0.6 with %d cards (prices, rules, service washes) on the left wall and a wash-care chart 0.6 x 0.8 beside the clock on the right" % nn)
+    have = counts_row(ctx, rows, di, {}, "steam_laundry")
+    return {"supports": ["script:crate", "script:paper_notices"], "texts": _texts(ctx, di),
+            "families": {"folded laundry": ["script:folded_towels"], "baskets of laundry": ["wicker_basket_01", "script:laundry_in_basket"], "detergents": ["script:detergent_boxes"]},
+            "era": "a 1990 launderette: front-loading machines, powder and soap flakes in printed card packets and plastic bottles of the period, wicker baskets, brown-paper parcels, towels (every maker invented); no modern phone, no flat screen, no barcode, no plastic modern packaging"}
+
+
+SHOPS.update({"steam_laundry": steam_laundry})

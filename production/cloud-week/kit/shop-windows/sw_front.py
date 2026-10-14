@@ -440,7 +440,7 @@ class Front:
         for k, bar in enumerate(t["bars"]):
             self.add("band_bar_%d" % k, bs.prism_ud([(bar["centre"] + p[0], max(p[1], 1.0)) for p in bp], 2474.0, 2793.0), "white")
         for k, (a, b) in enumerate(t["panes"]):
-            self.add("band_toplight_glass_%d" % k, bx(a - 4.0, b + 4.0, 30.3, 35.7, 2480.0, 2790.0), "glass", bev=None)
+            self.add("band_toplight_glass_%d" % k, bx(a - 4.0, b + 4.0, 30.3, 35.7 - (0.25 if self.ctx.lobby_depth else 0.0), 2480.0, 2790.0), "glass", bev=None)      # (batch B: a lobby's band jambs stand alone and their rebate face, d 36, showed in the pane's plane at 35.7: FRN-10; 35.45 is 0.55 clear)
             V, F = joinery.sweep_frame(bd, a, 2480.0, b, 2790.0, -36.0)
             self.add("band_toplight_bead_%d" % k, (V, [tuple(int(i) for i in f) for f in F]), "white", bev=None)
         # the panel over the side door: backing board, the frame round the raised-and-fielded panel (stiles and rails 50), the field 844 wide

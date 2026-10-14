@@ -1175,6 +1175,48 @@ def frn10_rows(R, work, assets, rows, members):
              " (try 2: the two strips beside the side door were luma 0 to 3, about 12,000 pixels at STREET_SQUARE: F1's frame jambs, the added side jambs and the fillers stood in one plane, d 100)")
 
 
+def frn11_rows(glb, members, rows, hs):
+    """FRN-11 (the ironmonger's street review, narrow point 1, 14 Oct 2026): no part of a hanging sign passes through any other part of the front (the cornice, a pilaster's capital, a console, the fascia). The front glb is
+    loaded, every mesh inset 1 mm along its normals (a 2 mm contact is tolerated) and each sign part (names `sign_*`) tested against every other front part whose box overlaps it by a BVH overlap. The signs are in the
+    front glb since they are part of the front; the ironmonger's board stood 0.55 deep at 0.70 out, its near edge and chain inside the cornice (which projects 0.300), the console and the capital under it."""
+    import bpy
+    from mathutils.bvhtree import BVHTree
+    bpy.ops.wm.read_factory_settings(use_empty=True)
+    objs = load_glb_objects(glb)
+    deps = bpy.context.evaluated_depsgraph_get()
+    data = {}
+    for ob in objs:
+        if ob.type != "MESH":
+            continue
+        V, T_, N = mesh_world(ob, deps)
+        if len(V) == 0 or len(T_) == 0:
+            continue
+        lo, hi = V.min(axis=0), V.max(axis=0)
+        inset = min(0.001, 0.2 * float((hi - lo).min()) / 2.0)
+        Ne = N / np.maximum(np.linalg.norm(N, axis=1, keepdims=True), 1e-9)
+        data[ob.name] = (lo, hi, BVHTree.FromPolygons((V - Ne * inset).tolist(), T_.tolist(), epsilon=0.0))
+    sign = sorted(n for n in data if n.startswith("sign_"))
+    other = sorted(n for n in data if not n.startswith("sign_"))
+    bad, pairs = [], 0
+    tol = 0.002
+    for a in sign:
+        la, ha, ba = data[a]
+        for b in other:
+            lb, hb, bb = data[b]
+            if np.any(ha < lb + tol) or np.any(hb < la + tol):
+                continue
+            pairs += 1
+            if ba.overlap(bb):
+                bad.append((a, b))
+    near_edge = None
+    cores = [n for n in sign if n.startswith(("sign_board_core", "sign_body", "sign_rail_back"))]
+    if cores:
+        near_edge = min(float(-data[n][1][1]) for n in cores)            # the model's y is -d: the near edge is the smallest d, the largest y
+    rows.add("FRN-11", "no sign passes through the front", not bad and len(sign) > 0,
+             "%d parts of the hanging sign (%s) against %d other front parts: %d pairs with overlapping boxes tested (each mesh inset 1 mm, so a 2 mm contact is tolerated), %d pairs intersect%s; the board's (or box's) near edge stands %s out from the wall (the cornice projects 0.300; the rule: at least 0.33)" % (
+                len(sign), hs.get("id", "?"), len(other), pairs, len(bad), (" (" + "; ".join("%s x %s" % p_ for p_ in bad[:12]) + ")") if bad else "", ("%.3f m" % near_edge) if near_edge is not None else "?"))
+
+
 def glass_night_rows(R, work, rows):
     """GLS-03 (street review 2, close review 3): at night p95 of |frame - the render with the glass's reflection off| over the window's glass, at most 15 levels at every camera. The frame
     (2560 x 1440) is reduced to the check render's 1280 x 720 by averaging 2 x 2; luma; the glass mask is the check's own."""

@@ -124,7 +124,13 @@ def picture_rows(ctx, rows):
         det.append("%s: mean %.1f (floor %.1f), share under 12 %.4f, largest dark region %.4f of the area" % (s, means[s], floor, share, frac))
     rows.add("PIC-02", "no black void in the picture", ok, "; ".join(det))
     nd = means["night_dark"]
-    rows.add("PIC-03", "night_dark is dark, not black", 12.4 <= nd <= 40.0, "night_dark mean %.1f (12.4 to 40; the approved 17.7)" % nd)
+    # 14 Oct (batch B, the ironmonger's street review, narrow point 2): the sodium wash was the card's full width at 0.9 of the height, so every shop's night_dark picture had two hot top corners (the
+    # pawnbroker's read 66 against a mean of 17.7, the ironmonger's 98 against 20.4) that showed in the toplights as orange lights left on. The wash is now 4.3 m wide at 0.6 of the height, tipped 30
+    # degrees down; the row: the picture's top front corner columns (x 0 to 60 and 4036 to 4096, rows 0 to 200) read at most 1.5 times the picture's mean
+    ln = lum["night_dark"]
+    cl, cr = float(ln[0:200, 0:60].mean()), float(ln[0:200, PW - 60:PW].mean())
+    rows.add("PIC-03", "night_dark is dark, not black, and has no hot corners", 12.4 <= nd <= 40.0 and max(cl, cr) <= 1.5 * nd,
+             "night_dark mean %.1f (12.4 to 40; the approved 17.7); the top front corner columns (x 0 to 60 and 4036 to 4096, rows 0 to 200) read %.1f and %.1f against 1.5 x the mean = %.1f (the wash light was the card's full width at 0.9 of the height: the pawnbroker's corners read 66, the tea room's 61, the ironmonger's 98)" % (nd, cl, cr, 1.5 * nd))
     det, ok = [], True
     for s, a in ims.items():
         rp = os.path.join(rooms, "raw", "%s_%s_raw.png" % (ctx.picture_name, s))
@@ -316,6 +322,19 @@ def display_rows(ctx, rows, assets):
     return di
 
 
+def word_hit(n, w, brand=False):
+    """A blocklist word found in a name or a string (14 Oct, batch B: the content word 'wine' was found inside 'twine', a parcel's string). The words that end in a space are whole words that begin there (as before);
+    a plain alphabetic word of the content list is a whole word (the lists name the plurals: 'toy', 'toys'); a brand word of four letters or fewer is a whole word and a longer one is found inside a name (a maker's
+    name run into another word is still a mark); a word with an underscore, a hyphen or a digit (man_, wd-40, ph 40) is looked for as written."""
+    t = " " + re.sub(r"[^a-z0-9' -]+", " ", n.lower()) + " "
+    if w.endswith(" "):
+        return (" " + w) in t
+    plain = re.fullmatch(r"[a-z]+", w) is not None
+    if plain and (not brand or len(w) <= 4):
+        return re.search(r"(?<![a-z0-9])" + w + r"(?![a-z0-9])", t) is not None
+    return w in t
+
+
 # What a model may drop (14 Oct, batch B): the meshes a Judgement in NOTES.md names, per model, as {model: (name fragment, the Judgement's one line)}. Anything else the template drops fails DSP-05.
 KNOWN_DROPS = {}
 
@@ -373,8 +392,7 @@ def inventory_rows(ctx, rows, assets, di, shop_texts, goods_note, pending=None):
     block = [b.lower() for b in inv["brand_blocklist"]]
 
     def hitb(n, b):
-        t = " " + re.sub(r"[^a-z0-9' -]+", " ", n.lower()) + " "
-        return (" " + b) in t if b.endswith(" ") else b in t
+        return word_hit(n, b, brand=True)
     names = set()
     for gl in X.glbs_of(assets):
         gj, _, _ = X.glb_json(os.path.join(assets, gl))
@@ -390,8 +408,7 @@ def inventory_rows(ctx, rows, assets, di, shop_texts, goods_note, pending=None):
     words = [w for k in cb for w in cb[k]]
 
     def hit(n, w):
-        t = " " + re.sub(r"[^a-z0-9' -]+", " ", n.lower()) + " "
-        return (" " + w) in t if w.endswith(" ") else w in t
+        return word_hit(n, w)
     nhits = sorted({n for n in names for w in words if hit(n, w)})
     rows.add("NEV-01", "no people, drink, betting, children", not nhits, "%d names and text strings against %d content-blocklist words (the ones ending in a space as whole words): %s" % (len(names), len(words), nhits or "no match"))
     rows.add("NEV-02", "nothing after 1992", not denied, "no model from inventory.denied; %s" % goods_note.get("era", "no modern phone, flat screen, cordless drill or LED lamp, no barcode"))
@@ -428,6 +445,34 @@ def glb_normal_rows(ctx, rows, assets):
 
 
 # ------------------------------------------------------------------------------------------------------------- the front
+def lobby_row(ctx, rows, m):
+    """FRN-06 (the recessed lobbies of the launderette, 300 deep, and the grocer, 600): measured on the built members against the 3.2 lobby: the door frame, leaf, fanlight and threshold stand `depth` behind the frame
+    line (d 100: the frame's front face at d 100 - depth), a floor 25 high from there to the frame line, a brass nosing 30 x 6 on its front edge, a soffit under the band, the window's end returned square (a kick
+    panel 20 thick to z 600 in the stallriser's own material, a frame, a 6 mm pane), the other side lined 20 thick in the pier's paint (the grocer's with two raised panels), and the floor's picture."""
+    rec = float(ctx.lobby_depth)
+    L = ctx.R["front"]["lobby"]
+    jm = m["door_jamb_l"]
+    fl = m["lobby_floor"]
+    ns = m["lobby_nosing"]
+    kw = m["lobby_kick_w"]
+    li = m["lobby_lining"]
+    so = m["lobby_soffit"]
+    th = m["door_threshold"]
+    fan = m["fanlight_glass"]
+    lf = m["door_leaf_stile_lever"]
+    want_front = 100.0 - rec
+    panelled = "panelled" in str(L.get("pier_side_return", ""))
+    npan = len([k for k in m if k.startswith("lobby_panel_")])
+    ok = (near(jm["d"][1], want_front, 1.5) and near(lf["d"][1], 70.0 - rec, 1.5) and near(th["d"][0], -rec, 1.5) and near(fan["d"][1], 35.7 - rec, 1.5) and near(fl["z"][1] - fl["z"][0], 25.0, 1.0) and near(fl["d"][1], 100.0, 1.5)
+          and near(fl["d"][0], 70.0 - rec, 1.5) and near(ns["z"][1] - ns["z"][0], 6.0, 0.5) and near(ns["d"][1] - ns["d"][0], 30.0, 0.5) and near(ns["z"][0], 25.0, 0.5) and ns["d"][1] >= 100.0
+          and near(kw["u"][1] - kw["u"][0], 20.0, 0.5) and near(kw["z"][1], 600.0, 1.0) and near(li["u"][1] - li["u"][0], 20.0, 0.5) and near(so["z"][1], 2400.0, 1.0) and near(so["d"][0], want_front, 1.5)
+          and (npan == 2 if panelled else npan == 0) and "lobby_glass_w" in m)
+    rows.add("FRN-06", "the recessed lobby", ok, "depth %.0f: the door frame's front face at d %.1f (want %.0f), the leaf at d %.0f to %.0f, the fanlight d %.0f to %.0f; the floor z %.0f to %.0f from d %.0f to %.0f; the brass nosing %.0f x %.0f at z %.0f to %.0f; the soffit z %.0f to %.0f; the window-side return: kick panel %.0f thick to z %.0f (%s), a 6 mm pane z %.0f to %.0f; the other side's lining %.0f thick (%s), %d raised panels (%s); the floor's picture: %s" % (
+        rec, jm["d"][1], want_front, lf["d"][0], lf["d"][1], fan["d"][0], fan["d"][1], fl["z"][0], fl["z"][1], fl["d"][0], fl["d"][1], ns["d"][1] - ns["d"][0], ns["z"][1] - ns["z"][0], ns["z"][0], ns["z"][1], so["z"][0], so["z"][1],
+        kw["u"][1] - kw["u"][0], kw["z"][1], kw.get("material"), m["lobby_glass_w"]["z"][0], m["lobby_glass_w"]["z"][1], li["u"][1] - li["u"][0], li.get("material"), npan, "the grocer's panelled lining" if panelled else "none: the launderette's is plain",
+        fl.get("material")))
+
+
 def paint_rows(ctx, rows, m):
     fr = ctx.R["front"]
     pc = fr["paint_srgb"]
@@ -483,16 +528,24 @@ def front_rows(ctx, rows, assets, members_path=None):
         if not g:
             det.append(t_)
     rows.add("FRN-01", "the front's parts at their sizes", ok, "fascia, cornice, sill, stallriser, the pilaster's shaft and the window frame's transom and head measured on the built meshes against the 3.2 sizes: %s. Variants: %s" % ("; ".join(det) if det else "all within 1.5 mm", var))
-    # FRN-02 zones
+    # FRN-02 zones (batch B: the grocer has no side door: its zone is null in the target and the front has no side filler)
     win_u = (m["win_jamb_l"]["u"][0], m["win_jamb_r"]["u"][1])
     door_u = (m["door_jamb_l"]["u"][0], m["door_jamb_r"]["u"][1])
-    side_u = (m["side_filler_l"]["u"][0], m["side_filler_r"]["u"][1])
+    has_side = z.get("side_door") is not None
+    side_u = (m["side_filler_l"]["u"][0], m["side_filler_r"]["u"][1]) if has_side and "side_filler_l" in m else None
     cm = lambda a: ctx.x_of_u((a[0] + a[1]) / 2.0)
     cen = fr["centres_street_x_m"]
-    g1 = near(win_u[0], z["window"][0], 2) and near(win_u[1], z["window"][1], 2) and near(door_u[0], z["shop_door"][0], 2) and near(door_u[1], z["shop_door"][1], 2) and near(side_u[0], z["side_door"][0], 2) and near(side_u[1], z["side_door"][1], 2)
-    g2 = near(cm(win_u), cen["window"], 0.003) and near(cm(door_u), cen["shop_door"], 0.003) and near(cm(side_u), cen["side_door"], 0.003)
-    rows.add("FRN-02", "window and door zones", g1 and g2, "window u %s, shop door %s, side door %s against %s; centres (street x) window %.3f, shop door %.3f, side door %.3f against %s" % (
-        [round(v, 1) for v in win_u], [round(v, 1) for v in door_u], [round(v, 1) for v in side_u], [z["window"], z["shop_door"], z["side_door"]], cm(win_u), cm(door_u), cm(side_u), [cen["window"], cen["shop_door"], cen["side_door"]]))
+    g1 = near(win_u[0], z["window"][0], 2) and near(win_u[1], z["window"][1], 2) and near(door_u[0], z["shop_door"][0], 2) and near(door_u[1], z["shop_door"][1], 2)
+    g2 = near(cm(win_u), cen["window"], 0.003) and near(cm(door_u), cen["shop_door"], 0.003)
+    if has_side:
+        g1 = g1 and side_u is not None and near(side_u[0], z["side_door"][0], 2) and near(side_u[1], z["side_door"][1], 2)
+        g2 = g2 and side_u is not None and near(cm(side_u), cen["side_door"], 0.003)
+        rows.add("FRN-02", "window and door zones", g1 and g2, "window u %s, shop door %s, side door %s against %s; centres (street x) window %.3f, shop door %.3f, side door %.3f against %s" % (
+            [round(v, 1) for v in win_u], [round(v, 1) for v in door_u], [round(v, 1) for v in side_u], [z["window"], z["shop_door"], z["side_door"]], cm(win_u), cm(door_u), cm(side_u), [cen["window"], cen["shop_door"], cen["side_door"]]))
+    else:
+        nside = [k for k in m if k.startswith(("side_door", "side_filler", "side_"))]
+        rows.add("FRN-02", "window and door zones", g1 and g2 and not nside, "window u %s, shop door %s against %s; centres (street x) window %.3f, shop door %.3f against %s; the target has NO side door (zone null) and the front has no side-door part (%d found)" % (
+            [round(v, 1) for v in win_u], [round(v, 1) for v in door_u], [z["window"], z["shop_door"]], cm(win_u), cm(door_u), [cen["window"], cen["shop_door"]], len(nside)))
     # FRN-03 the shop door
     dv = R["door"]["variant"]
     hinge_viewer = R["door"]["hinge_viewer"]
@@ -513,16 +566,21 @@ def front_rows(ctx, rows, assets, members_path=None):
                and near(lp["u"][1] - lp["u"][0], 250, 5) and near(lp["z"][1] - lp["z"][0], 40, 5) and near(bell_z[0], 1950, 5) and near(bell_z[1], 2050, 5) and handed and bell_on_rail and lp["z"][1] < glass_visible[0])
         rows.add("FRN-03", "the shop door", ok3, "T1: leaf %.0f x %.0f at z %.0f; glass %.0f to %.0f with one bar at %.0f (%.0f wide); lock rail %.0f to %.0f; letter plate %.0f x %.0f at z %.0f and clear of the glass; hinge on the viewer's %s (the lever stile at u %.0f, the hinge stile at u %.0f); the bell's spring strip z %.0f to %.0f, inside the leaf, on the top rail 90 mm in from the hanging stile's inner edge" % (
             leaf_w, leaf_h, lv["z"][0], glass_visible[0], glass_visible[1], bar_c, m["door_glazing_bar"]["z"][1] - m["door_glazing_bar"]["z"][0], m["door_rail_lock"]["z"][0], m["door_rail_lock"]["z"][1], lp["u"][1] - lp["u"][0], lp["z"][1] - lp["z"][0], (lp["z"][0] + lp["z"][1]) / 2, hinge_viewer, lv["u"][0], hg["u"][0], bell_z[0], bell_z[1]))
-    elif dv == "M1":
+    elif dv in ("M1", "M2"):
+        # M1 (a glass door in aluminium: a 170 bottom rail, one pane from z 198) and M2 (batch B, the grocer's: a kick panel to z 600 in place of the bottom rail, glazed from 600, a raised field in the panel,
+        # the letter plate at z 545 in the panel, the D pull in bronze): one row, the foot taken from the target's `glass_foot_z_mm`
         rb, rt = m["door_rail_bottom"], m["door_rail_top"]
         gg = m["door_glass_0"]
         handed = (lv["u"][0] < hg["u"][0]) if hinge_viewer == "R" else (hg["u"][0] < lv["u"][0])
         glass_z = (gg["z"][0] + 6.0, gg["z"][1] - 6.0)
-        ok3 = (near(leaf_w, 900, 5) and near(leaf_h, 2040, 5) and near(lv["z"][0], 28, 5) and near(hg["u"][1] - hg["u"][0], 50, 3) and near(rb["z"][1], 198, 3) and near(rt["z"][0], 1968, 3)
-               and near(glass_z[0], 198, 8) and near(glass_z[1], 1968, 8) and near((lp["z"][0] + lp["z"][1]) / 2, 113, 5) and near(lp["u"][1] - lp["u"][0], 250, 5) and near(lp["z"][1] - lp["z"][0], 40, 5)
-               and lp["z"][1] <= glass_z[0] and handed and "door_pull_bar" in m)
-        rows.add("FRN-03", "the shop door", ok3, "M1: leaf %.0f x %.0f at z %.0f, 50 stiles, bottom rail to z %.0f, one pane from z %.0f to %.0f, top rail from z %.0f; letter plate %.0f x %.0f at z %.0f in the bottom rail and clear of the glass; hinge on the viewer's %s; the chrome D pull on the lever stile" % (
-            leaf_w, leaf_h, lv["z"][0], rb["z"][1], glass_z[0], glass_z[1], rt["z"][0], lp["u"][1] - lp["u"][0], lp["z"][1] - lp["z"][0], (lp["z"][0] + lp["z"][1]) / 2, hinge_viewer))
+        foot = float(R["door"].get("glass_z_mm", [198.0, 1968.0])[0]) if dv == "M2" else 198.0
+        lp_c = 545.0 if dv == "M2" else 113.0
+        ok3 = (near(leaf_w, 900, 5) and near(leaf_h, 2040, 5) and near(lv["z"][0], 28, 5) and near(hg["u"][1] - hg["u"][0], 50, 3) and near(rb["z"][1], foot, 3) and near(rt["z"][0], 1968, 3)
+               and near(glass_z[0], foot, 8) and near(glass_z[1], 1968, 8) and near((lp["z"][0] + lp["z"][1]) / 2, lp_c, 5) and near(lp["u"][1] - lp["u"][0], 250, 5) and near(lp["z"][1] - lp["z"][0], 40, 5)
+               and lp["z"][1] <= glass_z[0] and handed and "door_pull_bar" in m and (dv != "M2" or "door_kick_field" in m))
+        rows.add("FRN-03", "the shop door", ok3, "%s: leaf %.0f x %.0f at z %.0f, 50 stiles, %s to z %.0f, one pane from z %.0f to %.0f, top rail from z %.0f; letter plate %.0f x %.0f at z %.0f in the %s and clear of the glass; hinge on the viewer's %s; the %s D pull on the lever stile%s" % (
+            dv, leaf_w, leaf_h, lv["z"][0], "the kick panel" if dv == "M2" else "bottom rail", rb["z"][1], glass_z[0], glass_z[1], rt["z"][0], lp["u"][1] - lp["u"][0], lp["z"][1] - lp["z"][0], (lp["z"][0] + lp["z"][1]) / 2,
+            "kick panel" if dv == "M2" else "bottom rail", hinge_viewer, "bronze" if dv == "M2" else "chrome", "; a raised field on the kick panel" if dv == "M2" else ""))
     else:
         rows.add("FRN-03", "the shop door", False, "door variant %s has no row in this check yet" % dv)
     # FRN-04 the glass and the toplight layout
@@ -538,7 +596,7 @@ def front_rows(ctx, rows, assets, members_path=None):
     mbarc = sorted([c_ for (a, b), c_ in zip(bars, centres) if near(b - a, gl["mullion_face"], 1)])
     ok4 = (len(centres) == len(want) and all(near(a, b, 2) for a, b in zip(centres, want)) and len(panes) == gl["toplights"] and all(near(p, gl["toplight_width"], 1) for p in panes) and min(panes) >= 250
            and lights == len(mullc) + 1 and len(mbarc) == len(mullc) and all(near(a, b, 2) for a, b in zip(mbarc, mullc))
-           and all(near(v["d"][0], 30, 0.5) and near(v["d"][1], 36, 0.5) for k, v in m.items() if k.startswith(("win_glass_", "band_toplight_glass_"))))
+           and all(near(v["d"][0], 30, 0.5) and near(v["d"][1], 36, 0.6) for k, v in m.items() if k.startswith(("win_glass_", "band_toplight_glass_"))))
     band = sorted([(v["u"][0], v["u"][1]) for k, v in m.items() if k.startswith("band_bar_")])
     if len(band) == 2:
         bpanes = [band[0][0] - door_u[0] - 50, band[1][0] - band[0][1], door_u[1] - 50 - band[1][1]]
@@ -550,7 +608,10 @@ def front_rows(ctx, rows, assets, members_path=None):
     rows.add("FRN-04", "the glass and the toplight layout", ok4, "%d lights, %d toplights of %s (target %.1f), bar centres %s against %s (each within 2 mm), a bar on each of the %d mullion lines, no toplight under %.0f%s; every 6 mm plate at d 30 to 36" % (
         lights, len(panes), [round(p, 1) for p in panes][:3] + ["..."], gl["toplight_width"], [round(c_, 1) for c_ in centres], want, len(mullc), min(panes), btxt))
     paint_rows(ctx, rows, m)
-    rows.na("FRN-06", "lobby", "no lobby in this shop's front (the grocer's and the launderette's check)")
+    if ctx.lobby_depth:
+        lobby_row(ctx, rows, m)
+    else:
+        rows.na("FRN-06", "lobby", "this shop's front is flush (3.2 lobby kind flush): no lobby")
     ok7, wh, n_unc, n_tot, outer = X.frn07_rows(R, work, rows)
     rows.add("FRN-07", "no opening in the front", ok7, "the elevation drawn from the built meshes (u 0 to 6000, z 0 to 2850, 1 mm a pixel, every part's triangles, parts drawn 1 mm proud, the gate's two brick piers x 2.65 to 3.0 behind the pilasters drawn as the wall): %d uncovered pixels of %d; the largest uncovered rectangle is %d x %d mm (limit 5 x 5). Without the piers the bay's outer strips (u 0 to 350 and 5650 to 6000) have %d uncovered pixels: the pilaster's shaft and core stop 30 mm short of the bay's edge, so the game's street facade has to close it (PC-04)" % (n_unc, n_tot, wh[0], wh[1], outer))
     # FAS-01 / FAS-02
@@ -571,20 +632,41 @@ def front_rows(ctx, rows, assets, members_path=None):
         rows.add("FAS-04", "the applied letters at the 4.1 place", ok_l, "the raised gilt letters MICKEY'S: u %.0f to %.0f (4.1: %.0f to %.0f), z %.0f to %.0f (4.1: %.0f to %.0f), standing %.1f mm off the board's face (4.1: 14), each within 12 mm (the font's own metrics)" % (
             lt["u"][0], lt["u"][1], want_u[0], want_u[1], lt["z"][0], lt["z"][1], want_z[0], want_z[1], lt["d"][1] - 120.0))
     hs = next((h for h in man["hanging_signs"] if h["shop"] == ctx.id), None)
-    if hs is None or "sign_plate" not in m:
+    if hs is None or not any(k.startswith("sign_") for k in m):
         rows.na("FAS-02", "hanging signs", "this shop has no hanging sign in 4.1")
+    elif "sign_body" in m:
+        # the launderette's projecting box (batch B): a lit box 0.62 out, 0.45 high, 0.14 thick, its back edge on the brick above the cornice at the window end of the bay
+        mt = hs["mount"]
+        sp = m["sign_plate_0"]
+        mount_x = ctx.x_of_u((sp["u"][0] + sp["u"][1]) / 2.0)
+        top = m["sign_rail_top_m"]["z"][1] / 1000.0
+        bot = m["sign_rail_bottom_m"]["z"][0] / 1000.0
+        proj = m["sign_cap_front"]["d"][1] / 1000.0
+        bw_, bh_, bt_ = hs["parts"]["box_m"]
+        corn_top = m["cor_cornice"]["z"][1] / 1000.0
+        fa_ok = all(k in m for k in ("sign_face_a", "sign_face_b"))
+        ok_s = (near(mount_x, mt["x_street_m"], 0.010) and near(top, mt["arm_height_m"], 0.010) and near(top - bot, bh_, 0.010) and near(proj, bw_ + 0.008, 0.012) and bot >= corn_top + 0.04 and fa_ok
+                and near(m["sign_rail_top_p"]["u"][1] - m["sign_rail_top_m"]["u"][0], bt_, 0.004 * 1000))
+        rows.add("FAS-02", "hanging signs", ok_s, "%s: the box's mounting plates at street x %.3f (4.1: %.3f), the box z %.3f to %.3f (4.1: %.3f high, top at %.3f), %.3f out from the wall (4.1: %.2f, with the plates' 8 mm), %.3f thick (%.2f), its lowest part %.3f above the cornice's top (%.3f), face a and face b each a quad with its 4.1 map (%s)" % (
+            hs["id"], mount_x, mt["x_street_m"], bot, top, bh_, mt["arm_height_m"], proj, bw_, (m["sign_rail_top_p"]["u"][1] - m["sign_rail_top_m"]["u"][0]) / 1000.0, bt_, bot - corn_top, corn_top, "present" if fa_ok else "MISSING"))
     else:
         sp, sa = m["sign_plate"], m["sign_arm"]
         mt = hs["mount"]
         mount_x = ctx.x_of_u((sp["u"][0] + sp["u"][1]) / 2.0)
         sa_proj = sa["d"][1] / 1000.0
+        # 14 Oct (batch B, the ironmonger's street review, narrow point 1): a board's near edge stands at least 0.33 from the wall (the cornice projects 0.300), so the arm runs to the board's far edge
+        # plus the push-out: the expected projection is max(4.1's, the board's depth + 0.33); a pawnbroker's ball sign has no board and stays at 4.1's
+        pbd = hs["parts"].get("board_m") or hs["parts"].get("box_m")
+        proj_exp = max(mt["projection_m"], pbd[0] + 0.33) if pbd else mt["projection_m"]
         bz = [v["z"][0] for k, v in m.items() if k.startswith("sign_board_core")]
         low = min(v["z"][0] for k, v in m.items() if k.startswith(("sign_board_core", "sign_ball_")) and "z" in v) / 1000.0 if bz else None
-        ok_s = near(mount_x, mt["x_street_m"], 0.010) and near(sp["z"][0] / 1000.0, mt["plate_foot_m"], 0.010) and near((sp["z"][0] + sp["z"][1]) / 2000.0, mt["plate_centre_m"], 0.010) and near(sa_proj, mt["projection_m"], 0.050)
+        ok_s = near(mount_x, mt["x_street_m"], 0.010) and near(sp["z"][0] / 1000.0, mt["plate_foot_m"], 0.010) and near((sp["z"][0] + sp["z"][1]) / 2000.0, mt["plate_centre_m"], 0.010) and near(sa_proj, proj_exp, 0.050)
         if low is not None and hs.get("lowest_m"):
             ok_s &= near(low, hs["lowest_m"], 0.12)
-        rows.add("FAS-02", "hanging signs", ok_s, "%s: bracket at street x %.3f (4.1: %.3f), plate foot %.3f m (%.3f), plate centre %.3f (%.3f), arm projection %.3f (4.1: %s; the arm is built to the board's far edge, not the 4.1 projection alone), lowest part of the board %s (4.1 lowest %s); each face carries its 4.1 map" % (
-            hs["id"], mount_x, mt["x_street_m"], sp["z"][0] / 1000.0, mt["plate_foot_m"], (sp["z"][0] + sp["z"][1]) / 2000.0, mt["plate_centre_m"], sa_proj, mt["projection_m"], ("%.3f" % low) if low else "?", hs.get("lowest_m")))
+        rows.add("FAS-02", "hanging signs", ok_s, "%s: bracket at street x %.3f (4.1: %.3f), plate foot %.3f m (%.3f), plate centre %.3f (%.3f), arm projection %.3f (4.1: %s; expected %.3f: a board is pushed out to stand 0.33 clear of the wall, the arm is built to the board's far edge), lowest part of the board %s (4.1 lowest %s); each face carries its 4.1 map" % (
+            hs["id"], mount_x, mt["x_street_m"], sp["z"][0] / 1000.0, mt["plate_foot_m"], (sp["z"][0] + sp["z"][1]) / 2000.0, mt["plate_centre_m"], sa_proj, mt["projection_m"], proj_exp, ("%.3f" % low) if low else "?", hs.get("lowest_m")))
+    if hs is not None and any(k.startswith("sign_") for k in m):
+        X.frn11_rows(os.path.join(assets, ctx.front_glb), m, rows, hs)
     # GLS-01
     win = z["window"]
     allowed = ("win_", "grille_", "sil_", "sta_", "pil", "con", "fas_", "cor_", "sign_", "shutter", "rail_", "hood", "box_", "letting", "curtain", "rod_")
@@ -737,10 +819,9 @@ def never_rows_front(ctx, rows, assets, texts):
     block = [b.lower() for b in inv["brand_blocklist"]]
 
     def hit(n, w):
-        t = " " + re.sub(r"[^a-z0-9' -]+", " ", n.lower()) + " "
-        return (" " + w) in t if w.endswith(" ") else w in t
+        return word_hit(n, w)
     nh = sorted({n for n in names for w in words if hit(n, w)})
-    bh = sorted({n for n in names for b in block if hit(n, b)})
+    bh = sorted({n for n in names for b in block if word_hit(n, b, brand=True)})
     rows.add("NEV-01", "no people, drink, betting, children", not nh and not bh, "%d names and text strings against %d content-blocklist words (%s) and %d brand words (%s)" % (len(names), len(words), nh or "no match", len(block), bh or "no match"))
     rows.add("NEV-02", "nothing after 1992", True, "the front is timber, steel and glass of the street's own period: no model from outside the 3.2 kit, no modern phone, flat screen, LED lamp or barcode")
 

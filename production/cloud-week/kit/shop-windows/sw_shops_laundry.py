@@ -229,6 +229,7 @@ def room(r):
         lo.location = (lx, ly - 0.03, lz)
         r.run_lamps.append(lo)
     r.run_lamp_w = 5.0
+    r.rows["running_lamps"] = {"n": len(lamps), "at": [[round(a, 3), round(b, 3), round(c, 3)] for a, b, c in lamps], "lit_in": "night_dark only"}
     orig_set_state = r.set_state
 
     def set_state(state, P, _o=orig_set_state):
