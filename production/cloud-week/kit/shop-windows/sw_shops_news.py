@@ -180,7 +180,21 @@ def room(r):
     r.fixtures.append({"fixture": "N-back-pensions", "name": "hours_cards", "ext": [round(v, 4) for v in hc.extents()]})
     # ---- the stockroom door (flat, 40 mm): the slab, two raised panels, an architrave and a brass knob
     dx0, dx1 = fx["N-back-door"]["x"]
-    paint = r.mat("door_paint", rgb8(96, 110, 140), rough=0.4)               # try 2 (the street review, narrow 3): (40, 52, 90) read as a flat near-black slab through the glass
+    # try 2 (the street review, narrow 3): (40, 52, 90) read as a flat near-black slab through the glass, so it is (96, 110, 140), roughness 0.4; and (FLT-01: the door alone was 7.2 per cent of the glass at
+    # STREET_30 with a 9 x 9 px standard deviation under 1) painted as a door is: a slow mottle (about 6 cm blotches, 10 per cent), a finer one (about 2 cm, 5 per cent) and vertical brush marks (3 per cent), a tileable 0.6 m map
+    from scipy import ndimage as _ndi
+    from PIL import Image as _Im
+    _n = 512
+    _rg = np.random.default_rng(41)
+
+    def _nz(sy, sx):
+        a_ = _ndi.gaussian_filter(_rg.normal(0.0, 1.0, (_n, _n)), (sy, sx), mode="wrap")
+        return a_ / a_.std()
+    _mott = 1.0 + 0.10 * _nz(16, 16) + 0.05 * _nz(5, 5) + 0.03 * _nz(30, 1.5)
+    _img = np.array((96.0, 110.0, 140.0), np.float32)[None, None, :] * _mott[..., None]
+    _pp = os.path.join(r.tex, "door_paint.png")
+    _Im.fromarray(np.clip(_img, 0, 255).astype(np.uint8)).save(_pp)
+    paint = r.image_mat("door_paint", _pp, tile_m=0.6, rough=0.4)
     r.box("door_slab", dx0, dx1, D - 0.04, D - 0.005, 0.0, 2.0, paint, fixture="N-back-door")
     r.box("door_panel_a", dx0 + 0.10, dx1 - 0.10, D - 0.048, D - 0.04, 0.12, 0.90, paint, fixture="N-back-door")
     r.box("door_panel_b", dx0 + 0.10, dx1 - 0.10, D - 0.048, D - 0.04, 1.05, 1.88, paint, fixture="N-back-door")
@@ -303,7 +317,7 @@ def display(d):
     PR.write_used(os.path.join(d.work, "prints_used.json"))
     # the white of the printed goods is held at about 0.86 of full in the window (newsprint is not paper white): under the gate's night spill the white card, paper and carton tops burnt (PIC-05g)
     from PIL import Image as _Im
-    for _p, _k in ((pap_p, 0.86), (card_p, 0.86), (post_p, 0.90), (cart_p, 0.88)):
+    for _p, _k in ((pap_p, 0.86), (card_p, 0.80), (post_p, 0.82), (cart_p, 0.88), (mag_p, 0.80)):                 # try 2: the covers (a board leaning 35 degrees faces the ceiling lamps), the cards and the postcards are held lower: PIC-05g read 0.0100 to 0.0156 at the close cameras
         _a = np.asarray(_Im.open(_p).convert("RGB")).astype(np.float32) * _k
         _Im.fromarray(np.clip(_a, 0, 255).astype(np.uint8)).save(_p)
     mag_m = d.image_mat("magazines", mag_p, rough=0.45)
@@ -335,13 +349,13 @@ def display(d):
         for st in range(2):
             for col in range(2):
                 k = ri * 4 + st * 2 + col
-                xc = X(u0 + 0.145 + 0.29 * col) + rnd.uniform(-0.003, 0.003)
+                xc = X(u0 + 0.145 + 0.29 * col) + rnd.uniform(-0.0015, 0.0015)
                 lean = 18.0 + rnd.uniform(-1.0, 1.0)
                 yaw = rnd.uniform(-1.0, 1.0)
                 foot_w = 0.055 if st == 0 else 0.24
                 top_v = 0.24 if st == 0 else 0.37
                 tile = pap_uv[k]
-                make = lambda c, tile=tile, lean=lean, yaw=yaw: _csheet(c, 0.29, 0.19, 0.004, lean, yaw, 0.002, 0.006, 10, 6, mi=0, uv=tile, uv_other=(tile[0] + 0.01, tile[1] + 0.01), fold_top=True, curl=0.002)
+                make = lambda c, tile=tile, lean=lean, yaw=yaw: _csheet(c, 0.280, 0.19, 0.004, lean, yaw, 0.002, 0.006, 10, 6, mi=0, uv=tile, uv_other=(tile[0] + 0.01, tile[1] + 0.01), fold_top=True, curl=0.002)
                 gm = d.lean_fit(make, xc, lean, foot_w, top_v)
                 d.gm_object("newspaper_%d" % k, gm, [pap_m], "scripted", "script:newspapers", tier="bed" if st == 0 else "step")
     # ---- the stand with the cartons: a timber shelf on four legs, six cartons of 280 x 90 x 50 in two columns of three, fronts to the street
@@ -364,7 +378,7 @@ def display(d):
     # ---- the magazine board (a slab leaning 35 degrees back with a side cheek at each end), the plinth in front of it, the twelve covers
     mx0, mx1 = X(1.30), X(2.20)
     lean_b = 35.0
-    vb, blen = 0.235, 0.56
+    vb, blen = 0.238, 0.56                                         # try 2: the foot at 0.238 (was 0.235): the top v 0.559 stays under 0.56
     cb, sb = math.cos(math.radians(lean_b)), math.sin(math.radians(lean_b))
     gm = GM()
     gm.sheet(((mx0 + mx1) / 2, vb + blen / 2 * sb, 0.004 + blen / 2 * cb), mx1 - mx0, blen, 0.012, tilt=lean_b, mi=0, uv=grey_strips[0], uv_other=(0.5, grey_strips[0][1] + 0.01))
@@ -374,7 +388,7 @@ def display(d):
                [(0, 3, 2, 1), (0, 1, 5, 4), (1, 2, 5), (0, 4, 3), (3, 4, 5, 2)], 0, [[(0.5, grey_strips[1][1] + 0.01)] * n_ for n_ in (4, 4, 3, 3, 4)])
     d.gm_object("magazine_board", gm, [grey_m], "support", "script:magazine_board")
     plg = GM()
-    d.tex_box(plg, X(1.29), X(2.22), 0.01, 0.235, 0.0, 0.06, deal_strips, 6, rnd)
+    d.tex_box(plg, X(1.29), X(2.22), 0.032, 0.228, 0.0, 0.06, deal_strips, 6, rnd)            # 14 Oct, try 2 (DSP-03): the front edge 0.032 (the price cards stand at v 0.02), the back edge 0.228 (the lowest covers' foot is at 0.2327)
     d.gm_object("stationery_plinth", plg, [deal_m], "support", "script:crate")
     for row in range(3):
         for i in range(4):
@@ -412,9 +426,10 @@ def display(d):
         key = d.sub_template("office_notepads", nm, lambda n, nm=nm: n == nm)
         rt = (0, 0, math.pi / 2) if "note_stack" not in nm else (0, 0, 0)
         dd = d.dims(key, rt)
-        _, nms_ = d.piece(key, x_pad + dd.x / 2, 0.01 + dd.y / 2 + 0.004, 0.06, rot=rt, tier="plinth", tag=nm, tris=None)
-        d.tone(nms_, 0.86)                                       # the pads burnt at night (the newsagent's close review, narrow 4): their white and yellow held at 0.86 like the printed whites
-        x_pad += dd.x + 0.006
+        psc = 0.95 if "note_stack" not in nm else 1.0                # try 2: a pad at 0.95 of the model's size (DSP-06 allows 0.9 to 1.1): its back edge must stay in front of the lowest covers (DSP-03)
+        _, nms_ = d.piece(key, x_pad + dd.x * psc / 2, 0.035 + dd.y * psc / 2, 0.06, rot=rt, scale=psc, tier="plinth", tag=nm, tris=None)
+        d.tone(nms_, 0.70)                                       # the pads burnt at night (the newsagent's close review, narrow 4): their white and yellow held at 0.86 (try 1) and at 0.70 (try 2: still burnt at 0.86 under the night spill, PIC-05g)
+        x_pad += dd.x * psc + 0.006
     d.piece(pot, x_pad + 0.045, 0.10, 0.06, rot=(0, 0, 0), tier="plinth", tris=None)
     # ---- the sweet jars: glass, the sweets inside, a lid, the paper label outside
     gl, ct, ld, lb = GM(), GM(), GM(), GM()

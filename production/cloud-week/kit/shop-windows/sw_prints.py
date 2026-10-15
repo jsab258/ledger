@@ -514,7 +514,7 @@ def greeting_card(idx, size=(230, 320), seed=0):
 POSTCARDS = [
     ("GREETINGS FROM MERIDIAN: THE HARBOUR WALL", "lake_harbour"), ("POSTS IN THE BAY", "pier_posts"), ("MERIDIAN QUAY: THE PIER AND THE MASTS", "lake_pier"), ("MIST ON THE CAPE", "cliff_mist"),
     ("THE BEACH HUTS", "beach_huts"), ("THE BAY AT SUNRISE", "beach_sunrise"), ("SEATS ON THE HEADLAND", "headland_seats"), ("THE ISLAND IN THE BAY", "headland_island"),
-    ("THE FALLS IN THE WOOD", "falls"), ("THE JETTY", "jetty"), ("BALES AT HARVEST", "hay_bales"), ("A VALLEY IN AUTUMN", "hills_valley"),
+    ("A WATERFALL IN THE WOOD", "falls"), ("THE JETTY", "jetty"), ("A ROUND BALE AT HARVEST", "hay_bales"), ("A VALLEY IN AUTUMN", "hills_valley"),
 ]
 
 
@@ -528,7 +528,13 @@ def postcard(idx, size=(405, 280), seed=0):
     g = photo(pid, w - 2 * b, h - 2 * b, seed=seed + idx, contrast=1.1)
     pim = _gradient(pil(g), int((h - 2 * b) * 0.78), h - 2 * b, 0.0, 0.5)
     im.paste(pim, (b, b))
-    f = fnt("evening-paper", 17, "OldStandard-Italic.ttf")
+    # 14 Oct, try 2: the caption is fitted to the card (two of the longest ran off the edge: "...THE HARBOU", "...THE MASTS" lost its S), the type stepping down 1 px at a time to at least 11 px
+    sz = 17
+    f = fnt("evening-paper", sz, "OldStandard-Italic.ttf")
+    dd_ = ImageDraw.Draw(im)
+    while dd_.textlength(cap, font=f) > w - 2 * b - 22 and sz > 11:
+        sz -= 1
+        f = fnt("evening-paper", sz, "OldStandard-Italic.ttf")
     _shadow_text(im, (b + 10, h - b - 26), cap, f, (250, 248, 240), blur=1, offset=1)
     TEXTS.append(cap)
     USED["postcard:%s" % cap] = pid
@@ -668,7 +674,13 @@ def jar_label(idx, size=(256, 128)):
     tw = d.textlength(t2, font=f2)
     d.text(((w - tw) / 2, h - 34), t2, font=f2, fill=(60, 50, 44))
     TEXTS.extend([name, t2])
-    return im
+    # 14 Oct, try 2 (PRT-02: a plain cream label was 64 per cent flat tone): paper fibre grain (a fine grain of about 3 levels) and a slow mottle of the paper's age (about 4 levels over a centimetre or two), the ink and the rule left as drawn
+    from scipy import ndimage as _ndi
+    rng = np.random.default_rng(300 + idx)
+    a = np.asarray(im).astype(np.float32)
+    grain = rng.normal(0.0, 3.2, (h, w)) + _ndi.gaussian_filter(rng.normal(0.0, 1.0, (h, w)), 5.0) * 14.0
+    a += grain[..., None] * np.array([1.0, 0.97, 0.90], np.float32)[None, None, :]
+    return Image.fromarray(np.clip(a, 0, 255).astype(np.uint8))
 
 
 def jar_atlases(content_path, label_path, n=10):

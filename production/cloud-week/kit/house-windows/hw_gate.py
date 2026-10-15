@@ -614,12 +614,16 @@ def build_and_render(view_name, cam, state, out_png, bake_dir, samples=48, res=N
                     emu = mn == "paint_white_emulsion"          # the RC and RC2 reveal boards (14 Oct, from the try 2 reviews): the wall's own white emulsion, not the house's window paint, never grimy or flaking
                     grime = site["condition"] == "grimy" and base in GRIME_PARTS and not emu
                     key = ("paint", site["paint"], site["condition"], base in ("paint_joinery__lower_bottom_rail", "paint_joinery__oak_sill", "paint_joinery__frame_sill_rail"), m0.name, (site["id"], base) if grime else None)
+                    if emu and night:
+                        key = key + ("room", site["room"], card_state(site, night, lit_names))
                     if key not in mats_w:
                         gr = None
                         if grime:
                             gr = (base, min((o.matrix_world @ v.co).z for v in o.data.vertices), Z)
                         if emu:
                             mats_w[key] = make_paint(m0, EMULSION, "sound", False, False, None)
+                            if night:
+                                make_reveal_room_lit(mats_w[key], site["room"], card_state(site, night, lit_names))
                         else:
                             mats_w[key] = make_paint(m0, paint, site["condition"], key[3], bool(extra.get("old_fault")), gr)
                     sl.material = mats_w[key]
@@ -834,6 +838,32 @@ def build_and_render(view_name, cam, state, out_png, bake_dir, samples=48, res=N
     t1 = time.time()
     bpy.ops.render.render(write_still=True)
     return round(time.time() - t1, 1), rec
+
+
+_ROOM_MEAN = {}
+
+
+def room_mean_lin(room, st):
+    """The mean linear colour of a room's picture in one state (the light the room's own surfaces carry)."""
+    k = (room, st)
+    if k not in _ROOM_MEAN:
+        a = np.asarray(Image.open(os.path.join(T.ROOMS, "%s_%s.png" % (room, st))).convert("RGB")).astype(np.float32) / 255.0
+        _ROOM_MEAN[k] = lin(a).reshape(-1, 3).mean(axis=0)
+    return _ROOM_MEAN[k]
+
+
+def make_reveal_room_lit(m, room, st):
+    """14 Oct, try 3: at night the RC and RC2 reveal boards are the room's own surfaces: the first render of them under the stand-in sky and lamps read a dark window's glass at 45 to 53 (a white reveal in the lamps' sodium
+    light through the glass, against the brick behind it before: 24 to 30) and lost the Hook's lit-to-dark ratio (NIGHT-08 1.9). They carry the light of the room's own picture instead, as the card does: no response to the stand-in lights, an emission of the
+    picture's mean linear colour x the card's gain for the state (a dark room's reveal as dark as the room, a lit room's as warm as its walls)."""
+    pb = m.node_tree.nodes["Principled BSDF"]
+    for lk in list(pb.inputs["Base Color"].links):
+        m.node_tree.links.remove(lk)
+    pb.inputs["Base Color"].default_value = (0.0, 0.0, 0.0, 1.0)
+    pb.inputs["Specular IOR Level"].default_value = 0.0
+    e = room_mean_lin(room, st) * BRIGHTNESS[st]
+    pb.inputs["Emission Color"].default_value = (float(e[0]), float(e[1]), float(e[2]), 1.0)
+    pb.inputs["Emission Strength"].default_value = 1.0
 
 
 CURTAIN_MAP_MEAN = 0.758         # the mean of the curtain atlas's fold map (hw_cloth.curtain_card: 0.57 to 0.95 at the 5th to 95th percentile: the target's brightness modulation of 0.25)

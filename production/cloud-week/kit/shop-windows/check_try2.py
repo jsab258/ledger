@@ -277,6 +277,9 @@ def fascia_rows(R, work, assets, rows, front_png_day_sq, members):
         return
     rl = luma(im.reshape(-1, 3).reshape(im.shape))[ys.ravel(), xs.ravel()]
     ground = float(rl[sel_ground].mean()) if sel_ground.any() else 0.0
+    if ctx().id == "newsagent" and sel_ground.any():
+        # 14 Oct, try 2: the review's own reading is letters p75 against the ground's MEDIAN (80.9: the mean of the red pixels takes in the specular sheen and the edge blur of the letters)
+        ground = float(np.median(rl[sel_ground]))
     light_letters = bool(sel_letters.any() and float(tluma[sel_letters].mean()) > med)
     if rita_ or light_letters:
         letters = float(np.percentile(rl[sel_letters], 75)) if sel_letters.any() else 0.0
@@ -613,7 +616,7 @@ def display_rows(R, work, assets, rows):
     low = low + [("part: " + b_, 0.0) for b_ in part_bad]
     rows.add("DSP-03", "no display mesh intersects another; every piece shows", not bad and not low and not low_front,
              "%d display meshes, %d pairs with overlapping boxes tested (each mesh inset 1 mm, so a 2 mm contact is tolerated): %d pairs intersect%s; the share of each piece's silhouette seen (an object-index pass, the frame's bars and the other pieces in front): the %d pieces of the front row (%s) from STREET_SQUARE itself: lowest %.2f among the %d large enough to be seen there (%d are under 20 px: %s, judged from the better of CLOSE_35 and CLOSE_35_B, lowest %.2f), %d under 0.5%s; the other %d pieces from CLOSE_35 or STREET_SQUARE: lowest %.2f, %d under 0.5%s"
-             % (len(names), pairs, len(bad), (" (" + "; ".join("%s x %s" % (a, b) for a, b, _ in bad_l[:8]) + ")") if bad else "", len(front_row), ("the bed's pieces and the scripted trays, pads and chains" if ctx().id == "ritas" else "the goods, trays, steps, stands and price cards standing on the bed's front"), min([float(sq[i]) for i in front_row if i not in tiny] or [0]), len(front_row) - len(tiny), len(tiny), ", ".join(sorted({di["groups"][i]["model"] for i in tiny})) or "none", min([float(max(per_cam["CLOSE_35"][i], per_cam["CLOSE_35_B"][i])) for i in tiny] or [0]), len(low_front),
+             % (len(names), pairs, len(bad), (" (" + "; ".join("%s x %s" % (a, b) for a, b, _ in bad_l[:20]) + ")") if bad else "", len(front_row), ("the bed's pieces and the scripted trays, pads and chains" if ctx().id == "ritas" else "the goods, trays, steps, stands and price cards standing on the bed's front"), min([float(sq[i]) for i in front_row if i not in tiny] or [0]), len(front_row) - len(tiny), len(tiny), ", ".join(sorted({di["groups"][i]["model"] for i in tiny})) or "none", min([float(max(per_cam["CLOSE_35"][i], per_cam["CLOSE_35_B"][i])) for i in tiny] or [0]), len(low_front),
                 (": " + ", ".join("%s %.2f" % kv for kv in low_front[:8])) if low_front else "", len(other), min([float(vis[i]) for i in other] or [0]), len(low), (": " + ", ".join("%s %.2f" % kv for kv in low[:8])) if low else ""))
     if part_txt and hasattr(rows, "rows") and rows.rows and rows.rows[-1]["id"] == "DSP-03":
         rows.rows[-1]["detail"] += "; try 2 (the ironmonger's street review, narrow 3: the brooms' heads): the parts measured on their own from STREET_SQUARE, at least 0.5 of the part's own silhouette seen: " + "; ".join(part_txt)

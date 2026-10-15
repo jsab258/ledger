@@ -864,6 +864,7 @@ def rebake_lit(rid, out_dir, samples=24, log=print, work=None):
     return time.time() - t0
 
 
+LIT_MEAN_AIM = 77.0             # the lit lounges' and bedrooms' mean luma aim (the standard is 70 +-15 per cent): a first set at 71 left the Hook's lit windows at 0.8 of their old light (the pendant's upper wall and ceiling halved) and NIGHT-08's lit-to-dark ratio at 2.49 against 2.5; 77 is inside the standard and restores it
 PEND_CAP = 13.5                 # try 3: the pendant's point light is halved, and at most this (the ceiling round the rose stays under the roll-off's knee: at 17 the close view's band had 12 per cent of its pixels over luma 200, at 13.4 four)
 GF_BOX = (849.0 / 3072.0, 649.0 / 2349.0, 2223.0 / 3072.0, 1700.0 / 2349.0)     # the close review's back wall box of a cottage picture (x0, y0, x1, y1 as fractions of the picture)
 GF_BOX_AIM = 0.15               # the aim for its mean linear luminance (PIC-14 asks at least 0.12; the lit net glows 0.306)
@@ -894,7 +895,10 @@ def relight_v3(rid, out_dir, samples=24, log=print, work=None):
     if gf:
         samples = min(samples, 16)
     P = {k: v for k, v in rec["light_params"].items() if k != "measured"}
-    v2 = {k: P[k] for k in ("pend", "lamp") if k in P}
+    v2 = dict(rec["relit_try3"]["was"]) if "relit_try3" in rec else {k: P[k] for k in ("pend", "lamp") if k in P}          # the lights of the try 2 picture, kept in the record: a second relight starts from them, not from the first relight's
+    for k, v in v2.items():
+        P[k] = v
+    P.pop("fill", None)
     res_q = (int(r.pix[0] / 4), int(r.pix[1] / 4))
     tmp = os.path.join(work, "cal_lit_v3.png")
     if gf:
@@ -902,9 +906,9 @@ def relight_v3(rid, out_dir, samples=24, log=print, work=None):
         P["lamp"] = v2["lamp"] * 8.0
         measure = lambda path: box_mean_Y(path)
     else:
-        key, tgt = "fill", TARGET_MEAN["night_lit"]
+        key, tgt = "fill", LIT_MEAN_AIM
         P["pend"] = min(0.5 * v2["pend"], PEND_CAP)
-        P["fill"] = 15.0 * v2["pend"] / 26.5
+        P["fill"] = (15.0 + 5.0) * v2["pend"] / 26.5
         measure = luma_stats
     hist = []
     for it in range(6):

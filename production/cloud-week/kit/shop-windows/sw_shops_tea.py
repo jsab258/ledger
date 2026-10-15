@@ -269,7 +269,7 @@ def display(d):
     rt = 0.25
     z0_, z1_ = top_surface - 0.025, top_surface
     nseg = 48
-    ring_t = [(xt + (rt - 0.003) * math.cos(2 * math.pi * k / nseg), tv + (rt - 0.003) * math.sin(2 * math.pi * k / nseg)) for k in range(nseg)]
+    ring_t = [(xt + rt * math.cos(2 * math.pi * k / nseg), tv + rt * math.sin(2 * math.pi * k / nseg)) for k in range(nseg)]
     V_ = [(xt, tv, z1_)] + [(x, y, z1_) for x, y in ring_t] + [(xt, tv, z0_)] + [(x, y, z0_) for x, y in ring_t]
     F_, U_ = [], []
     for k in range(nseg):
@@ -280,11 +280,14 @@ def display(d):
         U_.append([(0.5, 0.5)] * 3)
         F_.append((1 + k, nseg + 2 + k, nseg + 2 + k2, 1 + k2))                         # the side
         U_.append([(k / float(nseg), 0.0), (k / float(nseg), 0.05), ((k + 1) / float(nseg), 0.05), ((k + 1) / float(nseg), 0.0)])
-    lg.add(V_, F_, 0, U_)
-    eg = GM()
-    eg.lathe(xt, tv, z0_, [(rt - 0.003, 0.0), (rt, 0.0), (rt, 0.025), (rt - 0.003, 0.025)], mi=0, n=nseg)           # the 3 mm aluminium edge band
-    d.gm_object("table_laminate", lg, [lam], "support", "script:table_laminate", smooth=False)
-    d.gm_object("table_edge", eg, [alum], "support", "script:table_laminate", smooth=True)
+    # 14 Oct, try 2 (DSP-03: the 3 mm edge band and the disc were two meshes in contact and read as intersecting): ONE mesh, the top laminate (material 0) over a disc whose side and underside are the aluminium edge (material 1)
+    top_f = [f for f in F_ if f[0] == 0]
+    top_u = [u for f, u in zip(F_, U_) if f[0] == 0]
+    rest_f = [f for f in F_ if f[0] != 0]
+    rest_u = [u for f, u in zip(F_, U_) if f[0] != 0]
+    lg.add(V_, top_f, 0, top_u)
+    lg.add(V_, rest_f, 1, rest_u)
+    d.gm_object("table_laminate", lg, [lam, alum], "support", "script:table_laminate", smooth=False)
     cg = GM()
     cg.lathe(xt, tv, 0.03, [(0.0, 0.0), (0.025, 0.0), (0.025, top_surface - 0.025 - 0.03), (0.0, top_surface - 0.025 - 0.03)], mi=0, n=20)
     d.gm_object("table_column", cg, [chrome], "support", "script:table_column", smooth=True)
@@ -307,9 +310,9 @@ def display(d):
     pot = d.sub_template("tea_set_01", "pot", lambda n: "teapot" in n)
     cupa = d.compose("tea_set_01", "cupA", [(("cup_small_01",), (0.0, 0.2335, 0.013)), (("saucer_circular_04",), (0.0, 0.0, 0.0))])
     cupb = d.compose("tea_set_01", "cupB", [(("cup_small_02",), (0.0, 0.2335, 0.013)), (("saucer_circular_03",), (0.0, 0.0, 0.0))])
-    d.piece(pot, tu - 0.05, tv + 0.0, top_z, rot=(0, 0, 0.3), tier="table", tris=None)
+    d.piece(pot, tu + 0.10, tv + 0.10, top_z, rot=(0, 0, 0.3), tier="table", tris=None)       # try 2: the pot at the back right and the second cup in front of it (DSP-03: cupB was seen 0.45 behind the pot)
     d.piece(cupa, tu + 0.12, tv - 0.12, top_z, rot=(0, 0, 0.5), tier="table", tris=None)
-    d.piece(cupb, tu + 0.10, tv + 0.12, top_z, rot=(0, 0, -0.4), tier="table", tris=None)
+    d.piece(cupb, tu - 0.05, tv - 0.02, top_z, rot=(0, 0, -0.4), tier="table", tris=None)
     sg = GM()
     sg.lathe(X(tu - 0.16), tv + 0.14, top_z, [(0.0, 0.0), (0.025, 0.0), (0.040, 0.012), (0.042, 0.040), (0.030, 0.046), (0.0, 0.046)], mi=0, n=18)
     sg.lathe(X(tu - 0.16), tv + 0.14, top_z + 0.046, [(0.0, 0.0), (0.032, 0.0), (0.030, 0.012), (0.004, 0.018), (0.0, 0.026)], mi=0, n=18)
@@ -345,13 +348,13 @@ def display(d):
     for nm_, val in (("Transmission Weight", 0.3), ("Sheen Weight", 0.4)):
         if nm_ in pb.inputs:
             pb.inputs[nm_].default_value = val
-    for si, (side, (ua, ub)) in enumerate((("l", (0.04, 1.10)), ("r", (2.26, 3.31)))):
+    for si, (side, (ua, ub)) in enumerate((("l", (0.05, 1.10)), ("r", (2.26, 3.30)))):
         g = GM()
         g.rod((X(ua - 0.012), rod_v, rod_w), (X(ub + 0.012), rod_v, rod_w), 0.009, 0, 12)
         for xx, sgn in ((ua - 0.012, -1), (ub + 0.012, 1)):         # the end brackets: a 16 mm socket round the rod's end, a 70 mm arm along v to the plate on the back of the jamb or the mullion
             g.rod((X(xx) + sgn * 0.004, rod_v, rod_w), (X(xx) + sgn * 0.016, rod_v, rod_w), 0.0105, 0, 12)
             g.rod((X(xx) + sgn * 0.016, rod_v, rod_w), (X(xx) + sgn * 0.016, 0.006, rod_w), 0.004, 0, 8)
-            g.box(X(xx) + sgn * 0.016 - 0.015, X(xx) + sgn * 0.016 + 0.015, 0.0, 0.006, rod_w - 0.03, rod_w + 0.03, 0)
+            g.box(X(xx) + sgn * 0.016 - 0.010, X(xx) + sgn * 0.016 + 0.010, 0.0, 0.006, rod_w - 0.03, rod_w + 0.03, 0)
         d.gm_object("curtain_rod_" + side, g, [brass], "support", "script:cafe_curtain")
         cg = GM()
         GEN.cafe_curtain(cg, X(ua), X(ub), rod_v, rod_w, 0.55 - 0.016, 31 + si)
