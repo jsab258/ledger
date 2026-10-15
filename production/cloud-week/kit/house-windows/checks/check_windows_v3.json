@@ -1,11 +1,8 @@
 {
- "made": "2026-10-15 01:37:40",
- "pass": 80,
+ "made": "2026-10-15 03:26:38",
+ "pass": 82,
  "total": 82,
- "fail": [
-  "NIGHT-08",
-  "BAK-01"
- ],
+ "fail": [],
  "not_run": [],
  "reported": [],
  "target_rows": 57,
@@ -188,34 +185,34 @@
    "id": "NIGHT-01",
    "name": "lit and dark windows at night",
    "status": "pass",
-   "detail": "8 lit and 5 dark windows measured (night frames of the target's views, windows seen at 45 degrees or more, not cut by the picture's edge); dark median pane 49, the brightest dark window 55; lit (pane at least 1.5 times the dark median (the line 73) and above every dark window, r > g > b): _bay2_upper_w0 P 125, _bay2_upper_w0 P 126, uth_bay1_gf_w1 P 118, uth_bay2_gf_w0 P 126, uth_bay2_gf_w1 P 145, uth_bay1_gf_w1 P 116, uth_bay2_gf_w0 P 131, uth_bay2_gf_w1 P 142; dark windows' CLEAR glass (8 to 35) _bay1_upper_w1 25, _bay1_upper_w1 28, uth_bay1_gf_w0 25, out of band: none; dark windows' net over its frame's L (at most 0.7) _bay1_upper_w1 0.63, _bay2_upper_w1 0.56, _bay1_upper_w1 0.64, uth_bay1_gf_w0 0.62, uth_bay1_gf_w0 0.65, over: none; the close review's own wording, beside and not failed: dark P/L at most 0.70 in 5 of 5, lit P/L at least 1.0 with r > g > b in 6 of 8"
+   "detail": "8 lit and 5 dark windows measured (night frames of the target's views, windows seen at 45 degrees or more, not cut by the picture's edge); dark median pane 49, the brightest dark window 55; lit (pane at least 1.5 times the dark median (the line 73) and above every dark window, r > g > b): _bay2_upper_w0 P 127, _bay2_upper_w0 P 129, uth_bay1_gf_w1 P 118, uth_bay2_gf_w0 P 126, uth_bay2_gf_w1 P 145, uth_bay1_gf_w1 P 116, uth_bay2_gf_w0 P 131, uth_bay2_gf_w1 P 142; dark windows' CLEAR glass (8 to 35) _bay1_upper_w1 25, _bay1_upper_w1 28, uth_bay1_gf_w0 25, out of band: none; dark windows' net over its frame's L (at most 0.7) _bay1_upper_w1 0.63, _bay2_upper_w1 0.56, _bay1_upper_w1 0.64, uth_bay1_gf_w0 0.62, uth_bay1_gf_w0 0.65, over: none; the close review's own wording, beside and not failed: dark P/L at most 0.70 in 5 of 5, lit P/L at least 1.0 with r > g > b in 6 of 8"
   },
   {
    "id": "NIGHT-02",
    "name": "lit against dark",
    "status": "pass",
-   "detail": "median lit pane luma 126 over the dark windows' 49: 2.58 times (linear 6.9 times; the limit 2.5 / linear 6; the pane against the pane, the clear glass and the cloth in it as seen); the parade's windows alone (2 lit over 3 dark) 3.01 times; like for like, beside: clear glass lit 87 over dark 25; cloth lit 136 over dark 55",
+   "detail": "median lit pane luma 128 over the dark windows' 49: 2.62 times (linear 7.1 times; the limit 2.5 / linear 6; the pane against the pane, the clear glass and the cloth in it as seen); the parade's windows alone (2 lit over 3 dark) 3.07 times; like for like, beside: clear glass lit 90 over dark 25; cloth lit 137 over dark 55",
    "reported_only_in_the_cloud": true,
-   "ratio": 2.583,
-   "ratio_linear": 6.85
+   "ratio": 2.618,
+   "ratio_linear": 7.06
   },
   {
    "id": "NIGHT-03",
    "name": "the lit net glows its own colour",
    "status": "pass",
-   "detail": "the lit green curtain's strips (east_parade_bay2_upper_w0, the review's boxes): linear g/r 1.33 (the colour x the warm light: 1.35 +-0.12), b/r 0.38 (under 1); lit windows' mean colour (linear, the pane as seen): _bay2_upper_w0 g/r 0.74 b/r 0.36; _bay2_upper_w0 g/r 0.74 b/r 0.35; uth_bay1_gf_w1 g/r 0.38 b/r 0.11; uth_bay2_gf_w0 g/r 0.63 b/r 0.26; uth_bay2_gf_w1 g/r 0.57 b/r 0.24; uth_bay1_gf_w1 g/r 0.39 b/r 0.11 (nets: r>g>b, g/r 0.55 to 0.80, b/r 0.20 to 0.45; the pane's mean carries the card and the glass's reflection, so the bands are read with 0.12 and 0.10 of room); block by block on the reflection-off night frames (the room's own colour, without the stand-in sky's neutral reflection in the glass; 16 px at their half size = 32 px): 634 blocks wholly inside a lit pane in every night frame, 0 with r > g > b broken or linear g/r over 0.85, worst g/r 0.74; on the beauty frames, beside: 624 blocks of 32 px, 0 over (reflection of the night sky at the glass's edge): none"
+   "detail": "the lit green curtain's strips (east_parade_bay2_upper_w0, the review's boxes): linear g/r 1.32 (the colour x the warm light: 1.35 +-0.12), b/r 0.38 (under 1); lit windows' mean colour (linear, the pane as seen): _bay2_upper_w0 g/r 0.73 b/r 0.35; _bay2_upper_w0 g/r 0.73 b/r 0.34; uth_bay1_gf_w1 g/r 0.38 b/r 0.11; uth_bay2_gf_w0 g/r 0.63 b/r 0.26; uth_bay2_gf_w1 g/r 0.57 b/r 0.24; uth_bay1_gf_w1 g/r 0.39 b/r 0.11 (nets: r>g>b, g/r 0.55 to 0.80, b/r 0.20 to 0.45; the pane's mean carries the card and the glass's reflection, so the bands are read with 0.12 and 0.10 of room); block by block on the reflection-off night frames (the room's own colour, without the stand-in sky's neutral reflection in the glass; 16 px at their half size = 32 px): 634 blocks wholly inside a lit pane in every night frame, 0 with r > g > b broken or linear g/r over 0.85, worst g/r 0.73; on the beauty frames, beside: 624 blocks of 32 px, 0 over (reflection of the night sky at the glass's edge): none"
   },
   {
    "id": "NIGHT-07",
    "name": "a lit window's clear glass against its net",
    "status": "pass",
-   "detail": "a lit window's clear glass over its lit net's, curtain's or blind's, the mean of the linear luminance of each, H_ACROSS_0 night (frame, window, clear/cloth, the median's figure beside): [('h-across0-bay2w0', '_bay2_upper_w0', 0.69, 'median 0.25'), ('h-across0-gf2w1', 'uth_bay2_gf_w0', 0.58, 'median 0.59')] (0.5 to 1.0); out of band: none; the other views, beside and not failed: [('hook', '_bay0_upper_w1', 0.39, 'median 0.40'), ('close', '_bay0_upper_w1', 0.69, 'median 0.64'), ('close2', '_bay0_upper_w1', 1.23, 'median 1.29'), ('h-across30-bay2w0', '_bay2_upper_w0', 0.42, 'median 0.31'), ('h-across30-gf2w1', 'uth_bay2_gf_w0', 0.54, 'median 0.49'), ('h-along15-gf2w1', 'uth_bay2_gf_w0', 0.55, 'median 0.58'), ('h-along15road-gf2w1', 'uth_bay2_gf_w0', 0.47, 'median 0.47')]"
+   "detail": "a lit window's clear glass over its lit net's, curtain's or blind's, the mean of the linear luminance of each, H_ACROSS_0 night (frame, window, clear/cloth, the median's figure beside): [('h-across0-bay2w0', '_bay2_upper_w0', 0.71, 'median 0.27'), ('h-across0-gf2w1', 'uth_bay2_gf_w0', 0.58, 'median 0.59')] (0.5 to 1.0); out of band: none; the other views, beside and not failed: [('hook', '_bay0_upper_w1', 0.43, 'median 0.45'), ('close', '_bay0_upper_w1', 0.7, 'median 0.66'), ('close2', '_bay0_upper_w1', 1.24, 'median 1.30'), ('h-across30-bay2w0', '_bay2_upper_w0', 0.45, 'median 0.34'), ('h-across30-gf2w1', 'uth_bay2_gf_w0', 0.54, 'median 0.49'), ('h-along15-gf2w1', 'uth_bay2_gf_w0', 0.55, 'median 0.58'), ('h-along15road-gf2w1', 'uth_bay2_gf_w0', 0.47, 'median 0.47')]"
   },
   {
    "id": "NIGHT-08",
    "name": "lit against dark in the Hook night",
-   "status": "fail",
-   "detail": "Hook night: the 2 lit windows' median pane 88 (_bay0_upper_w1 97, _bay2_upper_w0 79) over the 6 dark windows' 35: 2.5 times, linear 5.7 times (at least 2.5 / 6); the lit cottage behind a drawn brown curtain (uth_bay1_gf_w1 101, which the street review allowed to stay dim) is left out; with it the median reads 2.7 times"
+   "status": "pass",
+   "detail": "Hook night: the 2 lit windows' median pane 94 (_bay0_upper_w1 103, _bay2_upper_w0 84) over the 6 dark windows' 35: 2.6 times, linear 6.4 times (at least 2.5 / 6); the lit cottage behind a drawn brown curtain (uth_bay1_gf_w1 101, which the street review allowed to stay dim) is left out; with it the median reads 2.9 times"
   },
   {
    "id": "NIGHT-09",
@@ -281,18 +278,18 @@
    "id": "NIGHT-11",
    "name": "the lit ceiling seen through an upper sash is not a flat plateau",
    "status": "pass",
-   "detail": "the lit ceiling in the upper panes of the close views at night is not a flat plateau: local spread (median 15 px standard deviation of the luma) at least 2 levels and under 25 per cent of the pane within 3 levels of its 90th percentile; the panes (frame, box, spread, share): [('close', (1322, 516, 1368, 728), 6.39, 0.07), ('close', (1262, 572, 1322, 810), 12.67, 0.03), ('close2', (1342, 408, 1496, 758), 3.07, 0.09), ('close2', (1194, 532, 1342, 896), 5.34, 0.09)]; failing: none"
+   "detail": "the lit ceiling in the upper panes of the close views at night is not a flat plateau: local spread (median 15 px standard deviation of the luma) at least 2 levels and under 25 per cent of the pane within 3 levels of its 90th percentile; the panes (frame, box, spread, share): [('close', (1322, 516, 1368, 728), 6.5, 0.07), ('close', (1262, 572, 1322, 810), 12.5, 0.03), ('close2', (1342, 408, 1496, 758), 3.02, 0.09), ('close2', (1194, 532, 1342, 896), 5.29, 0.09)]; failing: none"
   },
   {
    "id": "NIGHT-10",
    "name": "a lit curtain's folds read",
    "status": "pass",
-   "detail": "the lit green curtain's strips (east_parade_bay2_upper_w0, H_ACROSS_0 night, the review's two boxes, eroded 2 px, 486 px): (p95 - p5) / median of the luma 0.120 at median luma 132 (at least 0.08); the try 2 frame read 0.017 (negative control: under 0.05)"
+   "detail": "the lit green curtain's strips (east_parade_bay2_upper_w0, H_ACROSS_0 night, the review's two boxes, eroded 2 px, 486 px): (p95 - p5) / median of the luma 0.116 at median luma 132 (at least 0.08); the try 2 frame read 0.017 (negative control: under 0.05)"
   },
   {
    "id": "BAK-01",
    "name": "the pendant shade is drawn into the card's bake",
-   "status": "fail",
+   "status": "pass",
    "detail": "the pendant shade is drawn into the card's bake (the eye's ray against the shade's cone before the room box): h-across0-bay2w0_night: 6156 card px wholly under the shade, 100 per cent in the shade's colour [237, 204, 147], 6156 of them inside the window's opening; hook_night: 9152 card px wholly under the shade, 100 per cent in the shade's colour [237, 204, 147], 0 of them inside the window's opening"
   },
   {
@@ -365,7 +362,7 @@
    "id": "PIC-09",
    "name": "room pictures are not noisy",
    "status": "pass",
-   "detail": "noise: the robust standard deviation (1.4826 x median absolute deviation) of the picture minus its 2 px blur over its flat areas, at most 1.6 levels (24 samples, denoised; 16 for the cottages): up_lounge_1 day 0.53, up_lounge_1 night_lit 0.57, up_lounge_2 day 0.75, up_lounge_2 night_lit 0.63, up_lounge_3 day 0.80, up_lounge_3 night_lit 0.58, up_bedroom_1 day 0.63, up_bedroom_1 night_lit 0.49, up_bedroom_2 day 0.52, up_bedroom_2 night_lit 0.32, up_bedroom_3 day 0.81, up_bedroom_3 night_lit 0.58, up_landing_1 day 0.56, up_landing_1 night_lit 0.24, up_landing_2 day 0.60, up_landing_2 night_lit 0.28, up_empty_1 day 0.46, up_empty_1 night_lit 0.57, up_empty_2 day 0.58, up_empty_2 night_lit 0.47, gf_front_1 day 0.56, gf_front_1 night_lit 0.24, gf_front_2 day 0.78, gf_front_2 night_lit 0.57, gf_front_3 day 0.49, gf_front_3 night_lit 0.18"
+   "detail": "noise: the robust standard deviation (1.4826 x median absolute deviation) of the picture minus its 2 px blur over its flat areas, at most 1.6 levels (24 samples, denoised; 16 for the cottages): up_lounge_1 day 0.53, up_lounge_1 night_lit 0.59, up_lounge_2 day 0.75, up_lounge_2 night_lit 0.67, up_lounge_3 day 0.80, up_lounge_3 night_lit 0.59, up_bedroom_1 day 0.63, up_bedroom_1 night_lit 0.52, up_bedroom_2 day 0.52, up_bedroom_2 night_lit 0.33, up_bedroom_3 day 0.81, up_bedroom_3 night_lit 0.58, up_landing_1 day 0.56, up_landing_1 night_lit 0.24, up_landing_2 day 0.60, up_landing_2 night_lit 0.28, up_empty_1 day 0.46, up_empty_1 night_lit 0.57, up_empty_2 day 0.58, up_empty_2 night_lit 0.47, gf_front_1 day 0.56, gf_front_1 night_lit 0.24, gf_front_2 day 0.78, gf_front_2 night_lit 0.57, gf_front_3 day 0.49, gf_front_3 night_lit 0.18"
   },
   {
    "id": "PIC-06",
@@ -407,7 +404,7 @@
    "id": "PIC-15",
    "name": "the lit ceiling near the rose is no plateau",
    "status": "pass",
-   "detail": "the lit ceiling near the rose in the six lounge and bedroom pictures is no plateau: the share at luma 200 or more under 15 per cent, local spread at least 2 levels, under 25 per cent within 3 levels of the 90th percentile: up_lounge_1 hot 0.05 spread 2.7 near 0.06; up_lounge_2 hot 0.04 spread 2.7 near 0.07; up_lounge_3 hot 0.05 spread 2.7 near 0.07; up_bedroom_1 hot 0.05 spread 2.7 near 0.06; up_bedroom_2 hot 0.01 spread 2.8 near 0.04; up_bedroom_3 hot 0.05 spread 2.7 near 0.07 (before, up_lounge_1: 34 per cent hot)"
+   "detail": "the lit ceiling near the rose in the six lounge and bedroom pictures is no plateau: the share at luma 200 or more under 15 per cent, local spread at least 2 levels, under 25 per cent within 3 levels of the 90th percentile: up_lounge_1 hot 0.05 spread 2.7 near 0.07; up_lounge_2 hot 0.04 spread 2.7 near 0.07; up_lounge_3 hot 0.05 spread 2.7 near 0.07; up_bedroom_1 hot 0.05 spread 2.7 near 0.07; up_bedroom_2 hot 0.01 spread 2.8 near 0.04; up_bedroom_3 hot 0.05 spread 2.7 near 0.07 (before, up_lounge_1: 34 per cent hot)"
   },
   {
    "id": "PIC-10",
@@ -506,7 +503,7 @@
    "detail": "10 review previews of try 3 (JPEG, at most 1600 px wide, under 500 KB): hw-cam-a-day-2026-10-14-v3.jpg, hw-cam-a-night_lit-2026-10-14-v3.jpg, hw-close-day-2026-10-14-v3.jpg, hw-close-night_lit-2026-10-14-v3.jpg, hw-close2-day-2026-10-14-v3.jpg, hw-close2-night_lit-2026-10-14-v3.jpg, hw-hook-day-2026-10-14-v3.jpg, hw-hook-night_lit-2026-10-14-v3.jpg, hw-reverse-day-2026-10-14-v3.jpg, hw-reverse-night_lit-2026-10-14-v3.jpg; the 20 try 1 and try 2 pictures stay beside them; bad: none"
   }
  ],
- "seconds": 201.9,
+ "seconds": 197.0,
  "measurements": {
   "hook_day": {
    "east_parade_bay0_upper_w0": {
@@ -923,35 +920,35 @@
    "east_parade_bay0_upper_w1": {
     "pane_px": 7426,
     "joinery_px": 3896,
-    "P": 96.64240264892578,
-    "L": 85.06819915771484,
-    "D": 38.83879852294922,
-    "spread": 114.36224365234375,
+    "P": 103.13180541992188,
+    "L": 85.28079986572266,
+    "D": 38.93436050415039,
+    "spread": 114.44319152832031,
     "pane_rgb_mean": [
-     120.14004847831941,
-     100.30083490438999,
-     71.82332345812011
+     122.47858874225693,
+     102.03420414758955,
+     72.9078911931053
     ],
-    "P_over_L": 1.136057934760704,
-    "D_over_L": 0.45656072313159957,
+    "P_over_L": 1.2093203344985763,
+    "D_over_L": 0.456543097220638,
     "clear_px": 2019,
     "cloth_px": 3090,
     "brick_behind_px": 0,
     "world_behind_px": 0,
-    "clear_P": 91.64239501953125,
-    "cloth_P": 141.15020751953125,
+    "clear_P": 97.64240264892578,
+    "cloth_P": 142.43099975585938,
     "clear_rgb_mean": [
-     111.06736007924715,
-     85.518573551263,
-     55.58791480931154
+     117.7369985141159,
+     90.62555720653789,
+     58.859336305101536
     ],
     "clear_Y": [
-     0.10587349448778172,
-     0.10968286432222142
+     0.12003798018709312,
+     0.1253212788397535
     ],
     "cloth_Y": [
-     0.2746970653002584,
-     0.27084558702972417
+     0.27822998131061333,
+     0.276522543290196
     ],
     "curtain_colour": "cream",
     "blocks": {
@@ -967,7 +964,7 @@
      "bad_list": []
     },
     "line": {
-     "min_ratio": 0.4423956274986267,
+     "min_ratio": 0.44129276275634766,
      "edges": 7
     },
     "angle": 31.71,
@@ -988,9 +985,9 @@
     "D": 22.723461151123047,
     "spread": 52.995506286621094,
     "pane_rgb_mean": [
-     58.381611741899754,
+     58.38188867349765,
      45.60149543062863,
-     35.85018000553863
+     35.84990307394074
     ],
     "P_over_L": 0.5730823855456059,
     "D_over_L": 0.2638840823935195,
@@ -1036,7 +1033,7 @@
     "spread": 45.93456268310547,
     "pane_rgb_mean": [
      46.21923076923077,
-     40.199450549450546,
+     40.20054945054945,
      37.81263736263736
     ],
     "P_over_L": 0.5030755802042036,
@@ -1057,7 +1054,7 @@
      0.009728129843786008
     ],
     "cloth_Y": [
-     0.03048037847406654,
+     0.03048152297730873,
      0.02788600587801274
     ],
     "line": {
@@ -1077,28 +1074,28 @@
    "east_parade_bay2_upper_w0": {
     "pane_px": 1326,
     "joinery_px": 925,
-    "P": 79.44300079345703,
+    "P": 84.09459686279297,
     "L": 92.32571411132812,
-    "D": 53.27680206298828,
-    "spread": 72.98216247558594,
+    "D": 53.95330047607422,
+    "spread": 71.97984313964844,
     "pane_rgb_mean": [
-     104.47209653092006,
-     90.58295625942685,
-     59.56184012066365
+     108.14177978883862,
+     93.24283559577677,
+     61.09577677224736
     ],
-    "P_over_L": 0.8604645147684764,
-    "D_over_L": 0.5770526941036827,
+    "P_over_L": 0.910846969040392,
+    "D_over_L": 0.584379996357421,
     "clear_px": 0,
     "cloth_px": 339,
     "brick_behind_px": 0,
     "world_behind_px": 0,
     "clear_P": null,
-    "cloth_P": 127.0884017944336,
+    "cloth_P": 128.01620483398438,
     "clear_rgb_mean": null,
     "clear_Y": null,
     "cloth_Y": [
-     0.22018786760584977,
-     0.2161785349347786
+     0.22235643702750704,
+     0.218937066514481
     ],
     "curtain_colour": "green",
     "blocks": {
@@ -1114,7 +1111,7 @@
      "bad_list": []
     },
     "line": {
-     "min_ratio": 0.4624280631542206,
+     "min_ratio": 0.47477996349334717,
      "edges": 5
     },
     "angle": 18.84,
@@ -1136,7 +1133,7 @@
     "spread": 45.431922912597656,
     "pane_rgb_mean": [
      38.74909529553679,
-     26.835946924004826,
+     26.837153196622438,
      20.803377563329313
     ],
     "P_over_L": 0.25312231843173816,
@@ -1248,7 +1245,7 @@
     "pane_rgb_mean": [
      123.57426702204991,
      93.09449963653987,
-     56.92851950569421
+     56.92827719893385
     ],
     "P_over_L": 0.9954060826063792,
     "D_over_L": 0.5226114557740594,
@@ -1592,16 +1589,16 @@
     "pane_px": 183,
     "joinery_px": 777,
     "P": 66.41320037841797,
-    "L": 81.65547943115234,
-    "D": 43.629798889160156,
-    "spread": 30.615760803222656,
+    "L": 81.73407745361328,
+    "D": 44.05973815917969,
+    "spread": 31.20419692993164,
     "pane_rgb_mean": [
-     67.9672131147541,
-     61.704918032786885,
-     51.978142076502735
+     68.54098360655738,
+     62.08196721311475,
+     52.131147540983605
     ],
-    "P_over_L": 0.8133342776391893,
-    "D_over_L": 0.534315629436069,
+    "P_over_L": 0.8125521501861889,
+    "D_over_L": 0.5390620354672139,
     "clear_px": 0,
     "cloth_px": 0,
     "brick_behind_px": 0,
@@ -1625,7 +1622,7 @@
      "bad_list": []
     },
     "line": {
-     "min_ratio": 0.5428344011306763,
+     "min_ratio": 0.5423123836517334,
      "edges": 3
     },
     "angle": 9.2,
@@ -1685,7 +1682,7 @@
     "pane_rgb_mean": [
      33.95075757575758,
      30.901515151515152,
-     28.303030303030305
+     28.304924242424242
     ],
     "P_over_L": 0.5673697855538644,
     "D_over_L": 0.35750505449663184,
@@ -1720,9 +1717,9 @@
     "D": 14.421199798583984,
     "spread": 30.859600067138672,
     "pane_rgb_mean": [
-     30.26005575467941,
+     30.259657506969337,
      27.841497411389884,
-     25.161290322580644
+     25.16089207487057
     ],
     "P_over_L": 0.4711432515764099,
     "D_over_L": 0.23093724971287327,
@@ -1795,7 +1792,7 @@
     "spread": 35.931331634521484,
     "pane_rgb_mean": [
      41.44318181818182,
-     31.143939393939394,
+     31.142045454545453,
      25.988636363636363
     ],
     "P_over_L": 0.4661873051702587,
@@ -2009,8 +2006,8 @@
     "D": 9.26240062713623,
     "spread": 90.03479766845703,
     "pane_rgb_mean": [
-     73.84179869524696,
-     41.34902143522833,
+     73.84203168685927,
+     41.34925442684063,
      22.94501397949674
     ],
     "P_over_L": 0.32363135356699774,
@@ -2031,7 +2028,7 @@
      0.00656258483745225
     ],
     "cloth_Y": [
-     0.09100944500762184,
+     0.09101069721354617,
      0.10395136968685514
     ],
     "line": {
@@ -2056,8 +2053,8 @@
     "D": 10.746600151062012,
     "spread": 57.76100158691406,
     "pane_rgb_mean": [
-     46.96615783410138,
-     29.721630184331797,
+     46.96601382488479,
+     29.721774193548388,
      22.862903225806452
     ],
     "P_over_L": 0.3885601643800511,
@@ -2071,8 +2068,8 @@
     "clear_rgb_mean": null,
     "clear_Y": null,
     "cloth_Y": [
-     0.03920779094530832,
-     0.0371536520439684
+     0.03920780994533172,
+     0.03718098259700904
     ],
     "line": {
      "min_ratio": 0.11268984526395798,
@@ -2179,35 +2176,35 @@
    "east_parade_bay0_upper_w1": {
     "pane_px": 27539,
     "joinery_px": 16527,
-    "P": 95.08999633789062,
-    "L": 81.62740325927734,
+    "P": 96.30259704589844,
+    "L": 81.62979888916016,
     "D": 28.208600997924805,
-    "spread": 121.427001953125,
+    "spread": 121.94560241699219,
     "pane_rgb_mean": [
-     106.99012309815171,
-     90.93649006862994,
-     65.98565670503649
+     107.6007843422056,
+     91.30999673190748,
+     66.16296888049675
     ],
-    "P_over_L": 1.1649273717044673,
-    "D_over_L": 0.34557758634467844,
+    "P_over_L": 1.1797480620607865,
+    "D_over_L": 0.345567444509173,
     "clear_px": 6287,
     "cloth_px": 8495,
     "brick_behind_px": 0,
     "world_behind_px": 0,
-    "clear_P": 112.3667984008789,
-    "cloth_P": 138.00579833984375,
+    "clear_P": 114.08200073242188,
+    "cloth_P": 138.36280822753906,
     "clear_rgb_mean": [
-     134.28916812470177,
-     111.7921107046286,
-     76.81262923492922
+     136.308414188007,
+     113.02751709877525,
+     77.40050898679816
     ],
     "clear_Y": [
-     0.17822371447692908,
-     0.16619445338134828
+     0.18255639501373622,
+     0.17139399507885636
     ],
     "cloth_Y": [
-     0.25913409584329766,
-     0.257758936026062
+     0.260402750859917,
+     0.25963743887021457
     ],
     "curtain_colour": "cream",
     "blocks": {
@@ -2223,7 +2220,7 @@
      "bad_list": []
     },
     "line": {
-     "min_ratio": 0.23699147999286652,
+     "min_ratio": 0.236984521150589,
      "edges": 8
     },
     "angle": 19.45,
@@ -2244,7 +2241,7 @@
     "D": 23.774200439453125,
     "spread": 40.868797302246094,
     "pane_rgb_mean": [
-     45.637684449489214,
+     45.638138479001135,
      41.97934165720772,
      38.58910329171396
     ],
@@ -2364,47 +2361,47 @@
    "east_parade_bay0_upper_w1": {
     "pane_px": 117905,
     "joinery_px": 57022,
-    "P": 136.0780029296875,
+    "P": 136.86940002441406,
     "L": 83.42120361328125,
     "D": 27.557600021362305,
-    "spread": 160.06199645996094,
+    "spread": 160.77720642089844,
     "pane_rgb_mean": [
-     134.56979771850217,
-     114.63066027734193,
-     82.0114074890802
+     135.16509902039778,
+     114.97760909206565,
+     82.1628853738179
     ],
-    "P_over_L": 1.6312160102665183,
+    "P_over_L": 1.6407027721501668,
     "D_over_L": 0.33034287240821997,
     "clear_px": 35925,
     "cloth_px": 42888,
     "brick_behind_px": 0,
     "world_behind_px": 0,
-    "clear_P": 162.69578552246094,
-    "cloth_P": 145.15420532226562,
+    "clear_P": 163.62759399414062,
+    "cloth_P": 145.93759155273438,
     "clear_rgb_mean": [
-     181.6494363256785,
-     153.14644398051496,
-     105.25386221294363
+     182.90711203897007,
+     153.8744050104384,
+     105.5715518441197
     ],
     "clear_Y": [
-     0.3553821765546809,
-     0.3719288789958847
+     0.3588905194383016,
+     0.37670231013054656
     ],
     "cloth_Y": [
-     0.28856398509370895,
-     0.28813449225726934
+     0.2902289373083603,
+     0.2907163952661866
     ],
     "curtain_colour": "cream",
     "blocks": {
      "n": 33,
      "bad": 0,
-     "worst_g_over_r": 0.747,
+     "worst_g_over_r": 0.744,
      "bad_list": []
     },
     "blocks_ro": {
      "n": 33,
      "bad": 0,
-     "worst_g_over_r": 0.736,
+     "worst_g_over_r": 0.734,
      "bad_list": []
     },
     "line": {
@@ -3131,8 +3128,8 @@
     "D": 22.262401580810547,
     "spread": 58.07859802246094,
     "pane_rgb_mean": [
-     65.554682468118,
-     53.78893469019709,
+     65.55474687620764,
+     53.789321138735026,
      44.35591910343939
     ],
     "P_over_L": 0.6496472193252901,
@@ -3145,15 +3142,15 @@
     "cloth_P": 72.25959777832031,
     "clear_rgb_mean": [
      34.23265306122449,
-     20.39482993197279,
-     15.482993197278912
+     20.39591836734694,
+     15.482721088435374
     ],
     "clear_Y": [
-     0.009044678948350692,
+     0.009045171619328333,
      0.00874882537674564
     ],
     "cloth_Y": [
-     0.05847324781110597,
+     0.05847346163792729,
      0.06571573727369763
     ],
     "line": {
@@ -3178,9 +3175,9 @@
     "D": 20.131200790405273,
     "spread": 55.43440246582031,
     "pane_rgb_mean": [
-     52.05291564272754,
-     41.825497806664984,
-     38.16058427688845
+     52.0530764107393,
+     41.825635607817915,
+     38.16049240945316
     ],
     "P_over_L": 0.3853801964089791,
     "D_over_L": 0.20276215207364562,
@@ -3191,16 +3188,16 @@
     "clear_P": 24.615400314331055,
     "cloth_P": 62.13119888305664,
     "clear_rgb_mean": [
-     35.745852723788666,
-     21.49093895428415,
-     16.328770873254857
+     35.74601697235149,
+     21.490993703805092,
+     16.32844237612921
     ],
     "clear_Y": [
-     0.009758934502012389,
+     0.009758984184810547,
      0.00989357642264524
     ],
     "cloth_Y": [
-     0.04696837390147223,
+     0.04696850214285288,
      0.04846545584503511
     ],
     "line": {
@@ -3221,47 +3218,47 @@
    "east_parade_bay2_upper_w0": {
     "pane_px": 42286,
     "joinery_px": 19368,
-    "P": 125.1521987915039,
+    "P": 127.08200073242188,
     "L": 98.21260070800781,
-    "D": 55.28200149536133,
-    "spread": 92.3456039428711,
+    "D": 59.6713981628418,
+    "spread": 88.1635513305664,
     "pane_rgb_mean": [
-     132.12190796008136,
-     114.87473395450031,
-     81.11251951000331
+     135.04732062621198,
+     117.01733434233553,
+     82.25400841886203
     ],
-    "P_over_L": 1.2742987955648297,
-    "D_over_L": 0.5628809449789255,
+    "P_over_L": 1.2939480251647606,
+    "D_over_L": 0.6075737505439713,
     "clear_px": 15034,
     "cloth_px": 26654,
     "brick_behind_px": 0,
     "world_behind_px": 0,
-    "clear_P": 65.09400177001953,
-    "cloth_P": 128.72898864746094,
+    "clear_P": 69.37479400634766,
+    "cloth_P": 130.65679931640625,
     "clear_rgb_mean": [
-     113.12737794332845,
-     92.0233470799521,
-     60.822602101902355
+     118.06984169216443,
+     95.63223360383131,
+     62.69189836370893
     ],
     "clear_Y": [
-     0.15577408127636952,
-     0.05450827378033673
+     0.16326799248652943,
+     0.062006417971299646
     ],
     "cloth_Y": [
-     0.22502167336926387,
-     0.22134264201543943
+     0.23031320369660535,
+     0.2285035482543331
     ],
     "curtain_colour": "green",
     "blocks": {
      "n": 4,
      "bad": 0,
-     "worst_g_over_r": 0.585,
+     "worst_g_over_r": 0.577,
      "bad_list": []
     },
     "blocks_ro": {
      "n": 4,
      "bad": 0,
-     "worst_g_over_r": 0.56,
+     "worst_g_over_r": 0.555,
      "bad_list": []
     },
     "line": {
@@ -3287,9 +3284,9 @@
     "D": 34.04979705810547,
     "spread": 33.728397369384766,
     "pane_rgb_mean": [
-     59.24757165984192,
-     51.82454051995048,
-     48.55904199600038
+     59.24754785258547,
+     51.824564327206936,
+     48.559065803256836
     ],
     "P_over_L": 0.5580354491811881,
     "D_over_L": 0.3464401195896567,
@@ -3302,7 +3299,7 @@
     "clear_rgb_mean": null,
     "clear_Y": null,
     "cloth_Y": [
-     0.03758883028642967,
+     0.03758884309307567,
      0.03816073619848616
     ],
     "line": {
@@ -3328,9 +3325,9 @@
     "D": 21.768999099731445,
     "spread": 41.268798828125,
     "pane_rgb_mean": [
-     46.26611158460631,
+     46.26617714547958,
      33.99600078673048,
-     26.47997115321576
+     26.48003671408903
     ],
     "P_over_L": 0.3537738941310331,
     "D_over_L": 0.26456960962043574,
@@ -3350,7 +3347,7 @@
      0.011933949188597784
     ],
     "cloth_Y": [
-     0.03757077292606078,
+     0.03757070035156112,
      0.03796290173101871
     ],
     "line": {
@@ -3580,9 +3577,9 @@
     "D": 53.48419952392578,
     "spread": 51.42058563232422,
     "pane_rgb_mean": [
-     138.27697841726618,
+     138.2770821804095,
      99.24000415052573,
-     58.25148727172108
+     58.25131433314886
     ],
     "P_over_L": 0.981056594722266,
     "D_over_L": 0.5101594806682778,
@@ -3595,7 +3592,7 @@
     "clear_rgb_mean": null,
     "clear_Y": null,
     "cloth_Y": [
-     0.1985135738768312,
+     0.19851367392466301,
      0.18907904921661595
     ],
     "curtain_colour": "brown",
@@ -3633,8 +3630,8 @@
     "D": 47.850399017333984,
     "spread": 108.95761108398438,
     "pane_rgb_mean": [
-     130.16164121061828,
-     106.9200698867159,
+     130.16161544593038,
+     106.92007471759487,
      72.44522829928906
     ],
     "P_over_L": 1.0398832071493904,
@@ -3646,16 +3643,16 @@
     "clear_P": 92.15019989013672,
     "cloth_P": 136.55819702148438,
     "clear_rgb_mean": [
-     110.32957815969081,
-     87.67968523755555,
-     51.922496362212776
+     110.32954955792394,
+     87.6796888127764,
+     51.92251066309621
     ],
     "clear_Y": [
-     0.11318124593914,
+     0.11318122084824608,
      0.11032908839466905
     ],
     "cloth_Y": [
-     0.2679515970865107,
+     0.2679515675303473,
      0.25347704586413133
     ],
     "curtain_colour": null,
@@ -3694,8 +3691,8 @@
     "spread": 102.81019592285156,
     "pane_rgb_mean": [
      155.9650012258765,
-     120.67965220132395,
-     80.9970491401352
+     120.67966095758467,
+     80.99703162761374
     ],
     "P_over_L": 0.9024282732490656,
     "D_over_L": 0.31274238231469603,
@@ -3708,7 +3705,7 @@
     "clear_rgb_mean": null,
     "clear_Y": null,
     "cloth_Y": [
-     0.28417533062434736,
+     0.2841753181471105,
      0.28109770839029835
     ],
     "curtain_colour": "white",
@@ -3987,9 +3984,9 @@
     "D": 7.764999866485596,
     "spread": 51.806800842285156,
     "pane_rgb_mean": [
-     40.25728418484889,
-     33.822367529475535,
-     29.560983873153543
+     40.257453584496545,
+     33.82257080905272,
+     29.56108551294213
     ],
     "P_over_L": 0.5019534668920197,
     "D_over_L": 0.10850185192371288,
@@ -4000,16 +3997,16 @@
     "clear_P": 33.709999084472656,
     "cloth_P": 50.552398681640625,
     "clear_rgb_mean": [
-     29.908231055061368,
-     22.229478662312804,
-     20.85891228465263
+     29.908343654993807,
+     22.229703862177683,
+     20.85925008444995
     ],
     "clear_Y": [
-     0.010998127890318598,
+     0.010998241705213614,
      0.01578274142048742
     ],
     "cloth_Y": [
-     0.032930232640203824,
+     0.03293023484826997,
      0.032846591124292994
     ],
     "line": {
@@ -4036,7 +4033,7 @@
     "pane_rgb_mean": [
      33.02313554708764,
      30.96842678279804,
-     28.207131192161132
+     28.20685900925422
     ],
     "P_over_L": 0.4733594933231303,
     "D_over_L": 0.23614809674872908,
@@ -4432,7 +4429,7 @@
     "clear_rgb_mean": null,
     "clear_Y": null,
     "cloth_Y": [
-     0.04457858353267606,
+     0.04457852726320091,
      0.04643420750063912
     ],
     "line": {
@@ -4457,9 +4454,9 @@
     "D": 25.262399673461914,
     "spread": 51.2218017578125,
     "pane_rgb_mean": [
-     54.64977267806885,
-     44.53520242476726,
-     40.795366962546005
+     54.64985927689976,
+     44.535267373890456,
+     40.795453561376924
     ],
     "P_over_L": 0.4193846081833292,
     "D_over_L": 0.2540844706741785,
@@ -4470,16 +4467,16 @@
     "clear_P": 27.615402221679688,
     "cloth_P": 63.34379959106445,
     "clear_rgb_mean": [
-     39.45551911448191,
-     25.725479143179257,
-     20.659270267500258
+     39.455416623962286,
+     25.725632878958695,
+     20.659526493799323
     ],
     "clear_Y": [
-     0.012342109445807395,
+     0.012342159481063347,
      0.011736136088503728
     ],
     "cloth_Y": [
-     0.049007336587914486,
+     0.049007414224579146,
      0.050367021877166886
     ],
     "line": {
@@ -4500,51 +4497,51 @@
    "east_parade_bay2_upper_w0": {
     "pane_px": 28418,
     "joinery_px": 12014,
-    "P": 126.27450561523438,
+    "P": 129.00979614257812,
     "L": 98.28479766845703,
-    "D": 51.75625991821289,
-    "spread": 84.073486328125,
+    "D": 53.797447204589844,
+    "spread": 80.77977752685547,
     "pane_rgb_mean": [
-     127.68034344429587,
-     110.67608557956225,
-     77.1065521852347
+     131.31367443169822,
+     113.31596171440636,
+     78.4676261524386
     ],
-    "P_over_L": 1.284781661159793,
-    "D_over_L": 0.5265947648669094,
+    "P_over_L": 1.312611911536567,
+    "D_over_L": 0.5473628524531754,
     "clear_px": 9357,
     "cloth_px": 17733,
     "brick_behind_px": 0,
     "world_behind_px": 0,
-    "clear_P": 75.30259704589844,
-    "cloth_P": 131.7971954345703,
+    "clear_P": 80.29859924316406,
+    "cloth_P": 134.15020751953125,
     "clear_rgb_mean": [
-     97.81350860318479,
-     77.99903815325425,
-     49.996580100459546
+     103.62188735705888,
+     82.27893555626804,
+     52.23725553061879
     ],
     "clear_Y": [
-     0.09745880053800166,
-     0.07289499940583401
+     0.10687028564366033,
+     0.08314827669529923
     ],
     "cloth_Y": [
-     0.2319425503549235,
-     0.23300382050916454
+     0.23944224323986787,
+     0.2425439483170051
     ],
     "curtain_colour": "green",
     "blocks": {
      "n": 2,
      "bad": 0,
-     "worst_g_over_r": 0.599,
+     "worst_g_over_r": 0.589,
      "bad_list": []
     },
     "blocks_ro": {
      "n": 2,
      "bad": 0,
-     "worst_g_over_r": 0.566,
+     "worst_g_over_r": 0.56,
      "bad_list": []
     },
     "line": {
-     "min_ratio": 0.23098179697990417,
+     "min_ratio": 0.23825861513614655,
      "edges": 6
     },
     "angle": 55.14,
@@ -4566,9 +4563,9 @@
     "D": 27.402801513671875,
     "spread": 41.153594970703125,
     "pane_rgb_mean": [
-     57.02543528424586,
+     57.02559261590098,
      48.81754772393539,
-     45.10960771973988
+     45.10966016362492
     ],
     "P_over_L": 0.5471779302449945,
     "D_over_L": 0.281467208577284,
@@ -4581,7 +4578,7 @@
     "clear_rgb_mean": null,
     "clear_Y": null,
     "cloth_Y": [
-     0.03596051952168968,
+     0.03596057982486699,
      0.03706302120651854
     ],
     "line": {
@@ -4606,9 +4603,9 @@
     "D": 19.556400299072266,
     "spread": 44.77139663696289,
     "pane_rgb_mean": [
-     46.08577819839972,
+     46.085864234707046,
      35.96489718661275,
-     28.796266024262238
+     28.79617998795492
     ],
     "P_over_L": 0.4449081565390406,
     "D_over_L": 0.23767878206078624,
@@ -4619,12 +4616,12 @@
     "clear_P": 21.262401580810547,
     "cloth_P": 53.825199127197266,
     "clear_rgb_mean": [
-     30.829268292682926,
+     30.829492056388453,
      19.68225553815171,
      16.051913179682256
     ],
     "clear_Y": [
-     0.008311881559716489,
+     0.008311920144660673,
      0.007915406232023444
     ],
     "cloth_Y": [
@@ -4653,7 +4650,7 @@
     "D": 18.864599227905273,
     "spread": 27.1929988861084,
     "pane_rgb_mean": [
-     40.2576112412178,
+     40.25787145459277,
      25.762295081967213,
      21.06752537080406
     ],
@@ -4666,12 +4663,12 @@
     "clear_P": 22.855398178100586,
     "cloth_P": null,
     "clear_rgb_mean": [
-     40.437927663734115,
+     40.437732160312805,
      19.78826979472141,
      14.028543499511242
     ],
     "clear_Y": [
-     0.010283709552085194,
+     0.010283657118729396,
      0.009340973440493165
     ],
     "cloth_Y": null,
@@ -4698,7 +4695,7 @@
     "spread": 43.04692840576172,
     "pane_rgb_mean": [
      55.988170347003155,
-     47.503943217665615,
+     47.50552050473186,
      43.920347003154575
     ],
     "P_over_L": 0.5210869215885459,
@@ -4712,7 +4709,7 @@
     "clear_rgb_mean": null,
     "clear_Y": null,
     "cloth_Y": [
-     0.03436236775153167,
+     0.0343635497661268,
      0.03464910956839794
     ],
     "line": {
@@ -4939,9 +4936,9 @@
     "D": 14.751800537109375,
     "spread": 54.954200744628906,
     "pane_rgb_mean": [
-     59.48758023274018,
-     52.66054375619684,
-     49.977378281062464
+     59.4876063246882,
+     52.66062203204091,
+     49.977430464958516
     ],
     "P_over_L": 0.6649249637577324,
     "D_over_L": 0.16873624879526966,
@@ -4954,7 +4951,7 @@
     "clear_rgb_mean": null,
     "clear_Y": null,
     "cloth_Y": [
-     0.04550545120407561,
+     0.04550552747523932,
      0.04537270466869565
     ],
     "line": {
@@ -4979,9 +4976,9 @@
     "D": 18.990800857543945,
     "spread": 39.40400314331055,
     "pane_rgb_mean": [
-     40.99117018310252,
-     35.82303188028627,
-     30.77488614183474
+     40.99135607398457,
+     35.82331071660935,
+     30.77470025095269
     ],
     "P_over_L": 0.5492348094581584,
     "D_over_L": 0.2847209361938392,
@@ -4993,15 +4990,15 @@
     "cloth_P": 46.82720184326172,
     "clear_rgb_mean": [
      30.460142067876873,
-     27.044198895027623,
+     27.04498816101026,
      26.700078926598263
     ],
     "clear_Y": [
-     0.01272493664094835,
+     0.012725355352191051,
      0.013293600814756303
     ],
     "cloth_Y": [
-     0.02900154272042551,
+     0.02900173521060973,
      0.028805973304818665
     ],
     "line": {
@@ -5026,7 +5023,7 @@
     "D": 17.137399673461914,
     "spread": 34.88486862182617,
     "pane_rgb_mean": [
-     34.725573491928635,
+     34.72642310960068,
      32.75148683092608,
      30.247663551401867
     ],
@@ -5315,9 +5312,9 @@
     "D": 29.882999420166016,
     "spread": 33.08540344238281,
     "pane_rgb_mean": [
-     57.78037557762265,
-     45.52779471045128,
-     41.17923508012978
+     57.78053288762167,
+     45.527873365450795,
+     41.17925474387966
     ],
     "P_over_L": 0.6230703550750767,
     "D_over_L": 0.3806878054896533,
@@ -5329,15 +5326,15 @@
     "cloth_P": 48.90939712524414,
     "clear_rgb_mean": [
      35.98765432098765,
-     21.65432098765432,
+     21.660493827160494,
      14.660493827160494
     ],
     "clear_Y": [
-     0.010098742370850988,
+     0.010101719029618355,
      0.010212068646209837
     ],
     "cloth_Y": [
-     0.031150020358062424,
+     0.03115010337482717,
      0.030923490536766903
     ],
     "line": {
@@ -5363,9 +5360,9 @@
     "D": 55.76499938964844,
     "spread": 27.18219757080078,
     "pane_rgb_mean": [
-     169.52447253281477,
-     109.24616431696646,
-     58.69343704423918
+     169.52445308701994,
+     109.2461837627613,
+     58.693398152649486
     ],
     "P_over_L": 1.1473353472026742,
     "D_over_L": 0.5418742803748268,
@@ -5378,7 +5375,7 @@
     "clear_rgb_mean": null,
     "clear_Y": null,
     "cloth_Y": [
-     0.19969894105481623,
+     0.19969895993915263,
      0.19677782980673733
     ],
     "curtain_colour": "brown",
@@ -5417,9 +5414,9 @@
     "D": 47.18620300292969,
     "spread": 68.25159454345703,
     "pane_rgb_mean": [
-     148.40350978467933,
-     120.10614019896477,
-     78.16950489715022
+     148.40362523812271,
+     120.10619792568647,
+     78.16944717042853
     ],
     "P_over_L": 1.050168481211406,
     "D_over_L": 0.3921647327882027,
@@ -5430,16 +5427,16 @@
     "clear_P": 108.56340789794922,
     "cloth_P": 139.57139587402344,
     "clear_rgb_mean": [
-     133.94138092634537,
-     105.54869952354917,
-     60.76263375771303
+     133.941498086386,
+     105.54873857689604,
+     60.762594704366165
     ],
     "clear_Y": [
-     0.15937598647708826,
+     0.15937614931710326,
      0.15673334070835637
     ],
     "cloth_Y": [
-     0.2755970893074386,
+     0.2755974692069659,
      0.2658918548299406
     ],
     "curtain_colour": null,
@@ -5452,7 +5449,7 @@
     "blocks_ro": {
      "n": 21,
      "bad": 0,
-     "worst_g_over_r": 0.694,
+     "worst_g_over_r": 0.695,
      "bad_list": []
     },
     "line": {
@@ -5478,9 +5475,9 @@
     "D": 51.8108024597168,
     "spread": 75.12420654296875,
     "pane_rgb_mean": [
-     177.31042999333152,
-     137.03252735310826,
-     91.24537528711502
+     177.31040529526538,
+     137.03262614537283,
+     91.24544938131345
     ],
     "P_over_L": 0.9881593157956677,
     "D_over_L": 0.35362840443624693,
@@ -5493,7 +5490,7 @@
     "clear_rgb_mean": null,
     "clear_Y": null,
     "cloth_Y": [
-     0.2949703078058341,
+     0.29497057942157445,
      0.2943063969690836
     ],
     "curtain_colour": "white",
@@ -5790,9 +5787,9 @@
     "D": 7.6967997550964355,
     "spread": 90.74259948730469,
     "pane_rgb_mean": [
-     71.42309631870903,
-     40.361825516893596,
-     23.116616238023198
+     71.42334846192638,
+     40.36169944528492,
+     23.11674230963187
     ],
     "P_over_L": 0.3191640907833052,
     "D_over_L": 0.06147840932074987,
@@ -5801,7 +5798,7 @@
     "brick_behind_px": 0,
     "world_behind_px": 0,
     "clear_P": 14.239998817443848,
-    "cloth_P": 83.88520050048828,
+    "cloth_P": 83.88719940185547,
     "clear_rgb_mean": [
      34.441715782580225,
      12.512442698100852,
@@ -5812,8 +5809,8 @@
      0.005404155152652527
     ],
     "cloth_Y": [
-     0.08845631460329151,
-     0.09792140981684117
+     0.08845623357851064,
+     0.0979576638292024
     ],
     "line": {
      "min_ratio": 0.053490880876779556,
@@ -5837,9 +5834,9 @@
     "D": 11.5339994430542,
     "spread": 56.56160354614258,
     "pane_rgb_mean": [
-     47.41788410628493,
+     47.4182763015982,
      30.266986959505832,
-     23.33768016472203
+     23.337778213550347
     ],
     "P_over_L": 0.4026890250229994,
     "D_over_L": 0.1389554824975222,
@@ -5852,7 +5849,7 @@
     "clear_rgb_mean": null,
     "clear_Y": null,
     "cloth_Y": [
-     0.03891100998912502,
+     0.038911618830768546,
      0.03684565837522078
     ],
     "line": {
@@ -5877,9 +5874,9 @@
     "D": 25.8322811126709,
     "spread": 41.90925216674805,
     "pane_rgb_mean": [
-     59.164406779661014,
-     44.287724704673856,
-     38.789470980996406
+     59.16471494607088,
+     44.287981510015406,
+     38.789522342064714
     ],
     "P_over_L": 0.6393267075558058,
     "D_over_L": 0.3281957047017857,
@@ -5892,7 +5889,7 @@
     "clear_rgb_mean": null,
     "clear_Y": null,
     "cloth_Y": [
-     0.03268610173784445,
+     0.03268639465306219,
      0.03371933128454953
     ],
     "line": {
@@ -5918,7 +5915,7 @@
     "D": 56.1901969909668,
     "spread": 30.348800659179688,
     "pane_rgb_mean": [
-     166.1611047634057,
+     166.16098656475316,
      108.19687955557306,
      58.80292344667271
     ],
@@ -5933,7 +5930,7 @@
     "clear_rgb_mean": null,
     "clear_Y": null,
     "cloth_Y": [
-     0.20053728078908264,
+     0.20053713315846575,
      0.19677782980673733
     ],
     "curtain_colour": "brown",
@@ -5974,7 +5971,7 @@
     "pane_rgb_mean": [
      139.4184470963314,
      114.05262691788252,
-     75.34084619301703
+     75.340779772843
     ],
     "P_over_L": 1.0963643782312773,
     "D_over_L": 0.34685446961815686,
@@ -5985,16 +5982,16 @@
     "clear_P": 98.99260711669922,
     "cloth_P": 139.48080444335938,
     "clear_rgb_mean": [
-     118.597543154626,
-     94.77555027856425,
-     55.00470362590191
+     118.5974974883551,
+     94.77550461229336,
+     55.004612293360125
     ],
     "clear_Y": [
-     0.14812284637092682,
+     0.14812273581280605,
      0.12926663676675978
     ],
     "cloth_Y": [
-     0.2753021786636437,
+     0.27530234832085415,
      0.2651584420577145
     ],
     "curtain_colour": null,
@@ -6033,9 +6030,9 @@
     "D": 54.532798767089844,
     "spread": 69.61795806884766,
     "pane_rgb_mean": [
-     173.02138654081662,
-     134.37214373189164,
-     89.45661459422324
+     173.0215358881687,
+     134.37211386242123,
+     89.45655485528242
     ],
     "P_over_L": 0.9769263020125084,
     "D_over_L": 0.3760057676091198,
@@ -6048,7 +6045,7 @@
     "clear_rgb_mean": null,
     "clear_Y": null,
     "cloth_Y": [
-     0.2908446284401644,
+     0.29084474760699414,
      0.2886699636836124
     ],
     "curtain_colour": "white",
@@ -6476,17 +6473,17 @@
    "east_chandler_bay0_upper_w0": {
     "pane_px": 204,
     "joinery_px": 266,
-    "P": 75.23899841308594,
-    "L": 84.27420043945312,
-    "D": 60.76297378540039,
-    "spread": 16.253772735595703,
+    "P": 78.92610168457031,
+    "L": 84.5635986328125,
+    "D": 61.30889129638672,
+    "spread": 20.279911041259766,
     "pane_rgb_mean": [
-     86.02941176470588,
-     72.3578431372549,
-     52.029411764705884
+     89.8970588235294,
+     75.43137254901961,
+     53.57843137254902
     ],
-    "P_over_L": 0.8927880421380143,
-    "D_over_L": 0.7210151323720432,
+    "P_over_L": 0.9333342355412164,
+    "D_over_L": 0.7250033381691676,
     "clear_px": 0,
     "cloth_px": 0,
     "brick_behind_px": 0,
@@ -6510,7 +6507,7 @@
      "bad_list": []
     },
     "line": {
-     "min_ratio": 0.5566282272338867,
+     "min_ratio": 0.55472332239151,
      "edges": 5
     },
     "angle": 12.6,
@@ -6521,7 +6518,7 @@
     "frame": "h-along15-gf2w1_night",
     "cut": false,
     "own_footway": false,
-    "brick_median": 46.474998474121094
+    "brick_median": 46.545196533203125
    },
    "east_parade_bay3_upper_w1": {
     "pane_px": 1539,
@@ -6741,7 +6738,7 @@
     "pane_rgb_mean": [
      49.72134831460674,
      44.59887640449438,
-     43.03707865168539
+     43.03820224719101
     ],
     "P_over_L": 0.7024618803318657,
     "D_over_L": 0.5302261963395944,
@@ -6777,7 +6774,7 @@
     "spread": 33.31169128417969,
     "pane_rgb_mean": [
      120.33779576587796,
-     87.42029887920299,
+     87.41998754669987,
      54.473225404732254
     ],
     "P_over_L": 0.9586384474655104,
@@ -6826,9 +6823,9 @@
     "D": 34.127197265625,
     "spread": 116.28260040283203,
     "pane_rgb_mean": [
-     103.64522893088987,
-     87.71807318894697,
-     64.82940770954214
+     103.64520020681336,
+     87.71813063710002,
+     64.82943643361865
     ],
     "P_over_L": 0.7729397874547901,
     "D_over_L": 0.28843523729013565,
@@ -6839,16 +6836,16 @@
     "clear_P": 107.43040466308594,
     "cloth_P": 138.7209930419922,
     "clear_rgb_mean": [
-     129.9428216283406,
-     103.76429459291485,
-     61.57768800497203
+     129.94251087632068,
+     103.76413921690491,
+     61.57799875699192
     ],
     "clear_Y": [
-     0.15132840560810762,
+     0.1513278590537842,
      0.1527624562409506
     ],
     "cloth_Y": [
-     0.27312097139216024,
+     0.27312105880393794,
      0.2618516262039504
     ],
     "curtain_colour": null,
@@ -6886,7 +6883,7 @@
     "D": 42.452518463134766,
     "spread": 61.49928283691406,
     "pane_rgb_mean": [
-     103.86317232972726,
+     103.86332469907055,
      73.40713088526589,
      49.52704555843364
     ],
@@ -7359,7 +7356,7 @@
     "pane_rgb_mean": [
      121.39053728949479,
      89.68444266238974,
-     55.43263833199679
+     55.43223736968725
     ],
     "P_over_L": 0.9931634206375514,
     "D_over_L": 0.5372508639381169,
@@ -7407,9 +7404,9 @@
     "D": 32.49340057373047,
     "spread": 113.2772445678711,
     "pane_rgb_mean": [
-     83.18460914254801,
-     71.49986475520693,
-     56.13456856911009
+     83.18501487692724,
+     71.5,
+     56.134433324317015
     ],
     "P_over_L": 0.6379073150472125,
     "D_over_L": 0.34009681996027896,
@@ -7429,7 +7426,7 @@
      0.1255289758005876
     ],
     "cloth_Y": [
-     0.27098944067105263,
+     0.27099057997151904,
      0.2673860013104319
     ],
     "curtain_colour": null,

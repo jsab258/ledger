@@ -506,7 +506,7 @@ def block_colours(lin_img, glass, mt, green, bs):
     for y0_ in range((int(ys_.min()) + bs - 1) // bs * bs, int(ys_.max()) - bs + 1, bs):
         for x0_ in range((int(xs_.min()) + bs - 1) // bs * bs, int(xs_.max()) - bs + 1, bs):
             blk = mt[y0_:y0_ + bs, x0_:x0_ + bs, 0]
-            behind_room = ((blk == 5) | (blk == 3)).all()          # the room card or the cloth: a block that sees past the card's edge (the world's dusk landscape: the gate's card is 3.4 m wide and a near oblique view runs off it) is not the room
+            behind_room = ((blk == 5) | (blk == 3)).all()          # the room card or the cloth: a block with anything else behind it (the frame's joinery, a reveal) is not wholly the room. (Corrected in try 3, street review narrow point 9: the 14 blocks of h-along30-gf2w1 night once read as 'the world's dusk landscape past the card' are the framed print's own green field, with the card behind every pixel; a print's own colour is read as the green curtain's is, against its own colour, not against g/r 0.85)
             if glass[y0_:y0_ + bs, x0_:x0_ + bs].all() and behind_room and (not green or (blk == 5).all()):
                 r_, gg_, bb_ = lin_img[y0_:y0_ + bs, x0_:x0_ + bs].reshape(-1, 3).mean(axis=0)
                 nb += 1
