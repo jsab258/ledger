@@ -304,9 +304,9 @@ def display(d):
     top_z = top_surface
     # ---- the chairs at their own size, facing the table
     d.piece("painted_wooden_chair_01", 1.215, 0.32, 0.0, rot=(0, 0, math.pi / 2), tier="bed", tris=None)
-    d.tone(d.last_objs, 0.78)                   # the white paint burnt on the seats under the gate's night spill (PIC-05g)
+    d.tone(d.last_objs, 0.68)                   # the white paint burnt on the seats under the gate's night spill (PIC-05g); 15 Oct (the close review, narrow 4): 0.78 -> 0.68
     d.piece("painted_wooden_chair_01", 2.135, 0.32, 0.0, rot=(0, 0, -math.pi / 2), tier="bed", tris=None)
-    d.tone(d.last_objs, 0.78)
+    d.tone(d.last_objs, 0.68)
     pot = d.sub_template("tea_set_01", "pot", lambda n: "teapot" in n)
     cupa = d.compose("tea_set_01", "cupA", [(("cup_small_01",), (0.0, 0.2335, 0.013)), (("saucer_circular_04",), (0.0, 0.0, 0.0))])
     cupb = d.compose("tea_set_01", "cupB", [(("cup_small_02",), (0.0, 0.2335, 0.013)), (("saucer_circular_03",), (0.0, 0.0, 0.0))])
@@ -345,7 +345,8 @@ def display(d):
     weave = GEN.weave_png(os.path.join(tex, "cotton_weave.png"), (199, 192, 172))
     cur_m = d.image_mat("cafe_curtain", weave, rough=0.85)
     pb = [n_ for n_ in cur_m.node_tree.nodes if n_.type == "BSDF_PRINCIPLED"][0]
-    for nm_, val in (("Transmission Weight", 0.3), ("Sheen Weight", 0.4)):
+    # 15 Oct (the tea rooms' try 2 reviews, night point 3 and the close review's narrow 2: at night the curtains read as dark grey satin): sheen 0.4 -> 0.1, transmission 0.3 -> 0.5, roughness 0.9, specular level 0.25
+    for nm_, val in (("Transmission Weight", 0.5), ("Sheen Weight", 0.1), ("Roughness", 0.9), ("Specular IOR Level", 0.25)):
         if nm_ in pb.inputs:
             pb.inputs[nm_].default_value = val
     for si, (side, (ua, ub)) in enumerate((("l", (0.05, 1.10)), ("r", (2.26, 3.30)))):
@@ -362,6 +363,16 @@ def display(d):
     # ---- the hand-lettered card on the glass's inside (BREAKFASTS, LUNCHES, TEAS), on two clear suction cups with a steel hook each
     cp = os.path.join(tex, "window_card.png")
     cuv = GEN.card_atlas(cp, ["BREAKFASTS\nLUNCHES\nTEAS"], cols=1, tile=(512, 320), size=58, bg=(206, 200, 180))
+    # 15 Oct (the close review, narrow 3, and FLT-01: the card's paper is one flat white at the street camera, 2.16 per cent of the glass): a coarser, stronger grain: blotches of about 7 mm (6 levels) over the fibre
+    from scipy import ndimage as _ndc
+    import numpy as np
+    from PIL import Image
+    _a = np.asarray(Image.open(cp).convert("RGB")).astype(np.float32)
+    _rg = np.random.default_rng(77)
+    _n1 = _ndc.gaussian_filter(_rg.normal(0, 1, _a.shape[:2]), 5.0)
+    _n2 = _ndc.gaussian_filter(_rg.normal(0, 1, _a.shape[:2]), 1.2)
+    _a += ((_n1 / _n1.std()) * 6.0 + (_n2 / _n2.std()) * 3.0)[..., None]
+    Image.fromarray(np.clip(_a, 0, 255).astype(np.uint8)).save(cp)
     GEN.TEXTS.extend(["BREAKFASTS", "LUNCHES", "TEAS"])
     cm = d.image_mat("window_card", cp, rough=0.85)
     wg = GM()

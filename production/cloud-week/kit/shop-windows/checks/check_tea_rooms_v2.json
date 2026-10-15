@@ -1,13 +1,13 @@
 {
  "schema": "ledger.cloud-week-42.shop-windows-check/1",
  "shop": "tea_rooms",
- "made": "2026-10-15 06:21:23",
+ "made": "2026-10-15 06:38:24",
  "target": "production/cloud-week/targets/shop-windows/target.json (status: target for unit 7 of cloud week 42, part 2; written 12 October 2026; failed its )",
  "pass": 71,
  "counted": 74,
  "na": 6,
  "pending": 0,
- "seconds": 112.1,
+ "seconds": 108.5,
  "rows": [
   {
    "id": "PIC-01",
@@ -307,7 +307,7 @@
    "id": "FRN-13",
    "name": "the shop door's glass shows the card and the floor, never a reveal",
    "status": "pass",
-   "detail": "4480 rays (40 x 14 over each of the 2 door panes, 15 mm in) from the four review cameras through the shop door's glass into the gate's scene (the front's opaque parts, the gate's reveal slabs ['reveal_floor_window y 0.020', 'reveal_floor_shop_door y 0.165', 'reveal_floor_side_door y 0.525'], the card): STREET_SQUARE 0 of 1120 on the reveal or nothing; STREET_30 0 of 1120 on the reveal or nothing; CLOSE_35 0 of 1120 on the reveal or nothing; CLOSE_35_B 0 of 1120 on the reveal or nothing; where they end: card 2819, hall_face_dado 946, hall_face_plaster 458, door_leaf_stile_lever 139, door_rail_lock 77, door_leaf_stile_hinge 28, bell_brass 6, bell_spring_strip 3; none may end on a reveal slab, the sky or beyond the card (try 1: the grocer's and the launderette's door-zone slab stood 60 mm in front of the door leaf and read as a dark box through the glass)"
+   "detail": "4480 rays (40 x 14 over each of the 2 door panes, 15 mm in) from the four review cameras through the shop door's glass into the gate's scene (the front's opaque parts, the gate's reveal slabs ['reveal_floor_window y 0.020', 'reveal_floor_shop_door y 0.165', 'reveal_floor_side_door y 0.525'], the card): STREET_SQUARE 0 of 1120 on the reveal or nothing; STREET_30 0 of 1120 on the reveal or nothing; CLOSE_35 0 of 1120 on the reveal or nothing; CLOSE_35_B 0 of 1120 on the reveal or nothing; where they end: card 2765, hall_face_dado 982, hall_face_plaster 476, door_leaf_stile_lever 139, door_rail_lock 77, door_leaf_stile_hinge 28, bell_brass 6, bell_spring_strip 3; none may end on a reveal slab, the sky or beyond the card (try 1: the grocer's and the launderette's door-zone slab stood 60 mm in front of the door leaf and read as a dark box through the glass)"
   },
   {
    "id": "SIGN-01",
