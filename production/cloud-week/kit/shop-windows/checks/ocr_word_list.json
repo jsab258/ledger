@@ -1,0 +1,41 @@
+{
+ "about": "The project's own list for INV-08 (the second reader of every placed model's base-colour map): words the reader finds on a CC0 model's map that a person has looked at at 100 per cent and judged not a maker's name, a brand or a mark (a generic instruction or a material). Anything else the reader finds fails the build. 15 Oct 2026, the ironmonger's try 2 close review, narrow 1.",
+ "allowed": [
+  {
+   "words": "DROP FORGED STEEL",
+   "model": "adjustable_wrench",
+   "map": "adjustable_wrench_diff_1k_clean.jpg",
+   "where": [
+    357,
+    210,
+    553,
+    236
+   ],
+   "why": "a material and a process stamped on a spanner's jaw, read at 100 per cent: no maker's name, no brand"
+  },
+  {
+   "words": "Push to open",
+   "model": "drain_cleaner",
+   "map": "drain_cleaner_diff_1k_clean.jpg",
+   "where": [
+    649,
+    439,
+    706,
+    522
+   ],
+   "why": "a generic instruction on a cap, read at 100 per cent: no brand"
+  },
+  {
+   "words": "THERMOMETER",
+   "model": "vintage_electric_kettle",
+   "map": "vintage_electric_kettle_diff_1k.jpg",
+   "where": [
+    753,
+    190,
+    852,
+    217
+   ],
+   "why": "the word on a dial's face (a thermometer's scale with numbers), read at 100 per cent: no maker, no brand"
+  }
+ ]
+}

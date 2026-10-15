@@ -969,6 +969,7 @@ def run(ctx, assets, previews, out_json):
             X3.dsp09_rows(ctx, assets, rows, di)
             X3.dsp10_rows(ctx, assets, rows, di)
             X3.inv07_rows(ctx, assets, rows, di)
+            X3.inv08_rows(ctx, assets, rows, di)
             X3.flt01_rows(ctx, rows)
             if ctx.id == "ironmonger":
                 X3.dsp11_rows(ctx, rows, di)

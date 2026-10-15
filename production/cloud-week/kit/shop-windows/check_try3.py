@@ -360,6 +360,56 @@ def flt01_rows(ctx, rows):
 
 
 # --------------------------------------------------------------------------------------------------------------------------------------------- INV-07
+def inv08_rows(ctx, assets, rows, di):
+    """INV-08 (the ironmonger's try 2 close review, narrow 1, content rule: "Polybubble" with a registered-mark sign survived twice on the sprinkler's top, outside every blanking box, and INV-05 to INV-07 read only the
+    boxes): a SECOND READER over every placed model's base-colour map as the build uses it (the clean map where there is one): a text reader (`ocr_words.py`, run under the OCR venv: a tool of the check, nothing of it is
+    shipped) reads each map three ways (as it is, at twice the size with the contrast stretched, with the local contrast lifted: that is what shows a moulded word), and every line it finds with three letters or more at
+    a confidence of 0.5 or over is a legible word left on a model. The row fails on any word not on the project's own list (`checks/ocr_word_list.json`: each entry says which model, where and why it is not a maker's
+    or a brand's: a generic instruction or a material, read at 100 per cent by a person). The results are cached by file size and time in the shop's work folder."""
+    import re
+    import subprocess
+    placed = json.load(open(os.path.join(ctx.rooms, "placed.json"))) if ctx.has_room and os.path.exists(os.path.join(ctx.rooms, "placed.json")) else []
+    models = sorted({str(p["model"]).split("#")[0] for p in placed if "model" in p and not str(p["model"]).startswith("script:")} | {str(i["model"]).split("#")[0] for i in (di or {}).get("items", [])})
+    A.set_shop(ctx.id)
+    paths = []
+    for m in models:
+        folder = os.path.join(A.POLY, m, A.RES)
+        try:
+            rels = A.base_maps(m)
+        except Exception:  # noqa: BLE001
+            continue
+        for rel in rels:
+            c = os.path.join(folder, os.path.dirname(rel), os.path.splitext(os.path.basename(rel))[0] + "_clean.jpg")
+            paths.append((m, c if os.path.exists(c) else os.path.join(folder, rel)))
+    py = "/home/user/.ocrenv/bin/python"
+    if not os.path.exists(py):
+        rows.add("INV-08", "someone else reads every map", False, "the second reader is not installed (%s: rapidocr-onnxruntime)" % py)
+        return
+    cache_p = os.path.join(ctx.work, "ocr_cache.json")
+    cache = json.load(open(cache_p)) if os.path.exists(cache_p) else {}
+    todo = [p for _, p in paths if cache.get(p, {}).get("sig") != [os.path.getsize(p), int(os.path.getmtime(p))]]
+    if todo:
+        tmp = os.path.join(ctx.work, "ocr_out.json")
+        env = dict(os.environ, OMP_NUM_THREADS="2")
+        subprocess.run(["nice", "-n", "15", py, os.path.join(os.path.dirname(os.path.abspath(__file__)), "ocr_words.py"), tmp] + todo, check=True, env=env)
+        out = json.load(open(tmp))
+        for p_, found in out.items():
+            cache[p_] = {"sig": [os.path.getsize(p_), int(os.path.getmtime(p_))], "found": found}
+        json.dump(cache, open(cache_p, "w"))
+    allow = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "checks", "ocr_word_list.json")))["allowed"]
+    ok_words = {re.sub(r"[^A-Z0-9]", "", a["words"].upper()) for a in allow}
+    bad, seen = [], 0
+    for m, p_ in paths:
+        for f in cache[p_]["found"]:
+            if f["conf"] >= 0.5 and len(re.findall(r"[A-Za-z]", f["text"])) >= 3:
+                seen += 1
+                if re.sub(r"[^A-Z0-9]", "", f["text"].upper()) not in ok_words:
+                    bad.append("%s %s %r conf %.2f at %s" % (m, os.path.basename(p_), f["text"], f["conf"], f["box"]))
+    rows.add("INV-08", "someone else reads every map", not bad,
+             "%d base-colour maps of %d placed models read by the second reader (three readings each): %d legible lines in all, %d of them on the project's word list (%s); not on the list: %s" % (
+                 len(paths), len(models), seen, seen - len(bad), "; ".join(sorted({a["words"] for a in allow})) or "none", ("; ".join(bad[:12]) + (" ..." if len(bad) > 12 else "")) if bad else "none"))
+
+
 def inv07_rows(ctx, assets, rows, di):
     """INV-07 (the ironmonger's close review, fault 3; the brief's step 0 d: a maker's mark survived blanking in the glb: the tyre pump's roundel, the trowels' stamped word): the blanking boxes of every placed model
     are read in the pictures the build USES, not the source maps: (a) the images inside the display glb (the baked atlases: `<model>_diff_1k_clean`, JPEG at q 85), (b) the maps the room loads (the model's clean glTF

@@ -93,8 +93,11 @@ EXTRA_BLANK = {
 EXTRA_BLANK_T2 = {
     "tire_pump": [{"map": "tire_pump_diff_1k.jpg", "boxes": [[570, 893, 624, 957]], "fill": "the label plate's light grey",
                    "reads": "a roundel reading QUALITY / POLYLUFT round a three-pointed emblem (the maker's mark; the first blanking box stopped 13 px above it)"}],
-    "trowel_01": [{"map": "trowel_01_diff_1k.jpg", "boxes": [[838, 795, 922, 828]], "fill": "the handle's own wood",
-                   "reads": "a word stamped on the wooden handle, mirrored ('YOS...': a maker's name; the first box was for the blade's)"}],
+    "trowel_01": [{"map": "trowel_01_diff_1k.jpg", "boxes": [[838, 795, 922, 828]], "fill": "the handle's own wood", "copy_from": [[838, 830]],
+                   "reads": "a word stamped on the wooden handle, mirrored ('YOS...': a maker's name; the first box was for the blade's). 15 Oct (the ironmonger's try 2 close review, narrow 1): the box is REFILLED with the map's own handle wood from [838, 830, 922, 863], feathered 4 px, in the diffuse, normal and ARM maps (a flat fill showed as a smooth patch on the handle)"}],
+    # 15 Oct, try 2 (the ironmonger's try 2 close review, narrow 1, CONTENT RULE): a real trade name, 'Polybubble' with a registered-mark sign, survived twice on the sprinkler's top, outside every box
+    "garden_sprinkler_01": [{"map": "garden_sprinkler_01_diff_1k.jpg", "boxes": [[40, 935, 140, 964], [220, 895, 355, 932]], "fill": "the yellow body (194, 153, 58)",
+                             "reads": "a black printed 'Polububble' with a registered-mark sign at about [45, 945, 135, 962] and a moulded 'Polybubble' at about [225, 900, 350, 930] on the yellow body's top face (a real product name: the blanking box [30, 960, 210, 996] stopped at the first word's foot)"}],
     "CashRegister_01": [{"map": "CashRegister_01_diff_1k.jpg", "boxes": [[500, 228, 520, 248]], "fill": "the readout panel's dark grey (sampled 52, 52, 52)",
                          "reads": "a Y glyph left of the readout (it reads as a yen sign in the room picture)"}],
     "wall_clock": [{"map": "wall_clock_diff_1k.jpg", "boxes": [[270, 610, 288, 617]], "fill": "the dial's white",
@@ -139,6 +142,7 @@ BOX_FIX = {("vintage_pocket_watch", "vintage_pocket_watch_diff_1k.jpg"): {(620, 
 # Where the ring just outside a box is mostly another surface than the print's own, the target's stated sampled fill is used instead of the ring's median:
 # {(model, box): (r, g, b)}. The box's own test in verify() then compares with that fill.
 FILL_OVERRIDE = {("vintage_pocket_watch", (640, 664, 694, 762)): (180, 182, 184),
+                 ("garden_sprinkler_01", (40, 935, 140, 964)): (194, 153, 58), ("garden_sprinkler_01", (220, 895, 355, 932)): (194, 153, 58),
                  # the video camera's lens strips are light grey bands 12 to 14 px wide between dark rows: the ring would take the dark rows' median
                  ("vintage_video_camera", (614, 251, 648, 263)): (138, 142, 142),
                  ("vintage_video_camera", (775, 633, 788, 661)): (138, 140, 139)}
@@ -318,7 +322,7 @@ def _clean_patch(arr, box, boxes, rng):
     return None
 
 
-def blank_map(src, dst, boxes, whole_map_print=None, seed=1, fills=None, grain_scale=1.0):
+def blank_map(src, dst, boxes, whole_map_print=None, seed=1, fills=None, grain_scale=1.0, copies=None):
     """Paint the boxes of one map to their ring colour plus the map's own grain. Returns the report rows."""
     img = Image.open(src).convert("RGB")
     arr = np.asarray(img).astype(np.float32)
@@ -350,6 +354,15 @@ def blank_map(src, dst, boxes, whole_map_print=None, seed=1, fills=None, grain_s
             how = "grain drawn at the ring's strength (%s)" % ", ".join("%.1f" % v for v in sd)
         fill = fill + np.clip(grain * grain_scale, -13, 13)
         out[y0:y1, x0:x1] = fill
+        if copies and tuple(box) in copies:
+            # 15 Oct: the box is refilled with the map's OWN pixels from the patch whose top-left is (sx, sy), feathered 4 px into the original round it (the trowel's handle: a flat fill showed as a smooth patch)
+            sx, sy = copies[tuple(box)]
+            h_, w_ = y1 - y0, x1 - x0
+            src_patch = arr[sy:sy + h_, sx:sx + w_]
+            yy_, xx_ = np.mgrid[0:h_, 0:w_]
+            wgt = np.clip(np.minimum(np.minimum(xx_, w_ - 1 - xx_), np.minimum(yy_, h_ - 1 - yy_)) / 4.0, 0.0, 1.0)[..., None].astype(np.float32)
+            out[y0:y1, x0:x1] = arr[y0:y1, x0:x1] * (1.0 - wgt) + src_patch * wgt
+            how = "refilled from the map's own pixels at (%d, %d), feathered 4 px" % (sx, sy)
         rows.append({"box": box, "ring": [round(float(c), 1) for c in ring], "patch_from": pos, "grain": how})
     Image.fromarray(np.clip(out + 0.5, 0, 255).astype(np.uint8)).save(dst, quality=98, subsampling=0)
     return rows
@@ -527,7 +540,8 @@ def blank(ids=None, log=print):
                         rows = [{"box": boxes[0], "whole_map": True, "replaced_by": "invented_print(kind=%d)" % kind}]
                 else:
                     fills = {k[1]: v for k, v in FILL_OVERRIDE.items() if k[0] == a}
-                    rows = blank_map(src, dst, boxes, seed=int(hashlib.md5(a.encode()).hexdigest()[:6], 16), fills=fills)
+                    copies = {tuple(bx): tuple(cf) for b in bl for bx, cf in zip(b["boxes"], b.get("copy_from") or [None] * len(b["boxes"])) if cf}
+                    rows = blank_map(src, dst, boxes, seed=int(hashlib.md5(a.encode()).hexdigest()[:6], 16), fills=fills, copies=copies)
                 if a in POST_RECOLOUR and CURRENT != "ritas":
                     arr_ = np.asarray(Image.open(dst).convert("RGB")).astype(np.float32)
                     Image.fromarray(np.clip(POST_RECOLOUR[a](arr_) + 0.5, 0, 255).astype(np.uint8)).save(dst, quality=98, subsampling=0)
@@ -546,7 +560,7 @@ def blank(ids=None, log=print):
                         except KeyError:
                             continue
                         cdst_name = os.path.splitext(comp)[0] + "_clean.jpg"
-                        blank_map(os.path.join(folder, crel), os.path.join(folder, os.path.dirname(crel), cdst_name), boxes, seed=int(hashlib.md5((a + kind).encode()).hexdigest()[:6], 16), grain_scale=0.5)
+                        blank_map(os.path.join(folder, crel), os.path.join(folder, os.path.dirname(crel), cdst_name), boxes, seed=int(hashlib.md5((a + kind).encode()).hexdigest()[:6], 16), grain_scale=0.5, copies=copies)
                         rep.append({"map": comp, "clean": cdst_name, "rows": [{"box": b_, "companion_of": mp} for b_ in boxes]})
                         for im in g["images"]:
                             if os.path.basename(im["uri"]) == comp:
