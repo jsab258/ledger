@@ -36,6 +36,30 @@
     217
    ],
    "why": "the word on a dial's face (a thermometer's scale with numbers), read at 100 per cent: no maker, no brand"
+  },
+  {
+   "words": "Push to",
+   "model": "drain_cleaner",
+   "map": "drain_cleaner_diff_1k_clean.jpg",
+   "where": [
+    649,
+    439,
+    706,
+    522
+   ],
+   "why": "a line of 'Push to open' (the reader splits it in two), read at 100 per cent: a generic instruction on a cap, no brand"
+  },
+  {
+   "words": "open",
+   "model": "drain_cleaner",
+   "map": "drain_cleaner_diff_1k_clean.jpg",
+   "where": [
+    649,
+    439,
+    706,
+    522
+   ],
+   "why": "a line of 'Push to open' (the reader splits it in two), read at 100 per cent: a generic instruction on a cap, no brand"
   }
  ]
 }

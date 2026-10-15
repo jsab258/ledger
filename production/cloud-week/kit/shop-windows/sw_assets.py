@@ -605,6 +605,15 @@ def verify(log=print):
                 gy, gx = np.gradient(patch.mean(axis=2))
                 grad = np.hypot(gx, gy)
                 share = float((grad > 40).mean())
+                cf_ = dict(zip(map(tuple, b["boxes"]), b.get("copy_from") or [None] * len(b["boxes"]))).get(tuple(box))
+                if cf_:
+                    # 15 Oct: a box refilled with the map's OWN pixels from another place (the trowel's handle): the test is that its inside, 4 px in, IS that place (within JPEG's 6 levels), not that it is the ring's colour
+                    sx_, sy_ = cf_
+                    src_ = arr0[sy_ + 4:sy_ + (y1 - y0) - 4, sx_ + 4:sx_ + (x1 - x0) - 4]
+                    maxdiff = float(np.abs(patch[4:-4, 4:-4] - src_).max())
+                    ok = maxdiff <= 6.0 and points
+                    rows.append({"id": "INV-06 %s %s %s" % (a, b["map"], box), "ok": bool(ok), "detail": "refilled from the map's own pixels at %s: largest difference from that place %.1f (limit 6); glTF points at the clean map: %s" % (tuple(cf_), maxdiff, points)})
+                    continue
                 ok = maxdiff <= 24.0 and share < 0.02 and points
                 rows.append({"id": "INV-06 %s %s %s" % (a, b["map"], box), "ok": bool(ok),
                              "detail": "largest difference from the ring %.1f (limit 24); gradient above 40 on %.2f%% (limit 2); glTF points at the clean map: %s" % (maxdiff, share * 100, points)})
@@ -633,6 +642,13 @@ def verify(log=print):
                     maxdiff = float(np.abs(patch - ring).max())
                     gy, gx = np.gradient(patch.mean(axis=2))
                     share = float((np.hypot(gx, gy) > 40).mean())
+                    cf_ = dict(zip(map(tuple, b["boxes"]), b.get("copy_from") or [None] * len(b["boxes"]))).get(tuple(box))
+                    if cf_:
+                        sx_, sy_ = cf_
+                        src_ = arr0[sy_ + 4:sy_ + (y1 - y0) - 4, sx_ + 4:sx_ + (x1 - x0) - 4]
+                        maxdiff = float(np.abs(patch[4:-4, 4:-4] - src_).max())
+                        rows.append({"id": "INV-06 %s %s %s (relief)" % (a, comp, box), "ok": bool(maxdiff <= 6.0 and points), "detail": "refilled from the relief's own pixels at %s: largest difference from that place %.1f (limit 6); glTF points at it: %s" % (tuple(cf_), maxdiff, points)})
+                        continue
                     ok = maxdiff <= 24.0 and share < 0.02 and points
                     rows.append({"id": "INV-06 %s %s %s (relief)" % (a, comp, box), "ok": bool(ok), "detail": "largest difference from the ring %.1f; gradient above 40 on %.2f%%; glTF points at it: %s" % (maxdiff, share * 100, points)})
     return rows
