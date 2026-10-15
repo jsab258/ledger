@@ -1,5 +1,5 @@
 {
- "made": "2026-10-15 06:07:24",
+ "made": "2026-10-15 06:21:23",
  "what": "the tea rooms's batch A build, try 2 (14 Oct, from the try 1 reviews; first built 13 Oct): the files named here are the models and the three 4096 room pictures; those over 1 MB are out of git, so this names their versions; rebuilt by `build_shop.py --shop tea_rooms`",
  "files": {
   "tea_rooms_front.glb": {

@@ -1,13 +1,13 @@
 {
  "schema": "ledger.cloud-week-42.shop-windows-check/1",
  "shop": "tea_rooms",
- "made": "2026-10-15 06:07:24",
+ "made": "2026-10-15 06:21:23",
  "target": "production/cloud-week/targets/shop-windows/target.json (status: target for unit 7 of cloud week 42, part 2; written 12 October 2026; failed its )",
  "pass": 71,
  "counted": 74,
  "na": 6,
  "pending": 0,
- "seconds": 99.6,
+ "seconds": 112.1,
  "rows": [
   {
    "id": "PIC-01",
@@ -487,7 +487,7 @@
    "id": "X-PRV",
    "name": "previews: JPEG, about 1600 px wide, under 500 KB",
    "status": "pass",
-   "detail": "9 JPEGs of this shop in the previews folder (at least 9): tea_rooms-close-35-day 209 KB 1600 px, tea_rooms-close-35-night-dark 123 KB 1600 px, tea_rooms-close-35-night-lit 178 KB 1600 px, tea_rooms-room-day 158 KB 1600 px, tea_rooms-room-night-dark 76 KB 1600 px, tea_rooms-room-night-lit 140 KB 1600 px, tea_rooms-street-square-day 238 KB 1600 px, tea_rooms-street-square-night-dark 139 KB 1600 px, tea_rooms-street-square-night-lit 157 KB 1600 px"
+   "detail": "9 JPEGs of this shop in the previews folder (at least 9): tea_rooms-close-35-day 209 KB 1600 px, tea_rooms-close-35-night-dark 121 KB 1600 px, tea_rooms-close-35-night-lit 178 KB 1600 px, tea_rooms-room-day 158 KB 1600 px, tea_rooms-room-night-dark 76 KB 1600 px, tea_rooms-room-night-lit 140 KB 1600 px, tea_rooms-street-square-day 238 KB 1600 px, tea_rooms-street-square-night-dark 138 KB 1600 px, tea_rooms-street-square-night-lit 157 KB 1600 px"
   }
  ]
 }
