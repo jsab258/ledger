@@ -1,0 +1,1681 @@
+{
+ "Sofa_01": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/Sofa_01/Sofa_01_1k.gltf",
+  "gltf_size": 2636,
+  "textures": {
+   "textures/Sofa_01_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/Sofa_01/Sofa_01_diff_1k.jpg",
+   "textures/Sofa_01_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/Sofa_01/Sofa_01_nor_gl_1k.jpg",
+   "textures/Sofa_01_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/Sofa_01/Sofa_01_arm_1k.jpg"
+  },
+  "diffuse_downloaded": 1,
+  "name": "Sofa 01",
+  "dims_cm": [
+   1571.4675784111023,
+   658.0145359039307,
+   796.515051391907
+  ],
+  "polycount": 4101,
+  "authors": [
+   "Kirill Sannikov"
+  ],
+  "date_published": 1585605600,
+  "categories": [
+   "furniture",
+   "seating"
+  ],
+  "tags": [
+   "wood",
+   "prop",
+   "furniture",
+   "vintage",
+   "gothic",
+   "chair",
+   "couch",
+   "victorian",
+   "decorative"
+  ]
+ },
+ "sofa_02": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/sofa_02/sofa_02_1k.gltf",
+  "gltf_size": 4183,
+  "textures": {
+   "textures/sofa_02_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/sofa_02/sofa_02_diff_1k.jpg",
+   "textures/sofa_02_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/sofa_02/sofa_02_arm_1k.jpg",
+   "textures/sofa_02_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/sofa_02/sofa_02_nor_gl_1k.jpg"
+  },
+  "diffuse_downloaded": 1,
+  "name": "Sofa 02",
+  "dims_cm": [
+   1807.1673512458801,
+   817.7513778209686,
+   709.4888985157013
+  ],
+  "polycount": 2728,
+  "authors": [
+   "Kirill Sannikov"
+  ],
+  "date_published": 1593521418,
+  "categories": [
+   "furniture",
+   "seating"
+  ],
+  "tags": [
+   "wood",
+   "furniture",
+   "chair",
+   "prop",
+   "couch",
+   "leather",
+   "fabric"
+  ]
+ },
+ "sofa_03": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/sofa_03/sofa_03_1k.gltf",
+  "gltf_size": 4465,
+  "textures": {
+   "textures/sofa_03_rough_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/sofa_03/sofa_03_rough_1k.jpg",
+   "textures/sofa_03_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/sofa_03/sofa_03_diff_1k.jpg",
+   "textures/sofa_03_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/sofa_03/sofa_03_nor_gl_1k.jpg"
+  },
+  "diffuse_downloaded": 1,
+  "name": "Sofa 03",
+  "dims_cm": [
+   2731.17733001709,
+   925.0842034816742,
+   1118.2640366605483
+  ],
+  "polycount": 8004,
+  "authors": [
+   "Fran Calvente"
+  ],
+  "date_published": 1632441600,
+  "categories": [
+   "furniture",
+   "seating"
+  ],
+  "tags": [
+   "vintage",
+   "chair",
+   "couch",
+   "seat",
+   "fancy",
+   "mansion",
+   "manor",
+   "victorian",
+   "antique",
+   "leather"
+  ]
+ },
+ "ArmChair_01": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/ArmChair_01/ArmChair_01_1k.gltf",
+  "gltf_size": 2643,
+  "textures": {
+   "textures/Armchair_01_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/ArmChair_01/Armchair_01_diff_1k.jpg",
+   "textures/Armchair_01_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/ArmChair_01/Armchair_01_nor_gl_1k.jpg",
+   "textures/Armchair_01_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/ArmChair_01/Armchair_01_arm_1k.jpg"
+  },
+  "diffuse_downloaded": 1,
+  "name": "Arm Chair 01",
+  "dims_cm": [
+   848.4309017658234,
+   765.7602727413177,
+   1065.087635157397
+  ],
+  "polycount": 5626,
+  "authors": [
+   "Kirill Sannikov"
+  ],
+  "date_published": 1585605600,
+  "categories": [
+   "furniture",
+   "seating"
+  ],
+  "tags": [
+   "gothic",
+   "vintage",
+   "chair",
+   "furniture",
+   "victorian",
+   "couch",
+   "wood",
+   "varnished",
+   "classic"
+  ]
+ },
+ "CoffeeTable_01": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/CoffeeTable_01/CoffeeTable_01_1k.gltf",
+  "gltf_size": 3182,
+  "textures": {
+   "textures/CoffeeTable_01_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/CoffeeTable_01/CoffeeTable_01_nor_gl_1k.jpg",
+   "textures/CoffeeTable_01_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/CoffeeTable_01/CoffeeTable_01_diff_1k.jpg",
+   "textures/CoffeeTable_01_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/CoffeeTable_01/CoffeeTable_01_arm_1k.jpg"
+  },
+  "diffuse_downloaded": 1,
+  "name": "Coffee Table 01",
+  "dims_cm": [
+   1540.0111079216003,
+   972.847044467926,
+   523.237330140546
+  ],
+  "polycount": 10404,
+  "authors": [
+   "Fernando Quinn"
+  ],
+  "date_published": 1585605600,
+  "categories": [
+   "furniture",
+   "table"
+  ],
+  "tags": [
+   "wood",
+   "vintage",
+   "table",
+   "painted",
+   "old",
+   "worn",
+   "decorative"
+  ]
+ },
+ "side_table_01": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/side_table_01/side_table_01_1k.gltf",
+  "gltf_size": 2700,
+  "textures": {
+   "textures/side_table_01_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/side_table_01/side_table_01_diff_1k.jpg",
+   "textures/side_table_01_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/side_table_01/side_table_01_nor_gl_1k.jpg",
+   "textures/side_table_01_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/side_table_01/side_table_01_arm_1k.jpg"
+  },
+  "diffuse_downloaded": 1,
+  "name": "Side Table 01",
+  "dims_cm": [
+   550.0000715255737,
+   450.00001788139343,
+   550.6622816901654
+  ],
+  "polycount": 2756,
+  "authors": [
+   "James Ray Cock"
+  ],
+  "date_published": 1623767596,
+  "categories": [
+   "furniture",
+   "table"
+  ],
+  "tags": [
+   "table",
+   "wood",
+   "minimalist",
+   "modern",
+   "decor",
+   "living room",
+   "bedroom",
+   "shelf",
+   "contemporary",
+   "interior",
+   "home",
+   "wooden"
+  ]
+ },
+ "Television_01": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/Television_01/Television_01_1k.gltf",
+  "gltf_size": 2933,
+  "textures": {
+   "textures/Television_01_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/Television_01/Television_01_arm_1k.jpg",
+   "textures/Television_01_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/Television_01/Television_01_diff_1k.jpg",
+   "textures/Television_01_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/Television_01/Television_01_nor_gl_1k.jpg"
+  },
+  "diffuse_downloaded": 1,
+  "name": "Television 01",
+  "dims_cm": [
+   599.9999642372131,
+   470.8106815814972,
+   456.84892892313655
+  ],
+  "polycount": 1918,
+  "authors": [
+   "Gabriel Radi\u0107"
+  ],
+  "date_published": 1585605600,
+  "categories": [
+   "props",
+   "electronics",
+   "collection: the_shed"
+  ],
+  "tags": [
+   "vintage",
+   "prop",
+   "furniture",
+   "metal",
+   "wood",
+   "tv",
+   "television",
+   "video",
+   "audio"
+  ]
+ },
+ "television_02": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/television_02/television_02_1k.gltf",
+  "gltf_size": 2767,
+  "textures": {
+   "textures/television_02_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/television_02/television_02_nor_gl_1k.jpg",
+   "textures/television_02_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/television_02/television_02_diff_1k.jpg",
+   "textures/television_02_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/television_02/television_02_arm_1k.jpg"
+  },
+  "diffuse_downloaded": 1,
+  "name": "Television 02",
+  "dims_cm": [
+   399.74847435951233,
+   350.19391775131226,
+   411.41476929375244
+  ],
+  "polycount": 2310,
+  "authors": [
+   "Benny Weimer"
+  ],
+  "date_published": 1783036800,
+  "categories": [
+   "collection: project_lighthouse",
+   "electronics"
+  ],
+  "tags": [
+   "old",
+   "vintage",
+   "crt",
+   "cathode ray tube",
+   "tv",
+   "retro",
+   "boxy",
+   "screen"
+  ]
+ },
+ "standing_picture_frame_01": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/standing_picture_frame_01/standing_picture_frame_01_1k.gltf",
+  "gltf_size": 6936,
+  "textures": {
+   "textures/standing_picture_frame_01_artwork_rough_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/standing_picture_frame_01/standing_picture_frame_01_artwork_rough_1k.jpg",
+   "textures/standing_picture_frame_01_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/standing_picture_frame_01/standing_picture_frame_01_nor_gl_1k.jpg",
+   "textures/standing_picture_frame_01_artwork_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/standing_picture_frame_01/standing_picture_frame_01_artwork_diff_1k.jpg",
+   "textures/standing_picture_frame_01_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/standing_picture_frame_01/standing_picture_frame_01_arm_1k.jpg",
+   "textures/standing_picture_frame_01_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/standing_picture_frame_01/standing_picture_frame_01_diff_1k.jpg",
+   "textures/standing_picture_frame_01_artwork_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/standing_picture_frame_01/standing_picture_frame_01_artwork_nor_gl_1k.jpg"
+  },
+  "diffuse_downloaded": 2,
+  "name": "Standing Picture Frame 01",
+  "dims_cm": [
+   200.7998451590538,
+   100.2768762409687,
+   249.65811520814896
+  ],
+  "polycount": 1634,
+  "authors": [
+   "James Ray Cock"
+  ],
+  "date_published": 1623767634,
+  "categories": [
+   "decorative"
+  ],
+  "tags": [
+   "modern",
+   "minimalist",
+   "clean",
+   "frame",
+   "photo",
+   "simple",
+   "art"
+  ]
+ },
+ "standing_picture_frame_02": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/standing_picture_frame_02/standing_picture_frame_02_1k.gltf",
+  "gltf_size": 6671,
+  "textures": {
+   "textures/standing_picture_frame_02_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/standing_picture_frame_02/standing_picture_frame_02_nor_gl_1k.jpg",
+   "textures/standing_picture_frame_02_artwork_rough_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/standing_picture_frame_02/standing_picture_frame_02_artwork_rough_1k.jpg",
+   "textures/standing_picture_frame_02_artwork_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/standing_picture_frame_02/standing_picture_frame_02_artwork_diff_1k.jpg",
+   "textures/standing_picture_frame_02_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/standing_picture_frame_02/standing_picture_frame_02_arm_1k.jpg",
+   "textures/standing_picture_frame_02_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/standing_picture_frame_02/standing_picture_frame_02_diff_1k.jpg"
+  },
+  "diffuse_downloaded": 2,
+  "name": "Standing Picture Frame 02",
+  "dims_cm": [
+   216.89216047525406,
+   102.28872299194336,
+   266.3925290107727
+  ],
+  "polycount": 2986,
+  "authors": [
+   "James Ray Cock"
+  ],
+  "date_published": 1623767639,
+  "categories": [
+   "decorative"
+  ],
+  "tags": [
+   "wood",
+   "painting",
+   "old",
+   "art",
+   "frame",
+   "photo"
+  ]
+ },
+ "hanging_picture_frame_01": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/hanging_picture_frame_01/hanging_picture_frame_01_1k.gltf",
+  "gltf_size": 6495,
+  "textures": {
+   "textures/hanging_picture_frame_01_artwork_roughness_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/hanging_picture_frame_01/hanging_picture_frame_01_artwork_roughness_1k.jpg",
+   "textures/hanging_picture_frame_01_artwork_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/hanging_picture_frame_01/hanging_picture_frame_01_artwork_diff_1k.jpg",
+   "textures/hanging_picture_frame_01_artwork_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/hanging_picture_frame_01/hanging_picture_frame_01_artwork_nor_gl_1k.jpg",
+   "textures/hanging_picture_frame_01_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/hanging_picture_frame_01/hanging_picture_frame_01_arm_1k.jpg",
+   "textures/hanging_picture_frame_01_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/hanging_picture_frame_01/hanging_picture_frame_01_nor_gl_1k.jpg",
+   "textures/hanging_picture_frame_01_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/hanging_picture_frame_01/hanging_picture_frame_01_diff_1k.jpg"
+  },
+  "diffuse_downloaded": 2,
+  "name": "Hanging Picture Frame 01",
+  "dims_cm": [
+   593.999981880188,
+   15.749315607536118,
+   840.999960899353
+  ],
+  "polycount": 2586,
+  "authors": [
+   "James Ray Cock"
+  ],
+  "date_published": 1623767612,
+  "categories": [
+   "decorative",
+   "wall decoration"
+  ],
+  "tags": [
+   "modern",
+   "minimalist",
+   "clean",
+   "frame",
+   "simple",
+   "art"
+  ]
+ },
+ "hanging_picture_frame_02": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/hanging_picture_frame_02/hanging_picture_frame_02_1k.gltf",
+  "gltf_size": 6433,
+  "textures": {
+   "textures/hanging_picture_frame_02_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/hanging_picture_frame_02/hanging_picture_frame_02_diff_1k.jpg",
+   "textures/hanging_picture_frame_02_artwork_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/hanging_picture_frame_02/hanging_picture_frame_02_artwork_diff_1k.jpg",
+   "textures/hanging_picture_frame_02_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/hanging_picture_frame_02/hanging_picture_frame_02_arm_1k.jpg",
+   "textures/hanging_picture_frame_02_artwork_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/hanging_picture_frame_02/hanging_picture_frame_02_artwork_nor_gl_1k.jpg",
+   "textures/hanging_picture_frame_02_artwork_roughness_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/hanging_picture_frame_02/hanging_picture_frame_02_artwork_roughness_1k.jpg",
+   "textures/hanging_picture_frame_02_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/hanging_picture_frame_02/hanging_picture_frame_02_nor_gl_1k.jpg"
+  },
+  "diffuse_downloaded": 2,
+  "name": "Hanging Picture Frame 02",
+  "dims_cm": [
+   751.8134415149689,
+   33.07514381594956,
+   499.9999701976776
+  ],
+  "polycount": 3678,
+  "authors": [
+   "James Ray Cock"
+  ],
+  "date_published": 1623767614,
+  "categories": [
+   "decorative",
+   "wall decoration"
+  ],
+  "tags": [
+   "wood",
+   "painting",
+   "old",
+   "art",
+   "frame"
+  ]
+ },
+ "hanging_picture_frame_03": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/hanging_picture_frame_03/hanging_picture_frame_03_1k.gltf",
+  "gltf_size": 7644,
+  "textures": {
+   "textures/hanging_picture_frame_03_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/hanging_picture_frame_03/hanging_picture_frame_03_nor_gl_1k.jpg",
+   "textures/hanging_picture_frame_03_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/hanging_picture_frame_03/hanging_picture_frame_03_diff_1k.jpg",
+   "textures/hanging_picture_frame_03_artwork_rough_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/hanging_picture_frame_03/hanging_picture_frame_03_artwork_rough_1k.jpg",
+   "textures/hanging_picture_frame_03_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/hanging_picture_frame_03/hanging_picture_frame_03_arm_1k.jpg",
+   "textures/hanging_picture_frame_03_rough_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/hanging_picture_frame_03/hanging_picture_frame_03_rough_1k.jpg",
+   "textures/hanging_picture_frame_03_artwork_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/hanging_picture_frame_03/hanging_picture_frame_03_artwork_nor_gl_1k.jpg",
+   "textures/hanging_picture_frame_03_artwork_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/hanging_picture_frame_03/hanging_picture_frame_03_artwork_diff_1k.jpg"
+  },
+  "diffuse_downloaded": 2,
+  "name": "Hanging Picture Frame 03",
+  "dims_cm": [
+   385.00405848026276,
+   31.757352175191045,
+   502.39527225494385
+  ],
+  "polycount": 24348,
+  "authors": [
+   "James Ray Cock"
+  ],
+  "date_published": 1631664000,
+  "categories": [
+   "wall decoration",
+   "decorative"
+  ],
+  "tags": [
+   "vintage",
+   "photo",
+   "photograph",
+   "old",
+   "antique",
+   "picture",
+   "fancy",
+   "wooden",
+   "varnished"
+  ]
+ },
+ "fancy_picture_frame_01": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/fancy_picture_frame_01/fancy_picture_frame_01_1k.gltf",
+  "gltf_size": 5059,
+  "textures": {
+   "textures/fancy_picture_frame_01_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/fancy_picture_frame_01/fancy_picture_frame_01_nor_gl_1k.jpg",
+   "textures/fancy_picture_frame_01_canvas_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/fancy_picture_frame_01/fancy_picture_frame_01_canvas_diff_1k.jpg",
+   "textures/fancy_picture_frame_01_canvas_rough_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/fancy_picture_frame_01/fancy_picture_frame_01_canvas_rough_1k.jpg",
+   "textures/fancy_picture_frame_01_canvas_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/fancy_picture_frame_01/fancy_picture_frame_01_canvas_nor_gl_1k.jpg",
+   "textures/fancy_picture_frame_01_rough_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/fancy_picture_frame_01/fancy_picture_frame_01_rough_1k.jpg",
+   "textures/fancy_picture_frame_01_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/fancy_picture_frame_01/fancy_picture_frame_01_diff_1k.jpg"
+  },
+  "diffuse_downloaded": 2,
+  "name": "Fancy Picture Frame 01",
+  "dims_cm": [
+   603.030264377594,
+   19.993074471130967,
+   464.12645280361176
+  ],
+  "polycount": 938,
+  "authors": [
+   "Rob Tuytel",
+   "Rico Cilliers"
+  ],
+  "date_published": 1631059200,
+  "categories": [
+   "decorative",
+   "wall decoration"
+  ],
+  "tags": [
+   "art",
+   "vintage",
+   "old",
+   "dutch",
+   "painting",
+   "oil",
+   "antique",
+   "fancy",
+   "frame",
+   "picture"
+  ]
+ },
+ "fancy_picture_frame_02": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/fancy_picture_frame_02/fancy_picture_frame_02_1k.gltf",
+  "gltf_size": 5085,
+  "textures": {
+   "textures/fancy_picture_frame_02_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/fancy_picture_frame_02/fancy_picture_frame_02_diff_1k.jpg",
+   "textures/fancy_picture_frame_02_canvas_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/fancy_picture_frame_02/fancy_picture_frame_02_canvas_nor_gl_1k.jpg",
+   "textures/fancy_picture_frame_02_canvas_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/fancy_picture_frame_02/fancy_picture_frame_02_canvas_diff_1k.jpg",
+   "textures/fancy_picture_frame_02_rough_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/fancy_picture_frame_02/fancy_picture_frame_02_rough_1k.jpg",
+   "textures/fancy_picture_frame_02_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/fancy_picture_frame_02/fancy_picture_frame_02_nor_gl_1k.jpg",
+   "textures/fancy_picture_frame_02_canvas_rough_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/fancy_picture_frame_02/fancy_picture_frame_02_canvas_rough_1k.jpg"
+  },
+  "diffuse_downloaded": 2,
+  "name": "Fancy Picture Frame 02",
+  "dims_cm": [
+   660.5590283870697,
+   89.04315833933651,
+   771.0452079772949
+  ],
+  "polycount": 35102,
+  "authors": [
+   "Rob Tuytel",
+   "Rico Cilliers"
+  ],
+  "date_published": 1631232000,
+  "categories": [
+   "decorative",
+   "wall decoration"
+  ],
+  "tags": [
+   "art",
+   "vintage",
+   "old",
+   "dutch",
+   "painting",
+   "oil",
+   "antique",
+   "fancy",
+   "frame",
+   "picture"
+  ]
+ },
+ "ornate_mirror_01": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/ornate_mirror_01/ornate_mirror_01_1k.gltf",
+  "gltf_size": 2697,
+  "textures": {
+   "textures/ornate_mirror_01_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/ornate_mirror_01/ornate_mirror_01_arm_1k.jpg",
+   "textures/ornate_mirror_01_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/ornate_mirror_01/ornate_mirror_01_diff_1k.jpg",
+   "textures/ornate_mirror_01_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/ornate_mirror_01/ornate_mirror_01_nor_gl_1k.jpg"
+  },
+  "diffuse_downloaded": 1,
+  "name": "Ornate Mirror 01",
+  "dims_cm": [
+   486.4957332611084,
+   25.958335027098656,
+   744.1554069519043
+  ],
+  "polycount": 14246,
+  "authors": [
+   "James Ray Cock"
+  ],
+  "date_published": 1630454400,
+  "categories": [
+   "decorative",
+   "wall decoration",
+   "furniture"
+  ],
+  "tags": [
+   "decor",
+   "decoration",
+   "ornate",
+   "fancy",
+   "wealthy",
+   "mansion",
+   "manor",
+   "vintage",
+   "victorian",
+   "floral",
+   "gold",
+   "mirror"
+  ]
+ },
+ "mantel_clock_01": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/mantel_clock_01/mantel_clock_01_1k.gltf",
+  "gltf_size": 5628,
+  "textures": {
+   "textures/mantel_clock_01_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/mantel_clock_01/mantel_clock_01_diff_1k.jpg",
+   "textures/mantel_clock_01_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/mantel_clock_01/mantel_clock_01_arm_1k.jpg",
+   "textures/mantel_clock_01_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/mantel_clock_01/mantel_clock_01_nor_gl_1k.jpg"
+  },
+  "diffuse_downloaded": 1,
+  "name": "Mantel Clock 01",
+  "dims_cm": [
+   483.6633503437042,
+   250.80496072769165,
+   160.9499454498291
+  ],
+  "polycount": 29742,
+  "authors": [
+   "Yann Kervran",
+   "Rico Cilliers"
+  ],
+  "date_published": 1631836800,
+  "categories": [
+   "decorative",
+   "appliances",
+   "rigged"
+  ],
+  "tags": [
+   "vintage",
+   "antique",
+   "old",
+   "clock",
+   "time",
+   "wooden",
+   "shelf",
+   "mantel",
+   "fireplace",
+   "ornate"
+  ]
+ },
+ "wall_clock": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/wall_clock/wall_clock_1k.gltf",
+  "gltf_size": 9008,
+  "textures": {
+   "textures/wall_clock_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wall_clock/wall_clock_nor_gl_1k.jpg",
+   "textures/wall_clock_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wall_clock/wall_clock_diff_1k.jpg",
+   "textures/wall_clock_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wall_clock/wall_clock_arm_1k.jpg",
+   "textures/wall_clock_glass_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wall_clock/wall_clock_glass_arm_1k.jpg"
+  },
+  "diffuse_downloaded": 1,
+  "name": "Wall Clock",
+  "dims_cm": [
+   320.4909861087799,
+   47.2230945505423,
+   320.4909861087799
+  ],
+  "polycount": 3658,
+  "authors": [
+   "PierreB3D"
+  ],
+  "date_published": 1780963200,
+  "categories": [
+   "collection: project_lighthouse",
+   "decorative",
+   "appliances"
+  ],
+  "tags": [
+   "time",
+   "timepiece",
+   "watch",
+   "watchface",
+   "wall clock",
+   "analog",
+   "modern",
+   "office decor",
+   "home interior",
+   "admin",
+   "office",
+   "90s"
+  ]
+ },
+ "potted_plant_01": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/potted_plant_01/potted_plant_01_1k.gltf",
+  "gltf_size": 7969,
+  "textures": {
+   "textures/potted_plant_01_pot_rough_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/potted_plant_01/potted_plant_01_pot_rough_1k.jpg",
+   "textures/potted_plant_01_leaves_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/potted_plant_01/potted_plant_01_leaves_nor_gl_1k.jpg",
+   "textures/potted_plant_01_pot_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/potted_plant_01/potted_plant_01_pot_diff_1k.jpg",
+   "textures/potted_plant_01_leaves_rough_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/potted_plant_01/potted_plant_01_leaves_rough_1k.jpg",
+   "textures/potted_plant_01_pot_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/potted_plant_01/potted_plant_01_pot_nor_gl_1k.jpg",
+   "textures/potted_plant_01_leaves_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/potted_plant_01/potted_plant_01_leaves_diff_1k.jpg"
+  },
+  "diffuse_downloaded": 2,
+  "name": "Potted Plant 01",
+  "dims_cm": [
+   588.9185070991516,
+   636.6117596626282,
+   1350.7787585258484
+  ],
+  "polycount": 96030,
+  "authors": [
+   "Rico Cilliers"
+  ],
+  "date_published": 1626872095,
+  "categories": [
+   "decorative",
+   "plants",
+   "potted plants",
+   "nature"
+  ],
+  "tags": [
+   "potplant",
+   "plant",
+   "terracotta",
+   "pot",
+   "vase",
+   "medium",
+   "leaf",
+   "green"
+  ]
+ },
+ "potted_plant_02": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/potted_plant_02/potted_plant_02_1k.gltf",
+  "gltf_size": 6653,
+  "textures": {
+   "textures/potted_plant_02_leaves_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/potted_plant_02/potted_plant_02_leaves_diff_1k.jpg",
+   "textures/potted_plant_02_pot_rough_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/potted_plant_02/potted_plant_02_pot_rough_1k.jpg",
+   "textures/potted_plant_02_leaves_rough_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/potted_plant_02/potted_plant_02_leaves_rough_1k.jpg",
+   "textures/potted_plant_02_pot_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/potted_plant_02/potted_plant_02_pot_diff_1k.jpg",
+   "textures/potted_plant_02_leaves_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/potted_plant_02/potted_plant_02_leaves_nor_gl_1k.jpg",
+   "textures/potted_plant_02_pot_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/potted_plant_02/potted_plant_02_pot_nor_gl_1k.jpg"
+  },
+  "diffuse_downloaded": 2,
+  "name": "Potted Plant 02",
+  "dims_cm": [
+   701.1570334434509,
+   657.3865860700607,
+   841.1787391305552
+  ],
+  "polycount": 69806,
+  "authors": [
+   "Rico Cilliers"
+  ],
+  "date_published": 1628208000,
+  "categories": [
+   "decorative",
+   "plants",
+   "potted plants",
+   "nature"
+  ],
+  "tags": [
+   "potplant",
+   "plant",
+   "pot",
+   "vase",
+   "medium",
+   "leaf",
+   "green",
+   "terracotta"
+  ]
+ },
+ "Shelf_01": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/Shelf_01/Shelf_01_1k.gltf",
+  "gltf_size": 2617,
+  "textures": {
+   "textures/Shelf_01_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/Shelf_01/Shelf_01_diff_1k.jpg",
+   "textures/Shelf_01_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/Shelf_01/Shelf_01_nor_gl_1k.jpg",
+   "textures/Shelf_01_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/Shelf_01/Shelf_01_arm_1k.jpg"
+  },
+  "diffuse_downloaded": 1,
+  "name": "Shelf 01",
+  "dims_cm": [
+   1003.443717956543,
+   256.9795063869833,
+   2080.310344696045
+  ],
+  "polycount": 182,
+  "authors": [
+   "Gabriel Radi\u0107"
+  ],
+  "date_published": 1585605600,
+  "categories": [
+   "furniture",
+   "shelves"
+  ],
+  "tags": [
+   "wood",
+   "shelf",
+   "furniture",
+   "storage",
+   "home",
+   "organization",
+   "display",
+   "wooden",
+   "bookcase",
+   "shelves",
+   "bookshelf",
+   "dirty",
+   "weathered",
+   "distressed",
+   "aged",
+   "simple"
+  ]
+ },
+ "wooden_bookshelf_worn": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/wooden_bookshelf_worn/wooden_bookshelf_worn_1k.gltf",
+  "gltf_size": 2849,
+  "textures": {
+   "textures/wooden_bookshelf_worn_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wooden_bookshelf_worn/wooden_bookshelf_worn_nor_gl_1k.jpg",
+   "textures/wooden_bookshelf_worn_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wooden_bookshelf_worn/wooden_bookshelf_worn_arm_1k.jpg",
+   "textures/wooden_bookshelf_worn_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wooden_bookshelf_worn/wooden_bookshelf_worn_diff_1k.jpg"
+  },
+  "diffuse_downloaded": 1,
+  "name": "Wooden Bookshelf Worn",
+  "dims_cm": [
+   1373.95179271698,
+   581.3020169734955,
+   2063.442051410675
+  ],
+  "polycount": 10106,
+  "authors": [
+   "Ulan Cabanilla"
+  ],
+  "date_published": 1684108800,
+  "categories": [
+   "furniture",
+   "shelves",
+   "collection: the_shed"
+  ],
+  "tags": [
+   "old",
+   "wooden",
+   "wood",
+   "worn",
+   "garage",
+   "shed",
+   "rustic",
+   "antique",
+   "distressed",
+   "aged",
+   "weathered",
+   "bookcase",
+   "shelves",
+   "carpentry",
+   "vintage",
+   "storage"
+  ]
+ },
+ "book_encyclopedia_set_01": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/book_encyclopedia_set_01/book_encyclopedia_set_01_1k.gltf",
+  "gltf_size": 55011,
+  "textures": {
+   "textures/book_encyclopedia_set_01_cover_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/book_encyclopedia_set_01/book_encyclopedia_set_01_cover_diff_1k.jpg",
+   "textures/book_encyclopedia_set_01_paper_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/book_encyclopedia_set_01/book_encyclopedia_set_01_paper_nor_gl_1k.jpg",
+   "textures/book_encyclopedia_set_01_cover_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/book_encyclopedia_set_01/book_encyclopedia_set_01_cover_arm_1k.jpg",
+   "textures/book_encyclopedia_set_01_cover_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/book_encyclopedia_set_01/book_encyclopedia_set_01_cover_nor_gl_1k.jpg",
+   "textures/book_encyclopedia_set_01_paper_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/book_encyclopedia_set_01/book_encyclopedia_set_01_paper_diff_1k.jpg",
+   "textures/book_encyclopedia_set_01_paper_roughness_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/book_encyclopedia_set_01/book_encyclopedia_set_01_paper_roughness_1k.jpg"
+  },
+  "diffuse_downloaded": 2,
+  "name": "Book Encyclopedia Set 01",
+  "dims_cm": [
+   551.2974057346582,
+   163.06233406066895,
+   237.41818653931634
+  ],
+  "polycount": 67306,
+  "authors": [
+   "John Malcolm"
+  ],
+  "date_published": 1623767600,
+  "categories": [
+   "props",
+   "decorative",
+   "books"
+  ],
+  "tags": [
+   "bookshelf",
+   "books",
+   "library",
+   "reading",
+   "encyclopedia",
+   "set"
+  ]
+ },
+ "ceramic_vase_01": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/ceramic_vase_01/ceramic_vase_01_1k.gltf",
+  "gltf_size": 2706,
+  "textures": {
+   "textures/ceramic_vase_01_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/ceramic_vase_01/ceramic_vase_01_nor_gl_1k.jpg",
+   "textures/ceramic_vase_01_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/ceramic_vase_01/ceramic_vase_01_diff_1k.jpg",
+   "textures/ceramic_vase_01_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/ceramic_vase_01/ceramic_vase_01_arm_1k.jpg"
+  },
+  "diffuse_downloaded": 1,
+  "name": "Ceramic Vase 01",
+  "dims_cm": [
+   204.87193763256073,
+   206.37669414281845,
+   401.379804010503
+  ],
+  "polycount": 2548,
+  "authors": [
+   "James Ray Cock"
+  ],
+  "date_published": 1623767601,
+  "categories": [
+   "vases",
+   "containers",
+   "decorative"
+  ],
+  "tags": [
+   "pot",
+   "clean",
+   "tall",
+   "modern",
+   "fancy",
+   "decor"
+  ]
+ },
+ "ceramic_vase_03": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/ceramic_vase_03/ceramic_vase_03_1k.gltf",
+  "gltf_size": 2690,
+  "textures": {
+   "textures/ceramic_vase_03_rough_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/ceramic_vase_03/ceramic_vase_03_rough_1k.jpg",
+   "textures/ceramic_vase_03_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/ceramic_vase_03/ceramic_vase_03_nor_gl_1k.jpg",
+   "textures/ceramic_vase_03_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/ceramic_vase_03/ceramic_vase_03_diff_1k.jpg"
+  },
+  "diffuse_downloaded": 1,
+  "name": "Ceramic Vase 03",
+  "dims_cm": [
+   112.45502531528473,
+   112.45502158999443,
+   414.438920259272
+  ],
+  "polycount": 2784,
+  "authors": [
+   "James Ray Cock"
+  ],
+  "date_published": 1623767605,
+  "categories": [
+   "containers",
+   "decorative",
+   "vases"
+  ],
+  "tags": [
+   "clay",
+   "pot",
+   "exterior",
+   "decor",
+   "painted",
+   "vase",
+   "tall",
+   "modern",
+   "fancy"
+  ]
+ },
+ "vintage_oil_lamp": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/vintage_oil_lamp/vintage_oil_lamp_1k.gltf",
+  "gltf_size": 7786,
+  "textures": {
+   "textures/vintage_oil_lamp_glass_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_oil_lamp/vintage_oil_lamp_glass_diff_1k.jpg",
+   "textures/vintage_oil_lamp_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_oil_lamp/vintage_oil_lamp_nor_gl_1k.jpg",
+   "textures/vintage_oil_lamp_flame_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_oil_lamp/vintage_oil_lamp_flame_diff_1k.jpg",
+   "textures/vintage_oil_lamp_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_oil_lamp/vintage_oil_lamp_diff_1k.jpg",
+   "textures/vintage_oil_lamp_glass_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_oil_lamp/vintage_oil_lamp_glass_nor_gl_1k.jpg",
+   "textures/vintage_oil_lamp_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_oil_lamp/vintage_oil_lamp_arm_1k.jpg",
+   "textures/vintage_oil_lamp_glass_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_oil_lamp/vintage_oil_lamp_glass_arm_1k.jpg"
+  },
+  "diffuse_downloaded": 3,
+  "name": "Vintage Oil Lamp",
+  "dims_cm": [
+   219.9999988079071,
+   219.9999913573265,
+   801.6371909276536
+  ],
+  "polycount": 7208,
+  "authors": [
+   "Monsta3D"
+  ],
+  "date_published": 1685318400,
+  "categories": [
+   "lighting",
+   "decorative"
+  ],
+  "tags": [
+   "lamp",
+   "oil",
+   "antique",
+   "victorian",
+   "manor",
+   "historic"
+  ]
+ },
+ "desk_lamp_arm_01": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/desk_lamp_arm_01/desk_lamp_arm_01_1k.gltf",
+  "gltf_size": 4453,
+  "textures": {
+   "textures/desk_lamp_arm_01_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/desk_lamp_arm_01/desk_lamp_arm_01_nor_gl_1k.jpg",
+   "textures/desk_lamp_arm_01_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/desk_lamp_arm_01/desk_lamp_arm_01_arm_1k.jpg",
+   "textures/desk_lamp_arm_01_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/desk_lamp_arm_01/desk_lamp_arm_01_diff_1k.jpg"
+  },
+  "diffuse_downloaded": 1,
+  "name": "Desk Lamp Arm 01",
+  "dims_cm": [
+   617.3093914985657,
+   408.02252292633057,
+   879.0190517902374
+  ],
+  "polycount": 25710,
+  "authors": [
+   "Yann Kervran",
+   "Kuutti Siitonen"
+  ],
+  "date_published": 1661904000,
+  "categories": [
+   "lighting",
+   "rigged",
+   "collection: the_shed"
+  ],
+  "tags": [
+   "industrial",
+   "lamp",
+   "mounted",
+   "fixed",
+   "desk",
+   "table",
+   "light",
+   "arm"
+  ]
+ },
+ "throw_pillows_01": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/throw_pillows_01/throw_pillows_01_1k.gltf",
+  "gltf_size": 4548,
+  "textures": {
+   "textures/throw_pillows_01_rough_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/throw_pillows_01/throw_pillows_01_rough_1k.jpg",
+   "textures/throw_pillows_01_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/throw_pillows_01/throw_pillows_01_diff_1k.jpg",
+   "textures/throw_pillows_01_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/throw_pillows_01/throw_pillows_01_nor_gl_1k.jpg"
+  },
+  "diffuse_downloaded": 1,
+  "name": "Throw Pillows 01",
+  "dims_cm": [
+   1021.5678811073303,
+   627.4925470352173,
+   450.1592831220478
+  ],
+  "polycount": 6362,
+  "authors": [
+   "Serhii Khromov"
+  ],
+  "date_published": 1630022400,
+  "categories": [
+   "decorative"
+  ],
+  "tags": [
+   "decorative",
+   "pillow",
+   "throw",
+   "pattern",
+   "african",
+   "red",
+   "triangle",
+   "orange"
+  ]
+ },
+ "wicker_basket_01": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/wicker_basket_01/wicker_basket_01_1k.gltf",
+  "gltf_size": 2792,
+  "textures": {
+   "textures/wicker_basket_01_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wicker_basket_01/wicker_basket_01_arm_1k.jpg",
+   "textures/wicker_basket_01_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wicker_basket_01/wicker_basket_01_nor_gl_1k.jpg",
+   "textures/wicker_basket_01_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wicker_basket_01/wicker_basket_01_diff_1k.jpg"
+  },
+  "diffuse_downloaded": 1,
+  "name": "Wicker Basket 01",
+  "dims_cm": [
+   383.2242637872696,
+   295.01520097255707,
+   117.42293369024992
+  ],
+  "polycount": 22276,
+  "authors": [
+   "Kuutti Siitonen"
+  ],
+  "date_published": 1672963200,
+  "categories": [
+   "containers",
+   "decorative",
+   "collection: the_shed"
+  ],
+  "tags": [
+   "wood",
+   "wicker",
+   "twine",
+   "basket",
+   "picnic",
+   "outdoor",
+   "kitchen",
+   "dining",
+   "table",
+   "shed",
+   "farm"
+  ]
+ },
+ "dining_table": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/dining_table/dining_table_1k.gltf",
+  "gltf_size": 4165,
+  "textures": {
+   "textures/dining_table_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/dining_table/dining_table_nor_gl_1k.jpg",
+   "textures/dining_table_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/dining_table/dining_table_diff_1k.jpg",
+   "textures/dining_table_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/dining_table/dining_table_arm_1k.jpg"
+  },
+  "diffuse_downloaded": 1,
+  "name": "Dining Table",
+  "dims_cm": [
+   2255.895972251892,
+   1390.2360200881958,
+   876.989221200347
+  ],
+  "polycount": 1048,
+  "authors": [
+   "Aron \u0141yczek"
+  ],
+  "date_published": 1783036800,
+  "categories": [
+   "collection: project_lighthouse",
+   "furniture",
+   "table"
+  ],
+  "tags": [
+   "old",
+   "scratched",
+   "cloth-covered",
+   "rectangular",
+   "checkered-tablecloth",
+   "tapered-legs",
+   "worn"
+  ]
+ },
+ "dining_chair_02": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/dining_chair_02/dining_chair_02_1k.gltf",
+  "gltf_size": 2723,
+  "textures": {
+   "textures/dining_chair_02_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/dining_chair_02/dining_chair_02_nor_gl_1k.jpg",
+   "textures/dining_chair_02_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/dining_chair_02/dining_chair_02_diff_1k.jpg",
+   "textures/dining_chair_02_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/dining_chair_02/dining_chair_02_arm_1k.jpg"
+  },
+  "diffuse_downloaded": 1,
+  "name": "Dining Chair 02",
+  "dims_cm": [
+   433.5707724094391,
+   576.4201134443283,
+   973.3776897192001
+  ],
+  "polycount": 22013,
+  "authors": [
+   "James Ray Cock"
+  ],
+  "date_published": 1623767234,
+  "categories": [
+   "furniture",
+   "seating"
+  ],
+  "tags": [
+   "modern",
+   "chair",
+   "seat",
+   "dining",
+   "fancy",
+   "leather"
+  ]
+ },
+ "WoodenChair_01": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/WoodenChair_01/WoodenChair_01_1k.gltf",
+  "gltf_size": 2705,
+  "textures": {
+   "textures/WoodenChair_01_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/WoodenChair_01/WoodenChair_01_nor_gl_1k.jpg",
+   "textures/WoodenChair_01_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/WoodenChair_01/WoodenChair_01_arm_1k.jpg",
+   "textures/WoodenChair_01_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/WoodenChair_01/WoodenChair_01_diff_1k.jpg"
+  },
+  "diffuse_downloaded": 1,
+  "name": "Wooden Chair 01",
+  "dims_cm": [
+   688.1728172302246,
+   658.4618389606476,
+   2273.514856118709
+  ],
+  "polycount": 19992,
+  "authors": [
+   "Jake Mobley"
+  ],
+  "date_published": 1585605600,
+  "categories": [
+   "furniture",
+   "seating"
+  ],
+  "tags": [
+   "wood",
+   "prop",
+   "vintage",
+   "furniture",
+   "chair",
+   "gothic",
+   "victorian",
+   "decorative"
+  ]
+ },
+ "drawer_cabinet": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/drawer_cabinet/drawer_cabinet_1k.gltf",
+  "gltf_size": 8031,
+  "textures": {
+   "textures/drawer_cabinet_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/drawer_cabinet/drawer_cabinet_arm_1k.jpg",
+   "textures/drawer_cabinet_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/drawer_cabinet/drawer_cabinet_nor_gl_1k.jpg",
+   "textures/drawer_cabinet_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/drawer_cabinet/drawer_cabinet_diff_1k.jpg"
+  },
+  "diffuse_downloaded": 1,
+  "name": "Drawer Cabinet",
+  "dims_cm": [
+   1141.0778760910034,
+   488.08445036411285,
+   1881.253957748413
+  ],
+  "polycount": 26406,
+  "authors": [
+   "Ulan Cabanilla"
+  ],
+  "date_published": 1598525497,
+  "categories": [
+   "furniture"
+  ],
+  "tags": [
+   "wood",
+   "furniture",
+   "shelf",
+   "drawer",
+   "metal",
+   "modern"
+  ]
+ },
+ "vintage_cabinet_01": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/vintage_cabinet_01/vintage_cabinet_01_1k.gltf",
+  "gltf_size": 22562,
+  "textures": {
+   "textures/vintage_cabinet_01_a_rough_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_cabinet_01/vintage_cabinet_01_a_rough_1k.jpg",
+   "textures/vintage_cabinet_01_a_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_cabinet_01/vintage_cabinet_01_a_arm_1k.jpg",
+   "textures/vintage_cabinet_01_a_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_cabinet_01/vintage_cabinet_01_a_nor_gl_1k.jpg",
+   "textures/vintage_cabinet_01_b_rough_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_cabinet_01/vintage_cabinet_01_b_rough_1k.jpg",
+   "textures/vintage_cabinet_01_b_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_cabinet_01/vintage_cabinet_01_b_nor_gl_1k.jpg",
+   "textures/vintage_cabinet_01_a_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_cabinet_01/vintage_cabinet_01_a_diff_1k.jpg",
+   "textures/vintage_cabinet_01_b_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_cabinet_01/vintage_cabinet_01_b_diff_1k.jpg"
+  },
+  "diffuse_downloaded": 2,
+  "name": "Vintage Cabinet 01",
+  "dims_cm": [
+   2021.7604637145996,
+   669.8037981987,
+   2235.0515127764083
+  ],
+  "polycount": 61096,
+  "authors": [
+   "Rico Cilliers"
+  ],
+  "date_published": 1628121600,
+  "categories": [
+   "furniture",
+   "shelves"
+  ],
+  "tags": [
+   "vintage",
+   "farmhouse",
+   "old",
+   "antique",
+   "fancy",
+   "wooden",
+   "varnished",
+   "cupboard",
+   "shelf",
+   "cabinet"
+  ]
+ },
+ "painted_wooden_cabinet": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/painted_wooden_cabinet/painted_wooden_cabinet_1k.gltf",
+  "gltf_size": 9253,
+  "textures": {
+   "textures/painted_wooden_cabinet_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/painted_wooden_cabinet/painted_wooden_cabinet_diff_1k.jpg",
+   "textures/painted_wooden_cabinet_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/painted_wooden_cabinet/painted_wooden_cabinet_arm_1k.jpg",
+   "textures/painted_wooden_cabinet_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/painted_wooden_cabinet/painted_wooden_cabinet_nor_gl_1k.jpg"
+  },
+  "diffuse_downloaded": 1,
+  "name": "Painted Wooden Cabinet",
+  "dims_cm": [
+   1194.674551486969,
+   616.6356205940247,
+   1181.8697528215125
+  ],
+  "polycount": 2227,
+  "authors": [
+   "Kirill Sannikov"
+  ],
+  "date_published": 1708300800,
+  "categories": [
+   "furniture",
+   "shelves"
+  ],
+  "tags": [
+   "old",
+   "worn",
+   "antique",
+   "wooden",
+   "vintage",
+   "colonial",
+   "farmhouse",
+   "storage",
+   "aged",
+   "rustic",
+   "weathered"
+  ]
+ },
+ "old_bed_frame": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/old_bed_frame/old_bed_frame_1k.gltf",
+  "gltf_size": 3326,
+  "textures": {
+   "textures/old_bed_frame_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/old_bed_frame/old_bed_frame_nor_gl_1k.jpg",
+   "textures/old_bed_frame_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/old_bed_frame/old_bed_frame_diff_1k.jpg",
+   "textures/old_bed_frame_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/old_bed_frame/old_bed_frame_arm_1k.jpg"
+  },
+  "diffuse_downloaded": 1,
+  "name": "Old Bed Frame",
+  "dims_cm": [
+   904.6578407287598,
+   2001.7260313034058,
+   1201.4837953575998
+  ],
+  "polycount": 49990,
+  "authors": [
+   "Luca B"
+  ],
+  "date_published": 1782990563,
+  "categories": [
+   "collection: project_lighthouse",
+   "bed",
+   "furniture"
+  ],
+  "tags": [
+   "rusty",
+   "metal",
+   "bedroom",
+   "vintage",
+   "antique",
+   "hospital",
+   "traditional"
+  ]
+ },
+ "vintage_wooden_drawer_01": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/vintage_wooden_drawer_01/vintage_wooden_drawer_01_1k.gltf",
+  "gltf_size": 11781,
+  "textures": {
+   "textures/vintage_wooden_drawer_01_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_wooden_drawer_01/vintage_wooden_drawer_01_nor_gl_1k.jpg",
+   "textures/vintage_wooden_drawer_01_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_wooden_drawer_01/vintage_wooden_drawer_01_diff_1k.jpg",
+   "textures/vintage_wooden_drawer_01_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_wooden_drawer_01/vintage_wooden_drawer_01_arm_1k.jpg"
+  },
+  "diffuse_downloaded": 1,
+  "name": "Vintage Wooden Drawer 01",
+  "dims_cm": [
+   1715.1139974594116,
+   1006.912887096405,
+   1090.839296579361
+  ],
+  "polycount": 5184,
+  "authors": [
+   "James Ray Cock"
+  ],
+  "date_published": 1629244800,
+  "categories": [
+   "furniture",
+   "shelves",
+   "table"
+  ],
+  "tags": [
+   "vintage",
+   "old",
+   "filing",
+   "drawer",
+   "office",
+   "wooden",
+   "worn",
+   "cabinet"
+  ]
+ },
+ "alarm_clock_01": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/alarm_clock_01/alarm_clock_01_1k.gltf",
+  "gltf_size": 10056,
+  "textures": {
+   "textures/alarm_clock_01_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/alarm_clock_01/alarm_clock_01_diff_1k.jpg",
+   "textures/alarm_clock_01_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/alarm_clock_01/alarm_clock_01_nor_gl_1k.jpg",
+   "textures/alarm_clock_01_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/alarm_clock_01/alarm_clock_01_arm_1k.jpg"
+  },
+  "diffuse_downloaded": 1,
+  "name": "Alarm Clock 01",
+  "dims_cm": [
+   227.71471738815308,
+   168.41959953308105,
+   174.15538430213928
+  ],
+  "polycount": 13006,
+  "authors": [
+   "Yann Kervran",
+   "James Ray Cock"
+  ],
+  "date_published": 1628812800,
+  "categories": [
+   "props",
+   "decorative",
+   "rigged"
+  ],
+  "tags": [
+   "clock",
+   "time",
+   "alarm",
+   "bedside",
+   "old",
+   "90s",
+   "watch",
+   "blue",
+   "aqua"
+  ]
+ },
+ "vintage_day_bed": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/vintage_day_bed/vintage_day_bed_1k.gltf",
+  "gltf_size": 2791,
+  "textures": {
+   "textures/vintage_day_bed_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_day_bed/vintage_day_bed_nor_gl_1k.jpg",
+   "textures/vintage_day_bed_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_day_bed/vintage_day_bed_diff_1k.jpg",
+   "textures/vintage_day_bed_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_day_bed/vintage_day_bed_arm_1k.jpg"
+  },
+  "diffuse_downloaded": 1,
+  "name": "Vintage Day Bed",
+  "dims_cm": [
+   1972.5552201271057,
+   854.77614402771,
+   1127.3465404283343
+  ],
+  "polycount": 2715,
+  "authors": [
+   "Aron \u0141yczek"
+  ],
+  "date_published": 1783036800,
+  "categories": [
+   "collection: project_lighthouse",
+   "furniture",
+   "bed",
+   "seating"
+  ],
+  "tags": [
+   "old",
+   "vintage",
+   "antique",
+   "wooden",
+   "couch",
+   "bench",
+   "sofa-bed",
+   "matress",
+   "chaise"
+  ]
+ },
+ "painted_wooden_bench": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/painted_wooden_bench/painted_wooden_bench_1k.gltf",
+  "gltf_size": 2835,
+  "textures": {
+   "textures/painted_wooden_bench_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/painted_wooden_bench/painted_wooden_bench_diff_1k.jpg",
+   "textures/painted_wooden_bench_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/painted_wooden_bench/painted_wooden_bench_nor_gl_1k.jpg",
+   "textures/painted_wooden_bench_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/painted_wooden_bench/painted_wooden_bench_arm_1k.jpg"
+  },
+  "diffuse_downloaded": 1,
+  "name": "Painted Wooden Bench",
+  "dims_cm": [
+   1164.9435758590698,
+   496.5430945158005,
+   889.2914750613272
+  ],
+  "polycount": 630,
+  "authors": [
+   "Kirill Sannikov"
+  ],
+  "date_published": 1712707200,
+  "categories": [
+   "furniture",
+   "seating"
+  ],
+  "tags": [
+   "vintage",
+   "old",
+   "wooden",
+   "worn",
+   "antique",
+   "farmhouse",
+   "aged",
+   "rustic",
+   "small",
+   "seat",
+   "stool"
+  ]
+ },
+ "vintage_suitcase": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/vintage_suitcase/vintage_suitcase_1k.gltf",
+  "gltf_size": 15481,
+  "textures": {
+   "textures/vintage_suitcase_01_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_suitcase/vintage_suitcase_01_arm_1k.jpg",
+   "textures/vintage_suitcase_01_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_suitcase/vintage_suitcase_01_nor_gl_1k.jpg",
+   "textures/vintage_suitcase_01_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_suitcase/vintage_suitcase_01_diff_1k.jpg",
+   "textures/vintage_suitcase_02_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_suitcase/vintage_suitcase_02_arm_1k.jpg",
+   "textures/vintage_suitcase_02_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_suitcase/vintage_suitcase_02_nor_gl_1k.jpg",
+   "textures/vintage_suitcase_02_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_suitcase/vintage_suitcase_02_diff_1k.jpg"
+  },
+  "diffuse_downloaded": 2,
+  "name": "Vintage Suitcase",
+  "dims_cm": [
+   1608.1829071044922,
+   239.17551338672638,
+   567.9050989929237
+  ],
+  "polycount": 16474,
+  "authors": [
+   "Maximilian Schuster"
+  ],
+  "date_published": 1705881600,
+  "categories": [
+   "decorative",
+   "props"
+  ],
+  "tags": [
+   "vintage",
+   "old",
+   "hand made",
+   "stickers",
+   "travel",
+   "garbage",
+   "suitcase",
+   "trunk",
+   "rustic",
+   "luggage",
+   "worn",
+   "aged"
+  ]
+ },
+ "modern_wooden_cabinet": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/modern_wooden_cabinet/modern_wooden_cabinet_1k.gltf",
+  "gltf_size": 10960,
+  "textures": {
+   "textures/modern_wooden_cabinet_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modern_wooden_cabinet/modern_wooden_cabinet_nor_gl_1k.jpg",
+   "textures/modern_wooden_cabinet_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modern_wooden_cabinet/modern_wooden_cabinet_arm_1k.jpg",
+   "textures/modern_wooden_cabinet_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modern_wooden_cabinet/modern_wooden_cabinet_diff_1k.jpg"
+  },
+  "diffuse_downloaded": 1,
+  "name": "Modern Wooden Cabinet",
+  "dims_cm": [
+   2440.0004148483276,
+   520.0000107288361,
+   680.1425069570541
+  ],
+  "polycount": 24976,
+  "authors": [
+   "Patrik Pangerl"
+  ],
+  "date_published": 1690934400,
+  "categories": [
+   "furniture",
+   "table"
+  ],
+  "tags": [
+   "cabinet",
+   "wood",
+   "modern",
+   "minimalist",
+   "interrior",
+   "living room",
+   "contemporary",
+   "design"
+  ]
+ },
+ "round_wooden_table_01": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/round_wooden_table_01/round_wooden_table_01_1k.gltf",
+  "gltf_size": 4089,
+  "textures": {
+   "textures/round_wooden_table_01_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/round_wooden_table_01/round_wooden_table_01_nor_gl_1k.jpg",
+   "textures/round_wooden_table_01_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/round_wooden_table_01/round_wooden_table_01_arm_1k.jpg",
+   "textures/round_wooden_table_01_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/round_wooden_table_01/round_wooden_table_01_diff_1k.jpg"
+  },
+  "diffuse_downloaded": 1,
+  "name": "Round Wooden Table 01",
+  "dims_cm": [
+   1399.3489742279053,
+   1399.3489146232605,
+   1005.0213932991028
+  ],
+  "polycount": 8640,
+  "authors": [
+   "Ulan Cabanilla"
+  ],
+  "date_published": 1633046400,
+  "categories": [
+   "furniture",
+   "table"
+  ],
+  "tags": [
+   "vintage",
+   "wooden",
+   "wood",
+   "polish",
+   "circle",
+   "dark",
+   "old"
+  ]
+ },
+ "small_wooden_table_01": {
+  "exists": true,
+  "gltf_url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/small_wooden_table_01/small_wooden_table_01_1k.gltf",
+  "gltf_size": 2764,
+  "textures": {
+   "textures/small_wooden_table_01_arm_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/small_wooden_table_01/small_wooden_table_01_arm_1k.jpg",
+   "textures/small_wooden_table_01_diff_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/small_wooden_table_01/small_wooden_table_01_diff_1k.jpg",
+   "textures/small_wooden_table_01_nor_gl_1k.jpg": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/small_wooden_table_01/small_wooden_table_01_nor_gl_1k.jpg"
+  },
+  "diffuse_downloaded": 1,
+  "name": "Small Wooden Table 01",
+  "dims_cm": [
+   916.1878228187561,
+   439.96262550354004,
+   533.0857671797276
+  ],
+  "polycount": 3410,
+  "authors": [
+   "Ulan Cabanilla"
+  ],
+  "date_published": 1625732159,
+  "categories": [
+   "furniture",
+   "table"
+  ],
+  "tags": [
+   "vintage",
+   "wood",
+   "small",
+   "table",
+   "wooden"
+  ]
+ }
+}

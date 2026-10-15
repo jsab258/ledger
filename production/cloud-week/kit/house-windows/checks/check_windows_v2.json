@@ -1,0 +1,6917 @@
+{
+ "made": "2026-10-14 19:21:45",
+ "pass": 66,
+ "total": 73,
+ "fail": [
+  "WB-01",
+  "WB-02",
+  "WB-04b",
+  "WB-07",
+  "NIGHT-01",
+  "NIGHT-02",
+  "NIGHT-07"
+ ],
+ "not_run": [],
+ "target_rows": 52,
+ "rows": [
+  {
+   "id": "KIT-01",
+   "name": "the opening",
+   "status": "pass",
+   "detail": "S22 850.00 x 1676.40; S11 850.00 x 1676.40; RC 850.00 x 1676.40; RC2 850.00 x 1676.40 (S22/S11: the outer linings' inner faces 764.2 apart + 2 x the lab's 42.9 margin = the brick opening; head outer lining top to oak sill underside)"
+  },
+  {
+   "id": "KIT-02",
+   "name": "pivot",
+   "status": "pass",
+   "detail": "S22 x centre 0.00, z min 0.00, y min 108.3; S11 x centre 0.00, z min 0.00, y min 108.3; RC x centre 0.00, z min 0.00, y min 72.5; RC2 x centre 0.00, z min 0.00, y min 72.5 (room__card excluded: the target puts it 473.6 below the opening's bottom)"
+  },
+  {
+   "id": "KIT-03",
+   "name": "glass planes",
+   "status": "pass",
+   "detail": "S22 lower_L 189.6; S22 lower_R 189.6; S22 upper_L 142.0; S22 upper_R 142.0; S11 lower 189.6; S11 upper 142.0; RC lower 112.5; RC top 112.5; RC2 casement 112.5; RC2 fixed 112.5; RC2 top 112.5"
+  },
+  {
+   "id": "KIT-04",
+   "name": "one mesh a pane",
+   "status": "pass",
+   "detail": "panes {'S22': 4, 'S11': 2, 'RC': 2, 'RC2': 3}"
+  },
+  {
+   "id": "KIT-05",
+   "name": "pane tilt",
+   "status": "pass",
+   "detail": "S22 pitch [-0.18, -0.07, 0.24, 0.28] yaw [-0.18, 0.28, 0.37, -0.19]; S11 pitch [0.11, -0.27] yaw [-0.48, 0.2]; RC pitch [0.12, -0.24] yaw [0.45, -0.18]; RC2 pitch [-0.27, -0.11, 0.2] yaw [-0.14, 0.22, 0.2]"
+  },
+  {
+   "id": "KIT-06",
+   "name": "net cards",
+   "status": "pass",
+   "detail": "S22 N1 ok; S22 N2 ok; S22 N3 ok; S11 N1 ok; S11 N2 ok; S11 N3 ok; RC N1 ok; RC N2 ok; RC N3 ok; RC2 N1 ok; RC2 N2 ok; RC2 N3 ok"
+  },
+  {
+   "id": "KIT-07",
+   "name": "net inside the box",
+   "status": "pass",
+   "detail": "S22 plane 254 - lower pane front 190.0 = 64.0 mm (rear face 192.1: 61.9); S22 crossings none; S11 plane 254 - lower pane front 190.0 = 64.0 mm (rear face 192.1: 61.9); S11 crossings none; RC crossings none; RC2 crossings none"
+  },
+  {
+   "id": "KIT-08",
+   "name": "the room card",
+   "status": "pass",
+   "detail": "S22 ok; S11 ok; RC ok; RC2 ok; GF card ok (3.4 x 2.6, floor 373.6 below, ceiling 2226.4 above) (the baked picture's UV 0..1, the card's world origin from sites[].card in the manifest)"
+  },
+  {
+   "id": "KIT-09",
+   "name": "vertex colour on the joinery",
+   "status": "pass",
+   "detail": "S22: rules hold; corner vertices 1095, track 276, meeting rail 6 | S11: rules hold; corner vertices 1095, track 276, meeting rail 6 | RC: rules hold; corner vertices 72, track 0, meeting rail 0 | RC2: rules hold; corner vertices 96, track 0, meeting rail 0"
+  },
+  {
+   "id": "KIT-10",
+   "name": "the dark lines are wide enough",
+   "status": "pass",
+   "detail": "S22 lines under 6 mm: none; S11 lines under 6 mm: none; RC lines under 6 mm: none; RC2 lines under 6 mm: none (putty strips 6.4 to 9.5, the gasket and weld strips 6.0; the parting bead's 2 mm gap stays geometry, its shade 0.10 on the bead's 9.5 mm side faces)"
+  },
+  {
+   "id": "KIT-11",
+   "name": "budget",
+   "status": "pass",
+   "detail": "S22 3948 tris 367072 bytes; S11 3618 tris 338316 bytes; RC 1458 tris 246204 bytes; RC2 1706 tris 267996 bytes; GF 72 tris 4308 bytes"
+  },
+  {
+   "id": "KIT-12",
+   "name": "RC and RC2 parts",
+   "status": "pass",
+   "detail": "RC 11 parts; RC2 13 parts"
+  },
+  {
+   "id": "KIT-13",
+   "name": "paint and material names",
+   "status": "pass",
+   "detail": "material names on every node of the four kits: all in the target's list (paint_<name>, glass_house, net_voile, curtain, blind, pendant_shade, room_card)"
+  },
+  {
+   "id": "KIT-14",
+   "name": "equal lights, centred bars",
+   "status": "pass",
+   "detail": "S22 pane widths [352.6, 352.6, 352.6, 352.6], bar centres off by 0.00; S11 two panes equal; RC centres [np.float64(0.0), np.float64(0.02), np.float64(0.01)] transom 1207.0 (1207.0); RC2 lower openings 330.0 and 330.0, transom centre 1106.4 (1106.4), mullion 70 wide z 60.0 to 1071.4"
+  },
+  {
+   "id": "KIT-15",
+   "name": "no opening in the front",
+   "status": "pass",
+   "detail": "S22 largest uncovered square 0 mm; S11 largest uncovered square 0 mm; RC largest uncovered square 3 mm; RC2 largest uncovered square 3 mm (the opening 850 x 1676.4 rasterised at 1 mm from the glb's triangles)"
+  },
+  {
+   "id": "MAT-01",
+   "name": "the pane material",
+   "status": "pass",
+   "detail": "glb glass_house: roughness 0.03, metallic 0, base 0.03, no transmission, KHR specular colour factor 2.0 (Cycles Specular IOR Level 1.0, F0 0.08), opaque; bad: none; the gate's pane: Fresnel IOR 1.789 gives F0 0.0800"
+  },
+  {
+   "id": "MAT-02",
+   "name": "no day glow",
+   "status": "pass",
+   "detail": "no emission on the glb's pane (day) and none in the gate's pane shader; bad: none"
+  },
+  {
+   "id": "MAT-03",
+   "name": "the alpha is wired",
+   "status": "pass",
+   "detail": "net_voile: alphaMode BLEND and its alpha is the weave texture (std 0.15 to 0.4), not a constant; bad: none"
+  },
+  {
+   "id": "MAT-04",
+   "name": "reflectance at a grazing angle",
+   "status": "pass",
+   "detail": "the kit's own slab pane (glass__lower_L, 60 triangles, the gate's pane shader) at 16 degrees from the wall: against a uniform sky of luma 1.0 with the room black it reads 0.276 of the sky (0.26 +-0.05; up to 0.31); against the same sky with the room a uniform card of 1.0 it reads 1.000 (1.0 +-0.05: reflection and transmission add up to the whole, the back face is no mirror)"
+  },
+  {
+   "id": "WB-01",
+   "name": "net windows are darker than their frames",
+   "status": "fail",
+   "detail": "10 net windows at 15 to 30 degrees by day in the target's measuring views: P/L epbay0_w1 0.58 (close 19 deg), epbay0_w1 0.63 (close2 22 deg), epbay1_w1 0.55 (h-along30-bay1w1 19 deg), epbay3_w0 0.58 (h-along15-bay3w1 19 deg), epbay2_w1 0.90 (h-along15road-bay3w1 27 deg), epbay3_w0 0.61 (h-along15road-bay3w1 19 deg), epbay4_w1 0.46* (h-along15-gf2w1 17 deg), epbay5_w0 0.58* (h-along15-gf2w1 15 deg), west_south_bay2_gf_w0 0.56 (h-along15-gf2w1 22 deg), west_south_bay2_gf_w0 0.59 (h-along15road-gf2w1 18 deg)  (* under 5000 glass pixels: seen far or edge-on, read from a few hundred pixels)  (outside 0.55 to 0.97: [('east_parade_bay1_upper_w1', 'h-along30-bay1w1', 0.545, 28559), ('east_parade_bay4_upper_w1', 'h-along15-gf2w1', 0.458, 434)]); the review views' far net windows at 15 to 30 degrees (hook, reverse; reported beside, not failed: far along the wall the net is a third of the pane and the clear upper sash reads the dark day room) read P/L 0.40 to 0.63"
+  },
+  {
+   "id": "WB-02",
+   "name": "bare windows are much darker",
+   "status": "fail",
+   "detail": "3 bare window at 15 to 30 degrees by day: P/L epbay3_w1 0.48 (h-along30-bay3w1 19 deg), epbay3_w1 0.53* (h-along15-gf2w1 21 deg), epbay3_w1 0.58* (h-along15road-gf2w1 16 deg)  (* under 5000 glass pixels: seen far or edge-on, read from a few hundred pixels)"
+  },
+  {
+   "id": "WB-03",
+   "name": "bare windows from across, near square",
+   "status": "pass",
+   "detail": "bare window from H_ACROSS_0 by day: P/L epbay3_w1 0.57 (h-across0-bay3w1 69 deg) (band 0.35 to 0.90), blue minus red 2 levels (at least -3; the overcast dome is neutral)"
+  },
+  {
+   "id": "WB-04",
+   "name": "the dark lines are present",
+   "status": "pass",
+   "detail": "13 bare and net windows at 15 to 30 degrees: D/L epbay0_w1 0.31 (close 19 deg), epbay0_w1 0.29 (close2 22 deg), epbay1_w1 0.29 (h-along30-bay1w1 19 deg), epbay3_w0 0.31 (h-along15-bay3w1 19 deg), epbay2_w1 0.43 (h-along15road-bay3w1 27 deg), epbay3_w0 0.35 (h-along15road-bay3w1 19 deg), epbay4_w1 0.30* (h-along15-gf2w1 17 deg), epbay5_w0 0.43* (h-along15-gf2w1 15 deg), west_south_bay2_gf_w0 0.32 (h-along15-gf2w1 22 deg), west_south_bay2_gf_w0 0.38 (h-along15road-gf2w1 18 deg), epbay3_w1 0.28 (h-along30-bay3w1 19 deg), epbay3_w1 0.34* (h-along15-gf2w1 21 deg) ...  (* under 5000 glass pixels: seen far or edge-on, read from a few hundred pixels)"
+  },
+  {
+   "id": "WB-04b",
+   "name": "the dark line round each pane",
+   "status": "fail",
+   "detail": "dip at the pane edges over L (at most 0.60): ay0_upper_w1 0.22 (8 edges, close, 27539 glass px), ay0_upper_w1 0.21 (8 edges, close2, 117905 glass px), ay1_upper_w1 0.25 (6 edges, h-along30-bay1w1, 28559 glass px), ay3_upper_w0 0.19 (7 edges, h-along15-bay3w1, 29516 glass px), ay2_upper_w1 0.62 (1 edges, h-along15road-bay3w1, 38326 glass px), ay3_upper_w0 0.28 (6 edges, h-along15road-bay3w1, 10759 glass px), ay4_upper_w1 0.22 (5 edges, h-along15-gf2w1, 434 glass px), ay5_upper_w0 0.31 (5 edges, h-along15-gf2w1, 280 glass px), h_bay2_gf_w0 0.24 (7 edges, h-along15-gf2w1, 34814 glass px), h_bay2_gf_w0 0.28 (6 edges, h-along15road-gf2w1, 7394 glass px), ay3_upper_w1 0.20 (8 edges, h-along30-bay3w1, 27540 glass px), ay3_upper_w1 0.34 (8 edges, h-along15-gf2w1, 1539 glass px), ay3_upper_w1 0.29 (5 edges, h-along15road-gf2w1, 625 glass px); over: [('east_parade_bay2_upper_w1', 'h-along15road-bay3w1', 0.62, 1)]"
+  },
+  {
+   "id": "WB-05",
+   "name": "the pane is not one tone",
+   "status": "pass",
+   "detail": "net 10 windows spread 162/152/166/155/129 (min 40); bare 3 windows spread 158/79/61 (min 20); draped 6 windows spread 71/78/61/96/70 (min 20)"
+  },
+  {
+   "id": "WB-06",
+   "name": "something is behind the glass by day",
+   "status": "pass",
+   "detail": "ay3_upper_w0 band medians span 45 levels; ay3_upper_w1 band medians span 20 levels; ay1_upper_w1 band medians span 62 levels; ay2_upper_w0 band medians span 64 levels; h_bay2_gf_w0 band medians span 96 levels; h_bay2_gf_w1 band medians span 43 levels"
+  },
+  {
+   "id": "WB-07",
+   "name": "the frame is brighter than the wall",
+   "status": "fail",
+   "detail": "frame L over the brick beside it (linear): 25 windows, median 4.27, range 2.22 to 7.82 (band: floor 3.0 for white_fresh and white_upvc, 2.5 for white_grimy and white_flaking, ceiling 9.0); nearest the floor (site, ratio, floor, frame, joinery pixels): [('east_parade_bay3_upper_w0', 2.84, 2.5, 'h-along15road-bay3w1', 8322), ('east_parade_bay3_upper_w1', 2.22, 2.5, 'h-along15road-gf2w1', 1030), ('east_parade_bay3_upper_w1', 2.37, 2.5, 'h-along15-gf2w1', 1346), ('east_parade_bay5_upper_w0', 2.22, 2.5, 'h-along15-gf2w1', 492)]"
+  },
+  {
+   "id": "WB-08",
+   "name": "the old fault fails",
+   "status": "pass",
+   "detail": "the first build's pane (a lit pale card, no reflection) with flat joinery (no box shade, no shading of the reveal) in the same view: P/L 0.84, D/L 0.83, spread 1, line dip {'min_ratio': 0.8243550658226013, 'edges': 8}: the checks fail it as they must (WB-02 P/L over 0.45, WB-04 D/L over 0.72, WB-04b no dip, WB-05 spread under 20, a bare window)"
+  },
+  {
+   "id": "WB-09",
+   "name": "the window under 10 degrees",
+   "status": "pass",
+   "detail": "5 windows under 10 degrees (the Hook camera cam_A): pane luma at most the lining's: ay2_upper_w0 P 119 L 179, ay4_upper_w1 P 103 L 149, ay4_upper_w0 P 127 L 223, ay4_upper_w1 P 132 L 200, h_bay1_gf_w0 P 115 L 160"
+  },
+  {
+   "id": "NIGHT-01",
+   "name": "lit and dark windows at night",
+   "status": "fail",
+   "detail": "9 lit and 8 dark windows measured (night frames of the target's views, windows seen at 45 degrees or more); dark median pane 50; lit (pane at least 2.5 times the dark median, r > g > b): _bay2_upper_w0 P 120 NOT LIT, uth_bay2_gf_w0 P 84 NOT LIT, _bay2_upper_w0 P 122 NOT LIT, uth_bay1_gf_w1 P 118 NOT LIT, uth_bay2_gf_w0 P 79 NOT LIT, uth_bay2_gf_w1 P 144; dark windows' CLEAR glass (8 to 35) _bay1_upper_w0 23, _bay1_upper_w1 26, _bay3_upper_w0 28, _bay1_upper_w1 29, uth_bay1_gf_w0 26, out of band: none; dark windows' net over its frame's L (at most 0.7) _bay1_upper_w1 0.63, _bay2_upper_w1 0.56, _bay3_upper_w0 0.66, _bay1_upper_w1 0.64, uth_bay1_gf_w0 0.63, uth_bay1_gf_w0 0.65, over: none; the close review's own wording, beside and not failed: dark P/L at most 0.70 in 8 of 8, lit P/L at least 1.0 with r > g > b in 4 of 9"
+  },
+  {
+   "id": "NIGHT-02",
+   "name": "lit against dark",
+   "status": "fail",
+   "detail": "median lit pane luma 118 over the dark windows' 50: 2.4 times (linear 5.6 times; at least 2.5 / 6; the pane against the pane, the clear glass and the cloth in it as seen); like for like, beside: clear glass lit 62 over dark 26; cloth lit 135 over dark 58"
+  },
+  {
+   "id": "NIGHT-03",
+   "name": "the lit net glows its own colour",
+   "status": "pass",
+   "detail": "lit windows' mean colour (linear, the pane as seen): _bay2_upper_w0 g/r 0.75 b/r 0.37; uth_bay2_gf_w0 g/r 0.66 b/r 0.31; _bay2_upper_w0 g/r 0.76 b/r 0.36; uth_bay1_gf_w1 g/r 0.38 b/r 0.11; uth_bay2_gf_w0 g/r 0.64 b/r 0.27; uth_bay2_gf_w1 g/r 0.57 b/r 0.24 (nets: r>g>b, g/r 0.55 to 0.80, b/r 0.20 to 0.45; the pane's mean carries the card and the glass's reflection, so the bands are read with 0.12 and 0.10 of room); block by block on the reflection-off night frames (the room's own colour, without the stand-in sky's neutral reflection in the glass; 16 px at their half size = 32 px): 634 blocks wholly inside a lit pane in every night frame, 0 with r > g > b broken or linear g/r over 0.85, worst g/r 0.74; on the beauty frames, beside: 624 blocks of 32 px, 0 over (reflection of the night sky at the glass's edge): none"
+  },
+  {
+   "id": "NIGHT-07",
+   "name": "a lit window's clear glass against its net",
+   "status": "fail",
+   "detail": "a lit window's clear glass over its lit net's, curtain's or blind's, the mean of the linear luminance of each, H_ACROSS_0 night (frame, window, clear/cloth, the median's figure beside): [('h-across0-bay2w0', '_bay2_upper_w0', 0.66, 'median 0.27'), ('h-across0-gf2w1', 'uth_bay2_gf_w0', 0.19, 'median 0.19')] (0.5 to 1.0); out of band: [('h-across0-gf2w1', 'uth_bay2_gf_w0', 0.19)]; the other views, beside and not failed: [('hook', '_bay0_upper_w1', 0.53, 'median 0.54'), ('hook', '_bay2_upper_w0', 0.68, 'median 0.67'), ('close', '_bay0_upper_w1', 1.35, 'median 1.31'), ('close2', '_bay0_upper_w1', 1.58, 'median 1.79'), ('h-along30-gf2w1', 'uth_bay2_gf_w0', 0.16, 'median 0.15'), ('h-across30-bay2w0', '_bay2_upper_w0', 0.42, 'median 0.35'), ('h-across30-gf2w1', 'uth_bay2_gf_w0', 0.17, 'median 0.18'), ('h-along15-gf2w1', 'uth_bay2_gf_w0', 0.44, 'median 0.47')]"
+  },
+  {
+   "id": "NIGHT-08",
+   "name": "lit against dark in the Hook night",
+   "status": "pass",
+   "detail": "Hook night: the 2 lit windows' median pane 95 (_bay0_upper_w1 109, _bay2_upper_w0 81) over the 6 dark windows' 36: 2.7 times, linear 6.5 times (at least 2.5 / 6); the lit cottage behind a drawn brown curtain (uth_bay1_gf_w1 52, which the street review allowed to stay dim) is left out; with it the median reads 2.3 times"
+  },
+  {
+   "id": "NIGHT-09",
+   "name": "the lit cottages read above the dark ones in the reverse night",
+   "status": "pass",
+   "detail": "reverse night: the lit pair of west_south_bay2 reads {'y2_gf_w0': 56, 'y2_gf_w1': 83} (glass px [44, 82]), every dark cottage window {'uth_bay0_gf_w0': 46, 'uth_bay0_gf_w1': 33, 'uth_bay1_gf_w0': 24} (the lit pair above every dark one; the lit window behind the drawn brown curtain, west_south_bay1_gf_w1, may stay dim and reads 49)"
+  },
+  {
+   "id": "NIGHT-04",
+   "name": "a dark window shows only the sodium wash",
+   "status": "pass",
+   "detail": "13 of 13 night_dark pictures: up_lounge_1 b/r 0.001 luma 15.4; up_lounge_2 b/r 0.001 luma 14.6; up_lounge_3 b/r 0.001 luma 15.3; up_bedroom_1 b/r 0.001 luma 14.6; up_bedroom_2 b/r 0.001 luma 15.5; up_bedroom_3 b/r 0.001 luma 15.4; up_landing_1 b/r 0.002 luma 15.4; up_landing_2 b/r 0.001 luma 15.4; up_empty_1 b/r 0.001 luma 14.6; up_empty_2 b/r 0.001 luma 14.7; gf_front_1 b/r 0.001 luma 14.5; gf_front_2 b/r 0.001 luma 15.6; gf_front_3 b/r 0.001 luma 15.4"
+  },
+  {
+   "id": "NIGHT-05",
+   "name": "the lit order is nested",
+   "status": "pass",
+   "detail": "the set lit at 23:00 (4) is inside the set lit at 20:30 (7) but for the always-lit pair; no empty room is ever lit"
+  },
+  {
+   "id": "NIGHT-06",
+   "name": "the 20:30 count",
+   "status": "pass",
+   "detail": "seven windows lit at 20:30 (target 7 +-1): 7"
+  },
+  {
+   "id": "GLS-04",
+   "name": "no bright band in the night glass",
+   "status": "pass",
+   "detail": "night frames against the reflection-off render: hook_night largest orange patch 0.0000% of the glass (grey sky patch 0.00%, a real reflection); reverse_night largest orange patch 0.0000% of the glass (grey sky patch 0.00%, a real reflection); cam-a_night largest orange patch 0.0000% of the glass (grey sky patch 0.00%, a real reflection); close_night largest orange patch 0.0000% of the glass (grey sky patch 0.00%, a real reflection); close2_night largest orange patch 0.0000% of the glass (grey sky patch 0.00%, a real reflection); h-across0-bay2w0_night largest orange patch 0.0000% of the glass (grey sky patch 0.00%, a real reflection); h-along30-gf2w1_night largest orange patch 0.0000% of the glass (grey sky patch 0.00%, a real reflection); h-along15-bay3w1_night largest orange patch 0.0000% of the glass (grey sky patch 0.00%, a real reflection); h-across30-bay2w0_night largest orange patch 0.0000% of the glass (grey sky patch 0.00%, a real reflection); h-along15road-bay3w1_night largest orange patch 0.0000% of the glass (grey sky patch 0.00%, a real reflection); h-across0-gf2w1_night largest orange patch 0.0000% of the glass (grey sky patch 0.00%, a real reflection); h-across30-gf2w1_night largest orange patch 0.0000% of the glass (grey sky patch 0.00%, a real reflection); h-along15-gf2w1_night largest orange patch 0.0000% of the glass (grey sky patch 0.00%, a real reflection); h-along15road-gf2w1_night largest orange patch 0.0000% of the glass (grey sky patch 0.00%, a real reflection) (the largest connected patch of window glass 40 or more levels brighter than the reflection-off render and sodium-coloured must be under 0.1% of the glass)"
+  },
+  {
+   "id": "GLS-05",
+   "name": "no lit stand-in lamp in view, no burnt window frame",
+   "status": "pass",
+   "detail": "no lit stand-in lamp is seen (the lamp lights are out of camera, glossy and transmission rays) and no window's joinery is more than 2 per cent burnt (R 250+, B under 140), in 14 night frames: none; the most burnt windows (per cent, frame, window): [(0.04, 'h-along30-gf2w1', 'uth_bay2_gf_w1'), (0.04, 'h-across0-gf2w1', 'uth_bay2_gf_w1'), (0.01, 'h-across30-gf2w1', 'uth_bay2_gf_w1'), (0.0, 'reverse', 'uth_bay2_gf_w1')]"
+  },
+  {
+   "id": "FRM-01",
+   "name": "no see-through slot at any camera",
+   "status": "pass",
+   "detail": "no see-through slot: in 33 frames' masks the background shows inside no window's outline box (more than 3 pixels): none"
+  },
+  {
+   "id": "JNR-01",
+   "name": "no black joinery by day",
+   "status": "pass",
+   "detail": "by day no joinery pixel under luma 10 inside a window outline (at most 0.1 per cent of the window's joinery): 107 windows in the day frames; over: none; the most (per cent, pixels, frame, window): [(0.023, 2, 'h-under-bay1w0', '_bay0_upper_w1'), (0.008, 5, 'h-along30-gf2w1', 'uth_bay2_gf_w1'), (0.0, 0, 'reverse', 'uth_bay2_gf_w1'), (0.0, 0, 'reverse', 'uth_bay2_gf_w0')]"
+  },
+  {
+   "id": "ACC-01",
+   "name": "cam_A day: the cottage windows show their nets and rooms",
+   "status": "pass",
+   "detail": "cam_A day: west_south_bay0's two windows P/L {'y0_gf_w0': 0.49, 'y0_gf_w1': 0.46} (at least 0.45; the first build read 0.07 and 0.11 through the mirror)"
+  },
+  {
+   "id": "ACC-02",
+   "name": "Hook day: the near window's net shows",
+   "status": "pass",
+   "detail": "Hook day: east_parade_bay0_upper_w0 (a full-height net) P/L 0.72 (at least 0.55; the first build read 0.52 as four grey mirror panes)"
+  },
+  {
+   "id": "GLS-06",
+   "name": "the glass passes the room at every angle from the wall",
+   "status": "pass",
+   "detail": "the kit's own slab pane (glass__lower_L, 60 triangles) in front of an emission card of 0.5, the gate's pane shader, at 15, 20, 35, 50 and 70 degrees from the wall: the card through the pane must read at least (1 - F_front(angle)) of its own, less 0.03: 15 deg reads 0.705 (need 0.678, F 0.292); 20 deg reads 0.785 (need 0.756, F 0.214); 35 deg reads 0.886 (need 0.857, F 0.113); 50 deg reads 0.913 (need 0.883, F 0.087); 70 deg reads 0.920 (need 0.890, F 0.080)"
+  },
+  {
+   "id": "NEG-01",
+   "name": "negative control: the back-face mirror fails GLS-06 and MAT-04",
+   "status": "pass",
+   "detail": "negative control: the first build's pane (the back face a mirror again) must FAIL both GLS-06 and MAT-04: GLS-06 fails (15 deg 0.000; 20 deg 0.000; 35 deg 0.000; 50 deg 0.000; 70 deg 0.841), MAT-04 fails (reflection 0.277, energy 0.277)"
+  },
+  {
+   "id": "GRM-01",
+   "name": "the grime band on grimy windows",
+   "status": "pass",
+   "detail": "the grime band (target 4.2: 30 mm along the sill on a grimy window, x 0.75): the kit's bottom rail painted by the gate's own `make_paint`, square on under a uniform sky: its lowest 30 mm over the 30 mm above read 0.77 for a grimy window (0.68 to 0.85) and 1.00 for a sound one (0.97 or more: only a grimy house carries it)"
+  },
+  {
+   "id": "PIC-01",
+   "name": "size and states",
+   "status": "pass",
+   "detail": "39 of 39 pictures present at 1536 x 1399 (upper rooms) or 3072 x 2349 (cottages), 8-bit RGB; not rendered: none; wrong: none"
+  },
+  {
+   "id": "PIC-02",
+   "name": "mean luma",
+   "status": "pass",
+   "detail": "39 pictures' mean luma within 15% of the standard (day 105, night_lit 70, night_dark 15; landings 40 at night_lit; an empty room's night_lit is its night_dark, the target's lights_by_state over its PIC-02 line); off: none"
+  },
+  {
+   "id": "PIC-03",
+   "name": "no black void",
+   "status": "pass",
+   "detail": "24 day and night_lit pictures: under 25% below luma 8, largest dark region under 15%, composite (x brightness; a lit landing's card with its absolute floor) day 14+, night_lit 40+; an empty room's night_lit is its night_dark and is left out with the night_dark pictures; off: none"
+  },
+  {
+   "id": "PIC-03b",
+   "name": "the night wash does not burn the corners",
+   "status": "pass",
+   "detail": "night_dark top front corner columns at most 1.5 times the picture's mean (the shops' burnt orange corners): up_lounge_1 0.20, up_lounge_2 0.26, up_lounge_3 0.21, up_bedroom_1 0.20, up_bedroom_2 0.27, up_bedroom_3 0.21, up_landing_1 0.20, up_landing_2 0.28, up_empty_1 0.16, up_empty_2 0.18, gf_front_1 0.20, gf_front_2 0.27, gf_front_3 0.22"
+  },
+  {
+   "id": "PIC-04",
+   "name": "the back wall lands where the rule puts it",
+   "status": "pass",
+   "detail": "the back wall's side edges found in the day pictures within 8 px of the rule's projection: up_lounge_1 edges at 458 and 1077 (expected 461 and 1075); up_lounge_2 edges at 459 and 1077 (expected 461 and 1075); up_lounge_3 edges at 458 and 1077 (expected 461 and 1075); up_bedroom_1 edges at 458 and 1077 (expected 461 and 1075); up_bedroom_2 edges at 459 and 1077 (expected 461 and 1075); up_bedroom_3 edges at 458 and 1077 (expected 461 and 1075); up_landing_1 edges at 458 and 1077 (expected 461 and 1075); up_landing_2 edges at 459 and 1077 (expected 461 and 1075); up_empty_1 edges at 458 and 1077 (expected 461 and 1075); up_empty_2 edges at 458 and 1077 (expected 461 and 1075); gf_front_1 edges at 846 and 2225 (expected 849 and 2223); gf_front_2 edges at 846 and 2225 (expected 849 and 2223); gf_front_3 edges at 846 and 2225 (expected 849 and 2223)"
+  },
+  {
+   "id": "PIC-05",
+   "name": "stand-off",
+   "status": "pass",
+   "detail": "94 placed objects and flat forms inside the stand-off budgets of their surface (back 0.38 true, 0.71 tolerated; sides 0.03, 0.06; ceiling 0.02, 0.04); over: none"
+  },
+  {
+   "id": "PIC-09",
+   "name": "room pictures are not noisy",
+   "status": "pass",
+   "detail": "noise: the robust standard deviation (1.4826 x median absolute deviation) of the picture minus its 2 px blur over its flat areas, at most 1.6 levels (24 samples, denoised; 16 for the cottages): up_lounge_1 day 0.53, up_lounge_1 night_lit 0.36, up_lounge_2 day 0.75, up_lounge_2 night_lit 0.50, up_lounge_3 day 0.80, up_lounge_3 night_lit 0.47, up_bedroom_1 day 0.63, up_bedroom_1 night_lit 0.31, up_bedroom_2 day 0.52, up_bedroom_2 night_lit 0.29, up_bedroom_3 day 0.81, up_bedroom_3 night_lit 0.46, up_landing_1 day 0.56, up_landing_1 night_lit 0.24, up_landing_2 day 0.60, up_landing_2 night_lit 0.28, up_empty_1 day 0.46, up_empty_1 night_lit 0.57, up_empty_2 day 0.58, up_empty_2 night_lit 0.47, gf_front_1 day 0.56, gf_front_1 night_lit 0.30, gf_front_2 day 0.78, gf_front_2 night_lit 0.59, gf_front_3 day 0.49, gf_front_3 night_lit 0.19"
+  },
+  {
+   "id": "PIC-06",
+   "name": "parallax",
+   "status": "pass",
+   "detail": "marker at the picture centre baked from two eyes 2.0 m apart: seen at card columns 95.5 and 51.0, predicted by trace 96 and 51: error 5.3 px of 2048 (limit 20); proves the gate's bake, not the game"
+  },
+  {
+   "id": "PIC-07",
+   "name": "no marks",
+   "status": "pass",
+   "detail": "marks painted out by script and checked region by region (television_02 PARAGON, wall_clock URBAN quartz): television_02 box [270, 450, 300, 548]: max deviation from the ring 12, edge share 0.000; wall_clock box [246, 610, 316, 664]: max deviation from the ring 8, edge share 0.000; every framed picture's artwork replaced by a crop of a CC0 photograph (11 placements in the rooms rendered); every placed model's 1k base colour looked at at 100 per cent by me on 14 October (NOTES.md); the pictures themselves are for the reviewers' eyes"
+  },
+  {
+   "id": "PIC-08",
+   "name": "the room is lit as the table says",
+   "status": "pass",
+   "detail": "the picture each of the 20 windows uses: day by day; at 20:30 night_lit for the seven lit windows, night_dark for the rest (the gate's own rule `card_state`); wrong: none"
+  },
+  {
+   "id": "NEG-03",
+   "name": "negative control: the first build's clipped lit pictures fail PIC-13",
+   "status": "pass",
+   "detail": "negative control: the first build's 11 night_lit pictures must FAIL PIC-13: 11 of them have more than 0.1 per cent of their pixels clipped (gf_front_1 2.02%, gf_front_2 1.59%, gf_front_3 2.01%, up_bedroom_1 2.77%, up_bedroom_2 1.50%)"
+  },
+  {
+   "id": "PIC-13",
+   "name": "no clipped highlights in a lit room picture",
+   "status": "pass",
+   "detail": "no clipped highlights: the share of pixels with a channel at 250 or more in each of 13 night_lit pictures, at most 0.1 per cent (the highlight roll-off before the 8-bit write): up_lounge_1 0.0000%, up_lounge_2 0.0000%, up_lounge_3 0.0000%, up_bedroom_1 0.0000%, up_bedroom_2 0.0000%, up_bedroom_3 0.0000%, up_landing_1 0.0000%, up_landing_2 0.0000%, up_empty_1 0.0000%, up_empty_2 0.0000%, gf_front_1 0.0000%, gf_front_2 0.0000%, gf_front_3 0.0000%; beside, not failed: day and night_dark pictures over 0.1 per cent: none"
+  },
+  {
+   "id": "PIC-10",
+   "name": "no floating goods",
+   "status": "pass",
+   "detail": "floating goods: every piece stands on the floor, rests on its parent (a clock on its cabinet, the television on its table: the parent's top under it, a gap over 6 mm split into a sink) or hangs on its wall (touching): none floating; 13 rooms read"
+  },
+  {
+   "id": "PIC-11",
+   "name": "real size: no piece shrunk to fit",
+   "status": "pass",
+   "detail": "every placed piece at scale 1.0 and 0.9 to 1.1 of its model's own height: 33 pieces, off: none (mantel_clock_01's catalogue size 483.7 x 250.8 x 160.9 is not the model's 342.3 x 126.2 x 160.5: its own height is used)"
+  },
+  {
+   "id": "PIC-12",
+   "name": "models keep their glass and every part",
+   "status": "pass",
+   "detail": "every placed model keeps all the meshes of its glTF (the glass kept as a see-through material, not alpha-blended): all kept"
+  },
+  {
+   "id": "SITE-01",
+   "name": "the twenty openings",
+   "status": "pass",
+   "detail": "terrace-front.py's windows re-derived live (the target's hw_sites.derive, read only): 20 sites, centres within 1 mm of sites[]; the gate stands every kit piece at its site (x_centre, sill, side); off: none"
+  },
+  {
+   "id": "SITE-02",
+   "name": "no visible repeat",
+   "status": "pass",
+   "detail": "no (room, net kind, curtain) triple repeats within three places along any row (a cottage's own two windows, one room, excepted as the target's self-check does); paints are white throughout; repeats: none"
+  },
+  {
+   "id": "SITE-03",
+   "name": "the mix",
+   "status": "pass",
+   "detail": "net classes N0 4, N1 10, N2 5, N3 1; curtains and blinds 9 of 20; the built windows (a frame's kit pieces) match: {'N0': 4, 'N2': 5, 'N1': 10, 'N3': 1}"
+  },
+  {
+   "id": "SITE-04",
+   "name": "paint",
+   "status": "pass",
+   "detail": "paints by window: {'white_upvc': 8, 'white_grimy': 6, 'white_fresh': 4, 'white_flaking': 2}; every house white (Jafar's ruling of 3 October)"
+  },
+  {
+   "id": "CONTENT-01",
+   "name": "the content rule",
+   "status": "pass",
+   "detail": "the content rule: no real firm's name (the target's blocklist), no drink, gambling, child or toy in the kit's scripts, notes, node names or room records; no person in any render (the review's eyes); hits: none"
+  },
+  {
+   "id": "KIT-16",
+   "name": "export: real normal maps, UVs, no bump",
+   "status": "pass",
+   "detail": "every normalTexture in the four glbs is a real RGB normal map (blue over 0.7, red and green about 0.5), no bump in any exported material, every textured primitive has TEXCOORD_0 and no texCoord is negative; bad: none"
+  },
+  {
+   "id": "KIT-17",
+   "name": "nothing floats in a kit piece",
+   "status": "pass",
+   "detail": "nothing floats in a kit piece: every net card's 20 mm head casing carries its rod (the rod ends in two brackets that stand on the lining's back or the wall's inner face), the curtain cards hang from the pole (brackets on the wall's inner face), each blind from its headrail or roller; loose: none"
+  },
+  {
+   "id": "KIT-19",
+   "name": "no two parts share a plane",
+   "status": "pass",
+   "detail": "no two joinery parts of a kit piece have street-facing faces (normal -y) on one plane over an overlapping area above 2,000 mm2 (two faces on one plane shadow each other black in a path tracer: the first build's head lining on the side linings, 20,300 mm2, and bottom rail on the oak sill's riser, 26,500 mm2, made the black notch at the head of the far jamb); over: none; the smaller ones left in the lab's sash (stile feet on the sill riser 1,569 mm2 and a bar on a rail 328 mm2, none seen black in any frame): [('S22', 'lower_stile_L', 'oak_sill', '-y 185.7', 1569), ('S22', 'lower_stile_R', 'oak_sill', '-y 185.7', 1569), ('S22', 'lower_bar', 'lower_top_rail', '-y 192.1', 328), ('S22', 'upper_bar', 'upper_bottom_rail', '-y 144.5', 328), ('S22', 'upper_bar', 'upper_top_rail', '-y 144.5', 328), ('S11', 'lower_stile_L', 'oak_sill', '-y 185.7', 1569)]"
+  },
+  {
+   "id": "NEG-02",
+   "name": "negative control: the first build's shared planes fail KIT-19",
+   "status": "pass",
+   "detail": "negative control: the first build's S22 (kit_try1_glb/hw_S22.glb) must FAIL KIT-19: its largest shared-plane overlap is 26509 mm2 (over 2,000)"
+  },
+  {
+   "id": "KIT-18",
+   "name": "net and curtain folds vary",
+   "status": "pass",
+   "detail": "folds are not a regular corrugation: N1 pitch 30 to 69 mm (sd 11.3), depth sd 1.8; N2 pitch 34 to 70 mm (sd 12.8), depth sd 1.8; N3 pitch 32 to 70 mm (sd 12.0), depth sd 1.8; N1_torn pitch 31 to 64 mm (sd 9.7), depth sd 1.8; C1 pitch 59 to 91 mm (sd 9.9), depth sd 4.6"
+  },
+  {
+   "id": "PRV-01",
+   "name": "the review set is in production/previews",
+   "status": "pass",
+   "detail": "10 review previews of try 2 (JPEG, at most 1600 px wide, under 500 KB): hw-cam-a-day-2026-10-14-v2.jpg, hw-cam-a-night_lit-2026-10-14-v2.jpg, hw-close-day-2026-10-14-v2.jpg, hw-close-night_lit-2026-10-14-v2.jpg, hw-close2-day-2026-10-14-v2.jpg, hw-close2-night_lit-2026-10-14-v2.jpg, hw-hook-day-2026-10-14-v2.jpg, hw-hook-night_lit-2026-10-14-v2.jpg, hw-reverse-day-2026-10-14-v2.jpg, hw-reverse-night_lit-2026-10-14-v2.jpg; the 10 try 1 pictures stay beside them; bad: none"
+  }
+ ],
+ "seconds": 197.0,
+ "measurements": {
+  "hook_day": {
+   "east_parade_bay0_upper_w0": {
+    "pane_px": 18493,
+    "joinery_px": 7923,
+    "P": 146.43438720703125,
+    "L": 202.14041137695312,
+    "D": 87.62979888916016,
+    "spread": 70.72840118408203,
+    "pane_rgb_mean": [
+     140.2446331044179,
+     141.70405018114963,
+     141.69042340344996
+    ],
+    "P_over_L": 0.724419160966083,
+    "D_over_L": 0.4335095505754531,
+    "clear_px": 0,
+    "cloth_px": 14850,
+    "clear_P": null,
+    "cloth_P": 148.36219787597656,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": [
+     0.2894586141927113,
+     0.29775810582372503
+    ],
+    "line": {
+     "min_ratio": 0.3406127691268921,
+     "edges": 8
+    },
+    "angle": 39.95,
+    "state": "net",
+    "site": "east_parade_bay0_upper_w0",
+    "net": "N2",
+    "extra": null,
+    "frame": "hook_day",
+    "brick_median": 97.3436050415039
+   },
+   "east_parade_bay0_upper_w1": {
+    "pane_px": 7426,
+    "joinery_px": 3896,
+    "P": 124.93180847167969,
+    "L": 194.42779541015625,
+    "D": 82.7020034790039,
+    "spread": 90.87579345703125,
+    "pane_rgb_mean": [
+     129.9511176945866,
+     129.51710207379477,
+     129.28588742256935
+    ],
+    "P_over_L": 0.6425614619973913,
+    "D_over_L": 0.4253610102636788,
+    "clear_px": 2019,
+    "cloth_px": 3090,
+    "clear_P": 120.00399780273438,
+    "cloth_P": 144.41920471191406,
+    "clear_rgb_mean": [
+     120.0921248142645,
+     120.56364536899456,
+     123.60227835562159
+    ],
+    "clear_Y": [
+     0.19072575713880235,
+     0.1878494050524669
+    ],
+    "cloth_Y": [
+     0.2913099387762635,
+     0.28072649205658956
+    ],
+    "line": {
+     "min_ratio": 0.3710189461708069,
+     "edges": 7
+    },
+    "angle": 31.71,
+    "state": "net",
+    "site": "east_parade_bay0_upper_w1",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "hook_day",
+    "brick_median": 98.56539916992188
+   },
+   "east_parade_bay1_upper_w0": {
+    "pane_px": 3611,
+    "joinery_px": 2048,
+    "P": 124.06819915771484,
+    "L": 203.22865295410156,
+    "D": 55.901397705078125,
+    "spread": 135.4315948486328,
+    "pane_rgb_mean": [
+     129.1196344502908,
+     125.36554970922182,
+     117.73774577679313
+    ],
+    "P_over_L": 0.6104857624861352,
+    "D_over_L": 0.27506651691335693,
+    "clear_px": 939,
+    "cloth_px": 1580,
+    "clear_P": 69.4802017211914,
+    "cloth_P": 167.06019592285156,
+    "clear_rgb_mean": [
+     86.03620873269436,
+     81.06283280085196,
+     76.15122470713526
+    ],
+    "clear_Y": [
+     0.09544472258634815,
+     0.060598254019452506
+    ],
+    "cloth_Y": [
+     0.36403836355081676,
+     0.3868668399056554
+    ],
+    "line": {
+     "min_ratio": 0.2888076901435852,
+     "edges": 5
+    },
+    "angle": 25.98,
+    "state": "draped",
+    "site": "east_parade_bay1_upper_w0",
+    "net": "N0",
+    "extra": "B2",
+    "frame": "hook_day",
+    "brick_median": 100.77799987792969
+   },
+   "east_parade_bay1_upper_w1": {
+    "pane_px": 1820,
+    "joinery_px": 1361,
+    "P": 121.64300537109375,
+    "L": 191.7873992919922,
+    "D": 78.05500030517578,
+    "spread": 74.0834732055664,
+    "pane_rgb_mean": [
+     118.36538461538461,
+     115.72692307692307,
+     114.53681318681319
+    ],
+    "P_over_L": 0.6342596323854149,
+    "D_over_L": 0.406987114864302,
+    "clear_px": 264,
+    "cloth_px": 739,
+    "clear_P": 130.74349975585938,
+    "cloth_P": 126.93579864501953,
+    "clear_rgb_mean": [
+     130.5681818181818,
+     129.2348484848485,
+     131.98863636363637
+    ],
+    "clear_Y": [
+     0.22323612881595545,
+     0.2261091234343366
+    ],
+    "cloth_Y": [
+     0.20176043347459063,
+     0.21204660856257165
+    ],
+    "line": {
+     "min_ratio": 0.3712892532348633,
+     "edges": 5
+    },
+    "angle": 21.88,
+    "state": "net",
+    "site": "east_parade_bay1_upper_w1",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "hook_day",
+    "brick_median": 103.0811996459961
+   },
+   "east_parade_bay2_upper_w0": {
+    "pane_px": 1326,
+    "joinery_px": 925,
+    "P": 95.28340148925781,
+    "L": 217.59036254882812,
+    "D": 58.769500732421875,
+    "spread": 89.22615814208984,
+    "pane_rgb_mean": [
+     102.23303167420815,
+     96.25716440422323,
+     92.24434389140272
+    ],
+    "P_over_L": 0.43790267350593637,
+    "D_over_L": 0.27009238848634104,
+    "clear_px": 153,
+    "cloth_px": 495,
+    "clear_P": 77.27680206298828,
+    "cloth_P": 105.99600219726562,
+    "clear_rgb_mean": [
+     94.18300653594771,
+     91.50326797385621,
+     88.24183006535948
+    ],
+    "clear_Y": [
+     0.11853832178926849,
+     0.07481107375956676
+    ],
+    "cloth_Y": [
+     0.1521350615945385,
+     0.14413140561617746
+    ],
+    "line": {
+     "min_ratio": 0.15808972716331482,
+     "edges": 5
+    },
+    "angle": 18.84,
+    "state": "net",
+    "site": "east_parade_bay2_upper_w0",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "hook_day",
+    "brick_median": 108.58320617675781
+   },
+   "east_parade_bay2_upper_w1": {
+    "pane_px": 829,
+    "joinery_px": 633,
+    "P": 85.4894027709961,
+    "L": 211.81549072265625,
+    "D": 58.30641174316406,
+    "spread": 93.79964447021484,
+    "pane_rgb_mean": [
+     100.78287092882992,
+     92.39203860072377,
+     87.61037394451147
+    ],
+    "P_over_L": 0.4036031665074624,
+    "D_over_L": 0.27526981876650575,
+    "clear_px": 96,
+    "cloth_px": 191,
+    "clear_P": null,
+    "cloth_P": 92.13639831542969,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": [
+     0.12880073347322454,
+     0.1073855638718256
+    ],
+    "line": {
+     "min_ratio": 0.19574488699436188,
+     "edges": 5
+    },
+    "angle": 16.52,
+    "state": "net",
+    "site": "east_parade_bay2_upper_w1",
+    "net": "N2",
+    "extra": null,
+    "frame": "hook_day",
+    "brick_median": 109.80560302734375
+   },
+   "east_parade_bay3_upper_w0": {
+    "pane_px": 243,
+    "joinery_px": 484,
+    "P": 84.127197265625,
+    "L": 153.6121368408203,
+    "D": 67.9952621459961,
+    "spread": 62.249786376953125,
+    "pane_rgb_mean": [
+     98.88477366255144,
+     90.71604938271605,
+     84.73662551440329
+    ],
+    "P_over_L": 0.5476598333685139,
+    "D_over_L": 0.4426425121372785,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.2863237261772156,
+     "edges": 5
+    },
+    "angle": 14.69,
+    "state": "net",
+    "site": "east_parade_bay3_upper_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "hook_day",
+    "brick_median": 109.15339660644531
+   },
+   "west_south_bay1_gf_w0": {
+    "pane_px": 2246,
+    "joinery_px": 2573,
+    "P": 84.71060180664062,
+    "L": 170.1483917236328,
+    "D": 45.59700012207031,
+    "spread": 86.83219146728516,
+    "pane_rgb_mean": [
+     90.11442564559216,
+     80.9839715048976,
+     78.46705253784506
+    ],
+    "P_over_L": 0.49786307674440816,
+    "D_over_L": 0.26798372679379906,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.19916145503520966,
+     "edges": 5
+    },
+    "angle": 13.48,
+    "state": "net",
+    "site": "west_south_bay1_gf_w0",
+    "net": "N2",
+    "extra": null,
+    "frame": "hook_day",
+    "brick_median": 84.66000366210938
+   },
+   "west_south_bay1_gf_w1": {
+    "pane_px": 4127,
+    "joinery_px": 3820,
+    "P": 73.62980651855469,
+    "L": 174.07620239257812,
+    "D": 46.52479934692383,
+    "spread": 68.67012786865234,
+    "pane_rgb_mean": [
+     79.83232372183184,
+     74.3055488248122,
+     71.39374848558275
+    ],
+    "P_over_L": 0.4229745680716548,
+    "D_over_L": 0.26726685616682233,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.1991909295320511,
+     "edges": 5
+    },
+    "angle": 15.27,
+    "state": "draped",
+    "site": "west_south_bay1_gf_w1",
+    "net": "N0",
+    "extra": "C1",
+    "frame": "hook_day",
+    "brick_median": 86.02220153808594
+   }
+  },
+  "hook_night": {
+   "east_parade_bay0_upper_w0": {
+    "pane_px": 18493,
+    "joinery_px": 7923,
+    "P": 51.56560134887695,
+    "L": 84.92779541015625,
+    "D": 31.98149871826172,
+    "spread": 31.29399871826172,
+    "pane_rgb_mean": [
+     55.72676147731574,
+     49.33180122208403,
+     45.84550911155572
+    ],
+    "P_over_L": 0.6071699035615186,
+    "D_over_L": 0.3765728118080544,
+    "clear_px": 0,
+    "cloth_px": 14850,
+    "clear_P": null,
+    "cloth_P": 52.27159881591797,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": [
+     0.035034848862844185,
+     0.03480593839589092
+    ],
+    "line": {
+     "min_ratio": 0.31025177240371704,
+     "edges": 8
+    },
+    "angle": 39.95,
+    "state": "net",
+    "site": "east_parade_bay0_upper_w0",
+    "net": "N2",
+    "extra": null,
+    "frame": "hook_night",
+    "brick_median": 37.031402587890625
+   },
+   "east_parade_bay0_upper_w1": {
+    "pane_px": 7426,
+    "joinery_px": 3896,
+    "P": 109.09370422363281,
+    "L": 85.35299682617188,
+    "D": 40.63379669189453,
+    "spread": 109.64881896972656,
+    "pane_rgb_mean": [
+     127.73350390519795,
+     106.23363856719634,
+     75.37449501750606
+    ],
+    "P_over_L": 1.2781473208938494,
+    "D_over_L": 0.4760676039840578,
+    "clear_px": 2019,
+    "cloth_px": 3090,
+    "clear_P": 106.05960083007812,
+    "cloth_P": 142.43099975585938,
+    "clear_rgb_mean": [
+     130.89995047052997,
+     101.17335314512135,
+     65.24269440316989
+    ],
+    "clear_Y": [
+     0.14878542555262972,
+     0.1492995618318334
+    ],
+    "cloth_Y": [
+     0.2801857190936449,
+     0.276522543290196
+    ],
+    "curtain_colour": "cream",
+    "blocks": {
+     "n": 0,
+     "bad": 0,
+     "worst_g_over_r": 0.0,
+     "bad_list": []
+    },
+    "blocks_ro": {
+     "n": 0,
+     "bad": 0,
+     "worst_g_over_r": 0.0,
+     "bad_list": []
+    },
+    "line": {
+     "min_ratio": 0.45178964734077454,
+     "edges": 7
+    },
+    "angle": 31.71,
+    "state": "net",
+    "site": "east_parade_bay0_upper_w1",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "hook_night",
+    "brick_median": 38.127197265625
+   },
+   "east_parade_bay1_upper_w0": {
+    "pane_px": 3611,
+    "joinery_px": 2048,
+    "P": 49.973602294921875,
+    "L": 85.949462890625,
+    "D": 22.723461151123047,
+    "spread": 53.03160858154297,
+    "pane_rgb_mean": [
+     58.6566048186098,
+     45.81417889781224,
+     35.97258377180837
+    ],
+    "P_over_L": 0.581430070814006,
+    "D_over_L": 0.2643816539032919,
+    "clear_px": 939,
+    "cloth_px": 1580,
+    "clear_P": 24.44059944152832,
+    "cloth_P": 62.75699996948242,
+    "clear_rgb_mean": [
+     47.09691160809372,
+     22.19062832800852,
+     7.58359957401491
+    ],
+    "clear_Y": [
+     0.012290467635832105,
+     0.011090322660996516
+    ],
+    "cloth_Y": [
+     0.04904596465280407,
+     0.049842437891674196
+    ],
+    "line": {
+     "min_ratio": 0.27851250767707825,
+     "edges": 5
+    },
+    "angle": 25.98,
+    "state": "draped",
+    "site": "east_parade_bay1_upper_w0",
+    "net": "N0",
+    "extra": "B2",
+    "frame": "hook_night",
+    "brick_median": 38.81879806518555
+   },
+   "east_parade_bay1_upper_w1": {
+    "pane_px": 1820,
+    "joinery_px": 1361,
+    "P": 41.03209686279297,
+    "L": 80.14039611816406,
+    "D": 22.062999725341797,
+    "spread": 45.77780532836914,
+    "pane_rgb_mean": [
+     46.473626373626374,
+     40.38406593406594,
+     37.91373626373626
+    ],
+    "P_over_L": 0.5120026709412897,
+    "D_over_L": 0.27530435078971555,
+    "clear_px": 264,
+    "cloth_px": 739,
+    "clear_P": 24.51110076904297,
+    "cloth_P": 46.48419952392578,
+    "clear_rgb_mean": [
+     33.06818181818182,
+     23.416666666666668,
+     21.193181818181817
+    ],
+    "clear_Y": [
+     0.01041216264311273,
+     0.009732153217970062
+    ],
+    "cloth_Y": [
+     0.03053036868032338,
+     0.02800823447968554
+    ],
+    "line": {
+     "min_ratio": 0.2958059012889862,
+     "edges": 5
+    },
+    "angle": 21.88,
+    "state": "net",
+    "site": "east_parade_bay1_upper_w1",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "hook_night",
+    "brick_median": 39.76239776611328
+   },
+   "east_parade_bay2_upper_w0": {
+    "pane_px": 1326,
+    "joinery_px": 925,
+    "P": 81.40919494628906,
+    "L": 92.46852111816406,
+    "D": 35.86069869995117,
+    "spread": 102.53346252441406,
+    "pane_rgb_mean": [
+     98.57239819004525,
+     88.61915535444948,
+     58.09276018099548
+    ],
+    "P_over_L": 0.8803990153823,
+    "D_over_L": 0.38781520744908804,
+    "clear_px": 153,
+    "cloth_px": 495,
+    "clear_P": 106.85220336914062,
+    "cloth_P": 129.518798828125,
+    "clear_rgb_mean": [
+     126.98692810457516,
+     105.20915032679738,
+     64.72549019607843
+    ],
+    "clear_Y": [
+     0.15189062783407592,
+     0.15073724148863785
+    ],
+    "cloth_Y": [
+     0.2228847436987841,
+     0.2243882325168263
+    ],
+    "curtain_colour": "green",
+    "blocks": {
+     "n": 0,
+     "bad": 0,
+     "worst_g_over_r": 0.0,
+     "bad_list": []
+    },
+    "blocks_ro": {
+     "n": 0,
+     "bad": 0,
+     "worst_g_over_r": 0.0,
+     "bad_list": []
+    },
+    "line": {
+     "min_ratio": 0.4115584194660187,
+     "edges": 5
+    },
+    "angle": 18.84,
+    "state": "net",
+    "site": "east_parade_bay2_upper_w0",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "hook_night",
+    "brick_median": 42.47500228881836
+   },
+   "east_parade_bay2_upper_w1": {
+    "pane_px": 829,
+    "joinery_px": 633,
+    "P": 30.42119789123535,
+    "L": 89.39712524414062,
+    "D": 13.833200454711914,
+    "spread": 47.99352264404297,
+    "pane_rgb_mean": [
+     39.54644149577805,
+     30.81544028950543,
+     26.405307599517492
+    ],
+    "P_over_L": 0.34029279809788127,
+    "D_over_L": 0.15473876164288164,
+    "clear_px": 96,
+    "cloth_px": 191,
+    "clear_P": null,
+    "cloth_P": 34.27159881591797,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": [
+     0.01734247753688336,
+     0.01658058781835564
+    ],
+    "line": {
+     "min_ratio": 0.07728883624076843,
+     "edges": 5
+    },
+    "angle": 16.52,
+    "state": "net",
+    "site": "east_parade_bay2_upper_w1",
+    "net": "N2",
+    "extra": null,
+    "frame": "hook_night",
+    "brick_median": 42.827999114990234
+   },
+   "east_parade_bay3_upper_w0": {
+    "pane_px": 243,
+    "joinery_px": 484,
+    "P": 30.846399307250977,
+    "L": 61.49340057373047,
+    "D": 23.697580337524414,
+    "spread": 27.66171646118164,
+    "pane_rgb_mean": [
+     37.13168724279836,
+     33.76954732510288,
+     30.724279835390945
+    ],
+    "P_over_L": 0.5016212962603394,
+    "D_over_L": 0.38536786250926325,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.2658659517765045,
+     "edges": 5
+    },
+    "angle": 14.69,
+    "state": "net",
+    "site": "east_parade_bay3_upper_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "hook_night",
+    "brick_median": 42.47500228881836
+   },
+   "west_south_bay1_gf_w0": {
+    "pane_px": 2246,
+    "joinery_px": 2573,
+    "P": 27.2716007232666,
+    "L": 71.42520141601562,
+    "D": 13.748980522155762,
+    "spread": 43.090599060058594,
+    "pane_rgb_mean": [
+     38.84995547640249,
+     28.674532502226178,
+     24.49020480854853
+    ],
+    "P_over_L": 0.38182042448047626,
+    "D_over_L": 0.19249480924911802,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.13563279807567596,
+     "edges": 5
+    },
+    "angle": 13.48,
+    "state": "net",
+    "site": "west_south_bay1_gf_w0",
+    "net": "N2",
+    "extra": null,
+    "frame": "hook_night",
+    "brick_median": 34.402801513671875
+   },
+   "west_south_bay1_gf_w1": {
+    "pane_px": 4127,
+    "joinery_px": 3820,
+    "P": 51.85779571533203,
+    "L": 100.67659759521484,
+    "D": 29.567800521850586,
+    "spread": 62.59494400024414,
+    "pane_rgb_mean": [
+     82.07487278895081,
+     45.54034407559971,
+     23.361279379694693
+    ],
+    "P_over_L": 0.5150928513082451,
+    "D_over_L": 0.2936908996540815,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "curtain_colour": "brown",
+    "blocks": {
+     "n": 0,
+     "bad": 0,
+     "worst_g_over_r": 0.0,
+     "bad_list": []
+    },
+    "blocks_ro": {
+     "n": 0,
+     "bad": 0,
+     "worst_g_over_r": 0.0,
+     "bad_list": []
+    },
+    "line": {
+     "min_ratio": 0.16918133199214935,
+     "edges": 5
+    },
+    "angle": 15.27,
+    "state": "draped",
+    "site": "west_south_bay1_gf_w1",
+    "net": "N0",
+    "extra": "C1",
+    "frame": "hook_night",
+    "brick_median": 43.696800231933594
+   }
+  },
+  "reverse_day": {
+   "east_parade_bay2_upper_w0": {
+    "pane_px": 183,
+    "joinery_px": 777,
+    "P": 119.07220458984375,
+    "L": 178.85960388183594,
+    "D": 100.92418670654297,
+    "spread": 40.348602294921875,
+    "pane_rgb_mean": [
+     121.51366120218579,
+     118.65573770491804,
+     117.01639344262296
+    ],
+    "P_over_L": 0.6657300027820094,
+    "D_over_L": 0.5642648452538159,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.6186460852622986,
+     "edges": 3
+    },
+    "angle": 9.2,
+    "state": "net",
+    "site": "east_parade_bay2_upper_w0",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "reverse_day",
+    "brick_median": 111.91059875488281
+   },
+   "east_parade_bay2_upper_w1": {
+    "pane_px": 593,
+    "joinery_px": 1184,
+    "P": 118.0,
+    "L": 187.1227264404297,
+    "D": 92.21019744873047,
+    "spread": 46.486358642578125,
+    "pane_rgb_mean": [
+     118.85328836424958,
+     116.5902192242833,
+     115.24283305227657
+    ],
+    "P_over_L": 0.630602184163692,
+    "D_over_L": 0.49277925350283674,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.47627562284469604,
+     "edges": 2
+    },
+    "angle": 10.62,
+    "state": "net",
+    "site": "east_parade_bay2_upper_w1",
+    "net": "N2",
+    "extra": null,
+    "frame": "reverse_day",
+    "brick_median": 110.09039306640625
+   },
+   "east_parade_bay3_upper_w0": {
+    "pane_px": 528,
+    "joinery_px": 1813,
+    "P": 90.77220153808594,
+    "L": 147.84640502929688,
+    "D": 63.253196716308594,
+    "spread": 60.11186981201172,
+    "pane_rgb_mean": [
+     94.03977272727273,
+     86.92234848484848,
+     81.50189393939394
+    ],
+    "P_over_L": 0.6139628590908162,
+    "D_over_L": 0.42783046840925554,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.40421003103256226,
+     "edges": 3
+    },
+    "angle": 12.53,
+    "state": "net",
+    "site": "east_parade_bay3_upper_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "reverse_day",
+    "brick_median": 106.01819610595703
+   },
+   "east_parade_bay3_upper_w1": {
+    "pane_px": 2511,
+    "joinery_px": 3467,
+    "P": 79.05500030517578,
+    "L": 152.63380432128906,
+    "D": 51.18619918823242,
+    "spread": 64.40229797363281,
+    "pane_rgb_mean": [
+     83.88490641178814,
+     77.62166467542812,
+     72.22700119474312
+    ],
+    "P_over_L": 0.5179390021542518,
+    "D_over_L": 0.3353529672921418,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.37193724513053894,
+     "edges": 3
+    },
+    "angle": 15.23,
+    "state": "bare",
+    "site": "east_parade_bay3_upper_w1",
+    "net": "N0",
+    "extra": null,
+    "frame": "reverse_day",
+    "brick_median": 103.79119110107422
+   },
+   "west_south_bay0_gf_w0": {
+    "pane_px": 795,
+    "joinery_px": 870,
+    "P": 74.21260070800781,
+    "L": 135.16525268554688,
+    "D": 53.835838317871094,
+    "spread": 54.67422866821289,
+    "pane_rgb_mean": [
+     78.41761006289308,
+     74.4314465408805,
+     72.23270440251572
+    ],
+    "P_over_L": 0.549050878339706,
+    "D_over_L": 0.39829643527628106,
+    "clear_px": 80,
+    "cloth_px": 55,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.3164585530757904,
+     "edges": 5
+    },
+    "angle": 18.33,
+    "state": "net",
+    "site": "west_south_bay0_gf_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "reverse_day",
+    "brick_median": 85.59700012207031
+   },
+   "west_south_bay0_gf_w1": {
+    "pane_px": 528,
+    "joinery_px": 698,
+    "P": 75.31230163574219,
+    "L": 136.6686553955078,
+    "D": 55.30900192260742,
+    "spread": 52.40250015258789,
+    "pane_rgb_mean": [
+     78.06060606060606,
+     75.26325757575758,
+     73.52462121212122
+    ],
+    "P_over_L": 0.5510576029141034,
+    "D_over_L": 0.4046941250907001,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.29989907145500183,
+     "edges": 5
+    },
+    "angle": 16.92,
+    "state": "net",
+    "site": "west_south_bay0_gf_w1",
+    "net": "N1",
+    "extra": null,
+    "frame": "reverse_day",
+    "brick_median": 89.2531967163086
+   },
+   "west_south_bay1_gf_w0": {
+    "pane_px": 445,
+    "joinery_px": 495,
+    "P": 72.41200256347656,
+    "L": 169.3570098876953,
+    "D": 45.249000549316406,
+    "spread": 78.01148223876953,
+    "pane_rgb_mean": [
+     83.62921348314607,
+     74.0247191011236,
+     69.91685393258427
+    ],
+    "P_over_L": 0.42757015261130726,
+    "D_over_L": 0.26718114933253784,
+    "clear_px": 35,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.2579072415828705,
+     "edges": 5
+    },
+    "angle": 14.34,
+    "state": "net",
+    "site": "west_south_bay1_gf_w0",
+    "net": "N2",
+    "extra": null,
+    "frame": "reverse_day",
+    "brick_median": 85.61019897460938
+   },
+   "west_south_bay1_gf_w1": {
+    "pane_px": 372,
+    "joinery_px": 373,
+    "P": 71.37989807128906,
+    "L": 171.05776977539062,
+    "D": 43.84288024902344,
+    "spread": 73.20365905761719,
+    "pane_rgb_mean": [
+     83.3225806451613,
+     75.08333333333333,
+     72.95967741935483
+    ],
+    "P_over_L": 0.4172853309441323,
+    "D_over_L": 0.25630452394294534,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.29219135642051697,
+     "edges": 5
+    },
+    "angle": 13.46,
+    "state": "draped",
+    "site": "west_south_bay1_gf_w1",
+    "net": "N0",
+    "extra": "C1",
+    "frame": "reverse_day",
+    "brick_median": 92.73739624023438
+   }
+  },
+  "reverse_night": {
+   "east_parade_bay2_upper_w0": {
+    "pane_px": 183,
+    "joinery_px": 777,
+    "P": 66.41320037841797,
+    "L": 82.48139953613281,
+    "D": 48.40644073486328,
+    "spread": 22.16515350341797,
+    "pane_rgb_mean": [
+     70.43169398907104,
+     64.20218579234972,
+     53.5792349726776
+    ],
+    "P_over_L": 0.8051900277143599,
+    "D_over_L": 0.5868770535793074,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "curtain_colour": "green",
+    "blocks": {
+     "n": 0,
+     "bad": 0,
+     "worst_g_over_r": 0.0,
+     "bad_list": []
+    },
+    "blocks_ro": {
+     "n": 0,
+     "bad": 0,
+     "worst_g_over_r": 0.0,
+     "bad_list": []
+    },
+    "line": {
+     "min_ratio": 0.5365234017372131,
+     "edges": 3
+    },
+    "angle": 9.2,
+    "state": "net",
+    "site": "east_parade_bay2_upper_w0",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "reverse_night",
+    "brick_median": 43.98680114746094
+   },
+   "east_parade_bay2_upper_w1": {
+    "pane_px": 593,
+    "joinery_px": 1184,
+    "P": 41.49340057373047,
+    "L": 78.13520050048828,
+    "D": 25.329360961914062,
+    "spread": 31.353839874267578,
+    "pane_rgb_mean": [
+     42.95784148397976,
+     39.067453625632375,
+     37.23608768971332
+    ],
+    "P_over_L": 0.531046190551097,
+    "D_over_L": 0.3241734941443681,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.34630998969078064,
+     "edges": 2
+    },
+    "angle": 10.62,
+    "state": "net",
+    "site": "east_parade_bay2_upper_w1",
+    "net": "N2",
+    "extra": null,
+    "frame": "reverse_night",
+    "brick_median": 42.7505989074707
+   },
+   "east_parade_bay3_upper_w0": {
+    "pane_px": 528,
+    "joinery_px": 1813,
+    "P": 33.996002197265625,
+    "L": 59.91859817504883,
+    "D": 21.421201705932617,
+    "spread": 28.221799850463867,
+    "pane_rgb_mean": [
+     33.96969696969697,
+     30.926136363636363,
+     28.306818181818183
+    ],
+    "P_over_L": 0.5673697855538644,
+    "D_over_L": 0.35750505449663184,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.3765375018119812,
+     "edges": 3
+    },
+    "angle": 12.53,
+    "state": "net",
+    "site": "east_parade_bay3_upper_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "reverse_night",
+    "brick_median": 41.127201080322266
+   },
+   "east_parade_bay3_upper_w1": {
+    "pane_px": 2511,
+    "joinery_px": 3467,
+    "P": 29.561599731445312,
+    "L": 62.421199798583984,
+    "D": 15.115339279174805,
+    "spread": 30.753299713134766,
+    "pane_rgb_mean": [
+     30.52847471127041,
+     28.0442054958184,
+     25.265232974910393
+    ],
+    "P_over_L": 0.4735826902852308,
+    "D_over_L": 0.24215073289119465,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.37411966919898987,
+     "edges": 3
+    },
+    "angle": 15.23,
+    "state": "bare",
+    "site": "east_parade_bay3_upper_w1",
+    "net": "N0",
+    "extra": null,
+    "frame": "reverse_night",
+    "brick_median": 40.19940185546875
+   },
+   "west_south_bay0_gf_w0": {
+    "pane_px": 795,
+    "joinery_px": 870,
+    "P": 46.082401275634766,
+    "L": 104.85014343261719,
+    "D": 24.1324405670166,
+    "spread": 56.79869842529297,
+    "pane_rgb_mean": [
+     71.88427672955974,
+     41.270440251572325,
+     24.432704402515725
+    ],
+    "P_over_L": 0.43950727931287953,
+    "D_over_L": 0.23016125469132537,
+    "clear_px": 80,
+    "cloth_px": 55,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.21228773891925812,
+     "edges": 5
+    },
+    "angle": 18.33,
+    "state": "net",
+    "site": "west_south_bay0_gf_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "reverse_night",
+    "brick_median": 53.418399810791016
+   },
+   "west_south_bay0_gf_w1": {
+    "pane_px": 528,
+    "joinery_px": 698,
+    "P": 32.91200256347656,
+    "L": 70.43777465820312,
+    "D": 19.935649871826172,
+    "spread": 35.97566223144531,
+    "pane_rgb_mean": [
+     41.46022727272727,
+     31.16287878787879,
+     26.026515151515152
+    ],
+    "P_over_L": 0.4672493235792999,
+    "D_over_L": 0.2830249815324693,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.2025560736656189,
+     "edges": 5
+    },
+    "angle": 16.92,
+    "state": "net",
+    "site": "west_south_bay0_gf_w1",
+    "net": "N1",
+    "extra": null,
+    "frame": "reverse_night",
+    "brick_median": 43.62840270996094
+   },
+   "west_south_bay1_gf_w0": {
+    "pane_px": 445,
+    "joinery_px": 495,
+    "P": 23.84640121459961,
+    "L": 70.85040283203125,
+    "D": 11.330989837646484,
+    "spread": 37.835479736328125,
+    "pane_rgb_mean": [
+     32.6,
+     23.97752808988764,
+     20.732584269662922
+    ],
+    "P_over_L": 0.33657396798623035,
+    "D_over_L": 0.15992837562983875,
+    "clear_px": 35,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.10754207521677017,
+     "edges": 5
+    },
+    "angle": 14.34,
+    "state": "net",
+    "site": "west_south_bay1_gf_w0",
+    "net": "N2",
+    "extra": null,
+    "frame": "reverse_night",
+    "brick_median": 33.33979797363281
+   },
+   "west_south_bay1_gf_w1": {
+    "pane_px": 372,
+    "joinery_px": 373,
+    "P": 49.396697998046875,
+    "L": 80.30167388916016,
+    "D": 32.576881408691406,
+    "spread": 40.60167694091797,
+    "pane_rgb_mean": [
+     78.88709677419355,
+     46.33064516129032,
+     30.11021505376344
+    ],
+    "P_over_L": 0.6151390824832468,
+    "D_over_L": 0.40568122469846707,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "curtain_colour": "brown",
+    "blocks": {
+     "n": 0,
+     "bad": 0,
+     "worst_g_over_r": 0.0,
+     "bad_list": []
+    },
+    "blocks_ro": {
+     "n": 0,
+     "bad": 0,
+     "worst_g_over_r": 0.0,
+     "bad_list": []
+    },
+    "line": {
+     "min_ratio": 0.4955363869667053,
+     "edges": 5
+    },
+    "angle": 13.46,
+    "state": "draped",
+    "site": "west_south_bay1_gf_w1",
+    "net": "N0",
+    "extra": "C1",
+    "frame": "reverse_night",
+    "brick_median": 44.63759994506836
+   }
+  },
+  "cam-a_day": {
+   "west_south_bay0_gf_w0": {
+    "pane_px": 4292,
+    "joinery_px": 2089,
+    "P": 75.55359649658203,
+    "L": 153.85958862304688,
+    "D": 49.127201080322266,
+    "spread": 72.08037567138672,
+    "pane_rgb_mean": [
+     83.57735321528425,
+     80.8324790307549,
+     78.45852749301025
+    ],
+    "P_over_L": 0.49105549529114456,
+    "D_over_L": 0.3192989239083629,
+    "clear_px": 1768,
+    "cloth_px": 1717,
+    "clear_P": 51.84239959716797,
+    "cloth_P": 106.42520141601562,
+    "clear_rgb_mean": [
+     63.82013574660633,
+     57.76866515837104,
+     51.717194570135746
+    ],
+    "clear_Y": [
+     0.04502455314498443,
+     0.034269716134702144
+    ],
+    "cloth_Y": [
+     0.14022728111867136,
+     0.14536820926737007
+    ],
+    "line": {
+     "min_ratio": 0.34997105598449707,
+     "edges": 5
+    },
+    "angle": 33.67,
+    "state": "net",
+    "site": "west_south_bay0_gf_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "cam-a_day",
+    "brick_median": 80.44739532470703
+   },
+   "west_south_bay0_gf_w1": {
+    "pane_px": 6944,
+    "joinery_px": 3112,
+    "P": 71.85559844970703,
+    "L": 156.93179321289062,
+    "D": 31.774198532104492,
+    "spread": 92.79376220703125,
+    "pane_rgb_mean": [
+     75.0838133640553,
+     72.9105702764977,
+     71.36549539170507
+    ],
+    "P_over_L": 0.4578778906338572,
+    "D_over_L": 0.20247139143436813,
+    "clear_px": 0,
+    "cloth_px": 2896,
+    "clear_P": null,
+    "cloth_P": 106.21659851074219,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": [
+     0.14266919436703102,
+     0.14476366343622804
+    ],
+    "line": {
+     "min_ratio": 0.20884360373020172,
+     "edges": 5
+    },
+    "angle": 37.48,
+    "state": "net",
+    "site": "west_south_bay0_gf_w1",
+    "net": "N1",
+    "extra": null,
+    "frame": "cam-a_day",
+    "brick_median": 79.24400329589844
+   }
+  },
+  "cam-a_night": {
+   "west_south_bay0_gf_w0": {
+    "pane_px": 4292,
+    "joinery_px": 2089,
+    "P": 40.358097076416016,
+    "L": 124.12223815917969,
+    "D": 9.26240062713623,
+    "spread": 89.87239837646484,
+    "pane_rgb_mean": [
+     73.84762348555452,
+     41.39398881640261,
+     22.980661696178938
+    ],
+    "P_over_L": 0.3251479966439137,
+    "D_over_L": 0.07462321631082522,
+    "clear_px": 1768,
+    "cloth_px": 1717,
+    "clear_P": 16.44860076904297,
+    "cloth_P": 86.31439971923828,
+    "clear_rgb_mean": [
+     36.65158371040724,
+     13.571266968325792,
+     1.5820135746606334
+    ],
+    "clear_Y": [
+     0.007789779332920156,
+     0.00656258483745225
+    ],
+    "cloth_Y": [
+     0.0909782013316094,
+     0.10395136968685514
+    ],
+    "line": {
+     "min_ratio": 0.04647837579250336,
+     "edges": 5
+    },
+    "angle": 33.67,
+    "state": "net",
+    "site": "west_south_bay0_gf_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "cam-a_night",
+    "brick_median": 48.07619857788086
+   },
+   "west_south_bay0_gf_w1": {
+    "pane_px": 6944,
+    "joinery_px": 3112,
+    "P": 33.113399505615234,
+    "L": 83.49118041992188,
+    "D": 10.746600151062012,
+    "spread": 57.76100158691406,
+    "pane_rgb_mean": [
+     47.138680875576036,
+     29.870103686635943,
+     22.942684331797235
+    ],
+    "P_over_L": 0.3966095501233808,
+    "D_over_L": 0.128715393614171,
+    "clear_px": 0,
+    "cloth_px": 2896,
+    "clear_P": null,
+    "cloth_P": 53.75579833984375,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": [
+     0.03931014399689905,
+     0.037231604199501445
+    ],
+    "line": {
+     "min_ratio": 0.11251009255647659,
+     "edges": 5
+    },
+    "angle": 37.48,
+    "state": "net",
+    "site": "west_south_bay0_gf_w1",
+    "net": "N1",
+    "extra": null,
+    "frame": "cam-a_night",
+    "brick_median": 39.696800231933594
+   }
+  },
+  "close_day": {
+   "east_parade_bay0_upper_w1": {
+    "pane_px": 27539,
+    "joinery_px": 16527,
+    "P": 104.92379760742188,
+    "L": 180.14041137695312,
+    "D": 55.552398681640625,
+    "spread": 161.668212890625,
+    "pane_rgb_mean": [
+     125.52514615636007,
+     124.14495805947928,
+     123.07723591996805
+    ],
+    "P_over_L": 0.5824556344987101,
+    "D_over_L": 0.30838387820373275,
+    "clear_px": 6287,
+    "cloth_px": 8495,
+    "clear_P": 86.3530044555664,
+    "cloth_P": 197.6510009765625,
+    "clear_rgb_mean": [
+     130.64450453316368,
+     131.05678383966915,
+     132.81024335931286
+    ],
+    "clear_Y": [
+     0.2911901825369507,
+     0.09388620232677483
+    ],
+    "cloth_Y": [
+     0.4138073911849222,
+     0.5625453696818431
+    ],
+    "line": {
+     "min_ratio": 0.2180565744638443,
+     "edges": 8
+    },
+    "angle": 19.45,
+    "state": "net",
+    "site": "east_parade_bay0_upper_w1",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "close_day",
+    "brick_median": 102.35680389404297
+   },
+   "east_parade_bay1_upper_w0": {
+    "pane_px": 4405,
+    "joinery_px": 6644,
+    "P": 104.84239959716797,
+    "L": 182.4973907470703,
+    "D": 64.62107849121094,
+    "spread": 99.64360046386719,
+    "pane_rgb_mean": [
+     110.6211123723042,
+     105.07854710556187,
+     99.3489216799092
+    ],
+    "P_over_L": 0.5744871155033269,
+    "D_over_L": 0.3540931638895134,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.7467767596244812,
+     "edges": 3
+    },
+    "angle": 12.94,
+    "state": "draped",
+    "site": "east_parade_bay1_upper_w0",
+    "net": "N0",
+    "extra": "B2",
+    "frame": "close_day",
+    "brick_median": 102.57860565185547
+   }
+  },
+  "close_night": {
+   "east_parade_bay0_upper_w1": {
+    "pane_px": 27539,
+    "joinery_px": 16527,
+    "P": 125.33760070800781,
+    "L": 82.83439636230469,
+    "D": 30.553600311279297,
+    "spread": 156.1302032470703,
+    "pane_rgb_mean": [
+     123.14248883401721,
+     104.75206071389665,
+     75.25196993354878
+    ],
+    "P_over_L": 1.5131105701525338,
+    "D_over_L": 0.3688516081851147,
+    "clear_px": 6287,
+    "cloth_px": 8495,
+    "clear_P": 162.48719787597656,
+    "cloth_P": 144.01380920410156,
+    "clear_rgb_mean": [
+     187.02831239064736,
+     158.04930809607126,
+     109.04946715444568
+    ],
+    "clear_Y": [
+     0.3753519620641716,
+     0.3702196526175995
+    ],
+    "cloth_Y": [
+     0.27881935087248694,
+     0.2827912265973005
+    ],
+    "curtain_colour": "cream",
+    "blocks": {
+     "n": 0,
+     "bad": 0,
+     "worst_g_over_r": 0.0,
+     "bad_list": []
+    },
+    "blocks_ro": {
+     "n": 0,
+     "bad": 0,
+     "worst_g_over_r": 0.0,
+     "bad_list": []
+    },
+    "line": {
+     "min_ratio": 0.23353824019432068,
+     "edges": 8
+    },
+    "angle": 19.45,
+    "state": "net",
+    "site": "east_parade_bay0_upper_w1",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "close_night",
+    "brick_median": 39.678401947021484
+   },
+   "east_parade_bay1_upper_w0": {
+    "pane_px": 4405,
+    "joinery_px": 6644,
+    "P": 42.56159973144531,
+    "L": 75.63780212402344,
+    "D": 23.774200439453125,
+    "spread": 41.5066032409668,
+    "pane_rgb_mean": [
+     46.19727582292849,
+     42.392281498297386,
+     38.794551645856984
+    ],
+    "P_over_L": 0.5627027562442518,
+    "D_over_L": 0.31431638376364407,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.6657121181488037,
+     "edges": 3
+    },
+    "angle": 12.94,
+    "state": "draped",
+    "site": "east_parade_bay1_upper_w0",
+    "net": "N0",
+    "extra": "B2",
+    "frame": "close_night",
+    "brick_median": 39.39759826660156
+   }
+  },
+  "close2_day": {
+   "east_parade_bay0_upper_w1": {
+    "pane_px": 117905,
+    "joinery_px": 57022,
+    "P": 118.78340148925781,
+    "L": 189.14039611816406,
+    "D": 55.267601013183594,
+    "spread": 151.7364044189453,
+    "pane_rgb_mean": [
+     130.75855137610787,
+     130.29976676137568,
+     130.328739239218
+    ],
+    "P_over_L": 0.6280170916796048,
+    "D_over_L": 0.29220410947355513,
+    "clear_px": 35925,
+    "cloth_px": 42888,
+    "clear_P": 82.49340057373047,
+    "cloth_P": 190.79539489746094,
+    "clear_rgb_mean": [
+     125.75574112734864,
+     125.69441892832289,
+     126.9623382045929
+    ],
+    "clear_Y": [
+     0.26028997391479464,
+     0.08545068532067232
+    ],
+    "cloth_Y": [
+     0.450882166688076,
+     0.5198418710650724
+    ],
+    "line": {
+     "min_ratio": 0.21146197617053986,
+     "edges": 8
+    },
+    "angle": 21.94,
+    "state": "net",
+    "site": "east_parade_bay0_upper_w1",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "close2_day",
+    "brick_median": 100.8501968383789
+   },
+   "east_parade_bay1_upper_w0": {
+    "pane_px": 743,
+    "joinery_px": 2530,
+    "P": 80.14039611816406,
+    "L": 118.9917221069336,
+    "D": 61.05099868774414,
+    "spread": 33.346435546875,
+    "pane_rgb_mean": [
+     82.74966352624496,
+     78.14266487213997,
+     70.2436069986541
+    ],
+    "P_over_L": 0.6734955566585108,
+    "D_over_L": 0.5130692926091094,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.45495936274528503,
+     "edges": 2
+    },
+    "angle": 14.75,
+    "state": "draped",
+    "site": "east_parade_bay1_upper_w0",
+    "net": "N0",
+    "extra": "B2",
+    "frame": "close2_day",
+    "brick_median": 87.127197265625
+   }
+  },
+  "close2_night": {
+   "east_parade_bay0_upper_w1": {
+    "pane_px": 117905,
+    "joinery_px": 57022,
+    "P": 152.2906036376953,
+    "L": 86.21260070800781,
+    "D": 30.41320037841797,
+    "spread": 171.1984100341797,
+    "pane_rgb_mean": [
+     152.64003222933718,
+     130.26130359187482,
+     92.69553454051992
+    ],
+    "P_over_L": 1.7664541190850525,
+    "D_over_L": 0.35276978224359556,
+    "clear_px": 35925,
+    "cloth_px": 42888,
+    "clear_P": 199.96458435058594,
+    "cloth_P": 154.00180053710938,
+    "clear_rgb_mean": [
+     220.6698121085595,
+     187.6227974947808,
+     129.75061934585943
+    ],
+    "clear_Y": [
+     0.5333308744839624,
+     0.5883757936889243
+    ],
+    "cloth_Y": [
+     0.33846559702913553,
+     0.3280823748593395
+    ],
+    "curtain_colour": "cream",
+    "blocks": {
+     "n": 33,
+     "bad": 0,
+     "worst_g_over_r": 0.742,
+     "bad_list": []
+    },
+    "blocks_ro": {
+     "n": 33,
+     "bad": 0,
+     "worst_g_over_r": 0.732,
+     "bad_list": []
+    },
+    "line": {
+     "min_ratio": 0.2409183830022812,
+     "edges": 8
+    },
+    "angle": 21.94,
+    "state": "net",
+    "site": "east_parade_bay0_upper_w1",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "close2_night",
+    "brick_median": 39.03139877319336
+   },
+   "east_parade_bay1_upper_w0": {
+    "pane_px": 743,
+    "joinery_px": 2530,
+    "P": 35.05500030517578,
+    "L": 48.774200439453125,
+    "D": 25.316200256347656,
+    "spread": 12.63486099243164,
+    "pane_rgb_mean": [
+     39.104979811574694,
+     31.99057873485868,
+     26.122476446837148
+    ],
+    "P_over_L": 0.7187201428077132,
+    "D_over_L": 0.5190490059959968,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.5431026816368103,
+     "edges": 2
+    },
+    "angle": 14.75,
+    "state": "draped",
+    "site": "east_parade_bay1_upper_w0",
+    "net": "N0",
+    "extra": "B2",
+    "frame": "close2_night",
+    "brick_median": 33.827999114990234
+   }
+  },
+  "h-across0-bay3w1_day": {
+   "east_parade_bay2_upper_w1": {
+    "pane_px": 12617,
+    "joinery_px": 5628,
+    "P": 147.50660705566406,
+    "L": 229.79139709472656,
+    "D": 99.21887969970703,
+    "spread": 53.4263916015625,
+    "pane_rgb_mean": [
+     140.91963224221288,
+     143.640802092415,
+     145.90433542046446
+    ],
+    "P_over_L": 0.641915271505389,
+    "D_over_L": 0.431778042842945,
+    "clear_px": 0,
+    "cloth_px": 12452,
+    "clear_P": null,
+    "cloth_P": 147.5788116455078,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": [
+     0.2857027764572141,
+     0.29433916971779966
+    ],
+    "line": {
+     "min_ratio": 0.2526996433734894,
+     "edges": 5
+    },
+    "angle": 51.45,
+    "state": "net",
+    "site": "east_parade_bay2_upper_w1",
+    "net": "N2",
+    "extra": null,
+    "frame": "h-across0-bay3w1_day",
+    "brick_median": 94.55620574951172
+   },
+   "east_parade_bay3_upper_w0": {
+    "pane_px": 42123,
+    "joinery_px": 16602,
+    "P": 123.28880310058594,
+    "L": 200.8555908203125,
+    "D": 96.56160736083984,
+    "spread": 54.112396240234375,
+    "pane_rgb_mean": [
+     132.97471690050565,
+     131.24865275502694,
+     126.3625097927498
+    ],
+    "P_over_L": 0.6138181297172922,
+    "D_over_L": 0.48075140436207653,
+    "clear_px": 19536,
+    "cloth_px": 20068,
+    "clear_P": 117.0761947631836,
+    "cloth_P": 147.97999572753906,
+    "clear_rgb_mean": [
+     115.49523955773955,
+     116.59510647010647,
+     119.63047706797707
+    ],
+    "clear_Y": [
+     0.17686003490544958,
+     0.17816059462255404
+    ],
+    "cloth_Y": [
+     0.29507453384848004,
+     0.29632782752694253
+    ],
+    "line": {
+     "min_ratio": 0.4647767245769501,
+     "edges": 8
+    },
+    "angle": 62.43,
+    "state": "net",
+    "site": "east_parade_bay3_upper_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "h-across0-bay3w1_day",
+    "brick_median": 94.3436050415039
+   },
+   "east_parade_bay3_upper_w1": {
+    "pane_px": 42313,
+    "joinery_px": 18847,
+    "P": 113.28880310058594,
+    "L": 199.0681915283203,
+    "D": 97.13973999023438,
+    "spread": 26.06420135498047,
+    "pane_rgb_mean": [
+     114.47212440621085,
+     114.29083260463688,
+     116.77425377543544
+    ],
+    "P_over_L": 0.5690954553353089,
+    "D_over_L": 0.4879721830215896,
+    "clear_px": 40926,
+    "cloth_px": 0,
+    "clear_P": 113.21659851074219,
+    "cloth_P": null,
+    "clear_rgb_mean": [
+     114.35024190001467,
+     114.18987929433612,
+     116.86319210281972
+    ],
+    "clear_Y": [
+     0.1712478006626475,
+     0.16581919260258043
+    ],
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.25794678926467896,
+     "edges": 8
+    },
+    "angle": 68.72,
+    "state": "bare",
+    "site": "east_parade_bay3_upper_w1",
+    "net": "N0",
+    "extra": null,
+    "frame": "h-across0-bay3w1_day",
+    "brick_median": 93.91460418701172
+   },
+   "east_parade_bay4_upper_w0": {
+    "pane_px": 36218,
+    "joinery_px": 24023,
+    "P": 164.64700317382812,
+    "L": 237.79141235351562,
+    "D": 118.64700317382812,
+    "spread": 56.430389404296875,
+    "pane_rgb_mean": [
+     161.35576232812414,
+     162.5450880777514,
+     163.49364956651388
+    ],
+    "P_over_L": 0.6924009641233535,
+    "D_over_L": 0.49895411276434176,
+    "clear_px": 0,
+    "cloth_px": 35459,
+    "clear_P": null,
+    "cloth_P": 164.9318084716797,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": [
+     0.3743674819641234,
+     0.3759280063513253
+    ],
+    "line": {
+     "min_ratio": 0.26552850008010864,
+     "edges": 10
+    },
+    "angle": 62.43,
+    "state": "draped",
+    "site": "east_parade_bay4_upper_w0",
+    "net": "N2",
+    "extra": "C1",
+    "frame": "h-across0-bay3w1_day",
+    "brick_median": 94.1310043334961
+   },
+   "east_parade_bay4_upper_w1": {
+    "pane_px": 14567,
+    "joinery_px": 3678,
+    "P": 131.85560607910156,
+    "L": 231.00399780273438,
+    "D": 92.70320129394531,
+    "spread": 39.6025390625,
+    "pane_rgb_mean": [
+     139.08176014278848,
+     137.0707077641244,
+     132.47792956682915
+    ],
+    "P_over_L": 0.57079361107724,
+    "D_over_L": 0.40130561451628693,
+    "clear_px": 9263,
+    "cloth_px": 5104,
+    "clear_P": 130.07220458984375,
+    "cloth_P": 153.8350067138672,
+    "clear_rgb_mean": [
+     128.99546583180395,
+     128.48148547986614,
+     128.57756666306813
+    ],
+    "clear_Y": [
+     0.21930010045322076,
+     0.22349783486596406
+    ],
+    "cloth_Y": [
+     0.32460191453970155,
+     0.3226811185072125
+    ],
+    "line": {
+     "min_ratio": 0.24238541722297668,
+     "edges": 5
+    },
+    "angle": 51.45,
+    "state": "net",
+    "site": "east_parade_bay4_upper_w1",
+    "net": "N1",
+    "extra": null,
+    "frame": "h-across0-bay3w1_day",
+    "brick_median": 94.64680480957031
+   }
+  },
+  "h-along30-bay3w1_day": {
+   "east_parade_bay3_upper_w1": {
+    "pane_px": 27540,
+    "joinery_px": 16528,
+    "P": 80.9186019897461,
+    "L": 169.42120361328125,
+    "D": 47.17580032348633,
+    "spread": 157.95321655273438,
+    "pane_rgb_mean": [
+     113.42443718228031,
+     110.93968772694262,
+     109.84317356572258
+    ],
+    "P_over_L": 0.47761791478267324,
+    "D_over_L": 0.27845275158810245,
+    "clear_px": 14921,
+    "cloth_px": 0,
+    "clear_P": 158.1444091796875,
+    "cloth_P": null,
+    "clear_rgb_mean": [
+     133.41806849406876,
+     131.7963273239059,
+     133.84632397292407
+    ],
+    "clear_Y": [
+     0.3012421014061915,
+     0.3426088571141873
+    ],
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.20108580589294434,
+     "edges": 8
+    },
+    "angle": 19.45,
+    "state": "bare",
+    "site": "east_parade_bay3_upper_w1",
+    "net": "N0",
+    "extra": null,
+    "frame": "h-along30-bay3w1_day",
+    "brick_median": 101.93160247802734
+   },
+   "east_parade_bay4_upper_w0": {
+    "pane_px": 3814,
+    "joinery_px": 11344,
+    "P": 102.20800018310547,
+    "L": 246.00799560546875,
+    "D": 55.284202575683594,
+    "spread": 118.98725891113281,
+    "pane_rgb_mean": [
+     100.02884111169377,
+     95.77477713686419,
+     94.12952281069742
+    ],
+    "P_over_L": 0.4154661718679252,
+    "D_over_L": 0.22472522667248881,
+    "clear_px": 175,
+    "cloth_px": 102,
+    "clear_P": 71.77420043945312,
+    "cloth_P": null,
+    "clear_rgb_mean": [
+     76.58285714285714,
+     70.81714285714285,
+     66.34285714285714
+    ],
+    "clear_Y": [
+     0.06712323813728105,
+     0.06448223706218734
+    ],
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.23157133162021637,
+     "edges": 4
+    },
+    "angle": 12.94,
+    "state": "draped",
+    "site": "east_parade_bay4_upper_w0",
+    "net": "N2",
+    "extra": "C1",
+    "frame": "h-along30-bay3w1_day",
+    "brick_median": 102.21640014648438
+   },
+   "east_parade_bay4_upper_w1": {
+    "pane_px": 172,
+    "joinery_px": 587,
+    "P": 103.31549835205078,
+    "L": 149.0469512939453,
+    "D": 65.69171905517578,
+    "spread": 59.36623764038086,
+    "pane_rgb_mean": [
+     97.43023255813954,
+     95.55813953488372,
+     90.59302325581395
+    ],
+    "P_over_L": 0.6931741807203791,
+    "D_over_L": 0.44074513758836176,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.3819185495376587,
+     "edges": 2
+    },
+    "angle": 9.23,
+    "state": "net",
+    "site": "east_parade_bay4_upper_w1",
+    "net": "N1",
+    "extra": null,
+    "frame": "h-along30-bay3w1_day",
+    "brick_median": 94.55240631103516
+   }
+  },
+  "h-along30-bay1w1_day": {
+   "east_parade_bay1_upper_w1": {
+    "pane_px": 28559,
+    "joinery_px": 15509,
+    "P": 103.84640502929688,
+    "L": 190.49844360351562,
+    "D": 55.78340148925781,
+    "spread": 166.16610717773438,
+    "pane_rgb_mean": [
+     124.7033859728982,
+     123.73927658531461,
+     123.57971217479604
+    ],
+    "P_over_L": 0.5451299394625626,
+    "D_over_L": 0.2928286469644854,
+    "clear_px": 7840,
+    "cloth_px": 9756,
+    "clear_P": 78.42119598388672,
+    "cloth_P": 199.5146026611328,
+    "clear_rgb_mean": [
+     125.44464285714285,
+     125.59566326530613,
+     127.10038265306123
+    ],
+    "clear_Y": [
+     0.2672990668557867,
+     0.07706108728052422
+    ],
+    "cloth_Y": [
+     0.4359506345089706,
+     0.5746472167267795
+    ],
+    "line": {
+     "min_ratio": 0.2523285746574402,
+     "edges": 6
+    },
+    "angle": 19.45,
+    "state": "net",
+    "site": "east_parade_bay1_upper_w1",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "h-along30-bay1w1_day",
+    "brick_median": 102.09040069580078
+   },
+   "east_parade_bay2_upper_w0": {
+    "pane_px": 7951,
+    "joinery_px": 7207,
+    "P": 100.77020263671875,
+    "L": 204.67779541015625,
+    "D": 52.94940185546875,
+    "spread": 159.06198120117188,
+    "pane_rgb_mean": [
+     121.80203747956232,
+     113.97685825682304,
+     111.37290906804175
+    ],
+    "P_over_L": 0.4923357828570713,
+    "D_over_L": 0.2586963659119096,
+    "clear_px": 1282,
+    "cloth_px": 559,
+    "clear_P": 202.69110107421875,
+    "cloth_P": 204.4384002685547,
+    "clear_rgb_mean": [
+     184.60296411856476,
+     186.80421216848674,
+     192.8829953198128
+    ],
+    "clear_Y": [
+     0.5222591458417808,
+     0.5953351670019553
+    ],
+    "cloth_Y": [
+     0.5876013696955537,
+     0.6068359981878155
+    ],
+    "line": {
+     "min_ratio": 0.2613542079925537,
+     "edges": 2
+    },
+    "angle": 12.94,
+    "state": "net",
+    "site": "east_parade_bay2_upper_w0",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "h-along30-bay1w1_day",
+    "brick_median": 102.07600402832031
+   }
+  },
+  "h-across0-bay2w0_day": {
+   "east_parade_bay1_upper_w0": {
+    "pane_px": 15526,
+    "joinery_px": 2439,
+    "P": 167.70318603515625,
+    "L": 232.2126007080078,
+    "D": 93.06819915771484,
+    "spread": 88.83160400390625,
+    "pane_rgb_mean": [
+     157.16939327579544,
+     155.30825711709392,
+     147.85881746747393
+    ],
+    "P_over_L": 0.7221967521307427,
+    "D_over_L": 0.40078875510611084,
+    "clear_px": 3675,
+    "cloth_px": 11426,
+    "clear_P": 109.71920013427734,
+    "cloth_P": 180.69921875,
+    "clear_rgb_mean": [
+     107.78585034013605,
+     109.06748299319727,
+     112.11673469387755
+    ],
+    "clear_Y": [
+     0.1533094514460128,
+     0.15509857907871735
+    ],
+    "cloth_Y": [
+     0.41946235798018466,
+     0.4606524739735977
+    ],
+    "line": {
+     "min_ratio": 0.3069462776184082,
+     "edges": 3
+    },
+    "angle": 51.45,
+    "state": "draped",
+    "site": "east_parade_bay1_upper_w0",
+    "net": "N0",
+    "extra": "B2",
+    "frame": "h-across0-bay2w0_day",
+    "brick_median": 94.62840270996094
+   },
+   "east_parade_bay1_upper_w1": {
+    "pane_px": 43541,
+    "joinery_px": 15184,
+    "P": 125.41600036621094,
+    "L": 233.79139709472656,
+    "D": 105.51840209960938,
+    "spread": 72.57080078125,
+    "pane_rgb_mean": [
+     137.7604326956202,
+     139.1159367033371,
+     141.5272961117108
+    ],
+    "P_over_L": 0.5364440348307403,
+    "D_over_L": 0.45133569246286637,
+    "clear_px": 18265,
+    "cloth_px": 23235,
+    "clear_P": 116.79139709472656,
+    "cloth_P": 160.7191925048828,
+    "clear_rgb_mean": [
+     115.45885573501232,
+     116.61012866137422,
+     119.96955926635641
+    ],
+    "clear_Y": [
+     0.17691399407345398,
+     0.17723483288739858
+    ],
+    "cloth_Y": [
+     0.3479845172401411,
+     0.3550501028764943
+    ],
+    "line": {
+     "min_ratio": 0.18024785816669464,
+     "edges": 6
+    },
+    "angle": 62.43,
+    "state": "net",
+    "site": "east_parade_bay1_upper_w1",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "h-across0-bay2w0_day",
+    "brick_median": 93.768798828125
+   },
+   "east_parade_bay2_upper_w0": {
+    "pane_px": 42286,
+    "joinery_px": 19364,
+    "P": 147.50660705566406,
+    "L": 229.79139709472656,
+    "D": 105.64700317382812,
+    "spread": 73.1236572265625,
+    "pane_rgb_mean": [
+     141.1084046729414,
+     142.56600293241263,
+     143.60646549685475
+    ],
+    "P_over_L": 0.641915271505389,
+    "D_over_L": 0.4597517770879709,
+    "clear_px": 15034,
+    "cloth_px": 26654,
+    "clear_P": 113.07620239257812,
+    "cloth_P": 158.7873992919922,
+    "clear_rgb_mean": [
+     115.9275641878409,
+     116.79985366502594,
+     119.12657975256086
+    ],
+    "clear_Y": [
+     0.17968091573393213,
+     0.16539353440248566
+    ],
+    "cloth_Y": [
+     0.344192253753382,
+     0.3456857807095316
+    ],
+    "line": {
+     "min_ratio": 0.2533106207847595,
+     "edges": 8
+    },
+    "angle": 68.72,
+    "state": "net",
+    "site": "east_parade_bay2_upper_w0",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "h-across0-bay2w0_day",
+    "brick_median": 94.41580200195312
+   },
+   "east_parade_bay2_upper_w1": {
+    "pane_px": 42004,
+    "joinery_px": 18237,
+    "P": 159.64700317382812,
+    "L": 231.00399780273438,
+    "D": 121.14440155029297,
+    "spread": 46.26995849609375,
+    "pane_rgb_mean": [
+     156.83872964479573,
+     158.11725073802495,
+     158.48757261213217
+    ],
+    "P_over_L": 0.6911006073157163,
+    "D_over_L": 0.5244255627720525,
+    "clear_px": 0,
+    "cloth_px": 41254,
+    "clear_P": null,
+    "cloth_P": 159.85960388183594,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": [
+     0.35014398288881443,
+     0.3508574879511307
+    ],
+    "line": {
+     "min_ratio": 0.25137314200401306,
+     "edges": 6
+    },
+    "angle": 62.43,
+    "state": "net",
+    "site": "east_parade_bay2_upper_w1",
+    "net": "N2",
+    "extra": null,
+    "frame": "h-across0-bay2w0_day",
+    "brick_median": 94.3436050415039
+   },
+   "east_parade_bay3_upper_w0": {
+    "pane_px": 15253,
+    "joinery_px": 2712,
+    "P": 133.8555908203125,
+    "L": 195.99600219726562,
+    "D": 80.57604217529297,
+    "spread": 45.97600555419922,
+    "pane_rgb_mean": [
+     138.246181079132,
+     136.19812495902445,
+     132.1535435652003
+    ],
+    "P_over_L": 0.6829506179702064,
+    "D_over_L": 0.4111106414007107,
+    "clear_px": 9332,
+    "cloth_px": 4997,
+    "clear_P": 132.07220458984375,
+    "cloth_P": 151.9840087890625,
+    "clear_rgb_mean": [
+     129.50417916845262,
+     128.88416202314616,
+     129.3797685383626
+    ],
+    "clear_Y": [
+     0.2203495449166296,
+     0.2310151690529157
+    ],
+    "cloth_Y": [
+     0.313469785282811,
+     0.31446803937114043
+    ],
+    "line": {
+     "min_ratio": 0.32137390971183777,
+     "edges": 3
+    },
+    "angle": 51.45,
+    "state": "net",
+    "site": "east_parade_bay3_upper_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "h-across0-bay2w0_day",
+    "brick_median": 94.55620574951172
+   }
+  },
+  "h-across0-bay2w0_night": {
+   "east_parade_bay1_upper_w0": {
+    "pane_px": 15526,
+    "joinery_px": 2439,
+    "P": 64.54440307617188,
+    "L": 99.42520141601562,
+    "D": 22.262401580810547,
+    "spread": 58.07859802246094,
+    "pane_rgb_mean": [
+     65.57149297951823,
+     53.79402292927992,
+     44.35347159603246
+    ],
+    "P_over_L": 0.649175482241215,
+    "D_over_L": 0.2239110533722738,
+    "clear_px": 3675,
+    "cloth_px": 11426,
+    "clear_P": 22.615400314331055,
+    "cloth_P": 72.25959777832031,
+    "clear_rgb_mean": [
+     34.23183673469388,
+     20.39673469387755,
+     15.48326530612245
+    ],
+    "clear_Y": [
+     0.009045309816487733,
+     0.00874882537674564
+    ],
+    "cloth_Y": [
+     0.05849217851093409,
+     0.06571573727369763
+    ],
+    "line": {
+     "min_ratio": 0.2936820685863495,
+     "edges": 3
+    },
+    "angle": 51.45,
+    "state": "draped",
+    "site": "east_parade_bay1_upper_w0",
+    "net": "N0",
+    "extra": "B2",
+    "frame": "h-across0-bay2w0_night",
+    "brick_median": 36.17179870605469,
+    "lit": false
+   },
+   "east_parade_bay1_upper_w1": {
+    "pane_px": 43541,
+    "joinery_px": 15184,
+    "P": 38.33979797363281,
+    "L": 99.28480529785156,
+    "D": 23.0497989654541,
+    "spread": 53.08140182495117,
+    "pane_rgb_mean": [
+     53.27041179577869,
+     42.34778714315243,
+     38.20054661123998
+    ],
+    "P_over_L": 0.38615977398167345,
+    "D_over_L": 0.2321583740463142,
+    "clear_px": 18265,
+    "cloth_px": 23235,
+    "clear_P": 25.896202087402344,
+    "cloth_P": 62.13119888305664,
+    "clear_rgb_mean": [
+     38.54004927456885,
+     22.668436901177113,
+     16.397864768683274
+    ],
+    "clear_Y": [
+     0.01068981601455658,
+     0.0108153774537963
+    ],
+    "cloth_Y": [
+     0.04699993841049506,
+     0.04846545584503511
+    ],
+    "line": {
+     "min_ratio": 0.19920672476291656,
+     "edges": 6
+    },
+    "angle": 62.43,
+    "state": "net",
+    "site": "east_parade_bay1_upper_w1",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "h-across0-bay2w0_night",
+    "brick_median": 35.67839813232422,
+    "lit": false
+   },
+   "east_parade_bay2_upper_w0": {
+    "pane_px": 42286,
+    "joinery_px": 19364,
+    "P": 120.3759994506836,
+    "L": 97.8595962524414,
+    "D": 47.331539154052734,
+    "spread": 104.72115325927734,
+    "pane_rgb_mean": [
+     126.87728799129735,
+     111.08052310457362,
+     79.06858061769853
+    ],
+    "P_over_L": 1.2300888626206696,
+    "D_over_L": 0.48366783602861946,
+    "clear_px": 15034,
+    "cloth_px": 26654,
+    "clear_P": 64.81320190429688,
+    "cloth_P": 123.44820404052734,
+    "clear_rgb_mean": [
+     107.19662099241718,
+     88.10442995876015,
+     58.71438073699614
+    ],
+    "clear_Y": [
+     0.13847734411849155,
+     0.05377373634971298
+    ],
+    "cloth_Y": [
+     0.2107088444275658,
+     0.20249847227400614
+    ],
+    "curtain_colour": "green",
+    "blocks": {
+     "n": 4,
+     "bad": 0,
+     "worst_g_over_r": 0.627,
+     "bad_list": []
+    },
+    "blocks_ro": {
+     "n": 4,
+     "bad": 0,
+     "worst_g_over_r": 0.6,
+     "bad_list": []
+    },
+    "line": {
+     "min_ratio": 0.2480778694152832,
+     "edges": 8
+    },
+    "angle": 68.72,
+    "state": "net",
+    "site": "east_parade_bay2_upper_w0",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "h-across0-bay2w0_night",
+    "brick_median": 36.17179870605469,
+    "lit": true
+   },
+   "east_parade_bay2_upper_w1": {
+    "pane_px": 42004,
+    "joinery_px": 18237,
+    "P": 54.84640121459961,
+    "L": 98.28479766845703,
+    "D": 34.11800003051758,
+    "spread": 33.868797302246094,
+    "pane_rgb_mean": [
+     59.26290353299686,
+     51.957575469002954,
+     48.7007904009142
+    ],
+    "P_over_L": 0.5580354491811881,
+    "D_over_L": 0.3471340516527025,
+    "clear_px": 0,
+    "cloth_px": 41254,
+    "clear_P": null,
+    "cloth_P": 54.98680114746094,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": [
+     0.03772917638540187,
+     0.0382928155671328
+    ],
+    "line": {
+     "min_ratio": 0.2077757716178894,
+     "edges": 6
+    },
+    "angle": 62.43,
+    "state": "net",
+    "site": "east_parade_bay2_upper_w1",
+    "net": "N2",
+    "extra": null,
+    "frame": "h-across0-bay2w0_night",
+    "brick_median": 35.959197998046875,
+    "lit": false
+   },
+   "east_parade_bay3_upper_w0": {
+    "pane_px": 15253,
+    "joinery_px": 2712,
+    "P": 29.10879898071289,
+    "L": 82.28079986572266,
+    "D": 21.768999099731445,
+    "spread": 41.29975891113281,
+    "pane_rgb_mean": [
+     46.27207762407395,
+     33.99672195633646,
+     26.481675735920803
+    ],
+    "P_over_L": 0.3537738941310331,
+    "D_over_L": 0.26456960962043574,
+    "clear_px": 9332,
+    "cloth_px": 4997,
+    "clear_P": 27.755800247192383,
+    "cloth_P": 54.47220230102539,
+    "clear_rgb_mean": [
+     37.76296613801972,
+     24.369588512644665,
+     18.953064723531934
+    ],
+    "clear_Y": [
+     0.011363206216530811,
+     0.011933949188597784
+    ],
+    "cloth_Y": [
+     0.03757140290414988,
+     0.03796290173101871
+    ],
+    "line": {
+     "min_ratio": 0.24983228743076324,
+     "edges": 3
+    },
+    "angle": 51.45,
+    "state": "net",
+    "site": "east_parade_bay3_upper_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "h-across0-bay2w0_night",
+    "brick_median": 36.03139877319336,
+    "lit": false
+   }
+  },
+  "h-along30-gf2w1_day": {
+   "west_south_bay1_gf_w0": {
+    "pane_px": 8472,
+    "joinery_px": 9105,
+    "P": 79.62979888916016,
+    "L": 175.14840698242188,
+    "D": 43.809600830078125,
+    "spread": 87.40699768066406,
+    "pane_rgb_mean": [
+     87.59584513692162,
+     77.71470727101038,
+     74.53033522190746
+    ],
+    "P_over_L": 0.4546418677798874,
+    "D_over_L": 0.25012845726010463,
+    "clear_px": 663,
+    "cloth_px": 0,
+    "clear_P": 64.0365982055664,
+    "cloth_P": null,
+    "clear_rgb_mean": [
+     77.2684766214178,
+     64.04524886877829,
+     56.45550527903469
+    ],
+    "clear_Y": [
+     0.05719038378115097,
+     0.05181609270471588
+    ],
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.21551212668418884,
+     "edges": 5
+    },
+    "angle": 13.6,
+    "state": "net",
+    "site": "west_south_bay1_gf_w0",
+    "net": "N2",
+    "extra": null,
+    "frame": "h-along30-gf2w1_day",
+    "brick_median": 81.65080261230469
+   },
+   "west_south_bay1_gf_w1": {
+    "pane_px": 28912,
+    "joinery_px": 20231,
+    "P": 65.06819915771484,
+    "L": 181.6510009765625,
+    "D": 40.312198638916016,
+    "spread": 70.6510009765625,
+    "pane_rgb_mean": [
+     71.50325124515771,
+     66.10960846707249,
+     63.44625069175429
+    ],
+    "P_over_L": 0.3582044624467016,
+    "D_over_L": 0.22192114781749697,
+    "clear_px": 0,
+    "cloth_px": 12685,
+    "clear_P": null,
+    "cloth_P": 59.2848014831543,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": [
+     0.04819507725303317,
+     0.04425509921050478
+    ],
+    "line": {
+     "min_ratio": 0.2984437346458435,
+     "edges": 5
+    },
+    "angle": 18.83,
+    "state": "draped",
+    "site": "west_south_bay1_gf_w1",
+    "net": "N0",
+    "extra": "C1",
+    "frame": "h-along30-gf2w1_day",
+    "brick_median": 80.29380798339844
+   },
+   "west_south_bay2_gf_w0": {
+    "pane_px": 621005,
+    "joinery_px": 195243,
+    "P": 78.0,
+    "L": 187.79139709472656,
+    "D": 30.992000579833984,
+    "spread": 109.58279418945312,
+    "pane_rgb_mean": [
+     82.37256704857448,
+     80.98466840041546,
+     79.3700984694165
+    ],
+    "P_over_L": 0.41535449017749676,
+    "D_over_L": 0.1650341871848414,
+    "clear_px": 279703,
+    "cloth_px": 274543,
+    "clear_P": 44.127197265625,
+    "cloth_P": 111.64700317382812,
+    "clear_rgb_mean": [
+     47.6267612431758,
+     42.95507734990329,
+     38.329828425150964
+    ],
+    "clear_Y": [
+     0.02648512133534914,
+     0.02545804181958361
+    ],
+    "cloth_Y": [
+     0.16292314775778358,
+     0.1609559200843967
+    ],
+    "line": {
+     "min_ratio": 0.11712995916604996,
+     "edges": 5
+    },
+    "angle": 61.96,
+    "state": "net",
+    "site": "west_south_bay2_gf_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "h-along30-gf2w1_day",
+    "brick_median": 74.93160247802734
+   },
+   "west_south_bay2_gf_w1": {
+    "pane_px": 114204,
+    "joinery_px": 64631,
+    "P": 98.56559753417969,
+    "L": 194.8636016845703,
+    "D": 61.25230026245117,
+    "spread": 77.80801391601562,
+    "pane_rgb_mean": [
+     97.3706087352457,
+     96.75568281321145,
+     96.4097492206928
+    ],
+    "P_over_L": 0.5058184118639552,
+    "D_over_L": 0.314334230369002,
+    "clear_px": 0,
+    "cloth_px": 82921,
+    "clear_P": null,
+    "cloth_P": 91.21259307861328,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": [
+     0.12816233039624791,
+     0.10513907559706662
+    ],
+    "line": {
+     "min_ratio": 0.24630562961101532,
+     "edges": 7
+    },
+    "angle": 30.0,
+    "state": "draped",
+    "site": "west_south_bay2_gf_w1",
+    "net": "N1",
+    "extra": "B3",
+    "frame": "h-along30-gf2w1_day",
+    "brick_median": 76.50640106201172
+   }
+  },
+  "h-along30-gf2w1_night": {
+   "west_south_bay1_gf_w0": {
+    "pane_px": 8472,
+    "joinery_px": 9105,
+    "P": 23.837200164794922,
+    "L": 73.49740600585938,
+    "D": 13.040599822998047,
+    "spread": 44.62568664550781,
+    "pane_rgb_mean": [
+     38.706208687440984,
+     27.13916430594901,
+     21.978045325779036
+    ],
+    "P_over_L": 0.3243270947942648,
+    "D_over_L": 0.17742938875908656,
+    "clear_px": 663,
+    "cloth_px": 0,
+    "clear_P": 24.199399948120117,
+    "cloth_P": null,
+    "clear_rgb_mean": [
+     37.66817496229261,
+     17.541478129713425,
+     6.416289592760181
+    ],
+    "clear_Y": [
+     0.009533551914034271,
+     0.010744652629927881
+    ],
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.15803822875022888,
+     "edges": 5
+    },
+    "angle": 13.6,
+    "state": "net",
+    "site": "west_south_bay1_gf_w0",
+    "net": "N2",
+    "extra": null,
+    "frame": "h-along30-gf2w1_night",
+    "brick_median": 32.25320053100586
+   },
+   "west_south_bay1_gf_w1": {
+    "pane_px": 28912,
+    "joinery_px": 20231,
+    "P": 82.62680053710938,
+    "L": 103.9573974609375,
+    "D": 28.85260009765625,
+    "spread": 92.49279022216797,
+    "pane_rgb_mean": [
+     119.3161317100166,
+     72.80316131710016,
+     38.40011068068622
+    ],
+    "P_over_L": 0.7948140541721121,
+    "D_over_L": 0.27754253956287966,
+    "clear_px": 0,
+    "cloth_px": 12685,
+    "clear_P": null,
+    "cloth_P": 117.14599609375,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": [
+     0.1920310910825444,
+     0.19349757778502497
+    ],
+    "curtain_colour": "brown",
+    "blocks": {
+     "n": 0,
+     "bad": 0,
+     "worst_g_over_r": 0.0,
+     "bad_list": []
+    },
+    "blocks_ro": {
+     "n": 0,
+     "bad": 0,
+     "worst_g_over_r": 0.0,
+     "bad_list": []
+    },
+    "line": {
+     "min_ratio": 0.12065712362527847,
+     "edges": 5
+    },
+    "angle": 18.83,
+    "state": "draped",
+    "site": "west_south_bay1_gf_w1",
+    "net": "N0",
+    "extra": "C1",
+    "frame": "h-along30-gf2w1_night",
+    "brick_median": 42.02340316772461
+   },
+   "west_south_bay2_gf_w0": {
+    "pane_px": 621005,
+    "joinery_px": 195243,
+    "P": 83.87340545654297,
+    "L": 104.13035583496094,
+    "D": 43.56159973144531,
+    "spread": 113.64878845214844,
+    "pane_rgb_mean": [
+     110.9406961296608,
+     91.23362935886185,
+     62.45470809413773
+    ],
+    "P_over_L": 0.8054654647437893,
+    "D_over_L": 0.41833718306395967,
+    "clear_px": 279703,
+    "cloth_px": 274543,
+    "clear_P": 52.668800354003906,
+    "cloth_P": 135.00979614257812,
+    "clear_rgb_mean": [
+     69.4290551048791,
+     54.034247040610936,
+     30.32223465604588
+    ],
+    "clear_Y": [
+     0.043151724569190426,
+     0.03640076482331042
+    ],
+    "cloth_Y": [
+     0.2625102260818361,
+     0.24651129427857324
+    ],
+    "curtain_colour": null,
+    "blocks": {
+     "n": 452,
+     "bad": 0,
+     "worst_g_over_r": 0.737,
+     "bad_list": []
+    },
+    "blocks_ro": {
+     "n": 459,
+     "bad": 0,
+     "worst_g_over_r": 0.737,
+     "bad_list": []
+    },
+    "line": {
+     "min_ratio": 0.27408337593078613,
+     "edges": 5
+    },
+    "angle": 61.96,
+    "state": "net",
+    "site": "west_south_bay2_gf_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "h-along30-gf2w1_night",
+    "brick_median": 47.325199127197266,
+    "lit": true
+   },
+   "west_south_bay2_gf_w1": {
+    "pane_px": 114204,
+    "joinery_px": 64631,
+    "P": 132.21839904785156,
+    "L": 146.75498962402344,
+    "D": 46.02859878540039,
+    "spread": 100.61599731445312,
+    "pane_rgb_mean": [
+     155.33459423487793,
+     120.27103253826486,
+     80.79562011838465
+    ],
+    "P_over_L": 0.900946532629564,
+    "D_over_L": 0.3136424792323764,
+    "clear_px": 0,
+    "cloth_px": 82921,
+    "clear_P": null,
+    "cloth_P": 142.0659942626953,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": [
+     0.2805886629475045,
+     0.27689381428610216
+    ],
+    "curtain_colour": "white",
+    "blocks": {
+     "n": 34,
+     "bad": 0,
+     "worst_g_over_r": 0.697,
+     "bad_list": []
+    },
+    "blocks_ro": {
+     "n": 34,
+     "bad": 0,
+     "worst_g_over_r": 0.704,
+     "bad_list": []
+    },
+    "line": {
+     "min_ratio": 0.24071821570396423,
+     "edges": 7
+    },
+    "angle": 30.0,
+    "state": "draped",
+    "site": "west_south_bay2_gf_w1",
+    "net": "N1",
+    "extra": "B3",
+    "frame": "h-along30-gf2w1_night",
+    "brick_median": 50.23460006713867
+   }
+  },
+  "h-under-bay1w0_day": {
+   "east_parade_bay0_upper_w1": {
+    "pane_px": 6445,
+    "joinery_px": 8778,
+    "P": 71.62979888916016,
+    "L": 162.56561279296875,
+    "D": 41.78339767456055,
+    "spread": 85.15695190429688,
+    "pane_rgb_mean": [
+     80.97874321179209,
+     73.66470131885183,
+     69.02296353762607
+    ],
+    "P_over_L": 0.44062085245778543,
+    "D_over_L": 0.257024821896207,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.6911240220069885,
+     "edges": 2
+    },
+    "angle": 10.07,
+    "state": "net",
+    "site": "east_parade_bay0_upper_w1",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "h-under-bay1w0_day",
+    "brick_median": 110.65079498291016
+   },
+   "east_parade_bay1_upper_w0": {
+    "pane_px": 13672,
+    "joinery_px": 13308,
+    "P": 91.06019592285156,
+    "L": 204.93179321289062,
+    "D": 51.19540023803711,
+    "spread": 97.49581909179688,
+    "pane_rgb_mean": [
+     100.19155939145699,
+     94.19653306026916,
+     83.37960795787009
+    ],
+    "P_over_L": 0.444343918018884,
+    "D_over_L": 0.24981677774542996,
+    "clear_px": 0,
+    "cloth_px": 7106,
+    "clear_P": null,
+    "cloth_P": 124.19259643554688,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": [
+     0.19621775597272093,
+     0.2026525646134283
+    ],
+    "line": {
+     "min_ratio": 0.22060316801071167,
+     "edges": 6
+    },
+    "angle": 13.39,
+    "state": "draped",
+    "site": "east_parade_bay1_upper_w0",
+    "net": "N0",
+    "extra": "B2",
+    "frame": "h-under-bay1w0_day",
+    "brick_median": 107.79119873046875
+   },
+   "east_parade_bay1_upper_w1": {
+    "pane_px": 6433,
+    "joinery_px": 8790,
+    "P": 83.78339385986328,
+    "L": 181.6378173828125,
+    "D": 48.552398681640625,
+    "spread": 108.33049011230469,
+    "pane_rgb_mean": [
+     97.09777708689569,
+     90.27187937198819,
+     85.86988963158713
+    ],
+    "P_over_L": 0.46126624437071273,
+    "D_over_L": 0.26730335885568124,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.7204204797744751,
+     "edges": 2
+    },
+    "angle": 10.07,
+    "state": "net",
+    "site": "east_parade_bay1_upper_w1",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "h-under-bay1w0_day",
+    "brick_median": 109.22560119628906
+   }
+  },
+  "h-along15-bay3w1_day": {
+   "east_parade_bay3_upper_w0": {
+    "pane_px": 29516,
+    "joinery_px": 16939,
+    "P": 102.33979797363281,
+    "L": 175.06820678710938,
+    "D": 53.62580108642578,
+    "spread": 154.5837860107422,
+    "pane_rgb_mean": [
+     127.62261146496816,
+     125.68542485431631,
+     122.63247052446131
+    ],
+    "P_over_L": 0.584571007219389,
+    "D_over_L": 0.3063137623362825,
+    "clear_px": 8881,
+    "cloth_px": 8003,
+    "clear_P": 187.36898803710938,
+    "cloth_P": 195.79539489746094,
+    "clear_rgb_mean": [
+     140.63281162031302,
+     141.86611868032878,
+     144.58247945051232
+    ],
+    "clear_Y": [
+     0.3351753521603802,
+     0.49932152603535096
+    ],
+    "cloth_Y": [
+     0.3923192736719837,
+     0.550815798168392
+    ],
+    "line": {
+     "min_ratio": 0.18723103404045105,
+     "edges": 7
+    },
+    "angle": 19.45,
+    "state": "net",
+    "site": "east_parade_bay3_upper_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "h-along15-bay3w1_day",
+    "brick_median": 104.70979309082031
+   },
+   "east_parade_bay3_upper_w1": {
+    "pane_px": 3674,
+    "joinery_px": 5224,
+    "P": 81.79910278320312,
+    "L": 158.68434143066406,
+    "D": 51.84239959716797,
+    "spread": 77.74020385742188,
+    "pane_rgb_mean": [
+     89.88704409363092,
+     83.53456722917801,
+     77.85928143712574
+    ],
+    "P_over_L": 0.515483141220614,
+    "D_over_L": 0.32670141949588716,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.22096824645996094,
+     "edges": 5
+    },
+    "angle": 12.94,
+    "state": "bare",
+    "site": "east_parade_bay3_upper_w1",
+    "net": "N0",
+    "extra": null,
+    "frame": "h-along15-bay3w1_day",
+    "brick_median": 102.14420318603516
+   },
+   "east_parade_bay4_upper_w0": {
+    "pane_px": 572,
+    "joinery_px": 3068,
+    "P": 126.8595962524414,
+    "L": 222.7147979736328,
+    "D": 89.90416717529297,
+    "spread": 95.82389068603516,
+    "pane_rgb_mean": [
+     126.84615384615384,
+     126.62237762237763,
+     126.8076923076923
+    ],
+    "P_over_L": 0.5696056005558298,
+    "D_over_L": 0.40367397224290735,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.2090817540884018,
+     "edges": 3
+    },
+    "angle": 9.23,
+    "state": "draped",
+    "site": "east_parade_bay4_upper_w0",
+    "net": "N2",
+    "extra": "C1",
+    "frame": "h-along15-bay3w1_day",
+    "brick_median": 106.79119873046875
+   }
+  },
+  "h-along15-bay3w1_night": {
+   "east_parade_bay3_upper_w0": {
+    "pane_px": 29516,
+    "joinery_px": 16939,
+    "P": 35.92259979248047,
+    "L": 71.56559753417969,
+    "D": 8.049799919128418,
+    "spread": 51.78860092163086,
+    "pane_rgb_mean": [
+     40.34482992275376,
+     33.90357772055834,
+     29.605874779780457
+    ],
+    "P_over_L": 0.5019534668920197,
+    "D_over_L": 0.1124814183977691,
+    "clear_px": 8881,
+    "cloth_px": 8003,
+    "clear_P": 33.709999084472656,
+    "cloth_P": 50.48019790649414,
+    "clear_rgb_mean": [
+     29.91588785046729,
+     22.235896858461885,
+     20.86082648350411
+    ],
+    "clear_Y": [
+     0.011000004079880832,
+     0.01578274142048742
+    ],
+    "cloth_Y": [
+     0.032895143340393125,
+     0.032846591124292994
+    ],
+    "line": {
+     "min_ratio": 0.10470673441886902,
+     "edges": 7
+    },
+    "angle": 19.45,
+    "state": "net",
+    "site": "east_parade_bay3_upper_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "h-along15-bay3w1_night",
+    "brick_median": 40.53799819946289
+   },
+   "east_parade_bay3_upper_w1": {
+    "pane_px": 3674,
+    "joinery_px": 5224,
+    "P": 30.923799514770508,
+    "L": 64.70600128173828,
+    "D": 15.348999977111816,
+    "spread": 35.78739929199219,
+    "pane_rgb_mean": [
+     33.20577027762656,
+     31.095264017419705,
+     28.26129559063691
+    ],
+    "P_over_L": 0.4779123868298443,
+    "D_over_L": 0.23721138183582524,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.14343027770519257,
+     "edges": 5
+    },
+    "angle": 12.94,
+    "state": "bare",
+    "site": "east_parade_bay3_upper_w1",
+    "net": "N0",
+    "extra": null,
+    "frame": "h-along15-bay3w1_night",
+    "brick_median": 39.325401306152344
+   },
+   "east_parade_bay4_upper_w0": {
+    "pane_px": 572,
+    "joinery_px": 3068,
+    "P": 47.56560134887695,
+    "L": 94.49739837646484,
+    "D": 33.12759017944336,
+    "spread": 41.82388687133789,
+    "pane_rgb_mean": [
+     49.64160839160839,
+     46.80419580419581,
+     45.73951048951049
+    ],
+    "P_over_L": 0.503353554342121,
+    "D_over_L": 0.35056616106474725,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.1753021776676178,
+     "edges": 3
+    },
+    "angle": 9.23,
+    "state": "draped",
+    "site": "east_parade_bay4_upper_w0",
+    "net": "N2",
+    "extra": "C1",
+    "frame": "h-along15-bay3w1_night",
+    "brick_median": 41.325401306152344
+   }
+  },
+  "h-across30-bay2w0_day": {
+   "east_parade_bay1_upper_w0": {
+    "pane_px": 5792,
+    "joinery_px": 7037,
+    "P": 163.06019592285156,
+    "L": 208.9318084716797,
+    "D": 93.23828125,
+    "spread": 59.87250518798828,
+    "pane_rgb_mean": [
+     161.26174033149172,
+     158.56008287292818,
+     150.27779696132598
+    ],
+    "P_over_L": 0.7804469655225047,
+    "D_over_L": 0.44626178240657055,
+    "clear_px": 25,
+    "cloth_px": 5365,
+    "clear_P": null,
+    "cloth_P": 163.84759521484375,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": [
+     0.35723536636340925,
+     0.3706631640788697
+    ],
+    "line": {
+     "min_ratio": 0.4457933306694031,
+     "edges": 3
+    },
+    "angle": 67.85,
+    "state": "draped",
+    "site": "east_parade_bay1_upper_w0",
+    "net": "N0",
+    "extra": "B2",
+    "frame": "h-across30-bay2w0_day",
+    "brick_median": 92.34359741210938
+   },
+   "east_parade_bay1_upper_w1": {
+    "pane_px": 46190,
+    "joinery_px": 16917,
+    "P": 158.21258544921875,
+    "L": 233.93179321289062,
+    "D": 111.06299591064453,
+    "spread": 69.92378997802734,
+    "pane_rgb_mean": [
+     155.51052175795627,
+     155.57938947824204,
+     156.25457891318467
+    ],
+    "P_over_L": 0.6763192949375493,
+    "D_over_L": 0.47476657356091473,
+    "clear_px": 19514,
+    "cloth_px": 24724,
+    "clear_P": 132.1444091796875,
+    "cloth_P": 173.92779541015625,
+    "clear_rgb_mean": [
+     137.0688223839295,
+     136.88879778620478,
+     138.10822998872604
+    ],
+    "clear_Y": [
+     0.25482709876300813,
+     0.23129292185013708
+    ],
+    "cloth_Y": [
+     0.41455251617537703,
+     0.42287904632831286
+    ],
+    "line": {
+     "min_ratio": 0.325464129447937,
+     "edges": 8
+    },
+    "angle": 65.67,
+    "state": "net",
+    "site": "east_parade_bay1_upper_w1",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "h-across30-bay2w0_day",
+    "brick_median": 94.48400115966797
+   },
+   "east_parade_bay2_upper_w0": {
+    "pane_px": 28418,
+    "joinery_px": 12014,
+    "P": 145.85960388183594,
+    "L": 230.07620239257812,
+    "D": 113.06420135498047,
+    "spread": 56.145591735839844,
+    "pane_rgb_mean": [
+     143.32338658596663,
+     144.66274896192553,
+     145.3786684495742
+    ],
+    "P_over_L": 0.6339621497792122,
+    "D_over_L": 0.4914206692357494,
+    "clear_px": 9357,
+    "cloth_px": 18181,
+    "clear_P": 126.35700225830078,
+    "cloth_P": 157.64700317382812,
+    "clear_rgb_mean": [
+     125.18702575611842,
+     125.52591642620499,
+     126.87004381746286
+    ],
+    "clear_Y": [
+     0.20799956531992278,
+     0.20992247666233857
+    ],
+    "cloth_Y": [
+     0.3345302234072706,
+     0.34024842619070517
+    ],
+    "line": {
+     "min_ratio": 0.2474128007888794,
+     "edges": 6
+    },
+    "angle": 55.14,
+    "state": "net",
+    "site": "east_parade_bay2_upper_w0",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "h-across30-bay2w0_day",
+    "brick_median": 96.84620666503906
+   },
+   "east_parade_bay2_upper_w1": {
+    "pane_px": 19068,
+    "joinery_px": 7712,
+    "P": 145.4344024658203,
+    "L": 229.07620239257812,
+    "D": 104.13639831542969,
+    "spread": 55.35820007324219,
+    "pane_rgb_mean": [
+     141.0581602685127,
+     143.06922592825677,
+     144.0819697923222
+    ],
+    "P_over_L": 0.6348734654531372,
+    "D_over_L": 0.4545928264384551,
+    "clear_px": 0,
+    "cloth_px": 18080,
+    "clear_P": null,
+    "cloth_P": 146.43438720703125,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": [
+     0.28533839056912386,
+     0.2893484723163103
+    ],
+    "line": {
+     "min_ratio": 0.2675127387046814,
+     "edges": 5
+    },
+    "angle": 44.9,
+    "state": "net",
+    "site": "east_parade_bay2_upper_w1",
+    "net": "N2",
+    "extra": null,
+    "frame": "h-across30-bay2w0_day",
+    "brick_median": 98.9552001953125
+   },
+   "east_parade_bay3_upper_w0": {
+    "pane_px": 11623,
+    "joinery_px": 5499,
+    "P": 114.14839172363281,
+    "L": 197.0962677001953,
+    "D": 75.85160064697266,
+    "spread": 83.06340026855469,
+    "pane_rgb_mean": [
+     122.98459950098942,
+     121.071410135077,
+     115.95259399466575
+    ],
+    "P_over_L": 0.5791504479286479,
+    "D_over_L": 0.38484544396523596,
+    "clear_px": 4469,
+    "cloth_px": 4444,
+    "clear_P": 110.6510009765625,
+    "cloth_P": 144.9840087890625,
+    "clear_rgb_mean": [
+     109.7668382188409,
+     111.51532781382859,
+     114.962631461177
+    ],
+    "clear_Y": [
+     0.16054963553237306,
+     0.15794828802218683
+    ],
+    "cloth_Y": [
+     0.26566059834897104,
+     0.28333814188034906
+    ],
+    "line": {
+     "min_ratio": 0.32536590099334717,
+     "edges": 9
+    },
+    "angle": 36.92,
+    "state": "net",
+    "site": "east_parade_bay3_upper_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "h-across30-bay2w0_day",
+    "brick_median": 99.75579071044922
+   },
+   "east_parade_bay3_upper_w1": {
+    "pane_px": 7686,
+    "joinery_px": 4261,
+    "P": 113.71400451660156,
+    "L": 191.20858764648438,
+    "D": 48.25440216064453,
+    "spread": 93.23135375976562,
+    "pane_rgb_mean": [
+     105.92375748113453,
+     102.37822014051523,
+     102.66913869372885
+    ],
+    "P_over_L": 0.5947118061812238,
+    "D_over_L": 0.2523652454870886,
+    "clear_px": 5115,
+    "cloth_px": 0,
+    "clear_P": 115.0761947631836,
+    "cloth_P": null,
+    "clear_rgb_mean": [
+     104.60918866080156,
+     100.32179863147606,
+     102.53098729227762
+    ],
+    "clear_Y": [
+     0.14318274676790063,
+     0.1717078443273748
+    ],
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.273752361536026,
+     "edges": 9
+    },
+    "angle": 30.97,
+    "state": "bare",
+    "site": "east_parade_bay3_upper_w1",
+    "net": "N0",
+    "extra": null,
+    "frame": "h-across30-bay2w0_day",
+    "brick_median": 102.07200622558594
+   },
+   "east_parade_bay4_upper_w0": {
+    "pane_px": 1268,
+    "joinery_px": 375,
+    "P": 147.93380737304688,
+    "L": 228.834716796875,
+    "D": 78.22198486328125,
+    "spread": 60.680076599121094,
+    "pane_rgb_mean": [
+     143.99132492113566,
+     145.9826498422713,
+     148.26577287066246
+    ],
+    "P_over_L": 0.6464657524162307,
+    "D_over_L": 0.3418274375418086,
+    "clear_px": 0,
+    "cloth_px": 1215,
+    "clear_P": null,
+    "cloth_P": 149.64700317382812,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": [
+     0.30251858487664446,
+     0.30342957962192985
+    ],
+    "line": {
+     "min_ratio": 0.25812605023384094,
+     "edges": 3
+    },
+    "angle": 26.5,
+    "state": "draped",
+    "site": "east_parade_bay4_upper_w0",
+    "net": "N2",
+    "extra": "C1",
+    "frame": "h-across30-bay2w0_day",
+    "brick_median": 95.42499542236328
+   }
+  },
+  "h-across30-bay2w0_night": {
+   "east_parade_bay1_upper_w0": {
+    "pane_px": 5792,
+    "joinery_px": 7037,
+    "P": 60.40399932861328,
+    "L": 88.4251937866211,
+    "D": 34.36180114746094,
+    "spread": 37.50779724121094,
+    "pane_rgb_mean": [
+     66.69975828729282,
+     55.62845303867403,
+     46.32596685082873
+    ],
+    "P_over_L": 0.6831084755592871,
+    "D_over_L": 0.3885974084532902,
+    "clear_px": 25,
+    "cloth_px": 5365,
+    "clear_P": null,
+    "cloth_P": 60.616600036621094,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": [
+     0.044609535906071085,
+     0.04651771469175146
+    ],
+    "line": {
+     "min_ratio": 0.38598957657814026,
+     "edges": 3
+    },
+    "angle": 67.85,
+    "state": "draped",
+    "site": "east_parade_bay1_upper_w0",
+    "net": "N0",
+    "extra": "B2",
+    "frame": "h-across30-bay2w0_night",
+    "brick_median": 35.03139877319336,
+    "lit": false
+   },
+   "east_parade_bay1_upper_w1": {
+    "pane_px": 46190,
+    "joinery_px": 16917,
+    "P": 41.6973991394043,
+    "L": 99.42520141601562,
+    "D": 25.474998474121094,
+    "spread": 51.00920104980469,
+    "pane_rgb_mean": [
+     55.74137259147002,
+     44.96607490798874,
+     40.831738471530635
+    ],
+    "P_over_L": 0.4193846081833292,
+    "D_over_L": 0.25622274947705087,
+    "clear_px": 19514,
+    "cloth_px": 24724,
+    "clear_P": 28.968399047851562,
+    "cloth_P": 63.34379959106445,
+    "clear_rgb_mean": [
+     41.98652249666906,
+     26.71943220252127,
+     20.73711181715691
+    ],
+    "clear_Y": [
+     0.01333480178558539,
+     0.012815363695776018
+    ],
+    "cloth_Y": [
+     0.04904256297339406,
+     0.050367021877166886
+    ],
+    "line": {
+     "min_ratio": 0.2418883591890335,
+     "edges": 8
+    },
+    "angle": 65.67,
+    "state": "net",
+    "site": "east_parade_bay1_upper_w1",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "h-across30-bay2w0_night",
+    "brick_median": 35.959197998046875,
+    "lit": false
+   },
+   "east_parade_bay2_upper_w0": {
+    "pane_px": 28418,
+    "joinery_px": 12014,
+    "P": 121.65679931640625,
+    "L": 98.28479766845703,
+    "D": 50.27226257324219,
+    "spread": 84.552001953125,
+    "pane_rgb_mean": [
+     124.30332887606447,
+     109.2836230558097,
+     76.74400028151172
+    ],
+    "P_over_L": 1.2377987461172757,
+    "D_over_L": 0.5114958138574496,
+    "clear_px": 9357,
+    "cloth_px": 18181,
+    "clear_P": 75.23040008544922,
+    "cloth_P": 125.66079711914062,
+    "clear_rgb_mean": [
+     95.910868868227,
+     77.67457518435396,
+     50.62359730682911
+    ],
+    "clear_Y": [
+     0.09173407359934871,
+     0.07281704725030097
+    ],
+    "cloth_Y": [
+     0.21716601779954944,
+     0.21051377746243616
+    ],
+    "curtain_colour": "green",
+    "blocks": {
+     "n": 2,
+     "bad": 0,
+     "worst_g_over_r": 0.632,
+     "bad_list": []
+    },
+    "blocks_ro": {
+     "n": 2,
+     "bad": 0,
+     "worst_g_over_r": 0.602,
+     "bad_list": []
+    },
+    "line": {
+     "min_ratio": 0.2186441868543625,
+     "edges": 6
+    },
+    "angle": 55.14,
+    "state": "net",
+    "site": "east_parade_bay2_upper_w0",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "h-across30-bay2w0_night",
+    "brick_median": 37.61539840698242,
+    "lit": true
+   },
+   "east_parade_bay2_upper_w1": {
+    "pane_px": 19068,
+    "joinery_px": 7712,
+    "P": 53.27159881591797,
+    "L": 97.42520141601562,
+    "D": 30.330598831176758,
+    "spread": 37.86880111694336,
+    "pane_rgb_mean": [
+     57.58978393119362,
+     49.63289280469897,
+     45.980176211453745
+    ],
+    "P_over_L": 0.5467948543256561,
+    "D_over_L": 0.31132190018947953,
+    "clear_px": 0,
+    "cloth_px": 18080,
+    "clear_P": null,
+    "cloth_P": 53.48419952392578,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": [
+     0.03542554407619658,
+     0.03638392751948624
+    ],
+    "line": {
+     "min_ratio": 0.21457898616790771,
+     "edges": 5
+    },
+    "angle": 44.9,
+    "state": "net",
+    "site": "east_parade_bay2_upper_w1",
+    "net": "N2",
+    "extra": null,
+    "frame": "h-across30-bay2w0_night",
+    "brick_median": 37.959197998046875
+   },
+   "east_parade_bay3_upper_w0": {
+    "pane_px": 11623,
+    "joinery_px": 5499,
+    "P": 36.88820266723633,
+    "L": 82.28079986572266,
+    "D": 19.556400299072266,
+    "spread": 44.77139663696289,
+    "pane_rgb_mean": [
+     46.14299234276865,
+     36.00567839628323,
+     28.81975393616106
+    ],
+    "P_over_L": 0.4483209050888624,
+    "D_over_L": 0.23767878206078624,
+    "clear_px": 4469,
+    "cloth_px": 4444,
+    "clear_P": 21.262401580810547,
+    "cloth_P": 53.825199127197266,
+    "clear_rgb_mean": [
+     30.837100022376372,
+     19.68673081226225,
+     16.05594092638174
+    ],
+    "clear_Y": [
+     0.008315036318447919,
+     0.007915406232023444
+    ],
+    "cloth_Y": [
+     0.03696846223656957,
+     0.03726283763938791
+    ],
+    "line": {
+     "min_ratio": 0.28718486428260803,
+     "edges": 9
+    },
+    "angle": 36.92,
+    "state": "net",
+    "site": "east_parade_bay3_upper_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "h-across30-bay2w0_night",
+    "brick_median": 38.25320053100586
+   },
+   "east_parade_bay3_upper_w1": {
+    "pane_px": 7686,
+    "joinery_px": 4261,
+    "P": 25.728199005126953,
+    "L": 79.42119598388672,
+    "D": 18.864599227905273,
+    "spread": 27.102802276611328,
+    "pane_rgb_mean": [
+     40.30210772833723,
+     25.803799115274526,
+     21.094327348425708
+    ],
+    "P_over_L": 0.3239462549814383,
+    "D_over_L": 0.2375260029039678,
+    "clear_px": 5115,
+    "cloth_px": 0,
+    "clear_P": 22.904199600219727,
+    "cloth_P": null,
+    "clear_rgb_mean": [
+     40.4396871945259,
+     19.796089931573803,
+     14.033040078201369
+    ],
+    "clear_Y": [
+     0.010287131258376894,
+     0.009340973440493165
+    ],
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.2152523398399353,
+     "edges": 9
+    },
+    "angle": 30.97,
+    "state": "bare",
+    "site": "east_parade_bay3_upper_w1",
+    "net": "N0",
+    "extra": null,
+    "frame": "h-across30-bay2w0_night",
+    "brick_median": 39.39360046386719
+   },
+   "east_parade_bay4_upper_w0": {
+    "pane_px": 1268,
+    "joinery_px": 375,
+    "P": 50.62459945678711,
+    "L": 97.46852111816406,
+    "D": 22.986799240112305,
+    "spread": 44.42519760131836,
+    "pane_rgb_mean": [
+     55.27602523659306,
+     47.37223974763407,
+     44.0102523659306
+    ],
+    "P_over_L": 0.5193943529256319,
+    "D_over_L": 0.23583818628216086,
+    "clear_px": 0,
+    "cloth_px": 1215,
+    "clear_P": null,
+    "cloth_P": 51.55240249633789,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": [
+     0.033591224436828014,
+     0.03394145219821178
+    ],
+    "line": {
+     "min_ratio": 0.16847695410251617,
+     "edges": 3
+    },
+    "angle": 26.5,
+    "state": "draped",
+    "site": "east_parade_bay4_upper_w0",
+    "net": "N2",
+    "extra": "C1",
+    "frame": "h-across30-bay2w0_night",
+    "brick_median": 36.402801513671875
+   }
+  },
+  "h-along15road-bay3w1_day": {
+   "east_parade_bay2_upper_w1": {
+    "pane_px": 38326,
+    "joinery_px": 8105,
+    "P": 186.65101623535156,
+    "L": 207.14439392089844,
+    "D": 88.2656021118164,
+    "spread": 128.97201538085938,
+    "pane_rgb_mean": [
+     173.67883421176225,
+     174.71097949172886,
+     177.07819756823045
+    ],
+    "P_over_L": 0.9010671865279993,
+    "D_over_L": 0.4261066420437239,
+    "clear_px": 401,
+    "cloth_px": 32038,
+    "clear_P": 132.6417999267578,
+    "cloth_P": 188.6510009765625,
+    "clear_rgb_mean": [
+     127.28678304239402,
+     126.92269326683292,
+     128.02992518703243
+    ],
+    "clear_Y": [
+     0.23083940187726174,
+     0.23320130393911637
+    ],
+    "cloth_Y": [
+     0.5049322901579036,
+     0.506845509722657
+    ],
+    "line": {
+     "min_ratio": 0.6182750463485718,
+     "edges": 1
+    },
+    "angle": 27.47,
+    "state": "net",
+    "site": "east_parade_bay2_upper_w1",
+    "net": "N2",
+    "extra": null,
+    "frame": "h-along15road-bay3w1_day",
+    "brick_median": 100.92240142822266
+   },
+   "east_parade_bay3_upper_w0": {
+    "pane_px": 10759,
+    "joinery_px": 8322,
+    "P": 99.41719818115234,
+    "L": 162.63380432128906,
+    "D": 57.41320037841797,
+    "spread": 136.01651000976562,
+    "pane_rgb_mean": [
+     110.53555163119249,
+     105.7487684729064,
+     98.40273259596617
+    ],
+    "P_over_L": 0.611294795667142,
+    "D_over_L": 0.353021320616691,
+    "clear_px": 1267,
+    "cloth_px": 2546,
+    "clear_P": 175.6510009765625,
+    "cloth_P": 108.1072006225586,
+    "clear_rgb_mean": [
+     151.4972375690608,
+     151.6045777426993,
+     154.3843725335438
+    ],
+    "clear_Y": [
+     0.34969404090446443,
+     0.43230192252811966
+    ],
+    "cloth_Y": [
+     0.15066343003269853,
+     0.15092845167106872
+    ],
+    "line": {
+     "min_ratio": 0.28323879837989807,
+     "edges": 6
+    },
+    "angle": 19.12,
+    "state": "net",
+    "site": "east_parade_bay3_upper_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "h-along15road-bay3w1_day",
+    "brick_median": 100.29379272460938
+   },
+   "east_parade_bay3_upper_w1": {
+    "pane_px": 2354,
+    "joinery_px": 3632,
+    "P": 88.73550415039062,
+    "L": 155.19940185546875,
+    "D": 55.05339813232422,
+    "spread": 73.40586853027344,
+    "pane_rgb_mean": [
+     93.5267629566695,
+     87.47451146983857,
+     82.09813084112149
+    ],
+    "P_over_L": 0.5717515859566688,
+    "D_over_L": 0.3547268705558114,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.24389012157917023,
+     "edges": 4
+    },
+    "angle": 14.21,
+    "state": "bare",
+    "site": "east_parade_bay3_upper_w1",
+    "net": "N0",
+    "extra": null,
+    "frame": "h-along15road-bay3w1_day",
+    "brick_median": 100.14420318603516
+   },
+   "east_parade_bay4_upper_w0": {
+    "pane_px": 760,
+    "joinery_px": 2779,
+    "P": 124.78740692138672,
+    "L": 224.8339080810547,
+    "D": 75.27987670898438,
+    "spread": 116.76815795898438,
+    "pane_rgb_mean": [
+     119.69342105263158,
+     117.11578947368422,
+     116.21184210526316
+    ],
+    "P_over_L": 0.5550204058918005,
+    "D_over_L": 0.3348243925993818,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.24907277524471283,
+     "edges": 5
+    },
+    "angle": 11.19,
+    "state": "draped",
+    "site": "east_parade_bay4_upper_w0",
+    "net": "N2",
+    "extra": "C1",
+    "frame": "h-along15road-bay3w1_day",
+    "brick_median": 104.28459167480469
+   },
+   "east_parade_bay4_upper_w1": {
+    "pane_px": 225,
+    "joinery_px": 1464,
+    "P": 132.0,
+    "L": 200.07220458984375,
+    "D": 105.47655487060547,
+    "spread": 81.62162780761719,
+    "pane_rgb_mean": [
+     133.9111111111111,
+     133.0311111111111,
+     131.18666666666667
+    ],
+    "P_over_L": 0.6597618108452667,
+    "D_over_L": 0.5271924457814455,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.2869824171066284,
+     "edges": 4
+    },
+    "angle": 9.2,
+    "state": "net",
+    "site": "east_parade_bay4_upper_w1",
+    "net": "N1",
+    "extra": null,
+    "frame": "h-along15road-bay3w1_day",
+    "brick_median": 108.35679626464844
+   }
+  },
+  "h-along15road-bay3w1_night": {
+   "east_parade_bay2_upper_w1": {
+    "pane_px": 38326,
+    "joinery_px": 8105,
+    "P": 58.35300064086914,
+    "L": 87.42520141601562,
+    "D": 26.262401580810547,
+    "spread": 47.090599060058594,
+    "pane_rgb_mean": [
+     60.34861451755988,
+     54.138313416479676,
+     51.702838803945106
+    ],
+    "P_over_L": 0.6674620097607155,
+    "D_over_L": 0.30039852531583044,
+    "clear_px": 401,
+    "cloth_px": 32038,
+    "clear_P": 27.05500030517578,
+    "cloth_P": 59.271602630615234,
+    "clear_rgb_mean": [
+     35.03491271820449,
+     25.22942643391521,
+     20.174563591022444
+    ],
+    "clear_Y": [
+     0.011377389487490874,
+     0.011190923330978694
+    ],
+    "cloth_Y": [
+     0.044040263545879525,
+     0.04425765006231521
+    ],
+    "line": {
+     "min_ratio": 0.5310276746749878,
+     "edges": 1
+    },
+    "angle": 27.47,
+    "state": "net",
+    "site": "east_parade_bay2_upper_w1",
+    "net": "N2",
+    "extra": null,
+    "frame": "h-along15road-bay3w1_night",
+    "brick_median": 38.89099884033203
+   },
+   "east_parade_bay3_upper_w0": {
+    "pane_px": 10759,
+    "joinery_px": 8322,
+    "P": 36.99599838256836,
+    "L": 66.70600128173828,
+    "D": 19.204601287841797,
+    "spread": 38.76422119140625,
+    "pane_rgb_mean": [
+     41.213030950831865,
+     35.99749047309229,
+     30.863927874337765
+    ],
+    "P_over_L": 0.5546127435568011,
+    "D_over_L": 0.2878991532820201,
+    "clear_px": 1267,
+    "cloth_px": 2546,
+    "clear_P": 30.425199508666992,
+    "cloth_P": 46.96560287475586,
+    "clear_rgb_mean": [
+     30.44041041831097,
+     27.047355958958168,
+     26.7008681925809
+    ],
+    "clear_Y": [
+     0.012714582371545893,
+     0.013293600814756303
+    ],
+    "cloth_Y": [
+     0.02898761873974912,
+     0.02905507951524352
+    ],
+    "line": {
+     "min_ratio": 0.21829520165920258,
+     "edges": 6
+    },
+    "angle": 19.12,
+    "state": "net",
+    "site": "east_parade_bay3_upper_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "h-along15road-bay3w1_night",
+    "brick_median": 38.606197357177734
+   },
+   "east_parade_bay3_upper_w1": {
+    "pane_px": 2354,
+    "joinery_px": 3632,
+    "P": 35.17449951171875,
+    "L": 63.56560134887695,
+    "D": 17.280799865722656,
+    "spread": 34.647003173828125,
+    "pane_rgb_mean": [
+     34.971112999150385,
+     32.90484282073067,
+     30.329226847918438
+    ],
+    "P_over_L": 0.5533574569469591,
+    "D_over_L": 0.27185772649074397,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.16173526644706726,
+     "edges": 4
+    },
+    "angle": 14.21,
+    "state": "bare",
+    "site": "east_parade_bay3_upper_w1",
+    "net": "N0",
+    "extra": null,
+    "frame": "h-along15road-bay3w1_night",
+    "brick_median": 38.465797424316406
+   },
+   "east_parade_bay4_upper_w0": {
+    "pane_px": 760,
+    "joinery_px": 2779,
+    "P": 46.35300064086914,
+    "L": 94.49739837646484,
+    "D": 24.2716007232666,
+    "spread": 56.25093460083008,
+    "pane_rgb_mean": [
+     45.06184210526316,
+     41.189473684210526,
+     39.72631578947368
+    ],
+    "P_over_L": 0.490521447545096,
+    "D_over_L": 0.25684940686485175,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.19493870437145233,
+     "edges": 5
+    },
+    "angle": 11.19,
+    "state": "draped",
+    "site": "east_parade_bay4_upper_w0",
+    "net": "N2",
+    "extra": "C1",
+    "frame": "h-along15road-bay3w1_night",
+    "brick_median": 40.465797424316406
+   },
+   "east_parade_bay4_upper_w1": {
+    "pane_px": 225,
+    "joinery_px": 1464,
+    "P": 49.705997467041016,
+    "L": 83.42520141601562,
+    "D": 39.93511962890625,
+    "spread": 39.60904312133789,
+    "pane_rgb_mean": [
+     52.07111111111111,
+     49.888888888888886,
+     48.15555555555556
+    ],
+    "P_over_L": 0.5958151328778052,
+    "D_over_L": 0.47869371546089756,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.23193232715129852,
+     "edges": 4
+    },
+    "angle": 9.2,
+    "state": "net",
+    "site": "east_parade_bay4_upper_w1",
+    "net": "N1",
+    "extra": null,
+    "frame": "h-along15road-bay3w1_night",
+    "brick_median": 42.25320053100586
+   }
+  },
+  "h-across0-gf2w1_day": {
+   "west_south_bay1_gf_w0": {
+    "pane_px": 50855,
+    "joinery_px": 24470,
+    "P": 106.93179321289062,
+    "L": 185.7232208251953,
+    "D": 68.1404037475586,
+    "spread": 70.72319793701172,
+    "pane_rgb_mean": [
+     104.36102644774358,
+     105.19948874250319,
+     105.51540654802871
+    ],
+    "P_over_L": 0.5757588778493992,
+    "D_over_L": 0.36689221436501507,
+    "clear_px": 164,
+    "cloth_px": 50136,
+    "clear_P": 63.280799865722656,
+    "cloth_P": 106.92779541015625,
+    "clear_rgb_mean": [
+     64.27439024390245,
+     63.792682926829265,
+     62.9390243902439
+    ],
+    "clear_Y": [
+     0.05296009809602472,
+     0.050161557635753806
+    ],
+    "cloth_Y": [
+     0.14940565478073303,
+     0.1468179734524204
+    ],
+    "line": {
+     "min_ratio": 0.32265108823776245,
+     "edges": 6
+    },
+    "angle": 67.36,
+    "state": "net",
+    "site": "west_south_bay1_gf_w0",
+    "net": "N2",
+    "extra": null,
+    "frame": "h-across0-gf2w1_day",
+    "brick_median": 75.14420318603516
+   },
+   "west_south_bay1_gf_w1": {
+    "pane_px": 51425,
+    "joinery_px": 25470,
+    "P": 46.97760009765625,
+    "L": 185.7232208251953,
+    "D": 28.27159881591797,
+    "spread": 35.21259689331055,
+    "pane_rgb_mean": [
+     53.752085561497324,
+     44.60073894020418,
+     39.459154107924164
+    ],
+    "P_over_L": 0.2529441385354396,
+    "D_over_L": 0.15222436209270515,
+    "clear_px": 0,
+    "cloth_px": 51369,
+    "clear_P": null,
+    "cloth_P": 46.97760009765625,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": [
+     0.029256006886234635,
+     0.0287072640681775
+    ],
+    "line": {
+     "min_ratio": 0.14184442162513733,
+     "edges": 6
+    },
+    "angle": 78.22,
+    "state": "draped",
+    "site": "west_south_bay1_gf_w1",
+    "net": "N0",
+    "extra": "C1",
+    "frame": "h-across0-gf2w1_day",
+    "brick_median": 75.07200622558594
+   },
+   "west_south_bay2_gf_w0": {
+    "pane_px": 51969,
+    "joinery_px": 23915,
+    "P": 64.92779541015625,
+    "L": 197.85960388183594,
+    "D": 25.349002838134766,
+    "spread": 110.51461029052734,
+    "pane_rgb_mean": [
+     73.31742000038484,
+     72.70153360657315,
+     70.1507437125979
+    ],
+    "P_over_L": 0.32815084098183017,
+    "D_over_L": 0.12811611031665404,
+    "clear_px": 25606,
+    "cloth_px": 24556,
+    "clear_P": 31.064199447631836,
+    "cloth_P": 109.79139709472656,
+    "clear_rgb_mean": [
+     38.219596969460284,
+     35.50687338904944,
+     29.658751855033977
+    ],
+    "clear_Y": [
+     0.0193453481920504,
+     0.01377887318447189
+    ],
+    "cloth_Y": [
+     0.15845410650591332,
+     0.15532260260059394
+    ],
+    "line": {
+     "min_ratio": 0.11114951968193054,
+     "edges": 6
+    },
+    "angle": 78.22,
+    "state": "net",
+    "site": "west_south_bay2_gf_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "h-across0-gf2w1_day",
+    "brick_median": 77.28459167480469
+   },
+   "west_south_bay2_gf_w1": {
+    "pane_px": 40489,
+    "joinery_px": 23471,
+    "P": 103.6469955444336,
+    "L": 190.65098571777344,
+    "D": 48.0,
+    "spread": 92.14839172363281,
+    "pane_rgb_mean": [
+     97.03492306552397,
+     98.04682753340414,
+     98.21470028896738
+    ],
+    "P_over_L": 0.5436478345717313,
+    "D_over_L": 0.25176895791693354,
+    "clear_px": 0,
+    "cloth_px": 39580,
+    "clear_P": null,
+    "cloth_P": 104.29400634765625,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": [
+     0.1367209249765228,
+     0.1393138894090201
+    ],
+    "line": {
+     "min_ratio": 0.20567739009857178,
+     "edges": 8
+    },
+    "angle": 89.75,
+    "state": "draped",
+    "site": "west_south_bay2_gf_w1",
+    "net": "N1",
+    "extra": "B3",
+    "frame": "h-across0-gf2w1_day",
+    "brick_median": 74.40280151367188
+   }
+  },
+  "h-across0-gf2w1_night": {
+   "west_south_bay1_gf_w0": {
+    "pane_px": 50855,
+    "joinery_px": 24470,
+    "P": 49.474998474121094,
+    "L": 78.70999145507812,
+    "D": 30.68360137939453,
+    "spread": 33.08539962768555,
+    "pane_rgb_mean": [
+     58.31994887425032,
+     46.26384819585095,
+     41.740045226624716
+    ],
+    "P_over_L": 0.628573292405422,
+    "D_over_L": 0.3898310851285821,
+    "clear_px": 164,
+    "cloth_px": 50136,
+    "clear_P": 26.079299926757812,
+    "cloth_P": 49.474998474121094,
+    "clear_rgb_mean": [
+     36.28048780487805,
+     22.49390243902439,
+     15.768292682926829
+    ],
+    "clear_Y": [
+     0.010540828244128908,
+     0.01077110684643774
+    ],
+    "cloth_Y": [
+     0.031899059189274534,
+     0.031656110117413344
+    ],
+    "line": {
+     "min_ratio": 0.2900927662849426,
+     "edges": 6
+    },
+    "angle": 67.36,
+    "state": "net",
+    "site": "west_south_bay1_gf_w0",
+    "net": "N2",
+    "extra": null,
+    "frame": "h-across0-gf2w1_night",
+    "brick_median": 29.199399948120117,
+    "lit": false
+   },
+   "west_south_bay1_gf_w1": {
+    "pane_px": 51425,
+    "joinery_px": 25470,
+    "P": 118.14599609375,
+    "L": 103.05079650878906,
+    "D": 55.96563720703125,
+    "spread": 5.493408203125,
+    "pane_rgb_mean": [
+     169.5261448711716,
+     109.14269324258629,
+     58.6555177442878
+    ],
+    "P_over_L": 1.1464830947102238,
+    "D_over_L": 0.5430878664024495,
+    "clear_px": 0,
+    "cloth_px": 51369,
+    "clear_P": null,
+    "cloth_P": 118.14599609375,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": [
+     0.19804295144024334,
+     0.19688061507226837
+    ],
+    "curtain_colour": "brown",
+    "blocks": {
+     "n": 32,
+     "bad": 0,
+     "worst_g_over_r": 0.387,
+     "bad_list": []
+    },
+    "blocks_ro": {
+     "n": 32,
+     "bad": 0,
+     "worst_g_over_r": 0.387,
+     "bad_list": []
+    },
+    "line": {
+     "min_ratio": 0.32963937520980835,
+     "edges": 6
+    },
+    "angle": 78.22,
+    "state": "draped",
+    "site": "west_south_bay1_gf_w1",
+    "net": "N0",
+    "extra": "C1",
+    "frame": "h-across0-gf2w1_night",
+    "brick_median": 40.61920166015625,
+    "lit": true
+   },
+   "west_south_bay2_gf_w0": {
+    "pane_px": 51969,
+    "joinery_px": 23915,
+    "P": 79.08200073242188,
+    "L": 120.3906021118164,
+    "D": 45.83720016479492,
+    "spread": 105.66759490966797,
+    "pane_rgb_mean": [
+     119.0183186130193,
+     96.42581154149589,
+     63.64767457522754
+    ],
+    "P_over_L": 0.6568785216222449,
+    "D_over_L": 0.380737361228763,
+    "clear_px": 25606,
+    "cloth_px": 24556,
+    "clear_P": 61.5203971862793,
+    "cloth_P": 136.2091827392578,
+    "clear_rgb_mean": [
+     77.6942122939936,
+     59.88139498555026,
+     32.396196204014686
+    ],
+    "clear_Y": [
+     0.05037897785557451,
+     0.04908426841026927
+    ],
+    "cloth_Y": [
+     0.2657613672342169,
+     0.2518236260268761
+    ],
+    "curtain_colour": null,
+    "blocks": {
+     "n": 18,
+     "bad": 0,
+     "worst_g_over_r": 0.71,
+     "bad_list": []
+    },
+    "blocks_ro": {
+     "n": 21,
+     "bad": 0,
+     "worst_g_over_r": 0.703,
+     "bad_list": []
+    },
+    "line": {
+     "min_ratio": 0.24430477619171143,
+     "edges": 6
+    },
+    "angle": 78.22,
+    "state": "net",
+    "site": "west_south_bay2_gf_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "h-across0-gf2w1_night",
+    "brick_median": 42.148399353027344,
+    "lit": true
+   },
+   "west_south_bay2_gf_w1": {
+    "pane_px": 40489,
+    "joinery_px": 23471,
+    "P": 144.19198608398438,
+    "L": 146.64039611816406,
+    "D": 52.104801177978516,
+    "spread": 83.3219985961914,
+    "pane_rgb_mean": [
+     174.4887006347403,
+     134.8159994072464,
+     90.02170960013831
+    ],
+    "P_over_L": 0.9833033045532232,
+    "D_over_L": 0.3553236526720238,
+    "clear_px": 0,
+    "cloth_px": 39580,
+    "clear_P": null,
+    "cloth_P": 145.1258087158203,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": [
+     0.28795016504862203,
+     0.2919582615849703
+    ],
+    "curtain_colour": "white",
+    "blocks": {
+     "n": 9,
+     "bad": 0,
+     "worst_g_over_r": 0.701,
+     "bad_list": []
+    },
+    "blocks_ro": {
+     "n": 9,
+     "bad": 0,
+     "worst_g_over_r": 0.701,
+     "bad_list": []
+    },
+    "line": {
+     "min_ratio": 0.24871046841144562,
+     "edges": 8
+    },
+    "angle": 89.75,
+    "state": "draped",
+    "site": "west_south_bay2_gf_w1",
+    "net": "N1",
+    "extra": "B3",
+    "frame": "h-across0-gf2w1_night",
+    "brick_median": 44.53779983520508,
+    "lit": true
+   }
+  },
+  "h-across30-gf2w1_day": {
+   "west_south_bay0_gf_w0": {
+    "pane_px": 7932,
+    "joinery_px": 4203,
+    "P": 77.8384017944336,
+    "L": 152.93179321289062,
+    "D": 47.91459655761719,
+    "spread": 73.08940124511719,
+    "pane_rgb_mean": [
+     83.56530509329299,
+     80.66780131114473,
+     78.30168935955622
+    ],
+    "P_over_L": 0.5089746229946945,
+    "D_over_L": 0.31330696875382263,
+    "clear_px": 3054,
+    "cloth_px": 2898,
+    "clear_P": 51.91460037231445,
+    "cloth_P": 103.78479766845703,
+    "clear_rgb_mean": [
+     64.63588736083824,
+     58.33889980353634,
+     52.092665356908974
+    ],
+    "clear_Y": [
+     0.04660826698307669,
+     0.03434766829023519
+    ],
+    "cloth_Y": [
+     0.13660279003596096,
+     0.13783669956124928
+    ],
+    "line": {
+     "min_ratio": 0.42032331228256226,
+     "edges": 5
+    },
+    "angle": 30.62,
+    "state": "net",
+    "site": "west_south_bay0_gf_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "h-across30-gf2w1_day",
+    "brick_median": 77.15340423583984
+   },
+   "west_south_bay0_gf_w1": {
+    "pane_px": 10199,
+    "joinery_px": 5054,
+    "P": 75.21260070800781,
+    "L": 156.1444091796875,
+    "D": 33.84640121459961,
+    "spread": 90.872802734375,
+    "pane_rgb_mean": [
+     76.09736248651829,
+     73.88440043141485,
+     72.38523384645553
+    ],
+    "P_over_L": 0.4816861590058907,
+    "D_over_L": 0.21676345245028866,
+    "clear_px": 0,
+    "cloth_px": 3995,
+    "clear_P": null,
+    "cloth_P": 105.85960388183594,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": [
+     0.14151236868528502,
+     0.14372862669523104
+    ],
+    "line": {
+     "min_ratio": 0.3558090627193451,
+     "edges": 5
+    },
+    "angle": 34.02,
+    "state": "net",
+    "site": "west_south_bay0_gf_w1",
+    "net": "N1",
+    "extra": null,
+    "frame": "h-across30-gf2w1_day",
+    "brick_median": 76.80039978027344
+   },
+   "west_south_bay1_gf_w0": {
+    "pane_px": 19470,
+    "joinery_px": 8709,
+    "P": 106.57479858398438,
+    "L": 188.6446075439453,
+    "D": 68.9238052368164,
+    "spread": 70.16799926757812,
+    "pane_rgb_mean": [
+     103.9246533127889,
+     104.14745762711864,
+     103.83959938366718
+    ],
+    "P_over_L": 0.5649501460525844,
+    "D_over_L": 0.3653632411451804,
+    "clear_px": 73,
+    "cloth_px": 18551,
+    "clear_P": null,
+    "cloth_P": 106.78739929199219,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": [
+     0.1473610459079176,
+     0.14641098254462936
+    ],
+    "line": {
+     "min_ratio": 0.31537288427352905,
+     "edges": 5
+    },
+    "angle": 45.16,
+    "state": "net",
+    "site": "west_south_bay1_gf_w0",
+    "net": "N2",
+    "extra": null,
+    "frame": "h-across30-gf2w1_day",
+    "brick_median": 77.64680480957031
+   },
+   "west_south_bay1_gf_w1": {
+    "pane_px": 25381,
+    "joinery_px": 11359,
+    "P": 47.83319854736328,
+    "L": 187.7191925048828,
+    "D": 27.846399307250977,
+    "spread": 42.50659942626953,
+    "pane_rgb_mean": [
+     55.02852527481187,
+     46.3374965525393,
+     41.46318111973523
+    ],
+    "P_over_L": 0.25481250962721397,
+    "D_over_L": 0.14834071538277396,
+    "clear_px": 0,
+    "cloth_px": 24664,
+    "clear_P": null,
+    "cloth_P": 47.13240051269531,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": [
+     0.029906785345954444,
+     0.02888304429918188
+    ],
+    "line": {
+     "min_ratio": 0.15554828941822052,
+     "edges": 6
+    },
+    "angle": 51.83,
+    "state": "draped",
+    "site": "west_south_bay1_gf_w1",
+    "net": "N0",
+    "extra": "C1",
+    "frame": "h-across30-gf2w1_day",
+    "brick_median": 74.85940551757812
+   },
+   "west_south_bay2_gf_w0": {
+    "pane_px": 45167,
+    "joinery_px": 19159,
+    "P": 69.06820678710938,
+    "L": 197.6510009765625,
+    "D": 29.996000289916992,
+    "spread": 104.94499969482422,
+    "pane_rgb_mean": [
+     76.35610069298382,
+     76.08878163260788,
+     74.2598578608276
+    ],
+    "P_over_L": 0.34944526688888106,
+    "D_over_L": 0.15176245069193414,
+    "clear_px": 21898,
+    "cloth_px": 21147,
+    "clear_P": 35.85559844970703,
+    "cloth_P": 110.64700317382812,
+    "clear_rgb_mean": [
+     42.19138734130971,
+     40.108777057265506,
+     35.6224769385332
+    ],
+    "clear_Y": [
+     0.02300937898025524,
+     0.017523137755312543
+    ],
+    "cloth_Y": [
+     0.15937346362541283,
+     0.157899410071067
+    ],
+    "line": {
+     "min_ratio": 0.14198866486549377,
+     "edges": 8
+    },
+    "angle": 69.76,
+    "state": "net",
+    "site": "west_south_bay2_gf_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "h-across30-gf2w1_day",
+    "brick_median": 77.99980163574219
+   },
+   "west_south_bay2_gf_w1": {
+    "pane_px": 33479,
+    "joinery_px": 13546,
+    "P": 98.07219696044922,
+    "L": 195.4384002685547,
+    "D": 49.06819534301758,
+    "spread": 88.72319030761719,
+    "pane_rgb_mean": [
+     95.09262522775471,
+     95.81525732548762,
+     95.55109172914364
+    ],
+    "P_over_L": 0.5018061794697809,
+    "D_over_L": 0.25106731980814556,
+    "clear_px": 0,
+    "cloth_px": 31162,
+    "clear_P": null,
+    "cloth_P": 95.78739929199219,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": [
+     0.12867736697126164,
+     0.11643166426866604
+    ],
+    "line": {
+     "min_ratio": 0.28139811754226685,
+     "edges": 5
+    },
+    "angle": 60.0,
+    "state": "draped",
+    "site": "west_south_bay2_gf_w1",
+    "net": "N1",
+    "extra": "B3",
+    "frame": "h-across30-gf2w1_day",
+    "brick_median": 74.85940551757812
+   }
+  },
+  "h-across30-gf2w1_night": {
+   "west_south_bay0_gf_w0": {
+    "pane_px": 7932,
+    "joinery_px": 4203,
+    "P": 40.25579833984375,
+    "L": 124.96199798583984,
+    "D": 7.6967997550964355,
+    "spread": 90.7112045288086,
+    "pane_rgb_mean": [
+     71.49697428139183,
+     40.44415027735754,
+     23.168305597579426
+    ],
+    "P_over_L": 0.32214432378398244,
+    "D_over_L": 0.06159312334273499,
+    "clear_px": 3054,
+    "cloth_px": 2898,
+    "clear_P": 14.239998817443848,
+    "cloth_P": 83.9573974609375,
+    "clear_rgb_mean": [
+     34.422396856581535,
+     12.514079895219384,
+     1.5579567779960708
+    ],
+    "clear_Y": [
+     0.007587549986018407,
+     0.005404155152652527
+    ],
+    "cloth_Y": [
+     0.08849667882935472,
+     0.0979576638292024
+    ],
+    "line": {
+     "min_ratio": 0.05359068885445595,
+     "edges": 5
+    },
+    "angle": 30.62,
+    "state": "net",
+    "site": "west_south_bay0_gf_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "h-across30-gf2w1_night",
+    "brick_median": 48.07619857788086
+   },
+   "west_south_bay0_gf_w1": {
+    "pane_px": 10199,
+    "joinery_px": 5054,
+    "P": 34.14039993286133,
+    "L": 83.1931381225586,
+    "D": 11.5339994430542,
+    "spread": 56.6433219909668,
+    "pane_rgb_mean": [
+     47.60152956172174,
+     30.422982645357386,
+     23.42396313364055
+    ],
+    "P_over_L": 0.41037519083083895,
+    "D_over_L": 0.13864123536321618,
+    "clear_px": 0,
+    "cloth_px": 3995,
+    "clear_P": null,
+    "cloth_P": 53.46580123901367,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": [
+     0.03900985941543758,
+     0.03688727098496632
+    ],
+    "line": {
+     "min_ratio": 0.1446826010942459,
+     "edges": 5
+    },
+    "angle": 34.02,
+    "state": "net",
+    "site": "west_south_bay0_gf_w1",
+    "net": "N1",
+    "extra": null,
+    "frame": "h-across30-gf2w1_night",
+    "brick_median": 37.81880187988281
+   },
+   "west_south_bay1_gf_w0": {
+    "pane_px": 19470,
+    "joinery_px": 8709,
+    "P": 50.97760009765625,
+    "L": 78.92259216308594,
+    "D": 30.47100067138672,
+    "spread": 34.642860412597656,
+    "pane_rgb_mean": [
+     61.059784283513096,
+     46.23713405238829,
+     40.500616332819725
+    ],
+    "P_over_L": 0.6459189783365953,
+    "D_over_L": 0.38608717524661795,
+    "clear_px": 73,
+    "cloth_px": 18551,
+    "clear_P": null,
+    "cloth_P": 51.180999755859375,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": [
+     0.03304853782234518,
+     0.033781868533865916
+    ],
+    "line": {
+     "min_ratio": 0.28483858704566956,
+     "edges": 5
+    },
+    "angle": 45.16,
+    "state": "net",
+    "site": "west_south_bay1_gf_w0",
+    "net": "N2",
+    "extra": null,
+    "frame": "h-across30-gf2w1_night",
+    "brick_median": 30.828001022338867,
+    "lit": false
+   },
+   "west_south_bay1_gf_w1": {
+    "pane_px": 25381,
+    "joinery_px": 11359,
+    "P": 118.14599609375,
+    "L": 107.71880340576172,
+    "D": 56.023399353027344,
+    "spread": 6.497398376464844,
+    "pane_rgb_mean": [
+     168.3290256491076,
+     108.35175918994524,
+     58.439423190575624
+    ],
+    "P_over_L": 1.096800116212863,
+    "D_over_L": 0.5200893212858576,
+    "clear_px": 0,
+    "cloth_px": 24664,
+    "clear_P": null,
+    "cloth_P": 118.14599609375,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": [
+     0.19809160829243325,
+     0.19688061507226837
+    ],
+    "curtain_colour": "brown",
+    "blocks": {
+     "n": 10,
+     "bad": 0,
+     "worst_g_over_r": 0.386,
+     "bad_list": []
+    },
+    "blocks_ro": {
+     "n": 10,
+     "bad": 0,
+     "worst_g_over_r": 0.386,
+     "bad_list": []
+    },
+    "line": {
+     "min_ratio": 0.4015733301639557,
+     "edges": 6
+    },
+    "angle": 51.83,
+    "state": "draped",
+    "site": "west_south_bay1_gf_w1",
+    "net": "N0",
+    "extra": "C1",
+    "frame": "h-across30-gf2w1_night",
+    "brick_median": 37.19940185546875,
+    "lit": true
+   },
+   "west_south_bay2_gf_w0": {
+    "pane_px": 45167,
+    "joinery_px": 19159,
+    "P": 81.79719543457031,
+    "L": 120.25019836425781,
+    "D": 32.54159927368164,
+    "spread": 124.91744995117188,
+    "pane_rgb_mean": [
+     114.12695109261186,
+     93.38607833152523,
+     62.60526490579405
+    ],
+    "P_over_L": 0.6802250353616301,
+    "D_over_L": 0.2706157637687028,
+    "clear_px": 21898,
+    "cloth_px": 21147,
+    "clear_P": 58.87739944458008,
+    "cloth_P": 136.06478881835938,
+    "clear_rgb_mean": [
+     69.72659603616769,
+     54.47648187049045,
+     29.912412092428532
+    ],
+    "clear_Y": [
+     0.04435909442293707,
+     0.045158480107982575
+    ],
+    "cloth_Y": [
+     0.26572220215582354,
+     0.25081360385056983
+    ],
+    "curtain_colour": null,
+    "blocks": {
+     "n": 16,
+     "bad": 0,
+     "worst_g_over_r": 0.704,
+     "bad_list": []
+    },
+    "blocks_ro": {
+     "n": 16,
+     "bad": 0,
+     "worst_g_over_r": 0.709,
+     "bad_list": []
+    },
+    "line": {
+     "min_ratio": 0.2718731462955475,
+     "edges": 8
+    },
+    "angle": 69.76,
+    "state": "net",
+    "site": "west_south_bay2_gf_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "h-across30-gf2w1_night",
+    "brick_median": 42.256996154785156,
+    "lit": true
+   },
+   "west_south_bay2_gf_w1": {
+    "pane_px": 33479,
+    "joinery_px": 13546,
+    "P": 140.2825927734375,
+    "L": 145.10400390625,
+    "D": 54.823997497558594,
+    "spread": 72.6216049194336,
+    "pane_rgb_mean": [
+     170.6231368917829,
+     132.5349323456495,
+     88.42713342692434
+    ],
+    "P_over_L": 0.9667727216133364,
+    "D_over_L": 0.3778255321815912,
+    "clear_px": 0,
+    "cloth_px": 31162,
+    "clear_P": null,
+    "cloth_P": 142.997802734375,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": [
+     0.2839072118856856,
+     0.28228302142961814
+    ],
+    "curtain_colour": "white",
+    "blocks": {
+     "n": 14,
+     "bad": 0,
+     "worst_g_over_r": 0.695,
+     "bad_list": []
+    },
+    "blocks_ro": {
+     "n": 14,
+     "bad": 0,
+     "worst_g_over_r": 0.695,
+     "bad_list": []
+    },
+    "line": {
+     "min_ratio": 0.2508186995983124,
+     "edges": 5
+    },
+    "angle": 60.0,
+    "state": "draped",
+    "site": "west_south_bay2_gf_w1",
+    "net": "N1",
+    "extra": "B3",
+    "frame": "h-across30-gf2w1_night",
+    "brick_median": 45.10340118408203,
+    "lit": true
+   }
+  },
+  "h-along15-gf2w1_day": {
+   "east_chandler_bay0_upper_w0": {
+    "pane_px": 204,
+    "joinery_px": 266,
+    "P": 104.92379760742188,
+    "L": 196.32150268554688,
+    "D": 79.43988800048828,
+    "spread": 85.08597564697266,
+    "pane_rgb_mean": [
+     114.41666666666667,
+     109.42156862745098,
+     105.36764705882354
+    ],
+    "P_over_L": 0.5344488309845559,
+    "D_over_L": 0.40464180904182034,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.3936237394809723,
+     "edges": 5
+    },
+    "angle": 12.6,
+    "state": "draped",
+    "site": "east_chandler_bay0_upper_w0",
+    "net": "N0",
+    "extra": "B1",
+    "frame": "h-along15-gf2w1_day",
+    "brick_median": 115.3803939819336
+   },
+   "east_parade_bay3_upper_w1": {
+    "pane_px": 1539,
+    "joinery_px": 1346,
+    "P": 86.84640502929688,
+    "L": 163.493408203125,
+    "D": 55.10544204711914,
+    "spread": 78.74557495117188,
+    "pane_rgb_mean": [
+     93.42820012995452,
+     86.61013645224172,
+     81.92202729044834
+    ],
+    "P_over_L": 0.5311920889275149,
+    "D_over_L": 0.3370499315706715,
+    "clear_px": 536,
+    "cloth_px": 0,
+    "clear_P": 69.22889709472656,
+    "cloth_P": null,
+    "clear_rgb_mean": [
+     86.77798507462687,
+     75.52611940298507,
+     72.51119402985074
+    ],
+    "clear_Y": [
+     0.08683470392095279,
+     0.0602145962526657
+    ],
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.34374842047691345,
+     "edges": 8
+    },
+    "angle": 20.63,
+    "state": "bare",
+    "site": "east_parade_bay3_upper_w1",
+    "net": "N0",
+    "extra": null,
+    "frame": "h-along15-gf2w1_day",
+    "brick_median": 109.87779998779297
+   },
+   "east_parade_bay4_upper_w0": {
+    "pane_px": 785,
+    "joinery_px": 1451,
+    "P": 108.64700317382812,
+    "L": 221.00401306152344,
+    "D": 63.89984893798828,
+    "spread": 95.57708740234375,
+    "pane_rgb_mean": [
+     107.26114649681529,
+     103.27133757961784,
+     101.08535031847134
+    ],
+    "P_over_L": 0.4916064720670154,
+    "D_over_L": 0.289134337665623,
+    "clear_px": 36,
+    "cloth_px": 193,
+    "clear_P": null,
+    "cloth_P": 104.78340148925781,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": [
+     0.14365829512167347,
+     0.14065717433612968
+    ],
+    "line": {
+     "min_ratio": 0.2426643669605255,
+     "edges": 5
+    },
+    "angle": 18.46,
+    "state": "draped",
+    "site": "east_parade_bay4_upper_w0",
+    "net": "N2",
+    "extra": "C1",
+    "frame": "h-along15-gf2w1_day",
+    "brick_median": 114.38040161132812
+   },
+   "east_parade_bay4_upper_w1": {
+    "pane_px": 434,
+    "joinery_px": 1073,
+    "P": 98.20140075683594,
+    "L": 214.39083862304688,
+    "D": 64.93470001220703,
+    "spread": 85.28731536865234,
+    "pane_rgb_mean": [
+     102.1589861751152,
+     97.22350230414746,
+     91.25806451612904
+    ],
+    "P_over_L": 0.45804849399138153,
+    "D_over_L": 0.30288001310717666,
+    "clear_px": 88,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.21711935102939606,
+     "edges": 5
+    },
+    "angle": 16.69,
+    "state": "net",
+    "site": "east_parade_bay4_upper_w1",
+    "net": "N1",
+    "extra": null,
+    "frame": "h-along15-gf2w1_day",
+    "brick_median": 116.18619537353516
+   },
+   "east_parade_bay5_upper_w0": {
+    "pane_px": 280,
+    "joinery_px": 492,
+    "P": 94.76760864257812,
+    "L": 162.20538330078125,
+    "D": 70.05992126464844,
+    "spread": 67.92183685302734,
+    "pane_rgb_mean": [
+     104.75,
+     96.71785714285714,
+     91.90357142857142
+    ],
+    "P_over_L": 0.5842445343928464,
+    "D_over_L": 0.4319210610583416,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.31070980429649353,
+     "edges": 5
+    },
+    "angle": 15.21,
+    "state": "net",
+    "site": "east_parade_bay5_upper_w0",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "h-along15-gf2w1_day",
+    "brick_median": 112.30299377441406
+   },
+   "east_parade_bay5_upper_w1": {
+    "pane_px": 157,
+    "joinery_px": 367,
+    "P": 93.25839233398438,
+    "L": 160.90655517578125,
+    "D": 71.28083801269531,
+    "spread": 80.68383026123047,
+    "pane_rgb_mean": [
+     106.43949044585987,
+     97.7515923566879,
+     92.85987261146497
+    ],
+    "P_over_L": 0.5795810632581432,
+    "D_over_L": 0.4429952399069451,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.3634171187877655,
+     "edges": 3
+    },
+    "angle": 13.98,
+    "state": "net",
+    "site": "east_parade_bay5_upper_w1",
+    "net": "N3",
+    "extra": null,
+    "frame": "h-along15-gf2w1_day",
+    "brick_median": 112.24919891357422
+   },
+   "west_south_bay1_gf_w0": {
+    "pane_px": 890,
+    "joinery_px": 3002,
+    "P": 114.8595962524414,
+    "L": 159.98675537109375,
+    "D": 93.13626098632812,
+    "spread": 36.25410461425781,
+    "pane_rgb_mean": [
+     113.08202247191011,
+     113.08426966292134,
+     114.02696629213483
+    ],
+    "P_over_L": 0.7179319062132448,
+    "D_over_L": 0.5821498209042115,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.35715705156326294,
+     "edges": 5
+    },
+    "angle": 9.26,
+    "state": "net",
+    "site": "west_south_bay1_gf_w0",
+    "net": "N2",
+    "extra": null,
+    "frame": "h-along15-gf2w1_day",
+    "brick_median": 83.91459655761719
+   },
+   "west_south_bay1_gf_w1": {
+    "pane_px": 3212,
+    "joinery_px": 5260,
+    "P": 92.93180084228516,
+    "L": 171.07618713378906,
+    "D": 64.02273559570312,
+    "spread": 66.32559967041016,
+    "pane_rgb_mean": [
+     92.91531755915318,
+     90.6983188044832,
+     90.85958904109589
+    ],
+    "P_over_L": 0.5432187985906445,
+    "D_over_L": 0.3742352262365688,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.33900687098503113,
+     "edges": 5
+    },
+    "angle": 11.46,
+    "state": "draped",
+    "site": "west_south_bay1_gf_w1",
+    "net": "N0",
+    "extra": "C1",
+    "frame": "h-along15-gf2w1_day",
+    "brick_median": 83.8135986328125
+   },
+   "west_south_bay2_gf_w0": {
+    "pane_px": 34814,
+    "joinery_px": 28028,
+    "P": 106.42520141601562,
+    "L": 191.07618713378906,
+    "D": 61.132598876953125,
+    "spread": 84.02120971679688,
+    "pane_rgb_mean": [
+     103.14683747917505,
+     100.83271097834205,
+     99.09418624691216
+    ],
+    "P_over_L": 0.556977837021094,
+    "D_over_L": 0.31993834393476184,
+    "clear_px": 6436,
+    "cloth_px": 9596,
+    "clear_P": 63.548397064208984,
+    "cloth_P": 110.92779541015625,
+    "clear_rgb_mean": [
+     70.03713486637663,
+     63.07691112492231,
+     56.48104412678683
+    ],
+    "clear_Y": [
+     0.05595612750166608,
+     0.050893081504942504
+    ],
+    "cloth_Y": [
+     0.1631314351652774,
+     0.15874175344918998
+    ],
+    "line": {
+     "min_ratio": 0.24032193422317505,
+     "edges": 7
+    },
+    "angle": 21.55,
+    "state": "net",
+    "site": "west_south_bay2_gf_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "h-along15-gf2w1_day",
+    "brick_median": 80.7374038696289
+   },
+   "west_south_bay2_gf_w1": {
+    "pane_px": 6563,
+    "joinery_px": 10030,
+    "P": 93.3530044555664,
+    "L": 162.387451171875,
+    "D": 64.41600036621094,
+    "spread": 69.92320251464844,
+    "pane_rgb_mean": [
+     95.10361115343593,
+     92.35669663263751,
+     92.00518055767179
+    ],
+    "P_over_L": 0.5748781927536951,
+    "D_over_L": 0.3966809005335727,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.32549068331718445,
+     "edges": 5
+    },
+    "angle": 15.0,
+    "state": "draped",
+    "site": "west_south_bay2_gf_w1",
+    "net": "N1",
+    "extra": "B3",
+    "frame": "h-along15-gf2w1_day",
+    "brick_median": 81.01300048828125
+   }
+  },
+  "h-along15-gf2w1_night": {
+   "east_chandler_bay0_upper_w0": {
+    "pane_px": 204,
+    "joinery_px": 266,
+    "P": 53.19139862060547,
+    "L": 84.34439849853516,
+    "D": 33.99224090576172,
+    "spread": 46.67875671386719,
+    "pane_rgb_mean": [
+     61.0,
+     52.23529411764706,
+     42.48039215686274
+    ],
+    "P_over_L": 0.6306453014959762,
+    "D_over_L": 0.4030171713934515,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "curtain_colour": "white",
+    "blocks": {
+     "n": 0,
+     "bad": 0,
+     "worst_g_over_r": 0.0,
+     "bad_list": []
+    },
+    "blocks_ro": {
+     "n": 0,
+     "bad": 0,
+     "worst_g_over_r": 0.0,
+     "bad_list": []
+    },
+    "line": {
+     "min_ratio": 0.41480883955955505,
+     "edges": 5
+    },
+    "angle": 12.6,
+    "state": "draped",
+    "site": "east_chandler_bay0_upper_w0",
+    "net": "N0",
+    "extra": "B1",
+    "frame": "h-along15-gf2w1_night",
+    "brick_median": 45.402801513671875
+   },
+   "east_parade_bay3_upper_w1": {
+    "pane_px": 1539,
+    "joinery_px": 1346,
+    "P": 30.41200065612793,
+    "L": 66.70600128173828,
+    "D": 15.890398979187012,
+    "spread": 34.39228057861328,
+    "pane_rgb_mean": [
+     37.87394411955815,
+     28.909681611435996,
+     24.385315139701106
+    ],
+    "P_over_L": 0.45591101357852865,
+    "D_over_L": 0.23821543300238618,
+    "clear_px": 536,
+    "cloth_px": 0,
+    "clear_P": 19.36199951171875,
+    "cloth_P": null,
+    "clear_rgb_mean": [
+     39.09514925373134,
+     17.692164179104477,
+     10.14365671641791
+    ],
+    "clear_Y": [
+     0.010047142458143825,
+     0.008686899174095881
+    ],
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.12907683849334717,
+     "edges": 8
+    },
+    "angle": 20.63,
+    "state": "bare",
+    "site": "east_parade_bay3_upper_w1",
+    "net": "N0",
+    "extra": null,
+    "frame": "h-along15-gf2w1_night",
+    "brick_median": 42.827999114990234
+   },
+   "east_parade_bay4_upper_w0": {
+    "pane_px": 785,
+    "joinery_px": 1451,
+    "P": 38.62459945678711,
+    "L": 93.49739837646484,
+    "D": 15.753250122070312,
+    "spread": 48.430484771728516,
+    "pane_rgb_mean": [
+     42.51847133757962,
+     35.964331210191084,
+     33.32611464968153
+    ],
+    "P_over_L": 0.41310881508452424,
+    "D_over_L": 0.1684886466962456,
+    "clear_px": 36,
+    "cloth_px": 193,
+    "clear_P": null,
+    "cloth_P": 40.552398681640625,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": [
+     0.022763399847493627,
+     0.021949095680585742
+    ],
+    "line": {
+     "min_ratio": 0.11446307599544525,
+     "edges": 5
+    },
+    "angle": 18.46,
+    "state": "draped",
+    "site": "east_parade_bay4_upper_w0",
+    "net": "N2",
+    "extra": "C1",
+    "frame": "h-along15-gf2w1_night",
+    "brick_median": 45.118003845214844
+   },
+   "east_parade_bay4_upper_w1": {
+    "pane_px": 434,
+    "joinery_px": 1073,
+    "P": 30.20400047302246,
+    "L": 90.63780212402344,
+    "D": 10.62459945678711,
+    "spread": 48.490135192871094,
+    "pane_rgb_mean": [
+     35.3778801843318,
+     30.380184331797235,
+     27.170506912442395
+    ],
+    "P_over_L": 0.3332384475926842,
+    "D_over_L": 0.11722040040477849,
+    "clear_px": 88,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.07153968513011932,
+     "edges": 5
+    },
+    "angle": 16.69,
+    "state": "net",
+    "site": "east_parade_bay4_upper_w1",
+    "net": "N1",
+    "extra": null,
+    "frame": "h-along15-gf2w1_night",
+    "brick_median": 45.687599182128906
+   },
+   "east_parade_bay5_upper_w0": {
+    "pane_px": 280,
+    "joinery_px": 492,
+    "P": 51.90800476074219,
+    "L": 76.8997802734375,
+    "D": 33.2098388671875,
+    "spread": 50.06420135498047,
+    "pane_rgb_mean": [
+     59.50714285714286,
+     51.385714285714286,
+     41.925
+    ],
+    "P_over_L": 0.6750084925622616,
+    "D_over_L": 0.43185869646312564,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "curtain_colour": "floral_cream",
+    "blocks": {
+     "n": 0,
+     "bad": 0,
+     "worst_g_over_r": 0.0,
+     "bad_list": []
+    },
+    "blocks_ro": {
+     "n": 0,
+     "bad": 0,
+     "worst_g_over_r": 0.0,
+     "bad_list": []
+    },
+    "line": {
+     "min_ratio": 0.2830983102321625,
+     "edges": 5
+    },
+    "angle": 15.21,
+    "state": "net",
+    "site": "east_parade_bay5_upper_w0",
+    "net": "N1",
+    "extra": "C2",
+    "frame": "h-along15-gf2w1_night",
+    "brick_median": 44.40740203857422
+   },
+   "east_parade_bay5_upper_w1": {
+    "pane_px": 157,
+    "joinery_px": 367,
+    "P": 36.3489990234375,
+    "L": 66.70600128173828,
+    "D": 26.018692016601562,
+    "spread": 32.90612030029297,
+    "pane_rgb_mean": [
+     42.29936305732484,
+     38.27388535031847,
+     35.038216560509554
+    ],
+    "P_over_L": 0.5449134759242202,
+    "D_over_L": 0.3900502431064557,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.2932509779930115,
+     "edges": 3
+    },
+    "angle": 13.98,
+    "state": "net",
+    "site": "east_parade_bay5_upper_w1",
+    "net": "N3",
+    "extra": null,
+    "frame": "h-along15-gf2w1_night",
+    "brick_median": 43.827999114990234
+   },
+   "west_south_bay1_gf_w0": {
+    "pane_px": 890,
+    "joinery_px": 3002,
+    "P": 51.05900192260742,
+    "L": 67.55049896240234,
+    "D": 39.55746078491211,
+    "spread": 15.540367126464844,
+    "pane_rgb_mean": [
+     54.825842696629216,
+     48.95505617977528,
+     45.442696629213486
+    ],
+    "P_over_L": 0.7558641713516601,
+    "D_over_L": 0.5855983507528084,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.34879979491233826,
+     "edges": 5
+    },
+    "angle": 9.26,
+    "state": "net",
+    "site": "west_south_bay1_gf_w0",
+    "net": "N2",
+    "extra": null,
+    "frame": "h-along15-gf2w1_night",
+    "brick_median": 34.11280059814453
+   },
+   "west_south_bay1_gf_w1": {
+    "pane_px": 3212,
+    "joinery_px": 5260,
+    "P": 62.10649871826172,
+    "L": 98.81700134277344,
+    "D": 36.27880096435547,
+    "spread": 56.36134338378906,
+    "pane_rgb_mean": [
+     94.6939601494396,
+     57.54856787048568,
+     34.744707347447076
+    ],
+    "P_over_L": 0.6285001353444086,
+    "D_over_L": 0.36713116641247445,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "curtain_colour": "brown",
+    "blocks": {
+     "n": 0,
+     "bad": 0,
+     "worst_g_over_r": 0.0,
+     "bad_list": []
+    },
+    "blocks_ro": {
+     "n": 0,
+     "bad": 0,
+     "worst_g_over_r": 0.0,
+     "bad_list": []
+    },
+    "line": {
+     "min_ratio": 0.32924696803092957,
+     "edges": 5
+    },
+    "angle": 11.46,
+    "state": "draped",
+    "site": "west_south_bay1_gf_w1",
+    "net": "N0",
+    "extra": "C1",
+    "frame": "h-along15-gf2w1_night",
+    "brick_median": 43.48419952392578
+   },
+   "west_south_bay2_gf_w0": {
+    "pane_px": 34814,
+    "joinery_px": 28028,
+    "P": 87.82119750976562,
+    "L": 118.3906021118164,
+    "D": 34.48939895629883,
+    "spread": 114.44020080566406,
+    "pane_rgb_mean": [
+     100.56707071867639,
+     85.29939104957775,
+     63.337450450968
+    ],
+    "P_over_L": 0.7417919661124885,
+    "D_over_L": 0.29131872244153817,
+    "clear_px": 6436,
+    "cloth_px": 9596,
+    "clear_P": 95.07400512695312,
+    "cloth_P": 136.35879516601562,
+    "clear_rgb_mean": [
+     115.0616842759478,
+     92.07613424487259,
+     54.22762585456805
+    ],
+    "clear_Y": [
+     0.11749382553919017,
+     0.11808047188477648
+    ],
+    "cloth_Y": [
+     0.26517642169223976,
+     0.2519382952066464
+    ],
+    "curtain_colour": null,
+    "blocks": {
+     "n": 0,
+     "bad": 0,
+     "worst_g_over_r": 0.0,
+     "bad_list": []
+    },
+    "blocks_ro": {
+     "n": 0,
+     "bad": 0,
+     "worst_g_over_r": 0.0,
+     "bad_list": []
+    },
+    "line": {
+     "min_ratio": 0.26708707213401794,
+     "edges": 7
+    },
+    "angle": 21.55,
+    "state": "net",
+    "site": "west_south_bay2_gf_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "h-along15-gf2w1_night",
+    "brick_median": 39.1349983215332
+   },
+   "west_south_bay2_gf_w1": {
+    "pane_px": 6563,
+    "joinery_px": 10030,
+    "P": 79.98780059814453,
+    "L": 133.18978881835938,
+    "D": 42.674400329589844,
+    "spread": 61.2869987487793,
+    "pane_rgb_mean": [
+     104.84245009904008,
+     74.41992991010208,
+     50.23053481639494
+    ],
+    "P_over_L": 0.6005550523638845,
+    "D_over_L": 0.3204029431099109,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "curtain_colour": "white",
+    "blocks": {
+     "n": 0,
+     "bad": 0,
+     "worst_g_over_r": 0.0,
+     "bad_list": []
+    },
+    "blocks_ro": {
+     "n": 0,
+     "bad": 0,
+     "worst_g_over_r": 0.0,
+     "bad_list": []
+    },
+    "line": {
+     "min_ratio": 0.254022479057312,
+     "edges": 5
+    },
+    "angle": 15.0,
+    "state": "draped",
+    "site": "west_south_bay2_gf_w1",
+    "net": "N1",
+    "extra": "B3",
+    "frame": "h-along15-gf2w1_night",
+    "brick_median": 49.3251953125
+   }
+  },
+  "h-along15road-gf2w1_day": {
+   "east_parade_bay3_upper_w1": {
+    "pane_px": 625,
+    "joinery_px": 1030,
+    "P": 90.3988037109375,
+    "L": 154.8487091064453,
+    "D": 63.81553649902344,
+    "spread": 60.91844177246094,
+    "pane_rgb_mean": [
+     96.0928,
+     90.0304,
+     84.2912
+    ],
+    "P_over_L": 0.5837879064835859,
+    "D_over_L": 0.4121153922901332,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.29102084040641785,
+     "edges": 5
+    },
+    "angle": 15.65,
+    "state": "bare",
+    "site": "east_parade_bay3_upper_w1",
+    "net": "N0",
+    "extra": null,
+    "frame": "h-along15road-gf2w1_day",
+    "brick_median": 107.01300048828125
+   },
+   "east_parade_bay4_upper_w0": {
+    "pane_px": 440,
+    "joinery_px": 1028,
+    "P": 123.78739166259766,
+    "L": 212.07620239257812,
+    "D": 60.840065002441406,
+    "spread": 121.91097259521484,
+    "pane_rgb_mean": [
+     112.35,
+     106.80227272727272,
+     104.65227272727273
+    ],
+    "P_over_L": 0.5836929851914858,
+    "D_over_L": 0.2868783216412903,
+    "clear_px": 32,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.2751511037349701,
+     "edges": 5
+    },
+    "angle": 14.17,
+    "state": "draped",
+    "site": "east_parade_bay4_upper_w0",
+    "net": "N2",
+    "extra": "C1",
+    "frame": "h-along15road-gf2w1_day",
+    "brick_median": 111.0811996459961
+   },
+   "east_parade_bay4_upper_w1": {
+    "pane_px": 303,
+    "joinery_px": 798,
+    "P": 125.20860290527344,
+    "L": 210.30926513671875,
+    "D": 81.67040252685547,
+    "spread": 118.1746597290039,
+    "pane_rgb_mean": [
+     123.77557755775578,
+     119.52475247524752,
+     115.45544554455445
+    ],
+    "P_over_L": 0.5953546688676663,
+    "D_over_L": 0.38833478151218315,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.29749900102615356,
+     "edges": 5
+    },
+    "angle": 12.95,
+    "state": "net",
+    "site": "east_parade_bay4_upper_w1",
+    "net": "N1",
+    "extra": null,
+    "frame": "h-along15road-gf2w1_day",
+    "brick_median": 113.66520690917969
+   },
+   "west_south_bay1_gf_w0": {
+    "pane_px": 1370,
+    "joinery_px": 2356,
+    "P": 106.85040283203125,
+    "L": 167.07620239257812,
+    "D": 80.62229919433594,
+    "spread": 55.50981140136719,
+    "pane_rgb_mean": [
+     107.07299270072993,
+     105.04890510948906,
+     105.68029197080293
+    ],
+    "P_over_L": 0.6395309523552934,
+    "D_over_L": 0.4825480711184596,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.33089572191238403,
+     "edges": 5
+    },
+    "angle": 11.06,
+    "state": "net",
+    "site": "west_south_bay1_gf_w0",
+    "net": "N2",
+    "extra": null,
+    "frame": "h-along15road-gf2w1_day",
+    "brick_median": 85.01300048828125
+   },
+   "west_south_bay1_gf_w1": {
+    "pane_px": 2494,
+    "joinery_px": 3207,
+    "P": 86.56300354003906,
+    "L": 171.6084747314453,
+    "D": 50.805599212646484,
+    "spread": 69.97659301757812,
+    "pane_rgb_mean": [
+     87.61828388131515,
+     83.55934242181235,
+     82.47995188452286
+    ],
+    "P_over_L": 0.5044214959401266,
+    "D_over_L": 0.2960553043324552,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.35456523299217224,
+     "edges": 5
+    },
+    "angle": 12.74,
+    "state": "draped",
+    "site": "west_south_bay1_gf_w1",
+    "net": "N0",
+    "extra": "C1",
+    "frame": "h-along15road-gf2w1_day",
+    "brick_median": 84.9186019897461
+   },
+   "west_south_bay2_gf_w0": {
+    "pane_px": 7394,
+    "joinery_px": 8678,
+    "P": 106.57479858398438,
+    "L": 180.86358642578125,
+    "D": 69.05899810791016,
+    "spread": 75.19024658203125,
+    "pane_rgb_mean": [
+     105.39220989991885,
+     103.39775493643495,
+     101.98282391127941
+    ],
+    "P_over_L": 0.5892551435593596,
+    "D_over_L": 0.38182919775423696,
+    "clear_px": 691,
+    "cloth_px": 982,
+    "clear_P": 60.76499938964844,
+    "cloth_P": 108.78739929199219,
+    "clear_rgb_mean": [
+     77.2069464544139,
+     70.14182344428365,
+     64.70911722141824
+    ],
+    "clear_Y": [
+     0.0737722120423409,
+     0.04659480047699665
+    ],
+    "cloth_Y": [
+     0.1568156086989102,
+     0.15229550339550402
+    ],
+    "line": {
+     "min_ratio": 0.27748095989227295,
+     "edges": 6
+    },
+    "angle": 18.21,
+    "state": "net",
+    "site": "west_south_bay2_gf_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "h-along15road-gf2w1_day",
+    "brick_median": 82.66919708251953
+   },
+   "west_south_bay2_gf_w1": {
+    "pane_px": 2726,
+    "joinery_px": 4904,
+    "P": 91.56559753417969,
+    "L": 156.9330291748047,
+    "D": 64.24134826660156,
+    "spread": 69.71394348144531,
+    "pane_rgb_mean": [
+     95.22633895818048,
+     92.56016140865738,
+     92.21239911958914
+    ],
+    "P_over_L": 0.5834692544689654,
+    "D_over_L": 0.4093551791130238,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.3007614314556122,
+     "edges": 5
+    },
+    "angle": 15.0,
+    "state": "draped",
+    "site": "west_south_bay2_gf_w1",
+    "net": "N1",
+    "extra": "B3",
+    "frame": "h-along15road-gf2w1_day",
+    "brick_median": 82.23480224609375
+   }
+  },
+  "h-along15road-gf2w1_night": {
+   "east_parade_bay3_upper_w1": {
+    "pane_px": 625,
+    "joinery_px": 1030,
+    "P": 35.63379669189453,
+    "L": 62.92634201049805,
+    "D": 22.208599090576172,
+    "spread": 27.96219825744629,
+    "pane_rgb_mean": [
+     36.2752,
+     33.8992,
+     30.9904
+    ],
+    "P_over_L": 0.566277898148755,
+    "D_over_L": 0.3529300827127548,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.19286677241325378,
+     "edges": 5
+    },
+    "angle": 15.65,
+    "state": "bare",
+    "site": "east_parade_bay3_upper_w1",
+    "net": "N0",
+    "extra": null,
+    "frame": "h-along15road-gf2w1_night",
+    "brick_median": 41.465797424316406
+   },
+   "east_parade_bay4_upper_w0": {
+    "pane_px": 440,
+    "joinery_px": 1028,
+    "P": 45.495399475097656,
+    "L": 90.08345794677734,
+    "D": 17.049800872802734,
+    "spread": 55.45783996582031,
+    "pane_rgb_mean": [
+     42.71363636363636,
+     37.75454545454546,
+     36.038636363636364
+    ],
+    "P_over_L": 0.5050361133114697,
+    "D_over_L": 0.18926672289684984,
+    "clear_px": 32,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.18625172972679138,
+     "edges": 5
+    },
+    "angle": 14.17,
+    "state": "draped",
+    "site": "east_parade_bay4_upper_w0",
+    "net": "N2",
+    "extra": "C1",
+    "frame": "h-along15road-gf2w1_night",
+    "brick_median": 43.474998474121094
+   },
+   "east_parade_bay4_upper_w1": {
+    "pane_px": 303,
+    "joinery_px": 798,
+    "P": 46.131202697753906,
+    "L": 88.6377944946289,
+    "D": 24.064199447631836,
+    "spread": 59.933780670166016,
+    "pane_rgb_mean": [
+     46.63036303630363,
+     43.37293729372937,
+     40.742574257425744
+    ],
+    "P_over_L": 0.520446192967372,
+    "D_over_L": 0.2714891495759185,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.1844472885131836,
+     "edges": 5
+    },
+    "angle": 12.95,
+    "state": "net",
+    "site": "east_parade_bay4_upper_w1",
+    "net": "N1",
+    "extra": null,
+    "frame": "h-along15road-gf2w1_night",
+    "brick_median": 44.61540222167969
+   },
+   "west_south_bay1_gf_w0": {
+    "pane_px": 1370,
+    "joinery_px": 2356,
+    "P": 43.163299560546875,
+    "L": 69.35040283203125,
+    "D": 22.474998474121094,
+    "spread": 36.227962493896484,
+    "pane_rgb_mean": [
+     45.8036496350365,
+     38.15693430656934,
+     34.613868613138685
+    ],
+    "P_over_L": 0.6223943596274368,
+    "D_over_L": 0.3240788453465254,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "line": {
+     "min_ratio": 0.33758997917175293,
+     "edges": 5
+    },
+    "angle": 11.06,
+    "state": "net",
+    "site": "west_south_bay1_gf_w0",
+    "net": "N2",
+    "extra": null,
+    "frame": "h-along15road-gf2w1_night",
+    "brick_median": 34.258399963378906
+   },
+   "west_south_bay1_gf_w1": {
+    "pane_px": 2494,
+    "joinery_px": 3207,
+    "P": 58.495601654052734,
+    "L": 98.9614028930664,
+    "D": 34.774200439453125,
+    "spread": 57.05220031738281,
+    "pane_rgb_mean": [
+     91.75781876503609,
+     54.32878909382518,
+     31.69927826784282
+    ],
+    "P_over_L": 0.5910951132863451,
+    "D_over_L": 0.35139154683395796,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "curtain_colour": "brown",
+    "blocks": {
+     "n": 0,
+     "bad": 0,
+     "worst_g_over_r": 0.0,
+     "bad_list": []
+    },
+    "blocks_ro": {
+     "n": 0,
+     "bad": 0,
+     "worst_g_over_r": 0.0,
+     "bad_list": []
+    },
+    "line": {
+     "min_ratio": 0.35577908158302307,
+     "edges": 5
+    },
+    "angle": 12.74,
+    "state": "draped",
+    "site": "west_south_bay1_gf_w1",
+    "net": "N0",
+    "extra": "C1",
+    "frame": "h-along15road-gf2w1_night",
+    "brick_median": 44.37639617919922
+   },
+   "west_south_bay2_gf_w0": {
+    "pane_px": 7394,
+    "joinery_px": 8678,
+    "P": 61.33979797363281,
+    "L": 96.13169860839844,
+    "D": 32.91679763793945,
+    "spread": 110.04287719726562,
+    "pane_rgb_mean": [
+     82.30795239383284,
+     70.74114146605356,
+     55.6537733297268
+    ],
+    "P_over_L": 0.6380808709467028,
+    "D_over_L": 0.3424135650825139,
+    "clear_px": 691,
+    "cloth_px": 982,
+    "clear_P": 88.4310073852539,
+    "cloth_P": 138.28260803222656,
+    "clear_rgb_mean": [
+     108.02170767004341,
+     85.56150506512301,
+     52.75397973950796
+    ],
+    "clear_Y": [
+     0.10173067654794533,
+     0.10192324704975711
+    ],
+    "cloth_Y": [
+     0.2643410246919611,
+     0.25926430172740184
+    ],
+    "curtain_colour": null,
+    "blocks": {
+     "n": 0,
+     "bad": 0,
+     "worst_g_over_r": 0.0,
+     "bad_list": []
+    },
+    "blocks_ro": {
+     "n": 0,
+     "bad": 0,
+     "worst_g_over_r": 0.0,
+     "bad_list": []
+    },
+    "line": {
+     "min_ratio": 0.29259026050567627,
+     "edges": 6
+    },
+    "angle": 18.21,
+    "state": "net",
+    "site": "west_south_bay2_gf_w0",
+    "net": "N1",
+    "extra": null,
+    "frame": "h-along15road-gf2w1_night",
+    "brick_median": 39.127197265625
+   },
+   "west_south_bay2_gf_w1": {
+    "pane_px": 2726,
+    "joinery_px": 4904,
+    "P": 75.45500183105469,
+    "L": 130.3470001220703,
+    "D": 44.44459915161133,
+    "spread": 60.33294677734375,
+    "pane_rgb_mean": [
+     103.82318415260455,
+     73.2061628760088,
+     49.182318415260454
+    ],
+    "P_over_L": 0.5788779316776824,
+    "D_over_L": 0.340971400262291,
+    "clear_px": 0,
+    "cloth_px": 0,
+    "clear_P": null,
+    "cloth_P": null,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": null,
+    "curtain_colour": "white",
+    "blocks": {
+     "n": 0,
+     "bad": 0,
+     "worst_g_over_r": 0.0,
+     "bad_list": []
+    },
+    "blocks_ro": {
+     "n": 0,
+     "bad": 0,
+     "worst_g_over_r": 0.0,
+     "bad_list": []
+    },
+    "line": {
+     "min_ratio": 0.27535882592201233,
+     "edges": 5
+    },
+    "angle": 15.0,
+    "state": "draped",
+    "site": "west_south_bay2_gf_w1",
+    "net": "N1",
+    "extra": "B3",
+    "frame": "h-along15road-gf2w1_night",
+    "brick_median": 50.55619812011719
+   }
+  },
+  "h-under-gf2w1_day": {
+   "west_south_bay2_gf_w1": {
+    "pane_px": 1214341,
+    "joinery_px": 461092,
+    "P": 110.00399780273438,
+    "L": 173.86358642578125,
+    "D": 52.91459655761719,
+    "spread": 92.43841552734375,
+    "pane_rgb_mean": [
+     100.48708970544517,
+     101.24256860305302,
+     101.92502188429773
+    ],
+    "P_over_L": 0.6327029141878009,
+    "D_over_L": 0.30434547938078643,
+    "clear_px": 0,
+    "cloth_px": 1174904,
+    "clear_P": null,
+    "cloth_P": 109.49740600585938,
+    "clear_rgb_mean": null,
+    "clear_Y": null,
+    "cloth_Y": [
+     0.14577542987580874,
+     0.15442574812129492
+    ],
+    "line": {
+     "min_ratio": 0.5110880732536316,
+     "edges": 5
+    },
+    "angle": 87.25,
+    "state": "draped",
+    "site": "west_south_bay2_gf_w1",
+    "net": "N1",
+    "extra": "B3",
+    "frame": "h-under-gf2w1_day",
+    "brick_median": 74.93160247802734
+   }
+  }
+ }
+}

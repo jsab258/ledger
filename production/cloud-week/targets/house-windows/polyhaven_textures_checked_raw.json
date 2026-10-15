@@ -1,0 +1,314 @@
+{
+ "painted_plaster_wall": {
+  "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/painted_plaster_wall/painted_plaster_wall_diff_1k.jpg",
+  "bytes": 686726,
+  "name": "Painted Plaster Wall",
+  "dims_cm": [
+   2000,
+   2000
+  ],
+  "authors": [
+   "Amal Kumar"
+  ],
+  "categories": [
+   "wall",
+   "plaster-concrete",
+   "outdoor"
+  ],
+  "published": 1706140800
+ },
+ "plastered_wall_04": {
+  "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/plastered_wall_04/plastered_wall_04_diff_1k.jpg",
+  "bytes": 299230,
+  "name": "Plastered Wall 04",
+  "dims_cm": [
+   3199.9998092651367,
+   3199.9998092651367
+  ],
+  "authors": [
+   "Rob Tuytel"
+  ],
+  "categories": [
+   "wall",
+   "plaster-concrete",
+   "indoor"
+  ],
+  "published": 1736380800
+ },
+ "beige_wall_001": {
+  "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/beige_wall_001/beige_wall_001_diff_1k.jpg",
+  "bytes": 33074,
+  "name": "Beige Wall 001",
+  "dims_cm": [
+   3000,
+   3000.000238418579
+  ],
+  "authors": [
+   "Dimitrios Savva",
+   "Rico Cilliers"
+  ],
+  "categories": [
+   "man made",
+   "wall",
+   "plaster",
+   "outdoor",
+   "indoor",
+   "plaster-concrete"
+  ],
+  "published": 1626792811
+ },
+ "decrepit_wallpaper": {
+  "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/decrepit_wallpaper/decrepit_wallpaper_diff_1k.jpg",
+  "bytes": 814172,
+  "name": "Decrepit Wallpaper",
+  "dims_cm": [
+   2500,
+   2500
+  ],
+  "authors": [
+   "Rob Tuytel"
+  ],
+  "categories": [
+   "wall",
+   "man made"
+  ],
+  "published": 1727740800
+ },
+ "peeling_painted_wall": {
+  "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/peeling_painted_wall/peeling_painted_wall_diff_1k.jpg",
+  "bytes": 440121,
+  "name": "Peeling Painted Wall",
+  "dims_cm": [
+   1800.0000715255737,
+   1800.0000715255737
+  ],
+  "authors": [
+   "Dimitrios Savva"
+  ],
+  "categories": [
+   "wall",
+   "man made"
+  ],
+  "published": 1732147200
+ },
+ "old_wooden_floor_02": {
+  "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/old_wooden_floor_02/old_wooden_floor_02_diff_1k.jpg",
+  "bytes": 845402,
+  "name": "Old Wooden Floor 02",
+  "dims_cm": [
+   2029.9999713897705,
+   2029.9999713897705
+  ],
+  "authors": [
+   "Charlotte Baglioni",
+   "Jenelle van Heerden"
+  ],
+  "categories": [
+   "wood"
+  ],
+  "published": 1786448942
+ },
+ "plank_flooring_02": {
+  "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/plank_flooring_02/plank_flooring_02_diff_1k.jpg",
+  "bytes": 667517,
+  "name": "Plank Flooring 02",
+  "dims_cm": [
+   1980.0000190734863,
+   1980.0000190734863
+  ],
+  "authors": [
+   "Dario Barresi",
+   "Dimitrios Savva"
+  ],
+  "categories": [
+   "floor",
+   "wood",
+   "indoor"
+  ],
+  "published": 1671494400
+ },
+ "dirty_carpet": {
+  "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/dirty_carpet/dirty_carpet_diff_1k.jpg",
+  "bytes": 978020,
+  "name": "Dirty Carpet",
+  "dims_cm": [
+   599.9999046325684,
+   599.9999046325684
+  ],
+  "authors": [
+   "Rohit Seervi"
+  ],
+  "categories": [
+   "floor",
+   "fabric",
+   "carpet"
+  ],
+  "published": 1699315200
+ },
+ "linoleum_brown": {
+  "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/linoleum_brown/linoleum_brown_diff_1k.jpg",
+  "bytes": 684269,
+  "name": "Linoleum Brown",
+  "dims_cm": [
+   2000,
+   2000
+  ],
+  "authors": [
+   "Rob Tuytel"
+  ],
+  "categories": [
+   "floor",
+   "man made"
+  ],
+  "published": 1753747200
+ },
+ "old_linoleum_flooring_01": {
+  "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/old_linoleum_flooring_01/old_linoleum_flooring_01_diff_1k.jpg",
+  "bytes": 677917,
+  "name": "Old Linoleum Flooring 01",
+  "dims_cm": [
+   1990.0001287460327,
+   1990.0001287460327
+  ],
+  "authors": [
+   "Charlotte Baglioni"
+  ],
+  "categories": [
+   "floor",
+   "man made"
+  ],
+  "published": 1762300800
+ },
+ "ceiling_interior": {
+  "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/ceiling_interior/ceiling_interior_diff_1k.jpg",
+  "bytes": 641403,
+  "name": "Ceiling Interior",
+  "dims_cm": [
+   2000,
+   2000
+  ],
+  "authors": [
+   "Dimitrios Savva"
+  ],
+  "categories": [
+   "indoor",
+   "man made"
+  ],
+  "published": 1686009600
+ },
+ "white_plaster_rough_01": {
+  "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/white_plaster_rough_01/white_plaster_rough_01_diff_1k.jpg",
+  "bytes": 628421,
+  "name": "White Plaster Rough 01",
+  "dims_cm": [
+   1000,
+   1000
+  ],
+  "authors": [
+   "Rob Tuytel"
+  ],
+  "categories": [
+   "plaster-concrete",
+   "wall",
+   "floor",
+   "man made",
+   "outdoor"
+  ],
+  "published": 1529359200
+ },
+ "floral_jacquard": {
+  "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/floral_jacquard/floral_jacquard_diff_1k.jpg",
+  "bytes": 1338234,
+  "name": "Floral Jacquard",
+  "dims_cm": [
+   252.9498182468769,
+   383.59999656677246
+  ],
+  "authors": [
+   "colormass",
+   "Rico Cilliers"
+  ],
+  "categories": [
+   "fabric",
+   "jacquard"
+  ],
+  "published": 1757078158
+ },
+ "velour_velvet": {
+  "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/velour_velvet/velour_velvet_diff_1k.jpg",
+  "bytes": 735556,
+  "name": "Velour Velvet",
+  "dims_cm": [
+   284.22817052147235,
+   273.499995470047
+  ],
+  "authors": [
+   "colormass",
+   "Rico Cilliers"
+  ],
+  "categories": [
+   "fabric",
+   "velvet"
+  ],
+  "published": 1757078158
+ },
+ "stair_planks": {
+  "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/stair_planks/stair_planks_diff_1k.jpg",
+  "bytes": 728623,
+  "name": "Stair Planks",
+  "dims_cm": [
+   1200.0000476837158,
+   1200.0000476837158
+  ],
+  "authors": [
+   "Rob Tuytel"
+  ],
+  "categories": [
+   "wood"
+  ],
+  "published": 1786448942
+ },
+ "white_plaster_02": {
+  "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/white_plaster_02/white_plaster_02_diff_1k.jpg",
+  "bytes": 527219,
+  "name": "White Plaster 02",
+  "dims_cm": [
+   1000,
+   1000
+  ],
+  "authors": [
+   "Rob Tuytel"
+  ],
+  "categories": [
+   "plaster-concrete",
+   "wall",
+   "man made",
+   "outdoor",
+   "indoor",
+   "clean",
+   "floor"
+  ],
+  "published": 1531287574
+ },
+ "laminate_floor_02": {
+  "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/laminate_floor_02/laminate_floor_02_diff_1k.jpg",
+  "bytes": 721641,
+  "name": "Laminate Floor 02",
+  "dims_cm": [
+   1699.9999284744263,
+   1700.0000476837158
+  ],
+  "authors": [
+   "Dario Barresi",
+   "Charlotte Baglioni"
+  ],
+  "categories": [
+   "floor",
+   "man made",
+   "indoor",
+   "clean",
+   "wood"
+  ],
+  "published": 1669680000
+ }
+}

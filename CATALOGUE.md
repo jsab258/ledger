@@ -52,20 +52,20 @@ Beside what they approve (*.approval.json; tools/approvals.py): the story outlin
 
 - atlas-01, atlas-02: above.
 - clothing: garment tests, the clothes rubric (RUBRIC.md), jacket and suit films, footwear and Sheila's pieces.
-- clutter-2026-09-29: ten 1990 street clutter pieces.
-- compare: side-by-side frames of the street against references.
+- clutter-2026-09-29: ten street clutter pieces.
+- compare: street frames against references.
 - concept-copper-row-2026-09-10, concept-fairview-2026-09-10: above.
-- facades: facade drawings and tries.
-- fascia-01: Mickey's fascia package to a real mesh.
-- hair-2026-09-29: a hair study.
-- interiors-2026-09-23: four window interiors (unapproved).
-- lighting: the talk light and evening light tests.
+- facades: facade drawings.
+- fascia-01: Mickey's fascia mesh.
+- hair-2026-09-29: hair study.
+- interiors-2026-09-23: four window interiors.
+- lighting: talk and evening light tests.
 - mickeys-cars: cars considered (off until convincing).
-- shop-rooms: each shop's room plans and pictures; pawnbroker-goods-sources.md, Rita's window models and licences (verify_display_sources.py).
+- shop-rooms: each shop's room plans and pictures; Rita's window models and licences (verify_display_sources.py); the printed-goods library (shop-windows/sw_prints.py: crops of 24 Poly Haven HDRIs, ids in prints_used.json, Gutenberg 1408 prose; ocr_words.py reads every map's words).
 - mickeys-props: Mickey's office's hero props, scripted in Blender (tools/art-recipes/mickeys-props/; meshes on F: game-inputs), 6 October.
-- shopfront-kit: the parade's shopfront pieces (pilaster, stallriser, window frame, doors), scripted in Blender (tools/art-recipes/shopfront-kit/), 6 October.
-- sash-window: the lab's box sash, target amended from photographs (tools/art-recipes/sash-window/).
-- brick-colour: brick and maroon target from sheet and photographs.
+- shopfront-kit: the parade's shopfront pieces, scripted in Blender (tools/art-recipes/shopfront-kit/), 6 October.
+- sash-window: the lab's box sash (tools/art-recipes/sash-window/).
+- brick-colour: brick and maroon target.
 - south-quay: the street's south end (road, quay, basin, jetty), scripted (tools/art-recipes/south-quay/).
 - ui: the interface's screens.
 
@@ -75,9 +75,9 @@ Beside what they approve (*.approval.json; tools/approvals.py): the story outlin
 - **The town and its people**: rumour-propagation, small-town-networks, small-town-meetings, eyewitness-testimony, gaze-and-knowing, group-standing-without-a-score, precomputed-day, game-clock, waiting, players-and-a-world-that-remembers, holding-information, detection-legibility, emergent-story-legibility, ending-reading, authored-stories-in-simulation, crime-and-combat-coverage, failure-after-arrest, police-response-1990, british-policing-1988-1992, crime-scene-1990, threats-1990, shop-hours-1990, cab-office-1990, british-crime-fiction-tone, casting, cast-cards, hitman-density.
 - **Talk and voices**: voice-off-card, grounded-dialogue-selection, grounded-replies, invented-claims, conversation-model-capability, local-models, local-writers, llm-inference-economics, prompt-caching, live-speech-architecture, talk-helper, ambient-lines, street-lines-1990, holding-a-large-script, voice-alternatives-2026-09-24, voice-direction, voice-in-the-game, voice-latency, nano-listening-test, tts-licensing-and-consent, runtime-ai-business, ai-npc-demos-hollow, steam-ai-disclosure, player-data-notice.
 - **People on screen**: tom-face, sit-and-turn, character-pipeline, metahuman-audio-driven-animation, lip-sync, talking-face-faults, natural-idles, townspeople-animation, markerless-mocap, clothing-pipeline, clothing-assembly-line, game-clothing-pipeline, plain-1990-clothes, free-garments, wardrobe-at-scale.
-- **Play, testing and players**: baseline-features, feature-coverage, brief-coverage, coverage-audit, coverage-audit-disco-elysium, coverage-audit-hitman, coverage-audit-kcd2, coverage-audit-rdr2, coverage-audit-shadows-of-doubt, teaching-in-thirty-minutes, meridian-test-administration, packaged-game-testing, shipping-build, engine-notices, ai-tester, ui-design, ethics-and-reception.
+- **Play, testing and players**: baseline-features, feature-coverage, brief-coverage, coverage-audit, coverage-audit-disco-elysium, coverage-audit-hitman, coverage-audit-kcd2, coverage-audit-rdr2, coverage-audit-shadows-of-doubt, aaa-reference, teaching-in-thirty-minutes, meridian-test-administration, packaged-game-testing, shipping-build, engine-notices, ai-tester, ui-design, ethics-and-reception.
 - **How the work is done**: pre-production, frontier-ai-uses, agentic-studio-attempts, small-team-shipping, systemic-game-postmortems, content-mass-and-judgement, self-audit, checklist-sweep-2026-09-28, checklist-sweep-2026-09-29, claude-code-goal, blender-mcp, graphify-evaluation, egress-allowlist, terms-2026-10-03, catalogue-and-homes, git-history-clean-2026-10-04.md, README.md.
 
 - **Lab**: production/lab, exact-target trials (LAB-REPORT.md).
 
-Older research outside these folders: ledger-v2/research (the licence allowlist, feasibility, the waste lessons) and legacy/studio-v2.
+Older research outside these folders: ledger-v2/research (the licence allowlist, feasibility, waste lessons) and legacy/studio-v2.

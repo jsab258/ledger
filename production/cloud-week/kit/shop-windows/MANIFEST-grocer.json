@@ -1,0 +1,26 @@
+{
+ "made": "2026-10-14 17:11:50",
+ "what": "the files of the narrow-points build (13 Oct, from the try 2 reviews; v3); the three glbs and the three 4096 pictures are out of git (rebuilt by build_ritas.py) so this names the versions",
+ "files": {
+  "grocer_front.glb": {
+   "bytes": 3880096,
+   "sha256": "1c28f5a8d3fae5f659bd08ce8e369969642e17843cea04a8ccd153bd140d3b6e"
+  },
+  "grocer_display.glb": {
+   "bytes": 5731288,
+   "sha256": "4b58e2d0ef03e6921c9e9139561443ae431a7bce5ec482cc363a84ed0bc916f0"
+  },
+  "grocer_day.png": {
+   "bytes": 7020128,
+   "sha256": "c7bdeffada769814fef7ccc54299be6114f0f4390c4bc0464c0c64a3016b6248"
+  },
+  "grocer_night_lit.png": {
+   "bytes": 6771835,
+   "sha256": "eb292a3042c954878bfb010676bc7ae59b745cb81a05e5a1edb48e7c86dbd649"
+  },
+  "grocer_night_dark.png": {
+   "bytes": 5398496,
+   "sha256": "86672dc6711b5b6e8acd70067c55372da2545606fcbd5d304970ebc581a6d39c"
+  }
+ }
+}

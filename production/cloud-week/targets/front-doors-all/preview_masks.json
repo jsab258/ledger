@@ -1,0 +1,88 @@
+{
+ "d2-railway-street-1987-three-doors.jpg": [
+  {
+   "what": "a pole-mounted board",
+   "box_in_preview": [
+    181,
+    68,
+    319,
+    230
+   ]
+  },
+  {
+   "what": "an oval plaque on the white door",
+   "box_in_preview": [
+    999,
+    152,
+    1058,
+    196
+   ]
+  }
+ ],
+ "d3-levenshulme-ratcliffe-street-1994-four-light-door.jpg": [
+  {
+   "what": "a small numeral over the left door",
+   "box_in_preview": [
+    299,
+    323,
+    365,
+    353
+   ]
+  }
+ ],
+ "d5-aberdeen-hazlehead-1987-council-flush-door.jpg": [
+  {
+   "what": "a small white label on the door",
+   "box_in_preview": [
+    161,
+    261,
+    207,
+    281
+   ]
+  }
+ ],
+ "d6-hull-rensburg-street-1982-blue-door.jpg": [
+  {
+   "what": "a painted numeral on the door",
+   "box_in_preview": [
+    303,
+    367,
+    353,
+    489
+   ]
+  }
+ ],
+ "d8-hull-brazil-street-1986-painted-frames.jpg": [
+  {
+   "what": "a board on the fence",
+   "box_in_preview": [
+    48,
+    378,
+    162,
+    507
+   ]
+  }
+ ],
+ "d3-levenshulme-ratcliffe-street-1994-target-on-photo.jpg": [
+  {
+   "what": "a small numeral over the left door",
+   "box_in_preview": [
+    299,
+    323,
+    365,
+    353
+   ]
+  }
+ ],
+ "d5-aberdeen-hazlehead-1987-target-on-photo.jpg": [
+  {
+   "what": "a small white label on the door",
+   "box_in_preview": [
+    161,
+    261,
+    207,
+    281
+   ]
+  }
+ ]
+}

@@ -1,0 +1,26 @@
+{
+ "made": "2026-10-15 05:13:41",
+ "what": "the ironmonger's batch A build, try 2 (14 Oct, from the try 1 reviews; first built 13 Oct): the files named here are the models and the three 4096 room pictures; those over 1 MB are out of git, so this names their versions; rebuilt by `build_shop.py --shop ironmonger`",
+ "files": {
+  "ironmonger_front.glb": {
+   "bytes": 8686872,
+   "sha256": "f69eefef43fb2bfdd490d26cfc396ca759e075b9d46f46c14b257fe208aafd29"
+  },
+  "ironmonger_display.glb": {
+   "bytes": 25666584,
+   "sha256": "7b55e22572b5c234a12cf08278dd959a1fbbe0ccd5512d1c2bdf840fb098a7f2"
+  },
+  "ironmonger_day.png": {
+   "bytes": 7651685,
+   "sha256": "f5622cc2f022a3cb43601c67847a7d4674ae0accf5b64f812d081a84671a3da8"
+  },
+  "ironmonger_night_lit.png": {
+   "bytes": 7153269,
+   "sha256": "3d7d6817289b5a96601ad7963702c72167157e9e608cad4cba626b7a41331e95"
+  },
+  "ironmonger_night_dark.png": {
+   "bytes": 5268313,
+   "sha256": "9f9d1e86fa2e6bc87ab7627d0c345fa1b5c7673e722586bc574308b7a0f61b3b"
+  }
+ }
+}

@@ -1,0 +1,505 @@
+{
+ "schema": "ledger.cloud-week-42.shop-windows-check/1",
+ "shop": "ironmonger",
+ "made": "2026-10-15 05:13:41",
+ "target": "production/cloud-week/targets/shop-windows/target.json (status: target for unit 7 of cloud week 42, part 2; written 12 October 2026; failed its )",
+ "pass": 76,
+ "counted": 76,
+ "na": 6,
+ "pending": 0,
+ "seconds": 183.1,
+ "rows": [
+  {
+   "id": "PIC-01",
+   "name": "picture files",
+   "status": "pass",
+   "detail": "day 4096x1855 RGB; night_lit 4096x1855 RGB; night_dark 4096x1855 RGB; JSON beside them: w 5.3 h 2.4 d 4.5 camera_d 5.3 pixels [4096, 1855] states ['day', 'night_dark', 'night_lit'] samples 64"
+  },
+  {
+   "id": "PIC-02",
+   "name": "no black void in the picture",
+   "status": "pass",
+   "detail": "day: mean 121.9 (floor 83.7), share under 12 0.0020, largest dark region 0.0006 of the area; night_lit: mean 80.2 (floor 55.9), share under 12 0.0133, largest dark region 0.0033 of the area"
+  },
+  {
+   "id": "PIC-03",
+   "name": "night_dark is dark, not black, and has no hot corners",
+   "status": "pass",
+   "detail": "night_dark mean 18.1 (12.4 to 40; the approved 17.7); the top front corner columns (x 0 to 60 and 4036 to 4096, rows 0 to 200) read 5.6 and 5.6 against 1.5 x the mean = 27.2 (the wash light was the card's full width at 0.9 of the height: the pawnbroker's corners read 66, the tea room's 61, the ironmonger's 98); in the STREET_SQUARE night_dark frame the toplight strips read 17.3, 18.7, 21.7, 22.9, 23.9, 21.5 against the brick above the fascia 24.3 (none above it: the strongest 23.9; the pre-fix frame: the first toplight's end 75.1 and the sixth's 90.7 against the brick 26.4)"
+  },
+  {
+   "id": "PIC-05",
+   "name": "nothing burnt",
+   "status": "pass",
+   "detail": "share of pixels with a channel at 250 or above, on the render before the highlight shoulder (a Judgement: above level 232 the picture is compressed, 255 becomes 242; the raw renders are in rooms/raw): day 0.0100 before the shoulder (0.0000 after it), night_lit 0.0022 before the shoulder (0.0000 after it), night_dark 0.0000 before the shoulder (0.0000 after it) (limit 0.01)"
+  },
+  {
+   "id": "PIC-04",
+   "name": "the floor line and the back wall where the rule puts them",
+   "status": "pass",
+   "detail": "flat-colour pass: back wall top-left (940, 426), bottom-right (3155, 1428); the rule for D 4.5: (940, 426) and (3156, 1429) (largest error 1 px, limit 8)"
+  },
+  {
+   "id": "PIC-06",
+   "name": "each surface has texture",
+   "status": "pass",
+   "detail": "standard deviation of luma (mean of day and night_lit), levels: back 44.2, floor 24.6, left 49.6, right 46.5 (at least 6)"
+  },
+  {
+   "id": "X-NOISE",
+   "name": "picture noise after denoising",
+   "status": "pass",
+   "detail": "high-pass standard deviation of the quietest 32 x 400 patch of the ceiling above the back wall (x 1560, y 378): 0.39 levels (limit 2.0); 64 samples a pixel (the target says 128: cut for the cloud's four cores, denoised); for the record the back wall's top strip, which carries the plaster's own grain, reads 2.25 (x 1160)"
+  },
+  {
+   "id": "PRJ-01",
+   "name": "the identity camera",
+   "status": "pass",
+   "detail": "2000 card points seen from the render camera (card centre, 5.3 m out, mid height; this card is on the west side) through trace: largest error 0.00000 px of 4096 x 1855 (limit 1)"
+  },
+  {
+   "id": "PRJ-02",
+   "name": "the room shifts with the eye",
+   "status": "pass",
+   "detail": "the card's centre lands -1322.1 px (signed) apart between CLOSE_35 and CLOSE_35_B (target -1321.93, +-1.5); the mean absolute difference of the two baked cards is 25.7 levels (at least 8). This runs on the gate's own `trace` bake: it proves the gate, not the game (owed on the PC: PC-01)"
+  },
+  {
+   "id": "PRJ-03",
+   "name": "the gate shows the game's rule",
+   "status": "pass",
+   "detail": "1600 card pixels over the four cameras recomputed through the game's `trace` and the same bilinear-with-mips sampling: mean difference from the baked picture 0.000 level (limit 0.5), largest 0 (limit 3)"
+  },
+  {
+   "id": "SO-01",
+   "name": "back wall stand-off",
+   "status": "pass",
+   "detail": "84 placed goods and fixtures on the back wall: greatest stand-off by fixture {'I-back-drawers': 0.095, 'I-back-counter': 0.6, 'I-back-shelves': 0.28, 'I-back-floor': 0.644}; rule: shelf units and their goods 0.30, counters, free pieces, hatches and flat boards 0.60"
+  },
+  {
+   "id": "SO-02",
+   "name": "side wall stand-off",
+   "status": "pass",
+   "detail": "90 placed goods and fixtures on the side walls: greatest stand-off 0.132 (flat 0.05, tolerated 0.10; 14 Oct, try 2: a good hung on a pegboard at its own size, as DSP-06 asks, stands up to 0.135: a trowel is 0.103 and a broom's head 0.113 deep on a board 0.02 off the wall)"
+  },
+  {
+   "id": "SO-03",
+   "name": "floor and ceiling stand-off",
+   "status": "pass",
+   "detail": "the floor covering stands 0.000 high (limit 0.025), the battens drop 0.025 (0.045 tolerated, limit 0.05)"
+  },
+  {
+   "id": "SO-04",
+   "name": "nothing in the middle of the room",
+   "status": "pass",
+   "detail": "178 pieces and fixtures checked against the back and side walls; none farther than 0.60 m from every wall"
+  },
+  {
+   "id": "SO-05",
+   "name": "nothing stands across a door",
+   "status": "n/a",
+   "detail": "the room has no back door in the target"
+  },
+  {
+   "id": "SO-06",
+   "name": "the scales of the goods",
+   "status": "pass",
+   "detail": "120 placed models (not counting CashRegister_01, which carry their own sizes from the target) at scales 0.900 to 1.000 (limit 0.9 to 1.1 of real size, as DSP-06; before 14 Oct 0.60 to 1.1); those under 0.9 or over 1.1: none"
+  },
+  {
+   "id": "DSP-01",
+   "name": "the display stands in the window",
+   "status": "pass",
+   "detail": "41 pieces: u inside the window zone (0 to 3.35), v 0 to 0.55 from the back of the glass, w up to 1.55 (highest 1.29); none in front of a door"
+  },
+  {
+   "id": "DSP-02",
+   "name": "real geometry in the display",
+   "status": "pass",
+   "detail": "175 nodes, all meshes; materials with an alpha cut-out or blend: none; the price cards are 4 mm thick boxes; 173043 triangles"
+  },
+  {
+   "id": "DSP-07",
+   "name": "every placed model keeps all its parts",
+   "status": "pass",
+   "detail": "37 placed Poly Haven models against their glTF's meshes (the template's audit): CashRegister_01 2 of 2 meshes, glass kept: 1; adjustable_wrench 3 of 3 meshes; bolt_cutters_01 1 of 1 meshes; brass_blowtorch 1 of 1 meshes; cement_bag 1 of 1 meshes; cleaner_tin_01 1 of 1 meshes; combination_wrench 1 of 1 meshes; cross_pein_hammer 1 of 1 meshes; crowbar_01 1 of 1 meshes; drain_cleaner 1 of 1 meshes; dustpan 1 of 1 meshes; flathead_screwdriver 1 of 1 meshes; garden_gloves_01 1 of 1 meshes; garden_sprinkler_01 5 of 5 meshes; handsaw_wood 1 of 1 meshes; hatchet 1 of 1 meshes; lightbulb_01 1 of 1 meshes, glass kept: 1; measuring_tape_01 1 of 1 meshes; metal_jerrycan_green 5 of 5 meshes; metal_toolbox 6 of 6 meshes; metal_trash_can 8 of 8 meshes; mousetrap 1 of 1 meshes; oil_tin 2 of 2 meshes; pipe_wrench 1 of 1 meshes; plastic_broom 1 of 1 meshes; pliers 3 of 3 meshes; ratchet_wrench 1 of 1 meshes; screwdriver 1 of 1 meshes; screwdrivers_02 2 of 2 meshes; sledgehammer_01 1 of 1 meshes; small_oil_can_01 1 of 1 meshes; tire_pump 1 of 1 meshes; tongue_groove_pliers 2 of 2 meshes; trowel_01 1 of 1 meshes; watering_can_metal_01 1 of 1 meshes; wooden_broom 3 of 3 meshes; wooden_hammer_01 1 of 1 meshes (a loose-pieces model that is split on purpose, like the tea set, is judged as a whole; glass parts are kept as a see-through Principled material, transmission 1, alpha 1, nothing blended)"
+  },
+  {
+   "id": "ROOM-01",
+   "name": "the pegboards are covered",
+   "status": "n/a",
+   "detail": "Rita's row (the target's ROOM-01 applies_to ritas: 60 per cent of her left board by bounding box) and the ironmonger's target gives no coverage; measured and recorded, not judged: I-left-pegboard: 44 tools, 3 rows (the last of them not counted against 80 per cent), full rows filled to 87/91 per cent of the width, area share by bounding box 37 per cent of 2.88 m2; I-right-pegboard: 36 tools, 4 rows (the last of them not counted against 80 per cent), full rows filled to 89/86/95 per cent of the width, area share by bounding box 66 per cent of 2.88 m2 (hand tools are thin: by bounding box a real board hung in rows reads about a third; the boards' rows are held to Rita's 80 per cent of the width in ROOM-02)"
+  },
+  {
+   "id": "ROOM-02",
+   "name": "the pegboard rows are filled",
+   "status": "pass",
+   "detail": "each full row's tools (hung from one line, gaps 0.04 to 0.06) fill at least 80 per cent of the board's width (the last, partial row of a board is the remainder of the stock and is not counted); 80 tools in all"
+  },
+  {
+   "id": "ROOM-03",
+   "name": "the shelf tiers are filled",
+   "status": "pass",
+   "detail": "each built tier of the shelf unit, the goods' union along it against its length (at least 60 per cent): z 1.20: 7 goods, 67 per cent of 1.30 m; z 1.60: 17 goods, 89 per cent of 3.05 m; z 1.95: 17 goods, 68 per cent of 3.05 m (the tiers at 0.4 and 0.8 are not built: the counter and the floor goods hide them from every camera; NOTES.md)"
+  },
+  {
+   "id": "ROOM-04",
+   "name": "the drawer wall",
+   "status": "pass",
+   "detail": "60 drawer fronts in 6 columns x 10 rows (target 60), each with a brass label holder carrying a hand-lettered card and a ring pull"
+  },
+  {
+   "id": "ROOM-05",
+   "name": "every listed good is placed",
+   "status": "pass",
+   "detail": "ironmonger: 33 goods of the target's list placed at the target's count; SHORT, named as Judgements in NOTES.md: ['watering_can_metal_01 1 of 3', 'wooden_ladder 0 of 1', 'metal_jerrycan_green 2 of 3']; more than the target: ['adjustable_wrench 3 (target 2)', 'combination_wrench 5 (target 3)', 'cross_pein_hammer 3 (target 2)', 'wooden_hammer_01 2 (target 1)', 'pliers 4 (target 3)', 'tongue_groove_pliers 3 (target 2)', 'screwdriver 6 (target 4)', 'screwdrivers_02 2 (target 1)', 'flathead_screwdriver 5 (target 3)', 'hatchet 2 (target 1)', 'ratchet_wrench 3 (target 2)', 'pipe_wrench 2 (target 1)', 'trowel_01 8 (target 3)', 'garden_gloves_01 8 (target 4)', 'dustpan 4 (target 2)', 'mousetrap 14 (target 6)']"
+  },
+  {
+   "id": "INV-01",
+   "name": "inventory exists",
+   "status": "pass",
+   "detail": "37 of 37 placed Poly Haven models have a 1k glTF in the fetch and an `exists` entry in the inventory"
+  },
+  {
+   "id": "INV-02",
+   "name": "nothing denied is placed",
+   "status": "pass",
+   "detail": "placed models checked against inventory.denied (53 ids): none denied"
+  },
+  {
+   "id": "INV-03",
+   "name": "every model is allowed",
+   "status": "pass",
+   "detail": "37 models placed, all in inventory.polyhaven"
+  },
+  {
+   "id": "INV-04",
+   "name": "scripted goods are the listed ones and carry a why",
+   "status": "pass",
+   "detail": "scripted goods in this build: script:drawer_fronts, script:paint_tin_pyramid, script:paint_tins; each is a key of inventory.scripted with its why; supports that carry goods and are not goods (named in NOTES.md, in `Changes after the build`): script:backing_board, script:hung_card, script:bulb_tray, script:crate, script:hang_rod; no fish, crab or prawn"
+  },
+  {
+   "id": "INV-05",
+   "name": "no maker marks",
+   "status": "pass",
+   "detail": "script: 663 object, material, image and text names against the 63 blocklist words: none found. By eye: every base-colour map of every placed model on contact sheets at 512 px and again at 100 per cent (the marks found are in blanking_report.json and NOTES.md), the label atlases (the project's own fictional makers), and the three room pictures and the gate's frames at full size (see the notes)"
+  },
+  {
+   "id": "INV-06",
+   "name": "the final textures carry no mark",
+   "status": "pass",
+   "detail": "123 of 123 boxes pass the script test (the largest difference from the ring colour at most 24 levels, under 2 per cent of the box with a gradient above 40, the glTF pointing at the clean map; whole-map replacements differ from the original); each final map read at 100 per cent beside the original"
+  },
+  {
+   "id": "NEV-01",
+   "name": "no people, drink, betting, children",
+   "status": "pass",
+   "detail": "663 names and text strings against 51 content-blocklist words (the ones ending in a space as whole words): no match"
+  },
+  {
+   "id": "NEV-02",
+   "name": "nothing after 1992",
+   "status": "pass",
+   "detail": "no model from inventory.denied; the goods are a 1990 ironmonger's: tins, oils, tool boxes, watering cans, trowels, brooms, a tyre pump, a blowtorch (no cordless drill, no plastic modern packaging, no barcode, no LED lamp)"
+  },
+  {
+   "id": "GLB-01",
+   "name": "every normal map is a real tangent-space map",
+   "status": "pass",
+   "detail": "13 distinct normal maps in the 2 glbs (ironmonger_front.glb, ironmonger_display.glb): RGB, red and green means within 14 levels of 128, blue mean at least 200, blue 160 or more on 85 per cent of pixels (a height map exported as a normal map is grey, its blue mean about 128: Rita's street review; 85 and not 95 because a knitted glove's map has steep slopes on a tenth of its pixels and is a true tangent-space map, mean (132, 127, 211))"
+  },
+  {
+   "id": "FRN-01",
+   "name": "the front's parts at their sizes",
+   "status": "pass",
+   "detail": "fascia, cornice, sill, stallriser, the pilaster's shaft and the window frame's transom and head measured on the built meshes against the 3.2 sizes: all within 1.5 mm. Variants: {'pilaster': 'flute', 'console': 'scroll', 'cornice': 'timber', 'stallriser': 'panel', 'window_frame': 'T2', 'shop_door': 'T1', 'side_door': 'F1'}"
+  },
+  {
+   "id": "FRN-02",
+   "name": "window and door zones",
+   "status": "pass",
+   "detail": "window u [350.0, 3700.0], shop door [3700.0, 4706.0], side door [4706.0, 5650.0] against [[350.0, 3700.0], [3700.0, 4706.0], [4706.0, 5650.0]]; centres (street x) window 32.025, shop door 34.203, side door 35.178 against [32.025, 34.203, 35.178]"
+  },
+  {
+   "id": "FRN-03",
+   "name": "the shop door",
+   "status": "pass",
+   "detail": "T1: leaf 900 x 2040 at z 28; glass 871 to 1973 with one bar at 1423 (28 wide); lock rail 549 to 871; letter plate 250 x 40 at z 678 and clear of the glass; hinge on the viewer's L (the lever stile at u 4538, the hinge stile at u 3753); the bell's spring strip z 1950 to 2051, inside the leaf, on the top rail 90 mm in from the hanging stile's inner edge"
+  },
+  {
+   "id": "FRN-04",
+   "name": "the glass and the toplight layout",
+   "status": "pass",
+   "detail": "2 lights, 6 toplights of [509.7, 509.7, 509.7, '...'] (target 509.7), bar centres [573.7, 1111.3, 1675.0, 2238.7, 2776.3] against [573.67, 1111.33, 1675.0, 2238.67, 2776.33] (each within 2 mm), a bar on each of the 1 mullion lines, no toplight under 510; the three over-door toplights [283.3, 283.3, 283.3] (target 283.33); every 6 mm plate at d 30 to 36"
+  },
+  {
+   "id": "FRN-05",
+   "name": "paint colours",
+   "status": "pass",
+   "detail": "122 painted parts, each within 6 levels per channel of one of the target's paints (pilaster [30, 62, 44], console [30, 62, 44], cornice [30, 62, 44], fascia_board [188, 173, 136], stallriser [30, 62, 44], window_frame [30, 62, 44], shop_door [30, 62, 44], side_door [35, 36, 40]); the paints used: ['pilaster', 'side_door']"
+  },
+  {
+   "id": "FRN-06",
+   "name": "lobby",
+   "status": "n/a",
+   "detail": "this shop's front is flush (3.2 lobby kind flush): no lobby"
+  },
+  {
+   "id": "FRN-07",
+   "name": "no opening in the front",
+   "status": "pass",
+   "detail": "the elevation drawn from the built meshes (u 0 to 6000, z 0 to 2850, 1 mm a pixel, every part's triangles, parts drawn 1 mm proud, the gate's two brick piers x 2.65 to 3.0 behind the pilasters drawn as the wall): 0 uncovered pixels of 17100000; the largest uncovered rectangle is 0 x 0 mm (limit 5 x 5). Without the piers the bay's outer strips (u 0 to 350 and 5650 to 6000) have 128492 uncovered pixels: the pilaster's shaft and core stop 30 mm short of the bay's edge, so the game's street facade has to close it (PC-04)"
+  },
+  {
+   "id": "FAS-01",
+   "name": "the fascia's sign in place",
+   "status": "pass",
+   "detail": "the 4.1 board ironmonger_basecolour/height/orm/wear (5410x550) is the fascia board's material (image in the glb: True); the mapping puts texture column 0 at the viewer's left edge u 295 and the top row at z 3400 (5410 x 550 mm, 1 px a mm); the board sits u [295.0, 5705.0], z [2850.0, 3400.0]"
+  },
+  {
+   "id": "FAS-02",
+   "name": "hanging signs",
+   "status": "pass",
+   "detail": "ironmonger_hanging_board: bracket at street x 35.825 (4.1: 35.825), plate foot 3.600 m (3.600), plate centre 3.750 (3.750), arm projection 0.840 (4.1: 0.7; expected 0.880: a board is pushed out to stand 0.33 clear of the wall, the arm is built to the board's far edge), lowest part of the board 2.610 (4.1 lowest 2.61); each face carries its 4.1 map"
+  },
+  {
+   "id": "FRN-11",
+   "name": "no sign passes through the front",
+   "status": "pass",
+   "detail": "85 parts of the hanging sign (ironmonger_hanging_board) against 190 other front parts: 0 pairs with overlapping boxes tested (each mesh inset 1 mm, so a 2 mm contact is tolerated), 0 pairs intersect; the board's (or box's) near edge stands 0.330 m out from the wall (the cornice projects 0.300; a board hung from an arm: at least 0.33; a box fixed to the brick above the cornice has its back edge at the wall); try 2: the sign's 83 iron parts against each other: 77 pairs with overlapping boxes tested, 0 outside the designed joints; parts not within 2 mm of another sign part: none"
+  },
+  {
+   "id": "GLS-01",
+   "name": "nothing across the glass",
+   "status": "pass",
+   "detail": "in front of the window's glass (d over 36, over the window's u and z): only the window frame's own beads, bars and mullions, the sill, the stallriser, the pilasters and the shop's own fittings (none); the lettering rows, the OPEN sign and the hours plate stand behind the glass (d 29 to 39)"
+  },
+  {
+   "id": "FAS-01n",
+   "name": "the fascia's normal map is a normal map",
+   "status": "pass",
+   "detail": "1 normalTexture(s) in the glb: fascia_ironmonger: RGB 5410x550, mean (127.9, 127.9, 256.0), blue 200+ on 100.00% (RGB, mean within 10 levels of 128, 128, 255, blue 200 or more on 99 per cent of pixels)"
+  },
+  {
+   "id": "FAS-01c",
+   "name": "the board reads by day",
+   "status": "pass",
+   "detail": "STREET_SQUARE by day: the board's ground luma 125.3 (not black: at least 12), the dark letters (25th percentile of the lettering's pixels) 60.7: letters to ground 2.06 (at least 2.0). The stallriser's luma 55.6 is written beside it (the ground is 225 per cent of the stallriser's; try 2: the sentence was the wrong way round); for Rita's the two had to agree within 15 per cent because both were one paint, which is not asked of a shop whose stallriser is another material"
+  },
+  {
+   "id": "GLS-02",
+   "name": "no glass row lies behind a bar, mullion or bead",
+   "status": "pass",
+   "detail": "a ray from the camera's eye to each ink point of the shop's glass rows (the row's alpha, every 2 mm) must meet no opaque part of the front first: STREET_SQUARE EST. 1884: 0 of 3458 ink points behind nothing; STREET_SQUARE 16: 0 of 1633 ink points behind nothing; STREET_SQUARE MON-SAT 8.30-5.30 | WED 8.30-1 | SUN CLOSED: 0 of 4795 ink points behind nothing; STREET_30 EST. 1884: 0 of 3458 ink points behind nothing; STREET_30 16: 0 of 1633 ink points behind nothing; STREET_30 MON-SAT 8.30-5.30 | WED 8.30-1 | SUN CLOSED: 0 of 4795 ink points behind nothing"
+  },
+  {
+   "id": "FRN-09",
+   "name": "the hall behind the side door",
+   "status": "pass",
+   "detail": "560 rays from STREET_SQUARE's eye through the side door's fanlight (u 450 to 1200, z 2130 to 2380): 507 meet the hall's own walls, floor or ceiling, 53 the door and its frame (frame_head 39, frame_jamb_R 14), 0 get through to the card: none may (try 1: the room's wall clock and pegboard showed)"
+  },
+  {
+   "id": "FAS-03",
+   "name": "textured primitives carry UVs",
+   "status": "pass",
+   "detail": "ironmonger_front.glb: 0 textured primitives without TEXCOORD_0, 0 negative texCoord; ironmonger_display.glb: 0 textured primitives without TEXCOORD_0, 0 negative texCoord (try 1: the three balls had none and pointed their maps at texCoord -1)"
+  },
+  {
+   "id": "FRN-08",
+   "name": "no backdrop through the front",
+   "status": "pass",
+   "detail": "the front alone (glass opaque, no hanging sign) against a white emissive backdrop, 1280 x 720, from each review camera: backdrop pixels the front's outline encloses (specks under 4 px not counted): STREET_SQUARE 17 px (largest 17) [the bay's outer sliver beside the right pilaster, which the gate's pier closes: N2]; STREET_30 0 px (largest 0); CLOSE_35 0 px (largest 0); CLOSE_35_B 0 px (largest 0) (none allowed from CLOSE_35 and CLOSE_35_B, the review's cameras; the street cameras show only the bay's outer sliver, N2)"
+  },
+  {
+   "id": "FRN-10",
+   "name": "no two parts of the front share a visible face plane; nothing on the front is black",
+   "status": "pass",
+   "detail": "49 coplanar same-facing overlaps of more than 1 mm2 among the front's parts (hidden ones, behind the doors or inside the joinery: not a fault), 0 of them where a camera can see them. By day, in the four gate frames at 2560 x 1440, over the front's own pixels (a mask render: the glass, the two fanlights, the shop door's glass, the hall, the lettering rows and the OPEN sign are not the front; the mask eroded by 2 px; a dark patch counts when it is 35 mm wide on the front or more, a thin line of shade under the cornice or the sill does not): STREET_SQUARE 1181 of 741800 front pixels under luma 8, 0 of them in patches 8 px (35 mm) or wider (the darkest pixel 0.0); STREET_30 593 of 421445 front pixels under luma 8, 0 of them in patches 8 px (35 mm) or wider (the darkest pixel 0.0); CLOSE_35 2624 of 849249 front pixels under luma 8, 0 of them in patches 28 px (35 mm) or wider (the darkest pixel 1.0); CLOSE_35_B 199 of 608344 front pixels under luma 8, 0 of them in patches 28 px (35 mm) or wider (the darkest pixel 5.0) (try 2: the two strips beside the side door were luma 0 to 3, about 12,000 pixels at STREET_SQUARE: F1's frame jambs, the added side jambs and the fillers stood in one plane, d 100)"
+  },
+  {
+   "id": "FRN-13",
+   "name": "the shop door's glass shows the card and the floor, never a reveal",
+   "status": "pass",
+   "detail": "4480 rays (40 x 14 over each of the 2 door panes, 15 mm in) from the four review cameras through the shop door's glass into the gate's scene (the front's opaque parts, the gate's reveal slabs ['reveal_floor_window y 0.020', 'reveal_floor_shop_door y 0.165', 'reveal_floor_side_door y 0.525'], the card): STREET_SQUARE 0 of 1120 on the reveal or nothing; STREET_30 0 of 1120 on the reveal or nothing; CLOSE_35 0 of 1120 on the reveal or nothing; CLOSE_35_B 0 of 1120 on the reveal or nothing; where they end: card 2326, hall_face_dado 1120, hall_face_plaster 759, door_leaf_stile_lever 194, door_rail_lock 77, bell_brass 3, bell_spring_strip 1; none may end on a reveal slab, the sky or beyond the card (try 1: the grocer's and the launderette's door-zone slab stood 60 mm in front of the door leaf and read as a dark box through the glass)"
+  },
+  {
+   "id": "SIGN-01",
+   "name": "the door's sign follows the shop's hours",
+   "status": "pass",
+   "detail": "10 gate frames' camera files: the sign by day OPEN; at night_lit CLOSED (it is shut at night) (the shop's last closing hour 17.5, the night hour 20); at night_dark CLOSED; all as wanted"
+  },
+  {
+   "id": "DSP-09",
+   "name": "every display support has a picture",
+   "status": "pass",
+   "detail": "10 support meshes (crates, trays, shelves, boards, the bed and its top) read from the glb: each carries a base-colour picture, except metal, glass and plain china, black cast and clear plastic, which are one colour by nature (a flat factor on a board reads as a CG panel: the ironmonger's crate was 85,931 px at sd under 1.5 at CLOSE_35_B)"
+  },
+  {
+   "id": "DSP-10",
+   "name": "every cord ends on something",
+   "status": "pass",
+   "detail": "8 cord ends (4 rods in 1 meshes): each inside or within 2 mm of another part of the display (the rod under the transom, the shelf's top)"
+  },
+  {
+   "id": "INV-07",
+   "name": "no maker's mark in the pictures the build uses",
+   "status": "pass",
+   "detail": "56 blanking boxes of 37 placed models read in 41 pictures actually used (the display glb's own images and the room's clean maps): in each box the luma's standard deviation is at most 1.6 times its ring's plus 5; none marked (the pump's roundel, the trowels' stamped word, the till's glyph and the clock's dash were found at 100 per cent by the close review; INV-06 reads the source maps)"
+  },
+  {
+   "id": "INV-08",
+   "name": "someone else reads every map",
+   "status": "pass",
+   "detail": "40 base-colour maps of 37 placed models read by the second reader (three readings each): 6 legible lines in all, 6 of them on the project's word list (DROP FORGED STEEL; Push to; Push to open; THERMOMETER; open); not on the list: none"
+  },
+  {
+   "id": "FLT-01",
+   "name": "no large flat tone in the display",
+   "status": "pass",
+   "detail": "day frames, 9 x 9 px standard deviation under 1, the largest connected patch among the DISPLAY'S OWN PIECES (the check's mask_room render): STREET_SQUARE: the display's pieces' largest uniform patch 0.91 per cent of 284800 glass px (x 947 to 1020, y 758 to 831, luma 33); STREET_30: the display's pieces' largest uniform patch 0.67 per cent of 183909 glass px (x 1075 to 1115, y 775 to 822, luma 51) (limit 1.0 per cent of the glass; the ironmonger's street review, try 2 narrow 6: the row counts the display, the room's flat tones are FLT-02 and PIC-06)"
+  },
+  {
+   "id": "FLT-02",
+   "name": "no large flat tone in the window's room",
+   "status": "pass",
+   "detail": "day frames, the same test over the whole glass, the room's picture and the return walls included: STREET_SQUARE: the largest uniform patch of all 0.91 per cent of 284800 glass px (x 947 to 1020, y 758 to 831, luma 33); of it the room's picture and return walls 0.75, the display's pieces 0.91; STREET_30: the largest uniform patch of all 2.06 per cent of 183909 glass px (x 1139 to 1184, y 735 to 822, luma 41); of it the room's picture and return walls 2.06, the display's pieces 0.67 (limit 3.0 per cent for this shop: the review's)"
+  },
+  {
+   "id": "DSP-11",
+   "name": "the backing board is dark",
+   "status": "pass",
+   "detail": "the pyramid's backing board, 14324 visible pixels (an object-index render from STREET_SQUARE, eroded 3 px) in the day gate frame: mean luma 44.5 (p5 29.3, p95 63.2); wanted 25 to 45 (try 1: 86 to 111, primer grey)"
+  },
+  {
+   "id": "LIT-01",
+   "name": "lit shops lit at night, dark shops dark",
+   "status": "pass",
+   "detail": "this shop is dark at night (lit_at_night false: vignette-pieces lit_names omits west_north_interior1): STREET_SQUARE at night, the room-only composite over the glass lights reads 13.4 (a dark shop reads 10 to 35); the same room lit (night_lit, the state the tests and the lit-room pictures use) reads 75.2, so the difference is 61.8 (at least 25)"
+  },
+  {
+   "id": "LIT-01c",
+   "name": "the dark shop's night at the close cameras",
+   "status": "pass",
+   "detail": "night_dark, the room-only composite (picture x 0.7, glass reflection off) over the glass lights at the two close cameras: CLOSE_35 15.6, CLOSE_35_B 15.5 (a dark shop reads 10 to 35; the review measured 11.0 and 12.6 on try 1); STREET_SQUARE night_dark: the largest connected glass patch under luma 3 is 1.48 per cent of the glass (at most 2; the review's try 1 frame 8.3) and the display's own pieces read 1.02 of the room's (at least 0.6; try 1 0.34)"
+  },
+  {
+   "id": "LIT-02",
+   "name": "no black void in the street view",
+   "status": "pass",
+   "detail": "composite luma over the glass lights: by day STREET_SQUARE 44.5, STREET_30 43.6, CLOSE_35 48.2 (at least 33); at night (the lit room) 75.2, 75.8, 67.1 (at least 45)"
+  },
+  {
+   "id": "LIT-03",
+   "name": "the empty unit is a pale blank by day",
+   "status": "n/a",
+   "detail": "the empty unit's check, not this shop's"
+  },
+  {
+   "id": "LIT-05",
+   "name": "the display is lit at night",
+   "status": "pass",
+   "detail": "STREET_SQUARE at night, on the GLASS ONLY as the review words it (the mullions, the frame and the beads are not glass and are masked out): the display zone (z 0.60 to 1.45 above the footway across the window zone, 136836 glass px) mean luma 56.6 (at least 45; Rita's try 1 measured 45.4 with the glowing mullions inside its zone). The shop has no night grille: the glass is what the street sees. The spill is the gate's stand-in (a rect light 0.10 behind the wall face at z 2.30, 150 Blender watts, invisible to the camera, on the display's channel and the gate's footway): Lumen's own light on the display is owed on the PC (PC-02)"
+  },
+  {
+   "id": "LIT-07",
+   "name": "the night spill stays behind the glass",
+   "status": "pass",
+   "detail": "STREET_SQUARE: head band at 250 or above 0.0000 (under 0.01) ok; mullion fronts 11.2 (p95 13.5) against the glass 56.6 ok; the pavement pool in front of the window 128.7 (written, not a condition: see below); STREET_30: head band at 250 or above 0.0000 (under 0.01) ok; mullion fronts 19.8 (p95 93.2) against the glass 52.1 ok; the pavement pool in front of the window 128.2 (written, not a condition: see below) (try 1: head band 0.32 and 0.35, mullion fronts p95 228, pavement 113 against the glass 66.8). The third condition (the pavement pool no brighter than the lit glass) is STRUCK (13 Oct, from the try 2 street review, 5: it compared a pale pavement with a window whose glass shows dark velvet and black plastic and could not be met by any spill that lights the bed through the glass); the gate's footway is on the spill's channel again, so the pool is the gate's stand-in and the game's own is owed (PC-02)"
+  },
+  {
+   "id": "GLS-04",
+   "name": "no bright band in the night glass",
+   "status": "pass",
+   "detail": "at night, at every camera, the largest connected patch of window-glass pixels 40 or more levels brighter than the same frame with the glass's reflection off is under 0.1 per cent of the glass (a p95 cannot see a band: GLS-03 passed the ironmonger's burnt orange bar at 10.0): STREET_SQUARE: largest patch 0 px = 0.0000 per cent of 281784 glass px (0 patches in all, 0 px 40 levels brighter than the render with the reflection off); STREET_30: largest patch 0 px = 0.0000 per cent of 181475 glass px (0 patches in all, 0 px 40 levels brighter than the render with the reflection off); CLOSE_35: largest patch 277 px = 0.0116 per cent of 2385748 glass px (21 patches in all, 411 px 40 levels brighter than the render with the reflection off); CLOSE_35_B: largest patch 1596 px = 0.0651 per cent of 2451781 glass px (44 patches in all, 4983 px 40 levels brighter than the render with the reflection off) (the gate leaves the road and the far footway out of glossy rays by default, so the glass reflects the dark street and not the stand-in lamps' pools)"
+  },
+  {
+   "id": "GLS-03",
+   "name": "the night glass does not double what is behind it",
+   "status": "pass",
+   "detail": "at night, p95 of |gate frame minus the render with the glass's reflection off| (luma, levels), the frame against a render of the same size, samples and seed with the glass's reflection off, over the glass mask eroded by 2 px at 1280 (4 at 2560): STREET_SQUARE p95 2.1 (mean 0.8, 281784 glass px); STREET_30 p95 2.7 (mean 0.9, 181475 glass px); CLOSE_35 p95 9.1 (mean 2.3, 2385748 glass px); CLOSE_35_B p95 11.0 (mean 2.5, 2451781 glass px) (limit 15; try 2: 32.9 at STREET_30 and 17.2 at STREET_SQUARE: the stand-in glass mixed a Transparent and a Glass BSDF, which bent each ray at one face of the closed 6 mm slab and not the other, so everything behind it came two or three times; now a Glossy BSDF, GGX 0.02, weighted 0.2 x Fresnel at IOR 1.5, nothing refracted)"
+  },
+  {
+   "id": "LIT-08",
+   "name": "the display's goods are lit at night",
+   "status": "n/a",
+   "detail": "this shop is dark at night (lit_at_night false: vignette-pieces lit_names omits west_north_interior1): night_lit is the tests' state, not the game's night, so the row does not apply (the review's rule change)"
+  },
+  {
+   "id": "DSP-03",
+   "name": "no display mesh intersects another; every piece shows",
+   "status": "pass",
+   "detail": "175 display meshes, 129 pairs with overlapping boxes tested (each mesh inset 1 mm, so a 2 mm contact is tolerated): 0 pairs intersect; the share of each piece's silhouette seen (an object-index pass, the frame's bars and the other pieces in front): the 11 pieces of the front row (the goods, trays, steps, stands and price cards standing on the bed's front) from STREET_SQUARE itself: lowest 0.53 among the 11 large enough to be seen there (0 are under 20 px: none, judged from the better of CLOSE_35 and CLOSE_35_B, lowest 0.00), 0 under 0.5; the other 31 pieces from CLOSE_35 or STREET_SQUARE: lowest 0.75, 0 under 0.5; try 2 (the ironmonger's street review, narrow 3: the brooms' heads): the parts measured on their own from STREET_SQUARE, at least 0.5 of the part's own silhouette seen: plastic_broom part 'bristle' 0.55 of 228 px; plastic_broom part 'bristle' 0.71 of 215 px; plastic_broom part 'bristle' 0.76 of 206 px"
+  },
+  {
+   "id": "DSP-04",
+   "name": "no free run along a tier over 0.20 m",
+   "status": "pass",
+   "detail": "the longest stretch of the bed (the window's length less 0.10 at each end) and of each tier with nothing on it (the crates and trays count as what stands there): bed 0.020 m (20 pieces) (limit 0.20)"
+  },
+  {
+   "id": "DSP-05",
+   "name": "nothing floats; sheets lean back and rest on what is behind them",
+   "status": "pass",
+   "detail": "53 display pieces, scripted goods and price cards: each rests on or hangs from something (a point on its lowest half, or its highest quarter, within 2 mm of another part of the display): 0 float; 11 thin sheets measured by their principal axes: 0 lean toward the glass by more than 3 degrees (the kit's GM.sheet had the sign the wrong way until 14 Oct: the newsagent's magazines and papers); try 2 (the brief's step 0 e): every piece's lowest 3 mm rest on a part (or its top quarter hangs from one), and the 0 sheets that lean back by more than 3 degrees have their top within 5 mm of a support behind: 0 do not"
+  },
+  {
+   "id": "DSP-06",
+   "name": "display pieces at their real size",
+   "status": "pass",
+   "detail": "41 Poly Haven pieces of the display: scale 0.9 to 1.1 of the model's real size (the models are real-size scans); furniture: none in this display (the tea rooms' table was 0.47 m high and its chairs at 0.75 in batch A)"
+  },
+  {
+   "id": "TRD-01",
+   "name": "the trade's goods read from the street camera",
+   "status": "pass",
+   "detail": "pieces of each family of the trade with a silhouette of at least 120 px (about 0.6 m across at 8.8 m is 150 px) and at least half of it seen from STREET_SQUARE itself, 2560 x 1440: paint tins: 1 pieces read, the largest script:paint_tin_pyramid 8222 px (88 per cent seen); garden: 15 pieces read, the largest watering_can_metal_01 1091 px (85 per cent seen); tool boxes and tools: 5 pieces read, the largest metal_toolbox 3502 px (62 per cent seen)"
+  },
+  {
+   "id": "LIT-02b",
+   "name": "no black void in the rendered frames",
+   "status": "pass",
+   "detail": "window-glass pixels (the glass mask: no frame, mullion, bead or lattice) under luma 12, in frames rendered with the glass's reflection off, where the glass shows the room: CLOSE_35_B day: room share 0.0026 (of 621639 glass px, the room shows in 70 per cent of them), largest patch 0.0016, all glass 0.0026, 3480 dark px over a picture of luma 40 or more (paint in shade) not counted [share and patch]; CLOSE_35_B night_lit: room share 0.0033 (of 621639 glass px, the room shows in 70 per cent of them), largest patch 0.0015, all glass 0.0033, 0 dark px over a picture of luma 40 or more (paint in shade) not counted [share and patch]; STREET_30 day: room share 0.0010 (of 47834 glass px, the room shows in 70 per cent of them), largest patch 0.0010, all glass 0.0010, 1105 dark px over a picture of luma 40 or more (paint in shade) not counted [patch]; STREET_30 night_lit: room share 0.0083 (of 47834 glass px, the room shows in 70 per cent of them), largest patch 0.0024, all glass 0.0083, 14 dark px over a picture of luma 40 or more (paint in shade) not counted [patch]; STREET_SQUARE day: room share 0.0000 (of 73486 glass px, the room shows in 72 per cent of them), largest patch 0.0000, all glass 0.0000, 847 dark px over a picture of luma 40 or more (paint in shade) not counted [patch]; STREET_SQUARE night_lit: room share 0.0053 (of 73486 glass px, the room shows in 72 per cent of them), largest patch 0.0034, all glass 0.0054, 0 dark px over a picture of luma 40 or more (paint in shade) not counted [patch]; CLOSE_35 day: room share 0.0002 (of 604978 glass px, the room shows in 63 per cent of them), largest patch 0.0002, all glass 0.0002, 3269 dark px over a picture of luma 40 or more (paint in shade) not counted [reported]; CLOSE_35 night_lit: room share 0.0031 (of 604978 glass px, the room shows in 63 per cent of them), largest patch 0.0007, all glass 0.0031, 9 dark px over a picture of luma 40 or more (paint in shade) not counted [reported] (limits: 0.01 on the largest patch at STREET_SQUARE and STREET_30, 0.01 on both the share and the patch at CLOSE_35_B; try 1's black slab at CLOSE_35_B's far light was about a third of the window)"
+  },
+  {
+   "id": "PIC-05g",
+   "name": "nothing burnt in the gate's frames",
+   "status": "pass",
+   "detail": "share of pixels with a channel at 250 or above in the eight rendered frames (limit 0.01; try 1: night frames 0.033 and 0.031): STREET_SQUARE day 0.0000, STREET_SQUARE night_lit 0.0001, STREET_30 day 0.0000, STREET_30 night_lit 0.0001, CLOSE_35 day 0.0002, CLOSE_35 night_lit 0.0027, CLOSE_35_B day 0.0000, CLOSE_35_B night_lit 0.0050"
+  },
+  {
+   "id": "SO-07",
+   "name": "no room mesh intersects another",
+   "status": "pass",
+   "detail": "323 room meshes (fixtures, 145 placed goods, tickets, notices), 97 pairs with overlapping boxes tested (each mesh inset 1 mm, so a 2 mm contact is tolerated): 0 pairs intersect (try 2: the till ran 0.12 m up through the z 1.35 board and the box on it)"
+  },
+  {
+   "id": "LIT-06",
+   "name": "the sodium wash is the game's",
+   "status": "pass",
+   "detail": "night_dark's sodium wash colour (linear) [1.0, 0.25, 0.0] against unreal-look.json lantern_linear_rgb [1.0, 0.25, 0.0] (the scene file's stale 1.0, 0.7055, 0.0 is not used)"
+  },
+  {
+   "id": "GLS-05",
+   "name": "the gate glass is not a mirror at shallow views",
+   "status": "pass",
+   "detail": "the kit's own gate glass (sw_gate.make_glass) as a closed 6 mm slab over a bright card in a black world, the card's luma through the glass against the same view without it, at 15, 20, 35 and 50 degrees from the wall: night: 15 deg 0.91, 20 deg 0.92, 35 deg 0.91, 50 deg 0.96; day: 15 deg 0.80, 20 deg 0.86, 35 deg 0.92, 50 deg 0.94 (limit 0.5 at every angle; a Fresnel mix without a back-face guard read 0.002 at 20 degrees in the house windows' gate)"
+  },
+  {
+   "id": "PRV-01",
+   "name": "the previews show nothing they must not",
+   "status": "n/a",
+   "detail": "the photograph previews of the target (P1 to P6), not this build's; this build's previews were looked at: no real firm's name, number, person, drink, gambling or child in them"
+  },
+  {
+   "id": "CAM-01",
+   "name": "the cameras are the named ones",
+   "status": "pass",
+   "detail": "STREET_SQUARE day eye 0.00 mm, aim 0.000 deg, field 0.00 deg; STREET_SQUARE night_lit eye 0.00 mm, aim 0.000 deg, field 0.00 deg; STREET_30 day eye 0.00 mm, aim 0.000 deg, field 0.00 deg; STREET_30 night_lit eye 0.00 mm, aim 0.000 deg, field 0.00 deg; CLOSE_35 day eye 0.00 mm, aim 0.000 deg, field 0.00 deg; CLOSE_35 night_lit eye 0.00 mm, aim 0.000 deg, field 0.00 deg; CLOSE_35_B day eye 0.00 mm, aim 0.000 deg, field 0.00 deg; CLOSE_35_B night_lit eye 0.00 mm, aim 0.000 deg, field 0.00 deg (limits 5 mm and 0.1 degree)"
+  },
+  {
+   "id": "X-PRV",
+   "name": "previews: JPEG, about 1600 px wide, under 500 KB",
+   "status": "pass",
+   "detail": "9 JPEGs of this shop in the previews folder (at least 9): ironmonger-close-35-day 220 KB 1600 px, ironmonger-close-35-night-dark 118 KB 1600 px, ironmonger-close-35-night-lit 199 KB 1600 px, ironmonger-room-day 187 KB 1600 px, ironmonger-room-night-dark 93 KB 1600 px, ironmonger-room-night-lit 172 KB 1600 px, ironmonger-street-square-day 243 KB 1600 px, ironmonger-street-square-night-dark 140 KB 1600 px, ironmonger-street-square-night-lit 169 KB 1600 px"
+  }
+ ]
+}

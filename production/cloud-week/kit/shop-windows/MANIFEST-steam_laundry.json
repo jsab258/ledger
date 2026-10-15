@@ -1,0 +1,26 @@
+{
+ "made": "2026-10-14 14:57:01",
+ "what": "the files of the narrow-points build (13 Oct, from the try 2 reviews; v3); the three glbs and the three 4096 pictures are out of git (rebuilt by build_ritas.py) so this names the versions",
+ "files": {
+  "steam_laundry_front.glb": {
+   "bytes": 8592300,
+   "sha256": "0c4a8d2d23c77369746fa2e5bee11a04220c5379d8f3fd08a8e7081a491a83ad"
+  },
+  "steam_laundry_display.glb": {
+   "bytes": 1530188,
+   "sha256": "78ff8fdf52305eb5520542c46fe96edbed9385428e041f08a506c299d4fa05db"
+  },
+  "launderette_day.png": {
+   "bytes": 6982007,
+   "sha256": "a0f63e28b63b0c2c4e3bc12a36968abeadeb7fa94bcf890edc7b77e2de82e30d"
+  },
+  "launderette_night_lit.png": {
+   "bytes": 6423318,
+   "sha256": "2b24b88f69da6288f08d774c12a77c1b2a5e3372ec1798d8576d50ea1d47f2a5"
+  },
+  "launderette_night_dark.png": {
+   "bytes": 5335325,
+   "sha256": "0e3792b1917024b91423bb38f9a0dab77c2211202c360ff98c145369345e433c"
+  }
+ }
+}

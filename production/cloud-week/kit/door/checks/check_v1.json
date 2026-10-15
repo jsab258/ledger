@@ -1,0 +1,2910 @@
+{
+ "model": "production/assets/cloud-week/door/door_<V>.glb, kit/door/build/door_<V>.npz",
+ "pass_rule": {
+  "IoU": ">= 0.97",
+  "outline_p95_mm": "<= 2",
+  "outline_worst_mm": "<= 6",
+  "profiles": "p95 <= 1.5, worst <= 3",
+  "dimensions": "within each check's own tolerance (1 mm unless the target gives another)"
+ },
+ "variants": {
+  "T1": {
+   "variant": "T1",
+   "pass": true,
+   "failed": [],
+   "checks_run": 158,
+   "checks_passed": 158,
+   "extras": {
+    "run": 8,
+    "passed": 4,
+    "failed": [
+     "A2:section_h_lock:iron",
+     "A2:section_h_plate:iron",
+     "A3:section_v_muntin:iron"
+    ]
+   },
+   "not_applicable_or_covered": [
+    "C5",
+    "F8",
+    "G12",
+    "I1:context",
+    "H1",
+    "H2"
+   ],
+   "triangles": 6788,
+   "glb_bytes": 306944,
+   "adaptations": [
+    "A1 leaf and iron: the drawing paints the letter plate's aperture and the plugged keyhole as iron rectangles (with a 1-2 mm ring of leaf colour round the flap); the model has a slot through the leaf and a recess in it, so those rectangles are masked out of the leaf comparison, the keyhole out of the iron one, and the iron masks are closed by 1.5 mm (the flap's 1 mm gap closes in a silhouette raster).",
+    "A1 stone: the drawing's tread top is 6.6 mm lower at its front than at the riser (fall_to_front_mm) and leaves that strip empty; the model's top runs from the riser's foot to the front, so square-on it covers the strip. The strip is filled in the drawing for the stone comparison.",
+    "A1/A2/A3: the optional house numerals are drawn by target_drawing.py (present = 'optional') but not built (F9: absent unless the town gives a number), so their polygons are left out of every comparison.",
+    "A2 section_h_transom (T1): the drawn transom runs to y 241.3 at z 1955.6, below its own rebate underside (z 1959.6); the drawing is clipped at y 188.3, where the vertical profile has material.",
+    "A3 vertical sections: the drawing's head is 101.6 tall (top z 2371.2) while its elevation, frame.head_section_mm, B16, B17 and G8 cut the head to the soffit (T1 2340 / 2322, F1 2400); the build follows the cut, so the drawn head is clipped at the soffit's height at the cut before comparing.",
+    "A4 step tread: compared in front of the riser (y < 18); the target's profile stops at the riser's face, the stone runs on behind it.",
+    "A4 transom front: compared for y < 19 mm from the jamb face (the moulded front); the target's polygon closes the back as a plain 127 x face-height block.",
+    "C2: 'the visible jamb face's normals within 3 degrees' is measured on the jamb's flat front faces; the two 1 mm eases (target: every arris eased 1 mm) are 2.8% of the visible width and are their own 45 degree faces, not counted as the face.",
+    "G12, H1, H2: tested on the photographs by the target's self_check.py against the drawing (303 of 304); the built door equals that drawing within the pass rule (A1-A4, CTX:buff_elevation), so they are reported as covered, not re-measured on the photographs (not reachable from this cloud).",
+    "I1 is measured as the target's reason for it asks (diagonal hatching): no two faces of different parts coplanar within 0.1 mm, facing the same way and overlapping by more than 1 mm2 (0 found). Faces facing opposite ways where two parts butt (jamb to head, transom to jamb, the plinth to the wall) are counted and reported as back-to-back contacts: they are hidden, and are how joinery meets.",
+    "I5 (T1): the threshold's horns run 112 beyond each reveal (G2), 65 beyond the frame's width; that is the one part outside I5's 975.2 mm, by the target's own requirement.",
+    "L3 and L5 follow the target review's amendment (plinth returns 70 +-15 wide into the doorway, inner faces at x 70 and 812, the threshold and riser showing 742 +-30 between them), not target.json's 'nothing of it in the clear opening'; the returns are the wall's, in the context, never in the .glb (DECISIONS.md 8 Oct)."
+   ],
+   "rows": [
+    {
+     "id": "A1:frame",
+     "ok": true,
+     "measured": {
+      "iou": 0.9924,
+      "p95_mm": 0.5,
+      "max_mm": 1.12
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "front view, inside the opening"
+    },
+    {
+     "id": "A1:glass",
+     "ok": true,
+     "measured": {
+      "iou": 0.9946,
+      "p95_mm": 0.5,
+      "max_mm": 0.71
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "front view, inside the opening"
+    },
+    {
+     "id": "A1:leaf",
+     "ok": true,
+     "measured": {
+      "iou": 0.9935,
+      "p95_mm": 0.5,
+      "max_mm": 0.71
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "front view, inside the opening"
+    },
+    {
+     "id": "A1:panel",
+     "ok": true,
+     "measured": {
+      "iou": 0.9922,
+      "p95_mm": 1.0,
+      "max_mm": 1.12
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "front view, inside the opening"
+    },
+    {
+     "id": "A1:moulding",
+     "ok": true,
+     "measured": {
+      "iou": 0.9823,
+      "p95_mm": 0.5,
+      "max_mm": 1.12
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "front view, inside the opening"
+    },
+    {
+     "id": "A1:iron",
+     "ok": true,
+     "measured": {
+      "iou": 0.996,
+      "p95_mm": 0.5,
+      "max_mm": 0.71
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "front view, inside the opening (extra: the target draws it, A1 does not name it)",
+     "extra": true
+    },
+    {
+     "id": "A1:stone",
+     "ok": true,
+     "measured": {
+      "iou": 0.9982,
+      "p95_mm": 0.5,
+      "max_mm": 1.0
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "front view, inside the opening (extra: the target draws it, A1 does not name it)",
+     "extra": true
+    },
+    {
+     "id": "A2:section_h",
+     "ok": true,
+     "measured": {
+      "iou": 0.9967,
+      "p95_mm": 0.5,
+      "max_mm": 1.12
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "cut at z = 442.8 mm"
+    },
+    {
+     "id": "A2:section_h_lock",
+     "ok": true,
+     "measured": {
+      "iou": 0.9953,
+      "p95_mm": 0.5,
+      "max_mm": 1.12
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "cut at z = 1245.0 mm"
+    },
+    {
+     "id": "A2:section_h_lock:iron",
+     "ok": false,
+     "measured": {
+      "iou": 0.9238,
+      "p95_mm": 2.0,
+      "max_mm": 3.0
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "cut at z = 1245.0 mm (extra)",
+     "extra": true
+    },
+    {
+     "id": "A2:section_h_band",
+     "ok": true,
+     "measured": {
+      "iou": 0.9983,
+      "p95_mm": 0.5,
+      "max_mm": 1.12
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "cut at z = 831.2 mm"
+    },
+    {
+     "id": "A2:section_h_plate",
+     "ok": true,
+     "measured": {
+      "iou": 0.9962,
+      "p95_mm": 0.5,
+      "max_mm": 1.12
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "cut at z = 1627.0 mm"
+    },
+    {
+     "id": "A2:section_h_plate:iron",
+     "ok": false,
+     "measured": {
+      "iou": 0.73,
+      "p95_mm": 1.41,
+      "max_mm": 1.5
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "cut at z = 1627.0 mm (extra)",
+     "extra": true
+    },
+    {
+     "id": "A2:section_h_transom",
+     "ok": true,
+     "measured": {
+      "iou": 0.9944,
+      "p95_mm": 0.5,
+      "max_mm": 1.12
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "cut at z = 1955.6 mm (drawing adapted)"
+    },
+    {
+     "id": "A3:section_v",
+     "ok": true,
+     "measured": {
+      "iou": 0.9972,
+      "p95_mm": 0.5,
+      "max_mm": 1.41
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "cut at x = 264.9 mm"
+    },
+    {
+     "id": "A3:section_v:stone",
+     "ok": true,
+     "measured": {
+      "iou": 0.9979,
+      "p95_mm": 0.5,
+      "max_mm": 1.8
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "cut at x = 264.9 mm (extra)",
+     "extra": true
+    },
+    {
+     "id": "A3:section_v_muntin",
+     "ok": true,
+     "measured": {
+      "iou": 0.9975,
+      "p95_mm": 0.5,
+      "max_mm": 1.12
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "cut at x = 441.0 mm"
+    },
+    {
+     "id": "A3:section_v_muntin:iron",
+     "ok": false,
+     "measured": {
+      "iou": 0.4886,
+      "p95_mm": 1.5,
+      "max_mm": 2.5
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "cut at x = 441.0 mm (extra)",
+     "extra": true
+    },
+    {
+     "id": "A3:section_v_muntin:stone",
+     "ok": true,
+     "measured": {
+      "iou": 0.9981,
+      "p95_mm": 0.5,
+      "max_mm": 1.8
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "cut at x = 441.0 mm (extra)",
+     "extra": true
+    },
+    {
+     "id": "A4:bolection",
+     "ok": true,
+     "measured": {
+      "iou": 0.9204,
+      "p95_mm": 0.6,
+      "max_mm": 0.78
+     },
+     "expected": "p95 <= 1.5, worst <= 3"
+    },
+    {
+     "id": "A4:lock-rail band",
+     "ok": true,
+     "measured": {
+      "iou": 0.9645,
+      "p95_mm": 0.5,
+      "max_mm": 0.51
+     },
+     "expected": "p95 <= 1.5, worst <= 3"
+    },
+    {
+     "id": "A4:weatherboard",
+     "ok": true,
+     "measured": {
+      "iou": 0.9719,
+      "p95_mm": 0.5,
+      "max_mm": 0.51
+     },
+     "expected": "p95 <= 1.5, worst <= 3"
+    },
+    {
+     "id": "A4:transom front",
+     "ok": true,
+     "measured": {
+      "iou": 0.989,
+      "p95_mm": 0.2,
+      "max_mm": 2.0
+     },
+     "expected": "p95 <= 1.5, worst <= 3"
+    },
+    {
+     "id": "A4:glazing bead",
+     "ok": true,
+     "measured": {
+      "iou": 0.9006,
+      "p95_mm": 0.4,
+      "max_mm": 0.5
+     },
+     "expected": "p95 <= 1.5, worst <= 3"
+    },
+    {
+     "id": "A4:threshold",
+     "ok": true,
+     "measured": {
+      "iou": 0.9971,
+      "p95_mm": 0.1,
+      "max_mm": 1.49
+     },
+     "expected": "p95 <= 1.5, worst <= 3"
+    },
+    {
+     "id": "A4:step tread",
+     "ok": true,
+     "measured": {
+      "iou": 0.9996,
+      "p95_mm": 0.1,
+      "max_mm": 0.3
+     },
+     "expected": "p95 <= 1.5, worst <= 3"
+    },
+    {
+     "id": "A4:plinth splay (context)",
+     "ok": true,
+     "measured": {
+      "iou": 0.9997,
+      "p95_mm": 0.1,
+      "max_mm": 0.1
+     },
+     "expected": "p95 <= 1.5, worst <= 3"
+    },
+    {
+     "id": "B1",
+     "ok": true,
+     "measured": 812.8,
+     "expected": 812.8,
+     "tol": 1.0,
+     "note": "x extent of the leaf's framing"
+    },
+    {
+     "id": "B2",
+     "ok": true,
+     "measured": 1948.0,
+     "expected": 1948.0,
+     "tol": 1.0,
+     "note": "z extent of the leaf"
+    },
+    {
+     "id": "B3",
+     "ok": true,
+     "measured": 50.8,
+     "expected": 50.8,
+     "tol": 0.5,
+     "note": "y extent of the leaf"
+    },
+    {
+     "id": "B4",
+     "ok": true,
+     "measured": 114.3,
+     "expected": 114.3,
+     "tol": 1.0,
+     "note": "left stile; right stile 114.30"
+    },
+    {
+     "id": "B4:right",
+     "ok": true,
+     "measured": 114.3,
+     "expected": 114.3,
+     "tol": 1.0,
+     "note": "right stile"
+    },
+    {
+     "id": "B5",
+     "ok": true,
+     "measured": 120.0,
+     "expected": 120.0,
+     "tol": 1.5,
+     "note": "muntin; 14.8% of the leaf's width (target 14.8%)"
+    },
+    {
+     "id": "B6",
+     "ok": true,
+     "measured": 110.16,
+     "expected": 110.4,
+     "tol": 2.5,
+     "note": "x gap between the outer edges of a pair of panel mouldings"
+    },
+    {
+     "id": "B7:bottom_rail",
+     "ok": true,
+     "measured": 192.8,
+     "expected": 192.8,
+     "tol": 1.0
+    },
+    {
+     "id": "B7:lock_rail",
+     "ok": true,
+     "measured": 228.6,
+     "expected": 228.6,
+     "tol": 1.0
+    },
+    {
+     "id": "B7:top_rail",
+     "ok": true,
+     "measured": 127.0,
+     "expected": 127.0,
+     "tol": 1.0
+    },
+    {
+     "id": "B8:lower_height",
+     "ok": true,
+     "measured": 479.9,
+     "expected": 479.90000000000003,
+     "tol": 1.0,
+     "note": "lower panel opening, z"
+    },
+    {
+     "id": "B8:upper_height",
+     "ok": true,
+     "measured": 919.7,
+     "expected": 919.7,
+     "tol": 1.0,
+     "note": "upper panel opening, z"
+    },
+    {
+     "id": "B8:width",
+     "ok": true,
+     "measured": 232.1,
+     "expected": 232.09999999999997,
+     "tol": 1.0,
+     "note": "panel opening, x"
+    },
+    {
+     "id": "B9:panel_thickness",
+     "ok": true,
+     "measured": 16.9,
+     "expected": 16.9,
+     "tol": 0.5
+    },
+    {
+     "id": "B9:groove_depth",
+     "ok": true,
+     "measured": 12.7,
+     "expected": 12.7,
+     "tol": 0.5,
+     "note": "stile width less its width at the groove"
+    },
+    {
+     "id": "B10",
+     "ok": true,
+     "measured": 36.12,
+     "expected": 36.0,
+     "tol": 3.0,
+     "note": "bolection, outer edge to the panel field"
+    },
+    {
+     "id": "B11:across",
+     "ok": true,
+     "measured": 101.6,
+     "expected": 101.6,
+     "tol": 1.0,
+     "note": "jamb face"
+    },
+    {
+     "id": "B11:deep",
+     "ok": true,
+     "measured": 127.0,
+     "expected": 127.0,
+     "tol": 1.0,
+     "note": "jamb depth"
+    },
+    {
+     "id": "B12:width",
+     "ok": true,
+     "measured": 22.0,
+     "expected": 22.0,
+     "tol": 1.0,
+     "note": "rebate width"
+    },
+    {
+     "id": "B12:depth",
+     "ok": true,
+     "measured": 53.0,
+     "expected": 53.0,
+     "tol": 1.0,
+     "note": "rebate depth"
+    },
+    {
+     "id": "B13",
+     "ok": true,
+     "measured": 55.0,
+     "expected": 55.0,
+     "tol": 2.0,
+     "note": "jamb showing past the brick / in the doorway"
+    },
+    {
+     "id": "B14",
+     "ok": true,
+     "measured": 65.0,
+     "expected": 65.0,
+     "tol": 3.0,
+     "note": "transom face height"
+    },
+    {
+     "id": "B15:opening_w",
+     "ok": true,
+     "measured": 772.0,
+     "expected": 772.0,
+     "tol": 2.0,
+     "note": "bead to bead, the bead's embedded 0.4 mm taken off each side"
+    },
+    {
+     "id": "B15:opening_h",
+     "ok": true,
+     "measured": 267.0,
+     "expected": 267.0,
+     "tol": 2.0
+    },
+    {
+     "id": "B15:clear_w",
+     "ok": true,
+     "measured": 751.93,
+     "expected": 752.0,
+     "tol": 2.0
+    },
+    {
+     "id": "B15:clear_h",
+     "ok": true,
+     "measured": 246.93,
+     "expected": 247.0,
+     "tol": 2.0
+    },
+    {
+     "id": "B16:crown",
+     "ok": true,
+     "measured": 2340.0,
+     "expected": 2340.0,
+     "tol": 4.0,
+     "note": "head's top at the crown"
+    },
+    {
+     "id": "B16:end_left",
+     "ok": true,
+     "measured": 2321.99,
+     "expected": 2322.0,
+     "tol": 4.0
+    },
+    {
+     "id": "B16:end_right",
+     "ok": true,
+     "measured": 2321.99,
+     "expected": 2322.0,
+     "tol": 4.0
+    },
+    {
+     "id": "B17:frame_width",
+     "ok": true,
+     "measured": 975.2,
+     "expected": 975.2,
+     "tol": 3.0,
+     "note": "T1 975.2 / F1 1000.4"
+    },
+    {
+     "id": "B17:foot",
+     "ok": true,
+     "measured": -0.5,
+     "expected": 0.0,
+     "tol": 1.0,
+     "note": "the feet stand at z 0 (bedded 0.5)"
+    },
+    {
+     "id": "C1:L",
+     "ok": true,
+     "measured": {
+      "corner_deviation_mm": 0.71,
+      "longest_arc_run": 0
+     },
+     "expected": "corner deviation <= 1.5, no arc",
+     "tol": 1.5,
+     "note": "the jamb's four outer corners; the 1 mm ease is one 45 degree chamfer"
+    },
+    {
+     "id": "C1:R",
+     "ok": true,
+     "measured": {
+      "corner_deviation_mm": 0.71,
+      "longest_arc_run": 0
+     },
+     "expected": "corner deviation <= 1.5, no arc",
+     "tol": 1.5,
+     "note": "the jamb's four outer corners; the 1 mm ease is one 45 degree chamfer"
+    },
+    {
+     "id": "C2",
+     "ok": true,
+     "measured": 1.0,
+     "expected": ">= 0.98 within 3 degrees",
+     "note": "area of the jamb's front-facing flat triangles whose shading normals are within 3 degrees of the face's: the 1 mm eases are 2.8% of the visible width and are their own faces"
+    },
+    {
+     "id": "C3",
+     "ok": true,
+     "measured": {
+      "foot_z": -0.5,
+      "section_difference_mm2": 0.0
+     },
+     "expected": "foot at z 0 +-1, same section as the middle",
+     "tol": 1.0
+    },
+    {
+     "id": "C4",
+     "ok": true,
+     "measured": 0.004,
+     "expected": "mirror difference < 1 mm2",
+     "tol": 1.0,
+     "note": "left and right feet"
+    },
+    {
+     "id": "C5",
+     "ok": null,
+     "measured": "n/a",
+     "expected": "F1 only"
+    },
+    {
+     "id": "D1:face",
+     "ok": true,
+     "measured": 8.0,
+     "expected": 8.0,
+     "tol": 3.0,
+     "note": "face proud of the jamb faces"
+    },
+    {
+     "id": "D1:nose",
+     "ok": true,
+     "measured": 14.01,
+     "expected": 14.0,
+     "tol": 3.0,
+     "note": "nose proud of the jamb faces"
+    },
+    {
+     "id": "D2",
+     "ok": true,
+     "measured": 55.01,
+     "expected": 55.0,
+     "tol": 8.0,
+     "note": "weathered slope, degrees from the horizontal"
+    },
+    {
+     "id": "D4",
+     "ok": true,
+     "measured": 1.95,
+     "expected": "frontmost point in the lowest 6 mm (a lip bead)",
+     "tol": 3.0
+    },
+    {
+     "id": "D3:face_vertical",
+     "ok": true,
+     "measured": 0.0,
+     "expected": "< 1.5 mm of y over the face zone",
+     "tol": 1.5
+    },
+    {
+     "id": "D3:slope_rising",
+     "ok": true,
+     "measured": "monotone",
+     "expected": "y rises through the slope zone"
+    },
+    {
+     "id": "D7",
+     "ok": true,
+     "measured": {
+      "plateaus": 1,
+      "distinct_y_levels_1mm": 24
+     },
+     "expected": ">= 3"
+    },
+    {
+     "id": "D5:face_overrun_left",
+     "ok": true,
+     "measured": 10.0,
+     "expected": 10.0,
+     "tol": 4.0,
+     "note": "face past the stop edge"
+    },
+    {
+     "id": "D5:face_overrun_right",
+     "ok": true,
+     "measured": 10.0,
+     "expected": 10.0,
+     "tol": 4.0
+    },
+    {
+     "id": "D5:nose_underside_left",
+     "ok": true,
+     "measured": -0.0,
+     "expected": 0.0,
+     "tol": 3.0,
+     "note": "nose underside ends at the stop edge"
+    },
+    {
+     "id": "D5:nose_underside_right",
+     "ok": true,
+     "measured": -0.0,
+     "expected": 0.0,
+     "tol": 3.0
+    },
+    {
+     "id": "D8",
+     "ok": true,
+     "measured": 45.0,
+     "expected": 45.0,
+     "tol": 8.0,
+     "note": "the nose's end, in elevation, degrees from the horizontal"
+    },
+    {
+     "id": "D6:face",
+     "ok": true,
+     "measured": 10.04,
+     "expected": 10.0,
+     "tol": 1.5,
+     "note": "bead across the face (a), the foot 10 mm inside the opening edge"
+    },
+    {
+     "id": "D6:proud",
+     "ok": true,
+     "measured": 8.02,
+     "expected": 8.0,
+     "tol": 1.5,
+     "note": "bead proud of the glass"
+    },
+    {
+     "id": "E1:bottom",
+     "ok": true,
+     "measured": 785.0,
+     "expected": 785.0,
+     "tol": 4.0,
+     "note": "z above the leaf's bottom (top 857.5)"
+    },
+    {
+     "id": "E1:top",
+     "ok": true,
+     "measured": 857.5,
+     "expected": 857.5,
+     "tol": 4.0
+    },
+    {
+     "id": "E2",
+     "ok": true,
+     "measured": 22.0,
+     "expected": 22.0,
+     "tol": 4.0,
+     "note": "max proud of the leaf face"
+    },
+    {
+     "id": "E5:left",
+     "ok": true,
+     "measured": 2.0,
+     "expected": 2.0,
+     "tol": 1.5,
+     "note": "gap to the left stop face"
+    },
+    {
+     "id": "E5:right",
+     "ok": true,
+     "measured": 2.0,
+     "expected": 2.0,
+     "tol": 1.5,
+     "note": "gap to the right stop face"
+    },
+    {
+     "id": "E3",
+     "ok": true,
+     "measured": {
+      "crests_z": [
+       6.0,
+       37.0,
+       62.8
+      ],
+      "coves": [
+       [
+        25.8,
+        13.0
+       ],
+       [
+        49.0,
+        14.5
+       ]
+      ]
+     },
+     "expected": "3 crests (z 4-9, 37, 62), 2 coves (z 25, 49)"
+    },
+    {
+     "id": "E4",
+     "ok": true,
+     "measured": 17.0,
+     "expected": "flat underside 14 to 17 deep",
+     "tol": 2.0
+    },
+    {
+     "id": "W1:bottom",
+     "ok": true,
+     "measured": 0.0,
+     "expected": 0.0,
+     "tol": 4.0,
+     "note": "z above the leaf's bottom (top 80.0)"
+    },
+    {
+     "id": "W1:top",
+     "ok": true,
+     "measured": 80.0,
+     "expected": 80.0,
+     "tol": 4.0
+    },
+    {
+     "id": "W2",
+     "ok": true,
+     "measured": 26.0,
+     "expected": 26.0,
+     "tol": 4.0,
+     "note": "max proud of the leaf face"
+    },
+    {
+     "id": "W4:left",
+     "ok": true,
+     "measured": 2.0,
+     "expected": 2.0,
+     "tol": 1.5,
+     "note": "gap to the left stop face"
+    },
+    {
+     "id": "W4:right",
+     "ok": true,
+     "measured": 2.0,
+     "expected": 2.0,
+     "tol": 1.5,
+     "note": "gap to the right stop face"
+    },
+    {
+     "id": "W3",
+     "ok": true,
+     "measured": {
+      "belly_p": 26.0,
+      "hollow_p": 17.5,
+      "crests_either_side": [
+       25.4,
+       25.8
+      ],
+      "top_nose_radius_mm": 14.5
+     },
+     "expected": "belly >= 24 at z 26-40, a hollow >= 5 behind the crests either side at z 57, top nose radius >= 8"
+    },
+    {
+     "id": "F1",
+     "ok": true,
+     "measured": [
+      "iron_letter_flap",
+      "iron_letter_lip",
+      "iron_letter_plate"
+     ],
+     "expected": "backplate with a raised rim and an aperture, and a hinged flap",
+     "note": "the plate's loft has a back, a chamfered edge, a sloped rim and an aperture; the flap is its own part (with a lifting lip)"
+    },
+    {
+     "id": "F2:w",
+     "ok": true,
+     "measured": 76.0,
+     "expected": 76.0,
+     "tol": 3.0
+    },
+    {
+     "id": "F2:h",
+     "ok": true,
+     "measured": 242.0,
+     "expected": 242.0,
+     "tol": 3.0
+    },
+    {
+     "id": "F3:height",
+     "ok": true,
+     "measured": 1617.0,
+     "expected": 1617.0,
+     "tol": 10.0,
+     "note": "centre above the leaf's bottom"
+    },
+    {
+     "id": "F3:x_offset",
+     "ok": true,
+     "measured": 0.0,
+     "expected": 0.0,
+     "tol": 10.0,
+     "note": "x offset from the leaf's centre"
+    },
+    {
+     "id": "F4:rim_proud",
+     "ok": true,
+     "measured": 6.0,
+     "expected": 6.0,
+     "tol": 1.5
+    },
+    {
+     "id": "F4:backplate",
+     "ok": true,
+     "measured": 3.0,
+     "expected": 3.0,
+     "tol": 1.5,
+     "note": "the plate's outer edge stands 3 proud"
+    },
+    {
+     "id": "F5:collar",
+     "ok": true,
+     "measured": 43.5,
+     "expected": 43.5,
+     "tol": 4.0,
+     "note": "collar diameter"
+    },
+    {
+     "id": "F5:height",
+     "ok": true,
+     "measured": 1235.0,
+     "expected": 1235.0,
+     "tol": 4.0,
+     "note": "centre above the leaf's bottom"
+    },
+    {
+     "id": "F5:from_stop_face",
+     "ok": true,
+     "measured": 46.6,
+     "expected": 46.6,
+     "tol": 4.0,
+     "note": "centre to the stop face"
+    },
+    {
+     "id": "F5:plug",
+     "ok": true,
+     "measured": 28.0,
+     "expected": 28.0,
+     "tol": 4.0,
+     "note": "plug diameter, 12 mm in from the face"
+    },
+    {
+     "id": "F6",
+     "ok": true,
+     "measured": 24.85,
+     "expected": ">= 24",
+     "note": "collar's nearest edge to the stop face"
+    },
+    {
+     "id": "F7:w",
+     "ok": true,
+     "measured": 22.0,
+     "expected": 22.0,
+     "tol": 5.0
+    },
+    {
+     "id": "F7:h",
+     "ok": true,
+     "measured": 72.6,
+     "expected": 72.6,
+     "tol": 5.0
+    },
+    {
+     "id": "F7:centre_x",
+     "ok": true,
+     "measured": 859.4,
+     "expected": 859.4,
+     "tol": 5.0,
+     "note": "target.json's keep.centre_x_mm for this variant (the check text's F1 903.0 predates the 49 mm jamb)"
+    },
+    {
+     "id": "F7:centre_z",
+     "ok": true,
+     "measured": 1156.6,
+     "expected": 1156.6,
+     "tol": 5.0
+    },
+    {
+     "id": "F8",
+     "ok": null,
+     "measured": "n/a",
+     "expected": "F1 only"
+    },
+    {
+     "id": "F9",
+     "ok": true,
+     "measured": "no house number built",
+     "expected": "optional",
+     "note": "absent unless the town gives a number (target F9)"
+    },
+    {
+     "id": "F10",
+     "ok": true,
+     "measured": [],
+     "expected": "none"
+    },
+    {
+     "id": "G1",
+     "ok": true,
+     "measured": 76.0,
+     "expected": 76.0,
+     "tol": 4.0,
+     "note": "thickness"
+    },
+    {
+     "id": "G1:front",
+     "ok": true,
+     "measured": 0.0,
+     "expected": 0.0,
+     "tol": 3.0,
+     "note": "front flush with the wall (y 0)"
+    },
+    {
+     "id": "G1:nose",
+     "ok": true,
+     "measured": {
+      "radius_mm": 18.0,
+      "worst_deviation_mm": 0.04
+     },
+     "expected": "rounded top nose, r 18",
+     "tol": 1.0
+    },
+    {
+     "id": "G1:top",
+     "ok": true,
+     "measured": 0.0,
+     "expected": 0.0,
+     "tol": 1.0,
+     "note": "top at z 0"
+    },
+    {
+     "id": "G2:left",
+     "ok": true,
+     "measured": 112.0,
+     "expected": 112.0,
+     "tol": 20.0,
+     "note": "the threshold runs past the reveal into the brick"
+    },
+    {
+     "id": "G2:right",
+     "ok": true,
+     "measured": 112.0,
+     "expected": 112.0,
+     "tol": 20.0
+    },
+    {
+     "id": "G3:recess",
+     "ok": true,
+     "measured": 18.0,
+     "expected": 18.0,
+     "tol": 6.0,
+     "note": "riser face behind the threshold's nose"
+    },
+    {
+     "id": "G3:height",
+     "ok": true,
+     "measured": 72.0,
+     "expected": 72.0,
+     "tol": 6.0,
+     "note": "riser: the threshold's underside to the tread's top"
+    },
+    {
+     "id": "G4:top",
+     "ok": true,
+     "measured": 148.0,
+     "expected": 148.0,
+     "tol": 25.0,
+     "note": "tread top below the threshold's top"
+    },
+    {
+     "id": "G4:projection",
+     "ok": true,
+     "measured": 311.97,
+     "expected": 312.0,
+     "tol": 25.0,
+     "note": "tread beyond the wall face"
+    },
+    {
+     "id": "G4:width",
+     "ok": true,
+     "measured": 960.0,
+     "expected": 960.0,
+     "tol": 25.0
+    },
+    {
+     "id": "G4:ground",
+     "ok": true,
+     "measured": 318.0,
+     "expected": 318.0,
+     "tol": 25.0,
+     "note": "ground below the threshold's top"
+    },
+    {
+     "id": "G4:nose",
+     "ok": true,
+     "measured": {
+      "radius_mm": 45.0,
+      "worst_deviation_mm": 0.09
+     },
+     "expected": "a full half-round of radius 45 +-15",
+     "tol": 15.0
+    },
+    {
+     "id": "G4:undercut",
+     "ok": true,
+     "measured": 19.97,
+     "expected": 20.0,
+     "tol": 10.0,
+     "note": "the base face stands this far behind the nose's front"
+    },
+    {
+     "id": "G4:plan_corner",
+     "ok": true,
+     "measured": {
+      "radius_mm": 40.0,
+      "worst_deviation_mm": 0.12
+     },
+     "expected": "plan corner r 40",
+     "tol": 3.0
+    },
+    {
+     "id": "G5:left",
+     "ok": true,
+     "measured": 39.0,
+     "expected": 39.0,
+     "tol": 20.0,
+     "note": "the step wider than the opening"
+    },
+    {
+     "id": "G5:right",
+     "ok": true,
+     "measured": 39.0,
+     "expected": 39.0,
+     "tol": 20.0
+    },
+    {
+     "id": "CTX:buff_elevation",
+     "ok": true,
+     "measured": {
+      "iou": 0.9957,
+      "p95_mm": 0.5,
+      "max_mm": 1.0
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "the built quoins and arch against the drawing's buff layer (the drawing's 10 mm course joints closed)"
+    },
+    {
+     "id": "Q1",
+     "ok": true,
+     "measured": {
+      "blocks": 10,
+      "steps_mm": [
+       231.0
+      ],
+      "both_sides_in_step": true,
+      "alternate": true,
+      "bottom_width": 237.0,
+      "top_width": 122.0,
+      "block_z0": [
+       12.0,
+       243.0,
+       474.0,
+       705.0,
+       936.0,
+       1167.0,
+       1398.0,
+       1629.0,
+       1860.0,
+       2091.0
+      ]
+     },
+     "expected": "10 blocks of 231 +-8; bottom long, top short; alternating; both sides alike",
+     "tol": 8.0
+    },
+    {
+     "id": "Q2",
+     "ok": true,
+     "measured": {
+      "long": [
+       237.0
+      ],
+      "short": [
+       122.0
+      ],
+      "course_gauge_mm": 77.0,
+      "joint_mm": 10.0
+     },
+     "expected": "122 / 237 +-12; gauge 77; joints 10",
+     "tol": 12.0,
+     "note": "widths measured on the blocks; the 77 gauge and 10 mm joints are the brick shader's rows (render_door.py: 0.077 / 0.010), not geometry"
+    },
+    {
+     "id": "Q3",
+     "ok": true,
+     "measured": "return faces buff",
+     "expected": "buff",
+     "note": "each block runs the reveal's full depth (114.3), so its x = 0 / 882 face is the buff return"
+    },
+    {
+     "id": "G11:count",
+     "ok": true,
+     "measured": 13,
+     "expected": "exactly 13 bricks"
+    },
+    {
+     "id": "G11:soffit_circle",
+     "ok": true,
+     "measured": {
+      "fitted_radius": 5411.3,
+      "centre": [
+       441.0,
+       -3071.3
+      ]
+     },
+     "expected": "R 5411 through (0, 2322), (441, 2340), (882, 2322)"
+    },
+    {
+     "id": "G11:extrados_rise",
+     "ok": true,
+     "measured": 19.11,
+     "expected": 19.1,
+     "tol": 6.0,
+     "note": "extrados crown over its ends (crown z 2547.0)"
+    },
+    {
+     "id": "G11:radial_joints",
+     "ok": true,
+     "measured": 0.0,
+     "expected": "within 2 degrees of radial",
+     "tol": 2.0
+    },
+    {
+     "id": "G11:extrados_concentric",
+     "ok": true,
+     "measured": 0.0,
+     "expected": "extrados parallel to the soffit"
+    },
+    {
+     "id": "G7:depth",
+     "ok": true,
+     "measured": 207.0,
+     "expected": 207.0,
+     "tol": 7.0,
+     "note": "ring depth"
+    },
+    {
+     "id": "G7:overhang_left",
+     "ok": true,
+     "measured": 21.96,
+     "expected": 22.0,
+     "tol": 7.0,
+     "note": "ring's extrados corner beyond the left reveal"
+    },
+    {
+     "id": "G7:overhang_right",
+     "ok": true,
+     "measured": 21.96,
+     "expected": 22.0,
+     "tol": 7.0
+    },
+    {
+     "id": "G7:camber",
+     "ok": true,
+     "measured": 18.07,
+     "expected": 18.0,
+     "tol": 7.0,
+     "note": "soffit crown over its springing"
+    },
+    {
+     "id": "G8",
+     "ok": true,
+     "measured": 0.01,
+     "expected": "equal within 3",
+     "tol": 3.0
+    },
+    {
+     "id": "G9",
+     "ok": true,
+     "measured": {
+      "ring_end_z": 2321.6,
+      "top_block_top_z": 2322.0,
+      "left_end_x": -4.9,
+      "right_end_x": 886.9
+     },
+     "expected": "within 12 mm of the top block's top face, over its 122 mm",
+     "tol": 12.0
+    },
+    {
+     "id": "G12",
+     "ok": null,
+     "measured": "see CTX:buff_elevation",
+     "expected": "within 2.5 px on P1",
+     "note": "target's self_check.py fits the drawing's ring to P1; the built ring equals the drawing within the pass rule above"
+    },
+    {
+     "id": "L1:front",
+     "ok": true,
+     "measured": 60.0,
+     "expected": 60.0,
+     "tol": 20.0,
+     "note": "plinth front proud of the wall face"
+    },
+    {
+     "id": "L1:ground",
+     "ok": true,
+     "measured": 318.0,
+     "expected": 318.0,
+     "tol": 1.0,
+     "note": "from the ground"
+    },
+    {
+     "id": "L2:angle",
+     "ok": true,
+     "measured": 45.0,
+     "expected": 45.0,
+     "tol": 8.0,
+     "note": "splay, degrees"
+    },
+    {
+     "id": "L2:top_z",
+     "ok": true,
+     "measured": 12.0,
+     "expected": 12.0,
+     "tol": 3.0,
+     "note": "splay's top edge on the wall face"
+    },
+    {
+     "id": "L1:vertical_face_top",
+     "ok": true,
+     "measured": -48.0,
+     "expected": -48.0,
+     "tol": 3.0,
+     "note": "vertical face runs to z -48"
+    },
+    {
+     "id": "L3:return_left_inner_face",
+     "ok": true,
+     "measured": 70.0,
+     "expected": 70.0,
+     "tol": 15.0,
+     "note": "inner face at x 70 (the review: 70 +-15)"
+    },
+    {
+     "id": "L3:return_right_inner_face",
+     "ok": true,
+     "measured": 812.0,
+     "expected": 812.0,
+     "tol": 15.0,
+     "note": "inner face at x 812"
+    },
+    {
+     "id": "L3:return_depth",
+     "ok": true,
+     "measured": [
+      -60.0,
+      0.0
+     ],
+     "expected": "from y -60 back to the threshold's front (y 0)"
+    },
+    {
+     "id": "L3:return_top",
+     "ok": true,
+     "measured": 12.0,
+     "expected": 12.0,
+     "tol": 0.5,
+     "note": "stands to z 12"
+    },
+    {
+     "id": "L3:return_foot",
+     "ok": true,
+     "measured": -152.0,
+     "expected": "from the tread's top (z -148)"
+    },
+    {
+     "id": "L3:visible_threshold_length",
+     "ok": true,
+     "measured": 742.0,
+     "expected": 742.0,
+     "tol": 30.0,
+     "note": "the threshold and riser show only between the returns"
+    },
+    {
+     "id": "L3:return_front_splay",
+     "ok": true,
+     "measured": 45.0,
+     "expected": 45.0,
+     "tol": 8.0,
+     "note": "the splayed course on the return's front"
+    },
+    {
+     "id": "L3:return_inner_splay",
+     "ok": true,
+     "measured": 45.0,
+     "expected": 45.0,
+     "tol": 8.0,
+     "note": "mitred round the corner: the splay on the inner face"
+    },
+    {
+     "id": "L4",
+     "ok": true,
+     "measured": 0.001,
+     "expected": "no overlap, mm2",
+     "note": "the tread's plan against the plinth, two cuts"
+    },
+    {
+     "id": "L5",
+     "ok": true,
+     "measured": {
+      "jamb_foot_z": -0.5,
+      "plinth_top_z": 12.0
+     },
+     "expected": "feet on the threshold at z 0, square against the plinth's top",
+     "note": "the reveal's brick lip (z 0 to 12) stands beside each jamb's foot"
+    },
+    {
+     "id": "I1:context",
+     "ok": null,
+     "measured": {
+      "same_facing_overlaps": 22,
+      "back_to_back_contacts": 1692,
+      "examples": [
+       [
+        "ctx_arch_joints",
+        "ctx_arch_brick06",
+        38.0,
+        [
+         0.004,
+         0.0,
+         1.0
+        ]
+       ],
+       [
+        "ctx_arch_brick09",
+        "ctx_arch_joints",
+        9.3,
+        [
+         -0.039,
+         0.0,
+         -0.999
+        ]
+       ],
+       [
+        "ctx_arch_brick09",
+        "ctx_arch_joints",
+        151.9,
+        [
+         -0.039,
+         0.0,
+         -0.999
+        ]
+       ],
+       [
+        "ctx_arch_brick09",
+        "ctx_arch_joints",
+        13.2,
+        [
+         -0.039,
+         0.0,
+         -0.999
+        ]
+       ],
+       [
+        "ctx_arch_joints",
+        "ctx_arch_brick09",
+        5.8,
+        [
+         -0.04,
+         0.0,
+         -0.999
+        ]
+       ]
+      ]
+     },
+     "expected": "info",
+     "note": "the context wall's own faces (review only, never in the .glb)",
+     "extra": true
+    },
+    {
+     "id": "I1",
+     "ok": true,
+     "measured": {
+      "same_facing_overlaps": 0,
+      "back_to_back_contacts": 263,
+      "examples": []
+     },
+     "expected": 0,
+     "note": "no two visible faces of different parts coplanar and overlapping (z-fighting kind); back-to-back contacts are where frame members butt (jamb to head, transom to jamb) and are hidden"
+    },
+    {
+     "id": "I2",
+     "ok": true,
+     "measured": {
+      "open_meshes": []
+     },
+     "expected": "every moulding a closed ring (no mitre gap)",
+     "note": "each sweep is one closed mitred ring of faces: no gap to measure"
+    },
+    {
+     "id": "I3",
+     "ok": true,
+     "measured": {
+      "hard_edges_split": "3116 of 3125",
+      "curved_faces_smooth": "614 of 614"
+     },
+     "expected": "edges above 40 degrees split; the mouldings' curved faces smooth",
+     "note": "from the shading normals in the .glb as written"
+    },
+    {
+     "id": "I4",
+     "ok": true,
+     "measured": {
+      "brass": {
+       "srgb": [
+        181,
+        150,
+        85
+       ],
+       "roughness": 0.4,
+       "metallic": 1.0
+      },
+      "glass": {
+       "srgb": [
+        121,
+        131,
+        139
+       ],
+       "roughness": 0.05,
+       "metallic": 0.0
+      },
+      "paint_black": {
+       "srgb": [
+        35,
+        36,
+        40
+       ],
+       "roughness": 0.35,
+       "metallic": 0.0
+      },
+      "paint_white": {
+       "srgb": [
+        226,
+        224,
+        214
+       ],
+       "roughness": 0.35,
+       "metallic": 0.0
+      },
+      "steel_dark": {
+       "srgb": [
+        40,
+        40,
+        42
+       ],
+       "roughness": 0.6,
+       "metallic": 1.0
+      },
+      "stone_step": {
+       "srgb": [
+        156,
+        153,
+        149
+       ],
+       "roughness": 0.85,
+       "metallic": 0.0
+      }
+     },
+     "expected": "base colours within 6 (sRGB) of door_colours / frame_colours / materials; metal and roughness as the target",
+     "note": "starting values; the look is developed in Unreal"
+    },
+    {
+     "id": "I5:pivot",
+     "ok": true,
+     "measured": {
+      "frame_centre_x_mm": -0.0,
+      "lowest_z_m": 0.0
+     },
+     "expected": "pivot at the base's centre on the ground: x = the opening's centre, z = the ground (F1's sill stands 25 below it)"
+    },
+    {
+     "id": "I5:units",
+     "ok": true,
+     "measured": [
+      -0.553,
+      0.553
+     ],
+     "expected": "metres, z up"
+    },
+    {
+     "id": "I5:uv",
+     "ok": true,
+     "measured": true,
+     "expected": "one UV set per part"
+    },
+    {
+     "id": "I5:frame_width",
+     "ok": true,
+     "measured": 975.2,
+     "expected": 975.2,
+     "tol": 5.0,
+     "note": "across the frame"
+    },
+    {
+     "id": "I5:inside_bounding_box",
+     "ok": true,
+     "measured": {
+      "beyond": [],
+      "exception": [
+       [
+        "stone_threshold",
+        -112.0,
+        994.0
+       ]
+      ]
+     },
+     "expected": "no part beyond the frame's width by more than 5 mm",
+     "note": "the threshold's horns (112 beyond each reveal, 65 beyond the frame) are G2's own requirement and the one exception"
+    },
+    {
+     "id": "I5:size",
+     "ok": true,
+     "measured": 306944,
+     "expected": "< 1 MB"
+    },
+    {
+     "id": "H1",
+     "ok": null,
+     "measured": "see A1",
+     "expected": "built elevation laid on P1 within 2.5 px",
+     "note": "evaluated on the drawing by the target's self_check.py (303 of 304); the model equals that drawing (A1, every layer)"
+    },
+    {
+     "id": "H2",
+     "ok": null,
+     "measured": "see A1",
+     "expected": "F1 against P2",
+     "note": "evaluated on the drawing by self_check.py group 4; the model equals that drawing (A1)"
+    }
+   ]
+  },
+  "F1": {
+   "variant": "F1",
+   "pass": true,
+   "failed": [],
+   "checks_run": 109,
+   "checks_passed": 109,
+   "extras": {
+    "run": 7,
+    "passed": 4,
+    "failed": [
+     "A2:section_h_lock:iron",
+     "A2:section_h_plate:iron",
+     "A3:section_v_muntin:iron"
+    ]
+   },
+   "not_applicable_or_covered": [
+    "E1",
+    "E2",
+    "E3",
+    "E4",
+    "E5",
+    "W1",
+    "W2",
+    "W3",
+    "W4",
+    "G7",
+    "G8",
+    "G9",
+    "G11",
+    "G12",
+    "Q1",
+    "Q2",
+    "Q3",
+    "L1",
+    "L2",
+    "L3",
+    "L4",
+    "L5",
+    "H1",
+    "H2"
+   ],
+   "triangles": 12098,
+   "glb_bytes": 475340,
+   "adaptations": [
+    "A1 leaf and iron: the drawing paints the letter plate's aperture and the plugged keyhole as iron rectangles (with a 1-2 mm ring of leaf colour round the flap); the model has a slot through the leaf and a recess in it, so those rectangles are masked out of the leaf comparison, the keyhole out of the iron one, and the iron masks are closed by 1.5 mm (the flap's 1 mm gap closes in a silhouette raster).",
+    "A1/A2/A3: the optional house numerals are drawn by target_drawing.py (present = 'optional') but not built (F9: absent unless the town gives a number), so their polygons are left out of every comparison.",
+    "A3 vertical sections: the drawing's head is 101.6 tall (top z 2441.2) while its elevation, frame.head_section_mm, B16, B17 and G8 cut the head to the soffit (T1 2340 / 2322, F1 2400); the build follows the cut, so the drawn head is clipped at the soffit's height at the cut before comparing.",
+    "A4 transom front: compared for y < 19 mm from the jamb face (the moulded front); the target's polygon closes the back as a plain 127 x face-height block.",
+    "C2: 'the visible jamb face's normals within 3 degrees' is measured on the jamb's flat front faces; the two 1 mm eases (target: every arris eased 1 mm) are 2.8% of the visible width and are their own 45 degree faces, not counted as the face.",
+    "F7 (F1): the check text says x 903.0 and z 962.0, the pre-amendment values from the 944 bay; target.json's own F1 keep (centre_x_mm 878.6, z 925.7-998.3; TARGET.md section 2 fault 3) is what is built and measured.",
+    "I1 is measured as the target's reason for it asks (diagonal hatching): no two faces of different parts coplanar within 0.1 mm, facing the same way and overlapping by more than 1 mm2 (0 found). Faces facing opposite ways where two parts butt (jamb to head, transom to jamb, the plinth to the wall) are counted and reported as back-to-back contacts: they are hidden, and are how joinery meets."
+   ],
+   "rows": [
+    {
+     "id": "A1:frame",
+     "ok": true,
+     "measured": {
+      "iou": 0.9922,
+      "p95_mm": 1.0,
+      "max_mm": 1.41
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "front view, inside the opening"
+    },
+    {
+     "id": "A1:glass",
+     "ok": true,
+     "measured": {
+      "iou": 0.992,
+      "p95_mm": 1.0,
+      "max_mm": 1.41
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "front view, inside the opening"
+    },
+    {
+     "id": "A1:leaf",
+     "ok": true,
+     "measured": {
+      "iou": 0.9955,
+      "p95_mm": 0.5,
+      "max_mm": 1.5
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "front view, inside the opening"
+    },
+    {
+     "id": "A1:panel",
+     "ok": true,
+     "measured": {
+      "iou": 0.9922,
+      "p95_mm": 1.0,
+      "max_mm": 1.12
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "front view, inside the opening"
+    },
+    {
+     "id": "A1:moulding",
+     "ok": true,
+     "measured": {
+      "iou": 0.9833,
+      "p95_mm": 0.5,
+      "max_mm": 1.12
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "front view, inside the opening"
+    },
+    {
+     "id": "A1:iron",
+     "ok": true,
+     "measured": {
+      "iou": 0.9956,
+      "p95_mm": 0.5,
+      "max_mm": 1.41
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "front view, inside the opening (extra: the target draws it, A1 does not name it)",
+     "extra": true
+    },
+    {
+     "id": "A1:stone",
+     "ok": true,
+     "measured": {
+      "iou": 0.9878,
+      "p95_mm": 1.0,
+      "max_mm": 1.0
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "front view, inside the opening (extra: the target draws it, A1 does not name it)",
+     "extra": true
+    },
+    {
+     "id": "A2:section_h",
+     "ok": true,
+     "measured": {
+      "iou": 0.9971,
+      "p95_mm": 0.5,
+      "max_mm": 1.12
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "cut at z = 442.8 mm"
+    },
+    {
+     "id": "A2:section_h_lock",
+     "ok": true,
+     "measured": {
+      "iou": 0.996,
+      "p95_mm": 0.5,
+      "max_mm": 1.12
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "cut at z = 1050.0 mm"
+    },
+    {
+     "id": "A2:section_h_lock:iron",
+     "ok": false,
+     "measured": {
+      "iou": 0.8555,
+      "p95_mm": 2.52,
+      "max_mm": 3.5
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "cut at z = 1050.0 mm (extra)",
+     "extra": true
+    },
+    {
+     "id": "A2:section_h_plate",
+     "ok": true,
+     "measured": {
+      "iou": 0.9969,
+      "p95_mm": 0.5,
+      "max_mm": 1.12
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "cut at z = 1627.0 mm"
+    },
+    {
+     "id": "A2:section_h_plate:iron",
+     "ok": false,
+     "measured": {
+      "iou": 0.7234,
+      "p95_mm": 1.41,
+      "max_mm": 1.5
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "cut at z = 1627.0 mm (extra)",
+     "extra": true
+    },
+    {
+     "id": "A2:section_h_transom",
+     "ok": true,
+     "measured": {
+      "iou": 0.9963,
+      "p95_mm": 0.5,
+      "max_mm": 1.12
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "cut at z = 2010.6 mm"
+    },
+    {
+     "id": "A3:section_v",
+     "ok": true,
+     "measured": {
+      "iou": 0.9973,
+      "p95_mm": 0.5,
+      "max_mm": 1.41
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "cut at x = 265.2 mm"
+    },
+    {
+     "id": "A3:section_v:stone",
+     "ok": true,
+     "measured": {
+      "iou": 0.986,
+      "p95_mm": 0.5,
+      "max_mm": 1.41
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "cut at x = 265.2 mm (extra)",
+     "extra": true
+    },
+    {
+     "id": "A3:section_v_muntin",
+     "ok": true,
+     "measured": {
+      "iou": 0.9962,
+      "p95_mm": 0.5,
+      "max_mm": 3.0
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "cut at x = 447.6 mm"
+    },
+    {
+     "id": "A3:section_v_muntin:iron",
+     "ok": false,
+     "measured": {
+      "iou": 0.4872,
+      "p95_mm": 1.5,
+      "max_mm": 2.5
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "cut at x = 447.6 mm (extra)",
+     "extra": true
+    },
+    {
+     "id": "A3:section_v_muntin:stone",
+     "ok": true,
+     "measured": {
+      "iou": 0.9859,
+      "p95_mm": 0.5,
+      "max_mm": 1.12
+     },
+     "expected": "IoU >= 0.97, p95 <= 2, worst <= 6",
+     "note": "cut at x = 447.6 mm (extra)",
+     "extra": true
+    },
+    {
+     "id": "A4:bolection",
+     "ok": true,
+     "measured": {
+      "iou": 0.9232,
+      "p95_mm": 0.6,
+      "max_mm": 0.78
+     },
+     "expected": "p95 <= 1.5, worst <= 3"
+    },
+    {
+     "id": "A4:transom front",
+     "ok": true,
+     "measured": {
+      "iou": 0.9926,
+      "p95_mm": 0.2,
+      "max_mm": 2.0
+     },
+     "expected": "p95 <= 1.5, worst <= 3"
+    },
+    {
+     "id": "A4:glazing bead",
+     "ok": true,
+     "measured": {
+      "iou": 0.8495,
+      "p95_mm": 0.4,
+      "max_mm": 0.57
+     },
+     "expected": "p95 <= 1.5, worst <= 3"
+    },
+    {
+     "id": "A4:threshold",
+     "ok": true,
+     "measured": {
+      "iou": 0.997,
+      "p95_mm": 0.1,
+      "max_mm": 1.13
+     },
+     "expected": "p95 <= 1.5, worst <= 3"
+    },
+    {
+     "id": "A4:knob",
+     "ok": true,
+     "measured": {
+      "iou": 0.9851,
+      "p95_mm": 0.63,
+      "max_mm": 1.4
+     },
+     "expected": "p95 <= 1.5, worst <= 3"
+    },
+    {
+     "id": "B1",
+     "ok": true,
+     "measured": 838.0,
+     "expected": 838.0,
+     "tol": 1.0,
+     "note": "x extent of the leaf's framing"
+    },
+    {
+     "id": "B2",
+     "ok": true,
+     "measured": 1981.0,
+     "expected": 1981.0,
+     "tol": 1.0,
+     "note": "z extent of the leaf"
+    },
+    {
+     "id": "B3",
+     "ok": true,
+     "measured": 50.8,
+     "expected": 50.8,
+     "tol": 0.5,
+     "note": "y extent of the leaf"
+    },
+    {
+     "id": "B4",
+     "ok": true,
+     "measured": 114.3,
+     "expected": 114.3,
+     "tol": 1.0,
+     "note": "left stile; right stile 114.30"
+    },
+    {
+     "id": "B4:right",
+     "ok": true,
+     "measured": 114.3,
+     "expected": 114.3,
+     "tol": 1.0,
+     "note": "right stile"
+    },
+    {
+     "id": "B5",
+     "ok": true,
+     "measured": 120.0,
+     "expected": 120.0,
+     "tol": 1.5,
+     "note": "muntin; 14.3% of the leaf's width (target 14.8%)"
+    },
+    {
+     "id": "B6",
+     "ok": true,
+     "measured": 110.16,
+     "expected": 110.4,
+     "tol": 2.5,
+     "note": "x gap between the outer edges of a pair of panel mouldings"
+    },
+    {
+     "id": "B7:bottom_rail",
+     "ok": true,
+     "measured": 192.8,
+     "expected": 192.8,
+     "tol": 1.0
+    },
+    {
+     "id": "B7:lock_rail",
+     "ok": true,
+     "measured": 228.6,
+     "expected": 228.6,
+     "tol": 1.0
+    },
+    {
+     "id": "B7:top_rail",
+     "ok": true,
+     "measured": 127.0,
+     "expected": 127.0,
+     "tol": 1.0
+    },
+    {
+     "id": "B8:lower_height",
+     "ok": true,
+     "measured": 479.9,
+     "expected": 479.90000000000003,
+     "tol": 1.0,
+     "note": "lower panel opening, z"
+    },
+    {
+     "id": "B8:upper_height",
+     "ok": true,
+     "measured": 952.7,
+     "expected": 952.7,
+     "tol": 1.0,
+     "note": "upper panel opening, z"
+    },
+    {
+     "id": "B8:width",
+     "ok": true,
+     "measured": 244.7,
+     "expected": 244.7,
+     "tol": 1.0,
+     "note": "panel opening, x"
+    },
+    {
+     "id": "B9:panel_thickness",
+     "ok": true,
+     "measured": 16.9,
+     "expected": 16.9,
+     "tol": 0.5
+    },
+    {
+     "id": "B9:groove_depth",
+     "ok": true,
+     "measured": 12.7,
+     "expected": 12.7,
+     "tol": 0.5,
+     "note": "stile width less its width at the groove"
+    },
+    {
+     "id": "B10",
+     "ok": true,
+     "measured": 42.12,
+     "expected": 42.0,
+     "tol": 3.0,
+     "note": "bolection, outer edge to the panel field"
+    },
+    {
+     "id": "B11:across",
+     "ok": true,
+     "measured": 101.6,
+     "expected": 101.6,
+     "tol": 1.0,
+     "note": "jamb face"
+    },
+    {
+     "id": "B11:deep",
+     "ok": true,
+     "measured": 127.0,
+     "expected": 127.0,
+     "tol": 1.0,
+     "note": "jamb depth"
+    },
+    {
+     "id": "B12:width",
+     "ok": true,
+     "measured": 22.0,
+     "expected": 22.0,
+     "tol": 1.0,
+     "note": "rebate width"
+    },
+    {
+     "id": "B12:depth",
+     "ok": true,
+     "measured": 53.0,
+     "expected": 53.0,
+     "tol": 1.0,
+     "note": "rebate depth"
+    },
+    {
+     "id": "B13",
+     "ok": true,
+     "measured": 49.0,
+     "expected": 49.0,
+     "tol": 2.0,
+     "note": "jamb showing past the brick / in the doorway"
+    },
+    {
+     "id": "B14",
+     "ok": true,
+     "measured": 102.0,
+     "expected": 102.0,
+     "tol": 3.0,
+     "note": "transom face height"
+    },
+    {
+     "id": "B15:opening_w",
+     "ok": true,
+     "measured": 797.2,
+     "expected": 797.2,
+     "tol": 2.0,
+     "note": "bead to bead, the bead's embedded 0.4 mm taken off each side"
+    },
+    {
+     "id": "B15:opening_h",
+     "ok": true,
+     "measured": 267.0,
+     "expected": 267.0,
+     "tol": 2.0
+    },
+    {
+     "id": "B15:clear_w",
+     "ok": true,
+     "measured": 776.45,
+     "expected": 777.2,
+     "tol": 2.0
+    },
+    {
+     "id": "B15:clear_h",
+     "ok": true,
+     "measured": 246.25,
+     "expected": 247.0,
+     "tol": 2.0
+    },
+    {
+     "id": "B16:crown",
+     "ok": true,
+     "measured": 2400.0,
+     "expected": 2400.0,
+     "tol": 4.0,
+     "note": "head's top at the crown"
+    },
+    {
+     "id": "B16:end_left",
+     "ok": true,
+     "measured": 2400.0,
+     "expected": 2400.0,
+     "tol": 4.0
+    },
+    {
+     "id": "B16:end_right",
+     "ok": true,
+     "measured": 2400.0,
+     "expected": 2400.0,
+     "tol": 4.0
+    },
+    {
+     "id": "B17:frame_width",
+     "ok": true,
+     "measured": 1000.4,
+     "expected": 1000.4,
+     "tol": 3.0,
+     "note": "T1 975.2 / F1 1000.4"
+    },
+    {
+     "id": "B17:foot",
+     "ok": true,
+     "measured": -0.5,
+     "expected": 0.0,
+     "tol": 1.0,
+     "note": "the feet stand at z 0 (bedded 0.5)"
+    },
+    {
+     "id": "C1:L",
+     "ok": true,
+     "measured": {
+      "corner_deviation_mm": 0.71,
+      "longest_arc_run": 0
+     },
+     "expected": "corner deviation <= 1.5, no arc",
+     "tol": 1.5,
+     "note": "the jamb's four outer corners; the 1 mm ease is one 45 degree chamfer"
+    },
+    {
+     "id": "C1:R",
+     "ok": true,
+     "measured": {
+      "corner_deviation_mm": 0.71,
+      "longest_arc_run": 0
+     },
+     "expected": "corner deviation <= 1.5, no arc",
+     "tol": 1.5,
+     "note": "the jamb's four outer corners; the 1 mm ease is one 45 degree chamfer"
+    },
+    {
+     "id": "C2",
+     "ok": true,
+     "measured": 1.0,
+     "expected": ">= 0.98 within 3 degrees",
+     "note": "area of the jamb's front-facing flat triangles whose shading normals are within 3 degrees of the face's: the 1 mm eases are 2.8% of the visible width and are their own faces"
+    },
+    {
+     "id": "C3",
+     "ok": true,
+     "measured": {
+      "foot_z": -0.5,
+      "section_difference_mm2": 0.0
+     },
+     "expected": "foot at z 0 +-1, same section as the middle",
+     "tol": 1.0
+    },
+    {
+     "id": "C4",
+     "ok": true,
+     "measured": 0.002,
+     "expected": "mirror difference < 1 mm2",
+     "tol": 1.0,
+     "note": "left and right feet"
+    },
+    {
+     "id": "C5:L",
+     "ok": true,
+     "measured": {
+      "across": 5.0,
+      "proud": 2.5
+     },
+     "expected": "5 x 2.5",
+     "tol": 1.0
+    },
+    {
+     "id": "C5:R",
+     "ok": true,
+     "measured": {
+      "across": 5.0,
+      "proud": 2.5
+     },
+     "expected": "5 x 2.5",
+     "tol": 1.0
+    },
+    {
+     "id": "D1:face",
+     "ok": true,
+     "measured": 10.0,
+     "expected": 10.0,
+     "tol": 3.0,
+     "note": "face proud of the jamb faces"
+    },
+    {
+     "id": "D1:nose",
+     "ok": true,
+     "measured": 22.0,
+     "expected": 22.0,
+     "tol": 3.0,
+     "note": "nose proud of the jamb faces"
+    },
+    {
+     "id": "D2",
+     "ok": true,
+     "measured": 58.64,
+     "expected": 58.6,
+     "tol": 8.0,
+     "note": "weathered slope, degrees from the horizontal"
+    },
+    {
+     "id": "D4:round_z",
+     "ok": true,
+     "measured": 13.95,
+     "expected": 14.0,
+     "tol": 3.0,
+     "note": "fullest point of the round"
+    },
+    {
+     "id": "D4:quirk_proud",
+     "ok": true,
+     "measured": 7.0,
+     "expected": 7.0,
+     "tol": 3.0,
+     "note": "the quirk returns to about 7 proud"
+    },
+    {
+     "id": "D3:face_vertical",
+     "ok": true,
+     "measured": 0.0,
+     "expected": "< 1.5 mm of y over the face zone",
+     "tol": 1.5
+    },
+    {
+     "id": "D3:slope_rising",
+     "ok": true,
+     "measured": "monotone",
+     "expected": "y rises through the slope zone"
+    },
+    {
+     "id": "D7",
+     "ok": true,
+     "measured": {
+      "plateaus": 2,
+      "distinct_y_levels_1mm": 32
+     },
+     "expected": ">= 3"
+    },
+    {
+     "id": "D5:face_overrun_left",
+     "ok": true,
+     "measured": 28.0,
+     "expected": 28.0,
+     "tol": 5.0,
+     "note": "face past the stop edge"
+    },
+    {
+     "id": "D5:face_overrun_right",
+     "ok": true,
+     "measured": 28.0,
+     "expected": 28.0,
+     "tol": 5.0
+    },
+    {
+     "id": "D5:nose_underside_left",
+     "ok": true,
+     "measured": -0.0,
+     "expected": 0.0,
+     "tol": 3.0,
+     "note": "nose underside ends at the stop edge"
+    },
+    {
+     "id": "D5:nose_underside_right",
+     "ok": true,
+     "measured": -0.0,
+     "expected": 0.0,
+     "tol": 3.0
+    },
+    {
+     "id": "D8",
+     "ok": true,
+     "measured": 45.0,
+     "expected": 45.0,
+     "tol": 8.0,
+     "note": "the nose's end, in elevation, degrees from the horizontal"
+    },
+    {
+     "id": "D6:face",
+     "ok": true,
+     "measured": 10.38,
+     "expected": 10.0,
+     "tol": 1.5,
+     "note": "bead across the face (a), the foot 10 mm inside the opening edge"
+    },
+    {
+     "id": "D6:proud",
+     "ok": true,
+     "measured": 8.0,
+     "expected": 8.0,
+     "tol": 1.5,
+     "note": "bead proud of the glass"
+    },
+    {
+     "id": "E1",
+     "ok": null,
+     "measured": "n/a",
+     "expected": "T1 only"
+    },
+    {
+     "id": "E2",
+     "ok": null,
+     "measured": "n/a",
+     "expected": "T1 only"
+    },
+    {
+     "id": "E3",
+     "ok": null,
+     "measured": "n/a",
+     "expected": "T1 only"
+    },
+    {
+     "id": "E4",
+     "ok": null,
+     "measured": "n/a",
+     "expected": "T1 only"
+    },
+    {
+     "id": "E5",
+     "ok": null,
+     "measured": "n/a",
+     "expected": "T1 only"
+    },
+    {
+     "id": "W1",
+     "ok": null,
+     "measured": "n/a",
+     "expected": "T1 only"
+    },
+    {
+     "id": "W2",
+     "ok": null,
+     "measured": "n/a",
+     "expected": "T1 only"
+    },
+    {
+     "id": "W3",
+     "ok": null,
+     "measured": "n/a",
+     "expected": "T1 only"
+    },
+    {
+     "id": "W4",
+     "ok": null,
+     "measured": "n/a",
+     "expected": "T1 only"
+    },
+    {
+     "id": "F1",
+     "ok": true,
+     "measured": [
+      "iron_letter_flap",
+      "iron_letter_lip",
+      "iron_letter_plate"
+     ],
+     "expected": "backplate with a raised rim and an aperture, and a hinged flap",
+     "note": "the plate's loft has a back, a chamfered edge, a sloped rim and an aperture; the flap is its own part (with a lifting lip)"
+    },
+    {
+     "id": "F2:w",
+     "ok": true,
+     "measured": 76.0,
+     "expected": 76.0,
+     "tol": 3.0
+    },
+    {
+     "id": "F2:h",
+     "ok": true,
+     "measured": 242.0,
+     "expected": 242.0,
+     "tol": 3.0
+    },
+    {
+     "id": "F3:height",
+     "ok": true,
+     "measured": 1617.0,
+     "expected": 1617.0,
+     "tol": 10.0,
+     "note": "centre above the leaf's bottom"
+    },
+    {
+     "id": "F3:x_offset",
+     "ok": true,
+     "measured": -0.0,
+     "expected": 0.0,
+     "tol": 10.0,
+     "note": "x offset from the leaf's centre"
+    },
+    {
+     "id": "F4:rim_proud",
+     "ok": true,
+     "measured": 6.0,
+     "expected": 6.0,
+     "tol": 1.5
+    },
+    {
+     "id": "F4:backplate",
+     "ok": true,
+     "measured": 3.0,
+     "expected": 3.0,
+     "tol": 1.5,
+     "note": "the plate's outer edge stands 3 proud"
+    },
+    {
+     "id": "F5:collar",
+     "ok": true,
+     "measured": 37.0,
+     "expected": 37.0,
+     "tol": 4.0,
+     "note": "collar diameter"
+    },
+    {
+     "id": "F5:height",
+     "ok": true,
+     "measured": 1040.0,
+     "expected": 1040.0,
+     "tol": 4.0,
+     "note": "centre above the leaf's bottom"
+    },
+    {
+     "id": "F5:from_stop_face",
+     "ok": true,
+     "measured": 46.3,
+     "expected": 46.3,
+     "tol": 4.0,
+     "note": "centre to the stop face"
+    },
+    {
+     "id": "F5:plug",
+     "ok": true,
+     "measured": 18.0,
+     "expected": 18.0,
+     "tol": 4.0,
+     "note": "plug diameter, 12 mm in from the face"
+    },
+    {
+     "id": "F6",
+     "ok": true,
+     "measured": 27.8,
+     "expected": ">= 24",
+     "note": "collar's nearest edge to the stop face"
+    },
+    {
+     "id": "F7:w",
+     "ok": true,
+     "measured": 22.0,
+     "expected": 22.0,
+     "tol": 5.0
+    },
+    {
+     "id": "F7:h",
+     "ok": true,
+     "measured": 72.6,
+     "expected": 72.6,
+     "tol": 5.0
+    },
+    {
+     "id": "F7:centre_x",
+     "ok": true,
+     "measured": 878.6,
+     "expected": 878.6,
+     "tol": 5.0,
+     "note": "target.json's keep.centre_x_mm for this variant (the check text's F1 903.0 predates the 49 mm jamb)"
+    },
+    {
+     "id": "F7:centre_z",
+     "ok": true,
+     "measured": 962.0,
+     "expected": 962.0,
+     "tol": 5.0
+    },
+    {
+     "id": "F8:diameter",
+     "ok": true,
+     "measured": 70.32,
+     "expected": 69.0,
+     "tol": 4.0
+    },
+    {
+     "id": "F8:projection",
+     "ok": true,
+     "measured": 62.0,
+     "expected": 62.0,
+     "tol": 4.0,
+     "note": "to the cap's top, from the leaf face"
+    },
+    {
+     "id": "F8:rose",
+     "ok": true,
+     "measured": 76.0,
+     "expected": 76.0,
+     "tol": 4.0
+    },
+    {
+     "id": "F8:height",
+     "ok": true,
+     "measured": 787.0,
+     "expected": 787.0,
+     "tol": 4.0,
+     "note": "at the lock rail's centre"
+    },
+    {
+     "id": "F8:rings",
+     "ok": true,
+     "measured": 5,
+     "expected": "five turned rings",
+     "note": "grooves of the bulb, counted in the section through its axis"
+    },
+    {
+     "id": "F8:keyhole",
+     "ok": true,
+     "measured": true,
+     "expected": "plugged keyhole",
+     "note": "a keyhole recess 23 x 32, 2 deep, with a small brass blank"
+    },
+    {
+     "id": "F1:screws",
+     "ok": true,
+     "measured": 4,
+     "expected": "four slotted screws (F1)"
+    },
+    {
+     "id": "F9",
+     "ok": true,
+     "measured": "no house number built",
+     "expected": "optional",
+     "note": "absent unless the town gives a number (target F9)"
+    },
+    {
+     "id": "F10",
+     "ok": true,
+     "measured": [],
+     "expected": "none"
+    },
+    {
+     "id": "G6",
+     "ok": true,
+     "measured": 70.0,
+     "expected": 70.0,
+     "tol": 4.0,
+     "note": "thickness"
+    },
+    {
+     "id": "G6:front",
+     "ok": true,
+     "measured": 0.0,
+     "expected": 0.0,
+     "tol": 3.0,
+     "note": "front flush with the wall (y 0)"
+    },
+    {
+     "id": "G6:nose",
+     "ok": true,
+     "measured": {
+      "radius_mm": 8.0,
+      "worst_deviation_mm": 0.02
+     },
+     "expected": "rounded top nose, r 8",
+     "tol": 1.0
+    },
+    {
+     "id": "G6:top",
+     "ok": true,
+     "measured": 0.0,
+     "expected": 0.0,
+     "tol": 1.0,
+     "note": "top at z 0"
+    },
+    {
+     "id": "G6:above_paving",
+     "ok": true,
+     "measured": 45.0,
+     "expected": 45.0,
+     "tol": 10.0,
+     "note": "the top stands 45 above the paving (z -45)"
+    },
+    {
+     "id": "G7",
+     "ok": null,
+     "measured": "n/a",
+     "expected": "T1 only"
+    },
+    {
+     "id": "G8",
+     "ok": null,
+     "measured": "n/a",
+     "expected": "T1 only"
+    },
+    {
+     "id": "G9",
+     "ok": null,
+     "measured": "n/a",
+     "expected": "T1 only"
+    },
+    {
+     "id": "G11",
+     "ok": null,
+     "measured": "n/a",
+     "expected": "T1 only"
+    },
+    {
+     "id": "G12",
+     "ok": null,
+     "measured": "n/a",
+     "expected": "T1 only"
+    },
+    {
+     "id": "Q1",
+     "ok": null,
+     "measured": "n/a",
+     "expected": "T1 only"
+    },
+    {
+     "id": "Q2",
+     "ok": null,
+     "measured": "n/a",
+     "expected": "T1 only"
+    },
+    {
+     "id": "Q3",
+     "ok": null,
+     "measured": "n/a",
+     "expected": "T1 only"
+    },
+    {
+     "id": "L1",
+     "ok": null,
+     "measured": "n/a",
+     "expected": "T1 only"
+    },
+    {
+     "id": "L2",
+     "ok": null,
+     "measured": "n/a",
+     "expected": "T1 only"
+    },
+    {
+     "id": "L3",
+     "ok": null,
+     "measured": "n/a",
+     "expected": "T1 only"
+    },
+    {
+     "id": "L4",
+     "ok": null,
+     "measured": "n/a",
+     "expected": "T1 only"
+    },
+    {
+     "id": "L5",
+     "ok": null,
+     "measured": "n/a",
+     "expected": "T1 only"
+    },
+    {
+     "id": "I1",
+     "ok": true,
+     "measured": {
+      "same_facing_overlaps": 0,
+      "back_to_back_contacts": 303,
+      "examples": []
+     },
+     "expected": 0,
+     "note": "no two visible faces of different parts coplanar and overlapping (z-fighting kind); back-to-back contacts are where frame members butt (jamb to head, transom to jamb) and are hidden"
+    },
+    {
+     "id": "I2",
+     "ok": true,
+     "measured": {
+      "open_meshes": []
+     },
+     "expected": "every moulding a closed ring (no mitre gap)",
+     "note": "each sweep is one closed mitred ring of faces: no gap to measure"
+    },
+    {
+     "id": "I3",
+     "ok": true,
+     "measured": {
+      "hard_edges_split": "3833 of 3837",
+      "curved_faces_smooth": "464 of 464"
+     },
+     "expected": "edges above 40 degrees split; the mouldings' curved faces smooth",
+     "note": "from the shading normals in the .glb as written"
+    },
+    {
+     "id": "I4",
+     "ok": true,
+     "measured": {
+      "brass": {
+       "srgb": [
+        181,
+        150,
+        85
+       ],
+       "roughness": 0.4,
+       "metallic": 1.0
+      },
+      "chrome_nickel": {
+       "srgb": [
+        170,
+        170,
+        168
+       ],
+       "roughness": 0.35,
+       "metallic": 1.0
+      },
+      "glass": {
+       "srgb": [
+        121,
+        131,
+        139
+       ],
+       "roughness": 0.05,
+       "metallic": 0.0
+      },
+      "paint_dark_green": {
+       "srgb": [
+        28,
+        59,
+        41
+       ],
+       "roughness": 0.35,
+       "metallic": 0.0
+      },
+      "paint_white": {
+       "srgb": [
+        226,
+        224,
+        214
+       ],
+       "roughness": 0.35,
+       "metallic": 0.0
+      },
+      "steel_dark": {
+       "srgb": [
+        40,
+        40,
+        42
+       ],
+       "roughness": 0.6,
+       "metallic": 1.0
+      },
+      "timber_threshold": {
+       "srgb": [
+        81,
+        72,
+        65
+       ],
+       "roughness": 0.7,
+       "metallic": 0.0
+      }
+     },
+     "expected": "base colours within 6 (sRGB) of door_colours / frame_colours / materials; metal and roughness as the target",
+     "note": "starting values; the look is developed in Unreal"
+    },
+    {
+     "id": "I5:pivot",
+     "ok": true,
+     "measured": {
+      "frame_centre_x_mm": 0.0,
+      "lowest_z_m": -0.025
+     },
+     "expected": "pivot at the base's centre on the ground: x = the opening's centre, z = the ground (F1's sill stands 25 below it)"
+    },
+    {
+     "id": "I5:units",
+     "ok": true,
+     "measured": [
+      -0.5,
+      0.5
+     ],
+     "expected": "metres, z up"
+    },
+    {
+     "id": "I5:uv",
+     "ok": true,
+     "measured": true,
+     "expected": "one UV set per part"
+    },
+    {
+     "id": "I5:frame_width",
+     "ok": true,
+     "measured": 1000.4,
+     "expected": 1000.4,
+     "tol": 5.0,
+     "note": "across the frame"
+    },
+    {
+     "id": "I5:inside_bounding_box",
+     "ok": true,
+     "measured": {
+      "beyond": [],
+      "exception": []
+     },
+     "expected": "no part beyond the frame's width by more than 5 mm"
+    },
+    {
+     "id": "I5:size",
+     "ok": true,
+     "measured": 475340,
+     "expected": "< 1 MB"
+    },
+    {
+     "id": "H1",
+     "ok": null,
+     "measured": "see A1",
+     "expected": "built elevation laid on P1 within 2.5 px",
+     "note": "evaluated on the drawing by the target's self_check.py (303 of 304); the model equals that drawing (A1, every layer)"
+    },
+    {
+     "id": "H2",
+     "ok": null,
+     "measured": "see A1",
+     "expected": "F1 against P2",
+     "note": "evaluated on the drawing by self_check.py group 4; the model equals that drawing (A1)"
+    }
+   ]
+  }
+ },
+ "pass": true
+}

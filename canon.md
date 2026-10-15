@@ -154,8 +154,8 @@ which clauses the gate checks and which it does not claim to.
   dense town where what people know about you is the mechanic.
 - Anything that does not feed perception, memory, gossip or consequence
   gets the smallest budget that keeps it from looking wrong. A spend
-  rule, not a ban: driving, fighting and trade may exist and must not
-  look broken.
+  rule, not a ban: driving and trade may exist and must not
+  look broken; fighting must look and feel AAA (Jafar, 12 October 2026).
 
 ## Brands and law
 - Every brand, band, club, product, weapon and vehicle is fictional. No real people,

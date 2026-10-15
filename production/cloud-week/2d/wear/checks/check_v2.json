@@ -1,0 +1,2439 @@
+{
+ "rows": [
+  {
+   "id": "streak_sill.delivered",
+   "ok": true,
+   "detail": "each of the 6 delivered masks passes every check of its kind on its own",
+   "reported": false
+  },
+  {
+   "id": "streak_sill.files",
+   "ok": true,
+   "detail": "6 masks of 1280 x 1360 px at 800 px/m (frame [-0.8, -1.7, 0.8, 0.0] m), 16-bit, read back exactly",
+   "reported": false
+  },
+  {
+   "id": "streak_sill.streak_aspect_p50",
+   "ok": true,
+   "detail": "streak_aspect: median 5.362 over 6 masks (range 4.72 to 6.75), expected 3 to 30",
+   "reported": false
+  },
+  {
+   "id": "streak_sill.streak_width_mm_p50",
+   "ok": true,
+   "detail": "streak_width_mm: median 35.94 over 6 masks (range 29.97 to 37.38), expected 10 to 140",
+   "reported": false
+  },
+  {
+   "id": "streak_sill.streak_length_m_p90",
+   "ok": true,
+   "detail": "streak_length_m: median 0.3945 over 6 masks (range 0.2871 to 0.4856), expected 0.3 to 0.9",
+   "reported": false
+  },
+  {
+   "id": "streak_sill.streak_length_m_p50",
+   "ok": true,
+   "detail": "streak_length_m: median 0.2281 over 6 masks (range 0.1457 to 0.3423), expected 0.12 to 0.45",
+   "reported": false
+  },
+  {
+   "id": "streak_sill.vertical_within_deg",
+   "ok": true,
+   "detail": "verticality_deg: median 3.24 over 6 masks (range 1.778 to 8.128), expected 0 to 12",
+   "reported": false
+  },
+  {
+   "id": "streak_sill.fade_ratio_tail_over_head",
+   "ok": true,
+   "detail": "fade_ratio: median 0.5084 over 6 masks (range 0.3552 to 0.5822), expected 0.0 to 0.6",
+   "reported": false
+  },
+  {
+   "id": "streak_sill.edge_10_90_mm",
+   "ok": true,
+   "detail": "edge_10_90_mm: median 28.08 over 6 masks (range 26.37 to 29.82), expected 12 to 45",
+   "reported": false
+  },
+  {
+   "id": "streak_sill.coverage_of_decal_at_0.25",
+   "ok": true,
+   "detail": "coverage: median 0.03797 over 6 masks (range 0.0284 to 0.04784), expected 0.01 to 0.1",
+   "reported": false
+  },
+  {
+   "id": "streak_sill.peak_mask",
+   "ok": true,
+   "detail": "mask_max: median 0.8871 over 6 masks (range 0.8178 to 0.8973), expected 0.8 to 1.0",
+   "reported": false
+  },
+  {
+   "id": "streak_sill.end_streak_length_ratio",
+   "ok": true,
+   "detail": "end_streak_length_ratio: median 1.74 over 6 masks (range 1.516 to 2.085), expected 1.15 to 2.5",
+   "reported": false
+  },
+  {
+   "id": "streak_sill.end_streak_width_ratio",
+   "ok": true,
+   "detail": "end_streak_width_ratio: median 1.377 over 6 masks (range 1.241 to 1.625), expected 1.1 to 3.0",
+   "reported": false
+  },
+  {
+   "id": "streak_sill.rivulet_count",
+   "ok": true,
+   "detail": "rivulet_count: median 4.5 over 6 masks (range 2 to 7), expected 3 to 7",
+   "reported": false
+  },
+  {
+   "id": "streak_sill.rivulet_spacing_cv",
+   "ok": true,
+   "detail": "rivulet_spacing_cv: median 0.4517 over 6 masks (range 0 to 0.6301), expected 0.25 to 2.0",
+   "reported": false
+  },
+  {
+   "id": "streak_sill.rivulet_length_cv",
+   "ok": true,
+   "detail": "rivulet_length_cv: median 0.2947 over 6 masks (range 0 to 0.4588), expected 0.25 to 1.5",
+   "reported": false
+  },
+  {
+   "id": "streak_sill.refine",
+   "ok": true,
+   "detail": "the warp and the strength variation cost no check the plain envelope passes",
+   "reported": false
+  },
+  {
+   "id": "streak_sill.single",
+   "ok": true,
+   "detail": "single masks inside the range: rivulet_length_cv 7/12",
+   "reported": true
+  },
+  {
+   "id": "streak_sill.seed",
+   "ok": true,
+   "detail": "the same seed gives the same pixels; another seed gives other pixels",
+   "reported": false
+  },
+  {
+   "id": "wall_foot_splash.delivered",
+   "ok": true,
+   "detail": "each of the 5 delivered masks passes every check of its kind on its own",
+   "reported": false
+  },
+  {
+   "id": "wall_foot_splash.files",
+   "ok": true,
+   "detail": "5 masks of 800 x 300 px at 400 px/m (frame [0.0, 0.0, 2.0, 0.75] m), 16-bit, read back exactly",
+   "reported": false
+  },
+  {
+   "id": "wall_foot_splash.foot_profile",
+   "ok": true,
+   "detail": "foot_profile: median 1 over 6 masks (range 1 to 1), expected 0.8 to 1",
+   "reported": false
+  },
+  {
+   "id": "wall_foot_splash.profile_10_90_mm",
+   "ok": true,
+   "detail": "edge_10_90_mm: median 313.6 over 6 masks (range 312.6 to 315), expected 200 to 450",
+   "reported": false
+  },
+  {
+   "id": "wall_foot_splash.tile_seam",
+   "ok": true,
+   "detail": "tile_seam: median 0.1787 over 6 masks (range 0.1531 to 0.4084), expected 0.0 to 1.6",
+   "reported": false
+  },
+  {
+   "id": "wall_foot_splash.peak_mask",
+   "ok": true,
+   "detail": "mask_max: median 1 over 6 masks (range 1 to 1), expected 0.9 to 1.0",
+   "reported": false
+  },
+  {
+   "id": "wall_foot_splash.top_edge_std_mm",
+   "ok": true,
+   "detail": "top_edge_std_mm: median 36.79 over 6 masks (range 27.46 to 56.35), expected 15 to 60",
+   "reported": false
+  },
+  {
+   "id": "wall_foot_splash.column_mean_cv",
+   "ok": true,
+   "detail": "column_mean_cv: median 0.187 over 6 masks (range 0.1366 to 0.3055), expected 0.08 to 1.0",
+   "reported": false
+  },
+  {
+   "id": "wall_foot_splash.core_column_cv",
+   "ok": true,
+   "detail": "core_column_cv: median 0.002586 over 6 masks (range 1.783e-06 to 0.003391), expected 0.0 to 0.05",
+   "reported": false
+  },
+  {
+   "id": "wall_foot_splash.edge_on_course_share",
+   "ok": true,
+   "detail": "edge_on_course_share: median 0.925 over 6 masks (range 0.9213 to 0.96), expected 0.6 to 1.0",
+   "reported": false
+  },
+  {
+   "id": "wall_foot_splash.refine",
+   "ok": true,
+   "detail": "the warp and the strength variation cost no check the plain envelope passes",
+   "reported": false
+  },
+  {
+   "id": "wall_foot_splash.single",
+   "ok": true,
+   "detail": "single masks inside the range: all checks at 80 per cent or more of 12 masks",
+   "reported": true
+  },
+  {
+   "id": "wall_foot_splash.seed",
+   "ok": true,
+   "detail": "the same seed gives the same pixels; another seed gives other pixels",
+   "reported": false
+  },
+  {
+   "id": "streak_coping.delivered",
+   "ok": true,
+   "detail": "each of the 5 delivered masks passes every check of its kind on its own",
+   "reported": false
+  },
+  {
+   "id": "streak_coping.files",
+   "ok": true,
+   "detail": "5 masks of 1800 x 900 px at 300 px/m (frame [-3.0, -3.0, 3.0, 0.0] m), 16-bit, read back exactly",
+   "reported": false
+  },
+  {
+   "id": "streak_coping.streak_aspect_p50",
+   "ok": true,
+   "detail": "streak_aspect: median 5.779 over 6 masks (range 4.162 to 6.812), expected 3.0 to 40",
+   "reported": false
+  },
+  {
+   "id": "streak_coping.streak_length_m_p50",
+   "ok": true,
+   "detail": "streak_length_m: median 0.6039 over 6 masks (range 0.3938 to 0.9852), expected 0.25 to 1.2",
+   "reported": false
+  },
+  {
+   "id": "streak_coping.vertical_within_deg",
+   "ok": true,
+   "detail": "verticality_deg: median 3.15 over 6 masks (range 1.047 to 4.444), expected 0 to 10",
+   "reported": false
+  },
+  {
+   "id": "streak_coping.fade_ratio_tail_over_head",
+   "ok": true,
+   "detail": "fade_ratio: median 0.3663 over 6 masks (range 0.3466 to 0.4025), expected 0.0 to 0.6",
+   "reported": false
+  },
+  {
+   "id": "streak_coping.edge_10_90_mm",
+   "ok": true,
+   "detail": "edge_10_90_mm: median 45.02 over 6 masks (range 39.43 to 47.71), expected 20 to 80",
+   "reported": false
+  },
+  {
+   "id": "streak_coping.coverage_of_decal_at_0.25",
+   "ok": true,
+   "detail": "coverage: median 0.01615 over 6 masks (range 0.00729 to 0.02983), expected 0.005 to 0.12",
+   "reported": false
+  },
+  {
+   "id": "streak_coping.finger_spacing_cv",
+   "ok": true,
+   "detail": "finger_spacing_cv: median 0.4709 over 6 masks (range 0.306 to 0.6203), expected 0.25 to 0.8",
+   "reported": false
+  },
+  {
+   "id": "streak_coping.finger_length_cv",
+   "ok": true,
+   "detail": "finger_length_cv: median 0.5523 over 6 masks (range 0.4719 to 0.6862), expected 0.25 to 1.5",
+   "reported": false
+  },
+  {
+   "id": "streak_coping.refine",
+   "ok": true,
+   "detail": "the warp and the strength variation cost no check the plain envelope passes",
+   "reported": false
+  },
+  {
+   "id": "streak_coping.single",
+   "ok": true,
+   "detail": "single masks inside the range: all checks at 80 per cent or more of 12 masks",
+   "reported": true
+  },
+  {
+   "id": "streak_coping.seed",
+   "ok": true,
+   "detail": "the same seed gives the same pixels; another seed gives other pixels",
+   "reported": false
+  },
+  {
+   "id": "wall_foot_damp.delivered",
+   "ok": true,
+   "detail": "each of the 4 delivered masks passes every check of its kind on its own",
+   "reported": false
+  },
+  {
+   "id": "wall_foot_damp.files",
+   "ok": true,
+   "detail": "4 masks of 400 x 320 px at 200 px/m (frame [0.0, 0.0, 2.0, 1.6] m), 16-bit, read back exactly",
+   "reported": false
+  },
+  {
+   "id": "wall_foot_damp.foot_profile",
+   "ok": true,
+   "detail": "foot_profile: median 1 over 6 masks (range 1 to 1), expected 0.8 to 1",
+   "reported": false
+  },
+  {
+   "id": "wall_foot_damp.profile_10_90_mm",
+   "ok": true,
+   "detail": "edge_10_90_mm: median 861.4 over 6 masks (range 791.6 to 893.8), expected 700 to 1500",
+   "reported": false
+  },
+  {
+   "id": "wall_foot_damp.tile_seam",
+   "ok": true,
+   "detail": "tile_seam: median 0.1874 over 6 masks (range 0.05956 to 0.7261), expected 0.0 to 1.6",
+   "reported": false
+  },
+  {
+   "id": "wall_foot_damp.top_edge_std_mm",
+   "ok": true,
+   "detail": "top_edge_std_mm: median 67.17 over 6 masks (range 60.49 to 113.6), expected 40 to 150",
+   "reported": false
+  },
+  {
+   "id": "wall_foot_damp.column_mean_cv",
+   "ok": true,
+   "detail": "column_mean_cv: median 0.1625 over 6 masks (range 0.1279 to 0.2275), expected 0.08 to 1.0",
+   "reported": false
+  },
+  {
+   "id": "wall_foot_damp.core_column_cv",
+   "ok": true,
+   "detail": "core_column_cv: median 0.001067 over 6 masks (range 0.0008192 to 0.001678), expected 0.0 to 0.05",
+   "reported": false
+  },
+  {
+   "id": "wall_foot_damp.refine",
+   "ok": true,
+   "detail": "the warp and the strength variation cost no check the plain envelope passes",
+   "reported": false
+  },
+  {
+   "id": "wall_foot_damp.single",
+   "ok": true,
+   "detail": "single masks inside the range: top_edge_std_mm 9/12; column_mean_cv 9/12",
+   "reported": true
+  },
+  {
+   "id": "wall_foot_damp.seed",
+   "ok": true,
+   "detail": "the same seed gives the same pixels; another seed gives other pixels",
+   "reported": false
+  },
+  {
+   "id": "salt_bloom.delivered",
+   "ok": true,
+   "detail": "each of the 4 delivered masks passes every check of its kind on its own",
+   "reported": false
+  },
+  {
+   "id": "salt_bloom.files",
+   "ok": true,
+   "detail": "4 masks of 800 x 360 px at 400 px/m (frame [0.0, 0.0, 2.0, 0.9] m), 16-bit, read back exactly",
+   "reported": false
+  },
+  {
+   "id": "salt_bloom.coverage_of_decal_at_0.4",
+   "ok": true,
+   "detail": "coverage: median 0.1301 over 6 masks (range 0.08675 to 0.1514), expected 0.04 to 0.17",
+   "reported": false
+  },
+  {
+   "id": "salt_bloom.ragged_edge_10_90_mm",
+   "ok": true,
+   "detail": "edge_10_90_mm: median 29.72 over 6 masks (range 28.26 to 30.81), expected 15 to 100",
+   "reported": false
+  },
+  {
+   "id": "salt_bloom.peak_mask",
+   "ok": true,
+   "detail": "mask_max: median 0.6962 over 6 masks (range 0.6946 to 0.6987), expected 0.5 to 0.85",
+   "reported": false
+  },
+  {
+   "id": "salt_bloom.foot_profile",
+   "ok": true,
+   "detail": "foot_profile: median 1 over 6 masks (range 1 to 1), expected 0.8 to 1",
+   "reported": false
+  },
+  {
+   "id": "salt_bloom.top_edge_std_mm",
+   "ok": true,
+   "detail": "top_edge_std_mm: median 51.54 over 6 masks (range 40.71 to 60.93), expected 20 to 70",
+   "reported": false
+  },
+  {
+   "id": "salt_bloom.column_mean_cv",
+   "ok": true,
+   "detail": "column_mean_cv: median 0.3834 over 6 masks (range 0.366 to 0.5037), expected 0.08 to 2.0",
+   "reported": false
+  },
+  {
+   "id": "salt_bloom.brick_patch_share",
+   "ok": true,
+   "detail": "brick_patch_share: median 0.6176 over 6 masks (range 0.4706 to 0.7059), expected 0.35 to 0.75",
+   "reported": false
+  },
+  {
+   "id": "salt_bloom.brick_cell_std",
+   "ok": true,
+   "detail": "brick_cell_std: median 0.1131 over 6 masks (range 0.1032 to 0.1293), expected 0.0 to 0.15",
+   "reported": false
+  },
+  {
+   "id": "salt_bloom.brick_neighbour_same_share",
+   "ok": true,
+   "detail": "brick_neighbour_same_share: median 0.6 over 6 masks (range 0.4 to 0.6667), expected 0.3 to 0.8",
+   "reported": false
+  },
+  {
+   "id": "salt_bloom.edge_on_course_share",
+   "ok": true,
+   "detail": "edge_on_course_share: median 0.8765 over 6 masks (range 0.8025 to 0.8934), expected 0.6 to 1.0",
+   "reported": false
+  },
+  {
+   "id": "salt_bloom.refine",
+   "ok": true,
+   "detail": "the warp and the strength variation cost no check the plain envelope passes",
+   "reported": false
+  },
+  {
+   "id": "salt_bloom.single",
+   "ok": true,
+   "detail": "single masks inside the range: all checks at 80 per cent or more of 12 masks",
+   "reported": true
+  },
+  {
+   "id": "salt_bloom.seed",
+   "ok": true,
+   "detail": "the same seed gives the same pixels; another seed gives other pixels",
+   "reported": false
+  },
+  {
+   "id": "rust_bleed.delivered",
+   "ok": true,
+   "detail": "each of the 5 delivered masks passes every check of its kind on its own",
+   "reported": false
+  },
+  {
+   "id": "rust_bleed.files",
+   "ok": true,
+   "detail": "5 masks of 336 x 1232 px at 1120 px/m (frame [-0.15, -1.0, 0.15, 0.1] m), 16-bit, read back exactly",
+   "reported": false
+  },
+  {
+   "id": "rust_bleed.streak_aspect_p50",
+   "ok": true,
+   "detail": "streak_aspect: median 10.11 over 6 masks (range 4.014 to 15.15), expected 8 to 120",
+   "reported": false
+  },
+  {
+   "id": "rust_bleed.streak_width_mm_p50",
+   "ok": true,
+   "detail": "streak_width_mm: median 30.76 over 6 masks (range 13.12 to 45.65), expected 4 to 36",
+   "reported": false
+  },
+  {
+   "id": "rust_bleed.edge_10_90_mm",
+   "ok": true,
+   "detail": "edge_10_90_mm: median 9.854 over 6 masks (range 8.135 to 10.35), expected 6 to 45",
+   "reported": false
+  },
+  {
+   "id": "rust_bleed.vertical_within_deg",
+   "ok": true,
+   "detail": "verticality_deg: median 1.448 over 6 masks (range 0.38 to 10.31), expected 0 to 8",
+   "reported": false
+  },
+  {
+   "id": "rust_bleed.refine",
+   "ok": true,
+   "detail": "the warp and the strength variation cost no check the plain envelope passes",
+   "reported": false
+  },
+  {
+   "id": "rust_bleed.single",
+   "ok": true,
+   "detail": "single masks inside the range: streak_aspect_p50 7/12; streak_width_mm_p50 5/12",
+   "reported": true
+  },
+  {
+   "id": "rust_bleed.seed",
+   "ok": true,
+   "detail": "the same seed gives the same pixels; another seed gives other pixels",
+   "reported": false
+  },
+  {
+   "id": "algae_downpipe.algae_shoe.v0",
+   "ok": true,
+   "detail": "mask >= 0.5 over 0.42 m at 0.02 m up (at least 0.3)",
+   "reported": false
+  },
+  {
+   "id": "algae_downpipe.algae_rise.v0",
+   "ok": true,
+   "detail": "the patch rises 0.51 m above the shoe (the rule: 0.4 to 1.2)",
+   "reported": false
+  },
+  {
+   "id": "algae_downpipe.algae_run.v0",
+   "ok": true,
+   "detail": "run 0.24 m wide or more from 1.35 m up, at 0.5 or more over 100 per cent of its length (0.08 to 0.30 m, 0.9 to 1.35 m, 90 per cent)",
+   "reported": false
+  },
+  {
+   "id": "algae_downpipe.algae_shoe.v1",
+   "ok": true,
+   "detail": "mask >= 0.5 over 0.42 m at 0.02 m up (at least 0.3)",
+   "reported": false
+  },
+  {
+   "id": "algae_downpipe.algae_rise.v1",
+   "ok": true,
+   "detail": "the patch rises 0.49 m above the shoe (the rule: 0.4 to 1.2)",
+   "reported": false
+  },
+  {
+   "id": "algae_downpipe.algae_shoe.v2",
+   "ok": true,
+   "detail": "mask >= 0.5 over 0.38 m at 0.02 m up (at least 0.3)",
+   "reported": false
+  },
+  {
+   "id": "algae_downpipe.algae_rise.v2",
+   "ok": true,
+   "detail": "the patch rises 0.60 m above the shoe (the rule: 0.4 to 1.2)",
+   "reported": false
+  },
+  {
+   "id": "algae_downpipe.algae_run.v2",
+   "ok": true,
+   "detail": "run 0.16 m wide or more from 0.95 m up, at 0.5 or more over 100 per cent of its length (0.08 to 0.30 m, 0.9 to 1.35 m, 90 per cent)",
+   "reported": false
+  },
+  {
+   "id": "algae_downpipe.algae_shoe.v3",
+   "ok": true,
+   "detail": "mask >= 0.5 over 0.38 m at 0.02 m up (at least 0.3)",
+   "reported": false
+  },
+  {
+   "id": "algae_downpipe.algae_rise.v3",
+   "ok": true,
+   "detail": "the patch rises 0.49 m above the shoe (the rule: 0.4 to 1.2)",
+   "reported": false
+  },
+  {
+   "id": "algae_downpipe.algae_shoe.v4",
+   "ok": true,
+   "detail": "mask >= 0.5 over 0.33 m at 0.02 m up (at least 0.3)",
+   "reported": false
+  },
+  {
+   "id": "algae_downpipe.algae_rise.v4",
+   "ok": true,
+   "detail": "the patch rises 0.73 m above the shoe (the rule: 0.4 to 1.2)",
+   "reported": false
+  },
+  {
+   "id": "algae_downpipe.delivered",
+   "ok": true,
+   "detail": "each of the 5 delivered masks passes every check of its kind on its own",
+   "reported": false
+  },
+  {
+   "id": "algae_downpipe.files",
+   "ok": true,
+   "detail": "5 masks of 540 x 840 px at 600 px/m (frame [-0.45, 0.0, 0.45, 1.4] m), 16-bit, read back exactly",
+   "reported": false
+  },
+  {
+   "id": "algae_downpipe.blob_eqd_mm_p50",
+   "ok": true,
+   "detail": "blob_eqd_mm: median 403.8 over 2 masks (range 396.5 to 411), expected 100 to 450",
+   "reported": false
+  },
+  {
+   "id": "algae_downpipe.edge_10_90_mm",
+   "ok": true,
+   "detail": "edge_10_90_mm: median 25.83 over 6 masks (range 25.27 to 26.61), expected 12 to 100",
+   "reported": false
+  },
+  {
+   "id": "algae_downpipe.coverage_of_decal",
+   "ok": true,
+   "detail": "coverage: median 0.1969 over 6 masks (range 0.09801 to 0.2854), expected 0.06 to 0.4",
+   "reported": false
+  },
+  {
+   "id": "algae_downpipe.blob_eqd_mm_p50",
+   "ok": true,
+   "detail": "not on variants 0 and 2, which carry the rule's run from a leaking joint (0.1 to 0.3 m wide, 0.5 to 1.5 m long): joined to the patch on the shoe it is past the check's 450 mm; algae_rise and algae_run hold them",
+   "reported": true
+  },
+  {
+   "id": "algae_downpipe.refine",
+   "ok": true,
+   "detail": "the warp and the strength variation cost no check the plain envelope passes",
+   "reported": false
+  },
+  {
+   "id": "algae_downpipe.single",
+   "ok": true,
+   "detail": "single masks inside the range: all checks at 80 per cent or more of 12 masks",
+   "reported": true
+  },
+  {
+   "id": "algae_downpipe.seed",
+   "ok": true,
+   "detail": "the same seed gives the same pixels; another seed gives other pixels",
+   "reported": false
+  },
+  {
+   "id": "paint_fade.delivered",
+   "ok": true,
+   "detail": "each of the 3 delivered masks passes every check of its kind on its own",
+   "reported": false
+  },
+  {
+   "id": "paint_fade.files",
+   "ok": true,
+   "detail": "3 masks of 80 x 80 px at 40 px/m (frame [0.0, 0.0, 2.0, 2.0] m), 16-bit, read back exactly",
+   "reported": false
+  },
+  {
+   "id": "paint_fade.mask_std",
+   "ok": true,
+   "detail": "mask_std: median 0.1138 over 6 masks (range 0.09966 to 0.1288), expected 0.08 to 0.2",
+   "reported": false
+  },
+  {
+   "id": "paint_fade.dominant_wavelength_m",
+   "ok": true,
+   "detail": "dominant_wavelength_m: median 2 over 6 masks (range 2 to 2), expected 0.5 to 2.0",
+   "reported": false
+  },
+  {
+   "id": "paint_fade.tile_seam",
+   "ok": true,
+   "detail": "tile_seam: median 1.098 over 6 masks (range 0.7289 to 1.781), expected 0.0 to 1.6",
+   "reported": false
+  },
+  {
+   "id": "paint_fade.edge_10_90_mm",
+   "ok": true,
+   "detail": "edge_10_90_mm: median 1061 over 6 masks (range 1028 to 1100), expected 150 to 3000",
+   "reported": false
+  },
+  {
+   "id": "paint_fade.refine",
+   "ok": true,
+   "detail": "the warp and the strength variation cost no check the plain envelope passes",
+   "reported": false
+  },
+  {
+   "id": "paint_fade.single",
+   "ok": true,
+   "detail": "single masks inside the range: all checks at 80 per cent or more of 12 masks",
+   "reported": true
+  },
+  {
+   "id": "paint_fade.seed",
+   "ok": true,
+   "detail": "the same seed gives the same pixels; another seed gives other pixels",
+   "reported": false
+  },
+  {
+   "id": "paint_flake.flake_on_crack.v0",
+   "ok": true,
+   "detail": "0.64 of the flakes centred within 4 mm of a crack (the review: 0.6)",
+   "reported": false
+  },
+  {
+   "id": "paint_flake.flake_on_crack.v1",
+   "ok": true,
+   "detail": "0.56 of the flakes centred within 4 mm of a crack (the review: 0.6)",
+   "reported": false
+  },
+  {
+   "id": "paint_flake.flake_on_crack.v2",
+   "ok": true,
+   "detail": "0.55 of the flakes centred within 4 mm of a crack (the review: 0.6)",
+   "reported": false
+  },
+  {
+   "id": "paint_flake.delivered",
+   "ok": true,
+   "detail": "each of the 6 delivered masks passes every check of its kind on its own",
+   "reported": false
+  },
+  {
+   "id": "paint_flake.files",
+   "ok": true,
+   "detail": "6 masks of 1000 x 1000 px at 1000 px/m (frame [0.0, 0.0, 1.0, 1.0] m), 16-bit, read back exactly",
+   "reported": false
+  },
+  {
+   "id": "paint_flake.blob_eqd_mm_p50",
+   "ok": true,
+   "detail": "blob_eqd_mm: median 27.2 over 6 masks (range 20.17 to 34.3), expected 10 to 30",
+   "reported": false
+  },
+  {
+   "id": "paint_flake.blob_eqd_mm_p90",
+   "ok": true,
+   "detail": "blob_eqd_mm: median 73.25 over 6 masks (range 60.23 to 74.1), expected 25 to 80",
+   "reported": false
+  },
+  {
+   "id": "paint_flake.coverage_of_decal",
+   "ok": true,
+   "detail": "coverage: median 0.0502 over 6 masks (range 0.04745 to 0.05581), expected 0.03 to 0.15",
+   "reported": false
+  },
+  {
+   "id": "paint_flake.count_per_m2",
+   "ok": true,
+   "detail": "count_per_m2: median 26.5 over 6 masks (range 17 to 32), expected 20 to 60",
+   "reported": false
+  },
+  {
+   "id": "paint_flake.edge_10_90_mm",
+   "ok": true,
+   "detail": "edge_10_90_mm: median 1.97 over 6 masks (range 1.95 to 2.03), expected 0.2 to 4",
+   "reported": false
+  },
+  {
+   "id": "paint_flake.tile_seam",
+   "ok": true,
+   "detail": "tile_seam: median 1.579 over 6 masks (range 0.9706 to 4.362), expected 0.0 to 1.6",
+   "reported": false
+  },
+  {
+   "id": "paint_flake.refine",
+   "ok": true,
+   "detail": "the warp and the strength variation cost no check the plain envelope passes",
+   "reported": false
+  },
+  {
+   "id": "paint_flake.single",
+   "ok": true,
+   "detail": "single masks inside the range: blob_eqd_mm_p50 9/12; coverage_of_decal 9/12; tile_seam 8/12",
+   "reported": true
+  },
+  {
+   "id": "paint_flake.seed",
+   "ok": true,
+   "detail": "the same seed gives the same pixels; another seed gives other pixels",
+   "reported": false
+  },
+  {
+   "id": "render_patch.patch_pieces.v4",
+   "ok": true,
+   "detail": "4 separate losses (4 to 9)",
+   "reported": false
+  },
+  {
+   "id": "render_patch.delivered",
+   "ok": true,
+   "detail": "each of the 6 delivered masks passes every check of its kind on its own",
+   "reported": false
+  },
+  {
+   "id": "render_patch.files",
+   "ok": true,
+   "detail": "6 masks of 420 x 480 px at 600 px/m (frame [-0.35, -0.45, 0.35, 0.35] m), 16-bit, read back exactly",
+   "reported": false
+  },
+  {
+   "id": "render_patch.blob_eqd_mm_p50",
+   "ok": true,
+   "detail": "blob_eqd_mm: median 274 over 6 masks (range 212.5 to 388.2), expected 30 to 350",
+   "reported": false
+  },
+  {
+   "id": "render_patch.edge_10_90_mm",
+   "ok": true,
+   "detail": "edge_10_90_mm: median 11.53 over 6 masks (range 11.42 to 11.56), expected 6 to 30",
+   "reported": false
+  },
+  {
+   "id": "render_patch.coverage_of_decal",
+   "ok": true,
+   "detail": "coverage: median 0.1054 over 6 masks (range 0.06333 to 0.2114), expected 0.1 to 0.6",
+   "reported": false
+  },
+  {
+   "id": "render_patch.coverage_of_decal",
+   "ok": true,
+   "detail": "not on variant 5, the target's own single replacement brick (0.215 x 0.065 m is 2.5 per cent of the 0.7 x 0.8 m frame; the check asks 10)",
+   "reported": true
+  },
+  {
+   "id": "render_patch.refine",
+   "ok": true,
+   "detail": "the warp and the strength variation cost no check the plain envelope passes",
+   "reported": false
+  },
+  {
+   "id": "render_patch.single",
+   "ok": true,
+   "detail": "single masks inside the range: blob_eqd_mm_p50 9/12; coverage_of_decal 8/12",
+   "reported": true
+  },
+  {
+   "id": "render_patch.seed",
+   "ok": true,
+   "detail": "the same seed gives the same pixels; another seed gives other pixels",
+   "reported": false
+  },
+  {
+   "id": "poster_remnant.poster_rim.v0",
+   "ok": true,
+   "detail": "the paste ghost runs along 48 per cent of the site's edge in 3 pieces (30 to 60)",
+   "reported": false
+  },
+  {
+   "id": "poster_remnant.poster_intact.v0",
+   "ok": true,
+   "detail": "0.28 of the site at 0.5 or more, the variant's intact fraction 0.2 +/- 0.1",
+   "reported": false
+  },
+  {
+   "id": "poster_remnant.poster_rim.v1",
+   "ok": true,
+   "detail": "the paste ghost runs along 35 per cent of the site's edge in 4 pieces (30 to 60)",
+   "reported": false
+  },
+  {
+   "id": "poster_remnant.poster_intact.v1",
+   "ok": true,
+   "detail": "0.44 of the site at 0.5 or more, the variant's intact fraction 0.4 +/- 0.1",
+   "reported": false
+  },
+  {
+   "id": "poster_remnant.poster_rim.v2",
+   "ok": true,
+   "detail": "the paste ghost runs along 38 per cent of the site's edge in 2 pieces (30 to 60)",
+   "reported": false
+  },
+  {
+   "id": "poster_remnant.poster_intact.v2",
+   "ok": true,
+   "detail": "0.75 of the site at 0.5 or more, the variant's intact fraction 0.7 +/- 0.1",
+   "reported": false
+  },
+  {
+   "id": "poster_remnant.poster_rim.v3",
+   "ok": true,
+   "detail": "the paste ghost runs along 58 per cent of the site's edge in 4 pieces (30 to 60)",
+   "reported": false
+  },
+  {
+   "id": "poster_remnant.poster_intact.v3",
+   "ok": true,
+   "detail": "0.45 of the site at 0.5 or more, the variant's intact fraction 0.4 +/- 0.1",
+   "reported": false
+  },
+  {
+   "id": "poster_remnant.poster_rim.v4",
+   "ok": true,
+   "detail": "the paste ghost runs along 57 per cent of the site's edge in 3 pieces (30 to 60)",
+   "reported": false
+  },
+  {
+   "id": "poster_remnant.poster_strips.v4",
+   "ok": true,
+   "detail": "3 strips (2 to 5, a tear may split one)",
+   "reported": false
+  },
+  {
+   "id": "poster_remnant.delivered",
+   "ok": true,
+   "detail": "each of the 5 delivered masks passes every check of its kind on its own",
+   "reported": false
+  },
+  {
+   "id": "poster_remnant.files",
+   "ok": true,
+   "detail": "5 masks of 440 x 360 px at 400 px/m (frame [-0.55, -0.45, 0.55, 0.45] m), 16-bit, read back exactly",
+   "reported": false
+  },
+  {
+   "id": "poster_remnant.blob_eqd_mm_p50",
+   "ok": true,
+   "detail": "blob_eqd_mm: median 488.5 over 6 masks (range 326.3 to 773.2), expected 120 to 800",
+   "reported": false
+  },
+  {
+   "id": "poster_remnant.edge_10_90_mm",
+   "ok": true,
+   "detail": "edge_10_90_mm: median 6.337 over 6 masks (range 5.804 to 7.076), expected 2 to 14",
+   "reported": false
+  },
+  {
+   "id": "poster_remnant.coverage_of_decal",
+   "ok": true,
+   "detail": "replaced by poster_intact: the target's 0.25 to 0.75 of the frame assumed one whole sheet; its own variants are 20 to 70 per cent intact",
+   "reported": true
+  },
+  {
+   "id": "poster_remnant.refine",
+   "ok": true,
+   "detail": "the warp and the strength variation cost no check the plain envelope passes",
+   "reported": false
+  },
+  {
+   "id": "poster_remnant.single",
+   "ok": true,
+   "detail": "single masks inside the range: all checks at 80 per cent or more of 12 masks",
+   "reported": true
+  },
+  {
+   "id": "poster_remnant.seed",
+   "ok": true,
+   "detail": "the same seed gives the same pixels; another seed gives other pixels",
+   "reported": false
+  },
+  {
+   "id": "bird_dropping.delivered",
+   "ok": true,
+   "detail": "each of the 4 delivered masks passes every check of its kind on its own",
+   "reported": false
+  },
+  {
+   "id": "bird_dropping.files",
+   "ok": true,
+   "detail": "4 masks of 320 x 440 px at 800 px/m (frame [-0.2, -0.5, 0.2, 0.05] m), 16-bit, read back exactly",
+   "reported": false
+  },
+  {
+   "id": "bird_dropping.blob_eqd_mm_p50",
+   "ok": true,
+   "detail": "blob_eqd_mm: median 63.56 over 6 masks (range 56.2 to 112.8), expected 25 to 100",
+   "reported": false
+  },
+  {
+   "id": "bird_dropping.edge_10_90_mm",
+   "ok": true,
+   "detail": "edge_10_90_mm: median 6.113 over 6 masks (range 5.939 to 7.658), expected 2 to 20",
+   "reported": false
+  },
+  {
+   "id": "bird_dropping.coverage_of_frame",
+   "ok": true,
+   "detail": "coverage: median 0.02608 over 6 masks (range 0.01411 to 0.1214), expected 0.01 to 0.2",
+   "reported": false
+  },
+  {
+   "id": "bird_dropping.peak_mask",
+   "ok": true,
+   "detail": "mask_max: median 0.896 over 6 masks (range 0.792 to 0.985), expected 0.7 to 1.0",
+   "reported": false
+  },
+  {
+   "id": "bird_dropping.refine",
+   "ok": true,
+   "detail": "the warp and the strength variation cost no check the plain envelope passes",
+   "reported": false
+  },
+  {
+   "id": "bird_dropping.single",
+   "ok": true,
+   "detail": "single masks inside the range: blob_eqd_mm_p50 8/12",
+   "reported": true
+  },
+  {
+   "id": "bird_dropping.seed",
+   "ok": true,
+   "detail": "the same seed gives the same pixels; another seed gives other pixels",
+   "reported": false
+  },
+  {
+   "id": "gum.delivered",
+   "ok": true,
+   "detail": "each of the 8 delivered masks passes every check of its kind on its own",
+   "reported": false
+  },
+  {
+   "id": "gum.files",
+   "ok": true,
+   "detail": "8 masks of 1400 x 1400 px at 700 px/m (frame [0.0, 0.0, 2.0, 2.0] m), 16-bit, read back exactly",
+   "reported": false
+  },
+  {
+   "id": "gum.blob_eqd_mm_p50",
+   "ok": true,
+   "detail": "blob_eqd_mm: median 23.43 over 6 masks (range 20.86 to 33.74), expected 14 to 28",
+   "reported": false
+  },
+  {
+   "id": "gum.count_per_m2_open_footway",
+   "ok": true,
+   "detail": "count_per_m2: median 2.375 over 6 masks (range 2 to 2.5), expected 0.5 to 8.0",
+   "reported": false
+  },
+  {
+   "id": "gum.edge_10_90_mm",
+   "ok": true,
+   "detail": "edge_10_90_mm: median 3.714 over 6 masks (range 3.408 to 4.056), expected 0.8 to 5",
+   "reported": false
+  },
+  {
+   "id": "gum.coverage_of_decal",
+   "ok": true,
+   "detail": "coverage: median 0.001375 over 6 masks (range 0.001123 to 0.001688), expected 0.0001 to 0.006",
+   "reported": false
+  },
+  {
+   "id": "gum.nn_ratio",
+   "ok": true,
+   "detail": "nn_ratio: median 0.6757 over 6 masks (range 0.506 to 0.8918), expected 0.5 to 1.1",
+   "reported": false
+  },
+  {
+   "id": "gum.size_cv",
+   "ok": true,
+   "detail": "size_cv: median 0.3358 over 6 masks (range 0.2419 to 0.3907), expected 0.25 to 1.2",
+   "reported": false
+  },
+  {
+   "id": "gum.refine",
+   "ok": true,
+   "detail": "the warp and the strength variation cost no check the plain envelope passes",
+   "reported": false
+  },
+  {
+   "id": "gum.single",
+   "ok": true,
+   "detail": "single masks inside the range: nn_ratio 9/12",
+   "reported": true
+  },
+  {
+   "id": "gum.seed",
+   "ok": true,
+   "detail": "the same seed gives the same pixels; another seed gives other pixels",
+   "reported": false
+  },
+  {
+   "id": "render_crack.delivered",
+   "ok": true,
+   "detail": "each of the 6 delivered masks passes every check of its kind on its own",
+   "reported": false
+  },
+  {
+   "id": "render_crack.files",
+   "ok": true,
+   "detail": "6 masks of 2016 x 2016 px at 1120 px/m (frame [-0.9, -0.5, 0.9, 1.3] m), 16-bit, read back exactly",
+   "reported": false
+  },
+  {
+   "id": "render_crack.crack_width_mm",
+   "ok": true,
+   "detail": "crack_width_mm: median 3.1 over 6 masks (range 2.679 to 4.158), expected 1.5 to 10",
+   "reported": false
+  },
+  {
+   "id": "render_crack.edge_10_90_mm",
+   "ok": true,
+   "detail": "edge_10_90_mm: median 1.889 over 6 masks (range 1.879 to 1.905), expected 0.8 to 8",
+   "reported": false
+  },
+  {
+   "id": "render_crack.crack_length_m_per_m2_of_frame",
+   "ok": true,
+   "detail": "crack_length_per_m2: median 1.368 over 6 masks (range 0.6491 to 2.168), expected 0.3 to 3.5",
+   "reported": false
+  },
+  {
+   "id": "render_crack.refine",
+   "ok": true,
+   "detail": "the warp and the strength variation cost no check the plain envelope passes",
+   "reported": false
+  },
+  {
+   "id": "render_crack.single",
+   "ok": true,
+   "detail": "single masks inside the range: all checks at 80 per cent or more of 12 masks",
+   "reported": true
+  },
+  {
+   "id": "render_crack.seed",
+   "ok": true,
+   "detail": "the same seed gives the same pixels; another seed gives other pixels",
+   "reported": false
+  },
+  {
+   "id": "pavement_stain.delivered",
+   "ok": true,
+   "detail": "each of the 6 delivered masks passes every check of its kind on its own",
+   "reported": false
+  },
+  {
+   "id": "pavement_stain.files",
+   "ok": true,
+   "detail": "6 masks of 400 x 400 px at 400 px/m (frame [-0.5, -0.5, 0.5, 0.5] m), 16-bit, read back exactly",
+   "reported": false
+  },
+  {
+   "id": "pavement_stain.edge_10_90_mm",
+   "ok": true,
+   "detail": "edge_10_90_mm: median 27.1 over 6 masks (range 21.85 to 46.02), expected 8 to 80",
+   "reported": false
+  },
+  {
+   "id": "pavement_stain.coverage_of_decal",
+   "ok": true,
+   "detail": "coverage: median 0.07742 over 6 masks (range 0.001544 to 0.4556), expected 0.01 to 0.3",
+   "reported": false
+  },
+  {
+   "id": "pavement_stain.peak_mask",
+   "ok": true,
+   "detail": "mask_max: median 0.8987 over 6 masks (range 0.7133 to 0.98), expected 0.6 to 1.0",
+   "reported": false
+  },
+  {
+   "id": "pavement_stain.refine",
+   "ok": true,
+   "detail": "the warp and the strength variation cost no check the plain envelope passes",
+   "reported": false
+  },
+  {
+   "id": "pavement_stain.single",
+   "ok": true,
+   "detail": "single masks inside the range: coverage_of_decal 9/12",
+   "reported": true
+  },
+  {
+   "id": "pavement_stain.seed",
+   "ok": true,
+   "detail": "the same seed gives the same pixels; another seed gives other pixels",
+   "reported": false
+  },
+  {
+   "id": "cig_end.delivered",
+   "ok": true,
+   "detail": "each of the 10 delivered masks passes every check of its kind on its own",
+   "reported": false
+  },
+  {
+   "id": "cig_end.files",
+   "ok": true,
+   "detail": "10 masks of 2000 x 2000 px at 1000 px/m (frame [0.0, 0.0, 2.0, 2.0] m), 16-bit, read back exactly",
+   "reported": false
+  },
+  {
+   "id": "cig_end.blob_eqd_mm_p50",
+   "ok": true,
+   "detail": "blob_eqd_mm: median 16.04 over 6 masks (range 11.41 to 17.15), expected 8 to 22",
+   "reported": false
+  },
+  {
+   "id": "cig_end.count_per_m2_open_footway",
+   "ok": true,
+   "detail": "count_per_m2: median 3.875 over 6 masks (range 3.75 to 4), expected 0.3 to 10.0",
+   "reported": false
+  },
+  {
+   "id": "cig_end.edge_10_90_mm",
+   "ok": true,
+   "detail": "edge_10_90_mm: median 1.97 over 6 masks (range 1.929 to 2.071), expected 0.6 to 4",
+   "reported": false
+  },
+  {
+   "id": "cig_end.nn_ratio",
+   "ok": true,
+   "detail": "nn_ratio: median 1.141 over 6 masks (range 0.9704 to 1.468), expected 0.7 to 1.3",
+   "reported": false
+  },
+  {
+   "id": "cig_end.size_cv",
+   "ok": true,
+   "detail": "size_cv: median 0.3896 over 6 masks (range 0.2458 to 0.4289), expected 0.25 to 1.5",
+   "reported": false
+  },
+  {
+   "id": "cig_end.refine",
+   "ok": true,
+   "detail": "the warp and the strength variation cost no check the plain envelope passes",
+   "reported": false
+  },
+  {
+   "id": "cig_end.single",
+   "ok": true,
+   "detail": "single masks inside the range: all checks at 80 per cent or more of 12 masks",
+   "reported": true
+  },
+  {
+   "id": "cig_end.seed",
+   "ok": true,
+   "detail": "the same seed gives the same pixels; another seed gives other pixels",
+   "reported": false
+  },
+  {
+   "id": "road_oil.delivered",
+   "ok": true,
+   "detail": "each of the 5 delivered masks passes every check of its kind on its own",
+   "reported": false
+  },
+  {
+   "id": "road_oil.files",
+   "ok": true,
+   "detail": "5 masks of 2600 x 600 px at 1000 px/m (frame [0.0, -0.3, 2.6, 0.3] m), 16-bit, read back exactly",
+   "reported": false
+  },
+  {
+   "id": "road_oil.dot_eqd_mm_p50",
+   "ok": true,
+   "detail": "blob_eqd_mm: median 15.45 over 6 masks (range 14.76 to 16.12), expected 9 to 26",
+   "reported": false
+  },
+  {
+   "id": "road_oil.dots_per_m2_of_frame",
+   "ok": true,
+   "detail": "count_per_m2: median 57.37 over 6 masks (range 31.41 to 94.23), expected 20 to 220",
+   "reported": false
+  },
+  {
+   "id": "road_oil.edge_10_90_mm",
+   "ok": true,
+   "detail": "edge_10_90_mm: median 6.358 over 6 masks (range 6.284 to 6.393), expected 1 to 14",
+   "reported": false
+  },
+  {
+   "id": "road_oil.coverage_of_frame",
+   "ok": true,
+   "detail": "coverage: median 0.01664 over 6 masks (range 0.007847 to 0.02713), expected 0.002 to 0.03",
+   "reported": false
+  },
+  {
+   "id": "road_oil.peak_mask",
+   "ok": true,
+   "detail": "mask_max: median 0.8472 over 6 masks (range 0.8455 to 0.8494), expected 0.7 to 1.0",
+   "reported": false
+  },
+  {
+   "id": "road_oil.nn_ratio",
+   "ok": true,
+   "detail": "nn_ratio: median 1.253 over 6 masks (range 1.114 to 1.308), expected 0.7 to 1.4",
+   "reported": false
+  },
+  {
+   "id": "road_oil.size_cv",
+   "ok": true,
+   "detail": "size_cv: median 0.4284 over 6 masks (range 0.3928 to 0.5687), expected 0.25 to 1.5",
+   "reported": false
+  },
+  {
+   "id": "road_oil.refine",
+   "ok": true,
+   "detail": "the warp and the strength variation cost no check the plain envelope passes",
+   "reported": false
+  },
+  {
+   "id": "road_oil.single",
+   "ok": true,
+   "detail": "single masks inside the range: all checks at 80 per cent or more of 12 masks",
+   "reported": true
+  },
+  {
+   "id": "road_oil.seed",
+   "ok": true,
+   "detail": "the same seed gives the same pixels; another seed gives other pixels",
+   "reported": false
+  },
+  {
+   "id": "road_blot.delivered",
+   "ok": true,
+   "detail": "each of the 5 delivered masks passes every check of its kind on its own",
+   "reported": false
+  },
+  {
+   "id": "road_blot.files",
+   "ok": true,
+   "detail": "5 masks of 480 x 480 px at 400 px/m (frame [-0.6, -0.6, 0.6, 0.6] m), 16-bit, read back exactly",
+   "reported": false
+  },
+  {
+   "id": "road_blot.blob_eqd_mm_p50",
+   "ok": true,
+   "detail": "blob_eqd_mm: median 215.9 over 6 masks (range 163.2 to 751.8), expected 120 to 450",
+   "reported": false
+  },
+  {
+   "id": "road_blot.edge_10_90_mm",
+   "ok": true,
+   "detail": "edge_10_90_mm: median 20.54 over 6 masks (range 19.2 to 24.66), expected 8 to 70",
+   "reported": false
+  },
+  {
+   "id": "road_blot.coverage_of_frame",
+   "ok": true,
+   "detail": "coverage: median 0.04393 over 6 masks (range 0.02498 to 0.3083), expected 0.02 to 0.35",
+   "reported": false
+  },
+  {
+   "id": "road_blot.peak_mask",
+   "ok": true,
+   "detail": "mask_max: median 0.9241 over 6 masks (range 0.8352 to 0.9575), expected 0.6 to 1.0",
+   "reported": false
+  },
+  {
+   "id": "road_blot.refine",
+   "ok": true,
+   "detail": "the warp and the strength variation cost no check the plain envelope passes",
+   "reported": false
+  },
+  {
+   "id": "road_blot.single",
+   "ok": true,
+   "detail": "single masks inside the range: blob_eqd_mm_p50 9/12",
+   "reported": true
+  },
+  {
+   "id": "road_blot.seed",
+   "ok": true,
+   "detail": "the same seed gives the same pixels; another seed gives other pixels",
+   "reported": false
+  },
+  {
+   "id": "tyre_scuff.delivered",
+   "ok": true,
+   "detail": "each of the 4 delivered masks passes every check of its kind on its own",
+   "reported": false
+  },
+  {
+   "id": "tyre_scuff.files",
+   "ok": true,
+   "detail": "4 masks of 450 x 150 px at 150 px/m (frame [-1.5, -0.5, 1.5, 0.5] m), 16-bit, read back exactly",
+   "reported": false
+  },
+  {
+   "id": "tyre_scuff.streak_length_m_p50",
+   "ok": true,
+   "detail": "streak_length_m: median 1.837 over 6 masks (range 1.211 to 2.267), expected 1.2 to 3.2",
+   "reported": false
+  },
+  {
+   "id": "tyre_scuff.streak_aspect_p50",
+   "ok": true,
+   "detail": "streak_aspect: median 10.84 over 6 masks (range 6.442 to 14.09), expected 5 to 60",
+   "reported": false
+  },
+  {
+   "id": "tyre_scuff.edge_10_90_mm",
+   "ok": true,
+   "detail": "edge_10_90_mm: median 68.55 over 6 masks (range 65.46 to 78.93), expected 45 to 120",
+   "reported": false
+  },
+  {
+   "id": "tyre_scuff.peak_mask",
+   "ok": true,
+   "detail": "mask_max: median 0.7 over 6 masks (range 0.59 to 0.7), expected 0.6 to 0.8",
+   "reported": false
+  },
+  {
+   "id": "tyre_scuff.refine",
+   "ok": true,
+   "detail": "the warp and the strength variation cost no check the plain envelope passes",
+   "reported": false
+  },
+  {
+   "id": "tyre_scuff.single",
+   "ok": true,
+   "detail": "single masks inside the range: all checks at 80 per cent or more of 12 masks",
+   "reported": true
+  },
+  {
+   "id": "tyre_scuff.seed",
+   "ok": true,
+   "detail": "the same seed gives the same pixels; another seed gives other pixels",
+   "reported": false
+  },
+  {
+   "id": "road_patch.delivered",
+   "ok": true,
+   "detail": "each of the 5 delivered masks passes every check of its kind on its own",
+   "reported": false
+  },
+  {
+   "id": "road_patch.files",
+   "ok": true,
+   "detail": "5 masks of 480 x 480 px at 400 px/m (frame [-0.6, -0.6, 0.6, 0.6] m), 16-bit, read back exactly",
+   "reported": false
+  },
+  {
+   "id": "road_patch.patch_eqd_mm",
+   "ok": true,
+   "detail": "blob_eqd_mm: median 788.7 over 6 masks (range 715.2 to 808.3), expected 500 to 900",
+   "reported": false
+  },
+  {
+   "id": "road_patch.edge_10_90_mm",
+   "ok": true,
+   "detail": "edge_10_90_mm: median 19.36 over 6 masks (range 19 to 19.9), expected 3 to 40",
+   "reported": false
+  },
+  {
+   "id": "road_patch.coverage_of_frame",
+   "ok": true,
+   "detail": "coverage: median 0.3393 over 6 masks (range 0.279 to 0.3563), expected 0.15 to 0.45",
+   "reported": false
+  },
+  {
+   "id": "road_patch.peak_mask",
+   "ok": true,
+   "detail": "mask_max: median 0.9962 over 6 masks (range 0.9863 to 0.9994), expected 0.9 to 1.0",
+   "reported": false
+  },
+  {
+   "id": "road_patch.refine",
+   "ok": true,
+   "detail": "the warp and the strength variation cost no check the plain envelope passes",
+   "reported": false
+  },
+  {
+   "id": "road_patch.single",
+   "ok": true,
+   "detail": "single masks inside the range: all checks at 80 per cent or more of 12 masks",
+   "reported": true
+  },
+  {
+   "id": "road_patch.seed",
+   "ok": true,
+   "detail": "the same seed gives the same pixels; another seed gives other pixels",
+   "reported": false
+  },
+  {
+   "id": "flag_patch_crack.delivered",
+   "ok": true,
+   "detail": "each of the 6 delivered masks passes every check of its kind on its own",
+   "reported": false
+  },
+  {
+   "id": "flag_patch_crack.files",
+   "ok": true,
+   "detail": "6 masks of 3360 x 2688 px at 1120 px/m (frame [0.0, 0.0, 3.0, 2.4] m), 16-bit, read back exactly",
+   "reported": false
+  },
+  {
+   "id": "flag_patch_crack.refine",
+   "ok": true,
+   "detail": "the warp and the strength variation cost no check the plain envelope passes",
+   "reported": false
+  },
+  {
+   "id": "flag_patch_crack.single",
+   "ok": true,
+   "detail": "single masks inside the range: all checks at 80 per cent or more of 12 masks",
+   "reported": true
+  },
+  {
+   "id": "flag_patch_crack.seed",
+   "ok": true,
+   "detail": "the same seed gives the same pixels; another seed gives other pixels",
+   "reported": false
+  },
+  {
+   "id": "gutter_grime.delivered",
+   "ok": true,
+   "detail": "each of the 4 delivered masks passes every check of its kind on its own",
+   "reported": false
+  },
+  {
+   "id": "gutter_grime.files",
+   "ok": true,
+   "detail": "4 masks of 1000 x 375 px at 500 px/m (frame [0.0, 0.0, 2.0, 0.75] m), 16-bit, read back exactly",
+   "reported": false
+  },
+  {
+   "id": "gutter_grime.foot_profile",
+   "ok": true,
+   "detail": "foot_profile: median 1 over 6 masks (range 1 to 1), expected 0.8 to 1",
+   "reported": false
+  },
+  {
+   "id": "gutter_grime.tile_seam",
+   "ok": true,
+   "detail": "tile_seam: median 0.9594 over 6 masks (range 0.8493 to 1.832), expected 0.0 to 1.6",
+   "reported": false
+  },
+  {
+   "id": "gutter_grime.profile_10_90_mm",
+   "ok": true,
+   "detail": "edge_10_90_mm: median 29.17 over 6 masks (range 28.83 to 29.29), expected 15 to 300",
+   "reported": false
+  },
+  {
+   "id": "gutter_grime.top_edge_std_mm",
+   "ok": true,
+   "detail": "top_edge_std_mm: median 33.76 over 6 masks (range 25.98 to 64.62), expected 20 to 70",
+   "reported": false
+  },
+  {
+   "id": "gutter_grime.column_mean_cv",
+   "ok": true,
+   "detail": "column_mean_cv: median 0.1384 over 6 masks (range 0.1315 to 0.3095), expected 0.08 to 2.0",
+   "reported": false
+  },
+  {
+   "id": "gutter_grime.core_column_cv",
+   "ok": true,
+   "detail": "core_column_cv: median 0.002673 over 6 masks (range 0.001958 to 0.003687), expected 0.0 to 0.05",
+   "reported": false
+  },
+  {
+   "id": "gutter_grime.refine",
+   "ok": true,
+   "detail": "the warp and the strength variation cost no check the plain envelope passes",
+   "reported": false
+  },
+  {
+   "id": "gutter_grime.single",
+   "ok": true,
+   "detail": "single masks inside the range: all checks at 80 per cent or more of 12 masks",
+   "reported": true
+  },
+  {
+   "id": "gutter_grime.seed",
+   "ok": true,
+   "detail": "the same seed gives the same pixels; another seed gives other pixels",
+   "reported": false
+  },
+  {
+   "id": "wall_soot.delivered",
+   "ok": true,
+   "detail": "each of the 4 delivered masks passes every check of its kind on its own",
+   "reported": false
+  },
+  {
+   "id": "wall_soot.files",
+   "ok": true,
+   "detail": "4 masks of 100 x 100 px at 25 px/m (frame [0.0, 0.0, 4.0, 4.0] m), 16-bit, read back exactly",
+   "reported": false
+  },
+  {
+   "id": "wall_soot.mask_mean",
+   "ok": true,
+   "detail": "mask_mean: median 0.8689 over 6 masks (range 0.8619 to 0.8808), expected 0.82 to 0.97",
+   "reported": false
+  },
+  {
+   "id": "wall_soot.mask_std",
+   "ok": true,
+   "detail": "mask_std: median 0.06638 over 6 masks (range 0.06057 to 0.08315), expected 0.04 to 0.14",
+   "reported": false
+  },
+  {
+   "id": "wall_soot.mask_max",
+   "ok": true,
+   "detail": "mask_max: median 0.9968 over 6 masks (range 0.9924 to 0.999), expected 0.95 to 1.0",
+   "reported": false
+  },
+  {
+   "id": "wall_soot.tile_seam",
+   "ok": true,
+   "detail": "tile_seam: median 0.5956 over 6 masks (range 0.1386 to 1.004), expected 0.0 to 1.6",
+   "reported": false
+  },
+  {
+   "id": "wall_soot.dominant_wavelength_m",
+   "ok": true,
+   "detail": "dominant_wavelength_m: median 4 over 6 masks (range 2 to 4), expected 0.5 to 4.0",
+   "reported": false
+  },
+  {
+   "id": "wall_soot.foot_profile",
+   "ok": true,
+   "detail": "foot_profile: median 1 over 6 masks (range 1 to 1), expected 0.8 to 1",
+   "reported": false
+  },
+  {
+   "id": "wall_soot.lower_wall_excess",
+   "ok": true,
+   "detail": "lower_wall_excess: median 0.078 over 6 masks (range 0.002348 to 0.158), expected 0.05 to 0.15",
+   "reported": false
+  },
+  {
+   "id": "wall_soot.refine",
+   "ok": true,
+   "detail": "the warp and the strength variation cost no check the plain envelope passes",
+   "reported": false
+  },
+  {
+   "id": "wall_soot.single",
+   "ok": true,
+   "detail": "single masks inside the range: lower_wall_excess 5/12",
+   "reported": true
+  },
+  {
+   "id": "wall_soot.seed",
+   "ok": true,
+   "detail": "the same seed gives the same pixels; another seed gives other pixels",
+   "reported": false
+  },
+  {
+   "id": "wall_head_band.delivered",
+   "ok": true,
+   "detail": "each of the 4 delivered masks passes every check of its kind on its own",
+   "reported": false
+  },
+  {
+   "id": "wall_head_band.files",
+   "ok": true,
+   "detail": "4 masks of 320 x 240 px at 160 px/m (frame [0.0, -1.5, 2.0, 0.0] m), 16-bit, read back exactly",
+   "reported": false
+  },
+  {
+   "id": "wall_head_band.foot_profile",
+   "ok": true,
+   "detail": "foot_profile: median 1 over 6 masks (range 1 to 1), expected 0.8 to 1",
+   "reported": false
+  },
+  {
+   "id": "wall_head_band.profile_10_90_mm",
+   "ok": true,
+   "detail": "edge_10_90_mm: median 419.6 over 6 masks (range 413.2 to 425.3), expected 300 to 900",
+   "reported": false
+  },
+  {
+   "id": "wall_head_band.tile_seam",
+   "ok": true,
+   "detail": "tile_seam: median 0.1844 over 6 masks (range 0.1118 to 0.8284), expected 0.0 to 1.6",
+   "reported": false
+  },
+  {
+   "id": "wall_head_band.peak_mask",
+   "ok": true,
+   "detail": "mask_max: median 1 over 6 masks (range 1 to 1), expected 0.95 to 1.0",
+   "reported": false
+  },
+  {
+   "id": "wall_head_band.top_edge_std_mm",
+   "ok": true,
+   "detail": "top_edge_std_mm: median 49.21 over 6 masks (range 29.99 to 56.25), expected 20 to 100",
+   "reported": false
+  },
+  {
+   "id": "wall_head_band.column_mean_cv",
+   "ok": true,
+   "detail": "column_mean_cv: median 0.1113 over 6 masks (range 0.06836 to 0.1265), expected 0.08 to 1.0",
+   "reported": false
+  },
+  {
+   "id": "wall_head_band.core_column_cv",
+   "ok": true,
+   "detail": "core_column_cv: median 0.001468 over 6 masks (range 9.334e-05 to 0.002585), expected 0.0 to 0.05",
+   "reported": false
+  },
+  {
+   "id": "wall_head_band.edge_on_course_share",
+   "ok": true,
+   "detail": "edge_on_course_share: median 0.625 over 6 masks (range 0.5219 to 0.7312), expected 0.6 to 1.0",
+   "reported": false
+  },
+  {
+   "id": "wall_head_band.refine",
+   "ok": true,
+   "detail": "the warp and the strength variation cost no check the plain envelope passes",
+   "reported": false
+  },
+  {
+   "id": "wall_head_band.single",
+   "ok": true,
+   "detail": "single masks inside the range: edge_on_course_share 6/12",
+   "reported": true
+  },
+  {
+   "id": "wall_head_band.seed",
+   "ok": true,
+   "detail": "the same seed gives the same pixels; another seed gives other pixels",
+   "reported": false
+  },
+  {
+   "id": "iron_wear.delivered",
+   "ok": true,
+   "detail": "each of the 4 delivered masks passes every check of its kind on its own",
+   "reported": false
+  },
+  {
+   "id": "iron_wear.files",
+   "ok": true,
+   "detail": "4 masks of 86 x 960 px at 400 px/m (frame [-0.107, 0.0, 0.107, 2.4] m), 16-bit, read back exactly",
+   "reported": false
+  },
+  {
+   "id": "iron_wear.coverage_of_frame",
+   "ok": true,
+   "detail": "coverage: median 0.07267 over 6 masks (range 0.05665 to 0.07626), expected 0.05 to 0.14",
+   "reported": false
+  },
+  {
+   "id": "iron_wear.blob_eqd_mm_p50",
+   "ok": true,
+   "detail": "blob_eqd_mm: median 42.96 over 6 masks (range 39.69 to 55.57), expected 20 to 90",
+   "reported": false
+  },
+  {
+   "id": "iron_wear.edge_10_90_mm",
+   "ok": true,
+   "detail": "edge_10_90_mm: median 6.165 over 6 masks (range 5.962 to 7.051), expected 3 to 25",
+   "reported": false
+  },
+  {
+   "id": "iron_wear.peak_mask",
+   "ok": true,
+   "detail": "mask_max: median 0.9548 over 6 masks (range 0.9158 to 0.9717), expected 0.8 to 1.0",
+   "reported": false
+  },
+  {
+   "id": "iron_wear.coverage_share_below_m",
+   "ok": true,
+   "detail": "coverage_share_below_m: median 0.477 over 6 masks (range 0.3845 to 0.5206), expected 0.25 to 0.6",
+   "reported": false
+  },
+  {
+   "id": "iron_wear.refine",
+   "ok": true,
+   "detail": "the warp and the strength variation cost no check the plain envelope passes",
+   "reported": false
+  },
+  {
+   "id": "iron_wear.single",
+   "ok": true,
+   "detail": "single masks inside the range: all checks at 80 per cent or more of 12 masks",
+   "reported": true
+  },
+  {
+   "id": "iron_wear.seed",
+   "ok": true,
+   "detail": "the same seed gives the same pixels; another seed gives other pixels",
+   "reported": false
+  },
+  {
+   "id": "grate_wear.delivered",
+   "ok": true,
+   "detail": "each of the 3 delivered masks passes every check of its kind on its own",
+   "reported": false
+  },
+  {
+   "id": "grate_wear.files",
+   "ok": true,
+   "detail": "3 masks of 400 x 400 px at 1000 px/m (frame [0.0, 0.0, 0.4, 0.4] m), 16-bit, read back exactly",
+   "reported": false
+  },
+  {
+   "id": "grate_wear.coverage_of_frame",
+   "ok": true,
+   "detail": "coverage: median 0.6266 over 6 masks (range 0.6233 to 0.6307), expected 0.35 to 0.7",
+   "reported": false
+  },
+  {
+   "id": "grate_wear.blob_eqd_mm_p50",
+   "ok": true,
+   "detail": "blob_eqd_mm: median 137.7 over 6 masks (range 125.3 to 175.5), expected 50 to 160",
+   "reported": false
+  },
+  {
+   "id": "grate_wear.edge_10_90_mm",
+   "ok": true,
+   "detail": "edge_10_90_mm: median 2.899 over 6 masks (range 2.898 to 2.902), expected 1 to 12",
+   "reported": false
+  },
+  {
+   "id": "grate_wear.peak_mask",
+   "ok": true,
+   "detail": "mask_max: median 0.9 over 6 masks (range 0.9 to 0.9), expected 0.85 to 1.0",
+   "reported": false
+  },
+  {
+   "id": "grate_wear.refine",
+   "ok": true,
+   "detail": "the warp and the strength variation cost no check the plain envelope passes",
+   "reported": false
+  },
+  {
+   "id": "grate_wear.single",
+   "ok": true,
+   "detail": "single masks inside the range: blob_eqd_mm_p50 7/12",
+   "reported": true
+  },
+  {
+   "id": "grate_wear.seed",
+   "ok": true,
+   "detail": "the same seed gives the same pixels; another seed gives other pixels",
+   "reported": false
+  },
+  {
+   "id": "line_wear.delivered",
+   "ok": true,
+   "detail": "each of the 6 delivered masks passes every check of its kind on its own",
+   "reported": false
+  },
+  {
+   "id": "line_wear.files",
+   "ok": true,
+   "detail": "6 masks of 3360 x 112 px at 1120 px/m (frame [0.0, -0.05, 3.0, 0.05] m), 16-bit, read back exactly",
+   "reported": false
+  },
+  {
+   "id": "line_wear.coverage_of_frame",
+   "ok": true,
+   "detail": "coverage: median 0.2457 over 6 masks (range 0.1612 to 0.4272), expected 0.15 to 0.4",
+   "reported": false
+  },
+  {
+   "id": "line_wear.blob_eqd_mm_p50",
+   "ok": true,
+   "detail": "blob_eqd_mm: median 44.86 over 6 masks (range 33.03 to 74.01), expected 15 to 150",
+   "reported": false
+  },
+  {
+   "id": "line_wear.size_cv",
+   "ok": true,
+   "detail": "size_cv: median 0.7942 over 6 masks (range 0.6761 to 0.8613), expected 0.25 to 2.0",
+   "reported": false
+  },
+  {
+   "id": "line_wear.edge_10_90_mm",
+   "ok": true,
+   "detail": "edge_10_90_mm: median 3.174 over 6 masks (range 3.157 to 3.181), expected 2 to 15",
+   "reported": false
+  },
+  {
+   "id": "line_wear.peak_mask",
+   "ok": true,
+   "detail": "mask_max: median 1 over 6 masks (range 1 to 1), expected 0.9 to 1.0",
+   "reported": false
+  },
+  {
+   "id": "line_wear.refine",
+   "ok": true,
+   "detail": "the warp and the strength variation cost no check the plain envelope passes",
+   "reported": false
+  },
+  {
+   "id": "line_wear.single",
+   "ok": true,
+   "detail": "single masks inside the range: coverage_of_frame 9/12",
+   "reported": true
+  },
+  {
+   "id": "line_wear.seed",
+   "ok": true,
+   "detail": "the same seed gives the same pixels; another seed gives other pixels",
+   "reported": false
+  },
+  {
+   "id": "sign_ghost.delivered",
+   "ok": true,
+   "detail": "each of the 4 delivered masks passes every check of its kind on its own",
+   "reported": false
+  },
+  {
+   "id": "sign_ghost.files",
+   "ok": true,
+   "detail": "4 masks of 1760 x 800 px at 800 px/m (frame [-1.1, -0.5, 1.1, 0.5] m), 16-bit, read back exactly",
+   "reported": false
+  },
+  {
+   "id": "sign_ghost.coverage_of_frame",
+   "ok": true,
+   "detail": "coverage: median 0.1382 over 6 masks (range 0.05301 to 0.6141), expected 0.03 to 0.8",
+   "reported": false
+  },
+  {
+   "id": "sign_ghost.edge_10_90_mm",
+   "ok": true,
+   "detail": "edge_10_90_mm: median 18.36 over 6 masks (range 17.5 to 18.92), expected 3 to 25",
+   "reported": false
+  },
+  {
+   "id": "sign_ghost.peak_mask",
+   "ok": true,
+   "detail": "mask_max: median 0.9278 over 6 masks (range 0.8819 to 0.9534), expected 0.9 to 1.0",
+   "reported": false
+  },
+  {
+   "id": "sign_ghost.refine",
+   "ok": true,
+   "detail": "the warp and the strength variation cost no check the plain envelope passes",
+   "reported": false
+  },
+  {
+   "id": "sign_ghost.single",
+   "ok": true,
+   "detail": "single masks inside the range: all checks at 80 per cent or more of 12 masks",
+   "reported": true
+  },
+  {
+   "id": "sign_ghost.seed",
+   "ok": true,
+   "detail": "the same seed gives the same pixels; another seed gives other pixels",
+   "reported": false
+  },
+  {
+   "id": "graffiti_buff.delivered",
+   "ok": true,
+   "detail": "each of the 4 delivered masks passes every check of its kind on its own",
+   "reported": false
+  },
+  {
+   "id": "graffiti_buff.files",
+   "ok": true,
+   "detail": "4 masks of 640 x 520 px at 400 px/m (frame [-0.8, -0.65, 0.8, 0.65] m), 16-bit, read back exactly",
+   "reported": false
+  },
+  {
+   "id": "graffiti_buff.blob_eqd_mm_p50",
+   "ok": true,
+   "detail": "blob_eqd_mm: median 1108 over 6 masks (range 424.6 to 1466), expected 300 to 1500",
+   "reported": false
+  },
+  {
+   "id": "graffiti_buff.coverage_of_frame",
+   "ok": true,
+   "detail": "coverage: median 0.4685 over 6 masks (range 0.06806 to 0.8111), expected 0.1 to 0.9",
+   "reported": false
+  },
+  {
+   "id": "graffiti_buff.edge_10_90_mm",
+   "ok": true,
+   "detail": "edge_10_90_mm: median 8.569 over 6 masks (range 8.528 to 8.591), expected 2 to 20",
+   "reported": false
+  },
+  {
+   "id": "graffiti_buff.peak_mask",
+   "ok": true,
+   "detail": "mask_max: median 1 over 6 masks (range 1 to 1), expected 0.9 to 1.0",
+   "reported": false
+  },
+  {
+   "id": "graffiti_buff.refine",
+   "ok": true,
+   "detail": "the warp and the strength variation cost no check the plain envelope passes",
+   "reported": false
+  },
+  {
+   "id": "graffiti_buff.single",
+   "ok": true,
+   "detail": "single masks inside the range: all checks at 80 per cent or more of 12 masks",
+   "reported": true
+  },
+  {
+   "id": "graffiti_buff.seed",
+   "ok": true,
+   "detail": "the same seed gives the same pixels; another seed gives other pixels",
+   "reported": false
+  },
+  {
+   "id": "handle_wear.delivered",
+   "ok": true,
+   "detail": "each of the 4 delivered masks passes every check of its kind on its own",
+   "reported": false
+  },
+  {
+   "id": "handle_wear.files",
+   "ok": true,
+   "detail": "4 masks of 120 x 120 px at 200 px/m (frame [-0.3, -0.3, 0.3, 0.3] m), 16-bit, read back exactly",
+   "reported": false
+  },
+  {
+   "id": "handle_wear.blob_eqd_mm_p50",
+   "ok": true,
+   "detail": "blob_eqd_mm: median 115.1 over 6 masks (range 90.97 to 174.2), expected 80 to 290",
+   "reported": false
+  },
+  {
+   "id": "handle_wear.coverage_of_frame",
+   "ok": true,
+   "detail": "coverage: median 0.02927 over 6 masks (range 0.01806 to 0.06618), expected 0.015 to 0.4",
+   "reported": false
+  },
+  {
+   "id": "handle_wear.edge_10_90_mm",
+   "ok": true,
+   "detail": "edge_10_90_mm: median 60.09 over 6 masks (range 53.46 to 77.78), expected 20 to 100",
+   "reported": false
+  },
+  {
+   "id": "handle_wear.peak_mask",
+   "ok": true,
+   "detail": "mask_max: median 0.8812 over 6 masks (range 0.806 to 0.9285), expected 0.85 to 1.0",
+   "reported": false
+  },
+  {
+   "id": "handle_wear.refine",
+   "ok": true,
+   "detail": "the warp and the strength variation cost no check the plain envelope passes",
+   "reported": false
+  },
+  {
+   "id": "handle_wear.single",
+   "ok": true,
+   "detail": "single masks inside the range: all checks at 80 per cent or more of 12 masks",
+   "reported": true
+  },
+  {
+   "id": "handle_wear.seed",
+   "ok": true,
+   "detail": "the same seed gives the same pixels; another seed gives other pixels",
+   "reported": false
+  },
+  {
+   "id": "stone_top_lichen.delivered",
+   "ok": true,
+   "detail": "each of the 4 delivered masks passes every check of its kind on its own",
+   "reported": false
+  },
+  {
+   "id": "stone_top_lichen.files",
+   "ok": true,
+   "detail": "4 masks of 800 x 160 px at 800 px/m (frame [0.0, 0.0, 1.0, 0.2] m), 16-bit, read back exactly",
+   "reported": false
+  },
+  {
+   "id": "stone_top_lichen.coverage_of_frame",
+   "ok": true,
+   "detail": "coverage: median 0.6227 over 6 masks (range 0.4118 to 0.8002), expected 0.4 to 0.85",
+   "reported": false
+  },
+  {
+   "id": "stone_top_lichen.edge_10_90_mm",
+   "ok": true,
+   "detail": "edge_10_90_mm: median 4.686 over 6 masks (range 4.612 to 4.861), expected 2 to 14",
+   "reported": false
+  },
+  {
+   "id": "stone_top_lichen.mask_std",
+   "ok": true,
+   "detail": "mask_std: median 0.4274 over 6 masks (range 0.3513 to 0.4475), expected 0.3 to 0.52",
+   "reported": false
+  },
+  {
+   "id": "stone_top_lichen.peak_mask",
+   "ok": true,
+   "detail": "mask_max: median 0.9996 over 6 masks (range 0.9985 to 0.9999), expected 0.9 to 1.0",
+   "reported": false
+  },
+  {
+   "id": "stone_top_lichen.blob_eqd_mm_p50",
+   "ok": true,
+   "detail": "blob_eqd_mm: median 32.92 over 6 masks (range 21.15 to 56.21), expected 10 to 60",
+   "reported": false
+  },
+  {
+   "id": "stone_top_lichen.size_cv",
+   "ok": true,
+   "detail": "size_cv: median 1.167 over 6 masks (range 0.8839 to 1.456), expected 0.3 to 3.0",
+   "reported": false
+  },
+  {
+   "id": "stone_top_lichen.refine",
+   "ok": true,
+   "detail": "the warp and the strength variation cost no check the plain envelope passes",
+   "reported": false
+  },
+  {
+   "id": "stone_top_lichen.single",
+   "ok": true,
+   "detail": "single masks inside the range: all checks at 80 per cent or more of 12 masks",
+   "reported": true
+  },
+  {
+   "id": "stone_top_lichen.seed",
+   "ok": true,
+   "detail": "the same seed gives the same pixels; another seed gives other pixels",
+   "reported": false
+  },
+  {
+   "id": "footway_infill.delivered",
+   "ok": true,
+   "detail": "each of the 6 delivered masks passes every check of its kind on its own",
+   "reported": false
+  },
+  {
+   "id": "footway_infill.files",
+   "ok": true,
+   "detail": "6 masks of 896 x 3584 px at 1120 px/m (frame [-0.4, -1.6, 0.4, 1.6] m), 16-bit, read back exactly",
+   "reported": false
+  },
+  {
+   "id": "footway_infill.blob_eqd_mm_p50",
+   "ok": true,
+   "detail": "blob_eqd_mm: median 1280 over 6 masks (range 1099 to 1442), expected 600 to 2200",
+   "reported": false
+  },
+  {
+   "id": "footway_infill.coverage_of_frame",
+   "ok": true,
+   "detail": "coverage: median 0.5028 over 6 masks (range 0.3708 to 0.6378), expected 0.1 to 0.8",
+   "reported": false
+  },
+  {
+   "id": "footway_infill.edge_10_90_mm",
+   "ok": true,
+   "detail": "edge_10_90_mm: median 7.483 over 6 masks (range 7.467 to 7.506), expected 3 to 25",
+   "reported": false
+  },
+  {
+   "id": "footway_infill.peak_mask",
+   "ok": true,
+   "detail": "mask_max: median 1 over 6 masks (range 1 to 1), expected 0.9 to 1.0",
+   "reported": false
+  },
+  {
+   "id": "footway_infill.refine",
+   "ok": true,
+   "detail": "the warp and the strength variation cost no check the plain envelope passes",
+   "reported": false
+  },
+  {
+   "id": "footway_infill.single",
+   "ok": true,
+   "detail": "single masks inside the range: all checks at 80 per cent or more of 12 masks",
+   "reported": true
+  },
+  {
+   "id": "footway_infill.seed",
+   "ok": true,
+   "detail": "the same seed gives the same pixels; another seed gives other pixels",
+   "reported": false
+  },
+  {
+   "id": "road_crack.delivered",
+   "ok": true,
+   "detail": "each of the 5 delivered masks passes every check of its kind on its own",
+   "reported": false
+  },
+  {
+   "id": "road_crack.files",
+   "ok": true,
+   "detail": "5 masks of 3360 x 3360 px at 1120 px/m (frame [-1.5, -1.5, 1.5, 1.5] m), 16-bit, read back exactly",
+   "reported": false
+  },
+  {
+   "id": "road_crack.crack_length_m_per_m2_of_frame",
+   "ok": true,
+   "detail": "crack_length_per_m2: median 0.57 over 6 masks (range 0.5047 to 0.9893), expected 0.3 to 1.2",
+   "reported": false
+  },
+  {
+   "id": "road_crack.crack_width_mm",
+   "ok": true,
+   "detail": "crack_width_mm: median 4.158 over 6 masks (range 2.679 to 26.94), expected 2 to 40",
+   "reported": false
+  },
+  {
+   "id": "road_crack.edge_10_90_mm",
+   "ok": true,
+   "detail": "edge_10_90_mm: median 2.331 over 6 masks (range 2.296 to 2.373), expected 1 to 15",
+   "reported": false
+  },
+  {
+   "id": "road_crack.peak_mask",
+   "ok": true,
+   "detail": "mask_max: median 1 over 6 masks (range 1 to 1), expected 0.9 to 1.0",
+   "reported": false
+  },
+  {
+   "id": "road_crack.refine",
+   "ok": true,
+   "detail": "the warp and the strength variation cost no check the plain envelope passes",
+   "reported": false
+  },
+  {
+   "id": "road_crack.single",
+   "ok": true,
+   "detail": "single masks inside the range: all checks at 80 per cent or more of 12 masks",
+   "reported": true
+  },
+  {
+   "id": "road_crack.seed",
+   "ok": true,
+   "detail": "the same seed gives the same pixels; another seed gives other pixels",
+   "reported": false
+  },
+  {
+   "id": "wrong.wall_foot_damp.1",
+   "ok": true,
+   "detail": "a perfectly straight, uniform gradient with no ragged top: refused by top_edge_std_mm=0, column_mean_cv=1.88e-16",
+   "reported": false
+  },
+  {
+   "id": "wrong.wall_foot_splash.0",
+   "ok": true,
+   "detail": "a perfectly straight, uniform gradient with no ragged top: refused by top_edge_std_mm=0, column_mean_cv=1.46e-16",
+   "reported": false
+  },
+  {
+   "id": "wrong.gutter_grime.2",
+   "ok": true,
+   "detail": "a perfectly straight, uniform gradient with no ragged top: refused by top_edge_std_mm=0, column_mean_cv=0",
+   "reported": false
+  },
+  {
+   "id": "wrong.wall_head_band.3",
+   "ok": true,
+   "detail": "a perfectly straight, uniform gradient from the feature: refused by top_edge_std_mm=0, column_mean_cv=1.22e-16",
+   "reported": false
+  },
+  {
+   "id": "wrong.streak_sill.4",
+   "ok": true,
+   "detail": "two identical, symmetric bars and nothing else: refused by streak_length_m_p90=0.29, edge_10_90_mm=2.81, end_streak_length_ratio=1, end_streak_width_ratio=1",
+   "reported": false
+  },
+  {
+   "id": "wrong.streak_coping.5",
+   "ok": true,
+   "detail": "identical fingers at an identical 0.4 m spacing: refused by fade_ratio_tail_over_head=1, edge_10_90_mm=0, finger_spacing_cv=0, finger_length_cv=0",
+   "reported": false
+  },
+  {
+   "id": "wrong.gum.6",
+   "ok": true,
+   "detail": "a 3 x 3 grid of identical discs: refused by edge_10_90_mm=0, nn_ratio=2, size_cv=0.00516",
+   "reported": false
+  },
+  {
+   "id": "wrong.road_oil.8",
+   "ok": true,
+   "detail": "a lattice of identical dots: refused by edge_10_90_mm=0, nn_ratio=2.29, size_cv=4.14e-16",
+   "reported": false
+  },
+  {
+   "id": "wrong.cig_end.7",
+   "ok": true,
+   "detail": "a 4 x 4 grid of identical discs: refused by edge_10_90_mm=0, nn_ratio=2, size_cv=0",
+   "reported": false
+  },
+  {
+   "id": "wrong.salt_bloom.9",
+   "ok": true,
+   "detail": "one uniform 0.09 m stripe: refused by ragged_edge_10_90_mm=0, top_edge_std_mm=0, column_mean_cv=1.23e-16, brick_cell_std=0.18",
+   "reported": false
+  },
+  {
+   "id": "wrong.paint_fade.10",
+   "ok": true,
+   "detail": "white noise at texel scale: refused by dominant_wavelength_m=0.05, edge_10_90_mm=71.3",
+   "reported": false
+  },
+  {
+   "id": "wrong.wall_soot.11",
+   "ok": true,
+   "detail": "a perfectly uniform mask: refused by mask_std=1.11e-16, mask_max=0.9, lower_wall_excess=0",
+   "reported": false
+  },
+  {
+   "id": "wrong.wall_foot_splash.12",
+   "ok": true,
+   "detail": "the straight profile times a vertical cosine (period 0.25 m, +/-25 %, scaled to peak 1): a band in vertical stripes: refused by foot_profile=0.667, core_column_cv=0.177, edge_on_course_share=0.39 (the named check core_column_cv)",
+   "reported": false
+  },
+  {
+   "id": "wrong.wall_foot_splash.13",
+   "ok": true,
+   "detail": "the straight profile times a vertical cosine (period 0.40 m, +/-20 %, clipped at 1): a band in vertical stripes: refused by core_column_cv=0.0824, edge_on_course_share=0.175 (the named check core_column_cv)",
+   "reported": false
+  },
+  {
+   "id": "wrong.wall_foot_splash.14",
+   "ok": true,
+   "detail": "the straight profile times a vertical cosine (period 0.50 m, +/-15 %, scaled to peak 1): a band in vertical stripes: refused by core_column_cv=0.106, edge_on_course_share=0.345 (the named check core_column_cv)",
+   "reported": false
+  },
+  {
+   "id": "wrong.wall_foot_damp.15",
+   "ok": true,
+   "detail": "the straight profile times a vertical cosine (period 0.25 m, +/-25 %, scaled to peak 1): a band in vertical stripes: refused by core_column_cv=0.177 (the named check core_column_cv)",
+   "reported": false
+  },
+  {
+   "id": "wrong.wall_foot_damp.16",
+   "ok": true,
+   "detail": "the straight profile times a vertical cosine (period 0.40 m, +/-20 %, clipped at 1): a band in vertical stripes: refused by core_column_cv=0.141 (the named check core_column_cv)",
+   "reported": false
+  },
+  {
+   "id": "wrong.wall_foot_damp.17",
+   "ok": true,
+   "detail": "the straight profile times a vertical cosine (period 0.50 m, +/-15 %, scaled to peak 1): a band in vertical stripes: refused by core_column_cv=0.106 (the named check core_column_cv)",
+   "reported": false
+  },
+  {
+   "id": "wrong.wall_head_band.18",
+   "ok": true,
+   "detail": "the straight profile times a vertical cosine (period 0.25 m, +/-25 %, scaled to peak 1): a band in vertical stripes: refused by foot_profile=0.75, core_column_cv=0.177, edge_on_course_share=0.425 (the named check core_column_cv)",
+   "reported": false
+  },
+  {
+   "id": "wrong.wall_head_band.19",
+   "ok": true,
+   "detail": "the straight profile times a vertical cosine (period 0.40 m, +/-20 %, clipped at 1): a band in vertical stripes: refused by core_column_cv=0.0824, edge_on_course_share=0.156 (the named check core_column_cv)",
+   "reported": false
+  },
+  {
+   "id": "wrong.wall_head_band.20",
+   "ok": true,
+   "detail": "the straight profile times a vertical cosine (period 0.50 m, +/-15 %, scaled to peak 1): a band in vertical stripes: refused by core_column_cv=0.106, edge_on_course_share=0.338 (the named check core_column_cv)",
+   "reported": false
+  },
+  {
+   "id": "wrong.gutter_grime.21",
+   "ok": true,
+   "detail": "the straight profile times a vertical cosine (period 0.25 m, +/-25 %, scaled to peak 1): a band in vertical stripes: refused by core_column_cv=0.177 (the named check core_column_cv)",
+   "reported": false
+  },
+  {
+   "id": "wrong.gutter_grime.22",
+   "ok": true,
+   "detail": "the straight profile times a vertical cosine (period 0.40 m, +/-20 %, clipped at 1): a band in vertical stripes: refused by top_edge_std_mm=12.7, core_column_cv=0.141 (the named check core_column_cv)",
+   "reported": false
+  },
+  {
+   "id": "wrong.gutter_grime.23",
+   "ok": true,
+   "detail": "the straight profile times a vertical cosine (period 0.50 m, +/-15 %, scaled to peak 1): a band in vertical stripes: refused by top_edge_std_mm=10.8, core_column_cv=0.106 (the named check core_column_cv)",
+   "reported": false
+  },
+  {
+   "id": "wrong.salt_bloom.24",
+   "ok": true,
+   "detail": "a perfect checkerboard of whitened bricks in two courses, blurred 3 px: refused by brick_neighbour_same_share=0 (the named check brick_neighbour_same_share)",
+   "reported": false
+  },
+  {
+   "id": "wrong.salt_bloom.25",
+   "ok": true,
+   "detail": "a perfect checkerboard of whitened bricks in two courses, blurred 4 px: refused by brick_neighbour_same_share=0 (the named check brick_neighbour_same_share)",
+   "reported": false
+  },
+  {
+   "id": "wrong.streak_sill.26",
+   "ok": true,
+   "detail": "unequal end streaks and four identical, evenly spaced, ruler-straight rivulets: refused by edge_10_90_mm=4.03, rivulet_spacing_cv=0, rivulet_length_cv=0 (the named check rivulet_spacing_cv)",
+   "reported": false
+  },
+  {
+   "id": "wrong.wall_soot.27",
+   "ok": true,
+   "detail": "a 0.5 to 2 m mottle (std 0.07 around 0.90) with no darker lower wall: refused by lower_wall_excess=-0.0121 (the named check lower_wall_excess)",
+   "reported": false
+  },
+  {
+   "id": "wrong.iron_wear.28",
+   "ok": true,
+   "detail": "rust patches none below 0.35 m: refused by edge_10_90_mm=0, coverage_share_below_m=0 (the named check coverage_share_below_m)",
+   "reported": false
+  },
+  {
+   "id": "wrong.iron_wear.29",
+   "ok": true,
+   "detail": "rust patches spread evenly over the whole pipe: refused by edge_10_90_mm=0, coverage_share_below_m=0.183 (the named check coverage_share_below_m)",
+   "reported": false
+  },
+  {
+   "id": "wrong.stone_top_lichen.30",
+   "ok": true,
+   "detail": "one flat block over half the top: refused by blob_eqd_mm_p50=357, size_cv=0 (the named check blob_eqd_mm_p50)",
+   "reported": false
+  },
+  {
+   "id": "compose.wall_foot_splash.composed_foot_ratio",
+   "ok": true,
+   "detail": "composed_foot_ratio: median 0.1603 over 3 seeds (0.1586 to 0.1608), expected 0.16 to 0.4",
+   "reported": false
+  },
+  {
+   "id": "compose.wall_foot_splash.composed_wall_min_ratio",
+   "ok": true,
+   "detail": "composed_wall_min_ratio: median 0.15 over 3 seeds (0.15 to 0.15), expected 0.149 to 1.0",
+   "reported": false
+  },
+  {
+   "id": "compose.salt_bloom.composed_salt_ratio",
+   "ok": true,
+   "detail": "composed_salt_ratio: median 1.319 over 3 seeds (1.315 to 1.322), expected 0.57 to 2.2",
+   "reported": false
+  },
+  {
+   "id": "compose.pavement_stain.composed_ground_min_ratio",
+   "ok": true,
+   "detail": "composed_ground_min_ratio: median 0.28 over 3 seeds (0.28 to 0.28), expected 0.279 to 1.0",
+   "reported": false
+  },
+  {
+   "id": "compose.gutter_grime.channel_over_road",
+   "ok": true,
+   "detail": "channel_over_road: median 1.469 over 3 seeds (1.469 to 1.469), expected 1.15 to 1.8",
+   "reported": false
+  },
+  {
+   "id": "compose.gutter_grime.fringe_over_road",
+   "ok": true,
+   "detail": "fringe_over_road: median 0.9323 over 3 seeds (0.9317 to 0.9449), expected 0.85 to 0.99",
+   "reported": false
+  },
+  {
+   "id": "compose.wall_soot.composed_soot_ratio",
+   "ok": true,
+   "detail": "composed_soot_ratio: median 0.5086 over 3 seeds (0.4927 to 0.529), expected 0.35 to 0.55",
+   "reported": false
+  },
+  {
+   "id": "compose.wall_soot.composed_soot_chroma_ratio",
+   "ok": true,
+   "detail": "composed_soot_chroma_ratio: median 0.5151 over 3 seeds (0.5033 to 0.5384), expected 0.4 to 0.6",
+   "reported": false
+  },
+  {
+   "id": "compose.wall_soot.house_to_house_ratio",
+   "ok": true,
+   "detail": "house_to_house_ratio: median 0.8236 over 3 seeds (0.818 to 0.8308), expected 0.8 to 1.4",
+   "reported": false
+  },
+  {
+   "id": "compose.wall_head_band.composed_head_ratio_gable",
+   "ok": true,
+   "detail": "composed_head_ratio: median 0.5506 over 3 seeds (0.5449 to 0.5606), expected 0.45 to 0.65",
+   "reported": false
+  },
+  {
+   "id": "compose.wall_head_band.composed_head_ratio_gable_sooted",
+   "ok": true,
+   "detail": "composed_head_ratio: median 0.4002 over 3 seeds (0.3957 to 0.4138), expected 0.28 to 0.48",
+   "reported": false
+  },
+  {
+   "id": "compose.wall_head_band.composed_eaves_front_ratio",
+   "ok": true,
+   "detail": "composed_eaves_front_ratio: median 0.9557 over 3 seeds (0.9514 to 0.96), expected 0.9 to 1.1",
+   "reported": false
+  }
+ ],
+ "summary": {
+  "rows": 405,
+  "failing": 0,
+  "made": "2026-10-12 13:29:44"
+ }
+}

@@ -187,3 +187,6 @@ ledger/Assets/StreamingAssets/Decals/ours/wear_rings/
 ledger/Assets/StreamingAssets/Decals/ours/wear_burns/
 ledger/Assets/StreamingAssets/Decals/ours/wear_chips/
 production/assets/office-print/mickeys/district_map.png
+
+# Cloud week 42 (unit 10): the sound set's listening clips are audio, rebuilt by production/cloud-week/sound/make_sound.py; the size guard keeps audio out of git
+production/previews/cloud-week/sound/*.ogg

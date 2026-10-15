@@ -1,0 +1,981 @@
+{
+ "version": 2,
+ "passed": 67,
+ "failed": [],
+ "total": 67,
+ "rows": [
+  {
+   "id": "KERB granite: 900 long, the top 115 over the channel, buried to -140 (255 deep), the back at y -170, the face line at y 0",
+   "ok": true,
+   "measured": [
+    900.0,
+    115.0,
+    -140.0,
+    -170.0,
+    0.0
+   ],
+   "expected": [
+    900.0,
+    115.0,
+    -140.0,
+    -170.0,
+    0.0
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "KERB granite: the section at mid-length against the target's section_yz (half-battered face, R25 top arris): largest outline distance at most 2",
+   "ok": true,
+   "measured": 0.0,
+   "expected": "<= 2",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "KERB granite: face vertical to z 45 (y at z 40), then battered back 20 by z 90",
+   "ok": true,
+   "measured": [
+    0.0,
+    -19.556
+   ],
+   "expected": [
+    0.0,
+    -20.0
+   ],
+   "note": "tol 1.6",
+   "extra": false
+  },
+  {
+   "id": "KERB granite: the flat top 125 wide from y -45 to -170 (z 115)",
+   "ok": true,
+   "measured": [
+    -170.0,
+    -42.967
+   ],
+   "expected": [
+    -170.0,
+    -45.0
+   ],
+   "note": "tol 4.0",
+   "extra": false
+  },
+  {
+   "id": "KERB granite: the top is 125 flat + the R25 arris = 170 across (the target's top_width); the ends' arris eased 10 (the bevel)",
+   "ok": true,
+   "measured": 170.0,
+   "expected": "170",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "KERB concrete: 915 long, the top 95, buried to -160 (255 deep), 125 across (y -125 to 0)",
+   "ok": true,
+   "measured": [
+    915.0,
+    95.0,
+    -160.0,
+    -125.0,
+    0.0
+   ],
+   "expected": [
+    915.0,
+    95.0,
+    -160.0,
+    -125.0,
+    0.0
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "KERB concrete: the section at mid-length against the target's (a full R50 bull-nose over the top 50): largest outline distance at most 2",
+   "ok": true,
+   "measured": 0.0,
+   "expected": "<= 2",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "CHANNEL setts: two courses 204 across (y 0 to 204, within the 1 mm of joint), tops at about z 0 (dome 4, scatter 3, worn up to 5 lower), 140 deep",
+   "ok": true,
+   "measured": [
+    0.5,
+    203.5,
+    -0.032,
+    -140.0
+   ],
+   "expected": [
+    0.5,
+    203.5,
+    0.0,
+    -140.0
+   ],
+   "note": "tol 1.2",
+   "extra": false
+  },
+  {
+   "id": "CHANNEL setts: lengths along the kerb 120 to 210 (+-15), the mean about 160",
+   "ok": true,
+   "measured": [
+    128,
+    193,
+    156
+   ],
+   "expected": "120 to 210, mean 160",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "CHANNEL setts: joints 11 between setts along a course (the 1 mm of sett skin counted)",
+   "ok": true,
+   "measured": [
+    12.0,
+    12.0
+   ],
+   "expected": [
+    11.0,
+    11.0
+   ],
+   "note": "tol 1.5",
+   "extra": false
+  },
+  {
+   "id": "CHANNEL setts: the mortar's top 8 under the setts' tops (recessed dark joints)",
+   "ok": true,
+   "measured": -8.0,
+   "expected": "-8",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "CHANNEL concrete: 255 wide (y 0 to 255), 125 deep, 915 long, top at 0",
+   "ok": true,
+   "measured": [
+    255.0,
+    -125.0,
+    915.0,
+    0.0
+   ],
+   "expected": [
+    255.0,
+    -125.0,
+    915.0,
+    0.0
+   ],
+   "note": "tol 1.5",
+   "extra": false
+  },
+  {
+   "id": "CROSSOVER lip row: top z 12 (the target: 12 +-8), across 112 (y -112 to 0)",
+   "ok": true,
+   "measured": [
+    12.0,
+    -112.0,
+    0.0
+   ],
+   "expected": [
+    12.0,
+    -112.0,
+    0.0
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "CROSSOVER lip row: 19 setts between the kerb ends (x -1500 to 1500)",
+   "ok": true,
+   "measured": [
+    19,
+    -1496,
+    1496
+   ],
+   "expected": "19, +-1500",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "CROSSOVER ramp: rise 98 over a run of 721 (y -124 to -845), x +-1488, back edge z 110",
+   "ok": true,
+   "measured": [
+    98.0,
+    -845.0,
+    -1488.0,
+    1488.0
+   ],
+   "expected": [
+    98.0,
+    -845.0,
+    -1488.0,
+    1488.0
+   ],
+   "note": "tol 1.5",
+   "extra": false
+  },
+  {
+   "id": "CROSSOVER ramp: the surface at the lip is z 12 and at the back z 110",
+   "ok": true,
+   "measured": [
+    12.204,
+    109.728
+   ],
+   "expected": [
+    12.20388349514563,
+    109.72815533980582
+   ],
+   "note": "tol 1.2",
+   "extra": false
+  },
+  {
+   "id": "CROSSOVER flank strip: 140 wide, 663 long (y -845 to -182), top z 110, its inner face on the kerb block's end (x 1500)",
+   "ok": true,
+   "measured": [
+    140.0,
+    663.0,
+    -845.0,
+    -182.0,
+    110.0,
+    1500.0
+   ],
+   "expected": [
+    140.0,
+    663.0,
+    -845.0,
+    -182.0,
+    110.0,
+    1500.0
+   ],
+   "note": "tol 1.5",
+   "extra": false
+  },
+  {
+   "id": "CROSSOVER end block: a granite kerb block (900 long) whose end face stands at x 1500, the top 115",
+   "ok": true,
+   "measured": [
+    900.0,
+    1500.0,
+    115.0
+   ],
+   "expected": [
+    900.0,
+    1500.0,
+    115.0
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "CROSSOVER joints: 12 between the lip's back (y -112) and the ramp (y -124), and 12 between the ramp's end (x 1488) and the flank (x 1500)",
+   "ok": true,
+   "measured": [
+    12.0,
+    12.0
+   ],
+   "expected": [
+    12.0,
+    12.0
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "GRATE A: overall 440 x 290, 45 deep, the top at z 0 (flush)",
+   "ok": true,
+   "measured": [
+    440.0,
+    290.0,
+    -45.0,
+    0.0
+   ],
+   "expected": [
+    440.0,
+    290.0,
+    -45.0,
+    0.0
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "GRATE A: eight slots 26 wide x 255 long, perpendicular to the kerb, pitch 51, centres +-25.5 to +-178.5",
+   "ok": true,
+   "measured": [
+    8,
+    [
+     -178.5,
+     -127.5,
+     -76.5,
+     -25.5,
+     25.5,
+     76.5,
+     127.5,
+     178.5
+    ]
+   ],
+   "expected": "8 at the target's centres",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "GRATE A: the open fraction at the top, slot area over plan area (the target 0.416; 8 x 26 x 255 / (440 x 290))",
+   "ok": true,
+   "measured": 0.416,
+   "expected": 0.416,
+   "note": "tol 0.02",
+   "extra": false
+  },
+  {
+   "id": "GRATE A: the slots 22 wide at the foot (a draught of 2 a side), bars 25 wide at the top",
+   "ok": true,
+   "measured": [
+    22.0,
+    25.0
+   ],
+   "expected": [
+    22.0,
+    25.0
+   ],
+   "note": "tol 1.5",
+   "extra": false
+  },
+  {
+   "id": "GRATE A: end walls 28.5 along the kerb and 17.5 across (the slots' ends)",
+   "ok": true,
+   "measured": [
+    28.5,
+    17.5
+   ],
+   "expected": [
+    28.5,
+    17.5
+   ],
+   "note": "tol 2.0",
+   "extra": false
+  },
+  {
+   "id": "GRATE A: a black pot below the slots, 300 deep (the slots read black)",
+   "ok": true,
+   "measured": [
+    300.0
+   ],
+   "expected": "300 deep",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "GRATE B: overall 355 x 325, 45 deep, the top at z 0 (flush)",
+   "ok": true,
+   "measured": [
+    355.0,
+    325.0,
+    -45.0,
+    0.0
+   ],
+   "expected": [
+    355.0,
+    325.0,
+    -45.0,
+    0.0
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "GRATE B: seven slots 20 wide at pitch 42, lengths 91, 182, 255, 288, 255, 182, 91 (trimmed to an oval)",
+   "ok": true,
+   "measured": [
+    7,
+    [
+     91,
+     91,
+     182,
+     182,
+     255,
+     255,
+     288
+    ]
+   ],
+   "expected": [
+    91,
+    91,
+    182,
+    182,
+    255,
+    255,
+    288
+   ],
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "GRATE B: two round lifting holes 18 across on the long axis, 40 beyond the end slots' centres (x +-166)",
+   "ok": true,
+   "measured": [
+    [
+     -166,
+     17.8
+    ],
+    [
+     166,
+     17.8
+    ]
+   ],
+   "expected": "two at x +-166",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "GRATE B: a black pot below the slots, 300 deep (the slots read black)",
+   "ok": true,
+   "measured": [
+    300.0
+   ],
+   "expected": "300 deep",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "COVER stud square: outer 600 x 600, frame rim 12, the frame top at z 0",
+   "ok": true,
+   "measured": [
+    600.0,
+    600.0,
+    0.0
+   ],
+   "expected": [
+    600.0,
+    600.0,
+    0.0
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "COVER stud square: the lid 576 across (within the frame's 1 mm clearance), two leaves",
+   "ok": true,
+   "measured": [
+    576.0,
+    2.0
+   ],
+   "expected": [
+    576.0,
+    2.0
+   ],
+   "note": "tol 1.5",
+   "extra": false
+  },
+  {
+   "id": "COVER stud square: one diagonal joint 3 wide between the two triangular leaves (the leaves' nearest distance, across the diagonal: 3)",
+   "ok": true,
+   "measured": 3.0,
+   "expected": 2.9,
+   "note": "tol 0.8",
+   "extra": false
+  },
+  {
+   "id": "COVER stud square: square studs 28 on a 59 pitch, a lattice 10 x 10 (full studs read 28 across), 3 high; at least five half-studs along the joint",
+   "ok": true,
+   "measured": [
+    90,
+    20,
+    3.0
+   ],
+   "expected": ">= 70 full, >= 10 cut, 3 high",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "COVER stud square: the stud pitch is 59 (the spacing of the lattice's columns)",
+   "ok": true,
+   "measured": 59.0,
+   "expected": 59.0,
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "COVER stud square: one round keyhole 12 across in each leaf",
+   "ok": true,
+   "measured": [
+    11.8,
+    11.8
+   ],
+   "expected": "2 x 12",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "COVER stud square: a blank raised boss 50 x 25, 2 high, on the joint's lower end",
+   "ok": true,
+   "measured": [
+    2.0
+   ],
+   "expected": "2 high, blank",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "COVER round: frame 690 across and 68 deep, lid 590 (less 1 of clearance), the top at z 0",
+   "ok": true,
+   "measured": [
+    690.0,
+    68.0,
+    590.0
+   ],
+   "expected": [
+    690.0,
+    68.0,
+    590.0
+   ],
+   "note": "tol 1.5",
+   "extra": false
+  },
+  {
+   "id": "COVER round: lugs 36 x 10.5 x 2.5 in a basket pattern, a plain 25 rim; the lugs' furthest reach inside the lid's 295 less the rim",
+   "ok": true,
+   "measured": [
+    135,
+    2.5
+   ],
+   "expected": "lugs 2.5 high",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "COVER round: every lug is 36 x 10.5 (horizontal) or 10.5 x 36 (vertical)",
+   "ok": true,
+   "measured": [
+    [
+     10.5,
+     36.0
+    ],
+    [
+     36.0,
+     10.5
+    ]
+   ],
+   "expected": "36 x 10.5",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "COVER recessed footway: outer 1060 x 600 (the flange 40 level with the flags), the ledge 60 stepped 11 down, the infill 860 x 400",
+   "ok": true,
+   "measured": [
+    1060.0,
+    600.0,
+    0.0,
+    -11.0,
+    860.0,
+    400.0
+   ],
+   "expected": [
+    1060.0,
+    600.0,
+    0.0,
+    -11.0,
+    860.0,
+    400.0
+   ],
+   "note": "tol 1.5",
+   "extra": false
+  },
+  {
+   "id": "COVER recessed footway: the infill's top 8 under the flags",
+   "ok": true,
+   "measured": -8.0,
+   "expected": -8.0,
+   "note": "tol 0.6",
+   "extra": false
+  },
+  {
+   "id": "COVER recessed footway: lugs 36 x 10.5 x 2.5 on the frame, two staggered rows on the long sides, three columns at the left end and two at the right",
+   "ok": true,
+   "measured": [
+    2.5,
+    107
+   ],
+   "expected": "2.5 high",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "COVER recessed road: outer 645 x 670, frame rim 25, the tarmac infill with a 10 hairline between (595 - 20 = 575 x 600)",
+   "ok": true,
+   "measured": [
+    645.0,
+    670.0,
+    575.0,
+    600.0
+   ],
+   "expected": [
+    645.0,
+    670.0,
+    575.0,
+    600.0
+   ],
+   "note": "tol 1.5",
+   "extra": false
+  },
+  {
+   "id": "COVER double leaf: outer 1710 x 570, two equal leaves with a 15 gap across the middle",
+   "ok": true,
+   "measured": [
+    1710.0,
+    570.0,
+    2.0,
+    15.0,
+    0.0
+   ],
+   "expected": [
+    1710.0,
+    570.0,
+    2.0,
+    15.0,
+    0.0
+   ],
+   "note": "tol 3.0",
+   "extra": false
+  },
+  {
+   "id": "COVER double leaf: studs 17 across the flats (a diamond 24 corner to corner), 3 high, a lattice of pitch 31 turned 45 degrees, the edge margin 28",
+   "ok": true,
+   "measured": [
+    714,
+    3.0
+   ],
+   "expected": "3 high, pitch 31",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "SERVICE stopcock: round lid 135, frame 175, a slot 30 x 8 in the lid",
+   "ok": true,
+   "measured": [
+    135.0,
+    175.0
+   ],
+   "expected": [
+    135.0,
+    175.0
+   ],
+   "note": "tol 1.5",
+   "extra": false
+  },
+  {
+   "id": "SERVICE gas box: lid 240 x 130, frame 290 x 180, one slot at each end",
+   "ok": true,
+   "measured": [
+    240.0,
+    130.0,
+    290.0,
+    180.0
+   ],
+   "expected": [
+    240.0,
+    130.0,
+    290.0,
+    180.0
+   ],
+   "note": "tol 1.5",
+   "extra": false
+  },
+  {
+   "id": "SERVICE telecom blank: lid 335 x 150 (flag infill), frame 385 x 195, pale mortar 28 wide round it",
+   "ok": true,
+   "measured": [
+    335.0,
+    150.0,
+    385.0,
+    195.0,
+    28.0
+   ],
+   "expected": [
+    335.0,
+    150.0,
+    385.0,
+    195.0,
+    28.0
+   ],
+   "note": "tol 1.5",
+   "extra": false
+  },
+  {
+   "id": "SOLID every object of every model closed (each edge on two triangles)",
+   "ok": true,
+   "measured": {},
+   "expected": {},
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "HATCH faces of different objects in one plane, facing the same way, overlapping > 1 mm2 (every model)",
+   "ok": true,
+   "measured": {},
+   "expected": {},
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "FILE kerb_granite under 1 MB; named materials, no textures, a UV set",
+   "ok": true,
+   "measured": [
+    10256,
+    204,
+    [
+     "granite_grey"
+    ]
+   ],
+   "expected": "< 1000000",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "FILE kerb_concrete under 1 MB; named materials, no textures, a UV set",
+   "ok": true,
+   "measured": [
+    6068,
+    108,
+    [
+     "concrete_kerb"
+    ]
+   ],
+   "expected": "< 1000000",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "FILE channel_setts under 1 MB; named materials, no textures, a UV set",
+   "ok": true,
+   "measured": [
+    53288,
+    792,
+    [
+     "bitumen_joint",
+     "granite_blue_grey",
+     "sett_dull",
+     "sett_pale_worn"
+    ]
+   ],
+   "expected": "< 1000000",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "FILE channel_concrete under 1 MB; named materials, no textures, a UV set",
+   "ok": true,
+   "measured": [
+    3132,
+    28,
+    [
+     "concrete_kerb"
+    ]
+   ],
+   "expected": "< 1000000",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "FILE crossover_A under 1 MB; named materials, no textures, a UV set",
+   "ok": true,
+   "measured": [
+    98304,
+    1648,
+    [
+     "concrete_ramp",
+     "granite_blue_grey",
+     "granite_grey",
+     "granite_pink_grey"
+    ]
+   ],
+   "expected": "< 1000000",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "FILE gully_grate_A under 1 MB; named materials, no textures, a UV set",
+   "ok": true,
+   "measured": [
+    22532,
+    428,
+    [
+     "cast_iron_grate",
+     "pot_black"
+    ]
+   ],
+   "expected": "< 1000000",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "FILE gully_grate_B under 1 MB; named materials, no textures, a UV set",
+   "ok": true,
+   "measured": [
+    25776,
+    516,
+    [
+     "cast_iron_grate",
+     "pot_black"
+    ]
+   ],
+   "expected": "< 1000000",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "FILE cover_stud_square under 1 MB; named materials, no textures, a UV set",
+   "ok": true,
+   "measured": [
+    104892,
+    1500,
+    [
+     "cast_iron_cover"
+    ]
+   ],
+   "expected": "< 1000000",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "FILE cover_round_600 under 1 MB; named materials, no textures, a UV set",
+   "ok": true,
+   "measured": [
+    160420,
+    2772,
+    [
+     "cast_iron_cover"
+    ]
+   ],
+   "expected": "< 1000000",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "FILE cover_recessed_footway under 1 MB; named materials, no textures, a UV set",
+   "ok": true,
+   "measured": [
+    107284,
+    1500,
+    [
+     "cast_iron_cover",
+     "flag_pale"
+    ]
+   ],
+   "expected": "< 1000000",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "FILE cover_recessed_road under 1 MB; named materials, no textures, a UV set",
+   "ok": true,
+   "measured": [
+    9248,
+    108,
+    [
+     "cast_iron_cover",
+     "tarmac_infill"
+    ]
+   ],
+   "expected": "< 1000000",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "FILE cover_road_double_leaf under 1 MB; named materials, no textures, a UV set",
+   "ok": true,
+   "measured": [
+    609936,
+    8688,
+    [
+     "cast_iron_cover"
+    ]
+   ],
+   "expected": "< 1000000",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "FILE review_scene under 1 MB; named materials, no textures, a UV set",
+   "ok": true,
+   "measured": [
+    966728,
+    16198,
+    [
+     "bitumen_joint",
+     "cast_iron_cover",
+     "cast_iron_grate",
+     "concrete_kerb",
+     "concrete_ramp",
+     "flag_pale",
+     "granite_blue_grey",
+     "granite_grey",
+     "granite_pink_grey",
+     "pot_black",
+     "sett_dull",
+     "sett_pale_worn",
+     "tarmac_infill"
+    ]
+   ],
+   "expected": "< 1000000",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "FILE service_stopcock under 1 MB; named materials, no textures, a UV set",
+   "ok": true,
+   "measured": [
+    32424,
+    784,
+    [
+     "cast_iron_cover"
+    ]
+   ],
+   "expected": "< 1000000",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "FILE service_gas under 1 MB; named materials, no textures, a UV set",
+   "ok": true,
+   "measured": [
+    11052,
+    148,
+    [
+     "cast_iron_cover"
+    ]
+   ],
+   "expected": "< 1000000",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "FILE service_telecom under 1 MB; named materials, no textures, a UV set",
+   "ok": true,
+   "measured": [
+    11936,
+    140,
+    [
+     "cast_iron_cover",
+     "flag_pale",
+     "mortar_pale"
+    ]
+   ],
+   "expected": "< 1000000",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "NO LETTERING: no object is named for a mark, a letter or a name (the blank cast boss is the only raised oblong, unlettered)",
+   "ok": true,
+   "measured": "no lettering object",
+   "expected": "none",
+   "note": "",
+   "extra": false
+  }
+ ],
+ "not_built": [
+  "the two kerb corners (mitre 133 degrees, radius 6.2 m) and the precast taper (dropper) variant: not in today's street, the target lists them for a later build-out",
+  "tactile paving (none on a 1990 street)",
+  "the colour variants (granite grey, blue-grey, pink-grey), the wear states (chipped arris, tyre-polished front, weed, rust and silt) and the asphalt dish beside the grate: the engine's materials and masks (unit 4.5)",
+  "the asphalt edge and road surface beside the channel and the footway flags (the street's ground, not a kit piece)"
+ ]
+}

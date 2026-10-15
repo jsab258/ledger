@@ -1,0 +1,30 @@
+{
+ "made": "2026-10-14 04:01:34",
+ "what": "the files of the narrow-points build (13 Oct, from the try 2 reviews; v3); the three glbs and the three 4096 pictures are out of git (rebuilt by build_ritas.py) so this names the versions",
+ "files": {
+  "ritas_front.glb": {
+   "bytes": 9061428,
+   "sha256": "41ea60775f41fc7906ad0e324bfcbca62d1aa6a37139a1b262f17e0cc6ffc5f1"
+  },
+  "ritas_grille_night.glb": {
+   "bytes": 1503204,
+   "sha256": "73f5f0a23bbd81788810b6724ec6d7f685d50432cf59e0dd750cd47770e8251b"
+  },
+  "ritas_display.glb": {
+   "bytes": 9952816,
+   "sha256": "f1d034874bbe3d9aa8cfb84e1eca48a89550e394ff553e7c2dd57bae0686411a"
+  },
+  "pawnbroker_day.png": {
+   "bytes": 7945592,
+   "sha256": "7ae458629a1f928dbc8191b943e876452116122db0c5b0ce48c8f518e8e216ec"
+  },
+  "pawnbroker_night_lit.png": {
+   "bytes": 7419098,
+   "sha256": "b77e24f75af8abf0cb9ddaa3b657ef67f903718215a9e1db54c535fb9e9fbf8d"
+  },
+  "pawnbroker_night_dark.png": {
+   "bytes": 5326271,
+   "sha256": "d062c72ad3c76ab6fb9705b6d8aaef9c5c5d2874243ae63f27839b13c0a63b29"
+  }
+ }
+}
