@@ -501,7 +501,7 @@ def dsp11_rows(ctx, rows, di):
 
 
 # --------------------------------------------------------------------------------------------------------------------------------------------- PRT-01 to PRT-04 (the printed goods)
-ATLAS_GRID = {"magazines": (6, 4), "papers": (2, 4), "cards": (5, 2), "postcards": (3, 4), "cartons": (2, 3), "jar_labels": (2, 5)}
+ATLAS_GRID = {"magazines": (6, 4), "papers": (2, 4), "cards": (5, 2), "postcards": (3, 4), "cartons": (2, 9), "jar_labels": (2, 5)}
 
 
 def _prints_json(ctx):
@@ -554,6 +554,13 @@ def prt_rows(ctx, rows):
             for r_ in range(rws):
                 for c_ in range(cols):
                     t = a[r_ * th:(r_ + 1) * th, c_ * tw:(c_ + 1) * tw]
+                    if nm == "cartons":
+                        # 15 Oct: tiles 0..5 are the fronts, 6..11 the tops (the tile's top 560 x 100 px are the face), 12..17 the ends (its top-left 180 x 100 px): only the face that is printed is tested
+                        k_ = r_ * cols + c_
+                        if k_ >= 12:
+                            t = t[:100, :180]
+                        elif k_ >= 6:
+                            t = t[:100, :]
                     m1 = _nd.uniform_filter(t, 7)
                     m2 = _nd.uniform_filter(t * t, 7)
                     sd = np.sqrt(np.maximum(m2 - m1 * m1, 0.0))
