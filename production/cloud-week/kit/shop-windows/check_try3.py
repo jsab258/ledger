@@ -725,6 +725,11 @@ def news_rows(ctx, R, assets, rows, di, members):
                 n += 1
                 ok &= gap >= 10.0
                 det.append("%s pole at x %.0f to %.0f px, %.0f px from the nearest mullion or jamb" % (g["model"].replace("script:", ""), a, b, gap))
+    found_ = {d_.split(" pole")[0] for d_ in det}
+    missing_ = sorted({"postcard_rack", "card_rack"} - found_)                # 15 Oct: both racks must be measured (the row once read the card spinner only)
+    if missing_:
+        det.append("NOT MEASURED: %s" % ", ".join(missing_))
+        ok = False
     rows.add("DSP-12", "no rack's pole stands on a mullion", ok and n > 0, "STREET_SQUARE (2560 x 1440): " + "; ".join(det) + " (at least 10 px; try 1: the postcard rack's pole 0.8 px behind the mullion's edge)")
     board = next((mesh[nm] for g in di["groups"] if g["model"] == "script:magazine_board" for nm in g["objs"] if nm in mesh), None)
     covers = [mesh[nm] for g in di["groups"] if g["model"] == "script:magazines" for nm in g["objs"] if nm in mesh]
