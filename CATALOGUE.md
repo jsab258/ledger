@@ -52,16 +52,16 @@ Beside what they approve (*.approval.json; tools/approvals.py): the story outlin
 
 - atlas-01, atlas-02: above.
 - clothing: garment tests, the clothes rubric (RUBRIC.md), jacket and suit films, footwear and Sheila's pieces.
-- clutter-2026-09-29: ten 1990 street clutter pieces.
+- clutter-2026-09-29: ten street clutter pieces.
 - compare: street frames against references.
 - concept-copper-row-2026-09-10, concept-fairview-2026-09-10: above.
-- facades: facade drawings and tries.
-- fascia-01: Mickey's fascia package to a real mesh.
+- facades: facade drawings.
+- fascia-01: Mickey's fascia mesh.
 - hair-2026-09-29: hair study.
 - interiors-2026-09-23: four window interiors.
-- lighting: the talk light and evening light tests.
+- lighting: talk and evening light tests.
 - mickeys-cars: cars considered (off until convincing).
-- shop-rooms: each shop's room plans and pictures; Rita's window models and licences (verify_display_sources.py); the printed-goods library (production/cloud-week/kit/shop-windows/sw_prints.py: crops of 24 Poly Haven HDRIs, ids in prints_used.json, and Gutenberg 1408 prose).
+- shop-rooms: each shop's room plans and pictures; Rita's window models and licences (verify_display_sources.py); the printed-goods library (shop-windows/sw_prints.py: crops of 24 Poly Haven HDRIs, ids in prints_used.json, Gutenberg 1408 prose; ocr_words.py reads every map's words).
 - mickeys-props: Mickey's office's hero props, scripted in Blender (tools/art-recipes/mickeys-props/; meshes on F: game-inputs), 6 October.
 - shopfront-kit: the parade's shopfront pieces, scripted in Blender (tools/art-recipes/shopfront-kit/), 6 October.
 - sash-window: the lab's box sash (tools/art-recipes/sash-window/).

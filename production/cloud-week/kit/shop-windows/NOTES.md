@@ -1279,7 +1279,7 @@ Not rebuilt, not checked and no v2 previews (`check_mickeys_v2.json` and `check_
 
 ## Try 2, tea rooms (14 to 15 October 2026; `checks/check_tea_rooms_v2.json`: 71 of 74 rows pass, 6 n/a)
 
-Rebuilt by `python3 build_shop.py --shop tea_rooms` (every stage); checked with `LEDGER_CHECK_VERSION=v2 python3 build_shop.py --shop tea_rooms checks`. Previews `tea_rooms-<view>-<state>-2026-10-14-v2.jpg` (STREET_SQUARE and CLOSE_35 day, night_lit and night_dark; the three room pictures). The shop is open to 22:00, so night_lit is its real night and its door says OPEN. Three rows fail and are named below: FLT-01, FLT-02 and CUR-01.
+Rebuilt by `python3 build_shop.py --shop tea_rooms` (every stage); checked with `LEDGER_CHECK_VERSION=v2 python3 build_shop.py --shop tea_rooms checks`. Previews `tea_rooms-<view>-<state>-2026-10-14-v2.jpg` (STREET_SQUARE and CLOSE_35 day, night_lit and night_dark; the three room pictures). The shop is open to 22:00, so night_lit is its real night and its door says OPEN. Three rows fail and are named below: FLT-02, CUR-01 (d) and GLS-03 (FLT-01 failed in the first run and passes after the second reviews' fixes).
 
 | review item | what was done | how it was measured after |
 |---|---|---|
@@ -1304,11 +1304,25 @@ Rebuilt by `python3 build_shop.py --shop tea_rooms` (every stage); checked with 
 
 ### What did not pass, and what was left
 
-- **FLT-01 fails: the window card's paper is flat.** The display's own pieces' largest flat patch is 2.16 per cent of the glass at STREET_SQUARE (x 1476 to 1604, y 637 to 714, luma 191: the white window card) and 1.41 at STREET_30 (limit 1 per cent). The card has a 1 mm fibre grain of 4 levels, which the street camera and the denoiser do not keep. Not changed: a card texture the camera keeps would need the display rebuilt and every frame drawn again.
+- **FLT-01 (the display's own pieces) failed in the first run and passes now:** the window card's paper read 2.16 per cent flat at STREET_SQUARE and 1.41 at STREET_30; with a coarser grain (blotches of about 7 mm at 6 levels over the fibre) it reads 0.05 and 0.07.
 - **FLT-02 fails: 2.59 per cent at STREET_SQUARE (x 1290 to 1390, y 727 to 831, luma 28: a counter front panel in shade) and 5.84 at STREET_30 (x 1387 to 1529, y 552 to 678, luma 76: the right wall's plaster, 5.69 of it the room's picture)** against 2.5 (the dado's number: the matchboard dado is no longer among the patches). Needs the room drawn again with a plaster that keeps its grain after the camera's mip sampling, and the counter fronts in the room's own wood map.
-- **CUR-01 (d) fails: at night the left curtain is darker than the glass above it** (63.3 against 95.5, 0.66; 0.8 asked), the right one equal (1.00). The cloth's transmission 0.3 and sheen 0.4 were set for a translucent band; the left curtain sits in front of the room's dark dado. Not changed (a night frame and a display change).
+- **CUR-01 (d) still fails: at night the left curtain is darker than the glass above it** (59.6 against 95.5, 0.62; 0.8 asked), the right 0.92. First run: 0.66 and 1.00. The material was changed after the second reviews (sheen 0.4 to 0.1, transmission 0.3 to 0.5, roughness 0.9, specular level 0.25) and the frames drawn again; the curtain still reads as pleated grey at the street. The review's warm 40 W light behind each panel was not made.
+- **GLS-03 now fails at the two close cameras (p95 15.7 and 15.9 against 15; it passed in the first run):** the stand-in glass reflects the brighter, more translucent curtains. Named, not chased.
 - **Close 11 (seating in the room): not done, on purpose.** The room is the serving end (a counter, cups, urn, domes, the chalk menu); the seating is the window's. Written as a Judgement for the target's owner (section 5.7).
 - **The night_dark frames.** The gate's new display wash (a sodium light 0.02 m outside the glass, 30 W) lit the window card, 40 mm from it, to a hot orange panel in the first night_dark frames; the card and its cups and hooks are now left off the wash and the two night_dark frames were drawn again.
 - **Fabric034's normal map is not used**: the curtain's weave is a generated cotton picture (no extra file to licence).
 - **Times** (four cores shared with other builders, load 8 to 11): the room 4743 s (day 1232, night_lit 1772, night_dark 1568); the gate 2942 s (49 minutes; ten frames at 2560 x 1440 and the check renders); the check 100 s. About 14 GB free after.
 - **For the second reviewers:** street: STREET_SQUARE by day and at night (the table's top above the door's lever, the chairs facing it, the hours card on the door, OPEN lit, the curtains' scalloped heads and folds, the window card); close: CLOSE_35 and CLOSE_35_B (the table set at real size, the chairs, the curtains' folds and hems, the suction cups, the matchboard dado and rail, the cork board).
+
+### Try 2, tea rooms: the second reviews (street PASS 0 faults 5 narrow; close PASS 0 faults 4 narrow) and what was done (15 October)
+
+| second-review point | what was done | how measured after |
+|---|---|---|
+| street night 1: the house number 14 nearly vanishes at night (figures 63 against the fanlight's 65) | `glass_ink_night` in the tea rooms' `gate_lights_extra.json` (0.3: the base colour of every glass lettering row multiplied in the night_lit frames; off for every shop that does not set it); the STREET_SQUARE night_lit frame drawn again | the figures' darker pixels read 24.5 (10th percentile) against the fanlight's median 54.2: 0.45 (at most 0.5 asked); looked at at 300 per cent: the 14 reads dark on the lit fanlight |
+| street night 2: a black slot through the shop door's glass at night (STREET_SQUARE x 733-741, y 745-855, luma 5.6) | NOT FIXED. The hall faces were made 50 mm longer (`sw_front.hall`), as the review suggested; the slot is still there (luma 3.7). The cause is not the hall face's end; it lies between the hall face and the card. The door check's "no pixel through the door glass at night under luma 12" was not written | looked at: the dark strip, 8 px wide, runs the pane's full height at its left edge |
+| street night 3 / close narrow 2: the night curtains read as dark grey satin | material changed in the display (sheen 0.1, transmission 0.5, roughness 0.9, specular level 0.25); the warm light behind each panel NOT made | CUR-01 (d) 0.62 and 0.92 (fails: above) |
+| close narrow 3: the window card's paper is one flat white | coarser, stronger grain (blotches of about 7 mm, 6 levels, over the fibre) | FLT-01 0.05 and 0.07 per cent (limit 1) |
+| close narrow 4: white chair seats and the cake stand burn at night | the chairs' paint at 0.68 (was 0.78); the display light to 125 W NOT changed | PIC-05g: CLOSE_35 night_lit 0.0052, CLOSE_35_B night_lit 0.0033 (first run 0.0078 and 0.0064) |
+| close narrow 1: thin pure-black strips at night from the dado rail's front end | NOT DONE: the rail must run 0.10 m past the window plane on the side walls and the room drawn again (74 minutes); OWED | |
+
+All eight tea frames (STREET_SQUARE, STREET_30, CLOSE_35, CLOSE_35_B, day and night_lit) were drawn again from the final display and front; the two night_dark frames were drawn after the window card was left off the wash and do not show the new display (named).

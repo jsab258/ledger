@@ -1,5 +1,5 @@
 {
- "made": "2026-10-15 06:38:24",
+ "made": "2026-10-15 07:09:19",
  "what": "the tea rooms's batch A build, try 2 (14 Oct, from the try 1 reviews; first built 13 Oct): the files named here are the models and the three 4096 room pictures; those over 1 MB are out of git, so this names their versions; rebuilt by `build_shop.py --shop tea_rooms`",
  "files": {
   "tea_rooms_front.glb": {
@@ -7,8 +7,8 @@
    "sha256": "31fb3eed2e40e6e28acdb95e124b8587f3c5ffe56188cb9263cced98a686752a"
   },
   "tea_rooms_display.glb": {
-   "bytes": 12568740,
-   "sha256": "5b9db122b1baa8b1e384d018721fb25aff9d0287d1b0926639e99bb4eb881b12"
+   "bytes": 12565364,
+   "sha256": "8db45ec939f154d62b3192731a07b7ed0f8d91ddd11d0a48607caf86159fad60"
   },
   "tea_room_day.png": {
    "bytes": 7084627,
