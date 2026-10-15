@@ -711,7 +711,13 @@ def news_rows(ctx, R, assets, rows, di, members):
                 V = mesh.get(nm)
                 if V is None:
                     continue
-                pole = V[(V[:, 2] > 0.05) & (V[:, 2] < 0.45)]
+                # 15 Oct, try 2 (the newsagent's try 2 street review, narrow 7: the row measured the card spinner only: the postcard rack's pole is one long rod with vertices at its two ends and none between w 0.05 and
+                # 0.45): the pole is every vertex within 7.5 mm of the rack's axis (the mean of the vertices on the bed), over the pole's whole height
+                low_ = V[V[:, 2] < 0.002]
+                if not len(low_):
+                    continue
+                ax_ = low_[:, :2].mean(axis=0)
+                pole = V[np.linalg.norm(V[:, :2] - ax_[None, :], axis=1) <= 0.0075]
                 if not len(pole):
                     continue
                 a, b = px_x(pole + off)

@@ -477,7 +477,7 @@ TEXTS = []
 MAGAZINE_TITLES = [
     ("GARDEN LOG", "Spring bulbs, pruning roses, a greenhouse in a weekend", "garden"),
     ("THE ANGLER'S WEEK", "Spinning for pike; river reports; new rods tried", "river"),
-    ("MODEL RAILWAY NEWS", "A branch line in OO gauge; scenery in a day", "train"),
+    ("QUAYSIDE MODELLER", "A branch line in OO gauge; scenery in a day", "train"),
     ("WEEKEND COOK", "Seasonal suppers, bread and puddings, a roast guide", "teapot"),
     ("MOTOR WORLD", "Used cars tested; the roads of the west coast", "car"),
     ("YACHT AND DINGHY", "The autumn regattas; refitting a small cruiser", "boat"),
@@ -496,15 +496,15 @@ PAPER_NAMES = [("THE MERIDIAN HERALD", "COUNCIL APPROVES NEW BRIDGE", "Work to b
                ("MERIDIAN EVENING NEWS", "HARBOUR REPAIRS TO BEGIN", "Quay wall closed for six weeks, ferry times change"),
                ("WEST COAST DAILY", "RAIN FORECAST FOR THE WEEKEND", "Gales expected on the coast, bridge open"),
                ("THE QUAYSIDE MAIL", "TRAWLER BACK IN PORT", "Crew safe after engine failure off the point"),
-               ("MERIDIAN MORNING STAR", "BUS FARES TO RISE IN MAY", "Operator blames fuel costs; passengers protest"),
+               ("MERIDIAN MORNING GAZETTE", "BUS FARES TO RISE IN MAY", "Operator blames fuel costs; passengers protest"),
                ("THE WEST COUNTRY CHRONICLE", "NEW LIBRARY OPENS ON FRIDAY", "Reading rooms and a lending section for all")]
 CARD_WORDS = ["BIRTHDAY GREETINGS", "BEST WISHES", "GET WELL SOON", "THANK YOU", "HAPPY ANNIVERSARY", "WITH SYMPATHY", "CONGRATULATIONS", "GOOD LUCK", "HAPPY RETIREMENT", "NEW HOME"]
 POSTCARD_WORDS = ["GREETINGS FROM MERIDIAN", "THE HARBOUR AT DUSK", "MERIDIAN QUAY", "THE LIGHTHOUSE", "WEST COAST BEACH", "THE OLD MILL", "BRIDGE OVER THE RIVER", "MERIDIAN FROM THE HILL"]
 PACK_BRANDS = [("HOLLINGWORTH", "KING SIZE FILTER", (150, 30, 36), (236, 226, 190), (220, 190, 90)),
-               ("KESTRELL", "SMOOTH FILTER", (24, 70, 120), (236, 236, 232), (196, 40, 40)),
+               ("WYNYARD", "SMOOTH FILTER", (24, 70, 120), (236, 236, 232), (196, 40, 40)),
                ("MARSDEN", "MILD VIRGINIA", (232, 226, 206), (150, 30, 36), (40, 40, 60)),
                ("ALDERLEY", "GOLD FILTER", (196, 160, 70), (40, 30, 24), (120, 30, 30)),
-               ("CASTLEMERE", "EXTRA MILD", (226, 232, 238), (24, 70, 120), (110, 120, 130)),
+               ("RAVENSDALE", "EXTRA MILD", (226, 232, 238), (24, 70, 120), (110, 120, 130)),
                ("SELWYN", "NAVY CUT", (30, 50, 90), (236, 226, 190), (200, 60, 50)),
                ("TOWNLEY", "KING SIZE", (40, 100, 60), (240, 236, 220), (200, 170, 70)),
                ("AVONLEA", "LIGHTS", (240, 238, 232), (30, 90, 110), (190, 190, 196)),

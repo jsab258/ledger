@@ -437,7 +437,8 @@ def display(d):
         row, col = divmod(k, 3)
         xc = X(2.50 + col * 0.14 + (0.07 if row else 0.0))
         yc = 0.20 + row * 0.12
-        GEN.glass_jar(gl, ct, ld, lb, xc, yc, 0.0, uv_content=jc_uv[k], uv_label=jl_uv[k], n=24)
+        kj = (3, 5, 1, 0, 2, 4)[k]                        # 15 Oct, try 2 (the newsagent's street review, narrow 2: the front row read pale grey, saturation p90 0.19): FRUIT DROPS, SHERBET LEMONS and PEAR DROPS in front, HUMBUGS, MINT IMPERIALS and TOFFEES behind
+        GEN.glass_jar(gl, ct, ld, lb, xc, yc, 0.0, uv_content=jc_uv[kj], uv_label=jl_uv[kj], n=24)
     d.gm_object("sweet_jar_glass", gl, [glass_m], "scripted", "script:sweet_jars", tier="bed", smooth=True)
     d.gm_object("sweet_jar_sweets", ct, [sweets_m], "support", "script:sweet_jars", smooth=True)
     d.gm_object("sweet_jar_lids", ld, [lid_m], "support", "script:sweet_jars", smooth=True)

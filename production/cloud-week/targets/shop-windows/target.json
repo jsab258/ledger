@@ -15416,10 +15416,13 @@
    "royal mail",
    "bt ",
    "morning star",
-   "model railway news"
+   "model railway news",
+   "kestrel",
+   "castlemaine"
   ],
   "brand_blocklist_added": [
-   "14 Oct, from the try 1 reviews (newsagent street review 6): 'morning star' (the title of a real British national daily: the paper MERIDIAN MORNING STAR is now MERIDIAN MORNING GAZETTE) and 'model railway news' (a real British magazine's title: MODEL RAILWAY NEWS is now QUAYSIDE MODELLER) are in brand_blocklist above"
+   "14 Oct, from the try 1 reviews (newsagent street review 6): 'morning star' (the title of a real British national daily: the paper MERIDIAN MORNING STAR is now MERIDIAN MORNING GAZETTE) and 'model railway news' (a real British magazine's title: MODEL RAILWAY NEWS is now QUAYSIDE MODELLER) are in brand_blocklist above",
+   "15 Oct, from the newsagent's try 2 street review (point 3, content rule): 'kestrel' and 'castlemaine' (two lagers sold across Britain in 1990) are in the blocklist because two invented cigarette makers echoed them (KESTRELL one letter from Kestrel, CASTLEMERE sharing seven letters with Castlemaine): the cartons are now WYNYARD and RAVENSDALE (names on no register that is known and in no file of the repository; brand-verify.py reads clean); alcohol is not shown or spoken of"
   ],
   "content_blocklist": {
    "alcohol": [
