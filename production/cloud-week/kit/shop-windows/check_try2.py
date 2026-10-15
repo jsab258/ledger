@@ -1555,6 +1555,56 @@ def frn11_rows(glb, members, rows, hs):
             pairs += 1
             if ba.overlap(bb):
                 bad.append((a, b))
+    # 15 Oct, try 2 (the ironmonger's try 2 street review, narrow 1: the scroll under the arm was threaded on the near chain and floated, and FRN-11 passed because it tested the sign's parts against the OTHER front
+    # parts only): the sign's parts against each other, each mesh inset 1 mm, may meet only at the designed joints (ring on arm, link on link, chain in ring, chain in eye, eye in board, bolt in plate, brace on
+    # plate and arm, scroll on brace), and every part of the iron sign lies within 2 mm of another part of the sign (nothing floats)
+    def _cls(n):
+        for pre, c in (("sign_plate", "plate"), ("sign_bolt", "bolt"), ("sign_arm", "arm"), ("sign_brace", "brace"), ("sign_scroll", "scroll"), ("sign_ring", "ring"), ("sign_chain", "link"), ("sign_eye", "eye"), ("sign_board_core", "board")):
+            if n.startswith(pre):
+                return c
+        return None
+    joints = {frozenset(x) for x in (("ring", "arm"), ("link", "link"), ("link", "ring"), ("link", "eye"), ("eye", "board"), ("bolt", "plate"), ("brace", "plate"), ("brace", "arm"), ("scroll", "brace"))}
+    known = [n for n in sign if _cls(n)]
+    bad_s, pairs_s = [], 0
+    for i_, a in enumerate(known):
+        la, ha, ba = data[a]
+        for b in known[i_ + 1:]:
+            lb, hb, bb = data[b]
+            if np.any(ha < lb + tol) or np.any(hb < la + tol):
+                continue
+            pairs_s += 1
+            if ba.overlap(bb) and frozenset((_cls(a), _cls(b))) not in joints:
+                bad_s.append((a, b))
+    full = {}
+    for ob in objs:
+        if ob.type == "MESH" and ob.name in known:
+            V, T_, _N = mesh_world(ob, deps)
+            if len(V) and len(T_):
+                full[ob.name] = (V, BVHTree.FromPolygons(V.tolist(), T_.tolist(), epsilon=0.0))
+    floating = []
+    for a in known:
+        if a not in full:
+            continue
+        Va = full[a][0]
+        step = max(1, len(Va) // 150)
+        dmin = 1e9
+        for b in known:
+            if b == a or b not in full:
+                continue
+            for v in Va[::step]:
+                loc = full[b][1].find_nearest(v.tolist())
+                if loc[0] is not None:
+                    dmin = min(dmin, float(loc[3]))
+            Vb_ = full[b][0]
+            for v in Vb_[::max(1, len(Vb_) // 150)]:                 # and the other way (a box's corners are far from the ring that touches the middle of its face)
+                loc = full[a][1].find_nearest(v.tolist())
+                if loc[0] is not None:
+                    dmin = min(dmin, float(loc[3]))
+            if dmin <= 0.002:
+                break
+        if dmin > 0.002:
+            floating.append("%s %.0f mm" % (a, dmin * 1000.0))
+    bad = bad + bad_s + [("floating", f_) for f_ in floating]
     near_edge = None
     cores = [n for n in sign if n.startswith(("sign_board_core", "sign_body", "sign_rail_back"))]
     if cores:
@@ -1562,6 +1612,10 @@ def frn11_rows(glb, members, rows, hs):
     rows.add("FRN-11", "no sign passes through the front", not bad and len(sign) > 0,
              "%d parts of the hanging sign (%s) against %d other front parts: %d pairs with overlapping boxes tested (each mesh inset 1 mm, so a 2 mm contact is tolerated), %d pairs intersect%s; the board's (or box's) near edge stands %s out from the wall (the cornice projects 0.300; a board hung from an arm: at least 0.33; a box fixed to the brick above the cornice has its back edge at the wall)" % (
                 len(sign), hs.get("id", "?"), len(other), pairs, len(bad), (" (" + "; ".join("%s x %s" % p_ for p_ in bad[:12]) + ")") if bad else "", ("%.3f m" % near_edge) if near_edge is not None else "?"))
+    if hasattr(rows, "rows") and rows.rows and rows.rows[-1]["id"] == "FRN-11":
+        rows.rows[-1]["detail"] += "; try 2: the sign's %d iron parts against each other: %d pairs with overlapping boxes tested, %d outside the designed joints%s; parts not within 2 mm of another sign part: %s" % (
+            len(known), pairs_s, len(bad_s), (" (" + "; ".join("%s x %s" % p_ for p_ in bad_s[:8]) + ")") if bad_s else "", (", ".join(floating) if floating else "none"))
+
 
 
 def glass_night_rows(R, work, rows):

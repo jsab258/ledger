@@ -43,6 +43,7 @@ SPILL_POS = (0.975, 0.10, 2.30)        # the stand-in rect light, model frame (R
 PIERS = {"x": ((-3.0, -2.65), (2.65, 3.0)), "y": (0.0, 0.30), "z": (0.0, 3.56)}     # the brick piers behind the pilasters (sw_front.PIERS_X; street review N2)
 STRIP_AT = ((0.20, 0.377), (0.24, 0.727))     # the two strip lights' (v, w) in the display's frame (close review 1): 8 mm under the middle and the top tier boards' front edges
 STRIP_W = 0.0                                  # their strength in Blender watts: set from gate_lights.json (strip_w) by the gate stage
+WASH_W = 150.0                                # 15 Oct, try 2 (ironmonger try 2 street review, narrow 2): the sodium wash that lights the DISPLAY at night_dark, Blender watts (gate_lights_extra.json `wash_w` per shop)
 CARD_X0, CARD_Y, CARD_BOTTOM = 15.35, 5.875, 0.65         # Rita's (the other shops': sw_ctx.Ctx.card_*)
 CARD_BOTTOM_M = CARD_BOTTOM - 0.10          # the card's bottom in the front model's z (above the footway)
 BAY_MID_X = 18.0
@@ -581,7 +582,9 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
         # owed (PC-02)
         recv.objects.link(bpy.data.objects["footway"])
         # 14 Oct (batch B, from the ironmonger's close review, fault 1): the stand-in lamps' pools on the far footway and the road were reflected by the night glass as a burnt orange bar across the glass
-        # (both close frames; GLS-03's p95 could not see it). The road and the far footway are left out of glossy rays at night: the glass reflects the dark street there and nothing else changes. Default
+        # (both close frames; GLS-03's p95 could not see it). The road and the far footway are left out of glossy rays at night: the glass reflects the dark street there. NOT nothing else (15 Oct, from the ironmonger's
+        # try 2 street review, narrow 3): the front's paint loses the street's reflection too, so at STREET_SQUARE night_dark the pilasters read 4.2 (were 11.8) and the side door 2.2 (7.9): the gate's night reflections are
+        # a stand-in and the game's wet street is owed (PC-02, PC-12). Default
         # for every shop but Rita's (her gate and her numbers stay as they were); `{"street_glossy": true}` in gate_lights_extra.json puts the reflection back
         sg_ = (extra or {}).get("street_glossy")
         if sg_ is None:
@@ -598,6 +601,30 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
             # footway is left out of glossy rays, so the glass reflects the dark street there and nothing else changes
             bpy.data.objects["footway"].visible_glossy = False
         ro.light_linking.receiver_collection = recv
+        # 15 Oct, try 2 (the ironmonger's try 2 street review, narrow 2): the room's picture at night_dark is lit by the kit's sodium wash through the front, but the display, a metre nearer the street, got none of it
+        # (the bottom of the left light was a pure-black patch of 8.3 per cent of the glass). For night_dark only (Rita's gate is not touched): one area light like the room rig's wash (sodium, linear 1.0, 0.25, 0.0,
+        # 4.3 x 0.5 m, centred on the window, 0.02 m outside the glass, at 0.6 of the card's height above its foot, tipped 30 degrees below the horizontal into the window), invisible to the camera, glossy and
+        # transmission rays, on the display's own light channel (no footway: the street gets no pool from it)
+        if state == "night_dark" and ctx is not None and ctx.id != "ritas":
+            _cz = [(card.matrix_world @ Vector(c)).z for c in card.bound_box]
+            wl = bpy.data.lights.new("wash", "AREA")
+            wl.shape = "RECTANGLE"
+            wl.size, wl.size_y = 4.3, 0.5
+            wl.color = (1.0, 0.25, 0.0)
+            wl.energy = (extra or {}).get("wash_w", WASH_W)
+            wo = bpy.data.objects.new("wash", wl)
+            sc.collection.objects.link(wo)
+            wo.location = (ctx.window_cx_m, -0.045, min(_cz) + 0.6 * (max(_cz) - min(_cz)))
+            wo.rotation_euler = (math.radians(60.0), 0.0, 0.0)
+            wo.visible_camera = False
+            wo.visible_glossy = False
+            wo.visible_transmission = False
+            recv2 = bpy.data.collections.new("wash_receivers")
+            sc.collection.children.link(recv2)
+            for o in list(bpy.data.objects):
+                if o.type == "MESH" and o in disp and o.name != "card" and not o.name.startswith(("return_wall_",)):
+                    recv2.objects.link(o)
+            wo.light_linking.receiver_collection = recv2
         # 13 Oct, from the try 2 reviews (close 1): two strip lights in the display, each a rect 3.20 x 0.02 m, 8 mm under the front edge of a tier board (middle tier at v 0.20, w 0.377;
         # top tier at v 0.24, w 0.727), facing down and tipped 30 degrees toward the back, 3000 K, on the display's channel, invisible to the camera, glossy and transmission rays.
         # The display's local (x, y, w) is the model frame's (0.975 + x, -0.025 + y, 0.600 + w). Strength: Blender watts, set so that LIT-08 holds (the game's lumens are owed: PC-02)

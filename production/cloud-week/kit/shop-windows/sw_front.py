@@ -830,7 +830,8 @@ def make_hanging_board(ctx, front, fasc_dir):
     arm_end = proj - 40.0
     parts.append(("black_iron", bs.new_obj("sign_arm", *bx(uc - 4.0, uc + 4.0, 8.0, arm_end, z_arm - 10.0, z_arm + 10.0))))
     # 14 Oct (batch B, the chandler's board 0.80 wide on an arm 1.09 long): the stretched brace's upper end ran through the first ring (FRN-10 saw a coplanar patch where the brace's flank and the ring's facet meet):
-    # the brace is shortened, by the same factor on its three waypoints and its end, until it passes under the first ring's foot with 4 mm to spare (a board that did not need it, the ironmonger's, is unchanged)
+    # the brace is shortened, by the same factor on its three waypoints and its end, until it passes under the first ring's foot with 4 mm to spare (15 Oct, from the ironmonger's try 2 street review: this
+    # is NOT unchanged for the ironmonger, whose brace goes from d 420 to d 204 (kb 0.396); the scroll that stands under the brace is placed by the same kb, not by k_, or it is left on the near chain)
     dh0_ = (proj - bw) + 60.0
     kb = k_
     for _ in range(14):
@@ -843,7 +844,8 @@ def make_hanging_board(ctx, front, fasc_dir):
     brace = polyline_strip(wp_, uc - 3.0, uc + 3.0, 20.0)
     parts.append(("black_iron", bs.new_obj("sign_brace", *brace)))
     r0 = 55.0
-    pts = [((300.0 + (r0 * (1 - t / 4.0)) * math.cos(t * 1.1)) * k_, foot + 50.0 + (r0 * (1 - t / 4.0)) * math.sin(t * 1.1)) for t in np.linspace(0.0, 4.0, 18)]
+    k_sc = k_ if ctx.id == "ritas" else kb                    # 15 Oct: the scroll under the brace follows the brace's own factor (Rita's front is kept as it was)
+    pts = [((300.0 + (r0 * (1 - t / 4.0)) * math.cos(t * 1.1)) * k_sc, foot + 50.0 + (r0 * (1 - t / 4.0)) * math.sin(t * 1.1)) for t in np.linspace(0.0, 4.0, 18)]
     parts.append(("black_iron", bs.new_obj("sign_scroll_0", *polyline_strip(pts, uc - 4.0, uc + 4.0, 20.0))))
     # the board: its two rings hang 60 in from each end
     d_out, d_in = proj, proj - bw
