@@ -60,6 +60,18 @@
     522
    ],
    "why": "a line of 'Push to open' (the reader splits it in two), read at 100 per cent: a generic instruction on a cap, no brand"
+  },
+  {
+   "words": "ThERMOMETEer",
+   "model": "vintage_electric_kettle",
+   "map": "vintage_electric_kettle_diff_1k.jpg",
+   "where": [
+    753,
+    191,
+    850,
+    215
+   ],
+   "why": "the reader's second reading of THERMOMETER (the dial's word, read at 100 per cent)"
   }
  ]
 }

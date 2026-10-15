@@ -622,7 +622,8 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
             recv2 = bpy.data.collections.new("wash_receivers")
             sc.collection.children.link(recv2)
             for o in list(bpy.data.objects):
-                if o.type == "MESH" and o in disp and o.name != "card" and not o.name.startswith(("return_wall_",)):
+                # the pieces that stand on the glass's own face (the tea rooms' window card and its cups and hooks, 20 mm behind the glass and so 40 mm from this light) are left off: they burnt to a hot orange panel
+                if o.type == "MESH" and o in disp and o.name != "card" and not o.name.startswith(("return_wall_", "window_card")):
                     recv2.objects.link(o)
             wo.light_linking.receiver_collection = recv2
         # 13 Oct, from the try 2 reviews (close 1): two strip lights in the display, each a rect 3.20 x 0.02 m, 8 mm under the front edge of a tier board (middle tier at v 0.20, w 0.377;

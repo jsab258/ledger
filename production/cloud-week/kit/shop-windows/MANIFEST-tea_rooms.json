@@ -1,26 +1,26 @@
 {
- "made": "2026-10-14 00:15:38",
- "what": "the files of the narrow-points build (13 Oct, from the try 2 reviews; v3); the three glbs and the three 4096 pictures are out of git (rebuilt by build_ritas.py) so this names the versions",
+ "made": "2026-10-15 06:07:24",
+ "what": "the tea rooms's batch A build, try 2 (14 Oct, from the try 1 reviews; first built 13 Oct): the files named here are the models and the three 4096 room pictures; those over 1 MB are out of git, so this names their versions; rebuilt by `build_shop.py --shop tea_rooms`",
  "files": {
   "tea_rooms_front.glb": {
-   "bytes": 6094172,
-   "sha256": "39283f30ec0f86bc04671e4c9bb8c17a204dc58b7cd2523aa7fa2ac8483f18b8"
+   "bytes": 6151384,
+   "sha256": "5bcd319578a0690bf211c84c12a4bf560936bc587e3f95fa033088f2915b7876"
   },
   "tea_rooms_display.glb": {
-   "bytes": 3267984,
-   "sha256": "e23dd8aab54960de363111f3f7d67c214cf47b7c27d49bf9f77c67e41e169d6b"
+   "bytes": 12568740,
+   "sha256": "5b9db122b1baa8b1e384d018721fb25aff9d0287d1b0926639e99bb4eb881b12"
   },
   "tea_room_day.png": {
-   "bytes": 7340471,
-   "sha256": "7480bd48e999057bbcb14cdbc111d6e7c232cca80db5340e0b64b32b5130552e"
+   "bytes": 7084627,
+   "sha256": "5687f970b6d1c409a425245e991a2935bcbe0eeafae9c4a4602a03b7f4aa9692"
   },
   "tea_room_night_lit.png": {
-   "bytes": 6728500,
-   "sha256": "792d8a9d3ebbae05fa8e3c007d1f53fe28ff4d4949656f8e1ca096e3295c81e6"
+   "bytes": 6551911,
+   "sha256": "208c78a05f3e6bef0f1d31ac256b25b5c31cf61c90fcb20f52546502010f6e15"
   },
   "tea_room_night_dark.png": {
-   "bytes": 5331726,
-   "sha256": "1d9b75259f8cad218527881bd733240f4389e67af5cf60de1e9498c084661151"
+   "bytes": 5063403,
+   "sha256": "b23727c2dab356d2e4eed77d83919e90be44e8de1c8d42dfcf3e2082e1980afe"
   }
  }
 }

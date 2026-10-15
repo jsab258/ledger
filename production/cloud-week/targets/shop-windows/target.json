@@ -14548,6 +14548,20 @@
     "shops": [
      "grocer"
     ]
+   },
+   "script:table_column": {
+    "why": "the cafe table's chrome pedestal column (a lathe form, 50 mm across): the research's Formica cafe table has a chrome column and a cast base, not a walnut pedestal (the tea rooms' street review N6); no CC0 model is a cafe table at the right height",
+    "shops": [
+     "tea_rooms"
+    ],
+    "added": "15 Oct, from the try 1 reviews (batch A try 2)"
+   },
+   "script:table_base": {
+    "why": "the cafe table's black cast base: four arms 0.40 m across on a 100 mm hub, 30 mm high (a scripted form): see script:table_column",
+    "shops": [
+     "tea_rooms"
+    ],
+    "added": "15 Oct, from the try 1 reviews (batch A try 2)"
    }
   },
   "denied": {
