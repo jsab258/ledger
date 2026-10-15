@@ -373,7 +373,10 @@ def display(d):
             cg = GM()
             x0 = xmid - 0.285 + col * 0.290
             z0 = sw + 0.02 + lay * 0.09
-            cg.box(x0, x0 + 0.28, sv0 + 0.04, sv0 + 0.09, z0, z0 + 0.0895, 0, uv_front=cart_uv[kk], uv_other=(cart_uv[kk][0] + 0.01, cart_uv[kk][1] + 0.01))
+            tu_, te_ = cart_uv[6 + kk], cart_uv[12 + kk]
+            top_r = (tu_[0], tu_[3] - (100.0 / 180.0) * (tu_[3] - tu_[1]), tu_[2], tu_[3])                                         # the tile's top 560 x 100 px
+            end_r = (te_[0], te_[3] - (100.0 / 180.0) * (te_[3] - te_[1]), te_[0] + (180.0 / 560.0) * (te_[2] - te_[0]), te_[3])        # the tile's top-left 180 x 100 px
+            cg.box(x0, x0 + 0.28, sv0 + 0.04, sv0 + 0.09, z0, z0 + 0.0895, 0, uv_front=cart_uv[kk], uv_top=top_r, uv_ends=end_r, uv_other=(cart_uv[kk][0] + 0.01, cart_uv[kk][1] + 0.01))
             d.gm_object("carton_%d" % kk, cg, [cart_m], "scripted", "script:cigarette_cartons", tier="stand")
     # ---- the magazine board (a slab leaning 35 degrees back with a side cheek at each end), the plinth in front of it, the twelve covers
     mx0, mx1 = X(1.30), X(2.20)
@@ -458,14 +461,14 @@ def display(d):
                 a_ = math.radians(90 * sp)
                 g.rod((xc, vc, zr - 0.002), (xc + math.sin(a_) * rad, vc - math.cos(a_) * rad, zr - 0.002), 0.0015, 0, 6)
             for fi in range(n_face):
-                ang = 360.0 * fi / n_face + 11.0 * ri
+                ang = 360.0 * fi / n_face + (22.5 if n_face == 8 else 11.0) * ri                 # 15 Oct, try 2 (the newsagent's close review, narrow 1): the postcard rack's tiers are turned 22.5 degrees more each, so the pockets do not stand in columns
                 a_ = math.radians(ang)
                 ox, oy = math.sin(a_), -math.cos(a_)
                 pw = 0.8 * (cw_ if n_face == 4 else cw_ * 0.8)
                 d.wire_pocket(g, (xc + ox * rad, vc + oy * rad, zr - 0.0005), ang, pw, 0.020)
                 for dep in range(3):                                  # three cards: the front one, two behind it 6 mm apart and 15 mm higher
                     rr_ = rad - 0.0045 - 0.006 * dep
-                    kk = (ri * n_face * 3 + fi * 3 + dep) % len(uvs)
+                    kk = (ri * n_face * 3 + fi * 3 + dep) % len(uvs) if n_face != 8 else (8 * ri + fi + 4 * dep) % len(uvs)          # the postcard rack: the front card of pocket p on tier t is design (8t + p) mod 12, the two behind (+4, +8) (the same three cards stood on every tier)
                     cwid = cw_ if n_face == 4 else cw_ * 0.8
                     cgm.sheet((xc + ox * rr_, vc + oy * rr_, zr + ch_ / 2 + 0.0075 * dep + 0.0005), cwid, ch_ + 0.015 * dep, 0.003, tilt=0.0, yaw=ang, mi=0, uv=uvs[kk], uv_other=(uvs[kk][0] + 0.01, uvs[kk][1] + 0.01))
                     cnt += 1

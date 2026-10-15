@@ -594,10 +594,13 @@ def carton_front(idx, size=(560, 180)):
     f2 = fnt("oswald", 28)
     tw = d.textlength(kind, font=f2)
     d.text(((w - tw) / 2, 40 + int(f1.size * 1.15)), kind, font=f2, fill=ink)
-    f3 = fnt("jost", 24)
+    # 15 Oct, try 2 (the newsagent's try 2 close review, narrow 3): the line was drawn at y 6 in 24 px type, pale on pale and cut by the stripe's edge: now 8 px under the tile's top edge, 7 px caps (3.5 mm at 2 px
+    # a mm), in the band's contrast ink: navy (24, 70, 120) on a light stripe, cream (236, 236, 232) on a dark or red one
+    f3 = fnt("jost", 10)
     t3 = "200 CIGARETTES"
-    d.text((20, 6), t3, font=f3, fill=bg if sum(accent) < 500 else ink)
-    d.text((w - 20 - d.textlength("25 x 8", font=f3), 6), "25 x 8", font=f3, fill=bg if sum(accent) < 500 else ink)
+    ink3 = (24, 70, 120) if (0.2126 * accent[0] + 0.7152 * accent[1] + 0.0722 * accent[2]) >= 150 else (236, 236, 232)
+    d.text((20, 8), t3, font=f3, fill=ink3)
+    d.text((w - 20 - d.textlength("25 x 8", font=f3), 8), "25 x 8", font=f3, fill=ink3)
     band_y = h - 34
     d.rectangle((0, band_y, w - 1, h - 1), fill=(240, 238, 230))
     f4 = fnt("libre-franklin", 11)
@@ -608,8 +611,35 @@ def carton_front(idx, size=(560, 180)):
     return Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8))
 
 
+def carton_top(idx, size=(560, 180)):
+    """A carton's top (280 x 50 mm: the tile's top 560 x 100 px): the ground colour, the stripe along the back edge, the maker's name along it in the ink, and the kind beneath (15 Oct, try 2: the tops and ends were flat dark grey)."""
+    brand, kind, bg, ink, accent = GEN.PACK_BRANDS[idx % len(GEN.PACK_BRANDS)]
+    w, h = size
+    im = Image.new("RGB", size, bg)
+    d = ImageDraw.Draw(im)
+    d.rectangle((0, 0, w - 1, 12), fill=accent)
+    d.rectangle((0, 18, w - 1, 20), fill=ink)
+    f1, l1 = _fit(d, brand, "alfa-slab-one", None, w - 80, 44, 20, 1, step=2)
+    d.text(((w - d.textlength(l1[0], font=f1)) / 2, 30), l1[0], font=f1, fill=ink)
+    f2 = fnt("oswald", 18)
+    d.text(((w - d.textlength(kind, font=f2)) / 2, 30 + int(f1.size * 1.15)), kind, font=f2, fill=ink)
+    return im
+
+
+def carton_end(idx, size=(560, 180)):
+    """A carton's end (90 x 50 mm: the tile's top-left 180 x 100 px): the ground colour and the stripes, no lettering (one end of a box seen from the other side would read mirrored)."""
+    brand, kind, bg, ink, accent = GEN.PACK_BRANDS[idx % len(GEN.PACK_BRANDS)]
+    im = Image.new("RGB", size, bg)
+    d = ImageDraw.Draw(im)
+    d.rectangle((0, 0, 179, 12), fill=accent)
+    d.rectangle((0, 18, 179, 20), fill=ink)
+    d.rectangle((0, 80, 179, 99), fill=accent)
+    return im
+
+
 def carton_atlas(path, n=6, size=(560, 180), cols=2):
-    return atlas(path, [carton_front(i, size) for i in range(n)], cols)
+    """Tiles 0..n-1 the fronts, n..2n-1 the tops (the top 560 x 100 px of each tile), 2n..3n-1 the ends (the top-left 180 x 100 px)."""
+    return atlas(path, [carton_front(i, size) for i in range(n)] + [carton_top(i, size) for i in range(n)] + [carton_end(i, size) for i in range(n)], cols)
 
 
 JARS = [("HUMBUGS", "stripes", (238, 236, 228), (34, 26, 26)), ("PEAR DROPS", "dots", (206, 220, 120), (150, 170, 60)), ("MINT IMPERIALS", "dots", (240, 242, 238), (210, 218, 212)),
