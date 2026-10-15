@@ -437,6 +437,28 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
             if o.type == "MESH" and o.name.startswith("hall_face_"):
                 o.data.materials.clear()
                 o.data.materials.append(wall_r if hall_side == "r" else wall_l)
+    # 15 Oct, try 2 (the tea rooms' street review, night point 1: the house number 14 nearly vanished at night, figures 63 against the lit fanlight's 65): `glass_ink_night` in gate_lights_extra.json (a factor, the
+    # tea rooms' 0.3) multiplies the base colour of every glass lettering row in the night_lit frames, so a gilt row stands dark against a lit room behind it. Off for every shop that does not set it
+    gin_ = (extra or {}).get("glass_ink_night")
+    if gin_ is not None and state == "night_lit":
+        for o in front:
+            if o.type == "MESH" and o.name.startswith("glass_row"):
+                for sl_ in o.material_slots:
+                    m_ = sl_.material
+                    pb_ = m_.node_tree.nodes.get("Principled BSDF") if (m_ and m_.use_nodes) else None
+                    if pb_ is None:
+                        continue
+                    bc_ = pb_.inputs["Base Color"]
+                    mx_ = m_.node_tree.nodes.new("ShaderNodeMix")
+                    mx_.data_type = "RGBA"
+                    mx_.blend_type = "MULTIPLY"
+                    mx_.inputs[0].default_value = 1.0
+                    mx_.inputs[7].default_value = (gin_, gin_, gin_, 1.0)
+                    if bc_.links:
+                        m_.node_tree.links.new(bc_.links[0].from_socket, mx_.inputs[6])
+                    else:
+                        mx_.inputs[6].default_value = bc_.default_value
+                    m_.node_tree.links.new(mx_.outputs[2], bc_)
     # --- the street: wall, footway, road, far footway
     brick = bpy.data.materials.new("brick")
     brick.use_nodes = True

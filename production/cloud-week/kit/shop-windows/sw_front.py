@@ -642,8 +642,9 @@ class Front:
                 else:
                     ua, ub = u1, u1 + 2.0
                 zf = z0 + 33.0                  # above the door floor's 58 mm
-                self.add("hall_face_dado", bx(ua, ub, -dd, -4.0, zf, zd), "hall_face_dado", bev=None)
-                self.add("hall_face_plaster", bx(ua, ub, -dd, -4.0, zd, z1), "hall_face_plaster", bev=None)
+                # 15 Oct, try 2 (the tea rooms' street review, night point 2: a black slot 8 px wide down the door glass at night, where the face ended at the hall's back wall and the card began): the faces run 50 mm further back
+                self.add("hall_face_dado", bx(ua, ub, -dd - 50.0, -4.0, zf, zd), "hall_face_dado", bev=None)
+                self.add("hall_face_plaster", bx(ua, ub, -dd - 50.0, -4.0, zd, z1), "hall_face_plaster", bev=None)
 
     # ----------------------------------------------------------------------------------------------- one shop's own alterations
     def extras(self):
