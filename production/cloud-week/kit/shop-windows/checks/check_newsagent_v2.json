@@ -1,13 +1,13 @@
 {
  "schema": "ledger.cloud-week-42.shop-windows-check/1",
  "shop": "newsagent",
- "made": "2026-10-15 05:25:59",
+ "made": "2026-10-15 05:29:50",
  "target": "production/cloud-week/targets/shop-windows/target.json (status: target for unit 7 of cloud week 42, part 2; written 12 October 2026; failed its )",
  "pass": 76,
  "counted": 79,
  "na": 5,
  "pending": 0,
- "seconds": 192.7,
+ "seconds": 166.4,
  "rows": [
   {
    "id": "PIC-01",
@@ -361,7 +361,7 @@
    "id": "PRT-02",
    "name": "no printed good is mostly a flat tone",
    "status": "fail",
-   "detail": "each tile of 10 atlases: the largest share of flat pixels (7 x 7 luma sd under 1.5) in any tile: display/magazines 0.31, display/papers 0.20, display/cards 0.09, display/postcards 0.26, display/cartons 0.93, display/jar_labels 0.00, rooms_scene/magazines 0.18, rooms_scene/cards 0.01, rooms_scene/postcards 0.22, rooms_scene/jar_labels 0.00 (limit 0.40; try 1's eight flat pictures)"
+   "detail": "each tile of 10 atlases: the largest share of flat pixels (7 x 7 luma sd under 1.5) in any tile: display/magazines 0.31, display/papers 0.20, display/cards 0.09, display/postcards 0.26, display/cartons 0.40, display/jar_labels 0.00, rooms_scene/magazines 0.18, rooms_scene/cards 0.01, rooms_scene/postcards 0.22, rooms_scene/jar_labels 0.00 (limit 0.40; try 1's eight flat pictures)"
   },
   {
    "id": "PRT-03",

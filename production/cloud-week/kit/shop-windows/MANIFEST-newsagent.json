@@ -1,5 +1,5 @@
 {
- "made": "2026-10-15 05:25:59",
+ "made": "2026-10-15 05:29:50",
  "what": "the newsagent's batch A build, try 2 (14 Oct, from the try 1 reviews; first built 13 Oct): the files named here are the models and the three 4096 room pictures; those over 1 MB are out of git, so this names their versions; rebuilt by `build_shop.py --shop newsagent`",
  "files": {
   "newsagent_front.glb": {
@@ -7,8 +7,8 @@
    "sha256": "c4ed7522bd61cc43e8cb2045115fe95c2139e439dee7ac3de25a62306e5cdb70"
   },
   "newsagent_display.glb": {
-   "bytes": 5839776,
-   "sha256": "41aa7ea21b9d1bd66cecc19213880fdde22aa903bf73b622a0d00cbb05b1a4ff"
+   "bytes": 5848964,
+   "sha256": "42c3d83312b28578c9ecbe934089bbb58579b0bb82fb2d63660a9febf3dc9fde"
   },
   "newsagent_day.png": {
    "bytes": 7591300,

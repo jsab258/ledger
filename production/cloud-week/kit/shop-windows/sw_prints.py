@@ -607,7 +607,7 @@ def carton_front(idx, size=(560, 180)):
     d.text((8, band_y + 3), "MIDDLE TAR  As defined by H.M. Government.", font=f4, fill=(20, 20, 24))
     d.text((8, band_y + 18), "DANGER: Government Health WARNING: CIGARETTES CAN SERIOUSLY DAMAGE YOUR HEALTH", font=f4, fill=(20, 20, 24))
     TEXTS.extend([brand, kind, t3, "MIDDLE TAR As defined by H.M. Government.", "DANGER: Government Health WARNING: CIGARETTES CAN SERIOUSLY DAMAGE YOUR HEALTH"])
-    arr = np.asarray(im).astype(np.float32) + np.random.default_rng(80 + idx).normal(0, 1.8, (h, w, 1)).astype(np.float32)
+    arr = np.asarray(im).astype(np.float32) + np.random.default_rng(80 + idx).normal(0, 2.4, (h, w, 1)).astype(np.float32)
     return Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8))
 
 
@@ -623,7 +623,7 @@ def carton_top(idx, size=(560, 180)):
     d.text(((w - d.textlength(l1[0], font=f1)) / 2, 30), l1[0], font=f1, fill=ink)
     f2 = fnt("oswald", 18)
     d.text(((w - d.textlength(kind, font=f2)) / 2, 30 + int(f1.size * 1.15)), kind, font=f2, fill=ink)
-    arr = np.asarray(im).astype(np.float32) + np.random.default_rng(180 + idx).normal(0, 1.8, (h, w, 1)).astype(np.float32)        # the card's grain, as on the fronts
+    arr = np.asarray(im).astype(np.float32) + np.random.default_rng(180 + idx).normal(0, 2.4, (h, w, 1)).astype(np.float32)        # the card's grain, as on the fronts
     return Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8))
 
 
@@ -635,7 +635,7 @@ def carton_end(idx, size=(560, 180)):
     d.rectangle((0, 0, 179, 12), fill=accent)
     d.rectangle((0, 18, 179, 20), fill=ink)
     d.rectangle((0, 80, 179, 99), fill=accent)
-    arr = np.asarray(im).astype(np.float32) + np.random.default_rng(280 + idx).normal(0, 1.8, (size[1], size[0], 1)).astype(np.float32)
+    arr = np.asarray(im).astype(np.float32) + np.random.default_rng(280 + idx).normal(0, 2.4, (size[1], size[0], 1)).astype(np.float32)
     return Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8))
 
 
