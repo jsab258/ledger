@@ -17462,6 +17462,12 @@
    "for": "tea rooms street review N1 (the door's sign)",
    "what": "the game's door sign follows the shop's hours at the hour shown: a shop open past the night view's hour (20:00: the tea rooms to 22:00) shows OPEN in its lit night, a shop shut at that hour (the newsagent to 17:30, the ironmonger to 17:30) shows CLOSED, every shut-up night_dark shows CLOSED [14 Oct, from the try 1 reviews]",
    "why": "the cloud gate swaps the glb's sign by a rule written from the target's hours (sw_gate.py, SIGN-01); the game's own sign is owed; added 14 Oct, from the try 1 reviews"
+  },
+  {
+   "id": "PC-12",
+   "for": "ironmonger street review (try 2) narrow 3: the gate's night reflections in the front's paint",
+   "what": "at night in the packaged game, from STREET_SQUARE, the pilaster faces read at least 0.4 of the brick beside them (by day 0.58; the cloud gate's v1 read 0.64 and v2 0.23, because taking the road and the far footway out of glossy rays took the lit street out of the paint's reflection as well as the glass's) [15 Oct, from the ironmonger's try 2 street review]",
+   "why": "the gate's night reflections are a stand-in; the game's wet street and its lamp pools in the gloss paint (Lumen) are owed (PC-02); added 15 Oct, from the try 2 street review"
   }
  ],
  "previews": {

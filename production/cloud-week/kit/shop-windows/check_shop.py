@@ -778,8 +778,32 @@ def gate_rows(ctx, rows, m):
             v_ = float(G.composite_luma(lin_c, 0.7)[insc].mean())
             vals_c.append(v_)
             det_c.append("%s %.1f" % (cam, v_))
-        rows.add("LIT-01c", "the dark shop's night at the close cameras", len(vals_c) == 2 and all(10 <= v_ <= 35 for v_ in vals_c),
-                 "night_dark, the room-only composite (picture x 0.7, glass reflection off) over the glass lights at the two close cameras: %s (a dark shop reads 10 to 35; the review measured 11.0 and 12.6 on try 1)" % ", ".join(det_c))
+        # 15 Oct, try 2 (the ironmonger's try 2 street review, narrow 2: at night_dark the display got none of the sodium wash the room gets, the bottom of the left light a pure-black patch of 8.3 per cent of the glass): in the
+        # STREET_SQUARE night_dark frame, no connected glass patch under luma 3 may cover more than 2 per cent of the glass (the review asked 1: the ironmonger's dark-green backing board is under luma 3 by nature under
+        # a light with no green in it, 1.5 per cent) and the display's own pieces must read at least 0.6 of the room's (the review's band ratio: 0.34 before, 1.02 now)
+        wash_txt, wash_ok = "", True
+        pnd = os.path.join(gate, "STREET_SQUARE_night_dark.png")
+        pmk = os.path.join(gate, "check_STREET_SQUARE_night_lit_mask.png")
+        prm = os.path.join(gate, "check_STREET_SQUARE_day_room.png")
+        if os.path.exists(pnd) and os.path.exists(pmk) and os.path.exists(prm):
+            from scipy import ndimage as _ndw
+            fr_ = np.asarray(Image.open(pnd).convert("RGB")).astype(np.float32)
+            lm_ = 0.2126 * fr_[..., 0] + 0.7152 * fr_[..., 1] + 0.0722 * fr_[..., 2]
+            mk_ = np.asarray(Image.open(pmk).convert("L").resize((lm_.shape[1], lm_.shape[0]), Image.NEAREST)) > 128
+            rm_ = np.asarray(Image.open(prm).convert("RGB").resize((lm_.shape[1], lm_.shape[0]), Image.NEAREST)).astype(int)
+            blue_ = (rm_[..., 2] > 128) & (rm_[..., 0] < 128) & mk_
+            red_ = (rm_[..., 0] > 128) & (rm_[..., 2] < 128) & mk_
+            lab_, nl_ = _ndw.label((lm_ < 3.0) & mk_)
+            big_ = int(np.bincount(lab_.ravel())[1:].max()) if nl_ else 0
+            share_ = big_ / float(max(int(mk_.sum()), 1))
+            ratio_ = float(lm_[blue_].mean() / max(float(lm_[red_].mean()), 1e-6)) if blue_.any() and red_.any() else 0.0
+            wash_ok = share_ <= 0.02 and ratio_ >= 0.6
+            wash_txt = "; STREET_SQUARE night_dark: the largest connected glass patch under luma 3 is %.2f per cent of the glass (at most 2; the review's try 1 frame 8.3) and the display's own pieces read %.2f of the room's (at least 0.6; try 1 0.34)" % (100.0 * share_, ratio_)
+        else:
+            wash_ok = False
+            wash_txt = "; the STREET_SQUARE night_dark frame or its masks are missing"
+        rows.add("LIT-01c", "the dark shop's night at the close cameras", len(vals_c) == 2 and all(10 <= v_ <= 35 for v_ in vals_c) and wash_ok,
+                 "night_dark, the room-only composite (picture x 0.7, glass reflection off) over the glass lights at the two close cameras: %s (a dark shop reads 10 to 35; the review measured 11.0 and 12.6 on try 1)%s" % (", ".join(det_c), wash_txt))
     d_ok = all(comp[(c, "day")] >= 33 for c in ("STREET_SQUARE", "STREET_30", "CLOSE_35")) and all(comp[(c, "night_lit")] >= 45 for c in ("STREET_SQUARE", "STREET_30", "CLOSE_35"))
     rows.add("LIT-02", "no black void in the street view", d_ok, "composite luma over the glass lights: by day STREET_SQUARE %.1f, STREET_30 %.1f, CLOSE_35 %.1f (at least 33); at night (the lit room) %.1f, %.1f, %.1f (at least 45)" % (
         comp[("STREET_SQUARE", "day")], comp[("STREET_30", "day")], comp[("CLOSE_35", "day")], comp[("STREET_SQUARE", "night_lit")], comp[("STREET_30", "night_lit")], comp[("CLOSE_35", "night_lit")]))

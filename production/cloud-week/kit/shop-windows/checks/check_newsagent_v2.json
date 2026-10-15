@@ -1,13 +1,13 @@
 {
  "schema": "ledger.cloud-week-42.shop-windows-check/1",
  "shop": "newsagent",
- "made": "2026-10-15 03:47:56",
+ "made": "2026-10-15 04:10:40",
  "target": "production/cloud-week/targets/shop-windows/target.json (status: target for unit 7 of cloud week 42, part 2; written 12 October 2026; failed its )",
- "pass": 76,
- "counted": 77,
+ "pass": 77,
+ "counted": 78,
  "na": 5,
  "pending": 0,
- "seconds": 180.1,
+ "seconds": 185.2,
  "rows": [
   {
    "id": "PIC-01",
@@ -335,9 +335,15 @@
   },
   {
    "id": "FLT-01",
-   "name": "no large flat tone in the window",
+   "name": "no large flat tone in the display",
+   "status": "pass",
+   "detail": "day frames, 9 x 9 px standard deviation under 1, the largest connected patch among the DISPLAY'S OWN PIECES (the check's mask_room render): STREET_SQUARE: the display's pieces' largest uniform patch 0.00 per cent of 272506 glass px (x 1035 to 1038, y 760 to 762, luma 58); STREET_30: the display's pieces' largest uniform patch 0.00 per cent of 174083 glass px (x 1039 to 1042, y 759 to 760, luma 66) (limit 1.0 per cent of the glass; the ironmonger's street review, try 2 narrow 6: the row counts the display, the room's flat tones are FLT-02 and PIC-06)"
+  },
+  {
+   "id": "FLT-02",
+   "name": "no large flat tone in the window's room",
    "status": "fail",
-   "detail": "day frames, 9 x 9 px standard deviation under 1, the largest connected patch over the glass: STREET_SQUARE: largest uniform patch 6488 px = 2.38 per cent of 272506 glass px (x 1495 to 1569, y 733 to 833, luma 31); by what shows there (per cent of the glass): display's pieces 0.00, room and return walls 2.38; STREET_30: largest uniform patch 5306 px = 3.05 per cent of 174083 glass px (x 1387 to 1450, y 711 to 812, luma 40); by what shows there (per cent of the glass): display's pieces 0.00, room and return walls 3.05 (limit 3.0 per cent for this shop)"
+   "detail": "day frames, the same test over the whole glass, the room's picture and the return walls included: STREET_SQUARE: the largest uniform patch of all 2.38 per cent of 272506 glass px (x 1495 to 1569, y 733 to 833, luma 31); of it the room's picture and return walls 2.38, the display's pieces 0.00; STREET_30: the largest uniform patch of all 3.05 per cent of 174083 glass px (x 1387 to 1450, y 711 to 812, luma 40); of it the room's picture and return walls 3.05, the display's pieces 0.00 (limit 3.0 per cent for this shop: the review's)"
   },
   {
    "id": "PRT-01",

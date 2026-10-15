@@ -310,45 +310,53 @@ FLAT_LIMIT = {"ironmonger": 0.01, "newsagent": 0.03, "tea_rooms": 0.025}
 
 
 def flt01_rows(ctx, rows):
-    """FLT-01 (the ironmonger's street review, narrow 5: the crate was the window's largest flat tone, 2.2 per cent of the glass at STREET_SQUARE, with the return wall's 2.6 per cent at STREET_30): in the day gate frames
-    (2560 x 1440) over the window's glass (the check's glass mask), the pixels whose 9 x 9 neighbourhood has a luma standard deviation under 1; the largest connected patch of them, as a share of the glass. Limits: the
-    ironmonger 1 per cent (the review's), the newsagent 3, the tea rooms 2.5 (the dado)."""
-    lim = FLAT_LIMIT.get(ctx.id, 0.03)
-    det, ok, n = [], True, 0
+    """FLT-01 and FLT-02 (the ironmonger's street review, narrow 5: the crate was the window's largest flat tone, 2.2 per cent of the glass at STREET_SQUARE; the newsagent's street review, narrow 3: the stockroom
+    door was 6.7 per cent; the tea rooms' narrow 4: the dado): in the day gate frames (2560 x 1440) over the window's glass (the check's glass mask), the pixels whose 9 x 9 neighbourhood has a luma standard
+    deviation under 1; the largest connected patch of them as a share of the glass. 15 Oct (the ironmonger's try 2 street review, narrow 6): the row is split by what the check's mask_room render shows there. FLT-01
+    counts the DISPLAY'S OWN PIECES only (the supports and goods the build makes; limit 1 per cent of the glass at each street camera); FLT-02 counts the whole glass, the room's picture and the return walls too
+    (the review's wording over the whole glass: the newsagent 3 per cent, the tea rooms 2.5 (the dado), the ironmonger 3), and names what shows there, so a room panel in shade is seen apart from a flat display piece."""
+    lim_room = FLAT_LIMIT.get(ctx.id, 0.03)
+    if ctx.id == "ironmonger":
+        lim_room = 0.03
+    lim_disp = 0.01
+    det_d, det_a, ok_d, ok_a, n = [], [], True, True, 0
     for cam in ("STREET_SQUARE", "STREET_30"):
         pf = os.path.join(ctx.gate, "%s_day.png" % cam)
         pm = os.path.join(ctx.gate, "check_%s_day_mask.png" % cam)
-        if not (os.path.exists(pf) and os.path.exists(pm)):
-            ok = False
+        pr = os.path.join(ctx.gate, "check_%s_day_room.png" % cam)
+        if not (os.path.exists(pf) and os.path.exists(pm) and os.path.exists(pr)):
+            ok_d = ok_a = False
             continue
         im = luma(np.asarray(Image.open(pf).convert("RGB")).astype(np.float32))
         mk = np.asarray(Image.open(pm).convert("L").resize((im.shape[1], im.shape[0]), Image.NEAREST)) > 128
         mk = _nd.binary_erosion(mk, iterations=3)
+        rm = np.asarray(Image.open(pr).convert("RGB").resize((im.shape[1], im.shape[0]), Image.NEAREST)).astype(int)
+        blue = (rm[..., 2] > 128) & (rm[..., 0] < 128)
+        red = (rm[..., 0] > 128) & (rm[..., 2] < 128)
         m1 = _nd.uniform_filter(im, 9)
         m2 = _nd.uniform_filter(im * im, 9)
         sd = np.sqrt(np.maximum(m2 - m1 * m1, 0.0))
         flat = (sd < 1.0) & mk
-        lab, nl = _nd.label(flat)
-        sizes = np.bincount(lab.ravel())[1:] if nl else np.array([0])
-        big = int(sizes.max()) if nl else 0
-        share = big / float(max(int(mk.sum()), 1))
-        ys, xs = np.nonzero(lab == (int(np.argmax(sizes)) + 1)) if nl else (np.array([0]), np.array([0]))
-        mean_l = float(im[lab == (int(np.argmax(sizes)) + 1)].mean()) if nl else 0.0
+        gl = float(max(int(mk.sum()), 1))
+
+        def biggest(sel):
+            lab, nl = _nd.label(sel)
+            if not nl:
+                return 0.0, (0, 0, 0, 0), 0.0
+            sizes = np.bincount(lab.ravel())[1:]
+            k = int(np.argmax(sizes)) + 1
+            ys, xs = np.nonzero(lab == k)
+            return sizes.max() / gl, (int(xs.min()), int(xs.max()), int(ys.min()), int(ys.max())), float(im[lab == k].mean())
+        sh_all, bb_all, l_all = biggest(flat)
+        sh_d, bb_d, l_d = biggest(flat & blue)
+        sh_r, bb_r, l_r = biggest(flat & red)
         n += 1
-        ok &= share <= lim
-        # 14 Oct, try 2: what the patch is, from the check's own mask_room render (red: the room's card, reveals and return walls; blue: the display's pieces): the largest flat patch among each, so a reader sees the room's flat tones apart from the display's
-        split = ""
-        pr = os.path.join(ctx.gate, "check_%s_day_room.png" % cam)
-        if os.path.exists(pr):
-            rm = np.asarray(Image.open(pr).convert("RGB").resize((im.shape[1], im.shape[0]), Image.NEAREST)).astype(int)
-            parts = []
-            for nm_, sel in (("display's pieces", (rm[..., 2] > 128) & (rm[..., 0] < 128)), ("room and return walls", (rm[..., 0] > 128) & (rm[..., 2] < 128))):
-                lb2, n2 = _nd.label(flat & sel)
-                sz2 = int(np.bincount(lb2.ravel())[1:].max()) if n2 else 0
-                parts.append("%s %.2f" % (nm_, 100.0 * sz2 / float(max(int(mk.sum()), 1))))
-            split = "; by what shows there (per cent of the glass): " + ", ".join(parts)
-        det.append("%s: largest uniform patch %d px = %.2f per cent of %d glass px (x %d to %d, y %d to %d, luma %.0f)%s" % (cam, big, 100.0 * share, int(mk.sum()), xs.min(), xs.max(), ys.min(), ys.max(), mean_l, split))
-    rows.add("FLT-01", "no large flat tone in the window", ok and n == 2, "day frames, 9 x 9 px standard deviation under 1, the largest connected patch over the glass: " + "; ".join(det) + " (limit %.1f per cent for this shop)" % (100.0 * lim))
+        ok_d &= sh_d <= lim_disp
+        ok_a &= sh_all <= lim_room
+        det_d.append("%s: the display's pieces' largest uniform patch %.2f per cent of %d glass px (x %d to %d, y %d to %d, luma %.0f)" % ((cam, 100 * sh_d, int(gl)) + bb_d + (l_d,)))
+        det_a.append("%s: the largest uniform patch of all %.2f per cent of %d glass px (x %d to %d, y %d to %d, luma %.0f); of it the room's picture and return walls %.2f, the display's pieces %.2f" % ((cam, 100 * sh_all, int(gl)) + bb_all + (l_all, 100 * sh_r, 100 * sh_d)))
+    rows.add("FLT-01", "no large flat tone in the display", ok_d and n == 2, "day frames, 9 x 9 px standard deviation under 1, the largest connected patch among the DISPLAY'S OWN PIECES (the check's mask_room render): " + "; ".join(det_d) + " (limit 1.0 per cent of the glass; the ironmonger's street review, try 2 narrow 6: the row counts the display, the room's flat tones are FLT-02 and PIC-06)")
+    rows.add("FLT-02", "no large flat tone in the window's room", ok_a and n == 2, "day frames, the same test over the whole glass, the room's picture and the return walls included: " + "; ".join(det_a) + " (limit %.1f per cent for this shop: the review's)" % (100 * lim_room))
 
 
 # --------------------------------------------------------------------------------------------------------------------------------------------- INV-07
