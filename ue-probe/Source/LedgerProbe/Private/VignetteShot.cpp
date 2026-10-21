@@ -2852,15 +2852,19 @@ namespace
 				{
 					FActorSpawnParameters SP;
 					SP.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+					// TILTED OUT OVER THE ROAD by the look file's degrees (21 October): an east
+					// lamp (scene +z, this engine's +Y) leans its cone toward -Y, a west one +Y.
+					const float PoolTilt = (float)GLook.LanternPoolTiltDeg;
+					const FRotator PoolRot(-(90.0f - PoolTilt), P.Z > 0.0 ? -90.0f : 90.0f, 0.0f);
 					ASpotLight* S = World->SpawnActor<ASpotLight>(ASpotLight::StaticClass(),
-						FVector(P.X * 100.0, P.Z * 100.0, LightY * 100.0), FRotator(-90.0f, 0.0f, 0.0f), SP);
+						FVector(P.X * 100.0, P.Z * 100.0, LightY * 100.0), PoolRot, SP);
 					if (S != nullptr)
 					{
 						MakeMovable(S);
 						if (USpotLightComponent* SC = Cast<USpotLightComponent>(S->GetLightComponent()))
 						{
 							SC->SetMobility(EComponentMobility::Movable);
-							SC->SetWorldRotation(FRotator(-90.0f, 0.0f, 0.0f));
+							SC->SetWorldRotation(PoolRot);
 							SC->SetIntensityUnits(ELightUnits::Lumens);
 							SC->SetIntensity((float)PoolLumens);
 							SC->SetAttenuationRadius((float)GSpec.Lantern.RangeM * 100.0f);

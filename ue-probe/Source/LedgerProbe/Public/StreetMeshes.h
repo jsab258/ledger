@@ -451,6 +451,10 @@ namespace LedgerStreet
 		// Sodium lanterns throw their light down and along the road; a bare
 		// point light lit the house fronts as brightly as the pavement.
 		double LanternPoolLumens, LanternPoolInnerDeg, LanternPoolOuterDeg;
+		// AND ITS TILT OUT OVER THE ROAD, degrees from straight down (21 October 2026, lamp post C:
+		// a cut-off lantern throws its light over the road, not back at its own column, which a
+		// straight-down cone 0.78 m out lit to a clipped yellow bar).
+		double LanternPoolTiltDeg;
 		bool   bLanternRgb;
 		double LanternR, LanternG, LanternB;
 		int    Read;             // how many of the thirty-two the file supplied
@@ -463,7 +467,7 @@ namespace LedgerStreet
 		         GlassCubeStrength(0.0), GlassCubeStrengthNight(-1.0), GlassCubeSpecular(1.0), GlassCubeSize(256), GlassCubeHeroSize(0), SkyDomeYawDeg(0.0), SkyHorizonClampDeg(0.0), SkyTreeClampDeg(0.0), WaterLevelDay(0.0), WaterLevelNight(0.0), WhiteTempDay(0.0), FilmSpecular(0.5),
 		         bStreetInPlay(false), FogCapGainDay(1.0), FogDensityGainNight(1.0), FogDensityGainDay(1.0), FogStartDayM(0.0), FogCutoffDayM(0.0), LocalHighlightContrastDay(1.0), NightExposurePin(0.0),
 		         bStreetCollision(false), LanternLumens(0.0), LanternLightY(0.0),
-		         LanternPoolLumens(0.0), LanternPoolInnerDeg(35.0), LanternPoolOuterDeg(70.0), bLanternRgb(false),
+		         LanternPoolLumens(0.0), LanternPoolInnerDeg(35.0), LanternPoolOuterDeg(70.0), LanternPoolTiltDeg(0.0), bLanternRgb(false),
 		         LanternR(1.0), LanternG(1.0), LanternB(1.0),
 		         Read(0), bFromFile(false) {}
 	};
@@ -918,6 +922,8 @@ namespace LedgerStreet
 		{
 			Out.LanternPoolInnerDeg = V->Arr[0].Num; Out.LanternPoolOuterDeg = V->Arr[1].Num; ++Out.Read;
 		}
+		V = Root.Find("lantern_pool_tilt_deg");
+		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0 && V->Num <= 45.0) { Out.LanternPoolTiltDeg = V->Num; ++Out.Read; }
 		V = Root.Find("lantern_light_y_m");
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0) { Out.LanternLightY = V->Num; ++Out.Read; }
 		V = Root.Find("lantern_linear_rgb");

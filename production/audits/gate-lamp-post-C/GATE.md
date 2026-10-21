@@ -33,3 +33,8 @@ The kit's master material, the order's next step: world-aligned detail from the 
 - Across, by day: PASS on the lamp (upright, grounded, about 4.9 m, the arm over the road, grained concrete, no glow by day). The picture is not for his page: the two passers-by wear the white base layer (the open clothes fault) and a doormat lies mid-pavement (open).
 - Across, at night: PASS on the lamp (the head glows about as bright as the fish shop's window; the pool under the head; the column's face fades by about 4 stops to the foot). The same people fault.
 - Under, by day: FAIL. From below the bowl vanished (no yellowing, no surface: an open white dish) and the jacket read as a solid white rod; also the satellite dish's bracket shows through its face (an older fault of the street, not the lamp's). Fix, try 1: the jacket made see-through glass (a translucent kind of its own), the bowl a cream-amber yellowed acrylic at 0.55 opacity (production/specs/kit-materials.json). Re-shot with a second view from the road.
+
+## The close views again, 14:11 (the new glass; under and from the road)
+
+- From the road, by day: PASS. The bowl reads cream-amber acrylic, darker than the sky (no glow by day); the arc tube shows through.
+- From the road, at night: FAIL. The column's road face clips to a flat saturated yellow from the arm to the frame's foot, brighter than the lit window: the pool's cone, straight down 0.78 m from the column, lights it from 1 m. Fix, try 1: the pool leans 20 degrees out over the road (unreal-look.json lantern_pool_tilt_deg), as a cut-off lantern throws its light.
