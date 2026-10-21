@@ -13,7 +13,7 @@
 # its memory line to production/research/pre-production/p1-packaged/runs.jsonl. It refuses to start
 # while the build machine or an Unreal editor runs (their graphics work would be in the numbers).
 param([string]$Exe = "F:\LedgerTools\played-game\Windows\LedgerProbe.exe", [int]$Frames = 1800, [int]$VoiceSeconds = 660,
-      [string]$Tag = "", [string]$Cvars = "", [string]$Picture = "", [string[]]$Only = @(), [string[]]$GameArgs = @())
+      [string]$Tag = "", [string]$Cvars = "", [string]$Picture = "", [string[]]$Only = @(), [string[]]$GameArgs = @(), [string]$Voice = "")
 # A VARIANT, 7 October (P1's first packaged reading found no room, and two suspects): -Tag names it
 # (appended to each label), -Cvars adds engine settings to the game's own, -Picture runs "scalability
 # <n>" once the street is up (2 is High, the most the first launch picks, 3 Highest), and -Only
@@ -37,7 +37,9 @@ New-Item -ItemType Directory -Force $tmp | Out-Null
 $py = "python"
 
 # THE VOICE, SPEAKING THROUGHOUT: started once, warmed, and left running for all three captures.
-$voice = Start-Process -FilePath $py -ArgumentList @("tools/voice-live/voice_load.py", "--seconds", "$VoiceSeconds") -PassThru -NoNewWindow `
+# -Voice pocket (21 October, item 8): Pocket TTS on the processor instead of the cast voice on the card.
+$voiceArgs = @("tools/voice-live/voice_load.py", "--seconds", "$VoiceSeconds") + $(if ($Voice -eq "pocket") { @("--pocket") } else { @() })
+$voice = Start-Process -FilePath $py -ArgumentList $voiceArgs -PassThru -NoNewWindow `
          -RedirectStandardOutput "$tmp\voice-load.log" -RedirectStandardError "$tmp\voice-load.err"
 $w = 0
 while (-not (Select-String -Path "$tmp\voice-load.log" -Pattern "voiceLoad ready" -Quiet -ErrorAction SilentlyContinue) -and $w -lt 240 -and -not $voice.HasExited) { Start-Sleep 2; $w += 2 }
@@ -79,7 +81,7 @@ foreach ($m in $matrix) {
   $a += $GameArgs   # -GameArgs: the game's own switches for a variant (-RoomShadowsAll, the old room shadows)
   $t0 = Get-Date
   $stub = Start-Process -FilePath $Exe -ArgumentList $a -PassThru -NoNewWindow -RedirectStandardOutput "$tmp\$label.log" -RedirectStandardError "$tmp\$label.err"
-  $voicePids = @(Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -match "voice-server.py|voice_load.py" } | ForEach-Object { $_.ProcessId })
+  $voicePids = @(Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -match "voice-server.py|voice_load.py|pocket-server.py" } | ForEach-Object { $_.ProcessId })
   # the game the launcher starts, found by its path (up to a minute)
   $p = $null
   for ($k = 0; $k -lt 30 -and -not $p; $k++) {

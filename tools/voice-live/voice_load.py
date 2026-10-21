@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """THE CAST VOICE, SPEAKING WITHOUT A BREAK, beside a measurement (P1, 3 October).
 
-    python tools/voice-live/voice_load.py [--cpu] [--seconds 600]
+    python tools/voice-live/voice_load.py [--cpu | --pocket] [--seconds 600]
     python tools/voice-live/voice_load.py --selftest
 
 WHY. Jafar's order of 3 October (P1): profile the hook camera "with the voice speaking",
@@ -22,6 +22,10 @@ import time
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 PY = r"C:\LedgerTools\chatterbox-nano\env-dml\Scripts\python.exe"
 SCRIPT = os.path.join(REPO, "tools", "voice-live", "voice-server.py")
+# --pocket (21 October, his order, item 8: "Kyutai Pocket TTS on the CPU"): the same lines through
+# Pocket TTS's server on the processor (tools/voice-live/pocket-server.py, the same line format).
+POCKET_PY = r"F:\LedgerTools\pocket-tts\env\Scripts\python.exe"
+POCKET_SCRIPT = os.path.join(REPO, "tools", "voice-live", "pocket-server.py")
 OUT = r"F:\LedgerTools\tmp\builder\voice-load"
 LINES = [
     ("lena", "Morning, love. You'll be the one stopping at Mickey's, then."),
@@ -60,10 +64,12 @@ def selftest():
 def main(argv):
     if "--selftest" in argv:
         return selftest()
-    cpu = "--cpu" in argv
+    pocket = "--pocket" in argv
+    cpu = "--cpu" in argv or pocket
     seconds = float(argv[argv.index("--seconds") + 1]) if "--seconds" in argv else 600.0
     os.makedirs(OUT, exist_ok=True)
-    args = [PY, SCRIPT, "--prewarm", "--out", OUT] + (["--cpu"] if cpu else [])
+    args = ([POCKET_PY, POCKET_SCRIPT, "--prewarm", "--out", OUT] if pocket
+            else [PY, SCRIPT, "--prewarm", "--out", OUT] + (["--cpu"] if cpu else []))
     p = subprocess.Popen(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
                          text=True, bufsize=1, cwd=REPO)
     t0 = time.time()
@@ -92,7 +98,7 @@ def main(argv):
         pass
     took = time.time() - started
     print("voiceLoadSummary device=%s lines=%d pieces=%d spokenSeconds=%.1f madeInSeconds=%.1f realtime=%.2f"
-          % ("cpu" if cpu else "card", n, made, spoken, took, took / spoken if spoken else 0.0), flush=True)
+          % ("pocket-cpu" if pocket else "cpu" if cpu else "card", n, made, spoken, took, took / spoken if spoken else 0.0), flush=True)
     try:
         p.stdin.close()
         p.wait(timeout=20)
