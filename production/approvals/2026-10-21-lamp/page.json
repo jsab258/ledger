@@ -3,7 +3,7 @@
  "kicker": "LEDGER · Wednesday 21 October · the street, the first piece from the cloud's kit",
  "title": "Lamp post C in the street",
  "how": [
-  "Shortfalls first: the concrete is still clean for 1990 (the dirt at the foot barely shows, no rain streaks or rust runs; the wear layer comes later in your order), the number plate is blank, and from directly below the lamp tube inside the bowl reads as one pale rod (set aside after two tries).",
+  "Shortfalls first: at night each column's road face burns to a bright yellow stripe under its own lamp, and from directly below the lamp tube inside the bowl reads as one pale rod (both set aside after two tries each; a fix that cured the stripe left Mickey's window dark, so it was undone). The concrete is still clean for 1990 (the wear layer comes later in your order) and the number plate is blank.",
   "The cloud's concrete lamp column now stands at the street's four lamp spots in place of the old dark steel one, with the kit's new shared materials (concrete grain from the street's own photograph, a yellowed acrylic bowl). Each view passed one fresh reviewer; the reviews found old lamp parts left standing, concrete reading as white plastic, an invisible bowl and a column glaring under its own light, each fixed (the pool now leans out over the road). Taken today in the game at 2560 by 1440."
  ],
  "foot": "Nothing bought or signed up for. Anything you do not pick carries onto the next page.",
@@ -12,7 +12,7 @@
    "kind": "look",
    "key": "look-lamp-post-c-2026-10-21",
    "name": "Lamp post C: keep it, and bring in the rest of the kit the same way?",
-   "note": "The hook camera by day, the reverse view, the street at night, then the lamp from the road below it by day and at night.",
+   "note": "The hook camera by day, the reverse view, the street at night, then the lantern from the road below it by day.",
    "pictures": [
     {
      "src": "production/approvals/2026-10-21-lamp/lamp-hook-day.webp",
@@ -29,10 +29,6 @@
     {
      "src": "production/approvals/2026-10-21-lamp/lamp-close-day.webp",
      "alt": "The lantern from the road below it, by day"
-    },
-    {
-     "src": "production/approvals/2026-10-21-lamp/lamp-close-night.webp",
-     "alt": "The lantern from the road below it, at night"
     }
    ],
    "options": [
