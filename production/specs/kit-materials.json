@@ -101,6 +101,11 @@
   "lamp": {
    "master": "opaque",
    "note": "a lamp's glowing part: pale when cold, lit by the lanterns' drive at night"
+  },
+  "lamp_jacket": {
+   "master": "translucent",
+   "opacity": 0.3,
+   "note": "a lamp's clear glass jacket: see-through by day (the arc tube shows inside), lit by the lanterns' drive at night (21 October: the opaque 'lamp' kind read as a solid white rod from below, the close view's review)"
   }
  },
  "slots": {
@@ -140,10 +145,20 @@
    "kind": "glass",
    "shadow": false,
    "glow": 0.052,
-   "used_by": "lamp_post_C (the yellowed acrylic bowl; lit 4,800 cd/m2 against the tube's 91,700)"
+   "used_by": "lamp_post_C (the yellowed acrylic bowl; lit 4,800 cd/m2 against the tube's 91,700)",
+   "overrides": {
+    "BaseColor": [
+     0.8,
+     0.62,
+     0.3
+    ],
+    "Opacity": 0.55,
+    "Roughness": 0.2
+   },
+   "overrides_note": "21 October: from below the bowl read as an open white dish, no yellowing, no surface (the close view's review); the glb's near-white at opacity 0.35 vanished against the sky. Yellowed acrylic, judged in the camera: a cream-amber at 0.55 opacity."
   },
   "lamp_glass": {
-   "kind": "lamp",
+   "kind": "lamp_jacket",
    "shadow": false,
    "glow": 0.3,
    "used_by": "lamp_post_C (the lamp's glass jacket; 27,500 cd/m2 lit)"

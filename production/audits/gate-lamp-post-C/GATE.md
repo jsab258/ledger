@@ -27,3 +27,9 @@ The kit's master material, the order's next step: world-aligned detail from the 
 - Night: PASS. Watch point: the near east column's road face burns to flat pale yellow 3 to 4 m up, under its own lamp.
 - Known shortfalls, listed: the dirt at the foot barely shows (about 10 per cent darker); no rain streaks or rust runs from the spigot; the bowl reads opal white, not yellowed; the number plate blank; the arm a crisp right angle; the Hook sheet shows no lamp column, and the near one is now a pale vertical between Fresh Fish and Mickey's. The scene's older gaps (no parked cars, white puddles, a flat hill) are unchanged.
 - These views are now the lamp's last good pictures (F:/LedgerTools/gate/last-good/lamp-post-C). Packaged and walked: owed to the next build machine run.
+
+## The close views, 14:02 (new views, no earlier picture; -PageShots=at)
+
+- Across, by day: PASS on the lamp (upright, grounded, about 4.9 m, the arm over the road, grained concrete, no glow by day). The picture is not for his page: the two passers-by wear the white base layer (the open clothes fault) and a doormat lies mid-pavement (open).
+- Across, at night: PASS on the lamp (the head glows about as bright as the fish shop's window; the pool under the head; the column's face fades by about 4 stops to the foot). The same people fault.
+- Under, by day: FAIL. From below the bowl vanished (no yellowing, no surface: an open white dish) and the jacket read as a solid white rod; also the satellite dish's bracket shows through its face (an older fault of the street, not the lamp's). Fix, try 1: the jacket made see-through glass (a translucent kind of its own), the bowl a cream-amber yellowed acrylic at 0.55 opacity (production/specs/kit-materials.json). Re-shot with a second view from the road.

@@ -19,6 +19,15 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 21 Oct 2026, item 4: an AI session connected to the live game editor, verified read-only
+- Made: the engine maker's own Claude Code plugin installed for the project, and the editor's built-in tool server reached from the session; the first call listed the open level's actors.
+- Method (setting-free): install the vendor's plugin from the official marketplace at project scope; start the editor with the tool-server plugins named on its command line only (never in the project file, so nothing ships); register the server in local scope (never a committed config); commit before every editor session; the session reloads its plugins and reconnects the server; the first calls are read-only (list the toolsets, name the level, list its actors); close the editor and check the port is free and the tree unchanged.
+- Tools: Unreal 5.8 ModelContextProtocol and AllToolsets plugins (loopback 127.0.0.1:8000), Claude Code's MCP client.
+- Target and check: the setup note's ten-minute test, steps 2, 3 and 10: toolsets listed (actors, scene, materials, editor and Play control, logs, tests), the level and its actors read back, the port free after closing, git clean, no committed config.
+- Cost (hours): about 0.5 over the day.
+- Failed and why: the first connection attempt was refused because the editor had closed after a scripted run (an editor launched with a startup script quits when the script ends); reopening it without the script and re-dialling fixed it. The street exists only in Play, so reading it needs a Play session (not yet done).
+- Evidence: production/cloud-week/research/1e-unreal-mcp-setup.md (section 8)
+
 ### 21 Oct 2026, item 5, first piece: a kit model brought into the game street through the placed-props route, once, end to end
 - Made: one lamp post (column, arm, lantern) standing at the street's four lamp spots, replacing the old built-in columns; shared master materials (one opaque, one glass) with an instance per kind and per named slot; the lamp's glowing slots driven with the street lights.
 - Method (setting-free): join a many-part kit model into one mesh keeping every named material slot; place it as a data item (spot, side, turn, how deep it is buried) so the piece list carries it; one data file names each slot's kind, whether it casts a shadow and how bright it glows relative to the brightest part; masters are made once and every slot wears its kind's instance, starting from the model's own colours; the importer dresses slots by name, turns off shadows on glowing parts and switches the engine's mesh streaming (Nanite) off, which refuses glass; the game gives only glowing slots their own instance and drives them with the lights, in the lights' own colour; derive the glow from the brightness the old piece was tuned at, never pick it; take the old piece out of the street's built mesh in the same step; correct a stale colour from the primary table, not memory.

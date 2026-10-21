@@ -12,12 +12,12 @@ Phase 0 done (production/audits/phase0-exit/BUNDLE.md).
 ## His order of 21 October
 
 - [x] 1 to 3: health, branches, rules and combat (DECISIONS.md, 21 Oct).
-- [ ] 4 Editor connection: production/cloud-week/research/1e-unreal-mcp-setup.md.
+- [x] 4 Editor connection: production/cloud-week/research/1e-unreal-mcp-setup.md.
 - [ ] 5 Cloud pieces into the street: production/specs/kit-materials.json.
 - [ ] 6 Frame rate (1.4): research note 1d.
 - [ ] 7 Walk and clothes (1.2). 8 Speech (1.3). 9 Close phase 1.
 
-STATE (21 Oct 13:25): 4: server runs; the read-only test waits on his reload. 5: lamp post C placed, gate running. 1.1 passed its gate 8 Oct; 1.3 blocked; 1.4 regressed 8 Oct (glass catch).
+STATE (21 Oct 14:10): 4: read-only test passed. 5: lamp post C passed its gate (3 views); close views in review; kit master material made. 1.1 passed its gate 8 Oct; 1.3 blocked; 1.4 regressed 8 Oct (glass catch).
 
 ## Handovers
 
