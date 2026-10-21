@@ -34,7 +34,8 @@ SPEC = os.path.join(REPO, "production", "specs", "kit-materials.json")
 KIT_DIR = os.path.join(REPO, "ledger", "Assets", "Props", "base-mesh")
 PACKAGE = "/Game/Ledger/Kit"
 MASTERS = {"opaque": "M_LedgerKit", "translucent": "M_LedgerKitGlass"}
-PARAMS = ("BaseColor", "Roughness", "Metallic", "Specular", "EmissiveColor", "Opacity")
+PARAMS = ("BaseColor", "Roughness", "Metallic", "Specular", "EmissiveColor", "Opacity", "DetailSize",
+          "DetailIntensity", "RoughDetail", "DirtHeight", "DirtStrength", "DirtColour")
 
 
 def load_spec(path=SPEC):
@@ -97,75 +98,251 @@ def _write(line):
     print(line)
 
 
+WORLD_ALIGNED = "/Engine/Functions/Engine_MaterialFunctions01/Texturing/WorldAlignedTexture.WorldAlignedTexture"
+DETAIL_DIR = os.environ.get("LEDGER_KIT_DETAIL", "F:/LedgerTools/game-inputs/production/assets/kit-detail")
+NEUTRAL_TEX = "/Engine/EngineResources/WhiteSquareTexture.WhiteSquareTexture"
+# THE DETAIL AND THE DIRT (21 October 2026, production/research/aaa-street/KIT-MATERIALS-2026-10-21.md):
+# a world-aligned detail map (R: luminance high-passed to 0.5, G: roughness likewise, B: broad grunge)
+# multiplies the authored colour by lerp(1, 2 x R, DetailIntensity), so the slot's colour stays in
+# charge; a dirt band darkens the piece's foot, DirtHeight cm up from its own lowest point, its edge
+# broken by the grunge. Every scalar defaults to off, so a kind without them is the flat colour.
+SCALARS = (("Roughness", 0.6), ("Metallic", 0.0), ("Specular", 0.5), ("DetailSize", 60.0),
+           ("DetailIntensity", 0.0), ("RoughDetail", 0.0), ("DirtHeight", 50.0), ("DirtStrength", 0.0))
+VECTORS = (("BaseColor", (0.5, 0.5, 0.5)), ("EmissiveColor", (0.0, 0.0, 0.0)), ("DirtColour", (0.45, 0.42, 0.38)))
+
+
 def _make_master(unreal, name, translucent):
     tools = unreal.AssetToolsHelpers.get_asset_tools()
     mel = unreal.MaterialEditingLibrary
     path = PACKAGE + "/" + name
-    if unreal.EditorAssetLibrary.does_asset_exist(path):
-        unreal.EditorAssetLibrary.delete_asset(path)
-    mat = tools.create_asset(name, PACKAGE, unreal.Material, unreal.MaterialFactoryNew())
+    # REBUILT IN PLACE, never deleted (21 October, measured): once the instances and the lamp's
+    # mesh refer to a master, delete_asset refuses it and create_asset then fails unattended.
+    mat = unreal.EditorAssetLibrary.load_asset(path) if unreal.EditorAssetLibrary.does_asset_exist(path) else None
+    if mat is not None:
+        mel.delete_all_material_expressions(mat)
+    else:
+        mat = tools.create_asset(name, PACKAGE, unreal.Material, unreal.MaterialFactoryNew())
     if mat is None:
         return None, 0, 0
     if translucent:
         mat.set_editor_property("blend_mode", unreal.BlendMode.BLEND_TRANSLUCENT)
         mat.set_editor_property("translucency_lighting_mode", unreal.TranslucencyLightingMode.TLM_SURFACE_PER_PIXEL_LIGHTING)
-    asked = []
-    y = 0
+    n = {"made": 0, "asked": 0, "notes": []}
 
-    def param_vec(pname, default):
-        nonlocal y
-        e = mel.create_material_expression(mat, unreal.MaterialExpressionVectorParameter, -500, y)
-        e.set_editor_property("parameter_name", pname)
-        e.set_editor_property("default_value", unreal.LinearColor(default[0], default[1], default[2], 1.0))
-        y += 160
+    def ex(cls, x, y, **props):
+        e = mel.create_material_expression(mat, cls, x, y)
+        for k, v in props.items():
+            try:
+                e.set_editor_property(k, v)
+            except Exception as err:
+                n["notes"].append("%s.%s=%s" % (cls.__name__, k, str(err).split("\n")[0][:40]))
         return e
 
-    def param_scalar(pname, default):
-        nonlocal y
-        e = mel.create_material_expression(mat, unreal.MaterialExpressionScalarParameter, -500, y)
-        e.set_editor_property("parameter_name", pname)
-        e.set_editor_property("default_value", default)
-        y += 120
-        return e
-
-    asked.append((param_vec("BaseColor", (0.5, 0.5, 0.5)), unreal.MaterialProperty.MP_BASE_COLOR))
-    asked.append((param_scalar("Roughness", 0.6), unreal.MaterialProperty.MP_ROUGHNESS))
-    asked.append((param_scalar("Metallic", 0.0), unreal.MaterialProperty.MP_METALLIC))
-    asked.append((param_scalar("Specular", 0.5), unreal.MaterialProperty.MP_SPECULAR))
-    asked.append((param_vec("EmissiveColor", (0.0, 0.0, 0.0)), unreal.MaterialProperty.MP_EMISSIVE_COLOR))
-    if translucent:
-        asked.append((param_scalar("Opacity", 0.35), unreal.MaterialProperty.MP_OPACITY))
-    wired = 0
-    for src, prop in asked:
+    def link(a, ao, b, bi):
+        n["asked"] += 1
         try:
-            if mel.connect_material_property(src, "", prop):
-                wired += 1
+            if mel.connect_material_expressions(a, ao, b, bi):
+                n["made"] += 1
+                return
         except Exception:
             pass
+        n["notes"].append("link-%s-%s" % (ao or "out", bi or "in"))
+
+    def prop(a, ao, mp):
+        n["asked"] += 1
+        try:
+            if mel.connect_material_property(a, ao, mp):
+                n["made"] += 1
+                return
+        except Exception:
+            pass
+        n["notes"].append("prop-%s" % mp)
+
+    P = {}
+    y = 0
+    for pname, default in SCALARS:
+        P[pname] = ex(unreal.MaterialExpressionScalarParameter, -2200, y, parameter_name=pname, default_value=default)
+        y += 110
+    for pname, default in VECTORS:
+        P[pname] = ex(unreal.MaterialExpressionVectorParameter, -2200, y,
+                      parameter_name=pname, default_value=unreal.LinearColor(default[0], default[1], default[2], 1.0))
+        y += 160
+    MP = unreal.MaterialProperty
+    if translucent:
+        op = ex(unreal.MaterialExpressionScalarParameter, -400, 900, parameter_name="Opacity", default_value=0.35)
+        prop(op, "", MP.MP_OPACITY)
+        prop(P["BaseColor"], "", MP.MP_BASE_COLOR)
+        prop(P["Roughness"], "", MP.MP_ROUGHNESS)
+    else:
+        neutral = unreal.load_asset(NEUTRAL_TEX)
+        tex = ex(unreal.MaterialExpressionTextureObjectParameter, -2000, -400, parameter_name="DetailMap")
+        if neutral is not None:
+            tex.set_editor_property("texture", neutral)
+        wa = ex(unreal.MaterialExpressionMaterialFunctionCall, -1750, -400)
+        fn = unreal.load_asset(WORLD_ALIGNED)
+        try:
+            wa.set_editor_property("material_function", fn)
+        except Exception as err:
+            n["notes"].append("worldaligned=%s" % str(err).split("\n")[0][:40])
+        link(tex, "", wa, "TextureObject")
+        link(P["DetailSize"], "", wa, "TextureSize")
+        mr = ex(unreal.MaterialExpressionComponentMask, -1500, -460, r=True, g=False, b=False, a=False)
+        mg = ex(unreal.MaterialExpressionComponentMask, -1500, -360, r=False, g=True, b=False, a=False)
+        mb = ex(unreal.MaterialExpressionComponentMask, -1500, -260, r=False, g=False, b=True, a=False)
+        for m in (mr, mg, mb):
+            link(wa, "XYZ Texture", m, "")
+        # the colour: BaseColor x lerp(1, 2R, DetailIntensity) x lerp(1, DirtColour, dirt)
+        r2 = ex(unreal.MaterialExpressionMultiply, -1300, -460, const_b=2.0)
+        link(mr, "", r2, "A")
+        alb = ex(unreal.MaterialExpressionLinearInterpolate, -1100, -460, const_a=1.0)
+        link(r2, "", alb, "B")
+        link(P["DetailIntensity"], "", alb, "Alpha")
+        # the dirt: saturate(1 - h / DirtHeight - (B - 0.5) x 0.6) x DirtStrength, h from the piece's lowest point
+        try:
+            lp = ex(unreal.MaterialExpressionLocalPosition, -1750, 200)
+            lb = ex(unreal.MaterialExpressionObjectLocalBounds, -1750, 320)
+            from_lp, from_lb = (lp, ""), (lb, "Min")
+        except Exception as err:
+            n["notes"].append("localbounds=%s" % str(err).split("\n")[0][:40])
+            wp = ex(unreal.MaterialExpressionWorldPosition, -1750, 200)
+            opw = ex(unreal.MaterialExpressionObjectPositionWS, -1750, 320)
+            from_lp, from_lb = (wp, ""), (opw, "")
+        lz = ex(unreal.MaterialExpressionComponentMask, -1550, 200, r=False, g=False, b=True, a=False)
+        bz = ex(unreal.MaterialExpressionComponentMask, -1550, 320, r=False, g=False, b=True, a=False)
+        link(from_lp[0], from_lp[1], lz, "")
+        link(from_lb[0], from_lb[1], bz, "")
+        h = ex(unreal.MaterialExpressionSubtract, -1400, 250)
+        link(lz, "", h, "A")
+        link(bz, "", h, "B")
+        hd = ex(unreal.MaterialExpressionDivide, -1250, 250)
+        link(h, "", hd, "A")
+        link(P["DirtHeight"], "", hd, "B")
+        gb = ex(unreal.MaterialExpressionSubtract, -1300, 360, const_b=0.5)
+        link(mb, "", gb, "A")
+        gb6 = ex(unreal.MaterialExpressionMultiply, -1150, 360, const_b=0.6)
+        link(gb, "", gb6, "A")
+        hs = ex(unreal.MaterialExpressionAdd, -1050, 280)
+        link(hd, "", hs, "A")
+        link(gb6, "", hs, "B")
+        om = ex(unreal.MaterialExpressionOneMinus, -900, 280)
+        link(hs, "", om, "")
+        sat = ex(unreal.MaterialExpressionSaturate, -800, 280)
+        link(om, "", sat, "")
+        dirt = ex(unreal.MaterialExpressionMultiply, -700, 280)
+        link(sat, "", dirt, "A")
+        link(P["DirtStrength"], "", dirt, "B")
+        dcol = ex(unreal.MaterialExpressionLinearInterpolate, -550, 100, const_a=1.0)
+        link(P["DirtColour"], "", dcol, "B")
+        link(dirt, "", dcol, "Alpha")
+        c1 = ex(unreal.MaterialExpressionMultiply, -800, -460)
+        link(P["BaseColor"], "", c1, "A")
+        link(alb, "", c1, "B")
+        c2 = ex(unreal.MaterialExpressionMultiply, -400, -300)
+        link(c1, "", c2, "A")
+        link(dcol, "", c2, "B")
+        prop(c2, "", MP.MP_BASE_COLOR)
+        # the roughness: saturate(Roughness + (G - 0.5) x 2 x RoughDetail + dirt x 0.08)
+        gr = ex(unreal.MaterialExpressionSubtract, -1300, -120, const_b=0.5)
+        link(mg, "", gr, "A")
+        gr2 = ex(unreal.MaterialExpressionMultiply, -1150, -120, const_b=2.0)
+        link(gr, "", gr2, "A")
+        grd = ex(unreal.MaterialExpressionMultiply, -1000, -120)
+        link(gr2, "", grd, "A")
+        link(P["RoughDetail"], "", grd, "B")
+        r1 = ex(unreal.MaterialExpressionAdd, -850, -120)
+        link(P["Roughness"], "", r1, "A")
+        link(grd, "", r1, "B")
+        dr = ex(unreal.MaterialExpressionMultiply, -850, 0, const_b=0.08)
+        link(dirt, "", dr, "A")
+        r2b = ex(unreal.MaterialExpressionAdd, -700, -60)
+        link(r1, "", r2b, "A")
+        link(dr, "", r2b, "B")
+        rs = ex(unreal.MaterialExpressionSaturate, -550, -60)
+        link(r2b, "", rs, "")
+        prop(rs, "", MP.MP_ROUGHNESS)
+    prop(P["Metallic"], "", MP.MP_METALLIC)
+    prop(P["Specular"], "", MP.MP_SPECULAR)
+    prop(P["EmissiveColor"], "", MP.MP_EMISSIVE_COLOR)
+    try:
+        mel.layout_material_expressions(mat)
+    except Exception:
+        pass
     try:
         mel.recompile_material(mat)
     except Exception:
         pass
     unreal.EditorAssetLibrary.save_asset(path)
-    return mat, wired, len(asked)
+    if n["notes"]:
+        print("make_kit_materials %s notes: %s" % (name, " ".join(n["notes"][:8])))
+    return mat, n["made"], n["asked"]
 
 
-def _make_instance(unreal, name, parent, values):
+def _import_detail(unreal, name, png):
+    """One detail map imported as /Game/Ledger/Kit/T_KitDetail_<name>, sRGB off (the multiply
+    expects 0.5 to mean 'no change'), compressed as masks."""
+    if not os.path.exists(png):
+        return None
+    dest = "T_KitDetail_" + name
+    path = PACKAGE + "/" + dest
+    task = unreal.AssetImportTask()   # replace_existing re-imports over the old one in place
+    task.set_editor_property("filename", png)
+    task.set_editor_property("destination_path", PACKAGE)
+    task.set_editor_property("destination_name", dest)
+    task.set_editor_property("automated", True)
+    task.set_editor_property("replace_existing", True)
+    task.set_editor_property("save", False)
+    unreal.AssetToolsHelpers.get_asset_tools().import_asset_tasks([task])
+    tex = unreal.EditorAssetLibrary.load_asset(path)
+    if tex is None:
+        return None
+    try:
+        tex.set_editor_property("srgb", False)
+        tex.set_editor_property("compression_settings", unreal.TextureCompressionSettings.TC_MASKS)
+    except Exception:
+        pass
+    unreal.EditorAssetLibrary.save_asset(path)
+    return tex
+
+
+def _make_instance(unreal, name, parent, values, textures=None):
     tools = unreal.AssetToolsHelpers.get_asset_tools()
     mel = unreal.MaterialEditingLibrary
     path = PACKAGE + "/" + name
-    if unreal.EditorAssetLibrary.does_asset_exist(path):
-        unreal.EditorAssetLibrary.delete_asset(path)
-    mi = tools.create_asset(name, PACKAGE, unreal.MaterialInstanceConstant, unreal.MaterialInstanceConstantFactoryNew())
+    mi = unreal.EditorAssetLibrary.load_asset(path) if unreal.EditorAssetLibrary.does_asset_exist(path) else None
+    if mi is not None:
+        mel.clear_all_material_instance_parameters(mi)
+    else:
+        mi = tools.create_asset(name, PACKAGE, unreal.MaterialInstanceConstant, unreal.MaterialInstanceConstantFactoryNew())
     if mi is None:
         return False
     mel.set_material_instance_parent(mi, parent)
+    vec_names = {v[0] for v in VECTORS}
     for k, v in (values or {}).items():
-        if k in ("BaseColor", "EmissiveColor"):
+        if k in vec_names:
             mel.set_material_instance_vector_parameter_value(mi, k, unreal.LinearColor(v[0], v[1], v[2], 1.0))
         elif k in PARAMS:
             mel.set_material_instance_scalar_parameter_value(mi, k, float(v))
+    for k, t in (textures or {}).items():
+        if t is not None:
+            mel.set_material_instance_texture_parameter_value(mi, k, t)
     return bool(unreal.EditorAssetLibrary.save_asset(path))
+
+
+def kind_values(row):
+    """A kind's own parameters from its detail and dirt rows (the file's names to the master's)."""
+    v = {}
+    if "opacity" in row:
+        v["Opacity"] = row["opacity"]
+    d = row.get("detail") or {}
+    if d:
+        v.update({"DetailSize": d.get("size_cm", 60.0), "DetailIntensity": d.get("intensity", 1.0),
+                  "RoughDetail": d.get("rough", 0.0)})
+    t = row.get("dirt") or {}
+    if t:
+        v.update({"DirtHeight": t.get("height_cm", 50.0), "DirtStrength": t.get("strength", 0.5)})
+        if "colour" in t:
+            v["DirtColour"] = tuple(t["colour"])
+    return v
 
 
 def main():
@@ -178,14 +355,21 @@ def main():
         masters[key] = m
         wired_all += w
         asked_all += a
+    details = {}
+    for kind, row in spec["kinds"].items():
+        name = (row.get("detail") or {}).get("map")
+        if name and name not in details:
+            details[name] = _import_detail(unreal, name, os.path.join(DETAIL_DIR, name + "_detail.png"))
     kinds_made = 0
     kind_assets = {}
     for kind, row in spec["kinds"].items():
         parent = masters.get(row["master"])
         if parent is None:
             continue
-        vals = {"Opacity": row["opacity"]} if "opacity" in row else {}
-        if _make_instance(unreal, "MI_KitKind_" + kind, parent, vals):
+        vals = kind_values(row)
+        name = (row.get("detail") or {}).get("map")
+        texs = {"DetailMap": details.get(name)} if name else None
+        if _make_instance(unreal, "MI_KitKind_" + kind, parent, vals, texs):
             kinds_made += 1
             kind_assets[kind] = unreal.EditorAssetLibrary.load_asset(PACKAGE + "/MI_KitKind_" + kind)
     slots_made = 0
@@ -193,10 +377,13 @@ def main():
         parent = kind_assets.get(row["kind"])
         if parent is not None and _make_instance(unreal, "MI_Kit_" + slot, parent, row["values"]):
             slots_made += 1
-    ok = wired_all == asked_all and kinds_made == len(spec["kinds"]) and slots_made == len(slots) and not missing
-    _write("kitMaterials=%s masters=%d wired=%d/%d kinds=%d/%d slots=%d/%d missingSlots=%s"
+    det_ok = all(t is not None for t in details.values())
+    ok = (wired_all == asked_all and kinds_made == len(spec["kinds"]) and slots_made == len(slots)
+          and not missing and det_ok)
+    _write("kitMaterials=%s masters=%d wired=%d/%d kinds=%d/%d slots=%d/%d missingSlots=%s details=%s"
            % ("MADE" if ok else "INCOMPLETE", len([m for m in masters.values() if m]), wired_all, asked_all,
-              kinds_made, len(spec["kinds"]), slots_made, len(spec["slots"]), ",".join(missing) or "none"))
+              kinds_made, len(spec["kinds"]), slots_made, len(spec["slots"]), ",".join(missing) or "none",
+              ",".join("%s:%s" % (k, "ok" if v is not None else "MISSING") for k, v in details.items()) or "none"))
     return 0 if ok else 2
 
 
@@ -236,7 +423,7 @@ if __name__ == "__main__":
     if "--list" in sys.argv:
         s, miss = slot_values(load_spec())
         for k, v in s.items():
-            print(k, v["kind"], v["from"], {a: (tuple(round(x, 3) for x in b) if isinstance(b, tuple) else round(b, 3)) for a, b in v["values"].items()})
+            print(k, v["kind"], v["from"], {a: (tuple(round(x, 3) for x in b) if isinstance(b, (tuple, list)) else round(b, 3)) for a, b in v["values"].items()})
         print("missing:", miss)
         sys.exit(0)
     main()

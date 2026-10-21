@@ -1,34 +1,162 @@
 {
  "about": "The kit's material slots, by the name each kit model gives them: the one home for which shared master material a slot takes (his order of 21 October 2026, item 5: shared Unreal master materials made once from the material slot names). The starting values are each model's own (the target's base colour, roughness and metallic as built into the glb, read by tools/ue/make_kit_materials.py); the look is then made in Unreal against the Hook sheet, as the overrides below, never in the models. A slot not named here keeps the glTF importer's material, and the import reports it.",
- "pieces": ["lamp_post_C"],
+ "pieces": [
+  "lamp_post_C"
+ ],
  "pieces_note": "the kit pieces the street places, each a joined copy in ledger/Assets/Props/base-mesh (tools/art-recipes/kit_for_game.py), named by its scene item's asset; tools/ue/import_prop_meshes.py dresses their slots from this file and the game drives their glowing slots (VignetteShot.cpp BindKitPiece).",
  "masters": {
   "opaque": "/Game/Ledger/Kit/M_LedgerKit: base colour, roughness, metallic, specular and an emissive colour, as parameters",
   "translucent": "/Game/Ledger/Kit/M_LedgerKitGlass: the same with opacity, translucent, lit on its surface"
  },
  "kinds": {
-  "paint": {"master": "opaque", "note": "painted steel, aluminium or timber"},
-  "cast_iron": {"master": "opaque"},
-  "glass": {"master": "translucent", "opacity": 0.35, "note": "clear or yellowed glass and acrylic; shadow casting off on its sections"},
-  "brick": {"master": "opaque"},
-  "concrete": {"master": "opaque"},
-  "granite": {"master": "opaque"},
-  "enamel": {"master": "opaque", "note": "vitreous enamel, glossy"},
-  "galvanised": {"master": "opaque", "note": "dull zinc"},
-  "lamp": {"master": "opaque", "note": "a lamp's glowing part: pale when cold, lit by the lanterns' drive at night"}
+  "paint": {
+   "master": "opaque",
+   "note": "painted steel, aluminium or timber",
+   "detail": {
+    "map": "metal",
+    "size_cm": 40,
+    "intensity": 0.35,
+    "rough": 0.25
+   }
+  },
+  "cast_iron": {
+   "master": "opaque",
+   "detail": {
+    "map": "metal",
+    "size_cm": 40,
+    "intensity": 0.35,
+    "rough": 0.25
+   },
+   "dirt": {
+    "height_cm": 30,
+    "strength": 0.5,
+    "colour": [
+     0.5,
+     0.45,
+     0.4
+    ]
+   }
+  },
+  "glass": {
+   "master": "translucent",
+   "opacity": 0.35,
+   "note": "clear or yellowed glass and acrylic; shadow casting off on its sections"
+  },
+  "brick": {
+   "master": "opaque",
+   "detail": {
+    "map": "brick",
+    "size_cm": 100,
+    "intensity": 0.8,
+    "rough": 0.1
+   }
+  },
+  "concrete": {
+   "master": "opaque",
+   "detail": {
+    "map": "concrete",
+    "size_cm": 70,
+    "intensity": 1.0,
+    "rough": 0.15
+   },
+   "dirt": {
+    "height_cm": 55,
+    "strength": 0.6,
+    "colour": [
+     0.42,
+     0.39,
+     0.34
+    ]
+   }
+  },
+  "granite": {
+   "master": "opaque",
+   "detail": {
+    "map": "stone",
+    "size_cm": 50,
+    "intensity": 0.9,
+    "rough": 0.15
+   }
+  },
+  "enamel": {
+   "master": "opaque",
+   "note": "vitreous enamel, glossy",
+   "detail": {
+    "map": "metal",
+    "size_cm": 40,
+    "intensity": 0.35,
+    "rough": 0.25
+   }
+  },
+  "galvanised": {
+   "master": "opaque",
+   "note": "dull zinc",
+   "detail": {
+    "map": "metal",
+    "size_cm": 40,
+    "intensity": 0.35,
+    "rough": 0.25
+   }
+  },
+  "lamp": {
+   "master": "opaque",
+   "note": "a lamp's glowing part: pale when cold, lit by the lanterns' drive at night"
+  }
  },
  "slots": {
-  "concrete_C": {"kind": "concrete", "used_by": "lamp_post_C (the column)"},
-  "c_door_plate": {"kind": "paint", "used_by": "lamp_post_C (the column's door)"},
-  "plate": {"kind": "enamel", "used_by": "lamp_post_C (the number plate, its letters the engine's)"},
-  "c_spigot": {"kind": "galvanised", "used_by": "lamp_post_C (the steel spigot)"},
-  "canopy": {"kind": "paint", "used_by": "lamp_post_C (weathered painted aluminium)"},
-  "reflector": {"kind": "paint", "used_by": "lamp_post_C (the white reflector inside the canopy)"},
-  "bowl": {"kind": "glass", "shadow": false, "glow": 0.052, "used_by": "lamp_post_C (the yellowed acrylic bowl; lit 4,800 cd/m2 against the tube's 91,700)"},
-  "lamp_glass": {"kind": "lamp", "shadow": false, "glow": 0.3, "used_by": "lamp_post_C (the lamp's glass jacket; 27,500 cd/m2 lit)"},
-  "arc_tube": {"kind": "lamp", "shadow": false, "glow": 1.0, "used_by": "lamp_post_C (the U-shaped arc tube; 91,700 cd/m2 lit)"}
+  "concrete_C": {
+   "kind": "concrete",
+   "used_by": "lamp_post_C (the column)",
+   "overrides": {
+    "BaseColor": [
+     0.195,
+     0.188,
+     0.17
+    ]
+   },
+   "overrides_note": "21 October: the glb's (146, 143, 136) sRGB rendered near-white beside the street (reviewers read 186 to 196: a free-standing column sees more open sky than a wall); aged concrete is about 0.2 to 0.35 linear (research note KIT-MATERIALS-2026-10-21.md), so 0.68 of the target's linear value, the darker end, judged in the camera."
+  },
+  "c_door_plate": {
+   "kind": "paint",
+   "used_by": "lamp_post_C (the column's door)"
+  },
+  "plate": {
+   "kind": "enamel",
+   "used_by": "lamp_post_C (the number plate, its letters the engine's)"
+  },
+  "c_spigot": {
+   "kind": "galvanised",
+   "used_by": "lamp_post_C (the steel spigot)"
+  },
+  "canopy": {
+   "kind": "paint",
+   "used_by": "lamp_post_C (weathered painted aluminium)"
+  },
+  "reflector": {
+   "kind": "paint",
+   "used_by": "lamp_post_C (the white reflector inside the canopy)"
+  },
+  "bowl": {
+   "kind": "glass",
+   "shadow": false,
+   "glow": 0.052,
+   "used_by": "lamp_post_C (the yellowed acrylic bowl; lit 4,800 cd/m2 against the tube's 91,700)"
+  },
+  "lamp_glass": {
+   "kind": "lamp",
+   "shadow": false,
+   "glow": 0.3,
+   "used_by": "lamp_post_C (the lamp's glass jacket; 27,500 cd/m2 lit)"
+  },
+  "arc_tube": {
+   "kind": "lamp",
+   "shadow": false,
+   "glow": 1.0,
+   "used_by": "lamp_post_C (the U-shaped arc tube; 91,700 cd/m2 lit)"
+  }
  },
  "lit_emissive": 3.0,
  "lit_emissive_note": "21 October 2026: the arc tube's emissive at night in this engine's unitless units, in the lanterns' colour (unreal-look.json lantern_linear_rgb, the lights' own). A starting point, derived not picked: the bowl, which is what the street sees lit, then glows 0.052 x 3.0 = 0.16, the same as the old Blender lamp head's lens it replaces (its night glow 8.0 x street_glow_gain 0.02), which the night frames were tuned with. Judged in the game camera against the Hook sheet from there.",
- "glow_note": "glow is each slot's lit brightness relative to the arc tube (production/cloud-week/targets/lamp-posts/target.json, materials: lamp_glass 27,500, bowl 4,800 and the tube 91,700 cd/m2, colour (255, 137, 0)); the game multiplies it by the lantern's emissive strength when the lanterns are on, and sets it to 0 by day."
+ "glow_note": "glow is each slot's lit brightness relative to the arc tube (production/cloud-week/targets/lamp-posts/target.json, materials: lamp_glass 27,500, bowl 4,800 and the tube 91,700 cd/m2, colour (255, 137, 0)); the game multiplies it by the lantern's emissive strength when the lanterns are on, and sets it to 0 by day.",
+ "detail_note": "detail and dirt (21 October, production/research/aaa-street/KIT-MATERIALS-2026-10-21.md): detail.map names a map made by tools/props/make_kit_detail.py from the street's own photographs (concrete, stone, metal, brick), world-aligned every size_cm, multiplying the colour by up to about a third (intensity) and moving roughness (rough); dirt darkens a piece's foot height_cm up from its lowest point toward colour by strength. Starting points, judged in the game camera against the Hook sheet."
 }
