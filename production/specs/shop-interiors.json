@@ -38,7 +38,16 @@
    "brightness_day": 0.15,
    "brightness_night": 0.7,
    "room_3d": true,
-   "lamps": [{"x": -1.45, "y": 3.35, "z": 1.05, "lumens": 150, "radius_m": 1.6, "what": "the anglepoise over the radio desk: its warm pool on the dockets, seen from the street at night (6 October, phase 1, item 1.1)"}],
+   "lamps": [
+    {
+     "x": -1.45,
+     "y": 3.35,
+     "z": 1.05,
+     "lumens": 150,
+     "radius_m": 1.6,
+     "what": "the anglepoise over the radio desk: its warm pool on the dockets, seen from the street at night (6 October, phase 1, item 1.1)"
+    }
+   ],
    "room_lumens_day": 180,
    "room_lumens_night": 300,
    "sources": "production/research/cab-office-interior-1990 (both notes: paper and voice radio, wood-effect tops, fabric swivel chairs on five-star bases, plastic trays, coiled cords, pot plants; the number signwritten on the glass); canon.md D19; his ruling of 3 October, 'Mickey's window shows its office'",
@@ -65,25 +74,32 @@
     "z": 5.875
    },
    "decal": "production/art/interiors-2026-09-23/int23_pawn",
-   "pictures": "production/art/shop-rooms/pawnbroker",
+   "pictures": "production/art/shop-rooms/pawnbroker-cloud",
    "side": 1,
    "camera_d": 5.3,
-   "pixels_wide": 2048,
+   "pixels_wide": 4096,
    "lit_at_night": true,
    "brightness_day": 0.15,
    "brightness_night": 0.7,
    "spill_lumens": 350,
    "lit_note": "Day 0.15, since the glass reflects (Thin Translucent): at 0.3 the street's reflection was a faint veil, at 0.08 the room read dim, at 0.03 the pane was nearly a mirror and the room a void (filmed 1 October; the research's 1/8 to 1/10 of the pavement is for an unlit shop, the Hook sheet's is lit and readable); night 0.7 glows without blowing the floor out; the night spill (a tube-white rect light in the window head, tipped 62 degrees down) at 350 lm on lighting channel 1 lights the display and lays a pool on the pavement and the road; the window bars are not on that channel, so they no longer flare (filmed at 250 to 2500 lm and from deep inside the shop, 1 October).",
    "display": {
-    "glb": "pawnbroker-display",
-    "x0": 15.45,
-    "x1": 18.8,
+    "glb": "ritas-display",
+    "x0": 15.35,
+    "x1": 18.7,
     "front": 5.27,
     "bed": 0.7,
-    "depth": 0.55,
-    "measured": "the street model's own glass for this bay (street_glass_eg_bay2: panes at 5.245 to 5.265 m back, 0.70 to 2.91 m up, the door at 18.9 to 19.8 m) and its stallriser top (0.70 m)"
+    "measured": "the cloud's display (production/cloud-week/kit/shop-windows, build_shop.py display, rebuilt on the PC 21 October): its window zone 15.35 to 18.70 m along the street (street x = 21 - u/1000), 0.025 m behind the front's wall face (5.295) and 0.60 m above the footway (the crown + 0.10)"
    },
-   "sources": "the note's section 9: Peter Marshall's Hull and 1990 photographs (links), the Black Country Living Museum pawnbroker"
+   "sources": "the note's section 9: Peter Marshall's Hull and 1990 photographs (links), the Black Country Living Museum pawnbroker",
+   "front": {
+    "glb": "ritas-front",
+    "x": 18.0,
+    "z": 5.295,
+    "up": 0.1,
+    "note": "21 October 2026, his order (item 5) and his ruling of the day: the cloud's whole front for Rita's bay, made ready by tools/art-recipes/front_for_game.py (its glass is the street's, built by terrace-front.py CLOUD_FRONTS); its frame's origin is the bay's middle (street x 18) at its wall face (5.295 from the centreline) on the footway (0.10 above the crown)."
+   },
+   "pictures_note": "21 October: the cloud's room, rebuilt on the PC at 128 samples (production/cloud-week/kit/shop-windows build_shop.py room), 4096 x 1855, on F:/LedgerTools/game-inputs (over git's 1 MB); the game's own 2048 pictures of 1 October (production/art/shop-rooms/pawnbroker_*) stay as they were."
   }
  ]
 }

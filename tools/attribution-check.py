@@ -75,6 +75,9 @@ WATCHED = {
     "ue-probe/Content/Ledger/Kit": "ambientCG",
     "ue-probe/Content/Ledger/ShopDisplays": "Poly Haven",
     "ue-probe/Content/Ledger/ShopRooms": "Poly Haven",
+    # THE CLOUD'S SHOP FRONTS (21 October 2026, Rita's first): its joinery, fascia and gilt words with
+    # Poly Haven's CC0 textures, joined by tools/art-recipes/front_for_game.py.
+    "ue-probe/Content/Ledger/ShopFronts": "Poly Haven",
     "ue-probe/Content/Ledger/Sounds": ("VCTK", "sturmankin"),
     "ledger/Assets/Characters": "Mixamo",
     # THE PICKER'S REJECTING CASE. Four Mixamo clips that shipped under

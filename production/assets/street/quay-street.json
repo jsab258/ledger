@@ -91,7 +91,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 6420
+   "faces": 824
   },
   {
    "mesh": "street_brick_grey",
@@ -1882,7 +1882,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 130
+   "faces": 104
   },
   {
    "mesh": "street_fascia_cream",
@@ -1954,7 +1954,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 7231
+   "faces": 320
   },
   {
    "mesh": "street_fascia_door_green",
@@ -2098,7 +2098,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 19726
+   "faces": 1350
   },
   {
    "mesh": "street_fascia_plinth_black",
@@ -2386,7 +2386,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 36
+   "faces": 102
   },
   {
    "mesh": "street_glass_eg_bay3",
@@ -3470,7 +3470,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 48823
+   "faces": 31434
   },
   {
    "mesh": "street_paint_white",
@@ -3837,7 +3837,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": "crime_r",
-   "faces": 140
+   "faces": 136
   },
   {
    "mesh": "street_shard_r_glass",
@@ -3861,7 +3861,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": "crime_r",
-   "faces": 2350
+   "faces": 2294
   },
   {
    "mesh": "street_shard_r_ground",
@@ -4069,30 +4069,6 @@
    "tile_m": 0.0,
    "house_tint": null,
    "decal": "production/assets/vignette/decals2d/fascia_trade_newsagent",
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 6
-  },
-  {
-   "mesh": "street_sign_fascia_trade_pawnbroker",
-   "material": "sign_production/assets/vignette/decals2d/fascia_trade_pawnbroker",
-   "base_material": "paint_fascia",
-   "linear_rgb": [
-    0.03,
-    0.022,
-    0.03
-   ],
-   "roughness": 0.45,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": "production/assets/vignette/decals2d/fascia_trade_pawnbroker",
    "decal_uv": null,
    "decal_emit": null,
    "texture_mean": null,
@@ -4325,7 +4301,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 12422
+   "faces": 11702
   },
   {
    "mesh": "street_tile_patterned",

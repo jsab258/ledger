@@ -3192,6 +3192,60 @@ KIT_REPLACES = ("pilaster_left", "pilaster_right", "stallriser", "stall_plinth",
 KIT_REPLACES_PREFIX = ("shop_door_", "side_door_")
 
 
+#: THE CLOUD'S FRONTS (21 October 2026, his order, item 5, and his ruling of the day: Rita's front
+#: as the family's sample). A bay listed here keeps none of this recipe's joinery or fascia and
+#: none of the old kit: the cloud's whole front (production/cloud-week/kit/shop-windows, made ready
+#: by tools/art-recipes/front_for_game.py) stands in the opening as its own Unreal mesh
+#: (production/specs/shop-interiors.json "front"), and only its glass is built here, pane for pane
+#: from production/specs/shop-fronts/<name>-glass.json, so the street's glass, its reflections and
+#: the smashed window work on it as on every bay. The front's frame: x about the bay's middle from
+#: the viewer's left; y = -(out from its wall face, which stands CLOUD_WALL_BEHIND_M behind this
+#: recipe's frontage); z above the footway, which is this recipe's threshold.
+CLOUD_FRONTS = {("east_parade", 2): "ritas-front"}
+CLOUD_WALL_BEHIND_M = 0.17       # the cloud's wall face 5.295 against this recipe's frontage 5.125
+CLOUD_REPLACES = ("fascia_band", "fascia_sign", "fascia_letters", "fascia_cornice_bed", "fascia_cornice_corona",
+                  "fascia_cornice_cap", "blind_box", "blind_lath", "letting_board")
+CLOUD_REPLACES_PREFIX = ("fascia_console_",)
+#: each cloud front's display lights (the window's lower panes), bay-local x, filled by _cloud_shopfront
+CLOUD_PANES = {}
+
+
+def _cloud_glass(name, root=None):
+    path = os.path.join(root or ROOT, "production", "specs", "shop-fronts", name + "-glass.json")
+    with open(path, encoding="utf-8") as f:
+        return json.load(f)["panes"]
+
+
+def _cloud_shopfront(parts, p, name, here, root=None):
+    """Takes this recipe's joinery and fascia out of one bay and builds the cloud front's glass in it.
+    Bay-local: x = W/2 - front x (the front counts from the viewer's left, this recipe's doors-right
+    bay from the other end), y = CLOUD_WALL_BEHIND_M + front y, z = front z."""
+    W = p["bay_width_m"]
+    parts[:] = [q for q in parts if q["id"] not in KIT_REPLACES and not q["id"].startswith(KIT_REPLACES_PREFIX)
+                and q["id"] not in CLOUD_REPLACES and not q["id"].startswith(CLOUD_REPLACES_PREFIX)]
+    panes = _cloud_glass(name, root)
+    lower = [q for q in panes if q["name"].startswith("win_glass_lower")]
+    lights = sorted((W / 2.0 - q["max"][0], W / 2.0 - q["min"][0]) for q in lower)
+    for q in panes:
+        if q in lower:
+            continue
+        _box(parts, "cloud_glass_%s" % q["name"], "glass", W / 2.0 - q["max"][0], W / 2.0 - q["min"][0],
+             CLOUD_WALL_BEHIND_M + q["min"][1], CLOUD_WALL_BEHIND_M + q["max"][1], q["min"][2], q["max"][2],
+             "the-cloud-front's-glass/" + q["name"])
+    if lower:
+        # THE DISPLAY WINDOW AS ONE PANE behind the front's mullions, under the old kit's name so the
+        # smashed window (_broken_windows) finds it; its lights are the front's three panes.
+        x0, x1 = lights[0][0], lights[-1][1]
+        y0 = CLOUD_WALL_BEHIND_M + min(q["min"][1] for q in lower)
+        y1 = CLOUD_WALL_BEHIND_M + max(q["max"][1] for q in lower)
+        z0, z1 = min(q["min"][2] for q in lower), max(q["max"][2] for q in lower)
+        _box(parts, "kit_glass_window_frame_display", "glass", x0, x1, y0, y1, z0, z1,
+             "the-cloud-front's-display-glass/%d-panes" % len(lower))
+        cx = (x0 + x1) / 2.0
+        CLOUD_PANES[here] = [(a - cx, b - cx) for a, b in lights]
+    return len(panes)
+
+
 def _kit_glb(name, root=None):
     """The kit piece's path: the checkout's, else the game inputs' on F: (as the rooms)."""
     for base in (root or ROOT, os.environ.get("LEDGER_GAME_INPUTS", r"F:\LedgerTools\game-inputs")):
@@ -3659,7 +3713,8 @@ def _broken_windows(out):
             continue
         if kit:
             cx_ = (g["x0"] + g["x1"]) / 2.0
-            lights = [(cx_ + a, cx_ + b) for a, b in KIT_PANES]
+            cloud_ = CLOUD_PANES.get((prefix, int(bay.replace("bay", "") or 0)))
+            lights = [(cx_ + a, cx_ + b) for a, b in (cloud_ or KIT_PANES)]
         else:
             frames = sorted((p for p in out if p["id"] in (
                 "%s_display_jamb_left_%s" % (prefix, bay), "%s_display_jamb_right_%s" % (prefix, bay))
@@ -5715,7 +5770,9 @@ def plan_parts(p, bay=0, party_wall=True):
 
     # THE SHOPFRONT KIT where its bay is listed: the box joinery above taken out, the kit's
     # pieces in its place (KIT_BAYS; 6 October).
-    if here in KIT_BAYS and not refit:
+    if here in CLOUD_FRONTS and not refit:
+        _cloud_shopfront(parts, p, CLOUD_FRONTS[here], here)
+    elif here in KIT_BAYS and not refit:
         _kit_shopfront(parts, p, KIT_BAYS[here], doors_on, has_side_door,
                        (pier_name, pier_rgb), (stall_name, stall_rgb))
 
@@ -8844,12 +8901,27 @@ def selftest():
         # (a kit bay's side door is the kit's mesh, 6 October, so a bay counts by either)
         leaves = {b["bay"] for b in row if b["id"].startswith("side_door_leaf")
                   or (b["id"].startswith("kit_side_door_") and b.get("material") == "paint_door")}
+        # (a cloud front's side door is in the front's own mesh, 21 October)
+        leaves |= {kb for (blk, kb) in CLOUD_FRONTS if blk == p.get("block_id")}
         check("accept/exactly-one-bay-has-no-side-door",
               len(leaves) == p["bays"] - 1, "%d door(s) on %d bay(s)" % (len(leaves), p["bays"]))
         # THE KIT'S BAY (6 October): its box joinery gone, the kit standing in the opening zone, its
         # pieces filling it from pier to pier, its glass in front of the wall and behind the piers.
-        for (blk, kb) in KIT_BAYS:
+        for (blk, kb) in CLOUD_FRONTS:
             if blk != p.get("block_id"):
+                continue
+            kp = [b for b in row if b["bay"] == kb]
+            gone = [b["id"] for b in kp if b["id"].split("_bay")[0] in KIT_REPLACES + CLOUD_REPLACES
+                    or b["id"].startswith(KIT_REPLACES_PREFIX + CLOUD_REPLACES_PREFIX)]
+            check("accept/the-cloud-front's-bay-has-no-joinery-or-fascia-of-ours", not gone, ",".join(gone[:4]))
+            glass = [b for b in kp if b["id"].startswith(("cloud_glass_", "kit_glass_"))]
+            check("accept/the-cloud-front's-panes-stand-behind-the-frontage-where-the-front-holds-them",
+                  len(glass) >= 2 and all(0.05 < b["y0"] < b["y1"] < 0.20 for b in glass),
+                  ",".join("%.3f..%.3f" % (b["y0"], b["y1"]) for b in glass[:4]))
+            check("accept/the-cloud-front's-display-has-its-three-lights", len(CLOUD_PANES.get((blk, kb), [])) == 3,
+                  str(CLOUD_PANES.get((blk, kb))))
+        for (blk, kb) in KIT_BAYS:
+            if blk != p.get("block_id") or (blk, kb) in CLOUD_FRONTS:
                 continue
             kp = [b for b in row if b["bay"] == kb]
             gone = [b["id"] for b in kp if b["id"].split("_bay")[0] in KIT_REPLACES
@@ -9140,8 +9212,10 @@ def selftest():
             # AND EVERY TRADING BAY HAS ITS BOARD, THE EMPTY UNIT ITS BILLS (the C6 and G6 lines the
             # scene's retired pictures used to answer for, CoreTests' list since 4 October)
             check("accept/every-trading-bay-has-our-own-board",
-                  len([d for d in boards if str(d).startswith(LETTERED)]) == len(SIGN_OVERRIDE),
-                  "%d boards for %d" % (len([d for d in boards if str(d).startswith(LETTERED)]), len(SIGN_OVERRIDE)))
+                  len([d for d in boards if str(d).startswith(LETTERED)]) + len([k for k in SIGN_OVERRIDE if k in CLOUD_FRONTS])
+                  == len(SIGN_OVERRIDE),
+                  "%d boards for %d (a cloud front's board is the front's own)"
+                  % (len([d for d in boards if str(d).startswith(LETTERED)]), len(SIGN_OVERRIDE)))
             bills = [b for b in street if "flyposter_" in b["id"]]
             check("accept/the-empty-unit-is-fly-posted-with-our-own-bills",
                   len(bills) == len(FLYPOSTERS_ON_EMPTY) and all(str(b.get("decal", "")).startswith(LETTERED) for b in bills),

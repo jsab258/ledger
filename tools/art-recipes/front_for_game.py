@@ -3,6 +3,8 @@ rest joined into one mesh that keeps every material and texture.
 
     F:/LedgerTools/bpyenv/Scripts/python.exe tools/art-recipes/front_for_game.py \
         production/assets/cloud-week/shop-windows/ritas_front.glb ritas-front
+    F:/LedgerTools/bpyenv/Scripts/python.exe tools/art-recipes/front_for_game.py --display \
+        production/assets/cloud-week/shop-windows/ritas_display.glb ritas-display
     python tools/art-recipes/front_for_game.py --selftest
 
 WHY, 21 October 2026 (his order, item 5, and his ruling of the day: Rita's front as the family's
@@ -20,6 +22,11 @@ The front's frame (production/cloud-week/kit/shop-windows/sw_ctx.py): metres; x 
 the viewer's left to right about the bay's middle; y = -(distance out from the wall face toward the
 street); z above the footway. Only material names "glass" and "glass.NNN" are panes; the gilt words
 on the glass ("glass_row_*") stay with the front.
+
+AND THE CLOUD'S DISPLAY (--display, the same day): the goods on the window bed, about 330 parts,
+joined whole (no glass taken out) into F:/LedgerTools/game-inputs/production/assets/shop-displays/
+<name>.glb. Unjoined, the import made one static mesh per part and the game stood only the first
+(an alarm clock) behind the glass.
 """
 import json
 import os
@@ -29,6 +36,7 @@ import sys
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 OUT_GLB = os.environ.get("LEDGER_FRONT_OUT", "F:/LedgerTools/game-inputs/production/assets/shop-fronts")
 OUT_JSON = os.path.join(REPO, "production", "specs", "shop-fronts")
+OUT_DISPLAY = os.environ.get("LEDGER_DISPLAY_OUT", "F:/LedgerTools/game-inputs/production/assets/shop-displays")
 PANE = re.compile(r"^glass(\.\d+)?$")
 
 
@@ -36,7 +44,28 @@ def is_pane(material_names):
     return bool(material_names) and all(PANE.match(m or "") for m in material_names)
 
 
-def main(src, name):
+def tint_sheen_to_base(mat):
+    """THE VELVET'S SHEEN IN ITS OWN COLOUR (21 October): the cloud's velvet carries a white sheen at
+    full weight, which Cycles lays over the cloth as a soft rim but Unreal's glTF import spreads
+    over the whole surface, so Rita's dark red tiers came out pale pink. The sheen takes the
+    material's own mean base colour (linear) instead. True when it changed."""
+    b = mat.node_tree.nodes.get("Principled BSDF") if mat and mat.node_tree else None
+    if b is None or b.inputs["Sheen Weight"].default_value <= 0.0:
+        return False
+    rgb = list(b.inputs["Base Color"].default_value[:3])
+    for link in b.inputs["Base Color"].links:
+        img = getattr(link.from_node, "image", None)
+        if img is not None and img.size[0] > 0:
+            import numpy as np
+            px = np.array(img.pixels[:], dtype=np.float32).reshape(-1, img.channels)[:, :3].mean(axis=0)
+            if img.colorspace_settings.name.lower().startswith("srgb"):
+                px = np.where(px <= 0.04045, px / 12.92, ((px + 0.055) / 1.055) ** 2.4)
+            rgb = [float(v) for v in px]
+    b.inputs["Sheen Tint"].default_value = (rgb[0], rgb[1], rgb[2], 1.0)
+    return True
+
+
+def main(src, name, display=False):
     import bpy
     bpy.ops.wm.read_factory_settings(use_empty=True)
     bpy.ops.import_scene.gltf(filepath=os.path.abspath(src))
@@ -44,7 +73,7 @@ def main(src, name):
     panes, keep = [], []
     for o in [o for o in bpy.context.scene.objects if o.type == "MESH"]:
         mats = [s.material.name for s in o.material_slots if s.material]
-        if is_pane(mats):
+        if not display and is_pane(mats):
             ws = [o.matrix_world @ v.co for v in o.data.vertices]
             panes.append({"name": o.name,
                           "min": [round(min(p[i] for p in ws), 4) for i in range(3)],
@@ -58,6 +87,8 @@ def main(src, name):
         mw = o.matrix_world.copy()
         o.parent = None
         o.matrix_world = mw
+        if o.data.users > 1:   # a repeated good (the display's pocket watches) shares its mesh
+            o.data = o.data.copy()
         o.select_set(True)
     bpy.context.view_layer.objects.active = keep[0]
     bpy.ops.object.transform_apply(location=True, rotation=True, scale=True)
@@ -66,12 +97,19 @@ def main(src, name):
     joined.name = name
     for o in [o for o in bpy.context.scene.objects if o is not joined]:
         bpy.data.objects.remove(o, do_unlink=True)
-    os.makedirs(OUT_GLB, exist_ok=True)
-    glb = os.path.join(OUT_GLB, name + ".glb")
+    tinted = sum(1 for m in bpy.data.materials if tint_sheen_to_base(m))
+    out_dir = OUT_DISPLAY if display else OUT_GLB
+    os.makedirs(out_dir, exist_ok=True)
+    glb = os.path.join(out_dir, name + ".glb")
     bpy.ops.object.select_all(action="DESELECT")
     joined.select_set(True)
     bpy.ops.export_scene.gltf(filepath=glb, export_format="GLB", use_selection=True, export_apply=True,
                               export_materials="EXPORT", export_yup=True)
+    if display:
+        tris = sum(len(p.vertices) - 2 for p in joined.data.polygons)
+        print("front_for_game: %s -> %s display parts=%d slots=%d sheenTinted=%d triangles=%d bytes=%d"
+              % (os.path.basename(src), glb, len(keep), len(joined.material_slots), tinted, tris, os.path.getsize(glb)))
+        return 0
     os.makedirs(OUT_JSON, exist_ok=True)
     js = os.path.join(OUT_JSON, name + "-glass.json")
     with open(js, "w", encoding="utf-8", newline="\n") as f:
@@ -106,7 +144,8 @@ def selftest():
 if __name__ == "__main__":
     if "--selftest" in sys.argv:
         sys.exit(selftest())
-    if len(sys.argv) != 3:
+    args = [a for a in sys.argv[1:] if a != "--display"]
+    if len(args) != 2:
         print(__doc__)
         sys.exit(1)
-    sys.exit(main(sys.argv[1], sys.argv[2]))
+    sys.exit(main(args[0], args[1], display="--display" in sys.argv))

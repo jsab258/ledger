@@ -1020,6 +1020,18 @@ namespace
 	TArray<AStaticMeshActor*> GStreetActors;
 	FString GStreetFrom;
 	FString GStreetRepoRoot;
+	// THE GAME'S INPUTS THAT GIT DOES NOT HOLD, 21 October (Rita's room from the cloud, 4096 wide):
+	// a run-time file is read from the checkout, else from F:/LedgerTools/game-inputs under the same
+	// path (tools/ue/stage_game_data.py GAME_INPUTS, which stages it into a packaged copy the same way).
+	FString RepoOrGameInputs(const FString& Rel)
+	{
+		const FString InRepo = FPaths::Combine(GStreetRepoRoot, Rel);
+		if (IFileManager::Get().FileSize(*InRepo) > 0) { return InRepo; }
+		FString Inputs = FPlatformMisc::GetEnvironmentVariable(TEXT("LEDGER_GAME_INPUTS"));
+		if (Inputs.IsEmpty()) { Inputs = TEXT("F:/LedgerTools/game-inputs"); }
+		const FString InInputs = FPaths::Combine(Inputs, Rel);
+		return IFileManager::Get().FileSize(*InInputs) > 0 ? InInputs : InRepo;
+	}
 	std::string GStreetNote = "not-tried";
 	std::vector<std::string> GStreetTried;
 	int32 GStreetLoaded = 0, GStreetHidden = 0, GStreetPainted = 0;
@@ -7596,6 +7608,39 @@ namespace
 		return A;
 	}
 
+	// THE CLOUD'S SHOP FRONT (21 October 2026, his order, item 5: Rita's front as the family's
+	// sample): one mesh with its own materials (tools/art-recipes/front_for_game.py, imported by
+	// tools/ue/import_shop_displays.py), standing in the bay's opening where the street recipe took
+	// its own joinery out (terrace-front.py CLOUD_FRONTS) and built the front's glass. The shop file
+	// gives the front's middle along the street (x), its wall face across (z, from the centreline)
+	// and the footway under it (up); east fronts turn half round as the displays do.
+	AActor* SpawnShopFront(UWorld* World, const Value& Front, double Side, FString& Note)
+	{
+		const std::string Glb = LedgerStreet::StrOr(Front, "glb");
+		if (World == nullptr || Glb.empty()) { Note = TEXT("no-glb"); return nullptr; }
+		const FString Stem = UTF8_TO_TCHAR(Glb.c_str());
+		const FString MeshPath = FString::Printf(TEXT("/Game/Ledger/ShopFronts/%s/SM_%s.SM_%s"), *Stem, *Stem, *Stem);
+		UStaticMesh* Mesh = LoadObject<UStaticMesh>(nullptr, *MeshPath);
+		if (Mesh == nullptr) { Note = TEXT("no-front-mesh(tools/ue/import_shop_displays.py)"); return nullptr; }
+		const FVector At((float)(LedgerStreet::NumOr(Front, "x", 0.0) * 100.0),
+		                 (float)(LedgerStreet::NumOr(Front, "z", 0.0) * 100.0 * Side),
+		                 (float)(LedgerStreet::NumOr(Front, "up", 0.0) * 100.0));
+		FActorSpawnParameters Params;
+		Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		AStaticMeshActor* A = World->SpawnActor<AStaticMeshActor>(AStaticMeshActor::StaticClass(), At, FRotator(0.0f, Side > 0 ? 180.0f : 0.0f, 0.0f), Params);
+		if (A == nullptr) { Note = TEXT("front-spawn-failed"); return nullptr; }
+		MakeMovable(A);
+		if (UStaticMeshComponent* C = A->GetStaticMeshComponent())
+		{
+			C->SetMobility(EComponentMobility::Movable);
+			C->SetStaticMesh(Mesh);
+			C->SetCastShadow(true);
+		}
+		Note = FString::Printf(TEXT("front %s at %.0f,%.0f,%.0f cm"), *Stem, At.X, At.Y, At.Z);
+		UE_LOG(LogTemp, Display, TEXT("LedgerInteriors: %s"), *Note);
+		return A;
+	}
+
 	// AND A LIT SHOP'S LIGHT ON THE PAVEMENT at night (the note, section 5: "each
 	// lit window gets one real rect light, so its light spills onto the
 	// pavement"; Jafar: night has "pools of light with darkness between them,
@@ -7767,6 +7812,12 @@ namespace
 						if (Disp3 != nullptr && Disp3->Type == T_OBJ)
 						{
 							if (AActor* DA = SpawnShopDisplay(World3, *Disp3, Side3, DispNote3)) { GInteriorActors.Add(DA); }
+							const Value* FrontV3 = Sh.Find("front");
+							FString FrontNote3;
+							if (FrontV3 != nullptr && FrontV3->Type == T_OBJ)
+							{
+								if (AActor* FA = SpawnShopFront(World3, *FrontV3, Side3, FrontNote3)) { GInteriorActors.Add(FA); }
+							}
 						}
 						// (no separate night spill: the room's own light falls through its glass)
 						UE_LOG(LogTemp, Display, TEXT("LedgerInteriors: %s as a real room, %d parts at %.0f,%.0f cm, %s"),
@@ -7784,7 +7835,7 @@ namespace
 				int32 Got = 0;
 				for (int32 K = 0; K < 3; ++K)
 				{
-					const FString File = FPaths::Combine(GStreetRepoRoot, FString(UTF8_TO_TCHAR((Pics + "_" + States[K] + ".png").c_str())));
+					const FString File = RepoOrGameInputs(FString(UTF8_TO_TCHAR((Pics + "_" + States[K] + ".png").c_str())));
 					if (IFileManager::Get().FileSize(*File) <= 0) { continue; }
 					int32 FW = 0, FH = 0;
 					FString As;
@@ -7849,6 +7900,12 @@ namespace
 				if (Disp != nullptr && Disp->Type == T_OBJ)
 				{
 					if (AActor* DA = SpawnShopDisplay(World, *Disp, Side, DisplayNote)) { GInteriorActors.Add(DA); }
+				}
+				const Value* Front = Sh.Find("front");
+				if (Front != nullptr && Front->Type == T_OBJ)
+				{
+					FString FrontNote;
+					if (AActor* FA = SpawnShopFront(World, *Front, Side, FrontNote)) { GInteriorActors.Add(FA); }
 				}
 				double SpillLumens = LedgerStreet::NumOr(Sh, "spill_lumens", 300.0);
 				FParse::Value(FCommandLine::Get(), TEXT("ShopSpillLumens="), SpillLumens);

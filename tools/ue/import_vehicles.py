@@ -79,13 +79,16 @@ def import_glb(unreal, glb, dest, mesh_asset):
     task.set_editor_property("replace_existing", True)
     task.set_editor_property("save", True)
     unreal.AssetToolsHelpers.get_asset_tools().import_asset_tasks([task])
-    mesh = None
-    for p in lib.list_assets(dest, recursive=True, include_folder=False):
-        if isinstance(lib.load_asset(p), unreal.StaticMesh):
-            mesh = p
-            break
-    if mesh is None:
+    meshes = [p for p in lib.list_assets(dest, recursive=True, include_folder=False)
+              if isinstance(lib.load_asset(p), unreal.StaticMesh)]
+    if not meshes:
         return 0, 0, "%s-no-mesh" % stem
+    # ONE MESH OR NOTHING (21 October): a glb of loose parts imports as one static mesh per part, and
+    # taking the first stood Rita's alarm clock alone behind her glass; join it first
+    # (tools/art-recipes/front_for_game.py --display).
+    if len(meshes) > 1:
+        return 0, 0, "%s-%d-meshes-join-it-first" % (stem, len(meshes))
+    mesh = meshes[0]
     if mesh.split(".")[0] != mesh_asset:
         lib.rename_asset(mesh.split(".")[0], mesh_asset)
     m = lib.load_asset(mesh_asset)

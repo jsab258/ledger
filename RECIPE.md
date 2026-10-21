@@ -19,6 +19,15 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 21 Oct 2026, item 5: weathering a kit piece in the shared master material, set aside after two tries
+- Made: two weather layers in the kit's opaque master (rain runs on vertical faces, growth on faces turned to the sky), a stronger grime band at the foot for one kind, the piece a shade darker; the darker colour and the foot passed, the runs did not.
+- Method (setting-free): add each weather layer once in the shared master, driven by the piece's own bounds (foot band from its lowest point, runs falling from its highest) and the face's direction, so every piece of a kind weathers alike; the owner's words are the target ("weathered and a shade darker"); one fresh reviewer per view.
+- Tools: the engine's material graph built by editor Python, a run map drawn from numbers, the game's film.
+- Target and check: the owner's ruling; the gate per view against the last good picture.
+- Cost (hours): about 1.5.
+- Failed and why: a world-aligned run map, even after fewer, wider and varied runs, read as an even grain, not staining hanging from the fittings that cause it; the method is wrong for runs. Next direction: decals placed from the fittings (the source handover's wear masks).
+- Evidence: production/audits/gate-lamp-post-C/GATE.md; DECISIONS.md, 21 Oct 16:30
+
 ### 21 Oct 2026, item 5: a handover's "found" list closed against primary sources
 - Made: a stale light colour corrected, a window's hours brought into line with the cast's, a phone code confirmed dead in the game's year, a texture-size question settled.
 - Method (setting-free): for each finding, read the home of the fact (the cast file, a standards table, the engine's own source) rather than memory; change the derived thing, never the home; re-gate every passed view the change touches against its last good picture.

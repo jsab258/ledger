@@ -61,7 +61,7 @@ Beside what they approve (*.approval.json; tools/approvals.py): the story outlin
 - interiors-2026-09-23: four window interiors.
 - lighting: talk and evening light tests.
 - mickeys-cars: cars considered (off until convincing).
-- shop-rooms: each shop's room plans and pictures; Rita's window models and licences (verify_display_sources.py); the printed-goods library (shop-windows/sw_prints.py: crops of 24 Poly Haven HDRIs, ids in prints_used.json, Gutenberg 1408 prose; ocr_words.py reads every map's words).
+- shop-rooms: each shop's room plans and pictures; Rita's window models and licences (verify_display_sources.py); printed goods (sw_prints.py: 24 Poly Haven HDRI crops, prints_used.json; Gutenberg 1408); the cloud's fronts for the game (front_for_game.py, meshes on F:; velvet normals ambientCG Fabric034), all CC0.
 - mickeys-props: Mickey's office's hero props, scripted in Blender (tools/art-recipes/mickeys-props/; meshes on F: game-inputs), 6 October.
 - shopfront-kit: the parade's shopfront pieces, scripted in Blender (tools/art-recipes/shopfront-kit/), 6 October.
 - sash-window: the lab's box sash (tools/art-recipes/sash-window/).

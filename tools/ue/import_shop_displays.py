@@ -26,19 +26,36 @@ import time
 
 DISPLAYS_REL = "production/assets/shop-displays"
 PACKAGE_ROOT = "/Game/Ledger/ShopDisplays"
+# AND THE CLOUD'S SHOP FRONTS (21 October 2026, his order, item 5: Rita's front first), each one mesh
+# made by tools/art-recipes/front_for_game.py, under /Game/Ledger/ShopFronts/<stem>/SM_<stem>. Both
+# kinds are read from the checkout and from the game inputs on F: (over git's 1 MB, as the rooms:
+# tools/ue/import_shop_rooms.py), the newer file taken where a stem is in both.
+FRONTS_REL = "production/assets/shop-fronts"
+FRONTS_ROOT = "/Game/Ledger/ShopFronts"
+GAME_INPUTS = os.environ.get("LEDGER_GAME_INPUTS", r"F:\LedgerTools\game-inputs")
 
 
 def repo_root():
     return os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
+def sources(root, rel):
+    """{stem: path}: the checkout's and the game inputs' glbs, the newer where a stem is in both."""
+    found = {}
+    for base in (root, GAME_INPUTS):
+        for p in glob.glob(os.path.join(base, rel, "*.glb")):
+            st = os.path.splitext(os.path.basename(p))[0]
+            if st not in found or os.path.getmtime(p) > os.path.getmtime(found[st]):
+                found[st] = p
+    return found
+
+
 def stems(root):
-    return sorted(os.path.splitext(os.path.basename(p))[0]
-                  for p in glob.glob(os.path.join(root, DISPLAYS_REL, "*.glb")))
+    return sorted(sources(root, DISPLAYS_REL))
 
 
-def mesh_path(stem):
-    return "%s/%s/SM_%s" % (PACKAGE_ROOT, stem, stem)
+def mesh_path(stem, package=PACKAGE_ROOT):
+    return "%s/%s/SM_%s" % (package, stem, stem)
 
 
 def displays_line(asked, made, nanite_off, seconds, notes):
@@ -83,12 +100,16 @@ def main():
     root = repo_root()
     out = os.path.join(unreal.Paths.project_dir(), "ue-material.txt")
     notes = []
-    found = stems(root)
+    only = [a for a in os.environ.get("LEDGER_DISPLAYS_ONLY", "").split(",") if a]
+    todo = [(st, pth, PACKAGE_ROOT) for st, pth in sorted(sources(root, DISPLAYS_REL).items())]
+    todo += [(st, pth, FRONTS_ROOT) for st, pth in sorted(sources(root, FRONTS_REL).items())]
+    if only:
+        todo = [t for t in todo if t[0] in only]
+    found = [t[0] for t in todo]
     made = nanite_off = 0
-    for stem in found:
+    for stem, path, package in todo:
         try:
-            m, off, note = import_vehicles.import_glb(unreal, os.path.join(root, DISPLAYS_REL, stem + ".glb"),
-                                                      "%s/%s" % (PACKAGE_ROOT, stem), mesh_path(stem))
+            m, off, note = import_vehicles.import_glb(unreal, path, "%s/%s" % (package, stem), mesh_path(stem, package))
             made += m
             nanite_off += off
             if note:

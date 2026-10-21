@@ -124,6 +124,13 @@ def wanted():
         pic = row.get("picture")
         if pic:
             files.append(DECAL_ROOT + "/" + pic + "/" + pic.split("/")[-1] + ".png")
+    # THE SHOP ROOMS' PICTURES BY NAME, 21 October: Rita's room from the cloud (4096 wide, 5 to 8 MB
+    # each) lives on F: under the same path, and the folder walk below sees only the checkout.
+    shops = _load("production/specs/shop-interiors.json")
+    for sh in shops.get("shops", []) or []:
+        pic = sh.get("pictures")
+        if pic:
+            files += [pic + "_" + s + ".png" for s in ("day", "night_lit", "night_dark")]
     for d in DIRS:
         root = os.path.join(REPO, d)
         for dirpath, _dirs, names in os.walk(root):
@@ -214,6 +221,10 @@ def selftest():
     check("each drawn map comes with its normal and roughness", any(f.endswith("_n.png") for f in files) and any(f.endswith("_r.png") for f in files))
     check("the street's voices are staged", any(f.startswith(VOICE_ROOT) for f in files))
     check("nothing is listed twice", len(files) == len(set(files)))
+    check("every shop room's three pictures are staged by name, wherever they live",
+          all(p["pictures"] + "_" + s + ".png" in files
+              for p in _load("production/specs/shop-interiors.json").get("shops", []) if p.get("pictures")
+              for s in ("day", "night_lit", "night_dark")))
     check("the sky photograph is staged", any(f.startswith("ledger/Assets/Resources/Sky/") and f.endswith(".png") for f in files))
     check("the photographed surfaces are staged", any(f.startswith("ledger/Assets/StreamingAssets/CityPack/textures/") for f in files))
     check("the staging folder is inside the game's content", DEST.replace("\\", "/").endswith("ue-probe/Content/LedgerData"))
