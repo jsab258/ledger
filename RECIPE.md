@@ -19,6 +19,15 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 21 Oct 2026, item 8, part: a small processor speech model timed on the game's own voice path, its cost to the frame, and a prepared opener tried as an experiment
+- Made: first sound and whole-answer times for a 100-million-parameter speech model on the processor against the larger one on the graphics card, inside and outside the game; the game's frame time while it speaks without a break; the game's own prepared openers measured against both.
+- Method (setting-free): drive the game's own helper programs exactly as the game does, with a free stand-in for the paid talk model; measure inside the game itself (scripted lines, timestamps from the line sent to the opener, the first sound and the last); measure the frame cost under a flat-out load in the shipped build with nothing else running (a first run overlapped other work and was thrown out); an unattended run starts no talk program unless one is named, so name it.
+- Tools: the speech model's own package in its own environment on the second drive, the game's voice and talk helpers, the scripted ask in the game, the shipped build's frame capture.
+- Target and check: the owner's 2-second bar to first speech (unchanged until he rules); the walk's worst frame at or under 33.3 ms.
+- Cost (hours): about 1.5.
+- Failed and why: the first in-game run waited forever (no talk program started under -unattended); the opener clips into a fast voice's answer mid-word; the remote model test waits on the owner's key; the small model's accent, which set it aside before, was not re-judged.
+- Evidence: production/research/voice-latency/POCKET-CPU-2026-10-21.md
+
 ### 21 Oct 2026, item 6: a packaged game's worst frame on a walk brought under its bar by measuring each hitch to its cause
 - Made: the walk's worst frame from 63 ms to about 32 ms (three hitches, three causes): the shop windows' reflections taken once per light at build time instead of re-photographed in play; the hourly autosave's file writes moved off the game thread; the renderer allowed to read occlusion results a frame later.
 - Method (setting-free): measure the shipped build, never the editor, on a scripted walk with the real background load running (here the voice); report the worst frame and the count over the bar, not only a percentile; for each slow frame, find where and when it falls (position, clock, logs) and break it down first with the game's own named timers in the frame capture, then with a full trace when the threads do not explain it; fix the cause, not the symptom; re-measure the whole matrix after each fix; stamp any baked data with hashes of what it was baked from, ignoring line endings, and refuse a stale bake rather than ship it.

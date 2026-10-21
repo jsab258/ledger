@@ -3402,6 +3402,7 @@ namespace
 	bool bVoiceAsked = false, bVoicePlayed = false, bVoiceRecording = false, bVoiceAllIn = false;
 	double GVoiceSeconds = 0.0, GVoiceAskedAt = 0.0, GVoicePlayedAt = 0.0;
 	double GVoiceStartedAt = 0.0;   // when the latest sentence's sound began to play
+	double GAckStartedAt = 0.0;     // when the latest opener's word began (-PreparedAck; item 8's experiment)
 
 	// A SUBTITLE ONLY WITH THE AUDIO IT BELONGS TO (23 September; the rulings sweep of
 	// 1 October found the words shown on arrival, seconds before the voice): a reply's
@@ -3987,6 +3988,7 @@ namespace
 		GAck.Sound = UGameplayStatics::SpawnSoundAtLocation(World, W, Who->GetActorLocation() + FVector(0.0f, 0.0f, 160.0f),
 			FRotator::ZeroRotator, 1.0f, 1.0f, 0.0f, Att);
 		GAck.Until = NowS() + Seconds;
+		GAckStartedAt = NowS();
 		// THE GLANCE: the sound's own face animation, on the face (the part whose
 		// skeleton the animation was made on), then back to the idle where it was.
 		// Named as tools/ue/speech_faces.py names it: AS_ plus the sound's name, dashes as underscores.
@@ -6157,7 +6159,12 @@ namespace
 	// last has been heard out; for each, the seconds from the line sent to the
 	// answer's first words and to its first sound playing are written to
 	// ask-script.json in the game's log folder, and the game then closes.
-	struct FAskScript { int32 Left = 0, N = 0; bool bWaiting = false, bReported = false; double SentAt = 0.0, HeardAt = 0.0; FString Rows; };
+	// AND THE OPENER AND THE WHOLE ANSWER (21 October, his order, item 8, "as an experiment only: an
+	// instant in-character opener (a look and a word in under half a second) while the real line
+	// streams sentence by sentence. Report first sound and full answer times"): with -PreparedAck the
+	// opener's word and glance start at the line's sending; "opener" is when its sound began, and
+	// "wholeAnswer" when the last sentence had been heard out.
+	struct FAskScript { int32 Left = 0, N = 0; bool bWaiting = false, bReported = false; double SentAt = 0.0, HeardAt = 0.0, DoneAt = 0.0; FString Rows; };
 	FAskScript GAsk;
 
 	void AskScriptTick(double Now)
@@ -6186,9 +6193,12 @@ namespace
 			const bool bDone = GLive.PendingId == 0 && GAsk.HeardAt > 0.0 && bVoiceIdle;
 			if (!bDone && Now - GAsk.SentAt < 45.0) { return; }
 			const int32 I = GAsk.N - GAsk.Left;
-			GAsk.Rows += FString::Printf(TEXT("%s{\"who\":\"%s\",\"firstWords\":%.2f,\"firstHeard\":%s}"), GAsk.Rows.IsEmpty() ? TEXT("") : TEXT(","),
+			// The voice counts idle a second after its last sound ends (bVoiceIdle), so the answer was whole then.
+			const double Whole = bDone ? (GVoice.BusyUntil - GAsk.SentAt) : -1.0;
+			const double Opener = GAckStartedAt >= GAsk.SentAt ? GAckStartedAt - GAsk.SentAt : -1.0;
+			GAsk.Rows += FString::Printf(TEXT("%s{\"who\":\"%s\",\"firstWords\":%.2f,\"firstHeard\":%s,\"opener\":%.2f,\"wholeAnswer\":%.2f}"), GAsk.Rows.IsEmpty() ? TEXT("") : TEXT(","),
 				UTF8_TO_TCHAR(People[I % 3].Card), GLive.FirstAt > GAsk.SentAt ? GLive.FirstAt - GAsk.SentAt : -1.0,
-				GAsk.HeardAt > 0.0 ? *FString::Printf(TEXT("%.2f"), GAsk.HeardAt - GAsk.SentAt) : TEXT("null"));
+				GAsk.HeardAt > 0.0 ? *FString::Printf(TEXT("%.2f"), GAsk.HeardAt - GAsk.SentAt) : TEXT("null"), Opener, Whole);
 			UE_LOG(LogTemp, Display, TEXT("LedgerAskScript: line %d to %s: first words %.2f s, first sound %.2f s"), I + 1,
 				UTF8_TO_TCHAR(People[I % 3].Card), GLive.FirstAt - GAsk.SentAt, GAsk.HeardAt > 0.0 ? GAsk.HeardAt - GAsk.SentAt : -1.0);
 			GAsk.bWaiting = false;
