@@ -1,11 +1,4 @@
 {
  "about": "Branches older than a week kept on GitHub for a stated reason, each for at most fourteen days (tools/branch_check.py). Remove a line when its branch is archived as a tag or merged. 5 October: the new repository keeps main, wip and art/atlas-01 only; the old branches stay in the private archive (jsab258/ledger-archive-2026-10).",
- "held": [
-  {
-   "branch": "art/atlas-01",
-   "why": "the September atlas, on his page (Monday's Sweep, atlas-01-map)",
-   "since": "2026-10-05",
-   "page": "Pm1pF3ygCGW3nym14UvjYS"
-  }
- ]
+ "held": []
 }
