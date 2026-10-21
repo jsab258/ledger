@@ -115,6 +115,9 @@
 #include "Engine/StaticMeshActor.h"
 #include "Engine/StaticMesh.h"
 #include "Components/StaticMeshComponent.h"
+#include "Components/SkeletalMeshComponent.h"
+#include "ProfilingDebugging/CsvProfiler.h"
+#include "Async/Async.h"
 #include "Components/LocalLightComponent.h"
 #include "Components/PointLightComponent.h"
 #include "Engine/PointLight.h"
@@ -176,6 +179,9 @@ extern "C" __declspec(dllimport) int __stdcall MoveFileExW(const wchar_t* Existi
 #include <vector>
 
 using namespace LedgerCore;
+
+// THE GAME'S OWN WORK IN THE FRAME TIME CAPTURE (item 6, 21 October): the hour's hitch broken down
+CSV_DEFINE_CATEGORY(Ledger, true);
 
 namespace
 {
@@ -4608,6 +4614,18 @@ namespace
 				}
 			}
 			if (GPawn != nullptr) { GPawn->SetActorHiddenInGame(true); }
+			// -PageNoPeople (21 October, the page check: his page's street pictures carried a stand-in
+			// pose and base clothing on the passers-by, which are not what the picture is for): every
+			// skinned person hidden, so a shop or a piece of the street is judged on its own.
+			if (FParse::Param(FCommandLine::Get(), TEXT("PageNoPeople")))
+			{
+				int32 Hid = 0;
+				for (TActorIterator<AActor> It(World); It; ++It)
+				{
+					if (It->FindComponentByClass<USkeletalMeshComponent>() != nullptr) { It->SetActorHiddenInGame(true); ++Hid; }
+				}
+				UE_LOG(LogTemp, Display, TEXT("LedgerPageShots: %d people hidden (-PageNoPeople)"), Hid);
+			}
 			// THE SIZE ASKED, drawn whole: the view resized (the game keeps its own
 			// saved size otherwise, off screen too) and at its full screen percentage.
 			if (GEngine != nullptr)
@@ -5064,7 +5082,8 @@ namespace
 
 	std::string EvidenceFor(const GossiperPtr& G, double Familiarity, int OwnRungOnA);
 	std::string JsonField(const std::string& Line, const std::string& Name);
-	void SaveEncounterToDisk();
+	void SaveEncounterToDisk(bool bInBackground = false);
+	void FlushSaves();
 
 	// WHAT OF A STORY ABOUT HIM HAS REACHED THEM (town list 1): RegardFor's
 	// Knowing and Story, only when they can tell it is him; otherwise nothing.
@@ -5381,6 +5400,7 @@ namespace
 	// closed, and the line it then writes says what this session's talk cost.
 	void SessionEndAtExit()
 	{
+		FlushSaves();   // the hour's save, if still being written, finished before the game goes
 		double Usd = -1.0;
 		if (GLive.bStarted && GLive.InWrite != nullptr)
 		{
@@ -6820,10 +6840,16 @@ namespace
 			// THE HOUR BEFORE'S TALK FIRST (the port's independent check): an hour
 			// crossed in one jump (a wait, the cells) has its rounds run before
 			// the new hour's events, as they would have been played through.
-			if (!bLiveScript && GMill && bGCast) { GWeek.RoundsTo(GMill.get(), &GCast, H.AddMinutes(-1)); }
-			ConsequenceHour(H);
+			{
+				CSV_SCOPED_TIMING_STAT(Ledger, HourTownRounds);
+				if (!bLiveScript && GMill && bGCast) { GWeek.RoundsTo(GMill.get(), &GCast, H.AddMinutes(-1)); }
+			}
+			{
+				CSV_SCOPED_TIMING_STAT(Ledger, HourConsequence);
+				ConsequenceHour(H);
+			}
 		}
-		if (!Hours.empty() && !bHoldSaves) { SaveEncounterToDisk(); }
+		if (!Hours.empty() && !bHoldSaves) { SaveEncounterToDisk(true); }   // in the background (item 6)
 		// HIS HOURS IN THE CELLS, after the hour that took him: the clock goes to
 		// his release, the town's hours running on, and the release words show.
 		if (bHeldPending)
@@ -8738,8 +8764,9 @@ namespace
 	// A SAVE FILE WRITTEN WHOLE OR NOT AT ALL (the review's C3): to a .tmp beside
 	// it, then moved over it, so a save cut off leaves the last whole file, never
 	// an empty or half-written one.
-	bool SaveWhole(const FString& Text, const TCHAR* Path, FFileHelper::EEncodingOptions Enc)
+	bool SaveWholeNow(const FString& Text, const TCHAR* Path, FFileHelper::EEncodingOptions Enc)
 	{
+		CSV_SCOPED_TIMING_STAT(Ledger, SaveFileWrites);   // item 6 (21 October): the hour's hitch, measured
 		const FString Tmp = FString(Path) + TEXT(".tmp");
 		if (!FFileHelper::SaveStringToFile(Text, *Tmp, Enc)) { return false; }
 #if PLATFORM_WINDOWS
@@ -8752,8 +8779,32 @@ namespace
 #endif
 	}
 
-	void SaveEncounterToDisk()
+	// THE HOUR'S SAVE WRITTEN OFF THE GAME THREAD (21 October, his order, item 6: the packaged walk's worst
+	// frame, 63 ms, was the autosave at the hour, 51 ms of game thread, 49.9 of it these files' writes
+	// with their flush through to the disk). The save's text is still made on the game thread, all of it
+	// at once, so it is one moment of the game; one background task then writes each file whole, in
+	// order, as before (its .tmp, then Windows' own replace), and reports on the game thread. The next
+	// save, a load and the game's exit wait for it (FlushSaves). The scripted saves stay on the game
+	// thread: the build machine's verdicts read their result at once.
+	struct FSaveFile { FString Text; FString Path; FFileHelper::EEncodingOptions Enc; };
+	TArray<FSaveFile>* GSaveBatch = nullptr;
+	TFuture<bool> GSaveWrites;
+	void FlushSaves()
 	{
+		if (GSaveWrites.IsValid()) { GSaveWrites.Wait(); }
+	}
+	bool SaveWhole(const FString& Text, const TCHAR* Path, FFileHelper::EEncodingOptions Enc)
+	{
+		if (GSaveBatch != nullptr) { GSaveBatch->Add({ Text, FString(Path), Enc }); return true; }
+		return SaveWholeNow(Text, Path, Enc);
+	}
+
+	void SaveEncounterToDisk(bool bInBackground)
+	{
+		CSV_SCOPED_TIMING_STAT(Ledger, Autosave);
+		FlushSaves();
+		TArray<FSaveFile> Batch;
+		GSaveBatch = bInBackground ? &Batch : nullptr;
 		const FString Dir = EncSaveDir();
 		GSaveDirUsed = Dir;
 		IFileManager::Get().MakeDirectory(*Dir, true);
@@ -8866,18 +8917,31 @@ namespace
 			Ok = SaveWhole(Un(GHints.ToJson()), *(Dir / TEXT("hints.json")),
 				FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM) && Ok;
 		}
-		bSavedToDisk = Ok;
+		GSaveBatch = nullptr;
 		GSavedBytes = (int)Json.size();
-		if (Ok) { GLastSavedAt = GNow; bEverSavedLive = true; }   // the pause page's "last saved at"
+		const LedgerCrime::P3 SavedAt = GPawn != nullptr ? ToStreet(GPawn->GetActorLocation()) : LedgerCrime::P3(0.0, 0.0, 0.0);
+		const GameTime SavedClock = GNow;
+		auto Done = [SavedClock, SavedAt](bool bOk)
 		{
-			const LedgerCrime::P3 At = GPawn != nullptr ? ToStreet(GPawn->GetActorLocation()) : LedgerCrime::P3(0.0, 0.0, 0.0);
-			RouteCheck(TEXT("save"), Ok, FString::Printf(TEXT("clock=%s at=%.2f,%.2f"), *Un(GNow.ToString()), At.X, At.Z));
-		}
+			bSavedToDisk = bOk;
+			if (bOk) { GLastSavedAt = SavedClock; bEverSavedLive = true; }   // the pause page's "last saved at"
+			RouteCheck(TEXT("save"), bOk, FString::Printf(TEXT("clock=%s at=%.2f,%.2f"), *Un(SavedClock.ToString()), SavedAt.X, SavedAt.Z));
+		};
+		if (!bInBackground) { Done(Ok); return; }
+		const bool bTextOk = Ok;
+		GSaveWrites = Async(EAsyncExecution::Thread, [Files = MoveTemp(Batch), bTextOk, Done]()
+		{
+			bool bOk = bTextOk;
+			for (const FSaveFile& F : Files) { bOk = SaveWholeNow(F.Text, *F.Path, F.Enc) && bOk; }
+			AsyncTask(ENamedThreads::GameThread, [bOk, Done]() { Done(bOk); });
+			return bOk;
+		});
 	}
 
 	// THE LOAD, FROM DISK, in a process that never saw the crime.
 	void LoadEncounterFromDisk()
 	{
+		FlushSaves();   // never a load over the hour's save still being written
 		const FString Dir = EncSaveDir();
 		GSaveDirUsed = Dir;
 		// CHECK FIRST, THEN LOAD (the review's C2): a save this build cannot take

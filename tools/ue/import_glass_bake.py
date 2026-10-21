@@ -51,8 +51,10 @@ def stamp(root, files=STAMPED):
     for rel in files:
         p = os.path.join(root, rel)
         if os.path.isfile(p):
+            # LINE ENDINGS IGNORED (21 October: the build machine's checkout keeps CRLF where this PC's
+            # working copy keeps LF, and its first import called a fresh bake STALE on that alone)
             with open(p, "rb") as f:
-                out[rel] = hashlib.sha256(f.read()).hexdigest()
+                out[rel] = hashlib.sha256(f.read().replace(b"\r\n", b"\n")).hexdigest()
         else:
             out[rel] = None
     return out
@@ -149,6 +151,10 @@ def selftest():
     ok("an unchanged street is not stale", changed(a, stamp(d, list(a))) == [])
     open(p, "w").write('{"glass": 1}')
     ok("a changed look is stale, by name", changed(a, stamp(d, list(a))) == ["production/specs/unreal-look.json"])
+    open(p, "wb").write(b'{\r\n "glass": 1\r\n}\r\n')
+    crlf = stamp(d, list(a))
+    open(p, "wb").write(b'{\n "glass": 1\n}\n')
+    ok("line endings alone do not make a bake stale", changed(crlf, stamp(d, list(a))) == [])
     ok("the asset is named as the game looks it up", asset_name("street_glass_eg_bay2") == "TC_street_glass_eg_bay2")
     ok("the stamp covers the street's export and look", all(f in STAMPED for f in
        ("production/assets/street/quay-street.json", "production/specs/unreal-look.json")))
