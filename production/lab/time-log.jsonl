@@ -7,3 +7,13 @@
 {"event": "stop", "at": "2026-10-07T23:14:41", "note": "three tests closed; LAB-REPORT.md written and published"}
 {"event": "start", "at": "2026-10-08T07:12:37", "task": "lab test 4: plain clothes modelled to a pattern", "phase": "lab", "kind": "production"}
 {"event": "stop", "at": "2026-10-08T08:43:42", "note": "lab test 4 closed: v27, checks near pass, fresh review FAIL; report published"}
+{"event": "start", "at": "2026-10-08T11:10:04", "task": "lab task 1: wet road reflection", "phase": "lab", "kind": "production"}
+{"event": "stop", "at": "2026-10-08T11:22:32", "note": "ROAD-NOTES.md pushed for the builder"}
+{"event": "start", "at": "2026-10-08T11:23:07", "task": "lab task 2: shop glass stair steps", "phase": "lab", "kind": "production"}
+{"event": "stop", "at": "2026-10-08T11:29:17", "note": "GLASS-NOTES.md pushed"}
+{"event": "start", "at": "2026-10-08T11:29:35", "task": "lab task 3: front door (Ellis), phase 2", "phase": "lab", "kind": "production"}
+{"event": "stop", "at": "2026-10-08T12:21:43", "note": "front door: built, check passed, two fresh reviews failed on detail; set aside for phase 2"}
+{"event": "start", "at": "2026-10-08T14:43:25", "task": "lab test 5b: jumper and trousers in Marvelous Designer", "phase": "lab", "kind": "production"}
+{"event": "stop", "at": "2026-10-08T16:16:56", "note": "test 5b stopped: Marvelous bridge not started by 15:20; target amended; FAILED page"}
+{"event": "start", "at": "2026-10-08T16:16:56", "task": "lab test 6b: talk check on a local model", "phase": "lab", "kind": "production"}
+{"event": "stop", "at": "2026-10-08T17:15:24", "note": "test 6b done: local checker less accurate, do not switch; Gemini skipped (key file empty at 17:15)"}

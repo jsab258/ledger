@@ -2,7 +2,7 @@
 
 Copied from each page's own database into this folder (pages.json lists the pages). Written by tools/page_answers.py --index; never edited by hand.
 
-Read back: 2026-10-08
+Read back: 2026-10-21
 
 | Page | Updated | Answers | Each answer: pick or verdict, date |
 |---|---|---|---|

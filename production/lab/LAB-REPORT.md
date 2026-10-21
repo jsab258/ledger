@@ -37,6 +37,26 @@
 - **Adopt:** not as a way to make clothes. Yes for the body check (count the body points through a garment; gate on zero), and yes for testing a target against the body and its pattern before building to it.
 - Page: 4-plain-clothes/REPORT.md, https://claude.ai/artifact/5rTRS2pewmoWbjXgcPLiPo
 
+## 8 October, afternoon: two answers for the builder, and the front door
+
+- **The wet road's near-white mirror** (ROAD-NOTES.md, 12 minutes): our wet film is optically a sheet of water, and the engine renders it so. A real wet road is only partly under unbroken water, and the Hook sheet asks for 0.41 to 0.60 of today's reflection. The change: one "film specular" value of about 0.13 on the wet asphalt, which halves every reflection and keeps them sharp. The notes give the target per view, with each cause cited in our code and the engine's.
+- **The shop glass's stair steps** (GLASS-NOTES.md, 7 minutes): the window's picture of the street is taken without anti-aliasing at 512. 1024 was clean but grew the editor's memory past 10 GB; one capture setting exists for exactly that. The fix: that setting, and 1024 for the two hero windows, with the light unchanged.
+- **The four-panel front door** (5-front-door/NOTES.md, for phase 2, not the builder):
+  - A fresh helper wrote the target from Ellis and a photograph, the photograph winning nine disagreements, and tested it against its own sources (68 of 69).
+  - Built by script, it passes every check at the second run, and both fresh reviewers found its proportions right within about 1%.
+  - Both failed it on detail the target did not write down: the mouldings' profiles, the ironmongery, and the frame's square edges and projecting transom that its own photographs show. Set aside after two tries.
+  - The repository's size guard keeps the door's .glb out of git (models only where the game's build imports from), so it stays on F:, and the scripts rebuild it.
+
+## 8 October, evening: Marvelous Designer, and the talk check on a local model
+
+- **Ron's clothes in Marvelous Designer: FAILED, not tried** (6-marvelous-clothes/REPORT.md).
+  - Marvelous runs scripts only from inside the open program; the builder's bridge needs one press of Run in its Python window each time it opens. You were asked once at 14:46; no bridge by the 15:20 stop.
+  - First, a fresh helper amended the target with everything the test 4 reviewer found missing (sleeve ease, a tapered leg breaking on the boot, pleats, a flush waistband and fly, ribs drawing in), and its self-check passes. It is kept for any cloth route.
+- **The talk check on a small local model: do not switch** (talk-check/REPORT.md, $0).
+  - TinyLettuce 68M (MIT) on the CPU, on the 7 October sets: at its own setting it let 60% of invented details through (Haiku 5.5: 2%). Set strict, it refused 82% of true details (Haiku 5.5: 27%).
+  - It is faster only on short first sentences (0.33 s).
+  - Haiku 5.5 as the split stays.
+
 ## What needs you
 
 1. **Lab pushes:** done (allowed 8 October).
