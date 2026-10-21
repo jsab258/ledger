@@ -28,7 +28,7 @@ import tempfile
 # THE CAPS. A new session's own status file is added here, with its cap, in the
 # same commit that creates it.
 CAPS = [
-    ("CLAUDE.md", 1100),    # 13 Oct: +100, his ruling C adds the RECIPE.md rule (92 words) and he ordered it into this file
+    ("CLAUDE.md", 1270),    # 13 Oct: +100, his ruling C adds the RECIPE.md rule (92 words) and he ordered it into this file; 21 Oct: +170, his research-method and editor-tools rules (169 words), written as he gave them
     ("RULINGS.md", 3140),   # 7 Oct: his rulings grow and his words are not trimmed to fit (12 Oct: +60, the AAA study; 13 Oct: +480, his combat, NoAI and recipe rulings)
     ("NOW.md", 200),
     ("TOWN.md", 300),
