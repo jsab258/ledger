@@ -20,7 +20,9 @@ concurrency:
 jobs:
   guard:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    # 25, not 10 (21 October 2026): fetching each changed file's size one by one ran past 10
+    # minutes on pushes of several commits with Unreal assets, and every such run was cancelled.
+    timeout-minutes: 25
     steps:
       # The history without its file contents (a few MB): the guard reads only the commits it
       # checks, and asks for the sizes of their files, which git fetches one by one.
