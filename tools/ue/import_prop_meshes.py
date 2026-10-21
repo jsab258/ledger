@@ -215,7 +215,12 @@ def _kit_slots(unreal, mesh, report):
     """A kit piece's slots dressed by name: each slot named in kit-materials.json wears
     /Game/Ledger/Kit/MI_Kit_<slot> (tools/ue/make_kit_materials.py); a slot marked "shadow": false
     has its sections' shadow casting turned off (the lamp's glass, tube and bowl). Returns
-    (dressed, asked, shadowsOff, unknown names)."""
+    (dressed, asked, shadowsOff, unknown names).
+
+    THE SHADOWS NEED THE FULL EDITOR (21 October 2026, measured): under -run=pythonscript the
+    static mesh editor subsystem is None and every section's shadow is refused; run a kit import
+    in the editor itself, UnrealEditor.exe <project> -ExecutePythonScript=<this file>, with
+    LEDGER_PROPS_ONLY=<asset> (lamp post C: dressed 9/9, shadowsOff 3)."""
     import json as _json
     with open(os.path.join(repo_root(), KIT_SPEC), encoding="utf-8") as f:
         spec = _json.load(f)["slots"]
