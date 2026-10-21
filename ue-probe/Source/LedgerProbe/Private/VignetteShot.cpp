@@ -1142,6 +1142,25 @@ namespace
 	};
 	std::vector<LampPiece> GLampPieces;
 
+	// ---- A KIT PIECE'S GLOWING SLOTS (21 October 2026, lamp post C) ------
+	//
+	// The cloud's kit pieces keep their own named material slots
+	// (production/specs/kit-materials.json; tools/ue/import_prop_meshes.py
+	// dresses them). A slot that file gives a glow gets its own dynamic
+	// instance here, and the lantern drive lights it: the lantern colour times
+	// the file's lit_emissive times the slot's glow, black by day.
+	struct KitGlow
+	{
+		UMaterialInstanceDynamic* Mid;
+		double                    Glow;
+	};
+	std::vector<KitGlow> GKitGlow;
+	std::map<std::string, double> GKitGlowBySlot;
+	double GKitLitEmissive = 0.0;
+	bool   GKitSpecRead = false;
+	int    GKitPieces = 0;
+	int    GKitNoActor = 0;
+
 	// ---- QUEUE 333: THE WRITE-ON-CHANGE GUARD FOR THAT DRIVE ------------
 	//
 	// WHY THIS STRUCT IS IN THIS FILE AND NOT BESIDE LedgerSurface::
@@ -3356,6 +3375,18 @@ namespace
 			(float)(SrgbToLinear(GSpec.Lantern.G) * Gain),
 			(float)(SrgbToLinear(GSpec.Lantern.B) * Gain),
 			1.0f);
+		// THE KIT LAMPS' GLOWING SLOTS, in the lights' own colour (the look
+		// file's, else the scene file's), so the glass and the light agree.
+		const FLinearColor KitLamp = GLook.bLanternRgb
+			? FLinearColor((float)GLook.LanternR, (float)GLook.LanternG, (float)GLook.LanternB, 1.0f)
+			: LinearFromGamma(GSpec.Lantern.R, GSpec.Lantern.G, GSpec.Lantern.B);
+		for (size_t I = 0; I < GKitGlow.size(); ++I)
+		{
+			if (GKitGlow[I].Mid == nullptr) { continue; }
+			const float K = bWant ? (float)(GKitLitEmissive * GKitGlow[I].Glow) : 0.0f;
+			GKitGlow[I].Mid->SetVectorParameterValue(FName(TEXT("EmissiveColor")),
+				FLinearColor(KitLamp.R * K, KitLamp.G * K, KitLamp.B * K, 1.0f));
+		}
 		for (size_t I = 0; I < GLampPieces.size(); ++I)
 		{
 			++GLampDrive.Visits;
@@ -3493,7 +3524,10 @@ namespace
 				                         : "SOMETHING-ELSE")
 				: "nothing-measured",
 			GLampDrive.CompIsMidOn.c_str());
-		return std::string(B);
+		char K[160];
+		std::snprintf(K, sizeof(K), " kitPieces=%d/noActor=%d kitGlowSlots=%d kitLitEmissive=%.2f",
+			GKitPieces, GKitNoActor, (int)GKitGlow.size(), GKitLitEmissive);
+		return std::string(B) + K;
 	}
 
 	// THE ONLY WRITER OF THE SUN, THE FILL, THE FOG, THE SKY AND THE WETNESS.
@@ -8326,6 +8360,59 @@ namespace
 		UE_LOG(LogTemp, Display, TEXT("LedgerWear: %d of %d wear decals stood (street-wear.json, D53)"), GWearStood, GWearAsked);
 	}
 
+	// THE KIT FILE'S GLOWS, read once beside the pieces file it is staged
+	// with: each slot's glow and the arc tube's lit emissive.
+	void ReadKitGlow()
+	{
+		if (GKitSpecRead) { return; }
+		GKitSpecRead = true;
+		FString Contents;
+		const FString File = FPaths::Combine(FPaths::GetPath(GSpecPath), TEXT("kit-materials.json"));
+		if (!FFileHelper::LoadFileToString(Contents, *File))
+		{
+			UE_LOG(LogTemp, Display, TEXT("LedgerKit: no %s, the kit's lamps stay dark"), *File);
+			return;
+		}
+		const std::string Text(TCHAR_TO_UTF8(*Contents));
+		Reader R(Text);
+		Value Root;
+		if (!R.ReadValue(Root) || Root.Type != T_OBJ) { return; }
+		GKitLitEmissive = LedgerStreet::NumOr(Root, "lit_emissive", 0.0);
+		const Value* Slots = Root.Find("slots");
+		for (size_t I = 0; Slots != nullptr && Slots->Type == T_OBJ && I < Slots->Obj.size(); ++I)
+		{
+			const double Glow = LedgerStreet::NumOr(Slots->Obj[I].second, "glow", 0.0);
+			if (Glow > 0.0) { GKitGlowBySlot[Slots->Obj[I].first] = Glow; }
+		}
+	}
+
+	// A KIT PIECE KEEPS THE MATERIALS ITS IMPORT GAVE ITS SLOTS; only the
+	// glowing ones get an instance of their own, for the lantern drive.
+	void BindKitPiece(const Piece& Pc)
+	{
+		++GKitPieces;
+		ReadKitGlow();
+		AStaticMeshActor** Found = GByName.Find(FString(UTF8_TO_TCHAR(Pc.Name.c_str())));
+		UStaticMeshComponent* Comp = (Found != nullptr && *Found != nullptr) ? (*Found)->GetStaticMeshComponent() : nullptr;
+		if (Comp == nullptr) { ++GKitNoActor; return; }
+		const TArray<FName> Slots = Comp->GetMaterialSlotNames();
+		for (const FName& Slot : Slots)
+		{
+			const std::map<std::string, double>::const_iterator It = GKitGlowBySlot.find(std::string(TCHAR_TO_UTF8(*Slot.ToString())));
+			if (It == GKitGlowBySlot.end()) { continue; }
+			const int32 Index = Comp->GetMaterialIndex(Slot);
+			UMaterialInterface* M = Index >= 0 ? Comp->GetMaterial(Index) : nullptr;
+			if (M == nullptr) { continue; }
+			UMaterialInstanceDynamic* Mid = UMaterialInstanceDynamic::Create(M, Comp);
+			if (Mid == nullptr) { continue; }
+			Comp->SetMaterial(Index, Mid);
+			KitGlow G;
+			G.Mid = Mid;
+			G.Glow = It->second;
+			GKitGlow.push_back(G);
+		}
+	}
+
 	void BindSurfaces()
 	{
 		// THE WETNESS, DECIDED BEFORE THE FIRST INSTANCE IS MADE, because an
@@ -8335,6 +8422,9 @@ namespace
 		// before this file is compiled; this supplies the spec and nothing
 		// else.
 		GWetness = LedgerSurface::WetnessForBind(GSpec);
+		GKitGlow.clear();
+		GKitPieces = 0;
+		GKitNoActor = 0;
 		GBaseMaterial = LoadObject<UMaterialInterface>(nullptr, kBaseMaterialPath);
 		GTexRoot = FindTexRoot(GTexRootFiles, GTexRootTried);
 		// THE DECALS ARE A SECOND ROOT AND A SECOND READING. They are staged by
@@ -8550,6 +8640,7 @@ namespace
 		{
 			const Piece& Pc = GSpec.Pieces[P];
 			++GPaint.Examined;
+			if (Pc.Surface == "kit") { BindKitPiece(Pc); continue; }
 			int32 Idx = -1;
 			for (size_t I = 0; I < GBinds.size(); ++I)
 			{

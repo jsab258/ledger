@@ -1,6 +1,6 @@
 # Third-party models: The Base Mesh
 
-37 of the 39 .glb in this directory are CC0 1.0 from The Base Mesh
+37 of the 40 .glb in this directory are CC0 1.0 from The Base Mesh
 (https://thebasemesh.com), fetched via the M3-org GitHub mirror
 (https://github.com/M3-org/base-meshes) by tools/props/fetch_visual.py.
 
@@ -33,3 +33,18 @@ texture or UV set imported from anywhere. Neither has happened; the profiles
 are dimensioned from British shopfront design guidance (cited in the spec,
 prose guidance rather than copied geometry) and from the brick module the
 street's own scene file already carries.
+
+## And lamp post C, added 2026-10-21, also NOT third party
+
+- `lamp_post_C.glb`
+
+LEDGER's own work, the cloud week's lamp post (a concrete column and its
+sodium lantern), built by script in Blender by
+`production/cloud-week/kit/lamp-posts/` to the targets in
+`production/cloud-week/targets/lamp-posts/`, plain materials, no texture and
+no fetched input. This copy is the cloud's
+`production/assets/cloud-week/lamp-posts/lamp_post_C.glb` with its parts joined
+into one mesh and its named material slots kept, by
+`tools/art-recipes/kit_for_game.py`; nothing else changed. It sits here because
+the held-props route reads this directory by name.
+

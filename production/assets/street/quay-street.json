@@ -2993,30 +2993,6 @@
    "faces": 1813
   },
   {
-   "mesh": "street_grime",
-   "material": "grime",
-   "base_material": "grime",
-   "linear_rgb": [
-    0.078,
-    0.061,
-    0.048
-   ],
-   "roughness": 0.9,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 180
-  },
-  {
    "mesh": "street_harbour_water",
    "material": "harbour_water",
    "base_material": "harbour_water",
@@ -3194,30 +3170,6 @@
    "emit_night": null,
    "reveal_on": null,
    "faces": 1794
-  },
-  {
-   "mesh": "street_lens_amber",
-   "material": "lens_amber",
-   "base_material": "lens_amber",
-   "linear_rgb": [
-    0.78,
-    0.36,
-    0.04
-   ],
-   "roughness": 0.2,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": 0.0,
-   "emit_night": 8.0,
-   "reveal_on": null,
-   "faces": 132
   },
   {
    "mesh": "street_mickeys_card_production_art_shop_rooms_mickeys_day",
@@ -4345,7 +4297,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 3807
+   "faces": 1812
   },
   {
    "mesh": "street_stone",

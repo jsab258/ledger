@@ -99,6 +99,12 @@ import sys
 # ---- the three path conventions, which are a contract with the C++ --------
 
 BASE_MESH_DIR = os.path.join("ledger", "Assets", "Props", "base-mesh")
+# THE KIT'S PIECES, 21 October 2026 (his order, item 5): the cloud's script-built models made ready
+# by tools/art-recipes/kit_for_game.py (parts joined, slots named), looked for here first. They keep
+# their own materials, one per slot by its name (production/specs/kit-materials.json), where the
+# base-mesh props wear the street surface the scene names.
+KIT_SPEC = os.path.join("production", "specs", "kit-materials.json")
+KIT_PACKAGE = "/Game/Ledger/Kit"
 PACKAGE_DIR = "/Game/Ledger/Props"
 UASSET_PREFIX = "SM_"
 
@@ -192,6 +198,65 @@ def object_path(asset_id):
 
 def glb_source(asset_id):
     return os.path.join(BASE_MESH_DIR, asset_id + ".glb")
+
+
+def is_kit(asset_id):
+    """A cloud kit piece (production/specs/kit-materials.json "pieces"): it keeps its own named
+    slots, dressed by _kit_slots, instead of one street surface in slot 0."""
+    import json as _json
+    try:
+        with open(os.path.join(repo_root(), KIT_SPEC), encoding="utf-8") as f:
+            return asset_id in _json.load(f).get("pieces", [])
+    except (OSError, ValueError):
+        return False
+
+
+def _kit_slots(unreal, mesh, report):
+    """A kit piece's slots dressed by name: each slot named in kit-materials.json wears
+    /Game/Ledger/Kit/MI_Kit_<slot> (tools/ue/make_kit_materials.py); a slot marked "shadow": false
+    has its sections' shadow casting turned off (the lamp's glass, tube and bowl). Returns
+    (dressed, asked, shadowsOff, unknown names)."""
+    import json as _json
+    with open(os.path.join(repo_root(), KIT_SPEC), encoding="utf-8") as f:
+        spec = _json.load(f)["slots"]
+    dressed = shadows = 0
+    unknown = []
+    try:
+        mats = mesh.get_editor_property("static_materials")
+    except Exception as e:
+        report.append("kit-slots-unreadable=%s" % str(e).split("\n")[0][:60])
+        return 0, 0, 0, ["unreadable"]
+    names = [str(m.get_editor_property("material_slot_name")) for m in mats]
+    for i, name in enumerate(names):
+        if name not in spec:
+            unknown.append(name)
+            continue
+        mi = unreal.EditorAssetLibrary.load_asset(KIT_PACKAGE + "/MI_Kit_" + name)
+        if mi is None:
+            unknown.append(name + "(no-instance)")
+            continue
+        try:
+            mesh.set_material(i, mi)
+            dressed += 1
+        except Exception as e:
+            report.append("kit-slot-%s-refused=%s" % (name, str(e).split("\n")[0][:60]))
+    sub = unreal.get_editor_subsystem(unreal.StaticMeshEditorSubsystem)
+    try:
+        sections = sub.get_number_materials(mesh) if hasattr(sub, "get_number_materials") else len(names)
+    except Exception:
+        sections = len(names)
+    for sec in range(sections):
+        try:
+            slot = sub.get_lod_material_slot(mesh, 0, sec)
+        except Exception:
+            slot = sec
+        if 0 <= slot < len(names) and spec.get(names[slot], {}).get("shadow", True) is False:
+            try:
+                sub.enable_section_cast_shadow(mesh, False, 0, sec)
+                shadows += 1
+            except Exception as e:
+                report.append("kit-shadow-%s-refused=%s" % (names[slot], str(e).split("\n")[0][:60]))
+    return dressed, len(names), shadows, unknown
 
 
 def spec_box_m(piece):
@@ -2938,6 +3003,12 @@ def run_in_unreal():
     pieces = len(mesh_pieces(spec))
     boxes, _ = box_per_asset(spec)
     report = []
+    # ONE PIECE AT A TIME WHEN ASKED (21 October 2026): LEDGER_PROPS_ONLY=lamp_post_C imports
+    # just the named assets and leaves every other committed prop asset as it is.
+    only = [a for a in os.environ.get("LEDGER_PROPS_ONLY", "").split(",") if a]
+    if only:
+        asked = [(a, n) for a, n in asked if a in only]
+        report.append("only=%s" % "|".join(only))
     readings, failures = [], []
     sources = imported = saved = 0
     vias, details = [], []
@@ -2972,7 +3043,7 @@ def run_in_unreal():
             report.append("predelete-refused/%s=%s"
                           % (asset_id, str(e).split("\n")[0][:50]))
 
-    todo = [(a, boxes[a]) for a, _ in asked] + [(e, None) for e in EXTRA_ASSETS]
+    todo = [(a, boxes[a]) for a, _ in asked] + [(e, None) for e in EXTRA_ASSETS if not only or e in only]
     for asset_id, box in todo:
         is_extra = box is None
         abs_glb = os.path.join(root, glb_source(asset_id))
@@ -3010,6 +3081,9 @@ def run_in_unreal():
         # convention cannot put a box where the mesh is not.
         origin, extent, bvia = _bounds_of(unreal, mesh, report)
         cstate = _ensure_collision(unreal, mesh, origin, extent, report)
+        if is_kit(asset_id):
+            kd, ka, ks, ku = _kit_slots(unreal, mesh, report)
+            report.append("kit-%s=dressed%d/%d,shadowsOff%d,unknown:%s" % (asset_id, kd, ka, ks, "|".join(ku) or "none"))
         ok_save = False
         try:
             ok_save = bool(unreal.EditorAssetLibrary.save_asset(package_path(asset_id), False))

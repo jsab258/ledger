@@ -150,7 +150,9 @@ namespace LedgerSurface
 		for (size_t I = 0; I < Pieces.size(); ++I)
 		{
 			const std::string& S = Pieces[I].Surface;
-			if (S.empty()) { continue; }
+			// "kit": a cloud kit piece wearing its own named slots' materials
+			// (production/specs/kit-materials.json), never a street surface.
+			if (S.empty() || S == "kit") { continue; }
 			bool bFound = false;
 			for (size_t J = 0; J < Out.size(); ++J)
 			{

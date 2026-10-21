@@ -3,7 +3,7 @@
 The overview first; then the day's summary, under 200 words. Earlier summaries are in git and in
 production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md before that).
 
-## Overview (Thursday 8 October, written in the night and brought up to date before 07:30)
+## Overview (Wednesday 21 October: the PC back after 8 to 21 October; your week's order)
 
 <!-- morning pictures: written by tools/morning_pictures.py -->
 
@@ -21,37 +21,11 @@ No decision asked: these are for watching the street change.
 
 <!-- /morning pictures -->
 
-**The light change, this morning beside midday (8 October; editor pictures, same views).** The street now lit by the sky it shows, the colours tuned under the dark light brought back, the night camera a stop up and its lit windows glowing as rooms; Mickey's row's new sashes in the midday night picture. Its faults, by the gate's numbers: the brick's saturation 0.28 against the sheet's 0.53-0.65; the road mirroring the sky; the near lamp pool's clipped red 6% of the pavement (this morning's 4%).
-
-| | This morning, 08 Oct | Midday, 08 Oct |
-|---|---|---|
-| The hook camera by day | ![This morning](production/previews/morning-hook-day-2026-10-08.jpg) | ![Midday](production/previews/morning-hook-day-midday-2026-10-08.jpg) |
-| The reverse view | ![This morning](production/previews/morning-reverse-day-2026-10-08.jpg) | ![Midday](production/previews/morning-reverse-day-midday-2026-10-08.jpg) |
-| The street at night | ![This morning](production/previews/morning-night-2026-10-08.jpg) | ![Midday](production/previews/morning-night-midday-2026-10-08.jpg) |
-
-**This morning beside this evening, from the packaged game (8 October, 16:46; build 69d0948, all work to 16:06).**
-
-| | This morning, 08 Oct | This evening, 08 Oct (packaged) |
-|---|---|---|
-| The hook camera by day | ![This morning](production/previews/morning-hook-day-2026-10-08.jpg) | ![This evening](production/previews/morning-hook-day-evening-2026-10-08.jpg) |
-| The reverse view | ![This morning](production/previews/morning-reverse-day-2026-10-08.jpg) | ![This evening](production/previews/morning-reverse-day-evening-2026-10-08.jpg) |
-| The street at night | ![This morning](production/previews/morning-night-2026-10-08.jpg) | ![This evening](production/previews/morning-night-evening-2026-10-08.jpg) |
-
-**Where I stopped and what comes next (16:50).** New work stopped at 16:06 with the evening build; its views are above. Not passed: the frame rate. The shop glass's catch round costs a slow frame a window, and the evening build reads below 30 at its worst (99th percentile 46.8 ms; 33.7 this afternoon, 31.2 this morning; production/d1-probe/ue-perf-verdict.txt). Next, in order: the frame rate, by taking the glass catch out of play (at load, behind the title) and measuring it packaged; Mickey's open door (walked packaged at 16:55: its rails' overrun past the white post halved, not gone, after two tries; set aside, the post's depth to measure); then the road's flags and puddles, and the lab's second glass step. Item 1.1's own known shortfalls stand: the base layer, the bare sky, faint wear, the glass's small steps.
-
-**Today, by your orders of 07:10 and 11:10 (the PC goes off at 19:00).** The way back is tagged (before-sky-2026-10-08). Done: the talk branch merged; the sky lit by the sky it shows (two tries, closer, not passed); Mickey's row's windows to the photographs; the claim check on Haiku 5.5; Tom keeps take L1. Your light faults, two tries each: the near lamp pool 0.5% clipped (met); the brick passes near, parade and far, the left terrace and maroon fascias still short; the road a wet grey sheen instead of a white mirror, two of its three numbers still out, its flat puddles now standing out (production/audits/road-2026-10-08). Mickey's office under the new light: four fresh reviewers, two faults blocked (the night's reflected windows too bright, the yellow lines glowing); after one try each every office and front view passes on new faults, the directories now books, a back room behind the back door (production/audits/office-2026-10-08). Then (your 14:30 message) the lab's glass fix: the reflections' steps halved, rings gone, the card's memory within bounds (peak 7.9 GB); and a packaged walk-in of the office (the back room reads; the open door's rails needed a second try).
-
-Mickey's office this morning (left) and now (right), day above, night below; then his whole front by day and night (editor pictures):
-
-![Mickey's office, this morning and now](production/previews/office-morning-afternoon-2026-10-08.jpg)
-
-![Mickey's front, day and night](production/previews/mickeys-front-day-night-2026-10-08.jpg)
-
-Disk (10-08 03:45): C: 88.5 GB free, F: 38.4 GB free (retention's floors: 40 and 20).
-
-**Phase 1: on 1.1 (Mickey's office and Rita's front); its third review did not pass.** Your new gate ran for the first time (one reviewer per view, each beside its last good picture; [the review](production/audits/phase1-exit/GATE-1.1-REVIEW-3.md)). Every change of last evening did what it was meant to and made no fault: the black block, the roofs, the west shops' rooms, Sheila and Ron out of the office camera, grime at the tiles' foot. Blocking are faults newly seen: the street's walkers walk through things (the crates, an oil drum, each other); Mickey's office (a blind that stops short, a blank white slab, a chair Tom walks through, window-frame pieces poking into the room); and three of the review's own views framed too high to see a front's foot. Fixed by 04:30 and seen in the editor: the walkers kept out of the yard's crates and barrel, the stacking chair solid, the office's grime off the door frame, and each shop photographed whole from across the road ([picture](production/previews/shop-fronts-whole-2026-10-08.jpg)); and by 05:45 the office rebuilt: the open door flat on its wall, the blind fitted to its pane, the slab and the chair gone, and Ron's rank spot moved off the doorway's line; the grey slab past Mickey's end (the sky photograph's trees, stretched) gone. In the editor Tom stops at the office door (its room collides there; the packaged game let him in at 03:45): tonight's packaged walk-in is the test. Not narrow, but known: the cast's base layer, the glass at night, Rita's white sawtooth, faint wear on painted fronts, a bare sky. **1.2:** turning, sitting down and standing up work in the editor and are in last night's build; the walk slides at its joins; Tom's face blocked (Needs you 1); clothes failed (Needs you 3). **1.3, speech:** failed, a blocked capability. **1.4, P1:** complete.
-
-**The tester's walk (8 October, 03:04, last night's build):** 10 of 13 stages. It never found Sheila on the street to talk to, and lost her the next day; Ron stayed 8.5 m away; it talked with Darren (words in 0.2 s, the stand-in's). Darren and Hana saw the window broken; Ron showed he knew. What broke the illusion, by its eyes: Tom's stand-in stands splay-legged and stiff; three frames pitch black; the camera inside Tom's back; "Talk to Ron" offered while he stood in an unlit doorway; walkers frozen mid-stride, one foot through the tea room's step. The sixty-question bench measured nothing again. Why it missed Sheila: the route's, not the game's. The game writes nobody's place during her opening lines, which now turn page by page, and the route's five presses no longer ended them. Fixed, the same walk passed 15 of 15 at 06:10, talking to Sheila, Ron and Darren.
+**Today, 21 October, your week's order, top to bottom (the 8 October overview is in git).**
+- *Health check.* Disk: C: 91.3 GB and F: 52.5 GB free (floors 40 and 20; retention cleared F:'s old temp folder). Unreal opening the project: checked once the build machine's run ends (it was building 12:15's package). Jobs: the morning pictures ran at 12:15 (the views above) and the retention job; the nightly walk ran 12:57 to 13:12 (route 12 of 15 stages), but its eyes step failed: the command-line Claude's sign-in expired during the break (tested: "OAuth session expired"), which also stops the nightly read of your page answers, so I read them back by hand: 31 pages, nothing new since 7 October (Needs you 2). Git: clean.
+- *Branches.* The cloud's week (pull request #3) and the lab merged into wip, no conflict that touched your rulings or canon; talk, art/atlas-01 (adopted on 6 October), the two claude/ branches, lab and the cloud branch archived as tags. GitHub now holds main and wip only.
+- *Rules and combat.* Your research-method and editor-tools rules are in CLAUDE.md as written (its word cap raised by them); your combat doc is game-design/combat-design.md, one word changed (a real knife brand made a utility knife, as canon asks).
+- *Editor connection.* Epic's plugin installed for the project; the editor's MCP connection registered; its first read-only test follows the build machine.
 
 **Risks, Monday's review (production/research/pre-production/6-RISKS.md).**
 - R3, the street missing the bar: up, 25. The audit finds the visual method unproved: five proof-view steps were set aside, and Mickey's room failed three reviews. Phase 1's binding stop answers it.
@@ -62,7 +36,8 @@ Disk (10-08 03:45): C: 88.5 GB free, F: 38.4 GB free (retention's floors: 40 and
 
 ### Needs you
 
-(Your answers of 11:10 are in RULINGS.md: Tom keeps take L1; the photographs win over a period book; the two clothing checks; clothes reported failed, the base layer through phase 1. Nothing else waits on you.)
+1. Is "Help improve Claude" off in your claude.ai account? Your licence ruling of 3 October rests on it, and the Unreal editor connection now sends editor data. Recommended: check it once and say yes.
+2. The command-line Claude needs you to sign in again (it expired while the PC was off), or the night jobs that ask Claude keep failing. Recommended: in the Terminal, type claude, sign in once, then type /exit.
 
 ### Road to worth playing (PLAN.md)
 

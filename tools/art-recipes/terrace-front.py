@@ -577,6 +577,8 @@ STREET_FRONTAGE_M = 5.125
 #: staggered side to side, set 0.6 m back from the kerb. The piece file is the
 #: street as built and this recipe places its fronts around the same lamps.
 LAMP_AT = ((8.0, 3.725), (18.0, -3.725), (28.0, 3.725), (38.0, -3.725))
+#: False from 21 October 2026: lamp post C, the scene file's held prop, stands at LAMP_AT instead.
+LAMPS_FROM_RECIPE = False
 
 #: The two conditions the scene file names, and the only two this recipe
 #: renders. MEASURED: `conditions` in production/specs/vignette-scene.json.
@@ -2448,13 +2450,18 @@ def plan_street(root, spec_rel=SPEC_REL):
     # where they stood.
     if CARS_ON_STREET:
         _vehicles(out)
-    lamps, lerr = lamp_parts(root)
-    if lerr:
-        # A STREET WITH NO LAMPS IN IT SAYS SO. The night frame is the one the
-        # stage is judged on and it is nothing without them, so this refuses
-        # rather than quietly rendering an unlit street that looks deliberate.
-        return None, lerr
-    out.extend(lamps)
+    # THE LAMPS ARE THE SCENE FILE'S FROM 21 OCTOBER 2026 (his order of that day, item 5): the
+    # cloud's lamp post C stands at LAMP_AT as a held prop Unreal places from the scene file, so
+    # the recipe's own lighting column stays out of the street it exports. The Blender render's
+    # lights (lantern_lights) still hang where the lamps are.
+    if LAMPS_FROM_RECIPE:
+        lamps, lerr = lamp_parts(root)
+        if lerr:
+            # A STREET WITH NO LAMPS IN IT SAYS SO. The night frame is the one the
+            # stage is judged on and it is nothing without them, so this refuses
+            # rather than quietly rendering an unlit street that looks deliberate.
+            return None, lerr
+        out.extend(lamps)
     _house_variety(out)
     return out, ""
 
@@ -9626,6 +9633,16 @@ def selftest():
     check("accept/six-kinds-of-clutter-stand-in-the-street/the-pole-off-since-3-October",
           placed_kinds == ["bollard", "dustbin", "grit-bin", "kx100-kiosk", "litter-bin",
                            "pillar-box"], "%s %s" % (placed_kinds, cnotes))
+    try:
+        with open(os.path.join(ROOT, "production", "specs", "vignette-scene.json"), encoding="utf-8") as fh:
+            _held = json.load(fh)["held_props"]["items"]
+        lamp_spots = sorted((float(h["x_m"]), 1.0 if h.get("side") == "east" else -1.0)
+                            for h in _held if h.get("asset") == "lamp_post_C")
+    except (OSError, ValueError, KeyError) as e:
+        lamp_spots = [str(e)]
+    check("accept/the-lamps-are-the-scene-file's-lamp-post-C-at-every-LAMP_AT-and-none-of-the-recipe's",
+          not LAMPS_FROM_RECIPE and lamp_spots == sorted((x, 1.0 if y > 0 else -1.0) for x, y in LAMP_AT),
+          "%s %s" % (LAMPS_FROM_RECIPE, lamp_spots))
     check("accept/no-clutter-shares-a-lamp-column's-spot",
           all(abs(sp[1] - 8.0) >= CLUTTER_CLEAR_OF_COLUMN_M - 1e-9 or sp[2] < 0
               for sp in spots if sp[0] == "litter-bin"), "%s" % spots)

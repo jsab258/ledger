@@ -588,16 +588,16 @@
     {
       "id": "E1_lighting_column",
       "group": "E",
-      "what": "Street lighting column, swan neck, at a height that lights a carriageway",
-      "count": 1,
-      "route": "GENERATE",
-      "make_by": "PROC",
+      "what": "Street lighting column with its sodium lantern: lamp post C, the precast concrete column with its mitred concrete arm and the side-entry sodium lantern",
+      "count": 4,
+      "route": "HAVE",
       "certainty": "HELD",
-      "source": "scene generator",
-      "licence": "generated here",
-      "dims": "from JSON",
+      "source": "production/assets/cloud-week/lamp-posts/lamp_post_C.glb, built by script (production/cloud-week/kit/lamp-posts/build_lamp.py, cloud week 42 unit 3.8), copied to ledger/Assets/Props/base-mesh/lamp_post_C.glb",
+      "licence": "our own, built by script from the target (production/cloud-week/targets/lamp-posts)",
+      "dims": "measured from the model: 0.30 x 5.15 x 1.19 m (glTF x, y up, z), the column planted 0.15 m, the lantern 4.80 to 5.00 m up and 0.43 to 1.08 m out; 10,868 triangles",
       "priority": "MANDATORY",
-      "note": "MEASURED FINDING: the held lamp_post_01 measures 0.37 x 0.27 x 3.00 m. Three metres is amenity or park height; a British residential lighting column of the period is roughly 5 to 6 m. The lantern height decides the whole night image (throw, shadow length, how much of the frame is lit), so this is the highest-consequence measurement in the document. Rescaling the held mesh is forbidden by the dims policy; emitting a column at a height named in JSON is not."
+      "note": "21 October: the held-props route's first kit piece, replacing the scene's swan-neck stand-in and the lighting-column recipe's column at the same four places. Before: MEASURED FINDING: the held lamp_post_01 measures 0.37 x 0.27 x 3.00 m. Three metres is amenity or park height; a British residential lighting column of the period is roughly 5 to 6 m. The lantern height decides the whole night image (throw, shadow length, how much of the frame is lit), so this is the highest-consequence measurement in the document. Rescaling the held mesh is forbidden by the dims policy; emitting a column at a height named in JSON is not.",
+      "gate": "kit check 69 of 69 and two fresh reviews in the cloud; the game's own gate owed on the PC"
     },
     {
       "id": "E2_sodium_lantern_head",

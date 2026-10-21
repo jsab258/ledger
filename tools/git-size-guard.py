@@ -44,6 +44,10 @@ GAME_INPUTS = {                        # prefix: cap a file, in bytes
     # THE DECAL PICTURES (4 October): the street's stains and puddles, drawn by tools/make_wear_masks.py,
     # packaged from git by tools/ue/stage_game_data.py (DIRS); missing from this list since 3 October.
     "ledger/Assets/StreamingAssets/Decals/": 5_000_000,
+    # THE HELD PROPS (21 October): tools/ue/import_prop_meshes.py imports each held prop from here by
+    # name, and the Core tests check every prop the scene names has its file here; the cloud's kit
+    # pieces join them as joined copies (tools/art-recipes/kit_for_game.py; lamp post C first).
+    "ledger/Assets/Props/base-mesh/": 2_000_000,
 }
 BIG_KINDS = {
     # pictures and renders

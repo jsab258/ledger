@@ -1635,7 +1635,11 @@ namespace Ledger.Core
                     }
                     else
                     {
-                        cy = gy + sy * 0.5;
+                        // A KIT PIECE MAY BE MODELLED BURIED (21 October, lamp post C: its
+                        // column runs 0.15 m below its pivot, into the footway, as a planted
+                        // column does). `embed_m` is that depth, read from the model's own
+                        // bounds, so the pivot and not the lowest vertex stands on the ground.
+                        cy = gy + sy * 0.5 - (o.TryGetValue("embed_m", out var em) && em != null ? ToD(em) : 0.0);
                     }
                 }
 
@@ -1654,7 +1658,11 @@ namespace Ledger.Core
                 // design, so a probe over its corners reads a 40 mm gap that
                 // is the step and not a fault, and a metric that cries wolf
                 // is a metric that gets switched off.
-                if (kind == "ground") plan.Foot5(p, footY);
+                // And a ground piece whose box is not its footprint says so with
+                // "foot_probe": false and a reason (lamp post C: its box reaches
+                // over the carriageway with the lantern, 4.8 m up, which a corner
+                // probe would read as a foot hanging over the road).
+                if (kind == "ground" && !(o.TryGetValue("foot_probe", out var fp) && fp is bool probe && !probe)) plan.Foot5(p, footY);
             }
         }
 

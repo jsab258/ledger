@@ -2266,8 +2266,14 @@ int main(int argc, char** argv)
 		}
 		std::printf("    surfaces asked by the street: %d over %d piece(s)\n      %s\n",
 		            (int)Asked.size(), Sum, Names.c_str());
-		Check(Sum == (int)S.Pieces.size(),
-		      "every piece in the file is under exactly one surface name");
+		// A KIT PIECE (21 October 2026) wears its own named slots, never a
+		// street surface, so it is counted beside the surfaces, not under one.
+		int Kit = 0;
+		for (size_t I = 0; I < S.Pieces.size(); ++I) { if (S.Pieces[I].Surface == "kit") { ++Kit; } }
+		std::printf("    kit pieces wearing their own slots: %d\n", Kit);
+		Check(Sum + Kit == (int)S.Pieces.size(),
+		      "every piece in the file is under exactly one surface name, or is a kit piece");
+		Check(Kit >= 4, "the four lamp posts are kit pieces");
 		Check(Asked.size() >= 10,
 		      "the street asks for a real spread of surfaces and not one or two");
 		bool bSorted = true, bNamed = true;
