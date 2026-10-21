@@ -1,0 +1,295 @@
+{
+ "plastic_crate_01": {
+  "type": 2,
+  "name": "Plastic Crate 01",
+  "categories": [
+   "collection: project_lighthouse",
+   "props",
+   "containers"
+  ],
+  "tags": [
+   "beverage crate",
+   "milk crate",
+   "storage",
+   "crate",
+   "box",
+   "garage",
+   "workshop",
+   "retail"
+  ],
+  "description": "Free 4K model of a deep red plastic crate with lattice sides, cutout handles, and a worn GALLER STORAGE print. Realistic scuffs, grime, and sturdy ribs.",
+  "authors": {
+   "PierreB3D": "All"
+  },
+  "donated": true,
+  "max_resolution": [
+   4096,
+   4096
+  ],
+  "polycount": 18320,
+  "files_hash": "74d27ffa75c1d477708f4dd344d500b65d376a84",
+  "texel_density": 2983.682990693386,
+  "dimensions": [
+   298.00063371658325,
+   408.00413489341736,
+   264.1694247722626
+  ],
+  "date_published": 1780963200,
+  "staging": null,
+  "category_id": "6499c84b-386d-52a5-9bab-6e181db53769",
+  "category": "Containers & Storage/Boxes & Crates/Plastic Crates",
+  "collections": [
+   "project_lighthouse"
+  ],
+  "attributes": {
+   "condition": [
+    "worn"
+   ],
+   "material": [
+    "plastic"
+   ]
+  },
+  "img_version": "4a201d8b",
+  "download_count": 1490,
+  "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/plastic_crate_01.png?width=256&height=256&format=webp&v=4a201d8b"
+ },
+ "plastic_crate_02": {
+  "type": 2,
+  "name": "Plastic Crate 02",
+  "categories": [
+   "collection: project_lighthouse",
+   "props",
+   "containers"
+  ],
+  "tags": [
+   "plastic",
+   "crate",
+   "stackable",
+   "industrial",
+   "storage",
+   "utility",
+   "warehouse",
+   "retail",
+   "storage bin"
+  ],
+  "description": "Free 4K model of a rugged plastic crate with vented sides, stackable ribs, and cutout handles. Adjustable color with subtle scuffs and molded seams.",
+  "authors": {
+   "Fabi_G": "All"
+  },
+  "donated": true,
+  "max_resolution": [
+   4096,
+   4096
+  ],
+  "polycount": 5840,
+  "files_hash": "499ee17caf1790ee16f2e9e7e2a54cefcca3e73c",
+  "texel_density": 2910.2632558475593,
+  "dimensions": [
+   505.501389503479,
+   405.5013954639435,
+   254.08916175365448
+  ],
+  "date_published": 1780963200,
+  "staging": null,
+  "category_id": "6499c84b-386d-52a5-9bab-6e181db53769",
+  "category": "Containers & Storage/Boxes & Crates/Plastic Crates",
+  "collections": [
+   "project_lighthouse"
+  ],
+  "attributes": {
+   "condition": [
+    "worn"
+   ],
+   "material": [
+    "plastic"
+   ]
+  },
+  "img_version": "e6f7ff77",
+  "download_count": 2438,
+  "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/plastic_crate_02.png?width=256&height=256&format=webp&v=e6f7ff77"
+ },
+ "plastic_crate_03": {
+  "type": 2,
+  "name": "Plastic Crate 03",
+  "categories": [
+   "collection: project_lighthouse",
+   "containers",
+   "industrial"
+  ],
+  "category": "Containers & Storage/Boxes & Crates/Plastic Crates",
+  "tags": [
+   "plastic",
+   "crate",
+   "stackable",
+   "crate",
+   "aged",
+   "sun damaged",
+   "storage",
+   "distressed",
+   "rectangular bin"
+  ],
+  "description": "Free 8K model of a weathered red plastic crate with lattice sides, ribbed frame, open handles, and realistic scuffs, grime, and edge wear.",
+  "authors": {
+   "Pacific Penguin": "All"
+  },
+  "donated": true,
+  "category_id": "6499c84b-386d-52a5-9bab-6e181db53769",
+  "max_resolution": [
+   8192,
+   8192
+  ],
+  "polycount": 21740,
+  "files_hash": "de0df102c2dfdda10d8a569c40579824212f0fec",
+  "texel_density": 5649.514935115893,
+  "dimensions": [
+   481.1011254787445,
+   264.971524477005,
+   265.92550610776743
+  ],
+  "date_published": 1783036800,
+  "staging": null,
+  "collections": [
+   "project_lighthouse"
+  ],
+  "attributes": {
+   "material": [
+    "plastic"
+   ],
+   "condition": [
+    "worn"
+   ]
+  },
+  "img_version": "ae86e3d5",
+  "download_count": 1248,
+  "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/plastic_crate_03.png?width=256&height=256&format=webp&v=ae86e3d5"
+ },
+ "wooden_crate_01": {
+  "date_published": 1645747200,
+  "name": "Wooden Crate 01",
+  "type": 2,
+  "staging": null,
+  "authors": {
+   "James Ray Cock": "All"
+  },
+  "categories": [
+   "containers",
+   "collection: smugglers_cove"
+  ],
+  "tags": [
+   "vintage",
+   "wood",
+   "old",
+   "wooden",
+   "fancy",
+   "colonial",
+   "chest",
+   "box",
+   "prop",
+   "antique",
+   "farmhouse",
+   "crate",
+   "maritime",
+   "commercial",
+   "container"
+  ],
+  "max_resolution": [
+   8192,
+   8192
+  ],
+  "polycount": 6576,
+  "texel_density": 4578.689151712849,
+  "dimensions": [
+   825.2729177474976,
+   408.9537411928177,
+   349.6182831004262
+  ],
+  "files_hash": "1ac5d053ce4c72e3fbb4c3065e7979522bf1908e",
+  "description": "Free 8K model of a vintage wooden crate - weathered colonial chest with rope handles, metal rivets and latch; ideal as maritime, farmhouse or prop container.",
+  "category_id": "7db08e6b-4676-50ac-8387-ecec2d7ffeb2",
+  "category": "Containers & Storage/Boxes & Crates/Wooden Crates",
+  "sponsors": [
+   "7934315"
+  ],
+  "collections": [
+   "smugglers_cove"
+  ],
+  "attributes": {
+   "condition": [
+    "worn"
+   ],
+   "material": [
+    "wood",
+    "metal"
+   ]
+  },
+  "img_version": "3b8df674",
+  "download_count": 26004,
+  "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/wooden_crate_01.png?width=256&height=256&format=webp&v=3b8df674"
+ },
+ "wooden_crate_02": {
+  "date_published": 1646179200,
+  "name": "Wooden Crate 02",
+  "type": 2,
+  "staging": null,
+  "sponsors": [
+   "26820710"
+  ],
+  "categories": [
+   "containers",
+   "props",
+   "collection: smugglers_cove"
+  ],
+  "tags": [
+   "vintage",
+   "wood",
+   "old",
+   "wooden",
+   "worn",
+   "colonial",
+   "commercial",
+   "maritime",
+   "chest",
+   "box",
+   "container",
+   "prop",
+   "farmhouse",
+   "crate",
+   "farm"
+  ],
+  "max_resolution": [
+   8192,
+   8192
+  ],
+  "polycount": 5176,
+  "texel_density": 3166.7987598321547,
+  "dimensions": [
+   1166.325867176056,
+   529.1010439395905,
+   463.95453810691833
+  ],
+  "files_hash": "2733eca1a1c1aaa3b4be262939692a4c02a9315a",
+  "description": "Free 8K model of a vintage wooden crate with worn planks, dovetail joins, brass corner plates and rope handles - ideal for maritime, colonial or farmhouse props.",
+  "authors": {
+   "James Ray Cock": "modeling",
+   "Jurita Burger": "graphic design"
+  },
+  "category_id": "7db08e6b-4676-50ac-8387-ecec2d7ffeb2",
+  "category": "Containers & Storage/Boxes & Crates/Wooden Crates",
+  "collections": [
+   "smugglers_cove"
+  ],
+  "attributes": {
+   "condition": [
+    "worn"
+   ],
+   "material": [
+    "wood",
+    "brass",
+    "metal"
+   ]
+  },
+  "img_version": "067477fc",
+  "download_count": 13025,
+  "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/wooden_crate_02.png?width=256&height=256&format=webp&v=067477fc"
+ }
+}

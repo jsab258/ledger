@@ -1,0 +1,61 @@
+{
+ "note": "The three conditions as a parameter set for the engine's materials and for the wear layer of unit 4.5 (production/cloud-week/2d/wear/, target production/cloud-week/targets/wear/target.json): roughness is set in each house's door material; the neglected door carries the eroded notch as geometry (leaf_notch_bare); everything else is the layer's masks. No vertex colour is written: a leaf is a few large flat faces, and a gradient across them would not carry a splash band.",
+ "wear_layer_kinds": [
+  "paint_flake",
+  "paint_fade",
+  "handle_wear",
+  "wall_foot_splash",
+  "iron_wear"
+ ],
+ "not_covered_by_the_layer": [
+  "crazing in 2 to 4 mm cells: the layer's paint_flake crazing cells are 0.14 to 0.23 m (render); a timber-door tile is owed",
+  "kick marks and boot prints on a bottom rail: not a kind of the layer (the nearest is wall_foot_splash)",
+  "a letter plate's bright polish ring: not a kind (the layer's handle_wear is a dark grease halo); owed as a small brightening mask in the brass's own material",
+  "rot as geometry (the eroded notch): the layer is a texture, so the notch is a build parameter of the door"
+ ],
+ "conditions": {
+  "kept": {
+   "paint_flake_share": 0.03,
+   "paint_fade": 0.3,
+   "roughness": 0.35,
+   "crazing": "none",
+   "chips": "0 to 2 chips of 8 to 15 mm on the leaf's lower arrises",
+   "bottom_rail": "clean; a dark splash band to 0.24 m only",
+   "kick_marks": "0 to 2 scuffs, 20 to 40 mm, on the bottom rail",
+   "polish": "the brass is polished: a bright ring 12 mm wide round the letter plate's flap and the knob (kept bright), the rest dull gold",
+   "frame": "white, sound, a yellowing at the foot",
+   "notch_in_bottom_rail": false
+  },
+  "tired": {
+   "paint_flake_share": 0.063,
+   "paint_fade": 0.6,
+   "roughness": 0.55,
+   "crazing": "cells 2 to 4 mm over 30 per cent of the leaf (P2's)",
+   "chips": "4 to 8 chips of 10 to 40 mm on arrises and the mouldings' lower lips, bare wood or undercoat showing",
+   "bottom_rail": "darkened by splash to 0.33 m, a paint loss of 20 per cent on the rail",
+   "kick_marks": "3 to 6 scuffs and one boot print band 60 mm high at the lock side",
+   "polish": "brass dull; a brighter ring where the flap is pushed (10 to 14 mm wide), a dark grease halo 0.17 m round the handle (handle_wear)",
+   "frame": "yellowed, a hairline crack at the stop's foot",
+   "notch_in_bottom_rail": false
+  },
+  "neglected": {
+   "paint_flake_share": 0.4,
+   "paint_fade": 1.0,
+   "roughness": 0.65,
+   "crazing": "cells 2 to 4 mm over the whole leaf (P2's old door)",
+   "chips": "12 to 20 chips and two sheets of 80 to 250 mm off the rail and stile feet, grey bare timber below",
+   "bottom_rail": "rotted: an eroded notch 25 mm high and 60 to 200 mm wide, 3 mm deep, in the lower arris at the hinge side, bare grey wood, a soft dark wet stain to 0.5 m",
+   "kick_marks": "8 to 15 scuffs and dents, a split 120 mm long in the bottom panel's lower edge",
+   "polish": "brass dark and green-brown; the plate's flap rubbed bright in a ring 10 mm wide only where fingers push; no polish elsewhere",
+   "frame": "peeling down to a darker undercoat, a dirty foot",
+   "notch_in_bottom_rail": true
+  }
+ },
+ "notch": {
+  "height_mm": 25.0,
+  "width_mm": 130.0,
+  "depth_mm": 3.0,
+  "side": "the hinge side's end of the bottom edge",
+  "material": "timber_bare (118, 110, 100)"
+ }
+}

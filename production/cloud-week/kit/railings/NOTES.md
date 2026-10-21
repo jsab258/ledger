@@ -1,0 +1,9 @@
+# Guard rail panel (kit piece 3.3): build notes
+
+11 October 2026, cloud week 42, built by the coordinating session from `production/cloud-week/targets/railings/target.json` (kind A1) with no departures: `build_railings.py` (about 4 s), `check_railings.py` (28 of 28 in `checks/check_v1.json`), `render_railings.py` (the two review views).
+
+**Built:** the street's one kerbside panel (scene E8): two posts RHS 50 x 30 x 3 (R4.5) with welded cap plates, the top rail 50 x 30 laid flat (axis z 985), the bottom rail 40 x 20 (axis z 200), six-millimetre end plates bearing on the posts' inner faces, 17 round bars 12 at 109.09 pitch with a 2 mm weld fillet at each end (every clear gap 96.2 to 97.1, under the 100 sphere rule), four M10 studs 61 long through the posts with hex nuts 17 AF x 8 on the outer faces and 3 mm of thread beyond, and the two dark reinstatement patches as a separate mesh (`guard_rail_A1_ground_patch.glb`, top 1 mm proud of the flag, not in the panel's box). Solid rounded rectangles stand for the hollow sections (closed by the caps and the end plates, nothing of the hollow shows). `guard_rail_A1.glb` 5,028 triangles, 245 KB; the patches 184 triangles, 10 KB. Materials: `galvanised_steel` (118, 120, 122, rough 0.55, metal 1) and `bare_zinc` for the studs and nuts; `--paint black` writes `paint_black` (24, 24, 26, rough 0.42, metal 0) throughout.
+
+**Not built:** Q2 (the quay tube railing: the jetty only, not on Quay Street), R3A, R3B and R3D (cast-iron reserve kinds, unplaced), and the target's seeds (a lean of 0 to 1 degree, one or two bent bars, polished top rail, stickers, the 0.4 mm seam ridge): the engine's variants and masks.
+
+**Judgement:** the RHS's hollow is not modelled; the 12-sided bars and studs read round with smooth shading; the target's `y` is toward the carriageway, the footway side is -y.

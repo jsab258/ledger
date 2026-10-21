@@ -1,0 +1,368 @@
+{
+ "door_paints": [
+  {
+   "id": "black",
+   "material": "paint_black",
+   "srgb": [
+    35,
+    36,
+    40
+   ],
+   "linear": [
+    0.01681,
+    0.01764,
+    0.02122
+   ],
+   "class": "dark_neutral",
+   "metallic": 0.0,
+   "roughness": {
+    "kept": 0.35,
+    "tired": 0.55,
+    "neglected": 0.65
+   },
+   "src": "3.1 (P2 median 39,40,45)"
+  },
+  {
+   "id": "dark_green",
+   "material": "paint_dark_green",
+   "srgb": [
+    28,
+    59,
+    41
+   ],
+   "linear": [
+    0.01161,
+    0.04374,
+    0.02217
+   ],
+   "class": "dark_chroma",
+   "metallic": 0.0,
+   "roughness": {
+    "kept": 0.35,
+    "tired": 0.55,
+    "neglected": 0.65
+   },
+   "src": "3.1; the shopfront kit's door green"
+  },
+  {
+   "id": "maroon",
+   "material": "paint_maroon",
+   "srgb": [
+    92,
+    26,
+    32
+   ],
+   "linear": [
+    0.10702,
+    0.01033,
+    0.01444
+   ],
+   "class": "dark_chroma",
+   "metallic": 0.0,
+   "roughness": {
+    "kept": 0.35,
+    "tired": 0.55,
+    "neglected": 0.65
+   },
+   "src": "3.1; terrace-front.py reads the sheet's doors as 'a deep teal and a deep red'"
+  },
+  {
+   "id": "navy",
+   "material": "paint_navy",
+   "srgb": [
+    24,
+    38,
+    78
+   ],
+   "linear": [
+    0.00913,
+    0.01938,
+    0.07619
+   ],
+   "class": "dark_neutral",
+   "metallic": 0.0,
+   "roughness": {
+    "kept": 0.35,
+    "tired": 0.55,
+    "neglected": 0.65
+   },
+   "src": "3.1"
+  },
+  {
+   "id": "brown",
+   "material": "paint_brown",
+   "srgb": [
+    74,
+    48,
+    34
+   ],
+   "linear": [
+    0.06848,
+    0.02956,
+    0.016
+   ],
+   "class": "dark_neutral",
+   "metallic": 0.0,
+   "roughness": {
+    "kept": 0.35,
+    "tired": 0.55,
+    "neglected": 0.65
+   },
+   "src": "3.1"
+  },
+  {
+   "id": "deep_teal",
+   "material": "paint_deep_teal",
+   "srgb": [
+    22,
+    64,
+    66
+   ],
+   "linear": [
+    0.00802,
+    0.05127,
+    0.05448
+   ],
+   "class": "dark_chroma",
+   "metallic": 0.0,
+   "roughness": {
+    "kept": 0.35,
+    "tired": 0.55,
+    "neglected": 0.65
+   },
+   "src": "terrace-front.py comment on the Hook sheet; D1 left door (a teal gone dark in shade, median 28,39,29); value Judgement"
+  },
+  {
+   "id": "cream",
+   "material": "paint_cream",
+   "srgb": [
+    222,
+    212,
+    184
+   ],
+   "linear": [
+    0.73046,
+    0.65837,
+    0.47932
+   ],
+   "class": "light",
+   "metallic": 0.0,
+   "roughness": {
+    "kept": 0.35,
+    "tired": 0.55,
+    "neglected": 0.65
+   },
+   "src": "3.1 frame cream; D3's door reads white-cream; held in reserve (no house takes it today: two pale doors side by side broke the neighbour rule)"
+  },
+  {
+   "id": "white_gloss",
+   "material": "paint_white_gloss",
+   "srgb": [
+    226,
+    224,
+    214
+   ],
+   "linear": [
+    0.76052,
+    0.7454,
+    0.67244
+   ],
+   "class": "light",
+   "metallic": 0.0,
+   "roughness": {
+    "kept": 0.35,
+    "tired": 0.55,
+    "neglected": 0.65
+   },
+   "src": "3.1 frame white; D3, D4, D2 white doors"
+  },
+  {
+   "id": "council_turquoise",
+   "material": "paint_council_turquoise",
+   "srgb": [
+    30,
+    112,
+    128
+   ],
+   "linear": [
+    0.01298,
+    0.16203,
+    0.21586
+   ],
+   "class": "bright",
+   "metallic": 0.0,
+   "roughness": {
+    "kept": 0.35,
+    "tired": 0.55,
+    "neglected": 0.65
+   },
+   "src": "D9 box median (22,108,126) lifted for film; value Judgement"
+  },
+  {
+   "id": "olive",
+   "material": "paint_olive",
+   "srgb": [
+    114,
+    102,
+    65
+   ],
+   "linear": [
+    0.16827,
+    0.13287,
+    0.05286
+   ],
+   "class": "mid",
+   "metallic": 0.0,
+   "roughness": {
+    "kept": 0.35,
+    "tired": 0.55,
+    "neglected": 0.65
+   },
+   "src": "D5 box median (the paint of an indoor door: Judgement for a street door); on no house today"
+  },
+  {
+   "id": "khaki",
+   "material": "paint_khaki",
+   "srgb": [
+    128,
+    124,
+    78
+   ],
+   "linear": [
+    0.21586,
+    0.20156,
+    0.07619
+   ],
+   "class": "mid",
+   "metallic": 0.0,
+   "roughness": {
+    "kept": 0.35,
+    "tired": 0.55,
+    "neglected": 0.65
+   },
+   "src": "D2 middle door box median (136,132,83) darkened a little for film"
+  },
+  {
+   "id": "mustard",
+   "material": "paint_mustard",
+   "srgb": [
+    140,
+    128,
+    40
+   ],
+   "linear": [
+    0.26225,
+    0.21586,
+    0.02122
+   ],
+   "class": "bright",
+   "metallic": 0.0,
+   "roughness": {
+    "kept": 0.35,
+    "tired": 0.55,
+    "neglected": 0.65
+   },
+   "src": "D2 left door box median (142,136,39)"
+  },
+  {
+   "id": "bright_blue",
+   "material": "paint_bright_blue",
+   "srgb": [
+    30,
+    78,
+    140
+   ],
+   "linear": [
+    0.01298,
+    0.07619,
+    0.26225
+   ],
+   "class": "bright",
+   "metallic": 0.0,
+   "roughness": {
+    "kept": 0.35,
+    "tired": 0.55,
+    "neglected": 0.65
+   },
+   "src": "D6 box median (26,67,117) lifted for film; value Judgement"
+  },
+  {
+   "id": "red",
+   "material": "paint_red",
+   "srgb": [
+    201,
+    41,
+    32
+   ],
+   "linear": [
+    0.58408,
+    0.02217,
+    0.01444
+   ],
+   "class": "bright",
+   "metallic": 0.0,
+   "roughness": {
+    "kept": 0.35,
+    "tired": 0.55,
+    "neglected": 0.65
+   },
+   "src": "3.1 (P1 median)"
+  },
+  {
+   "id": "varnish",
+   "material": "paint_varnish",
+   "srgb": [
+    122,
+    76,
+    40
+   ],
+   "linear": [
+    0.19462,
+    0.07227,
+    0.02122
+   ],
+   "class": "mid",
+   "metallic": 0.0,
+   "roughness": {
+    "kept": 0.35,
+    "tired": 0.55,
+    "neglected": 0.65
+   },
+   "src": "Judgement: no photograph read shows one on these streets"
+  }
+ ],
+ "frame_colours": [
+  {
+   "id": "white",
+   "material": "paint_white",
+   "srgb": [
+    226,
+    224,
+    214
+   ],
+   "linear": [
+    0.76052,
+    0.7454,
+    0.67244
+   ],
+   "roughness": 0.35,
+   "src": "3.1 (P1 240,239,245 fresh; P2 222,225,229 old); the Hook sheet's surrounds are white"
+  },
+  {
+   "id": "white_grimy",
+   "material": "paint_white_grimy",
+   "srgb": [
+    208,
+    205,
+    192
+   ],
+   "linear": [
+    0.63076,
+    0.6105,
+    0.52712
+   ],
+   "roughness": 0.35,
+   "src": "3.1 white x 0.92, the windows target's white_grimy"
+  }
+ ]
+}

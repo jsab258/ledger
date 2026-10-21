@@ -135,7 +135,7 @@ by Kenney (kenney.nl), CC0."
 
 | | |
 |---|---|
-| **What** | The cast's faces and bodies (MH_RoccoP2, MH_LenaS4, MH_SamS6 and the street's people), made in MetaHuman Creator from Epic's presets and the project's own measurements, the plain garment and the hair and grooms that come with the engine's own MetaHuman plugin. EPIC'S FAB GARMENT PACKS (boots, casual sneakers, flats, jeans, slim jeans, sweater, T-shirt variants) WERE REMOVED ON 3 OCTOBER: each is marked on Fab "Allows usage with AI: No" (NoAI), and by Jafar's ruling nothing NoAI is used |
+| **What** | The cast's faces and bodies (MH_RoccoP2, MH_LenaS4, MH_SamS6 and the street's people), made in MetaHuman Creator from Epic's presets and the project's own measurements, the plain garment and the hair and grooms that come with the engine's own MetaHuman plugin. EPIC'S FAB GARMENT PACKS (boots, casual sneakers, flats, jeans, slim jeans, sweater, T-shirt variants) WERE REMOVED ON 3 OCTOBER: each is marked on Fab "Allows usage with AI: No" (NoAI), and by Jafar's ruling nothing NoAI was used. On 13 October his ruling narrowed this: content Epic itself publishes on Fab may be used inside the game even when NoAI-tagged (our AI only places and sets it up, never trains on it), so these garments are tried first again; none is re-imported yet, and each gets its own row here when it is |
 | **Licence** | The Unreal Engine EULA and the Epic Content License's MetaHuman addendum (read from his PC 3 October, production/research/terms-2026-10-03): Unreal-only content, used and shared only with Unreal Engine; never put in a database for, nor used to train or test, an AI (EULA 6(e)). The MetaHuman files stay out of this public repository and live on Jafar's PC (F:/LedgerTools) |
 | **Obligation** | Credited on the credits page; shipped only inside the packaged Unreal game |
 
@@ -143,7 +143,7 @@ by Kenney (kenney.nl), CC0."
 
 | | |
 |---|---|
-| **What** | The idles and, since 6 October, the walk loops, starts and stops (UEFNAnimPreset/Locomotion) that come with the engine's own MetaHuman plugin (/MetaHumanCharacter/Optional/Animation), where the game uses them. Not Epic's Game Animation Sample on Fab, which is marked NoAI and is never used (3 October) |
+| **What** | The idles and, since 6 October, the walk loops, starts and stops (UEFNAnimPreset/Locomotion) that come with the engine's own MetaHuman plugin (/MetaHumanCharacter/Optional/Animation), where the game uses them. Epic's Game Animation Sample on Fab is marked NoAI by Epic and was never used before 13 October; his ruling of that day allows it inside the game, and the walk is to be rebuilt on it with motion matching: not yet imported, and its row goes here when it is |
 | **Licence** | Epic's "UE-Only Content" terms under the Unreal Engine EULA: allowed in a product that requires the engine; the licence allowlist admits Epic's Unreal-only content for animation only (entry 8, 30 September) |
 | **Obligation** | Credited on the credits page |
 
@@ -426,6 +426,15 @@ holds and has to be corrected or widened.
 | **Where** | `production/assets/steps/step-walk-0.wav` to `-7.wav` and `step-run-0.wav` to `-7.wav`, cut by `tools/ue/make_steps.py`: the rumble below 60 Hz (walk) or 100 Hz (run) taken off, each footfall cut so its loudest hit lands 12 ms in and ended 35 dB down, kept only with a heel and a toe, died away by its end, and between 500 and 1600 Hz, levelled |
 | **What** | Tom's footsteps, walking and running, played by the player character as each foot lands (`ue-probe` SliceCharacter.cpp) |
 
+## Street sound — Freesound and BigSoundBank authors, CC0
+
+| | |
+|---|---|
+| **Source** | 46 recordings, each page read 12 October 2026 without signing in; a Freesound file is the page's public high-quality preview (the lossless original needs a login), a BigSoundBank file its lossless FLAC or WAV. Freesound (pages https://freesound.org/s/NUMBER/): **richwise**: "Traffic" (503456); **hz37**: "Street Hilversum at night 2009" (395686); **Canardo55**: "Herring Gull 2" (538015); "Herring Gull 1" (538016); **nigelcoop**: "Gull" (73497); **achats57**: "Gulls at Moelfre" (372213); **genghisattenborough**: "Herring Gull passing over roof" (744592); **Carlvus**: "CFX-20130331-UK-DorsetHarbour05" (182610); "CFX-20130331-UK-DorsetHarbour04" (182611); "CFX-20130331-UK-DorsetHarbour02" (182612); **Pfannkuchn**: "Stronger wind at a marina, rattling at masts and rigging of the yachts." (360633); **dangale**: "Storm wind whistling through harbour boat masts" (463373); "Phone ringing 5 times then picked up UK GPO 746" (435577); **jackmichaelking**: "Distant small boat returning to marina" (559821); **kyles**: "wind synthetic good distant variable gusty" (454374); "rain light on awning close drops on fabric" (454130); "footsteps shoes walk hard floor stone patio nice" (637555); "footsteps shoes walk road asphalt hard" (637556); **Sounds_by_Cois**: "High Wind - Ambiance at Night" (554845); **nicotep**: "Bouxwiller_Pluie_gouttières" (846446); **brunoboselli**: "Generic Interior Walla" (757318); **SpliceSound**: "Indoor adult murmur, couple" (260124); **PuplPndaHimwx**: "Muffled Talking" (528615); **sturmankin**: "paving_17a_boots_walk" (273071); "paving_18a_trekkingboots_walk" (273067); **SiriusS19YT**: "Footsteps on Old Concrete Slabs" (868548); **audioninja001**: "footsteps-concrete-asphalt" (455056); **lwdickens**: "footsteps winter puddle bird call " (263495); **patchytherat**: "puddle footsteps" (531566); **doctorphil**: "Footsteps on a wooden floor" (536770); **LampEight**: "Door Open Close Heavy Wooden Medium Creak Seal Theatre" (402464); "Door Open Close Heavy Wooden Hard Loud Creak Seal Theatre" (402465); "Door Close Heavy Wooden Slow Quiet Seal Theatre" (402466); "Door Close Heavy Metal Glass Slow Creak Seal Theatre" (402459); "Door Close Heavy Metal Glass Medium Creak Seal Theatre" (402460); **mmmtoop**: "230104-028_normalized_phone_booth_door_1" (674027); **3bagbrew**: "shop_door_bell" (57743); **775noise**: "Shop door bell" (494565). BigSoundBank (https://bigsoundbank.com/, by sound number), **Joseph Sardin**: "Night after rain" (621); "Strong Wind in a Village" (625); "Rain on concrete" (1289); "Old glass door" (1270); "Light door" (224); "Door closures" (545); "Open a Entrance Door with a Key" (1320); "Gnashing" (605). |
+| **Licence** | Every page states CC0 1.0 Universal: "Creative Commons 0" on Freesound, "CC0 (public domain)" on BigSoundBank. Credit not required, given here. Each source's page, author, licence text, date read, download address and md5 are in `production/cloud-week/sound/sources.json`; `fetch_sources.py` reads each source's page and refuses any whose page does not say CC0, and `check_sound.py` reads `sources.json` and fails any source whose recorded licence is not CC0 or whose record is incomplete |
+| **Where** | Not in the repository. `production/cloud-week/sound/fetch_sources.py` fetches the sources into `F:/LedgerTools/sound-sources` (set SOUND_SOURCES); `make_sound.py` rebuilds every output exactly from them (21 ambience loops, 40 footsteps, the doors, the shop bell, the phone box) into `F:/LedgerTools/sound-out` (SOUND_OUT); spectrogram previews are in `production/previews/cloud-week/sound/` |
+| **What** | The street's ambience in day, night and rain (distant traffic, gulls, harbour, wind, voices and a radio through windows scrambled so no word survives, rain on pavement, awning and gutter), footsteps on paving, setts, asphalt, wet ground and wood, the shop and house doors, the shop bell, the phone box. Not yet in the game: how the PC plays them is not decided in the cloud |
+
 ## Clothes and the body they are fitted through — MakeHuman community, CC0
 
 | | |
@@ -498,3 +507,63 @@ and no content derived from them is generated into the game. The done-test
 they serve is a side-by-side judgment by a person. Since 3 October they are no
 longer in this repository (as above), kept on his PC at
 F:/LedgerTools/reference-other-games and in his backup.
+
+## Fonts — THE STREET'S SIGNS AND PAPER, SIL OPEN FONT LICENCE 1.1 (cloud week 42, 9 October 2026)
+
+Fetched from Google Fonts' repository (github.com/google/fonts, `ofl/<family>/`) for the shop
+fascias (production/cloud-week/2d/fascias/) and the posters, notices, boards and plates; each
+licence was read and travels beside its font in production/fonts/<family>/OFL.txt. They are used
+to draw our own lettering into textures; the OFL allows that and allows shipping the fonts, never
+selling them on their own.
+
+| Family (folder) | Copyright, as its OFL.txt states |
+|---|---|
+| Abril Fatface (abril-fatface) | Copyright (c) 2011, TypeTogether |
+| Archivo (archivo) | Copyright 2020 The Archivo Project Authors (github.com/Omnibus-Type/Archivo) |
+| Courier Prime (courier-prime) | Copyright 2015 The Courier Prime Project Authors (github.com/quoteunquoteapps/CourierPrime) |
+| Alfa Slab One (alfa-slab-one) | Copyright 2016 The Alfa Slab One Project Authors, Reserved Font Name "Alfa Slab" |
+| Fraunces (fraunces) | Copyright 2018 The Fraunces Project Authors |
+| Josefin Sans (josefin-sans) | Copyright 2010 The Josefin Sans Project Authors, with a Reserved Font Name |
+| Jost (jost) | Copyright 2020 The Jost Project Authors |
+| Libre Franklin (libre-franklin) | Copyright 2020 The Libre Franklin Project Authors |
+| Old Standard TT (old-standard-tt) | Copyright 2011 The Old Standard Project Authors |
+| Oswald (oswald) | Copyright 2016 The Oswald Project Authors |
+
+## House rooms behind the street's windows — Poly Haven, CC0 (cloud week 42, 14 October 2026)
+
+| | |
+|---|---|
+| **Source** | **Poly Haven** (https://polyhaven.com), 16 models and 9 textures at 1k, fetched by `production/cloud-week/kit/house-windows/hw_models.py` through `tools/art-recipes/fetch_polyhaven.py` (each with a `source.json` naming the asset, its page and its licence), kept outside the repository under `ledger-scratch/house-windows/polyhaven` in the cloud and `F:/LedgerTools/polyhaven` on the PC |
+| **Licence** | CC0 1.0 Universal — https://polyhaven.com/license, no attribution required |
+| **Where** | the thirteen rooms' pictures (`<room>_day.png`, `_night_lit.png`, `_night_dark.png` and a `<room>.json`) are rendered by `production/cloud-week/kit/house-windows/hw_roomgen.py` outside the repository (the PC takes them from `ledger-scratch/house-windows/rooms`); nothing of Poly Haven's is in git for this unit, only the scripts, the target's inventory and the record here; the kit pieces (`production/assets/cloud-week/house-windows/`) hold none of it |
+| **What** | the street's front rooms, seen through the windows: shelving (Shelf 01, Wooden Bookshelf Worn), a sofa (Sofa 01), a side table (Side Table 01), a bench (Painted Wooden Bench), cabinets (Vintage Cabinet 01, Painted Wooden Cabinet), a television (Television 02), an oil lamp (Vintage Oil Lamp), a potted plant (Potted Plant 01), an ornate mirror (Ornate Mirror 01), a wall clock and a mantel clock (Wall Clock, Mantel Clock 01), three hanging picture frames (Hanging Picture Frame 01 to 03); and the textures ceiling_interior, decrepit_wallpaper, dirty_carpet, floral_jacquard, linoleum_brown, old_wooden_floor_02, painted_plaster_wall, peeling_painted_wall, plastered_wall_04 |
+
+The makers' marks found at 100 per cent were painted out by script before use (the television's "PARAGON" lettering on the bezel and the wall clock's "URBAN quartz" on the dial; `hw_models.py`, `MARKS`), and the artwork of the three picture frames is replaced by prints cropped from Poly Haven's CC0 HDRI photographs (lake_pier, dalkey_view, blouberg_sunrise_1, belfast_open_field; no person, sign or modern building in any crop). Authors, as Poly Haven lists them: Kirill Sannikov (Sofa 01, Painted Wooden Cabinet, Painted Wooden Bench), James Ray Cock (Side Table 01, the three Hanging Picture Frames, Ornate Mirror 01), Benny Weimer (Television 02), Yann Kervran and Rico Cilliers (Mantel Clock 01), PierreB3D (Wall Clock), Rico Cilliers (Potted Plant 01, Vintage Cabinet 01), Gabriel Radić (Shelf 01), Ulan Cabanilla (Wooden Bookshelf Worn), Monsta3D (Vintage Oil Lamp); textures by Dimitrios Savva (ceiling_interior, peeling_painted_wall), Rob Tuytel (decrepit_wallpaper, linoleum_brown, plastered_wall_04), Rohit Seervi (dirty_carpet), colormass and Rico Cilliers (floral_jacquard), Charlotte Baglioni and Jenelle van Heerden (old_wooden_floor_02), Amal Kumar (painted_plaster_wall). The nets, curtains and blinds on the kit pieces are our own: textures drawn by `hw_cloth.py` from seeded noise, no fetched input.
+
+Attribution not required; recorded anyway under this file's standing rule.
+
+## Shop windows, batch B (launderette, grocer, chandler, fish market) — Poly Haven and ambientCG, CC0 (cloud week 42, 14 October 2026)
+
+| | |
+|---|---|
+| **Source** | **Poly Haven** (https://polyhaven.com), 1k glTF models and textures fetched by `production/cloud-week/kit/shop-windows/sw_assets.py` (`fetch`) from the public API (api.polyhaven.com/files/<id>), each kept on this PC beside a `source.json` naming the asset, its page and its licence (read on 14 October for all 31 below, 24 models and 7 textures: present, "CC0 1.0", page on polyhaven.com); and **ambientCG** (https://ambientcg.com), three 1k CC0 materials |
+| **Licence** | CC0 1.0 Universal (https://polyhaven.com/license, https://docs.ambientcg.com/license/): no attribution required |
+| **Where** | `production/assets/cloud-week/shop-windows/<shop>_front.glb`, `<shop>_display.glb` (a window's real meshes with the models cut down and joined, their textures at 512 px; out of git when over 1 MB) and `rooms/` (the room pictures, out of git); previews in `production/previews/cloud-week/shop-windows/` |
+| **What** | **launderette**: wall_clock; textures rubber_tiles, long_white_tiles, painted_plaster_wall; wicker_basket_01 (window); ambientCG Fabric020 (the weave of the folded towels). **Grocer**: CashRegister_01, wall_clock, wicker_basket_01 and _02, hamburger_buns, plastic_crate_02 and _03, food_apple_01, lemon, yellow_onion, bananas; textures linoleum_brown, painted_plaster_wall. **Chandler**: ocean_buoy, rubber_boots, oil_tin, small_oil_can_01, cleaner_tin_01, Lantern_01, wooden_lantern_01, signal_flashlight, seadogs_compass, brass_blowtorch, life_jacket, lifebuoy, CashRegister_01; textures old_wooden_floor_02, painted_plaster_wall; ambientCG Rope001 and Rope002 (the rope coils). **Fish market**: wall_clock, garden_hose_wall_mounted_01, lemon; textures terracotta_floor_tiles, long_white_tiles, marble_01 (the window's slab, lightened toward white) |
+
+Each model's page is https://polyhaven.com/a/<id>; ambientCG's are https://ambientcg.com/a/Fabric020, /Rope001, /Rope002. Every maker's mark found at 100 per cent on a model's base colour was painted out before use (`sw_assets.py`, EXTRA_BLANK; the signal lamp's scuffed lettering is one of them); every tin, packet, jar, bottle, sign, chart and card in these four shops is the project's own, in the project's OFL fonts, with invented makers (HOLMFIELD, PENNYWELL, DALTREY, KINGSMEAD, ASHBY, MEADOWBANK, STANWICK, FERNLEY, TRENTHAM, OAKHAM, LANGDALE, FERNSIDE, HOLME, BRIGHTWELL, MEADOWS, ASHDOWN, LINDEN, PENHALE, TREGENNA, WESTHAVEN, SALTHOUSE, TIDEMARK, FENWICK, BRIGHTWATER). The scanned goods the fish market and the grocer wait for (Sketchfab, ffishAsia, CC0) are not in the repository: the download needs Jafar's login.
+
+Attribution not required; recorded anyway under this file's standing rule.
+
+## Shop windows, batch A try 2 (ironmonger, newsagent, tea rooms) — Poly Haven photographs and a texture, Project Gutenberg prose (cloud week 42, 14 October 2026)
+
+| | |
+|---|---|
+| **Source** | **Poly Haven** (https://polyhaven.com): 24 HDRI photographs at 2k, fetched by `production/cloud-week/kit/shop-windows/sw_prints.py` (`fetch_sources`) through the public API (api.polyhaven.com/files/<id>), each kept beside a `<id>.source.json` naming the asset, its page and its licence (read on 14 October: present, "CC0 1.0", page on polyhaven.com), and one 1k texture, `plywood`; **Project Gutenberg** (https://www.gutenberg.org), eBook 1408, *The Natural History of Selborne* by Gilbert White (1789), public domain |
+| **Licence** | Poly Haven: CC0 1.0 Universal (https://polyhaven.com/license), no attribution required; Gutenberg's text: public domain in the United States and the United Kingdom (the author died in 1793) |
+| **Where** | the magazine covers, newspaper fronts, greetings cards, postcards, carton fronts, jar labels and notices of the newsagent and the tea rooms are pictures made by script from crops of the HDRIs (`<shop>/display_work/tex/*.png` in the scratch area, inside `<shop>_display.glb` in `production/assets/cloud-week/shop-windows/`, and in the room pictures); the plywood texture is the base of the display beds, boards and shelves of the three windows (`<shop>_display.glb`); the Gutenberg text is cut into three-millimetre columns on the newspapers' fronts (filtered: no alcohol, gambling, children or violence words); no photograph and no page of Gutenberg's is in git, only the scripts and the record here |
+| **What** | the HDRIs (author as Poly Haven lists it): garden_nook, belfast_farmhouse and belfast_open_field (Dimitrios Savva, photography; Jarod Guest, processing), autumn_park, autumn_field, autumn_road, near_the_river_01 and near_the_river_02 (Sergej Majboroda), autumn_hill_view, farmland_overcast and hay_bales (Grzegorz Wronkowski), farm_road (Dario Barresi), kiara_5_noon, bell_park_pier and lakeside (Greg Zaal), white_cliff_top, fish_hoek_beach and blouberg_sunrise_1 (Greg Zaal; Rico Cilliers, backplates), monbachtal_riverbank (Andreas Mischok), lake_pier and ouchy_pier (Alexander Scholten), dalkey_view (Savva Zakharov), gray_pier (Sergey Rudavin), poolbeg (Savva Zakharov); the texture plywood |
+
+Each crop was looked at at 100 per cent before use: no person, no sign, no modern building; it is tone-mapped (middle grey from its median, a soft shoulder, saturation 0.7, a slight warm or cool cast, a paper grain) and laid into a cover, front page, card or postcard whose words are the project's own invented titles and cover lines. Every picture used is recorded by id in `prints_used.json` beside the display (PRT-01 to PRT-04). The cork of the tea rooms' notice board, the sweets in the jars, the cotton weave of the curtains and the laminate are made by script from seeded noise, no fetched input. Attribution not required; recorded anyway under this file's standing rule.
+
+Tool of the shop windows' checks, not shipped (15 October 2026): rapidocr-onnxruntime 1.2.3 (Apache-2.0) with onnxruntime 1.31.0 (MIT), installed in a separate environment outside the repository (`/home/user/.ocrenv`) and run by `production/cloud-week/kit/shop-windows/ocr_words.py` for INV-08, the second reader of every placed model's base-colour map. Nothing of the package or its models is in the repository or in any build.

@@ -1,0 +1,395 @@
+{
+ "schema": "ledger.cloud-week-42.shop-windows-ritas-check/1",
+ "made": "2026-10-13 12:39:22",
+ "target": "production/cloud-week/targets/shop-windows/target.json (status: target for unit 7 of cloud week 42, part 2; written 12 October 2026; failed its )",
+ "pass": 60,
+ "counted": 61,
+ "na": 3,
+ "seconds": 251.6,
+ "rows": [
+  {
+   "id": "PIC-01",
+   "name": "picture files",
+   "status": "pass",
+   "detail": "day 4096x1855 RGB; night_lit 4096x1855 RGB; night_dark 4096x1855 RGB; JSON beside them: w 5.3 h 2.4 d 4.5 camera_d 5.3 pixels [4096, 1855] states ['day', 'night_dark', 'night_lit'] samples 64"
+  },
+  {
+   "id": "PIC-02",
+   "name": "no black void in the picture",
+   "status": "pass",
+   "detail": "day: mean 120.9 (floor 83.7), share under 12 0.0005, largest dark region 0.0001 of the area; night_lit: mean 79.1 (floor 55.9), share under 12 0.0143, largest dark region 0.0033 of the area"
+  },
+  {
+   "id": "PIC-03",
+   "name": "night_dark is dark, not black",
+   "status": "pass",
+   "detail": "night_dark mean 17.7 (12.4 to 40; the approved 17.7)"
+  },
+  {
+   "id": "PIC-05",
+   "name": "nothing burnt",
+   "status": "pass",
+   "detail": "share of pixels with a channel at 250 or above, on the render before the highlight shoulder (a Judgement: above level 232 the picture is compressed, 255 becomes 242; the raw renders are in rooms/raw): day 0.0054 before the shoulder (0.0000 after it), night_lit 0.0011 before the shoulder (0.0000 after it), night_dark 0.0000 before the shoulder (0.0000 after it) (limit 0.01)"
+  },
+  {
+   "id": "PIC-04",
+   "name": "the floor line and the back wall where the rule puts them",
+   "status": "pass",
+   "detail": "flat-colour pass: back wall top-left (940, 426), bottom-right (3155, 1428); the rule: (940, 426) and (3156, 1429) (largest error 1 px, limit 8)"
+  },
+  {
+   "id": "PIC-06",
+   "name": "each surface has texture",
+   "status": "pass",
+   "detail": "standard deviation of luma (mean of day and night_lit), levels: back 41.0, floor 29.2, left 42.2, right 29.2 (at least 6)"
+  },
+  {
+   "id": "X-NOISE",
+   "name": "picture noise after denoising",
+   "status": "pass",
+   "detail": "high-pass standard deviation of a plain-wall patch: 1.80 levels (limit 2.0); 64 samples a pixel (the target says 128: cut for the cloud's four cores, denoised)"
+  },
+  {
+   "id": "PRJ-01",
+   "name": "the identity camera",
+   "status": "pass",
+   "detail": "2000 card points seen from the render camera (card centre, 5.3 m out, mid height) through trace: largest error 0.00000 px of 4096 x 1855 (limit 1)"
+  },
+  {
+   "id": "PRJ-02",
+   "name": "the room shifts with the eye",
+   "status": "pass",
+   "detail": "the card's centre lands 1322.1 px apart between CLOSE_35 and CLOSE_35_B (target 1321.93, +-1.5); the mean absolute difference of the two baked cards is 27.7 levels (at least 8). This runs on the gate's own `trace` bake: it proves the gate, not the game (owed on the PC: PC-01)"
+  },
+  {
+   "id": "PRJ-03",
+   "name": "the gate shows the game's rule",
+   "status": "pass",
+   "detail": "1600 card pixels over the four cameras recomputed through the game's `trace` and the same bilinear-with-mips sampling: mean difference from the baked picture 0.000 level (limit 0.5), largest 0 (limit 3)"
+  },
+  {
+   "id": "SO-01",
+   "name": "back wall stand-off",
+   "status": "pass",
+   "detail": "63 placed goods and the fixtures: greatest stand-off by fixture {'R-back-door-boxes': 0.3, 'R-back-tv-tiers': 0.35, 'R-back-stock': 0.3, 'R-back-counter': 0.6}; rule: shelf goods 0.30, the TV tier 0.35, the counter 0.60"
+  },
+  {
+   "id": "SO-02",
+   "name": "side wall stand-off",
+   "status": "pass",
+   "detail": "104 placed goods and fixtures on the side walls: greatest stand-off 0.096 (flat 0.05, tolerated 0.10)"
+  },
+  {
+   "id": "SO-03",
+   "name": "floor and ceiling stand-off",
+   "status": "pass",
+   "detail": "the mat stands 0.012 high (limit 0.025), the battens drop 0.025 (0.045 tolerated, limit 0.05)"
+  },
+  {
+   "id": "SO-04",
+   "name": "nothing in the middle of the room",
+   "status": "pass",
+   "detail": "199 pieces and fixtures checked against the back and side walls; none farther than 0.60 m from every wall"
+  },
+  {
+   "id": "SO-05",
+   "name": "nothing stands across a door",
+   "status": "pass",
+   "detail": "the back door's x range 1.45 to 2.35 below z 2.0: 0 pieces overlap it (the stock wall ends at 1.32; the boxes over the door start at z 2.05)"
+  },
+  {
+   "id": "DSP-01",
+   "name": "the display stands in the window",
+   "status": "pass",
+   "detail": "33 pieces: u inside the window zone (0 to 3.35), v 0 to 0.55 from the back of the glass, w up to 1.55 (highest 1.44); none in front of a door"
+  },
+  {
+   "id": "DSP-02",
+   "name": "real geometry in the display",
+   "status": "pass",
+   "detail": "174 nodes, all meshes; materials with an alpha cut-out or blend: none; the price cards are 3 mm thick boxes; 189415 triangles"
+  },
+  {
+   "id": "INV-01",
+   "name": "inventory exists",
+   "status": "pass",
+   "detail": "43 of 43 placed Poly Haven models have a 1k glTF in the fetch and an `exists` entry in the inventory"
+  },
+  {
+   "id": "INV-02",
+   "name": "nothing denied is placed",
+   "status": "pass",
+   "detail": "placed models checked against inventory.denied (53 ids): none denied"
+  },
+  {
+   "id": "INV-03",
+   "name": "every model is allowed",
+   "status": "pass",
+   "detail": "43 models placed, all in inventory.polyhaven; scripted: counter_jewellery and pledge_tickets (inventory.scripted)"
+  },
+  {
+   "id": "INV-04",
+   "name": "scripted goods are the listed ones and carry a why",
+   "status": "pass",
+   "detail": "scripted in this build: counter_jewellery (rings, watch discs, chains on the raked velvet), pledge_tickets (90 tickets), ring_tray, watch_pad (each dial a painted map) and chain (60 links; the approved display's front row: {\"ring_trays\": 4, \"rings\": 96, \"watch_pads\": 4, \"watches_on_pads\": 28, \"chains\": 2}), watch_chain_cards (40 on the pledge board) and the projector's BS 1363 plug; each is in inventory.scripted with its why; no fish, crab or prawn"
+  },
+  {
+   "id": "INV-05",
+   "name": "no maker marks",
+   "status": "pass",
+   "detail": "script: 627 object, material, image and text names against the 59 blocklist words: none found. By eye, two passes: every one of the 45 models' base-colour maps (53 maps) on 5 contact sheets at 512 px, then again at 0.75 to 2 times at 1k (14 sheets, then halves and zooms of every map that carries print), with the marked ones in the original-beside-clean pages; the approved pictures pawnbroker_day, _night_lit and _night_dark searched at full size: no legible maker's name (a pale two-word plate on the till's drawer and a red roundel dot on a cassette player are seen as unreadable smudges at 2048 wide); the new pictures searched at 4096 wide after the build (see the notes)"
+  },
+  {
+   "id": "INV-06",
+   "name": "the final textures carry no mark",
+   "status": "pass",
+   "detail": "168 of 168 boxes pass the script test (the largest difference from the ring colour at most 24 levels, under 2 per cent of the box with a gradient above 40, the glTF pointing at the clean map; whole-map replacements differ from the original); each final map read at 100 per cent beside the original; ten marks found by the builder at 1k that the target's list lacks and blanked the same way (Camera_01 strap name and the body's 'DEP', cardboard_box_01 print, pliers approval marks, seadogs_compass bezel, metal_toolbox badge word, filmstrip_projector_8mm 'PROJECTOMAT GPP', vintage_video_camera 'PH-JNL' x3, portable_cassette_player name plate and model number, hand_plane_no4 stamp)"
+  },
+  {
+   "id": "NEV-01",
+   "name": "no people, drink, betting, children",
+   "status": "pass",
+   "detail": "627 names and text strings against 51 content-blocklist words (the ones ending in a space as whole words: as substrings 'ale ' would hit 'PLEDGES FOR SALE', the target's own notice; the list's owner may want ' ale '): no match"
+  },
+  {
+   "id": "NEV-02",
+   "name": "nothing after 1992",
+   "status": "pass",
+   "detail": "no model from inventory.denied; the models are the 1980s radios, cameras, clocks, tools and ornaments of the approved room (no modern phone, flat screen, cordless drill or LED lamp)"
+  },
+  {
+   "id": "FRN-01",
+   "name": "the front's parts at their sizes",
+   "status": "pass",
+   "detail": "pilasters, consoles, fascia, cornice, sill, stallriser and the window frame's transom (2400 to 2480) and head (2790 to 2850) measured on the built meshes against the 3.2 sizes: all within 1.5 mm. (The 3.2 kit's own check, its 171 rows, passed on these parts: kit/shopfront/checks/check_v2.json.)"
+  },
+  {
+   "id": "FRN-02",
+   "name": "window and door zones",
+   "status": "pass",
+   "detail": "window u (2299.999952316284, 5649.9998569488525), shop door (1293.9997911453247, 2299.999952316284), side door (349.99990463256836, 1293.9997911453247) against [[2300.0, 5650.0], [1294.0, 2300.0], [350.0, 1294.0]]; centres (street x) window 17.025, shop door 19.203, side door 20.178 against [17.025, 19.203, 20.178]"
+  },
+  {
+   "id": "FRN-03",
+   "name": "the shop door",
+   "status": "pass",
+   "detail": "T1: leaf 900 x 2040 at z 28; glass 871 to 1973 with one bar at 1423 (28 wide); lock rail 549 to 871; letter plate 250 x 40 at z 678 and clear of the glass; the lever on the viewer's LEFT stile (u 1347), the hinge side on the RIGHT (u 2247); the bell's spring strip z 1950 to 2051, inside the leaf, centred at u 2042 on the TOP RAIL (the rail runs u 1462 to 2132), 90 mm in from the hanging stile's inner edge (try 2: on the hinge stile, hidden behind it)"
+  },
+  {
+   "id": "FRN-04",
+   "name": "the glass and the toplight layout",
+   "status": "pass",
+   "detail": "3 lights, 9 toplights of [326.9, 326.9, 326.9, '...'] (target 326.9), bar centres [390.9, 745.8, 1121.7, 1497.6, 1852.5, 2228.3, 2604.2, 2959.1] against [390.9, 745.8, 1121.7, 1497.57, 1852.43, 2228.3, 2604.2, 2959.1] (each within 2 mm), a bar on each of the 2 mullion lines, no toplight under 327; the three over-door toplights [283.3, 283.3, 283.3] (target 283.3); every 6 mm plate at d 30 to 36"
+  },
+  {
+   "id": "FRN-05",
+   "name": "paint colours",
+   "status": "pass",
+   "detail": "106 painted parts: oxblood [93, 46, 49], gloss white yellowed [226, 224, 214], buttermilk [222, 212, 184]; within 6 levels per channel"
+  },
+  {
+   "id": "FRN-06",
+   "name": "lobby",
+   "status": "n/a",
+   "detail": "Rita's front is flush: no lobby (the check is the grocer's and the launderette's)"
+  },
+  {
+   "id": "FRN-07",
+   "name": "no opening in the front",
+   "status": "pass",
+   "detail": "the elevation drawn from the built meshes (u 0 to 6000, z 0 to 2850, 1 mm a pixel, every part's triangles, parts drawn 1 mm proud, the gate's two brick piers x 2.65 to 3.0 behind the pilasters drawn as the wall): 0 uncovered pixels of 17100000; the largest uncovered rectangle is 0 x 0 mm (limit 5 x 5). Without the piers the bay's outer strips (u 0 to 350 and 5650 to 6000) have 128492 uncovered pixels: the pilaster's shaft and core stop 30 mm short of the bay's edge, so the game's street facade has to close it (PC-04). The band over the doors (fanlight, transom, three toplights, panel over the side door, head) is built; the side door's hall is left out of the drawing so that it cannot hide a gap behind the door"
+  },
+  {
+   "id": "FAS-01",
+   "name": "the fascia's sign in place",
+   "status": "pass",
+   "detail": "the 4.1 board ritas_basecolour/height/orm/wear (5410x550) is the fascia board's material (image in the glb: True); the mapping puts texture column 0 at the viewer's left edge u 295 and the top row at z 3400 (5410 x 550 mm, 1 px a mm); the board sits u [294.9998378753662, 5705.000162124634], z [2850.0001430511475, 3400.0000953674316]"
+  },
+  {
+   "id": "FAS-02",
+   "name": "hanging signs",
+   "status": "pass",
+   "detail": "Rita's three balls: bracket at street x 20.825 (4.1: 20.825), plate foot 3.600 m, arm height 3.750, projection 0.850, three gilt balls of 0.26 m, lowest at 2.650 (4.1: 2.65); each ball carries its 4.1 face map"
+  },
+  {
+   "id": "GLS-01",
+   "name": "nothing across the glass",
+   "status": "pass",
+   "detail": "in front of the window's glass (d over 36, over the window's u and z): only the window frame's own beads, bars and mullions, the night grille's rails and plates, the sill, the stallriser and the pilasters; the lettering rows, the OPEN sign and the hours plate stand behind the glass (d 29 to 39)"
+  },
+  {
+   "id": "LIT-04",
+   "name": "Rita's grille",
+   "status": "pass",
+   "detail": "top rail 40 x 40 at z 2400 to 2440 and bottom channel at z 600, both powder black, with 4 fixing plates; the lattice plane at d 136 to 143 (the glass front is d 36: 100 in front), flat bars 20 x 4 at 45 degrees on a 120 diamond (two layers of 2 mm), 840 rivets, in its own model (ritas_grille_night.glb, 24528 triangles) so BY DAY only the rail, the channel and the plates stand (the day front has no lattice)"
+  },
+  {
+   "id": "FAS-01n",
+   "name": "the fascia's normal map is a normal map",
+   "status": "pass",
+   "detail": "1 normalTexture(s) in the glb: fascia_ritas: RGB 5410x550, mean (128.0, 127.9, 256.0), blue 200+ on 100.00% (RGB, mean within 10 levels of 128, 128, 255, blue 200 or more on 99 per cent of pixels)"
+  },
+  {
+   "id": "FAS-01c",
+   "name": "the board reads by day",
+   "status": "pass",
+   "detail": "STREET_SQUARE by day: the board's ground luma 61.4 against the stallriser's 57.0 (108 per cent; within 15 per cent), the gilt letters (75th percentile of the lettering's pixels) 124.2: letters to ground 2.02 (at least 2.0; try 1: 34.2 against 55.6 and 1.39)"
+  },
+  {
+   "id": "GLS-02",
+   "name": "no glass row lies behind a bar, mullion or bead",
+   "status": "pass",
+   "detail": "a ray from the camera's eye to each ink point of WATCHES, JEWELLERY and LOANS (the row's alpha, every 2 mm) must meet no opaque part of the front first: STREET_SQUARE WATCHES: 0 of 9425 ink points behind nothing; STREET_SQUARE JEWELLERY: 0 of 11783 ink points behind nothing; STREET_SQUARE LOANS: 0 of 5780 ink points behind nothing; STREET_30 WATCHES: 0 of 9425 ink points behind nothing; STREET_30 JEWELLERY: 0 of 11783 ink points behind nothing; STREET_30 LOANS: 0 of 5780 ink points behind nothing"
+  },
+  {
+   "id": "FRN-09",
+   "name": "the hall behind the side door",
+   "status": "pass",
+   "detail": "560 rays from STREET_SQUARE's eye through the side door's fanlight (u 450 to 1200, z 2130 to 2380): 520 meet the hall's own walls, floor or ceiling, 40 the door and its frame (frame_head 40), 0 get through to the card: none may (try 1: the room's wall clock and pegboard showed)"
+  },
+  {
+   "id": "FAS-03",
+   "name": "textured primitives carry UVs",
+   "status": "pass",
+   "detail": "ritas_front.glb: 0 textured primitives without TEXCOORD_0, 0 negative texCoord; ritas_grille_night.glb: 0 textured primitives without TEXCOORD_0, 0 negative texCoord; ritas_display.glb: 0 textured primitives without TEXCOORD_0, 0 negative texCoord (try 1: the three balls had none and pointed their maps at texCoord -1)"
+  },
+  {
+   "id": "FRN-08",
+   "name": "no backdrop through the front",
+   "status": "pass",
+   "detail": "the front alone (glass opaque, no hanging sign) against a white emissive backdrop, 1280 x 720, from each review camera: backdrop pixels the front's outline encloses (specks under 4 px not counted): STREET_SQUARE 26 px (largest 26) [the bay's outer sliver beside the right pilaster, which the gate's pier closes: N2]; STREET_30 32 px (largest 4) [the bay's outer sliver beside the right pilaster, which the gate's pier closes: N2]; CLOSE_35 0 px (largest 0); CLOSE_35_B 0 px (largest 0) (none allowed from CLOSE_35 and CLOSE_35_B, the review's cameras; the street cameras show only the bay's outer sliver, N2)"
+  },
+  {
+   "id": "FRN-10",
+   "name": "no two parts of the front share a visible face plane; nothing on the front is black",
+   "status": "pass",
+   "detail": "49 coplanar same-facing overlaps of more than 1 mm2 among the front's parts (hidden ones, behind the doors or inside the joinery: not a fault), 0 of them where a camera can see them. By day, in the four gate frames at 2560 x 1440, over the front's own pixels (a mask render: the glass, the two fanlights, the shop door's glass, the hall, the lettering rows and the OPEN sign are not the front; the mask eroded by 2 px; a dark patch counts when it is 35 mm wide on the front or more, a thin line of shade under the cornice or the sill does not): STREET_SQUARE 551 of 754246 front pixels under luma 8, 0 of them in patches 8 px (35 mm) or wider (the darkest pixel 0.2); STREET_30 327 of 427929 front pixels under luma 8, 0 of them in patches 8 px (35 mm) or wider (the darkest pixel 0.2); CLOSE_35 29 of 928075 front pixels under luma 8, 0 of them in patches 28 px (35 mm) or wider (the darkest pixel 3.0); CLOSE_35_B 201 of 691986 front pixels under luma 8, 0 of them in patches 28 px (35 mm) or wider (the darkest pixel 3.1) (try 2: the two strips beside the side door were luma 0 to 3, about 12,000 pixels at STREET_SQUARE: F1's frame jambs, the added side jambs and the fillers stood in one plane, d 100)"
+  },
+  {
+   "id": "LIT-01",
+   "name": "lit shops lit at night, dark shops dark",
+   "status": "pass",
+   "detail": "STREET_SQUARE at night, the room-only composite (picture x 0.7, glass reflection off) over the glass lights: lit 71.6 (at least 45); the same shop dark (night_dark) 12.4 (a dark shop reads 10 to 35); difference 59.3 (at least 25)"
+  },
+  {
+   "id": "LIT-02",
+   "name": "no black void in the street view",
+   "status": "pass",
+   "detail": "composite luma over the glass lights: by day STREET_SQUARE 45.6, STREET_30 41.7, CLOSE_35 49.8 (at least 33); at night (lit) 71.6, 66.3, 71.4 (at least 45)"
+  },
+  {
+   "id": "LIT-03",
+   "name": "the empty unit is a pale blank by day",
+   "status": "n/a",
+   "detail": "the empty unit's check, not Rita's"
+  },
+  {
+   "id": "LIT-05",
+   "name": "the display is lit at night",
+   "status": "pass",
+   "detail": "STREET_SQUARE at night, on the GLASS ONLY as the review words it (the mullions, the frame and the beads are not glass and are masked out): the display zone (z 0.60 to 1.45 above the footway across the window zone, 76542 glass px) mean luma 64.3 (at least 45; Rita's try 1 measured 45.4 with the glowing mullions inside its zone). With the lattice's bars in the zone, as the street sees the window all night, it reads 43.3: the bars are black and cover about 30 per cent of it (a known shortfall: the room behind is lit as the approved night shot is). The spill is the gate's stand-in (a rect light 0.10 behind the wall face at z 2.30, 80, with the two strip lights under the tier boards at 9 each Blender watts, invisible to the camera, on the display's channel and the gate's footway): Lumen's own light on the display is owed on the PC (PC-02)"
+  },
+  {
+   "id": "LIT-07",
+   "name": "the night spill stays behind the glass",
+   "status": "pass",
+   "detail": "STREET_SQUARE: head band at 250 or above 0.0000 (under 0.01) ok; mullion fronts 23.4 (p95 40.7) against the glass 64.3 ok; the pavement pool in front of the window 72.0 (written, not a condition: see below); STREET_30: head band at 250 or above 0.0000 (under 0.01) ok; mullion fronts 29.5 (p95 57.9) against the glass 61.3 ok; the pavement pool in front of the window 72.0 (written, not a condition: see below) (try 1: head band 0.32 and 0.35, mullion fronts p95 228, pavement 113 against the glass 66.8). The third condition (the pavement pool no brighter than the lit glass) is STRUCK (13 Oct, from the try 2 street review, 5: it compared a pale pavement with a window whose glass shows dark velvet and black plastic and could not be met by any spill that lights the bed through the glass); the gate's footway is on the spill's channel again, so the pool is the gate's stand-in and the game's own is owed (PC-02)"
+  },
+  {
+   "id": "GLS-03",
+   "name": "the night glass does not double what is behind it",
+   "status": "pass",
+   "detail": "at night, p95 of |gate frame minus the render with the glass's reflection off| (luma, levels), the frame against a render of the same size, samples and seed with the glass's reflection off, over the glass mask eroded by 2 px at 1280 (4 at 2560): STREET_SQUARE p95 2.1 (mean 0.7, 51258 glass px); STREET_30 p95 2.9 (mean 1.1, 19907 glass px); CLOSE_35 p95 7.2 (mean 1.9, 979013 glass px); CLOSE_35_B p95 7.3 (mean 1.9, 1007831 glass px) (limit 15; try 2: 32.9 at STREET_30 and 17.2 at STREET_SQUARE: the stand-in glass mixed a Transparent and a Glass BSDF, which bent each ray at one face of the closed 6 mm slab and not the other, so everything behind it came two or three times; now a Glossy BSDF, GGX 0.02, weighted 0.2 x Fresnel at IOR 1.5, nothing refracted)"
+  },
+  {
+   "id": "LIT-08",
+   "name": "the display's goods are lit at night",
+   "status": "fail",
+   "detail": "at night_lit, each display piece's mean luma over the lattice's gaps against the room's mean luma in a 24 px ring round it: CLOSE_35: 22 pieces seen against the room, lowest ratio boombox 0.15 (12 against 83), seadogs_compass 0.22 (18 against 85), binoculars 0.23 (23 against 102), 9 under 0.6 (boombox 0.15, seadogs_compass 0.22, binoculars 0.23, vintage_binocular 0.25, Camera_01 0.26, brass_vase_01 0.42, measuring_tape_01 0.47, vintage_video_camera 0.50); median ratio 0.72; CLOSE_35_B: 20 pieces seen against the room, lowest ratio Camera_01 0.23 (22 against 96), vintage_binocular 0.23 (27 against 115), binoculars 0.24 (27 against 112), 8 under 0.6 (Camera_01 0.23, vintage_binocular 0.23, binoculars 0.24, boombox 0.35, mantel_clock_01 0.38, brass_vase_01 0.42, vintage_video_camera 0.49, alarm_clock_01 0.51); median ratio 0.87 (limit 0.6; try 2, CLOSE_35_B: the alarm clock's dial 33 against a room of 95, the cassette player 26, the mantel clock 25; the two strip lights under the tier boards are the fix; PIC-05g stays at 0.01 or under)"
+  },
+  {
+   "id": "DSP-03",
+   "name": "no display mesh intersects another; every piece shows",
+   "status": "pass",
+   "detail": "174 display meshes, 83 pairs with overlapping boxes tested (each mesh inset 1 mm, so a 2 mm contact is tolerated): 0 pairs intersect; the share of each piece's silhouette seen (an object-index pass, the frame's bars and the other pieces in front): the 18 pieces of the front row (the bed's pieces and the scripted trays, pads and chains) from STREET_SQUARE itself: lowest 0.56 among the 16 large enough to be seen there (2 are under 20 px: script:chain, judged from the better of CLOSE_35 and CLOSE_35_B, lowest 1.00), 0 under 0.5; the other 25 pieces from CLOSE_35 or STREET_SQUARE: lowest 0.75, 0 under 0.5"
+  },
+  {
+   "id": "DSP-04",
+   "name": "no free run along a tier over 0.20 m",
+   "status": "pass",
+   "detail": "the longest stretch of the bed's front strip (u 0.14 to 3.20), the step and each tier with nothing on it: bed 0.020 m (18 pieces); step 0.130 m (9 pieces); middle 0.163 m (9 pieces); top 0.112 m (7 pieces) (limit 0.20)"
+  },
+  {
+   "id": "LIT-02b",
+   "name": "no black void in the rendered frames",
+   "status": "pass",
+   "detail": "window-glass pixels (the glass mask: no frame, mullion, bead or lattice) under luma 12, in frames rendered with the glass's reflection off, where the glass shows the room: CLOSE_35_B day: room share 0.0023 (of 600715 glass px, the room shows in 59 per cent of them), largest patch 0.0004, all glass 0.0060 [share and patch]; CLOSE_35_B night_lit: room share 0.0033 (of 341569 glass px, the room shows in 59 per cent of them), largest patch 0.0005, all glass 0.0352 [share and patch]; STREET_30 day: room share 0.0093 (of 46397 glass px, the room shows in 66 per cent of them), largest patch 0.0049, all glass 0.0113 [patch]; STREET_30 night_lit: room share 0.0134 (of 26352 glass px, the room shows in 66 per cent of them), largest patch 0.0061, all glass 0.0400 [patch]; STREET_SQUARE day: room share 0.0032 (of 70974 glass px, the room shows in 68 per cent of them), largest patch 0.0019, all glass 0.0043 [patch]; STREET_SQUARE night_lit: room share 0.0085 (of 41132 glass px, the room shows in 68 per cent of them), largest patch 0.0018, all glass 0.0385 [patch]; CLOSE_35 day: room share 0.0023 (of 585603 glass px, the room shows in 59 per cent of them), largest patch 0.0005, all glass 0.0069 [reported]; CLOSE_35 night_lit: room share 0.0025 (of 333133 glass px, the room shows in 59 per cent of them), largest patch 0.0006, all glass 0.0541 [reported] (limits: 0.01 on the largest patch at STREET_SQUARE and STREET_30, 0.01 on both the share and the patch at CLOSE_35_B; try 1's black slab at CLOSE_35_B's far light was about a third of the window)"
+  },
+  {
+   "id": "PIC-05g",
+   "name": "nothing burnt in the gate's frames",
+   "status": "pass",
+   "detail": "share of pixels with a channel at 250 or above in the eight rendered frames (limit 0.01; try 1: night frames 0.033 and 0.031): STREET_SQUARE day 0.0000, STREET_SQUARE night_lit 0.0006, STREET_30 day 0.0000, STREET_30 night_lit 0.0004, CLOSE_35 day 0.0006, CLOSE_35 night_lit 0.0086, CLOSE_35_B day 0.0014, CLOSE_35_B night_lit 0.0033"
+  },
+  {
+   "id": "SO-06",
+   "name": "the stock wall's scales",
+   "status": "pass",
+   "detail": "42 stock pieces (the boxes and the clock carry their own sizes from the target: CashRegister_01, Ukulele_01, cardboard_box_01, ornate_mirror_01, pocket_watch, vintage_pocket_watch, wall_clock) at scales 0.906 to 1.000 (limit 0.9 to 1.1; try 1: 0.45 to 1.45); the 4 television sets at [1.0]"
+  },
+  {
+   "id": "ROOM-01",
+   "name": "the left board is covered",
+   "status": "pass",
+   "detail": "the left board (y 0.3 to 4.2, z 0.45 to 2.15, 6.63 m2): goods at real size cover 63 per cent by bounding box (4.18 m2; at least 60 per cent)"
+  },
+  {
+   "id": "ROOM-02",
+   "name": "the right board is covered",
+   "status": "pass",
+   "detail": "by rows, each tool's interval along the board widened by 0.03, the union against the board's 2.9 m (at least 80 per cent), gaps 0.04 to 0.06, scales 0.9 to 1.0: R1 (saws z 1.85 to 2.10): 4 tools, 94 per cent of the width, gaps 0.044 to 0.049, scales 1.00 to 1.00; R2 (hammers and pipe wrenches 1.40 to 1.80): 19 tools, 95 per cent of the width, gaps 0.040 to 0.059, scales 1.00 to 1.00; R3 (pliers and adjustable wrenches 0.95 to 1.35): 24 tools, 91 per cent of the width, gaps 0.040 to 0.060, scales 1.00 to 1.00; R4 (combination wrenches and planes 0.50 to 0.90): 18 tools, 92 per cent of the width, gaps 0.041 to 0.060, scales 0.90 to 1.00; 65 tools (the review: about 60); the area share by bounding box, for the record: 36 per cent (try 2: 18)"
+  },
+  {
+   "id": "ROOM-03",
+   "name": "the risers and the boxes on the sets",
+   "status": "pass",
+   "detail": "5 riser shelves (0.20 above their television board, 0.195 deep): z 1.35 x -1.34 to -0.46: 3 pieces, 93 per cent; z 1.35 x -0.04 to 0.20: 1 pieces, 88 per cent; z 1.80 x -1.90 to -1.31: 2 pieces, 92 per cent; z 1.80 x -0.89 to 0.04: 4 pieces, 94 per cent; z 1.80 x 0.46 to 0.90: 2 pieces, 78 per cent; overall 91 per cent of 3.03 m (at least 80, each at least 70); 2 cardboard boxes on top of the upper sets (2 wanted), the stock wall's pieces at scale 0.9 to 1.0; the review: 'about 14 more pieces': 49 stock pieces now against 33 in try 2"
+  },
+  {
+   "id": "ROOM-04",
+   "name": "the left board's six clocks",
+   "status": "pass",
+   "detail": "6 wall clocks on the left board: z of the centres [1.57, 1.58, 1.6, 1.83, 1.85, 1.88] (two rows: z 1.55 to 1.60 and 1.83 to 1.88, three in each); y [1.2, 1.47, 1.74, 2.01, 2.28, 2.55]; the times shown ['2:35', '7:50', '4:20', '11:45', '5:05', '1:15'] (all different); scale 1.0"
+  },
+  {
+   "id": "SO-07",
+   "name": "no room mesh intersects another",
+   "status": "pass",
+   "detail": "538 room meshes (fixtures, 146 placed goods, tickets, notices), 121 pairs with overlapping boxes tested (each mesh inset 1 mm, so a 2 mm contact is tolerated): 0 pairs intersect (try 2: the till ran 0.12 m up through the z 1.35 board and the box on it)"
+  },
+  {
+   "id": "LIT-06",
+   "name": "the sodium wash is the game's",
+   "status": "pass",
+   "detail": "night_dark's sodium wash colour (linear) [1.0, 0.25, 0.0] against unreal-look.json lantern_linear_rgb [1.0, 0.25, 0.0] (the scene file's stale 1.0, 0.7055, 0.0 is not used)"
+  },
+  {
+   "id": "PRV-01",
+   "name": "the previews show nothing they must not",
+   "status": "n/a",
+   "detail": "the photograph previews of the target (P1 to P6), not this build's; this build's previews were looked at: no real firm's name, number, person, drink, gambling or child in them"
+  },
+  {
+   "id": "CAM-01",
+   "name": "the cameras are the named ones",
+   "status": "pass",
+   "detail": "STREET_SQUARE day eye 0.00 mm, aim 0.000 deg, field 0.00 deg; STREET_SQUARE night_lit eye 0.00 mm, aim 0.000 deg, field 0.00 deg; STREET_30 day eye 0.00 mm, aim 0.000 deg, field 0.00 deg; STREET_30 night_lit eye 0.00 mm, aim 0.000 deg, field 0.00 deg; CLOSE_35 day eye 0.00 mm, aim 0.000 deg, field 0.00 deg; CLOSE_35 night_lit eye 0.00 mm, aim 0.000 deg, field 0.00 deg; CLOSE_35_B day eye 0.00 mm, aim 0.000 deg, field 0.00 deg; CLOSE_35_B night_lit eye 0.00 mm, aim 0.000 deg, field 0.00 deg (limits 5 mm and 0.1 degree)"
+  },
+  {
+   "id": "X-PRV",
+   "name": "previews: JPEG, about 1600 px wide, under 500 KB",
+   "status": "pass",
+   "detail": "24 JPEGs in the previews folder: ritas-close-35-day 201 KB 1600 px, ritas-close-35-day-v2 222 KB 1600 px, ritas-close-35-day-v3 227 KB 1600 px, ritas-close-35-night-lit 357 KB 1600 px, ritas-close-35-night-lit-v2 301 KB 1600 px, ritas-close-35-night-lit-v3 318 KB 1600 px, ritas-room-before-after 315 KB 1400 px, ritas-room-before-after-v2 314 KB 1400 px, ritas-room-before-after-v3 321 KB 1400 px, ritas-room-day 209 KB 1600 px, ritas-room-day-v2 205 KB 1600 px, ritas-room-day-v3 213 KB 1600 px, ritas-room-night-dark 97 KB 1600 px, ritas-room-night-dark-v2 98 KB 1600 px, ritas-room-night-dark-v3 102 KB 1600 px, ritas-room-night-lit 189 KB 1600 px, ritas-room-night-lit-v2 189 KB 1600 px, ritas-room-night-lit-v3 196 KB 1600 px, ritas-street-square-day 248 KB 1600 px, ritas-street-square-day-v2 246 KB 1600 px, ritas-street-square-day-v3 248 KB 1600 px, ritas-street-square-night-lit 202 KB 1600 px, ritas-street-square-night-lit-v2 181 KB 1600 px, ritas-street-square-night-lit-v3 188 KB 1600 px"
+  }
+ ]
+}

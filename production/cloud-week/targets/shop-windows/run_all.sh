@@ -1,0 +1,10 @@
+#!/bin/sh
+# Rebuild everything in order (about 30 seconds with the network): target.json, its self-check (live, written into target.json), the controls, the previews, TARGET.md.
+set -e
+PY=/home/user/.bpyenv/bin/python
+cd "$(dirname "$0")"
+$PY -I make_target.py
+$PY -I self_check.py --live --write
+$PY -I controls.py
+$PY -I make_previews.py
+$PY -I make_doc.py

@@ -1,0 +1,3456 @@
+{
+ "read": "2026-10-12",
+ "catalogue_url": "https://api.polyhaven.com/assets?t=models",
+ "catalogue_count": 521,
+ "licence": "CC0 (https://polyhaven.com/license)",
+ "models": {
+  "Camera_01": {
+   "exists": true,
+   "name": "Camera 01",
+   "dims_cm": [
+    21.4,
+    26.3,
+    7.8
+   ],
+   "polycount": 26987,
+   "categories": [
+    "props",
+    "electronics"
+   ],
+   "tags": [
+    "vintage",
+    "camera",
+    "antique",
+    "ornate",
+    "photography",
+    "photography",
+    "retro",
+    "lens"
+   ],
+   "published": "2020-03-30",
+   "authors": [
+    "Rajil Jose Macatangay"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/Camera_01/Camera_01_1k.gltf",
+    "bytes": 9886,
+    "textures": 10
+   }
+  },
+  "CashRegister_01": {
+   "exists": true,
+   "name": "Cash Register 01",
+   "dims_cm": [
+    60.0,
+    62.4,
+    62.1
+   ],
+   "polycount": 9927,
+   "categories": [
+    "appliances",
+    "props"
+   ],
+   "tags": [
+    "commercial",
+    "store",
+    "vintage",
+    "cash",
+    "transaction",
+    "register",
+    "money",
+    "sales"
+   ],
+   "published": "2020-03-30",
+   "authors": [
+    "Joe Seabuhr"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/CashRegister_01/CashRegister_01_1k.gltf",
+    "bytes": 6300,
+    "textures": 7
+   }
+  },
+  "Lantern_01": {
+   "exists": true,
+   "name": "Lantern 01",
+   "dims_cm": [
+    12.2,
+    9.7,
+    29.4
+   ],
+   "polycount": 33902,
+   "categories": [
+    "props",
+    "lighting"
+   ],
+   "tags": [
+    "prop",
+    "metal",
+    "glass",
+    "lantern",
+    "antique",
+    "vintage",
+    "hurricane",
+    "lamp"
+   ],
+   "published": "2020-05-28",
+   "authors": [
+    "Rajil Jose Macatangay"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/Lantern_01/Lantern_01_1k.gltf",
+    "bytes": 4866,
+    "textures": 4
+   }
+  },
+  "Ukulele_01": {
+   "exists": true,
+   "name": "Ukulele 01",
+   "dims_cm": [
+    17.8,
+    5.1,
+    52.7
+   ],
+   "polycount": 8912,
+   "categories": [
+    "props",
+    "instrument"
+   ],
+   "tags": [
+    "instrument",
+    "wood",
+    "prop",
+    "guitar",
+    "ukulele",
+    "music"
+   ],
+   "published": "2020-03-30",
+   "authors": [
+    "Joseph Burgan"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/Ukulele_01/Ukulele_01_1k.gltf",
+    "bytes": 2665,
+    "textures": 4
+   }
+  },
+  "adjustable_wrench": {
+   "exists": true,
+   "name": "Adjustable Wrench",
+   "dims_cm": [
+    6.8,
+    3.1,
+    25.4
+   ],
+   "polycount": 5390,
+   "categories": [
+    "collection: project_lighthouse",
+    "props",
+    "industrial",
+    "tools"
+   ],
+   "tags": [
+    "vintage",
+    "worn",
+    "antique",
+    "aged",
+    "shed",
+    "garage",
+    "hand tool",
+    "rustic"
+   ],
+   "published": "2026-06-30",
+   "authors": [
+    "Mateusz Sadek"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/adjustable_wrench/adjustable_wrench_1k.gltf",
+    "bytes": 5659,
+    "textures": 4
+   }
+  },
+  "alarm_clock_01": {
+   "exists": true,
+   "name": "Alarm Clock 01",
+   "dims_cm": [
+    22.8,
+    16.8,
+    17.4
+   ],
+   "polycount": 13006,
+   "categories": [
+    "props",
+    "decorative",
+    "rigged"
+   ],
+   "tags": [
+    "clock",
+    "time",
+    "alarm",
+    "bedside",
+    "old",
+    "90s",
+    "watch",
+    "blue"
+   ],
+   "published": "2021-08-13",
+   "authors": [
+    "Yann Kervran",
+    "James Ray Cock"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/alarm_clock_01/alarm_clock_01_1k.gltf",
+    "bytes": 10056,
+    "textures": 4
+   }
+  },
+  "antique_ceramic_vase_01": {
+   "exists": true,
+   "name": "Antique Ceramic Vase 01",
+   "dims_cm": [
+    25.5,
+    25.5,
+    44.0
+   ],
+   "polycount": 9408,
+   "categories": [
+    "decorative",
+    "containers",
+    "vases"
+   ],
+   "tags": [
+    "vintage",
+    "antique",
+    "pot",
+    "fancy",
+    "pattern",
+    "vase"
+   ],
+   "published": "2021-06-15",
+   "authors": [
+    "James Ray Cock"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/antique_ceramic_vase_01/antique_ceramic_vase_01_1k.gltf",
+    "bytes": 2789,
+    "textures": 4
+   }
+  },
+  "bananas": {
+   "exists": true,
+   "name": "Bananas",
+   "dims_cm": [
+    60.0,
+    24.4,
+    17.9
+   ],
+   "polycount": 46868,
+   "categories": [
+    "food",
+    "collection: project_lighthouse",
+    "nature"
+   ],
+   "tags": [
+    "banana bunch",
+    "yellow",
+    "single banana",
+    "ripe",
+    "fruit"
+   ],
+   "published": "2026-06-19",
+   "authors": [
+    "Alexander Shulha"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/bananas/bananas_1k.gltf",
+    "bytes": 8796,
+    "textures": 4
+   }
+  },
+  "binoculars": {
+   "exists": true,
+   "name": "Binoculars",
+   "dims_cm": [
+    16.7,
+    28.8,
+    7.7
+   ],
+   "polycount": 19248,
+   "categories": [
+    "collection: project_lighthouse",
+    "props",
+    "tools"
+   ],
+   "tags": [
+    "leather",
+    "strap",
+    "vintage",
+    "antique",
+    "optical"
+   ],
+   "published": "2026-06-30",
+   "authors": [
+    "Derek Wight"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/binoculars/binoculars_1k.gltf",
+    "bytes": 11141,
+    "textures": 4
+   }
+  },
+  "bolt_cutters_01": {
+   "exists": true,
+   "name": "Bolt Cutters 01",
+   "dims_cm": [
+    28.1,
+    3.6,
+    93.8
+   ],
+   "polycount": 6719,
+   "categories": [
+    "tools",
+    "industrial",
+    "props",
+    "rigged",
+    "collection: the_shed"
+   ],
+   "tags": [
+    "metal",
+    "worn",
+    "used",
+    "large",
+    "workshop",
+    "shed",
+    "garage"
+   ],
+   "published": "2022-12-02",
+   "authors": [
+    "Yann Kervran",
+    "Antanas Kep"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/bolt_cutters_01/bolt_cutters_01_1k.gltf",
+    "bytes": 2797,
+    "textures": 4
+   }
+  },
+  "boombox": {
+   "exists": true,
+   "name": "Boombox",
+   "dims_cm": [
+    72.4,
+    18.6,
+    47.0
+   ],
+   "polycount": 10168,
+   "categories": [
+    "appliances",
+    "electronics",
+    "collection: hidden_alley"
+   ],
+   "tags": [
+    "loudspeaker",
+    "radio",
+    "cd player",
+    "stereo",
+    "80's",
+    "sound system",
+    "portable"
+   ],
+   "published": "2023-09-22",
+   "authors": [
+    "Thomas Paul Mouilleron"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/boombox/boombox_1k.gltf",
+    "bytes": 4656,
+    "textures": 6
+   }
+  },
+  "brass_blowtorch": {
+   "exists": true,
+   "name": "Brass Blowtorch",
+   "dims_cm": [
+    12.9,
+    25.9,
+    21.1
+   ],
+   "polycount": 11750,
+   "categories": [
+    "props",
+    "tools"
+   ],
+   "tags": [
+    "blowtorch",
+    "industrial",
+    "workshop",
+    "garage",
+    "weld",
+    "welding",
+    "automotive",
+    "repair shop"
+   ],
+   "published": "2025-08-01",
+   "authors": [
+    "Ulan Cabanilla"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/brass_blowtorch/brass_blowtorch_1k.gltf",
+    "bytes": 2779,
+    "textures": 4
+   }
+  },
+  "brass_vase_01": {
+   "exists": true,
+   "name": "Brass Vase 01",
+   "dims_cm": [
+    22.7,
+    22.7,
+    69.2
+   ],
+   "polycount": 21440,
+   "categories": [
+    "decorative",
+    "vases"
+   ],
+   "tags": [
+    "brass",
+    "antique",
+    "metal",
+    "ancient",
+    "artifact",
+    "vase",
+    "old",
+    "clean"
+   ],
+   "published": "2021-08-26",
+   "authors": [
+    "Rico Cilliers"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/brass_vase_01/brass_vase_01_1k.gltf",
+    "bytes": 2693,
+    "textures": 4
+   }
+  },
+  "brass_vase_02": {
+   "exists": true,
+   "name": "Brass Vase 02",
+   "dims_cm": [
+    21.0,
+    21.0,
+    52.9
+   ],
+   "polycount": 6890,
+   "categories": [
+    "decorative",
+    "vases"
+   ],
+   "tags": [
+    "brass",
+    "antique",
+    "metal",
+    "ancient",
+    "old",
+    "gold",
+    "container",
+    "vase"
+   ],
+   "published": "2021-11-17",
+   "authors": [
+    "Rico Cilliers"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/brass_vase_02/brass_vase_02_1k.gltf",
+    "bytes": 2672,
+    "textures": 4
+   }
+  },
+  "brass_vase_03": {
+   "exists": true,
+   "name": "Brass Vase 03",
+   "dims_cm": [
+    8.3,
+    8.3,
+    20.0
+   ],
+   "polycount": 2616,
+   "categories": [
+    "containers",
+    "props",
+    "decorative",
+    "vases"
+   ],
+   "tags": [
+    "metal",
+    "prop",
+    "brass",
+    "decorative",
+    "ornate",
+    "vase",
+    "gold",
+    "pitcher"
+   ],
+   "published": "2022-02-11",
+   "authors": [
+    "Rico Cilliers"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/brass_vase_03/brass_vase_03_1k.gltf",
+    "bytes": 2668,
+    "textures": 4
+   }
+  },
+  "cardboard_box_01": {
+   "exists": true,
+   "name": "Cardboard Box 01",
+   "dims_cm": [
+    38.7,
+    51.6,
+    34.2
+   ],
+   "polycount": 16952,
+   "categories": [
+    "industrial",
+    "containers",
+    "collection: the_shed"
+   ],
+   "tags": [
+    "warehouse",
+    "shed",
+    "storage",
+    "box",
+    "paper",
+    "worn",
+    "old",
+    "broken"
+   ],
+   "published": "2022-12-16",
+   "authors": [
+    "Rahul Chaudhary"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/cardboard_box_01/cardboard_box_01_1k.gltf",
+    "bytes": 2903,
+    "textures": 4
+   }
+  },
+  "carrot_cake": {
+   "exists": true,
+   "name": "Carrot Cake",
+   "dims_cm": [
+    22.5,
+    22.5,
+    9.8
+   ],
+   "polycount": 13790,
+   "categories": [
+    "food",
+    "props"
+   ],
+   "tags": [
+    "baked goods",
+    "cake",
+    "carrot",
+    "food",
+    "bakery",
+    "dish",
+    "cooking",
+    "dessert"
+   ],
+   "published": "2022-08-17",
+   "authors": [
+    "Greg Zaal",
+    "James Ray Cock"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/carrot_cake/carrot_cake_1k.gltf",
+    "bytes": 2682,
+    "textures": 4
+   }
+  },
+  "carved_wooden_elephant": {
+   "exists": true,
+   "name": "Carved Wooden Elephant",
+   "dims_cm": [
+    10.9,
+    5.8,
+    9.6
+   ],
+   "polycount": 2752,
+   "categories": [
+    "props",
+    "decorative"
+   ],
+   "tags": [
+    "wood",
+    "wooden",
+    "woodwork",
+    "statue",
+    "carved",
+    "animal"
+   ],
+   "published": "2022-02-02",
+   "authors": [
+    "Greg Zaal"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/carved_wooden_elephant/carved_wooden_elephant_1k.gltf",
+    "bytes": 2791,
+    "textures": 4
+   }
+  },
+  "cassette_player": {
+   "exists": true,
+   "name": "Cassette Player",
+   "dims_cm": [
+    12.9,
+    4.9,
+    23.7
+   ],
+   "polycount": 4830,
+   "categories": [
+    "props",
+    "electronics"
+   ],
+   "tags": [
+    "walkman",
+    "vintage",
+    "device",
+    "audio",
+    "retro",
+    "music",
+    "gadget",
+    "nostalgia"
+   ],
+   "published": "2020-08-19",
+   "authors": [
+    "Oday Abuzaeed"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/cassette_player/cassette_player_1k.gltf",
+    "bytes": 7549,
+    "textures": 7
+   }
+  },
+  "cement_bag": {
+   "exists": true,
+   "name": "Cement Bag",
+   "dims_cm": [
+    46.2,
+    70.0,
+    18.0
+   ],
+   "polycount": 844,
+   "categories": [
+    "props",
+    "collection: project_lighthouse"
+   ],
+   "tags": [
+    "industrial",
+    "warehouse",
+    "factory",
+    "building",
+    "construction",
+    "cement",
+    "cement bag",
+    "building material"
+   ],
+   "published": "2026-06-08",
+   "authors": [
+    "PierreB3D"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/cement_bag/cement_bag_1k.gltf",
+    "bytes": 2745,
+    "textures": 4
+   }
+  },
+  "ceramic_vase_01": {
+   "exists": true,
+   "name": "Ceramic Vase 01",
+   "dims_cm": [
+    20.5,
+    20.6,
+    40.1
+   ],
+   "polycount": 2548,
+   "categories": [
+    "vases",
+    "containers",
+    "decorative"
+   ],
+   "tags": [
+    "pot",
+    "clean",
+    "tall",
+    "modern",
+    "fancy",
+    "decor"
+   ],
+   "published": "2021-06-15",
+   "authors": [
+    "James Ray Cock"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/ceramic_vase_01/ceramic_vase_01_1k.gltf",
+    "bytes": 2706,
+    "textures": 4
+   }
+  },
+  "ceramic_vase_03": {
+   "exists": true,
+   "name": "Ceramic Vase 03",
+   "dims_cm": [
+    11.2,
+    11.2,
+    41.4
+   ],
+   "polycount": 2784,
+   "categories": [
+    "containers",
+    "decorative",
+    "vases"
+   ],
+   "tags": [
+    "clay",
+    "pot",
+    "exterior",
+    "decor",
+    "painted",
+    "vase",
+    "tall",
+    "modern"
+   ],
+   "published": "2021-06-15",
+   "authors": [
+    "James Ray Cock"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/ceramic_vase_03/ceramic_vase_03_1k.gltf",
+    "bytes": 2690,
+    "textures": 4
+   }
+  },
+  "cigarette_case": {
+   "exists": true,
+   "name": "Cigarette Case",
+   "dims_cm": [
+    32.3,
+    10.1,
+    2.4
+   ],
+   "polycount": 16912,
+   "categories": [
+    "collection: project_lighthouse",
+    "props"
+   ],
+   "tags": [
+    "cigarette pack",
+    "cigarette holder",
+    "metal tin",
+    "smoking",
+    "accessories"
+   ],
+   "published": "2026-06-08",
+   "authors": [
+    "Micha\u0142 Wi\u015bniewski"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/cigarette_case/cigarette_case_1k.gltf",
+    "bytes": 19722,
+    "textures": 4
+   }
+  },
+  "cigarette_pack": {
+   "exists": true,
+   "name": "Cigarette Pack",
+   "dims_cm": [
+    5.6,
+    2.9,
+    10.3
+   ],
+   "polycount": 7582,
+   "categories": [
+    "containers",
+    "props",
+    "collection: project_lighthouse"
+   ],
+   "tags": [
+    "smoking",
+    "tabacco",
+    "cigarette pack",
+    "flip-top box"
+   ],
+   "published": "2026-07-03",
+   "authors": [
+    "Ulrich B\u00fcch"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/cigarette_pack/cigarette_pack_1k.gltf",
+    "bytes": 7111,
+    "textures": 4
+   }
+  },
+  "cleaner_tin_01": {
+   "exists": true,
+   "name": "Cleaner Tin 01",
+   "dims_cm": [
+    8.8,
+    8.8,
+    13.0
+   ],
+   "polycount": 3560,
+   "categories": [
+    "containers",
+    "tools",
+    "industrial",
+    "collection: the_shed"
+   ],
+   "tags": [
+    "shed",
+    "workshop",
+    "metal",
+    "lubricant",
+    "oil",
+    "construction",
+    "garage"
+   ],
+   "published": "2023-03-06",
+   "authors": [
+    "Tom Phillips"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/cleaner_tin_01/cleaner_tin_01_1k.gltf",
+    "bytes": 3154,
+    "textures": 4
+   }
+  },
+  "combination_wrench": {
+   "exists": true,
+   "name": "Combination Wrench",
+   "dims_cm": [
+    5.7,
+    33.7,
+    2.2
+   ],
+   "polycount": 1986,
+   "categories": [
+    "collection: project_lighthouse",
+    "tools",
+    "industrial"
+   ],
+   "tags": [
+    "garage",
+    "workshop",
+    "construction",
+    "scratched"
+   ],
+   "published": "2026-07-03",
+   "authors": [
+    "BKS"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/combination_wrench/combination_wrench_1k.gltf",
+    "bytes": 2828,
+    "textures": 4
+   }
+  },
+  "cross_pein_hammer": {
+   "exists": true,
+   "name": "Cross Pein Hammer",
+   "dims_cm": [
+    9.9,
+    2.4,
+    30.0
+   ],
+   "polycount": 2124,
+   "categories": [
+    "collection: project_lighthouse",
+    "props",
+    "tools"
+   ],
+   "tags": [
+    "old",
+    "vintage",
+    "antique",
+    "wooden",
+    "hammer",
+    "blacksmith",
+    "rustic",
+    "aged"
+   ],
+   "published": "2026-03-20",
+   "authors": [
+    "Tics"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/cross_pein_hammer/cross_pein_hammer_1k.gltf",
+    "bytes": 2819,
+    "textures": 4
+   }
+  },
+  "crowbar_01": {
+   "exists": true,
+   "name": "Crowbar 01",
+   "dims_cm": [
+    4.0,
+    12.8,
+    55.5
+   ],
+   "polycount": 2300,
+   "categories": [
+    "tools",
+    "industrial",
+    "props",
+    "collection: the_shed"
+   ],
+   "tags": [
+    "metal",
+    "shed",
+    "workshop",
+    "garage",
+    "used",
+    "dirty",
+    "construction",
+    "carpentry"
+   ],
+   "published": "2023-01-27",
+   "authors": [
+    "Alexander Otterbeck"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/crowbar_01/crowbar_01_1k.gltf",
+    "bytes": 2741,
+    "textures": 4
+   }
+  },
+  "drain_cleaner": {
+   "exists": true,
+   "name": "Drain Cleaner",
+   "dims_cm": [
+    16.5,
+    5.6,
+    17.9
+   ],
+   "polycount": 4338,
+   "categories": [
+    "industrial",
+    "props",
+    "tools"
+   ],
+   "tags": [
+    "workshop",
+    "garage",
+    "bathroom",
+    "cleaning",
+    "cleaning supplies",
+    "toilet",
+    "household",
+    "maintenance"
+   ],
+   "published": "2023-12-15",
+   "authors": [
+    "James Ray Cock"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/drain_cleaner/drain_cleaner_1k.gltf",
+    "bytes": 2793,
+    "textures": 4
+   }
+  },
+  "dustpan": {
+   "exists": true,
+   "name": "Dustpan",
+   "dims_cm": [
+    33.2,
+    36.8,
+    10.0
+   ],
+   "polycount": 4332,
+   "categories": [
+    "collection: project_lighthouse",
+    "props",
+    "tools"
+   ],
+   "tags": [
+    "garage",
+    "workshop",
+    "cleaning supplies",
+    "dusted",
+    "storage",
+    "sanitation",
+    "janitorial",
+    "cleaning"
+   ],
+   "published": "2026-06-09",
+   "authors": [
+    "Balen"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/dustpan/dustpan_1k.gltf",
+    "bytes": 2711,
+    "textures": 4
+   }
+  },
+  "filmstrip_projector_8mm": {
+   "exists": true,
+   "name": "Filmstrip Projector 8mm",
+   "dims_cm": [
+    25.4,
+    60.3,
+    34.5
+   ],
+   "polycount": 32697,
+   "categories": [
+    "electronics",
+    "appliances",
+    "collection: project_lighthouse"
+   ],
+   "tags": [
+    "antique",
+    "vintage",
+    "old",
+    "retro",
+    "film",
+    "movie",
+    "theater"
+   ],
+   "published": "2026-06-20",
+   "authors": [
+    "PeterM"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/filmstrip_projector_8mm/filmstrip_projector_8mm_1k.gltf",
+    "bytes": 27195,
+    "textures": 4
+   }
+  },
+  "flathead_screwdriver": {
+   "exists": true,
+   "name": "Flathead Screwdriver",
+   "dims_cm": [
+    3.0,
+    3.0,
+    26.1
+   ],
+   "polycount": 2300,
+   "categories": [
+    "tools",
+    "props",
+    "industrial",
+    "collection: the_shed"
+   ],
+   "tags": [
+    "wood",
+    "shed",
+    "wooden",
+    "garage",
+    "workshop",
+    "woodwork",
+    "carpentry"
+   ],
+   "published": "2023-02-15",
+   "authors": [
+    "Dylan Detwiller"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/flathead_screwdriver/flathead_screwdriver_1k.gltf",
+    "bytes": 2848,
+    "textures": 4
+   }
+  },
+  "food_apple_01": {
+   "exists": true,
+   "name": "Food Apple 01",
+   "dims_cm": [
+    9.8,
+    9.6,
+    8.5
+   ],
+   "polycount": 7012,
+   "categories": [
+    "food",
+    "nature"
+   ],
+   "tags": [
+    "food",
+    "fruit",
+    "apple",
+    "fruitbowl",
+    "red",
+    "ripe",
+    "fresh",
+    "organic"
+   ],
+   "published": "2021-07-07",
+   "authors": [
+    "Oliver Harries"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/food_apple_01/food_apple_01_1k.gltf",
+    "bytes": 2705,
+    "textures": 4
+   }
+  },
+  "garden_gloves_01": {
+   "exists": true,
+   "name": "Garden Gloves 01",
+   "dims_cm": [
+    22.7,
+    29.9,
+    7.6
+   ],
+   "polycount": 6822,
+   "categories": [
+    "props",
+    "collection: the_shed"
+   ],
+   "tags": [
+    "outdoor",
+    "shed",
+    "garden",
+    "gardening",
+    "hand",
+    "dirty",
+    "used",
+    "worn"
+   ],
+   "published": "2022-12-30",
+   "authors": [
+    "Satyaki Mandal"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/garden_gloves_01/garden_gloves_01_1k.gltf",
+    "bytes": 2813,
+    "textures": 4
+   }
+  },
+  "garden_hose_wall_mounted_01": {
+   "exists": true,
+   "name": "Garden Hose Wall Mounted 01",
+   "dims_cm": [
+    46.7,
+    25.0,
+    55.7
+   ],
+   "polycount": 11684,
+   "categories": [
+    "wall decoration",
+    "plants",
+    "collection: the_shed"
+   ],
+   "tags": [
+    "garden",
+    "gardening",
+    "landscaping",
+    "pipes",
+    "cable",
+    "valve",
+    "hose",
+    "water"
+   ],
+   "published": "2022-12-12",
+   "authors": [
+    "Kuutti Siitonen"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/garden_hose_wall_mounted_01/garden_hose_wall_mounted_01_1k.gltf",
+    "bytes": 4432,
+    "textures": 4
+   }
+  },
+  "garden_sprinkler_01": {
+   "exists": true,
+   "name": "Garden Sprinkler 01",
+   "dims_cm": [
+    36.0,
+    24.9,
+    21.6
+   ],
+   "polycount": 8192,
+   "categories": [
+    "tools",
+    "appliances",
+    "collection: the_shed"
+   ],
+   "tags": [
+    "garden",
+    "gardening",
+    "shed",
+    "outdoor",
+    "garage",
+    "landscaping",
+    "water",
+    "tap"
+   ],
+   "published": "2023-01-23",
+   "authors": [
+    "Amal Kumar"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/garden_sprinkler_01/garden_sprinkler_01_1k.gltf",
+    "bytes": 9574,
+    "textures": 4
+   }
+  },
+  "hamburger_buns": {
+   "exists": true,
+   "name": "Hamburger Buns",
+   "dims_cm": [
+    39.7,
+    11.4,
+    6.3
+   ],
+   "polycount": 11588,
+   "categories": [
+    "props",
+    "food",
+    "collection: project_lighthouse"
+   ],
+   "tags": [
+    "baked goods",
+    "bread",
+    "bakery",
+    "bread rolls",
+    "buns"
+   ],
+   "published": "2026-03-13",
+   "authors": [
+    "Alexander Shulha"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/hamburger_buns/hamburger_buns_1k.gltf",
+    "bytes": 5815,
+    "textures": 4
+   }
+  },
+  "hand_plane_no4": {
+   "exists": true,
+   "name": "Hand Plane No4",
+   "dims_cm": [
+    33.1,
+    8.4,
+    19.8
+   ],
+   "polycount": 8220,
+   "categories": [
+    "tools",
+    "collection: the_shed"
+   ],
+   "tags": [
+    "vintage",
+    "hand tool",
+    "carpentry",
+    "old",
+    "wood",
+    "worn",
+    "woodwork",
+    "workshop"
+   ],
+   "published": "2022-11-25",
+   "authors": [
+    "Satyaki Mandal"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/hand_plane_no4/hand_plane_no4_1k.gltf",
+    "bytes": 2917,
+    "textures": 4
+   }
+  },
+  "handsaw_wood": {
+   "exists": true,
+   "name": "Handsaw Wood",
+   "dims_cm": [
+    4.1,
+    63.3,
+    16.7
+   ],
+   "polycount": 2548,
+   "categories": [
+    "props",
+    "tools",
+    "industrial",
+    "collection: the_shed"
+   ],
+   "tags": [
+    "wooden",
+    "workshop",
+    "shed",
+    "woodwork",
+    "worn",
+    "metal",
+    "carpentry",
+    "garage"
+   ],
+   "published": "2023-03-03",
+   "authors": [
+    "Konrad Sza\u0142ankiewicz"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/handsaw_wood/handsaw_wood_1k.gltf",
+    "bytes": 2762,
+    "textures": 4
+   }
+  },
+  "hanging_picture_frame_01": {
+   "exists": true,
+   "name": "Hanging Picture Frame 01",
+   "dims_cm": [
+    59.4,
+    1.6,
+    84.1
+   ],
+   "polycount": 2586,
+   "categories": [
+    "decorative",
+    "wall decoration"
+   ],
+   "tags": [
+    "modern",
+    "minimalist",
+    "clean",
+    "frame",
+    "simple",
+    "art"
+   ],
+   "published": "2021-06-15",
+   "authors": [
+    "James Ray Cock"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/hanging_picture_frame_01/hanging_picture_frame_01_1k.gltf",
+    "bytes": 6495,
+    "textures": 7
+   }
+  },
+  "hanging_picture_frame_02": {
+   "exists": true,
+   "name": "Hanging Picture Frame 02",
+   "dims_cm": [
+    75.2,
+    3.3,
+    50.0
+   ],
+   "polycount": 3678,
+   "categories": [
+    "decorative",
+    "wall decoration"
+   ],
+   "tags": [
+    "wood",
+    "painting",
+    "old",
+    "art",
+    "frame"
+   ],
+   "published": "2021-06-15",
+   "authors": [
+    "James Ray Cock"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/hanging_picture_frame_02/hanging_picture_frame_02_1k.gltf",
+    "bytes": 6433,
+    "textures": 7
+   }
+  },
+  "hanging_picture_frame_03": {
+   "exists": true,
+   "name": "Hanging Picture Frame 03",
+   "dims_cm": [
+    38.5,
+    3.2,
+    50.2
+   ],
+   "polycount": 24348,
+   "categories": [
+    "wall decoration",
+    "decorative"
+   ],
+   "tags": [
+    "vintage",
+    "photo",
+    "photograph",
+    "old",
+    "antique",
+    "picture",
+    "fancy",
+    "wooden"
+   ],
+   "published": "2021-09-15",
+   "authors": [
+    "James Ray Cock"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/hanging_picture_frame_03/hanging_picture_frame_03_1k.gltf",
+    "bytes": 7644,
+    "textures": 8
+   }
+  },
+  "hatchet": {
+   "exists": true,
+   "name": "Hatchet",
+   "dims_cm": [
+    2.6,
+    10.4,
+    28.9
+   ],
+   "polycount": 5250,
+   "categories": [
+    "tools"
+   ],
+   "tags": [
+    "weapon",
+    "axe",
+    "lumber",
+    "hatchet",
+    "chopping",
+    "woodwork",
+    "camping",
+    "forestry"
+   ],
+   "published": "2023-11-25",
+   "authors": [
+    "James Ray Cock",
+    "Ulan Cabanilla"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/hatchet/hatchet_1k.gltf",
+    "bytes": 2718,
+    "textures": 4
+   }
+  },
+  "horse_statue_01": {
+   "exists": true,
+   "name": "Horse Statue 01",
+   "dims_cm": [
+    16.4,
+    10.8,
+    22.0
+   ],
+   "polycount": 22388,
+   "categories": [
+    "props",
+    "decorative"
+   ],
+   "tags": [
+    "decorative",
+    "horse",
+    "statue",
+    "figurine",
+    "porcelain",
+    "animal",
+    "sculpture",
+    "white"
+   ],
+   "published": "2021-10-22",
+   "authors": [
+    "Rico Cilliers"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/horse_statue_01/horse_statue_01_1k.gltf",
+    "bytes": 5858,
+    "textures": 4
+   }
+  },
+  "jug_01": {
+   "exists": true,
+   "name": "Jug 01",
+   "dims_cm": [
+    27.5,
+    16.8,
+    21.1
+   ],
+   "polycount": 5770,
+   "categories": [
+    "props",
+    "decorative",
+    "dishes",
+    "containers"
+   ],
+   "tags": [
+    "ceramic",
+    "milk",
+    "white",
+    "antique",
+    "vintage",
+    "old",
+    "fancy",
+    "decorative"
+   ],
+   "published": "2022-08-26",
+   "authors": [
+    "Kuutti Siitonen"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/jug_01/jug_01_1k.gltf",
+    "bytes": 2612,
+    "textures": 4
+   }
+  },
+  "lemon": {
+   "exists": true,
+   "name": "Lemon",
+   "dims_cm": [
+    6.9,
+    6.8,
+    9.5
+   ],
+   "polycount": 4012,
+   "categories": [
+    "props",
+    "food"
+   ],
+   "tags": [
+    "culinary",
+    "cooking",
+    "vegetable",
+    "vegetables",
+    "organic",
+    "ingredients",
+    "produce"
+   ],
+   "published": "2024-07-17",
+   "authors": [
+    "Kuutti Siitonen"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/lemon/lemon_1k.gltf",
+    "bytes": 3036,
+    "textures": 4
+   }
+  },
+  "life_jacket": {
+   "exists": true,
+   "name": "Life Jacket",
+   "dims_cm": [
+    69.6,
+    18.4,
+    99.2
+   ],
+   "polycount": 8968,
+   "categories": [
+    "collection: project_lighthouse",
+    "props"
+   ],
+   "tags": [
+    "flotation device",
+    "life preserver",
+    "ocean",
+    "boat",
+    "single-seat",
+    "fishing",
+    "accessories",
+    "ship"
+   ],
+   "published": "2026-06-09",
+   "authors": [
+    "PierreB3D"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/life_jacket/life_jacket_1k.gltf",
+    "bytes": 2754,
+    "textures": 4
+   }
+  },
+  "lifebuoy": {
+   "exists": true,
+   "name": "Lifebuoy",
+   "dims_cm": [
+    78.3,
+    15.5,
+    84.1
+   ],
+   "polycount": 10728,
+   "categories": [
+    "collection: project_lighthouse",
+    "wall decoration",
+    "industrial"
+   ],
+   "tags": [
+    "weathered",
+    "safety",
+    "lifering",
+    "marine",
+    "nautical",
+    "flotation device",
+    "life preserver"
+   ],
+   "published": "2026-06-30",
+   "authors": [
+    "Hank Kaamura"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/lifebuoy/lifebuoy_1k.gltf",
+    "bytes": 2724,
+    "textures": 4
+   }
+  },
+  "lightbulb_01": {
+   "exists": true,
+   "name": "Lightbulb 01",
+   "dims_cm": [
+    6.0,
+    6.0,
+    10.0
+   ],
+   "polycount": 4372,
+   "categories": [
+    "lighting",
+    "collection: the_shed"
+   ],
+   "tags": [
+    "globe",
+    "filament",
+    "light",
+    "lamp",
+    "shed",
+    "bulb",
+    "illumination",
+    "incandescent"
+   ],
+   "published": "2022-11-28",
+   "authors": [
+    "Josh Dean"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/lightbulb_01/lightbulb_01_1k.gltf",
+    "bytes": 5721,
+    "textures": 5
+   }
+  },
+  "magnifying_glass_01": {
+   "exists": true,
+   "name": "Magnifying Glass 01",
+   "dims_cm": [
+    13.2,
+    2.7,
+    27.2
+   ],
+   "polycount": 7240,
+   "categories": [
+    "props",
+    "tools"
+   ],
+   "tags": [
+    "eye",
+    "focal",
+    "lense",
+    "magnifier",
+    "magnifying lens",
+    "inspection",
+    "optical tool",
+    "reading aid"
+   ],
+   "published": "2021-10-06",
+   "authors": [
+    "Nazar Borodavka"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/magnifying_glass_01/magnifying_glass_01_1k.gltf",
+    "bytes": 4929,
+    "textures": 5
+   }
+  },
+  "mantel_clock_01": {
+   "exists": true,
+   "name": "Mantel Clock 01",
+   "dims_cm": [
+    48.4,
+    25.1,
+    16.1
+   ],
+   "polycount": 29742,
+   "categories": [
+    "decorative",
+    "appliances",
+    "rigged"
+   ],
+   "tags": [
+    "vintage",
+    "antique",
+    "old",
+    "clock",
+    "time",
+    "wooden",
+    "shelf",
+    "mantel"
+   ],
+   "published": "2021-09-17",
+   "authors": [
+    "Yann Kervran",
+    "Rico Cilliers"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/mantel_clock_01/mantel_clock_01_1k.gltf",
+    "bytes": 5628,
+    "textures": 4
+   }
+  },
+  "measuring_tape_01": {
+   "exists": true,
+   "name": "Measuring Tape 01",
+   "dims_cm": [
+    4.1,
+    16.9,
+    7.3
+   ],
+   "polycount": 2868,
+   "categories": [
+    "industrial",
+    "tools",
+    "props",
+    "collection: the_shed"
+   ],
+   "tags": [
+    "tape",
+    "ruler",
+    "measure",
+    "tool",
+    "toolbox",
+    "woodwork"
+   ],
+   "published": "2021-10-15",
+   "authors": [
+    "Kuutti Siitonen"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/measuring_tape_01/measuring_tape_01_1k.gltf",
+    "bytes": 2720,
+    "textures": 4
+   }
+  },
+  "metal_jerrycan_green": {
+   "exists": true,
+   "name": "Metal Jerrycan Green",
+   "dims_cm": [
+    37.4,
+    17.1,
+    50.1
+   ],
+   "polycount": 9636,
+   "categories": [
+    "collection: project_lighthouse",
+    "props",
+    "containers"
+   ],
+   "tags": [
+    "old",
+    "worn",
+    "jerrycan",
+    "fuel can",
+    "military",
+    "petrol",
+    "garage",
+    "gas"
+   ],
+   "published": "2026-06-09",
+   "authors": [
+    "Ulan Cabanilla"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/metal_jerrycan_green/metal_jerrycan_green_1k.gltf",
+    "bytes": 9539,
+    "textures": 4
+   }
+  },
+  "metal_jug": {
+   "exists": true,
+   "name": "Metal Jug",
+   "dims_cm": [
+    19.7,
+    19.5,
+    28.8
+   ],
+   "polycount": 6040,
+   "categories": [
+    "containers",
+    "decorative",
+    "vases"
+   ],
+   "tags": [
+    "milk jug",
+    "metal",
+    "vase",
+    "farmhouse",
+    "countryside",
+    "kitchen decor",
+    "vintage",
+    "farmhouse decor"
+   ],
+   "published": "2024-05-22",
+   "authors": [
+    "Anzor Lezhava"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/metal_jug/metal_jug_1k.gltf",
+    "bytes": 2752,
+    "textures": 4
+   }
+  },
+  "metal_toolbox": {
+   "exists": true,
+   "name": "Metal Toolbox",
+   "dims_cm": [
+    40.0,
+    29.2,
+    34.7
+   ],
+   "polycount": 14228,
+   "categories": [
+    "collection: project_lighthouse",
+    "containers",
+    "tools",
+    "industrial"
+   ],
+   "tags": [
+    "vintage",
+    "rustic",
+    "garage",
+    "workshop",
+    "metal",
+    "storage",
+    "shed",
+    "construction"
+   ],
+   "published": "2026-04-16",
+   "authors": [
+    "Mateusz Sadek"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/metal_toolbox/metal_toolbox_1k.gltf",
+    "bytes": 10717,
+    "textures": 4
+   }
+  },
+  "metal_trash_can": {
+   "exists": true,
+   "name": "Metal Trash Can",
+   "dims_cm": [
+    184.7,
+    55.6,
+    90.6
+   ],
+   "polycount": 13960,
+   "categories": [
+    "industrial",
+    "containers",
+    "collection: hidden_alley"
+   ],
+   "tags": [
+    "bin",
+    "rubbish",
+    "garbage",
+    "disposal",
+    "litter",
+    "dumpster",
+    "outdoor trash can",
+    " urban"
+   ],
+   "published": "2023-09-27",
+   "authors": [
+    "GurJas Studios"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/metal_trash_can/metal_trash_can_1k.gltf",
+    "bytes": 15481,
+    "textures": 7
+   }
+  },
+  "mousetrap": {
+   "exists": true,
+   "name": "Mousetrap",
+   "dims_cm": [
+    5.5,
+    10.0,
+    1.8
+   ],
+   "polycount": 5136,
+   "categories": [
+    "props"
+   ],
+   "tags": [
+    "wood",
+    "old",
+    "trap",
+    "rat",
+    "mouse",
+    "catcher",
+    "pest control",
+    "rodent"
+   ],
+   "published": "2023-05-19",
+   "authors": [
+    "GreenPixel"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/mousetrap/mousetrap_1k.gltf",
+    "bytes": 2738,
+    "textures": 4
+   }
+  },
+  "ocean_buoy": {
+   "exists": true,
+   "name": "Ocean Buoy",
+   "dims_cm": [
+    106.7,
+    95.2,
+    265.6
+   ],
+   "polycount": 12240,
+   "categories": [
+    "collection: project_lighthouse",
+    "props"
+   ],
+   "tags": [
+    "marine buoy",
+    "light beacon",
+    "maritime",
+    "ship",
+    "dock",
+    "jetty",
+    "sea",
+    "ocean"
+   ],
+   "published": "2026-04-16",
+   "authors": [
+    "Mateusz Sadek"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/ocean_buoy/ocean_buoy_1k.gltf",
+    "bytes": 3228,
+    "textures": 5
+   }
+  },
+  "office_notepads": {
+   "exists": true,
+   "name": "Office Notepads",
+   "dims_cm": [
+    110.3,
+    66.0,
+    2.2
+   ],
+   "polycount": 666,
+   "categories": [
+    "collection: project_lighthouse",
+    "props",
+    "office"
+   ],
+   "tags": [
+    "stationery",
+    "notepad",
+    "lined paper",
+    "blank paper",
+    "art supplies",
+    "office",
+    "admin",
+    "sticky notes"
+   ],
+   "published": "2026-06-09",
+   "authors": [
+    "Ulan Cabanilla"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/office_notepads/office_notepads_1k.gltf",
+    "bytes": 15568,
+    "textures": 4
+   }
+  },
+  "oil_tin": {
+   "exists": true,
+   "name": "Oil Tin",
+   "dims_cm": [
+    11.5,
+    15.4,
+    20.5
+   ],
+   "polycount": 2834,
+   "categories": [
+    "containers",
+    "props",
+    "industrial",
+    "collection: project_lighthouse"
+   ],
+   "tags": [
+    "old",
+    "worn",
+    "rusted",
+    "metal",
+    "rectangular",
+    "fuel",
+    "storage"
+   ],
+   "published": "2026-06-20",
+   "authors": [
+    "Niklas"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/oil_tin/oil_tin_1k.gltf",
+    "bytes": 4273,
+    "textures": 4
+   }
+  },
+  "ornate_mirror_01": {
+   "exists": true,
+   "name": "Ornate Mirror 01",
+   "dims_cm": [
+    48.6,
+    2.6,
+    74.4
+   ],
+   "polycount": 14246,
+   "categories": [
+    "decorative",
+    "wall decoration",
+    "furniture"
+   ],
+   "tags": [
+    "decor",
+    "decoration",
+    "ornate",
+    "fancy",
+    "wealthy",
+    "mansion",
+    "manor",
+    "vintage"
+   ],
+   "published": "2021-09-01",
+   "authors": [
+    "James Ray Cock"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/ornate_mirror_01/ornate_mirror_01_1k.gltf",
+    "bytes": 2697,
+    "textures": 4
+   }
+  },
+  "painted_wooden_chair_01": {
+   "exists": true,
+   "name": "Painted Wooden Chair 01",
+   "dims_cm": [
+    43.2,
+    54.0,
+    95.6
+   ],
+   "polycount": 724,
+   "categories": [
+    "furniture",
+    "seating"
+   ],
+   "tags": [
+    "chair",
+    "wood",
+    "painted",
+    "farmhouse",
+    "dining",
+    "diner",
+    "american",
+    "kitchen"
+   ],
+   "published": "2021-09-29",
+   "authors": [
+    "Kuutti Siitonen"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/painted_wooden_chair_01/painted_wooden_chair_01_1k.gltf",
+    "bytes": 2785,
+    "textures": 4
+   }
+  },
+  "pipe_wrench": {
+   "exists": true,
+   "name": "Pipe Wrench",
+   "dims_cm": [
+    8.4,
+    3.4,
+    40.5
+   ],
+   "polycount": 10746,
+   "categories": [
+    "industrial",
+    "tools",
+    "collection: hidden_alley"
+   ],
+   "tags": [
+    "wrench",
+    "garage",
+    "workshop",
+    "construction",
+    "plumbing",
+    "automotive",
+    "used",
+    "mechanics toolbox"
+   ],
+   "published": "2023-08-25",
+   "authors": [
+    "Will Evarts"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/pipe_wrench/pipe_wrench_1k.gltf",
+    "bytes": 2756,
+    "textures": 4
+   }
+  },
+  "plastic_broom": {
+   "exists": true,
+   "name": "Plastic Broom",
+   "dims_cm": [
+    41.6,
+    56.7,
+    119.8
+   ],
+   "polycount": 18736,
+   "categories": [
+    "collection: project_lighthouse",
+    "props",
+    "tools"
+   ],
+   "tags": [
+    "cleaning",
+    "janitorial",
+    "red",
+    "housekeeping"
+   ],
+   "published": "2026-06-20",
+   "authors": [
+    "L"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/plastic_broom/plastic_broom_1k.gltf",
+    "bytes": 4696,
+    "textures": 4
+   }
+  },
+  "plastic_crate_02": {
+   "exists": true,
+   "name": "Plastic Crate 02",
+   "dims_cm": [
+    50.6,
+    40.6,
+    25.4
+   ],
+   "polycount": 5840,
+   "categories": [
+    "collection: project_lighthouse",
+    "props",
+    "containers"
+   ],
+   "tags": [
+    "plastic",
+    "crate",
+    "stackable",
+    "industrial",
+    "storage",
+    "utility",
+    "warehouse",
+    "retail"
+   ],
+   "published": "2026-06-09",
+   "authors": [
+    "Fabi_G"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/plastic_crate_02/plastic_crate_02_1k.gltf",
+    "bytes": 2947,
+    "textures": 4
+   }
+  },
+  "plastic_crate_03": {
+   "exists": true,
+   "name": "Plastic Crate 03",
+   "dims_cm": [
+    48.1,
+    26.5,
+    26.6
+   ],
+   "polycount": 21740,
+   "categories": [
+    "collection: project_lighthouse",
+    "containers",
+    "industrial"
+   ],
+   "tags": [
+    "plastic",
+    "crate",
+    "stackable",
+    "crate",
+    "aged",
+    "sun damaged",
+    "storage",
+    "distressed"
+   ],
+   "published": "2026-07-03",
+   "authors": [
+    "Pacific Penguin"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/plastic_crate_03/plastic_crate_03_1k.gltf",
+    "bytes": 2817,
+    "textures": 4
+   }
+  },
+  "pliers": {
+   "exists": true,
+   "name": "Pliers",
+   "dims_cm": [
+    5.5,
+    1.8,
+    18.0
+   ],
+   "polycount": 4540,
+   "categories": [
+    "collection: project_lighthouse",
+    "tools",
+    "props",
+    "industrial"
+   ],
+   "tags": [
+    "rusted",
+    "plastic",
+    "metal",
+    "combination pliers",
+    "wire cutters",
+    "hand tool"
+   ],
+   "published": "2026-06-20",
+   "authors": [
+    "PierreB3D"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/pliers/pliers_1k.gltf",
+    "bytes": 5560,
+    "textures": 4
+   }
+  },
+  "pocket_watch": {
+   "exists": true,
+   "name": "Pocket Watch",
+   "dims_cm": [
+    5.8,
+    1.6,
+    7.6
+   ],
+   "polycount": 15615,
+   "categories": [
+    "collection: project_lighthouse",
+    "props"
+   ],
+   "tags": [
+    "antique",
+    "brass",
+    "ornate",
+    "gold",
+    "vintage",
+    "watch",
+    "timepiece",
+    "watchface"
+   ],
+   "published": "2026-06-09",
+   "authors": [
+    "PierreB3D"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/pocket_watch/pocket_watch_1k.gltf",
+    "bytes": 12349,
+    "textures": 5
+   }
+  },
+  "portable_cassette_player": {
+   "exists": true,
+   "name": "Portable Cassette Player",
+   "dims_cm": [
+    17.2,
+    4.0,
+    13.0
+   ],
+   "polycount": 13307,
+   "categories": [
+    "collection: project_lighthouse",
+    "props",
+    "electronics"
+   ],
+   "tags": [
+    "old",
+    "vintage",
+    "cassette tape",
+    "tape",
+    "retro",
+    "analog",
+    "walkman"
+   ],
+   "published": "2026-03-20",
+   "authors": [
+    "Mateusz Sadek"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/portable_cassette_player/portable_cassette_player_1k.gltf",
+    "bytes": 9340,
+    "textures": 4
+   }
+  },
+  "potted_plant_04": {
+   "exists": true,
+   "name": "Potted Plant 04",
+   "dims_cm": [
+    17.0,
+    18.6,
+    26.8
+   ],
+   "polycount": 6097,
+   "categories": [
+    "decorative",
+    "plants",
+    "potted plants",
+    "succulent",
+    "nature"
+   ],
+   "tags": [
+    "cactus",
+    "aloe",
+    "succulent",
+    "potplant",
+    "small",
+    "pot",
+    "plant",
+    "decor"
+   ],
+   "published": "2021-06-15",
+   "authors": [
+    "James Ray Cock"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/potted_plant_04/potted_plant_04_1k.gltf",
+    "bytes": 7081,
+    "textures": 4
+   }
+  },
+  "ratchet_wrench": {
+   "exists": true,
+   "name": "Ratchet Wrench",
+   "dims_cm": [
+    4.4,
+    4.3,
+    24.6
+   ],
+   "polycount": 8796,
+   "categories": [
+    "props",
+    "tools",
+    "industrial",
+    "collection: the_shed",
+    "rigged"
+   ],
+   "tags": [
+    "metal",
+    "shed",
+    "workshop",
+    "construction",
+    "garage",
+    "mechanic",
+    "wrench",
+    "nuts"
+   ],
+   "published": "2022-12-09",
+   "authors": [
+    "John Hutcheson"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/ratchet_wrench/ratchet_wrench_1k.gltf",
+    "bytes": 2788,
+    "textures": 4
+   }
+  },
+  "round_spectacles": {
+   "exists": true,
+   "name": "Round Spectacles",
+   "dims_cm": [
+    15.8,
+    14.9,
+    4.6
+   ],
+   "polycount": 11810,
+   "categories": [
+    "collection: project_lighthouse",
+    "props"
+   ],
+   "tags": [
+    "vintage",
+    "round frame",
+    "retro",
+    "eyewear",
+    "accessories",
+    "glasses"
+   ],
+   "published": "2026-03-24",
+   "authors": [
+    "Sean Buckley"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/round_spectacles/round_spectacles_1k.gltf",
+    "bytes": 5976,
+    "textures": 4
+   }
+  },
+  "round_wooden_table_02": {
+   "exists": true,
+   "name": "Round Wooden Table 02",
+   "dims_cm": [
+    79.6,
+    79.6,
+    74.6
+   ],
+   "polycount": 4254,
+   "categories": [
+    "furniture",
+    "table"
+   ],
+   "tags": [
+    "antique",
+    "vintage",
+    "wooden",
+    "traditional",
+    "circle",
+    "lounge",
+    "dining"
+   ],
+   "published": "2025-03-24",
+   "authors": [
+    "Ulan Cabanilla"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/round_wooden_table_02/round_wooden_table_02_1k.gltf",
+    "bytes": 2851,
+    "textures": 4
+   }
+  },
+  "rubber_boots": {
+   "exists": true,
+   "name": "Rubber Boots",
+   "dims_cm": [
+    89.1,
+    26.9,
+    37.3
+   ],
+   "polycount": 35004,
+   "categories": [
+    "collection: project_lighthouse",
+    "props"
+   ],
+   "tags": [
+    "clothing",
+    "shoes",
+    "outdoor",
+    "waterproof",
+    "wellies",
+    "rubber",
+    "workwear",
+    "utility"
+   ],
+   "published": "2026-06-09",
+   "authors": [
+    "L"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/rubber_boots/rubber_boots_1k.gltf",
+    "bytes": 6106,
+    "textures": 7
+   }
+  },
+  "screwdriver": {
+   "exists": true,
+   "name": "Screwdriver",
+   "dims_cm": [
+    2.7,
+    2.7,
+    20.9
+   ],
+   "polycount": 3412,
+   "categories": [
+    "collection: project_lighthouse",
+    "tools",
+    "props"
+   ],
+   "tags": [
+    "flathead",
+    "slotted",
+    "worn",
+    "red",
+    "aged",
+    "dirty",
+    "hand tool"
+   ],
+   "published": "2026-06-20",
+   "authors": [
+    "PierreB3D"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/screwdriver/screwdriver_1k.gltf",
+    "bytes": 2757,
+    "textures": 4
+   }
+  },
+  "screwdrivers_02": {
+   "exists": true,
+   "name": "Screwdrivers 02",
+   "dims_cm": [
+    10.0,
+    27.0,
+    2.7
+   ],
+   "polycount": 3548,
+   "categories": [
+    "collection: project_lighthouse",
+    "tools",
+    "props"
+   ],
+   "tags": [
+    "vintage",
+    "flathead",
+    "phillips",
+    "wooden-handle",
+    "metal",
+    "antique",
+    "old"
+   ],
+   "published": "2026-07-03",
+   "authors": [
+    "BKS"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/screwdrivers_02/screwdrivers_02_1k.gltf",
+    "bytes": 4293,
+    "textures": 4
+   }
+  },
+  "seadogs_compass": {
+   "exists": true,
+   "name": "Seadogs Compass",
+   "dims_cm": [
+    8.1,
+    15.0,
+    8.7
+   ],
+   "polycount": 11645,
+   "categories": [
+    "props",
+    "tools",
+    "decorative",
+    "collection: project_lighthouse"
+   ],
+   "tags": [
+    "old",
+    "vintage",
+    "antique",
+    "brass",
+    "nautical",
+    "compass",
+    "maritime",
+    "ship"
+   ],
+   "published": "2026-04-16",
+   "authors": [
+    "Benny Weimer"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/seadogs_compass/seadogs_compass_1k.gltf",
+    "bytes": 6060,
+    "textures": 4
+   }
+  },
+  "signal_flashlight": {
+   "exists": true,
+   "name": "Signal Flashlight",
+   "dims_cm": [
+    7.1,
+    4.5,
+    15.0
+   ],
+   "polycount": 9730,
+   "categories": [
+    "collection: project_lighthouse",
+    "props",
+    "electronics"
+   ],
+   "tags": [
+    "handheld",
+    "light",
+    "torch",
+    "signal device",
+    "portable beacon",
+    "emergency signal",
+    "vintage"
+   ],
+   "published": "2026-06-09",
+   "authors": [
+    "Ji\u0159\u00ed Pt\u00e1\u010dek"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/signal_flashlight/signal_flashlight_1k.gltf",
+    "bytes": 17980,
+    "textures": 4
+   }
+  },
+  "sledgehammer_01": {
+   "exists": true,
+   "name": "Sledgehammer 01",
+   "dims_cm": [
+    20.8,
+    9.0,
+    100.6
+   ],
+   "polycount": 2596,
+   "categories": [
+    "props",
+    "tools",
+    "industrial",
+    "collection: the_shed"
+   ],
+   "tags": [
+    "outdoor",
+    "construction",
+    "hammer",
+    "nails",
+    "heavy",
+    "shed"
+   ],
+   "published": "2023-01-20",
+   "authors": [
+    "Dylan Guzman"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/sledgehammer_01/sledgehammer_01_1k.gltf",
+    "bytes": 2796,
+    "textures": 4
+   }
+  },
+  "small_oil_can_01": {
+   "exists": true,
+   "name": "Small Oil Can 01",
+   "dims_cm": [
+    26.6,
+    10.4,
+    23.7
+   ],
+   "polycount": 16746,
+   "categories": [
+    "industrial",
+    "tools",
+    "props",
+    "collection: the_shed"
+   ],
+   "tags": [
+    "oil",
+    "fuel",
+    "can",
+    "dropper",
+    "mechanic",
+    "tools",
+    "repair"
+   ],
+   "published": "2021-06-15",
+   "authors": [
+    "Raven van de Werken"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/small_oil_can_01/small_oil_can_01_1k.gltf",
+    "bytes": 2722,
+    "textures": 4
+   }
+  },
+  "standing_picture_frame_01": {
+   "exists": true,
+   "name": "Standing Picture Frame 01",
+   "dims_cm": [
+    20.1,
+    10.0,
+    25.0
+   ],
+   "polycount": 1634,
+   "categories": [
+    "decorative"
+   ],
+   "tags": [
+    "modern",
+    "minimalist",
+    "clean",
+    "frame",
+    "photo",
+    "simple",
+    "art"
+   ],
+   "published": "2021-06-15",
+   "authors": [
+    "James Ray Cock"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/standing_picture_frame_01/standing_picture_frame_01_1k.gltf",
+    "bytes": 6936,
+    "textures": 7
+   }
+  },
+  "standing_picture_frame_02": {
+   "exists": true,
+   "name": "Standing Picture Frame 02",
+   "dims_cm": [
+    21.7,
+    10.2,
+    26.6
+   ],
+   "polycount": 2986,
+   "categories": [
+    "decorative"
+   ],
+   "tags": [
+    "wood",
+    "painting",
+    "old",
+    "art",
+    "frame",
+    "photo"
+   ],
+   "published": "2021-06-15",
+   "authors": [
+    "James Ray Cock"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/standing_picture_frame_02/standing_picture_frame_02_1k.gltf",
+    "bytes": 6671,
+    "textures": 6
+   }
+  },
+  "stationery_supplies": {
+   "exists": true,
+   "name": "Stationery Supplies",
+   "dims_cm": [
+    30.2,
+    8.4,
+    16.4
+   ],
+   "polycount": 4412,
+   "categories": [
+    "collection: project_lighthouse",
+    "props",
+    "office"
+   ],
+   "tags": [
+    "pen",
+    "pencil",
+    "eraser",
+    "stationery",
+    "art supplies",
+    "writing",
+    "office",
+    "desk"
+   ],
+   "published": "2026-03-24",
+   "authors": [
+    "Mateusz Sadek"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/stationery_supplies/stationery_supplies_1k.gltf",
+    "bytes": 15220,
+    "textures": 4
+   }
+  },
+  "strawberry_chocolate_cake": {
+   "exists": true,
+   "name": "Strawberry Chocolate Cake",
+   "dims_cm": [
+    24.4,
+    24.0,
+    7.9
+   ],
+   "polycount": 27054,
+   "categories": [
+    "props",
+    "food"
+   ],
+   "tags": [
+    "cooking",
+    "culinary",
+    "cake",
+    "baked goods",
+    "bakery",
+    "treat"
+   ],
+   "published": "2024-07-19",
+   "authors": [
+    "Kuutti Siitonen"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/strawberry_chocolate_cake/strawberry_chocolate_cake_1k.gltf",
+    "bytes": 2933,
+    "textures": 4
+   }
+  },
+  "tea_set_01": {
+   "exists": true,
+   "name": "Tea Set 01",
+   "dims_cm": [
+    91.8,
+    48.4,
+    16.5
+   ],
+   "polycount": 40296,
+   "categories": [
+    "props",
+    "dishes"
+   ],
+   "tags": [
+    "antique",
+    "tea",
+    "cup",
+    "english",
+    "ornate",
+    "vintage",
+    "floral",
+    "decorative"
+   ],
+   "published": "2021-11-05",
+   "authors": [
+    "James Ray Cock",
+    "Rico Cilliers",
+    "Jurita Burger"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/tea_set_01/tea_set_01_1k.gltf",
+    "bytes": 15836,
+    "textures": 4
+   }
+  },
+  "television_02": {
+   "exists": true,
+   "name": "Television 02",
+   "dims_cm": [
+    40.0,
+    35.0,
+    41.1
+   ],
+   "polycount": 2310,
+   "categories": [
+    "collection: project_lighthouse",
+    "electronics"
+   ],
+   "tags": [
+    "old",
+    "vintage",
+    "crt",
+    "cathode ray tube",
+    "tv",
+    "retro",
+    "boxy",
+    "screen"
+   ],
+   "published": "2026-07-03",
+   "authors": [
+    "Benny Weimer"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/television_02/television_02_1k.gltf",
+    "bytes": 2767,
+    "textures": 4
+   }
+  },
+  "tire_pump": {
+   "exists": true,
+   "name": "Tire Pump",
+   "dims_cm": [
+    25.5,
+    10.1,
+    58.0
+   ],
+   "polycount": 6572,
+   "categories": [
+    "tools",
+    "props",
+    "collection: the_shed"
+   ],
+   "tags": [
+    "shed",
+    "garage",
+    "wheel",
+    "tire",
+    "pump",
+    "inflate",
+    "matress"
+   ],
+   "published": "2023-02-03",
+   "authors": [
+    "Garrison Gager"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/tire_pump/tire_pump_1k.gltf",
+    "bytes": 2735,
+    "textures": 4
+   }
+  },
+  "tongue_groove_pliers": {
+   "exists": true,
+   "name": "Tongue & Groove Pliers",
+   "dims_cm": [
+    6.3,
+    24.4,
+    1.4
+   ],
+   "polycount": 2694,
+   "categories": [
+    "collection: project_lighthouse",
+    "tools"
+   ],
+   "tags": [
+    "wrench",
+    "adjustable wrench",
+    "serrated jaws",
+    "black grips",
+    "rubber grips",
+    "scratched"
+   ],
+   "published": "2026-07-03",
+   "authors": [
+    "BKS"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/tongue_groove_pliers/tongue_groove_pliers_1k.gltf",
+    "bytes": 4263,
+    "textures": 4
+   }
+  },
+  "trowel_01": {
+   "exists": true,
+   "name": "Trowel 01",
+   "dims_cm": [
+    9.9,
+    34.7,
+    10.3
+   ],
+   "polycount": 5242,
+   "categories": [
+    "props",
+    "tools",
+    "collection: the_shed"
+   ],
+   "tags": [
+    "outdoor",
+    "plant",
+    "garden",
+    "gardening",
+    "landscaping",
+    "shed",
+    "digging",
+    "hand"
+   ],
+   "published": "2022-12-26",
+   "authors": [
+    "Satyaki Mandal"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/trowel_01/trowel_01_1k.gltf",
+    "bytes": 2738,
+    "textures": 4
+   }
+  },
+  "vintage_binocular": {
+   "exists": true,
+   "name": "Vintage Binoculars",
+   "dims_cm": [
+    19.4,
+    19.9,
+    6.8
+   ],
+   "polycount": 19362,
+   "categories": [
+    "collection: project_lighthouse",
+    "instrument",
+    "props"
+   ],
+   "tags": [
+    "antique",
+    "leather",
+    "optical",
+    "vintage",
+    "brass"
+   ],
+   "published": "2026-07-03",
+   "authors": [
+    "Luke"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/vintage_binocular/vintage_binocular_1k.gltf",
+    "bytes": 13871,
+    "textures": 4
+   }
+  },
+  "vintage_electric_kettle": {
+   "exists": true,
+   "name": "Vintage Electric Kettle",
+   "dims_cm": [
+    32.1,
+    24.9,
+    30.5
+   ],
+   "polycount": 14838,
+   "categories": [
+    "collection: project_lighthouse",
+    "decorative",
+    "appliances"
+   ],
+   "tags": [
+    "old",
+    "vintage",
+    "antique",
+    "electric",
+    "gooseneck spout",
+    "metal",
+    "rusted",
+    "dirty"
+   ],
+   "published": "2026-06-20",
+   "authors": [
+    "SV Garip"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/vintage_electric_kettle/vintage_electric_kettle_1k.gltf",
+    "bytes": 4801,
+    "textures": 4
+   }
+  },
+  "vintage_flashlight": {
+   "exists": true,
+   "name": "Vintage Flashlight",
+   "dims_cm": [
+    9.6,
+    30.5,
+    14.4
+   ],
+   "polycount": 10562,
+   "categories": [
+    "collection: project_lighthouse",
+    "lighting",
+    "electronics",
+    "props",
+    "tools"
+   ],
+   "tags": [
+    "antique",
+    "vintage",
+    "old",
+    "metal",
+    "torch",
+    "searchlight",
+    "spotlight",
+    "handheld"
+   ],
+   "published": "2026-07-03",
+   "authors": [
+    "Omar M. El-Safy"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/vintage_flashlight/vintage_flashlight_1k.gltf",
+    "bytes": 7510,
+    "textures": 4
+   }
+  },
+  "vintage_lighter": {
+   "exists": true,
+   "name": "Vintage Lighter",
+   "dims_cm": [
+    8.2,
+    1.4,
+    6.6
+   ],
+   "polycount": 3366,
+   "categories": [
+    "collection: project_lighthouse",
+    "props",
+    "tools"
+   ],
+   "tags": [
+    "metal",
+    "scratched",
+    "brass",
+    "vintage",
+    "copper",
+    "worn"
+   ],
+   "published": "2026-03-20",
+   "authors": [
+    "Slinc"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/vintage_lighter/vintage_lighter_1k.gltf",
+    "bytes": 9363,
+    "textures": 4
+   }
+  },
+  "vintage_pocket_watch": {
+   "exists": true,
+   "name": "Vintage Pocket Watch",
+   "dims_cm": [
+    6.2,
+    1.4,
+    8.0
+   ],
+   "polycount": 4200,
+   "categories": [
+    "props"
+   ],
+   "tags": [
+    "vintage",
+    "watch",
+    "time",
+    "gold",
+    "antique",
+    "pocket watch",
+    "timepiece",
+    "ornate"
+   ],
+   "published": "2021-12-01",
+   "authors": [
+    "Tal Swicegood"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/vintage_pocket_watch/vintage_pocket_watch_1k.gltf",
+    "bytes": 10104,
+    "textures": 4
+   }
+  },
+  "vintage_video_camera": {
+   "exists": true,
+   "name": "Vintage Video Camera",
+   "dims_cm": [
+    7.1,
+    13.3,
+    14.5
+   ],
+   "polycount": 18682,
+   "categories": [
+    "electronics",
+    "appliances"
+   ],
+   "tags": [
+    "old",
+    "vintage",
+    "photography",
+    "film",
+    "cinematic",
+    "video",
+    "camera",
+    "recording"
+   ],
+   "published": "2025-06-16",
+   "authors": [
+    "James Ray Cock",
+    "Jenelle van Heerden"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/vintage_video_camera/vintage_video_camera_1k.gltf",
+    "bytes": 4620,
+    "textures": 4
+   }
+  },
+  "wall_clock": {
+   "exists": true,
+   "name": "Wall Clock",
+   "dims_cm": [
+    32.0,
+    4.7,
+    32.0
+   ],
+   "polycount": 3658,
+   "categories": [
+    "collection: project_lighthouse",
+    "decorative",
+    "appliances"
+   ],
+   "tags": [
+    "time",
+    "timepiece",
+    "watch",
+    "watchface",
+    "wall clock",
+    "analog",
+    "modern",
+    "office decor"
+   ],
+   "published": "2026-06-09",
+   "authors": [
+    "PierreB3D"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/wall_clock/wall_clock_1k.gltf",
+    "bytes": 9008,
+    "textures": 5
+   }
+  },
+  "watering_can_metal_01": {
+   "exists": true,
+   "name": "Watering Can Metal 01",
+   "dims_cm": [
+    19.1,
+    45.2,
+    19.7
+   ],
+   "polycount": 11837,
+   "categories": [
+    "containers",
+    "tools",
+    "props",
+    "collection: the_shed"
+   ],
+   "tags": [
+    "metal",
+    "garage",
+    "garden",
+    "gardening",
+    "landscaping",
+    "outdoor",
+    "shed",
+    "irrigation"
+   ],
+   "published": "2023-01-18",
+   "authors": [
+    "Charles Nderitu"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/watering_can_metal_01/watering_can_metal_01_1k.gltf",
+    "bytes": 3183,
+    "textures": 4
+   }
+  },
+  "wicker_basket_01": {
+   "exists": true,
+   "name": "Wicker Basket 01",
+   "dims_cm": [
+    38.3,
+    29.5,
+    11.7
+   ],
+   "polycount": 22276,
+   "categories": [
+    "containers",
+    "decorative",
+    "collection: the_shed"
+   ],
+   "tags": [
+    "wood",
+    "wicker",
+    "twine",
+    "basket",
+    "picnic",
+    "outdoor",
+    "kitchen",
+    "dining"
+   ],
+   "published": "2023-01-06",
+   "authors": [
+    "Kuutti Siitonen"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/wicker_basket_01/wicker_basket_01_1k.gltf",
+    "bytes": 2792,
+    "textures": 4
+   }
+  },
+  "wicker_basket_02": {
+   "exists": true,
+   "name": "Wicker Basket 02",
+   "dims_cm": [
+    37.5,
+    27.1,
+    21.8
+   ],
+   "polycount": 17850,
+   "categories": [
+    "containers",
+    "decorative"
+   ],
+   "tags": [
+    "handcrafted",
+    "home decor",
+    "rattan",
+    "basket",
+    "handwoven",
+    "woven",
+    "rustic decor",
+    "wicker"
+   ],
+   "published": "2024-07-31",
+   "authors": [
+    "Kuutti Siitonen"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/wicker_basket_02/wicker_basket_02_1k.gltf",
+    "bytes": 4497,
+    "textures": 4
+   }
+  },
+  "wooden_broom": {
+   "exists": true,
+   "name": "Wooden Broom",
+   "dims_cm": [
+    49.0,
+    11.3,
+    145.4
+   ],
+   "polycount": 14258,
+   "categories": [
+    "collection: project_lighthouse",
+    "props",
+    "tools"
+   ],
+   "tags": [
+    "cleaning",
+    "janitorial",
+    "housekeeping",
+    "wood",
+    "worn",
+    "old"
+   ],
+   "published": "2026-06-20",
+   "authors": [
+    "Balen"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/wooden_broom/wooden_broom_1k.gltf",
+    "bytes": 7588,
+    "textures": 5
+   }
+  },
+  "wooden_hammer_01": {
+   "exists": true,
+   "name": "Wooden Hammer 01",
+   "dims_cm": [
+    11.2,
+    2.3,
+    27.9
+   ],
+   "polycount": 3617,
+   "categories": [
+    "industrial",
+    "tools",
+    "props",
+    "collection: the_shed"
+   ],
+   "tags": [
+    "wooden",
+    "worn",
+    "used",
+    "old",
+    "dirty",
+    "mallet",
+    "nails",
+    "woodwork"
+   ],
+   "published": "2022-07-15",
+   "authors": [
+    "James Ray Cock"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/wooden_hammer_01/wooden_hammer_01_1k.gltf",
+    "bytes": 2709,
+    "textures": 4
+   }
+  },
+  "wooden_ladder": {
+   "exists": true,
+   "name": "Wooden Ladder",
+   "dims_cm": [
+    95.9,
+    50.0,
+    133.5
+   ],
+   "polycount": 8492,
+   "categories": [
+    "collection: project_lighthouse",
+    "tools",
+    "industrial"
+   ],
+   "tags": [
+    "scaffolding",
+    "steps",
+    "construction",
+    "workshop",
+    "ladder",
+    "step-ladder",
+    "maintenance",
+    "utility"
+   ],
+   "published": "2026-06-09",
+   "authors": [
+    "Miroslav Turura"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/wooden_ladder/wooden_ladder_1k.gltf",
+    "bytes": 4390,
+    "textures": 4
+   }
+  },
+  "wooden_lantern_01": {
+   "exists": true,
+   "name": "Wooden Lantern 01",
+   "dims_cm": [
+    22.1,
+    23.5,
+    53.0
+   ],
+   "polycount": 8321,
+   "categories": [
+    "props",
+    "lighting",
+    "collection: smugglers_cove"
+   ],
+   "tags": [
+    "lantern",
+    "wooden",
+    "wood",
+    "old",
+    "worn",
+    "farmhouse",
+    "maritime",
+    "colonial"
+   ],
+   "published": "2022-03-11",
+   "authors": [
+    "James Ray Cock"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/wooden_lantern_01/wooden_lantern_01_1k.gltf",
+    "bytes": 9540,
+    "textures": 7
+   }
+  },
+  "yellow_onion": {
+   "exists": true,
+   "name": "Yellow Onion",
+   "dims_cm": [
+    7.2,
+    6.9,
+    8.6
+   ],
+   "polycount": 5444,
+   "categories": [
+    "props",
+    "food"
+   ],
+   "tags": [
+    "culinary",
+    "kitchen",
+    "cooking",
+    "vegetables",
+    "organic",
+    "produce",
+    "nutrition",
+    "ingredients"
+   ],
+   "published": "2024-07-10",
+   "authors": [
+    "Kuutti Siitonen"
+   ],
+   "gltf_1k": {
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/yellow_onion/yellow_onion_1k.gltf",
+    "bytes": 2785,
+    "textures": 4
+   }
+  }
+ }
+}

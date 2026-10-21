@@ -1,0 +1,2071 @@
+{
+ "Camera_01": [
+  {
+   "map": "Camera_01_lens_body_diff_1k.jpg",
+   "clean": "Camera_01_lens_body_diff_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      16,
+      203,
+      604,
+      237
+     ],
+     "ring": [
+      13.0,
+      13.0,
+      12.0
+     ],
+     "patch_from": [
+      16,
+      403
+     ],
+     "grain": "the map's own grain from the patch at (16, 403)"
+    },
+    {
+     "box": [
+      828,
+      88,
+      1024,
+      462
+     ],
+     "ring": [
+      18.0,
+      17.0,
+      15.0
+     ],
+     "patch_from": null,
+     "grain": "grain drawn at the ring's strength (1.5, 1.5, 1.5)"
+    }
+   ]
+  },
+  {
+   "map": "Camera_01_lens_body_nor_gl_1k.jpg",
+   "clean": "Camera_01_lens_body_nor_gl_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      16,
+      203,
+      604,
+      237
+     ],
+     "companion_of": "Camera_01_lens_body_diff_1k.jpg"
+    },
+    {
+     "box": [
+      828,
+      88,
+      1024,
+      462
+     ],
+     "companion_of": "Camera_01_lens_body_diff_1k.jpg"
+    }
+   ]
+  },
+  {
+   "map": "Camera_01_lens_body_arm_1k.jpg",
+   "clean": "Camera_01_lens_body_arm_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      16,
+      203,
+      604,
+      237
+     ],
+     "companion_of": "Camera_01_lens_body_diff_1k.jpg"
+    },
+    {
+     "box": [
+      828,
+      88,
+      1024,
+      462
+     ],
+     "companion_of": "Camera_01_lens_body_diff_1k.jpg"
+    }
+   ]
+  },
+  {
+   "map": "Camera_01_body_diff_1k.jpg",
+   "clean": "Camera_01_body_diff_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      748,
+      566,
+      902,
+      624
+     ],
+     "ring": [
+      22.0,
+      21.0,
+      19.0
+     ],
+     "patch_from": [
+      508,
+      566
+     ],
+     "grain": "the map's own grain from the patch at (508, 566)"
+    },
+    {
+     "box": [
+      620,
+      646,
+      737,
+      680
+     ],
+     "ring": [
+      10.0,
+      10.0,
+      10.0
+     ],
+     "patch_from": [
+      743,
+      646
+     ],
+     "grain": "the map's own grain from the patch at (743, 646)"
+    },
+    {
+     "box": [
+      398,
+      196,
+      460,
+      258
+     ],
+     "ring": [
+      221.0,
+      221.0,
+      221.0
+     ],
+     "patch_from": null,
+     "grain": "grain drawn at the ring's strength (9.0, 9.0, 9.0)"
+    },
+    {
+     "box": [
+      833,
+      428,
+      927,
+      550
+     ],
+     "ring": [
+      11.0,
+      11.0,
+      10.0
+     ],
+     "patch_from": [
+      683,
+      428
+     ],
+     "grain": "the map's own grain from the patch at (683, 428)"
+    }
+   ]
+  },
+  {
+   "map": "Camera_01_body_nor_gl_1k.jpg",
+   "clean": "Camera_01_body_nor_gl_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      748,
+      566,
+      902,
+      624
+     ],
+     "companion_of": "Camera_01_body_diff_1k.jpg"
+    },
+    {
+     "box": [
+      620,
+      646,
+      737,
+      680
+     ],
+     "companion_of": "Camera_01_body_diff_1k.jpg"
+    },
+    {
+     "box": [
+      398,
+      196,
+      460,
+      258
+     ],
+     "companion_of": "Camera_01_body_diff_1k.jpg"
+    },
+    {
+     "box": [
+      833,
+      428,
+      927,
+      550
+     ],
+     "companion_of": "Camera_01_body_diff_1k.jpg"
+    }
+   ]
+  },
+  {
+   "map": "Camera_01_body_arm_1k.jpg",
+   "clean": "Camera_01_body_arm_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      748,
+      566,
+      902,
+      624
+     ],
+     "companion_of": "Camera_01_body_diff_1k.jpg"
+    },
+    {
+     "box": [
+      620,
+      646,
+      737,
+      680
+     ],
+     "companion_of": "Camera_01_body_diff_1k.jpg"
+    },
+    {
+     "box": [
+      398,
+      196,
+      460,
+      258
+     ],
+     "companion_of": "Camera_01_body_diff_1k.jpg"
+    },
+    {
+     "box": [
+      833,
+      428,
+      927,
+      550
+     ],
+     "companion_of": "Camera_01_body_diff_1k.jpg"
+    }
+   ]
+  },
+  {
+   "map": "Camera_01_strap_diff_1k.jpg",
+   "clean": "Camera_01_strap_diff_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      632,
+      840,
+      712,
+      874
+     ],
+     "ring": [
+      49.0,
+      30.0,
+      24.0
+     ],
+     "patch_from": [
+      546,
+      840
+     ],
+     "grain": "the map's own grain from the patch at (546, 840)"
+    }
+   ]
+  },
+  {
+   "map": "Camera_01_strap_nor_gl_1k.jpg",
+   "clean": "Camera_01_strap_nor_gl_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      632,
+      840,
+      712,
+      874
+     ],
+     "companion_of": "Camera_01_strap_diff_1k.jpg"
+    }
+   ]
+  },
+  {
+   "map": "Camera_01_strap_arm_1k.jpg",
+   "clean": "Camera_01_strap_arm_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      632,
+      840,
+      712,
+      874
+     ],
+     "companion_of": "Camera_01_strap_diff_1k.jpg"
+    }
+   ]
+  }
+ ],
+ "CashRegister_01": [
+  {
+   "map": "CashRegister_01_diff_1k.jpg",
+   "clean": "CashRegister_01_diff_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      468,
+      227,
+      486,
+      248
+     ],
+     "ring": [
+      52.0,
+      52.0,
+      52.0
+     ],
+     "patch_from": [
+      468,
+      254
+     ],
+     "grain": "the map's own grain from the patch at (468, 254)"
+    },
+    {
+     "box": [
+      780,
+      438,
+      802,
+      532
+     ],
+     "ring": [
+      52.0,
+      52.0,
+      52.0
+     ],
+     "patch_from": [
+      780,
+      538
+     ],
+     "grain": "the map's own grain from the patch at (780, 538)"
+    },
+    {
+     "box": [
+      905,
+      317,
+      942,
+      386
+     ],
+     "ring": [
+      59.0,
+      59.0,
+      59.0
+     ],
+     "patch_from": [
+      905,
+      242
+     ],
+     "grain": "the map's own grain from the patch at (905, 242)"
+    },
+    {
+     "box": [
+      195,
+      338,
+      232,
+      380
+     ],
+     "ring": [
+      78.0,
+      47.0,
+      42.5
+     ],
+     "patch_from": [
+      195,
+      290
+     ],
+     "grain": "the map's own grain from the patch at (195, 290)"
+    },
+    {
+     "box": [
+      222,
+      490,
+      300,
+      532
+     ],
+     "ring": [
+      188.0,
+      187.0,
+      186.0
+     ],
+     "patch_from": [
+      96,
+      490
+     ],
+     "grain": "the map's own grain from the patch at (96, 490)"
+    },
+    {
+     "box": [
+      395,
+      85,
+      450,
+      184
+     ],
+     "ring": [
+      92.5,
+      90.0,
+      83.0
+     ],
+     "patch_from": [
+      547,
+      347
+     ],
+     "grain": "the map's own grain from the patch at (547, 347)"
+    },
+    {
+     "box": [
+      778,
+      165,
+      862,
+      238
+     ],
+     "ring": [
+      60.0,
+      59.0,
+      60.0
+     ],
+     "patch_from": null,
+     "grain": "grain drawn at the ring's strength (3.0, 3.0, 3.0)"
+    },
+    {
+     "box": [
+      855,
+      545,
+      920,
+      603
+     ],
+     "ring": [
+      60.0,
+      61.0,
+      60.0
+     ],
+     "patch_from": [
+      784,
+      545
+     ],
+     "grain": "the map's own grain from the patch at (784, 545)"
+    }
+   ]
+  },
+  {
+   "map": "CashRegister_01_nor_gl_1k.jpg",
+   "clean": "CashRegister_01_nor_gl_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      468,
+      227,
+      486,
+      248
+     ],
+     "companion_of": "CashRegister_01_diff_1k.jpg"
+    },
+    {
+     "box": [
+      780,
+      438,
+      802,
+      532
+     ],
+     "companion_of": "CashRegister_01_diff_1k.jpg"
+    },
+    {
+     "box": [
+      905,
+      317,
+      942,
+      386
+     ],
+     "companion_of": "CashRegister_01_diff_1k.jpg"
+    },
+    {
+     "box": [
+      195,
+      338,
+      232,
+      380
+     ],
+     "companion_of": "CashRegister_01_diff_1k.jpg"
+    },
+    {
+     "box": [
+      222,
+      490,
+      300,
+      532
+     ],
+     "companion_of": "CashRegister_01_diff_1k.jpg"
+    },
+    {
+     "box": [
+      395,
+      85,
+      450,
+      184
+     ],
+     "companion_of": "CashRegister_01_diff_1k.jpg"
+    },
+    {
+     "box": [
+      778,
+      165,
+      862,
+      238
+     ],
+     "companion_of": "CashRegister_01_diff_1k.jpg"
+    },
+    {
+     "box": [
+      855,
+      545,
+      920,
+      603
+     ],
+     "companion_of": "CashRegister_01_diff_1k.jpg"
+    }
+   ]
+  },
+  {
+   "map": "CashRegister_01_arm_1k.jpg",
+   "clean": "CashRegister_01_arm_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      468,
+      227,
+      486,
+      248
+     ],
+     "companion_of": "CashRegister_01_diff_1k.jpg"
+    },
+    {
+     "box": [
+      780,
+      438,
+      802,
+      532
+     ],
+     "companion_of": "CashRegister_01_diff_1k.jpg"
+    },
+    {
+     "box": [
+      905,
+      317,
+      942,
+      386
+     ],
+     "companion_of": "CashRegister_01_diff_1k.jpg"
+    },
+    {
+     "box": [
+      195,
+      338,
+      232,
+      380
+     ],
+     "companion_of": "CashRegister_01_diff_1k.jpg"
+    },
+    {
+     "box": [
+      222,
+      490,
+      300,
+      532
+     ],
+     "companion_of": "CashRegister_01_diff_1k.jpg"
+    },
+    {
+     "box": [
+      395,
+      85,
+      450,
+      184
+     ],
+     "companion_of": "CashRegister_01_diff_1k.jpg"
+    },
+    {
+     "box": [
+      778,
+      165,
+      862,
+      238
+     ],
+     "companion_of": "CashRegister_01_diff_1k.jpg"
+    },
+    {
+     "box": [
+      855,
+      545,
+      920,
+      603
+     ],
+     "companion_of": "CashRegister_01_diff_1k.jpg"
+    }
+   ]
+  }
+ ],
+ "Ukulele_01": [
+  {
+   "map": "Ukulele_01_diff_1k.jpg",
+   "clean": "Ukulele_01_diff_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      520,
+      195,
+      640,
+      305
+     ],
+     "ring": [
+      115.0,
+      111.0,
+      86.0
+     ],
+     "patch_from": null,
+     "grain": "grain drawn at the ring's strength (9.0, 9.0, 9.0)"
+    }
+   ]
+  },
+  {
+   "map": "Ukulele_01_nor_gl_1k.jpg",
+   "clean": "Ukulele_01_nor_gl_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      520,
+      195,
+      640,
+      305
+     ],
+     "companion_of": "Ukulele_01_diff_1k.jpg"
+    }
+   ]
+  },
+  {
+   "map": "Ukulele_01_arm_1k.jpg",
+   "clean": "Ukulele_01_arm_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      520,
+      195,
+      640,
+      305
+     ],
+     "companion_of": "Ukulele_01_diff_1k.jpg"
+    }
+   ]
+  }
+ ],
+ "adjustable_wrench": [
+  {
+   "map": "adjustable_wrench_diff_1k.jpg",
+   "clean": "adjustable_wrench_diff_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      612,
+      358,
+      724,
+      422
+     ],
+     "ring": [
+      125.0,
+      120.0,
+      116.0
+     ],
+     "patch_from": null,
+     "grain": "grain drawn at the ring's strength (9.0, 9.0, 9.0)"
+    }
+   ]
+  },
+  {
+   "map": "adjustable_wrench_nor_gl_1k.jpg",
+   "clean": "adjustable_wrench_nor_gl_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      612,
+      358,
+      724,
+      422
+     ],
+     "companion_of": "adjustable_wrench_diff_1k.jpg"
+    }
+   ]
+  },
+  {
+   "map": "adjustable_wrench_arm_1k.jpg",
+   "clean": "adjustable_wrench_arm_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      612,
+      358,
+      724,
+      422
+     ],
+     "companion_of": "adjustable_wrench_diff_1k.jpg"
+    }
+   ]
+  }
+ ],
+ "alarm_clock_01": [],
+ "antique_ceramic_vase_01": [],
+ "binoculars": [],
+ "boombox": [
+  {
+   "map": "boombox_diff_1k.jpg",
+   "clean": "boombox_diff_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      0,
+      100,
+      320,
+      230
+     ],
+     "ring": [
+      71.0,
+      71.0,
+      71.0
+     ],
+     "patch_from": null,
+     "grain": "grain drawn at the ring's strength (5.9, 5.9, 5.9)"
+    },
+    {
+     "box": [
+      555,
+      385,
+      685,
+      505
+     ],
+     "ring": [
+      120.0,
+      120.0,
+      120.0
+     ],
+     "patch_from": [
+      351,
+      574
+     ],
+     "grain": "the map's own grain from the patch at (351, 574)"
+    },
+    {
+     "box": [
+      740,
+      515,
+      830,
+      635
+     ],
+     "ring": [
+      122.0,
+      122.0,
+      122.0
+     ],
+     "patch_from": null,
+     "grain": "grain drawn at the ring's strength (4.4, 4.4, 4.4)"
+    },
+    {
+     "box": [
+      720,
+      775,
+      835,
+      890
+     ],
+     "ring": [
+      120.0,
+      120.0,
+      120.0
+     ],
+     "patch_from": [
+      720,
+      896
+     ],
+     "grain": "the map's own grain from the patch at (720, 896)"
+    }
+   ]
+  },
+  {
+   "map": "boombox_nor_gl_1k.jpg",
+   "clean": "boombox_nor_gl_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      0,
+      100,
+      320,
+      230
+     ],
+     "companion_of": "boombox_diff_1k.jpg"
+    },
+    {
+     "box": [
+      555,
+      385,
+      685,
+      505
+     ],
+     "companion_of": "boombox_diff_1k.jpg"
+    },
+    {
+     "box": [
+      740,
+      515,
+      830,
+      635
+     ],
+     "companion_of": "boombox_diff_1k.jpg"
+    },
+    {
+     "box": [
+      720,
+      775,
+      835,
+      890
+     ],
+     "companion_of": "boombox_diff_1k.jpg"
+    }
+   ]
+  },
+  {
+   "map": "boombox_arm_1k.jpg",
+   "clean": "boombox_arm_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      0,
+      100,
+      320,
+      230
+     ],
+     "companion_of": "boombox_diff_1k.jpg"
+    },
+    {
+     "box": [
+      555,
+      385,
+      685,
+      505
+     ],
+     "companion_of": "boombox_diff_1k.jpg"
+    },
+    {
+     "box": [
+      740,
+      515,
+      830,
+      635
+     ],
+     "companion_of": "boombox_diff_1k.jpg"
+    },
+    {
+     "box": [
+      720,
+      775,
+      835,
+      890
+     ],
+     "companion_of": "boombox_diff_1k.jpg"
+    }
+   ]
+  }
+ ],
+ "brass_vase_01": [],
+ "brass_vase_02": [],
+ "brass_vase_03": [],
+ "cardboard_box_01": [
+  {
+   "map": "cardboard_box_01_diff_1k.jpg",
+   "clean": "cardboard_box_01_diff_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      185,
+      190,
+      395,
+      350
+     ],
+     "ring": [
+      165.0,
+      143.0,
+      97.0
+     ],
+     "patch_from": null,
+     "grain": "grain drawn at the ring's strength (4.4, 4.4, 4.4)"
+    },
+    {
+     "box": [
+      395,
+      255,
+      505,
+      365
+     ],
+     "ring": [
+      166.0,
+      143.0,
+      97.0
+     ],
+     "patch_from": null,
+     "grain": "grain drawn at the ring's strength (3.0, 3.0, 4.4)"
+    },
+    {
+     "box": [
+      250,
+      360,
+      375,
+      465
+     ],
+     "ring": [
+      167.0,
+      143.0,
+      97.0
+     ],
+     "patch_from": null,
+     "grain": "grain drawn at the ring's strength (3.0, 3.0, 4.4)"
+    }
+   ]
+  },
+  {
+   "map": "cardboard_box_01_nor_gl_1k.jpg",
+   "clean": "cardboard_box_01_nor_gl_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      185,
+      190,
+      395,
+      350
+     ],
+     "companion_of": "cardboard_box_01_diff_1k.jpg"
+    },
+    {
+     "box": [
+      395,
+      255,
+      505,
+      365
+     ],
+     "companion_of": "cardboard_box_01_diff_1k.jpg"
+    },
+    {
+     "box": [
+      250,
+      360,
+      375,
+      465
+     ],
+     "companion_of": "cardboard_box_01_diff_1k.jpg"
+    }
+   ]
+  },
+  {
+   "map": "cardboard_box_01_arm_1k.jpg",
+   "clean": "cardboard_box_01_arm_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      185,
+      190,
+      395,
+      350
+     ],
+     "companion_of": "cardboard_box_01_diff_1k.jpg"
+    },
+    {
+     "box": [
+      395,
+      255,
+      505,
+      365
+     ],
+     "companion_of": "cardboard_box_01_diff_1k.jpg"
+    },
+    {
+     "box": [
+      250,
+      360,
+      375,
+      465
+     ],
+     "companion_of": "cardboard_box_01_diff_1k.jpg"
+    }
+   ]
+  }
+ ],
+ "carved_wooden_elephant": [],
+ "cassette_player": [
+  {
+   "map": "cassette_player_body_diff_1k.jpg",
+   "clean": "cassette_player_body_diff_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      380,
+      794,
+      540,
+      820
+     ],
+     "ring": [
+      151.0,
+      153.0,
+      152.0
+     ],
+     "patch_from": [
+      380,
+      826
+     ],
+     "grain": "the map's own grain from the patch at (380, 826)"
+    }
+   ]
+  },
+  {
+   "map": "cassette_player_body_nor_gl_1k.jpg",
+   "clean": "cassette_player_body_nor_gl_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      380,
+      794,
+      540,
+      820
+     ],
+     "companion_of": "cassette_player_body_diff_1k.jpg"
+    }
+   ]
+  },
+  {
+   "map": "cassette_player_body_arm_1k.jpg",
+   "clean": "cassette_player_body_arm_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      380,
+      794,
+      540,
+      820
+     ],
+     "companion_of": "cassette_player_body_diff_1k.jpg"
+    }
+   ]
+  }
+ ],
+ "ceramic_vase_01": [
+  {
+   "map": "ceramic_vase_01_diff_1k.jpg",
+   "clean": "ceramic_vase_01_diff_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      580,
+      84,
+      626,
+      164
+     ],
+     "ring": [
+      214.0,
+      210.0,
+      207.0
+     ],
+     "patch_from": [
+      580,
+      170
+     ],
+     "grain": "the map's own grain from the patch at (580, 170)"
+    }
+   ]
+  },
+  {
+   "map": "ceramic_vase_01_nor_gl_1k.jpg",
+   "clean": "ceramic_vase_01_nor_gl_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      580,
+      84,
+      626,
+      164
+     ],
+     "companion_of": "ceramic_vase_01_diff_1k.jpg"
+    }
+   ]
+  },
+  {
+   "map": "ceramic_vase_01_arm_1k.jpg",
+   "clean": "ceramic_vase_01_arm_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      580,
+      84,
+      626,
+      164
+     ],
+     "companion_of": "ceramic_vase_01_diff_1k.jpg"
+    }
+   ]
+  }
+ ],
+ "ceramic_vase_03": [],
+ "cigarette_case": [],
+ "combination_wrench": [],
+ "cross_pein_hammer": [],
+ "filmstrip_projector_8mm": [
+  {
+   "map": "filmstrip_projector_8mm_diff_1k.jpg",
+   "clean": "filmstrip_projector_8mm_diff_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      270,
+      474,
+      400,
+      574
+     ],
+     "ring": [
+      38.0,
+      36.0,
+      36.0
+     ],
+     "patch_from": null,
+     "grain": "grain drawn at the ring's strength (9.0, 9.0, 8.9)"
+    }
+   ]
+  },
+  {
+   "map": "filmstrip_projector_8mm_nor_gl_1k.jpg",
+   "clean": "filmstrip_projector_8mm_nor_gl_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      270,
+      474,
+      400,
+      574
+     ],
+     "companion_of": "filmstrip_projector_8mm_diff_1k.jpg"
+    }
+   ]
+  },
+  {
+   "map": "filmstrip_projector_8mm_arm_1k.jpg",
+   "clean": "filmstrip_projector_8mm_arm_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      270,
+      474,
+      400,
+      574
+     ],
+     "companion_of": "filmstrip_projector_8mm_diff_1k.jpg"
+    }
+   ]
+  }
+ ],
+ "hand_plane_no4": [],
+ "handsaw_wood": [],
+ "hanging_picture_frame_02": [
+  {
+   "map": "hanging_picture_frame_02_artwork_diff_1k.jpg",
+   "clean": "hanging_picture_frame_02_artwork_diff_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      0,
+      0,
+      1024,
+      1024
+     ],
+     "whole_map": true,
+     "replaced_by": "invented_print(kind=0)"
+    }
+   ]
+  }
+ ],
+ "horse_statue_01": [],
+ "jug_01": [],
+ "magnifying_glass_01": [],
+ "mantel_clock_01": [],
+ "measuring_tape_01": [
+  {
+   "map": "measuring_tape_01_diff_1k.jpg",
+   "clean": "measuring_tape_01_diff_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      555,
+      255,
+      725,
+      422
+     ],
+     "ring": [
+      29.0,
+      29.0,
+      29.0
+     ],
+     "patch_from": [
+      555,
+      82
+     ],
+     "grain": "the map's own grain from the patch at (555, 82)"
+    }
+   ]
+  },
+  {
+   "map": "measuring_tape_01_nor_gl_1k.jpg",
+   "clean": "measuring_tape_01_nor_gl_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      555,
+      255,
+      725,
+      422
+     ],
+     "companion_of": "measuring_tape_01_diff_1k.jpg"
+    }
+   ]
+  },
+  {
+   "map": "measuring_tape_01_arm_1k.jpg",
+   "clean": "measuring_tape_01_arm_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      555,
+      255,
+      725,
+      422
+     ],
+     "companion_of": "measuring_tape_01_diff_1k.jpg"
+    }
+   ]
+  }
+ ],
+ "metal_toolbox": [],
+ "ornate_mirror_01": [],
+ "pipe_wrench": [
+  {
+   "map": "pipe_wrench_diff_1k.jpg",
+   "clean": "pipe_wrench_diff_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      40,
+      100,
+      100,
+      175
+     ],
+     "ring": [
+      70.0,
+      44.0,
+      34.0
+     ],
+     "patch_from": null,
+     "grain": "grain drawn at the ring's strength (8.9, 8.9, 8.9)"
+    },
+    {
+     "box": [
+      320,
+      100,
+      380,
+      175
+     ],
+     "ring": [
+      71.0,
+      42.0,
+      32.0
+     ],
+     "patch_from": null,
+     "grain": "grain drawn at the ring's strength (9.0, 9.0, 9.0)"
+    }
+   ]
+  },
+  {
+   "map": "pipe_wrench_nor_gl_1k.jpg",
+   "clean": "pipe_wrench_nor_gl_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      40,
+      100,
+      100,
+      175
+     ],
+     "companion_of": "pipe_wrench_diff_1k.jpg"
+    },
+    {
+     "box": [
+      320,
+      100,
+      380,
+      175
+     ],
+     "companion_of": "pipe_wrench_diff_1k.jpg"
+    }
+   ]
+  },
+  {
+   "map": "pipe_wrench_arm_1k.jpg",
+   "clean": "pipe_wrench_arm_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      40,
+      100,
+      100,
+      175
+     ],
+     "companion_of": "pipe_wrench_diff_1k.jpg"
+    },
+    {
+     "box": [
+      320,
+      100,
+      380,
+      175
+     ],
+     "companion_of": "pipe_wrench_diff_1k.jpg"
+    }
+   ]
+  }
+ ],
+ "pliers": [
+  {
+   "map": "pliers_diff_1k.jpg",
+   "clean": "pliers_diff_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      146,
+      530,
+      196,
+      778
+     ],
+     "ring": [
+      220.0,
+      76.0,
+      60.0
+     ],
+     "patch_from": [
+      90,
+      530
+     ],
+     "grain": "the map's own grain from the patch at (90, 530)"
+    }
+   ]
+  },
+  {
+   "map": "pliers_nor_gl_1k.jpg",
+   "clean": "pliers_nor_gl_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      146,
+      530,
+      196,
+      778
+     ],
+     "companion_of": "pliers_diff_1k.jpg"
+    }
+   ]
+  },
+  {
+   "map": "pliers_arm_1k.jpg",
+   "clean": "pliers_arm_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      146,
+      530,
+      196,
+      778
+     ],
+     "companion_of": "pliers_diff_1k.jpg"
+    }
+   ]
+  }
+ ],
+ "pocket_watch": [
+  {
+   "map": "pocket_watch_diff_1k.jpg",
+   "clean": "pocket_watch_diff_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      220,
+      132,
+      294,
+      170
+     ],
+     "ring": [
+      218.0,
+      217.0,
+      199.0
+     ],
+     "patch_from": [
+      140,
+      176
+     ],
+     "grain": "the map's own grain from the patch at (140, 176)"
+    }
+   ]
+  },
+  {
+   "map": "pocket_watch_nor_gl_1k.jpg",
+   "clean": "pocket_watch_nor_gl_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      220,
+      132,
+      294,
+      170
+     ],
+     "companion_of": "pocket_watch_diff_1k.jpg"
+    }
+   ]
+  },
+  {
+   "map": "pocket_watch_arm_1k.jpg",
+   "clean": "pocket_watch_arm_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      220,
+      132,
+      294,
+      170
+     ],
+     "companion_of": "pocket_watch_diff_1k.jpg"
+    }
+   ]
+  }
+ ],
+ "portable_cassette_player": [
+  {
+   "map": "portable_cassette_player_diff_1k.jpg",
+   "clean": "portable_cassette_player_diff_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      45,
+      515,
+      345,
+      695
+     ],
+     "ring": [
+      60.0,
+      65.0,
+      66.0
+     ],
+     "patch_from": null,
+     "grain": "grain drawn at the ring's strength (7.4, 7.4, 7.4)"
+    },
+    {
+     "box": [
+      0,
+      700,
+      300,
+      775
+     ],
+     "ring": [
+      54.0,
+      58.0,
+      61.0
+     ],
+     "patch_from": null,
+     "grain": "grain drawn at the ring's strength (3.0, 3.0, 3.0)"
+    },
+    {
+     "box": [
+      95,
+      330,
+      145,
+      510
+     ],
+     "ring": [
+      101.0,
+      120.0,
+      119.0
+     ],
+     "patch_from": null,
+     "grain": "grain drawn at the ring's strength (3.0, 3.0, 3.0)"
+    },
+    {
+     "box": [
+      735,
+      765,
+      760,
+      815
+     ],
+     "ring": [
+      102.0,
+      121.0,
+      121.0
+     ],
+     "patch_from": [
+      998,
+      765
+     ],
+     "grain": "the map's own grain from the patch at (998, 765)"
+    }
+   ]
+  },
+  {
+   "map": "portable_cassette_player_nor_gl_1k.jpg",
+   "clean": "portable_cassette_player_nor_gl_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      45,
+      515,
+      345,
+      695
+     ],
+     "companion_of": "portable_cassette_player_diff_1k.jpg"
+    },
+    {
+     "box": [
+      0,
+      700,
+      300,
+      775
+     ],
+     "companion_of": "portable_cassette_player_diff_1k.jpg"
+    },
+    {
+     "box": [
+      95,
+      330,
+      145,
+      510
+     ],
+     "companion_of": "portable_cassette_player_diff_1k.jpg"
+    },
+    {
+     "box": [
+      735,
+      765,
+      760,
+      815
+     ],
+     "companion_of": "portable_cassette_player_diff_1k.jpg"
+    }
+   ]
+  },
+  {
+   "map": "portable_cassette_player_arm_1k.jpg",
+   "clean": "portable_cassette_player_arm_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      45,
+      515,
+      345,
+      695
+     ],
+     "companion_of": "portable_cassette_player_diff_1k.jpg"
+    },
+    {
+     "box": [
+      0,
+      700,
+      300,
+      775
+     ],
+     "companion_of": "portable_cassette_player_diff_1k.jpg"
+    },
+    {
+     "box": [
+      95,
+      330,
+      145,
+      510
+     ],
+     "companion_of": "portable_cassette_player_diff_1k.jpg"
+    },
+    {
+     "box": [
+      735,
+      765,
+      760,
+      815
+     ],
+     "companion_of": "portable_cassette_player_diff_1k.jpg"
+    }
+   ]
+  }
+ ],
+ "round_spectacles": [],
+ "seadogs_compass": [
+  {
+   "map": "seadogs_compass_diff_1k.jpg",
+   "clean": "seadogs_compass_diff_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      560,
+      230,
+      615,
+      335
+     ],
+     "ring": [
+      44.0,
+      31.0,
+      21.0
+     ],
+     "patch_from": null,
+     "grain": "grain drawn at the ring's strength (7.4, 5.9, 5.9)"
+    },
+    {
+     "box": [
+      650,
+      225,
+      735,
+      350
+     ],
+     "ring": [
+      40.0,
+      31.0,
+      22.0
+     ],
+     "patch_from": null,
+     "grain": "grain drawn at the ring's strength (7.4, 7.4, 5.9)"
+    }
+   ]
+  },
+  {
+   "map": "seadogs_compass_nor_gl_1k.jpg",
+   "clean": "seadogs_compass_nor_gl_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      560,
+      230,
+      615,
+      335
+     ],
+     "companion_of": "seadogs_compass_diff_1k.jpg"
+    },
+    {
+     "box": [
+      650,
+      225,
+      735,
+      350
+     ],
+     "companion_of": "seadogs_compass_diff_1k.jpg"
+    }
+   ]
+  },
+  {
+   "map": "seadogs_compass_arm_1k.jpg",
+   "clean": "seadogs_compass_arm_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      560,
+      230,
+      615,
+      335
+     ],
+     "companion_of": "seadogs_compass_diff_1k.jpg"
+    },
+    {
+     "box": [
+      650,
+      225,
+      735,
+      350
+     ],
+     "companion_of": "seadogs_compass_diff_1k.jpg"
+    }
+   ]
+  }
+ ],
+ "standing_picture_frame_01": [
+  {
+   "map": "standing_picture_frame_01_artwork_diff_1k.jpg",
+   "clean": "standing_picture_frame_01_artwork_diff_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      0,
+      0,
+      1024,
+      1024
+     ],
+     "whole_map": true,
+     "replaced_by": "invented_print(kind=1)"
+    }
+   ]
+  }
+ ],
+ "standing_picture_frame_02": [
+  {
+   "map": "standing_picture_frame_02_artwork_diff_1k.jpg",
+   "clean": "standing_picture_frame_02_artwork_diff_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      0,
+      0,
+      1024,
+      1024
+     ],
+     "whole_map": true,
+     "replaced_by": "invented_print(kind=2)"
+    }
+   ]
+  }
+ ],
+ "television_02": [
+  {
+   "map": "television_02_diff_1k.jpg",
+   "clean": "television_02_diff_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      268,
+      452,
+      296,
+      542
+     ],
+     "ring": [
+      55.0,
+      55.0,
+      54.0
+     ],
+     "patch_from": [
+      217,
+      452
+     ],
+     "grain": "the map's own grain from the patch at (217, 452)"
+    }
+   ]
+  },
+  {
+   "map": "television_02_nor_gl_1k.jpg",
+   "clean": "television_02_nor_gl_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      268,
+      452,
+      296,
+      542
+     ],
+     "companion_of": "television_02_diff_1k.jpg"
+    }
+   ]
+  },
+  {
+   "map": "television_02_arm_1k.jpg",
+   "clean": "television_02_arm_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      268,
+      452,
+      296,
+      542
+     ],
+     "companion_of": "television_02_diff_1k.jpg"
+    }
+   ]
+  }
+ ],
+ "vintage_binocular": [],
+ "vintage_flashlight": [],
+ "vintage_lighter": [
+  {
+   "map": "vintage_lighter_diff_1k.jpg",
+   "clean": "vintage_lighter_diff_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      60,
+      452,
+      295,
+      522
+     ],
+     "ring": [
+      147.0,
+      125.0,
+      112.0
+     ],
+     "patch_from": [
+      542,
+      604
+     ],
+     "grain": "the map's own grain from the patch at (542, 604)"
+    },
+    {
+     "box": [
+      20,
+      700,
+      296,
+      1002
+     ],
+     "ring": [
+      144.0,
+      123.0,
+      110.0
+     ],
+     "patch_from": [
+      302,
+      700
+     ],
+     "grain": "the map's own grain from the patch at (302, 700)"
+    }
+   ]
+  },
+  {
+   "map": "vintage_lighter_nor_gl_1k.jpg",
+   "clean": "vintage_lighter_nor_gl_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      60,
+      452,
+      295,
+      522
+     ],
+     "companion_of": "vintage_lighter_diff_1k.jpg"
+    },
+    {
+     "box": [
+      20,
+      700,
+      296,
+      1002
+     ],
+     "companion_of": "vintage_lighter_diff_1k.jpg"
+    }
+   ]
+  },
+  {
+   "map": "vintage_lighter_arm_1k.jpg",
+   "clean": "vintage_lighter_arm_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      60,
+      452,
+      295,
+      522
+     ],
+     "companion_of": "vintage_lighter_diff_1k.jpg"
+    },
+    {
+     "box": [
+      20,
+      700,
+      296,
+      1002
+     ],
+     "companion_of": "vintage_lighter_diff_1k.jpg"
+    }
+   ]
+  }
+ ],
+ "vintage_pocket_watch": [
+  {
+   "map": "vintage_pocket_watch_diff_1k.jpg",
+   "clean": "vintage_pocket_watch_diff_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      640,
+      664,
+      694,
+      762
+     ],
+     "ring": [
+      180.0,
+      182.0,
+      184.0
+     ],
+     "patch_from": null,
+     "grain": "grain drawn at the ring's strength (7.4, 7.4, 5.9)"
+    }
+   ]
+  },
+  {
+   "map": "vintage_pocket_watch_nor_gl_1k.jpg",
+   "clean": "vintage_pocket_watch_nor_gl_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      640,
+      664,
+      694,
+      762
+     ],
+     "companion_of": "vintage_pocket_watch_diff_1k.jpg"
+    }
+   ]
+  },
+  {
+   "map": "vintage_pocket_watch_arm_1k.jpg",
+   "clean": "vintage_pocket_watch_arm_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      640,
+      664,
+      694,
+      762
+     ],
+     "companion_of": "vintage_pocket_watch_diff_1k.jpg"
+    }
+   ]
+  }
+ ],
+ "vintage_video_camera": [
+  {
+   "map": "vintage_video_camera_diff_1k.jpg",
+   "clean": "vintage_video_camera_diff_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      10,
+      388,
+      202,
+      650
+     ],
+     "ring": [
+      75.0,
+      72.0,
+      57.0
+     ],
+     "patch_from": null,
+     "grain": "grain drawn at the ring's strength (9.0, 9.0, 9.0)"
+    },
+    {
+     "box": [
+      28,
+      808,
+      192,
+      932
+     ],
+     "ring": [
+      72.0,
+      67.0,
+      54.0
+     ],
+     "patch_from": null,
+     "grain": "grain drawn at the ring's strength (9.0, 8.9, 8.9)"
+    }
+   ]
+  },
+  {
+   "map": "vintage_video_camera_nor_gl_1k.jpg",
+   "clean": "vintage_video_camera_nor_gl_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      10,
+      388,
+      202,
+      650
+     ],
+     "companion_of": "vintage_video_camera_diff_1k.jpg"
+    },
+    {
+     "box": [
+      28,
+      808,
+      192,
+      932
+     ],
+     "companion_of": "vintage_video_camera_diff_1k.jpg"
+    }
+   ]
+  },
+  {
+   "map": "vintage_video_camera_arm_1k.jpg",
+   "clean": "vintage_video_camera_arm_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      10,
+      388,
+      202,
+      650
+     ],
+     "companion_of": "vintage_video_camera_diff_1k.jpg"
+    },
+    {
+     "box": [
+      28,
+      808,
+      192,
+      932
+     ],
+     "companion_of": "vintage_video_camera_diff_1k.jpg"
+    }
+   ]
+  }
+ ],
+ "wall_clock": [
+  {
+   "map": "wall_clock_diff_1k.jpg",
+   "clean": "wall_clock_diff_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      248,
+      616,
+      312,
+      664
+     ],
+     "ring": [
+      224.0,
+      224.0,
+      224.0
+     ],
+     "patch_from": [
+      248,
+      562
+     ],
+     "grain": "the map's own grain from the patch at (248, 562)"
+    }
+   ]
+  },
+  {
+   "map": "wall_clock_nor_gl_1k.jpg",
+   "clean": "wall_clock_nor_gl_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      248,
+      616,
+      312,
+      664
+     ],
+     "companion_of": "wall_clock_diff_1k.jpg"
+    }
+   ]
+  },
+  {
+   "map": "wall_clock_arm_1k.jpg",
+   "clean": "wall_clock_arm_1k_clean.jpg",
+   "rows": [
+    {
+     "box": [
+      248,
+      616,
+      312,
+      664
+     ],
+     "companion_of": "wall_clock_diff_1k.jpg"
+    }
+   ]
+  }
+ ]
+}

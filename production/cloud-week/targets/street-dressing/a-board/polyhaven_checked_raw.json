@@ -1,0 +1,123 @@
+{
+ "standing_chalkboard_01": {
+  "donated": true,
+  "type": 2,
+  "tags": [
+   "resturant",
+   "sign",
+   "signage",
+   "chalk",
+   "board",
+   "coffee",
+   "workshop",
+   "cafe",
+   "urban",
+   "deli",
+   "menu"
+  ],
+  "name": "Standing Chalkboard 01",
+  "categories": [
+   "decorative"
+  ],
+  "authors": {
+   "ParzivalCG": "All"
+  },
+  "date_published": 1640304000,
+  "sponsors": [
+   "11167855"
+  ],
+  "max_resolution": [
+   4096,
+   4096
+  ],
+  "polycount": 2372,
+  "texel_density": 2315.9967515566295,
+  "dimensions": [
+   919.5267558097839,
+   758.704662322998,
+   1509.0324000189241
+  ],
+  "files_hash": "a28256e934770192e1892051638032435cc27a0b",
+  "description": "Free 4K model: wooden A-frame standing chalkboard with a worn oak frame, matte smudged slate surface and folding metal hinges, rustic cafe/deli signage.",
+  "category_id": "4196ad0b-7767-5281-9c1a-54fb3b4514a3",
+  "category": "Office & Stationery/Stationery & Supplies/Clipboards & Boards",
+  "attributes": {
+   "condition": [
+    "worn"
+   ],
+   "material": [
+    "wood",
+    "stone",
+    "metal"
+   ]
+  },
+  "img_version": "1e7e4c02",
+  "download_count": 11463,
+  "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/standing_chalkboard_01.png?width=256&height=256&format=webp&v=1e7e4c02",
+  "info_authors": {
+   "ParzivalCG": "All"
+  },
+  "info_date_published": 1640304000,
+  "info_max_resolution": [
+   4096,
+   4096
+  ],
+  "read": "2026-10-13",
+  "base_colour_checked": "board_diff 1k at 100 percent: dark grey with faint chalk smudges, wood on the lower band, no lettering",
+  "licence": "CC0 1.0 (Poly Haven)"
+ },
+ "WetFloorSign_01": {
+  "date_published": 1585605600,
+  "name": "Wet Floor Sign 01",
+  "categories": [
+   "props",
+   "industrial",
+   "office"
+  ],
+  "type": 2,
+  "authors": {
+   "Fran Calvente": "All"
+  },
+  "tags": [
+   "prop",
+   "plastic",
+   "sign",
+   "safety",
+   "caution",
+   "warning",
+   "yellow",
+   "hazard",
+   "slippery",
+   "slippery when wet",
+   "utility"
+  ],
+  "max_resolution": [
+   4096,
+   4096
+  ],
+  "polycount": 228,
+  "texel_density": 3444.6741905680797,
+  "dimensions": [
+   300.0548481941223,
+   358.5093021392822,
+   629.5440040994436
+  ],
+  "files_hash": "79eb7de75bfe5924b67412f11e3e63c8abb82593",
+  "description": "Free 4K model of a yellow plastic A-frame wet floor sign with molded handle, bold \"CAUTION / WET FLOOR\" icon and worn scuffs and grime for realistic detail.",
+  "category_id": "3963d5ba-698d-5cd6-8072-77872c2388d8",
+  "category": "Industrial & Infrastructure/Traffic & Safety/Signs",
+  "attributes": {
+   "condition": [
+    "worn"
+   ],
+   "material": [
+    "plastic"
+   ]
+  },
+  "img_version": "5e5e6332",
+  "download_count": 32181,
+  "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/WetFloorSign_01.png?width=256&height=256&format=webp&v=5e5e6332",
+  "read": "2026-10-13",
+  "licence": "CC0 1.0 (Poly Haven)"
+ }
+}

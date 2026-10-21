@@ -1,0 +1,449 @@
+"""The ship chandler (east_chandler bay 0, "chandler"): the room's layout and the window display (14 October 2026, batch B). Read from `shops.chandler.room` and `.display` in target.json; every choice the target left
+open is stated in the docstrings (each a Judgement in NOTES.md and a `Changes after the build` line).
+
+Content rule: no drink, no explosives (the 3 Oct drum is out), no ship model, no hanging from the ceiling; every maker and every chart is the project's own. Rope and twine are ambientCG Rope001 and Rope002 (CC0) on
+swept tubes; the sou'westers are a sewn pattern by script (the library's fishermans_hat is a boonie hat).
+"""
+import math
+import os
+import random
+
+import numpy as np
+from PIL import Image, ImageDraw
+
+import sw_assets as A
+import sw_gen as GEN
+import sw_goods_b as GB
+from sw_gen import GM
+
+rgb8 = None
+
+TIN_DESIGNS = [("PENHALE", "MARINE VARNISH", "clear gloss", (120, 70, 30), (246, 232, 200), (246, 232, 200)),
+               ("PENHALE", "ANTIFOULING", "red", (160, 40, 36), (246, 236, 214), (246, 236, 214)),
+               ("TREGENNA", "DECK PAINT", "slate grey", (90, 100, 110), (240, 238, 228), (240, 238, 228)),
+               ("TREGENNA", "WHITE SPIRIT", "", (236, 232, 218), (30, 60, 120), (30, 60, 120)),
+               ("WESTHAVEN", "BILGE PAINT", "grey", (70, 80, 84), (236, 232, 216), (236, 232, 216)),
+               ("PENHALE", "METAL PRIMER", "red oxide", (150, 70, 46), (246, 236, 214), (246, 236, 214)),
+               ("WESTHAVEN", "TEAK OIL", "", (190, 140, 60), (60, 40, 20), (60, 40, 20)),
+               ("TREGENNA", "HULL PAINT", "navy", (30, 50, 100), (240, 236, 220), (240, 236, 220)),
+               ("PENHALE", "EPOXY FILLER", "", (220, 200, 90), (60, 50, 30), (60, 50, 30)),
+               ("WESTHAVEN", "BOAT VARNISH", "yacht", (170, 110, 40), (250, 240, 210), (250, 240, 210)),
+               ("TREGENNA", "BITUMEN PAINT", "black", (40, 40, 44), (230, 220, 190), (230, 220, 190)),
+               ("PENHALE", "WHITE GLOSS", "", (236, 236, 230), (150, 40, 40), (150, 40, 40))]
+ROPE_COLOURS = [(176, 146, 92), (52, 96, 162), (226, 120, 34), (226, 222, 210), (66, 128, 76)]          # natural, blue, orange, white, green
+
+
+def _setup():
+    global rgb8
+    import sw_room as S
+    rgb8 = S.rgb8
+
+
+def _map_wall(gm, i0, f):
+    """Move the vertices from index `i0` on through `f(x, y, z) -> (x, y, z)` (a local frame to a side wall's)."""
+    for i in range(i0, len(gm.V)):
+        gm.V[i] = tuple(float(c) for c in f(*gm.V[i]))
+
+
+FILL_W = (20.0, 30.0)          # the low fill (day, night_lit): found with qroom.py, 1280 x 580, 16 samples (see NOTES.md)
+
+
+# ---------------------------------------------------------------------------------------------------------------------------------- the room
+def room(r):
+    """The chandler's room (target `shops.chandler.room`: fixtures C-*). What the target leaves open, and what this does:
+
+    shelves C-back-shelves: tall shelving 0.30 deep, five tiers (board tops 0.4, 0.8, 1.2, 1.6, 2.0), from x -1.95 to 0.2 (the target's -2.6 to 0.2 is shared with the marker buoy at the left end, which stands
+    against the wall at x -2.6 to -2.0: the shelves start where it ends). Floor level: two pairs of rubber_boots at their own size (two pairs); 0.4: oil_tin x5, small_oil_can_01 x4, cleaner_tin_01 x4; 0.8 and 1.2: paint tins
+    (lathe, a rim and a wire bail, atlas labels: marine varnish, antifouling, deck paint, white spirit; makers PENHALE, TREGENNA, WESTHAVEN), two deep; 1.2 also four Lantern_01 (glass kept) and three signal_flashlight;
+    1.6: six coils of rope standing on edge (swept tube, ambientCG Rope001 picture in five colours); 2.0: ten twine reels and more tins.
+    counter C-back-counter (x 0.4 to 2.6, 0.6 deep, panelled, a brass edge, a chart drawer): CashRegister_01 at 0.42 (mark blanked), three seadogs_compass, the hurricane lamp (Lantern_01, lit at night: a warm
+    point light 2200 K and a small flame).
+    hooks C-back-hooks: a timber board over the counter (x 0.4 to 2.5, z 1.35 to 2.2, 0.18) carrying life_jacket x2 at their own size and one lifebuoy at 0.9: the target's 4, 2 and 3 do not fit 2.1 m without
+    one hanging through another (short, named in NOTES.md).
+    left wall C-left-charts: six invented chart sheets and a tide-table card (paper, script) and a board with a flat coil of rope. right wall C-right-board: a pegboard 1.6 x 1.1 with 24 pieces of hardware (shackles,
+    single blocks, horn cleats, chain), flat.
+    buoy C-floor-buoy: ocean_buoy scaled to 1.5 m tall (its lamp unlit), standing on the floor against the back wall at the left end."""
+    _setup()
+    import sw_room_gen as RG
+    import bpy
+    D, W = RG.D, RG.W
+    rr = r.RR
+    fx = r.fxd
+    rnd = r.rnd
+    tex = r.tex
+    GEN.TEXTS.clear()
+    GB.fetch_ropes()
+    steel = r.mat("hw_steel", rgb8(170, 172, 176), rough=0.3, metal=1.0)
+    metal = r.mat("tin_metal", rgb8(168, 168, 164), rough=0.35, metal=0.85)
+    tp = os.path.join(tex, "marine_tins.png")
+    tuv = GB.tin_atlas(tp, TIN_DESIGNS, tile=(256, 128), cols=4)
+    tin_label = r.image_mat("marine_tin_labels", tp, rough=0.5)
+    rope_m = []
+    for i, c in enumerate(ROPE_COLOURS):
+        pth = os.path.join(tex, "rope_%d.png" % i)
+        GB.rope_png(pth, c, which=1)
+        rope_m.append(r.image_mat("rope_%d" % i, pth, rough=0.9))
+    twine_pth = os.path.join(tex, "twine.png")
+    GB.rope_png(twine_pth, (200, 178, 128), which=2)
+    twine_m = r.image_mat("twine", twine_pth, rough=0.9)
+    reel_wood = r.mat("reel_wood", rgb8(150, 110, 70), rough=0.6)
+    # ---- the buoy at the left end
+    bs = 1.5 / r.dims("ocean_buoy").z
+    r.place("ocean_buoy", (-2.6 + 1.067 * bs / 2 + 0.01, D - 0.01, 0.0), rot=(0, 0, 0), scale=bs, fixture="C-floor-buoy", anchor=("c", "max", "min"), tag="buoy")
+    # ---- the shelves
+    sx0, sx1 = -1.95, fx["C-back-shelves"]["x"][1] + 0.10          # (to 0.30: four pairs of boots at 0.6 of their size need 2.16 m)
+    tiers = fx["C-back-shelves"]["tiers"]
+    r.shelf_unit("C-back-shelves", [(z, sx0 + 0.015, sx1 - 0.015) for z in tiers], depth=fx["C-back-shelves"]["depth_m"])
+    xa, xb = sx0 + 0.04, sx1 - 0.04
+    # floor level: two pairs of boots at their own size (the target's four do not fit 2.2 m at real size; a boot at 0.6 is a child's)
+    bsc = 1.0
+    bw = r.dims("rubber_boots").x * bsc
+    xb0 = xa
+    for k in range(2):
+        r.place("rubber_boots", (xb0 + bw / 2 + k * (bw + 0.004), D - 0.02, 0.0), rot=(0, 0, 0), scale=bsc, fixture="C-back-shelves", anchor=("c", "max", "min"), tag="boots")
+    # 0.4: oil tins, oil cans, cleaner tins in a row
+    x = xa
+    row = []
+    row += [("oil_tin", 1.0)] * 5 + [("small_oil_can_01", 1.0)] * 4 + [("cleaner_tin_01", 1.0)] * 4
+    rnd.shuffle(row)
+    for asset, sc in row:
+        d_ = r.dims(asset)
+        if x + d_.x * sc > xb:
+            break
+        r.place(asset, (x + d_.x * sc / 2, D - 0.02, tiers[0]), rot=(0, 0, 0), scale=sc, fixture="C-back-shelves", anchor=("c", "max", "min"), tag=asset)
+        x += d_.x * sc + rnd.uniform(0.01, 0.025)
+    # tins, two deep, on 0.8 and 1.2 (1.2: the left part), 2.0 (the right part)
+
+    def tins(gm, x0, x1, z, rows_y=(D - 0.080, D - 0.225), kinds=((0.07, 0.18), (0.062, 0.15), (0.055, 0.12))):
+        n = 0
+        for yc in rows_y:
+            x = x0
+            while True:
+                rad, hh = rnd.choice(kinds)
+                if x + 2 * rad * 1.035 > x1:
+                    break
+                if rnd.random() < 0.05:
+                    x += 2 * rad * 1.035 + 0.006
+                    continue
+                GB.paint_tin(gm, x + rad * 1.035, yc, z, rad, hh, tuv[rnd.randrange(len(TIN_DESIGNS))], n=16)
+                n += 1
+                x += 2 * rad * 1.035 + 0.006
+        return n
+    n_tins = 0
+    plan = {tiers[1]: [(xa, xb)], tiers[2]: [(xa, xa + 0.95)], tiers[4]: [(xa + 1.10, xb)]}
+    for z, segs in plan.items():
+        gm = GM()
+        nt = 0
+        for a_, b_ in segs:
+            nt += tins(gm, a_, b_, z)
+        o = gm.to_object("paint_tins_%.2f" % z, [metal, tin_label], r.sc)
+        r.placed_rec("C-back-shelves", "script:paint_tins", gm.extents(), [o.name], tag="tins_%.2f" % z, n=nt)
+        n_tins += nt
+    # 1.2: four Lantern_01 and three signal flashlights, to the right of the tins
+    x = xa + 1.00
+    for k in range(4):
+        r.place("Lantern_01", (x + 0.07, D - 0.10, tiers[2]), rot=(0, 0, rnd.uniform(-0.3, 0.3)), scale=1.0, fixture="C-back-shelves", anchor=("c", "c", "min"), tag="lantern")
+        x += 0.16
+    for k in range(3):
+        r.place("signal_flashlight", (x + 0.04, D - 0.10, tiers[2]), rot=(0, 0, math.pi / 2 + rnd.uniform(-0.2, 0.2)), scale=1.0, fixture="C-back-shelves", anchor=("c", "c", "min"), tag="flashlight")
+        x += 0.10
+    # 1.6: six coils of rope standing on edge (axis along y), five colours, four layers deep
+    gm_by = {}
+    cnt_by = {}
+    x = xa + 0.20
+    for k in range(6):
+        ci = k % len(ROPE_COLOURS)
+        g = gm_by.setdefault(ci, GM())
+        Rin = rnd.uniform(0.05, 0.075)
+        rho, turns = 0.0095, 3.2
+        Rout = Rin + 0.4 * rho * 3 + 2 * rho * turns + rho
+        GB.rope_coil(g, (x, D - 0.150, tiers[3] + Rout + 0.0005), Rin, turns, rho, axis="y", mi=0, layers=4)
+        cnt_by[ci] = cnt_by.get(ci, 0) + 1
+        x += 0.30
+    for ci, g in gm_by.items():
+        o = g.to_object("rope_coils_%d" % ci, [rope_m[ci]], r.sc, smooth=True)
+        r.placed_rec("C-back-shelves", "script:rope_coils", g.extents(), [o.name], tag="coils_%d" % ci, n=cnt_by[ci])
+    # 2.0: ten twine reels
+    gm = GM()
+    for k in range(10):
+        GB.twine_reel(gm, xa + 0.07 + k * 0.105, D - 0.09, tiers[4], r=0.045, h=0.11, mi_wood=0, mi_twine=1)
+    o = gm.to_object("twine_reels", [reel_wood, twine_m], r.sc)
+    r.placed_rec("C-back-shelves", "script:twine_reels", gm.extents(), [o.name], tag="reels", n=10)
+    # ---- the counter
+    # the counter, built here: its top overhangs the panelled front by 0.032 so that the brass edge, the drawer and its pull stand inside the 0.60 rule
+    cx0, cx1 = fx["C-back-counter"]["x"]
+    ch = fx["C-back-counter"]["z"][1]
+    cy0 = D - fx["C-back-counter"]["depth_m"]
+    cy1 = D - 0.005
+    r.box("counter_base", cx0, cx1, cy0 + 0.032, cy1, 0.0, ch - 0.03, r.wood_m, fixture="C-back-counter")
+    pm_ = r.mat("counter_panel_chandler", rgb8(112, 70, 42), rough=0.5)
+    rail_ = r.mat("counter_rail_chandler", rgb8(84, 50, 30), rough=0.5)
+    r.box("counter_plinth", cx0, cx1, cy0 + 0.020, cy0 + 0.032, 0.0, 0.10, rail_, fixture="C-back-counter")
+    r.box("counter_rail", cx0, cx1, cy0 + 0.020, cy0 + 0.032, ch - 0.12, ch - 0.03, rail_, fixture="C-back-counter")
+    npan = max(2, int(round((cx1 - cx0) / 0.55)))
+    wpan = (cx1 - cx0) / npan
+    for k in range(npan):
+        r.box("counter_panel_%d" % k, cx0 + k * wpan + 0.05, cx0 + (k + 1) * wpan - 0.05, cy0 + 0.020, cy0 + 0.032, 0.16, ch - 0.17, pm_, fixture="C-back-counter")
+    top_m = r.mat("counter_top_chandler", rgb8(120, 80, 48), rough=0.38)
+    r.box("counter_top", cx0, cx1, cy0, cy1, ch - 0.03, ch, top_m, fixture="C-back-counter")
+    brass = r.brass_m
+    r.box("counter_brass_edge", cx0, cx1, cy0, cy0 + 0.010, ch, ch + 0.004, brass, fixture="C-back-counter")
+    drawer_m = r.mat("chart_drawer", rgb8(130, 86, 50), rough=0.5)
+    r.box("chart_drawer_front", cx0 + 0.66, cx0 + 0.99, cy0 + 0.012, cy0 + 0.020, 0.55, 0.80, drawer_m, fixture="C-back-counter")
+    r.box("chart_drawer_pull", cx0 + 0.78, cx0 + 0.87, cy0 + 0.004, cy0 + 0.012, 0.66, 0.69, brass, fixture="C-back-counter")
+    till_s = next(g["size_m"] for g in rr["goods"] if g["model"] == "CashRegister_01") / max(r.dims("CashRegister_01"))
+    r.place("CashRegister_01", (cx1 - 0.32, D - 0.02, ch), rot=(0, 0, 0), scale=till_s, fixture="C-back-counter", anchor=("c", "max", "min"))
+    for k, xc in enumerate((cx0 + 0.25, cx0 + 0.50, cx0 + 1.60)):
+        r.place("seadogs_compass", (xc, D - 0.25 - 0.05 * k, ch), rot=(0, 0, rnd.uniform(-0.6, 0.6)), scale=1.0, fixture="C-back-counter", anchor=("c", "c", "min"), tag="compass")
+    lx, ly = cx0 + 1.05, D - 0.30
+    ext = r.place("Lantern_01", (lx, ly, ch), rot=(0, 0, 0), scale=1.1, fixture="C-back-counter", anchor=("c", "c", "min"), tag="hurricane_lamp")
+    flame_m = r.mat("lamp_flame", rgb8(255, 190, 90), rough=0.4, emit=(1.0, 0.62, 0.22), emit_strength=0.0)
+    gm = GM()
+    gm.lathe(lx, ly, ch + 0.100, [(0.0, 0.0), (0.0045, 0.008), (0.005, 0.020), (0.0025, 0.030), (0.0, 0.036)], mi=0, n=10)
+    o = gm.to_object("lamp_flame", [flame_m], r.sc, smooth=True)
+    r.fixture_rec("C-back-counter", "lamp_flame", gm.extents())
+    ll = bpy.data.lights.new("lamp_light", "POINT")
+    ll.energy = 0.0
+    ll.color = (1.0, 0.62, 0.30)
+    ll.shadow_soft_size = 0.02
+    lo = bpy.data.objects.new("lamp_light", ll)
+    r.sc.collection.objects.link(lo)
+    lo.location = (lx, ly - 0.03, ch + 0.115)
+    r.lamp = lo
+    orig_set_state = r.set_state
+
+    def set_state(state, P, _o=orig_set_state):
+        _o(state, P)
+        on = state == "night_lit"
+        flame_m.node_tree.nodes["Principled BSDF"].inputs["Emission Strength"].default_value = 30.0 if on else 0.0
+        lo.data.energy = P.get("lamp", 6.0) if on else 0.0
+    r.set_state = set_state
+    # ---- the hooks board over the counter: two life jackets and a lifebuoy at their own size (the target's 4, 2 and 3 sou'westers do not fit 2.2 m without one hanging through another)
+    hx0, hx1 = fx["C-back-hooks"]["x"]
+    hx1 = 2.60
+    wood = r.mat("hooks_board", rgb8(112, 76, 46), rough=0.6)
+    r.box("hooks_board", hx0, hx1, D - 0.030, D - 0.005, 2.04, 2.28, wood, fixture="C-back-hooks")
+    gm = GM()
+    for k, xc in enumerate((0.76, 1.50)):
+        gm.rod((xc, D - 0.030, 2.12), (xc, D - 0.075, 2.12), 0.007, 0, 8)
+        r.place("life_jacket", (xc, D - 0.075, 2.12 - 0.02), rot=(0, 0, 0), scale=1.0, fixture="C-back-hooks", anchor=("c", "max", "max"), tag="jacket")
+    lsc = 0.9
+    lbx = 2.24
+    gm.rod((lbx, D - 0.030, 2.20), (lbx, D - 0.065, 2.20), 0.007, 0, 8)
+    r.place("lifebuoy", (lbx, D - 0.065, 2.20), rot=(0, 0, 0), scale=lsc, fixture="C-back-hooks", anchor=("c", "max", "max"), tag="lifebuoy")
+    o = gm.to_object("hooks_pegs", [brass], r.sc)
+    r.fixture_rec("C-back-hooks", "hooks_pegs", gm.extents())
+    # ---- the left wall: six chart sheets, a tide table card, a board with a flat coil of rope
+    xl, xr = -W / 2, W / 2
+    titles = ["HARBOUR\nAPPROACHES No.1", "THE WESTERN\nSOUNDS", "NORTH CHANNEL\nTO THE BAR", "INSHORE WATERS\nSOUTH COAST", "THE ESTUARY\nAND ROADS", "OFFSHORE BANKS\nSHEET 4", "TIDE TABLE\nFOR THE MONTH"]
+    cp = os.path.join(tex, "charts.png")
+    cuv = GB.chart_atlas(cp, [t.split("\n")[0] if t.startswith("TIDE") else t for t in titles[:6]] + ["TIDE TABLE"], cols=4)
+    cm = r.image_mat("charts", cp, rough=0.8)
+    GEN.TEXTS.extend(["HARBOUR", "APPROACHES No.1", "TIDE TABLE", "FOR THE MONTH"])
+    cg = GM()
+    cells = [(1.42, 1.65), (1.78, 1.65), (2.14, 1.65), (1.42, 1.15), (1.78, 1.15), (2.14, 1.15), (2.52, 1.70)]
+    for k, (yc, zc) in enumerate(cells):
+        w_, h_ = (0.30, 0.40)
+        uvk = cuv[k]
+        cg.box(xl + 0.0030, xl + 0.0050, yc - w_ / 2, yc + w_ / 2, zc - h_ / 2, zc + h_ / 2, 0, uv_front=uvk, front="+x", uv_other=(uvk[0] + 0.01, uvk[1] + 0.01))
+    o = cg.to_object("chart_sheets", [cm], r.sc)
+    r.placed_rec("C-left-charts", "script:chart_posters", cg.extents(), [o.name], tag="charts", n=7)
+    board_m = r.mat("rope_board", rgb8(116, 80, 50), rough=0.6)
+    r.box("rope_board", xl + 0.0005, xl + 0.012, 2.40, 2.95, 1.00, 1.50, board_m, fixture="C-left-charts")
+    rg = GM()
+    Rout = GB.rope_coil(rg, (xl + 0.012 + 0.0105, 2.675, 1.25), 0.045, 3.0, 0.0095, axis="x", mi=0, layers=1)
+    o = rg.to_object("rope_flat_coil", [rope_m[0]], r.sc, smooth=True)
+    r.fixture_rec("C-left-charts", "rope_flat_coil", rg.extents())
+    # ---- the right wall: the pegboard and 24 pieces of hardware, flat
+    r.make_pegboard_texture()
+    top = r.pegboard_panels("C-right-board", "right")
+    hw = GM()
+    n_hw = 0
+    rows_hw = [(1.88, "block", [0.15 + k * 0.25 for k in range(6)]), (1.62, "shackle", [0.12 + k * 0.19 for k in range(8)]), (1.36, "cleat", [0.20 + k * 0.30 for k in range(5)]),
+               (1.12, "shackle", [0.20, 0.55]), (1.12, "chain", [0.95, 1.25, 1.50])]
+
+    def to_wall(x_, y_, z_):
+        return (top - 0.006 + y_, 2.8 - x_, z_)          # local (u, -d, z) -> the right wall: out of the board is -x; u runs along -y from the viewer's right
+    for z, kind, us in rows_hw:
+        for uu in us:
+            i0 = len(hw.V)
+            if kind == "block":
+                GB.wooden_block(hw, 0.0, 0.0, 0.0, s=1.0, mi_wood=0, mi_steel=1)
+            elif kind == "shackle":
+                GB.shackle(hw, 0.0, 0.0, 0.0, s=1.0, mi=1)
+            elif kind == "cleat":
+                GB.horn_cleat(hw, 0.0, 0.0, 0.0, s=1.0, mi=1)
+            else:
+                GB.chain_run(hw, 0.0, 0.0, 0.0, 9, s=1.0, mi=1)
+            _map_wall(hw, i0, lambda x_, y_, z_, uu=uu, z=z: to_wall(x_ + uu, y_, z_ + z))
+            n_hw += 1
+    block_wood = r.mat("block_wood", rgb8(130, 90, 56), rough=0.45)
+    o = hw.to_object("rigging_hardware", [block_wood, steel], r.sc)
+    r.placed_rec("C-right-board", "script:shackles_blocks", hw.extents(), [o.name], tag="hardware", n=n_hw)
+    r.rows["counts"] = {"paint_tins": n_tins, "hardware": n_hw}
+    r.notes.append("%d paint tins (target 40), 24 pieces of rigging on the pegboard, life jackets 2 of 4, lifebuoy 1 of 2 (0.9), sou'westers 0 of 3 on the hooks board, boots 2 of 4 pairs (no room for more without one through another); the hurricane lamp is lit in night_lit only" % n_tins)
+    r.texts = list(GEN.TEXTS)
+    GB.add_fill(r, (sx0 + 2.6) / 2, 4.6, 0.40, D - 2.4, FILL_W)          # the low bounce under the shelving's boards (see sw_goods_b.add_fill; DADO_LIFT in sw_room_gen)
+    return r
+
+
+# ---------------------------------------------------------------------------------------------------------------------------------- the window
+def display(d):
+    """The chandler's window (target `shops.chandler.display`, 12 item rows; bed 3.35 x 0.55; 1.55 high at most). Every Poly Haven piece stands at its real size (DSP-06: a boot at 0.5 is a child's); the target's
+    twelve zones overlap in volume and add up to more than 3.35 x 0.55 at that size, so (each a Judgement in NOTES.md):
+    the lifebuoy leans on its edge at the left (u 0.05 to 0.85, its foot on the bed, its top toward the glass); two life jackets hang from a timber rail at w 1.45 (u 1.30 and 2.40, the rail from u 0.95 to 2.95) on
+    cords from the window head, two sou'westers from a second rail in front of them (u 1.45 and 2.30); FRONT ROW (v 0.13, each piece placed in a light of the window, clear of the mullions at u 1.10 to 1.15 and 2.20 to
+    2.25): oil_tin x4, seadogs_compass x2 (on a low riser), Lantern_01 x2, small_oil_can_01 x2 (the target's 3 do not fit), the blowtorch; BACK ROW (v 0.40): ONE pair of rubber_boots (the target's 3 do not fit 0.9 m at
+    real size), wooden_lantern_01, THREE rope coils hung on 8 mm pegs standing out of the second rail (two big of 2.6 turns and a small one of 2 turns: coils lying flat were a sliver from the far pavement, DSP-03 0.18
+    to 0.46; the target's fifth and fourth do not fit), a pyramid of 21 paint tins (6 + 5 + ... + 1) with a backing board; ten price cards, each before its goods (a card on a stake before bed goods, a card on a 30 mm
+    cord tied to the hung goods). Toned for the night frames (the gate's spill burns the red channel of orange and red goods and the dark ones read dark against the lit room: PIC-05g, LIT-08): jackets 0.40, buoy
+    0.62, Lantern_01 base 4.5 and metal 0.15, oil tins 1.5, boots 1.6, compasses 2.0. The woven galvanised mesh screens of the night (target `night`) are night furniture (`make_mesh_screens` in sw_front.py): not in the day glb
+    and out of the lit night view."""
+    _setup()
+    import sw_room_gen as RG
+    rr = d.RR
+    walls = rr["walls"]
+    d.start((126, 92, 60), RG._rgb(walls["above"]), RG._rgb(walls["dado"]))
+    rnd = d.rnd
+    L = d.L
+    X = lambda u: u - L / 2
+    tex = d.tex
+    GEN.TEXTS.clear()
+    GB.fetch_ropes()
+    # ---- lifebuoy leaning on its edge (its foot on the bed, its top toward the glass)
+    ext, nm_ = d.piece("lifebuoy", 0.45, 0.24, 0.0, rot=(math.radians(-12), 0, 0), scale=1.0, tier="bed", tris=None)
+    GB.ground_piece(d, nm_, 0.0)
+    buoy_names = list(nm_)
+    # ---- the rails: jackets behind, hats in front (hung from the window head on cords)
+    rail_m = d.mat("rail_timber", rgb8(120, 84, 54), rough=0.6)
+    rail_w, rail_v = 1.45, 0.42
+    gm = GM()
+    gm.rod((X(0.90), rail_v, rail_w), (X(2.78), rail_v, rail_w), 0.014, 0, 12)
+    for xx in (0.95, 2.74):
+        gm.rod((X(xx), rail_v, rail_w + 0.012), (X(xx), rail_v, 1.55), 0.002, 0, 6)
+    d.gm_object("rail", gm, [rail_m], "support", "script:crate")
+    jackets_names = []
+    jacket_hem = 0.445
+    for k, uc in enumerate((1.30, 2.40)):          # the wooden lantern's handle (to w 0.53) stands in the gap between the jackets, whose hems hang at 0.445
+        _, nm_ = d.piece("life_jacket", uc, rail_v, 0.5, rot=(0, 0, 0), scale=1.0, tier="rail", tris=None)
+        GB.ground_piece(d, nm_, rail_w - 0.013, top=True)
+        jackets_names.extend(nm_)
+        jacket_hem = d.items[-1]["ext"][4]
+    sg = GM()
+    sw_m = [d.mat("oilskin_yellow", rgb8(176, 138, 20), rough=0.32), d.mat("oilskin_seam", rgb8(150, 110, 20), rough=0.5)]
+    strap = GM()
+    rail2_w, rail2_v, hs = 1.28, 0.12, 0.85
+    gm2 = GM()
+    gm2.rod((X(1.15), rail2_v, rail2_w), (X(2.95), rail2_v, rail2_w), 0.010, 0, 12)
+    for xx in (1.18, 2.92):
+        gm2.rod((X(xx), rail2_v, rail2_w + 0.008), (X(xx), rail2_v, 1.55), 0.002, 0, 6)
+    d.gm_object("rail_front", gm2, [rail_m], "support", "script:crate")
+    crown_top = (0.04 + 0.112) * hs
+    hat_z = rail2_w - 0.012 - 0.035 - crown_top
+    for uc in (1.45, 2.30):
+        GB.souwester(sg, X(uc), rail2_v, hat_z, s=hs, mi=0, mi_seam=1, face=-1.0)
+        strap.rod((X(uc), rail2_v, rail2_w - 0.008), (X(uc), rail2_v, hat_z + crown_top + 0.001), 0.0022, 0, 6)
+    d.gm_object("sou_westers", sg, sw_m, "scripted", "script:oilskin_sou_wester", tier="rail", smooth=True)
+    d.gm_object("sou_wester_straps", strap, [d.mat("strap", rgb8(60, 52, 44), rough=0.8)], "support", "script:crate")
+    # ---- the front row (v 0.13), each piece at a place of its own (14 Oct: the window's mullions, at u 1.10 to 1.15 and 2.20 to 2.25, stood across the second oil tin and the first can, DSP-03 read 0.44; the pieces
+    # stand clear of them): oil tins, the compasses on a riser 80 mm high (flat on the bed they lie under the sill's 40 mm: 0.22), two lanterns, two oil cans (the third does not fit between the mullion and the blowtorch)
+    # and the blowtorch
+    placed_f = []
+    names_by = {}
+
+    def _at(asset, u0, rz, w=0.0, v=0.13):
+        dm = d.dims(asset, (0, 0, rz))
+        ext, nm = d.piece(asset, u0 + dm.x / 2.0, v, w, rot=(0, 0, rz + rnd.uniform(-0.05, 0.05)), scale=1.0, tier="bed", tris=None)
+        placed_f.append((asset, u0 + dm.x / 2.0, ext))
+        names_by.setdefault(asset, []).extend(nm)
+        return u0 + dm.x
+
+    for u0 in (0.88, 1.19, 1.36, 1.53):
+        _at("oil_tin", u0, math.pi / 2)
+    d.crate("compass_riser", 1.69, 1.88, 0.05, 0.20, 0.0, 0.08)
+    _at("seadogs_compass", 1.70, 0.0, w=0.08)
+    _at("seadogs_compass", 1.79, 0.0, w=0.08)
+    _at("Lantern_01", 1.89, 0.0)
+    _at("Lantern_01", 2.02, 0.0)
+    _at("small_oil_can_01", 2.29, 0.0)
+    _at("small_oil_can_01", 2.575, 0.0)
+    _at("brass_blowtorch", 2.855, math.pi / 2)
+    # ---- the back row (v 0.40): the boots, the wooden lantern
+    placed_b = GB.row_pack(d, [("rubber_boots", 0.0, 1.0), ("wooden_lantern_01", 0.0, 1.0)], 0.92, 2.08, 0.40, gap=0.03)
+    # the night rows pull against each other (lesson 26): the orange jackets burnt in the red channel under the gate's spill (PIC-05g 0.06) and the dark goods read 0.32 to 0.49 of the room (LIT-08, limit 0.6): the
+    # jackets' picture is toned down (0.62) and the lanterns' (1.5), the boots' (1.4) and the oil tins' (1.3) up, in the display's copy of their textures
+    import bpy
+    boots_names = [o.name for o in bpy.data.objects if o.type == "MESH" and o.name.startswith("rubber_boots") and not o.hide_render and d.coll_t not in o.users_collection]
+    d.tone(jackets_names, 0.40)
+    d.tone(buoy_names, 0.62)
+    d.tone(names_by.get("Lantern_01", []), 4.5)
+    d.tone_metal(names_by.get("Lantern_01", []), 0.15)
+    d.tone(names_by.get("oil_tin", []), 1.5)
+    d.tone(boots_names, 1.6)
+    d.tone(names_by.get("seadogs_compass", []), 2.0)
+    # ---- rope coils HUNG on the front rail, as a chandler hangs them (14 Oct: coils lying flat on crates behind the cans were a sliver from the pavement, DSP-03 read 0.18 to 0.46): two big (2 layers) and a small
+    # (1 layer) between the sou'westers, the rail through each coil's hole and the hole's top edge on the rail; the pyramid of paint tins beside them
+    rm = []
+    for i, c in enumerate(ROPE_COLOURS):
+        pth = os.path.join(tex, "rope_%d.png" % i)
+        GB.rope_png(pth, c, which=1, size=512)
+        rm.append(d.image_mat("rope_%d" % i, pth, rough=0.9))
+    rope_r = 0.0095
+    hung = ((1.82, 0.088, 2.6, 2, 0), (2.082, 0.050, 2.0, 1, 2), (2.62, 0.088, 2.6, 2, 3))
+    coil_bottom, coil_front = {}, {}
+    pg = GM()
+    peg_top = rail2_w + 0.008
+    for k, (uc, r_in, turns, lay, ci) in enumerate(hung):
+        # a wooden peg 8 mm in radius stands out of the rail's front toward the glass; the coil hangs on it, its hole's top edge on the peg (the rail itself runs along u and cannot pass through a hole)
+        pg.rod((X(uc), rail2_v - 0.0095, rail2_w), (X(uc), rail2_v - 0.062, rail2_w), 0.008, 0, 10)
+        zc = peg_top - (r_in - 0.5 * rope_r) - 0.0004
+        cy = rail2_v - 0.045
+        g = GM()
+        rout = GB.rope_coil(g, (X(uc), cy, zc), r_in, turns, rope_r, axis="y", mi=0, layers=lay)
+        coil_bottom[k] = min(v[2] for v in g.V) + 0.001                 # the lowest turn of a spiral is not at the outer radius
+        coil_front[k] = cy - rope_r
+        d.gm_object("rope_coil_%d" % k, g, [rm[ci]], "scripted", "script:rope_coils", tier="rail", smooth=True)
+    d.gm_object("coil_pegs", pg, [rail_m], "support", "script:crate")
+    tp = os.path.join(tex, "marine_tins.png")
+    tuv = GB.tin_atlas(tp, TIN_DESIGNS, tile=(256, 128), cols=4)
+    tin_label = d.image_mat("marine_tin_labels", tp, rough=0.5)
+    metal = d.mat("tin_metal", rgb8(168, 168, 164), rough=0.35, metal=0.85)
+    r_t, h_t = 0.0475, 0.086
+    gm = GM()
+    u_c = 3.05
+    for row in range(6):
+        nrow = 6 - row
+        x_start = X(u_c) - nrow * 2 * r_t * 1.02 / 2
+        for i in range(nrow):
+            GB.paint_tin(gm, x_start + (i + 0.5) * 2 * r_t * 1.02, 0.42, row * h_t, r_t, h_t, tuv[(row * 3 + i) % len(TIN_DESIGNS)], n=16, bail=False)
+    d.gm_object("paint_tin_pyramid", gm, [metal, tin_label], "scripted", "script:paint_tin_pyramid", tier="bed")
+    back_m = d.mat("pyramid_board", rgb8(150, 140, 120), rough=0.8)
+    gm = GM()
+    gm.box(X(u_c - 0.295), X(u_c + 0.295), 0.50, 0.515, 0.0, 0.54, 0)
+    d.gm_object("pyramid_backing", gm, [back_m], "support", "script:backing_board")
+    # ---- price cards, each before the goods it prices (14 Oct, tea rooms close review narrow 2): a stake card on the bed before the goods on the bed (the lifebuoy, the oil tins, the compasses, the lamps, the cans, the
+    # paint, the blowtorch), a card on a cord from the goods that hang (the jackets' hem, the sou'westers' rail, the big rope coil)
+    texts = ["LIFEBUOY\n\u00a312.50", "JACKETS\n\u00a39.95", "ROPE\n85p a metre", "SOU'WESTERS\n\u00a32.95", "LAMPS\n\u00a34.20", "COMPASS\n\u00a35.50", "OIL TINS\n\u00a31.60", "OIL CANS\n\u00a31.35", "PAINT\n\u00a33.45", "BLOWTORCH\n\u00a37.25"]
+    path = os.path.join(tex, "price_cards.png")
+    uvs = GEN.card_atlas(path, texts, cols=4, tile=(256, 128), size=40)
+    pm = [d.image_mat("price_cards", path, rough=0.8), d.mat("stake", rgb8(60, 60, 62), rough=0.5, metal=0.7)]
+    fu = {a: [u for (aa, u, e) in placed_f if aa == a] for a in {x[0] for x in placed_f}}
+    spots = {0: (0.45, 0.02), 4: (fu["Lantern_01"][0], 0.03), 5: (fu["seadogs_compass"][0], 0.03), 6: (fu["oil_tin"][1], 0.03), 7: (fu["small_oil_can_01"][0], 0.03), 8: (3.28, 0.03), 9: (fu["brass_blowtorch"][0], 0.03)}
+    for k, (uc, vv) in spots.items():
+        d.price_card(uc, vv, 0.0, k, uvs, pm)
+
+    def hung_card(k, uc, vv, z_top):
+        """A card 70 x 50 mm on a 30 mm cord from `z_top` (the hem, the rail, the coil's lowest turn), the face toward the street: one mesh, a ticket for the checks."""
+        gmh = GM()
+        x = X(uc)
+        gmh.rod((x, vv, z_top), (x, vv, z_top - 0.030), 0.0012, 1, 6)
+        gmh.box(x - 0.035, x + 0.035, vv - 0.002, vv + 0.002, z_top - 0.080, z_top - 0.030, 0, uv_front=uvs[k])
+        ob = gmh.to_object("hung_card_%d" % k, pm, d.sc)
+        d.groups.append({"kind": "ticket", "model": "script:price_cards", "objs": [ob.name]})
+
+    hz1 = GB.hit_up(d, X(1.12), 0.40, 0.30)                  # under the left panel's hem (the jacket is open between its two panels): found by a ray
+    hung_card(1, 1.12, 0.40, (hz1 if hz1 is not None else jacket_hem) - 0.0015)
+    hz2 = GB.hit_up(d, X(2.62), coil_front[2] + 0.004, 0.90)   # the coil's lowest turn, found by a ray (the card hangs just inside its front face)
+    hung_card(2, 2.62, coil_front[2] + 0.004 - 0.0005 if hz2 is not None else coil_front[2] - 0.003, (hz2 if hz2 is not None else coil_bottom[2]) - 0.0015)
+    hung_card(3, 2.44, rail2_v - 0.004, rail2_w - 0.010)
+    d.display_texts = list(GEN.TEXTS) + [t.replace("\n", " ") for t in texts]

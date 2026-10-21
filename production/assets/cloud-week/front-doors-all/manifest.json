@@ -1,0 +1,847 @@
+{
+ "made_by": "production/cloud-week/kit/front-doors-all/build_doors.py",
+ "target": "production/cloud-week/targets/front-doors-all/target.json",
+ "kinds": {
+  "T1": {
+   "paint": "navy",
+   "frame_colour": "white_grimy",
+   "condition": "tired",
+   "glb_bytes": 277572,
+   "triangles": 6520,
+   "materials": [
+    "glass",
+    "paint_navy",
+    "paint_white_grimy",
+    "stone_step"
+   ],
+   "sha256": "6f332e67aa532f464d3f0309e787d5dd9bdc14fb32a0ea78fc5b5f0d57d231a6",
+   "notes": {
+    "kind": "T1"
+   },
+   "file": "door_T1.glb",
+   "parts": [
+    "frame_glazing_bead",
+    "frame_head",
+    "frame_jamb_L",
+    "frame_jamb_R",
+    "frame_transom",
+    "glass_fanlight",
+    "leaf_frame",
+    "moulding_band",
+    "moulding_bolection_bottom_left",
+    "moulding_bolection_bottom_right",
+    "moulding_bolection_top_left",
+    "moulding_bolection_top_right",
+    "moulding_single_bottom_left",
+    "moulding_single_bottom_right",
+    "moulding_single_top_left",
+    "moulding_single_top_right",
+    "moulding_weatherboard",
+    "panel_bottom_left",
+    "panel_bottom_right",
+    "panel_top_left",
+    "panel_top_right",
+    "stone_riser",
+    "stone_threshold",
+    "stone_tread"
+   ]
+  },
+  "T2": {
+   "paint": "maroon",
+   "frame_colour": "white",
+   "condition": "tired",
+   "glb_bytes": 258452,
+   "triangles": 6272,
+   "materials": [
+    "glass",
+    "lead_came",
+    "net_voile",
+    "paint_maroon",
+    "paint_white",
+    "steel_dark",
+    "stone_step"
+   ],
+   "sha256": "ff2a70dbd11a311b7d2af2e0669a1bf87c67beae613d41492dbbddac71bfa086",
+   "notes": {
+    "kind": "T2",
+    "came_parts": 19,
+    "keyhole_pocket": {
+     "u": 57.2,
+     "v": 1031.6,
+     "depth_mm": 2.2
+    }
+   },
+   "file": "door_T2.glb",
+   "parts": [
+    "bead_light1",
+    "bead_light2",
+    "bead_light3",
+    "bead_light4",
+    "frame_glazing_bead",
+    "frame_head",
+    "frame_jamb_L",
+    "frame_jamb_R",
+    "frame_transom",
+    "glass_fanlight",
+    "glass_light1",
+    "glass_light2",
+    "glass_light3",
+    "glass_light4",
+    "iron_hinge_fixing_1",
+    "iron_hinge_fixing_2",
+    "lead_came",
+    "leaf_frame",
+    "net_light1",
+    "net_light2",
+    "net_light3",
+    "net_light4",
+    "stone_riser",
+    "stone_threshold",
+    "stone_tread"
+   ]
+  },
+  "T3": {
+   "paint": "white_gloss",
+   "frame_colour": "white",
+   "condition": "kept",
+   "glb_bytes": 187064,
+   "triangles": 4518,
+   "materials": [
+    "glass",
+    "paint_white",
+    "paint_white_gloss",
+    "stone_step"
+   ],
+   "sha256": "624891160d032fa33fd43d54ac59937bf72f816251af4c89bb7804c1e343c344",
+   "notes": {
+    "kind": "T3"
+   },
+   "file": "door_T3.glb",
+   "parts": [
+    "bead_small_light",
+    "frame_glazing_bead",
+    "frame_head",
+    "frame_jamb_L",
+    "frame_jamb_R",
+    "frame_transom",
+    "glass_fanlight",
+    "glass_small_light",
+    "leaf_frame",
+    "stone_riser",
+    "stone_threshold",
+    "stone_tread"
+   ]
+  },
+  "F1": {
+   "paint": "maroon",
+   "frame_colour": "white_grimy",
+   "condition": "tired",
+   "glb_bytes": 224120,
+   "triangles": 4922,
+   "materials": [
+    "glass",
+    "paint_maroon",
+    "paint_white_grimy",
+    "timber_threshold"
+   ],
+   "sha256": "5d0039904b0bc78024f2b6a29f18f84be321d989f24642a666fdc406b50ec094",
+   "notes": {
+    "kind": "F1",
+    "keyhole_pocket": {
+     "u": 782.8,
+     "v": 1151.0,
+     "depth_mm": 2.2
+    }
+   },
+   "file": "door_F1.glb",
+   "parts": [
+    "frame_glazing_bead",
+    "frame_head",
+    "frame_jamb_L",
+    "frame_jamb_R",
+    "frame_stop_bead_L",
+    "frame_stop_bead_R",
+    "frame_transom",
+    "glass_fanlight",
+    "leaf_frame",
+    "moulding_bolection_bottom_left",
+    "moulding_bolection_bottom_right",
+    "moulding_bolection_top_left",
+    "moulding_bolection_top_right",
+    "moulding_single_bottom_left",
+    "moulding_single_bottom_right",
+    "moulding_single_top_left",
+    "moulding_single_top_right",
+    "panel_bottom_left",
+    "panel_bottom_right",
+    "panel_top_left",
+    "panel_top_right",
+    "stone_threshold"
+   ]
+  },
+  "F2": {
+   "paint": "black",
+   "frame_colour": "white",
+   "condition": "kept",
+   "glb_bytes": 282636,
+   "triangles": 6282,
+   "materials": [
+    "glass",
+    "paint_black",
+    "paint_white",
+    "timber_threshold"
+   ],
+   "sha256": "b14622e59185ae5524834256502fe5077f63680df7546e150cd8a05ab5e8972e",
+   "notes": {
+    "kind": "F2",
+    "keyhole_pocket": {
+     "u": 782.8,
+     "v": 1188.1,
+     "depth_mm": 2.2
+    }
+   },
+   "file": "door_F2.glb",
+   "parts": [
+    "frame_glazing_bead",
+    "frame_head",
+    "frame_jamb_L",
+    "frame_jamb_R",
+    "frame_stop_bead_L",
+    "frame_stop_bead_R",
+    "frame_transom",
+    "glass_fanlight",
+    "leaf_frame",
+    "moulding_bolection_bottom_l",
+    "moulding_bolection_bottom_r",
+    "moulding_bolection_long_l",
+    "moulding_bolection_long_r",
+    "moulding_bolection_small_upper_l",
+    "moulding_bolection_small_upper_r",
+    "moulding_single_bottom_l",
+    "moulding_single_bottom_r",
+    "moulding_single_long_l",
+    "moulding_single_long_r",
+    "moulding_single_small_upper_l",
+    "moulding_single_small_upper_r",
+    "panel_bottom_l",
+    "panel_bottom_r",
+    "panel_long_l",
+    "panel_long_r",
+    "panel_small_upper_l",
+    "panel_small_upper_r",
+    "stone_threshold"
+   ]
+  },
+  "F3": {
+   "paint": "brown",
+   "frame_colour": "white",
+   "condition": "tired",
+   "glb_bytes": 138300,
+   "triangles": 2938,
+   "materials": [
+    "glass",
+    "paint_brown",
+    "paint_white",
+    "timber_threshold"
+   ],
+   "sha256": "bce5b21f504a2e572e3568c9ffc23c63251de1c29709fd111246423d45b0fb66",
+   "notes": {
+    "kind": "F3",
+    "keyhole_pocket": {
+     "u": 67.0,
+     "v": 1050.0,
+     "depth_mm": 2.2
+    }
+   },
+   "file": "door_F3.glb",
+   "parts": [
+    "frame_glazing_bead",
+    "frame_head",
+    "frame_jamb_L",
+    "frame_jamb_R",
+    "frame_stop_bead_L",
+    "frame_stop_bead_R",
+    "frame_transom",
+    "glass_fanlight",
+    "leaf_frame",
+    "moulding_ovolo_long_l",
+    "moulding_ovolo_long_r",
+    "panel_long_l",
+    "panel_long_r",
+    "stone_threshold"
+   ]
+  },
+  "F4": {
+   "paint": "brown",
+   "frame_colour": "white_grimy",
+   "condition": "neglected",
+   "glb_bytes": 178920,
+   "triangles": 3826,
+   "materials": [
+    "glass",
+    "paint_brown",
+    "paint_white_grimy",
+    "timber_bare",
+    "timber_threshold"
+   ],
+   "sha256": "75ad2ac1241dec32e621efbb8fc8de4f4d2873953e745c1903ed523c7a1491eb",
+   "notes": {
+    "kind": "F4",
+    "notch_u": [
+     708.0,
+     838.0
+    ]
+   },
+   "file": "door_F4.glb",
+   "parts": [
+    "bead_light1",
+    "bead_light2",
+    "bead_light3",
+    "frame_glazing_bead",
+    "frame_head",
+    "frame_jamb_L",
+    "frame_jamb_R",
+    "frame_stop_bead_L",
+    "frame_stop_bead_R",
+    "frame_transom",
+    "glass_fanlight",
+    "glass_light1",
+    "glass_light2",
+    "glass_light3",
+    "leaf_frame",
+    "leaf_notch_bare",
+    "stone_threshold"
+   ]
+  },
+  "F5": {
+   "paint": "black",
+   "frame_colour": "white",
+   "condition": "kept",
+   "glb_bytes": 86424,
+   "triangles": 1608,
+   "materials": [
+    "glass",
+    "paint_black",
+    "paint_white",
+    "timber_threshold"
+   ],
+   "sha256": "beaafa29dddfe08a59be3409d9505558570158e6e70d8f6456944f57fa7a41ff",
+   "notes": {
+    "kind": "F5"
+   },
+   "file": "door_F5.glb",
+   "parts": [
+    "bead_slit",
+    "frame_glazing_bead",
+    "frame_head",
+    "frame_jamb_L",
+    "frame_jamb_R",
+    "frame_stop_bead_L",
+    "frame_stop_bead_R",
+    "frame_transom",
+    "glass_fanlight",
+    "glass_slit",
+    "leaf_frame",
+    "stone_threshold"
+   ]
+  },
+  "F6": {
+   "paint": "council_turquoise",
+   "frame_colour": "white",
+   "condition": "tired",
+   "glb_bytes": 281808,
+   "triangles": 6476,
+   "materials": [
+    "chrome_nickel",
+    "glass",
+    "glass_reeded",
+    "paint_council_turquoise",
+    "paint_white",
+    "timber_threshold"
+   ],
+   "sha256": "14ef6d60dc6b87b8279e7be779a0d3c26663948540bd5634f11ba64b923e7598",
+   "notes": {
+    "kind": "F6"
+   },
+   "file": "door_F6.glb",
+   "parts": [
+    "frame_glazing_bead",
+    "frame_head",
+    "frame_jamb_L",
+    "frame_jamb_R",
+    "frame_stop_bead_L",
+    "frame_stop_bead_R",
+    "frame_transom",
+    "glass_fanlight",
+    "glass_fanlight_flutes",
+    "glass_lens",
+    "iron_spyhole_ring",
+    "leaf_frame",
+    "stone_threshold"
+   ]
+  },
+  "F7": {
+   "paint": "deep_teal",
+   "frame_colour": "white_grimy",
+   "condition": "neglected",
+   "glb_bytes": 259820,
+   "triangles": 6052,
+   "materials": [
+    "glass",
+    "paint_deep_teal",
+    "paint_white_grimy",
+    "timber_bare",
+    "timber_threshold"
+   ],
+   "sha256": "c705e50c931a91fdd72194d49307f6f272cdea6eef7b43c5d6fae585504ac791",
+   "notes": {
+    "kind": "F7",
+    "notch_u": [
+     0.0,
+     130.0
+    ]
+   },
+   "file": "door_F7.glb",
+   "parts": [
+    "frame_glazing_bead",
+    "frame_head",
+    "frame_jamb_L",
+    "frame_jamb_R",
+    "frame_stop_bead_L",
+    "frame_stop_bead_R",
+    "frame_transom",
+    "glass_fanlight",
+    "iron_nail_heads",
+    "leaf_board_1",
+    "leaf_board_2",
+    "leaf_board_3",
+    "leaf_board_4",
+    "leaf_board_5",
+    "leaf_board_6",
+    "leaf_brace_1",
+    "leaf_brace_2",
+    "leaf_ledge_1",
+    "leaf_ledge_2",
+    "leaf_ledge_3",
+    "leaf_notch_bare",
+    "stone_threshold"
+   ]
+  },
+  "F4_kept": {
+   "paint": "brown",
+   "frame_colour": "white_grimy",
+   "condition": "kept",
+   "glb_bytes": 99304,
+   "triangles": 1836,
+   "materials": [
+    "glass",
+    "paint_brown",
+    "paint_white_grimy",
+    "timber_threshold"
+   ],
+   "sha256": "842d2d038d654777ee119863b891c4006aa4ec5c906d906fcad426ff7d73259e",
+   "file": "door_F4_kept.glb"
+  },
+  "F7_kept": {
+   "paint": "deep_teal",
+   "frame_colour": "white_grimy",
+   "condition": "kept",
+   "glb_bytes": 176248,
+   "triangles": 4064,
+   "materials": [
+    "glass",
+    "paint_deep_teal",
+    "paint_white_grimy",
+    "timber_threshold"
+   ],
+   "sha256": "66995f0c683ca389e81340e12073ade5fa7e1d5066e3d073440cb8efca3adc22",
+   "file": "door_F7_kept.glb"
+  }
+ },
+ "furniture": {
+  "LP1": {
+   "glb_bytes": 14796,
+   "triangles": 236,
+   "parts": [
+    "iron_letter_flap",
+    "iron_letter_liner",
+    "iron_letter_lip",
+    "iron_letter_plate"
+   ],
+   "materials": [
+    "brass",
+    "slot_interior"
+   ],
+   "sha256": "767e05c2585eeebe9876312cf8ce77a844a4491f30de15905fb3c21435d1499f"
+  },
+  "LP2": {
+   "glb_bytes": 31008,
+   "triangles": 620,
+   "parts": [
+    "iron_letter_flap",
+    "iron_letter_liner",
+    "iron_letter_lip",
+    "iron_letter_plate",
+    "iron_plate_pivot_l",
+    "iron_plate_pivot_r"
+   ],
+   "materials": [
+    "chrome_nickel",
+    "slot_interior"
+   ],
+   "sha256": "51245f02d120d7bb3a9100309954ecd3baa7819ad79660828ba716681ec4c194"
+  },
+  "LP3": {
+   "glb_bytes": 16224,
+   "triangles": 236,
+   "parts": [
+    "iron_letter_flap",
+    "iron_letter_liner",
+    "iron_letter_lip",
+    "iron_letter_plate"
+   ],
+   "materials": [
+    "cast_iron",
+    "slot_interior"
+   ],
+   "sha256": "051975ab40c1e592cc7d0ce3c0ead5b893436aaafa550940290de152a3bc72a0"
+  },
+  "LP4": {
+   "glb_bytes": 6824,
+   "triangles": 64,
+   "parts": [
+    "iron_letter_flap",
+    "iron_letter_liner",
+    "iron_letter_plate"
+   ],
+   "materials": [
+    "chrome_nickel",
+    "slot_interior"
+   ],
+   "sha256": "08fb6b5ce79850beb3e82bd5cf8c0e52a7f1d18a9d0aca8468ad57cbb4133e75"
+  },
+  "LP5": {
+   "glb_bytes": 6828,
+   "triangles": 64,
+   "parts": [
+    "iron_letter_flap",
+    "iron_letter_liner",
+    "iron_letter_plate"
+   ],
+   "materials": [
+    "aluminium_pale",
+    "slot_interior"
+   ],
+   "sha256": "d1eea2111dc2232f408d5705ee0eb2ee09d3461760f4e96210e3098bdda395f1"
+  },
+  "LP6": {
+   "glb_bytes": 6868,
+   "triangles": 64,
+   "parts": [
+    "iron_letter_flap",
+    "iron_letter_liner",
+    "iron_letter_plate"
+   ],
+   "materials": [
+    "plastic_white",
+    "slot_interior"
+   ],
+   "sha256": "ad028e82082ccb38d421b8d1c8fac3f4ac99460f45c9661656ff030be35d6b88"
+  },
+  "LP7": {
+   "glb_bytes": 6856,
+   "triangles": 64,
+   "parts": [
+    "iron_letter_flap",
+    "iron_letter_liner",
+    "iron_letter_plate"
+   ],
+   "materials": [
+    "aluminium_pale",
+    "slot_interior"
+   ],
+   "sha256": "5471877704a6a13e921e2d633fd12f47116cd478d35d35d5a25e80dde8d9b49e"
+  },
+  "HD1": {
+   "glb_bytes": 164176,
+   "triangles": 5288,
+   "parts": [
+    "iron_knob",
+    "iron_knob_cap",
+    "iron_knob_rose"
+   ],
+   "materials": [
+    "brass",
+    "paint_black"
+   ],
+   "sha256": "4f87e1e65489cba054abeedf09502d3b04ee37b2684a9091725644c251fed89a"
+  },
+  "HD2a": {
+   "glb_bytes": 31060,
+   "triangles": 684,
+   "parts": [
+    "iron_lever",
+    "iron_neck",
+    "iron_rose"
+   ],
+   "materials": [
+    "chrome_nickel"
+   ],
+   "sha256": "c9cc366aa1e165ee9a6f1209cd650e463898af3b12370b76e8f2390ced3e94aa"
+  },
+  "HD2b": {
+   "glb_bytes": 87840,
+   "triangles": 2056,
+   "parts": [
+    "iron_backplate",
+    "iron_keyhole_liner",
+    "iron_lever",
+    "iron_neck",
+    "iron_rose"
+   ],
+   "materials": [
+    "chrome_nickel",
+    "slot_interior"
+   ],
+   "sha256": "00ea3bfc3ec9e8e5d9c423bb5f85949e0da71bbfddd5c984d530f025ce6f65d0"
+  },
+  "HD2c": {
+   "glb_bytes": 87840,
+   "triangles": 2056,
+   "parts": [
+    "iron_backplate",
+    "iron_keyhole_liner",
+    "iron_lever",
+    "iron_neck",
+    "iron_rose"
+   ],
+   "materials": [
+    "chrome_nickel",
+    "slot_interior"
+   ],
+   "sha256": "c2bc0907bbff36c45b0a5ba3d351bdcd5ebae83485e8dfbf2b2085b8096ac757"
+  },
+  "HD3": {
+   "glb_bytes": 53492,
+   "triangles": 1808,
+   "parts": [
+    "iron_pull_bar",
+    "iron_pull_post_l",
+    "iron_pull_post_u"
+   ],
+   "materials": [
+    "steel_dark"
+   ],
+   "sha256": "2e4e30d576d4d2ddbf810a55999af425bacdd826f0cd52365655e52033a93940"
+  },
+  "HD4": {
+   "glb_bytes": 73676,
+   "triangles": 1968,
+   "parts": [
+    "iron_latch_bow",
+    "iron_latch_plate",
+    "iron_latch_post_l",
+    "iron_latch_post_u",
+    "iron_latch_slot_liner",
+    "iron_latch_thumb"
+   ],
+   "materials": [
+    "slot_interior",
+    "steel_dark"
+   ],
+   "sha256": "efc86dbed8ed051c38ea1f5742dc85e6a8ca2166439e739c68f1eeb836b8e885"
+  },
+  "LK1": {
+   "glb_bytes": 70164,
+   "triangles": 2030,
+   "parts": [
+    "iron_lock"
+   ],
+   "materials": [
+    "chrome_nickel"
+   ],
+   "sha256": "80fb66c276088c6f5f9a25fab62a9eb7c67535c42a9df0f4103e13a1f2047f09"
+  },
+  "LK2": {
+   "glb_bytes": 89496,
+   "triangles": 2190,
+   "parts": [
+    "iron_lock_collar",
+    "iron_lock_plug"
+   ],
+   "materials": [
+    "chrome_nickel"
+   ],
+   "sha256": "c796e3bae017f149cfbb28f2a2f39ba848ec53f9c15fc409fe22b5ecc5bfcc3b"
+  },
+  "LK3": {
+   "glb_bytes": 12112,
+   "triangles": 270,
+   "parts": [
+    "iron_lock"
+   ],
+   "materials": [
+    "steel_dark"
+   ],
+   "sha256": "4ac59c51fd900afcde17a5e97d5a95c5f210f2ce00b1720789f6f1394fb57ba9"
+  },
+  "KH1": {
+   "glb_bytes": 38720,
+   "triangles": 932,
+   "parts": [
+    "iron_keyhole_blank",
+    "iron_keyhole_plate"
+   ],
+   "materials": [
+    "chrome_nickel",
+    "steel_dark"
+   ],
+   "sha256": "70c859c45ca20db20364ba674581700afa9138242ae796139dac9bf6e9205cbb"
+  },
+  "KN1": {
+   "glb_bytes": 59152,
+   "triangles": 1400,
+   "parts": [
+    "iron_knocker_lug",
+    "iron_knocker_plate",
+    "iron_knocker_ring",
+    "iron_knocker_striker"
+   ],
+   "materials": [
+    "brass"
+   ],
+   "sha256": "6af191a8acfc58839abbfa78081eb39ec6a9195ab6a8b4d7f713aff385d72c84"
+  },
+  "KN2": {
+   "glb_bytes": 23396,
+   "triangles": 440,
+   "parts": [
+    "iron_knocker_bar",
+    "iron_knocker_lug_l",
+    "iron_knocker_lug_r",
+    "iron_knocker_strike"
+   ],
+   "materials": [
+    "brass"
+   ],
+   "sha256": "2aeed7217ee44a925519f412291ee7060bc5cc88278edfb9b267d046c2509323"
+  },
+  "BL1": {
+   "glb_bytes": 4796,
+   "triangles": 76,
+   "parts": [
+    "iron_bellpush"
+   ],
+   "materials": [
+    "plastic_dark_grey"
+   ],
+   "sha256": "907e3f7ec9d89bcc27a2d5aa7d6ae6264ef72f9b3cf47d6ba72fea4ae12f8450"
+  },
+  "BL2": {
+   "glb_bytes": 33036,
+   "triangles": 957,
+   "parts": [
+    "iron_bellpull"
+   ],
+   "materials": [
+    "brass"
+   ],
+   "sha256": "8b835b9f8902307921ea879f3b9e9ff0ae368025d4e0d9482904a1505a89e9bb"
+  },
+  "NM1": {
+   "glb_bytes": 12288,
+   "triangles": 252,
+   "parts": [
+    "iron_numerals"
+   ],
+   "materials": [
+    "brass"
+   ],
+   "sha256": "5f1ae4198610fb30de5e8b32a6c604e65f46bc0558582ba21b427630ea9371ee"
+  },
+  "NM1_stacked": {
+   "glb_bytes": 8256,
+   "triangles": 156,
+   "parts": [
+    "iron_numerals"
+   ],
+   "materials": [
+    "brass"
+   ],
+   "sha256": "89847e149ebd6612444016b64e5b2365264892d3f18e5fc936795d8c08e4ed92"
+  },
+  "NM2": {
+   "glb_bytes": 26232,
+   "triangles": 612,
+   "parts": [
+    "iron_numerals"
+   ],
+   "materials": [
+    "cast_iron"
+   ],
+   "sha256": "590092d89b6c4a25b9482e097d6770401e2380d0475f814fd66cdb64a35c1204"
+  },
+  "NM3": {
+   "glb_bytes": 28324,
+   "triangles": 668,
+   "parts": [
+    "iron_numerals"
+   ],
+   "materials": [
+    "paint_numeral_white"
+   ],
+   "sha256": "3ed9e17e510f12a4888559011c4cb9fb261b9f65ecd857b2668917fc10563b6a"
+  },
+  "NM4": {
+   "glb_bytes": 14708,
+   "triangles": 320,
+   "parts": [
+    "iron_numerals"
+   ],
+   "materials": [
+    "paint_numeral_white"
+   ],
+   "sha256": "1006bd0a396498303f10c3d8c0c607f35bf0a6e9b29b48c80149bc8017aa7028"
+  },
+  "NM5": {
+   "glb_bytes": 42960,
+   "triangles": 1016,
+   "parts": [
+    "plaque_body",
+    "plaque_ornament",
+    "plaque_rim"
+   ],
+   "materials": [
+    "plastic_dark",
+    "plastic_pale"
+   ],
+   "sha256": "0f2a900c6b9d0d78ecdbf6523373d9cfca129bb1c85835e96be1b52f3d570692"
+  },
+  "NM6": {
+   "glb_bytes": 14124,
+   "triangles": 300,
+   "parts": [
+    "iron_numerals"
+   ],
+   "materials": [
+    "steel_dark"
+   ],
+   "sha256": "3babe133f9c1ad7a235fc6a28cb3a98e860383add4c3bc19c9c71522f6cd01ab"
+  },
+  "BS1": {
+   "glb_bytes": 65208,
+   "triangles": 1404,
+   "parts": [
+    "iron_scraper_blade",
+    "iron_scraper_foot_l",
+    "iron_scraper_foot_r",
+    "iron_scraper_standard_l",
+    "iron_scraper_standard_r"
+   ],
+   "materials": [
+    "cast_iron"
+   ],
+   "sha256": "b9a2fce7e7bb63a13d1fbc66c8025bd45024d1f18e5d90a7dd5c1e9069221cf2"
+  }
+ }
+}

@@ -1,0 +1,496 @@
+{
+ "version": 1,
+ "passed": 28,
+ "failed": [],
+ "total": 28,
+ "rows": [
+  {
+   "id": "BOX overall x, y, z (the target's bbox, patches excluded)",
+   "ok": true,
+   "measured": [
+    -1036.0,
+    1036.0,
+    -25.0,
+    25.0,
+    0.0,
+    1030.0
+   ],
+   "expected": [
+    -1036.0,
+    1036.0,
+    -25.0,
+    25.0,
+    0.0,
+    1030.0
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "POST l: x range, y range, z range (post and cap)",
+   "ok": true,
+   "measured": [
+    -1025.0,
+    -975.0,
+    -15.0,
+    15.0,
+    0.0,
+    1030.0
+   ],
+   "expected": [
+    -1025.0,
+    -975.0,
+    -15.0,
+    15.0,
+    0.0,
+    1030.0
+   ],
+   "note": "tol 0.6",
+   "extra": false
+  },
+  {
+   "id": "CAP l: z range 1027 to 1030",
+   "ok": true,
+   "measured": [
+    1027.0,
+    1030.0
+   ],
+   "expected": [
+    1027.0,
+    1030.0
+   ],
+   "note": "tol 0.6",
+   "extra": false
+  },
+  {
+   "id": "POST r: x range, y range, z range (post and cap)",
+   "ok": true,
+   "measured": [
+    975.0,
+    1025.0,
+    -15.0,
+    15.0,
+    0.0,
+    1030.0
+   ],
+   "expected": [
+    975.0,
+    1025.0,
+    -15.0,
+    15.0,
+    0.0,
+    1030.0
+   ],
+   "note": "tol 0.6",
+   "extra": false
+  },
+  {
+   "id": "CAP r: z range 1027 to 1030",
+   "ok": true,
+   "measured": [
+    1027.0,
+    1030.0
+   ],
+   "expected": [
+    1027.0,
+    1030.0
+   ],
+   "note": "tol 0.6",
+   "extra": false
+  },
+  {
+   "id": "TOP RAIL (with its plates): x +-975, y +-25, z 970 to 1000",
+   "ok": true,
+   "measured": [
+    -975.0,
+    975.0,
+    -25.0,
+    25.0,
+    970.0,
+    1000.0
+   ],
+   "expected": [
+    -975.0,
+    975.0,
+    -25.0,
+    25.0,
+    970.0,
+    1000.0
+   ],
+   "note": "tol 0.6",
+   "extra": false
+  },
+  {
+   "id": "BOTTOM RAIL (with its plates): x +-975, y +-20, z 190 to 210",
+   "ok": true,
+   "measured": [
+    -975.0,
+    975.0,
+    -20.0,
+    20.0,
+    190.0,
+    210.0
+   ],
+   "expected": [
+    -975.0,
+    975.0,
+    -20.0,
+    20.0,
+    190.0,
+    210.0
+   ],
+   "note": "tol 0.6",
+   "extra": false
+  },
+  {
+   "id": "BARS: seventeen",
+   "ok": true,
+   "measured": 17,
+   "expected": 17,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "BARS: centres along x (pitch 109.09)",
+   "ok": true,
+   "measured": [
+    -872.76,
+    -763.66,
+    -654.57,
+    -545.47,
+    -436.38,
+    -327.28,
+    -218.19,
+    -109.09,
+    0.0,
+    109.09,
+    218.19,
+    327.28,
+    436.38,
+    545.47,
+    654.57,
+    763.66,
+    872.76
+   ],
+   "expected": [
+    -872.76,
+    -763.66,
+    -654.57,
+    -545.47,
+    -436.38,
+    -327.28,
+    -218.19,
+    -109.09,
+    0.0,
+    109.09,
+    218.19,
+    327.28,
+    436.38,
+    545.47,
+    654.57,
+    763.66,
+    872.76
+   ],
+   "note": "tol 0.5",
+   "extra": false
+  },
+  {
+   "id": "BARS: z from 209.5 to 970.5 (210 to 970 with 0.5 into each rail), all bars",
+   "ok": true,
+   "measured": [
+    209.5,
+    970.5
+   ],
+   "expected": [
+    209.5,
+    970.5
+   ],
+   "note": "tol 0.3",
+   "extra": false
+  },
+  {
+   "id": "BARS: diameter 12 at z 500 (a 12-gon: 12 corner to corner, 11.6 across flats)",
+   "ok": true,
+   "measured": [
+    12.0,
+    12.0
+   ],
+   "expected": [
+    11.8,
+    12.0
+   ],
+   "note": "tol 0.3",
+   "extra": false
+  },
+  {
+   "id": "GAPS: every clear gap at most 100 (the sphere rule), bar to bar and bar to post face",
+   "ok": true,
+   "measured": [
+    96.24,
+    97.1
+   ],
+   "expected": "<= 100",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "STUD lt: x range, diameter 10 (y and z extents), centre z",
+   "ok": true,
+   "measured": [
+    -1036.0,
+    -974.0,
+    10.0,
+    10.01,
+    985.005
+   ],
+   "expected": [
+    -1036.0,
+    -974.0,
+    10.0,
+    10.0,
+    985.0
+   ],
+   "note": "a 12-gon: 11.6 across flats reads 10 +-0.6 tol 0.6",
+   "extra": false
+  },
+  {
+   "id": "NUT lt: x range 1025 to 1033, across flats 17 (z), corner to corner (y), centre z",
+   "ok": true,
+   "measured": [
+    -1033.0,
+    -1025.0,
+    17.0,
+    18.63,
+    985.0
+   ],
+   "expected": [
+    -1033.0,
+    -1025.0,
+    17.0,
+    19.629909152447276,
+    985.0
+   ],
+   "note": "1 mm chamfer tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "STUD lb: x range, diameter 10 (y and z extents), centre z",
+   "ok": true,
+   "measured": [
+    -1036.0,
+    -974.0,
+    10.0,
+    10.01,
+    200.005
+   ],
+   "expected": [
+    -1036.0,
+    -974.0,
+    10.0,
+    10.0,
+    200.0
+   ],
+   "note": "a 12-gon: 11.6 across flats reads 10 +-0.6 tol 0.6",
+   "extra": false
+  },
+  {
+   "id": "NUT lb: x range 1025 to 1033, across flats 17 (z), corner to corner (y), centre z",
+   "ok": true,
+   "measured": [
+    -1033.0,
+    -1025.0,
+    17.0,
+    18.63,
+    200.0
+   ],
+   "expected": [
+    -1033.0,
+    -1025.0,
+    17.0,
+    19.629909152447276,
+    200.0
+   ],
+   "note": "1 mm chamfer tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "STUD rt: x range, diameter 10 (y and z extents), centre z",
+   "ok": true,
+   "measured": [
+    974.0,
+    1036.0,
+    10.0,
+    10.01,
+    985.005
+   ],
+   "expected": [
+    974.0,
+    1036.0,
+    10.0,
+    10.0,
+    985.0
+   ],
+   "note": "a 12-gon: 11.6 across flats reads 10 +-0.6 tol 0.6",
+   "extra": false
+  },
+  {
+   "id": "NUT rt: x range 1025 to 1033, across flats 17 (z), corner to corner (y), centre z",
+   "ok": true,
+   "measured": [
+    1025.0,
+    1033.0,
+    17.0,
+    18.63,
+    985.0
+   ],
+   "expected": [
+    1025.0,
+    1033.0,
+    17.0,
+    19.629909152447276,
+    985.0
+   ],
+   "note": "1 mm chamfer tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "STUD rb: x range, diameter 10 (y and z extents), centre z",
+   "ok": true,
+   "measured": [
+    974.0,
+    1036.0,
+    10.0,
+    10.01,
+    200.005
+   ],
+   "expected": [
+    974.0,
+    1036.0,
+    10.0,
+    10.0,
+    200.0
+   ],
+   "note": "a 12-gon: 11.6 across flats reads 10 +-0.6 tol 0.6",
+   "extra": false
+  },
+  {
+   "id": "NUT rb: x range 1025 to 1033, across flats 17 (z), corner to corner (y), centre z",
+   "ok": true,
+   "measured": [
+    1025.0,
+    1033.0,
+    17.0,
+    18.63,
+    200.0
+   ],
+   "expected": [
+    1025.0,
+    1033.0,
+    17.0,
+    19.629909152447276,
+    200.0
+   ],
+   "note": "1 mm chamfer tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "STUDS: the thread stands 3 beyond the nut (1036 against 1033)",
+   "ok": true,
+   "measured": true,
+   "expected": true,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "SECTION post plan at z 500 against the target's outer profile (RHS 50 x 30, R4.5)",
+   "ok": true,
+   "measured": {
+    "iou": 0.997,
+    "mean_mm": 0.03,
+    "p95_mm": 0.05,
+    "max_mm": 0.07
+   },
+   "expected": {
+    "iou": 0.97,
+    "p95_mm": 0.3,
+    "max_mm": 0.8
+   },
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "SECTION top rail at x 0 against the target's profile (RHS 50 x 30 laid flat)",
+   "ok": true,
+   "measured": {
+    "iou": 0.9998,
+    "mean_mm": 0.0,
+    "p95_mm": 0.0,
+    "max_mm": 0.05
+   },
+   "expected": {
+    "iou": 0.97,
+    "p95_mm": 0.3,
+    "max_mm": 0.8
+   },
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "SOLID every object closed (each edge on two triangles)",
+   "ok": true,
+   "measured": [],
+   "expected": [],
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "HATCH faces of different objects in one plane, facing the same way, overlapping > 1 mm2",
+   "ok": true,
+   "measured": {
+    "count": 0,
+    "examples": []
+   },
+   "expected": 0,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "FILE A1 under 1 MB, under 20,000 triangles",
+   "ok": true,
+   "measured": [
+    245240,
+    5028
+   ],
+   "expected": "< 1000000, < 20000",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "FILE patch under 1 MB, under 20,000 triangles",
+   "ok": true,
+   "measured": [
+    9740,
+    184
+   ],
+   "expected": "< 1000000, < 20000",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "FILE A1: no textures, a UV set on every mesh, materials named by what they are",
+   "ok": true,
+   "measured": [
+    "galvanised_steel",
+    "bare_zinc"
+   ],
+   "expected": "galvanised_steel, bare_zinc",
+   "note": "",
+   "extra": false
+  }
+ ],
+ "not_built": [
+  "Q2 quay tube railing (the jetty only: not on Quay Street)",
+  "R3A, R3B, R3D cast-iron reserve kinds (unplaced)",
+  "the seeds: lean, bent bars, polish, stickers (the engine's variants and masks)"
+ ]
+}

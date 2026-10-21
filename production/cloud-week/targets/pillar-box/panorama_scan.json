@@ -1,0 +1,573 @@
+{
+ "date": "2026-10-09",
+ "source": "https://api.polyhaven.com/files/<id> (tonemapped) for the ids below; CC0",
+ "rule": "hue within 30 degrees of red, saturation > 0.68, value > 0.30, area >= 80 px at 4096 px wide",
+ "panoramas": {
+  "adams_place_bridge": {
+   "source_px": [
+    8192,
+    4096
+   ],
+   "blobs_ge_80px": 0,
+   "largest": [],
+   "looked_at": "no red blobs; a glazed covered walkway",
+   "pillar_box": false
+  },
+  "bethnal_green_entrance": {
+   "source_px": [
+    8192,
+    4096
+   ],
+   "blobs_ge_80px": 15,
+   "largest": [
+    {
+     "area_px": 2290,
+     "yaw_deg": 55.1,
+     "pitch_deg": -77.0,
+     "w_px": 121,
+     "h_px": 29
+    },
+    {
+     "area_px": 288,
+     "yaw_deg": 309.8,
+     "pitch_deg": -49.0,
+     "w_px": 38,
+     "h_px": 18
+    },
+    {
+     "area_px": 260,
+     "yaw_deg": 205.2,
+     "pitch_deg": -71.2,
+     "w_px": 29,
+     "h_px": 14
+    },
+    {
+     "area_px": 247,
+     "yaw_deg": 281.8,
+     "pitch_deg": -69.7,
+     "w_px": 28,
+     "h_px": 13
+    },
+    {
+     "area_px": 204,
+     "yaw_deg": 12.2,
+     "pitch_deg": 10.2,
+     "w_px": 9,
+     "h_px": 39
+    },
+    {
+     "area_px": 189,
+     "yaw_deg": 20.2,
+     "pitch_deg": 10.6,
+     "w_px": 8,
+     "h_px": 33
+    }
+   ],
+   "looked_at": "blobs are brick gate piers and red tags on them; no post box in the eight views",
+   "pillar_box": false
+  },
+  "birbeck_street_underpass": {
+   "source_px": [
+    8192,
+    4096
+   ],
+   "blobs_ge_80px": 1278,
+   "largest": [
+    {
+     "area_px": 132895,
+     "yaw_deg": 178.3,
+     "pitch_deg": 64.0,
+     "w_px": 1165,
+     "h_px": 473
+    },
+    {
+     "area_px": 43398,
+     "yaw_deg": 305.2,
+     "pitch_deg": 81.0,
+     "w_px": 901,
+     "h_px": 154
+    },
+    {
+     "area_px": 37324,
+     "yaw_deg": 130.9,
+     "pitch_deg": 33.0,
+     "w_px": 597,
+     "h_px": 248
+    },
+    {
+     "area_px": 32714,
+     "yaw_deg": 326.1,
+     "pitch_deg": 44.7,
+     "w_px": 348,
+     "h_px": 215
+    },
+    {
+     "area_px": 23707,
+     "yaw_deg": 345.6,
+     "pitch_deg": 28.7,
+     "w_px": 328,
+     "h_px": 168
+    },
+    {
+     "area_px": 20067,
+     "yaw_deg": 265.3,
+     "pitch_deg": 81.5,
+     "w_px": 386,
+     "h_px": 135
+    }
+   ],
+   "looked_at": "blobs are graffiti and brick under a railway arch; no post box",
+   "pillar_box": false
+  },
+  "cambridge": {
+   "source_px": [
+    8192,
+    4096
+   ],
+   "blobs_ge_80px": 0,
+   "largest": [],
+   "looked_at": "no red blobs; a college court, no post box",
+   "pillar_box": false
+  },
+  "canary_wharf": {
+   "source_px": [
+    8192,
+    4096
+   ],
+   "blobs_ge_80px": 10,
+   "largest": [
+    {
+     "area_px": 419,
+     "yaw_deg": 43.9,
+     "pitch_deg": 12.2,
+     "w_px": 78,
+     "h_px": 21
+    },
+    {
+     "area_px": 410,
+     "yaw_deg": 56.0,
+     "pitch_deg": 14.0,
+     "w_px": 65,
+     "h_px": 12
+    },
+    {
+     "area_px": 330,
+     "yaw_deg": 50.4,
+     "pitch_deg": 13.3,
+     "w_px": 62,
+     "h_px": 14
+    },
+    {
+     "area_px": 179,
+     "yaw_deg": 60.4,
+     "pitch_deg": 14.3,
+     "w_px": 28,
+     "h_px": 10
+    },
+    {
+     "area_px": 169,
+     "yaw_deg": 32.0,
+     "pitch_deg": 9.4,
+     "w_px": 31,
+     "h_px": 12
+    },
+    {
+     "area_px": 119,
+     "yaw_deg": 65.6,
+     "pitch_deg": 14.3,
+     "w_px": 23,
+     "h_px": 8
+    }
+   ],
+   "looked_at": "blobs are a lit ticker sign on a glass tower; no post box",
+   "pillar_box": false
+  },
+  "epping_forest_01": {
+   "source_px": [
+    8192,
+    4096
+   ],
+   "blobs_ge_80px": 0,
+   "largest": [],
+   "looked_at": "woodland; no red",
+   "pillar_box": false
+  },
+  "epping_forest_02": {
+   "source_px": [
+    8192,
+    4096
+   ],
+   "blobs_ge_80px": 0,
+   "largest": [],
+   "looked_at": "woodland; no red",
+   "pillar_box": false
+  },
+  "greenwich_park": {
+   "source_px": [
+    8192,
+    4096
+   ],
+   "blobs_ge_80px": 0,
+   "largest": [],
+   "looked_at": "parkland; no red",
+   "pillar_box": false
+  },
+  "greenwich_park_02": {
+   "source_px": [
+    8192,
+    4096
+   ],
+   "blobs_ge_80px": 8,
+   "largest": [
+    {
+     "area_px": 224,
+     "yaw_deg": 138.7,
+     "pitch_deg": -67.1,
+     "w_px": 17,
+     "h_px": 28
+    },
+    {
+     "area_px": 139,
+     "yaw_deg": 136.9,
+     "pitch_deg": 85.2,
+     "w_px": 21,
+     "h_px": 9
+    },
+    {
+     "area_px": 126,
+     "yaw_deg": 155.8,
+     "pitch_deg": -68.4,
+     "w_px": 14,
+     "h_px": 18
+    },
+    {
+     "area_px": 123,
+     "yaw_deg": 319.6,
+     "pitch_deg": 62.6,
+     "w_px": 18,
+     "h_px": 10
+    },
+    {
+     "area_px": 106,
+     "yaw_deg": 140.1,
+     "pitch_deg": -64.6,
+     "w_px": 15,
+     "h_px": 9
+    },
+    {
+     "area_px": 98,
+     "yaw_deg": 151.8,
+     "pitch_deg": -51.2,
+     "w_px": 17,
+     "h_px": 10
+    }
+   ],
+   "looked_at": "parkland; a few leaf-litter specks",
+   "pillar_box": false
+  },
+  "greenwich_park_03": {
+   "source_px": [
+    8192,
+    4096
+   ],
+   "blobs_ge_80px": 0,
+   "largest": [],
+   "looked_at": "parkland; no red",
+   "pillar_box": false
+  },
+  "leadenhall_market": {
+   "source_px": [
+    8192,
+    4096
+   ],
+   "blobs_ge_80px": 207,
+   "largest": [
+    {
+     "area_px": 13278,
+     "yaw_deg": 45.1,
+     "pitch_deg": 25.1,
+     "w_px": 391,
+     "h_px": 183
+    },
+    {
+     "area_px": 11249,
+     "yaw_deg": 297.2,
+     "pitch_deg": 32.5,
+     "w_px": 830,
+     "h_px": 235
+    },
+    {
+     "area_px": 9252,
+     "yaw_deg": 227.5,
+     "pitch_deg": 28.1,
+     "w_px": 302,
+     "h_px": 142
+    },
+    {
+     "area_px": 8467,
+     "yaw_deg": 317.5,
+     "pitch_deg": -11.2,
+     "w_px": 402,
+     "h_px": 84
+    },
+    {
+     "area_px": 6008,
+     "yaw_deg": 77.2,
+     "pitch_deg": 26.4,
+     "w_px": 197,
+     "h_px": 139
+    },
+    {
+     "area_px": 5857,
+     "yaw_deg": 288.6,
+     "pitch_deg": 34.9,
+     "w_px": 195,
+     "h_px": 62
+    }
+   ],
+   "looked_at": "hundreds of blobs: painted shopfronts and awnings of a covered market; the street furniture is bins and bollards; no post box",
+   "pillar_box": false
+  },
+  "limehouse": {
+   "source_px": [
+    8192,
+    4096
+   ],
+   "blobs_ge_80px": 58,
+   "largest": [
+    {
+     "area_px": 1040,
+     "yaw_deg": 258.8,
+     "pitch_deg": -2.6,
+     "w_px": 70,
+     "h_px": 16
+    },
+    {
+     "area_px": 1020,
+     "yaw_deg": 258.8,
+     "pitch_deg": -6.1,
+     "w_px": 69,
+     "h_px": 17
+    },
+    {
+     "area_px": 998,
+     "yaw_deg": 258.8,
+     "pitch_deg": -9.5,
+     "w_px": 69,
+     "h_px": 18
+    },
+    {
+     "area_px": 982,
+     "yaw_deg": 258.8,
+     "pitch_deg": 0.9,
+     "w_px": 69,
+     "h_px": 16
+    },
+    {
+     "area_px": 802,
+     "yaw_deg": 262.1,
+     "pitch_deg": -11.2,
+     "w_px": 54,
+     "h_px": 17
+    },
+    {
+     "area_px": 797,
+     "yaw_deg": 259.5,
+     "pitch_deg": -12.9,
+     "w_px": 54,
+     "h_px": 17
+    }
+   ],
+   "looked_at": "blobs are brick courses and a red brick corner; boats and bollards; no post box",
+   "pillar_box": false
+  },
+  "roof_garden": {
+   "source_px": [
+    8192,
+    4096
+   ],
+   "blobs_ge_80px": 1,
+   "largest": [
+    {
+     "area_px": 113,
+     "yaw_deg": 91.6,
+     "pitch_deg": 11.1,
+     "w_px": 12,
+     "h_px": 17
+    }
+   ],
+   "looked_at": "one tiny blob; a rooftop garden",
+   "pillar_box": false
+  },
+  "urban_street_01": {
+   "source_px": [
+    8192,
+    4096
+   ],
+   "blobs_ge_80px": 11,
+   "largest": [
+    {
+     "area_px": 397,
+     "yaw_deg": 281.9,
+     "pitch_deg": -4.6,
+     "w_px": 47,
+     "h_px": 20
+    },
+    {
+     "area_px": 277,
+     "yaw_deg": 35.8,
+     "pitch_deg": -33.1,
+     "w_px": 30,
+     "h_px": 14
+    },
+    {
+     "area_px": 174,
+     "yaw_deg": 280.3,
+     "pitch_deg": 1.5,
+     "w_px": 10,
+     "h_px": 29
+    },
+    {
+     "area_px": 161,
+     "yaw_deg": 21.2,
+     "pitch_deg": -31.1,
+     "w_px": 19,
+     "h_px": 16
+    },
+    {
+     "area_px": 126,
+     "yaw_deg": 324.2,
+     "pitch_deg": -4.2,
+     "w_px": 16,
+     "h_px": 18
+    },
+    {
+     "area_px": 114,
+     "yaw_deg": 29.0,
+     "pitch_deg": -32.2,
+     "w_px": 15,
+     "h_px": 12
+    }
+   ],
+   "looked_at": "blobs are the tail lights of parked cars and a red-brick building; blue notice boards, bollards; no post box",
+   "pillar_box": false
+  },
+  "urban_street_02": {
+   "source_px": [
+    8192,
+    4096
+   ],
+   "blobs_ge_80px": 7,
+   "largest": [
+    {
+     "area_px": 1463,
+     "yaw_deg": 79.8,
+     "pitch_deg": 7.6,
+     "w_px": 49,
+     "h_px": 48
+    },
+    {
+     "area_px": 489,
+     "yaw_deg": 139.8,
+     "pitch_deg": -4.5,
+     "w_px": 9,
+     "h_px": 67
+    },
+    {
+     "area_px": 156,
+     "yaw_deg": 138.4,
+     "pitch_deg": -2.2,
+     "w_px": 8,
+     "h_px": 25
+    },
+    {
+     "area_px": 145,
+     "yaw_deg": 172.7,
+     "pitch_deg": 12.0,
+     "w_px": 14,
+     "h_px": 16
+    },
+    {
+     "area_px": 128,
+     "yaw_deg": 172.8,
+     "pitch_deg": 13.5,
+     "w_px": 14,
+     "h_px": 15
+    },
+    {
+     "area_px": 115,
+     "yaw_deg": 29.9,
+     "pitch_deg": 21.0,
+     "w_px": 25,
+     "h_px": 9
+    }
+   ],
+   "looked_at": "blobs are a purple wheelie bin (hue near red), brick, orange barrier panels behind railings; no post box",
+   "pillar_box": false
+  },
+  "urban_street_03": {
+   "source_px": [
+    8192,
+    4096
+   ],
+   "blobs_ge_80px": 6,
+   "largest": [
+    {
+     "area_px": 1339,
+     "yaw_deg": 128.6,
+     "pitch_deg": -15.9,
+     "w_px": 63,
+     "h_px": 25
+    },
+    {
+     "area_px": 819,
+     "yaw_deg": 123.9,
+     "pitch_deg": -15.4,
+     "w_px": 42,
+     "h_px": 28
+    },
+    {
+     "area_px": 338,
+     "yaw_deg": 21.4,
+     "pitch_deg": -4.1,
+     "w_px": 28,
+     "h_px": 21
+    },
+    {
+     "area_px": 181,
+     "yaw_deg": 164.0,
+     "pitch_deg": -2.9,
+     "w_px": 14,
+     "h_px": 23
+    },
+    {
+     "area_px": 100,
+     "yaw_deg": 165.2,
+     "pitch_deg": -4.4,
+     "w_px": 11,
+     "h_px": 14
+    },
+    {
+     "area_px": 95,
+     "yaw_deg": 116.2,
+     "pitch_deg": -12.9,
+     "w_px": 10,
+     "h_px": 15
+    }
+   ],
+   "looked_at": "blobs are the tail lights of two parked estate cars and a garden wall; a terraced street with no post box in eight views",
+   "pillar_box": false
+  },
+  "urban_street_04": {
+   "source_px": [
+    8192,
+    4096
+   ],
+   "blobs_ge_80px": 0,
+   "largest": [],
+   "looked_at": "no red blobs; a stucco terrace in Notting Hill with no post box in eight views",
+   "pillar_box": false
+  }
+ },
+ "pillar_box_found": false
+}

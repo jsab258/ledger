@@ -1,0 +1,285 @@
+{
+ "P1": {
+  "photo": "P1rot",
+  "gid": "3671864",
+  "size": [
+   480,
+   640
+  ],
+  "object_box": [
+   70,
+   36,
+   436,
+   640
+  ],
+  "rotated": {
+   "deg": 2.6,
+   "centre": [
+    265,
+    335
+   ]
+  },
+  "features": {
+   "left_top": {
+    "px": 70.43,
+    "contrast": 19.8,
+    "spread": 0.11,
+    "id": "left_top",
+    "axis": "x",
+    "band": [
+     100,
+     140
+    ],
+    "win": [
+     62,
+     80
+    ],
+    "pol": "-"
+   },
+   "left_bot": {
+    "px": 68.25,
+    "contrast": 21.3,
+    "spread": 0.14,
+    "id": "left_bot",
+    "axis": "x",
+    "band": [
+     500,
+     540
+    ],
+    "win": [
+     62,
+     78
+    ],
+    "pol": "-"
+   },
+   "right_top": {
+    "px": 435.88,
+    "contrast": 14.2,
+    "spread": 0.14,
+    "id": "right_top",
+    "axis": "x",
+    "band": [
+     100,
+     140
+    ],
+    "win": [
+     430,
+     439
+    ],
+    "pol": "-"
+   },
+   "right_bot": {
+    "px": 437.67,
+    "contrast": 32.9,
+    "spread": 0.01,
+    "id": "right_bot",
+    "axis": "x",
+    "band": [
+     500,
+     540
+    ],
+    "win": [
+     430,
+     441
+    ],
+    "pol": "-"
+   },
+   "top_y": {
+    "px": 41.04,
+    "contrast": 42.0,
+    "spread": 1.11,
+    "id": "top_y",
+    "axis": "y",
+    "band": [
+     200,
+     300
+    ],
+    "win": [
+     30,
+     48
+    ],
+    "pol": "+"
+   },
+   "foot_left_y": {
+    "px": 633.34,
+    "contrast": 23.3,
+    "spread": 0.34,
+    "id": "foot_left_y",
+    "axis": "y",
+    "band": [
+     75,
+     115
+    ],
+    "win": [
+     620,
+     640
+    ],
+    "pol": "-"
+   },
+   "foot_right_y": {
+    "px": 629.15,
+    "contrast": 24.2,
+    "spread": 1.33,
+    "id": "foot_right_y",
+    "axis": "y",
+    "band": [
+     385,
+     425
+    ],
+    "win": [
+     620,
+     640
+    ],
+    "pol": "-"
+   },
+   "arch_top_y": {
+    "px": 596.94,
+    "contrast": 40.5,
+    "spread": 0.36,
+    "id": "arch_top_y",
+    "axis": "y",
+    "band": [
+     200,
+     290
+    ],
+    "win": [
+     588,
+     606
+    ],
+    "pol": "-"
+   }
+  },
+  "arch_features": {
+   "arch_base_left_x": {
+    "px": 140.62,
+    "contrast": 34.2,
+    "spread": 1.07,
+    "id": "arch_base_left_x",
+    "axis": "x",
+    "band": [
+     620,
+     628
+    ],
+    "win": [
+     128,
+     152
+    ],
+    "pol": "any"
+   },
+   "arch_base_right_x": {
+    "px": 363.8,
+    "contrast": 28.2,
+    "spread": 0.8,
+    "id": "arch_base_right_x",
+    "axis": "x",
+    "band": [
+     620,
+     628
+    ],
+    "win": [
+     352,
+     378
+    ],
+    "pol": "any"
+   }
+  },
+  "page": {
+   "id": "3671864",
+   "title": "A sandwich board sign outside the...",
+   "author": "Walter Baxter cc-by-sa/2.0",
+   "licence": "http://creativecommons.org/licenses/by-sa/2.0/",
+   "taken": "2013-09-14",
+   "image": "https://s0.geograph.org.uk/geophotos/03/67/18/3671864_7ce86cf7.jpg",
+   "ok": true
+  }
+ },
+ "P2": {
+  "photo": "P2",
+  "gid": "6913397",
+  "size": [
+   1024,
+   690
+  ],
+  "object_box": [
+   484,
+   466,
+   560,
+   562
+  ],
+  "features": {
+   "left_x": {
+    "px": 490.35,
+    "contrast": 37.8,
+    "spread": 1.25,
+    "id": "left_x",
+    "axis": "x",
+    "band": [
+     500,
+     520
+    ],
+    "win": [
+     482,
+     500
+    ],
+    "pol": "+"
+   },
+   "right_x": {
+    "px": 550.96,
+    "contrast": 45.5,
+    "spread": 1.23,
+    "id": "right_x",
+    "axis": "x",
+    "band": [
+     500,
+     520
+    ],
+    "win": [
+     540,
+     560
+    ],
+    "pol": "-"
+   },
+   "top_y": {
+    "px": 468.01,
+    "contrast": 12.2,
+    "spread": 0.24,
+    "id": "top_y",
+    "axis": "y",
+    "band": [
+     505,
+     535
+    ],
+    "win": [
+     464,
+     471
+    ],
+    "pol": "+"
+   },
+   "bottom_y": {
+    "px": 559.26,
+    "contrast": 44.0,
+    "spread": 0.77,
+    "id": "bottom_y",
+    "axis": "y",
+    "band": [
+     505,
+     535
+    ],
+    "win": [
+     552,
+     566
+    ],
+    "pol": "-"
+   }
+  },
+  "page": {
+   "id": "6913397",
+   "title": "Waiting for customers, Beach Bus...",
+   "author": "Alan Murray-Rust",
+   "licence": "http://creativecommons.org/licenses/by-sa/2.0/",
+   "taken": "1978-08-04",
+   "image": "https://s0.geograph.org.uk/geophotos/06/91/33/6913397_07ea2c00.jpg",
+   "ok": true
+  }
+ }
+}

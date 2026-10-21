@@ -1,0 +1,2176 @@
+{
+ "version": 1,
+ "passed": 162,
+ "failed": [],
+ "total": 162,
+ "extras": {
+  "run": 12,
+  "not_passing": [
+   "B:pilaster base ogee against the drawing's rectangle (extra: the drawing ignores the taper of its own profile)",
+   "B:front: base ogee against the drawing's rectangle (extra: the drawing ignores the taper of its own profile)",
+   "B:front: cornice against the drawing's plain rectangle (extra: the rectangle ignores the mitred returns' profile)"
+  ]
+ },
+ "rows": [
+  {
+   "id": "A:pilaster plinth cap (plinth_cap_side)",
+   "ok": true,
+   "measured": {
+    "iou": 0.9969,
+    "mean_mm": 0.09,
+    "p95_mm": 0.25,
+    "max_mm": 0.71
+   },
+   "expected": {
+    "iou": 0.97,
+    "p95_mm": 2.0,
+    "max_mm": 6.0
+   },
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "A:pilaster plinth through the panel",
+   "ok": true,
+   "measured": {
+    "iou": 0.9995,
+    "mean_mm": 0.03,
+    "p95_mm": 0.25,
+    "max_mm": 0.75
+   },
+   "expected": {
+    "iou": 0.97,
+    "p95_mm": 2.0,
+    "max_mm": 6.0
+   },
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "A:pilaster base ogee",
+   "ok": true,
+   "measured": {
+    "iou": 0.9913,
+    "mean_mm": 0.02,
+    "p95_mm": 0.1,
+    "max_mm": 0.1
+   },
+   "expected": {
+    "iou": 0.97,
+    "p95_mm": 2.0,
+    "max_mm": 6.0
+   },
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "A:pilaster capital (capital_side)",
+   "ok": true,
+   "measured": {
+    "iou": 0.9998,
+    "mean_mm": 0.01,
+    "p95_mm": 0.0,
+    "max_mm": 1.0
+   },
+   "expected": {
+    "iou": 0.97,
+    "p95_mm": 2.0,
+    "max_mm": 6.0
+   },
+   "note": "the drawing's z is local from the neck (add 2540)",
+   "extra": false
+  },
+  {
+   "id": "A:pilaster shaft plan (shaft_panel_plan) front 45 mm",
+   "ok": true,
+   "measured": {
+    "iou": 0.9997,
+    "mean_mm": 0.0,
+    "p95_mm": 0.0,
+    "max_mm": 0.58
+   },
+   "expected": {
+    "iou": 0.97,
+    "p95_mm": 2.0,
+    "max_mm": 6.0
+   },
+   "note": "the target polygon cut at d 95: behind it is the core, a separate layer",
+   "extra": false
+  },
+  {
+   "id": "A:console side silhouette",
+   "ok": true,
+   "measured": {
+    "iou": 0.9992,
+    "mean_mm": 0.04,
+    "p95_mm": 0.25,
+    "max_mm": 0.25
+   },
+   "expected": {
+    "iou": 0.97,
+    "p95_mm": 2.0,
+    "max_mm": 6.0
+   },
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "A:fascia board section (with the bed mould)",
+   "ok": true,
+   "measured": {
+    "iou": 0.9995,
+    "mean_mm": 0.03,
+    "p95_mm": 0.25,
+    "max_mm": 0.71
+   },
+   "expected": {
+    "iou": 0.97,
+    "p95_mm": 2.0,
+    "max_mm": 6.0
+   },
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "A:cornice section (19 points)",
+   "ok": true,
+   "measured": {
+    "iou": 0.9965,
+    "mean_mm": 0.15,
+    "p95_mm": 0.25,
+    "max_mm": 0.9
+   },
+   "expected": {
+    "iou": 0.97,
+    "p95_mm": 2.0,
+    "max_mm": 6.0
+   },
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "A:sill section",
+   "ok": true,
+   "measured": {
+    "iou": 0.9963,
+    "mean_mm": 0.09,
+    "p95_mm": 0.25,
+    "max_mm": 0.71
+   },
+   "expected": {
+    "iou": 0.97,
+    "p95_mm": 2.0,
+    "max_mm": 6.0
+   },
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "A:stallriser frame section (through the end stile)",
+   "ok": true,
+   "measured": {
+    "iou": 0.9995,
+    "mean_mm": 0.03,
+    "p95_mm": 0.25,
+    "max_mm": 0.71
+   },
+   "expected": {
+    "iou": 0.97,
+    "p95_mm": 2.0,
+    "max_mm": 6.0
+   },
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "A:window mullion T1 plan",
+   "ok": true,
+   "measured": {
+    "iou": 0.9968,
+    "mean_mm": 0.06,
+    "p95_mm": 0.1,
+    "max_mm": 0.78
+   },
+   "expected": {
+    "iou": 0.97,
+    "p95_mm": 2.0,
+    "max_mm": 6.0
+   },
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "A:window jamb T1 plan",
+   "ok": true,
+   "measured": {
+    "iou": 0.9956,
+    "mean_mm": 0.07,
+    "p95_mm": 0.1,
+    "max_mm": 0.78
+   },
+   "expected": {
+    "iou": 0.97,
+    "p95_mm": 2.0,
+    "max_mm": 6.0
+   },
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "A:window toplight bar plan",
+   "ok": true,
+   "measured": {
+    "iou": 0.9909,
+    "mean_mm": 0.07,
+    "p95_mm": 0.28,
+    "max_mm": 0.78
+   },
+   "expected": {
+    "iou": 0.97,
+    "p95_mm": 2.0,
+    "max_mm": 6.0
+   },
+   "note": "compared from d 1: the bar's back is 1 off the wall (hidden), so that its back face is not coplanar with the transom's and the head's",
+   "extra": false
+  },
+  {
+   "id": "A:window transom T1",
+   "ok": true,
+   "measured": {
+    "iou": 0.9973,
+    "mean_mm": 0.06,
+    "p95_mm": 0.1,
+    "max_mm": 0.78
+   },
+   "expected": {
+    "iou": 0.97,
+    "p95_mm": 2.0,
+    "max_mm": 6.0
+   },
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "A:window head",
+   "ok": true,
+   "measured": {
+    "iou": 0.9996,
+    "mean_mm": 0.01,
+    "p95_mm": 0.0,
+    "max_mm": 0.76
+   },
+   "expected": {
+    "iou": 0.97,
+    "p95_mm": 2.0,
+    "max_mm": 6.0
+   },
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "A:window glazing bead ovolo (foot of light 1)",
+   "ok": true,
+   "measured": {
+    "iou": 0.9871,
+    "mean_mm": 0.04,
+    "p95_mm": 0.1,
+    "max_mm": 0.1
+   },
+   "expected": {
+    "iou": 0.97,
+    "p95_mm": 2.0,
+    "max_mm": 6.0
+   },
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "A:cornice plan, front run and mitred return (left end)",
+   "ok": true,
+   "measured": {
+    "iou": 0.9979,
+    "mean_mm": 0.13,
+    "p95_mm": 0.25,
+    "max_mm": 0.71
+   },
+   "expected": {
+    "iou": 0.97,
+    "p95_mm": 2.0,
+    "max_mm": 6.0
+   },
+   "note": "the neighbour's run is not in this model; compared from the party line to u 330",
+   "extra": false
+  },
+  {
+   "id": "COR-06 return left: Hausdorff to return_left_uz (section at d 0.5)",
+   "ok": true,
+   "measured": 1.061,
+   "expected": "<= 1.5",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "COR-06 return right: Hausdorff to return_right_uz (section at d 0.5)",
+   "ok": true,
+   "measured": 1.061,
+   "expected": "<= 1.5",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "B:pilaster elevation (panel), core and base ogee left out",
+   "ok": true,
+   "measured": {
+    "iou": 0.998,
+    "mean_mm": 0.27,
+    "p95_mm": 0.5,
+    "max_mm": 5.32
+   },
+   "expected": {
+    "iou": 0.97,
+    "p95_mm": 2.0,
+    "max_mm": 6.0
+   },
+   "note": "the core is the closing board behind the shaft, not drawn; the ogee is compared apart",
+   "extra": false
+  },
+  {
+   "id": "B:pilaster base ogee against the drawing's rectangle (extra: the drawing ignores the taper of its own profile)",
+   "ok": false,
+   "measured": {
+    "iou": 0.9305,
+    "mean_mm": 1.79,
+    "p95_mm": 11.6,
+    "max_mm": 14.71
+   },
+   "expected": {
+    "iou": 0.97,
+    "p95_mm": 2.0,
+    "max_mm": 6.0
+   },
+   "note": "",
+   "extra": true
+  },
+  {
+   "id": "B:front: both pilasters (core and base ogee left out; the shaft's foot behind the ogee filled)",
+   "ok": true,
+   "measured": {
+    "iou": 0.9969,
+    "mean_mm": 0.41,
+    "p95_mm": 1.0,
+    "max_mm": 5.66
+   },
+   "expected": {
+    "iou": 0.97,
+    "p95_mm": 2.0,
+    "max_mm": 6.0
+   },
+   "note": "the drawing's ogee is a plain 320 x 60 rectangle; its own profile (base_ogee) narrows to the shaft's width at the top: compared apart, below",
+   "extra": false
+  },
+  {
+   "id": "B:front: base ogee against the drawing's rectangle (extra: the drawing ignores the taper of its own profile)",
+   "ok": false,
+   "measured": {
+    "iou": 0.9152,
+    "mean_mm": 2.21,
+    "p95_mm": 12.0,
+    "max_mm": 15.3
+   },
+   "expected": {
+    "iou": 0.97,
+    "p95_mm": 2.0,
+    "max_mm": 6.0
+   },
+   "note": "",
+   "extra": true
+  },
+  {
+   "id": "B:front: consoles",
+   "ok": true,
+   "measured": {
+    "iou": 0.9902,
+    "mean_mm": 0.83,
+    "p95_mm": 1.0,
+    "max_mm": 1.41
+   },
+   "expected": {
+    "iou": 0.97,
+    "p95_mm": 2.0,
+    "max_mm": 6.0
+   },
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "B:front: console leaves",
+   "ok": true,
+   "measured": {
+    "iou": 0.978,
+    "mean_mm": 0.65,
+    "p95_mm": 1.0,
+    "max_mm": 1.41
+   },
+   "expected": {
+    "iou": 0.97,
+    "p95_mm": 2.0,
+    "max_mm": 6.0
+   },
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "B:front: fascia board",
+   "ok": true,
+   "measured": {
+    "iou": 0.9962,
+    "mean_mm": 0.95,
+    "p95_mm": 1.0,
+    "max_mm": 1.41
+   },
+   "expected": {
+    "iou": 0.97,
+    "p95_mm": 2.0,
+    "max_mm": 6.0
+   },
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "B:front: cornice (the run and the two mitred returns turned, from the target's profiles)",
+   "ok": true,
+   "measured": {
+    "iou": 0.9866,
+    "mean_mm": 0.99,
+    "p95_mm": 1.0,
+    "max_mm": 2.24
+   },
+   "expected": {
+    "iou": 0.97,
+    "p95_mm": 2.0,
+    "max_mm": 6.0
+   },
+   "note": "the front run fills the returns' drip-groove notch; the drawing's plain rectangle 54 to 5946 x 150 is not the target's own return profile (the wash and the cap step back toward the wall); compared against the returns",
+   "extra": false
+  },
+  {
+   "id": "B:front: cornice against the drawing's plain rectangle (extra: the rectangle ignores the mitred returns' profile)",
+   "ok": false,
+   "measured": {
+    "iou": 0.9837,
+    "mean_mm": 1.2,
+    "p95_mm": 1.0,
+    "max_mm": 21.95
+   },
+   "expected": {
+    "iou": 0.97,
+    "p95_mm": 2.0,
+    "max_mm": 6.0
+   },
+   "note": "",
+   "extra": true
+  },
+  {
+   "id": "B:front: sill",
+   "ok": true,
+   "measured": {
+    "iou": 0.9732,
+    "mean_mm": 1.01,
+    "p95_mm": 1.0,
+    "max_mm": 3.61
+   },
+   "expected": {
+    "iou": 0.97,
+    "p95_mm": 2.0,
+    "max_mm": 6.0
+   },
+   "note": "the sill stops 3 mm short of the plinth (the meets row); the drawing runs it to the plinth",
+   "extra": false
+  },
+  {
+   "id": "B:front: stallriser (plinth, rails, panels, muntins), between u 2380 and 5570",
+   "ok": true,
+   "measured": {
+    "iou": 0.9981,
+    "mean_mm": 0.43,
+    "p95_mm": 1.0,
+    "max_mm": 1.0
+   },
+   "expected": {
+    "iou": 0.97,
+    "p95_mm": 2.0,
+    "max_mm": 6.0
+   },
+   "note": "the drawing leaves the two 80 end stiles (u 2300 to 2380 and 5570 to 5650, z 120 to 525 beside the panels) undrawn; the build has them (the target's text: 80 stiles)",
+   "extra": false
+  },
+  {
+   "id": "B:front: window joinery (jambs, seat, mullions, transom, bars, head)",
+   "ok": true,
+   "measured": {
+    "iou": 0.984,
+    "mean_mm": 0.45,
+    "p95_mm": 1.0,
+    "max_mm": 1.41
+   },
+   "expected": {
+    "iou": 0.97,
+    "p95_mm": 2.0,
+    "max_mm": 6.0
+   },
+   "note": "compared from z 600: the jambs' feet go 12 into the sill",
+   "extra": false
+  },
+  {
+   "id": "B:front: window joinery and glass together fill the frame (no hole)",
+   "ok": true,
+   "measured": {
+    "iou": 0.9993,
+    "mean_mm": 0.5,
+    "p95_mm": 1.0,
+    "max_mm": 1.0
+   },
+   "expected": {
+    "iou": 0.97,
+    "p95_mm": 2.0,
+    "max_mm": 6.0
+   },
+   "note": "union of joinery, glass and beads against the drawing's window",
+   "extra": false
+  },
+  {
+   "id": "PIL-01 slot width (plinth in u)",
+   "ok": true,
+   "measured": 350.0,
+   "expected": 350.0,
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "PIL-02 plinth top z",
+   "ok": true,
+   "measured": 600.0,
+   "expected": 600.0,
+   "note": "tol 2.0",
+   "extra": false
+  },
+  {
+   "id": "PIL-03 plinth proud",
+   "ok": true,
+   "measured": 180.102,
+   "expected": 180.0,
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "PIL-04 shaft width",
+   "ok": true,
+   "measured": 290.0,
+   "expected": 290.0,
+   "note": "tol 1.5",
+   "extra": false
+  },
+  {
+   "id": "PIL-05 shaft proud",
+   "ok": true,
+   "measured": 140.0,
+   "expected": 140.0,
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "PIL-06 neck z (shaft top, capital foot)",
+   "ok": true,
+   "measured": [
+    2540.0,
+    2540.0
+   ],
+   "expected": [
+    2540.0,
+    2540.0
+   ],
+   "note": "tol 2.0",
+   "extra": false
+  },
+  {
+   "id": "PIL-07 capital top z",
+   "ok": true,
+   "measured": 2850.0,
+   "expected": 2850.0,
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "PIL-08 capital top size (u, d)",
+   "ok": true,
+   "measured": [
+    350.0,
+    175.0
+   ],
+   "expected": [
+    350.0,
+    175.0
+   ],
+   "note": "tol 3.5",
+   "extra": false
+  },
+  {
+   "id": "PIL-09 capital height",
+   "ok": true,
+   "measured": 310.0,
+   "expected": 310.0,
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "PIL-10 panelled shaft: stile, sunk, cove",
+   "ok": true,
+   "measured": [
+    44.75,
+    12.0,
+    10.0
+   ],
+   "expected": [
+    45.0,
+    12.0,
+    10.0
+   ],
+   "note": "stile 45; sunk field 12; the cove (the target's 'bead') 10 tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "PIL-10 rails: bottom rail top z, top rail foot z",
+   "ok": true,
+   "measured": [
+    740.0,
+    2430.0
+   ],
+   "expected": [
+    740.0,
+    2430.0
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "PIL-12 party-wall pair gap (plinth, cap, capital reach the party line)",
+   "ok": true,
+   "measured": -0.0,
+   "expected": 0.0,
+   "note": "tol 3.0",
+   "extra": false
+  },
+  {
+   "id": "PIL-13 downpipe chase: notch half-width 38 from d 50 (plinth, capital)",
+   "ok": true,
+   "measured": [
+    50.0,
+    38.0,
+    50.0,
+    38.0
+   ],
+   "expected": [
+    50.0,
+    38.0,
+    50.0,
+    38.0
+   ],
+   "note": "the chase 76 across is 38 on each of the two piers; the front stops at d 50 inside the notch tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "PIL-14 profile fit: capital_side (two-way Hausdorff)",
+   "ok": true,
+   "measured": 0.026,
+   "expected": "<= 1.5",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "PIL-14 profile fit: plinth cap (two-way Hausdorff)",
+   "ok": true,
+   "measured": 0.707,
+   "expected": "<= 1.5",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "PIL-14 profile fit: base ogee (two-way Hausdorff)",
+   "ok": true,
+   "measured": 0.0,
+   "expected": "<= 1.5",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "PIL-14 profile fit: plinth through the stile (u 44, beyond the chase)",
+   "ok": true,
+   "measured": 1.0,
+   "expected": "<= 1.5",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "PIL-14 profile fit: plinth through the panel (u 175)",
+   "ok": true,
+   "measured": 1.0,
+   "expected": "<= 1.5",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "PIL-15 relief beside the window jamb: shaft face minus jamb front",
+   "ok": true,
+   "measured": 45.0,
+   "expected": ">= 40.0",
+   "note": "shaft 140.0, jamb 95.0",
+   "extra": false
+  },
+  {
+   "id": "PIL-15 relief beside the shop-door and F1 frames (frames not built: the target's 100)",
+   "ok": true,
+   "measured": 40.0,
+   "expected": ">= 40.0",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "PIL-17 base ogee: proud of the shaft face, height, foot z",
+   "ok": true,
+   "measured": [
+    15.0,
+    60.0,
+    600.0
+   ],
+   "expected": [
+    15.0,
+    60.0,
+    600.0
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "PIL-17 base ogee returned to u 15 and 335",
+   "ok": true,
+   "measured": [
+    15.0,
+    335.0
+   ],
+   "expected": [
+    15.0,
+    335.0
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "CON-01 envelope (w, d, h)",
+   "ok": true,
+   "measured": [
+    240.0,
+    205.0,
+    550.0
+   ],
+   "expected": [
+    240.0,
+    205.0,
+    550.0
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "CON-02 centres (assembly)",
+   "ok": true,
+   "measured": [
+    175.0,
+    5825.0
+   ],
+   "expected": [
+    175.0,
+    5825.0
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "CON-04 top z",
+   "ok": true,
+   "measured": 3400.0,
+   "expected": 3400.0,
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "CON-03 foot on the capital: foot outside the capital's top (mm2), gap to the top",
+   "ok": true,
+   "measured": [
+    0.0,
+    0.0
+   ],
+   "expected": [
+    0.0,
+    0.0
+   ],
+   "note": "foot 240 x 172",
+   "extra": false
+  },
+  {
+   "id": "CON-05 silhouette: two-way Hausdorff",
+   "ok": true,
+   "measured": 0.01,
+   "expected": "<= 2.0",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "CON-06 leaf: relief, half width, z range (local)",
+   "ok": true,
+   "measured": [
+    12.0,
+    60.0,
+    150.0,
+    420.0
+   ],
+   "expected": [
+    12.0,
+    60.0,
+    150.0,
+    420.0
+   ],
+   "note": "the target says 12 at the rib and a rib 4 proud of the dome: built as dome 8 + rib 4 tol 1.5",
+   "extra": false
+  },
+  {
+   "id": "CON-07 volutes: front at the upper eye z 468, at the lower eye z 48; waist d and z; stem d at z 330; upper volute's top z",
+   "ok": true,
+   "measured": [
+    205.0,
+    184.0,
+    140.0,
+    140.0,
+    150.0,
+    513.0
+   ],
+   "expected": [
+    205.0,
+    184.0,
+    140.0,
+    140.0,
+    150.0,
+    513.0
+   ],
+   "note": "tol 1.5",
+   "extra": false
+  },
+  {
+   "id": "CON-07 cap block 205 deep at z 528 to 550",
+   "ok": true,
+   "measured": [
+    205.0,
+    205.0
+   ],
+   "expected": [
+    205.0,
+    205.0
+   ],
+   "note": "tol 1.5",
+   "extra": false
+  },
+  {
+   "id": "CON-07 upper volute: eye (d, z) and outer radius",
+   "ok": true,
+   "measured": [
+    159.973,
+    467.998,
+    44.979
+   ],
+   "expected": [
+    160.0,
+    468.0,
+    45.0
+   ],
+   "note": "least-squares circle through the outline's arc tol 2.0",
+   "extra": false
+  },
+  {
+   "id": "CON-07 lower volute: eye (d, z) and outer radius",
+   "ok": true,
+   "measured": [
+    157.935,
+    48.018,
+    26.006
+   ],
+   "expected": [
+    158.0,
+    48.0,
+    26.0
+   ],
+   "note": "least-squares circle through the outline's arc tol 2.0",
+   "extra": false
+  },
+  {
+   "id": "CON-08 grooves: the start 8 inside the outline, the width across the upper groove, the bosses across (upper, lower)",
+   "ok": true,
+   "measured": [
+    7.983,
+    5.0,
+    16.0,
+    16.0
+   ],
+   "expected": [
+    8.0,
+    5.0,
+    16.0,
+    16.0
+   ],
+   "note": "tol 0.6",
+   "extra": false
+  },
+  {
+   "id": "CON-08 groove depth 4 (empty at u 118, solid at u 115.5), boss 3 proud of the groove floor (top at u 119)",
+   "ok": true,
+   "measured": [
+    0.19,
+    1440.6,
+    1497.3,
+    true
+   ],
+   "expected": "~0, >= 0.85 x ref, true",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "CON-09 the front is at least 140 at every z (and the board's mould 132 and face 120 stand behind it)",
+   "ok": true,
+   "measured": 140.0038,
+   "expected": ">= 140.0",
+   "note": "least front 140.004",
+   "extra": false
+  },
+  {
+   "id": "FAS-01 board: u range, z range, face d",
+   "ok": true,
+   "measured": [
+    295.0,
+    5705.0,
+    2850.0,
+    3400.0,
+    120.0
+   ],
+   "expected": [
+    295.0,
+    5705.0,
+    2850.0,
+    3400.0,
+    120.0
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "FAS-02 foot on the abacus: overlap in u at each end",
+   "ok": true,
+   "measured": [
+    55.0,
+    55.0
+   ],
+   "expected": [
+    55.0,
+    55.0
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "FAS-03 bed mould: top z, front d",
+   "ok": true,
+   "measured": [
+    2890.0,
+    132.0
+   ],
+   "expected": [
+    2890.0,
+    132.0
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "COR-01 cornice: length, depth, height, z bottom",
+   "ok": true,
+   "measured": [
+    5892.0,
+    215.0,
+    150.0,
+    3400.0
+   ],
+   "expected": [
+    5892.0,
+    215.0,
+    150.0,
+    3400.0
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "COR-02 oversail: depth minus board face, minus console depth",
+   "ok": true,
+   "measured": [
+    95.0,
+    10.0
+   ],
+   "expected": [
+    95.0,
+    10.0
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "COR-03 soffit on the board and the consoles' tops (gaps)",
+   "ok": true,
+   "measured": [
+    0.0,
+    0.0
+   ],
+   "expected": [
+    0.0,
+    0.0
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "COR-04 profile: two-way Hausdorff",
+   "ok": true,
+   "measured": 0.707,
+   "expected": "<= 1.5",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "COR-05 nose line u range (the end faces at the nose); COR-06 the mitres meet the wall at u 269 and 5731 (vertices on the mitre lines)",
+   "ok": true,
+   "measured": [
+    54.0,
+    5946.0,
+    269.0,
+    5731.0
+   ],
+   "expected": [
+    54.0,
+    5946.0,
+    269.0,
+    5731.0
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "COR-06 plan: the mitre meets the wall at u 269 (left) and the nose at u 54 (area of the return, 23112.5 mm2)",
+   "ok": true,
+   "measured": [
+    -0.971
+   ],
+   "expected": [
+    0.0
+   ],
+   "note": "plan area of the left end up to u 330 against the rectangle (the union of the run and the return) tol 2000.0",
+   "extra": true
+  },
+  {
+   "id": "SIL-01 sill: z range, nose d",
+   "ok": true,
+   "measured": [
+    525.0,
+    600.0,
+    150.0
+   ],
+   "expected": [
+    525.0,
+    600.0,
+    150.0
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "SIL-02 profile: two-way Hausdorff",
+   "ok": true,
+   "measured": 0.707,
+   "expected": "<= 1.5",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "STA-01 stallriser: top z, face d (frame)",
+   "ok": true,
+   "measured": [
+    525.0,
+    125.0
+   ],
+   "expected": [
+    525.0,
+    125.0
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "STA-02 one panel per light of the window above (3)",
+   "ok": true,
+   "measured": 3,
+   "expected": 3,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "WIN-01 seat foot z",
+   "ok": true,
+   "measured": 600.0,
+   "expected": 600.0,
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "WIN-02 transom z range, head z range",
+   "ok": true,
+   "measured": [
+    2400.0,
+    2480.0,
+    2790.0,
+    2850.0
+   ],
+   "expected": [
+    2400.0,
+    2480.0,
+    2790.0,
+    2850.0
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "WIN-03 mullion: face, front d, in front of the glass (d 30)",
+   "ok": true,
+   "measured": [
+    70.0,
+    92.0,
+    62.0
+   ],
+   "expected": [
+    70.0,
+    92.0,
+    62.0
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "WIN-04 mullion centres from the frame's left edge (shops[].glazing_layout)",
+   "ok": true,
+   "measured": [
+    1121.7,
+    2228.3
+   ],
+   "expected": [
+    1121.7,
+    2228.3
+   ],
+   "note": "tol 3.0",
+   "extra": false
+  },
+  {
+   "id": "WIN-04 toplight bar centres",
+   "ok": true,
+   "measured": [
+    445.8,
+    855.5,
+    1265.2,
+    1675.0,
+    2084.8,
+    2494.5,
+    2904.2
+   ],
+   "expected": [
+    445.8,
+    855.5,
+    1265.2,
+    1675.0,
+    2084.8,
+    2494.5,
+    2904.2
+   ],
+   "note": "tol 3.0",
+   "extra": false
+  },
+  {
+   "id": "WIN-05 glass plane: back face d 30 (the drawing's glass is d 30 to 36)",
+   "ok": true,
+   "measured": [
+    30.0,
+    36.0
+   ],
+   "expected": [
+    30.0,
+    36.0
+   ],
+   "note": "the drawing puts the 6 mm pane at d 30 to 36 tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "WIN-06 frame length",
+   "ok": true,
+   "measured": 3350.0,
+   "expected": 3350.0,
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "ZON-01 zones fill the opening: side door + shop door + window = 5300",
+   "ok": true,
+   "measured": [
+    5300.0
+   ],
+   "expected": [
+    5300.0
+   ],
+   "note": "the clear opening left of the window is 1950.0 = 944 + 1006 = 1950 (the two doors' slots are left plain) tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "ZON-02 window length (default 3350)",
+   "ok": true,
+   "measured": 3350.0,
+   "expected": 3350.0,
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "ASM-ritas-door: opening left of the window (the side door's and the shop door's slots), window u range",
+   "ok": true,
+   "measured": [
+    350.0,
+    2300.0,
+    5650.0
+   ],
+   "expected": [
+    350.0,
+    2300.0,
+    5650.0
+   ],
+   "note": "the slots' inner boundary (u 1294) is the target's table: nothing is built there tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "ASM-ritas-x: street x of the window centre and the side door's centre (east parade: x = 21 - u/1000)",
+   "ok": true,
+   "measured": [
+    17.025,
+    20.178
+   ],
+   "expected": [
+    17.025,
+    20.178
+   ],
+   "note": "tol 0.005",
+   "extra": false
+  },
+  {
+   "id": "D:join plinth cap top / base ogee foot (z)",
+   "ok": true,
+   "measured": 0.0,
+   "expected": 0.0,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "D:join plinth cap top / shaft foot (z)",
+   "ok": true,
+   "measured": 0.0,
+   "expected": 0.0,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "D:join plinth body top / cap foot (z)",
+   "ok": true,
+   "measured": 0.0,
+   "expected": 0.0,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "D:join shaft top / capital foot (z)",
+   "ok": true,
+   "measured": 0.0,
+   "expected": 0.0,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "D:join core front / shaft back (d)",
+   "ok": true,
+   "measured": 0.0,
+   "expected": 0.0,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "D:join capital top / left console foot (z)",
+   "ok": true,
+   "measured": 0.0,
+   "expected": 0.0,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "D:join capital top / right console foot (z)",
+   "ok": true,
+   "measured": 0.0,
+   "expected": 0.0,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "D:join capital top / board foot (z)",
+   "ok": true,
+   "measured": 0.0,
+   "expected": 0.0,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "D:join left console inner side / board end (u)",
+   "ok": true,
+   "measured": 0.0,
+   "expected": 0.0,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "D:join board end / right console inner side (u)",
+   "ok": true,
+   "measured": 0.0,
+   "expected": 0.0,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "D:join board top / cornice soffit (z)",
+   "ok": true,
+   "measured": 0.0,
+   "expected": 0.0,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "D:join console top / cornice soffit (z)",
+   "ok": true,
+   "measured": 0.0,
+   "expected": 0.0,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "D:join stallriser top / sill underside (z)",
+   "ok": true,
+   "measured": 0.0,
+   "expected": 0.0,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "D:join sill top / window seat foot (z)",
+   "ok": true,
+   "measured": 0.0,
+   "expected": 0.0,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "D:join stallriser end / right plinth side (u)",
+   "ok": true,
+   "measured": 0.0,
+   "expected": 0.0,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "D:join sill end / right plinth side (u): the target's 3",
+   "ok": true,
+   "measured": 3.0,
+   "expected": 3.0,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "D:join window jamb outer / right core side (u)",
+   "ok": true,
+   "measured": 0.0,
+   "expected": 0.0,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "D:join window head top / board foot (z)",
+   "ok": true,
+   "measured": 0.0,
+   "expected": 0.0,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "D:join transom left end / left jamb inner face (u)",
+   "ok": true,
+   "measured": 0.0,
+   "expected": 0.0,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "D:join transom right end / right jamb inner face (u)",
+   "ok": true,
+   "measured": 0.0,
+   "expected": 0.0,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "D:join mullion foot / seat top (z)",
+   "ok": true,
+   "measured": 0.0,
+   "expected": 0.0,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "D:join mullion top / transom underside (z)",
+   "ok": true,
+   "measured": 0.0,
+   "expected": 0.0,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "D:join glass front / bead base (d)",
+   "ok": true,
+   "measured": 0.0,
+   "expected": 0.0,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "D:join stallriser left end / window left jamb outer face (u)",
+   "ok": true,
+   "measured": 0.0,
+   "expected": 0.0,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "E:pilaster size under 1 MB",
+   "ok": true,
+   "measured": 88180,
+   "expected": "< 1000000",
+   "note": "1762 triangles",
+   "extra": false
+  },
+  {
+   "id": "E:pilaster no textures, no images; a UV set on every mesh",
+   "ok": true,
+   "measured": {
+    "images": 0,
+    "textures": 0,
+    "uv": true
+   },
+   "expected": "none / none / true",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "MAT-01 pilaster: at most three plain PBR materials, paint + glass",
+   "ok": true,
+   "measured": [
+    "paint_oxblood"
+   ],
+   "expected": "<= 3",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "MAT-02 pilaster: paint_oxblood is the shop's paint (sRGB)",
+   "ok": true,
+   "measured": [
+    93.0,
+    46.0,
+    49.0
+   ],
+   "expected": [
+    93,
+    46,
+    49
+   ],
+   "note": "tol 2.0",
+   "extra": false
+  },
+  {
+   "id": "NO-01 pilaster: no lettering, maker's mark, text geometry",
+   "ok": true,
+   "measured": 7,
+   "expected": "0 text objects",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "E:pilaster normals written, every vertex",
+   "ok": true,
+   "measured": 2237,
+   "expected": "= positions",
+   "note": "",
+   "extra": true
+  },
+  {
+   "id": "E:console size under 1 MB",
+   "ok": true,
+   "measured": 199104,
+   "expected": "< 1000000",
+   "note": "5428 triangles",
+   "extra": false
+  },
+  {
+   "id": "E:console no textures, no images; a UV set on every mesh",
+   "ok": true,
+   "measured": {
+    "images": 0,
+    "textures": 0,
+    "uv": true
+   },
+   "expected": "none / none / true",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "MAT-01 console: at most three plain PBR materials, paint + glass",
+   "ok": true,
+   "measured": [
+    "paint_oxblood"
+   ],
+   "expected": "<= 3",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "MAT-02 console: paint_oxblood is the shop's paint (sRGB)",
+   "ok": true,
+   "measured": [
+    93.0,
+    46.0,
+    49.0
+   ],
+   "expected": [
+    93,
+    46,
+    49
+   ],
+   "note": "tol 2.0",
+   "extra": false
+  },
+  {
+   "id": "NO-01 console: no lettering, maker's mark, text geometry",
+   "ok": true,
+   "measured": 6,
+   "expected": "0 text objects",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "E:console normals written, every vertex",
+   "ok": true,
+   "measured": 5084,
+   "expected": "= positions",
+   "note": "",
+   "extra": true
+  },
+  {
+   "id": "E:fascia_board size under 1 MB",
+   "ok": true,
+   "measured": 5780,
+   "expected": "< 1000000",
+   "note": "76 triangles",
+   "extra": false
+  },
+  {
+   "id": "E:fascia_board no textures, no images; a UV set on every mesh",
+   "ok": true,
+   "measured": {
+    "images": 0,
+    "textures": 0,
+    "uv": true
+   },
+   "expected": "none / none / true",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "MAT-01 fascia_board: at most three plain PBR materials, paint + glass",
+   "ok": true,
+   "measured": [
+    "paint_oxblood"
+   ],
+   "expected": "<= 3",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "MAT-02 fascia_board: paint_oxblood is the shop's paint (sRGB)",
+   "ok": true,
+   "measured": [
+    93.0,
+    46.0,
+    49.0
+   ],
+   "expected": [
+    93,
+    46,
+    49
+   ],
+   "note": "tol 2.0",
+   "extra": false
+  },
+  {
+   "id": "NO-01 fascia_board: no lettering, maker's mark, text geometry",
+   "ok": true,
+   "measured": 1,
+   "expected": "0 text objects",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "E:fascia_board normals written, every vertex",
+   "ok": true,
+   "measured": 128,
+   "expected": "= positions",
+   "note": "",
+   "extra": true
+  },
+  {
+   "id": "E:cornice size under 1 MB",
+   "ok": true,
+   "measured": 19648,
+   "expected": "< 1000000",
+   "note": "328 triangles",
+   "extra": false
+  },
+  {
+   "id": "E:cornice no textures, no images; a UV set on every mesh",
+   "ok": true,
+   "measured": {
+    "images": 0,
+    "textures": 0,
+    "uv": true
+   },
+   "expected": "none / none / true",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "MAT-01 cornice: at most three plain PBR materials, paint + glass",
+   "ok": true,
+   "measured": [
+    "paint_oxblood"
+   ],
+   "expected": "<= 3",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "MAT-02 cornice: paint_oxblood is the shop's paint (sRGB)",
+   "ok": true,
+   "measured": [
+    93.0,
+    46.0,
+    49.0
+   ],
+   "expected": [
+    93,
+    46,
+    49
+   ],
+   "note": "tol 2.0",
+   "extra": false
+  },
+  {
+   "id": "NO-01 cornice: no lettering, maker's mark, text geometry",
+   "ok": true,
+   "measured": 1,
+   "expected": "0 text objects",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "E:cornice normals written, every vertex",
+   "ok": true,
+   "measured": 514,
+   "expected": "= positions",
+   "note": "",
+   "extra": true
+  },
+  {
+   "id": "E:sill size under 1 MB",
+   "ok": true,
+   "measured": 7736,
+   "expected": "< 1000000",
+   "note": "116 triangles",
+   "extra": false
+  },
+  {
+   "id": "E:sill no textures, no images; a UV set on every mesh",
+   "ok": true,
+   "measured": {
+    "images": 0,
+    "textures": 0,
+    "uv": true
+   },
+   "expected": "none / none / true",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "MAT-01 sill: at most three plain PBR materials, paint + glass",
+   "ok": true,
+   "measured": [
+    "paint_white_joinery"
+   ],
+   "expected": "<= 3",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "MAT-02 sill: paint_white_joinery is the shop's paint (sRGB)",
+   "ok": true,
+   "measured": [
+    226.0,
+    224.0,
+    214.0
+   ],
+   "expected": [
+    226,
+    224,
+    214
+   ],
+   "note": "tol 2.0",
+   "extra": false
+  },
+  {
+   "id": "NO-01 sill: no lettering, maker's mark, text geometry",
+   "ok": true,
+   "measured": 1,
+   "expected": "0 text objects",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "E:sill normals written, every vertex",
+   "ok": true,
+   "measured": 182,
+   "expected": "= positions",
+   "note": "",
+   "extra": true
+  },
+  {
+   "id": "E:stallriser size under 1 MB",
+   "ok": true,
+   "measured": 86768,
+   "expected": "< 1000000",
+   "note": "2620 triangles",
+   "extra": false
+  },
+  {
+   "id": "E:stallriser no textures, no images; a UV set on every mesh",
+   "ok": true,
+   "measured": {
+    "images": 0,
+    "textures": 0,
+    "uv": true
+   },
+   "expected": "none / none / true",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "MAT-01 stallriser: at most three plain PBR materials, paint + glass",
+   "ok": true,
+   "measured": [
+    "paint_oxblood"
+   ],
+   "expected": "<= 3",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "MAT-02 stallriser: paint_oxblood is the shop's paint (sRGB)",
+   "ok": true,
+   "measured": [
+    93.0,
+    46.0,
+    49.0
+   ],
+   "expected": [
+    93,
+    46,
+    49
+   ],
+   "note": "tol 2.0",
+   "extra": false
+  },
+  {
+   "id": "NO-01 stallriser: no lettering, maker's mark, text geometry",
+   "ok": true,
+   "measured": 1,
+   "expected": "0 text objects",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "E:stallriser normals written, every vertex",
+   "ok": true,
+   "measured": 2182,
+   "expected": "= positions",
+   "note": "",
+   "extra": true
+  },
+  {
+   "id": "E:window_frame size under 1 MB",
+   "ok": true,
+   "measured": 188636,
+   "expected": "< 1000000",
+   "note": "2756 triangles",
+   "extra": false
+  },
+  {
+   "id": "E:window_frame no textures, no images; a UV set on every mesh",
+   "ok": true,
+   "measured": {
+    "images": 0,
+    "textures": 0,
+    "uv": true
+   },
+   "expected": "none / none / true",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "MAT-01 window_frame: at most three plain PBR materials, paint + glass",
+   "ok": true,
+   "measured": [
+    "paint_white_joinery",
+    "glass"
+   ],
+   "expected": "<= 3",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "MAT-02 window_frame: paint_white_joinery is the shop's paint (sRGB)",
+   "ok": true,
+   "measured": [
+    226.0,
+    224.0,
+    214.0
+   ],
+   "expected": [
+    226,
+    224,
+    214
+   ],
+   "note": "tol 2.0",
+   "extra": false
+  },
+  {
+   "id": "NO-01 window_frame: no lettering, maker's mark, text geometry",
+   "ok": true,
+   "measured": 38,
+   "expected": "0 text objects",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "E:window_frame normals written, every vertex",
+   "ok": true,
+   "measured": 4534,
+   "expected": "= positions",
+   "note": "",
+   "extra": true
+  },
+  {
+   "id": "E:shopfront_ritas size under 1 MB",
+   "ok": true,
+   "measured": 875924,
+   "expected": "< 1000000",
+   "note": "20276 triangles",
+   "extra": false
+  },
+  {
+   "id": "E:shopfront_ritas no textures, no images; a UV set on every mesh",
+   "ok": true,
+   "measured": {
+    "images": 0,
+    "textures": 0,
+    "uv": true
+   },
+   "expected": "none / none / true",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "MAT-01 shopfront_ritas: at most three plain PBR materials, paint + glass",
+   "ok": true,
+   "measured": [
+    "paint_oxblood",
+    "paint_white_joinery",
+    "glass"
+   ],
+   "expected": "<= 3",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "MAT-02 shopfront_ritas: paint_oxblood is the shop's paint (sRGB)",
+   "ok": true,
+   "measured": [
+    93.0,
+    46.0,
+    49.0
+   ],
+   "expected": [
+    93,
+    46,
+    49
+   ],
+   "note": "tol 2.0",
+   "extra": false
+  },
+  {
+   "id": "MAT-02 shopfront_ritas: paint_white_joinery is the shop's paint (sRGB)",
+   "ok": true,
+   "measured": [
+    226.0,
+    224.0,
+    214.0
+   ],
+   "expected": [
+    226,
+    224,
+    214
+   ],
+   "note": "tol 2.0",
+   "extra": false
+  },
+  {
+   "id": "NO-01 shopfront_ritas: no lettering, maker's mark, text geometry",
+   "ok": true,
+   "measured": 68,
+   "expected": "0 text objects",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "E:shopfront_ritas normals written, every vertex",
+   "ok": true,
+   "measured": 22126,
+   "expected": "= positions",
+   "note": "",
+   "extra": true
+  },
+  {
+   "id": "E:pilaster every object a closed solid (each edge on two triangles)",
+   "ok": true,
+   "measured": [],
+   "expected": [],
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "E:console every object a closed solid (each edge on two triangles)",
+   "ok": true,
+   "measured": [],
+   "expected": [],
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "E:fascia_board every object a closed solid (each edge on two triangles)",
+   "ok": true,
+   "measured": [],
+   "expected": [],
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "E:cornice every object a closed solid (each edge on two triangles)",
+   "ok": true,
+   "measured": [],
+   "expected": [],
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "E:sill every object a closed solid (each edge on two triangles)",
+   "ok": true,
+   "measured": [],
+   "expected": [],
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "E:stallriser every object a closed solid (each edge on two triangles)",
+   "ok": true,
+   "measured": [],
+   "expected": [],
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "E:window_frame every object a closed solid (each edge on two triangles)",
+   "ok": true,
+   "measured": [],
+   "expected": [],
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "E:shopfront_ritas every object a closed solid (each edge on two triangles)",
+   "ok": true,
+   "measured": [],
+   "expected": [],
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "E:shopfront_ritas faces of different objects in one plane, facing the same way, overlapping > 1 mm2 (the hatching kind)",
+   "ok": true,
+   "measured": {
+    "count": 0,
+    "examples": []
+   },
+   "expected": 0,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "CLR-01 no solid overlaps except those enclosed (pairs tested: 54)",
+   "ok": true,
+   "measured": {
+    "unexplained": [],
+    "declared_enclosed": 28
+   },
+   "expected": "enclosed only",
+   "note": "bosses 0.4 into the groove floor; the die's tablet 0.5 into the die; the jambs' feet scribed 12 into the sill; the leaf 0.4 into the face; toplight bars 3 into the head; toplight bars 6 into the transom's top",
+   "extra": false
+  }
+ ],
+ "not_applicable": [
+  {
+   "id": "PIL-11",
+   "why": "the fluted pilaster is not built: Rita's pilaster is the panel variant"
+  },
+  {
+   "id": "PIL-16",
+   "why": "the render variant's stepped plinth is not built: Rita's is the panel variant"
+  },
+  {
+   "id": "STA-03",
+   "why": "tile courses: Rita's stallriser is the panel variant"
+  },
+  {
+   "id": "DOR-01..07",
+   "why": "the shop door is not in this unit (its slot is left plain)"
+  },
+  {
+   "id": "SID-01..04",
+   "why": "the side door slot is not in this unit (left plain)"
+  },
+  {
+   "id": "ALT-01..09",
+   "why": "Rita's has no shutter, aluminium refit, box sign, lobby or empty-unit alteration; ALT-08 is the newsagent's"
+  },
+  {
+   "id": "ASM-<other nine>",
+   "why": "only Rita's front is assembled; nothing is multiplied to other bays"
+  }
+ ],
+ "adaptations": [
+  "the sill is 3347 long (u 2300 to 5647): the target's text says 3430 (40 under each jamb), its meets row says the sill stops 3 short of the plinth, its drawing draws 3350",
+  "the glass is d 30 to 36 (the target's drawing); WIN-05 says d 30 (its back face)",
+  "CON-06 / the leaf: 'relief 12 at the rib' and 'a rib 4 proud of the dome' cannot both be 12 at the top: built as a dome of 8 and the rib 4 more",
+  "PIL-10: the target calls the sunk field's edge a quarter-round bead 10; its own plan polygon makes it a 10 cove (concave): built to the polygon",
+  "capital flare: the elevation draws straight sides (290 to 350) and the section a hollow front: built to both (width linear in z, depth the hollow)",
+  "the backing core (330 x 140) is built as the kit's: 95 deep (the window jamb's), from the shaft's party side to the slot's free edge, plinth top to neck; the party-side strip is left open for the downpipe",
+  "MAT-01 'at most three materials per piece': per part one or two; the assembly three (paint_oxblood, paint_white_joinery, glass)"
+ ],
+ "files": {
+  "pilaster": {
+   "bytes": 88180,
+   "triangles": 1762,
+   "materials": [
+    "paint_oxblood"
+   ]
+  },
+  "console": {
+   "bytes": 199104,
+   "triangles": 5428,
+   "materials": [
+    "paint_oxblood"
+   ]
+  },
+  "fascia_board": {
+   "bytes": 5780,
+   "triangles": 76,
+   "materials": [
+    "paint_oxblood"
+   ]
+  },
+  "cornice": {
+   "bytes": 19648,
+   "triangles": 328,
+   "materials": [
+    "paint_oxblood"
+   ]
+  },
+  "sill": {
+   "bytes": 7736,
+   "triangles": 116,
+   "materials": [
+    "paint_white_joinery"
+   ]
+  },
+  "stallriser": {
+   "bytes": 86768,
+   "triangles": 2620,
+   "materials": [
+    "paint_oxblood"
+   ]
+  },
+  "window_frame": {
+   "bytes": 188636,
+   "triangles": 2756,
+   "materials": [
+    "glass",
+    "paint_white_joinery"
+   ]
+  },
+  "shopfront_ritas": {
+   "bytes": 875924,
+   "triangles": 20276,
+   "materials": [
+    "glass",
+    "paint_oxblood",
+    "paint_white_joinery"
+   ]
+  }
+ }
+}
