@@ -17,7 +17,7 @@ Phase 0 done (production/audits/phase0-exit/BUNDLE.md).
 - [ ] 6 Frame rate (1.4): research note 1d.
 - [ ] 7 Walk and clothes (1.2). 8 Speech (1.3). 9 Close phase 1.
 
-STATE (21 Oct 18:20): Rita's front in the street, at its gate (hook by day passed; night glare set aside); item 6 route A built (glass baked, 15 windows), measured on tonight's package. Rest of 5 after Monday 14:00.
+STATE (21 Oct 21:15): Rita's front gated (4 day views pass; night set aside). Item 6: walk worst frame under 33.3 (glass baked, autosave in background, occlusion buffered); final package then P1's fresh review. Rest of 5 after Monday 14:00.
 
 ## Handovers
 

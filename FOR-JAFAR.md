@@ -54,8 +54,8 @@ No decision asked: these are for watching the street change.
 
 ## Builder, Wednesday 21 October
 
-**Failed:** lamp post C's rain staining read as grain after two tries; set aside, so the lamp is not done. Rita's front at night: her window's light burns the display's pale wall, a white vase and a jug to white, and close up her glossy goods show blocky marks (the cloud's low-quality texture files); both set aside after two tries. The command-line Claude's sign-in expired while the PC was off (Needs you 2).
+**Failed:** lamp post C's rain staining read as grain after two tries; set aside, so the lamp is not done. Rita's front at night: her window's light is far too strong for the goods, and close up her shiny goods show blocky marks from the cloud's texture files; both set aside after two tries. The command-line Claude's sign-in expired while the PC was off (Needs you 2).
 
-**Done:** items 1 to 4. Item 5's sample: Rita's whole front, display and room stand in the street; the hook camera by day, the pavement by day and the view from across the road passed fresh reviewers (the balls turned to face along the street, the window light kept off the joinery). Mickey's window reads TILL 3 A.M. Item 6 begun: the shop glass is baked once by day and once at night, so the game no longer re-photographs the street while you walk; tonight's package measures the walk's worst frame.
+**Done:** items 1 to 4. Item 5's sample: Rita's whole front, display and room stand in the street; four day views passed fresh reviewers. Item 6: the packaged walk's worst frame went from 63 ms to under 33.3 (30.8 and 32.8 on two walks), three causes found by measuring: the shop glass now baked, not re-photographed while you walk; the hourly autosave written in the background; the card's visibility results read up to two frames later. The final package is building for P1's fresh review.
 
-**Act on:** tomorrow morning's page: Rita's front and the weathered lamp, two taps.
+**Act on:** tomorrow morning's page: Rita's front and the lamp, two taps.

@@ -29,3 +29,6 @@ A fresh reviewer (Opus) judged each picture full size against the page rule (no 
 
 - The hook crops left the page (the street's stand-ins in front of her bay); the page says why.
 - The window filmed again from a framed camera (-PageAt rita-window@19.6@3.9@1.6@142.4@-3@60, people hidden), cut clear of the kiosk, the fascia's lettering and the fish shop's: her door with its OPEN card and hours, the window, its gilt words whole; the glass's slight steps named on the page.
+- Round 4's check (21:20): close. Trimmed: 50 px off the window view's left (a sign's cut letters inside the shop), 10 px off the lamp's (the fish fascia's cut letters). Named on the page: the stair-steps in the glass's reflection (plainly visible), the kiosk's sign reflected back to front, a pale streak under the hours, the bell's arm reading as a stray rod, the sill's streaky marble.
+- Round 5 (21:35): the lamp fit. The window view's trim cut the M of the door's hours, and the shop's inside sign sits over the same columns at the frame's edge, so the picture is now her window alone (the door left out); the kiosk's reflection named in both panes.
+- Round 6 (21:50): her window alone, FIT. Added in words: the steps along the ledge in the small panes above, the blank price tickets. Both pictures now fit; the page is ready for the morning.
