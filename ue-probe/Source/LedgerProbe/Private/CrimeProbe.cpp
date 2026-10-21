@@ -4487,6 +4487,26 @@ namespace
 			{
 				for (const TCHAR* Id : { TEXT("ron-whole"), TEXT("ron-boots"), TEXT("sheila-whole"), TEXT("sheila-handbag") }) { FPageShot S; S.Id = Id; Shots.Add(S); }
 			}
+			else if (Mode == TEXT("at") || Mode == TEXT("atnight"))
+			{
+				// ANY CAMERA BY NUMBERS (21 October 2026, a kit piece's close view for its gate and
+				// his page): -PageAt=id@x@z@eye@yaw@pitch@vfov/... in the scene file's frame.
+				FString AtArg;
+				FParse::Value(FCommandLine::Get(), TEXT("PageAt="), AtArg, false);
+				TArray<FString> Items;
+				AtArg.ParseIntoArray(Items, TEXT("/"));
+				for (const FString& It : Items)
+				{
+					TArray<FString> F;
+					It.ParseIntoArray(F, TEXT("@"));
+					if (F.Num() < 7) { continue; }
+					FPageShot S;
+					S.Id = F[0];
+					S.X = FCString::Atod(*F[1]); S.Z = FCString::Atod(*F[2]); S.Eye = FCString::Atod(*F[3]);
+					S.Yaw = FCString::Atod(*F[4]); S.Pitch = FCString::Atod(*F[5]); S.VFov = FCString::Atod(*F[6]);
+					Shots.Add(S);
+				}
+			}
 			else if (Mode == TEXT("shop") || Mode == TEXT("shopnight"))
 			{
 				// THE PAWNBROKER'S WINDOW FROM THE PAVEMENT (item 2a): 1.2 m out from the
@@ -4568,7 +4588,7 @@ namespace
 				}
 				Shots.Sort([](const FPageShot& A, const FPageShot& B) { return A.Id == TEXT("cam_hook") || (B.Id != TEXT("cam_hook") && A.Id < B.Id); });
 			}
-			if (Mode == TEXT("night") || Mode == TEXT("shopnight"))
+			if (Mode == TEXT("night") || Mode == TEXT("shopnight") || Mode == TEXT("atnight"))
 			{
 				// To ten at night, as Z would take him; the clock then lights the street for it.
 				GClock.JumpTo(GameTime(GNow.Day, 22, 0));
