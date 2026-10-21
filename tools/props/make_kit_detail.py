@@ -87,7 +87,7 @@ def make(name, src, out_dir=OUT, size=SIZE):
             "bytes": os.path.getsize(p) + os.path.getsize(pn)}
 
 
-def make_streaks(out_dir=OUT, size=SIZE, seed=1990, count=70):
+def make_streaks(out_dir=OUT, size=SIZE, seed=1990, count=22):
     """THE RAIN STREAKS (21 October 2026, his ruling: the lamp columns "weathered and a shade
     darker"): a tileable map of vertical runs, drawn here from numbers alone (no photograph): each
     run starts at a random height, is 2 to 9 px wide, fades as it falls and wanders a little; the
@@ -100,8 +100,8 @@ def make_streaks(out_dir=OUT, size=SIZE, seed=1990, count=70):
     for _ in range(count):
         x0 = rng.uniform(0, size)
         top = rng.uniform(0, size)
-        length = rng.uniform(0.25, 0.9) * size
-        width = rng.uniform(2.0, 9.0)
+        length = rng.uniform(0.35, 1.0) * size
+        width = rng.uniform(3.0, 16.0)   # try 2 (21 Oct): fewer, wider, more varied runs; 70 even ones read as grain
         strength = rng.uniform(0.35, 1.0)
         wander = rng.uniform(1.0, 6.0) * np.sin(ys / rng.uniform(30, 90) + rng.uniform(0, 6.3))
         d = (ys - top) % size                     # distance fallen below the run's top, wrapped

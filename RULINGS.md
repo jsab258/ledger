@@ -14,6 +14,7 @@ His binding rulings; the later stands; canon.md outranks them.
 - 4 Oct: The friends' build: his PC and own account, a shortcut, his key capped at five dollars an evening, no relay; the twenty basics; nothing a friend sees unfinished; Sheila's face whole when she talks; no debug text.
 - 29 Sep: No new systems until the slice is worth playing; what was ruled for after the route (townspeople, microphone, the ending's signs, regulars) and the sweep's larger items wait for a place in PLAN.md.
 - 13 Oct: RECIPE.md (repository root) is a notebook, not a project: no lesson we learn is lost, so that one day the process can make a whole AAA game. Every unit that finishes or is set aside adds a few lines to it in the same commit: what was made; the method in setting-free words; the tools; the target and the check; the cost in hours; what failed and why; the evidence file. Anything specific to 1990 or Meridian stays in data, never in the method. No separate recipe work, no recipe tests (CLAUDE.md carries the rule).
+- 21 Oct: This week: Rita's front as item 5's family sample, on his page; then items 6 to 9 in order. About a day and a half of work this week (to Thursday night or Friday morning); the rest carries to Monday after 14:00. The other families wait until he has judged Rita's sample.
 
 ## Sources, licences and money
 

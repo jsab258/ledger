@@ -1,0 +1,253 @@
+{
+ "what": "the glass panes taken out of ritas_front.glb (tools/art-recipes/front_for_game.py): each pane's box in the front's own frame (metres; x across from the viewer's left to right about the bay's middle; y = -(out from the wall face); z above the footway); the street recipe builds the street's own glass there (terrace-front.py CLOUD_FRONTS)",
+ "source": "production/assets/cloud-week/shop-windows/ritas_front.glb",
+ "panes": [
+  {
+   "name": "band_toplight_glass_0",
+   "min": [
+    -1.66,
+    -0.0357,
+    2.48
+   ],
+   "max": [
+    -1.3687,
+    -0.0303,
+    2.79
+   ]
+  },
+  {
+   "name": "band_toplight_glass_1",
+   "min": [
+    -1.3487,
+    -0.0357,
+    2.48
+   ],
+   "max": [
+    -1.0573,
+    -0.0303,
+    2.79
+   ]
+  },
+  {
+   "name": "band_toplight_glass_2",
+   "min": [
+    -1.0373,
+    -0.0357,
+    2.48
+   ],
+   "max": [
+    -0.746,
+    -0.0303,
+    2.79
+   ]
+  },
+  {
+   "name": "door_glass_0",
+   "min": [
+    -1.548,
+    -0.046,
+    0.863
+   ],
+   "max": [
+    -0.858,
+    -0.04,
+    1.417
+   ]
+  },
+  {
+   "name": "door_glass_1",
+   "min": [
+    -1.548,
+    -0.046,
+    1.429
+   ],
+   "max": [
+    -0.858,
+    -0.04,
+    1.981
+   ]
+  },
+  {
+   "name": "fanlight_glass",
+   "min": [
+    -1.658,
+    -0.0357,
+    2.127
+   ],
+   "max": [
+    -0.748,
+    -0.0303,
+    2.404
+   ]
+  },
+  {
+   "name": "glass_fanlight",
+   "min": [
+    -2.5826,
+    -0.0825,
+    2.1115
+   ],
+   "max": [
+    -1.7734,
+    -0.0795,
+    2.3907
+   ]
+  },
+  {
+   "name": "win_glass_lower_0",
+   "min": [
+    -0.66,
+    -0.036,
+    0.625
+   ],
+   "max": [
+    0.3947,
+    -0.03,
+    2.4
+   ]
+  },
+  {
+   "name": "win_glass_lower_1",
+   "min": [
+    0.4487,
+    -0.036,
+    0.625
+   ],
+   "max": [
+    1.5013,
+    -0.03,
+    2.4
+   ]
+  },
+  {
+   "name": "win_glass_lower_2",
+   "min": [
+    1.5553,
+    -0.036,
+    0.625
+   ],
+   "max": [
+    2.61,
+    -0.03,
+    2.4
+   ]
+  },
+  {
+   "name": "win_glass_top_0",
+   "min": [
+    -0.66,
+    -0.036,
+    2.48
+   ],
+   "max": [
+    -0.3191,
+    -0.03,
+    2.79
+   ]
+  },
+  {
+   "name": "win_glass_top_1",
+   "min": [
+    -0.2991,
+    -0.036,
+    2.48
+   ],
+   "max": [
+    0.0358,
+    -0.03,
+    2.79
+   ]
+  },
+  {
+   "name": "win_glass_top_2",
+   "min": [
+    0.0558,
+    -0.036,
+    2.48
+   ],
+   "max": [
+    0.3947,
+    -0.03,
+    2.79
+   ]
+  },
+  {
+   "name": "win_glass_top_3",
+   "min": [
+    0.4487,
+    -0.036,
+    2.48
+   ],
+   "max": [
+    0.7876,
+    -0.03,
+    2.79
+   ]
+  },
+  {
+   "name": "win_glass_top_4",
+   "min": [
+    0.8076,
+    -0.036,
+    2.48
+   ],
+   "max": [
+    1.1425,
+    -0.03,
+    2.79
+   ]
+  },
+  {
+   "name": "win_glass_top_5",
+   "min": [
+    1.1625,
+    -0.036,
+    2.48
+   ],
+   "max": [
+    1.5013,
+    -0.03,
+    2.79
+   ]
+  },
+  {
+   "name": "win_glass_top_6",
+   "min": [
+    1.5553,
+    -0.036,
+    2.48
+   ],
+   "max": [
+    1.8942,
+    -0.03,
+    2.79
+   ]
+  },
+  {
+   "name": "win_glass_top_7",
+   "min": [
+    1.9142,
+    -0.036,
+    2.48
+   ],
+   "max": [
+    2.2491,
+    -0.03,
+    2.79
+   ]
+  },
+  {
+   "name": "win_glass_top_8",
+   "min": [
+    2.2691,
+    -0.036,
+    2.48
+   ],
+   "max": [
+    2.61,
+    -0.03,
+    2.79
+   ]
+  }
+ ]
+}

@@ -36,7 +36,7 @@ PACKAGE = "/Game/Ledger/Kit"
 MASTERS = {"opaque": "M_LedgerKit", "translucent": "M_LedgerKitGlass"}
 PARAMS = ("BaseColor", "Roughness", "Metallic", "Specular", "EmissiveColor", "Opacity", "DetailSize",
           "DetailIntensity", "RoughDetail", "DirtHeight", "DirtStrength", "DirtColour", "StreakSize", "StreakLength",
-          "StreakStrength", "StreakColour", "TopStrength", "TopColour")
+          "StreakStrength", "StreakColour", "TopStrength", "TopColour", "StreakFall")
 
 
 def load_spec(path=SPEC):
@@ -109,6 +109,7 @@ NEUTRAL_TEX = "/Engine/EngineResources/WhiteSquareTexture.WhiteSquareTexture"
 # broken by the grunge. Every scalar defaults to off, so a kind without them is the flat colour.
 SCALARS = (("Roughness", 0.6), ("Metallic", 0.0), ("Specular", 0.5), ("DetailSize", 60.0),
            ("StreakSize", 30.0), ("StreakLength", 200.0), ("StreakStrength", 0.0), ("TopStrength", 0.0),
+           ("StreakFall", 250.0),
            ("DetailIntensity", 0.0), ("RoughDetail", 0.0), ("DirtHeight", 50.0), ("DirtStrength", 0.0))
 VECTORS = (("BaseColor", (0.5, 0.5, 0.5)), ("EmissiveColor", (0.0, 0.0, 0.0)), ("DirtColour", (0.45, 0.42, 0.38)),
            ("StreakColour", (0.6, 0.58, 0.55)), ("TopColour", (0.6, 0.68, 0.5)))
@@ -272,8 +273,28 @@ def _make_master(unreal, name, translucent):
         link(vz, "", vabs, "")
         vert = ex(unreal.MaterialExpressionOneMinus, -1300, 950)
         link(vabs, "", vert, "")
+        # TRY 2 (21 October, the close view's review: an even grain, no source): the streaks hang
+        # from the top of the piece, where the water comes off, strongest there and fading down
+        # StreakFall cm, a third of them left lower down.
+        mz = ex(unreal.MaterialExpressionComponentMask, -1550, 1150, r=False, g=False, b=True, a=False)
+        link(from_lb[0], "Max" if from_lb[1] == "Min" else from_lb[1], mz, "")
+        dtop = ex(unreal.MaterialExpressionSubtract, -1400, 1150)
+        link(mz, "", dtop, "A")
+        link(lz, "", dtop, "B")
+        dfall = ex(unreal.MaterialExpressionDivide, -1250, 1150)
+        link(dtop, "", dfall, "A")
+        link(P["StreakFall"], "", dfall, "B")
+        fall1 = ex(unreal.MaterialExpressionOneMinus, -1150, 1150)
+        link(dfall, "", fall1, "")
+        fall2 = ex(unreal.MaterialExpressionSaturate, -1050, 1150)
+        link(fall1, "", fall2, "")
+        fall3 = ex(unreal.MaterialExpressionLinearInterpolate, -950, 1150, const_a=0.33, const_b=1.0)
+        link(fall2, "", fall3, "Alpha")
+        st0 = ex(unreal.MaterialExpressionMultiply, -1250, 760)
+        link(sr, "", st0, "A")
+        link(fall3, "", st0, "B")
         st1 = ex(unreal.MaterialExpressionMultiply, -1150, 760)
-        link(sr, "", st1, "A")
+        link(st0, "", st1, "A")
         link(vert, "", st1, "B")
         st2 = ex(unreal.MaterialExpressionMultiply, -1000, 760)
         link(st1, "", st2, "A")
@@ -398,7 +419,7 @@ def kind_values(row):
     w = row.get("streaks") or {}
     if w:
         v.update({"StreakSize": w.get("size_cm", 30.0), "StreakLength": w.get("length_cm", 200.0),
-                  "StreakStrength": w.get("strength", 0.5)})
+                  "StreakStrength": w.get("strength", 0.5), "StreakFall": w.get("fall_cm", 250.0)})
         if "colour" in w:
             v["StreakColour"] = tuple(w["colour"])
     tp = row.get("top") or {}

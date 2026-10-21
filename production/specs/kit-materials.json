@@ -69,13 +69,14 @@
     ]
    },
    "streaks": {
-    "size_cm": 20,
-    "length_cm": 200,
-    "strength": 0.9,
+    "size_cm": 45,
+    "length_cm": 260,
+    "strength": 1.0,
+    "fall_cm": 260,
     "colour": [
-     0.45,
-     0.43,
-     0.4
+     0.4,
+     0.38,
+     0.35
     ]
    },
    "top": {
@@ -86,7 +87,7 @@
      0.45
     ]
    },
-   "weather_note": "21 October, his ruling (the page's answer): the columns stay concrete, but clean concrete looks cheap: weathered and a shade darker before it counts as done. Rain streaks down the vertical faces (a drawn map of runs, tools/props/make_kit_detail.py), a greenish growth on faces turned to the sky, and a stronger grime band at the foot; starting points judged in the camera."
+   "weather_note": "21 October, his ruling (the page's answer): the columns stay concrete, but clean concrete looks cheap: weathered and a shade darker before it counts as done. Rain streaks down the vertical faces (a drawn map of runs, tools/props/make_kit_detail.py), a greenish growth on faces turned to the sky, and a stronger grime band at the foot; starting points judged in the camera. Try 2 (the close view's review, 'an even grain like a timber pole'): 22 wider, varied runs hanging from the top of the piece and fading down 2.6 m."
   },
   "granite": {
    "master": "opaque",

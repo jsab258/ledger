@@ -17,7 +17,7 @@ Phase 0 done (production/audits/phase0-exit/BUNDLE.md).
 - [ ] 6 Frame rate (1.4): research note 1d.
 - [ ] 7 Walk and clothes (1.2). 8 Speech (1.3). 9 Close phase 1.
 
-STATE (21 Oct 15:10): 5: lamp post C gated (2 faults listed), its page up; master material made; found-list fixed; next Rita's front. 1.1 passed its gate 8 Oct; 1.3 blocked; 1.4 regressed 8 Oct (glass catch).
+STATE (21 Oct 16:00, his scope ruling): Rita's front as item 5's sample, then 6 to 9; the rest after Monday 14:00. 1.1 passed its gate 8 Oct; 1.3 blocked; 1.4 regressed 8 Oct (glass catch).
 
 ## Handovers
 
