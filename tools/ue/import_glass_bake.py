@@ -2,6 +2,7 @@
 tools/glass_bake.py, as a compressed cube the game only looks up.
 
     python tools/ue/import_glass_bake.py --selftest     # runs without Unreal
+    python tools/ue/import_glass_bake.py --check-fresh  # a pre-push check: fails while the bake is stale
 
 WHY IT EXISTS, 21 October 2026 (his order, item 6: the packaged build's worst frame at or under
 33.3 ms on the walk). Research note production/cloud-week/research/1d-shop-glass-without-frame-cost.md
@@ -72,6 +73,27 @@ def asset_name(mesh):
 def status_line(status, made, asked, seconds, notes):
     return ("glassBakeStatus=%s glassBakeImported=%d/%d glassBakeSeconds=%.1f glassBakeNote=%s"
             % (status, made, asked, seconds, ("/".join(notes) or "none").replace(" ", "~")[:220]))
+
+
+def check_fresh(root=None, bake_root=None):
+    """THE STALE BAKE STOPPED AT THE PUSH (21 October, P1's fresh review: "a stale bake does not fail
+    the build; the game silently catches live again", and the build machine's import step is made
+    never to fail). Run by tools/ci-checks.sh before every push: fails while the bake on this PC was
+    made from other files than the checkout's, naming them, so a street, look or shop change cannot
+    reach the build machine without its bake (python tools/glass_bake.py). A PC with no bake passes,
+    saying so."""
+    root = root or repo_root()
+    man_path = os.path.join(bake_root or BAKE_ROOT, "manifest.json")
+    if not os.path.isfile(man_path):
+        print("glassBakeFresh=NO-BAKE (none at %s; the game catches the glass live)" % (bake_root or BAKE_ROOT))
+        return 0
+    man = json.load(open(man_path, encoding="utf-8"))
+    diff = changed(man.get("stamp", {}), stamp(root))
+    if diff:
+        print("glassBakeFresh=STALE changed=%s: run python tools/glass_bake.py, then import it" % ",".join(diff))
+        return 1
+    print("glassBakeFresh=OK made=%s windows=%d" % (man.get("made"), len(man.get("windows", []))))
+    return 0
 
 
 def main():
@@ -160,6 +182,13 @@ def selftest():
        ("production/assets/street/quay-street.json", "production/specs/unreal-look.json")))
     src = open(os.path.join(repo_root(), "ue-probe", "Source", "LedgerProbe", "Private", "VignetteShot.cpp"), encoding="utf-8").read()
     ok("the game looks under the same package", "/Game/Ledger/GlassBake/%s/TC_%s.TC_%s" in src and PACKAGE == "/Game/Ledger/GlassBake")
+    bk = tempfile.mkdtemp()
+    ok("a PC with no bake passes the push check", check_fresh(d, bk) == 0)
+    json.dump({"stamp": stamp(d, STAMPED)}, open(os.path.join(bk, "manifest.json"), "w"))
+    ok("a bake made from these files passes", check_fresh(d, bk) == 0)
+    os.makedirs(os.path.join(d, "production", "assets", "street"), exist_ok=True)
+    open(os.path.join(d, "production", "assets", "street", "quay-street.json"), "w").write("{}")
+    ok("a street exported after its bake fails the push check", check_fresh(d, bk) == 1)
     print("import_glass_bake selftest: passed=%d/%d failed=%d" % (passed, passed + failed, failed))
     return 1 if failed else 0
 
@@ -167,4 +196,6 @@ def selftest():
 if __name__ == "__main__":
     if "--selftest" in sys.argv:
         sys.exit(selftest())
+    if "--check-fresh" in sys.argv:
+        sys.exit(check_fresh())
     sys.exit(main())

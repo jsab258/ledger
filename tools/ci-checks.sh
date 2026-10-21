@@ -200,6 +200,8 @@ real_table() {
     sky-longlat-selftest  "$REPO"                 "$PY tools/hdr-to-longlat.py --selftest" \
     facade-drawing-selftest "$REPO"               "$PY tools/facade-drawing.py --selftest" \
     slice-perf-selftest   "$REPO"                 "$PY tools/slice-perf.py --selftest" \
+    glass-bake-fresh      "$REPO"                 "$PY tools/ue/import_glass_bake.py --check-fresh" \
+    glass-bake-selftest   "$REPO"                 "$PY tools/ue/import_glass_bake.py --selftest" \
     retention-selftest    "$REPO"                 "$PY tools/retention.py --selftest" \
     core-tests            "$REPO"                 "dotnet run --project ledger/CoreTests -c Release" \
     talk-tests            "$REPO"                 "dotnet run --project ledger/TalkTests -c Release" \

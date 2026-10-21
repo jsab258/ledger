@@ -93,6 +93,9 @@ def summarise(header, body, label=""):
     verdict = None
     if f50 is not None and f1 is not None:
         verdict = "MEETS" if f50 <= 16.7 and f1 <= 33.3 else ("BELOW-60" if f1 <= 33.3 else "BELOW-30")
+        # NEVER BELOW 30 IS EVERY FRAME (21 October, P1's fresh review): a MEETS with a frame over 33.3 ms is SPIKES.
+        if verdict == "MEETS" and frame and max(frame) > 33.3:
+            verdict = "SPIKES"
     return {
         "label": label, "frames": len(frame),
         "frameMedianMs": f50, "frameSlowest1pctMs": round(f1, 2) if f1 is not None else None,

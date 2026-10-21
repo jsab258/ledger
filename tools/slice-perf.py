@@ -14,7 +14,9 @@ street is still loading in them.
 
 THE VERDICT, in the ruling's own terms: MEETS when the median frame is at or
 under 16.7 ms and the slowest 1% at or under 33.3 ms; BELOW-60 when the median
-is over 16.7 ms and the slowest 1% is not; BELOW-30 otherwise.
+is over 16.7 ms and the slowest 1% is not; BELOW-30 otherwise. AND NEVER BELOW 30
+MEANS EVERY FRAME (21 October, P1's fresh review: a slice with a 211.8 ms frame
+and 13 over 33.3 still read MEETS): a MEETS with any frame over 33.3 ms is SPIKES.
 """
 import csv
 import os
@@ -42,9 +44,9 @@ def pct(xs, p):
     return xs[min(len(xs) - 1, int(len(xs) * p))] if xs else 0.0
 
 
-def verdict(median, p99):
+def verdict(median, p99, worst=None):
     if median <= 16.7 and p99 <= 33.3:
-        return "MEETS"
+        return "SPIKES" if worst is not None and worst > 33.3 else "MEETS"
     if p99 <= 33.3:
         return "BELOW-60"
     return "BELOW-30"
@@ -68,7 +70,7 @@ def line(label, ft, gpu, mem):
     med, p99 = statistics.median(ft), pct(ft, 0.99)
     return ("slicePerf=%s status=%s frames=%d medianMs=%.2f p95Ms=%.2f p99Ms=%.2f worstMs=%.2f fps=%.1f "
             "gpuMedianMs=%s over16.7=%d over33.3=%d gpuMemMB=%s target=60fps-at-3440x1440/never-below-30"
-            % (label, verdict(med, p99), len(ft), med, pct(ft, 0.95), p99, max(ft), 1000.0 / med,
+            % (label, verdict(med, p99, max(ft)), len(ft), med, pct(ft, 0.95), p99, max(ft), 1000.0 / med,
                ("%.2f" % statistics.median(gpu)) if gpu else "absent",
                sum(1 for x in ft if x > 16.7), sum(1 for x in ft if x > 33.3),
                ("%.0f" % statistics.median(mem)) if mem else "absent"))
@@ -85,6 +87,8 @@ def selftest():
             bad += 1
             print("slice-perf selftest FAIL " + name)
     check("meets", verdict(11.8, 12.9) == "MEETS")
+    check("a single frame over 33.3 is SPIKES, not MEETS", verdict(11.8, 12.9, 211.8) == "SPIKES")
+    check("every frame under the bar still MEETS", verdict(11.8, 12.9, 20.1) == "MEETS")
     check("below 60", verdict(20.0, 30.0) == "BELOW-60")
     check("below 30", verdict(20.0, 40.0) == "BELOW-30")
     check("no frames says so", line("x", [], [], []) == "slicePerf=x status=NO-FRAMES")
