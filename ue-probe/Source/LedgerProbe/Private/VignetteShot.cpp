@@ -8366,8 +8366,14 @@ namespace
 	{
 		if (GKitSpecRead) { return; }
 		GKitSpecRead = true;
+		// Beside the look file (the street's repository root, the packaged copy's
+		// staged data), else beside the pieces file.
 		FString Contents;
-		const FString File = FPaths::Combine(FPaths::GetPath(GSpecPath), TEXT("kit-materials.json"));
+		FString File = FPaths::Combine(GStreetRepoRoot, TEXT("production/specs/kit-materials.json"));
+		if (GStreetRepoRoot.IsEmpty() || !FPaths::FileExists(File))
+		{
+			File = FPaths::Combine(FPaths::GetPath(GSpecPath), TEXT("kit-materials.json"));
+		}
 		if (!FFileHelper::LoadFileToString(Contents, *File))
 		{
 			UE_LOG(LogTemp, Display, TEXT("LedgerKit: no %s, the kit's lamps stay dark"), *File);

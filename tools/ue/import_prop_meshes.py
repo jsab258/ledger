@@ -3089,6 +3089,16 @@ def run_in_unreal():
         if is_kit(asset_id):
             kd, ka, ks, ku = _kit_slots(unreal, mesh, report)
             report.append("kit-%s=dressed%d/%d,shadowsOff%d,unknown:%s" % (asset_id, kd, ka, ks, "|".join(ku) or "none"))
+            # NANITE OFF (21 October, measured): the importer leaves Nanite on, which draws a
+            # coarse stand-in and refuses the kit's translucent glass ("Invalid material
+            # [MI_Kit_bowl] used on Nanite static mesh"); the game draws no Nanite (nanite_audit.py).
+            try:
+                sys.path.insert(0, os.path.join(repo_root(), "tools", "ue"))
+                import import_vehicles
+                off = import_vehicles.nanite_off_and_rebuilt(unreal, mesh)
+            except Exception as e:
+                off = "refused-%s" % str(e).split("\n")[0][:40]
+            report.append("kit-%s-naniteOff=%s" % (asset_id, off))
         ok_save = False
         try:
             ok_save = bool(unreal.EditorAssetLibrary.save_asset(package_path(asset_id), False))
