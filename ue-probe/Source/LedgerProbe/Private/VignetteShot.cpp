@@ -130,6 +130,7 @@
 #include "Components/SkyLightComponent.h"
 #include "Components/SceneCaptureComponentCube.h"
 #include "Engine/TextureRenderTargetCube.h"
+#include "Engine/TextureCube.h"
 #include "UObject/StrongObjectPtr.h"
 #include "Components/SkyAtmosphereComponent.h"
 #include "GameFramework/PlayerController.h"
@@ -1073,6 +1074,32 @@ namespace
 		FString Mesh;
 	};
 	TArray<FGlassCatch> GGlassCatches;
+	// THE GLASS BAKED (21 October 2026, his order, item 6; production/cloud-week/research/
+	// 1d-shop-glass-without-frame-cost.md, route A): each window's street caught once per light at
+	// build time (-PageShots=bake -GlassBake=day|night, tools/glass_bake.py), imported as a
+	// compressed cube (/Game/Ledger/GlassBake/<light>/TC_<mesh>, tools/ue/import_glass_bake.py) and
+	// only looked up in play, so no catch runs while the player walks: a catch's Lumen passes were
+	// the slow frames (8 October: p99 46.8 ms with three windows at 1024). A window without both
+	// lights' bakes is caught live as before; -GlassCatchLive (and every bake run) catches all live.
+	struct FGlassBaked
+	{
+		TWeakObjectPtr<UMaterialInstanceDynamic> Mid;
+		TStrongObjectPtr<UTextureCube> Day, Night;
+		FString Mesh;
+	};
+	TArray<FGlassBaked> GGlassBaked;
+	int32 GGlassBakedMissing = 0;
+	bool GlassCatchLive()
+	{
+		static const bool bLive = FParse::Param(FCommandLine::Get(), TEXT("GlassCatchLive"))
+			|| FCString::Strifind(FCommandLine::Get(), TEXT("GlassBake=")) != nullptr;
+		return bLive;
+	}
+	UTextureCube* LoadGlassBake(const FString& Mesh, const TCHAR* Light)
+	{
+		const FString Path = FString::Printf(TEXT("/Game/Ledger/GlassBake/%s/TC_%s.TC_%s"), Light, *Mesh, *Mesh);
+		return LoadObject<UTextureCube>(nullptr, *Path, nullptr, LOAD_NoWarn | LOAD_Quiet);
+	}
 	// The light the street was last driven to, so a window made after it catches at its strength.
 	bool GGlassSunOn = true;
 	// GGlassCatchLeft: the windows still to catch in this round; GGlassCatchPass: the passes left
@@ -7105,6 +7132,25 @@ namespace
 		FVector N = bFacesX ? FVector(1.0, 0.0, 0.0) : FVector(0.0, 1.0, 0.0);
 		const FVector ToRoad = bFacesX ? FVector(RoadMid.X - Mid.X, 0.0, 0.0) : FVector(0.0, RoadMid.Y - Mid.Y, 0.0);
 		if (FVector::DotProduct(ToRoad, N) < 0.0) { N = -N; }
+		// BAKED, IF BOTH LIGHTS ARE (route A above): looked up, never caught in play.
+		if (!GlassCatchLive())
+		{
+			UTextureCube* Day = LoadGlassBake(Mesh, TEXT("day"));
+			UTextureCube* Night = LoadGlassBake(Mesh, TEXT("night"));
+			if (Day != nullptr && Night != nullptr)
+			{
+				G->SetTextureParameterValue(FName(TEXT("ReflectCube")), GGlassSunOn ? Day : Night);
+				const double BOpacity = FMath::Max(GLook.GlassOpacity, 0.01);
+				const double BStrength = (!GGlassSunOn && GLook.GlassCubeStrengthNight >= 0.0) ? GLook.GlassCubeStrengthNight : GLook.GlassCubeStrength;
+				G->SetScalarParameterValue(FName(TEXT("ReflectStrength")), (float)(BStrength / BOpacity));
+				FGlassBaked Gb;
+				Gb.Mid = G; Gb.Day.Reset(Day); Gb.Night.Reset(Night); Gb.Mesh = Mesh;
+				GGlassBaked.Add(MoveTemp(Gb));
+				UE_LOG(LogTemp, Display, TEXT("LedgerGlassCatch: %s baked (day and night cubes, %d a face), no catch in play"), *Mesh, Day->GetSizeX());
+				return;
+			}
+			++GGlassBakedMissing;
+		}
 		UTextureRenderTargetCube* Rt = NewObject<UTextureRenderTargetCube>(A);
 		if (Rt == nullptr) { return; }
 		Rt->bHDR = true;
@@ -7114,7 +7160,10 @@ namespace
 		Rt->ClearColor = FLinearColor::Black;
 		bool bHero = false;
 		for (const std::string& H : GLook.GlassCubeHeroes) { if (Mesh == UTF8_TO_TCHAR(H.c_str())) { bHero = true; } }
-		const int32 CubeSize = bHero && GLook.GlassCubeHeroSize > 0 ? GLook.GlassCubeHeroSize : GLook.GlassCubeSize;
+		int32 CubeSize = bHero && GLook.GlassCubeHeroSize > 0 ? GLook.GlassCubeHeroSize : GLook.GlassCubeSize;
+		// A BAKE IS FREE IN PLAY, so the other windows are baked at 512 (note 1d: "512 for the rest";
+		// the grazing panes of the reverse view are near-mirrors).
+		if (FCString::Strifind(FCommandLine::Get(), TEXT("GlassBake=")) != nullptr) { CubeSize = FMath::Max(CubeSize, 512); }
 		Rt->InitAutoFormat((uint32)CubeSize);
 		Rt->UpdateResourceImmediate(true);
 		G->SetTextureParameterValue(FName(TEXT("ReflectCube")), Rt);
@@ -7144,6 +7193,8 @@ namespace
 		if (GStreetLoaded == 0 || GBaseMaterial == nullptr) { return; }
 		GGlassMids.Reset();
 		GGlassCatches.Reset();
+		GGlassBaked.Reset();
+		GGlassBakedMissing = 0;
 		// The road's middle line, for which way each window faces: the street is laid along x about
 		// y = 0 (vignette-scene.json, the carriageway centred on z = 0). The asphalt mesh's own bounds
 		// were tried first and sat past the east frontage, turning the east side's captures inward.
@@ -7630,6 +7681,7 @@ namespace
 		AStaticMeshActor* A = World->SpawnActor<AStaticMeshActor>(AStaticMeshActor::StaticClass(), At, FRotator(0.0f, Side > 0 ? 180.0f : 0.0f, 0.0f), Params);
 		if (A == nullptr) { Note = TEXT("front-spawn-failed"); return nullptr; }
 		MakeMovable(A);
+		A->Tags.Add(FName(TEXT("LedgerShopFront")));   // kept out of the window light's channel (ApplyShopInteriors)
 		if (UStaticMeshComponent* C = A->GetStaticMeshComponent())
 		{
 			C->SetMobility(EComponentMobility::Movable);
@@ -7646,7 +7698,7 @@ namespace
 	// pavement"; Jafar: night has "pools of light with darkness between them,
 	// and lit windows"). A tube-white panel inside the window head, tipped down
 	// and out through the glass; switched with the night (ReDriveShopInteriors).
-	ARectLight* SpawnShopSpill(UWorld* World, const FBox& Card, double Side, double Lumens)
+	ARectLight* SpawnShopSpill(UWorld* World, const FBox& Card, double Side, double Lumens, const Value* Sh = nullptr)
 	{
 		if (World == nullptr || Lumens <= 0.0) { return nullptr; }
 		// In the window head, 12 cm in front of the room's card, at its top. It
@@ -7656,7 +7708,31 @@ namespace
 		// wet road then mirrored as a hard white bar (the fresh reviewer,
 		// 1 October). From a metre and a half inside, the transom shaded the
 		// pavement and the bars still glowed.
-		const FVector At((float)((Card.Min.X + Card.Max.X) * 0.5), (float)(Side > 0 ? Card.Min.Y - 12.0 : Card.Max.Y + 12.0), (float)(Card.Max.Z - 10.0));
+		FVector At((float)((Card.Min.X + Card.Max.X) * 0.5), (float)(Side > 0 ? Card.Min.Y - 12.0 : Card.Max.Y + 12.0), (float)(Card.Max.Z - 10.0));
+		// OR WHERE THE SHOP FILE PUTS IT (21 October, Rita's front; the gate's night reviewer: her window
+		// "blown to white" and the pavement in front darker than before): the cloud's display is a box
+		// with its own back, returns and head reaching the card, so the panel at the card's top lit
+		// the inside of that box from a few centimetres and the box shaded the street. "spill_y" (from
+		// the centreline, metres) and "spill_up" (above the crown) stand it in the window head just
+		// behind the glass instead, in front of the goods, as a shopfitter's head lamp is; "spill_x" and
+		// "spill_width" (metres) keep it over the window alone (try 2: at the card's width and middle its
+		// end stood against the window's return and burned it white).
+		double Width = FMath::Max(100.0, (Card.Max.X - Card.Min.X) * 0.7);
+		bool bShadows = true;
+		if (Sh != nullptr)
+		{
+			// "spill_shadows": false (21 October, the close night review: a blocky dark camouflage on the
+			// brass vase and the projector's side, a hand's breadth under the panel, where the display,
+			// one mesh of 189,000 triangles, shadowed itself in the light's coarse local shadow map).
+			const Value* Shd = Sh->Find("spill_shadows");
+			if (Shd != nullptr && Shd->Type == T_BOOL) { bShadows = Shd->Bool; }
+			const double Sy = LedgerStreet::NumOr(*Sh, "spill_y", -1.0), Su = LedgerStreet::NumOr(*Sh, "spill_up", -1.0);
+			const double Sx = LedgerStreet::NumOr(*Sh, "spill_x", -1.0), Sw = LedgerStreet::NumOr(*Sh, "spill_width", -1.0);
+			if (Sy > 0.0) { At.Y = (float)(Sy * 100.0 * Side); }
+			if (Su > 0.0) { At.Z = (float)(Su * 100.0); }
+			if (Sx > 0.0) { At.X = (float)(Sx * 100.0); }
+			if (Sw > 0.0) { Width = Sw * 100.0; }
+		}
 		double PitchDeg = -62.0;
 		FParse::Value(FCommandLine::Get(), TEXT("ShopSpillPitch="), PitchDeg);
 		const FRotator Aim((float)PitchDeg, Side > 0 ? -90.0f : 90.0f, 0.0f);
@@ -7671,11 +7747,11 @@ namespace
 			RC->SetWorldRotation(Aim);
 			RC->SetIntensityUnits(ELightUnits::Lumens);
 			RC->SetIntensity((float)Lumens);
-			RC->SetSourceWidth((float)FMath::Max(100.0, (Card.Max.X - Card.Min.X) * 0.7));
+			RC->SetSourceWidth((float)Width);
 			RC->SetSourceHeight(30.0f);
 			RC->SetAttenuationRadius(900.0f);
 			RC->SetLightColor(FLinearColor(1.0f, 0.93f, 0.80f));     // a T12 "white" tube, about 3500 K
-			RC->SetCastShadows(true);
+			RC->SetCastShadows(bShadows);
 			// Its emitter is a bar of light, and on the wet road its mirror image
 			// was a hard white bar under the window (cam_B, 1 October); the window
 			// itself already reflects there through Lumen.
@@ -7911,7 +7987,7 @@ namespace
 				FParse::Value(FCommandLine::Get(), TEXT("ShopSpillLumens="), SpillLumens);
 				if (Ir.bLitAtNight)
 				{
-					Ir.Spill = SpawnShopSpill(World, B, Side, SpillLumens);
+					Ir.Spill = SpawnShopSpill(World, B, Side, SpillLumens, &Sh);
 					if (Ir.Spill.IsValid()) { GInteriorActors.Add(Ir.Spill.Get()); }
 					// What the window's light may fall on: the ground and the display.
 					static const char* Ground[] = { "asphalt", "paving", "kerbstone", "standing_water", "standing_water_flags",
@@ -7928,6 +8004,9 @@ namespace
 					for (const TWeakObjectPtr<AActor>& W : GInteriorActors)
 					{
 						AStaticMeshActor* SA = Cast<AStaticMeshActor>(W.Get());
+						// Never a shop front (21 October, Rita's: its white bars a few centimetres from the
+						// panel burned as "neon strips", the fault of 1 October over again).
+						if (SA != nullptr && SA->ActorHasTag(FName(TEXT("LedgerShopFront")))) { continue; }
 						if (SA != nullptr && SA->GetStaticMeshComponent() != nullptr) { SA->GetStaticMeshComponent()->SetLightingChannels(true, true, false); }
 					}
 				}
@@ -7985,6 +8064,17 @@ namespace
 			Gc.Mid->SetScalarParameterValue(FName(TEXT("GlassSpecular")), (float)(Day * GLook.GlassCubeSpecular));
 			const double Strength = (!C.SunOn && GLook.GlassCubeStrengthNight >= 0.0) ? GLook.GlassCubeStrengthNight : GLook.GlassCubeStrength;
 			Gc.Mid->SetScalarParameterValue(FName(TEXT("ReflectStrength")), (float)(Strength / FMath::Max(GLook.GlassOpacity, 0.01)));
+		}
+		// The baked windows swap to this light's cube: no catch, no slow frame (route A).
+		for (const FGlassBaked& Gb : GGlassBaked)
+		{
+			if (!Gb.Mid.IsValid()) { continue; }
+			const double Day = C.SunOn ? 1.0 : GLook.GlassSpecularNight;
+			Gb.Mid->SetScalarParameterValue(FName(TEXT("GlassSpecular")), (float)(Day * GLook.GlassCubeSpecular));
+			const double Strength = (!C.SunOn && GLook.GlassCubeStrengthNight >= 0.0) ? GLook.GlassCubeStrengthNight : GLook.GlassCubeStrength;
+			Gb.Mid->SetScalarParameterValue(FName(TEXT("ReflectStrength")), (float)(Strength / FMath::Max(GLook.GlassOpacity, 0.01)));
+			UTextureCube* Cube = C.SunOn ? Gb.Day.Get() : Gb.Night.Get();
+			if (Cube != nullptr) { Gb.Mid->SetTextureParameterValue(FName(TEXT("ReflectCube")), Cube); }
 		}
 		GGlassCatchLeft = GGlassCatches.Num();   // each window in turn, its passes on consecutive frames
 		GGlassCatchNotBefore = FMath::Max(GGlassCatchNotBefore, FPlatformTime::Seconds() + 1.0);
@@ -9714,6 +9804,32 @@ namespace LedgerVignetteShot
 	}
 
 	int32 GlassCatchesLeft() { return GGlassCatchLeft > 0 ? GGlassCatchLeft : 0; }
+
+	int32 GlassBakedWindows() { return GGlassBaked.Num(); }
+
+	int32 DumpGlassCatches(const FString& Dir)
+	{
+		// THE BAKE'S PICTURES (21 October, route A): each caught window's cube as a long-lat HDR,
+		// 2N x N for an N cube, which the importer takes back as an N cube
+		// (TextureBuildUtilities.cpp ComputeLongLatCubemapExtents: width / 2).
+		int32 Wrote = 0;
+		IFileManager::Get().MakeDirectory(*Dir, true);
+		for (const FGlassCatch& Gc : GGlassCatches)
+		{
+			UTextureRenderTargetCube* Rt = Gc.Rt.Get();
+			if (Rt == nullptr) { continue; }
+			TArray<uint8> Bytes;
+			FMemoryWriter Ar(Bytes);
+			if (!FImageUtils::ExportRenderTargetCubeAsHDR(Rt, Ar)) { continue; }
+			const FString Path = Dir / (Gc.Mesh + TEXT(".hdr"));
+			if (FFileHelper::SaveArrayToFile(Bytes, *Path))
+			{
+				++Wrote;
+				UE_LOG(LogTemp, Display, TEXT("LedgerGlassBake: %s, cube %d, %d bytes"), *Path, Rt->SizeX, Bytes.Num());
+			}
+		}
+		return Wrote;
+	}
 
 	int32 SetShopRoomLit(const char* Shop, bool bLit)
 	{

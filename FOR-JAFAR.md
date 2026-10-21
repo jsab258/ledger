@@ -26,7 +26,7 @@ No decision asked: these are for watching the street change.
 - *Branches.* The cloud's week (pull request #3) and the lab merged into wip, no conflict that touched your rulings or canon; talk, art/atlas-01 (adopted on 6 October), the two claude/ branches, lab and the cloud branch archived as tags. GitHub now holds main and wip only.
 - *Rules and combat.* Your research-method and editor-tools rules are in CLAUDE.md as written (its word cap raised by them); your combat doc is game-design/combat-design.md, one word changed (a real knife brand made a utility knife, as canon asks).
 - *Editor connection.* Epic's plugin installed for the project; after your reload the session read the editor's level and its actors, closed it, nothing left behind. Done.
-- *The cloud's pieces, first piece.* Lamp post C stands at the four lamp spots with the kit's new shared materials and passed its gate; two small faults are set aside after two tries each (a hot stripe on each column under its own lamp at night; the tube inside the bowl from directly below). **Your page: https://claude.ai/artifact/R6mfWdCEKmuHBPD9q6JYJ3** (keep it and go on; concrete or black steel columns).
+- *The cloud's pieces.* Lamp post C stands at the four lamp spots and passed its gate; your answers read back: kept, concrete, "weathered and a shade darker before it counts as done". Darker and grimed at the foot passed; the rain staining read as grain after two tries and is set aside, so the lamp is not done yet (shown to you again with Rita's). Then your scope ruling: Rita's front as the family sample on your page, then items 6 to 9; the rest after Monday 14:00. Rita's front, display and room are in the street now, at the gate.
 
 **Risks, Monday's review (production/research/pre-production/6-RISKS.md).**
 - R3, the street missing the bar: up, 25. The audit finds the visual method unproved: five proof-view steps were set aside, and Mickey's room failed three reviews. Phase 1's binding stop answers it.
@@ -39,6 +39,8 @@ No decision asked: these are for watching the street change.
 
 1. Is "Help improve Claude" off in your claude.ai account? Your licence ruling of 3 October rests on it, and the Unreal editor connection now sends editor data. Recommended: check it once and say yes.
 2. The command-line Claude needs you to sign in again (it expired while the PC was off), or the night jobs that ask Claude keep failing. Recommended: in the Terminal, type claude, sign in once, then type /exit.
+3. Item 7 needs Epic's Game Animation Sample and the MetaHuman garments from Fab, which only your signed-in Epic launcher can fetch. Recommended: in the Epic Games Launcher, Fab library, create the Game Animation Sample project on F: and add the MetaHuman garments, then tell me.
+4. Item 8's Gemini test waits on your key in the file F:\LedgerTools\keys\google.txt (still empty; never in chat). Recommended: paste it there when convenient; Pocket TTS goes ahead meanwhile.
 
 ### Road to worth playing (PLAN.md)
 
@@ -52,8 +54,8 @@ No decision asked: these are for watching the street change.
 
 ## Builder, Wednesday 21 October
 
-**Failed:** two small faults of lamp post C, set aside after two tries each: at night each column's road face burns to a yellow stripe under its own lamp (leaning the light out cured it but left Mickey's window dark, so it was undone), and from directly below the tube inside the bowl reads as one pale rod. The command-line Claude's sign-in expired while the PC was off, so the night jobs that ask Claude fail (Needs you 2).
+**Failed:** lamp post C's rain staining read as grain after two tries; set aside, so the lamp is not done. Rita's front at night: her window's light burns the display's pale wall, a white vase and a jug to white, and close up her glossy goods show blocky marks (the cloud's low-quality texture files); both set aside after two tries. The command-line Claude's sign-in expired while the PC was off (Needs you 2).
 
-**Done:** your order's items 1 to 4: the health check, the branches home, your rules and combat doc in, Epic's editor connection working (its read-only test passed). Item 5 begun: the cloud's lamp post C stands at the four lamp spots with the kit's new shared materials (concrete grain from the street's own photograph), through its gate in three views; Mickey's window now reads TILL 3 A.M., the cast's hours.
+**Done:** items 1 to 4. Item 5's sample: Rita's whole front, display and room stand in the street; the hook camera by day, the pavement by day and the view from across the road passed fresh reviewers (the balls turned to face along the street, the window light kept off the joinery). Mickey's window reads TILL 3 A.M. Item 6 begun: the shop glass is baked once by day and once at night, so the game no longer re-photographs the street while you walk; tonight's package measures the walk's worst frame.
 
-**Act on:** your page for lamp post C, two taps: https://claude.ai/artifact/R6mfWdCEKmuHBPD9q6JYJ3
+**Act on:** tomorrow morning's page: Rita's front and the weathered lamp, two taps.

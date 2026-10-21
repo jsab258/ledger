@@ -4418,6 +4418,24 @@ if __name__ == "__main__":
                       encoding="utf-8") as _f:
                 _f.write("shopDisplaysImportStatus=RAISED shopDisplaysImportNote=%s\n"
                          % str(_disp_err).replace(" ", "~")[:160])
+    # ---- AND THE SHOP GLASS BAKED, 21 October 2026 (item 6; research note 1d, route A) ---
+    # tools/ue/import_glass_bake.py: each window's day and night street, baked by tools/glass_bake.py
+    # on F:, as compressed cubes the game only looks up; a stale bake is not imported.
+    if _inside_unreal():
+        try:
+            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+            import import_glass_bake
+            import_glass_bake.main()
+        except Exception as _bake_err:
+            try:
+                import unreal
+                _root = unreal.Paths.project_dir()
+            except Exception:
+                _root = "."
+            with open(os.path.join(_root, "ue-material.txt"), "a",
+                      encoding="utf-8") as _f:
+                _f.write("glassBakeStatus=RAISED glassBakeNote=%s\n"
+                         % str(_bake_err).replace(" ", "~")[:160])
     # tools/ue/import_shop_rooms.py: each shop's room as real geometry, its floor, ceiling,
     # walls and fittings apart (3 October; production/research/shop-window-interiors/
     # CLOSE-RANGE-2026-10-03.md), which the game stands behind the glass in place of the

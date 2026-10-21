@@ -99,7 +99,12 @@
     "up": 0.1,
     "note": "21 October 2026, his order (item 5) and his ruling of the day: the cloud's whole front for Rita's bay, made ready by tools/art-recipes/front_for_game.py (its glass is the street's, built by terrace-front.py CLOUD_FRONTS); its frame's origin is the bay's middle (street x 18) at its wall face (5.295 from the centreline) on the footway (0.10 above the crown)."
    },
-   "pictures_note": "21 October: the cloud's room, rebuilt on the PC at 128 samples (production/cloud-week/kit/shop-windows build_shop.py room), 4096 x 1855, on F:/LedgerTools/game-inputs (over git's 1 MB); the game's own 2048 pictures of 1 October (production/art/shop-rooms/pawnbroker_*) stay as they were."
+   "pictures_note": "21 October: the cloud's room, rebuilt on the PC at 128 samples (production/cloud-week/kit/shop-windows build_shop.py room), 4096 x 1855, on F:/LedgerTools/game-inputs (over git's 1 MB); the game's own 2048 pictures of 1 October (production/art/shop-rooms/pawnbroker_*) stay as they were.",
+   "spill_y": 5.33,
+   "spill_up": 2.42,
+   "spill_note": "21 October, the gate's night reviewer (Rita's window blown to white, the pavement darker): the window head just behind her glass (its back face 5.265, its head 2.50 above the crown), in front of the cloud's display, whose own back, returns and head reach the card where the panel used to stand; try 2 the same evening: over the window alone (its glass 15.39 to 18.66 along the street), 2.6 m wide, since at the card's 3.7 m about the card's middle (18.0) its end burned the window's left return white",
+   "spill_x": 17.03,
+   "spill_width": 2.6
   }
  ]
 }

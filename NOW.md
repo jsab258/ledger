@@ -17,7 +17,7 @@ Phase 0 done (production/audits/phase0-exit/BUNDLE.md).
 - [ ] 6 Frame rate (1.4): research note 1d.
 - [ ] 7 Walk and clothes (1.2). 8 Speech (1.3). 9 Close phase 1.
 
-STATE (21 Oct 16:00, his scope ruling): Rita's front as item 5's sample, then 6 to 9; the rest after Monday 14:00. 1.1 passed its gate 8 Oct; 1.3 blocked; 1.4 regressed 8 Oct (glass catch).
+STATE (21 Oct 18:20): Rita's front in the street, at its gate (hook by day passed; night glare set aside); item 6 route A built (glass baked, 15 windows), measured on tonight's package. Rest of 5 after Monday 14:00.
 
 ## Handovers
 

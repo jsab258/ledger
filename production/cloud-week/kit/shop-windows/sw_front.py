@@ -758,27 +758,30 @@ def make_balls_and_bracket(front, fasc_dir):
         objs.append(("black_iron", bs.new_obj("sign_scroll_%d" % k, *polyline_strip(pts, uc - 4.0, uc + 4.0, 20.0))))
     d_h = 570.0
     objs.append(("black_iron", bs.new_obj("sign_hanger", *cyl_z(uc, d_h, 3180.0, z_arm - 10.0, 5.0, 8))))
-    # ring over the top balls (a small torus in the u-z plane)
+    # ring over the top balls (a small torus in the d-z plane: the bracket's own plane, 21 Oct below)
     ring = []
     for k in range(16):
         t = 2 * math.pi * k / 16
-        ring.append((uc + 28.0 * math.cos(t), 3150.0 + 28.0 * math.sin(t)))
-    rv = [(p[0], -d_h - 5.0, p[1]) for p in ring] + [(p[0], -d_h + 5.0, p[1]) for p in ring]
+        ring.append((d_h + 28.0 * math.cos(t), 3150.0 + 28.0 * math.sin(t)))
+    rv = [(uc + 5.0, -p[0], p[1]) for p in ring] + [(uc - 5.0, -p[0], p[1]) for p in ring]
     rf = [tuple(range(16))[::-1], tuple(range(16, 32))] + [(i, (i + 1) % 16, 16 + (i + 1) % 16, 16 + i) for i in range(16)]
     # (a flat ring plate rather than a torus: 10 thick, the inner hole left out is a flat disc)
     objs.append(("black_iron", bs.new_obj("sign_ring", np.array(rv), rf)))
-    # the three balls: 0.26 m, centres (out 0.57; height 3.0 / 3.0 / 2.78 m; along the street +-0.14)
+    # the three balls: 0.26 m, centres (out 0.57 +-0.14; height 3.0 / 3.0 / 2.78 m; along the street 0)
+    # IN THE BRACKET'S PLANE (21 Oct, the PC's gate in the game's hook camera: hung across the bracket,
+    # the triangle faced the road and a walker looking along the pavement saw two balls, one hiding
+    # the other; a hanging sign faces along the street, as the bracket's scrolls do)
     balls = []
-    cen = ((0.57, 3.0, -0.14), (0.57, 3.0, 0.14), (0.57, 2.78, 0.0))
+    cen = ((0.43, 3.0, 0.0), (0.71, 3.0, 0.0), (0.57, 2.78, 0.0))
     # three 10 mm rods from the ring to each ball's top (13 Oct, N4: the top balls stood 38 mm clear of the ring, the lower one 0.2 m): each rod runs from the ring's edge toward the ball's
     # top and 6 mm into the ball, so the balls hang from the ring
-    ring_c = np.array([uc, 3150.0])
+    ring_c = np.array([d_h, 3150.0])
     for k, (out, h, along) in enumerate(cen):
-        top = np.array([uc + along * 1000.0, h * 1000.0 + 130.0])
+        top = np.array([out * 1000.0, h * 1000.0 + 130.0])
         dirv = (top - ring_c) / np.linalg.norm(top - ring_c)
         p0 = ring_c + dirv * 26.0
         p1 = top - dirv * 6.0
-        objs.append(("black_iron", bs.new_obj("sign_rod_%d" % (k + 1), *rod((p0[0], d_h, p0[1]), (p1[0], d_h, p1[1]), 5.0, 8))))
+        objs.append(("black_iron", bs.new_obj("sign_rod_%d" % (k + 1), *rod((uc + along * 1000.0, p0[0], p0[1]), (uc + along * 1000.0, p1[0], p1[1]), 5.0, 8))))
     for k, (out, h, along) in enumerate(cen):
         bm = bmesh.new()
         bm.loops.layers.uv.new("UVMap")          # the layer must exist before calc_uvs has anywhere to write

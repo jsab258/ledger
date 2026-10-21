@@ -162,6 +162,12 @@ namespace LedgerVignetteShot
 	// window reflects the street as it now is (the page photographs wait for it).
 	int32 GlassCatchesLeft();
 
+	// THE GLASS BAKED, 21 October (item 6, route A of research note 1d): how many windows reflect a
+	// baked cube instead of a catch, and, for the bake run (-PageShots=bake), every caught window's
+	// cube written to Dir as <mesh>.hdr. Returns how many.
+	int32 GlassBakedWindows();
+	int32 DumpGlassCatches(const FString& Dir);
+
 	// THE STREET MESHES WHOSE NAMES START WITH Prefix shown (with their collision) or hidden
 	// (without), 6 October: Mickey's shut door, street_mickeysdoor_*, taken away when Tom
 	// unlocks it. Returns how many.

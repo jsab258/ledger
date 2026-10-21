@@ -363,7 +363,10 @@ def build_display(work, out_dir, log=print):
     drng = random.Random(23)            # which of the four dials a watch gets: its own draw, so the main stream (tickets, trays' colours) is the one the try 2 build used
     board = r.mat("bed_board", S.rgb8(70, 44, 28), rough=0.7)
     lacquer = r.mat("post_lacquer", S.rgb8(12, 12, 12), rough=0.25)
-    plaster = r.mat("return_plaster", S.rgb8(242, 219, 168), rough=0.9)
+    # THE RETURNS DARKER (21 Oct, the PC's gate in the game's hook camera, which looks along the street through the window's
+    # door end at its return nearly face on): at 242/219/168 the plaster read as a cream block by day and burned white under the
+    # window's night light, far brighter than the room picture's walls it meets (shown at 0.15 by day); about half the light now
+    plaster = r.mat("return_plaster", S.rgb8(176, 158, 120), rough=0.9)
     dado = r.mat("return_dado", S.rgb8(107, 69, 43), rough=0.9)
     paper = r.image_mat("tickets_atlas", os.path.join(r.tex, "tickets.png"), rough=0.8)
     gold = r.mat("gold", S.rgb8(218, 160, 66), rough=0.25, metal=1.0)

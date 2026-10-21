@@ -103,8 +103,10 @@ def main(src, name, display=False):
     glb = os.path.join(out_dir, name + ".glb")
     bpy.ops.object.select_all(action="DESELECT")
     joined.select_set(True)
+    # AUTO (21 October): each picture passes through as it came, never re-encoded (the cloud's display's normal
+    # maps, already JPEG, showed 8 x 8 blocks on glossy metal; byte-identical through this step, checked).
     bpy.ops.export_scene.gltf(filepath=glb, export_format="GLB", use_selection=True, export_apply=True,
-                              export_materials="EXPORT", export_yup=True)
+                              export_materials="EXPORT", export_image_format="AUTO", export_yup=True)
     if display:
         tris = sum(len(p.vertices) - 2 for p in joined.data.polygons)
         print("front_for_game: %s -> %s display parts=%d slots=%d sheenTinted=%d triangles=%d bytes=%d"

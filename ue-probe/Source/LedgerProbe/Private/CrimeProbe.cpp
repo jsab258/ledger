@@ -4588,7 +4588,12 @@ namespace
 				}
 				Shots.Sort([](const FPageShot& A, const FPageShot& B) { return A.Id == TEXT("cam_hook") || (B.Id != TEXT("cam_hook") && A.Id < B.Id); });
 			}
-			if (Mode == TEXT("night") || Mode == TEXT("shopnight") || Mode == TEXT("atnight"))
+			// THE GLASS BAKE (21 October, item 6; research note 1d, route A): -PageShots=bake
+			// -GlassBake=day|night takes no picture: it lets the street's windows be caught in that
+			// light, writes each one's cube (LedgerVignetteShot::DumpGlassCatches) and quits.
+			FString BakeLight;
+			FParse::Value(FCommandLine::Get(), TEXT("GlassBake="), BakeLight);
+			if (Mode == TEXT("night") || Mode == TEXT("shopnight") || Mode == TEXT("atnight") || (Mode == TEXT("bake") && BakeLight == TEXT("night")))
 			{
 				// To ten at night, as Z would take him; the clock then lights the street for it.
 				GClock.JumpTo(GameTime(GNow.Day, 22, 0));
@@ -4618,6 +4623,23 @@ namespace
 			if (Cam.IsValid()) { Cam->GetCameraComponent()->bConstrainAspectRatio = false; }
 			Step = 0;
 			NextAt = Now + 6.0;   // the street settled, the light applied
+			return;
+		}
+		if (Mode == TEXT("bake"))
+		{
+			static double BakeSince = -1.0;
+			static int32 BakeSettle = 0;
+			if (BakeSince < 0.0) { BakeSince = Now; }
+			if (LedgerVignetteShot::GlassCatchesLeft() > 0 && Now - BakeSince < 180.0) { NextAt = Now + 0.25; return; }
+			if (BakeSettle++ < 8) { NextAt = Now + 0.25; return; }   // the last deferred passes render first
+			FString Light(TEXT("day")), Dir(TEXT("F:/LedgerTools/game-inputs/glass-bake"));
+			FParse::Value(FCommandLine::Get(), TEXT("GlassBake="), Light);
+			FParse::Value(FCommandLine::Get(), TEXT("GlassBakeDir="), Dir);
+			const int32 Left = LedgerVignetteShot::GlassCatchesLeft();
+			const int32 Wrote = LedgerVignetteShot::DumpGlassCatches(Dir / Light);
+			UE_LOG(LogTemp, Display, TEXT("LedgerGlassBake: light=%s windows=%d left=%d seconds=%.0f dir=%s"), *Light, Wrote, Left, Now - BakeSince, *(Dir / Light));
+			FPlatformMisc::RequestExit(false);
+			NextAt = Now + 60.0;
 			return;
 		}
 		const int32 I = Step / 2;

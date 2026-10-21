@@ -3202,7 +3202,11 @@ KIT_REPLACES_PREFIX = ("shop_door_", "side_door_")
 #: the viewer's left; y = -(out from its wall face, which stands CLOUD_WALL_BEHIND_M behind this
 #: recipe's frontage); z above the footway, which is this recipe's threshold.
 CLOUD_FRONTS = {("east_parade", 2): "ritas-front"}
-CLOUD_WALL_BEHIND_M = 0.17       # the cloud's wall face 5.295 against this recipe's frontage 5.125
+CLOUD_WALL_BEHIND_M = 0.17
+#: the piers behind the front's end pilasters (PC-04): 80 mm in from each bay edge, from just behind the
+#: pilasters' fronts (0.18 out from the front's wall face) to 0.45 back, to the cornice's top (3.55) and over
+CLOUD_PIER_M, CLOUD_PIER_FRONT_M, CLOUD_PIER_BACK_M, CLOUD_PIER_TOP_M = 0.08, 0.0, 0.45, 3.60
+CLOUD_PIER_PAST_M = 0.06       # the cloud's wall face 5.295 against this recipe's frontage 5.125
 CLOUD_REPLACES = ("fascia_band", "fascia_sign", "fascia_letters", "fascia_cornice_bed", "fascia_cornice_corona",
                   "fascia_cornice_cap", "blind_box", "blind_lath", "letting_board")
 CLOUD_REPLACES_PREFIX = ("fascia_console_",)
@@ -3243,6 +3247,15 @@ def _cloud_shopfront(parts, p, name, here, root=None):
              "the-cloud-front's-display-glass/%d-panes" % len(lower))
         cx = (x0 + x1) / 2.0
         CLOUD_PANES[here] = [(a - cx, b - cx) for a, b in lights]
+    # A BRICK PIER BEHIND EACH END PILASTER (21 October, the gate's reverse view: a sliver of sky between
+    # her right pilaster and FRESH FISH's; the cloud's own owed point PC-04): the front's pilasters stop
+    # 30 mm short of the bay's edge (50 at the consoles and cornice), and this recipe's own joinery that
+    # filled it is gone, so brick stands in the gap, its face just behind the pilasters' fronts.
+    # try 2, the same evening: the right-hand view still showed a hair of light at the neighbour's side,
+    # so each pier reaches 60 mm past the bay's edge, behind the neighbour's own pilaster
+    for side, (b0, b1) in (("l", (-CLOUD_PIER_PAST_M, CLOUD_PIER_M)), ("r", (W - CLOUD_PIER_M, W + CLOUD_PIER_PAST_M))):
+        _box(parts, "cloud_pier_%s" % side, "brick_red", b0, b1, CLOUD_PIER_FRONT_M, CLOUD_PIER_BACK_M,
+             0.0, CLOUD_PIER_TOP_M, "brick-behind-the-cloud-front's-end-pilaster")
     return len(panes)
 
 
@@ -8920,6 +8933,10 @@ def selftest():
                   ",".join("%.3f..%.3f" % (b["y0"], b["y1"]) for b in glass[:4]))
             check("accept/the-cloud-front's-display-has-its-three-lights", len(CLOUD_PANES.get((blk, kb), [])) == 3,
                   str(CLOUD_PANES.get((blk, kb))))
+            piers = [b for b in kp if b["id"].startswith("cloud_pier_")]
+            check("accept/brick-closes-the-gap-at-each-end-pilaster-of-the-cloud-front (PC-04)",
+                  len(piers) == 2 and all(b["y0"] <= 0.0 and b["y1"] >= 0.30 for b in piers),
+                  ",".join("%s %.3f..%.3f" % (b["id"], b["y0"], b["y1"]) for b in piers))
         for (blk, kb) in KIT_BAYS:
             if blk != p.get("block_id") or (blk, kb) in CLOUD_FRONTS:
                 continue

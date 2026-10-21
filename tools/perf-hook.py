@@ -96,6 +96,10 @@ def summarise(header, body, label=""):
     return {
         "label": label, "frames": len(frame),
         "frameMedianMs": f50, "frameSlowest1pctMs": round(f1, 2) if f1 is not None else None,
+        # THE WORST FRAME AND HOW MANY ARE OVER THE BAR (21 October, his order, item 6: "the
+        # packaged build's worst frame at or under 33.3 ms on the walk, measured").
+        "frameWorstMs": round(max(frame), 2) if frame else None,
+        "framesOver33": sum(1 for f in frame if f > 33.3),
         "gpuMedianMs": med(gpu), "gpuLineMs": GPU_LINE_MS,
         "gpuRoomMs": round(GPU_LINE_MS - med(gpu), 2) if gpu else None,
         "verdict": verdict,
@@ -110,7 +114,7 @@ def summarise(header, body, label=""):
 
 
 def table(rows):
-    keys = ["label", "frameMedianMs", "frameSlowest1pctMs", "gpuMedianMs", "gpuRoomMs", "verdict", "drawCalls", "primitives", "gpuMemMB"]
+    keys = ["label", "frameMedianMs", "frameSlowest1pctMs", "frameWorstMs", "framesOver33", "gpuMedianMs", "gpuRoomMs", "verdict", "drawCalls", "primitives", "gpuMemMB"]
     out = [" | ".join(keys)]
     for r in rows:
         out.append(" | ".join(str(r.get(k)) for k in keys))

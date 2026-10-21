@@ -1,0 +1,41 @@
+{
+ "tab": "Rita's Front",
+ "kicker": "LEDGER · Thursday 22 October · the street, the shop family's sample",
+ "title": "Rita's front in the street",
+ "how": [
+  "Shortfalls first. At night her window's light burns the display's pale side wall, the big white vase and the china jug to pure white (set aside after two tries; next, the strip lights under the shelves the cloud designed). The front is clean, with no wear yet; the goods stand in tidy rows rather than a crammed 1990 window; the watches and clocks have no glass; PAWNBROKER under her name and the words on the glass do not read from the hook camera. The lamp columns: darker and grimed at the foot as you asked, but the rain staining read as an even grain after two tries and is set aside, so they are not done.",
+  "The cloud's whole front for Rita's pawnbroker now stands in the street behind the street's own glass (so the broken-window crime still works on it): the fascia with RITA'S, the three gilt balls on their bracket, the doors, the 3D display of goods on velvet tiers and her room behind. Each view passed one fresh reviewer or carries its set-aside; the reviews found the balls hung across their bracket (seen as two from along the street) and the window light burning the joinery, both fixed. Taken today in the game at 2560 by 1440, shown at full size."
+ ],
+ "foot": "Nothing bought or signed up for. Anything you do not pick carries onto the next page.",
+ "sections": [
+  {
+   "kind": "look",
+   "key": "look-ritas-front-2026-10-22",
+   "name": "Rita's front: keep it as the shops' sample, and bring the other shops in the same way after Monday?",
+   "note": "The hook camera by day and at night (full size, cut to her bay), then her window from the pavement by day and at night.",
+   "pictures": [
+    {"src": "production/approvals/2026-10-22-ritas/ritas-hook-day.webp", "alt": "The hook camera by day, cut to Rita's bay at full size"},
+    {"src": "production/approvals/2026-10-22-ritas/ritas-hook-night.webp", "alt": "The hook camera at night, cut to Rita's bay at full size"},
+    {"src": "production/approvals/2026-10-22-ritas/ritas-pavement-day.webp", "alt": "Rita's window from the pavement by day"},
+    {"src": "production/approvals/2026-10-22-ritas/ritas-pavement-night.webp", "alt": "Rita's window from the pavement at night"}
+   ],
+   "options": [
+    ["yes", "Keep it and go on; not yet 2026-grade until the wear and the night light are done (recommended)"],
+    ["no", "Not like this"]
+   ]
+  },
+  {
+   "kind": "look",
+   "key": "look-lamp-weathered-2026-10-22",
+   "name": "The lamp columns, darker and grimed at the foot: done, or not yet?",
+   "note": "The nearest column from the hook camera by day, at full size. The rain staining is set aside (it read as grain); the next try would be stains placed from the arm and the spigot.",
+   "pictures": [
+    {"src": "production/approvals/2026-10-22-ritas/lamp-column-day.webp", "alt": "The nearest lamp column from the hook camera by day, full size"}
+   ],
+   "options": [
+    ["later", "Not yet: finish the staining after Monday (recommended)"],
+    ["done", "Done as it is"]
+   ]
+  }
+ ]
+}

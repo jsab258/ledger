@@ -19,6 +19,15 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 21 Oct 2026, item 5, the shop family's sample: a whole shopfront, its window display and its room picture from another team, brought into the game street behind the street's own glass
+- Made: one shop's complete front (joinery, fascia, hanging sign, doors), a 3D display of goods behind the glass and a painted room behind that, in place of the game's old front.
+- Method (setting-free): split the delivered front into its glass and everything else; the street's own builder takes its own joinery out of that bay and builds a pane where each delivered pane was, so the game's glass, reflections and scripted breakages still work; everything else is joined into one mesh keeping every material; a many-part display must be joined whole before import (an importer given loose parts makes one mesh each and the game stood only the first); check exported cloth materials (a renderer's sheen became a pale wash in the engine: tint it to the cloth's own colour); big run-time pictures live beside the code's inputs and are read and packaged from there by name; the window's lamp belongs in the window head just behind the glass, over the window alone, and must not light the front's own joinery; fix a fault at the source that made it (the delivered build script) and rebuild, never patch the export; one fresh reviewer per view, two tries a fault.
+- Tools: Blender as a Python module (split, join, the source team's build), the street recipe, Unreal 5.8 editor Python (import), the game's C++ (placement, light), the game's film and page cameras.
+- Target and check: the delivered target's frame (19 panes, the display's window zone); the game's gate per view against its last good picture, the Hook sheet and KCD2.
+- Cost (hours): about 4.
+- Failed and why: at night the window's lamp still burns the display's pale side wall and two white pieces to pure white after two tries (moved, narrowed, the joinery kept off it): set aside; the delivered design lights the goods from strips under the tiers instead, not tried. A neighbour's window "lost its goods": they had been lit by the old lamp leaking through the party wall (tested by filming with the lamp off).
+- Evidence: production/audits/gate-ritas-front/GATE.md
+
 ### 21 Oct 2026, item 5: weathering a kit piece in the shared master material, set aside after two tries
 - Made: two weather layers in the kit's opaque master (rain runs on vertical faces, growth on faces turned to the sky), a stronger grime band at the foot for one kind, the piece a shade darker; the darker colour and the foot passed, the runs did not.
 - Method (setting-free): add each weather layer once in the shared master, driven by the piece's own bounds (foot band from its lowest point, runs falling from its highest) and the face's direction, so every piece of a kind weathers alike; the owner's words are the target ("weathered and a shade darker"); one fresh reviewer per view.
