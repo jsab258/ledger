@@ -7,13 +7,13 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
 
 <!-- morning pictures: written by tools/morning_pictures.py -->
 
-**Morning, Thursday 8 October. Phase 1, prove the bottlenecks. On: 1.1 Mickey's front office, frontage, three views: production/research/pre-production/3-PROOFS.md. Next: 1.2 Tom and a speaker: production/casting/CASTING.md.**
+**Morning, Wednesday 21 October. Phase 1, prove the bottlenecks. On: 1.1 Mickey's front office, frontage, three views: production/research/pre-production/3-PROOFS.md. Next: 1.2 Tom and a speaker: production/casting/CASTING.md.**
 
-| | Today, 08 Oct | Yesterday, 07 Oct |
+| | Today, 21 Oct | Yesterday, 20 Oct |
 |---|---|---|
-| The hook camera by day | ![The hook camera by day, 2026-10-08](production/previews/morning-hook-day-2026-10-08.jpg) | ![The hook camera by day, 2026-10-07](production/previews/morning-hook-day-2026-10-07.jpg) |
-| The reverse view | ![The reverse view, 2026-10-08](production/previews/morning-reverse-day-2026-10-08.jpg) | ![The reverse view, 2026-10-07](production/previews/morning-reverse-day-2026-10-07.jpg) |
-| The street at night | ![The street at night, 2026-10-08](production/previews/morning-night-2026-10-08.jpg) | ![The street at night, 2026-10-07](production/previews/morning-night-2026-10-07.jpg) |
+| The hook camera by day | ![The hook camera by day, 2026-10-21](production/previews/morning-hook-day-2026-10-21.jpg) | none |
+| The reverse view | ![The reverse view, 2026-10-21](production/previews/morning-reverse-day-2026-10-21.jpg) | none |
+| The street at night | ![The street at night, 2026-10-21](production/previews/morning-night-2026-10-21.jpg) | none |
 
 The Hook sheet, the bar they are held to: ![The Hook sheet](production/previews/hook-sheet-2026-10-05.jpg)
 
