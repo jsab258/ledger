@@ -104,7 +104,7 @@
   },
   "lamp_jacket": {
    "master": "translucent",
-   "opacity": 0.3,
+   "opacity": 0.15,
    "note": "a lamp's clear glass jacket: see-through by day (the arc tube shows inside), lit by the lanterns' drive at night (21 October: the opaque 'lamp' kind read as a solid white rod from below, the close view's review)"
   }
  },
@@ -167,7 +167,16 @@
    "kind": "lamp",
    "shadow": false,
    "glow": 1.0,
-   "used_by": "lamp_post_C (the U-shaped arc tube; 91,700 cd/m2 lit)"
+   "used_by": "lamp_post_C (the U-shaped arc tube; 91,700 cd/m2 lit)",
+   "overrides": {
+    "BaseColor": [
+     0.16,
+     0.1,
+     0.06
+    ],
+    "Roughness": 0.3
+   },
+   "overrides_note": "21 October, try 2 of the close view's 'the jacket reads as a solid rod': a cold low-pressure sodium arc tube is a darker amber-brown U (its sodium film), so it reads inside the clear jacket; the glb's pale grey made tube and jacket one pale rod. The jacket's opacity 0.3 -> 0.15."
   }
  },
  "lit_emissive": 3.0,
