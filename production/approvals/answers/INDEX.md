@@ -45,5 +45,6 @@ Read back: 2026-10-21
 | [LEDGER — voice candidates](https://claude.ai/artifact/LWtCuBtgKX2GkWkwnbC5qZ) | 2026-07-31 | 0 | July; its version declares no database |
 | [LEDGER — UI style directions](https://claude.ai/artifact/19KEWmTYDgC8azDcgEPd9p) | 2026-07-26 | 0 | July; its version declares no database |
 | [The Voice](https://claude.ai/artifact/LTmrUMeRzYkaDZBKuGcEkg) | 2026-10-07 | 2 | first-sentence-model-2026-10-07: off, 2026-10-07; voice-route-2026-10-07: stop, 2026-10-07 (Report it failed, as a blocked core capability. The measurements show the check ) |
+| [Lamp Post C](https://claude.ai/artifact/R6mfWdCEKmuHBPD9q6JYJ3) | 2026-10-21 | 2 | lamp-columns-material-2026-10-21: concrete, 2026-10-21 (Concrete stays, but clean it looks cheap. Show me it weathered and a shade darke); look-lamp-post-c-2026-10-21: yes, 2026-10-21 |
 
-39 pages, 147 answers.
+40 pages, 149 answers.

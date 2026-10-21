@@ -35,7 +35,8 @@ KIT_DIR = os.path.join(REPO, "ledger", "Assets", "Props", "base-mesh")
 PACKAGE = "/Game/Ledger/Kit"
 MASTERS = {"opaque": "M_LedgerKit", "translucent": "M_LedgerKitGlass"}
 PARAMS = ("BaseColor", "Roughness", "Metallic", "Specular", "EmissiveColor", "Opacity", "DetailSize",
-          "DetailIntensity", "RoughDetail", "DirtHeight", "DirtStrength", "DirtColour")
+          "DetailIntensity", "RoughDetail", "DirtHeight", "DirtStrength", "DirtColour", "StreakSize", "StreakLength",
+          "StreakStrength", "StreakColour", "TopStrength", "TopColour")
 
 
 def load_spec(path=SPEC):
@@ -107,8 +108,14 @@ NEUTRAL_TEX = "/Engine/EngineResources/WhiteSquareTexture.WhiteSquareTexture"
 # charge; a dirt band darkens the piece's foot, DirtHeight cm up from its own lowest point, its edge
 # broken by the grunge. Every scalar defaults to off, so a kind without them is the flat colour.
 SCALARS = (("Roughness", 0.6), ("Metallic", 0.0), ("Specular", 0.5), ("DetailSize", 60.0),
+           ("StreakSize", 30.0), ("StreakLength", 200.0), ("StreakStrength", 0.0), ("TopStrength", 0.0),
            ("DetailIntensity", 0.0), ("RoughDetail", 0.0), ("DirtHeight", 50.0), ("DirtStrength", 0.0))
-VECTORS = (("BaseColor", (0.5, 0.5, 0.5)), ("EmissiveColor", (0.0, 0.0, 0.0)), ("DirtColour", (0.45, 0.42, 0.38)))
+VECTORS = (("BaseColor", (0.5, 0.5, 0.5)), ("EmissiveColor", (0.0, 0.0, 0.0)), ("DirtColour", (0.45, 0.42, 0.38)),
+           ("StreakColour", (0.6, 0.58, 0.55)), ("TopColour", (0.6, 0.68, 0.5)))
+# THE WEATHER (21 October 2026, his ruling: the lamp columns "weathered and a shade darker"): rain
+# streaks, a drawn map of vertical runs stretched StreakLength cm tall on vertical faces only,
+# multiply the colour toward StreakColour; growth on faces turned to the sky (the vertex normal's
+# up part, broken by the detail's grunge) toward TopColour. Both off at 0.
 
 
 def _make_master(unreal, name, translucent):
@@ -240,7 +247,58 @@ def _make_master(unreal, name, translucent):
         c2 = ex(unreal.MaterialExpressionMultiply, -400, -300)
         link(c1, "", c2, "A")
         link(dcol, "", c2, "B")
-        prop(c2, "", MP.MP_BASE_COLOR)
+        stex = ex(unreal.MaterialExpressionTextureObjectParameter, -2000, 700, parameter_name="StreakMap")
+        if neutral is not None:
+            stex.set_editor_property("texture", neutral)
+        wa2 = ex(unreal.MaterialExpressionMaterialFunctionCall, -1750, 700)
+        try:
+            wa2.set_editor_property("material_function", fn)
+        except Exception as err:
+            n["notes"].append("worldaligned2=%s" % str(err).split("\n")[0][:40])
+        ss2 = ex(unreal.MaterialExpressionAppendVector, -1900, 820)
+        link(P["StreakSize"], "", ss2, "A")
+        link(P["StreakSize"], "", ss2, "B")
+        ss3 = ex(unreal.MaterialExpressionAppendVector, -1850, 880)
+        link(ss2, "", ss3, "A")
+        link(P["StreakLength"], "", ss3, "B")
+        link(stex, "", wa2, "TextureObject")
+        link(ss3, "", wa2, "TextureSize")
+        sr = ex(unreal.MaterialExpressionComponentMask, -1500, 700, r=True, g=False, b=False, a=False)
+        link(wa2, "XYZ Texture", sr, "")
+        vn = ex(unreal.MaterialExpressionVertexNormalWS, -1750, 950)
+        vz = ex(unreal.MaterialExpressionComponentMask, -1550, 950, r=False, g=False, b=True, a=False)
+        link(vn, "", vz, "")
+        vabs = ex(unreal.MaterialExpressionAbs, -1400, 950)
+        link(vz, "", vabs, "")
+        vert = ex(unreal.MaterialExpressionOneMinus, -1300, 950)
+        link(vabs, "", vert, "")
+        st1 = ex(unreal.MaterialExpressionMultiply, -1150, 760)
+        link(sr, "", st1, "A")
+        link(vert, "", st1, "B")
+        st2 = ex(unreal.MaterialExpressionMultiply, -1000, 760)
+        link(st1, "", st2, "A")
+        link(P["StreakStrength"], "", st2, "B")
+        scol = ex(unreal.MaterialExpressionLinearInterpolate, -850, 700, const_a=1.0)
+        link(P["StreakColour"], "", scol, "B")
+        link(st2, "", scol, "Alpha")
+        up = ex(unreal.MaterialExpressionSaturate, -1300, 1050)
+        link(vz, "", up, "")
+        tp1 = ex(unreal.MaterialExpressionMultiply, -1150, 1050)
+        link(up, "", tp1, "A")
+        link(mb, "", tp1, "B")
+        tp2 = ex(unreal.MaterialExpressionMultiply, -1000, 1050)
+        link(tp1, "", tp2, "A")
+        link(P["TopStrength"], "", tp2, "B")
+        tcol = ex(unreal.MaterialExpressionLinearInterpolate, -850, 1000, const_a=1.0)
+        link(P["TopColour"], "", tcol, "B")
+        link(tp2, "", tcol, "Alpha")
+        c3 = ex(unreal.MaterialExpressionMultiply, -300, -200)
+        link(c2, "", c3, "A")
+        link(scol, "", c3, "B")
+        c4 = ex(unreal.MaterialExpressionMultiply, -200, -100)
+        link(c3, "", c4, "A")
+        link(tcol, "", c4, "B")
+        prop(c4, "", MP.MP_BASE_COLOR)
         # the roughness: saturate(Roughness + (G - 0.5) x 2 x RoughDetail + dirt x 0.08)
         gr = ex(unreal.MaterialExpressionSubtract, -1300, -120, const_b=0.5)
         link(mg, "", gr, "A")
@@ -337,6 +395,17 @@ def kind_values(row):
     if d:
         v.update({"DetailSize": d.get("size_cm", 60.0), "DetailIntensity": d.get("intensity", 1.0),
                   "RoughDetail": d.get("rough", 0.0)})
+    w = row.get("streaks") or {}
+    if w:
+        v.update({"StreakSize": w.get("size_cm", 30.0), "StreakLength": w.get("length_cm", 200.0),
+                  "StreakStrength": w.get("strength", 0.5)})
+        if "colour" in w:
+            v["StreakColour"] = tuple(w["colour"])
+    tp = row.get("top") or {}
+    if tp:
+        v["TopStrength"] = tp.get("strength", 0.5)
+        if "colour" in tp:
+            v["TopColour"] = tuple(tp["colour"])
     t = row.get("dirt") or {}
     if t:
         v.update({"DirtHeight": t.get("height_cm", 50.0), "DirtStrength": t.get("strength", 0.5)})
@@ -368,7 +437,11 @@ def main():
             continue
         vals = kind_values(row)
         name = (row.get("detail") or {}).get("map")
-        texs = {"DetailMap": details.get(name)} if name else None
+        texs = {"DetailMap": details.get(name)} if name else {}
+        if row.get("streaks"):
+            if "streaks" not in details:
+                details["streaks"] = _import_detail(unreal, "streaks", os.path.join(DETAIL_DIR, "streaks_detail.png"))
+            texs["StreakMap"] = details.get("streaks")
         if _make_instance(unreal, "MI_KitKind_" + kind, parent, vals, texs):
             kinds_made += 1
             kind_assets[kind] = unreal.EditorAssetLibrary.load_asset(PACKAGE + "/MI_KitKind_" + kind)

@@ -52,6 +52,7 @@ His binding rulings; the later stands; canon.md outranks them.
 - 3 Oct: Names the plan needs are minted within canon (a town task); placeholders meanwhile, never on his page.
 - D14: Every interior in scope is designed, assembled by script from designed kits, and photoreal.
 - 22 Sep: Image-to-3D waits until hand-made props are the bottleneck.
+- 21 Oct: The street's lamp columns are concrete (lamp post C, kept), but clean concrete looks cheap: weathered and a shade darker before it counts as done; shown to him again then.
 
 ## Faces, hair and voices
 
