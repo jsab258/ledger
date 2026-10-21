@@ -2,7 +2,7 @@
 
 Copied from each page's own database into this folder (pages.json lists the pages). Written by tools/page_answers.py --index; never edited by hand.
 
-Read back: 2026-10-21
+Read back: 2026-10-22
 
 | Page | Updated | Answers | Each answer: pick or verdict, date |
 |---|---|---|---|
@@ -46,5 +46,6 @@ Read back: 2026-10-21
 | [LEDGER — UI style directions](https://claude.ai/artifact/19KEWmTYDgC8azDcgEPd9p) | 2026-07-26 | 0 | July; its version declares no database |
 | [The Voice](https://claude.ai/artifact/LTmrUMeRzYkaDZBKuGcEkg) | 2026-10-07 | 2 | first-sentence-model-2026-10-07: off, 2026-10-07; voice-route-2026-10-07: stop, 2026-10-07 (Report it failed, as a blocked core capability. The measurements show the check ) |
 | [Lamp Post C](https://claude.ai/artifact/R6mfWdCEKmuHBPD9q6JYJ3) | 2026-10-21 | 2 | lamp-columns-material-2026-10-21: concrete, 2026-10-21 (Concrete stays, but clean it looks cheap. Show me it weathered and a shade darke); look-lamp-post-c-2026-10-21: yes, 2026-10-21 |
+| [Rita's Front](https://claude.ai/artifact/2yznAYjEwDVv3RvzzKUpBR) | 2026-10-22 | 0 | Rita's front as the shops' sample (item 5, his ruling of 21 October): keep it and go on; the lamp columns darker with a faint grimy foot: done or not yet |
 
-40 pages, 149 answers.
+41 pages, 149 answers.
