@@ -69,6 +69,10 @@ WATCHED = {
     "ue-probe/Content/Ledger/Figure": "Mixamo",
     "ue-probe/Content/Ledger/People": "Mixamo",
     "ue-probe/Content/Ledger/Props": "The Base Mesh",
+    # THE KIT'S MATERIALS (21 October 2026): this project's own master materials and instances
+    # (tools/ue/make_kit_materials.py) and four detail maps high-passed from the street's CC0
+    # ambientCG photographs (tools/props/make_kit_detail.py; ledger/Assets/StreamingAssets/CityPack).
+    "ue-probe/Content/Ledger/Kit": "ambientCG",
     "ue-probe/Content/Ledger/ShopDisplays": "Poly Haven",
     "ue-probe/Content/Ledger/ShopRooms": "Poly Haven",
     "ue-probe/Content/Ledger/Sounds": ("VCTK", "sturmankin"),
@@ -310,6 +314,7 @@ OURS = {
     "production/audio/ui": "the interface's sounds, synthesised by tools/ui/make_ui_sounds.py, 1 October",
     # 2 October's page: the pawnbroker's window filmed by the game in its own street (-PageShots).
     "production/approvals/2026-10-02": "the game filming its own street and cast for the day's page, 2 October",
+    "production/approvals/2026-10-21-lamp": "the game filming its own street with lamp post C for his page, 21 October (out of git)",
     # The clothing page of 2 October: Ron in the clothing session's own jacket, filmed by the game in its own street
     # (the builder's in-game test), a MetaHuman built on this PC (renders may be shown; its files stay out of here).
     "production/approvals/2026-10-02-clothes": "the game filming Ron in the clothing session's own jacket, 2 October",

@@ -1,0 +1,31 @@
+{
+ "tab": "Lamp Post C",
+ "kicker": "LEDGER · Wednesday 21 October · the street, the first piece from the cloud's kit",
+ "title": "Lamp post C in the street",
+ "how": [
+  "Shortfalls first: the concrete is still clean for 1990 (the dirt at the foot barely shows, no rain streaks or rust runs; the wear layer comes later in your order), the bowl reads white by day where the real acrylic was yellowed, and the number plate is blank.",
+  "The cloud's concrete lamp column now stands at the street's four lamp spots in place of the old dark steel one, with the kit's new shared materials (real concrete grain from the street's own photograph). It passed its gate on the third round, one fresh reviewer for each of the three views; the first two rounds found old lamp parts left standing and concrete that read as white plastic, both fixed. Taken today in the game at 2560 by 1440, through its own light and exposure."
+ ],
+ "foot": "Nothing bought or signed up for. Anything you do not pick carries onto the next page.",
+ "sections": [
+  {
+   "kind": "look",
+   "key": "look-lamp-post-c-2026-10-21",
+   "name": "Lamp post C: keep it, and bring in the rest of the kit the same way?",
+   "note": "The hook camera by day, the reverse view, the street at night, then the lamp close to by day and by night.",
+   "pictures": [
+    {"src": "production/approvals/2026-10-21-lamp/lamp-hook-day.webp", "alt": "The hook camera by day with the four new lamp columns"},
+    {"src": "production/approvals/2026-10-21-lamp/lamp-reverse-day.webp", "alt": "The reverse view by day"},
+    {"src": "production/approvals/2026-10-21-lamp/lamp-hook-night.webp", "alt": "The street at night, the lamps lit"}
+   ],
+   "options": [["yes", "Keep it and go on; not yet 2026-grade until the wear is on (recommended)"], ["no", "Not like this"]]
+  },
+  {
+   "kind": "decide",
+   "key": "lamp-columns-material-2026-10-21",
+   "name": "The street's lamp columns: concrete or black steel?",
+   "note": "The cloud built precast concrete as the main kind (its photographs of such streets show pale concrete columns with square arms) and kept a black painted steel column as the written-out alternative; both share the arm, the lantern and the light. Your Hook sheet shows no lamp column, and the old stand-in was dark steel. Concrete reads paler in the street.",
+   "options": [["concrete", "Concrete, as now (recommended)"], ["steel", "Black painted steel"]]
+  }
+ ]
+}

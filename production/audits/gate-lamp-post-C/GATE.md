@@ -19,3 +19,11 @@ The game's own vignette camera, 2560 x 1440, three views, one fresh reviewer (Op
 ## The fix for round 3
 
 The kit's master material, the order's next step: world-aligned detail from the street's own concrete photograph, a dirt band at the foot, and the concrete's starting colour moved to the dark end of aged concrete (production/research/aaa-street/KIT-MATERIALS-2026-10-21.md; production/specs/kit-materials.json). All three views are reviewed again after it, since the material shows in each.
+
+## Round 3, 13:48: PASSED, all three views
+
+- Hook by day: PASS. The concrete shows a mottled photographic texture and reads as concrete; the bowl does not glow by day (about 200 against the window frames' 200 to 222); no clipping (pillar box 1 m nearer at x 27, the column at x 28; the bins clear).
+- Reverse by day: PASS. Matt, mottled concrete, not plastic.
+- Night: PASS. Watch point: the near east column's road face burns to flat pale yellow 3 to 4 m up, under its own lamp.
+- Known shortfalls, listed: the dirt at the foot barely shows (about 10 per cent darker); no rain streaks or rust runs from the spigot; the bowl reads opal white, not yellowed; the number plate blank; the arm a crisp right angle; the Hook sheet shows no lamp column, and the near one is now a pale vertical between Fresh Fish and Mickey's. The scene's older gaps (no parked cars, white puddles, a flat hill) are unchanged.
+- These views are now the lamp's last good pictures (F:/LedgerTools/gate/last-good/lamp-post-C). Packaged and walked: owed to the next build machine run.
