@@ -19,6 +19,15 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 21 Oct 2026, item 5: a handover's "found" list closed against primary sources
+- Made: a stale light colour corrected, a window's hours brought into line with the cast's, a phone code confirmed dead in the game's year, a texture-size question settled.
+- Method (setting-free): for each finding, read the home of the fact (the cast file, a standards table, the engine's own source) rather than memory; change the derived thing, never the home; re-gate every passed view the change touches against its last good picture.
+- Tools: the engine's installed C++ source, CIE's data table, the encyclopaedia's code history, the game's vignette film.
+- Target and check: each view the change shows in, a fresh reviewer against its last good picture.
+- Cost (hours): about 1.
+- Failed and why: nothing failed; the door finding was already fixed upstream and waits for its family.
+- Evidence: DECISIONS.md, 21 Oct 13:20 and 15:15
+
 ### 21 Oct 2026, item 4: an AI session connected to the live game editor, verified read-only
 - Made: the engine maker's own Claude Code plugin installed for the project, and the editor's built-in tool server reached from the session; the first call listed the open level's actors.
 - Method (setting-free): install the vendor's plugin from the official marketplace at project scope; start the editor with the tool-server plugins named on its command line only (never in the project file, so nothing ships); register the server in local scope (never a committed config); commit before every editor session; the session reloads its plugins and reconnects the server; the first calls are read-only (list the toolsets, name the level, list its actors); close the editor and check the port is free and the tree unchanged.

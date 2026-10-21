@@ -1443,8 +1443,11 @@ def build_and_render(argv):
         # (the heater under the window is a modelled prop now, placed with the others below)
 
         # THE FIRM'S NUMBER ON THE GLASS, in gilt (the 1980 Brixton photograph: the window is the
-        # sign). 0632 is the code television used for numbers that rang nowhere. Our Marcellus SC,
-        # read from the street.
+        # sign). 0632 is the code television used for numbers that rang nowhere (Newcastle's until
+        # the change to 091 from 1982, so dead by 1990: https://en.wikipedia.org/wiki/0191, read 21 Oct
+        # 2026). TILL 3 A.M., not 24 HOURS (21 October, the cloud's review): the cast's hours are
+        # 7.00 (9.00 on Sundays) to 3.00 (production/specs/hook-cast.json, areas.mickeys.hours).
+        # Our Marcellus SC, read from the street.
         # GILT WITH ITS BLACK SHADE behind, down and to the right, as a signwriter laid it (the
         # first film: gold alone was lost over the lit room)
         shade = mat("gilt_shade", (0.01, 0.01, 0.01), rough=0.6)
@@ -1452,7 +1455,7 @@ def build_and_render(argv):
         # gilt number is a thick black slab with a sawtooth edge"): leaf and shade flat against the
         # pane's inside face, a hair apart, their curves smooth at the lettering's own size; from
         # inside the room they read as a signwriter's backs do, crisp dark letters on the glass.
-        for name, body, z, size in (("glass_number", "0632  960418", 2.02, 0.17), ("glass_word", "MINICABS  ·  24 HOURS", 1.82, 0.085)):
+        for name, body, z, size in (("glass_number", "0632  960418", 2.02, 0.17), ("glass_word", "MINICABS  ·  TILL 3 A.M.", 1.82, 0.085)):
             text(name, body, -0.92, 0.03, z, size, gilt, font="marcellus-sc/MarcellusSC-Regular.ttf", extrude=0.0003, res=7)
             text(name + "_shade", body, -0.92 + size * 0.03, 0.0312, z - size * 0.03, size, shade,
                  font="marcellus-sc/MarcellusSC-Regular.ttf", extrude=0.0003, res=7)

@@ -50,60 +50,10 @@ No decision asked: these are for watching the street change.
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
 
-## Builder, Thursday 8 October
+## Builder, Wednesday 21 October
 
-**Failed:** the frame rate. The shop glass's catch costs a slow frame a window; the evening build reads 46.8 ms at its 99th percentile (bar 33.3). Two tries failed, set aside. The road: two of three numbers still out after two tries, its puddles more visible. The brick's left terrace and maroon fascias still short. My slip: the cover's 11:20 fix was committed without its code and came back as a doormat; restored, now checked.
+**Failed:** two small faults of lamp post C, set aside after two tries each: at night each column's road face burns to a yellow stripe under its own lamp (leaning the light out cured it but left Mickey's window dark, so it was undone), and from directly below the tube inside the bowl reads as one pale rod. The command-line Claude's sign-in expired while the PC was off, so the night jobs that ask Claude fail (Needs you 2).
 
-**Done:** your light faults to their numbers (the near pool met). Mickey's office passes its gate under the new light: the night reflections, the yellow lines, the directories, a back room. The lab's glass fix: steps halved, rings gone, memory within the card; the glass no longer flashes an unlit street. Walked in the packaged game.
+**Done:** your order's items 1 to 4: the health check, the branches home, your rules and combat doc in, Epic's editor connection working (its read-only test passed). Item 5 begun: the cloud's lamp post C stands at the four lamp spots with the kit's new shared materials (concrete grain from the street's own photograph), through its gate in three views; Mickey's window now reads TILL 3 A.M., the cast's hours.
 
-**Two tries kept:** every fault stopped at two.
-
-**Act on:** compare this evening's three views with this morning's (above); the next session starts with the frame rate.
-
-## Builder, Wednesday 7 October
-
-**Failed:** speech: 4.6 s median, 4.0 with a faster first sentence; a blocked capability, your answer. Item 1.1's second review: the glass worst, then the office lit, the cast's base layer, a black block, faint wear. Tom's face: blocked. Plain clothes: the made outfit failed its third review and the ready-made CC0 pieces their checks; failed for now (Needs you 3).
-
-**Fixed:** the frame: 59 and 51 fps to 80 with the voice speaking, card peak 5.9 GB. The glass lit and reflecting the street. Mickey's office dark until the key; the black post and white strip. Since the review: the black block (houses without sides), the west shops' rooms, the roofs' seams, Sheila and Ron out of the office camera, Enter showing a line's end; in tonight's build. The glass still steps; the shopfront wear never showed; now the grime is in the paint itself. Your two faults done.
-
-**Two-tries rule broken:** the glass, twice: past three tries before a measurement found the cause; tonight a third anti-aliasing try without fresh research. Kept: the wear stopped at two.
-
-**Act on:** Tom's face: research the other route, or pick a take?
-
-## Builder, Tuesday 6 October
-
-**Done:** phase 0 passed its recheck. 1.1's review faults fixed and walked in the packaged game: reflections, a harbour at the street's end, the locked office lighting up as Tom enters, wear, ashtray, map. Walking carries real travel. Your build ruling is in.
-
-**Failed:** 1.1's first review; P2, the voice; the walk-in three times (a door bar, an engine warning, a leftover picture in the doorway; fixed); last night's measurement and walk, lost when my session closed at 00:30 (I had ended my turn to wait for the night's jobs to wake me; the program closed while idle, nothing in Windows' logs says why).
-
-**Two-tries rule broken twice:** Tom's face, ten passes before it was set aside; the sky's band, five tries in one evening before the photograph was measured.
-
-**Your question, builds:** 8 yesterday, 17 to 36 minutes (median 31; 3.2 hours): 15 cooking and packaging, 6 a second cook kept only as a measurement (removed), 9 tests and pictures. While one runs the graphics card stays free: code, records, research, reviewers; editor work waits.
-
-**Act on:** nothing; the voice's numbers come on one screen.
-
-## Builder, Monday 5 October
-
-**Done:** your plan adopted with its ten edits; phase 0's items 0.1 to 0.6; the history cleaned into the new repository (30.8 GB to 3.2 GB), with guards before every push here and on GitHub, nine workflows retired, the tests green on GitHub. Every page's answers read back: 144, none new.
-
-**Failed, then fixed:** phase 0's fresh reviewer failed it on eleven old jobs waiting on GitHub to run on this PC (one installs a scheduled task); the reconnect now refuses while any wait. A retired job put a 16 MB picture on main: taken off. The finished game carried a jacket made in Marvelous Designer's evaluation-only trial: now never built in, and a check traces every file the package ships to its source (6,585 of 6,585).
-
-**Evidence:** checks 62/62 here; the core tests green on GitHub; the Shipping package rebuilt twice; the friends' evening re-run across a restart from the real shortcut (6.7 cents of calls).
-
-**C:** 57.2 GB free, **F:** 22.5 GB.
-
-**For you:** cancel the eleven old jobs (or leave them to lapse about 13:20), then reconnect the build machine.
-
-## Builder, Sunday 4 October
-
-**No page today:** nothing passed the gate. [The proof view, one frame a step](https://claude.ai/artifact/CaQ73RAcLMk1zqvqaNYt3r).
-
-**Done:** your six answers applied; P5 on your own account; the history plan written (Needs you 1). Mickey's office furnished behind its window; every shop's board lettered by us; poll-tax bills; the image model's 41 worded pictures retired (kept on F:); cornices, brackets, panelled doors; the cottage doors' "pale slab" fixed; the brand bible put right. The atlas kept off main, as you ordered.
-
-**Failed:** the facades and Mickey's room, each after three fresh reviews (Needs you 3 and 4). Found: the street is lit by a sky 41% as bright as the one seen.
-
-**Evidence:** checks 47/47; core tests 5,077; engine checks 693/693; both game targets built today; previews of every try in production/previews. Committed here, not pushed: none of it has passed its gate yet.
-
-**C:** 72 GB free, **F:** 23 GB. Backup with this commit.
-
-**For you:** your four answers are recorded; I act on them Monday, starting with the five set-aside steps judged again by your narrow-points rule.
+**Act on:** your page for lamp post C, two taps: https://claude.ai/artifact/R6mfWdCEKmuHBPD9q6JYJ3
