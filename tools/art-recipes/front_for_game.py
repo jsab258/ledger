@@ -97,6 +97,35 @@ def cut_out_cards(glb, names=CUTOUT_MATERIALS):
     return n
 
 
+# A DISPLAY'S CLOTH IS SOLID (23 October, the tea rooms' gate, square on: dark saw-tooth triangles ran down the fold
+# ridges of the café curtains, which the design gives half transmission; drawn see-through in the game, a folded sheet's
+# triangles are not sorted by depth, and back folds drew over front ones). Each material named here loses its
+# transmission and is written opaque.
+SOLID_CLOTH = ("cafe_curtain",)
+
+
+def solid_cloth(glb, names=SOLID_CLOTH):
+    """Rewrite a glb in place with the named materials' transmission removed and alphaMode OPAQUE. Returns how many changed."""
+    import struct
+    data = open(glb, "rb").read()
+    jlen = struct.unpack("<I", data[12:16])[0]
+    j = json.loads(data[20:20 + jlen])
+    rest = data[20 + jlen:]
+    n = 0
+    for m in j.get("materials", []):
+        if m.get("name") in names and ("KHR_materials_transmission" in m.get("extensions", {}) or m.get("alphaMode") in ("BLEND", "MASK")):
+            m.get("extensions", {}).pop("KHR_materials_transmission", None)
+            m["alphaMode"] = "OPAQUE"
+            m.pop("alphaCutoff", None)
+            n += 1
+    if n:
+        body = json.dumps(j, separators=(",", ":")).encode("utf-8")
+        body += b" " * ((4 - len(body) % 4) % 4)
+        head = data[:8] + struct.pack("<I", 20 + len(body) + len(rest)) + struct.pack("<I", len(body)) + data[16:20]
+        open(glb, "wb").write(head + body + rest)
+    return n
+
+
 # A LIT BOX SIGN GLOWS AT NIGHT (22 October, the newsagent's front: the design's sign is lit by tubes, the target's 4.1
 # `lit: tubes`; its gate puts the 4.1 board's emissive map on the sign's face material at night, sw_gate.py, and its glb is
 # the day state, PC-NA1): the map goes into the front's glb as that material's emissive texture with a factor of 0, so it is
@@ -186,9 +215,10 @@ def main(src, name, display=False, glow=None):
     bpy.ops.export_scene.gltf(filepath=glb, export_format="GLB", use_selection=True, export_apply=True,
                               export_materials="EXPORT", export_image_format="AUTO", export_yup=True)
     if display:
+        solid = solid_cloth(glb)
         tris = sum(len(p.vertices) - 2 for p in joined.data.polygons)
-        print("front_for_game: %s -> %s display parts=%d slots=%d sheenTinted=%d triangles=%d bytes=%d"
-              % (os.path.basename(src), glb, len(keep), len(joined.material_slots), tinted, tris, os.path.getsize(glb)))
+        print("front_for_game: %s -> %s display parts=%d slots=%d sheenTinted=%d solidCloth=%d triangles=%d bytes=%d"
+              % (os.path.basename(src), glb, len(keep), len(joined.material_slots), tinted, solid, tris, os.path.getsize(glb)))
         return 0
     cut_out_cards(glb)
     if glow:

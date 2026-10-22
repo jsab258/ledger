@@ -227,6 +227,55 @@
    "pictures_note": "22 October: the cloud's room, built on the PC at 128 samples (production/cloud-week/kit/shop-windows build_shop.py room), which also clears the two old carton names of the 48-sample pictures (OWED-04); the shop is lit at night by its design (shut at 17.30, its lights left on), so its door card reads CLOSED and its window is lit.",
    "sources": "the cloud's target for the ironmonger (production/cloud-week/targets/shop-windows/target.json) and its notes (production/cloud-week/kit/shop-windows/NOTES.md, the ironmonger)",
    "spill_lumens": 60
+  },
+  {
+   "id": "tea_rooms",
+   "block": "west_north",
+   "bay": 2,
+   "trade": "tea rooms (no. 14): tables with checked cloths, a counter with cake stands and an urn, plates on a dresser, a menu board (production/cloud-week/targets/shop-windows, the tea rooms); open to 22:00",
+   "room": {
+    "w": 5.3,
+    "h": 2.4,
+    "d": 4.5
+   },
+   "card": {
+    "x0": 24.35,
+    "x1": 29.65,
+    "bottom": 0.65,
+    "top": 3.05,
+    "z": 5.875
+   },
+   "decal": "production/art/shop-rooms/tea_room_day",
+   "pictures": "production/art/shop-rooms/tea-rooms-cloud",
+   "side": -1,
+   "camera_d": 5.3,
+   "pixels_wide": 4096,
+   "lit_at_night": true,
+   "brightness_day": 0.15,
+   "brightness_night": 0.7,
+   "display": {
+    "glb": "tea-rooms-display",
+    "x0": 26.3,
+    "x1": 29.65,
+    "front": 5.27,
+    "bed": 0.7,
+    "measured": "the cloud's display (production/cloud-week/kit/shop-windows, build_shop.py display, built on the PC 23 October): its window zone u 2300 to 5650 mm from the viewer's left (the tea rooms' doors stand at the viewer's left, sw_ctx zones), street x 26.30 to 29.65 on the west (street x = 24 + u/1000), 0.025 m behind the front's wall face (5.295) and 0.60 m above the footway. 23 October, its gate's first round: the newsagent's zone copied here (u 350 to 3700) stood the display 1.95 m left of its window."
+   },
+   "front": {
+    "glb": "tea-rooms-front",
+    "x": 27.0,
+    "z": 5.295,
+    "up": 0.1,
+    "note": "23 October 2026, night (his message of 22 October: the next shop family the same way as Rita's): the cloud's whole front for the tea rooms' bay (west_north bay 2, street x 24 to 30), made ready by tools/art-recipes/front_for_game.py; its frame's origin is the bay's middle (street x 27) at its wall face (5.295 from the centreline) on the footway. Its fascia is painted, not lit.",
+    "door_sign_closed": "production/art/shop-signs/door-card-closed",
+    "door_sign_note": "22 October, the ironmonger's night gate: the door's card turned to its CLOSED face at night (the design's K03b_A, production/cloud-week/2d/paper; sw_gate.py turns it for a shop whose hours end before the evening: Rita's 5.30, the ironmonger's); open_at_night on the shop keeps it OPEN (VignetteShot.cpp ReDriveShopInteriors).",
+    "street_decals": false,
+    "street_decals_note": "22 October, its gate (square on and from the left): the street's splash and damp bands (production/specs/street-wear.json) and the old front's moss stain (vignette-pieces decal_08_Moss001), placed for the bay's old joinery, stood on its pale sill, window post and stallriser with hard edges; the front takes no street decals, its wear baked into its own paints. Rita's and the ironmonger's still take them (their gates passed so; listed)."
+   },
+   "pictures_note": "23 October: the cloud's room, built on the PC at 128 samples (production/cloud-week/kit/shop-windows build_shop.py room); open to 22:00 by its design, so at night it is lit and its card reads OPEN (open_at_night).",
+   "sources": "the cloud's target for the ironmonger (production/cloud-week/targets/shop-windows/target.json) and its notes (production/cloud-week/kit/shop-windows/NOTES.md, the ironmonger)",
+   "spill_lumens": 60,
+   "open_at_night": true
   }
  ]
 }

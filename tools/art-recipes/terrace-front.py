@@ -3206,8 +3206,9 @@ KIT_REPLACES_PREFIX = ("shop_door_", "side_door_")
 #: 22 October: the ironmonger's (west_north bay 1, no. 16), the next shop family Rita's way (his message of 22
 #: October); a west bay is this recipe's same bay turned a half turn, so the front's frame maps the same way.
 #: 22 October, night: the newsagent's (west_north bay 0, no. 18), the next after his, the same way.
+#: 23 October, night: the tea rooms' (west_north bay 2, no. 14), the third of the west row's three.
 CLOUD_FRONTS = {("east_parade", 2): "ritas-front", ("west_north", 1): "ironmonger-front",
-                ("west_north", 0): "newsagent-front"}
+                ("west_north", 0): "newsagent-front", ("west_north", 2): "tea-rooms-front"}
 CLOUD_WALL_BEHIND_M = 0.17
 #: the piers behind the front's end pilasters (PC-04): 80 mm in from each bay edge, from just behind the
 #: pilasters' fronts (0.18 out from the front's wall face) to 0.45 back, to the cornice's top (3.55) and over
@@ -9025,7 +9026,16 @@ def selftest():
                 for k in SHOP_PARTS:
                     if k in b["id"]:
                         shoppy.add(k)
-            if q["ground_floor"] == "shopfront":
+            # (23 October: a bay with a cloud front builds none of this recipe's parts, its own front standing there;
+            # with every bay of a row a cloud front, each bay's own display pane and door glass stand for them)
+            cloud_here = [kb for (blk, kb) in CLOUD_FRONTS if blk == other]
+            if q["ground_floor"] == "shopfront" and len(cloud_here) >= q["bays"]:
+                whole = all(any(b["id"].startswith("kit_glass_window_frame_display") and b.get("bay") == kb for b in qboxes)
+                            and any(b["id"].startswith("cloud_glass_door") and b.get("bay") == kb for b in qboxes)
+                            for kb in cloud_here)
+                check("accept/%s-carries-a-whole-shopfront" % other, whole,
+                      "every bay a cloud front: %d with a display pane and door glass" % len(cloud_here))
+            elif q["ground_floor"] == "shopfront":
                 missing = [k for k in SHOP_PARTS if k not in shoppy]
                 check("accept/%s-carries-a-whole-shopfront" % other, not missing,
                       "missing " + ",".join(missing))
@@ -9086,6 +9096,8 @@ def selftest():
                 # A SHOP ROW HAS SHOP DOORS, not household ones, and its
                 # glazing is the display run rather than a pair of sashes.
                 shopdoors = [b for b in qboxes if b["id"].startswith("shop_door")]
+                # a cloud front's shop door counts by its own glass (23 October)
+                shopdoors += list({b["id"].rsplit("_bay", 1)[-1]: b for b in qboxes if b["id"].startswith("cloud_glass_door")}.values())
                 # a cloud front's display glass counts (kit_glass_window_frame_display, the name the crime finds)
                 disp = [b for b in qboxes if b["id"].startswith(("display_glazing", "kit_glass_window_frame_display"))]
                 check("accept/%s-has-a-shop-door-per-bay" % other,
@@ -9197,6 +9209,9 @@ def selftest():
                 if "_display_jamb_left_" not in b["id"]:
                     continue
                 (metal_bays if b["material"] in REFIT_FRAMES else timber_bays).add(b["id"])
+            # every cloud front is a timber front of its own (23 October: three of them now stand where this recipe's
+            # timber bays stood)
+            timber_bays |= {"cloud_%s_bay%d" % (blk, kb) for (blk, kb) in CLOUD_FRONTS}
             check("accept/the-parade-is-mixed-not-all-metal",
                   bool(metal_bays) and len(timber_bays) > len(metal_bays),
                   "%d metal / %d timber" % (len(metal_bays), len(timber_bays)))

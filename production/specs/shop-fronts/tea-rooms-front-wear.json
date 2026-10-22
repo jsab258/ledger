@@ -1,0 +1,108 @@
+{
+  "front": "tea-rooms-front",
+  "out": "tea-rooms-front-worn",
+  "note": "23 October 2026, night: the tea rooms' front worn the way the newsagent's, the ironmonger's and Rita's passed (tools/art-recipes/front_wear.py, the same settings), with this front's own places read from its model on 23 October: its shop door (x -1.548 to -0.858, at the viewer's left) and its lever at x -1.613 to -1.476, 0.88 to 1.12 up, on the door face (y -0.07); the door's bottom rail z 0.03 to 0.22 under its moulding (0.218 to 0.258, kept clear of chips) and its lock rail 0.55 to 0.88; the cream sill's nose z 0.525 to 0.63 over the window, x -0.70 to 2.65. Its paints are a brown front, a cream door and joinery and a dark brown side door; the cornice's white timber is above the foot and not worn. No night glow: its sign is painted.",
+  "paints": [
+    "paint_brown",
+    "paint_door_cream",
+    "paint_side_door_dark_brown"
+  ],
+  "texture_px": {
+    "paint_brown": 4096,
+    "paint_door_cream": 4096,
+    "paint_side_door_dark_brown": 2048
+  },
+  "texture_px_note": "one texture set per paint, its ground filled with the clean paint (Rita's lesson)",
+  "roughness_px": 1024,
+  "detail_below_m": 1.2,
+  "detail_ratio": 3.0,
+  "dirt_hue": [
+    0.2,
+    0.155,
+    0.11
+  ],
+  "dirt_luminance": 0.55,
+  "foot_m": 0.17,
+  "foot_ragged_m": 0.05,
+  "foot_full": 0.4,
+  "tide": 0.15,
+  "tide_m": 0.03,
+  "splash_m": 0.4,
+  "splash": 0.5,
+  "splash_above": 0.55,
+  "ao_m": 0.08,
+  "ao_reach_m": 1.0,
+  "ao": 0.9,
+  "ao_everywhere": 0.3,
+  "ledge": 0.3,
+  "lever": [
+    -1.545,
+    -0.07,
+    1.0
+  ],
+  "lever_m": 0.15,
+  "lever_weight": 0.25,
+  "chip_colour": [
+    0.22,
+    0.18,
+    0.13
+  ],
+  "chip_edge_m": 0.03,
+  "chip_scale": 25.0,
+  "chip_above": 0.58,
+  "chip_regions": [
+    {
+      "name": "shop door, bottom rail",
+      "x": [
+        -1.55,
+        -0.85
+      ],
+      "z": [
+        0.0,
+        0.21
+      ],
+      "amount": 1.0,
+      "note": "22 October, the gate's left view: chips on the rail's top moulding (z 0.218 to 0.258, a thin sloped profile) came out as evenly spaced chevrons, the mask aliased on its narrow strips; the region now stops under it, the rail's flat face and its foot still chipped (try 1 of this fault)."
+    },
+    {
+      "name": "shop door, lock rail",
+      "x": [
+        -1.55,
+        -0.85
+      ],
+      "z": [
+        0.54,
+        0.89
+      ],
+      "amount": 1.0
+    },
+    {
+      "name": "the sill's nose",
+      "x": [
+        -0.71,
+        2.66
+      ],
+      "z": [
+        0.52,
+        0.63
+      ],
+      "amount": 1.0
+    },
+    {
+      "name": "the foot, elsewhere",
+      "x": [
+        -3.0,
+        3.0
+      ],
+      "z": [
+        0.0,
+        0.7
+      ],
+      "amount": 0.35
+    }
+  ],
+  "roughness_dirt": 0.55,
+  "roughness_chip": 0.6,
+  "roughness_note": "22 October, the gate's right view: grime at roughness 0.85 caught the sky as a grey sheen at a low slant and read as a pale chalky wash on the oxblood (78,35,37 to 78,68,65); street grime here is damp splash, so it is only a little duller than the paint.",
+  "dirt_luminance_floor": 0.035
+}
