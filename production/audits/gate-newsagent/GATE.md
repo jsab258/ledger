@@ -60,3 +60,23 @@ His message of 22 October: with item 7 blocked, Rita's night light, then the lam
   - the street's pale open end beyond the row.
 - **The front reads showroom-clean without the street's grime;** its own wear is the next step (w1).
 - **The last good pictures** are in F:/LedgerTools/gate/last-good/newsagent.
+
+## Its front's wear (w1)
+
+- **Made:** tools/art-recipes/front_wear.py with the ironmonger's passed settings and this front's own places, read from its model (production/specs/shop-fronts/newsagent-front-wear.json):
+  - the shop door's handle;
+  - its bottom rail, kept clear of the thin moulding that failed the ironmonger's first try, and its lock rail;
+  - the white sill's nose.
+- **The paints:** dove grey, white and the blue side door. The dirt floor matters only for the blue.
+- **The sign's glow** is put back into the worn glb after the bake (front_wear.py night_glow; Blender's round trip drops a dark emissive map).
+- **The game** takes newsagent-front-worn; newsagent-front is the clean copy.
+- **All ten views pass fresh reviewers at the first try:**
+  - by day: across the road, square on, from the left and from the right;
+  - at night: across the road, square on, from the left and from the right (the sign's glow identical to before, to 0.1 a channel);
+  - the street's hook and reverse cameras.
+- **Listed, for a later pass:**
+  - the sill is busy: chips on its nose, its back edge and the window's bottom rail along its whole length, densest near the camera;
+  - the small nicks on the glazing line come close to a dotted line;
+  - the plinth's dirt reads a little cream rather than brown on the pale paint, and its top follows the plinth;
+  - at night the street lamp's orange burn mutes it all.
+- **The last good pictures** are now w1's. Preview: production/previews/newsagent-2026-10-22.jpg (day above, night below).

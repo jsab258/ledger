@@ -19,6 +19,20 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 22 Oct 2026, item 5: a third delivered shop, with a sign lit by the hour, and street grime kept off a front that carries its own
+- Made: a designed shop in the street's bay: its front with a lit box sign, its window display, its room pictures, and the front's foot wear.
+- Method (setting-free):
+  - A sign that lights at night: put its own glow picture into the model, switched off, and let the game raise its strength after dark. A round trip through a modelling tool can drop a switched-off glow, so put it back after any rebake.
+  - A piece that carries its own wear must not also take the old setting's projected grime, placed by rule for what stood there before. Turn decal-receiving off on the piece.
+  - Where two delivered pieces meet, the filler between them belongs to one of them, not both. Two overlapping faces in one plane fight.
+  - When a fix does not remove a fault, measure again before a second try. Here the banded strip was an untouched pipe in front, not the overlap first blamed.
+  - Read every printed word in delivered pictures at full size before they go in; names that echo real brands of a ruled-out product come out.
+- Tools: the delivering team's builder (Blender), the readying recipe with a night-glow option, the wear bake, the street recipe, the game's page cameras, a test run with one input file moved aside, fresh reviewers a view.
+- Target and check: the delivering team's passed design; the gate (ten views for the shop, ten for its wear).
+- Cost (hours): about 3.
+- Failed and why: the street's grime decals on the new front (sill band, moss patch), fixed once; the build script needed a fetch step it did not call.
+- Evidence: production/audits/gate-newsagent/GATE.md
+
 ### 22 Oct 2026, item 5: a second delivered front worn by the first one's bake
 - Made: wear at the foot, on the rails and round the lever, baked into a dark front's own paints.
 - Method (setting-free):

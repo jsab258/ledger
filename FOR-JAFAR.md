@@ -56,20 +56,18 @@ For tomorrow's page:
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
 
-## Builder, Friday 23 October (written Thursday 21:10, for your morning)
+## Builder, Friday 23 October (written Thursday 23:57, for your morning)
 
 **Failed:**
-- **Phase 1 closed, no exit passing:** the walk, period clothes, speech within 2 s, frame headroom, the office's wear.
-- **Tom's motion-matched walk** slides 13 to 67 cm at starts, stops and turns; your current walk slides too.
+- **Phase 1 closed, no exit passing:** the walk, period clothes, speech within 2 s, frame headroom, the office's wear. You held phase 2: next week goes on these.
+- **Tom's motion-matched walk** slides 13 to 67 cm; your current walk slides too.
 - **Epic's garments** cannot dress 1990 people.
-- **Rita's front wear, first try:** it read as frost on the pale paints.
+- **The newsagent's first round:** the street's old grime stood on its new front with hard edges. Now a front with its own wear takes none.
 
 **Done:**
-- **Gemini 3.5 Flash-Lite** checks in 0.60 s against Haiku's 0.97, but lets 3 invented details in 42 through.
-- **Pocket TTS** no longer stalls the walk. First speech is now 2.41 s; the model is the slow part.
-- **Rita's night light** passed all five night views, packaged too.
-- **Rita's front wear, second try,** passed all eight views.
-- **The lamp's staining** passed all six views: run-off from the arm, rust, algae.
-- **The ironmonger's shop** came in Rita's way and passed all eight views; door cards now read CLOSED at night.
+- **Gemini 3.5 Flash-Lite** is faster than Haiku but lets more invented details through. **Pocket TTS** no longer stalls the walk.
+- **Rita's night light and wear**, and **the lamp's staining**, passed every view.
+- **The ironmonger's shop and its wear** passed all eight views.
+- **The newsagent's shop and its wear** passed all ten views. Its box sign now lights after dark, and its card reads CLOSED.
 
-**Act on:** your page, three taps, at the link above.
+**Act on:** your page, two taps left (Marvelous Designer, the Gemini switch): https://claude.ai/artifact/2yznAYjEwDVv3RvzzKUpBR
