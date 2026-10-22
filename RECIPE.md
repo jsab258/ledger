@@ -19,6 +19,26 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 22 Oct 2026, item 5, the next shop family: a second delivered shop brought into the street by the first one's method, on the other side of the road
+- Made: a designed shop (front, window display, room pictures) standing in a bay on the street's other side, through the game's own glass; a door card the game turns by the hour.
+- Method (setting-free):
+  - Pick the next piece by the other team's own verdicts (both reviews passed) and by how much of it a player sees.
+  - Build it from the team's own scripts on this machine, then bring it in exactly as the first: the same readying step, the same street hook, the same shop entry.
+  - Check every assumption the first piece made about its side and its building before believing it carries: the mirrored side, the row's height, the names the game links by.
+  - When the design assumes a building the street does not have (a wall above the cornice), mount to what is there and keep the design's own numbers otherwise, in the design's script keyed by piece.
+  - A card or sign that changes with the hour is changed by the game, not baked into one model.
+  - A small printed card is solid, not see-through.
+- Tools: the team's shop builder (Blender), the front-readying recipe, the street recipe and its self-test, the game's page cameras (with the shop's window middle and side), a C++ swap of one material's picture at night, fresh reviewers a view.
+- Target and check: the team's passed design and its renders; the gate (eight views).
+- Cost (hours): about 2.5.
+- Failed and why (each fixed at most twice):
+  - the bracket on the roof of a one-storey row;
+  - filler piers through its eave;
+  - the shop entry linked by a new name the game did not know;
+  - the page camera framing the first shop by default;
+  - the door card OPEN at night, then see-through; a solid card a few pixels wide reads grey behind its glass at a slant (set aside: the glass's reflection, not the card).
+- Evidence: production/audits/gate-ironmonger/GATE.md
+
 ### 22 Oct 2026, item 5, the lamp: a kit piece's named stains baked onto its own unwrap and laid over by its shared material
 - Made: a stain picture for one kit piece (a concrete lamp column) and an optional stain in the kit's shared master, off by default.
 - Method (setting-free):

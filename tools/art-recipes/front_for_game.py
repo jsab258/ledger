@@ -65,6 +65,37 @@ def tint_sheen_to_base(mat):
     return True
 
 
+# A FRONT'S CARDS ARE SOLID (22 October, the ironmonger's night gate: his door's card, see-through as the design exported
+# it, showed the dark shop's room glowing through it as a pale tag, whichever face it turned): each material named here is
+# written OPAQUE. Try 1 wrote it cut-out (glTF MASK at 0.5); from the hook camera, a few pixels wide, Rita's cut-out card
+# washed out to grey by day. Its picture is transparent only in 293 of 88,000 pixels (the corners and the hole), which carry
+# the card's own colour, so opaque costs nothing seen. From the hook camera (a few pixels, a low slant) the solid card reads
+# grey: try 2 made it satin (roughness 0.7) and nothing changed, so it is the door glass's own reflection over it, now that
+# the card is drawn behind the glass as a solid (the see-through card had been drawn over it); set aside, listed.
+CUTOUT_MATERIALS = ("door_sign",)
+
+
+def cut_out_cards(glb, names=CUTOUT_MATERIALS):
+    """Rewrite a glb in place with the named materials' alphaMode OPAQUE. Returns how many changed."""
+    import struct
+    data = open(glb, "rb").read()
+    jlen = struct.unpack("<I", data[12:16])[0]
+    j = json.loads(data[20:20 + jlen])
+    rest = data[20 + jlen:]
+    n = 0
+    for m in j.get("materials", []):
+        if m.get("name") in names and m.get("alphaMode") in ("BLEND", "MASK"):
+            m["alphaMode"] = "OPAQUE"
+            m.pop("alphaCutoff", None)
+            n += 1
+    if n:
+        body = json.dumps(j, separators=(",", ":")).encode("utf-8")
+        body += b" " * ((4 - len(body) % 4) % 4)
+        head = data[:8] + struct.pack("<I", 20 + len(body) + len(rest)) + struct.pack("<I", len(body)) + data[16:20]
+        open(glb, "wb").write(head + body + rest)
+    return n
+
+
 def main(src, name, display=False):
     import bpy
     bpy.ops.wm.read_factory_settings(use_empty=True)
@@ -112,6 +143,7 @@ def main(src, name, display=False):
         print("front_for_game: %s -> %s display parts=%d slots=%d sheenTinted=%d triangles=%d bytes=%d"
               % (os.path.basename(src), glb, len(keep), len(joined.material_slots), tinted, tris, os.path.getsize(glb)))
         return 0
+    cut_out_cards(glb)
     os.makedirs(OUT_JSON, exist_ok=True)
     js = os.path.join(OUT_JSON, name + "-glass.json")
     with open(js, "w", encoding="utf-8", newline="\n") as f:

@@ -131,6 +131,10 @@ def wanted():
         pic = sh.get("pictures")
         if pic:
             files += [pic + "_" + s + ".png" for s in ("day", "night_lit", "night_dark")]
+        # and a cloud front's door card turned at night (22 October), wherever it lives
+        closed = (sh.get("front") or {}).get("door_sign_closed")
+        if closed:
+            files.append(closed + ".png")
     for d in DIRS:
         root = os.path.join(REPO, d)
         for dirpath, _dirs, names in os.walk(root):

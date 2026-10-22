@@ -7397,7 +7397,9 @@ namespace
 	// (tools/ue/make_interior_material.py). The card's front corner comes from its
 	// own bounds in the world, logged beside the spec's numbers.
 	struct FInteriorRow { int32 Row = -1; UMaterialInstanceDynamic* Mid = nullptr; float DayGlow = 1.0f, NightGlow = 1.0f; bool bLitAtNight = false;
-		TWeakObjectPtr<ARectLight> Spill; TArray<TWeakObjectPtr<ARectLight>> Strips; FString Shop; };
+		TWeakObjectPtr<ARectLight> Spill; TArray<TWeakObjectPtr<ARectLight>> Strips; FString Shop;
+		// the door's OPEN card, turned to CLOSED at night unless the shop keeps late hours (ReDriveShopInteriors)
+		UMaterialInstanceDynamic* DoorSign = nullptr; UTexture* SignOpen = nullptr; UTexture* SignClosed = nullptr; bool bOpenAtNight = false; };
 	TArray<FInteriorRow> GInteriorRows;
 	int32 GInteriorsAsked = 0;
 	// What the shops stood behind their glass, taken down when the street is painted again.
@@ -7665,7 +7667,8 @@ namespace
 	// its own joinery out (terrace-front.py CLOUD_FRONTS) and built the front's glass. The shop file
 	// gives the front's middle along the street (x), its wall face across (z, from the centreline)
 	// and the footway under it (up); east fronts turn half round as the displays do.
-	AActor* SpawnShopFront(UWorld* World, const Value& Front, double Side, FString& Note)
+	AActor* SpawnShopFront(UWorld* World, const Value& Front, double Side, FString& Note,
+	                       UMaterialInstanceDynamic** OutSign = nullptr, UTexture** OutOpen = nullptr, UTexture** OutClosed = nullptr)
 	{
 		const std::string Glb = LedgerStreet::StrOr(Front, "glb");
 		if (World == nullptr || Glb.empty()) { Note = TEXT("no-glb"); return nullptr; }
@@ -7728,7 +7731,38 @@ namespace
 				}
 			}
 		}
-		Note = FString::Printf(TEXT("front %s at %.0f,%.0f,%.0f cm, %d painted slot(s) worn at the foot"), *Stem, At.X, At.Y, At.Z, Worn);
+		// THE DOOR'S OPEN CARD TURNED AT NIGHT (22 October, the ironmonger's night gate: "the door's sign reads OPEN on a
+		// shut shop"; the design turns the card over to its CLOSED face, K03b_A, in a shut shop's night picture,
+		// production/cloud-week/kit/shop-windows/sw_gate.py): the front's "door_sign" slot becomes swappable and the
+		// CLOSED face, named by the front's entry ("door_sign_closed", a picture without its .png), is loaded beside it;
+		// ReDriveShopInteriors shows one or the other.
+		bool bSign = false;
+		const std::string Closed = LedgerStreet::StrOr(Front, "door_sign_closed");
+		if (UStaticMeshComponent* C = A->GetStaticMeshComponent())
+		{
+			const TArray<FStaticMaterial>& Slots = Mesh->GetStaticMaterials();
+			for (int32 Slot = 0; Slot < Slots.Num() && OutSign != nullptr && !Closed.empty(); ++Slot)
+			{
+				if (Slots[Slot].MaterialSlotName != FName(TEXT("door_sign"))) { continue; }
+				UMaterialInterface* Base = C->GetMaterial(Slot);
+				UMaterialInstanceDynamic* Mid = Base != nullptr ? UMaterialInstanceDynamic::Create(Base, A) : nullptr;
+				if (Mid == nullptr) { break; }
+				UTexture* Open = nullptr;
+				Mid->GetTextureParameterValue(FName(TEXT("BaseColorTexture")), Open);
+				int32 W = 0, H = 0;
+				FString As;
+				UTexture2D* Shut = ImportTexture(RepoOrGameInputs(FString(UTF8_TO_TCHAR((Closed + ".png").c_str()))), true, W, H, As);
+				if (Open == nullptr || Shut == nullptr) { break; }
+				C->SetMaterial(Slot, Mid);
+				*OutSign = Mid;
+				if (OutOpen != nullptr) { *OutOpen = Open; }
+				if (OutClosed != nullptr) { *OutClosed = Shut; }
+				bSign = true;
+				break;
+			}
+		}
+		Note = FString::Printf(TEXT("front %s at %.0f,%.0f,%.0f cm, %d painted slot(s) worn at the foot, door card %s"), *Stem, At.X, At.Y, At.Z, Worn,
+			bSign ? TEXT("turns at night") : TEXT("fixed"));
 		UE_LOG(LogTemp, Display, TEXT("LedgerInteriors: %s"), *Note);
 		return A;
 	}
@@ -8079,7 +8113,9 @@ namespace
 				if (Front != nullptr && Front->Type == T_OBJ)
 				{
 					FString FrontNote;
-					if (AActor* FA = SpawnShopFront(World, *Front, Side, FrontNote)) { GInteriorActors.Add(FA); }
+					if (AActor* FA = SpawnShopFront(World, *Front, Side, FrontNote, &Ir.DoorSign, &Ir.SignOpen, &Ir.SignClosed)) { GInteriorActors.Add(FA); }
+					const Value* Late = Sh.Find("open_at_night");
+					Ir.bOpenAtNight = Late != nullptr && Late->Type == T_BOOL && Late->Bool;
 				}
 				double SpillLumens = LedgerStreet::NumOr(Sh, "spill_lumens", 300.0);
 				FParse::Value(FCommandLine::Get(), TEXT("ShopSpillLumens="), SpillLumens);
@@ -8139,6 +8175,10 @@ namespace
 			for (const TWeakObjectPtr<ARectLight>& St : Ir.Strips)
 			{
 				if (St.IsValid() && St->GetLightComponent() != nullptr) { St->GetLightComponent()->SetVisibility(!bSunOn && Ir.bLitAtNight && !GShopsDark.Contains(Ir.Shop)); }
+			}
+			if (Ir.DoorSign != nullptr)
+			{
+				Ir.DoorSign->SetTextureParameterValue(FName(TEXT("BaseColorTexture")), (bSunOn || Ir.bOpenAtNight) ? Ir.SignOpen : Ir.SignClosed);
 			}
 		}
 	}

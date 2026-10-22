@@ -47,6 +47,12 @@ PIER_Z = (0.0, 3.56)
 # (d -580), so a box deeper than that would cut through the card and the card would show inside the hall: 0.50 keeps the hall's back wall 0.08 in front of the card
 HALL_DEPTH = 500.0
 HALL_Z = (25.0, 2420.0)
+# THE PC'S STREET, 22 October 2026 (the PC's gate, the ironmonger across the road: "the KEYS CUT board's iron bracket is
+# mounted on the roof"): the target puts the bracket on brick above the cornice (plate 3.6 to 3.9 m), but the game's west_north
+# row is single-storey with its eave at 3.4 m, so there is no brick there. A board on such a shop hangs from its pilaster:
+# the plate on the door-end capital's face (d 175, z 2.55 to 2.85), the arm at its middle (2.70) and a short drop, the
+# board's foot at 2.22 m over the footway. Keyed by shop; the target is not edited (his ruling of 11 October).
+PC_SIGN_MOUNT = {"ironmonger": {"plate_foot_m": 2.55, "arm_height_m": 2.70, "drop_m": 0.10, "plate_d_mm": 175.0}}
 SIGN_NEAR_MIN = 330.0                  # a hanging board's near edge stands at least this far from the wall (mm): the cornice projects 300
 
 
@@ -812,13 +818,15 @@ def make_hanging_board(ctx, front, fasc_dir):
     hs = ctx.R["fascia"]["hanging_sign"]
     mt, pt = hs["mount"], None
     uc = ctx.u_of_x(mt["x_street_m"])
-    z_arm = mt["arm_height_m"] * 1000.0
+    pcm = PC_SIGN_MOUNT.get(ctx.id) or {}
+    z_arm = pcm.get("arm_height_m", mt["arm_height_m"]) * 1000.0
     proj = mt["projection_m"] * 1000.0
-    foot = mt["plate_foot_m"] * 1000.0
+    foot = pcm.get("plate_foot_m", mt["plate_foot_m"]) * 1000.0
+    plate_d = pcm.get("plate_d_mm", 0.0)
     man = json.load(open(os.path.join(fasc_dir, "manifest.json")))
     hsm = next(h for h in man["hanging_signs"] if h["id"] == hs["id"])
     bw, bh, bt = (v * 1000.0 for v in hsm["parts"]["board_m"])          # 550 x 380 x 40
-    drop = hsm["parts"]["drop_m"] * 1000.0                                # 760: from the arm to the board's top
+    drop = pcm.get("drop_m", hsm["parts"]["drop_m"]) * 1000.0             # 760: from the arm to the board's top
     z_top = z_arm - drop
     z_bot = z_top - bh
     parts = []
@@ -828,9 +836,9 @@ def make_hanging_board(ctx, front, fasc_dir):
     proj0 = proj
     proj = max(proj0, bw + SIGN_NEAR_MIN)
     k_ = (proj - 40.0) / (proj0 - 40.0)
-    parts.append(("black_iron", bs.new_obj("sign_plate", *bx(uc - 90.0, uc + 90.0, 0.0, 8.0, foot, foot + 300.0))))
+    parts.append(("black_iron", bs.new_obj("sign_plate", *bx(uc - 90.0, uc + 90.0, plate_d, plate_d + 8.0, foot, foot + 300.0))))
     for k, (du, dz) in enumerate(((-65, 100), (65, 100), (-65, -100), (65, -100))):
-        parts.append(("black_iron", bs.new_obj("sign_bolt_%d" % k, *cyl_d(uc + du, z_arm + dz, 8.0, 14.0, 6.0, 8))))
+        parts.append(("black_iron", bs.new_obj("sign_bolt_%d" % k, *cyl_d(uc + du, z_arm + dz, plate_d + 8.0, plate_d + 14.0, 6.0, 8))))
     arm_end = proj - 40.0
     parts.append(("black_iron", bs.new_obj("sign_arm", *bx(uc - 4.0, uc + 4.0, 8.0, arm_end, z_arm - 10.0, z_arm + 10.0))))
     # 14 Oct (batch B, the chandler's board 0.80 wide on an arm 1.09 long): the stretched brace's upper end ran through the first ring (FRN-10 saw a coplanar patch where the brace's flank and the ring's facet meet):

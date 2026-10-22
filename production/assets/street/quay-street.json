@@ -91,7 +91,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 824
+   "faces": 728
   },
   {
    "mesh": "street_brick_grey",
@@ -262,7 +262,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 104
+   "faces": 130
   },
   {
    "mesh": "street_brick_grey_h_west_north_bay2",
@@ -2002,7 +2002,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 560
+   "faces": 430
   },
   {
    "mesh": "street_fascia_door_navy",
@@ -2098,7 +2098,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 1350
+   "faces": 992
   },
   {
    "mesh": "street_fascia_plinth_black",
@@ -2242,7 +2242,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 1482
+   "faces": 988
   },
   {
    "mesh": "street_frame_painted",
@@ -2794,7 +2794,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 24
+   "faces": 48
   },
   {
    "mesh": "street_glass_wg_bay5",
@@ -2818,7 +2818,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 24
+   "faces": 60
   },
   {
    "mesh": "street_glass_wg_bay6",
@@ -3169,7 +3169,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 1794
+   "faces": 1768
   },
   {
    "mesh": "street_mickeys_card_production_art_shop_rooms_mickeys_day",
@@ -3470,7 +3470,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 31434
+   "faces": 31356
   },
   {
    "mesh": "street_paint_white",
@@ -4008,30 +4008,6 @@
    "faces": 6
   },
   {
-   "mesh": "street_sign_fascia_trade_ironmonger",
-   "material": "sign_production/assets/vignette/decals2d/fascia_trade_ironmonger",
-   "base_material": "paint_fascia",
-   "linear_rgb": [
-    0.03,
-    0.022,
-    0.03
-   ],
-   "roughness": 0.45,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": "production/assets/vignette/decals2d/fascia_trade_ironmonger",
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 6
-  },
-  {
    "mesh": "street_sign_fascia_trade_launderette",
    "material": "sign_production/assets/vignette/decals2d/fascia_trade_launderette",
    "base_material": "paint_fascia",
@@ -4356,7 +4332,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 132
+   "faces": 106
   },
   {
    "mesh": "street_window_far_lit",

@@ -407,6 +407,12 @@ def main(spec_path):
                               export_apply=True, export_yup=True)
 
     shared = one_texture_per_picture(out)
+    # and its door card solid, as the front's own copy is (front_for_game.cut_out_cards, 22 October)
+    import importlib.util
+    ffg = importlib.util.spec_from_file_location("front_for_game", os.path.join(os.path.dirname(os.path.abspath(__file__)), "front_for_game.py"))
+    mod = importlib.util.module_from_spec(ffg)
+    ffg.loader.exec_module(mod)
+    mod.cut_out_cards(out)
 
     report = {"out": out, "textures_merged": shared, "px": px, "bake_s": round(bake_s, 1), "total_s": round(time.time() - t0, 1),
               "density_low_per_high": spec["detail_ratio"], "high_scale": high_scale, "area_m2": density,

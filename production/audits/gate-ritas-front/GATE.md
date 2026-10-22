@@ -186,3 +186,10 @@ The cloud's W1 items (the band round the lever, the chipped rails and the sill's
 - **Fix, try 1.** The pier's face now stands 5 mm behind the frontage (terrace-front.py CLOUD_PIER_FRONT_M 0.005; its self-test asks for just behind, never on, 171/171). The street was exported and imported again; the glass bake is still fresh (the street's data file did not change).
 - **Measured.** Three captures of the same build read the same there (144,128,118): plain cream render meeting the cornice cap. The reverse view's joint between her right pilaster and FRESH FISH's shows no sky. Pictures: F:/LedgerTools/gate/new/ritas-pier-2026-10-22.
 - **One fresh reviewer: PASS.** The captures agree, nothing else on her front changed, and there is no sky in the reverse joint. The across view's last good picture is now run 1.
+
+## 22 October: her door card turned at night
+
+- **Found** at the ironmonger's night gate: the cloud fronts' door card read OPEN at all hours. The design turns it to CLOSED at night for a shop that shuts before the evening; hers shuts at 5.30.
+- **The game turns it now** (VignetteShot.cpp ReDriveShopInteriors; production/specs/shop-interiors.json door_sign_closed). The card is solid: see-through, a dark room glowed through it.
+- **Her two night views pass fresh reviewers twice:** CLOSED in red, lit from the street, as faint as the gilt hours beside it. Her last good night pictures are now these (F:/LedgerTools/gate/new/ironmonger-2026-10-22/r5).
+- **Listed, set aside after two tries:** from the hook camera, a few pixels wide, her card reads grey behind its door glass by day (production/audits/gate-ironmonger/GATE.md, rounds 6 and 7).

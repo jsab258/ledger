@@ -98,7 +98,9 @@
     "x": 18.0,
     "z": 5.295,
     "up": 0.1,
-    "note": "21 October 2026, his order (item 5) and his ruling of the day: the cloud's whole front for Rita's bay, made ready by tools/art-recipes/front_for_game.py (its glass is the street's, built by terrace-front.py CLOUD_FRONTS); its frame's origin is the bay's middle (street x 18) at its wall face (5.295 from the centreline) on the footway (0.10 above the crown)."
+    "note": "21 October 2026, his order (item 5) and his ruling of the day: the cloud's whole front for Rita's bay, made ready by tools/art-recipes/front_for_game.py (its glass is the street's, built by terrace-front.py CLOUD_FRONTS); its frame's origin is the bay's middle (street x 18) at its wall face (5.295 from the centreline) on the footway (0.10 above the crown).",
+    "door_sign_closed": "production/art/shop-signs/door-card-closed",
+    "door_sign_note": "22 October, the ironmonger's night gate: the door's card turned to its CLOSED face at night (the design's K03b_A, production/cloud-week/2d/paper; sw_gate.py turns it for a shop whose hours end before the evening: Rita's 5.30, the ironmonger's); open_at_night on the shop keeps it OPEN (VignetteShot.cpp ReDriveShopInteriors)."
    },
    "pictures_note": "21 October: the cloud's room, rebuilt on the PC at 128 samples (production/cloud-week/kit/shop-windows build_shop.py room), 4096 x 1855, on F:/LedgerTools/game-inputs (over git's 1 MB); the game's own 2048 pictures of 1 October (production/art/shop-rooms/pawnbroker_*) stay as they were.",
    "spill_y": 5.33,
@@ -107,10 +109,69 @@
    "spill_x": 17.03,
    "spill_width": 2.6,
    "display_lights": [
-    {"v": 0.2, "w": 0.377, "length": 3.2, "lumens": 1.5, "kelvin": 3000, "tilt": 30},
-    {"v": 0.24, "w": 0.727, "length": 3.2, "lumens": 1.5, "kelvin": 3000, "tilt": 30}
+    {
+     "v": 0.2,
+     "w": 0.377,
+     "length": 3.2,
+     "lumens": 1.5,
+     "kelvin": 3000,
+     "tilt": 30
+    },
+    {
+     "v": 0.24,
+     "w": 0.727,
+     "length": 3.2,
+     "lumens": 1.5,
+     "kelvin": 3000,
+     "tilt": 30
+    }
    ],
    "display_lights_note": "22 October, his order (Rita's night light, after the 21 October gate set it aside): the cloud's design (production/cloud-week/kit/shop-windows/NOTES.md, rule 4 and PC-07), a strip 8 mm under the front edge of each tier's board (the middle tier's at v 0.20, w 0.377; the top's at v 0.24, w 0.727, in the display's frame: v back from the glass, w above the bed), 3.20 m long, tipped 30 degrees toward the back, 3000 K; the head light lowered for the top tier and the pavement alone. The lumens measured in the game's own square-on night camera (-PageShots=shopnight -PageShopX=17.6), set by the cloud's burnt-pixel bar (any channel at 250 on at most 1 per cent of the window): strips 40, 20, 10, 3, 2 and 1.5 against the head's 160, 120, 100, 80 and 60; at 1.5 and 60 the window is 0.6 per cent burnt (the projector's pink reel and the white vase under the head light), the middle tier 0.01, the bed 0.13 (the last good: 10 to 21). Game lumens, not a shop's: the night exposure sets the scale"
+  },
+  {
+   "id": "ironmonger",
+   "block": "west_north",
+   "bay": 1,
+   "trade": "ironmonger (no. 16): a drawer wall of nails and screws, shelves of paint and paraffin tins, a counter with a brass rule, hand tools and garden tools on pegboards (production/cloud-week/targets/shop-windows, the ironmonger)",
+   "room": {
+    "w": 5.3,
+    "h": 2.4,
+    "d": 4.5
+   },
+   "card": {
+    "x0": 30.35,
+    "x1": 35.65,
+    "bottom": 0.65,
+    "top": 3.05,
+    "z": 5.875
+   },
+   "decal": "production/art/shop-rooms/ironmonger_day",
+   "pictures": "production/art/shop-rooms/ironmonger-cloud",
+   "side": -1,
+   "camera_d": 5.3,
+   "pixels_wide": 4096,
+   "lit_at_night": false,
+   "brightness_day": 0.15,
+   "brightness_night": 0.7,
+   "display": {
+    "glb": "ironmonger-display",
+    "x0": 30.35,
+    "x1": 33.7,
+    "front": 5.27,
+    "bed": 0.7,
+    "measured": "the cloud's display (production/cloud-week/kit/shop-windows, build_shop.py display, built on the PC 22 October): its window zone u 350 to 3700 mm from the viewer's left, street x 30.35 to 33.70 on the west (street x = 30 + u/1000, sw_ctx.Ctx.x_of_u), 0.025 m behind the front's wall face (5.295) and 0.60 m above the footway, as Rita's"
+   },
+   "front": {
+    "glb": "ironmonger-front",
+    "x": 33.0,
+    "z": 5.295,
+    "up": 0.1,
+    "note": "22 October 2026, his message of 22 October (the next shop family the same way as Rita's): the cloud's whole front for the ironmonger's bay (west_north bay 1, street x 30 to 36), made ready by tools/art-recipes/front_for_game.py; its frame's origin is the bay's middle (street x 33) at its wall face (5.295 from the centreline) on the footway; a west front turns as the west displays do.",
+    "door_sign_closed": "production/art/shop-signs/door-card-closed",
+    "door_sign_note": "22 October, the ironmonger's night gate: the door's card turned to its CLOSED face at night (the design's K03b_A, production/cloud-week/2d/paper; sw_gate.py turns it for a shop whose hours end before the evening: Rita's 5.30, the ironmonger's); open_at_night on the shop keeps it OPEN (VignetteShot.cpp ReDriveShopInteriors)."
+   },
+   "pictures_note": "22 October: the cloud's room, built on the PC at 128 samples (production/cloud-week/kit/shop-windows build_shop.py room); the shop is dark at night (the target), so the game shows its night_dark picture and no window light.",
+   "sources": "the cloud's target for the ironmonger (production/cloud-week/targets/shop-windows/target.json) and its notes (production/cloud-week/kit/shop-windows/NOTES.md, the ironmonger)"
   }
  ]
 }

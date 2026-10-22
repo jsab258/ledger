@@ -821,7 +821,9 @@ SHOPFRONT_REFITS = {
     ("east_parade", 0): {"frame": "frame_painted", "stall": "tile_patterned",
                          "paint": ("slate_blue", (0.0625, 0.0875, 0.119))},
     ("east_parade", 1): {"frame": "frame_metal", "stall": "tile_stall"},
-    ("west_north", 1):  {"frame": "frame_metal", "stall": "tile_stall"},
+    # ("west_north", 1) WAS A METAL REFIT until 22 October: the cloud's ironmonger front (a timber front with
+    # fluted pilasters, production/cloud-week/targets/shop-windows) stands there now (CLOUD_FRONTS), his
+    # message of 22 October bringing the shops in Rita's way.
     # THE SHIP CHANDLER'S, 24 September: a metal refit, as D06 gives the Hook's
     # shops, with R05's plain glazed tile under the glass.
     ("east_chandler", 0): {"frame": "frame_metal", "stall": "tile_stall"},
@@ -3201,7 +3203,9 @@ KIT_REPLACES_PREFIX = ("shop_door_", "side_door_")
 #: the smashed window work on it as on every bay. The front's frame: x about the bay's middle from
 #: the viewer's left; y = -(out from its wall face, which stands CLOUD_WALL_BEHIND_M behind this
 #: recipe's frontage); z above the footway, which is this recipe's threshold.
-CLOUD_FRONTS = {("east_parade", 2): "ritas-front"}
+#: 22 October: the ironmonger's (west_north bay 1, no. 16), the next shop family Rita's way (his message of 22
+#: October); a west bay is this recipe's same bay turned a half turn, so the front's frame maps the same way.
+CLOUD_FRONTS = {("east_parade", 2): "ritas-front", ("west_north", 1): "ironmonger-front"}
 CLOUD_WALL_BEHIND_M = 0.17
 #: the piers behind the front's end pilasters (PC-04): 80 mm in from each bay edge, from just behind the
 #: pilasters' fronts (0.18 out from the front's wall face) to 0.45 back, to the cornice's top (3.55) and over
@@ -3257,8 +3261,11 @@ def _cloud_shopfront(parts, p, name, here, root=None):
     # try 2, the same evening: the right-hand view still showed a hair of light at the neighbour's side,
     # so each pier reaches 60 mm past the bay's edge, behind the neighbour's own pilaster
     for side, (b0, b1) in (("l", (-CLOUD_PIER_PAST_M, CLOUD_PIER_M)), ("r", (W - CLOUD_PIER_M, W + CLOUD_PIER_PAST_M))):
-        _box(parts, "cloud_pier_%s" % side, "brick_red", b0, b1, CLOUD_PIER_FRONT_M, CLOUD_PIER_BACK_M,
-             0.0, CLOUD_PIER_TOP_M, "brick-behind-the-cloud-front's-end-pilaster")
+        # the row's own brick (22 October: the west row is grey, and red there hid in it)
+        _box(parts, "cloud_pier_%s" % side, p.get("wall_surface", "brick_red"), b0, b1, CLOUD_PIER_FRONT_M, CLOUD_PIER_BACK_M,
+             # no higher than just under the row's own eave (22 October, the ironmonger's gate: on the single-storey
+             # west row, eave 3.4 m, the piers at 3.60 stood up through the gutter at both ends of the front)
+             0.0, min(CLOUD_PIER_TOP_M, p.get("eaves_m", CLOUD_PIER_TOP_M) - 0.02), "brick-behind-the-cloud-front's-end-pilaster")
     return len(panes)
 
 
@@ -9072,7 +9079,8 @@ def selftest():
                 # A SHOP ROW HAS SHOP DOORS, not household ones, and its
                 # glazing is the display run rather than a pair of sashes.
                 shopdoors = [b for b in qboxes if b["id"].startswith("shop_door")]
-                disp = [b for b in qboxes if b["id"].startswith("display_glazing")]
+                # a cloud front's display glass counts (kit_glass_window_frame_display, the name the crime finds)
+                disp = [b for b in qboxes if b["id"].startswith(("display_glazing", "kit_glass_window_frame_display"))]
                 check("accept/%s-has-a-shop-door-per-bay" % other,
                       len(shopdoors) >= q["bays"], "%d for %d" % (len(shopdoors), q["bays"]))
                 check("accept/%s-has-a-display-window-per-bay" % other,
