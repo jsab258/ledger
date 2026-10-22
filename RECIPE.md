@@ -19,6 +19,15 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 22 Oct 2026, item 5, Rita's sample: a delivered model given the street's own wear by swapping its paint for the street's material, failed
+- Made: nothing kept. One try at wearing an imported shopfront at the foot by drawing its paints in the street's own worn material; the shop entry is restored and the code left off.
+- Method (setting-free): before swapping an asset's material for the house material, check that the two draw the same colour the same at several angles (a flat colour can shift by angle through the material chain); judge a house wear on the asset's light paints and dark ones separately, since a pale dust made for dark paint reads as frost on cream.
+- Tools: the game's material instances, the page cameras, fresh reviewers a view.
+- Target and check: the gate (no colour shift, wear that reads as dirt).
+- Cost (hours): about 1.
+- Failed and why: the house material drew the same oxblood 2 to 17 per cent darker and redder depending on the angle (cause not found), and its pale dust read as frost and marble veins on the cream and buttermilk paints.
+- Evidence: production/audits/gate-ritas-front/GATE.md (22 October, the wear)
+
 ### 22 Oct 2026, item 5, Rita's sample: a shop window's night light rebuilt to its designer's plan and set by measurement
 - Made: two under-shelf strip lights and a dimmer head lamp in a display window at night, their strengths set by a burnt-pixel bar; and a camera that waits until the night light has settled.
 - Method (setting-free): take the designer's own light plan before inventing one; sweep each light's strength in the game's own camera and set it by a written bar (no channel clipped over 1 per cent of the window), lights off first to find what burns; compare the window with its lit neighbours from the street; before and after from the same camera, the same build and the same settled light; when a reviewer sees the whole frame change, measure repeat runs before believing either picture.

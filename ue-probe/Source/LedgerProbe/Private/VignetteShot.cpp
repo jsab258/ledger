@@ -7682,13 +7682,53 @@ namespace
 		if (A == nullptr) { Note = TEXT("front-spawn-failed"); return nullptr; }
 		MakeMovable(A);
 		A->Tags.Add(FName(TEXT("LedgerShopFront")));   // kept out of the window light's channel (ApplyShopInteriors)
+		int32 Worn = 0;
 		if (UStaticMeshComponent* C = A->GetStaticMeshComponent())
 		{
 			C->SetMobility(EComponentMobility::Movable);
 			C->SetStaticMesh(Mesh);
 			C->SetCastShadow(true);
+			// ITS PAINT WORN AT THE FOOT AS THE STREET'S IS (22 October; his page: "not yet 2026-grade until
+			// the wear and the night light are done"; phase 1's Exit A review: "frontage wear: NOT MET"):
+			// the street's painted fronts wear at the foot in the street's own material (make_base_material.py
+			// WEAR_PARAM, 7 October), which the cloud's front, imported with its own glTF paints, never had.
+			// "worn_paints" in the front's entry names its painted slots and their colours ([r, g, b, rough],
+			// linear, as the front's own model carries them); each becomes the street's material in that flat
+			// colour with the street's foot wear (WearAmount, -FrontWear=N as for the street; the band's height
+			// and the footway's are the material's own). -ShopFrontPlainPaint leaves the model's own paints.
+			// TRY 1 FAILED ITS GATE, 22 October (production/audits/gate-ritas-front/GATE.md): the street's pale dust
+			// read as frost and marble veins on her cream and buttermilk, and this material drew her oxblood 2 to
+			// 17 per cent darker and redder by angle; her entry no longer names "worn_paints", so this is off.
+			const Value* Paints = Front.Find("worn_paints");
+			if (GBaseMaterial == nullptr) { GBaseMaterial = LoadObject<UMaterialInterface>(nullptr, kBaseMaterialPath); }
+			if (Paints != nullptr && Paints->Type == T_OBJ && GBaseMaterial != nullptr && !FParse::Param(FCommandLine::Get(), TEXT("ShopFrontPlainPaint")))
+			{
+				float FrontWear = 1.0f;
+				FParse::Value(FCommandLine::Get(), TEXT("FrontWear="), FrontWear);
+				const TArray<FStaticMaterial>& Slots = Mesh->GetStaticMaterials();
+				for (int32 Slot = 0; Slot < Slots.Num(); ++Slot)
+				{
+					const std::string Name(TCHAR_TO_UTF8(*Slots[Slot].MaterialSlotName.ToString()));
+					const Value* Rgb = Paints->Find(Name.c_str());
+					if (Rgb == nullptr || Rgb->Type != T_ARR || Rgb->Arr.size() < 4) { continue; }
+					UMaterialInstanceDynamic* Mid = UMaterialInstanceDynamic::Create(GBaseMaterial, A);
+					if (Mid == nullptr) { continue; }
+					const int32 RB = LedgerStreet::LinearByte(Rgb->Arr[3].Num);
+					Mid->SetTextureParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::MapParam(0))),
+						MakeFlatTexture(LedgerStreet::SrgbByte(Rgb->Arr[0].Num), LedgerStreet::SrgbByte(Rgb->Arr[1].Num),
+						                LedgerStreet::SrgbByte(Rgb->Arr[2].Num), true, TEXT("front-paint")));
+					Mid->SetTextureParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::MapParam(2))), MakeFlatTexture(RB, RB, RB, false, TEXT("front-rough")));
+					Mid->SetScalarParameterValue(FName(TEXT("TilingU")), 1.0f);
+					Mid->SetScalarParameterValue(FName(TEXT("TilingV")), 1.0f);
+					Mid->SetVectorParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::AlbedoGradeParam())), FLinearColor(1.0f, 1.0f, 1.0f, 1.0f));
+					Mid->SetScalarParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::WetnessParam())), 0.0f);
+					Mid->SetScalarParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::WearParam())), FrontWear);
+					C->SetMaterial(Slot, Mid);
+					++Worn;
+				}
+			}
 		}
-		Note = FString::Printf(TEXT("front %s at %.0f,%.0f,%.0f cm"), *Stem, At.X, At.Y, At.Z);
+		Note = FString::Printf(TEXT("front %s at %.0f,%.0f,%.0f cm, %d painted slot(s) worn at the foot"), *Stem, At.X, At.Y, At.Z, Worn);
 		UE_LOG(LogTemp, Display, TEXT("LedgerInteriors: %s"), *Note);
 		return A;
 	}

@@ -78,4 +78,33 @@ These are game lumens, not a shop's: the night exposure sets the scale.
 
 The earlier known shortfalls stand.
 
-**Last good pictures:** F:/LedgerTools/gate/last-good/ritas-front (cam_hook-night and the four pawnbroker *-shopnight, 22 October). Packaged and walked: owed to tonight's package.
+**Last good pictures:** F:/LedgerTools/gate/last-good/ritas-front (cam_hook-night and the four pawnbroker *-shopnight, 22 October). **Seen packaged** (711cc3c, the played copy, 22 October 14:20): the square-on night view measures as the editor's within one level (burnt 1.81, 0.01 and 0.13 per cent by tier; the log names the head light at 60 lm and two display strips). Walked by the AI tester: owed to tonight's walk.
+
+## 22 October: the front's wear at the foot, try 1 (failed; set aside for research)
+
+**The try.** Her front's painted slots (oxblood, the cream joinery, the buttermilk side door) were drawn in the street's own surface material, in their own colours, with the street's foot wear (WearAmount: dust up about 0.4 m with a ragged top), as the street's painted fronts wear (VignetteShot.cpp SpawnShopFront, "worn_paints"; make_base_material.py WEAR_PARAM).
+
+**The gate** (one fresh reviewer, Opus, a view, beside the same camera's before; brief F:/LedgerTools/gate/new/ritas-wear-2026-10-22/BRIEF.md):
+- **Square on by day: PASS**, with no evidence either way: the foot is out of frame.
+- **From across the road by day: FAIL.**
+  - The stallriser and pilaster bases read as splash dirt, matching the neighbours'.
+  - But the side door's foot reads as frost or foam: pale blotches as light as the cream, grey between them.
+  - The shop door's frame shows marble-like veins.
+  - The oxblood shifted colour over its full height: ΔE 6 on the pilasters, 10 on the cornice.
+- **From the left by day: FAIL.** The doorway's wear reads as marble veining, not dirt.
+
+**The two causes, measured.**
+1. **The street's dust on pale paint.** The material's dust is a cool pale grey through a 3D noise. On dark oxblood it reads as dirt; on cream and buttermilk it reads as frost, foam or veins.
+2. **The street's material draws the same flat colour darker and redder, and by angle.** On her oxblood, measured in linear light:
+   - from across the road, red 8%, green and blue 17% darker;
+   - from the left, only 2 to 6%.
+   
+   So a tint cannot correct it. The cause is not found: the material's specular is the glTF's 0.5, and its roughness is set from the same 0.45.
+
+The game is back on the front's own paints (the shop entry restored; the code stays, off without "worn_paints").
+
+**Next, after research:**
+- why the street material and the imported material differ on the same colour (compare the two material graphs and the look's colour chain);
+- a grime for pale paints (warm, darker, damp-edged, as the reviewers describe real door feet), or wear baked into the front's own model in Blender.
+
+The cloud's W1 items (the band round the lever, the chipped rails and the sill's nose) are still owed.
