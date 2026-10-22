@@ -1,0 +1,193 @@
+ledgerTomWalk=FAIL mode=matched worstJoinCm=101.78 stand=0.00/0 start=53.43/4 loop=88.42/15 stop=101.78/7 turn=43.33/8 run=12.44/7 frames=1780 mannequin: stand=0.00/0 start=45.12/4 loop=53.83/15 stop=92.91/9 turn=43.05/8 run=5.68/7
+the route's heading 90 degrees, 15.0 m clear ahead, 15.0 m behind
+2.00 s, stretch 0, 0 cm/s, root 0.0 cm off, M_Neutral_Stand_Idle_Loop@0.10(kept) cost -0.01 rate 1.00; chose idle, ahead 0 cm/s
+2.26 s, stretch 0, 0 cm/s, root 0.0 cm off, M_Neutral_Stand_Idle_Loop@0.36(kept) cost -0.01 rate 1.00; chose idle, ahead 0 cm/s
+2.51 s, stretch 0, 0 cm/s, root 0.0 cm off, M_Neutral_Stand_Idle_Loop@0.61(kept) cost -0.01 rate 1.00; chose idle, ahead 0 cm/s
+2.76 s, stretch 0, 0 cm/s, root 0.0 cm off, M_Neutral_Stand_Idle_Loop@0.87(kept) cost -0.01 rate 1.00; chose idle, ahead 0 cm/s
+3.00 s, stretch 0, 0 cm/s, root 0.0 cm off, M_Neutral_Stand_Idle_Loop@1.10(kept) cost -0.01 rate 1.00; chose idle, ahead 0 cm/s
+3.26 s, stretch 0, 0 cm/s, root 0.0 cm off, M_Neutral_Stand_Idle_Loop@1.36(kept) cost -0.01 rate 1.00; chose idle, ahead 0 cm/s
+3.51 s, stretch 0, 0 cm/s, root 0.0 cm off, M_Neutral_Stand_Idle_Loop@1.61(kept) cost -0.01 rate 1.00; chose idle, ahead 0 cm/s
+3.76 s, stretch 0, 0 cm/s, root 0.0 cm off, M_Neutral_Stand_Idle_Loop@1.86(kept) cost -0.01 rate 1.00; chose idle, ahead 0 cm/s
+4.00 s, stretch 0, 0 cm/s, root 0.0 cm off, M_Neutral_Stand_Idle_Loop@2.10(kept) cost -0.01 rate 1.00; chose idle, ahead 0 cm/s
+4.26 s, stretch 0, 0 cm/s, root 0.0 cm off, M_Neutral_Stand_Idle_Loop@2.36(kept) cost -0.01 rate 1.00; chose idle, ahead 0 cm/s
+4.51 s, stretch 0, 0 cm/s, root 0.0 cm off, M_Neutral_Stand_Idle_Loop@2.61(kept) cost -0.01 rate 1.00; chose idle, ahead 0 cm/s
+4.77 s, stretch 0, 0 cm/s, root 0.0 cm off, M_Neutral_Stand_Idle_Loop@2.86(kept) cost -0.01 rate 1.00; chose idle, ahead 0 cm/s
+5.00 s, stretch 0, 0 cm/s, root 0.0 cm off, M_Neutral_Stand_Idle_Loop@3.10(kept) cost -0.01 rate 1.00; chose idle, ahead 0 cm/s
+5.12 s, stretch 1, start, the mannequin's right foot, slid 36.67 cm
+5.17 s, stretch 1, start, his right foot, slid 42.18 cm
+5.25 s, stretch 1, 160 cm/s, root 8.6 cm off, M_Neutral_Walk_Reface_Start_F_R_090@0.15(kept) cost -0.09 rate 1.00; chose walk, ahead 160 cm/s
+5.46 s, stretch 1, start, his left foot, slid 53.43 cm
+5.48 s, stretch 1, start, the mannequin's left foot, slid 45.12 cm
+5.51 s, stretch 1, 160 cm/s, root 3.2 cm off, M_Neutral_Walk_Reface_Start_F_R_090@0.40(kept) cost -0.09 rate 0.82; chose walk, ahead 160 cm/s
+5.76 s, stretch 1, 160 cm/s, root 0.6 cm off, M_Neutral_Walk_Reface_Start_F_R_090@0.60(kept) cost -0.09 rate 0.78; chose walk, ahead 160 cm/s
+6.00 s, stretch 1, start, his right foot, slid 2.17 cm
+6.01 s, stretch 1, 160 cm/s, root 0.4 cm off, M_Neutral_Walk_Reface_Start_F_R_090@0.81(kept) cost -0.00 rate 0.78; chose walk, ahead 160 cm/s
+6.01 s, stretch 1, start, the mannequin's right foot, slid 8.52 cm
+6.26 s, stretch 1, 160 cm/s, root 0.4 cm off, M_Neutral_Walk_Reface_Start_F_R_090@1.01(kept) cost -0.00 rate 0.77; chose walk, ahead 160 cm/s
+6.52 s, stretch 1, 160 cm/s, root 0.5 cm off, M_Neutral_Walk_Reface_Start_F_R_090@1.21(kept) cost -0.00 rate 0.82; chose walk, ahead 160 cm/s
+6.58 s, stretch 1, start, his left foot, slid 4.57 cm
+6.60 s, stretch 1, start, the mannequin's left foot, slid 3.14 cm
+6.75 s, stretch 1, 160 cm/s, root 0.5 cm off, M_Neutral_Walk_Reface_Start_F_R_090@1.40(kept) cost -0.00 rate 0.81; chose walk, ahead 160 cm/s
+7.00 s, stretch 1, 160 cm/s, root 0.4 cm off, M_Neutral_Walk_Reface_Start_F_R_090@1.60(kept) cost -0.00 rate 0.79; chose walk, ahead 160 cm/s
+7.23 s, stretch 1, loop, his right foot, slid 2.95 cm
+7.23 s, stretch 1, loop, the mannequin's right foot, slid 4.89 cm
+7.25 s, stretch 1, 160 cm/s, root 0.4 cm off, M_Neutral_Walk_Reface_Start_F_R_090@1.80(kept) cost -0.00 rate 0.78; chose walk, ahead 160 cm/s
+7.52 s, stretch 1, 160 cm/s, root 0.4 cm off, M_Neutral_Walk_Reface_Start_F_R_090@2.01(kept) cost -0.00 rate 0.78; chose walk, ahead 160 cm/s
+7.77 s, stretch 1, 160 cm/s, root 0.5 cm off, M_Neutral_Walk_Reface_Start_F_R_090@2.21(kept) cost -0.00 rate 0.78; chose walk, ahead 160 cm/s
+7.83 s, stretch 1, loop, his left foot, slid 3.25 cm
+7.83 s, stretch 1, loop, the mannequin's left foot, slid 2.47 cm
+8.02 s, stretch 1, 160 cm/s, root 0.4 cm off, M_Neutral_Walk_Reface_Start_F_R_090@2.41(kept) cost -0.00 rate 0.79; chose walk, ahead 160 cm/s
+8.26 s, stretch 1, 160 cm/s, root 0.4 cm off, M_Neutral_Walk_Reface_Start_F_R_090@2.60(kept) cost -0.00 rate 0.79; chose walk, ahead 160 cm/s
+8.44 s, stretch 1, loop, his right foot, slid 3.45 cm
+8.45 s, stretch 1, loop, the mannequin's right foot, slid 3.59 cm
+8.50 s, stretch 1, 160 cm/s, root 0.4 cm off, M_Neutral_Walk_Reface_Start_F_R_090@2.80(kept) cost -0.00 rate 0.79; chose walk, ahead 160 cm/s
+8.76 s, stretch 1, 160 cm/s, root 0.4 cm off, M_Neutral_Walk_Reface_Start_F_R_090@3.01(kept) cost -0.00 rate 0.81; chose walk, ahead 160 cm/s
+9.00 s, stretch 1, 160 cm/s, root 0.5 cm off, M_Neutral_Walk_Reface_Start_F_R_090@3.20(kept) cost -0.00 rate 0.79; chose walk, ahead 160 cm/s
+9.06 s, stretch 2, loop, his left foot, slid 2.55 cm
+9.06 s, stretch 2, loop, the mannequin's left foot, slid 2.42 cm
+9.26 s, stretch 2, 0 cm/s, root 18.2 cm off, M_Neutral_Walk_Stop_F_Lfoot@1.25(kept) cost 0.02 rate 0.75; chose idle, ahead 0 cm/s
+9.47 s, stretch 2, stop, the mannequin's right foot, slid 40.28 cm
+9.51 s, stretch 2, 0 cm/s, root 14.7 cm off, M_Neutral_Stand_Idle_Loop@2.85(kept) cost -0.01 rate 1.00; chose idle, ahead 0 cm/s
+9.76 s, stretch 2, 0 cm/s, root 6.5 cm off, M_Neutral_Stand_Idle_Loop@3.10(kept) cost -0.01 rate 1.00; chose idle, ahead 0 cm/s
+10.00 s, stretch 2, 0 cm/s, root 2.8 cm off, M_Neutral_Stand_Idle_Loop@3.34(kept) cost -0.01 rate 1.00; chose idle, ahead 0 cm/s
+10.26 s, stretch 2, 0 cm/s, root 1.1 cm off, M_Neutral_Stand_Idle_Loop@3.60(kept) cost -0.01 rate 1.00; chose idle, ahead 0 cm/s
+10.51 s, stretch 2, 0 cm/s, root 0.5 cm off, M_Neutral_Stand_Idle_Loop@3.85(kept) cost -0.01 rate 1.00; chose idle, ahead 0 cm/s
+10.75 s, stretch 2, 0 cm/s, root 0.2 cm off, M_Neutral_Stand_Idle_Loop@4.10(kept) cost -0.01 rate 1.00; chose idle, ahead 0 cm/s
+11.00 s, stretch 2, 0 cm/s, root 0.1 cm off, M_Neutral_Stand_Idle_Loop@4.34(kept) cost -0.01 rate 1.00; chose idle, ahead 0 cm/s
+11.25 s, stretch 2, 0 cm/s, root 0.0 cm off, M_Neutral_Stand_Idle_Loop@4.59(kept) cost -0.01 rate 1.00; chose idle, ahead 0 cm/s
+11.51 s, stretch 2, 0 cm/s, root 0.0 cm off, M_Neutral_Stand_Idle_Loop@4.85(kept) cost -0.01 rate 1.00; chose idle, ahead 0 cm/s
+11.66 s, stretch 3, stop, his left foot, slid 101.78 cm
+11.67 s, stretch 3, stop, the mannequin's left foot, slid 92.91 cm
+11.76 s, stretch 3, 160 cm/s, root 5.8 cm off, M_Neutral_Walk_Reface_Start_F_L_180@0.17(kept) cost -0.49 rate 0.92; chose walk, ahead 159 cm/s
+11.98 s, stretch 3, stop, his right foot, slid 66.73 cm
+11.98 s, stretch 3, stop, the mannequin's right foot, slid 41.75 cm
+12.01 s, stretch 3, 160 cm/s, root 2.6 cm off, M_Neutral_Walk_Reface_Start_F_L_180@0.40(kept) cost -0.49 rate 0.82; chose walk, ahead 160 cm/s
+12.25 s, stretch 3, 160 cm/s, root 1.7 cm off, M_Neutral_Walk_Reface_Start_F_L_180@0.60(kept) cost -0.49 rate 0.79; chose walk, ahead 160 cm/s
+12.50 s, stretch 3, turn, the mannequin's left foot, slid 10.16 cm
+12.51 s, stretch 3, 160 cm/s, root 1.8 cm off, M_Neutral_Walk_Reface_Start_F_L_180@0.81(kept) cost 0.00 rate 0.80; chose walk, ahead 160 cm/s
+12.51 s, stretch 3, turn, his left foot, slid 9.87 cm
+12.76 s, stretch 3, 160 cm/s, root 1.9 cm off, M_Neutral_Walk_Reface_Start_F_L_180@1.00(kept) cost 0.00 rate 0.79; chose walk, ahead 160 cm/s
+13.01 s, stretch 3, 160 cm/s, root 1.9 cm off, M_Neutral_Walk_Reface_Start_F_L_180@1.20(kept) cost 0.00 rate 0.76; chose walk, ahead 160 cm/s
+13.09 s, stretch 3, turn, his right foot, slid 4.72 cm
+13.09 s, stretch 3, turn, the mannequin's right foot, slid 6.63 cm
+13.26 s, stretch 3, 160 cm/s, root 2.0 cm off, M_Neutral_Walk_Reface_Start_F_L_180@1.40(kept) cost 0.00 rate 0.80; chose walk, ahead 160 cm/s
+13.51 s, stretch 3, 160 cm/s, root 2.0 cm off, M_Neutral_Walk_Reface_Start_F_L_180@1.60(kept) cost 0.00 rate 0.76; chose walk, ahead 160 cm/s
+13.69 s, stretch 3, loop, his left foot, slid 6.41 cm
+13.69 s, stretch 3, loop, the mannequin's left foot, slid 4.84 cm
+13.76 s, stretch 3, 160 cm/s, root 1.9 cm off, M_Neutral_Walk_Reface_Start_F_L_180@1.80(kept) cost 0.00 rate 0.77; chose walk, ahead 160 cm/s
+14.01 s, stretch 3, 160 cm/s, root 2.0 cm off, M_Neutral_Walk_Reface_Start_F_L_180@2.00(kept) cost 0.00 rate 0.81; chose walk, ahead 160 cm/s
+14.25 s, stretch 3, 160 cm/s, root 2.0 cm off, M_Neutral_Walk_Reface_Start_F_L_180@2.20(kept) cost 0.00 rate 0.80; chose walk, ahead 160 cm/s
+14.29 s, stretch 3, loop, his right foot, slid 3.98 cm
+14.31 s, stretch 3, loop, the mannequin's right foot, slid 5.95 cm
+14.51 s, stretch 3, 160 cm/s, root 2.0 cm off, M_Neutral_Walk_Reface_Start_F_L_180@2.40(kept) cost 0.00 rate 0.80; chose walk, ahead 160 cm/s
+14.76 s, stretch 3, 160 cm/s, root 2.0 cm off, M_Neutral_Walk_Reface_Start_F_L_180@2.60(kept) cost 0.00 rate 0.78; chose walk, ahead 160 cm/s
+14.92 s, stretch 3, loop, his left foot, slid 5.85 cm
+14.92 s, stretch 3, loop, the mannequin's left foot, slid 5.51 cm
+15.01 s, stretch 3, 160 cm/s, root 2.0 cm off, M_Neutral_Walk_Reface_Start_F_L_180@2.80(kept) cost 0.00 rate 0.79; chose walk, ahead 160 cm/s
+15.25 s, stretch 4, 78 cm/s, root 14.0 cm off, M_Neutral_Walk_Turn_R_180_Rfoot@1.08(kept) cost 0.04 rate 0.75; chose walk, ahead 141 cm/s
+15.35 s, stretch 4, loop, his right foot, slid 65.53 cm
+15.35 s, stretch 4, loop, the mannequin's right foot, slid 53.83 cm
+15.50 s, stretch 4, 160 cm/s, root 17.7 cm off, M_Neutral_Walk_Turn_R_180_Rfoot@1.33(kept) cost 0.01 rate 1.16; chose walk, ahead 160 cm/s
+15.54 s, stretch 4, turn, the mannequin's left foot, slid 13.63 cm
+15.55 s, stretch 4, turn, his left foot, slid 16.51 cm
+15.75 s, stretch 4, 160 cm/s, root 3.1 cm off, M_Neutral_Walk_Turn_R_180_Rfoot@1.58(kept) cost -0.00 rate 0.87; chose walk, ahead 160 cm/s
+16.01 s, stretch 4, 160 cm/s, root 1.2 cm off, M_Neutral_Walk_Turn_R_180_Rfoot@1.79(kept) cost -0.00 rate 0.82; chose walk, ahead 160 cm/s
+16.19 s, stretch 4, turn, his right foot, slid 4.76 cm
+16.19 s, stretch 4, turn, the mannequin's right foot, slid 9.44 cm
+16.26 s, stretch 4, 160 cm/s, root 1.2 cm off, M_Neutral_Walk_Turn_R_180_Rfoot@1.99(kept) cost -0.00 rate 0.79; chose walk, ahead 160 cm/s
+16.51 s, stretch 4, 160 cm/s, root 1.2 cm off, M_Neutral_Walk_Turn_R_180_Rfoot@2.19(kept) cost -0.00 rate 0.83; chose walk, ahead 160 cm/s
+16.76 s, stretch 4, 160 cm/s, root 1.2 cm off, M_Neutral_Walk_Turn_R_180_Rfoot@2.39(kept) cost -0.00 rate 0.81; chose walk, ahead 160 cm/s
+16.81 s, stretch 4, loop, his left foot, slid 4.79 cm
+16.82 s, stretch 4, loop, the mannequin's left foot, slid 3.98 cm
+17.01 s, stretch 4, 160 cm/s, root 1.2 cm off, M_Neutral_Walk_Turn_R_180_Rfoot@2.59(kept) cost -0.00 rate 0.80; chose walk, ahead 160 cm/s
+17.26 s, stretch 4, 160 cm/s, root 1.2 cm off, M_Neutral_Walk_Turn_R_180_Rfoot@2.79(kept) cost -0.00 rate 0.82; chose walk, ahead 160 cm/s
+17.45 s, stretch 4, loop, his right foot, slid 4.48 cm
+17.45 s, stretch 4, loop, the mannequin's right foot, slid 5.38 cm
+17.51 s, stretch 4, 160 cm/s, root 1.2 cm off, M_Neutral_Walk_Turn_R_180_Rfoot@2.99(kept) cost -0.00 rate 0.82; chose walk, ahead 160 cm/s
+17.76 s, stretch 4, 160 cm/s, root 1.2 cm off, M_Neutral_Walk_Turn_R_180_Rfoot@3.19(kept) cost -0.00 rate 0.77; chose walk, ahead 160 cm/s
+18.02 s, stretch 4, 160 cm/s, root 1.2 cm off, M_Neutral_Walk_Loop_F@2.51(kept) cost -0.01 rate 0.82; chose walk, ahead 160 cm/s
+18.05 s, stretch 4, loop, his left foot, slid 3.88 cm
+18.05 s, stretch 4, loop, the mannequin's left foot, slid 2.06 cm
+18.25 s, stretch 4, 160 cm/s, root 1.2 cm off, M_Neutral_Walk_Loop_F@2.70(kept) cost -0.01 rate 0.81; chose walk, ahead 160 cm/s
+18.51 s, stretch 4, 160 cm/s, root 1.2 cm off, M_Neutral_Walk_Loop_F@2.91(kept) cost -0.01 rate 0.84; chose walk, ahead 160 cm/s
+18.69 s, stretch 5, loop, his right foot, slid 24.51 cm
+18.69 s, stretch 5, loop, the mannequin's right foot, slid 27.16 cm
+18.76 s, stretch 5, 160 cm/s, root 3.7 cm off, M_Neutral_Walk_Loop_FR@3.15(kept) cost 1.67 rate 0.83; chose walk, ahead 160 cm/s
+19.01 s, stretch 5, 160 cm/s, root 0.8 cm off, M_Neutral_Walk_Loop_FR@3.35(kept) cost 1.67 rate 0.82; chose walk, ahead 160 cm/s
+19.25 s, stretch 5, turn, his left foot, slid 32.52 cm
+19.25 s, stretch 5, turn, the mannequin's left foot, slid 31.52 cm
+19.26 s, stretch 5, 160 cm/s, root 0.9 cm off, M_Neutral_Walk_Loop_FR@3.56(kept) cost 1.67 rate 0.78; chose walk, ahead 160 cm/s
+19.51 s, stretch 5, 160 cm/s, root 1.0 cm off, M_Neutral_Walk_Loop_FR@3.75(kept) cost 1.67 rate 0.81; chose walk, ahead 160 cm/s
+19.76 s, stretch 5, 139 cm/s, root 3.3 cm off, M_Neutral_Walk_Turn_R_090_Rfoot@0.84(kept) cost 0.10 rate 0.75; chose walk+pivot, ahead 151 cm/s
+19.90 s, stretch 5, turn, his right foot, slid 4.31 cm
+19.90 s, stretch 5, turn, the mannequin's right foot, slid 7.89 cm
+20.01 s, stretch 5, 159 cm/s, root 6.8 cm off, M_Neutral_Walk_Turn_R_090_Lfoot@1.35(kept) cost 0.05 rate 0.77; chose walk+pivot, ahead 154 cm/s
+20.07 s, stretch 6, loop, his left foot, slid 17.63 cm
+20.08 s, stretch 6, loop, the mannequin's left foot, slid 20.26 cm
+20.25 s, stretch 6, 160 cm/s, root 17.5 cm off, M_Neutral_Transition_Run_to_Walk_Lfoot@1.57(kept) cost 0.52 rate 0.94; chose walk, ahead 160 cm/s
+20.41 s, stretch 6, loop, his right foot, slid 30.85 cm
+20.42 s, stretch 6, loop, the mannequin's right foot, slid 29.82 cm
+20.51 s, stretch 6, 160 cm/s, root 19.3 cm off, M_Neutral_Transition_Run_to_Walk_Lfoot@1.80(kept) cost 0.53 rate 0.78; chose walk, ahead 160 cm/s
+20.76 s, stretch 6, 160 cm/s, root 19.6 cm off, M_Neutral_Transition_Run_to_Walk_Lfoot@2.02(kept) cost 0.52 rate 0.90; chose walk, ahead 160 cm/s
+21.01 s, stretch 6, 160 cm/s, root 20.0 cm off, M_Neutral_Transition_Run_to_Walk_Lfoot@2.25(kept) cost 0.53 rate 0.91; chose walk, ahead 160 cm/s
+21.02 s, stretch 6, turn, the mannequin's left foot, slid 43.05 cm
+21.04 s, stretch 6, turn, his left foot, slid 43.33 cm
+21.26 s, stretch 6, 160 cm/s, root 20.2 cm off, M_Neutral_Transition_Run_to_Walk_Lfoot@2.47(kept) cost 0.53 rate 0.88; chose walk, ahead 160 cm/s
+21.51 s, stretch 6, 160 cm/s, root 20.6 cm off, M_Neutral_Transition_Run_to_Walk_Lfoot@2.68(kept) cost 0.53 rate 0.81; chose walk, ahead 160 cm/s
+21.60 s, stretch 6, turn, his right foot, slid 39.07 cm
+21.60 s, stretch 6, turn, the mannequin's right foot, slid 40.91 cm
+21.75 s, stretch 6, 160 cm/s, root 20.7 cm off, M_Neutral_Transition_Run_to_Walk_Lfoot@2.87(kept) cost 0.53 rate 0.83; chose walk, ahead 160 cm/s
+22.01 s, stretch 6, 160 cm/s, root 20.8 cm off, M_Neutral_Transition_Run_to_Walk_Lfoot@3.08(kept) cost 0.53 rate 0.84; chose walk, ahead 160 cm/s
+22.21 s, stretch 7, loop, the mannequin's left foot, slid 43.30 cm
+22.26 s, stretch 7, 0 cm/s, root 14.2 cm off, M_Neutral_Stand_Idle_Loop@9.07(kept) cost 0.01 rate 1.00; chose idle, ahead 0 cm/s
+22.51 s, stretch 7, 0 cm/s, root 6.0 cm off, M_Neutral_Stand_Idle_Loop@9.32(kept) cost 0.01 rate 1.00; chose idle, ahead 0 cm/s
+22.76 s, stretch 7, 0 cm/s, root 2.4 cm off, M_Neutral_Stand_Idle_Loop@9.56(kept) cost 0.01 rate 1.00; chose idle, ahead 0 cm/s
+23.01 s, stretch 7, 0 cm/s, root 1.1 cm off, M_Neutral_Stand_Idle_Loop@9.81(kept) cost 0.01 rate 1.00; chose idle, ahead 0 cm/s
+23.25 s, stretch 7, 0 cm/s, root 0.4 cm off, M_Neutral_Stand_Idle_Loop@0.06(kept) cost 0.01 rate 1.00; chose idle, ahead 0 cm/s
+23.51 s, stretch 7, 0 cm/s, root 0.2 cm off, M_Neutral_Stand_Idle_Loop@0.32(kept) cost 0.01 rate 1.00; chose idle, ahead 0 cm/s
+23.76 s, stretch 7, 0 cm/s, root 0.1 cm off, M_Neutral_Stand_Idle_Loop@0.57(kept) cost 0.01 rate 1.00; chose idle, ahead 0 cm/s
+24.01 s, stretch 7, 0 cm/s, root 0.0 cm off, M_Neutral_Stand_Idle_Loop@0.82(kept) cost 0.01 rate 1.00; chose idle, ahead 0 cm/s
+24.26 s, stretch 7, 0 cm/s, root 0.0 cm off, M_Neutral_Stand_Idle_Loop@1.06(kept) cost 0.01 rate 1.00; chose idle, ahead 0 cm/s
+24.51 s, stretch 7, 0 cm/s, root 0.0 cm off, M_Neutral_Stand_Idle_Loop@1.31(kept) cost 0.01 rate 1.00; chose idle, ahead 0 cm/s
+24.70 s, stretch 8, stop, the mannequin's right foot, slid 64.01 cm
+24.71 s, stretch 8, stop, his right foot, slid 74.55 cm
+24.75 s, stretch 8, 133 cm/s, root 6.0 cm off, M_Neutral_Run_Reface_Start_F_R_180@0.28(kept) cost -0.33 rate 0.77; chose run+start, ahead 376 cm/s
+24.91 s, stretch 8, loop, his left foot, slid 88.42 cm
+24.91 s, stretch 8, stop, the mannequin's left foot, slid 58.93 cm
+25.00 s, stretch 8, 331 cm/s, root 6.1 cm off, M_Neutral_Run_Reface_Start_F_R_180@0.48(kept) cost -0.45 rate 0.81; chose run, ahead 405 cm/s
+25.15 s, stretch 8, run, his right foot, slid 12.44 cm
+25.15 s, stretch 8, run, the mannequin's right foot, slid 4.31 cm
+25.25 s, stretch 8, 420 cm/s, root 3.9 cm off, M_Neutral_Run_Reface_Start_F_R_180@0.69(kept) cost -0.00 rate 0.84; chose run, ahead 420 cm/s
+25.38 s, stretch 8, run, his left foot, slid 6.65 cm
+25.38 s, stretch 8, run, the mannequin's left foot, slid 5.68 cm
+25.50 s, stretch 8, 420 cm/s, root 5.1 cm off, M_Neutral_Run_Reface_Start_F_R_180@0.90(kept) cost -0.02 rate 0.83; chose run, ahead 420 cm/s
+25.71 s, stretch 8, run, his right foot, slid 4.73 cm
+25.71 s, stretch 8, run, the mannequin's right foot, slid 4.50 cm
+25.76 s, stretch 8, 420 cm/s, root 5.3 cm off, M_Neutral_Run_Reface_Start_F_R_180@1.11(kept) cost -0.01 rate 0.82; chose run, ahead 420 cm/s
+26.00 s, stretch 8, 420 cm/s, root 5.5 cm off, M_Neutral_Run_Reface_Start_F_R_180@1.32(kept) cost -0.02 rate 0.83; chose run, ahead 420 cm/s
+26.00 s, stretch 8, run, his left foot, slid 4.45 cm
+26.00 s, stretch 8, run, the mannequin's left foot, slid 5.42 cm
+26.25 s, stretch 8, 420 cm/s, root 5.5 cm off, M_Neutral_Run_Reface_Start_F_R_180@1.53(kept) cost -0.02 rate 0.83; chose run, ahead 420 cm/s
+26.36 s, stretch 8, run, his right foot, slid 4.68 cm
+26.36 s, stretch 8, run, the mannequin's right foot, slid 2.47 cm
+26.51 s, stretch 8, 420 cm/s, root 5.5 cm off, M_Neutral_Run_Reface_Start_F_R_180@1.74(kept) cost -0.02 rate 0.85; chose run, ahead 420 cm/s
+26.74 s, stretch 8, run, the mannequin's left foot, slid 3.73 cm
+26.76 s, stretch 8, 420 cm/s, root 5.6 cm off, M_Neutral_Run_Reface_Start_F_R_180@1.95(kept) cost -0.01 rate 0.79; chose run, ahead 420 cm/s
+26.76 s, stretch 8, run, his left foot, slid 6.85 cm
+27.01 s, stretch 8, 420 cm/s, root 5.5 cm off, M_Neutral_Run_Reface_Start_F_R_180@2.16(kept) cost -0.02 rate 0.83; chose run, ahead 420 cm/s
+27.13 s, stretch 9, run, his right foot, slid 2.93 cm
+27.13 s, stretch 9, run, the mannequin's right foot, slid 4.07 cm
+27.26 s, stretch 9, 111 cm/s, root 4.9 cm off, M_Neutral_Run_Stop_F_Lfoot@0.83(kept) cost -0.07 rate 0.85; chose idle, ahead 31 cm/s
+27.51 s, stretch 9, 0 cm/s, root 6.0 cm off, M_Neutral_Run_Stop_F_Lfoot@1.02(kept) cost -0.09 rate 1.00; chose idle, ahead 0 cm/s
+27.61 s, stretch 9, stop, his left foot, slid 11.94 cm
+27.66 s, stretch 9, stop, the mannequin's left foot, slid 6.32 cm
+27.76 s, stretch 9, 0 cm/s, root 2.5 cm off, M_Neutral_Run_Stop_F_Lfoot@1.28(kept) cost -0.09 rate 1.00; chose idle, ahead 0 cm/s
+28.00 s, stretch 9, 0 cm/s, root 1.1 cm off, M_Neutral_Run_Stop_F_Lfoot@1.52(kept) cost -0.09 rate 1.00; chose idle, ahead 0 cm/s
+28.26 s, stretch 9, 0 cm/s, root 0.4 cm off, M_Neutral_Run_Stop_F_Lfoot@1.79(kept) cost -0.09 rate 1.00; chose idle, ahead 0 cm/s
+28.30 s, stretch 9, stop, the mannequin's right foot, slid 4.40 cm
+28.45 s, stretch 9, stop, his right foot, slid 6.95 cm
+28.51 s, stretch 9, 0 cm/s, root 0.2 cm off, M_Neutral_Run_Stop_F_Lfoot@2.03(kept) cost -0.09 rate 1.00; chose idle, ahead 0 cm/s
+28.76 s, stretch 9, 0 cm/s, root 0.1 cm off, M_Neutral_Run_Stop_F_Lfoot@2.28(kept) cost -0.09 rate 1.00; chose idle, ahead 0 cm/s
+29.01 s, stretch 9, 0 cm/s, root 0.0 cm off, M_Neutral_Run_Stop_F_Lfoot@2.53(kept) cost -0.09 rate 1.00; chose idle, ahead 0 cm/s
+29.26 s, stretch 9, 0 cm/s, root 0.0 cm off, M_Neutral_Run_Stop_F_Lfoot@2.78(kept) cost -0.09 rate 1.00; chose idle, ahead 0 cm/s
+29.51 s, stretch 9, 0 cm/s, root 0.0 cm off, M_Neutral_Run_Stop_F_Lfoot@3.03(kept) cost -0.09 rate 1.00; chose idle, ahead 0 cm/s

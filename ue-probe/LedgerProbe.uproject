@@ -18,6 +18,10 @@
 		{
 			"Name": "ChaosClothAsset",
 			"Enabled": true
+		},
+		{
+			"Name": "PoseSearch",
+			"Enabled": true
 		}
 	]
 }

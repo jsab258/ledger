@@ -4381,6 +4381,25 @@ if __name__ == "__main__":
                       encoding="utf-8") as _f:
                 _f.write("peopleImportStatus=RAISED peopleImportNote=%s\n"
                          % str(_people_err).replace(" ", "~")[:160])
+    # ---- AND TOM'S WALK BY MOTION MATCHING, 22 October 2026 (his order, item 7) ---
+    # tools/ue/make_tom_retarget.py: Tom's retarget from the Game Animation Sample's mannequin and
+    # the motion-matching graph it runs (MotionMatchAnim.h), after his body is imported above.
+    # Without the sample's content in the checkout it writes its line and the game keeps his clips.
+    if _inside_unreal():
+        try:
+            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+            import make_tom_retarget
+            make_tom_retarget.main()
+        except Exception as _tom_err:
+            try:
+                import unreal
+                _root = unreal.Paths.project_dir()
+            except Exception:
+                _root = "."
+            with open(os.path.join(_root, "ue-material.txt"), "a",
+                      encoding="utf-8") as _f:
+                _f.write("tomRetargetStatus=RAISED tomRetargetNote=%s\n"
+                         % str(_tom_err).replace(" ", "~")[:160])
     # ---- AND THE PARKED CARS, 23 September, FOR THE SAME REASON ------------
     # tools/ue/import_vehicles.py: each production/assets/vehicles/*.glb, a
     # car built by tools/art-recipes/car-model.py, becomes one static mesh.

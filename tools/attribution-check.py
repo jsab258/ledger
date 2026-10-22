@@ -64,6 +64,12 @@ WATCHED = {
     # same step under /Game/Retarget, which the build never cooks
     "ue-probe/Content/Retarget": ("Mixamo", "MetaHuman"),
     "ue-probe/Content/MH_Test.uasset": "MetaHuman",
+    # EPIC'S GAME ANIMATION SAMPLE, 22 October 2026 (his 13 October ruling): migrated into the probe's
+    # content on this PC for Tom's motion-matching trial, at the sample's own paths.
+    "ue-probe/Content/Audio": "Game Animation Sample",
+    "ue-probe/Content/Blueprints": "Game Animation Sample",
+    "ue-probe/Content/Characters": "Game Animation Sample",
+    "ue-probe/Content/Misc": "Game Animation Sample",
     "ue-probe/Content/Ledger/Export": "MetaHuman",
     "ue-probe/Content/Ledger/Cloth": ("MakeHuman", "FreeSewing"),
     "ue-probe/Content/Ledger/Figure": "Mixamo",

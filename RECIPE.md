@@ -19,6 +19,15 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 22 Oct 2026, item 7, the walk: a vendor's motion-matched locomotion brought onto a character with another skeleton, measured at its joins, set aside
+- Made: the vendor sample's motion-matching graph (its own nodes and settings, read from its exported files) in an animation asset made by script, running on the sample's own body hidden beside the character and copied onto him through a retargeter; a set route (starts, stops, turns, a pivot, a run) measuring each planted foot's slide on both bodies; the walk itself not passed, left behind a switch.
+- Method (setting-free): export the reference project's graphs, character and choosers to text and read every node, setting and helper function before copying any; copy the graph by script node by node with the reference's own settings, naming each change; copy its movement model too, since its clips were matched to it; measure on the driving body and the driven one at once, so a fault is put to the right half; trace one foot frame by frame when a number surprises.
+- Tools: the engine's editor Python and a C++ function that lays out and compiles the graph; the editor's text export of assets; the engine's own pose search, offset root, foot placement and retarget nodes; the game's scripted route.
+- Target and check: the owner's bar, each planted foot's slide at starts, stops and turns at or under 3 cm, read per contact.
+- Cost (hours): about 3.5.
+- Failed and why: graph nodes of this kind cannot run from code in a shipped build (they read settings from an asset's class); all clip sets searched at once let one set's bias win every search; a movement model unlike the reference's stopped the body dead; easing the root's rotation dragged planted feet round the turns; what remains, 20 to 100 cm on the first steps of starts and turns, needs the reference's steering inside its blend, not built.
+- Evidence: production/research/sit-and-turn/TOM-MOTION-MATCHING-2026-10-22.md
+
 ### 21 Oct 2026, item 8, part: a small processor speech model timed on the game's own voice path, its cost to the frame, and a prepared opener tried as an experiment
 - Made: first sound and whole-answer times for a 100-million-parameter speech model on the processor against the larger one on the graphics card, inside and outside the game; the game's frame time while it speaks without a break; the game's own prepared openers measured against both.
 - Method (setting-free): drive the game's own helper programs exactly as the game does, with a free stand-in for the paid talk model; measure inside the game itself (scripted lines, timestamps from the line sent to the opener, the first sound and the last); measure the frame cost under a flat-out load in the shipped build with nothing else running (a first run overlapped other work and was thrown out); an unattended run starts no talk program unless one is named, so name it.

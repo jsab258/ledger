@@ -1,0 +1,201 @@
+Begin Object Class=/Script/Chooser.ChooserTable Name="CHT_PoseSearchDatabases_Sparse" ExportPath="/Script/Chooser.ChooserTable'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/CHT_PoseSearchDatabases_Sparse.CHT_PoseSearchDatabases_Sparse'"
+   Begin Object Class=/Script/Chooser.ChooserTable Name="Crouch Idle" ExportPath="/Script/Chooser.ChooserTable'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/CHT_PoseSearchDatabases_Sparse.CHT_PoseSearchDatabases_Sparse:Crouch Idle'"
+   End Object
+   Begin Object Class=/Script/Chooser.ChooserTable Name="Crouch Moving" ExportPath="/Script/Chooser.ChooserTable'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/CHT_PoseSearchDatabases_Sparse.CHT_PoseSearchDatabases_Sparse:Crouch Moving'"
+   End Object
+   Begin Object Class=/Script/Chooser.ChooserTable Name="InAir" ExportPath="/Script/Chooser.ChooserTable'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/CHT_PoseSearchDatabases_Sparse.CHT_PoseSearchDatabases_Sparse:InAir'"
+   End Object
+   Begin Object Class=/Script/Chooser.ChooserTable Name="Stand Idles" ExportPath="/Script/Chooser.ChooserTable'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/CHT_PoseSearchDatabases_Sparse.CHT_PoseSearchDatabases_Sparse:Stand Idles'"
+   End Object
+   Begin Object Class=/Script/Chooser.ChooserTable Name="Stand Runs" ExportPath="/Script/Chooser.ChooserTable'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/CHT_PoseSearchDatabases_Sparse.CHT_PoseSearchDatabases_Sparse:Stand Runs'"
+   End Object
+   Begin Object Class=/Script/Chooser.ChooserTable Name="Stand Sprint" ExportPath="/Script/Chooser.ChooserTable'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/CHT_PoseSearchDatabases_Sparse.CHT_PoseSearchDatabases_Sparse:Stand Sprint'"
+   End Object
+   Begin Object Class=/Script/Chooser.ChooserTable Name="Stand Walks" ExportPath="/Script/Chooser.ChooserTable'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/CHT_PoseSearchDatabases_Sparse.CHT_PoseSearchDatabases_Sparse:Stand Walks'"
+   End Object
+   Begin Object Name="Crouch Idle" ExportPath="/Script/Chooser.ChooserTable'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/CHT_PoseSearchDatabases_Sparse.CHT_PoseSearchDatabases_Sparse:Crouch Idle'"
+      RootChooser="/Script/Chooser.ChooserTable'CHT_PoseSearchDatabases_Sparse'"
+      ResultsStructs(0)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Crouch_Idles.PSD_Dense_Crouch_Idles'")
+      ResultsStructs(1)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Sparse/PSD_Sparse_Crouch_Walk_Stops.PSD_Sparse_Crouch_Walk_Stops'")
+      ResultsStructs(2)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Crouch_TurnInPlace.PSD_Dense_Crouch_TurnInPlace'")
+      DisabledRows(0)=False
+      DisabledRows(1)=False
+      DisabledRows(2)=False
+      Version=3
+      CookedResults(0)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Crouch_Idles.PSD_Dense_Crouch_Idles'")
+      CookedResults(1)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Sparse/PSD_Sparse_Crouch_Walk_Stops.PSD_Sparse_Crouch_Walk_Stops'")
+      CookedResults(2)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Crouch_TurnInPlace.PSD_Dense_Crouch_TurnInPlace'")
+      ColumnsStructs(0)=/Script/Chooser.FloatRangeColumn(InputValue=/Script/Chooser.FloatContextProperty(Binding=(PropertyBindingChain=("Speed2D"),ContextIndex=0,IsBoundToRoot=False,DisplayName="Speed 2D")),bWrapInput=False,MinValue=-180.000000,MaxValue=180.000000,DefaultRowValue=(Min=0.000000,Max=0.000000,bNoMin=False,bNoMax=False),RowValues=((Max=20.000000),(Min=20.000000,bNoMax=True),(bNoMin=True,bNoMax=True)),bDisabled=False,EditorColumnWidth=200.000000)
+      ColumnsStructs(1)=/Script/Chooser.BoolColumn(InputValue=/Script/Chooser.BoolContextProperty(Binding=(PropertyBindingChain=("ShouldTurnInPlace"),ContextIndex=0,IsBoundToRoot=False,DisplayName="")),DefaultRowValue=MatchAny,RowValuesWithAny=(MatchAny,MatchAny,MatchTrue),bDisabled=False,EditorColumnWidth=200.000000)
+   End Object
+   Begin Object Name="Crouch Moving" ExportPath="/Script/Chooser.ChooserTable'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/CHT_PoseSearchDatabases_Sparse.CHT_PoseSearchDatabases_Sparse:Crouch Moving'"
+      RootChooser="/Script/Chooser.ChooserTable'CHT_PoseSearchDatabases_Sparse'"
+      ResultsStructs(0)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Sparse/PSD_Sparse_Crouch_Walk_Starts.PSD_Sparse_Crouch_Walk_Starts'")
+      ResultsStructs(1)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Sparse/PSD_Sparse_Crouch_Walk_Loops.PSD_Sparse_Crouch_Walk_Loops'")
+      ResultsStructs(2)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Sparse/PSD_Sparse_Crouch_Walk_Pivots.PSD_Sparse_Crouch_Walk_Pivots'")
+      DisabledRows(0)=False
+      DisabledRows(1)=False
+      DisabledRows(2)=False
+      Version=3
+      CookedResults(0)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Sparse/PSD_Sparse_Crouch_Walk_Starts.PSD_Sparse_Crouch_Walk_Starts'")
+      CookedResults(1)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Sparse/PSD_Sparse_Crouch_Walk_Loops.PSD_Sparse_Crouch_Walk_Loops'")
+      CookedResults(2)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Sparse/PSD_Sparse_Crouch_Walk_Pivots.PSD_Sparse_Crouch_Walk_Pivots'")
+      ColumnsStructs(0)=/Script/Chooser.BoolColumn(InputValue=/Script/Chooser.BoolContextProperty(Binding=(PropertyBindingChain=("IsStarting"),ContextIndex=0,IsBoundToRoot=False,DisplayName="")),DefaultRowValue=MatchAny,RowValuesWithAny=(MatchTrue,MatchAny,MatchAny),bDisabled=False,EditorColumnWidth=200.000000)
+      ColumnsStructs(1)=/Script/Chooser.BoolColumn(InputValue=/Script/Chooser.BoolContextProperty(Binding=(PropertyBindingChain=("IsPivoting"),ContextIndex=0,IsBoundToRoot=False,DisplayName="")),DefaultRowValue=MatchAny,RowValuesWithAny=(MatchAny,MatchAny,MatchFalse),bDisabled=False,EditorColumnWidth=200.000000)
+   End Object
+   Begin Object Name="InAir" ExportPath="/Script/Chooser.ChooserTable'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/CHT_PoseSearchDatabases_Sparse.CHT_PoseSearchDatabases_Sparse:InAir'"
+      RootChooser="/Script/Chooser.ChooserTable'CHT_PoseSearchDatabases_Sparse'"
+      ResultsStructs(0)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Jumps.PSD_Dense_Jumps'")
+      ResultsStructs(1)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Jumps_Far.PSD_Dense_Jumps_Far'")
+      ResultsStructs(2)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Jumps_FromTraversal.PSD_Dense_Jumps_FromTraversal'")
+      Version=3
+      CookedResults(0)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Jumps.PSD_Dense_Jumps'")
+      CookedResults(1)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Jumps_Far.PSD_Dense_Jumps_Far'")
+      CookedResults(2)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Jumps_FromTraversal.PSD_Dense_Jumps_FromTraversal'")
+      ColumnsStructs(0)=/Script/Chooser.FloatRangeColumn(InputValue=/Script/Chooser.FloatContextProperty(Binding=(PropertyBindingChain=("TrajectoryCollision","TimeToLand"),ContextIndex=0,IsBoundToRoot=False,DisplayName="Time to Land")),bWrapInput=False,MinValue=-180.000000,MaxValue=180.000000,DefaultRowValue=(Min=0.000000,Max=0.000000,bNoMin=False,bNoMax=False),RowValues=((Max=999.000000),(Min=1.200000,Max=999.000000),(Max=999.000000)),bDisabled=False,EditorColumnWidth=200.000000)
+      ColumnsStructs(1)=/Script/Chooser.BoolColumn(InputValue=/Script/Chooser.BoolContextProperty(Binding=(PropertyBindingChain=("JustTraversed"),ContextIndex=0,IsBoundToRoot=False,DisplayName="")),DefaultRowValue=MatchAny,RowValuesWithAny=(MatchAny,MatchAny,MatchTrue),bDisabled=False,EditorColumnWidth=200.000000)
+   End Object
+   Begin Object Name="Stand Idles" ExportPath="/Script/Chooser.ChooserTable'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/CHT_PoseSearchDatabases_Sparse.CHT_PoseSearchDatabases_Sparse:Stand Idles'"
+      RootChooser="/Script/Chooser.ChooserTable'CHT_PoseSearchDatabases_Sparse'"
+      ResultsStructs(0)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Stand_Idles.PSD_Dense_Stand_Idles'")
+      ResultsStructs(1)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Sparse/PSD_Sparse_Stand_Walk_Stops.PSD_Sparse_Stand_Walk_Stops'")
+      ResultsStructs(2)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Sparse/PSD_Sparse_Stand_Run_Stops.PSD_Sparse_Stand_Run_Stops'")
+      ResultsStructs(3)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Sparse/PSD_Sparse_Stand_Sprint_Stops.PSD_Sparse_Stand_Sprint_Stops'")
+      ResultsStructs(4)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Stand_Idle_Lands_Light.PSD_Dense_Stand_Idle_Lands_Light'")
+      ResultsStructs(5)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Stand_Idle_Lands_Heavy.PSD_Dense_Stand_Idle_Lands_Heavy'")
+      ResultsStructs(6)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Stand_TurnInPlace.PSD_Dense_Stand_TurnInPlace'")
+      DisabledRows(0)=False
+      DisabledRows(1)=False
+      DisabledRows(2)=False
+      DisabledRows(3)=False
+      DisabledRows(4)=False
+      DisabledRows(5)=False
+      DisabledRows(6)=False
+      Version=3
+      CookedResults(0)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Stand_Idles.PSD_Dense_Stand_Idles'")
+      CookedResults(1)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Sparse/PSD_Sparse_Stand_Walk_Stops.PSD_Sparse_Stand_Walk_Stops'")
+      CookedResults(2)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Sparse/PSD_Sparse_Stand_Run_Stops.PSD_Sparse_Stand_Run_Stops'")
+      CookedResults(3)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Sparse/PSD_Sparse_Stand_Sprint_Stops.PSD_Sparse_Stand_Sprint_Stops'")
+      CookedResults(4)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Stand_Idle_Lands_Light.PSD_Dense_Stand_Idle_Lands_Light'")
+      CookedResults(5)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Stand_Idle_Lands_Heavy.PSD_Dense_Stand_Idle_Lands_Heavy'")
+      CookedResults(6)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Stand_TurnInPlace.PSD_Dense_Stand_TurnInPlace'")
+      ColumnsStructs(0)=/Script/Chooser.FloatRangeColumn(InputValue=/Script/Chooser.FloatContextProperty(Binding=(PropertyBindingChain=("Speed2D"),ContextIndex=0,IsBoundToRoot=False,DisplayName="Speed 2D")),bWrapInput=False,MinValue=-180.000000,MaxValue=180.000000,DefaultRowValue=(Min=0.000000,Max=0.000000,bNoMin=False,bNoMax=False),RowValues=((Max=20.000000),(Min=20.000000,Max=999.000000,bNoMax=True),(Min=100.000000,Max=999.000000,bNoMax=True),(Min=550.000000,bNoMax=True),(Max=999.000000,bNoMin=True,bNoMax=True),(Max=999.000000,bNoMin=True,bNoMax=True),(Max=999.000000,bNoMin=True,bNoMax=True)),bDisabled=False,EditorColumnWidth=200.000000)
+      ColumnsStructs(1)=/Script/Chooser.BoolColumn(InputValue=/Script/Chooser.BoolContextProperty(Binding=(PropertyBindingChain=("JustLanded_Light"),ContextIndex=0,IsBoundToRoot=False,DisplayName="")),DefaultRowValue=MatchAny,RowValuesWithAny=(MatchFalse,MatchFalse,MatchFalse,MatchFalse,MatchTrue,MatchFalse,MatchFalse),bDisabled=False,EditorColumnWidth=200.000000)
+      ColumnsStructs(2)=/Script/Chooser.BoolColumn(InputValue=/Script/Chooser.BoolContextProperty(Binding=(PropertyBindingChain=("JustLanded_Heavy"),ContextIndex=0,IsBoundToRoot=False,DisplayName="")),DefaultRowValue=MatchAny,RowValuesWithAny=(MatchFalse,MatchFalse,MatchFalse,MatchFalse,MatchFalse,MatchTrue,MatchFalse),bDisabled=False,EditorColumnWidth=200.000000)
+      ColumnsStructs(3)=/Script/Chooser.BoolColumn(InputValue=/Script/Chooser.BoolContextProperty(Binding=(PropertyBindingChain=("ShouldTurnInPlace"),ContextIndex=0,IsBoundToRoot=False,DisplayName="")),DefaultRowValue=MatchAny,RowValuesWithAny=(MatchFalse,MatchAny,MatchAny,MatchAny,MatchAny,MatchAny,MatchTrue),bDisabled=False,EditorColumnWidth=200.000000)
+   End Object
+   Begin Object Name="Stand Runs" ExportPath="/Script/Chooser.ChooserTable'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/CHT_PoseSearchDatabases_Sparse.CHT_PoseSearchDatabases_Sparse:Stand Runs'"
+      RootChooser="/Script/Chooser.ChooserTable'CHT_PoseSearchDatabases_Sparse'"
+      ResultsStructs(0)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Sparse/PSD_Sparse_Stand_Run_Starts.PSD_Sparse_Stand_Run_Starts'")
+      ResultsStructs(1)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Sparse/PSD_Sparse_Stand_Run_Loops.PSD_Sparse_Stand_Run_Loops'")
+      ResultsStructs(2)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Sparse/PSD_Sparse_Stand_Run_Pivots.PSD_Sparse_Stand_Run_Pivots'")
+      ResultsStructs(3)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Stand_Run_SpinTransition.PSD_Dense_Stand_Run_SpinTransition'")
+      ResultsStructs(4)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Stand_Run_FromTraversal.PSD_Dense_Stand_Run_FromTraversal'")
+      ResultsStructs(5)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Stand_Run_Lands_Light.PSD_Dense_Stand_Run_Lands_Light'")
+      ResultsStructs(6)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Stand_Run_Lands_Heavy.PSD_Dense_Stand_Run_Lands_Heavy'")
+      DisabledRows(0)=False
+      DisabledRows(1)=False
+      DisabledRows(2)=False
+      DisabledRows(3)=False
+      DisabledRows(4)=False
+      DisabledRows(5)=False
+      DisabledRows(6)=False
+      Version=3
+      CookedResults(0)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Sparse/PSD_Sparse_Stand_Run_Starts.PSD_Sparse_Stand_Run_Starts'")
+      CookedResults(1)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Sparse/PSD_Sparse_Stand_Run_Loops.PSD_Sparse_Stand_Run_Loops'")
+      CookedResults(2)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Sparse/PSD_Sparse_Stand_Run_Pivots.PSD_Sparse_Stand_Run_Pivots'")
+      CookedResults(3)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Stand_Run_SpinTransition.PSD_Dense_Stand_Run_SpinTransition'")
+      CookedResults(4)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Stand_Run_FromTraversal.PSD_Dense_Stand_Run_FromTraversal'")
+      CookedResults(5)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Stand_Run_Lands_Light.PSD_Dense_Stand_Run_Lands_Light'")
+      CookedResults(6)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Stand_Run_Lands_Heavy.PSD_Dense_Stand_Run_Lands_Heavy'")
+      ColumnsStructs(0)=/Script/Chooser.BoolColumn(InputValue=/Script/Chooser.BoolContextProperty(Binding=(PropertyBindingChain=("IsStarting"),ContextIndex=0,IsBoundToRoot=False,DisplayName="")),DefaultRowValue=MatchAny,RowValuesWithAny=(MatchTrue,MatchAny,MatchAny,MatchAny,MatchAny,MatchAny,MatchAny),bDisabled=False,EditorColumnWidth=200.000000)
+      ColumnsStructs(1)=/Script/Chooser.BoolColumn(InputValue=/Script/Chooser.BoolContextProperty(Binding=(PropertyBindingChain=("IsPivoting"),ContextIndex=0,IsBoundToRoot=False,DisplayName="")),DefaultRowValue=MatchAny,RowValuesWithAny=(MatchAny,MatchAny,MatchTrue,MatchFalse,MatchAny,MatchAny,MatchAny),bDisabled=False,EditorColumnWidth=200.000000)
+      ColumnsStructs(2)=/Script/Chooser.BoolColumn(InputValue=/Script/Chooser.BoolContextProperty(Binding=(PropertyBindingChain=("JustTraversed"),ContextIndex=0,IsBoundToRoot=False,DisplayName="")),DefaultRowValue=MatchAny,RowValuesWithAny=(MatchAny,MatchAny,MatchAny,MatchAny,MatchTrue,MatchAny,MatchAny),bDisabled=False,EditorColumnWidth=200.000000)
+      ColumnsStructs(3)=/Script/Chooser.BoolColumn(InputValue=/Script/Chooser.BoolContextProperty(Binding=(PropertyBindingChain=("JustLanded_Light"),ContextIndex=0,IsBoundToRoot=False,DisplayName="")),DefaultRowValue=MatchAny,RowValuesWithAny=(MatchFalse,MatchFalse,MatchFalse,MatchAny,MatchFalse,MatchTrue,MatchFalse),bDisabled=False,EditorColumnWidth=200.000000)
+      ColumnsStructs(4)=/Script/Chooser.BoolColumn(InputValue=/Script/Chooser.BoolContextProperty(Binding=(PropertyBindingChain=("JustLanded_Heavy"),ContextIndex=0,IsBoundToRoot=False,DisplayName="")),DefaultRowValue=MatchAny,RowValuesWithAny=(MatchFalse,MatchFalse,MatchFalse,MatchAny,MatchFalse,MatchFalse,MatchTrue),bDisabled=False,EditorColumnWidth=200.000000)
+      ColumnsStructs(5)=/Script/Chooser.BoolColumn(InputValue=/Script/Chooser.BoolContextProperty(Binding=(PropertyBindingChain=("ShouldSpinTransition"),ContextIndex=0,IsBoundToRoot=False,DisplayName="")),DefaultRowValue=MatchAny,RowValuesWithAny=(MatchAny,MatchAny,MatchAny,MatchTrue,MatchAny,MatchAny,MatchAny),bDisabled=False,EditorColumnWidth=200.000000)
+   End Object
+   Begin Object Name="Stand Sprint" ExportPath="/Script/Chooser.ChooserTable'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/CHT_PoseSearchDatabases_Sparse.CHT_PoseSearchDatabases_Sparse:Stand Sprint'"
+      RootChooser="/Script/Chooser.ChooserTable'CHT_PoseSearchDatabases_Sparse'"
+      ResultsStructs(0)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Sparse/PSD_Sparse_Stand_Sprint_Loops.PSD_Sparse_Stand_Sprint_Loops'")
+      ResultsStructs(1)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Sparse/PSD_Sparse_Stand_Sprint_Starts.PSD_Sparse_Stand_Sprint_Starts'")
+      ResultsStructs(2)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Sparse/PSD_Sparse_Stand_Sprint_Pivots.PSD_Sparse_Stand_Sprint_Pivots'")
+      ResultsStructs(3)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Stand_Sprint_Lands_Light.PSD_Dense_Stand_Sprint_Lands_Light'")
+      ResultsStructs(4)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Stand_Sprint_Lands_Heavy.PSD_Dense_Stand_Sprint_Lands_Heavy'")
+      DisabledRows(0)=False
+      DisabledRows(1)=False
+      DisabledRows(2)=False
+      DisabledRows(3)=False
+      DisabledRows(4)=False
+      Version=3
+      CookedResults(0)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Sparse/PSD_Sparse_Stand_Sprint_Loops.PSD_Sparse_Stand_Sprint_Loops'")
+      CookedResults(1)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Sparse/PSD_Sparse_Stand_Sprint_Starts.PSD_Sparse_Stand_Sprint_Starts'")
+      CookedResults(2)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Sparse/PSD_Sparse_Stand_Sprint_Pivots.PSD_Sparse_Stand_Sprint_Pivots'")
+      CookedResults(3)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Stand_Sprint_Lands_Light.PSD_Dense_Stand_Sprint_Lands_Light'")
+      CookedResults(4)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Stand_Sprint_Lands_Heavy.PSD_Dense_Stand_Sprint_Lands_Heavy'")
+      ColumnsStructs(0)=/Script/Chooser.BoolColumn(InputValue=/Script/Chooser.BoolContextProperty(Binding=(PropertyBindingChain=("IsStarting"),ContextIndex=0,IsBoundToRoot=False,DisplayName="")),DefaultRowValue=MatchAny,RowValuesWithAny=(MatchAny,MatchTrue,MatchAny,MatchAny,MatchAny),bDisabled=False,EditorColumnWidth=200.000000)
+      ColumnsStructs(1)=/Script/Chooser.BoolColumn(InputValue=/Script/Chooser.BoolContextProperty(Binding=(PropertyBindingChain=("IsPivoting"),ContextIndex=0,IsBoundToRoot=False,DisplayName="")),DefaultRowValue=MatchAny,RowValuesWithAny=(MatchFalse,MatchFalse,MatchTrue,MatchAny,MatchAny),bDisabled=False,EditorColumnWidth=200.000000)
+      ColumnsStructs(2)=/Script/Chooser.BoolColumn(InputValue=/Script/Chooser.BoolContextProperty(Binding=(PropertyBindingChain=("JustLanded_Light"),ContextIndex=0,IsBoundToRoot=False,DisplayName="")),DefaultRowValue=MatchAny,RowValuesWithAny=(MatchAny,MatchAny,MatchAny,MatchTrue,MatchFalse),bDisabled=False,EditorColumnWidth=200.000000)
+      ColumnsStructs(3)=/Script/Chooser.BoolColumn(InputValue=/Script/Chooser.BoolContextProperty(Binding=(PropertyBindingChain=("JustLanded_Heavy"),ContextIndex=0,IsBoundToRoot=False,DisplayName="")),DefaultRowValue=MatchAny,RowValuesWithAny=(MatchAny,MatchAny,MatchAny,MatchFalse,MatchTrue),bDisabled=False,EditorColumnWidth=200.000000)
+   End Object
+   Begin Object Name="Stand Walks" ExportPath="/Script/Chooser.ChooserTable'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/CHT_PoseSearchDatabases_Sparse.CHT_PoseSearchDatabases_Sparse:Stand Walks'"
+      RootChooser="/Script/Chooser.ChooserTable'CHT_PoseSearchDatabases_Sparse'"
+      ResultsStructs(0)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Sparse/PSD_Sparse_Stand_Walk_Starts.PSD_Sparse_Stand_Walk_Starts'")
+      ResultsStructs(1)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Sparse/PSD_Sparse_Stand_Walk_Loops.PSD_Sparse_Stand_Walk_Loops'")
+      ResultsStructs(2)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Sparse/PSD_Sparse_Stand_Walk_Pivots.PSD_Sparse_Stand_Walk_Pivots'")
+      ResultsStructs(3)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Stand_Walk_SpinTransition.PSD_Dense_Stand_Walk_SpinTransition'")
+      ResultsStructs(4)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Stand_Walk_FromTraversal.PSD_Dense_Stand_Walk_FromTraversal'")
+      ResultsStructs(5)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Stand_Walk_Lands_Light.PSD_Dense_Stand_Walk_Lands_Light'")
+      ResultsStructs(6)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Stand_Walk_Lands_Heavy.PSD_Dense_Stand_Walk_Lands_Heavy'")
+      Version=3
+      CookedResults(0)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Sparse/PSD_Sparse_Stand_Walk_Starts.PSD_Sparse_Stand_Walk_Starts'")
+      CookedResults(1)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Sparse/PSD_Sparse_Stand_Walk_Loops.PSD_Sparse_Stand_Walk_Loops'")
+      CookedResults(2)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Sparse/PSD_Sparse_Stand_Walk_Pivots.PSD_Sparse_Stand_Walk_Pivots'")
+      CookedResults(3)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Stand_Walk_SpinTransition.PSD_Dense_Stand_Walk_SpinTransition'")
+      CookedResults(4)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Stand_Walk_FromTraversal.PSD_Dense_Stand_Walk_FromTraversal'")
+      CookedResults(5)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Stand_Walk_Lands_Light.PSD_Dense_Stand_Walk_Lands_Light'")
+      CookedResults(6)=/Script/Chooser.AssetChooser(Asset="/Script/PoseSearch.PoseSearchDatabase'/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/Dense/PSD_Dense_Stand_Walk_Lands_Heavy.PSD_Dense_Stand_Walk_Lands_Heavy'")
+      ColumnsStructs(0)=/Script/Chooser.BoolColumn(InputValue=/Script/Chooser.BoolContextProperty(Binding=(PropertyBindingChain=("IsStarting"),ContextIndex=0,IsBoundToRoot=False,DisplayName="")),DefaultRowValue=MatchAny,RowValuesWithAny=(MatchTrue,MatchAny,MatchAny,MatchAny,MatchAny,MatchAny,MatchAny),bDisabled=False,EditorColumnWidth=200.000000)
+      ColumnsStructs(1)=/Script/Chooser.BoolColumn(InputValue=/Script/Chooser.BoolContextProperty(Binding=(PropertyBindingChain=("IsPivoting"),ContextIndex=0,IsBoundToRoot=False,DisplayName="")),DefaultRowValue=MatchAny,RowValuesWithAny=(MatchAny,MatchAny,MatchTrue,MatchAny,MatchAny,MatchAny,MatchAny),bDisabled=False,EditorColumnWidth=200.000000)
+      ColumnsStructs(2)=/Script/Chooser.BoolColumn(InputValue=/Script/Chooser.BoolContextProperty(Binding=(PropertyBindingChain=("JustTraversed"),ContextIndex=0,IsBoundToRoot=False,DisplayName="")),DefaultRowValue=MatchAny,RowValuesWithAny=(MatchAny,MatchAny,MatchAny,MatchAny,MatchTrue,MatchAny,MatchAny),bDisabled=False,EditorColumnWidth=200.000000)
+      ColumnsStructs(3)=/Script/Chooser.BoolColumn(InputValue=/Script/Chooser.BoolContextProperty(Binding=(PropertyBindingChain=("JustLanded_Light"),ContextIndex=0,IsBoundToRoot=False,DisplayName="")),DefaultRowValue=MatchAny,RowValuesWithAny=(MatchFalse,MatchFalse,MatchFalse,MatchAny,MatchFalse,MatchTrue,MatchFalse),bDisabled=False,EditorColumnWidth=200.000000)
+      ColumnsStructs(4)=/Script/Chooser.BoolColumn(InputValue=/Script/Chooser.BoolContextProperty(Binding=(PropertyBindingChain=("JustLanded_Heavy"),ContextIndex=0,IsBoundToRoot=False,DisplayName="")),DefaultRowValue=MatchAny,RowValuesWithAny=(MatchFalse,MatchFalse,MatchFalse,MatchAny,MatchFalse,MatchFalse,MatchTrue),bDisabled=False,EditorColumnWidth=200.000000)
+      ColumnsStructs(5)=/Script/Chooser.BoolColumn(InputValue=/Script/Chooser.BoolContextProperty(Binding=(PropertyBindingChain=("ShouldSpinTransition"),ContextIndex=0,IsBoundToRoot=False,DisplayName="")),DefaultRowValue=MatchAny,RowValuesWithAny=(MatchAny,MatchAny,MatchAny,MatchTrue,MatchAny,MatchAny,MatchAny),bDisabled=False,EditorColumnWidth=200.000000)
+   End Object
+   ResultsStructs(0)=/Script/Chooser.NestedChooser(Chooser="/Script/Chooser.ChooserTable'Stand Idles'")
+   ResultsStructs(1)=/Script/Chooser.NestedChooser(Chooser="/Script/Chooser.ChooserTable'Stand Walks'")
+   ResultsStructs(2)=/Script/Chooser.NestedChooser(Chooser="/Script/Chooser.ChooserTable'Stand Runs'")
+   ResultsStructs(3)=/Script/Chooser.NestedChooser(Chooser="/Script/Chooser.ChooserTable'Stand Sprint'")
+   ResultsStructs(4)=/Script/Chooser.NestedChooser(Chooser="/Script/Chooser.ChooserTable'InAir'")
+   ResultsStructs(5)=/Script/Chooser.NestedChooser(Chooser="/Script/Chooser.ChooserTable'Crouch Idle'")
+   ResultsStructs(6)=/Script/Chooser.NestedChooser(Chooser="/Script/Chooser.ChooserTable'Crouch Moving'")
+   DisabledRows(0)=False
+   DisabledRows(1)=False
+   DisabledRows(2)=False
+   DisabledRows(3)=False
+   DisabledRows(4)=False
+   DisabledRows(5)=False
+   DisabledRows(6)=False
+   NestedObjects(0)="/Script/Chooser.ChooserTable'CHT_PoseSearchDatabases_Sparse'"
+   NestedObjects(1)="/Script/Chooser.ChooserTable'InAir'"
+   NestedObjects(2)="/Script/Chooser.ChooserTable'Stand Idles'"
+   NestedObjects(3)="/Script/Chooser.ChooserTable'Stand Runs'"
+   NestedObjects(4)="/Script/Chooser.ChooserTable'Stand Walks'"
+   NestedObjects(5)="/Script/Chooser.ChooserTable'Stand Sprint'"
+   NestedObjects(6)="/Script/Chooser.ChooserTable'Crouch Idle'"
+   NestedObjects(7)="/Script/Chooser.ChooserTable'Crouch Moving'"
+   Version=3
+   CookedResults(0)=/Script/Chooser.NestedChooser(Chooser="/Script/Chooser.ChooserTable'Stand Idles'")
+   CookedResults(1)=/Script/Chooser.NestedChooser(Chooser="/Script/Chooser.ChooserTable'Stand Walks'")
+   CookedResults(2)=/Script/Chooser.NestedChooser(Chooser="/Script/Chooser.ChooserTable'Stand Runs'")
+   CookedResults(3)=/Script/Chooser.NestedChooser(Chooser="/Script/Chooser.ChooserTable'Stand Sprint'")
+   CookedResults(4)=/Script/Chooser.NestedChooser(Chooser="/Script/Chooser.ChooserTable'InAir'")
+   CookedResults(5)=/Script/Chooser.NestedChooser(Chooser="/Script/Chooser.ChooserTable'Crouch Idle'")
+   CookedResults(6)=/Script/Chooser.NestedChooser(Chooser="/Script/Chooser.ChooserTable'Crouch Moving'")
+   ColumnsStructs(0)=/Script/Chooser.EnumColumn(InputValue=/Script/Chooser.EnumContextProperty(Binding=(Enum="/Script/Engine.UserDefinedEnum'/Game/Blueprints/Data/E_MovementMode.E_MovementMode'",PropertyBindingChain=("MovementMode"),ContextIndex=0,IsBoundToRoot=False,DisplayName="Movement Mode")),DefaultRowValue=(ValueName="",Comparison=MatchEqual,Value=0),RowValues=((ValueName="E_MovementMode::NewEnumerator4"),(ValueName="E_MovementMode::NewEnumerator4"),(ValueName="E_MovementMode::NewEnumerator4"),(ValueName="E_MovementMode::NewEnumerator4"),(ValueName="E_MovementMode::NewEnumerator5",Value=1),(ValueName="E_MovementMode::NewEnumerator4"),(ValueName="E_MovementMode::NewEnumerator4")),bDisabled=False,EditorColumnWidth=200.000000)
+   ColumnsStructs(1)=/Script/Chooser.EnumColumn(InputValue=/Script/Chooser.EnumContextProperty(Binding=(Enum="/Script/Engine.UserDefinedEnum'/Game/Blueprints/Data/E_Stance.E_Stance'",PropertyBindingChain=("Stance"),ContextIndex=0,IsBoundToRoot=False,DisplayName="Stance")),DefaultRowValue=(ValueName="",Comparison=MatchEqual,Value=0),RowValues=((ValueName="E_Stance::NewEnumerator0"),(ValueName="E_Stance::NewEnumerator0"),(ValueName="E_Stance::NewEnumerator0"),(ValueName="E_Stance::NewEnumerator0"),(ValueName="E_Stance::NewEnumerator0",Comparison=MatchAny),(ValueName="E_Stance::NewEnumerator1",Value=1),(ValueName="E_Stance::NewEnumerator1",Value=1)),bDisabled=False,EditorColumnWidth=200.000000)
+   ColumnsStructs(2)=/Script/Chooser.EnumColumn(InputValue=/Script/Chooser.EnumContextProperty(Binding=(Enum="/Script/Engine.UserDefinedEnum'/Game/Blueprints/Data/E_MovementState.E_MovementState'",PropertyBindingChain=("MovementState"),ContextIndex=0,IsBoundToRoot=False,DisplayName="Movement State")),DefaultRowValue=(ValueName="",Comparison=MatchEqual,Value=0),RowValues=((ValueName="E_MovementState::NewEnumerator4"),(ValueName="E_MovementState::NewEnumerator0",Value=1),(ValueName="E_MovementState::NewEnumerator0",Value=1),(ValueName="E_MovementState::NewEnumerator0",Value=1),(ValueName="E_MovementState::NewEnumerator4",Comparison=MatchAny),(ValueName="E_MovementState::NewEnumerator4"),(ValueName="E_MovementState::NewEnumerator0",Value=1)),bDisabled=False,EditorColumnWidth=200.000000)
+   ColumnsStructs(3)=/Script/Chooser.EnumColumn(InputValue=/Script/Chooser.EnumContextProperty(Binding=(Enum="/Script/Engine.UserDefinedEnum'/Game/Blueprints/Data/E_Gait.E_Gait'",PropertyBindingChain=("Gait"),ContextIndex=0,IsBoundToRoot=False,DisplayName="Gait")),DefaultRowValue=(ValueName="",Comparison=MatchEqual,Value=0),RowValues=((ValueName="E_Gait::NewEnumerator0",Comparison=MatchAny),(ValueName="E_Gait::NewEnumerator0"),(ValueName="E_Gait::NewEnumerator1",Value=1),(ValueName="E_Gait::NewEnumerator2",Value=2),(ValueName="E_Gait::NewEnumerator0",Comparison=MatchAny),(ValueName="E_Gait::NewEnumerator0",Comparison=MatchAny),(ValueName="E_Gait::NewEnumerator0",Comparison=MatchAny)),bDisabled=False,EditorColumnWidth=200.000000)
+   OutputObjectType="/Script/CoreUObject.Class'/Script/PoseSearch.PoseSearchDatabase'"
+   ContextData(0)=/Script/Chooser.ContextObjectTypeClass(Class="/Script/Engine.AnimBlueprintGeneratedClass'/Game/Blueprints/SandboxCharacter_CMC_ABP.SandboxCharacter_CMC_ABP_C'",Direction=ReadWrite)
+End Object

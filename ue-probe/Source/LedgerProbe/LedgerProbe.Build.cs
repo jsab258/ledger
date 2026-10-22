@@ -56,6 +56,17 @@ public class LedgerProbe : ModuleRules
 		// run in a native animation instance because this project makes no
 		// Blueprint assets.
 		PrivateDependencyModuleNames.AddRange(new string[] { "AnimGraphRuntime", "AnimationCore" });
+		// PoseSearch, BlendStack AND IKRig, 22 October 2026 (his order, item 7): Tom's walk by the
+		// engine's motion matching on the Game Animation Sample's databases, copied onto his body by
+		// the engine's retargeting, and AnimationWarpingRuntime for the sample's Offset Root Bone
+		// (MotionMatchAnim.h).
+		PrivateDependencyModuleNames.AddRange(new string[] { "PoseSearch", "BlendStack", "IKRig", "AnimationWarpingRuntime" });
+		// The editor's graph and compiler, for the one script-made animation blueprint those nodes
+		// need (ULedgerMotionMatchTools; editor builds only).
+		if (Target.bBuildEditor)
+		{
+			PrivateDependencyModuleNames.AddRange(new string[] { "UnrealEd", "BlueprintGraph" });
+		}
 		// AudioMixer, 23 September: the engine's own output recorder, so the
 		// walk's sound is committed as a recording anyone can listen to.
 		PrivateDependencyModuleNames.Add("AudioMixer");

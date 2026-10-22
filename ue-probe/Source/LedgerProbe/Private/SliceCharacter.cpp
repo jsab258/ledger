@@ -5,6 +5,10 @@
 #include "Kismet/GameplayStatics.h"
 
 #include "LocomotionAnim.h"
+#include "MotionMatchAnim.h"
+#include "PoseSearch/PoseSearchDatabase.h"
+#include "Retargeter/IKRetargeter.h"
+#include "Misc/FileHelper.h"
 
 #include "Animation/AnimSequenceBase.h"
 #include "Camera/CameraComponent.h"
@@ -16,6 +20,8 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/PlayerController.h"
 #include "Camera/PlayerCameraManager.h"
+#include "Camera/CameraActor.h"
+#include "UnrealClient.h"
 #include "InputCoreTypes.h"
 #include "NavigationInvokerComponent.h"
 #include "NavigationSystem.h"
@@ -81,6 +87,7 @@ ALedgerSliceCharacter::ALedgerSliceCharacter()
 void ALedgerSliceCharacter::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
+	WalkProofTick(DeltaSeconds);
 	if (const APlayerController* KeysPC = Cast<APlayerController>(GetController()))
 	{
 		// A CONTROLLER, 1 October (the interface: the design's suggested lines are for a
@@ -103,6 +110,11 @@ void ALedgerSliceCharacter::Tick(float DeltaSeconds)
 		    || KeysPC->IsInputKeyDown(EKeys::Gamepad_FaceButton_Bottom) || KeysPC->IsInputKeyDown(EKeys::Gamepad_Special_Right)) { LedgerPaper::SetPadInUse(true); }
 		else if (KeysPC->IsInputKeyDown(EKeys::W) || KeysPC->IsInputKeyDown(EKeys::A) || KeysPC->IsInputKeyDown(EKeys::S) || KeysPC->IsInputKeyDown(EKeys::D)
 		         || FMath::Abs(MouseX) + FMath::Abs(MouseY) > 0.5f) { LedgerPaper::SetPadInUse(false); }
+	}
+	if (MotionDriver != nullptr)
+	{
+		// the sample's braking: hard when let go, gentle while still pushed (its CalculateBrakingDeceleration)
+		GetCharacterMovement()->BrakingDecelerationWalking = GetCharacterMovement()->GetCurrentAcceleration().IsNearlyZero() ? 2000.0f : 500.0f;
 	}
 	if (GetMesh() == nullptr) { return; }
 	// HIS FEET ON THE GROUND WHEN HE RUNS, 30 September. The person export
@@ -143,7 +155,8 @@ void ALedgerSliceCharacter::StepTick(float DeltaSeconds)
 {
 	USkeletalMeshComponent* M = GetMesh();
 	const ULedgerLocomotionAnim* Loco = M != nullptr ? Cast<ULedgerLocomotionAnim>(M->GetAnimInstance()) : nullptr;
-	if (Loco == nullptr || StepClips.Num() == 0 || DeltaSeconds <= 0.0f) { return; }
+	const ULedgerMotionMatchAnim* Matched = MotionDriver != nullptr ? Cast<ULedgerMotionMatchAnim>(MotionDriver->GetAnimInstance()) : nullptr;
+	if ((Loco == nullptr && Matched == nullptr) || StepClips.Num() == 0 || DeltaSeconds <= 0.0f) { return; }
 	StepClock += DeltaSeconds;
 	UWorld* World = GetWorld();
 	if (StepsRecordingUntil > 0.0f && StepClock >= StepsRecordingUntil && World != nullptr)
@@ -153,9 +166,21 @@ void ALedgerSliceCharacter::StepTick(float DeltaSeconds)
 		StepsRecordingUntil = -1.0f;
 		UE_LOG(LogTemp, Log, TEXT("LedgerSteps: the steps' sound written to ue-steps.wav"));
 	}
+	const float Speed = GetVelocity().Size2D();
+	if (Matched != nullptr)
+	{
+		// THE SAMPLE'S CLIPS MARK THE FEET (their foley notifies, caught in HandleNotify): one
+		// step for each new mark, from the foot it names, while he is on the ground.
+		const int32 New = Matched->Footfalls - HeardFootfalls;
+		HeardFootfalls = Matched->Footfalls;
+		if (New > 0 && Speed > 30.0f && !GetCharacterMovement()->IsFalling())
+		{
+			SoundStep(Matched->LastFoot, Matched->LastKind == 1, Speed, TEXT("matched"), -1.0f);
+		}
+		return;
+	}
 	float WalkT = 0.0f, RunT = 0.0f;
 	if (!Loco->ClipTimes(WalkT, RunT)) { return; }
-	const float Speed = GetVelocity().Size2D();
 	const bool bMoving = Speed > 30.0f && Loco->ToWalk > 0.3f && !GetCharacterMovement()->IsFalling();
 	// THE CLIP CARRYING HIS FEET: the run once it is half blended in, else the
 	// walk. A change of clip, a stop or a fall starts the count again from
@@ -177,11 +202,20 @@ void ALedgerSliceCharacter::StepTick(float DeltaSeconds)
 		// included (the clip wraps from its end to its start).
 		const float C = Falls[F];
 		const bool bPassed = From <= T ? (From < C && C <= T) : (C > From || C <= T);
-		if (!bPassed) { continue; }
+		if (bPassed) { SoundStep(F, bRunClip, Speed, bRunClip ? TEXT("run") : TEXT("walk"), T); }
+	}
+}
+
+bool ALedgerSliceCharacter::SoundStep(int32 F, bool bRunClip, float Speed, const TCHAR* From, float T)
+{
+	USkeletalMeshComponent* M = GetMesh();
+	UWorld* World = GetWorld();
+	if (M == nullptr) { return false; }
+	{
 		// NEVER TWO AT ONCE, and never one foot twice running within less
 		// than its own stride (a change of clip right on a landing).
-		if (LastStepAt >= 0.0f && StepClock - LastStepAt < 0.18f) { continue; }
-		if (F == LastStepFoot && StepClock - LastStepAt < 0.6f) { continue; }
+		if (LastStepAt >= 0.0f && StepClock - LastStepAt < 0.18f) { return false; }
+		if (F == LastStepFoot && StepClock - LastStepAt < 0.6f) { return false; }
 		LastStepFoot = F;
 		const TArray<TObjectPtr<USoundBase>>& Set = bRunClip && RunStepClips.Num() > 0 ? RunStepClips : StepClips;
 		int32 Pick = FMath::RandRange(0, Set.Num() - 1);
@@ -197,7 +231,7 @@ void ALedgerSliceCharacter::StepTick(float DeltaSeconds)
 		{
 			UE_LOG(LogTemp, Log, TEXT("LedgerSteps: step %d, %s foot, %.0f cm/s, %.2f s after the last, the %s at %.3f s"),
 				Steps, F == 0 ? TEXT("left") : TEXT("right"), Speed, LastStepAt < 0.0f ? 0.0f : StepClock - LastStepAt,
-				bRunClip ? TEXT("run") : TEXT("walk"), T);
+				From, T);
 		}
 		if (Steps % 20 == 0)
 		{
@@ -219,6 +253,7 @@ void ALedgerSliceCharacter::StepTick(float DeltaSeconds)
 		}
 		LastStepAt = StepClock;
 	}
+	return true;
 }
 
 void ALedgerSliceCharacter::BeginPlay()
@@ -269,12 +304,314 @@ void ALedgerSliceCharacter::BeginPlay()
 	}
 	UE_LOG(LogTemp, Log, TEXT("LedgerSteps: %d walking and %d running step sound(s), feet %s and %s"), StepClips.Num(),
 		RunStepClips.Num(), *FootBone[0].ToString(), *FootBone[1].ToString());
+	if (StartMotionMatching(M)) { return; }
 	M->SetAnimInstanceClass(ULedgerLocomotionAnim::StaticClass());
 	if (ULedgerLocomotionAnim* A = Cast<ULedgerLocomotionAnim>(M->GetAnimInstance()))
 	{
 		A->Setup(Clips[0], Clips[1] != nullptr ? Clips[1] : Clips[0], Clips[2] != nullptr ? Clips[2] : Clips[1],
 		         WalkSpeedCm, RunSpeedCm);
 		M->InitAnim(true);
+	}
+}
+
+bool ALedgerSliceCharacter::StartMotionMatching(USkeletalMeshComponent* M)
+{
+	// ONLY WITH -LedgerMotionMatch (22 October): measured on the set route, its starts, stops and turns
+	// slid 23, 67 and 13 cm at the median against his own clips' 27, 20 and 3.5 (its run held, 4.7
+	// against theirs, which the measure cannot read); the sample's steering inside its blend is not
+	// built yet (production/research/sit-and-turn/TOM-MOTION-MATCHING-2026-10-22.md). His own clips
+	// stay the walk until it passes.
+	if (M == nullptr || !FParse::Param(FCommandLine::Get(), TEXT("LedgerMotionMatch"))) { return false; }
+	// THE SAMPLE'S STANDING SET: walk and run (loops, starts, stops, pivots), the idles and the turns
+	// in place, at the sample's own paths (F:/LedgerTools/game-inputs/gasp, copied into the build). The
+	// sparse walk and run sets: the dense ones the sample's own player uses (its chooser's level 0) were
+	// measured too (22 October) and slid more in the steady walk, 15 to 24 cm against 3 to 6.
+	static const TCHAR* Names[] = {
+		TEXT("Sparse/PSD_Sparse_Stand_Walk_Loops"), TEXT("Sparse/PSD_Sparse_Stand_Walk_Starts"),
+		TEXT("Sparse/PSD_Sparse_Stand_Walk_Stops"), TEXT("Sparse/PSD_Sparse_Stand_Walk_Pivots"),
+		TEXT("Sparse/PSD_Sparse_Stand_Run_Loops"), TEXT("Sparse/PSD_Sparse_Stand_Run_Starts"),
+		TEXT("Sparse/PSD_Sparse_Stand_Run_Stops"), TEXT("Sparse/PSD_Sparse_Stand_Run_Pivots"),
+		TEXT("Dense/PSD_Dense_Stand_Idles"), TEXT("Dense/PSD_Dense_Stand_TurnInPlace") };
+	const FString Root = TEXT("/Game/Characters/UEFN_Mannequin/Animations/MotionMatchingData/Databases/");
+	TArray<UPoseSearchDatabase*> Dbs;
+	for (const TCHAR* N : Names)
+	{
+		const FString Pkg = Root + N;
+		if (!FPackageName::DoesPackageExist(Pkg)) { continue; }
+		if (UPoseSearchDatabase* D = LoadObject<UPoseSearchDatabase>(nullptr, *(Pkg + TEXT(".") + FPackageName::GetShortName(Pkg)))) { Dbs.Add(D); }
+	}
+	static const TCHAR* MannequinPath = TEXT("/Game/Characters/UEFN_Mannequin/Meshes/SKM_UEFN_Mannequin.SKM_UEFN_Mannequin");
+	static const TCHAR* RetargetPath = TEXT("/Game/Ledger/People/tom-player/RTG_UEFN_to_TomPlayer.RTG_UEFN_to_TomPlayer");
+	USkeletalMesh* Mannequin = FPackageName::DoesPackageExist(FPackageName::ObjectPathToPackageName(FString(MannequinPath)))
+		? LoadObject<USkeletalMesh>(nullptr, MannequinPath) : nullptr;
+	UIKRetargeter* Retargeter = FPackageName::DoesPackageExist(FPackageName::ObjectPathToPackageName(FString(RetargetPath)))
+		? LoadObject<UIKRetargeter>(nullptr, RetargetPath) : nullptr;
+	// THE GRAPH, script-made (MotionMatchAnim.h): with the sample's Offset Root Bone, or without it
+	// for a comparison (-LedgerNoOffsetRoot).
+	const bool bOffsetRoot = !FParse::Param(FCommandLine::Get(), TEXT("LedgerNoOffsetRoot"));
+	const FString GraphPath = bOffsetRoot ? TEXT("/Game/Ledger/People/tom-player/ABP_TomMotion.ABP_TomMotion_C")
+	                                      : TEXT("/Game/Ledger/People/tom-player/ABP_TomMotionPlain.ABP_TomMotionPlain_C");
+	UClass* Graph = FPackageName::DoesPackageExist(FPackageName::ObjectPathToPackageName(GraphPath))
+		? LoadClass<ULedgerMotionMatchAnim>(nullptr, *GraphPath) : nullptr;
+	if (Dbs.Num() < UE_ARRAY_COUNT(Names) || Mannequin == nullptr || Retargeter == nullptr || Graph == nullptr)
+	{
+		UE_LOG(LogTemp, Log, TEXT("LedgerWalk: his own clips (motion matching needs %d databases, found %d; mannequin %s; retargeter %s; graph %s)"),
+			(int32)UE_ARRAY_COUNT(Names), Dbs.Num(), Mannequin != nullptr ? TEXT("yes") : TEXT("no"), Retargeter != nullptr ? TEXT("yes") : TEXT("no"),
+			Graph != nullptr ? TEXT("yes") : TEXT("no"));
+		return false;
+	}
+	// THE MANNEQUIN, placed as his body is and never drawn, its pose worked out every frame.
+	MotionDriver = NewObject<USkeletalMeshComponent>(this, TEXT("MotionDriver"));
+	MotionDriver->SetupAttachment(GetCapsuleComponent());
+	MotionDriver->SetRelativeLocationAndRotation(FVector(0.0, 0.0, -88.0), FRotator(0.0f, -90.0f, 0.0f));
+	MotionDriver->SetSkeletalMeshAsset(Mannequin);
+	MotionDriver->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	MotionDriver->SetCastShadow(false);
+	MotionDriver->SetHiddenInGame(true);
+	MotionDriver->VisibilityBasedAnimTickOption = EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones;
+	MotionDriver->RegisterComponent();
+	MotionDriver->SetAnimInstanceClass(Graph);
+	ULedgerMotionMatchAnim* Matcher = Cast<ULedgerMotionMatchAnim>(MotionDriver->GetAnimInstance());
+	if (Matcher == nullptr) { MotionDriver->DestroyComponent(); MotionDriver = nullptr; return false; }
+	Matcher->Setup(Dbs);
+	// HIS BODY copies the mannequin's pose after it is worked out.
+	M->SetAnimInstanceClass(ULedgerRetargetAnim::StaticClass());
+	if (ULedgerRetargetAnim* R = Cast<ULedgerRetargetAnim>(M->GetAnimInstance()))
+	{
+		R->Setup(MotionDriver, Retargeter);
+		M->InitAnim(true);
+	}
+	M->AddTickPrerequisiteComponent(MotionDriver);
+	// THE SAMPLE'S OWN MOVEMENT (SandboxCharacter_CMC's UpdateMovement_PreCMC and its Calculate
+	// functions, exported and read 22 October), which its clips' paths were matched to: speeding up
+	// at 800 cm/s/s, ground friction 5, no extra braking friction; braking 2,000 cm/s/s when let go and
+	// 500 while still pushed (set each frame, Tick).
+	UCharacterMovementComponent* Move = GetCharacterMovement();
+	Move->MaxAcceleration = 800.0f;
+	Move->GroundFriction = 5.0f;
+	Move->BrakingFrictionFactor = 0.0f;
+	Move->BrakingDecelerationWalking = 2000.0f;
+	// AND ITS TURNING: the capsule faces where he goes at once (the sample's UpdateRotation_PreCMC sets
+	// the rate to -1 on the ground), and his body turns as the clips and the offset root carry it.
+	Move->RotationRate = FRotator(0.0f, -1.0f, 0.0f);
+	UE_LOG(LogTemp, Log, TEXT("LedgerWalk: motion matching on the sample's %d databases, copied onto him through %s; offset root %s"),
+		Dbs.Num(), *Retargeter->GetName(), bOffsetRoot ? TEXT("on") : TEXT("off"));
+	return true;
+}
+
+namespace
+{
+	// THE ROUTE: seconds, heading from his first (degrees), pace (0 stand, 1 walk, 2 run), and the kind
+	// a contact made in its first second is counted as (later contacts of a walk count as the loop).
+	// Kinds: 0 stand, 1 start, 2 loop, 3 stop, 4 turn, 5 run.
+	struct FProofSeg { float Seconds; float Yaw; int32 Pace; int32 Kind; };
+	const FProofSeg GProofRoute[] = {
+		{ 3.0f,   0.0f, 0, 0 },   // standing; the feet's rest height is learnt in its last second
+		{ 4.0f,   0.0f, 1, 1 },   // a start, then the walk
+		{ 2.5f,   0.0f, 0, 3 },   // a stop
+		{ 3.5f, 180.0f, 1, 4 },   // about, from standing
+		{ 3.5f,   0.0f, 1, 4 },   // about again, while walking (a pivot)
+		{ 1.5f,  45.0f, 1, 4 },   // a turn while walking
+		{ 2.0f,   0.0f, 1, 4 },   // and back
+		{ 2.5f,   0.0f, 0, 3 },   // a stop
+		{ 2.5f, 180.0f, 2, 5 },   // a run, back the way he came
+		{ 2.5f,   0.0f, 0, 3 },   // a stop from the run
+	};
+	const TCHAR* GKindNames[6] = { TEXT("stand"), TEXT("start"), TEXT("loop"), TEXT("stop"), TEXT("turn"), TEXT("run") };
+}
+
+void ALedgerSliceCharacter::WalkProofTick(float DeltaSeconds)
+{
+	static const bool bOn = FParse::Param(FCommandLine::Get(), TEXT("TomWalkProof"));
+	const int32 Segs = UE_ARRAY_COUNT(GProofRoute);
+	USkeletalMeshComponent* M = GetMesh();
+	if (!bOn || ProofSeg >= Segs || M == nullptr || !bBodyLoaded) { return; }
+	ProofClock += DeltaSeconds;
+	if (ProofSeg < 0)
+	{
+		// TWO SECONDS for the street to settle, then his heading is the route's first.
+		if (ProofClock < 2.0f) { return; }
+		for (int32 B = 0; B < M->GetNumBones(); ++B)
+		{
+			const FString S = M->GetBoneName(B).ToString();
+			if (S.EndsWith(TEXT("LeftToeBase"))) { Soles[0].Ball[0] = M->GetBoneName(B); }
+			else if (S.EndsWith(TEXT("RightToeBase"))) { Soles[0].Ball[1] = M->GetBoneName(B); }
+		}
+		Soles[1].Ball[0] = FName(TEXT("ball_l"));
+		Soles[1].Ball[1] = FName(TEXT("ball_r"));
+		// THE CLEAREST LINE: his capsule swept 15 m each way along sixteen headings through the
+		// street's walls, kerbs and parked things (people do not stop him during the measure); the
+		// route needs about 11 m ahead and 2 m behind, so the heading with the most ahead, with 3 m
+		// behind, is taken.
+		GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Pawn, ECR_Ignore);
+		const FCollisionShape Shape = FCollisionShape::MakeCapsule(GetCapsuleComponent()->GetScaledCapsuleRadius(), GetCapsuleComponent()->GetScaledCapsuleHalfHeight() - 5.0f);
+		FCollisionQueryParams Q(FName(TEXT("TomWalkProofLine")), false, this);
+		FCollisionResponseParams R;
+		R.CollisionResponse.SetResponse(ECC_Pawn, ECR_Ignore);
+		auto Clear = [&](float Yaw) -> float
+		{
+			const FVector From = GetActorLocation() + FVector(0.0, 0.0, 5.0);
+			const FVector To = From + FRotator(0.0f, Yaw, 0.0f).Vector() * 1500.0;
+			FHitResult Hit;
+			return GetWorld()->SweepSingleByChannel(Hit, From, To, FQuat::Identity, ECC_Pawn, Shape, Q, R) ? Hit.Distance : 1500.0f;
+		};
+		float Best = -1.0f;
+		ProofYaw = GetActorRotation().Yaw;
+		for (int32 H = 0; H < 16; ++H)
+		{
+			const float Yaw = GetActorRotation().Yaw + H * 22.5f;
+			const float Ahead = Clear(Yaw), Behind = Clear(Yaw + 180.0f);
+			const float Score = Behind >= 300.0f ? Ahead : Ahead * 0.1f;
+			if (Score > Best) { Best = Score; ProofYaw = Yaw; }
+		}
+		ProofLines += FString::Printf(TEXT("the route's heading %.0f degrees, %.1f m clear ahead, %.1f m behind") LINE_TERMINATOR,
+			ProofYaw, Clear(ProofYaw) / 100.0f, Clear(ProofYaw + 180.0f) / 100.0f);
+		M->RegisterOnBoneTransformsFinalizedDelegate(FOnBoneTransformsFinalizedMultiCast::FDelegate::CreateUObject(this, &ALedgerSliceCharacter::MeasureFeet));
+		ProofSeg = 0;
+		ProofSegAt = ProofClock;
+		UE_LOG(LogTemp, Display, TEXT("ledgerTomWalk: the route begins, balls %s and %s, %s"), *Soles[0].Ball[0].ToString(), *Soles[0].Ball[1].ToString(),
+			MotionDriver != nullptr ? TEXT("motion matching") : TEXT("his own clips"));
+	}
+	if (ProofClock - ProofSegAt >= GProofRoute[ProofSeg].Seconds)
+	{
+		++ProofSeg;
+		ProofSegAt = ProofClock;
+		if (ProofSeg >= Segs)
+		{
+			// THE JOINS (starts, stops, turns) carry the bar; the loop and the run are named beside them,
+			// and the mannequin's own feet after his.
+			const FFeetMeasure& F = Soles[0];
+			const float Joins = FMath::Max3(F.Worst[1], F.Worst[3], F.Worst[4]);
+			const bool bPass = Joins <= 3.0f && F.Contacts[1] + F.Contacts[3] + F.Contacts[4] > 0;
+			FString Kinds, Driver;
+			for (int32 K = 0; K < 6; ++K)
+			{
+				Kinds += FString::Printf(TEXT(" %s=%.2f/%d"), GKindNames[K], F.Worst[K], F.Contacts[K]);
+				Driver += FString::Printf(TEXT(" %s=%.2f/%d"), GKindNames[K], Soles[1].Worst[K], Soles[1].Contacts[K]);
+			}
+			const FString Line = FString::Printf(TEXT("ledgerTomWalk=%s mode=%s worstJoinCm=%.2f%s frames=%d mannequin:%s"), bPass ? TEXT("PASS") : TEXT("FAIL"),
+				MotionDriver != nullptr ? (FParse::Param(FCommandLine::Get(), TEXT("LedgerNoOffsetRoot")) ? TEXT("matched-no-offset") : TEXT("matched")) : TEXT("clips"),
+				Joins, *Kinds, ProofFrames, MotionDriver != nullptr ? *Driver : TEXT(" none"));
+			UE_LOG(LogTemp, Display, TEXT("%s"), *Line);
+			FFileHelper::SaveStringToFile(Line + LINE_TERMINATOR + ProofLines, *(FPaths::ProjectSavedDir() / TEXT("Logs") / TEXT("tom-walk.txt")));
+			GetCharacterMovement()->MaxWalkSpeed = WalkSpeedCm;
+			if (FParse::Param(FCommandLine::Get(), TEXT("TomWalkProofExit"))) { FPlatformMisc::RequestExit(false); }
+			return;
+		}
+	}
+	const FProofSeg& S = GProofRoute[ProofSeg];
+	// -TomWalkProofShots: a side-on camera beside him, level with his knees, and a picture each tenth of
+	// a second through the first start and the first stop (Saved/TomWalk), so the feet are seen.
+	static const bool bShots = FParse::Param(FCommandLine::Get(), TEXT("TomWalkProofShots"));
+	if (bShots)
+	{
+		APlayerController* ShotPC = Cast<APlayerController>(GetController());
+		if (ShotCamera == nullptr && ShotPC != nullptr)
+		{
+			ShotCamera = GetWorld()->SpawnActor<ACameraActor>(GetActorLocation(), FRotator::ZeroRotator);
+			if (ShotCamera != nullptr) { ShotCamera->GetCameraComponent()->SetFieldOfView(40.0f); ShotPC->SetViewTarget(ShotCamera); }
+		}
+		if (ShotCamera != nullptr)
+		{
+			// on whichever side is open there and then (a line traced each way), never inside a wall
+			const FVector Look = GetActorLocation() - FVector(0.0, 0.0, 50.0);
+			float Room[2] = { 450.0f, 450.0f };
+			for (int32 K = 0; K < 2; ++K)
+			{
+				FHitResult Hit;
+				FCollisionQueryParams CQ(FName(TEXT("TomWalkProofCamera")), false, this);
+				const FVector Way = FRotator(0.0f, ProofYaw + (K == 0 ? 90.0f : -90.0f), 0.0f).Vector();
+				if (GetWorld()->LineTraceSingleByChannel(Hit, Look, Look + Way * 450.0, ECC_Camera, CQ)) { Room[K] = Hit.Distance; }
+			}
+			const int32 K = Room[0] >= Room[1] ? 0 : 1;
+			const FVector Side = FRotator(0.0f, ProofYaw + (K == 0 ? 90.0f : -90.0f), 0.0f).Vector();
+			ShotCamera->SetActorLocationAndRotation(Look + Side * FMath::Max(120.0f, Room[K] - 40.0f) + FVector(0.0, 0.0, 10.0), (-Side).Rotation());
+			const float T = ProofClock - ProofSegAt;
+			if ((ProofSeg == 1 || ProofSeg == 2) && T < 1.6f && ProofClock >= NextShotAt)
+			{
+				FScreenshotRequest::RequestScreenshot(FPaths::ConvertRelativePathToFull(FPaths::ProjectSavedDir() / TEXT("TomWalk")
+					/ FString::Printf(TEXT("%s-%02d.png"), ProofSeg == 1 ? TEXT("start") : TEXT("stop"), FMath::FloorToInt(T * 10.0f))), false, false);
+				NextShotAt = ProofClock + 0.1f;
+			}
+		}
+	}
+	// THE FIRST DAY'S TOUR holds his feet (CrimeProbe.cpp, WalkRoundTick); the measure walks him anyway.
+	if (APlayerController* PC = Cast<APlayerController>(GetController())) { if (PC->IsMoveInputIgnored()) { PC->ResetIgnoreMoveInput(); } }
+	GetCharacterMovement()->MaxWalkSpeed = S.Pace == 2 ? RunSpeedCm : WalkSpeedCm;
+	if (S.Pace > 0) { AddMovementInput(FRotator(0.0f, ProofYaw + S.Yaw, 0.0f).Vector(), 1.0f); }
+	// FOUR TIMES A SECOND, what moves and what plays: his speed, where his body's root stands from
+	// the capsule, and the clip the motion matching has picked.
+	if (FMath::FloorToInt(ProofClock * 4.0f) != FMath::FloorToInt((ProofClock - DeltaSeconds) * 4.0f))
+	{
+		const ULedgerMotionMatchAnim* Mm = MotionDriver != nullptr ? Cast<ULedgerMotionMatchAnim>(MotionDriver->GetAnimInstance()) : nullptr;
+		const FVector RootAt = MotionDriver != nullptr ? MotionDriver->GetBoneLocation(MotionDriver->GetBoneName(0)) : FVector::ZeroVector;
+		const FVector Feet = GetActorLocation() - FVector(0.0, 0.0, GetCapsuleComponent()->GetScaledCapsuleHalfHeight());
+		ProofLines += FString::Printf(TEXT("%.2f s, stretch %d, %.0f cm/s, root %.1f cm off, %s") LINE_TERMINATOR, ProofClock, ProofSeg,
+			GetVelocity().Size2D(), (float)FVector::Dist2D(RootAt, Feet), Mm != nullptr ? *Mm->Describe() : TEXT("-"));
+	}
+}
+
+void ALedgerSliceCharacter::MeasureFeet()
+{
+	// ONCE HIS POSE FOR THE FRAME IS FINAL and he stands where the frame draws him: each ball of the
+	// foot, planted when within 2.5 cm of its standing height and no higher than the other; its
+	// drift along the ground while planted is the slide.
+	const int32 Segs = UE_ARRAY_COUNT(GProofRoute);
+	USkeletalMeshComponent* M = GetMesh();
+	if (M == nullptr || ProofSeg < 0 || ProofSeg >= Segs) { return; }
+	const float T = ProofClock - ProofSegAt;
+	const float Floor = GetActorLocation().Z - GetCapsuleComponent()->GetScaledCapsuleHalfHeight();
+	++ProofFrames;
+	MeasureBody(0, M, ProofSeg, T, Floor);
+	if (MotionDriver != nullptr) { MeasureBody(1, MotionDriver, ProofSeg, T, Floor); }
+}
+
+void ALedgerSliceCharacter::MeasureBody(int32 B, USkeletalMeshComponent* Body, int32 Seg, float T, float Floor)
+{
+	FFeetMeasure& F = Soles[B];
+	if (F.Ball[0].IsNone() || F.Ball[1].IsNone() || Body->GetBoneIndex(F.Ball[0]) == INDEX_NONE) { return; }
+	const FProofSeg& S = GProofRoute[Seg];
+	const FVector P[2] = { Body->GetBoneLocation(F.Ball[0]), Body->GetBoneLocation(F.Ball[1]) };
+	if (Seg == 0)
+	{
+		if (T > S.Seconds - 1.0f) { F.Rest[0] += P[0].Z - Floor; F.Rest[1] += P[1].Z - Floor; ++F.RestN; }
+		return;
+	}
+	const int32 Kind = S.Pace == 0 ? (T < 1.5f ? 3 : 0) : (S.Pace == 2 ? 5 : (T < 1.0f ? S.Kind : 2));
+	// -TomWalkProofTrace: each frame of the first start and stop, each foot's ball along the route and
+	// above its standing height, for reading the slide by hand.
+	static const bool bTrace = FParse::Param(FCommandLine::Get(), TEXT("TomWalkProofTrace"));
+	if (bTrace && (Seg == 1 || Seg == 2) && T < 1.6f)
+	{
+		const FVector Along = FRotator(0.0f, ProofYaw, 0.0f).Vector();
+		ProofLines += FString::Printf(TEXT("trace %s %d %.3f: left %.1f along %.1f up%s, right %.1f along %.1f up%s, capsule %.1f") LINE_TERMINATOR,
+			B == 0 ? TEXT("his") : TEXT("mannequin"), Seg, T,
+			(float)FVector::DotProduct(P[0], Along), (float)(P[0].Z - Floor - (F.RestN > 0 ? F.Rest[0] / F.RestN : 0.0f)), F.bDown[0] ? TEXT(" down") : TEXT(""),
+			(float)FVector::DotProduct(P[1], Along), (float)(P[1].Z - Floor - (F.RestN > 0 ? F.Rest[1] / F.RestN : 0.0f)), F.bDown[1] ? TEXT(" down") : TEXT(""),
+			(float)FVector::DotProduct(GetActorLocation(), Along));
+	}
+	for (int32 I = 0; I < 2; ++I)
+	{
+		const float Rest = F.RestN > 0 ? F.Rest[I] / F.RestN : 0.0f;
+		const bool bDown = P[I].Z - Floor - Rest < 2.5f && P[I].Z <= P[1 - I].Z + 1.0f;
+		if (bDown && !F.bDown[I])
+		{
+			F.Planted[I] = P[I];
+			F.Slip[I] = 0.0f;
+			F.Kind[I] = Kind;
+			++F.Contacts[Kind];
+		}
+		else if (bDown)
+		{
+			F.Slip[I] = FMath::Max(F.Slip[I], (float)FVector::Dist2D(P[I], F.Planted[I]));
+			F.Worst[F.Kind[I]] = FMath::Max(F.Worst[F.Kind[I]], F.Slip[I]);
+		}
+		if (!bDown && F.bDown[I])
+		{
+			ProofLines += FString::Printf(TEXT("%.2f s, stretch %d, %s, %s %s foot, slid %.2f cm") LINE_TERMINATOR, ProofClock, Seg,
+				GKindNames[F.Kind[I]], B == 0 ? TEXT("his") : TEXT("the mannequin's"), I == 0 ? TEXT("left") : TEXT("right"), F.Slip[I]);
+		}
+		F.bDown[I] = bDown;
 	}
 }
 

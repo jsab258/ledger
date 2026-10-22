@@ -148,6 +148,46 @@ private:
 	UPROPERTY()
 	TObjectPtr<USoundAttenuation> StepAttenuation;
 
+	// TOM'S WALK BY MOTION MATCHING (MotionMatchAnim.h, 22 October), with -LedgerMotionMatch only: the
+	// sample's mannequin, hidden beside him, whose pose is copied onto his body each frame; null
+	// without the switch, or when the sample's databases or his retargeter are not in this build
+	// (then his own clips play).
+	UPROPERTY()
+	TObjectPtr<USkeletalMeshComponent> MotionDriver;
+	bool StartMotionMatching(USkeletalMeshComponent* M);
+	int32 HeardFootfalls = 0;
+	// One step's sound from foot F (0 left, 1 right); false when too soon after the last.
+	bool SoundStep(int32 F, bool bRun, float Speed, const TCHAR* From, float T);
+
+	// THE WALK'S MEASURE, -TomWalkProof (22 October; the walk proof's method, CrimeProbe.cpp): he
+	// walks a set route of starts, stops, turns, a pivot and a run, and each planted foot's drift is
+	// measured once his pose for the frame is final, the worst named for each kind of join.
+	void WalkProofTick(float DeltaSeconds);
+	void MeasureFeet();
+	int32 ProofSeg = -1;
+	float ProofClock = 0.0f, ProofSegAt = 0.0f, ProofYaw = 0.0f;
+	// EACH BODY'S FEET, measured alike: 0 his own, 1 the sample's mannequin that drives him (so a
+	// slide is put down to the motion matching or to the copying onto him).
+	struct FFeetMeasure
+	{
+		FName Ball[2];
+		float Rest[2] = { 0.0f, 0.0f };
+		int32 RestN = 0;
+		bool bDown[2] = { false, false };
+		FVector Planted[2];
+		float Slip[2] = { 0.0f, 0.0f };
+		int32 Kind[2] = { 0, 0 };
+		float Worst[6] = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };   // stand, start, loop, stop, turn, run
+		int32 Contacts[6] = { 0, 0, 0, 0, 0, 0 };
+	};
+	FFeetMeasure Soles[2];
+	void MeasureBody(int32 B, USkeletalMeshComponent* Body, int32 Seg, float T, float Floor);
+	int32 ProofFrames = 0;
+	UPROPERTY()
+	TObjectPtr<class ACameraActor> ShotCamera;
+	float NextShotAt = 0.0f;
+	FString ProofLines;
+
 public:
 	int32 Steps = 0;
 	static constexpr int32 MaxStepClips = 8;

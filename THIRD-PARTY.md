@@ -143,7 +143,7 @@ by Kenney (kenney.nl), CC0."
 
 | | |
 |---|---|
-| **What** | The idles and, since 6 October, the walk loops, starts and stops (UEFNAnimPreset/Locomotion) that come with the engine's own MetaHuman plugin (/MetaHumanCharacter/Optional/Animation), where the game uses them. Epic's Game Animation Sample on Fab is marked NoAI by Epic and was never used before 13 October; his ruling of that day allows it inside the game, and the walk is to be rebuilt on it with motion matching: not yet imported, and its row goes here when it is |
+| **What** | The idles and, since 6 October, the walk loops, starts and stops (UEFNAnimPreset/Locomotion) that come with the engine's own MetaHuman plugin (/MetaHumanCharacter/Optional/Animation), where the game uses them. Epic's **Game Animation Sample** on Fab is marked NoAI by Epic and was never used before 13 October; his ruling of that day allows it inside the game. Since 22 October its mannequin, rigs, motion-matching databases and their clips (with the folders they draw on: Audio, Blueprints, Characters, Misc) are in `ue-probe/Content` on this PC only, migrated from `F:/LedgerTools/GameAnimationSample` by way of `F:/LedgerTools/game-inputs/gasp`, for Tom's motion-matching trial (off by default, `-LedgerMotionMatch`; production/research/sit-and-turn/TOM-MOTION-MATCHING-2026-10-22.md); not copied to the build machine, so not in the package |
 | **Licence** | Epic's "UE-Only Content" terms under the Unreal Engine EULA: allowed in a product that requires the engine; the licence allowlist admits Epic's Unreal-only content for animation only (entry 8, 30 September) |
 | **Obligation** | Credited on the credits page |
 
