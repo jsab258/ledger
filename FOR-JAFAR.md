@@ -21,10 +21,10 @@ No decision asked: these are for watching the street change.
 
 <!-- /morning pictures -->
 
-**Your week's order, where it stands (22 October, 15:15; the 21 October overview is in git).**
+**Your week's order, where it stands (22 October, 17:20; the 21 October overview is in git).**
 - *1 to 4.* Done 21 October: health check, branches home, your rules and combat doc, the editor connection.
 - *5, the cloud's pieces.* Lamp post C stands at the four lamp spots (darker, faint grime; its rain staining set aside). Rita's front, display and room are in the street as the shops' sample: four day views passed fresh reviewers, and her night light passed on 22 October (below). You answered on 22 October: keep her front and bring the other shops the same way after Monday; finish the lamp's staining after Monday.
-- *5, today (22 October, after 7 to 9):* Rita's night light rebuilt to the cloud's own design (strip lights under the shelves, a dimmer head lamp), its strength measured. All five night views passed fresh reviewers: her glass no longer burns (6% to 0% from the hook camera), the red no longer stains the pale goods, and her window now sits just below the fish shop's. On the way, night pictures were found to be taken before the light settled; tomorrow's morning night picture will look darker for that reason, not because the street changed. Her front's wear at the foot was tried once in the afternoon and failed its gate (it read as frost on the cream and buttermilk paints); set aside for research, her own paints kept.
+- *5, today (22 October, after 7 to 9):* Rita's night light rebuilt to the cloud's own design (strip lights under the shelves, a dimmer head lamp), its strength measured. All five night views passed fresh reviewers: her glass no longer burns (6% to 0% from the hook camera), the red no longer stains the pale goods, and her window now sits just below the fish shop's. On the way, night pictures were found to be taken before the light settled; tomorrow's morning night picture will look darker for that reason, not because the street changed. Her front's wear: the first try, in the street's own material, failed (frost on the cream, her red shifted); the second, painted into her front's own textures, passed all eight views in the evening (grime at the foot, chipped rails and sill, dirt in the corners; her paint above unchanged).
 - *6, frame rate.* Done: the packaged walk's worst frame 30.3 ms (it was 63), P1 closed by a fresh review (production/research/pre-production/P1-PACKAGED-2026-10-21.md).
 - *7, the walk and the clothes.* The walk was rebuilt on Epic's sample with motion matching and measured on a set route. Starts, stops and turns slide 13 to 67 cm (the bar is 3), so it is set aside and off by default. Your current walk fails too: it slides on about half its steps, the right foot on every stride (production/research/sit-and-turn/TOM-MOTION-MATCHING-2026-10-22.md). Clothes: Epic's Fab items all load in 5.8, but the Techwear Outfit is modern sportswear and the Construction Presets are bare bodies, not clothes; none can dress the Hook sheet's people (Needs you 1).
 - *8, speech.* Done. **The Gemini test:** on the reply check, Gemini 3.5 Flash-Lite took 0.60 s at the median against Haiku's 0.97, but it let 3 invented details in 42 through where Haiku lets 1 (Needs you 2); Gemini 3.8 Flash was the most accurate but slower, 1.8 s (production/research/voice-latency/GEMINI-CHECK-2026-10-22.md). **Pocket no longer stalls the walk:** run at lower priority, the walk's slowest 1% is 20.6 ms (it was 34) and its worst 47 ms (it was 175). The one frame left over the bar is a separate stall that the usual card voice shows too (87 ms today), so the frame-rate margin is thinner than P1's close said (listed). **The real path with Pocket:** 20 checked replies, with the game open, first sound heard at 2.41 s at the median, the best yet (3.25 s before) but over 2 s. The model's first checked sentence alone now takes 2.10 s, so the voice is no longer the bottleneck (about $0.15 of your measuring dollar).
@@ -54,17 +54,18 @@ Your page today (https://claude.ai/artifact/2yznAYjEwDVv3RvzzKUpBR) asks all thr
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
 
-## Builder, Friday 23 October (written Thursday 15:15, for your morning)
+## Builder, Friday 23 October (written Thursday 17:20, for your morning)
 
 **Failed:**
 - **Phase 1 closed with no exit passing** (four fresh reviews): Tom and the walk, period clothes, first speech within 2 s, the frame budget's headroom, the office's wear.
 - **Tom's motion-matched walk** slides 13 to 67 cm at starts, stops and turns. Your current walk fails too, on about half its steps.
 - **Epic's garments** cannot dress 1990 people.
-- **Rita's front wear (try 1):** it read as frost on the pale paints. Set aside for research.
+- **Rita's front wear, first try:** it read as frost on the pale paints.
 
 **Done:**
 - **Gemini 3.5 Flash-Lite** checks in 0.60 s against Haiku's 0.97, but lets 3 invented details in 42 through.
 - **Pocket TTS** no longer stalls the walk. With Pocket on the real path, first speech is 2.41 s, the best yet: the model, not the voice, is now what's slow.
 - **Rita's night light** passed all five night views, and was checked in the packaged game.
+- **Rita's front wear, second try,** passed all eight views: dirt at the foot, chips on door and sill (production/previews/rita-front-wear-2026-10-22.jpg).
 
 **Act on:** your page, three taps, at the link above.

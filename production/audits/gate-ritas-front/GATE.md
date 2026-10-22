@@ -108,3 +108,73 @@ The game is back on the front's own paints (the shop entry restored; the code st
 - a grime for pale paints (warm, darker, damp-edged, as the reviewers describe real door feet), or wear baked into the front's own model in Blender.
 
 The cloud's W1 items (the band round the lever, the chipped rails and the sill's nose) are still owed.
+
+## 22 October: the front's wear, try 2 (baked into its own paints)
+
+**The research** (production/research/street-wear/FRONT-WEAR-BAKE-2026-10-22.md).
+- **Try 1's colour shift, measured.**
+  - The capture repeats: unchanged parts of the frame agree to 0.1%.
+  - Her oxblood lost 21% red and 37 to 39% green and blue, mostly as missing sky reflection.
+  - Every setting of the two materials matches, as read in the editor. The cause is not isolated.
+- **So the wear goes into the front's own paints**, as the industry wears a unique piece (Substance Painter's generators: masks from maps baked from the model).
+
+**The try.**
+- **The recipe:** tools/art-recipes/front_wear.py, with the spec production/specs/shop-fronts/ritas-front-wear.json.
+- **What it makes:** a second copy of the front, "ritas-front-worn"; the shop file names which copy stands.
+- **How:**
+  - one texture set per paint, over a new unwrap of that paint's faces;
+  - a Cycles emission bake of the paint drawn toward a warm dirt at 55% of its own luminance, by a mask of the foot band, splash, occlusion near the foot and faintly everywhere, dust on faces turned up, and the band round the lever;
+  - chips of old wood on convex edges in W1's regions;
+  - roughness toward matt under the dirt.
+- **The front's glTF material is kept.**
+
+**Measured** (across the road, against BEFORE, linear light):
+- the clean oxblood above the foot is within 0.5 to 1.5%; try 1 was 21 to 39% off;
+- brick, render, the neighbours and the road are within 0.1 to 1.2%;
+- the cornice's mouldings are 2 to 4% darker, which is the intended dirt in their corners;
+- the stallriser's foot roll is 13% darker in red.
+
+**The gate, round 1** (pictures F:/LedgerTools/gate/new/ritas-wear-2026-10-22-t2b):
+- **Across the road: PASS.** The foot reads as the dull, used base of an old shopfront. Points to watch:
+  - on the oxblood the grime is greyer more than darker;
+  - a small smudge where the sill meets the right pilaster.
+- **Square on: FAIL.** Two black hairlines run down the left door frame's mouldings, full height.
+  - **The cause:** all three paints shared one atlas on a black ground. The narrow faces, seen at a slant, read the picture's smaller copies (mip levels), where the black bled in.
+  - **Fix, try 1:** one texture set per paint (oxblood and cream 4096, buttermilk 2048, roughness 1024), each picture's unused ground filled with the clean paint. No black pixel is left in any picture; the hairlines are gone (F:/LedgerTools/gate/new/ritas-wear-2026-10-22-t2c).
+
+**The gate, round 2** (one texture set per paint; F:/LedgerTools/gate/new/ritas-wear-2026-10-22-t2c):
+- **Square on: PASS.**
+  - The hairlines are gone.
+  - The clean paint is within 1 level.
+  - The sill's nose is chipped, unevenly; the door has chips on its middle rail and stile.
+  - Shortfall: the joinery above the foot is still crisp.
+- **Across the road: PASS.** Points to watch:
+  - The oxblood plinth's grime reads lighter and greyer, not darker.
+  - A 3-px step at the left pilaster's grime top, masked by its base moulding.
+  - Brownish marks on the shop door's stile feet, barely visible at full size.
+- **From the left: PASS.** Only the shop door's foot is in frame. Points to watch:
+  - The lever's grime is heavy and blotchy rather than a slight band.
+  - The bottom rail's flecks are dense.
+- **From the right: FAIL.** On the oxblood stallriser's foot the grime read as a pale, chalky lilac-grey wash with a crisp top (at 1600,1350: 78,35,37 to 78,68,65). The plinth went from dark brown to flat grey.
+  - **The cause:** the texture at that place is darker than the paint, so the colour was not to blame. The grime's finish was set matt (roughness 0.85). Seen at a low slant, a matt surface catches the bright sky as a grey sheen, where the glossy paint mirrors the dark street.
+  - **Fix, try 1:** grime as damp street splash, only a little duller than the paint (roughness 0.55; chips 0.6); a softer tide line (0.15 over 30 mm, was 0.25 over 15); chips a little sparser.
+  - **Measured from the right** (F:/LedgerTools/gate/new/ritas-wear-2026-10-22-t2d):
+    - the foot band is 60,41,38, against 69,41,39 before and 71,54,51 in round 2;
+    - the plinth is 32,26,23, against 40,25,24 and 46,42,39;
+    - the paint above the band is unchanged (89,57,56).
+
+**The gate, round 3** (both fixes; F:/LedgerTools/gate/new/ritas-wear-2026-10-22-t2d; one fresh reviewer a view, beside BEFORE): **all eight views PASS.**
+- **From the right.** The foot is darker and browner, with a soft top; the clean paint is within 2 levels.
+- **Across the road.** The foot reads as street dirt on an old shopfront in use, quietly. The clean paint is within 1 level.
+- **Square on.** Dust on the sill, the nose chipped unevenly (no pattern), the door rail chipped.
+- **From the left.** The door's foot reads as an old door in daily use.
+- **Hook by day.** The foot reads as dirt, mostly hidden by the kiosk.
+- **Night across, night square, hook at night.** Nothing glows, reads pale or smears.
+- **Points to watch, not failing:**
+  - On the oxblood the grime is a little greyer from far off.
+  - The sill's nose chips and some rail flecks read as soft smudges or dotted rows when enlarged.
+  - The lever's band shows as scuffs, not a band.
+  - The joinery above the foot still reads freshly painted, cleaner than the Hook sheet's street.
+- **Open fault, not of this change:** the cornice's right end (across the road, x 1729 to 1746, y 303 to 326) flips between a dark block and a pale streak from one capture to the next, by day and at night. It looks like two surfaces fighting at one depth, and it is listed in FINDINGS.md.
+- **Seen in passing:** the man in white in Mickey's doorway at night is the cast's base layer (the clothes fault, listed).
+- **The last good pictures** are now these (F:/LedgerTools/gate/last-good/ritas-front). The preview is production/previews/rita-front-wear-2026-10-22.jpg (before above, after below).

@@ -93,7 +93,8 @@
    },
    "sources": "the note's section 9: Peter Marshall's Hull and 1990 photographs (links), the Black Country Living Museum pawnbroker",
    "front": {
-    "glb": "ritas-front",
+    "glb": "ritas-front-worn",
+    "glb_note": "22 October 2026: her front worn at the foot, the lever and the rails, baked into its own paints (tools/art-recipes/front_wear.py, production/specs/shop-fronts/ritas-front-wear.json; production/research/street-wear/FRONT-WEAR-BAKE-2026-10-22.md); 'ritas-front' is the clean copy.",
     "x": 18.0,
     "z": 5.295,
     "up": 0.1,

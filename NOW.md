@@ -21,7 +21,7 @@ Phase 1 closed 22 Oct, no exit passed; binding stop until he rules (production/a
 - [x] 8 Speech: GEMINI-CHECK-2026-10-22.md.
 - [x] 9 Close phase 1: CLOSE-2026-10-22.md.
 
-STATE (22 Oct 15:15): Rita's night light passed, her wear set aside; phase 2 asked.
+STATE (22 Oct 17:15): Rita's night light and wear passed; phase 2 asked.
 
 ## Handovers
 

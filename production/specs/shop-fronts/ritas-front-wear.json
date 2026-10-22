@@ -1,0 +1,106 @@
+{
+  "front": "ritas-front",
+  "out": "ritas-front-worn",
+  "note": "22 October 2026. Rita's front worn at the foot by a bake into its own paints (tools/art-recipes/front_wear.py; production/research/street-wear/FRONT-WEAR-BAKE-2026-10-22.md). The target is the front's own design, W1 (production/cloud-week/kit/shop-windows NOTES.md PC-05; REVIEW-v2-close.md narrow 9, from its dated photograph): foot grime to 150 mm along the whole front, 20 per cent darker; a band 150 mm round the shop door's lever, 10 per cent darker; chipped edges on the shop door's bottom and lock rails and on the sill's nose. Try 1's reviewers: real door feet are warm, darker and damp-edged; pale dust on cream reads as frost, so the grime only darkens. Positions are in the front's own frame (metres; x across the bay from the viewer's left about its middle; y out toward the street negative; z above the footway), read from the model on 22 October.",
+  "paints": [
+    "paint_oxblood",
+    "paint_white_joinery",
+    "paint_buttermilk"
+  ],
+  "texture_px": {
+    "paint_oxblood": 4096,
+    "paint_white_joinery": 4096,
+    "paint_buttermilk": 2048
+  },
+  "texture_px_note": "22 October: one texture set per paint, its unused ground filled with the clean paint (the gate's square view: black from one shared atlas bled into narrow faces seen at a slant).",
+  "roughness_px": 1024,
+  "detail_below_m": 1.2,
+  "detail_ratio": 3.0,
+  "dirt_hue": [
+    0.2,
+    0.155,
+    0.11
+  ],
+  "dirt_luminance": 0.55,
+  "foot_m": 0.17,
+  "foot_ragged_m": 0.05,
+  "foot_full": 0.4,
+  "tide": 0.15,
+  "tide_m": 0.03,
+  "splash_m": 0.4,
+  "splash": 0.5,
+  "splash_above": 0.55,
+  "ao_m": 0.08,
+  "ao_reach_m": 1.0,
+  "ao": 0.9,
+  "ao_everywhere": 0.3,
+  "ledge": 0.3,
+  "lever": [
+    -1.596,
+    -0.06,
+    0.95
+  ],
+  "lever_m": 0.15,
+  "lever_weight": 0.25,
+  "chip_colour": [
+    0.22,
+    0.18,
+    0.13
+  ],
+  "chip_edge_m": 0.03,
+  "chip_scale": 25.0,
+  "chip_above": 0.58,
+  "chip_regions": [
+    {
+      "name": "shop door, bottom rail",
+      "x": [
+        -1.66,
+        -0.74
+      ],
+      "z": [
+        0.0,
+        0.26
+      ],
+      "amount": 1.0
+    },
+    {
+      "name": "shop door, lock rail",
+      "x": [
+        -1.66,
+        -0.74
+      ],
+      "z": [
+        0.86,
+        1.07
+      ],
+      "amount": 1.0
+    },
+    {
+      "name": "the sill's nose",
+      "x": [
+        -0.76,
+        2.72
+      ],
+      "z": [
+        0.5,
+        0.6
+      ],
+      "amount": 1.0
+    },
+    {
+      "name": "the foot, elsewhere",
+      "x": [
+        -3.0,
+        3.0
+      ],
+      "z": [
+        0.0,
+        0.7
+      ],
+      "amount": 0.35
+    }
+  ],
+  "roughness_dirt": 0.55,
+  "roughness_chip": 0.6,
+  "roughness_note": "22 October, the gate's right view: grime at roughness 0.85 caught the sky as a grey sheen at a low slant and read as a pale chalky wash on the oxblood (78,35,37 to 78,68,65); street grime here is damp splash, so it is only a little duller than the paint."
+}

@@ -19,6 +19,23 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 22 Oct 2026, item 5, Rita's sample: a delivered model worn at the foot by baking the wear into its own paints, through three gate rounds
+- Made: a second copy of an imported shopfront whose three paints carry baked wear (grime at the foot, dirt in corners, dust on ledges, a hand band by the lever, chips on named rails); the shop file names which copy stands; a recipe and a spec that repeat it for the next front.
+- Method (setting-free):
+  - Wear a unique piece the way a texturing tool does: masks from what the model itself gives (height in its own frame, ambient occlusion near and far, faces turned up, convex edges found by occlusion inside the solid, distance from a hand's place), combined and baked into the piece's own textures. Keep the material that already passed.
+  - One texture set per material, its unused ground filled with the clean colour. A shared atlas on black bleeds into narrow faces seen at a slant, through the smaller mip copies.
+  - Dirt drawn toward a warm hue at a fraction of the paint's own luminance, so it only darkens, on pale and dark paints alike.
+  - Grime only a little duller than the paint. A fully matt grime catches the sky as a pale sheen at low angles and reads as a chalky wash.
+  - Preview in the bake tool before the engine. Check the clean paint against BEFORE by measurement first. One fresh reviewer per view, and every view re-reviewed after any fix.
+- Tools: Blender 5.2 headless (Cycles emission bake, ambient occlusion and noise nodes, smart unwrap and pack), the glTF exporter and a small pass that de-duplicates textures, Unreal's glTF import, the game's page cameras, fresh reviewers a view.
+- Target and check: the front's own design (W1: foot grime to 150 mm about 20 per cent darker, a band round the lever, chipped rails and sill nose); the gate (new faults block; the clean paint within 1.5 per cent).
+- Cost (hours): about 3.5, with research.
+- Failed and why (each fixed once):
+  - one shared atlas left black hairlines on the mouldings in the close view;
+  - a matt grime read as a pale lilac wash on the dark paint from the side;
+  - the glTF exporter wrote one texture per material for a shared picture, and the import made three copies of it in memory.
+- Evidence: production/audits/gate-ritas-front/GATE.md (22 October, try 2); production/research/street-wear/FRONT-WEAR-BAKE-2026-10-22.md
+
 ### 22 Oct 2026, item 5, Rita's sample: a delivered model given the street's own wear by swapping its paint for the street's material, failed
 - Made: nothing kept. One try at wearing an imported shopfront at the foot by drawing its paints in the street's own worn material; the shop entry is restored and the code left off.
 - Method (setting-free): before swapping an asset's material for the house material, check that the two draw the same colour the same in several views and places (a flat colour can shift through the material chain); judge a house wear on the asset's light paints and dark ones separately, since a pale dust made for dark paint reads as frost on cream.
