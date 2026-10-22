@@ -21,11 +21,11 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ### 22 Oct 2026, item 5, Rita's sample: a delivered model given the street's own wear by swapping its paint for the street's material, failed
 - Made: nothing kept. One try at wearing an imported shopfront at the foot by drawing its paints in the street's own worn material; the shop entry is restored and the code left off.
-- Method (setting-free): before swapping an asset's material for the house material, check that the two draw the same colour the same at several angles (a flat colour can shift by angle through the material chain); judge a house wear on the asset's light paints and dark ones separately, since a pale dust made for dark paint reads as frost on cream.
+- Method (setting-free): before swapping an asset's material for the house material, check that the two draw the same colour the same in several views and places (a flat colour can shift through the material chain); judge a house wear on the asset's light paints and dark ones separately, since a pale dust made for dark paint reads as frost on cream.
 - Tools: the game's material instances, the page cameras, fresh reviewers a view.
 - Target and check: the gate (no colour shift, wear that reads as dirt).
 - Cost (hours): about 1.
-- Failed and why: the house material drew the same oxblood 2 to 17 per cent darker and redder depending on the angle (cause not found), and its pale dust read as frost and marble veins on the cream and buttermilk paints.
+- Failed and why: the house material drew the same oxblood 2 to 17 per cent darker and redder, varying between views (by angle or place, not separated; cause not found), and its pale dust read as frost and marble veins on the cream and buttermilk paints.
 - Evidence: production/audits/gate-ritas-front/GATE.md (22 October, the wear)
 
 ### 22 Oct 2026, item 5, Rita's sample: a shop window's night light rebuilt to its designer's plan and set by measurement

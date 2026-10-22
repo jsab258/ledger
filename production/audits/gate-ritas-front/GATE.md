@@ -95,11 +95,11 @@ The earlier known shortfalls stand.
 
 **The two causes, measured.**
 1. **The street's dust on pale paint.** The material's dust is a cool pale grey through a 3D noise. On dark oxblood it reads as dirt; on cream and buttermilk it reads as frost, foam or veins.
-2. **The street's material draws the same flat colour darker and redder, and by angle.** On her oxblood, measured in linear light:
+2. **The street's material draws the same flat colour darker and redder, by different amounts from view to view.** On her oxblood, measured in linear light:
    - from across the road, red 8%, green and blue 17% darker;
    - from the left, only 2 to 6%.
    
-   So a tint cannot correct it. The cause is not found: the material's specular is the glTF's 0.5, and its roughness is set from the same 0.45.
+   The two views measured different parts of the front, so the difference may be by angle or by place (a large-scale variation in the material, for example); not separated. So one tint is not known to correct it. The cause is not found: the material's specular is the glTF's 0.5, and its roughness is set from the same 0.45.
 
 The game is back on the front's own paints (the shop entry restored; the code stays, off without "worn_paints").
 

@@ -7698,7 +7698,7 @@ namespace
 			// and the footway's are the material's own). -ShopFrontPlainPaint leaves the model's own paints.
 			// TRY 1 FAILED ITS GATE, 22 October (production/audits/gate-ritas-front/GATE.md): the street's pale dust
 			// read as frost and marble veins on her cream and buttermilk, and this material drew her oxblood 2 to
-			// 17 per cent darker and redder by angle; her entry no longer names "worn_paints", so this is off.
+			// 17 per cent darker and redder, varying between views; her entry no longer names "worn_paints", so this is off.
 			const Value* Paints = Front.Find("worn_paints");
 			if (GBaseMaterial == nullptr) { GBaseMaterial = LoadObject<UMaterialInterface>(nullptr, kBaseMaterialPath); }
 			if (Paints != nullptr && Paints->Type == T_OBJ && GBaseMaterial != nullptr && !FParse::Param(FCommandLine::Get(), TEXT("ShopFrontPlainPaint")))
