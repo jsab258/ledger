@@ -7734,6 +7734,13 @@ namespace
 				}
 			}
 		}
+		// NO STREET GRIME ON A FRONT THAT CARRIES ITS OWN (22 October, the newsagent's gate: the street's splash band and
+		// the old front's moss stain, placed for the bay's old joinery, stood on its pale sill, window post and stallriser
+		// with hard edges): a front whose entry says "street_decals": false takes none of the street's projected decals;
+		// its wear is baked into its own paints (tools/art-recipes/front_wear.py).
+		const Value* Decals = Front.Find("street_decals");
+		const bool bNoStreetDecals = Decals != nullptr && Decals->Type == T_BOOL && !Decals->Bool;
+		if (UStaticMeshComponent* C = A->GetStaticMeshComponent(); C != nullptr && bNoStreetDecals) { C->SetReceivesDecals(false); }
 		// THE DOOR'S OPEN CARD TURNED AT NIGHT (22 October, the ironmonger's night gate: "the door's sign reads OPEN on a
 		// shut shop"; the design turns the card over to its CLOSED face, K03b_A, in a shut shop's night picture,
 		// production/cloud-week/kit/shop-windows/sw_gate.py): the front's "door_sign" slot becomes swappable and the
@@ -7786,8 +7793,8 @@ namespace
 				++Glows;
 			}
 		}
-		Note = FString::Printf(TEXT("front %s at %.0f,%.0f,%.0f cm, %d painted slot(s) worn at the foot, door card %s, %d sign slot(s) lit at night"), *Stem, At.X, At.Y, At.Z, Worn,
-			bSign ? TEXT("turns at night") : TEXT("fixed"), Glows);
+		Note = FString::Printf(TEXT("front %s at %.0f,%.0f,%.0f cm, %d painted slot(s) worn at the foot, door card %s, %d sign slot(s) lit at night, %s"), *Stem, At.X, At.Y, At.Z, Worn,
+			bSign ? TEXT("turns at night") : TEXT("fixed"), Glows, bNoStreetDecals ? TEXT("no street decals") : TEXT("street decals on it"));
 		UE_LOG(LogTemp, Display, TEXT("LedgerInteriors: %s"), *Note);
 		return A;
 	}

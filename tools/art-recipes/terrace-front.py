@@ -3262,7 +3262,12 @@ def _cloud_shopfront(parts, p, name, here, root=None):
     # filled it is gone, so brick stands in the gap, its face just behind the pilasters' fronts.
     # try 2, the same evening: the right-hand view still showed a hair of light at the neighbour's side,
     # so each pier reaches 60 mm past the bay's edge, behind the neighbour's own pilaster
-    for side, (b0, b1) in (("l", (-CLOUD_PIER_PAST_M, CLOUD_PIER_M)), ("r", (W - CLOUD_PIER_M, W + CLOUD_PIER_PAST_M))):
+    # (22 October, the newsagent's gate, from the left: where the neighbour is a cloud front too, its own pier
+    # stands behind its pilaster, and the two overlapping piers' faces fought as a smeared strip; a pier then
+    # stops at the bay's edge. A bay's "r" side meets the next bay's "l", in both rows, the west being turned.)
+    def past(side):
+        return 0.0 if (here[0], here[1] + (1 if side == "r" else -1)) in CLOUD_FRONTS else CLOUD_PIER_PAST_M
+    for side, (b0, b1) in (("l", (-past("l"), CLOUD_PIER_M)), ("r", (W - CLOUD_PIER_M, W + past("r")))):
         # the row's own brick (22 October: the west row is grey, and red there hid in it)
         _box(parts, "cloud_pier_%s" % side, p.get("wall_surface", "brick_red"), b0, b1, CLOUD_PIER_FRONT_M, CLOUD_PIER_BACK_M,
              # no higher than just under the row's own eave (22 October, the ironmonger's gate: on the single-storey

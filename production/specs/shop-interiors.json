@@ -208,7 +208,8 @@
     "measured": "the cloud's display (production/cloud-week/kit/shop-windows, build_shop.py display, built on the PC 22 October): its window zone u 350 to 3700 mm from the viewer's left, street x 36.35 to 39.70 on the west (street x = 36 + u/1000, sw_ctx.Ctx.x_of_u), 0.025 m behind the front's wall face (5.295) and 0.60 m above the footway, as the ironmonger's"
    },
    "front": {
-    "glb": "newsagent-front",
+    "glb": "newsagent-front-worn",
+    "glb_note": "22 October 2026, night: its front worn at the foot, the lever and the rails, baked into its own paints as Rita's and the ironmonger's are (tools/art-recipes/front_wear.py, production/specs/shop-fronts/newsagent-front-wear.json), its box sign's night glow put back after the bake; 'newsagent-front' is the clean copy.",
     "x": 39.0,
     "z": 5.295,
     "up": 0.1,
@@ -219,7 +220,9 @@
      "slot": "fascia_newsagent",
      "strength": 0.7,
      "note": "22 October: the box sign is lit by tubes (the target's 4.1 'lit: tubes'); the design lights its face with the board's own emissive map at night (sw_gate.py). The game sets the slot's EmissiveFactor to this strength after dark and 0 by day (VignetteShot.cpp ReDriveShopInteriors). First strength 0.7, the room's own night brightness: the design's night picture has the sign's red at about 0.8 of the lit room's brightness (newsagent-street-square-night-lit-2026-10-14-v2.jpg)."
-    }
+    },
+    "street_decals": false,
+    "street_decals_note": "22 October, its gate (square on and from the left): the street's splash and damp bands (production/specs/street-wear.json) and the old front's moss stain (vignette-pieces decal_08_Moss001), placed for the bay's old joinery, stood on its pale sill, window post and stallriser with hard edges; the front takes no street decals, its wear baked into its own paints. Rita's and the ironmonger's still take them (their gates passed so; listed)."
    },
    "pictures_note": "22 October: the cloud's room, built on the PC at 128 samples (production/cloud-week/kit/shop-windows build_shop.py room), which also clears the two old carton names of the 48-sample pictures (OWED-04); the shop is lit at night by its design (shut at 17.30, its lights left on), so its door card reads CLOSED and its window is lit.",
    "sources": "the cloud's target for the ironmonger (production/cloud-week/targets/shop-windows/target.json) and its notes (production/cloud-week/kit/shop-windows/NOTES.md, the ironmonger)",
