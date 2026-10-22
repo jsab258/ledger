@@ -15,13 +15,13 @@ Phase 1 closed 22 Oct, no exit passed; binding stop until he rules (production/a
 ## His order of 21 October
 
 - [x] 1 to 4: DECISIONS.md, 21 Oct.
-- [ ] 5 Cloud pieces into the street: production/specs/kit-materials.json.
+- [x] 5 Rita's front passed: gate-ritas-front/GATE.md; the rest after Monday.
 - [x] 6 Frame rate: P1-PACKAGED-2026-10-21.md.
-- [ ] 7 Walk and clothes, set aside: TOM-MOTION-MATCHING-2026-10-22.md; DECISIONS.md, 22 Oct.
+- [x] 7 Set aside (two tries); next go asked: TOM-MOTION-MATCHING-2026-10-22.md.
 - [x] 8 Speech: GEMINI-CHECK-2026-10-22.md.
 - [x] 9 Close phase 1: CLOSE-2026-10-22.md.
 
-STATE (22 Oct 17:15): Rita's night light and wear passed; phase 2 asked.
+STATE (22 Oct 18:10): the rest waits on his page.
 
 ## Handovers
 
