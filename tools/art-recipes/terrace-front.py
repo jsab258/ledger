@@ -3205,7 +3205,9 @@ KIT_REPLACES_PREFIX = ("shop_door_", "side_door_")
 #: recipe's frontage); z above the footway, which is this recipe's threshold.
 #: 22 October: the ironmonger's (west_north bay 1, no. 16), the next shop family Rita's way (his message of 22
 #: October); a west bay is this recipe's same bay turned a half turn, so the front's frame maps the same way.
-CLOUD_FRONTS = {("east_parade", 2): "ritas-front", ("west_north", 1): "ironmonger-front"}
+#: 22 October, night: the newsagent's (west_north bay 0, no. 18), the next after his, the same way.
+CLOUD_FRONTS = {("east_parade", 2): "ritas-front", ("west_north", 1): "ironmonger-front",
+                ("west_north", 0): "newsagent-front"}
 CLOUD_WALL_BEHIND_M = 0.17
 #: the piers behind the front's end pilasters (PC-04): 80 mm in from each bay edge, from just behind the
 #: pilasters' fronts (0.18 out from the front's wall face) to 0.45 back, to the cornice's top (3.55) and over
@@ -9442,11 +9444,19 @@ def selftest():
             # Orientation is not visible in an axis-aligned box, so the
             # check is on the ORDER, which is the same fact seen from the
             # side a piece list can see it from.
+            # (22 October: a bay with a cloud front has no fascia band of this recipe's, so its display
+            # pane stands for it; two of the west row's three bays are cloud fronts now)
             def bay_run(prefix):
-                got = [(int(b["id"].split("bay")[-1]), (b["x0"] + b["x1"]) * 0.5)
-                       for b in street
-                       if b["id"].startswith(prefix) and "fascia_band_bay" in b["id"]]
-                return [x for _n, x in sorted(got)]
+                got = {}
+                for b in street:
+                    if not b["id"].startswith(prefix):
+                        continue
+                    for mark, rank in (("fascia_band_bay", 0), ("kit_glass_window_frame_display_bay", 1)):
+                        if mark in b["id"]:
+                            n = int(b["id"].split("bay")[-1])
+                            if n not in got or rank < got[n][0]:
+                                got[n] = (rank, (b["x0"] + b["x1"]) * 0.5)
+                return [got[n][1] for n in sorted(got)]
             east_run = bay_run("east_parade_")
             west_run = bay_run("west_north_")
             check("accept/the-parade-bays-run-up-the-street",

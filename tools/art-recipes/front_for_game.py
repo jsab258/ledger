@@ -5,6 +5,7 @@ rest joined into one mesh that keeps every material and texture.
         production/assets/cloud-week/shop-windows/ritas_front.glb ritas-front
     F:/LedgerTools/bpyenv/Scripts/python.exe tools/art-recipes/front_for_game.py --display \
         production/assets/cloud-week/shop-windows/ritas_display.glb ritas-display
+    (a lit box sign: --night-glow=<material>=<the sign's emissive map>, dark until the game lights it)
     python tools/art-recipes/front_for_game.py --selftest
 
 WHY, 21 October 2026 (his order, item 5, and his ruling of the day: Rita's front as the family's
@@ -96,7 +97,53 @@ def cut_out_cards(glb, names=CUTOUT_MATERIALS):
     return n
 
 
-def main(src, name, display=False):
+# A LIT BOX SIGN GLOWS AT NIGHT (22 October, the newsagent's front: the design's sign is lit by tubes, the target's 4.1
+# `lit: tubes`; its gate puts the 4.1 board's emissive map on the sign's face material at night, sw_gate.py, and its glb is
+# the day state, PC-NA1): the map goes into the front's glb as that material's emissive texture with a factor of 0, so it is
+# dark by day as exported; the game sets the factor after dark (VignetteShot.cpp ReDriveShopInteriors, the shop entry's
+# front "night_glow"). Unreal's glTF import keeps an emissive texture whatever its factor (its bHasEmissiveTexture switch).
+def add_night_glow(glb, material, png):
+    """Rewrite a glb in place: the PNG appended to its binary chunk and set as `material`'s emissive texture, on the
+    same texture coordinates as its base colour, with emissiveFactor [0, 0, 0]. Returns True when it changed."""
+    import struct
+    data = open(glb, "rb").read()
+    jlen = struct.unpack("<I", data[12:16])[0]
+    j = json.loads(data[20:20 + jlen])
+    rest = data[20 + jlen:]
+    blen = struct.unpack("<I", rest[0:4])[0]
+    assert rest[4:8] == b"BIN\x00", "no binary chunk"
+    binary = rest[8:8 + blen]
+    mats = [m for m in j.get("materials", []) if m.get("name") == material]
+    if not mats:
+        return False
+    pic = open(png, "rb").read()
+    binary += b"\x00" * ((4 - len(binary) % 4) % 4)
+    j.setdefault("bufferViews", []).append({"buffer": 0, "byteOffset": len(binary), "byteLength": len(pic)})
+    binary += pic + b"\x00" * ((4 - len(pic) % 4) % 4)
+    j["buffers"][0]["byteLength"] = len(binary)
+    j.setdefault("images", []).append({"bufferView": len(j["bufferViews"]) - 1, "mimeType": "image/png",
+                                       "name": os.path.splitext(os.path.basename(png))[0]})
+    for m in mats:
+        base = m.get("pbrMetallicRoughness", {}).get("baseColorTexture", {})
+        tex = {"source": len(j["images"]) - 1}
+        if "index" in base and "sampler" in j["textures"][base["index"]]:
+            tex["sampler"] = j["textures"][base["index"]]["sampler"]
+        j.setdefault("textures", []).append(tex)
+        info = {"index": len(j["textures"]) - 1, "texCoord": base.get("texCoord", 0)}
+        if "extensions" in base:
+            info["extensions"] = base["extensions"]
+        m["emissiveTexture"] = info
+        m["emissiveFactor"] = [0.0, 0.0, 0.0]
+    body = json.dumps(j, separators=(",", ":")).encode("utf-8")
+    body += b" " * ((4 - len(body) % 4) % 4)
+    total = 12 + 8 + len(body) + 8 + len(binary)
+    out = data[:8] + struct.pack("<I", total) + struct.pack("<I", len(body)) + b"JSON" + body \
+        + struct.pack("<I", len(binary)) + b"BIN\x00" + binary
+    open(glb, "wb").write(out)
+    return True
+
+
+def main(src, name, display=False, glow=None):
     import bpy
     bpy.ops.wm.read_factory_settings(use_empty=True)
     bpy.ops.import_scene.gltf(filepath=os.path.abspath(src))
@@ -144,6 +191,11 @@ def main(src, name, display=False):
               % (os.path.basename(src), glb, len(keep), len(joined.material_slots), tinted, tris, os.path.getsize(glb)))
         return 0
     cut_out_cards(glb)
+    if glow:
+        material, png = glow.split("=", 1)
+        if not add_night_glow(glb, material, png):
+            print("front_for_game: no material %s for the night glow" % material)
+            return 1
     os.makedirs(OUT_JSON, exist_ok=True)
     js = os.path.join(OUT_JSON, name + "-glass.json")
     with open(js, "w", encoding="utf-8", newline="\n") as f:
@@ -178,8 +230,9 @@ def selftest():
 if __name__ == "__main__":
     if "--selftest" in sys.argv:
         sys.exit(selftest())
-    args = [a for a in sys.argv[1:] if a != "--display"]
+    glow = [a.split("=", 1)[1] for a in sys.argv[1:] if a.startswith("--night-glow=")]
+    args = [a for a in sys.argv[1:] if a != "--display" and not a.startswith("--night-glow=")]
     if len(args) != 2:
         print(__doc__)
         sys.exit(1)
-    sys.exit(main(args[0], args[1], display="--display" in sys.argv))
+    sys.exit(main(args[0], args[1], display="--display" in sys.argv, glow=glow[0] if glow else None))

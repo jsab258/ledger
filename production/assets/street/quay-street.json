@@ -91,7 +91,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 728
+   "faces": 632
   },
   {
    "mesh": "street_brick_grey",
@@ -1882,7 +1882,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 104
+   "faces": 78
   },
   {
    "mesh": "street_fascia_cream",
@@ -1906,7 +1906,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 1178
+   "faces": 768
   },
   {
    "mesh": "street_fascia_door_black",
@@ -1954,7 +1954,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 320
+   "faces": 190
   },
   {
    "mesh": "street_fascia_door_green",
@@ -2818,7 +2818,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 60
+   "faces": 96
   },
   {
    "mesh": "street_glass_wg_bay6",
@@ -2842,7 +2842,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 6
+   "faces": 54
   },
   {
    "mesh": "street_glass_wg_baym13",
@@ -3169,7 +3169,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 1768
+   "faces": 1742
   },
   {
    "mesh": "street_mickeys_card_production_art_shop_rooms_mickeys_day",
@@ -3470,7 +3470,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 31356
+   "faces": 30836
   },
   {
    "mesh": "street_paint_white",
@@ -4021,30 +4021,6 @@
    "tile_m": 0.0,
    "house_tint": null,
    "decal": "production/assets/vignette/decals2d/fascia_trade_launderette",
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 6
-  },
-  {
-   "mesh": "street_sign_fascia_trade_newsagent",
-   "material": "sign_production/assets/vignette/decals2d/fascia_trade_newsagent",
-   "base_material": "paint_fascia",
-   "linear_rgb": [
-    0.03,
-    0.022,
-    0.03
-   ],
-   "roughness": 0.45,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": "production/assets/vignette/decals2d/fascia_trade_newsagent",
    "decal_uv": null,
    "decal_emit": null,
    "texture_mean": null,

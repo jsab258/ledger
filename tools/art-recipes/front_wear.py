@@ -415,6 +415,11 @@ def main(spec_path):
     mod = importlib.util.module_from_spec(ffg)
     ffg.loader.exec_module(mod)
     mod.cut_out_cards(out)
+    # and a lit box sign's night glow put back, dark until the game lights it (front_for_game.add_night_glow, 22 October:
+    # Blender's own round trip does not keep an emissive map whose factor is 0)
+    glow = spec.get("night_glow")
+    if glow and not mod.add_night_glow(out, glow["material"], glow["png"]):
+        raise SystemExit("front_wear: no material %s for the night glow" % glow["material"])
 
     report = {"out": out, "textures_merged": shared, "px": px, "bake_s": round(bake_s, 1), "total_s": round(time.time() - t0, 1),
               "density_low_per_high": spec["detail_ratio"], "high_scale": high_scale, "area_m2": density,
