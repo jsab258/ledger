@@ -19,6 +19,24 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 22 Oct 2026, item 5, the lamp: a kit piece's named stains baked onto its own unwrap and laid over by its shared material
+- Made: a stain picture for one kit piece (a concrete lamp column) and an optional stain in the kit's shared master, off by default.
+- Method (setting-free):
+  - When an even, world-aligned weathering pattern reads as grain, place the stains at their sources instead: take the piece's own design rows (which stain, from which fitting, how long and wide), bake each texel's position and facing in the piece's frame, and draw seeded runs and patches there in code.
+  - Lay the picture over the shared material by an alpha and a strength that defaults to 0, so no other piece moves; commit only the assets meant to change.
+  - Add, within canon, what the design's sizes leave unreadable at play distance (broad run-off), and keep the owner's approved shade when a darkening pattern is removed.
+  - Layer stains on top of one another in order, and spread runs from one source rather than letting them coincide.
+  - When a reviewer flags a change outside the piece, switch the change off and measure before believing either side; restore the older parts one at a time to find what moved.
+- Tools: Blender 5.2 headless (Cycles emission bake of position and normal into float pictures), numpy, the kit's material script, the game's page cameras, fresh reviewers a view.
+- Target and check: the design's wear rows; his ruling (weathered, a shade darker); the gate (six views).
+- Cost (hours): about 3, with research.
+- Failed and why (each fixed once):
+  - the design's stains alone were too small to read from the pavement;
+  - the shaft read lighter once the even pattern was gone;
+  - the recipe drew new stains under old ones;
+  - a lantern change seen by a reviewer was measured to predate the work and lie outside the piece.
+- Evidence: production/audits/gate-lamp-post-C/GATE.md (22 October); production/research/street-wear/LAMP-STAINING-BAKE-2026-10-22.md
+
 ### 22 Oct 2026, item 5, Rita's sample: a delivered model worn at the foot by baking the wear into its own paints, through three gate rounds
 - Made: a second copy of an imported shopfront whose three paints carry baked wear (grime at the foot, dirt in corners, dust on ledges, a hand band by the lever, chips on named rails); the shop file names which copy stands; a recipe and a spec that repeat it for the next front.
 - Method (setting-free):

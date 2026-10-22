@@ -58,3 +58,42 @@ The kit's master material, the order's next step: world-aligned detail from the 
 
 - Try 1 (15:31, rain streaks of 70 even runs, growth on top faces, a stronger foot band, the concrete 0.85 darker): hook day PASS and reverse day PASS (a shade darker, a soft grimy foot; the streaks too faint to read as rain staining); the column close up FAIL: "a uniform full-height grain that reads like a grey timber pole, with no rain runs from the arm, joint, spigot or plate".
 - Try 2 (16:20, 22 wider, varied runs hanging from the piece's top and fading down 2.6 m): by eye at the close view the runs are thin and faint; it does not read as run-off staining either. **Set aside after two tries.** Kept: the darker concrete and the grimy foot. Research direction: run-offs placed from their sources (the cloud's wear masks as decals under the arm and spigot, the rust bleed under the spigot), or staining baked onto the column in Blender. Not done by his ruling; shown on his next page with this shortfall first.
+
+## 22 October: the staining, a third direction (his message: "then the lamp's staining")
+
+**The research** (production/research/street-wear/LAMP-STAINING-BAKE-2026-10-22.md).
+- The two tries were one even, world-aligned pattern on every face, so they read as grain.
+- The column's own design names its stains and their sources: lime under the arm and from the top, rust under the door plate's screws and the spigot, algae on the shaded face and the arm's top.
+- So they are baked where it puts them, the method that passed on Rita's front today.
+
+**The build.**
+- **The recipe:** tools/art-recipes/kit_stain.py, with the spec production/specs/kit-wear/lamp_post_C.json.
+- **The bake:** the column's faces get their own unwrap. Cycles bakes each texel's position and facing, and the stains are drawn on those.
+- **The kit material:** the shared material gains an optional StainMap with StainStrength, default 0, so every other slot is as it was (tools/ue/make_kit_materials.py; 91/91 wired). The column's slot takes strength 1, and its world-aligned runs are off.
+- **Added within canon:** broad dark run-off below the arm and from the top, 1 to 2.5 m. It is what real columns show, and what the 21 October close reviewer asked for. The design's lime, rust and algae alone are too small to read from the pavement.
+- **What git carries:** the kit's materials and the lamp's mesh are tracked in git. Only the four assets meant to change are committed: the opaque master, the column's material, its stain and the mesh. The rest were restored to 21 October's, and the column measured identical.
+
+**Round 1** (F:/LedgerTools/gate/new/lamp-post-C/s4):
+- **The column close up: PASS**, only partly answering the weathering. The run-off was too weak to read, and with the even pattern gone the shaft was 4 to 5% lighter than his approved shade.
+- **From the road: FAIL** on the lantern: its bowl and tube read about 12 levels lighter than on 21 October.
+- **The lantern, measured three ways.** In each, the bowl stays at 170 against 21 October's 157:
+  - today's build with the column's stain switched off;
+  - 21 October's committed glass materials restored;
+  - 21 October's committed lamp mesh restored.
+  
+  Two pictures of 21 October agree with each other, as do two of today. So it is not this change, nor the lamp's own files: a drift elsewhere in the scene since 21 October, cause not found, listed in FINDINGS.md.
+- **Fixes:**
+  - the shaft's colour to 0.91 of 21 October's, so its shade is his again (134 against 136 mid-shaft in the close view);
+  - the run-off darker, broader, longer and held longer, spread across the face under the arm;
+  - two faults of the recipe's own found on the way: the run-offs fell on one spot, and each new stain was drawn under the earlier ones, not over.
+
+**Round 2** (F:/LedgerTools/gate/new/lamp-post-C/s5; one fresh reviewer a view): **all six views PASS.**
+- **The column close up.** It reads as weathered concrete, with run-off and lime drips from the arm and a grimy foot; the grey-timber grain is gone. The middle 2.4 m are plain.
+- **From the road.** Run-off from the joint fades down, with pale runs under it; nothing else changed against the stain-off picture.
+- **From across.** It reads as weathered; the bowl's drift is warmer as well as lighter, noted for its investigation.
+- **Hook by day.** All four columns read as darkened, weathered concrete with grime from the arm.
+- **Reverse by day.** The near column has soft run-off below the arm; the far ones are faint, acceptable at their size.
+- **From the road at night.** Nothing glows or bands. The known yellow bar under its own light is now more two-tone, because the run-off darkens the shaft above it.
+- **Points to watch:** the lime streaks look crisp, close to painted drips, when enlarged 3 to 5 times; at each view's distance they read as lime.
+- **The last good pictures** are now these (F:/LedgerTools/gate/last-good/lamp-post-C). Preview: production/previews/lamp-staining-2026-10-22.jpg (before left, after right).
+- **Not done:** the chipped arris (one column's only).

@@ -36,7 +36,7 @@ PACKAGE = "/Game/Ledger/Kit"
 MASTERS = {"opaque": "M_LedgerKit", "translucent": "M_LedgerKitGlass"}
 PARAMS = ("BaseColor", "Roughness", "Metallic", "Specular", "EmissiveColor", "Opacity", "DetailSize",
           "DetailIntensity", "RoughDetail", "DirtHeight", "DirtStrength", "DirtColour", "StreakSize", "StreakLength",
-          "StreakStrength", "StreakColour", "TopStrength", "TopColour", "StreakFall")
+          "StreakStrength", "StreakColour", "TopStrength", "TopColour", "StreakFall", "StainStrength")
 
 
 def load_spec(path=SPEC):
@@ -109,7 +109,7 @@ NEUTRAL_TEX = "/Engine/EngineResources/WhiteSquareTexture.WhiteSquareTexture"
 # broken by the grunge. Every scalar defaults to off, so a kind without them is the flat colour.
 SCALARS = (("Roughness", 0.6), ("Metallic", 0.0), ("Specular", 0.5), ("DetailSize", 60.0),
            ("StreakSize", 30.0), ("StreakLength", 200.0), ("StreakStrength", 0.0), ("TopStrength", 0.0),
-           ("StreakFall", 250.0),
+           ("StreakFall", 250.0), ("StainStrength", 0.0),
            ("DetailIntensity", 0.0), ("RoughDetail", 0.0), ("DirtHeight", 50.0), ("DirtStrength", 0.0))
 VECTORS = (("BaseColor", (0.5, 0.5, 0.5)), ("EmissiveColor", (0.0, 0.0, 0.0)), ("DirtColour", (0.45, 0.42, 0.38)),
            ("StreakColour", (0.6, 0.58, 0.55)), ("TopColour", (0.6, 0.68, 0.5)))
@@ -319,7 +319,22 @@ def _make_master(unreal, name, translucent):
         c4 = ex(unreal.MaterialExpressionMultiply, -200, -100)
         link(c3, "", c4, "A")
         link(tcol, "", c4, "B")
-        prop(c4, "", MP.MP_BASE_COLOR)
+        # A PIECE'S OWN STAINS (22 October 2026, the lamp's staining after two tries of world-aligned
+        # runs read as grain; production/research/street-wear/LAMP-STAINING-BAKE-2026-10-22.md): a
+        # picture on the piece's first UV, its colour laid over by its alpha times StainStrength
+        # (tools/art-recipes/kit_stain.py draws it). StainStrength defaults to 0, so every slot
+        # without a stain draws exactly as before.
+        stain = ex(unreal.MaterialExpressionTextureSampleParameter2D, -500, 120, parameter_name="StainMap")
+        if neutral is not None:
+            stain.set_editor_property("texture", neutral)
+        sa = ex(unreal.MaterialExpressionMultiply, -300, 160)
+        link(stain, "A", sa, "A")
+        link(P["StainStrength"], "", sa, "B")
+        c5 = ex(unreal.MaterialExpressionLinearInterpolate, -100, -60)
+        link(c4, "", c5, "A")
+        link(stain, "RGB", c5, "B")
+        link(sa, "", c5, "Alpha")
+        prop(c5, "", MP.MP_BASE_COLOR)
         # the roughness: saturate(Roughness + (G - 0.5) x 2 x RoughDetail + dirt x 0.08)
         gr = ex(unreal.MaterialExpressionSubtract, -1300, -120, const_b=0.5)
         link(mg, "", gr, "A")
@@ -377,6 +392,32 @@ def _import_detail(unreal, name, png):
     try:
         tex.set_editor_property("srgb", False)
         tex.set_editor_property("compression_settings", unreal.TextureCompressionSettings.TC_MASKS)
+    except Exception:
+        pass
+    unreal.EditorAssetLibrary.save_asset(path)
+    return tex
+
+
+def _import_stain(unreal, slot, png):
+    """One slot's stain picture (tools/art-recipes/kit_stain.py) imported as
+    /Game/Ledger/Kit/T_KitStain_<slot>: its colour sRGB, its amount in alpha."""
+    if not os.path.exists(png):
+        return None
+    dest = "T_KitStain_" + slot
+    path = PACKAGE + "/" + dest
+    task = unreal.AssetImportTask()
+    task.set_editor_property("filename", png)
+    task.set_editor_property("destination_path", PACKAGE)
+    task.set_editor_property("destination_name", dest)
+    task.set_editor_property("automated", True)
+    task.set_editor_property("replace_existing", True)
+    task.set_editor_property("save", False)
+    unreal.AssetToolsHelpers.get_asset_tools().import_asset_tasks([task])
+    tex = unreal.EditorAssetLibrary.load_asset(path)
+    if tex is None:
+        return None
+    try:
+        tex.set_editor_property("srgb", True)
     except Exception:
         pass
     unreal.EditorAssetLibrary.save_asset(path)
@@ -467,11 +508,17 @@ def main():
             kinds_made += 1
             kind_assets[kind] = unreal.EditorAssetLibrary.load_asset(PACKAGE + "/MI_KitKind_" + kind)
     slots_made = 0
+    stains = {}
     for slot, row in slots.items():
         parent = kind_assets.get(row["kind"])
-        if parent is not None and _make_instance(unreal, "MI_Kit_" + slot, parent, row["values"]):
+        png = spec["slots"][slot].get("stain_map")
+        texs = None
+        if png:
+            stains[slot] = _import_stain(unreal, slot, png)
+            texs = {"StainMap": stains[slot]}
+        if parent is not None and _make_instance(unreal, "MI_Kit_" + slot, parent, row["values"], texs):
             slots_made += 1
-    det_ok = all(t is not None for t in details.values())
+    det_ok = all(t is not None for t in list(details.values()) + list(stains.values()))
     ok = (wired_all == asked_all and kinds_made == len(spec["kinds"]) and slots_made == len(slots)
           and not missing and det_ok)
     _write("kitMaterials=%s masters=%d wired=%d/%d kinds=%d/%d slots=%d/%d missingSlots=%s details=%s"

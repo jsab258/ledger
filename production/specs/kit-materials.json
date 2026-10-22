@@ -134,12 +134,17 @@
    "used_by": "lamp_post_C (the column)",
    "overrides": {
     "BaseColor": [
-     0.166,
-     0.16,
-     0.145
-    ]
+     0.151,
+     0.146,
+     0.132
+    ],
+    "StainStrength": 1.0,
+    "StreakStrength": 0.0
    },
-   "overrides_note": "21 October, his ruling: a shade darker again, 0.85 of the 13:50 value (0.195, 0.188, 0.170), itself 0.68 of the target's linear (146, 143, 136); before that the glb's colour rendered near-white beside the street."
+   "overrides_note": "21 October, his ruling: a shade darker again, 0.85 of the 13:50 value (0.195, 0.188, 0.170), itself 0.68 of the target's linear (146, 143, 136); before that the glb's colour rendered near-white beside the street.",
+   "stain_map": "F:/LedgerTools/game-inputs/production/assets/kit-wear/lamp_post_C_stain.png",
+   "base_note": "22 October, the stain's gate round 1: with the world-aligned runs off the shaft read 4 to 5 per cent lighter than his approved shade, so its colour is 0.91 of 21 October's (0.166, 0.16, 0.145) to keep his 'a shade darker'.",
+   "stain_note": "22 October, the lamp's staining (his message: then the lamp's staining): the design's named stains (lime under the arm and from the top, rust under the plate's screws and the spigot, algae on the shaded face and the arm's top) baked onto the column's own unwrap (tools/art-recipes/kit_stain.py, production/specs/kit-wear/lamp_post_C.json), laid over at StainStrength 1; the kind's world-aligned runs off for this slot (they read as grain, two tries)."
   },
   "c_door_plate": {
    "kind": "paint",

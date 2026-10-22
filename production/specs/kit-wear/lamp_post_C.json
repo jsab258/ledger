@@ -1,0 +1,113 @@
+{
+  "piece": "lamp_post_C",
+  "glb": "ledger/Assets/Props/base-mesh/lamp_post_C.glb",
+  "slot": "concrete_C",
+  "stain": "F:/LedgerTools/game-inputs/production/assets/kit-wear/lamp_post_C_stain.png",
+  "note": "22 October 2026, his ruling of 21 October (the concrete columns weathered) and his message of 22 October (then the lamp's staining). The design's own wear rows for variant C (production/cloud-week/targets/lamp-posts/TARGET.md: lime_streaks, arm_lime, rust_bleed, spigot_rust, algae, arm_algae), baked onto the column's own unwrap by tools/art-recipes/kit_stain.py; research production/research/street-wear/LAMP-STAINING-BAKE-2026-10-22.md. Positions in the piece's own frame (metres: the shaft about x and y 0, its -y face the shaded face carrying the door plate, the arm out along +y at the top, z up from the footway), read from the model on 22 October. Colours linear. The chipped arris is LC 2's alone and the game stands one mesh at all four spots, so it is left out.",
+  "px": 2048,
+  "margin_px": 32,
+  "seed": 1990,
+  "shaft_half_m": 0.11,
+  "shaft_top_m": 4.99,
+  "arm": {
+    "y0": 0.11,
+    "y1": 0.4,
+    "z0": 4.85,
+    "z1": 4.99
+  },
+  "runoff": {
+    "colour": [
+      0.06,
+      0.056,
+      0.05
+    ],
+    "strength": 0.85,
+    "count": 6,
+    "under_arm": 3,
+    "length_m": [
+      1.0,
+      2.5
+    ],
+    "width_m": [
+      0.05,
+      0.15
+    ],
+    "note": "22 October, decided within canon (DECISIONS.md): broad dark run-off below the arm and from the top, as real precast columns show and as the 21 October close reviewer asked ('rain runs from the arm, joint, spigot or plate'); the design's lime, rust and algae are too small to read from the pavement alone Round 1 of the gate (22 October): too weak to read at the close view's distance, so darker, broader, longer and held longer (fade to the power 0.5).",
+    "fade_power": 0.5
+  },
+  "lime": {
+    "colour": [
+      0.51,
+      0.5,
+      0.46
+    ],
+    "strength": 0.85,
+    "count": 8,
+    "under_arm": 3,
+    "length_m": [
+      0.03,
+      0.4
+    ],
+    "width_m": [
+      0.004,
+      0.02
+    ]
+  },
+  "arm_lime": {
+    "count": 3,
+    "length_m": [
+      0.03,
+      0.15
+    ],
+    "width_m": [
+      0.004,
+      0.012
+    ]
+  },
+  "rust": {
+    "colour": [
+      0.112,
+      0.042,
+      0.021
+    ],
+    "strength": 0.9
+  },
+  "door_rust": {
+    "from_z": 0.44,
+    "x": [
+      -0.04,
+      0.04
+    ],
+    "length_m": [
+      0.06,
+      0.2
+    ],
+    "width_m": [
+      0.004,
+      0.008
+    ]
+  },
+  "spigot_rust": {
+    "length_m": [
+      0.02,
+      0.06
+    ],
+    "width_m": 0.008
+  },
+  "algae": {
+    "colour": [
+      0.093,
+      0.138,
+      0.061
+    ],
+    "shaded_to_m": 0.7,
+    "strong_below_m": 0.3,
+    "shaded_strength": 0.8,
+    "others_to_m": 0.35,
+    "others_strength": 0.4,
+    "patch_m": 0.08
+  },
+  "arm_algae": {
+    "strength": 0.35
+  }
+}

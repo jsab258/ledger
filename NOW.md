@@ -15,13 +15,13 @@ Phase 1 closed 22 Oct, no exit passed; binding stop until he rules (production/a
 ## His order of 21 October
 
 - [x] 1 to 4: DECISIONS.md, 21 Oct.
-- [x] 5 Rita's front passed: gate-ritas-front/GATE.md; the rest after Monday.
+- [ ] 5 Rita's front, lamp staining passed; next: a shop family, Rita's way.
 - [x] 6 Frame rate: P1-PACKAGED-2026-10-21.md.
 - [x] 7 Set aside (two tries); next go asked: TOM-MOTION-MATCHING-2026-10-22.md.
 - [x] 8 Speech: GEMINI-CHECK-2026-10-22.md.
 - [x] 9 Close phase 1: CLOSE-2026-10-22.md.
 
-STATE (22 Oct 18:10): the rest waits on his page.
+STATE (22 Oct 19:25): the lamp passed; a shop family next.
 
 ## Handovers
 
