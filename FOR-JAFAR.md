@@ -21,13 +21,13 @@ No decision asked: these are for watching the street change.
 
 <!-- /morning pictures -->
 
-**Your week's order, where it stands (22 October, 11:35; the 21 October overview is in git).**
+**Your week's order, where it stands (22 October, 12:05; the 21 October overview is in git).**
 - *1 to 4.* Done 21 October: health check, branches home, your rules and combat doc, the editor connection.
 - *5, the cloud's pieces.* Lamp post C stands at the four lamp spots (darker, faint grime; its rain staining set aside). Rita's front, display and room are in the street as the shops' sample: four day views passed fresh reviewers; at night her window's light is too strong (set aside). **Your page: https://claude.ai/artifact/2yznAYjEwDVv3RvzzKUpBR** (Rita's front; the lamp done or not yet). The other families wait for your judgement, as you ruled.
 - *6, frame rate.* Done: the packaged walk's worst frame 30.3 ms (it was 63), P1 closed by a fresh review (production/research/pre-production/P1-PACKAGED-2026-10-21.md).
-- *7, the walk and the clothes.* The walk was rebuilt on Epic's sample with motion matching and measured on a set route. Starts, stops and turns slide 13 to 67 cm (the bar is 3), so it is set aside, off by default, and your current walk kept (production/research/sit-and-turn/TOM-MOTION-MATCHING-2026-10-22.md). Clothes: Epic's Fab items all load in 5.8, but the Techwear Outfit is modern sportswear and the Construction Presets are bare bodies, not clothes; none can dress the Hook sheet's people (Needs you 1).
-- *8, speech.* Done. **The Gemini test:** on the reply check, Gemini 3.5 Flash-Lite took 0.60 s at the median against Haiku's 0.97, but it let 3 invented details in 42 through where Haiku lets 1 (Needs you 2); Gemini 3.8 Flash was the most accurate but slower, 1.8 s (production/research/voice-latency/GEMINI-CHECK-2026-10-22.md). **Pocket no longer stalls the walk:** run at lower priority, the walk's slowest 1% is 20.6 ms (it was 34) and its worst 47 ms (it was 175). The one frame left over the bar is a separate stall that the usual card voice shows too (87 ms today), so the frame-rate margin is thinner than P1's close said (listed).
-- *9, closing phase 1.* Waits on 7 and 8.
+- *7, the walk and the clothes.* The walk was rebuilt on Epic's sample with motion matching and measured on a set route. Starts, stops and turns slide 13 to 67 cm (the bar is 3), so it is set aside and off by default. Your current walk fails too: it slides on about half its steps, the right foot on every stride (production/research/sit-and-turn/TOM-MOTION-MATCHING-2026-10-22.md). Clothes: Epic's Fab items all load in 5.8, but the Techwear Outfit is modern sportswear and the Construction Presets are bare bodies, not clothes; none can dress the Hook sheet's people (Needs you 1).
+- *8, speech.* Done. **The Gemini test:** on the reply check, Gemini 3.5 Flash-Lite took 0.60 s at the median against Haiku's 0.97, but it let 3 invented details in 42 through where Haiku lets 1 (Needs you 2); Gemini 3.8 Flash was the most accurate but slower, 1.8 s (production/research/voice-latency/GEMINI-CHECK-2026-10-22.md). **Pocket no longer stalls the walk:** run at lower priority, the walk's slowest 1% is 20.6 ms (it was 34) and its worst 47 ms (it was 175). The one frame left over the bar is a separate stall that the usual card voice shows too (87 ms today), so the frame-rate margin is thinner than P1's close said (listed). **The real path with Pocket:** 20 checked replies, with the game open, first sound heard at 2.41 s at the median, the best yet (3.25 s before) but over 2 s. The model's first checked sentence alone now takes 2.10 s, so the voice is no longer the bottleneck (about $0.15 of your measuring dollar).
+- *9, closing phase 1.* Done. Four fresh reviewers, one for each exit, found that none passes (production/audits/phase1-exit/CLOSE-2026-10-22.md): Tom is still the stand-in body and slides; nobody sits in the game as played; first speech is 3.25 s at best; the frame bar held once and failed its repeat, and card memory with the voice is 7 to 9.9 GB against 6; there is no wear in the office or on Rita's front. They also caught four of my own records wrong, all corrected today. The plan's stop rule halts expansion until you decide (Needs you 1).
 
 **Risks, Monday's review (production/research/pre-production/6-RISKS.md).**
 - R3, the street missing the bar: up, 25. The audit finds the visual method unproved: five proof-view steps were set aside, and Mickey's room failed three reviews. Phase 1's binding stop answers it.
@@ -38,8 +38,10 @@ No decision asked: these are for watching the street change.
 
 ### Needs you
 
-1. Clothes: Epic's garments cannot dress 1990 people, so by your ruling Marvelous Designer is next, with your yes. Recommended: yes, one month for one sample outfit (Tom's), its price shown to you before anything is bought.
-2. The reply check on Gemini 3.5 Flash-Lite would be about 0.4 s faster to first speech (0.60 s against Haiku's 0.97 at the median), but it lets 3 invented details in 42 through where Haiku lets 1. Recommended: no switch now; keep Haiku and revisit when the whole path is measured.
+Your page today (https://claude.ai/artifact/2yznAYjEwDVv3RvzzKUpBR) asks all three, one tap each:
+1. Phase 2: start it? Recommended: not yet; next week goes on the failed capabilities first.
+2. Clothes: try Marvelous Designer? Recommended: yes, one month for one sample outfit (Tom's), with the price shown to you before anything is bought.
+3. The reply check on Gemini 3.5 Flash-Lite (about 0.4 s faster, but 3 invented details in 42 against Haiku's 1): switch? Recommended: no, not yet.
 
 ### Road to worth playing (PLAN.md)
 

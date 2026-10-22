@@ -19,6 +19,15 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 22 Oct 2026, item 9: a production phase's exit checked by one independent reviewer per exit, and the phase closed on what they found
+- Made: four fresh reviews, one for each of the phase's exits, a closing record, the next phase's list, and one page asking the owner whether it starts.
+- Method (setting-free): give each reviewer the requirement word for word and where the outputs are, never the maker's verdict; ask for a verdict per clause (met, not met, not shown) with the file that decides it, faults the maker did not name, and what could not be reached; have them recompute numbers from raw captures; check every correction they find and fix the record the same day; when no exit passes, the stop rule decides, and the owner is asked rather than the next phase begun.
+- Tools: subagents on the strongest model, read-only; the project's own capture readers.
+- Target and check: the plan's exit (samples at the bar, measured headroom, first speech within 2 s).
+- Cost (hours): about 1 (four reviews run two at a time, about 6 minutes each, and the records).
+- Failed and why: all four exits; and the maker's own records were wrong in four places, each caught only because the reviewers recomputed from the raw files (a median hiding one foot's slide on every stride, a picture source misnamed, a stale fault line, a frame misread).
+- Evidence: production/audits/phase1-exit/CLOSE-2026-10-22.md
+
 ### 22 Oct 2026, item 8, part: a speech model on the processor kept from stalling the game beside it
 - Made: the speech server at the operating system's below-normal priority, so the game's threads win the processor; the shipped walk measured with it speaking flat out.
 - Method (setting-free): a helper that shares the processor with a real-time program runs below its priority before its thread count is cut; measure the shipped build with the helper at full load, per frame, and read each slow frame's thread times before blaming the helper; run the same build without the helper to see what is left.

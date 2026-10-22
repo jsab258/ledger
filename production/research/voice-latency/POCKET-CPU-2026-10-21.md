@@ -31,7 +31,7 @@ Off the card the game runs faster on the median, but walking it stalls: 92.4 and
 
 ## Pocket kept from stalling the walk (22 October; his order: "then stop Pocket TTS from stalling the walk")
 
-Pocket's server now runs at Windows' below-normal priority (`tools/voice-live/pocket-server.py`, `set_priority`; `--priority normal` or `LEDGER_POCKET_PRIORITY` brings back the old way), so the game's threads get the processor first. Everything is measured on the packaged walk, 1,800 frames, with the voice speaking flat out the whole time; the played copy is last night's package 35e10a9, the same game code as 00f81b1.
+Pocket's server now runs at Windows' below-normal priority (`tools/voice-live/pocket-server.py`, `set_priority`; `--priority normal` or `LEDGER_POCKET_PRIORITY` brings back the old way), so the game's threads get the processor first. Everything is measured on the packaged walk, 1,800 frames, with the voice speaking flat out the whole time; the played copy is last night's package 35e10a9, the same game code as 00f81b1. The PC was not quiet: other programs held 1.5 GB of the card, against 0.3 GB on 21 October (the Exit D review).
 
 | run | median | slowest 1% | worst | over 33.3 | the voice's speed |
 |---|---|---|---|---|---|
@@ -40,11 +40,32 @@ Pocket's server now runs at Windows' below-normal priority (`tools/voice-live/po
 | Pocket, below normal, 4 threads | 11.99 | 21.93 | 47.50 | 1 | 0.40 |
 | the card voice, as the game has it (today's package, for comparison) | 12.78 | 27.66 | 87.17 | 2 | 0.93 |
 
-- **The game's threads are no longer short.** The 92 and 43 ms frames, with the game and render threads waiting, are gone.
+- **The game's threads are no longer short.** The 92 ms frame, with the game and render threads waiting, is gone. (Corrected after phase 1's Exit D fresh review: the 21 October 43.3 ms frame was already this kind of RHI wait, 31.7 ms, so it was never "gone".)
 - **The voice still speaks two to two and a half times faster than real time.**
 - **One frame over the bar remains in each Pocket run** (47 ms, frame 418 both times). The render-submission (RHI) thread waits there, 36.5 and 38.9 ms, while the game, render and card times are normal.
 - **The same kind of RHI wait shows without Pocket.** The card-voice run of the same package has 80.3 and 32.3 ms waits at frames 1221 and 376. So it is not Pocket's, and it is listed as its own fault (FINDINGS.md).
 - **Kept at 6 threads**, since 4 threads changed nothing but the voice's speed.
+
+## The real path with Pocket (22 October, after phase 1's Exit C review)
+
+The Exit C reviewer estimated that Pocket on the real path would land at about 1.94 to 2.01 s, and noted it had only been timed on stand-in talk. So it was measured. The run used `tools/voice-live/latency.py --live --early --voice pocket --prewarm --lines 20 --checker claude-haiku-5-5`:
+- 20 checked replies on LEDGER's key (about $0.15, logged in production/playtest/talk-runs.jsonl, within his $1 a day);
+- the replies on the helper's own choice per moment (Sonnet 5 for conversation, Haiku 4.5 for small talk), the check on Haiku 5.5;
+- Pocket at below-normal priority;
+- the packaged game open in the street (35e10a9, -unattended, so it ran no helpers of its own).
+
+| stage, seconds after the line is sent (20 turns) | median | fastest | slowest |
+|---|---|---|---|
+| the first checked sentence ready | 2.10 | 1.61 | 5.50 |
+| the first sound made | 2.37 | 1.91 | 6.14 |
+| **the first sound heard** (made, plus one frame and the sound card's buffer) | **2.41** | 1.95 | 6.18 |
+| the first sentence's sound complete | 4.04 | 2.84 | 10.16 |
+| the whole reply's text | 4.28 | 1.66 | 10.06 |
+
+- **The best whole-path first sound measured so far** (3.25 s with the card voice on 8 October), but still over the 2-second line.
+- **The voice's share is now about 0.3 s.** The model's first checked sentence alone takes 2.10 s at the median (1.78 s on 8 October), so the line cannot be met by the voice. It needs a faster first sentence or check.
+- **Not measured: the accent.** Pocket was set aside on 26 and 28 September for drift, and adopting it would reopen his 3 October voice rulings.
+- **"Heard" is computed, not heard in the game.** Raw lines: live-2026-10-22/live-pocket-below.json.
 
 ## The opener, as an experiment (his order: "an instant in-character opener (a look and a word in under half a second) while the real line streams sentence by sentence")
 

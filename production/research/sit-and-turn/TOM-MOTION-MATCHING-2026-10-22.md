@@ -58,16 +58,20 @@ His order of 21 October, item 7: "Tom's walk rebuilt on Epic's Game Animation Sa
 
   Each foot counts as planted when its ball is within 2.5 cm of its standing height and no higher than the other foot. Its drift along the ground is measured once the frame's pose is final. Both bodies are measured: Tom and the mannequin.
 
-## Results (Tom's feet, per contact; median / worst, cm)
+## Results (Tom's feet, per contact; median / share over 7 cm / worst, cm)
 
-| | starts | stops | turns | walk loop | run |
-|---|---|---|---|---|---|
-| Motion matching (final) | 23.4 / 53.4 | 66.7 / 101.8 | 13.2 / 43.3 | 4.8 / 88.4 | 4.7 / 12.4 |
-| His own clips (the walk he has) | 26.9 / 35.6 | 20.4 / 23.2 | 3.5 / 43.4 | 3.4 / 80.2 | not read* |
+Corrected the same day after the fresh review of phase 1's Exit B. The first table gave only medians and the printed contacts' worst; it hid that in his own clips his right foot slides 27 to 36 cm on every steady stride. Each worst is now the run's own header line, which counts contacts still planted when a stretch ends.
+
+| | starts | stops | turns | walk loop | run | all steps over 7 cm |
+|---|---|---|---|---|---|---|
+| Motion matching (final) | 23.4 / 2 of 4 / 53.4 | 66.7 / 4 of 5 / 101.8 | 13.2 / 5 of 8 / 43.3 | 4.8 / 5 of 15 / 88.4 | 4.7 / 1 of 7 / 12.4 | 17 of 39 |
+| His own clips (the walk he has) | 26.9 / 3 of 5 / 35.6 | 20.4 / 2 of 2 / 30.8 | 3.5 / 8 of 18 / 43.4 | 3.4 / 15 of 40 / 80.2 (his right foot 27 to 36 on each stride) | not read* | 35 of 72 |
 
 \* The clip run lowers his body 21 cm (RunDropCm), so the measure, calibrated standing, reads both feet as always planted.
 
-The mannequin's own feet slide the same as Tom's. The copy onto Tom adds nothing, so the slide is the motion matching's.
+The mannequin's own feet slide as much as Tom's, so copying the pose onto Tom adds nothing: the slide comes from the motion matching.
+
+**Both walks fail the bar, each on about half its steps.** The motion-matched walk is worse at stops and steadier in the run and the loop; his own clips' right foot slides on every stride. Neither is better overall. The default stays his own clips, so the player sees no change until one passes. That is the reason; it is not that his clips are better.
 
 ## What failed and why (in order)
 

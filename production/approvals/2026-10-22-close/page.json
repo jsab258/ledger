@@ -1,0 +1,60 @@
+{
+ "tab": "Thursday's Decisions",
+ "kicker": "LEDGER · Thursday 22 October · phase 1 closed",
+ "title": "Phase 1 closed: three decisions",
+ "how": [
+  "Shortfalls first. Phase 1 is closed, and four fresh reviewers, one for each exit, found that none passes. Tom is still the stand-in body: his walk slides on about half its steps, the motion-matched walk too, and nobody sits in the game as played. First speech is 3.25 s at best, against 2. The frame bar held once and failed its repeat, and card memory with the voice is 7 to 9.9 GB, against 6. The office and Rita's front have no wear. The plan's stop rule halts expansion until you decide.",
+  "Pick one answer in each; the first is recommended. Rita's and the lamp's answers from this morning are kept."
+ ],
+ "foot": "Nothing bought or signed up for. Anything you do not pick carries onto the next page.",
+ "sections": [
+  {
+   "kind": "decide",
+   "key": "decide-phase2-2026-10-22",
+   "name": "Phase 2 (the whole street from proved families): start it?",
+   "note": "The four reviews are in production/audits/phase1-exit/CLOSE-2026-10-22.md. Phase 2 multiplies families, and a family may only be multiplied once proved. The failed capabilities are: a walk, turn and sit without sliding; period clothes; first speech within 2 s; a frame budget with headroom; wear and no glitches at the Hook sheet's bar.",
+   "options": [
+    [
+     "hold",
+     "Not yet: next week on the failed capabilities first (recommended)"
+    ],
+    [
+     "start",
+     "Start phase 2, the failures carried as listed faults"
+    ]
+   ]
+  },
+  {
+   "kind": "decide",
+   "key": "decide-marvelous-2026-10-22",
+   "name": "Clothes: try Marvelous Designer?",
+   "note": "Epic's Fab garments load in 5.8, but none can dress 1990 people: the Techwear Outfit is modern sportswear, and the Construction Presets are bare bodies. By your ruling of 13 October, Marvelous Designer comes next, and it needs your yes. Its price is not checked yet; it would be shown to you before anything is bought.",
+   "options": [
+    [
+     "yes",
+     "Yes, one month for one sample outfit (Tom's), the price shown first (recommended)"
+    ],
+    [
+     "no",
+     "No"
+    ]
+   ]
+  },
+  {
+   "kind": "decide",
+   "key": "decide-check-model-2026-10-22",
+   "name": "The reply check on Gemini Flash-Lite: switch?",
+   "note": "On the same 127 labelled details, Gemini 3.5 Flash-Lite checks in 0.60 s at the median, against Haiku's 0.97, but lets 3 invented details in 42 through where Haiku lets 1 (production/research/voice-latency/GEMINI-CHECK-2026-10-22.md). It would save about 0.4 s of the 2-second line.",
+   "options": [
+    [
+     "no",
+     "No: keep Haiku and revisit when the whole path is measured (recommended)"
+    ],
+    [
+     "yes",
+     "Yes, try it in the game"
+    ]
+   ]
+  }
+ ]
+}

@@ -316,11 +316,11 @@ void ALedgerSliceCharacter::BeginPlay()
 
 bool ALedgerSliceCharacter::StartMotionMatching(USkeletalMeshComponent* M)
 {
-	// ONLY WITH -LedgerMotionMatch (22 October): measured on the set route, its starts, stops and turns
-	// slid 23, 67 and 13 cm at the median against his own clips' 27, 20 and 3.5 (its run held, 4.7
-	// against theirs, which the measure cannot read); the sample's steering inside its blend is not
-	// built yet (production/research/sit-and-turn/TOM-MOTION-MATCHING-2026-10-22.md). His own clips
-	// stay the walk until it passes.
+	// ONLY WITH -LedgerMotionMatch (22 October): measured on the set route, both it and his own clips
+	// slide over 7 cm on about half their steps (17 of 39, 35 of 72); it is worse at stops (67 cm at the
+	// median), they slide his right foot on every stride; the sample's steering inside its blend is not
+	// built yet (production/research/sit-and-turn/TOM-MOTION-MATCHING-2026-10-22.md). Neither passes,
+	// so the player keeps the walk he has until one does.
 	if (M == nullptr || !FParse::Param(FCommandLine::Get(), TEXT("LedgerMotionMatch"))) { return false; }
 	// THE SAMPLE'S STANDING SET: walk and run (loops, starts, stops, pivots), the idles and the turns
 	// in place, at the sample's own paths (F:/LedgerTools/game-inputs/gasp, copied into the build). The

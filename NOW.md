@@ -1,25 +1,27 @@
-GOAL (his /goal, to Mon 26 Oct 14:00): his order of 21 October in order, each item done with evidence or set aside with its reason; every street piece gated or listed with its faults; all pushed to wip.
+GOAL (to Mon 26 Oct 14:00): his 21 October order, each item done or set aside with its reason; street pieces gated or listed; all pushed to wip.
 
 Phase 0 done (production/audits/phase0-exit/BUNDLE.md).
 
-## Phase 1: prove the bottlenecks (binding stop)
+Phase 1 closed 22 Oct, no exit passed; binding stop until he rules (production/audits/phase1-exit/CLOSE-2026-10-22.md).
 
-- [ ] 1.1 Mickey's front office: production/research/pre-production/3-PROOFS.md.
-- [ ] 1.2 Tom and a speaker: production/casting/CASTING.md.
-- [ ] 1.3 P2 voice: 3-PROOFS.md, P2.
-- [x] 1.4 P1 packaged: P1-PACKAGED-2026-10-21.md.
+## Phase 2: Produce Quay Street from proved families (on his yes)
+
+- [ ] 2.1 Building kit re-seeded; upper rooms; near shop rooms: production/research/asset-plan/SUMMARY.md.
+- [ ] 2.2 Ground, wear, signage, furniture, vegetation, the hill.
+- [ ] 2.3 P7 walking, P6 plain clothes, P20 exposure, P13 ambience: 3-PROOFS.md.
+- [ ] 2.4 The wet street's seam, the icy lane.
+- [ ] Exit: the whole street walked, day and night.
 
 ## His order of 21 October
 
-- [x] 1 to 3: health, branches, rules and combat (DECISIONS.md, 21 Oct).
-- [x] 4 Editor connection: production/cloud-week/research/1e-unreal-mcp-setup.md.
+- [x] 1 to 4: DECISIONS.md, 21 Oct.
 - [ ] 5 Cloud pieces into the street: production/specs/kit-materials.json.
-- [x] 6 Frame rate (1.4): P1-PACKAGED-2026-10-21.md, closed by its fresh review.
-- [ ] 7 Walk and clothes (1.2), set aside: walk, sit-and-turn/TOM-MOTION-MATCHING-2026-10-22.md; garments fail the floor, Marvelous Designer waits on him (DECISIONS.md, 22 Oct).
-- [x] 8 Speech (1.3): GEMINI-CHECK-2026-10-22.md; POCKET-CPU-2026-10-21.md.
-- [ ] 9 Close phase 1.
+- [x] 6 Frame rate: P1-PACKAGED-2026-10-21.md.
+- [ ] 7 Walk and clothes, set aside: TOM-MOTION-MATCHING-2026-10-22.md; DECISIONS.md, 22 Oct.
+- [x] 8 Speech: GEMINI-CHECK-2026-10-22.md.
+- [x] 9 Close phase 1: CLOSE-2026-10-22.md.
 
-STATE (22 Oct 11:35): 7 set aside (walk, garments); 8 done. Next: 9. Rest of 5 after Monday 14:00.
+STATE (22 Oct 11:55): 9 done; phase 2 asked on his page. Rest of 5 Monday.
 
 ## Handovers
 
