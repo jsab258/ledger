@@ -38,3 +38,44 @@ The game's own cameras, 2560 x 1440: the vignette film's hook camera by day and 
 - LISTED, NOT PASSED, set aside after two tries each (FINDINGS.md, shown first on his page): at night her window's light is far too strong for the goods (in the hook camera her glass burns white in three patches; close up the whites burn, the red velvet clips and stains the pale goods red, the rings read black); close up her glossy goods show the cloud's JPEG blocks. Next direction for both: the cloud's own strip lights under the tiers at a measured, lower strength, and the goods' maps lossless from their 1k sources.
 - Known shortfalls listed throughout: no wear; the balls matte, not gilt; PAWNBROKER and the glass words too small to read from the hook camera; tidy rows of goods rather than a crammed window; the models' own glass missing; the grille's empty rails.
 - These views (round 5, and round 3's close night) are now Rita's last good pictures: F:/LedgerTools/gate/last-good/ritas-front. Packaged and walked: owed to tonight's package.
+
+## 22 October: the night light (his order: "work on Rita's night light")
+
+**The change.** The cloud's own design for the display's light (NOTES.md rule 4, PC-07), in the game:
+- two strip lights, one 8 mm under the front edge of each tier's board, 3.20 m long, tipped 30° toward the back, 3000 K, on the display's channel only, with no shadow and no highlight of their own (VignetteShot.cpp SpawnDisplayStrips; shop-interiors.json display_lights);
+- the head light lowered to light only the top tier and the pavement.
+
+**The strengths, measured** in the game's square-on night camera against the cloud's burnt-pixel bar (any channel at 250 on at most 1% of the window):
+
+| strips (lm) | head (lm) | top tier burnt | middle tier burnt | bed burnt |
+|---|---|---|---|---|
+| none | 350 (before) | 10.7% | 10.0% | 20.6% |
+| 40 | 160 | 5.6% | 26.9% | 41.7% |
+| 20 | 120 | 4.2% | 21.1% | 38.2% |
+| 10 | 100 | 3.5% | 9.6% | 28.1% |
+| 0 | 100 | 3.5% | 3.5% | 0.3% |
+| 3 | 80 | 2.8% | 3.5% | 1.8% |
+| 1.5 | 80 | 2.8% | 1.8% | 0.3% |
+| **1.5** | **60** | **1.8%** | **0.01%** | **0.13%** (the window as a whole 0.6%) |
+
+These are game lumens, not a shop's: the night exposure sets the scale.
+
+**A fault in the camera, found and fixed on the way.** The first hook review failed the view because the whole frame came out 54% brighter than "before". Three night runs of one street, shot 6 s after the clock's jump to 22:00, gave the frame's mean 44, 56 and 68: the night's global light was still settling. Night shots now wait 30 s (CrimeProbe.cpp, PageShotSettle). Two runs then gave 16.2 and 16.2, as the vignette film's own night (15.6). The glass was rebaked with the settled night, and every view was reshot before and after.
+
+**The gate** (one fresh reviewer, Opus, a view, each beside the same camera's before; the brief: F:/LedgerTools/gate/new/ritas-night-2026-10-22/BRIEF.md):
+- **Hook camera at night: PASS.** In her glass, burnt pixels went 11.5% to 0% and the mean 134 to 88, just below the fish shop's 98.5 and the launderette's 108. The white pool on the pavement is gone. "A warm lit 1990 shop window, neither too dark nor a light box." (The first hook review, on unsettled shots, failed it for the whole frame's change; that was the camera, fixed above.)
+- **Square on: PASS.** Burnt pixels went 8.2% to 0.2% of the frame. The goods show their own colours (the radios cream, the clocks green and cream), and the red staining is gone.
+- **From the left: PASS.** Burnt pixels in the window went 89,155 to 4,487. The staining is gone.
+- **From the right: PASS.** Nothing in the window clips; the pavement under it went 216 to 105.
+- **From across the road: PASS.** The window reads warm and lit below the fish shop's glare; the floodlit pavement is gone (164 to 60).
+
+**Listed, not failing:**
+- the white vase's top and the projector's pink reel still clip a little under the head light (about 7% of the right vase);
+- her gilt letters read dull bronze at night from the side, and the door's opening hours can no longer be read from across the road;
+- the strips stop short of the display's left end, so the low tier's back-left corner is darker;
+- the kiosk now reads unlit inside;
+- older, and not hers: the fish shop's bright window throws almost no light on its own pavement.
+
+The earlier known shortfalls stand.
+
+**Last good pictures:** F:/LedgerTools/gate/last-good/ritas-front (cam_hook-night and the four pawnbroker *-shopnight, 22 October). Packaged and walked: owed to tonight's package.

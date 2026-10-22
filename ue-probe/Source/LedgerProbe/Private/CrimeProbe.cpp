@@ -4642,7 +4642,15 @@ namespace
 			Cam = World->SpawnActor<ACameraActor>(FVector::ZeroVector, FRotator::ZeroRotator, P);
 			if (Cam.IsValid()) { Cam->GetCameraComponent()->bConstrainAspectRatio = false; }
 			Step = 0;
-			NextAt = Now + 6.0;   // the street settled, the light applied
+			// THE STREET SETTLED, THE LIGHT APPLIED: 6 s by day, 30 s at night (22 October, Rita's night
+			// gate). Three night runs of one street after 6 s gave the hook frame's mean 44, 56 and 68, the
+			// global light still settling from the day after the clock's jump (the exposure is pinned);
+			// after 30 s two runs gave 16.2 and 16.2, as the vignette film's own night (15.6). The morning
+			// pictures and the glass bake's night pass wait the same. -PageShotSettle=N sets it.
+			const bool bNightShot = Mode == TEXT("night") || Mode == TEXT("shopnight") || Mode == TEXT("atnight") || (Mode == TEXT("bake") && BakeLight == TEXT("night"));
+			double Settle = bNightShot ? 30.0 : 6.0;
+			FParse::Value(FCommandLine::Get(), TEXT("PageShotSettle="), Settle);
+			NextAt = Now + Settle;
 			return;
 		}
 		if (Mode == TEXT("bake"))

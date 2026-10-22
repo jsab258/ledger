@@ -81,7 +81,7 @@
    "lit_at_night": true,
    "brightness_day": 0.15,
    "brightness_night": 0.7,
-   "spill_lumens": 350,
+   "spill_lumens": 60,
    "lit_note": "Day 0.15, since the glass reflects (Thin Translucent): at 0.3 the street's reflection was a faint veil, at 0.08 the room read dim, at 0.03 the pane was nearly a mirror and the room a void (filmed 1 October; the research's 1/8 to 1/10 of the pavement is for an unlit shop, the Hook sheet's is lit and readable); night 0.7 glows without blowing the floor out; the night spill (a tube-white rect light in the window head, tipped 62 degrees down) at 350 lm on lighting channel 1 lights the display and lays a pool on the pavement and the road; the window bars are not on that channel, so they no longer flare (filmed at 250 to 2500 lm and from deep inside the shop, 1 October).",
    "display": {
     "glb": "ritas-display",
@@ -104,7 +104,12 @@
    "spill_up": 2.42,
    "spill_note": "21 October, the gate's night reviewer (Rita's window blown to white, the pavement darker): the window head just behind her glass (its back face 5.265, its head 2.50 above the crown), in front of the cloud's display, whose own back, returns and head reach the card where the panel used to stand; try 2 the same evening: over the window alone (its glass 15.39 to 18.66 along the street), 2.6 m wide, since at the card's 3.7 m about the card's middle (18.0) its end burned the window's left return white",
    "spill_x": 17.03,
-   "spill_width": 2.6
+   "spill_width": 2.6,
+   "display_lights": [
+    {"v": 0.2, "w": 0.377, "length": 3.2, "lumens": 1.5, "kelvin": 3000, "tilt": 30},
+    {"v": 0.24, "w": 0.727, "length": 3.2, "lumens": 1.5, "kelvin": 3000, "tilt": 30}
+   ],
+   "display_lights_note": "22 October, his order (Rita's night light, after the 21 October gate set it aside): the cloud's design (production/cloud-week/kit/shop-windows/NOTES.md, rule 4 and PC-07), a strip 8 mm under the front edge of each tier's board (the middle tier's at v 0.20, w 0.377; the top's at v 0.24, w 0.727, in the display's frame: v back from the glass, w above the bed), 3.20 m long, tipped 30 degrees toward the back, 3000 K; the head light lowered for the top tier and the pavement alone. The lumens measured in the game's own square-on night camera (-PageShots=shopnight -PageShopX=17.6), set by the cloud's burnt-pixel bar (any channel at 250 on at most 1 per cent of the window): strips 40, 20, 10, 3, 2 and 1.5 against the head's 160, 120, 100, 80 and 60; at 1.5 and 60 the window is 0.6 per cent burnt (the projector's pink reel and the white vase under the head light), the middle tier 0.01, the bed 0.13 (the last good: 10 to 21). Game lumens, not a shop's: the night exposure sets the scale"
   }
  ]
 }

@@ -7397,7 +7397,7 @@ namespace
 	// (tools/ue/make_interior_material.py). The card's front corner comes from its
 	// own bounds in the world, logged beside the spec's numbers.
 	struct FInteriorRow { int32 Row = -1; UMaterialInstanceDynamic* Mid = nullptr; float DayGlow = 1.0f, NightGlow = 1.0f; bool bLitAtNight = false;
-		TWeakObjectPtr<ARectLight> Spill; FString Shop; };
+		TWeakObjectPtr<ARectLight> Spill; TArray<TWeakObjectPtr<ARectLight>> Strips; FString Shop; };
 	TArray<FInteriorRow> GInteriorRows;
 	int32 GInteriorsAsked = 0;
 	// What the shops stood behind their glass, taken down when the street is painted again.
@@ -7762,6 +7762,64 @@ namespace
 		return L;
 	}
 
+	// THE DISPLAY'S OWN LIGHTS (22 October, his order: "work on Rita's night light"; the cloud's design,
+	// production/cloud-week/kit/shop-windows/NOTES.md rule 4 and PC-07): one head light leaves stacked
+	// tiers dark and, made strong enough to reach them, burns the goods nearest it white (the gate of
+	// 21 October, set aside after two tries). So a strip light 8 mm under the front edge of each tier's
+	// board, 3.20 by 0.02 m, tipped 30 degrees toward the back, 3000 K, as a shopfitter's under-shelf
+	// tube, and the head light only for the top tier and the pavement. "display_lights" in the shop's
+	// entry gives each strip in the display's own frame (v back from the glass, w above the bed: the
+	// display entry's "front" and "bed"), its length, lumens, kelvin and tilt; -ShopStripLumens=N sets
+	// every strip's lumens for measuring. They light the display's channel only, cast no shadow (each
+	// shines down and back from under its board, so the board above is behind it) and show no highlight
+	// of their own (the cloud's strips are invisible to glossy rays); off by day, as the head light is.
+	TArray<TWeakObjectPtr<ARectLight>> SpawnDisplayStrips(UWorld* World, const Value& Sh, double Side)
+	{
+		TArray<TWeakObjectPtr<ARectLight>> Out;
+		const Value* Lights = Sh.Find("display_lights");
+		const Value* Disp = Sh.Find("display");
+		if (World == nullptr || Lights == nullptr || Lights->Type != T_ARR || Disp == nullptr || Disp->Type != T_OBJ) { return Out; }
+		const double Front = LedgerStreet::NumOr(*Disp, "front", 0.0), Bed = LedgerStreet::NumOr(*Disp, "bed", 0.0);
+		const double X0 = LedgerStreet::NumOr(*Disp, "x0", 0.0), X1 = LedgerStreet::NumOr(*Disp, "x1", 0.0);
+		double LumensOverride = -1.0;
+		FParse::Value(FCommandLine::Get(), TEXT("ShopStripLumens="), LumensOverride);
+		for (const Value& Li : Lights->Arr)
+		{
+			if (Li.Type != T_OBJ) { continue; }
+			const double V = LedgerStreet::NumOr(Li, "v", 0.0), W = LedgerStreet::NumOr(Li, "w", 0.0);
+			const double Length = LedgerStreet::NumOr(Li, "length", X1 - X0);
+			const double Lumens = LumensOverride >= 0.0 ? LumensOverride : LedgerStreet::NumOr(Li, "lumens", 0.0);
+			const double Tilt = LedgerStreet::NumOr(Li, "tilt", 30.0), Kelvin = LedgerStreet::NumOr(Li, "kelvin", 3000.0);
+			if (Lumens <= 0.0 || Length <= 0.0) { continue; }
+			const FVector At((float)(LedgerStreet::NumOr(Li, "x", (X0 + X1) * 0.5) * 100.0), (float)((Front + V) * 100.0 * Side), (float)((Bed + W) * 100.0));
+			// down, and tipped toward the back of the shop (away from the street)
+			const FRotator Aim((float)-(90.0 - Tilt), Side > 0 ? 90.0f : -90.0f, 0.0f);
+			FActorSpawnParameters Params;
+			Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+			ARectLight* L = World->SpawnActor<ARectLight>(ARectLight::StaticClass(), At, Aim, Params);
+			if (L == nullptr) { continue; }
+			MakeMovable(L);
+			if (URectLightComponent* RC = Cast<URectLightComponent>(L->GetLightComponent()))
+			{
+				RC->SetMobility(EComponentMobility::Movable);
+				RC->SetWorldRotation(Aim);
+				RC->SetIntensityUnits(ELightUnits::Lumens);
+				RC->SetIntensity((float)Lumens);
+				RC->SetSourceWidth((float)(Length * 100.0));
+				RC->SetSourceHeight(2.0f);
+				RC->SetAttenuationRadius(150.0f);
+				RC->SetUseTemperature(true);
+				RC->SetTemperature((float)Kelvin);
+				RC->SetCastShadows(false);
+				RC->SetSpecularScale(0.0f);
+				RC->SetLightingChannels(false, true, false);
+				RC->SetVisibility(false);
+			}
+			Out.Add(L);
+		}
+		return Out;
+	}
+
 	void ApplyShopInteriors()
 	{
 		GInteriorRows.Reset();
@@ -7989,6 +8047,8 @@ namespace
 				{
 					Ir.Spill = SpawnShopSpill(World, B, Side, SpillLumens, &Sh);
 					if (Ir.Spill.IsValid()) { GInteriorActors.Add(Ir.Spill.Get()); }
+					Ir.Strips = SpawnDisplayStrips(World, Sh, Side);
+					for (const TWeakObjectPtr<ARectLight>& St : Ir.Strips) { if (St.IsValid()) { GInteriorActors.Add(St.Get()); } }
 					// What the window's light may fall on: the ground and the display.
 					static const char* Ground[] = { "asphalt", "paving", "kerbstone", "standing_water", "standing_water_flags",
 						"paint_yellow", "paint_white", "grime" };
@@ -8016,7 +8076,7 @@ namespace
 					UTF8_TO_TCHAR(Id.c_str()), Corner.X, Corner.Y, Corner.Z,
 					Card ? LedgerStreet::NumOr(*Card, "x0", 0.0) * 100.0 : 0.0, Card ? LedgerStreet::NumOr(*Card, "z", 0.0) * 100.0 : 0.0,
 					Card ? LedgerStreet::NumOr(*Card, "bottom", 0.0) * 100.0 : 0.0, B.Max.X - B.Min.X, Ir.DayGlow, Ir.NightGlow,
-					*DisplayNote, Ir.Spill.IsValid() ? *FString::Printf(TEXT("%.0f lm"), SpillLumens) : TEXT("none (shut at night)"));
+					*DisplayNote, Ir.Spill.IsValid() ? *FString::Printf(TEXT("%.0f lm, %d display strip(s)"), SpillLumens, Ir.Strips.Num()) : TEXT("none (shut at night)"));
 			}
 		}
 	}
@@ -8035,6 +8095,10 @@ namespace
 				// key, still threw its window's light over the pavement and the yellow lines, which
 				// glowed the length of the frame)
 				Ir.Spill->GetLightComponent()->SetVisibility(!bSunOn && Ir.bLitAtNight && !GShopsDark.Contains(Ir.Shop));
+			}
+			for (const TWeakObjectPtr<ARectLight>& St : Ir.Strips)
+			{
+				if (St.IsValid() && St->GetLightComponent() != nullptr) { St->GetLightComponent()->SetVisibility(!bSunOn && Ir.bLitAtNight && !GShopsDark.Contains(Ir.Shop)); }
 			}
 		}
 	}
@@ -9841,6 +9905,10 @@ namespace LedgerVignetteShot
 		{
 			if (Ir.Shop != Id || !Ir.Spill.IsValid() || Ir.Spill->GetLightComponent() == nullptr) { continue; }
 			Ir.Spill->GetLightComponent()->SetVisibility(bLit && !GRoomLightsSunOn && Ir.bLitAtNight);
+			for (const TWeakObjectPtr<ARectLight>& St : Ir.Strips)
+			{
+				if (St.IsValid() && St->GetLightComponent() != nullptr) { St->GetLightComponent()->SetVisibility(bLit && !GRoomLightsSunOn && Ir.bLitAtNight); }
+			}
 			++Switched;
 		}
 		for (const FRoomLight& RL : GRoomLights)

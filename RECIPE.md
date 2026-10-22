@@ -19,6 +19,15 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 22 Oct 2026, item 5, Rita's sample: a shop window's night light rebuilt to its designer's plan and set by measurement
+- Made: two under-shelf strip lights and a dimmer head lamp in a display window at night, their strengths set by a burnt-pixel bar; and a camera that waits until the night light has settled.
+- Method (setting-free): take the designer's own light plan before inventing one; sweep each light's strength in the game's own camera and set it by a written bar (no channel clipped over 1 per cent of the window), lights off first to find what burns; compare the window with its lit neighbours from the street; before and after from the same camera, the same build and the same settled light; when a reviewer sees the whole frame change, measure repeat runs before believing either picture.
+- Tools: the engine's rect lights in physical units; the game's page cameras; a crop-and-count script; fresh reviewers a view.
+- Target and check: the gate (new faults block, against the last good); the cloud's burnt-pixel bar.
+- Cost (hours): about 2.
+- Failed and why: the first hook review failed the view because night shots were taken 6 s after the clock's jump, before the global light settled, so before and after differed everywhere; the wait is now 30 s and repeats agree.
+- Evidence: production/audits/gate-ritas-front/GATE.md
+
 ### 22 Oct 2026, item 9: a production phase's exit checked by one independent reviewer per exit, and the phase closed on what they found
 - Made: four fresh reviews, one for each of the phase's exits, a closing record, the next phase's list, and one page asking the owner whether it starts.
 - Method (setting-free): give each reviewer the requirement word for word and where the outputs are, never the maker's verdict; ask for a verdict per clause (met, not met, not shown) with the file that decides it, faults the maker did not name, and what could not be reached; have them recompute numbers from raw captures; check every correction they find and fix the record the same day; when no exit passes, the stop rule decides, and the owner is asked rather than the next phase begun.
