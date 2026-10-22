@@ -29,6 +29,23 @@ tools/p1-packaged.ps1 -Voice pocket (tools/voice-live/voice_load.py --pocket): t
 
 Off the card the game runs faster on the median, but walking it stalls: 92.4 and 43.3 ms frames with the game's own threads short (game 10 and 6 ms, render 9 and 11, card 10 and 15), the processor busy elsewhere, and a 174.7 ms first frame. A first run overlapped this PC's checks and is not counted (worst 129 to 150 ms). Frames: F:/LedgerTools/tmp/p1-packaged/packaged-*-pocket2-00f81b1.csv.
 
+## Pocket kept from stalling the walk (22 October; his order: "then stop Pocket TTS from stalling the walk")
+
+Pocket's server now runs at Windows' below-normal priority (`tools/voice-live/pocket-server.py`, `set_priority`; `--priority normal` or `LEDGER_POCKET_PRIORITY` brings back the old way), so the game's threads get the processor first. Everything is measured on the packaged walk, 1,800 frames, with the voice speaking flat out the whole time; the played copy is last night's package 35e10a9, the same game code as 00f81b1.
+
+| run | median | slowest 1% | worst | over 33.3 | the voice's speed |
+|---|---|---|---|---|---|
+| Pocket, normal priority, 6 threads (21 Oct, 00f81b1) | 13.17 | 33.95 | 174.7 | 3 | 0.40 of real time |
+| **Pocket, below normal, 6 threads** | 12.06 | **20.62** | 47.37 | 1 | 0.48 |
+| Pocket, below normal, 4 threads | 11.99 | 21.93 | 47.50 | 1 | 0.40 |
+| the card voice, as the game has it (today's package, for comparison) | 12.78 | 27.66 | 87.17 | 2 | 0.93 |
+
+- **The game's threads are no longer short.** The 92 and 43 ms frames, with the game and render threads waiting, are gone.
+- **The voice still speaks two to two and a half times faster than real time.**
+- **One frame over the bar remains in each Pocket run** (47 ms, frame 418 both times). The render-submission (RHI) thread waits there, 36.5 and 38.9 ms, while the game, render and card times are normal.
+- **The same kind of RHI wait shows without Pocket.** The card-voice run of the same package has 80.3 and 32.3 ms waits at frames 1221 and 376. So it is not Pocket's, and it is listed as its own fault (FINDINGS.md).
+- **Kept at 6 threads**, since 4 threads changed nothing but the voice's speed.
+
 ## The opener, as an experiment (his order: "an instant in-character opener (a look and a word in under half a second) while the real line streams sentence by sentence")
 
 The game's own prepared openers ("hmm, well now", "let me think", each with its own face animation and glance; off since his ruling of 7 October, -PreparedAck brings them back) played at the line's sending, in the editor's game: -AskScript=6 asks Darren, Sheila and Ron six lines down the player's own path (the stand-in talk, so the model's time is not in it), and the game itself records, from the line sent, the opener's start, the answer's first words and first sound, and the whole answer heard out (CrimeProbe.cpp AskScriptTick, its "opener" and "wholeAnswer" added today). Records: F:/LedgerTools/latency/opener-2026-10-21/ask-pocket.json and ask-card.json.

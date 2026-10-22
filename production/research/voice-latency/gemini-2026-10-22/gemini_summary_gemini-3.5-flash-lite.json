@@ -1,0 +1,19 @@
+{
+ "model": "gemini-3.5-flash-lite",
+ "details": {
+  "true_refused": [
+   15,
+   85
+  ],
+  "invented_passed": [
+   3,
+   42
+  ],
+  "unread": 0,
+  "median_s": 0.604,
+  "slowest_tenth_s": 0.702,
+  "slowest_s": 0.965
+ },
+ "tokens_in": 277774,
+ "tokens_out": 3286
+}

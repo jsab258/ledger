@@ -1,0 +1,19 @@
+{
+ "model": "gemini-3.8-flash",
+ "details": {
+  "true_refused": [
+   19,
+   82
+  ],
+  "invented_passed": [
+   0,
+   42
+  ],
+  "unread": 3,
+  "median_s": 1.822,
+  "slowest_tenth_s": 2.915,
+  "slowest_s": 5.238
+ },
+ "tokens_in": 271199,
+ "tokens_out": 2739
+}

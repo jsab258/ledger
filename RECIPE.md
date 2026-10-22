@@ -19,6 +19,33 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 22 Oct 2026, item 8, part: a speech model on the processor kept from stalling the game beside it
+- Made: the speech server at the operating system's below-normal priority, so the game's threads win the processor; the shipped walk measured with it speaking flat out.
+- Method (setting-free): a helper that shares the processor with a real-time program runs below its priority before its thread count is cut; measure the shipped build with the helper at full load, per frame, and read each slow frame's thread times before blaming the helper; run the same build without the helper to see what is left.
+- Tools: the operating system's priority classes, the engine's frame capture, the packaged-walk script.
+- Target and check: no frame over 33.3 ms on the walk while the voice speaks; the voice faster than real time.
+- Cost (hours): about 1.
+- Failed and why: one frame over remains, a render-submission wait that the run without the helper shows too (a different fault, listed).
+- Evidence: production/research/voice-latency/POCKET-CPU-2026-10-21.md
+
+### 22 Oct 2026, item 8, part: a cheaper and faster checking model tried against the one in use, on the same labelled set and prompt
+- Made: accuracy and speed of two of another vendor's fast models as the reply checker, beside the model in use, on the held-out half of a labelled set.
+- Method (setting-free): keep the set, the prompt and the scoring fixed and change only the model; time each call from the machine that will make it; report the tail, not only the median; keep a key in memory and in a header only; when a model refuses one setting, drop only that setting and say so; switch only by a rule written before the run (no less accurate and faster), and put a trade the rule refuses to the owner.
+- Tools: the lab's prepared runner, unchanged, and a small wrapper; the vendor's REST API.
+- Target and check: the owner's 2-second bar to first speech; invented details passed and true ones refused, on 127 labelled details.
+- Cost (hours): about 0.5.
+- Failed and why: the faster model passes more invented details (3 of 42 against 1), so no switch by the rule; the end-to-end first sound with it is not measured (the talk helper speaks one vendor's interface only).
+- Evidence: production/research/voice-latency/GEMINI-CHECK-2026-10-22.md
+
+### 22 Oct 2026, item 7, the clothes: a vendor's garment packs judged against a period floor before any fitting
+- Made: a yes or no on each downloaded garment pack, with proof they load in the engine version in use.
+- Method (setting-free): load each pack in a throwaway project of the right engine version before touching the game's; read each pack's own preview pictures out of its files; judge against the written floor (period, no modern giveaways) before any fitting work, and stop there if nothing passes.
+- Tools: the engine's editor Python in a scratch project; the packs' embedded previews.
+- Target and check: the clothes' floor; loads without error in 5.8.
+- Cost (hours): about 0.3.
+- Failed and why: every pack loads, none passes: one modern outfit, and "construction presets" that are bodies, not clothes.
+- Evidence: DECISIONS.md, 22 Oct 10:35
+
 ### 22 Oct 2026, item 7, the walk: a vendor's motion-matched locomotion brought onto a character with another skeleton, measured at its joins, set aside
 - Made: the vendor sample's motion-matching graph (its own nodes and settings, read from its exported files) in an animation asset made by script, running on the sample's own body hidden beside the character and copied onto him through a retargeter; a set route (starts, stops, turns, a pivot, a run) measuring each planted foot's slide on both bodies; the walk itself not passed, left behind a switch.
 - Method (setting-free): export the reference project's graphs, character and choosers to text and read every node, setting and helper function before copying any; copy the graph by script node by node with the reference's own settings, naming each change; copy its movement model too, since its clips were matched to it; measure on the driving body and the driven one at once, so a fault is put to the right half; trace one foot frame by frame when a number surprises.

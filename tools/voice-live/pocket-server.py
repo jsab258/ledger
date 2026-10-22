@@ -42,6 +42,18 @@ def server_module():
     return vs
 
 
+def set_priority(name):
+    """Windows: this process's priority class, "below" (below normal), "idle" or "normal"; returns what was set."""
+    classes = {"below": 0x4000, "idle": 0x40, "normal": 0x20}
+    if os.name != "nt" or name not in classes:
+        return "unchanged"
+    import ctypes
+    k = ctypes.windll.kernel32
+    k.GetCurrentProcess.restype = ctypes.c_void_p
+    ok = k.SetPriorityClass(ctypes.c_void_p(k.GetCurrentProcess()), classes[name])
+    return name if ok else "refused"
+
+
 def main(argv):
     # THE SIGN-IN (Jafar, 26 September: Kyutai's terms accepted, signed in on
     # this PC): the model cache lives on F:, the sign-in where hf put it.
@@ -57,7 +69,16 @@ def main(argv):
     out = pathlib.Path(argv[argv.index("--out") + 1]) if "--out" in argv else pathlib.Path(tempfile.mkdtemp(prefix="ledger-pocket-"))
     out.mkdir(parents=True, exist_ok=True)
     t0 = time.time()
-    torch.set_num_threads(max(2, (os.cpu_count() or 4) // 2))   # half the processor: the game keeps the rest
+    # THE GAME FIRST (22 October, item 8: "stop Pocket TTS from stalling the walk"): speaking flat out
+    # beside the packaged walk, Pocket's threads at the game's own priority left the game's threads short
+    # (92 and 43 ms frames, POCKET-CPU-2026-10-21.md). The voice now runs below normal priority, so
+    # Windows gives the game's threads the processor first and the voice what is left; --threads N sets
+    # its thread count (default half the processor) and --priority normal restores the old way.
+    # (or LEDGER_POCKET_THREADS and LEDGER_POCKET_PRIORITY, for a launcher that passes no arguments)
+    threads = int(argv[argv.index("--threads") + 1]) if "--threads" in argv else int(os.environ.get("LEDGER_POCKET_THREADS") or max(2, (os.cpu_count() or 4) // 2))
+    torch.set_num_threads(threads)
+    priority = argv[argv.index("--priority") + 1] if "--priority" in argv else (os.environ.get("LEDGER_POCKET_PRIORITY") or "below")
+    lowered = set_priority(priority)
     # --temp: how freely the model varies its speech (Kyutai's default when
     # absent). Lower keeps a cloned voice nearer its clip (Darren's drifted
     # American at the default, 26 September).
@@ -92,7 +113,7 @@ def main(argv):
             if st is not None:
                 for _ in model.generate_audio_stream(st, "Right."):
                     pass
-    print(dumps({"ready": True, "device": "cpu", "loadS": round(time.time() - t0, 1), "out": str(out), "rate": sr}), flush=True)
+    print(dumps({"ready": True, "device": "cpu", "loadS": round(time.time() - t0, 1), "out": str(out), "rate": sr, "threads": threads, "priority": lowered}), flush=True)
     for line in sys.stdin:
         if not line.strip():
             continue

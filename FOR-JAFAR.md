@@ -21,12 +21,12 @@ No decision asked: these are for watching the street change.
 
 <!-- /morning pictures -->
 
-**Your week's order, where it stands (22 October, 00:20; the 21 October overview is in git).**
+**Your week's order, where it stands (22 October, 11:35; the 21 October overview is in git).**
 - *1 to 4.* Done 21 October: health check, branches home, your rules and combat doc, the editor connection.
 - *5, the cloud's pieces.* Lamp post C stands at the four lamp spots (darker, faint grime; its rain staining set aside). Rita's front, display and room are in the street as the shops' sample: four day views passed fresh reviewers; at night her window's light is too strong (set aside). **Your page: https://claude.ai/artifact/2yznAYjEwDVv3RvzzKUpBR** (Rita's front; the lamp done or not yet). The other families wait for your judgement, as you ruled.
 - *6, frame rate.* Done: the packaged walk's worst frame 30.3 ms (it was 63), P1 closed by a fresh review (production/research/pre-production/P1-PACKAGED-2026-10-21.md).
-- *7, the walk and the clothes.* Waits on Epic's samples from Fab (Needs you 3).
-- *8, speech.* Pocket TTS on the processor timed (its first sound 0.13 s after the reply's first sentence; the game walks less smoothly while it works flat out) and the opener tried as an experiment; the Gemini test waits on your key (Needs you 4).
+- *7, the walk and the clothes.* The walk was rebuilt on Epic's sample with motion matching and measured on a set route. Starts, stops and turns slide 13 to 67 cm (the bar is 3), so it is set aside, off by default, and your current walk kept (production/research/sit-and-turn/TOM-MOTION-MATCHING-2026-10-22.md). Clothes: Epic's Fab items all load in 5.8, but the Techwear Outfit is modern sportswear and the Construction Presets are bare bodies, not clothes; none can dress the Hook sheet's people (Needs you 1).
+- *8, speech.* Done. **The Gemini test:** on the reply check, Gemini 3.5 Flash-Lite took 0.60 s at the median against Haiku's 0.97, but it let 3 invented details in 42 through where Haiku lets 1 (Needs you 2); Gemini 3.8 Flash was the most accurate but slower, 1.8 s (production/research/voice-latency/GEMINI-CHECK-2026-10-22.md). **Pocket no longer stalls the walk:** run at lower priority, the walk's slowest 1% is 20.6 ms (it was 34) and its worst 47 ms (it was 175). The one frame left over the bar is a separate stall that the usual card voice shows too (87 ms today), so the frame-rate margin is thinner than P1's close said (listed).
 - *9, closing phase 1.* Waits on 7 and 8.
 
 **Risks, Monday's review (production/research/pre-production/6-RISKS.md).**
@@ -38,10 +38,8 @@ No decision asked: these are for watching the street change.
 
 ### Needs you
 
-1. Is "Help improve Claude" off in your claude.ai account? Your licence ruling of 3 October rests on it, and the Unreal editor connection now sends editor data. Recommended: check it once and say yes.
-2. The command-line Claude needs you to sign in again (it expired while the PC was off), or the night jobs that ask Claude keep failing. Recommended: in the Terminal, type claude, sign in once, then type /exit.
-3. Item 7 needs Epic's Game Animation Sample and the MetaHuman garments from Fab, which only your signed-in Epic launcher can fetch. Recommended: in the Epic Games Launcher, Fab library, create the Game Animation Sample project on F: and add the MetaHuman garments, then tell me.
-4. Item 8's Gemini test waits on your key in the file F:\LedgerTools\keys\google.txt (still empty; never in chat). Recommended: paste it there when convenient; Pocket TTS goes ahead meanwhile.
+1. Clothes: Epic's garments cannot dress 1990 people, so by your ruling Marvelous Designer is next, with your yes. Recommended: yes, one month for one sample outfit (Tom's), its price shown to you before anything is bought.
+2. The reply check on Gemini 3.5 Flash-Lite would be about 0.4 s faster to first speech (0.60 s against Haiku's 0.97 at the median), but it lets 3 invented details in 42 through where Haiku lets 1. Recommended: no switch now; keep Haiku and revisit when the whole path is measured.
 
 ### Road to worth playing (PLAN.md)
 

@@ -1,0 +1,87 @@
+{
+ "date": "2026-10-08",
+ "night": "F:/LedgerTools/nightly\\2026-10-08",
+ "events": 85,
+ "summary": {
+  "walk": {
+   "passed": 10,
+   "stages": 13,
+   "failed": [
+    "talk-open: never in reach of Sheila (she is not on the street)",
+    "town-Sheila: lost sight of Sheila",
+    "town-Ron: never in reach of Ron (8.5 m away)"
+   ]
+  },
+  "noticed": {
+   "saw_the_deed": [
+    "Darren",
+    "Hana"
+   ],
+   "onlooker_lines": [
+    {
+     "t": 126.5,
+     "e": "onlookers",
+     "hour": 11,
+     "night": false,
+     "light": 1.0,
+     "measured": 20,
+     "_file": "2026-10-08-030534.jsonl"
+    }
+   ]
+  },
+  "knew_later": {
+   "rocco": [
+    "look",
+    "recognition"
+   ]
+  },
+  "greeted": [
+   {
+    "who": "Sheila",
+    "reached": false,
+    "detail": "lost sight of Sheila"
+   },
+   {
+    "who": "Ron",
+    "reached": false,
+    "detail": "never in reach of Ron (8.5 m away)"
+   },
+   {
+    "who": "Darren",
+    "reached": true,
+    "detail": "open=1 words=seconds=0.23 heard=seconds=3.07"
+   }
+  ],
+  "replies": {
+   "n": 1,
+   "broke": 0,
+   "checked": 0,
+   "by_how": {
+    "own": 1
+   },
+   "seconds_median": 0.2,
+   "seconds_max": 0.2,
+   "source": "the walk's stand-in words with the real voice: not the real path"
+  },
+  "police_told_by": [
+   "hana"
+  ],
+  "thats_all_i_know": {
+   "count": null,
+   "of": 60,
+   "note": "the bench's 60 calls all failed, so nothing was measured (bench.log)"
+  },
+  "illusion": {
+   "lines": [
+    "Tom stands splay-legged with stiff arms in nearly every frame â€” a broken default idle, not a person: step-025.jpg, step-034.jpg, step-058.jpg, step-178.jpg.",
+    "Three frames in a row are pitch black, nothing readable at all â€” a dead stretch of walk: step-106.jpg, step-130.jpg, step-154.jpg.",
+    "The camera sits inside Tom's back and a passer-by's body fills the right edge: step-010.jpg.",
+    "\"Talk to Ron\" is offered while Ron stands motionless in an unlit doorway, and the record says he was never reachable: step-082.jpg.",
+    "Townspeople are frozen mid-stride â€” the woman's foot passes through the tea-room step, the man by the wall is rigid; the street is otherwise empty and nobody reacts to anything: step-226.jpg, step-202.jpg."
+   ],
+   "pictures": 12,
+   "source": "Claude Code, non-interactive, on the walk's pictures"
+  }
+ },
+ "paragraph": "**The town and Tom (the AI tester's walk of 2026-10-08, played as a player would, the stand-in's words):** the route 10 of 13 stages; failed: talk-open: never in reach of Sheila (she is not on the street); town-Sheila: lost sight of Sheila. Who saw him break Rita's window: Darren, Hana. Who showed they knew afterwards, and how: rocco (look, recognition). That is 1 people (+1 on the night before). \"That's all I know\" to a newcomer's sixty first questions (the real engine's words): not measured. Replies heard after a median 0.2 s, at most 0.2 s (stand-in words, real voice; not the real path), 0 of 1 broke. What broke the illusion: Tom stands splay-legged with stiff arms in nearly every frame â€” a broken default idle, not a person: step-025.jpg, step-034.jpg, step-058.jpg, step-178.jpg.; Three frames in a row are pitch black, nothing readable at all â€” a dead stretch of walk: step-106.jpg, step-130.jpg, step-154.jpg.; The camera sits inside Tom's back and a passer-by's body fills the right edge: step-010.jpg.."
+}

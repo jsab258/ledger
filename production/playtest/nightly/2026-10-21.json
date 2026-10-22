@@ -1,0 +1,80 @@
+{
+ "date": "2026-10-21",
+ "night": "F:/LedgerTools/nightly\\2026-10-21",
+ "events": 48,
+ "summary": {
+  "walk": {
+   "passed": 12,
+   "stages": 15,
+   "failed": [
+    "town-Sheila: never in reach of Sheila (13.4 m away)",
+    "town-Ron: lost sight of Ron",
+    "town-Darren: Darren is not on the street"
+   ]
+  },
+  "noticed": {
+   "saw_the_deed": [
+    "Darren",
+    "Ron"
+   ],
+   "onlooker_lines": [
+    {
+     "t": 167.7,
+     "e": "onlookers",
+     "hour": 13,
+     "night": false,
+     "light": 1.0,
+     "measured": 14,
+     "_file": "2026-10-21-125906.jsonl"
+    }
+   ]
+  },
+  "knew_later": {
+   "rocco": [
+    "recognition"
+   ]
+  },
+  "greeted": [
+   {
+    "who": "Sheila",
+    "reached": false,
+    "detail": "never in reach of Sheila (13.4 m away)"
+   },
+   {
+    "who": "Ron",
+    "reached": false,
+    "detail": "lost sight of Ron"
+   },
+   {
+    "who": "Darren",
+    "reached": false,
+    "detail": "Darren is not on the street"
+   }
+  ],
+  "replies": {
+   "n": 1,
+   "broke": 0,
+   "checked": 0,
+   "by_how": {
+    "own": 1
+   },
+   "seconds_median": 0.2,
+   "seconds_max": 0.2,
+   "source": "the walk's stand-in words with the real voice: not the real path"
+  },
+  "police_told_by": [],
+  "thats_all_i_know": {
+   "count": null,
+   "of": 60,
+   "note": "the bench's 60 calls all failed, so nothing was measured (bench.log)"
+  },
+  "illusion": {
+   "lines": [
+    "Failed to authenticate: OAuth session expired and could not be refreshed"
+   ],
+   "pictures": 12,
+   "source": "Claude Code, non-interactive, on the walk's pictures"
+  }
+ },
+ "paragraph": "**The town and Tom (the AI tester's walk of 2026-10-21, played as a player would, the stand-in's words):** the route 12 of 15 stages; failed: town-Sheila: never in reach of Sheila (13.4 m away); town-Ron: lost sight of Ron. Who saw him break Rita's window: Darren, Ron. Who showed they knew afterwards, and how: rocco (recognition). That is 1 people (same as the night before). \"That's all I know\" to a newcomer's sixty first questions (the real engine's words): not measured. Replies heard after a median 0.2 (same as the night before) s, at most 0.2 s (stand-in words, real voice; not the real path), 0 of 1 broke. What broke the illusion: Failed to authenticate: OAuth session expired and could not be refreshed."
+}
