@@ -34,6 +34,7 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
   - one shared atlas left black hairlines on the mouldings in the close view;
   - a matt grime read as a pale lilac wash on the dark paint from the side;
   - the glTF exporter wrote one texture per material for a shared picture, and the import made three copies of it in memory.
+  - after the pass, a filler block put behind the piece (to close a gap) sat exactly on the street's own frontage plane and fought another part there; the patch flipped between captures. Fixed by setting the filler 5 mm back: filler geometry never shares a plane with what it fills behind.
 - Evidence: production/audits/gate-ritas-front/GATE.md (22 October, try 2); production/research/street-wear/FRONT-WEAR-BAKE-2026-10-22.md
 
 ### 22 Oct 2026, item 5, Rita's sample: a delivered model given the street's own wear by swapping its paint for the street's material, failed

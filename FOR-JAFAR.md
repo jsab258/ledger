@@ -44,6 +44,9 @@ Your page today (https://claude.ai/artifact/2yznAYjEwDVv3RvzzKUpBR) asks all thr
 2. Clothes: try Marvelous Designer? Recommended: yes, one month for one sample outfit (Tom's), with the price shown to you before anything is bought.
 3. The reply check on Gemini 3.5 Flash-Lite (about 0.4 s faster, but 3 invented details in 42 against Haiku's 1): switch? Recommended: no, not yet.
 
+For tomorrow's page:
+4. Tom's walk: Epic's sample already ships the way to put its walk on a MetaHuman (its own character, Tom's body worn over it). Try that after Monday, as the walk's next go? Recommended: yes; the first go is set aside under your two-tries rule.
+
 ### Road to worth playing (PLAN.md)
 
 - **0. Recover control** (0.20W): done 6 October, passed by a fresh review with narrow points.

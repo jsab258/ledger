@@ -90,6 +90,15 @@ What remains: the first one or two contacts of each start and turn slide 20 to 1
 - **B. Drive the sample's own character.** Use `SandboxCharacter_CMC` unchanged, hidden, as a puppet. Feed it Tom's input and speeds by reflection, and have Tom follow its capsule. Every Epic node and function stays as Epic made it.
 - **Either way, onto MetaHuman Tom.** The walk then goes onto Tom's MetaHuman body (approved face L1) through Epic's own `RTG_UEFN_to_Metahuman` retargeters, which are already in the project. Epic's garments (item 7's second half) need that body anyway.
 
+## Direction B already exists in the sample (read on disk, 22 October 2026, 17:40)
+
+The sample's own content (F:/LedgerTools/GameAnimationSample/Content, listed on 22 October) ships Epic's path for a different visible body:
+- `Blueprints/AC_VisualOverrideManager` and `Blueprints/RetargetedCharacters/ABP_GenericRetarget`: its own character keeps running its own graph, and a second mesh copies the pose through a retargeter.
+- A MetaHuman, `MetaHumans/Kellan`, with `MetaHumans/Common/Common/Rigs/RTG_UEFN_to_Metahuman_nrw` and `_ovw`.
+- The same for Echo, TwinBlast and both mannequins.
+
+So direction B is Epic's built and shipped method, and the right next go for Tom's MetaHuman body: the sample's character as the mover, Tom's body worn over it. How `AC_VisualOverrideManager` picks and drives the mesh is not yet read (its blueprint is not exported); that is the first step of the next go. **Not started:** the walk is set aside under his two-tries rule, so the next go waits for his yes (FOR-JAFAR.md, Needs you).
+
 ## Cost
 
 About 3.5 hours on 22 October (09:00 to 10:15 build and measure loops after the morning's set-up; GASP migration and retargeter earlier).

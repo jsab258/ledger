@@ -3205,7 +3205,10 @@ CLOUD_FRONTS = {("east_parade", 2): "ritas-front"}
 CLOUD_WALL_BEHIND_M = 0.17
 #: the piers behind the front's end pilasters (PC-04): 80 mm in from each bay edge, from just behind the
 #: pilasters' fronts (0.18 out from the front's wall face) to 0.45 back, to the cornice's top (3.55) and over
-CLOUD_PIER_M, CLOUD_PIER_FRONT_M, CLOUD_PIER_BACK_M, CLOUD_PIER_TOP_M = 0.08, 0.0, 0.45, 3.60
+#: its face 5 mm behind this recipe's frontage (22 October, the wear gate's across view: at 0.0 it shared the
+#: frontage with the party wall's stone strip, and above the cloud's cornice the two faces fought, the
+#: cornice's right end flipping between dark and pale from one capture to the next)
+CLOUD_PIER_M, CLOUD_PIER_FRONT_M, CLOUD_PIER_BACK_M, CLOUD_PIER_TOP_M = 0.08, 0.005, 0.45, 3.60
 CLOUD_PIER_PAST_M = 0.06       # the cloud's wall face 5.295 against this recipe's frontage 5.125
 CLOUD_REPLACES = ("fascia_band", "fascia_sign", "fascia_letters", "fascia_cornice_bed", "fascia_cornice_corona",
                   "fascia_cornice_cap", "blind_box", "blind_lath", "letting_board")
@@ -8935,7 +8938,8 @@ def selftest():
                   str(CLOUD_PANES.get((blk, kb))))
             piers = [b for b in kp if b["id"].startswith("cloud_pier_")]
             check("accept/brick-closes-the-gap-at-each-end-pilaster-of-the-cloud-front (PC-04)",
-                  len(piers) == 2 and all(b["y0"] <= 0.0 and b["y1"] >= 0.30 for b in piers),
+                  # its face just behind the frontage, never on it (22 October: on it, it fought the party wall's strip)
+                  len(piers) == 2 and all(0.0 < b["y0"] <= 0.01 and b["y1"] >= 0.30 for b in piers),
                   ",".join("%s %.3f..%.3f" % (b["id"], b["y0"], b["y1"]) for b in piers))
         for (blk, kb) in KIT_BAYS:
             if blk != p.get("block_id") or (blk, kb) in CLOUD_FRONTS:

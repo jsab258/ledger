@@ -178,3 +178,11 @@ The cloud's W1 items (the band round the lever, the chipped rails and the sill's
 - **Open fault, not of this change:** the cornice's right end (across the road, x 1729 to 1746, y 303 to 326) flips between a dark block and a pale streak from one capture to the next, by day and at night. It looks like two surfaces fighting at one depth, and it is listed in FINDINGS.md.
 - **Seen in passing:** the man in white in Mickey's doorway at night is the cast's base layer (the clothes fault, listed).
 - **The last good pictures** are now these (F:/LedgerTools/gate/last-good/ritas-front). The preview is production/previews/rita-front-wear-2026-10-22.jpg (before above, after below).
+
+## 22 October: the cornice's right end, fixed
+
+- **The fault.** It was found by the wear gate's across reviewer and is not of the wear: above the cloud cornice's right end (across the road, x 1729 to 1746, y 303 to 326), a dark block in three of five captures and a pale streaky patch in two.
+- **The cause.** The brick pier behind her end pilaster (PC-04, 21 October) had its face on the street's frontage, the very plane of the party wall's stone strip. The 5 cm of it above the cornice (its top 3.60 against the cornice's 3.55) fought the strip.
+- **Fix, try 1.** The pier's face now stands 5 mm behind the frontage (terrace-front.py CLOUD_PIER_FRONT_M 0.005; its self-test asks for just behind, never on, 171/171). The street was exported and imported again; the glass bake is still fresh (the street's data file did not change).
+- **Measured.** Three captures of the same build read the same there (144,128,118): plain cream render meeting the cornice cap. The reverse view's joint between her right pilaster and FRESH FISH's shows no sky. Pictures: F:/LedgerTools/gate/new/ritas-pier-2026-10-22.
+- **One fresh reviewer: PASS.** The captures agree, nothing else on her front changed, and there is no sky in the reverse joint. The across view's last good picture is now run 1.
