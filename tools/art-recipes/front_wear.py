@@ -43,7 +43,9 @@ def lum(c):
 def dirt_colour(paint, spec):
     """The dirt a paint is drawn toward: the spec's hue at dirt_luminance of the paint's own luminance."""
     hue = spec["dirt_hue"]
-    k = lum(paint) * spec["dirt_luminance"] / lum(hue)
+    # on a near-black paint road dirt dries a little lighter and browner than the paint: a floor (22 October, the
+    # ironmonger's dark green and black, luminance 0.04 and 0.02; 0 keeps Rita's as they were)
+    k = max(lum(paint) * spec["dirt_luminance"], spec.get("dirt_luminance_floor", 0.0)) / lum(hue)
     return [h * k for h in hue]
 
 

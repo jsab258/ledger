@@ -19,6 +19,19 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 22 Oct 2026, item 5: a second delivered front worn by the first one's bake
+- Made: wear at the foot, on the rails and round the lever, baked into a dark front's own paints.
+- Method (setting-free):
+  - Reuse the first piece's passed settings unchanged; read only this piece's own places (handle, rails, sill) from its model.
+  - A near-black paint needs a dirt floor: dried dirt reads lighter and browner than such paint, never darker.
+  - Keep edge-chip regions off thin moulded profiles: a few texels wide, the edge mask aliases into an even row that reads as a pattern.
+  - Before calling a difference a fault, look at the same spot in every earlier round: one here came and went with the front unchanged.
+- Tools: the wear bake recipe and its spec, the game's page cameras, fresh reviewers a view.
+- Target and check: the first piece's passed look; the gate (eight views).
+- Cost (hours): about 1.5.
+- Failed and why: chips on the door's thin bottom moulding read as a chevron row (fixed once).
+- Evidence: production/audits/gate-ironmonger/GATE.md
+
 ### 22 Oct 2026, item 5, the next shop family: a second delivered shop brought into the street by the first one's method, on the other side of the road
 - Made: a designed shop (front, window display, room pictures) standing in a bay on the street's other side, through the game's own glass; a door card the game turns by the hour.
 - Method (setting-free):

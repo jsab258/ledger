@@ -46,6 +46,6 @@ Read back: 2026-10-22
 | [LEDGER — UI style directions](https://claude.ai/artifact/19KEWmTYDgC8azDcgEPd9p) | 2026-07-26 | 0 | July; its version declares no database |
 | [The Voice](https://claude.ai/artifact/LTmrUMeRzYkaDZBKuGcEkg) | 2026-10-07 | 2 | first-sentence-model-2026-10-07: off, 2026-10-07; voice-route-2026-10-07: stop, 2026-10-07 (Report it failed, as a blocked core capability. The measurements show the check ) |
 | [Lamp Post C](https://claude.ai/artifact/R6mfWdCEKmuHBPD9q6JYJ3) | 2026-10-21 | 2 | lamp-columns-material-2026-10-21: concrete, 2026-10-21 (Concrete stays, but clean it looks cheap. Show me it weathered and a shade darke); look-lamp-post-c-2026-10-21: yes, 2026-10-21 |
-| [Rita's Front](https://claude.ai/artifact/2yznAYjEwDVv3RvzzKUpBR) | 2026-10-22 | 2 | look-lamp-weathered-2026-10-22: later, 2026-10-22; look-ritas-front-2026-10-22: yes, 2026-10-22 |
+| [Thursday's Decisions](https://claude.ai/artifact/2yznAYjEwDVv3RvzzKUpBR) | 2026-10-22 | 3 | decide-phase2-2026-10-22: hold, 2026-10-22; look-lamp-weathered-2026-10-22: later, 2026-10-22; look-ritas-front-2026-10-22: yes, 2026-10-22 |
 
-41 pages, 151 answers.
+41 pages, 152 answers.

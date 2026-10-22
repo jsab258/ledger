@@ -79,3 +79,22 @@ His message of 22 October: with item 7 blocked, Rita's night light, then the lam
 - Hook by day: the ironmonger's strip clean; its one fault, Rita's card at that distance, is listed above, so by the gate's rule it fails nothing alone.
 - **The last good pictures** are in F:/LedgerTools/gate/last-good/ironmonger. Preview: production/previews/ironmonger-2026-10-22.jpg (day above, night below).
 - **Owed, Rita's way:** the wear on his front (the design's W1 for every front).
+
+## His front's wear, Rita's way (22 October, evening: w1, w2)
+
+- **Made:** tools/art-recipes/front_wear.py with Rita's final settings and this front's own places, read from its model (production/specs/shop-fronts/ironmonger-front-wear.json): the shop door's lever, its bottom and lock rails, the sill's nose. Its two paints are near-black (the dark green's luminance 0.04, the side door's 0.02), so the dirt has a floor (0.035): dried road dirt reads a little lighter and browner than such paint. The game's entry takes ironmonger-front-worn; ironmonger-front is the clean copy.
+- **w1** (the pictures in F:/LedgerTools/gate/new/ironmonger-2026-10-22/w1, BEFORE r6):
+  - across the road, square on, from the right and across the road at night: PASS;
+  - **from the left: FAIL** on two points.
+    - **The bottom rail:** its chips lined up as an even row of chevrons along the rail's thin top moulding (a sloped profile 0.218 to 0.258 m up, a few texels wide in the bake). **Fix, try 1:** the chip region stops under it (z 0 to 0.21).
+    - **A near-black streak** at the foot of the cream pier next door. **Measured:** at the same place the eight rounds of this gate alternate, dark in first, r3, r5 and w1 and light in r1, r2, r4 and r6, with the front unchanged between several of them. So it is run to run, not this change; the next brief says so.
+- **w2:**
+  - from the left: PASS (the chevrons gone, the rail's chips uneven; the streak a light run);
+  - square on at night: PASS;
+  - reverse by day: PASS;
+  - hook by day: PASS (the front a sliver behind the lamp post and the pallets; nothing changed).
+- **The gate's end:** all eight views pass (across the road, square on, from the right and across at night in w1; the w2 change is the bottom rail's moulding only, and between w1 and w2 those four differ by run-to-run noise alone, measured: the one large difference, in the right view, is the wet pavement's reflection of the sky). The last good pictures are now w2's (F:/LedgerTools/gate/last-good/ironmonger). Preview: production/previews/ironmonger-wear-2026-10-22.jpg (before left, after right, from the left).
+- **Watch points, listed:**
+  - the lock rail's chips run along its edges and joints, faintly outlining it close up;
+  - the wear is quiet rather than heavy at the reverse view's distance;
+  - at night the foot is near-black at true levels, so the wear shows only by day.

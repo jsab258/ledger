@@ -1,0 +1,106 @@
+{
+  "front": "ironmonger-front",
+  "out": "ironmonger-front-worn",
+  "note": "22 October 2026, the ironmonger's front worn Rita's way (his message of 22 October: the next shop family the same way as Rita's), by tools/art-recipes/front_wear.py with Rita's final settings (production/specs/shop-fronts/ritas-front-wear.json, passed eight views) and this front's own places, read from its model on 22 October: its shop door's lever at x 1.596, 1.0 up, on the door face (y -0.075); the door's bottom rail z 0.03 to 0.23 and lock rail 0.55 to 0.87 over x 0.87 to 1.54; the sill's nose z 0.53 to 0.60 over the window, x -2.65 to 0.70. Its paints are near-black (dark green luminance 0.04, the side door 0.02), so the dirt has a floor of 0.035: dried road dirt reads a little lighter and browner than such paint. The design's W1 target as Rita's.",
+  "paints": [
+    "paint_dark_green",
+    "paint_side_door_black_door"
+  ],
+  "texture_px": {
+    "paint_dark_green": 4096,
+    "paint_side_door_black_door": 2048
+  },
+  "texture_px_note": "one texture set per paint, its ground filled with the clean paint (Rita's lesson)",
+  "roughness_px": 1024,
+  "detail_below_m": 1.2,
+  "detail_ratio": 3.0,
+  "dirt_hue": [
+    0.2,
+    0.155,
+    0.11
+  ],
+  "dirt_luminance": 0.55,
+  "foot_m": 0.17,
+  "foot_ragged_m": 0.05,
+  "foot_full": 0.4,
+  "tide": 0.15,
+  "tide_m": 0.03,
+  "splash_m": 0.4,
+  "splash": 0.5,
+  "splash_above": 0.55,
+  "ao_m": 0.08,
+  "ao_reach_m": 1.0,
+  "ao": 0.9,
+  "ao_everywhere": 0.3,
+  "ledge": 0.3,
+  "lever": [
+    1.596,
+    -0.075,
+    1.0
+  ],
+  "lever_m": 0.15,
+  "lever_weight": 0.25,
+  "chip_colour": [
+    0.22,
+    0.18,
+    0.13
+  ],
+  "chip_edge_m": 0.03,
+  "chip_scale": 25.0,
+  "chip_above": 0.58,
+  "chip_regions": [
+    {
+      "name": "shop door, bottom rail",
+      "x": [
+        0.86,
+        1.55
+      ],
+      "z": [
+        0.0,
+        0.21
+      ],
+      "amount": 1.0,
+      "note": "22 October, the gate's left view: chips on the rail's top moulding (z 0.218 to 0.258, a thin sloped profile) came out as evenly spaced chevrons, the mask aliased on its narrow strips; the region now stops under it, the rail's flat face and its foot still chipped (try 1 of this fault)."
+    },
+    {
+      "name": "shop door, lock rail",
+      "x": [
+        0.86,
+        1.55
+      ],
+      "z": [
+        0.54,
+        0.89
+      ],
+      "amount": 1.0
+    },
+    {
+      "name": "the sill's nose",
+      "x": [
+        -2.66,
+        0.71
+      ],
+      "z": [
+        0.5,
+        0.6
+      ],
+      "amount": 1.0
+    },
+    {
+      "name": "the foot, elsewhere",
+      "x": [
+        -3.0,
+        3.0
+      ],
+      "z": [
+        0.0,
+        0.7
+      ],
+      "amount": 0.35
+    }
+  ],
+  "roughness_dirt": 0.55,
+  "roughness_chip": 0.6,
+  "roughness_note": "22 October, the gate's right view: grime at roughness 0.85 caught the sky as a grey sheen at a low slant and read as a pale chalky wash on the oxblood (78,35,37 to 78,68,65); street grime here is damp splash, so it is only a little duller than the paint.",
+  "dirt_luminance_floor": 0.035
+}

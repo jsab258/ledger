@@ -162,7 +162,8 @@
     "measured": "the cloud's display (production/cloud-week/kit/shop-windows, build_shop.py display, built on the PC 22 October): its window zone u 350 to 3700 mm from the viewer's left, street x 30.35 to 33.70 on the west (street x = 30 + u/1000, sw_ctx.Ctx.x_of_u), 0.025 m behind the front's wall face (5.295) and 0.60 m above the footway, as Rita's"
    },
    "front": {
-    "glb": "ironmonger-front",
+    "glb": "ironmonger-front-worn",
+    "glb_note": "22 October 2026: his front worn at the foot, the lever and the rails, baked into its own paints as Rita's is (tools/art-recipes/front_wear.py, production/specs/shop-fronts/ironmonger-front-wear.json); 'ironmonger-front' is the clean copy.",
     "x": 33.0,
     "z": 5.295,
     "up": 0.1,

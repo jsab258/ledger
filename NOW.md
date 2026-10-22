@@ -2,7 +2,7 @@ GOAL (to Mon 26 Oct 14:00): his 21 October order, each item done or set aside wi
 
 Phase 0 done (production/audits/phase0-exit/BUNDLE.md).
 
-Phase 1 closed 22 Oct, no exit passed; binding stop until he rules (production/audits/phase1-exit/CLOSE-2026-10-22.md).
+Phase 1 closed 22 Oct, no exit passed (production/audits/phase1-exit/CLOSE-2026-10-22.md); phase 2 held: failed capabilities first.
 
 ## Phase 2: Produce Quay Street from proved families (on his yes)
 
@@ -15,7 +15,7 @@ Phase 1 closed 22 Oct, no exit passed; binding stop until he rules (production/a
 ## His order of 21 October
 
 - [x] 1 to 4: DECISIONS.md, 21 Oct.
-- [ ] 5 Rita's, lamp, ironmonger passed; next: his wear, then a family.
+- [ ] 5 Rita's, lamp, ironmonger and his wear passed; next: the newsagent.
 - [x] 6 Frame rate: P1-PACKAGED-2026-10-21.md.
 - [x] 7 Set aside (two tries); next go asked: TOM-MOTION-MATCHING-2026-10-22.md.
 - [x] 8 Speech: GEMINI-CHECK-2026-10-22.md.
