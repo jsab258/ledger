@@ -45,3 +45,9 @@
     - **Next, research in another direction, not a third script:** a modelled or scanned oilskin sou'wester (its review found none CC0; the library's is a boonie hat), or a hat laid on the bed so its long flap shows.
     - Listed with the chandler's faults.
   - Still showing: the sky reflection over the left-centre pane, weaker than r1 (the rail behind the left hat 190,173,156 against 91,61,41 in the right pane).
+- **Across the road by day: FAIL**, on F1 alone.
+  - **F2 is fixed:** the plate sits on the brick face with its four bolts and carries the arm.
+  - **F1 is weaker but still there:** an even grey sheet, 117 to 133 against 46 to 48 in the clear panes, with the same hard edge down the middle pane.
+    - **Measured:** street_glass_eg_bay6 is the whole window and the shop door (street x 40.39 to 44.66); eg_bay7 is only the side door's fanlight. So the edge lies inside one pane's picture: the newsagent's gable reflected, and left of it the even overcast sky.
+    - Open sky outshines a shop kept dim by day, as real glass does, but it hides the goods the design shows.
+    - **Fix, try 2 (the last for this fault):** that pane reflects at 0.4 by day, below a true reflection, as games keep a window's goods readable. Every view retaken as r3.
