@@ -3275,6 +3275,14 @@ def _cloud_shopfront(parts, p, name, here, root=None):
     # (22 October, the newsagent's gate, from the left: where the neighbour is a cloud front too, its own pier
     # stands behind its pilaster, and the two overlapping piers' faces fought as a smeared strip; a pier then
     # stops at the bay's edge. A bay's "r" side meets the next bay's "l", in both rows, the west being turned.)
+    # THE FOOTWAY TO THE WALL WHERE A REFIT STOOD (23 October, the chandler's gate, from the left: a white void 17 px wide at
+    # the foot of both its doors). The footway stops at this recipe's frontage and the cloud's front stands CLOUD_WALL_BEHIND_M
+    # behind it; the metal refit drawn in this bay filled that strip with its own threshold and stall, which the cloud front
+    # replaces, and at its doors nothing did. So the strip is paved here, flush with the footway.
+    if here in SHOPFRONT_REFITS:
+        _box(parts, "cloud_footway_fill", "paving", -CLOUD_PIER_PAST_M, W + CLOUD_PIER_PAST_M, -0.002, CLOUD_WALL_BEHIND_M + 0.01,
+             -0.06, 0.0, "the-footway-paved-to-the-cloud-front's-wall")
+
     def past(side):
         return 0.0 if (here[0], here[1] + (1 if side == "r" else -1)) in CLOUD_FRONTS else CLOUD_PIER_PAST_M
     for side, (b0, b1) in (("l", (-past("l"), CLOUD_PIER_M)), ("r", (W - CLOUD_PIER_M, W + past("r")))):

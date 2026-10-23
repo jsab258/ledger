@@ -61,3 +61,14 @@
 - Every view retaken as r4.
 - **Across the road by day (r3): PASS.** F1 is gone: the door glass is 59 to 63 where r2 read 109 to 112, and the added light is about 4% of white in linear terms (19% in r2), what plain glass reflects from an overcast sky near normal incidence. The goods keep their colour, and the door reads as dark glass with a sheen, its buoy showing. No new fault.
   - Narrow points, not failing: the reflection's edge down the middle pane is now faint, under the listed stair-steps; the sheen reaches below eye level in the lower left pane and the door.
+
+## Round 4 (r4: the hats set aside)
+
+- **Square on by day (r4): PASS.** Where the hats were, the jackets' tops and the room's shelves show through their necks, with no cord, knot, hole or float left, and the rail clean. BLOWLAMP reads right. Nothing burns (max 247). No new fault.
+- **From the left by day (r4): FAIL.** A white void 17 to 19 px wide at the foot of both doors (x 493 to 690, y 963 to 1135; mean 244, the sky's own value). It is present since r1, unseen until this view.
+  - **The cause:** this recipe's footway stops at its frontage (5.125 m), and the cloud's front stands CLOUD_WALL_BEHIND_M (0.17 m) behind it. The metal refit drawn in this bay filled that strip with its own threshold and stall, which the cloud front replaces; at its doors nothing did.
+  - **Fix, try 1:** where a designed front replaces a refit, the strip is paved flush with the footway (terrace-front.py cloud_footway_fill). Self-test 175/175. Street exported and imported, glass baked again, every view retaken as r5.
+  - The rest of the view held up: the plate on the brick, the side door's hall through its fanlight, the room's dado level through door and window, nothing clipped.
+  - Noted, the street's: hard tone steps in the brick right of the right pilaster (x 2147 and 2230 to 2245), the same in r1 and at night, likely the street's projected grime's edges.
+- **From the right by day (r4): PASS.** The pilaster, console, sill and plinth meet the brick and the grocer's tight; the room's dado level sits on the horizon; nothing floats or burns. No new fault.
+  - Narrow points: the hurricane lamps cream-white (the lantern's own picture; the design's grey came from its see-through material); a thin gap between the upper rail and the jackets' tops, as the design builds them; the jackets a little browner than the design.
