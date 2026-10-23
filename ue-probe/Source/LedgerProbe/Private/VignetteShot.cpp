@@ -1074,6 +1074,8 @@ namespace
 		FString Mesh;
 	};
 	TArray<FGlassCatch> GGlassCatches;
+	// What the shops stood behind their glass, taken down when the street is painted again.
+	TArray<TWeakObjectPtr<AActor>> GInteriorActors;
 	// THE GLASS BAKED (21 October 2026, his order, item 6; production/cloud-week/research/
 	// 1d-shop-glass-without-frame-cost.md, route A): each window's street caught once per light at
 	// build time (-PageShots=bake -GlassBake=day|night, tools/glass_bake.py), imported as a
@@ -7007,6 +7009,29 @@ namespace
 		// 7 October. Set before only on the set-aside anti-aliased route.
 		Cap->bExcludeFromSceneTextureExtents = true;
 		Cap->HiddenActors.Add(A);
+		// NOR WHAT STANDS BEHIND THE PANE (23 October, the grocer's gate from the left: a grey smoke trailing from
+		// the jar lids, on the glass by day; gone with the glass hidden and with the cube at strength 0, kept with
+		// the front layer, screen traces, translucency volume, bloom and anti-aliasing each off;
+		// production/audits/gate-grocer/GATE.md). Taken half a metre out with the pane hidden, the cube also sees
+		// in through it at a slant, so the window's own display lies just past its street half, and the glass's
+		// lookup at a slant reached the brightest goods, the sunlit lids. A reflection holds only what is in
+		// front of the pane, so every shop's display, room and lights wholly behind its plane (the row's
+		// fronts stand proud of it and stay) are left out of its catch.
+		{
+			const FVector PaneMid = A->GetComponentsBoundingBox(true).GetCenter();   // Gc.At is 50 cm out from it, toward the road
+			const FVector N = (Gc.At - PaneMid).GetSafeNormal2D();
+			int32 Behind = 0;
+			for (const TWeakObjectPtr<AActor>& W : GInteriorActors)
+			{
+				if (!W.IsValid()) { continue; }
+				const FBox B = W->GetComponentsBoundingBox(true);
+				if (!B.IsValid) { continue; }
+				// its point nearest the street no more than 5 cm proud of the pane
+				const double Front = FVector::DotProduct(B.GetCenter() - PaneMid, N) + FMath::Abs(B.GetExtent().X * N.X) + FMath::Abs(B.GetExtent().Y * N.Y);
+				if (Front <= 5.0) { Cap->HiddenActors.Add(W.Get()); ++Behind; }
+			}
+			UE_LOG(LogTemp, Display, TEXT("LedgerGlassCatch: %s leaves out %d shop part(s) behind its pane"), *Gc.Mesh, Behind);
+		}
 		Cap->SetMobility(EComponentMobility::Movable);
 		Cap->SetWorldLocation(Gc.At);
 		Cap->RegisterComponent();
@@ -7404,8 +7429,8 @@ namespace
 		TArray<UMaterialInstanceDynamic*> SignGlow; float SignGlowStrength = 0.0f; };
 	TArray<FInteriorRow> GInteriorRows;
 	int32 GInteriorsAsked = 0;
-	// What the shops stood behind their glass, taken down when the street is painted again.
-	TArray<TWeakObjectPtr<AActor>> GInteriorActors;
+	// What the shops stood behind their glass (GInteriorActors) is declared with the glass catches above,
+	// whose captures leave it out.
 
 	// THE NEAR METRE BEHIND THE GLASS, 1 October: the shop's display on its bed
 	// as real meshes (tools/art-recipes/shop-room.py --display, imported by

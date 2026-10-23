@@ -302,8 +302,14 @@ def main(spec_path):
         edge = math_("MULTIPLY", math_("SUBTRACT", math_("SUBTRACT", 1.0, ao(spec["chip_edge_m"], True)), 0.1), 8.0, clamp=True)
         region = None
         for r in spec["chip_regions"]:
+            # a region may name its paints (23 October, the grocer's: its bronze and its green slab are no paint that
+            # chips, the cream render beside them is)
+            if "paints" in r and mat.name not in r["paints"]:
+                continue
             w = math_("MULTIPLY", box(r["x"][0], r["x"][1], r["z"][0], r["z"][1]), r["amount"])
             region = w if region is None else math_("MAXIMUM", region, w)
+        if region is None:
+            region = 0.0
         # crisp flakes, not smudges: a hard threshold on the noise times a hard edge
         chip = math_("MULTIPLY", math_("MULTIPLY", math_("SUBTRACT", math_("MULTIPLY", n3, math_("ADD", 0.7, math_("MULTIPLY", n2, 0.6))),
                                                          spec["chip_above"]), 40.0, clamp=True),

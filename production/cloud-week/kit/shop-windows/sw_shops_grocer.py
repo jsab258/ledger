@@ -481,9 +481,13 @@ def display(d):
             GB.settle_down(d, nm_, max_drop=0.05)
     # ---- wicker_basket_02 with rolls across its rim, two crate_03 with lemons (all at their own size, DSP-06)
     d.tone(crate02_names, 1.45)                # the red crates read 0.49 of the room at CLOSE_35_B at night (LIT-08): a lighter plastic
-    ext, bn_ = d.piece("wicker_basket_02", 1.78, 0.18, 0.0, rot=(0, 0, 0), scale=1.0, tier="bed", tris=None)
-    _, nm_ = d.piece("hamburger_buns", 1.78, 0.18, ext[5] + 0.001, rot=(0, 0, 0), scale=0.9, tier="basket", tris=None)
-    GB.settle_down(d, nm_, max_drop=0.05)
+    # THE ROLLS ON A BREAD BOARD (23 October, the PC's gate, square on: the rolls model is a row of three 0.36 m long, the
+    # basket 0.21 across; set across its rims, the third roll stood in the air, first beside the model's lid and, the lid
+    # left out, beside the rim (try 1); try 2: the basket is left out and the row lies on a low deal board on the bed, where
+    # every roll rests on wood, between the apples and the lemons)
+    d.crate("bread_board", 1.58, 1.98, 0.10, 0.26, 0.0, 0.03)
+    _, nm_ = d.piece("hamburger_buns", 1.78, 0.18, 0.031, rot=(0, 0, 0), scale=0.9, tier="board", tris=None)
+    GB.settle_down(d, nm_, max_drop=0.02)
     for k, uc in enumerate((2.19, 2.64)):
         ext, _ = d.piece("plastic_crate_03", uc, 0.14, 0.0, rot=(0, 0, 0), scale=0.9, tier="bed", tris=None)
         _crate_bed(d, ext, ext[5] - 0.034, "lemon_bed_%d" % k, shrink=(0.08, 0.05), z0=0.0675, top_back=ext[5] + 0.002)          # crate_03 has a cross bar at 0.064 under its floor grid: the bed rests on it, under the lemons; sloped, the lemons' centres at the rim in front

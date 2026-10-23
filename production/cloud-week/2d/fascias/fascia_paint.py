@@ -226,8 +226,10 @@ def squeeze_glyph(ga, s, ox, delta):
     return a, int(round(ox * s))
 
 
-def text_layers(T, b, rng=None, hand=True, board_wh=(W_MM, H_MM), dx_mm=0.0, font_key=None, shade=True, extra_pad=24):
+def text_layers(T, b, rng=None, hand=True, board_wh=(W_MM, H_MM), dx_mm=0.0, font_key=None, shade=True, extra_pad=80):
     """Draw one block's string from its font at 4x. Returns (face, shade, win): face and shade are float 1x alphas over win.
+    (23 October, the PC's grocer gate: the canvas's margin round the block's box was 24 mm, and on this machine the text ran a
+    little wider than where the box was measured, so FAMILY GROCER's last R was cut straight at the canvas's edge; 80 mm now)
     hand=False draws it without any jitter (the clean reference)."""
     W, H = board_wh
     key = font_key or b["font"]

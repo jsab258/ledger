@@ -8,7 +8,8 @@ rest joined into one mesh that keeps every material and texture.
     (a lit box sign: --night-glow=<material>=<the sign's emissive map>, dark until the game lights it;
      lettering on glass as solid cut-outs: --mask=<material>[,...];
      a display's side linings up to the window head: --raise=<material>:<metres>;
-     and a head board across their tops, or at a height in the display's frame: --head=<material>[@<metres>])
+     and a head board across their tops, or at a height in the display's frame: --head=<material>[@<metres>];
+     a mirror-glossy glass fascia dulled: --dull=<material>:<roughness>[:<specular>])
     python tools/art-recipes/front_for_game.py --selftest
 
 WHY, 21 October 2026 (his order, item 5, and his ruling of the day: Rita's front as the family's
@@ -116,6 +117,41 @@ def mask_materials(glb, names):
         if m.get("name") in names and m.get("alphaMode") == "BLEND":
             m["alphaMode"] = "MASK"
             m["alphaCutoff"] = 0.5
+            n += 1
+    if n:
+        body = json.dumps(j, separators=(",", ":")).encode("utf-8")
+        body += b" " * ((4 - len(body) % 4) % 4)
+        head = data[:8] + struct.pack("<I", 20 + len(body) + len(rest)) + struct.pack("<I", len(body)) + data[16:20]
+        open(glb, "wb").write(head + body + rest)
+    return n
+
+
+# A GLASS FASCIA DULLED TO SATIN (23 October, the grocer's gate from across the road: its glass fascia, bottle green with
+# cream letters, came in nearly a mirror (roughness about 0.13) and from below it caught the bright overcast sky and read
+# pale grey; the design's render, nearly head on, keeps the green). --dull=<material>:<roughness> drops the material's
+# metal and roughness map and sets it plain, not metal, at that roughness.
+def dull_materials(glb, specs):
+    """Rewrite a glb in place: each "<material>:<roughness>" loses its metallicRoughnessTexture and takes metallicFactor 0
+    and that roughnessFactor. Returns how many changed."""
+    import struct
+    data = open(glb, "rb").read()
+    jlen = struct.unpack("<I", data[12:16])[0]
+    j = json.loads(data[20:20 + jlen])
+    rest = data[20 + jlen:]
+    want = {sp.split(":")[0]: [float(x) for x in sp.split(":")[1:]] for sp in specs}
+    n = 0
+    for m in j.get("materials", []):
+        if m.get("name") in want:
+            pbr = m.setdefault("pbrMetallicRoughness", {})
+            pbr.pop("metallicRoughnessTexture", None)
+            pbr["metallicFactor"] = 0.0
+            pbr["roughnessFactor"] = want[m["name"]][0]
+            # (try 2, the same morning: at satin 0.45 it still read pale grey-green from below; "<material>:<roughness>:<specular>"
+            # also cuts its reflectance, KHR_materials_specular)
+            if len(want[m["name"]]) > 1:
+                m.setdefault("extensions", {})["KHR_materials_specular"] = {"specularFactor": want[m["name"]][1]}
+                if "KHR_materials_specular" not in j.setdefault("extensionsUsed", []):
+                    j["extensionsUsed"].append("KHR_materials_specular")
             n += 1
     if n:
         body = json.dumps(j, separators=(",", ":")).encode("utf-8")
@@ -249,7 +285,7 @@ def add_head(obj, material, thick=0.012, at=None):
     return len(new)
 
 
-def main(src, name, display=False, glow=None, mask=None, raise_=None, head=None):
+def main(src, name, display=False, glow=None, mask=None, raise_=None, head=None, dull=None):
     import bpy
     bpy.ops.wm.read_factory_settings(use_empty=True)
     bpy.ops.import_scene.gltf(filepath=os.path.abspath(src))
@@ -305,6 +341,9 @@ def main(src, name, display=False, glow=None, mask=None, raise_=None, head=None)
               % (os.path.basename(src), glb, len(keep), len(joined.material_slots), tinted, solid, raised, headed, tris, os.path.getsize(glb)))
         return 0
     cut_out_cards(glb)
+    if dull and dull_materials(glb, dull) != len(dull):
+        print("front_for_game: not every material of --dull is in this front: %s" % ",".join(dull))
+        return 1
     if mask and mask_materials(glb, mask) != len(mask):
         print("front_for_game: not every material of --mask is see-through here: %s" % ",".join(mask))
         return 1
@@ -351,9 +390,10 @@ if __name__ == "__main__":
     mask = [m for a in sys.argv[1:] if a.startswith("--mask=") for m in a.split("=", 1)[1].split(",") if m]
     raise_ = [a.split("=", 1)[1] for a in sys.argv[1:] if a.startswith("--raise=")]
     head = [a.split("=", 1)[1] for a in sys.argv[1:] if a.startswith("--head=")]
-    args = [a for a in sys.argv[1:] if a != "--display" and not a.startswith(("--night-glow=", "--mask=", "--raise=", "--head="))]
+    dull = [d for a in sys.argv[1:] if a.startswith("--dull=") for d in a.split("=", 1)[1].split(",") if d]
+    args = [a for a in sys.argv[1:] if a != "--display" and not a.startswith(("--night-glow=", "--mask=", "--raise=", "--head=", "--dull="))]
     if len(args) != 2:
         print(__doc__)
         sys.exit(1)
     sys.exit(main(args[0], args[1], display="--display" in sys.argv, glow=glow[0] if glow else None, mask=mask or None,
-                  raise_=raise_ or None, head=head[0] if head else None))
+                  raise_=raise_ or None, head=head[0] if head else None, dull=dull or None))
