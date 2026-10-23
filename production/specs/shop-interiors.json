@@ -224,7 +224,8 @@
     "measured": "the cloud's display (production/cloud-week/kit/shop-windows, build_shop.py display, built on the PC 23 October, its sou'westers rebuilt to its close review's fix): its window zone u 2300 to 5650 mm from the viewer's left (side door and shop door at the viewer's left), street x 43.70 to 40.35 on the east (street x = 46 - u/1000), 0.025 m behind the front's wall face (5.295) and 0.60 m above the footway, as Rita's; made ready with its linings to the window head, a head board, and its tins shaded round (front_for_game.py --raise, --head, --smooth)"
    },
    "front": {
-    "glb": "chandler-front",
+    "glb": "chandler-front-worn",
+    "glb_note": "23 October 2026: its front worn at the foot and the side door's knob, baked into its navy paints as the grocer's are (tools/art-recipes/front_wear.py, production/specs/shop-fronts/chandler-front-wear.json), its natural aluminium left clean and its CLOSED card's night glow put back after the bake; 'chandler-front' is the clean copy (its glass lettering a cut-out, --mask=glass_row_21,glass_row_22,glass_row_90).",
     "x": 43.0,
     "z": 5.295,
     "up": 0.1,
