@@ -20,10 +20,10 @@ Phase 1 closed 22 Oct, no exit passed (production/audits/phase1-exit/CLOSE-2026-
 
 - [x] Launderette parked, in progress (sw_cloth_proto.py).
 - [x] Card memory, voice on the processor: frame-headroom/FINDINGS-2026-10-23.md.
-- [ ] The 87 ms stall: named; bundled pipeline cache building.
+- [x] The 87 ms stall: bundled pipeline cache, 0 misses (FINDINGS).
 - [ ] The card's spare time.
 
-STATE (23 Oct 20:00): package 2 failed; package 3 asked.
+STATE (23 Oct 21:40): window shadows fixed; package 4 next.
 
 ## Handovers
 

@@ -2264,6 +2264,13 @@ namespace
 		const FVector At((float)(P.X * 100.0), (float)(P.Z * 100.0), (float)(P.Y * 100.0));
 		AActor* A = World->SpawnActor<AActor>(Cls, At, FRotator(0.0f, (float)(P.FaceDeg + kPersonYawOffsetDeg), 0.0f), Params);
 		if (A == nullptr) { GCastNote = "spawn-failed"; return nullptr; }
+		// A PASSER-BY'S SHADOW IN A SHOP WINDOW'S LIGHT (23 October, frame headroom): the window lamps and the rooms' lights
+		// cast from "cinematic" pieces only (SpawnShopSpill); people are among them, so a person still throws one.
+		{
+			TArray<UPrimitiveComponent*> Prims;
+			A->GetComponents(Prims);
+			for (UPrimitiveComponent* Pc : Prims) { if (Pc != nullptr) { Pc->bCastCinematicShadow = true; Pc->MarkRenderStateDirty(); } }
+		}
 		UAnimSequenceBase* Idle = IdlePath.empty() ? nullptr : LoadObject<UAnimSequenceBase>(nullptr, UTF8_TO_TCHAR(IdlePath.c_str()));
 		if (Idle != nullptr)
 		{
@@ -2376,6 +2383,7 @@ namespace
 			C->SetSkeletalMeshAsset(Mesh);
 			C->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 			C->SetCastShadow(true);
+			C->bCastCinematicShadow = true;     // a person's shadow in a shop window's light (SpawnShopSpill)
 			C->VisibilityBasedAnimTickOption = EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones;
 			const float At0 = (float)(P.Phase * (double)Anim->GetPlayLength());
 			// HEADS THAT TURN, 23 September: the loop and Unreal's own Look At
@@ -7723,6 +7731,7 @@ namespace
 			C->SetMobility(EComponentMobility::Movable);
 			C->SetStaticMesh(Mesh);
 			C->SetCastShadow(true);
+			RoomCastsOwnShadow(C);      // its frame shades its own window's light on the pavement (SpawnShopSpill)
 			// ITS PAINT WORN AT THE FOOT AS THE STREET'S IS (22 October; his page: "not yet 2026-grade until
 			// the wear and the night light are done"; phase 1's Exit A review: "frontage wear: NOT MET"):
 			// the street's painted fronts wear at the foot in the street's own material (make_base_material.py
@@ -7910,6 +7919,11 @@ namespace
 			RC->SetAttenuationRadius(900.0f);
 			RC->SetLightColor(FLinearColor(1.0f, 0.93f, 0.80f));     // a T12 "white" tube, about 3500 K
 			RC->SetCastShadows(bShadows);
+			// FROM THE SHOP'S OWN PIECES ONLY (23 October, his order: frame headroom). With every caster within its 9 m the
+			// window lamps' shadows took 4.3 ms of the card at night (4.98 ms of shadow drawing, 0.70 with them off; the
+			// card's spare time 0.10 ms against PLAN's 1.4). As the rooms' lights do (RoomShadowsOwnOnly), they now cast
+			// from "cinematic" pieces only: the displays, the fronts and the people (each marked where it is spawned).
+			RC->bCastShadowsFromCinematicObjectsOnly = RoomShadowsOwnOnly();
 			if (ShadowBias > 0.0) { RC->SetShadowBias((float)ShadowBias); }
 			if (ShadowSlopeBias > 0.0) { RC->SetShadowSlopeBias((float)ShadowSlopeBias); }
 			// Its emitter is a bar of light, and on the wet road its mirror image
