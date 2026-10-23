@@ -48,6 +48,12 @@ No decision asked: these are for watching the street change.
 - *8, speech.* Done. **The Gemini test:** on the reply check, Gemini 3.5 Flash-Lite took 0.60 s at the median against Haiku's 0.97, but it let 3 invented details in 42 through where Haiku lets 1 (you kept Haiku); Gemini 3.8 Flash was the most accurate but slower, 1.8 s (production/research/voice-latency/GEMINI-CHECK-2026-10-22.md). **Pocket no longer stalls the walk:** run at lower priority, the walk's slowest 1% is 20.6 ms (it was 34) and its worst 47 ms (it was 175). The one frame left over the bar is a separate stall that the usual card voice shows too (87 ms today), so the frame-rate margin is thinner than P1's close said (listed). **The real path with Pocket:** 20 checked replies, with the game open, first sound heard at 2.41 s at the median, the best yet (3.25 s before) but over 2 s. The model's first checked sentence alone now takes 2.10 s, so the voice is no longer the bottleneck (about $0.15 of your measuring dollar).
 - *9, closing phase 1.* Done. Four fresh reviewers, one for each exit, found that none passes (production/audits/phase1-exit/CLOSE-2026-10-22.md): Tom is still the stand-in body and slides; nobody sits in the game as played; first speech is 3.25 s at best; the frame bar held once and failed its repeat, and card memory with the voice is 7 to 9.9 GB against 6; there is no wear in the office or on Rita's front. They also caught four of my own records wrong, all corrected on 22 October. You held phase 2 on your page: next week goes on these failed capabilities first.
 
+**Your order of 23 October afternoon, frame headroom, to Saturday 06:00 (16:35).**
+- *The launderette* is parked on wip, in progress: its maker renamed, its towels rebuilt in code, its washing's cloth simulation prototyped.
+- *Card memory with the voice on the processor:* a median of 4.7 to 4.9 GB in all, under the 6 GB line (7.1 to 7.9 with the voice on the card); the game alone peaks at 5.6 GB. Two runs (production/research/frame-headroom/FINDINGS-2026-10-23.md). But the packaged game itself still starts the cast voice, which runs on the card unless told otherwise; whether it holds the card during play is not yet established (Needs you 2).
+- *The 87 ms frame* is named: when Mickey's lamp starts casting shadows 7 m off (the first lamp shadow of the day), 13 of the engine's own screen passes are built on first use; 380 ms on a first run, 66 to 87 ms after. Epic's remedy, a bundled pipeline cache built before play, is under way: two packages, the first building now.
+- *The card's spare time:* about 2.1 ms of its "loss" was the measure (the 21 October runs at the Highest picture level); at High it is 2.3 to 2.6 ms. The measure now sets and records the level.
+
 **The tester's walk (23 October, 02:30 to 03:07; production/playtest/nightly/2026-10-23.md).**
 - The route ran 13 of 15 stages. It failed at Ron (lost from sight) and at Darren (not on the street).
 - Nobody the record names saw Rita's window broken. One person, Rocco, showed afterwards that he knew, the same as the night before.
@@ -68,6 +74,8 @@ No decision asked: these are for watching the street change.
 ### Needs you
 
 1. Marvelous Designer, your yes of Thursday and Friday: its price is 39 USD a month or 280 a year, with a two-week free trial for new users (read on its own site this morning; production/research/clothing-pipeline/MARVELOUS-PRICE-2026-10-23.md). Recommended: start with the free trial for Tom's one outfit, signed up by you (I cannot make accounts or pay); its licence for game use is read before anything made in it goes in.
+
+2. The game's voice: the packaged game still starts the cast voice on the card, while Pocket (on the processor) was set aside in September for losing the cast's likeness. Recommended: let me measure the cast voice itself on the processor first (no cost), then you choose.
 
 Your answers are recorded: the walk's next go by Epic's MetaHuman route after Monday, and the reply check stays on Haiku.
 

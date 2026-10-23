@@ -43,13 +43,18 @@ $py = "python"
 
 # THE VOICE, SPEAKING THROUGHOUT: started once, warmed, and left running for all three captures.
 # -Voice pocket (21 October, item 8): Pocket TTS on the processor instead of the cast voice on the card.
-$voiceArgs = @("tools/voice-live/voice_load.py", "--seconds", "$VoiceSeconds") + $(if ($Voice -eq "pocket") { @("--pocket") } else { @() })
-$voice = Start-Process -FilePath $py -ArgumentList $voiceArgs -PassThru -NoNewWindow `
-         -RedirectStandardOutput "$tmp\voice-load.log" -RedirectStandardError "$tmp\voice-load.err"
-$w = 0
-while (-not (Select-String -Path "$tmp\voice-load.log" -Pattern "voiceLoad ready" -Quiet -ErrorAction SilentlyContinue) -and $w -lt 240 -and -not $voice.HasExited) { Start-Sleep 2; $w += 2 }
-$voiceReady = Select-String -Path "$tmp\voice-load.log" -Pattern "voiceLoad ready" -Quiet -ErrorAction SilentlyContinue
-"p1Packaged voice=" + $(if ($voiceReady) { "speaking" } else { "NOT-READY" })
+# -Voice none (23 October, frame headroom): no voice beside the game, to tell the game's own slow frames from those the
+# voice's processor load causes (slow frames with every one of the game's threads short).
+$voiceProc = $null
+if ($Voice -ne "none") {
+  $voiceArgs = @("tools/voice-live/voice_load.py", "--seconds", "$VoiceSeconds") + $(if ($Voice -eq "pocket") { @("--pocket") } else { @() })
+  $voiceProc = Start-Process -FilePath $py -ArgumentList $voiceArgs -PassThru -NoNewWindow `
+           -RedirectStandardOutput "$tmp\voice-load.log" -RedirectStandardError "$tmp\voice-load.err"
+  $w = 0
+  while (-not (Select-String -Path "$tmp\voice-load.log" -Pattern "voiceLoad ready" -Quiet -ErrorAction SilentlyContinue) -and $w -lt 240 -and -not $voiceProc.HasExited) { Start-Sleep 2; $w += 2 }
+  $voiceReady = Select-String -Path "$tmp\voice-load.log" -Pattern "voiceLoad ready" -Quiet -ErrorAction SilentlyContinue
+  "p1Packaged voice=" + $(if ($voiceReady) { "speaking" } else { "NOT-READY" })
+} else { "p1Packaged voice=none" }
 
 function Sample-Memory($gamePid, $voicePids) {
   # Windows' own counters: the card's dedicated memory per process and in all, and each process's memory.
@@ -123,8 +128,8 @@ foreach ($m in $matrix) {
 }
 # the voice ends on its own when its time is up, and only then prints its summary (sustained speech)
 $w = 0
-while ($voice -and -not $voice.HasExited -and $w -lt 900) { Start-Sleep 5; $w += 5 }
-if ($voice -and -not $voice.HasExited) { Stop-Process -Id $voice.Id -Force -ErrorAction SilentlyContinue }
+while ($voiceProc -and -not $voiceProc.HasExited -and $w -lt 900) { Start-Sleep 5; $w += 5 }
+if ($voiceProc -and -not $voiceProc.HasExited) { Stop-Process -Id $voiceProc.Id -Force -ErrorAction SilentlyContinue }
 Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -match "voice-server.py" } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }
 $sum = Select-String -Path "$tmp\voice-load.log" -Pattern "voiceLoadSummary" -ErrorAction SilentlyContinue | Select-Object -Last 1
 "p1Packaged voice=" + $(if ($sum) { $sum.Line } else { "no-summary" })

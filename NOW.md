@@ -19,11 +19,11 @@ Phase 1 closed 22 Oct, no exit passed (production/audits/phase1-exit/CLOSE-2026-
 ## His order of 23 October (to Sat 06:00)
 
 - [x] Launderette parked, in progress (sw_cloth_proto.py).
-- [ ] Card memory, voice on the processor.
-- [ ] The 87 ms first-use stall on the repeat walk.
+- [x] Card memory, voice on the processor: frame-headroom/FINDINGS-2026-10-23.md.
+- [ ] The 87 ms stall: named; bundled pipeline cache building.
 - [ ] The card's spare time.
 
-STATE (23 Oct 15:55): research for card memory.
+STATE (23 Oct 17:50): cache recorded; package 2 asked.
 
 ## Handovers
 
