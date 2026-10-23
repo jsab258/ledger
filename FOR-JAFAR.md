@@ -23,9 +23,9 @@ No decision asked: these are for watching the street change.
 
 <!-- /morning pictures -->
 
-**Your week's order, where it stands (23 October, 10:30; the 22 October overview is in git).**
+**Your week's order, where it stands (23 October, 14:55; the 22 October overview is in git).**
 - *1 to 4.* Done 21 October: health check, branches home, your rules and combat doc, the editor connection.
-- *5, the cloud's pieces.* Done for the lamp and the shops whose designs passed, each through the game's gate (fresh reviewers, one per view):
+- *5, the cloud's pieces.* Done: the lamp and every shop whose design passed, each through the game's gate (fresh reviewers, one per view). The launderette's, the fish market's, Mickey's and the empty unit's designs failed their own reviews, so they come next as new work:
   - Lamp post C stands at the four lamp spots, stained: run-off and lime from its arm, rust at its door plate, algae at its foot.
   - **Rita's front** (the shops' sample, which you kept): her night light and her wear passed every view.
   - **The ironmonger's** (no. 16): the shop passed all eight views, and its wear too.
@@ -34,12 +34,15 @@ No decision asked: these are for watching the street change.
   - **The grocer's** (no. 11, on the parade): the shop and its wear passed all ten views in ten rounds. Fixed on the way: its design's toy tomatoes (now real onions), a grey glass sign, a floating roll, a cut-off letter, its opening hours hanging in the air in front of its recessed door, and tins striped under the night light.
     - Set aside after two tries: a faint grey smoke on the glass above the jar lids by day (listed; next, a frame capture to find its cause).
   - New fronts no longer take the street's old grime, which had landed on the newsagent's pale paint with hard edges; they carry their own. One rule now, checked by the build: each worn front states it (Rita's and the ironmonger's keep the old grime, as passed).
+  - **The chandler's** (no. 13, at the parade's end): the shop and its wear, all ten views in nine rounds. Fixed on the way: its door's foot was black glass at night (now a solid aluminium panel), its CLOSED card unreadable (now faintly lit), and the walls seen through its door at a slant were black (now lit as the room). Its sou'westers read as hard hats, then pith helmets, so they left the window.
+    - Set aside after two tries: one side lining glares near white at night from one slant. The cause is found (the design keeps that lining out of the window lamp's light); the fix is next.
   - **The west row's three fronts** are cut under their low eave: the tan strip on the slates is gone, all 26 views passed (production/previews/west-row-eaves-2026-10-23.jpg).
   - Listed:
     - deep shadows under the tea rooms' table at night (two tries at a fill light failed; set aside);
     - a faint smoke on shop glass over dark goods by day (the grocer's jars, two smears on the ironmonger's glass), cause not found;
-    - the street lamp's orange glare on the pale newsagent.
-  - Pictures: production/previews/ironmonger-2026-10-22.jpg, newsagent-2026-10-22.jpg, tea-rooms-2026-10-23.jpg, grocer-2026-10-23.jpg.
+    - the street lamp's orange glare on the pale newsagent;
+    - the chandler's side lining at night (above).
+  - Pictures: production/previews/ironmonger-2026-10-22.jpg, newsagent-2026-10-22.jpg, tea-rooms-2026-10-23.jpg, grocer-2026-10-23.jpg, chandler-2026-10-23.jpg.
 - *6, frame rate.* Done: the packaged walk's worst frame 30.3 ms (it was 63), P1 closed by a fresh review (production/research/pre-production/P1-PACKAGED-2026-10-21.md).
 - *7, the walk and the clothes.* The walk was rebuilt on Epic's sample with motion matching and measured on a set route. Starts, stops and turns slide 13 to 67 cm (the bar is 3), so it is set aside and off by default. Your current walk fails too: it slides on about half its steps, the right foot on every stride (production/research/sit-and-turn/TOM-MOTION-MATCHING-2026-10-22.md). Clothes: Epic's Fab items all load in 5.8, but the Techwear Outfit is modern sportswear and the Construction Presets are bare bodies, not clothes; none can dress the Hook sheet's people. Your answers: the walk's next go is Epic's MetaHuman route after Monday; Marvelous Designer yes, its price now shown (Needs you 1).
 - *8, speech.* Done. **The Gemini test:** on the reply check, Gemini 3.5 Flash-Lite took 0.60 s at the median against Haiku's 0.97, but it let 3 invented details in 42 through where Haiku lets 1 (you kept Haiku); Gemini 3.8 Flash was the most accurate but slower, 1.8 s (production/research/voice-latency/GEMINI-CHECK-2026-10-22.md). **Pocket no longer stalls the walk:** run at lower priority, the walk's slowest 1% is 20.6 ms (it was 34) and its worst 47 ms (it was 175). The one frame left over the bar is a separate stall that the usual card voice shows too (87 ms today), so the frame-rate margin is thinner than P1's close said (listed). **The real path with Pocket:** 20 checked replies, with the game open, first sound heard at 2.41 s at the median, the best yet (3.25 s before) but over 2 s. The model's first checked sentence alone now takes 2.10 s, so the voice is no longer the bottleneck (about $0.15 of your measuring dollar).
@@ -78,17 +81,17 @@ Your answers are recorded: the walk's next go by Epic's MetaHuman route after Mo
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
 
-## Builder, Friday 23 October (06:47, updated 09:40)
+## Builder, Friday 23 October (06:47, updated 14:55)
 
 **Failed:**
 - **Phase 1's exits** (walk, period clothes, speech within 2 s, frame headroom) still fail; you held phase 2 for them.
-- **The tea rooms' night** failed seven times, each fault fixed within two tries: the display off its window, see-through curtains and number, black gaps, a burnt edge, a light leaking next door.
-- **Listed:** deep shadows under its table at night; the row's cornices above its low eave.
+- **The tea rooms' night** failed seven times, each fault fixed within two tries.
+- **Set aside after two tries:** a faint smoke on the grocer's glass by day; one chandler's side lining glaring at night (its cause found).
+- **The chandler's sou'westers** left its window: rebuilt twice, they still read as hard hats.
 
 **Done:**
-- **The ironmonger's, the newsagent's and the tea rooms'** shops and their wear passed every view. The whole west row now has its designed fronts.
-- **The newsagent's box sign** lights after dark.
-- **The grocer's** and its wear passed all ten views. A faint smoke on the glass above its jar lids is set aside after two tries.
+- **The ironmonger's, newsagent's, tea rooms', grocer's and chandler's** shops and their wear passed every view. The whole west row has its designed fronts.
+- **Item 5 is done:** every design the cloud team passed is in the street.
 - **The tester's walk** ran 13 of 15 stages; the white-vest townsfolk still break the illusion.
 
 **Act on:** your answers are recorded. Marvelous Designer costs 39 USD a month, with two weeks free: the trial for Tom's outfit is yours to start.

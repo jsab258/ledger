@@ -38,6 +38,25 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
   - Storing the glass pictures sharper did not change the smoke, so resolution is not its cause.
 - Evidence: production/audits/gate-west-eaves/GATE.md; tools/homes_check.py (fronts); production/specs/shop-fronts/*-front-wear.json (clip_top_m)
 
+### 23 Oct 2026, item 5: a sixth delivered shop, at a block's end, with its door's view inside made whole
+- Made: a designed shop in the street's last bay of a block: its front (a metal refit with a side door to a hall), its window display, its room pictures, and its front's wear.
+- Method (setting-free):
+  - A delivered good that reads as another trade's after two rebuilds leaves the window by the design's own rule; the rest of the display stays as passed. Name what would replace it (a modelled or scanned original).
+  - Glass facing open sky can outshine a dimly lit window by day. Lower that pane's stored reflection alone, per pane, below a true reflection.
+  - Where a delivered front stands behind the line a replaced front filled, pave the strip to its wall, or its doors stand over a void.
+  - A glazed door shows what stands behind it at every slant. Walk each camera's line of sight through each door: a painted picture that starts above the floor, a side wall and the back of a display lining are all seen, and each must be lit as the room is. Close the foot with a solid panel where the design's rule allows it; let side faces glow as the room's own wall beside them, their colour measured off the room's night picture.
+  - A card hung inside a door's glass, with a lit room behind it, takes no light on its street face. Give it a faint glow of its own face, turned with the card.
+  - A window lamp whose ends stand close to a side lining burns that lining white long before the goods are lit. Keep the lamp's ends well off the linings; the tonemapper's shoulder hides most of a small change, so move it far.
+  - Review every view at night, and from both slants, before calling a shop done; the faults of this shop were in views not reviewed for four rounds.
+- Tools: the delivering team's builder (Blender), the readying recipe (cut-out lettering, a door card's and walls' night glow, several glows and flat colours), the wear bake, the game's page cameras, fresh reviewers one view each.
+- Target and check: the delivering team's passed street design and its close review's one fault; the game's gate: ten views, each changed view reviewed again beside its last good picture; one fault set aside after two tries, its cause found in the design's own lighting.
+- Cost (hours): about 4.5, from 10:30 to 14:55, nine rounds and twenty fresh reviews.
+- Failed and why:
+  - The sou'westers read as hard hats, then as pith helmets: a crown modelled from a description, not from an original (set aside).
+  - The first lamp narrowing barely moved the lining (232 to 225): too small a change at the tonemapper's shoulder.
+  - The door's black foot, card and walls were in frames from round one, unseen until their views were reviewed.
+- Evidence: production/audits/gate-chandler/GATE.md; production/specs/shop-fronts/chandler-front-wear.json; production/previews/chandler-2026-10-23.jpg
+
 ### 23 Oct 2026, item 5: a fifth delivered shop, with a recessed lobby, worn in the same round as its gate
 - Made: a designed shop in the street's bay: its front with a glass fascia and a recessed door lobby, its window display, its room pictures, and its front's foot wear.
 - Method (setting-free):
