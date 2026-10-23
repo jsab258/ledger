@@ -103,6 +103,18 @@ def main(spec_path):
     bpy.ops.wm.read_factory_settings(use_empty=True)
     bpy.ops.import_scene.gltf(filepath=src)
     front = [o for o in bpy.context.scene.objects if o.type == "MESH"][0]
+    # TRIMMED UNDER A LOW EAVE (23 October; the west row's gates, one fix owed for its three fronts): designed for a
+    # two-storey row, each front's cornice tops out at 3.55 m and stands 0.3 m proud, but this single-storey row's
+    # slates start at its 3.4 m eave, so the cornice's top showed as a tan strip on the slates and the rest was lost
+    # behind the gutter. "clip_top_m" cuts the front there; under it a thin bed moulding stays below the gutter.
+    clip = spec.get("clip_top_m")
+    if clip:
+        bm = bmesh.new()
+        bm.from_mesh(front.data)
+        bmesh.ops.bisect_plane(bm, geom=list(bm.verts) + list(bm.edges) + list(bm.faces), dist=0.0001,
+                               plane_co=(0.0, 0.0, float(clip)), plane_no=(0.0, 0.0, 1.0), clear_outer=True)
+        bm.to_mesh(front.data)
+        bm.free()
     paints = {}
     for s in front.material_slots:
         if s.material and s.material.name in spec["paints"]:

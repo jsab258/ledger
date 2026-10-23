@@ -285,7 +285,46 @@ def add_head(obj, material, thick=0.012, at=None):
     return len(new)
 
 
-def main(src, name, display=False, glow=None, mask=None, raise_=None, head=None, dull=None):
+def smooth_by_angle(obj, materials, degrees=30.0):
+    """ROUND GOODS SHADED ROUND (23 October, the grocer's night gate from the right: its tins came from the design
+    flat-shaded, 16-sided, and under the window's strong night light each side face read as its own hard light or dark
+    stripe, a jump of 100 levels in one pixel along a label). Each corner of a face of `materials` takes the mean normal
+    of the faces of `materials` meeting at its point within `degrees` of its own face (a modeller's smooth-by-angle:
+    the sides round, a rim or a lid's edge kept sharp). Flat-shaded faces share no vertices, so this goes by position,
+    not by the mesh's edges; every other face keeps the normals it has, and the custom normals travel in the glTF.
+    Returns how many faces were smoothed."""
+    import math
+    from collections import defaultdict
+    from mathutils import Vector
+    me = obj.data
+    slots = {i for i, sl in enumerate(obj.material_slots) if sl.material and sl.material.name in materials}
+    if not slots:
+        return 0
+    corner = [Vector(c.vector) for c in me.corner_normals]
+    faces = [p for p in me.polygons if p.material_index in slots]
+
+    def key(li):
+        v = me.vertices[me.loops[li].vertex_index].co
+        return (round(v.x, 5), round(v.y, 5), round(v.z, 5))
+    at = defaultdict(list)
+    for p in faces:
+        for li in p.loop_indices:
+            at[key(li)].append(p.normal.copy())
+    lim = math.cos(math.radians(degrees))
+    for p in faces:
+        n = p.normal
+        for li in p.loop_indices:
+            acc = Vector((0.0, 0.0, 0.0))
+            for m in at[key(li)]:
+                if n.dot(m) >= lim:
+                    acc += m
+            corner[li] = acc.normalized() if acc.length > 0 else n.copy()
+        p.use_smooth = True
+    me.normals_split_custom_set([tuple(c) for c in corner])
+    return len(faces)
+
+
+def main(src, name, display=False, glow=None, mask=None, raise_=None, head=None, dull=None, smooth=None):
     import bpy
     bpy.ops.wm.read_factory_settings(use_empty=True)
     bpy.ops.import_scene.gltf(filepath=os.path.abspath(src))
@@ -325,6 +364,7 @@ def main(src, name, display=False, glow=None, mask=None, raise_=None, head=None,
     # (try 2, the same night: at the linings' top the board left a gap above the room's card, which stops lower, and the
     # eye still passed through it; "<material>@<height>" puts the board at the card's top, in the display's own frame)
     headed = add_head(joined, head.split("@")[0], at=float(head.split("@")[1]) if "@" in head else None) if head else 0
+    smoothed = smooth_by_angle(joined, smooth) if smooth else 0
     out_dir = OUT_DISPLAY if display else OUT_GLB
     os.makedirs(out_dir, exist_ok=True)
     glb = os.path.join(out_dir, name + ".glb")
@@ -337,8 +377,8 @@ def main(src, name, display=False, glow=None, mask=None, raise_=None, head=None,
     if display:
         solid = solid_cloth(glb)
         tris = sum(len(p.vertices) - 2 for p in joined.data.polygons)
-        print("front_for_game: %s -> %s display parts=%d slots=%d sheenTinted=%d solidCloth=%d raisedVerts=%d headFaces=%d triangles=%d bytes=%d"
-              % (os.path.basename(src), glb, len(keep), len(joined.material_slots), tinted, solid, raised, headed, tris, os.path.getsize(glb)))
+        print("front_for_game: %s -> %s display parts=%d slots=%d sheenTinted=%d solidCloth=%d raisedVerts=%d headFaces=%d smoothFaces=%d triangles=%d bytes=%d"
+              % (os.path.basename(src), glb, len(keep), len(joined.material_slots), tinted, solid, raised, headed, smoothed, tris, os.path.getsize(glb)))
         return 0
     cut_out_cards(glb)
     if dull and dull_materials(glb, dull) != len(dull):
@@ -391,9 +431,10 @@ if __name__ == "__main__":
     raise_ = [a.split("=", 1)[1] for a in sys.argv[1:] if a.startswith("--raise=")]
     head = [a.split("=", 1)[1] for a in sys.argv[1:] if a.startswith("--head=")]
     dull = [d for a in sys.argv[1:] if a.startswith("--dull=") for d in a.split("=", 1)[1].split(",") if d]
-    args = [a for a in sys.argv[1:] if a != "--display" and not a.startswith(("--night-glow=", "--mask=", "--raise=", "--head=", "--dull="))]
+    smooth = [s for a in sys.argv[1:] if a.startswith("--smooth=") for s in a.split("=", 1)[1].split(",") if s]
+    args = [a for a in sys.argv[1:] if a != "--display" and not a.startswith(("--night-glow=", "--mask=", "--raise=", "--head=", "--dull=", "--smooth="))]
     if len(args) != 2:
         print(__doc__)
         sys.exit(1)
     sys.exit(main(args[0], args[1], display="--display" in sys.argv, glow=glow[0] if glow else None, mask=mask or None,
-                  raise_=raise_ or None, head=head[0] if head else None, dull=dull or None))
+                  raise_=raise_ or None, head=head[0] if head else None, dull=dull or None, smooth=smooth or None))

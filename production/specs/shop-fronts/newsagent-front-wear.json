@@ -1,6 +1,8 @@
 {
   "front": "newsagent-front",
   "out": "newsagent-front-worn",
+  "clip_top_m": 3.4,
+  "clip_top_note": "23 October: the west row's single storey has its eave at 3.4 m; the design's cornice (3.36 to 3.55 m, 0.3 m proud) stood above it, its top a tan strip on the slates, the rest lost behind the gutter (the gates of the ironmonger's r3, the newsagent's r2 and the tea rooms' across view). The front is cut at 3.40 m; its lowest 4 cm stays as a bed moulding under the gutter.",
   "note": "22 October 2026, night: the newsagent's front worn the way the ironmonger's and Rita's passed (tools/art-recipes/front_wear.py, the same settings), with this front's own places read from its model on 22 October: its shop door's lever at x 1.475 to 1.616, 0.88 to 1.12 up, on the door face (y -0.07); the door's bottom rail z 0.03 to 0.22 under its moulding (0.218 to 0.258, kept clear of chips as the ironmonger's gate taught) and its lock rail 0.55 to 0.88 over x 0.86 to 1.55; the sill's nose, white joinery, z 0.525 to 0.626 over the window, x -2.65 to 0.70. Its paints are a dove grey, a white and a dark blue side door; the dirt floor of 0.035 matters only for the blue. Its box sign's night glow is put back after the bake (night_glow).",
   "paints": [
     "paint_dove_grey",

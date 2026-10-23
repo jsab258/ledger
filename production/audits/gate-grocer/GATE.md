@@ -106,3 +106,25 @@ The grocer's (east_parade bay 5, no. 11) is the simplest, and it stands on the p
   - From the right: the shop is unchanged. Only the glass's reflected roofline differs, back to r5's overlaid layers (a run-to-run change already passed in r5), so its pass stands.
 - **The street's hook camera (r7): PASS.** The grocer's sits cleanly in the parade, lettering the right way round; the lobby is hidden here, so r8's change cannot show. Mickey's, the fish shop's and Rita's glass reflect a little differently since every window was caught again, and none is worse. No new fault.
 - **From the left by day (r8): PASS.** The floating hours are gone from the cheek, which reads as a plain painted panel with a little grime at its foot. The plinth keeps its chips. No new fault.
+- **Across the road by day (r8): PASS.** The hours stand wholly within the door's glass, centred under the OPEN card, the right way round, veiled as lettering behind glass is, not glowing. The cheek's dots and the floating plate's shadow are gone. No new fault.
+- **Across the road at night (r8): PASS.** Lit and shut by its design: the room and display lit, a soft warm pool on the pavement fading to the kerb, nothing blown, the door card CLOSED, the hours on the door's lower pane. The wear shows only when brightened. No new fault.
+  - Narrow point, not failing: the CLOSED card is dim at night (its letters about 30 to 36 on a card of 15), the right word but only a dim red tag at full size.
+  - Known: the street lamps' orange on the cream and the green (the stallriser near black); the room lit brighter than the design's night render, not clipping.
+- **Square on at night (r8): PASS.** The room and display lit as designed, the glass near invisible but for a faint reflected lamp column, nothing clipped, soft shadows with no saw-tooth or stripes, the rolls all on their board. No new fault.
+- **From the left at night (r8): PASS.** The room and display lit and clear, nothing blown, the lobby's cheek clean, the r1 floating hours gone, the glass unchanged against r1. No new fault.
+  - Narrow points, not failing: the tins' facets show more under the night light's hard shadows (with the known wide tins); pinkish smears under the room picture's crates.
+- **From the right at night (r8): FAIL.** The left tin pyramid shows hard vertical stripes under the window's night light (x 240 to 800, y 620 to 1150; a jump from 51 to 154 in one pixel along a label at row 690). By day the same tins step by 10 to 18 and read smooth. The design's night render shades them softly, so this is worse than the design.
+  - **The cause:** the design's tins are 16-sided and flat-shaded (food_tin_labels and tin_metal, 2,581 and 15,888 flat faces in its own glb). Under strong, hard light each face reads as its own stripe.
+  - **Fix, try 1:** the display readied with its tins smoothed by angle (front_for_game.py --smooth=food_tin_labels,tin_metal). Each corner takes the mean normal of the tin faces meeting at its point within 30 degrees, so the sides round and the rims stay sharp. 32,256 of 56,448 tin corners now carry rounded normals; every other part keeps its own.
+  - Every view retaken as r9.
+
+## Round 9 (r9: the tins smoothed)
+
+- **Measured against r8:** the tins read round under the night light; the night views changed most, the day views little (1 to 16 tiles of 80 px over 20 levels).
+- **One change not of this round's making:** in the day view from the right, a dark speckled wedge on the launderette's left pilaster (about x 1930 to 1950, y 400 to 1100). In r1 to r8 the strip read as brick and cream (mean 130,119,95); in r9 it is 96,88,71. Nothing near it changed. It reads as a shadow that varies from run to run, so the day views are taken again after the west row's eaves round, before they are reviewed.
+- The night views are reviewed on r9, one reviewer each.
+- **From the left at night (r9): PASS.** The tins on all three pyramids now shade smoothly from lit to shadowed side and read round, closer to the design's night render. There is no seam, label line, dark facet or ring, and the rims stay sharp. Everything else is run noise. No new fault.
+- **From the right at night (r9): PASS.** The fault is gone. At row 690 the label now rises smoothly, 39 to 221 over 30 px, where r8 jumped 54 to 162 in one pixel. The facet lines are gone from every tin on all three pyramids, the rims stay crisp, and brightness is unchanged elsewhere. No new fault.
+  - Narrow points, not failing: the tins' outlines still 16-sided at 4x zoom; the lids charcoal where the design's night render shows them light grey.
+- **Square on at night (r9): PASS.** Only the three pyramids changed: their stripes are gone (a stripe measure fell 3.24 to 2.64, 2.51 to 2.33 and 3.61 to 3.04, the rest being lettering and edges). The rims stay crisp, and everything else is at noise level. No new fault.
+- **Across the road at night (r9): PASS.** The tins shade smoothly with sharp rims; their stripe measure fell 30 to 40% on the outer pyramids. The rest of the view is unchanged (0.15 levels on average outside the window). No new fault. All four night views pass on r9.

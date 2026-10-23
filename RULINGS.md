@@ -14,7 +14,7 @@ His binding rulings; the later stands; canon.md outranks them.
 - 4 Oct: The friends' build: his PC and own account, a shortcut, his key capped at five dollars an evening, no relay; the twenty basics; nothing a friend sees unfinished; Sheila's face whole when she talks; no debug text.
 - 29 Sep: No new systems until the slice is worth playing; what was ruled for after the route (townspeople, microphone, the ending's signs, regulars) and the sweep's larger items wait for a place in PLAN.md.
 - 13 Oct: RECIPE.md (repository root) is a notebook, not a project: no lesson we learn is lost, so that one day the process can make a whole AAA game. Every unit that finishes or is set aside adds a few lines to it in the same commit: what was made; the method in setting-free words; the tools; the target and the check; the cost in hours; what failed and why; the evidence file. Anything specific to 1990 or Meridian stays in data, never in the method. No separate recipe work, no recipe tests (CLAUDE.md carries the rule).
-- 22 Oct: Rita's front kept as the shops' sample; items 7 to 9 in order, else Rita's night light, the lamp's staining, the next shop family as Rita's; the rest after Monday 14:00. His page: phase 2 held; next week on phase 1's failed capabilities first (walk, turn and sit without sliding; period clothes; speech within 2 s; frame headroom; wear without glitches).
+- 22 Oct: Rita's front is the shops' sample; items 7 to 9, else Rita's night light, the lamp's staining, the next shop family; the rest Monday 14:00. Phase 2 held; next week phase 1's failed capabilities first (production/audits/phase1-exit/CLOSE-2026-10-22.md). 23 Oct: the walk's next go, Epic's MetaHuman route, after Monday.
 
 ## Sources, licences and money
 
@@ -74,7 +74,7 @@ His binding rulings; the later stands; canon.md outranks them.
 ## Clothes
 
 - 3 Oct: Clothes are the one exception to the visual bar; tailoring waits for the tools. Their floor: plain, period-plausible, no modern giveaways (contrast-stitched slim jeans, trainers), no clipping or holes, nobody frozen stiff; judged on it, not the Hook sheet: passers-by at eight metres, Tom's talkers close up.
-- 3 Oct: People wear only gated garments from CC0, unmarked CC-BY with credit, or Blender; none bought or commissioned. 13 Oct: Epic's MetaHuman garments are tried first; Marvelous Designer only if those fail. 8 Oct: the white base layer stays through phase 1, reported failed; the lab's, not this session's.
+- 3 Oct: People wear only gated garments from CC0, unmarked CC-BY with credit, or Blender; none bought or commissioned. 13 Oct: Epic's MetaHuman garments are tried first; Marvelous Designer only if those fail. 23 Oct: Marvelous Designer yes, one month for Tom's sample outfit, price shown first. 8 Oct: the white base layer stays through phase 1, reported failed; the lab's, not this session's.
 - 2 Oct: Stopped: Marvelous draping, procedural tailoring, fitting every garment to six bodies; production/art/clothing/RUBRIC.md is the bar when tailoring resumes; clothing work never opens Unreal. 8 Oct: no more draping of tailored jackets in Blender (drafting by code works); an outfit stays an outfit until the character is assembled (saving bakes it). Garment reviews first count body points showing through; every target is tested against its body or model and its source before building.
 - 30 Sep: Game clothes are skinned meshes, only loose parts simulated; shoulders judged in Unreal.
 - 29 Sep: Clothes on people are his to approve, in the game's camera.
@@ -93,7 +93,7 @@ His binding rulings; the later stands; canon.md outranks them.
 - 1 Oct (D48): The model is chosen by the kind of moment (small talk lighter, real conversation better), never by the character.
 - 24 Sep: The paid router stays; a local model later as the fallback offline; three router changes owed; no training on its answers.
 - 23 Sep: The talk runs beside the game as the tested C# helper, not rewritten in C++.
-- 7 Oct, speech: no prepared openings. Two seconds not reached: failed, a blocked core capability. No third attempt at the voice; no cloud voice; the faster first sentence off. 8 Oct: the check study parked until a faster voice; the ladder careful, as built.
+- 7 Oct, speech: no prepared openings. Two seconds not reached: failed, a blocked core capability. No third attempt at the voice; no cloud voice; the faster first sentence off. 8 Oct: the check study parked until a faster voice; the ladder careful, as built. 23 Oct: the reply check stays on Haiku, not Gemini.
 - 7 Oct, lighting: day and night now; four or five states with transitions later, no moving sun, not in phase 1.
 - 23 Sep: Offline or slow: the authored street carries on, an in-character brush-off and a small sign; a slow line dropped after about 8 s.
 - 24 Sep: Before outsiders play: the AI notice before the first talk, a way to report any line, the content rule on live speech; Steam's AI disclosure as drafted.

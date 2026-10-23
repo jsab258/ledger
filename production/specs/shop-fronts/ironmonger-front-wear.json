@@ -1,6 +1,8 @@
 {
   "front": "ironmonger-front",
   "out": "ironmonger-front-worn",
+  "clip_top_m": 3.4,
+  "clip_top_note": "23 October: the west row's single storey has its eave at 3.4 m; the design's cornice (3.36 to 3.55 m, 0.3 m proud) stood above it, its top a tan strip on the slates, the rest lost behind the gutter (the gates of the ironmonger's r3, the newsagent's r2 and the tea rooms' across view). The front is cut at 3.40 m; its lowest 4 cm stays as a bed moulding under the gutter.",
   "note": "22 October 2026, the ironmonger's front worn Rita's way (his message of 22 October: the next shop family the same way as Rita's), by tools/art-recipes/front_wear.py with Rita's final settings (production/specs/shop-fronts/ritas-front-wear.json, passed eight views) and this front's own places, read from its model on 22 October: its shop door's lever at x 1.596, 1.0 up, on the door face (y -0.075); the door's bottom rail z 0.03 to 0.23 and lock rail 0.55 to 0.87 over x 0.87 to 1.54; the sill's nose z 0.53 to 0.60 over the window, x -2.65 to 0.70. Its paints are near-black (dark green luminance 0.04, the side door 0.02), so the dirt has a floor of 0.035: dried road dirt reads a little lighter and browner than such paint. The design's W1 target as Rita's.",
   "paints": [
     "paint_dark_green",
