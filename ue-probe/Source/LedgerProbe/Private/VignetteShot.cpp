@@ -7170,7 +7170,7 @@ namespace
 			{
 				G->SetTextureParameterValue(FName(TEXT("ReflectCube")), GGlassSunOn ? Day : Night);
 				const double BOpacity = FMath::Max(GLook.GlassOpacity, 0.01);
-				const double BStrength = (!GGlassSunOn && GLook.GlassCubeStrengthNight >= 0.0) ? GLook.GlassCubeStrengthNight : GLook.GlassCubeStrength;
+				const double BStrength = GLook.GlassCubeStrengthFor(TCHAR_TO_UTF8(*Mesh), GGlassSunOn);   // a pane facing open sky by its own day strength
 				G->SetScalarParameterValue(FName(TEXT("ReflectStrength")), (float)(BStrength / BOpacity));
 				FGlassBaked Gb;
 				Gb.Mid = G; Gb.Day.Reset(Day); Gb.Night.Reset(Night); Gb.Mesh = Mesh;
@@ -7199,7 +7199,7 @@ namespace
 		// Thin translucency multiplies emissive by opacity (ThinTranslucentCommon.ush), so a
 		// true reflection is the strength over the pane's opacity.
 		const double Opacity = FMath::Max(GLook.GlassOpacity, 0.01);
-		const double Strength = (!GGlassSunOn && GLook.GlassCubeStrengthNight >= 0.0) ? GLook.GlassCubeStrengthNight : GLook.GlassCubeStrength;
+		const double Strength = GLook.GlassCubeStrengthFor(TCHAR_TO_UTF8(*Mesh), GGlassSunOn);
 		G->SetScalarParameterValue(FName(TEXT("ReflectStrength")), (float)(Strength / Opacity));
 		FGlassCatch Gc;
 		Gc.Rt = Rt; Gc.Owner = A; Gc.Mid = G; Gc.Mesh = Mesh; Gc.At = Mid + N * 50.0;
@@ -8283,7 +8283,7 @@ namespace
 			if (!Gc.Mid.IsValid()) { continue; }
 			const double Day = C.SunOn ? 1.0 : GLook.GlassSpecularNight;
 			Gc.Mid->SetScalarParameterValue(FName(TEXT("GlassSpecular")), (float)(Day * GLook.GlassCubeSpecular));
-			const double Strength = (!C.SunOn && GLook.GlassCubeStrengthNight >= 0.0) ? GLook.GlassCubeStrengthNight : GLook.GlassCubeStrength;
+			const double Strength = GLook.GlassCubeStrengthFor(TCHAR_TO_UTF8(*Gc.Mesh), C.SunOn);
 			Gc.Mid->SetScalarParameterValue(FName(TEXT("ReflectStrength")), (float)(Strength / FMath::Max(GLook.GlassOpacity, 0.01)));
 		}
 		// The baked windows swap to this light's cube: no catch, no slow frame (route A).
@@ -8292,7 +8292,7 @@ namespace
 			if (!Gb.Mid.IsValid()) { continue; }
 			const double Day = C.SunOn ? 1.0 : GLook.GlassSpecularNight;
 			Gb.Mid->SetScalarParameterValue(FName(TEXT("GlassSpecular")), (float)(Day * GLook.GlassCubeSpecular));
-			const double Strength = (!C.SunOn && GLook.GlassCubeStrengthNight >= 0.0) ? GLook.GlassCubeStrengthNight : GLook.GlassCubeStrength;
+			const double Strength = GLook.GlassCubeStrengthFor(TCHAR_TO_UTF8(*Gb.Mesh), C.SunOn);
 			Gb.Mid->SetScalarParameterValue(FName(TEXT("ReflectStrength")), (float)(Strength / FMath::Max(GLook.GlassOpacity, 0.01)));
 			UTextureCube* Cube = C.SunOn ? Gb.Day.Get() : Gb.Night.Get();
 			if (Cube != nullptr) { Gb.Mid->SetTextureParameterValue(FName(TEXT("ReflectCube")), Cube); }

@@ -52,7 +52,10 @@ HALL_Z = (25.0, 2420.0)
 # row is single-storey with its eave at 3.4 m, so there is no brick there. A board on such a shop hangs from its pilaster:
 # the plate on the door-end capital's face (d 175, z 2.55 to 2.85), the arm at its middle (2.70) and a short drop, the
 # board's foot at 2.22 m over the footway. Keyed by shop; the target is not edited (his ruling of 11 October).
-PC_SIGN_MOUNT = {"ironmonger": {"plate_foot_m": 2.55, "arm_height_m": 2.70, "drop_m": 0.10, "plate_d_mm": 175.0}}
+PC_SIGN_MOUNT = {"ironmonger": {"plate_foot_m": 2.55, "arm_height_m": 2.70, "drop_m": 0.10, "plate_d_mm": 175.0},
+                 # 23 Oct, the game's gate of the chandler's across the road: its plate (0 to 8 mm out) was buried in the street's brick above the cornice,
+                 # whose face stands 165 mm proud of the front's wall line there (measured in quay-street.glb), the arm ending in bare brick
+                 "chandler": {"plate_d_mm": 168.0}}
 SIGN_NEAR_MIN = 330.0                  # a hanging board's near edge stands at least this far from the wall (mm): the cornice projects 300
 
 

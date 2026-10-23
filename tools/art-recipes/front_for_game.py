@@ -165,7 +165,10 @@ def dull_materials(glb, specs):
 # ridges of the café curtains, which the design gives half transmission; drawn see-through in the game, a folded sheet's
 # triangles are not sorted by depth, and back folds drew over front ones). Each material named here loses its
 # transmission and is written opaque.
-SOLID_CLOTH = ("cafe_curtain",)
+# AND A LAMP WHOLLY MADE GLASS (23 October, the chandler's gate, square on: its two brass hurricane lamps drew see-through
+# all over, cap, tubes and tank, the bed through them; the Poly Haven lantern's one material keeps only its globe clear by a
+# map the glTF does not carry, so it came out transmission 1 everywhere): the lamp solid, its globe as its picture paints it.
+SOLID_CLOTH = ("cafe_curtain", "Lantern_01_brass")
 
 
 def solid_cloth(glb, names=SOLID_CLOTH):

@@ -378,6 +378,16 @@ namespace LedgerStreet
 		// GlassCubeHeroSize; at 1024 a cube is 50 MB of the card, so only these.
 		std::vector<std::string> GlassCubeHeroes;
 		int GlassCubeHeroSize;
+		// A PANE FACING OPEN SKY, A TRUE REFLECTION BY DAY (23 October, the chandler's gate across the road: at the
+		// day's 2.5 its window and door, which face the gap past the west row's end, mirrored the sky as a flat white
+		// veil over half the window). The street mesh named here takes this day strength in place of GlassCubeStrength.
+		std::vector<std::pair<std::string, double> > GlassCubeStrengthByMesh;
+		double GlassCubeStrengthFor(const std::string& Mesh, bool bDay) const
+		{
+			if (!bDay && GlassCubeStrengthNight >= 0.0) { return GlassCubeStrengthNight; }
+			for (size_t I = 0; I < GlassCubeStrengthByMesh.size(); ++I) { if (GlassCubeStrengthByMesh[I].first == Mesh) { return GlassCubeStrengthByMesh[I].second; } }
+			return GlassCubeStrength;
+		}
 		// THE SKY PHOTOGRAPH TURNED ABOUT THE VERTICAL, degrees (6 October, item 1.1's first gate: "the
 		// reverse view ends ... under outsized background trees" - the photograph's own tree line,
 		// which faced down the street to the sea).
@@ -878,6 +888,15 @@ namespace LedgerStreet
 		if (V != 0 && V->Type == T_ARR)
 		{
 			for (size_t I = 0; I < V->Arr.size(); ++I) { if (V->Arr[I].Type == T_STR && !V->Arr[I].Str.empty()) { Out.GlassCubeHeroes.push_back(V->Arr[I].Str); } }
+			++Out.Read;
+		}
+		V = Root.Find("glass_cube_strength_by_mesh");
+		if (V != 0 && V->Type == T_OBJ)
+		{
+			for (size_t I = 0; I < V->Obj.size(); ++I)
+			{
+				if (V->Obj[I].second.Type == T_NUM && V->Obj[I].second.Num >= 0.0 && V->Obj[I].second.Num <= 4.0) { Out.GlassCubeStrengthByMesh.push_back(std::make_pair(V->Obj[I].first, V->Obj[I].second.Num)); }
+			}
 			++Out.Read;
 		}
 		V = Root.Find("glass_cube_hero_size");

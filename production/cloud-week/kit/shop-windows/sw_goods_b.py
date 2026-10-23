@@ -529,7 +529,7 @@ def souwester(gm, cx, cy, z0, s=1.0, mi=0, mi_seam=1, n=36, face=-1.0):
             gm.rod(a, b, 0.0016 * s, mi_seam, 5)
 
 
-def souwester_hung(gm, knot, s=1.0, mi=0, mi_tie=1, flap=1.0, tilt_deg=60.0, drop=0.17, n=40, seed=0):
+def souwester_hung(gm, knot, s=1.0, mi=0, mi_tie=1, mi_seam=None, flap=1.0, tilt_deg=60.0, drop=0.17, n=40, seed=0, hang="side"):
     """A sou'wester hung by its chin ties from a rail (23 October, the game's readying of the chandler's; its close review F1:
     the hemispherical crown with raised seams, a nearly flat front brim and one long lobe turned into the shop read as a
     builder's hard hat with a visor). Built to the review's exact fix:
@@ -540,12 +540,19 @@ def souwester_hung(gm, knot, s=1.0, mi=0, mi_tie=1, flap=1.0, tilt_deg=60.0, dro
       * two 3 mm cotton ties from inside the brim at the ears to a knot over the rail;
       * the hat tipped so its crown faces the street (-y) at `tilt_deg`, and turned about its axis so the neck flap runs
         along the window (`flap` +1 toward +x, -1 toward -x), so from 35 degrees it reads short front, long back.
+      * with `mi_seam`, the crown's four seams and the brim's four rows of stitching as flush lines of a darker oilskin.
+    hang "wall" (the game's gate, square on, try 2: tipped 30 degrees, seen from above, they read as smooth plastic domes with
+    no neck flap): as a shop hangs one on a hook by its ties, the crown to the street, the short front brim at the top and the
+    long neck flap hanging down, so from the front it reads short over long.
     `knot` is the point on the rail where the ties are knotted; the crown's base centre hangs `drop` below it."""
     rng = random.Random(seed)
     r_c = 0.098 * s
     band, h = 0.015 * s, 0.70 * 0.098 * s
-    a = math.radians(tilt_deg)
-    yaw = -math.pi / 2 if flap > 0 else math.pi / 2           # the local back (+y) turned to +x or -x
+    if hang == "wall":
+        a, yaw = math.radians(90.0), math.pi                    # the back (+y) turned to -y, then tipped: down
+    else:
+        a = math.radians(tilt_deg)
+        yaw = -math.pi / 2 if flap > 0 else math.pi / 2       # the local back (+y) turned to +x or -x
 
     def place(p):
         x, y, z = p
@@ -579,6 +586,7 @@ def souwester_hung(gm, knot, s=1.0, mi=0, mi_tie=1, flap=1.0, tilt_deg=60.0, dro
     gm.add(V, F, mi)
     # the brim: all round, sloping down, the neck flap at the local back (+y)
     nb = 5
+    crumple = [[rng.uniform(-0.0015, 0.0015) * s * (j / float(nb)) for i in range(n)] for j in range(nb + 1)]
     V, F, ringsb = [], [], []
     for j in range(nb + 1):
         t = j / float(nb)
@@ -589,7 +597,7 @@ def souwester_hung(gm, knot, s=1.0, mi=0, mi_tie=1, flap=1.0, tilt_deg=60.0, dro
             w = (0.055 + 0.075 * b) * s
             ang = math.radians(30.0 + 15.0 * b)
             rad = r_c + t * w * math.cos(ang)
-            z = -t * w * math.sin(ang)
+            z = -t * w * math.sin(ang) + crumple[j][i]                 # the oilskin a little crumpled toward its edge
             idx.append(len(V))
             V.append(place((rad * math.cos(th), rad * math.sin(th), z)))
         ringsb.append(idx)
@@ -606,8 +614,40 @@ def souwester_hung(gm, knot, s=1.0, mi=0, mi_tie=1, flap=1.0, tilt_deg=60.0, dro
             b = (1.0 + math.sin(th)) / 2.0
             w = (0.055 + 0.075 * b) * s
             ang = math.radians(30.0 + 15.0 * b)
-            under.append(place(((r_c + t * w * math.cos(ang)) * math.cos(th), (r_c + t * w * math.cos(ang)) * math.sin(th), -t * w * math.sin(ang) - 0.003 * s)))
+            under.append(place(((r_c + t * w * math.cos(ang)) * math.cos(th), (r_c + t * w * math.cos(ang)) * math.sin(th),
+                                -t * w * math.sin(ang) + crumple[j][i] - 0.003 * s)))
     gm.add(under, [tuple(reversed(f)) for f in F], mi)
+    if mi_seam is not None:
+        lift, sw = 0.0005 * s, 0.0016 * s
+        # the crown's four seams, flush lines from the band to near the top
+        for k in range(4):
+            th = math.pi / 2 * k
+            V, F = [], []
+            m = 8
+            for j in range(m + 1):
+                phi = (math.pi / 2) * 0.97 * j / m
+                rr, z = r_c * math.cos(phi) + lift * math.cos(phi), band + h * math.sin(phi) + lift * math.sin(phi)
+                for sgn in (-1.0, 1.0):
+                    dth = sgn * sw / max(rr, 0.004 * s)
+                    V.append(place((rr * math.cos(th + dth), rr * math.sin(th + dth), z)))
+            for j in range(m):
+                F.append((2 * j, 2 * j + 1, 2 * j + 3, 2 * j + 2))
+            gm.add(V, F, mi_seam)
+        # four rows of stitching round the brim, 6 mm apart, from 4 mm in from its edge
+        for row in range(4):
+            V, F = [], []
+            for i in range(n + 1):
+                th = 2 * math.pi * i / n
+                b = (1.0 + math.sin(th)) / 2.0
+                w = (0.055 + 0.075 * b) * s
+                ang = math.radians(30.0 + 15.0 * b)
+                for dd in (-0.0008 * s, 0.0008 * s):
+                    rad = r_c + (w - 0.004 * s - 0.006 * s * row + dd) * math.cos(ang)
+                    z = -(w - 0.004 * s - 0.006 * s * row + dd) * math.sin(ang) + lift
+                    V.append(place((rad * math.cos(th), rad * math.sin(th), z)))
+            for i in range(n):
+                F.append((2 * i, 2 * i + 2, 2 * i + 3, 2 * i + 1))
+            gm.add(V, F, mi_seam)
     # the chin ties: from inside the brim at the ears (local +-x) up to the knot
     for sx in (1.0, -1.0):
         ear = place((sx * (r_c - 0.004 * s), 0.0, 0.004 * s))
