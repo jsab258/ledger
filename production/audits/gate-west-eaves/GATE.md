@@ -35,3 +35,24 @@
   - The same set-aside smear lies at fixed heights over dark goods and on the door's lower pane, where the reviewer read it as a reflected kerb line.
 - **The ironmonger's from the left by day: FAIL as first judged.** A streaked full-height strip at the tea rooms' join (x 415 to 481). It is newly visible because the tea rooms' old flat panel used to hide it. Asked of the same reviewer whether it is the street's lead downpipe at that join, a known shortfall (the across view finds one exactly there).
   - **Revised: PASS.** The order of parts matches the across view: brick, then a 14 px pipe (78 mm at that view's 179 px a metre), then green. The grey speckled face is the pipe's front, and the banded strip is its narrow face turned toward a camera on the left, newly shown since the tea rooms' narrower front. It is a listed shortfall, now the plainest in this view. No new fault.
+- **The ironmonger's square on at night: PASS.** The cut and the neighbours are out of frame. The reflections moved left and are a little clearer, none worse. Nothing burns, leaks or floats. No new fault.
+  - Noted: its shut display is about 25% darker at night, with the room unchanged and the day view unchanged. Its last good dates from before the tea rooms came in, when, by the tea rooms' own gate (their night view from the right, try 1), a neighbour's window light could reach this display through the party wall. The tea rooms' light keeps its shadows now. Read as the leak gone, not a fault, and listed under "little fill at night".
+- **The ironmonger's from the left at night: PASS.** The cut is unseen from this low angle. The newsagent's new lit front meets it cleanly, and the glass lost a large pale ghost. No new fault.
+  - The set-aside smoke shows faintly at night here too (3 to 8 levels over near-black). Its listing now says "mostly by day".
+- **The ironmonger's from the right at night: PASS.** The tea rooms' cut top shows only a thin bed moulding under the soffit, with no open edge or gap, and its sill ends cleanly at the pilaster. The pavement now reads, lit by the tea rooms' window. The door glass lost a warm smear. The shut display is darker, within the known amount. No new fault. **The ironmonger's views are all done in this gate** (its square view by day listed with the set-aside smoke).
+- **The newsagent's square on by day: PASS.** The only change is one reflection patch, which now shows the family grocer's opposite, correctly mirrored, consistent with the rest of the reflected street. It is no brighter and edged on natural lines. No new fault.
+- **The newsagent's from the left by day: PASS.** The front's top is unchanged. One reflection band moved, with a faint new smear (x 1564 to 1640, y 413 to 428), counted under the set-aside smoke. The joins are unchanged. No new fault.
+  - Noted, not new: a flat white patch on the ground at the foot of no. 20's wall (x 2051 to 2166, y 860 to 920) reads as a sky-white hole in the pavement. It belongs to the pavement, not this gate.
+- **The newsagent's from the right by day: PASS.** The ironmonger's top in frame is unchanged, with no tan strip. The top panes lost a hard pale ghost, and the door glass lost a sharp white rectangle for a soft band (no worse, the till clearer). The joins are unchanged. No new fault.
+- **The newsagent's square on at night: PASS.** The soft red and yellow ghosts of the shop's own goods on the glass over the counter are gone, as the new glass pictures intend. The rest is glints. No new fault.
+- **The newsagent's from the left at night: PASS.** The lit box sign is unchanged, the glass is within noise, and the woodwork is a few percent dimmer, its sheen no longer catching the window's own goods. No new fault.
+- **The newsagent's from the right at night: PASS.** The tea rooms' new lit front meets the eave with no gap. The door glass lost its blotchy ghosts. No new fault.
+
+## The gate's end: every view passes or is listed
+
+- All 24 shop views and both street cameras were reviewed, one reviewer each, beside each view's last good picture.
+- **The cut** passes everywhere it can be seen: the tan strips on the slates are gone, and nothing raw shows at the cut.
+- **Listed with its fault:** the ironmonger's square view by day, two soft white smears on its glass at the lids' height (the set-aside smoke, FINDINGS.md).
+- **Kept as known:** the ironmonger's shut display reads about 25% darker at night, read as the old leak through the party wall gone.
+- **Noted for the pavement, not new:** a flat white patch at the foot of no. 20's wall.
+- **Last good pictures:** F:/LedgerTools/gate/last-good/{tea-rooms,ironmonger,newsagent} (r1). Preview: production/previews/west-row-eaves-2026-10-23.jpg (the three across the road, by day).

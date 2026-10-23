@@ -19,6 +19,25 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 23 Oct 2026, item 5: delivered fronts fitted under a lower eave than they were designed for, and one rule for street grime, checked
+- Made:
+  - three delivered shopfronts cut under a single-storey row's eave;
+  - a stated rule, enforced by a check, for whether a front that carries its own wear also takes the street's projected grime;
+  - two tries at a night fill light for a café window, both set aside.
+- Method (setting-free):
+  - A front designed for a taller host can stand into the host's roof. Cut the front at the eave in the step that wears it, so both copies agree; keep a thin bed moulding under the gutter. Gate every view that sees the top, and every view whose picture changed for any reason.
+  - A rule that has held only by habit gets a check: each worn front must state its street grime, with a note when it keeps it.
+  - A reviewer may misname a known shortfall seen from a new angle (a downpipe's narrow face newly exposed). Send the specific evidence back to the same reviewer; do not overrule.
+  - A fill light from behind the goods lights only faces the camera cannot see. A shadowless fill from above lifts the burns before the shadows. Research how shopfitters light a window's floor before a third try.
+  - A stray smudge band on glass that survives every setting test, and a sharper stored picture, is not settled by more switches. The next step is a frame capture.
+- Tools: the wear bake with a cut height, the readying step with smoothing by angle, the homes check, the glass bake, the page cameras, fresh reviewers one view each.
+- Target and check: the three fronts' gates (24 views and both street cameras, each beside its last good picture); the build's homes check.
+- Cost (hours): about 3, 10:15 to 13:15 (the reviews two at a time).
+- Failed and why:
+  - The fill light twice: it is the wrong kind of light for the shadow it was meant to lift.
+  - Storing the glass pictures sharper did not change the smoke, so resolution is not its cause.
+- Evidence: production/audits/gate-west-eaves/GATE.md; tools/homes_check.py (fronts); production/specs/shop-fronts/*-front-wear.json (clip_top_m)
+
 ### 23 Oct 2026, item 5: a fifth delivered shop, with a recessed lobby, worn in the same round as its gate
 - Made: a designed shop in the street's bay: its front with a glass fascia and a recessed door lobby, its window display, its room pictures, and its front's foot wear.
 - Method (setting-free):

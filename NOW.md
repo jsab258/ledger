@@ -15,13 +15,13 @@ Phase 1 closed 22 Oct, no exit passed (production/audits/phase1-exit/CLOSE-2026-
 ## His order of 21 October
 
 - [x] 1 to 4: DECISIONS.md, 21 Oct.
-- [ ] 5 Six shop pieces passed (gate-grocer/GATE.md); owed: eaves, fill light, decals.
+- [ ] 5 Six shop pieces passed; eaves cut, grime rule (gate-west-eaves/GATE.md); fill set aside.
 - [x] 6 Frame rate: P1-PACKAGED-2026-10-21.md.
 - [x] 7 Set aside; next go after Monday: TOM-MOTION-MATCHING-2026-10-22.md.
 - [x] 8 Speech: GEMINI-CHECK-2026-10-22.md.
 - [x] 9 Close phase 1: CLOSE-2026-10-22.md.
 
-STATE (23 Oct 08:40): the grocer's passed; its jar smoke set aside.
+STATE (23 Oct 13:15): grocer passed; west eaves gated; next shop.
 
 ## Handovers
 

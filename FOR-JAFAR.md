@@ -23,7 +23,7 @@ No decision asked: these are for watching the street change.
 
 <!-- /morning pictures -->
 
-**Your week's order, where it stands (23 October, 08:45; the 22 October overview is in git).**
+**Your week's order, where it stands (23 October, 13:30; the 22 October overview is in git).**
 - *1 to 4.* Done 21 October: health check, branches home, your rules and combat doc, the editor connection.
 - *5, the cloud's pieces.* Done for the lamp and the shops whose designs passed, each through the game's gate (fresh reviewers, one per view):
   - Lamp post C stands at the four lamp spots, stained: run-off and lime from its arm, rust at its door plate, algae at its foot.
@@ -33,10 +33,11 @@ No decision asked: these are for watching the street change.
   - **The tea rooms** (no. 14): the shop passed all ten views after eight rounds of night fixes, and its wear too. Every bay of the west row now has its designed front.
   - **The grocer's** (no. 11, on the parade): the shop and its wear passed all ten views in ten rounds. Fixed on the way: its design's toy tomatoes (now real onions), a grey glass sign, a floating roll, a cut-off letter, its opening hours hanging in the air in front of its recessed door, and tins striped under the night light.
     - Set aside after two tries: a faint grey smoke on the glass above the jar lids by day (listed; next, a frame capture to find its cause).
-  - New fronts no longer take the street's old grime, which had landed on the newsagent's pale paint with hard edges; they carry their own.
+  - New fronts no longer take the street's old grime, which had landed on the newsagent's pale paint with hard edges; they carry their own. One rule now, checked by the build: each worn front states it (Rita's and the ironmonger's keep the old grime, as passed).
+  - **The west row's three fronts** are cut under their low eave: the tan strip on the slates is gone, all 26 views passed (production/previews/west-row-eaves-2026-10-23.jpg).
   - Listed:
-    - on the one-storey row, the designs' cornices sit above the gutter (one fix owed for the three);
-    - deep shadows under the tea rooms' table at night;
+    - deep shadows under the tea rooms' table at night (two tries at a fill light failed; set aside);
+    - a faint smoke on shop glass over dark goods by day (the grocer's jars, two smears on the ironmonger's glass), cause not found;
     - the street lamp's orange glare on the pale newsagent.
   - Pictures: production/previews/ironmonger-2026-10-22.jpg, newsagent-2026-10-22.jpg, tea-rooms-2026-10-23.jpg, grocer-2026-10-23.jpg.
 - *6, frame rate.* Done: the packaged walk's worst frame 30.3 ms (it was 63), P1 closed by a fresh review (production/research/pre-production/P1-PACKAGED-2026-10-21.md).
