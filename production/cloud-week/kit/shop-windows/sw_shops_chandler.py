@@ -46,6 +46,8 @@ def _map_wall(gm, i0, f):
 
 
 FILL_W = (20.0, 30.0)          # the low fill (day, night_lit): found with qroom.py, 1280 x 580, 16 samples (see NOTES.md)
+#: the sou'westers set aside (23 Oct, the game's gate: twice rebuilt, they read as hard hats, then as pith helmets; see display())
+SOUWESTERS_SET_ASIDE = True
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------- the room
@@ -344,9 +346,13 @@ def display(d):
     # front brim at the top, the long neck flap hanging down (the game's gate, square on, try 2: tipped 30 degrees, seen from above,
     # they read as smooth plastic domes with no neck flap; at the review's 60 they showed only a dome on a disc), with its seams and
     # stitching
-    for k, uc in enumerate((1.45, 2.30)):
-        GB.souwester_hung(sg, (X(uc), rail2_v, rail2_w + 0.010), s=hs, mi=0, mi_tie=1, mi_seam=2, hang="wall", drop=0.19, seed=11 + k)
-    d.gm_object("sou_westers", sg, sw_m, "scripted", "script:oilskin_sou_wester", tier="rail", smooth=True)
+    # SET ASIDE (23 October, the game's gate, square on, round 3): rebuilt twice, the hats read as pith helmets crown-on; by the design's
+    # own rule for goods that read as another trade's (the grocer's tomatoes), they and their card leave the window until a modelled or
+    # scanned oilskin hat is found. The rail stays for the rope.
+    if not SOUWESTERS_SET_ASIDE:
+        for k, uc in enumerate((1.45, 2.30)):
+            GB.souwester_hung(sg, (X(uc), rail2_v, rail2_w + 0.010), s=hs, mi=0, mi_tie=1, mi_seam=2, hang="wall", drop=0.19, seed=11 + k)
+        d.gm_object("sou_westers", sg, sw_m, "scripted", "script:oilskin_sou_wester", tier="rail", smooth=True)
     # ---- the front row (v 0.13), each piece at a place of its own (14 Oct: the window's mullions, at u 1.10 to 1.15 and 2.20 to 2.25, stood across the second oil tin and the first can, DSP-03 read 0.44; the pieces
     # stand clear of them): oil tins, the compasses on a riser 80 mm high (flat on the bed they lie under the sill's 40 mm: 0.22), two lanterns, two oil cans (the third does not fit between the mullion and the blowtorch)
     # and the blowtorch
@@ -425,7 +431,7 @@ def display(d):
     d.gm_object("pyramid_backing", gm, [back_m], "support", "script:backing_board")
     # ---- price cards, each before the goods it prices (14 Oct, tea rooms close review narrow 2): a stake card on the bed before the goods on the bed (the lifebuoy, the oil tins, the compasses, the lamps, the cans, the
     # paint, the blowtorch), a card on a cord from the goods that hang (the jackets' hem, the sou'westers' rail, the big rope coil)
-    texts = ["LIFEBUOY\n\u00a312.50", "JACKETS\n\u00a39.95", "ROPE\n85p a metre", "SOU'WESTERS\n\u00a32.95", "LAMPS\n\u00a34.20", "COMPASS\n\u00a35.50", "OIL TINS\n\u00a31.60", "OIL CANS\n\u00a31.35", "PAINT\n\u00a33.45", "BLOWTORCH\n\u00a37.25"]
+    texts = ["LIFEBUOY\n\u00a312.50", "JACKETS\n\u00a39.95", "ROPE\n85p a metre", "SOU'WESTERS\n\u00a32.95", "LAMPS\n\u00a34.20", "COMPASS\n\u00a35.50", "OIL TINS\n\u00a31.60", "OIL CANS\n\u00a31.35", "PAINT\n\u00a33.45", "BLOWLAMP\n\u00a37.25"]   # 23 Oct: BLOWLAMP, the British trade's word (two of the game's reviewers)
     path = os.path.join(tex, "price_cards.png")
     uvs = GEN.card_atlas(path, texts, cols=4, tile=(256, 128), size=40)
     pm = [d.image_mat("price_cards", path, rough=0.8), d.mat("stake", rgb8(60, 60, 62), rough=0.5, metal=0.7)]
@@ -447,5 +453,6 @@ def display(d):
     hung_card(1, 1.12, 0.40, (hz1 if hz1 is not None else jacket_hem) - 0.0015)
     hz2 = GB.hit_up(d, X(2.62), coil_front[2] + 0.004, 0.90)   # the coil's lowest turn, found by a ray (the card hangs just inside its front face)
     hung_card(2, 2.62, coil_front[2] + 0.004 - 0.0005 if hz2 is not None else coil_front[2] - 0.003, (hz2 if hz2 is not None else coil_bottom[2]) - 0.0015)
-    hung_card(3, 2.44, rail2_v - 0.004, rail2_w - 0.010)
+    if not SOUWESTERS_SET_ASIDE:
+        hung_card(3, 2.44, rail2_v - 0.004, rail2_w - 0.010)
     d.display_texts = list(GEN.TEXTS) + [t.replace("\n", " ") for t in texts]

@@ -51,3 +51,13 @@
     - **Measured:** street_glass_eg_bay6 is the whole window and the shop door (street x 40.39 to 44.66); eg_bay7 is only the side door's fanlight. So the edge lies inside one pane's picture: the newsagent's gable reflected, and left of it the even overcast sky.
     - Open sky outshines a shop kept dim by day, as real glass does, but it hides the goods the design shows.
     - **Fix, try 2 (the last for this fault):** that pane reflects at 0.4 by day, below a true reflection, as games keep a window's goods readable. Every view retaken as r3.
+
+## Round 3 (r3: the window's day reflection at 0.4)
+
+- **Measured:** door glass 176, then 113, now 64; left pane 179, then 127, now 88; the clear panes about 59.
+- **Square on by day: FAIL** on the hats alone. With the wash gone, both read as pith helmets crown-on (a round dome, four seams meeting at a peak, a stiff round brim, the flap only an off-centre brim). Each crown also has a shading pinch at its peak.
+  - **Set aside, removed:** by the design's own rule for goods that read as another trade's (the grocer's tomatoes), the two hats and their card leave the window (sw_shops_chandler.py SOUWESTERS_SET_ASIDE) until a modelled or scanned oilskin hat is found. The rail stays for the rope.
+  - **A narrow point fixed with it:** the blowlamp's card reads BLOWLAMP, the British trade's word, as two reviewers asked.
+- Every view retaken as r4.
+- **Across the road by day (r3): PASS.** F1 is gone: the door glass is 59 to 63 where r2 read 109 to 112, and the added light is about 4% of white in linear terms (19% in r2), what plain glass reflects from an overcast sky near normal incidence. The goods keep their colour, and the door reads as dark glass with a sheen, its buoy showing. No new fault.
+  - Narrow points, not failing: the reflection's edge down the middle pane is now faint, under the listed stair-steps; the sheen reaches below eye level in the lower left pane and the door.
