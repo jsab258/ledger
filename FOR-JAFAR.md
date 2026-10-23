@@ -31,6 +31,7 @@ No decision asked: these are for watching the street change.
   - **The ironmonger's** (no. 16): the shop passed all eight views, and its wear too.
   - **The newsagent's** (no. 18): the shop and its wear passed all ten views. Its box sign now lights after dark.
   - **The tea rooms** (no. 14): the shop passed all ten views after eight rounds of night fixes, and its wear too. Every bay of the west row now has its designed front.
+  - **The grocer's** (no. 11, on the parade): the other designs each failed their close review on one point. The grocer's was the simplest, scripted tomatoes its own rule sets aside, so it comes next. Its gate is under way.
   - New fronts no longer take the street's old grime, which had landed on the newsagent's pale paint with hard edges; they carry their own.
   - Listed:
     - on the one-storey row, the designs' cornices sit above the gutter (one fix owed for the three);
@@ -78,7 +79,7 @@ Your page today (https://claude.ai/artifact/VNFZHnSWBrA72zGKRbwFRn) asks three, 
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
 
-## Builder, Friday 23 October (written 05:05, for your morning)
+## Builder, Friday 23 October (written 06:47, for your morning)
 
 **Failed:**
 - **Phase 1's exits** (walk, period clothes, speech within 2 s, frame headroom) still fail; you held phase 2 for them.
@@ -88,6 +89,7 @@ Your page today (https://claude.ai/artifact/VNFZHnSWBrA72zGKRbwFRn) asks three, 
 **Done:**
 - **The ironmonger's, the newsagent's and the tea rooms'** shops and their wear passed every view. The whole west row now has its designed fronts.
 - **The newsagent's box sign** lights after dark; new fronts no longer take the street's old grime.
+- **The grocer's** (no. 11, the parade) is coming in. Its design's own fault is fixed: the toy-like tomatoes are replaced by real onions. Three game faults are fixed too: a grey glass sign, a floating roll, a cut-off letter. Its review is under way.
 - **The tester's walk** ran 13 of 15 stages; the white-vest townsfolk still break the illusion.
 
 **Act on:** today's page, three taps (the walk's next go, Marvelous Designer, the Gemini switch): https://claude.ai/artifact/VNFZHnSWBrA72zGKRbwFRn
