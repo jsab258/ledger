@@ -2797,6 +2797,9 @@ INTERIOR_PICTURE = {
     ("west_north", 0): ("production/art/shop-rooms/newsagent_day", (0.0, 0.0, 1.0, 1.0)),
     ("west_north", 1): ("production/art/shop-rooms/ironmonger_day", (0.0, 0.0, 1.0, 1.0)),
     ("west_north", 2): ("production/art/shop-rooms/tea_room_day", (0.0, 0.0, 1.0, 1.0)),
+    # THE CHANDLER'S (23 October, the next shop family as Rita's): its bay had the lit card and no room on it; its own
+    # shop-room.py picture of 7 October names the card for the game, which lays the cloud's room pictures over it.
+    ("east_chandler", 0): ("production/art/shop-rooms/chandler_day", (0.0, 0.0, 1.0, 1.0)),
 }
 #: How brightly a pictured room glows, by day and at night. By day it stands
 #: where the plain card stood, about the sheet's own window value; at night
@@ -3210,7 +3213,7 @@ KIT_REPLACES_PREFIX = ("shop_door_", "side_door_")
 #: 23 October, morning: the grocer's (east_parade bay 5), its tomatoes set aside after its close review.
 CLOUD_FRONTS = {("east_parade", 2): "ritas-front", ("west_north", 1): "ironmonger-front",
                 ("west_north", 0): "newsagent-front", ("west_north", 2): "tea-rooms-front",
-                ("east_parade", 5): "grocer-front"}
+                ("east_parade", 5): "grocer-front", ("east_chandler", 0): "chandler-front"}
 #: a cloud front with no side door of its own (23 October: the grocer's, the parade's one bay without one in this spec too)
 CLOUD_FRONTS_NO_SIDE_DOOR = {"grocer-front"}
 #: how far back a cloud front's recessed lobby may hold its door's glass (the grocer's, 0.55 behind its wall face)
@@ -5476,7 +5479,9 @@ def plan_parts(p, bay=0, party_wall=True):
     # a Victorian shop. Two of the largest painted areas on the whole street
     # were the two that were not painted.
     here = (p.get("block_id"), bay)
-    refit_of = SHOPFRONT_REFITS.get(here)
+    # A DESIGNED FRONT TAKES THE BAY WHOLE (23 October, the chandler's): its own front is the metal refit the
+    # street drew here, so the bay is built as any other and the cloud's front replaces its joinery (CLOUD_REPLACES).
+    refit_of = SHOPFRONT_REFITS.get(here) if here not in CLOUD_FRONTS else None
     pier_name, pier_rgb = FASCIA_PAINT[bay % len(FASCIA_PAINT)]
     if refit_of and "paint" in refit_of:
         pier_name, pier_rgb = refit_of["paint"]

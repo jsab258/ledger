@@ -529,6 +529,92 @@ def souwester(gm, cx, cy, z0, s=1.0, mi=0, mi_seam=1, n=36, face=-1.0):
             gm.rod(a, b, 0.0016 * s, mi_seam, 5)
 
 
+def souwester_hung(gm, knot, s=1.0, mi=0, mi_tie=1, flap=1.0, tilt_deg=60.0, drop=0.17, n=40, seed=0):
+    """A sou'wester hung by its chin ties from a rail (23 October, the game's readying of the chandler's; its close review F1:
+    the hemispherical crown with raised seams, a nearly flat front brim and one long lobe turned into the shop read as a
+    builder's hard hat with a visor). Built to the review's exact fix:
+      * the crown an oblate dome 0.70 r_c high on a 15 mm upright band, four soft panels with no raised seams, a little
+        vertex noise so the oilskin is soft, not a shell;
+      * the brim all the way round and sloping down, 55 mm at 30 degrees over the front and sides, widening smoothly to
+        130 mm at 45 degrees at the back (the neck flap), 3 mm thick;
+      * two 3 mm cotton ties from inside the brim at the ears to a knot over the rail;
+      * the hat tipped so its crown faces the street (-y) at `tilt_deg`, and turned about its axis so the neck flap runs
+        along the window (`flap` +1 toward +x, -1 toward -x), so from 35 degrees it reads short front, long back.
+    `knot` is the point on the rail where the ties are knotted; the crown's base centre hangs `drop` below it."""
+    rng = random.Random(seed)
+    r_c = 0.098 * s
+    band, h = 0.015 * s, 0.70 * 0.098 * s
+    a = math.radians(tilt_deg)
+    yaw = -math.pi / 2 if flap > 0 else math.pi / 2           # the local back (+y) turned to +x or -x
+
+    def place(p):
+        x, y, z = p
+        x, y = x * math.cos(yaw) - y * math.sin(yaw), x * math.sin(yaw) + y * math.cos(yaw)
+        y, z = y * math.cos(a) - z * math.sin(a), y * math.sin(a) + z * math.cos(a)
+        return (cx + x, cy + y, cz + z)
+    kx, ky, kz = knot
+    cx, cy, cz = kx, ky - 0.02 * s, kz - drop
+    # the crown: a band, then an oblate dome, softened
+    V, F, rings = [], [], []
+    prof = [(r_c, 0.0), (r_c, band)]
+    nlat = 7
+    for j in range(1, nlat + 1):
+        phi = (math.pi / 2) * j / nlat
+        prof.append((r_c * math.cos(phi), band + h * math.sin(phi)))
+    for k, (rad, z) in enumerate(prof):
+        idx = []
+        for i in range(n):
+            th = 2 * math.pi * i / n
+            soft = 0.0 if k == 0 else rng.uniform(-0.0015, 0.0015) * s * (rad / r_c)     # none at the crown's top, where the panels meet
+            rr = max(rad + soft, 0.0)
+            # four panels: a faint inward crease at each seam, not a raised rod
+            crease = 0.0012 * s * max(0.0, math.cos(2 * th) ** 16) if 0 < k < len(prof) - 1 else 0.0
+            idx.append(len(V))
+            V.append(place((max(rr - crease, 0.0) * math.cos(th), max(rr - crease, 0.0) * math.sin(th), z)))
+        rings.append(idx)
+    for j in range(len(rings) - 1):
+        for i in range(n):
+            i2 = (i + 1) % n
+            F.append((rings[j][i], rings[j][i2], rings[j + 1][i2], rings[j + 1][i]))
+    gm.add(V, F, mi)
+    # the brim: all round, sloping down, the neck flap at the local back (+y)
+    nb = 5
+    V, F, ringsb = [], [], []
+    for j in range(nb + 1):
+        t = j / float(nb)
+        idx = []
+        for i in range(n):
+            th = 2 * math.pi * i / n
+            b = (1.0 + math.sin(th)) / 2.0                     # 0 at the front (-y), 1 at the back (+y), smooth (a cosine) between
+            w = (0.055 + 0.075 * b) * s
+            ang = math.radians(30.0 + 15.0 * b)
+            rad = r_c + t * w * math.cos(ang)
+            z = -t * w * math.sin(ang)
+            idx.append(len(V))
+            V.append(place((rad * math.cos(th), rad * math.sin(th), z)))
+        ringsb.append(idx)
+    for j in range(nb):
+        for i in range(n):
+            i2 = (i + 1) % n
+            F.append((ringsb[j][i], ringsb[j][i2], ringsb[j + 1][i2], ringsb[j + 1][i]))
+    gm.add(V, F, mi)
+    under = []
+    for j in range(nb + 1):
+        t = j / float(nb)
+        for i in range(n):
+            th = 2 * math.pi * i / n
+            b = (1.0 + math.sin(th)) / 2.0
+            w = (0.055 + 0.075 * b) * s
+            ang = math.radians(30.0 + 15.0 * b)
+            under.append(place(((r_c + t * w * math.cos(ang)) * math.cos(th), (r_c + t * w * math.cos(ang)) * math.sin(th), -t * w * math.sin(ang) - 0.003 * s)))
+    gm.add(under, [tuple(reversed(f)) for f in F], mi)
+    # the chin ties: from inside the brim at the ears (local +-x) up to the knot
+    for sx in (1.0, -1.0):
+        ear = place((sx * (r_c - 0.004 * s), 0.0, 0.004 * s))
+        gm.rod(ear, (kx + sx * 0.006 * s, ky, kz - 0.006 * s), 0.0015 * s, mi_tie, 6)
+    gm.rod((kx - 0.012 * s, ky, kz - 0.004 * s), (kx + 0.012 * s, ky, kz - 0.004 * s), 0.004 * s, mi_tie, 8)    # the knot over the rail
+
+
 def shackle(gm, cx, cy, z, s=1.0, mi=0, face_y=True):
     """A bow shackle seen from the front, lying flat on a wall (the ring in the xz plane): a U of steel rod (a torus half, two straight legs) and a pin across the open end with a head. `s` scales it."""
     R, rr = 0.022 * s, 0.0045 * s

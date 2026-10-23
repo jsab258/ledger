@@ -32,7 +32,7 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
   - A stray smudge band on glass that survives every setting test, and a sharper stored picture, is not settled by more switches. The next step is a frame capture.
 - Tools: the wear bake with a cut height, the readying step with smoothing by angle, the homes check, the glass bake, the page cameras, fresh reviewers one view each.
 - Target and check: the three fronts' gates (24 views and both street cameras, each beside its last good picture); the build's homes check.
-- Cost (hours): about 3, 10:15 to 13:15 (the reviews two at a time).
+- Cost (hours): about 1.7, 08:50 to 10:30 (the reviews two at a time).
 - Failed and why:
   - The fill light twice: it is the wrong kind of light for the shadow it was meant to lift.
   - Storing the glass pictures sharper did not change the smoke, so resolution is not its cause.
@@ -53,7 +53,7 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
   - Delivered goods can be flat-shaded low-poly models. Under a strong, hard night light each face reads as a stripe, though by day they pass. Smooth such goods by angle at the readying step: set each corner's normal from the faces meeting at its point, since flat-shaded faces share no vertices. Check the night views first.
   - A dark wedge appeared in one take and was gone in the next. Retake once before calling such a thing a fault.
 - Target and check: the delivering team's passed design, and the game's gate: ten views, ten rounds; each changed view was reviewed again beside its last good picture.
-- Cost (hours): about 5, from 05:00 to 10:15, with about 50 minutes of diagnostic launches.
+- Cost (hours): about 4.5, from 05:00 to 09:40, with about 50 minutes of diagnostic launches.
 - Failed and why:
   - The smoke on the jar lids' glass: the cause was not found in two tries (set aside, listed).
   - The first wear bake made bronze flat paint.

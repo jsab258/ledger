@@ -21,7 +21,7 @@ Phase 1 closed 22 Oct, no exit passed (production/audits/phase1-exit/CLOSE-2026-
 - [x] 8 Speech: GEMINI-CHECK-2026-10-22.md.
 - [x] 9 Close phase 1: CLOSE-2026-10-22.md.
 
-STATE (23 Oct 13:15): grocer passed; west eaves gated; next shop.
+STATE (23 Oct 10:30): grocer passed; west eaves gated; next shop.
 
 ## Handovers
 

@@ -1,0 +1,162 @@
+{
+ "what": "the glass panes taken out of chandler_front.glb (tools/art-recipes/front_for_game.py): each pane's box in the front's own frame (metres; x across from the viewer's left to right about the bay's middle; y = -(out from the wall face); z above the footway); the street recipe builds the street's own glass there (terrace-front.py CLOUD_FRONTS)",
+ "source": "production/assets/cloud-week/shop-windows/chandler_front.glb",
+ "panes": [
+  {
+   "name": "band_toplight_glass_0",
+   "min": [
+    -1.66,
+    -0.0357,
+    2.48
+   ],
+   "max": [
+    -1.3833,
+    -0.0303,
+    2.79
+   ]
+  },
+  {
+   "name": "band_toplight_glass_1",
+   "min": [
+    -1.3413,
+    -0.0357,
+    2.48
+   ],
+   "max": [
+    -1.0647,
+    -0.0303,
+    2.79
+   ]
+  },
+  {
+   "name": "band_toplight_glass_2",
+   "min": [
+    -1.0227,
+    -0.0357,
+    2.48
+   ],
+   "max": [
+    -0.746,
+    -0.0303,
+    2.79
+   ]
+  },
+  {
+   "name": "door_glass_0",
+   "min": [
+    -1.609,
+    -0.046,
+    0.192
+   ],
+   "max": [
+    -0.797,
+    -0.04,
+    1.974
+   ]
+  },
+  {
+   "name": "fanlight_glass",
+   "min": [
+    -1.658,
+    -0.0357,
+    2.127
+   ],
+   "max": [
+    -0.748,
+    -0.0303,
+    2.404
+   ]
+  },
+  {
+   "name": "glass_fanlight",
+   "min": [
+    -2.5826,
+    -0.0825,
+    2.1115
+   ],
+   "max": [
+    -1.7734,
+    -0.0795,
+    2.3907
+   ]
+  },
+  {
+   "name": "win_glass_lower_0",
+   "min": [
+    -0.66,
+    -0.036,
+    0.625
+   ],
+   "max": [
+    0.408,
+    -0.03,
+    2.4
+   ]
+  },
+  {
+   "name": "win_glass_lower_1",
+   "min": [
+    0.442,
+    -0.036,
+    0.625
+   ],
+   "max": [
+    1.508,
+    -0.03,
+    2.4
+   ]
+  },
+  {
+   "name": "win_glass_lower_2",
+   "min": [
+    1.542,
+    -0.036,
+    0.625
+   ],
+   "max": [
+    2.61,
+    -0.03,
+    2.4
+   ]
+  },
+  {
+   "name": "win_glass_top_0",
+   "min": [
+    -0.66,
+    -0.036,
+    2.48
+   ],
+   "max": [
+    0.408,
+    -0.03,
+    2.79
+   ]
+  },
+  {
+   "name": "win_glass_top_1",
+   "min": [
+    0.442,
+    -0.036,
+    2.48
+   ],
+   "max": [
+    1.508,
+    -0.03,
+    2.79
+   ]
+  },
+  {
+   "name": "win_glass_top_2",
+   "min": [
+    1.542,
+    -0.036,
+    2.48
+   ],
+   "max": [
+    2.61,
+    -0.03,
+    2.79
+   ]
+  }
+ ]
+}

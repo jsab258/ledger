@@ -184,6 +184,56 @@
    "pictures_note": "23 October: the cloud's room, built on the PC at 128 samples; lit at night by its design, shut at 17.30, so its card reads CLOSED."
   },
   {
+   "id": "chandler",
+   "block": "east_chandler",
+   "bay": 0,
+   "trade": "ship's chandler (no. 13): life jackets, sou'westers, rope, a lifebuoy, lanterns, boots, compasses, oil tins and cans, a paint pyramid and a blowlamp in a metal-framed 1980s refit (production/cloud-week/targets/shop-windows, the chandler)",
+   "room": {
+    "w": 5.3,
+    "h": 2.4,
+    "d": 4.5
+   },
+   "card": {
+    "x0": 40.35,
+    "x1": 45.65,
+    "bottom": 0.65,
+    "top": 3.05,
+    "z": 5.875
+   },
+   "decal": "production/art/shop-rooms/chandler_day",
+   "pictures": "production/art/shop-rooms/chandler-cloud",
+   "side": 1,
+   "camera_d": 5.3,
+   "pixels_wide": 4096,
+   "lit_at_night": true,
+   "brightness_day": 0.15,
+   "brightness_night": 0.7,
+   "spill_lumens": 60,
+   "spill_y": 5.33,
+   "spill_up": 2.42,
+   "spill_x": 42.025,
+   "spill_width": 2.6,
+   "spill_shadow_bias": 2.0,
+   "spill_shadow_slope_bias": 2.0,
+   "display": {
+    "glb": "chandler-display",
+    "x0": 40.35,
+    "x1": 43.7,
+    "front": 5.27,
+    "bed": 0.7,
+    "measured": "the cloud's display (production/cloud-week/kit/shop-windows, build_shop.py display, built on the PC 23 October, its sou'westers rebuilt to its close review's fix): its window zone u 2300 to 5650 mm from the viewer's left (side door and shop door at the viewer's left), street x 43.70 to 40.35 on the east (street x = 46 - u/1000), 0.025 m behind the front's wall face (5.295) and 0.60 m above the footway, as Rita's; made ready with its linings to the window head, a head board, and its tins shaded round (front_for_game.py --raise, --head, --smooth)"
+   },
+   "front": {
+    "glb": "chandler-front",
+    "x": 43.0,
+    "z": 5.295,
+    "up": 0.1,
+    "note": "23 October 2026 (his message of 22 October: the next shop family the same way as Rita's): the cloud's whole front for the chandler's bay (east_chandler bay 0, street x 40 to 46), a metal 1980s refit with a tiled stallriser, its side door and hall at the viewer's left; made ready by tools/art-recipes/front_for_game.py, its glass lettering cut-out (--mask); its frame's origin is the bay's middle (street x 43) at its wall face on the footway.",
+    "door_sign_closed": "production/art/shop-signs/door-card-closed",
+    "street_decals": false
+   }
+  },
+  {
    "id": "ironmonger",
    "block": "west_north",
    "bay": 1,

@@ -330,21 +330,21 @@ def display(d):
         jackets_names.extend(nm_)
         jacket_hem = d.items[-1]["ext"][4]
     sg = GM()
-    sw_m = [d.mat("oilskin_yellow", rgb8(176, 138, 20), rough=0.32), d.mat("oilskin_seam", rgb8(150, 110, 20), rough=0.5)]
-    strap = GM()
+    # 23 October (the game's readying; close review F1, the hats read as hard hats): the review's oilskin, a little darker so the crowns
+    # do not burn at night, and cotton ties
+    sw_m = [d.mat("oilskin_yellow", rgb8(164, 132, 28), rough=0.28), d.mat("cotton_tie", rgb8(200, 190, 160), rough=0.9)]
     rail2_w, rail2_v, hs = 1.28, 0.12, 0.85
     gm2 = GM()
     gm2.rod((X(1.15), rail2_v, rail2_w), (X(2.95), rail2_v, rail2_w), 0.010, 0, 12)
     for xx in (1.18, 2.92):
         gm2.rod((X(xx), rail2_v, rail2_w + 0.008), (X(xx), rail2_v, 1.55), 0.002, 0, 6)
     d.gm_object("rail_front", gm2, [rail_m], "support", "script:crate")
-    crown_top = (0.04 + 0.112) * hs
-    hat_z = rail2_w - 0.012 - 0.035 - crown_top
-    for uc in (1.45, 2.30):
-        GB.souwester(sg, X(uc), rail2_v, hat_z, s=hs, mi=0, mi_seam=1, face=-1.0)
-        strap.rod((X(uc), rail2_v, rail2_w - 0.008), (X(uc), rail2_v, hat_z + crown_top + 0.001), 0.0022, 0, 6)
+    # each hat hangs by its chin ties knotted over the front rail, its crown tipped 30 degrees toward the street (at the review's 60 it
+    # faced the street square and showed only a round dome on a disc), its neck flap along the window
+    # (the left hat's front toward +x, the right's toward -x)
+    for k, uc in enumerate((1.45, 2.30)):
+        GB.souwester_hung(sg, (X(uc), rail2_v, rail2_w + 0.010), s=hs, mi=0, mi_tie=1, flap=-1.0 if k == 0 else 1.0, tilt_deg=30.0, seed=11 + k)
     d.gm_object("sou_westers", sg, sw_m, "scripted", "script:oilskin_sou_wester", tier="rail", smooth=True)
-    d.gm_object("sou_wester_straps", strap, [d.mat("strap", rgb8(60, 52, 44), rough=0.8)], "support", "script:crate")
     # ---- the front row (v 0.13), each piece at a place of its own (14 Oct: the window's mullions, at u 1.10 to 1.15 and 2.20 to 2.25, stood across the second oil tin and the first can, DSP-03 read 0.44; the pieces
     # stand clear of them): oil tins, the compasses on a riser 80 mm high (flat on the bed they lie under the sill's 40 mm: 0.22), two lanterns, two oil cans (the third does not fit between the mullion and the blowtorch)
     # and the blowtorch

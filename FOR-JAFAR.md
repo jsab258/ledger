@@ -23,7 +23,7 @@ No decision asked: these are for watching the street change.
 
 <!-- /morning pictures -->
 
-**Your week's order, where it stands (23 October, 13:30; the 22 October overview is in git).**
+**Your week's order, where it stands (23 October, 10:30; the 22 October overview is in git).**
 - *1 to 4.* Done 21 October: health check, branches home, your rules and combat doc, the editor connection.
 - *5, the cloud's pieces.* Done for the lamp and the shops whose designs passed, each through the game's gate (fresh reviewers, one per view):
   - Lamp post C stands at the four lamp spots, stained: run-off and lime from its arm, rust at its door plate, algae at its foot.
@@ -78,7 +78,7 @@ Your answers are recorded: the walk's next go by Epic's MetaHuman route after Mo
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
 
-## Builder, Friday 23 October (06:47, updated 08:45)
+## Builder, Friday 23 October (06:47, updated 09:40)
 
 **Failed:**
 - **Phase 1's exits** (walk, period clothes, speech within 2 s, frame headroom) still fail; you held phase 2 for them.
