@@ -370,7 +370,7 @@ def display(d):
     """The launderette's window (target `shops.steam_laundry.display`, 6 item rows; bed 3.35 x 0.55; "SERVICE WASHES" is lettered on the glass, 4.1): a 20 mm laminate bed cover (script:laundry_shelf_board), and on it
     left to right five stacks of folded towels (0.30 x 0.45 footprint, 6 to 9 towels of 0.05, each stack leaning 1 to 3 degrees, mixed colours, the folded edge and a coloured border to the street), two wicker baskets
     (wicker_basket_01 at its own size, a heap of laundry in each), the hand-lettered SERVICE WASHES card on two posts behind the baskets (in the right-hand light: the mullion stood across it in the middle), and ten detergent items on the right (four large boxes on a low step at the back, in
-    front three packets, two washing-up bottles and a bleach bottle; every maker invented: HOLME, BRIGHTWELL, FERNSIDE, LINDEN, ASHDOWN, MEADOWS). Whites are toned (0.85): pure white packaging burns under the gate's night
+    front three packets, two washing-up bottles and a bleach bottle; every maker invented: HOLME, CLAYBROOK (BRIGHTWELL until 23 October: a real firm in the trade, its close review's fault 3), FERNSIDE, LINDEN, ASHDOWN, MEADOWS). Whites are toned (0.85): pure white packaging burns under the gate's night
     spill (PIC-05g). The shop is dark at night, so nothing here is lit by the shop."""
     _setup()
     import sw_room_gen as RG
@@ -395,9 +395,12 @@ def display(d):
     for c in base:
         cols.append(c)
         cols.append(tuple(min(255, int(v * 1.14)) for v in c))
+    # 23 Oct, the PC (its close review's fault 1, "plaid cushions"): the review's exact fix (sw_goods_b.towel_folded): a fine soft weave and one
+    # border band across, a terry normal map at roughness 1.0, the folded edge a half round, each towel jittered and sagging
     tp = os.path.join(tex, "towel_tiles.png")
-    tuv = GB.towel_atlas(tp, cols)
-    tm = d.image_mat("towel_tiles", tp, rough=0.95)
+    tuv = GB.towel_atlas_fine(tp, cols)
+    tn = GB.terry_normal(os.path.join(tex, "towel_terry_normal.png"))
+    tm = d.image_mat("towel_tiles", tp, rough=1.0, normal=tn, normal_strength=0.6)
     stacks = [(0.17, 8, 0), (0.47, 6, 1), (0.77, 9, 2), (1.07, 7, 3), (1.37, 6, 4)]
     gm = GM()
     for si, (uc, n, bi) in enumerate(stacks):
@@ -407,9 +410,10 @@ def display(d):
             uv = tuv[bi * 2 + (k % 2)]
             off = math.tan(math.radians(lean)) * (z0 + 0.05 * k)
             xj = rnd.uniform(-0.004, 0.004)
-            GB.towel_box(gm, (X(uc) + off + xj, 0.31 + rnd.uniform(-0.004, 0.004), z0 + 0.05 * k + 0.0245), 0.30, 0.049, 0.45, yaw + rnd.uniform(-1.2, 1.2), 0, uv)
-    ob, _ = d.gm_object("folded_towels", gm, [tm], "scripted", "script:folded_towels", tier="board")
-    GB.chamfer(ob, 0.012, 3, angle=20.0)
+            GB.towel_folded(gm, (X(uc) + off + xj, 0.31 + rnd.uniform(-0.004, 0.004), z0 + 0.05 * k + 0.0245), 0.30 + rnd.uniform(-0.010, 0.0),
+                            0.45 + rnd.uniform(-0.010, 0.0), 0.049, yaw + rnd.uniform(-1.2, 1.2), 0, uv)
+    ob, _ = d.gm_object("folded_towels", gm, [tm], "scripted", "script:folded_towels", tier="board", smooth=True)
+    ob.data.set_sharp_from_angle(angle=math.radians(40.0))      # the round shaded smooth, the flat ends kept sharp
     # ---- two wicker baskets with laundry heaped in each (three lumps of cloth in two or three colours: sheets and a towel)
     cloth = [[d.mat("laundry_a1", rgb8(176, 196, 210), rough=0.95), d.mat("laundry_a2", rgb8(226, 214, 190), rough=0.95), d.mat("laundry_a3", rgb8(176, 104, 96), rough=0.95)],
              [d.mat("laundry_b1", rgb8(214, 176, 124), rough=0.95), d.mat("laundry_b2", rgb8(150, 176, 154), rough=0.95), d.mat("laundry_b3", rgb8(216, 206, 196), rough=0.95)]]
@@ -444,11 +448,11 @@ def display(d):
     d.gm_object("service_card_posts", gm, [post_m], "support", "script:crate")
     # ---- the detergents: four large boxes on a low step at the back, in front three packets, two washing-up bottles and a bleach bottle
     designs = [("HOLME", "SOAP FLAKES", "for woollens", (60, 110, 170), (244, 240, 224), (220, 70, 60), "drop"),
-               ("BRIGHTWELL", "WASHING\nPOWDER", "2 kg", (200, 60, 50), (246, 240, 220), (240, 200, 70), "star"),
+               ("CLAYBROOK", "WASHING\nPOWDER", "2 kg", (200, 60, 50), (246, 240, 220), (240, 200, 70), "star"),
                ("MEADOWS", "BIOLOGICAL\nPOWDER", "1.5 kg", (60, 130, 90), (246, 242, 226), (236, 200, 80), "leaf"),
                ("ASHDOWN", "FABRIC\nSOFTENER", "1 litre", (226, 170, 190), (70, 40, 70), (90, 150, 200), "wave"),
                ("HOLME", "SOAP FLAKES", "1 kg", (236, 200, 70), (50, 70, 130), (200, 60, 60), "drop"),
-               ("BRIGHTWELL", "AUTOMATIC", "3 kg", (50, 90, 150), (244, 240, 224), (240, 190, 60), "sun"),
+               ("CLAYBROOK", "AUTOMATIC", "3 kg", (50, 90, 150), (244, 240, 224), (240, 190, 60), "sun"),
                ("LINDEN", "WASHING SODA", "1 kg", (120, 170, 190), (30, 50, 90), (240, 240, 230), "wave"),
                ("MEADOWS", "STARCH", "500 g", (236, 232, 214), (150, 40, 50), (60, 100, 150), "ear")]
     pk = os.path.join(tex, "detergents.png")

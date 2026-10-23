@@ -143,7 +143,8 @@ class Room:
         self.mats[name] = m
         return m
 
-    def image_mat(self, name, path, tile_m=None, rough=0.7, alpha=False, nonc=False, tint=None):
+    def image_mat(self, name, path, tile_m=None, rough=0.7, alpha=False, nonc=False, tint=None, normal=None, normal_strength=1.0):
+        """`normal`: a tangent-space normal map on the same texture coordinates (23 Oct, the PC: the launderette's towels' terry pile)."""
         m = bpy.data.materials.new(name)
         m.use_nodes = True
         nt = m.node_tree
@@ -162,6 +163,14 @@ class Room:
         nt.links.new(t.outputs["Color"], p.inputs["Base Color"])
         if alpha:
             nt.links.new(t.outputs["Alpha"], p.inputs["Alpha"])
+        if normal:
+            ni = nt.nodes.new("ShaderNodeTexImage")
+            ni.image = bpy.data.images.load(normal, check_existing=True)
+            ni.image.colorspace_settings.name = "Non-Color"
+            nm = nt.nodes.new("ShaderNodeNormalMap")
+            nm.inputs["Strength"].default_value = normal_strength
+            nt.links.new(ni.outputs["Color"], nm.inputs["Color"])
+            nt.links.new(nm.outputs["Normal"], p.inputs["Normal"])
         p.inputs["Roughness"].default_value = rough
         self.mats[name] = m
         return m

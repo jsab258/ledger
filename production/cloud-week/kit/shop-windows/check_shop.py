@@ -40,6 +40,10 @@ near = CR.near
 Rows = CR.Rows
 
 
+# 23 Oct 2026, the PC: real firms found after the target was frozen (his ruling of 11 October: the target is not edited), so the
+# check fails them all the same. BRIGHTWELL: Brightwell Dispensers Ltd, Newhaven, laundry detergent dosing (the launderette's close review, fault 3).
+PC_BRAND_BLOCKLIST = ["brightwell"]
+
 def glb_of(assets, name):
     return os.path.join(assets, name)
 
@@ -402,7 +406,7 @@ def inventory_rows(ctx, rows, assets, di, shop_texts, goods_note, pending=None):
     missing = [s for s in goods_scripts if s not in inv["scripted"] or not inv["scripted"][s].get("why")]
     rows.add("INV-04", "scripted goods are the listed ones and carry a why", not missing, "scripted goods in this build: %s; each is a key of inventory.scripted with its why%s; supports that carry goods and are not goods (named in NOTES.md, in `Changes after the build`): %s; no fish, crab or prawn" % (
         ", ".join(goods_scripts) or "none", ("; MISSING: %s" % missing) if missing else "", ", ".join(goods_note.get("supports", [])) or "none"))
-    block = [b.lower() for b in inv["brand_blocklist"]]
+    block = [b.lower() for b in inv["brand_blocklist"]] + PC_BRAND_BLOCKLIST
 
     def hitb(n, b):
         return word_hit(n, b, brand=True)
@@ -885,7 +889,7 @@ def never_rows_front(ctx, rows, assets, texts):
     names |= set(texts)
     cb = inv["content_blocklist"]
     words = [w for k in cb for w in cb[k]]
-    block = [b.lower() for b in inv["brand_blocklist"]]
+    block = [b.lower() for b in inv["brand_blocklist"]] + PC_BRAND_BLOCKLIST
 
     def hit(n, w):
         return word_hit(n, w)

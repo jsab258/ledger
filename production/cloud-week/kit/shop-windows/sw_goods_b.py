@@ -284,6 +284,122 @@ def towel_box(gm, c, w, h, t, yaw_deg, mi, uvr, vband=(0.44, 0.56)):
     gm.add(V, F, mi, uv)
 
 
+# ---------------------------------------------------------------------------------------------------------------------------------- folded towels, try 2 (23 Oct, the PC)
+# The launderette's close review, fault 1: the towels read as plaid cushions (a 2 cm check in strong light and dark, rigid slabs of one thickness with
+# one small bevel all round, two border stripes running front to back). Its exact fix: the weave at a sixth of its size (cells about 3 mm) and a third
+# of its contrast; a terry pile as a real normal map; the folded edge to the street a half round of half the towel's thickness, the other edges 5 mm;
+# each towel's width and depth jittered by up to 10 mm and its top sagging 3 mm in the middle; one woven border band, 40 mm wide, across each towel
+# 50 mm behind the folded edge.
+def towel_atlas_fine(path, bases, tile=512, seed=2, depth_m=0.45, band_m=(0.05, 0.09), weave_div=6):
+    """One square tile per towel colour (the whole towel's top: u across, v from the folded edge, v up): ambientCG Fabric020's luminance shrunk to a
+    sixth (`weave_div`) and tiled, at g = 0.85 + 0.15 x the weave, times the colour, with one darker woven band across at `band_m` behind the folded
+    edge. Returns {index: (u0, v0, u1, v1)}."""
+    fetch_fabric020()
+    src = Image.open(FABRIC020).convert("L")
+    small = src.resize((max(8, src.size[0] // weave_div), max(8, src.size[1] // weave_div)), Image.LANCZOS)
+    w = np.asarray(small, np.float32)
+    reps = (tile // w.shape[0] + 1, tile // w.shape[1] + 1)
+    weave = np.tile(w, reps)[:tile, :tile]
+    weave = weave / max(float(weave.mean()), 1e-6)
+    n = len(bases)
+    cols = 4
+    rows = (n + cols - 1) // cols
+    atlas = np.zeros((rows * tile, cols * tile, 3), np.float32)
+    out = {}
+    # rows of the tile (image rows, top = far edge) that the band covers: v measured up from the folded edge
+    b0 = int(round(tile * (1.0 - band_m[1] / depth_m)))
+    b1 = int(round(tile * (1.0 - band_m[0] / depth_m)))
+    for k, c in enumerate(bases):
+        r_, c_ = k // cols, k % cols
+        g = 0.85 + 0.15 * weave
+        blk = np.empty((tile, tile, 3), np.float32)
+        blk[:] = np.array(c, np.float32)
+        blk *= g[..., None]
+        blk[b0:b1] *= 0.78                            # the woven band: the same weave, the colour darker
+        blk[b0:b0 + 2] *= 0.9
+        blk[b1 - 2:b1] *= 0.9
+        atlas[r_ * tile:(r_ + 1) * tile, c_ * tile:(c_ + 1) * tile] = blk
+        out[k] = (c_ * tile / (cols * tile), 1.0 - (r_ + 1) * tile / (rows * tile), (c_ + 1) * tile / (cols * tile), 1.0 - r_ * tile / (rows * tile))
+    Image.fromarray(np.clip(atlas, 0, 255).astype(np.uint8)).save(path)
+    return out
+
+
+def terry_normal(path, size=512, seed=5, depth_px_m=0.45, height_m=0.001):
+    """A terry pile as a tangent-space normal map (OpenGL green up, as glTF): a fine bump of smoothed noise, `height_m` deep, over a tile that spans
+    `depth_px_m` metres (about 600 bumps a metre at 512 px over 0.45 m: a bump every two pixels, smoothed so it does not alias)."""
+    from scipy import ndimage
+    rng = np.random.default_rng(seed)
+    h = ndimage.gaussian_filter(rng.normal(0, 1, (size, size)), 0.9, mode="wrap")
+    h = h / max(float(np.abs(h).max()), 1e-6) * height_m
+    px = depth_px_m / size
+    gy, gx = np.gradient(h, px)
+    nx, ny, nz = -gx, gy, np.ones_like(h)
+    ln = np.sqrt(nx * nx + ny * ny + nz * nz)
+    rgb = np.stack([nx / ln, ny / ln, nz / ln], -1) * 0.5 + 0.5
+    Image.fromarray(np.clip(rgb * 255.0, 0, 255).astype(np.uint8)).save(path)
+    return path
+
+
+def towel_folded(gm, c, w, t, h, yaw_deg, mi, uvr, sag=0.003, r_edge=0.005, nx=10, nseg=8, vband=(0.44, 0.56)):
+    """A folded towel w (x) by t (y, the folded edge at -y, toward the street) by h (z) centred on c, turned `yaw_deg` about the vertical: its cross-section
+    (y, z) is the bottom, a half round of radius h/2 at the folded edge, the top sagging `sag` in the middle, and a back edge rounded `r_edge`; extruded
+    along x in `nx` steps and closed by flat ends. The top and the bottom take the whole atlas tile `uvr` (v from the folded edge), the round and the
+    back the tile's middle band, the ends the band too."""
+    hx, hy, hz = w / 2.0, t / 2.0, h / 2.0
+    r = hz
+    prof = []                                                    # (y, z, s): s = 0 bottom, 1 round, 2 top, 3 back
+    for k in range(nseg + 1):                                    # the bottom, from the back to the round's foot
+        prof.append((hy - r_edge - (2 * hy - r - r_edge) * k / nseg, -hz, 0))
+    for k in range(1, nseg * 2):                                  # the half round at the folded edge, from its foot to its top
+        a = math.pi * k / (nseg * 2)
+        prof.append((-hy + r - r * math.sin(a), -r * math.cos(a), 1))
+    for k in range(nseg + 1):                                    # the top, from the round's top to the back
+        prof.append((-hy + r + (2 * hy - r - r_edge) * k / nseg, hz, 2))
+    for k in range(1, 4):                                        # the back edge, rounded
+        a = math.pi * k / 4
+        prof.append((hy - r_edge + r_edge * math.sin(a), hz * math.cos(a), 3))
+    ya = math.radians(yaw_deg)
+    ca, sa = math.cos(ya), math.sin(ya)
+    np_ = len(prof)
+    V = []
+    for i in range(nx + 1):
+        x = -hx + w * i / nx
+        fx = 1.0 - (2.0 * x / w) ** 2
+        for (y, z, s) in prof:
+            zz = z
+            if s == 2:                                           # the top sags in the middle
+                fy = 1.0 - (2.0 * y / t) ** 2
+                zz = z - sag * max(0.0, fx) * max(0.0, fy)
+            V.append((c[0] + x * ca - y * sa, c[1] + x * sa + y * ca, c[2] + zz))
+    u0, v0, u1, v1 = uvr
+
+    def q(a, b):
+        return (u0 + (u1 - u0) * a, v0 + (v1 - v0) * b)
+    b0, b1 = vband
+    F, UV = [], []
+    for i in range(nx):
+        ua, ub = i / nx, (i + 1) / nx
+        for j in range(np_):                                     # the profile is a closed loop: its last point joins its first
+            j1 = (j + 1) % np_
+            a_, b_ = i * np_ + j, (i + 1) * np_ + j
+            F.append((a_, b_, (i + 1) * np_ + j1, i * np_ + j1))
+            ya_, za_, s0 = prof[j]
+            yb_, zb_, s1 = prof[j1]
+            if s0 == s1 and s0 in (0, 2):
+                va, vb = (ya_ + hy) / t, (yb_ + hy) / t
+                UV.append([q(ua, va), q(ub, va), q(ub, vb), q(ua, vb)])
+            else:
+                fa, fb = j / np_, (j + 1) / np_
+                UV.append([q(ua, b0 + (b1 - b0) * fa), q(ub, b0 + (b1 - b0) * fa), q(ub, b0 + (b1 - b0) * fb), q(ua, b0 + (b1 - b0) * fb)])
+    # the two flat ends, each one polygon of the profile (convex: a box with rounded edges); the profile runs clockwise seen from +x, so
+    # in its own order it faces -x (the end at -w/2), reversed it faces +x
+    for i, rev in ((0, False), (nx, True)):
+        js = list(range(np_ - 1, -1, -1)) if rev else list(range(np_))
+        F.append(tuple(i * np_ + j for j in js))
+        UV.append([q(0.5 + 0.49 * prof[j][0] / hy, b0 + (b1 - b0) * (0.5 + 0.5 * prof[j][1] / hz)) for j in js])
+    gm.add(V, F, mi, UV)
+
+
 # ---------------------------------------------------------------------------------------------------------------------------------- bottles with a label whose text faces the street
 def bottle_atlas(path, tiles, tile=(512, 256)):
     """Labels for bottles made by `bottle` (a lathe wraps its label once round, ring 0 at +x, so the street faces u = 0.75): `tiles` = [(maker, product, colour_rgb, band_rgb)]: a paper label (cream) with a band top

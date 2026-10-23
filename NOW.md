@@ -21,7 +21,7 @@ Phase 1 closed 22 Oct, no exit passed (production/audits/phase1-exit/CLOSE-2026-
 - [x] 8 Speech: GEMINI-CHECK-2026-10-22.md.
 - [x] 9 Close phase 1: CLOSE-2026-10-22.md.
 
-STATE (23 Oct 14:55): order worked through; next, the launderette's design faults.
+STATE (23 Oct 15:40): order worked through; launderette's design faults begun (name, towels).
 
 ## Handovers
 
