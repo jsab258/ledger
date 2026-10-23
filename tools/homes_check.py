@@ -12,6 +12,10 @@ can compare today:
   atlas      once the atlas is in main (production/art/atlas-01/data/atlas.json), its street
              (length, road, pavements, the yard gap, Mickey's place) is the built street's
              (production/specs/vignette-scene.json).
+  fronts     a shop front that carries its own wear (production/specs/shop-interiors.json, a "-worn"
+             glb) states whether it also takes the street's projected grime ("street_decals"), with a
+             note when it does (23 October: the west row's fronts refuse it, Rita's and the
+             ironmonger's passed their gates with it on; one rule, stated per front, not left to a default).
 The port against the Core is compared by tools/port-golden-check.sh, the pieces against the
 scene by CoreTests.
 
@@ -96,8 +100,24 @@ def _same(a, b):
     return abs(float(a) - float(b)) < 1e-6
 
 
+def fronts(root=REPO):
+    """Each worn shop front states its street grime: "street_decals" false, or true with a "street_decals_note"."""
+    path = os.path.join(root, "production", "specs", "shop-interiors.json")
+    if not os.path.exists(path):
+        return []
+    out = []
+    for s in load("production/specs/shop-interiors.json", root).get("shops", []):
+        f = s.get("front")
+        if not isinstance(f, dict) or not str(f.get("glb", "")).endswith("-worn"):
+            continue
+        d = f.get("street_decals")
+        if d is None or (d is True and not f.get("street_decals_note")):
+            out.append("worn-front-grime-unstated:" + s.get("id", "?"))
+    return out
+
+
 def check(root=REPO, out=sys.stdout):
-    found = set(walkers(root) + plan(root) + atlas(root))
+    found = set(walkers(root) + plan(root) + atlas(root) + fronts(root))
     known_path = os.path.join(root, "production", "homes-known.json")
     known = {k["key"]: k for k in load("production/homes-known.json", root)["known"]} if os.path.exists(known_path) else {}
     new = sorted(found - set(known))
@@ -137,6 +157,11 @@ def selftest():
     t(check(d, sink) == 0, "a listed one passes")
     w("production/specs/street-people.json", {"people": [{"glb": "joe"}], "cast": [{"id": "rocco", "replaces": "joe"}]})
     t(check(d, sink) == 1, "a listed one that has ended fails until it is taken off the list")
+    w("production/specs/shop-interiors.json", {"shops": [{"id": "a", "front": {"glb": "a-front-worn"}},
+                                                        {"id": "b", "front": {"glb": "b-front-worn", "street_decals": False}},
+                                                        {"id": "c", "front": {"glb": "c-front-worn", "street_decals": True, "street_decals_note": "passed with it"}},
+                                                        {"id": "d", "front": {"glb": "d-front"}}]})
+    t(fronts(d) == ["worn-front-grime-unstated:a"], "a worn front that does not state its street grime is found; stated ones and clean copies are not")
     print("homes_check selftest: " + ("passed" if ok else "FAILED"))
     return 0 if ok else 1
 

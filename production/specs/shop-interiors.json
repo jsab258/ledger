@@ -95,6 +95,8 @@
    "front": {
     "glb": "ritas-front-worn",
     "glb_note": "22 October 2026: her front worn at the foot, the lever and the rails, baked into its own paints (tools/art-recipes/front_wear.py, production/specs/shop-fronts/ritas-front-wear.json; production/research/street-wear/FRONT-WEAR-BAKE-2026-10-22.md); 'ritas-front' is the clean copy.",
+    "street_decals": true,
+    "street_decals_note": "22 October: her front passed its wear gate and his page (he kept it as the shops' sample) with the street's splash, wash and damp on it over her own wear; kept as passed. 23 October, the rule for the family: a worn front refuses the street's grime unless its gates passed with it (tools/homes_check.py fronts).",
     "x": 18.0,
     "z": 5.295,
     "up": 0.1,
@@ -217,6 +219,8 @@
    "front": {
     "glb": "ironmonger-front-worn",
     "glb_note": "22 October 2026: his front worn at the foot, the lever and the rails, baked into its own paints as Rita's is (tools/art-recipes/front_wear.py, production/specs/shop-fronts/ironmonger-front-wear.json); 'ironmonger-front' is the clean copy.",
+    "street_decals": true,
+    "street_decals_note": "22 October: his front passed its wear gate with the street's splash, wash and damp on it over his own wear (the dark green takes them without hard edges, unlike the newsagent's pale paint); kept as passed. 23 October, the rule for the family: a worn front refuses the street's grime unless its gates passed with it (tools/homes_check.py fronts).",
     "x": 33.0,
     "z": 5.295,
     "up": 0.1,
