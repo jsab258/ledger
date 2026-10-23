@@ -8255,7 +8255,15 @@ namespace
 				const Value* Disp = Sh.Find("display");
 				if (Disp != nullptr && Disp->Type == T_OBJ)
 				{
-					if (AActor* DA = SpawnShopDisplay(World, *Disp, Side, DisplayNote)) { GInteriorActors.Add(DA); }
+					if (AActor* DA = SpawnShopDisplay(World, *Disp, Side, DisplayNote))
+					{
+						GInteriorActors.Add(DA);
+						// A SHUT SHOP'S WINDOW TAKES NO OTHER SHOP'S WINDOW LIGHT (23 October, frame headroom: with the window
+						// lamps casting shadows only near, a reviewer saw the tea rooms' lamp light the ironmonger's shut display
+						// through the party wall from 26 m off): its display stays off the window lamps' channel.
+						const Value* LitN = Sh.Find("lit_at_night");
+						if (!(LitN != nullptr && LitN->Type == T_BOOL && LitN->Bool)) { DA->Tags.Add(FName(TEXT("LedgerShutDisplay"))); }
+					}
 				}
 				const Value* Front = Sh.Find("front");
 				if (Front != nullptr && Front->Type == T_OBJ)
@@ -8291,6 +8299,7 @@ namespace
 						// Never a shop front (21 October, Rita's: its white bars a few centimetres from the
 						// panel burned as "neon strips", the fault of 1 October over again).
 						if (SA != nullptr && SA->ActorHasTag(FName(TEXT("LedgerShopFront")))) { continue; }
+						if (SA != nullptr && SA->ActorHasTag(FName(TEXT("LedgerShutDisplay")))) { continue; }
 						if (SA != nullptr && SA->GetStaticMeshComponent() != nullptr) { SA->GetStaticMeshComponent()->SetLightingChannels(true, true, false); }
 					}
 				}

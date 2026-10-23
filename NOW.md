@@ -23,7 +23,7 @@ Phase 1 closed 22 Oct, no exit passed (production/audits/phase1-exit/CLOSE-2026-
 - [x] The 87 ms stall: bundled pipeline cache, 0 misses (FINDINGS).
 - [ ] The card's spare time.
 
-STATE (23 Oct 23:00): night spare, try 2; package 5.
+STATE (24 Oct 00:20): night spare 2.6; shut-window fix, package 6.
 
 ## Handovers
 
