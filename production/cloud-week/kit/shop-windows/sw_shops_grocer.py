@@ -499,23 +499,14 @@ def display(d):
         ix, iy = j % 5, j // 5
         ox, oy = 2.88 + 0.036 + ix * 0.0725, 0.0825 + iy * 0.080
         d.piece("yellow_onion", ox, oy, GB.rest_z(d, ox - L / 2, oy, 0.036) if False else 0.07, rot=(0, 0, rnd.uniform(0, 6.28)), scale=1.0, tier="onions", tris=None)
-    d.crate("tomato_tray", 3.27, 3.72, 0.04, 0.30, 0.0, 0.06)
-    toms = [d.mat("tomato_a", rgb8(190, 38, 28), rough=0.30), d.mat("tomato_b", rgb8(206, 56, 36), rough=0.30), d.mat("tomato_c", rgb8(172, 34, 26), rough=0.30), d.mat("tomato_d", rgb8(214, 78, 40), rough=0.30)]
-    calyx = d.mat("tomato_calyx", rgb8(70, 120, 50), rough=0.6)
-    gm = GM()
-    hz = 0.026
-    for j in range(30):
-        lay, k = divmod(j, 20)
-        ix, iy = k % 4, k // 4
-        if lay == 0:
-            cx, cy, cz = X(3.27 + 0.06 + ix * 0.105), 0.075 + iy * 0.052, 0.06
-        else:
-            cx, cy, cz = X(3.27 + 0.11 + (ix % 3) * 0.105), 0.10 + (iy % 3) * 0.052, 0.06 + 0.040
-        rx = 0.042 * rnd.uniform(0.92, 1.06)
-        ts = [-math.pi / 2 + math.pi * t / 8.0 for t in range(1, 8)]
-        gm.lathe(cx, cy, cz, [(0.0, 0.0)] + [(rx * math.cos(t), hz * (1.0 + math.sin(t))) for t in ts] + [(0.0, 2 * hz)], mi=j % 4, n=14)
-        gm.lathe(cx, cy, cz + 2 * hz - 0.002, [(0.0, 0.0), (0.012, 0.0), (0.014, 0.003), (0.006, 0.006), (0.0, 0.006)], mi=4, n=8)
-    d.gm_object("tomatoes", gm, toms + [calyx], "scripted", "script:tomatoes", tier="tray", smooth=True)
+    # THE TOMATOES SET ASIDE (23 October, the PC, from the close review of 14 October, fault 1: "the tomatoes read as plastic
+    # toys", the failure of 3 October the target says to set them aside for): their tray holds Spanish onions, the scanned
+    # onion at its real size (DSP-06), laid as the onion tray's, under their own card
+    d.crate("spanish_onion_tray", 3.27, 3.72, 0.04, 0.30, 0.0, 0.06)
+    for j in range(18):
+        ix, iy = j % 6, j // 6
+        sx_, sy_ = 3.27 + 0.036 + ix * 0.0725, 0.0825 + iy * 0.080
+        d.piece("yellow_onion", sx_, sy_, 0.07, rot=(0, 0, rnd.uniform(0, 6.28)), scale=1.0, tier="onions", tris=None)
     d.crate("banana_crate", 3.74, 4.29, 0.04, 0.44, 0.0, 0.12)
     bd = d.dims("bananas")
     d.piece("bananas", 4.015, 0.135, 0.12, rot=(0, 0, 0), scale=0.9, tier="crate", tris=None)
@@ -523,7 +514,7 @@ def display(d):
     # ---- the price cards (14)
     # (14 Oct, from the tea rooms' close review, narrow 2: "the price cards stand before the wrong goods": the first set stood before whatever was nearest) each card stands before the goods it prices: the three
     # apple crates, the rolls, the two lemon crates (one card between them), the onions, the tomatoes, the bananas, and one card for each of the six jars' products (three jars of a product together on step A)
-    texts = ["APPLES\n29p lb", "COOKERS\n24p lb", "EATING\n32p lb", "ROLLS\n6 for 55p", "LEMONS\n8p each", "ONIONS\n19p lb", "TOMATOES\n45p lb", "BANANAS\n32p lb",
+    texts = ["APPLES\n29p lb", "COOKERS\n24p lb", "EATING\n32p lb", "ROLLS\n6 for 55p", "LEMONS\n8p each", "ONIONS\n19p lb", "SPANISH\nONIONS 22p", "BANANAS\n32p lb",
              "STRAWBERRY\nJAM 59p", "MARMALADE\n55p", "HONEY\n69p", "PICCALILLI\n49p", "PICKLED\nONIONS 65p", "BLACKCURRANT\nJAM 59p"]
     path = os.path.join(tex, "price_cards.png")
     uvs = GEN.card_atlas(path, texts, cols=4, tile=(256, 128), size=42)

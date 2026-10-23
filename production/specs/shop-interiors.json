@@ -129,6 +129,58 @@
    "display_lights_note": "22 October, his order (Rita's night light, after the 21 October gate set it aside): the cloud's design (production/cloud-week/kit/shop-windows/NOTES.md, rule 4 and PC-07), a strip 8 mm under the front edge of each tier's board (the middle tier's at v 0.20, w 0.377; the top's at v 0.24, w 0.727, in the display's frame: v back from the glass, w above the bed), 3.20 m long, tipped 30 degrees toward the back, 3000 K; the head light lowered for the top tier and the pavement alone. The lumens measured in the game's own square-on night camera (-PageShots=shopnight -PageShopX=17.6), set by the cloud's burnt-pixel bar (any channel at 250 on at most 1 per cent of the window): strips 40, 20, 10, 3, 2 and 1.5 against the head's 160, 120, 100, 80 and 60; at 1.5 and 60 the window is 0.6 per cent burnt (the projector's pink reel and the white vase under the head light), the middle tier 0.01, the bed 0.13 (the last good: 10 to 21). Game lumens, not a shop's: the night exposure sets the scale"
   },
   {
+   "id": "grocer",
+   "block": "east_parade",
+   "bay": 5,
+   "trade": "greengrocer and grocer (no. 7): fruit and vegetables in crates and trays on a sloping bed, jars and tins on stepped shelves, a counter with scales (production/cloud-week/targets/shop-windows, the grocer)",
+   "room": {
+    "w": 5.3,
+    "h": 2.4,
+    "d": 4.5
+   },
+   "card": {
+    "x0": 33.35,
+    "x1": 38.65,
+    "bottom": 0.65,
+    "top": 3.05,
+    "z": 5.875
+   },
+   "decal": "production/art/interiors-2026-09-23/int23_grocer",
+   "pictures": "production/art/shop-rooms/grocer-cloud",
+   "side": 1,
+   "camera_d": 5.3,
+   "pixels_wide": 4096,
+   "lit_at_night": true,
+   "brightness_day": 0.15,
+   "brightness_night": 0.7,
+   "spill_lumens": 60,
+   "spill_y": 5.33,
+   "spill_up": 2.42,
+   "spill_x": 35.497,
+   "spill_width": 2.6,
+   "spill_shadow_bias": 2.0,
+   "spill_shadow_slope_bias": 2.0,
+   "spill_note": "23 October: placed as the tea rooms' ended (their gate's lessons): just behind the glass and over the window alone (its zone u 1356 to 5650, street x 37.644 to 33.35 on the east, middle 35.497), 2.6 m wide, its shadows kept with a larger bias.",
+   "display": {
+    "glb": "grocer-display",
+    "x0": 33.35,
+    "x1": 37.644,
+    "front": 5.27,
+    "bed": 0.7,
+    "measured": "the cloud's display (production/cloud-week/kit/shop-windows, build_shop.py display, built on the PC 23 October, the tomatoes set aside for Spanish onions): its window zone u 1356 to 5650 mm from the viewer's left (the shop door at the viewer's left, no side door), street x 37.644 to 33.35 on the east (street x = 39 - u/1000), 0.025 m behind the front's wall face (5.295) and 0.60 m above the footway, as Rita's; made ready with its linings to the window head and a head board (front_for_game.py --raise, --head)"
+   },
+   "front": {
+    "glb": "grocer-front",
+    "x": 36.0,
+    "z": 5.295,
+    "up": 0.1,
+    "note": "23 October 2026 (his message of 22 October: the next shop family the same way as Rita's): the cloud's whole front for the grocer's bay (east_parade bay 5, street x 33 to 39), made ready by tools/art-recipes/front_for_game.py, its glass lettering cut-out (--mask); its frame's origin is the bay's middle (street x 36) at its wall face on the footway.",
+    "door_sign_closed": "production/art/shop-signs/door-card-closed",
+    "street_decals": false
+   },
+   "pictures_note": "23 October: the cloud's room, built on the PC at 128 samples; lit at night by its design, shut at 17.30, so its card reads CLOSED."
+  },
+  {
    "id": "ironmonger",
    "block": "west_north",
    "bay": 1,

@@ -3207,8 +3207,14 @@ KIT_REPLACES_PREFIX = ("shop_door_", "side_door_")
 #: October); a west bay is this recipe's same bay turned a half turn, so the front's frame maps the same way.
 #: 22 October, night: the newsagent's (west_north bay 0, no. 18), the next after his, the same way.
 #: 23 October, night: the tea rooms' (west_north bay 2, no. 14), the third of the west row's three.
+#: 23 October, morning: the grocer's (east_parade bay 5), its tomatoes set aside after its close review.
 CLOUD_FRONTS = {("east_parade", 2): "ritas-front", ("west_north", 1): "ironmonger-front",
-                ("west_north", 0): "newsagent-front", ("west_north", 2): "tea-rooms-front"}
+                ("west_north", 0): "newsagent-front", ("west_north", 2): "tea-rooms-front",
+                ("east_parade", 5): "grocer-front"}
+#: a cloud front with no side door of its own (23 October: the grocer's, the parade's one bay without one in this spec too)
+CLOUD_FRONTS_NO_SIDE_DOOR = {"grocer-front"}
+#: how far back a cloud front's recessed lobby may hold its door's glass (the grocer's, 0.55 behind its wall face)
+CLOUD_LOBBY_M = 0.80
 CLOUD_WALL_BEHIND_M = 0.17
 #: the piers behind the front's end pilasters (PC-04): 80 mm in from each bay edge, from just behind the
 #: pilasters' fronts (0.18 out from the front's wall face) to 0.45 back, to the cornice's top (3.55) and over
@@ -8933,7 +8939,7 @@ def selftest():
         leaves = {b["bay"] for b in row if b["id"].startswith("side_door_leaf")
                   or (b["id"].startswith("kit_side_door_") and b.get("material") == "paint_door")}
         # (a cloud front's side door is in the front's own mesh, 21 October)
-        leaves |= {kb for (blk, kb) in CLOUD_FRONTS if blk == p.get("block_id")}
+        leaves |= {kb for (blk, kb), nm in CLOUD_FRONTS.items() if blk == p.get("block_id") and nm not in CLOUD_FRONTS_NO_SIDE_DOOR}
         check("accept/exactly-one-bay-has-no-side-door",
               len(leaves) == p["bays"] - 1, "%d door(s) on %d bay(s)" % (len(leaves), p["bays"]))
         # THE KIT'S BAY (6 October): its box joinery gone, the kit standing in the opening zone, its
@@ -8946,8 +8952,11 @@ def selftest():
                     or b["id"].startswith(KIT_REPLACES_PREFIX + CLOUD_REPLACES_PREFIX)]
             check("accept/the-cloud-front's-bay-has-no-joinery-or-fascia-of-ours", not gone, ",".join(gone[:4]))
             glass = [b for b in kp if b["id"].startswith(("cloud_glass_", "kit_glass_"))]
+            # (a recessed lobby's door, fanlight and side glass stand deeper, up to CLOUD_LOBBY_M; the window's still in the front)
+            lobby = ("cloud_glass_door", "cloud_glass_fanlight", "cloud_glass_lobby")
             check("accept/the-cloud-front's-panes-stand-behind-the-frontage-where-the-front-holds-them",
-                  len(glass) >= 2 and all(0.05 < b["y0"] < b["y1"] < 0.20 for b in glass),
+                  len(glass) >= 2 and all(0.05 < b["y0"] < b["y1"] < (CLOUD_LOBBY_M + 0.2 if b["id"].startswith(lobby) else 0.20)
+                                          for b in glass),
                   ",".join("%.3f..%.3f" % (b["y0"], b["y1"]) for b in glass[:4]))
             check("accept/the-cloud-front's-display-has-its-three-lights", len(CLOUD_PANES.get((blk, kb), [])) == 3,
                   str(CLOUD_PANES.get((blk, kb))))
