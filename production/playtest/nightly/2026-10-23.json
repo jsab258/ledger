@@ -1,0 +1,80 @@
+{
+ "date": "2026-10-23",
+ "night": "F:/LedgerTools/nightly\\2026-10-23",
+ "events": 51,
+ "summary": {
+  "walk": {
+   "passed": 13,
+   "stages": 15,
+   "failed": [
+    "town-Ron: lost sight of Ron",
+    "town-Darren: Darren is not on the street"
+   ]
+  },
+  "noticed": {
+   "saw_the_deed": [],
+   "onlooker_lines": [
+    {
+     "t": 177.2,
+     "e": "onlookers",
+     "hour": 13,
+     "night": false,
+     "light": 1.0,
+     "measured": 14,
+     "_file": "2026-10-23-025452.jsonl"
+    }
+   ]
+  },
+  "knew_later": {
+   "rocco": [
+    "recognition"
+   ]
+  },
+  "greeted": [
+   {
+    "who": "Sheila",
+    "reached": true,
+    "detail": "open=1 words=seconds=0.18 heard=seconds=2.98"
+   },
+   {
+    "who": "Ron",
+    "reached": false,
+    "detail": "lost sight of Ron"
+   },
+   {
+    "who": "Darren",
+    "reached": false,
+    "detail": "Darren is not on the street"
+   }
+  ],
+  "replies": {
+   "n": 2,
+   "broke": 0,
+   "checked": 0,
+   "by_how": {
+    "own": 2
+   },
+   "seconds_median": 0.2,
+   "seconds_max": 0.2,
+   "source": "the walk's stand-in words with the real voice: not the real path"
+  },
+  "police_told_by": [],
+  "thats_all_i_know": {
+   "count": null,
+   "of": 60,
+   "note": "the bench's 60 calls all failed, so nothing was measured (bench.log)"
+  },
+  "illusion": {
+   "lines": [
+    "Townsfolk in plain white vests and shorts, some barefoot, standing stiffly in the default arms-down pose. Two stand frozen in the middle of the road, and the street has nobody in proper clothes (0300 step-026.jpg, step-040.jpg, 0254 step-001.jpg).",
+    "Rita's window is smashed, but the woman standing right beside it takes no notice, and the record says nobody saw it happen (0254 step-057.jpg).",
+    "At night down by the quay the street is almost pitch black: no street lamps, no lit windows, just dark outlines, and the town feels dead (0300 step-054.jpg, step-068.jpg, step-082.jpg, step-096.jpg).",
+    "Sheila says \"Morning\" while the camera shows only the player's hip and arm, so she can't be seen at all (0254 step-043.jpg). Ron was lost from sight and Darren never appeared, so two of the three greetings didn't happen.",
+    "The fog cuts the scene off in a flat white wall at the end of the streets, and a tall white shape stands there with no detail (0300 step-026.jpg, step-040.jpg)."
+   ],
+   "pictures": 12,
+   "source": "Claude Code, non-interactive, on the walk's pictures"
+  }
+ },
+ "paragraph": "**The town and Tom (the AI tester's walk of 2026-10-23, played as a player would, the stand-in's words):** the route 13 of 15 stages; failed: town-Ron: lost sight of Ron; town-Darren: Darren is not on the street. Who saw him break Rita's window: nobody the record names. Who showed they knew afterwards, and how: rocco (recognition). That is 1 people (same as the night before). \"That's all I know\" to a newcomer's sixty first questions (the real engine's words): not measured. Replies heard after a median 0.2 (same as the night before) s, at most 0.2 s (stand-in words, real voice; not the real path), 0 of 2 broke. What broke the illusion: Townsfolk in plain white vests and shorts, some barefoot, standing stiffly in the default arms-down pose. Two stand frozen in the middle of the road, and the street has nobody in proper clothes (0300 step-026.jpg, step-040.jpg, 0254 step-001.jpg).; Rita's window is smashed, but the woman standing right beside it takes no notice, and the record says nobody saw it happen (0254 step-057.jpg).; At night down by the quay the street is almost pitch black: no street lamps, no lit windows, just dark outlines, and the town feels dead (0300 step-054.jpg, step-068.jpg, step-082.jpg, step-096.jpg).."
+}
