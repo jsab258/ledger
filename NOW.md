@@ -23,7 +23,7 @@ Phase 1 closed 22 Oct, no exit passed (production/audits/phase1-exit/CLOSE-2026-
 - [ ] The 87 ms stall: named; bundled pipeline cache building.
 - [ ] The card's spare time.
 
-STATE (23 Oct 17:50): cache recorded; package 2 asked.
+STATE (23 Oct 20:00): package 2 failed; package 3 asked.
 
 ## Handovers
 
