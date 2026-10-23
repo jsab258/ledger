@@ -88,3 +88,21 @@ The grocer's (east_parade bay 5, no. 11) is the simplest, and it stands on the p
   - Next, research in another direction: a GPU capture of the glass's draw and the frame's later passes, not another setting.
 - **Kept, though it did not cure the smoke:** every catch leaves out the shop parts wholly behind its pane. A reflection holds only what is in front of the glass, and the street cameras are reviewed with it in this round.
 - The brief now lists the smoke as a known shortfall. Ten views are reviewed, one reviewer each.
+- **Across the road by day (r7): PASS.** The wear reads as real weathering: chips on the plinths' edges and mouldings (18% of the left plinth), splash on the lobby cheek thinning out about 0.6 m up, and a soft dust band about 15 cm high at the stallriser's foot. Nothing brighter anywhere. The glass is 0.65 levels from r5 on average. No new fault.
+- **Square on by day (r7): PASS.** No wear in shot (the frame ends at the clean bronze sill). The glass is unchanged against r5 (PSNR 48.8 dB). The jar smoke is faint here, within 0.3 of a level of r5. No new fault.
+- **From the left by day (r7): FAIL**, on a fault the earlier rounds missed. The hours lettering (MON-SAT 8-5.30 / WED 8-1 / SUN CLOSED) hung in the air at the lobby's mouth, at the front's plane, 0.56 m in front of the door that carries its OPEN card. It reads as lettering on the lobby's cream cheek, where the design has none.
+  - **The cause:** in the front builder (production/cloud-week/kit/shop-windows/sw_front.py make_glass_rows), a shop whose hours row was made like Rita's took her plate's depth, 39 mm, after the lobby's depth was taken off. Her door is flush with the frame; the grocer's stands 0.6 m back. Only the grocer and the launderette have recessed lobbies.
+  - **Fix, try 1:** the plate stands 39 mm behind the door's own glass (39 - lobby depth). The front was rebuilt, readied (--mask, --dull) and worn again; the plate now sits at 0.561 m, on the door's lower pane.
+  - **Also, a narrow point fixed:** the left plinth's chip region took in the lobby's cheek, flecked evenly to a level top 0.6 m up. It now stops at the plinth (-2.655 m), and the cheek keeps its dirt and splash.
+  - The wear itself reads as real chipped paint and street dirt. The glass is unchanged against r5, the jar smoke aside (set aside).
+- **From the right by day (r7): PASS.** The right plinth's chips sit on its arrises and tiers, and the stallriser's foot has a soft dirt wash across the slab joint. The middle and right lights' reflection is one softer roofline where r5 overlaid two. No goods in the reflection, no smoke here. No new fault.
+  - Narrow points, not failing: the reflected roofline's stair-steps are plainer now the overlay is gone (the same steps); a faint haze above it, 3% darker.
+- **The street's reverse camera (r7): PASS.** The grocer's lies just out of frame. Other windows' glass is the same or slightly cleaner (the fish shop's panes no longer grey in their lower half, its own goods now left out of its picture). No new fault.
+
+## Round 8 (r8: the hours plate on the door; the cheek's chips gone)
+
+- **Measured against r7:** the hours plate stands on the door's lower pane behind its glass, below the OPEN card, in both views that see the lobby. The cheek is clean cream, with its foot dirt.
+  - Square on: identical to r7 (no tile over noise), so its pass stands.
+  - From the right: the shop is unchanged. Only the glass's reflected roofline differs, back to r5's overlaid layers (a run-to-run change already passed in r5), so its pass stands.
+- **The street's hook camera (r7): PASS.** The grocer's sits cleanly in the parade, lettering the right way round; the lobby is hidden here, so r8's change cannot show. Mickey's, the fish shop's and Rita's glass reflect a little differently since every window was caught again, and none is worse. No new fault.
+- **From the left by day (r8): PASS.** The floating hours are gone from the cheek, which reads as a plain painted panel with a little grime at its foot. The plinth keeps its chips. No new fault.

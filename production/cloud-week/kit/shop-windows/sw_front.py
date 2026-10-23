@@ -1083,7 +1083,9 @@ def make_glass_rows(ctx, fasc_dir):
             if ctx.id == "ritas" or g.get("hours_like_ritas"):
                 # Rita's hours plate: the door's lower pane (the glazing bar at 1423 crosses 4.1's z 1.38); 14 Oct, try 2: a shop whose hours row was made like hers (sw_hours) stands where hers does
                 z_base = 1040.0 + base_from_bottom
-                d = 39.0
+                # behind the door's own glass: hers is flush with the frame, a recessed lobby's door stands lobby_depth back (23 Oct, the game's gate
+                # of the grocer's from the left: at 39.0 alone its hours hung in the air at the lobby's mouth, 0.56 m in front of its door)
+                d = 39.0 - ctx.lobby_depth
         u_ink = BAY_MID + (ctx.mid_x - xs) * 1000.0 if not ctx.west else BAY_MID + (xs - ctx.mid_x) * 1000.0      # u from the viewer's left
         sc_ = ROW_SCALE.get((ctx.id, rid), 1.0)          # (batch B) a row shrunk to fit a light, about its ink centre and baseline
         u0 = u_ink - ink_c * sc_

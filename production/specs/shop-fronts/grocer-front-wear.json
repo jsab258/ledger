@@ -53,7 +53,7 @@
       "name": "the left pilaster's plinth, by the lobby",
       "x": [
         -3.0,
-        -2.62
+        -2.655
       ],
       "z": [
         0.0,
@@ -62,7 +62,8 @@
       "amount": 1.0,
       "paints": [
         "paint_cream"
-      ]
+      ],
+      "note": "23 October, the gate from the left (r7): to -2.62 the region took in the lobby's cream cheek (x -2.65 to -2.63), flecked evenly to a level top 0.6 m up; it now stops at the plinth, the cheek keeping its dirt and splash (try 1)."
     },
     {
       "name": "the right pilaster's plinth",
