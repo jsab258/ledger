@@ -7825,6 +7825,7 @@ namespace
 		// end stood against the window's return and burned it white).
 		double Width = FMath::Max(100.0, (Card.Max.X - Card.Min.X) * 0.7);
 		bool bShadows = true;
+		double ShadowBias = -1.0, ShadowSlopeBias = -1.0;
 		if (Sh != nullptr)
 		{
 			// "spill_shadows": false (21 October, the close night review: a blocky dark camouflage on the
@@ -7838,6 +7839,12 @@ namespace
 			if (Su > 0.0) { At.Z = (float)(Su * 100.0); }
 			if (Sx > 0.0) { At.X = (float)(Sx * 100.0); }
 			if (Sw > 0.0) { Width = Sw * 100.0; }
+			// "spill_shadow_bias" and "spill_shadow_slope_bias" (23 October, the tea rooms' night gate from the right: just
+			// behind the glass the panel grazes the window card hung there, and its shadow map drew saw-tooth stripes across
+			// it; with no shadows at all it lit the next shop's display through the party wall): a larger bias for that one
+			// light, its shadows kept.
+			ShadowBias = LedgerStreet::NumOr(*Sh, "spill_shadow_bias", -1.0);
+			ShadowSlopeBias = LedgerStreet::NumOr(*Sh, "spill_shadow_slope_bias", -1.0);
 		}
 		double PitchDeg = -62.0;
 		FParse::Value(FCommandLine::Get(), TEXT("ShopSpillPitch="), PitchDeg);
@@ -7858,6 +7865,8 @@ namespace
 			RC->SetAttenuationRadius(900.0f);
 			RC->SetLightColor(FLinearColor(1.0f, 0.93f, 0.80f));     // a T12 "white" tube, about 3500 K
 			RC->SetCastShadows(bShadows);
+			if (ShadowBias > 0.0) { RC->SetShadowBias((float)ShadowBias); }
+			if (ShadowSlopeBias > 0.0) { RC->SetShadowSlopeBias((float)ShadowSlopeBias); }
 			// Its emitter is a bar of light, and on the wet road its mirror image
 			// was a hard white bar under the window (cam_B, 1 October); the window
 			// itself already reflects there through Lumen.

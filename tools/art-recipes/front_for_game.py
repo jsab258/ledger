@@ -8,7 +8,7 @@ rest joined into one mesh that keeps every material and texture.
     (a lit box sign: --night-glow=<material>=<the sign's emissive map>, dark until the game lights it;
      lettering on glass as solid cut-outs: --mask=<material>[,...];
      a display's side linings up to the window head: --raise=<material>:<metres>;
-     and a head board across their tops: --head=<material>)
+     and a head board across their tops, or at a height in the display's frame: --head=<material>[@<metres>])
     python tools/art-recipes/front_for_game.py --selftest
 
 WHY, 21 October 2026 (his order, item 5, and his ruling of the day: Rita's front as the family's
@@ -221,7 +221,7 @@ def raise_tops(obj, material, metres):
     return len(verts)
 
 
-def add_head(obj, material, thick=0.012):
+def add_head(obj, material, thick=0.012, at=None):
     """A DISPLAY'S HEAD (23 October, the tea rooms' night gate from the right: through the middle toplights, from below at
     a slant, the eye passed over the room's card into nothing, black; Rita's display has its own head and shows the
     room there). A board of `material` over the whole span of that material's faces, at their top, from the glass back
@@ -235,7 +235,7 @@ def add_head(obj, material, thick=0.012):
     vs = [v.co.copy() for f in bm.faces if f.material_index in slots for v in f.verts]
     x0, x1 = min(v.x for v in vs), max(v.x for v in vs)
     y0, y1 = min(v.y for v in vs), max(v.y for v in vs)
-    z1 = max(v.z for v in vs)
+    z1 = max(v.z for v in vs) if at is None else at
     res = bmesh.ops.create_cube(bm, size=1.0)
     for v in res["verts"]:
         v.co.x = x0 if v.co.x < 0 else x1
@@ -286,7 +286,9 @@ def main(src, name, display=False, glow=None, mask=None, raise_=None, head=None)
     for spec in raise_ or []:
         material, metres = spec.split(":")
         raised += raise_tops(joined, material, float(metres))
-    headed = add_head(joined, head) if head else 0
+    # (try 2, the same night: at the linings' top the board left a gap above the room's card, which stops lower, and the
+    # eye still passed through it; "<material>@<height>" puts the board at the card's top, in the display's own frame)
+    headed = add_head(joined, head.split("@")[0], at=float(head.split("@")[1]) if "@" in head else None) if head else 0
     out_dir = OUT_DISPLAY if display else OUT_GLB
     os.makedirs(out_dir, exist_ok=True)
     glb = os.path.join(out_dir, name + ".glb")

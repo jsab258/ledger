@@ -73,3 +73,50 @@ His message of 22 October: "the next shop family the same way as Rita's". After 
   - **The cause:** they came with round 3's move of the window's light panel to just behind the glass, where it grazes the card. It is the light's own shadow map at a grazing angle.
   - **Fix, try 1 of that fault:** the panel casts no shadows (spill_shadows false, the option made for Rita's goods).
   - Listed: the window's left side wall is the brightest surface in that frame (239, not clipped); the fanlight's 14 reads faint from that slant against its dark glass.
+
+## Round 6 (r6: the number solid, the linings to the head, the window light without shadows; every view retaken)
+
+- **From the right at night: FAIL.** The window card's stripes are gone (their ripple 1.07 to 0.35), and the 14, the door glass and the window's ends are clean.
+  - But two toplights over the middle light read near-black (means 8 and 13), there since r1 and not named before: from below at a slant the eye passes over the room's card into nothing.
+- **From the left at night: FAIL.** The far toplights now show the raised lining (fixed), but the same two middle toplights stay black.
+  - And with no shadows, the window's light reached through the party wall and lit the ironmonger's shut display (its crate 8 to 23, its tins 4 to 13).
+- **Fixes:**
+  - **The middle toplights:** the display gets a head board in its linings' plaster at their top, glass to card, as Rita's display has (front_for_game.py --head). This is try 1 of the middle-toplight fault, try 2 of the black-toplight fault from the left.
+  - **The stripes and the leak:** shadows back on (the leak's cause removed), with the panel's own shadow bias and slope bias at 2.0 against the engine's 0.5 (spill_shadow_bias, spill_shadow_slope_bias; VignetteShot.cpp SpawnShopSpill; both game targets built). This is try 2 of the stripes fault.
+
+## Round 7 (r7: shadows back with the bias, the head board at the linings' top)
+
+- **Measured against r6:**
+  - the ironmonger's display is dark again (9.7 to 3.9);
+  - the window card is clean with shadows on, so the stripes' try 2 holds;
+  - the middle toplights are still dark (about 10).
+- **The cause of the last:** the board stood at the raised linings' top, 3.50 m above the crown, while the room's card stops at 3.05. A rising line through the toplights passes over the card's top and under the board, into the gap.
+- **Try 2 of that fault:** the board at the card's own top (2.35 in the display's frame, whose bed is 0.70 above the crown). Its first placement (2.45, a frame misread) was rebuilt before any picture.
+
+## Round 8 (r8: the head board at the room's top; the final state)
+
+- **The middle toplights** show the head board (means 37 to 48 where they were about 10).
+- **From the right at night: PASS.** The card is clean, the toplights show the board, and there is no slot.
+  - Narrow point: a ragged shadow edge on the near chair's rail since the larger bias, reading as worn paint.
+- **From the left at night:** both r6 faults are fixed (toplights 44 with nothing near-black; the ironmonger's display dark, 3.4).
+  - The reviewer failed it on the depth of the shadows under the table and the cake stand, near-black with little fill.
+  - That look is the window light's with shadows on: rounds 4 and 5 had it, and their reviewers listed it as a shortfall (square on at night r4, "hard chair and table shadows"; from the left r5, "hard light-and-shadow bands").
+  - By the gate's rule (a known shortfall fails nothing alone) it passes with it listed. **Owed:** a soft fill light under the window head, shadowless, with a short reach so it cannot touch the next shop.
+- **Across the road at night, square on at night, reverse, hook: PASS** (r8).
+  - Across at night: the 14 solid, no slot, all nine toplights cream, both ends clean, nothing new clipped, the ironmonger's display unchanged.
+  - Square at night: the card evenly lit, the curtains bright without burning.
+  - Reverse: the front whole between the end house and the ironmonger's.
+  - Hook: a sliver of the front behind the lamp post and the crates.
+  - Narrow points listed: a ragged shadow edge on the near chair's rail; a fine stepped shadow edge on the right curtain; the cake stand's lower tier lit under the upper one.
+- **The day views** (across the road, square on, from the left and from the right) passed in r3. Measured between r3 and r8, their differences are small:
+  - across the road: a neighbouring roof's wet sheen at the frame's left edge, which varies between runs;
+  - from the right: the wet pavement's sky reflection, and a little in the toplights, where the board now stands;
+  - square on and from the left: means under 1 level, no large blocks.
+  - So their r3 verdicts stand.
+- **The gate's end: all ten views pass.** The last good pictures are r8's (F:/LedgerTools/gate/last-good/tea-rooms).
+- **Listed:**
+  - deep shadows under the table and cake stand at night (a soft, short-reach fill light owed);
+  - the cornice above the low eave (one fix owed for the row's three fronts);
+  - the kick plate brown, not brass;
+  - no ceiling tubes in the toplights;
+  - the street's downpipe at the corner.

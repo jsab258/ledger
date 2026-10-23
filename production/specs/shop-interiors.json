@@ -262,7 +262,8 @@
     "measured": "the cloud's display (production/cloud-week/kit/shop-windows, build_shop.py display, built on the PC 23 October): its window zone u 2300 to 5650 mm from the viewer's left (the tea rooms' doors stand at the viewer's left, sw_ctx zones), street x 26.30 to 29.65 on the west (street x = 24 + u/1000), 0.025 m behind the front's wall face (5.295) and 0.60 m above the footway. 23 October, its gate's first round: the newsagent's zone copied here (u 350 to 3700) stood the display 1.95 m left of its window."
    },
    "front": {
-    "glb": "tea-rooms-front",
+    "glb": "tea-rooms-front-worn",
+    "glb_note": "23 October 2026, night: its front worn at the foot, the lever and the rails, baked into its own paints as the other three fronts are (tools/art-recipes/front_wear.py, production/specs/shop-fronts/tea-rooms-front-wear.json); 'tea-rooms-front' is the clean copy (its fanlight's number a cut-out, --mask=glass_row_20).",
     "x": 27.0,
     "z": 5.295,
     "up": 0.1,
@@ -279,8 +280,9 @@
    "spill_up": 2.42,
    "spill_x": 27.975,
    "spill_width": 2.6,
-   "spill_shadows": false,
-   "spill_note": "23 October, its gate's night view across the road: at the default place (the card's middle, 27.0, 3.7 m wide) the panel's end stood against the window's left return (26.30; the tea rooms' window is at the bay's right, its doors at the left) and burned it white; over the window alone (26.30 to 29.65, middle 27.975), 2.6 m wide, just behind the glass, as Rita's (try 1). The same night, from the right: just behind the glass the panel grazed the hand-lettered window card hung there and drew saw-tooth stripes across it, the light's own shadow map at a grazing angle; it casts no shadows (spill_shadows false, as the option was made for Rita's goods' camouflage; try 1 of that fault).",
+   "spill_shadow_bias": 2.0,
+   "spill_shadow_slope_bias": 2.0,
+   "spill_note": "23 October, its gate's night view across the road: at the default place (the card's middle, 27.0, 3.7 m wide) the panel's end stood against the window's left return (26.30; the tea rooms' window is at the bay's right, its doors at the left) and burned it white; over the window alone (26.30 to 29.65, middle 27.975), 2.6 m wide, just behind the glass, as Rita's (try 1). The same night, from the right: just behind the glass the panel grazed the hand-lettered window card hung there and drew saw-tooth stripes across it, the light's own shadow map at a grazing angle; try 1 cast no shadows (spill_shadows false) and the stripes went, but the panel then lit the ironmonger's shut display through the party wall; try 2: shadows kept, a larger bias (spill_shadow_bias and spill_shadow_slope_bias 2.0, against the engine's 0.5).",
    "open_at_night": true
   }
  ]
