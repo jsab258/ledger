@@ -30,13 +30,13 @@ No decision asked: these are for watching the street change.
   - **Rita's front** (the shops' sample, which you kept): her night light and her wear passed every view.
   - **The ironmonger's** (no. 16): the shop passed all eight views, and its wear too.
   - **The newsagent's** (no. 18): the shop and its wear passed all ten views. Its box sign now lights after dark.
-  - **The tea rooms** (no. 14): the shop passed all ten views after eight rounds of night fixes. Its wear is in review this morning.
+  - **The tea rooms** (no. 14): the shop passed all ten views after eight rounds of night fixes, and its wear too. Every bay of the west row now has its designed front.
   - New fronts no longer take the street's old grime, which had landed on the newsagent's pale paint with hard edges; they carry their own.
   - Listed:
     - on the one-storey row, the designs' cornices sit above the gutter (one fix owed for the three);
     - deep shadows under the tea rooms' table at night;
     - the street lamp's orange glare on the pale newsagent.
-  - Pictures: production/previews/ironmonger-2026-10-22.jpg, newsagent-2026-10-22.jpg.
+  - Pictures: production/previews/ironmonger-2026-10-22.jpg, newsagent-2026-10-22.jpg, tea-rooms-2026-10-23.jpg.
 - *6, frame rate.* Done: the packaged walk's worst frame 30.3 ms (it was 63), P1 closed by a fresh review (production/research/pre-production/P1-PACKAGED-2026-10-21.md).
 - *7, the walk and the clothes.* The walk was rebuilt on Epic's sample with motion matching and measured on a set route. Starts, stops and turns slide 13 to 67 cm (the bar is 3), so it is set aside and off by default. Your current walk fails too: it slides on about half its steps, the right foot on every stride (production/research/sit-and-turn/TOM-MOTION-MATCHING-2026-10-22.md). Clothes: Epic's Fab items all load in 5.8, but the Techwear Outfit is modern sportswear and the Construction Presets are bare bodies, not clothes; none can dress the Hook sheet's people (Needs you 1).
 - *8, speech.* Done. **The Gemini test:** on the reply check, Gemini 3.5 Flash-Lite took 0.60 s at the median against Haiku's 0.97, but it let 3 invented details in 42 through where Haiku lets 1 (Needs you 2); Gemini 3.8 Flash was the most accurate but slower, 1.8 s (production/research/voice-latency/GEMINI-CHECK-2026-10-22.md). **Pocket no longer stalls the walk:** run at lower priority, the walk's slowest 1% is 20.6 ms (it was 34) and its worst 47 ms (it was 175). The one frame left over the bar is a separate stall that the usual card voice shows too (87 ms today), so the frame-rate margin is thinner than P1's close said (listed). **The real path with Pocket:** 20 checked replies, with the game open, first sound heard at 2.41 s at the median, the best yet (3.25 s before) but over 2 s. The model's first checked sentence alone now takes 2.10 s, so the voice is no longer the bottleneck (about $0.15 of your measuring dollar).
@@ -78,18 +78,16 @@ Your page today (https://claude.ai/artifact/VNFZHnSWBrA72zGKRbwFRn) asks three, 
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
 
-## Builder, Friday 23 October (written Thursday 23:57, for your morning)
+## Builder, Friday 23 October (written 05:05, for your morning)
 
 **Failed:**
-- **Phase 1 closed, no exit passing:** the walk, period clothes, speech within 2 s, frame headroom, the office's wear. You held phase 2: next week goes on these.
-- **Tom's motion-matched walk** slides 13 to 67 cm; your current walk slides too.
-- **Epic's garments** cannot dress 1990 people.
-- **The newsagent's first round:** the street's old grime stood on its new front with hard edges. Now a front with its own wear takes none.
+- **Phase 1's exits** (walk, period clothes, speech within 2 s, frame headroom) still fail; you held phase 2 for them.
+- **The tea rooms' night** failed seven times, each fault fixed within two tries: the display off its window, see-through curtains and number, black gaps, a burnt edge, a light leaking next door.
+- **Listed:** deep shadows under its table at night; the row's cornices above its low eave.
 
 **Done:**
-- **Gemini 3.5 Flash-Lite** is faster than Haiku but lets more invented details through. **Pocket TTS** no longer stalls the walk.
-- **Rita's night light and wear**, and **the lamp's staining**, passed every view.
-- **The ironmonger's shop and its wear** passed all eight views.
-- **The newsagent's shop and its wear** passed all ten views. Its box sign now lights after dark, and its card reads CLOSED.
+- **The ironmonger's, the newsagent's and the tea rooms'** shops and their wear passed every view. The whole west row now has its designed fronts.
+- **The newsagent's box sign** lights after dark; new fronts no longer take the street's old grime.
+- **The tester's walk** ran 13 of 15 stages; the white-vest townsfolk still break the illusion.
 
-**Act on:** today's page, three taps: https://claude.ai/artifact/VNFZHnSWBrA72zGKRbwFRn
+**Act on:** today's page, three taps (the walk's next go, Marvelous Designer, the Gemini switch): https://claude.ai/artifact/VNFZHnSWBrA72zGKRbwFRn

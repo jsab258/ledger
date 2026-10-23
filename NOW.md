@@ -15,13 +15,13 @@ Phase 1 closed 22 Oct, no exit passed (production/audits/phase1-exit/CLOSE-2026-
 ## His order of 21 October
 
 - [x] 1 to 4: DECISIONS.md, 21 Oct.
-- [ ] 5 Rita's, lamp, ironmonger, newsagent passed; next: tea rooms.
+- [ ] 5 Rita's, lamp, ironmonger, newsagent, tea rooms passed; west row done.
 - [x] 6 Frame rate: P1-PACKAGED-2026-10-21.md.
 - [x] 7 Set aside (two tries); next go asked: TOM-MOTION-MATCHING-2026-10-22.md.
 - [x] 8 Speech: GEMINI-CHECK-2026-10-22.md.
 - [x] 9 Close phase 1: CLOSE-2026-10-22.md.
 
-STATE (22 Oct 23:57): two more shops and their wear passed; the tea rooms next.
+STATE (23 Oct 05:01): the tea rooms passed; west row done.
 
 ## Handovers
 

@@ -19,6 +19,32 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 23 Oct 2026, item 5: a fourth delivered shop, mirrored and lit late, through eight gate rounds
+- Made: a designed shop open in the evening, its window lit with its card OPEN, in the last bay of a row of delivered fronts.
+- Method (setting-free):
+  - Never copy a placement from a neighbour's entry. Read each piece's own zones from its design: a mirrored layout puts the window at the other end of the bay.
+  - Point every page camera at the window's own middle, read from those zones.
+  - A see-through material in a delivered design is a risk in the game. Folded see-through cloth draws its back folds over its front, and see-through lettering takes the light volume's brightness whatever lights are meant to touch it. Write cloth solid and lettering as cut-outs.
+  - A black slot in a delivered room picture can be the picture itself: fixtures set short of a wall leave an unlit gap that renders black. Run fixtures to the wall and render again.
+  - When a window stands at the end of its room, close the box: side linings to the window head and a head board at the room's top, or a low eye at a slant sees past the room into nothing.
+  - Hang a window's light over the window alone. Its end against a side lining burns it.
+  - Keep its shadows. Without them it lit the next shop through the party wall. Kill grazing stripes with that one light's shadow bias instead.
+  - Check each fix's side effects in every view before the next round. Here each night fix showed a new fault in another view.
+- Tools: the delivering team's builder and room renderer, the readying recipe (--mask, --raise, --head, solid cloth), the game's spill-light keys (place, width, shadow bias), page cameras at the window's middle, fresh reviewers a view.
+- Target and check: the passed design; the gate (ten views).
+- Cost (hours): about 4.5, mostly night faults.
+- Failed and why, each fixed within two tries:
+  - the display off its window (copied zone);
+  - the curtains' saw-teeth (see-through cloth);
+  - the door's black slot (the room's gaps);
+  - a burnt lining (the light's end);
+  - the ghostly number (see-through lettering);
+  - black toplights (an open box);
+  - stripes on the window card (a grazing shadow map);
+  - a leak into the next shop (no shadows).
+- Listed: deep shadows under the table at night (a soft fill owed); the cornice above the low eave (one fix owed for the row).
+- Evidence: production/audits/gate-tea-rooms/GATE.md
+
 ### 22 Oct 2026, item 5: a third delivered shop, with a sign lit by the hour, and street grime kept off a front that carries its own
 - Made: a designed shop in the street's bay: its front with a lit box sign, its window display, its room pictures, and the front's foot wear.
 - Method (setting-free):

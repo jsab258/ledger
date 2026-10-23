@@ -120,3 +120,21 @@ His message of 22 October: "the next shop family the same way as Rita's". After 
   - the kick plate brown, not brass;
   - no ceiling tubes in the toplights;
   - the street's downpipe at the corner.
+
+## Its front's wear (w1, w2)
+
+- **Made:** tools/art-recipes/front_wear.py with the passed settings and this front's own places (production/specs/shop-fronts/tea-rooms-front-wear.json): the door at the viewer's left, its handle, its rails, and the cream sill's nose. Paints: the brown, the cream and the dark brown side door.
+- **w1:**
+  - from the left, across the road and square on: PASS;
+  - **from the right: FAIL.** The lock rail's chips ran round all four of its edges and joints, a dotted frame. On the ironmonger's and newsagent's this was a watch point.
+  - **Across the road at night: FAIL** on the same frame, and on the sill's chips running in two unbroken rows its whole width (its nose and the window's bead), an even row.
+  - **Fixes, try 1 of each:** no chips on the lock rail; the sill's chips on its nose alone, below the bead, by the door and at the far end.
+- **w2: all ten views pass.**
+  - by day: across the road, square on, from the left, from the right (the lock rail clean, the sill's chips in two sparse clusters, the grime soft-topped road dirt, the clean paint unshifted);
+  - at night: across the road, square on, from the left, from the right;
+  - the street's reverse and hook cameras.
+- **Listed:**
+  - the chips read grey-taupe rather than old wood, flat with no raised edge;
+  - the plinth's grime leans cool grey and follows its moulding;
+  - at night the wear barely shows under the lamp's orange.
+- **The last good pictures** are now w2's (F:/LedgerTools/gate/last-good/tea-rooms). Preview: production/previews/tea-rooms-2026-10-23.jpg (day above, night below).

@@ -1,7 +1,7 @@
 {
   "front": "tea-rooms-front",
   "out": "tea-rooms-front-worn",
-  "note": "23 October 2026, night: the tea rooms' front worn the way the newsagent's, the ironmonger's and Rita's passed (tools/art-recipes/front_wear.py, the same settings), with this front's own places read from its model on 23 October: its shop door (x -1.548 to -0.858, at the viewer's left) and its lever at x -1.613 to -1.476, 0.88 to 1.12 up, on the door face (y -0.07); the door's bottom rail z 0.03 to 0.22 under its moulding (0.218 to 0.258, kept clear of chips) and its lock rail 0.55 to 0.88; the cream sill's nose z 0.525 to 0.63 over the window, x -0.70 to 2.65. Its paints are a brown front, a cream door and joinery and a dark brown side door; the cornice's white timber is above the foot and not worn. No night glow: its sign is painted.",
+  "note": "23 October 2026, night: the tea rooms' front worn the way the newsagent's, the ironmonger's and Rita's passed (tools/art-recipes/front_wear.py, the same settings), with this front's own places read from its model on 23 October: its shop door (x -1.548 to -0.858, at the viewer's left) and its lever at x -1.613 to -1.476, 0.88 to 1.12 up, on the door face (y -0.07); the door's bottom rail z 0.03 to 0.22 under its moulding (0.218 to 0.258, kept clear of chips) and its lock rail 0.55 to 0.88; the cream sill's nose z 0.525 to 0.63 over the window, x -0.70 to 2.65. Its paints are a brown front, a cream door and joinery and a dark brown side door; the cornice's white timber is above the foot and not worn. No night glow: its sign is painted. 23 October, its gate from the right: the lock rail's chips ran round all four of its edges and its joints with the stiles, a dotted frame that read as a plate, not wear (a watch point on the ironmonger's and the newsagent's); the lock rail's chip region is dropped here (try 1).",
   "paints": [
     "paint_brown",
     "paint_door_cream",
@@ -65,28 +65,29 @@
       "note": "22 October, the gate's left view: chips on the rail's top moulding (z 0.218 to 0.258, a thin sloped profile) came out as evenly spaced chevrons, the mask aliased on its narrow strips; the region now stops under it, the rail's flat face and its foot still chipped (try 1 of this fault)."
     },
     {
-      "name": "shop door, lock rail",
+      "name": "the sill's nose, by the door",
       "x": [
-        -1.55,
-        -0.85
+        -0.71,
+        -0.05
       ],
       "z": [
-        0.54,
-        0.89
+        0.52,
+        0.575
       ],
       "amount": 1.0
     },
     {
-      "name": "the sill's nose",
+      "name": "the sill's nose, at the far end",
       "x": [
-        -0.71,
+        2.05,
         2.66
       ],
       "z": [
         0.52,
-        0.63
+        0.575
       ],
-      "amount": 1.0
+      "amount": 1.0,
+      "note": "23 October, its gate across the road at night: the sill's chips ran in two unbroken rows its whole width (the nose and the window's bottom bead above it), an even row; the nose alone now, below the bead, and only where hands and feet reach, by the door and at the far end (try 1)."
     },
     {
       "name": "the foot, elsewhere",
