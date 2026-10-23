@@ -7430,7 +7430,7 @@ namespace
 		// the door's OPEN card, turned to CLOSED at night unless the shop keeps late hours (ReDriveShopInteriors)
 		UMaterialInstanceDynamic* DoorSign = nullptr; UTexture* SignOpen = nullptr; UTexture* SignClosed = nullptr; bool bOpenAtNight = false;
 		// a lit box sign's face, glowing after dark at the front's "night_glow" strength (ReDriveShopInteriors)
-		TArray<UMaterialInstanceDynamic*> SignGlow; float SignGlowStrength = 0.0f; };
+		TArray<UMaterialInstanceDynamic*> SignGlow; TArray<float> SignGlowStrength; };
 	TArray<FInteriorRow> GInteriorRows;
 	int32 GInteriorsAsked = 0;
 	// What the shops stood behind their glass (GInteriorActors) is declared with the glass catches above,
@@ -7700,7 +7700,7 @@ namespace
 	// and the footway under it (up); east fronts turn half round as the displays do.
 	AActor* SpawnShopFront(UWorld* World, const Value& Front, double Side, FString& Note,
 	                       UMaterialInstanceDynamic** OutSign = nullptr, UTexture** OutOpen = nullptr, UTexture** OutClosed = nullptr,
-	                       TArray<UMaterialInstanceDynamic*>* OutGlow = nullptr)
+	                       TArray<UMaterialInstanceDynamic*>* OutGlow = nullptr, TArray<float>* OutGlowStrength = nullptr)
 	{
 		const std::string Glb = LedgerStreet::StrOr(Front, "glb");
 		if (World == nullptr || Glb.empty()) { Note = TEXT("no-glb"); return nullptr; }
@@ -7804,11 +7804,23 @@ namespace
 		// gate lights the sign's face with the board's own emissive map at night, sw_gate.py; tools/art-recipes/
 		// front_for_game.py --night-glow puts that map in the front's glb with a factor of 0): the slot the front's
 		// "night_glow" names becomes a dynamic material whose EmissiveFactor ReDriveShopInteriors sets, 0 by day.
+		// ONE SLOT OR A LIST OF THEM (23 October, the chandler's night gate from the left: through the shop door the hall's
+		// wall that faces into the shop, painted as the room's walls, was black, lit by nothing; the room's own walls glow
+		// in its picture, so that face glows with them), each {slot, strength}.
 		int32 Glows = 0;
 		const Value* Glow = Front.Find("night_glow");
-		const std::string GlowSlot = (Glow != nullptr && Glow->Type == T_OBJ) ? LedgerStreet::StrOr(*Glow, "slot") : std::string();
-		if (UStaticMeshComponent* C = A->GetStaticMeshComponent(); C != nullptr && OutGlow != nullptr && !GlowSlot.empty())
+		TArray<const Value*> GlowEntries;
+		if (Glow != nullptr && Glow->Type == T_OBJ) { GlowEntries.Add(Glow); }
+		for (size_t K = 0; Glow != nullptr && Glow->Type == T_ARR && K < Glow->Arr.size(); ++K)
 		{
+			if (Glow->Arr[K].Type == T_OBJ) { GlowEntries.Add(&Glow->Arr[K]); }
+		}
+		UStaticMeshComponent* GlowC = A->GetStaticMeshComponent();
+		for (const Value* GE : GlowEntries)
+		{
+			const std::string GlowSlot = LedgerStreet::StrOr(*GE, "slot");
+			if (GlowC == nullptr || OutGlow == nullptr || GlowSlot.empty()) { continue; }
+			UStaticMeshComponent* C = GlowC;
 			const TArray<FStaticMaterial>& Slots = Mesh->GetStaticMaterials();
 			for (int32 Slot = 0; Slot < Slots.Num(); ++Slot)
 			{
@@ -7822,6 +7834,7 @@ namespace
 				Mid->SetVectorParameterValue(FName(TEXT("EmissiveFactor")), FLinearColor::Black);
 				C->SetMaterial(Slot, Mid);
 				OutGlow->Add(Mid);
+				if (OutGlowStrength != nullptr) { OutGlowStrength->Add(static_cast<float>(LedgerStreet::NumOr(*GE, "strength", 0.0))); }
 				++Glows;
 			}
 		}
@@ -8186,9 +8199,7 @@ namespace
 				if (Front != nullptr && Front->Type == T_OBJ)
 				{
 					FString FrontNote;
-					if (AActor* FA = SpawnShopFront(World, *Front, Side, FrontNote, &Ir.DoorSign, &Ir.SignOpen, &Ir.SignClosed, &Ir.SignGlow)) { GInteriorActors.Add(FA); }
-					const Value* Glow = Front->Find("night_glow");
-					Ir.SignGlowStrength = (Glow != nullptr && Glow->Type == T_OBJ) ? static_cast<float>(LedgerStreet::NumOr(*Glow, "strength", 0.0)) : 0.0f;
+					if (AActor* FA = SpawnShopFront(World, *Front, Side, FrontNote, &Ir.DoorSign, &Ir.SignOpen, &Ir.SignClosed, &Ir.SignGlow, &Ir.SignGlowStrength)) { GInteriorActors.Add(FA); }
 					const Value* Late = Sh.Find("open_at_night");
 					Ir.bOpenAtNight = Late != nullptr && Late->Type == T_BOOL && Late->Bool;
 				}
@@ -8260,10 +8271,11 @@ namespace
 					Ir.DoorSign->SetTextureParameterValue(FName(TEXT("EmissiveTexture")), (bSunOn || Ir.bOpenAtNight) ? Ir.SignOpen : Ir.SignClosed);
 				}
 			}
-			for (UMaterialInstanceDynamic* G : Ir.SignGlow)
+			for (int32 K = 0; K < Ir.SignGlow.Num(); ++K)
 			{
-				const float E = (!bSunOn && !GShopsDark.Contains(Ir.Shop)) ? Ir.SignGlowStrength : 0.0f;
-				G->SetVectorParameterValue(FName(TEXT("EmissiveFactor")), FLinearColor(E, E, E, 1.0f));
+				const float S = Ir.SignGlowStrength.IsValidIndex(K) ? Ir.SignGlowStrength[K] : 0.0f;
+				const float E = (!bSunOn && !GShopsDark.Contains(Ir.Shop)) ? S : 0.0f;
+				Ir.SignGlow[K]->SetVectorParameterValue(FName(TEXT("EmissiveFactor")), FLinearColor(E, E, E, 1.0f));
 			}
 		}
 	}

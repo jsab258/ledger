@@ -61,6 +61,10 @@ PC_SIGN_MOUNT = {"ironmonger": {"plate_foot_m": 2.55, "arm_height_m": 2.70, "dro
 # night render shows it too). The door takes a flat aluminium panel to the sill's line (600), as the target's glazed-from
 # rule asks of its timber and 1930s doors; keyed by shop, the target not edited.
 PC_DOOR_KICK_MM = {"chandler": 600.0}
+# 23 Oct, the same gate from the right at night: through the shop door's glass the back of the display's side lining, painted
+# as the room's walls, was black (nothing lit it); it is faced with the hall's two shop-facing paints, which glow after dark as
+# the lit room's walls (the shop's entry in production/specs/shop-interiors.json, its front's night_glow). Keyed by shop.
+PC_LINING_FACE = {"chandler"}
 SIGN_NEAR_MIN = 330.0                  # a hanging board's near edge stands at least this far from the wall (mm): the cornice projects 300
 
 
@@ -666,6 +670,18 @@ class Front:
                 self.add("hall_face_dado", bx(ua, ub, -dd - 50.0, -4.0, zf, zd), "hall_face_dado", bev=None)
                 self.add("hall_face_plaster", bx(ua, ub, -dd - 50.0, -4.0, zd, z1), "hall_face_plaster", bev=None)
 
+    def lining_face(self):
+        """The display's side lining by the shop door, seen from the door's glass, faced with the hall's shop-facing paints (PC_LINING_FACE)."""
+        if self.ctx.id not in PC_LINING_FACE or "hall_face_plaster" not in self.mats:
+            return
+        win = self.R["front"]["zones_u_mm"]["window"]
+        if self.R["front"]["zones_u_mm"]["shop_door"][1] > win[0] + 1.0:
+            return                              # the lining by the door is the window's left one only
+        u = win[0] - 10.0 - 1.0                 # the display (3.37 m) stands 10 mm past its zone (3.35 m) each side; 1 mm off its lining
+        zd = 1550.0                             # the lining's own dado line: 0.95 over the display's foot, 0.60 above the footway
+        self.add("lining_face_dado", bx(u - 2.0, u, -580.0, -4.0, 550.0, zd), "hall_face_dado", bev=None)
+        self.add("lining_face_plaster", bx(u - 2.0, u, -580.0, -4.0, zd, HALL_Z[1]), "hall_face_plaster", bev=None)
+
     # ----------------------------------------------------------------------------------------------- one shop's own alterations
     def extras(self):
         """Parts that belong to one shop's alterations (the newsagent's roller-shutter hood, rails and box sign; the tea rooms' flat panel sign; the empty unit's boards...): a method extras_<id> if the shop has one."""
@@ -1263,6 +1279,7 @@ def build_front(out_dir, work_dir, fasc_dir, paper_dir, log=print, ctx=None):
         F.grille_fixed()
     F.side_door()
     F.hall()
+    F.lining_face()
     F.lobby_info = F.lobby_parts() if ctx.lobby_depth else None          # (batch B) a recessed lobby: the door goes back, the lobby's floor, soffit and returns are built
     F.extras()
     obs = F.finish()

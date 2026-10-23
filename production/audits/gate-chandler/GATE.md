@@ -93,3 +93,16 @@
 
 - **Across the road at night (r6): PASS.** F1 is gone: the card reads CLOSED, its red about 92 and its letters about 150 (r5: 22 and 30 to 35), darker than the lit buoy beside it, with no halo. F2 is gone: the door's foot is a flat panel (8 to 17) in its frame, flush with the stiles, a rail line at its top; by day plain aluminium matching the frame. The door's reflection in the wet pavement evens out with it. Everything else that changed is sampling sparkle. No new fault.
   - Narrow points: the panel's thin left shadow line starts a little below its top; the door's hours lettering dark against the lit room, partly read; the side door and the hanging sign nearly lost in the dark.
+- **From the left at night (r6): FAIL**, two faults (both already in r5's frame, which was not reviewed).
+  - **F3, the shop door's glass black above its new panel** (x 632 to 716, y 628 to 916; 0 to 3 where the room through the window beside it is lit). At this slant the eye meets, through the door, the hall's wall that faces into the shop. The design paints that face as the room's walls (cream over the green dado), and in its renders it carries the room picture's wall; in the game nothing lit it at night.
+  - **F4, the display's side lining by the door burned near white** (x 745 to 926, y 375 to 632; 236 to 244), brighter than the room's own tubes (208 to 213). The window's head lamp ended 0.375 m from it.
+  - **Fix, try 1 for each:**
+    - F3: the hall's shop-facing paints glow after dark as the lit room's own wall beside them: flat maps of its colours measured off the room's night picture (112, 98, 78 above the dado; 32, 46, 31 below), at the room's night brightness (0.7). The game's front glow now takes a list (VignetteShot.cpp), and the readying and wear scripts write several glows and flat colours.
+    - F4: the head lamp narrowed from 2.6 to 2.2 m, its ends 0.575 m from each lining.
+  - The worn front came in at round 7 (r7). Every view retaken as r8.
+- **From the right at night (r7, the first with the wear): FAIL**, one fault.
+  - **F5, a dark slab down the right of the shop door's glass, black at its foot** (x 435 to 620, y 170 to 1440; under 3 at x 480 to 619 from y 1060 down). At this slant the eye meets, through the door, the back of the display's side lining, painted as the room's walls; nothing lit it at night (about 34 against the room's 111 at the same heights). In r4 to r6 too.
+  - **Fix, try 1:** that face takes a veneer, 1 mm off it, in the hall's two shop-facing paints, which glow after dark as the lit room's walls (sw_front.py PC_LINING_FACE, the chandler's alone).
+  - The wear: invisible at night here; brightened, real chips and dirt where feet put them. Not a fault.
+  - Listed: hard black shadows of the rope rail's string and a jacket on the right lining, cast by the window's lamp with no fill; the street lamp's orange reflection with stepped edges.
+- **Round 8 (r8: the hall wall's glow, the lamp at 2.2 m), measured from the left at night:** the door's glass shows the lit hall wall and its hours lettering (12.9 against 1.8); F3's fix holds, for review. The lining's cream fell only from a median of 232 to 225 (none now at 236): try 1 for F4 not enough. **Try 2, the last:** the lamp at 1.6 m, its ends 0.875 m from each lining. Every view retaken as r9, with F5's veneer.

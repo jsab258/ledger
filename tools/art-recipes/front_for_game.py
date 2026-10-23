@@ -5,7 +5,7 @@ rest joined into one mesh that keeps every material and texture.
         production/assets/cloud-week/shop-windows/ritas_front.glb ritas-front
     F:/LedgerTools/bpyenv/Scripts/python.exe tools/art-recipes/front_for_game.py --display \
         production/assets/cloud-week/shop-windows/ritas_display.glb ritas-display
-    (a lit box sign: --night-glow=<material>=<the sign's emissive map>, dark until the game lights it;
+    (a lit box sign: --night-glow=<material>=<the sign's emissive map, or #rrggbb>, dark until the game lights it, repeatable;
      lettering on glass as solid cut-outs: --mask=<material>[,...];
      a display's side linings up to the window head: --raise=<material>:<metres>;
      and a head board across their tops, or at a height in the display's frame: --head=<material>[@<metres>];
@@ -198,6 +198,21 @@ def solid_cloth(glb, names=SOLID_CLOTH):
 # the day state, PC-NA1): the map goes into the front's glb as that material's emissive texture with a factor of 0, so it is
 # dark by day as exported; the game sets the factor after dark (VignetteShot.cpp ReDriveShopInteriors, the shop entry's
 # front "night_glow"). Unreal's glTF import keeps an emissive texture whatever its factor (its bHasEmissiveTexture switch).
+# OR ONE FLAT COLOUR, "#rrggbb" in place of the PNG's path (23 October, the chandler's night gate from the left: the hall's
+# wall that faces into the shop glows as the lit room's own wall beside it, its colour measured off the room's night picture).
+def flat_png(colour, size=8):
+    """An 8 x 8 PNG of one sRGB colour given as "#rrggbb"."""
+    import struct
+    import zlib
+    rgb = bytes(int(colour[k:k + 2], 16) for k in (1, 3, 5))
+    raw = b"".join(b"\x00" + rgb * size for _ in range(size))
+
+    def chunk(kind, body):
+        return struct.pack(">I", len(body)) + kind + body + struct.pack(">I", zlib.crc32(kind + body) & 0xFFFFFFFF)
+    return (b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", struct.pack(">IIBBBBB", size, size, 8, 2, 0, 0, 0))
+            + chunk(b"IDAT", zlib.compress(raw)) + chunk(b"IEND", b""))
+
+
 def add_night_glow(glb, material, png):
     """Rewrite a glb in place: the PNG appended to its binary chunk and set as `material`'s emissive texture, on the
     same texture coordinates as its base colour, with emissiveFactor [0, 0, 0]. Returns True when it changed."""
@@ -212,7 +227,7 @@ def add_night_glow(glb, material, png):
     mats = [m for m in j.get("materials", []) if m.get("name") == material]
     if not mats:
         return False
-    pic = open(png, "rb").read()
+    pic = flat_png(png) if png.startswith("#") else open(png, "rb").read()
     binary += b"\x00" * ((4 - len(binary) % 4) % 4)
     j.setdefault("bufferViews", []).append({"buffer": 0, "byteOffset": len(binary), "byteLength": len(pic)})
     binary += pic + b"\x00" * ((4 - len(pic) % 4) % 4)
@@ -390,8 +405,8 @@ def main(src, name, display=False, glow=None, mask=None, raise_=None, head=None,
     if mask and mask_materials(glb, mask) != len(mask):
         print("front_for_game: not every material of --mask is see-through here: %s" % ",".join(mask))
         return 1
-    if glow:
-        material, png = glow.split("=", 1)
+    for g in ([glow] if isinstance(glow, str) else (glow or [])):
+        material, png = g.split("=", 1)
         if not add_night_glow(glb, material, png):
             print("front_for_game: no material %s for the night glow" % material)
             return 1
@@ -439,5 +454,5 @@ if __name__ == "__main__":
     if len(args) != 2:
         print(__doc__)
         sys.exit(1)
-    sys.exit(main(args[0], args[1], display="--display" in sys.argv, glow=glow[0] if glow else None, mask=mask or None,
+    sys.exit(main(args[0], args[1], display="--display" in sys.argv, glow=glow or None, mask=mask or None,
                   raise_=raise_ or None, head=head[0] if head else None, dull=dull or None, smooth=smooth or None))
