@@ -61,7 +61,30 @@ The grocer's (east_parade bay 5, no. 11) is the simplest, and it stands on the p
   - **Measured:** it is in r1, r4 and r5 alike, so it is steady, not a run's chance; faintly in the square view too, straight up there; not at night, where the room behind is lit.
   - The lids are gold metal (metallic 0.8, roughness 0.35); the jars have no see-through material, and nothing of the display stands behind them, only the room's unlit picture.
   - Three short launches, one setting off in each (F:/LedgerTools/gate/new/grocer-2026-10-23/smoke-test): with the anti-aliasing off, and with bloom off, the smoke stays; with see-through surfaces hidden (the window's glass), it is gone and the lids are crisp. So it is drawn on the glass, in its reflection, not on the jars.
-  - Two more launches, the glass kept: Lumen's live reflection on the glass (its front layer) off, and its screen traces off.
+  - Four more launches, the glass kept: Lumen's live reflection on the glass (its front layer) off, its screen traces off, the translucency lighting volume off, and its reprojection off: the smoke stays in each. The glass's baked street picture at strength 0: gone.
+  - **The cause:** each window's street picture is caught half a metre out from the pane with the pane hidden, so it also sees in through the pane at a slant; the grocer's shows its own display just past the street half (F:/LedgerTools/game-inputs/glass-bake/day/street_glass_eg_bay5.hdr), and the glass's slanting lookup reached the brightest goods there, the sunlit lids.
+  - **Fix, try 1:** every catch leaves out each shop part wholly behind its pane (VignetteShot.cpp MakeGlassCapture), and the glass was baked again.
+- **Its wear, in the same round:** the front worn the west row's way (production/specs/shop-fronts/grocer-front-wear.json): dirt and splash at the foot of the cream and the green slab, grime round the door's pull, chips on the cream plinths alone (a chip region may now name its paints).
+  - The bake's first try made the bronze flat brown: front_wear bakes colour and roughness and writes a paint non-metallic, so the bronze (metallic 0.9) lost its metal. The bronze is left clean (try 2).
+- Every view retaken as r6, with the night views and the street's two cameras, which r5 did not reach.
 - **From the right by day: PASS.** No new fault; the shop is pixel for pixel r4's, the glass's reflected roofs aside.
   - Narrow points, not failing: a soft white streak over the near apples (the glass's reflection; gone without the glass); the room's ceiling tubes grey by day.
   - Design-level points for its makers, not faults: COOKERS on red apples, where a 1990 grocer would show green Bramleys; the lemons stand on end.
+
+## Round 6 (r6: the catch leaving out what stands behind each pane; the wear)
+
+- **Measured before review:** the grocer's catch left out 1 part where its neighbours' left out 7 or 8, and its day cube still held its own display.
+  - **The cause:** its glass row holds the lobby's door glass too, 0.6 m back, so the row's middle stood 0.3 m behind the window, and the display, flush with the window, counted as in front.
+  - **Fix, try 2 (the last under the two-tries rule):** the pane's plane is its street face, not its middle. Rebaked and every view retaken as r7; r6 not reviewed.
+- **The wear, seen in r6:** chips on the left plinth, a dirtier right plinth, the green slab still green with a darker foot.
+
+## Round 7 (r7: the pane's street face; every view retaken)
+
+- **Measured before review:** the grocer's catch now leaves out 8 parts, as its neighbours' do, and its day cube holds no goods of its own.
+- **But the smoke is still on the lids** in the left view (crop unchanged against r5). So the jars in the stored picture were not its cause: try 2 failed too.
+- **Set aside** under the two-tries rule, and named in FINDINGS.md (the glass line) and the day's summary. What is known:
+  - It needs the glass's stored reflection: gone with its strength at 0.
+  - It stays with anti-aliasing, bloom, Lumen's front layer, its screen traces, the translucency volume and its reprojection each off, and with the jars left out of the picture.
+  - Next, research in another direction: a GPU capture of the glass's draw and the frame's later passes, not another setting.
+- **Kept, though it did not cure the smoke:** every catch leaves out the shop parts wholly behind its pane. A reflection holds only what is in front of the glass, and the street cameras are reviewed with it in this round.
+- The brief now lists the smoke as a known shortfall. Ten views are reviewed, one reviewer each.

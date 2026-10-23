@@ -170,7 +170,8 @@
     "measured": "the cloud's display (production/cloud-week/kit/shop-windows, build_shop.py display, built on the PC 23 October, the tomatoes set aside for Spanish onions): its window zone u 1356 to 5650 mm from the viewer's left (the shop door at the viewer's left, no side door), street x 37.644 to 33.35 on the east (street x = 39 - u/1000), 0.025 m behind the front's wall face (5.295) and 0.60 m above the footway, as Rita's; made ready with its linings to the window head and a head board (front_for_game.py --raise, --head)"
    },
    "front": {
-    "glb": "grocer-front",
+    "glb": "grocer-front-worn",
+    "glb_note": "23 October 2026: its front worn at the foot and the door's pull, baked into its cream and green paints as the west row's are (tools/art-recipes/front_wear.py, production/specs/shop-fronts/grocer-front-wear.json), its bronze left clean; 'grocer-front' is the clean copy (its fascia dulled, --dull=fascia_grocer:0.8:0.2, and its glass lettering a cut-out, --mask).",
     "x": 36.0,
     "z": 5.295,
     "up": 0.1,

@@ -7018,8 +7018,12 @@ namespace
 		// front of the pane, so every shop's display, room and lights wholly behind its plane (the row's
 		// fronts stand proud of it and stay) are left out of its catch.
 		{
-			const FVector PaneMid = A->GetComponentsBoundingBox(true).GetCenter();   // Gc.At is 50 cm out from it, toward the road
-			const FVector N = (Gc.At - PaneMid).GetSafeNormal2D();
+			const FBox PaneBox = A->GetComponentsBoundingBox(true);
+			const FVector N = (Gc.At - PaneBox.GetCenter()).GetSafeNormal2D();   // Gc.At is 50 cm out from its middle, toward the road
+			// ITS STREET FACE, not its middle (try 2, the same day: the grocer's glass row holds its lobby's door glass
+			// too, 0.6 m back, so the row's middle stood 0.3 m behind its window and the display, flush with the window,
+			// counted as in front: its catch left out 1 part where its neighbours' left out 7 or 8).
+			const FVector PaneMid = PaneBox.GetCenter() + N * (FMath::Abs(PaneBox.GetExtent().X * N.X) + FMath::Abs(PaneBox.GetExtent().Y * N.Y));
 			int32 Behind = 0;
 			for (const TWeakObjectPtr<AActor>& W : GInteriorActors)
 			{
