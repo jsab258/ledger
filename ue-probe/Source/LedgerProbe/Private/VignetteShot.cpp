@@ -7814,7 +7814,10 @@ namespace
 			{
 				if (Slots[Slot].MaterialSlotName != FName(UTF8_TO_TCHAR(GlowSlot.c_str()))) { continue; }
 				UMaterialInterface* Base = C->GetMaterial(Slot);
-				UMaterialInstanceDynamic* Mid = Base != nullptr ? UMaterialInstanceDynamic::Create(Base, A) : nullptr;
+				// THE DOOR'S CARD MAY GLOW TOO (23 October, the chandler's night gate: its CLOSED card read black on black):
+				// the card's slot already has its turning material, which is kept, so the glow and the turn are one material
+				UMaterialInstanceDynamic* Mid = (OutSign != nullptr && *OutSign != nullptr && Base == *OutSign) ? *OutSign
+					: (Base != nullptr ? UMaterialInstanceDynamic::Create(Base, A) : nullptr);
 				if (Mid == nullptr) { continue; }
 				Mid->SetVectorParameterValue(FName(TEXT("EmissiveFactor")), FLinearColor::Black);
 				C->SetMaterial(Slot, Mid);
@@ -8251,6 +8254,11 @@ namespace
 			if (Ir.DoorSign != nullptr)
 			{
 				Ir.DoorSign->SetTextureParameterValue(FName(TEXT("BaseColorTexture")), (bSunOn || Ir.bOpenAtNight) ? Ir.SignOpen : Ir.SignClosed);
+				// a glowing card glows with the face it shows
+				if (Ir.SignGlow.Contains(Ir.DoorSign))
+				{
+					Ir.DoorSign->SetTextureParameterValue(FName(TEXT("EmissiveTexture")), (bSunOn || Ir.bOpenAtNight) ? Ir.SignOpen : Ir.SignClosed);
+				}
 			}
 			for (UMaterialInstanceDynamic* G : Ir.SignGlow)
 			{

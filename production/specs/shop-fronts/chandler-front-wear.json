@@ -83,5 +83,10 @@
   "roughness_dirt": 0.55,
   "roughness_chip": 0.6,
   "roughness_note": "22 October, the ironmonger's gate from the right: grime at roughness 0.85 caught the sky as a grey sheen at a low slant; street grime here is damp splash, so it is only a little duller than the paint.",
-  "dirt_luminance_floor": 0.035
+  "dirt_luminance_floor": 0.035,
+  "night_glow": {
+    "material": "door_sign",
+    "png": "F:/LedgerTools/game-inputs/production/art/shop-signs/door-card-closed.png",
+    "note": "23 October, its gate at night: the CLOSED card glows faintly after dark (shop-interiors.json, its front's night_glow); the bake's round trip drops a dark emissive map, so it is put back."
+  }
 }

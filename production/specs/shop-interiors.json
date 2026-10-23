@@ -230,6 +230,11 @@
     "up": 0.1,
     "note": "23 October 2026 (his message of 22 October: the next shop family the same way as Rita's): the cloud's whole front for the chandler's bay (east_chandler bay 0, street x 40 to 46), a metal 1980s refit with a tiled stallriser, its side door and hall at the viewer's left; made ready by tools/art-recipes/front_for_game.py, its glass lettering cut-out (--mask); its frame's origin is the bay's middle (street x 43) at its wall face on the footway.",
     "door_sign_closed": "production/art/shop-signs/door-card-closed",
+    "night_glow": {
+     "slot": "door_sign",
+     "strength": 0.15,
+     "note": "23 October, its gate across the road at night: the CLOSED card, hung inside the door's glass with the lit shop behind it, read as black letters on black (about 30 on 22). The card takes the faint light the window's lamps and the lobby throw back on it: its own face as an emissive map (front_for_game.py --night-glow), at this strength after dark, the map turned with the card (VignetteShot.cpp ReDriveShopInteriors). First strength 0.15, a fifth of the lit room's."
+    },
     "street_decals": false
    }
   },

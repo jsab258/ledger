@@ -56,6 +56,11 @@ PC_SIGN_MOUNT = {"ironmonger": {"plate_foot_m": 2.55, "arm_height_m": 2.70, "dro
                  # 23 Oct, the game's gate of the chandler's across the road: its plate (0 to 8 mm out) was buried in the street's brick above the cornice,
                  # whose face stands 165 mm proud of the front's wall line there (measured in quay-street.glb), the arm ending in bare brick
                  "chandler": {"plate_d_mm": 168.0}}
+# 23 Oct, the game's gate of the chandler's at night: its M1 door is glazed from the bottom rail (198), and the shop's room
+# is a picture from 0.65 m up, so through the door's foot at night there was nothing to see but black (the design's own
+# night render shows it too). The door takes a flat aluminium panel to the sill's line (600), as the target's glazed-from
+# rule asks of its timber and 1930s doors; keyed by shop, the target not edited.
+PC_DOOR_KICK_MM = {"chandler": 600.0}
 SIGN_NEAR_MIN = 330.0                  # a hanging board's near edge stands at least this far from the wall (mm): the cornice projects 300
 
 
@@ -295,7 +300,7 @@ class Front:
             # M2 (batch B, the grocer's: variants.M2): the same frame in bronze with a kick panel, 28 to 600, in place of the bottom rail, glazed from 600; a raised field on the panel below the letter plate (z 545,
             # in the panel, outside the glass), the D pull in bronze, no foot strip (the panel is the foot)
             m2 = D["variant"] == "M2"
-            zg = float(D["glass_z_mm"][0]) if m2 else 198.0                     # the glass's foot: 198 (M1), 600 (M2)
+            zg = float(D["glass_z_mm"][0]) if m2 else PC_DOOR_KICK_MM.get(self.ctx.id, 198.0)   # the glass's foot: 198 (M1), 600 (M2, the chandler's)
             met = "bronze_metal" if m2 else "chrome"
             self.mats.setdefault("chrome", bs.make_material("chrome", (170, 172, 174), 0.2, 1.0))
             self.mats.setdefault("bronze_metal", bs.make_material("bronze_metal", (150, 112, 62), 0.3, 1.0))
@@ -303,7 +308,13 @@ class Front:
             self.add("door_leaf_stile_lever", bx(lu0, lu0 + st, d0, d1, z_foot, z_top), "door_paint")
             self.add("door_leaf_stile_hinge", bx(lu1 - st, lu1, d0, d1, z_foot, z_top), "door_paint")
             ru0, ru1 = lu0 + st, lu1 - st
-            self.add("door_rail_bottom", bx(ru0, ru1, d0, d1, 28.0, zg), "door_paint")
+            if not m2 and zg > 198.0:
+                # the M1 rail stays 170 high; a flat sheet panel fills from it to the glass, set back in the glazing plane
+                self.add("door_rail_bottom", bx(ru0, ru1, d0, d1, 28.0, 198.0), "door_paint")
+                self.add("door_kick_sheet", bx(ru0, ru1, 40.0, 46.0, 198.0, zg), "door_paint", bev=None)
+                self.add("door_rail_mid", bx(ru0, ru1, d0, d1, zg - 50.0, zg), "door_paint")
+            else:
+                self.add("door_rail_bottom", bx(ru0, ru1, d0, d1, 28.0, zg), "door_paint")
             self.add("door_rail_top", bx(ru0, ru1, d0, d1, 1968.0, 2068.0), "door_paint")
             if m2:
                 self.add("door_kick_field", bx(ru0 + 45.0, ru1 - 45.0, d1, d1 + 6.0, 90.0, 500.0), "door_paint")

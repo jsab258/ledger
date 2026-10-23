@@ -72,3 +72,24 @@
   - Noted, the street's: hard tone steps in the brick right of the right pilaster (x 2147 and 2230 to 2245), the same in r1 and at night, likely the street's projected grime's edges.
 - **From the right by day (r4): PASS.** The pilaster, console, sill and plinth meet the brick and the grocer's tight; the room's dado level sits on the horizon; nothing floats or burns. No new fault.
   - Narrow points: the hurricane lamps cream-white (the lantern's own picture; the design's grey came from its see-through material); a thin gap between the upper rail and the jackets' tops, as the design builds them; the jackets a little browner than the design.
+
+## Round 5 (r5: the doors' strip paved)
+
+- **Across the road by day (r5): PASS.** The hats, their strings, card and road reflections are gone cleanly, the jackets' necks showing as the design's own. The doors' feet are paved with no seam. The glass is as r3 (0.2 to 0.5 levels). No new fault.
+- **From the left by day (r5): PASS.** The void is gone: in r4's box, near-white pixels fall from 2,202 to 180, all of them the alley wedge's tip. The new paving matches the slab beside it (69/61/52 against 67/59/51), with a joint line and no step, no flicker-prone overlap and no gap at either door. No new fault.
+  - Noted, not new (since r1): a straight-edged grey veil down the near brick pier, from this camera only, akin to the smears on glass; and the alley wedge's 2 to 3 px tail under the shop's pier, to recheck when the alley is paved.
+- **Across the road at night (r5): FAIL**, two faults.
+  - **F1, the CLOSED card unreadable:** its letters about 30 to 35 on a ground of 22. Hung inside the door's glass with the lit shop behind it, the card's street face takes no light.
+  - **F2, the shop door's lower glass black** (x 829 to 964, y 830 to 903). The design's M1 door is glazed from its bottom rail (0.198 m), and the room behind is a picture from 0.65 m up, so below it there is nothing to see. The design's own night render shows the same.
+  - **Fix, try 1 for each:**
+    - F2: the door takes a flat aluminium panel to the sill's line (0.60 m), with a mid rail, as the target's glazed-from rule asks of its timber and 1930s doors (sw_front.py PC_DOOR_KICK_MM; the target not edited). The street's glass in the door now starts at 0.594 m.
+    - F1: the card takes the faint light the window's lamps and the lobby throw back: its own face as an emissive map, a fifth of the lit room's strength after dark, turned with the card (front "night_glow" on door_sign; VignetteShot.cpp keeps one material for the glow and the turn).
+  - Every view retaken as r6.
+- **Square on at night (r5): PASS.** The room lit warm and true behind the window; all eight cards read; the glass clear; the linings hide the room's edges; the tins round. No new fault.
+  - The listed shortfall at its worst here: the window's light leaves the front row dark, not only under the goods (the left oil can 2 against 30 by day, the blowlamp 5 against 34, the compass dials 17 against 85; about a tenth of the window near-black). The design's night render has the oil cans and compasses lit. Listed, as the street's night-fill shortfall.
+  - Narrow points: the white rope's upper arc clips to white; small orange glints above the jackets' strap tabs; a hard self-shadow notch on the tan rope.
+
+## Round 6 (r6: the door's lower panel, the CLOSED card's glow)
+
+- **Across the road at night (r6): PASS.** F1 is gone: the card reads CLOSED, its red about 92 and its letters about 150 (r5: 22 and 30 to 35), darker than the lit buoy beside it, with no halo. F2 is gone: the door's foot is a flat panel (8 to 17) in its frame, flush with the stiles, a rail line at its top; by day plain aluminium matching the frame. The door's reflection in the wet pavement evens out with it. Everything else that changed is sampling sparkle. No new fault.
+  - Narrow points: the panel's thin left shadow line starts a little below its top; the door's hours lettering dark against the lit room, partly read; the side door and the hanging sign nearly lost in the dark.
