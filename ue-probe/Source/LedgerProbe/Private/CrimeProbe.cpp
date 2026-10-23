@@ -172,6 +172,8 @@ extern "C" __declspec(dllimport) int __stdcall MoveFileExW(const wchar_t* Existi
 #include "Animation/SkeletalMeshActor.h"
 #include "EngineUtils.h"
 #include "UObject/UObjectIterator.h"
+#include "PipelineStateCache.h"
+#include "ShaderPipelineCache.h"
 
 #include <map>
 #include <set>
@@ -4815,6 +4817,12 @@ namespace
 		if (Step == 0)
 		{
 			if (Now < NextAt) { return; }
+			// AND NOT WHILE SHADER PIPELINES ARE STILL BEING PREPARED (23 October, frame headroom: the title screen holds a
+			// player until they are done, but -NoTitle skipped that wait, so a capture could start with the bundled cache or
+			// precaching still compiling). Two minutes at most, as the title screen allows.
+			const int32 Pending = PipelineStateCache::GetNumActivePipelinePrecompileTasks() + (int32)FShaderPipelineCache::NumPrecompilesRemaining();
+			if (Pending > 0 && Now < NextAt + 120.0) { return; }
+			UE_LOG(LogTemp, Display, TEXT("LedgerPerfHook: capture starts %.1f s after the street settled, %d shader pipeline(s) still being prepared"), Now - NextAt, Pending);
 			int32 Frames = 1800;
 			FParse::Value(FCommandLine::Get(), TEXT("PerfHookFrames="), Frames);
 			if (GEngine != nullptr) { GEngine->Exec(World, *FString::Printf(TEXT("csvprofile frames=%d"), FMath::Max(60, Frames))); }

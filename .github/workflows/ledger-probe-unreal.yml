@@ -563,6 +563,18 @@ jobs:
             # no project folder beside it.
             $stage = & python tools/ue/stage_game_data.py 2>&1
             $L += ($stage | Select-Object -Last 1)
+            # THE BUNDLED PIPELINE CACHE, 23 October (his order: frame headroom; production/research/frame-headroom/):
+            # ue-probe/Build is not in git, so the cache recorded on the PC with -logPSO and expanded there
+            # (F:\LedgerTools\game-inputs\pipeline-caches\*.spc) is put where the cook bundles it; after the cook,
+            # the stable shader keys it wrote (DefaultEngine.ini NeedsShaderStableKeys) are kept beside it for the
+            # next recording's expansion.
+            $pcSrc = "F:\LedgerTools\game-inputs\pipeline-caches"
+            $pcDst = Join-Path $PWD "ue-probe\Build\Windows\PipelineCaches"
+            if (Test-Path $pcSrc) {
+              New-Item -ItemType Directory -Force $pcDst | Out-Null
+              Copy-Item (Join-Path $pcSrc "*.spc") $pcDst -Force -ErrorAction SilentlyContinue
+            }
+            $L += "pipelineCachesBundled=$(@(Get-ChildItem $pcDst -Filter *.spc -ErrorAction SilentlyContinue).Count)"
             $uatArgs = @("BuildCookRun", "-project=`"$proj`"", "-noP4",
                          "-platform=Win64", "-clientconfig=Development",
                          "-cook", "-build", "-stage", "-pak", "-archive",
@@ -600,6 +612,13 @@ jobs:
               }
               if (Test-Path "cook-cold.err") { $L += "--- cook stderr ---"; $L += (Get-Content "cook-cold.err" -Tail 20) }
             }
+            $keysDir = Join-Path $PWD "ue-probe\Saved\Cooked\Windows\LedgerProbe\Metadata\PipelineCaches"
+            $keys = @(Get-ChildItem $keysDir -Filter *.shk -ErrorAction SilentlyContinue)
+            if ($keys.Count -gt 0) {
+              New-Item -ItemType Directory -Force (Join-Path $pcSrc "shk") | Out-Null
+              $keys | ForEach-Object { Copy-Item $_.FullName (Join-Path $pcSrc "shk") -Force }
+            }
+            $L += "stableShaderKeysKept=$($keys.Count)"
             # THE SECOND, "WARM" COOK IS GONE, 6 October (Jafar: "Remove the second cook that exists
             # only as an old measurement"). It cooked and packaged the same commit again, about six
             # minutes a run, to give an edit's cost beside Unity's 2.47 minute warm build; that

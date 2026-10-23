@@ -13,7 +13,12 @@
 # its memory line to production/research/pre-production/p1-packaged/runs.jsonl. It refuses to start
 # while the build machine or an Unreal editor runs (their graphics work would be in the numbers).
 param([string]$Exe = "F:\LedgerTools\played-game\Windows\LedgerProbe.exe", [int]$Frames = 1800, [int]$VoiceSeconds = 660,
-      [string]$Tag = "", [string]$Cvars = "", [string]$Picture = "", [string[]]$Only = @(), [string[]]$GameArgs = @(), [string]$Voice = "")
+      [string]$Tag = "", [string]$Cvars = "", [string]$Picture = "2", [string[]]$Only = @(), [string[]]$GameArgs = @(), [string]$Voice = "")
+# THE PICTURE LEVEL IS SET AND WRITTEN DOWN, 23 October (production/research/frame-headroom/CARD-TIME-2026-10-23.md): with
+# -NoTitle the title screen's picture budget never runs, so each capture took whatever level the copy had saved, and the 21 October
+# captures ran at Highest (a 1000 MB texture pool) against 7 October's High: about 2.1 ms of the card's "lost" spare time was that.
+# -Picture now defaults to 2 (High, what a player's first launch is given) and every memory line records the level asked and the
+# texture pool the capture itself reports.
 # A VARIANT, 7 October (P1's first packaged reading found no room, and two suspects): -Tag names it
 # (appended to each label), -Cvars adds engine settings to the game's own, -Picture runs "scalability
 # <n>" once the street is up (2 is High, the most the first launch picks, 3 Highest), and -Only
@@ -99,7 +104,12 @@ foreach ($m in $matrix) {
   $csv = Get-ChildItem $csvDir -Filter *.csv -ErrorAction SilentlyContinue | Sort-Object LastWriteTime -Descending | Select-Object -First 1
   if ($csv) { Copy-Item $csv.FullName (Join-Path $tmp "$label.csv") -Force }   # each capture's frames kept
   $perf = if ($csv) { (& $py tools/perf-hook.py $csv.FullName --label $label) -join "" } else { "{`"label`": `"$label`", `"status`": `"NO-CSV`"}" }
-  $mem = @{ label = $label; samples = $samples.Count }
+  $mem = @{ label = $label; samples = $samples.Count; picture = $(if ($Picture) { $Picture } else { "unset" }) }
+  if ($csv) {
+    $meta = (Get-Content $csv.FullName -Tail 1) -split ','
+    $ip = [array]::IndexOf($meta, '[streamingpoolsizemb]')
+    if ($ip -ge 0) { $mem.streamingPoolMB = [int]$meta[$ip + 1] }
+  }
   foreach ($k in "cardAllMB", "cardGameMB", "cardVoiceMB", "gamePrivateMB", "gameWorkingMB", "voicePrivateMB", "systemUsedMB") {
     $v = @($samples | ForEach-Object { $_[$k] } | Where-Object { $_ -ne $null } | Sort-Object)
     if ($v.Count) { $mem[$k + "Peak"] = $v[-1]; $mem[$k + "Median"] = $v[[int][math]::Floor($v.Count / 2)] }
