@@ -14,14 +14,16 @@ Phase 1 closed 22 Oct, no exit passed (production/audits/phase1-exit/CLOSE-2026-
 
 ## His order of 21 October
 
-- [x] 1 to 4: DECISIONS.md, 21 Oct.
-- [x] 5 Every passed design gated in: seven shops (gate-chandler/GATE.md); two faults set aside.
-- [x] 6 Frame rate: P1-PACKAGED-2026-10-21.md.
-- [x] 7 Set aside; next go after Monday: TOM-MOTION-MATCHING-2026-10-22.md.
-- [x] 8 Speech: GEMINI-CHECK-2026-10-22.md.
-- [x] 9 Close phase 1: CLOSE-2026-10-22.md.
+- [x] Done (DECISIONS.md); 7 set aside to Monday.
 
-STATE (23 Oct 15:40): order worked through; launderette's design faults begun (name, towels).
+## His order of 23 October (to Sat 06:00)
+
+- [x] Launderette parked, in progress (sw_cloth_proto.py).
+- [ ] Card memory, voice on the processor.
+- [ ] The 87 ms first-use stall on the repeat walk.
+- [ ] The card's spare time.
+
+STATE (23 Oct 15:55): research for card memory.
 
 ## Handovers
 
