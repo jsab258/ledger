@@ -1,0 +1,22 @@
+# The west row's fronts cut under their eave: the gate (23 October 2026)
+
+**What:** the tea rooms', the ironmonger's and the newsagent's worn fronts, each cut at 3.40 m (production/specs/shop-fronts/*-front-wear.json clip_top_m; tools/art-recipes/front_wear.py). Their cornices, designed for a two-storey row, rose 3.36 to 3.55 m and stood 0.3 m proud. This single storey's eave is at 3.4 m. The gates of all three listed it: a tan strip on the slates, the rest lost behind the gutter (production/audits/gate-tea-rooms/GATE.md, across the road). One fix was owed for the three.
+
+**Measured before review:** the tea rooms' strip on the slates is gone; the fascia now meets the gutter.
+
+**The gate:** 24 shop views and the street's two cameras, each beside its last good picture. Every view differs: the cut, today's new glass pictures (a rule already passed on the grocer's gate and the street cameras), and, for the ironmonger's, the neighbours' fronts that came in after its last good. Brief: F:/LedgerTools/gate/new/west-eaves-2026-10-23/BRIEF.md; pictures in r1/.
+
+## Round 1 (r1)
+
+- **The tea rooms across the road by day: PASS.** The tan strip on the slates is gone (rows 478 to 483 now plain slate), and so is the ironmonger's green one beside it. Below the gutter nothing moved (1 to 2 levels), and both ends meet the eave cleanly, the cut's top face unseen from below. The ironmonger's glass lost a pale smear and gained a soft band: no worse. No new fault.
+- **The ironmonger's across the road by day: PASS.** From this low camera everything above 3.40 m was behind the gutter before and after, so the cut cannot be seen; the eave band matches within noise. Both joins to the new neighbours are closed (brick and a downpipe behind). The KEYS CUT board is unchanged. The glass reflections moved, none worse. No new fault.
+- **The newsagent's across the road by day: PASS.** The two pale strips on the slates at the front's ends (and the ironmonger's beside them) are gone, matching the slates around. Under the gutter old and new agree, with no gap, raw edge or open face. The box sign is unchanged, and its window lost two white ghost bands. No new fault.
+- **The tea rooms across the road at night: PASS.** The lit tan strip on the slates (y 480 to 483, its whole width) is gone, as is the ironmonger's. The top reads in clean layers: slate edge, gutter, a dark bed moulding in its shadow, the fascia. Both ends are clean even brightened, with nothing burning. No new fault.
+- **The street's hook camera: PASS.** The one change in the west row is the tan strip on the slates above the tea rooms' left console, now gone; the slate edge, its shadow and the end wall run through unbroken. Mickey's and the fish shop's panes are darker and less milky in the new glass pictures, their interiors and lettering still clear. No new fault.
+- **The newsagent's across the road at night: PASS.** The lit cornice slivers on the slates at both ends (and the ironmonger's) are gone, and the gutter's top edge runs unbroken. Along the lit box sign each row is within 2 levels, with no lit edge, gap or leak. The glass is a little cleaner. No new fault.
+- **The ironmonger's across the road at night: PASS.** The cut does not show here (rows within 1 level, the band under the gutter dark and whole). The left pane's hard black shapes at its sill, the window's own goods caught in its old glass picture, are gone. Both joins are clean. No new fault.
+  - Narrow point, not failing: the fanlight's 16 is fainter in the dimmer light.
+- **The street's reverse camera: PASS.** From street level the cut cannot show (the eave band within 0.64 levels on average); the tea rooms' and ironmonger's fascias meet the gutter with no gap. A few panes are a few levels darker in the new glass pictures, none worse. No new fault.
+- **The tea rooms square on by day: PASS.** The top is out of frame. The right pane's reflection lost a pale streak and a bright band, and now shows a soft reflected shopfront from across the street, plausible and no worse. The rest is glints. No new fault.
+- **The tea rooms from the left by day: PASS.** Only the left pane's reflection changed, now a coherent reflected shopfront across the road. The ironmonger's eave in frame is unchanged, with no gap. No new fault.
+- **The tea rooms from the right by day: PASS.** The tan strip under the eave at the front's left end is gone; the eave now meets a narrow bed moulding and the fascia's top, with no gap or open face. The glass is a little cleaner. No new fault.

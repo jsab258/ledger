@@ -19,6 +19,29 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 23 Oct 2026, item 5: a fifth delivered shop, with a recessed lobby, worn in the same round as its gate
+- Made: a designed shop in the street's bay: its front with a glass fascia and a recessed door lobby, its window display, its room pictures, and its front's foot wear.
+- Method (setting-free):
+  - A delivered design's own fault is fixed at the design before it comes in: here, toy-like scripted goods were replaced by a scanned real item at its real size, never scaled down to fit.
+  - A near-mirror material exported from a modelling tool reads as the sky from below. Set its roughness and specular from the real material, not the export.
+  - A row of goods modelled as one piece cannot sit in a container narrower than the row. Give it a surface it fits on.
+  - Lettering drawn into a tile needs a margin wider than the measured box. Fonts run wider on another machine.
+  - A placement rule copied from a reference piece carries its assumptions. A flush door's depth put another shop's hours plate in mid-air in front of a recessed door. Write the rule relative to what it stands on.
+  - A wear region named by place may take in a neighbouring part. Let each region name the materials it may touch. Leave metal out of a colour-only bake, or it comes out as paint.
+  - When a fault needs a feature to show (here a stored reflection), turning that feature off is evidence of where the fault is, not of its cause. Two tries built on that evidence both failed. Set the fault aside and name the next research: a frame capture, not another switch.
+  - Wear the piece before the gate's last rounds, so one set of reviews judges both.
+- Tools: the delivering team's builder (Blender), the readying recipe (cut-out lettering, dulled glass), the wear bake, the game's page cameras, diagnostic launches with one setting off each, fresh reviewers one view each.
+  - Delivered goods can be flat-shaded low-poly models. Under a strong, hard night light each face reads as a stripe, though by day they pass. Smooth such goods by angle at the readying step: set each corner's normal from the faces meeting at its point, since flat-shaded faces share no vertices. Check the night views first.
+  - A dark wedge appeared in one take and was gone in the next. Retake once before calling such a thing a fault.
+- Target and check: the delivering team's passed design, and the game's gate: ten views, ten rounds; each changed view was reviewed again beside its last good picture.
+- Cost (hours): about 5, from 05:00 to 10:15, with about 50 minutes of diagnostic launches.
+- Failed and why:
+  - The smoke on the jar lids' glass: the cause was not found in two tries (set aside, listed).
+  - The first wear bake made bronze flat paint.
+  - The first leave-out measured from the middle of a glass row that included a recessed door pane.
+  - The tins striped at night: flat shading the design never showed under its own soft light.
+- Evidence: production/audits/gate-grocer/GATE.md; production/specs/shop-fronts/grocer-front-wear.json; production/previews/grocer-2026-10-23.jpg
+
 ### 23 Oct 2026, item 5: a fourth delivered shop, mirrored and lit late, through eight gate rounds
 - Made: a designed shop open in the evening, its window lit with its card OPEN, in the last bay of a row of delivered fronts.
 - Method (setting-free):

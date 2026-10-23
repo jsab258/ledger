@@ -128,3 +128,20 @@ The grocer's (east_parade bay 5, no. 11) is the simplest, and it stands on the p
   - Narrow points, not failing: the tins' outlines still 16-sided at 4x zoom; the lids charcoal where the design's night render shows them light grey.
 - **Square on at night (r9): PASS.** Only the three pyramids changed: their stripes are gone (a stripe measure fell 3.24 to 2.64, 2.51 to 2.33 and 3.61 to 3.04, the rest being lettering and edges). The rims stay crisp, and everything else is at noise level. No new fault.
 - **Across the road at night (r9): PASS.** The tins shade smoothly with sharp rims; their stripe measure fell 30 to 40% on the outer pyramids. The rest of the view is unchanged (0.15 levels on average outside the window). No new fault. All four night views pass on r9.
+
+## Round 10 (r10: the day views taken again)
+
+- The launderette pilaster's dark wedge in r9 is gone (the strip measures 130,119,95 again, as in r1 to r8): it was a run's flicker, not the work.
+- Against r8, the day views differ only at the tins (by day a little) and by the run's own reflections. Each is reviewed beside r8.
+- **From the left by day (r10): PASS.** The three pyramids' tins read round, with no seam, facet or wrong shading and their average brightness within 1.5 levels. Masked of the tins and the wet pavement, only specks and edges differ. No new fault.
+- **From the right by day (r10): PASS.** The tins read round (no darker overall, no facet lines), the reflected roof varies by run, and the launderette's pilaster is clean. No new fault.
+  - Not new (r5, r8 and r10 alike): a faint grey smoke on the glass over the lower-left apples (about x 360 to 490, y 1135 to 1185), the same set-aside smoke over bright goods. The listing now says "bright goods", not only the jar lids.
+- **Across the road by day (r10): PASS.** Only the three pyramids changed: the tins roll off smoothly, their rims catch a little more light, and each pyramid's colour moved under 0.3 levels. The rest is run noise. No new fault.
+- **Square on by day (r10): PASS.** Only the tins changed (2,158 of 2,267 changed pixels), now an even gradient where r8 stepped by 9 to 15 levels per pixel, with sharp rims and no new seam. No new fault.
+
+## The gate's end: all ten views pass
+
+- Day views r10, night views r9, and the street cameras r7 (the grocer unchanged in them since).
+- The last good pictures are F:/LedgerTools/gate/last-good/grocer. The preview is production/previews/grocer-2026-10-23.jpg (day above, night below).
+- **Set aside and listed:** a faint grey smoke on the glass over bright goods by day (the jar lids, the apples). Two tries failed and the cause is not found (FINDINGS.md).
+- **Narrow points kept:** the tins' outlines are 16-sided at zoom; the CLOSED card is dim at night; the hours sit a little right of the door glass's middle, following the OPEN card.

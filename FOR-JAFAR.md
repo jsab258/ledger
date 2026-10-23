@@ -23,7 +23,7 @@ No decision asked: these are for watching the street change.
 
 <!-- /morning pictures -->
 
-**Your week's order, where it stands (23 October, 04:50; the 22 October overview is in git).**
+**Your week's order, where it stands (23 October, 08:45; the 22 October overview is in git).**
 - *1 to 4.* Done 21 October: health check, branches home, your rules and combat doc, the editor connection.
 - *5, the cloud's pieces.* Done for the lamp and the shops whose designs passed, each through the game's gate (fresh reviewers, one per view):
   - Lamp post C stands at the four lamp spots, stained: run-off and lime from its arm, rust at its door plate, algae at its foot.
@@ -31,16 +31,17 @@ No decision asked: these are for watching the street change.
   - **The ironmonger's** (no. 16): the shop passed all eight views, and its wear too.
   - **The newsagent's** (no. 18): the shop and its wear passed all ten views. Its box sign now lights after dark.
   - **The tea rooms** (no. 14): the shop passed all ten views after eight rounds of night fixes, and its wear too. Every bay of the west row now has its designed front.
-  - **The grocer's** (no. 11, on the parade): the other designs each failed their close review on one point. The grocer's was the simplest, scripted tomatoes its own rule sets aside, so it comes next. Its gate is under way.
+  - **The grocer's** (no. 11, on the parade): the shop and its wear passed all ten views in ten rounds. Fixed on the way: its design's toy tomatoes (now real onions), a grey glass sign, a floating roll, a cut-off letter, its opening hours hanging in the air in front of its recessed door, and tins striped under the night light.
+    - Set aside after two tries: a faint grey smoke on the glass above the jar lids by day (listed; next, a frame capture to find its cause).
   - New fronts no longer take the street's old grime, which had landed on the newsagent's pale paint with hard edges; they carry their own.
   - Listed:
     - on the one-storey row, the designs' cornices sit above the gutter (one fix owed for the three);
     - deep shadows under the tea rooms' table at night;
     - the street lamp's orange glare on the pale newsagent.
-  - Pictures: production/previews/ironmonger-2026-10-22.jpg, newsagent-2026-10-22.jpg, tea-rooms-2026-10-23.jpg.
+  - Pictures: production/previews/ironmonger-2026-10-22.jpg, newsagent-2026-10-22.jpg, tea-rooms-2026-10-23.jpg, grocer-2026-10-23.jpg.
 - *6, frame rate.* Done: the packaged walk's worst frame 30.3 ms (it was 63), P1 closed by a fresh review (production/research/pre-production/P1-PACKAGED-2026-10-21.md).
-- *7, the walk and the clothes.* The walk was rebuilt on Epic's sample with motion matching and measured on a set route. Starts, stops and turns slide 13 to 67 cm (the bar is 3), so it is set aside and off by default. Your current walk fails too: it slides on about half its steps, the right foot on every stride (production/research/sit-and-turn/TOM-MOTION-MATCHING-2026-10-22.md). Clothes: Epic's Fab items all load in 5.8, but the Techwear Outfit is modern sportswear and the Construction Presets are bare bodies, not clothes; none can dress the Hook sheet's people (Needs you 1).
-- *8, speech.* Done. **The Gemini test:** on the reply check, Gemini 3.5 Flash-Lite took 0.60 s at the median against Haiku's 0.97, but it let 3 invented details in 42 through where Haiku lets 1 (Needs you 2); Gemini 3.8 Flash was the most accurate but slower, 1.8 s (production/research/voice-latency/GEMINI-CHECK-2026-10-22.md). **Pocket no longer stalls the walk:** run at lower priority, the walk's slowest 1% is 20.6 ms (it was 34) and its worst 47 ms (it was 175). The one frame left over the bar is a separate stall that the usual card voice shows too (87 ms today), so the frame-rate margin is thinner than P1's close said (listed). **The real path with Pocket:** 20 checked replies, with the game open, first sound heard at 2.41 s at the median, the best yet (3.25 s before) but over 2 s. The model's first checked sentence alone now takes 2.10 s, so the voice is no longer the bottleneck (about $0.15 of your measuring dollar).
+- *7, the walk and the clothes.* The walk was rebuilt on Epic's sample with motion matching and measured on a set route. Starts, stops and turns slide 13 to 67 cm (the bar is 3), so it is set aside and off by default. Your current walk fails too: it slides on about half its steps, the right foot on every stride (production/research/sit-and-turn/TOM-MOTION-MATCHING-2026-10-22.md). Clothes: Epic's Fab items all load in 5.8, but the Techwear Outfit is modern sportswear and the Construction Presets are bare bodies, not clothes; none can dress the Hook sheet's people. Your answers: the walk's next go is Epic's MetaHuman route after Monday; Marvelous Designer yes, its price now shown (Needs you 1).
+- *8, speech.* Done. **The Gemini test:** on the reply check, Gemini 3.5 Flash-Lite took 0.60 s at the median against Haiku's 0.97, but it let 3 invented details in 42 through where Haiku lets 1 (you kept Haiku); Gemini 3.8 Flash was the most accurate but slower, 1.8 s (production/research/voice-latency/GEMINI-CHECK-2026-10-22.md). **Pocket no longer stalls the walk:** run at lower priority, the walk's slowest 1% is 20.6 ms (it was 34) and its worst 47 ms (it was 175). The one frame left over the bar is a separate stall that the usual card voice shows too (87 ms today), so the frame-rate margin is thinner than P1's close said (listed). **The real path with Pocket:** 20 checked replies, with the game open, first sound heard at 2.41 s at the median, the best yet (3.25 s before) but over 2 s. The model's first checked sentence alone now takes 2.10 s, so the voice is no longer the bottleneck (about $0.15 of your measuring dollar).
 - *9, closing phase 1.* Done. Four fresh reviewers, one for each exit, found that none passes (production/audits/phase1-exit/CLOSE-2026-10-22.md): Tom is still the stand-in body and slides; nobody sits in the game as played; first speech is 3.25 s at best; the frame bar held once and failed its repeat, and card memory with the voice is 7 to 9.9 GB against 6; there is no wear in the office or on Rita's front. They also caught four of my own records wrong, all corrected on 22 October. You held phase 2 on your page: next week goes on these failed capabilities first.
 
 **The tester's walk (23 October, 02:30 to 03:07; production/playtest/nightly/2026-10-23.md).**
@@ -62,12 +63,9 @@ No decision asked: these are for watching the street change.
 
 ### Needs you
 
-Your page today (https://claude.ai/artifact/VNFZHnSWBrA72zGKRbwFRn) asks three, one tap each:
-1. Tom's walk, its next go: Epic's own way to put its walk on a MetaHuman, after Monday? Recommended: yes; the first two tries are set aside under your two-tries rule.
-2. Clothes: try Marvelous Designer? Recommended: yes, one month for one sample outfit (Tom's), with the price shown to you before anything is bought.
-3. The reply check on Gemini 3.5 Flash-Lite (about 0.4 s faster, but 3 invented details in 42 against Haiku's 1): switch? Recommended: no, not yet.
+1. Marvelous Designer, your yes of Thursday and Friday: its price is 39 USD a month or 280 a year, with a two-week free trial for new users (read on its own site this morning; production/research/clothing-pipeline/MARVELOUS-PRICE-2026-10-23.md). Recommended: start with the free trial for Tom's one outfit, signed up by you (I cannot make accounts or pay); its licence for game use is read before anything made in it goes in.
 
-(2 and 3 are carried from Thursday's page; a tap on either page counts.)
+Your answers are recorded: the walk's next go by Epic's MetaHuman route after Monday, and the reply check stays on Haiku.
 
 ### Road to worth playing (PLAN.md)
 
@@ -79,7 +77,7 @@ Your page today (https://claude.ai/artifact/VNFZHnSWBrA72zGKRbwFRn) asks three, 
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
 
-## Builder, Friday 23 October (written 06:47, for your morning)
+## Builder, Friday 23 October (06:47, updated 08:45)
 
 **Failed:**
 - **Phase 1's exits** (walk, period clothes, speech within 2 s, frame headroom) still fail; you held phase 2 for them.
@@ -88,8 +86,8 @@ Your page today (https://claude.ai/artifact/VNFZHnSWBrA72zGKRbwFRn) asks three, 
 
 **Done:**
 - **The ironmonger's, the newsagent's and the tea rooms'** shops and their wear passed every view. The whole west row now has its designed fronts.
-- **The newsagent's box sign** lights after dark; new fronts no longer take the street's old grime.
-- **The grocer's** (no. 11, the parade) is coming in. Its design's own fault is fixed: the toy-like tomatoes are replaced by real onions. Three game faults are fixed too: a grey glass sign, a floating roll, a cut-off letter. Its review is under way.
+- **The newsagent's box sign** lights after dark.
+- **The grocer's** and its wear passed all ten views. A faint smoke on the glass above its jar lids is set aside after two tries.
 - **The tester's walk** ran 13 of 15 stages; the white-vest townsfolk still break the illusion.
 
-**Act on:** today's page, three taps (the walk's next go, Marvelous Designer, the Gemini switch): https://claude.ai/artifact/VNFZHnSWBrA72zGKRbwFRn
+**Act on:** your answers are recorded. Marvelous Designer costs 39 USD a month, with two weeks free: the trial for Tom's outfit is yours to start.
