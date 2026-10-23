@@ -275,6 +275,12 @@
    "pictures_note": "23 October: the cloud's room, built on the PC at 128 samples (production/cloud-week/kit/shop-windows build_shop.py room); open to 22:00 by its design, so at night it is lit and its card reads OPEN (open_at_night).",
    "sources": "the cloud's target for the ironmonger (production/cloud-week/targets/shop-windows/target.json) and its notes (production/cloud-week/kit/shop-windows/NOTES.md, the ironmonger)",
    "spill_lumens": 60,
+   "spill_y": 5.33,
+   "spill_up": 2.42,
+   "spill_x": 27.975,
+   "spill_width": 2.6,
+   "spill_shadows": false,
+   "spill_note": "23 October, its gate's night view across the road: at the default place (the card's middle, 27.0, 3.7 m wide) the panel's end stood against the window's left return (26.30; the tea rooms' window is at the bay's right, its doors at the left) and burned it white; over the window alone (26.30 to 29.65, middle 27.975), 2.6 m wide, just behind the glass, as Rita's (try 1). The same night, from the right: just behind the glass the panel grazed the hand-lettered window card hung there and drew saw-tooth stripes across it, the light's own shadow map at a grazing angle; it casts no shadows (spill_shadows false, as the option was made for Rita's goods' camouflage; try 1 of that fault).",
    "open_at_night": true
   }
  ]

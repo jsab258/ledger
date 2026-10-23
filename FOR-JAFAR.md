@@ -39,12 +39,12 @@ No decision asked: these are for watching the street change.
 
 ### Needs you
 
-Your page today (https://claude.ai/artifact/2yznAYjEwDVv3RvzzKUpBR) still asks two, one tap each (phase 2: held, as you tapped):
-1. Clothes: try Marvelous Designer? Recommended: yes, one month for one sample outfit (Tom's), with the price shown to you before anything is bought.
-2. The reply check on Gemini 3.5 Flash-Lite (about 0.4 s faster, but 3 invented details in 42 against Haiku's 1): switch? Recommended: no, not yet.
+Your page today (https://claude.ai/artifact/VNFZHnSWBrA72zGKRbwFRn) asks three, one tap each:
+1. Tom's walk, its next go: Epic's own way to put its walk on a MetaHuman, after Monday? Recommended: yes; the first two tries are set aside under your two-tries rule.
+2. Clothes: try Marvelous Designer? Recommended: yes, one month for one sample outfit (Tom's), with the price shown to you before anything is bought.
+3. The reply check on Gemini 3.5 Flash-Lite (about 0.4 s faster, but 3 invented details in 42 against Haiku's 1): switch? Recommended: no, not yet.
 
-For tomorrow's page:
-3. Tom's walk: Epic's sample already ships the way to put its walk on a MetaHuman (its own character, Tom's body worn over it). Try that after Monday, as the walk's next go? Recommended: yes; the first go is set aside under your two-tries rule.
+(2 and 3 are carried from Thursday's page; a tap on either page counts.)
 
 ### Road to worth playing (PLAN.md)
 
@@ -70,4 +70,4 @@ For tomorrow's page:
 - **The ironmonger's shop and its wear** passed all eight views.
 - **The newsagent's shop and its wear** passed all ten views. Its box sign now lights after dark, and its card reads CLOSED.
 
-**Act on:** your page, two taps left (Marvelous Designer, the Gemini switch): https://claude.ai/artifact/2yznAYjEwDVv3RvzzKUpBR
+**Act on:** today's page, three taps: https://claude.ai/artifact/VNFZHnSWBrA72zGKRbwFRn

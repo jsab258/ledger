@@ -38,3 +38,38 @@ His message of 22 October: "the next shop family the same way as Rita's". After 
   - **Measured:** the curtains are dense (18,172 and 16,860 faces) with consistent, smooth normals, so the cause is not coarse geometry.
   - **The cause:** the design gives the cloth half transmission (KHR_materials_transmission 0.5). The game draws that see-through, and a folded see-through sheet's triangles are not sorted by depth, so back folds draw over front ones.
   - **Fix, try 1:** front_for_game.py --display writes the curtain solid (SOLID_CLOTH, solid_cloth). The display was imported again and every view retaken (r3).
+
+## Round 3 (r3: the curtains solid)
+
+- **Square on, from the right, from the left and across the road by day: PASS.** The curtains' folds are clean.
+  - Listed: the solid cloth now shades the ring cake under it a little; the shop door's upper pane is mostly reflection by day; the kick plate reads brown where the design's is brass.
+- **Across the road at night: FAIL** on two points.
+  - **A, the black slot in the shop door's glass:** the design's own open point.
+    - **Measured:** it is in the room picture itself. The counter stops 0.10 m short of the left wall, and the gap renders near-black (values 0 to 5 at its core, in the design's pictures and the PC's).
+    - **Fix, try 1:** a filler of the counter's own base and top runs it to the wall (sw_shops_tea.py; the scene checks pass), and the room is rendered again.
+  - **B, a burnt white sliver at the window's left edge:**
+    - **The cause:** the window's light panel at its default place, the card's middle (27.0) and 3.7 m wide, has its end against the window's left return (26.30) and burns it. The same fault was Rita's second try of 21 October.
+    - **Fix, try 1:** the panel over the window alone, as hers (spill_x 27.975, spill_width 2.6, just behind the glass).
+  - The room's first re-render closed the counter's gap. A second, narrower dark gap stood above it, where the cup shelves stopped 0.10 m short of the wall, so the shelves now run to just clear of the wall and its dado rail (0.035 m; the scene checks pass), and the room was rendered a third time.
+
+## Round 4 (r4: the counter and shelves to the wall, the window's light over the window)
+
+- **Across the road at night:** both r3 faults fixed. The door's slot now reads about 16, the counter's shaded end, where it read 1 to 3; the window's left edge, 230 before, now reads about 60.
+  - **A new fault, FAIL:** the door's number 14 on the fanlight went pale and ghostly (its digits 80 to 88 against a wall of 70 to 110; 35 before).
+  - **The cause:** the number is see-through as the design exported it (glTF BLEND). Unreal lights a see-through surface from its light volume, which ignores the lighting channels that keep the window's light off the front. Once the light panel hung just behind the fanlight, it lit the number.
+  - **Fix, try 1 of this fault:** the number written as a cut-out (front_for_game.py --mask=glass_row_20), lit as the front is; the front was imported again.
+- **Square on at night: PASS.** The room and the curtains are lit but not burnt (curtains' top 1% at 240, nothing clipped); the curtain folds are smooth.
+  - Listed: harder shadows than the design's, the cards dark under the lamp's orange.
+
+## Round 5 (r5, the night set, taken 02:23 before the build machine's night run)
+
+- **The number 14 reads dark and solid again:** its box's mean 65.6 against 90.6 in r4 and 62.9 in r3.
+- **Across the road at night: PASS** (r5). The 14 is solid dark brown and reads the right way round, there is no slot in the door glass, and the window's left edge peaks at 241 with nothing clipped.
+  - Listed: the kick plate reads brown, not the design's brass; the toplights show no ceiling tubes; the cornice strip on the slates.
+- **From the left at night: FAIL** (r5). The window's last toplights showed black over the lit room.
+  - **The cause:** the tea rooms' window stands at the bay's end, where the room's card ends (29.65). From a slant through its last toplights, the eye passes over the display's side linings (their tops 0.35 m under the window head) and beyond the card's end into nothing. Rita's and the newsagent's windows end inside their cards' width, so they show the room there.
+  - **Fix, try 1:** the display's side linings run up to the window head, as a shopfitter's are (front_for_game.py --display --raise=return_plaster:0.45; their tops from 2.95 to 3.40 m).
+- **From the right at night: FAIL** (r5). Saw-tooth vertical stripes (about every 20 px) crossed the hand-lettered window card hung on the glass; absent in r3.
+  - **The cause:** they came with round 3's move of the window's light panel to just behind the glass, where it grazes the card. It is the light's own shadow map at a grazing angle.
+  - **Fix, try 1 of that fault:** the panel casts no shadows (spill_shadows false, the option made for Rita's goods).
+  - Listed: the window's left side wall is the brightest surface in that frame (239, not clipped); the fanlight's 14 reads faint from that slant against its dark glass.

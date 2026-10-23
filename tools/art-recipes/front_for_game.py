@@ -5,7 +5,10 @@ rest joined into one mesh that keeps every material and texture.
         production/assets/cloud-week/shop-windows/ritas_front.glb ritas-front
     F:/LedgerTools/bpyenv/Scripts/python.exe tools/art-recipes/front_for_game.py --display \
         production/assets/cloud-week/shop-windows/ritas_display.glb ritas-display
-    (a lit box sign: --night-glow=<material>=<the sign's emissive map>, dark until the game lights it)
+    (a lit box sign: --night-glow=<material>=<the sign's emissive map>, dark until the game lights it;
+     lettering on glass as solid cut-outs: --mask=<material>[,...];
+     a display's side linings up to the window head: --raise=<material>:<metres>;
+     and a head board across their tops: --head=<material>)
     python tools/art-recipes/front_for_game.py --selftest
 
 WHY, 21 October 2026 (his order, item 5, and his ruling of the day: Rita's front as the family's
@@ -97,6 +100,31 @@ def cut_out_cards(glb, names=CUTOUT_MATERIALS):
     return n
 
 
+# LETTERING ON GLASS AS A CUT-OUT (23 October, the tea rooms' night gate: their door's number 14, see-through as the
+# design exported it, lit up as a ghost once the window's light panel hung just behind the fanlight; Unreal lights a
+# see-through surface from its light volume, whatever lights may touch the front). --mask=<material>[,...] writes the
+# named materials cut-out (MASK at 0.5): their letters solid, lit as the front is.
+def mask_materials(glb, names):
+    """Rewrite a glb in place with the named materials' alphaMode MASK at 0.5. Returns how many changed."""
+    import struct
+    data = open(glb, "rb").read()
+    jlen = struct.unpack("<I", data[12:16])[0]
+    j = json.loads(data[20:20 + jlen])
+    rest = data[20 + jlen:]
+    n = 0
+    for m in j.get("materials", []):
+        if m.get("name") in names and m.get("alphaMode") == "BLEND":
+            m["alphaMode"] = "MASK"
+            m["alphaCutoff"] = 0.5
+            n += 1
+    if n:
+        body = json.dumps(j, separators=(",", ":")).encode("utf-8")
+        body += b" " * ((4 - len(body) % 4) % 4)
+        head = data[:8] + struct.pack("<I", 20 + len(body) + len(rest)) + struct.pack("<I", len(body)) + data[16:20]
+        open(glb, "wb").write(head + body + rest)
+    return n
+
+
 # A DISPLAY'S CLOTH IS SOLID (23 October, the tea rooms' gate, square on: dark saw-tooth triangles ran down the fold
 # ridges of the café curtains, which the design gives half transmission; drawn see-through in the game, a folded sheet's
 # triangles are not sorted by depth, and back folds drew over front ones). Each material named here loses its
@@ -172,7 +200,56 @@ def add_night_glow(glb, material, png):
     return True
 
 
-def main(src, name, display=False, glow=None):
+def raise_tops(obj, material, metres):
+    """A DISPLAY'S SIDE LININGS TO THE WINDOW HEAD (23 October, the tea rooms' night gate from the left: their window
+    stands at the bay's end, and through its last toplights, from a slant, the eye passed over the returns' tops (0.35 m
+    under the head) beyond the room's card into nothing, black against the lit room). The top edge of every face of
+    `material` moves up by `metres`. Returns how many vertices moved."""
+    import bmesh
+    slots = [i for i, sl in enumerate(obj.material_slots) if sl.material and sl.material.name == material]
+    if not slots or metres <= 0.0:
+        return 0
+    bm = bmesh.new()
+    bm.from_mesh(obj.data)
+    faces = [f for f in bm.faces if f.material_index in slots]
+    top = max(v.co.z for f in faces for v in f.verts)
+    verts = {v for f in faces for v in f.verts if v.co.z >= top - 0.001}
+    for v in verts:
+        v.co.z += metres
+    bm.to_mesh(obj.data)
+    bm.free()
+    return len(verts)
+
+
+def add_head(obj, material, thick=0.012):
+    """A DISPLAY'S HEAD (23 October, the tea rooms' night gate from the right: through the middle toplights, from below at
+    a slant, the eye passed over the room's card into nothing, black; Rita's display has its own head and shows the
+    room there). A board of `material` over the whole span of that material's faces, at their top, from the glass back
+    to the card, as a shopfitter closes a window's lining box. Returns the board's face count."""
+    import bmesh
+    slots = [i for i, sl in enumerate(obj.material_slots) if sl.material and sl.material.name == material]
+    if not slots:
+        return 0
+    bm = bmesh.new()
+    bm.from_mesh(obj.data)
+    vs = [v.co.copy() for f in bm.faces if f.material_index in slots for v in f.verts]
+    x0, x1 = min(v.x for v in vs), max(v.x for v in vs)
+    y0, y1 = min(v.y for v in vs), max(v.y for v in vs)
+    z1 = max(v.z for v in vs)
+    res = bmesh.ops.create_cube(bm, size=1.0)
+    for v in res["verts"]:
+        v.co.x = x0 if v.co.x < 0 else x1
+        v.co.y = y0 if v.co.y < 0 else y1
+        v.co.z = z1 - thick if v.co.z < 0 else z1
+    new = {f for v in res["verts"] for f in v.link_faces}
+    for f in new:
+        f.material_index = slots[0]
+    bm.to_mesh(obj.data)
+    bm.free()
+    return len(new)
+
+
+def main(src, name, display=False, glow=None, mask=None, raise_=None, head=None):
     import bpy
     bpy.ops.wm.read_factory_settings(use_empty=True)
     bpy.ops.import_scene.gltf(filepath=os.path.abspath(src))
@@ -205,6 +282,11 @@ def main(src, name, display=False, glow=None):
     for o in [o for o in bpy.context.scene.objects if o is not joined]:
         bpy.data.objects.remove(o, do_unlink=True)
     tinted = sum(1 for m in bpy.data.materials if tint_sheen_to_base(m))
+    raised = 0
+    for spec in raise_ or []:
+        material, metres = spec.split(":")
+        raised += raise_tops(joined, material, float(metres))
+    headed = add_head(joined, head) if head else 0
     out_dir = OUT_DISPLAY if display else OUT_GLB
     os.makedirs(out_dir, exist_ok=True)
     glb = os.path.join(out_dir, name + ".glb")
@@ -217,10 +299,13 @@ def main(src, name, display=False, glow=None):
     if display:
         solid = solid_cloth(glb)
         tris = sum(len(p.vertices) - 2 for p in joined.data.polygons)
-        print("front_for_game: %s -> %s display parts=%d slots=%d sheenTinted=%d solidCloth=%d triangles=%d bytes=%d"
-              % (os.path.basename(src), glb, len(keep), len(joined.material_slots), tinted, solid, tris, os.path.getsize(glb)))
+        print("front_for_game: %s -> %s display parts=%d slots=%d sheenTinted=%d solidCloth=%d raisedVerts=%d headFaces=%d triangles=%d bytes=%d"
+              % (os.path.basename(src), glb, len(keep), len(joined.material_slots), tinted, solid, raised, headed, tris, os.path.getsize(glb)))
         return 0
     cut_out_cards(glb)
+    if mask and mask_materials(glb, mask) != len(mask):
+        print("front_for_game: not every material of --mask is see-through here: %s" % ",".join(mask))
+        return 1
     if glow:
         material, png = glow.split("=", 1)
         if not add_night_glow(glb, material, png):
@@ -261,8 +346,12 @@ if __name__ == "__main__":
     if "--selftest" in sys.argv:
         sys.exit(selftest())
     glow = [a.split("=", 1)[1] for a in sys.argv[1:] if a.startswith("--night-glow=")]
-    args = [a for a in sys.argv[1:] if a != "--display" and not a.startswith("--night-glow=")]
+    mask = [m for a in sys.argv[1:] if a.startswith("--mask=") for m in a.split("=", 1)[1].split(",") if m]
+    raise_ = [a.split("=", 1)[1] for a in sys.argv[1:] if a.startswith("--raise=")]
+    head = [a.split("=", 1)[1] for a in sys.argv[1:] if a.startswith("--head=")]
+    args = [a for a in sys.argv[1:] if a != "--display" and not a.startswith(("--night-glow=", "--mask=", "--raise=", "--head="))]
     if len(args) != 2:
         print(__doc__)
         sys.exit(1)
-    sys.exit(main(args[0], args[1], display="--display" in sys.argv, glow=glow[0] if glow else None))
+    sys.exit(main(args[0], args[1], display="--display" in sys.argv, glow=glow[0] if glow else None, mask=mask or None,
+                  raise_=raise_ or None, head=head[0] if head else None))

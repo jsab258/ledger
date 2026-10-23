@@ -67,8 +67,17 @@ def room(r):
     cream = r.mat("hatch_cream", rgb8(226, 216, 190), rough=0.5)
     # ---- the counter
     cx0, cx1, cy0, cy1, ch = r.counter("T-back-counter", panels=True)
+    # THE COUNTER RUNS TO THE WALL (23 October, the PC's night gate: the counter stops 0.10 short of the left wall, and
+    # the unlit gap read pure black through the shop door's glass, the "black slot" of the design's own night
+    # pictures, its cause not found here): a filler of the counter's own base and top closes it, as a fitted counter is
+    if cx0 > -W / 2 + 0.005:
+        r.box("counter_T-back-counter_end_filler", -W / 2, cx0, cy0 + 0.012, cy1, 0.0, ch - 0.03, r.wood_m, fixture="T-back-counter")
+        r.box("counter_T-back-counter_end_top", -W / 2, cx0, cy0, cy1, ch - 0.03, ch, r.mat("counter_top_" + r.ctx.id, rgb8(120, 80, 48), rough=0.38),
+              fixture="T-back-counter")
     sx0, sx1 = fx["T-back-shelf"]["x"]
-    r.shelf_unit("T-back-shelf", [(1.35, sx0, -0.60), (1.75, sx0, sx1)], bottom=ch)
+    # and the shelves above it too (the same night: their 0.10 m gap at the corner read black above the counter)
+    sw0 = min(sx0, -W / 2 + 0.035)          # just clear of the wall and its dado rail
+    r.shelf_unit("T-back-shelf", [(1.35, sw0, -0.60), (1.75, sw0, sx1)], bottom=ch)
     sd = fx["T-back-shelf"]["depth_m"]
     yb = D - sd - 0.02                       # in front of the shelf
     yc = D - 0.30                            # the middle of the counter's top
