@@ -75,7 +75,10 @@ def main(argv):
     # Windows gives the game's threads the processor first and the voice what is left; --threads N sets
     # its thread count (default half the processor) and --priority normal restores the old way.
     # (or LEDGER_POCKET_THREADS and LEDGER_POCKET_PRIORITY, for a launcher that passes no arguments)
-    threads = int(argv[argv.index("--threads") + 1]) if "--threads" in argv else int(os.environ.get("LEDGER_POCKET_THREADS") or max(2, (os.cpu_count() or 4) // 2))
+    # FOUR THREADS, 23 October (frame headroom): on six (half this PC's twelve) two packaged walks each had one frame over
+    # 33.3 ms (52.7, 44.7) with every game thread short; on four both held (30.1, 32.9) and the voice still made speech
+    # 2.6 times faster than it is spoken (production/research/frame-headroom/FINDINGS-2026-10-23.md).
+    threads = int(argv[argv.index("--threads") + 1]) if "--threads" in argv else int(os.environ.get("LEDGER_POCKET_THREADS") or min(4, max(2, (os.cpu_count() or 4) // 2)))
     torch.set_num_threads(threads)
     priority = argv[argv.index("--priority") + 1] if "--priority" in argv else (os.environ.get("LEDGER_POCKET_PRIORITY") or "below")
     lowered = set_priority(priority)

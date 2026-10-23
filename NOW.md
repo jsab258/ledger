@@ -16,14 +16,14 @@ Phase 1 closed 22 Oct, no exit passed (production/audits/phase1-exit/CLOSE-2026-
 
 - [x] Done (DECISIONS.md); 7 set aside to Monday.
 
-## His order of 23 October (to Sat 06:00)
+## His order of 23 October (to Sat 14:00)
 
 - [x] Launderette parked, in progress (sw_cloth_proto.py).
 - [x] Card memory, voice on the processor: frame-headroom/FINDINGS-2026-10-23.md.
 - [x] The 87 ms stall: bundled pipeline cache, 0 misses (FINDINGS).
 - [ ] The card's spare time.
 
-STATE (23 Oct 21:40): window shadows fixed; package 4 next.
+STATE (23 Oct 23:00): night spare, try 2; package 5.
 
 ## Handovers
 

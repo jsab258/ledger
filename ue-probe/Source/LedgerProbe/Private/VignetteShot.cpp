@@ -1891,6 +1891,10 @@ namespace
 			C->SetCollisionEnabled(bInteractive ? ECollisionEnabled::QueryOnly
 			                                     : ECollisionEnabled::NoCollision);
 			C->SetCastShadow(true);
+			// AND THE STREET'S FURNITURE IN A SHOP WINDOW'S LIGHT (23 October, frame headroom: with the window lamps casting
+			// from their shop's own pieces only, two reviewers saw Rita's lamp light the inside of the telephone kiosk in front
+			// of it, and the wet glints behind a railing and a bin brighten). Props are small: they cast for those lamps too.
+			C->bCastCinematicShadow = true;
 		}
 		A->SetActorScale3D(ScaleUU);
 		A->SetActorLocationAndRotation(
@@ -7516,9 +7520,23 @@ namespace
 	FTSTicker::FDelegateHandle GRoomShadowTicker;
 	constexpr double kRoomShadowNearCm = 700.0;
 
+	// THE WINDOW LAMPS' SHADOWS BY DISTANCE TOO (23 October, his order: frame headroom; the night's spare card time, try 2):
+	// cast from their shop's own pieces only, the five window lamps' shadows still took about 4 ms at night (the grocer's and
+	// the chandler's alone 1.9, 35 to 45 m from the hook camera, where their goods' shadows cannot be seen). As the rooms' do,
+	// a window lamp casts shadows only while the eye is within 15 m of it, which every shop's own gate cameras are; looked at
+	// four times a second. -SpillShadowsAlways keeps them on at any distance, to compare.
+	struct FSpillShadowLod
+	{
+		TWeakObjectPtr<URectLightComponent> Light;
+		FVector At = FVector::ZeroVector;
+		int32 Near = -1;
+	};
+	TArray<FSpillShadowLod> GSpillShadowLods;
+	constexpr double kSpillShadowNearCm = 1500.0;
+
 	bool TickRoomShadows(float)
 	{
-		if (GRoomShadowLods.Num() == 0 || GEngine == nullptr) { return true; }
+		if ((GRoomShadowLods.Num() == 0 && GSpillShadowLods.Num() == 0) || GEngine == nullptr) { return true; }
 		UWorld* World = nullptr;
 		for (const FWorldContext& Ctx : GEngine->GetWorldContexts())
 		{
@@ -7545,6 +7563,22 @@ namespace
 			}
 			UE_LOG(LogTemp, Display, TEXT("LedgerInteriors: %s's shadows %s"), *R.Shop,
 				Near == 1 ? TEXT("near: the fittings and the lamps cast them") : TEXT("far: the shell casts them, the lamps none"));
+		}
+		int32 SpillNear = 0, SpillChanged = 0;
+		for (FSpillShadowLod& S : GSpillShadowLods)
+		{
+			URectLightComponent* L = S.Light.Get();
+			if (L == nullptr) { continue; }
+			const int32 Near = FVector::Dist(Eye, S.At) < kSpillShadowNearCm ? 1 : 0;
+			SpillNear += Near;
+			if (Near == S.Near) { continue; }
+			S.Near = Near;
+			L->SetCastShadows(Near == 1);
+			++SpillChanged;
+		}
+		if (SpillChanged > 0)
+		{
+			UE_LOG(LogTemp, Display, TEXT("LedgerInteriors: window lamps casting shadows: %d of %d (within %.0f m)"), SpillNear, GSpillShadowLods.Num(), kSpillShadowNearCm / 100.0);
 		}
 		return true;
 	}
@@ -7922,7 +7956,8 @@ namespace
 			// FROM THE SHOP'S OWN PIECES ONLY (23 October, his order: frame headroom). With every caster within its 9 m the
 			// window lamps' shadows took 4.3 ms of the card at night (4.98 ms of shadow drawing, 0.70 with them off; the
 			// card's spare time 0.10 ms against PLAN's 1.4). As the rooms' lights do (RoomShadowsOwnOnly), they now cast
-			// from "cinematic" pieces only: the displays, the fronts and the people (each marked where it is spawned).
+			// from "cinematic" pieces only: the displays, the fronts, the people and the street's props (each marked where it
+			// is spawned); the street's own walls, paving and roofs, the bulk of the 9 m, no longer draw into them.
 			RC->bCastShadowsFromCinematicObjectsOnly = RoomShadowsOwnOnly();
 			if (ShadowBias > 0.0) { RC->SetShadowBias((float)ShadowBias); }
 			if (ShadowSlopeBias > 0.0) { RC->SetShadowSlopeBias((float)ShadowSlopeBias); }
@@ -7932,6 +7967,18 @@ namespace
 			RC->SetSpecularScale(0.0f);      // at 0.15 the second reviewer still saw the bar
 			RC->SetLightingChannels(false, true, false);
 			RC->SetVisibility(false);
+			// and only while the eye is near (FSpillShadowLod)
+			if (bShadows && RoomShadowsOwnOnly() && !FParse::Param(FCommandLine::Get(), TEXT("SpillShadowsAlways")))
+			{
+				FSpillShadowLod Lod;
+				Lod.Light = RC;
+				Lod.At = At;
+				GSpillShadowLods.Add(Lod);
+				if (!GRoomShadowTicker.IsValid())
+				{
+					GRoomShadowTicker = FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateStatic(&TickRoomShadows), 0.25f);
+				}
+			}
 		}
 		return L;
 	}
@@ -8000,6 +8047,7 @@ namespace
 		GRoomLights.Reset();
 		GRoomSwitches.Reset();
 		GRoomShadowLods.Reset();
+		GSpillShadowLods.Reset();
 		GInteriorsAsked = 0;
 		for (const TWeakObjectPtr<AActor>& W : GInteriorActors)
 		{

@@ -47,7 +47,8 @@ $py = "python"
 # voice's processor load causes (slow frames with every one of the game's threads short).
 $voiceProc = $null
 if ($Voice -ne "none") {
-  $voiceArgs = @("tools/voice-live/voice_load.py", "--seconds", "$VoiceSeconds") + $(if ($Voice -eq "pocket") { @("--pocket") } else { @() })
+  # -Voice castcpu (23 October): the cast's own voice on the processor (voice-server.py --cpu), the game's voice without the card
+  $voiceArgs = @("tools/voice-live/voice_load.py", "--seconds", "$VoiceSeconds") + $(if ($Voice -eq "pocket") { @("--pocket") } elseif ($Voice -eq "castcpu") { @("--cpu") } else { @() })
   $voiceProc = Start-Process -FilePath $py -ArgumentList $voiceArgs -PassThru -NoNewWindow `
            -RedirectStandardOutput "$tmp\voice-load.log" -RedirectStandardError "$tmp\voice-load.err"
   $w = 0
