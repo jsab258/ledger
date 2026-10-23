@@ -7557,12 +7557,18 @@ namespace
 				F->bCastCinematicShadow = Near == 1;
 				F->MarkRenderStateDirty();
 			}
+			// THE LAMPS KEEP THEIR SHADOWS (24 October, frame headroom): switching a lamp's shadows on as the eye came within
+			// 7 m made the card's driver build its shadow map there and then, the first local-light shadow of the day: in half
+			// the packaged walks a 28 to 43 ms wait on the render-submission thread at that moment (frames 373 to 385), voice or
+			// none. The lamp (1.6 m reach, inside the room) now always casts, from the room's shell when far; only the
+			// fittings' 489,000 triangles come and go. -RoomLampShadowsByDistance restores the old switch.
+			static const bool bLampsByDistance = FParse::Param(FCommandLine::Get(), TEXT("RoomLampShadowsByDistance"));
 			for (const TWeakObjectPtr<ULocalLightComponent>& L : R.Lamps)
 			{
-				if (L.IsValid()) { L->SetCastShadows(Near == 1); }
+				if (L.IsValid() && bLampsByDistance) { L->SetCastShadows(Near == 1); }
 			}
 			UE_LOG(LogTemp, Display, TEXT("LedgerInteriors: %s's shadows %s"), *R.Shop,
-				Near == 1 ? TEXT("near: the fittings and the lamps cast them") : TEXT("far: the shell casts them, the lamps none"));
+				Near == 1 ? TEXT("near: the fittings and the lamps cast them") : TEXT("far: the shell casts them"));
 		}
 		int32 SpillNear = 0, SpillChanged = 0;
 		for (FSpillShadowLod& S : GSpillShadowLods)
