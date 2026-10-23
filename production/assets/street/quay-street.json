@@ -91,7 +91,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 472
+   "faces": 376
   },
   {
    "mesh": "street_brick_grey",
@@ -157,7 +157,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 480
+   "faces": 506
   },
   {
    "mesh": "street_brick_grey_h_east_chandler_bay_north",
@@ -1207,6 +1207,35 @@
    "faces": 6
   },
   {
+   "mesh": "street_card_chandler_day",
+   "material": "card_production/art/shop-rooms/chandler_day",
+   "base_material": "interior_lit",
+   "linear_rgb": [
+    1.0,
+    0.714,
+    0.344
+   ],
+   "roughness": 0.9,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "house_tint": null,
+   "decal": "production/art/shop-rooms/chandler_day",
+   "decal_uv": [
+    0.0,
+    0.0,
+    1.0,
+    1.0
+   ],
+   "decal_emit": "room",
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": 0.4,
+   "emit_night": 1.6,
+   "reveal_on": null,
+   "faces": 6
+  },
+  {
    "mesh": "street_card_ironmonger_day",
    "material": "card_production/art/shop-rooms/ironmonger_day",
    "base_material": "interior_lit",
@@ -1882,7 +1911,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 768
+   "faces": 410
   },
   {
    "mesh": "street_fascia_door_black",
@@ -2026,7 +2055,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 290
+   "faces": 160
   },
   {
    "mesh": "street_fascia_masonry_cream",
@@ -2218,7 +2247,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 988
+   "faces": 494
   },
   {
    "mesh": "street_frame_painted",
@@ -2458,7 +2487,31 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 24
+   "faces": 54
+  },
+  {
+   "mesh": "street_glass_eg_bay7",
+   "material": "glass_eg_bay7",
+   "base_material": "glass",
+   "linear_rgb": [
+    0.085,
+    0.092,
+    0.1
+   ],
+   "roughness": 0.0,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "house_tint": null,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "reveal_on": null,
+   "faces": 6
   },
   {
    "mesh": "street_glass_eg_baym17",
@@ -3017,30 +3070,6 @@
    "faces": 198
   },
   {
-   "mesh": "street_interior_lit",
-   "material": "interior_lit",
-   "base_material": "interior_lit",
-   "linear_rgb": [
-    1.0,
-    0.714,
-    0.344
-   ],
-   "roughness": 0.9,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": 3.4,
-   "emit_night": 0.7,
-   "reveal_on": null,
-   "faces": 6
-  },
-  {
    "mesh": "street_iron_black",
    "material": "iron_black",
    "base_material": "iron_black",
@@ -3145,7 +3174,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 1716
+   "faces": 1690
   },
   {
    "mesh": "street_mickeys_card_production_art_shop_rooms_mickeys_day",
@@ -3446,7 +3475,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 29874
+   "faces": 29796
   },
   {
    "mesh": "street_paint_white",
@@ -3912,30 +3941,6 @@
    "faces": 6
   },
   {
-   "mesh": "street_sign_fascia_trade_chandler",
-   "material": "sign_production/assets/vignette/decals2d/fascia_trade_chandler",
-   "base_material": "paint_fascia",
-   "linear_rgb": [
-    0.03,
-    0.022,
-    0.03
-   ],
-   "roughness": 0.45,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": "production/assets/vignette/decals2d/fascia_trade_chandler",
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 6
-  },
-  {
    "mesh": "street_sign_fascia_trade_fishmonger",
    "material": "sign_production/assets/vignette/decals2d/fascia_trade_fishmonger",
    "base_material": "paint_fascia",
@@ -4236,7 +4241,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 106
+   "faces": 80
   },
   {
    "mesh": "street_window_far_lit",
