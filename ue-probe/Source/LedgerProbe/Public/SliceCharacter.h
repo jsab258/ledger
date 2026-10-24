@@ -156,6 +156,20 @@ private:
 	TObjectPtr<USkeletalMeshComponent> MotionDriver;
 	bool StartMotionMatching(USkeletalMeshComponent* M);
 	int32 HeardFootfalls = 0;
+	// TOM'S WALK BY EPIC'S METAHUMAN ROUTE (his order of 24 October), with -LedgerGaspMover only: the Game
+	// Animation Sample's own character, unchanged and unseen, is the mover; he wears his MetaHuman body
+	// (L1) in its VisualOverride slot, copied from its hidden mannequin by the sample's own
+	// ABP_GenericRetarget and Epic's RTG_UEFN_to_Metahuman_nrw (the sample's way of dressing it, read from
+	// its AC_VisualOverrideManager and BP_Kellan; production/research/sit-and-turn/metahuman-route-2026-10-24).
+	// His own capsule rides on the mover's and hands it what the keys, the pad and the route ask.
+	UPROPERTY()
+	TObjectPtr<ACharacter> GaspMover;
+	UPROPERTY()
+	TObjectPtr<USkeletalMeshComponent> WornBody;
+	UPROPERTY()
+	TObjectPtr<UClass> WornAnimClass;
+	bool StartGaspMover(USkeletalMeshComponent* M);
+	void GaspTick();
 	// One step's sound from foot F (0 left, 1 right); false when too soon after the last.
 	bool SoundStep(int32 F, bool bRun, float Speed, const TCHAR* From, float T);
 

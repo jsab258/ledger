@@ -28,6 +28,7 @@
 #include "NavMesh/NavMeshBoundsVolume.h"
 #include "Components/BrushComponent.h"
 #include "Components/BoxComponent.h"
+#include "Components/ChildActorComponent.h"
 #include "PhysicsEngine/BodySetup.h"
 #include "TimerManager.h"
 #include "AudioMixerBlueprintLibrary.h"
@@ -111,6 +112,7 @@ void ALedgerSliceCharacter::Tick(float DeltaSeconds)
 		else if (KeysPC->IsInputKeyDown(EKeys::W) || KeysPC->IsInputKeyDown(EKeys::A) || KeysPC->IsInputKeyDown(EKeys::S) || KeysPC->IsInputKeyDown(EKeys::D)
 		         || FMath::Abs(MouseX) + FMath::Abs(MouseY) > 0.5f) { LedgerPaper::SetPadInUse(false); }
 	}
+	GaspTick();
 	if (MotionDriver != nullptr)
 	{
 		// the sample's braking: hard when let go, gentle while still pushed (its CalculateBrakingDeceleration)
@@ -140,7 +142,9 @@ void ALedgerSliceCharacter::Tick(float DeltaSeconds)
 	if (bClose != bBodyHiddenForCamera)
 	{
 		bBodyHiddenForCamera = bClose;
-		GetMesh()->SetVisibility(!bClose, true);
+		// the body he wears on Epic's route, else his own
+		if (WornBody != nullptr && WornBody->GetOwner() != nullptr) { WornBody->GetOwner()->SetActorHiddenInGame(bClose); }
+		else { GetMesh()->SetVisibility(!bClose, true); }
 	}
 	StepTick(DeltaSeconds);
 }
@@ -304,6 +308,7 @@ void ALedgerSliceCharacter::BeginPlay()
 	}
 	UE_LOG(LogTemp, Log, TEXT("LedgerSteps: %d walking and %d running step sound(s), feet %s and %s"), StepClips.Num(),
 		RunStepClips.Num(), *FootBone[0].ToString(), *FootBone[1].ToString());
+	if (StartGaspMover(M)) { return; }
 	if (StartMotionMatching(M)) { return; }
 	M->SetAnimInstanceClass(ULedgerLocomotionAnim::StaticClass());
 	if (ULedgerLocomotionAnim* A = Cast<ULedgerLocomotionAnim>(M->GetAnimInstance()))
@@ -399,6 +404,103 @@ bool ALedgerSliceCharacter::StartMotionMatching(USkeletalMeshComponent* M)
 	return true;
 }
 
+bool ALedgerSliceCharacter::StartGaspMover(USkeletalMeshComponent* M)
+{
+	if (M == nullptr || !FParse::Param(FCommandLine::Get(), TEXT("LedgerGaspMover"))) { return false; }
+	// THE SAMPLE'S OWN PIECES at their own paths (copied into the game unchanged, 24 October), and his
+	// MetaHuman as assembled (the face he was given, L1).
+	static const TCHAR* MoverPath = TEXT("/Game/Blueprints/SandboxCharacter_CMC.SandboxCharacter_CMC_C");
+	static const TCHAR* BodyPath = TEXT("/Game/Ledger/MetaHumans/MH_TomL1/BP_MH_TomL1.BP_MH_TomL1_C");
+	static const TCHAR* CopyPath = TEXT("/Game/Blueprints/RetargetedCharacters/ABP_GenericRetarget.ABP_GenericRetarget_C");
+	auto Load = [](const TCHAR* P) -> UClass*
+	{
+		return FPackageName::DoesPackageExist(FPackageName::ObjectPathToPackageName(FString(P))) ? LoadClass<UObject>(nullptr, P) : nullptr;
+	};
+	UClass* MoverClass = Load(MoverPath);
+	UClass* BodyClass = Load(BodyPath);
+	UClass* CopyClass = Load(CopyPath);
+	UWorld* World = GetWorld();
+	if (World == nullptr || MoverClass == nullptr || !MoverClass->IsChildOf(ACharacter::StaticClass()) || BodyClass == nullptr || CopyClass == nullptr)
+	{
+		UE_LOG(LogTemp, Log, TEXT("LedgerWalk: his own clips (Epic's route needs the sample's character %s, his MetaHuman %s, the sample's retarget graph %s)"),
+			MoverClass != nullptr ? TEXT("yes") : TEXT("no"), BodyClass != nullptr ? TEXT("yes") : TEXT("no"), CopyClass != nullptr ? TEXT("yes") : TEXT("no"));
+		return false;
+	}
+	FActorSpawnParameters Spawn;
+	Spawn.Owner = this;
+	Spawn.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+	ACharacter* Mover = World->SpawnActor<ACharacter>(MoverClass, GetActorLocation(), FRotator(0.0f, GetActorRotation().Yaw, 0.0f), Spawn);
+	if (Mover == nullptr) { return false; }
+	// a controller of its own, so its movement takes input (it is never the player's: the camera and the
+	// game's own systems stay on him)
+	if (Mover->GetController() == nullptr) { Mover->SpawnDefaultController(); }
+	Mover->AddTickPrerequisiteActor(this);
+	// HIS BODY IN ITS SLOT, as the sample's AC_VisualOverrideManager puts one there: the slot tagged
+	// VisualOverride takes the body's class, and the mannequin is hidden (it keeps working out its pose:
+	// its mesh ticks pose and bones always). The body copies the hidden pose through the retargeter its
+	// tag names (ABP_GenericRetarget looks the tag up in its IKRetargeter_Map, as BP_Kellan's body is tagged).
+	UChildActorComponent* Slot = nullptr;
+	for (UActorComponent* C : Mover->GetComponentsByTag(UChildActorComponent::StaticClass(), FName(TEXT("VisualOverride")))) { Slot = Cast<UChildActorComponent>(C); if (Slot != nullptr) { break; } }
+	if (Slot != nullptr) { Slot->SetChildActorClass(BodyClass); }
+	AActor* Worn = Slot != nullptr ? Slot->GetChildActor() : nullptr;
+	TInlineComponentArray<USkeletalMeshComponent*> Parts;
+	if (Worn != nullptr) { Worn->GetComponents(Parts); }
+	for (USkeletalMeshComponent* P : Parts) { if (P->GetName() == TEXT("Body")) { WornBody = P; break; } }
+	if (WornBody == nullptr)
+	{
+		UE_LOG(LogTemp, Log, TEXT("LedgerWalk: his own clips (the sample's character has %s, his MetaHuman %s)"),
+			Slot != nullptr ? TEXT("its slot") : TEXT("no VisualOverride slot"), Worn != nullptr ? TEXT("has no Body") : TEXT("did not spawn"));
+		Mover->Destroy();
+		return false;
+	}
+	WornBody->ComponentTags.AddUnique(FName(TEXT("RTG_UEFN_to_Metahuman_nrw")));
+	WornAnimClass = CopyClass;
+	WornBody->SetAnimInstanceClass(CopyClass);
+	WornBody->AddTickPrerequisiteComponent(Mover->GetMesh());
+	Mover->GetMesh()->SetVisibility(false, false);
+	GaspMover = Mover;
+	// HIS OWN BODY AND CAPSULE PUT BY: the stand-in body unseen and still, his capsule riding on the
+	// mover's (no collision of its own, no movement of its own).
+	M->SetVisibility(false, true);
+	M->SetComponentTickEnabled(false);
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	GetCharacterMovement()->DisableMovement();
+	GetCharacterMovement()->SetComponentTickEnabled(false);
+	GetRootComponent()->AttachToComponent(Mover->GetRootComponent(), FAttachmentTransformRules::SnapToTargetNotIncludingScale);
+	UE_LOG(LogTemp, Log, TEXT("LedgerWalk: Epic's route: the sample's %s moves, he wears %s through %s"), *Mover->GetClass()->GetName(),
+		*BodyClass->GetName(), *CopyClass->GetName());
+	return true;
+}
+
+void ALedgerSliceCharacter::GaspTick()
+{
+	if (GaspMover == nullptr) { return; }
+	// WHAT THE KEYS, THE PAD AND THE ROUTE ASKED THIS FRAME goes to the mover (his own movement takes none).
+	const FVector In = ConsumeMovementInputVector();
+	if (!In.IsNearlyZero()) { GaspMover->AddMovementInput(In.GetSafeNormal2D(), FMath::Min(1.0, In.Size())); }
+	// HIS PACE as the sample's input state: walking unless he runs (shift, or the route's run). The sample
+	// picks its gait from that (GetDesiredGait); with a full push and no walk wish it would run.
+	const bool bWalk = GetCharacterMovement()->MaxWalkSpeed <= WalkSpeedCm + 1.0f;
+	if (FStructProperty* State = FindFProperty<FStructProperty>(GaspMover->GetClass(), TEXT("CharacterInputState")))
+	{
+		void* Data = State->ContainerPtrToValuePtr<void>(GaspMover);
+		for (TFieldIterator<FBoolProperty> It(State->Struct); It; ++It)
+		{
+			const FString N = It->GetName();
+			if (N.StartsWith(TEXT("WantsToWalk"))) { It->SetPropertyValue_InContainer(Data, bWalk); }
+			else if (N.StartsWith(TEXT("WantsToSprint"))) { It->SetPropertyValue_InContainer(Data, false); }
+		}
+	}
+	// what reads his speed (his steps, people noticing him) reads the mover's
+	GetCapsuleComponent()->ComponentVelocity = GaspMover->GetVelocity();
+	// HIS METAHUMAN'S OWN SET-UP may put its body's graph back as it starts: the copying graph again
+	if (WornBody != nullptr && WornAnimClass != nullptr && WornBody->GetAnimClass() != WornAnimClass)
+	{
+		WornBody->SetAnimInstanceClass(WornAnimClass);
+		UE_LOG(LogTemp, Log, TEXT("LedgerWalk: his MetaHuman's body graph set again to the sample's copy"));
+	}
+}
+
 namespace
 {
 	// THE ROUTE: seconds, heading from his first (degrees), pace (0 stand, 1 walk, 2 run), and the kind
@@ -439,11 +541,14 @@ void ALedgerSliceCharacter::WalkProofTick(float DeltaSeconds)
 		}
 		Soles[1].Ball[0] = FName(TEXT("ball_l"));
 		Soles[1].Ball[1] = FName(TEXT("ball_r"));
+		// on Epic's route the body he wears is a MetaHuman's, whose balls are named as the mannequin's
+		if (WornBody != nullptr) { Soles[0].Ball[0] = FName(TEXT("ball_l")); Soles[0].Ball[1] = FName(TEXT("ball_r")); }
 		// THE CLEAREST LINE: his capsule swept 15 m each way along sixteen headings through the
 		// street's walls, kerbs and parked things (people do not stop him during the measure); the
 		// route needs about 11 m ahead and 2 m behind, so the heading with the most ahead, with 3 m
 		// behind, is taken.
 		GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Pawn, ECR_Ignore);
+		if (GaspMover != nullptr) { GaspMover->GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Pawn, ECR_Ignore); }
 		const FCollisionShape Shape = FCollisionShape::MakeCapsule(GetCapsuleComponent()->GetScaledCapsuleRadius(), GetCapsuleComponent()->GetScaledCapsuleHalfHeight() - 5.0f);
 		FCollisionQueryParams Q(FName(TEXT("TomWalkProofLine")), false, this);
 		FCollisionResponseParams R;
@@ -466,11 +571,11 @@ void ALedgerSliceCharacter::WalkProofTick(float DeltaSeconds)
 		}
 		ProofLines += FString::Printf(TEXT("the route's heading %.0f degrees, %.1f m clear ahead, %.1f m behind") LINE_TERMINATOR,
 			ProofYaw, Clear(ProofYaw) / 100.0f, Clear(ProofYaw + 180.0f) / 100.0f);
-		M->RegisterOnBoneTransformsFinalizedDelegate(FOnBoneTransformsFinalizedMultiCast::FDelegate::CreateUObject(this, &ALedgerSliceCharacter::MeasureFeet));
+		(WornBody != nullptr ? WornBody.Get() : M)->RegisterOnBoneTransformsFinalizedDelegate(FOnBoneTransformsFinalizedMultiCast::FDelegate::CreateUObject(this, &ALedgerSliceCharacter::MeasureFeet));
 		ProofSeg = 0;
 		ProofSegAt = ProofClock;
 		UE_LOG(LogTemp, Display, TEXT("ledgerTomWalk: the route begins, balls %s and %s, %s"), *Soles[0].Ball[0].ToString(), *Soles[0].Ball[1].ToString(),
-			MotionDriver != nullptr ? TEXT("motion matching") : TEXT("his own clips"));
+			GaspMover != nullptr ? TEXT("Epic's route (the sample's character, his MetaHuman worn)") : (MotionDriver != nullptr ? TEXT("motion matching") : TEXT("his own clips")));
 	}
 	if (ProofClock - ProofSegAt >= GProofRoute[ProofSeg].Seconds)
 	{
@@ -490,8 +595,8 @@ void ALedgerSliceCharacter::WalkProofTick(float DeltaSeconds)
 				Driver += FString::Printf(TEXT(" %s=%.2f/%d"), GKindNames[K], Soles[1].Worst[K], Soles[1].Contacts[K]);
 			}
 			const FString Line = FString::Printf(TEXT("ledgerTomWalk=%s mode=%s worstJoinCm=%.2f%s frames=%d mannequin:%s"), bPass ? TEXT("PASS") : TEXT("FAIL"),
-				MotionDriver != nullptr ? (FParse::Param(FCommandLine::Get(), TEXT("LedgerNoOffsetRoot")) ? TEXT("matched-no-offset") : TEXT("matched")) : TEXT("clips"),
-				Joins, *Kinds, ProofFrames, MotionDriver != nullptr ? *Driver : TEXT(" none"));
+				GaspMover != nullptr ? TEXT("gasp-metahuman") : (MotionDriver != nullptr ? (FParse::Param(FCommandLine::Get(), TEXT("LedgerNoOffsetRoot")) ? TEXT("matched-no-offset") : TEXT("matched")) : TEXT("clips")),
+				Joins, *Kinds, ProofFrames, (MotionDriver != nullptr || GaspMover != nullptr) ? *Driver : TEXT(" none"));
 			UE_LOG(LogTemp, Display, TEXT("%s"), *Line);
 			FFileHelper::SaveStringToFile(Line + LINE_TERMINATOR + ProofLines, *(FPaths::ProjectSavedDir() / TEXT("Logs") / TEXT("tom-walk.txt")));
 			GetCharacterMovement()->MaxWalkSpeed = WalkSpeedCm;
@@ -557,13 +662,16 @@ void ALedgerSliceCharacter::MeasureFeet()
 	// foot, planted when within 2.5 cm of its standing height and no higher than the other; its
 	// drift along the ground while planted is the slide.
 	const int32 Segs = UE_ARRAY_COUNT(GProofRoute);
-	USkeletalMeshComponent* M = GetMesh();
+	// on Epic's route: the MetaHuman body he wears, and the sample's mannequin under it, on the mover's floor
+	USkeletalMeshComponent* M = WornBody != nullptr ? WornBody.Get() : GetMesh();
 	if (M == nullptr || ProofSeg < 0 || ProofSeg >= Segs) { return; }
 	const float T = ProofClock - ProofSegAt;
-	const float Floor = GetActorLocation().Z - GetCapsuleComponent()->GetScaledCapsuleHalfHeight();
+	const ACharacter* Stand = GaspMover != nullptr ? GaspMover.Get() : this;
+	const float Floor = Stand->GetActorLocation().Z - Stand->GetCapsuleComponent()->GetScaledCapsuleHalfHeight();
 	++ProofFrames;
 	MeasureBody(0, M, ProofSeg, T, Floor);
-	if (MotionDriver != nullptr) { MeasureBody(1, MotionDriver, ProofSeg, T, Floor); }
+	if (GaspMover != nullptr) { MeasureBody(1, GaspMover->GetMesh(), ProofSeg, T, Floor); }
+	else if (MotionDriver != nullptr) { MeasureBody(1, MotionDriver, ProofSeg, T, Floor); }
 }
 
 void ALedgerSliceCharacter::MeasureBody(int32 B, USkeletalMeshComponent* Body, int32 Seg, float T, float Floor)
