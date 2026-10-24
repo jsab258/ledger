@@ -8,9 +8,14 @@ What was learnt (each run about 1 to 3.5 minutes on the PC):
     sharp teeth and slips through the weave's gaps (cloth_proto_0.5.png in the session's scratch).
   - quality 8, distances 3 / 4 mm, collision quality 5, 150 frames: every sheet blew away (to 7 m), with the wicker or with an inner box.
   - back to the first settings with shrink 0.65, 120 frames: stable again, the sheets inside the basket (sheet 2 took 200 s).
-Next: judge the 0.65 run's look; an inner box collider with the first settings; then the weave tile at 3 mm cells and a normal map,
+  - judged by eye (24 Oct, 02:10): with the wicker as collider the cloth fell through its floor and gaps (shrink 0.65); with an
+    open box just inside the weave as collider (its faces turned inward, the first settings, shrink 0.6, three sheets) it lies
+    as soft cloth in the basket, a blue sheet under cream and a crumpled red one, in 45 s: the best so far, but low (top 0.088
+    against the rim's 0.117).
+  - five sheets (shrink 0.7): the later ones crumple into small balls and the run takes 13 minutes: no.
+Next: three sheets with less shrink (0.8), so the cloth heaps over the rim; then the weave tile at 3 mm cells and a normal map,
 and DSP-03 inside the group (the review's exact fix).
-Run: F:/LedgerTools/bpyenv/Scripts/python.exe sw_cloth_proto.py <shrink> <frames> [wicker|proxy]
+Run: F:/LedgerTools/bpyenv/Scripts/python.exe sw_cloth_proto.py <shrink> <frames> [wicker|proxy] [sheets]
 """
 """Prototype: three cotton sheets dropped into wicker_basket_01 by Blender's cloth simulation (the launderette's close review, fault 2).
 Run with the bpy module's python. Writes a render and timings to the scratchpad."""
@@ -82,7 +87,8 @@ bed.collision.thickness_outer = 0.003
 rnd = random.Random(4)
 sheets = []
 t0 = time.time()
-for i in range(3):
+NSHEETS = int(sys.argv[4]) if len(sys.argv) > 4 else 3
+for i in range(NSHEETS):
     bm = bmesh.new()
     bmesh.ops.create_grid(bm, x_segments=40, y_segments=30, size=0.5)
     for v in bm.verts:
@@ -141,7 +147,7 @@ for ob in sheets:
     ob.modifiers.clear()
     ob.data = new
     print(ob.name, "faces", len(ob.data.polygons))
-cols = [(0.43, 0.55, 0.65), (0.78, 0.70, 0.55), (0.43, 0.15, 0.12)]
+cols = [(0.43, 0.55, 0.65), (0.78, 0.70, 0.55), (0.43, 0.15, 0.12), (0.62, 0.45, 0.24), (0.36, 0.48, 0.38)]
 for ob, cc in zip(sheets, cols):
     mat = bpy.data.materials.new(ob.name)
     mat.use_nodes = True
@@ -167,6 +173,6 @@ w.use_nodes = True
 w.node_tree.nodes["Background"].inputs["Strength"].default_value = 0.8
 sc.render.engine = "BLENDER_EEVEE"
 sc.render.resolution_x, sc.render.resolution_y = 960, 720
-sc.render.filepath = os.path.join(OUT, "cloth_proto_%s.png" % SHRINK)
+sc.render.filepath = os.path.join(OUT, "cloth_proto_%s_%d.png" % (SHRINK, NSHEETS))
 bpy.ops.render.render(write_still=True)
 print("rendered", sc.render.filepath, round(time.time() - t0, 1), "s")

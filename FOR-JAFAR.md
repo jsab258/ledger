@@ -3,7 +3,7 @@
 The overview first; then the day's summary, under 200 words. Earlier summaries are in git and in
 production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md before that).
 
-## Overview (Friday 23 October: your week's order, day three)
+## Overview (Saturday 24 October: your week's order, day four)
 
 <!-- retention -->Disk (10-22 04:32): C: 79.9 GB free, F: 48.4 GB free; grew most since 10-21 12:17: C:\actions-runner-ledger\_work\ledger +1.5 GB, F:\LedgerTools\uv\cache +1.4 GB, F:\LedgerTools\bpyenv\Lib +0.9 GB.
 
@@ -48,11 +48,12 @@ No decision asked: these are for watching the street change.
 - *8, speech.* Done. **The Gemini test:** on the reply check, Gemini 3.5 Flash-Lite took 0.60 s at the median against Haiku's 0.97, but it let 3 invented details in 42 through where Haiku lets 1 (you kept Haiku); Gemini 3.8 Flash was the most accurate but slower, 1.8 s (production/research/voice-latency/GEMINI-CHECK-2026-10-22.md). **Pocket no longer stalls the walk:** run at lower priority, the walk's slowest 1% is 20.6 ms (it was 34) and its worst 47 ms (it was 175). The one frame left over the bar is a separate stall that the usual card voice shows too (87 ms today), so the frame-rate margin is thinner than P1's close said (listed). **The real path with Pocket:** 20 checked replies, with the game open, first sound heard at 2.41 s at the median, the best yet (3.25 s before) but over 2 s. The model's first checked sentence alone now takes 2.10 s, so the voice is no longer the bottleneck (about $0.15 of your measuring dollar).
 - *9, closing phase 1.* Done. Four fresh reviewers, one for each exit, found that none passes (production/audits/phase1-exit/CLOSE-2026-10-22.md): Tom is still the stand-in body and slides; nobody sits in the game as played; first speech is 3.25 s at best; the frame bar held once and failed its repeat, and card memory with the voice is 7 to 9.9 GB against 6; there is no wear in the office or on Rita's front. They also caught four of my own records wrong, all corrected on 22 October. You held phase 2 on your page: next week goes on these failed capabilities first.
 
-**Your order of 23 October afternoon, frame headroom, to Saturday 06:00 (16:35).**
+**Your order of 23 October afternoon, frame headroom, to Saturday 14:00 (24 October, 03:55).** Frame headroom is done as far as it goes; the launderette is next.
 - *The launderette* is parked on wip, in progress: its maker renamed, its towels rebuilt in code, its washing's cloth simulation prototyped.
-- *Card memory with the voice on the processor:* a median of 4.7 to 4.9 GB in all, under the 6 GB line (7.1 to 7.9 with the voice on the card); the game alone peaks at 5.6 GB. Two runs (production/research/frame-headroom/FINDINGS-2026-10-23.md). But the packaged game itself still starts the cast voice, which runs on the card unless told otherwise; whether it holds the card during play is not yet established (Needs you 2).
-- *The 87 ms frame* is named: when Mickey's lamp starts casting shadows 7 m off (the first lamp shadow of the day), 13 of the engine's own screen passes are built on first use; 380 ms on a first run, 66 to 87 ms after. Epic's remedy, a bundled pipeline cache built before play, is under way: two packages, the first building now.
-- *The card's spare time:* about 2.1 ms of its "loss" was the measure (the 21 October runs at the Highest picture level); at High it is 2.3 to 2.6 ms. The measure now sets and records the level.
+- *Card memory with the voice on the processor:* the game alone a median of 5.0 GB, peaks 5.9 GB walking, under the 6 GB line; with Pocket beside it, 5.2 GB in all (peaks 6.5). With the cast voice on the card the card in all peaks 7.4 to 8.7 GB (Needs you 2).
+- *The 87 ms frame:* fixed. It was 13 of the engine's own screen passes built on first use; a bundled pipeline cache now compiles them before play, and no capture misses a pipeline. With the driver's cache cleared, as on a first launch, a player waits about 75 s at the title once.
+- *The 38 ms frame with the voice:* partly. In half the walks the engine's first garbage collection, a minute after loading, cost one frame 31 to 50 ms; it is now collected behind the title, and walks with no voice hold every frame under 33.3 ms (worst 24 to 27). With Pocket working beside the game one frame still runs 42 to 55 ms at the day schedule's moment, when people move and shadows switch: the processor is crowded. Set aside after two tries; next, a trace of that moment.
+- *The card's spare time:* at night back to 2.7 ms (it fell to 0.1 when today's shops came in: their window lamps' shadows); those lamps now cast only from their own shop and only within 15 m, which fresh reviewers passed on all four night street cameras. By day 1.7 to 1.8 ms against the plan's 2.5 (Needs you 3). The measure now sets the picture level (2.1 ms of the old "loss" was the Highest level).
 
 **The tester's walk (23 October, 02:30 to 03:07; production/playtest/nightly/2026-10-23.md).**
 - The route ran 13 of 15 stages. It failed at Ron (lost from sight) and at Darren (not on the street).
@@ -75,7 +76,9 @@ No decision asked: these are for watching the street change.
 
 1. Marvelous Designer, your yes of Thursday and Friday: its price is 39 USD a month or 280 a year, with a two-week free trial for new users (read on its own site this morning; production/research/clothing-pipeline/MARVELOUS-PRICE-2026-10-23.md). Recommended: start with the free trial for Tom's one outfit, signed up by you (I cannot make accounts or pay); its licence for game use is read before anything made in it goes in.
 
-2. The game's voice: the packaged game still starts the cast voice on the card, while Pocket (on the processor) was set aside in September for losing the cast's likeness. Recommended: let me measure the cast voice itself on the processor first (no cost), then you choose.
+2. The game's voice: the packaged game starts the cast voice on the card (the card in all then peaks 7.4 to 8.7 GB). The cast voice on the processor is too slow on this PC (1.56 times slower than speech, and a 197 ms frame). Pocket on the processor keeps up (2.6 times faster than speech) and fits the card, but was set aside in September for losing the cast's likeness. Recommended: keep the cast voice on the card for now and set the 6 GB line as the game alone (5.9 GB peak), since the card has 10 GB (Windows gives the game 9.4).
+
+3. The card's spare time by day is 1.7 to 1.8 ms against the plan's 2.5, since today's two shops; frames hold (worst 24 to 27 ms standing). Winning it back means trimming the sun's shadows, which changes the look. Recommended: accept 1.7 ms by day for now and revisit with phase 2's street budget.
 
 Your answers are recorded: the walk's next go by Epic's MetaHuman route after Monday, and the reply check stays on Haiku.
 
@@ -89,17 +92,18 @@ Your answers are recorded: the walk's next go by Epic's MetaHuman route after Mo
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
 
-## Builder, Friday 23 October (06:47, updated 14:55)
+## Builder, Saturday 24 October (03:55)
 
 **Failed:**
-- **Phase 1's exits** (walk, period clothes, speech within 2 s, frame headroom) still fail; you held phase 2 for them.
-- **The tea rooms' night** failed seven times, each fault fixed within two tries.
-- **Set aside after two tries:** a faint smoke on the grocer's glass by day; one chandler's side lining glaring at night (its cause found).
-- **The chandler's sou'westers** left its window: rebuilt twice, they still read as hard hats.
+- **A frame with the voice beside the game:** one per walk still runs 42 to 55 ms, when the day's schedule moves people and shadows switch; set aside after two tries.
+- **The card's spare time by day:** 1.7 to 1.8 ms against the plan's 2.5, since the grocer and the chandler came in (Needs you 3).
+- **Set aside earlier:** the chandler's side lining glares at night; its sou'westers left the window.
 
 **Done:**
-- **The ironmonger's, newsagent's, tea rooms', grocer's and chandler's** shops and their wear passed every view. The whole west row has its designed fronts.
-- **Item 5 is done:** every design the cloud team passed is in the street.
-- **The tester's walk** ran 13 of 15 stages; the white-vest townsfolk still break the illusion.
+- **The chandler's** and its wear passed ten views: item 5 is done.
+- **The 87 ms stall** is gone: a bundled pipeline cache, no pipeline built mid-play.
+- **The night's spare card time** is 2.7 ms: shop window lamps cast shadows only near their own shop, passed by fresh reviewers.
+- **Card memory:** the game alone peaks 5.9 GB; with Pocket beside it 5.2 GB in all.
+- **The tester's walk** ran 13 of 15 stages.
 
-**Act on:** your answers are recorded. Marvelous Designer costs 39 USD a month, with two weeks free: the trial for Tom's outfit is yours to start.
+**Act on:** Needs you 2 and 3, the voice and the daytime budget; the Marvelous trial is yours to start.

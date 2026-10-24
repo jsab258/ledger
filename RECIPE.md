@@ -38,6 +38,30 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
   - Storing the glass pictures sharper did not change the smoke, so resolution is not its cause.
 - Evidence: production/audits/gate-west-eaves/GATE.md; tools/homes_check.py (fronts); production/specs/shop-fronts/*-front-wear.json (clip_top_m)
 
+### 23 to 24 Oct 2026, frame headroom: card memory, a repeatable stall and the card's spare time measured again and mostly fixed
+- Made: card memory re-measured beside a processor voice; the engine's bundled pipeline cache in the packaged build; the shop window lamps' shadows cut to their own shop and to the near distance; a measure that sets and records its own conditions.
+- Method (setting-free):
+  - Before trusting a trend, check its conditions were the same: here the picture level drifted (the title screen that sets it was skipped), and that alone was most of a "lost" 2 ms. The measure now sets the level and writes it into every line.
+  - A stall at the same moment every run has a cause in the game's own timeline. Read the game's log around it first: here a distance switch turned on the day's first local-light shadow.
+  - Name every missed pipeline with the engine's own description, and run once with the driver's cache cleared, as a player's first run is: the stall grew from 66 to 380 ms.
+  - The engine's automatic precaching does not cover most of its own full-screen passes; a bundled cache recorded on the packaged game and compiled before play does. Expand it against the stable keys of the one shader platform the cook builds, or the cook stops.
+  - Whatever holds play until compilation ends must also hold a measure that skips the title screen.
+  - New content changes the budget: re-measure every condition after each piece, not only the one being fixed. Two new shops took the night's spare time from 2.6 to 0.1 ms through their window lamps' shadows.
+  - Find a cost by switching one thing off in the packaged copy's own data before writing code: the window lamps' shadows were 4.3 ms of 4.98.
+  - A light that only needs to shade its own objects should cast from those alone; a light whose shadows cannot be seen from afar should cast only near. When shadows stop blocking a light, check every neighbour it can now reach: here a shut shop's dark window lit up through a wall, and was taken off that light's channel.
+  - Turning a light's shadows on mid-play makes the driver build its shadow map then; keep such lights casting, and switch the expensive casters instead.
+  - When a slow frame comes with an outside load, test without the load before blaming it: the "voice" frame was the shadow switch.
+  - A watcher that waits for success must stop on failure too; in a shell whose names ignore case, a new variable can overwrite a parameter.
+- Tools: the packaged game's frame captures and per-pass timings, its pipeline logs, the engine source, the pipeline cache tools, the build machine's cook, Windows' card-memory counters, fresh reviewers of old beside new.
+- Target and check: phase 1's Exit D: card memory under 6 GB with the voice, the walk's worst frame under 33.3 ms on repeat, the card's spare time at 2.5 ms by day and 1.4 at night.
+- Cost (hours): about 12.5, 15:15 to 03:45, with eight packages (about 25 minutes each on the build machine) and 26 measured captures.
+- Failed and why:
+  - A cache expanded against two shader platforms' keys stopped the cook (a two-hour wait followed, the watcher waiting only for success).
+  - Casting the window lamps from their own shop alone saved 0.2 of 4 ms: the shop's own pieces were the cost; only distance helped.
+  - Keeping a room lamp's shadows on did not remove the walk's stall: the cause was the first garbage collection, found by reading what else landed on that frame.
+  - Set aside: with a voice working beside the game, one frame at the day schedule's moment still runs 42 to 55 ms (the processor oversubscribed); the daytime spare stays 1.7 ms against 2.5 since two new shops.
+- Evidence: production/research/frame-headroom/FINDINGS-2026-10-23.md; production/research/pre-production/p1-packaged/runs.jsonl
+
 ### 23 Oct 2026, item 5: a sixth delivered shop, at a block's end, with its door's view inside made whole
 - Made: a designed shop in the street's last bay of a block: its front (a metal refit with a side door to a hall), its window display, its room pictures, and its front's wear.
 - Method (setting-free):

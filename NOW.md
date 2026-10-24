@@ -18,12 +18,10 @@ Phase 1 closed 22 Oct, no exit passed (production/audits/phase1-exit/CLOSE-2026-
 
 ## His order of 23 October (to Sat 14:00)
 
-- [x] Launderette parked, in progress (sw_cloth_proto.py).
-- [x] Card memory, voice on the processor: frame-headroom/FINDINGS-2026-10-23.md.
-- [x] The 87 ms stall: bundled pipeline cache, 0 misses (FINDINGS).
-- [ ] The card's spare time.
+- [x] Frame headroom: frame-headroom/FINDINGS-2026-10-23.md; voice frame set aside.
+- [ ] Launderette: towels, name, washing (sw_cloth_proto.py).
 
-STATE (24 Oct 02:05): walk stall try 2 (GC).
+STATE (24 Oct 03:50): launderette resumed.
 
 ## Handovers
 
