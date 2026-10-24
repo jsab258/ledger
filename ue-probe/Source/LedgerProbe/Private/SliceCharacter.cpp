@@ -688,9 +688,22 @@ void ALedgerSliceCharacter::WalkProofTick(float DeltaSeconds)
 					CVarInt(TEXT("DDCvar.FootPlacementMode")), CVarInt(TEXT("DDCvar.MMDatabaseLOD")), CVarInt(TEXT("DDCVar.AttributeBasedRootMotion.Enable")),
 					RootMotion != nullptr ? (RootMotion->GetPropertyValue_InContainer(GaspMover.Get()) ? 1 : 0) : -1, Radius, Angle);
 			}
-			const FString Line = FString::Printf(TEXT("ledgerTomWalk=%s mode=%s worstJoinCm=%.2f%s frames=%d mannequin:%s%s"), bPass ? TEXT("PASS") : TEXT("FAIL"),
+			// and beside it, planted read from the moving animation's own contact marks (Epic's route only)
+			FString ByMarks;
+			if (GaspMover != nullptr)
+			{
+				for (int32 Bd = 0; Bd < 2; ++Bd)
+				{
+					const FFeetMeasure& C = Soles[Bd];
+					const float CJoins = FMath::Max3(C.ConWorst[1], C.ConWorst[3], C.ConWorst[4]);
+					ByMarks += FString::Printf(TEXT(" %s=%s worstJoinCm=%.2f"), Bd == 0 ? TEXT("byContactMarks") : TEXT("mannequinByContactMarks"),
+						CJoins <= 3.0f && C.ConContacts[1] + C.ConContacts[3] + C.ConContacts[4] > 0 ? TEXT("PASS") : TEXT("FAIL"), CJoins);
+					for (int32 K = 0; K < 6; ++K) { ByMarks += FString::Printf(TEXT(" %s=%.2f/%d"), GKindNames[K], C.ConWorst[K], C.ConContacts[K]); }
+				}
+			}
+			const FString Line = FString::Printf(TEXT("ledgerTomWalk=%s mode=%s worstJoinCm=%.2f%s frames=%d mannequin:%s%s%s"), bPass ? TEXT("PASS") : TEXT("FAIL"),
 				GaspMover != nullptr ? TEXT("gasp-metahuman") : (MotionDriver != nullptr ? (FParse::Param(FCommandLine::Get(), TEXT("LedgerNoOffsetRoot")) ? TEXT("matched-no-offset") : TEXT("matched")) : TEXT("clips")),
-				Joins, *Kinds, ProofFrames, (MotionDriver != nullptr || GaspMover != nullptr) ? *Driver : TEXT(" none"), *Settings);
+				Joins, *Kinds, ProofFrames, (MotionDriver != nullptr || GaspMover != nullptr) ? *Driver : TEXT(" none"), *Settings, *ByMarks);
 			UE_LOG(LogTemp, Display, TEXT("%s"), *Line);
 			FFileHelper::SaveStringToFile(Line + LINE_TERMINATOR + ProofLines, *(FPaths::ProjectSavedDir() / TEXT("Logs") / TEXT("tom-walk.txt")));
 			GetCharacterMovement()->MaxWalkSpeed = WalkSpeedCm;
@@ -858,6 +871,36 @@ void ALedgerSliceCharacter::MeasureBody(int32 B, USkeletalMeshComponent* Body, i
 	// -TomWalkProofTrace: each frame of the first start and stop, each foot's ball along the route and
 	// above its standing height, for reading the slide by hand.
 	static const bool bTrace = FParse::Param(FCommandLine::Get(), TEXT("TomWalkProofTrace"));
+	// -TomWalkProofTraceAt=a-b,...: the same trace through those spans of the route's clock, with the sample's
+	// own contact curves (its foot placement plants by them: under 1, planted) and the ball's world position
+	// (24 October, research after the walk was set aside: is a worst step a slide the animation means, or not?)
+	static TArray<FVector2f> TraceSpans;
+	static const bool bTraceSpans = []()
+	{
+		FString List;
+		if (!FParse::Value(FCommandLine::Get(), TEXT("TomWalkProofTraceAt="), List, false)) { return false; }
+		TArray<FString> Parts;
+		List.ParseIntoArray(Parts, TEXT(","));
+		for (const FString& Part : Parts)
+		{
+			FString A, B2;
+			if (Part.Split(TEXT("-"), &A, &B2)) { TraceSpans.Add(FVector2f(FCString::Atof(*A), FCString::Atof(*B2))); }
+		}
+		return TraceSpans.Num() > 0;
+	}();
+	bool bInTraceSpan = false;
+	for (const FVector2f& Sp : TraceSpans) { bInTraceSpan |= ProofClock >= Sp.X && ProofClock <= Sp.Y; }
+	if (bTraceSpans && bInTraceSpan)
+	{
+		const UAnimInstance* Src = GaspMover != nullptr ? GaspMover->GetMesh()->GetAnimInstance() : nullptr;
+		ProofLines += FString::Printf(TEXT("traceAt %s %.3f: left %.1f,%.1f up %.2f%s, right %.1f,%.1f up %.2f%s, contact %.2f/%.2f, mover %.1f,%.1f %.0f cm/s") LINE_TERMINATOR,
+			B == 0 ? TEXT("his") : TEXT("mannequin"), ProofClock,
+			(float)P[0].X, (float)P[0].Y, H[0] - (F.RestN > 0 ? F.Rest[0] / F.RestN : 0.0f), F.bDown[0] ? TEXT(" down") : TEXT(""),
+			(float)P[1].X, (float)P[1].Y, H[1] - (F.RestN > 0 ? F.Rest[1] / F.RestN : 0.0f), F.bDown[1] ? TEXT(" down") : TEXT(""),
+			Src != nullptr ? Src->GetCurveValue(FName(TEXT("contact_l"))) : -1.0f, Src != nullptr ? Src->GetCurveValue(FName(TEXT("contact_r"))) : -1.0f,
+			GaspMover != nullptr ? (float)GaspMover->GetActorLocation().X : 0.0f, GaspMover != nullptr ? (float)GaspMover->GetActorLocation().Y : 0.0f,
+			GaspMover != nullptr ? (float)GaspMover->GetVelocity().Size2D() : 0.0f);
+	}
 	if (bTrace && (Seg == 1 || Seg == 2) && T < 1.6f)
 	{
 		const FVector Along = FRotator(0.0f, ProofYaw, 0.0f).Vector();
@@ -866,6 +909,22 @@ void ALedgerSliceCharacter::MeasureBody(int32 B, USkeletalMeshComponent* Body, i
 			(float)FVector::DotProduct(P[0], Along), H[0] - (F.RestN > 0 ? F.Rest[0] / F.RestN : 0.0f), F.bDown[0] ? TEXT(" down") : TEXT(""),
 			(float)FVector::DotProduct(P[1], Along), H[1] - (F.RestN > 0 ? F.Rest[1] / F.RestN : 0.0f), F.bDown[1] ? TEXT(" down") : TEXT(""),
 			(float)FVector::DotProduct(GetActorLocation(), Along));
+	}
+	// planted by the moving animation's own contact marks (on Epic's route only: the sample's clips carry them)
+	if (const UAnimInstance* Src = GaspMover != nullptr ? GaspMover->GetMesh()->GetAnimInstance() : nullptr)
+	{
+		const float Con[2] = { Src->GetCurveValue(FName(TEXT("contact_l"))), Src->GetCurveValue(FName(TEXT("contact_r"))) };
+		for (int32 I = 0; I < 2; ++I)
+		{
+			const bool bPlanted = Con[I] < 1.0f;
+			if (bPlanted && !F.bCon[I]) { F.ConPlanted[I] = P[I]; F.ConSlip[I] = 0.0f; F.ConKind[I] = Kind; ++F.ConContacts[Kind]; }
+			else if (bPlanted)
+			{
+				F.ConSlip[I] = FMath::Max(F.ConSlip[I], (float)FVector::Dist2D(P[I], F.ConPlanted[I]));
+				F.ConWorst[F.ConKind[I]] = FMath::Max(F.ConWorst[F.ConKind[I]], F.ConSlip[I]);
+			}
+			F.bCon[I] = bPlanted;
+		}
 	}
 	for (int32 I = 0; I < 2; ++I)
 	{

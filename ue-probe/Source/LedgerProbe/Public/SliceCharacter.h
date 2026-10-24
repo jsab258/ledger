@@ -194,6 +194,15 @@ private:
 		int32 Kind[2] = { 0, 0 };
 		float Worst[6] = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };   // stand, start, loop, stop, turn, run
 		int32 Contacts[6] = { 0, 0, 0, 0, 0, 0 };
+		// THE SAME, WITH PLANTED READ FROM THE MOVING ANIMATION'S OWN CONTACT MARKS (24 October, Epic's route:
+		// the sample's clips carry contact_l and contact_r, under 1 while a foot is planted; the height
+		// reading counted low swings and scuffs as planted). Reported beside the height reading, never instead.
+		bool bCon[2] = { false, false };
+		FVector ConPlanted[2];
+		float ConSlip[2] = { 0.0f, 0.0f };
+		int32 ConKind[2] = { 0, 0 };
+		float ConWorst[6] = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
+		int32 ConContacts[6] = { 0, 0, 0, 0, 0, 0 };
 	};
 	FFeetMeasure Soles[2];
 	void MeasureBody(int32 B, USkeletalMeshComponent* Body, int32 Seg, float T, float Floor);
