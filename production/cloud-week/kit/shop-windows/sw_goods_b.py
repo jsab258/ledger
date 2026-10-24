@@ -6,6 +6,7 @@ Every string drawn is added to `GEN.TEXTS`, which the checks (INV-05, NEV-01) re
 import math
 import os
 import random
+import time
 
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
@@ -398,6 +399,161 @@ def towel_folded(gm, c, w, t, h, yaw_deg, mi, uvr, sag=0.003, r_edge=0.005, nx=1
         F.append(tuple(i * np_ + j for j in js))
         UV.append([q(0.5 + 0.49 * prof[j][0] / hy, b0 + (b1 - b0) * (0.5 + 0.5 * prof[j][1] / hz)) for j in js])
     gm.add(V, F, mi, UV)
+
+
+# ---------------------------------------------------------------------------------------------------------------------------------- washing in a basket, by cloth simulation (24 Oct, the PC)
+# The launderette's close review, fault 2: the washing was smooth untextured lumps, one a blue column like a box. Its exact fix: no scan
+# of a cloth pile exists in the CC0 libraries (searched 23 October: Poly Haven's 521 models have none), so three cotton sheets of
+# 0.9 x 0.7 m are dropped into the basket by Blender's cloth simulation, applied and given 2 mm of thickness, coloured with a cotton
+# weave at a 3 mm cell and a normal map. What the prototype taught (sw_cloth_proto.py): the wicker's gaps let cloth through, so an
+# open box just inside the weave, its faces turned inward, is the collider; the solver is stable at the first settings and a shrink
+# of 0.6 (0.85, stiffer collisions or five sheets blow up or crumple); the box's floor at 55 per cent of the basket's depth lets the
+# cloth heap to the rim, and a flat sheet of the first cloth at that floor hides the hollow under it.
+def cloth_weave_tile(path, rgb, tile=256, weave_div=6):
+    """A 256 px tile of one cotton colour: Fabric020's luminance shrunk to a sixth (cells about 3 mm at 5 cm a tile) at 0.85 + 0.15 x
+    the weave, times the colour."""
+    fetch_fabric020()
+    src = Image.open(FABRIC020).convert("L")
+    small = src.resize((max(8, src.size[0] // weave_div), max(8, src.size[1] // weave_div)), Image.LANCZOS)
+    w = np.asarray(small, np.float32)
+    w = np.tile(w, (tile // w.shape[0] + 1, tile // w.shape[1] + 1))[:tile, :tile]
+    w = w / max(float(w.mean()), 1e-6)
+    g = 0.85 + 0.15 * w
+    img = np.clip(np.array(rgb, np.float32)[None, None, :] * g[..., None], 0, 255).astype(np.uint8)
+    Image.fromarray(img).save(path)
+    return path
+
+
+def laundry_by_cloth(d, asset, names, mats, seed=1, shrink=0.6, frames=120, floor_frac=0.55, size=(0.9, 0.7), grid=(40, 30),
+                     tile_m=0.05, log=print):
+    """Drop len(mats) sheets into the placed `asset` (its objects `names`, children of the frame `place` made) and leave them there as
+    meshes, one per sheet, plus a flat sheet of the first material at the box's floor. Returns the new objects."""
+    import bmesh
+    from mathutils import Euler, Matrix, Vector
+    sc = d.sc
+    bpy.context.view_layer.update()          # the frame `place` made has its transform set but not yet evaluated
+    root = bpy.data.objects[names[0]].parent or bpy.data.objects[names[0]]
+    M = root.matrix_world.copy()
+    _m, lo, hi = d.template(asset, None)
+    rnd = random.Random(seed)
+    inset = 0.012
+    x0, x1, y0, y1 = lo.x + inset, hi.x - inset, lo.y + inset, hi.y - inset
+    rim = hi.z
+    z0, z1 = lo.z + (hi.z - lo.z) * floor_frac, rim - 0.004
+    cen = Vector(((x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2))
+    bm = bmesh.new()
+    vs = [bm.verts.new(c) for c in ((x0, y0, z0), (x1, y0, z0), (x1, y1, z0), (x0, y1, z0), (x0, y0, z1), (x1, y0, z1), (x1, y1, z1), (x0, y1, z1))]
+    for f in ((0, 1, 2, 3), (0, 1, 5, 4), (1, 2, 6, 5), (2, 3, 7, 6), (3, 0, 4, 7)):
+        bm.faces.new([vs[i] for i in f])
+    r_ = [bm.verts.new(c) for c in ((lo.x, lo.y, rim), (hi.x, lo.y, rim), (hi.x, hi.y, rim), (lo.x, hi.y, rim))]
+    for a, b in ((0, 1), (1, 2), (2, 3), (3, 0)):
+        bm.faces.new([vs[4 + a], vs[4 + b], r_[b], r_[a]])
+    for f in bm.faces:
+        f.normal_update()
+        fc = f.calc_center_median()
+        want = Vector((0, 0, 1)) if abs(fc.z - rim) < 1e-4 else (cen - fc)
+        if f.normal.dot(want) < 0:
+            f.normal_flip()
+    pm = bpy.data.meshes.new("laundry_proxy")
+    bm.to_mesh(pm)
+    bm.free()
+    proxy = bpy.data.objects.new("laundry_proxy", pm)
+    sc.collection.objects.link(proxy)
+    proxy.matrix_world = M
+    bpy.context.view_layer.update()
+    bw = [o.matrix_world @ Vector(c_) for n_ in names for o in [bpy.data.objects[n_]] if o.type == "MESH" for c_ in o.bound_box]
+    pw = [proxy.matrix_world @ Vector(c_) for c_ in proxy.bound_box]
+    log("laundry: basket x %.3f..%.3f y %.3f..%.3f z %.3f..%.3f; box x %.3f..%.3f y %.3f..%.3f z %.3f..%.3f" % (
+        min(p.x for p in bw), max(p.x for p in bw), min(p.y for p in bw), max(p.y for p in bw), min(p.z for p in bw), max(p.z for p in bw),
+        min(p.x for p in pw), max(p.x for p in pw), min(p.y for p in pw), max(p.y for p in pw), min(p.z for p in pw), max(p.z for p in pw)))
+    proxy.modifiers.new("Collision", "COLLISION")
+    proxy.collision.thickness_outer = 0.004
+    proxy.collision.thickness_inner = 0.004
+    proxy.collision.cloth_friction = 5.0
+    made = []
+    t0 = time.time()
+    for i, mat in enumerate(mats):
+        bm = bmesh.new()
+        uvl = bm.loops.layers.uv.new()
+        bmesh.ops.create_grid(bm, x_segments=grid[0], y_segments=grid[1], size=0.5)
+        for v in bm.verts:
+            v.co.x *= size[0]
+            v.co.y *= size[1]
+        for f in bm.faces:
+            for l_ in f.loops:
+                l_[uvl].uv = (l_.vert.co.x / tile_m, l_.vert.co.y / tile_m)
+        me = bpy.data.meshes.new("laundry_sheet")
+        bm.to_mesh(me)
+        bm.free()
+        ob = bpy.data.objects.new("laundry_sheet", me)
+        sc.collection.objects.link(ob)
+        local = Matrix.Translation(Vector((cen.x + rnd.uniform(-0.03, 0.03), cen.y + rnd.uniform(-0.03, 0.03), rim + 0.30 + 0.02 * i)))
+        tilt = Euler((math.radians(rnd.uniform(-8, 8)), math.radians(rnd.uniform(-8, 8)), rnd.uniform(0, 6.28))).to_matrix().to_4x4()
+        ob.matrix_world = M @ local @ tilt
+        cl = ob.modifiers.new("Cloth", "CLOTH")
+        s = cl.settings
+        s.quality = 5
+        s.mass = 0.3
+        s.air_damping = 1.0
+        s.tension_stiffness = s.compression_stiffness = 15.0
+        s.shear_stiffness = 5.0
+        s.bending_stiffness = 0.5
+        s.shrink_min = shrink
+        c = cl.collision_settings
+        c.use_self_collision = True
+        c.self_distance_min = 0.0015
+        c.distance_min = 0.003
+        c.collision_quality = 4
+        cl.point_cache.frame_start = 1
+        cl.point_cache.frame_end = frames
+        sc.frame_start, sc.frame_end = 1, frames
+        for fr in range(1, frames + 1):
+            sc.frame_set(fr)
+        dg = bpy.context.evaluated_depsgraph_get()
+        new = bpy.data.meshes.new_from_object(ob.evaluated_get(dg))
+        ob.modifiers.clear()
+        ob.data = new
+        sc.frame_set(1)
+        ob.modifiers.new("Collision", "COLLISION")
+        ob.collision.thickness_outer = 0.003
+        made.append((ob, mat))
+        log("laundry: sheet %d settled after %.1f s" % (i, time.time() - t0))
+    out = []
+    for k, (ob, mat) in enumerate(made):
+        ob.modifiers.clear()
+        sd = ob.modifiers.new("Sub", "SUBSURF")
+        sd.levels = sd.render_levels = 1
+        so = ob.modifiers.new("Solid", "SOLIDIFY")
+        so.thickness = 0.002
+        so.offset = 0.0
+        dg = bpy.context.evaluated_depsgraph_get()
+        new = bpy.data.meshes.new_from_object(ob.evaluated_get(dg))
+        ob.modifiers.clear()
+        ob.data = new
+        ob.data.materials.clear()
+        ob.data.materials.append(mat)
+        for p in ob.data.polygons:
+            p.use_smooth = True
+        ob.name = "laundry_in_basket_%d_%d" % (seed, k)
+        out.append(ob)
+    # the hollow under the raised floor, closed by a flat sheet of the first cloth
+    bm = bmesh.new()
+    fv = [bm.verts.new(c) for c in ((x0, y0, z0 + 0.002), (x1, y0, z0 + 0.002), (x1, y1, z0 + 0.002), (x0, y1, z0 + 0.002))]
+    bm.faces.new(fv)
+    uvl = bm.loops.layers.uv.new()
+    for f in bm.faces:
+        for l_ in f.loops:
+            l_[uvl].uv = (l_.vert.co.x / tile_m, l_.vert.co.y / tile_m)
+    fm = bpy.data.meshes.new("laundry_floor")
+    bm.to_mesh(fm)
+    bm.free()
+    fo = bpy.data.objects.new("laundry_floor_%d" % seed, fm)
+    sc.collection.objects.link(fo)
+    fo.matrix_world = M
+    fo.data.materials.append(mats[0])
+    out.append(fo)
+    bpy.data.objects.remove(proxy, do_unlink=True)
+    return out
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------- bottles with a label whose text faces the street

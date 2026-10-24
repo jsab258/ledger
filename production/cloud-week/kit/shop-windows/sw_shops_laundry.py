@@ -415,24 +415,19 @@ def display(d):
     ob, _ = d.gm_object("folded_towels", gm, [tm], "scripted", "script:folded_towels", tier="board", smooth=True)
     ob.data.set_sharp_from_angle(angle=math.radians(40.0))      # the round shaded smooth, the flat ends kept sharp
     # ---- two wicker baskets with laundry heaped in each (three lumps of cloth in two or three colours: sheets and a towel)
-    cloth = [[d.mat("laundry_a1", rgb8(176, 196, 210), rough=0.95), d.mat("laundry_a2", rgb8(226, 214, 190), rough=0.95), d.mat("laundry_a3", rgb8(176, 104, 96), rough=0.95)],
-             [d.mat("laundry_b1", rgb8(214, 176, 124), rough=0.95), d.mat("laundry_b2", rgb8(150, 176, 154), rough=0.95), d.mat("laundry_b3", rgb8(216, 206, 196), rough=0.95)]]
+    # 24 Oct, the PC (its close review's fault 2, "smooth blobs, a blue column like a box"): the review's exact fix, cloth simulation
+    # (sw_goods_b.laundry_by_cloth): three cotton sheets in each basket in the old lumps' colours, a 3 mm weave and a normal map
+    cloth_cols = [[(176, 196, 210), (226, 214, 190), (176, 104, 96)], [(214, 176, 124), (150, 176, 154), (216, 206, 196)]]
     for k, uc in enumerate((1.95, 2.37)):
         ext, names = d.piece("wicker_basket_01", uc, 0.26, z0, rot=(0, 0, rnd.uniform(0, 6.28)), scale=1.0, tier="board", tris=None)
-        gm = GM()
-        bx = (ext[0] + ext[1]) / 2
-        by = (ext[2] + ext[3]) / 2
-        # the basket's opening is 0.13 in radius (the weave's inner face) under a flat rim lip out to 0.225: the first lump of cloth stands on the basket's floor inside the opening (radius 0.085 at the foot), the next two
-        # lie over the lip, their feet 1 mm above its top (a sheet over the edge), so that no cloth passes through the wicker (DSP-03)
-        rin = 0.072
-        rout = 0.165
-        # the cloth stands on the basket's floor: the highest point of the weave under its foot (the floor is not flat: its bumps rise 15 mm), found by rays
-        zt = max(GB.rest_z(d, bx + 0.065 * math.cos(a_), by + 0.065 * math.sin(a_), 0.002, ring=4) for a_ in [2 * math.pi * i / 10 for i in range(10)] + [0.0]) + 0.0015
-        zl = ext[5] + 0.012
-        GB.heap(gm, bx, by, zt, rin, rin, 0.15, seed=3 + k, mi=0, amp=1.2)
-        GB.heap(gm, bx - 0.30 * rout, by + 0.15 * rout, zl, rout * 0.9, rout * 0.9, 0.085, seed=7 + k, mi=1, amp=1.2)
-        GB.heap(gm, bx + 0.45 * rout, by - 0.10 * rout, zl + 0.03, rout * 0.55, rout * 0.55, 0.07, seed=11 + k, mi=2, amp=1.2)
-        d.gm_object("laundry_in_basket_%d" % k, gm, cloth[k], "scripted", "script:laundry_in_basket", tier="basket", smooth=True)
+        cm = [d.image_mat("laundry_%s%d" % ("ab"[k], j + 1), GB.cloth_weave_tile(os.path.join(tex, "laundry_%s%d.png" % ("ab"[k], j + 1)), c),
+                          rough=0.95, normal=tn, normal_strength=0.4) for j, c in enumerate(cloth_cols[k])]
+        sheets = GB.laundry_by_cloth(d, "wicker_basket_01", names, cm, seed=3 + k)
+        pts = [s_.matrix_world @ v_.co for s_ in sheets for v_ in s_.data.vertices]
+        d.groups.append({"kind": "scripted", "model": "script:laundry_in_basket", "tier": "basket", "objs": [s_.name for s_ in sheets]})
+        d.scripted.append({"model": "script:laundry_in_basket", "u": [round(min(p.x for p in pts) + L / 2, 3), round(max(p.x for p in pts) + L / 2, 3)],
+                           "v": [round(min(p.y for p in pts), 3), round(max(p.y for p in pts), 3)], "w": [round(min(p.z for p in pts), 3), round(max(p.z for p in pts), 3)],
+                           "tier": "basket"})
     # ---- the SERVICE WASHES card on two posts, behind the baskets
     cpth = os.path.join(tex, "service_card.png")
     cuv = GEN.card_atlas(cpth, ["SERVICE WASHES\nLEAVE IT WITH US"], cols=1, tile=(768, 240), size=70, bg=(232, 226, 204), ink=(150, 30, 40))
@@ -450,7 +445,7 @@ def display(d):
     designs = [("HOLME", "SOAP FLAKES", "for woollens", (60, 110, 170), (244, 240, 224), (220, 70, 60), "drop"),
                ("CLAYBROOK", "WASHING\nPOWDER", "2 kg", (200, 60, 50), (246, 240, 220), (240, 200, 70), "star"),
                ("MEADOWS", "BIOLOGICAL\nPOWDER", "1.5 kg", (60, 130, 90), (246, 242, 226), (236, 200, 80), "leaf"),
-               ("ASHDOWN", "FABRIC\nSOFTENER", "1 litre", (226, 170, 190), (70, 40, 70), (90, 150, 200), "wave"),
+               ("ASHDOWN", "NON-BIOLOGICAL\nPOWDER", "2 kg", (226, 170, 190), (70, 40, 70), (90, 150, 200), "wave"),     # 24 Oct (narrow point 4): a box marked "1 litre" (softener came in bottles); now a powder
                ("HOLME", "SOAP FLAKES", "1 kg", (236, 200, 70), (50, 70, 130), (200, 60, 60), "drop"),
                ("CLAYBROOK", "AUTOMATIC", "3 kg", (50, 90, 150), (244, 240, 224), (240, 190, 60), "sun"),
                ("LINDEN", "WASHING SODA", "1 kg", (120, 170, 190), (30, 50, 90), (240, 240, 230), "wave"),
@@ -505,6 +500,8 @@ def display(d):
     path = os.path.join(tex, "price_cards.png")
     uvs = GEN.card_atlas(path, texts, cols=3, tile=(256, 128), size=42)
     pmm = [d.image_mat("price_cards", path, rough=0.8), d.mat("stake", rgb8(60, 60, 62), rough=0.5, metal=0.7)]
-    for k, (uc, vv) in enumerate(((0.45, 0.05), (2.16, 0.06), (2.78, 0.12), (3.04, 0.115), (3.22, 0.12), (1.20, 0.05))):
+    # 24 Oct, the PC (its close review's narrow point 3: the cards stood at the bed's front edge, so the parallax moved each under a
+    # neighbour): POWDER, SOAP FLAKES and BLEACH each 8 mm in front of its own good, centred on it
+    for k, (uc, vv) in enumerate(((0.45, 0.05), (2.16, 0.06), (2.90, 0.192), (2.76, 0.192), (3.285, 0.197), (1.20, 0.05))):
         d.price_card(uc, vv, z0, k, uvs, pmm)
     d.display_texts = list(GEN.TEXTS) + [t.replace("\n", " ") for t in texts]

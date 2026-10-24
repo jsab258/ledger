@@ -105,7 +105,10 @@ class GDisplay(RG.GRoom):
         dado = self.mat("return_dado", rgb8(*dado_rgb), rough=0.9)
         ya, yb = -0.005, CARD_PLANE_LOCAL_Y
         dado_top = 0.95
-        for side, (xa, xb) in (("l", (-L / 2 - 0.01, -L / 2)), ("r", (L / 2, L / 2 + 0.01))):
+        # 24 Oct, the PC (the launderette's close review, narrow point 2: its left return's face lay in the plane of the front's door jamb, the
+        # Rita's-try-2 black strip again): for that shop the returns stand 1 mm inside the window zone; the shops already in the street keep theirs
+        rin = 0.011 if getattr(self.ctx, "id", "") == "steam_laundry" else 0.0
+        for side, (xa, xb) in (("l", (-L / 2 - 0.01 + rin, -L / 2 + rin)), ("r", (L / 2 - rin, L / 2 + 0.01 - rin))):
             self.solid("return_wall_%s_dado" % side, xa, xb, ya, yb, WALL_Z[0], dado_top, dado, "return_wall", bevel=0.0)
             self.solid("return_wall_%s_plaster" % side, xa, xb, ya, yb, dado_top, WALL_Z[1], plaster, "return_wall", bevel=0.0)
 

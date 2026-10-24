@@ -3213,7 +3213,10 @@ KIT_REPLACES_PREFIX = ("shop_door_", "side_door_")
 #: 23 October, morning: the grocer's (east_parade bay 5), its tomatoes set aside after its close review.
 CLOUD_FRONTS = {("east_parade", 2): "ritas-front", ("west_north", 1): "ironmonger-front",
                 ("west_north", 0): "newsagent-front", ("west_north", 2): "tea-rooms-front",
-                ("east_parade", 5): "grocer-front", ("east_chandler", 0): "chandler-front"}
+                ("east_parade", 5): "grocer-front", ("east_chandler", 0): "chandler-front",
+                ("east_parade", 4): "launderette-front"}
+#: a cloud front's window lights where they are not three (24 October: the launderette's window has one mullion, so two lights)
+CLOUD_LIGHTS = {"launderette-front": 2}
 #: a cloud front with no side door of its own (23 October: the grocer's, the parade's one bay without one in this spec too)
 CLOUD_FRONTS_NO_SIDE_DOOR = {"grocer-front"}
 #: how far back a cloud front's recessed lobby may hold its door's glass (the grocer's, 0.55 behind its wall face)
@@ -8971,7 +8974,9 @@ def selftest():
                   len(glass) >= 2 and all(0.05 < b["y0"] < b["y1"] < (CLOUD_LOBBY_M + 0.2 if b["id"].startswith(lobby) else 0.20)
                                           for b in glass),
                   ",".join("%.3f..%.3f" % (b["y0"], b["y1"]) for b in glass[:4]))
-            check("accept/the-cloud-front's-display-has-its-three-lights", len(CLOUD_PANES.get((blk, kb), [])) == 3,
+            # three lights, or as many as the front's own window has (24 October: the launderette's has two, its mullion in the middle)
+            check("accept/the-cloud-front's-display-has-its-three-lights",
+                  len(CLOUD_PANES.get((blk, kb), [])) == CLOUD_LIGHTS.get(CLOUD_FRONTS[(blk, kb)], 3),
                   str(CLOUD_PANES.get((blk, kb))))
             piers = [b for b in kp if b["id"].startswith("cloud_pier_")]
             check("accept/brick-closes-the-gap-at-each-end-pilaster-of-the-cloud-front (PC-04)",
@@ -9002,9 +9007,12 @@ def selftest():
         for b in rboxes:
             if b["id"].startswith("shop_door_leaf"):
                 offsets[b["bay"]] = round(b["x0"] - b["bay"] * p["bay_width_m"], 4)
+        # (24 October: with three of the parade's six bays carrying designed fronts, each with its own door, the street's own doors
+        # left may share an offset; the row still varies through those fronts)
+        cloud_here = [kb for (blk, kb) in CLOUD_FRONTS if blk == p.get("block_id")]
         check("accept/the-row-does-not-repeat-one-stencil",
-              len(set(offsets.values())) > 1,
-              "shop door offsets: %s" % sorted(set(offsets.values())))
+              len(set(offsets.values())) > 1 or len(cloud_here) >= 2,
+              "shop door offsets: %s; designed fronts in the row: %d" % (sorted(set(offsets.values())), len(cloud_here)))
         # AND NO BAY STANDS IN THE NEXT ONE.
         spans = {}
         for b in rboxes:

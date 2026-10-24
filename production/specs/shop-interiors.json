@@ -131,6 +131,67 @@
    "display_lights_note": "22 October, his order (Rita's night light, after the 21 October gate set it aside): the cloud's design (production/cloud-week/kit/shop-windows/NOTES.md, rule 4 and PC-07), a strip 8 mm under the front edge of each tier's board (the middle tier's at v 0.20, w 0.377; the top's at v 0.24, w 0.727, in the display's frame: v back from the glass, w above the bed), 3.20 m long, tipped 30 degrees toward the back, 3000 K; the head light lowered for the top tier and the pavement alone. The lumens measured in the game's own square-on night camera (-PageShots=shopnight -PageShopX=17.6), set by the cloud's burnt-pixel bar (any channel at 250 on at most 1 per cent of the window): strips 40, 20, 10, 3, 2 and 1.5 against the head's 160, 120, 100, 80 and 60; at 1.5 and 60 the window is 0.6 per cent burnt (the projector's pink reel and the white vase under the head light), the middle tier 0.01, the bed 0.13 (the last good: 10 to 21). Game lumens, not a shop's: the night exposure sets the scale"
   },
   {
+   "id": "launderette",
+   "block": "east_parade",
+   "bay": 4,
+   "trade": "launderette (Steam Laundry, no. 9): stacked coin-op washers and dryers, a notice board, a wash-care chart; in the window folded towels, two wicker baskets of washing, a SERVICE WASHES card and the detergents (production/cloud-week/targets/shop-windows, steam_laundry)",
+   "room": {
+    "w": 5.3,
+    "h": 2.4,
+    "d": 4.5
+   },
+   "card": {
+    "x0": 27.35,
+    "x1": 32.65,
+    "bottom": 0.65,
+    "top": 3.05,
+    "z": 5.875
+   },
+   "decal": "production/art/interiors-2026-09-23/int23_laundry",
+   "pictures": "production/art/shop-rooms/launderette-cloud",
+   "pictures_note": "24 October: the cloud's room, built on the PC at 128 samples (production/cloud-week/kit/shop-windows, build_shop.py room), its floor lifted to the review's mid grey and its dado tile at Poly Haven's own size (its close review's narrow points 1 and 6).",
+   "side": 1,
+   "camera_d": 5.3,
+   "pixels_wide": 4096,
+   "lit_at_night": false,
+   "lit_note": "the target: the launderette shuts at 17.30 and its room is dark at night; its box sign and fascia glow (the front's night_glow).",
+   "brightness_day": 0.15,
+   "brightness_night": 0.7,
+   "display": {
+    "glb": "launderette-display",
+    "x0": 27.35,
+    "x1": 30.7,
+    "front": 5.27,
+    "bed": 0.7,
+    "measured": "the cloud's display (build_shop.py display, built on the PC 24 October, its close review's three faults fixed: the towels rebuilt as folded towels, the washing by cloth simulation, the BRIGHTWELL packets renamed CLAYBROOK): its window zone u 2300 to 5650 mm from the viewer's left (side door and shop door at the viewer's left), street x 30.70 to 27.35 on the east (street x = 33 - u/1000), 0.025 m in front of the front's wall face (5.295) and 0.60 m above the footway, as Rita's; made ready with its linings to the window head and a head board (front_for_game.py --raise, --head)"
+   },
+   "front": {
+    "glb": "launderette-front",
+    "x": 30.0,
+    "z": 5.295,
+    "up": 0.1,
+    "note": "24 October 2026 (his order of 23 October, after frame headroom: the launderette): the cloud's whole front for the launderette's bay (east_parade bay 4, street x 27 to 33), a timber front with a recessed lobby (300) and its side door at the viewer's left, its box sign and fascia lit; made ready by tools/art-recipes/front_for_game.py, its glass lettering cut-out (--mask=glass_row_13,glass_row_14) and its sign's faces and fascia glowing at night (--night-glow); its frame's origin is the bay's middle (street x 30) at its wall face on the footway.",
+    "door_sign_closed": "production/art/shop-signs/door-card-closed",
+    "night_glow": [
+     {
+      "slot": "fascia_steam_laundry",
+      "strength": 0.7,
+      "note": "the target's box sign and fascia lit by tubes (4.1 'lit: tubes'); the design lights them with their own emissive maps at night (sw_gate.py); 0.7, the newsagent's"
+     },
+     {
+      "slot": "sign_face_a",
+      "strength": 0.7
+     },
+     {
+      "slot": "sign_face_b",
+      "strength": 0.7
+     }
+    ],
+    "street_decals": false,
+    "street_decals_note": "a designed front, its wear to be baked into its own paints after its gate (the grime rule, tools/homes_check.py)"
+   }
+  },
+  {
    "id": "grocer",
    "block": "east_parade",
    "bay": 5,

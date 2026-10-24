@@ -53,8 +53,10 @@ def tex_mean_lin(asset):
 
 
 # batch B (14 October): the metres one repeat of each floor texture covers in the new rooms (the launderette's rubber tile, the grocer's lino, the chandler's boards, the fish market's quarry tile), set by eye
-FLOOR_TILE_M = {"steam_laundry": 1.0, "grocer": 1.2, "chandler": 1.2, "fish_market": 0.9}
-WALL_TILE_M = {"steam_laundry": 0.9, "fish_market": 0.9}          # the white glazed tile of the launderette's dado and the fish market's walls
+# 24 Oct, the PC (the launderette's close review, narrow points 1 and 6): its floor tile at the target's 300 mm (rubber_tiles is 2.0 m with four
+# tiles across, so 1.2 m a repeat), and the dado's long_white_tiles at Poly Haven's own 1.27 m (at 0.9 they were 26 x 90 mm slivers)
+FLOOR_TILE_M = {"steam_laundry": 1.2, "grocer": 1.2, "chandler": 1.2, "fish_market": 0.9}
+WALL_TILE_M = {"steam_laundry": 1.27, "fish_market": 0.9}          # the white glazed tile of the launderette's dado and the fish market's walls
 
 
 class GRoom(S.Room):
@@ -166,7 +168,13 @@ class GRoom(S.Room):
         base = rr["floor"]["base"]
         mean = tex_mean_lin(asset)
         tgt = _lin(base)
-        tint = tuple(float(v) for v in np.clip(tgt / np.maximum(mean, 1e-3), 0.05, 1.6))
+        # 24 Oct, the PC (the launderette's close review, narrow point 1: its floor read as a flat charcoal sheet, rubber_tiles' own mean being
+        # 33 of 255, which a tint clipped at 1.6 cannot lift): the texture divided by its own mean and multiplied by (150, 152, 150), as the
+        # review gives, its joints kept
+        lift = {"steam_laundry": 20.0}.get(self.ctx.id, 1.6)
+        if self.ctx.id == "steam_laundry":
+            tgt = _lin((150, 152, 150))
+        tint = tuple(float(v) for v in np.clip(tgt / np.maximum(mean, 1e-3), 0.05, lift))
         k = max(t * m for t, m in zip(tint, mean))
         if k > 0.85:
             tint = tuple(t * 0.85 / k for t in tint)

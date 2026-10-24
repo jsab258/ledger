@@ -91,7 +91,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 376
+   "faces": 280
   },
   {
    "mesh": "street_brick_grey",
@@ -1866,54 +1866,6 @@
    "faces": 384
   },
   {
-   "mesh": "street_fascia_canvas_buff",
-   "material": "fascia_canvas_buff",
-   "base_material": "paint_fascia",
-   "linear_rgb": [
-    0.42,
-    0.36,
-    0.24
-   ],
-   "roughness": 0.45,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 26
-  },
-  {
-   "mesh": "street_fascia_cream",
-   "material": "fascia_cream",
-   "base_material": "paint_stall",
-   "linear_rgb": [
-    0.52,
-    0.43,
-    0.27
-   ],
-   "roughness": 0.5,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 410
-  },
-  {
    "mesh": "street_fascia_door_black",
    "material": "fascia_door_black",
    "base_material": "paint_door",
@@ -2055,7 +2007,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 160
+   "faces": 30
   },
   {
    "mesh": "street_fascia_masonry_cream",
@@ -2439,7 +2391,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 18
+   "faces": 60
   },
   {
    "mesh": "street_glass_eg_bay5",
@@ -3174,7 +3126,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 1690
+   "faces": 1664
   },
   {
    "mesh": "street_mickeys_card_production_art_shop_rooms_mickeys_day",
@@ -3475,7 +3427,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 29796
+   "faces": 29276
   },
   {
    "mesh": "street_paint_white",
@@ -3954,30 +3906,6 @@
    "tile_m": 0.0,
    "house_tint": null,
    "decal": "production/assets/vignette/decals2d/fascia_trade_fishmonger",
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 6
-  },
-  {
-   "mesh": "street_sign_fascia_trade_launderette",
-   "material": "sign_production/assets/vignette/decals2d/fascia_trade_launderette",
-   "base_material": "paint_fascia",
-   "linear_rgb": [
-    0.03,
-    0.022,
-    0.03
-   ],
-   "roughness": 0.45,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": "production/assets/vignette/decals2d/fascia_trade_launderette",
    "decal_uv": null,
    "decal_emit": null,
    "texture_mean": null,
