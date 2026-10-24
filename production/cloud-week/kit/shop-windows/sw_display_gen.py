@@ -87,8 +87,9 @@ class GDisplay(RG.GRoom):
         bm.to_mesh(me)
         bm.free()
 
-    def start(self, bed_rgb, wall_rgb, dado_rgb, bed_png=None, board_png=None):
-        """`bed_png` / `board_png` (try 2, 14 Oct): the painted top of the bed and the bed's timber edge as pictures (a painted plywood, a bare deal) in place of a flat base-colour factor."""
+    def start(self, bed_rgb, wall_rgb, dado_rgb, bed_png=None, board_png=None, dado_png=None, dado_tile_m=None):
+        """`bed_png` / `board_png` (try 2, 14 Oct): the painted top of the bed and the bed's timber edge as pictures (a painted plywood, a bare deal) in place of a flat base-colour factor.
+        `dado_png` (24 Oct, the PC): the returns' dado as a tile picture (tile_png) laid at `dado_tile_m` a repeat, in place of a flat colour."""
         L = self.L
         if bed_png:
             bed_m = self.image_mat("bed_paint", bed_png, rough=0.62)
@@ -102,14 +103,18 @@ class GDisplay(RG.GRoom):
         self.solid("bed_top", -L / 2 + 0.01, L / 2 - 0.01, 0.01, DEPTH - 0.01, -0.006, 0.0, bed_m, "bed_top", bevel=0.0)
         self.uv_tile = 0.25
         plaster = self.mat("return_plaster", rgb8(*wall_rgb), rough=0.9)
-        dado = self.mat("return_dado", rgb8(*dado_rgb), rough=0.9)
+        # 24 Oct, the PC (the launderette's gate from the right, r3: through the lobby's side glass its left return read as a flat cool grey under the cream, a hard line at eye level; the
+        # design's close review, narrow point 5, gave the fix): the dado a tile picture at the tile's real size, as the room's dado
+        dado = self.image_mat("return_dado", dado_png, rough=0.6) if dado_png else self.mat("return_dado", rgb8(*dado_rgb), rough=0.9)
         ya, yb = -0.005, CARD_PLANE_LOCAL_Y
         dado_top = 0.95
         # 24 Oct, the PC (the launderette's close review, narrow point 2: its left return's face lay in the plane of the front's door jamb, the
         # Rita's-try-2 black strip again): for that shop the returns stand 1 mm inside the window zone; the shops already in the street keep theirs
         rin = 0.011 if getattr(self.ctx, "id", "") == "steam_laundry" else 0.0
         for side, (xa, xb) in (("l", (-L / 2 - 0.01 + rin, -L / 2 + rin)), ("r", (L / 2 - rin, L / 2 + 0.01 - rin))):
+            self.uv_tile = dado_tile_m if dado_png else 0.25
             self.solid("return_wall_%s_dado" % side, xa, xb, ya, yb, WALL_Z[0], dado_top, dado, "return_wall", bevel=0.0)
+            self.uv_tile = 0.25
             self.solid("return_wall_%s_plaster" % side, xa, xb, ya, yb, dado_top, WALL_Z[1], plaster, "return_wall", bevel=0.0)
 
     def tone(self, obj_names, k):
@@ -254,6 +259,19 @@ class GDisplay(RG.GRoom):
         out = np.clip(np.array(rgb, np.float32)[None, None, :] * k[..., None], 0, 255)
         path = os.path.join(self.tex, name + ".png")
         Image.fromarray(out.astype(np.uint8)).save(path)
+        return path
+
+    def tile_png(self, name, asset, rgb):
+        """A Poly Haven tile map tinted so that its mean is `rgb` (sRGB), its grout and glaze kept: the map times rgb over its own mean, in linear light, as the room's tinted tile (sw_room_gen tint_for).
+        Written to the display's texture folder (a 1k PNG): the glb carries it as a plain base-colour image."""
+        a = self.poly_map(asset) / 255.0
+        lin = lambda c: np.where(c <= 0.04045, c / 12.92, ((c + 0.055) / 1.055) ** 2.4)
+        srgb = lambda c: np.where(c <= 0.0031308, 12.92 * c, 1.055 * np.power(np.maximum(c, 0.0), 1 / 2.4) - 0.055)
+        al = lin(a)
+        target = lin(np.array(rgb, np.float32) / 255.0)
+        out = np.clip(al * (target / al.reshape(-1, 3).mean(0))[None, None, :], 0.0, 1.0)
+        path = os.path.join(self.tex, name + ".png")
+        Image.fromarray((srgb(out) * 255.0 + 0.5).astype(np.uint8)).save(path)
         return path
 
     def hang_cords(self, pairs, name="hung_cords", r=0.0015):

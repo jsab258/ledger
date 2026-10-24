@@ -376,7 +376,9 @@ def display(d):
     import sw_room_gen as RG
     rr = d.RR
     walls = rr["walls"]
-    d.start((118, 120, 124), RG._rgb(walls["above"]), (210, 208, 198))         # the bed: a mid grey (the cover is laminate); the dado is the white tile, toned (the target gives no colour for it)
+    # the bed: a mid grey (the cover is laminate); the dado is the white tile, toned (the target gives no colour for it), laid as the room's own tile at its real size (24 Oct: the gate from the right, r3)
+    d.start((118, 120, 124), RG._rgb(walls["above"]), (210, 208, 198),
+            dado_png=d.tile_png("return_dado_tile", "long_white_tiles", (210, 208, 198)), dado_tile_m=RG.WALL_TILE_M["steam_laundry"])
     rnd = d.rnd
     L = d.L
     X = lambda u: u - L / 2
