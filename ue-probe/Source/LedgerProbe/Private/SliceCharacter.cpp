@@ -540,6 +540,18 @@ void ALedgerSliceCharacter::GaspTick()
 			}
 		}
 	}
+	// THE SAMPLE'S OWN FOOT PLACEMENT SWITCHED ON IN ITS GRAPH (24 October, the second genuine try: with
+	// -GaspFootPlacement=N only): its graph's FootPlacementMode (0 off, 1 its Foot Placement node, 2 its
+	// control rig) read 0 in every run, whatever its console setting, so its foot lock never ran
+	static int32 GraphFootPlacement = -1;
+	static const bool bGraphFoot = FParse::Value(FCommandLine::Get(), TEXT("GaspFootPlacement="), GraphFootPlacement);
+	if (bGraphFoot)
+	{
+		if (UAnimInstance* Graph = GaspMover->GetMesh()->GetAnimInstance())
+		{
+			if (FIntProperty* Mode = FindFProperty<FIntProperty>(Graph->GetClass(), TEXT("FootPlacementMode"))) { Mode->SetPropertyValue_InContainer(Graph, GraphFootPlacement); }
+		}
+	}
 	// what reads his speed (his steps, people noticing him) reads the mover's
 	GetCapsuleComponent()->ComponentVelocity = GaspMover->GetVelocity();
 	GetCharacterMovement()->Velocity = GaspMover->GetVelocity();
@@ -684,7 +696,13 @@ void ALedgerSliceCharacter::WalkProofTick(float DeltaSeconds)
 						if (const FFloatProperty* A = FindFProperty<FFloatProperty>(Plant->Struct, TEXT("UnplantAngle"))) { Angle = A->GetPropertyValue_InContainer(PS); }
 					}
 				}
-				Settings = FString::Printf(TEXT(" settings: footPlacementMode=%d databaseLevel=%d rootMotionSetting=%d rootMotionUsed=%d unplantCm=%.0f unplantDeg=%.0f"),
+				int32 GraphMode = -1;
+				if (const UAnimInstance* G2 = GaspMover->GetMesh()->GetAnimInstance())
+				{
+					if (const FIntProperty* Mode = FindFProperty<FIntProperty>(G2->GetClass(), TEXT("FootPlacementMode"))) { GraphMode = Mode->GetPropertyValue_InContainer(G2); }
+				}
+				Settings = FString::Printf(TEXT(" settings: graphFootPlacement=%d"), GraphMode);
+				Settings += FString::Printf(TEXT(" footPlacementMode=%d databaseLevel=%d rootMotionSetting=%d rootMotionUsed=%d unplantCm=%.0f unplantDeg=%.0f"),
 					CVarInt(TEXT("DDCvar.FootPlacementMode")), CVarInt(TEXT("DDCvar.MMDatabaseLOD")), CVarInt(TEXT("DDCVar.AttributeBasedRootMotion.Enable")),
 					RootMotion != nullptr ? (RootMotion->GetPropertyValue_InContainer(GaspMover.Get()) ? 1 : 0) : -1, Radius, Angle);
 			}
@@ -906,9 +924,28 @@ void ALedgerSliceCharacter::MeasureBody(int32 B, USkeletalMeshComponent* Body, i
 		{
 			const USkeletalMeshComponent* Man = GaspMover->GetMesh();
 			const FVector Root = Man->GetBoneLocation(Man->GetBoneName(0));
-			ProofLines += FString::Printf(TEXT("traceRoot %.3f: root %.1f,%.1f, capsule %.1f,%.1f, off %.1f cm") LINE_TERMINATOR, ProofClock,
+			// and what the sample's graph has chosen: its clip, and its own foot placement and root offset switches
+			FString Chosen;
+			if (const UAnimInstance* G = Man->GetAnimInstance())
+			{
+				for (const TCHAR* N : { TEXT("CurrentSelectedAnim"), TEXT("FootPlacementMode"), TEXT("OffsetRootBoneEnabled") })
+				{
+					if (const FProperty* Pr = G->GetClass()->FindPropertyByName(FName(N)))
+					{
+						FString V;
+						Pr->ExportTextItem_Direct(V, Pr->ContainerPtrToValuePtr<void>(G), nullptr, nullptr, PPF_None);
+						if (const FObjectPropertyBase* Op = CastField<FObjectPropertyBase>(Pr))
+						{
+							const UObject* O = Op->GetObjectPropertyValue_InContainer(G);
+							V = O != nullptr ? O->GetName() : TEXT("none");
+						}
+						Chosen += FString::Printf(TEXT(", %s %s"), N, *V);
+					}
+				}
+			}
+			ProofLines += FString::Printf(TEXT("traceRoot %.3f: root %.1f,%.1f, capsule %.1f,%.1f, off %.1f cm%s") LINE_TERMINATOR, ProofClock,
 				(float)Root.X, (float)Root.Y, (float)GaspMover->GetActorLocation().X, (float)GaspMover->GetActorLocation().Y,
-				(float)FVector::Dist2D(Root, GaspMover->GetActorLocation()));
+				(float)FVector::Dist2D(Root, GaspMover->GetActorLocation()), *Chosen);
 		}
 	}
 	if (bTrace && (Seg == 1 || Seg == 2) && T < 1.6f)

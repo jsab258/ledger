@@ -100,9 +100,9 @@ A contact's kind is set when the foot lands. A slide that starts in a stop and g
 Each run's result line now reports the settings in force at the route's end.
 
 1. **The sample's own alternatives:**
-   - Feet by its control rig (`DDCvar.FootPlacementMode 2`) took, and measured the same.
-   - Its sparse animation sets (`DDCvar.MMDatabaseLOD 1`) were worse: stops 71 cm.
-2. **The sample's foot lock held through each contact.** Its let-go distance and angle were raised from 20 cm and 60° to 100 cm and 180° on its own graph at run time (`-GaspUnplantCm=100 -GaspUnplantDeg=180`; took). Nothing changed: Tom's stops 35, turns 20, steady walk 24. So the slide does not come from the lock letting go.
+   - Its sparse animation sets (`DDCvar.MMDatabaseLOD 1`) took and were worse: stops 71 cm.
+   - Its control-rig feet (`DDCvar.FootPlacementMode 2`) were no test. The console setting took, but nothing in its character's graph reads it. Setting the graph's own `FootPlacementMode` variable (to 0 or 1, read back at the route's end) leaves every number identical to the decimal, because its Foot Placement node is always on: its enable is fixed true, in the main chain.
+2. **The sample's foot lock held through each contact.** This is the node that runs; its plant settings are bound to the variables changed here. Its let-go distance and angle were raised from 20 cm and 60° to 100 cm and 180° on its own graph at run time (`-GaspUnplantCm=100 -GaspUnplantDeg=180`; took). Nothing changed: Tom's stops 35, turns 20, steady walk 24. So the slide does not come from the lock letting go.
 
 Not a try: the sample's attribute-based root motion. Set from startup, the setting read 1, but the character never used root motion (`rootMotionUsed=0`, run t2rmv).
 
@@ -111,7 +111,7 @@ Not a try: the sample's attribute-based root motion. Set from startup, the setti
 - **Known:** the mannequin under him slides as much as he does. With Blend to Source = 1 he copies its feet, so the slide is in the sample's own walk as driven here.
 - **Known:** its foot lock letting go at a distance is not the cause (try 2).
 - **Known:** the body does not lag its capsule. The sample's root offset is 0 cm at every frame of the worst stop, because its own default `DDCvar.OffsetRootBone.TranslationRadius` is 0. So the stop glide is not the body catching up.
-- **Likely, not proved:** each real slide happens just after the sample's animation marks the foot as moving while it is still on the floor. Its foot lock then releases the foot and eases it along the floor to where the clip has it, which shows the drift the lock had hidden.
+- **Known (traces, 11:35 to 11:49):** while a clip marks a foot as planted, the lock holds it within 0.5 cm, with foot placement on or off. Every real slide happens while the clip marks the foot as moving, so the lock lets it follow the clip, and the clip moves it along the floor. The stop's 13 cm glide is the clip `M_Neutral_Walk_Stop_F_Lfoot` (its name traced each frame). So the slide is in the sample's animation data as matched, not in the lock and not in the dressing.
 
 ## Research after the set-aside: does the measure count what a player sees? (24 October, 10:40 to 11:35)
 
@@ -139,9 +139,10 @@ The walk itself is unchanged. These are readings and pictures.
 
 ## Next directions (for the next go; the slide stays set aside under his rule)
 
-- **D, now first: one bad step traced inside the sample's foot placement.** For the stop at 22.5 s and the pivot at 15.0 s, compare where the animation puts the foot with where the lock holds it, while in contact and through the release. If the hidden drift is the cause, the fix sits where the animation's foot leaves the capsule:
-  - the clips' speeds against the capsule's (the sample's 200 cm/s walk with 2,000 cm/s² braking);
-  - or the lock's release made at lift, not at the mark.
+- **D, now first: measure the clips themselves.** Read the foot travel while low and marked moving in the stop clip `M_Neutral_Walk_Stop_F_Lfoot` and in the pivot and turn clips the trace names, offline from the assets. Find which clips carry the slides. Then choose among:
+  - a lock that holds a foot while it is low and slow, not only while marked planted (the field's contact test; the leg takes up the difference);
+  - leaving the sliding clips out of the motion-matching sets;
+  - a world-space lock on Tom's body (A).
 - **A: a world-space foot lock on Tom's own body after the retarget,** releasing only when the foot lifts clear (engine route: ENGINE-SOURCE.md, point 5). Expect the leg to take up the drift instead (a stretched or bent knee). Holden: "almost always better to let feet slide than to break the pose".
 - **C, the measure:** pictured judgement as the gate for the worst steps, as the field does. The height reading keeps flagging where to look.
 - **To make it the default, whichever passes:** its assets reach the build machine; it is walked packaged.
@@ -153,7 +154,7 @@ About 3.5 hours, 08:00 to 11:35, including the research helpers, the fresh revie
 ## Evidence
 
 - `metahuman-route-2026-10-24/`: QUESTIONS.md, EPIC-SOURCES.md, ENGINE-SOURCE.md, REVIEW.md, FOOT-SKATE-MEASURES.md, VISUAL-REVIEW.md.
-- `metahuman-route-2026-10-24/runs/`, every run cited above:
+- `metahuman-route-2026-10-24/runs/`, every run cited above (and fpoff, fp1a/b, roottrace and cliptrace for the foot placement and clip traces):
   - gasp12a and gasp12b: Epic's route, final measure;
   - t1fp2v and t2locka/b: the tries;
   - t2rmv: root motion, not taken;

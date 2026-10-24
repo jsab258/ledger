@@ -1,0 +1,700 @@
+ledgerTomWalk=FAIL mode=gasp-metahuman worstJoinCm=32.80 stand=0.00/0 start=4.85/4 loop=21.76/25 stop=32.80/8 turn=10.37/10 run=4.70/8 frames=1658 mannequin: stand=0.00/0 start=7.21/4 loop=20.16/20 stop=15.23/9 turn=9.73/9 run=4.78/8 settings: footPlacementMode=0 databaseLevel=0 rootMotionSetting=0 rootMotionUsed=0 unplantCm=20 unplantDeg=60 byContactMarks=PASS worstJoinCm=2.73 stand=0.00/0 start=1.61/4 loop=1.76/19 stop=2.73/9 turn=2.49/9 run=0.52/9 mannequinByContactMarks=PASS worstJoinCm=1.24 stand=0.00/0 start=1.24/4 loop=0.18/19 stop=0.28/9 turn=0.49/9 run=0.01/9
+the route's heading 90 degrees, 15.0 m clear ahead (nothing), 15.0 m behind, from 100,400
+2.02 s, stretch 0, 0 cm/s, root 412.3 cm off, - mannequin balls -0.1/0.9, worn -1.9/-1.0, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,400
+2.27 s, stretch 0, 0 cm/s, root 412.3 cm off, - mannequin balls -0.1/0.9, worn -1.9/-1.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,400
+2.52 s, stretch 0, 0 cm/s, root 412.3 cm off, - mannequin balls -0.1/0.9, worn -1.9/-1.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,400
+2.77 s, stretch 0, 0 cm/s, root 412.3 cm off, - mannequin balls -0.1/0.9, worn -1.9/-1.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,400
+3.02 s, stretch 0, 0 cm/s, root 412.3 cm off, - mannequin balls -0.1/0.9, worn -1.9/-1.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,400
+3.27 s, stretch 0, 0 cm/s, root 412.3 cm off, - mannequin balls -0.1/0.9, worn -1.9/-1.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,400
+3.52 s, stretch 0, 0 cm/s, root 412.3 cm off, - mannequin balls -0.1/0.9, worn -1.9/-1.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,400
+3.77 s, stretch 0, 0 cm/s, root 412.3 cm off, - mannequin balls -0.1/0.9, worn -1.9/-1.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,400
+4.02 s, stretch 0, 0 cm/s, root 412.3 cm off, - mannequin balls -0.1/0.9, worn -1.9/-1.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,400
+4.25 s, stretch 0, 0 cm/s, root 412.3 cm off, - mannequin balls -0.1/0.9, worn -1.9/-1.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,400
+4.50 s, stretch 0, 0 cm/s, root 412.3 cm off, - mannequin balls -0.1/0.9, worn -1.9/-1.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,400
+4.75 s, stretch 0, 0 cm/s, root 412.3 cm off, - mannequin balls -0.2/0.9, worn -1.9/-1.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,400
+5.00 s, stretch 0, 0 cm/s, root 412.3 cm off, - mannequin balls -0.2/0.9, worn -1.9/-1.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,400
+5.12 s, stretch 1, start, his right foot, slid 4.85 cm
+5.13 s, stretch 1, start, the mannequin's right foot, slid 6.68 cm
+5.25 s, stretch 1, 173 cm/s, root 435.0 cm off, - mannequin balls -0.6/7.0, worn -2.5/5.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,423
+5.30 s, stretch 1, start, his left foot, slid 3.28 cm
+5.32 s, stretch 1, start, the mannequin's left foot, slid 3.63 cm
+5.50 s, stretch 1, 200 cm/s, root 483.8 cm off, - mannequin balls 4.1/0.2, worn 2.6/-2.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,473
+5.75 s, stretch 1, 200 cm/s, root 532.8 cm off, - mannequin balls 7.5/0.4, worn 6.1/-1.9, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,523
+5.77 s, stretch 1, start, his right foot, slid 2.95 cm
+5.78 s, stretch 1, start, the mannequin's right foot, slid 7.21 cm
+6.00 s, stretch 1, 200 cm/s, root 582.0 cm off, - mannequin balls 0.9/2.4, worn -0.6/0.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,573
+6.25 s, stretch 1, 200 cm/s, root 631.3 cm off, - mannequin balls 1.9/3.3, worn 0.3/1.2, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,623
+6.25 s, stretch 1, start, his left foot, slid 1.05 cm
+6.25 s, stretch 1, start, the mannequin's left foot, slid 2.60 cm
+6.50 s, stretch 1, 200 cm/s, root 680.7 cm off, - mannequin balls 3.1/1.0, worn 1.0/-0.3, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,673
+6.50 s, stretch 1, loop, his left foot, slid 0.00 cm
+6.75 s, stretch 1, 200 cm/s, root 730.2 cm off, - mannequin balls 4.2/1.6, worn 2.6/-0.0, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,723
+6.77 s, stretch 1, loop, his right foot, slid 1.61 cm
+6.77 s, stretch 1, loop, the mannequin's right foot, slid 4.39 cm
+7.00 s, stretch 1, 200 cm/s, root 779.8 cm off, - mannequin balls 1.1/3.0, worn -0.1/0.7, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,773
+7.25 s, stretch 1, 200 cm/s, root 829.4 cm off, - mannequin balls 2.9/3.2, worn 1.2/1.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,823
+7.25 s, stretch 1, loop, his left foot, slid 1.22 cm
+7.25 s, stretch 1, loop, the mannequin's left foot, slid 2.27 cm
+7.50 s, stretch 1, 200 cm/s, root 879.0 cm off, - mannequin balls 4.0/1.0, worn 1.8/-0.4, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,873
+7.72 s, stretch 1, loop, his right foot, slid 1.61 cm
+7.73 s, stretch 1, loop, the mannequin's right foot, slid 2.21 cm
+7.75 s, stretch 1, 200 cm/s, root 928.7 cm off, - mannequin balls 2.4/5.1, worn 0.6/4.2, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,923
+8.00 s, stretch 1, 200 cm/s, root 978.5 cm off, - mannequin balls 1.0/3.2, worn -0.4/1.0, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,973
+8.23 s, stretch 1, loop, his left foot, slid 1.26 cm
+8.23 s, stretch 1, loop, the mannequin's left foot, slid 2.72 cm
+8.25 s, stretch 1, 200 cm/s, root 1028.2 cm off, - mannequin balls 4.6/2.3, worn 3.2/0.2, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,1023
+8.50 s, stretch 1, 200 cm/s, root 1078.0 cm off, - mannequin balls 3.5/1.1, worn 1.4/-0.2, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,1073
+8.73 s, stretch 1, loop, his right foot, slid 0.84 cm
+8.75 s, stretch 1, 200 cm/s, root 1127.8 cm off, - mannequin balls 2.3/2.9, worn 0.5/1.5, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,1123
+8.75 s, stretch 1, loop, the mannequin's right foot, slid 3.53 cm
+9.00 s, stretch 1, 200 cm/s, root 1177.6 cm off, - mannequin balls 1.1/2.3, worn -0.3/0.0, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,1173
+9.00 s, stretch 1, loop, his right foot, slid 21.76 cm
+9.25 s, stretch 2, 0 cm/s, root 1189.2 cm off, - mannequin balls 2.1/1.4, worn 0.3/-0.6, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,1185
+9.25 s, stretch 2, loop, his left foot, slid 11.50 cm
+9.25 s, stretch 2, loop, the mannequin's left foot, slid 9.60 cm
+9.50 s, stretch 2, 0 cm/s, root 1189.2 cm off, - mannequin balls 2.4/1.2, worn 0.7/-0.4, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,1185
+9.75 s, stretch 2, 0 cm/s, root 1189.2 cm off, - mannequin balls 0.9/1.2, worn -0.7/-0.7, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,1185
+9.83 s, stretch 2, stop, his right foot, slid 2.40 cm
+9.83 s, stretch 2, stop, the mannequin's right foot, slid 2.02 cm
+10.00 s, stretch 2, 0 cm/s, root 1189.2 cm off, - mannequin balls 1.0/5.0, worn -0.7/2.7, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,1185
+10.25 s, stretch 2, 0 cm/s, root 1189.2 cm off, - mannequin balls 1.0/2.6, worn -0.7/0.7, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,1185
+10.50 s, stretch 2, 0 cm/s, root 1189.2 cm off, - mannequin balls 1.0/1.4, worn -0.7/-0.6, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,1185
+10.75 s, stretch 2, 0 cm/s, root 1189.2 cm off, - mannequin balls 1.0/1.0, worn -0.7/-0.9, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,1185
+11.00 s, stretch 2, 0 cm/s, root 1189.2 cm off, - mannequin balls 1.0/1.0, worn -0.7/-0.8, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,1185
+11.25 s, stretch 2, 0 cm/s, root 1189.2 cm off, - mannequin balls 1.1/1.1, worn -0.7/-0.8, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,1185
+11.52 s, stretch 2, 0 cm/s, root 1189.2 cm off, - mannequin balls 1.1/1.1, worn -0.7/-0.8, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,1185
+11.62 s, stretch 3, stop, the mannequin's left foot, slid 10.97 cm
+11.63 s, stretch 3, stop, his left foot, slid 15.54 cm
+11.77 s, stretch 3, 173 cm/s, root 1166.0 cm off, - mannequin balls 5.1/1.6, worn 3.7/-0.3, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,1162
+11.85 s, stretch 3, stop, his right foot, slid 2.95 cm
+11.85 s, stretch 3, stop, the mannequin's right foot, slid 3.23 cm
+12.02 s, stretch 3, 200 cm/s, root 1116.2 cm off, - mannequin balls 1.1/7.0, worn -0.4/4.8, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,1112
+12.27 s, stretch 3, 200 cm/s, root 1066.4 cm off, - mannequin balls 2.2/1.7, worn 0.3/0.0, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,1062
+12.27 s, stretch 3, turn, his left foot, slid 3.92 cm
+12.27 s, stretch 3, turn, the mannequin's left foot, slid 5.62 cm
+12.52 s, stretch 3, 200 cm/s, root 1016.6 cm off, - mannequin balls 3.8/1.0, worn 1.7/-0.5, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,1012
+12.73 s, stretch 3, turn, his right foot, slid 1.06 cm
+12.75 s, stretch 3, turn, the mannequin's right foot, slid 4.83 cm
+12.77 s, stretch 3, 200 cm/s, root 966.9 cm off, - mannequin balls 1.8/5.2, worn -0.0/3.8, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,962
+13.02 s, stretch 3, 200 cm/s, root 917.1 cm off, - mannequin balls 1.1/3.8, worn -0.4/1.6, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,912
+13.23 s, stretch 3, loop, his left foot, slid 0.98 cm
+13.23 s, stretch 3, loop, the mannequin's left foot, slid 2.24 cm
+13.27 s, stretch 3, 200 cm/s, root 867.5 cm off, - mannequin balls 6.9/1.5, worn 5.8/-0.6, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,862
+13.52 s, stretch 3, 200 cm/s, root 817.8 cm off, - mannequin balls 6.2/0.9, worn 4.2/-0.8, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,812
+13.70 s, stretch 3, loop, his right foot, slid 1.39 cm
+13.72 s, stretch 3, loop, the mannequin's right foot, slid 2.82 cm
+13.77 s, stretch 3, 200 cm/s, root 768.2 cm off, - mannequin balls 1.1/9.4, worn -0.7/9.0, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,762
+14.02 s, stretch 3, 200 cm/s, root 718.7 cm off, - mannequin balls 0.9/6.3, worn -0.9/4.3, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,712
+14.22 s, stretch 3, loop, his left foot, slid 1.21 cm
+14.22 s, stretch 3, loop, the mannequin's left foot, slid 2.98 cm
+14.27 s, stretch 3, 200 cm/s, root 669.2 cm off, - mannequin balls 8.5/1.1, worn 7.6/-1.0, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,662
+14.52 s, stretch 3, 200 cm/s, root 619.8 cm off, - mannequin balls 5.0/0.9, worn 3.1/-0.8, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,612
+14.72 s, stretch 3, loop, his right foot, slid 0.63 cm
+14.73 s, stretch 3, loop, the mannequin's right foot, slid 3.43 cm
+14.77 s, stretch 3, 200 cm/s, root 570.5 cm off, - mannequin balls 1.1/7.3, worn -0.7/6.4, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,562
+traceAt his 14.817: left 91.2,520.1 up -0.22 down, right 110.1,587.4 up 10.38, contact 0.00/100.00, mover 100.0,548.3 200 cm/s
+traceAt mannequin 14.817: left 93.3,521.1 up -0.15 down, right 108.1,585.2 up 9.34, contact 0.00/100.00, mover 100.0,548.3 200 cm/s
+traceRoot 14.817: root 100.0,548.3, capsule 100.0,548.3, off 0.0 cm
+traceAt his 14.833: left 91.2,520.1 up -0.19 down, right 110.0,578.7 up 9.21, contact 0.00/100.00, mover 100.0,545.0 200 cm/s
+traceAt mannequin 14.833: left 93.3,521.1 up -0.14 down, right 108.0,576.6 up 8.36, contact 0.00/100.00, mover 100.0,545.0 200 cm/s
+traceRoot 14.833: root 100.0,545.0, capsule 100.0,545.0, off 0.0 cm
+traceAt his 14.850: left 91.2,520.1 up -0.14 down, right 110.0,570.0 up 8.11, contact 0.00/100.00, mover 100.0,541.7 200 cm/s
+traceAt mannequin 14.850: left 93.3,521.1 up -0.13 down, right 108.0,568.0 up 7.44, contact 0.00/100.00, mover 100.0,541.7 200 cm/s
+traceRoot 14.850: root 100.0,541.7, capsule 100.0,541.7, off 0.0 cm
+traceAt his 14.867: left 91.2,520.1 up -0.05 down, right 110.1,560.3 up 6.46, contact 0.00/100.00, mover 100.0,538.3 200 cm/s
+traceAt mannequin 14.867: left 93.3,521.1 up -0.12 down, right 108.1,558.4 up 5.99, contact 0.00/100.00, mover 100.0,538.3 200 cm/s
+traceRoot 14.867: root 100.0,538.3, capsule 100.0,538.3, off 0.0 cm
+traceAt his 14.883: left 91.2,520.1 up 0.10 down, right 110.2,550.5 up 5.01, contact 0.00/100.00, mover 100.0,535.0 200 cm/s
+traceAt mannequin 14.883: left 93.3,521.1 up -0.11 down, right 108.2,548.8 up 4.72, contact 0.00/100.00, mover 100.0,535.0 200 cm/s
+traceRoot 14.883: root 100.0,535.0, capsule 100.0,535.0, off 0.0 cm
+traceAt his 14.900: left 91.2,520.1 up 0.23 down, right 110.4,540.0 up 3.54, contact 0.00/100.00, mover 100.0,531.7 200 cm/s
+traceAt mannequin 14.900: left 93.3,521.1 up -0.09 down, right 108.4,538.6 up 3.44, contact 0.00/100.00, mover 100.0,531.7 200 cm/s
+traceRoot 14.900: root 100.0,531.7, capsule 100.0,531.7, off 0.0 cm
+traceAt his 14.917: left 91.2,520.1 up 0.45 down, right 110.7,529.5 up 2.38, contact 0.00/100.00, mover 100.0,528.3 200 cm/s
+traceAt mannequin 14.917: left 93.3,521.1 up -0.03 down, right 108.7,528.4 up 2.42, contact 0.00/100.00, mover 100.0,528.3 200 cm/s
+traceRoot 14.917: root 100.0,528.3, capsule 100.0,528.3, off 0.0 cm
+traceAt his 14.933: left 91.2,520.1 up 0.48 down, right 111.2,518.7 up 1.52, contact 0.00/100.00, mover 100.0,525.0 200 cm/s
+traceAt mannequin 14.933: left 93.3,521.1 up -0.00 down, right 109.2,517.8 up 1.67, contact 0.00/100.00, mover 100.0,525.0 200 cm/s
+traceRoot 14.933: root 100.0,525.0, capsule 100.0,525.0, off 0.0 cm
+traceAt his 14.950: left 91.2,520.1 up 0.55 down, right 111.8,507.9 up 1.10, contact 0.00/100.00, mover 100.0,521.7 200 cm/s
+traceAt mannequin 14.950: left 93.3,521.1 up 0.06 down, right 109.7,507.4 up 1.33, contact 0.00/100.00, mover 100.0,521.7 200 cm/s
+traceRoot 14.950: root 100.0,521.7, capsule 100.0,521.7, off 0.0 cm
+traceAt his 14.967: left 91.2,520.2 up 0.37 down, right 112.5,497.0 up 1.58 down, contact 0.00/100.00, mover 100.0,518.3 200 cm/s
+14.97 s, stretch 3, loop, his right foot, slid 0.00 cm
+traceAt mannequin 14.967: left 93.3,521.1 up 0.01 down, right 110.4,496.8 up 1.80, contact 0.00/100.00, mover 100.0,518.3 200 cm/s
+traceRoot 14.967: root 100.0,518.3, capsule 100.0,518.3, off 0.0 cm
+traceAt his 14.983: left 91.2,520.3 up 0.23 down, right 113.2,486.4 up 2.42, contact 0.00/100.00, mover 100.0,515.0 200 cm/s
+traceAt mannequin 14.983: left 93.3,521.1 up -0.00 down, right 111.1,486.5 up 2.50, contact 0.00/100.00, mover 100.0,515.0 200 cm/s
+traceRoot 14.983: root 100.0,515.0, capsule 100.0,515.0, off 0.0 cm
+traceAt his 15.000: left 91.2,520.3 up -0.06 down, right 114.1,476.2 up 4.34, contact 0.00/100.00, mover 100.0,511.7 200 cm/s
+traceAt mannequin 15.000: left 93.3,521.1 up -0.08 down, right 111.8,476.6 up 4.28, contact 0.00/100.00, mover 100.0,511.7 200 cm/s
+traceRoot 15.000: root 100.0,511.7, capsule 100.0,511.7, off 0.0 cm
+15.02 s, stretch 3, 200 cm/s, root 521.3 cm off, - mannequin balls 0.9/4.4, worn -0.8/2.4, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,512
+traceAt his 15.017: left 91.2,520.4 up -0.25 down, right 114.8,466.4 up 6.48, contact 0.00/100.00, mover 100.0,508.3 200 cm/s
+traceAt mannequin 15.017: left 93.3,521.1 up -0.10 down, right 112.6,467.1 up 6.30, contact 0.00/100.00, mover 100.0,508.3 200 cm/s
+traceRoot 15.017: root 100.0,508.3, capsule 100.0,508.3, off 0.0 cm
+traceAt his 15.033: left 91.2,520.4 up -0.24 down, right 115.5,457.7 up 9.20, contact 0.00/100.00, mover 100.0,505.0 200 cm/s
+traceAt mannequin 15.033: left 93.3,521.1 up -0.11 down, right 113.2,458.8 up 8.89, contact 0.00/100.00, mover 100.0,505.0 200 cm/s
+traceRoot 15.033: root 100.0,505.0, capsule 100.0,505.0, off 0.0 cm
+traceAt his 15.050: left 91.2,520.5 up -0.27 down, right 115.8,450.5 up 11.96, contact 0.00/99.83, mover 100.0,502.4 153 cm/s
+traceAt mannequin 15.050: left 93.3,521.1 up -0.12 down, right 113.5,451.7 up 11.50, contact 0.00/99.83, mover 100.0,502.4 153 cm/s
+traceRoot 15.050: root 100.0,502.4, capsule 100.0,502.4, off 0.0 cm
+traceAt his 15.067: left 91.2,520.6 up -0.31 down, right 115.7,445.7 up 13.38, contact 0.01/97.80, mover 100.0,500.5 114 cm/s
+traceAt mannequin 15.067: left 93.3,521.1 up -0.13 down, right 113.4,447.2 up 12.85, contact 0.01/97.80, mover 100.0,500.5 114 cm/s
+traceRoot 15.067: root 100.0,500.5, capsule 100.0,500.5, off 0.0 cm
+traceAt his 15.083: left 91.1,520.7 up -0.34 down, right 115.7,442.3 up 14.29, contact 0.13/94.08, mover 100.0,499.2 82 cm/s
+traceAt mannequin 15.083: left 93.3,521.1 up -0.14 down, right 113.4,443.9 up 13.69, contact 0.13/94.08, mover 100.0,499.2 82 cm/s
+traceRoot 15.083: root 100.0,499.2, capsule 100.0,499.2, off 0.0 cm
+traceAt his 15.100: left 91.1,522.7 up -0.39 down, right 115.2,441.6 up 12.98, contact 1.98/89.66, mover 100.0,498.3 55 cm/s
+traceAt mannequin 15.100: left 93.2,522.9 up -0.13 down, right 113.0,443.2 up 12.42, contact 1.98/89.66, mover 100.0,498.3 55 cm/s
+traceRoot 15.100: root 100.0,498.3, capsule 100.0,498.3, off 0.0 cm
+traceAt his 15.117: left 90.9,524.9 up -0.30 down, right 114.8,441.6 up 11.40, contact 10.25/84.38, mover 100.0,497.7 33 cm/s
+traceAt mannequin 15.117: left 93.0,524.9 up 0.01 down, right 112.6,443.1 up 10.90, contact 10.25/84.38, mover 100.0,497.7 33 cm/s
+traceRoot 15.117: root 100.0,497.7, capsule 100.0,497.7, off 0.0 cm
+traceAt his 15.133: left 90.7,527.2 up -0.08 down, right 114.3,443.6 up 8.67, contact 19.61/78.40, mover 100.0,497.5 14 cm/s
+traceAt mannequin 15.133: left 92.8,526.9 up 0.23 down, right 112.1,445.1 up 8.27, contact 19.61/78.40, mover 100.0,497.5 14 cm/s
+traceRoot 15.133: root 100.0,497.5, capsule 100.0,497.5, off 0.0 cm
+traceAt his 15.150: left 90.4,529.6 up 0.51 down, right 113.7,446.1 up 6.28, contact 28.21/71.81, mover 100.0,497.5 2 cm/s
+traceAt mannequin 15.150: left 92.4,528.9 up 0.77 down, right 111.5,447.4 up 5.98, contact 28.21/71.81, mover 100.0,497.5 2 cm/s
+traceRoot 15.150: root 100.0,497.5, capsule 100.0,497.5, off 0.0 cm
+traceAt his 15.167: left 89.9,531.7 up 1.29 down, right 113.2,448.8 up 4.12, contact 37.98/64.51, mover 100.0,497.8 15 cm/s
+traceAt mannequin 15.167: left 91.9,530.6 up 1.43 down, right 111.1,450.0 up 3.97, contact 37.98/64.51, mover 100.0,497.8 15 cm/s
+traceRoot 15.167: root 100.0,497.8, capsule 100.0,497.8, off 0.0 cm
+traceAt his 15.183: left 89.7,533.7 up 2.46 down, right 112.1,451.6 up 2.37, contact 58.85/54.97, mover 100.0,498.2 29 cm/s
+traceAt mannequin 15.183: left 91.5,532.3 up 2.44 down, right 110.1,452.7 up 2.33, contact 58.85/54.97, mover 100.0,498.2 29 cm/s
+traceRoot 15.183: root 100.0,498.2, capsule 100.0,498.2, off 0.0 cm
+traceAt his 15.200: left 89.4,535.2 up 3.73 down, right 111.2,454.6 up 1.28 down, contact 89.88/35.79, mover 100.0,498.9 42 cm/s
+15.20 s, stretch 4, loop, his left foot, slid 13.62 cm
+traceAt mannequin 15.200: left 91.1,533.4 up 3.56 down, right 109.2,455.7 up 1.29 down, contact 89.88/35.79, mover 100.0,498.9 42 cm/s
+traceRoot 15.200: root 100.0,498.9, capsule 100.0,498.9, off 0.0 cm
+15.20 s, stretch 4, loop, the mannequin's left foot, slid 11.13 cm
+traceAt his 15.217: left 89.1,536.3 up 4.80, right 110.4,457.4 up 0.45 down, contact 99.17/8.61, mover 100.0,499.9 55 cm/s
+traceAt mannequin 15.217: left 90.7,534.3 up 4.51, right 108.4,458.5 up 0.49 down, contact 99.17/8.61, mover 100.0,499.9 55 cm/s
+traceRoot 15.217: root 100.0,499.9, capsule 100.0,499.9, off 0.0 cm
+traceAt his 15.233: left 88.3,537.1 up 5.81, right 110.4,457.4 up 0.13 down, contact 99.93/0.69, mover 100.0,501.0 69 cm/s
+traceAt mannequin 15.233: left 89.7,534.9 up 5.47, right 108.4,458.5 up 0.14 down, contact 99.93/0.69, mover 100.0,501.0 69 cm/s
+traceRoot 15.233: root 100.0,501.0, capsule 100.0,501.0, off 0.0 cm
+traceAt his 15.250: left 87.6,537.8 up 6.32, right 110.4,457.4 up -0.07 down, contact 100.00/0.06, mover 100.0,502.4 82 cm/s
+traceAt mannequin 15.250: left 88.7,535.5 up 5.97, right 108.4,458.6 up -0.09 down, contact 100.00/0.06, mover 100.0,502.4 82 cm/s
+traceRoot 15.250: root 100.0,502.4, capsule 100.0,502.4, off 0.0 cm
+15.27 s, stretch 4, 69 cm/s, root 512.2 cm off, - mannequin balls 7.0/-0.4, worn 5.6/-2.5, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,502
+traceAt his 15.267: left 86.3,538.8 up 6.80, right 110.5,457.7 up 0.01 down, contact 100.00/0.00, mover 100.0,504.0 95 cm/s
+traceAt mannequin 15.267: left 87.2,536.4 up 6.47, right 108.4,458.8 up -0.00 down, contact 100.00/0.00, mover 100.0,504.0 95 cm/s
+traceRoot 15.267: root 100.0,504.0, capsule 100.0,504.0, off 0.0 cm
+traceAt his 15.283: left 86.0,540.9 up 6.69, right 110.5,457.9 up 0.12 down, contact 100.00/0.00, mover 100.0,505.8 109 cm/s
+traceAt mannequin 15.283: left 86.6,538.4 up 6.38, right 108.5,459.0 up 0.11 down, contact 100.00/0.00, mover 100.0,505.8 109 cm/s
+traceRoot 15.283: root 100.0,505.8, capsule 100.0,505.8, off 0.0 cm
+traceAt his 15.300: left 86.1,544.1 up 6.31, right 110.6,457.9 up 0.28 down, contact 100.00/0.00, mover 100.0,507.8 122 cm/s
+traceAt mannequin 15.300: left 86.5,541.6 up 6.04, right 108.5,459.0 up 0.26 down, contact 100.00/0.00, mover 100.0,507.8 122 cm/s
+traceRoot 15.300: root 100.0,507.8, capsule 100.0,507.8, off 0.0 cm
+traceAt his 15.317: left 88.7,549.2 up 5.24, right 110.6,457.7 up 0.47 down, contact 100.00/0.00, mover 100.0,510.0 135 cm/s
+traceAt mannequin 15.317: left 88.7,546.5 up 5.38, right 108.5,459.0 up 0.35 down, contact 100.00/0.00, mover 100.0,510.0 135 cm/s
+traceRoot 15.317: root 100.0,510.0, capsule 100.0,510.0, off 0.0 cm
+traceAt his 15.333: left 91.6,554.9 up 3.60, right 110.6,457.4 up 0.69 down, contact 100.00/0.01, mover 100.0,512.5 149 cm/s
+traceAt mannequin 15.333: left 91.3,552.0 up 4.49, right 108.6,458.9 up 0.50 down, contact 100.00/0.01, mover 100.0,512.5 149 cm/s
+traceRoot 15.333: root 100.0,512.5, capsule 100.0,512.5, off 0.0 cm
+traceAt his 15.350: left 95.0,560.5 up 3.38, right 110.6,457.0 up 1.22 down, contact 100.00/0.33, mover 100.0,515.2 162 cm/s
+traceAt mannequin 15.350: left 94.2,557.9 up 3.52, right 108.6,458.8 up 0.93 down, contact 100.00/0.33, mover 100.0,515.2 162 cm/s
+traceRoot 15.350: root 100.0,515.2, capsule 100.0,515.2, off 0.0 cm
+traceAt his 15.367: left 99.4,565.8 up 2.69, right 110.5,456.2 up 1.81 down, contact 99.99/2.82, mover 100.0,518.1 175 cm/s
+traceAt mannequin 15.367: left 98.2,563.5 up 2.55, right 108.5,458.4 up 1.54 down, contact 99.99/2.82, mover 100.0,518.1 175 cm/s
+traceRoot 15.367: root 100.0,518.1, capsule 100.0,518.1, off 0.0 cm
+traceAt his 15.383: left 103.3,570.2 up 1.97, right 110.1,456.9 up 1.94 down, contact 99.67/25.20, mover 100.0,521.3 189 cm/s
+traceAt mannequin 15.383: left 101.8,568.2 up 1.76, right 108.2,459.6 up 1.84 down, contact 99.67/25.20, mover 100.0,521.3 189 cm/s
+traceRoot 15.383: root 100.0,521.3, capsule 100.0,521.3, off 0.0 cm
+traceAt his 15.400: left 107.4,574.4 up 1.20 down, right 109.4,457.2 up 2.16 down, contact 97.04/78.36, mover 100.0,524.6 200 cm/s
+traceAt mannequin 15.400: left 105.6,572.7 up 0.99 down, right 107.6,460.5 up 2.56 down, contact 97.04/78.36, mover 100.0,524.6 200 cm/s
+traceRoot 15.400: root 100.0,524.6, capsule 100.0,524.6, off 0.0 cm
+15.40 s, stretch 4, turn, the mannequin's right foot, slid 7.17 cm
+traceAt his 15.417: left 108.7,574.2 up 0.43 down, right 107.9,460.4 up 3.41 down, contact 74.32/97.96, mover 100.0,527.9 200 cm/s
+15.42 s, stretch 4, turn, his right foot, slid 6.57 cm
+traceAt mannequin 15.417: left 106.9,572.8 up 0.49 down, right 106.4,463.7 up 3.50, contact 74.32/97.96, mover 100.0,527.9 200 cm/s
+traceRoot 15.417: root 100.0,527.9, capsule 100.0,527.9, off 0.0 cm
+traceAt his 15.433: left 109.3,574.3 up -0.14 down, right 106.4,463.5 up 5.53, contact 21.32/99.78, mover 100.0,531.3 200 cm/s
+traceAt mannequin 15.433: left 107.5,573.2 up 0.15 down, right 105.1,466.5 up 4.54, contact 21.32/99.78, mover 100.0,531.3 200 cm/s
+traceRoot 15.433: root 100.0,531.3, capsule 100.0,531.3, off 0.0 cm
+traceAt his 15.450: left 110.0,574.4 up -0.35 down, right 104.1,468.1 up 6.96, contact 2.05/100.00, mover 100.0,534.6 200 cm/s
+traceAt mannequin 15.450: left 108.2,573.2 up -0.10 down, right 103.0,471.1 up 5.54, contact 2.05/100.00, mover 100.0,534.6 200 cm/s
+traceRoot 15.450: root 100.0,534.6, capsule 100.0,534.6, off 0.0 cm
+traceAt his 15.467: left 110.0,574.4 up -0.56 down, right 102.0,472.4 up 8.21, contact 0.22/100.00, mover 100.0,537.9 200 cm/s
+traceAt mannequin 15.467: left 108.2,573.2 up -0.34 down, right 101.2,475.4 up 6.62, contact 0.22/100.00, mover 100.0,537.9 200 cm/s
+traceRoot 15.467: root 100.0,537.9, capsule 100.0,537.9, off 0.0 cm
+traceAt his 15.483: left 110.1,574.4 up -0.52 down, right 99.0,478.4 up 8.91, contact 0.00/100.00, mover 100.0,541.3 200 cm/s
+traceAt mannequin 15.483: left 108.2,573.2 up -0.36 down, right 98.5,481.5 up 7.34, contact 0.00/100.00, mover 100.0,541.3 200 cm/s
+traceRoot 15.483: root 100.0,541.3, capsule 100.0,541.3, off 0.0 cm
+traceAt his 15.500: left 110.1,574.4 up -0.50 down, right 96.4,484.5 up 9.57, contact 0.00/100.00, mover 100.0,544.6 200 cm/s
+traceAt mannequin 15.500: left 108.2,573.2 up -0.39 down, right 96.3,487.6 up 8.05, contact 0.00/100.00, mover 100.0,544.6 200 cm/s
+traceRoot 15.500: root 100.0,544.6, capsule 100.0,544.6, off 0.0 cm
+15.52 s, stretch 4, 200 cm/s, root 553.7 cm off, - mannequin balls 0.6/8.4, worn -1.2/7.8, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,545
+15.77 s, stretch 4, 200 cm/s, root 603.0 cm off, - mannequin balls 0.9/7.9, worn -1.1/5.6, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,595
+15.90 s, stretch 4, turn, his left foot, slid 8.23 cm
+15.90 s, stretch 4, turn, the mannequin's left foot, slid 9.73 cm
+16.02 s, stretch 4, 200 cm/s, root 652.3 cm off, - mannequin balls 8.5/1.3, worn 7.2/-0.8, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,645
+16.18 s, stretch 4, loop, his left foot, slid 20.71 cm
+16.18 s, stretch 4, loop, the mannequin's left foot, slid 20.16 cm
+16.27 s, stretch 4, 200 cm/s, root 701.8 cm off, - mannequin balls 7.5/2.7, worn 5.8/0.4, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,695
+16.35 s, stretch 4, turn, his right foot, slid 2.51 cm
+16.35 s, stretch 4, turn, the mannequin's right foot, slid 5.14 cm
+16.52 s, stretch 4, 200 cm/s, root 751.3 cm off, - mannequin balls 0.8/8.7, worn -0.9/7.0, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,745
+16.77 s, stretch 4, 200 cm/s, root 800.9 cm off, - mannequin balls 0.7/12.4, worn -1.3/10.9, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,795
+16.85 s, stretch 4, loop, his left foot, slid 4.43 cm
+16.85 s, stretch 4, loop, the mannequin's left foot, slid 5.85 cm
+17.02 s, stretch 4, 200 cm/s, root 850.5 cm off, - mannequin balls 6.4/0.9, worn 4.6/-0.5, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,845
+17.27 s, stretch 4, 200 cm/s, root 900.2 cm off, - mannequin balls 12.0/0.8, worn 10.8/-1.2, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,895
+17.32 s, stretch 4, loop, his right foot, slid 1.44 cm
+17.33 s, stretch 4, loop, the mannequin's right foot, slid 2.73 cm
+17.52 s, stretch 4, 200 cm/s, root 949.9 cm off, - mannequin balls 0.9/5.2, worn -0.5/3.3, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,945
+17.58 s, stretch 4, loop, his right foot, slid 0.00 cm
+17.77 s, stretch 4, 200 cm/s, root 999.6 cm off, - mannequin balls 0.8/11.6, worn -1.2/10.0, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,995
+17.83 s, stretch 4, loop, his left foot, slid 1.25 cm
+17.83 s, stretch 4, loop, the mannequin's left foot, slid 2.94 cm
+18.02 s, stretch 4, 200 cm/s, root 1049.4 cm off, - mannequin balls 6.4/0.9, worn 4.7/-0.7, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,1045
+18.27 s, stretch 4, 200 cm/s, root 1099.2 cm off, - mannequin balls 11.2/0.5, worn 10.0/-1.6, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,1095
+18.33 s, stretch 4, loop, his right foot, slid 0.70 cm
+18.35 s, stretch 4, loop, the mannequin's right foot, slid 3.28 cm
+18.52 s, stretch 4, 200 cm/s, root 1149.0 cm off, - mannequin balls 0.9/5.6, worn -0.6/3.9, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,1145
+18.58 s, stretch 5, loop, his right foot, slid 10.79 cm
+18.77 s, stretch 5, 200 cm/s, root 1193.1 cm off, - mannequin balls 0.7/10.5, worn -1.4/8.8, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 83,1190
+18.83 s, stretch 5, loop, his left foot, slid 3.46 cm
+18.83 s, stretch 5, loop, the mannequin's left foot, slid 4.10 cm
+19.02 s, stretch 5, 200 cm/s, root 1228.3 cm off, - mannequin balls 5.6/0.7, worn 3.9/-1.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 50,1227
+19.27 s, stretch 5, 200 cm/s, root 1262.9 cm off, - mannequin balls 12.1/0.9, worn 10.9/-1.4, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 14,1263
+19.35 s, stretch 5, turn, his right foot, slid 3.22 cm
+19.35 s, stretch 5, turn, the mannequin's right foot, slid 5.12 cm
+19.52 s, stretch 5, 200 cm/s, root 1298.3 cm off, - mannequin balls 0.9/6.4, worn -0.7/4.6, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at -20,1298
+19.77 s, stretch 5, 199 cm/s, root 1343.7 cm off, - mannequin balls 1.3/13.9, worn -1.0/12.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at -20,1344
+19.87 s, stretch 5, turn, his left foot, slid 8.06 cm
+19.87 s, stretch 5, turn, the mannequin's left foot, slid 7.37 cm
+20.02 s, stretch 5, 199 cm/s, root 1393.5 cm off, - mannequin balls 7.7/1.0, worn 6.1/-0.7, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at -20,1393
+20.27 s, stretch 6, 200 cm/s, root 1443.4 cm off, - mannequin balls 11.9/0.7, worn 11.1/-1.6, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at -20,1443
+20.35 s, stretch 6, loop, his right foot, slid 0.98 cm
+20.37 s, stretch 6, loop, the mannequin's right foot, slid 2.48 cm
+20.52 s, stretch 6, 200 cm/s, root 1493.4 cm off, - mannequin balls 0.5/7.1, worn -1.3/5.6, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at -20,1493
+20.77 s, stretch 6, 200 cm/s, root 1543.4 cm off, - mannequin balls 0.8/12.9, worn -1.3/11.3, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at -20,1543
+20.85 s, stretch 6, turn, his left foot, slid 1.65 cm
+20.87 s, stretch 6, turn, the mannequin's left foot, slid 4.75 cm
+21.02 s, stretch 6, 200 cm/s, root 1593.4 cm off, - mannequin balls 6.6/0.9, worn 5.0/-0.8, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at -20,1593
+21.12 s, stretch 6, turn, his left foot, slid 10.37 cm
+21.27 s, stretch 6, 200 cm/s, root 1643.4 cm off, - mannequin balls 13.2/0.9, worn 11.9/-1.4, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at -20,1643
+21.37 s, stretch 6, turn, his right foot, slid 2.52 cm
+21.37 s, stretch 6, turn, the mannequin's right foot, slid 4.69 cm
+21.52 s, stretch 6, 200 cm/s, root 1693.4 cm off, - mannequin balls 0.9/7.8, worn -0.8/6.2, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at -20,1693
+21.77 s, stretch 6, 200 cm/s, root 1743.4 cm off, - mannequin balls 0.9/14.1, worn -1.1/12.6, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at -20,1743
+21.87 s, stretch 6, loop, his left foot, slid 1.00 cm
+21.88 s, stretch 6, loop, the mannequin's left foot, slid 4.28 cm
+traceAt his 21.917: left -11.0,1722.5 up 7.54, right -28.4,1812.9 up -0.07 down, contact 100.00/0.00, mover -20.0,1776.6 200 cm/s
+traceAt mannequin 21.917: left -12.5,1724.8 up 6.79, right -26.2,1812.2 up -0.04 down, contact 100.00/0.00, mover -20.0,1776.6 200 cm/s
+traceRoot 21.917: root -20.0,1776.6, capsule -20.0,1776.6, off 0.0 cm
+traceAt his 21.933: left -10.6,1729.8 up 8.08, right -28.4,1812.9 up -0.07 down, contact 100.00/0.00, mover -20.0,1779.9 200 cm/s
+traceAt mannequin 21.933: left -12.1,1732.1 up 7.39, right -26.2,1812.2 up -0.04 down, contact 100.00/0.00, mover -20.0,1779.9 200 cm/s
+traceRoot 21.933: root -20.0,1779.9, capsule -20.0,1779.9, off 0.0 cm
+traceAt his 21.950: left -10.1,1737.2 up 8.71, right -28.4,1812.9 up -0.06 down, contact 100.00/0.00, mover -20.0,1783.2 200 cm/s
+traceAt mannequin 21.950: left -11.7,1739.4 up 8.07, right -26.2,1812.2 up -0.04 down, contact 100.00/0.00, mover -20.0,1783.2 200 cm/s
+traceRoot 21.950: root -20.0,1783.2, capsule -20.0,1783.2, off 0.0 cm
+traceAt his 21.967: left -9.6,1746.0 up 8.23, right -28.4,1812.9 up -0.05 down, contact 100.00/0.00, mover -20.0,1786.6 200 cm/s
+traceAt mannequin 21.967: left -11.3,1748.0 up 7.72, right -26.2,1812.2 up -0.04 down, contact 100.00/0.00, mover -20.0,1786.6 200 cm/s
+traceRoot 21.967: root -20.0,1786.6, capsule -20.0,1786.6, off 0.0 cm
+traceAt his 21.983: left -9.1,1754.8 up 7.95, right -28.4,1812.9 up -0.03 down, contact 100.00/0.00, mover -20.0,1789.9 200 cm/s
+traceAt mannequin 21.983: left -10.9,1756.6 up 7.56, right -26.2,1812.2 up -0.04 down, contact 100.00/0.00, mover -20.0,1789.9 200 cm/s
+traceRoot 21.983: root -20.0,1789.9, capsule -20.0,1789.9, off 0.0 cm
+traceAt his 22.000: left -8.7,1764.3 up 6.83, right -28.4,1812.9 up 0.02 down, contact 100.00/0.00, mover -20.0,1793.2 200 cm/s
+traceAt mannequin 22.000: left -10.6,1765.9 up 6.59, right -26.2,1812.2 up -0.04 down, contact 100.00/0.00, mover -20.0,1793.2 200 cm/s
+traceRoot 22.000: root -20.0,1793.2, capsule -20.0,1793.2, off 0.0 cm
+22.02 s, stretch 6, 200 cm/s, root 1793.4 cm off, - mannequin balls 7.6/1.0, worn 6.1/-1.0, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at -20,1793
+traceAt his 22.017: left -8.4,1773.8 up 5.94, right -28.4,1812.9 up 0.13 down, contact 100.00/0.00, mover -20.0,1796.6 200 cm/s
+traceAt mannequin 22.017: left -10.4,1775.2 up 5.82, right -26.2,1812.2 up -0.04 down, contact 100.00/0.00, mover -20.0,1796.6 200 cm/s
+traceRoot 22.017: root -20.0,1796.6, capsule -20.0,1796.6, off 0.0 cm
+traceAt his 22.033: left -8.3,1784.1 up 4.73, right -28.4,1812.9 up 0.21 down, contact 100.00/0.00, mover -20.0,1799.9 200 cm/s
+traceAt mannequin 22.033: left -10.3,1785.2 up 4.76, right -26.2,1812.2 up -0.04 down, contact 100.00/0.00, mover -20.0,1799.9 200 cm/s
+traceRoot 22.033: root -20.0,1799.9, capsule -20.0,1799.9, off 0.0 cm
+traceAt his 22.050: left -8.2,1794.3 up 3.81, right -28.4,1812.9 up 0.38 down, contact 100.00/0.00, mover -20.0,1803.2 200 cm/s
+traceAt mannequin 22.050: left -10.2,1795.2 up 3.96, right -26.2,1812.2 up -0.04 down, contact 100.00/0.00, mover -20.0,1803.2 200 cm/s
+traceRoot 22.050: root -20.0,1803.2, capsule -20.0,1803.2, off 0.0 cm
+traceAt his 22.067: left -8.1,1804.9 up 2.92, right -28.4,1812.8 up 0.43 down, contact 100.00/0.00, mover -20.0,1806.6 200 cm/s
+traceAt mannequin 22.067: left -10.2,1805.6 up 3.17, right -26.2,1812.2 up -0.05 down, contact 100.00/0.00, mover -20.0,1806.6 200 cm/s
+traceRoot 22.067: root -20.0,1806.6, capsule -20.0,1806.6, off 0.0 cm
+traceAt his 22.083: left -8.1,1815.4 up 2.30, right -28.4,1812.8 up 0.54 down, contact 100.00/0.00, mover -20.0,1809.9 200 cm/s
+traceAt mannequin 22.083: left -10.2,1815.8 up 2.61, right -26.2,1812.2 up -0.05 down, contact 100.00/0.00, mover -20.0,1809.9 200 cm/s
+traceRoot 22.083: root -20.0,1809.9, capsule -20.0,1809.9, off 0.0 cm
+traceAt his 22.100: left -8.2,1825.4 up 1.96, right -28.4,1812.8 up 0.48 down, contact 100.00/0.00, mover -20.0,1812.7 167 cm/s
+traceAt mannequin 22.100: left -10.3,1825.5 up 2.32, right -26.2,1812.2 up -0.05 down, contact 100.00/0.00, mover -20.0,1812.7 167 cm/s
+traceRoot 22.100: root -20.0,1812.7, capsule -20.0,1812.7, off 0.0 cm
+traceAt his 22.117: left -8.4,1834.7 up 1.83, right -28.4,1812.7 up 0.41 down, contact 100.00/0.00, mover -20.0,1814.9 133 cm/s
+traceAt mannequin 22.117: left -10.4,1834.4 up 2.20, right -26.2,1812.2 up -0.05 down, contact 100.00/0.00, mover -20.0,1814.9 133 cm/s
+traceRoot 22.117: root -20.0,1814.9, capsule -20.0,1814.9, off 0.0 cm
+traceAt his 22.133: left -8.5,1843.2 up 2.42, right -28.4,1812.7 up 0.19 down, contact 100.00/0.00, mover -20.0,1816.6 100 cm/s
+traceAt mannequin 22.133: left -10.5,1842.7 up 2.74, right -26.2,1812.2 up -0.05 down, contact 100.00/0.00, mover -20.0,1816.6 100 cm/s
+traceRoot 22.133: root -20.0,1816.6, capsule -20.0,1816.6, off 0.0 cm
+traceAt his 22.150: left -8.7,1850.7 up 3.09, right -28.4,1812.6 up 0.02 down, contact 100.00/0.00, mover -20.0,1817.7 67 cm/s
+traceAt mannequin 22.150: left -10.6,1850.0 up 3.32, right -26.2,1812.3 up -0.05 down, contact 100.00/0.00, mover -20.0,1817.7 67 cm/s
+traceRoot 22.150: root -20.0,1817.7, capsule -20.0,1817.7, off 0.0 cm
+traceAt his 22.167: left -8.7,1856.8 up 4.66, right -28.4,1812.6 up -0.15 down, contact 100.00/0.00, mover -20.0,1818.2 33 cm/s
+traceAt mannequin 22.167: left -10.7,1855.8 up 4.80, right -26.2,1812.3 up -0.06 down, contact 100.00/0.00, mover -20.0,1818.2 33 cm/s
+traceRoot 22.167: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.183: left -8.8,1861.8 up 6.06, right -28.4,1812.5 up -0.20 down, contact 100.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.183: left -10.8,1860.5 up 6.05, right -26.2,1812.3 up -0.08 down, contact 100.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 22.183: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.200: left -8.9,1865.0 up 7.17, right -28.4,1812.5 up -0.23 down, contact 100.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.200: left -10.9,1863.7 up 7.06, right -26.2,1812.3 up -0.10 down, contact 100.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 22.200: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.216: left -9.0,1867.7 up 7.92, right -28.4,1812.4 up -0.20 down, contact 100.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.216: left -10.9,1866.3 up 7.73, right -26.2,1812.3 up -0.09 down, contact 100.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 22.216: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.233: left -9.1,1868.8 up 7.50, right -28.4,1812.3 up -0.14 down, contact 99.92/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.233: left -11.0,1867.3 up 7.28, right -26.2,1812.3 up -0.05 down, contact 99.92/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 22.233: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.250: left -9.2,1869.6 up 6.91, right -28.5,1812.1 up -0.03 down, contact 99.26/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.250: left -11.1,1868.1 up 6.67, right -26.2,1812.3 up 0.03 down, contact 99.26/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 22.250: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+22.27 s, stretch 7, 0 cm/s, root 1818.4 cm off, - mannequin balls 7.7/1.1, worn 6.2/-1.0, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,1818
+traceAt his 22.266: left -9.2,1869.2 up 5.54, right -28.5,1811.9 up 0.20 down, contact 92.93/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.266: left -11.2,1867.7 up 5.28, right -26.2,1812.3 up 0.22 down, contact 92.93/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 22.266: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.283: left -9.2,1868.9 up 4.28, right -28.5,1811.7 up 0.69 down, contact 72.95/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.283: left -11.2,1867.4 up 4.01, right -26.2,1812.3 up 0.66 down, contact 72.95/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 22.283: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.300: left -9.1,1867.9 up 2.79, right -28.5,1811.4 up 1.41 down, contact 41.38/0.07, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.300: left -11.2,1866.5 up 2.54, right -26.2,1812.3 up 1.31 down, contact 41.38/0.07, mover -20.0,1818.2 0 cm/s
+traceRoot 22.300: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.316: left -9.0,1867.3 up 1.63, right -28.4,1811.2 up 2.37 down, contact 23.21/0.47, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.316: left -11.1,1866.0 up 1.38, right -26.2,1812.3 up 2.18 down, contact 23.21/0.47, mover -20.0,1818.2 0 cm/s
+traceRoot 22.316: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.333: left -8.7,1866.4 up 0.88 down, right -28.6,1812.2 up 3.17 down, contact 15.95/3.51, mover -20.0,1818.2 0 cm/s
+22.33 s, stretch 7, loop, his right foot, slid 1.60 cm
+traceAt mannequin 22.333: left -10.8,1865.1 up 0.68 down, right -26.4,1813.5 up 2.93 down, contact 15.95/3.51, mover -20.0,1818.2 0 cm/s
+traceRoot 22.333: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+22.33 s, stretch 7, loop, the mannequin's right foot, slid 0.32 cm
+traceAt his 22.350: left -8.4,1865.8 up 0.39 down, right -28.8,1812.8 up 4.04, contact 10.23/8.22, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.350: left -10.5,1864.5 up 0.22 down, right -26.6,1814.2 up 3.76, contact 10.23/8.22, mover -20.0,1818.2 0 cm/s
+traceRoot 22.350: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.366: left -8.2,1865.4 up 0.14 down, right -29.2,1813.5 up 4.56, contact 4.71/7.52, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.366: left -10.2,1864.2 up 0.01 down, right -27.1,1815.0 up 4.31, contact 4.71/7.52, mover -20.0,1818.2 0 cm/s
+traceRoot 22.366: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.383: left -8.2,1865.4 up -0.00 down, right -29.7,1814.0 up 4.79, contact 0.63/19.68, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.383: left -10.2,1864.2 up -0.09 down, right -27.7,1815.5 up 4.59, contact 0.63/19.68, mover -20.0,1818.2 0 cm/s
+traceRoot 22.383: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.400: left -8.2,1865.4 up -0.06 down, right -30.7,1814.4 up 4.42, contact 0.02/64.04, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.400: left -10.2,1864.2 up -0.10 down, right -28.7,1815.9 up 4.31, contact 0.02/64.04, mover -20.0,1818.2 0 cm/s
+traceRoot 22.400: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.416: left -8.3,1865.4 up -0.06 down, right -31.8,1814.3 up 3.88, contact 0.00/92.77, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.416: left -10.2,1864.2 up -0.06 down, right -29.9,1815.8 up 3.86, contact 0.00/92.77, mover -20.0,1818.2 0 cm/s
+traceRoot 22.416: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.433: left -8.3,1865.4 up -0.02 down, right -33.3,1814.0 up 3.25, contact 0.00/99.28, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.433: left -10.2,1864.1 up 0.01 down, right -31.5,1815.4 up 3.32, contact 0.00/99.28, mover -20.0,1818.2 0 cm/s
+traceRoot 22.433: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.450: left -8.3,1865.3 up 0.02 down, right -35.0,1813.7 up 2.69, contact 0.00/99.94, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.450: left -10.2,1864.1 up 0.06 down, right -33.2,1815.0 up 2.83, contact 0.00/99.94, mover -20.0,1818.2 0 cm/s
+traceRoot 22.450: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.466: left -8.3,1865.3 up 0.04 down, right -36.8,1813.3 up 2.17, contact 0.00/99.82, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.466: left -10.2,1864.1 up 0.10 down, right -35.0,1814.4 up 2.35, contact 0.00/99.82, mover -20.0,1818.2 0 cm/s
+traceRoot 22.466: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.483: left -8.3,1865.3 up 0.05 down, right -38.7,1812.7 up 1.72, contact 0.00/98.32, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.483: left -10.2,1864.1 up 0.11 down, right -36.8,1813.8 up 1.93, contact 0.00/98.32, mover -20.0,1818.2 0 cm/s
+traceRoot 22.483: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.500: left -8.3,1865.3 up 0.05 down, right -40.2,1812.1 up 1.32, contact 0.00/82.62, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.500: left -10.2,1864.1 up 0.09 down, right -38.3,1813.1 up 1.53, contact 0.00/82.62, mover -20.0,1818.2 0 cm/s
+traceRoot 22.500: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+22.52 s, stretch 7, 0 cm/s, root 1818.4 cm off, - mannequin balls 1.1/2.6, worn -0.6/0.3, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,1818
+traceAt his 22.516: left -8.3,1865.3 up 0.04 down, right -41.7,1811.4 up 0.95, contact 0.00/36.22, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.516: left -10.2,1864.1 up 0.06 down, right -39.7,1812.3 up 1.15, contact 0.00/36.22, mover -20.0,1818.2 0 cm/s
+traceRoot 22.516: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.533: left -8.3,1865.4 up 0.02 down, right -42.8,1810.7 up 0.61 down, contact 0.00/7.23, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.533: left -10.2,1864.1 up 0.03 down, right -40.7,1811.6 up 0.80, contact 0.00/7.23, mover -20.0,1818.2 0 cm/s
+traceRoot 22.533: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.550: left -8.3,1865.4 up 0.00 down, right -42.8,1810.8 up 0.30 down, contact 0.00/0.72, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.550: left -10.2,1864.2 up 0.01 down, right -40.7,1811.6 up 0.47 down, contact 0.00/0.72, mover -20.0,1818.2 0 cm/s
+traceRoot 22.550: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.566: left -8.3,1865.4 up -0.01 down, right -42.8,1810.8 up 0.10 down, contact 0.00/0.06, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.566: left -10.2,1864.2 up 0.00 down, right -40.7,1811.6 up 0.24 down, contact 0.00/0.06, mover -20.0,1818.2 0 cm/s
+traceRoot 22.566: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.583: left -8.3,1865.4 up -0.00 down, right -42.9,1810.9 up -0.07 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.583: left -10.2,1864.2 up 0.01 down, right -40.7,1811.6 up 0.04 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 22.583: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.600: left -8.3,1865.4 up 0.01 down, right -42.9,1810.9 up -0.15 down, contact 0.18/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.600: left -10.2,1864.2 up 0.03 down, right -40.7,1811.6 up -0.07 down, contact 0.18/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 22.600: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.616: left -8.0,1864.7 up 0.01 down, right -43.0,1811.0 up -0.18 down, contact 1.68/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.616: left -9.9,1863.5 up 0.04 down, right -40.7,1811.6 up -0.15 down, contact 1.68/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 22.616: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.633: left -7.5,1863.6 up 0.06 down, right -43.0,1811.0 up -0.15 down, contact 17.38/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.633: left -9.5,1862.5 up 0.11 down, right -40.7,1811.6 up -0.13 down, contact 17.38/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 22.633: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.650: left -7.0,1862.5 up 0.11 down, right -43.0,1811.0 up -0.09 down, contact 63.78/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.650: left -9.0,1861.3 up 0.20 down, right -40.7,1811.6 up -0.08 down, contact 63.78/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 22.650: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.666: left -6.4,1861.1 up 0.19 down, right -43.0,1811.0 up -0.07 down, contact 92.77/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.666: left -8.4,1860.0 up 0.30 down, right -40.7,1811.6 up -0.06 down, contact 92.77/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 22.666: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.683: left -5.8,1859.5 up 0.28 down, right -43.0,1811.0 up -0.07 down, contact 99.28/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.683: left -7.7,1858.5 up 0.42 down, right -40.7,1811.6 up -0.06 down, contact 99.28/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 22.683: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.700: left -5.1,1857.9 up 0.39 down, right -43.0,1811.0 up -0.07 down, contact 99.94/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.700: left -7.1,1856.9 up 0.55 down, right -40.7,1811.6 up -0.06 down, contact 99.94/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 22.700: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.716: left -4.4,1856.2 up 0.51 down, right -43.0,1811.0 up -0.07 down, contact 100.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.716: left -6.4,1855.2 up 0.68 down, right -40.7,1811.6 up -0.06 down, contact 100.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 22.716: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.733: left -3.7,1854.5 up 0.62 down, right -43.0,1811.0 up -0.06 down, contact 99.82/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.733: left -5.7,1853.6 up 0.80 down, right -40.7,1811.6 up -0.07 down, contact 99.82/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 22.733: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.750: left -3.0,1852.9 up 0.72 down, right -43.0,1811.0 up -0.06 down, contact 98.32/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.750: left -5.0,1852.0 up 0.92 down, right -40.7,1811.6 up -0.07 down, contact 98.32/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 22.750: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+22.77 s, stretch 7, 0 cm/s, root 1818.4 cm off, - mannequin balls 2.0/1.0, worn 0.0/-1.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,1818
+traceAt his 22.766: left -2.5,1851.5 up 0.77 down, right -43.0,1811.0 up -0.06 down, contact 82.62/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.766: left -4.4,1850.6 up 0.97 down, right -40.7,1811.6 up -0.07 down, contact 82.62/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 22.766: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+22.77 s, stretch 7, stop, the mannequin's left foot, slid 15.23 cm
+traceAt his 22.783: left -1.9,1850.1 up 0.81 down, right -43.0,1811.0 up -0.06 down, contact 36.22/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.783: left -3.9,1849.2 up 1.01, right -40.7,1811.6 up -0.07 down, contact 36.22/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 22.783: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.800: left -1.5,1849.0 up 0.76 down, right -43.0,1811.0 up -0.05 down, contact 7.23/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.800: left -3.5,1848.1 up 0.96, right -40.7,1811.6 up -0.06 down, contact 7.23/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 22.800: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.816: left -1.5,1849.1 up 0.69 down, right -43.0,1811.0 up -0.05 down, contact 0.72/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.816: left -3.5,1848.1 up 0.88, right -40.7,1811.6 up -0.06 down, contact 0.72/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 22.816: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.833: left -1.5,1849.1 up 0.54 down, right -43.0,1811.0 up -0.04 down, contact 0.06/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.833: left -3.5,1848.1 up 0.72 down, right -40.7,1811.6 up -0.06 down, contact 0.06/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 22.833: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.850: left -1.5,1849.2 up 0.39 down, right -43.0,1811.0 up -0.03 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.850: left -3.5,1848.1 up 0.54 down, right -40.7,1811.6 up -0.06 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 22.850: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.866: left -1.5,1849.2 up 0.19 down, right -43.0,1811.0 up -0.03 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.866: left -3.5,1848.1 up 0.31 down, right -40.7,1811.6 up -0.06 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 22.866: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.883: left -1.6,1849.3 up 0.02 down, right -43.0,1811.0 up -0.02 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.883: left -3.5,1848.1 up 0.08 down, right -40.7,1811.6 up -0.06 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 22.883: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.900: left -1.6,1849.3 up -0.04 down, right -43.0,1811.0 up -0.01 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.900: left -3.5,1848.1 up -0.01 down, right -40.7,1811.6 up -0.06 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 22.900: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.916: left -1.6,1849.4 up -0.06 down, right -43.0,1811.0 up -0.00 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.916: left -3.5,1848.1 up -0.04 down, right -40.7,1811.6 up -0.06 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 22.916: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.933: left -1.6,1849.4 up -0.06 down, right -43.0,1811.0 up 0.01 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.933: left -3.5,1848.1 up -0.05 down, right -40.7,1811.6 up -0.06 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 22.933: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.950: left -1.6,1849.4 up -0.05 down, right -43.0,1811.0 up 0.02 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.950: left -3.5,1848.1 up -0.04 down, right -40.7,1811.6 up -0.06 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 22.950: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.966: left -1.6,1849.4 up -0.05 down, right -43.0,1811.0 up 0.02 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.966: left -3.5,1848.1 up -0.04 down, right -40.7,1811.6 up -0.06 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 22.966: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 22.983: left -1.6,1849.4 up -0.05 down, right -43.0,1811.0 up 0.03 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 22.983: left -3.5,1848.1 up -0.04 down, right -40.7,1811.6 up -0.06 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 22.983: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 23.000: left -1.6,1849.4 up -0.05 down, right -43.0,1811.0 up 0.04 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 23.000: left -3.5,1848.1 up -0.04 down, right -40.7,1811.6 up -0.05 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 23.000: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+23.02 s, stretch 7, 0 cm/s, root 1818.4 cm off, - mannequin balls 1.0/1.0, worn -0.7/-1.0, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,1818
+traceAt his 23.016: left -1.6,1849.4 up -0.05 down, right -43.0,1811.0 up 0.05 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 23.016: left -3.5,1848.1 up -0.03 down, right -40.7,1811.6 up -0.05 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 23.016: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 23.033: left -1.6,1849.4 up -0.04 down, right -43.0,1811.0 up 0.05 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 23.033: left -3.5,1848.1 up -0.03 down, right -40.7,1811.6 up -0.05 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 23.033: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 23.050: left -1.6,1849.4 up -0.04 down, right -43.0,1811.0 up 0.05 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 23.050: left -3.5,1848.1 up -0.02 down, right -40.7,1811.6 up -0.05 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 23.050: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 23.066: left -1.6,1849.4 up -0.05 down, right -43.0,1811.0 up 0.06 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 23.066: left -3.5,1848.1 up -0.02 down, right -40.7,1811.6 up -0.05 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 23.066: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 23.083: left -1.6,1849.4 up -0.07 down, right -43.0,1811.0 up 0.06 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 23.083: left -3.5,1848.1 up -0.02 down, right -40.7,1811.6 up -0.05 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 23.083: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 23.100: left -1.6,1849.4 up -0.06 down, right -43.0,1811.0 up 0.06 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 23.100: left -3.5,1848.1 up -0.01 down, right -40.7,1811.6 up -0.05 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 23.100: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 23.116: left -1.6,1849.4 up -0.05 down, right -43.0,1811.0 up 0.07 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 23.116: left -3.5,1848.1 up -0.01 down, right -40.7,1811.6 up -0.05 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 23.116: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 23.133: left -1.6,1849.4 up -0.05 down, right -43.0,1811.0 up 0.07 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 23.133: left -3.5,1848.1 up -0.01 down, right -40.7,1811.6 up -0.05 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 23.133: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 23.150: left -1.6,1849.4 up -0.05 down, right -43.0,1811.0 up 0.07 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 23.150: left -3.5,1848.1 up -0.01 down, right -40.7,1811.6 up -0.05 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 23.150: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 23.166: left -1.6,1849.4 up -0.04 down, right -43.0,1811.0 up 0.07 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 23.166: left -3.5,1848.1 up -0.01 down, right -40.7,1811.6 up -0.05 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 23.166: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 23.183: left -1.6,1849.4 up -0.04 down, right -43.0,1811.0 up 0.08 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 23.183: left -3.5,1848.1 up -0.01 down, right -40.7,1811.6 up -0.05 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 23.183: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 23.200: left -1.6,1849.4 up -0.04 down, right -43.0,1811.0 up 0.08 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 23.200: left -3.5,1848.1 up -0.01 down, right -40.7,1811.6 up -0.04 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 23.200: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+23.27 s, stretch 7, 0 cm/s, root 1818.4 cm off, - mannequin balls 1.0/1.0, worn -0.7/-0.9, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,1818
+23.52 s, stretch 7, 0 cm/s, root 1818.4 cm off, - mannequin balls 1.0/1.0, worn -0.7/-0.9, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,1818
+23.77 s, stretch 7, 0 cm/s, root 1818.4 cm off, - mannequin balls 1.0/1.0, worn -0.7/-0.8, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,1818
+24.02 s, stretch 7, 0 cm/s, root 1818.4 cm off, - mannequin balls 1.1/1.1, worn -0.7/-0.8, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,1818
+24.27 s, stretch 7, 0 cm/s, root 1818.4 cm off, - mannequin balls 1.1/1.1, worn -0.6/-0.8, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,1818
+traceAt his 24.416: left -1.6,1849.4 up 0.04 down, right -43.0,1811.1 up 0.22 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 24.416: left -3.5,1848.1 up 0.05 down, right -40.7,1811.6 up 0.05 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 24.416: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 24.433: left -1.6,1849.4 up 0.04 down, right -43.0,1811.1 up 0.23 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 24.433: left -3.5,1848.1 up 0.06 down, right -40.7,1811.6 up 0.05 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 24.433: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 24.450: left -1.6,1849.4 up 0.05 down, right -43.0,1811.0 up 0.23 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 24.450: left -3.5,1848.1 up 0.06 down, right -40.7,1811.6 up 0.06 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 24.450: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 24.466: left -1.6,1849.4 up 0.05 down, right -43.0,1811.0 up 0.23 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 24.466: left -3.5,1848.1 up 0.06 down, right -40.7,1811.6 up 0.06 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 24.466: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 24.483: left -1.6,1849.4 up 0.04 down, right -43.0,1811.0 up 0.23 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 24.483: left -3.5,1848.1 up 0.06 down, right -40.7,1811.6 up 0.06 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 24.483: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 24.500: left -1.6,1849.4 up 0.05 down, right -43.0,1811.0 up 0.23 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 24.500: left -3.5,1848.1 up 0.06 down, right -40.7,1811.6 up 0.06 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 24.500: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+24.52 s, stretch 7, 0 cm/s, root 1818.4 cm off, - mannequin balls 1.1/1.1, worn -0.6/-0.8, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,1818
+traceAt his 24.516: left -1.6,1849.4 up 0.05 down, right -43.0,1811.0 up 0.23 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 24.516: left -3.5,1848.1 up 0.06 down, right -40.7,1811.6 up 0.06 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 24.516: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 24.533: left -1.6,1849.4 up 0.05 down, right -43.0,1811.0 up 0.23 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 24.533: left -3.5,1848.1 up 0.06 down, right -40.7,1811.6 up 0.06 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 24.533: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 24.550: left -1.6,1849.4 up 0.04 down, right -43.0,1811.0 up 0.23 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 24.550: left -3.5,1848.1 up 0.05 down, right -40.7,1811.6 up 0.06 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 24.550: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 24.566: left -1.6,1849.4 up 0.05 down, right -43.0,1811.0 up 0.23 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 24.566: left -3.5,1848.1 up 0.06 down, right -40.7,1811.6 up 0.06 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 24.566: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 24.583: left -1.6,1849.4 up 0.05 down, right -43.0,1811.0 up 0.23 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 24.583: left -3.5,1848.1 up 0.06 down, right -40.7,1811.6 up 0.06 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 24.583: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 24.600: left -1.6,1849.4 up 0.05 down, right -43.0,1811.0 up 0.23 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceAt mannequin 24.600: left -3.5,1848.1 up 0.06 down, right -40.7,1811.6 up 0.06 down, contact 0.00/0.00, mover -20.0,1818.2 0 cm/s
+traceRoot 24.600: root -20.0,1818.2, capsule -20.0,1818.2, off 0.0 cm
+traceAt his 24.616: left -1.6,1849.4 up 0.06 down, right -43.0,1811.0 up 0.21 down, contact 0.73/0.00, mover -20.0,1818.0 13 cm/s
+traceAt mannequin 24.616: left -3.5,1848.1 up 0.08 down, right -40.7,1811.6 up 0.06 down, contact 0.73/0.00, mover -20.0,1818.0 13 cm/s
+traceRoot 24.616: root -20.0,1818.0, capsule -20.0,1818.0, off 0.0 cm
+traceAt his 24.633: left -2.2,1849.3 up 0.11 down, right -43.0,1811.0 up 0.21 down, contact 2.80/0.01, mover -20.0,1817.6 27 cm/s
+traceAt mannequin 24.633: left -4.1,1848.0 up 0.15 down, right -40.7,1811.6 up 0.06 down, contact 2.80/0.01, mover -20.0,1817.6 27 cm/s
+traceRoot 24.633: root -20.0,1817.6, capsule -20.0,1817.6, off 0.0 cm
+traceAt his 24.650: left -3.3,1849.0 up 0.16 down, right -43.0,1810.9 up 0.19 down, contact 6.08/0.10, mover -20.0,1816.9 40 cm/s
+traceAt mannequin 24.650: left -5.1,1847.7 up 0.22 down, right -40.7,1811.6 up 0.06 down, contact 6.08/0.10, mover -20.0,1816.9 40 cm/s
+traceRoot 24.650: root -20.0,1816.9, capsule -20.0,1816.9, off 0.0 cm
+traceAt his 24.666: left -4.2,1848.3 up 0.16 down, right -42.8,1809.6 up 0.17 down, contact 10.40/1.67, mover -20.0,1816.0 53 cm/s
+traceAt mannequin 24.666: left -6.0,1847.0 up 0.26 down, right -40.6,1810.4 up 0.06 down, contact 10.40/1.67, mover -20.0,1816.0 53 cm/s
+traceRoot 24.666: root -20.0,1816.0, capsule -20.0,1816.0, off 0.0 cm
+traceAt his 24.683: left -5.1,1847.2 up 0.09 down, right -42.6,1808.4 up 0.20 down, contact 15.60/8.73, mover -20.0,1814.9 67 cm/s
+traceAt mannequin 24.683: left -6.9,1845.9 up 0.24 down, right -40.4,1809.3 up 0.14 down, contact 15.60/8.73, mover -20.0,1814.9 67 cm/s
+traceRoot 24.683: root -20.0,1814.9, capsule -20.0,1814.9, off 0.0 cm
+traceAt his 24.700: left -5.8,1845.6 up -0.08 down, right -42.4,1807.5 up 0.34 down, contact 21.32/19.17, mover -20.0,1813.6 80 cm/s
+traceAt mannequin 24.700: left -7.6,1844.4 up 0.10 down, right -40.3,1808.4 up 0.34 down, contact 21.32/19.17, mover -20.0,1813.6 80 cm/s
+traceRoot 24.700: root -20.0,1813.6, capsule -20.0,1813.6, off 0.0 cm
+traceAt his 24.716: left -6.4,1843.8 up -0.29 down, right -42.0,1806.9 up 0.61 down, contact 24.81/27.83, mover -20.0,1812.0 93 cm/s
+traceAt mannequin 24.716: left -8.1,1842.6 up -0.09 down, right -39.9,1807.8 up 0.69 down, contact 24.81/27.83, mover -20.0,1812.0 93 cm/s
+traceRoot 24.716: root -20.0,1812.0, capsule -20.0,1812.0, off 0.0 cm
+traceAt his 24.733: left -6.7,1841.9 up -0.53 down, right -41.4,1806.8 up 1.06 down, contact 18.86/35.15, mover -20.0,1810.2 107 cm/s
+24.73 s, stretch 8, stop, his right foot, slid 4.54 cm
+traceAt mannequin 24.733: left -8.4,1840.6 up -0.33 down, right -39.4,1807.7 up 1.22 down, contact 18.86/35.15, mover -20.0,1810.2 107 cm/s
+traceRoot 24.733: root -20.0,1810.2, capsule -20.0,1810.2, off 0.0 cm
+24.73 s, stretch 8, stop, the mannequin's right foot, slid 3.86 cm
+traceAt his 24.750: left -6.6,1840.0 up -0.74 down, right -40.7,1806.8 up 1.66, contact 6.33/42.53, mover -20.0,1808.2 120 cm/s
+traceAt mannequin 24.750: left -8.4,1838.7 up -0.54 down, right -38.7,1807.7 up 1.87, contact 6.33/42.53, mover -20.0,1808.2 120 cm/s
+traceRoot 24.750: root -20.0,1808.2, capsule -20.0,1808.2, off 0.0 cm
+24.77 s, stretch 8, 107 cm/s, root 1808.4 cm off, - mannequin balls 0.5/2.9, worn -1.4/0.6, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 500, mode 1, at -20,1808
+traceAt his 24.766: left -6.7,1840.1 up -0.77 down, right -39.5,1806.5 up 2.37, contact 0.76/50.00, mover -20.0,1806.0 133 cm/s
+traceAt mannequin 24.766: left -8.4,1838.7 up -0.59 down, right -37.6,1807.5 up 2.62, contact 0.76/50.00, mover -20.0,1806.0 133 cm/s
+traceRoot 24.766: root -20.0,1806.0, capsule -20.0,1806.0, off 0.0 cm
+traceAt his 24.783: left -6.7,1840.1 up -0.81 down, right -38.2,1806.0 up 3.21, contact 0.10/57.48, mover -20.0,1803.6 147 cm/s
+traceAt mannequin 24.783: left -8.4,1838.7 up -0.66 down, right -36.3,1806.9 up 3.48, contact 0.10/57.48, mover -20.0,1803.6 147 cm/s
+traceRoot 24.783: root -20.0,1803.6, capsule -20.0,1803.6, off 0.0 cm
+traceAt his 24.800: left -6.7,1840.1 up -0.92 down, right -36.2,1803.9 up 4.15, contact 0.00/64.80, mover -20.0,1800.9 160 cm/s
+traceAt mannequin 24.800: left -8.4,1838.7 up -0.78 down, right -34.4,1804.9 up 4.41, contact 0.00/64.80, mover -20.0,1800.9 160 cm/s
+traceRoot 24.800: root -20.0,1800.9, capsule -20.0,1800.9, off 0.0 cm
+traceAt his 24.816: left -6.6,1840.1 up -1.01 down, right -34.0,1801.0 up 5.21, contact 0.00/71.82, mover -20.0,1798.0 173 cm/s
+traceAt mannequin 24.816: left -8.4,1838.7 up -0.89 down, right -32.2,1802.1 up 5.43, contact 0.00/71.82, mover -20.0,1798.0 173 cm/s
+traceRoot 24.816: root -20.0,1798.0, capsule -20.0,1798.0, off 0.0 cm
+traceAt his 24.833: left -6.6,1840.0 up -1.09 down, right -31.5,1795.8 up 6.42, contact 0.00/78.40, mover -20.0,1794.9 187 cm/s
+traceAt mannequin 24.833: left -8.4,1838.7 up -0.97 down, right -29.6,1797.0 up 6.56, contact 0.00/78.40, mover -20.0,1794.9 187 cm/s
+traceRoot 24.833: root -20.0,1794.9, capsule -20.0,1794.9, off 0.0 cm
+traceAt his 24.850: left -6.5,1840.0 up -1.16 down, right -28.5,1789.9 up 7.76, contact 0.00/84.38, mover -20.0,1791.6 200 cm/s
+traceAt mannequin 24.850: left -8.4,1838.7 up -1.04 down, right -26.6,1791.3 up 7.80, contact 0.00/84.38, mover -20.0,1791.6 200 cm/s
+traceRoot 24.850: root -20.0,1791.6, capsule -20.0,1791.6, off 0.0 cm
+traceAt his 24.866: left -6.5,1839.9 up -1.21 down, right -25.4,1782.4 up 9.02, contact 0.02/89.60, mover -20.0,1788.0 213 cm/s
+traceAt mannequin 24.866: left -8.4,1838.7 up -1.08 down, right -23.6,1784.0 up 8.94, contact 0.02/89.60, mover -20.0,1788.0 213 cm/s
+traceRoot 24.866: root -20.0,1788.0, capsule -20.0,1788.0, off 0.0 cm
+traceAt his 24.883: left -6.5,1839.9 up -1.24 down, right -21.6,1774.7 up 10.34, contact 0.32/93.93, mover -20.0,1784.2 227 cm/s
+traceAt mannequin 24.883: left -8.4,1838.7 up -1.11 down, right -19.9,1776.6 up 10.13, contact 0.32/93.93, mover -20.0,1784.2 227 cm/s
+traceRoot 24.883: root -20.0,1784.2, capsule -20.0,1784.2, off 0.0 cm
+traceAt his 24.900: left -5.0,1839.4 up -1.21 down, right -17.9,1768.0 up 10.46, contact 2.71/97.20, mover -20.0,1780.2 240 cm/s
+traceAt mannequin 24.900: left -6.9,1838.3 up -1.07 down, right -16.5,1770.1 up 10.22, contact 2.71/97.20, mover -20.0,1780.2 240 cm/s
+traceRoot 24.900: root -20.0,1780.2, capsule -20.0,1780.2, off 0.0 cm
+traceAt his 24.916: left -4.2,1839.1 up -1.17 down, right -13.7,1761.4 up 10.46, contact 22.23/99.28, mover -20.0,1776.0 253 cm/s
+traceAt mannequin 24.916: left -6.1,1838.0 up -1.01 down, right -12.7,1763.8 up 10.17, contact 22.23/99.28, mover -20.0,1776.0 253 cm/s
+traceRoot 24.916: root -20.0,1776.0, capsule -20.0,1776.0, off 0.0 cm
+traceAt his 24.933: left -3.0,1838.4 up -0.67 down, right -10.4,1757.8 up 8.45, contact 76.45/100.00, mover -20.0,1771.6 267 cm/s
+traceAt mannequin 24.933: left -5.0,1837.3 up -0.61 down, right -9.9,1760.3 up 8.25, contact 76.45/100.00, mover -20.0,1771.6 267 cm/s
+traceRoot 24.933: root -20.0,1771.6, capsule -20.0,1771.6, off 0.0 cm
+traceAt his 24.950: left -2.5,1837.7 up 0.28 down, right -7.3,1754.5 up 6.29, contact 97.45/99.77, mover -20.0,1766.9 280 cm/s
+traceAt mannequin 24.950: left -4.6,1836.5 up 0.30 down, right -7.3,1757.0 up 6.17, contact 97.45/99.77, mover -20.0,1766.9 280 cm/s
+traceRoot 24.950: root -20.0,1766.9, capsule -20.0,1766.9, off 0.0 cm
+traceAt his 24.966: left -3.6,1835.0 up 1.42 down, right -6.0,1753.9 up 3.12, contact 99.70/97.91, mover -20.0,1762.0 293 cm/s
+traceAt mannequin 24.966: left -5.7,1833.1 up 1.03 down, right -6.5,1756.2 up 3.08, contact 99.70/97.91, mover -20.0,1762.0 293 cm/s
+traceRoot 24.966: root -20.0,1762.0, capsule -20.0,1762.0, off 0.0 cm
+traceAt his 24.983: left -4.9,1833.1 up 2.02 down, right -5.4,1753.2 up -0.14, contact 99.99/78.17, mover -20.0,1756.9 307 cm/s
+24.98 s, stretch 8, stop, his left foot, slid 32.80 cm
+traceAt mannequin 24.983: left -6.8,1830.0 up 2.22 down, right -6.2,1755.2 up -0.00, contact 99.99/78.17, mover -20.0,1756.9 307 cm/s
+traceRoot 24.983: root -20.0,1756.9, capsule -20.0,1756.9, off 0.0 cm
+24.98 s, stretch 8, stop, the mannequin's left foot, slid 15.16 cm
+traceAt his 25.000: left -6.7,1824.0 up 4.09, right -4.2,1753.7 up -0.43 down, contact 100.00/24.74, mover -20.0,1751.6 320 cm/s
+traceAt mannequin 25.000: left -8.0,1821.3 up 3.19, right -5.3,1755.6 up -0.27 down, contact 100.00/24.74, mover -20.0,1751.6 320 cm/s
+traceRoot 25.000: root -20.0,1751.6, capsule -20.0,1751.6, off 0.0 cm
+25.02 s, stretch 8, 307 cm/s, root 1751.7 cm off, - mannequin balls 4.2/0.8, worn 3.4/-1.4, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 500, mode 1, at -20,1752
+traceAt his 25.016: left -7.4,1815.4 up 5.67, right -3.8,1754.3 up -0.47 down, contact 100.00/2.90, mover -20.0,1746.0 333 cm/s
+traceAt mannequin 25.016: left -8.0,1812.7 up 4.42, right -5.3,1756.1 up -0.41 down, contact 100.00/2.90, mover -20.0,1746.0 333 cm/s
+traceRoot 25.016: root -20.0,1746.0, capsule -20.0,1746.0, off 0.0 cm
+traceAt his 25.033: left -9.0,1804.5 up 6.85, right -3.9,1754.5 up -0.76 down, contact 100.00/0.32, mover -20.0,1740.2 347 cm/s
+traceAt mannequin 25.033: left -9.4,1801.7 up 5.93, right -5.3,1756.1 up -0.52 down, contact 100.00/0.32, mover -20.0,1740.2 347 cm/s
+traceRoot 25.033: root -20.0,1740.2, capsule -20.0,1740.2, off 0.0 cm
+traceAt his 25.050: left -9.4,1793.4 up 8.70, right -4.0,1754.6 up -0.92 down, contact 100.00/0.01, mover -20.0,1734.2 360 cm/s
+traceAt mannequin 25.050: left -9.6,1790.7 up 8.13, right -5.3,1756.0 up -0.51 down, contact 100.00/0.01, mover -20.0,1734.2 360 cm/s
+traceRoot 25.050: root -20.0,1734.2, capsule -20.0,1734.2, off 0.0 cm
+traceAt his 25.066: left -13.9,1781.6 up 9.69, right -4.1,1754.7 up -1.03 down, contact 100.00/0.00, mover -20.0,1728.0 373 cm/s
+traceAt mannequin 25.066: left -13.9,1779.0 up 9.31, right -5.3,1756.0 up -0.52 down, contact 100.00/0.00, mover -20.0,1728.0 373 cm/s
+traceRoot 25.066: root -20.0,1728.0, capsule -20.0,1728.0, off 0.0 cm
+traceAt his 25.083: left -17.7,1769.0 up 10.72, right -4.2,1754.8 up -1.06 down, contact 100.00/0.00, mover -20.0,1721.6 387 cm/s
+traceAt mannequin 25.083: left -17.6,1766.6 up 10.52, right -5.3,1756.0 up -0.45 down, contact 100.00/0.00, mover -20.0,1721.6 387 cm/s
+traceRoot 25.083: root -20.0,1721.6, capsule -20.0,1721.6, off 0.0 cm
+traceAt his 25.100: left -23.2,1754.4 up 9.72, right -4.2,1754.9 up -1.05 down, contact 100.00/0.22, mover -20.0,1714.9 400 cm/s
+traceAt mannequin 25.100: left -22.8,1752.2 up 9.80, right -5.3,1756.0 up -0.41 down, contact 100.00/0.22, mover -20.0,1714.9 400 cm/s
+traceRoot 25.100: root -20.0,1714.9, capsule -20.0,1714.9, off 0.0 cm
+25.18 s, stretch 8, run, his right foot, slid 2.68 cm
+25.18 s, stretch 8, run, the mannequin's right foot, slid 1.62 cm
+25.27 s, stretch 8, 500 cm/s, root 1645.5 cm off, - mannequin balls 0.0/23.6, worn -1.9/22.4, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 500, mode 1, at -20,1645
+25.37 s, stretch 8, run, his left foot, slid 4.70 cm
+25.37 s, stretch 8, run, the mannequin's left foot, slid 4.78 cm
+25.52 s, stretch 8, 500 cm/s, root 1520.5 cm off, - mannequin balls 50.1/0.7, worn 50.8/-1.5, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 500, mode 1, at -20,1520
+25.65 s, stretch 8, run, his right foot, slid 0.93 cm
+25.65 s, stretch 8, run, the mannequin's right foot, slid 2.26 cm
+25.77 s, stretch 8, 500 cm/s, root 1395.5 cm off, - mannequin balls 1.4/39.1, worn -0.7/39.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 500, mode 1, at -20,1395
+25.90 s, stretch 8, run, his left foot, slid 2.00 cm
+25.90 s, stretch 8, run, the mannequin's left foot, slid 3.52 cm
+26.02 s, stretch 8, 500 cm/s, root 1270.5 cm off, - mannequin balls 45.8/11.0, worn 46.3/9.2, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 500, mode 1, at -20,1270
+26.20 s, stretch 8, run, his right foot, slid 1.22 cm
+26.20 s, stretch 8, run, the mannequin's right foot, slid 1.29 cm
+26.27 s, stretch 8, 500 cm/s, root 1145.5 cm off, - mannequin balls 10.5/23.4, worn 8.5/21.9, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 500, mode 1, at -20,1145
+26.52 s, stretch 8, 500 cm/s, root 1020.6 cm off, - mannequin balls 1.5/22.9, worn -0.4/21.2, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 500, mode 1, at -20,1020
+26.53 s, stretch 8, run, his left foot, slid 1.01 cm
+26.53 s, stretch 8, run, the mannequin's left foot, slid 2.12 cm
+26.77 s, stretch 8, 500 cm/s, root 895.6 cm off, - mannequin balls 44.9/0.1, worn 44.9/-2.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 500, mode 1, at -20,895
+26.83 s, stretch 8, run, his right foot, slid 0.77 cm
+26.83 s, stretch 8, run, the mannequin's right foot, slid 0.93 cm
+27.02 s, stretch 8, 500 cm/s, root 770.6 cm off, - mannequin balls 0.1/53.7, worn -1.8/54.5, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 500, mode 1, at -20,770
+27.15 s, stretch 9, run, his left foot, slid 0.84 cm
+27.15 s, stretch 9, run, the mannequin's left foot, slid 2.72 cm
+27.27 s, stretch 9, 267 cm/s, root 665.7 cm off, - mannequin balls 22.3/13.5, worn 21.6/11.7, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,665
+27.52 s, stretch 9, 0 cm/s, root 654.0 cm off, - mannequin balls 8.8/0.8, worn 6.8/-1.5, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,654
+27.77 s, stretch 9, 0 cm/s, root 654.0 cm off, - mannequin balls 2.1/0.7, worn -0.1/-1.5, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,654
+27.93 s, stretch 9, stop, his right foot, slid 2.93 cm
+27.93 s, stretch 9, stop, the mannequin's right foot, slid 3.19 cm
+28.02 s, stretch 9, 0 cm/s, root 654.0 cm off, - mannequin balls 0.9/2.8, worn -1.0/0.5, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,654
+28.27 s, stretch 9, 0 cm/s, root 654.0 cm off, - mannequin balls 1.0/2.3, worn -0.8/0.2, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,654
+28.52 s, stretch 9, 0 cm/s, root 654.0 cm off, - mannequin balls 1.1/1.0, worn -0.7/-1.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,654
+28.77 s, stretch 9, 0 cm/s, root 654.0 cm off, - mannequin balls 1.6/1.0, worn -0.3/-1.0, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,654
+29.02 s, stretch 9, 0 cm/s, root 654.0 cm off, - mannequin balls 1.3/1.1, worn -0.5/-0.9, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,654
+29.27 s, stretch 9, 0 cm/s, root 654.0 cm off, - mannequin balls 1.1/1.1, worn -0.7/-0.8, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,654
+29.52 s, stretch 9, 0 cm/s, root 654.0 cm off, - mannequin balls 1.1/1.1, worn -0.6/-0.9, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,654
