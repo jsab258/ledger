@@ -1,0 +1,18 @@
+keys M_Neutral_Walk_Stop_F_Lfoot contact_l: 180 keys, times 0.00..2.98, values 0.0..1.0
+keys M_Neutral_Walk_Stop_F_Lfoot contact_r: 180 keys, times 0.00..2.98, values 0.0..1.0
+== M_Neutral_Walk_Stop_F_Lfoot length 2.97 s, frames 179, root travel 268.3 cm
+   ball_l flat on the ground (within 1 cm of lowest): worst travel 6.7 cm 1.38-1.83 s
+   ball_l marked planted: worst travel 197.6 cm 0.00-0.57 s
+   ball_l low, marked moving: worst travel 0.8 cm 1.97-2.33 s
+   ball_r flat on the ground (within 1 cm of lowest): worst travel 2.0 cm 0.07-0.52 s
+   ball_r marked planted: worst travel 200.3 cm 0.45-1.08 s
+   ball_r low, marked moving: worst travel 1.1 cm 1.10-1.40 s
+keys M_Neutral_Walk_Stop_F_Rfoot contact_l: 198 keys, times 0.00..3.28, values 0.0..1.0
+keys M_Neutral_Walk_Stop_F_Rfoot contact_r: 198 keys, times 0.00..3.28, values 0.0..1.0
+== M_Neutral_Walk_Stop_F_Rfoot length 3.27 s, frames 196, root travel 278.4 cm
+   ball_l flat on the ground (within 1 cm of lowest): worst travel 9.7 cm 1.03-1.45 s
+   ball_l marked planted: worst travel 198.6 cm 0.45-1.07 s
+   ball_l low, marked moving: worst travel 3.2 cm 1.75-3.25 s
+   ball_r flat on the ground (within 1 cm of lowest): worst travel 1.8 cm 0.53-1.00 s
+   ball_r marked planted: worst travel 198.4 cm 0.00-0.55 s
+   ball_r low, marked moving: worst travel 0.5 cm 2.48-2.87 s

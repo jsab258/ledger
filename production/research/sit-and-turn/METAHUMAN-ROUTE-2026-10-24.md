@@ -139,7 +139,14 @@ The walk itself is unchanged. These are readings and pictures.
 
 ## Next directions (for the next go; the slide stays set aside under his rule)
 
-- **D, now first: measure the clips themselves.** Read the foot travel while low and marked moving in the stop clip `M_Neutral_Walk_Stop_F_Lfoot` and in the pivot and turn clips the trace names, offline from the assets. Find which clips carry the slides. Then choose among:
+- **D, begun (11:54): the stop clips measured from their assets** (`runs/clip-feet-stop-clips.txt`, script `runs/clip_feet.py`; the clip's own frame, root motion included):
+  - In `M_Neutral_Walk_Stop_F_Lfoot` the left ball travels 6.7 cm while flat on the ground (within 1 cm of its lowest, 1.38 to 1.83 s).
+  - In `M_Neutral_Walk_Stop_F_Rfoot` it travels 9.7 cm (1.03 to 1.45 s).
+  - The other feet travel 2 cm or less.
+  - So the stop's glide is already in Epic's animation data. In the street, where the capsule does not move exactly as the clip's root does, it showed as 13 cm.
+  - (The asset's contact curves run 0 to 1; the game's graph remaps them, to 0 and 100. The asset reading here is by height alone.)
+  - Still to measure: the pivot and turn clips.
+- **D, next: measure the remaining clips themselves.** Read the foot travel while low and marked moving in the stop clip `M_Neutral_Walk_Stop_F_Lfoot` and in the pivot and turn clips the trace names, offline from the assets. Find which clips carry the slides. Then choose among:
   - a lock that holds a foot while it is low and slow, not only while marked planted (the field's contact test; the leg takes up the difference);
   - leaving the sliding clips out of the motion-matching sets;
   - a world-space lock on Tom's body (A).
