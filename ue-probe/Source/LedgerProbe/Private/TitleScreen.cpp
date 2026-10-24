@@ -673,6 +673,11 @@ EChoice Tick(UWorld* World, bool bStreetReady)
 		if ((GQuietSince >= 0.0 && Now - GQuietSince >= kQuietFor) || bWaitedEnough)
 		{
 			bReady = true;
+			// THE STREET'S SETTING-UP GARBAGE COLLECTED HERE, behind the title (24 October, frame headroom): left to the engine's
+			// periodic collection about a minute after loading, its release cost the render-submission thread 28 to 43 ms in
+			// one frame of half the packaged walks (none with the collection pushed back, production/research/frame-headroom/
+			// FINDINGS-2026-10-23.md). A full collection now, while the player is still on the title.
+			if (GEngine != nullptr) { GEngine->ForceGarbageCollection(true); }
 			UE_LOG(LogTemp, Log, TEXT("LedgerTitle: ready after %.1f s; at most %d shader pipelines were being prepared at once%s"),
 				Now - GShownAt, GMostPending, bWaitedEnough && Pending > 0 ? TEXT(" (let in after two minutes with some still going)") : TEXT(""));
 		}
