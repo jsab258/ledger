@@ -170,6 +170,7 @@ private:
 	TObjectPtr<UClass> WornAnimClass;
 	bool StartGaspMover(USkeletalMeshComponent* M);
 	void GaspTick();
+	float GaspLastIn = 0.0f;
 	// One step's sound from foot F (0 left, 1 right); false when too soon after the last.
 	bool SoundStep(int32 F, bool bRun, float Speed, const TCHAR* From, float T);
 

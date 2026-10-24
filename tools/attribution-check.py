@@ -70,6 +70,12 @@ WATCHED = {
     "ue-probe/Content/Blueprints": "Game Animation Sample",
     "ue-probe/Content/Characters": "Game Animation Sample",
     "ue-probe/Content/Misc": "Game Animation Sample",
+    # and 24 October 2026 (his order: the walk by Epic's MetaHuman route): the rest of what the sample's own
+    # character needs, copied the same way (its input actions, the level pieces its traversal references,
+    # and Epic's MetaHuman retargeters and rigs the sample ships under MetaHumans/Common)
+    "ue-probe/Content/Input": "Game Animation Sample",
+    "ue-probe/Content/Levels": "Game Animation Sample",
+    "ue-probe/Content/MetaHumans": ("Game Animation Sample", "MetaHuman"),
     "ue-probe/Content/Ledger/Export": "MetaHuman",
     "ue-probe/Content/Ledger/Cloth": ("MakeHuman", "FreeSewing"),
     "ue-probe/Content/Ledger/Figure": "Mixamo",

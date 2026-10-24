@@ -2,6 +2,7 @@
 #include "LedgerPaper.h"
 #include "LedgerSettings.h"
 #include "HAL/PlatformMisc.h"
+#include "HAL/IConsoleManager.h"
 #include "Kismet/GameplayStatics.h"
 
 #include "LocomotionAnim.h"
@@ -445,6 +446,9 @@ bool ALedgerSliceCharacter::StartGaspMover(USkeletalMeshComponent* M)
 	AActor* Worn = Slot != nullptr ? Slot->GetChildActor() : nullptr;
 	TInlineComponentArray<USkeletalMeshComponent*> Parts;
 	if (Worn != nullptr) { Worn->GetComponents(Parts); }
+	// he is the player: his body works out its pose whether or not the camera draws it this frame (a
+	// MetaHuman's parts tick only when drawn, and the measure's side camera froze it, 24 October)
+	for (USkeletalMeshComponent* P : Parts) { P->VisibilityBasedAnimTickOption = EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones; }
 	for (USkeletalMeshComponent* P : Parts) { if (P->GetName() == TEXT("Body")) { WornBody = P; break; } }
 	if (WornBody == nullptr)
 	{
@@ -458,6 +462,12 @@ bool ALedgerSliceCharacter::StartGaspMover(USkeletalMeshComponent* M)
 	WornBody->SetAnimInstanceClass(CopyClass);
 	WornBody->AddTickPrerequisiteComponent(Mover->GetMesh());
 	Mover->GetMesh()->SetVisibility(false, false);
+	// THE WORN BODY TOUCHES NOTHING (24 October, the first measure: his outfits' bodies blocked the mover's own
+	// capsule, which walked a second and stopped while still pushed), and the hidden mannequin keeps its
+	// finest level of detail (a hidden mesh's level can go stale, and the body copies it).
+	Worn->SetActorEnableCollision(false);
+	Mover->MoveIgnoreActorAdd(Worn);
+	Mover->GetMesh()->SetForcedLOD(1);
 	GaspMover = Mover;
 	// HIS OWN BODY AND CAPSULE PUT BY: the stand-in body unseen and still, his capsule riding on the
 	// mover's (no collision of its own, no movement of its own).
@@ -467,16 +477,32 @@ bool ALedgerSliceCharacter::StartGaspMover(USkeletalMeshComponent* M)
 	GetCharacterMovement()->DisableMovement();
 	GetCharacterMovement()->SetComponentTickEnabled(false);
 	GetRootComponent()->AttachToComponent(Mover->GetRootComponent(), FAttachmentTransformRules::SnapToTargetNotIncludingScale);
-	UE_LOG(LogTemp, Log, TEXT("LedgerWalk: Epic's route: the sample's %s moves, he wears %s through %s"), *Mover->GetClass()->GetName(),
-		*BodyClass->GetName(), *CopyClass->GetName());
+	// the sample's own settings its graphs read (its data-driven console variables, DefaultEngine.ini)
+	const IConsoleVariable* FootMode = IConsoleManager::Get().FindConsoleVariable(TEXT("DDCvar.FootPlacementMode"));
+	const IConsoleVariable* DbLod = IConsoleManager::Get().FindConsoleVariable(TEXT("DDCvar.MMDatabaseLOD"));
+	UE_LOG(LogTemp, Log, TEXT("LedgerWalk: Epic's route: the sample's %s moves, he wears %s through %s; foot placement mode %d, database level %d"), *Mover->GetClass()->GetName(),
+		*BodyClass->GetName(), *CopyClass->GetName(), FootMode != nullptr ? FootMode->GetInt() : -1, DbLod != nullptr ? DbLod->GetInt() : -1);
 	return true;
 }
 
 void ALedgerSliceCharacter::GaspTick()
 {
 	if (GaspMover == nullptr) { return; }
+	// WHERE THE GAME PUTS HIM, THE MOVER GOES (24 October, the first measures: the game places him at his
+	// start after the mover was made where he loaded, and the mover walked from there into a wall): any
+	// move the game makes of him (his start, a door, a scene) takes the mover with it.
+	USceneComponent* Root = GetRootComponent();
+	if (Root->GetAttachParent() == GaspMover->GetRootComponent() && (Root->GetRelativeLocation().SizeSquared() > 1.0 || !Root->GetRelativeRotation().IsNearlyZero(0.5f)))
+	{
+		const FVector Where = Root->GetComponentLocation();
+		const float Yaw = Root->GetComponentRotation().Yaw;
+		GaspMover->SetActorLocationAndRotation(Where, FRotator(0.0f, Yaw, 0.0f), false, nullptr, ETeleportType::TeleportPhysics);
+		Root->SetRelativeLocationAndRotation(FVector::ZeroVector, FRotator::ZeroRotator);
+		UE_LOG(LogTemp, Log, TEXT("LedgerWalk: the mover follows where the game put him (%.0f, %.0f)"), Where.X, Where.Y);
+	}
 	// WHAT THE KEYS, THE PAD AND THE ROUTE ASKED THIS FRAME goes to the mover (his own movement takes none).
 	const FVector In = ConsumeMovementInputVector();
+	GaspLastIn = (float)In.Size();
 	if (!In.IsNearlyZero()) { GaspMover->AddMovementInput(In.GetSafeNormal2D(), FMath::Min(1.0, In.Size())); }
 	// HIS PACE as the sample's input state: walking unless he runs (shift, or the route's run). The sample
 	// picks its gait from that (GetDesiredGait); with a full push and no walk wish it would run.
@@ -488,11 +514,14 @@ void ALedgerSliceCharacter::GaspTick()
 		{
 			const FString N = It->GetName();
 			if (N.StartsWith(TEXT("WantsToWalk"))) { It->SetPropertyValue_InContainer(Data, bWalk); }
-			else if (N.StartsWith(TEXT("WantsToSprint"))) { It->SetPropertyValue_InContainer(Data, false); }
+			// he turns to where he goes, as the game's player always has: no strafing (the sample's own
+			// character strafes toward its controller's view by default; this one's controller is a puppet's)
+			else if (N.StartsWith(TEXT("WantsToSprint")) || N.StartsWith(TEXT("WantsToStrafe")) || N.StartsWith(TEXT("WantsToAim"))) { It->SetPropertyValue_InContainer(Data, false); }
 		}
 	}
 	// what reads his speed (his steps, people noticing him) reads the mover's
 	GetCapsuleComponent()->ComponentVelocity = GaspMover->GetVelocity();
+	GetCharacterMovement()->Velocity = GaspMover->GetVelocity();
 	// HIS METAHUMAN'S OWN SET-UP may put its body's graph back as it starts: the copying graph again
 	if (WornBody != nullptr && WornAnimClass != nullptr && WornBody->GetAnimClass() != WornAnimClass)
 	{
@@ -549,15 +578,35 @@ void ALedgerSliceCharacter::WalkProofTick(float DeltaSeconds)
 		// behind, is taken.
 		GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Pawn, ECR_Ignore);
 		if (GaspMover != nullptr) { GaspMover->GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Pawn, ECR_Ignore); }
-		const FCollisionShape Shape = FCollisionShape::MakeCapsule(GetCapsuleComponent()->GetScaledCapsuleRadius(), GetCapsuleComponent()->GetScaledCapsuleHalfHeight() - 5.0f);
+		const UCapsuleComponent* Cap = GaspMover != nullptr ? GaspMover->GetCapsuleComponent() : GetCapsuleComponent();
+		const FCollisionShape Shape = FCollisionShape::MakeCapsule(Cap->GetScaledCapsuleRadius(), Cap->GetScaledCapsuleHalfHeight() - 5.0f);
 		FCollisionQueryParams Q(FName(TEXT("TomWalkProofLine")), false, this);
+		// on Epic's route the sweep starts inside the mover's own capsule and his worn body: neither is in the way
+		if (GaspMover != nullptr) { Q.AddIgnoredActor(GaspMover); if (WornBody != nullptr) { Q.AddIgnoredActor(WornBody->GetOwner()); } }
 		FCollisionResponseParams R;
 		R.CollisionResponse.SetResponse(ECC_Pawn, ECR_Ignore);
+		FString Blocker;
 		auto Clear = [&](float Yaw) -> float
 		{
 			const FVector From = GetActorLocation() + FVector(0.0, 0.0, 5.0);
 			const FVector To = From + FRotator(0.0f, Yaw, 0.0f).Vector() * 1500.0;
 			FHitResult Hit;
+			if (GaspMover != nullptr)
+			{
+				// on Epic's route: the mover's own capsule with its own collision, as its movement sweeps it
+				TArray<FHitResult> Hits;
+				FComponentQueryParams CQ(FName(TEXT("TomWalkProofLine")), GaspMover);
+				CQ.AddIgnoredActor(this);
+				if (WornBody != nullptr) { CQ.AddIgnoredActor(WornBody->GetOwner()); }
+				UPrimitiveComponent* Cap = GaspMover->GetCapsuleComponent();
+				GetWorld()->ComponentSweepMulti(Hits, Cap, From, To, Cap->GetComponentQuat(), CQ);
+				for (const FHitResult& H : Hits)
+				{
+					if (H.bBlockingHit) { Blocker = H.GetActor() != nullptr ? H.GetActor()->GetName() : TEXT("?"); return (float)H.Distance; }
+				}
+				Blocker.Reset();
+				return 1500.0f;
+			}
 			return GetWorld()->SweepSingleByChannel(Hit, From, To, FQuat::Identity, ECC_Pawn, Shape, Q, R) ? Hit.Distance : 1500.0f;
 		};
 		float Best = -1.0f;
@@ -569,8 +618,10 @@ void ALedgerSliceCharacter::WalkProofTick(float DeltaSeconds)
 			const float Score = Behind >= 300.0f ? Ahead : Ahead * 0.1f;
 			if (Score > Best) { Best = Score; ProofYaw = Yaw; }
 		}
-		ProofLines += FString::Printf(TEXT("the route's heading %.0f degrees, %.1f m clear ahead, %.1f m behind") LINE_TERMINATOR,
-			ProofYaw, Clear(ProofYaw) / 100.0f, Clear(ProofYaw + 180.0f) / 100.0f);
+		const float AheadM = Clear(ProofYaw) / 100.0f;
+		const FString AheadBy = Blocker;
+		ProofLines += FString::Printf(TEXT("the route's heading %.0f degrees, %.1f m clear ahead (%s), %.1f m behind, from %.0f,%.0f") LINE_TERMINATOR,
+			ProofYaw, AheadM, AheadBy.IsEmpty() ? TEXT("nothing") : *AheadBy, Clear(ProofYaw + 180.0f) / 100.0f, GetActorLocation().X, GetActorLocation().Y);
 		(WornBody != nullptr ? WornBody.Get() : M)->RegisterOnBoneTransformsFinalizedDelegate(FOnBoneTransformsFinalizedMultiCast::FDelegate::CreateUObject(this, &ALedgerSliceCharacter::MeasureFeet));
 		ProofSeg = 0;
 		ProofSegAt = ProofClock;
@@ -632,10 +683,10 @@ void ALedgerSliceCharacter::WalkProofTick(float DeltaSeconds)
 			const FVector Side = FRotator(0.0f, ProofYaw + (K == 0 ? 90.0f : -90.0f), 0.0f).Vector();
 			ShotCamera->SetActorLocationAndRotation(Look + Side * FMath::Max(120.0f, Room[K] - 40.0f) + FVector(0.0, 0.0, 10.0), (-Side).Rotation());
 			const float T = ProofClock - ProofSegAt;
-			if ((ProofSeg == 1 || ProofSeg == 2) && T < 1.6f && ProofClock >= NextShotAt)
+			if ((ProofSeg == 1 || ProofSeg == 2 || ProofSeg == 3) && T < 1.6f && ProofClock >= NextShotAt)
 			{
 				FScreenshotRequest::RequestScreenshot(FPaths::ConvertRelativePathToFull(FPaths::ProjectSavedDir() / TEXT("TomWalk")
-					/ FString::Printf(TEXT("%s-%02d.png"), ProofSeg == 1 ? TEXT("start") : TEXT("stop"), FMath::FloorToInt(T * 10.0f))), false, false);
+					/ FString::Printf(TEXT("%s-%02d.png"), ProofSeg == 1 ? TEXT("start") : (ProofSeg == 2 ? TEXT("stop") : TEXT("about")), FMath::FloorToInt(T * 10.0f))), false, false);
 				NextShotAt = ProofClock + 0.1f;
 			}
 		}
@@ -651,8 +702,22 @@ void ALedgerSliceCharacter::WalkProofTick(float DeltaSeconds)
 		const ULedgerMotionMatchAnim* Mm = MotionDriver != nullptr ? Cast<ULedgerMotionMatchAnim>(MotionDriver->GetAnimInstance()) : nullptr;
 		const FVector RootAt = MotionDriver != nullptr ? MotionDriver->GetBoneLocation(MotionDriver->GetBoneName(0)) : FVector::ZeroVector;
 		const FVector Feet = GetActorLocation() - FVector(0.0, 0.0, GetCapsuleComponent()->GetScaledCapsuleHalfHeight());
-		ProofLines += FString::Printf(TEXT("%.2f s, stretch %d, %.0f cm/s, root %.1f cm off, %s") LINE_TERMINATOR, ProofClock, ProofSeg,
-			GetVelocity().Size2D(), (float)FVector::Dist2D(RootAt, Feet), Mm != nullptr ? *Mm->Describe() : TEXT("-"));
+		FString Gasp;
+		if (GaspMover != nullptr)
+		{
+			// on Epic's route: each body's balls above the floor, and whether the mover's graph is working
+			const USkeletalMeshComponent* Man = GaspMover->GetMesh();
+			const float Floor = GaspMover->GetActorLocation().Z - GaspMover->GetCapsuleComponent()->GetScaledCapsuleHalfHeight();
+			auto Up = [Floor](const USkeletalMeshComponent* B, const TCHAR* Bone) { return B != nullptr && B->GetBoneIndex(FName(Bone)) != INDEX_NONE ? (float)(B->GetBoneLocation(FName(Bone)).Z - Floor) : -99.0f; };
+			const UCharacterMovementComponent* MC = GaspMover->GetCharacterMovement();
+			Gasp = FString::Printf(TEXT(" mannequin balls %.1f/%.1f, worn %.1f/%.1f, graph %s, lod %d; push %.2f, its input %.2f, accel %.0f, max %.0f, mode %d, at %.0f,%.0f"),
+				Up(Man, TEXT("ball_l")), Up(Man, TEXT("ball_r")), Up(WornBody, TEXT("ball_l")), Up(WornBody, TEXT("ball_r")),
+				Man->GetAnimInstance() != nullptr ? *Man->GetAnimInstance()->GetClass()->GetName() : TEXT("none"), Man->GetPredictedLODLevel(),
+				GaspLastIn, (float)GaspMover->GetLastMovementInputVector().Size(), (float)MC->GetCurrentAcceleration().Size(), MC->GetMaxSpeed(), (int32)MC->MovementMode,
+				(float)GaspMover->GetActorLocation().X, (float)GaspMover->GetActorLocation().Y);
+		}
+		ProofLines += FString::Printf(TEXT("%.2f s, stretch %d, %.0f cm/s, root %.1f cm off, %s%s") LINE_TERMINATOR, ProofClock, ProofSeg,
+			GetVelocity().Size2D(), (float)FVector::Dist2D(RootAt, Feet), Mm != nullptr ? *Mm->Describe() : TEXT("-"), *Gasp);
 	}
 }
 
@@ -680,9 +745,21 @@ void ALedgerSliceCharacter::MeasureBody(int32 B, USkeletalMeshComponent* Body, i
 	if (F.Ball[0].IsNone() || F.Ball[1].IsNone() || Body->GetBoneIndex(F.Ball[0]) == INDEX_NONE) { return; }
 	const FProofSeg& S = GProofRoute[Seg];
 	const FVector P[2] = { Body->GetBoneLocation(F.Ball[0]), Body->GetBoneLocation(F.Ball[1]) };
+	// EACH BALL'S HEIGHT ABOVE THE GROUND UNDER IT (24 October, Epic's route: measured from the capsule's
+	// foot, a kerb or the pavement's fall read a foot as planted for metres), traced straight down past
+	// his bodies; the capsule's foot where nothing is found
+	float H[2];
+	for (int32 I = 0; I < 2; ++I)
+	{
+		FCollisionQueryParams GQ(FName(TEXT("TomWalkProofGround")), false, this);
+		if (GaspMover != nullptr) { GQ.AddIgnoredActor(GaspMover); if (WornBody != nullptr) { GQ.AddIgnoredActor(WornBody->GetOwner()); } }
+		FHitResult Hit;
+		const bool bHit = GetWorld()->LineTraceSingleByChannel(Hit, P[I] + FVector(0.0, 0.0, 40.0), P[I] - FVector(0.0, 0.0, 60.0), ECC_Visibility, GQ);
+		H[I] = (float)(P[I].Z - (bHit ? Hit.ImpactPoint.Z : Floor));
+	}
 	if (Seg == 0)
 	{
-		if (T > S.Seconds - 1.0f) { F.Rest[0] += P[0].Z - Floor; F.Rest[1] += P[1].Z - Floor; ++F.RestN; }
+		if (T > S.Seconds - 1.0f) { F.Rest[0] += H[0]; F.Rest[1] += H[1]; ++F.RestN; }
 		return;
 	}
 	const int32 Kind = S.Pace == 0 ? (T < 1.5f ? 3 : 0) : (S.Pace == 2 ? 5 : (T < 1.0f ? S.Kind : 2));
@@ -694,14 +771,14 @@ void ALedgerSliceCharacter::MeasureBody(int32 B, USkeletalMeshComponent* Body, i
 		const FVector Along = FRotator(0.0f, ProofYaw, 0.0f).Vector();
 		ProofLines += FString::Printf(TEXT("trace %s %d %.3f: left %.1f along %.1f up%s, right %.1f along %.1f up%s, capsule %.1f") LINE_TERMINATOR,
 			B == 0 ? TEXT("his") : TEXT("mannequin"), Seg, T,
-			(float)FVector::DotProduct(P[0], Along), (float)(P[0].Z - Floor - (F.RestN > 0 ? F.Rest[0] / F.RestN : 0.0f)), F.bDown[0] ? TEXT(" down") : TEXT(""),
-			(float)FVector::DotProduct(P[1], Along), (float)(P[1].Z - Floor - (F.RestN > 0 ? F.Rest[1] / F.RestN : 0.0f)), F.bDown[1] ? TEXT(" down") : TEXT(""),
+			(float)FVector::DotProduct(P[0], Along), H[0] - (F.RestN > 0 ? F.Rest[0] / F.RestN : 0.0f), F.bDown[0] ? TEXT(" down") : TEXT(""),
+			(float)FVector::DotProduct(P[1], Along), H[1] - (F.RestN > 0 ? F.Rest[1] / F.RestN : 0.0f), F.bDown[1] ? TEXT(" down") : TEXT(""),
 			(float)FVector::DotProduct(GetActorLocation(), Along));
 	}
 	for (int32 I = 0; I < 2; ++I)
 	{
 		const float Rest = F.RestN > 0 ? F.Rest[I] / F.RestN : 0.0f;
-		const bool bDown = P[I].Z - Floor - Rest < 2.5f && P[I].Z <= P[1 - I].Z + 1.0f;
+		const bool bDown = H[I] - Rest < 2.5f && H[I] <= H[1 - I] + 1.0f;
 		if (bDown && !F.bDown[I])
 		{
 			F.Planted[I] = P[I];

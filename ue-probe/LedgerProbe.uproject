@@ -76,10 +76,6 @@
 			"Enabled": true
 		},
 		{
-			"Name": "MovieSceneAnimMixer",
-			"Enabled": true
-		},
-		{
 			"Name": "SmartObjects",
 			"Enabled": true
 		},
