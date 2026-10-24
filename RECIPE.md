@@ -36,7 +36,7 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
   - Never adopt a reading because it passes: here the contact-mark reading passed a walk that visibly slides 10 to 15 cm.
 - Tools: the sample's blueprints exported to text and searched, the engine's source, the asset registry's dependency list, the game's set walking route with a per-frame trace, two research helpers in parallel.
 - Target and check: a foot slide of 3 cm or less at starts, stops and turns, on a set route. Two runs per setting from the same start; the worn body and the source body measured alike.
-- Cost (hours): about 4, 08:00 to 12:00 (research, a fresh review and a picture reviewer alongside).
+- Cost (hours): about 3.5, 08:00 to 11:35 (research, a fresh review and a picture reviewer alongside).
 - Failed and why:
   - The slide stayed at 11 to 35 cm at worst (medians 1 to 4). The vendor's own options gained nothing; holding its foot lock through each contact changed nothing, so the lock letting go is not the cause. Set aside after two tries, the cause not yet known.
   - The first runs failed for harness reasons: the puppet was made before the game placed the player; it strafed; the worn body froze; heights came from the capsule; two feet's raw heights were compared.

@@ -55,7 +55,7 @@ No decision asked: these are for watching the street change.
 - *The 38 ms frame with the voice:* partly. In half the walks the engine's first garbage collection, a minute after loading, cost one frame 31 to 50 ms; it is now collected behind the title, and walks with no voice hold every frame under 33.3 ms (worst 24 to 27). With Pocket working beside the game one frame still runs 42 to 55 ms at the day schedule's moment, when people move and shadows switch: the processor is crowded. Set aside after two tries; next, a trace of that moment.
 - *The card's spare time:* at night back to 2.7 ms (it fell to 0.1 when today's shops came in: their window lamps' shadows); those lamps now cast only from their own shop and only within 15 m, which fresh reviewers passed on all four night street cameras. By day 1.7 to 1.8 ms against the plan's 2.5 (Needs you 3). The measure now sets the picture level (2.1 ms of the old "loss" was the Highest level).
 
-**Your order of 24 October, the walk by Epic's MetaHuman route, to Saturday 18:00 (24 October, 12:05).** Built, measured, set aside on the bar after two tries, then judged by eye (production/research/sit-and-turn/METAHUMAN-ROUTE-2026-10-24.md, checked by two fresh reviewers).
+**Your order of 24 October, the walk by Epic's MetaHuman route, to Saturday 18:00 (24 October, 11:35).** Built, measured, set aside on the bar after two tries, then judged by eye (production/research/sit-and-turn/METAHUMAN-ROUTE-2026-10-24.md, checked by two fresh reviewers).
 - *How it works:* the sample's own character, unchanged and unseen, does the moving; Tom wears his MetaHuman (L1) over it through Epic's own retargeter, as the sample dresses its MetaHuman. Behind a switch, off by default; the packaged game builds and runs with the sample's parts in it (15 ms a frame, 5.5 GB on the card).
 - *By eye:* ordinary steps hold their feet within 1.5 cm. But at about five moments a planted foot slides 10 to 15 cm: a stop where the front foot glides back flat about 13 cm (the one you might notice; picture below, the foot nearest the camera), a pivot, two turns from standing, a landing. The walk he has slides up to 50 cm.
 - *Tried and failed (each shown to have taken):* the sample's own alternatives, and its foot lock held through each step.
@@ -95,7 +95,7 @@ Nothing waits on you. Your answers of 24 October are recorded (RULINGS.md): the 
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
 
-## Builder, Saturday 24 October (12:05)
+## Builder, Saturday 24 October (11:35)
 
 **Failed:**
 - **The walk by Epic's route:** ordinary steps within 1.5 cm, but at about five moments a planted foot slides 10 to 15 cm (pictured, judged by eye); set aside after two tries.

@@ -113,7 +113,7 @@ Not a try: the sample's attribute-based root motion. Set from startup, the setti
 - **Known:** the body does not lag its capsule. The sample's root offset is 0 cm at every frame of the worst stop, because its own default `DDCvar.OffsetRootBone.TranslationRadius` is 0. So the stop glide is not the body catching up.
 - **Likely, not proved:** each real slide happens just after the sample's animation marks the foot as moving while it is still on the floor. Its foot lock then releases the foot and eases it along the floor to where the clip has it, which shows the drift the lock had hidden.
 
-## Research after the set-aside: does the measure count what a player sees? (24 October, 11:00 to 12:00)
+## Research after the set-aside: does the measure count what a player sees? (24 October, 10:40 to 11:35)
 
 The walk itself is unchanged. These are readings and pictures.
 
@@ -148,7 +148,7 @@ The walk itself is unchanged. These are readings and pictures.
 
 ## Cost
 
-About 4 hours, 08:00 to 12:00, including the research helpers, the fresh review of the findings and the reviewer of the pictures.
+About 3.5 hours, 08:00 to 11:35, including the research helpers, the fresh review of the findings and the reviewer of the pictures.
 
 ## Evidence
 
