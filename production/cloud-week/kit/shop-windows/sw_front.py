@@ -60,7 +60,7 @@ PC_SIGN_MOUNT = {"ironmonger": {"plate_foot_m": 2.55, "arm_height_m": 2.70, "dro
 # is a picture from 0.65 m up, so through the door's foot at night there was nothing to see but black (the design's own
 # night render shows it too). The door takes a flat aluminium panel to the sill's line (600), as the target's glazed-from
 # rule asks of its timber and 1930s doors; keyed by shop, the target not edited.
-PC_DOOR_KICK_MM = {"chandler": 600.0}
+PC_DOOR_KICK_MM = {"chandler": 600.0, "steam_laundry": 600.0}      # 24 Oct: the launderette's too (its gate across the road: the same black foot by day)
 # 23 Oct, the same gate from the right at night: through the shop door's glass the back of the display's side lining, painted
 # as the room's walls, was black (nothing lit it); it is faced with the hall's two shop-facing paints, which glow after dark as
 # the lit room's walls (the shop's entry in production/specs/shop-interiors.json, its front's night_glow). Keyed by shop.

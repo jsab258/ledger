@@ -11,3 +11,9 @@ Built on the PC 24 October (front, display, room at 128 samples, 28 minutes), ma
 Brief: F:/LedgerTools/gate/new/launderette-2026-10-24/BRIEF.md.
 
 ## Round 1 (r1)
+- **Across the road by day (r1): PASS.** The front sits clean in its bay (cornice, pilasters, pavement); fascia, box sign and glass lettering read right; the towels read as towels, the washing as cloth in baskets; nothing burns. Narrow points: the shop door's lower glass a uniform black at the display's height (the chandler's fault by day; fixed for r2 with the same flat lower panel to 0.60 m, sw_front.py PC_DOOR_KICK_MM); the left console crossing the street's downpipe by about 12 px; faint drip marks at the fascia's top edge; the washing barely over the rims.
+- **Square on by day (r1): FAIL.**
+  - **F1, the left basket's cream and coral sheets pass through each other:** islands of each through the other, reading as a stained rag (in a crime game, a menace misread). The settled cloth had been smoothed by a subdivision, which moved it a few millimetres.
+  - **F2, the floor sheets' corners come out through the basket walls** (the basket narrows toward its foot).
+  - **Fix, try 1 each:** no subdivision (the simulation's own surface, shaded smooth) and 4 mm between sheets; the coral sheet lilac; the floor sheet inset 35 mm.
+  - Passed: the towels (a clear gain over the design's cushions), the card and posts, every packet's lettering (CLAYBROOK), each price card before its own good, the glass, the room. Listed: the soft white smear at a fixed height; stair-steps; plain packets and machines; the return walls a flat two-tone (the design review's narrow point 5); the towels' sides single smooth slabs up close.

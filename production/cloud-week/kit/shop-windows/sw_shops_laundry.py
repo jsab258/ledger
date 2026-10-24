@@ -417,7 +417,8 @@ def display(d):
     # ---- two wicker baskets with laundry heaped in each (three lumps of cloth in two or three colours: sheets and a towel)
     # 24 Oct, the PC (its close review's fault 2, "smooth blobs, a blue column like a box"): the review's exact fix, cloth simulation
     # (sw_goods_b.laundry_by_cloth): three cotton sheets in each basket in the old lumps' colours, a 3 mm weave and a normal map
-    cloth_cols = [[(176, 196, 210), (226, 214, 190), (176, 104, 96)], [(214, 176, 124), (150, 176, 154), (216, 206, 196)]]
+    # (24 Oct, the gate's square view: the coral red sheet crumpled with the cream one read as a stained rag in a crime game; lilac now)
+    cloth_cols = [[(176, 196, 210), (226, 214, 190), (186, 160, 196)], [(214, 176, 124), (150, 176, 154), (216, 206, 196)]]
     for k, uc in enumerate((1.95, 2.37)):
         ext, names = d.piece("wicker_basket_01", uc, 0.26, z0, rot=(0, 0, rnd.uniform(0, 6.28)), scale=1.0, tier="board", tris=None)
         cm = [d.image_mat("laundry_%s%d" % ("ab"[k], j + 1), GB.cloth_weave_tile(os.path.join(tex, "laundry_%s%d.png" % ("ab"[k], j + 1)), c),

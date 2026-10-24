@@ -438,6 +438,9 @@ def laundry_by_cloth(d, asset, names, mats, seed=1, shrink=0.6, frames=120, floo
     rnd = random.Random(seed)
     inset = 0.012
     x0, x1, y0, y1 = lo.x + inset, hi.x - inset, lo.y + inset, hi.y - inset
+    # the basket narrows toward its foot: at the raised floor its weave stands farther in than at the rim (24 Oct, the gate's square view:
+    # the floor sheet's corners came out through the wall), so the floor sheet is inset more
+    fin = 0.035
     rim = hi.z
     z0, z1 = lo.z + (hi.z - lo.z) * floor_frac, rim - 0.004
     cen = Vector(((x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2))
@@ -515,14 +518,14 @@ def laundry_by_cloth(d, asset, names, mats, seed=1, shrink=0.6, frames=120, floo
         ob.data = new
         sc.frame_set(1)
         ob.modifiers.new("Collision", "COLLISION")
-        ob.collision.thickness_outer = 0.003
+        ob.collision.thickness_outer = 0.004
         made.append((ob, mat))
         log("laundry: sheet %d settled after %.1f s" % (i, time.time() - t0))
     out = []
     for k, (ob, mat) in enumerate(made):
         ob.modifiers.clear()
-        sd = ob.modifiers.new("Sub", "SUBSURF")
-        sd.levels = sd.render_levels = 1
+        # no subdivision (24 Oct, the gate's square view: smoothing the settled cloth moved it a few millimetres and two sheets crossed,
+        # cream and red islands through each other); the sheets keep the simulation's own surface, shaded smooth
         so = ob.modifiers.new("Solid", "SOLIDIFY")
         so.thickness = 0.002
         so.offset = 0.0
@@ -538,7 +541,8 @@ def laundry_by_cloth(d, asset, names, mats, seed=1, shrink=0.6, frames=120, floo
         out.append(ob)
     # the hollow under the raised floor, closed by a flat sheet of the first cloth
     bm = bmesh.new()
-    fv = [bm.verts.new(c) for c in ((x0, y0, z0 + 0.002), (x1, y0, z0 + 0.002), (x1, y1, z0 + 0.002), (x0, y1, z0 + 0.002))]
+    fv = [bm.verts.new(c) for c in ((lo.x + fin, lo.y + fin, z0 + 0.002), (hi.x - fin, lo.y + fin, z0 + 0.002), (hi.x - fin, hi.y - fin, z0 + 0.002),
+                                    (lo.x + fin, hi.y - fin, z0 + 0.002))]
     bm.faces.new(fv)
     uvl = bm.loops.layers.uv.new()
     for f in bm.faces:
