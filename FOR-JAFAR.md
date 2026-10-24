@@ -48,8 +48,8 @@ No decision asked: these are for watching the street change.
 - *8, speech.* Done. **The Gemini test:** on the reply check, Gemini 3.5 Flash-Lite took 0.60 s at the median against Haiku's 0.97, but it let 3 invented details in 42 through where Haiku lets 1 (you kept Haiku); Gemini 3.8 Flash was the most accurate but slower, 1.8 s (production/research/voice-latency/GEMINI-CHECK-2026-10-22.md). **Pocket no longer stalls the walk:** run at lower priority, the walk's slowest 1% is 20.6 ms (it was 34) and its worst 47 ms (it was 175). The one frame left over the bar is a separate stall that the usual card voice shows too (87 ms today), so the frame-rate margin is thinner than P1's close said (listed). **The real path with Pocket:** 20 checked replies, with the game open, first sound heard at 2.41 s at the median, the best yet (3.25 s before) but over 2 s. The model's first checked sentence alone now takes 2.10 s, so the voice is no longer the bottleneck (about $0.15 of your measuring dollar).
 - *9, closing phase 1.* Done. Four fresh reviewers, one for each exit, found that none passes (production/audits/phase1-exit/CLOSE-2026-10-22.md): Tom is still the stand-in body and slides; nobody sits in the game as played; first speech is 3.25 s at best; the frame bar held once and failed its repeat, and card memory with the voice is 7 to 9.9 GB against 6; there is no wear in the office or on Rita's front. They also caught four of my own records wrong, all corrected on 22 October. You held phase 2 on your page: next week goes on these failed capabilities first.
 
-**Your order of 23 October afternoon, frame headroom, to Saturday 14:00 (24 October, 03:55).** Frame headroom is done as far as it goes; the launderette is next.
-- *The launderette* (resumed 03:50): its design's three faults fixed and the shop in the street (east parade, no. 9), dark at night with its sign lit; in its gate (production/audits/gate-launderette/GATE.md), four views passed, the washing in its baskets on its third round.
+**Your order of 23 October afternoon, frame headroom, to Saturday 14:00 (24 October, 07:25).** Both parts are done: frame headroom as far as it goes, then the launderette.
+- *The launderette* (no. 9, east parade): all ten views passed in five rounds (production/audits/gate-launderette/GATE.md; picture production/previews/launderette-2026-10-24.jpg). Its design's three faults are fixed: the towels; the washing, now made by cloth simulation; and a real firm's name. Its front is worn, and it is dark at night with its sign lit. The gate also caught a flat side wall seen through the lobby's glass, now tiled like its room.
 - *Card memory with the voice on the processor:* the game alone a median of 5.0 GB, peaks 5.9 GB walking, under the 6 GB line; with Pocket beside it, 5.2 GB in all (peaks 6.5). With the cast voice on the card the card in all peaks 7.4 to 8.7 GB (Needs you 2).
 - *The 87 ms frame:* fixed. It was 13 of the engine's own screen passes built on first use; a bundled pipeline cache now compiles them before play, and no capture misses a pipeline. With the driver's cache cleared, as on a first launch, a player waits about 75 s at the title once.
 - *The 38 ms frame with the voice:* partly. In half the walks the engine's first garbage collection, a minute after loading, cost one frame 31 to 50 ms; it is now collected behind the title, and walks with no voice hold every frame under 33.3 ms (worst 24 to 27). With Pocket working beside the game one frame still runs 42 to 55 ms at the day schedule's moment, when people move and shadows switch: the processor is crowded. Set aside after two tries; next, a trace of that moment.
@@ -92,7 +92,7 @@ Your answers are recorded: the walk's next go by Epic's MetaHuman route after Mo
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
 
-## Builder, Saturday 24 October (06:10)
+## Builder, Saturday 24 October (07:25)
 
 **Failed:**
 - **A frame with the voice beside the game:** one per walk still runs 42 to 55 ms when the day's schedule moves people and shadows switch; set aside after two tries.
@@ -104,6 +104,6 @@ Your answers are recorded: the walk's next go by Epic's MetaHuman route after Mo
 - **The 87 ms stall** is gone: a bundled pipeline cache.
 - **The night's spare card time** is 2.7 ms: window lamps cast shadows only near their own shop.
 - **Card memory:** the game alone peaks 5.9 GB.
-- **The launderette** is in the street with its design's three faults fixed; four of its views pass, its washing on its third look.
+- **The launderette** passed all ten views with its wear: your 23 October order is done.
 
 **Act on:** Needs you 2 and 3, the voice and the daytime budget; the Marvelous trial is yours to start.

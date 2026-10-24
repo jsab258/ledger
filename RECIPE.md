@@ -19,6 +19,28 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 24 Oct 2026, the next shop family: a seventh delivered shop whose design had failed its own close review, fixed on the PC and brought in
+- Made: a designed shop in the street's bay: its front with a recessed lobby and a lit sign, its window display, its room pictures, and its front's foot wear. The design's three close-review faults were fixed first: goods read as cushions, washing read as blobs, and a real firm's name.
+- Method (setting-free):
+  - When no scanned asset exists for soft goods (heaped cloth), simulate them:
+    - drop real-sized sheets one at a time into a simple collider just inside the container, with its floor raised so the heap reaches the rim;
+    - update the scene before reading positions, and make the texture coordinates before the cloth;
+    - smoothing a settled cloth moves it a few millimetres, so lift each later sheet by its order, or the smoothing carries it through the one below;
+    - without smoothing, cloth reads as crumpled paper.
+  - Stiffer cloth, wider gaps or no shrink can stall the solver or blow it apart. Prototype the settings on one container before the build.
+  - A renamed brand goes into the design's own check as a blocked word, so the old name cannot come back.
+  - A glazed panel at the side of a recessed lobby looks straight onto whatever the display builder put behind it, at full height and close. Gate every view that sees through side glass; a flat placeholder there reads as a fault.
+  - A wall that turns a corner beside a projected room picture will not line its dado up with the picture's from every eye height. That stays a narrow point unless both are geometry.
+  - A rebuild with a deterministic simulation reproduces the same cloth to the pixel. Check by difference, so one view's pass carries.
+  - Wear the front in the same round as the last fixes, so one set of reviews judges both.
+- Tools: the delivering team's builder with its cloth simulation (Blender), the readying recipe (cut-out lettering, night glow, raised linings), the wear bake, the glass bake, the game's page cameras, fresh reviewers one view each with a difference against the last good picture.
+- Target and check: the design's close review's fixes, then the game's gate. Ten views in five rounds, the last with every view reviewed: all ten pass.
+- Cost (hours): about 3.5, 03:45 to 07:30, of which the build at 128 samples took 0.5 and about 2 hours were reviewers running two at a time.
+- Failed and why:
+  - Smoothing the cloth crossed two sheets (round 1). Without smoothing the cloth read as paper (round 2). Smoothing plus a lift per sheet passed.
+  - The view from the right was first reviewed only in round 3, and it found the flat return behind the lobby's side glass. Earlier rounds had reviewed only the views that changed.
+- Evidence: production/audits/gate-launderette/GATE.md; production/specs/shop-fronts/launderette-front-wear.json; production/previews/launderette-2026-10-24.jpg
+
 ### 23 Oct 2026, item 5: delivered fronts fitted under a lower eave than they were designed for, and one rule for street grime, checked
 - Made:
   - three delivered shopfronts cut under a single-storey row's eave;

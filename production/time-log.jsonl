@@ -83,3 +83,7 @@
 {"event": "stop", "at": "2026-10-08T15:30:00", "note": "reviewers ran beside the fixes"}
 {"event": "start", "at": "2026-10-08T15:30:00", "task": "8 Oct: the glass's dark reflection found (catch timing; spare cube; photographs wait), the lost cover restored, the cheap catch taken out; the evening build asked", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-08T16:10:00", "note": ""}
+{"event": "start", "at": "2026-10-23T15:15:00", "task": "23-24 Oct: frame headroom (his order of 23 October): card memory, the 87 ms stall, the card's spare time, the voice's frame", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-24T03:45:00", "note": "recorded afterwards from the commit times; the log was not kept from 9 to 22 October"}
+{"event": "start", "at": "2026-10-24T03:45:00", "task": "24 Oct: the launderette's design fixed and brought into the street through the game's gate (five rounds, ten views)", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-24T07:20:00", "note": "recorded afterwards from the commit times; about 2 hours of it fresh reviewers"}
