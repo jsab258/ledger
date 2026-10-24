@@ -21,7 +21,7 @@ Phase 1 closed 22 Oct, no exit passed (production/audits/phase1-exit/CLOSE-2026-
 - [x] Frame headroom: frame-headroom/FINDINGS-2026-10-23.md; voice frame set aside.
 - [x] Launderette: gate-launderette/GATE.md; all ten views pass.
 
-STATE (24 Oct 07:25): the 23 October order done; the next shop family (Mickey's or the empty unit) until Saturday 14:00.
+STATE (24 Oct 07:30): the 23 October order done; stopped until Monday 14:00, as ordered. Next shops, on his word: the empty unit, Mickey's, the fish market.
 
 ## Handovers
 
