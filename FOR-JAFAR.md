@@ -49,21 +49,21 @@ No decision asked: these are for watching the street change.
 - *9, closing phase 1.* Done. Four fresh reviewers, one for each exit, found that none passes (production/audits/phase1-exit/CLOSE-2026-10-22.md): Tom is still the stand-in body and slides; nobody sits in the game as played; first speech is 3.25 s at best; the frame bar held once and failed its repeat, and card memory with the voice is 7 to 9.9 GB against 6; there is no wear in the office or on Rita's front. They also caught four of my own records wrong, all corrected on 22 October. You held phase 2 on your page: next week goes on these failed capabilities first.
 
 **Your order of 23 October afternoon, frame headroom, to Saturday 14:00 (24 October, 03:55).** Frame headroom is done as far as it goes; the launderette is next.
-- *The launderette* is parked on wip, in progress: its maker renamed, its towels rebuilt in code, its washing's cloth simulation prototyped.
+- *The launderette* (resumed 03:50): its design's three faults fixed and the shop in the street (east parade, no. 9), dark at night with its sign lit; in its gate (production/audits/gate-launderette/GATE.md), four views passed, the washing in its baskets on its third round.
 - *Card memory with the voice on the processor:* the game alone a median of 5.0 GB, peaks 5.9 GB walking, under the 6 GB line; with Pocket beside it, 5.2 GB in all (peaks 6.5). With the cast voice on the card the card in all peaks 7.4 to 8.7 GB (Needs you 2).
 - *The 87 ms frame:* fixed. It was 13 of the engine's own screen passes built on first use; a bundled pipeline cache now compiles them before play, and no capture misses a pipeline. With the driver's cache cleared, as on a first launch, a player waits about 75 s at the title once.
 - *The 38 ms frame with the voice:* partly. In half the walks the engine's first garbage collection, a minute after loading, cost one frame 31 to 50 ms; it is now collected behind the title, and walks with no voice hold every frame under 33.3 ms (worst 24 to 27). With Pocket working beside the game one frame still runs 42 to 55 ms at the day schedule's moment, when people move and shadows switch: the processor is crowded. Set aside after two tries; next, a trace of that moment.
 - *The card's spare time:* at night back to 2.7 ms (it fell to 0.1 when today's shops came in: their window lamps' shadows); those lamps now cast only from their own shop and only within 15 m, which fresh reviewers passed on all four night street cameras. By day 1.7 to 1.8 ms against the plan's 2.5 (Needs you 3). The measure now sets the picture level (2.1 ms of the old "loss" was the Highest level).
 
-**The tester's walk (23 October, 02:30 to 03:07; production/playtest/nightly/2026-10-23.md).**
-- The route ran 13 of 15 stages. It failed at Ron (lost from sight) and at Darren (not on the street).
+**The tester's walk (24 October, 02:30 to 03:01; production/playtest/nightly/2026-10-24.md).**
+- The route ran 13 of 15 stages. It failed at Ron (never within reach, 3.7 m away) and at Darren (lost from sight).
 - Nobody the record names saw Rita's window broken. One person, Rocco, showed afterwards that he knew, the same as the night before.
 - Replies were first heard at 0.2 s. That is the stand-in's words with the real voice, not the real path.
 - "That's all I know" was not measured.
 - What broke the illusion:
-  - townsfolk in the plain white base layer, two frozen in the road;
-  - a woman beside the smashed window who takes no notice;
-  - the quay end almost pitch black at night.
+  - townsfolk in the plain white base layer, two of them barefoot, one standing in the road;
+  - people standing stiff in one pose, doing nothing;
+  - Rita beside her smashed window, facing away, taking no notice.
 
 **Risks, Monday's review (production/research/pre-production/6-RISKS.md).**
 - R3, the street missing the bar: up, 25. The audit finds the visual method unproved: five proof-view steps were set aside, and Mickey's room failed three reviews. Phase 1's binding stop answers it.
@@ -92,18 +92,18 @@ Your answers are recorded: the walk's next go by Epic's MetaHuman route after Mo
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
 
-## Builder, Saturday 24 October (03:55)
+## Builder, Saturday 24 October (06:10)
 
 **Failed:**
-- **A frame with the voice beside the game:** one per walk still runs 42 to 55 ms, when the day's schedule moves people and shadows switch; set aside after two tries.
+- **A frame with the voice beside the game:** one per walk still runs 42 to 55 ms when the day's schedule moves people and shadows switch; set aside after two tries.
 - **The card's spare time by day:** 1.7 to 1.8 ms against the plan's 2.5, since the grocer and the chandler came in (Needs you 3).
-- **Set aside earlier:** the chandler's side lining glares at night; its sou'westers left the window.
+- **Set aside:** the chandler's side lining glares at night; its sou'westers left the window.
 
 **Done:**
-- **The chandler's** and its wear passed ten views: item 5 is done.
-- **The 87 ms stall** is gone: a bundled pipeline cache, no pipeline built mid-play.
-- **The night's spare card time** is 2.7 ms: shop window lamps cast shadows only near their own shop, passed by fresh reviewers.
-- **Card memory:** the game alone peaks 5.9 GB; with Pocket beside it 5.2 GB in all.
-- **The tester's walk** ran 13 of 15 stages.
+- **The chandler's** passed its ten views: item 5 is done.
+- **The 87 ms stall** is gone: a bundled pipeline cache.
+- **The night's spare card time** is 2.7 ms: window lamps cast shadows only near their own shop.
+- **Card memory:** the game alone peaks 5.9 GB.
+- **The launderette** is in the street with its design's three faults fixed; four of its views pass, its washing on its third look.
 
 **Act on:** Needs you 2 and 3, the voice and the daytime budget; the Marvelous trial is yours to start.

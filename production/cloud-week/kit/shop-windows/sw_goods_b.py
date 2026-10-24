@@ -524,8 +524,11 @@ def laundry_by_cloth(d, asset, names, mats, seed=1, shrink=0.6, frames=120, floo
     out = []
     for k, (ob, mat) in enumerate(made):
         ob.modifiers.clear()
-        # no subdivision (24 Oct, the gate's square view: smoothing the settled cloth moved it a few millimetres and two sheets crossed,
-        # cream and red islands through each other); the sheets keep the simulation's own surface, shaded smooth
+        # SMOOTHED, AND EACH SHEET A LITTLE ABOVE THE ONE UNDER IT (24 Oct, the gate's square view: smoothed, the settled cloth moved a few
+        # millimetres and two sheets crossed, cream and red islands through each other; unsmoothed, its hard creases read as crumpled
+        # paper). One subdivision for soft cotton, and sheet k lifted 5 mm x k, so the smoothing cannot carry it through the one below.
+        sd = ob.modifiers.new("Sub", "SUBSURF")
+        sd.levels = sd.render_levels = 1
         so = ob.modifiers.new("Solid", "SOLIDIFY")
         so.thickness = 0.002
         so.offset = 0.0
@@ -533,6 +536,7 @@ def laundry_by_cloth(d, asset, names, mats, seed=1, shrink=0.6, frames=120, floo
         new = bpy.data.meshes.new_from_object(ob.evaluated_get(dg))
         ob.modifiers.clear()
         ob.data = new
+        ob.matrix_world = Matrix.Translation(Vector((0.0, 0.0, 0.005 * k))) @ ob.matrix_world
         ob.data.materials.clear()
         ob.data.materials.append(mat)
         for p in ob.data.polygons:
