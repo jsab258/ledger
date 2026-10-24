@@ -1,0 +1,214 @@
+ledgerTomWalk=FAIL mode=gasp-metahuman worstJoinCm=34.35 stand=0.00/0 start=4.21/4 loop=21.04/24 stop=34.35/8 turn=10.27/11 run=6.17/8 frames=1594 mannequin: stand=0.00/0 start=5.91/4 loop=11.73/20 stop=16.42/9 turn=12.42/9 run=2.14/8 settings: footPlacementMode=1 databaseLevel=0 rootMotionSetting=0 rootMotionUsed=0 unplantCm=100 unplantDeg=180
+the route's heading 90 degrees, 15.0 m clear ahead (nothing), 15.0 m behind, from 100,400
+2.01 s, stretch 0, 0 cm/s, root 412.3 cm off, - mannequin balls -0.1/0.9, worn -1.9/-1.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,400
+2.27 s, stretch 0, 0 cm/s, root 412.3 cm off, - mannequin balls -0.1/0.9, worn -1.9/-1.0, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,400
+2.51 s, stretch 0, 0 cm/s, root 412.3 cm off, - mannequin balls -0.1/0.9, worn -1.9/-1.0, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,400
+2.77 s, stretch 0, 0 cm/s, root 412.3 cm off, - mannequin balls -0.1/0.9, worn -1.9/-1.0, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,400
+3.01 s, stretch 0, 0 cm/s, root 412.3 cm off, - mannequin balls -0.1/0.9, worn -1.9/-1.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,400
+3.27 s, stretch 0, 0 cm/s, root 412.3 cm off, - mannequin balls -0.1/0.9, worn -1.9/-1.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,400
+3.51 s, stretch 0, 0 cm/s, root 412.3 cm off, - mannequin balls -0.1/0.9, worn -1.9/-1.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,400
+3.77 s, stretch 0, 0 cm/s, root 412.3 cm off, - mannequin balls -0.1/0.9, worn -1.9/-1.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,400
+4.00 s, stretch 0, 0 cm/s, root 412.3 cm off, - mannequin balls -0.1/0.9, worn -1.9/-1.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,400
+4.26 s, stretch 0, 0 cm/s, root 412.3 cm off, - mannequin balls -0.1/0.9, worn -1.9/-1.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,400
+4.50 s, stretch 0, 0 cm/s, root 412.3 cm off, - mannequin balls -0.1/0.9, worn -1.9/-1.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,400
+4.76 s, stretch 0, 0 cm/s, root 412.3 cm off, - mannequin balls -0.1/0.9, worn -1.9/-1.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,400
+5.00 s, stretch 0, 0 cm/s, root 412.3 cm off, - mannequin balls -0.2/0.9, worn -1.9/-1.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,400
+5.11 s, stretch 1, start, his right foot, slid 4.21 cm
+5.13 s, stretch 1, start, the mannequin's right foot, slid 5.91 cm
+5.26 s, stretch 1, 177 cm/s, root 436.5 cm off, - mannequin balls -0.7/7.1, worn -2.5/5.3, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,425
+5.30 s, stretch 1, start, his left foot, slid 3.59 cm
+5.32 s, stretch 1, start, the mannequin's left foot, slid 4.21 cm
+5.52 s, stretch 1, 200 cm/s, root 484.6 cm off, - mannequin balls 3.8/0.2, worn 2.2/-2.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,474
+5.75 s, stretch 1, 200 cm/s, root 532.6 cm off, - mannequin balls 7.6/0.4, worn 6.1/-1.9, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,523
+5.77 s, stretch 1, start, his right foot, slid 1.07 cm
+5.77 s, stretch 1, start, the mannequin's right foot, slid 3.62 cm
+6.01 s, stretch 1, 200 cm/s, root 582.2 cm off, - mannequin balls 0.9/2.4, worn -0.6/0.2, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,574
+6.26 s, stretch 1, 200 cm/s, root 631.7 cm off, - mannequin balls 2.0/3.0, worn 0.4/1.0, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,624
+6.26 s, stretch 1, start, his left foot, slid 1.25 cm
+6.26 s, stretch 1, start, the mannequin's left foot, slid 2.55 cm
+6.51 s, stretch 1, 200 cm/s, root 681.4 cm off, - mannequin balls 3.1/1.0, worn 1.0/-0.4, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,674
+6.76 s, stretch 1, 200 cm/s, root 730.5 cm off, - mannequin balls 4.0/1.7, worn 2.4/0.0, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,724
+6.76 s, stretch 1, loop, his right foot, slid 1.07 cm
+6.77 s, stretch 1, loop, the mannequin's right foot, slid 5.09 cm
+7.00 s, stretch 1, 200 cm/s, root 779.4 cm off, - mannequin balls 1.1/3.0, worn -0.2/0.7, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,773
+7.25 s, stretch 1, loop, his left foot, slid 1.12 cm
+7.25 s, stretch 1, loop, the mannequin's left foot, slid 2.04 cm
+7.27 s, stretch 1, 200 cm/s, root 832.3 cm off, - mannequin balls 4.5/2.1, worn 3.0/-0.0, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,826
+7.52 s, stretch 1, 200 cm/s, root 881.9 cm off, - mannequin balls 4.7/0.9, worn 2.6/-0.6, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,876
+7.72 s, stretch 1, loop, his right foot, slid 1.59 cm
+7.72 s, stretch 1, loop, the mannequin's right foot, slid 1.61 cm
+7.76 s, stretch 1, 200 cm/s, root 930.4 cm off, - mannequin balls 1.8/6.3, worn -0.0/5.5, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,925
+8.01 s, stretch 1, 200 cm/s, root 979.9 cm off, - mannequin balls 0.9/3.7, worn -0.6/1.6, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,975
+8.23 s, stretch 1, loop, his left foot, slid 1.39 cm
+8.23 s, stretch 1, loop, the mannequin's left foot, slid 2.26 cm
+8.26 s, stretch 1, 200 cm/s, root 1030.6 cm off, - mannequin balls 6.1/1.6, worn 4.9/-0.5, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,1026
+8.51 s, stretch 1, 200 cm/s, root 1080.3 cm off, - mannequin balls 3.8/1.0, worn 1.7/-0.5, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,1076
+8.74 s, stretch 1, loop, his right foot, slid 1.02 cm
+8.74 s, stretch 1, loop, the mannequin's right foot, slid 2.47 cm
+8.76 s, stretch 1, 200 cm/s, root 1129.4 cm off, - mannequin balls 1.8/3.9, worn -0.0/2.6, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,1125
+9.00 s, stretch 1, loop, his right foot, slid 21.04 cm
+9.02 s, stretch 1, 200 cm/s, root 1180.5 cm off, - mannequin balls 0.9/3.1, worn -0.6/0.9, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,1176
+9.25 s, stretch 2, 0 cm/s, root 1192.2 cm off, - mannequin balls 1.9/1.4, worn 0.2/-0.7, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,1188
+9.25 s, stretch 2, loop, his left foot, slid 8.34 cm
+9.25 s, stretch 2, loop, the mannequin's left foot, slid 6.17 cm
+9.51 s, stretch 2, 0 cm/s, root 1192.2 cm off, - mannequin balls 2.4/1.1, worn 0.6/-0.4, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,1188
+9.76 s, stretch 2, 0 cm/s, root 1192.2 cm off, - mannequin balls 0.9/1.1, worn -0.7/-0.7, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,1188
+9.84 s, stretch 2, stop, the mannequin's right foot, slid 1.86 cm
+9.86 s, stretch 2, stop, his right foot, slid 3.08 cm
+10.02 s, stretch 2, 0 cm/s, root 1192.2 cm off, - mannequin balls 0.9/5.0, worn -0.8/2.7, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,1188
+10.25 s, stretch 2, 0 cm/s, root 1192.2 cm off, - mannequin balls 1.0/2.6, worn -0.8/0.7, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,1188
+10.51 s, stretch 2, 0 cm/s, root 1192.2 cm off, - mannequin balls 1.0/1.4, worn -0.8/-0.6, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,1188
+10.76 s, stretch 2, 0 cm/s, root 1192.2 cm off, - mannequin balls 1.0/0.9, worn -0.8/-1.0, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,1188
+11.01 s, stretch 2, 0 cm/s, root 1192.2 cm off, - mannequin balls 1.0/1.0, worn -0.8/-0.9, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,1188
+11.27 s, stretch 2, 0 cm/s, root 1192.2 cm off, - mannequin balls 1.0/1.0, worn -0.7/-0.9, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,1188
+11.50 s, stretch 2, 0 cm/s, root 1192.2 cm off, - mannequin balls 1.0/1.0, worn -0.7/-0.8, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at 100,1188
+11.61 s, stretch 3, stop, the mannequin's left foot, slid 9.82 cm
+11.63 s, stretch 3, stop, his left foot, slid 13.87 cm
+11.76 s, stretch 3, 166 cm/s, root 1171.1 cm off, - mannequin balls 4.4/1.4, worn 2.9/-0.5, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,1167
+11.85 s, stretch 3, stop, his right foot, slid 2.76 cm
+11.85 s, stretch 3, stop, the mannequin's right foot, slid 2.96 cm
+12.01 s, stretch 3, 200 cm/s, root 1120.0 cm off, - mannequin balls 1.1/6.8, worn -0.4/4.6, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,1115
+12.26 s, stretch 3, 200 cm/s, root 1071.6 cm off, - mannequin balls 1.3/2.6, worn -0.7/1.0, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,1067
+12.27 s, stretch 3, turn, his left foot, slid 4.97 cm
+12.27 s, stretch 3, turn, the mannequin's left foot, slid 7.12 cm
+12.51 s, stretch 3, 200 cm/s, root 1022.2 cm off, - mannequin balls 3.2/1.0, worn 1.1/-0.4, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,1017
+12.74 s, stretch 3, turn, his right foot, slid 1.17 cm
+12.74 s, stretch 3, turn, the mannequin's right foot, slid 3.78 cm
+12.76 s, stretch 3, 200 cm/s, root 971.8 cm off, - mannequin balls 2.4/3.9, worn 0.6/2.4, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,967
+13.00 s, stretch 3, 200 cm/s, root 923.7 cm off, - mannequin balls 1.1/2.9, worn -0.2/0.6, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,918
+13.24 s, stretch 3, loop, his left foot, slid 0.96 cm
+13.24 s, stretch 3, loop, the mannequin's left foot, slid 2.04 cm
+13.25 s, stretch 3, 200 cm/s, root 873.6 cm off, - mannequin balls 4.8/2.1, worn 3.4/0.0, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,868
+13.52 s, stretch 3, 200 cm/s, root 821.7 cm off, - mannequin balls 5.7/0.9, worn 3.7/-0.7, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,816
+13.71 s, stretch 3, loop, his right foot, slid 1.29 cm
+13.71 s, stretch 3, loop, the mannequin's right foot, slid 1.57 cm
+13.76 s, stretch 3, 200 cm/s, root 773.2 cm off, - mannequin balls 1.3/8.1, worn -0.5/7.6, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,767
+14.01 s, stretch 3, 200 cm/s, root 724.7 cm off, - mannequin balls 0.9/4.4, worn -0.7/2.3, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,718
+14.21 s, stretch 3, loop, his left foot, slid 1.26 cm
+14.21 s, stretch 3, loop, the mannequin's left foot, slid 2.08 cm
+14.25 s, stretch 3, 200 cm/s, root 676.3 cm off, - mannequin balls 6.0/1.6, worn 4.8/-0.5, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,669
+14.52 s, stretch 3, 200 cm/s, root 623.6 cm off, - mannequin balls 4.6/0.9, worn 2.7/-0.7, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,616
+14.73 s, stretch 3, loop, his right foot, slid 0.85 cm
+14.73 s, stretch 3, loop, the mannequin's right foot, slid 2.33 cm
+14.76 s, stretch 3, 200 cm/s, root 574.7 cm off, - mannequin balls 1.2/6.3, worn -0.6/5.4, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,566
+14.97 s, stretch 3, loop, his right foot, slid 0.00 cm
+15.01 s, stretch 3, 200 cm/s, root 526.2 cm off, - mannequin balls 0.9/3.5, worn -0.6/1.4, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,517
+15.18 s, stretch 4, loop, his left foot, slid 11.29 cm
+15.18 s, stretch 4, loop, the mannequin's left foot, slid 9.11 cm
+15.26 s, stretch 4, 63 cm/s, root 516.1 cm off, - mannequin balls 6.7/-0.2, worn 5.3/-2.3, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,506
+15.39 s, stretch 4, turn, the mannequin's right foot, slid 7.24 cm
+15.41 s, stretch 4, turn, his right foot, slid 7.11 cm
+15.51 s, stretch 4, 200 cm/s, root 556.6 cm off, - mannequin balls 0.6/8.1, worn -1.3/7.6, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,548
+15.75 s, stretch 4, 200 cm/s, root 605.1 cm off, - mannequin balls 0.8/7.7, worn -1.1/5.4, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,597
+15.89 s, stretch 4, turn, his left foot, slid 10.27 cm
+15.91 s, stretch 4, turn, the mannequin's left foot, slid 12.42 cm
+16.00 s, stretch 4, 200 cm/s, root 654.1 cm off, - mannequin balls 8.4/1.2, worn 7.3/-0.8, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,646
+16.17 s, stretch 4, loop, his left foot, slid 12.06 cm
+16.17 s, stretch 4, loop, the mannequin's left foot, slid 11.73 cm
+16.27 s, stretch 4, 200 cm/s, root 706.5 cm off, - mannequin balls 7.5/2.7, worn 5.8/0.4, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,699
+16.34 s, stretch 4, turn, his right foot, slid 3.04 cm
+16.36 s, stretch 4, turn, the mannequin's right foot, slid 5.81 cm
+16.51 s, stretch 4, 200 cm/s, root 754.8 cm off, - mannequin balls 0.8/9.0, worn -0.9/7.3, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,748
+16.75 s, stretch 4, 200 cm/s, root 803.3 cm off, - mannequin balls 0.7/13.5, worn -1.3/12.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,797
+16.85 s, stretch 4, loop, his left foot, slid 3.11 cm
+16.85 s, stretch 4, loop, the mannequin's left foot, slid 4.69 cm
+17.00 s, stretch 4, 200 cm/s, root 852.4 cm off, - mannequin balls 7.1/0.8, worn 5.5/-0.8, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,847
+17.26 s, stretch 4, 200 cm/s, root 904.6 cm off, - mannequin balls 12.0/0.7, worn 10.8/-1.3, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,899
+17.32 s, stretch 4, loop, his right foot, slid 1.41 cm
+17.32 s, stretch 4, loop, the mannequin's right foot, slid 1.85 cm
+17.50 s, stretch 4, 200 cm/s, root 952.1 cm off, - mannequin balls 0.8/5.9, worn -0.7/4.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,947
+17.57 s, stretch 4, loop, his right foot, slid 0.00 cm
+17.76 s, stretch 4, 200 cm/s, root 1003.9 cm off, - mannequin balls 0.7/11.6, worn -1.3/10.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,999
+17.83 s, stretch 4, loop, his left foot, slid 1.47 cm
+17.83 s, stretch 4, loop, the mannequin's left foot, slid 2.65 cm
+18.01 s, stretch 4, 200 cm/s, root 1054.2 cm off, - mannequin balls 6.3/0.8, worn 4.5/-0.7, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,1049
+18.26 s, stretch 4, 200 cm/s, root 1103.4 cm off, - mannequin balls 11.3/0.5, worn 10.1/-1.7, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,1099
+18.34 s, stretch 4, loop, his right foot, slid 0.69 cm
+18.34 s, stretch 4, loop, the mannequin's right foot, slid 3.07 cm
+18.50 s, stretch 4, 200 cm/s, root 1151.9 cm off, - mannequin balls 0.8/6.1, worn -0.8/4.5, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 100,1148
+18.58 s, stretch 5, turn, his right foot, slid 10.20 cm
+18.76 s, stretch 5, 200 cm/s, root 1196.7 cm off, - mannequin balls 0.7/12.0, worn -1.3/10.4, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 82,1194
+18.84 s, stretch 5, loop, his left foot, slid 4.67 cm
+18.84 s, stretch 5, loop, the mannequin's left foot, slid 5.89 cm
+19.01 s, stretch 5, 200 cm/s, root 1232.4 cm off, - mannequin balls 6.9/0.7, worn 5.3/-1.2, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 48,1231
+19.25 s, stretch 5, 200 cm/s, root 1265.6 cm off, - mannequin balls 13.2/0.7, worn 12.2/-1.6, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at 14,1266
+19.35 s, stretch 5, turn, his right foot, slid 2.51 cm
+19.35 s, stretch 5, turn, the mannequin's right foot, slid 4.06 cm
+19.51 s, stretch 5, 194 cm/s, root 1302.4 cm off, - mannequin balls 0.9/6.4, worn -0.6/4.7, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at -20,1302
+19.61 s, stretch 5, loop, his right foot, slid 20.38 cm
+19.76 s, stretch 5, 199 cm/s, root 1347.4 cm off, - mannequin balls 1.3/14.4, worn -1.1/12.7, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at -20,1347
+19.86 s, stretch 5, turn, his left foot, slid 5.67 cm
+19.86 s, stretch 5, turn, the mannequin's left foot, slid 4.32 cm
+20.00 s, stretch 5, 199 cm/s, root 1395.6 cm off, - mannequin balls 8.5/1.0, worn 7.0/-0.8, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at -20,1395
+20.26 s, stretch 6, 200 cm/s, root 1446.6 cm off, - mannequin balls 11.6/0.6, worn 10.7/-1.6, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at -20,1446
+20.34 s, stretch 6, loop, his right foot, slid 1.59 cm
+20.35 s, stretch 6, loop, the mannequin's right foot, slid 1.11 cm
+20.51 s, stretch 6, 200 cm/s, root 1497.6 cm off, - mannequin balls 0.6/6.1, worn -1.2/4.4, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at -20,1498
+20.75 s, stretch 6, 200 cm/s, root 1546.0 cm off, - mannequin balls 0.8/12.3, worn -1.3/10.6, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at -20,1546
+20.83 s, stretch 6, turn, his left foot, slid 1.36 cm
+20.83 s, stretch 6, turn, the mannequin's left foot, slid 2.26 cm
+21.01 s, stretch 6, 200 cm/s, root 1597.7 cm off, - mannequin balls 5.7/0.9, worn 3.9/-0.7, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at -20,1598
+21.09 s, stretch 6, turn, his left foot, slid 10.01 cm
+21.25 s, stretch 6, 200 cm/s, root 1645.7 cm off, - mannequin balls 13.0/0.9, worn 11.7/-1.4, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at -20,1646
+21.35 s, stretch 6, turn, his right foot, slid 2.61 cm
+21.35 s, stretch 6, turn, the mannequin's right foot, slid 4.92 cm
+21.51 s, stretch 6, 200 cm/s, root 1696.5 cm off, - mannequin balls 0.9/7.1, worn -0.8/5.3, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at -20,1696
+21.76 s, stretch 6, 200 cm/s, root 1746.6 cm off, - mannequin balls 0.8/12.5, worn -1.2/10.9, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at -20,1747
+21.85 s, stretch 6, loop, his left foot, slid 1.04 cm
+21.85 s, stretch 6, loop, the mannequin's left foot, slid 3.29 cm
+22.01 s, stretch 6, 200 cm/s, root 1796.6 cm off, - mannequin balls 6.8/1.0, worn 5.2/-0.8, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 200, mode 1, at -20,1796
+22.25 s, stretch 7, 0 cm/s, root 1817.3 cm off, - mannequin balls 6.1/1.3, worn 4.6/-0.7, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,1817
+22.30 s, stretch 7, loop, his right foot, slid 1.48 cm
+22.30 s, stretch 7, loop, the mannequin's right foot, slid 0.47 cm
+22.50 s, stretch 7, 0 cm/s, root 1817.3 cm off, - mannequin balls 1.1/2.1, worn -0.7/-0.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,1817
+22.73 s, stretch 7, stop, the mannequin's left foot, slid 15.16 cm
+22.77 s, stretch 7, 0 cm/s, root 1817.3 cm off, - mannequin balls 2.0/1.0, worn 0.1/-1.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,1817
+23.02 s, stretch 7, 0 cm/s, root 1817.3 cm off, - mannequin balls 1.0/1.0, worn -0.7/-1.0, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,1817
+23.26 s, stretch 7, 0 cm/s, root 1817.3 cm off, - mannequin balls 1.0/1.0, worn -0.7/-0.9, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,1817
+23.51 s, stretch 7, 0 cm/s, root 1817.3 cm off, - mannequin balls 1.0/1.0, worn -0.7/-0.9, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,1817
+23.76 s, stretch 7, 0 cm/s, root 1817.3 cm off, - mannequin balls 1.0/1.0, worn -0.7/-0.8, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,1817
+24.01 s, stretch 7, 0 cm/s, root 1817.3 cm off, - mannequin balls 1.1/1.1, worn -0.7/-0.8, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,1817
+24.25 s, stretch 7, 0 cm/s, root 1817.3 cm off, - mannequin balls 1.1/1.1, worn -0.7/-0.8, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,1817
+24.50 s, stretch 7, 0 cm/s, root 1817.3 cm off, - mannequin balls 1.1/1.1, worn -0.6/-0.8, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,1817
+24.69 s, stretch 8, stop, his right foot, slid 4.44 cm
+24.69 s, stretch 8, stop, the mannequin's right foot, slid 3.79 cm
+24.75 s, stretch 8, 125 cm/s, root 1804.5 cm off, - mannequin balls 0.4/3.9, worn -1.5/1.6, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 500, mode 1, at -20,1804
+24.95 s, stretch 8, stop, his left foot, slid 34.35 cm
+24.95 s, stretch 8, stop, the mannequin's left foot, slid 16.42 cm
+25.00 s, stretch 8, 325 cm/s, root 1743.1 cm off, - mannequin balls 5.9/0.6, worn 5.3/-1.6, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 500, mode 1, at -20,1743
+25.14 s, stretch 8, run, his right foot, slid 2.58 cm
+25.14 s, stretch 8, run, the mannequin's right foot, slid 1.95 cm
+25.25 s, stretch 8, 500 cm/s, root 1632.1 cm off, - mannequin balls -0.0/25.8, worn -2.0/24.6, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 500, mode 1, at -20,1632
+25.33 s, stretch 8, run, his left foot, slid 6.17 cm
+25.33 s, stretch 8, run, the mannequin's left foot, slid 1.81 cm
+25.51 s, stretch 8, 500 cm/s, root 1503.2 cm off, - mannequin balls 48.5/0.5, worn 48.9/-1.8, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 500, mode 1, at -20,1503
+25.61 s, stretch 8, run, his right foot, slid 0.86 cm
+25.61 s, stretch 8, run, the mannequin's right foot, slid 1.85 cm
+25.75 s, stretch 8, 500 cm/s, root 1381.7 cm off, - mannequin balls 1.1/42.1, worn -1.0/42.3, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 500, mode 1, at -20,1382
+25.85 s, stretch 8, run, his left foot, slid 2.89 cm
+25.85 s, stretch 8, run, the mannequin's left foot, slid 2.12 cm
+26.02 s, stretch 8, 500 cm/s, root 1251.8 cm off, - mannequin balls 55.1/5.2, worn 56.0/3.2, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 500, mode 1, at -20,1252
+26.16 s, stretch 8, run, his right foot, slid 1.21 cm
+26.16 s, stretch 8, run, the mannequin's right foot, slid 1.28 cm
+26.26 s, stretch 8, 500 cm/s, root 1127.2 cm off, - mannequin balls 13.5/39.1, worn 11.8/38.5, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 500, mode 1, at -20,1127
+26.49 s, stretch 8, run, his left foot, slid 1.03 cm
+26.49 s, stretch 8, run, the mannequin's left foot, slid 1.56 cm
+26.50 s, stretch 8, 500 cm/s, root 1008.4 cm off, - mannequin balls 4.1/17.4, worn 2.5/15.4, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 500, mode 1, at -20,1008
+26.75 s, stretch 8, 500 cm/s, root 884.1 cm off, - mannequin balls 37.1/0.3, worn 36.6/-1.9, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 500, mode 1, at -20,884
+26.81 s, stretch 8, run, his right foot, slid 0.77 cm
+26.81 s, stretch 8, run, the mannequin's right foot, slid 2.09 cm
+27.00 s, stretch 8, 500 cm/s, root 759.4 cm off, - mannequin balls -0.3/53.4, worn -2.2/54.2, graph SandboxCharacter_CMC_ABP_C, lod 0; push 1.00, its input 1.00, accel 800, max 500, mode 1, at -20,759
+27.12 s, stretch 9, run, his left foot, slid 0.57 cm
+27.12 s, stretch 9, run, the mannequin's left foot, slid 2.14 cm
+27.25 s, stretch 9, 193 cm/s, root 667.4 cm off, - mannequin balls 19.5/9.9, worn 18.8/7.9, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,667
+27.50 s, stretch 9, 0 cm/s, root 662.9 cm off, - mannequin balls 9.1/0.8, worn 7.2/-1.5, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,663
+27.75 s, stretch 9, 0 cm/s, root 662.9 cm off, - mannequin balls 1.3/0.8, worn -0.9/-1.5, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,663
+27.87 s, stretch 9, stop, the mannequin's right foot, slid 2.54 cm
+27.89 s, stretch 9, stop, his right foot, slid 2.80 cm
+28.02 s, stretch 9, 0 cm/s, root 662.9 cm off, - mannequin balls 0.9/2.4, worn -0.9/0.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,663
+28.27 s, stretch 9, 0 cm/s, root 662.9 cm off, - mannequin balls 0.9/1.5, worn -0.9/-0.7, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,663
+28.51 s, stretch 9, 0 cm/s, root 662.9 cm off, - mannequin balls 1.2/0.9, worn -0.5/-1.1, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,663
+28.76 s, stretch 9, 0 cm/s, root 662.9 cm off, - mannequin balls 1.4/1.0, worn -0.4/-1.0, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,663
+29.01 s, stretch 9, 0 cm/s, root 662.9 cm off, - mannequin balls 1.2/1.1, worn -0.5/-0.9, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,663
+29.26 s, stretch 9, 0 cm/s, root 662.9 cm off, - mannequin balls 1.1/1.1, worn -0.7/-0.8, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,663
+29.50 s, stretch 9, 0 cm/s, root 662.9 cm off, - mannequin balls 1.2/1.1, worn -0.6/-0.9, graph SandboxCharacter_CMC_ABP_C, lod 0; push 0.00, its input 0.00, accel 0, max 200, mode 1, at -20,663

@@ -55,6 +55,12 @@ No decision asked: these are for watching the street change.
 - *The 38 ms frame with the voice:* partly. In half the walks the engine's first garbage collection, a minute after loading, cost one frame 31 to 50 ms; it is now collected behind the title, and walks with no voice hold every frame under 33.3 ms (worst 24 to 27). With Pocket working beside the game one frame still runs 42 to 55 ms at the day schedule's moment, when people move and shadows switch: the processor is crowded. Set aside after two tries; next, a trace of that moment.
 - *The card's spare time:* at night back to 2.7 ms (it fell to 0.1 when today's shops came in: their window lamps' shadows); those lamps now cast only from their own shop and only within 15 m, which fresh reviewers passed on all four night street cameras. By day 1.7 to 1.8 ms against the plan's 2.5 (Needs you 3). The measure now sets the picture level (2.1 ms of the old "loss" was the Highest level).
 
+**Your order of 24 October, the walk by Epic's MetaHuman route, to Saturday 18:00 (24 October, 10:50).** Built, measured, and set aside on the bar after two tries (production/research/sit-and-turn/METAHUMAN-ROUTE-2026-10-24.md, checked by a fresh reviewer).
+- *How it works:* the sample's own character, unchanged and unseen, does the moving; Tom wears his MetaHuman (L1) over it through Epic's own retargeter, as the sample dresses its MetaHuman. It runs in the game behind a switch, off by default; the packaged game still builds and runs with the sample's parts in it (15 ms a frame, 5.5 GB on the card).
+- *The slide:* the typical step is near the bar (medians 1 to 4 cm), the worst are not: starts 15 cm, turns 11, stops 35 (the stop's last little scuff of the trailing foot), against 51, 50 and 19 for the walk he has. The hidden figure's feet slide as much as Tom's, so the slide is in the sample's walk, not in dressing him.
+- *Tried and failed (each shown to have taken):* the sample's own alternatives (its control-rig feet; its lighter animation sets, worse); and its foot lock held through each step. The cause is not yet known.
+- *Next, by research first:* whether the measure counts what you would see (pictures of the worst steps judged beside the numbers; the scuff may be a natural last step), then a frame-by-frame trace of one bad step.
+
 **The tester's walk (24 October, 02:30 to 03:01; production/playtest/nightly/2026-10-24.md).**
 - The route ran 13 of 15 stages. It failed at Ron (never within reach, 3.7 m away) and at Darren (lost from sight).
 - Nobody the record names saw Rita's window broken. One person, Rocco, showed afterwards that he knew, the same as the night before.
@@ -86,20 +92,17 @@ Nothing waits on you. Your answers of 24 October are recorded (RULINGS.md): the 
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
 
-## Builder, Saturday 24 October (07:25)
+## Builder, Saturday 24 October (10:55)
 
 **Failed:**
-- **A frame with the voice beside the game:** one per walk still runs 42 to 55 ms when the day's schedule moves people and shadows switch; set aside after two tries.
-- **The card's spare time by day:** 1.7 to 1.8 ms against the plan's 2.5, since the grocer and the chandler came in (Needs you 3).
-- **Set aside:** the chandler's side lining glares at night; its sou'westers left the window.
+- **The walk by Epic's route:** typical steps near the 3 cm bar, worst 11 to 35 cm; set aside after two tries, cause not yet known.
+- **A frame with the voice beside the game:** one per walk still runs 42 to 55 ms; set aside.
+- **Set aside earlier:** the chandler's side lining glares at night.
 
 **Done:**
-- **The chandler's** passed its ten views: item 5 is done.
-- **The 87 ms stall** is gone: a bundled pipeline cache.
-- **The night's spare card time** is 2.7 ms: window lamps cast shadows only near their own shop.
-- **Card memory:** the game alone peaks 5.9 GB.
+- **The walk's route is built:** the sample's own character moves, Tom wears his MetaHuman; the packaged game builds and runs with it (off by default).
 - **The launderette** passed all ten views with its wear: your 23 October order is done.
+- **The 87 ms stall** is gone; **the night's spare card time** is 2.7 ms; **card memory**, the game alone, peaks 5.9 GB.
+- **Your answers** on the voice, the daytime budget and Marvelous are in the rulings.
 
-**Resumed** at 08:00 on your new order: the walk's next go, to 18:00.
-
-**Act on:** nothing waits on you; the walk's next go runs to 18:00.
+**Act on:** nothing waits on you; the walk's next step is research, to 18:00.

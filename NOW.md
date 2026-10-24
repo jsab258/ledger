@@ -22,9 +22,9 @@ Phase 1 closed 22 Oct, no exit passed (production/audits/phase1-exit/CLOSE-2026-
 
 ## His order of 24 October (to Sat 18:00)
 
-- [ ] The walk by Epic's MetaHuman route, 3 cm slide bar: research/sit-and-turn/.
+- [x] The walk by Epic's MetaHuman route: built; slide set aside (worst 11-35 cm): sit-and-turn/METAHUMAN-ROUTE-2026-10-24.md.
 
-STATE (24 Oct 08:05): researching the route. Next shops, on his word: empty unit, Mickey's, fish market.
+STATE (24 Oct 10:55): walk set aside, reviewed; next, research: is the slide visible?
 
 ## Handovers
 

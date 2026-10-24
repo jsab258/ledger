@@ -519,6 +519,27 @@ void ALedgerSliceCharacter::GaspTick()
 			else if (N.StartsWith(TEXT("WantsToSprint")) || N.StartsWith(TEXT("WantsToStrafe")) || N.StartsWith(TEXT("WantsToAim"))) { It->SetPropertyValue_InContainer(Data, false); }
 		}
 	}
+	// THE SAMPLE'S FOOT LOCK HELD THROUGH EACH CONTACT (24 October, try 2 at the slide; only with
+	// -GaspUnplantCm= and/or -GaspUnplantDeg=): its foot placement holds a planted foot until the animation's
+	// foot is 20 cm or 60 degrees away (40 cm in stops; its PlantSettings_Default and _Stops), then lets it go
+	// and eases it over; with a wider radius it lets go only as the animation lifts the foot (its contact
+	// curves). Set on the mover's own graph each frame, Epic's asset untouched.
+	static float UnplantCm = -1.0f, UnplantDeg = -1.0f;
+	static const bool bUnplant = FParse::Value(FCommandLine::Get(), TEXT("GaspUnplantCm="), UnplantCm) | FParse::Value(FCommandLine::Get(), TEXT("GaspUnplantDeg="), UnplantDeg);
+	if (bUnplant)
+	{
+		if (UAnimInstance* Graph = GaspMover->GetMesh()->GetAnimInstance())
+		{
+			for (const TCHAR* Which : { TEXT("PlantSettings_Default"), TEXT("PlantSettings_Stops") })
+			{
+				FStructProperty* Plant = FindFProperty<FStructProperty>(Graph->GetClass(), Which);
+				if (Plant == nullptr) { continue; }
+				void* Settings = Plant->ContainerPtrToValuePtr<void>(Graph);
+				if (UnplantCm > 0.0f) { if (FFloatProperty* R = FindFProperty<FFloatProperty>(Plant->Struct, TEXT("UnplantRadius"))) { R->SetPropertyValue_InContainer(Settings, UnplantCm); } }
+				if (UnplantDeg > 0.0f) { if (FFloatProperty* A = FindFProperty<FFloatProperty>(Plant->Struct, TEXT("UnplantAngle"))) { A->SetPropertyValue_InContainer(Settings, UnplantDeg); } }
+			}
+		}
+	}
 	// what reads his speed (his steps, people noticing him) reads the mover's
 	GetCapsuleComponent()->ComponentVelocity = GaspMover->GetVelocity();
 	GetCharacterMovement()->Velocity = GaspMover->GetVelocity();
@@ -645,9 +666,31 @@ void ALedgerSliceCharacter::WalkProofTick(float DeltaSeconds)
 				Kinds += FString::Printf(TEXT(" %s=%.2f/%d"), GKindNames[K], F.Worst[K], F.Contacts[K]);
 				Driver += FString::Printf(TEXT(" %s=%.2f/%d"), GKindNames[K], Soles[1].Worst[K], Soles[1].Contacts[K]);
 			}
-			const FString Line = FString::Printf(TEXT("ledgerTomWalk=%s mode=%s worstJoinCm=%.2f%s frames=%d mannequin:%s"), bPass ? TEXT("PASS") : TEXT("FAIL"),
+			// on Epic's route, the sample's settings as they stood at the route's end (so a setting given at
+			// launch is shown to have taken), and whether its character moved by its animation's root motion
+			FString Settings;
+			if (GaspMover != nullptr)
+			{
+				auto CVarInt = [](const TCHAR* N) { const IConsoleVariable* V = IConsoleManager::Get().FindConsoleVariable(N); return V != nullptr ? V->GetInt() : -1; };
+				const FBoolProperty* RootMotion = FindFProperty<FBoolProperty>(GaspMover->GetClass(), TEXT("UsingAttributeBasedRootMotion"));
+				// and the foot lock's let-go distance and angle in force on the mover's graph
+				float Radius = -1.0f, Angle = -1.0f;
+				if (const UAnimInstance* Graph = GaspMover->GetMesh()->GetAnimInstance())
+				{
+					if (const FStructProperty* Plant = FindFProperty<FStructProperty>(Graph->GetClass(), TEXT("PlantSettings_Default")))
+					{
+						const void* PS = Plant->ContainerPtrToValuePtr<void>(Graph);
+						if (const FFloatProperty* R = FindFProperty<FFloatProperty>(Plant->Struct, TEXT("UnplantRadius"))) { Radius = R->GetPropertyValue_InContainer(PS); }
+						if (const FFloatProperty* A = FindFProperty<FFloatProperty>(Plant->Struct, TEXT("UnplantAngle"))) { Angle = A->GetPropertyValue_InContainer(PS); }
+					}
+				}
+				Settings = FString::Printf(TEXT(" settings: footPlacementMode=%d databaseLevel=%d rootMotionSetting=%d rootMotionUsed=%d unplantCm=%.0f unplantDeg=%.0f"),
+					CVarInt(TEXT("DDCvar.FootPlacementMode")), CVarInt(TEXT("DDCvar.MMDatabaseLOD")), CVarInt(TEXT("DDCVar.AttributeBasedRootMotion.Enable")),
+					RootMotion != nullptr ? (RootMotion->GetPropertyValue_InContainer(GaspMover.Get()) ? 1 : 0) : -1, Radius, Angle);
+			}
+			const FString Line = FString::Printf(TEXT("ledgerTomWalk=%s mode=%s worstJoinCm=%.2f%s frames=%d mannequin:%s%s"), bPass ? TEXT("PASS") : TEXT("FAIL"),
 				GaspMover != nullptr ? TEXT("gasp-metahuman") : (MotionDriver != nullptr ? (FParse::Param(FCommandLine::Get(), TEXT("LedgerNoOffsetRoot")) ? TEXT("matched-no-offset") : TEXT("matched")) : TEXT("clips")),
-				Joins, *Kinds, ProofFrames, (MotionDriver != nullptr || GaspMover != nullptr) ? *Driver : TEXT(" none"));
+				Joins, *Kinds, ProofFrames, (MotionDriver != nullptr || GaspMover != nullptr) ? *Driver : TEXT(" none"), *Settings);
 			UE_LOG(LogTemp, Display, TEXT("%s"), *Line);
 			FFileHelper::SaveStringToFile(Line + LINE_TERMINATOR + ProofLines, *(FPaths::ProjectSavedDir() / TEXT("Logs") / TEXT("tom-walk.txt")));
 			GetCharacterMovement()->MaxWalkSpeed = WalkSpeedCm;
@@ -778,7 +821,11 @@ void ALedgerSliceCharacter::MeasureBody(int32 B, USkeletalMeshComponent* Body, i
 	for (int32 I = 0; I < 2; ++I)
 	{
 		const float Rest = F.RestN > 0 ? F.Rest[I] / F.RestN : 0.0f;
-		const bool bDown = H[I] - Rest < 2.5f && H[I] <= H[1 - I] + 1.0f;
+		// each foot against its own standing height, the other foot likewise (24 October, the fresh review of
+		// Epic's route: the two balls stand a few millimetres apart, and comparing raw heights read a swinging
+		// foot passing low as planted)
+		const float RestOther = F.RestN > 0 ? F.Rest[1 - I] / F.RestN : 0.0f;
+		const bool bDown = H[I] - Rest < 2.5f && H[I] - Rest <= H[1 - I] - RestOther + 1.0f;
 		if (bDown && !F.bDown[I])
 		{
 			F.Planted[I] = P[I];

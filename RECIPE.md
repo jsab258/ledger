@@ -19,6 +19,26 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 24 Oct 2026, the walk's second go: a sample's own character as an unseen mover, the game's character worn over it, set aside on its slide
+- Made: a vendor sample's moving character, unchanged, driven as a puppet by the game's player character; the game's MetaHuman worn over it through the sample's own retarget; a walk measure on a set route; two tries at the slide, both set aside.
+- Method (setting-free):
+  - Read the sample's own shipped files before its documentation. The vendor's pages described an older version; the shipped blueprints (exported to text) showed the real method: a tagged slot, a hidden source mesh, a tag naming the retargeter.
+  - A sample's character needs the sample's plugins and project settings, not only its assets. Its graphs read settings that default to "off" when absent: here the foot placement mode. A plugin that asserts on the game's own code is left out, and the sample's graphs checked to still compile.
+  - Drive a vendor character as a puppet: give it a controller, hand it the player's input and pace through its own input state each frame, and let the player's character ride on it. Where the game moves the player, move the puppet. Check the puppet's defaults that assume a player's view (strafing toward the controller).
+  - A worn body that animates only when drawn freezes under a test camera: make the player's body always animate.
+  - Trust no number until the trace explains it. A foot "sliding" four metres means the measure, or the set-up, is wrong. Four harness faults were found that way before any number counted.
+  - Measure contact from the ground under each foot, not from the character's capsule. Kerbs and cambers move the capsule's floor.
+  - A retargeter that pins the worn feet to the source's feet copies the source's slide one for one. Measure the source body too, so a slide is put down to the motion or to the copy.
+  - Show each setting given at launch took, in the result line itself: one of the two first tries never took (the vendor's root motion), and was no try.
+  - Have the findings reviewed fresh against the runs before writing the cause: the first write-up took medians wrongly, missed a fault in its own measure (comparing two feet's raw heights) and named a cause that the next try disproved.
+- Tools: the sample's blueprints exported to text and searched, the engine's source, the asset registry's dependency list, the game's set walking route with a per-frame trace, two research helpers in parallel.
+- Target and check: a foot slide of 3 cm or less at starts, stops and turns, on a set route. Two runs per setting from the same start; the worn body and the source body measured alike.
+- Cost (hours): about 3, 08:00 to 10:50 (research and a fresh review alongside).
+- Failed and why:
+  - The slide stayed at 11 to 35 cm at worst (medians 1 to 4). The vendor's own options gained nothing; holding its foot lock through each contact changed nothing, so the lock letting go is not the cause. Set aside after two tries, the cause not yet known.
+  - The first runs failed for harness reasons: the puppet was made before the game placed the player; it strafed; the worn body froze; heights came from the capsule; two feet's raw heights were compared.
+- Evidence: production/research/sit-and-turn/METAHUMAN-ROUTE-2026-10-24.md; production/research/sit-and-turn/metahuman-route-2026-10-24/runs/
+
 ### 24 Oct 2026, the next shop family: a seventh delivered shop whose design had failed its own close review, fixed on the PC and brought in
 - Made: a designed shop in the street's bay: its front with a recessed lobby and a lit sign, its window display, its room pictures, and its front's foot wear. The design's three close-review faults were fixed first: goods read as cushions, washing read as blobs, and a real firm's name.
 - Method (setting-free):
