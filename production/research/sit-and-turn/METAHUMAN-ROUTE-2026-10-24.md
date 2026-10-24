@@ -14,6 +14,12 @@ His order of 24 October: "start the walk's next go now ... by Epic's MetaHuman r
   - one steady-walk step 21 cm.
 - His own clips, measured the same way, give starts 51, turns 50 and steady walk 52 at worst. Their medians are 3 to 23.
 - The hidden mannequin's feet slide as much as Tom's. The copying adds little; the slide comes from the sample's own walk as driven here.
+- **By eye** (research after the set-aside, pictures judged by a fresh reviewer): ordinary planted steps hold within 1.5 cm. A weight-bearing foot visibly slides 10 to 15 cm at about five moments of the route:
+  - a stop's flat glide of 13 cm, the one a player may notice;
+  - a pivot;
+  - two turns from standing;
+  - a landing.
+  The measure's other large figures are swinging feet passing low.
 
 This text was corrected after a fresh review (`metahuman-route-2026-10-24/REVIEW.md`), which found:
 - the medians wrongly taken;
@@ -103,39 +109,50 @@ Not a try: the sample's attribute-based root motion. Set from startup, the setti
 ## Why it stops short of 3 cm: what is known, and what is not
 
 - **Known:** the mannequin under him slides as much as he does. With Blend to Source = 1 he copies its feet, so the slide is in the sample's own walk as driven here.
-- **Known:** its foot lock letting go is not the cause (try 2).
-- **Not known:**
-  - whether the slide comes from the motion matching's half-second blends between clips;
-  - whether it comes from the contact curves marking a foot as moving while it is still low (the stop's scuff);
-  - whether it comes from the sample's speeds against the clips;
-  - whether a player sees these slides at all.
+- **Known:** its foot lock letting go at a distance is not the cause (try 2).
+- **Known:** the body does not lag its capsule. The sample's root offset is 0 cm at every frame of the worst stop, because its own default `DDCvar.OffsetRootBone.TranslationRadius` is 0. So the stop glide is not the body catching up.
+- **Likely, not proved:** each real slide happens just after the sample's animation marks the foot as moving while it is still on the floor. Its foot lock then releases the foot and eases it along the floor to where the clip has it, which shows the drift the lock had hidden.
 
-## Next directions (research, not tries; set aside under his rule)
+## Research after the set-aside: does the measure count what a player sees? (24 October, 11:00 to 12:00)
 
-- **C first: does the measure count what a player sees?**
-  - Take side-on pictures of the worst steps of each kind.
-  - Have a fresh reviewer judge them beside the numbers.
-  - Find how the field measures foot skate: contact by height and speed, heel and toe.
-  - If the worst steps are the stop's scuff and heel pivots, the bar's measure, which is his, may need his word.
-- **A: a world-space foot lock on Tom's own body after the retarget.**
-  - The engine allows it: an IK Rig node fed world-space goals (ENGINE-SOURCE.md, point 5).
-  - It is needed only if C finds real, visible slides that the sample's own lock does not catch.
-- **D: trace one bad step frame by frame:**
-  - the clip and the blend weight;
-  - the contact curve;
-  - the planted ball's drift.
-  - Then the cause is known before anything else is tried.
-- **To make it the default, whichever passes:**
-  - its assets reach the build machine (a copy step, as the MetaHumans have);
-  - it is walked packaged.
+The walk itself is unchanged. These are readings and pictures.
+
+- **How the field measures foot skate** (`metahuman-route-2026-10-24/FOOT-SKATE-MEASURES.md`, 28 sources):
+  - A foot is planted when it is both low and slow, heel and toe apart (Epic's Foot Placement: ball under 60 cm/s and within 10 cm).
+  - Skate is reported as an average or a share of frames, never the worst single contact. Real motion capture scores above zero.
+  - No studio or paper publishes a pass mark; studios judge by eye.
+  - About 2 to 3 cm is roughly what people notice. A 2011 study (abstract only) puts viewers' detection at under about 2 cm; walking-slip research puts a felt slip at about 3 cm.
+- **The worst steps pictured and judged by a fresh reviewer** (`metahuman-route-2026-10-24/VISUAL-REVIEW.md`):
+  - All ten spans were pictured on a fixed time step, with a still side camera.
+  - Ordinary planted steps hold within 1.5 cm.
+  - A weight-bearing foot visibly moves more than 3 cm in about five places:
+    - a stop where the front foot glides back flat about 13 cm after the body has stopped. This is the one a player is most likely to see: possibly from behind, obviously from the side.
+    - a pivot's forefoot slide of about 15 cm;
+    - two standing turns of 10 to 12 cm each;
+    - an unclear landing of 7 to 12 cm.
+  - The height reading's other big figures are swinging feet passing 1 to 2.5 cm over the floor, or separate contacts merged across a stop.
+- **A second reading, planted by the animation's own contact marks:**
+  - It is reported beside the height reading in each result line.
+  - It gives worst 2.7 to 2.8 cm (a pass) but misses all the real slides above, because the animation marks those feet as moving.
+  - **It is not adopted.** It would pass a walk that visibly slides.
+- **What this means for the bar's measure:** the height reading over-counts (swings, merged contacts), and the contact-mark reading under-counts (drags marked as moving). Neither is the field's own; the field judges by eye. The walk fails the bar by eye too, by about 10 to 15 cm at five moments.
+
+## Next directions (for the next go; the slide stays set aside under his rule)
+
+- **D, now first: one bad step traced inside the sample's foot placement.** For the stop at 22.5 s and the pivot at 15.0 s, compare where the animation puts the foot with where the lock holds it, while in contact and through the release. If the hidden drift is the cause, the fix sits where the animation's foot leaves the capsule:
+  - the clips' speeds against the capsule's (the sample's 200 cm/s walk with 2,000 cm/s² braking);
+  - or the lock's release made at lift, not at the mark.
+- **A: a world-space foot lock on Tom's own body after the retarget,** releasing only when the foot lifts clear (engine route: ENGINE-SOURCE.md, point 5). Expect the leg to take up the drift instead (a stretched or bent knee). Holden: "almost always better to let feet slide than to break the pose".
+- **C, the measure:** pictured judgement as the gate for the worst steps, as the field does. The height reading keeps flagging where to look.
+- **To make it the default, whichever passes:** its assets reach the build machine; it is walked packaged.
 
 ## Cost
 
-About 3 hours, 08:00 to 10:50, including the research helpers and the fresh review.
+About 4 hours, 08:00 to 12:00, including the research helpers, the fresh review of the findings and the reviewer of the pictures.
 
 ## Evidence
 
-- `metahuman-route-2026-10-24/`: QUESTIONS.md, EPIC-SOURCES.md, ENGINE-SOURCE.md, REVIEW.md.
+- `metahuman-route-2026-10-24/`: QUESTIONS.md, EPIC-SOURCES.md, ENGINE-SOURCE.md, REVIEW.md, FOOT-SKATE-MEASURES.md, VISUAL-REVIEW.md.
 - `metahuman-route-2026-10-24/runs/`, every run cited above:
   - gasp12a and gasp12b: Epic's route, final measure;
   - t1fp2v and t2locka/b: the tries;

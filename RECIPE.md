@@ -31,13 +31,16 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
   - A retargeter that pins the worn feet to the source's feet copies the source's slide one for one. Measure the source body too, so a slide is put down to the motion or to the copy.
   - Show each setting given at launch took, in the result line itself: one of the two first tries never took (the vendor's root motion), and was no try.
   - Have the findings reviewed fresh against the runs before writing the cause: the first write-up took medians wrongly, missed a fault in its own measure (comparing two feet's raw heights) and named a cause that the next try disproved.
+  - Judge the worst steps by eye before trusting any foot-slide number. Picture them on a fixed time step (pictures on a running clock stall frames and change the walk), with a camera held still through each moment, and have a fresh reviewer measure in pixels against the foot's own length.
+  - A planted test by height alone counts swinging feet passing low. A planted test by the animation's own contact marks misses drags marked as moving. Neither replaces the eye. The field publishes no pass mark, and judges by eye and averages.
+  - Never adopt a reading because it passes: here the contact-mark reading passed a walk that visibly slides 10 to 15 cm.
 - Tools: the sample's blueprints exported to text and searched, the engine's source, the asset registry's dependency list, the game's set walking route with a per-frame trace, two research helpers in parallel.
 - Target and check: a foot slide of 3 cm or less at starts, stops and turns, on a set route. Two runs per setting from the same start; the worn body and the source body measured alike.
-- Cost (hours): about 3, 08:00 to 10:50 (research and a fresh review alongside).
+- Cost (hours): about 4, 08:00 to 12:00 (research, a fresh review and a picture reviewer alongside).
 - Failed and why:
   - The slide stayed at 11 to 35 cm at worst (medians 1 to 4). The vendor's own options gained nothing; holding its foot lock through each contact changed nothing, so the lock letting go is not the cause. Set aside after two tries, the cause not yet known.
   - The first runs failed for harness reasons: the puppet was made before the game placed the player; it strafed; the worn body froze; heights came from the capsule; two feet's raw heights were compared.
-- Evidence: production/research/sit-and-turn/METAHUMAN-ROUTE-2026-10-24.md; production/research/sit-and-turn/metahuman-route-2026-10-24/runs/
+- Evidence: production/research/sit-and-turn/METAHUMAN-ROUTE-2026-10-24.md; production/research/sit-and-turn/metahuman-route-2026-10-24/ (runs/, VISUAL-REVIEW.md, FOOT-SKATE-MEASURES.md); production/previews/walk-stop-glide-2026-10-24.jpg
 
 ### 24 Oct 2026, the next shop family: a seventh delivered shop whose design had failed its own close review, fixed on the PC and brought in
 - Made: a designed shop in the street's bay: its front with a recessed lobby and a lit sign, its window display, its room pictures, and its front's foot wear. The design's three close-review faults were fixed first: goods read as cushions, washing read as blobs, and a real firm's name.

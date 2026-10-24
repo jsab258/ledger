@@ -900,6 +900,16 @@ void ALedgerSliceCharacter::MeasureBody(int32 B, USkeletalMeshComponent* Body, i
 			Src != nullptr ? Src->GetCurveValue(FName(TEXT("contact_l"))) : -1.0f, Src != nullptr ? Src->GetCurveValue(FName(TEXT("contact_r"))) : -1.0f,
 			GaspMover != nullptr ? (float)GaspMover->GetActorLocation().X : 0.0f, GaspMover != nullptr ? (float)GaspMover->GetActorLocation().Y : 0.0f,
 			GaspMover != nullptr ? (float)GaspMover->GetVelocity().Size2D() : 0.0f);
+		// and how far the mover's body root stands from its capsule (the sample's Offset Root Bone lets the
+		// body lag the capsule by up to 30 cm and eases it back when idle: research, 24 October)
+		if (B == 1 && GaspMover != nullptr)
+		{
+			const USkeletalMeshComponent* Man = GaspMover->GetMesh();
+			const FVector Root = Man->GetBoneLocation(Man->GetBoneName(0));
+			ProofLines += FString::Printf(TEXT("traceRoot %.3f: root %.1f,%.1f, capsule %.1f,%.1f, off %.1f cm") LINE_TERMINATOR, ProofClock,
+				(float)Root.X, (float)Root.Y, (float)GaspMover->GetActorLocation().X, (float)GaspMover->GetActorLocation().Y,
+				(float)FVector::Dist2D(Root, GaspMover->GetActorLocation()));
+		}
 	}
 	if (bTrace && (Seg == 1 || Seg == 2) && T < 1.6f)
 	{
