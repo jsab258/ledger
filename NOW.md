@@ -16,12 +16,15 @@ Phase 1 closed 22 Oct, no exit passed (production/audits/phase1-exit/CLOSE-2026-
 
 - [x] Done (DECISIONS.md); 7 set aside to Monday.
 
-## His order of 23 October (to Sat 14:00)
+## His order of 23 October: done
 
-- [x] Frame headroom: frame-headroom/FINDINGS-2026-10-23.md; voice frame set aside.
-- [x] Launderette: gate-launderette/GATE.md; all ten views pass.
+- [x] Frame headroom; the launderette (gate-launderette/GATE.md).
 
-STATE (24 Oct 07:30): the 23 October order done; stopped until Monday 14:00, as ordered. Next shops, on his word: the empty unit, Mickey's, the fish market.
+## His order of 24 October (to Sat 18:00)
+
+- [ ] The walk by Epic's MetaHuman route, 3 cm slide bar: research/sit-and-turn/.
+
+STATE (24 Oct 08:05): researching the route. Next shops, on his word: empty unit, Mickey's, fish market.
 
 ## Handovers
 

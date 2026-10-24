@@ -44,7 +44,7 @@ No decision asked: these are for watching the street change.
     - the chandler's side lining at night (above).
   - Pictures: production/previews/ironmonger-2026-10-22.jpg, newsagent-2026-10-22.jpg, tea-rooms-2026-10-23.jpg, grocer-2026-10-23.jpg, chandler-2026-10-23.jpg.
 - *6, frame rate.* Done: the packaged walk's worst frame 30.3 ms (it was 63), P1 closed by a fresh review (production/research/pre-production/P1-PACKAGED-2026-10-21.md).
-- *7, the walk and the clothes.* The walk was rebuilt on Epic's sample with motion matching and measured on a set route. Starts, stops and turns slide 13 to 67 cm (the bar is 3), so it is set aside and off by default. Your current walk fails too: it slides on about half its steps, the right foot on every stride (production/research/sit-and-turn/TOM-MOTION-MATCHING-2026-10-22.md). Clothes: Epic's Fab items all load in 5.8, but the Techwear Outfit is modern sportswear and the Construction Presets are bare bodies, not clothes; none can dress the Hook sheet's people. Your answers: the walk's next go is Epic's MetaHuman route after Monday; Marvelous Designer yes, its price now shown (Needs you 1).
+- *7, the walk and the clothes.* The walk was rebuilt on Epic's sample with motion matching and measured on a set route. Starts, stops and turns slide 13 to 67 cm (the bar is 3), so it is set aside and off by default. Your current walk fails too: it slides on about half its steps, the right foot on every stride (production/research/sit-and-turn/TOM-MOTION-MATCHING-2026-10-22.md). Clothes: Epic's Fab items all load in 5.8, but the Techwear Outfit is modern sportswear and the Construction Presets are bare bodies, not clothes; none can dress the Hook sheet's people. Your answers: the walk's next go by Epic's MetaHuman route, begun 24 October; Marvelous Designer one month, paid by you when Tom's outfit is ready.
 - *8, speech.* Done. **The Gemini test:** on the reply check, Gemini 3.5 Flash-Lite took 0.60 s at the median against Haiku's 0.97, but it let 3 invented details in 42 through where Haiku lets 1 (you kept Haiku); Gemini 3.8 Flash was the most accurate but slower, 1.8 s (production/research/voice-latency/GEMINI-CHECK-2026-10-22.md). **Pocket no longer stalls the walk:** run at lower priority, the walk's slowest 1% is 20.6 ms (it was 34) and its worst 47 ms (it was 175). The one frame left over the bar is a separate stall that the usual card voice shows too (87 ms today), so the frame-rate margin is thinner than P1's close said (listed). **The real path with Pocket:** 20 checked replies, with the game open, first sound heard at 2.41 s at the median, the best yet (3.25 s before) but over 2 s. The model's first checked sentence alone now takes 2.10 s, so the voice is no longer the bottleneck (about $0.15 of your measuring dollar).
 - *9, closing phase 1.* Done. Four fresh reviewers, one for each exit, found that none passes (production/audits/phase1-exit/CLOSE-2026-10-22.md): Tom is still the stand-in body and slides; nobody sits in the game as played; first speech is 3.25 s at best; the frame bar held once and failed its repeat, and card memory with the voice is 7 to 9.9 GB against 6; there is no wear in the office or on Rita's front. They also caught four of my own records wrong, all corrected on 22 October. You held phase 2 on your page: next week goes on these failed capabilities first.
 
@@ -74,13 +74,7 @@ No decision asked: these are for watching the street change.
 
 ### Needs you
 
-1. Marvelous Designer, your yes of Thursday and Friday: its price is 39 USD a month or 280 a year, with a two-week free trial for new users (read on its own site this morning; production/research/clothing-pipeline/MARVELOUS-PRICE-2026-10-23.md). Recommended: start with the free trial for Tom's one outfit, signed up by you (I cannot make accounts or pay); its licence for game use is read before anything made in it goes in.
-
-2. The game's voice: the packaged game starts the cast voice on the card (the card in all then peaks 7.4 to 8.7 GB). The cast voice on the processor is too slow on this PC (1.56 times slower than speech, and a 197 ms frame). Pocket on the processor keeps up (2.6 times faster than speech) and fits the card, but was set aside in September for losing the cast's likeness. Recommended: keep the cast voice on the card for now and set the 6 GB line as the game alone (5.9 GB peak), since the card has 10 GB (Windows gives the game 9.4).
-
-3. The card's spare time by day is 1.7 to 1.8 ms against the plan's 2.5, since today's two shops; frames hold (worst 24 to 27 ms standing). Winning it back means trimming the sun's shadows, which changes the look. Recommended: accept 1.7 ms by day for now and revisit with phase 2's street budget.
-
-Your answers are recorded: the walk's next go by Epic's MetaHuman route after Monday, and the reply check stays on Haiku.
+Nothing waits on you. Your answers of 24 October are recorded (RULINGS.md): the cast voice stays on the card, the 6 GB line is the game alone, and the friends' cards are checked before their build; 1.7 ms of spare card time by day is accepted until phase 2's street budget; Marvelous Designer is one month you pay yourself, and you are told when Tom's outfit is ready to start. The walk's next go is under way this weekend, to Saturday 18:00.
 
 ### Road to worth playing (PLAN.md)
 
@@ -106,6 +100,6 @@ Your answers are recorded: the walk's next go by Epic's MetaHuman route after Mo
 - **Card memory:** the game alone peaks 5.9 GB.
 - **The launderette** passed all ten views with its wear: your 23 October order is done.
 
-**Stopped** at 07:30 until Monday 14:00, as you ordered; nothing is left running but the nightly jobs.
+**Resumed** at 08:00 on your new order: the walk's next go, to 18:00.
 
-**Act on:** Needs you 2 and 3, the voice and the daytime budget; the Marvelous trial is yours to start.
+**Act on:** nothing waits on you; the walk's next go runs to 18:00.

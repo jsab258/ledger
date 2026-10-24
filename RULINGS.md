@@ -14,7 +14,7 @@ His binding rulings; the later stands; canon.md outranks them.
 - 4 Oct: The friends' build: his PC and own account, a shortcut, his key capped at five dollars an evening, no relay; the twenty basics; nothing a friend sees unfinished; Sheila's face whole when she talks; no debug text.
 - 29 Sep: No new systems until the slice is worth playing; what was ruled for after the route (townspeople, microphone, the ending's signs, regulars) and the sweep's larger items wait for a place in PLAN.md.
 - 13 Oct: RECIPE.md (repository root) is a notebook, not a project: no lesson we learn is lost, so that one day the process can make a whole AAA game. Every unit that finishes or is set aside adds a few lines to it in the same commit: what was made; the method in setting-free words; the tools; the target and the check; the cost in hours; what failed and why; the evidence file. Anything specific to 1990 or Meridian stays in data, never in the method. No separate recipe work, no recipe tests (CLAUDE.md carries the rule).
-- 22 Oct: Rita's front is the shops' sample; items 7 to 9, else Rita's night light, the lamp's staining, the next shop family; the rest Monday 14:00. Phase 2 held; next week phase 1's failed capabilities first (production/audits/phase1-exit/CLOSE-2026-10-22.md). 23 Oct: the walk's next go, Epic's MetaHuman route, after Monday.
+- 22 Oct: Rita's front is the shops' sample; items 7 to 9, else Rita's night light, the lamp's staining, the next shop family; the rest Monday 14:00. Phase 2 held; next week phase 1's failed capabilities first (production/audits/phase1-exit/CLOSE-2026-10-22.md). 24 Oct: the walk's next go this weekend, to Saturday 18:00: Epic's MetaHuman route, the sample's own character the mover, Tom's MetaHuman body worn over it, the bar 3 cm of foot slide.
 
 ## Sources, licences and money
 
@@ -44,6 +44,7 @@ His binding rulings; the later stands; canon.md outranks them.
 - 15 Sep: The sky is a photograph (D40); presentation is built early (D28), its grain, grade and depth of field owed at stage 1.
 - 1 Oct: Night: pools of lamp light with darkness between, lit windows, not one orange wash.
 - 23 Sep: 60 fps at 3440×1440 on the RX 6700 with the voice running, never below 30, met by drawing smaller and upscaling.
+- 24 Oct: The cast voice stays on the card; the 6 GB card line is the game alone for now; before the friends' build, check their cards hold game and voice together. The day's spare card time of 1.7 ms is accepted for now, revisited with phase 2's street budget.
 - 2 Oct: No cars until convincing fictional 1990 cars pass; skip and pallets off until real; the KX100 phone box stays.
 - 2 Oct: Rita's window is the model; the other eleven shopfronts are made like it.
 - 4 Oct: Mickey's room rebuilt as the office's front room Tom walks into, from the room kit, researched first; phase 1's first proof: real glass reflecting the street, a 1990 cab office's wear and clutter (radio set, ashtrays, kettle, telephone, scuffed counter); no glitches.
@@ -74,7 +75,7 @@ His binding rulings; the later stands; canon.md outranks them.
 ## Clothes
 
 - 3 Oct: Clothes are the one exception to the visual bar; tailoring waits for the tools. Their floor: plain, period-plausible, no modern giveaways (contrast-stitched slim jeans, trainers), no clipping or holes, nobody frozen stiff; judged on it, not the Hook sheet: passers-by at eight metres, Tom's talkers close up.
-- 3 Oct: People wear only gated garments from CC0, unmarked CC-BY with credit, or Blender; none bought or commissioned. 13 Oct: Epic's MetaHuman garments are tried first; Marvelous Designer only if those fail. 23 Oct: Marvelous Designer yes, one month for Tom's sample outfit, price shown first. 8 Oct: the white base layer stays through phase 1, reported failed; the lab's, not this session's.
+- 3 Oct: People wear only gated garments from CC0, unmarked CC-BY with credit, or Blender; none bought or commissioned. 13 Oct: Epic's MetaHuman garments are tried first; Marvelous Designer only if those fail. 24 Oct: Marvelous Designer, no free trial (trial-made work never goes in the game): he pays one month, 39 USD, himself when Tom's outfit is ready to start; he is told then. 8 Oct: the white base layer stays through phase 1, reported failed; the lab's, not this session's.
 - 2 Oct: Stopped: Marvelous draping, procedural tailoring, fitting every garment to six bodies; production/art/clothing/RUBRIC.md is the bar when tailoring resumes; clothing work never opens Unreal. 8 Oct: no more draping of tailored jackets in Blender (drafting by code works); an outfit stays an outfit until the character is assembled (saving bakes it). Garment reviews first count body points showing through; every target is tested against its body or model and its source before building.
 - 30 Sep: Game clothes are skinned meshes, only loose parts simulated; shoulders judged in Unreal.
 - 29 Sep: Clothes on people are his to approve, in the game's camera.
