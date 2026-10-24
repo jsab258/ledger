@@ -105,7 +105,8 @@ Nothing waits on you. Your answers of 24 October are recorded (RULINGS.md): the 
 **Done:**
 - **The walk's route is built:** the sample's own character moves, Tom wears his MetaHuman; the packaged game builds and runs with it (off by default).
 - **The launderette** passed all ten views with its wear: your 23 October order is done.
-- **The 87 ms stall** is gone; **the night's spare card time** is 2.7 ms; **card memory**, the game alone, peaks 5.9 GB.
 - **Your answers** on the voice, the daytime budget and Marvelous are in the rulings.
+
+**Stopped** at 12:00 until Monday 14:00: the walk's go is done as far as your two-tries rule allows, its cause traced.
 
 **Act on:** nothing waits on you. If a browser "Save" dialog is open, cancel it (a research page offered a download; nothing was saved).

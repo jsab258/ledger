@@ -24,7 +24,7 @@ Phase 1 closed 22 Oct, no exit passed (production/audits/phase1-exit/CLOSE-2026-
 
 - [x] The walk by Epic's MetaHuman route: built; slide set aside (worst 11-35 cm): sit-and-turn/METAHUMAN-ROUTE-2026-10-24.md.
 
-STATE (24 Oct 11:49): walk set aside; slides are in the sample's clips.
+STATE (24 Oct 12:00): walk set aside, cause traced; stopped until Monday 14:00.
 
 ## Handovers
 
