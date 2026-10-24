@@ -9,13 +9,13 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
 
 <!-- morning pictures: written by tools/morning_pictures.py -->
 
-**Morning, Friday 23 October. Phase 2, Produce Quay Street from proved families. On: 2.1 Building kit re-seeded; upper rooms; near shop rooms: production/research/asset-plan/SUMMARY.md. Next: 2.2 Ground, wear, signage, furniture, vegetation, the hill.**
+**Morning, Saturday 24 October. Phase 2, Produce Quay Street from proved families. On: 2.1 Building kit re-seeded; upper rooms; near shop rooms: production/research/asset-plan/SUMMARY.md. Next: 2.2 Ground, wear, signage, furniture, vegetation, the hill.**
 
-| | Today, 23 Oct | Yesterday, 22 Oct |
+| | Today, 24 Oct | Yesterday, 23 Oct |
 |---|---|---|
-| The hook camera by day | ![The hook camera by day, 2026-10-23](production/previews/morning-hook-day-2026-10-23.jpg) | ![The hook camera by day, 2026-10-22](production/previews/morning-hook-day-2026-10-22.jpg) |
-| The reverse view | ![The reverse view, 2026-10-23](production/previews/morning-reverse-day-2026-10-23.jpg) | ![The reverse view, 2026-10-22](production/previews/morning-reverse-day-2026-10-22.jpg) |
-| The street at night | ![The street at night, 2026-10-23](production/previews/morning-night-2026-10-23.jpg) | ![The street at night, 2026-10-22](production/previews/morning-night-2026-10-22.jpg) |
+| The hook camera by day | ![The hook camera by day, 2026-10-24](production/previews/morning-hook-day-2026-10-24.jpg) | ![The hook camera by day, 2026-10-23](production/previews/morning-hook-day-2026-10-23.jpg) |
+| The reverse view | ![The reverse view, 2026-10-24](production/previews/morning-reverse-day-2026-10-24.jpg) | ![The reverse view, 2026-10-23](production/previews/morning-reverse-day-2026-10-23.jpg) |
+| The street at night | ![The street at night, 2026-10-24](production/previews/morning-night-2026-10-24.jpg) | ![The street at night, 2026-10-23](production/previews/morning-night-2026-10-23.jpg) |
 
 The Hook sheet, the bar they are held to: ![The Hook sheet](production/previews/hook-sheet-2026-10-05.jpg)
 
