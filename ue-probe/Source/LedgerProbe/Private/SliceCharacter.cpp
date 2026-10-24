@@ -724,9 +724,58 @@ void ALedgerSliceCharacter::WalkProofTick(float DeltaSeconds)
 			}
 			const int32 K = Room[0] >= Room[1] ? 0 : 1;
 			const FVector Side = FRotator(0.0f, ProofYaw + (K == 0 ? 90.0f : -90.0f), 0.0f).Vector();
-			ShotCamera->SetActorLocationAndRotation(Look + Side * FMath::Max(120.0f, Room[K] - 40.0f) + FVector(0.0, 0.0, 10.0), (-Side).Rotation());
+			// with picture spans (below) the camera is set once as each span begins and then held still, so a
+			// planted foot stays on the same pixels and a slide shows against the pavement
+			static int32 HeldSpan = -2;
+			int32 InSpan = -1;
+			{
+				FString List;
+				if (FParse::Value(FCommandLine::Get(), TEXT("TomWalkProofShotsAt="), List, false))
+				{
+					TArray<FString> Parts;
+					List.ParseIntoArray(Parts, TEXT(","));
+					for (int32 Sp = 0; Sp < Parts.Num(); ++Sp)
+					{
+						FString A, B;
+						if (Parts[Sp].Split(TEXT("-"), &A, &B) && ProofClock >= FCString::Atof(*A) && ProofClock <= FCString::Atof(*B)) { InSpan = Sp; }
+					}
+				}
+			}
+			if (InSpan < 0 || InSpan != HeldSpan)
+			{
+				ShotCamera->SetActorLocationAndRotation(Look + Side * FMath::Max(120.0f, Room[K] - 40.0f) + FVector(0.0, 0.0, 10.0), (-Side).Rotation());
+				HeldSpan = InSpan;
+			}
 			const float T = ProofClock - ProofSegAt;
-			if ((ProofSeg == 1 || ProofSeg == 2 || ProofSeg == 3) && T < 1.6f && ProofClock >= NextShotAt)
+			// -TomWalkProofShotsAt=a-b,c-d,...: pictures ten a second through those spans of the route's clock
+			// instead (24 October: the worst steps fall at the same moments in each run from the same start,
+			// so they can be pictured for judging by eye)
+			static TArray<FVector2f> Spans;
+			static const bool bSpans = []()
+			{
+				FString List;
+				if (!FParse::Value(FCommandLine::Get(), TEXT("TomWalkProofShotsAt="), List, false)) { return false; }
+				TArray<FString> Parts;
+				List.ParseIntoArray(Parts, TEXT(","));
+				for (const FString& Part : Parts)
+				{
+					FString A, B;
+					if (Part.Split(TEXT("-"), &A, &B)) { Spans.Add(FVector2f(FCString::Atof(*A), FCString::Atof(*B))); }
+				}
+				return Spans.Num() > 0;
+			}();
+			if (bSpans)
+			{
+				bool bIn = false;
+				for (const FVector2f& Sp : Spans) { bIn |= ProofClock >= Sp.X && ProofClock <= Sp.Y; }
+				if (bIn && ProofClock >= NextShotAt)
+				{
+					FScreenshotRequest::RequestScreenshot(FPaths::ConvertRelativePathToFull(FPaths::ProjectSavedDir() / TEXT("TomWalk")
+						/ FString::Printf(TEXT("w%05.2f.png"), ProofClock)), false, false);
+					NextShotAt = ProofClock + 0.1f;
+				}
+			}
+			else if ((ProofSeg == 1 || ProofSeg == 2 || ProofSeg == 3) && T < 1.6f && ProofClock >= NextShotAt)
 			{
 				FScreenshotRequest::RequestScreenshot(FPaths::ConvertRelativePathToFull(FPaths::ProjectSavedDir() / TEXT("TomWalk")
 					/ FString::Printf(TEXT("%s-%02d.png"), ProofSeg == 1 ? TEXT("start") : (ProofSeg == 2 ? TEXT("stop") : TEXT("about")), FMath::FloorToInt(T * 10.0f))), false, false);
