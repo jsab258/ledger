@@ -1,0 +1,102 @@
+{
+  "front": "launderette-front",
+  "out": "launderette-front-worn",
+  "note": "24 October 2026: the launderette's front worn the way the grocer's and the chandler's passed (tools/art-recipes/front_wear.py, the same settings), with this front's own places read from its model on 24 October. Its window and shop door are anodised aluminium in bronze (paint_alu_bronze, metallic 0.85: left clean, as the grocer's bronze, since the bake makes a paint non-metallic), its stallriser tiled (a picture, not a flat paint, so not baked), its shop door at the back of a recessed lobby (x -1.706 to -0.700) with brass furniture (left clean). Its paints are the cream render of the pilasters (x -3.0 to -2.65 and 2.65 to 3.0, their plinths 0 to 0.6 up and 0.18 proud) and the cornice, and the dark brown side door to the hall at the viewer's left (x -2.597 to -1.759, flush at y about -0.03), whose brass knob at x -2.178, 0.842 up is the hand's place. Only the cream plinths chip; no rail chips (the tea rooms' and the ironmonger's lesson). The dark brown is near black, so the dirt floor applies. Its fascia and box sign's two faces glow at night: their emissive maps put back after the bake (night_glow), copied from the design's build into the game's lasting inputs.",
+  "paints": [
+    "paint_cream",
+    "paint_side_door_dark_brown"
+  ],
+  "texture_px": {
+    "paint_cream": 4096,
+    "paint_side_door_dark_brown": 2048
+  },
+  "texture_px_note": "one texture set per paint, its ground filled with the clean paint (Rita's lesson)",
+  "roughness_px": 1024,
+  "detail_below_m": 1.2,
+  "detail_ratio": 3.0,
+  "dirt_hue": [
+    0.2,
+    0.155,
+    0.11
+  ],
+  "dirt_luminance": 0.55,
+  "foot_m": 0.17,
+  "foot_ragged_m": 0.05,
+  "foot_full": 0.4,
+  "tide": 0.15,
+  "tide_m": 0.03,
+  "splash_m": 0.4,
+  "splash": 0.5,
+  "splash_above": 0.55,
+  "ao_m": 0.08,
+  "ao_reach_m": 1.0,
+  "ao": 0.9,
+  "ao_everywhere": 0.3,
+  "ledge": 0.3,
+  "lever": [
+    -2.178,
+    -0.03,
+    0.842
+  ],
+  "lever_m": 0.15,
+  "lever_weight": 0.25,
+  "chip_colour": [
+    0.22,
+    0.18,
+    0.13
+  ],
+  "chip_edge_m": 0.03,
+  "chip_scale": 25.0,
+  "chip_above": 0.58,
+  "chip_regions": [
+    {
+      "name": "the left pilaster's plinth, by the side door",
+      "x": [
+        -3.0,
+        -2.655
+      ],
+      "z": [
+        0.0,
+        0.6
+      ],
+      "amount": 1.0,
+      "paints": [
+        "paint_cream"
+      ]
+    },
+    {
+      "name": "the right pilaster's plinth",
+      "x": [
+        2.65,
+        3.0
+      ],
+      "z": [
+        0.0,
+        0.6
+      ],
+      "amount": 0.6,
+      "paints": [
+        "paint_cream"
+      ]
+    }
+  ],
+  "roughness_dirt": 0.55,
+  "roughness_chip": 0.6,
+  "roughness_note": "22 October, the ironmonger's gate from the right: grime at roughness 0.85 caught the sky as a grey sheen at a low slant; street grime here is damp splash, so it is only a little duller than the paint.",
+  "dirt_luminance_floor": 0.035,
+  "night_glow": [
+    {
+      "material": "fascia_steam_laundry",
+      "png": "F:/LedgerTools/game-inputs/production/art/shop-signs/launderette/steam_laundry_emissive.png",
+      "note": "the fascia's lettering lit by tubes at night (shop-interiors.json, its front's night_glow, 0.7); the bake's round trip drops an emissive map whose factor is 0, so it is put back."
+    },
+    {
+      "material": "sign_face_a",
+      "png": "F:/LedgerTools/game-inputs/production/art/shop-signs/launderette/steam_laundry_box_face_a_emissive.png"
+    },
+    {
+      "material": "sign_face_b",
+      "png": "F:/LedgerTools/game-inputs/production/art/shop-signs/launderette/steam_laundry_box_face_b_emissive.png"
+    }
+  ]
+}

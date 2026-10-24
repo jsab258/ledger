@@ -166,7 +166,8 @@
     "measured": "the cloud's display (build_shop.py display, built on the PC 24 October, its close review's three faults fixed: the towels rebuilt as folded towels, the washing by cloth simulation, the BRIGHTWELL packets renamed CLAYBROOK): its window zone u 2300 to 5650 mm from the viewer's left (side door and shop door at the viewer's left), street x 30.70 to 27.35 on the east (street x = 33 - u/1000), 0.025 m in front of the front's wall face (5.295) and 0.60 m above the footway, as Rita's; made ready with its linings to the window head and a head board (front_for_game.py --raise, --head)"
    },
    "front": {
-    "glb": "launderette-front",
+    "glb": "launderette-front-worn",
+    "glb_note": "24 October 2026: its front worn at the foot and the side door's knob, baked into its cream and dark brown paints as the grocer's and the chandler's are (tools/art-recipes/front_wear.py, production/specs/shop-fronts/launderette-front-wear.json), its bronze aluminium and brass left clean and its fascia's and box sign's night glow put back after the bake; 'launderette-front' is the clean copy (its glass lettering a cut-out, --mask=glass_row_13,glass_row_14).",
     "x": 30.0,
     "z": 5.295,
     "up": 0.1,
