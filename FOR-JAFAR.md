@@ -9,13 +9,15 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
 
 <!-- morning pictures: written by tools/morning_pictures.py -->
 
-**Morning, Saturday 24 October. Phase 2, Produce Quay Street from proved families. On: 2.1 Building kit re-seeded; upper rooms; near shop rooms: production/research/asset-plan/SUMMARY.md. Next: 2.2 Ground, wear, signage, furniture, vegetation, the hill.**
+**Morning, Sunday 25 October. Phase 2, Produce Quay Street from proved families. On: 2.1 Building kit re-seeded; upper rooms; near shop rooms: production/research/asset-plan/SUMMARY.md. Next: 2.2 Ground, wear, signage, furniture, vegetation, the hill.**
 
-| | Today, 24 Oct | Yesterday, 23 Oct |
+No morning pictures today: the free-space check refused ({"job": "morning pictures", "drives": "CF", "before": {"C": 39.1, "F": 29.8}, "after": {"C": 39.7, "F": 29.9}, "verdict": "STOP", "needsYou": "morning pictures stopped: C: has 39.7 GB free (needs 40.0), F: 29.9 GB (needs 20.0) after the nightly limits ran. Put this in Needs you and do not retry until there is room."}). Yesterday's stand below.
+
+| | Today, 25 Oct | Yesterday, 24 Oct |
 |---|---|---|
-| The hook camera by day | ![The hook camera by day, 2026-10-24](production/previews/morning-hook-day-2026-10-24.jpg) | ![The hook camera by day, 2026-10-23](production/previews/morning-hook-day-2026-10-23.jpg) |
-| The reverse view | ![The reverse view, 2026-10-24](production/previews/morning-reverse-day-2026-10-24.jpg) | ![The reverse view, 2026-10-23](production/previews/morning-reverse-day-2026-10-23.jpg) |
-| The street at night | ![The street at night, 2026-10-24](production/previews/morning-night-2026-10-24.jpg) | ![The street at night, 2026-10-23](production/previews/morning-night-2026-10-23.jpg) |
+| The hook camera by day | none | ![The hook camera by day, 2026-10-24](production/previews/morning-hook-day-2026-10-24.jpg) |
+| The reverse view | none | ![The reverse view, 2026-10-24](production/previews/morning-reverse-day-2026-10-24.jpg) |
+| The street at night | none | ![The street at night, 2026-10-24](production/previews/morning-night-2026-10-24.jpg) |
 
 The Hook sheet, the bar they are held to: ![The Hook sheet](production/previews/hook-sheet-2026-10-05.jpg)
 
