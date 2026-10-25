@@ -524,8 +524,12 @@ void ALedgerSliceCharacter::GaspTick()
 	// foot is 20 cm or 60 degrees away (40 cm in stops; its PlantSettings_Default and _Stops), then lets it go
 	// and eases it over; with a wider radius it lets go only as the animation lifts the foot (its contact
 	// curves). Set on the mover's own graph each frame, Epic's asset untouched.
-	static float UnplantCm = -1.0f, UnplantDeg = -1.0f;
-	static const bool bUnplant = FParse::Value(FCommandLine::Get(), TEXT("GaspUnplantCm="), UnplantCm) | FParse::Value(FCommandLine::Get(), TEXT("GaspUnplantDeg="), UnplantDeg);
+	// 25 October (his order of 25 October, item 2, try 2): -GaspPlantSpeed= sets the speed below which a foot counts
+	// as planted. The sample's graph makes each clip's contact curve a speed, (1 - contact) * 100, and plants
+	// below 1, so only a foot marked above 0.99 is held; motion matching blends clips, and a blended mark often
+	// sits just under that. 50 holds any foot marked at least half planted.
+	static float UnplantCm = -1.0f, UnplantDeg = -1.0f, PlantSpeed = -1.0f;
+	static const bool bUnplant = FParse::Value(FCommandLine::Get(), TEXT("GaspUnplantCm="), UnplantCm) | FParse::Value(FCommandLine::Get(), TEXT("GaspUnplantDeg="), UnplantDeg) | FParse::Value(FCommandLine::Get(), TEXT("GaspPlantSpeed="), PlantSpeed);
 	if (bUnplant)
 	{
 		if (UAnimInstance* Graph = GaspMover->GetMesh()->GetAnimInstance())
@@ -537,6 +541,7 @@ void ALedgerSliceCharacter::GaspTick()
 				void* Settings = Plant->ContainerPtrToValuePtr<void>(Graph);
 				if (UnplantCm > 0.0f) { if (FFloatProperty* R = FindFProperty<FFloatProperty>(Plant->Struct, TEXT("UnplantRadius"))) { R->SetPropertyValue_InContainer(Settings, UnplantCm); } }
 				if (UnplantDeg > 0.0f) { if (FFloatProperty* A = FindFProperty<FFloatProperty>(Plant->Struct, TEXT("UnplantAngle"))) { A->SetPropertyValue_InContainer(Settings, UnplantDeg); } }
+				if (PlantSpeed > 0.0f) { if (FFloatProperty* S = FindFProperty<FFloatProperty>(Plant->Struct, TEXT("SpeedThreshold"))) { S->SetPropertyValue_InContainer(Settings, PlantSpeed); } }
 			}
 		}
 	}
@@ -686,7 +691,7 @@ void ALedgerSliceCharacter::WalkProofTick(float DeltaSeconds)
 				auto CVarInt = [](const TCHAR* N) { const IConsoleVariable* V = IConsoleManager::Get().FindConsoleVariable(N); return V != nullptr ? V->GetInt() : -1; };
 				const FBoolProperty* RootMotion = FindFProperty<FBoolProperty>(GaspMover->GetClass(), TEXT("UsingAttributeBasedRootMotion"));
 				// and the foot lock's let-go distance and angle in force on the mover's graph
-				float Radius = -1.0f, Angle = -1.0f;
+				float Radius = -1.0f, Angle = -1.0f, PlantSpeedNow = -1.0f;
 				if (const UAnimInstance* Graph = GaspMover->GetMesh()->GetAnimInstance())
 				{
 					if (const FStructProperty* Plant = FindFProperty<FStructProperty>(Graph->GetClass(), TEXT("PlantSettings_Default")))
@@ -694,6 +699,7 @@ void ALedgerSliceCharacter::WalkProofTick(float DeltaSeconds)
 						const void* PS = Plant->ContainerPtrToValuePtr<void>(Graph);
 						if (const FFloatProperty* R = FindFProperty<FFloatProperty>(Plant->Struct, TEXT("UnplantRadius"))) { Radius = R->GetPropertyValue_InContainer(PS); }
 						if (const FFloatProperty* A = FindFProperty<FFloatProperty>(Plant->Struct, TEXT("UnplantAngle"))) { Angle = A->GetPropertyValue_InContainer(PS); }
+						if (const FFloatProperty* S = FindFProperty<FFloatProperty>(Plant->Struct, TEXT("SpeedThreshold"))) { PlantSpeedNow = S->GetPropertyValue_InContainer(PS); }
 					}
 				}
 				int32 GraphMode = -1;
@@ -705,6 +711,7 @@ void ALedgerSliceCharacter::WalkProofTick(float DeltaSeconds)
 				Settings += FString::Printf(TEXT(" footPlacementMode=%d databaseLevel=%d rootMotionSetting=%d rootMotionUsed=%d unplantCm=%.0f unplantDeg=%.0f"),
 					CVarInt(TEXT("DDCvar.FootPlacementMode")), CVarInt(TEXT("DDCvar.MMDatabaseLOD")), CVarInt(TEXT("DDCVar.AttributeBasedRootMotion.Enable")),
 					RootMotion != nullptr ? (RootMotion->GetPropertyValue_InContainer(GaspMover.Get()) ? 1 : 0) : -1, Radius, Angle);
+				Settings += FString::Printf(TEXT(" plantSpeed=%.0f"), PlantSpeedNow);
 			}
 			// and beside it, planted read from the moving animation's own contact marks (Epic's route only)
 			FString ByMarks;
