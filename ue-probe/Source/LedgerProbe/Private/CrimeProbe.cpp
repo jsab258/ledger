@@ -4282,6 +4282,9 @@ namespace
 			GOffice.bDoorShut = Shut > 0;
 			bool bDarkUntilIn = false;
 			(*Door)->TryGetBoolField(TEXT("dark_until_inside"), bDarkUntilIn);
+			// -OfficeLit (25 October, item 5: the office's wear photographed as Tom will see it once inside):
+			// the room lit from the start, the door as it is
+			if (FParse::Param(FCommandLine::Get(), TEXT("OfficeLit"))) { bDarkUntilIn = false; }
 			if (bDarkUntilIn && !GOffice.Shop.empty())
 			{
 				LedgerVignetteShot::SetShopRoomLit(GOffice.Shop.c_str(), false);
