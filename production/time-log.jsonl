@@ -117,3 +117,5 @@
 {"event": "stop", "at": "2026-10-25T22:15:00", "note": "from the clock"}
 {"event": "start", "at": "2026-10-25T22:10:00", "task": "25 Oct: item 4 frame spike: trace, research, two tries", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-25T22:57:00", "note": "from the clock"}
+{"event": "start", "at": "2026-10-25T22:58:00", "task": "25 Oct: item 5 office pictures and wear research", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-25T23:11:00", "note": "from the clock"}

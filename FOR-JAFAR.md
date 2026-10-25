@@ -36,11 +36,12 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
   - LEDGER is already built the simulated way, with something both lack: who told whom, and talk that weakens as it travels.
   - For us: crime memory that lasts by kind (1 to 7 days); show a witness walking to tell someone; benches and beds as places in the routine; spreading only where people meet, as canon says.
 
-**Your items so far (25 October, 22:57).**
+**Your items so far (25 October, 23:11).**
 - *The walk (item 2):* Epic's 223 walking clips measured; 134 carry a sliding flat foot in Epic's own data. Two tries took eight of ten moments under 3 cm by eye (five on Saturday). Two remain: the stop's re-step at 10 to 11 cm and the run's start at about 4.5 cm. Set aside by your two-tries rule; it stays off by default (Needs you 1). Turning passes.
 - *Sitting (item 2):* Tom now sits on the office bench and stands again with E, on Epic's own bench clips; his hips land 8 cm from the seat's mark. But a fresh reviewer failed the sit-down by eye: one foot hangs in the air for a second, the other slides on tiptoe, and his head folds to his chest. A second try changed nothing; Epic's own mannequin does the same, so the fault is in how the clip is started. Set aside (Needs you 1). It rides on Epic's walk, so it is not in the game as played yet either way.
 - *Speech (item 4):* re-timed with the cast voice the game's way (the old measure counted voice time the game hides). The first sound is heard at 4.14 s median: the model drafts in 0.75 s, the check adds 1.1 s, and the cast voice on the card takes 2.8 s beside the running game. So the voice is the slow part again (Needs you 2).
 - *The frame stalls while the voice speaks (item 4):* traced in the packaged walk with the cast voice on the card. The stalls are the card busy with the voice's work: one frame waited 487 ms for it, while the game's own drawing took 16 ms. Two tries (the voice giving way on the card; the game keeping off the part of the card the voice uses) cut the worst stall from about 440 ms to 118 ms; six frames are still too slow. Set aside. The card's memory is full in every such run (10.1 of 10 GB), the next thing to look at.
+- *Mickey's office (item 5):* begun with research. Today's pictures (production/previews/office-2026-10-25.jpg) show the inside dark by day until Tom brings the key, so its wear will be judged lit. The wear target is set: smoke-yellowed ceiling and upper walls, pale patches behind the notices, the carpet path, the bench's worn front edge, the counter's customer edge; each with a check a fresh reviewer can judge from pictures.
 
 
 <!-- retention -->Disk (10-22 04:32): C: 79.9 GB free, F: 48.4 GB free; grew most since 10-21 12:17: C:\actions-runner-ledger\_work\ledger +1.5 GB, F:\LedgerTools\uv\cache +1.4 GB, F:\LedgerTools\bpyenv\Lib +0.9 GB.
@@ -157,6 +158,7 @@ Your answers of 25 October are recorded (RULINGS.md): Warhorse's tools left out;
 - The health check, the order ledger and your progress page.
 - Speech re-timed the game's way: 4.14 s to the first sound; the voice is 2.8 s of it (Needs you 2).
 - Six studies, each passed by a fresh reviewer with fixes: animation, characters, tech budgets, streets, visuals, town life. Three of them had wrong advice about our own game, now corrected.
+- Mickey's office: today's pictures, and its wear target researched.
 
 **Stopped at 01:00 as you asked;** everything is pushed.
 
