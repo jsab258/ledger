@@ -806,11 +806,15 @@ void ALedgerSliceCharacter::WalkProofTick(float DeltaSeconds)
 			{
 				bool bIn = false;
 				for (const FVector2f& Sp : Spans) { bIn |= ProofClock >= Sp.X && ProofClock <= Sp.Y; }
-				if (bIn && ProofClock >= NextShotAt)
+				// -TomWalkProofShotStep=s (25 October): pictures every s seconds inside the spans, for moments a
+				// tenth of a second cannot settle (a fresh reviewer's three doubtful contacts); 0.1 by default
+				static float ShotStep = 0.1f;
+				static const bool bStep = FParse::Value(FCommandLine::Get(), TEXT("TomWalkProofShotStep="), ShotStep);
+				if (bIn && ProofClock >= NextShotAt - 0.001f)
 				{
 					FScreenshotRequest::RequestScreenshot(FPaths::ConvertRelativePathToFull(FPaths::ProjectSavedDir() / TEXT("TomWalk")
-						/ FString::Printf(TEXT("w%05.2f.png"), ProofClock)), false, false);
-					NextShotAt = ProofClock + 0.1f;
+						/ FString::Printf(TEXT("w%06.3f.png"), ProofClock)), false, false);
+					NextShotAt = ProofClock + FMath::Max(ShotStep, 0.001f);
 				}
 			}
 			else if ((ProofSeg == 1 || ProofSeg == 2 || ProofSeg == 3) && T < 1.6f && ProofClock >= NextShotAt)

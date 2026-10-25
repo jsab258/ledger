@@ -1,5 +1,5 @@
 {
-  "updated": "Sunday 25 October 2026, 20:28",
+  "updated": "Sunday 25 October 2026, 20:56",
   "here": 1,
   "friends_eta": "around January",
   "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
@@ -102,24 +102,24 @@
       "what": "How far a planted foot slides while Tom walks, stops and turns.",
       "unit": "cm",
       "start": 50,
-      "now": 15,
+      "now": 11,
       "target": 3,
       "start_label": "Tom's own walk",
-      "now_label": "Epic's walk",
+      "now_label": "25 Oct, by eye",
       "state": "fighting",
-      "last": "24 Oct: Tom now walks on Epic's walk, behind a switch. Ordinary steps hold within 1.5 cm; a stop, a pivot and two turns still slide 10 to 15 cm."
+      "last": "25 Oct: Epic's walk with its contact marks rewritten and a stricter lock: eight of ten moments under 3 cm by eye. The stop's re-step still slides 10 to 11 cm and the run's start about 4.5 cm. Set aside after two tries; a third is your call."
     },
     {
       "name": "The Long Pause",
       "what": "Seconds from the end of your question to the character's first sound.",
       "unit": "s",
       "start": 3.25,
-      "now": 2.41,
+      "now": 4.14,
       "target": 2.0,
       "start_label": "8 Oct",
-      "now_label": "22 Oct",
+      "now_label": "25 Oct, cast voice",
       "state": "fighting",
-      "last": "22 Oct: 2.41 s with the stand-in voice on the processor; the cast's own voice is not re-timed yet. The model writing the first checked sentence now takes 2.1 s on its own."
+      "last": "25 Oct: re-timed the game's way with the cast voice on the card: 4.14 s median. The model drafts in 0.75 s and its check adds 1.1 s; the cast voice takes 2.8 s. Your call on the voice."
     },
     {
       "name": "The Stutter",
@@ -142,7 +142,7 @@
       "target": 0,
       "display": "0 of 1 outfit made",
       "state": "fighting",
-      "last": "22 Oct: Epic's outfits are modern sportswear. Next: Marvelous Designer, one paid month, for Tom's outfit."
+      "last": "25 Oct: Study 6 set the target (jacket about 20,000 triangles, trousers about 9,000, 2048 textures, skinned). Next: Marvelous Designer, one paid month, on your sign-up."
     },
     {
       "name": "The Empty Chair",
@@ -150,7 +150,7 @@
       "display": "Not built yet",
       "hp": 100,
       "state": "fighting",
-      "last": "Comes after the walk, using the same Epic animation set."
+      "last": "25 Oct: Epic's sample in the project already holds a bench interaction built on smart objects; it is next, on the same mover."
     },
     {
       "name": "The Clean Room",
@@ -207,7 +207,7 @@
     "gap_note": "No pictures from 9 to 20 October: the PC was off."
   },
   "studies": {
-    "done": 1,
+    "done": 2,
     "total": 16,
     "order": "2026-10-25.md",
     "list": [
@@ -244,7 +244,7 @@
       {
         "n": 6,
         "name": "Characters and wardrobe",
-        "status": "open",
+        "status": "done",
         "week": "this week"
       },
       {

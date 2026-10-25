@@ -7,7 +7,7 @@ key in its environment: this measures the path after the reply (the voice
 and the game's own steps); the model's own time comes from the live talk's
 record while Jafar plays. What follows is how it measured before.
 
-    python tools/voice-live/latency.py --lines 12 [--prewarm] [--early] [--voice nano|pocket] [--out F:/.../latency.json]
+    python tools/voice-live/latency.py --lines 12 [--prewarm] [--early] [--pending] [--voice nano|pocket] [--out F:/.../latency.json]
     python tools/voice-live/latency.py --selftest
 
 WHY, 26 September. Jafar: "Today about six seconds pass between my line and the
@@ -133,10 +133,14 @@ def summary(rows, key):
 KEY_FILE = os.path.join(os.environ.get("LOCALAPPDATA", ""), "LEDGER", "live-talk-key.txt")
 
 
-def run(n, prewarm=False, early=False, voice="nano", live=False, checker=None):
+def run(n, prewarm=False, early=False, voice="nano", live=False, checker=None, pending=False):
     env = dict(os.environ)
     env.pop("ANTHROPIC_API_KEY", None)   # never a key: the stand-in only (29 September)
-    hargs = [HELPER, "--fake"] + (["--early"] if early else [])
+    # --pending (25 October): the game starts the helper with --early --pending (CrimeProbe.cpp), so the voice
+    # makes the first sentence while its check runs and plays it the moment the check passes. Without it this
+    # measure spoke only after the check and counted the voice's time the game hides.
+    early = early or pending
+    hargs = [HELPER, "--fake"] + (["--early"] if early else []) + (["--pending"] if pending else [])
     if live:
         # THE REAL PATH ON LEDGER'S KEY (his order of 8 October: Haiku 5.5 against 4.5 for the check,
         # 20 turns each; measurement runs are allowed on the key, $1 a day in all, 3 October): the key
@@ -144,7 +148,7 @@ def run(n, prewarm=False, early=False, voice="nano", live=False, checker=None):
         # (CrimeProbe.cpp), and is never printed or written.
         with open(KEY_FILE, encoding="utf-8") as fh:
             env["ANTHROPIC_API_KEY"] = fh.read().strip()
-        hargs = [HELPER] + (["--early"] if early else [])
+        hargs = [HELPER] + (["--early"] if early else []) + (["--pending"] if pending else [])
     if checker:
         env["LEDGER_CHECKER_MODEL"] = checker
     if voice == "pocket":
@@ -172,12 +176,27 @@ def run(n, prewarm=False, early=False, voice="nano", live=False, checker=None):
         helper.send({"id": rid, "to": who, "say": say, "hour": 21, "scene": "the street by Mickey's, evening"})
         row = {"who": who, "say": say}
         spoke = False
+        held = None   # the sentence the voice made ahead of its check, as the game does (--pending)
         tr = r = None
         if early:
-            te, e = helper.wait(lambda d: d.get("id") == rid and ("first" in d or "reply" in d), 30)
+            te, e = helper.wait(lambda d: d.get("id") == rid and ("first" in d or "reply" in d or "pending" in d), 30)
+            if e and "pending" in e and "first" not in e:
+                held = e["pending"]
+                row["pendingAt"] = round(te - t0, 2)
+                voicep.send({"id": rid * 10 + 7, "who": who, "text": held})
+                te, e = helper.wait(lambda d: d.get("id") == rid and ("first" in d or "reply" in d), 30)
             if e and "first" in e:
                 row["firstWords"] = row["firstSentence"] = te - t0
-                voicep.send({"id": rid * 10, "who": who, "text": e["first"]})
+                if held is not None and held == e["first"]:
+                    # the held sound is released the moment the words pass: heard when both are ready
+                    th_, m_ = voicep.wait(lambda d: d.get("id") == rid * 10 + 7 and d.get("part") == 0, 60)
+                    if m_ is not None:
+                        row["heldSoundAt"] = round(th_ - t0, 2)
+                        row["firstSoundMade"] = max(th_, te) - t0
+                        row["firstHeard"] = row["firstSoundMade"] + FRAME_S + PLAY_S
+                        row["firstPieceSeconds"] = m_.get("seconds")
+                else:
+                    voicep.send({"id": rid * 10, "who": who, "text": e["first"]})
                 spoke = True
             elif e:
                 tr, r = te, e    # no early sentence (it did not pass its check): the whole reply came first
@@ -195,8 +214,13 @@ def run(n, prewarm=False, early=False, voice="nano", live=False, checker=None):
             voicep.send({"id": rid * 10, "who": who, "text": r["reply"]})
         elif r.get("rest"):
             voicep.send({"id": rid * 10 + 1, "who": who, "text": r["rest"]})
-        tm, m = voicep.wait(lambda d: d.get("id") == rid * 10 and d.get("part") == 0, 60)
-        if m is None:
+        if "firstSoundMade" in row:
+            tm, m = None, {"held": True}   # already timed from the held sentence
+        else:
+            tm, m = voicep.wait(lambda d: d.get("id") == rid * 10 and d.get("part") == 0, 60)
+        if m is not None and m.get("held"):
+            pass
+        elif m is None:
             row["error"] = "no sound"
         else:
             row["firstSoundMade"] = tm - t0
@@ -212,7 +236,7 @@ def run(n, prewarm=False, early=False, voice="nano", live=False, checker=None):
         # let every piece of this reply finish before the next line, as a player would listen
         deadline = time.perf_counter() + 40
         while time.perf_counter() < deadline:
-            t_, d_ = voicep.wait(lambda d: d.get("id") in (rid * 10, rid * 10 + 1) and d.get("last"), 2)
+            t_, d_ = voicep.wait(lambda d: d.get("id") in (rid * 10, rid * 10 + 1, rid * 10 + 7) and d.get("last"), 2)
             if d_ is not None:
                 if d_.get("id") == rid * 10 + 1 or not (early and r.get("rest")):
                     break
@@ -255,7 +279,8 @@ if __name__ == "__main__":
     n = int(a[a.index("--lines") + 1]) if "--lines" in a else 12
     voice = a[a.index("--voice") + 1] if "--voice" in a else "nano"
     res = run(n, prewarm="--prewarm" in a, early="--early" in a, voice=voice, live="--live" in a,
-              checker=a[a.index("--checker") + 1] if "--checker" in a else None)
+              checker=a[a.index("--checker") + 1] if "--checker" in a else None, pending="--pending" in a)
+    res["pending"] = "--pending" in a
     res["checker"] = a[a.index("--checker") + 1] if "--checker" in a else "default"
     res["live"] = "--live" in a
     if "--out" in a:

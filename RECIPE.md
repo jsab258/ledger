@@ -19,6 +19,44 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 25 Oct 2026, the walk's slide: a vendor's walking clips measured and their contact marks rewritten, set aside on two moments
+- Made: every clip a motion-matching set can pick for walking measured from its assets; contact marks rewritten where a foot is low and still; a stricter lock switch; pictures at every game step around doubtful contacts.
+- Method (setting-free):
+  - Measure the source before fixing the runtime: a planted foot in a clip's own frame, root motion kept in the root bone, must not travel. Extracting root motion pins the root and makes every planted foot travel a stride; an absurd number is the cue.
+  - Read how the lock decides "planted" in the graph and the engine's source before changing anything: here a remap turned contact into speed and planted only above 0.99, so blended clips fell just under it.
+  - Hold a low, slow foot (the field's contact test) by rewriting its marks, keeping the originals beside it; then loosen the plant threshold on the graph at run time, the vendor's asset untouched.
+  - A height reading over-counts swinging feet; judge by eye. Ten pictures a second hid a slide lasting a tenth of a second: a reviewer passed all ten moments, and pictures at every step overturned two. Picture every step around each contact, with the camera on the open side.
+- Tools: an editor script measuring clips through the animation pose API; a curve-rewrite script with backups; a run-time setting on the graph; side-camera pictures on a fixed step; a fresh picture reviewer.
+- Target and check: no weight-bearing foot moving more than 3 cm, by eye, on ten set moments of a route.
+- Cost (hours): about 1.2, 19:42 to 20:55, beside two studies.
+- Failed and why: two moments still slide (a stop's re-step and a run's start). The fix holds what the clip marks or nearly marks as planted, but these feet slide in clips that mark them as moving. Choosing stops by distance and stride, as a shipped game does, is the next direction.
+- Evidence: production/research/sit-and-turn/WALK-2026-10-25.md
+
+### 25 Oct 2026, speech re-timed the game's way: a measuring harness that did not do what the game does
+- Made: the timing tool brought into line with the game (the voice making the draft while its check runs), and the path re-timed with the cast voice on the graphics card.
+- Method (setting-free):
+  - Before trusting a latency figure, compare the harness's steps with the product's own: here the product started voicing before the check and the harness after it, so every earlier figure overstated the delay by the voice's hidden time.
+  - Split the path into its stages from per-line marks (draft, check passed, sound made, heard), so the slow part is named, not guessed.
+  - Rank the levers by their likely saving on the measured split. Levers on one stage cannot close a gap held by another.
+- Tools: the timing tool with a new switch; the game's packaged copy open; a research helper reading the code and the vendor's pages.
+- Target and check: first sound heard within 2 s of the line, median.
+- Cost (hours): about 0.4.
+- Failed and why: with the cast voice on the card the voice takes 2.8 s beside the running game, so 2 s is out of reach without a voice decision that is the owner's.
+- Evidence: production/research/voice-latency/CAST-VOICE-2026-10-25.md
+
+### 25 Oct 2026, two reference studies of shipped games in one evening: helpers extract and count, one synthesis, one fresh review
+- Made: animation and wardrobe studies of two shipped games, each from the games' own files plus public sources, each passed by a fresh review with fixes.
+- Method (setting-free):
+  - Export only the folders a study needs, as property readouts, by driving the file viewer by script; counts come from the readouts and the name index, never from memory.
+  - Run three bounded helpers in parallel (one per game, one on public sources), each with written questions and the legal rule; they return text, and raw counts stay outside the repository.
+  - The synthesis keeps every hedge the helpers gave. The fresh review then checks numbers against the raw files and the advice against the owner's rulings. Here it caught a dropped hedge that carried a whole recommendation, and advice that broke a standing ruling.
+  - Check that every method taken from an older engine version exists in ours before relying on it.
+- Tools: the file viewer automated through its interface, Python on the readouts and indexes, five helpers, two reviewers.
+- Target and check: each brief's questions answered with numbers, its required output given, and the review's fixes applied.
+- Cost (hours): about 1.5 for both, from the clock.
+- Failed and why: the reviews found 7 and 5 wrong figures and several dropped hedges; all were fixed. A helper's own file write was refused, so its report is saved by the session.
+- Evidence: production/research/aaa-reference/studies/06-characters-wardrobe.md, 07-animation.md
+
 ### 25 Oct 2026, an order ledger: every item of every order kept with a status until done or dropped by the owner
 - Made: one file per order holding every item, every study and everything still open from earlier orders, each with one status; a check that fails the build and the push when an item has no status or leaves a file without being done or dropped; the owner's progress page fed from the same file.
 - Method (setting-free):

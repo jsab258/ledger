@@ -101,3 +101,9 @@
 {"event": "stop", "at": "2026-10-25T19:40:00", "note": "from the clock"}
 {"event": "start", "at": "2026-10-25T19:42:00", "task": "25 Oct: Study 7 (animation): exports, three helpers, synthesis", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-25T20:20:00", "note": "from the clock; helpers in parallel"}
+{"event": "start", "at": "2026-10-25T19:42:00", "task": "25 Oct: item 2 the walk (clips measured, two tries, pictures, two reviews)", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-25T20:55:00", "note": "from the clock; beside the studies"}
+{"event": "start", "at": "2026-10-25T20:21:00", "task": "25 Oct: Study 6 (characters and wardrobe) and its review", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-25T20:56:00", "note": "from the clock; helpers in parallel"}
+{"event": "start", "at": "2026-10-25T20:30:00", "task": "25 Oct: item 4 speech re-timed with the cast voice; harness --pending", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-25T20:56:00", "note": "from the clock"}

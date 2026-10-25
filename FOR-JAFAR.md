@@ -15,6 +15,14 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
   - Neither game uses motion matching. Mafia walks on a layered state machine of single clips, Kingdom Come II on blend spaces. Both choose their starts, stops and turns rather than search for them: Kingdom Come II by distance, the stride's quarter and which leg.
   - Feet: Mafia traces the ground under each foot and locks a foot only in its duels; Kingdom Come II declares leg IK and a feet lock. The one perception figure found says viewers notice slides under about 2 cm, so our 3 cm bar is lenient.
   - For us: Epic's walk stays; its slides are in 134 of its 223 walking clips. If today's fixes fail by eye, stops and turns get chosen Kingdom Come II's way. Sitting can use the bench interaction already in Epic's sample. A first list of 14 street actions is drawn up, their sources still to check.
+- *Study 6, characters and wardrobe* (studies/06-characters-wardrobe.md, passed its fresh review with fixes):
+  - Both games dress people from a few shared bodies with skinned garments. Mafia: tops a median 22,000 triangles at full detail, trousers 9,600, four levels of detail. Kingdom Come II: one body per sex, 10 clothing layers.
+  - Variety comes from material, not mesh: one layered material gives each garment 4 to 15 colourways, with grime and blood as values. Only hems, skirts and coat tails move; Mafia's crowd wears no cloth at all.
+  - For us: Tom's jacket about 20,000 triangles, trousers about 9,000, 2048 textures, skinned, tails on a short bone chain. One base body per sex for the crowd. Mafia's own makers name Marvelous Designer.
+
+**Your items so far (25 October, 20:56).**
+- *The walk (item 2):* Epic's 223 walking clips measured; 134 carry a sliding flat foot in Epic's own data. Two tries took eight of ten moments under 3 cm by eye (five on Saturday). Two remain: the stop's re-step at 10 to 11 cm and the run's start at about 4.5 cm. Set aside by your two-tries rule; it stays off by default (Needs you 1). Turning passes; sitting is next.
+- *Speech (item 4):* re-timed with the cast voice the game's way (the old measure counted voice time the game hides). The first sound is heard at 4.14 s median: the model drafts in 0.75 s, the check adds 1.1 s, and the cast voice on the card takes 2.8 s beside the running game. So the voice is the slow part again (Needs you 2).
 
 
 <!-- retention -->Disk (10-22 04:32): C: 79.9 GB free, F: 48.4 GB free; grew most since 10-21 12:17: C:\actions-runner-ledger\_work\ledger +1.5 GB, F:\LedgerTools\uv\cache +1.4 GB, F:\LedgerTools\bpyenv\Lib +0.9 GB.
@@ -104,7 +112,9 @@ No decision asked: these are for watching the street change.
 
 ### Needs you
 
-1. **Coming, not yet:** Marvelous Designer, one paid month (not a trial), for Tom's outfit. It is needed once Study 6 has set the outfit's numbers, likely mid-week; the day will be named here a day ahead.
+1. **The walk: a third try?** Eight of ten moments pass by eye; the stop's re-step (10 to 11 cm) and the run's start (about 4.5 cm) fail after two tries. Recommended: **allow a third, researched try**: stops picked Kingdom Come II's way, by distance and stride. Or: judge those two by eye at the game's camera. Or: leave it set aside.
+2. **Speech: the cast voice is the slow part.** It takes 2.8 s on the card beside the game, the model and check 1.9 s. Recommended: **live lines in Pocket on the processor (about 2.1 s estimated, measured next), if a listening test passes its accent.** Or: keep the cast voice and accept about 3.5 to 4 s. Or: allow one more voice attempt, against your 7 October ruling.
+3. **Marvelous Designer, ready now:** Tom's outfit target is set (Study 6). Please sign up for the one paid month (not a trial). Its terms page could not be reached from here; I read the licence as shown at sign-up before anything goes in. Note: the pricing page shows 23.3 a month billed yearly, and the Personal plan is for "eligible freelancers and sole proprietors".
 
 Your answers of 25 October are recorded (RULINGS.md): Warhorse's tools left out; no recordings and no checkpoint stop; your friends play on your PC, so the voice on the card is fine for their evening.
 

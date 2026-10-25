@@ -63,7 +63,7 @@ Where: **data** = tables and assets; **script** = behaviour trees, Lua, quest fi
 | Damage, hit reactions, health | data: hit reactions, damage types | code: H13DamageReactions 74, H13Impacts 82, H13Health 18, H13PhysicalAnimation 16 | 14 | |
 | Abilities and effects | data: buffs, perks | code: H13GAS 188 (Unreal's ability system) | 11, 14 | |
 | Doors, pick-ups, world interaction | data: door animation sets, picking, smart entities | code: H13InteractionSystem 85, H13WorldInteractions 86, H13EnvironmentInteraction 11 | 4, 7 |animation side 25 Oct (Study 7); the rest Study 4 |
-| Characters, faces, clothes | data: clothing tables, body layers, clothing presets, blood masks | code: H13OutfitCore 52, DNAFramework 80 (MetaHuman faces), SkeletalMerging 7 | 6 | |
+| Characters, faces, clothes | data: clothing tables, body layers, clothing presets, blood masks | code: H13OutfitCore 52, DNAFramework 80 (MetaHuman faces), SkeletalMerging 7 | 6 |25 Oct, studies/06-characters-wardrobe.md |
 | Locomotion and animation | data: 752 clips, 777 blend spaces, 94 animation databases, fragment tables | code: H13CapsuleChar 308, H13AnimCore 99, H13CharacterProceduralGround 20 (feet on the ground), H13MovementPrediction 4, H13AnimationSharing 21 | 7 |25 Oct, studies/07-animation.md |
 | Vehicles | (horses only) | code: H13Vehicles 525 | 9-13 | |
 | Animals | script: AI/animal 98 | code: H13Animals 171 | (not LEDGER's) | |
