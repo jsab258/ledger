@@ -62,9 +62,9 @@ Where: **data** = tables and assets; **script** = behaviour trees, Lua, quest fi
 | Guns, cover, aiming | (not in KCD2) | code: H13CoverSystem 115, NeroWeapons 11, H13DynamicTargeting 43, aim assist 34 | 14 | |
 | Damage, hit reactions, health | data: hit reactions, damage types | code: H13DamageReactions 74, H13Impacts 82, H13Health 18, H13PhysicalAnimation 16 | 14 | |
 | Abilities and effects | data: buffs, perks | code: H13GAS 188 (Unreal's ability system) | 11, 14 | |
-| Doors, pick-ups, world interaction | data: door animation sets, picking, smart entities | code: H13InteractionSystem 85, H13WorldInteractions 86, H13EnvironmentInteraction 11 | 4, 7 | |
+| Doors, pick-ups, world interaction | data: door animation sets, picking, smart entities | code: H13InteractionSystem 85, H13WorldInteractions 86, H13EnvironmentInteraction 11 | 4, 7 |animation side 25 Oct (Study 7); the rest Study 4 |
 | Characters, faces, clothes | data: clothing tables, body layers, clothing presets, blood masks | code: H13OutfitCore 52, DNAFramework 80 (MetaHuman faces), SkeletalMerging 7 | 6 | |
-| Locomotion and animation | data: 752 clips, 777 blend spaces, 94 animation databases, fragment tables | code: H13CapsuleChar 308, H13AnimCore 99, H13CharacterProceduralGround 20 (feet on the ground), H13MovementPrediction 4, H13AnimationSharing 21 | 7 | |
+| Locomotion and animation | data: 752 clips, 777 blend spaces, 94 animation databases, fragment tables | code: H13CapsuleChar 308, H13AnimCore 99, H13CharacterProceduralGround 20 (feet on the ground), H13MovementPrediction 4, H13AnimationSharing 21 | 7 |25 Oct, studies/07-animation.md |
 | Vehicles | (horses only) | code: H13Vehicles 525 | 9-13 | |
 | Animals | script: AI/animal 98 | code: H13Animals 171 | (not LEDGER's) | |
 | Sound and ambience | data: 309 sound banks, music | code: AkAudio 569 (Wwise), H13Audio 162, H13AudioAmbient 69 | 8 | |

@@ -8,7 +8,13 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
 **Your order of 25 October evening, to Monday 2 November 13:00** (production/orders/2026-10-25.md, every item and study with a status; work stops Monday 06:00 until you say continue).
 - **Phase 1 is open, not closed.** It failed its first exit check on 22 October. Fresh reviewers re-run that check once the walk, the clothes and speech pass; phase 2 waits for it, and the shops already in the street stay.
 - **Recorded:** your rulings (RULINGS.md and DECISIONS.md); the study's order for both weeks at the top of the study plan; the order ledger, seeded with everything still open from before (21 and 23 October's leftovers, the cloud week's four questions, the three shops not yet in the street, FINDINGS' twenty faults, your two clicks on the old archive). A new check fails any push where an item has no status or vanishes without being done or dropped.
-- **Next:** the health check, your progress page, then Study 7 (animation) beside the walk.
+- **Done:** the health check (production/audits/health-2026-10-25.md); your progress page now has the studies bar and the 33 carried items.
+
+**The studies (1 of 16 done).**
+- *Study 7, animation* (production/research/aaa-reference/studies/07-animation.md, passed its fresh review with fixes):
+  - Neither game uses motion matching. Mafia walks on a layered state machine of single clips, Kingdom Come II on blend spaces. Both choose their starts, stops and turns rather than search for them: Kingdom Come II by distance, the stride's quarter and which leg.
+  - Feet: Mafia traces the ground under each foot and locks a foot only in its duels; Kingdom Come II declares leg IK and a feet lock. The one perception figure found says viewers notice slides under about 2 cm, so our 3 cm bar is lenient.
+  - For us: Epic's walk stays; its slides are in 134 of its 223 walking clips. If today's fixes fail by eye, stops and turns get chosen Kingdom Come II's way. Sitting can use the bench interaction already in Epic's sample. A first list of 14 street actions is drawn up, their sources still to check.
 
 
 <!-- retention -->Disk (10-22 04:32): C: 79.9 GB free, F: 48.4 GB free; grew most since 10-21 12:17: C:\actions-runner-ledger\_work\ledger +1.5 GB, F:\LedgerTools\uv\cache +1.4 GB, F:\LedgerTools\bpyenv\Lib +0.9 GB.

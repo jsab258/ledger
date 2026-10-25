@@ -1,5 +1,5 @@
 {
-  "updated": "Sunday 25 October 2026, 19:34",
+  "updated": "Sunday 25 October 2026, 20:28",
   "here": 1,
   "friends_eta": "around January",
   "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
@@ -207,7 +207,7 @@
     "gap_note": "No pictures from 9 to 20 October: the PC was off."
   },
   "studies": {
-    "done": 0,
+    "done": 1,
     "total": 16,
     "order": "2026-10-25.md",
     "list": [
@@ -250,7 +250,7 @@
       {
         "n": 7,
         "name": "Animation",
-        "status": "open",
+        "status": "done",
         "week": "this week"
       },
       {

@@ -99,3 +99,5 @@
 {"event": "stop", "at": "2026-10-25T16:45:00", "note": "recorded at the end"}
 {"event": "start", "at": "2026-10-25T19:17:00", "task": "25 Oct evening: his week order recorded; the order ledger and its check; progress page; health check", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-25T19:40:00", "note": "from the clock"}
+{"event": "start", "at": "2026-10-25T19:42:00", "task": "25 Oct: Study 7 (animation): exports, three helpers, synthesis", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-25T20:20:00", "note": "from the clock; helpers in parallel"}
