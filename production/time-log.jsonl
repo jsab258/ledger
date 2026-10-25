@@ -95,3 +95,5 @@
 {"event": "stop", "at": "2026-10-25T14:50:00", "note": "recorded at the end"}
 {"event": "start", "at": "2026-10-25T14:46:00", "task": "25 Oct: .NET 10 runtime on his yes; FModel run against Mafia: mounts with the key, packages need a mappings file", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-25T14:56:00", "note": "recorded at the end"}
+{"event": "start", "at": "2026-10-25T16:26:00", "task": "25 Oct: Mafia's published mappings file fetched, matched to the installed build, nine packages of seven kinds opened in FModel", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-25T16:45:00", "note": "recorded at the end"}

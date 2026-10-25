@@ -19,9 +19,9 @@ Phase 1 closed 22 Oct, no exit passed (production/audits/phase1-exit/CLOSE-2026-
 ## His order of 25 October (short job)
 
 - [x] Disk: both floors hold; nothing deleted.
-- [x] AAA study set-up: KCD2 unpacked; Mafia's published key found, all packages named (aaa-reference/REFERENCE.md).
+- [x] AAA study set-up: KCD2 unpacked; Mafia's key and mappings found, packages open (aaa-reference/REFERENCE.md).
 
-STATE (25 Oct 14:53): waiting for Monday's order after 13:00.
+STATE (25 Oct 16:40): waiting for Monday's order after 13:00.
 
 ## Handovers
 
