@@ -70,7 +70,7 @@ No decision asked: these are for watching the street change.
 - *Disk:* Mafia: The Old Country is in C:/Games (49 GB), beside KCD2 (82 GB). C: has 209 GB free against its 40 floor, F: 31 against 20, so nothing was deleted.
 - *The AAA study:* your plan is imported word for word (production/research/aaa-reference/STUDY-PLAN.md), and your amendment on Mafia's key is in the rulings and the legal file, with your word that you own both games.
   - *KCD2:* all 99 archives listed; its readable data unpacked to F: (31,150 files: tables, scripts, both regions' layers, English text). Schedules, crime and reputation each live in readable tables and scripts: Kuttenberg's schedule table alone holds 64,529 entries; there are 30 crimes, 308 crime behaviour trees and 203 reputation changes. Warhorse's official tools are not set up: they install only through a Steam account that owns the game, which I don't sign in to, and their licence covers individuals making mods only, "Companies are not entitled to use the Modding Tools" (Needs you 1). Their public wiki, which needs no account, documents where each system lives, and was read instead.
-  - *Mafia:* **the published key was found** on a second search, in a public forum post of August 2025 (source in your study plan), and it opens the files. The first index now names all 139,791 packages and the sound files beside them: 45,898 map pieces, 22,781 animations, 19,396 environment pieces, 8,629 character assets, 595 AI assets. The game's 216 code modules are named too. The file viewer (FModel) is set up with the key, but this build needs Microsoft's .NET 10 runtime, which the PC lacks (Needs you 2).
+  - *Mafia:* **the published key was found** on a second search, in a public forum post of August 2025 (source in your study plan), and it opens the files. The first index now names all 139,791 packages and the sound files beside them: 45,898 map pieces, 22,781 animations, 19,396 environment pieces, 8,629 character assets, 595 AI assets. The game's 216 code modules are named too. The file viewer (FModel) now runs on Microsoft's .NET 10 runtime on F: and mounts everything with the key, but it opens no package's contents without a "mappings" file, and none is published (Needs you 2).
   - *The coverage map:* 31 systems, each with where its logic lives in each game and which study covers it (production/research/aaa-reference/REFERENCE.md). Its open blind spots: Mafia's files are named but not yet read; how KCD2's code runs its tables; anything seen in play, until your recordings.
 
 **The tester's walk (24 October, 02:30 to 03:01; production/playtest/nightly/2026-10-24.md).**
@@ -93,7 +93,7 @@ No decision asked: these are for watching the street change.
 ### Needs you
 
 1. **Warhorse's tools for KCD2.** Their licence excludes companies and every use but making mods, and they need KCD2 on your Steam account. Recommended: **leave them out**; the study reads the game's own files and Warhorse's public wiki, as your ruling allows where the tools don't cover the need. Or: you put KCD2 and the tools on your Steam account and take their licence on yourself. Or: you write to Warhorse for permission.
-2. **The runtime FModel needs.** May I download Microsoft's .NET 10 desktop runtime (the free zip from Microsoft's own site, about 60 MB) onto F:, so the file viewer starts? Recommended: **yes**; it installs nothing into Windows. Or: no, and the studies read the files with my own scripts only.
+2. **Mafia's mappings file.** FModel needs one to show a package's contents. None is published, and making one means running a dump tool inside the game. Recommended: **I download UE Viewer**, the free viewer from its author's own site, whose forum shows it reading this game's meshes and textures without one; data tables and Blueprints then wait. Or: the studies use names, text and sound only. (If you ever have a mappings file, it goes beside the key on F:.)
 
 Your answers of 24 October are recorded (RULINGS.md): the cast voice stays on the card, the 6 GB line is the game alone, and the friends' cards are checked before their build; 1.7 ms of spare card time by day is accepted until phase 2's street budget; Marvelous Designer is one month you pay yourself, and you are told when Tom's outfit is ready to start.
 
@@ -107,19 +107,19 @@ Your answers of 24 October are recorded (RULINGS.md): the cast voice stays on th
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
 
-## Builder, Sunday 25 October (14:41)
+## Builder, Sunday 25 October (14:53)
 
 **Failed:**
-- The file viewer does not start: it needs Microsoft's .NET 10 runtime (Needs you 2).
+- The file viewer runs and mounts everything, but opens no package: it needs a mappings file nobody has published (Needs you 2).
 - Warhorse's KCD2 tools could not be set up: they need your Steam account, and their licence excludes study (Needs you 1).
 
 **Done:**
 - **Disk:** Mafia is in C:/Games (49 GB); both floors hold, nothing deleted.
 - **Your study plan** is in the repository word for word. Your key amendment and your word that you own both games are in the legal file.
 - **KCD2:** all 99 archives listed, and its readable data (31,150 files) unpacked to F:. Schedules, crime and reputation all sit in readable tables and scripts.
-- **Mafia:** its published key found in an open forum post and proved on every container; all 139,791 packages named, and its 216 code modules.
-- **The coverage map:** 31 systems across both games, each with where its logic lives and the study that covers it.
+- **Mafia:** its published key found in an open forum post and proved; all 139,791 packages named.
+- **The coverage map:** 31 systems across both games, each with where its logic lives and its study.
 
 **Found:** your pages' answers had not been read back since 22 October. Read by hand: 157, none new.
 
-**Act on:** Needs you 1 and 2, Warhorse's tools and the runtime. Waiting for Monday's order after 13:00.
+**Act on:** Needs you 1 and 2, Warhorse's tools and Mafia's mappings file. Waiting for Monday's order after 13:00.

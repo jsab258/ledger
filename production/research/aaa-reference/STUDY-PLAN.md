@@ -50,7 +50,8 @@ Three ways in, used in this order: the game's files first, its code only where t
 > *Set-up record (the session, 25 October 2026; his order of that day):*
 > - **Mafia's file key:** published on 8 August 2025 by the user JimCollin in the public thread "Mafia: The Old Country" on Gildor's Forums (UE Viewer's forum), https://www.gildor.org/smf/index.php?topic=9279.0, read without an account on 25 October 2026. The same post gives the engine as Unreal 5.4.
 > - **Kept and checked:** the key is kept in F:\LedgerTools\keys\mafia-aes.txt, never in git. It decrypts the name index of all eight encrypted containers and of every .pak file, and the names found match the package count taken before the key, container by container (139,791).
-> - **FModel:** set to Unreal 5.4 with the key, but this build needs Microsoft's .NET 10 desktop runtime, which the PC lacks, so the viewer does not start yet.
+> - **FModel:** set to Unreal 5.4 with the key. It runs on Microsoft's .NET 10.0.13 runtime, downloaded on his yes from Microsoft's own release list (both zips' SHA-512 checked) to F:\LedgerTools\dotnet10, installed into nothing. It mounts 18 of the 19 archives with the key (372,542 files; the global container needs no key) and reads the game's 26,273 English text entries.
+> - **Packages do not open yet:** opening one (a difficulty data table) stops at "Package has unversioned properties but mapping file (.usmap) is missing". A mappings file describes the game's own classes; none is published (searched the same day), and making one means running a dump tool inside the game, which is extraction, so it is his call (FOR-JAFAR, Needs you 2).
 > - **Where the rest stands:** the first index and the coverage map are in REFERENCE.md.
 
 ## The studies at a glance

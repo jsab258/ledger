@@ -93,3 +93,5 @@
 {"event": "stop", "at": "2026-10-25T14:20:00", "note": "recorded afterwards; the 13:32 hold and his answer inside it; one research helper and one fresh reviewer alongside"}
 {"event": "start", "at": "2026-10-25T14:32:00", "task": "25 Oct: his 30-minute order: Mafia's published key found, proved, the first index and coverage map updated", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-25T14:50:00", "note": "recorded at the end"}
+{"event": "start", "at": "2026-10-25T14:46:00", "task": "25 Oct: .NET 10 runtime on his yes; FModel run against Mafia: mounts with the key, packages need a mappings file", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-25T14:56:00", "note": "recorded at the end"}
