@@ -87,3 +87,7 @@
 {"event": "stop", "at": "2026-10-24T03:45:00", "note": "recorded afterwards from the commit times; the log was not kept from 9 to 22 October"}
 {"event": "start", "at": "2026-10-24T03:45:00", "task": "24 Oct: the launderette's design fixed and brought into the street through the game's gate (five rounds, ten views)", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-24T07:20:00", "note": "recorded afterwards from the commit times; about 2 hours of it fresh reviewers"}
+{"event": "start", "at": "2026-10-24T08:06:00", "task": "24 Oct: the walk by Epic's MetaHuman route (his order of 24 October), built, measured, set aside after two tries", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-24T12:00:00", "note": "recorded afterwards from the commit times; fresh reviewers alongside"}
+{"event": "start", "at": "2026-10-25T13:20:00", "task": "25 Oct: his short job: disk, the AAA study's set-up for both games, the coverage map", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-25T14:20:00", "note": "recorded afterwards; the 13:32 hold and his answer inside it; one research helper and one fresh reviewer alongside"}

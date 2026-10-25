@@ -19,9 +19,9 @@ Phase 1 closed 22 Oct, no exit passed (production/audits/phase1-exit/CLOSE-2026-
 ## His order of 25 October (short job)
 
 - [x] Disk: both floors hold; nothing deleted.
-- [ ] AAA study set-up: plan imported; held, copies not store copies (DECISIONS).
+- [x] AAA study set-up: KCD2 unpacked; Mafia keyless, containers counted only (aaa-reference/REFERENCE.md).
 
-STATE (25 Oct 13:32): waiting for Monday's order after 13:00.
+STATE (25 Oct 14:09): waiting for Monday's order after 13:00.
 
 ## Handovers
 

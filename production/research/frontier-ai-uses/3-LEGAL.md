@@ -15,7 +15,8 @@ Jafar has read this note and accepts the legal risk of one exception: **the AAA 
 - **Not covered:** taking anything from either game into LEDGER or git, and any other game. Those stay as below, and need a new ruling.
 - Everything below stays true as research. The ruling is his choice to take the risk, not a finding that it is gone.
 - **His amendment of 25 October:** the session may find and enter Mafia's published file key itself, instead of his entering it. If no key is published, it reports that and never asks him to extract one. Everything else in the ruling stands.
-- **Not applied on 25 October:** the copies of both games found on this PC (C:/Games) carry a repack group's file (`_Redist/fitgirl.md5`) and piracy sites' links (IGG-GAMES, PCGAMESTORRENTS, OneHack), not a store's. The ruling and his study doc assume copies he owns (its prerequisite: "Mafia owned and installed"). The risk he accepted is opening his own copies' files, not using unlicensed copies, so the set-up waits for store-bought copies.
+- **His word on ownership, 25 October:** the copies of both games on this PC (C:/Games) carry a repack group's file (`_Redist/fitgirl.md5`) and piracy sites' links, not a store's, so the session held the set-up and said why. He answered: "I own the games, this is nothing for you to decide. Go". The set-up went ahead on his statement that he owns both games; the question is his, and is not reopened.
+- **The key, 25 October:** no published key for Mafia: The Old Country was found, so nothing was entered and its packages stay closed. Checked: FModel's public key list, FModel's game lists, web searches. Not reached: the modding forum's key collection and the modders' chat servers, which need a sign-in the session does not make (DECISIONS, 25 October).
 
 ## The rule of thumb
 

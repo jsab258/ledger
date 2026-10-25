@@ -3,7 +3,7 @@
 The overview first; then the day's summary, under 200 words. Earlier summaries are in git and in
 production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md before that).
 
-## Overview (Saturday 24 October: your week's order, day four)
+## Overview (Sunday 25 October: your short job)
 
 <!-- retention -->Disk (10-22 04:32): C: 79.9 GB free, F: 48.4 GB free; grew most since 10-21 12:17: C:\actions-runner-ledger\_work\ledger +1.5 GB, F:\LedgerTools\uv\cache +1.4 GB, F:\LedgerTools\bpyenv\Lib +0.9 GB.
 
@@ -67,8 +67,11 @@ No decision asked: these are for watching the street change.
 ![The stop: Tom's front foot glides back about 13 cm after he has stopped (side view, ten pictures a second)](production/previews/walk-stop-glide-2026-10-24.jpg)
 
 **Your short job of 25 October.**
-- *Disk:* Mafia: The Old Country is in C:/Games (46 GB), beside KCD2 (82 GB). C: has 209 GB free against its 40 floor, F: 31 against 20, so nothing was deleted.
-- *The AAA study:* your plan is imported word for word (production/research/aaa-reference/STUDY-PLAN.md), and your amendment on Mafia's key is recorded in the rulings and the legal file. The set-up itself is held. Both copies on this PC carry a repack group's file (fitgirl) and piracy sites' links (IGG-GAMES, PCGAMESTORRENTS), not a store's. Your ruling covers opening your own copies, and your plan says "Mafia owned and installed". So I installed no viewer, sought no key and opened no file of either copy (Needs you 1).
+- *Disk:* Mafia: The Old Country is in C:/Games (49 GB), beside KCD2 (82 GB). C: has 209 GB free against its 40 floor, F: 31 against 20, so nothing was deleted.
+- *The AAA study:* your plan is imported word for word (production/research/aaa-reference/STUDY-PLAN.md), and your amendment on Mafia's key is in the rulings and the legal file, with your word that you own both games.
+  - *KCD2:* all 99 archives listed; its readable data unpacked to F: (31,150 files: tables, scripts, both regions' layers, English text). Schedules, crime and reputation each live in readable tables and scripts: Kuttenberg's schedule table alone holds 64,529 entries; there are 30 crimes, 308 crime behaviour trees and 203 reputation changes. Warhorse's official tools are not set up: they install only through a Steam account that owns the game, which I don't sign in to, and their licence covers individuals making mods only, "Companies are not entitled to use the Modding Tools" (Needs you 1). Their public wiki, which needs no account, documents where each system lives, and was read instead.
+  - *Mafia:* the file viewer (FModel) is installed on F:, but every content file is encrypted and **no published key exists** that I could find; the places that may hold one need a sign-in, which I don't make. So its first index counts what is readable without a key: 139,791 packages in 8 containers, and the game's 216 code modules by name (AI, missions, vehicles, outfits, cover, barks).
+  - *The coverage map:* 31 systems, each with where its logic lives in each game and which study covers it (production/research/aaa-reference/REFERENCE.md). Its open blind spots: all of Mafia's data and Blueprints, until a key; how KCD2's code runs its tables; anything seen in play, until your recordings.
 
 **The tester's walk (24 October, 02:30 to 03:01; production/playtest/nightly/2026-10-24.md).**
 - The route ran 13 of 15 stages. It failed at Ron (never within reach, 3.7 m away) and at Darren (lost from sight).
@@ -89,9 +92,9 @@ No decision asked: these are for watching the street change.
 
 ### Needs you
 
-1. The AAA study needs store-bought copies of both games. Recommended: buy Kingdom Come: Deliverance II and Mafia: The Old Country from a store (Steam, or GOG for KCD2) and install them there. The set-up (viewer, key, first index, coverage map) then runs the same day, in about an hour.
+1. **Warhorse's tools for KCD2.** Their licence excludes companies and every use but making mods, and they need KCD2 on your Steam account. Recommended: **leave them out**; the study reads the game's own files and Warhorse's public wiki, as your ruling allows where the tools don't cover the need. Or: you put KCD2 and the tools on your Steam account and take their licence on yourself. Or: you write to Warhorse for permission.
 
-Nothing else waits on you. Your answers of 24 October are recorded (RULINGS.md): the cast voice stays on the card, the 6 GB line is the game alone, and the friends' cards are checked before their build; 1.7 ms of spare card time by day is accepted until phase 2's street budget; Marvelous Designer is one month you pay yourself, and you are told when Tom's outfit is ready to start. The walk's next go is under way this weekend, to Saturday 18:00.
+Your answers of 24 October are recorded (RULINGS.md): the cast voice stays on the card, the 6 GB line is the game alone, and the friends' cards are checked before their build; 1.7 ms of spare card time by day is accepted until phase 2's street budget; Marvelous Designer is one month you pay yourself, and you are told when Tom's outfit is ready to start.
 
 ### Road to worth playing (PLAN.md)
 
@@ -103,16 +106,19 @@ Nothing else waits on you. Your answers of 24 October are recorded (RULINGS.md):
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
 
-## Builder, Sunday 25 October (13:35)
+## Builder, Sunday 25 October (14:09)
 
-**Failed:** nothing ran that could fail; one item is held.
+**Failed:**
+- Mafia's files stay closed: no published key could be found, and the places that may hold one need a sign-in.
+- Warhorse's KCD2 tools could not be set up: they need your Steam account, and their licence excludes study (Needs you 1).
 
 **Done:**
-- **Disk:** Mafia is in C:/Games (46 GB); both floors hold (C: 209 GB free, F: 31), nothing deleted.
-- **Your study plan** is in the repository word for word, and your key amendment is in the rulings and the legal file.
+- **Disk:** Mafia is in C:/Games (49 GB); both floors hold, nothing deleted.
+- **Your study plan** is in the repository word for word. Your key amendment and your word that you own both games are in the legal file.
+- **KCD2:** all 99 archives listed, and its readable data (31,150 files) unpacked to F:. Schedules, crime and reputation all sit in readable tables and scripts.
+- **Mafia:** the file viewer is installed, 139,791 packages are counted, and its 216 code modules are named.
+- **The coverage map:** 31 systems across both games, each with where its logic lives and the study that covers it.
 
-**Found:** your pages' answers had not been read back since 22 October; the nightly read-back runs only when the app runs it, and has run 7 times in 19 days. Read back by hand today: 157 answers, none new.
+**Found:** your pages' answers had not been read back since 22 October. Read by hand: 157, none new.
 
-**Held:** the study's set-up. Both installed copies carry piracy-site and repack files, not a store's; your ruling and plan assume owned copies, so nothing of either was opened (Needs you 1).
-
-**Act on:** Needs you 1, the two games from a store. Waiting for Monday's order after 13:00.
+**Act on:** Needs you 1, Warhorse's tools. Waiting for Monday's order after 13:00.
