@@ -27,10 +27,13 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
   - An engine's global script container is usually unencrypted and lists every compiled module and class by name: the game's own names for its systems are the first source of the coverage map.
   - The map marks where each system's logic lives (data, script or compiled code), so a system whose logic is only in code is seen as a blind spot, not missed.
   - Read the archive's own headers for faults before trusting a library: one level archive named files with "/" in its directory and "\" in each file's own header, which a standard zip reader refuses.
+  - A published key is found where the viewer tools' own authors and users talk, not in key lists or search engines: the public lists held nothing; the open thread of a viewer's forum held it.
+  - Prove a key on the files before trusting its post: decrypt each container's name index and match the names against the package count taken without the key, container by container.
+  - Check a downloaded tool's runtime before relying on it: the viewer's newest build needed a runtime the machine lacked.
 - Tools: Python's zip reader, a short container-header reader, FModel (installed, waits on a key).
 - Target and check: every archive listed and every system of both games given a line; every count read from the files the same day.
 - Cost (hours): about 1, 13:20 to 14:20, with a research helper and a fresh reviewer alongside.
-- Failed and why: the encrypted game's asset names and types could not be indexed. No published key was found, and the places that may hold one need a sign-in.
+- Failed and why: the first search for the key found none (lists and search engines only); a second, in the viewer's own forum, found it. The viewer did not start: its build needs a newer runtime, and downloading one waits on the owner's yes.
 - Evidence: production/research/aaa-reference/REFERENCE.md; DECISIONS.md (25 Oct 14:05)
 
 ### 24 Oct 2026, the walk's second go: a sample's own character as an unseen mover, the game's character worn over it, set aside on its slide
@@ -608,6 +611,6 @@ Written by unit 14 from the repository's records; each line names its evidence f
 - Whether invented details (7 percent) and newcomer fallbacks (a third) fall further; the retune waits on his yes. FINDINGS.md; DECISIONS.md (29 Sep)
 - Sound: only an ear can judge the day bed, the radio and a possible whine at 3.4 kHz. production/cloud-week/sound/REVIEW-v1.md (last section)
 - Town content and ambient lines: a fresh canon review failed both and its fixes are applied without a second review (13 October); his reading is the gate. production/cloud-week/HANDOVER.md (Part 2, units 11 and 12); production/cloud-week/REVIEW-canon-11-12-B5-FIXES.md
-- Mafia's packages wait on a published file key; KCD2's set-up is done. production/research/aaa-reference/REFERENCE.md
+- Both games' set-up is done; Mafia's viewer waits on a runtime download. production/research/aaa-reference/REFERENCE.md
 - Whether one family's cost and reuse time can carry a town: phase 1 was to measure it. PLAN.md (opening); CLAUDE.md (How the work is done)
 - Three shipped libraries have no licence read. FINDINGS.md (libraries)

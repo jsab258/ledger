@@ -91,3 +91,5 @@
 {"event": "stop", "at": "2026-10-24T12:00:00", "note": "recorded afterwards from the commit times; fresh reviewers alongside"}
 {"event": "start", "at": "2026-10-25T13:20:00", "task": "25 Oct: his short job: disk, the AAA study's set-up for both games, the coverage map", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-25T14:20:00", "note": "recorded afterwards; the 13:32 hold and his answer inside it; one research helper and one fresh reviewer alongside"}
+{"event": "start", "at": "2026-10-25T14:32:00", "task": "25 Oct: his 30-minute order: Mafia's published key found, proved, the first index and coverage map updated", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-25T14:50:00", "note": "recorded at the end"}

@@ -47,6 +47,12 @@ Three ways in, used in this order: the game's files first, its code only where t
 - [ ] A first export index: a list of every package and asset type, to plan where each study looks, then the coverage map
 - [ ] Jafar's recording of the first hour of a new game, without skipping
 
+> *Set-up record (the session, 25 October 2026; his order of that day):*
+> - **Mafia's file key:** published on 8 August 2025 by the user JimCollin in the public thread "Mafia: The Old Country" on Gildor's Forums (UE Viewer's forum), https://www.gildor.org/smf/index.php?topic=9279.0, read without an account on 25 October 2026. The same post gives the engine as Unreal 5.4.
+> - **Kept and checked:** the key is kept in F:\LedgerTools\keys\mafia-aes.txt, never in git. It decrypts the name index of all eight encrypted containers and of every .pak file, and the names found match the package count taken before the key, container by container (139,791).
+> - **FModel:** set to Unreal 5.4 with the key, but this build needs Microsoft's .NET 10 desktop runtime, which the PC lacks, so the viewer does not start yet.
+> - **Where the rest stands:** the first index and the coverage map are in REFERENCE.md.
+
 ## The studies at a glance
 
 Sixteen studies cover everything an AAA game is made of; the first four and combat (14) are the ones LEDGER needs most.
