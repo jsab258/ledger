@@ -19,6 +19,19 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 25 Oct 2026, a game frame held by another program's work on the same graphics card: traced, researched, two tries, set aside
+- Made: a trace of the game's slowest frames with the speech model speaking beside it on the card; a research note on how Windows shares one card between two programs; a switch for the model's own priority on the card.
+- Method (setting-free):
+  - Trace the moment, then split each slow card frame into the game's own drawing and the rest: here 16 ms of a 504 ms frame was the game's; the rest was another program holding the card. Export the trace's timings headless and read them by script.
+  - Before trying anything, read how the operating system and the card share work between programs: whether the driver allows hardware scheduling, how fine the card's pre-emption is (here a whole batch of compute work cannot be stopped), which engine each program uses (both on the compute engine), and what priority a program may set for itself.
+  - Test the levers on a stand-in workload first; then on the real thing, one at a time, the same capture each time.
+  - Watch the card's memory in the same run: near its top, the system pages one program's data out for the other's, which can also stall a frame.
+- Tools: the engine's trace and its headless export; a probe of the card-priority call; the capture script with its memory counters; a research helper.
+- Target and check: no frame over 33.3 ms in the packaged walk with the voice speaking.
+- Cost (hours): about 0.75, 22:10 to 22:56.
+- Failed and why: lowering the model's priority changed nothing; keeping the game off the shared compute engine cut the worst frame from 339 to 442 ms to 118 ms, six frames still over. A running batch on the card cannot be pre-empted, and the card was full of memory in every run. Set aside after two tries.
+- Evidence: production/research/frame-headroom/VOICE-ON-CARD-TRACE-2026-10-25.md
+
 ### 25 Oct 2026, the player sits: a vendor sample's bench interaction driven on a puppet character; it lands right and looks wrong, set aside
 - Made: a seats file (each seat a point under the seat bone and a facing, plus the room the player must stand in); the act key sits the player on the nearest free seat and stands him again; a test that walks him through it and reports.
 - Method (setting-free):

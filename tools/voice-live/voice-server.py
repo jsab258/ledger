@@ -164,6 +164,26 @@ def load_models(cpu_only):
     # tokeniser, the vocoder's reference) now lives on the processor in the
     # one copy, and only the part that makes the sound tokens is on the card.
     import torch_directml
+    # ITS PLACE IN THE CARD'S QUEUE (25 October, his order item 4: the frame spike with the voice on the
+    # card; production/research/frame-headroom/VOICE-ON-CARD-TRACE-2026-10-25.md): the voice's card work
+    # held the game's frame for up to 487 ms. LEDGER_VOICE_CARD_PRIORITY=idle|below|normal sets this
+    # program's own scheduling class on the card (D3DKMTSetProcessSchedulingPriorityClass, its own process
+    # only; no system setting), so Windows serves the game first. Unset: unchanged until measured.
+    want = os.environ.get("LEDGER_VOICE_CARD_PRIORITY", "")
+    if want in ("idle", "below", "normal"):
+        import ctypes
+        setp = ctypes.WinDLL("gdi32").D3DKMTSetProcessSchedulingPriorityClass
+        setp.argtypes = [ctypes.c_void_p, ctypes.c_int]
+        setp.restype = ctypes.c_long
+        k32 = ctypes.WinDLL("kernel32")
+        k32.GetCurrentProcess.restype = ctypes.c_void_p
+        status = setp(k32.GetCurrentProcess(), {"idle": 0, "below": 1, "normal": 2}[want]) & 0xFFFFFFFF
+        print(f"voice card priority {want}: status 0x{status:08X}", file=sys.stderr, flush=True)
+        # written down too (its error stream is often discarded): the measure checks it took
+        try:
+            pathlib.Path(tempfile.gettempdir(), "ledger-voice-card-priority.txt").write_text(f"{want} 0x{status:08X} {time.time():.0f}\n")
+        except OSError:
+            pass
     dev = torch_directml.device()
     speaker = ChatterboxTurboTTS.from_local(weights, dev, nano=True)
     speaker.s3gen.to("cpu")

@@ -36,10 +36,11 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
   - LEDGER is already built the simulated way, with something both lack: who told whom, and talk that weakens as it travels.
   - For us: crime memory that lasts by kind (1 to 7 days); show a witness walking to tell someone; benches and beds as places in the routine; spreading only where people meet, as canon says.
 
-**Your items so far (25 October, 22:15).**
+**Your items so far (25 October, 22:57).**
 - *The walk (item 2):* Epic's 223 walking clips measured; 134 carry a sliding flat foot in Epic's own data. Two tries took eight of ten moments under 3 cm by eye (five on Saturday). Two remain: the stop's re-step at 10 to 11 cm and the run's start at about 4.5 cm. Set aside by your two-tries rule; it stays off by default (Needs you 1). Turning passes.
 - *Sitting (item 2):* Tom now sits on the office bench and stands again with E, on Epic's own bench clips; his hips land 8 cm from the seat's mark. But a fresh reviewer failed the sit-down by eye: one foot hangs in the air for a second, the other slides on tiptoe, and his head folds to his chest. A second try changed nothing; Epic's own mannequin does the same, so the fault is in how the clip is started. Set aside (Needs you 1). It rides on Epic's walk, so it is not in the game as played yet either way.
 - *Speech (item 4):* re-timed with the cast voice the game's way (the old measure counted voice time the game hides). The first sound is heard at 4.14 s median: the model drafts in 0.75 s, the check adds 1.1 s, and the cast voice on the card takes 2.8 s beside the running game. So the voice is the slow part again (Needs you 2).
+- *The frame stalls while the voice speaks (item 4):* traced in the packaged walk with the cast voice on the card. The stalls are the card busy with the voice's work: one frame waited 487 ms for it, while the game's own drawing took 16 ms. Two tries (the voice giving way on the card; the game keeping off the part of the card the voice uses) cut the worst stall from about 440 ms to 118 ms; six frames are still too slow. Set aside. The card's memory is full in every such run (10.1 of 10 GB), the next thing to look at.
 
 
 <!-- retention -->Disk (10-22 04:32): C: 79.9 GB free, F: 48.4 GB free; grew most since 10-21 12:17: C:\actions-runner-ledger\_work\ledger +1.5 GB, F:\LedgerTools\uv\cache +1.4 GB, F:\LedgerTools\bpyenv\Lib +0.9 GB.
@@ -130,7 +131,7 @@ No decision asked: these are for watching the street change.
 ### Needs you
 
 1. **The walk and the sit: a third try each?** Walk: eight of ten moments pass by eye; the stop's re-step (10 to 11 cm) and the run's start (about 4.5 cm) fail after two tries. Sit: he lands on the seat, but the sit-down looks wrong after two tries. Recommended: **allow a third, researched try for both**: stops picked Kingdom Come II's way, by distance and stride; the sit's clip started from its beginning, checked against Epic's own sample. Or: judge the walk's two moments by eye at the game's camera. Or: leave both set aside.
-2. **Speech: the cast voice is the slow part.** It takes 2.8 s on the card beside the game, the model and check 1.9 s. Recommended: **live lines in Pocket on the processor (about 2.1 s estimated, measured next), if a listening test passes its accent.** Or: keep the cast voice and accept about 3.5 to 4 s. Or: allow one more voice attempt, against your 7 October ruling.
+2. **Speech: the cast voice is the slow part.** It takes 2.8 s on the card beside the game, the model and check 1.9 s, and it causes the frame stalls above. Recommended: **live lines in Pocket on the processor (about 2.1 s estimated, measured next), if a listening test passes its accent.** Or: keep the cast voice and accept about 3.5 to 4 s. Or: allow one more voice attempt, against your 7 October ruling.
 3. **Marvelous Designer, ready now:** Tom's outfit target is set (Study 6). Please sign up for the one paid month (not a trial). Its terms page could not be reached from here; I read the licence as shown at sign-up before anything goes in. Note: the pricing page shows 23.3 a month billed yearly, and the Personal plan is for "eligible freelancers and sole proprietors".
 
 Your answers of 25 October are recorded (RULINGS.md): Warhorse's tools left out; no recordings and no checkpoint stop; your friends play on your PC, so the voice on the card is fine for their evening.
@@ -145,18 +146,18 @@ Your answers of 25 October are recorded (RULINGS.md): Warhorse's tools left out;
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
 
-## Builder, Sunday 25 October (16:40)
+## Builder, Sunday 25 October (23:00)
 
 **Failed:**
-- Warhorse's KCD2 tools could not be set up: they need your Steam account, and their licence excludes study (Needs you 1).
+- The walk's last two sliding moments, after two tries; set aside (Needs you 1).
+- Tom sits and stands on the office bench, but the sit-down looks wrong (a foot hangs in the air, his head folds); two tries, set aside (Needs you 1).
+- The frame stalls while the cast voice speaks: traced to the voice holding the card; two tries cut the worst from about 440 ms to 118 ms, still too slow; set aside.
 
 **Done:**
-- **Disk:** Mafia is in C:/Games (49 GB); both floors hold, nothing deleted.
-- **Your study plan** is in the repository word for word. Your key amendment and your word that you own both games are in the legal file.
-- **KCD2:** all 99 archives listed, and its readable data (31,150 files) unpacked to F:. Schedules, crime and reputation all sit in readable tables and scripts.
-- **Mafia:** its published key and mappings file found and proved; all 139,791 packages named; the viewer opens every kind tried.
-- **The coverage map:** 31 systems across both games, each with where its logic lives and its study.
+- The health check, the order ledger and your progress page.
+- Speech re-timed the game's way: 4.14 s to the first sound; the voice is 2.8 s of it (Needs you 2).
+- Six studies, each passed by a fresh reviewer with fixes: animation, characters, tech budgets, streets, visuals, town life. Three of them had wrong advice about our own game, now corrected.
 
-**Found:** your pages' answers had not been read back since 22 October. Read by hand: 157, none new.
+**Stopped at 01:00 as you asked;** everything is pushed.
 
-**Act on:** Needs you 1, Warhorse's tools. Waiting for Monday's order after 13:00.
+**Act on:** Needs you 1 (a third try for the walk and the sit) and 2 (the voice).
