@@ -46,12 +46,12 @@ Where: **data** = tables and assets; **script** = behaviour trees, Lua, quest fi
 
 | System | KCD2: where | Mafia: where | Study | Ticked |
 |---|---|---|---|---|
-| NPC daily life and schedules | data: level scheduler tables, smart objects, situations; script: AI/npc, AI/profession | code: H13SmartObjects 37, H13AIRoles 61, H13AIWorldState 41; data: AI roles 97, state trees 196, spawner definitions 422 | 1 | |
-| NPC brains and decisions | data: brain and subbrain tables; script: 1,400 AI trees | code: H13AICore 530, NeroAI 424, H13AIBehaviorTree 11 | 1 | |
-| Perception and awareness | script: hearing subscriptions, nervousness flags | code: H13AIPerceptionAndAwareness 86, NeroAIPerceptionRuntime 3 | 1, 15 | |
+| NPC daily life and schedules | data: level scheduler tables, smart objects, situations; script: AI/npc, AI/profession | code: H13SmartObjects 37, H13AIRoles 61, H13AIWorldState 41; data: AI roles 97, state trees 196, spawner definitions 422 | 1 |data side 25 Oct, studies/01-npc-life.md |
+| NPC brains and decisions | data: brain and subbrain tables; script: 1,400 AI trees | code: H13AICore 530, NeroAI 424, H13AIBehaviorTree 11 | 1 |data side 25 Oct (Study 1); code not read |
+| Perception and awareness | script: hearing subscriptions, nervousness flags | code: H13AIPerceptionAndAwareness 86, NeroAIPerceptionRuntime 3 | 1, 15 |constants 25 Oct (Study 1) |
 | Group coordination and squads | data: situation roles | code: H13AICoordination 176, H13AISquads 15, NeroAICoordinationRuntime 27 | 1, 14 | |
-| Crime: witnesses, reporting, arrest, punishment | data: crimes, crime roles; script: Crime.lua, AI/crime 308 | code: H13NPCReactions 53, NeroAIReactions 18 | 15 | |
-| Reputation by place and faction | data: reputation tables, faction tree, renown | none seen by name: open blind spot | 11 | |
+| Crime: witnesses, reporting, arrest, punishment | data: crimes, crime roles; script: Crime.lua, AI/crime 308 | code: H13NPCReactions 53, NeroAIReactions 18 | 15 |witness side 25 Oct (Study 1) |
+| Reputation by place and faction | data: reputation tables, faction tree, renown | none seen by name: open blind spot | 11 |KCD2 25 Oct (Study 1) |
 | NPC mood and anger | data: angriness, morale, nervousness | code: H13StateLayer 61 (unconfirmed) | 11 | |
 | Random world events | data: RandomEvent tables, situation frequency | none seen by name | 1 | |
 | Dialogue and choices | data: dialogue-system tables, English text; script: quests | code: H13Lexicon 31; data: text 9,238 (scripted, systemic, handcrafted, cinematic), 2,452 lexicon assets | 3 | |
@@ -62,7 +62,7 @@ Where: **data** = tables and assets; **script** = behaviour trees, Lua, quest fi
 | Guns, cover, aiming | (not in KCD2) | code: H13CoverSystem 115, NeroWeapons 11, H13DynamicTargeting 43, aim assist 34 | 14 | |
 | Damage, hit reactions, health | data: hit reactions, damage types | code: H13DamageReactions 74, H13Impacts 82, H13Health 18, H13PhysicalAnimation 16 | 14 | |
 | Abilities and effects | data: buffs, perks | code: H13GAS 188 (Unreal's ability system) | 11, 14 | |
-| Doors, pick-ups, world interaction | data: door animation sets, picking, smart entities | code: H13InteractionSystem 85, H13WorldInteractions 86, H13EnvironmentInteraction 11 | 4, 7 |animation side 25 Oct (Study 7); the rest Study 4 |
+| Doors, pick-ups, world interaction | data: door animation sets, picking, smart entities | code: H13InteractionSystem 85, H13WorldInteractions 86, H13EnvironmentInteraction 11 | 4, 7 |animation side 25 Oct (Study 7); the rest Study 4; street side 25 Oct (Study 4) |
 | Characters, faces, clothes | data: clothing tables, body layers, clothing presets, blood masks | code: H13OutfitCore 52, DNAFramework 80 (MetaHuman faces), SkeletalMerging 7 | 6 |25 Oct, studies/06-characters-wardrobe.md |
 | Locomotion and animation | data: 752 clips, 777 blend spaces, 94 animation databases, fragment tables | code: H13CapsuleChar 308, H13AnimCore 99, H13CharacterProceduralGround 20 (feet on the ground), H13MovementPrediction 4, H13AnimationSharing 21 | 7 |25 Oct, studies/07-animation.md |
 | Vehicles | (horses only) | code: H13Vehicles 525 | 9-13 | |
@@ -70,8 +70,8 @@ Where: **data** = tables and assets; **script** = behaviour trees, Lua, quest fi
 | Sound and ambience | data: 309 sound banks, music | code: AkAudio 569 (Wwise), H13Audio 162, H13AudioAmbient 69 | 8 | |
 | Interface and menus | data: 33 ui tables | code: NeroUI 1,120, NoesisRuntime 119 | 9-13 | |
 | Saving | code only | code: H13SaveGame 94 | 9-13 | |
-| Streaming the open world, budgets | data: level layers, distant-detail archives | code: H13WorldPartition 28, H13SignificanceSystem 42, H13MemoryBudget 21, H13StreamingAssistant 3 | 4, 5 | |
-| Look: light, weather, post-process | data: engine config (42 files), time-of-day, weather profiles | code: H13RenderParametersDriver 9, H13Upscaler 42; data: lighting 392, TODP assets 104 (by the prefix, time-of-day profiles), materials 3,828 | 5 | |
+| Streaming the open world, budgets | data: level layers, distant-detail archives | code: H13WorldPartition 28, H13SignificanceSystem 42, H13MemoryBudget 21, H13StreamingAssistant 3 | 4, 5, 12 |budget side 25 Oct, studies/12-tech-budgets.md; streaming side 25 Oct, studies/04-street-world.md |
+| Look: light, weather, post-process | data: engine config (42 files), time-of-day, weather profiles | code: H13RenderParametersDriver 9, H13Upscaler 42; data: lighting 392, TODP assets 104 (by the prefix, time-of-day profiles), materials 3,828 | 5 |settings side 25 Oct, studies/05-visuals.md |
 | Economy and shops | data: shop table, money changes, item tables | none seen by name | 11 | |
 | Time and needs (sleep, food) | data: skip-time, sleeping spots, food types, buffs | none seen by name | 11 | |
 | Difficulty | data: game modes | code: H13DifficultySystem 37 | 9-13 | |

@@ -19,6 +19,19 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 25 Oct 2026, the player sits: a vendor sample's bench interaction driven on a puppet character; it lands right and looks wrong, set aside
+- Made: a seats file (each seat a point under the seat bone and a facing, plus the room the player must stand in); the act key sits the player on the nearest free seat and stands him again; a test that walks him through it and reports.
+- Method (setting-free):
+  - Read the vendor's whole interaction before building: what picks the clip (the side approached from, the foot in the air), what places it (a warp target with a fixed name, inside the clip's own warp window), what loops and what ends it. Take the same steps in code when the vendor's entry needs a controller the character does not have, and leave its assets untouched.
+  - Start the approach clip where its remaining walk matches the player's distance; the warp absorbs the rest.
+  - Offer a seat by plain rules (within reach, in the room, nobody on it) rather than a traced line: a line hit the player's own worn body, then the room's own meshes.
+  - Judge where the body sits, not where the capsule is: the clip carries the capsule on after its warp window by design, so a capsule bar fails a correct sit. Measure the clip's warp window and its travel after it before setting the bar.
+- Tools: the game's own build on a fixed step; a side camera in the room; the clip's notify list and root-motion extraction.
+- Target and check: hips within 10 cm of the seat's point and 40 to 60 cm above the floor; sits, holds, stands; by eye in pictures.
+- Cost (hours): about 0.8, 21:25 to 22:12, beside four studies.
+- Failed and why: two runs never started (the two offer checks above), one judged the capsule. Then a fresh picture reviewer failed the sit-down (a foot held in mid-air, the weight foot sliding on tiptoe, the head folding), which the numbers had passed: judge a body's motion by eye, not by where it ends. A second try without a stricter foot lock changed nothing; filming the vendor's own mannequin through the same steps showed the fault is in the clip as started (part-way in), not in the copy onto the character. Set aside after two tries. Not in the game as played: the vendor's walk it rides on is not the default until its slide passes.
+- Evidence: production/research/sit-and-turn/WALK-2026-10-25.md (Sitting)
+
 ### 25 Oct 2026, the walk's slide: a vendor's walking clips measured and their contact marks rewritten, set aside on two moments
 - Made: every clip a motion-matching set can pick for walking measured from its assets; contact marks rewritten where a foot is low and still; a stricter lock switch; pictures at every game step around doubtful contacts.
 - Method (setting-free):
@@ -43,6 +56,20 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 - Cost (hours): about 0.4.
 - Failed and why: with the cast voice on the card the voice takes 2.8 s beside the running game, so 2 s is out of reach without a voice decision that is the owner's.
 - Evidence: production/research/voice-latency/CAST-VOICE-2026-10-25.md
+
+### 25 Oct 2026, four more reference studies the same evening: the game numbers held, the comparisons with our own project did not
+- Made: studies of tech budgets, streets and world building, visuals, and NPC life, from two shipped games' files, each passed by a fresh review with fixes.
+- Method (setting-free):
+  - Same as the first two: bounded helpers per game extract and count; one synthesis; one fresh reviewer per study with the raw files and our own project's files.
+  - Give the reviewer our own project's research and code, not only the games' files: in three of four studies the review's heaviest fixes were in what we said about ourselves (a target that contradicted our own measured research, a claim of a system we do not have, a section that missed what our simulation already does).
+  - A count is only what its filter caught: a "props per 10 m" figure counted every entity in the corridor (walk points, cameras, seats of one table); check what a filter keeps before quoting its number.
+  - Compare like with like: a "time to notice" row set three different events side by side; a light row set candela against lumens against an exposure pin.
+  - Take times from the clock as they happen, never from memory: three cost lines had to be corrected.
+- Tools: the file viewer automated, Python over readouts, the games' wikis, four reviewers.
+- Target and check: each brief's questions answered with numbers and its output given; the review's fixes applied; numbers the review could not reproduce marked as the helper's.
+- Cost (hours): about 1.2 of the session's time, 20:58 to 22:10, helpers in parallel.
+- Failed and why: each review found 5 to 8 wrong figures; one game's town and props could not be measured (not exported, or stored outside the text data). All fixed or listed as blind spots.
+- Evidence: production/research/aaa-reference/studies/12-tech-budgets.md, 04-street-world.md, 05-visuals.md, 01-npc-life.md
 
 ### 25 Oct 2026, two reference studies of shipped games in one evening: helpers extract and count, one synthesis, one fresh review
 - Made: animation and wardrobe studies of two shipped games, each from the games' own files plus public sources, each passed by a fresh review with fixes.

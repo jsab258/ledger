@@ -61,6 +61,8 @@ public class LedgerProbe : ModuleRules
 		// the engine's retargeting, and AnimationWarpingRuntime for the sample's Offset Root Bone
 		// (MotionMatchAnim.h).
 		PrivateDependencyModuleNames.AddRange(new string[] { "PoseSearch", "BlendStack", "IKRig", "AnimationWarpingRuntime" });
+		// MotionWarping, 25 October (his order, item 2: Tom sits): the sample's bench clips are warped onto the seat.
+		PrivateDependencyModuleNames.Add("MotionWarping");
 		// The editor's graph and compiler, for the one script-made animation blueprint those nodes
 		// need (ULedgerMotionMatchTools; editor builds only).
 		if (Target.bBuildEditor)

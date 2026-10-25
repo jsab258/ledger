@@ -38,6 +38,14 @@
 #include "Misc/Paths.h"
 #include "Sound/SoundAttenuation.h"
 #include "Sound/SoundBase.h"
+#include "MotionWarpingComponent.h"
+#include "Animation/AnimMontage.h"
+#include "Animation/AnimInstance.h"
+#include "Animation/AnimNotifies/AnimNotifyState.h"
+#include "Dom/JsonObject.h"
+#include "Serialization/JsonReader.h"
+#include "Serialization/JsonSerializer.h"
+#include "EngineUtils.h"
 
 const TCHAR* ALedgerSliceCharacter::MeshPath()
 {
@@ -114,6 +122,8 @@ void ALedgerSliceCharacter::Tick(float DeltaSeconds)
 		         || FMath::Abs(MouseX) + FMath::Abs(MouseY) > 0.5f) { LedgerPaper::SetPadInUse(false); }
 	}
 	GaspTick();
+	SitTick(DeltaSeconds);
+	SitProofTick(DeltaSeconds);
 	if (MotionDriver != nullptr)
 	{
 		// the sample's braking: hard when let go, gentle while still pushed (its CalculateBrakingDeceleration)
@@ -462,6 +472,14 @@ bool ALedgerSliceCharacter::StartGaspMover(USkeletalMeshComponent* M)
 	WornBody->SetAnimInstanceClass(CopyClass);
 	WornBody->AddTickPrerequisiteComponent(Mover->GetMesh());
 	Mover->GetMesh()->SetVisibility(false, false);
+	// -GaspShowMannequin (research, 25 October): the sample's own mannequin is shown, to tell a fault in Epic's
+	// clips from one in the copying onto him. Hiding his worn body this way did not take (the first film showed
+	// both, the grey mannequin over him); the two still compare frame by frame.
+	if (FParse::Param(FCommandLine::Get(), TEXT("GaspShowMannequin")))
+	{
+		Mover->GetMesh()->SetVisibility(true, false);
+		Worn->SetActorHiddenInGame(true);
+	}
 	// THE WORN BODY TOUCHES NOTHING (24 October, the first measure: his outfits' bodies blocked the mover's own
 	// capsule, which walked a second and stopped while still pushed), and the hidden mannequin keeps its
 	// finest level of detail (a hidden mesh's level can go stale, and the body copies it).
@@ -503,7 +521,9 @@ void ALedgerSliceCharacter::GaspTick()
 	// WHAT THE KEYS, THE PAD AND THE ROUTE ASKED THIS FRAME goes to the mover (his own movement takes none).
 	const FVector In = ConsumeMovementInputVector();
 	GaspLastIn = (float)In.Size();
-	if (!In.IsNearlyZero()) { GaspMover->AddMovementInput(In.GetSafeNormal2D(), FMath::Min(1.0, In.Size())); }
+	// while he sits (TryStartSit) a push stands him up instead of walking the mover
+	if (SitPhase != ESitPhase::None) { if (In.Size() > 0.3) { bSitWantsUp = true; } }
+	else if (!In.IsNearlyZero()) { GaspMover->AddMovementInput(In.GetSafeNormal2D(), FMath::Min(1.0, In.Size())); }
 	// HIS PACE as the sample's input state: walking unless he runs (shift, or the route's run). The sample
 	// picks its gait from that (GetDesiredGait); with a full push and no walk wish it would run.
 	const bool bWalk = GetCharacterMovement()->MaxWalkSpeed <= WalkSpeedCm + 1.0f;
@@ -1056,7 +1076,13 @@ void ALedgerSliceCharacter::LookYaw(float Value) { AddControllerYawInput(Value *
 void ALedgerSliceCharacter::LookPitch(float Value) { AddControllerPitchInput(-Value * LedgerSettings::LookSensitivity() * (LedgerSettings::InvertLook() ? -1.0f : 1.0f)); }
 void ALedgerSliceCharacter::RunPressed() { GetCharacterMovement()->MaxWalkSpeed = RunSpeedCm; }
 void ALedgerSliceCharacter::RunReleased() { GetCharacterMovement()->MaxWalkSpeed = WalkSpeedCm; }
-void ALedgerSliceCharacter::RequestAct() { ++ActRequests; }
+void ALedgerSliceCharacter::RequestAct()
+{
+	// on Epic's route, E by a free seat sits him and E seated stands him (25 October, item 2); else it acts
+	if (SitPhase == ESitPhase::Seated) { bSitWantsUp = true; return; }
+	if (GaspMover != nullptr && SitPhase == ESitPhase::None && TryStartSit()) { return; }
+	++ActRequests;
+}
 void ALedgerSliceCharacter::RequestTalk() { ++TalkRequests; }
 void ALedgerSliceCharacter::RequestPadAct() { ++PadActRequests; }
 int32 ALedgerSliceCharacter::ConsumePadActRequests()
@@ -1181,4 +1207,273 @@ void ALedgerSliceCharacter::BuildStreetNavigation()
 	// builds the tiles around the invokers, and blocks until they are done.
 	Nav->Build();
 	bNavBuilt = Nav->GetDefaultNavDataInstance(FNavigationSystem::DontCreate) != nullptr;
+}
+
+// ---- TOM SITS (his order of 25 October, item 2: "Tom sits down in the game as played") ----------------
+// On Epic's route (-LedgerGaspMover): E by a free seat of production/specs/seats.json plays the Game
+// Animation Sample's own bench interaction on the mover, as its AC_SmartObjectAnimation and chooser
+// CHT_SmartObject_BenchAnim do (production/research/sit-and-turn/WALK-2026-10-25.md, sitting): the approach
+// clip by the side he comes from (front within 55 degrees, left 55 to 120, right -55 to -120, behind-left
+// and behind-right beyond), started where its remaining walk matches his distance to the seat, warped onto
+// the seat by Motion Warping's target "SmartObject" (the clips' own warp window), then its sitting loop
+// until he moves or presses E, then its stand-up. The sample's own entry runs through a state tree for a
+// player controller, which the puppet mover has not, so the same steps are taken here; its assets are
+// unchanged.
+namespace LedgerSit
+{
+	struct FSeat { FString Name; FVector Slot = FVector::ZeroVector; float Yaw = 0.0f; };
+	// where he must stand for E to sit him (seats.json "room", in the engine's X and Y)
+	FBox2D GRoom(ForceInit);
+
+	const TArray<FSeat>& Seats()
+	{
+		static TArray<FSeat> Out;
+		static bool bRead = false;
+		if (bRead) { return Out; }
+		bRead = true;
+		TArray<FString> Cands;
+		FString Repo;
+		if (FParse::Value(FCommandLine::Get(), TEXT("LedgerRepo="), Repo) && !Repo.IsEmpty()) { Cands.Add(FPaths::Combine(Repo, TEXT("production/specs/seats.json"))); }
+		Cands.Add(FPaths::ConvertRelativePathToFull(FPaths::Combine(FPaths::ProjectDir(), TEXT("../production/specs/seats.json"))));
+		Cands.Add(FPaths::ConvertRelativePathToFull(FPaths::Combine(FPaths::ProjectContentDir(), TEXT("LedgerData/production/specs/seats.json"))));
+		FString Text;
+		for (const FString& C : Cands) { if (FFileHelper::LoadFileToString(Text, *C)) { break; } }
+		TSharedPtr<FJsonObject> Root;
+		const TArray<TSharedPtr<FJsonValue>>* List = nullptr;
+		if (!Text.IsEmpty() && FJsonSerializer::Deserialize(TJsonReaderFactory<>::Create(Text), Root) && Root.IsValid() && Root->TryGetArrayField(TEXT("seats"), List))
+		{
+			const TSharedPtr<FJsonObject>* Room = nullptr;
+			if (Root->TryGetObjectField(TEXT("room"), Room) && Room != nullptr)
+			{
+				GRoom = FBox2D(FVector2D((*Room)->GetNumberField(TEXT("x0")) * 100.0, (*Room)->GetNumberField(TEXT("z0")) * 100.0),
+				               FVector2D((*Room)->GetNumberField(TEXT("x1")) * 100.0, (*Room)->GetNumberField(TEXT("z1")) * 100.0));
+			}
+			for (const TSharedPtr<FJsonValue>& V : *List)
+			{
+				const TSharedPtr<FJsonObject> S = V->AsObject();
+				if (!S.IsValid()) { continue; }
+				const double X = S->GetNumberField(TEXT("x")), Y = S->GetNumberField(TEXT("y")), Z = S->GetNumberField(TEXT("z"));
+				const double FX = S->GetNumberField(TEXT("face_x")), FZ = S->GetNumberField(TEXT("face_z"));
+				FSeat Seat;
+				Seat.Name = S->GetStringField(TEXT("name"));
+				// street metres to the engine (CrimeProbe.cpp ToUE): X = x*100, Y = z*100, Z = y*100
+				Seat.Slot = FVector(X * 100.0, Z * 100.0, Y * 100.0);
+				Seat.Yaw = (float)FMath::RadiansToDegrees(FMath::Atan2(FZ - Z, FX - X));
+				Out.Add(Seat);
+			}
+		}
+		UE_LOG(LogTemp, Log, TEXT("LedgerSit: %d seats read"), Out.Num());
+		return Out;
+	}
+
+	UAnimMontage* Clip(const FString& Name)
+	{
+		return LoadObject<UAnimMontage>(nullptr, *FString::Printf(TEXT("/Game/Characters/UEFN_Mannequin/Animations/Interactions/Bench/%s.%s"), *Name, *Name));
+	}
+
+	// how near E reaches a seat; the seat must be in sight and nobody on it (Ron's evening seat is the middle one)
+	constexpr double ReachCm = 160.0;
+	FCollisionResponseContainer GSavedResponses;
+}
+
+bool ALedgerSliceCharacter::TryStartSit()
+{
+	if (GaspMover == nullptr || SitPhase != ESitPhase::None) { return false; }
+	const FVector At = GaspMover->GetActorLocation();
+	const LedgerSit::FSeat* Best = nullptr;
+	double BestD = 1e9;
+	for (const LedgerSit::FSeat& S : LedgerSit::Seats())
+	{
+		const double D = FVector::Dist2D(At, S.Slot);
+		if (D >= BestD || D > LedgerSit::ReachCm) { continue; }
+		// nobody else on it (his own worn body rides on the mover, so anything attached to the mover is his)
+		bool bTaken = false;
+		for (TActorIterator<ACharacter> It(GetWorld()); It; ++It)
+		{
+			if (*It == GaspMover || *It == this || It->GetAttachParentActor() == GaspMover || It->GetOwner() == GaspMover) { continue; }
+			if (FVector::Dist2D(It->GetActorLocation(), S.Slot) < 40.0) { bTaken = true; }
+		}
+		// in the room: he stands on the office's public side (never a seat through a wall or the window; a
+		// line traced to the seat was stopped by the room's own meshes, 25 October)
+		const bool bOutside = LedgerSit::GRoom.bIsValid && !LedgerSit::GRoom.IsInside(FVector2D(At.X, At.Y));
+		if (bTaken || bOutside)
+		{
+			UE_LOG(LogTemp, Display, TEXT("LedgerSit: %s passed over at %.0f cm: %s"), *S.Name, D, bTaken ? TEXT("someone is on it") : TEXT("he is not in its room"));
+			continue;
+		}
+		BestD = D; Best = &S;
+	}
+	if (Best == nullptr) { UE_LOG(LogTemp, Display, TEXT("LedgerSit: no free seat within %.0f cm of (%.0f, %.0f)"), LedgerSit::ReachCm, At.X, At.Y); return false; }
+	SitSlot =FTransform(FRotator(0.0f, Best->Yaw, 0.0f), Best->Slot);
+	const FVector Rel = SitSlot.InverseTransformPosition(At);
+	const float Angle = (float)FMath::RadiansToDegrees(FMath::Atan2(Rel.Y, Rel.X));
+	const FString Side = FMath::Abs(Angle) <= 55.0f ? TEXT("F") : (Angle > 55.0f && Angle <= 120.0f ? TEXT("L_090")
+		: (Angle < -55.0f && Angle >= -120.0f ? TEXT("R_090") : (Angle > 0.0f ? TEXT("BL") : TEXT("BR"))));
+	// the clip that leads with the foot now in the air (the sample picks the foot by pose search)
+	USkeletalMeshComponent* MM = GaspMover->GetMesh();
+	const bool bLeftUp = MM->GetSocketLocation(TEXT("ball_l")).Z > MM->GetSocketLocation(TEXT("ball_r")).Z;
+	const bool bBack = Side.StartsWith(TEXT("B"));
+	const FString Name = FString::Printf(TEXT("M_interaction_bench_into_%s_%s_Montage"), *Side,
+		bLeftUp ? (bBack ? TEXT("LFoot") : TEXT("Lfoot")) : (bBack ? TEXT("RFoot") : TEXT("Rfoot")));
+	UAnimMontage* Entry = LedgerSit::Clip(Name);
+	UAnimInstance* Graph = MM->GetAnimInstance();
+	if (Entry == nullptr || Graph == nullptr)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("LedgerSit: no clip %s or no graph"), *Name);
+		return false;
+	}
+	// WHERE IN THE CLIP TO START: where its remaining root travel matches his distance to the seat
+	const float Len = Entry->GetPlayLength();
+	float Start = 0.0f, BestErr = 1e9f;
+	for (float T = 0.0f; T < Len * 0.9f; T += 1.0f / 30.0f)
+	{
+		const FTransform Rest = Entry->ExtractRootMotionFromTrackRange(T, Len, FAnimExtractContext());
+		const float Err = FMath::Abs((float)Rest.GetTranslation().Size2D() - (float)BestD);
+		if (Err < BestErr) { BestErr = Err; Start = T; }
+	}
+	if (UMotionWarpingComponent* Warp = GaspMover->FindComponentByClass<UMotionWarpingComponent>())
+	{
+		Warp->AddOrUpdateWarpTargetFromTransform(FName(TEXT("SmartObject")), SitSlot);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("LedgerSit: the mover has no motion warping component; the clip is not placed"));
+	}
+	// THE BENCH'S COLLISION AND GRAVITY OFF while the clip carries him onto it (the sample ignores the bench)
+	UCapsuleComponent* Cap = GaspMover->GetCapsuleComponent();
+	LedgerSit::GSavedResponses = Cap->GetCollisionResponseToChannels();
+	Cap->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Ignore);
+	Cap->SetCollisionResponseToChannel(ECC_WorldDynamic, ECR_Ignore);
+	GaspMover->GetCharacterMovement()->SetMovementMode(MOVE_Flying);
+	Graph->Montage_Play(Entry, 1.0f, EMontagePlayReturnType::MontageLength, Start);
+	SitMontage = Entry;
+	SitPhase = ESitPhase::Entering;
+	SitPhaseAt = SitClock;
+	bSitWantsUp = false;
+	UE_LOG(LogTemp, Display, TEXT("LedgerSit: %s, from %.0f cm at %.0f degrees: %s from %.2f s of %.2f (its walk off by %.0f cm)"),
+		*Best->Name, BestD, Angle, *Name, Start, Len, BestErr);
+	// the clip's own warp windows, and how far its root still travels after the last one ends
+	for (const FAnimNotifyEvent& N : Entry->Notifies)
+	{
+		const UAnimNotifyState* State = N.NotifyStateClass.Get();
+		if (State != nullptr && State->GetClass()->GetName().Contains(TEXT("MotionWarping")))
+		{
+			const float End = N.GetTriggerTime() + N.GetDuration();
+			const FVector After = Entry->ExtractRootMotionFromTrackRange(End, Len, FAnimExtractContext()).GetTranslation();
+			UE_LOG(LogTemp, Display, TEXT("LedgerSit: warp window %.2f to %.2f s; after it the root moves %.1f cm (%.1f, %.1f)"), N.GetTriggerTime(), End, After.Size2D(), After.X, After.Y);
+		}
+	}
+	return true;
+}
+
+void ALedgerSliceCharacter::SitTick(float DeltaSeconds)
+{
+	SitClock += DeltaSeconds;
+	if (SitPhase == ESitPhase::None || GaspMover == nullptr) { return; }
+	UAnimInstance* Graph = GaspMover->GetMesh()->GetAnimInstance();
+	if (Graph == nullptr || SitMontage == nullptr) { return; }
+	const float Pos = Graph->Montage_GetPosition(SitMontage);
+	const bool bEnding = !Graph->Montage_IsPlaying(SitMontage) || Pos >= SitMontage->GetPlayLength() - 0.2f;
+	if (SitPhase == ESitPhase::Entering && bEnding)
+	{
+		if (UAnimMontage* Loop = LedgerSit::Clip(TEXT("M_interaction_bench_idle_loop_Montage")))
+		{
+			Graph->Montage_Play(Loop, 1.0f);
+			const FName Section = Loop->GetSectionName(0);
+			Graph->Montage_SetNextSection(Section, Section, Loop);
+			SitMontage = Loop;
+		}
+		SitPhase = ESitPhase::Seated;
+		SitPhaseAt = SitClock;
+		// where he ended in the seat's own frame (X out into the room, Y along the bench), and the pelvis's
+		const FVector Rel = SitSlot.InverseTransformPosition(GaspMover->GetActorLocation());
+		const FVector Pelvis = SitSlot.InverseTransformPosition(GaspMover->GetMesh()->GetSocketLocation(TEXT("pelvis")));
+		UE_LOG(LogTemp, Display, TEXT("LedgerSit: seated, %.1f cm from the seat (out %.1f, along %.1f; pelvis out %.1f, along %.1f, up %.1f)"),
+			FVector::Dist2D(GaspMover->GetActorLocation(), SitSlot.GetLocation()), Rel.X, Rel.Y, Pelvis.X, Pelvis.Y, Pelvis.Z);
+	}
+	else if (SitPhase == ESitPhase::Seated && bSitWantsUp)
+	{
+		if (UAnimMontage* Up = LedgerSit::Clip(TEXT("M_interaction_bench_out_to_stand_Montage")))
+		{
+			Graph->Montage_Play(Up, 1.0f);
+			SitMontage = Up;
+		}
+		SitPhase = ESitPhase::Leaving;
+		SitPhaseAt = SitClock;
+		bSitWantsUp = false;
+	}
+	else if (SitPhase == ESitPhase::Leaving && bEnding)
+	{
+		GaspMover->GetCapsuleComponent()->SetCollisionResponseToChannels(LedgerSit::GSavedResponses);
+		GaspMover->GetCharacterMovement()->SetMovementMode(MOVE_Walking);
+		SitPhase = ESitPhase::None;
+		SitMontage = nullptr;
+		UE_LOG(LogTemp, Display, TEXT("LedgerSit: standing again"));
+	}
+}
+
+// -TomSitProof: he is stood 1.2 m in front of the door-end seat facing it, presses E, sits, stays three
+// seconds, stands, and the line says how each step went and where his hips sat against the seat's point;
+// -TomSitProofShots pictures it from the side ten times a second (Saved/TomSit), on the fixed step;
+// -TomSitProofExit ends the game after.
+void ALedgerSliceCharacter::SitProofTick(float DeltaSeconds)
+{
+	static const bool bOn = FParse::Param(FCommandLine::Get(), TEXT("TomSitProof"));
+	if (!bOn || GaspMover == nullptr) { return; }
+	static float T = 0.0f, StepAt = 0.0f, Offset = -1.0f, PelvisUp = 0.0f, NextShot = 0.0f;
+	static int32 Step = 0;
+	static TWeakObjectPtr<ACameraActor> Cam;
+	T += DeltaSeconds;
+	const TArray<LedgerSit::FSeat>& Seats = LedgerSit::Seats();
+	auto Done = [&](bool bPass, const TCHAR* Why)
+	{
+		UE_LOG(LogTemp, Display, TEXT("ledgerTomSit=%s %s entered=%d seated=%d stood=%d hipsFromSeatCm=%.1f hipsUpCm=%.1f t=%.1f"), bPass ? TEXT("PASS") : TEXT("FAIL"), Why,
+			Step >= 2 ? 1 : 0, Step >= 3 ? 1 : 0, Step >= 5 ? 1 : 0, Offset, PelvisUp, T);
+		Step = 99;
+		if (FParse::Param(FCommandLine::Get(), TEXT("TomSitProofExit"))) { FPlatformMisc::RequestExit(false); }
+	};
+	if (Step == 99) { return; }
+	if (Seats.Num() == 0) { Done(false, TEXT("no-seats")); return; }
+	const LedgerSit::FSeat& S = Seats[0];
+	const FVector Front = FRotator(0.0f, S.Yaw, 0.0f).Vector();
+	if (Step == 0 && T > 3.0f)
+	{
+		SetActorLocationAndRotation(S.Slot + Front * 120.0 + FVector(0.0, 0.0, 95.0), FRotator(0.0f, S.Yaw + 180.0f, 0.0f), false, nullptr, ETeleportType::TeleportPhysics);
+		Step = 1; StepAt = T;
+	}
+	else if (Step == 1 && T - StepAt > 1.5f) { if (TryStartSit()) { Step = 2; StepAt = T; } else { Done(false, TEXT("no-start")); return; } }
+	else if (Step == 2 && SitPhase == ESitPhase::Seated)
+	{
+		// JUDGED BY HIS HIPS, not his capsule: the seat's point is the one under the seat bone, and the
+		// sample's clip carries the capsule 23 cm on after its warp ends (measured 25 October), by design
+		const FVector Pelvis = GaspMover->GetMesh()->GetSocketLocation(TEXT("pelvis"));
+		Offset = (float)FVector::Dist2D(Pelvis, S.Slot);
+		PelvisUp = (float)(Pelvis.Z - S.Slot.Z);
+		Step = 3; StepAt = T;
+	}
+	else if (Step == 3 && T - StepAt > 3.0f) { bSitWantsUp = true; Step = 4; StepAt = T; }
+	// the hips within 10 cm of the seat's point, and between 40 and 60 cm over the floor (a 45 cm seat)
+	else if (Step == 4 && SitPhase == ESitPhase::None) { Step = 5; Done(Offset >= 0.0f && Offset < 10.0f && PelvisUp > 40.0f && PelvisUp < 60.0f, TEXT("sat-and-stood")); return; }
+	else if (T > 45.0f) { Done(false, TEXT("timeout")); return; }
+	if (FParse::Param(FCommandLine::Get(), TEXT("TomSitProofShots")) && Step >= 1)
+	{
+		if (!Cam.IsValid())
+		{
+			// out in the room 2.6 m in front of the seat and a little to the side, eye height, looking at it
+			// (the bench runs along the side wall, so there is no room for a camera beside it)
+			const FVector Side = FRotator(0.0f, S.Yaw - 90.0f, 0.0f).Vector();
+			const FVector Eye = S.Slot + Front * 260.0 + Side * 80.0 + FVector(0.0, 0.0, 150.0);
+			Cam = GetWorld()->SpawnActor<ACameraActor>(Eye, (S.Slot + Front * 30.0 + FVector(0.0, 0.0, 70.0) - Eye).Rotation());
+			if (Cam.IsValid())
+			{
+				Cam->GetCameraComponent()->SetFieldOfView(60.0f);
+				if (APlayerController* PC = Cast<APlayerController>(GetController())) { PC->SetViewTarget(Cam.Get()); }
+			}
+		}
+		if (T >= NextShot)
+		{
+			FScreenshotRequest::RequestScreenshot(FPaths::ConvertRelativePathToFull(FPaths::ProjectSavedDir() / TEXT("TomSit") / FString::Printf(TEXT("s%05.2f.png"), T)), false, false);
+			NextShot = T + 0.1f;
+		}
+	}
 }

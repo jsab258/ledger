@@ -107,3 +107,11 @@
 {"event": "stop", "at": "2026-10-25T20:56:00", "note": "from the clock; helpers in parallel"}
 {"event": "start", "at": "2026-10-25T20:30:00", "task": "25 Oct: item 4 speech re-timed with the cast voice; harness --pending", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-25T20:56:00", "note": "from the clock"}
+{"event": "start", "at": "2026-10-25T20:58:00", "task": "25 Oct: Study 12 synthesis, its review and fixes", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-25T21:45:00", "note": "from the clock"}
+{"event": "start", "at": "2026-10-25T21:25:00", "task": "25 Oct: item 2 Tom sits on Epic's route (seats spec, C++, six runs, pictures)", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-25T21:58:00", "note": "from the clock; beside the studies"}
+{"event": "start", "at": "2026-10-25T21:40:00", "task": "25 Oct: Studies 4, 5, 1 syntheses from the helpers", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-25T21:50:00", "note": "from the clock; helpers in parallel earlier"}
+{"event": "start", "at": "2026-10-25T21:58:00", "task": "25 Oct: Studies 4, 5, 1 reviews' fixes; sit-down picture review, try 2, mannequin research", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-25T22:15:00", "note": "from the clock"}

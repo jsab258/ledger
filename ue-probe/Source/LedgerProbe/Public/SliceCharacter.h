@@ -171,6 +171,22 @@ private:
 	bool StartGaspMover(USkeletalMeshComponent* M);
 	void GaspTick();
 	float GaspLastIn = 0.0f;
+	// TOM SITS (his order of 25 October, item 2: "Tom sits down in the game as played"), on Epic's route:
+	// E near a seat of production/specs/seats.json plays the sample's bench interaction on the mover, its
+	// approach clip chosen by the side he comes from and started where its remaining walk matches his
+	// distance, warped onto the seat (Motion Warping, target "SmartObject", as the sample does), then its
+	// sitting loop until he moves, then its stand-up. -TomSitProof walks him through it once and reports.
+	enum class ESitPhase : uint8 { None, Entering, Seated, Leaving };
+	ESitPhase SitPhase = ESitPhase::None;
+	FTransform SitSlot;
+	UPROPERTY()
+	TObjectPtr<class UAnimMontage> SitMontage;
+	float SitPhaseAt = 0.0f;
+	float SitClock = 0.0f;
+	bool bSitWantsUp = false;
+	bool TryStartSit();
+	void SitTick(float DeltaSeconds);
+	void SitProofTick(float DeltaSeconds);
 	// One step's sound from foot F (0 left, 1 right); false when too soon after the last.
 	bool SoundStep(int32 F, bool bRun, float Speed, const TCHAR* From, float T);
 

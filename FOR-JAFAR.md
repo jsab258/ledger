@@ -5,12 +5,12 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
 
 ## Overview (Sunday 25 October, evening: your week's order)
 
-**Your order of 25 October evening, to Monday 2 November 13:00** (production/orders/2026-10-25.md, every item and study with a status; work stops Monday 06:00 until you say continue).
+**Your order of 25 October evening, to Monday 2 November 13:00** (production/orders/2026-10-25.md, every item and study with a status; work stops tonight at 01:00, your change, until you say continue).
 - **Phase 1 is open, not closed.** It failed its first exit check on 22 October. Fresh reviewers re-run that check once the walk, the clothes and speech pass; phase 2 waits for it, and the shops already in the street stay.
 - **Recorded:** your rulings (RULINGS.md and DECISIONS.md); the study's order for both weeks at the top of the study plan; the order ledger, seeded with everything still open from before (21 and 23 October's leftovers, the cloud week's four questions, the three shops not yet in the street, FINDINGS' twenty faults, your two clicks on the old archive). A new check fails any push where an item has no status or vanishes without being done or dropped.
 - **Done:** the health check (production/audits/health-2026-10-25.md); your progress page now has the studies bar and the 33 carried items.
 
-**The studies (1 of 16 done).**
+**The studies (6 of 16 done: this week's six).**
 - *Study 7, animation* (production/research/aaa-reference/studies/07-animation.md, passed its fresh review with fixes):
   - Neither game uses motion matching. Mafia walks on a layered state machine of single clips, Kingdom Come II on blend spaces. Both choose their starts, stops and turns rather than search for them: Kingdom Come II by distance, the stride's quarter and which leg.
   - Feet: Mafia traces the ground under each foot and locks a foot only in its duels; Kingdom Come II declares leg IK and a feet lock. The one perception figure found says viewers notice slides under about 2 cm, so our 3 cm bar is lenient.
@@ -19,9 +19,26 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
   - Both games dress people from a few shared bodies with skinned garments. Mafia: tops a median 22,000 triangles at full detail, trousers 9,600, four levels of detail. Kingdom Come II: one body per sex, 10 clothing layers.
   - Variety comes from material, not mesh: one layered material gives each garment 4 to 15 colourways, with grime and blood as values. Only hems, skirts and coat tails move; Mafia's crowd wears no cloth at all.
   - For us: Tom's jacket about 20,000 triangles, trousers about 9,000, 2048 textures, skinned, tails on a short bone chain. One base body per sex for the crowd. Mafia's own makers name Marvelous Designer.
+- *Study 12, tech and budgets* (studies/12-tech-budgets.md, passed its fresh review with fixes):
+  - Mafia runs the same lighting family as ours (software Lumen, virtual shadows, TSR); for 60 fps it lowers shadows, view, textures and reflections, keeps GI, and lets the picture size float between 40 and 83%.
+  - Dense towns hold their frame by slowing what doesn't matter: Mafia freezes people unseen beyond 70 m and gives animation 3 ms; Kingdom Come II keeps 70 people in full detail within 150 m and budgets 8 shadow-casting lights a frame.
+  - For us: those rules for phase 5's town; a shadow-light budget for the street's lamps; and our shop windows' reflections switch off below Mafia's reflection level 2, so a lower setting of ours needs a stand-in for glass.
+- *Study 4, street and world building* (studies/04-street-world.md, passed its fresh review with fixes):
+  - Mafia's dressed street: 14.7 m wide, 4.9 real props per 10 m (17 with ground dressing), all of it where the mission walks; its neighbours are nearly bare. Kingdom Come II's market street: 6 to 13 m wide, median 9.9.
+  - Mafia builds streets from kit (433 meshes, each used about 78 times; one street, 2 house families) and keeps one-off buildings for its hero town; fake rooms behind windows are rare.
+  - For us: Quay Street's 10.25 m is right. New checks for phase 2: at least 5 props per 10 m from a fixed list, kit reuse per street, every street view ending on a building.
+- *Study 5, visuals* (studies/05-visuals.md, passed its fresh review with fixes):
+  - Mafia's lamps are two lights each (a spot for the pool, a tiny bulb light), with light profiles and a little fog glow; its night is lit by contrast between lamp and dark, not by bright lamps.
+  - Wet streets: one wetness value sets roughness 0.1 to 0.2, and puddles are decals; wear is mostly leak stains under sills and grime at wall bases.
+  - For us: our shop glass stays as it is (our own research beats theirs here); windows get shaded frames first, fake rooms only higher up; lamps rebuilt Mafia's way.
+- *Study 1, NPC life and AI* (studies/01-npc-life.md, passed its fresh review with fixes):
+  - Kingdom Come II simulates its town: 1,354 people with homes, beds and working days; a crime becomes information a witness runs to a guard or a friend, kept 1 to 7 days. Mafia only stages people looping in place, and forgets.
+  - LEDGER is already built the simulated way, with something both lack: who told whom, and talk that weakens as it travels.
+  - For us: crime memory that lasts by kind (1 to 7 days); show a witness walking to tell someone; benches and beds as places in the routine; spreading only where people meet, as canon says.
 
-**Your items so far (25 October, 20:56).**
-- *The walk (item 2):* Epic's 223 walking clips measured; 134 carry a sliding flat foot in Epic's own data. Two tries took eight of ten moments under 3 cm by eye (five on Saturday). Two remain: the stop's re-step at 10 to 11 cm and the run's start at about 4.5 cm. Set aside by your two-tries rule; it stays off by default (Needs you 1). Turning passes; sitting is next.
+**Your items so far (25 October, 22:15).**
+- *The walk (item 2):* Epic's 223 walking clips measured; 134 carry a sliding flat foot in Epic's own data. Two tries took eight of ten moments under 3 cm by eye (five on Saturday). Two remain: the stop's re-step at 10 to 11 cm and the run's start at about 4.5 cm. Set aside by your two-tries rule; it stays off by default (Needs you 1). Turning passes.
+- *Sitting (item 2):* Tom now sits on the office bench and stands again with E, on Epic's own bench clips; his hips land 8 cm from the seat's mark. But a fresh reviewer failed the sit-down by eye: one foot hangs in the air for a second, the other slides on tiptoe, and his head folds to his chest. A second try changed nothing; Epic's own mannequin does the same, so the fault is in how the clip is started. Set aside (Needs you 1). It rides on Epic's walk, so it is not in the game as played yet either way.
 - *Speech (item 4):* re-timed with the cast voice the game's way (the old measure counted voice time the game hides). The first sound is heard at 4.14 s median: the model drafts in 0.75 s, the check adds 1.1 s, and the cast voice on the card takes 2.8 s beside the running game. So the voice is the slow part again (Needs you 2).
 
 
@@ -112,7 +129,7 @@ No decision asked: these are for watching the street change.
 
 ### Needs you
 
-1. **The walk: a third try?** Eight of ten moments pass by eye; the stop's re-step (10 to 11 cm) and the run's start (about 4.5 cm) fail after two tries. Recommended: **allow a third, researched try**: stops picked Kingdom Come II's way, by distance and stride. Or: judge those two by eye at the game's camera. Or: leave it set aside.
+1. **The walk and the sit: a third try each?** Walk: eight of ten moments pass by eye; the stop's re-step (10 to 11 cm) and the run's start (about 4.5 cm) fail after two tries. Sit: he lands on the seat, but the sit-down looks wrong after two tries. Recommended: **allow a third, researched try for both**: stops picked Kingdom Come II's way, by distance and stride; the sit's clip started from its beginning, checked against Epic's own sample. Or: judge the walk's two moments by eye at the game's camera. Or: leave both set aside.
 2. **Speech: the cast voice is the slow part.** It takes 2.8 s on the card beside the game, the model and check 1.9 s. Recommended: **live lines in Pocket on the processor (about 2.1 s estimated, measured next), if a listening test passes its accent.** Or: keep the cast voice and accept about 3.5 to 4 s. Or: allow one more voice attempt, against your 7 October ruling.
 3. **Marvelous Designer, ready now:** Tom's outfit target is set (Study 6). Please sign up for the one paid month (not a trial). Its terms page could not be reached from here; I read the licence as shown at sign-up before anything goes in. Note: the pricing page shows 23.3 a month billed yearly, and the Personal plan is for "eligible freelancers and sole proprietors".
 
