@@ -6,6 +6,10 @@
 # the shared git folder, so every checkout of this repository on this PC runs it:
 #   cp tools/hooks/pre-push "$(git rev-parse --git-common-dir)/hooks/pre-push"
 # Never bypassed with --no-verify (CLAUDE.md).
-GUARD="$(git rev-parse --git-common-dir)/../tools/push_guard.py"
-[ -f "$GUARD" ] || GUARD="tools/push_guard.py"
-exec python "$GUARD" "$@"
+# 25 October 2026 (his order ledger): the same push also fails when an order's item or study has no
+# status, or leaves its order file without being done or dropped (tools/order_ledger.py).
+TOOLS="$(git rev-parse --git-common-dir)/../tools"
+[ -f "$TOOLS/push_guard.py" ] || TOOLS="tools"
+REFS="$(cat)"
+printf '%s\n' "$REFS" | python "$TOOLS/push_guard.py" "$@" || exit 1
+printf '%s\n' "$REFS" | python "$TOOLS/order_ledger.py" --push || exit 1

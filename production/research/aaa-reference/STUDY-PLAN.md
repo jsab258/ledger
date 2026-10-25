@@ -1,5 +1,15 @@
 <!-- Imported 25 October 2026 from his Claude Docs doc "LEDGER AAA Reference Study" (https://claude.ai/artifact/Bk6Tfpg4wRusZi2p3AEhXE, revision 29), his order of 25 October. His words, unchanged; the doc is the source, this a copy. -->
 
+> **His changes of 25 October (evening order), which stand over the plan below:**
+> - **The study runs in full,** all sixteen studies (about 45 to 50 hours), beside the production work, front-loaded over two weeks.
+> - **This week, in order:** Study 7 animation; Study 6 characters and wardrobe; Study 4 street and world building (including how each game builds its world at scale); Study 12 tech and budgets; Study 5 visuals; Study 1 NPC life and AI.
+> - **Next week, in order** (carried items in production/orders/2026-10-25.md): Study 14 combat and violence; Study 2 the first 30 minutes; Studies 11 and 15 together; Study 3 dialogue and barks; Study 16 jobs and story; Study 8 sound; then Studies 9, 10 and 13 together.
+> - **No recordings from Jafar and no checkpoint stop.** Whatever only shows in play comes from public talks, interviews and guides, or is listed as an open blind spot.
+> - **KCD2:** Warhorse's modding tools are left out. KCD2 is read from its own unpacked files and Warhorse's public wiki. The nine third-party mods in his install stay out of the study data, so every finding describes Warhorse's game.
+> - **Mafia:** read from its own files with the published key found on 25 October, kept on F: only, never in git or chat. Mafia runs on Unreal 5.4 and LEDGER on 5.8: anything taken from its setup as a method is checked against 5.8 before the builder relies on it.
+> - **The legal ruling of 11 October stands as amended on 25 October:** study only; nothing from either game enters LEDGER or git; our own words and numbers only; no other game.
+> - **Each study is a bounded task:** Sonnet helpers for extraction and counting, Opus for its synthesis and its fresh review. Each ends with three lines in his morning summary, and its numbers go straight to the item that needs them.
+
 # LEDGER: AAA Reference Study
 
 Mafia: The Old Country and Kingdom Come: Deliverance II, studied end to end · Oct 11, 2026 · @Jafar

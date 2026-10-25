@@ -1,28 +1,25 @@
-GOAL (to Mon 26 Oct 14:00): his 21 October order, each item done or set aside with its reason; street pieces gated or listed; all pushed to wip.
+GOAL (to Mon 2 Nov 13:00): his order of 25 October item by item, six studies beside it, every status in production/orders/2026-10-25.md. Stop Mon 26 Oct 06:00 until he says continue.
 
 Phase 0 done (production/audits/phase0-exit/BUNDLE.md).
 
-Phase 1 closed 22 Oct, no exit passed (production/audits/phase1-exit/CLOSE-2026-10-22.md); phase 2 held: failed capabilities first.
+## Phase 1: Prove the bottlenecks (open, not closed)
 
-## Phase 2: Produce Quay Street from proved families (on his yes)
+It failed its first exit check on 22 Oct (production/audits/phase1-exit/CLOSE-2026-10-22.md). Fresh reviewers re-run it once the walk, the clothes and speech pass. Phase 2 waits for it; the shops in the street stay.
 
-- [ ] 2.1 Building kit re-seeded; upper rooms; near shop rooms: production/research/asset-plan/SUMMARY.md.
-- [ ] 2.2 Ground, wear, signage, furniture, vegetation, the hill.
-- [ ] 2.3 P7 walking, P6 plain clothes, P20 exposure, P13 ambience: 3-PROOFS.md.
-- [ ] 2.4 The wet street's seam, the icy lane.
-- [ ] Exit: the whole street walked, day and night.
+- [ ] 1. Health check; the order ledger.
+- [ ] 2. The walk to 3 cm on Epic's route; turning; Tom sits as played (sit-and-turn/).
+- [ ] 3. Tom's outfit in Marvelous Designer, Study 6's numbers (Needs you when ready).
+- [ ] 4. Speech under 2 s with the cast voice; the voice's frame spike (voice-latency/).
+- [ ] 5. Mickey's office: wear, glitches, packaged walk.
+- [ ] 6. Phase 1's exit re-run; phase 2?
+- Blocked: phase 3's simulation port.
 
-## His orders of 21 to 24 October: done
+## Studies this week (aaa-reference/STUDY-PLAN.md)
 
-- [x] 21st (7 set aside); 23rd (frame headroom, launderette); 24th (walk set aside: sit-and-turn/METAHUMAN-ROUTE-2026-10-24.md).
+7 animation, 6 characters, 4 street and world, 12 tech, 5 visuals, 1 NPC life. Done: 0 of 16.
 
-## His order of 25 October (short job)
-
-- [x] Disk: both floors hold; nothing deleted.
-- [x] AAA study set-up: KCD2 unpacked; Mafia's key and mappings found, packages open (aaa-reference/REFERENCE.md).
-
-STATE (25 Oct 16:40): waiting for Monday's order after 13:00.
+STATE (25 Oct 19:25): records and ledger.
 
 ## Handovers
 
-Town: TOWN.md. Clothing: CLOTHES.md. Helpers: south quay kit (open).
+Town: TOWN.md. Clothing: CLOTHES.md.

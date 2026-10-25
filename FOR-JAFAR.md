@@ -3,7 +3,13 @@
 The overview first; then the day's summary, under 200 words. Earlier summaries are in git and in
 production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md before that).
 
-## Overview (Sunday 25 October: your short job)
+## Overview (Sunday 25 October, evening: your week's order)
+
+**Your order of 25 October evening, to Monday 2 November 13:00** (production/orders/2026-10-25.md, every item and study with a status; work stops Monday 06:00 until you say continue).
+- **Phase 1 is open, not closed.** It failed its first exit check on 22 October. Fresh reviewers re-run that check once the walk, the clothes and speech pass; phase 2 waits for it, and the shops already in the street stay.
+- **Recorded:** your rulings (RULINGS.md and DECISIONS.md); the study's order for both weeks at the top of the study plan; the order ledger, seeded with everything still open from before (21 and 23 October's leftovers, the cloud week's four questions, the three shops not yet in the street, FINDINGS' twenty faults, your two clicks on the old archive). A new check fails any push where an item has no status or vanishes without being done or dropped.
+- **Next:** the health check, your progress page, then Study 7 (animation) beside the walk.
+
 
 <!-- retention -->Disk (10-22 04:32): C: 79.9 GB free, F: 48.4 GB free; grew most since 10-21 12:17: C:\actions-runner-ledger\_work\ledger +1.5 GB, F:\LedgerTools\uv\cache +1.4 GB, F:\LedgerTools\bpyenv\Lib +0.9 GB.
 
@@ -92,9 +98,9 @@ No decision asked: these are for watching the street change.
 
 ### Needs you
 
-1. **Warhorse's tools for KCD2.** Their licence excludes companies and every use but making mods, and they need KCD2 on your Steam account. Recommended: **leave them out**; the study reads the game's own files and Warhorse's public wiki, as your ruling allows where the tools don't cover the need. Or: you put KCD2 and the tools on your Steam account and take their licence on yourself. Or: you write to Warhorse for permission.
+1. **Coming, not yet:** Marvelous Designer, one paid month (not a trial), for Tom's outfit. It is needed once Study 6 has set the outfit's numbers, likely mid-week; the day will be named here a day ahead.
 
-Your answers of 24 October are recorded (RULINGS.md): the cast voice stays on the card, the 6 GB line is the game alone, and the friends' cards are checked before their build; 1.7 ms of spare card time by day is accepted until phase 2's street budget; Marvelous Designer is one month you pay yourself, and you are told when Tom's outfit is ready to start.
+Your answers of 25 October are recorded (RULINGS.md): Warhorse's tools left out; no recordings and no checkpoint stop; your friends play on your PC, so the voice on the card is fine for their evening.
 
 ### Road to worth playing (PLAN.md)
 

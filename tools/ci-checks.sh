@@ -163,6 +163,8 @@ real_table() {
     voice-load-selftest   "$REPO"                 "$PY tools/voice-live/voice_load.py --selftest" \
     doc-caps              "$REPO"                 "$PY tools/doc-caps.py" \
     doc-caps-selftest     "$REPO"                 "$PY tools/doc-caps.py --selftest" \
+    order-ledger          "$REPO"                 "$PY tools/order_ledger.py" \
+    order-ledger-selftest "$REPO"                 "$PY tools/order_ledger.py --selftest" \
     timelog-selftest      "$REPO"                 "$PY tools/timelog.py --selftest" \
     morning-selftest      "$REPO"                 "$PY tools/morning_pictures.py --selftest" \
     page-answers          "$REPO"                 "$PY tools/page_answers.py" \
