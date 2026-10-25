@@ -19,6 +19,21 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 25 Oct 2026, an order ledger: every item of every order kept with a status until done or dropped by the owner
+- Made: one file per order holding every item, every study and everything still open from earlier orders, each with one status; a check that fails the build and the push when an item has no status or leaves a file without being done or dropped; the owner's progress page fed from the same file.
+- Method (setting-free):
+  - One line per item: a stable id, a status from a short fixed list, the text, and the evidence or the reason the status needs.
+  - Seed it from every place open work hides: earlier orders' leftovers, questions waiting on the owner, unfinished pieces, the open-faults list, the owner's own pending clicks marked as his.
+  - Carry by rule: anything not done or dropped must reappear in the next order's file; an older file may hold no "open" item.
+  - Check against the version being replaced, so an item cannot be deleted quietly, and in the push hook as well as the build checks; skip branches that carry no ledger rather than block other sessions.
+  - Derive the owner's page from the ledger by script, so a status is typed once.
+  - A health check reads each scheduled job's last run and result from the scheduler, not from memory: two of three had not done their work.
+- Tools: a ledger checker with a selftest, the pre-push hook, a page builder, the task scheduler's own records.
+- Target and check: every item a status; the selftest refuses each failure kind once and accepts the clean cases.
+- Cost (hours): about 0.5, 19:17 to 19:40.
+- Failed and why: a shell heredoc ate the backslashes of a hook and a check table on the first write (a known trap); fixed with direct edits. A phase name copied into the status file broke a consistency check whose pattern stops at a bracket; the state went into brackets on the heading.
+- Evidence: production/orders/2026-10-25.md; tools/order_ledger.py; production/audits/health-2026-10-25.md
+
 ### 25 Oct 2026, the reference study's set-up: two shipped games indexed and their systems mapped before any study
 - Made: an index of every archive of one game (ordinary zip archives), its readable data unpacked outside the repository; a container-level index of a second game whose content is encrypted; one coverage map listing each system of both games, where its logic lives and which study covers it.
 - Method (setting-free):

@@ -165,6 +165,7 @@ real_table() {
     doc-caps-selftest     "$REPO"                 "$PY tools/doc-caps.py --selftest" \
     order-ledger          "$REPO"                 "$PY tools/order_ledger.py" \
     order-ledger-selftest "$REPO"                 "$PY tools/order_ledger.py --selftest" \
+    progress-page         "$REPO"                 "$PY tools/progress_page.py --check" \
     timelog-selftest      "$REPO"                 "$PY tools/timelog.py --selftest" \
     morning-selftest      "$REPO"                 "$PY tools/morning_pictures.py --selftest" \
     page-answers          "$REPO"                 "$PY tools/page_answers.py" \

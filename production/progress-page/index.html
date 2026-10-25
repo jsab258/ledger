@@ -1,0 +1,502 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>The Meridian Line</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;800&family=Overpass+Mono:wght@400;700&display=swap">
+<style>
+/* Layout: a transit poster. Ticket up top, the line and its bosses side by side on wide screens, the street's flipbook across the foot. */
+:root{
+  --paper:#E9EEEC; --surface:#F7F9F8; --ink:#13201E; --muted:#55645F; --rule:#C2CCC9; --track:#D5DDDA;
+  --line:#0B6D65; --brick:#AD3F2A; --ok:#2B7A4C;
+  --display:"Overpass","Helvetica Neue",Arial,sans-serif;
+  --mono:"Overpass Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0F1517; --surface:#172022; --ink:#E3EBE8; --muted:#92A29E; --rule:#2B3739; --track:#25302F;
+    --line:#3DB4A7; --brick:#E37450; --ok:#5DC28A; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0F1517; --surface:#172022; --ink:#E3EBE8; --muted:#92A29E; --rule:#2B3739; --track:#25302F;
+  --line:#3DB4A7; --brick:#E37450; --ok:#5DC28A; color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--paper);color:var(--ink);font:16px/1.5 var(--display);}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:28px 56px;display:grid;gap:40px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
+h1{font-weight:800;font-size:clamp(34px,6vw,56px);line-height:1;letter-spacing:-.01em}
+h2{font-weight:800;font-size:clamp(22px,3.2vw,28px);line-height:1.1}
+h3{font-weight:800;font-size:19px;line-height:1.15}
+.kicker,.label{font:700 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--line)}
+.lede{margin:0;max-width:60ch;color:var(--muted)}
+.sub{margin:0;color:var(--muted);max-width:62ch}
+.mast{display:grid;gap:14px}
+
+/* The ticket */
+.ticket{position:relative;background:var(--surface);border:1px solid var(--rule);display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:0;margin-top:6px}
+.ticket::before,.ticket::after{content:"";position:absolute;top:50%;width:18px;height:18px;margin-top:-9px;border-radius:50%;background:var(--paper);border:1px solid var(--rule)}
+.ticket::before{left:-10px;clip-path:inset(0 0 0 50%)}
+.ticket::after{right:-10px;clip-path:inset(0 50% 0 0)}
+.field{padding:14px 18px;border-right:1px dashed var(--rule);display:grid;gap:6px;min-width:0}
+.field:last-child{border-right:0}
+.field .v{font:700 17px/1.2 var(--display)}
+.field .v small{display:block;font:400 13px/1.35 var(--display);color:var(--muted);margin-top:3px}
+.field .v.big{font:700 24px/1 var(--mono);font-variant-numeric:tabular-nums}
+
+/* Two columns on wide screens */
+.board{display:grid;grid-template-columns:minmax(0,1fr);gap:40px}
+@media (min-width:900px){.board{grid-template-columns:minmax(0,5fr) minmax(0,6fr);align-items:start}}
+.col{display:grid;gap:16px;min-width:0}
+
+/* The route */
+.route{list-style:none;margin:6px 0 0;padding:0}
+.stop{position:relative;display:grid;grid-template-columns:40px minmax(0,1fr);column-gap:12px;padding-bottom:22px}
+.stop::before{content:"";position:absolute;left:17px;top:0;bottom:0;width:6px;background:var(--line)}
+.stop:first-child::before{top:12px}
+.stop:last-child::before{bottom:auto;height:12px}
+.stop.sketch::before{background:repeating-linear-gradient(to bottom,var(--line) 0 9px,transparent 9px 16px);opacity:.75}
+.stop.passed::before{background:var(--line)}
+.dot{grid-column:1;justify-self:center;align-self:start;width:24px;height:24px;margin-top:1px;border-radius:50%;background:var(--surface);border:5px solid var(--line);position:relative;z-index:1}
+.passed .dot{background:var(--line)}
+.sketch .dot{border-style:dotted;border-width:4px}
+.milestone .dot{width:30px;height:30px;margin-top:-2px;border:4px solid var(--ink);box-shadow:inset 0 0 0 4px var(--surface),inset 0 0 0 9px var(--ink)}
+.terminus .dot{border-radius:4px;width:26px;height:26px}
+.here .dot{border-color:var(--brick);width:30px;height:30px;margin-top:-2px;background:var(--brick);box-shadow:inset 0 0 0 5px var(--surface)}
+.here .dot::after{content:"";position:absolute;inset:-9px;border-radius:50%;border:3px solid var(--brick);opacity:.0;animation:ping 2.2s ease-out infinite}
+@keyframes ping{0%{transform:scale(.7);opacity:.7}100%{transform:scale(1.35);opacity:0}}
+@media (prefers-reduced-motion:reduce){.here .dot::after{animation:none;opacity:.35}}
+.body{grid-column:2;display:grid;gap:4px;min-width:0}
+.stop-n{font:700 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.stop-name{font:800 18px/1.2 var(--display)}
+.passed .stop-name{color:var(--muted)}
+.stop-get{margin:0;color:var(--muted);font-size:15px;max-width:52ch}
+.stop-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:2px}
+.pill{font:700 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:5px 8px;border:1px solid var(--rule);color:var(--muted);background:var(--surface)}
+.pill.here{background:var(--brick);border-color:var(--brick);color:var(--surface)}
+.pill.next{border-color:var(--line);color:var(--line)}
+.pill.done{border-color:var(--line);background:var(--line);color:var(--surface)}
+.pill.sketchp{border-style:dashed}
+.note{margin:4px 0 0;font-size:14px;max-width:52ch}
+.here .note{border-left:3px solid var(--brick);padding-left:10px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.chip{font:600 13px/1 var(--display);padding:6px 9px;background:var(--surface);border:1px solid var(--rule)}
+.sketch-note{margin:-6px 0 0 52px;font-size:13px;color:var(--muted);max-width:50ch}
+
+/* The bosses */
+.bosses{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.boss{background:var(--surface);border:1px solid var(--rule);padding:16px;display:grid;gap:10px;align-content:start;position:relative;min-width:0}
+.boss header{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.state{font:700 10px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;padding:5px 7px;white-space:nowrap}
+.fighting .state{background:var(--brick);color:var(--surface)}
+.unchecked .state{border:1px dashed var(--muted);color:var(--muted)}
+.defeated .state{background:var(--ok);color:var(--surface)}
+.what{margin:0;font-size:14px;color:var(--muted)}
+.hp{display:grid;gap:5px}
+.hp-label{display:flex;justify-content:space-between;font:700 12px/1 var(--mono);letter-spacing:.06em;font-variant-numeric:tabular-nums}
+.hp-label .hpnum{color:var(--brick)}
+.defeated .hp-label .hpnum{color:var(--ok)}
+.hp-track{height:16px;background:var(--track);position:relative;overflow:hidden}
+.hp-fill{position:absolute;inset:0 auto 0 0;background:var(--brick);transition:width .6s ease}
+.unchecked .hp-fill{background:repeating-linear-gradient(135deg,var(--muted) 0 6px,transparent 6px 12px);opacity:.55}
+.hp-track::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 calc(10% - 3px),var(--surface) calc(10% - 3px) 10%)}
+.nums{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:0}
+.nums div{display:grid;gap:3px}
+.nums dt{font:700 10px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.nums dd{margin:0;font:700 15px/1.2 var(--mono);font-variant-numeric:tabular-nums}
+.nums .goal dd{color:var(--line)}
+.display{margin:0;font:700 15px/1.3 var(--mono)}
+.last{margin:0;font-size:13.5px;line-height:1.45;border-top:1px dashed var(--rule);padding-top:9px}
+.defeated{opacity:.86}
+.defeated h3{text-decoration:line-through;text-decoration-thickness:2px;text-decoration-color:var(--ok)}
+.bosses-count{font:700 14px/1 var(--mono);color:var(--muted)}
+
+/* The study and the carried items */
+.ledger{display:grid;grid-template-columns:minmax(0,1fr);gap:40px}
+@media (min-width:900px){.ledger{grid-template-columns:minmax(0,5fr) minmax(0,6fr);align-items:start}}
+.sbar{display:grid;gap:6px}
+.sbar-label{display:flex;justify-content:space-between;font:700 13px/1 var(--mono);letter-spacing:.06em;font-variant-numeric:tabular-nums}
+.sbar-track{height:16px;background:var(--track);display:grid;grid-template-columns:repeat(16,minmax(0,1fr));gap:3px;padding:0}
+.sbar-track span{background:var(--track);border:1px solid var(--rule)}
+.sbar-track span.done{background:var(--line);border-color:var(--line)}
+.sbar-track span.open{background:repeating-linear-gradient(135deg,var(--line) 0 4px,transparent 4px 8px);border-color:var(--line);opacity:.7}
+.slist,.clist{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.slist li,.clist li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:baseline;padding:6px 0;border-bottom:1px dashed var(--rule);font-size:14px;min-width:0}
+.slist li b{font:700 12px/1 var(--mono);color:var(--muted);margin-right:6px}
+.clist li span:first-child{min-width:0}
+.clist .his{font:700 10px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--brick);margin-right:6px}
+.clist details{font-size:14px}
+.clist summary{cursor:pointer;color:var(--muted);font:700 12px/1.6 var(--mono);letter-spacing:.06em;text-transform:uppercase}
+
+/* The street */
+.street{display:grid;gap:14px}
+.controls{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center}
+.seg{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--rule);background:var(--surface)}
+.seg button{font:600 14px/1 var(--display);padding:10px 12px;border:0;border-right:1px solid var(--rule);background:transparent;color:var(--ink);cursor:pointer;min-height:40px}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
+button:focus-visible,input:focus-visible{outline:3px solid var(--brick);outline-offset:2px}
+.frame{margin:0;display:grid;gap:8px}
+.stage{position:relative;width:100%;max-width:100%;aspect-ratio:16/9;background:var(--track);overflow:hidden;border:1px solid var(--rule)}
+.stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.stage img.over{clip-path:inset(0 0 0 50%)}
+.divider{position:absolute;top:0;bottom:0;left:50%;width:3px;margin-left:-1px;background:var(--surface);box-shadow:0 0 0 1px rgba(0,0,0,.35)}
+.tag{position:absolute;top:10px;font:700 13px/1 var(--mono);padding:7px 9px;background:var(--ink);color:var(--surface);font-variant-numeric:tabular-nums}
+.tag.l{left:10px}.tag.r{right:10px}
+figcaption{font-size:14px;color:var(--muted)}
+.scrub{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.scrub input[type=range]{flex:1 1 200px;min-width:0;accent-color:var(--brick);height:28px}
+.scrub button{font:700 14px/1 var(--display);min-width:44px;min-height:40px;padding:0 12px;border:1px solid var(--rule);background:var(--surface);color:var(--ink);cursor:pointer}
+.scrub button.on{background:var(--brick);border-color:var(--brick);color:var(--surface)}
+.scrub output,.scrub .end{font:700 14px/1 var(--mono);font-variant-numeric:tabular-nums;min-width:86px}
+.scrub .end{min-width:0;color:var(--muted)}
+.small{font-size:13px;color:var(--muted);margin:0}
+.strip{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 8px;scroll-snap-type:x proximity}
+.strip button{flex:0 0 auto;width:116px;display:grid;gap:5px;padding:0;border:2px solid transparent;background:transparent;color:var(--ink);cursor:pointer;scroll-snap-align:start;text-align:left}
+.strip img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:var(--track)}
+.strip span{font:700 12px/1 var(--mono);padding:0 2px 3px;font-variant-numeric:tabular-nums}
+.strip button[aria-pressed="true"]{border-color:var(--brick)}
+.strip button[aria-pressed="true"] span{color:var(--brick)}
+.stage.loading img{opacity:.55;transition:opacity .2s}
+footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:var(--muted);display:grid;gap:6px;max-width:75ch}
+.err{color:var(--brick);font-weight:600}
+</style>
+
+<div class="wrap">
+  <header class="mast">
+    <div class="kicker">LEDGER &middot; progress</div>
+    <h1>The Meridian Line</h1>
+    <p class="lede">From one street in 1990 to the finished game: where the game is now, what stands in its way, and how Quay Street has grown.</p>
+    <div class="ticket" id="ticket" aria-label="Where the game is now">
+      <div class="field"><span class="label">Now</span><span class="v">Loading...</span></div>
+    </div>
+  </header>
+
+  <div class="board">
+    <section class="col" aria-labelledby="h-line">
+      <div><h2 id="h-line">The line</h2></div>
+      <p class="sub">Eleven stops from here to release. The solid line is the adopted plan; the dotted line is still a sketch.</p>
+      <ol class="route" id="route"></ol>
+      <p class="sketch-note" id="sketchNote"></p>
+    </section>
+
+    <section class="col" aria-labelledby="h-boss">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap">
+        <h2 id="h-boss">Phase 1 bosses</h2>
+        <span class="bosses-count" id="bossCount"></span>
+      </div>
+      <p class="sub">What stands between this stop and the next. A boss falls when its number reaches its goal, or when you rule the goal met.</p>
+      <div class="bosses" id="bosses"></div>
+    </section>
+  </div>
+
+  <div class="ledger">
+    <section class="col" aria-labelledby="h-study">
+      <h2 id="h-study">The AAA study</h2>
+      <p class="sub">Sixteen studies of Mafia: The Old Country and Kingdom Come: Deliverance II, run beside the work; each ends with its numbers going to the item that needs them.</p>
+      <div class="sbar"><div class="sbar-label"><span>Studies done</span><span id="studyNum"></span></div><div class="sbar-track" id="studyBar" role="meter" aria-valuemin="0" aria-valuemax="16"></div></div>
+      <ul class="slist" id="studyList"></ul>
+    </section>
+    <section class="col" aria-labelledby="h-carried">
+      <h2 id="h-carried">Carried over</h2>
+      <p class="sub">Everything still open from earlier orders, from the order ledger. Nothing leaves it unless done or dropped by you.</p>
+      <ul class="clist" id="carriedList"></ul>
+    </section>
+  </div>
+
+  <section class="street" aria-labelledby="h-street">
+    <h2 id="h-street">Quay Street, day by day</h2>
+    <div class="controls">
+      <div class="seg" id="views" role="group" aria-label="Camera"></div>
+      <div class="seg" id="modes" role="group" aria-label="Mode">
+        <button type="button" id="mode-days" data-mode="days" aria-pressed="true">Day by day</button>
+        <button type="button" id="mode-compare" data-mode="compare" aria-pressed="false">Then and now</button>
+      </div>
+    </div>
+    <figure class="frame">
+      <div class="stage" id="stage">
+        <img id="imgA" alt="">
+        <img id="imgB" class="over" alt="" hidden>
+        <div class="divider" id="divider" hidden></div>
+        <span class="tag l" id="tagL"></span>
+        <span class="tag r" id="tagR" hidden></span>
+      </div>
+      <figcaption id="cap"></figcaption>
+    </figure>
+    <div class="strip" id="strip" role="group" aria-label="Pick a day"></div>
+    <div class="scrub" id="scrubDays">
+      <button type="button" id="prev" aria-label="Day before">&lsaquo;</button>
+      <button type="button" id="play">Play</button>
+      <button type="button" id="next" aria-label="Next day">&rsaquo;</button>
+      <input type="range" id="dayRange" min="0" max="0" value="0" aria-label="Day">
+      <output id="dayOut" for="dayRange"></output>
+    </div>
+    <div class="scrub" id="scrubCompare" hidden>
+      <span class="end" id="firstEnd"></span>
+      <input type="range" id="wipe" min="0" max="100" value="50" aria-label="Drag between then and now">
+      <span class="end" id="lastEnd"></span>
+    </div>
+    <p class="small" id="gapNote"></p>
+  </section>
+
+  <footer>
+    <span>Numbers come from the builder's own measurements and your rulings, as recorded in the project. The builder refreshes this page each night.</span>
+    <span id="updated"></span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
+  const fmt = (v, unit) => {
+    if (v == null) return "";
+    const s = Number.isInteger(v) ? String(v) : String(Math.round(v * 100) / 100);
+    return unit ? s + " " + unit : s;
+  };
+  const day = d => new Date(d + "T12:00:00").toLocaleDateString("en-GB", {weekday:"short", day:"numeric", month:"short"});
+  const short = d => new Date(d + "T12:00:00").toLocaleDateString("en-GB", {day:"numeric", month:"short"});
+
+  function hpOf(b){
+    if (b.state === "defeated") return 0;
+    if (typeof b.hp === "number") return b.hp;
+    if (typeof b.start === "number" && typeof b.now === "number" && typeof b.target === "number" && b.start !== b.target){
+      const r = (b.now - b.target) / (b.start - b.target);
+      return Math.max(0, Math.min(100, Math.round(r * 100)));
+    }
+    return 100;
+  }
+
+  function renderTicket(d){
+    const t = $("ticket"); t.replaceChildren();
+    const here = d.stations.find(s => s.n === d.here) || d.stations[0];
+    const next = d.stations.find(s => s.n === d.here + 1);
+    const down = d.bosses.filter(b => b.state === "defeated").length;
+    const add = (label, v, small, big) => {
+      const f = el("div", "field"); f.append(el("span", "label", label));
+      const vv = el("span", "v" + (big ? " big" : ""), v); if (small) vv.append(el("small", null, small));
+      f.append(vv); t.append(f);
+    };
+    add("You are here", "Phase " + here.n + ": " + here.name);
+    if (next) add("Next stop", next.name, next.size || "");
+    add("Bosses down", down + " of " + d.bosses.length, null, true);
+    add("Friends' evening", d.friends_eta, d.friends_eta_note);
+  }
+
+  function renderRoute(d){
+    const r = $("route"); r.replaceChildren();
+    for (const s of d.stations){
+      const li = el("li", "stop " + s.state + (s.milestone ? " milestone" : "") + (s.terminus ? " terminus" : ""));
+      if (s.state === "here") li.setAttribute("aria-current", "step");
+      li.append(el("span", "dot"));
+      const b = el("div", "body");
+      b.append(el("span", "stop-n", "Phase " + s.n));
+      b.append(el("span", "stop-name", s.name));
+      b.append(el("p", "stop-get", s.get));
+      const meta = el("div", "stop-meta");
+      const label = {passed:["Passed","done"], here:["You are here","here"], next:["Next stop","next"], ahead:["Ahead",""], sketch:["Sketch","sketchp"]}[s.state] || ["",""];
+      if (label[0]) meta.append(el("span", "pill " + label[1], label[0]));
+      if (s.milestone) meta.append(el("span", "pill", "The big one"));
+      if (s.size) meta.append(el("span", "pill", s.size));
+      b.append(meta);
+      if (s.note) b.append(el("p", "note", s.note));
+      if (s.arrived && s.arrived.length){
+        const c = el("div", "chips"); for (const a of s.arrived) c.append(el("span", "chip", a)); b.append(c);
+      }
+      li.append(b); r.append(li);
+    }
+    $("sketchNote").textContent = d.sketch_note || "";
+  }
+
+  function renderBosses(d){
+    const g = $("bosses"); g.replaceChildren();
+    const down = d.bosses.filter(b => b.state === "defeated").length;
+    $("bossCount").textContent = down + " of " + d.bosses.length + " down";
+    if (d.bosses_title) $("h-boss").textContent = d.bosses_title;
+    for (const b of d.bosses){
+      const hp = hpOf(b);
+      const a = el("article", "boss " + b.state);
+      const h = el("header"); h.append(el("h3", null, b.name));
+      h.append(el("span", "state", b.state === "defeated" ? "Defeated" + (b.when ? " " + b.when : "") : b.state === "unchecked" ? "Not re-checked" : "Fighting"));
+      a.append(h);
+      a.append(el("p", "what", b.what));
+      const bar = el("div", "hp");
+      const lab = el("div", "hp-label"); lab.append(el("span", null, "HP")); lab.append(el("span", "hpnum", b.state === "unchecked" ? "?" : hp + "%"));
+      const track = el("div", "hp-track"); track.setAttribute("role", "meter"); track.setAttribute("aria-valuemin", "0"); track.setAttribute("aria-valuemax", "100"); track.setAttribute("aria-valuenow", String(hp)); track.setAttribute("aria-label", b.name + " health");
+      const fill = el("div", "hp-fill"); fill.style.width = hp + "%"; track.append(fill);
+      bar.append(lab, track); a.append(bar);
+      const numeric = typeof b.start === "number" && typeof b.now === "number" && typeof b.target === "number" && !b.display;
+      if (numeric){
+        const dl = el("dl", "nums");
+        const cell = (k, v, sub, cls) => { const w = el("div", cls || ""); w.append(el("dt", null, k)); const dd = el("dd", null, v); w.append(dd); if (sub) w.title = sub; return w; };
+        dl.append(cell("Start", fmt(b.start, b.unit), b.start_label), cell("Now", fmt(b.now, b.unit), b.now_label), cell("Goal", fmt(b.target, b.unit), null, "goal"));
+        a.append(dl);
+      } else if (b.display){
+        a.append(el("p", "display", b.display));
+      }
+      if (b.last) a.append(el("p", "last", b.last));
+      g.append(a);
+    }
+  }
+
+  function renderStudies(d){
+    const st = d.studies; if (!st) return;
+    $("studyNum").textContent = st.done + " of " + st.total;
+    const bar = $("studyBar"); bar.replaceChildren(); bar.setAttribute("aria-valuenow", String(st.done)); bar.setAttribute("aria-label", "Studies done: " + st.done + " of " + st.total);
+    for (const s of st.list) bar.append(el("span", s.status === "done" ? "done" : s.status === "open" ? "open" : ""));
+    const ul = $("studyList"); ul.replaceChildren();
+    const label = {done:"Done", open:"This week", "carried over":"Next week", "set aside":"Set aside", dropped:"Dropped"};
+    for (const s of st.list){
+      const li = el("li"); const n = el("span"); n.append(el("b", null, String(s.n)), document.createTextNode(s.name));
+      li.append(n, el("span", "pill" + (s.status === "done" ? " done" : s.status === "open" ? " next" : ""), label[s.status] || s.status));
+      ul.append(li);
+    }
+  }
+
+  function renderCarried(d){
+    const items = d.carried || []; const ul = $("carriedList"); ul.replaceChildren();
+    const groups = [["Yours", items.filter(x => x.his)], ["Waiting", items.filter(x => !x.his && x.status === "carried over")], ["Set-aside faults", items.filter(x => x.status === "set aside")]];
+    for (const [title, list] of groups){
+      if (!list.length) continue;
+      const li = el("li"); const det = el("details"); if (title !== "Set-aside faults") det.open = true;
+      det.append(el("summary", null, title + " (" + list.length + ")"));
+      const inner = el("ul", "clist");
+      for (const x of list){
+        const r = el("li"); const t = el("span"); if (x.his) t.append(el("span", "his", "Yours")); t.append(document.createTextNode(x.text));
+        r.append(t, el("span", "pill", x.status)); inner.append(r);
+      }
+      det.append(inner); li.append(det); ul.append(li);
+    }
+  }
+
+  // Street flipbook
+  let S = null, view = 0, idx = 0, mode = "days", timer = null, target = false;
+  const src = (v, dte) => S.path.replace("{view}", S.views[v].key).replace("{date}", dte);
+  const cache = {};
+  function preload(v){ for (const dte of S.days){ const u = src(v, dte); if (!cache[u]){ const i = new Image(); i.src = u; cache[u] = i; } } }
+  function setImg(img, url){
+    return new Promise(res => {
+      if (img.getAttribute("src") === url && img.complete){ res(); return; }
+      $("stage").classList.add("loading");
+      img.onload = img.onerror = () => { $("stage").classList.remove("loading"); res(); };
+      img.src = url;
+    });
+  }
+  function renderStrip(){
+    const st = $("strip"); st.replaceChildren();
+    S.days.forEach((dte, i) => {
+      const b = el("button"); b.type = "button"; b.id = "day-" + dte;
+      const im = el("img"); im.loading = "lazy"; im.alt = ""; im.src = src(view, dte);
+      b.append(im, el("span", null, short(dte)));
+      b.setAttribute("aria-label", day(dte));
+      b.addEventListener("click", () => { stop(); idx = i; showStreet(); });
+      st.append(b);
+    });
+  }
+  function syncStrip(){
+    [...$("strip").children].forEach((b, i) => b.setAttribute("aria-pressed", i === idx ? "true" : "false"));
+    const cur = $("strip").children[idx];
+    if (cur && cur.scrollIntoView) { const st = $("strip"); st.scrollLeft = Math.max(0, cur.offsetLeft - st.offsetLeft - st.clientWidth / 2 + cur.clientWidth / 2); }
+  }
+  function showStreet(){
+    const A = $("imgA"), B = $("imgB");
+    const last = S.days.length - 1;
+    $("scrubDays").hidden = target || mode !== "days";
+    $("strip").hidden = target || mode !== "days";
+    $("scrubCompare").hidden = target || mode !== "compare";
+    if (target){
+      A.src = S.target; A.alt = "The Hook sheet, the target look";
+      B.hidden = true; $("divider").hidden = true; $("tagR").hidden = true;
+      $("tagL").textContent = "The target";
+      $("cap").textContent = "The Hook sheet: the look every street frame is judged against.";
+      return;
+    }
+    const lab = S.views[view].label;
+    if (mode === "days"){
+      const shown = setImg(A, src(view, S.days[idx])); A.alt = lab + ", " + day(S.days[idx]);
+      syncStrip();
+      B.hidden = true; $("divider").hidden = true; $("tagR").hidden = true;
+      $("tagL").textContent = day(S.days[idx]);
+      $("dayRange").max = String(last); $("dayRange").value = String(idx);
+      $("dayOut").textContent = (idx + 1) + " of " + S.days.length;
+      $("cap").textContent = lab + ", taken by the game each morning. Tap a day, or press Play.";
+      return shown;
+    } else {
+      A.src = src(view, S.days[0]); A.alt = lab + ", " + day(S.days[0]);
+      B.src = src(view, S.days[last]); B.alt = lab + ", " + day(S.days[last]); B.hidden = false;
+      $("divider").hidden = false; $("tagR").hidden = false;
+      $("tagL").textContent = short(S.days[0]); $("tagR").textContent = short(S.days[last]);
+      $("firstEnd").textContent = short(S.days[0]); $("lastEnd").textContent = short(S.days[last]);
+      wipe();
+      $("cap").textContent = lab + ": drag to wipe between the first morning and the latest.";
+    }
+  }
+  function wipe(){
+    const v = Number($("wipe").value);
+    $("imgB").style.clipPath = "inset(0 0 0 " + v + "%)";
+    $("divider").style.left = v + "%";
+  }
+  function stop(){ timer = null; $("play").textContent = "Play"; $("play").classList.remove("on"); }
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  async function play(){
+    if (timer){ stop(); return; }
+    const run = {}; timer = run;
+    if (idx >= S.days.length - 1) idx = 0;
+    $("play").textContent = "Pause"; $("play").classList.add("on");
+    await showStreet();
+    while (timer === run){
+      await wait(1100);
+      if (timer !== run) return;
+      if (idx >= S.days.length - 1){ stop(); return; }
+      idx++;
+      await showStreet();
+    }
+  }
+  function renderStreet(d){
+    S = d.street; idx = S.days.length - 1;
+    const vs = $("views"); vs.replaceChildren();
+    S.views.forEach((v, i) => {
+      const b = el("button", null, v.label); b.type = "button"; b.id = "view-" + v.key; b.setAttribute("aria-pressed", i === view ? "true" : "false");
+      b.addEventListener("click", () => { stop(); target = false; view = i; syncViews(); preload(view); renderStrip(); showStreet(); });
+      vs.append(b);
+    });
+    if (S.target){
+      const b = el("button", null, "The target"); b.type = "button"; b.id = "view-target"; b.setAttribute("aria-pressed", "false");
+      b.addEventListener("click", () => { stop(); target = true; syncViews(); showStreet(); });
+      vs.append(b);
+    }
+    $("gapNote").textContent = S.gap_note || "";
+    preload(view); renderStrip(); showStreet();
+  }
+  function syncViews(){
+    [...$("views").children].forEach((b, i) => {
+      const isT = b.id === "view-target";
+      b.setAttribute("aria-pressed", (isT ? target : (!target && i === view)) ? "true" : "false");
+    });
+  }
+  $("prev").addEventListener("click", () => { stop(); idx = Math.max(0, idx - 1); showStreet(); });
+  $("next").addEventListener("click", () => { stop(); idx = Math.min(S.days.length - 1, idx + 1); showStreet(); });
+  $("play").addEventListener("click", play);
+  $("dayRange").addEventListener("input", e => { stop(); idx = Number(e.target.value); showStreet(); });
+  $("wipe").addEventListener("input", wipe);
+  for (const b of $("modes").children){
+    b.addEventListener("click", () => {
+      stop(); mode = b.dataset.mode; target = false; syncViews();
+      for (const x of $("modes").children) x.setAttribute("aria-pressed", x === b ? "true" : "false");
+      showStreet();
+    });
+  }
+
+  fetch("progress.json", {cache:"no-store"}).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => {
+    renderTicket(d); renderRoute(d); renderBosses(d); renderStudies(d); renderCarried(d); renderStreet(d);
+    $("updated").textContent = "Updated " + d.updated + ".";
+  }).catch(() => {
+    const t = $("ticket"); t.replaceChildren();
+    const f = el("div", "field"); f.append(el("span", "label", "Progress")); f.append(el("span", "v err", "The progress data didn't load. Reload the page to try again.")); t.append(f);
+  });
+})();
+</script>
+
+</body></html>

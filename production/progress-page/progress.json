@@ -1,0 +1,512 @@
+{
+  "updated": "Sunday 25 October 2026, 19:34",
+  "here": 1,
+  "friends_eta": "around January",
+  "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
+  "sketch_note": "Phases 6 to 10 are a sketch from your earlier stages and design documents. They are not adopted yet.",
+  "stations": [
+    {
+      "n": 0,
+      "name": "Recover control",
+      "get": "Order in the project: branches, records and checks.",
+      "size": "2 to 3 days",
+      "state": "passed",
+      "note": "Passed 6 October."
+    },
+    {
+      "n": 1,
+      "name": "Prove the bottlenecks",
+      "get": "One finished room, one complete Tom who walks, sits and turns, speech under 2 seconds, frame headroom.",
+      "size": "1 to 2 weeks",
+      "state": "here",
+      "note": "Open, not closed: it failed its first exit check on 22 October. Fresh reviewers re-run that check once the walk, the clothes and speech pass; phase 2 waits for it."
+    },
+    {
+      "n": 2,
+      "name": "Quay Street",
+      "get": "The whole street, day and night, built from proved pieces, with people in plain clothes.",
+      "size": "3 to 4 weeks",
+      "state": "next",
+      "note": "Waits until phase 1 passes. The shops already in the street stay.",
+      "arrived": [
+        "Lamp posts",
+        "Rita's pawnbroker",
+        "The ironmonger's",
+        "The newsagent's",
+        "The tea rooms",
+        "The grocer's",
+        "The chandler's",
+        "The launderette",
+        "The west row's eaves"
+      ]
+    },
+    {
+      "n": 3,
+      "name": "Thirty minutes that hold",
+      "get": "The town remembers what you did: arrivals, deliveries, consequences, the office and the ledger, talk.",
+      "size": "1 to 2 weeks",
+      "state": "ahead"
+    },
+    {
+      "n": 4,
+      "name": "Friends' evening",
+      "get": "Your friends play thirty minutes on your PC, with a $5 cap per evening.",
+      "size": "About a week",
+      "state": "ahead",
+      "milestone": true,
+      "note": "Around January if phase 1 passes soon. Low confidence."
+    },
+    {
+      "n": 5,
+      "name": "The Hook",
+      "get": "The district: one more block, then the 14 main characters, about 30 regulars and a crowd.",
+      "size": "3 to 6 months",
+      "state": "ahead"
+    },
+    {
+      "n": 6,
+      "name": "Crime and combat",
+      "get": "The escalation ladder, fists and improvised weapons. Guns rare, and last.",
+      "state": "sketch"
+    },
+    {
+      "n": 7,
+      "name": "Empire",
+      "get": "Your first business, first recruit and first racket, and a rival who reacts.",
+      "state": "sketch"
+    },
+    {
+      "n": 8,
+      "name": "Meridian",
+      "get": "More districts, traffic, the docks.",
+      "state": "sketch"
+    },
+    {
+      "n": 9,
+      "name": "The story",
+      "get": "Jobs, the main arc and its endings: 30 to 40 hours.",
+      "state": "sketch"
+    },
+    {
+      "n": 10,
+      "name": "Release",
+      "get": "Menus, music, polish and testing: the finished game.",
+      "state": "sketch",
+      "terminus": true
+    }
+  ],
+  "bosses_title": "Phase 1 bosses",
+  "bosses": [
+    {
+      "name": "The Glide",
+      "what": "How far a planted foot slides while Tom walks, stops and turns.",
+      "unit": "cm",
+      "start": 50,
+      "now": 15,
+      "target": 3,
+      "start_label": "Tom's own walk",
+      "now_label": "Epic's walk",
+      "state": "fighting",
+      "last": "24 Oct: Tom now walks on Epic's walk, behind a switch. Ordinary steps hold within 1.5 cm; a stop, a pivot and two turns still slide 10 to 15 cm."
+    },
+    {
+      "name": "The Long Pause",
+      "what": "Seconds from the end of your question to the character's first sound.",
+      "unit": "s",
+      "start": 3.25,
+      "now": 2.41,
+      "target": 2.0,
+      "start_label": "8 Oct",
+      "now_label": "22 Oct",
+      "state": "fighting",
+      "last": "22 Oct: 2.41 s with the stand-in voice on the processor; the cast's own voice is not re-timed yet. The model writing the first checked sentence now takes 2.1 s on its own."
+    },
+    {
+      "name": "The Stutter",
+      "what": "The worst single frame on a walk down the street.",
+      "unit": "ms",
+      "start": 87,
+      "now": 55,
+      "target": 33.3,
+      "start_label": "22 Oct",
+      "now_label": "24 Oct",
+      "state": "fighting",
+      "last": "23 Oct: the 87 ms stall is gone. One frame per walk still reaches 42 to 55 ms when the voice speaks; without the voice the worst is 24 ms."
+    },
+    {
+      "name": "The Tailor",
+      "what": "Period clothes on the cast, starting with Tom's outfit.",
+      "unit": "outfits to go",
+      "start": 1,
+      "now": 1,
+      "target": 0,
+      "display": "0 of 1 outfit made",
+      "state": "fighting",
+      "last": "22 Oct: Epic's outfits are modern sportswear. Next: Marvelous Designer, one paid month, for Tom's outfit."
+    },
+    {
+      "name": "The Empty Chair",
+      "what": "Someone sits down in the game as you play it.",
+      "display": "Not built yet",
+      "hp": 100,
+      "state": "fighting",
+      "last": "Comes after the walk, using the same Epic animation set."
+    },
+    {
+      "name": "The Clean Room",
+      "what": "Mickey's office worn, lived in and free of glitches, at the Hook sheet's bar.",
+      "display": "Not re-checked since 22 Oct",
+      "hp": 100,
+      "state": "unchecked",
+      "last": "The method works on shop fronts: eight fronts got their wear this week and passed."
+    },
+    {
+      "name": "The Memory Hog",
+      "what": "Graphics card memory.",
+      "display": "Game alone 5.9 GB, under the 6 GB line",
+      "state": "defeated",
+      "when": "24 Oct",
+      "last": "Down from 9.9 GB with the voice. Your ruling of 24 Oct: the 6 GB line counts the game alone; game and voice peak at 8.7 GB on your 10 GB card."
+    },
+    {
+      "name": "The Shadow Tax",
+      "what": "Spare graphics card time, kept for what the street still needs.",
+      "display": "Night 2.7 ms, day 1.7 ms",
+      "state": "defeated",
+      "when": "24 Oct",
+      "last": "Night beats its 1.4 ms target. Day is under its 2.5 ms target, accepted by your ruling of 24 Oct until phase 2's street budget."
+    }
+  ],
+  "street": {
+    "path": "street/morning-{view}-{date}.jpg",
+    "target": "street/hook-sheet.jpg",
+    "views": [
+      {
+        "key": "hook-day",
+        "label": "Hook camera by day"
+      },
+      {
+        "key": "reverse-day",
+        "label": "Reverse view"
+      },
+      {
+        "key": "night",
+        "label": "At night"
+      }
+    ],
+    "days": [
+      "2026-10-05",
+      "2026-10-06",
+      "2026-10-07",
+      "2026-10-08",
+      "2026-10-21",
+      "2026-10-22",
+      "2026-10-23",
+      "2026-10-24"
+    ],
+    "gap_note": "No pictures from 9 to 20 October: the PC was off."
+  },
+  "studies": {
+    "done": 0,
+    "total": 16,
+    "order": "2026-10-25.md",
+    "list": [
+      {
+        "n": 1,
+        "name": "NPC life and AI",
+        "status": "open",
+        "week": "this week"
+      },
+      {
+        "n": 2,
+        "name": "The first 30 minutes",
+        "status": "carried over",
+        "week": "next week"
+      },
+      {
+        "n": 3,
+        "name": "Dialogue and barks",
+        "status": "carried over",
+        "week": "next week"
+      },
+      {
+        "n": 4,
+        "name": "Street and world building",
+        "status": "open",
+        "week": "this week"
+      },
+      {
+        "n": 5,
+        "name": "Visuals",
+        "status": "open",
+        "week": "this week"
+      },
+      {
+        "n": 6,
+        "name": "Characters and wardrobe",
+        "status": "open",
+        "week": "this week"
+      },
+      {
+        "n": 7,
+        "name": "Animation",
+        "status": "open",
+        "week": "this week"
+      },
+      {
+        "n": 8,
+        "name": "Sound",
+        "status": "carried over",
+        "week": "next week"
+      },
+      {
+        "n": 9,
+        "name": "Study 9",
+        "status": "carried over",
+        "week": "next week"
+      },
+      {
+        "n": 10,
+        "name": "Study 10",
+        "status": "carried over",
+        "week": "next week"
+      },
+      {
+        "n": 11,
+        "name": "Systems",
+        "status": "carried over",
+        "week": "next week"
+      },
+      {
+        "n": 12,
+        "name": "Tech and budgets",
+        "status": "open",
+        "week": "this week"
+      },
+      {
+        "n": 13,
+        "name": "Study 13",
+        "status": "carried over",
+        "week": "next week"
+      },
+      {
+        "n": 14,
+        "name": "Combat and violence",
+        "status": "carried over",
+        "week": "next week"
+      },
+      {
+        "n": 15,
+        "name": "The crime toolkit",
+        "status": "carried over",
+        "week": "next week"
+      },
+      {
+        "n": 16,
+        "name": "Jobs and story",
+        "status": "carried over",
+        "week": "next week"
+      }
+    ]
+  },
+  "carried": [
+    {
+      "id": "o21-7-walk",
+      "status": "carried over",
+      "text": "The walk (21 Oct item 7; 24 Oct's go set aside after two tries): now item `o25-2-walk`",
+      "his": false
+    },
+    {
+      "id": "o21-7-clothes",
+      "status": "carried over",
+      "text": "The clothes (21 Oct item 7: Epic's Fab items cannot dress the Hook sheet's people): now item `o25-3-clothes`",
+      "his": false
+    },
+    {
+      "id": "o21-8-speech-2s",
+      "status": "carried over",
+      "text": "Speech under 2 s (21 Oct item 8: 2.41 s best, with the stand-in voice): now item `o25-4-speech`",
+      "his": false
+    },
+    {
+      "id": "o23-frame-voice-spike",
+      "status": "carried over",
+      "text": "The frame of 42 to 55 ms with the voice working beside the game (23 Oct order, set aside after two tries): now part of `o25-4-speech`",
+      "his": false
+    },
+    {
+      "id": "shop-empty-unit",
+      "status": "carried over",
+      "text": "The empty unit to let (bay 3): its design's review fixes not made",
+      "his": false
+    },
+    {
+      "id": "shop-mickeys-front",
+      "status": "carried over",
+      "text": "Mickey's front: its design's review fixes not made (the glass words, the stallriser tiles, the sign board's paint loss, the night fixes)",
+      "his": false
+    },
+    {
+      "id": "shop-fish-market",
+      "status": "carried over",
+      "text": "The fish market (bay 1): its design failed its own close review; second round not started",
+      "his": false
+    },
+    {
+      "id": "q-first-30",
+      "status": "carried over",
+      "text": "The first 30 minutes' proposals: three choices for his page (why Tom puts Rita's window in, what fills the quiet route's days, the clock) and two smaller ones",
+      "his": false
+    },
+    {
+      "id": "q-town-inventions",
+      "status": "carried over",
+      "text": "The 29 town inventions for his check",
+      "his": false
+    },
+    {
+      "id": "q-sound-listening",
+      "status": "carried over",
+      "text": "The sound listening list: only an ear can judge the day bed, the radio and a possible whine at 3.4 kHz",
+      "his": false
+    },
+    {
+      "id": "q-street-dressing",
+      "status": "carried over",
+      "text": "The street dressing questions: unit 13's nine families, targets written and fixed, builds not started",
+      "his": false
+    },
+    {
+      "id": "his-archive-retention",
+      "status": "carried over",
+      "text": "His: on the old archive repository (jsab258/ledger-archive-2026-10), artifact retention to 3 days",
+      "his": true
+    },
+    {
+      "id": "his-archive-actions",
+      "status": "carried over",
+      "text": "His: on the same repository, Actions off",
+      "his": true
+    },
+    {
+      "id": "f-hill-haze",
+      "status": "set aside",
+      "text": "The hill's haze does not thicken toward the crest",
+      "his": false
+    },
+    {
+      "id": "f-street-details",
+      "status": "set aside",
+      "text": "Street details: the broken window, Mickey's glass reflections and their frame cost, lamp post C's column and bowl, the shops' listed faults (the grocer's smoke on glass, the chandler's side lining, the tea rooms' table shadows, Rita's door card and normal maps), the ground missing between blocks",
+      "his": false
+    },
+    {
+      "id": "f-suspicion-port",
+      "status": "set aside",
+      "text": "Nothing in the game reads the C++ port's suspicion yet",
+      "his": false
+    },
+    {
+      "id": "f-invented-claims",
+      "status": "set aside",
+      "text": "Live talk still invents (7%)",
+      "his": false
+    },
+    {
+      "id": "f-old-launchers",
+      "status": "set aside",
+      "text": "The old studio's launchers and the Unity game layer name retired things",
+      "his": false
+    },
+    {
+      "id": "f-speech-delay",
+      "status": "set aside",
+      "text": "First spoken answer 2.41 s at best, none at 2 s",
+      "his": false
+    },
+    {
+      "id": "f-frame-headroom",
+      "status": "set aside",
+      "text": "The 42 to 55 ms frame with a voice beside the game; the day's spare card time",
+      "his": false
+    },
+    {
+      "id": "f-face-light",
+      "status": "set aside",
+      "text": "Faces underlit outside conversations; Sheila's and Darren's faces fail their sheets",
+      "his": false
+    },
+    {
+      "id": "f-voice-accents",
+      "status": "set aside",
+      "text": "Recorded crowd lines drift American",
+      "his": false
+    },
+    {
+      "id": "f-thats-all",
+      "status": "set aside",
+      "text": "A newcomer's first questions end in \"that's all I know\" about a third of the time",
+      "his": false
+    },
+    {
+      "id": "f-claim-about-listener",
+      "status": "set aside",
+      "text": "The claim check does not read what a character says about the listener",
+      "his": false
+    },
+    {
+      "id": "f-placeholder-people",
+      "status": "set aside",
+      "text": "Three placeholder figures in play; the cast not wired through",
+      "his": false
+    },
+    {
+      "id": "f-tom-speaker",
+      "status": "set aside",
+      "text": "Tom's stand-in body and sliding walk; nobody sits in the game as played",
+      "his": false
+    },
+    {
+      "id": "f-police-file",
+      "status": "set aside",
+      "text": "Three time-and-state faults in the police file",
+      "his": false
+    },
+    {
+      "id": "f-free-play",
+      "status": "set aside",
+      "text": "Free play's faults (the dark quay, the trapped pavements, the debugger key, the talk box's first letter, the shared save)",
+      "his": false
+    },
+    {
+      "id": "f-mickey-past",
+      "status": "set aside",
+      "text": "Mickey's past disagrees with itself",
+      "his": false
+    },
+    {
+      "id": "f-nightly-bench",
+      "status": "set aside",
+      "text": "The nightly walk's sixty-question bench measured nothing on three nights",
+      "his": false
+    },
+    {
+      "id": "f-licences-three",
+      "status": "set aside",
+      "text": "Three shipped libraries with no licence read",
+      "his": false
+    },
+    {
+      "id": "f-sash-windows",
+      "status": "set aside",
+      "text": "The street's sash windows beyond Mickey's row",
+      "his": false
+    },
+    {
+      "id": "f-clothes-base-layer",
+      "status": "set aside",
+      "text": "The cast wear the white base layer",
+      "his": false
+    }
+  ]
+}
