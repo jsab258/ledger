@@ -14,6 +14,8 @@ Jafar has read this note and accepts the legal risk of one exception: **the AAA 
 - **The method it covers is the one in his own study doc** ("LEDGER AAA Reference Study", 11 October, read on 13 October): the games' files through FModel with the game's key entered by him, a time-boxed code read where the files are silent, and recorded play. The doc carries "Legal risk: accepted by Jafar on 11 October 2026" beside its study-only guardrail. A correction: an earlier line here, written before the doc was found, said a key was not covered; his doc shows it is part of the method he accepted.
 - **Not covered:** taking anything from either game into LEDGER or git, and any other game. Those stay as below, and need a new ruling.
 - Everything below stays true as research. The ruling is his choice to take the risk, not a finding that it is gone.
+- **His amendment of 25 October:** the session may find and enter Mafia's published file key itself, instead of his entering it. If no key is published, it reports that and never asks him to extract one. Everything else in the ruling stands.
+- **Not applied on 25 October:** the copies of both games found on this PC (C:/Games) carry a repack group's file (`_Redist/fitgirl.md5`) and piracy sites' links (IGG-GAMES, PCGAMESTORRENTS, OneHack), not a store's. The ruling and his study doc assume copies he owns (its prerequisite: "Mafia owned and installed"). The risk he accepted is opening his own copies' files, not using unlicensed copies, so the set-up waits for store-bought copies.
 
 ## The rule of thumb
 

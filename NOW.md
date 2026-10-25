@@ -12,19 +12,16 @@ Phase 1 closed 22 Oct, no exit passed (production/audits/phase1-exit/CLOSE-2026-
 - [ ] 2.4 The wet street's seam, the icy lane.
 - [ ] Exit: the whole street walked, day and night.
 
-## His order of 21 October
+## His orders of 21 to 24 October: done
 
-- [x] Done (DECISIONS.md); 7 set aside to Monday.
+- [x] 21st (7 set aside); 23rd (frame headroom, launderette); 24th (walk set aside: sit-and-turn/METAHUMAN-ROUTE-2026-10-24.md).
 
-## His order of 23 October: done
+## His order of 25 October (short job)
 
-- [x] Frame headroom; the launderette (gate-launderette/GATE.md).
+- [x] Disk: both floors hold; nothing deleted.
+- [ ] AAA study set-up: plan imported; held, copies not store copies (DECISIONS).
 
-## His order of 24 October (to Sat 18:00)
-
-- [x] The walk by Epic's MetaHuman route: built; slide set aside (worst 11-35 cm): sit-and-turn/METAHUMAN-ROUTE-2026-10-24.md.
-
-STATE (24 Oct 12:00): walk set aside, cause traced; stopped until Monday 14:00.
+STATE (25 Oct 13:32): waiting for Monday's order after 13:00.
 
 ## Handovers
 

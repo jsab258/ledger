@@ -66,6 +66,10 @@ No decision asked: these are for watching the street change.
 
 ![The stop: Tom's front foot glides back about 13 cm after he has stopped (side view, ten pictures a second)](production/previews/walk-stop-glide-2026-10-24.jpg)
 
+**Your short job of 25 October.**
+- *Disk:* Mafia: The Old Country is in C:/Games (46 GB), beside KCD2 (82 GB). C: has 209 GB free against its 40 floor, F: 31 against 20, so nothing was deleted.
+- *The AAA study:* your plan is imported word for word (production/research/aaa-reference/STUDY-PLAN.md), and your amendment on Mafia's key is recorded in the rulings and the legal file. The set-up itself is held. Both copies on this PC carry a repack group's file (fitgirl) and piracy sites' links (IGG-GAMES, PCGAMESTORRENTS), not a store's. Your ruling covers opening your own copies, and your plan says "Mafia owned and installed". So I installed no viewer, sought no key and opened no file of either copy (Needs you 1).
+
 **The tester's walk (24 October, 02:30 to 03:01; production/playtest/nightly/2026-10-24.md).**
 - The route ran 13 of 15 stages. It failed at Ron (never within reach, 3.7 m away) and at Darren (lost from sight).
 - Nobody the record names saw Rita's window broken. One person, Rocco, showed afterwards that he knew, the same as the night before.
@@ -85,7 +89,9 @@ No decision asked: these are for watching the street change.
 
 ### Needs you
 
-Nothing waits on you. Your answers of 24 October are recorded (RULINGS.md): the cast voice stays on the card, the 6 GB line is the game alone, and the friends' cards are checked before their build; 1.7 ms of spare card time by day is accepted until phase 2's street budget; Marvelous Designer is one month you pay yourself, and you are told when Tom's outfit is ready to start. The walk's next go is under way this weekend, to Saturday 18:00.
+1. The AAA study needs store-bought copies of both games. Recommended: buy Kingdom Come: Deliverance II and Mafia: The Old Country from a store (Steam, or GOG for KCD2) and install them there. The set-up (viewer, key, first index, coverage map) then runs the same day, in about an hour.
+
+Nothing else waits on you. Your answers of 24 October are recorded (RULINGS.md): the cast voice stays on the card, the 6 GB line is the game alone, and the friends' cards are checked before their build; 1.7 ms of spare card time by day is accepted until phase 2's street budget; Marvelous Designer is one month you pay yourself, and you are told when Tom's outfit is ready to start. The walk's next go is under way this weekend, to Saturday 18:00.
 
 ### Road to worth playing (PLAN.md)
 
@@ -97,18 +103,16 @@ Nothing waits on you. Your answers of 24 October are recorded (RULINGS.md): the 
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
 
-## Builder, Saturday 24 October (11:49)
+## Builder, Sunday 25 October (13:35)
 
-**Failed:**
-- **The walk by Epic's route:** ordinary steps within 1.5 cm, but at about five moments a foot slides 10 to 15 cm (pictured, judged by eye), from the sample's own clips; set aside after two tries.
-- **A frame with the voice beside the game:** one per walk still runs 42 to 55 ms; set aside.
-- **Set aside earlier:** the chandler's side lining glares at night.
+**Failed:** nothing ran that could fail; one item is held.
 
 **Done:**
-- **The walk's route is built:** the sample's own character moves, Tom wears his MetaHuman; the packaged game builds and runs with it (off by default).
-- **The launderette** passed all ten views with its wear: your 23 October order is done.
-- **Your answers** on the voice, the daytime budget and Marvelous are in the rulings.
+- **Disk:** Mafia is in C:/Games (46 GB); both floors hold (C: 209 GB free, F: 31), nothing deleted.
+- **Your study plan** is in the repository word for word, and your key amendment is in the rulings and the legal file.
 
-**Stopped** at 12:00 until Monday 14:00: the walk's go is done as far as your two-tries rule allows, its cause traced.
+**Found:** your pages' answers had not been read back since 22 October; the nightly read-back runs only when the app runs it, and has run 7 times in 19 days. Read back by hand today: 157 answers, none new.
 
-**Act on:** nothing waits on you. If a browser "Save" dialog is open, cancel it (a research page offered a download; nothing was saved).
+**Held:** the study's set-up. Both installed copies carry piracy-site and repack files, not a store's; your ruling and plan assume owned copies, so nothing of either was opened (Needs you 1).
+
+**Act on:** Needs you 1, the two games from a store. Waiting for Monday's order after 13:00.
