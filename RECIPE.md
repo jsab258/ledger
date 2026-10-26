@@ -19,6 +19,49 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 26 Oct 2026, a lit room's own exposure inside a street with one pinned exposure
+- Made: a post-process volume over everything, above the street's own, weighed in only while the player's camera is inside the room's box (eased at its edges), holding the room's own exposure at night; a test that photographs the room through the player's own camera.
+- Method (setting-free):
+  - Find why in the code before tuning: the street's exposure was pinned for the dark street at night, so any lit room blew out; by day the camera metered the bright street.
+  - Photograph through the camera the player has: the page camera carried its own exposure, so one of the two faults (the room near-black by day) was the photograph's, not the game's.
+  - A volume shaped by a box made at run time was never entered by the camera; an unbound volume with its weight driven by the camera's place in the room's box works.
+  - Ladder the value and measure each picture (mean brightness, clipped pixels), then set it in the room's own spec.
+- Tools: the engine's post-process volume; a ticker driving its weight; a placed-player camera test; an image measure.
+- Target and check: under 1% clipped at night, the room's mean brightness near the day's; fresh reviewers per view.
+- Cost (hours): about 0.8.
+- Failed and why: the first, shaped volume did nothing (see above).
+- Evidence: production/research/cab-office-interior-1990/LIGHT-2026-10-26.md
+
+### 26 Oct 2026, stops chosen by stance and distance from a vendor's clips: the fix worked where the clip was clean
+- Made: a table of moments read once from the vendor's forward stop clips (which foot its contact curves mark planted, how long it has been down, the stance's length, the root's walk left); on letting go of the walk, the moment whose foot and stance quarter match the player's live pose and whose walk left lies in a distance window plays whole as a montage, its root motion carrying the character; a camera for the test kept behind the player as play keeps it.
+- Method (setting-free):
+  - Play one stop clip whole from a matched moment instead of letting a search switch clips mid-stop: that removes the re-step the search caused.
+  - Before adopting a clip set, measure each clip's feet in its own data: here every forward stop dragged its trailing foot 11 to 18 cm inside every start the distance window allows, so no choice could remove it.
+  - Judge the result at the camera the player will use, the camera steered as a player would; a test that turns the body but not the camera looks side-on and loses the feet.
+- Tools: the clips' curves and root motion read at run time; a fixed-step route; game-camera pictures every 1/30 s; a fresh frame reviewer.
+- Target and check: no weight-bearing foot moving more than 3 cm, by eye, at the moments that failed.
+- Cost (hours): about 0.7.
+- Failed and why: the first stop now shows the vendor's own drag (10 to 13 cm, the same without the chosen stop); the run's start cannot be judged at the game's camera. Third try: the moments go to the owner's eye.
+- Evidence: production/research/sit-and-turn/WALK-2026-10-25.md (Third try)
+
+### 26 Oct 2026, the sit's third try: the vendor's clip from its own start, filmed beside the vendor's own character
+- Made: the approach clip played from its beginning with its warp window bending the approach; the vendor's own character filmed alone through the same steps as the reference (the player's body hidden part by part).
+- Method (setting-free): start an authored transition where its author starts it; then film the vendor's character beside yours, frame for frame, so each fault is assigned to the clip or to the copy before anything is changed.
+- Tools: the game on a fixed step, a switch showing the vendor's character, a fresh frame reviewer with both films and the last failed one.
+- Target and check: sits on the seat, stands, no held foot, slide or pass through furniture, by eye.
+- Cost (hours): about 0.4.
+- Failed and why: the held foot and the slide were gone; the vendor's approach swings the leg through the window sill beside that seat, the vendor's character too. Set aside after the third try.
+- Evidence: production/research/sit-and-turn/WALK-2026-10-25.md (Sitting, Third try)
+
+### 26 Oct 2026, a listening test of two voices for the same people, gated before the owner hears it
+- Made: each person's three sheet lines in the current voice and in a faster one, cloned from the same reference clip, loudness evened, and gated (accent over the whole line and in windows, the words heard back, likeness to the approved voice); one page with one tap per question.
+- Method (setting-free): same lines, same clip, same loudness, so only the voice differs; the gate rejects a voice that drifts out of accent before the owner hears it; the page asks the owner's ear what the numbers cannot (whether it is still the same person), and asks the follow-on question (prepared lines) in the same visit so no one is left with two voices.
+- Tools: both voice servers driven by script, an accent classifier, a speech-to-text check, a speaker-likeness score, the page tool with a stored pick per question.
+- Target and check: the owner's pass by ear; gate verdicts listed beside it.
+- Cost (hours): about 0.6.
+- Failed and why: one person's faster voice drifted American on every line, as in September; kept off the page. Sound files are refused by the repository's size guard: they live on the drives and are published from there.
+- Evidence: production/approvals/2026-10-26/page.json
+
 ### 25 Oct 2026, a game frame held by another program's work on the same graphics card: traced, researched, two tries, set aside
 - Made: a trace of the game's slowest frames with the speech model speaking beside it on the card; a research note on how Windows shares one card between two programs; a switch for the model's own priority on the card.
 - Method (setting-free):

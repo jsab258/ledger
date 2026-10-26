@@ -8125,10 +8125,31 @@ namespace
 							const FVector LAt(Cx3 - (float)(Side3 * Lx * 100.0), (float)((Front3 + Ly) * 100.0 * Side3), (float)(12.0 + Lz * 100.0));
 							FActorSpawnParameters LP;
 							LP.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-							if (APointLight* PL = World3->SpawnActor<APointLight>(APointLight::StaticClass(), LAt, FRotator::ZeroRotator, LP))
+							// A LAMP AIMED DOWN FROM INSIDE ITS SHADE (26 October, item 5, Mickey's anglepoise: a bare point light
+							// lit upward too and threw the radio shelf's and the filing cabinet's shadows up across the map):
+							// a lamp with "cone_deg" is a spot pointing straight down with that outer cone, its inner half that.
+							const double ConeDeg = LedgerStreet::NumOr(Lp, "cone_deg", 0.0);
+							AActor* LampActor = nullptr;
+							UPointLightComponent* LC = nullptr;
+							if (ConeDeg > 0.0)
 							{
+								if (ASpotLight* SL = World3->SpawnActor<ASpotLight>(ASpotLight::StaticClass(), LAt, FRotator(-90.0f, 0.0f, 0.0f), LP))
+								{
+									USpotLightComponent* SC = Cast<USpotLightComponent>(SL->GetLightComponent());
+									if (SC != nullptr) { SC->SetOuterConeAngle((float)ConeDeg); SC->SetInnerConeAngle((float)ConeDeg * 0.5f); }
+									LampActor = SL;
+									LC = SC;
+								}
+							}
+							else if (APointLight* PLt = World3->SpawnActor<APointLight>(APointLight::StaticClass(), LAt, FRotator::ZeroRotator, LP))
+							{
+								LampActor = PLt;
+								LC = PLt->PointLightComponent;
+							}
+							if (LampActor != nullptr && LC != nullptr)
+							{
+								AActor* PL = LampActor;
 								MakeMovable(PL);
-								UPointLightComponent* LC = PL->PointLightComponent;
 								LC->SetMobility(EComponentMobility::Movable);
 								LC->SetIntensityUnits(ELightUnits::Lumens);
 								LC->SetIntensity((float)LedgerStreet::NumOr(Lp, "lumens", 120.0));
@@ -10148,6 +10169,8 @@ namespace LedgerVignetteShot
 		}
 		return Wrote;
 	}
+
+	bool SunOnNow() { return GRoomLightsSunOn; }
 
 	int32 SetShopRoomLit(const char* Shop, bool bLit)
 	{

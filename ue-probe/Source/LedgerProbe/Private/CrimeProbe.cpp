@@ -174,6 +174,10 @@ extern "C" __declspec(dllimport) int __stdcall MoveFileExW(const wchar_t* Existi
 #include "UObject/UObjectIterator.h"
 #include "PipelineStateCache.h"
 #include "ShaderPipelineCache.h"
+#include "Engine/PostProcessVolume.h"
+#include "Components/BrushComponent.h"
+#include "PhysicsEngine/BodySetup.h"
+#include "Containers/Ticker.h"
 
 #include <map>
 #include <set>
@@ -4389,6 +4393,65 @@ namespace
 			float Arm = 0.0f;
 			if (FParse::Value(FCommandLine::Get(), TEXT("InsideArm="), Arm) && Arm > 0.5f) { GOffice.ArmM = Arm; }
 			GOffice.bOn = true;
+			// THE OFFICE'S OWN EXPOSURE (26 October, item 5; production/research/cab-office-interior-1990/
+			// WEAR-2026-10-25.md, the room lit): the street's exposure is pinned for the street (by night the look
+			// file's night pin, by day the camera metering the bright street), so inside the lit room read near-black
+			// by day and blew out at night. As interiors are done in Unreal, a volume shaped to the rooms, above the
+			// street's own, holds an exposure of its own while the camera is inside, one by day and one by night
+			// (the spec's "exposure_pin_day" and "exposure_pin_night"; -OfficePinDay= and -OfficePinNight= to try
+			// values), blended over half a metre at the door.
+			double PinDay = 0.0, PinNight = 0.0, Back = GOffice.Z1;
+			(*Inside)->TryGetNumberField(TEXT("exposure_pin_day"), PinDay);
+			(*Inside)->TryGetNumberField(TEXT("exposure_pin_night"), PinNight);
+			(*Inside)->TryGetNumberField(TEXT("exposure_z1"), Back);
+			FParse::Value(FCommandLine::Get(), TEXT("OfficePinDay="), PinDay);
+			FParse::Value(FCommandLine::Get(), TEXT("OfficePinNight="), PinNight);
+			if (PinDay > 0.0 || PinNight > 0.0)
+			{
+				const FVector Mid((GOffice.X0 + GOffice.X1) * 50.0, (GOffice.Z0 + Back) * 50.0, 150.0);
+				const FTransform Where(Mid);
+				// UNBOUND, ITS WEIGHT FOLLOWING THE CAMERA (the first try shaped the volume to the rooms with a box made at
+				// run time, and the engine never counted the camera inside it: the same picture at every value): the
+				// volume covers everything above the street's own and is weighed in only while the player's camera is in
+				// the rooms' box, eased over half a metre at its edges.
+				APostProcessVolume* V = World->SpawnActor<APostProcessVolume>(APostProcessVolume::StaticClass(), Where);
+				if (V != nullptr)
+				{
+					V->bUnbound = true;
+					V->Priority = 10.0f;
+					V->BlendWeight = 0.0f;
+					TWeakObjectPtr<APostProcessVolume> Weak(V);
+					TWeakObjectPtr<UWorld> WeakWorld(World);
+					const FBox2D Rooms(FVector2D(GOffice.X0 * 100.0, GOffice.Z0 * 100.0), FVector2D(GOffice.X1 * 100.0, Back * 100.0));
+					auto Drive = [Weak, WeakWorld, Rooms, PinDay, PinNight](float) -> bool
+					{
+						APostProcessVolume* P = Weak.Get();
+						UWorld* W = WeakWorld.Get();
+						if (P == nullptr || W == nullptr) { return false; }
+						float Weight = 0.0f;
+						if (APlayerCameraManager* Cam = UGameplayStatics::GetPlayerCameraManager(W, 0))
+						{
+							const FVector E = Cam->GetCameraLocation();
+							// how far inside the box the eye is, against half a metre of easing at its edges
+							const double In = FMath::Min(FMath::Min(E.X - Rooms.Min.X, Rooms.Max.X - E.X), FMath::Min(E.Y - Rooms.Min.Y, Rooms.Max.Y - E.Y));
+							Weight = (float)FMath::Clamp(In / 50.0, 0.0, 1.0);
+						}
+						P->BlendWeight = Weight;
+						const double Pin = LedgerVignetteShot::SunOnNow() ? PinDay : PinNight;
+						FPostProcessSettings& S = P->Settings;
+						S.bOverride_AutoExposureMinBrightness = Pin > 0.0;
+						S.bOverride_AutoExposureMaxBrightness = Pin > 0.0;
+						S.AutoExposureMinBrightness = (float)Pin;
+						S.AutoExposureMaxBrightness = (float)Pin;
+						S.bOverride_AutoExposureBias = Pin > 0.0;
+						S.AutoExposureBias = 0.0f;
+						return true;
+					};
+					Drive(0.0f);
+					FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateLambda(Drive), 0.0f);
+					UE_LOG(LogTemp, Display, TEXT("LedgerOffice: its own exposure, pinned %.3f by day and %.3f at night, inside x %.2f-%.2f z %.2f-%.2f"), PinDay, PinNight, GOffice.X0, GOffice.X1, GOffice.Z0, Back);
+				}
+			}
 		}
 		RouteCheck(TEXT("office-built"), Hidden > 0 && Boxes > 0, FString::Printf(TEXT("hid=%d boxes=%d marks=%d lights=%d arm_m=%.2f realRoom=%d"), Hidden, Boxes, Marks, Lights, GOffice.ArmM, bRealRoom ? 1 : 0));
 	}
@@ -8282,6 +8345,42 @@ namespace
 	};
 	FSitProof GSit;
 
+	// -OfficeLook (26 October, item 5): the office as the player sees it, through his own camera, which carries no
+	// exposure of its own (the page photographs' camera does, so it never shows the office's own exposure): Tom
+	// placed inside the lit office facing in (-OfficeLookX=, -OfficeLookZ=, -OfficeLookYaw= in street metres and
+	// degrees), the clock to 20:00 with -OfficeLookNight; two pictures through his camera (Saved/OfficeLook), then
+	// the game closes.
+	void OfficeLookTick(UWorld* World, double Now)
+	{
+		static const bool bOn = FParse::Param(FCommandLine::Get(), TEXT("OfficeLook"));
+		static int32 Step = 0;
+		static double At = 0.0;
+		if (!bOn || World == nullptr || GPawn == nullptr || Step >= 9 || Now < 6.0) { return; }
+		static const bool bNight = FParse::Param(FCommandLine::Get(), TEXT("OfficeLookNight"));
+		auto Shot = [&](int32 N)
+		{
+			FScreenshotRequest::RequestScreenshot(FPaths::ConvertRelativePathToFull(FPaths::ProjectSavedDir() / TEXT("OfficeLook")
+				/ FString::Printf(TEXT("look-%s-%d.png"), bNight ? TEXT("night") : TEXT("day"), N)), false, false);
+		};
+		if (Step == 0)
+		{
+			if (bNight) { GClock.JumpTo(GameTime(GNow.Day, 20, 0)); GNow = GClock.Now(); ClockLight(); }
+			if (!GOffice.Shop.empty()) { LedgerVignetteShot::SetShopRoomLit(GOffice.Shop.c_str(), true); }
+			double X = 6.2, Z = 6.3, Yaw = 30.0;
+			FParse::Value(FCommandLine::Get(), TEXT("OfficeLookX="), X);
+			FParse::Value(FCommandLine::Get(), TEXT("OfficeLookZ="), Z);
+			FParse::Value(FCommandLine::Get(), TEXT("OfficeLookYaw="), Yaw);
+			GPawn->SetActorLocationAndRotation(FVector(X * 100.0, Z * 100.0, 12.0 + 96.0), FRotator(0.0, Yaw, 0.0), false, nullptr, ETeleportType::TeleportPhysics);
+			if (APlayerController* PC = Cast<APlayerController>(GPawn->GetController())) { PC->SetControlRotation(FRotator(-12.0, Yaw, 0.0)); }
+			UE_LOG(LogTemp, Display, TEXT("ledgerOfficeLook: Tom in the office at (%.2f, %.2f) facing %.0f, %s"), X, Z, Yaw, bNight ? TEXT("20:00") : TEXT("by day"));
+			Step = 1; At = Now;
+			return;
+		}
+		if (Step == 1 && Now - At > 4.0) { Shot(1); Step = 2; At = Now; }
+		else if (Step == 2 && Now - At > 1.5) { Shot(2); Step = 3; At = Now; }
+		else if (Step == 3 && Now - At > 1.0) { Step = 9; FPlatformMisc::RequestExit(false); }
+	}
+
 	void SitProofTick(UWorld* World, double Now)
 	{
 		static const bool bOn = FParse::Param(FCommandLine::Get(), TEXT("SitProof"));
@@ -8507,6 +8606,7 @@ namespace
 		MoveProofTick(World, Now);
 		WalkProofTick(World, Now);
 		SitProofTick(World, Now);
+		OfficeLookTick(World, Now);
 		TurnTick(World, Now);
 		TalkShotTick(World);
 		SceneShotsTick(World);

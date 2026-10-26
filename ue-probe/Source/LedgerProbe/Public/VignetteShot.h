@@ -158,6 +158,10 @@ namespace LedgerVignetteShot
 	// Returns how many lights and materials it switched.
 	int32 SetShopRoomLit(const char* Shop, bool bLit);
 
+	// WHETHER THE STREET'S CONDITION NOW IS A DAY ONE (the sun on), as the shop rooms' lights were last driven:
+	// for Mickey's office's own exposure (26 October), which differs by day and by night.
+	bool SunOnNow();
+
 	// THE WINDOWS THE GLASS CATCH HAS STILL TO TAKE IN ITS ROUND, 8 October: 0 when every shop
 	// window reflects the street as it now is (the page photographs wait for it).
 	int32 GlassCatchesLeft();

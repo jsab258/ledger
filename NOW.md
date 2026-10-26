@@ -7,10 +7,10 @@ Phase 0 done (production/audits/phase0-exit/BUNDLE.md).
 Failed its exit check on 22 Oct (production/audits/phase1-exit/CLOSE-2026-10-22.md); re-run once the walk, clothes and speech pass. Phase 2 waits.
 
 - [x] 1. Health check; the order ledger.
-- [ ] 2. Third tries (his yes, 26 Oct): stops chosen Kingdom Come II's way; the sit from its clip's start (sit-and-turn/).
-- [ ] 3. Marvelous: he signed up 26 Oct; licence first, then Tom's outfit.
-- [ ] 4. Speech: listening test, cast voice against Pocket, on his page; frame stalls set aside (frame-headroom/).
-- [ ] 5. Mickey's office: wear target set, faults listed (cab-office-interior-1990/WEAR-2026-10-25.md); fix light first, then wear, packaged walk.
+- [ ] 2. Third tries: the walk's moments on his page; the sit set aside on the sill (sit-and-turn/WALK-2026-10-25.md).
+- [ ] 3. Marvelous licence read; Tom's outfit specified, body exported (art/clothing/tom-outfit/SPEC.md).
+- [ ] 4. Speech: the listening test on his page (approvals/2026-10-26); frame stalls set aside.
+- [ ] 5. Mickey's office: its light fixed (cab-office-interior-1990/LIGHT-2026-10-26.md); wear and props next, then the packaged walk.
 - [ ] 6. Phase 1's exit re-run; phase 2?
 - Blocked: phase 3's simulation port.
 
@@ -18,7 +18,7 @@ Failed its exit check on 22 Oct (production/audits/phase1-exit/CLOSE-2026-10-22.
 
 Done 6 of 16: 7, 6, 12, 4, 5, 1 (this week's).
 
-STATE (26 Oct 08:35): his answers recorded; the sit's third try.
+STATE (26 Oct 10:15): his page out; the office's wear next.
 
 ## Handovers
 

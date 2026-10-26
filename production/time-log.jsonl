@@ -121,3 +121,11 @@
 {"event": "stop", "at": "2026-10-25T23:11:00", "note": "from the clock"}
 {"event": "start", "at": "2026-10-25T23:11:00", "task": "25 Oct: item 5 office lit, four fresh picture reviews, faults listed; the night's records", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-25T23:38:00", "note": "from the clock"}
+{"event": "start", "at": "2026-10-26T08:24:00", "task": "26 Oct: his answers recorded; walk and sit third tries; listening test and his page", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-26T09:05:00", "note": "from the clock; helpers in parallel"}
+{"event": "start", "at": "2026-10-26T08:40:00", "task": "26 Oct: Marvelous licence read; Tom's outfit specified, body exported and measured", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-26T09:15:00", "note": "from the clock; beside the walk"}
+{"event": "start", "at": "2026-10-26T09:06:00", "task": "26 Oct: item 5 the office's light: exposure volume, -OfficeLook, the lamp; fresh reviews", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-26T10:15:00", "note": "from the clock"}
+{"event": "start", "at": "2026-10-26T08:45:00", "task": "26 Oct: fresh reviews (sit, walk frames, office views, lamp)", "phase": "1", "kind": "review"}
+{"event": "stop", "at": "2026-10-26T10:15:00", "note": "reviewers in parallel; session time only"}

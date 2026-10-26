@@ -42,10 +42,11 @@
     {
      "x": -1.45,
      "y": 3.35,
-     "z": 1.05,
-     "lumens": 150,
+     "z": 1.12,
+     "lumens": 60,
      "radius_m": 1.6,
-     "what": "the anglepoise over the radio desk: its warm pool on the dockets, seen from the street at night (6 October, phase 1, item 1.1)"
+     "cone_deg": 30,
+     "what": "the anglepoise over the radio desk: its warm pool on the dockets, seen from the street at night (6 October, phase 1, item 1.1); 26 October: raised 7 cm into its shade (at 1.05 it sat at the radio shelf's height and threw the shelf's, the microphone's and its own shadows up across the map, a fresh reviewer's fault), then aimed straight down (cone_deg) so nothing throws a shadow upward, and softened from 150 lumens and a 50 degree cone to 60 and 30 when the aimed light burned the radio's pale front white (production/research/cab-office-interior-1990/LIGHT-2026-10-26.md)"
     }
    ],
    "room_lumens_day": 180,

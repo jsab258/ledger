@@ -51,7 +51,7 @@ Beside what they approve (*.approval.json; tools/approvals.py): the story outlin
 ## Art (production/art)
 
 - atlas-01, atlas-02: above.
-- clothing: garment tests, the clothes rubric (RUBRIC.md), jacket and suit films, footwear and Sheila's pieces.
+- clothing: garment tests, the rubric (RUBRIC.md), jacket and suit films, footwear, Sheila's pieces, Tom's outfit.
 - clutter-2026-09-29: ten street clutter pieces.
 - compare: street frames against references.
 - concept-copper-row-2026-09-10, concept-fairview-2026-09-10: above.
