@@ -31,6 +31,21 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 - Failed and why: the first cut lost every carriage return (awk's text mode on Windows); caught by the byte comparison.
 - Evidence: tools/port-golden-check.sh (THE TABLE IS KEPT IN PARTS; self-test case 7)
 
+### 26 Oct 2026, a small local fact checker trained on a large model's sentences and labels, set aside after two tries
+- Made: a 17M-parameter token classifier fine-tuned on 5,006 sentences a cloud model wrote and labelled from the game's own facts, to clear a spoken sentence before the slow check answers; measured on held-out human-labelled details, beside the running game, and on the bench's real first sentences. Not in the game.
+- Method (setting-free):
+  - Generate the training sentences only from the tuning half's contexts, keep the held half for the one test, and set the clearing threshold on the tuning half as the most lenient that clears no invented tuning detail.
+  - Check what the halves share before trusting the test: here the same speakers' facts lists, so the test covers new questions, not new characters.
+  - Judge a pre-filter by the whole chain's leaks, not its own: a filter that clears a case the slow check would have caught adds to the slow check's own misses (here 1 of 42 became 2).
+  - When a classifier is too slow, look at its input length before its precision: 8-bit cut 10% and moved scores by up to 0.6; giving it only the few facts sharing most words with the sentence cut 0.25 s to 0.03 s. Choose any such setting on the tuning half, then run the held half once per try.
+  - Measure "beside the game" as the build machine measures frame time, runs alternated with and without the helper; time-stamp the helper's answers and keep only those given while the game ran (a run longer than the game timed mostly an idle machine).
+  - A detail-level test understates what a sentence-level user gains (a third of real first sentences cleared, against 13% of single details), and does not show whether its threshold carries over.
+- Tools: a batch API for the training data under a dollar cap; the classifier's own trainer on the processor with the game shut; the measuring script with a local-model and a fewer-facts option; a beside-the-game runner with time-stamped answers; a first-sentence counter.
+- Target and check: the game as a whole lets through no more invented details than the slow check alone (1 of 42); 0.15 s or less beside the game with no frame stall; a licence for a sold game.
+- Cost (hours): about 5, most of it the processor training (2 h 45 min); $0.91.
+- Failed and why: try 1, every fact: safe but 0.25 s alone; try 2, six facts: 0.05 s beside the game (3 of 1,380 answers over 0.15 s), but the game's leaks rise from 1 to 2 of 42. A fresh review caught both the chain's leak and the idle-machine timing.
+- Evidence: production/research/invented-claims/LOCAL-CHECKERS-2026-10-26.md (Trained, on the 127; Fresh review); checkers-trained-2026-10-26.json
+
 ### 26 Oct 2026, a refused spoken sentence rewritten alone, benched offline and set aside
 - Made: a bench that times a dialogue engine's turns as the game runs them; two existing switches measured; a repair of the refused sentence benched offline in two tries and set aside.
 - Method (setting-free):

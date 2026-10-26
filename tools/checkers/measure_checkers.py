@@ -2,7 +2,7 @@
 """The open fact checkers on the labelled details, the way Haiku was measured: how many invented details each lets
 through, how many true ones it clears, and how long it takes.
 
-    C:/LedgerTools/chatterbox-nano/env-dml/Scripts/python.exe tools/checkers/measure_checkers.py OUT.json [--only NAME]
+    C:/LedgerTools/chatterbox-nano/env-dml/Scripts/python.exe tools/checkers/measure_checkers.py OUT.json [--only NAME] [--local NAME=DIR ...] [--top K]
 
 WHY, 26 October 2026. His answer, speech 1: "a small checker on this PC clears only the sentences it is sure are
 supported; everything else waits for Haiku ... compare open checkers ... on the same 127 labelled details Haiku was
@@ -21,6 +21,15 @@ LettuceDetect base (MIT), token classifiers that mark unsupported answer tokens 
 token's probability of being unsupported); Vectara's HHEM-2.1-Open (Apache 2.0), a pair classifier giving a
 consistency score (a detail's score: 1 minus it). The package that runs the KR Labs models is installed apart, in
 F:/LedgerTools/checkers/pkgs, so the voice environment it borrows is not changed.
+
+--local NAME=DIR adds a checker trained here (tools/checkers/train_checker.py; its training sentences come from the
+tuning contexts only, so the held 127 stay unseen), measured the same way. Its threshold is still set on the tune half,
+whose contexts it was trained on: if that makes it too lenient, the held half shows it.
+
+--top K, the second try of 26 October (the trained 17M cleared no invented detail but took 0.25 s against his 0.15 s, its
+input about 1,650 tokens): the checker reads only the K facts sharing the most words with the question and the detail
+(LOCAL-CHECKERS-2026-10-26.md, "Three levers", 1). A supporting fact left out can only make a true detail wait for
+Haiku, never let an invented one through unchecked.
 
 THE TIMES here are the checker alone on this PC's processor; his bar (0.15 s beside the running game, no frame
 stalls) is measured separately, with the game open.
@@ -49,12 +58,28 @@ def rows():
     return [r for r in out if r["half"] == "tune"], [r for r in out if r["half"] == "held"]
 
 
-def lettuce_scorer(path):
+STOP = set("a an and are as at be but by for from had has have he her his i in is it its me my of on or our she so that the "
+           "their them they this to was we were what when where which who will with you your".split())
+
+
+def words(t):
+    return {w for w in "".join(c.lower() if c.isalnum() else " " for c in t).split() if w not in STOP and len(w) > 1}
+
+
+def top_facts(known, probe, detail, k):
+    """The k facts sharing the most words with the question and the detail, in their own order."""
+    want = words(probe + " " + detail)
+    ranked = sorted(range(len(known)), key=lambda i: (-len(want & words(known[i].split(": ", 1)[-1])), i))[:k]
+    return [known[i] for i in sorted(ranked)]
+
+
+def lettuce_scorer(path, top=0):
     from lettucedetect.models.inference import HallucinationDetector
     det = HallucinationDetector(method="transformer", model_path=path)
 
     def score(r):
-        toks = det.predict(context=r["known"], question=r["probe"], answer=r["detail"], output_format="tokens")
+        known = top_facts(r["known"], r["probe"], r["detail"], top) if top else r["known"]
+        toks = det.predict(context=known, question=r["probe"], answer=r["detail"], output_format="tokens")
         return max((t["prob"] for t in toks), default=1.0)
     return score
 
@@ -99,11 +124,13 @@ def run(name, scorer, tune, held):
 def main(argv):
     tune, held = rows()
     only = argv[argv.index("--only") + 1] if "--only" in argv else None
+    local = dict(argv[i + 1].split("=", 1) for i, a in enumerate(argv) if a == "--local")
+    top = int(argv[argv.index("--top") + 1]) if "--top" in argv else 0
     results = []
-    for name, path in LETTUCE.items():
+    for name, path in {**LETTUCE, **local}.items():
         if only and only != name:
             continue
-        results.append(run(name, lettuce_scorer(path), tune, held))
+        results.append(run(name + ("-top%d" % top if top else ""), lettuce_scorer(path, top), tune, held))
     if not only or only == "hhem":
         results.append(run("hhem-2.1-open", hhem_scorer(), tune, held))
     json.dump({"tune": len(tune), "held": len(held), "results": results}, open(argv[0], "w", encoding="utf-8"), indent=1)

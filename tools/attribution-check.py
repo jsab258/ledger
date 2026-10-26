@@ -314,6 +314,8 @@ WATCHED = {
     # 26 October, his listening test: the cast's sheet lines in the game's voice engine and in Pocket TTS,
     # both cloned from the same cast clips (VCTK's obligations, as above; Pocket's weights CC BY 4.0, kept off the game)
     "production/approvals/2026-10-26-voices": "Casting voice candidates",
+    # 26 October night: Darren's delivery heard blind on his page, A and B, Pocket TTS cloned from his VCTK p286 clip
+    "production/approvals/2026-10-27-voices": "Casting voice candidates",
 }
 
 # ASSETS THIS PROJECT MADE ITSELF, which need no attribution and must not be

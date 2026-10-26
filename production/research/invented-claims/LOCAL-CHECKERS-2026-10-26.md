@@ -29,7 +29,7 @@ Every source was read on 26 October 2026; the numbered list is at the end. "Esti
 
 ## The PC and what the check competes with
 
-- The project's records name the PC's parts as a Ryzen 5 5600X (6 cores, 12 threads) and an RTX 3080 with 10 GB. The Pocket voice already runs on the CPU (production/research/voice-latency/POCKET-CPU-2026-10-21.md).
+- The project's records named the PC's graphics card as an RTX 3080 with 10 GB; the game's own logs name an AMD Radeon RX 6700 (corrected 26 October night, the fresh review). The processor: a Ryzen 5 5600X (6 cores, 12 threads). The Pocket voice already runs on the CPU (production/research/voice-latency/POCKET-CPU-2026-10-21.md).
 - The checker therefore shares the CPU with Unreal's threads and the voice. The GPU belongs to the game.
 - ONNX Runtime's CPU speed roughly halves with each doubling of threads, up to 4 to 8 threads, and then stops improving [35]. A checker held to 2 to 4 threads will run slower than the 8-thread figures below.
 
@@ -171,7 +171,7 @@ Every source was read on 26 October 2026; the numbered list is at the end. "Esti
      - Qwen3.5-0.8B is also Apache-2.0 [41][42], but it carries a vision encoder this job does not need [41].
 - **Expected latency.**
   - On this CPU, both are well over 0.15 s. A 7B model reads a 512-token prompt at 23.7 tokens a second on a 5600X [36]. Scaled to 0.44B, that is roughly 380 tokens a second, about 0.8 to 2.1 s for 300 to 800 tokens (estimate). Granite 2B would be several seconds.
-  - On the RTX 3080 they would likely take tens of milliseconds (estimate, UNVERIFIED), at the cost of game VRAM and GPU time.
+  - On the graphics card (an AMD RX 6700, not the RTX 3080 first written here) they would likely take tens of milliseconds (estimate, UNVERIFIED), at the cost of game VRAM and GPU time.
 
 ## 3. Which can answer in 0.15 s or less
 
@@ -400,3 +400,56 @@ His yes the same afternoon: the five models downloaded (1.45 GB, F:/LedgerTools/
 | HHEM-2.1-Open | 3 | 19 | 2.12 |
 
 **None passes untrained.** At a threshold safe enough for his bar they clear almost no true detail (the most useful, LettuceDetect base, clears 9 of 85 at Haiku's 1 of 42), and none comes near 0.15 s on the processor; HHEM lets 3 through even at its tuned threshold. So the order's second step, training on LEDGER's own first sentences, is the only route left among the open checkers; the smallest (TinyLettuce 17M, 0.26 s here untrained and unbatched) is the candidate for speed, and its training waits on Anthropic's answer (his pick: ask first; the request drafted, ANTHROPIC-REQUEST-2026-10-26.md). Not yet measured: the times beside the running game, and on the graphics card.
+
+## Trained, on the 127 (26 October, night)
+
+**Verdict: set aside after two tries.** Try 1 was too slow. Try 2 is fast enough, but placed in front of Haiku it doubles what the game lets through on the 127: from Haiku's 1 of 42 to 2 of 42. His bar is no more than Haiku's, so it fails; with 42 cases, 1 and 2 are also within noise of each other. Nothing changed in the game. His order's next candidate is TypeSafe's Jev, which needs his sign-up and, by section 5, cannot answer in 0.15 s from Switzerland: his page.
+
+His answer that evening: train on Gemini 3.8 Flash's sentences and labels; the 127 stay the test; nothing in the game before he sees the numbers. Training data: tools/checkers/gemini_training_data.py, 5,006 first sentences written and labelled by Gemini 3.8 Flash from the detail bench's tuning contexts only, $0.91 at the Batch price. Training: tools/checkers/train_checker.py, TinyLettuce 17M, three passes on this PC's processor with the game shut (2 h 45 min). The pass kept was the best on a 500-sentence practice split: the second, token-level F1 for unsupported words 0.82 (0.50 before training). Measured by tools/checkers/measure_checkers.py exactly as the untrained five were: threshold set on the tune half, tested once per try on the held 127. Raw: checkers-trained-2026-10-26.json.
+
+**Limits of the test.**
+- The held half has new questions and new sentences, but the same three speakers' facts lists as the tune half (50 to 52 facts each; all 134 held facts appear in tune), and the training sentences were written from those lists. So it tests new questions to known characters, not a new character's facts.
+- The 127 are short detail phrases; the game would hand the checker a whole first sentence. Whether the threshold carries over to sentences is not measured.
+
+| Try | Invented cleared by the checker (Haiku alone: 1 of 42) | True cleared, of 85 | Seconds, median, alone |
+|---|---|---|---|
+| 1. Trained, every fact (about 1,650 tokens) | 0 | 10 | 0.25 |
+| 1b. The same in 8-bit | not tested on the 127: 0.23 s on 40 held details, and scores moved by up to 0.6 | | |
+| 2. Trained, only the 6 facts sharing most words with the question and detail | 1 (d197, Darren: "you've just come up", labelled added) | 11 | 0.03 |
+
+The 6 was chosen on the tune half before the held half was run (tune true details cleared at 3, 6 and 10 facts: 2, 10 and 9 of 61; every fact: 4). A supporting fact left out can only make a true sentence wait for Haiku.
+
+**The game's leak with the checker in front.** Haiku as the game runs it (Haiku 5.5, thinking off, successors-run3) lets one held invented detail through, d062, and refuses d197 in every setting measured. With the checker in front, d197 is spoken without Haiku seeing it and d062 still gets through: **2 of 42**.
+
+**Beside the running game** (tools/checkers/checker_beside_game.py; the packaged game of 26 Oct 14:50, the slice standing still at 3440x1440 drawn at half; the build machine's performance step runs the same, but with a voice speaking, and no voice ran here; the checker on 2 threads scoring without pause, far harsher than one sentence a turn):
+
+| Run | Median frame | Slowest 1% | Worst frame | Frames over 16.7 ms |
+|---|---|---|---|---|
+| alone 1 | 11.87 ms | 13.07 | 14.51 | 0 |
+| with checker 1 | 12.86 | 14.35 | 14.89 | 0 |
+| with checker 2 | 12.91 | 14.32 | 16.30 | 0 |
+| alone 2 | 12.79 | 14.18 | 15.29 | 0 |
+| with checker 3 | 12.88 | 14.47 | 15.26 | 0 |
+| with checker 4 | 12.18 | 13.80 | 15.19 | 0 |
+
+No frame stall in any run; the median moved no more with the checker than between the two runs without it. **The checker's own answers while the game was running** (runs 3 and 4, each answer time-stamped and kept only between the game's start and exit, after the fresh review found runs 1 and 2 had timed mostly answers with no game open): median 0.05 s, slowest 1% 0.08 s, **3 of 1,380 over 0.15 s** (worst 0.29 s). So some answers miss the bar.
+
+**What it would speed up** (tools/checkers/firsts_cleared.py, on the bench's 354 turns of 26 October): of 240 turns on a newcomer's real questions whose first sentence passed Haiku (187 different sentences), it clears 77 turns (61 sentences), about a third; on the two runs at the game's own settings alone, 29 of 89, the same rate (the other runs tried switches). Small talk: 12 of 22. Those turns would be heard sooner by the bench's first-sentence check, a median 1.35 s. The bench keeps no text of a refused first sentence, so what it would let through at the sentence level is not measured.
+
+**Against his four bars:** invented let through, the game as a whole: 2 of 42 against Haiku's 1 (fails); speed beside the game: 0.05 s typical, 3 answers in 1,380 over 0.15 s, measured without the voice (fails narrowly, and unmeasured with the voice); no frame stall (passes); licence MIT (TinyLettuce weights and code; the Ettin base MIT, from section 1), trained on Gemini output under Google's terms as read for his answer.
+
+### Fresh review (26 October, night)
+
+**Verdict: SOUND WITH FIXES.** Every number matches its raw file (frames recomputed from the CSVs; bench count reproduced). The session's record shows 3, 6 and 10 facts compared on the tune half only, the held half run once per try; the 8-bit check read 40 held scores, never labels. A fair test, not a leak. Training read only tune contexts; the stated limit is right: each speaker has one facts list, identical in both halves.
+
+- **With the checker, the game lets 2 of 42 through, not 1.** Haiku's one leak is d062 (F:/LedgerTools/town-scratch/talk-ladder/successors/successors-run3.jsonl); every Haiku setting refused d197. The checker speaks d197 unchecked; Haiku still passes d062. "Level with Haiku" holds for the checker alone; his page needs the combined figure. On 42 cases, 1 and 2 are within noise.
+- **Its times "beside the game" are mostly without it.** The checker scored for 150 s; each game lived about 35 s (game logs, file times). About three quarters of the 7,185 answers, perhaps the 9 over 0.15 s too, came with no game running. Rerun, stopping the checker with the game.
+- **No voice ran,** though Pocket now shares this processor; the bars line should say so. The build machine's step runs a voice, so "as the build machine runs it" is the scene only.
+- **The 127 are short detail phrases; the game sends whole sentences.** "The 127 are that test" overstates; the threshold's carry-over to sentences is unmeasured.
+- **Bench:** the 240 are turns, 187 different sentences (61 cleared, the same third); three runs were switch trials (NarrowRedraft twice, PlanFirst); today's two runs clear 29 of 89.
+- Small: lists hold 50 to 52 facts, not ~45; 0.82 is a word-level F1; the bench's check takes a median 1.35 s; 9 answers over 0.15 s miss the bar, say so plainly.
+- Elsewhere: the game logs name an AMD Radeon RX 6700, not "The PC"'s RTX 3080.
+
+Not checked: Ettin's and Google's terms; whether each reply's first sentence equals the engine's checked one (none found differing).
+
+Fixed after this review (26 October night): every point above is taken into the section, the game-wide leak (2 of 42) made its verdict, the checker re-timed only while the game ran (runs 3 and 4), and the graphics card corrected in "The PC".

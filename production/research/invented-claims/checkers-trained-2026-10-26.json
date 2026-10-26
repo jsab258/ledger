@@ -1,0 +1,128 @@
+{
+ "what": "The fast checker trained on Gemini 3.8 Flash's sentences and labels, measured 26 October 2026 night (LOCAL-CHECKERS-2026-10-26.md, 'Trained, on the 127').",
+ "training": {
+  "base": "KRLabsOrg/tinylettuce-ettin-17m-en",
+  "train": 4506,
+  "dev": 500,
+  "epochs": [
+   {
+    "epoch": 1,
+    "loss": 0.352,
+    "devF1": 0.7968,
+    "minutes": 56.5
+   },
+   {
+    "epoch": 2,
+    "loss": 0.257,
+    "devF1": 0.816,
+    "minutes": 110.8
+   },
+   {
+    "epoch": 3,
+    "loss": 0.1943,
+    "devF1": 0.8105,
+    "minutes": 164.9
+   }
+  ],
+  "devF1Before": 0.4959,
+  "devF1Best": 0.816
+ },
+ "held127_wholeList": {
+  "checker": "trained-17m",
+  "threshold": 0.0156,
+  "heldInventedCleared": 0,
+  "heldInvented": 42,
+  "heldTrueCleared": 10,
+  "heldTrue": 85,
+  "tuneTrueCleared": 4,
+  "secondsMedian": 0.245,
+  "secondsSlowestTenth": 0.254,
+  "inventedClearedIds": [],
+  "minutes": 1.0
+ },
+ "held127_sixFacts": {
+  "checker": "trained-17m-top6",
+  "threshold": 0.0484,
+  "heldInventedCleared": 1,
+  "heldInvented": 42,
+  "heldTrueCleared": 11,
+  "heldTrue": 85,
+  "tuneTrueCleared": 10,
+  "secondsMedian": 0.027,
+  "secondsSlowestTenth": 0.03,
+  "inventedClearedIds": [
+   "d197"
+  ],
+  "minutes": 0.1
+ },
+ "besideGame": {
+  "slicePerf": {
+   "alone-1": "slicePerf=alone-1 status=MEETS frames=1500 medianMs=11.87 p95Ms=12.71 p99Ms=13.07 worstMs=14.51 fps=84.3 gpuMedianMs=10.75 over16.7=0 over33.3=0 gpuMemMB=5303 target=60fps-at-3440x1440/never-below-30",
+   "with-checker-1": "slicePerf=with-checker-1 status=MEETS frames=1500 medianMs=12.86 p95Ms=13.84 p99Ms=14.35 worstMs=14.89 fps=77.8 gpuMedianMs=11.51 over16.7=0 over33.3=0 gpuMemMB=5180 target=60fps-at-3440x1440/never-below-30",
+   "with-checker-2": "slicePerf=with-checker-2 status=MEETS frames=1500 medianMs=12.91 p95Ms=13.72 p99Ms=14.32 worstMs=16.30 fps=77.5 gpuMedianMs=11.51 over16.7=0 over33.3=0 gpuMemMB=5183 target=60fps-at-3440x1440/never-below-30",
+   "alone-2": "slicePerf=alone-2 status=MEETS frames=1500 medianMs=12.79 p95Ms=13.78 p99Ms=14.18 worstMs=15.29 fps=78.2 gpuMedianMs=11.52 over16.7=0 over33.3=0 gpuMemMB=5179 target=60fps-at-3440x1440/never-below-30",
+   "ingame-1": "slicePerf=ingame-1 status=MEETS frames=1500 medianMs=12.88 p95Ms=13.79 p99Ms=14.47 worstMs=15.26 fps=77.6 gpuMedianMs=11.50 over16.7=0 over33.3=0 gpuMemMB=5187 target=60fps-at-3440x1440/never-below-30",
+   "ingame-2": "slicePerf=ingame-2 status=MEETS frames=1500 medianMs=12.18 p95Ms=13.09 p99Ms=13.80 worstMs=15.19 fps=82.1 gpuMedianMs=10.78 over16.7=0 over33.3=0 gpuMemMB=5347 target=60fps-at-3440x1440/never-below-30"
+  },
+  "checker": {
+   "with-checker-1": {
+    "model": "F:\\LedgerTools\\checkers\\trained\\tinylettuce-17m-2026-10-26",
+    "threads": 2,
+    "calls": 3596,
+    "secondsMedian": 0.0415,
+    "secondsP99": 0.0639,
+    "secondsMax": 0.1699,
+    "over015": 4
+   },
+   "with-checker-2": {
+    "model": "F:\\LedgerTools\\checkers\\trained\\tinylettuce-17m-2026-10-26",
+    "threads": 2,
+    "calls": 3589,
+    "secondsMedian": 0.0413,
+    "secondsP99": 0.065,
+    "secondsMax": 0.1798,
+    "over015": 5
+   }
+  },
+  "checkerWhileGameRan": {
+   "ingame-1": "gameSeconds=36.3 calls=713 median=0.0504 p99=0.0775 max=0.1751 over015=2",
+   "ingame-2": "gameSeconds=34.3 calls=667 median=0.0508 p99=0.0797 max=0.2862 over015=1",
+   "note": "answers time-stamped (--calls) and kept only between the game start and exit; the earlier checker JSONs cover 150 s, mostly with no game running (fresh review)"
+  }
+ },
+ "benchFirstSentences": {
+  "model": "F:/LedgerTools/checkers/trained/tinylettuce-17m-2026-10-26",
+  "threshold": 0.0484,
+  "top": 6,
+  "runs": [
+   "F:/LedgerTools/town-scratch/slow-replies/control",
+   "F:/LedgerTools/town-scratch/slow-replies/narrow",
+   "F:/LedgerTools/town-scratch/slow-replies/narrow2",
+   "F:/LedgerTools/town-scratch/slow-replies/plan",
+   "F:/LedgerTools/town-scratch/slow-replies/size",
+   "F:/LedgerTools/town-scratch/slow-replies/size2",
+   "F:/LedgerTools/town-scratch/slow-replies/today",
+   "F:/LedgerTools/town-scratch/slow-replies/today2"
+  ],
+  "byMoment": {
+   "small talk": {
+    "turns": 36,
+    "firstPassed": 22,
+    "cleared": 12
+   },
+   "real question": {
+    "turns": 318,
+    "firstPassed": 240,
+    "cleared": 77
+   }
+  }
+ },
+ "gameWideLeak": {
+  "haikuAsTheGameRunsIt": "successors-run3 claude-haiku-5-5 thinking off: held invented passed = d062 only; d197 refused in every Haiku setting",
+  "withCheckerInFront": [
+   "d062",
+   "d197"
+  ],
+  "of": 42
+ }
+}
