@@ -203,3 +203,23 @@ A fresh reviewer opened every source and the raw run of 25 October. Verdicts: th
 - **Sizing:** 60 live turns cannot show a drop from 10 to 3; the slow-wait rate is better computed as each path's measured time times its rate, the rates taken from the bench (larger, no voice, cheaper per turn).
 
 **The plan, revised:** (1) the "before": live turns on today's voices with each turn's steps kept (tools/voice-live/latency.py now records them), sorted by cause; the bench's first-sentence failure rate with today's settings; (2) NarrowRedraft and PlanFirst measured on the same bench; (3) only then new code: a repair of the failed sentence alone (thinking off, the refused details named), whose pass rate is benched offline before it is wired to speech; ending after the repaired sentence is the expected case; (4) the "after" the same way. The bench's cost against the $1 a day limit for measurement calls is to be sized before it runs.
+
+## The "before", measured (26 October, 15:30)
+
+30 live turns on today's voices (Sheila and Ron on Pocket, Darren on the card), the packaged game open in the street, the check on Haiku 5.5, each turn's steps kept (tools/voice-live/latency.py --live --early --pending --prewarm --checker claude-haiku-5-5 --lines 30; F:/LedgerTools/latency/before-slow-2026-10-26.json; about $0.4).
+
+| Who | Turns | First sound heard, median | 5 s or more | First sentence refused |
+|---|---|---|---|---|
+| Sheila (Pocket) | 10 | 1.97 s | 3 | 1 |
+| Ron (Pocket) | 10 | 1.92 s | 3 | 3 |
+| Darren (card) | 10 | 4.39 s | 4 | 1 |
+| All | 30 | 3.43 s | **10** | 5 |
+
+The ten slow turns by cause:
+- **The card voice (3, all Darren):** his first sentence passed its check at 1.7 to 2.4 s and was heard at 5.2 to 9.7 s. Pocket for him (his recast, on his page) is the fix; nothing in the check touches these.
+- **Refused twice (4: Ron 3, Sheila 1):** the first sentence refused, the second draft's first sentence refused too, so the character fell back ("You've had the lot off me, friend.") at 6.4 to 8.3 s. This is the path the repair and NarrowRedraft act on.
+- **A whole-reply check that found something (1, Sheila):** no early first sentence; draft, check, redraft, recheck, fallback at 7.8 s.
+- **The 8-second limit (1, Sheila):** a brush-off ("Later. I'm in the middle of something.") after 8.3 s with the first sentence passed; the turn's own steps do not show where the time went (to be traced).
+- **A redraft that passed (1, Darren):** 9.45 s, on the card voice.
+
+So, of the 7 slow turns the speech check can change, 5 end in the fallback: the second draft failing again matters more than the first draft's time. The "after" is measured the same way.

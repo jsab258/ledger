@@ -51,6 +51,7 @@
    ],
    "room_lumens_day": 180,
    "room_lumens_night": 300,
+   "shadow_at_high_note": "26 October, set aside after two tries (production/research/cab-office-interior-1990/WEAR-2026-10-25.md, the packaged walk): at the game's own picture level, High, the counter's small things lose most of their shadows and the soft shadows under the shelf and the loudspeaker speckle; a contact shadow (\"contact_shadow\", a share of the screen) brought the spike's shadow back but grained the papers, and the tubes' lit size (\"tube_source_cm\" [width, height]) did not fix the phone; both keys are read by VignetteShot.cpp, and neither is set.",
    "sources": "production/research/cab-office-interior-1990 (both notes: paper and voice radio, wood-effect tops, fabric swivel chairs on five-star bases, plastic trays, coiled cords, pot plants; the number signwritten on the glass); canon.md D19; his ruling of 3 October, 'Mickey's window shows its office'",
    "lumens_note": "4 October: the street runs on low light values (its sun at 3), so a room light is small in lumens: at 500 the room washed out (its dark wood counter cream, the night frame's median 190); 180 by day and 300 at night. The first read of black at 400 was the street's solid block behind the window (now hidden, hide_meshes).",
    "hide_meshes": [

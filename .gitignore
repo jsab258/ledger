@@ -196,3 +196,5 @@ production/previews/cloud-week/sound/*.ogg
 # F:\LedgerTools\game-inputs under the same path, where tools/ue/stage_game_data.py reads what the checkout lacks
 ledger/Assets/StreamingAssets/Decals/ours/wear_head/
 ledger/Assets/StreamingAssets/Decals/ours/wear_damp_patch/
+# POCKET-ONLY VOICE REFERENCES, 26 October: audio stays out of git; F:\LedgerTools\game-inputs holds them
+game-design/pocket-voices/

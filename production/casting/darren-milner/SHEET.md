@@ -11,7 +11,7 @@ character was called Sam; the old name survives only as an internal id.
 | **Body** | Thin and restless, about 5 ft 9 in. |
 | **Hair** | A grown-out perm with bleached tips; light stubble. |
 | **Clothes, 1990** | A shiny purple and teal nylon shell-suit jacket over a white T-shirt; stonewashed jeans; plain black leather lace-up boots, scuffed; a black pager on his belt. (Jafar, 1 October: plain 1990 clothes, no trainers; the full-length concept picture below still shows trainers.) |
-| **Voice** | Quick, ingratiating, never still. His approved voice is kept (he is in its age range); it is Scottish, which a local lad would not be. |
+| **Voice** | Quick, ingratiating, never still. Since 26 October his voice is a young northern Englishman's (VCTK p286, Newcastle, 23), spoken through Pocket: Jafar's pick on his page of that afternoon (voice-2026-10-26/REVIEW.md); the Scottish voice before it (p241) drifted American in Pocket. |
 
 ## Concept portraits
 

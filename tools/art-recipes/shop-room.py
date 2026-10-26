@@ -1560,6 +1560,29 @@ def build_and_render(argv):
         # (4 October, after the fresh review's "featureless slabs": Poly Haven's metal office
         # desk, CC0, at 1.5 m, its top read back and the set stood on it)
         desk = model("metal_office_desk", (rx0 + rx1) / 2.0, (ry0 + ry1) / 2.0, 0.0, turn=0.0, size=1.5)
+        # A MID-GREY STEEL DESK, 26 October (item 5, the packaged walk: under the lamp's pool its pale top read
+        # as a flat near-white slab behind the counter): its colour multiplied down to an office steel's grey,
+        # the way the walls take their tint (a multiply the room's glb keeps)
+        for o_ in ([desk] + list(desk.children_recursive)) if desk is not None else []:
+            for slot_ in getattr(o_, "material_slots", []):
+                m_ = slot_.material
+                if m_ is None or not m_.use_nodes or m_.get("ledger_desk_grey"):
+                    continue
+                p_ = m_.node_tree.nodes.get("Principled BSDF")
+                if p_ is None:
+                    continue
+                grey = (0.50, 0.52, 0.50, 1.0)
+                link = p_.inputs["Base Color"].links[0] if p_.inputs["Base Color"].links else None
+                if link is None:
+                    p_.inputs["Base Color"].default_value = tuple(a * b for a, b in zip(p_.inputs["Base Color"].default_value, grey))
+                else:
+                    mul_ = m_.node_tree.nodes.new("ShaderNodeMixRGB")
+                    mul_.blend_type = "MULTIPLY"
+                    mul_.inputs["Fac"].default_value = 1.0
+                    mul_.inputs["Color2"].default_value = grey
+                    m_.node_tree.links.new(link.from_socket, mul_.inputs["Color1"])
+                    m_.node_tree.links.new(mul_.outputs["Color"], p_.inputs["Base Color"])
+                m_["ledger_desk_grey"] = True
         desk_top = 0.74
         if desk is not None:
             bpy.context.view_layer.update()

@@ -897,6 +897,13 @@ jobs:
           if (Test-Path $voiceProg) {
             Copy-Item -Path "tools\voice-live\*.py" -Destination $voiceProg -Force
             Copy-Item -Path "production\specs\voice-engines.json" -Destination (Join-Path $voiceSrc "production\specs") -Force
+            # and the references of characters recast for Pocket alone (Darren, 26 October), kept out of git
+            # on the game inputs
+            $pocketVoices = "F:\LedgerTools\game-inputs\game-design\pocket-voices"
+            if (Test-Path $pocketVoices) {
+              New-Item -ItemType Directory -Force -Path (Join-Path $voiceSrc "game-design\pocket-voices") | Out-Null
+              Copy-Item -Path (Join-Path $pocketVoices "*.wav") -Destination (Join-Path $voiceSrc "game-design\pocket-voices") -Force
+            }
             Write-Host "playedVoiceProgram=REFRESHED"
           }
           if (Test-Path $voiceLink) {

@@ -1,6 +1,6 @@
 {
- "about": "Which voice engine speaks for whom (tools/voice-live/voice-server.py). Everyone is on Nano, the game's own engine, unless a character is given to Sopro or Pocket (on the processor, tools/voice-live/pocket-server.py) here; 26 October, his page: Pocket passed his ear for Sheila (lena) and Ron (rocco), live and prepared lines, Darren (sam) staying on Nano; nobody is moved without Jafar's yes on a blind page (CLAUDE.md: no voice is cast without his yes). reference_extra adds a character's approved in-game line to its reference for Sopro (29 September: with it and a steadier sampler Ron held his accent on 15 of 16 test lines).",
- "engines": {"lena": "pocket", "rocco": "pocket"},
+ "about": "Which voice engine speaks for whom (tools/voice-live/voice-server.py). Everyone is on Nano, the game's own engine, unless a character is given to Sopro or Pocket (on the processor, tools/voice-live/pocket-server.py) here; 26 October, his page: Pocket passed his ear for Sheila (lena) and Ron (rocco), live and prepared lines, Darren (sam) staying on Nano; the same afternoon Darren recast in Pocket from VCTK p286 (his page's pick A), his reference in game-design/pocket-voices/sam.wav; nobody is moved without Jafar's yes on a blind page (CLAUDE.md: no voice is cast without his yes). reference_extra adds a character's approved in-game line to its reference for Sopro (29 September: with it and a steadier sampler Ron held his accent on 15 of 16 test lines).",
+ "engines": {"lena": "pocket", "rocco": "pocket", "sam": "pocket"},
  "reference_extra": {
   "rocco": "production/casting/in-game-2026-09-25/voice/ron-kirby.wav",
   "sam": "production/casting/in-game-2026-09-25/voice/darren-milner.wav"

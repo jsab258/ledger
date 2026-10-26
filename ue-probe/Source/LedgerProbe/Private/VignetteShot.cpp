@@ -8108,6 +8108,31 @@ namespace
 					const int32 Made3 = SpawnShopRoom(World3, Id, B3, Side3, Front3, LedgerStreet::NumOr(*Room, "d", 4.5),
 						LedgerStreet::NumOr(*Room, "h_real", 2.9), LedgerStreet::NumOr(Sh, "room_lumens_day", 400.0) * RoomLumensScale(),
 						LedgerStreet::NumOr(Sh, "room_lumens_night", 900.0) * RoomLumensScale(), Parts3);
+					// CONTACT SHADOWS IN A WALKED ROOM, 26 October (item 5, Mickey's office in the packaged game: at the
+					// game's own picture level, High, the small things on the counter, the docket spike, the phone, the
+					// bookings card, lost their shadows and seemed to float; Epic's contact shadows, a short screen-space
+					// trace per light, put them back): the spec's "contact_shadow", the trace's length as a share of the
+					// screen, on the room's tubes and lamps; none where the spec gives none.
+					const float Contact3 = (float)LedgerStreet::NumOr(Sh, "contact_shadow", 0.0);
+					// THE TUBES' OWN SIZE (the same day, the second try): at High the soft shadows of local lights take
+					// half Epic's rays, and the tubes' 150 by 40 cm source spread every small shadow into speckle (the
+					// docket spike gone, grain under the loudspeaker); a fitting's real lit size from the spec's
+					// "tube_source_cm" [width, height] narrows the penumbra the rays must fill.
+					const Value* TubeCm = Sh.Find("tube_source_cm");
+					const bool bTubeSize = TubeCm != nullptr && TubeCm->Type == T_ARR && TubeCm->Arr.size() == 2;
+					for (AActor* A3 : Parts3)
+					{
+						ALight* La = Cast<ALight>(A3);
+						ULightComponent* Lc = La != nullptr ? La->GetLightComponent() : nullptr;
+						if (Lc == nullptr) { continue; }
+						if (Contact3 > 0.0f) { Lc->ContactShadowLength = Contact3; }
+						if (URectLightComponent* Rc = Cast<URectLightComponent>(Lc); Rc != nullptr && bTubeSize)
+						{
+							Rc->SetSourceWidth((float)TubeCm->Arr[0].Num);
+							Rc->SetSourceHeight((float)TubeCm->Arr[1].Num);
+						}
+						Lc->MarkRenderStateDirty();
+					}
 					if (Made3 >= 6)
 					{
 						GStreetActors[I]->SetActorHiddenInGame(true);
@@ -8156,6 +8181,7 @@ namespace
 								LC->SetAttenuationRadius((float)(LedgerStreet::NumOr(Lp, "radius_m", 1.8) * 100.0));
 								LC->SetLightColor(FLinearColor(1.0f, 0.78f, 0.52f));
 								LC->SetSourceRadius(3.0f);
+								LC->ContactShadowLength = Contact3;
 								LC->bCastShadowsFromCinematicObjectsOnly = RoomShadowsOwnOnly();
 								LC->MarkRenderStateDirty();
 								if (FRoomShadowLod* Lod = RoomShadowLodOf(UTF8_TO_TCHAR(Id.c_str()))) { Lod->Lamps.Add(LC); }

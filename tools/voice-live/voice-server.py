@@ -278,6 +278,11 @@ def start_pocket(out, prewarm):
     if not os.path.isfile(py):
         return None
     args = [py, str(pathlib.Path(__file__).with_name("pocket-server.py")), "--out", str(out / "pocket")] + (["--prewarm", "--who", ",".join(sorted(prewarm))] if prewarm else [])
+    # A CHARACTER RECAST FOR POCKET ALONE (26 October: Darren, his page's pick, VCTK p286): his reference in
+    # game-design/pocket-voices/<who>.wav, read before the cast clip; a character not there keeps his cast clip
+    voices = ROOT / "game-design" / "pocket-voices"
+    if voices.is_dir():
+        args += ["--prompts", str(voices)]
     p = subprocess.Popen(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True, bufsize=1, encoding="utf-8")
     for line in p.stdout:
         if '"ready"' in line:
