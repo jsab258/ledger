@@ -144,18 +144,19 @@ No decision asked: these are for watching the street change.
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
 
-## Builder, Monday 26 October (11:05)
+## Builder, Monday 26 October (evening)
 
 **Failed:**
-- The sit, third try: the foot and slide faults are gone, but on the walk-in to the window seat his leg passes through the sill, as Epic's own mannequin's does. Set aside.
-- The walk's two moments still slide in Epic's own stop clip: on your page for your eye, as you ruled.
-- The office's worn carpet path didn't show after two tries.
+- The office's small shadows at High, the level you play at: two fixes failed review; set aside (Needs you 3).
+- Darren: only two of your three voices passed; the Yorkshire and Leicester voices failed twice each.
+- The open fact checkers, untrained: at Haiku's safety the best clears 9 of 85 true details and takes 2.6 s; training waits on Anthropic.
+- Two Marvelous jobs stopped on boxes you closed: my wrong file name, then the old scale.
 
 **Done:**
-- Your answers recorded; today's page: Pocket for Sheila and Ron, their prepared lines, Tom's walk by eye.
-- Marvelous's licence read (fine for a sold game made by one person; no CLO avatars or samples; export before the month ends). Tom's outfit specified, his body exported and measured.
-- Mickey's office: its own exposure at night, the lamp aimed down, rings off the hung papers, real-looking box files. Each passed by fresh reviewers.
+- The new walk: default, and the packaged game walked by the AI tester, 14 of 15 stages.
+- All three speak through Pocket; Darren in your pick, the Newcastle voice; first sound about 0.2 s.
+- Marvelous: our bridge runs at your click; Tom's body is in, with its fitting points.
+- The office's second wear pass passed; the steel desk fixed.
+- Your progress page in plain words; slow replies measured before: 10 of 30 at 5 s or more.
 
-**Stopped at 11:05, before your 12:00;** everything is pushed.
-
-**Act on:** today's page, three taps: https://claude.ai/artifact/8LsucbjBtuCj1QyaRamqpB
+**Act on:** send the Anthropic request (Needs you 1); keep Marvelous open.

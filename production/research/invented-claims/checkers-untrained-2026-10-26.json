@@ -1,0 +1,77 @@
+{
+ "tune": 111,
+ "held": 127,
+ "results": [
+  {
+   "checker": "tinylettuce-17m",
+   "threshold": 0.0001,
+   "heldInventedCleared": 0,
+   "heldInvented": 42,
+   "heldTrueCleared": 0,
+   "heldTrue": 85,
+   "tuneTrueCleared": 0,
+   "secondsMedian": 0.263,
+   "secondsSlowestTenth": 0.353,
+   "inventedClearedIds": [],
+   "minutes": 1.1
+  },
+  {
+   "checker": "tinylettuce-32m",
+   "threshold": 0.001,
+   "heldInventedCleared": 0,
+   "heldInvented": 42,
+   "heldTrueCleared": 0,
+   "heldTrue": 85,
+   "tuneTrueCleared": 0,
+   "secondsMedian": 0.51,
+   "secondsSlowestTenth": 0.717,
+   "inventedClearedIds": [],
+   "minutes": 2.3
+  },
+  {
+   "checker": "tinylettuce-68m",
+   "threshold": 0.001,
+   "heldInventedCleared": 0,
+   "heldInvented": 42,
+   "heldTrueCleared": 2,
+   "heldTrue": 85,
+   "tuneTrueCleared": 1,
+   "secondsMedian": 1.364,
+   "secondsSlowestTenth": 1.979,
+   "inventedClearedIds": [],
+   "minutes": 5.9
+  },
+  {
+   "checker": "lettucedetect-base",
+   "threshold": 0.0003,
+   "heldInventedCleared": 1,
+   "heldInvented": 42,
+   "heldTrueCleared": 9,
+   "heldTrue": 85,
+   "tuneTrueCleared": 6,
+   "secondsMedian": 2.589,
+   "secondsSlowestTenth": 2.817,
+   "inventedClearedIds": [
+    "d247"
+   ],
+   "minutes": 10.7
+  },
+  {
+   "checker": "hhem-2.1-open",
+   "threshold": 0.1422,
+   "heldInventedCleared": 3,
+   "heldInvented": 42,
+   "heldTrueCleared": 19,
+   "heldTrue": 85,
+   "tuneTrueCleared": 14,
+   "secondsMedian": 2.121,
+   "secondsSlowestTenth": 2.243,
+   "inventedClearedIds": [
+    "d005",
+    "d062",
+    "d201"
+   ],
+   "minutes": 8.7
+  }
+ ]
+}

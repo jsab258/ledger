@@ -1,5 +1,5 @@
 {
-  "updated": "Monday 26 October 2026, 13:49",
+  "updated": "Monday 26 October 2026, 16:45",
   "here": 1,
   "friends_eta": "around January",
   "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
@@ -121,7 +121,7 @@
       "start_label": "8 Oct",
       "now_label": "25 Oct, cast voice",
       "state": "fighting",
-      "last": "26 Oct: Sheila and Ron now speak through Pocket, as you picked: in the packaged game their voice starts 0.18 to 0.22 s after the reply (2.2 to 3.1 s before); Darren, still on the card, 2.5 to 2.8 s. The whole path with the real model is not re-timed (no real calls in development); it was 4.14 s on 25 Oct, of which the voice was 2.8 s."
+      "last": "26 Oct: all three now speak through Pocket on the processor, Darren in the new voice you picked; Sheila and Ron start speaking 0.18 to 0.22 s after the reply in the packaged game (2.2 to 3.1 s on the card before). Slow replies measured: 10 of 30 turns waited 5 s or more, three of them Darren's old card voice. The whole path with the real model is not re-timed yet."
     },
     {
       "name": "The Stutter",
@@ -144,7 +144,7 @@
       "target": 0,
       "display": "0 of 1 outfit made",
       "state": "fighting",
-      "last": "26 Oct: Marvelous Designer's licence read and your ruling recorded (garments made during your month stay in the game); Tom's outfit specified and his body measured. Next: the jacket's first pattern."
+      "last": "26 Oct: our bridge runs inside Marvelous at your one click; Tom's body is in with its 109 fitting points, saved for the jobs. Next: the zip jacket's pattern, on October's pattern tools."
     },
     {
       "name": "The Empty Chair",
@@ -157,10 +157,10 @@
     {
       "name": "The Clean Room",
       "what": "Mickey's office worn, lived in and free of glitches, at the Hook sheet's bar.",
-      "display": "Light fixed; wear in progress",
+      "display": "Wear passed in the editor; packaged faults open",
       "hp": 100,
       "state": "fighting",
-      "last": "26 Oct: the room's own exposure fixed (no blow-out at night), the desk lamp aimed down, mug rings off the hung papers, real box files. Next: soft head and damp marks, a skirting board, then the packaged walk."
+      "last": "26 Oct: two wear passes passed; in the packaged game, at High, small shadows on the counter go and two fixes failed (set aside, your call on the next); the desk under the radio fixed; faults behind the counter listed for tomorrow."
     },
     {
       "name": "The Memory Hog",

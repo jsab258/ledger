@@ -386,3 +386,17 @@ Clauses are paraphrased with their section numbers; one short quotation is kept,
 53. https://docs.typesafe.ai/introduction
 54. TypeSafe terms of use: https://typesafe.ai/legal/terms
 55. LiteLLM on Jev, 20 Sep 2026: https://docs.litellm.ai/blog/typesafe_jev
+
+## Measured, untrained, on the 127 (26 October, evening)
+
+His yes the same afternoon: the five models downloaded (1.45 GB, F:/LedgerTools/hf) and the flan-t5-base tokenizer HHEM loads (2.5 MB, his second yes). Measured by tools/checkers/measure_checkers.py: each checker scores every labelled detail against the speaker's facts; its threshold is set on the 121 tuning details as the most lenient at which no invented tuning detail is cleared, then it is tested once on the 127 held-out details (85 true, 42 invented). Times are the checker alone on this PC's processor, other work running beside it (Unreal and builds), so they are generous to nothing. Raw: production/research/invented-claims/checkers-untrained-2026-10-26.json.
+
+| Checker | Invented cleared (Haiku: 1 of 42) | True cleared, of 85 | Seconds, median |
+|---|---|---|---|
+| TinyLettuce 17M | 0 | 0 | 0.26 |
+| TinyLettuce 32M | 0 | 0 | 0.51 |
+| TinyLettuce 68M | 0 | 2 | 1.36 |
+| LettuceDetect base | 1 | 9 | 2.59 |
+| HHEM-2.1-Open | 3 | 19 | 2.12 |
+
+**None passes untrained.** At a threshold safe enough for his bar they clear almost no true detail (the most useful, LettuceDetect base, clears 9 of 85 at Haiku's 1 of 42), and none comes near 0.15 s on the processor; HHEM lets 3 through even at its tuned threshold. So the order's second step, training on LEDGER's own first sentences, is the only route left among the open checkers; the smallest (TinyLettuce 17M, 0.26 s here untrained and unbatched) is the candidate for speed, and its training waits on Anthropic's answer (his pick: ask first; the request drafted, ANTHROPIC-REQUEST-2026-10-26.md). Not yet measured: the times beside the running game, and on the graphics card.
