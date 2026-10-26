@@ -131,7 +131,7 @@ No decision asked: these are for watching the street change.
 ### Needs you
 
 1. **Marvelous, one click (now, recommended):** open Marvelous Designer. The first time only: Plugin tab, Plug-in Manager, + ADD, pick the file C:\Users\Jafar\ledger-local\tools\md-bridge\ledger_md_bridge.py and name it "LEDGER bridge". Then click LEDGER bridge once and leave Marvelous open. Our bridge then takes Tom's outfit jobs from a folder on F:; I'll ask again only if Marvelous gets closed.
-2. **Darren's voice, the checkers' downloads, and Haiku's labels:** on today's page once it is up (up to three taps).
+2. **Today's page, three taps (afternoon):** Darren's voice (two passed of the three you asked for), the checkers' download (recommended yes, 1.5 GB), and asking Anthropic before training on Haiku's labels (recommended). https://claude.ai/artifact/8LsucbjBtuCj1QyaRamqpB
 
 ### Road to worth playing (PLAN.md)
 

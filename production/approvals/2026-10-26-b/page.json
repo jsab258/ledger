@@ -1,0 +1,88 @@
+{
+ "tab": "Monday's Decisions",
+ "kicker": "LEDGER · Monday 26 October, afternoon · three decisions",
+ "title": "Darren's new voice and the fast checker",
+ "how": [
+  "Shortfalls first. Only two of the three Darren voices you asked for passed the checks. Darren still answers in about 2.6 s on the graphics card against your 2 s; Sheila and Ron now answer in 0.2 s. No checker has been measured yet: the open ones have to be downloaded first.",
+  "Pick one answer in each; the first is recommended. Anything you do not pick carries onto the next page."
+ ],
+ "foot": "Nothing bought or signed up for. The morning's three answers are recorded and gone from this page.",
+ "sections": [
+  {
+   "kind": "listen",
+   "key": "darren-voice-2026-10-26",
+   "name": "Darren's new voice: is one of these him?",
+   "people": [
+    {
+     "name": "Darren",
+     "line": "Alright? Darren. You'll have heard of me. No? You will, give it a week. / Tell you what, I can get you anything, me. Radio, pager, a lift to Grimsby. Mates' rates. / I never saw nothing. Well. I saw a bit. Depends who's asking, doesn't it, and what it's worth.",
+     "takes": [
+      {
+       "label": "A",
+       "audio": "production/approvals/2026-10-26-voices/darren/darren-A.wav"
+      },
+      {
+       "label": "B",
+       "audio": "production/approvals/2026-10-26-voices/darren/darren-B.wav"
+      }
+     ]
+    }
+   ],
+   "options": [
+    [
+     "A",
+     "A"
+    ],
+    [
+     "B",
+     "B"
+    ],
+    [
+     "none",
+     "Neither: look for more voices elsewhere"
+    ]
+   ],
+   "detail": "Two young men from the north and Midlands of England, from the same free speech collection as Ron's voice (CC BY 4.0), each made in Pocket on the processor saying his three sheet lines; heard blind, set to the same loudness. Measured (a screen, never a gate): every word there; the accent reads England throughout; each also said twelve of his in-game lines and passed all twelve. You asked for three: the third was not reached. Of five young men tried, a Yorkshire and a Leicester voice each failed a fresh reviewer twice (stretches heard as another accent, and a dropped word), and a Cheshire voice never passed his first line, so all three were set aside. His face and the rest of his sheet stay."
+  },
+  {
+   "kind": "decide",
+   "key": "checker-downloads-2026-10-26",
+   "name": "Download the open fact checkers to test them?",
+   "options": [
+    [
+     "all",
+     "Yes: five models, about 1.5 GB onto F: (recommended)"
+    ],
+    [
+     "small",
+     "Only the three smallest, about 0.5 GB"
+    ],
+    [
+     "no",
+     "No"
+    ]
+   ],
+   "note": "TinyLettuce in three sizes and LettuceDetect (MIT licence, KR Labs), and Vectara's HHEM (Apache 2.0), from Hugging Face, with the small Python package that runs them. The research says only TinyLettuce is likely to answer within your 0.15 s beside the game; the others are there to compare. MiniCheck is left out: its small models were trained partly on data that forbids commercial use, its large one is non-commercial. Each is measured on the 127 labelled details before anything else."
+  },
+  {
+   "kind": "decide",
+   "key": "haiku-labels-2026-10-26",
+   "name": "Training the checker on Haiku's labels: ask Anthropic first?",
+   "options": [
+    [
+     "ask",
+     "Yes: I draft the request, you send it; meanwhile the checkers are tested untrained (recommended)"
+    ],
+    [
+     "people",
+     "No: train only on labels from the simulation and from people"
+    ],
+    [
+     "go",
+     "No need: use Haiku's labels as planned"
+    ]
+   ],
+   "note": "Anthropic's terms read three ways: the commercial terms bar only training a competing model; a help article lists classifiers as allowed but says training needs written permission; the usage policy from 12 November bars training any model on its outputs without prior permission. A small checker inside your game is not a competing model, but the safe reading is to ask. Nothing is trained until this is settled."
+  }
+ ]
+}
