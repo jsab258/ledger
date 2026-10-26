@@ -110,8 +110,11 @@ def main(argv):
                           "last": piece_last and last_piece, "firstChunk": n == 0, "who": who, "wav": str(path),
                           "ms": int((time.time() - t) * 1000), "seconds": round(len(data) / sr, 2), "rate": sr}), flush=True)
 
+    # --who a,b (26 October): only these voices prepared, the game's own voice program passing the
+    # characters Pocket speaks for (voice-engines.json), the rest staying on the card
+    warm = argv[argv.index("--who") + 1].split(",") if "--who" in argv else CAST
     if "--prewarm" in argv:
-        for who in CAST:
+        for who in warm:
             st = voice(who)
             if st is not None:
                 for _ in model.generate_audio_stream(st, "Right."):

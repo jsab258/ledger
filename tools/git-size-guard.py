@@ -48,6 +48,10 @@ GAME_INPUTS = {                        # prefix: cap a file, in bytes
     # name, and the Core tests check every prop the scene names has its file here; the cloud's kit
     # pieces join them as joined copies (tools/art-recipes/kit_for_game.py; lamp post C first).
     "ledger/Assets/Props/base-mesh/": 2_000_000,
+    # THE THINKING SOUNDS (26 October): packaged from git by tools/ue/stage_game_data.py (DIRS,
+    # content/voice/acks) and read by the game (CrimeProbe.cpp AckFiles); missing from this list since
+    # 3 October, found when Sheila's and Ron's were made again in Pocket (his page of 26 October).
+    "content/voice/acks/": 200_000,
 }
 BIG_KINDS = {
     # pictures and renders
@@ -167,6 +171,8 @@ def selftest():
     ok("but not past its own cap", verdict("ledger/CoreTests/Program.cs", 6_000_000, b"using System;\n"))
     ok("the street the build imports is let through", verdict("production/assets/street/quay-street.glb", 16_200_000) is None)
     ok("a game input over its cap is refused", verdict("production/assets/street/quay-street.glb", 30_000_000))
+    ok("a thinking sound the build stages is let through", verdict("content/voice/acks/lena/well-now.wav", 42_000) is None)
+    ok("a long sound in the thinking sounds' folder is refused", verdict("content/voice/acks/lena/x.wav", 900_000))
     ok("the Hook sheet is let through", verdict("production/reference/hook-sheet.png", 4_834_247) is None)
     ok("Windows paths are read the same", verdict("production\\d1-probe\\x.png", 10))
     ok("a reduced preview under 500 KB is let through", verdict("production/previews/proof-2.2-atmosphere-sky-2026-10-03.jpg", 420_000) is None)

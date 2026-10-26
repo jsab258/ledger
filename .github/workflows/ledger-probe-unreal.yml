@@ -889,6 +889,16 @@ jobs:
           # entered, before the old copy goes, and made again after the new one is in.
           $voiceLink = Join-Path $dst "Windows\Voice"
           $voiceSrc = "F:\LedgerTools\voice-portable"
+          # THE VOICE PROGRAM KEPT CURRENT, 26 October: the portable folder's own copy of the voice
+          # program dated from 1 October, so the played game spoke through a month-old program and
+          # never read voice-engines.json's Pocket (his page: Sheila and Ron on Pocket). Its Python and
+          # weights stay; the program and the engines spec are copied from this build's commit each time.
+          $voiceProg = Join-Path $voiceSrc "tools\voice-live"
+          if (Test-Path $voiceProg) {
+            Copy-Item -Path "tools\voice-live\*.py" -Destination $voiceProg -Force
+            Copy-Item -Path "production\specs\voice-engines.json" -Destination (Join-Path $voiceSrc "production\specs") -Force
+            Write-Host "playedVoiceProgram=REFRESHED"
+          }
           if (Test-Path $voiceLink) {
             $vi = Get-Item $voiceLink -Force
             if ($vi.LinkType) { [System.IO.Directory]::Delete($voiceLink, $false) }

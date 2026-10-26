@@ -241,13 +241,48 @@ def engines(env=None, path=ENGINES_FILE):
         spec = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
     except Exception:
         spec = {}
-    who = {k: v for k, v in (spec.get("engines") or {}).items() if v in ("sopro", "nano")}
-    for pair in [p for p in env.split(",") if "=" in p]:
-        k, v = pair.split("=", 1)
-        if v.strip() in ("sopro", "nano"):
-            who[k.strip()] = v.strip()
+    who = engine_map(env, spec)
     extra = {k: str(ROOT / v) for k, v in (spec.get("reference_extra") or {}).items()}
     return {k: v for k, v in who.items() if v == "sopro"}, extra
+
+
+# POCKET, 26 October (his page: Pocket passes for Sheila and Ron, their prepared lines too; Darren keeps
+# Nano): a third engine, Pocket TTS on the processor (tools/voice-live/pocket-server.py, the same line
+# format, streaming its pieces), for the characters voice-engines.json gives it.
+def engine_map(env, spec):
+    """{who: engine} as the file and LEDGER_VOICE_ENGINES give it, engines being nano, sopro or pocket."""
+    who = {k: v for k, v in (spec.get("engines") or {}).items() if v in ("sopro", "nano", "pocket")}
+    for pair in [p for p in env.split(",") if "=" in p]:
+        k, v = pair.split("=", 1)
+        if v.strip() in ("sopro", "nano", "pocket"):
+            who[k.strip()] = v.strip()
+    return who
+
+
+def pocket_who(env=None, path=ENGINES_FILE):
+    """The characters Pocket speaks for."""
+    env = os.environ.get("LEDGER_VOICE_ENGINES", "") if env is None else env
+    try:
+        spec = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+    except Exception:
+        spec = {}
+    return {k for k, v in engine_map(env, spec).items() if v == "pocket"}
+
+
+def start_pocket(out, prewarm):
+    """Pocket's own server, started once with its own Python (LEDGER_POCKET_PY), answering in this server's
+    lines, the characters in prewarm prepared before it says it is ready; None when its Python is not on
+    this PC (then Nano speaks for everyone, as before)."""
+    import subprocess
+    py = os.environ.get("LEDGER_POCKET_PY", r"F:\LedgerTools\pocket-tts\env\Scripts\python.exe")
+    if not os.path.isfile(py):
+        return None
+    args = [py, str(pathlib.Path(__file__).with_name("pocket-server.py")), "--out", str(out / "pocket")] + (["--prewarm", "--who", ",".join(sorted(prewarm))] if prewarm else [])
+    p = subprocess.Popen(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True, bufsize=1, encoding="utf-8")
+    for line in p.stdout:
+        if '"ready"' in line:
+            return p
+    return None
 
 
 def start_sopro(out):
@@ -331,8 +366,9 @@ def serve(args):
     # cast voice learned or read from the cache, and one word said in it, so
     # the card has run the model once before the player's first line.
     warmed = []
+    by_pocket = pocket_who()
     if args.get("prewarm"):
-        for who in CAST:
+        for who in [w for w in CAST if w not in by_pocket]:
             clip = clip_for(who)
             if clip is None:
                 continue
@@ -348,6 +384,9 @@ def serve(args):
                 pass   # a voice that will not warm is learned on first use, as before
     by_sopro, extra = engines()
     sopro = start_sopro(out) if by_sopro else None
+    pocket = start_pocket(out, by_pocket if args.get("prewarm") else set()) if by_pocket else None
+    if pocket is not None:
+        warmed += [w + ":pocket" for w in sorted(by_pocket)]
     if sopro is not None and args.get("prewarm"):
         # Sopro's voices learned and run once before the first line, as Nano's are.
         for k, who in enumerate(sorted(by_sopro)):
@@ -361,7 +400,7 @@ def serve(args):
                     warmed.append(who + ":sopro")
                     break
     print(dumps({"ready": True, "device": str(dev), "loadS": round(time.time() - t0, 1), "out": str(out), "warmed": warmed,
-                 "sopro": sorted(by_sopro) if sopro else []}), flush=True)
+                 "sopro": sorted(by_sopro) if sopro else [], "pocket": sorted(by_pocket) if pocket else []}), flush=True)
     # THE GAME'S LINES ARE READ AS THEY COME, on their own thread, so a new
     # turn's first sentence is seen while an older reply is still being made.
     import threading
@@ -443,6 +482,16 @@ def serve(args):
             i, who, text = parse(line)
         except Exception as e:
             print(dumps({"error": "bad-line", "why": str(e)[:80]}), flush=True)
+            continue
+        if pocket is not None and who in by_pocket:
+            # Pocket streams its sentences in pieces, each passed on as it comes ("joined" ones continue
+            # the sound already playing); its last piece ends the line
+            pocket.stdin.write(dumps({"id": i, "who": who, "text": text}) + "\n")
+            pocket.stdin.flush()
+            for answer in pocket.stdout:
+                print(answer.strip(), flush=True)
+                if '"last":true' in answer or '"error"' in answer:
+                    break
             continue
         clip = clip_for(who)
         if clip is None:
