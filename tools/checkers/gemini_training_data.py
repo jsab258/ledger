@@ -35,6 +35,7 @@ another batch once the total passes the cap ($10, his yes).
 import json
 import os
 import random
+import re
 import sys
 import time
 import urllib.request
@@ -142,6 +143,13 @@ def results_text(res):
     return out
 
 
+# The project's content rule (no children anywhere; no alcohol or gambling): the writer drifted into school runs and
+# childhood memories in about one sentence in 150 (26 October's batch); those are dropped before labelling.
+OUT_OF_CANON = re.compile(r"\b(school\w*|child\w*|kids?|boys together|man and boy|when (s?he|I) was (a )?(little|young|"
+                          r"small|twelve|ten|\w+teen|\d+)|girl|pub|pint|beer|lager|whiske?y|wine|drunk|booze|bookies?|"
+                          r"bookmaker\w*|betting|casino|gambl\w*|the pools)\b", re.I)
+
+
 def label_requests(gen_res, out, per_call):
     ctx = contexts()
     texts = results_text(gen_res)
@@ -149,7 +157,7 @@ def label_requests(gen_res, out, per_call):
     with open(out, "w", encoding="utf-8") as fh:
         for k, text in sorted(texts.items()):
             i = int(k.split("-")[1])
-            sents = parse_lines(text)
+            sents = [t for t in parse_lines(text) if not OUT_OF_CANON.search(t)]
             for s in range(0, len(sents), per_call):
                 chunk = sents[s:s + per_call]
                 body = "\n".join("%d. %s" % (m + 1, t) for m, t in enumerate(chunk))

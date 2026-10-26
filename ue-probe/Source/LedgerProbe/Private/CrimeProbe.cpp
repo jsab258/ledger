@@ -4423,7 +4423,27 @@ namespace
 					TWeakObjectPtr<APostProcessVolume> Weak(V);
 					TWeakObjectPtr<UWorld> WeakWorld(World);
 					const FBox2D Rooms(FVector2D(GOffice.X0 * 100.0, GOffice.Z0 * 100.0), FVector2D(GOffice.X1 * 100.0, Back * 100.0));
-					auto Drive = [Weak, WeakWorld, Rooms, PinDay, PinNight](float) -> bool
+					// THE ROOM'S SHADOWS AT THE GAME'S OWN LEVEL (26 October, his yes that evening; WEAR-2026-10-25.md, the
+					// office in the packaged game). At High, the level the game ships at, the counter's small things lost their
+					// shadows. This project draws classic shadow maps (r.Shadow.Virtual.Enable is never set, so it stays at its
+					// default 0), and High caps a light's shadow map at 1024 against Epic's 2048: the docket spike's shadow came
+					// back in six photographs of six with the cap at 2048 and in none of three without (the rays first raised
+					// here belong to virtual shadow maps and changed nothing). While the camera is inside, each setting in the
+					// spec's "shadow_inside" is raised to its value, never lowered, and the level's own value comes back on
+					// leaving unless something else (the settings menu) changed it meanwhile; the street pays nothing.
+					// Set at the picture level's own rank (by scalability), never above it, or the settings menu could no
+					// longer change it afterwards.
+					TArray<TPair<FString, float>> ShadowInside;
+					const TSharedPtr<FJsonObject>* ShadowObj = nullptr;
+					if ((*Inside)->TryGetObjectField(TEXT("shadow_inside"), ShadowObj) && ShadowObj && ShadowObj->IsValid())
+					{
+						for (const auto& KV : (*ShadowObj)->Values)
+						{
+							double Num = 0.0;
+							if (KV.Value.IsValid() && KV.Value->TryGetNumber(Num)) { ShadowInside.Add(TPair<FString, float>(KV.Key, (float)Num)); }
+						}
+					}
+					auto Drive = [Weak, WeakWorld, Rooms, PinDay, PinNight, ShadowInside](float) -> bool
 					{
 						APostProcessVolume* P = Weak.Get();
 						UWorld* W = WeakWorld.Get();
@@ -4437,6 +4457,32 @@ namespace
 							Weight = (float)FMath::Clamp(In / 50.0, 0.0, 1.0);
 						}
 						P->BlendWeight = Weight;
+						if (ShadowInside.Num() > 0)
+						{
+							static TArray<float> Outside;
+							static bool bRaised = false;
+							const bool bIn = Weight > 0.5f;
+							if (bIn != bRaised)
+							{
+								Outside.SetNum(ShadowInside.Num());
+								for (int32 k = 0; k < ShadowInside.Num(); ++k)
+								{
+									IConsoleVariable* Var = IConsoleManager::Get().FindConsoleVariable(*ShadowInside[k].Key);
+									if (!Var) { continue; }
+									const float Want = ShadowInside[k].Value;
+									if (bIn)
+									{
+										Outside[k] = Var->GetFloat();
+										if (Outside[k] < Want) { Var->Set(Want, ECVF_SetByScalability); }
+									}
+									else if (Outside[k] < Want && FMath::IsNearlyEqual(Var->GetFloat(), Want))
+									{
+										Var->Set(Outside[k], ECVF_SetByScalability);
+									}
+								}
+								bRaised = bIn;
+							}
+						}
 						const double Pin = LedgerVignetteShot::SunOnNow() ? PinDay : PinNight;
 						FPostProcessSettings& S = P->Settings;
 						S.bOverride_AutoExposureMinBrightness = Pin > 0.0;

@@ -19,10 +19,25 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 26 Oct 2026, a quality setting raised only while the player is inside one room, found by halving the engine's level groups
+- Made: the setting that lost a room's small shadows at the shipped picture level found and raised only while the camera is inside; its frame cost measured; the earlier diagnosis corrected.
+- Method (setting-free):
+  - Before tuning a renderer setting, confirm the feature it belongs to is on in this project (read the project's config, the engine's default in its source, and the running value in the log); a plausible setting for a feature that is off changes nothing.
+  - Find the one setting by halving: the higher level's whole group first, then each group, then halves of the group's settings, then one at a time; photograph the same view each time and measure the region.
+  - Repeat any result that disagrees with its neighbours: some shadows vary run to run, so count how many runs show the effect (here six of six against none of three).
+  - Raise the setting only inside the room, at the same rank the picture level sets it (never above, or the settings menu loses it), never lowering a higher value, and restore it on leaving only if nothing else changed it.
+  - Measure the cost where it is paid (inside the room) with the engine's per-frame recorder, both ways.
+  - Give reviewers the true "before": a picture taken during an earlier failed try carried shadows that try had added, and two reviewers failed the change for losing them.
+- Tools: the editor's game at a set picture level with console commands at start; the engine's frame recorder; per-view fresh reviewers.
+- Target and check: the small things sit on the counter at the shipped level, no new fault against plain High, cost under a millisecond.
+- Cost (hours): about 2.5.
+- Failed and why: the first try (soft-shadow rays) changed nothing, its feature being off; the first reviews used a wrong baseline.
+- Evidence: production/research/cab-office-interior-1990/WEAR-2026-10-25.md (Shadows raised only inside)
+
 ### 26 Oct 2026, a room passed at the editor's picture level and failed at the level the game ships at
 - Made: the office photographed in the packaged build; the cause traced to the picture level; two fixes tried and set aside; one prop's colour fixed.
 - Method (setting-free):
-  - Photograph for the gate at the level the player plays at, not the editor's highest: soft shadows of local lights get half the rays one level down, so small things lose their shadows and soft shadows speckle.
+  - Photograph for the gate at the level the player plays at, not the editor's highest: soft shadows of local lights get half the rays one level down, so small things lose their shadows and soft shadows speckle. (Wrong cause, corrected in the entry above: the project used classic shadow maps, and the rays belong to the other kind.)
   - Reproduce the packaged fault in the editor at that level, with the suspected feature off and on, before changing anything.
   - A screen-space contact shadow puts small shadows back but adds grain on thin sheets; a smaller light source narrows penumbrae but does not restore every small shadow.
   - A pale prop under a lamp's pool reads as an untextured slab: tone its colour, not the light.
