@@ -992,13 +992,26 @@ static partial class Program
                 // As the talk helper loads it, with the street's plain facts (town list ck).
                 var card = StreetFacts.AddTo(CharacterCard.Parse(File.ReadAllText(Path.Combine(cardsDir, job.card + ".md"))), job.card);
                 var engine = new ConversationEngine(talkClient, card, new MemoryStore(card.Id), new KnowledgeBase(), new SuspicionTracker(), cost, FirstsModel) { Checker = talkClient };
+                // --checker MODEL: the check's model as the game sets it (TalkHelper NewEngine: Haiku 5.5).
+                string checkerModel = Arg(FirstsArgs, "--checker", null);
+                if (checkerModel != null) engine.CheckerModel = checkerModel;
                 if (FirstsByMoment && FirstsModel == null) engine.Model = TalkMoment.ModelFor(TalkMoment.Of(job.probe));
                 engine.People = cast.PeopleFor(job.card, 0, 10);
                 engine.HowYouKnowHim = new PlayerIdentity().HowTheyKnowHim(true, true, null);
                 string where = cast.WhereWords(job.card, 0, 10);
                 string reply;
-                try { reply = await engine.SayToAsync(job.probe, new GameTime(0, 10, 0), "Dry, grey." + (where != null ? " Where you are: " + where + "." : ""), default, null); }
+                // --early (the slow replies, 26 October): the turn as the talk program runs it with --early, the first
+                // sentence checked on its own and handed over the moment it passes; the row keeps when that was
+                // (-1: held back, the player waits for the whole turn) and the turn's own steps.
+                var sw = Stopwatch.StartNew();
+                long firstAt = -1;
+                Func<string, Task<bool>> onFirst = null;
+                if (FirstsArgs.Contains("--early")) onFirst = s => { Interlocked.CompareExchange(ref firstAt, sw.ElapsedMilliseconds, -1); return Task.FromResult(true); };
+                try { reply = await engine.SayToAsync(job.probe, new GameTime(0, 10, 0), "Dry, grey." + (where != null ? " Where you are: " + where + "." : ""), default, onFirst); }
                 catch (Exception) { Interlocked.Increment(ref failed); return; }
+                long turnMs = sw.ElapsedMilliseconds;
+                List<object> steps;
+                lock (engine.LastSteps) steps = engine.LastSteps.Select(st => (object)new { st.step, st.ms }).ToList();
                 bool fell = ClaimCheck.IsKnownOnly(reply, card);
                 bool refusedLine = ResponseValidator.IsDeflection(reply, card.Name);
                 // THE SAME TURN, TODAY'S WAY AND THE LADDER'S (the talk task of 7
@@ -1022,7 +1035,8 @@ static partial class Program
                                    refusedAgain = engine.LastRefusedAgain, bearing = engine.LastBearing, saidPlainly = engine.LastSaidPlainly,
                                    rule = engine.LastRule == null ? null : engine.LastRule.Concept + " " + engine.LastRule.Kind,
                                    known = engine.LastKnown.Select(k => k.id + ": " + k.text).ToList(),
-                                   plan = engine.LastPlan.HasValue ? engine.LastPlan.Value.intent + " " + string.Join(",", engine.LastPlan.Value.facts) : null });
+                                   plan = engine.LastPlan.HasValue ? engine.LastPlan.Value.intent + " " + string.Join(",", engine.LastPlan.Value.facts) : null,
+                                   firstMs = firstAt, turnMs, steps });
                 }
             }
             finally { gate.Release(); }

@@ -20,8 +20,16 @@ using Ledger.DevTools;
 /// what ran, its calls, tokens by model and dollars. Refused under CI.
 static partial class Program
 {
-    const string KeyTask = "talk-2026-10-07";
-    const double KeyTaskCap = 3.00;
+    // EACH TASK ITS OWN CAP (his yes of 26 October evening: "The slow-reply tests may spend up to $10 this
+    // week beyond my $1 a day"): --task names which task's money a run spends; the 7 October talk task's
+    // three dollars stay the default.
+    static readonly Dictionary<string, double> KeyTaskCaps = new Dictionary<string, double>
+    {
+        { "talk-2026-10-07", 3.00 },
+        { "slow-replies-2026-10-26", 10.00 },
+    };
+    static string KeyTask = "talk-2026-10-07";
+    static double KeyTaskCap => KeyTaskCaps[KeyTask];
     static string RunsLog => Path.Combine(RepoRoot(), "production", "playtest", "talk-runs.jsonl");
 
     /// What the task's key runs have spent so far, from the log.
@@ -64,6 +72,9 @@ static partial class Program
         var path = Path.Combine(Environment.GetEnvironmentVariable("LOCALAPPDATA") ?? "", "LEDGER", "live-talk-key.txt");
         string key = File.Exists(path) ? File.ReadAllText(path).Trim() : null;
         if (string.IsNullOrEmpty(key)) throw new InvalidOperationException("no LEDGER key: nothing run");
+        string task = Arg(args, "--task", "talk-2026-10-07");
+        if (!KeyTaskCaps.ContainsKey(task)) throw new InvalidOperationException("refused: no cap for the task " + task);
+        KeyTask = task;
         double left = KeyTaskCap - KeyTaskSpent();
         double cap = double.Parse(Arg(args, "--cap", "1.00"), System.Globalization.CultureInfo.InvariantCulture);
         double limit = Math.Max(0, Math.Min(left, cap));
@@ -73,14 +84,19 @@ static partial class Program
         return new Counted(_keyRun);
     }
 
-    /// Counts every call's tokens by model on the way through, for the log.
-    sealed class Counted : ILlmClient, IDisposable
+    /// Counts every call's tokens by model on the way through, for the log. It streams too (the slow
+    /// replies, 26 October): the engine takes the early first-sentence path only through a streaming
+    /// client, and without this the bench measured every turn as a whole-reply check.
+    sealed class Counted : IStreamingLlmClient, IDisposable
     {
         readonly KeyRun _run;
         public Counted(KeyRun run) => _run = run;
         public async System.Threading.Tasks.Task<LlmResponse> CompleteAsync(LlmRequest request, System.Threading.CancellationToken ct = default)
+            => Count(request, await _run.Client.CompleteAsync(request, ct).ConfigureAwait(false));
+        public async System.Threading.Tasks.Task<LlmResponse> StreamAsync(LlmRequest request, Action<string> onText, System.Threading.CancellationToken ct = default)
+            => Count(request, await _run.Client.StreamAsync(request, onText, ct).ConfigureAwait(false));
+        LlmResponse Count(LlmRequest request, LlmResponse r)
         {
-            var r = await _run.Client.CompleteAsync(request, ct).ConfigureAwait(false);
             lock (_run.ByModel)
             {
                 _run.ByModel.TryGetValue(request.Model ?? "", out var b);

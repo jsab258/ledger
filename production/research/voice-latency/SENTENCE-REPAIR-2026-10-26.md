@@ -223,3 +223,35 @@ The ten slow turns by cause:
 - **A redraft that passed (1, Darren):** 9.45 s, on the card voice.
 
 So, of the 7 slow turns the speech check can change, 5 end in the fallback: the second draft failing again matters more than the first draft's time. The "after" is measured the same way.
+
+## The bench, and why its 3.2 s is not the 2.41 s (26 October, evening)
+
+**The bench.** ClaimBench `firsts --early` now runs a turn as the game does (the first sentence checked alone and handed over when it passes; the game's own switches: rules, plain fallback, the ladder and its judge, the model by the kind of moment, the check on Haiku 5.5), on LEDGER's key under its own $10 cap (`--task slow-replies-2026-10-26`; the counting wrapper now streams, without which every turn ran as a whole-reply check), and keeps each turn's steps. `tools/voice-live/slow_turns.py` scores a run: heard = the first sentence's hand-over plus 0.2 s of Pocket voice (all three speak through Pocket since Darren's recast). Raw: F:/LedgerTools/town-scratch/slow-replies (slow-turns-2026-10-26.json). Spent $4.86 of the $10.
+
+**His question: 3.2 s against 22 October's 2.41 s.** Step by step, medians in seconds after the line is sent:
+
+| Run (lines) | Who | Reply drafted | Check passed | Voice ready | Heard |
+|---|---|---|---|---|---|
+| Live, 22 Oct, Pocket (street small talk, 20) | Sheila / Ron / Darren | not recorded | 2.05 / 2.09 / 2.75 | 2.29 / 2.33 / 3.01 | 2.32 / 2.37 / 3.05 |
+| Live, 26 Oct 15:30 (the same script, 30; Darren on the card) | Sheila / Ron / Darren | 0.68 / 0.67 / 0.71 | 1.82 / 1.88 / 2.10 | 1.93 / 1.88 / 4.36 | 1.97 / 1.92 / 4.39 |
+| Bench on that script's own 12 lines (36) | Sheila / Ron / Darren | 0.46 / 0.49 / 0.49 | 0.50 / 1.50 / 1.50 | +0.2 | 1.55 / 1.91 / 1.79 |
+| Bench, a newcomer's 20 real questions (60) | Sheila / Ron / Darren | 1.01 / 1.13 / 1.35 | 2.49 / 3.29 / 2.89 | +0.2 | 2.78 / 3.91 / 3.26 |
+
+(Check passed: the turns whose first sentence passed, or needed no check; heard: every turn.)
+
+- **The bench is not slower than the game:** on the live script's own lines it hears Sheila and Ron no later than the live run did (1.55 and 1.91 against 1.97 and 1.92), and Darren on Pocket at 1.79 against his card voice's 4.39.
+- **The difference is the questions.** The live script is street small talk ("Evening. Anything going on round here?"), which the game gives the lighter model (Haiku 4.5; TalkMoment), and many of whose first sentences carry nothing to check ("Nothing much."). The bench's set is a newcomer's real questions about the place ("Who are you?", "How did Mickey die?"), which the game gives the better model (Sonnet 5): drafting takes 0.5 to 0.8 s longer, and their first sentences name people and places, so the check takes longer (median 1.4 to 1.7 s against about 1.0) and refuses more of them.
+- **So both figures are true, for different talk:** about 2 s for small talk (22 October's 2.41 s with Pocket, about 2.1 s with the pending voice), about 3 s for a newcomer's real questions. Switches are judged only against the same lines on the same bench.
+
+**The switches, two runs each where it mattered (60 turns a run):**
+
+| Run | 5 s or more | First sentence refused | Refused twice | Heard, median |
+|---|---|---|---|---|
+| Today's settings | 17, 9 | 14, 7 | 7, 2 | 3.17, 3.03 |
+| NarrowRedraft | 19, 13 | 8, 11 | 3, 5 | 3.30, 3.06 |
+| PlanFirst | 23 | 6 | 3 | 4.21 |
+
+- Two identical runs of today's settings gave 17 and 9 slow turns: the API's own pace and the model's choices vary that much, so one run proves nothing.
+- **Every turn whose first sentence was refused was heard at 5 s or later** (36 of 36 across the four runs of today and NarrowRedraft). The refusal itself arrives at 2.9 to 4.5 s, because a refusing check writes out its whole list (1.9 to 3.1 s against about 1.5 for a pass); any second sentence and its check then land past 5 s.
+- **NarrowRedraft:** no better (32 of 120 slow against 26 of 120). **PlanFirst:** fewer refusals, but planning first adds about 1.3 s to every turn; worse. Neither is switched on.
+- **What follows for the repair:** rewriting only the refused sentence after the refusal saves only its writing time (0.5 to 3 s here) and still lands near 5 s. The repair pays only if it starts alongside the first check (a safe rewrite of the drafted sentence, used only if the check refuses), so that a refusal needs one more check, not a draft and a check. That is the next code, benched the same way before it reaches speech.
