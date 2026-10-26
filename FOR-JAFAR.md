@@ -48,19 +48,19 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
 
 <!-- morning pictures: written by tools/morning_pictures.py -->
 
-**Morning, Sunday 25 October. Phase 2, Produce Quay Street from proved families. On: 2.1 Building kit re-seeded; upper rooms; near shop rooms: production/research/asset-plan/SUMMARY.md. Next: 2.2 Ground, wear, signage, furniture, vegetation, the hill.**
+**Morning, Monday 26 October. Phase 1, Prove the bottlenecks. On: 2. Walk slide and sit-down's look set aside (Needs you 1); turning passes (sit-and-turn/WALK-2026-10-25.md). Next: 3. Tom's outfit in Marvelous Designer (Needs you 3).**
 
-No morning pictures today: the free-space check refused ({"job": "morning pictures", "drives": "CF", "before": {"C": 39.1, "F": 29.8}, "after": {"C": 39.7, "F": 29.9}, "verdict": "STOP", "needsYou": "morning pictures stopped: C: has 39.7 GB free (needs 40.0), F: 29.9 GB (needs 20.0) after the nightly limits ran. Put this in Needs you and do not retry until there is room."}). Yesterday's stand below.
-
-| | Today, 25 Oct | Yesterday, 24 Oct |
+| | Today, 26 Oct | Yesterday, 25 Oct |
 |---|---|---|
-| The hook camera by day | none | ![The hook camera by day, 2026-10-24](production/previews/morning-hook-day-2026-10-24.jpg) |
-| The reverse view | none | ![The reverse view, 2026-10-24](production/previews/morning-reverse-day-2026-10-24.jpg) |
-| The street at night | none | ![The street at night, 2026-10-24](production/previews/morning-night-2026-10-24.jpg) |
+| The hook camera by day | ![The hook camera by day, 2026-10-26](production/previews/morning-hook-day-2026-10-26.jpg) | none |
+| The reverse view | ![The reverse view, 2026-10-26](production/previews/morning-reverse-day-2026-10-26.jpg) | none |
+| The street at night | ![The street at night, 2026-10-26](production/previews/morning-night-2026-10-26.jpg) | none |
 
 The Hook sheet, the bar they are held to: ![The Hook sheet](production/previews/hook-sheet-2026-10-05.jpg)
 
 No decision asked: these are for watching the street change.
+
+**The repository on Monday:** 3.40 GB on GitHub; 3.86 GB packed on this PC (the history was 30.8 GB before 5 October's cleaning; a guard refuses large files before every push).
 
 <!-- /morning pictures -->
 
