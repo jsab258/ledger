@@ -19,6 +19,19 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 26 Oct 2026, the fast checker's third try: aimed training data, a pre-set cut-off and a larger test judged on the whole chain
+- Made: 2,151 near-miss and paraphrase training sentences and 617 test sentences written and labelled by a cloud model (training from tuning contexts, test from held ones); the 17M checker retrained on its use-time input (10 facts); a cut-off fixed before the test; the test run once against the production check's own verdicts, with a blind hand reading of every item that decides the bar.
+- Method (setting-free):
+  - Aim new training data at the observed miss: inventions that reuse the right names with one wrong or added detail, and true sentences that paraphrase a fact.
+  - Write the whole design (model, input, cut-off rule, test, pass rule, hand-reading rule) into the record before the test exists; set the cut-off on kept-out tuning data as a margin below the most convincing invention seen.
+  - Have a fresh reviewer spot-check the generated test labels blind (here 77 of 80 agreed, every error on the strict side), then read by hand, blind and mixed, every item that decides the bar.
+  - A pre-filter can never be safer than the check it sits in front of: measure that check on the larger test too; here it was the bigger finding.
+- Tools: the batch API with half/style options; the trainer with a fewer-facts input; the production check's bench mode calling its whole entry point; a side-by-side sentence test.
+- Target and check: with the checker in front, no more inventions through than the production check alone, on the larger test; 0.15 s beside the game; no frame stall.
+- Cost (hours): about 2.5 (40 minutes of processor training); $0.60 of cloud labelling, $0.92 of production-check calls.
+- Failed and why: none of the bars; but the cut-off strict enough to hold the bar clears 3% of true sentences, almost all evasions, so the speed it buys is negligible. The production check itself let 18 to 23 of about 300 invented first sentences through.
+- Evidence: production/research/invented-claims/LOCAL-CHECKERS-2026-10-26.md (Third try; The hand reading); HAIKU-FALSE-REFUSALS-2026-10-26.md
+
 ### 26 Oct 2026, a rule that lived only in the engine port given its home in the reference rules
 - Made: the reference test suite's 2 MB source cut into partial-class files under the size guard, unchanged; one gameplay rule (how well a person knows the player's face from meetings) moved from the port into the reference rules, ported back from there and pinned by golden rows and tests.
 - Method (setting-free):

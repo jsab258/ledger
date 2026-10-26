@@ -39,7 +39,7 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
 **Your items (26 October, night).**
 - *The walk (item 2), done:* your pass made it the default; the packaged game, walked by the AI tester, 14 of 15 stages (the one miss, Ron out of reach, is the route's old fault). The sit stays set aside.
 - *Clothes (item 3):* Marvelous's licence ruled; our bridge runs in Marvelous at your one click; Tom's body is in it with 109 fitting points. Next: the zip jacket, once tonight's zip-and-pockets research is reviewed.
-- *Speech (item 4):* all three speak through Pocket (first sound about 0.2 s). The fast checker, trained on Gemini's labels ($0.91), failed both tries: reading every fact it took 0.25 s; reading six it takes 0.05 s beside the game, but the game would let 2 of 42 invented details through against Haiku's 1 (a fresh reviewer caught it). Set aside; what next is on your page. Your 2-second bar is judged on a newcomer's real questions; Ron's slow check is the service's wait, not his facts. Rewriting only a refused sentence is being measured again (my bench used only the check's first step). $5.31 of the $10 spent.
+- *Speech (item 4):* all three speak through Pocket (first sound about 0.2 s). The fast checker, three tries: the third, as you set it, holds your bar but clears only 3% of true sentences. Its 617 new test sentences showed Haiku's own check letting 18 to 23 invented first sentences through and refusing 31% of true ones. Rewriting only a refused sentence: 31 of 37 pass the real check; next, real turns. $6.21 of the $10 spent.
 - *Mickey's office (item 5):* the small shadows at High fixed by raising one setting only while you are inside (about 0.2 ms a frame), passed in the editor beside plain High; packaged pictures after tonight's build. Faults behind the counter next.
 - *Fallback, the simulation's port:* begun. Its blocker is gone: the 2.7 MB test table the port is checked against is now kept in pieces the upload guard accepts. Next: how well each person knows Tom's face, a rule that lives only in the game's code, given its home in the rules.
 
@@ -130,7 +130,7 @@ No decision asked: these are for watching the street change.
 
 ### Needs you
 
-1. **Tonight's page, three taps** (https://claude.ai/artifact/GmtwhT5o89Ho9huHXYUieX): Darren's delivery A or B, blind; stop the fast checker (recommended); price a north-east actor for Darren (recommended).
+1. **Tonight's page, three taps** (https://claude.ai/artifact/GmtwhT5o89Ho9huHXYUieX): Darren's delivery A or B, blind; the checker's third try: keep Haiku alone and fix its leaks (recommended); price a north-east actor for Darren (recommended).
 2. **Leave Marvelous open with the bridge running** (recommended): Tom's jacket jobs run through it; if it is closed, one click on LEDGER bridge next time.
 
 Your evening answers are recorded (shadows inside the office: yes; $10 for the slow-reply tests; the checker trained on Gemini's labels, no letter to Anthropic).
@@ -148,14 +148,14 @@ Your evening answers are recorded (shadows inside the office: yes; $10 for the s
 ## Builder, Monday 26 October (night)
 
 **Failed:**
-- The fast checker, both tries: reading every fact, 0.25 s against your 0.15 s; reading six, 0.05 s beside the game, but the game would let 2 of 42 invented details through against Haiku's 1. Set aside.
-- Rewriting only a refused sentence: my bench judged it by the check's first step only, stricter than the game's; its "set aside" is withdrawn and it is being measured again.
-- Darren's flatness: no setting changes it; only whole lines or a new reference voice.
-- My first checker timing ran mostly after the game had closed; a reviewer caught it, redone.
+- Haiku's own check, on 617 new test sentences: it lets 18 to 23 invented ones through (one has Sheila deny the second book exists) and refuses 31% of true ones.
+- The fast checker's third try holds your bar but clears only 3% of true sentences.
+- My first bench for the rewrite used only the check's first step; corrected.
 
 **Done:**
-- The office's small shadows at High, raised only inside: passed in the editor, about 0.2 ms a frame.
-- Your speech ruling recorded; Ron's slow check explained.
-- The port's blocker removed: its test table now in pieces the upload guard accepts.
+- Rewriting only a refused sentence, measured properly: 31 of 37 pass; next, real turns.
+- The office's small shadows at High, raised only inside: passed in the editor.
+- The port: its test files in pieces under the upload limit; face familiarity now in the rules.
+- Tom's zip and pockets researched: baked detail, a small zip pull; under review.
 
 **Act on:** tonight's page, three taps (Needs you 1).

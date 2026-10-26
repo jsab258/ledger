@@ -293,3 +293,16 @@ Each call took about 1.1 s to rewrite and 1.3 s to check again.
 Found while building the fast checker's enlarged test: ClaimBench's repair mode (Repair.cs) judged each sentence by the check's **first step alone** (ClaimCheck.RequestItems and ParseItems), not by the game's whole check (ClaimCheck.CheckAsync: that list, then the details stated word for word cleared by code, then a second look at each detail still flagged). The list flags every event not backed by a belief, memory or report (B, M, W items) for the later steps to clear, so a sentence passed the bench only when it stated almost nothing: which is why 15 of the strict try's 17 passes were "I don't know". **So both repair tries were measured against a stricter check than the game's, and the "set aside" above does not stand;** the repair is to be benched again against the whole check (a re-measurement, not a third try).
 
 Ron's question is less affected: CheckTime's 1.1 s per sentence timed the list call alone, which is the same for all three; the whole check (the list, then any second looks) is what the four runs timed at 1.63 s typical for Ron, in the middle of the three. What the second looks add per character is not yet measured.
+
+## Re-measured against the whole check (26 October, night)
+
+The same 40 sentences (Gemini's unsupported training sentences, a fixed seed), the repair mode now judging by ClaimCheck.CheckAsync as the game does (F:/LedgerTools/town-scratch/slow-replies/repair-full; $0.26):
+
+| Repair | Refused by the check | Repaired and passed | Of those, "I don't know" | Rewrite, median | Recheck, median |
+|---|---|---|---|---|---|
+| Keep the words, the refused details named | 39 | 26 | 13 | 1.0 s | 2.2 s |
+| Keep the words, alongside the check (nothing named) | 39 | 14 | 9 | 1.0 s | 2.3 s |
+| One item's facts only, named | 37 | **31** | 9 | 1.0 s | 1.6 s |
+| One item's facts only, alongside the check | 37 | 29 | 16 | 1.0 s | 1.5 s |
+
+**The repair is not set aside.** The strict rewrite passes 31 of 37 refused sentences, 22 of them still saying something (against today's second draft passing about 60% of refused turns). Started alongside the first check (2.4 s for these sentences), the rewrite's own second is hidden, so a refused first sentence could be replaced about 1.5 s after the refusal instead of waiting for a redrafted reply. These are Gemini's sentences, not the game's own refused ones. Next, under his order (speech 2): the strict rewrite wired into the bench's real turns behind a switch, and the waits of 5 s or more measured before and after, on a newcomer's real questions.

@@ -3,10 +3,10 @@
  "kicker": "LEDGER · Monday 26 October, night · three decisions",
  "title": "Darren's delivery and the fast checker",
  "how": [
-  "Shortfalls first. The fast checker failed both tries: the first was too slow; the second is fast (0.05 s beside the game) but would let 2 of the 42 invented details through where Haiku alone lets 1. Darren's voice can be livelier only by speaking each line whole, or with a new reference voice.",
+  "Shortfalls first. The fast checker's third try holds your bar (it lets nothing invented through that Haiku would stop) but clears only 3% of true first sentences, mostly 'I couldn't tell you'. The test found something worse: Haiku's own check, as the game runs it, lets 6 to 8% of invented first sentences through, one of them Sheila denying the second book exists.",
   "Pick one answer in each; the first is recommended. Anything you do not pick carries onto the next page."
  ],
- "foot": "Nothing bought or signed up for. Nothing in the game has changed for the checker.",
+ "foot": "Nothing bought or signed up for. Nothing in the game has changed. Your third-try answer is recorded and gone from this page.",
  "sections": [
   {
    "kind": "listen",
@@ -17,33 +17,70 @@
      "name": "Darren",
      "line": "Tell you what, I can get you anything, me. Radio, pager, a lift to Grimsby. Mates' rates. / I never saw nothing. Well. I saw a bit. Depends who's asking, doesn't it, and what it's worth. / A shape's not much to go on. Half the town could pass for that on a night like this. / You'd know him again, that's something. Next time that face shows, you sing out. / The new owner and a broken window on Quay Street. That'll travel faster than the tide does.",
      "takes": [
-      {"label": "A", "audio": "production/approvals/2026-10-27-voices/darren-delivery-A.wav"},
-      {"label": "B", "audio": "production/approvals/2026-10-27-voices/darren-delivery-B.wav"}
+      {
+       "label": "A",
+       "audio": "production/approvals/2026-10-27-voices/darren-delivery-A.wav"
+      },
+      {
+       "label": "B",
+       "audio": "production/approvals/2026-10-27-voices/darren-delivery-B.wav"
+      }
      ]
     }
    ],
-   "options": [["A", "A"], ["B", "B"], ["neither", "Neither: both too flat"]],
+   "options": [
+    [
+     "A",
+     "A"
+    ],
+    [
+     "B",
+     "B"
+    ],
+    [
+     "neither",
+     "Neither: both too flat"
+    ]
+   ],
    "detail": "The same five lines in the same voice (the Newcastle voice you picked), same loudness, heard blind: one is spoken as the game speaks now, the other another way. Measured, not a gate: both pass every voice check; one moves its pitch more (5.2 against 4.6, a semitone measure); both start in 0.2 s. Your note on A of this afternoon: very robotic and unemotional. Temperature and other settings were tried and change nothing; the rest of the flatness is in the reference recording, which is read newspaper sentences."
   },
   {
    "kind": "decide",
-   "key": "checker-next-2026-10-26",
-   "name": "The fast checker failed both tries. What next?",
+   "key": "checker-third-2026-10-26",
+   "name": "The checker passes but clears 3%. Put it in the game?",
    "options": [
-    ["stop", "Stop it: keep Haiku alone; next, why Haiku refuses true sentences (recommended)"],
-    ["jev", "Sign up for TypeSafe's Jev so it can be measured (your account)"],
-    ["third", "Allow a third try: stricter, clearing fewer sentences"]
+    [
+     "no",
+     "No: keep Haiku alone; next, stop Haiku letting inventions through (recommended)"
+    ],
+    [
+     "switch",
+     "Yes, behind a switch, measured live with the voice first"
+    ],
+    [
+     "more",
+     "Try once more, aiming to clear more"
+    ]
    ],
-   "note": "Trained on Gemini's 5,006 labelled sentences ($0.91 of your $10). Try 1 read every fact: safe, but 0.25 s against your 0.15 s. Try 2 read only the 6 closest facts: 0.05 s beside the game, 3 answers in 1,380 over 0.15 s, no frame drop; it would clear a third of real first sentences about a second sooner. But it clears one invented detail Haiku catches, so the game would let 2 of 42 through, against Haiku's 1, your bar. A fresh reviewer checked every number and caught that. Your order names Jev next; it needs your sign-up, and its round trip to the US alone is about 0.1 s, so 0.15 s is very unlikely. Every first sentence Haiku refuses is heard at 5 s or later, and some it refuses look true (Ron's 'two drivers on the rank'): that is where the time is."
+   "note": "Your third try, done as you set it: 2,151 near-miss training sentences, 10 facts read, a strict cut-off fixed before the test, and 617 more test sentences labelled by Gemini and spot-checked by a fresh reviewer (77 of 80 agreed). With the checker in front, the game lets through exactly what Haiku alone does (35 of 308 sentences, 1 of 42 details), and a reviewer read all 9 sentences it clears: none invented. But those 9 are 3% of the true ones, mostly refusals to guess, so replies would rarely start sooner. It answers in 0.07 s beside the game (4 answers in 982 over 0.15 s); no frame stall. The bigger finding: a reviewer read the 35 invented sentences Haiku passed, and 18 to 23 really are invented, among them Sheila saying 'your uncle never kept two sets of books', and Mickey dying 'in his flat upstairs'. Haiku also refuses 31% of true sentences, and takes 2.4 s a sentence. $1.51 of Gemini's $10 and $6.21 of the slow-reply $10 spent."
   },
   {
    "kind": "decide",
    "key": "darren-reference-2026-10-26",
    "name": "If Darren still sounds flat: where does a livelier voice come from?",
    "options": [
-    ["actor", "A north-east actor records a lively reference; I price options first, nothing booked (recommended)"],
-    ["cv", "A speaker from Mozilla's Common Voice (your account; its terms read first)"],
-    ["keep", "Keep this voice"]
+    [
+     "actor",
+     "A north-east actor records a lively reference; I price options first, nothing booked (recommended)"
+    ],
+    [
+     "cv",
+     "A speaker from Mozilla's Common Voice (your account; its terms read first)"
+    ],
+    [
+     "keep",
+     "Keep this voice"
+    ]
    ],
    "note": "The voice engine copies the style of the recording it is given; Darren's is a man reading newspaper sentences, so no setting makes him lively. A hired actor gives a recording made for him, with clear rights for a sold game, at a fee you see first. Common Voice has spontaneous speech, but downloading needs an account only you can open, and its terms on using a person's voice need reading. His face and lines stay as they are."
   }
