@@ -208,6 +208,10 @@ def run(n, prewarm=False, early=False, voice="nano", live=False, checker=None, p
             continue
         row["reply"] = r.get("reply")
         row["helperMs"] = r.get("ms")
+        # THE TURN'S OWN STEPS (26 October, the slow replies: his order counts 5 s waits before and after;
+        # a first sentence that failed its check shows as "first-flagged", a second draft as "redraft")
+        row["steps"] = r.get("steps")
+        row["went"] = r.get("went")
         row["replyWhole"] = tr - t0
         if not spoke:
             row["firstWords"] = row["firstSentence"] = tr - t0

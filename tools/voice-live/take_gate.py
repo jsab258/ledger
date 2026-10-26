@@ -56,7 +56,9 @@ def spell(n):
 def norm(s):
     s = re.sub(r"^\([^)]*\)", "", s).lower().replace("-", " ").replace("anymore", "any more")
     s = re.sub(r"\d+", lambda m: " " + spell(m.group()) + " ", s)
-    return re.sub(r"[^a-z' ]", " ", s).split()
+    # a word's own apostrophe stays ("don't"), a possessive's trailing one goes: "Mates' rates" was scored
+    # a wrong word on every take, since the transcript writes "Mates rates" (26 October, Darren's review)
+    return [w.strip("'") for w in re.sub(r"[^a-z' ]", " ", s).split() if w.strip("'")]
 
 
 def wer(ref, hyp):
