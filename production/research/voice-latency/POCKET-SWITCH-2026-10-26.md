@@ -34,3 +34,18 @@ On 21 October, everyone on the card, the same script gave Sheila 2.16 and 3.07 s
 - The frame stalls the voice caused on the card (set aside 25 October, VOICE-ON-CARD-TRACE-2026-10-25.md) are now Darren's alone; not measured again here.
 - A friend's PC: Pocket's Python lives only on this PC (F:), so a copy of the game elsewhere would speak all three on Nano. Making Pocket portable belongs with a friends' build, not in this week's order.
 - An unattended editor run of -AskScript needs -TalkHelper= pointing at a built talk program (the repo's own build of it is from 23 September); the packaged game carries its own and is the better place to measure anyway.
+
+## Darren too (26 October, evening)
+
+His page's pick A (VCTK p286, a Newcastle man of 23; production/casting/darren-milner/voice-2026-10-26/REVIEW.md) is Darren's voice in Pocket: his reference in game-design/pocket-voices/sam.wav (out of git; F:/LedgerTools/game-inputs holds it and the build copies it into the played game's voice folder), voice-engines.json gives sam to Pocket, pocket-server.py reads that folder before the cast clips; his two thinking sounds remade from the new voice and gated (England, every word, no holes). The same packaged test (F:/LedgerTools/latency/pocket-switch-2026-10-26/ask-packaged-all-pocket.json):
+
+| Line | Who | First sound | Whole answer heard |
+|---|---|---|---|
+| 1 | Darren (Pocket) | 0.46 s | 3.84 s |
+| 2 | Sheila | 0.24 s | 3.60 s |
+| 3 | Ron | 0.19 s | 3.03 s |
+| 4 | Darren | 0.21 s | 6.34 s |
+| 5 | Sheila | 0.23 s | 6.24 s |
+| 6 | Ron | 0.21 s | 6.60 s |
+
+Darren on the card that afternoon: 2.75 and 2.52 s. Nothing of the cast's speech now runs on the graphics card (the card's voice stays loaded for the town's other speakers).
