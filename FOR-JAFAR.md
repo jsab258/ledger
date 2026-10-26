@@ -129,10 +129,9 @@ No decision asked: these are for watching the street change.
 
 ### Needs you
 
-1. **Send the request to Anthropic (yours to send):** the draft is in production/research/invented-claims/ANTHROPIC-REQUEST-2026-10-26.md, to Anthropic's support from the account that holds the game's key. Nothing is trained on Haiku's labels until they answer.
-2. **Leave Marvelous open with the bridge running** (recommended): Tom's jacket jobs run through it; if you close it, one click on LEDGER bridge next time.
-3. **The office's small shadows at High** (on tomorrow's page): two tries failed and are set aside; next, raise shadow quality only while the camera is inside the room (no cost in the street). Recommended: yes.
-4. **The slow replies' measurements cost more than $1 a day** (on tomorrow's page): about $1.60 for each 60-turn bench run, some $8 over the week for the before, the two existing switches and the after. Recommended: allow it for this item.
+1. **Leave Marvelous open with the bridge running** (recommended): Tom's jacket jobs run through it; if it is closed, one click on LEDGER bridge next time.
+
+Your evening answers are recorded (shadows inside the office: yes; $10 for the slow-reply tests; the checker trained on Gemini's labels, no letter to Anthropic).
 
 ### Road to worth playing (PLAN.md)
 
