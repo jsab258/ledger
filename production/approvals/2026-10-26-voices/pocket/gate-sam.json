@@ -1,0 +1,17 @@
+{
+ "reference": "game-design/picked-clips/sam.p241.mp3",
+ "takes": [
+  {
+   "file": "production/approvals/2026-10-26-voices/pocket/sam-1.wav",
+   "text": "Alright? Darren. You'll have heard of me. No? You will, give it a week."
+  },
+  {
+   "file": "production/approvals/2026-10-26-voices/pocket/sam-2.wav",
+   "text": "Tell you what, I can get you anything, me. Radio, pager, a lift to Grimsby. Mates' rates."
+  },
+  {
+   "file": "production/approvals/2026-10-26-voices/pocket/sam-3.wav",
+   "text": "I never saw nothing. Well. I saw a bit. Depends who's asking, doesn't it, and what it's worth."
+  }
+ ]
+}

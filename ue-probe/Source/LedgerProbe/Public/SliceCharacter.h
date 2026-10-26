@@ -187,6 +187,16 @@ private:
 	bool TryStartSit();
 	void SitTick(float DeltaSeconds);
 	void SitProofTick(float DeltaSeconds);
+	// HIS STOPS CHOSEN KINGDOM COME II'S WAY (his answer of 26 October, the walk's third try; -TomStopChosen): when
+	// the walk is let go, Epic's own forward stop for the foot that is planted is played whole as a montage, from
+	// the moment in it where the same foot is in the same quarter of its stance and the clip's remaining walk lies
+	// in Kingdom Come II's walk window (0.6 to 2.1 m), its root motion carrying the mover; a push ends it.
+	UPROPERTY()
+	TObjectPtr<class UAnimMontage> StopMontage;
+	float ContactFor[2] = { 0.0f, 0.0f };   // how long each foot has been planted (its contact curve over a half)
+	float StanceSeconds = 0.55f;            // a planted spell's usual length, learned as he walks
+	void StopTick(float WasIn, float NowIn);
+	bool TryStartStop();
 	// One step's sound from foot F (0 left, 1 right); false when too soon after the last.
 	bool SoundStep(int32 F, bool bRun, float Speed, const TCHAR* From, float T);
 

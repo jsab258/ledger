@@ -1,5 +1,5 @@
 {
-  "updated": "Sunday 25 October 2026, 23:37",
+  "updated": "Monday 26 October 2026, 9:01",
   "here": 1,
   "friends_eta": "around January",
   "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
@@ -202,7 +202,8 @@
       "2026-10-21",
       "2026-10-22",
       "2026-10-23",
-      "2026-10-24"
+      "2026-10-24",
+      "2026-10-26"
     ],
     "gap_note": "No pictures from 9 to 20 October: the PC was off."
   },
@@ -310,6 +311,24 @@
     ]
   },
   "carried": [
+    {
+      "id": "o26-walk-third",
+      "status": "open",
+      "text": "His answer of 26 October: the walk's third, researched try: stops chosen Kingdom Come II's way (-TomStopChosen); the re-stepping stop now plants cleanly, Epic's own forward stop still skims the trailing foot 10 to 13 cm, the run's start unseen at the game's camera. On his page for his eye (https://claude.ai/artifact/8LsucbjBtuCj1QyaRamqpB); no fourth try. Evidence so far: production/research/sit-and-turn/WALK-2026-10-25.md (Third try)",
+      "his": false
+    },
+    {
+      "id": "o26-sit-third",
+      "status": "set aside",
+      "text": "His answer of 26 October: the sit's third try, its clip played from its beginning, checked against Epic's own mannequin filmed alone. Hips 8.9 cm from the seat's point, 49.6 cm up; the held foot and the tiptoe slide gone",
+      "his": false
+    },
+    {
+      "id": "o26-listening-test",
+      "status": "open",
+      "text": "His answer of 26 October: each person's three sheet lines in the cast voice and in Pocket, gated (Pocket's Darren drifted American on all three and stays in the cast voice); Sheila and Ron on his page with the prepared-lines question (https://claude.ai/artifact/8LsucbjBtuCj1QyaRamqpB; production/approvals/2026-10-26/page.json)",
+      "his": false
+    },
     {
       "id": "o21-7-walk",
       "status": "carried over",

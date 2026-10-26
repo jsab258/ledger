@@ -1,0 +1,51 @@
+{
+ "reference": "game-design/picked-clips/rocco.p227.mp3",
+ "rules": {
+  "werMax": 0.15,
+  "likenessMin": 0.45,
+  "americanWindow": 0.3,
+  "americanRunMaxS": 3.0,
+  "americanWholeMax": 0.5
+ },
+ "takes": [
+  {
+   "file": "production/approvals/2026-10-26-voices/cast/rocco-1.wav",
+   "text": "Forty years on the docks and they finished it with a letter. Mickey gave me the door. I don't forget that.",
+   "accentTop": "england",
+   "want": 1.0,
+   "american": 0.0,
+   "worstWindowAmerican": 0.0,
+   "americanRunS": 0.0,
+   "heard": "40 years on the docks and they finished it with a letter. Mickey gave me the door. I don't forget that.",
+   "wer": 0.0,
+   "likeness": 0.68,
+   "verdict": "PASS"
+  },
+  {
+   "file": "production/approvals/2026-10-26-voices/cast/rocco-2.wav",
+   "text": "You want to stand there, son, you stand where I can see you. That's all I ask.",
+   "accentTop": "england",
+   "want": 0.94,
+   "american": 0.06,
+   "worstWindowAmerican": 1.0,
+   "americanRunS": 4.5,
+   "heard": "You want to stand there, son? You stand where I can see you. That's all I ask.",
+   "wer": 0.0,
+   "likeness": 0.62,
+   "verdict": "FAIL:american"
+  },
+  {
+   "file": "production/approvals/2026-10-26-voices/cast/rocco-3.wav",
+   "text": "Nobody's asked me yet. When they do, I'll tell them the truth, and I'll tell you first.",
+   "accentTop": "england",
+   "want": 1.0,
+   "american": 0.0,
+   "worstWindowAmerican": 0.0,
+   "americanRunS": 0.0,
+   "heard": "Nobody's asked me yet. When they do, I'll tell them the truth, and I'll tell you first.",
+   "wer": 0.0,
+   "likeness": 0.74,
+   "verdict": "PASS"
+  }
+ ]
+}

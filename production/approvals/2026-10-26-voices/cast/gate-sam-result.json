@@ -1,0 +1,51 @@
+{
+ "reference": "game-design/picked-clips/sam.p241.mp3",
+ "rules": {
+  "werMax": 0.15,
+  "likenessMin": 0.45,
+  "americanWindow": 0.3,
+  "americanRunMaxS": 3.0,
+  "americanWholeMax": 0.5
+ },
+ "takes": [
+  {
+   "file": "production/approvals/2026-10-26-voices/cast/sam-1.wav",
+   "text": "Alright? Darren. You'll have heard of me. No? You will, give it a week.",
+   "accentTop": "england",
+   "want": 1.0,
+   "american": 0.0,
+   "worstWindowAmerican": 0.0,
+   "americanRunS": 0.0,
+   "heard": "Alright, Theron, you'll have heard of me. No, you will give it a week.",
+   "wer": 0.07,
+   "likeness": 0.54,
+   "verdict": "PASS"
+  },
+  {
+   "file": "production/approvals/2026-10-26-voices/cast/sam-2.wav",
+   "text": "Tell you what, I can get you anything, me. Radio, pager, a lift to Grimsby. Mates' rates.",
+   "accentTop": "england",
+   "want": 1.0,
+   "american": 0.0,
+   "worstWindowAmerican": 1.0,
+   "americanRunS": 4.5,
+   "heard": "Tell you what, I can get you anything, me. Radio, pager, a lift to Grimsby. Mates is rates.",
+   "wer": 0.12,
+   "likeness": 0.72,
+   "verdict": "FAIL:american"
+  },
+  {
+   "file": "production/approvals/2026-10-26-voices/cast/sam-3.wav",
+   "text": "I never saw nothing. Well. I saw a bit. Depends who's asking, doesn't it, and what it's worth.",
+   "accentTop": "england",
+   "want": 1.0,
+   "american": 0.0,
+   "worstWindowAmerican": 0.95,
+   "americanRunS": 3.5,
+   "heard": "I never saw nothing. Well, I saw a bit. Depends who's asking, doesn't it? And what it's worth.",
+   "wer": 0.0,
+   "likeness": 0.64,
+   "verdict": "FAIL:american"
+  }
+ ]
+}

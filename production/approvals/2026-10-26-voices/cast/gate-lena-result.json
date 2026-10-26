@@ -1,0 +1,51 @@
+{
+ "reference": "game-design/picked-clips/lena.p267.wav",
+ "rules": {
+  "werMax": 0.15,
+  "likenessMin": 0.45,
+  "americanWindow": 0.3,
+  "americanRunMaxS": 3.0,
+  "americanWholeMax": 0.5
+ },
+ "takes": [
+  {
+   "file": "production/approvals/2026-10-26-voices/cast/lena-1.wav",
+   "text": "Thirty-one years I've kept Mickey's books, love. I know what every fare cost and who never paid it.",
+   "accentTop": "england",
+   "want": 1.0,
+   "american": 0.0,
+   "worstWindowAmerican": 0.0,
+   "americanRunS": 0.0,
+   "heard": "Thirty-one years I've kept Mickey's books. Love. I know what every fare cost and who never paid it.",
+   "wer": 0.0,
+   "likeness": 0.82,
+   "verdict": "PASS"
+  },
+  {
+   "file": "production/approvals/2026-10-26-voices/cast/lena-2.wav",
+   "text": "Sit down, you're making the place look untidy. Now, what is it you think you want to know?",
+   "accentTop": "australia",
+   "want": 0.0,
+   "american": 0.0,
+   "worstWindowAmerican": 0.0,
+   "americanRunS": 0.0,
+   "heard": "Sit down, you're making the place look untidy. Now what is it you think you want to know?",
+   "wer": 0.0,
+   "likeness": 0.82,
+   "verdict": "FAIL:accent:australia"
+  },
+  {
+   "file": "production/approvals/2026-10-26-voices/cast/lena-3.wav",
+   "text": "I saw what I saw. Whether I tell anybody else is a different question, isn't it.",
+   "accentTop": "australia",
+   "want": 0.0,
+   "american": 0.0,
+   "worstWindowAmerican": 0.0,
+   "americanRunS": 0.0,
+   "heard": "I saw what I saw. Whether I tell anybody else is a different question, isn't it?",
+   "wer": 0.0,
+   "likeness": 0.77,
+   "verdict": "FAIL:accent:australia"
+  }
+ ]
+}

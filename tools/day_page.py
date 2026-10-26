@@ -81,6 +81,9 @@ def publishable(spec):
             p["src"] = pub(p["src"], tag)
         for t in s.get("takes", []):
             t["audio"] = pub(t["audio"], tag)
+        for person in s.get("people", []):
+            for t in person.get("takes", []):
+                t["audio"] = pub(t["audio"], tag)
         for c in s.get("clips", []):
             c["audio"] = pub(c["audio"], tag)
             c["sprite"]["file"] = pub(c["sprite"]["file"], tag)
@@ -205,6 +208,20 @@ function render(){
         row.append(b);
       }
       sec.append(row, el("div", {class:"row"}, el("q", {text:s.line})), picks(s.key, s.options, st.pick));
+      if (s.detail) sec.append(el("details", {}, el("summary", {text:"What was measured"}), el("p", {class:"was", text:s.detail})));
+    } else if (s.kind === "listen") {
+      // SEVERAL PEOPLE, EACH IN TWO VOICES, ONE PICK (26 October: his listening test inside the page's three decisions)
+      for (const p of s.people) {
+        const row = el("div", {class:"row"}, el("div", {class:"take", text:p.name}));
+        for (const t of p.takes) {
+          const b = el("button", {type:"button", text:"Play " + t.label});
+          b.addEventListener("click", () => play(t.audio, b));
+          row.append(b);
+        }
+        sec.append(row, el("div", {class:"row"}, el("q", {text:p.line})));
+      }
+      sec.append(picks(s.key, s.options, st.pick));
+      if (s.detail) sec.append(el("details", {}, el("summary", {text:"What was measured"}), el("p", {class:"was", text:s.detail})));
     } else if (s.kind === "said") {
       // A FACE FILMED SAYING A LINE, played in time with its own sound.
       for (const c of s.clips) {

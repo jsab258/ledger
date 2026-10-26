@@ -1,0 +1,88 @@
+{
+ "model": "Jzuluaga/accent-id-commonaccent_ecapa",
+ "want": "england",
+ "reject_at": 0.3,
+ "files": [
+  {
+   "file": "production/approvals/2026-10-26-voices/pocket/lena-1.wav",
+   "verdict": "PASS",
+   "top": "england",
+   "p_top": 1.0,
+   "second": "wales",
+   "p_second": 0.0,
+   "p_american": 0.0
+  },
+  {
+   "file": "production/approvals/2026-10-26-voices/pocket/lena-2.wav",
+   "verdict": "PASS",
+   "top": "england",
+   "p_top": 1.0,
+   "second": "ireland",
+   "p_second": 0.0,
+   "p_american": 0.0
+  },
+  {
+   "file": "production/approvals/2026-10-26-voices/pocket/lena-3.wav",
+   "verdict": "PASS",
+   "top": "england",
+   "p_top": 1.0,
+   "second": "ireland",
+   "p_second": 0.0,
+   "p_american": 0.0
+  },
+  {
+   "file": "production/approvals/2026-10-26-voices/pocket/rocco-1.wav",
+   "verdict": "PASS",
+   "top": "england",
+   "p_top": 1.0,
+   "second": "australia",
+   "p_second": 0.0,
+   "p_american": 0.0
+  },
+  {
+   "file": "production/approvals/2026-10-26-voices/pocket/rocco-2.wav",
+   "verdict": "PASS",
+   "top": "england",
+   "p_top": 1.0,
+   "second": "us",
+   "p_second": 0.0,
+   "p_american": 0.0
+  },
+  {
+   "file": "production/approvals/2026-10-26-voices/pocket/rocco-3.wav",
+   "verdict": "PASS",
+   "top": "england",
+   "p_top": 1.0,
+   "second": "wales",
+   "p_second": 0.0,
+   "p_american": 0.0
+  },
+  {
+   "file": "production/approvals/2026-10-26-voices/pocket/sam-1.wav",
+   "verdict": "REVIEW",
+   "top": "scotland",
+   "p_top": 0.932,
+   "second": "us",
+   "p_second": 0.059,
+   "p_american": 0.059
+  },
+  {
+   "file": "production/approvals/2026-10-26-voices/pocket/sam-2.wav",
+   "verdict": "PASS",
+   "top": "england",
+   "p_top": 0.957,
+   "second": "scotland",
+   "p_second": 0.038,
+   "p_american": 0.005
+  },
+  {
+   "file": "production/approvals/2026-10-26-voices/pocket/sam-3.wav",
+   "verdict": "PASS",
+   "top": "england",
+   "p_top": 0.944,
+   "second": "australia",
+   "p_second": 0.05,
+   "p_american": 0.0
+  }
+ ]
+}

@@ -5,7 +5,7 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
 
 ## Overview (Sunday 25 October, evening: your week's order)
 
-**Your order of 25 October evening, to Monday 2 November 13:00** (production/orders/2026-10-25.md, every item and study with a status; work stops tonight at 01:00, your change, until you say continue).
+**Your order of 25 October evening, to Monday 2 November 13:00** (production/orders/2026-10-25.md, every item and study with a status; 26 October: work stops at 12:00 at the latest, until you say continue).
 - **Phase 1 is open, not closed.** It failed its first exit check on 22 October. Fresh reviewers re-run that check once the walk, the clothes and speech pass; phase 2 waits for it, and the shops already in the street stay.
 - **Recorded:** your rulings (RULINGS.md and DECISIONS.md); the study's order for both weeks at the top of the study plan; the order ledger, seeded with everything still open from before (21 and 23 October's leftovers, the cloud week's four questions, the three shops not yet in the street, FINDINGS' twenty faults, your two clicks on the old archive). A new check fails any push where an item has no status or vanishes without being done or dropped.
 - **Done:** the health check (production/audits/health-2026-10-25.md); your progress page now has the studies bar and the 33 carried items.
@@ -131,11 +131,10 @@ No decision asked: these are for watching the street change.
 
 ### Needs you
 
-1. **The walk and the sit: a third try each?** Walk: eight of ten moments pass by eye; the stop's re-step (10 to 11 cm) and the run's start (about 4.5 cm) fail after two tries. Sit: he lands on the seat, but the sit-down looks wrong after two tries. Recommended: **allow a third, researched try for both**: stops picked Kingdom Come II's way, by distance and stride; the sit's clip started from its beginning, checked against Epic's own sample. Or: judge the walk's two moments by eye at the game's camera. Or: leave both set aside.
-2. **Speech: the cast voice is the slow part.** It takes 2.8 s on the card beside the game, the model and check 1.9 s, and it causes the frame stalls above. Recommended: **live lines in Pocket on the processor (about 2.1 s estimated, measured next), if a listening test passes its accent.** Or: keep the cast voice and accept about 3.5 to 4 s. Or: allow one more voice attempt, against your 7 October ruling.
-3. **Marvelous Designer, ready now:** Tom's outfit target is set (Study 6). Please sign up for the one paid month (not a trial). Its terms page could not be reached from here; I read the licence as shown at sign-up before anything goes in. Note: the pricing page shows 23.3 a month billed yearly, and the Personal plan is for "eligible freelancers and sole proprietors".
-
-Your answers of 25 October are recorded (RULINGS.md): Warhorse's tools left out; no recordings and no checkpoint stop; your friends play on your PC, so the voice on the card is fine for their evening.
+**Today's page, three taps:** https://claude.ai/artifact/8LsucbjBtuCj1QyaRamqpB
+1. **Pocket for Sheila and Ron:** their three sheet lines in the cast voice and in Pocket. Recommended: both pass, if your ear agrees (accent England on every line; likeness to the approved voices lower). Darren's Pocket drifted American, so he keeps the cast voice.
+2. **Their prepared lines move with them,** so each keeps one voice. Recommended: yes.
+3. **Tom's walk at the game's camera,** after the third try: pass makes it the default. The re-stepping stop now plants cleanly; Epic's own forward stop still skims the trailing foot 10 to 13 cm.
 
 ### Road to worth playing (PLAN.md)
 

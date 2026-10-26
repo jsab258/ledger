@@ -1,0 +1,116 @@
+{
+ "tab": "Monday's Decisions",
+ "kicker": "LEDGER · Monday 26 October · three decisions",
+ "title": "Pocket's voices and Tom's walk",
+ "how": [
+  "Shortfalls first. The first spoken answer takes 4.14 s with the cast voice against your 2 s, and the cast voice also stalls the game's frame while it speaks. Tom's walk still has moments that slide after its third try, and Tom's sit-down fails at the window seat (set aside).",
+  "Pick one answer in each; the first is recommended. Anything you do not pick carries onto the next page."
+ ],
+ "foot": "Darren is not on this page: Pocket's Darren drifted American on all three of his lines, so he keeps the cast voice. Nothing bought or signed up for.",
+ "sections": [
+  {
+   "kind": "listen",
+   "key": "listen-pocket-2026-10-26",
+   "name": "Pocket for Sheila and Ron: does it pass your ear?",
+   "people": [
+    {
+     "name": "Sheila",
+     "line": "Thirty-one years I've kept Mickey's books, love. I know what every fare cost and who never paid it. / Sit down, you're making the place look untidy. Now, what is it you think you want to know? / I saw what I saw. Whether I tell anybody else is a different question, isn't it.",
+     "takes": [
+      {
+       "label": "cast voice",
+       "audio": "production/approvals/2026-10-26-voices/lena-cast.wav"
+      },
+      {
+       "label": "Pocket",
+       "audio": "production/approvals/2026-10-26-voices/lena-pocket.wav"
+      }
+     ]
+    },
+    {
+     "name": "Ron",
+     "line": "Forty years on the docks and they finished it with a letter. Mickey gave me the door. I don't forget that. / You want to stand there, son, you stand where I can see you. That's all I ask. / Nobody's asked me yet. When they do, I'll tell them the truth, and I'll tell you first.",
+     "takes": [
+      {
+       "label": "cast voice",
+       "audio": "production/approvals/2026-10-26-voices/rocco-cast.wav"
+      },
+      {
+       "label": "Pocket",
+       "audio": "production/approvals/2026-10-26-voices/rocco-pocket.wav"
+      }
+     ]
+    }
+   ],
+   "options": [
+    [
+     "both",
+     "Both pass: their live lines move to Pocket (recommended)"
+    ],
+    [
+     "sheila",
+     "Sheila only"
+    ],
+    [
+     "ron",
+     "Ron only"
+    ],
+    [
+     "neither",
+     "Neither: both keep the cast voice"
+    ]
+   ],
+   "detail": "Each says three sheet lines, first in the cast voice as the game has it now, then in Pocket on the processor, both learned from the same cast clip and set to the same loudness. Measured (a screen, never a gate): Pocket's accent reads England on all six lines; its likeness to the approved voice is lower, 0.54 to 0.60 for Sheila (the cast voice 0.77 to 0.82) and 0.58 to 0.65 for Ron (0.62 to 0.74; in September 0.51 to 0.58 was heard as another man); every word right. With Pocket the first sound is estimated at about 2.1 s (not yet measured whole), against 4.14 s, and their lines no longer stall the frame."
+  },
+  {
+   "kind": "decide",
+   "key": "prepared-pocket-2026-10-26",
+   "name": "Their prepared lines move with them?",
+   "options": [
+    [
+     "move",
+     "Yes: whoever moves to Pocket takes all their lines, so each keeps one voice (recommended)"
+    ],
+    [
+     "stay",
+     "No: prepared lines stay in the cast voice"
+    ]
+   ],
+   "note": "Prepared lines are made ahead of time (the thinking sounds and the short ready answers); live lines are made as the person answers. If only the live lines moved, Sheila or Ron would switch between two voices from one line to the next. Darren keeps the cast voice for every line."
+  },
+  {
+   "kind": "look",
+   "key": "walk-by-eye-2026-10-26",
+   "name": "Tom's walk at the game's camera: do these moments pass your eye?",
+   "pictures": [
+    {
+     "src": "production/approvals/2026-10-26/walk-second-stop-chosen.webp",
+     "alt": "The stop that re-stepped, now with the chosen stop (half speed)"
+    },
+    {
+     "src": "production/approvals/2026-10-26/walk-second-stop-own.webp",
+     "alt": "The same stop without the chosen stop: last night's re-step (half speed)"
+    },
+    {
+     "src": "production/approvals/2026-10-26/walk-first-stop-chosen.webp",
+     "alt": "The first stop, with Epic's chosen stop clip (half speed)"
+    },
+    {
+     "src": "production/approvals/2026-10-26/walk-run-start-chosen.webp",
+     "alt": "The run's start (half speed): the camera swings with him, so a small slide cannot be seen here"
+    }
+   ],
+   "options": [
+    [
+     "pass",
+     "They pass: this walk becomes the default"
+    ],
+    [
+     "fail",
+     "They fail: the walk stays as it is now"
+    ]
+   ],
+   "detail": "The third try chose each stop Kingdom Come II's way: Epic's forward stop for the planted foot, from the point where its stance quarter matches his and its remaining walk lies in 0.6 to 2.1 m, played whole. A fresh reviewer, frame by frame: the stop that re-stepped now reads as one clean plant (last night's shows the re-step and a shuffle); at the first stop the trailing foot skims about 10 to 13 cm as it settles, about the same with or without the chosen stop (Epic's own clip drags it); he stops about half a second later than before. The run's start measures about 4.5 cm, which this camera's swing and blur hide. The test yard ends in white with a hillside floating beyond it: the test's place, not the street."
+  }
+ ]
+}

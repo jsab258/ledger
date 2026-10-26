@@ -1,0 +1,65 @@
+[
+ {
+  "who": "lena",
+  "n": 1,
+  "text": "Thirty-one years I've kept Mickey's books, love. I know what every fare cost and who never paid it.",
+  "wav": "production/approvals/2026-10-26-voices/pocket/lena-1.wav",
+  "seconds": 5.54
+ },
+ {
+  "who": "lena",
+  "n": 2,
+  "text": "Sit down, you're making the place look untidy. Now, what is it you think you want to know?",
+  "wav": "production/approvals/2026-10-26-voices/pocket/lena-2.wav",
+  "seconds": 5.3
+ },
+ {
+  "who": "lena",
+  "n": 3,
+  "text": "I saw what I saw. Whether I tell anybody else is a different question, isn't it.",
+  "wav": "production/approvals/2026-10-26-voices/pocket/lena-3.wav",
+  "seconds": 4.43
+ },
+ {
+  "who": "rocco",
+  "n": 1,
+  "text": "Forty years on the docks and they finished it with a letter. Mickey gave me the door. I don't forget that.",
+  "wav": "production/approvals/2026-10-26-voices/pocket/rocco-1.wav",
+  "seconds": 6.93
+ },
+ {
+  "who": "rocco",
+  "n": 2,
+  "text": "You want to stand there, son, you stand where I can see you. That's all I ask.",
+  "wav": "production/approvals/2026-10-26-voices/pocket/rocco-2.wav",
+  "seconds": 5.06
+ },
+ {
+  "who": "rocco",
+  "n": 3,
+  "text": "Nobody's asked me yet. When they do, I'll tell them the truth, and I'll tell you first.",
+  "wav": "production/approvals/2026-10-26-voices/pocket/rocco-3.wav",
+  "seconds": 6.34
+ },
+ {
+  "who": "sam",
+  "n": 1,
+  "text": "Alright? Darren. You'll have heard of me. No? You will, give it a week.",
+  "wav": "production/approvals/2026-10-26-voices/pocket/sam-1.wav",
+  "seconds": 8.49
+ },
+ {
+  "who": "sam",
+  "n": 2,
+  "text": "Tell you what, I can get you anything, me. Radio, pager, a lift to Grimsby. Mates' rates.",
+  "wav": "production/approvals/2026-10-26-voices/pocket/sam-2.wav",
+  "seconds": 6.68
+ },
+ {
+  "who": "sam",
+  "n": 3,
+  "text": "I never saw nothing. Well. I saw a bit. Depends who's asking, doesn't it, and what it's worth.",
+  "wav": "production/approvals/2026-10-26-voices/pocket/sam-3.wav",
+  "seconds": 7.82
+ }
+]

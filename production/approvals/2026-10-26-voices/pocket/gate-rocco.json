@@ -1,0 +1,17 @@
+{
+ "reference": "game-design/picked-clips/rocco.p227.mp3",
+ "takes": [
+  {
+   "file": "production/approvals/2026-10-26-voices/pocket/rocco-1.wav",
+   "text": "Forty years on the docks and they finished it with a letter. Mickey gave me the door. I don't forget that."
+  },
+  {
+   "file": "production/approvals/2026-10-26-voices/pocket/rocco-2.wav",
+   "text": "You want to stand there, son, you stand where I can see you. That's all I ask."
+  },
+  {
+   "file": "production/approvals/2026-10-26-voices/pocket/rocco-3.wav",
+   "text": "Nobody's asked me yet. When they do, I'll tell them the truth, and I'll tell you first."
+  }
+ ]
+}

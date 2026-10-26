@@ -478,7 +478,8 @@ bool ALedgerSliceCharacter::StartGaspMover(USkeletalMeshComponent* M)
 	if (FParse::Param(FCommandLine::Get(), TEXT("GaspShowMannequin")))
 	{
 		Mover->GetMesh()->SetVisibility(true, false);
-		Worn->SetActorHiddenInGame(true);
+		// his body's parts hidden one by one (hiding the worn actor alone left them drawn, 25 October)
+		for (USkeletalMeshComponent* P : Parts) { P->SetHiddenInGame(true); P->SetVisibility(false, true); }
 	}
 	// THE WORN BODY TOUCHES NOTHING (24 October, the first measure: his outfits' bodies blocked the mover's own
 	// capsule, which walked a second and stopped while still pushed), and the hidden mannequin keeps its
@@ -520,9 +521,12 @@ void ALedgerSliceCharacter::GaspTick()
 	}
 	// WHAT THE KEYS, THE PAD AND THE ROUTE ASKED THIS FRAME goes to the mover (his own movement takes none).
 	const FVector In = ConsumeMovementInputVector();
+	const float WasIn = GaspLastIn;
 	GaspLastIn = (float)In.Size();
+	StopTick(WasIn, (float)In.Size());
 	// while he sits (TryStartSit) a push stands him up instead of walking the mover
 	if (SitPhase != ESitPhase::None) { if (In.Size() > 0.3) { bSitWantsUp = true; } }
+	else if (StopMontage != nullptr) { /* a chosen stop carries him (StopTick) */ }
 	else if (!In.IsNearlyZero()) { GaspMover->AddMovementInput(In.GetSafeNormal2D(), FMath::Min(1.0, In.Size())); }
 	// HIS PACE as the sample's input state: walking unless he runs (shift, or the route's run). The sample
 	// picks its gait from that (GetDesiredGait); with a full push and no walk wish it would run.
@@ -766,7 +770,20 @@ void ALedgerSliceCharacter::WalkProofTick(float DeltaSeconds)
 		if (ShotCamera == nullptr && ShotPC != nullptr)
 		{
 			ShotCamera = GetWorld()->SpawnActor<ACameraActor>(GetActorLocation(), FRotator::ZeroRotator);
-			if (ShotCamera != nullptr) { ShotCamera->GetCameraComponent()->SetFieldOfView(40.0f); ShotPC->SetViewTarget(ShotCamera); }
+			// -TomWalkProofGameCam (26 October, his answer: the walk's moments judged by his eye "at the game's
+			// camera"): the pictures through the player's own camera instead of the side one
+			if (ShotCamera != nullptr) { ShotCamera->GetCameraComponent()->SetFieldOfView(40.0f); if (!FParse::Param(FCommandLine::Get(), TEXT("TomWalkProofGameCam"))) { ShotPC->SetViewTarget(ShotCamera); } }
+		}
+		// and the game's camera kept behind him as a player steering would keep it (the route turns him, not
+		// the camera; the first film looked at him side-on with his feet out of the frame)
+		static const bool bGameCam = FParse::Param(FCommandLine::Get(), TEXT("TomWalkProofGameCam"));
+		if (bGameCam && ShotPC != nullptr)
+		{
+			const float Want = GaspMover != nullptr ? GaspMover->GetActorRotation().Yaw : GetActorRotation().Yaw;
+			FRotator R = ShotPC->GetControlRotation();
+			R.Yaw = FMath::FixedTurn(R.Yaw, Want, 90.0f * DeltaSeconds);
+			R.Pitch = -14.0f;
+			ShotPC->SetControlRotation(R);
 		}
 		if (ShotCamera != nullptr)
 		{
@@ -1322,14 +1339,21 @@ bool ALedgerSliceCharacter::TryStartSit()
 		UE_LOG(LogTemp, Warning, TEXT("LedgerSit: no clip %s or no graph"), *Name);
 		return false;
 	}
-	// WHERE IN THE CLIP TO START: where its remaining root travel matches his distance to the seat
+	// FROM THE CLIP'S BEGINNING (his answer of 26 October, the sit's third try): the first two tries started
+	// it where its remaining walk matched his distance (1.80 s in), and a fresh reviewer failed the sit-down
+	// (a foot held in the air, the head folding), as Epic's own mannequin showed too; the sample plays it from
+	// its start and lets the warp window bend the approach. -TomSitMatchStart keeps the old way to compare.
 	const float Len = Entry->GetPlayLength();
-	float Start = 0.0f, BestErr = 1e9f;
-	for (float T = 0.0f; T < Len * 0.9f; T += 1.0f / 30.0f)
+	float Start = 0.0f, BestErr = 0.0f;
+	if (FParse::Param(FCommandLine::Get(), TEXT("TomSitMatchStart")))
 	{
-		const FTransform Rest = Entry->ExtractRootMotionFromTrackRange(T, Len, FAnimExtractContext());
-		const float Err = FMath::Abs((float)Rest.GetTranslation().Size2D() - (float)BestD);
-		if (Err < BestErr) { BestErr = Err; Start = T; }
+		BestErr = 1e9f;
+		for (float T = 0.0f; T < Len * 0.9f; T += 1.0f / 30.0f)
+		{
+			const FTransform Rest = Entry->ExtractRootMotionFromTrackRange(T, Len, FAnimExtractContext());
+			const float Err = FMath::Abs((float)Rest.GetTranslation().Size2D() - (float)BestD);
+			if (Err < BestErr) { BestErr = Err; Start = T; }
+		}
 	}
 	if (UMotionWarpingComponent* Warp = GaspMover->FindComponentByClass<UMotionWarpingComponent>())
 	{
@@ -1476,4 +1500,140 @@ void ALedgerSliceCharacter::SitProofTick(float DeltaSeconds)
 			NextShot = T + 0.1f;
 		}
 	}
+}
+
+// ---- HIS STOPS, CHOSEN KINGDOM COME II'S WAY (his answer of 26 October, the walk's third try) ------------------
+// Kingdom Come II picks each stop from a table by the distance left (0.6 to 2.1 m at a walk) and the quarter of
+// the stride, with a clip for each leg (production/research/aaa-reference/studies/07-animation.md). Here: Epic's
+// two forward walking stops (M_Neutral_Walk_Stop_F_Lfoot, _Rfoot), each read once into a table of moments (which
+// foot its contact curves mark planted, how long it has been down, how long that stance lasts, and how far its
+// root still walks); when the walk is let go, the moment whose planted foot and stance quarter match his own and
+// whose walk left lies in the window is played from there to its end as a montage, its root motion carrying the
+// mover, so no search can change clips half way through a stop (the re-step of 25 October). Only with
+// -TomStopChosen: the walk stays as it is by default until this passes.
+namespace LedgerStop
+{
+	struct FMoment { float T = 0.0f; int32 Foot = -1; float Down = 0.0f; float Stance = 0.0f; float Left = 0.0f; };
+	struct FClip { UAnimSequence* Seq = nullptr; TArray<FMoment> Moments; };
+	TArray<FClip> GClips;
+	FName GSlot;
+	bool bRead = false;
+	const TCHAR* Contact[2] = { TEXT("contact_l"), TEXT("contact_r") };
+
+	void Read()
+	{
+		if (bRead) { return; }
+		bRead = true;
+		if (UAnimMontage* Any = LedgerSit::Clip(TEXT("M_interaction_bench_idle_loop_Montage")))
+		{
+			if (Any->SlotAnimTracks.Num() > 0) { GSlot = Any->SlotAnimTracks[0].SlotName; }
+		}
+		for (const TCHAR* Name : { TEXT("M_Neutral_Walk_Stop_F_Lfoot"), TEXT("M_Neutral_Walk_Stop_F_Rfoot") })
+		{
+			UAnimSequence* Seq = LoadObject<UAnimSequence>(nullptr, *FString::Printf(TEXT("/Game/Characters/UEFN_Mannequin/Animations/Walk/%s.%s"), Name, Name));
+			if (Seq == nullptr) { UE_LOG(LogTemp, Warning, TEXT("LedgerStop: no clip %s"), Name); continue; }
+			Seq->AddToRoot();
+			FClip C;
+			C.Seq = Seq;
+			const float Len = Seq->GetPlayLength();
+			const float Step = 1.0f / 30.0f;
+			TArray<float> Cv[2];
+			for (float T = 0.0f; T <= Len; T += Step)
+			{
+				for (int32 F = 0; F < 2; ++F) { Cv[F].Add(Seq->EvaluateCurveData(FName(Contact[F]), FAnimExtractContext((double)T))); }
+			}
+			const int32 N = Cv[0].Num();
+			for (int32 I = 0; I < N; ++I)
+			{
+				FMoment M;
+				M.T = I * Step;
+				// the planted foot: the one marked down; in double support, the one that came down last
+				int32 Down[2] = { 0, 0 };
+				for (int32 F = 0; F < 2; ++F) { for (int32 J = I; J >= 0 && Cv[F][J] > 0.5f; --J) { ++Down[F]; } }
+				if (Down[0] > 0 && (Down[1] == 0 || Down[0] <= Down[1])) { M.Foot = 0; }
+				else if (Down[1] > 0) { M.Foot = 1; }
+				if (M.Foot >= 0)
+				{
+					int32 Up = 0;
+					for (int32 J = I + 1; J < N && Cv[M.Foot][J] > 0.5f; ++J) { ++Up; }
+					M.Down = Down[M.Foot] * Step;
+					M.Stance = (Down[M.Foot] + Up) * Step;
+				}
+				M.Left = (float)Seq->ExtractRootMotionFromRange(M.T, Len, FAnimExtractContext()).GetTranslation().Size2D();
+				C.Moments.Add(M);
+			}
+			UE_LOG(LogTemp, Display, TEXT("LedgerStop: %s read, %.2f s, %d moments, root motion %s, slot %s"), Name, Len, C.Moments.Num(),
+				Seq->bEnableRootMotion ? TEXT("on") : TEXT("off"), *GSlot.ToString());
+			GClips.Add(C);
+		}
+	}
+}
+
+void ALedgerSliceCharacter::StopTick(float WasIn, float NowIn)
+{
+	static const bool bOn = FParse::Param(FCommandLine::Get(), TEXT("TomStopChosen"));
+	if (!bOn || GaspMover == nullptr) { return; }
+	UAnimInstance* Graph = GaspMover->GetMesh()->GetAnimInstance();
+	if (Graph == nullptr) { return; }
+	const float Dt = GetWorld()->GetDeltaSeconds();
+	// HIS OWN STANCE, LIVE: how long each foot has been marked planted by the pose he is in
+	for (int32 F = 0; F < 2; ++F)
+	{
+		if (Graph->GetCurveValue(FName(LedgerStop::Contact[F])) > 0.5f) { ContactFor[F] += Dt; }
+		else
+		{
+			if (ContactFor[F] > 0.2f && ContactFor[F] < 1.2f) { StanceSeconds = FMath::Lerp(StanceSeconds, ContactFor[F], 0.3f); }
+			ContactFor[F] = 0.0f;
+		}
+	}
+	if (StopMontage != nullptr)
+	{
+		// a push ends the stop; so does its own end
+		if (NowIn > 0.3f) { Graph->Montage_Stop(0.2f, StopMontage); }
+		if (NowIn > 0.3f || !Graph->Montage_IsPlaying(StopMontage))
+		{
+			UE_LOG(LogTemp, Display, TEXT("LedgerStop: done (%s)"), NowIn > 0.3f ? TEXT("a push") : TEXT("its end"));
+			StopMontage = nullptr;
+		}
+		return;
+	}
+	// LET GO while walking: a chosen stop
+	const float Speed = (float)GaspMover->GetVelocity().Size2D();
+	const bool bWalk = GetCharacterMovement()->MaxWalkSpeed <= WalkSpeedCm + 1.0f;
+	if (WasIn > 0.3f && NowIn < 0.05f && bWalk && Speed > 60.0f && SitPhase == ESitPhase::None) { TryStartStop(); }
+}
+
+bool ALedgerSliceCharacter::TryStartStop()
+{
+	LedgerStop::Read();
+	UAnimInstance* Graph = GaspMover->GetMesh()->GetAnimInstance();
+	if (Graph == nullptr || LedgerStop::GClips.Num() == 0 || LedgerStop::GSlot.IsNone()) { return false; }
+	// his planted foot (in double support the one that came down last) and how far through its stance he is
+	int32 Foot = -1;
+	if (ContactFor[0] > 0.0f && (ContactFor[1] <= 0.0f || ContactFor[0] <= ContactFor[1])) { Foot = 0; }
+	else if (ContactFor[1] > 0.0f) { Foot = 1; }
+	if (Foot < 0) { UE_LOG(LogTemp, Display, TEXT("LedgerStop: no foot marked planted; the walk's own stop")); return false; }
+	const float Through = FMath::Clamp(ContactFor[Foot] / FMath::Max(StanceSeconds, 0.2f), 0.0f, 1.0f);
+	const int32 Quarter = Through < 0.5f ? 0 : 1;   // the planted half of the stride, early or late
+	const LedgerStop::FClip* Best = nullptr;
+	const LedgerStop::FMoment* At = nullptr;
+	float BestScore = 1e9f;
+	for (const LedgerStop::FClip& C : LedgerStop::GClips)
+	{
+		for (const LedgerStop::FMoment& M : C.Moments)
+		{
+			if (M.Foot != Foot || M.Stance <= 0.0f || M.Left < 60.0f || M.Left > 210.0f) { continue; }
+			const float MThrough = M.Down / M.Stance;
+			if ((MThrough < 0.5f ? 0 : 1) != Quarter) { continue; }
+			// the nearest point in the stance first, then the shortest walk left (he stops soonest)
+			const float Score = FMath::Abs(MThrough - Through) * 400.0f + M.Left;
+			if (Score < BestScore) { BestScore = Score; Best = &C; At = &M; }
+		}
+	}
+	if (Best == nullptr) { UE_LOG(LogTemp, Display, TEXT("LedgerStop: no moment fits (foot %d, %.2f through); the walk's own stop"), Foot, Through); return false; }
+	Best->Seq->bEnableRootMotion = true;
+	StopMontage = Graph->PlaySlotAnimationAsDynamicMontage(Best->Seq, LedgerStop::GSlot, 0.2f, 0.25f, 1.0f, 1, -1.0f, At->T);
+	UE_LOG(LogTemp, Display, TEXT("LedgerStop: %s from %.2f s (foot %s, %.0f%% through its stance against his %.0f%%, %.0f cm left)"),
+		*Best->Seq->GetName(), At->T, Foot == 0 ? TEXT("left") : TEXT("right"), 100.0f * At->Down / At->Stance, 100.0f * Through, At->Left);
+	return StopMontage != nullptr;
 }

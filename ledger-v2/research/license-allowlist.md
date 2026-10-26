@@ -9,6 +9,7 @@ SHIP-SAFE
 6. Geodata: OSM/Overture as skeleton only, geometry self-generated, OSM attribution shipped, layouts fictionalized.
 7. Fonts: the SIL Open Font Licence (OFL 1.1), which lets a game ship the font; its licence text shipped beside it and the font never sold on its own. Ruled by Jafar 2026-09-30 (Wednesday's page, "call-font", A), first for Marcellus SC on the street's name plates.
 8. Animation (Epic, Unreal-only): Epic's free animation content licensed for use in Unreal Engine products only and not marked NoAI (the Game Animation Sample is marked NoAI by Epic and is in since his ruling of 13 October, for the walk with motion matching; Lyra's mark is read before use), used inside the game only: never exported, sold or used outside an Unreal build. Each pack's own licence is read at download and named in THIRD-PARTY.md. Our MetaHumans already come under the same kind of Epic licence. Ruled by Jafar 2026-09-30 (production/research/townspeople-animation, A).
+9. Garments made in Marvelous Designer on his own Individual (formerly Personal) plan, which he pays monthly himself (his ruling of 25 October; signed up 26 October): its terms (CLO's MD Additional Terms, updated 23 October 2026, and General Terms, 30 March 2026, read 26 October 2026 at legal.clo-set.com) let a self-employed one-person maker use it for his business; he keeps all rights in his work (General Terms 7(h)); no export, attribution or territory limit found. Conditions: one person only (a company or a second user needs the Enterprise plan); proof of self-employment may be asked; every garment exported to our own files before the month ends; no CLO avatar, sample garment, pattern or trim in anything shipped (Additional Terms 4.1, 4.3); CONNECT items only under their Free or Extended licence; no MD AI features. Not stated in the terms: that garments may stay in a sold game after he stops paying (support's written word is his to ask for).
 
 NEVER SHIP
 1. XTTS-v2 or F5-TTS official weights output (non-commercial).
@@ -16,6 +17,7 @@ NEVER SHIP
 3. Hunyuan3D outputs if distribution may include EU, UK or South Korea (territory-excluded license); given Switzerland plus likely EU reach, treat as banned.
 4. Google Photorealistic 3D Tiles as shipped assets.
 5. Real brands, logos, car models, lyrics, likenesses, cloned real voices, celebrity styles.
+   Marvelous Designer's own avatars, sample garments, patterns and trims, and anything made in its free trial.
    "Cloned real voices" means the voices of identifiable real people and public figures. It does NOT cover anonymous volunteers who recorded for speech research under an open licence, such as the University of Edinburgh's VCTK corpus (CC BY 4.0, credited), whose consent is taken to cover cloned game characters as a stated risk on the record. Ruled by Jafar 2026-09-24.
 6. Suno or Udio output until their legal posture is re-verified at ship (Suno lost in Munich 2026-07-31, not final).
 
