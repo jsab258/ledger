@@ -1602,7 +1602,11 @@ def build_and_render(argv):
         # the base station with its desk microphone and coiled lead (the hero prop: a car set on its
         # mains unit, as late-1980s minicab offices had it), turned a little to the window so its
         # face, its knobs and its red channel window read from the street
-        prop("radio-base-station", -1.08, ry0 + 0.29, rz, turn=-0.45)
+        # SQUARE TO THE WINDOW AND ON ITS SHELF (26 October, item 5: the staff view's fresh review found the desk
+        # microphone half off its riser): the model is 0.485 m deep with the microphone's base at its front, so turned
+        # 0.45 it needed 0.575 m of the 0.50 m shelf and its front hung 0.17 m past the shelf's edge; square-on, its
+        # back 1 cm inside the shelf's, all of it stands on the shelf, its face still to the street
+        prop("radio-base-station", -1.08, ry0 + 0.41, rz, turn=0.0)
         # the anglepoise over the desk, its warm pool on the dockets at night; a clipboard of the jobs
         prop("desk-lamp", -1.62, ry0 + 0.35, desk_top, turn=2.6)
         model("clipboard", -0.45, ry0 + 0.18, desk_top, turn=0.3, size=0.32)
@@ -1698,10 +1702,22 @@ def build_and_render(argv):
         # cabinet under it, a fire extinguisher on its bracket
         metre_uvs(box("files_shelf", -W / 2, -W / 2 + 0.30, 2.85, 4.05, 1.78, 1.80, laminate), 0.8)
         ring_steel = mat("ring_steel", (0.55, 0.55, 0.56), rough=0.3)
+        hgts = {}
         for k in range(14):
             yy = 2.88 + k * 0.083
             c = rnd.choice(((0.08, 0.10, 0.22), (0.30, 0.05, 0.04), (0.10, 0.10, 0.10), (0.42, 0.36, 0.20), (0.06, 0.16, 0.10)))
             hgt = rnd.uniform(0.28, 0.34)
+            hgts[k] = hgt
+            # THE GAP THE LAST FILE LEANS INTO (26 October, item 5: the staff view's fresh review found "a binder
+            # through its neighbour": file 13 was tipped about its own middle, its top swinging into file 12). File 12
+            # is taken out (its draws from rnd still made, so every other file keeps its colour and height) and file
+            # 13 leans across the gap onto file 11, below.
+            if k == 12:
+                continue
+            # the leaning file no taller than lets its top corner meet file 11 a centimetre under file 11's top at
+            # its fixed lean (0.30 rad), so its foot stays on the shelf (its far corner 4.04 m against the shelf's 4.05)
+            if k == 13:
+                hgt = min(hgt, (hgts[11] - 0.01) / math.cos(0.30))
             o = box("box_file_%d" % k, -W / 2 + 0.01, -W / 2 + 0.28, yy, yy + 0.075, 1.80, 1.80 + hgt,
                     mat("file_%d_%d_%d" % tuple(int(v * 99) for v in c), c, rough=0.6))
             # A BOX FILE, NOT A BLOCK (26 October, item 5: four fresh reviewers read the plain boxes as
@@ -1724,7 +1740,14 @@ def build_and_render(argv):
                 part.parent = o
                 part.matrix_parent_inverse = o.matrix_world.inverted()
             if k == 13:
-                o.rotation_euler[0] = 0.25
+                # leaning on file 11: tipped about x (its top towards -y), its foot on the shelf, its top corner
+                # against file 11's face (y11) at height hgt cos(th) (a: half its thickness, b: half its height)
+                a, b = 0.0375, hgt / 2.0
+                y11 = 2.88 + 11 * 0.083 + 0.075
+                th = 0.30
+                o.rotation_euler[0] = th
+                o.location.y = y11 + a * math.cos(th) + b * math.sin(th)
+                o.location.z = 1.80 + a * math.sin(th) + b * math.cos(th)
         # (the four-drawer cabinet, its drawers to the window, is a modelled prop, placed above)
         # the jug kettle on the cabinet's top, where the office makes its tea (the plan's kettle, 6 October)
         prop("jug-kettle", -W / 2 + 0.25, 3.64, 1.32, turn=0.5)
