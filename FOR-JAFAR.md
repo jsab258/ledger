@@ -36,11 +36,12 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
   - LEDGER is already built the simulated way, with something both lack: who told whom, and talk that weakens as it travels.
   - For us: crime memory that lasts by kind (1 to 7 days); show a witness walking to tell someone; benches and beds as places in the routine; spreading only where people meet, as canon says.
 
-**Your items (26 October, evening).**
+**Your items (26 October, night).**
 - *The walk (item 2), done:* your pass made it the default; the packaged game, walked by the AI tester, 14 of 15 stages (the one miss, Ron out of reach, is the route's old fault). The sit stays set aside.
-- *Clothes (item 3):* Marvelous's licence ruled; our bridge runs in Marvelous at your one click; Tom's body is in it with 109 fitting points, saved for the jobs. Next: the zip jacket's pattern, reusing October's pattern tools.
-- *Speech (item 4):* all three now speak through Pocket, Darren in the Newcastle voice you picked (first sound about 0.2 s, against 2.6 s on the card). The untrained checkers clear almost nothing safely and are too slow on the processor, so the trained route waits on Anthropic's answer. Slow replies, before: 10 of 30 turns at 5 s or more; three were Darren's card voice, now gone.
-- *Mickey's office (item 5):* two wear passes passed in the editor; in the packaged game, at High, small shadows go and two fixes failed (set aside, Needs you 3); the desk under the radio fixed; new faults behind the counter listed for tomorrow.
+- *Clothes (item 3):* Marvelous's licence ruled; our bridge runs in Marvelous at your one click; Tom's body is in it with 109 fitting points. Next: the zip jacket, once tonight's zip-and-pockets research is reviewed.
+- *Speech (item 4):* all three speak through Pocket (first sound about 0.2 s). The fast checker, trained on Gemini's labels ($0.91), failed both tries: reading every fact it took 0.25 s; reading six it takes 0.05 s beside the game, but the game would let 2 of 42 invented details through against Haiku's 1 (a fresh reviewer caught it). Set aside; what next is on your page. Your 2-second bar is judged on a newcomer's real questions; Ron's slow check is the service's wait, not his facts. Rewriting only a refused sentence failed two tries. $5.03 of the $10 spent.
+- *Mickey's office (item 5):* the small shadows at High fixed by raising one setting only while you are inside (about 0.2 ms a frame), passed in the editor beside plain High; packaged pictures after tonight's build. Faults behind the counter next.
+- *Fallback, the simulation's port:* begun. Its blocker is gone: the 2.7 MB test table the port is checked against is now kept in pieces the upload guard accepts. Next: how well each person knows Tom's face, a rule that lives only in the game's code, given its home in the rules.
 
 <!-- retention -->Disk (10-22 04:32): C: 79.9 GB free, F: 48.4 GB free; grew most since 10-21 12:17: C:\actions-runner-ledger\_work\ledger +1.5 GB, F:\LedgerTools\uv\cache +1.4 GB, F:\LedgerTools\bpyenv\Lib +0.9 GB.
 
@@ -129,7 +130,8 @@ No decision asked: these are for watching the street change.
 
 ### Needs you
 
-1. **Leave Marvelous open with the bridge running** (recommended): Tom's jacket jobs run through it; if it is closed, one click on LEDGER bridge next time.
+1. **Tonight's page, three taps** (https://claude.ai/artifact/GmtwhT5o89Ho9huHXYUieX): Darren's delivery A or B, blind; stop the fast checker (recommended); price a north-east actor for Darren (recommended).
+2. **Leave Marvelous open with the bridge running** (recommended): Tom's jacket jobs run through it; if it is closed, one click on LEDGER bridge next time.
 
 Your evening answers are recorded (shadows inside the office: yes; $10 for the slow-reply tests; the checker trained on Gemini's labels, no letter to Anthropic).
 
@@ -143,19 +145,17 @@ Your evening answers are recorded (shadows inside the office: yes; $10 for the s
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
 
-## Builder, Monday 26 October (evening)
+## Builder, Monday 26 October (night)
 
 **Failed:**
-- The office's small shadows at High, the level you play at: two fixes failed review; set aside (Needs you 3).
-- Darren: only two of your three voices passed; the Yorkshire and Leicester voices failed twice each.
-- The open fact checkers, untrained: at Haiku's safety the best clears 9 of 85 true details and takes 2.6 s; training waits on Anthropic.
-- Two Marvelous jobs stopped on boxes you closed: my wrong file name, then the old scale.
+- The fast checker, both tries: reading every fact, 0.25 s against your 0.15 s; reading six, 0.05 s beside the game, but the game would let 2 of 42 invented details through against Haiku's 1. Set aside.
+- Rewriting only a refused sentence: two tries; it mostly answers "I don't know". Set aside.
+- Darren's flatness: no setting changes it; only whole lines or a new reference voice.
+- My first checker timing ran mostly after the game had closed; a reviewer caught it, redone.
 
 **Done:**
-- The new walk: default, and the packaged game walked by the AI tester, 14 of 15 stages.
-- All three speak through Pocket; Darren in your pick, the Newcastle voice; first sound about 0.2 s.
-- Marvelous: our bridge runs at your click; Tom's body is in, with its fitting points.
-- The office's second wear pass passed; the steel desk fixed.
-- Your progress page in plain words; slow replies measured before: 10 of 30 at 5 s or more.
+- The office's small shadows at High, raised only inside: passed in the editor, about 0.2 ms a frame.
+- Your speech ruling recorded; Ron's slow check explained.
+- The port's blocker removed: its test table now in pieces the upload guard accepts.
 
-**Act on:** send the Anthropic request (Needs you 1); keep Marvelous open.
+**Act on:** tonight's page, three taps (Needs you 1).

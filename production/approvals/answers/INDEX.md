@@ -49,5 +49,6 @@ Read back: 2026-10-26
 | [Friday's Decisions](https://claude.ai/artifact/VNFZHnSWBrA72zGKRbwFRn) | 2026-10-23 | 3 | decide-check-model-2026-10-23: no, 2026-10-23; decide-marvelous-2026-10-23: yes, 2026-10-23; decide-walk-next-2026-10-23: yes, 2026-10-23 |
 | [Thursday's Decisions](https://claude.ai/artifact/2yznAYjEwDVv3RvzzKUpBR) | 2026-10-22 | 5 | decide-check-model-2026-10-22: no, 2026-10-22; decide-marvelous-2026-10-22: yes, 2026-10-22; decide-phase2-2026-10-22: hold, 2026-10-22; look-lamp-weathered-2026-10-22: later, 2026-10-22; look-ritas-front-2026-10-22: yes, 2026-10-22 |
 | [Monday's Decisions](https://claude.ai/artifact/8LsucbjBtuCj1QyaRamqpB) | 2026-10-26 | 6 | checker-downloads-2026-10-26: all, 2026-10-26; darren-voice-2026-10-26: A, 2026-10-26 (this is just about the voice, not how real it sounds right? A is ok, but very ro); haiku-labels-2026-10-26: ask, 2026-10-26; listen-pocket-2026-10-26: both, 2026-10-26; prepared-pocket-2026-10-26: move, 2026-10-26; walk-by-eye-2026-10-26: pass, 2026-10-26 |
+| [Monday Night's Decisions](https://claude.ai/artifact/GmtwhT5o89Ho9huHXYUieX) | 2026-10-26 | 0 | Darren's delivery heard blind (A/B key: F:/LedgerTools/approvals/darren-delivery-2026-10-26/blind-key-2026-10-27.json); the fast checker after two failed tries (stop, Jev, or a third try); a livelier Darren reference (actor, Common Voice, keep) |
 
-43 pages, 163 answers.
+44 pages, 163 answers.
