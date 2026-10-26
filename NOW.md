@@ -8,7 +8,7 @@ Failed its exit check on 22 Oct (production/audits/phase1-exit/CLOSE-2026-10-22.
 
 - [x] 1. Health check; the order ledger.
 - [x] 2. The walk: default, walked packaged (14 of 15). Sit set aside (sit-and-turn/).
-- [ ] 3. Tom's outfit: bridge running; his body in Marvelous with its points; the jacket next (tom-outfit/SPEC.md).
+- [ ] 3. Tom's outfit: zip jacket drape 4 with its zip tapes; the bake next (tom-outfit/SPEC.md).
 - [ ] 4. Speech: all on Pocket; fast checker set aside after two tries (invented-claims/); slow replies (voice-latency/).
 - [ ] 5. Mickey's office: packaged; shadows at High set aside; staff-side faults next (cab-office-interior-1990/).
 - [ ] 6. Phase 1's exit re-run; phase 2?
