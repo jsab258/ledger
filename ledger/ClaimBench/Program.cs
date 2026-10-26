@@ -125,6 +125,7 @@ static partial class Program
             case "check": _withPeople = args.Contains("--people"); return await Check(dir, args.Length > 1 ? args[1] : "v2", parallel, Arg(args, "--half", "all"));
             case "pipeline": return await Pipeline(dir, args.Length > 1 ? args[1] : "run", parallel, Arg(args, "--checker", "v3v"),
                                                    args.Contains("--early"));
+            case "checktime": return await CheckTime(args);
             case "again":
             {
                 // Some turns of the bench's drafts through the live check, each

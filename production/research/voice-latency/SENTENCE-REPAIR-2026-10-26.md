@@ -255,3 +255,19 @@ So, of the 7 slow turns the speech check can change, 5 end in the fallback: the 
 - **Every turn whose first sentence was refused was heard at 5 s or later** (36 of 36 across the four runs of today and NarrowRedraft). The refusal itself arrives at 2.9 to 4.5 s, because a refusing check writes out its whole list (1.9 to 3.1 s against about 1.5 for a pass); any second sentence and its check then land past 5 s.
 - **NarrowRedraft:** no better (32 of 120 slow against 26 of 120). **PlanFirst:** fewer refusals, but planning first adds about 1.3 s to every turn; worse. Neither is switched on.
 - **What follows for the repair:** rewriting only the refused sentence after the refusal saves only its writing time (0.5 to 3 s here) and still lands near 5 s. The repair pays only if it starts alongside the first check (a safe rewrite of the drafted sentence, used only if the check refuses), so that a refusal needs one more check, not a draft and a check. That is the next code, benched the same way before it reaches speech.
+
+## Why Ron's check looked slowest (his question, 26 October evening)
+
+His ruling the same evening: the 2-second bar is judged on a newcomer's real questions; small talk is reported beside it, never instead (RULINGS.md, speech). His question: Ron's check is the slowest on real questions (about 3.3 s to pass); why, for example the length of his known-facts list?
+
+- **The 3.3 s was one run's time from the line to the check passing** (drafted 1.13 s, check alone 2.28 s, in the "today" run). Over all four runs of today's settings and NarrowRedraft, a passing first-sentence check took (median): Sheila 1.26 s, Ron 1.63 s, Darren 1.79 s. Ron is in the middle, not the slowest.
+- **The facts list is the same size for all three:** 56 to 58 items, about 7,200 characters (about 4,250 tokens with the check's instructions). Across 187 passing checks, the check's time does not follow the list's length (correlation 0.08); it follows the sentence's length a little (0.27): Sheila's first sentences run to a median 3.5 words, Ron's 7, Darren's 8.
+- **Measured one call at a time** (ClaimBench `checktime`: 10 passed first sentences per character from those runs, each checked twice on Haiku 5.5 with its own list and with the list cut to its first 15 items, order alternating; F:/LedgerTools/town-scratch/slow-replies/checktime; $0.02):
+
+| Who | Whole list (about 57 items, 4,250 tokens in) | Cut to 15 items (2,150 tokens in) | Tokens written |
+|---|---|---|---|
+| Sheila | 1.05 s | 1.13 s | 43 / 40 |
+| Ron | 1.11 s | 1.05 s | 44 / 55 |
+| Darren | 1.07 s | 0.99 s | 43 / 44 |
+
+- **So neither the list nor his sentences is why.** Alone, every check takes about 1.1 s (1.13 s plus 0.7 ms a token written; halving the list moves it under 0.1 s either way). The checks of 2 to 4 s in the runs are the service's own varying wait: they fell on all three, and on Ron's turns most in that one run. Tighter facts would therefore not speed the check; they matter only for how often it refuses. A check on this PC (the fast checker, whose numbers come tonight) is the one change that removes that wait for the sentences it is sure of.
