@@ -129,3 +129,5 @@
 {"event": "stop", "at": "2026-10-26T10:15:00", "note": "from the clock"}
 {"event": "start", "at": "2026-10-26T08:45:00", "task": "26 Oct: fresh reviews (sit, walk frames, office views, lamp)", "phase": "1", "kind": "review"}
 {"event": "stop", "at": "2026-10-26T10:15:00", "note": "reviewers in parallel; session time only"}
+{"event": "start", "at": "2026-10-26T10:15:00", "task": "26 Oct: item 5 first wear pass: traced, fixed, exported, imported, reviewed", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-26T11:03:00", "note": "from the clock"}

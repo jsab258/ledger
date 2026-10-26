@@ -49,8 +49,10 @@ def mm(v):
     return int(v * PX_PER_MM)
 
 
-def age(img, rng, amount=0.10, stain=True):
-    """Paper that has hung in a smoking room: a little uneven, yellowed toward the edges."""
+def age(img, rng, amount=0.10, stain=False):
+    """Paper that has hung in a smoking room: a little uneven, yellowed toward the edges. Mug rings
+    (stain=True) only on paper that lies on a desk: on the hung notices a fresh reviewer read them
+    as stray circles (26 October, Mickey's office, item 5)."""
     w, h = img.size
     px = img.load()
     cx, cy = w / 2.0, h / 2.0
@@ -211,6 +213,26 @@ def drivers_board(rng):
         if status == "OUT":
             hand(d, (mm(400), y + mm(18)), "%d.%02d" % (rng.randint(9, 11), rng.choice((5, 10, 20, 35, 40, 50))), 18, rng, INK)
     return img
+
+
+# THE BOX FILES' SPINE LABELS (26 October, item 5: a fresh reviewer read the files as placeholders, their labels
+# blank): a cab office's paperwork in biro on yellowed card, 50 by 100 mm, read sideways as on a real spine.
+LABELS = ("ACCOUNTS 89/90", "VAT 89", "DRIVERS A-K", "DRIVERS L-Z", "INSURANCE", "CAR LOGS 1-6", "CAR LOGS 7-12",
+          "COMPLAINTS", "LOST PROPERTY", "ACCOUNTS 88/89", "VAT 88", "COUNCIL", "RADIO", "RECEIPTS")
+
+
+def label(n):
+    def make_label(rng):
+        img = sheet(50, 100, (226, 212, 172))
+        d = ImageDraw.Draw(img)
+        d.rectangle([mm(3), mm(3), mm(47), mm(97)], outline=(150, 130, 90), width=mm(0.6))
+        txt = Image.new("RGB", (mm(90), mm(40)), (226, 212, 172))
+        t = ImageDraw.Draw(txt)
+        # felt-tip, not biro: a fresh reviewer could not read the first at play distance
+        t.text((mm(45), mm(20)), LABELS[n], font=font(HAND, 11), fill=(14, 18, 40), anchor="mm", stroke_width=1, stroke_fill=(14, 18, 40))
+        img.paste(txt.rotate(90, expand=True), (mm(5), mm(5)))
+        return age(img, rng, 0.12)
+    return make_label
 
 
 def bookings(rng):
@@ -389,7 +411,7 @@ def district_map(rng):
 PIECES = (("fares", fares), ("licence", licence), ("accounts", accounts), ("calendar", calendar),
           ("farebook", farebook), ("directory", directory), ("drivers_board", drivers_board),
           ("bookings", bookings), ("pinboard", pinboard), ("radio_faceplate", radio_faceplate), ("keypad", keypad),
-          ("district_map", district_map))
+          ("district_map", district_map)) + tuple(("label_%d" % n, label(n)) for n in range(len(LABELS)))
 
 
 def make():

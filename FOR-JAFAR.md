@@ -41,7 +41,7 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
 - *The sit, third try (item 2):* from the clip's beginning, Epic's mannequin filmed alone beside it. The hanging foot and the tiptoe slide are gone, but on the walk-in to the window seat his leg passes through the sill, as Epic's mannequin's does. Set aside.
 - *Speech (item 4):* the listening test is on today's page: Sheila and Ron in the cast voice and in Pocket. Pocket's Darren drifted American on every line, so he stays in the cast voice.
 - *Clothes (item 3):* Marvelous's licence read: fine for a sold game made by one person, as long as no CLO avatar or sample goes in and everything is exported before your month ends. Tom's outfit specified (zip jacket, jumper, jeans, shoes, to Study 6's numbers); his body exported and measured for it.
-- *Mickey's office (item 5):* the light first. The room now has its own exposure while the camera is inside, so it no longer blows out at night; the "too dark by day" was the photograph's camera, not the game's. The desk lamp now shines down from its shade instead of throwing shadows up the map. What still fails is wear and props: placeholder books, stuck-on grime, rings on wall papers.
+- *Mickey's office (item 5):* the light first. The room now has its own exposure while the camera is inside, so it no longer blows out at night; the "too dark by day" was the photograph's camera, not the game's. The desk lamp now shines down from its shade instead of throwing shadows up the map. Then a first wear pass: the coffee rings are off the papers on the wall, and the box files have written labels and proper finger holes (both passed). The worn carpet path didn't show after two tries; the streaky frieze and the bench's wall board are next.
 
 <!-- retention -->Disk (10-22 04:32): C: 79.9 GB free, F: 48.4 GB free; grew most since 10-21 12:17: C:\actions-runner-ledger\_work\ledger +1.5 GB, F:\LedgerTools\uv\cache +1.4 GB, F:\LedgerTools\bpyenv\Lib +0.9 GB.
 
@@ -145,19 +145,18 @@ No decision asked: these are for watching the street change.
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
 
-## Builder, Sunday 25 October (23:40)
+## Builder, Monday 26 October (11:05)
 
 **Failed:**
-- The walk's last two sliding moments: two tries, set aside (Needs you 1).
-- Tom sits and stands on the office bench, but the sit-down looks wrong (a foot hangs in the air, his head folds): two tries, set aside (Needs you 1).
-- The frame stalls while the cast voice speaks: the voice holds the card; two tries cut the worst from about 440 ms to 118 ms, still too slow; set aside.
+- The sit, third try: the foot and slide faults are gone, but on the walk-in to the window seat his leg passes through the sill, as Epic's own mannequin's does. Set aside.
+- The walk's two moments still slide in Epic's own stop clip: on your page for your eye, as you ruled.
+- The office's worn carpet path didn't show after two tries.
 
 **Done:**
-- The health check, the order ledger, your progress page.
-- Speech re-timed the game's way: 4.14 s to the first sound, 2.8 s of it the voice (Needs you 2).
-- Six studies, each passed by a fresh reviewer with fixes: animation, characters, budgets, streets, visuals, town life.
-- Mickey's office: wear target researched; four fresh reviewers list its faults (too dark by day, blown out at night, stuck-on wear).
+- Your answers recorded; today's page: Pocket for Sheila and Ron, their prepared lines, Tom's walk by eye.
+- Marvelous's licence read (fine for a sold game made by one person; no CLO avatars or samples; export before the month ends). Tom's outfit specified, his body exported and measured.
+- Mickey's office: its own exposure at night, the lamp aimed down, rings off the hung papers, real-looking box files. Each passed by fresh reviewers.
 
-**Stopped at 23:40, before your 01:00;** everything is pushed.
+**Stopped at 11:05, before your 12:00;** everything is pushed.
 
-**Act on:** Needs you 1 (a third try for the walk and the sit) and 2 (the voice).
+**Act on:** today's page, three taps: https://claude.ai/artifact/8LsucbjBtuCj1QyaRamqpB

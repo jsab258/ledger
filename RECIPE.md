@@ -19,6 +19,19 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 26 Oct 2026, a room's first wear pass: faults traced to the recipe's own lines, fixed at the source, judged at the player's camera
+- Made: rings kept to desk papers only; box files with written labels and round rimmed holes, fixed to each file; the room re-exported and imported, photographed through the player's own camera.
+- Method (setting-free):
+  - Trace each reviewer's fault to the line that makes it before changing anything: here a print maker that ringed every paper by default, plain boxes standing for files, a plain box for a carpet path, a bench's own wall board read as grime.
+  - A placeholder is fixed by what tells the eye "real": legible writing, a round hole with a rim; colour alone does not.
+  - When a fix cannot be seen from the player's camera, two tries, then check where the thing lies before a third.
+  - A fault seen in one run of three, not caused by the change, is listed as intermittent, not chased.
+- Tools: the room recipe in Blender, the print maker, the room import, the -OfficeLook camera, one reviewer per view.
+- Target and check: the listed faults gone in every view, no new fault.
+- Cost (hours): about 0.8.
+- Failed and why: the carpet path did not show at a quarter or half darker; set aside.
+- Evidence: production/research/cab-office-interior-1990/WEAR-2026-10-25.md
+
 ### 26 Oct 2026, a lit room's own exposure inside a street with one pinned exposure
 - Made: a post-process volume over everything, above the street's own, weighed in only while the player's camera is inside the room's box (eased at its edges), holding the room's own exposure at night; a test that photographs the room through the player's own camera.
 - Method (setting-free):

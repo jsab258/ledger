@@ -1601,7 +1601,10 @@ def build_and_render(argv):
         # WEAR: thirty years of boots on the counter's kick and front, a trodden path in the carpet
         # from the door to the counter, the counter top's laminate rubbed pale where the book lies
         # (no scuff boxes on the counter's foot: in the game they read as a dark skyline)
-        box("carpet_path", -0.6, 1.6, 0.6, 2.2, 0.0, 0.004, mat("carpet_trodden", (0.065, 0.045, 0.032), rough=0.98, noise=0.5))
+        # (the path in the carpet's own pile, darker, not a plain box: four fresh reviewers read the plain one
+        # as "a flat grey patch", 26 October; at a quarter darker it did not show from the game's camera)
+        metre_uvs(box("carpet_path", -0.6, 1.6, 0.6, 2.2, 0.0, 0.004, texmat("carpet_trodden", "dirty_carpet", 1.0, (0.40, 0.23, 0.11),
+                                                                          base=mat("carpet_trodden_plain", (0.065, 0.045, 0.032), rough=0.98, noise=0.5))), 1.0)
         box("counter_rubbed", bkx - 0.4, bkx + 0.4, cy0 + 0.02, cy0 + 0.25, 0.985, 0.9858, mat("laminate_rubbed", (0.55, 0.43, 0.30), rough=0.3))
         # A PINBOARD right of the back door: dockets, a postcard, a card of phone numbers
         print_plane("pinboard", "pinboard", 1.35, D - 0.008, 1.45, 0.70, 0.60, "-y")
@@ -1660,12 +1663,32 @@ def build_and_render(argv):
         # behind the counter on the left wall: a shelf of box files and ledgers, a grey four-drawer
         # cabinet under it, a fire extinguisher on its bracket
         metre_uvs(box("files_shelf", -W / 2, -W / 2 + 0.30, 2.85, 4.05, 1.78, 1.80, laminate), 0.8)
+        ring_steel = mat("ring_steel", (0.55, 0.55, 0.56), rough=0.3)
         for k in range(14):
             yy = 2.88 + k * 0.083
             c = rnd.choice(((0.08, 0.10, 0.22), (0.30, 0.05, 0.04), (0.10, 0.10, 0.10), (0.42, 0.36, 0.20), (0.06, 0.16, 0.10)))
             hgt = rnd.uniform(0.28, 0.34)
             o = box("box_file_%d" % k, -W / 2 + 0.01, -W / 2 + 0.28, yy, yy + 0.075, 1.80, 1.80 + hgt,
                     mat("file_%d_%d_%d" % tuple(int(v * 99) for v in c), c, rough=0.6))
+            # A BOX FILE, NOT A BLOCK (26 October, item 5: four fresh reviewers read the plain boxes as
+            # placeholders; the second look, blank labels and square holes): its spine's card label in biro
+            # (tools/props/make_office_print.py, label_0 to label_5: ACCOUNTS, VAT, DRIVERS...) and the round
+            # finger hole under it with its steel rim, on the spine facing into the room (+x), a hair proud;
+            # fixed to the file, so the leaning one carries them with it
+            sx = -W / 2 + 0.281
+            lab = print_plane("box_file_%d_label" % k, "label_%d" % k, sx + 0.001, yy + 0.0375, 1.80 + hgt * 0.66, 0.05, 0.10, "+x")
+            bpy.ops.mesh.primitive_cylinder_add(vertices=20, radius=0.014, depth=0.003, location=(sx + 0.0012, yy + 0.0375, 1.80 + hgt * 0.30), rotation=(0.0, math.pi / 2, 0.0))
+            rim = bpy.context.object
+            rim.name = "box_file_%d_rim" % k
+            rim.data.materials.append(ring_steel)
+            bpy.ops.mesh.primitive_cylinder_add(vertices=20, radius=0.0105, depth=0.004, location=(sx + 0.0016, yy + 0.0375, 1.80 + hgt * 0.30), rotation=(0.0, math.pi / 2, 0.0))
+            hole = bpy.context.object
+            hole.name = "box_file_%d_hole" % k
+            hole.data.materials.append(black)
+            bpy.context.view_layer.update()
+            for part in (lab, rim, hole):
+                part.parent = o
+                part.matrix_parent_inverse = o.matrix_world.inverted()
             if k == 13:
                 o.rotation_euler[0] = 0.25
         # (the four-drawer cabinet, its drawers to the window, is a modelled prop, placed above)
