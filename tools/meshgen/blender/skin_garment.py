@@ -150,7 +150,10 @@ for v0 in bm.verts:
                 st.append(w)
 main = np.bincount(comp[comp >= 0]).argmax()
 is_button = np.zeros(len(bm.verts), bool)
-piece_attr = me.attributes.get("piece")                 # mh_garment.py's: 0 cloth, 1 shirt, 2 tie, 3 button
+# mh_garment.py's: 0 cloth, 1 shirt, 2 tie, 3 button. --piece-attr none (27 October, the zip jacket): its "piece" is the
+# pattern piece's number (retopo_pieces.py), where 3 is a sleeve, never a button
+_pa = opt("--piece-attr", "piece", str)
+piece_attr = me.attributes.get(_pa) if _pa != "none" else None
 for f in bm.faces:
     if "Button" in mat_names[f.material_index] or (piece_attr is not None and piece_attr.data[f.index].value == 3):
         for v in f.verts:
@@ -239,6 +242,24 @@ for i in pieces_ids:
     if W[i].sum() < 1e-6:
         W[i, spine5] = 1.0
 log["piecesArmWeightRemoved"] = int((W[pieces_ids][:, arm_cols].sum(axis=1) >= 0).sum()) if arm_cols else 0
+# A COLLAR SEWN INTO THE MESH (--collar-attr piece:10, 27 October, the zip jacket: its stand collar is part of the one
+# welded sheet, not a loose piece, so the rule above never found it; the pose test put its sides 144 mm into the neck
+# with the arms down, carried by the collarbones and the upper arms): its points found by a face attribute's value,
+# and neither the arm nor the collarbones move it; their weight goes to the upper spine
+_ca = opt("--collar-attr", "", str)
+if _ca:
+    _an, _av = _ca.split(":")
+    _attr = me.attributes.get(_an)
+    if _attr is not None:
+        cids = sorted({v.index for f in bm.faces if _attr.data[f.index].value == int(_av) for v in f.verts})
+        clav_cols = [col[n] for n in names if n.startswith("clavicle")]
+        drop = sorted(set(arm_cols) | set(clav_cols))
+        for i in cids:
+            lost = W[i, drop].sum()
+            W[i, drop] = 0.0
+            W[i, spine5] += lost
+        is_collar[cids] = True
+        log["collarAttrPoints"] = len(cids)
 # no head or face bones anywhere (the collar followed the jaw)
 face = [col[n] for n in names if n == "head" or n.startswith(("FACIAL", "facial", "head_"))]
 neck2 = col.get("neck_02", col.get("neck_01"))
