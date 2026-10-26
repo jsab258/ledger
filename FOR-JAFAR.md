@@ -39,7 +39,7 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
 **Your items (26 October, night).**
 - *The walk (item 2), done:* your pass made it the default; the packaged game, walked by the AI tester, 14 of 15 stages (the one miss, Ron out of reach, is the route's old fault). The sit stays set aside.
 - *Clothes (item 3):* Marvelous's licence ruled; our bridge runs in Marvelous at your one click; Tom's body is in it with 109 fitting points. Next: the zip jacket, once tonight's zip-and-pockets research is reviewed.
-- *Speech (item 4):* all three speak through Pocket (first sound about 0.2 s). The fast checker, trained on Gemini's labels ($0.91), failed both tries: reading every fact it took 0.25 s; reading six it takes 0.05 s beside the game, but the game would let 2 of 42 invented details through against Haiku's 1 (a fresh reviewer caught it). Set aside; what next is on your page. Your 2-second bar is judged on a newcomer's real questions; Ron's slow check is the service's wait, not his facts. Rewriting only a refused sentence failed two tries. $5.03 of the $10 spent.
+- *Speech (item 4):* all three speak through Pocket (first sound about 0.2 s). The fast checker, trained on Gemini's labels ($0.91), failed both tries: reading every fact it took 0.25 s; reading six it takes 0.05 s beside the game, but the game would let 2 of 42 invented details through against Haiku's 1 (a fresh reviewer caught it). Set aside; what next is on your page. Your 2-second bar is judged on a newcomer's real questions; Ron's slow check is the service's wait, not his facts. Rewriting only a refused sentence is being measured again (my bench used only the check's first step). $5.31 of the $10 spent.
 - *Mickey's office (item 5):* the small shadows at High fixed by raising one setting only while you are inside (about 0.2 ms a frame), passed in the editor beside plain High; packaged pictures after tonight's build. Faults behind the counter next.
 - *Fallback, the simulation's port:* begun. Its blocker is gone: the 2.7 MB test table the port is checked against is now kept in pieces the upload guard accepts. Next: how well each person knows Tom's face, a rule that lives only in the game's code, given its home in the rules.
 
@@ -149,7 +149,7 @@ Your evening answers are recorded (shadows inside the office: yes; $10 for the s
 
 **Failed:**
 - The fast checker, both tries: reading every fact, 0.25 s against your 0.15 s; reading six, 0.05 s beside the game, but the game would let 2 of 42 invented details through against Haiku's 1. Set aside.
-- Rewriting only a refused sentence: two tries; it mostly answers "I don't know". Set aside.
+- Rewriting only a refused sentence: my bench judged it by the check's first step only, stricter than the game's; its "set aside" is withdrawn and it is being measured again.
 - Darren's flatness: no setting changes it; only whole lines or a new reference voice.
 - My first checker timing ran mostly after the game had closed; a reviewer caught it, redone.
 

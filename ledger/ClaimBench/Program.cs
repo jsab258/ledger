@@ -127,6 +127,7 @@ static partial class Program
                                                    args.Contains("--early"));
             case "checktime": return await CheckTime(args);
             case "repair": return await Repair(args);
+            case "sentcheck": return await SentCheck(args);
             case "again":
             {
                 // Some turns of the bench's drafts through the live check, each

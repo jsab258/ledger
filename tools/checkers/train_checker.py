@@ -2,7 +2,11 @@
 """Train a small open checker (KR Labs' TinyLettuce) on Gemini's labelled first sentences.
 
     C:/LedgerTools/chatterbox-nano/env-dml/Scripts/python.exe tools/checkers/train_checker.py TRAIN.json OUT_DIR
-        [--base tinylettuce-17m] [--epochs 3] [--lr 2e-5] [--batch 8] [--max-length 2048] [--limit N]
+        [--base tinylettuce-17m] [--epochs 3] [--lr 2e-5] [--batch 8] [--max-length 2048] [--limit N] [--top K]
+
+TRAIN.json may be several files, comma-separated. --top K (the third try, his page answer of 26 October night)
+trains on the same input the checker is then given: only the K facts sharing most words with the question and the
+sentence (measure_checkers.top_facts), not the whole list.
 
 WHY, 26 October 2026. His answer that evening (production/orders/2026-10-25.md): the fast checker is trained on data
 Gemini 3.8 Flash wrote and labelled (tools/checkers/gemini_training_data.py), "the 127 held-out details stay the
@@ -43,13 +47,19 @@ def game_running():
     return any('"%s"' % g in out for g in GAME)
 
 
-def samples(path, limit):
+def samples(path, limit, top=0):
     from lettucedetect.datasets.hallucination_dataset import HallucinationSample
     from lettucedetect.detectors.prompt_utils import PromptUtils
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from measure_checkers import top_facts
     out = []
-    for e in json.load(open(path, encoding="utf-8")):
+    rows = [e for p in path.split(",") for e in json.load(open(p, encoding="utf-8"))]
+    assert all(e.get("half", "tune") == "tune" for e in rows), "a held-half sentence in the training data"
+    for e in rows:
         labels = e["labels"] if isinstance(e["labels"], list) else json.loads(e["labels"])
         ctx = e["context"] if isinstance(e["context"], list) else [e["context"]]
+        if top:
+            ctx = top_facts(ctx, e["question"], e["answer"], top)
         out.append(HallucinationSample(prompt=PromptUtils.format_context(ctx, e["question"], "en"), answer=e["answer"],
                                        labels=[{"start": l["start"], "end": l["end"], "label": "unsupported"} for l in labels],
                                        split="train", task_type="qa", dataset="ledger-gemini-2026-10-26", language="en",
@@ -69,11 +79,11 @@ def main(a):
     train_json, out_dir = a[0], a[1]
     base = BASES[opt("--base", "tinylettuce-17m")]
     epochs, lr, batch = opt("--epochs", 3, int), opt("--lr", 2e-5, float), opt("--batch", 8, int)
-    max_len, limit = opt("--max-length", 2048, int), opt("--limit", 0, int)
+    max_len, limit, top = opt("--max-length", 2048, int), opt("--limit", 0, int), opt("--top", 0, int)
     if game_running():
         print("the game or an Unreal editor is open: not training")
         return 2
-    data = samples(train_json, limit)
+    data = samples(train_json, limit, top)
     n_dev = max(1, len(data) // 10)
     dev, train = data[:n_dev], data[n_dev:]
     tok = AutoTokenizer.from_pretrained(base)
@@ -87,7 +97,7 @@ def main(a):
     m = dev_loader_metrics()
     best = m["hallucinated"]["f1"]
     print("before training, dev F1 on unsupported words: %.4f" % best, flush=True)
-    log = {"base": base, "train": len(train), "dev": len(dev), "epochs": [], "devF1Before": round(best, 4)}
+    log = {"base": base, "train": len(train), "dev": len(dev), "top": top, "files": train_json, "epochs": [], "devF1Before": round(best, 4)}
     os.makedirs(out_dir, exist_ok=True)
     t0 = time.time()
     for ep in range(epochs):

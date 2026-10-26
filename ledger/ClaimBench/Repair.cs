@@ -17,7 +17,7 @@ using Ledger.Core;
 /// THE SENTENCES: Gemini 3.8 Flash's first sentences in each character's voice, written for the fast checker's
 /// training from the detail bench's tuning contexts only (the held contexts stay that checker's test), with the
 /// facts that speaker was given; --n of those Gemini marked unsupported, by a fixed seed. Each goes through the
-/// game's own check (ClaimCheck.RequestItems on Haiku 5.5, as the game sets it); the ones it refuses are repaired
+/// game's own check (ClaimCheck.CheckAsync on Haiku 5.5, as the game runs it); the ones it refuses are repaired
 /// two ways and each repair checked again the same way:
 ///   named:       the refused details named, as a repair made after the refusal would be;
 ///   alongside:   nothing named, as a repair started at the same moment as the check would be (used only if the
@@ -79,12 +79,15 @@ static partial class Program
                 return c > 0 ? (k.Substring(0, c), k.Substring(c + 2)) : ("?", k);
             }).ToList();
             var numbered = ClaimCheck.NumberedKnown(items);
-            var ids = items.Select(i => i.Item1).ToList();
+            // THE GAME'S WHOLE CHECK (ClaimCheck.CheckAsync: the list, the code's word-for-word clearing, the second
+            // look). Corrected 26 October night: the first two runs read the list's flags alone (RequestItems and
+            // ParseItems), which flag every event not backed by a belief, memory or report for the later steps to
+            // clear, so a sentence passed only when it stated almost nothing. A failed or malformed check is refused.
             async Task<(IReadOnlyList<string> found, long ms)> Check(string line)
             {
                 var sw = Stopwatch.StartNew();
-                var resp = await llm.CompleteAsync(ClaimCheck.RequestItems(RepairModel, numbered, line));
-                return (ClaimCheck.ParseItems(resp.Text, ids), sw.ElapsedMilliseconds);
+                var (invented, _) = await ClaimCheck.CheckAsync(llm, RepairModel, items, line, System.Threading.CancellationToken.None);
+                return (invented ?? new List<string> { "(no answer)" }, sw.ElapsedMilliseconds);
             }
             async Task<(string text, long ms)> Fix(IReadOnlyList<string> refused)
             {

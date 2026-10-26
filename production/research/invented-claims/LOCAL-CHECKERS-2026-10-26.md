@@ -453,3 +453,44 @@ No frame stall in any run; the median moved no more with the checker than betwee
 Not checked: Ettin's and Google's terms; whether each reply's first sentence equals the engine's checked one (none found differing).
 
 Fixed after this review (26 October night): every point above is taken into the section, the game-wide leak (2 of 42) made its verdict, the checker re-timed only while the game ran (runs 3 and 4), and the graphics card corrected in "The PC".
+
+## Third try: the design, fixed before the test (26 October, 22:50)
+
+His page answer on the second try: a third try "broader than stricter alone": more of the closest facts (10 to 12) and/or a somewhat larger small model, at 0.15 s or less beside the game; training aimed at the misses (near-miss inventions with the right names and wrong details, and true paraphrases of a fact); a cut-off that clears only what it is sure of; the held test enlarged by a few hundred Gemini-labelled, spot-checked first sentences; the bar unchanged, no more invented through than Haiku on that larger test; Haiku's false refusals studied in parallel (HAIKU-FALSE-REFUSALS-2026-10-26.md).
+
+Written down before any of the test was run:
+- **Data.** Gemini 3.8 Flash wrote 2,151 new training sentences from the 27 tuning contexts only, in a near-miss style (half true paraphrases, half with one wrong or added detail using the right names), and 617 test sentences from the 31 held contexts (half in the first batch's mixed style, half near-miss), each labelled by Gemini the same way. Cost so far $1.16 of the $10.
+- **Training.** TinyLettuce 17M (the headroom is spent on reading more facts first, not a larger model), from its base, on the first batch's 5,006 sentences plus 85% of the new ones, each given only its **10** closest facts, the same input it gets in use. The other 15% of the new sentences are kept out to set the cut-off.
+- **The cut-off** (tools/checkers/sentence_test.py cutoff): half the lowest score any invented tuning item gets (the 111 tuning details and the kept-out sentences), so it clears only what it scores well below every invention it has met.
+- **The test** (sentence_test.py test), run once: the 617 held sentences, each through the game's own Haiku check (ledger/ClaimBench sentcheck), plus the 127 held details; the game with the checker in front lets an invented item through when the checker clears it or Haiku passes it. **The bar holds only if that total is no higher than Haiku alone's.** A fresh reviewer spot-checks Gemini's test labels before the result is read.
+- **Speed** beside the packaged game as before, answers time-stamped and kept only while the game runs.
+
+### Spot check of Gemini's test labels (26 October, night)
+
+A fresh reviewer drew 80 of the 617 test sentences at random (seed 80271026), judged each against its speaker's full facts before seeing Gemini's verdict, then compared. Per-item record: F:\LedgerTools\checkers\train3\spotcheck\spotcheck.json.
+
+- **Agreement:** 77 of 80 (96%). In the sample Gemini called 35 true and 45 invented.
+- **Gemini "true" that is really invented (the dangerous direction):** none of 35. With only 35 seen, up to about 8% of all "true" labels could still be wrong (95% bound).
+- **Gemini "invented" that is really true:** 1. "Darren Milner, I'm the one who keeps an eye on Quay Street and lets folks know what's what." His facts: walks Quay Street at all hours, talks to everyone, hears everything, trades in being useful (C1 to C3).
+- **Arguable, Gemini the stricter:** 2. "all I know is what the doctor wrote down" (the doctor *said* it); "until your letter turned up, I did it without anyone asking what my job was" (a past claim the facts don't give, though really a jab).
+- **Soft trues, both agreed:** 6 whose only extra is an opinion ("Nobody's got the clout Mickey had", "quiet as a churchyard today"). A strict reader could call these invented; none adds a name, time, place or event.
+- Where both said invented (42), Gemini marked the same words.
+
+**Verdict:** good enough in the direction that matters (no invention passed as true), but 2 to 7% of "invented" labels are true or arguable. The bar counts every "invented" item the checker clears and Haiku refuses, so each must be read by hand against its facts before the bar is decided: with a margin of a few items, one wrong label can decide it.
+
+**Added to the design after the spot check, still before the test was run (26 October, night):** every test item labelled invented that decides the bar (each the checker clears, and each Haiku passes) is read by hand against its facts by a fresh reviewer, without being told which side of the bar it falls on; a label found wrong is corrected for both sides alike, Haiku alone and the checker in front, and the bar is counted after that.
+
+## Third try: the result (26 October, night)
+
+Trained (tools/checkers/train_checker.py --top 10): TinyLettuce 17M from its base on 6,152 sentences (the first batch's 5,006 less its practice split, and 85% of the 2,151 new near-miss ones), each given its 10 closest facts; the second pass kept (practice-split F1 0.81). Cut-off set on tuning data only, by the rule fixed beforehand: the lowest invented tuning score 0.0332, the cut-off half of it, **0.0166** (it clears 2 of 145 true kept-out sentences and 2 of 61 true tuning details). Test run once (F:/LedgerTools/checkers/train3/test-result.json):
+
+| | Invented let through, Haiku alone | With the checker in front | True cleared by the checker |
+|---|---|---|---|
+| 617 held sentences (308 invented, 309 true) | 35 | **35** | 9 (3%) |
+| 127 held details (42 invented, 85 true) | 1 | **1** | 0 |
+
+**The bar holds:** the checker clears no invented sentence or detail, so the game lets through exactly what Haiku alone does. **But it buys almost nothing:** the cut-off strict enough to hold the bar clears 9 of 309 true sentences, all of them refusals to guess, deflections or opinions ("I couldn't tell you, and I don't make a habit of guessing"), eight of which Haiku passes anyway.
+
+**Beside the packaged game** (two runs, answers kept only while the game ran): median 0.072 s, slowest 1% 0.11 to 0.12 s, 4 of 982 answers over 0.15 s (worst 0.24 s); frames at 60 or more throughout but one frame of 3,001 at 19.9 ms, none near the 33 ms stall line.
+
+**The larger finding, about Haiku itself** (the game's whole check on the 617, ledger/ClaimBench sentcheck; the first run of that mode read the check's list step only and is discarded, see SENTENCE-REPAIR's correction): it lets **35 of 308** invented sentences through (11%) and refuses **96 of 309** true ones (31%), alike for all three speakers and both sentence styles, at a median 2.4 s and three calls a sentence. On whole sentences Haiku is far less safe than its 1 in 42 on single details, and the fast checker cannot be safer than what it sits in front of. A fresh reviewer is reading the 35 and the checker's 9 blind against their facts (the rule fixed before the test).

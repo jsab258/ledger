@@ -73,6 +73,7 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 - Target and check: replies heard at 5 s or later, by cause; repairs passing the game's own check with an answer kept.
 - Cost (hours): about 3; $5.03 of a $10 cap.
 - Failed and why: both repair tries (re-invention; then "don't know"); the two existing switches (no gain; planning adds 1.3 s a turn).
+- Corrected the same night: the repair bench judged sentences by the check's first step alone, far stricter than the game's whole check, so both repair tries were mismeasured and are to be benched again. Lesson: a bench that stands in for a production component must call that component's whole entry point, and its pass rate should be compared once with the component's own before anything is concluded.
 - Evidence: production/research/voice-latency/SENTENCE-REPAIR-2026-10-26.md (last three sections)
 
 ### 26 Oct 2026, a quality setting raised only while the player is inside one room, found by halving the engine's level groups

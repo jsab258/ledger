@@ -2,10 +2,11 @@
 """The fast checker's training data, written and labelled by Gemini 3.8 Flash through Google's Batch API.
 
     python tools/checkers/gemini_training_data.py gen-requests OUT.jsonl [--per 93 --calls-per-context 2]
+        [--half tune|held] [--style mixed|nearmiss|mixed,nearmiss]
     python tools/checkers/gemini_training_data.py submit IN.jsonl NAME            # uploads, creates the batch; prints its name
     python tools/checkers/gemini_training_data.py status BATCH                    # its state
     python tools/checkers/gemini_training_data.py fetch BATCH OUT.jsonl           # its results, and the cost logged
-    python tools/checkers/gemini_training_data.py label-requests GEN.jsonl OUT.jsonl [--per-call 10]
+    python tools/checkers/gemini_training_data.py label-requests GEN.jsonl OUT.jsonl [--per-call 10] [--half tune|held]
     python tools/checkers/gemini_training_data.py build LABELLED.jsonl GEN.jsonl TRAIN.json
     python tools/checkers/gemini_training_data.py --selftest
 
@@ -55,12 +56,12 @@ def key():
     return open(KEYFILE, encoding="utf-8").read().strip()
 
 
-def contexts():
+def contexts(half="tune"):
     seen, out = set(), []
     for line in open(GOLD, encoding="utf-8"):
         r = json.loads(line)
         k = (r["card"], r["probe"])
-        if r["half"] != "tune" or k in seen:
+        if r["half"] != half or k in seen:
             continue
         seen.add(k)
         out.append({"card": r["card"], "probe": r["probe"], "known": r["known"]})
@@ -79,6 +80,27 @@ Write {n} different possible FIRST SENTENCES of the character's spoken reply, on
 - The rest must each slip in ONE specific detail the list does not support: a name, a time, a place, an event,
   a number or a habit that is invented, or that contradicts the list. Make these sound just as natural.
 - Vary them: different facts, different lengths (4 to 25 words), different ways of not answering.
+- Never mention alcohol, pubs, betting or gambling, children, real brands, real people, or anything after 1992.
+Return only the numbered lines."""
+
+# THE THIRD TRY'S SENTENCES (his page answer, 26 October night): "Add training data aimed at what it missed:
+# near-miss inventions that use the right names with wrong details, and true sentences that paraphrase a fact."
+# The second try let through "you've just come up" (an event the facts never state, in the right people's words).
+NEARMISS = """You write lines for a character in a video game set in 1990 in a fictional northern English seaside town.
+The character is {who}. The player has just asked them: "{probe}"
+
+Everything the character knows is in this numbered list:
+{facts}
+
+Write {n} different possible FIRST SENTENCES of the character's spoken reply, one per line, numbered 1 to {n}.
+- Spoken English as this character would say it in 1990: short, plain, in their own voice.
+- About half must be TRUE but reworded: each restates one fact from the list in different words (a paraphrase,
+  a part of it, or a plain consequence of it), so it does not copy the list's wording.
+- The rest must be NEAR MISSES: each uses the right names, people and places from the list but gets ONE detail
+  wrong or adds ONE the list does not state: the wrong time or day, the wrong person doing it, the wrong place,
+  a wrong number, a habit or an event (something that has just happened, someone arriving or leaving) the list
+  never mentions. Make them sound exactly as natural and as sure as the true ones.
+- Vary them: different facts, different lengths (4 to 25 words).
 - Never mention alcohol, pubs, betting or gambling, children, real brands, real people, or anything after 1992.
 Return only the numbered lines."""
 
@@ -106,15 +128,21 @@ def request(text, temperature):
             "generation_config": {"temperature": temperature, "maxOutputTokens": 8000, "thinkingConfig": {"thinkingBudget": 0}}}
 
 
-def gen_requests(out, per, calls):
+def gen_requests(out, per, calls, half="tune", styles=("mixed",)):
+    """--half held writes the enlarged TEST (his page answer, 26 October night): sentences from the held half's
+    contexts, never trained on. --style mixed (the first batch's prompt), nearmiss, or both (comma-separated):
+    each context gets --calls-per-context calls of each style."""
     n = 0
+    prompts = {"mixed": GEN, "nearmiss": NEARMISS}
     with open(out, "w", encoding="utf-8") as fh:
-        for i, c in enumerate(contexts()):
-            for j in range(calls):
-                text = GEN.format(who=SPEAKERS.get(c["card"], c["card"]), probe=c["probe"], facts=facts_text(c["known"]), n=per)
-                fh.write(json.dumps({"key": "gen-%02d-%d" % (i, j), "request": request(text, 1.0)}) + "\n")
-                n += 1
-    print("gen requests: %d (%d contexts x %d) -> %s" % (n, len(contexts()), calls, out))
+        for i, c in enumerate(contexts(half)):
+            for st in styles:
+                for j in range(calls):
+                    text = prompts[st].format(who=SPEAKERS.get(c["card"], c["card"]), probe=c["probe"], facts=facts_text(c["known"]), n=per)
+                    fh.write(json.dumps({"key": "gen-%02d-%d%s" % (i, j, "" if st == "mixed" else "n"), "request": request(text, 1.0),
+                                         "half": half, "style": st}) + "\n")
+                    n += 1
+    print("gen requests: %d (%d %s contexts x %d x %s) -> %s" % (n, len(contexts(half)), half, calls, ",".join(styles), out))
 
 
 def parse_lines(text):
@@ -150,8 +178,8 @@ OUT_OF_CANON = re.compile(r"\b(school\w*|child\w*|kids?|boys together|man and bo
                           r"bookmaker\w*|betting|casino|gambl\w*|the pools)\b", re.I)
 
 
-def label_requests(gen_res, out, per_call):
-    ctx = contexts()
+def label_requests(gen_res, out, per_call, half="tune"):
+    ctx = contexts(half)
     texts = results_text(gen_res)
     n_req = n_sent = 0
     with open(out, "w", encoding="utf-8") as fh:
@@ -162,7 +190,10 @@ def label_requests(gen_res, out, per_call):
                 chunk = sents[s:s + per_call]
                 body = "\n".join("%d. %s" % (m + 1, t) for m, t in enumerate(chunk))
                 req = request(LABEL.format(facts=facts_text(ctx[i]["known"]), sentences=body), 0.0)
-                fh.write(json.dumps({"key": "lab-%s-%03d" % (k, s), "request": req, "sentences": chunk, "context": i}) + "\n")
+                # the facts and question travel with the request, so a held-half label can never be built
+                # against a tuning context (the first batch kept only the index into the tuning half)
+                fh.write(json.dumps({"key": "lab-%s-%03d" % (k, s), "request": req, "sentences": chunk, "context": i,
+                                     "half": half, "known": ctx[i]["known"], "probe": ctx[i]["probe"], "card": ctx[i]["card"]}) + "\n")
                 n_req += 1
                 n_sent += len(chunk)
     print("label requests: %d covering %d sentences -> %s" % (n_req, n_sent, out))
@@ -273,8 +304,9 @@ def build(labelled_res, label_req, out):
             if not v.get("supported") and not spans:
                 bad += 1                      # unsupported but no words found: unusable as a token label
                 continue
-            c = ctx[q["context"]]
-            ex.append({"context": c["known"], "question": c["probe"], "answer": s, "labels": spans, "supported": bool(v.get("supported"))})
+            c = {"known": q["known"], "probe": q["probe"], "card": q.get("card")} if "known" in q else ctx[q["context"]]
+            ex.append({"context": c["known"], "question": c["probe"], "answer": s, "labels": spans, "supported": bool(v.get("supported")),
+                       "card": c.get("card"), "half": q.get("half", "tune"), "key": k})
     random.Random(19901026).shuffle(ex)
     json.dump(ex, open(out, "w", encoding="utf-8"), indent=0)
     print(json.dumps({"examples": len(ex), "supported": sum(e["supported"] for e in ex), "unusable": bad, "out": out}))
@@ -296,8 +328,10 @@ if __name__ == "__main__":
         sys.exit(selftest())
     cmd = a[0]
     num = lambda n, d: int(a[a.index(n) + 1]) if n in a else d  # noqa: E731
+    half = a[a.index("--half") + 1] if "--half" in a else "tune"
     if cmd == "gen-requests":
-        gen_requests(a[1], num("--per", 93), num("--calls-per-context", 2))
+        styles = tuple((a[a.index("--style") + 1] if "--style" in a else "mixed").split(","))
+        gen_requests(a[1], num("--per", 93), num("--calls-per-context", 2), half, styles)
     elif cmd == "submit":
         submit(a[1], a[2])
     elif cmd == "status":
@@ -305,6 +339,6 @@ if __name__ == "__main__":
     elif cmd == "fetch":
         fetch(a[1], a[2])
     elif cmd == "label-requests":
-        label_requests(a[1], a[2], num("--per-call", 10))
+        label_requests(a[1], a[2], num("--per-call", 10), half)
     elif cmd == "build":
         build(a[1], a[2], a[3])
