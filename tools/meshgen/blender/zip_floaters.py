@@ -98,6 +98,28 @@ def box(bm_, centre, t, b, n, along, across, high):
         bm_.faces.new([vs[i] for i in q])
 
 
+def pillow(bm_, centre, t, b, n, along, across, high, nu=4, nv=6):
+    """A rounded element: its top a grid domed across and along (a box's flat top faces the way the cloth does and
+    bakes no relief into a normal map: the first bake's teeth were invisible in it), its edges a quarter of its
+    height, a skirt down to its base."""
+    top = [[None] * (nv + 1) for _ in range(nu + 1)]
+    for i in range(nu + 1):
+        u = -1.0 + 2.0 * i / nu
+        for j in range(nv + 1):
+            v = -1.0 + 2.0 * j / nv
+            z = high * (0.25 + 0.75 * math.sqrt(max(0.0, 1 - u * u)) * math.sqrt(max(0.0, 1 - v * v)))
+            top[i][j] = bm_.verts.new(centre + t * (u * along / 2) + b * (v * across / 2) + n * z)
+    for i in range(nu):
+        for j in range(nv):
+            bm_.faces.new((top[i][j], top[i + 1][j], top[i + 1][j + 1], top[i][j + 1]))
+    ring = [top[i][0] for i in range(nu + 1)] + [top[nu][j] for j in range(1, nv + 1)] + \
+           [top[i][nv] for i in range(nu - 1, -1, -1)] + [top[0][j] for j in range(nv - 1, 0, -1)]
+    base = [bm_.verts.new(v.co - n * (v.co - centre).dot(n)) for v in ring]
+    for k in range(len(ring)):
+        a, c = ring[k], ring[(k + 1) % len(ring)]
+        bm_.faces.new((base[k], base[(k + 1) % len(ring)], c, a))
+
+
 # ---- the zip's line: where the two tapes are sewn to each other, bottom to top ---------------------------------
 iR, iL = NAMES.index("tapeR"), NAMES.index("tapeL")
 line_edges = [e for e in db.edges if {f[pl] for f in e.link_faces} == {iR, iL}]
@@ -150,7 +172,7 @@ while s < L - STOP_TOP:
     side = 1 if k % 2 == 0 else -1
     # each element reaches from its own tape across the centre into the gap between the other side's elements
     centre = p + b * (side * EL_ACROSS / 6) + n * PROUD
-    box(tb, centre, tan, b, n, EL_ALONG, EL_ACROSS * 2 / 3, EL_HIGH)
+    pillow(tb, centre, tan, b, n, EL_ALONG, EL_ACROSS * 2 / 3, EL_HIGH)
     s += PITCH
     k += 1
 log["checks"]["teeth"] = k
@@ -160,11 +182,11 @@ teeth = new_obj("Teeth", tb, mat("Teeth", (0.62, 0.60, 0.56), metal=1.0, rough=0
 # ---- the stops: a bottom box, a top clip on each tape -----------------------------------------------------------
 sb_ = bmesh.new()
 p, tan, n = at(STOP_LOW / 2)
-box(sb_, p + n * PROUD, tan, tan.cross(n).normalized(), n, STOP_LOW, 0.007, 0.0028)
+pillow(sb_, p + n * PROUD, tan, tan.cross(n).normalized(), n, STOP_LOW, 0.007, 0.0028)
 for side in (1, -1):
     p, tan, n = at(L - 0.0045)
     b = tan.cross(n).normalized()
-    box(sb_, p + b * (side * 0.0022) + n * PROUD, tan, b, n, 0.0035, 0.0025, 0.0018)
+    pillow(sb_, p + b * (side * 0.0022) + n * PROUD, tan, b, n, 0.0035, 0.0025, 0.0018)
 stops = new_obj("Stops", sb_, mat("Stop", (0.55, 0.53, 0.50), metal=1.0, rough=0.4))
 
 # ---- the welts: lifted through each front's own pattern ---------------------------------------------------------

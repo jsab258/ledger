@@ -493,7 +493,16 @@ for _ in range(opt("--taubin", 12, int)):
             new_co[v] = v.co + (avg - v.co) * lam
         for v, c in new_co.items():
             v.co = c
+# ONE WINDING, FACING OUT (27 October: each piece's grid is wound as its pattern runs, so pieces disagreed and the
+# zip's tapes faced in): made consistent across the sheet, then turned to face away from the garment's axis
+bmesh.ops.recalc_face_normals(lb, faces=lb.faces[:])
 lb.normal_update()
+ax_ = sum((v.co for v in lb.verts), Vector()) / len(lb.verts)
+votes_ = sum(1 if f.normal.dot(Vector((f.calc_center_median().x - ax_.x, f.calc_center_median().y - ax_.y, 0))) >= 0 else -1 for f in lb.faces)
+if votes_ < 0:
+    bmesh.ops.reverse_faces(lb, faces=lb.faces[:])
+    lb.normal_update()
+log["checks"]["facesOutwardShare"] = round(sum(1 for f in lb.faces if f.normal.dot(Vector((f.calc_center_median().x - ax_.x, f.calc_center_median().y - ax_.y, 0))) >= 0) / len(lb.faces), 3)
 log["checks"]["triangles"] = 2 * len(lb.faces)
 log["checks"]["nonManifoldEdges"] = sum(1 for e in lb.edges if len(e.link_faces) > 2)
 bnd = {e for e in lb.edges if len(e.link_faces) == 1}
