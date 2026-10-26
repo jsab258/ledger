@@ -2322,9 +2322,9 @@
   },
   {
    "kind": "grime",
-   "picture": "ours/wear_damp",
+   "picture": "ours/wear_head",
    "x_m": 8.65,
-   "y_m": 1.0784,
+   "y_m": 1.1789,
    "z_m": 5.8893,
    "w_m": 0.5199,
    "h_m": 0.3977,
@@ -2335,9 +2335,9 @@
   },
   {
    "kind": "grime",
-   "picture": "ours/wear_damp",
+   "picture": "ours/wear_head",
    "x_m": 8.65,
-   "y_m": 1.078,
+   "y_m": 1.1786,
    "z_m": 6.4292,
    "w_m": 0.5159,
    "h_m": 0.3962,
@@ -2348,9 +2348,9 @@
   },
   {
    "kind": "grime",
-   "picture": "ours/wear_damp",
+   "picture": "ours/wear_head",
    "x_m": 8.65,
-   "y_m": 1.0739,
+   "y_m": 1.1759,
    "z_m": 6.9713,
    "w_m": 0.5123,
    "h_m": 0.4005,
@@ -2361,7 +2361,7 @@
   },
   {
    "kind": "grime",
-   "picture": "ours/wear_damp",
+   "picture": "ours/wear_head",
    "x_m": 6.32,
    "y_m": 1.12,
    "z_m": 9.4,
@@ -2374,7 +2374,7 @@
   },
   {
    "kind": "damp",
-   "picture": "ours/stain_Leaking005",
+   "picture": "ours/wear_damp_patch",
    "x_m": 8.3,
    "y_m": 2.74,
    "z_m": 9.4,

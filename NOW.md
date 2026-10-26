@@ -8,9 +8,9 @@ Failed its exit check on 22 Oct (production/audits/phase1-exit/CLOSE-2026-10-22.
 
 - [x] 1. Health check; the order ledger.
 - [ ] 2. The walk passed his eye: now the default; packaged walk next. Sit set aside (sit-and-turn/).
-- [ ] 3. Marvelous licence read; Tom's outfit specified, body exported (art/clothing/tom-outfit/SPEC.md).
-- [x] 4. Speech: Sheila and Ron on Pocket, heard in 0.2 s packaged (voice-latency/POCKET-SWITCH-2026-10-26.md).
-- [ ] 5. Mickey's office: light fixed; wear pass 1; soft marks, skirting, then the packaged walk (cab-office-interior-1990/).
+- [ ] 3. Tom's outfit: licence ruled; spec, body; our plug-in, one click a session (tom-outfit/SPEC.md).
+- [ ] 4. Speech: Sheila and Ron on Pocket (0.2 s). Next: two-speed check, slow replies, Darren recast (his answers, 26 Oct).
+- [ ] 5. Mickey's office: light, two wear passes passed; the packaged walk next (cab-office-interior-1990/).
 - [ ] 6. Phase 1's exit re-run; phase 2?
 - Blocked: phase 3's simulation port.
 

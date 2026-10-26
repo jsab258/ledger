@@ -127,8 +127,11 @@ h3{font-weight:800;font-size:19px;line-height:1.15}
 .slist li b{font:700 12px/1 var(--mono);color:var(--muted);margin-right:6px}
 .clist li span:first-child{min-width:0}
 .clist .his{font:700 10px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--brick);margin-right:6px}
-.clist details{font-size:14px}
-.clist summary{cursor:pointer;color:var(--muted);font:700 12px/1.6 var(--mono);letter-spacing:.06em;text-transform:uppercase}
+.carried{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.carried summary{cursor:pointer;padding:12px 0;font:600 15px/1.4 var(--display);list-style-position:inside}
+.carried summary::marker{color:var(--muted)}
+.carried .clist{padding-bottom:10px}
+.carried .clist li{grid-template-columns:minmax(0,1fr)}
 
 /* The street */
 .street{display:grid;gap:14px}
@@ -201,8 +204,8 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
     </section>
     <section class="col" aria-labelledby="h-carried">
       <h2 id="h-carried">Carried over</h2>
-      <p class="sub">Everything still open from earlier orders, from the order ledger. Nothing leaves it unless done or dropped by you.</p>
-      <ul class="clist" id="carriedList"></ul>
+      <p class="sub">What is still open from earlier weeks. Nothing leaves it unless it is done or you drop it.</p>
+      <details class="carried" id="carried"><summary id="carriedSum"></summary><ul class="clist" id="carriedList"></ul></details>
     </section>
   </div>
 
@@ -356,18 +359,13 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
   }
 
   function renderCarried(d){
-    const items = d.carried || []; const ul = $("carriedList"); ul.replaceChildren();
-    const groups = [["Yours", items.filter(x => x.his)], ["Waiting", items.filter(x => !x.his && x.status === "carried over")], ["Set-aside faults", items.filter(x => x.status === "set aside")]];
-    for (const [title, list] of groups){
-      if (!list.length) continue;
-      const li = el("li"); const det = el("details"); if (title !== "Set-aside faults") det.open = true;
-      det.append(el("summary", null, title + " (" + list.length + ")"));
-      const inner = el("ul", "clist");
-      for (const x of list){
-        const r = el("li"); const t = el("span"); if (x.his) t.append(el("span", "his", "Yours")); t.append(document.createTextNode(x.text));
-        r.append(t, el("span", "pill", x.status)); inner.append(r);
-      }
-      det.append(inner); li.append(det); ul.append(li);
+    const items = (d.carried || []).slice().sort((a, b) => (b.his ? 1 : 0) - (a.his ? 1 : 0));
+    const yours = items.filter(x => x.his).length;
+    $("carriedSum").textContent = items.length + " item" + (items.length === 1 ? "" : "s") + " carried over" + (yours ? ", " + yours + " of them yours" : "");
+    const ul = $("carriedList"); ul.replaceChildren();
+    for (const x of items){
+      const r = el("li"); const t = el("span"); if (x.his) t.append(el("span", "his", "Yours")); t.append(document.createTextNode(x.text));
+      r.append(t); ul.append(r);
     }
   }
 

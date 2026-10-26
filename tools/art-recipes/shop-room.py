@@ -1389,6 +1389,14 @@ def build_and_render(argv):
         # ceiling; the street door opens between it and the window.
         box("stair_wall", 1.81, 1.95, 0.0, D, 0.0, H, wall)
         box("stair_wall_dado", 1.80, 1.81, 0.0, D, 0.0, 0.95, dado)
+        # A SKIRTING BOARD round the room, 26 October (item 5, the first wear pass: "no skirting"; the
+        # dado met the carpet with no board): varnished, darker and glossier than the wood-effect dado,
+        # 95 mm high and standing 18 mm proud of it, along the left, back and stair walls
+        skirt = mat("skirting_varnish", (0.12, 0.068, 0.034), rough=0.35)
+        box("skirting_left", -W / 2 + 0.01, -W / 2 + 0.028, 0.0, D - 0.01, 0.0, 0.095, skirt)
+        box("skirting_stair", 1.782, 1.80, 0.0, D - 0.01, 0.0, 0.095, skirt)
+        for k_, (sx0, sx1) in enumerate(((-W / 2 + 0.01, back_gap[0]), (back_gap[1], 1.80)) if back_gap else ((-W / 2 + 0.01, 1.80),)):
+            box("skirting_back_%d" % k_, sx0, sx1, D - 0.028, D - 0.01, 0.0, 0.095, skirt)
         # THE REVEAL'S TIMBER LINING, 6 October (item 1.1's first gate: "the window reveal still has
         # the black pitted scan material"; MICKEYS-OTHER-DIRECTION-2026-10-04.md: "the reveal's
         # timber lining (replacing the black scan)"): a painted board down each side of the opening
@@ -1603,8 +1611,9 @@ def build_and_render(argv):
         # (no scuff boxes on the counter's foot: in the game they read as a dark skyline)
         # (the path in the carpet's own pile, darker, not a plain box: four fresh reviewers read the plain one
         # as "a flat grey patch", 26 October; at a quarter darker it did not show from the game's camera)
-        metre_uvs(box("carpet_path", -0.6, 1.6, 0.6, 2.2, 0.0, 0.004, texmat("carpet_trodden", "dirty_carpet", 1.0, (0.40, 0.23, 0.11),
-                                                                          base=mat("carpet_trodden_plain", (0.065, 0.045, 0.032), rough=0.98, noise=0.5))), 1.0)
+        # (THE PATH TAKEN OUT, 26 October afternoon: set aside that morning, it still showed from the back
+        # wall as a hard-edged rectangle of greyer carpet, a fresh reviewer's fault; a worn path comes back
+        # only as a soft-edged mark, never a box)
         box("counter_rubbed", bkx - 0.4, bkx + 0.4, cy0 + 0.02, cy0 + 0.25, 0.985, 0.9858, mat("laminate_rubbed", (0.55, 0.43, 0.30), rough=0.3))
         # A PINBOARD right of the back door: dockets, a postcard, a card of phone numbers
         print_plane("pinboard", "pinboard", 1.35, D - 0.008, 1.45, 0.70, 0.60, "-y")
@@ -1619,8 +1628,10 @@ def build_and_render(argv):
         # 8 October)
         # the lighter by the counter's ashtray
         model("vintage_lighter", -1.62, 2.36, 0.985, turn=0.4, size=0.06)
-        # COAT HOOKS by the back door, a rail of four (no coats: as boxes they read as boards)
-        prop("coat_rail", 1.32, D, 1.64)
+        # COAT HOOKS by the back door, a rail of four (no coats: as boxes they read as boards), on the
+        # stair wall beside the back corner (26 October: on the back wall it was hung across the
+        # pinboard's top row of notes, a fresh reviewer's fault)
+        prop("coat_rail", 1.80, D - 0.42, 1.64, turn=-math.pi / 2)
         # THE OFFICE CLOCK over the back door (Poly Haven's wall clock, CC0)
         model("wall_clock", 0.42, D - 0.03, 2.25, turn=0.0, size=0.30)
         # SHEILA'S BACK ROOM through the half-open back door (8 October, item 1.1's third review,

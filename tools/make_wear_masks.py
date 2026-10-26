@@ -147,6 +147,29 @@ def marks(rng):
     out["wear_burns"] = soften(burn, 1)
     flakes = (smooth_noise(rng, n, (32, 64, 128)) > 0.70).astype(float)
     out["wear_chips"] = ramp(soften(flakes, 1), "bottom")
+    # WHERE HEADS AND HANDS REST, 26 October (item 5, Mickey's office: the heads behind the bench
+    # printed the street's rising-damp strip, whose straight sides and top read as three stuck-on
+    # rectangles): an oval smudge, darkest a little above its middle where the head rests, mottled,
+    # and fading to nothing at every edge, so no side of the decal can show
+    d = np.sqrt(((xx - 0.5) / 0.40) ** 2 + ((yy - 0.42) / 0.36) ** 2)
+    oval = np.clip(1.0 - d, 0.0, 1.0) ** 1.4
+    mottle = 0.55 + 0.45 * np.clip(smooth_noise(rng, n, (8, 16, 32)) * 1.4 - 0.2, 0.0, 1.0)
+    out["wear_head"] = soften(oval * mottle, 6)
+    # DAMP COME THROUGH FROM ABOVE, 26 October (the same pass: the corner's leak photograph, cropped,
+    # read as a streaked rectangle under the ceiling): a pale stain with a darker tide line at its
+    # ragged edge, as water dries back, clear of the decal's edges on every side
+    r = np.hypot((xx - 0.5) / 0.44, (yy - 0.45) / 0.40)
+    field = np.clip(1.0 - r, 0.0, 1.0) * 1.3 + (smooth_noise(rng, n, (8, 16, 32)) - 0.5) * 0.45
+    # (the second try, the same afternoon: a fresh reviewer read the first, a flat fill with a faint tide
+    # line, as a cut-out shape: now the fill is faint and fades to nothing toward the middle, and the
+    # tide lines carry it, the outer one strongest, two fainter ones inside where it dried back)
+    edge = 0.30                                                        # where the water stopped
+    inside = np.clip((field - edge) / 0.30, 0.0, 1.0)
+    fill = np.where(field > edge, 0.22 * (1.0 - inside) ** 1.5, 0.0)
+    rings = np.zeros_like(field)
+    for off, width, k in ((0.012, 0.022, 1.0), (0.09, 0.016, 0.45), (0.17, 0.014, 0.30)):
+        rings = np.maximum(rings, k * np.clip(1.0 - np.abs(field - edge - off) / width, 0.0, 1.0))
+    out["wear_damp_patch"] = soften(np.maximum(fill, rings), 2.5)
     return out
 
 
@@ -225,6 +248,12 @@ def selftest():
         ok, bad = (ok + 1, bad) if cond else (ok, bad + 1)
         if not cond:
             print("make_wear_masks selftest FAIL " + what)
+    hd = marks(np.random.default_rng(19901006))["wear_head"]
+    check("a head's smudge fades to nothing at every edge", max(hd[0, :].max(), hd[-1, :].max(), hd[:, 0].max(), hd[:, -1].max()) < 0.02)
+    check("and is dark enough inside to show", hd.max() > 0.5)
+    dp = marks(np.random.default_rng(19901006))["wear_damp_patch"]
+    check("a damp patch fades to nothing at every edge", max(dp[0, :].max(), dp[-1, :].max(), dp[:, 0].max(), dp[:, -1].max()) < 0.02)
+    check("its tide line darker than its middle", dp.max() > 0.6 and dp[SIZE // 2, SIZE // 2] < dp.max() * 0.7)
     rng = np.random.default_rng(19901002)
     a = puddle(rng)
     check("a puddle stays clear of the decal's edge", a[0, :].max() == 0 and a[-1, :].max() == 0 and a[:, 0].max() == 0 and a[:, -1].max() == 0)

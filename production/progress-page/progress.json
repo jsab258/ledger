@@ -1,5 +1,5 @@
 {
-  "updated": "Monday 26 October 2026, 12:53",
+  "updated": "Monday 26 October 2026, 13:49",
   "here": 1,
   "friends_eta": "around January",
   "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
@@ -264,13 +264,13 @@
       },
       {
         "n": 9,
-        "name": "Study 9",
+        "name": "Camera, controls and feel",
         "status": "carried over",
         "week": "next week"
       },
       {
         "n": 10,
-        "name": "Study 10",
+        "name": "Interface",
         "status": "carried over",
         "week": "next week"
       },
@@ -288,7 +288,7 @@
       },
       {
         "n": 13,
-        "name": "Study 13",
+        "name": "Production pipeline",
         "status": "carried over",
         "week": "next week"
       },
@@ -314,213 +314,153 @@
   },
   "carried": [
     {
-      "id": "o26-sit-third",
-      "status": "set aside",
-      "text": "His answer of 26 October: the sit's third try, its clip played from its beginning, checked against Epic's own mannequin filmed alone. Hips 8.9 cm from the seat's point, 49.6 cm up; the held foot and the tiptoe slide gone",
-      "his": false
-    },
-    {
-      "id": "o26-walk-default",
-      "status": "open",
-      "text": "His pass of 26 October: the new walk (Epic's route, the chosen stops) becomes the default in the game as played; then the packaged walk",
-      "his": false
-    },
-    {
-      "id": "o21-7-walk",
-      "status": "carried over",
-      "text": "The walk (21 Oct item 7; 24 Oct's go set aside after two tries): now item `o25-2-walk`",
-      "his": false
-    },
-    {
-      "id": "o21-7-clothes",
-      "status": "carried over",
-      "text": "The clothes (21 Oct item 7: Epic's Fab items cannot dress the Hook sheet's people): now item `o25-3-clothes`",
-      "his": false
-    },
-    {
-      "id": "o21-8-speech-2s",
-      "status": "carried over",
-      "text": "Speech under 2 s (21 Oct item 8: 2.41 s best, with the stand-in voice): now item `o25-4-speech`",
-      "his": false
-    },
-    {
-      "id": "o23-frame-voice-spike",
-      "status": "carried over",
-      "text": "The frame of 42 to 55 ms with the voice working beside the game (23 Oct order, set aside after two tries): now part of `o25-4-speech`",
-      "his": false
-    },
-    {
       "id": "shop-empty-unit",
       "status": "carried over",
-      "text": "The empty unit to let (bay 3): its design's review fixes not made",
+      "text": "The empty shop to let: its review's fixes not made yet",
       "his": false
     },
     {
       "id": "shop-mickeys-front",
       "status": "carried over",
-      "text": "Mickey's front: its design's review fixes not made (the glass words, the stallriser tiles, the sign board's paint loss, the night fixes)",
+      "text": "Mickey's shop front: its review's fixes not made yet",
       "his": false
     },
     {
       "id": "shop-fish-market",
       "status": "carried over",
-      "text": "The fish market (bay 1): its design failed its own close review; second round not started",
+      "text": "The fish market: failed its review; the second go not started",
       "his": false
     },
     {
       "id": "q-first-30",
       "status": "carried over",
-      "text": "The first 30 minutes' proposals: three choices for his page (why Tom puts Rita's window in, what fills the quiet route's days, the clock) and two smaller ones",
+      "text": "The first 30 minutes: three choices waiting to go on your page",
       "his": false
     },
     {
       "id": "q-town-inventions",
       "status": "carried over",
-      "text": "The 29 town inventions for his check",
+      "text": "29 new facts about the town, waiting for your check",
       "his": false
     },
     {
       "id": "q-sound-listening",
       "status": "carried over",
-      "text": "The sound listening list: only an ear can judge the day bed, the radio and a possible whine at 3.4 kHz",
+      "text": "Street sounds only an ear can judge, waiting for you",
       "his": false
     },
     {
       "id": "q-street-dressing",
       "status": "carried over",
-      "text": "The street dressing questions: unit 13's nine families, targets written and fixed, builds not started",
+      "text": "Street props: nine kinds planned, none built yet",
       "his": false
     },
     {
       "id": "his-archive-retention",
       "status": "carried over",
-      "text": "His: on the old archive repository (jsab258/ledger-archive-2026-10), artifact retention to 3 days",
+      "text": "The old archive: keep its build files for 3 days",
       "his": true
     },
     {
       "id": "his-archive-actions",
       "status": "carried over",
-      "text": "His: on the same repository, Actions off",
+      "text": "The old archive: switch its automatic runs off",
       "his": true
     },
     {
       "id": "f-hill-haze",
       "status": "set aside",
-      "text": "The hill's haze does not thicken toward the crest",
+      "text": "The haze on the hill doesn't thicken toward the top",
       "his": false
     },
     {
       "id": "f-street-details",
       "status": "set aside",
-      "text": "Street details: the broken window, Mickey's glass reflections and their frame cost, lamp post C's column and bowl, the shops' listed faults (the grocer's smoke on glass, the chandler's side lining, the tea rooms' table shadows, Rita's door card and normal maps), the ground missing between blocks",
+      "text": "Small street faults: the broken window, glass reflections, a lamp post, shop details",
       "his": false
     },
     {
       "id": "f-suspicion-port",
       "status": "set aside",
-      "text": "Nothing in the game reads the C++ port's suspicion yet",
+      "text": "The game doesn't yet use the town's suspicion",
       "his": false
     },
     {
       "id": "f-invented-claims",
       "status": "set aside",
-      "text": "Live talk still invents (7%)",
+      "text": "Characters still invent details in about 7 replies in 100",
       "his": false
     },
     {
       "id": "f-old-launchers",
       "status": "set aside",
-      "text": "The old studio's launchers and the Unity game layer name retired things",
-      "his": false
-    },
-    {
-      "id": "f-speech-delay",
-      "status": "set aside",
-      "text": "First spoken answer 2.41 s at best, none at 2 s",
-      "his": false
-    },
-    {
-      "id": "f-frame-headroom",
-      "status": "set aside",
-      "text": "The 42 to 55 ms frame with a voice beside the game; the day's spare card time",
+      "text": "Old launchers still name things that are gone",
       "his": false
     },
     {
       "id": "f-face-light",
       "status": "set aside",
-      "text": "Faces underlit outside conversations; Sheila's and Darren's faces fail their sheets",
+      "text": "Faces too dark outside conversations; Sheila's and Darren's faces off their sheets",
       "his": false
     },
     {
       "id": "f-voice-accents",
       "status": "set aside",
-      "text": "Recorded crowd lines drift American",
+      "text": "Some recorded crowd lines sound American",
       "his": false
     },
     {
       "id": "f-thats-all",
       "status": "set aside",
-      "text": "A newcomer's first questions end in \"that's all I know\" about a third of the time",
+      "text": "Newcomers hear \"that's all I know\" too often",
       "his": false
     },
     {
       "id": "f-claim-about-listener",
       "status": "set aside",
-      "text": "The claim check does not read what a character says about the listener",
+      "text": "The fact check misses what someone says about you",
       "his": false
     },
     {
       "id": "f-placeholder-people",
       "status": "set aside",
-      "text": "Three placeholder figures in play; the cast not wired through",
-      "his": false
-    },
-    {
-      "id": "f-tom-speaker",
-      "status": "set aside",
-      "text": "Tom's stand-in body and sliding walk; nobody sits in the game as played",
+      "text": "Three stand-in figures still in the street",
       "his": false
     },
     {
       "id": "f-police-file",
       "status": "set aside",
-      "text": "Three time-and-state faults in the police file",
+      "text": "Three timing faults in the police file",
       "his": false
     },
     {
       "id": "f-free-play",
       "status": "set aside",
-      "text": "Free play's faults (the dark quay, the trapped pavements, the debugger key, the talk box's first letter, the shared save)",
+      "text": "Free play's faults: the dark quay, pavements that trap you, a test key, the save",
       "his": false
     },
     {
       "id": "f-mickey-past",
       "status": "set aside",
-      "text": "Mickey's past disagrees with itself",
+      "text": "Mickey's past contradicts itself",
       "his": false
     },
     {
       "id": "f-nightly-bench",
       "status": "set aside",
-      "text": "The nightly walk's sixty-question bench measured nothing on three nights",
+      "text": "The nightly question test measured nothing three nights running",
       "his": false
     },
     {
       "id": "f-licences-three",
       "status": "set aside",
-      "text": "Three shipped libraries with no licence read",
+      "text": "Three pieces of code whose licences are not read yet",
       "his": false
     },
     {
       "id": "f-sash-windows",
       "status": "set aside",
-      "text": "The street's sash windows beyond Mickey's row",
-      "his": false
-    },
-    {
-      "id": "f-clothes-base-layer",
-      "status": "set aside",
-      "text": "The cast wear the white base layer",
+      "text": "The sash windows beyond Mickey's row",
       "his": false
     }
   ]

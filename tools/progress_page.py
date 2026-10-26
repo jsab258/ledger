@@ -30,8 +30,41 @@ PREVIEWS = os.path.join(ROOT, "production", "previews")
 VIEWS = ("hook-day", "reverse-day", "night")
 NAMES = {"study-%d" % i: n for i, n in enumerate(
     ["", "NPC life and AI", "The first 30 minutes", "Dialogue and barks", "Street and world building", "Visuals",
-     "Characters and wardrobe", "Animation", "Sound", "Study 9", "Study 10", "Systems", "Tech and budgets",
-     "Study 13", "Combat and violence", "The crime toolkit", "Jobs and story"]) if i}
+     "Characters and wardrobe", "Animation", "Sound", "Camera, controls and feel", "Interface", "Systems",
+     "Tech and budgets", "Production pipeline", "Combat and violence", "The crime toolkit", "Jobs and story"]) if i}
+# THE CARRIED LIST IN HIS WORDS (Jafar, 26 October: "plain words only: no item codes, no file names, no
+# technical detail; one short line per item"): one line for each item carried from earlier orders, kept
+# here beside the ledger's own wording; --check fails when a carried item has no line, so a new one is
+# never shown in the ledger's working words.
+PLAIN = {
+    "shop-empty-unit": "The empty shop to let: its review's fixes not made yet",
+    "shop-mickeys-front": "Mickey's shop front: its review's fixes not made yet",
+    "shop-fish-market": "The fish market: failed its review; the second go not started",
+    "q-first-30": "The first 30 minutes: three choices waiting to go on your page",
+    "q-town-inventions": "29 new facts about the town, waiting for your check",
+    "q-sound-listening": "Street sounds only an ear can judge, waiting for you",
+    "q-street-dressing": "Street props: nine kinds planned, none built yet",
+    "his-archive-retention": "The old archive: keep its build files for 3 days",
+    "his-archive-actions": "The old archive: switch its automatic runs off",
+    "f-hill-haze": "The haze on the hill doesn't thicken toward the top",
+    "f-street-details": "Small street faults: the broken window, glass reflections, a lamp post, shop details",
+    "f-suspicion-port": "The game doesn't yet use the town's suspicion",
+    "f-invented-claims": "Characters still invent details in about 7 replies in 100",
+    "f-old-launchers": "Old launchers still name things that are gone",
+    "f-face-light": "Faces too dark outside conversations; Sheila's and Darren's faces off their sheets",
+    "f-voice-accents": "Some recorded crowd lines sound American",
+    "f-thats-all": "Newcomers hear \"that's all I know\" too often",
+    "f-claim-about-listener": "The fact check misses what someone says about you",
+    "f-placeholder-people": "Three stand-in figures still in the street",
+    "f-police-file": "Three timing faults in the police file",
+    "f-free-play": "Free play's faults: the dark quay, pavements that trap you, a test key, the save",
+    "f-mickey-past": "Mickey's past contradicts itself",
+    "f-nightly-bench": "The nightly question test measured nothing three nights running",
+    "f-licences-three": "Three pieces of code whose licences are not read yet",
+    "f-sash-windows": "The sash windows beyond Mickey's row",
+}
+CARRIED_SECTION = "## Carried from earlier orders"
+FOLDED = ("now item", "now part of", "worked again as", "worked again in")   # carried into this week's own items, shown there
 
 
 def newest_order():
@@ -49,12 +82,13 @@ def derived():
         week = "this week" if "this week" in rest else "next week" if "next week" in rest else ""
         studies.append({"n": i, "name": NAMES[sid], "status": status, "week": week})
     carried = []
-    for iid, (status, rest) in items.items():
-        if iid.startswith(("o25-", "study-")) or status in ("done", "dropped"):
+    text_all = open(os.path.join(ROOT, order_ledger.ORDERS, name), encoding="utf-8").read()
+    section = text_all.split(CARRIED_SECTION, 1)[1].split("\n## ", 1)[0] if CARRIED_SECTION in text_all else ""
+    for iid in re.findall(r"^- `([^`]+)`", section, re.M):
+        status, rest = items.get(iid, ("missing", ""))
+        if status in ("done", "dropped") or any(f in rest for f in FOLDED):
             continue
-        text = rest.strip()
-        text = re.split(r" Reason: | \(production/| \(cloud week", text)[0].rstrip(" .")
-        carried.append({"id": iid, "status": status, "text": text, "his": iid.startswith("his-")})
+        carried.append({"id": iid, "status": status, "text": PLAIN.get(iid, ""), "his": iid.startswith("his-")})
     days = sorted({m.group(1) for f in os.listdir(PREVIEWS) for m in [re.match(r"^morning-night-(\d{4}-\d\d-\d\d)\.jpg$", f)] if m
                    and all(os.path.exists(os.path.join(PREVIEWS, "morning-%s-%s.jpg" % (v, m.group(1)))) for v in VIEWS)})
     return name, studies, carried, days
@@ -71,6 +105,10 @@ def main(argv):
         missing = [x for x in days if x not in d["street"]["days"]]
         for k in bad:
             print("progress-page FAIL %s disagrees with the order ledger (%s): run tools/progress_page.py" % (k, order))
+        for x in carried:
+            if not x["text"]:
+                print("progress-page FAIL carried item %s has no plain line in tools/progress_page.py PLAIN" % x["id"])
+                bad.append("plain")
         if missing:
             print("progress-page FAIL morning pictures not on the page: %s" % ", ".join(missing))
         print("progress-page: %d studies, %d carried items, %d days; %s" % (len(studies), len(carried), len(days),

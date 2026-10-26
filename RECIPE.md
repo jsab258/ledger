@@ -19,6 +19,20 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 26 Oct 2026, a room's second wear pass: marks of use as soft decals, and a check that the import really ran
+- Made: head and hand marks and a ceiling water stain as soft-edged decal pictures made by script; a skirting board; a prop moved off a notice board; a set-aside floor patch taken out.
+- Method (setting-free):
+  - Trace a "stuck-on" mark to the picture it prints: a street mask cropped to a strip shows its straight sides indoors. Every mark picture fades to nothing at all its edges, and a test says so.
+  - A stain reads as damp when its edge carries it: a strong tide line and fainter inner rings, the fill fading to nothing toward the middle. A flat fill with a faint edge reads as a cut-out.
+  - A fault set aside as "does not show" can show from another camera: remove it rather than leave it.
+  - After any import, read the result line the import itself just wrote (count the lines before and after); an old success line proves nothing.
+  - One reviewer per view, each beside its last picture; a view never reviewed before gets a full fault hunt.
+- Tools: the room recipe in Blender; the decal mask maker and the wear list generator; the room import; the player-camera pictures; a fresh reviewer per view.
+- Target and check: the listed faults gone in every view, no new fault; marks soft at every edge.
+- Cost (hours): about 1.5.
+- Failed and why: the first water stain (flat fill, faint edge) read as pasted on; the first import never ran (a relative script path).
+- Evidence: production/research/cab-office-interior-1990/WEAR-2026-10-25.md (The second wear pass)
+
 ### 26 Oct 2026, two characters moved to a second speech engine after a listening test, the old lines made again to match
 - Made: a third engine in the game's voice program, chosen per character from one spec file; the two characters' made-ahead sounds remade in it; the shipped copy of the voice program brought up to date and kept so by the build.
 - Method (setting-free):

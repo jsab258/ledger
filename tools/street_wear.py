@@ -290,7 +290,9 @@ def room_wear(spec_path=OFFICE):
     out = []
     # the street's own prepared masks (ours/), never ambientCG's folder previews, which are
     # sphere renders and stood in the room as round blobs (6 October, the first film)
-    smudge, rub, damp = "ours/wear_damp", "ours/wear_splash", "ours/stain_Leaking005"
+    # heads and hands print an oval smudge faded at every edge (26 October, item 5: the damp strip's
+    # straight sides read as three stuck-on rectangles behind the bench; tools/make_wear_masks.py)
+    smudge, rub, damp = "ours/wear_head", "ours/wear_splash", "ours/wear_damp_patch"
     c = box.get("counter")
     if c:   # the customers' face of the counter, toward the window (yaw 0 faces -z): a few uneven
         # patches where people stand to book, not one band (6 October: one decal the counter's
@@ -312,7 +314,9 @@ def room_wear(spec_path=OFFICE):
         for k in range(3):
             z = b["z0"] + (b["z1"] - b["z0"]) * (k + 0.5 + 0.3 * (rnd(s, "z%d" % k) - 0.5)) / 3.0
             out.append({"kind": "grime", "picture": smudge, "x_m": 8.65,
-                        "y_m": round(ROOM_FLOOR_M + 0.9 + 0.12 * rnd(s, "y%d" % k), 4),
+                        # a seated head rests about 1.05 m up, above the dado's top at 0.95 (26 October: at
+                        # 0.9 the smudges sat on the dado's edge and read as dirt on the rail)
+                        "y_m": round(ROOM_FLOOR_M + 1.02 + 0.08 * rnd(s, "y%d" % k), 4),
                         "z_m": round(z, 4), "w_m": round(0.38 + 0.14 * rnd(s, "w%d" % k), 4),
                         "h_m": round(0.32 + 0.12 * rnd(s, "h%d" % k), 4),
                         "yaw_deg": 270.0, "pitch_deg": 0.0, "strength": round(0.35 + 0.15 * rnd(s, "st%d" % k), 3),
