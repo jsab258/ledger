@@ -29,14 +29,17 @@ def loud(data, sr):
     return y * min(1.0, 0.89 / peak)
 
 
-def main(jobs_path):
+def main(jobs_path, prompts=None):
     import numpy as np
     import soundfile as sf
     jobs = json.load(open(jobs_path, encoding="utf-8"))
     out = pathlib.Path(jobs_path).parent
     tmp = out / "pocket-pieces"
     tmp.mkdir(exist_ok=True)
-    p = subprocess.Popen([sys.executable, str(SERVER), "--out", str(tmp)], stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+    # --prompts DIR (26 October, Darren's recast): each voice learned from DIR/<who>.wav, a candidate's own
+    # reference, instead of the cast clip
+    extra = ["--prompts", prompts] if prompts else []
+    p = subprocess.Popen([sys.executable, str(SERVER), "--out", str(tmp)] + extra, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                          stderr=subprocess.DEVNULL, text=True, encoding="utf-8", bufsize=1)
     while True:
         msg = json.loads(p.stdout.readline())
@@ -80,4 +83,4 @@ def main(jobs_path):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1])
+    main(sys.argv[1], sys.argv[sys.argv.index("--prompts") + 1] if "--prompts" in sys.argv else None)

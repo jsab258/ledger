@@ -5,7 +5,7 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
 
 ## Overview (Sunday 25 October, evening: your week's order)
 
-**Your order of 25 October evening, to Monday 2 November 13:00** (production/orders/2026-10-25.md, every item and study with a status; 26 October: work stops at 12:00 at the latest, until you say continue).
+**Your order of 25 October evening, to Monday 2 November 13:00** (production/orders/2026-10-25.md, every item and study with a status; 26 October: carrying on through the 13:00 reset, as you said).
 - **Phase 1 is open, not closed.** It failed its first exit check on 22 October. Fresh reviewers re-run that check once the walk, the clothes and speech pass; phase 2 waits for it, and the shops already in the street stay.
 - **Recorded:** your rulings (RULINGS.md and DECISIONS.md); the study's order for both weeks at the top of the study plan; the order ledger, seeded with everything still open from before (21 and 23 October's leftovers, the cloud week's four questions, the three shops not yet in the street, FINDINGS' twenty faults, your two clicks on the old archive). A new check fails any push where an item has no status or vanishes without being done or dropped.
 - **Done:** the health check (production/audits/health-2026-10-25.md); your progress page now has the studies bar and the 33 carried items.
@@ -130,7 +130,8 @@ No decision asked: these are for watching the street change.
 
 ### Needs you
 
-Nothing open: your page's three taps (26 October) and your Marvelous ruling are recorded (RULINGS.md). The new walk is now the game's default; Sheila and Ron move to Pocket next.
+1. **Marvelous, one click (now, recommended):** open Marvelous Designer. The first time only: Plugin tab, Plug-in Manager, + ADD, pick the file C:\Users\Jafar\ledger-local\tools\md-bridge\ledger_md_bridge.py and name it "LEDGER bridge". Then click LEDGER bridge once and leave Marvelous open. Our bridge then takes Tom's outfit jobs from a folder on F:; I'll ask again only if Marvelous gets closed.
+2. **Darren's voice, the checkers' downloads, and Haiku's labels:** on today's page once it is up (up to three taps).
 
 ### Road to worth playing (PLAN.md)
 
