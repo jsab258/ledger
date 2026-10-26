@@ -19,6 +19,21 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 26 Oct 2026, two characters moved to a second speech engine after a listening test, the old lines made again to match
+- Made: a third engine in the game's voice program, chosen per character from one spec file; the two characters' made-ahead sounds remade in it; the shipped copy of the voice program brought up to date and kept so by the build.
+- Method (setting-free):
+  - Use the exact settings the owner heard on the listening page, so what ships is what passed.
+  - Each engine prepares only the voices it speaks for, so the start-up cost moves with the characters.
+  - Remake every made-ahead line in the new engine too, or a character sounds like two people; gate each take by the accent measure and by a transcript, and make spare takes, since short takes drift more.
+  - Match the new takes' loudness and trim to the old ones', measured, not by ear.
+  - Check what the shipped game actually runs: here its voice folder was a month-old copy, so no voice change since had reached play. Make the build copy the program in, not a person.
+  - Measure in the shipped game itself, with its own helpers, not in the editor.
+- Tools: the voice program and the second engine's server; an accent classifier; a speech-to-text check; the game's own scripted-question timing.
+- Target and check: the two characters' first sound under half a second in the shipped game; all remade lines English by the classifier and word-perfect.
+- Cost (hours): about 1.2.
+- Failed and why: an editor run of the timing script waited forever (its talk program must be named on the command line there); the shipped game was used instead.
+- Evidence: production/research/voice-latency/POCKET-SWITCH-2026-10-26.md
+
 ### 26 Oct 2026, a room's first wear pass: faults traced to the recipe's own lines, fixed at the source, judged at the player's camera
 - Made: rings kept to desk papers only; box files with written labels and round rimmed holes, fixed to each file; the room re-exported and imported, photographed through the player's own camera.
 - Method (setting-free):
