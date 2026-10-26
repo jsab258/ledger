@@ -19,6 +19,48 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 26 Oct 2026, a room passed at the editor's picture level and failed at the level the game ships at
+- Made: the office photographed in the packaged build; the cause traced to the picture level; two fixes tried and set aside; one prop's colour fixed.
+- Method (setting-free):
+  - Photograph for the gate at the level the player plays at, not the editor's highest: soft shadows of local lights get half the rays one level down, so small things lose their shadows and soft shadows speckle.
+  - Reproduce the packaged fault in the editor at that level, with the suspected feature off and on, before changing anything.
+  - A screen-space contact shadow puts small shadows back but adds grain on thin sheets; a smaller light source narrows penumbrae but does not restore every small shadow.
+  - A pale prop under a lamp's pool reads as an untextured slab: tone its colour, not the light.
+  - A view never reviewed before gets a full fault hunt and its faults are listed, even when they are not new.
+- Tools: the packaged build's own photo option; the editor at a set picture level; per-view fresh reviewers; the room recipe and its spec.
+- Target and check: the packaged views match the passed ones, no new fault.
+- Cost (hours): about 2.
+- Failed and why: both shadow fixes (grain; the phone's shadow unchanged); set aside after two tries.
+- Evidence: production/research/cab-office-interior-1990/WEAR-2026-10-25.md (The office in the packaged game)
+
+### 26 Oct 2026, a character's voice recast from an open speech corpus, gated by a reviewer who cannot hear
+- Made: five young men's recordings fetched by byte range from a 10.9 GB corpus (20 MB); a voice made from each; two passed every round, one picked by the owner and put in the game with its made-ahead sounds.
+- Method (setting-free):
+  - Read only the members you need from a large remote zip (its central directory, then each file by range), refusing any reply that is not the exact range asked.
+  - Gate each joined take, not only each line: accent windows that cross the joins can fail a take whose lines each passed.
+  - Choose retakes by the reviewer's own measure (here the longest run of non-English windows over five shifted grids), calibrated on the takes it already judged.
+  - Words can vanish silently: a dropped "I" passed a word-error bar; check every scripted word.
+  - Two tries per candidate, then set it aside; present fewer candidates and say so first, rather than a weaker one.
+  - A two-sentence sound joined with digital silence has a hole; use a one-sentence take instead of patching.
+- Tools: byte-range reader; the speech model; accent classifier with windows; speech-to-text; speaker likeness; a fresh measuring reviewer.
+- Target and check: every word, England throughout, no non-English stretch over 3 s, likeness over the floor; the owner's ear.
+- Cost (hours): about 2.5.
+- Failed and why: two candidates (accent stretches; a dropped word); a third never passed its first line.
+- Evidence: production/casting/darren-milner/voice-2026-10-26/REVIEW.md
+
+### 26 Oct 2026, a desktop design program driven by script through a one-click plug-in
+- Made: a plug-in that, started once, runs job files from a folder on the program's own thread; a probe of its API; the body imported with its fitting points and saved for later jobs.
+- Method (setting-free):
+  - Search the project for earlier tools first: a bridge, a pattern writer and the body's scale lesson already existed and were found late.
+  - A Windows timer on the program's own thread keeps it usable while jobs run; a heartbeat file tells the outside whether it is alive; no network port.
+  - Every job checks its files exist before calling the program: a wrong path opens a modal box only a person can close.
+  - Bodies in centimetres are read as millimetres: import at scale 10 so the program recognises the pose and places its points; save the result so later jobs load it without asking.
+- Tools: the program's documented Python modules; ctypes; job and result files.
+- Target and check: a job runs and returns without a click; the body takes its points.
+- Cost (hours): about 1.5.
+- Failed and why: two jobs stopped on boxes the owner had to close (a wrong file name, the old scale).
+- Evidence: tools/md-bridge/; production/research/game-clothing-pipeline/MD-AVATAR-2026-10-26.md
+
 ### 26 Oct 2026, a room's second wear pass: marks of use as soft decals, and a check that the import really ran
 - Made: head and hand marks and a ceiling water stain as soft-edged decal pictures made by script; a skirting board; a prop moved off a notice board; a set-aside floor patch taken out.
 - Method (setting-free):

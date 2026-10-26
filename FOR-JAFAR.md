@@ -36,12 +36,11 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
   - LEDGER is already built the simulated way, with something both lack: who told whom, and talk that weakens as it travels.
   - For us: crime memory that lasts by kind (1 to 7 days); show a witness walking to tell someone; benches and beds as places in the routine; spreading only where people meet, as canon says.
 
-**Your items (26 October, morning, after your answers).**
-- *The walk, third try (item 2):* stops now chosen Kingdom Come II's way. The stop that re-stepped now plants cleanly; Epic's own forward stop still skims the trailing foot 10 to 13 cm (it is in Epic's clip, every start); the run's start cannot be seen at the game's camera. On today's page for your eye.
-- *The sit, third try (item 2):* from the clip's beginning, Epic's mannequin filmed alone beside it. The hanging foot and the tiptoe slide are gone, but on the walk-in to the window seat his leg passes through the sill, as Epic's mannequin's does. Set aside.
-- *Speech (item 4):* the listening test is on today's page: Sheila and Ron in the cast voice and in Pocket. Pocket's Darren drifted American on every line, so he stays in the cast voice.
-- *Clothes (item 3):* Marvelous's licence read: fine for a sold game made by one person, as long as no CLO avatar or sample goes in and everything is exported before your month ends. Tom's outfit specified (zip jacket, jumper, jeans, shoes, to Study 6's numbers); his body exported and measured for it.
-- *Mickey's office (item 5):* the light first. The room now has its own exposure while the camera is inside, so it no longer blows out at night; the "too dark by day" was the photograph's camera, not the game's. The desk lamp now shines down from its shade instead of throwing shadows up the map. Then a first wear pass: the coffee rings are off the papers on the wall, and the box files have written labels and proper finger holes (both passed). The worn carpet path didn't show after two tries; the streaky frieze and the bench's wall board are next.
+**Your items (26 October, evening).**
+- *The walk (item 2), done:* your pass made it the default; the packaged game, walked by the AI tester, 14 of 15 stages (the one miss, Ron out of reach, is the route's old fault). The sit stays set aside.
+- *Clothes (item 3):* Marvelous's licence ruled; our bridge runs in Marvelous at your one click; Tom's body is in it with 109 fitting points, saved for the jobs. Next: the zip jacket's pattern, reusing October's pattern tools.
+- *Speech (item 4):* all three now speak through Pocket, Darren in the Newcastle voice you picked (first sound about 0.2 s, against 2.6 s on the card). The untrained checkers clear almost nothing safely and are too slow on the processor, so the trained route waits on Anthropic's answer. Slow replies, before: 10 of 30 turns at 5 s or more; three were Darren's card voice, now gone.
+- *Mickey's office (item 5):* two wear passes passed in the editor; in the packaged game, at High, small shadows go and two fixes failed (set aside, Needs you 3); the desk under the radio fixed; new faults behind the counter listed for tomorrow.
 
 <!-- retention -->Disk (10-22 04:32): C: 79.9 GB free, F: 48.4 GB free; grew most since 10-21 12:17: C:\actions-runner-ledger\_work\ledger +1.5 GB, F:\LedgerTools\uv\cache +1.4 GB, F:\LedgerTools\bpyenv\Lib +0.9 GB.
 
@@ -130,8 +129,10 @@ No decision asked: these are for watching the street change.
 
 ### Needs you
 
-1. **Marvelous, one click (now, recommended):** open Marvelous Designer. The first time only: Plugin tab, Plug-in Manager, + ADD, pick the file C:\Users\Jafar\ledger-local\tools\md-bridge\ledger_md_bridge.py and name it "LEDGER bridge". Then click LEDGER bridge once and leave Marvelous open. Our bridge then takes Tom's outfit jobs from a folder on F:; I'll ask again only if Marvelous gets closed.
-2. **Today's page, three taps (afternoon):** Darren's voice (two passed of the three you asked for), the checkers' download (recommended yes, 1.5 GB), and asking Anthropic before training on Haiku's labels (recommended). https://claude.ai/artifact/8LsucbjBtuCj1QyaRamqpB
+1. **Send the request to Anthropic (yours to send):** the draft is in production/research/invented-claims/ANTHROPIC-REQUEST-2026-10-26.md, to Anthropic's support from the account that holds the game's key. Nothing is trained on Haiku's labels until they answer.
+2. **Leave Marvelous open with the bridge running** (recommended): Tom's jacket jobs run through it; if you close it, one click on LEDGER bridge next time.
+3. **The office's small shadows at High** (on tomorrow's page): two tries failed and are set aside; next, raise shadow quality only while the camera is inside the room (no cost in the street). Recommended: yes.
+4. **The slow replies' measurements cost more than $1 a day** (on tomorrow's page): about $1.60 for each 60-turn bench run, some $8 over the week for the before, the two existing switches and the after. Recommended: allow it for this item.
 
 ### Road to worth playing (PLAN.md)
 
