@@ -45,7 +45,9 @@ TAPE_W = 12.0
 # a hip welt: its slit's length and its lips' height, its centre this far up from the front's hem and this share of
 # the way from the centre front to the side seam, leaning this many degrees from upright with its top towards the
 # side seam (a hand-warmer welt; slanted, not upright: DECISIONS, 26 October night)
-WELT_L, WELT_H, WELT_UP, WELT_ACROSS, WELT_LEAN = 150.0, 15.0, 120.0, 0.55, 20.0
+# (0.40 across, 27 October: at 0.55 the welts sat where the front turns back round the body and their lips bent across
+# that crease in the drape, the bake plan's "welt across a fold")
+WELT_L, WELT_H, WELT_UP, WELT_ACROSS, WELT_LEAN = 150.0, 15.0, 120.0, 0.40, 20.0
 
 
 def load(path):
