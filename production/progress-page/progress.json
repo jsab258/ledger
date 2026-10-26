@@ -1,5 +1,5 @@
 {
-  "updated": "Monday 26 October 2026, 12:13",
+  "updated": "Monday 26 October 2026, 12:53",
   "here": 1,
   "friends_eta": "around January",
   "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
@@ -106,8 +106,10 @@
       "target": 3,
       "start_label": "Tom's own walk",
       "now_label": "25 Oct, by eye",
-      "state": "fighting",
-      "last": "25 Oct: Epic's walk with its contact marks rewritten and a stricter lock: eight of ten moments under 3 cm by eye. The stop's re-step still slides 10 to 11 cm and the run's start about 4.5 cm. Set aside after two tries; a third is your call."
+      "state": "defeated",
+      "last": "26 Oct: the third try (stops chosen Kingdom Come II's way) passed your eye at the game's camera and is now the default. Measured, the first stop still drags 10 to 13 cm inside Epic's own clip; your eye is the gate.",
+      "when": "26 Oct",
+      "display": "Passed your eye, 26 Oct"
     },
     {
       "name": "The Long Pause",
@@ -119,7 +121,7 @@
       "start_label": "8 Oct",
       "now_label": "25 Oct, cast voice",
       "state": "fighting",
-      "last": "25 Oct: re-timed the game's way with the cast voice on the card: 4.14 s median. The model drafts in 0.75 s and its check adds 1.1 s; the cast voice takes 2.8 s. Your call on the voice."
+      "last": "26 Oct: Sheila and Ron now speak through Pocket, as you picked: in the packaged game their voice starts 0.18 to 0.22 s after the reply (2.2 to 3.1 s before); Darren, still on the card, 2.5 to 2.8 s. The whole path with the real model is not re-timed (no real calls in development); it was 4.14 s on 25 Oct, of which the voice was 2.8 s."
     },
     {
       "name": "The Stutter",
@@ -142,7 +144,7 @@
       "target": 0,
       "display": "0 of 1 outfit made",
       "state": "fighting",
-      "last": "25 Oct: Study 6 set the target (jacket about 20,000 triangles, trousers about 9,000, 2048 textures, skinned). Next: Marvelous Designer, one paid month, on your sign-up."
+      "last": "26 Oct: Marvelous Designer's licence read and your ruling recorded (garments made during your month stay in the game); Tom's outfit specified and his body measured. Next: the jacket's first pattern."
     },
     {
       "name": "The Empty Chair",
@@ -150,15 +152,15 @@
       "display": "Not built yet",
       "hp": 100,
       "state": "fighting",
-      "last": "25 Oct: Epic's sample in the project already holds a bench interaction built on smart objects; it is next, on the same mover."
+      "last": "26 Oct: the third try (Epic's clip from its own start) set aside: Tom's leg passes through the window sill on Epic's approach. Sitting stays off in play."
     },
     {
       "name": "The Clean Room",
       "what": "Mickey's office worn, lived in and free of glitches, at the Hook sheet's bar.",
-      "display": "Not re-checked since 22 Oct",
+      "display": "Light fixed; wear in progress",
       "hp": 100,
-      "state": "unchecked",
-      "last": "The method works on shop fronts: eight fronts got their wear this week and passed."
+      "state": "fighting",
+      "last": "26 Oct: the room's own exposure fixed (no blow-out at night), the desk lamp aimed down, mug rings off the hung papers, real box files. Next: soft head and damp marks, a skirting board, then the packaged walk."
     },
     {
       "name": "The Memory Hog",
@@ -321,12 +323,6 @@
       "id": "o26-walk-default",
       "status": "open",
       "text": "His pass of 26 October: the new walk (Epic's route, the chosen stops) becomes the default in the game as played; then the packaged walk",
-      "his": false
-    },
-    {
-      "id": "o26-pocket-switch",
-      "status": "open",
-      "text": "His picks of 26 October: Sheila's and Ron's live lines and their prepared lines move to Pocket on the processor; Darren stays in the cast voice on the card; then the speech delay measured again",
       "his": false
     },
     {
