@@ -106,6 +106,9 @@ WATCHED = {
     # is not authorship: the same corpus and the same obligation.
     "production/assets/people": "Mixamo",
     "game-design/picked-clips": "VCTK",
+    # A CHARACTER RECAST FOR POCKET ALONE (26 October: Darren, VCTK p286, his page's pick): its reference,
+    # kept out of git (the game inputs on F: hold it), the same corpus and the same credit
+    "game-design/pocket-voices": "VCTK",
     "voice-candidates": "VCTK",
     # THE SYNTHESISED BARKS, AND THEY BELONG HERE RATHER THAN IN `OURS`.
     #
