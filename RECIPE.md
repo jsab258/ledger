@@ -19,6 +19,21 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 26 Oct 2026, a refused spoken sentence rewritten alone, benched offline and set aside
+- Made: a bench that times a dialogue engine's turns as the game runs them; two existing switches measured; a repair of the refused sentence benched offline in two tries and set aside.
+- Method (setting-free):
+  - Measure latency on the talk the bar is about (here a newcomer's real questions, on the better model), with small talk beside it; a run on the live script's own lines first proves the bench reads like the game.
+  - Run each condition at least twice: two identical runs of 60 turns differed 17 to 9 in slow turns.
+  - Split each slow turn by its steps (drafted, checked, refused, redrafted, rechecked) before choosing a fix; here every refused first sentence was slow, whatever came next.
+  - Test whether a suspected input (the facts list's length) drives a call's time by timing the same calls one at a time with it halved.
+  - A repair model given the facts and the refused sentence re-invents from the speaker's identity; told to add nothing, it mostly answers "don't know". Bench a repair's pass rate, and how many passes keep an answer, before wiring it.
+  - When a strict check refuses a rewrite that looks true, suspect the check's false alarms: no rewrite fixes those.
+- Tools: the engine's own bench mode on the API key under a task cap; a step scorer; a one-at-a-time timing mode; an offline repair mode.
+- Target and check: replies heard at 5 s or later, by cause; repairs passing the game's own check with an answer kept.
+- Cost (hours): about 3; $5.03 of a $10 cap.
+- Failed and why: both repair tries (re-invention; then "don't know"); the two existing switches (no gain; planning adds 1.3 s a turn).
+- Evidence: production/research/voice-latency/SENTENCE-REPAIR-2026-10-26.md (last three sections)
+
 ### 26 Oct 2026, a quality setting raised only while the player is inside one room, found by halving the engine's level groups
 - Made: the setting that lost a room's small shadows at the shipped picture level found and raised only while the camera is inside; its frame cost measured; the earlier diagnosis corrected.
 - Method (setting-free):

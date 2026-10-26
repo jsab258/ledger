@@ -271,3 +271,19 @@ His ruling the same evening: the 2-second bar is judged on a newcomer's real que
 | Darren | 1.07 s | 0.99 s | 43 / 44 |
 
 - **So neither the list nor his sentences is why.** Alone, every check takes about 1.1 s (1.13 s plus 0.7 ms a token written; halving the list moves it under 0.1 s either way). The checks of 2 to 4 s in the runs are the service's own varying wait: they fell on all three, and on Ron's turns most in that one run. Tighter facts would therefore not speed the check; they matter only for how often it refuses. A check on this PC (the fast checker, whose numbers come tonight) is the one change that removes that wait for the sentences it is sure of.
+
+## The refused sentence rewritten alone: two tries, set aside (26 October, evening)
+
+Benched offline first, as planned (ClaimBench `repair`; F:/LedgerTools/town-scratch/slow-replies/repair; $0.15): 40 of Gemini's unsupported first sentences from the tuning contexts (the held contexts stay the fast checker's test), each through the game's own check on Haiku 5.5 (it refused all 40), then rewritten by Haiku 5.5 with thinking off, two ways (the refused details named, as after a refusal; nothing named, as a rewrite started alongside the check), and each rewrite checked again the same way.
+
+| Try | Named: passed | Alongside: passed | Of those passing, an answer kept |
+|---|---|---|---|
+| 1. Keep the speaker's words and length, take the unsupported out | 6 of 40 | 6 of 40 | |
+| 2. Only what one item says, nothing inferred, shorter is better | 12 of 40 | 17 of 40 | 4 of 12; 2 of 17 (the rest "I don't know") |
+
+Each call took about 1.1 s to rewrite and 1.3 s to check again.
+
+- **Try 1 fails:** the rewriter re-invents from who the speaker is ("since he's living in Mickey's flat over the office"; "trade's been thin since the docks went"), and the check rightly refuses it.
+- **Try 2 fails differently:** what passes is nearly always a plain "don't know", the answer lost; today's second draft passed about 60% of refused turns in the runs above.
+- **Set aside after two tries** (his rule). Wired alongside the check, it would turn a slow answer into a fast "don't know" about one time in three, which is not what he asked for.
+- **The other direction, from the same data:** some refused rewrites look true to the speaker's card (Ron: "Two drivers on the rank, one by day and one by night"). This matches the September finding that false alarms are most of the check's refusals (40 to 45 of 132 clean turns flagged on the held-back bench). The lever for slow replies is therefore the check's false alarms: fewer of them, or the fast checker clearing the sentences it is sure of. Tonight's numbers bear on the second; the first gets its own research, from the refusals these runs kept.

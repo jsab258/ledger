@@ -126,6 +126,7 @@ static partial class Program
             case "pipeline": return await Pipeline(dir, args.Length > 1 ? args[1] : "run", parallel, Arg(args, "--checker", "v3v"),
                                                    args.Contains("--early"));
             case "checktime": return await CheckTime(args);
+            case "repair": return await Repair(args);
             case "again":
             {
                 // Some turns of the bench's drafts through the live check, each
