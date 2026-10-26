@@ -22,6 +22,14 @@ collar along the whole neckline. The zip is drawn closed: the fronts' centre edg
 front ends are sewn edge to edge (no API call makes a zip; the zip itself is a detail for the game mesh). Rib is cut
 shorter than the edge it is sewn to (the band 0.9, the cuff 0.85) so it draws the cloth in, as rib does.
 
+THE ZIP'S TAPES AND THE POCKETS' PLACES (26 October night; production/research/game-clothing-pipeline/
+ZIP-POCKETS-2026-10-26.md, the route, step 1): no Marvelous zipper (no API call makes one, and its trims would
+escape the game mesh's retopology). Instead two zip tapes, TAPE_W wide, each running the whole closure (the hem
+band's front end, the front's centre edge, the collar's front end), sewn to those three edges on one side and to
+each other on the other: the zip drawn closed, with the tapes' own width and a firmer cloth's stiffness. The teeth,
+the welts' lips and the stops are built later in Blender on the drape and baked (step 3). The two hip welts' places
+are written into the plan in each front's own pattern coordinates (WELT_*), which the drape's UV islands carry.
+
 EVERY EDGE IS NAMED BY ITS TWO ENDS (Brian's own points), and a seam pairs two edges by those names, so its
 directions follow from which ends meet, not from how each outline happens to wind. Every outline is wound
 counter-clockwise with y up, starting on a corner, as Marvelous wants (tools/md/make_jacket_job.py's lessons).
@@ -33,6 +41,11 @@ import sys
 CORNER, CURVE = 0, 2
 RIB_BAND, RIB_CUFF = 0.90, 0.85
 BAND_H, CUFF_H, COLLAR_H = 55.0, 60.0, 70.0
+TAPE_W = 12.0
+# a hip welt: its slit's length and its lips' height, its centre this far up from the front's hem and this share of
+# the way from the centre front to the side seam, leaning this many degrees from upright with its top towards the
+# side seam (a hand-warmer welt; slanted, not upright: DECISIONS, 26 October night)
+WELT_L, WELT_H, WELT_UP, WELT_ACROSS, WELT_LEAN = 150.0, 15.0, 120.0, 0.55, 20.0
 
 
 def load(path):
@@ -144,7 +157,35 @@ def build(brian, sleeve_shorten=0.0):
     pieces["collar"] = [([[0, 0], [nL, 0]], "colCfL", "colHpsL"), ([[nL, 0], [nL + nB, 0]], "colHpsL", "colHpsR"),
                         ([[nL + nB, 0], [W, 0]], "colHpsR", "colCfR"), ([[W, 0], [W, COLLAR_H]], "colCfR", "colTopCfR"),
                         ([[W, COLLAR_H], [0, COLLAR_H]], "colTopCfR", "colTopCfL"), ([[0, COLLAR_H], [0, 0]], "colTopCfL", "colCfL")]
+    # THE ZIP'S TAPES: each the closure's whole length, its outer side in three lines that meet the band's front end,
+    # the front's centre edge and the collar's front end, its inner side one line meeting the other tape's
+    for s in ("R", "L"):
+        lb = length(E("bandFront" + s, "bandCfLow" + s, "bandCf" + s))
+        lf = length(E("front" + s, "cfHem" + s, "cfNeck" + s))
+        lc = COLLAR_H
+        t = "tape" + s
+        tape = [([[0, 0], [TAPE_W, 0]], t + "LowO", t + "LowI"),
+                ([[TAPE_W, 0], [TAPE_W, lb + lf + lc]], t + "LowI", t + "TopI"),
+                ([[TAPE_W, lb + lf + lc], [0, lb + lf + lc]], t + "TopI", t + "TopO"),
+                ([[0, lb + lf + lc], [0, lb + lf]], t + "TopO", t + "NeckO"),
+                ([[0, lb + lf], [0, lb]], t + "NeckO", t + "BandO"),
+                ([[0, lb], [0, 0]], t + "BandO", t + "LowO")]
+        pieces[t] = ccw(tape if s == "L" else mirror_edges(tape))
     return pieces
+
+
+def welts(brian):
+    """The two hip welts' places in each front's pattern coordinates (the left front as drafted, the right mirrored)."""
+    fpts, fn = brian["brian.front"]
+    cf, side = fn["cfHem"], fn["hem"]
+    cx = cf[0] + (side[0] - cf[0]) * WELT_ACROSS
+    cy = cf[1] + (side[1] - cf[1]) * WELT_ACROSS + WELT_UP
+    lean = WELT_LEAN if side[0] > cf[0] else -WELT_LEAN
+    out = []
+    for s, sx in (("L", 1), ("R", -1)):
+        out.append({"piece": "front" + s, "centre": [round(cx * sx, 1), round(cy, 1)], "length": WELT_L, "lips": WELT_H,
+                    "leanDegreesFromUpright": round(lean * sx, 1), "leansTowards": "side seam"})
+    return out
 
 
 # THE SEAMS: (piece, end, end) against (piece, end, end), the ends that meet listed in the same order
@@ -164,10 +205,14 @@ def seams():
             (("collar", "colCfR", "colHpsR"), ("frontR", "cfNeckR", "hpsR")),
             (("collar", "colHpsR", "colHpsL"), ("back", "hpsR", "hpsL")),
             (("collar", "colHpsL", "colCfL"), ("frontL", "hpsL", "cfNeckL")),
-            # the zip, closed: the fronts', the bands' and the collar's front edges
-            (("frontR", "cfNeckR", "cfHemR"), ("frontL", "cfNeckL", "cfHemL")),
-            (("bandFrontR", "bandCfR", "bandCfLowR"), ("bandFrontL", "bandCfL", "bandCfLowL")),
-            (("collar", "colCfR", "colTopCfR"), ("collar", "colCfL", "colTopCfL"))]
+            # the zip, closed: each tape's outer side to the band's, the front's and the collar's front ends, and the
+            # two tapes' inner sides to each other
+            (("tapeR", "tapeRLowI", "tapeRTopI"), ("tapeL", "tapeLLowI", "tapeLTopI"))]
+    for s in ("R", "L"):
+        t = "tape" + s
+        out += [((t, t + "LowO", t + "BandO"), ("bandFront" + s, "bandCfLow" + s, "bandCf" + s)),
+                ((t, t + "BandO", t + "NeckO"), ("front" + s, "cfHem" + s, "cfNeck" + s)),
+                ((t, t + "NeckO", t + "TopO"), ("collar", "colCf" + s, "colTopCf" + s))]
     return out
 
 
@@ -175,7 +220,8 @@ def seams():
 # tops above the head and the sleeves' caps above the shoulders, and the sleeves bunched at the elbow (26 October)
 ARRANGE = {"frontR": "Body_Front_3_R", "frontL": "Body_Front_3_L", "back": "Body_Back_Center_3",
            "sleeveR": "Arm_Outside_2_R", "sleeveL": "Arm_Outside_2_L", "cuffR": "Wrist_Outside_R", "cuffL": "Wrist_Outside_L",
-           "bandFrontR": "Body_Front_5_R", "bandFrontL": "Body_Front_5_L", "bandBack": "Body_Back_Center_5", "collar": "Neck_Back"}
+           "bandFrontR": "Body_Front_5_R", "bandFrontL": "Body_Front_5_L", "bandBack": "Body_Back_Center_5", "collar": "Neck_Back",
+           "tapeR": "Body_Front_Center_3", "tapeL": "Body_Front_Center_3"}
 
 
 def plan(brian, sleeve_shorten=0.0):
@@ -189,13 +235,13 @@ def plan(brian, sleeve_shorten=0.0):
             pts.append([round(seg[0][0], 2), round(seg[0][1], 2), CORNER])
             pts += [[round(x, 2), round(y, 2), CURVE] for x, y in seg[1:-1]]
         out_pieces.append({"key": key, "points": pts, "arrange": ARRANGE.get(key),
-                           "fabric": "rib" if key.startswith(("band", "cuff")) else "shell"})
+                           "fabric": "rib" if key.startswith(("band", "cuff")) else "tape" if key.startswith("tape") else "shell"})
     out_seams = []
     for (pa, a0, a1), (pb, b0, b1) in seams():
         la, fa = lines[(pa, a0, a1)]
         lb, fb = lines[(pb, b0, b1)]
         out_seams.append({"a": [pa, la, fa], "b": [pb, lb, fb], "names": [a0, a1, b0, b1]})
-    return {"pieces": out_pieces, "seams": out_seams}
+    return {"pieces": out_pieces, "seams": out_seams, "welts": welts(brian)}
 
 
 JOB = '''# Generated by tools/md-bridge/zip_jacket.py from %(src)s: Tom's zip jacket made, placed on his own avatar's
@@ -228,7 +274,7 @@ result["sewn"] = sewn
 # shell, rib knit for the bands and cuffs, from Marvelous's stock library as October's drapes used
 FAB = r"C:\\Users\\Public\\Documents\\MarvelousDesigner\\New Assets\\Fabric"
 fabrics = {}
-for name, f in (("shell", "V2_Woven_Twill_1.zfab"), ("rib", "V2_Cut_Sew_Knit_Rib_1.zfab")):
+for name, f in (("shell", "V2_Woven_Twill_1.zfab"), ("rib", "V2_Cut_Sew_Knit_Rib_1.zfab"), ("tape", "V2_Woven_Canvas_1.zfab")):
     path = os.path.join(FAB, f)
     if os.path.isfile(path):
         fabrics[name] = fabric_api.AddFabric(path)
@@ -237,6 +283,11 @@ for p in PLAN["pieces"]:
         fabric_api.AssignFabricToPattern(fabrics[p["fabric"]], made[p["key"]], 1)
 result["fabrics"] = fabrics
 pattern_api.SetParticleDistanceOfPatterns(%(particle)g)
+# THE TAPES FINER (the research's fresh review, 26 October night: a 12 mm tape at the jacket's 10 to 20 mm is one
+# row of cloth): each tape at a third of its width
+for p in PLAN["pieces"]:
+    if p["key"].startswith("tape"):
+        pattern_api.SetParticleDistanceOfPattern(made[p["key"]], 4.0)
 result["simulated"] = bool(utility_api.Simulate(%(steps)d))
 eo = ApiTypes.ImportExportOption()
 eo.bExportGarment = True

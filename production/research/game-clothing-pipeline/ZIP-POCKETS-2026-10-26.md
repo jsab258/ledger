@@ -61,3 +61,18 @@ All times are estimates (I). **Nothing is done by hand each run.** Three one-lin
 - British mail-order catalogues of 1989 to 1991; the Westminster Menswear Archive refused the connection (helper's report).
 - polycount.com threads (not tried; behind Cloudflare in September).
 - support.marvelousdesigner.com and vintagepatterns.fandom.com refused the plain fetch (403, 402) but were read in the browser.
+
+### Fresh review (26 October, night)
+
+**Verdict: SOUND WITH FIXES.** Every linked source I opened says what the note quotes; the route holds. The fixes: steps and estimate.
+
+- **Step 2 overstates reuse.** finish_md_jacket.py names the tailored jacket's pieces (sideL, topsleeveL...) and reads spec["pockets"]["buttons"], so it stops on the zip jacket; it decimates, never bakes. The chain that bakes, pockets lifted as floaters (--pocket-lift), buttons kept as mesh, is tools/meshgen/blender/retopo_garment.py (30 September), unnamed here and built for that jacket. Budget adapting both.
+- **Step 1 is short of detail.** Seams join whole lines, so each tape edge must be split to meet the front, the hem band and the collar. A 12 mm tape at 10 to 20 mm particle distance is one row; it needs its own (SetParticleDistanceOfPattern).
+- **Texture.** One 2048 map over the jacket is about 1.5 pixels a millimetre, 2 to 5 a tooth (I): teeth may shimmer. Give the tape a denser UV island. The ID mask is a fourth map SPEC's table lacks: pack it or change the table.
+- **Estimate.** 6 to 10 hours covers the new parts only; with both scripts adapted and one gate round, 10 to 16 is likelier (I).
+- **Mafia.** Jacket meshes run 10,867 to 40,843 triangles; extra sections also hold sleeve variants and chest-hair shells. "No trim material" stands.
+- **GenerateZippersFromObj** is only a name in our probe. Its neighbours ZipperObjectType and ZipperScaleUnit match the manual's Register OBJ dialog (type, scale): likely it registers zipper parts, not a zipper on edges (I). Not depending on it is right.
+- **1990 evidence is thin.** Neue Mode says "welt or jetted pockets", not where; "no chest pocket" is read from silence. The 1983 M&S jacket has knitted sleeves; M&S's 1985 cotton jacket (T16/1) has zip hip pockets. Kays catalogues of 1988 to 1991 or dated photographs (plain-1990-clothes names them) would settle pockets and teeth.
+- **Alan Wake** concerns sim mesh against render mesh; it shows pockets modelled, no more.
+
+**Not checked:** an independent game source on zips (Polycount behind Cloudflare; none found); Baracuta; the helper-read patterns.
