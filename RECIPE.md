@@ -19,6 +19,18 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 26 Oct 2026, a generated test table too big for the repository's size guard, kept in parts
+- Made: the simulation's 2.7 MB golden table (the reference rules' answers the engine port is checked against) kept as four parts under 900 KB; the whole table is written, not committed, wherever a reader needs it.
+- Method (setting-free):
+  - When a size guard blocks a generated text file, cut it into parts under the limit at line ends and join them in name order; prove the round trip byte for byte, line endings included (text tools on Windows drop carriage returns unless told to read in binary).
+  - Leave the readers alone where possible: here the build machine already regenerated the table before the engine read it, so only the regenerating script changed, and it now always writes the whole table, not only when it moved.
+  - Add the round trip and "every part under the limit" to the script's own self-test.
+- Tools: the golden check script (bash and awk); the push guard.
+- Target and check: the check passes from the parts (no drift, the port agrees on every row); the self-test 12 of 12; the push guard passes.
+- Cost (hours): 0.5.
+- Failed and why: the first cut lost every carriage return (awk's text mode on Windows); caught by the byte comparison.
+- Evidence: tools/port-golden-check.sh (THE TABLE IS KEPT IN PARTS; self-test case 7)
+
 ### 26 Oct 2026, a refused spoken sentence rewritten alone, benched offline and set aside
 - Made: a bench that times a dialogue engine's turns as the game runs them; two existing switches measured; a repair of the refused sentence benched offline in two tries and set aside.
 - Method (setting-free):

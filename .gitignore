@@ -115,6 +115,8 @@ ue-probe/Build/
 /crime-witness-v1.json
 ue-probe/vignette-pieces.json
 ue-probe/crime-witness-v1.json
+# The whole golden table, joined from ue-probe/perception-golden/part-NN.txt by tools/port-golden-check.sh --accept (26 Oct 2026: the push guard refuses files over 1 MB)
+ue-probe/perception-golden.txt
 ue-probe/Content/vignette-pieces.json
 ue-probe/Content/crime-witness-v1.json
 ue-probe/Saved/

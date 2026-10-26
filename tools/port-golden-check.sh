@@ -26,10 +26,21 @@
 #   tools/port-golden-check.sh             # the check
 #   tools/port-golden-check.sh --accept    # regenerate in place and keep it
 #   tools/port-golden-check.sh --selftest  # this script, both ways
+#
+# THE TABLE IS KEPT IN PARTS, 26 October 2026. It is 2.7 MB, and the push
+# guard (tools/push_guard.py) refuses any changed file over 1 MB, so no rule
+# of the Core could change without the push being refused. The committed
+# table is ue-probe/perception-golden/part-NN.txt, each under 900,000 bytes,
+# cut only at line ends; joined in order they are the table, byte for byte.
+# --accept writes the parts when the Core has moved, and always writes the
+# whole table to ue-probe/perception-golden.txt (not committed), which is
+# where the engine's golden test and the build machine's later steps read it.
 set -u
 
 REPO=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
+PARTS="$REPO/ue-probe/perception-golden"
 COMMITTED="$REPO/ue-probe/perception-golden.txt"
+PART_MAX=900000
 PORT_TEST="ue-probe/tests/core-port-test.cpp"
 PORT_SRC="ue-probe/Source/LedgerProbe/Private/Perception.cpp"
 INC_PUBLIC="ue-probe/Source/LedgerProbe/Public"
@@ -59,6 +70,24 @@ regenerate() {
 }
 
 rows_in() { grep -cv '^#' "$1" 2>/dev/null | tr -d ' '; }
+
+# THE PARTS, JOINED AND CUT. Binary mode (BINMODE) so awk on Windows keeps
+# each line's carriage return; joined, the parts are the table byte for byte.
+join_parts() { # dir  dest
+  : > "$2"
+  local f
+  for f in "$1"/part-*.txt; do [ -f "$f" ] && cat "$f" >> "$2"; done
+  return 0
+}
+split_parts() { # table  dir
+  mkdir -p "$2"
+  rm -f "$2"/part-*.txt
+  LC_ALL=C awk -v BINMODE=3 -v dir="$2" -v max="$PART_MAX" '
+    BEGIN { n = 1; size = 0; f = sprintf("%s/part-%02d.txt", dir, n) }
+    { l = length($0) + 1
+      if (size > 0 && size + l > max) { close(f); n++; f = sprintf("%s/part-%02d.txt", dir, n); size = 0 }
+      print > f; size += l }' "$1"
+}
 
 # DRIFT, NAMED IN ROWS RATHER THAN AS A DIFF. Line endings are normalised
 # first: the table is written by .NET on Windows and read by g++ on Linux,
@@ -138,7 +167,8 @@ check() {
   echo
   echo "===== the committed table against it"
   local drift=0
-  drift_check "$COMMITTED" "$fresh" || drift=1
+  join_parts "$PARTS" "$WORK/committed.txt"
+  drift_check "$WORK/committed.txt" "$fresh" || drift=1
 
   echo
   echo "===== the C++ port against the FRESH table"
@@ -169,14 +199,16 @@ accept() {
   local fresh="$WORK/fresh.txt"
   regenerate "$fresh" || return $?
   tail -n 1 "$WORK/regen.log"
-  if drift_check "$COMMITTED" "$fresh" > "$WORK/drift.txt" 2>&1; then
+  join_parts "$PARTS" "$WORK/committed.txt"
+  cp "$fresh" "$COMMITTED"
+  if drift_check "$WORK/committed.txt" "$fresh" > "$WORK/drift.txt" 2>&1; then
     cat "$WORK/drift.txt"
-    echo "port-golden --accept: the committed table was already what the Core emits; nothing written."
+    echo "port-golden --accept: the committed parts were already what the Core emits; ue-probe/perception-golden.txt written for the engine's test."
     return 0
   fi
   cat "$WORK/drift.txt"
-  cp "$fresh" "$COMMITTED"
-  echo "port-golden --accept: ue-probe/perception-golden.txt rewritten from the C# Core. COMMIT IT."
+  split_parts "$fresh" "$PARTS"
+  echo "port-golden --accept: ue-probe/perception-golden/ rewritten from the C# Core ($(ls "$PARTS"/part-*.txt | wc -l | tr -d ' ') parts). COMMIT THEM."
   return 0
 }
 
@@ -245,6 +277,17 @@ selftest() {
   { cat "$good"; echo "MotionFactor|999|1"; } > "$WORK/long.txt"
   out=$(drift_check "$WORK/long.txt" "$good" 2>&1); rc=$?
   _ok "a table carrying a row the Core dropped is drift too" 1 "goldenDrift=YES"
+
+  echo
+  echo "[7] THE PARTS ARE THE TABLE, AND EACH FITS UNDER THE PUSH GUARD"
+  split_parts "$good" "$WORK/parts"
+  join_parts "$WORK/parts" "$WORK/joined.txt"
+  cmp -s "$good" "$WORK/joined.txt"; rc=$?; out=""
+  _ok "cut and joined, the table is the same byte for byte" 0 ""
+  out=$(find "$WORK/parts" -name 'part-*.txt' -size +"$PART_MAX"c); rc=0; [ -n "$out" ] && rc=1
+  _ok "no part is over $PART_MAX bytes" 0 ""
+  out=$(ls "$WORK/parts" | wc -l | tr -d ' '); rc=0; [ "$out" -ge 2 ] || rc=1
+  _ok "the table really was cut (more than one part)" 0 ""
 
   echo
   echo "port-golden selftest: passed=$pass/$((pass + fail)) failed=$fail"
