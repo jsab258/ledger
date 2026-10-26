@@ -2,7 +2,7 @@
 
 Copied from each page's own database into this folder (pages.json lists the pages). Written by tools/page_answers.py --index; never edited by hand.
 
-Read back: 2026-10-25
+Read back: 2026-10-26
 
 | Page | Updated | Answers | Each answer: pick or verdict, date |
 |---|---|---|---|
@@ -48,5 +48,6 @@ Read back: 2026-10-25
 | [Lamp Post C](https://claude.ai/artifact/R6mfWdCEKmuHBPD9q6JYJ3) | 2026-10-21 | 2 | lamp-columns-material-2026-10-21: concrete, 2026-10-21 (Concrete stays, but clean it looks cheap. Show me it weathered and a shade darke); look-lamp-post-c-2026-10-21: yes, 2026-10-21 |
 | [Friday's Decisions](https://claude.ai/artifact/VNFZHnSWBrA72zGKRbwFRn) | 2026-10-23 | 3 | decide-check-model-2026-10-23: no, 2026-10-23; decide-marvelous-2026-10-23: yes, 2026-10-23; decide-walk-next-2026-10-23: yes, 2026-10-23 |
 | [Thursday's Decisions](https://claude.ai/artifact/2yznAYjEwDVv3RvzzKUpBR) | 2026-10-22 | 5 | decide-check-model-2026-10-22: no, 2026-10-22; decide-marvelous-2026-10-22: yes, 2026-10-22; decide-phase2-2026-10-22: hold, 2026-10-22; look-lamp-weathered-2026-10-22: later, 2026-10-22; look-ritas-front-2026-10-22: yes, 2026-10-22 |
+| [Monday's Decisions](https://claude.ai/artifact/8LsucbjBtuCj1QyaRamqpB) | 2026-10-26 | 3 | listen-pocket-2026-10-26: both, 2026-10-26; prepared-pocket-2026-10-26: move, 2026-10-26; walk-by-eye-2026-10-26: pass, 2026-10-26 |
 
-42 pages, 157 answers.
+43 pages, 160 answers.

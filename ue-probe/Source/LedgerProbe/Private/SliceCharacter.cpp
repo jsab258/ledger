@@ -417,7 +417,9 @@ bool ALedgerSliceCharacter::StartMotionMatching(USkeletalMeshComponent* M)
 
 bool ALedgerSliceCharacter::StartGaspMover(USkeletalMeshComponent* M)
 {
-	if (M == nullptr || !FParse::Param(FCommandLine::Get(), TEXT("LedgerGaspMover"))) { return false; }
+	// THE DEFAULT WALK SINCE 26 OCTOBER (his pass by eye on his page, after the third try): Epic's route is on unless
+	// -NoGaspMover; -LedgerGaspMover, which switched it on before, is still read and changes nothing
+	if (M == nullptr || FParse::Param(FCommandLine::Get(), TEXT("NoGaspMover"))) { return false; }
 	// THE SAMPLE'S OWN PIECES at their own paths (copied into the game unchanged, 24 October), and his
 	// MetaHuman as assembled (the face he was given, L1).
 	static const TCHAR* MoverPath = TEXT("/Game/Blueprints/SandboxCharacter_CMC.SandboxCharacter_CMC_C");
@@ -552,8 +554,9 @@ void ALedgerSliceCharacter::GaspTick()
 	// as planted. The sample's graph makes each clip's contact curve a speed, (1 - contact) * 100, and plants
 	// below 1, so only a foot marked above 0.99 is held; motion matching blends clips, and a blended mark often
 	// sits just under that. 50 holds any foot marked at least half planted.
-	static float UnplantCm = -1.0f, UnplantDeg = -1.0f, PlantSpeed = -1.0f;
-	static const bool bUnplant = FParse::Value(FCommandLine::Get(), TEXT("GaspUnplantCm="), UnplantCm) | FParse::Value(FCommandLine::Get(), TEXT("GaspUnplantDeg="), UnplantDeg) | FParse::Value(FCommandLine::Get(), TEXT("GaspPlantSpeed="), PlantSpeed);
+	// 26 October: the walk he passed ran at 50, so 50 is the default; -GaspPlantSpeed= still sets another
+	static float UnplantCm = -1.0f, UnplantDeg = -1.0f, PlantSpeed = 50.0f;
+	static const bool bUnplant = FParse::Value(FCommandLine::Get(), TEXT("GaspUnplantCm="), UnplantCm) | FParse::Value(FCommandLine::Get(), TEXT("GaspUnplantDeg="), UnplantDeg) | FParse::Value(FCommandLine::Get(), TEXT("GaspPlantSpeed="), PlantSpeed) | (PlantSpeed > 0.0f);
 	if (bUnplant)
 	{
 		if (UAnimInstance* Graph = GaspMover->GetMesh()->GetAnimInstance())
@@ -1097,7 +1100,9 @@ void ALedgerSliceCharacter::RequestAct()
 {
 	// on Epic's route, E by a free seat sits him and E seated stands him (25 October, item 2); else it acts
 	if (SitPhase == ESitPhase::Seated) { bSitWantsUp = true; return; }
-	if (GaspMover != nullptr && SitPhase == ESitPhase::None && TryStartSit()) { return; }
+	// sitting only with -TomSit until it passes (its third try set aside, 26 October: the window seat's sill)
+	static const bool bSitOn = FParse::Param(FCommandLine::Get(), TEXT("TomSit"));
+	if (bSitOn && GaspMover != nullptr && SitPhase == ESitPhase::None && TryStartSit()) { return; }
 	++ActRequests;
 }
 void ALedgerSliceCharacter::RequestTalk() { ++TalkRequests; }
@@ -1571,7 +1576,8 @@ namespace LedgerStop
 
 void ALedgerSliceCharacter::StopTick(float WasIn, float NowIn)
 {
-	static const bool bOn = FParse::Param(FCommandLine::Get(), TEXT("TomStopChosen"));
+	// on by default since his pass of 26 October; -NoTomStopChosen leaves the stops to the motion matching
+	static const bool bOn = !FParse::Param(FCommandLine::Get(), TEXT("NoTomStopChosen"));
 	if (!bOn || GaspMover == nullptr) { return; }
 	UAnimInstance* Graph = GaspMover->GetMesh()->GetAnimInstance();
 	if (Graph == nullptr) { return; }

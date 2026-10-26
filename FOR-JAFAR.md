@@ -130,10 +130,7 @@ No decision asked: these are for watching the street change.
 
 ### Needs you
 
-**Today's page, three taps:** https://claude.ai/artifact/8LsucbjBtuCj1QyaRamqpB
-1. **Pocket for Sheila and Ron:** their three sheet lines in the cast voice and in Pocket. Recommended: both pass, if your ear agrees (accent England on every line; likeness to the approved voices lower). Darren's Pocket drifted American, so he keeps the cast voice.
-2. **Their prepared lines move with them,** so each keeps one voice. Recommended: yes.
-3. **Tom's walk at the game's camera,** after the third try: pass makes it the default. The re-stepping stop now plants cleanly; Epic's own forward stop still skims the trailing foot 10 to 13 cm.
+Nothing open: your page's three taps (26 October) and your Marvelous ruling are recorded (RULINGS.md). The new walk is now the game's default; Sheila and Ron move to Pocket next.
 
 ### Road to worth playing (PLAN.md)
 

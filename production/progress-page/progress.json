@@ -1,5 +1,5 @@
 {
-  "updated": "Monday 26 October 2026, 11:03",
+  "updated": "Monday 26 October 2026, 12:13",
   "here": 1,
   "friends_eta": "around January",
   "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
@@ -312,21 +312,21 @@
   },
   "carried": [
     {
-      "id": "o26-walk-third",
-      "status": "open",
-      "text": "His answer of 26 October: the walk's third, researched try: stops chosen Kingdom Come II's way (-TomStopChosen); the re-stepping stop now plants cleanly, Epic's own forward stop still skims the trailing foot 10 to 13 cm, the run's start unseen at the game's camera. On his page for his eye (https://claude.ai/artifact/8LsucbjBtuCj1QyaRamqpB); no fourth try. Evidence so far: production/research/sit-and-turn/WALK-2026-10-25.md (Third try)",
-      "his": false
-    },
-    {
       "id": "o26-sit-third",
       "status": "set aside",
       "text": "His answer of 26 October: the sit's third try, its clip played from its beginning, checked against Epic's own mannequin filmed alone. Hips 8.9 cm from the seat's point, 49.6 cm up; the held foot and the tiptoe slide gone",
       "his": false
     },
     {
-      "id": "o26-listening-test",
+      "id": "o26-walk-default",
       "status": "open",
-      "text": "His answer of 26 October: each person's three sheet lines in the cast voice and in Pocket, gated (Pocket's Darren drifted American on all three and stays in the cast voice); Sheila and Ron on his page with the prepared-lines question (https://claude.ai/artifact/8LsucbjBtuCj1QyaRamqpB; production/approvals/2026-10-26/page.json)",
+      "text": "His pass of 26 October: the new walk (Epic's route, the chosen stops) becomes the default in the game as played; then the packaged walk",
+      "his": false
+    },
+    {
+      "id": "o26-pocket-switch",
+      "status": "open",
+      "text": "His picks of 26 October: Sheila's and Ron's live lines and their prepared lines move to Pocket on the processor; Darren stays in the cast voice on the card; then the speech delay measured again",
       "his": false
     },
     {
