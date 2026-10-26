@@ -1670,11 +1670,12 @@ namespace LedgerCrime
 	/// HOW WELL A WITNESS KNOWS HIS FACE (the review's A4): a stranger until
 	/// they have met him face to face; then enough to recognise him in a good
 	/// sighting (Perception's 0.35), a little more each further day they meet,
-	/// to 0.7.
+	/// to 0.7. Since 26 October 2026 the rule's home is the Core
+	/// (Acquaintance.FromMeetings, the sweep's G2), ported in Suspecting.h and
+	/// checked by its golden rows; a stranger there is kFamiliarity here.
 	inline double FamiliarityFromMeetings(int DaysMet)
 	{
-		if (DaysMet <= 0) return kFamiliarity;
-		return std::min(0.7, 0.4 + 0.1 * (DaysMet - 1));
+		return LedgerCore::Acquaintance::FromMeetings(DaysMet);
 	}
 
 	/// HOW WELL ONE OF THE THREE KNOWS HIS FACE FOR THEIR LOOKS AND REMARKS

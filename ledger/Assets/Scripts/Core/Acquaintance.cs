@@ -83,5 +83,19 @@ namespace Ledger.Core
         /// ended up measuring two different angles on the same night.
         public static bool CanNameYou(double familiarity) =>
             familiarity >= Perception.RecognitionFamiliarity;
+
+        /// HOW WELL A FACE IS KNOWN FROM MEETINGS (the review's A4, 1 October).
+        /// A stranger until they have met him face to face; the first meeting
+        /// puts them over recognition (0.4 against `Perception`'s 0.35), each
+        /// further day they meet adds 0.1, to 0.7, which stays below `Close`:
+        /// meeting a man, however often, is not walking where he walks.
+        ///
+        /// ITS HOME SINCE 26 OCTOBER 2026. The rule lived only in the game's
+        /// C++ (CrimeProbe.h, FamiliarityFromMeetings), where nothing in the
+        /// Core could disagree with it (the 5 October sweep's G2), though it
+        /// decides rung 4 and so the report, the constable and the arrest.
+        /// The port now reads this through its golden rows.
+        public static double FromMeetings(int daysMet) =>
+            daysMet <= 0 ? Stranger : System.Math.Min(0.7, 0.4 + 0.1 * (daysMet - 1));
     }
 }

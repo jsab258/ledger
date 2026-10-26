@@ -27,6 +27,7 @@
 #include "Perception.h"      // LedgerCore::Clamp
 #include "Suspicion.h"       // SuspicionLevel
 
+#include <algorithm>
 #include <string>
 
 namespace LedgerCore
@@ -39,6 +40,16 @@ namespace LedgerCore
 		const double Stranger   = 0.0;
 		const double HeardOfYou = 0.20;
 		const double Close      = 0.80;
+
+		// Acquaintance.cs FromMeetings (26 October 2026, the sweep's G2: the
+		// rule lived only in CrimeProbe.h, with no C# to agree with). A
+		// stranger until met; 0.4 from the first meeting, 0.1 more each
+		// further day met, to 0.7. Pinned by the FamiliarityFromMeetings rows.
+		inline double FromMeetings(int DaysMet)
+		{
+			if (DaysMet <= 0) return Stranger;
+			return std::min(0.7, 0.4 + 0.1 * (DaysMet - 1));
+		}
 	}
 
 	// Suspecting.cs 6 to 34. What one person holds about a deed: the account

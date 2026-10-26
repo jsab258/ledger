@@ -4507,6 +4507,11 @@ namespace Golden
 		{
 			A.Known = true; A.Got = FromDouble(Perception::LightFactor(D(F[1])));
 		}
+		else if (Fn == "FamiliarityFromMeetings" && F.size() >= 3)
+		{
+			// The sweep's G2 (26 October 2026): Acquaintance.FromMeetings.
+			A.Known = true; A.Got = FromDouble(Acquaintance::FromMeetings(std::atoi(F[1].c_str())));
+		}
 		else if (Fn == "FacingIsReadable" && F.size() >= 4)
 		{
 			A.Known = true; A.Got = FromBool(Perception::FacingIsReadable(D(F[1]), D(F[2])));

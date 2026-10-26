@@ -59,6 +59,12 @@ namespace Ledger.PerceptionGolden
             foreach (var l in lights)
                 sb.Append("LightFactor|").Append(D(l)).Append('|').Append(D(Perception.LightFactor(l))).Append('\n');
 
+            // FAMILIARITY FROM MEETINGS (26 October 2026, the 5 October sweep's G2): the rule
+            // lived only in the game's C++; now Acquaintance.FromMeetings, read by the port.
+            // Never met and below, the first meeting, the rise, the cap and past it.
+            foreach (var d in new[] { -1, 0, 1, 2, 3, 4, 5, 9 })
+                sb.Append("FamiliarityFromMeetings|").Append(d.ToString(Inv)).Append('|').Append(D(Acquaintance.FromMeetings(d))).Append('\n');
+
             foreach (var m in new double[] { 1, 5, 20, 39, 40, 41 })
                 foreach (var a in new double[] { 0, 45, 70 })
                     foreach (var l in new double[] { 0.0, 0.5, 1.0 })

@@ -19,6 +19,20 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 26 Oct 2026, a rule that lived only in the engine port given its home in the reference rules
+- Made: the reference test suite's 2 MB source cut into partial-class files under the size guard, unchanged; one gameplay rule (how well a person knows the player's face from meetings) moved from the port into the reference rules, ported back from there and pinned by golden rows and tests.
+- Method (setting-free):
+  - Write the test in the reference suite first and watch it fail (here: the rule did not exist there).
+  - Move the rule's body into the reference code word for word; the port's old function now calls the port of it, so its callers do not change.
+  - Emit golden rows across the rule's edges (below zero, zero, the first step, the rise, the cap, past it); check the port against them; plant one wrong number in the port and see the rows go red.
+  - Cut an oversized test file at member boundaries only, then prove the same checks run in the same order.
+  - Build both the editor and the shipping targets: a header in another namespace compiled in the standalone test and failed in the engine.
+- Tools: the reference suite; the golden emitter and port check; the engine's build tool.
+- Target and check: the suite passes with the new checks; the port agrees on every golden row; a planted break fails; both engine targets build.
+- Cost (hours): 1.
+- Failed and why: the first engine build (the rule's namespace not named in the game's header).
+- Evidence: production/audits/sweep-2026-10-05/port-vs-core.md (G2); ledger/CoreTests/Program.Port.cs
+
 ### 26 Oct 2026, a generated test table too big for the repository's size guard, kept in parts
 - Made: the simulation's 2.7 MB golden table (the reference rules' answers the engine port is checked against) kept as four parts under 900 KB; the whole table is written, not committed, wherever a reader needs it.
 - Method (setting-free):
