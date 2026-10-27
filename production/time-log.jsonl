@@ -147,3 +147,5 @@
 {"event": "stop", "at": "2026-10-27T05:53:49", "note": "patch traced: a correct tube shadow without bounce; coverage test rules out the card limit; second try waits on research"}
 {"event": "start", "at": "2026-10-27T05:53:49", "task": "27 Oct: item 4 Haiku's false refusals sorted by cause (a helper, existing data)", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-27T05:59:31", "note": "sorted by cause; a blind fresh review: sound with fixes"}
+{"event": "start", "at": "2026-10-27T06:07:32", "task": "27 Oct: item 5 the shelf patch: distance-field view test before its second try", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-27T06:23:06", "note": "two tries failed; set aside; importer change reverted"}

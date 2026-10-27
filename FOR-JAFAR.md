@@ -40,7 +40,7 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
 - *The walk (item 2), done:* your pass made it the default; the packaged game, walked by the AI tester, 14 of 15 stages (the one miss, Ron out of reach, is the route's old fault). The sit stays set aside.
 - *Clothes (item 3):* Tom's zip jacket, made tonight by script from the Marvelous drape: an even game mesh of 21,448 triangles (budget 18,000 to 22,000), its maps baked (the metal zip and two hip pockets read), skinned to his skeleton and following him arms down, up, walking and sitting (pictures in production/previews, tom-zip-jacket-*). Next: onto Tom in the game (he is not yet a wearer in the garment system), then the gate. Its colour is yours to choose, with pictures from the game: navy until then.
 - *Speech (item 4):* all three speak through Pocket (first sound about 0.2 s). The fast checker's third try holds your bar but clears 3%; Haiku's own check lets 18 to 23 of 617 invented first sentences through. Rewriting a refused sentence: left off (no fewer 5-second waits). The check's own time: each call sent twice and the copy the service starts first kept takes about a second off the slowest checks, but may refuse more true sentences; off until whole turns are tested (Needs you 5). Why Haiku refuses true sentences: of the 96 it refused, about 55 are details that are no claim at all or are cut from their subject, which the check's wording could fix; reviewed, measured next on the invented sentences first.
-- *Mickey's office (item 5):* the small shadows at High fixed by raising one setting only while you are inside (about 0.2 ms a frame), passed in the editor beside plain High. This morning the staff side's fixes (the radio wholly on its riser, the leaning box file) passed fresh reviewers, and local exposure inside the room took the lamp's burn off the radio (all three views passed). Open: a new dark patch under the radio shelf, a tube's shadow; its second try next.
+- *Mickey's office (item 5):* the small shadows at High fixed by raising one setting only while you are inside (about 0.2 ms a frame), passed in the editor beside plain High. This morning the staff side's fixes (the radio wholly on its riser, the leaning box file) passed fresh reviewers, and local exposure inside the room took the lamp's burn off the radio (all three views passed). Set aside after two tries: a dark patch under the radio shelf at night (a correct shadow no bounce light reaches); researched another way before a third.
 - *Fallback, the simulation's port:* begun. Its blocker is gone: the 2.7 MB test table the port is checked against is now kept in pieces the upload guard accepts. Next: how well each person knows Tom's face, a rule that lives only in the game's code, given its home in the rules.
 - *The AI tester, tonight's build (03:45):* 13 of 15 stages (Ron lost sight of, Darren not on the street, as on the old build). "That's all I know" to a newcomer's sixty first questions: 4 of 60, the first count ever (the nightly bench had never run). What broke the illusion: townsfolk in underclothes; the quay end dark at night (no lamps there yet); the two missed greetings.
 
@@ -150,11 +150,12 @@ Your evening answers are recorded (shadows inside the office: yes; $10 for the s
 ## Builder, Monday 26 October (night)
 
 **Failed:**
-- The night's build: its request lost a race with my push (now retries), then the build and the morning pictures stopped on F:'s free space; my own files compressed, nothing deleted (Needs you 4). Built at 03:45; pictures retaken.
+- The night's build and morning pictures stopped on F:'s free space; my own files compressed, nothing deleted (Needs you 4); built at 03:45, pictures retaken.
 - Tom's jacket's cuffs hang off his wrists; two fixes failed; researched (Needs you 2).
-- Haiku's check lets 18 to 23 of 617 test inventions through and refuses 31% of true sentences.
+- Haiku's check lets 18 to 23 of 617 test inventions through, refuses 31% of true ones.
 - The fast checker's third try holds your bar but clears only 3%.
 - Starting the check's second look early saves 0.04 s; left off.
+- The office: a dark patch under the radio shelf, two tries failed; set aside.
 
 **Done:**
 - Tonight's build walked: 13 of 15 stages (Ron, Darren missed, as before); townsfolk still undressed.

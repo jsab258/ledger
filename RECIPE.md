@@ -30,7 +30,7 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 - Tools: the room recipe and its importer; the game's own photograph mode at the shipped picture level; show-flag and console overrides from the command line; pixel measures; one fresh reviewer per view.
 - Target and check: no new fault in any view against its last good picture; burned-white pixels back below the last good's.
 - Cost (hours): about 1; nothing spent.
-- Failed and why: local exposure did not lift the new shadow (too small a region); its second try is geometric.
+- Failed and why: the new shadow was set aside after two tries: local exposure (too small a region) and distance fields twice as fine (the field changed, the patch did not). Lesson: a correct shadow that no bounce reaches is a lighting-design question (fill, set placement), not a renderer setting; and an import setting's read-back from the pipeline does not prove the mesh got it.
 - Evidence: production/research/cab-office-interior-1990/WEAR-2026-10-25.md (the staff side's gate); production/previews/office-staff-local-exposure-2026-10-27.jpg
 
 ### 27 Oct 2026, a slow, uneven model call sent twice at once, the copy the service begins first kept, reviewed and held for the owner's yes
