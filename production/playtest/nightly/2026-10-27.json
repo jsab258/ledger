@@ -1,12 +1,14 @@
 {
  "date": "2026-10-27",
  "night": "F:/LedgerTools/nightly\\2026-10-27",
- "events": 53,
+ "events": 29,
  "summary": {
   "walk": {
-   "passed": 13,
-   "stages": 15,
+   "passed": 9,
+   "stages": 13,
    "failed": [
+    "talk-open: never in reach of Sheila (she is not on the street)",
+    "town-Sheila: lost sight of Sheila",
     "town-Ron: lost sight of Ron",
     "town-Darren: Darren is not on the street"
    ]
@@ -15,13 +17,13 @@
    "saw_the_deed": [],
    "onlooker_lines": [
     {
-     "t": 190.5,
+     "t": 580.8,
      "e": "onlookers",
-     "hour": 14,
-     "night": false,
-     "light": 1.0,
-     "measured": 13,
-     "_file": "2026-10-27-145311.jsonl"
+     "hour": 3,
+     "night": true,
+     "light": 0.7,
+     "measured": 0,
+     "_file": "2026-10-27-171559.jsonl"
     }
    ]
   },
@@ -33,8 +35,8 @@
   "greeted": [
    {
     "who": "Sheila",
-    "reached": true,
-    "detail": "open=1 words=seconds=0.18 heard=none"
+    "reached": false,
+    "detail": "lost sight of Sheila"
    },
    {
     "who": "Ron",
@@ -48,14 +50,12 @@
    }
   ],
   "replies": {
-   "n": 2,
+   "n": 0,
    "broke": 0,
    "checked": 0,
-   "by_how": {
-    "own": 2
-   },
-   "seconds_median": 0.2,
-   "seconds_max": 0.2,
+   "by_how": {},
+   "seconds_median": null,
+   "seconds_max": null,
    "source": "the walk's stand-in words with the real voice: not the real path"
   },
   "police_told_by": [],
@@ -72,15 +72,15 @@
   },
   "illusion": {
    "lines": [
-    "**Placeholder clothes:** several townspeople wear plain white vests and shorts, or a white shift, and some are barefoot in the rain. Sheila is barefoot carrying a bag. A man in white stands in the middle of the road at night. (step-011, step-021, step-031, step-041, 1458 step-030)",
-    "**Stiff poses:** the hero stands frozen with knees bent and arms held out like a mannequin. Ron and the bearded man stand still beside a bin, staring at nothing. (1452 step-051, 1458 step-010, step-031)",
-    "**Dialogue and labels:** Sheila's line is cut off mid-sentence (\"I didn't have the\"). \"Talk to Sheila\" floats in the air with no Sheila visible. The pause menu shows unfinished-work text (\"Tom's notebook is not in this build yet\"). (step-011, 1458 step-020, step-061)",
-    "**Dead night:** no street lamps or windows are lit. Two pictures in a row are almost black, showing only shapes against the sky, with nobody about. (1458 step-040, step-050)",
-    "**Rain and missing people:** puddles look like flat grey patches pasted onto the road. Ron was lost and Darren never appeared, so the street feels thin. (1452 step-051, record)"
+    "**People in placeholder bodies:** the player and most townsfolk are barefoot, in plain white vests and shorts. Two men stand frozen in a stiff arms-down pose at the fish shop, one barefoot and one in shoes (step-094 of the 17:15 walk). The same stiff stance shows on the woman at Mickey's door (step-032 and step-063 of the 17:15 walk) and on the man pressed to the wall at night (step-125 of the 17:15 walk).",
+    "**Visual faults:** a tall white slab floats in the fog above the rooftops (step-032 of the 17:15 walk). A blank white board stands in front of Rita's window, with no sign or texture (step-037 of the 17:28 walk).",
+    "**Night is dead and badly lit:** the player is lit flat orange-yellow, as if by a floodlight, on an empty dark street with nobody about (step-156 of the 17:15 walk; step-099 of the 17:28 walk). The street then goes almost fully black (step-130 of the 17:28 walk).",
+    "**The town's named people are missing:** the record never reaches Sheila, Ron or Darren. Two are \"not on the street\" and the walk loses sight of the third, so there were no greetings and no conversation (0 replies).",
+    "**No one reacts:** at 3 a.m. one onlooker line fires, but nobody saw the deed, the police were told by no one, and figures stand idle as the player passes close by (step-125 of the 17:15 walk)."
    ],
    "pictures": 12,
    "source": "Claude Code, non-interactive, on the walk's pictures"
   }
  },
- "paragraph": "**The town and Tom (the AI tester's walk of 2026-10-27, played as a player would, the stand-in's words):** the route 13 of 15 stages; failed: town-Ron: lost sight of Ron; town-Darren: Darren is not on the street. Who saw him break Rita's window: nobody the record names. Who showed they knew afterwards, and how: rocco (recognition). That is 1 people (same as the night before). \"That's all I know\" to a newcomer's sixty first questions (the real engine's words): 3 of 60. Replies heard after a median 0.2 (same as the night before) s, at most 0.2 s (stand-in words, real voice; not the real path), 0 of 2 broke. What broke the illusion: **Placeholder clothes:** several townspeople wear plain white vests and shorts, or a white shift, and some are barefoot in the rain. Sheila is barefoot carrying a bag. A man in white stands in the middle of the road at night. (step-011, step-021, step-031, step-041, 1458 step-030); **Stiff poses:** the hero stands frozen with knees bent and arms held out like a mannequin. Ron and the bearded man stand still beside a bin, staring at nothing. (1452 step-051, 1458 step-010, step-031); **Dialogue and labels:** Sheila's line is cut off mid-sentence (\"I didn't have the\"). \"Talk to Sheila\" floats in the air with no Sheila visible. The pause menu shows unfinished-work text (\"Tom's notebook is not in this build yet\"). (step-011, 1458 step-020, step-061)."
+ "paragraph": "**The town and Tom (the AI tester's walk of 2026-10-27, played as a player would, the stand-in's words):** the route 9 of 13 stages; failed: talk-open: never in reach of Sheila (she is not on the street); town-Sheila: lost sight of Sheila. Who saw him break Rita's window: nobody the record names. Who showed they knew afterwards, and how: rocco (recognition). That is 1 people (same as the night before). \"That's all I know\" to a newcomer's sixty first questions (the real engine's words): 3 of 60. Replies heard after a median not measured s, at most None s (stand-in words, real voice; not the real path), 0 of 0 broke. What broke the illusion: **People in placeholder bodies:** the player and most townsfolk are barefoot, in plain white vests and shorts. Two men stand frozen in a stiff arms-down pose at the fish shop, one barefoot and one in shoes (step-094 of the 17:15 walk). The same stiff stance shows on the woman at Mickey's door (step-032 and step-063 of the 17:15 walk) and on the man pressed to the wall at night (step-125 of the 17:15 walk).; **Visual faults:** a tall white slab floats in the fog above the rooftops (step-032 of the 17:15 walk). A blank white board stands in front of Rita's window, with no sign or texture (step-037 of the 17:28 walk).; **Night is dead and badly lit:** the player is lit flat orange-yellow, as if by a floodlight, on an empty dark street with nobody about (step-156 of the 17:15 walk; step-099 of the 17:28 walk). The street then goes almost fully black (step-130 of the 17:28 walk).."
 }

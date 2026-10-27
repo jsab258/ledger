@@ -7,7 +7,7 @@ Phase 0 done (production/audits/phase0-exit/BUNDLE.md).
 Failed its exit check on 22 Oct (production/audits/phase1-exit/CLOSE-2026-10-22.md); re-run once the walk, clothes and speech pass. Phase 2 waits.
 
 - [x] 1. Health check; the order ledger.
-- [ ] 2. The walk: never packaged (assets missing); fix built, packaged build running.
+- [ ] 2. The walk: packaged at last (Tom's MetaHuman); route 9 of 13, Sheila missed.
 - [ ] 3. Tom's outfit: zip jacket baked, skinned; cuffs' third try failed, his way next (RIB-CUFFS).
 - [ ] 4. Speech: all on Pocket; checker's fourth try designed (LOCAL-CHECKERS); wording A/B running; Common Voice fails consent (voice-latency/COMMON-VOICE).
 - [ ] 5. Mickey's office: staff-side fixes passed; shadow under radio shelf open (cab-office-interior-1990/WEAR).

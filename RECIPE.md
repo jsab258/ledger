@@ -19,6 +19,20 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 27 Oct 2026, a feature that only ever ran in the editor: content loaded by name never reached the packaged build
+- Made: the player's character and its movement system (a third party's sample) reached the packaged game three weeks after they were called done in the editor.
+- Method (setting-free):
+  - Content too big for the repository reaches the build machine only by an explicit copy step. List every such folder a feature loads, and add it to that step in the same change as the feature.
+  - Content loaded by name at run time is invisible to the cook's reference walk. It needs an always-cook rule, or the cook leaves it out without an error.
+  - The game must say in its own log which path it took (here, "his own clips" against the full route), and the build machine must read that line. A route's pass marks can pass on the fallback, so the feature can be "done" without ever running.
+  - A plugin left out of the project leaves traces in third-party assets that the editor tolerates and the cook rejects. Re-save the assets in the editor without the plugin (the engine's resave tool), keep backups, load them twice to prove them clean, and record the change to someone else's files.
+  - An answer to the owner's question, "when will we see X?", is checked in the shipped artefact's own log, not in the record.
+- Tools: the engine's build, cook and resave tools; the build machine's copy step; the packaged game's own log.
+- Target and check: the packaged log names the full route, and the tester's pictures show the character. Met on the second build; the tester's route then fell from 13 to 9 stages (open).
+- Cost (hours): about 1.2 (two builds of 45 minutes on the build machine); nothing spent.
+- Failed and why: the first build's cook failed on the plugin's traces; the second passed.
+- Evidence: DECISIONS.md (27 October, 15:40 to 17:44); production/previews/tom-metahuman-packaged-2026-10-27.jpg.
+
 ### 27 Oct 2026, a frame-rate collapse on a build with no game change, traced to another program's idle graphics memory
 - Made: the cause found and removed; the night jobs now name any program holding over 1 GB of the graphics card.
 - Method (setting-free):

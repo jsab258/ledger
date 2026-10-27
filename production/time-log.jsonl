@@ -169,3 +169,9 @@
 {"event": "stop", "at": "2026-10-27T14:35:55", "note": "wording A/B running; fourth try designed; Common Voice read and reviewed; Pocket credited"}
 {"event": "start", "at": "2026-10-27T14:25:00", "task": "27 Oct: fallback, the sweep's U3: the reaction ladder's rules ported, not wired", "phase": "3", "kind": "production"}
 {"event": "stop", "at": "2026-10-27T14:36:00", "note": ""}
+{"event": "start", "at": "2026-10-27T14:51:00", "task": "27 Oct: the frame test's fall traced to Marvelous's card memory; the walk test, pictures and bench re-run", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-27T15:30:00", "note": ""}
+{"event": "start", "at": "2026-10-27T15:30:00", "task": "27 Oct: item 2 reopened: Tom's MetaHuman and Epic's walk were never packaged; the build's copy and cook fixed", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-27T15:45:00", "note": ""}
+{"event": "start", "at": "2026-10-27T16:35:00", "task": "27 Oct: item 2: the cook's plugin traces re-saved; Tom's MetaHuman packaged and walked", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-27T17:45:00", "note": ""}

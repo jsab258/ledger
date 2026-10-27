@@ -533,3 +533,18 @@ Written down before any of it is run:
   - invented through per 300, with the checker and with Haiku alone.
 
   He picks the row. Nothing changes in the game before he has.
+
+## Fourth try: the sizes timed (27 October, 17:50; tools/checkers/speed_sizes.py)
+
+Alone on this PC's processor, 2 threads, the 10 closest facts, 238 of the bench's details, nothing else running (F:/LedgerTools/checkers/speed-sizes-2026-10-27.json):
+
+| Checker | Median, full precision | Median, 8-bit | Slowest 1%, 8-bit | Expected beside the game (x 1.27) |
+|---|---|---|---|---|
+| 17M, the third try's (the yardstick) | 0.057 s | 0.051 s | 0.072 s | 0.072 s (measured) |
+| TinyLettuce 32M | 0.127 s | 0.104 s | 0.144 s | about 0.13 s |
+| TinyLettuce 68M | 0.344 s | 0.255 s | 0.365 s | about 0.32 s |
+| LettuceDetect base | 0.731 s | 0.525 s | 0.727 s | about 0.67 s |
+
+The ratio 1.27 is the 17M's own: 0.072 s beside the packaged game (the third try's two runs) against 0.057 s alone.
+
+**The 68M and LettuceDetect base he named do not fit 0.15 s beside the game on this processor, even in 8 bits** (about 0.32 and 0.67 s). On the graphics card they would be faster, but that was not in the design, and it costs the game's frames, which would need their own measure. **The largest that fits is the 32M in 8 bits**, close to the line: trained as fixed beforehand (the same data and split, the 10 closest facts), its time beside the game measured before anything is offered.
