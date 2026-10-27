@@ -501,3 +501,35 @@ A fresh reviewer read 44 test sentences blind against their facts, mixed and unl
 - **The checker's 9:** none invented (refusals, opinions, plain restatements). The bar holds after the reading as before it: corrections fall on both sides alike.
 - **Haiku's 35:** 23 judged invented (18 clear, 5 arguable), 12 supported (4 clear, 8 arguable; three of these say the dock scheme ended "last year", right only because the game is set in 1990 and Ron's facts give 1989 but no current year). So Haiku, as the game runs it, lets through 18 to 23 of about 300 invented first sentences (6 to 8%), not the 1 in 42 measured on single details.
 - **The clearest:** Sheila, "your uncle never kept two sets of books" (her own H4 and C2: the real second book exists; it denies the story's central secret); "Mickey passed away in his flat upstairs" (H7: he died at the office); Sheila, "I live in the flat above the office" (H12: the new owner does). Close behind: the office opening at eight (H14: seven), the café at half past seven (H17: half past six), the scheme ending in eighty-seven (C1: 1989).
+
+## Fourth try: the design, fixed before anything is measured (27 October, afternoon)
+
+His words, 27 October (chat): "run a fourth try, judged fairly. Haiku itself lets through 6 to 8% of invented whole first sentences, so judge the whole game (checker first, then Haiku) on the 617 held sentences against Haiku alone, not on the 42 short details. Try a larger small checker (for example the 68M TinyLettuce or LettuceDetect base) with the 10 closest facts, within 0.15 s beside the game. Then show me on my page the trade-off at three cut-offs: share of real first sentences cleared, seconds saved, and invented sentences let through per 300 against Haiku alone. I decide the cut-off."
+
+Written down before any of it is run:
+
+- **Which model.**
+  - Untrained speed is measured first, alone on this PC with 2 threads and the 10 closest facts, for TinyLettuce 32M and 68M and LettuceDetect base. The third try's trained 17M is timed the same way as the yardstick.
+  - Each is timed in full precision and in 8-bit (dynamic int8 on its linear layers, PyTorch's standard CPU method).
+  - The 17M took 0.072 s beside the game against its own time alone, which gives the ratio to expect beside the game.
+  - The largest model whose expected time beside the game is under 0.15 s is trained. If none of the larger ones fits, that is the finding, said plainly.
+- **Training.** As the third try: from the model's base, on the same 6,152 sentences with the same split, each given its 10 closest facts. The pass with the best practice-split F1 is kept. Nothing from the 31 held contexts is read.
+- **Three cut-offs, set on tuning data only** (the 111 tuning details and the kept-out 15% of the near-miss sentences), before the test is run:
+  - **strict:** half the lowest score of any invented tuning item (the third try's rule);
+  - **middle:** the lowest invented tuning score itself (it clears nothing invented that tuning showed it);
+  - **open:** the score under which 2% of the invented tuning items fall.
+- **The test, run once per cut-off: the whole game on the 617 held first sentences** (308 invented, 309 true, Gemini's labels).
+  - A sentence the checker clears is spoken without Haiku; any other gets Haiku's own verdict from the third try's run of the game's whole check (F:/LedgerTools/checkers/train3/haiku-verdicts.jsonl, unchanged). No new spending.
+  - Reported per cut-off: invented sentences through **per 300**, with the checker in front and for Haiku alone, on Gemini's labels.
+  - Every invented sentence the checker clears that Haiku refused is read by a fresh reviewer blind against its facts, mixed with as many cleared true ones. A label found wrong is corrected for both sides alike, and the per-300 numbers are given again after the reading.
+- **Real first sentences cleared, and seconds saved** (tools/checkers/firsts_cleared.py), on the bench's newcomer turns of 26 October (the same eight runs as the second try). A turn counts when its first sentence passed Haiku.
+  - Reported: the share the checker clears.
+  - Also reported: the seconds it saves on those turns. Each saving is the turn's own measured wait from the first sentence written to its check passing, less the checker's own time.
+  - That saving is also given averaged over all real-question turns.
+- **Speed beside the packaged game,** for the model trained, as before: answers time-stamped and kept only while the game runs, with the frame times beside a run without it. The bar is his: 0.15 s.
+- **His page:** a table of the three cut-offs, one row each. Columns:
+  - real first sentences cleared;
+  - seconds saved (median per cleared turn, and averaged over all turns);
+  - invented through per 300, with the checker and with Haiku alone.
+
+  He picks the row. Nothing changes in the game before he has.

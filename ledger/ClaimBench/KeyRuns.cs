@@ -22,11 +22,11 @@ static partial class Program
 {
     // EACH TASK ITS OWN CAP (his yes of 26 October evening: "The slow-reply tests may spend up to $10 this
     // week beyond my $1 a day"): --task names which task's money a run spends; the 7 October talk task's
-    // three dollars stay the default.
+    // three dollars stay the default. His yes of 27 October: "up to $4 more beyond the $10" for the speech tests.
     static readonly Dictionary<string, double> KeyTaskCaps = new Dictionary<string, double>
     {
         { "talk-2026-10-07", 3.00 },
-        { "slow-replies-2026-10-26", 10.00 },
+        { "slow-replies-2026-10-26", 14.00 },
     };
     static string KeyTask = "talk-2026-10-07";
     static double KeyTaskCap => KeyTaskCaps[KeyTask];

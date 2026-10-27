@@ -1,7 +1,8 @@
 """Quick pictures of what Marvelous Designer holds: its OBJ export (avatar and garment) drawn from the front, side,
 back and three-quarter, flat-shaded (Workbench, seconds a picture), the garment charcoal, the body pale.
 
-    blender -b -P tools/md/look_md.py -- SCENE.obj OUT_PREFIX [--size 900] [--garment-only]
+    blender -b -P tools/md/look_md.py -- SCENE.obj OUT_PREFIX [--size 900] [--garment-only] [--pieces]
+        [--focus X,Y,Z --span MM]
 
 WHY, 2 October (the jacket proof in Marvelous): the bridge script cannot see Marvelous's 3D window, so each
 arrangement and drape is exported and looked at here before the next step. These are working looks for me, never
@@ -83,7 +84,22 @@ views = [("front", 0, centre, height * 1.08), ("three-quarter", 35, centre, heig
 up = Vector((centre.x, centre.y, ghi - (ghi - glo) * 0.3))
 views += [("close-front", 0, up, (ghi - glo) * 0.75), ("close-three-quarter", 35, up, (ghi - glo) * 0.75),
           ("close-side", 90, up, (ghi - glo) * 0.75), ("close-back", 180, up, (ghi - glo) * 0.75)]
+# --focus X,Y,Z (Marvelous's millimetres, as tools/md-bridge/cuff_measure.py prints a wrist) --span MM: four views round
+# that one point only (the cuffs' third try, 27 October: a wrist is a few pixels in the whole-body views)
+if "--focus" in argv:
+    fx, fy, fz = (float(v) for v in argv[argv.index("--focus") + 1].split(","))
+    at = Vector((fx, -fz, fy))
+    span = opt("--span", 260.0)
+    views = [("focus-front", 0, at, span), ("focus-three-quarter", 45, at, span), ("focus-side", 90, at, span),
+             ("focus-back", 180, at, span), ("focus-below", -1, at, span)]
 for name, ang, at, scale in views:
+    if ang == -1:   # from below, looking up the forearm's underside
+        cam.data.ortho_scale = scale
+        cam.location = at - Vector((0, 0, height * 3))
+        cam.rotation_euler = Vector((0, 0, 1)).to_track_quat("-Z", "Y").to_euler()
+        sc.render.filepath = "%s-%s.png" % (PREFIX, name)
+        bpy.ops.render.render(write_still=True)
+        continue
     a = math.radians(ang)
     # the avatar faces -Y in Blender after the OBJ import (Marvelous's +Z forward)
     d = Vector((math.sin(a), -math.cos(a), 0))
@@ -92,6 +108,9 @@ for name, ang, at, scale in views:
     cam.rotation_euler = (d * -1).to_track_quat("-Z", "Y").to_euler()
     sc.render.filepath = "%s-%s.png" % (PREFIX, name)
     bpy.ops.render.render(write_still=True)
+if "--focus" in argv:
+    print("LOOKED", PREFIX, flush=True)
+    raise SystemExit(0)
 # from above, the collar and lapels round the neck
 cam.data.ortho_scale = (ghi - glo) * 0.6
 cam.location = Vector((centre.x, centre.y, ghi + height))

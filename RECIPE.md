@@ -19,6 +19,19 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 27 Oct 2026, a garment's rib cuffs scripted round a wrist in a cloth simulator: a third, researched try, failed and set aside
+- Made: nothing kept. Four drapes and three probe jobs; a measure that finds the wrist on the body and says where each cuff sits.
+- Method (setting-free):
+  - Measure the body before judging the cloth: find a joint's place as a tape does (the narrowest cut square to a fitted limb axis), then put every try's piece in that limb's frame (how far past the joint, how far off the axis). Two numbers per try made four drapes comparable in seconds where pictures alone had not.
+  - Probe each scripting call on its own before building a recipe on it. A call that reads back the value it was given can still do nothing (here, a placement setting); export the piece unsimulated and measure where it really is.
+  - A seam sewn against the wrap direction twists a piece through itself; reversing it moved the cuff from the hand to the wrist. Check seam direction early whenever a sewn band crumples to one side.
+  - A band closed into a tube before the limb is inside it stays beside the limb whatever follows (shrinking it only tightens the flap). The professional routes (cut the band from a sleeve already round the limb, or place it by hand) need calls or hands a script may not have; weigh that before the first try.
+- Tools: the cloth simulator's own scripting through a file bridge; a measure script over its OBJ exports; a 3D package for close views round one point.
+- Target and check: the cuff's centre within 30 mm of the wrist along the forearm and within 30 mm of its axis; no gap past the skin offset plus 5 mm. Best reached: 14 mm along, but 52 mm off the axis; none passed.
+- Cost (hours): about 0.6; nothing spent.
+- Failed and why: the separate cuff never encircles the wrist (the placement cannot move along the arm by script; the cut-from-sleeve call refuses its undocumented arguments).
+- Evidence: production/research/game-clothing-pipeline/RIB-CUFFS-2026-10-27.md (third try); production/previews/tom-zip-jacket-cuffs-try3-2026-10-27.jpg.
+
 ### 27 Oct 2026, an engine port's geography given its home in the reference rules, checked hour by hour against the real data files
 - Made: the street geography (who stands where at each hour, which way they look) moved from the engine code to the shared rules, with the data reader brought level; the engine's copy now reads the shared rules' port.
 - Method (setting-free):

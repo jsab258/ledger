@@ -2,7 +2,9 @@
 """Tom's zip jacket as one Marvelous Designer job: FreeSewing's Brian block at his size cut into a zip-front jacket's
 pieces, placed on his avatar's arrangement points, sewn, draped and exported.
 
-    python tools/md-bridge/zip_jacket.py BRIAN.json JOB.py [--steps 400] [--particle 20] [--out DIR]
+    python tools/md-bridge/zip_jacket.py BRIAN.json JOB.py [--steps 400] [--particle 20] [--out DIR] [--sleeve-shorten MM]
+        [--cuff-of-wrist 1.0] [--cuff-particle 6] [--grip 85] [--cuff-seam-late STEPS]
+        [--flip-cuff-seam R|L|RL]
     python tools/md-bridge/md_job.py JOB.py          # runs it through the bridge (Jafar's one click a session)
 
 WHY, 26 October 2026 (his order of 25 October, item 3: Tom's outfit in Marvelous Designer to Study 6's numbers; his
@@ -46,7 +48,10 @@ BAND_H, CUFF_H, COLLAR_H = 55.0, 60.0, 70.0
 # wrist edge, about 196 mm round, each cuff was as wide as his 197 mm wrist and hung off it as a bell or a flap): cut at
 # 0.85 of his wrist's girth (F:/LedgerTools/bodies/MH_TomL1/measurements.json, "wrist"), it grips the wrist and the
 # sleeve's end gathers into it, as a blouson's rib cuff does
-WRIST_MM, CUFF_OF_WRIST = 197.1, 0.85
+# THE CUFFS' THIRD TRY (27 October, his yes; production/research/game-clothing-pipeline/RIB-CUFFS-2026-10-27.md): cut
+# at 1.0 of the wrist to settle loose first, then drawn in to grip by the piece's weft shrinkage (--grip), not by a
+# cut narrower than the hand it must pass
+WRIST_MM, CUFF_OF_WRIST = 197.1, 1.0
 TAPE_W = 12.0
 # a hip welt: its slit's length and its lips' height, its centre this far up from the front's hem and this share of
 # the way from the centre front to the side seam, leaning this many degrees from upright with its top towards the
@@ -106,7 +111,7 @@ def rect(w, h, names):
     return [([[0, 0], [w, 0]], bl, br), ([[w, 0], [w, h]], br, tr), ([[w, h], [0, h]], tr, tl), ([[0, h], [0, 0]], tl, bl)]
 
 
-def build(brian, sleeve_shorten=0.0):
+def build(brian, sleeve_shorten=0.0, cuff_of_wrist=CUFF_OF_WRIST):
     fpts, fn = brian["brian.front"]
     bpts, bn = brian["brian.back"]
     spts, sn = brian["library.sleeve"]
@@ -151,7 +156,7 @@ def build(brian, sleeve_shorten=0.0):
         band = rect(w, BAND_H, ["bandCfLow" + s, "bandSideLow" + s, "bandSide" + s, "bandCf" + s])
         # each band's centre-front end on the same side as its front's (the right front's is on +x)
         pieces["bandFront" + s] = ccw(mirror_edges(band)) if s == "R" else band
-        w = WRIST_MM * CUFF_OF_WRIST
+        w = WRIST_MM * cuff_of_wrist
         cuff = rect(w, CUFF_H, ["cuffAlow" + s, "cuffBlow" + s, "cuffB" + s, "cuffA" + s])
         # the right cuff mirrored, as the right band is (27 October: cut as drafted beside the drafted right sleeve, it
         # had to turn inside out through itself to be sewn; it draped as a crumpled flap and baked 83% wrong)
@@ -229,14 +234,17 @@ def seams():
 
 # a piece is centred on its point: the first try, on the chest's and the upper arm's points, put the body pieces'
 # tops above the head and the sleeves' caps above the shoulders, and the sleeves bunched at the elbow (26 October)
+# THE CUFFS ON THE ARM'S OWN LOWEST POINT (the third try, step 1, 27 October: tools/md-bridge/jobs/cuff_arrange.py and
+# cuff_measure.py): on Wrist_Outside a cuff's centre lands 177 mm past the wrist, over the hand, and the two drapes'
+# cuffs ended 66 to 70 mm onto it; on Arm_Outside_3 it lands at the wrist (1 mm), beside the arm until sewn
 ARRANGE = {"frontR": "Body_Front_3_R", "frontL": "Body_Front_3_L", "back": "Body_Back_Center_3",
-           "sleeveR": "Arm_Outside_2_R", "sleeveL": "Arm_Outside_2_L", "cuffR": "Wrist_Outside_R", "cuffL": "Wrist_Outside_L",
+           "sleeveR": "Arm_Outside_2_R", "sleeveL": "Arm_Outside_2_L", "cuffR": "Arm_Outside_3_R", "cuffL": "Arm_Outside_3_L",
            "bandFrontR": "Body_Front_5_R", "bandFrontL": "Body_Front_5_L", "bandBack": "Body_Back_Center_5", "collar": "Neck_Back",
            "tapeR": "Body_Front_Center_3", "tapeL": "Body_Front_Center_3"}
 
 
-def plan(brian, sleeve_shorten=0.0):
-    pieces = build(brian, sleeve_shorten)
+def plan(brian, sleeve_shorten=0.0, cuff_of_wrist=CUFF_OF_WRIST):
+    pieces = build(brian, sleeve_shorten, cuff_of_wrist)
     out_pieces, lines = [], {}
     for key, edges in pieces.items():
         pts = []
@@ -251,7 +259,9 @@ def plan(brian, sleeve_shorten=0.0):
     for (pa, a0, a1), (pb, b0, b1) in seams():
         la, fa = lines[(pa, a0, a1)]
         lb, fb = lines[(pb, b0, b1)]
-        out_seams.append({"a": [pa, la, fa], "b": [pb, lb, fb], "names": [a0, a1, b0, b1]})
+        # the cuff's own side seam (it closes the cuff into a tube) is sewn LATE when asked (--cuff-seam-late)
+        late = pa == pb and pa.startswith("cuff")
+        out_seams.append({"a": [pa, la, fa], "b": [pb, lb, fb], "names": [a0, a1, b0, b1], "late": late})
     # EACH PIECE'S NAMED CORNERS (pattern millimetres) and ITS FOUR PATCH CORNERS for the game mesh's grid (the bake
     # chain, tools/meshgen/blender/retopo_pieces.py; production/art/clothing/tom-outfit/BAKE-PLAN-2026-10-27.md,
     # step 2): the bottom side runs from the first to the second; the grid's rows run bottom to top
@@ -294,9 +304,20 @@ for p in PLAN["pieces"]:
             pattern_api.SetArrangementShapeStyle(idx, "Curved")
 result["made"] = made
 sewn = []
+# THE CUFF'S SIDE SEAM SEWN LATE (the cuffs' third try, 27 October: sewn at once, each cuff closed into a flat tube beside
+# the arm where it was placed, and the arm never passed through it): first each cuff hangs open from the sleeve's end
+# and is carried round the arm as the sleeve's own seam closes; its side seam is sewn after LATE_STEPS
+LATE_STEPS = %(late)d
+# --flip-cuff-seam R|L|RL: that side's cuff sewn to its sleeve's end the other way round (a seam sewn against the
+# wrap twists the piece through itself, the manual's twisted seam; the right cuff met it once on 27 October)
+FLIP = %(flip)r
 for s in PLAN["seams"]:
+    if LATE_STEPS and s.get("late"):
+        continue
     pa, la, fa = s["a"]
     pb, lb, fb = s["b"]
+    if pa.startswith("cuff") and pb.startswith("sleeve") and pa[-1] in FLIP:
+        fb = not fb
     sewn.append(bool(pattern_api.AddSeamlinePairGroup(made[pa], la, made[pb], lb, fa, fb)))
 result["sewn"] = sewn
 # THE CLOTH (only its physics: nothing of a library fabric's look goes into the game): cotton twill for the
@@ -317,6 +338,19 @@ pattern_api.SetParticleDistanceOfPatterns(%(particle)g)
 for p in PLAN["pieces"]:
     if p["key"].startswith("tape"):
         pattern_api.SetParticleDistanceOfPattern(made[p["key"]], 4.0)
+    # THE CUFFS FINER (the cuffs' third try, step 2: at 10 mm a cuff is about 8 particles round and 3 deep, too coarse to
+    # fold round a wrist; a little below the avatar's quad size, only where needed)
+    if p["key"].startswith("cuff") and %(cuff_particle)g > 0:
+        pattern_api.SetParticleDistanceOfPattern(made[p["key"]], %(cuff_particle)g)
+if LATE_STEPS:
+    result["openSimulated"] = bool(utility_api.Simulate(LATE_STEPS))
+    late = []
+    for s in PLAN["seams"]:
+        if s.get("late"):
+            pa, la, fa = s["a"]
+            pb, lb, fb = s["b"]
+            late.append(bool(pattern_api.AddSeamlinePairGroup(made[pa], la, made[pb], lb, fa, fb)))
+    result["lateSewn"] = late
 result["simulated"] = bool(utility_api.Simulate(%(steps)d))
 eo = ApiTypes.ImportExportOption()
 eo.bExportGarment = True
@@ -325,6 +359,24 @@ eo.bSingleObject = False
 eo.scale = 1.0
 result["exported"] = export_api.ExportOBJ(os.path.join(OUT, "zip_jacket.obj"), eo)
 result["zprj"] = export_api.ExportZPrj(os.path.join(OUT, "zip_jacket.zprj"))
+# THE GRIP (the cuffs' third try, step 3): everything but the sleeves and cuffs frozen, still colliding, while each
+# cuff's weft shrinks to GRIP per cent and draws the sleeve's end in; then all free to settle together
+GRIP = %(grip)g
+if GRIP > 0:
+    for p in PLAN["pieces"]:
+        if not p["key"].startswith(("sleeve", "cuff")):
+            pattern_api.SetPatternFreeze(made[p["key"]], True)
+    for s in ("cuffR", "cuffL"):
+        pattern_api.SetWidthShrinkagePercentage(made[s], float(GRIP))
+    result["gripShrinkage"] = {s: dict(pattern_api.GetShrinkagePercentage(made[s])) for s in ("cuffR", "cuffL")}
+    result["gripSimulated"] = bool(utility_api.Simulate(200))
+    for p in PLAN["pieces"]:
+        pattern_api.SetPatternFreeze(made[p["key"]], False)
+    result["settled"] = bool(utility_api.Simulate(100))
+    grip_out = os.path.join(OUT, "grip")
+    os.makedirs(grip_out, exist_ok=True)
+    result["gripExported"] = export_api.ExportOBJ(os.path.join(grip_out, "zip_jacket.obj"), eo)
+    result["gripZprj"] = export_api.ExportZPrj(os.path.join(grip_out, "zip_jacket.zprj"))
 log("zip jacket made, sewn and draped")
 '''
 
@@ -333,9 +385,12 @@ def main(argv):
     src, job = argv[0], argv[1]
     opt = lambda n, d: float(argv[argv.index(n) + 1]) if n in argv else d  # noqa: E731
     out = argv[argv.index("--out") + 1] if "--out" in argv else r"F:\LedgerTools\garments\tom\zip_jacket"
-    p = plan(load(src), opt("--sleeve-shorten", 0.0))
+    p = plan(load(src), opt("--sleeve-shorten", 0.0), opt("--cuff-of-wrist", CUFF_OF_WRIST))
     open(job, "w", encoding="utf-8").write(JOB % {"src": src, "plan": json.dumps(p), "out": out,
-                                                  "steps": int(opt("--steps", 400)), "particle": opt("--particle", 20.0)})
+                                                  "steps": int(opt("--steps", 400)), "particle": opt("--particle", 20.0),
+                                                  "cuff_particle": opt("--cuff-particle", 6.0), "grip": opt("--grip", 0.0),
+                                                  "late": int(opt("--cuff-seam-late", 0)),
+                                                  "flip": argv[argv.index("--flip-cuff-seam") + 1] if "--flip-cuff-seam" in argv else ""})
     json.dump(p, open(job[:-3] + ".plan.json", "w", encoding="utf-8"), indent=1)
     print("zip jacket: %d pieces, %d seams -> %s" % (len(p["pieces"]), len(p["seams"]), job))
     for q in p["pieces"]:

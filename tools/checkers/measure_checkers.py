@@ -73,9 +73,14 @@ def top_facts(known, probe, detail, k):
     return [known[i] for i in sorted(ranked)]
 
 
-def lettuce_scorer(path, top=0):
+def lettuce_scorer(path, top=0, int8=False):
     from lettucedetect.models.inference import HallucinationDetector
     det = HallucinationDetector(method="transformer", model_path=path)
+    # 8-BIT (the fourth try, 27 October: a larger checker inside 0.15 s on the processor): PyTorch's dynamic int8 on the
+    # model's linear layers, its weights stored in 8 bits and its activations quantized as it runs
+    if int8:
+        import torch
+        det.detector.model = torch.quantization.quantize_dynamic(det.detector.model, {torch.nn.Linear}, dtype=torch.qint8)
 
     def score(r):
         known = top_facts(r["known"], r["probe"], r["detail"], top) if top else r["known"]
