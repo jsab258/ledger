@@ -38,7 +38,7 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
 
 **Your items (26 October, night).**
 - *The walk (item 2), done:* your pass made it the default; the packaged game, walked by the AI tester, 14 of 15 stages (the one miss, Ron out of reach, is the route's old fault). The sit stays set aside.
-- *Clothes (item 3):* Tom's zip jacket drapes in Marvelous by script on his own body; the zip and pockets researched and reviewed: the zip's tapes are in (drape 4), the teeth and pocket welts will be baked into the textures, the pull a small piece. Next: the bake chain, about 10 to 16 hours.
+- *Clothes (item 3):* Tom's zip jacket, made tonight by script from the Marvelous drape: an even game mesh of 21,448 triangles (budget 18,000 to 22,000), its maps baked (the metal zip and two hip pockets read), skinned to his skeleton and following him arms down, up, walking and sitting (pictures in production/previews, tom-zip-jacket-*). Next: onto Tom in the game (he is not yet a wearer in the garment system), then the gate. Its colour is yours to choose, with pictures from the game: navy until then.
 - *Speech (item 4):* all three speak through Pocket (first sound about 0.2 s). The fast checker, three tries: the third, as you set it, holds your bar but clears only 3% of true sentences. Its 617 new test sentences showed Haiku's own check letting 18 to 23 invented first sentences through and refusing 31% of true ones. Rewriting only a refused sentence: 31 of 37 pass the real check; next, real turns. $6.21 of the $10 spent.
 - *Mickey's office (item 5):* the small shadows at High fixed by raising one setting only while you are inside (about 0.2 ms a frame), passed in the editor beside plain High; packaged pictures after tonight's build. Faults behind the counter next.
 - *Fallback, the simulation's port:* begun. Its blocker is gone: the 2.7 MB test table the port is checked against is now kept in pieces the upload guard accepts. Next: how well each person knows Tom's face, a rule that lives only in the game's code, given its home in the rules.
@@ -156,6 +156,6 @@ Your evening answers are recorded (shadows inside the office: yes; $10 for the s
 - Rewriting only a refused sentence, measured properly: 31 of 37 pass; next, real turns.
 - The office's small shadows at High, raised only inside: passed in the editor.
 - The port: its test files in pieces under the upload limit; face familiarity now in the rules.
-- Tom's zip and pockets researched: baked detail, a small zip pull; under review.
+- Tom's zip jacket: game mesh, maps baked, skinned and posed; next, onto Tom in the game.
 
 **Act on:** tonight's page, three taps (Needs you 1).
