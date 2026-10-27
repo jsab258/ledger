@@ -149,14 +149,15 @@ Your evening answers are recorded (shadows inside the office: yes; $10 for the s
 ## Builder, Monday 26 October (night)
 
 **Failed:**
+- The night's build request lost a race with my push (walk on yesterday's build); asked again, now retries.
 - Tom's jacket's cuffs hang off his wrists; two fixes failed; researched (Needs you 2).
-- Haiku's own check, on 617 test sentences, lets 18 to 23 invented ones through (one has Sheila deny the second book) and refuses 31% of true ones; skipping its second look is faster but lets twice as many through, so it stays.
+- Haiku's check, on 617 test sentences, lets 18 to 23 inventions through (Sheila denies the second book) and refuses 31% of true ones; its second look stays.
 - The fast checker's third try holds your bar but clears only 3%.
 - My first rewrite bench used only the check's first step; corrected.
 
 **Done:**
 - Tom's zip jacket: game mesh in budget, maps baked (zip, pockets, rib), skinned and posed; reviewed twice.
-- Rewriting only a refused sentence, tried in real turns: 8 of 10 rewritten, no fallbacks, the slowest tenth a second shorter, but 5-second waits not fewer; left off.
+- Rewriting a refused sentence, in real turns: 8 of 10 rewritten, no fallbacks, 5-second waits not fewer; left off.
 - The port: its test files under the upload limit; two rule sets moved home (face familiarity, who saw the window).
 - The office's shadows at High: passed in the editor.
 

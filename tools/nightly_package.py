@@ -67,6 +67,23 @@ def main(dry=False):
     if dry:
         print("nightlyPackage=WOULD-ASK built=%s head=%s newCommits=%d" % (built[:8], head[:8], len(subjects)))
         return 0
+    # THE RACE WITH A SESSION'S OWN PUSH (27 October: at 01:30 the session pushed to wip between this fetch and this
+    # push; the push was refused, the night asked for nothing, and the walk played the day before's build): refused,
+    # it fetches again and builds its commit on the new top, up to three times
+    for attempt in range(3):
+        try:
+            return ask(head, built)
+        except RuntimeError as e:
+            if attempt == 2 or "git push" not in str(e):
+                raise
+            print("nightlyPackage=RETRY after a refused push (%s)" % str(e)[:120])
+            git("fetch", "-q", "origin", "wip")
+            head = git("rev-parse", "origin/wip").strip()
+    return 1
+
+
+def ask(head, built):
+    """The request, as one commit on top of origin/wip's head, pushed fast-forward."""
     try:
         old = git("show", "origin/wip:" + REQUEST_FILE)
     except RuntimeError:
