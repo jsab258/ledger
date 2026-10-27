@@ -4,7 +4,7 @@ pieces, placed on his avatar's arrangement points, sewn, draped and exported.
 
     python tools/md-bridge/zip_jacket.py BRIAN.json JOB.py [--steps 400] [--particle 20] [--out DIR] [--sleeve-shorten MM]
         [--cuff-of-wrist 1.0] [--cuff-particle 6] [--grip 85] [--cuff-seam-late STEPS]
-        [--flip-cuff-seam R|L|RL]
+        [--flip-cuff-seam R|L|RL] [--no-cuffs]
     python tools/md-bridge/md_job.py JOB.py          # runs it through the bridge (Jafar's one click a session)
 
 WHY, 26 October 2026 (his order of 25 October, item 3: Tom's outfit in Marvelous Designer to Study 6's numbers; his
@@ -243,8 +243,12 @@ ARRANGE = {"frontR": "Body_Front_3_R", "frontL": "Body_Front_3_L", "back": "Body
            "tapeR": "Body_Front_Center_3", "tapeL": "Body_Front_Center_3"}
 
 
-def plan(brian, sleeve_shorten=0.0, cuff_of_wrist=CUFF_OF_WRIST):
+def plan(brian, sleeve_shorten=0.0, cuff_of_wrist=CUFF_OF_WRIST, cuffs=True):
     pieces = build(brian, sleeve_shorten, cuff_of_wrist)
+    # --no-cuffs (the third try's fresh review, 27 October): the sleeves alone, to see whether a sleeve's own end goes
+    # round the arm before any cuff is sewn to it
+    if not cuffs:
+        pieces = {k: v for k, v in pieces.items() if not k.startswith("cuff")}
     out_pieces, lines = [], {}
     for key, edges in pieces.items():
         pts = []
@@ -257,6 +261,8 @@ def plan(brian, sleeve_shorten=0.0, cuff_of_wrist=CUFF_OF_WRIST):
                            "fabric": "rib" if key.startswith(("band", "cuff")) else "tape" if key.startswith("tape") else "shell"})
     out_seams = []
     for (pa, a0, a1), (pb, b0, b1) in seams():
+        if pa not in pieces or pb not in pieces:
+            continue
         la, fa = lines[(pa, a0, a1)]
         lb, fb = lines[(pb, b0, b1)]
         # the cuff's own side seam (it closes the cuff into a tube) is sewn LATE when asked (--cuff-seam-late)
@@ -385,7 +391,7 @@ def main(argv):
     src, job = argv[0], argv[1]
     opt = lambda n, d: float(argv[argv.index(n) + 1]) if n in argv else d  # noqa: E731
     out = argv[argv.index("--out") + 1] if "--out" in argv else r"F:\LedgerTools\garments\tom\zip_jacket"
-    p = plan(load(src), opt("--sleeve-shorten", 0.0), opt("--cuff-of-wrist", CUFF_OF_WRIST))
+    p = plan(load(src), opt("--sleeve-shorten", 0.0), opt("--cuff-of-wrist", CUFF_OF_WRIST), "--no-cuffs" not in argv)
     open(job, "w", encoding="utf-8").write(JOB % {"src": src, "plan": json.dumps(p), "out": out,
                                                   "steps": int(opt("--steps", 400)), "particle": opt("--particle", 20.0),
                                                   "cuff_particle": opt("--cuff-particle", 6.0), "grip": opt("--grip", 0.0),

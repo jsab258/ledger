@@ -129,7 +129,7 @@ No decision asked: these are for watching the street change.
 
 ### Needs you
 
-1. **Tom's jacket's cuffs: the third try failed** (four drapes, preview tom-zip-jacket-cuffs-try3). Each cuff closes into a flat band beside the arm, never round the wrist: Marvelous cannot move a placed piece along the arm by script, and its cut call refuses. Which way now? A: no separate cuff, the sleeve's own end drawn in round the wrist and the rib shown by its texture (recommended: documented calls, certain to sit round the wrist, looks flatter); B: a cuff band built in Blender as part of the bake (certain, new code, time not measured); C: the jacket waits.
+1. **Tom's jacket's cuffs: the third try failed, and the reason is the sleeve** (preview tom-zip-jacket-cuffs-try3). Each cuff closed into a flat band beside the arm; then a fresh reviewer found, and a drape without cuffs confirmed, that the sleeve's own end lies as a flat flap past the hand, the hand coming through its cloth. Every cuff was sewn to that flap. Yes: find why the sleeve's end lies flat, then the cuffs at the wrist (the placement that now works), a fourth round (recommended); or build the cuffs in Blender in the bake (new code, time not measured); or the jacket waits.
 2. **Leave Marvelous open with the bridge running** (recommended): Tom's jacket jobs run through it; if it is closed, one click on LEDGER bridge next time.
 
 Your answers of 27 October are recorded: the cuffs' third try (failed, above), $4 more for speech tests (the wording test running), the bin emptied (the build re-run at 13:34), the checker's fourth try as you set it (its cut-offs come to your page), no actor for Darren (Common Voice's terms being read).
