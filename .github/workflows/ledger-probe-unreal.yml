@@ -413,7 +413,10 @@ jobs:
           # checkout is deleted.
           $gaspSrc = "C:\Users\Jafar\ledger-local\ue-probe\Content"
           $gaspCopied = 0
-          foreach ($d in @("Audio", "Blueprints", "Characters", "Input", "Levels", "Misc", "Retarget")) {
+          # MetaHumans: the sample's /Game/MetaHumans/Common/Common/Rigs, the
+          # retargeters its graph copies the walk through onto Tom (RTG_UEFN_to_
+          # Metahuman_nrw), missed in the first copy of the same day.
+          foreach ($d in @("Audio", "Blueprints", "Characters", "Input", "Levels", "Misc", "Retarget", "MetaHumans")) {
             $s = Join-Path $gaspSrc $d
             if (Test-Path $s) {
               robocopy $s (Join-Path $PWD "ue-probe\Content\$d") /E /NFL /NDL /NJH /NJS /NP | Out-Null
