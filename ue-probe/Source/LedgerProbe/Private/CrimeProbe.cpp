@@ -9072,6 +9072,20 @@ namespace
 			// When DS Ellis first came and when he was first taken (the review's C4),
 			// so the week read after a load is the week played.
 			+ "\nellisFirst=" + GWeek.EllisFirst + "\ntakenFirst=" + GWeek.TakenFirst
+			// THE PLAIN QUESTIONS STILL PUT TO HIM AND THE LINES SAID (27 October 2026, the sweep's W2; the review's
+			// C5 (b) and (d)): Ron's "tell them no?" and Sheila's question for an answer, so a "Yes." after Continue
+			// still answers them, and the street's line count, so its lines do not start over.
+			+ [] {
+				std::string Out;
+				for (const auto& Kv : GDealAsked)
+				{
+					if (Kv.first.empty() || Kv.second.empty()) { continue; }
+					std::string Asked = Kv.second;
+					for (char& Ch : Asked) { if (Ch == '\n' || Ch == '\r') { Ch = ' '; } }
+					Out += "\ndealAsked_" + Kv.first + "=" + Asked;
+				}
+				return Out + "\nlinesSaid=" + std::to_string(GLive.LinesSaid);
+			}()
 			+ [] {
 				if (GPawn == nullptr || bLiveScript) { return std::string(); }
 				const LedgerCrime::P3 At = ToStreet(GPawn->GetActorLocation());
@@ -9235,6 +9249,9 @@ namespace
 		}
 		FString ClockText;
 		bool bClockRead = false;
+		// a load keeps only the save's questions and count, never the session it replaces (W2)
+		GDealAsked.clear();
+		GLive.LinesSaid = 0;
 		if (FFileHelper::LoadFileToString(ClockText, *(Dir / TEXT("clock.txt"))))
 		{
 			TArray<FString> Lines;
@@ -9265,6 +9282,8 @@ namespace
 				else if (GStandLoaded.TakeLine(Utf8(Kv), Utf8(V))) { }
 				else if (Kv == TEXT("ellisFirst") && !V.IsEmpty()) { GWeek.EllisFirst = Utf8(V); }
 				else if (Kv == TEXT("takenFirst") && !V.IsEmpty()) { GWeek.TakenFirst = Utf8(V); }
+				else if (Kv.StartsWith(TEXT("dealAsked_")) && !V.IsEmpty()) { GDealAsked[Utf8(Kv.Mid(10))] = Utf8(V); }
+				else if (Kv == TEXT("linesSaid")) { GLive.LinesSaid = FMath::Max(0, FCString::Atoi(*V)); }
 				else if (Kv == TEXT("commit")) { GSavedByCommit = Utf8(V); }
 				else if (Kv == TEXT("clock")) { bClockRead = GClock.FromText(Utf8(V)); }
 				else if (Kv == TEXT("waitShown") && TownSave::IsStopKey(Utf8(V))) { GWaitShown.insert(Utf8(V)); }   // an older save's, checked as the town's save checks them
