@@ -9,7 +9,7 @@ Failed its exit check on 22 Oct (production/audits/phase1-exit/CLOSE-2026-10-22.
 - [x] 1. Health check; the order ledger.
 - [x] 2. The walk: default, walked packaged (14 of 15). Sit set aside (sit-and-turn/).
 - [ ] 3. Tom's outfit: zip jacket baked, skinned; cuffs' third try failed, his way next (RIB-CUFFS).
-- [ ] 4. Speech: all on Pocket; checker's fourth try designed (LOCAL-CHECKERS); wording A/B running; Darren's Common Voice terms read next.
+- [ ] 4. Speech: all on Pocket; checker's fourth try designed (LOCAL-CHECKERS); wording A/B running; Common Voice fails consent (voice-latency/COMMON-VOICE).
 - [ ] 5. Mickey's office: staff-side fixes passed; shadow under radio shelf open (cab-office-interior-1990/WEAR).
 - [ ] 6. Phase 1's exit re-run; phase 2?
 - Fallback: phase 3's port; golden in parts, G2 next (sweep-2026-10-05/).
@@ -18,7 +18,7 @@ Failed its exit check on 22 Oct (production/audits/phase1-exit/CLOSE-2026-10-22.
 
 Done 6 of 16: 7, 6, 12, 4, 5, 1 (this week's).
 
-STATE (27 Oct 14:10): build re-run for his walk; cuffs set aside.
+STATE (27 Oct 14:25): build re-run, walk running; cuffs set aside.
 
 ## Handovers
 

@@ -155,6 +155,14 @@ by Kenney (kenney.nl), CC0."
 | **Licence** | MIT (Nano's code, Resemble AI 2025, and its weights' card); PyTorch BSD-3; torch-directml MIT (each read 3 October, the card in the browser on his PC and the runtimes' own licence files) |
 | **Obligation** | The MIT and BSD notices shipped with the voice when it ships; Resemble's watermark kept (the allowlist, entry 1) |
 
+## The live voice — Pocket TTS, Kyutai (Sheila, Ron and Darren since 26 October)
+
+| | |
+|---|---|
+| **What** | The voice Sheila, Ron and Darren speak with since his page of 26 October (tools/voice-live/pocket-server.py, on the processor): Kyutai's Pocket TTS, its code and weights (huggingface.co/kyutai/pocket-tts), each character's voice taken from a VCTK reference recording (credited above) |
+| **Licence** | CC BY 4.0 (the weights' model record, read 27 October 2026 at huggingface.co/api/models/kyutai/pocket-tts). Its access terms add a prohibited use: "voice impersonation or cloning without explicit and lawful consent", and presenting generated speech as genuine recordings of real people |
+| **Obligation** | Credit Kyutai and the CC BY 4.0 licence with the game; disclose the voices as machine-made (production/store/steam-ai-disclosure.md); each reference's speaker consent on the record (the allowlist, never-ship 5: VCTK's speakers recorded for a voice-cloning corpus, consent a stated risk, his ruling of 24 September) |
+
 ## The live talk — Anthropic's Claude
 
 | | |
