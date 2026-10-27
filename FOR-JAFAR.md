@@ -39,9 +39,10 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
 **Your items (26 October, night).**
 - *The walk (item 2), done:* your pass made it the default; the packaged game, walked by the AI tester, 14 of 15 stages (the one miss, Ron out of reach, is the route's old fault). The sit stays set aside.
 - *Clothes (item 3):* Tom's zip jacket, made tonight by script from the Marvelous drape: an even game mesh of 21,448 triangles (budget 18,000 to 22,000), its maps baked (the metal zip and two hip pockets read), skinned to his skeleton and following him arms down, up, walking and sitting (pictures in production/previews, tom-zip-jacket-*). Next: onto Tom in the game (he is not yet a wearer in the garment system), then the gate. Its colour is yours to choose, with pictures from the game: navy until then.
-- *Speech (item 4):* all three speak through Pocket (first sound about 0.2 s). The fast checker, three tries: the third, as you set it, holds your bar but clears only 3% of true sentences. Its 617 new test sentences showed Haiku's own check letting 18 to 23 invented first sentences through and refusing 31% of true ones. Rewriting only a refused sentence: 31 of 37 pass the real check; next, real turns. $6.21 of the $10 spent.
-- *Mickey's office (item 5):* the small shadows at High fixed by raising one setting only while you are inside (about 0.2 ms a frame), passed in the editor beside plain High; packaged pictures after tonight's build. Faults behind the counter next.
+- *Speech (item 4):* all three speak through Pocket (first sound about 0.2 s). The fast checker's third try holds your bar but clears 3%; Haiku's own check lets 18 to 23 of 617 invented first sentences through. Rewriting a refused sentence: left off (no fewer 5-second waits). The check's own time: each call sent twice and the copy the service starts first kept takes about a second off the slowest checks, reviewed, off until your word (Needs you 5).
+- *Mickey's office (item 5):* the small shadows at High fixed by raising one setting only while you are inside (about 0.2 ms a frame), passed in the editor beside plain High. The staff side's first fixes (the leaning box file, the radio on its riser) exported; imported and photographed this morning.
 - *Fallback, the simulation's port:* begun. Its blocker is gone: the 2.7 MB test table the port is checked against is now kept in pieces the upload guard accepts. Next: how well each person knows Tom's face, a rule that lives only in the game's code, given its home in the rules.
+- *The AI tester, tonight's build (03:45):* 13 of 15 stages (Ron lost sight of, Darren not on the street, as on the old build). "That's all I know" to a newcomer's sixty first questions: 4 of 60, the first count ever (the nightly bench had never run). What broke the illusion: townsfolk in underclothes; the quay end dark at night (no lamps there yet); the two missed greetings.
 
 <!-- retention -->Disk (10-22 04:32): C: 79.9 GB free, F: 48.4 GB free; grew most since 10-21 12:17: C:\actions-runner-ledger\_work\ledger +1.5 GB, F:\LedgerTools\uv\cache +1.4 GB, F:\LedgerTools\bpyenv\Lib +0.9 GB.
 
@@ -131,7 +132,8 @@ No decision asked: these are for watching the street change.
 1. **Tonight's page, three taps** (https://claude.ai/artifact/GmtwhT5o89Ho9huHXYUieX): Darren's delivery A or B, blind; the checker's third try: keep Haiku alone and fix its leaks (recommended); price a north-east actor for Darren (recommended).
 2. **Tom's jacket's cuffs, a third try?** Two fixes failed (they hang off his wrists). Research found the cause: the wrist's placement point sits mid-hand, so each cuff closes over the hand. Yes, by the researched route: placed at the arm's wrist end, then drawn in to grip (recommended); or no, the jacket waits.
 3. **Leave Marvelous open with the bridge running** (recommended): Tom's jacket jobs run through it; if it is closed, one click on LEDGER bridge next time.
-4. **Empty F:'s recycle bin** (recommended): it holds 7.2 GB of files you deleted yourself; F: is at its 20 GB floor, and tonight's build stopped on it once. I never empty it.
+4. **Empty F:'s recycle bin** (recommended): it holds 7.2 GB of files you deleted yourself; F: is at its 20 GB floor, and tonight's build and the morning pictures stopped on it. I never empty it.
+5. **Two copies of each speech check, the one the service starts first kept** (money): about a second off the slowest checks, no more inventions seen, a fresh review's fixes in; about $0.30 more a 150-turn evening, estimated. Yes: switch it on in the game and measure it in play (recommended); or no.
 
 Your evening answers are recorded (shadows inside the office: yes; $10 for the slow-reply tests; the checker trained on Gemini's labels, no letter to Anthropic).
 
@@ -148,16 +150,17 @@ Your evening answers are recorded (shadows inside the office: yes; $10 for the s
 ## Builder, Monday 26 October (night)
 
 **Failed:**
-- The night's build: its request lost a race with my push (now retries); the second ask stopped on F:'s free space. Compressed my own files; asked again at 03:15.
+- The night's build: its request lost a race with my push (now retries), then the build and the morning pictures stopped on F:'s free space; my own files compressed, nothing deleted (Needs you 4). Built at 03:45; pictures retaken.
 - Tom's jacket's cuffs hang off his wrists; two fixes failed; researched (Needs you 2).
-- Haiku's check, on 617 test sentences, lets 18 to 23 inventions through (Sheila denies the second book) and refuses 31% of true ones; its second look stays.
+- Haiku's check lets 18 to 23 of 617 test inventions through and refuses 31% of true sentences.
 - The fast checker's third try holds your bar but clears only 3%.
-- My first rewrite bench used only the check's first step; corrected.
+- Starting the check's second look early saves 0.04 s; left off.
 
 **Done:**
-- Tom's zip jacket: game mesh in budget, maps baked (zip, pockets, rib), skinned and posed; reviewed twice.
-- Rewriting a refused sentence, in real turns: 8 of 10 rewritten, no fallbacks, 5-second waits not fewer; left off.
-- The port: its test files under the upload limit; two rule sets moved home (face familiarity, who saw the window).
-- The office's shadows at High: passed in the editor.
+- Tonight's build walked: 13 of 15 stages (Ron, Darren missed, as before); townsfolk still undressed.
+- The nightly "that's all I know" count had never run (a command-line limit): fixed, 4 of 60.
+- Speech: two copies of each check call cut the slowest checks by about a second; reviewed; off until your word (Needs you 5).
+- Tom's zip jacket: game mesh, maps baked, skinned, posed.
+- The port: two rule sets moved home.
 
-**Act on:** tonight's page, three taps; the cuffs (Needs you 2).
+**Act on:** the page, three taps; Needs you 2 and 5.

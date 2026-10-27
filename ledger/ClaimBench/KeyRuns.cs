@@ -87,14 +87,22 @@ static partial class Program
     /// Counts every call's tokens by model on the way through, for the log. It streams too (the slow
     /// replies, 26 October): the engine takes the early first-sentence path only through a streaming
     /// client, and without this the bench measured every turn as a whole-reply check.
-    sealed class Counted : IStreamingLlmClient, IDisposable
+    sealed class Counted : IStartingLlmClient, IDisposable
     {
         readonly KeyRun _run;
         public Counted(KeyRun run) => _run = run;
         public async System.Threading.Tasks.Task<LlmResponse> CompleteAsync(LlmRequest request, System.Threading.CancellationToken ct = default)
             => Count(request, await _run.Client.CompleteAsync(request, ct).ConfigureAwait(false));
-        public async System.Threading.Tasks.Task<LlmResponse> StreamAsync(LlmRequest request, Action<string> onText, System.Threading.CancellationToken ct = default)
-            => Count(request, await _run.Client.StreamAsync(request, onText, ct).ConfigureAwait(false));
+        public System.Threading.Tasks.Task<LlmResponse> StreamAsync(LlmRequest request, Action<string> onText, System.Threading.CancellationToken ct = default)
+            => StreamAsync(request, onText, null, ct);
+        // A stream stopped on purpose (a draft after a refused first sentence, a check's second copy) is counted too,
+        // at what it used (27 October 2026: the log counted only calls that finished).
+        public async System.Threading.Tasks.Task<LlmResponse> StreamAsync(LlmRequest request, Action<string> onText, Action onStart,
+                                                                           System.Threading.CancellationToken ct = default)
+        {
+            try { return Count(request, await _run.Client.StreamAsync(request, onText, onStart, ct).ConfigureAwait(false)); }
+            catch (LlmStreamStoppedException e) { Count(request, e.SoFar ?? new LlmResponse()); throw; }
+        }
         LlmResponse Count(LlmRequest request, LlmResponse r)
         {
             lock (_run.ByModel)

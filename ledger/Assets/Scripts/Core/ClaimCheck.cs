@@ -252,6 +252,28 @@ namespace Ledger.Core
         /// On, such a detail is cleared on the list's word, as a B, M or W one is; measured before any use.
         public static bool HistorySupports = false;
 
+        /// THE SECOND LOOKS STARTED AS THE LIST IS WRITTEN: a bench switch, off in the game until measured (27 October
+        /// 2026, his speech order: the check's own time is the lever left; production/research/voice-latency/
+        /// SENTENCE-REPAIR-2026-10-26.md, last section). On 617 first sentences, a line the list clears outright was
+        /// checked in a median 1.06 s, but anything it flags waited for the whole list to be written before its second
+        /// look began, and was heard of at 2.5 to 2.8 s. On, the list is streamed and each flagged detail's look starts
+        /// as soon as its entry is written whole. A look asks about its detail alone, so the requests are the ones the
+        /// finished list would make; the whole answer is still read exactly as before. A look the finished list does
+        /// not need is never read: waited for and costed, or stopped when the list's verdict stands without looks.
+        public static bool EarlyLooks = false;
+
+        /// TWO COPIES OF EACH CHECK CALL, THE ONE BEGUN FIRST KEPT: a bench switch, off in the game until measured on
+        /// the real path and given his yes (27 October 2026; production/research/voice-latency/CHECK-TIME-2026-10-27.md,
+        /// sections 3 and 4: the same call sent twice at once began up to a second apart, and keeping the first cut the
+        /// slowest tenth of checks that needed a look by about a second). Dean and Barroso's hedged requests ("The Tail
+        /// at Scale", 2013), but sent at once: a copy sent late needs its own 0.6 to 0.8 s to begin, so it rarely
+        /// overtakes. The copy kept is the one the model begins first, thinking included (IStartingLlmClient), so the
+        /// choice is made before either copy has thought or written a word of its answer and cannot lean to a verdict
+        /// (the fresh review: chosen by first words, a look's kept copy is the one that thought least). Only a client
+        /// that can say when the model begins gets two copies; any other makes its one plain call. The copy not kept is
+        /// stopped, and what it used is added to the kept answer's tokens, for the cost.
+        public static bool TwoCopies = false;
+
         /// THE REFUSED SENTENCE REWRITTEN ALONE (ConversationEngine.RepairFirst, a bench switch): the strict rewrite that
         /// passed 31 of 37 refused sentences against the whole check (production/research/voice-latency/
         /// SENTENCE-REPAIR-2026-10-26.md): only what one known item says, in its own facts, the refused details named,
@@ -275,7 +297,119 @@ namespace Ledger.Core
 
         // A call whose failure, however it comes, arrives in its task.
         static async System.Threading.Tasks.Task<LlmResponse> LookAsync(ILlmClient client, LlmRequest request, System.Threading.CancellationToken ct) =>
-            await client.CompleteAsync(request, ct).ConfigureAwait(false);
+            TwoCopies && client is IStartingLlmClient twice
+                ? await FirstOfTwo(twice, request, ct).ConfigureAwait(false)
+                : await client.CompleteAsync(request, ct).ConfigureAwait(false);
+
+        // One call sent twice at once (TwoCopies): the copy the model begins first is read, the other stopped, what it
+        // used added to the kept answer's tokens. A copy that fails leaves the other to answer. When neither answers
+        // whole, a stream that broke is asked for again in one piece, as the plain call retries a dropped connection;
+        // two copies refused outright fail as one would.
+        internal static async System.Threading.Tasks.Task<LlmResponse> FirstOfTwo(IStartingLlmClient client, LlmRequest request,
+                                                                                  System.Threading.CancellationToken ct)
+        {
+            var stops = new[] { System.Threading.CancellationTokenSource.CreateLinkedTokenSource(ct),
+                                System.Threading.CancellationTokenSource.CreateLinkedTokenSource(ct) };
+            int first = -1;
+            System.Threading.Tasks.Task<LlmResponse> Copy(int i) => client.StreamAsync(request, null, () =>
+            {
+                if (System.Threading.Interlocked.CompareExchange(ref first, i, -1) == -1) stops[1 - i].Cancel();
+            }, stops[i].Token);
+            var copies = new[] { Copy(0), Copy(1) };
+            try
+            {
+                try { await System.Threading.Tasks.Task.WhenAll(copies).ConfigureAwait(false); }
+                catch (Exception) { }
+                ct.ThrowIfCancellationRequested();
+                int w = System.Threading.Volatile.Read(ref first);
+                LlmResponse Done(int i) => copies[i].Status == System.Threading.Tasks.TaskStatus.RanToCompletion ? copies[i].Result : null;
+                bool Broke(int i) => copies[i].IsFaulted && copies[i].Exception?.InnerException is LlmStreamBrokenException;
+                // What a copy used: its answer; what it had read, thought and written when it was stopped; for one that
+                // broke mid-stream, the prompt it read (the kept answer's, `prompt`); one refused outright, nothing.
+                async System.Threading.Tasks.Task<LlmResponse> Used(int i, int prompt)
+                {
+                    try { return await copies[i].ConfigureAwait(false); }
+                    catch (LlmStreamStoppedException e) { return e.SoFar; }
+                    catch (LlmStreamBrokenException) { return new LlmResponse { InputTokens = prompt }; }
+                    catch (Exception) { return null; }
+                }
+                int k = w >= 0 ? (Done(w) != null ? w : Done(1 - w) != null ? 1 - w : -1) : (Done(0) != null ? 0 : Done(1) != null ? 1 : -1);
+                if (k < 0)
+                {
+                    if (!Broke(0) && !Broke(1)) await copies[0].ConfigureAwait(false);
+                    var again = await client.CompleteAsync(request, ct).ConfigureAwait(false);
+                    int read = again.InputTokens;
+                    AddUse(again, await Used(0, read).ConfigureAwait(false));
+                    AddUse(again, await Used(1, read).ConfigureAwait(false));
+                    return again;
+                }
+                var kept = Done(k);
+                AddUse(kept, await Used(1 - k, kept.InputTokens).ConfigureAwait(false));
+                return kept;
+            }
+            finally { foreach (var s in stops) s.Dispose(); }
+        }
+
+        static void AddUse(LlmResponse kept, LlmResponse other)
+        {
+            if (other == null) return;
+            kept.InputTokens += other.InputTokens;
+            kept.OutputTokens += other.OutputTokens;
+        }
+
+        // A flagged detail's looks: Looks of them at everything they know, and one at the planned facts when there are any.
+        static List<System.Threading.Tasks.Task<LlmResponse>> StartLooks(ILlmClient client, string model, string known, string focusKnown,
+                                                                         string detail, System.Threading.CancellationToken ct)
+        {
+            var looks = new List<System.Threading.Tasks.Task<LlmResponse>>();
+            for (int k = 0; k < Looks; k++) looks.Add(LookAsync(client, RequestVerify(model, known, new[] { detail }), ct));
+            if (focusKnown != null) looks.Add(LookAsync(client, RequestVerify(model, focusKnown, new[] { detail }), ct));
+            return looks;
+        }
+
+        // Stated in so many words in an item the list cited for it (see CheckAsync): no model is asked.
+        static bool StatedByCode(string detail, List<string> ids, ICollection<string> habits, IDictionary<string, List<string>> cites,
+                                 Dictionary<string, string> itemText)
+        {
+            if ((ids.Contains("O1") && TellsOfHours(detail)) || !cites.TryGetValue(detail, out var cited)) return false;
+            foreach (var id in cited)
+                if ((id[0] != 'P' || habits.Contains(detail) || Timeless(detail)) && itemText.TryGetValue(id, out var t) && StatedIn(detail, t)) return true;
+            return false;
+        }
+
+        // The list, streamed, its flagged details' looks started as each entry is written whole (EarlyLooks). A stream
+        // that breaks is asked for again in one piece; the looks already started stay, and are used if the new list
+        // flags the same details.
+        static async System.Threading.Tasks.Task<LlmResponse> ListStartingLooks(IStreamingLlmClient client, string model, string known,
+            string line, List<string> ids, Dictionary<string, string> itemText, string focusKnown,
+            Dictionary<string, List<System.Threading.Tasks.Task<LlmResponse>>> started, System.Threading.CancellationToken lookCt,
+            System.Threading.CancellationToken ct)
+        {
+            var request = RequestItems(model, known, line);
+            int closed = 0;
+            void OnText(string text)
+            {
+                // Read again only when another entry may have closed. A fault here only means a look starts late.
+                try
+                {
+                    int n = 0;
+                    foreach (var c in text) if (c == '}') n++;
+                    if (n == closed) return;
+                    closed = n;
+                    var habits = new HashSet<string>();
+                    var cites = new Dictionary<string, List<string>>();
+                    var soFar = ParseItems(Salvaged(text), ids, habits, cites);
+                    // More than MaxLooks flagged already: the list's verdict will stand without looks.
+                    if (soFar == null || soFar.Count > MaxLooks) return;
+                    foreach (var d in soFar)
+                        if (!started.ContainsKey(d) && started.Count < MaxLooks && !StatedByCode(d, ids, habits, cites, itemText))
+                            started[d] = StartLooks(client, model, known, focusKnown, d, lookCt);
+                }
+                catch (Exception) { }
+            }
+            try { return await client.StreamAsync(request, OnText, ct).ConfigureAwait(false); }
+            catch (LlmStreamBrokenException) { return await client.CompleteAsync(request, ct).ConfigureAwait(false); }
+        }
 
         /// THE WHOLE CHECK, as the conversation runs it: the list, then the
         /// second look at whatever it flagged. Returns the invented details
@@ -299,7 +433,30 @@ namespace Ledger.Core
             var known = NumberedKnown(items);
             var ids = new List<string>();
             foreach (var (id, _) in items) ids.Add(id);
-            var r = await client.CompleteAsync(RequestItems(model, known, line), ct).ConfigureAwait(false);
+            var itemText = new Dictionary<string, string>();
+            foreach (var (id, text) in items) itemText[id] = text;
+            // THE PLANNED FACTS, looked at alone (focus): the facts the reply was
+            // written from, with who they are, how they know him, the scene and
+            // the time now.
+            var focusItems = new List<(string id, string text)>();
+            if (focus != null && focus.Count > 0)
+            {
+                var focusSet = new HashSet<string>(focus);
+                foreach (var (id, text) in items)
+                    if (focusSet.Contains(id) || id == "K1" || id == "S1" || id == "T1") focusItems.Add((id, text));
+            }
+            string focusKnown = focusItems.Count > 0 ? NumberedKnown(focusItems) : null;
+            // Looks started while the list was written (EarlyLooks), by detail; stopped if the list's verdict
+            // stands without them.
+            var started = new Dictionary<string, List<System.Threading.Tasks.Task<LlmResponse>>>();
+            using var lookStop = System.Threading.CancellationTokenSource.CreateLinkedTokenSource(ct);
+            LlmResponse r;
+            if (EarlyLooks && client is IStreamingLlmClient streaming)
+                r = await ListStartingLooks(streaming, model, known, line, ids, itemText, focusKnown, started, lookStop.Token, ct).ConfigureAwait(false);
+            else if (TwoCopies && client is IStartingLlmClient twice)
+                r = await FirstOfTwo(twice, RequestItems(model, known, line), ct).ConfigureAwait(false);
+            else
+                r = await client.CompleteAsync(RequestItems(model, known, line), ct).ConfigureAwait(false);
             calls.Add(r);
             // CUT OFF AT THE CAP (the independent check, 28 September): the
             // entries that were written whole are read, and if none of them
@@ -308,8 +465,15 @@ namespace Ledger.Core
             var habits = new HashSet<string>();
             var cites = new Dictionary<string, List<string>>();
             var flagged = ParseItems(cut ? Salvaged(r.Text) : r.Text, ids, habits, cites);
-            if (cut && (flagged == null || flagged.Count == 0)) return (null, calls);
-            if (flagged == null || flagged.Count == 0) return (flagged, calls);
+            // The list's verdict standing without looks: any started while it was written are stopped (their cost,
+            // rare, goes uncounted).
+            (IReadOnlyList<string> invented, List<LlmResponse> calls) Stands(IReadOnlyList<string> verdict)
+            {
+                if (started.Count > 0) lookStop.Cancel();
+                return (verdict, calls);
+            }
+            if (cut && (flagged == null || flagged.Count == 0)) return Stands(null);
+            if (flagged == null || flagged.Count == 0) return Stands(flagged);
             // STATED IN SO MANY WORDS, BY CODE (U1, 30 September: the check's
             // standard is "stated or directly implied"; the research's own
             // split, production/research/grounded-replies/NOTE-2026-09-29.md).
@@ -323,21 +487,14 @@ namespace Ledger.Core
             // present with nothing of another time ("Rita keeps the pawn shop"),
             // never an event (6ad: "Ron minding the door" said of the night
             // the window went has a word the line does not, and a time).
-            var itemText = new Dictionary<string, string>();
-            foreach (var (id, text) in items) itemText[id] = text;
             var stated = new HashSet<string>();
-            foreach (var d in flagged)
-            {
-                if ((ids.Contains("O1") && TellsOfHours(d)) || !cites.TryGetValue(d, out var cited)) continue;
-                foreach (var id in cited)
-                    if ((id[0] != 'P' || habits.Contains(d) || Timeless(d)) && itemText.TryGetValue(id, out var t) && StatedIn(d, t)) { stated.Add(d); break; }
-            }
+            foreach (var d in flagged) if (StatedByCode(d, ids, habits, cites, itemText)) stated.Add(d);
             if (stated.Count > 0)
             {
                 var rest = new List<string>();
                 foreach (var d in flagged) if (!stated.Contains(d)) rest.Add(d);
                 flagged = rest;
-                if (flagged.Count == 0) return (cut ? null : flagged, calls);
+                if (flagged.Count == 0) return Stands(cut ? null : flagged);
             }
             // ONE SECOND LOOK A DETAIL, side by side (measured on the bench:
             // given five details at once, it cited one true hard fact for all
@@ -348,8 +505,7 @@ namespace Ledger.Core
             // refused for its length (town list 6bo, the independent check).
             int otherFlagged = 0;
             foreach (var d in flagged) if (!(ids.Contains("O1") && TellsOfHours(d))) otherFlagged++;
-            if (otherFlagged > MaxLooks || flagged.Count > MaxLooks * 4) return (flagged, calls);
-            var looks = new List<System.Threading.Tasks.Task<LlmResponse>>();
+            if (otherFlagged > MaxLooks || flagged.Count > MaxLooks * 4) return Stands(flagged);
             // NOT SHOWN THE LINE (measured on the bench's held-out half, 28
             // September: shown it, the second look read the rest of the line as
             // context and cleared details no item gives, 68% of invented
@@ -362,35 +518,31 @@ namespace Ledger.Core
             // it to naming a real item, not to naming a memory.
             // LOOKS A DETAIL (Looks; U1, 30 September): with more than one, a
             // detail stays refused only when every look refuses it, side by side.
-            // THE PLANNED FACTS, looked at alone (focus): the facts the reply was
-            // written from, with who they are, how they know him, the scene and
-            // the time now.
-            var focusItems = new List<(string id, string text)>();
-            if (focus != null && focus.Count > 0)
-            {
-                var focusSet = new HashSet<string>(focus);
-                foreach (var (id, text) in items)
-                    if (focusSet.Contains(id) || id == "K1" || id == "S1" || id == "T1") focusItems.Add((id, text));
-            }
-            int perDetail = Looks + (focusItems.Count > 0 ? 1 : 0);
-            string focusKnown = focusItems.Count > 0 ? NumberedKnown(focusItems) : null;
+            // (The planned facts' look, focusKnown, is one more beside them.)
+            var perDetail = new List<List<System.Threading.Tasks.Task<LlmResponse>>>();
             foreach (var d in flagged)
             {
-                for (int k = 0; k < Looks; k++) looks.Add(LookAsync(client, RequestVerify(model, known, new[] { d }), ct));
-                if (focusKnown != null) looks.Add(LookAsync(client, RequestVerify(model, focusKnown, new[] { d }), ct));
+                if (started.TryGetValue(d, out var early)) { perDetail.Add(early); started.Remove(d); }
+                else perDetail.Add(StartLooks(client, model, known, focusKnown, d, lookStop.Token));
             }
             // Every look is waited for, so none is left running unwatched when
-            // the turn is cancelled (the independent check's third pass).
+            // the turn is cancelled (the independent check's third pass); those
+            // started early that the finished list does not need too, for their cost.
+            var looks = new List<System.Threading.Tasks.Task<LlmResponse>>();
+            foreach (var mine in perDetail) looks.AddRange(mine);
+            foreach (var unneeded in started.Values) looks.AddRange(unneeded);
             try { await System.Threading.Tasks.Task.WhenAll(looks).ConfigureAwait(false); }
             catch (Exception) { }
             ct.ThrowIfCancellationRequested();
+            foreach (var unneeded in started.Values)
+                foreach (var look in unneeded)
+                    if (look.Status == System.Threading.Tasks.TaskStatus.RanToCompletion && look.Result != null) calls.Add(look.Result);
             var left = new List<string>();
             for (int i = 0; i < flagged.Count; i++)
             {
                 bool cleared = false;
-                for (int k = 0; k < perDetail; k++)
+                foreach (var look in perDetail[i])
                 {
-                    var look = looks[i * perDetail + k];
                     // THE SECOND LOOK FAILING KEEPS THE LIST'S VERDICT (the
                     // independent check: a throw here let a flagged line be said
                     // word for word, and lost the first call's cost).

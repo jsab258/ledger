@@ -54,6 +54,16 @@ namespace Ledger.Core
         Task<LlmResponse> StreamAsync(LlmRequest request, Action<string> onText, CancellationToken ct = default);
     }
 
+    /// A STREAMING CLIENT THAT ALSO SAYS WHEN THE MODEL BEGINS, 27 October 2026
+    /// (ClaimCheck.TwoCopies): onStart hears, once, the first moment the model
+    /// writes anything, its thinking included, before any of the answer exists,
+    /// so a call sent twice can keep the copy the service took up first without
+    /// that choice depending on what either copy says.
+    public interface IStartingLlmClient : IStreamingLlmClient
+    {
+        Task<LlmResponse> StreamAsync(LlmRequest request, Action<string> onText, Action onStart, CancellationToken ct = default);
+    }
+
     /// Model tiering per design doc: cheap/fast for the ambient population,
     /// stronger for the authored core cast. Cost table used by CostTracker
     /// (USD per million tokens; sonnet uses post-intro sticker prices so
@@ -88,7 +98,7 @@ namespace Ledger.Core
     /// Raw-HTTP Anthropic Messages API client. Dependency-free by design so the
     /// identical code runs under Unity (Mono/IL2CPP) and plain .NET; the official
     /// C# SDK is not validated for Unity runtimes. Wire format per Anthropic docs.
-    public class AnthropicClient : IStreamingLlmClient, IDisposable
+    public class AnthropicClient : IStartingLlmClient, IDisposable
     {
         readonly HttpClient _http;
         readonly string _apiKey;
@@ -199,7 +209,13 @@ namespace Ledger.Core
         /// "stream": true, read event by event. A stream that will not start,
         /// or answers with an error status, falls back to the plain call and
         /// its retries, and hands the whole text over once.
-        public async Task<LlmResponse> StreamAsync(LlmRequest request, Action<string> onText, CancellationToken ct = default)
+        public Task<LlmResponse> StreamAsync(LlmRequest request, Action<string> onText, CancellationToken ct = default) =>
+            StreamAsync(request, onText, null, ct);
+
+        /// As above, onStart heard at the first content block, thinking or text
+        /// (IStartingLlmClient), or with the whole answer when the plain call
+        /// stands in for a stream that would not start.
+        public async Task<LlmResponse> StreamAsync(LlmRequest request, Action<string> onText, Action onStart, CancellationToken ct = default)
         {
             var messages = new List<object>();
             foreach (var m in request.Messages)
@@ -230,6 +246,7 @@ namespace Ledger.Core
             {
                 resp?.Dispose();
                 var whole = await CompleteAsync(request, ct).ConfigureAwait(false);
+                onStart?.Invoke();
                 onText?.Invoke(whole.Text);
                 return whole;
             }
@@ -242,12 +259,19 @@ namespace Ledger.Core
                 using var stop = ct.Register(() => stream.Dispose());
                 using var reader = new System.IO.StreamReader(stream, Encoding.UTF8);
                 string line;
-                bool stopped = false;
+                bool stopped = false, begun = false;
                 string error = null;
+                long thought = 0;
                 // What was used before a stop: the prompt, and roughly four
-                // characters a token of what had been written.
+                // characters a token of what had been written, its thinking too.
                 LlmResponse SoFar() => new LlmResponse { Model = result.Model, InputTokens = result.InputTokens,
-                                                         OutputTokens = Math.Max(result.OutputTokens, (sb.Length + 3) / 4), Text = sb.ToString() };
+                                                         OutputTokens = (int)Math.Max(result.OutputTokens, (sb.Length + thought + 3) / 4), Text = sb.ToString() };
+                void Begin()
+                {
+                    if (begun) return;
+                    begun = true;
+                    onStart?.Invoke();
+                }
                 while (error == null)
                 {
                     try { line = await reader.ReadLineAsync().ConfigureAwait(false); }
@@ -273,13 +297,19 @@ namespace Ledger.Core
                             result.Model = MiniJson.GetString(start, "model") ?? "";
                             result.InputTokens = MiniJson.GetInt(MiniJson.GetObject(start, "usage"), "input_tokens");
                             break;
+                        case "content_block_start":
+                            Begin();
+                            break;
                         case "content_block_delta":
+                            Begin();
                             var delta = MiniJson.GetObject(ev, "delta");
-                            if (MiniJson.GetString(delta, "type") == "text_delta")
+                            var kind = MiniJson.GetString(delta, "type");
+                            if (kind == "text_delta")
                             {
                                 sb.Append(MiniJson.GetString(delta, "text"));
                                 onText?.Invoke(sb.ToString());
                             }
+                            else if (kind == "thinking_delta") thought += (MiniJson.GetString(delta, "thinking") ?? "").Length;
                             break;
                         case "message_delta":
                             result.StopReason = MiniJson.GetString(MiniJson.GetObject(ev, "delta"), "stop_reason") ?? result.StopReason;

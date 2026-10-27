@@ -9,7 +9,7 @@ Failed its exit check on 22 Oct (production/audits/phase1-exit/CLOSE-2026-10-22.
 - [x] 1. Health check; the order ledger.
 - [x] 2. The walk: default, walked packaged (14 of 15). Sit set aside (sit-and-turn/).
 - [ ] 3. Tom's outfit: zip jacket baked, skinned; cuffs set aside, his word (BAKE-PLAN).
-- [ ] 4. Speech: all on Pocket; checker's third try clears 3% (invented-claims/); rewrite left off (voice-latency/).
+- [ ] 4. Speech: all on Pocket; checker's third try clears 3% (invented-claims/); rewrite, early looks left off; two copies a check call next (voice-latency/CHECK-TIME).
 - [ ] 5. Mickey's office: packaged; shadows at High set aside; staff-side faults next (cab-office-interior-1990/).
 - [ ] 6. Phase 1's exit re-run; phase 2?
 - Fallback: phase 3's port; golden in parts, G2 next (sweep-2026-10-05/).

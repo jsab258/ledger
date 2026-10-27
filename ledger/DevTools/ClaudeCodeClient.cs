@@ -104,12 +104,22 @@ namespace Ledger.DevTools
                                       "--setting-sources", "", "--disable-slash-commands", "--strict-mcp-config" })
                 psi.ArgumentList.Add(a);
             if (!string.IsNullOrEmpty(request.Model)) { psi.ArgumentList.Add("--model"); psi.ArgumentList.Add(request.Model); }
-            psi.ArgumentList.Add("--system-prompt");
-            psi.ArgumentList.Add(string.IsNullOrEmpty(request.System) ? "You are a helpful assistant." : request.System);
+            // THE SYSTEM PROMPT FROM A FILE (27 October 2026): given on the command line, a character's whole card and
+            // facts ran past cmd.exe's 8,191 characters ("The command line is too long."), and the nightly walk's bench
+            // failed every turn on every night from 4 October.
+            string systemFile = Path.Combine(_workDir, "system-" + Guid.NewGuid().ToString("N") + ".txt");
+            File.WriteAllText(systemFile, string.IsNullOrEmpty(request.System) ? "You are a helpful assistant." : request.System, new UTF8Encoding(false));
+            psi.ArgumentList.Add("--system-prompt-file");
+            psi.ArgumentList.Add(systemFile);
             psi.Environment.Remove("ANTHROPIC_API_KEY");
             psi.Environment.Remove("ANTHROPIC_AUTH_TOKEN");
             psi.Environment["MAX_THINKING_TOKENS"] = "0";
+            try { return await RunAsync(psi, request, ct).ConfigureAwait(false); }
+            finally { try { File.Delete(systemFile); } catch (IOException) { } }
+        }
 
+        async Task<LlmResponse> RunAsync(ProcessStartInfo psi, LlmRequest request, CancellationToken ct)
+        {
             using var p = new Process { StartInfo = psi };
             p.Start();
             await p.StandardInput.WriteAsync(PromptFor(request));

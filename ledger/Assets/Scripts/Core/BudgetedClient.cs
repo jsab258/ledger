@@ -20,7 +20,7 @@ namespace Ledger.Core
     /// sent. After the call, the reserve settles to the tokens the reply says it
     /// used. A call that fails keeps its reserve, since a request that reached
     /// the service may be billed.
-    public sealed class BudgetedClient : IStreamingLlmClient, IDisposable
+    public sealed class BudgetedClient : IStartingLlmClient, IDisposable
     {
         readonly ILlmClient _inner;
         /// The client this cap wraps: what the run really talks to (the claim check asks, P3).
@@ -116,15 +116,40 @@ namespace Ledger.Core
             return resp;
         }
 
-        public async Task<LlmResponse> StreamAsync(LlmRequest request, Action<string> onText, CancellationToken ct = default)
+        public Task<LlmResponse> StreamAsync(LlmRequest request, Action<string> onText, CancellationToken ct = default) =>
+            StreamAsync(request, onText, null, ct);
+
+        public async Task<LlmResponse> StreamAsync(LlmRequest request, Action<string> onText, Action onStart, CancellationToken ct = default)
         {
             double reserved = Reserve(request);
             LlmResponse resp;
-            if (_inner is IStreamingLlmClient streaming) resp = await streaming.StreamAsync(request, onText, ct).ConfigureAwait(false);
-            else
+            try
             {
-                resp = await _inner.CompleteAsync(request, ct).ConfigureAwait(false);
-                onText?.Invoke(resp?.Text ?? "");
+                if (_inner is IStartingLlmClient starting) resp = await starting.StreamAsync(request, onText, onStart, ct).ConfigureAwait(false);
+                else if (_inner is IStreamingLlmClient streaming)
+                {
+                    // A client that cannot say when the model begins: its first words stand for it.
+                    bool begun = false;
+                    resp = await streaming.StreamAsync(request, text =>
+                    {
+                        if (!begun && !string.IsNullOrEmpty(text)) { begun = true; onStart?.Invoke(); }
+                        onText?.Invoke(text);
+                    }, ct).ConfigureAwait(false);
+                }
+                else
+                {
+                    resp = await _inner.CompleteAsync(request, ct).ConfigureAwait(false);
+                    onStart?.Invoke();
+                    onText?.Invoke(resp?.Text ?? "");
+                }
+            }
+            // A STREAM STOPPED ON PURPOSE IS SETTLED AT WHAT IT USED (27 October 2026, the fresh review of
+            // ClaimCheck.TwoCopies): its worst case stayed counted, so every first draft stopped after a refused first
+            // sentence, and every second copy a check stopped, ate into the cap at its dearest.
+            catch (LlmStreamStoppedException e)
+            {
+                Settle(reserved, request, e.SoFar);
+                throw;
             }
             Settle(reserved, request, resp);
             return resp;

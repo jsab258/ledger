@@ -19,6 +19,34 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 27 Oct 2026, a slow, uneven model call sent twice at once, the copy the service begins first kept, reviewed and held for the owner's yes
+- Made: a switch that sends each check call twice and keeps the copy the model begins first; a stream signal for that moment; a budget fix for stopped streams; a paired-timing bench mode; tests.
+- Method (setting-free):
+  - Before hedging, send the same request twice at the same moment many times and measure whether slowness is shared (rank correlation of the two copies' times); hedge only what is not shared.
+  - A copy sent after a delay rarely wins when every request has a fixed start-up time much larger than the delay; sending both at once is what pays.
+  - Choose between copies on a signal that exists before any content (the service beginning the request), never on first words or first finish: a longer answer or longer reasoning would otherwise lose the race and bias the verdicts.
+  - A budget counter that reserves a worst case must settle streams stopped on purpose at what they used, or every deliberate stop eats the cap.
+  - When stopping work on purpose, keep the plain path's retries for the case where every copy breaks.
+  - Have a fresh reviewer re-run every scorer and recompute the spend from token counts before quoting costs.
+- Tools: the check's switch; a streaming client signal for the model's beginning; the bench's paired mode and alternating A/B; two scoring scripts; the paper read as extracted text.
+- Target and check: a shorter slow tail with no more invented details through; 119 sentences A/B, 40 more paired.
+- Cost (hours): about 2.5; about $0.45 real (the counter said $0.94 before its fix).
+- Failed and why: the first version raced on first words (a bias route, caught by review); the first cost figure was the counter's, not the bill.
+- Evidence: production/research/voice-latency/CHECK-TIME-2026-10-27.md (sections 3 to 5, the fresh review)
+
+### 27 Oct 2026, a two-step model check pipelined (the second step started as the first streams), measured and left off
+- Made: a switch that streams a checker's list of claims and starts each flagged claim's second check as soon as its entry is written whole; tests; an alternating A/B bench mode.
+- Method (setting-free):
+  - Before speeding a chain of model calls, split recorded times by how many calls each case made: here one call took about 1.1 s, two or more 2.3 to 2.8 s.
+  - Pipeline a dependent call only when its request depends on its own entry alone; read the finished answer exactly as before, so the pipeline can change only when calls start, never what is decided. Stop early calls the final answer turns out not to need.
+  - Measure on/off on the same inputs, alternating which runs first, and compare verdict agreement with two plain runs' own spread.
+  - When the same request differs by a second or more from one run to the next, the service's pace is the lever, not the order of steps: a fast-generating first call leaves little to overlap.
+- Tools: the dialogue engine's check with a bench switch; a scripted streaming client in the tests; the bench's sentence mode with an alternating A/B; a scoring script.
+- Target and check: a shorter check with no verdict changed; 206 sentences, both ways.
+- Cost (hours): about 1.5; $0.42.
+- Failed and why: saved a median 0.04 s (0.11 s where a second check was needed); verdicts unchanged. Left off.
+- Evidence: production/research/voice-latency/CHECK-TIME-2026-10-27.md (section 2)
+
 ### 26 Oct 2026, the fast checker's third try: aimed training data, a pre-set cut-off and a larger test judged on the whole chain
 - Made: 2,151 near-miss and paraphrase training sentences and 617 test sentences written and labelled by a cloud model (training from tuning contexts, test from held ones); the 17M checker retrained on its use-time input (10 facts); a cut-off fixed before the test; the test run once against the production check's own verdicts, with a blind hand reading of every item that decides the bar.
 - Method (setting-free):

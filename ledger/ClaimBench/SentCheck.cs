@@ -13,7 +13,7 @@ using Ledger.Core;
 /// larger test").
 ///
 ///     dotnet run --project ledger/ClaimBench -c Release -- sentcheck --key --task slow-replies-2026-10-26
-///         --from F:/LedgerTools/checkers/train3/TEST3.json [--out OUT.jsonl] [--limit N]
+///         --from F:/LedgerTools/checkers/train3/TEST3.json [--out OUT.jsonl] [--limit N] [--every N] [--ab early|two]
 ///
 /// Each sentence (written by Gemini 3.8 Flash from the detail bench's HELD contexts, never trained on) goes through
 /// the check exactly as the game runs it on a first sentence: ClaimCheck.CheckAsync on Haiku 5.5 with the speaker's
@@ -35,6 +35,8 @@ static partial class Program
                 half: e.TryGetProperty("half", out var hh) ? hh.GetString() : "?"))
             .ToList();
         if (rows.Any(r => r.half != "held")) { Console.WriteLine("refused: a sentence that is not from the held half"); return 2; }
+        int every = int.Parse(Arg(args, "--every", "1"));
+        if (every > 1) rows = rows.Where((_, i) => i % every == 0).ToList();
         if (limit > 0) rows = rows.Take(limit).ToList();
         // --history-supports: the check's H items count as an event's support at the list (ClaimCheck.HistorySupports)
         ClaimCheck.HistorySupports = args.Contains("--history-supports");
@@ -42,6 +44,14 @@ static partial class Program
         var llm = (ILlmClient)client;
         var outRows = new List<object>();
         int refused = 0, failed = 0;
+        // --ab early|two: each sentence checked twice, with a switch and without, the order alternating sentence by
+        // sentence, so the service's pace through the night falls on both alike: early, the second looks started as
+        // the list is written (ClaimCheck.EarlyLooks); two, every check call sent twice at once and the first to answer
+        // kept (ClaimCheck.TwoCopies). --ab-early is --ab early. --every N takes every Nth sentence.
+        string abSwitch = args.Contains("--ab-early") ? "early" : Arg(args, "--ab", null);
+        if (abSwitch != null && abSwitch != "early" && abSwitch != "two") { Console.WriteLine("refused: --ab takes early or two"); return 2; }
+        bool ab = abSwitch != null;
+        int n = 0;
         foreach (var r in rows)
         {
             var items = r.known.Select(k =>
@@ -49,6 +59,27 @@ static partial class Program
                 int c = k.IndexOf(": ", StringComparison.Ordinal);
                 return c > 0 ? (k.Substring(0, c), k.Substring(c + 2)) : ("?", k);
             }).ToList();
+            if (ab)
+            {
+                bool earlyFirst = n++ % 2 == 1;
+                var got = new Dictionary<bool, (bool passed, List<string> found, int calls, long ms)>();
+                try
+                {
+                    foreach (var early in earlyFirst ? new[] { true, false } : new[] { false, true })
+                    {
+                        if (abSwitch == "early") ClaimCheck.EarlyLooks = early; else ClaimCheck.TwoCopies = early;
+                        var sw = Stopwatch.StartNew();
+                        var (invented, calls) = await ClaimCheck.CheckAsync(llm, "claude-haiku-5-5", items, r.sentence, System.Threading.CancellationToken.None);
+                        got[early] = (invented != null && invented.Count == 0, invented?.ToList() ?? new List<string> { "(no answer)" }, calls.Count, sw.ElapsedMilliseconds);
+                    }
+                }
+                catch (Exception e) { failed++; Console.WriteLine("failed: " + e.Message); continue; }
+                finally { ClaimCheck.EarlyLooks = false; ClaimCheck.TwoCopies = false; }
+                outRows.Add(new { r.key, r.sentence, earlyFirst, passedOff = got[false].passed, passedOn = got[true].passed, foundOff = got[false].found,
+                                  foundOn = got[true].found, callsOff = got[false].calls, callsOn = got[true].calls, msOff = got[false].ms, msOn = got[true].ms });
+                Console.WriteLine($"{(got[false].passed ? "pass" : "refuse")}/{(got[true].passed ? "pass" : "refuse")} off {got[false].ms} on {got[true].ms} | {r.sentence}");
+                continue;
+            }
             try
             {
                 // THE WHOLE CHECK, AS THE GAME RUNS IT (ConversationEngine.CheckLine = ClaimCheck.CheckAsync): the list,

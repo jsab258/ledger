@@ -104,7 +104,7 @@ static partial class Program
             case "smalltalk": return await SmallTalk(dir, parallel);
             case "tics": return await Tics(dir, parallel);
             case "disguise": return await Disguise(dir);
-            case "firsts": ConversationEngine.ChooseFirst = !args.Contains("--no-choose"); ConversationEngine.PlanFirst = args.Contains("--plan"); ConversationEngine.NarrowRedraft = args.Contains("--narrow"); ConversationEngine.RepairFirst = args.Contains("--repair-first"); ConversationEngine.PlainFallback = args.Contains("--plain"); ConversationEngine.UseRules = args.Contains("--rules"); ConversationEngine.ReactFirst = args.Contains("--react"); ClaimCheck.Looks = args.Contains("--two-looks") ? 2 : 1; FirstsOnly = Arg(args, "--only", null); FirstsModel = Arg(args, "--model", null); ConversationEngine.Ladder = args.Contains("--ladder"); ConversationEngine.JudgeLadder = args.Contains("--judge-ladder"); FirstsByMoment = args.Contains("--moment"); FirstsTake = int.Parse(Arg(args, "--take", "0")); FirstsArgs = args; return await Firsts(dir, parallel);
+            case "firsts": ConversationEngine.ChooseFirst = !args.Contains("--no-choose"); ConversationEngine.PlanFirst = args.Contains("--plan"); ConversationEngine.NarrowRedraft = args.Contains("--narrow"); ConversationEngine.RepairFirst = args.Contains("--repair-first"); ClaimCheck.EarlyLooks = args.Contains("--early-looks"); ClaimCheck.TwoCopies = args.Contains("--two-copies"); ConversationEngine.PlainFallback = args.Contains("--plain"); ConversationEngine.UseRules = args.Contains("--rules"); ConversationEngine.ReactFirst = args.Contains("--react"); ClaimCheck.Looks = args.Contains("--two-looks") ? 2 : 1; FirstsOnly = Arg(args, "--only", null); FirstsModel = Arg(args, "--model", null); ConversationEngine.Ladder = args.Contains("--ladder"); ConversationEngine.JudgeLadder = args.Contains("--judge-ladder"); FirstsByMoment = args.Contains("--moment"); FirstsTake = int.Parse(Arg(args, "--take", "0")); FirstsArgs = args; return await Firsts(dir, parallel);
             case "suggest": return await SuggestBench(Arg(args, "--from", "F:/LedgerTools/town-scratch/sheila-sonnet/firsts.jsonl"), Arg(args, "--out", "F:/LedgerTools/town-scratch/suggest-bench.jsonl"), parallel);
             case "bearing": return Bearing();
             case "detailbench": return await DetailBench(args, Arg(args, "--dir", "F:/LedgerTools/town-scratch/detail-bench"), parallel);
@@ -128,6 +128,7 @@ static partial class Program
             case "checktime": return await CheckTime(args);
             case "repair": return await Repair(args);
             case "sentcheck": return await SentCheck(args);
+            case "lookpairs": return await LookPairs(args);
             case "again":
             {
                 // Some turns of the bench's drafts through the live check, each
@@ -1011,7 +1012,13 @@ static partial class Program
                 Func<string, Task<bool>> onFirst = null;
                 if (FirstsArgs.Contains("--early")) onFirst = s => { Interlocked.CompareExchange(ref firstAt, sw.ElapsedMilliseconds, -1); return Task.FromResult(true); };
                 try { reply = await engine.SayToAsync(job.probe, new GameTime(0, 10, 0), "Dry, grey." + (where != null ? " Where you are: " + where + "." : ""), default, onFirst); }
-                catch (Exception) { Interlocked.Increment(ref failed); return; }
+                // THE FIRST FAILED TURN SAYS WHY (27 October 2026: the nightly walk's bench had failed all 60 turns on
+                // every night since 4 October, and the log said only "60 failed").
+                catch (Exception e)
+                {
+                    if (Interlocked.Increment(ref failed) == 1) Console.WriteLine("the first failed turn: " + e.GetType().Name + ": " + e.Message);
+                    return;
+                }
                 long turnMs = sw.ElapsedMilliseconds;
                 List<object> steps;
                 lock (engine.LastSteps) steps = engine.LastSteps.Select(st => (object)new { st.step, st.ms }).ToList();
