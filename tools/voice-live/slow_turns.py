@@ -24,6 +24,8 @@ import sys
 
 def cause(steps):
     names = [s["step"] for s in steps]
+    if "repair-passed" in names:
+        return "repaired"          # the refused first sentence rewritten alone (ConversationEngine.RepairFirst)
     if "first-passed" in names:
         return "passed"
     if "re-first-passed" in names:

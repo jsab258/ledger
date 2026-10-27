@@ -78,6 +78,13 @@ namespace Ledger.Core
         /// The second try, after a refused first, told to answer in one or two
         /// short sentences from what bears on his line alone (ClaimCheck.SecondDraftNote).
         public static bool NarrowRedraft = false;
+        /// THE REFUSED FIRST SENTENCE REWRITTEN ALONE (his speech order of 26 October, 2: "When one fails, rewrite only
+        /// that sentence"; production/research/voice-latency/SENTENCE-REPAIR-2026-10-26.md: benched against the whole
+        /// check, the strict rewrite passed 31 of 37 refused sentences). A bench switch, off in the game: when the first
+        /// sentence is refused, it is rewritten from one known item's own words with its refused details named
+        /// (ClaimCheck.RepairRequest), checked again, and if it passes it is heard and is the whole reply, as when a
+        /// heard first sentence's rest fails; if not, the second draft is asked for as before.
+        public static bool RepairFirst = false;
         /// WHEN THE CHECK REFUSES TWICE (Jafar's list of 30 September afternoon,
         /// item 2; the research note grounded-dialogue-selection, step 1): the
         /// character says the chosen facts plainly instead of "that's all I
@@ -1979,6 +1986,36 @@ namespace Ledger.Core
             string firstSentence = d1.First;
             IReadOnlyList<string> firstFlagged = d1.FirstFlagged;
             Drafted d2 = null;
+            bool repaired = false;
+            if (RepairFirst && firstFlagged != null && firstFlagged.Count > 0 && !Unchecked(firstFlagged) && firstSentence != null
+                && knownEarly != null && onFirstChecked != null && Checker != null)
+            {
+                var fixReq = ClaimCheck.RepairRequest(CheckerModel, ClaimCheck.NumberedKnown(knownEarly), playerInput, firstSentence, firstFlagged);
+                var fixResp = await Checker.CompleteAsync(fixReq, ct);
+                _cost?.Record(CheckerModel, fixResp.InputTokens, fixResp.OutputTokens);
+                var fixedLine = ValidateReply((fixResp.Text ?? "").Trim().Trim('"'));
+                Step("repair-written");
+                if (!string.IsNullOrWhiteSpace(fixedLine) && fixedLine.IndexOf(DoneMark, StringComparison.OrdinalIgnoreCase) < 0
+                    && PromisesIn(fixedLine).Count == 0 && RealWorld.Find(fixedLine).Count == 0
+                    && !ResponseValidator.IsDeflection(ResponseValidator.Validate(fixedLine, Card.Name, Card.AlsoCalled), Card.Name))
+                {
+                    var (bad2, cost2) = await FirstInventedAsync(knownEarly, fixedLine, ct);
+                    if (cost2 != null) _cost?.Record(CheckerModel, cost2.InputTokens, cost2.OutputTokens);
+                    if (bad2.Count == 0 && !ClaimCheck.Repeats(fixedLine, firstFlagged))
+                    {
+                        Step("repair-passed");
+                        if (await onFirstChecked(fixedLine))
+                        {
+                            firstHeard = true;
+                            firstSentence = fixedLine;
+                            reply = fixedLine;
+                            firstFlagged = null;
+                            repaired = true;
+                        }
+                    }
+                    else Step("repair-flagged");
+                }
+            }
 
             // ONLY WHAT THE SIMULATION KNOWS (ClaimCheck.cs): checked BEFORE the
             // reply is said, kept in the transcript or remembered, so a claim
@@ -2011,8 +2048,9 @@ namespace Ledger.Core
                     // sentence kept the player waiting a whole reply, its whole
                     // check, a second draft and its check: the slowest tenth of
                     // turns heard their first word after about 8 s.
-                    var invented = firstFlagged ?? await InventedAsync(known, reply, ct);
-                    if (firstFlagged == null) Step("check");
+                    // a repaired first sentence passed its own check and is the whole reply: nothing more to check
+                    var invented = repaired ? new List<string>() : firstFlagged ?? await InventedAsync(known, reply, ct);
+                    if (firstFlagged == null && !repaired) Step("check");
                     LastInvented = invented;
                     // A PROMISE THE WORLD WILL NOT KEEP (town list 6af) is asked
                     // again without, the same way as a claim nobody supports.

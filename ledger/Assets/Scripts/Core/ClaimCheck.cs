@@ -252,6 +252,27 @@ namespace Ledger.Core
         /// On, such a detail is cleared on the list's word, as a B, M or W one is; measured before any use.
         public static bool HistorySupports = false;
 
+        /// THE REFUSED SENTENCE REWRITTEN ALONE (ConversationEngine.RepairFirst, a bench switch): the strict rewrite that
+        /// passed 31 of 37 refused sentences against the whole check (production/research/voice-latency/
+        /// SENTENCE-REPAIR-2026-10-26.md): only what one known item says, in its own facts, the refused details named,
+        /// nothing inferred from who the speaker is; "don't know" in their manner when no item answers. Thinking off.
+        public static LlmRequest RepairRequest(string model, string numberedKnown, string question, string sentence, IReadOnlyList<string> refused)
+        {
+            var r = new LlmRequest { Model = model, MaxTokens = 120 };
+            if (ThinksByDefault(model)) r.Thinking = "disabled";
+            r.System =
+                "You fix one sentence a character in a small British port town in 1990 is about to say aloud. KNOWN is everything " +
+                "they know, as numbered items, and nothing else is. The sentence states details KNOWN does not support; they are " +
+                "listed under REFUSED. Rewrite it so it states only what one KNOWN item says, in that item's own facts: never add a " +
+                "reason, place, time, person, amount or explanation that the items do not give, and nothing you infer from who the " +
+                "speaker is. When in doubt, leave it out; shorter is better. If no item answers what was asked, say in a few words, " +
+                "in the speaker's manner, that they don't know. Answer with the one sentence only, no quotation marks.";
+            var refusedText = new System.Text.StringBuilder();
+            foreach (var x in refused) refusedText.Append("\n- ").Append(x);
+            r.Messages.Add(new LlmMessage("user", "KNOWN:\n" + numberedKnown + "\nTHEY WERE ASKED: " + question + "\nSENTENCE: " + sentence + "\nREFUSED:" + refusedText));
+            return r;
+        }
+
         // A call whose failure, however it comes, arrives in its task.
         static async System.Threading.Tasks.Task<LlmResponse> LookAsync(ILlmClient client, LlmRequest request, System.Threading.CancellationToken ct) =>
             await client.CompleteAsync(request, ct).ConfigureAwait(false);

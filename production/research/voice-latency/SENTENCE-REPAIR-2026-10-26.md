@@ -310,3 +310,15 @@ The same 40 sentences (Gemini's unsupported training sentences, a fixed seed), t
 ## What the repair would buy, estimated from the bench's own turns (27 October, 01:32)
 
 On the two runs at the game's own settings (F:/LedgerTools/town-scratch/slow-replies/today, today2), a newcomer's 120 real questions: 21 first sentences refused; heard now at a median 3.11 s, 26 turns at 5 s or more. With the strict rewrite started alongside the check (its second hidden behind the check), a refused sentence would be heard at its refusal plus the rewrite's recheck (1.5 s) plus the voice, when it passes (31 of 37): about **22 turns at 5 s or more** (the median unchanged). So the repair is worth building, but it is not the main lever: most slow turns are not refusals but the check's own time, a median 2.4 s and three calls a sentence, because every event the cast's history (H) items support goes to a second look (HAIKU-FALSE-REFUSALS-2026-10-26.md, question 2). The next measurement: whether counting H items as support at the list step, as B, M and W are, cuts the check's time without letting more inventions through, on the 617 held sentences.
+
+## The rewrite in the bench's real turns (27 October, 02:13)
+
+ConversationEngine.RepairFirst (a bench switch, off in the game): when the first sentence is refused, the strict rewrite (ClaimCheck.RepairRequest, its refused details named, Haiku 5.5, thinking off) is checked again and, if it passes, heard as the whole reply. One run of the newcomer's 60 real questions at the game's own settings (`firsts --early ... --repair-first`, F:/LedgerTools/town-scratch/slow-replies/repairfirst; $0.70), beside the two runs without it:
+
+| Run | Heard, median | Slowest tenth | 5 s or more | First sentence refused | Rewritten and passed | Fallback |
+|---|---|---|---|---|---|---|
+| today | 3.17 s | 7.03 s | 17 | 14 | | 2 |
+| today2 | 3.03 s | 7.41 s | 9 | 7 | | 1 |
+| with the rewrite | 2.87 s | 6.33 s | 9 | 10 | 8 | 0 |
+
+The rewrites read as the characters would say them and state only what one fact gives ("Not much; trade has been thin since the docks went."; "Mickey's own room, that is; it's been locked since he died, and Sheila keeps the key."); no turn fell back to the plain line. But 6 of the 8 rewritten turns were still heard at 5 s or later: the rewrite waits for the refusal (the first sentence's whole check, a median 2.4 s), takes about 1 s, then its own check. The 5-second count is within the two runs' own spread (17 and 9). **The switch stays off**; what it buys is fewer fallbacks and a shorter slowest tenth, not fewer slow turns. The remaining lever is the time of a check, not the rewrite. $7.39 of his $10 spent.
