@@ -65,6 +65,19 @@ namespace Ledger.PerceptionGolden
             foreach (var d in new[] { -1, 0, 1, 2, 3, 4, 5, 9 })
                 sb.Append("FamiliarityFromMeetings|").Append(d.ToString(Inv)).Append('|').Append(D(Acquaintance.FromMeetings(d))).Append('\n');
 
+            // WHO SAW THE WINDOW GO: THE RULES (27 October 2026, the sweep's G1): Sighting.cs, read by the port.
+            foreach (var h in new[] { -1, 0, 6, 7, 12, 18, 19, 23, 24, 31, 43 })
+                Row(sb, "SightingNightAt", h.ToString(Inv), Bit(Sighting.NightAt(h)));
+            foreach (var night in new[] { false, true })
+                foreach (var reach in new[] { -1.0, 0.0, 0.3, 0.6, 1.0, 3.0 })
+                    Row(sb, "SightingLight", Bit(night), D(reach), D(Sighting.LightOnHim(night, reach)));
+            foreach (var rung in new[] { -1, 0, 1, 2, 3, 4 })
+                foreach (var bank in new[] { false, true })
+                    Row(sb, "SightingFiles", rung.ToString(Inv), Bit(bank), ((int)Sighting.WhatWitnessFiles(rung, bank)).ToString(Inv));
+            foreach (var rung in new[] { -1, 0, 1, 2, 4 })
+                Row(sb, "SightingShouts", rung.ToString(Inv), Bit(Sighting.WitnessShouts(rung)));
+            Row(sb, "SightingDeedSeconds", "0", D(Sighting.DeedSeconds));
+
             foreach (var m in new double[] { 1, 5, 20, 39, 40, 41 })
                 foreach (var a in new double[] { 0, 45, 70 })
                     foreach (var l in new double[] { 0.0, 0.5, 1.0 })

@@ -49,6 +49,7 @@
 #include "Schedule.h"
 #include "StreetVoice.h"
 #include "Suspecting.h"
+#include "Sighting.h"
 #include "Suspicion.h"
 #include "TownRounds.h"
 #include "FirstMoments.h"
@@ -4506,6 +4507,27 @@ namespace Golden
 		else if (Fn == "LightFactor" && F.size() >= 3)
 		{
 			A.Known = true; A.Got = FromDouble(Perception::LightFactor(D(F[1])));
+		}
+		else if (Fn == "SightingNightAt" && F.size() >= 3)
+		{
+			// The sweep's G1 (27 October 2026): Sighting.cs.
+			A.Known = true; A.Got = FromBool(Sighting::NightAt(std::atoi(F[1].c_str())));
+		}
+		else if (Fn == "SightingLight" && F.size() >= 4)
+		{
+			A.Known = true; A.Got = FromDouble(Sighting::LightOnHim(F[1] == "1", D(F[2])));
+		}
+		else if (Fn == "SightingFiles" && F.size() >= 4)
+		{
+			A.Known = true; A.Got = std::to_string((int)Sighting::WhatWitnessFiles(std::atoi(F[1].c_str()), F[2] == "1"));
+		}
+		else if (Fn == "SightingShouts" && F.size() >= 3)
+		{
+			A.Known = true; A.Got = FromBool(Sighting::WitnessShouts(std::atoi(F[1].c_str())));
+		}
+		else if (Fn == "SightingDeedSeconds" && F.size() >= 3)
+		{
+			A.Known = true; A.Got = FromDouble(Sighting::DeedSeconds);
 		}
 		else if (Fn == "FamiliarityFromMeetings" && F.size() >= 3)
 		{

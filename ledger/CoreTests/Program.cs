@@ -114,6 +114,7 @@ namespace Ledger.CoreTests
                 TestPortReviewFaults();
                 TestSweepFaults();
                 TestFamiliarityFromMeetings();
+                TestSighting();
                 TestBudgetedClient();
                 await TestTranscriptRollback();
                 await TestReflection();

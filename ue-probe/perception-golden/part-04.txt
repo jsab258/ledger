@@ -1,3 +1,15 @@
+RecognitionThreat|Comments|1|3|recognition/threat-heard|Heard~you've~been~telling~people~to~keep~their~mouths~shut.|1
+RecognitionThreat|Comments|1|4|recognition/threat-heard|Threatening~folk~now,~are~we?~That's~what~I~heard.|1
+RecognitionThreat|Comments|1|5|recognition/threat-heard|They~say~you're~not~above~a~threat~or~two.|1
+RecognitionThreat|Avoids|0|0|recognition/avoids|...|1
+RecognitionThreat|Avoids|0|1|recognition/avoids|Excuse~me.|1
+RecognitionThreat|Avoids|0|2|recognition/avoids|Sorry,~in~a~hurry.|1
+RecognitionThreat|Avoids|0|3|recognition/avoids|Can't~stop.|1
+RecognitionThreat|Avoids|0|4|recognition/avoids|Another~time.|1
+RecognitionThreat|Avoids|0|5|recognition/avoids|Mm.|1
+RecognitionThreat|Avoids|1|0|recognition/avoids|...|1
+RecognitionThreat|Avoids|1|1|recognition/avoids|Excuse~me.|1
+RecognitionThreat|Avoids|1|2|recognition/avoids|Sorry,~in~a~hurry.|1
 RecognitionThreat|Avoids|1|3|recognition/avoids|Can't~stop.|1
 RecognitionThreat|Avoids|1|4|recognition/avoids|Another~time.|1
 RecognitionThreat|Avoids|1|5|recognition/avoids|Mm.|1

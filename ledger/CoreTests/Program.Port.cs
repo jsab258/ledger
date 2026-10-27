@@ -33,5 +33,31 @@ namespace Ledger.CoreTests
             Check(Acquaintance.HeardOfYou < Acquaintance.FromMeetings(1),
                   "one meeting knows him better than having heard of him");
         }
+
+        /// G1's rules, the first part: WHO SAW THE WINDOW GO AND WHAT THEY DO (the review's A1, A5 and B-b; the night
+        /// of the game's own clock). The geography (who stands where at the hour) stays in the port for now.
+        static void TestSighting()
+        {
+            Console.WriteLine("Sighting (the sweep's G1, its rules):");
+
+            Check(Sighting.NightAt(19) && Sighting.NightAt(2) && Sighting.NightAt(6) && !Sighting.NightAt(7)
+                  && !Sighting.NightAt(12) && !Sighting.NightAt(18),
+                  "night is 19:00 to 07:00, the game's own clock");
+            Check(Sighting.NightAt(-1) && Sighting.NightAt(43) && !Sighting.NightAt(31),
+                  "an hour outside the day wraps round it");
+            Check(Sighting.LightOnHim(false, 0.0) == 1.0 && Sighting.LightOnHim(true, 0.0) == 0.0,
+                  "daylight lights him fully; the night alone not at all");
+            Check(Math.Abs(Sighting.LightOnHim(true, 0.6) - 0.6) < 1e-12 && Sighting.LightOnHim(false, 0.6) == 1.0,
+                  "at night a lamp's reach is his light; by day it adds nothing past full");
+            Check(Sighting.LightOnHim(true, 3.0) == 1.0 && Sighting.LightOnHim(true, -1.0) == 0.0,
+                  "a lamp's reach is held to 0 to 1");
+            Check(Sighting.DeedSeconds == 1.0, "anybody with a clear line on him watched the deed one second");
+            Check(Sighting.WhatWitnessFiles(0, false) == WitnessFiles.NoiseOnly && Sighting.WhatWitnessFiles(0, true) == WitnessFiles.NoiseOnly,
+                  "a noise or no sighting files only the noise, never a story about him");
+            Check(Sighting.WhatWitnessFiles(2, true) == WitnessFiles.StoryAboutHim && Sighting.WhatWitnessFiles(2, false) == WitnessFiles.Nothing,
+                  "a sighting files a story only when the witness bank has words for it");
+            Check(!Sighting.WitnessShouts(0) && Sighting.WitnessShouts(1) && Sighting.WitnessShouts(3),
+                  "only somebody who saw it shouts at him");
+        }
     }
 }

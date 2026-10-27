@@ -48,6 +48,7 @@
 #include "Observation.h"
 #include "Perception.h"
 #include "Reaction.h"
+#include "Sighting.h"
 #include "StreetVoice.h"
 #include "Suspecting.h"
 #include "Suspicion.h"
@@ -1967,14 +1968,11 @@ namespace LedgerCrime
 	/// September, DECISIONS.md). Night is the game's own, from 19:00 to 07:00
 	/// (ClockLight), and the light on him is Perceivers.LevelAt's: daylight and
 	/// the lamps that reach him, saturating.
-	const double kDeedSeconds = 1.0;   // the swing and the glass going: anybody with a clear line on him watched that long
-	inline bool NightAt(int Hour) { const int H = ((Hour % 24) + 24) % 24; return H >= 19 || H < 7; }
-	inline double LightOnHim(bool bNight, double LampReach)
-	{
-		const double Day = bNight ? 0.0 : 1.0;
-		const double L = std::max(0.0, std::min(1.0, LampReach));
-		return std::max(0.0, std::min(1.0, Day + L - Day * L));
-	}
+	// Since 27 October 2026 these rules' home is the Core (Sighting.cs, the sweep's G1), ported in Sighting.h and
+	// checked by its golden rows; the names here stay for their callers.
+	const double kDeedSeconds = LedgerCore::Sighting::DeedSeconds;
+	inline bool NightAt(int Hour) { return LedgerCore::Sighting::NightAt(Hour); }
+	inline double LightOnHim(bool bNight, double LampReach) { return LedgerCore::Sighting::LightOnHim(bNight, LampReach); }
 	inline bool OnQuayStreet(double X, double Z) { return X >= -10.0 && X <= 50.0 && std::fabs(Z) <= 10.0; }
 	/// The counters, the office and the cafe stand 7.5 m either side of the
 	/// street's middle, behind their windows (hook-cast.json's places).
@@ -2066,12 +2064,9 @@ namespace LedgerCrime
 	/// a noise or a shape is suspicion, never "he did it"). A story about him
 	/// only from a sighting the witness bank has words for; a noise alone is
 	/// the damage heard; otherwise nothing, never a diagnostic's words.
-	enum class WitnessFiles { Nothing, NoiseOnly, StoryAboutHim };
-	inline WitnessFiles WhatWitnessFiles(int Rung, bool bBankHasWords)
-	{
-		if (Rung <= 0) return WitnessFiles::NoiseOnly;
-		return bBankHasWords ? WitnessFiles::StoryAboutHim : WitnessFiles::Nothing;
-	}
+	// (Sighting.cs since 27 October 2026, ported in Sighting.h)
+	using WitnessFiles = LedgerCore::WitnessFiles;
+	inline WitnessFiles WhatWitnessFiles(int Rung, bool bBankHasWords) { return LedgerCore::Sighting::WhatWitnessFiles(Rung, bBankHasWords); }
 	/// WHETHER THE GLASS WAS SEEN GOING IN (the independent check of 2 October on
 	/// B-b): the window itself in what they saw, never merely a clear line to it;
 	/// somebody with their back to it, or side on, only heard it.
@@ -2089,7 +2084,7 @@ namespace LedgerCrime
 		return bSawTheGlassGo ? "I saw Rita's window go in. I never saw who did it." : "I heard glass go over at Rita's. I never saw who did it.";
 	}
 	/// Only somebody who saw it shouts at him.
-	inline bool WitnessShouts(int Rung) { return Rung >= 1; }
+	inline bool WitnessShouts(int Rung) { return LedgerCore::Sighting::WitnessShouts(Rung); }
 
 	/// THE TALK'S FILE BESIDE THE SAVE: TalkHelper writes and reads only a path
 	/// ending ".talk.json" (its guard against writing over anything else).
