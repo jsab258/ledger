@@ -1596,9 +1596,12 @@ def build_and_render(argv):
         # below about 0.86 m: on the desk the set showed its top 9 cm, the third review's "radio desk
         # out of sight". On a riser at 1.15 m it is seen whole over the counter, as a dispatcher keeps it.
         rz = 1.15 + dz
-        box("radio_riser_shelf", -1.42, -0.74, ry0 + 0.04, ry0 + 0.54, rz - 0.03, rz, laminate)
+        # THE GRAIN AT ITS OWN SIZE (27 October, item 5: the staff view's fresh review found the riser's wood "tiling"):
+        # the riser's boards were the only laminate left on their default box UVs, the veneer squeezed onto each face;
+        # in metres, as the window board and the files shelf are
+        metre_uvs(box("radio_riser_shelf", -1.42, -0.74, ry0 + 0.04, ry0 + 0.54, rz - 0.03, rz, laminate), 0.8)
         for xx in (-1.42, -0.77):
-            box("radio_riser_side", xx, xx + 0.03, ry0 + 0.04, ry0 + 0.54, 0.74 + dz, rz - 0.03, laminate)
+            metre_uvs(box("radio_riser_side", xx, xx + 0.03, ry0 + 0.04, ry0 + 0.54, 0.74 + dz, rz - 0.03, laminate), 0.8)
         # the base station with its desk microphone and coiled lead (the hero prop: a car set on its
         # mains unit, as late-1980s minicab offices had it), turned a little to the window so its
         # face, its knobs and its red channel window read from the street

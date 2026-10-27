@@ -149,3 +149,5 @@
 {"event": "stop", "at": "2026-10-27T05:59:31", "note": "sorted by cause; a blind fresh review: sound with fixes"}
 {"event": "start", "at": "2026-10-27T06:07:32", "task": "27 Oct: item 5 the shelf patch: distance-field view test before its second try", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-27T06:23:06", "note": "two tries failed; set aside; importer change reverted"}
+{"event": "start", "at": "2026-10-27T06:27:26", "task": "27 Oct: item 5 the riser's wood grain: metre UVs as the recipe's other laminate (try 1)", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-27T06:39:48", "note": "riser grain fixed, both views passed"}

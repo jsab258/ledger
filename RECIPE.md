@@ -27,6 +27,7 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
   - Local exposure does not lift a small dark gap among bright surfaces; it works on regions larger than the gap.
   - To find which light a shadow belongs to, switch each light kind off in turn and measure the patch and its lit neighbour; rule out screen-space effects the same way before touching geometry.
   - Have reviewers measure (percentiles, clipped counts, edge profiles) and check for halos and flattening against the bar, not only by eye.
+  - When one piece's texture reads as a pattern, first check it got the same mapping as its siblings: here the one laminate piece left on default box UVs was the whole fault.
 - Tools: the room recipe and its importer; the game's own photograph mode at the shipped picture level; show-flag and console overrides from the command line; pixel measures; one fresh reviewer per view.
 - Target and check: no new fault in any view against its last good picture; burned-white pixels back below the last good's.
 - Cost (hours): about 1; nothing spent.
