@@ -1,0 +1,12 @@
+{
+ "what": "The fast checker in front of Haiku's check on a reply's first sentence (his page pick of 27 October 2026 night: the open cut-off; production/research/invented-claims/LOCAL-CHECKERS-2026-10-26.md). Off unless switched on (LEDGER_FAST_CHECKER=1 for the talk helper, --fast-checker for the bench) until measured live with the voice.",
+ "model": "F:/LedgerTools/checkers/trained/tinylettuce-17m-try3-2026-10-26",
+ "top": 10,
+ "int8": false,
+ "threads": 2,
+ "cutName": "open",
+ "cut": 0.106419,
+ "cutRule": "the score under which 2% of the invented tuning items fall, as coded the 4th-lowest of 227 (tools/checkers/tradeoff.py); set on tuning data only",
+ "python": "C:/LedgerTools/chatterbox-nano/env-dml/Scripts/python.exe",
+ "answerWithinMs": 400
+}

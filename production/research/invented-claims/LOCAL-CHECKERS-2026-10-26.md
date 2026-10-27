@@ -580,3 +580,45 @@ Its time beside the game was measured in the third try (10 facts): median 0.072 
 **For his page:** the 17M's three rows, since it alone comes near his 0.15 s (4 answers in 982 over). The middle row is the one that keeps his bar (no more invented through than Haiku alone) while clearing about a seventh of real first sentences (15%), each about 1.2 s sooner. The open row clears half and saves 0.6 s a question on average, at 2 more invented per 617 than Haiku alone.
 
 **Fresh review of the results (27 October, evening): SOUND WITH FIXES.** Every table number matches its raw file; the 32M's times beside the game recounted (94 of about 554 over 0.15 s); the four blind verdicts match the key; the 17M ran under the same rules on the same tuning items. Fixes taken: the 17M's time beside the game was the second try's (corrected to the third try's 0.072 s, 4 of 982 over); "only it meets 0.15 s" softened to "comes near"; the seconds saved subtract the checker's time alone (noted, about 0.03 s per cleared turn for the 17M); the open cut-off clears 1.3% of invented tuning items as coded, not 2% (noted); the page names Gemini's labels and the hand reading of Haiku's leak.
+
+## His pick, and the cut-offs on the cited replies (27 October, night)
+
+His page pick: the open cut-off (the third try's 17M), into the game behind a switch, measured live with the voice before
+it is on by default. His other answer that night put the cited facts into the reply's prompt, so the cut-offs were run
+again, free, on what the game's own model writes (the source test's sentences, Gemini's labels and Haiku's verdicts on
+each; F:/LedgerTools/checkers/try4/cutoffs-on-source.json):
+
+| On 410 cited replies' first sentences | Cleared at once | Invented cleared | of which Haiku refused (new through) | True cleared that Haiku refused (spared) |
+|---|---|---|---|---|
+| strict | 35 (8.5%) | 0 | 0 | 1 |
+| middle | 79 (19%) | 0 | 0 | 6 |
+| open | 222 (54%) | 1 | 1 | 19 |
+
+So with the cited prompt and the open cut-off the game would let through 7 invented first sentences in 410 against 6
+(Gemini's labels), and refuse 15 true ones against 34, the cleared half heard without waiting for Haiku. On today's prompt
+for comparison: open clears 49%, adds 2 invented through and spares 27 refusals. One labeller, 410 sentences: no
+difference here of one or two sentences is proven.
+
+## In the game behind a switch, and measured live (27 October, night)
+
+- **Built:** the third try's 17M at the open cut-off (production/specs/fast-checker.json, its one home) served by
+  tools/checkers/checker_server.py, the checker exactly as measured, in a process of its own (nothing new to download;
+  the in-process way, ONNX Runtime, needs his yes for its download). The game's talk asks it about each first sentence
+  after the hard rule on names and before Haiku (ConversationEngine.Fast); under the cut-off the sentence is said at
+  once, otherwise, or with no answer within 0.4 s, Haiku checks it as before. **Off** unless switched on
+  (LEDGER_FAST_CHECKER for the talk helper, --fast-checker for the bench).
+- **Thirty real first turns, the cited prompt, checker on against off** (ClaimBench firsts at the game's switches; the
+  same ten questions to each speaker; F:/LedgerTools/town-scratch/cited-fast and cited-firsts): it cleared 18 of 30
+  first sentences; the first sentence was ready (cleared or passed) at a median 1.92 s from the line against 3.03 s,
+  and the wait from written to ready fell from a median 1.49 s to 0.06 s; it answered in time on 28 of 30; no brace said.
+- **Beside the packaged game with the voice speaking without pause** (Pocket on the processor; two runs each;
+  F:/LedgerTools/checkers/beside-voice-2026-10-27): the checker's answers while the game ran, scoring without pause,
+  median 0.095 and 0.099 s, slowest 1% 0.18 and 0.17 s, worst 0.29 and 0.37 s, **over 0.15 s 18 of 416 and 13 of 405
+  (3 to 4%)**, none over the 0.4 s at which the game stops waiting for it. Frames: median 13.19 and 13.23 ms against
+  12.81 and 13.12 with the voice alone; frames over 16.7 ms 3 and 0 against 0 and 2; none over 33.3 ms. The voice made
+  185 and 176 pieces of sound in the game's 42 s against 216 and 207 without it, about 15% fewer, under a checker scoring
+  without pause; in play it scores one sentence a turn.
+- **Against his bar** (0.15 s beside the game, no frame stall): no stall; 3 to 4% of answers over 0.15 s with the voice
+  running (0.4% without it in the third try). So it misses his 0.15 s narrowly, and stays off for his word on the next
+  page, with these numbers: cleared turns heard about a second sooner, fewer true sentences refused, one more invention
+  through in 410 on the cited replies.

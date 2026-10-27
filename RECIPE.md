@@ -19,6 +19,20 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 27 Oct 2026, a small fast checker put in front of a slow model check, behind a switch, and measured live with the voice
+- Made: the owner's chosen checker and cut-off in the product's talk path, off by default, with its live numbers.
+- Method (setting-free):
+  - Ship what was measured: the same model, settings and code path, served by a small process when the in-process route would need a new download; its settings in one spec file.
+  - Order the gates: the hard rule first, then the fast checker, then the slow check only for what is not cleared; a late or missing answer falls back to the slow check, with a time limit so it never adds wait.
+  - Measure on real turns, on and off, the same questions: share cleared, time to the first sentence ready, the wait from written to ready.
+  - Measure beside the shipped game with the other processor load running (here the voice), on and off, two runs each: the checker's own times kept only while the game ran, frame times, and the other load's own output.
+  - Against the owner's bar, report a narrow miss plainly and leave the switch for his word.
+- Tools: the bench's real-turn mode, the packaged game's frame profiler, the voice server under continuous load, a time-stamped call log.
+- Target and check: 0.15 s beside the game with no frame stall. No stall; the first sentence ready about 1.1 s sooner; 3 to 4% of answers over 0.15 s with the voice running.
+- Cost (hours): about 1; $0.53 of the order's budget.
+- Failed and why: the bar, narrowly: the voice shares the processor.
+- Evidence: production/research/invented-claims/LOCAL-CHECKERS-2026-10-26.md ("In the game behind a switch").
+
 ### 27 Oct 2026, invented statements cut at the source: the speaker's facts listed beside the rule, then cited per sentence
 - Made: a measured comparison of three reply instructions for a grounded character, and a hard name rule in front of the model check.
 - Method (setting-free):

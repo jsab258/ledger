@@ -153,6 +153,8 @@ static class Program
 
         public Helper(ILlmClient llm, TimeSpan patience) { _llm = llm; _patience = patience; }
         public bool Early;
+        /// The fast checker in front of Haiku, when LEDGER_FAST_CHECKER switched it on; null otherwise.
+        public FastChecker Fast;
         /// THE FIRST SENTENCE AHEAD OF ITS CHECK (--pending; U1, 30 September):
         /// with Early, each first sentence is also written the moment it is
         /// drafted as {"id","to","pending":...,"ms"}, before its check, so the
@@ -283,6 +285,7 @@ static class Program
             // thinking is set per request (ClaimCheck.ThinksByDefault).
             var checker = Environment.GetEnvironmentVariable("LEDGER_CHECKER_MODEL");
             engine.CheckerModel = string.IsNullOrEmpty(checker) ? CheckerDefault : checker;
+            engine.Fast = Fast;
             return engine;
         }
 
@@ -1582,6 +1585,17 @@ static class Program
             };
         }
         helper.Early = Array.IndexOf(args, "--early") >= 0;
+        // THE FAST CHECKER, OFF UNLESS SWITCHED ON (his page pick of 27 October 2026 night: the open cut-off, measured live
+        // with the voice before it is on by default): LEDGER_FAST_CHECKER names the repository whose
+        // production/specs/fast-checker.json and tools/checkers/checker_server.py it runs.
+        string fastRoot = Environment.GetEnvironmentVariable("LEDGER_FAST_CHECKER");
+        if (!string.IsNullOrEmpty(fastRoot))
+        {
+            helper.Fast = FastChecker.Start(Path.Combine(fastRoot, "production", "specs", "fast-checker.json"),
+                                            Path.Combine(fastRoot, "tools", "checkers", "checker_server.py"), out var fastWhy);
+            Console.Error.WriteLine(helper.Fast != null ? $"talk: the fast checker is on, cut-off {helper.Fast.CutName} {helper.Fast.Cut}"
+                                                        : "talk: the fast checker did not start (" + fastWhy + "); Haiku alone");
+        }
         helper.Pending = Array.IndexOf(args, "--pending") >= 0;
         LoadCards(helper, CardsDir(args));
         LoadCast(helper, CardsDir(args));

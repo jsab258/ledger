@@ -131,7 +131,8 @@ No decision asked: these are for watching the street change.
 
 1. **Marvelous, one click, when you can:** open it and click LEDGER bridge, for the cuffs' fourth round (the sleeve's end first, your pick).
 2. **Two copies of each check call: switch on?** In whole turns it refuses no more (16 against 20 first sentences of about 120); by the sentence it saves a median 0.29 s and cuts the slowest tenth from 4.0 to 3.2 s. About $0.30 a friends' evening (estimated). Yes (recommended); or leave it off.
-3. **The wider hard rule** (tomorrow's page): numbers, years and a short list of places and roles the facts lack refused too. On your 617 it stops 8 of Haiku's 35 leaks, all harmful, and refuses nothing true on any test. Yes (recommended); or names only.
+3. **The fast checker on by default?** (tomorrow's page) Built and measured live: the first sentence ready about a second sooner on most turns, fewer true sentences refused, one more invention through in 410; but with the voice speaking, 3 to 4% of its answers take over your 0.15 s (worst 0.37 s), no frame stall. Yes (recommended); or keep it off.
+4. **The wider hard rule** (tomorrow's page): numbers, years and a short list of places and roles the facts lack refused too. On your 617 it stops 8 of Haiku's 35 leaks, all harmful, and refuses nothing true on any test. Yes (recommended); or names only.
 
 Your answers of 27 October are recorded: the cuffs' third try (failed), $4 more for speech tests (spent on the wording test and two copies), the bin emptied (the build re-run at 13:34), the checker's fourth try as you set it (failed; the small checker's cut-offs went to your page), no actor for Darren (Common Voice read, and failed), your evening order on invented sentences with its $20 ($17.86 spent), and tonight's page: the checker at the open cut-off (behind a switch until measured live), the cuffs by the sleeve first, Darren's voice kept, the cited instructions into the game.
 

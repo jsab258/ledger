@@ -981,6 +981,17 @@ static partial class Program
         using var client = (IDisposable)BenchClient(FirstsArgs, "the newcomer's questions (" + (Set.Length == 0 ? "the sixty" : Set) + ")" +
                                                     (ConversationEngine.Ladder ? ", with the ladder" : "") + (FirstsByMoment ? ", models by moment" : ""));
         var talkClient = (ILlmClient)client;
+        // --fast-checker: the fast checker in front of Haiku on each first sentence, as the game would run it switched on
+        // (his page pick of 27 October night; production/specs/fast-checker.json)
+        FastChecker fastChecker = null;
+        if (FirstsArgs.Contains("--fast-checker"))
+        {
+            fastChecker = FastChecker.Start(Path.Combine(RepoRoot(), "production", "specs", "fast-checker.json"),
+                                            Path.Combine(RepoRoot(), "tools", "checkers", "checker_server.py"), out var why);
+            if (fastChecker == null) { Console.WriteLine("refused: the fast checker did not start: " + why); return 2; }
+            Console.WriteLine($"fast checker: ready, cut-off {fastChecker.CutName} {fastChecker.Cut}");
+        }
+        using var fastOwned = fastChecker;
         int beforeEmpty = 0, afterEmpty = 0;
         var rungs = new Dictionary<string, int>();
         var rows = new List<object>();
@@ -996,7 +1007,7 @@ static partial class Program
             {
                 // As the talk helper loads it, with the street's plain facts (town list ck).
                 var card = StreetFacts.AddTo(CharacterCard.Parse(File.ReadAllText(Path.Combine(cardsDir, job.card + ".md"))), job.card);
-                var engine = new ConversationEngine(talkClient, card, new MemoryStore(card.Id), new KnowledgeBase(), new SuspicionTracker(), cost, FirstsModel) { Checker = talkClient };
+                var engine = new ConversationEngine(talkClient, card, new MemoryStore(card.Id), new KnowledgeBase(), new SuspicionTracker(), cost, FirstsModel) { Checker = talkClient, Fast = fastChecker };
                 // --checker MODEL: the check's model as the game sets it (TalkHelper NewEngine: Haiku 5.5).
                 string checkerModel = Arg(FirstsArgs, "--checker", null);
                 if (checkerModel != null) engine.CheckerModel = checkerModel;
@@ -1047,7 +1058,7 @@ static partial class Program
                                    rule = engine.LastRule == null ? null : engine.LastRule.Concept + " " + engine.LastRule.Kind,
                                    known = engine.LastKnown.Select(k => k.id + ": " + k.text).ToList(),
                                    plan = engine.LastPlan.HasValue ? engine.LastPlan.Value.intent + " " + string.Join(",", engine.LastPlan.Value.facts) : null,
-                                   firstMs = firstAt, turnMs, steps });
+                                   firstMs = firstAt, turnMs, steps, fastScore = engine.LastFastScore, cited = engine.LastCited });
                 }
             }
             finally { gate.Release(); }

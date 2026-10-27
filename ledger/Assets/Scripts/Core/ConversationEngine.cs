@@ -189,6 +189,24 @@ namespace Ledger.Core
         /// What the last reply cited (CiteFacts), for the record.
         public IReadOnlyList<string> LastCited { get; private set; } = new List<string>();
 
+        /// THE FAST CHECKER in front of Haiku on the first sentence (FastChecker; his page pick of 27 October 2026
+        /// night, the open cut-off): null, the game as before, unless switched on. A first sentence it clears is said
+        /// without waiting for Haiku; the hard rule on names runs first, so a sentence naming someone the facts lack is
+        /// never cleared by it.
+        public FastChecker Fast;
+        /// The last first sentence's score from it, null when it was not asked or did not answer in time.
+        public double? LastFastScore { get; private set; }
+
+        async Task<bool> FastClearsAsync(List<(string id, string text)> known, string line, CancellationToken ct)
+        {
+            LastFastScore = null;
+            if (Fast == null || known == null) return false;
+            if (ClaimCheck.NameRule && NameRules.Missing(line, known.Select(k => k.text), ClaimCheck.NameRuleWider).Count > 0) return false;
+            var score = await Fast.ScoreAsync(known, _turnInput, line, ct).ConfigureAwait(false);
+            LastFastScore = score;
+            return score.HasValue && score.Value < Fast.Cut;
+        }
+
         /// THE FIRST SENTENCE BY A FASTER MODEL (Jafar, 7 October: "stream the
         /// writing so the voice starts on the first sentence, with a faster model
         /// for that first sentence"). When set, and the turn's own model is
@@ -1732,11 +1750,12 @@ namespace Ledger.Core
                             // "Couldn't tell you, friend.") states nothing to check,
                             // so it is not kept waiting for the check (PlainWords).
                             bool plain = PlainWords.IsPlain(said);
-                            var (bad, cost) = plain
+                            bool cleared = !plain && await FastClearsAsync(knownEarly, said, ct).ConfigureAwait(false);
+                            var (bad, cost) = plain || cleared
                                 ? ((IReadOnlyList<string>)new List<string>(), (LlmResponse)null)
                                 : await FirstInventedAsync(knownEarly, said, ct).ConfigureAwait(false);
                             if (bad.Count == 0 && flagged != null && ClaimCheck.Repeats(said, flagged)) bad = flagged;
-                            d.Step?.Invoke(d.Prefix + (bad.Count > 0 ? (Unchecked(bad) ? "first-unchecked" : "first-flagged") : plain ? "first-plain" : "first-passed"));
+                            d.Step?.Invoke(d.Prefix + (bad.Count > 0 ? (Unchecked(bad) ? "first-unchecked" : "first-flagged") : plain ? "first-plain" : cleared ? "first-cleared" : "first-passed"));
                             if (bad.Count > 0)
                             {
                                 // Stopped for a real failure, never for a check that could not run.
