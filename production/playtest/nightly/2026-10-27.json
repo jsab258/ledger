@@ -1,0 +1,86 @@
+{
+ "date": "2026-10-27",
+ "night": "F:/LedgerTools/nightly\\2026-10-27",
+ "events": 53,
+ "summary": {
+  "walk": {
+   "passed": 13,
+   "stages": 15,
+   "failed": [
+    "town-Ron: lost sight of Ron",
+    "town-Darren: Darren is not on the street"
+   ]
+  },
+  "noticed": {
+   "saw_the_deed": [],
+   "onlooker_lines": [
+    {
+     "t": 190.5,
+     "e": "onlookers",
+     "hour": 14,
+     "night": false,
+     "light": 1.0,
+     "measured": 13,
+     "_file": "2026-10-27-145311.jsonl"
+    }
+   ]
+  },
+  "knew_later": {
+   "rocco": [
+    "recognition"
+   ]
+  },
+  "greeted": [
+   {
+    "who": "Sheila",
+    "reached": true,
+    "detail": "open=1 words=seconds=0.18 heard=none"
+   },
+   {
+    "who": "Ron",
+    "reached": false,
+    "detail": "lost sight of Ron"
+   },
+   {
+    "who": "Darren",
+    "reached": false,
+    "detail": "Darren is not on the street"
+   }
+  ],
+  "replies": {
+   "n": 2,
+   "broke": 0,
+   "checked": 0,
+   "by_how": {
+    "own": 2
+   },
+   "seconds_median": 0.2,
+   "seconds_max": 0.2,
+   "source": "the walk's stand-in words with the real voice: not the real path"
+  },
+  "police_told_by": [],
+  "thats_all_i_know": {
+   "count": 3,
+   "of": 60,
+   "failed": 0,
+   "by_who": {
+    "Sheila": 1,
+    "Ron": 1,
+    "Darren": 1
+   },
+   "source": "the real engine's words, through Claude Code on the subscription, the game's talk settings"
+  },
+  "illusion": {
+   "lines": [
+    "**Placeholder clothes:** several townspeople wear plain white vests and shorts, or a white shift, and some are barefoot in the rain. Sheila is barefoot carrying a bag. A man in white stands in the middle of the road at night. (step-011, step-021, step-031, step-041, 1458 step-030)",
+    "**Stiff poses:** the hero stands frozen with knees bent and arms held out like a mannequin. Ron and the bearded man stand still beside a bin, staring at nothing. (1452 step-051, 1458 step-010, step-031)",
+    "**Dialogue and labels:** Sheila's line is cut off mid-sentence (\"I didn't have the\"). \"Talk to Sheila\" floats in the air with no Sheila visible. The pause menu shows unfinished-work text (\"Tom's notebook is not in this build yet\"). (step-011, 1458 step-020, step-061)",
+    "**Dead night:** no street lamps or windows are lit. Two pictures in a row are almost black, showing only shapes against the sky, with nobody about. (1458 step-040, step-050)",
+    "**Rain and missing people:** puddles look like flat grey patches pasted onto the road. Ron was lost and Darren never appeared, so the street feels thin. (1452 step-051, record)"
+   ],
+   "pictures": 12,
+   "source": "Claude Code, non-interactive, on the walk's pictures"
+  }
+ },
+ "paragraph": "**The town and Tom (the AI tester's walk of 2026-10-27, played as a player would, the stand-in's words):** the route 13 of 15 stages; failed: town-Ron: lost sight of Ron; town-Darren: Darren is not on the street. Who saw him break Rita's window: nobody the record names. Who showed they knew afterwards, and how: rocco (recognition). That is 1 people (same as the night before). \"That's all I know\" to a newcomer's sixty first questions (the real engine's words): 3 of 60. Replies heard after a median 0.2 (same as the night before) s, at most 0.2 s (stand-in words, real voice; not the real path), 0 of 2 broke. What broke the illusion: **Placeholder clothes:** several townspeople wear plain white vests and shorts, or a white shift, and some are barefoot in the rain. Sheila is barefoot carrying a bag. A man in white stands in the middle of the road at night. (step-011, step-021, step-031, step-041, 1458 step-030); **Stiff poses:** the hero stands frozen with knees bent and arms held out like a mannequin. Ron and the bearded man stand still beside a bin, staring at nothing. (1452 step-051, 1458 step-010, step-031); **Dialogue and labels:** Sheila's line is cut off mid-sentence (\"I didn't have the\"). \"Talk to Sheila\" floats in the air with no Sheila visible. The pause menu shows unfinished-work text (\"Tom's notebook is not in this build yet\"). (step-011, 1458 step-020, step-061)."
+}

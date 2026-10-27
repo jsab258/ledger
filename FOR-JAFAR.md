@@ -48,7 +48,7 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
 
 <!-- morning pictures: written by tools/morning_pictures.py -->
 
-**Morning, Tuesday 27 October. Phase 1, Prove the bottlenecks. On: 3. Tom's outfit: zip jacket baked, skinned; cuffs set aside, his word (BAKE-PLAN). Next: 4. Speech: all on Pocket; checker's third try clears 3% (invented-claims/); rewrite, early looks left off; two copies a check call next (voice-latency/CHECK-TIME).**
+**Morning, Tuesday 27 October. Phase 1, Prove the bottlenecks. On: 3. Tom's outfit: zip jacket baked, skinned; cuffs' third try failed, his way next (RIB-CUFFS). Next: 4. Speech: all on Pocket; checker's fourth try designed (LOCAL-CHECKERS); wording A/B running; Common Voice fails consent (voice-latency/COMMON-VOICE).**
 
 | | Today, 27 Oct | Yesterday, 26 Oct |
 |---|---|---|
@@ -131,7 +131,8 @@ No decision asked: these are for watching the street change.
 
 1. **Tom's jacket's cuffs: the third try failed, and the reason is the sleeve** (preview tom-zip-jacket-cuffs-try3). Each cuff closed into a flat band beside the arm; then a fresh reviewer found, and a drape without cuffs confirmed, that the sleeve's own end lies as a flat flap past the hand, the hand coming through its cloth. Every cuff was sewn to that flap. Yes: find why the sleeve's end lies flat, then the cuffs at the wrist (the placement that now works), a fourth round (recommended); or build the cuffs in Blender in the bake (new code, time not measured); or the jacket waits.
 2. **Darren's livelier voice: Common Voice fails** (its terms read, then checked by a fresh reviewer). The voice engine's own terms forbid copying a voice without the speaker's explicit consent, and Common Voice's volunteers agreed only to speech recognition. Keep his current voice for now (recommended); or a few lively minutes recorded for him, unpaid, with written consent to copy the voice (someone you know).
-3. **Leave Marvelous open with the bridge running** (recommended): Tom's jacket jobs run through it; if it is closed, one click on LEDGER bridge next time.
+3. **Two copies of each check call: switch on?** Measured with your $4: in whole turns it refuses no more (16 against 20 first sentences of about 120); by the sentence it saves a median 0.29 s and cuts the slowest tenth from 4.0 to 3.2 s; whole turns could not show the gain, the service's own pace swinging from 3.3 to 7.0 s between identical runs. Cost about $0.30 a friends' evening (estimated). Yes (recommended); or leave it off.
+4. **Marvelous is closed** (it held 6 GB of the graphics card and slowed the game's frame test from 78 to 22 fps; closed, the test meets the bar again). When the jacket resumes: open it and click LEDGER bridge once. From now on I close it at the end of each garment session.
 
 Your answers of 27 October are recorded: the cuffs' third try (failed, above), $4 more for speech tests (the wording test running), the bin emptied (the build re-run at 13:34), the checker's fourth try as you set it (its cut-offs come to your page), no actor for Darren (Common Voice read: Needs you 2).
 

@@ -19,6 +19,18 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 27 Oct 2026, a frame-rate collapse on a build with no game change, traced to another program's idle graphics memory
+- Made: the cause found and removed; the night jobs now name any program holding over 1 GB of the graphics card.
+- Method (setting-free):
+  - When a performance measure falls with no change to what is measured, replay it by hand with the same arguments before believing it.
+  - Then take away one load at a time: the game alone, then the game with its companion process.
+  - Look at the card's memory per process, not only its busy time. An idle program can hold gigabytes; the measured program then thrashes when a second process needs memory, while looking fine on its own.
+  - Clearing a tool's scene may not free what it holds; closing it does. Prove the cause by measuring again with it gone.
+- Tools: the build machine's frame step replayed in a script; the operating system's per-process graphics memory counters.
+- Target and check: 60 fps, never below 30, at the ultrawide test resolution. 22 fps with the program open; 78 with it closed.
+- Cost (hours): about 0.4; nothing spent.
+- Evidence: DECISIONS.md (27 October, 15:27); tools/close_games.py (cardHeld).
+
 ### 27 Oct 2026, a behaviour ladder ported to the shipping engine as rules first, its wiring held back until the engine can show its rungs
 - Made: the reference rules' reaction ladder (how bad what a witness got was; what their temperament makes them do; which reactions make a noise) in the engine's port, pinned by golden rows; a design note saying why it is not yet wired.
 - Method (setting-free):

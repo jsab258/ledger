@@ -91,3 +91,22 @@ nearer 55 of the 96 than the reading's 62; "held the service three weeks ago" is
 the look's own example says; and "low risk" is assumed: **any wording change is measured on the invented sentences
 first, against his bar** (no more invented details through than Haiku today). Next: the list's wording for the misread
 and cut-off details as a bench switch, run on the 617 held sentences, when the measuring money allows.
+
+## The wording fix measured on all 617 (27 October, afternoon; his extra $4)
+
+ClaimCheck.WholeDetails (each detail written whole, as the line says it) against the game's check as it is, on every
+held sentence. The two runs alternated sentence by sentence (ledger/ClaimBench sentcheck --ab whole;
+F:/LedgerTools/checkers/train3/whole-ab.jsonl; $1.28, 3,242 calls). Gemini's labels, as before.
+
+| | Invented let through, of 308 (per 300) | True refused, of 309 | Median check |
+|---|---|---|---|
+| The check as the game runs it | 40 (39.0) | 99 (32%) | 2.50 s |
+| With the wording fix | 31 (30.2) | 95 (31%) | 2.46 s |
+
+- **Its aim missed.** True sentences refused fell by 4. Where the runs disagreed, 27 true sentences passed only with the fix and 23 only without it: noise.
+- **But it let fewer inventions through.** Where the runs disagreed, 14 invented sentences passed only without the fix and 5 only with it.
+  - That is suggestive, not proven: a sign test gives p about 0.06.
+  - The same check alone moves by about 5 between runs (35 last night, 40 today).
+  - The 5 it newly passed (F:/LedgerTools/checkers/train3/whole-ab-discordant.json) include Mickey's nephew "living upstairs right now" and the cafe opening "at half past seven". So it is not cleaner in kind, only fewer.
+- **Verdict: left off.** It holds his bar (no more inventions through), but the safety gain is unproven and its purpose was not met.
+- **Next, with money:** a second run on the 617 would settle the safety gain (about $1.30). The rest of his $4 went to the two-copies whole-turn test, so this waits for his word or a later budget.

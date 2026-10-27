@@ -42,7 +42,31 @@ def running():
     return [(row["ProcessId"], row["Name"], row.get("CommandLine") or "") for row in rows]
 
 
+# PROGRAMS THAT HOLD THE GRAPHICS CARD'S MEMORY WHILE IDLE (27 October 2026): Marvelous Designer kept 6.1 GB of the
+# card after an afternoon of fine drapes, and the game with its voice beside it fell from 78 fps to 22 in the build
+# machine's frame test (production/d1-probe/ue-perf-verdict.txt, 14:51; replayed by hand, then 78 again with it closed).
+# They are his programs, so they are named, never closed here: a night job's log says what held the card.
+CARD_HOLDERS = ("MarvelousDesigner_Personal", "MarvelousDesigner", "blender")
+
+
+def card_holders(min_mb=1024):
+    """[(name, pid, MB)] of CARD_HOLDERS holding at least min_mb of the card's own memory."""
+    ps = (r"$m = @{}; (Get-Counter '\GPU Process Memory(*)\Dedicated Usage' -ErrorAction SilentlyContinue).CounterSamples | "
+          r"ForEach-Object { if ($_.InstanceName -match 'pid_(\d+)_') { $m[[int]$Matches[1]] += $_.CookedValue } }; "
+          "Get-Process -Name %s -ErrorAction SilentlyContinue | ForEach-Object { '{0} {1} {2}' -f $_.Name, $_.Id, "
+          "[math]::Round($m[$_.Id] / 1MB) }" % ",".join(CARD_HOLDERS))
+    r = subprocess.run(["powershell", "-NoProfile", "-Command", ps], capture_output=True, text=True)
+    out = []
+    for line in (r.stdout or "").splitlines():
+        f = line.split()
+        if len(f) == 3 and f[1].isdigit() and f[2].isdigit() and int(f[2]) >= min_mb:
+            out.append((f[0], int(f[1]), int(f[2])))
+    return out
+
+
 def close_games(dry=False, log=print):
+    for name, pid, mb in card_holders():
+        log("cardHeld %s pid=%d holds %d MB of the graphics card: frame times beside it are not the game's" % (name, pid, mb))
     games = [(pid, name, cmd) for pid, name, cmd in running() if is_game(name, cmd)]
     for pid, name, cmd in games:
         log("closeGames %s pid=%d %s" % ("would-close" if dry else "closing", pid, name))

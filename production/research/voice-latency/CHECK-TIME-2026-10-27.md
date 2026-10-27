@@ -212,3 +212,24 @@ checked with two copies (raced on the model's beginning) and without, alternatin
 - **Next, with his word (money):** whole turns, the newcomer's 60 questions, two runs with two copies and two without
   (one run proves nothing: two identical runs gave 17 and 9 slow turns), about $3 beyond his $10 for these tests
   (the counter says $9.18 of it spent; the real spend is lower).
+
+## Whole turns, two copies against one (27 October, afternoon; his extra $4)
+
+The newcomer's 60 real questions at the game's own settings, four runs alternating two copies and one (ClaimBench
+`firsts --early ... --two-copies`; F:/LedgerTools/town-scratch/slow-replies/two-copies-turns; $3.25 by the counter,
+which counts each stopped copy at its dearest). Scored by tools/voice-live/slow_turns.py (heard = the first sentence's
+hand-over plus 0.2 s of Pocket).
+
+| Run | Turns | Heard, median (slowest tenth from) | 5 s or more | First sentence refused |
+|---|---|---|---|---|
+| two copies, 1 | 58 (2 stopped by its own cap) | 3.71 s (8.15) | 17 | 9 |
+| one copy, 1 | 60 | 7.03 s (14.19) | 36 | 12 |
+| two copies, 2 | 60 | 4.80 s (11.49) | 29 | 7 |
+| one copy, 2 | 60 | 3.29 s (9.65) | 19 | 8 |
+| **two copies, both** | 118 | | **46** | **16** |
+| **one copy, both** | 120 | | **55** | **20** |
+
+- **No sign of more refusals.** The verdict tests' hint that two copies refuse more true sentences (19 against 9 of 180) does not show in whole turns: 16 first sentences refused against 20.
+- **The speed gain cannot be read here.** The service's own pace swung more than any switch could. The two one-copy runs, minutes apart and identical, gave medians of 7.0 s and 3.3 s.
+  - The sentence-level measure stands: a median 0.29 s saved, the slowest tenth from 3.2 s instead of 4.0.
+- **Verdict: no harm found, the gain as measured by sentence.** Switching it on is a money change in the game, about $0.30 a friends' evening (estimated), so it waits for his yes.
