@@ -1705,6 +1705,11 @@ static class Program
     static async Task<int> SelfTest(string cardsDir)
     {
         int passed = 0, failed = 0;
+        // THE HARD RULE ON NAMES (ClaimCheck.NameRule, 27 October 2026): on in the game; these scripted turns predate it
+        // and name people their cut-down test facts lack ("Ask Rita."), so they run with it off, but for the one case
+        // below that shows it working through the helper.
+        bool nameRuleShipped = ClaimCheck.NameRule;
+        ClaimCheck.NameRule = false;
         void Ok(string name, bool cond, string detail = "")
         {
             if (cond) passed++; else { failed++; Console.WriteLine($"talkhelper selftest FAIL {name} {detail}"); }
@@ -2086,6 +2091,11 @@ static class Program
         var firstBad = await Early(new StreamFake("Dennis from the yard did it. Everyone knows."), "Who was it?", TimeSpan.FromSeconds(8));
         Ok("a first sentence that invents is never sent early", firstBad.firsts.Count == 0 && Str(firstBad.last, "rest") == null, firstBad.last);
         Ok("and the reply is the usual second draft or the plain line", Reply(firstBad.last) != null && !Reply(firstBad.last).Contains("Dennis"), firstBad.last);
+        ClaimCheck.NameRule = true;
+        var invented = await Early(new StreamFake("I saw Frank Doyle do it. Everyone knows."), "Who was it?", TimeSpan.FromSeconds(8));
+        ClaimCheck.NameRule = false;
+        Ok("the hard rule on names: a first sentence naming someone the facts lack is never said", nameRuleShipped && invented.firsts.Count == 0 &&
+           Reply(invented.last) != null && !Reply(invented.last).Contains("Frank Doyle"), invented.last);
         // Town list 6a: the failed draft is stopped, and the second draft's first
         // sentence goes out without waiting for the failed draft to finish.
         var redraftEarly = await Early(new StreamFake("Dennis from the yard did it. Everyone knows.") { Redraft = "Can't say I did. Ask Rita.", Pause = TimeSpan.FromSeconds(2) },

@@ -36,8 +36,15 @@ namespace Ledger.CoreTests
         /// separated from the guard that judges it. Without the argument
         /// nothing on this path writes anything, which is what keeps the
         /// drift guard a guard.
+        /// The hard rule on names as the game ships it (on); every other test predates it and scripts the model's
+        /// answers around lines that name people their own scripted facts lack, so they run with it off, and only
+        /// TestNameRule turns it on.
+        static bool NameRuleShipped;
+
         static async Task<int> Main(string[] args)
         {
+            NameRuleShipped = ClaimCheck.NameRule;
+            ClaimCheck.NameRule = false;
             if (args != null && Array.IndexOf(args, "--write-vignette-pieces") >= 0)
             {
                 // `--ahead-of-run <sha>` DECLARES that this regeneration puts
@@ -121,6 +128,7 @@ namespace Ledger.CoreTests
                 TestSightingGeography();
                 TestTownSaveVersion();
                 TestReactionAtTheWindow();
+                TestNameRule();
                 TestBudgetedClient();
                 await TestTranscriptRollback();
                 await TestReflection();

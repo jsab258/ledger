@@ -19,6 +19,22 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 27 Oct 2026, invented statements cut at the source: the speaker's facts listed beside the rule, then cited per sentence
+- Made: a measured comparison of three reply instructions for a grounded character, and a hard name rule in front of the model check.
+- Method (setting-free):
+  - Sort what leaks by harm before tuning: a blind reader splits the invented statements that get past the check into harmful (a person, place, time or event the sources lack) and harmless (opinion, overstatement, manner).
+  - Test at the source, not on synthetic test sentences: ask the real reply model the same questions with each instruction set, keep the raw first sentence, run the unchanged check, label every sentence with the same labeller, and count per 300 written: invented written, invented through, harmful and harmless, true ones refused.
+  - Same rows in every arm. When the budget cannot cover them all, take a fixed fraction of rows for every arm alike, and say so.
+  - Pilot first at a few dozen rows to measure the real price per row; a per-run cap stops a run partway, so make runs resumable.
+  - A deterministic rule (code, not a model) runs before the model check. Design it on tuning data and test it once on the held set. Report what it cannot catch: here, leaks that describe rather than name.
+  - Check the labeller too: a second blind reader on a sample of its verdicts.
+  - The published method (allow "I don't know", restrict to the given sources, cite each claim) was the right lever: listing the sources beside the rule cut invented statements written by three quarters.
+- Tools: the bench's source mode, the reply and check models, a second model as labeller, two blind readers, a rule in code with its reference script.
+- Target and check: fewer invented statements through per 300 than today, harmful apart, without more true ones refused. Invented written fell by three quarters with the sources listed, proven paired by question; through, harmful and refused moved the right way (10.2 to 5.1 and 4.4; harmful 5.8 to 0.7 and 1.5) but are not proven on 31 questions asked 13 times each. Test paired by prompt when rows repeat prompts. The name rule caught nothing here and refused nothing true.
+- Cost (hours): about 1.5; $17.86 of a $20 budget.
+- Failed and why: the first full run stopped at the bench's default $1 a run; the name rule as specified misses descriptions ("the harbourmaster") and a lone name opening a sentence.
+- Evidence: production/research/invented-claims/SOURCE-TEST-2026-10-27.md; F:/LedgerTools/checkers/source.
+
 ### 27 Oct 2026, a scripted tester's steering retuned when the character's movement changed, and what its walk then found
 - Made: the automated tester's full route through the shipped game, 15 of 15 stages, after a new movement system made it miss.
 - Method (setting-free):

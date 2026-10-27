@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Ledger.Core
@@ -274,6 +275,10 @@ namespace Ledger.Core
         /// that can say when the model begins gets two copies; any other makes its one plain call. The copy not kept is
         /// stopped, and what it used is added to the kept answer's tokens, for the cost.
         public static bool TwoCopies = false;
+        /// The hard rule on names, on (his order of 27 October 2026, evening); its wider form, numbers and a short list
+        /// of places and roles too, off until his word (NameRules).
+        public static bool NameRule = true;
+        public static bool NameRuleWider = false;
 
         /// EACH DETAIL A WHOLE STATEMENT, AS THE LINE SAYS IT: a bench switch, off in the game until measured against his
         /// bar (27 October 2026; production/research/invented-claims/FALSE-REFUSALS-BY-CAUSE-2026-10-27.md and its blind
@@ -446,6 +451,13 @@ namespace Ledger.Core
             IReadOnlyCollection<string> focus)
         {
             var calls = new List<LlmResponse>();
+            // THE HARD RULE ON NAMES (NameRules; his order of 27 October 2026, evening): a sentence naming a person,
+            // place or event the facts do not have is refused here, before any call, whatever a model would say.
+            if (NameRule)
+            {
+                var named = NameRules.Missing(line, items.Select(i => i.text), NameRuleWider);
+                if (named.Count > 0) return (named, calls);
+            }
             var known = NumberedKnown(items);
             var ids = new List<string>();
             foreach (var (id, _) in items) ids.Add(id);

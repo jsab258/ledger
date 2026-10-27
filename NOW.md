@@ -9,8 +9,8 @@ Failed its exit check on 22 Oct (production/audits/phase1-exit/CLOSE-2026-10-22.
 - [x] 1. Health check; the order ledger.
 - [x] 2. The walk: Epic's, Tom's MetaHuman, packaged; tester's route 15 of 15. Sit set aside.
 - [ ] 3. Tom's outfit: zip jacket baked, skinned; cuffs' third try failed, his way next (RIB-CUFFS).
-- [ ] 4. Speech: all on Pocket; checker's fourth try failed (LOCAL-CHECKERS), the 17M's cut-off on his page; Common Voice fails consent (voice-latency/COMMON-VOICE).
-- [ ] 5. Mickey's office: staff-side fixes passed; shadow under radio shelf open (cab-office-interior-1990/WEAR).
+- [ ] 4. Speech: checker's cut-off on his page; source test done, name rule on (invented-claims/SOURCE-TEST).
+- [ ] 5. Mickey's office: packaged, Epic's camera: back wall passes; door, grainy shadows next (cab-office-interior-1990/WEAR).
 - [ ] 6. Phase 1's exit re-run; phase 2?
 - Fallback: phase 3's port; U3's rules ported, not wired (sweep-2026-10-05/U3-DESIGN).
 

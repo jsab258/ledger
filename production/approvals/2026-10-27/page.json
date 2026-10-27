@@ -4,10 +4,19 @@
  "title": "The checker's cut-off, Tom's cuffs and Darren's voice",
  "how": [
   "Shortfalls first. The fourth checker failed: the larger one you named is too slow beside the game and clears less, so the rows below are the third try's small checker. Tom's cuffs failed a third time and are set aside. Common Voice cannot give Darren a voice: its speakers never agreed to be cloned.",
-  "Pick one answer in each; the first is recommended. Anything you do not pick carries onto the next page."
+  "Pick one answer in each of the three; the first is recommended. Anything you do not pick carries onto the next page."
  ],
  "foot": "Nothing bought or signed up for. Nothing in the game has changed. Your answers of this afternoon are recorded and gone from this page.",
  "sections": [
+  {
+   "kind": "look",
+   "key": "invented-source-2026-10-27",
+   "name": "Your order of this evening: invented sentences, measured",
+   "note": "Per 300 first sentences the game writes, invented ones getting through the check: today 10 (6 harmful, 4 harmless); told to keep to its facts, 5 (1, 4); facts cited, 4 (1.5, 1.5). True ones wrongly refused: 35, 35, 25. Which version goes into the game: tomorrow's page.",
+   "detail": "412 of your 617 questions asked again of the game's own reply model, each version alike ($17.86 of your $20; all 617 three ways would have cost about $25 once the facts list lengthened the prompt). Listing the facts beside the rule cuts the inventions it writes by three quarters (39 to 9 of about 410), which holds question by question; the smaller numbers getting through, the harm split and the refusals point the same way but are not proven on 31 questions asked about 13 times each, and between the two new versions every difference is noise. Today's harmful ones include the model reading Mickey's will as a man called Will, four times. Haiku is weaker on the game's own inventions than on your 617: it lets through 14 of 39 (36%) against 35 of 308 (11%). On your 617, Haiku alone lets through 22 harmful and 10 harmless per 300 (a blind reader's sort). Your hard rule on names is in the game from tonight's build, before any check call, and refuses no true sentence anywhere; it catches none of these leaks, which describe rather than name ('the harbourmaster', 'since nineteen eighty-two'). A wider form (numbers, years, a short list of places and roles) stops 8 of Haiku's 35, all harmful, and refuses none: off until you say. Either new version costs about half again per reply and some 0.15 to 0.2 s per draft. Fresh reviewer: sound with fixes, all taken.",
+   "pictures": [],
+   "options": []
+  },
   {
    "kind": "decide",
    "key": "checker-cutoff-2026-10-27",

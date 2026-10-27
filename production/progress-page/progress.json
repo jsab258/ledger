@@ -1,5 +1,5 @@
 {
-  "updated": "Tuesday 27 October 2026, 4:35",
+  "updated": "Tuesday 27 October 2026, 19:47",
   "here": 1,
   "friends_eta": "around January",
   "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
@@ -107,7 +107,7 @@
       "start_label": "Tom's own walk",
       "now_label": "25 Oct, by eye",
       "state": "defeated",
-      "last": "26 Oct: the third try (stops chosen Kingdom Come II's way) passed your eye at the game's camera and is now the default. Measured, the first stop still drags 10 to 13 cm inside Epic's own clip; your eye is the gate.",
+      "last": "27 Oct: found that Epic's walk and Tom's MetaHuman had never reached the packaged game (their files never went to the build machine); fixed, and the AI tester walked the whole route in it, 15 of 15. The first stop still drags 10 to 13 cm inside Epic's own clip; your eye passed it.",
       "when": "26 Oct",
       "display": "Passed your eye, 26 Oct"
     },
@@ -121,7 +121,7 @@
       "start_label": "8 Oct",
       "now_label": "25 Oct, cast voice",
       "state": "fighting",
-      "last": "27 Oct: the check that keeps characters to what they know is the slow part: alone about 1.1 s, 2.3 to 2.8 s when it needs its second look. Sending each check call twice and keeping the copy the service starts first takes about a second off the slowest checks (a fresh review's fixes in; off until your word, Needs you 5). The whole path with the real model is not re-timed yet."
+      "last": "27 Oct night: the fast checker's fourth try failed (the larger model too slow beside the game, and it clears less). The small one's cut-offs are on your page: at the middle one, 15% of first sentences heard about 1.2 s sooner, no more inventions through than Haiku alone. Two copies of each check call: no more refusals in whole turns (Needs you 4). The whole path with the real model is not re-timed yet."
     },
     {
       "name": "The Stutter",
@@ -144,7 +144,7 @@
       "target": 0,
       "display": "0 of 1 outfit made",
       "state": "fighting",
-      "last": "26 Oct: our bridge runs inside Marvelous at your one click; Tom's body is in with its 109 fitting points, saved for the jobs. Next: the zip jacket's pattern, on October's pattern tools."
+      "last": "27 Oct: Tom's zip jacket made by script from the Marvelous drape, 21,448 triangles, its maps baked, skinned to his skeleton. Its cuffs failed a third try (the sleeve's own end lies flat past the hand): your call on the page."
     },
     {
       "name": "The Empty Chair",

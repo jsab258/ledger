@@ -128,6 +128,7 @@ static partial class Program
             case "checktime": return await CheckTime(args);
             case "repair": return await Repair(args);
             case "sentcheck": return await SentCheck(args);
+            case "source": return await Source(args, parallel);
             case "lookpairs": return await LookPairs(args);
             case "again":
             {

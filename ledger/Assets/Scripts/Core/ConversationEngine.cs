@@ -396,6 +396,12 @@ namespace Ledger.Core
             return Heard == Knowing.ALittle ? $"they half remember hearing that {story}" : $"they hold this about him, seen or heard: {story}";
         }
 
+        /// What the character knows as the check reads it (the list ClaimCheck judges a sentence against): the first
+        /// sentence's early check reads it, and the bench's source test of 27 October tells its replies to keep to it.
+        public List<(string id, string text)> KnownForCheck(GameTime now, string sceneContext) =>
+            ClaimCheck.KnownItems(Card, ClaimCheck.WitnessedFor(Memory, _shown), Memory.Beliefs, WhyForCheck(), sceneContext,
+                                  now.ToldAs, HowYouKnowHim, People, SpeakerName, StreetHours);
+
         public string BuildSystemPrompt(string playerInput, GameTime now, string sceneContext)
         {
             LastBearing = new List<string>();
@@ -1952,8 +1958,7 @@ namespace Ledger.Core
             List<(string id, string text)> knownEarly = null;
             if (streaming != null)
             {
-                knownEarly = ClaimCheck.KnownItems(Card, ClaimCheck.WitnessedFor(Memory, _shown),
-                                                   Memory.Beliefs, WhyForCheck(), sceneContext, now.ToldAs, HowYouKnowHim, People, SpeakerName, StreetHours);
+                knownEarly = KnownForCheck(now, sceneContext);
             }
             // Each step is marked as it happens, under a lock, since a first
             // sentence's check ends on its own thread.

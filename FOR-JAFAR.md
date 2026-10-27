@@ -39,7 +39,7 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
 **Your items (27 October, afternoon).**
 - *The walk (item 2), reopened (my fault, found 27 October afternoon):* your pass made Epic's walk with Tom's MetaHuman the default, but neither ever reached the packaged game: their files were never copied to the build machine, so every packaged game, the one you and the AI tester play, fell back to the old stand-in. Fixed the same afternoon: the packaged game now logs Epic's walk with his MetaHuman, and the AI tester's pictures show his own face (in the white base layer until his clothes). Done again the same evening: the AI tester's whole route, 15 of 15 stages, once its steering allowed for Epic's walk gliding on after a key is let go. The sit stays set aside. The same walk found an internal name in a subtitle (Darren: "I heard from outfit_man that ..."); fixed in code, proved by tonight's walk.
 - *Clothes (item 3):* Tom's zip jacket, made tonight by script from the Marvelous drape: an even game mesh of 21,448 triangles (budget 18,000 to 22,000), its maps baked (the metal zip and two hip pockets read), skinned to his skeleton and following him arms down, up, walking and sitting (pictures in production/previews, tom-zip-jacket-*). Its cuffs failed a third try this afternoon and are set aside (Needs you 1); the jacket goes onto Tom in the game once the cuffs' way is chosen. Its colour is yours to choose, with pictures from the game: navy until then.
-- *Speech (item 4):* all three speak through Pocket (first sound about 0.2 s). The fast checker's fourth try failed: the larger checker (the 32M, the largest that fits) took over 0.15 s on 1 answer in 6 beside the game and cleared less. The third try's small checker, run through the same three cut-offs, is on tonight's page: at the middle one it clears 15% of real first sentences, each about 1.2 s sooner, with no more invented through than Haiku alone (34 per 300 on Gemini's labels). Haiku's own check lets 18 to 23 of about 300 invented first sentences through. Rewriting a refused sentence: left off (no fewer 5-second waits). The check's own time: each call sent twice and the copy the service starts first kept: in whole turns it refuses no more, your call (Needs you 4). Why Haiku refuses true sentences: about 55 of its 96 refusals looked like a wording fault, but the wording fix, tested on all 617, refused only 4 fewer (noise); it let 31 inventions through against 40, suggestive, not proven. Left off.
+- *Speech (item 4):* all three speak through Pocket (first sound about 0.2 s). The fast checker's fourth try failed: the larger checker (the 32M, the largest that fits) took over 0.15 s on 1 answer in 6 beside the game and cleared less. The third try's small checker, run through the same three cut-offs, is on tonight's page: at the middle one it clears 15% of real first sentences, each about 1.2 s sooner, with no more invented through than Haiku alone (34 per 300 on Gemini's labels). Your order of this evening, measured (SOURCE-TEST): told to keep to its listed facts, the game writes three quarters fewer invented first sentences; through the check, per 300, today 10 (6 harmful), facts listed 5 (1), facts cited 4 (1.5), not yet proven; your hard rule on names is in, refuses nothing true, and catches none of these (they describe rather than name). Rewriting a refused sentence: left off (no fewer 5-second waits). The check's own time: each call sent twice and the copy the service starts first kept: in whole turns it refuses no more, your call (Needs you 4). Why Haiku refuses true sentences: about 55 of its 96 refusals looked like a wording fault, but the wording fix, tested on all 617, refused only 4 fewer (noise); it let 31 inventions through against 40, suggestive, not proven. Left off.
 - *Mickey's office (item 5):* the small shadows at High fixed by raising one setting only while you are inside (about 0.2 ms a frame), passed in the editor beside plain High. This morning the staff side's fixes (the radio wholly on its riser, the leaning box file) passed fresh reviewers, and local exposure inside the room took the lamp's burn off the radio (all three views passed). Set aside after two tries: a dark patch under the radio shelf at night (a correct shadow no bounce light reaches); researched another way before a third.
 - *Fallback, the simulation's port:* two of the sweep's rules that lived only in the game's code now live in the shared rules, checked row by row: how well each person knows Tom's face (G2), and who saw the window go, what they file and where everyone stands at each hour (G1, closed this morning; the port agrees on all 59,713 test rows).
 - *The AI tester, tonight's build (03:45):* 13 of 15 stages (Ron lost sight of, Darren not on the street, as on the old build). "That's all I know" to a newcomer's sixty first questions: 4 of 60, the first count ever (the nightly bench had never run). What broke the illusion: townsfolk in underclothes; the quay end dark at night (no lamps there yet); the two missed greetings.
@@ -129,15 +129,15 @@ No decision asked: these are for watching the street change.
 
 ### Needs you
 
-Tonight's page, three taps: [Tuesday Night's Decisions](https://claude.ai/artifact/GXm8LhpnZRXPScr6GVZtfT).
+Tonight's page, three taps and a report: [Tuesday Night's Decisions](https://claude.ai/artifact/GXm8LhpnZRXPScr6GVZtfT).
 
 1. **The fast checker's cut-off** (on the page). The fourth try's larger checker failed (too slow beside the game, clears less). The third try's small one at three cut-offs, judged as the whole game against Haiku alone: middle clears 15% of real first sentences, 0.18 s saved a question, 34 invented per 300 as Haiku alone (recommended); open 51%, 0.6 s, 36 per 300; strict 6%; or none.
-2. **Tom's cuffs** (on the page; preview tom-zip-jacket-cuffs-try3). The sleeve's own end lies as a flat flap past the hand, so no cuff can sit right. Fix the sleeve's end first, then the cuffs, a fourth round (recommended); or build them in Blender at the bake; or place them by hand in Marvelous.
+2. **Tom's cuffs** (on the page; preview tom-zip-jacket-cuffs-try3). The sleeve's own end lies as a flat flap past the hand, so no cuff can sit right. Fix the sleeve's end first, then the cuffs, a fourth round (recommended); or build them in Blender at the bake; or place them by hand in Marvelous. Marvelous is closed (it held the graphics card); any way that uses it needs your one click on LEDGER bridge.
 3. **Darren's voice** (on the page). Common Voice fails consent. Keep his present voice (recommended); or an unpaid north-east man records a lively reference with written consent to clone it.
-4. **Two copies of each check call: switch on?** Measured with your $4: in whole turns it refuses no more (16 against 20 first sentences of about 120); by the sentence it saves a median 0.29 s and cuts the slowest tenth from 4.0 to 3.2 s; whole turns could not show the gain, the service's own pace swinging from 3.3 to 7.0 s between identical runs. Cost about $0.30 a friends' evening (estimated). Yes (recommended); or leave it off.
-5. **Marvelous is closed** (it held 6 GB of the graphics card and slowed the game's frame test from 78 to 22 fps; closed, the test meets the bar again). When the jacket resumes: open it and click LEDGER bridge once. From now on I close it at the end of each garment session.
+4. **Two copies of each check call: switch on?** In whole turns it refuses no more (16 against 20 first sentences of about 120); by the sentence it saves a median 0.29 s and cuts the slowest tenth from 4.0 to 3.2 s. About $0.30 a friends' evening (estimated). Yes (recommended); or leave it off.
+5. **Which reply instructions go into the game** (tomorrow's page): only its listed facts, else deflect (recommended: the plainer, fewest invented written); or the facts cited per sentence (no better on this test); or today's. Either new one costs half again per reply and about 0.2 s per draft. And the wider hard rule (numbers, years, a short list of places and roles): it stops 8 of Haiku's 35 leaks on your 617, all harmful, and refuses nothing true.
 
-Your answers of 27 October are recorded: the cuffs' third try (failed: Needs you 2), $4 more for speech tests (spent on the wording test and two copies), the bin emptied (the build re-run at 13:34), the checker's fourth try as you set it (failed; the small checker's cut-offs: Needs you 1), no actor for Darren (Common Voice read: Needs you 3).
+Your answers of 27 October are recorded: the cuffs' third try (failed: Needs you 2), $4 more for speech tests (spent on the wording test and two copies), the bin emptied (the build re-run at 13:34), the checker's fourth try as you set it (failed; the small checker's cut-offs: Needs you 1), no actor for Darren (Common Voice read: Needs you 3), and your evening order on invented sentences with its $20 ($17.86 spent; Needs you 5).
 
 ### Road to worth playing (PLAN.md)
 
@@ -152,18 +152,15 @@ Your answers of 27 October are recorded: the cuffs' third try (failed: Needs you
 ## Builder, Tuesday 27 October (night)
 
 **Failed:**
-- The fast checker's fourth try: the larger checker is too slow beside the game (1 answer in 6 over 0.15 s) and clears less than the small one (Needs you 1).
+- The fast checker's fourth try: the larger checker is too slow beside the game and clears less (Needs you 1).
 - Tom's cuffs, third try: the sleeve's own end lies flat past the hand; set aside (Needs you 2).
-- Common Voice cannot give Darren a voice: its speakers never agreed to be copied (Needs you 3).
+- Common Voice cannot give Darren a voice: no consent to cloning (Needs you 3).
 - My fault: Epic's walk and Tom's MetaHuman had never reached the packaged game. Fixed.
-- The frame test fell to 20 fps: Marvelous held the graphics card; closed.
+- Mickey's office in the packaged game, through Epic's wider camera: two of three views fail (the back room's bare door, grainy shadow edges); parked for your order.
 
 **Done:**
-- Tom walks as his MetaHuman on Epic's route in the packaged game; the AI tester's whole route, 15 of 15.
-- That walk caught an internal name in Darren's subtitle ("outfit_man"); fixed, proved by tonight's walk.
-- Last night's build and morning pictures re-run.
-- Two copies of each check call: in whole turns, no more refusals (Needs you 4).
-- The check's wording fix: no fewer false refusals; left off.
-- U3's reaction rules in the shipping engine, not yet wired.
+- Tom walks as his MetaHuman on Epic's route, packaged; the AI tester's whole route, 15 of 15.
+- That walk caught "outfit_man" in Darren's subtitle; fixed, proved by tonight's walk.
+- Your order on invented sentences: listing a character's facts cuts inventions written by three quarters; your name rule is in (Needs you 5).
 
 **Act on:** tonight's page, three taps.

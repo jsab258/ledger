@@ -163,7 +163,8 @@ function render(){
   let judged = 0, total = 0;
   for (const s of PAGE.sections) {
     const st = state[s.key] || {};
-    total++; if (st.pick) judged++;
+    // a report with no choices (27 October: his order's results) is read, not picked
+    if (s.options === undefined || s.options.length > 0 || s.kind === "faces") { total++; if (st.pick) judged++; }
     const sec = el("section", {class:"person", id:s.key});
     sec.append(el("div", {}, el("h2", {text:s.name})));
     // A DECISION FITS ONE LINE (Jafar, 30 September: every page fits one phone

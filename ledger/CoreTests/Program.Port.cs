@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Ledger.Core;
 
 namespace Ledger.CoreTests
@@ -143,6 +144,42 @@ namespace Ledger.CoreTests
             bool refused = false;
             try { CastDay.Parse(json.Replace("\"body_x_m\":3.75", "\"body_x_m\":\"door\"")); } catch (FormatException) { refused = true; }
             Check(refused, "a body_x_m that is not a number is refused, as the game's own reading refuses it");
+        }
+
+        /// THE HARD RULE ON NAMES (his order of 27 October 2026, evening; NameRules, its reference
+        /// tools/checkers/name_rule.py): a sentence naming a person, place or event missing from the speaker's facts
+        /// never passes, and the check refuses it before any call.
+        static void TestNameRule()
+        {
+            Console.WriteLine("The hard rule on names:");
+            Check(NameRuleShipped && !ClaimCheck.NameRuleWider, "the game ships with the rule on and its wider form off");
+            ClaimCheck.NameRule = true;
+            var facts = new[] { "C1: Ron Kirby keeps Mickey's door and the rank.", "P17: Hal keeps the coin shop on Quay Street." };
+            Check(NameRules.Missing("Hal runs it from the coin shop.", facts).Count == 0, "a name in the facts passes");
+            Check(string.Join("|", NameRules.Missing("Frank Doyle runs it now.", facts)) == "Frank Doyle", "an invented person is refused");
+            Check(string.Join("|", NameRules.Missing("I heard it from Father Walsh.", facts)) == "Father Walsh", "a title does not make a name known");
+            Check(NameRules.Missing("Mickey's door shuts on a Sunday in November.", facts).Count == 0, "days and months are times, not names");
+            Check(string.Join("|", NameRules.Missing("He came up from Leeds.", facts)) == "Leeds", "a place missing from the facts is refused");
+            Check(NameRules.Missing("Mr Kirby keeps it.", facts).Count == 0, "a surname in the facts makes the name known");
+            Check(string.Join("|", NameRules.Missing("The Crown shuts at ten on Mondays.", facts)) == "The Crown", "a common word never makes a name known");
+            Check(NameRules.Missing("Head down Quay Street, mate.", facts).Count == 0, "a sentence's opening capital alone is no name");
+            Check(NameRules.Missing("Frank was in earlier.", facts).Count == 0, "the known gap: a lone name opening a sentence is not caught");
+            Check(string.Join("|", NameRules.Missing("I've kept this gate since nineteen eighty-two.", facts, true)) == "19|82",
+                  "wider: a year the facts do not state is refused");
+            Check(string.Join("|", NameRules.Missing("Ask the harbourmaster.", facts, true)) == "harbourmaster",
+                  "wider: a role the facts do not have is refused");
+            Check(NameRules.Missing("Ask the harbourmaster.", facts).Count == 0, "the wider form is off unless asked for");
+            var items = new List<(string id, string text)> { ("C1", facts[0]), ("P17", facts[1]) };
+            var (invented, calls) = ClaimCheck.CheckAsync(new FailingClient(), "claude-haiku-5-5", items, "Frank Doyle runs it now.",
+                                                          System.Threading.CancellationToken.None).GetAwaiter().GetResult();
+            Check(invented != null && invented.Count == 1 && calls.Count == 0, "the check refuses it before any call to a model");
+            ClaimCheck.NameRule = false;
+        }
+
+        sealed class FailingClient : ILlmClient
+        {
+            public System.Threading.Tasks.Task<LlmResponse> CompleteAsync(LlmRequest request, System.Threading.CancellationToken ct = default) =>
+                throw new InvalidOperationException("no call was expected");
         }
     }
 }
