@@ -143,3 +143,7 @@
 {"event": "stop", "at": "2026-10-27T04:39:00", "note": "from the clock and commit times"}
 {"event": "start", "at": "2026-10-27T04:39:31", "task": "27 Oct: item 4 two copies' verdict test on 87 more sentences; then item 5 the office's import and staff-side gate", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-27T05:37:59", "note": "two copies' verdict test done; the office imported, gated, local exposure in"}
+{"event": "start", "at": "2026-10-27T05:41:23", "task": "27 Oct: item 5 the shadow under the radio shelf, second try: geometry measured, then the fix", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-27T05:53:49", "note": "patch traced: a correct tube shadow without bounce; coverage test rules out the card limit; second try waits on research"}
+{"event": "start", "at": "2026-10-27T05:53:49", "task": "27 Oct: item 4 Haiku's false refusals sorted by cause (a helper, existing data)", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-27T05:59:31", "note": "sorted by cause; a blind fresh review: sound with fixes"}

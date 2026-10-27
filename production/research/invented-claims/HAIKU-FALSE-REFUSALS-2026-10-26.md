@@ -71,3 +71,23 @@ The 617 held sentences through the game's whole check twice, the second time wit
 | H items counted at the list | **66** | 64 | 1.93 s | 2 | 3.15 s |
 
 Faster by half a second and a third fewer false refusals, but nearly twice the inventions through: 40 newly passed, among them plain contradictions of the facts ("the cafe ... shuts its doors at eleven", "I found him stone cold up in his flat over the office", Ron "shouting at a stranger out back two nights before Mickey died"). The list step cites an H item for details the item does not give; the second look is what catches them. **The switch stays off.** The time lever, if any, is a faster second look, not a skipped one. Data: F:/LedgerTools/checkers/train3/haiku-verdicts-history.jsonl.
+
+## The 96 true sentences refused, sorted by cause (27 October, 06:00; a helper's reading, its fresh review running)
+
+Each of the 96 true first sentences the game's check refused, read beside its facts and the details the check named
+(FALSE-REFUSALS-BY-CAUSE-2026-10-27.md; existing data, nothing spent): not a claim but listed anyway 27 (20 of them name a
+place, person or number, which the code counts as a claim); a paraphrase missed 23 (7 of them "inside the office" against
+"at the office"); the check misreading the sentence 14; a detail cut from its subject, so the second look cannot place it,
+5; a people line that can clear only a habit, by design, 5; a reasonable inference the rules forbid, 7; a time, 3; the
+label wrong, none for certain, 12 unsure. "Who runs things round here?" is refused most (18 of 35). The reading says the
+list's wording could fix the misreadings and the cut details at low risk; the non-claims need a narrower rule in code, and
+the paraphrases looser examples in the look, both with risk; the inferences and times are refused on purpose.
+
+**Its fresh review (27 October, 06:05; 30 re-sorted blind, then compared): sound with fixes.** Every number and quote
+checks; the conclusions follow. Fixes: bare details such as "right here in the office" and "sitting on the key" are cut
+from their subject and belong with the wording fix rather than the paraphrases (the blind sort found 6 such in 30); the
+naming rule in code reaches about 20 of the 27 non-claims, and sentences with two refused details need both fixed, so
+nearer 55 of the 96 than the reading's 62; "held the service three weeks ago" is a forbidden inference with a time, as
+the look's own example says; and "low risk" is assumed: **any wording change is measured on the invented sentences
+first, against his bar** (no more invented details through than Haiku today). Next: the list's wording for the misread
+and cut-off details as a bench switch, run on the 617 held sentences, when the measuring money allows.
