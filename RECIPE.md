@@ -33,6 +33,7 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 - Target and check: fewer invented statements through per 300 than today, harmful apart, without more true ones refused. Invented written fell by three quarters with the sources listed, proven paired by question; through, harmful and refused moved the right way (10.2 to 5.1 and 4.4; harmful 5.8 to 0.7 and 1.5) but are not proven on 31 questions asked 13 times each. Test paired by prompt when rows repeat prompts. The name rule caught nothing here and refused nothing true.
 - Cost (hours): about 1.5; $17.86 of a $20 budget.
 - Failed and why: the first full run stopped at the bench's default $1 a run; the name rule as specified misses descriptions ("the harbourmaster") and a lone name opening a sentence.
+- Then into the product: the chosen instructions put in the prompt word for word as measured; their markup (the citations) taken off at every point text flows (whole reply, redraft, the streamed text the first sentence is cut from, a half-written mark included); thirty real turns to prove nothing of it is said, and the first sentence's time against the same questions before.
 - Evidence: production/research/invented-claims/SOURCE-TEST-2026-10-27.md; F:/LedgerTools/checkers/source.
 
 ### 27 Oct 2026, a scripted tester's steering retuned when the character's movement changed, and what its walk then found

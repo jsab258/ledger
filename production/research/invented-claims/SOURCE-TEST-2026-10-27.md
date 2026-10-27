@@ -123,3 +123,17 @@ low-confidence count corrected.
 (no braces to drop), with the fewest invented written; the cited version is no better on this test. Either costs about
 half again a reply and some 0.15 to 0.2 s a draft. Then it is measured live with the voice, and the fast checker's
 cut-off measured again on what it writes.
+
+## In the game (27 October, night; his page note "Facts cited")
+
+- **The cited version is the game's prompt** (ConversationEngine.CiteFacts, on; the block word for word as measured,
+  CitedFactsBlock, appended at the prompt's end; off with the plan first). Its braces are taken off before anything is
+  checked, said, shown or remembered (WithoutCites: the whole reply, the second draft, and the streamed text from which
+  the first sentence is cut early, a brace still being written included); what was cited is kept (LastCited). The bench's
+  source mode now reads "today" as the prompt without it. 9 core checks.
+- **Thirty real first turns through the game's whole path** (ClaimBench firsts at the game's switches, ten questions to
+  each of the three; F:/LedgerTools/town-scratch/cited-firsts; $0.59): no brace or fact number in any reply; the first
+  sentence written in a median 1.21 s against 1.08 s for the same questions on 26 October, and passed by its check in
+  3.03 s against 2.85 s, inside the service's own swing between identical runs (3.3 to 7.0 s). 25 of the 30 first
+  sentences passed the check, against 24 of 30 before.
+- Not yet measured: a long run's refusals and wait, and the fast checker's cut-off on what this version writes.

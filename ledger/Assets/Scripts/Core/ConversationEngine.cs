@@ -134,6 +134,61 @@ namespace Ledger.Core
         /// firsts --plan).
         public static bool PlanFirst = false;
 
+        /// THE FACTS CITED (his page note of 27 October 2026, night, "Facts cited", on his order of that evening;
+        /// production/research/invented-claims/SOURCE-TEST-2026-10-27.md). The reply is shown what the character knows
+        /// as the check's own numbered list, told to say only what it says and to deflect in character otherwise, and
+        /// writes after every sentence the numbers of the facts it uses in braces, which are taken off before anything
+        /// is checked, said or remembered (WithoutCites). Measured on 412 of the 617 held questions against today's
+        /// prompt: invented first sentences written per 300 from 28.5 to 10.2, through the check 10.2 to 4.4 (not proven
+        /// on 31 questions), true ones refused 35 to 25 (not proven); at about 1.6 cents a reply against 1.0, and about
+        /// 0.2 s more a draft. Off with the plan first, which numbers the facts its own way.
+        public static bool CiteFacts = true;
+
+        /// The rule both measured versions gave (the source test's "facts" and "cite").
+        public const string FactsOnlyRule =
+            "Say only what this list says, in your own words. Whatever it does not give, you do not know: deflect in character, " +
+            "your own way, and add nothing of your own, no person, place, time or event it does not have.";
+
+        /// The cited version's block, word for word as it was measured, appended at the prompt's end.
+        public static string CitedFactsBlock(IEnumerable<(string id, string text)> known)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine();
+            sb.AppendLine("Everything you know, numbered:");
+            foreach (var (id, text) in known) sb.AppendLine(id + ": " + text);
+            sb.AppendLine(FactsOnlyRule);
+            sb.AppendLine("After every sentence you say, put the numbers of the facts it uses in curly braces, like this: " +
+                          "\"That's Mickey's door, that. {C1}\" A sentence that uses none of them (a feeling, a deflection, a question back) " +
+                          "gets {}. The braces are taken off before you are heard, so this overrides the rule against brackets; nothing else " +
+                          "goes in braces.");
+            return sb.ToString();
+        }
+
+        static readonly System.Text.RegularExpressions.Regex CiteMark = new System.Text.RegularExpressions.Regex(@"\s*\{[^{}]*\}");
+        static readonly System.Text.RegularExpressions.Regex CiteOpen = new System.Text.RegularExpressions.Regex(@"\s*\{[^{}]*$");
+
+        /// The reply as it is said: every citation in braces taken off, and one still being written at the end of a
+        /// streamed text, so no brace or fact number is ever checked, voiced, shown or remembered.
+        public static string WithoutCites(string text)
+        {
+            if (text == null || text.IndexOf('{') < 0) return text;
+            return CiteOpen.Replace(CiteMark.Replace(text, ""), "");
+        }
+
+        /// The fact numbers a reply cited, once each, in order.
+        public static List<string> CitesIn(string text)
+        {
+            var ids = new List<string>();
+            if (text == null) return ids;
+            foreach (System.Text.RegularExpressions.Match m in CiteMark.Matches(text))
+                foreach (var id in m.Value.Trim().Trim('{', '}').Split(new[] { ',', ' ', ';' }, StringSplitOptions.RemoveEmptyEntries))
+                    if (!ids.Contains(id)) ids.Add(id);
+            return ids;
+        }
+
+        /// What the last reply cited (CiteFacts), for the record.
+        public IReadOnlyList<string> LastCited { get; private set; } = new List<string>();
+
         /// THE FIRST SENTENCE BY A FASTER MODEL (Jafar, 7 October: "stream the
         /// writing so the voice starts on the first sentence, with a faster model
         /// for that first sentence"). When set, and the turn's own model is
@@ -716,6 +771,7 @@ namespace Ledger.Core
                     if (CurrentDeed != null) _promptRaisesDeed = true;
                 }
             }
+            if (CiteFacts && !PlanFirst) sb.Append(CitedFactsBlock(KnownForCheck(now, sceneContext)));
             return sb.ToString();
         }
 
@@ -1658,7 +1714,7 @@ namespace Ledger.Core
                         // A stage direction said in the first person is never the
                         // sentence spoken early (town list 6aj): the next one is.
                         // With the plan first, the first sentence is read after the tag.
-                        var spoken = PlanFirst ? AfterPlan(text) : text;
+                        var spoken = PlanFirst ? AfterPlan(text) : WithoutCites(text);
                         if (spoken == null) return;
                         var f = FirstSentence(ResponseValidator.WithoutGestures(spoken));
                         if (f == null) return;
@@ -1986,7 +2042,8 @@ namespace Ledger.Core
                                                               now.ToldAs, HowYouKnowHim, People, SpeakerName, StreetHours)) ids.Add(id);
                 LastPlan = ReadPlan(d1.Response.Text, ids);
             }
-            var reply = d1.Response != null ? ValidateReply(PlanFirst ? StripPlan(d1.Response.Text) : d1.Response.Text) : null;
+            LastCited = CitesIn(d1.Response?.Text);
+            var reply = d1.Response != null ? ValidateReply(PlanFirst ? StripPlan(d1.Response.Text) : WithoutCites(d1.Response.Text)) : null;
             bool firstHeard = d1.Heard;
             string firstSentence = d1.First;
             IReadOnlyList<string> firstFlagged = d1.FirstFlagged;
@@ -2096,7 +2153,7 @@ namespace Ledger.Core
                         }
                         else
                         {
-                            var redrafted = ValidateReply(PlanFirst ? StripPlan(d2.Response.Text) : d2.Response.Text);
+                            var redrafted = ValidateReply(PlanFirst ? StripPlan(d2.Response.Text) : WithoutCites(d2.Response.Text));
                             var again = await InventedAsync(known, redrafted, ct);
                             Step("recheck");
                             bool holds = again.Count == 0 && !ClaimCheck.Repeats(redrafted, flagged) && PromisesIn(redrafted).Count == 0 && RealWorld.Find(redrafted).Count == 0;

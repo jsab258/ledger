@@ -129,6 +129,7 @@ namespace Ledger.CoreTests
                 TestTownSaveVersion();
                 TestReactionAtTheWindow();
                 TestNameRule();
+                TestCitedFacts();
                 TestBudgetedClient();
                 await TestTranscriptRollback();
                 await TestReflection();

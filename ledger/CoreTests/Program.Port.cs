@@ -181,5 +181,31 @@ namespace Ledger.CoreTests
             public System.Threading.Tasks.Task<LlmResponse> CompleteAsync(LlmRequest request, System.Threading.CancellationToken ct = default) =>
                 throw new InvalidOperationException("no call was expected");
         }
+
+        /// THE FACTS CITED (his page note of 27 October 2026 night; ConversationEngine.CiteFacts): the reply is shown the
+        /// check's numbered list and cites it after each sentence in braces, which nothing ever says, checks or keeps.
+        static void TestCitedFacts()
+        {
+            Console.WriteLine("The facts cited:");
+            Check(ConversationEngine.CiteFacts && !ConversationEngine.PlanFirst, "the game ships with the cited facts on");
+            Check(ConversationEngine.WithoutCites("That's Mickey's door. {C1} Ask Sheila. {C2, P5}") == "That's Mickey's door. Ask Sheila.",
+                  "the braces and their numbers are taken off", ConversationEngine.WithoutCites("That's Mickey's door. {C1} Ask Sheila. {C2, P5}"));
+            Check(ConversationEngine.WithoutCites("That's Mickey's door. {C") == "That's Mickey's door.",
+                  "a brace still being streamed is taken off too");
+            Check(ConversationEngine.FirstSentence(ConversationEngine.WithoutCites("That's Mickey's door. {C1} Ask")) == "That's Mickey's door.",
+                  "the first sentence streams out without its numbers");
+            Check(ConversationEngine.WithoutCites("Aye. {}") == "Aye.", "an empty citation is taken off");
+            Check(string.Join(",", ConversationEngine.CitesIn("Aye. {C1} Ask her. {C2, P5} Go on. {C1}")) == "C1,C2,P5", "what was cited, once each");
+            Check(ConversationEngine.WithoutCites("No braces here.") == "No braces here.", "a reply with none is untouched");
+            var card = MakeLenaCard();
+            var engine = new ConversationEngine(new ScriptedLlm("unused"), card, new MemoryStore(card.Id), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
+            string on = engine.BuildSystemPrompt("Who runs this place?", new GameTime(0, 10, 0), "In the office.");
+            Check(on.Contains("Everything you know, numbered:") && on.Contains(ConversationEngine.FactsOnlyRule) && on.Contains("{C1}"),
+                  "the prompt lists the facts numbered, says to keep to them, and asks for the numbers");
+            ConversationEngine.CiteFacts = false;
+            string off = engine.BuildSystemPrompt("Who runs this place?", new GameTime(0, 10, 0), "In the office.");
+            ConversationEngine.CiteFacts = true;
+            Check(!off.Contains("Everything you know, numbered:") && on.StartsWith(off.TrimEnd()), "switched off, the prompt is today's, which the cited block only follows");
+        }
     }
 }

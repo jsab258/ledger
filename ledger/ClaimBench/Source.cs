@@ -31,10 +31,6 @@ using Ledger.Core;
 /// Gemini labels each kept sentence afterwards (tools/checkers/source_test.py), as it labelled the 617.
 static partial class Program
 {
-    const string FactsOnlyRule =
-        "Say only what this list says, in your own words. Whatever it does not give, you do not know: deflect in character, " +
-        "your own way, and add nothing of your own, no person, place, time or event it does not have.";
-
     static async Task<int> Source(string[] args, int parallel)
     {
         string variant = Arg(args, "--variant", null);
@@ -68,6 +64,8 @@ static partial class Program
         // The game's own switches, as the firsts runs set them.
         ConversationEngine.ChooseFirst = !args.Contains("--no-choose");
         ConversationEngine.UseRules = args.Contains("--rules");
+        // today is the prompt before the cited facts went in (27 October night); cite is the game's own prompt since
+        ConversationEngine.CiteFacts = variant == "cite";
         // the check as the first runs measured it, before the hard rule on names (27 October night); --name-rule adds it
         ClaimCheck.NameRule = args.Contains("--name-rule");
         bool byMoment = args.Contains("--moment");
@@ -95,17 +93,13 @@ static partial class Program
                 var system = engine.BuildSystemPrompt(r.question, now, scene);
                 var known = engine.KnownForCheck(now, scene);
                 var sb = new StringBuilder(system);
-                if (variant != "today")
+                // the cited block is the engine's own now (ConversationEngine.CitedFactsBlock, the same words)
+                if (variant == "facts")
                 {
                     sb.AppendLine();
-                    sb.AppendLine(variant == "cite" ? "Everything you know, numbered:" : "Everything you know:");
-                    foreach (var (id, text) in known) sb.AppendLine(variant == "cite" ? id + ": " + text : "- " + text);
-                    sb.AppendLine(FactsOnlyRule);
-                    if (variant == "cite")
-                        sb.AppendLine("After every sentence you say, put the numbers of the facts it uses in curly braces, like this: " +
-                                      "\"That's Mickey's door, that. {C1}\" A sentence that uses none of them (a feeling, a deflection, a question back) " +
-                                      "gets {}. The braces are taken off before you are heard, so this overrides the rule against brackets; nothing else " +
-                                      "goes in braces.");
+                    sb.AppendLine("Everything you know:");
+                    foreach (var (_, text) in known) sb.AppendLine("- " + text);
+                    sb.AppendLine(ConversationEngine.FactsOnlyRule);
                 }
                 var request = new LlmRequest { Model = engine.Model, System = sb.ToString(), MaxTokens = 150 };
                 request.Messages.Add(new LlmMessage("user", r.question));

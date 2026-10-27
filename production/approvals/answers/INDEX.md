@@ -2,7 +2,7 @@
 
 Copied from each page's own database into this folder (pages.json lists the pages). Written by tools/page_answers.py --index; never edited by hand.
 
-Read back: 2026-10-26
+Read back: 2026-10-27
 
 | Page | Updated | Answers | Each answer: pick or verdict, date |
 |---|---|---|---|
@@ -50,5 +50,6 @@ Read back: 2026-10-26
 | [Thursday's Decisions](https://claude.ai/artifact/2yznAYjEwDVv3RvzzKUpBR) | 2026-10-22 | 5 | decide-check-model-2026-10-22: no, 2026-10-22; decide-marvelous-2026-10-22: yes, 2026-10-22; decide-phase2-2026-10-22: hold, 2026-10-22; look-lamp-weathered-2026-10-22: later, 2026-10-22; look-ritas-front-2026-10-22: yes, 2026-10-22 |
 | [Monday's Decisions](https://claude.ai/artifact/8LsucbjBtuCj1QyaRamqpB) | 2026-10-26 | 6 | checker-downloads-2026-10-26: all, 2026-10-26; darren-voice-2026-10-26: A, 2026-10-26 (this is just about the voice, not how real it sounds right? A is ok, but very ro); haiku-labels-2026-10-26: ask, 2026-10-26; listen-pocket-2026-10-26: both, 2026-10-26; prepared-pocket-2026-10-26: move, 2026-10-26; walk-by-eye-2026-10-26: pass, 2026-10-26 |
 | [Monday Night's Decisions](https://claude.ai/artifact/GmtwhT5o89Ho9huHXYUieX) | 2026-10-26 | 1 | checker-next-2026-10-26: third, 2026-10-26 (Third try, broader than stricter alone. Use the 0.1 s of headroom try 2 left: re) |
+| [Tuesday Night's Decisions](https://claude.ai/artifact/GXm8LhpnZRXPScr6GVZtfT) | 2026-10-27 | 4 | checker-cutoff-2026-10-27: open, 2026-10-27; cuffs-next-2026-10-27: sleeve, 2026-10-27; darren-voice-2026-10-27: keep, 2026-10-27; invented-source-2026-10-27: ?, 2026-10-27 (Facts cited) |
 
-44 pages, 164 answers.
+45 pages, 168 answers.
