@@ -1973,11 +1973,13 @@ namespace LedgerCrime
 	const double kDeedSeconds = LedgerCore::Sighting::DeedSeconds;
 	inline bool NightAt(int Hour) { return LedgerCore::Sighting::NightAt(Hour); }
 	inline double LightOnHim(bool bNight, double LampReach) { return LedgerCore::Sighting::LightOnHim(bNight, LampReach); }
-	inline bool OnQuayStreet(double X, double Z) { return X >= -10.0 && X <= 50.0 && std::fabs(Z) <= 10.0; }
+	// WHO STANDS WHERE (Sighting.cs since 27 October 2026, the sweep's G1, ported in Sighting.h and checked by its
+	// golden rows): the names here stay for their callers.
+	inline bool OnQuayStreet(double X, double Z) { return LedgerCore::Sighting::OnQuayStreet(X, Z); }
 	/// The counters, the office and the cafe stand 7.5 m either side of the
 	/// street's middle, behind their windows (hook-cast.json's places).
-	inline bool IndoorPlace(double Z) { return std::fabs(Z) >= 7.0; }
-	inline P3 BodySpotFor(double X, double Z) { return IndoorPlace(Z) ? P3(X, 0.0, Z > 0.0 ? 4.6 : -4.6) : P3(X, 0.0, Z); }
+	inline bool IndoorPlace(double Z) { return LedgerCore::Sighting::IndoorPlace(Z); }
+	inline P3 BodySpotFor(double X, double Z) { double BX, BZ; LedgerCore::Sighting::BodySpot(X, Z, BX, BZ); return P3(BX, 0.0, BZ); }
 	/// THE SAME, AT THE PLACE'S OWN WAITING SPOT (7 October, item 1.1's second fresh review: Sheila,
 	/// in the locked office by her day, stood on the pavement straight out from its middle, square
 	/// in front of Mickey's window and its camera). A place may name where along its pavement a
@@ -1985,8 +1987,9 @@ namespace LedgerCrime
 	/// inside place's body still stands on its own pavement.
 	inline P3 BodySpotFor(const LedgerCore::CastDay& Cast, const std::string& Place, double X, double Z)
 	{
-		double BX = X;
-		return Cast.BodyXOf(Place, BX) ? BodySpotFor(BX, Z) : BodySpotFor(X, Z);
+		double BX, BZ;
+		LedgerCore::Sighting::BodySpot(Cast, Place, X, Z, BX, BZ);
+		return P3(BX, 0.0, BZ);
 	}
 	/// A PLACE TO STAND, 1 October (the AI tester, the packaged game: Sheila on
 	/// top of the fish market's pallet crate, where her day puts her at
@@ -2024,10 +2027,7 @@ namespace LedgerCrime
 		return { X, Z, Here, false };
 	}
 	/// Which way somebody at a place looks: out at the street (up it from the quay).
-	inline double StreetFacingYaw(double X, double Z)
-	{
-		return std::fabs(Z) < 0.5 ? YawToFace(P3(X, 0.0, Z), P3(X + 10.0, 0.0, Z)) : YawToFace(P3(X, 0.0, Z), P3(X, 0.0, 0.0));
-	}
+	inline double StreetFacingYaw(double X, double Z) { return LedgerCore::Sighting::StreetFacingYaw(X, Z); }
 	struct OnlookerAt
 	{
 		std::string Id, Place;
@@ -2039,22 +2039,16 @@ namespace LedgerCrime
 	inline std::vector<OnlookerAt> OnlookersAt(const LedgerCore::CastDay& Cast, int Day, int Hour,
 	                                            const std::set<std::string>& WithBodies)
 	{
+		// The Core's list (Sighting.cs, ported in Sighting.h), in this file's own shape.
 		std::vector<OnlookerAt> Out;
-		for (const std::string& Id : Cast.People())
+		for (const LedgerCore::Sighting::Onlooker& L : LedgerCore::Sighting::OnlookersAt(Cast, Day, Hour, WithBodies))
 		{
-			double X = 0.0, Z = 0.0;
-			std::string Place;
-			if (!Cast.Where(Id, Day, Hour, X, Z) || !Cast.PlaceOf(Id, Day, Hour, Place)) continue;
-			// On Quay Street by the town's own rule (CastDay::OnQuayStreet, the
-			// street's own areas, as DS Ellis asks there; the review's A11).
-			if (!Cast.OnQuayStreet(Id, Day, Hour)) continue;
 			OnlookerAt O;
-			O.Id = Id;
-			O.Place = Place;
-			O.bBody = WithBodies.count(Id) > 0;
-			if (!O.bBody && !IndoorPlace(Z)) continue;
-			O.At = O.bBody ? BodySpotFor(Cast, Place, X, Z) : P3(X, 0.0, Z);
-			O.YawDeg = StreetFacingYaw(O.At.X, O.At.Z);
+			O.Id = L.Id;
+			O.Place = L.Place;
+			O.bBody = L.bBody;
+			O.At = P3(L.X, 0.0, L.Z);
+			O.YawDeg = L.YawDeg;
 			Out.push_back(O);
 		}
 		return Out;

@@ -59,5 +59,44 @@ namespace Ledger.CoreTests
             Check(!Sighting.WitnessShouts(0) && Sighting.WitnessShouts(1) && Sighting.WitnessShouts(3),
                   "only somebody who saw it shouts at him");
         }
+
+        /// G1's geography, the second part: WHO STANDS WHERE ON QUAY STREET AT THE HOUR, and which way they look.
+        static void TestSightingGeography()
+        {
+            Console.WriteLine("Sighting (the sweep's G1, its geography):");
+
+            Check(Sighting.OnQuayStreet(-10.0, 10.0) && Sighting.OnQuayStreet(50.0, -10.0) && !Sighting.OnQuayStreet(50.1, 0.0) && !Sighting.OnQuayStreet(0.0, 10.1),
+                  "Quay Street runs from 10 m below the quay's end to 50 m up, 10 m either side of its middle");
+            Check(Sighting.IndoorPlace(7.0) && Sighting.IndoorPlace(-7.5) && !Sighting.IndoorPlace(6.99),
+                  "a place 7 m or more from the street's middle is behind a window");
+            Check(Sighting.BodySpot(12.0, 7.5) == (12.0, 4.6) && Sighting.BodySpot(12.0, -7.5) == (12.0, -4.6) && Sighting.BodySpot(12.0, 2.0) == (12.0, 2.0),
+                  "an inside place's body stands on its own pavement, straight out from it; outside, where the place is");
+            Check(Sighting.StreetFacingYaw(5.0, 0.2) == 0.0 && Sighting.StreetFacingYaw(5.0, 4.6) == -90.0 && Sighting.StreetFacingYaw(5.0, -4.6) == 90.0,
+                  "in the street's middle one looks up it; at the side, across it");
+
+            const string json = "{\"talk_range_m\":6,\"places\":{" +
+                "\"office\":{\"x_m\":0,\"z_m\":7.5,\"body_x_m\":3.75},\"cafe\":{\"x_m\":25,\"z_m\":-7.5},\"pavement\":{\"x_m\":10,\"z_m\":2}}," +
+                "\"people\":[" +
+                "{\"id\":\"inside\",\"routine\":[[0,\"cafe\"]]}," +
+                "{\"id\":\"outside\",\"routine\":[[0,\"pavement\"]]}," +
+                "{\"id\":\"bodied\",\"routine\":[[0,\"office\"]]}," +
+                "{\"id\":\"bodied_out\",\"routine\":[[0,\"pavement\"]]}," +
+                "{\"id\":\"home\",\"routine\":[[0,\"off\"]]}],\"ties\":[]}";
+            var cast = CastDay.Parse(json);
+            Check(cast.BodyXOf("office") == 3.75 && cast.BodyXOf("cafe") == null, "the cast file's body_x_m is read, and only where given");
+            Check(Sighting.BodySpot(cast, "office", 0.0, 7.5) == (3.75, 4.6), "a place's body waits where its body_x_m says along the pavement");
+            var seen = Sighting.OnlookersAt(cast, 0, 12, new[] { "bodied", "bodied_out" });
+            var ids = string.Join(",", seen.ConvertAll(o => o.Id));
+            Check(ids == "inside,bodied,bodied_out", "the onlookers: somebody inside, and every body on the street; not somebody outside with no body, nor anyone at home", ids);
+            var bodied = seen.Find(o => o.Id == "bodied");
+            Check(bodied != null && bodied.Body && bodied.X == 3.75 && bodied.Z == 4.6 && bodied.YawDeg == -90.0 && bodied.Place == "office",
+                  "a body for an inside place stands at its waiting spot on the pavement, looking across the street");
+            var inside = seen.Find(o => o.Id == "inside");
+            Check(inside != null && !inside.Body && inside.X == 25.0 && inside.Z == -7.5 && inside.YawDeg == 90.0,
+                  "somebody inside is at their place, looking out at the street");
+            bool refused = false;
+            try { CastDay.Parse(json.Replace("\"body_x_m\":3.75", "\"body_x_m\":\"door\"")); } catch (FormatException) { refused = true; }
+            Check(refused, "a body_x_m that is not a number is refused, as the game's own reading refuses it");
+        }
     }
 }

@@ -78,6 +78,39 @@ namespace Ledger.PerceptionGolden
                 Row(sb, "SightingShouts", rung.ToString(Inv), Bit(Sighting.WitnessShouts(rung)));
             Row(sb, "SightingDeedSeconds", "0", D(Sighting.DeedSeconds));
 
+            // WHO STANDS WHERE ON QUAY STREET AT THE HOUR (27 October 2026, the sweep's G1, its geography): Sighting.cs.
+            foreach (var x in new[] { -10.1, -10.0, 0.0, 25.0, 50.0, 50.1 })
+                foreach (var z in new[] { -10.1, -10.0, 0.0, 10.0, 10.1 })
+                    Row(sb, "SightingOnStreet", D(x), D(z), Bit(Sighting.OnQuayStreet(x, z)));
+            foreach (var z in new[] { -7.5, -7.0, -6.99, 0.0, 6.99, 7.0, 7.5 })
+                Row(sb, "SightingIndoor", D(z), Bit(Sighting.IndoorPlace(z)));
+            foreach (var (x, z) in new[] { (12.0, 7.5), (12.0, -7.5), (12.0, 2.0), (-3.0, 7.0), (0.0, 0.0) })
+            {
+                var spot = Sighting.BodySpot(x, z);
+                Row(sb, "SightingBodySpot", D(x), D(z), D(spot.x), D(spot.z));
+            }
+            foreach (var (x, z) in new[] { (5.0, 0.0), (5.0, 0.49), (5.0, 0.5), (5.0, 4.6), (5.0, -4.6), (-3.0, 7.5), (20.0, -2.0) })
+                Row(sb, "SightingFacing", D(x), D(z), D(Sighting.StreetFacingYaw(x, z)));
+            foreach (var name in new[] { "quay-cast.json", "hook-cast.json" })
+            {
+                var cast = CastFileNamed(name);
+                if (cast == null) { Row(sb, "SightingOnlookerCount", name, "0", "0", "missing"); continue; }
+                foreach (var place in cast.Places)
+                    Row(sb, "CastBodyX", name, place, cast.BodyXOf(place) is double bx ? D(bx) : "none");
+                // the game's own call: its three speaking people have bodies in the street (CrimeProbe.cpp)
+                var bodies = new[] { "lena", "sam", "rocco" };
+                for (int day = 0; day < 7; day++)
+                    for (int hour = 0; hour < 24; hour++)
+                    {
+                        // one row an onlooker, each number in a field of its own (compared as a number), and their count
+                        var seen = Sighting.OnlookersAt(cast, day, hour, bodies);
+                        Row(sb, "SightingOnlookerCount", name, day.ToString(Inv), hour.ToString(Inv), seen.Count.ToString(Inv));
+                        for (int i = 0; i < seen.Count; i++)
+                            Row(sb, "SightingOnlooker", name, day.ToString(Inv), hour.ToString(Inv), i.ToString(Inv),
+                                seen[i].Id, seen[i].Place, Bit(seen[i].Body), D(seen[i].X), D(seen[i].Z), D(seen[i].YawDeg));
+                    }
+            }
+
             foreach (var m in new double[] { 1, 5, 20, 39, 40, 41 })
                 foreach (var a in new double[] { 0, 45, 70 })
                     foreach (var l in new double[] { 0.0, 0.5, 1.0 })
@@ -2838,6 +2871,17 @@ namespace Ledger.PerceptionGolden
                 Row(sb, "SuspicionSave", "afterTalk", D(before), D(back.Get("s").Suspicion.Value), D(back.Get("l").Suspicion.Value));
                 Row(sb, "SuspicionSave", "csharpSave", Esc(json), D(back.Get("s").Suspicion.Value), D(back.Get("l").Suspicion.Value));
             }
+        }
+
+        // A cast file of production/specs by name, found upward from the program, or null.
+        static CastDay CastFileNamed(string name)
+        {
+            for (var dir = new System.IO.DirectoryInfo(AppContext.BaseDirectory); dir != null; dir = dir.Parent)
+            {
+                var p = System.IO.Path.Combine(dir.FullName, "production", "specs", name);
+                if (System.IO.File.Exists(p)) return CastDay.Parse(System.IO.File.ReadAllText(p));
+            }
+            return null;
         }
 
         static void EmitCastDay(StringBuilder sb)

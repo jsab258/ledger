@@ -19,6 +19,19 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 27 Oct 2026, an engine port's geography given its home in the reference rules, checked hour by hour against the real data files
+- Made: the street geography (who stands where at each hour, which way they look) moved from the engine code to the shared rules, with the data reader brought level; the engine's copy now reads the shared rules' port.
+- Method (setting-free):
+  - When a rule moves home, move what it reads too: the shared data reader lacked a field the engine's reader had (a body's spot), so the rule could not be written there until it read it.
+  - Pin a list-valued rule with one golden row per item plus a count row, each number in its own field: one joined text row failed only on number formatting ("-90" against "-9e+01").
+  - Drive the golden rows from the real data files over every hour of every weekday, not only made-up cases.
+  - Plant a fault in the engine copy and see the check go red before trusting green.
+- Tools: the shared rules and their tests; the golden table generator and the port's comparison script (compiles the port itself); the reach check's allowlist for engine-only callers; both engine targets built.
+- Target and check: the engine copy agrees with the shared rules on every golden row; a planted fault fails.
+- Cost (hours): about 1; nothing spent.
+- Failed and why: the first row form (a joined text) compared numbers as text.
+- Evidence: production/audits/sweep-2026-10-05/port-vs-core.md (G1)
+
 ### 27 Oct 2026, a room's highlight burn answered by local exposure in its own volume, and a new shadow traced to its light by switching light kinds off
 - Made: two prop placements fixed and passed; local exposure added to a room's own post-process volume from its spec; a new dark patch traced to the light it lost.
 - Method (setting-free):

@@ -4529,6 +4529,55 @@ namespace Golden
 		{
 			A.Known = true; A.Got = FromDouble(Sighting::DeedSeconds);
 		}
+		// The geography (Sighting.cs, the same day).
+		else if (Fn == "SightingOnStreet" && F.size() >= 4)
+		{
+			A.Known = true; A.Got = FromBool(Sighting::OnQuayStreet(D(F[1]), D(F[2])));
+		}
+		else if (Fn == "SightingIndoor" && F.size() >= 3)
+		{
+			A.Known = true; A.Got = FromBool(Sighting::IndoorPlace(D(F[1])));
+		}
+		else if (Fn == "SightingBodySpot" && F.size() >= 5)
+		{
+			double BX = 0.0, BZ = 0.0;
+			Sighting::BodySpot(D(F[1]), D(F[2]), BX, BZ);
+			A.Known = true; A.Got = MultiAnswer(F, 3, { FromDouble(BX), FromDouble(BZ) });
+		}
+		else if (Fn == "SightingFacing" && F.size() >= 4)
+		{
+			A.Known = true; A.Got = FromDouble(Sighting::StreetFacingYaw(D(F[1]), D(F[2])));
+		}
+		else if (Fn == "CastBodyX" && F.size() >= 4)
+		{
+			const CastDay* C = CastNamed(F[1]);
+			double BX = 0.0;
+			A.Known = true;
+			A.Got = C == 0 ? "cast-file-not-read/" + F[1] : C->BodyXOf(F[2], BX) ? FromDouble(BX) : std::string("none");
+		}
+		else if ((Fn == "SightingOnlookerCount" && F.size() >= 5) || (Fn == "SightingOnlooker" && F.size() >= 11))
+		{
+			// the game's own call: its three speaking people have bodies in the street (CrimeProbe.cpp); one row an
+			// onlooker, each number in its own field, and their count
+			const CastDay* C = CastNamed(F[1]);
+			A.Known = true;
+			if (C == 0) { A.Got = "missing"; }
+			else
+			{
+				const std::vector<Sighting::Onlooker> Seen = Sighting::OnlookersAt(*C, std::atoi(F[2].c_str()), std::atoi(F[3].c_str()), { "lena", "sam", "rocco" });
+				if (Fn == "SightingOnlookerCount") { A.Got = FromInt((long long)Seen.size()); }
+				else
+				{
+					const int K = std::atoi(F[4].c_str());
+					if (K < 0 || K >= (int)Seen.size()) { A.Got = "no-onlooker-" + F[4]; }
+					else
+					{
+						const Sighting::Onlooker& O = Seen[K];
+						A.Got = MultiAnswer(F, 5, { O.Id, O.Place, O.bBody ? "1" : "0", FromDouble(O.X), FromDouble(O.Z), FromDouble(O.YawDeg) });
+					}
+				}
+			}
+		}
 		else if (Fn == "FamiliarityFromMeetings" && F.size() >= 3)
 		{
 			// The sweep's G2 (26 October 2026): Acquaintance.FromMeetings.

@@ -52,6 +52,9 @@ namespace Ledger.Core
         readonly Dictionary<string, string> _within = new Dictionary<string, string>();
         readonly HashSet<string> _street = new HashSet<string>();
         readonly HashSet<string> _inside = new HashSet<string>();
+        // Where along the street a body waits for a place on its pavement (the file's "body_x_m"; 27 October 2026, the
+        // sweep's G1: the game's CastDay.h read it and this one did not).
+        readonly Dictionary<string, double> _bodyX = new Dictionary<string, double>();
         readonly Dictionary<string, string> _keeper = new Dictionary<string, string>();
         readonly Dictionary<string, (double open, double close)?[]> _hours = new Dictionary<string, (double, double)?[]>();
         readonly Dictionary<string, string> _hoursNote = new Dictionary<string, string>();
@@ -96,6 +99,14 @@ namespace Ledger.Core
                 {
                     if (!(io is bool inside)) throw new FormatException($"cast file: place {kv.Key}'s inside must be true or false");
                     if (inside) c._inside.Add(kv.Key);
+                }
+                // WHERE A BODY WAITS FOR THIS PLACE ON ITS PAVEMENT, optional (7 October): an inside place's person stands
+                // on their own pavement until the room is built or unlocked (Sighting.BodySpot), by default straight out
+                // from the place; "body_x_m" moves them along it, to the shop's door.
+                if (p.TryGetValue("body_x_m", out var bo))
+                {
+                    if (!(bo is double bodyX)) throw new FormatException($"cast file: place {kv.Key}'s body_x_m must be a number");
+                    c._bodyX[kv.Key] = bodyX;
                 }
             }
             // The areas, optional: each a list of its places and the names people use.
@@ -484,6 +495,10 @@ namespace Ledger.Core
             if (place == null || place == Off) return null;
             return _places[place];
         }
+
+        /// Where along the street a body waits for this place on its pavement (the file's "body_x_m"), or null where the
+        /// file gives none and the place's own x serves.
+        public double? BodyXOf(string place) => place != null && _bodyX.TryGetValue(place, out var x) ? x : (double?)null;
 
         /// Whether a place is inside a building (the file's "inside": the office,
         /// the counters, the cafe), where a wall stands between it and the next.

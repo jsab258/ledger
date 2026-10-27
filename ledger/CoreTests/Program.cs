@@ -118,6 +118,7 @@ namespace Ledger.CoreTests
                 TestSweepFaults();
                 TestFamiliarityFromMeetings();
                 TestSighting();
+                TestSightingGeography();
                 TestBudgetedClient();
                 await TestTranscriptRollback();
                 await TestReflection();

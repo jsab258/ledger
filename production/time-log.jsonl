@@ -151,3 +151,5 @@
 {"event": "stop", "at": "2026-10-27T06:23:06", "note": "two tries failed; set aside; importer change reverted"}
 {"event": "start", "at": "2026-10-27T06:27:26", "task": "27 Oct: item 5 the riser's wood grain: metre UVs as the recipe's other laminate (try 1)", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-27T06:39:48", "note": "riser grain fixed, both views passed"}
+{"event": "start", "at": "2026-10-27T06:44:07", "task": "27 Oct: fallback, phase 3's port: G1's geography (who stands where at the hour) homed in the Core", "phase": "3", "kind": "production"}
+{"event": "stop", "at": "2026-10-27T06:52:29", "note": "G1 closed: geography homed, 1,788 golden rows, port agrees"}
