@@ -245,6 +245,13 @@ namespace Ledger.Core
         /// kept to measure with (ClaimBench firsts --two-looks).
         public static int Looks = 1;
 
+        /// WHAT THE CHARACTER KNOWS HAPPENED (H items) COUNTED AS AN EVENT'S SUPPORT AT THE LIST, as beliefs, memories
+        /// and reports (B, M, W) are: a bench switch, off in the game (27 October 2026: on a newcomer's real questions
+        /// the whole check takes a median 2.4 s and three calls a sentence, because every event the cast's H items
+        /// support goes to a second look; production/research/invented-claims/HAIKU-FALSE-REFUSALS-2026-10-26.md).
+        /// On, such a detail is cleared on the list's word, as a B, M or W one is; measured before any use.
+        public static bool HistorySupports = false;
+
         // A call whose failure, however it comes, arrives in its task.
         static async System.Threading.Tasks.Task<LlmResponse> LookAsync(ILlmClient client, LlmRequest request, System.Threading.CancellationToken ct) =>
             await client.CompleteAsync(request, ct).ConfigureAwait(false);
@@ -793,7 +800,7 @@ namespace Ledger.Core
                 // word alone: the second look, which is shown them, checks each
                 // time against them (town list 6bo: cleared by the list, four
                 // of 24 answers about hours passed wrong, "half eight" for eight).
-                if (ids != null) foreach (var id in ids) if (id[0] == 'B' || id[0] == 'M' || id[0] == 'W') eventSupport = true;
+                if (ids != null) foreach (var id in ids) if (id[0] == 'B' || id[0] == 'M' || id[0] == 'W' || (HistorySupports && id[0] == 'H')) eventSupport = true;
                 if (!eventSupport) { outList.Add(detail.Trim()); claimed.Add(detail.Trim()); }
             }
             // The same words given twice, once as a habit a P item may clear and

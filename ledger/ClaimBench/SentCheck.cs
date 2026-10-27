@@ -36,6 +36,8 @@ static partial class Program
             .ToList();
         if (rows.Any(r => r.half != "held")) { Console.WriteLine("refused: a sentence that is not from the held half"); return 2; }
         if (limit > 0) rows = rows.Take(limit).ToList();
+        // --history-supports: the check's H items count as an event's support at the list (ClaimCheck.HistorySupports)
+        ClaimCheck.HistorySupports = args.Contains("--history-supports");
         using var client = (IDisposable)BenchClient(args, "the game's check on the fast checker's enlarged held test, " + rows.Count + " sentences");
         var llm = (ILlmClient)client;
         var outRows = new List<object>();
