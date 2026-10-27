@@ -158,6 +158,7 @@ Your answers of 27 October are recorded: the cuffs' third try (failed), $4 more 
 **Done:**
 - Tom walks as his MetaHuman on Epic's route, packaged; the AI tester's whole route, 15 of 15.
 - That walk caught "outfit_man" in Darren's subtitle; fixed, proved by tonight's walk.
-- Your order on invented sentences: listing a character's facts cuts inventions written by three quarters; your name rule is in; the cited version goes in next.
+- Your order on invented sentences: listing a character's facts cuts inventions written by three quarters; your name rule and the cited version are in.
+- Mickey's back door now stands shut on his locked room, as Sheila says; judged after tonight's build.
 
 **Act on:** Marvelous, one click (Needs you 1).

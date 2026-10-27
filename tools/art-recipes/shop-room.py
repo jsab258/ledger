@@ -384,16 +384,38 @@ def build_and_render(argv):
     for name, fx0, fx1, fz0, fz1 in (("door_frame_l", 1.02, 1.1, 0, 2.08), ("door_frame_r", 1.95, 2.03, 0, 2.08),
                                      ("door_frame_head", 1.02, 2.03, 2.0, 2.08)):
         box(name, fx0 + dx, fx1 + dx, D - 0.035, D - 0.005, fz0, fz1, door)
-    door_leaf = box("door_leaf", 1.1 + dx, 1.92 + dx, D - 0.06, D - 0.02, 0, 1.98, door)
-    door_leaf.rotation_euler[2] = math.radians(-35)
-    # ITS KNOB, on the open edge, room side (the second review: "the door has no handle")
-    th_ = math.radians(-35)
+    shut_ = shop["id"] == "mickeys"
+    # shut, the leaf fills its frame (a 3 cm slit showed the dark behind down its edge, 27 October night)
+    door_leaf = box("door_leaf", 1.1 + dx, (1.95 if shut_ else 1.92) + dx, D - 0.06, D - 0.02, 0, 2.0 if shut_ else 1.98, door)
+    # MICKEY'S BACK DOOR STANDS SHUT (27 October, night). Behind it is Mickey's own room, locked since he died, Sheila
+    # keeping the key: her facts and Darren's say so (ClaimCheck's known items, H13 and H12), and the room's collision
+    # has always stood it shut (production/specs/mickeys-office.json). Since 8 October it hung half open onto a bare
+    # "back room" a metre deep, to mend a flat grey doorway; through Epic's wider camera in the packaged game (27
+    # October) that bare room and the slab of a leaf were the staff view's faults. Shut, it is a four-panel door of the
+    # terrace's own age, a smooth brass knob, and a keyhole under it. Other shops keep their half-open back door.
+    th_ = math.radians(0 if shut_ else -35)
+    door_leaf.rotation_euler[2] = th_
+    brass_ = mat("door_brass", (0.55, 0.40, 0.16), rough=0.3, metal=1.0)
+    if shut_:
+        # four sunk panels' raised mouldings on the office side, the leaf's own paint
+        for k_, (pz0, pz1) in enumerate(((0.12, 0.88), (1.08, 1.86))):
+            for j_, (px0, px1) in enumerate(((1.17, 1.48), (1.54, 1.85))):
+                for nm_, a0, a1, b0, b1 in (("l", px0, px0 + 0.025, pz0, pz1), ("r", px1 - 0.025, px1, pz0, pz1),
+                                            ("b", px0, px1, pz0, pz0 + 0.025), ("t", px0, px1, pz1 - 0.025, pz1)):
+                    box("door_panel_%d%d%s" % (k_, j_, nm_), a0 + dx, a1 + dx, D - 0.068, D - 0.06, b0, b1, door)
+        # the keyhole: a brass plate under the knob, a dark slot in it
+        box("door_keyplate", 1.835 + dx, 1.865 + dx, D - 0.066, D - 0.06, 0.86, 0.93, brass_)
+        box("door_keyhole", 1.846 + dx, 1.854 + dx, D - 0.068, D - 0.066, 0.875, 0.905, mat("keyhole", (0.01, 0.01, 0.01), rough=1.0))
+    # ITS KNOB, on the open edge, room side (the second review: "the door has no handle"); smooth on the shut door,
+    # whose knob the wider camera sees (27 October: "a faceted knob")
     ax_, ay_ = 1.51 + dx + 0.34 * math.cos(th_), D - 0.04 + 0.34 * math.sin(th_)
     nx_, ny_ = math.sin(th_), -math.cos(th_)
-    bpy.ops.mesh.primitive_uv_sphere_add(segments=12, ring_count=8, radius=0.03,
+    bpy.ops.mesh.primitive_uv_sphere_add(segments=32 if shut_ else 12, ring_count=16 if shut_ else 8, radius=0.03,
                                          location=(ax_ + 0.045 * nx_, ay_ + 0.045 * ny_, 1.0))
     bpy.context.object.name = "door_knob"
-    bpy.context.object.data.materials.append(mat("door_brass", (0.55, 0.40, 0.16), rough=0.3, metal=1.0))
+    bpy.context.object.data.materials.append(brass_)
+    if shut_:
+        bpy.ops.object.shade_smooth()
 
     # THE TUBES: three T12 battens across the ceiling, 1.5 m long (an empty unit has a bare bulb).
     # LIT IN A REAL ROOM (4 October: a fresh reviewer saw Mickey's battens dark): the exported
@@ -1665,24 +1687,27 @@ def build_and_render(argv):
         # THE OFFICE CLOCK over the back door (Poly Haven's wall clock, CC0)
         model("wall_clock", 0.42, D - 0.03, 2.25, turn=0.0, size=0.30)
         # SHEILA'S BACK ROOM through the half-open back door (8 October, item 1.1's third review,
+        # NOT BUILT SINCE 27 October night: the back door stands shut on Mickey's locked room (above), so nothing of it
+        # is seen; kept here, off, as the record of the room that was
         # V9: "the room beyond the door flat untextured grey"): a real room a metre deep, so the
         # office's light falls into it and falls off, its walls, floor and skirting meeting in
         # corners, a shelf with a mug and a coat rail on the far wall (the office's calendar is the only print, so none here)
-        bx0, bx1 = back_gap
-        by0, by1 = D + t, D + t + 1.1
-        rx0, rx1 = bx0 - 0.6, bx1 + 0.9
-        back_wall = mat("back_room_wall", (0.46, 0.40, 0.30), rough=0.9)
-        back_floor = mat("back_room_lino", (0.20, 0.15, 0.11), rough=0.6)
-        back_wood = mat("back_room_wood", (0.22, 0.14, 0.08), rough=0.6)
-        box("back_room_floor", rx0, rx1, by0, by1, -0.012, 0.0, back_floor)
-        box("back_room_far", rx0, rx1, by1, by1 + 0.05, 0.0, 2.4, back_wall)
-        box("back_room_side_l", rx0 - 0.05, rx0, by0, by1, 0.0, 2.4, back_wall)
-        box("back_room_side_r", rx1, rx1 + 0.05, by0, by1, 0.0, 2.4, back_wall)
-        box("back_room_ceiling", rx0, rx1, by0, by1, 2.4, 2.45, back_wall)
-        box("back_room_skirting", rx0, rx1, by1 - 0.015, by1, 0.0, 0.10, back_wood)
-        box("back_room_shelf", bx0 + 0.05, bx1 + 0.3, by1 - 0.22, by1, 1.10, 1.125, back_wood)
-        prop("mug", bx0 + 0.25, by1 - 0.10, 1.125, turn=0.3)
-        prop("coat_rail", bx0 + 0.45, by1, 1.64)
+        if not shut_:
+            bx0, bx1 = back_gap
+            by0, by1 = D + t, D + t + 1.1
+            rx0, rx1 = bx0 - 0.6, bx1 + 0.9
+            back_wall = mat("back_room_wall", (0.46, 0.40, 0.30), rough=0.9)
+            back_floor = mat("back_room_lino", (0.20, 0.15, 0.11), rough=0.6)
+            back_wood = mat("back_room_wood", (0.22, 0.14, 0.08), rough=0.6)
+            box("back_room_floor", rx0, rx1, by0, by1, -0.012, 0.0, back_floor)
+            box("back_room_far", rx0, rx1, by1, by1 + 0.05, 0.0, 2.4, back_wall)
+            box("back_room_side_l", rx0 - 0.05, rx0, by0, by1, 0.0, 2.4, back_wall)
+            box("back_room_side_r", rx1, rx1 + 0.05, by0, by1, 0.0, 2.4, back_wall)
+            box("back_room_ceiling", rx0, rx1, by0, by1, 2.4, 2.45, back_wall)
+            box("back_room_skirting", rx0, rx1, by1 - 0.015, by1, 0.0, 0.10, back_wood)
+            box("back_room_shelf", bx0 + 0.05, bx1 + 0.3, by1 - 0.22, by1, 1.10, 1.125, back_wood)
+            prop("mug", bx0 + 0.25, by1 - 0.10, 1.125, turn=0.3)
+            prop("coat_rail", bx0 + 0.45, by1, 1.64)
         # THE FANLIGHT'S LETTERS, reverse-gilded on the glass over the street door (the dressing
         # research; the second review read the fanlight as "a blank board")
         for nm_, col_, off_ in (("fanlight_word_shade", mat("gilt_shade2", (0.01, 0.01, 0.01), rough=0.6), 0.003),
