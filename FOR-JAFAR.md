@@ -131,7 +131,8 @@ No decision asked: these are for watching the street change.
 ### Needs you
 
 1. **Tonight's page, three taps** (https://claude.ai/artifact/GmtwhT5o89Ho9huHXYUieX): Darren's delivery A or B, blind; the checker's third try: keep Haiku alone and fix its leaks (recommended); price a north-east actor for Darren (recommended).
-2. **Leave Marvelous open with the bridge running** (recommended): Tom's jacket jobs run through it; if it is closed, one click on LEDGER bridge next time.
+2. **Tom's jacket's cuffs, a third try?** Two fixes failed (they hang off his wrists). Research found the cause: the wrist's placement point sits mid-hand, so each cuff closes over the hand. Yes, by the researched route: placed at the arm's wrist end, then drawn in to grip (recommended); or no, the jacket waits.
+3. **Leave Marvelous open with the bridge running** (recommended): Tom's jacket jobs run through it; if it is closed, one click on LEDGER bridge next time.
 
 Your evening answers are recorded (shadows inside the office: yes; $10 for the slow-reply tests; the checker trained on Gemini's labels, no letter to Anthropic).
 
