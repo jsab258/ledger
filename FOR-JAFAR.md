@@ -149,21 +149,21 @@ Your answers of 27 October are recorded: the cuffs' third try (failed: Needs you
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
 
-## Builder, Monday 26 October (night)
+## Builder, Tuesday 27 October (night)
 
 **Failed:**
-- The night's build and morning pictures stopped on F:'s free space; my own files compressed, nothing deleted (Needs you 4); built at 03:45, pictures retaken.
-- Tom's jacket's cuffs hang off his wrists; two fixes failed; researched (Needs you 2).
-- Haiku's check lets 18 to 23 of 617 test inventions through, refuses 31% of true ones.
-- The fast checker's third try holds your bar but clears only 3%.
-- Starting the check's second look early saves 0.04 s; left off.
-- The office: a dark patch under the radio shelf, two tries failed; set aside.
+- The fast checker's fourth try: the larger checker is too slow beside the game (1 answer in 6 over 0.15 s) and clears less than the small one (Needs you 1).
+- Tom's cuffs, third try: the sleeve's own end lies flat past the hand; set aside (Needs you 2).
+- Common Voice cannot give Darren a voice: its speakers never agreed to be copied (Needs you 3).
+- My fault: Epic's walk and Tom's MetaHuman had never reached the packaged game. Fixed.
+- The frame test fell to 20 fps: Marvelous held the graphics card; closed.
 
 **Done:**
-- Tonight's build walked: 13 of 15 stages (Ron, Darren missed, as before); townsfolk still undressed.
-- The nightly "that's all I know" count had never run (a command-line limit): fixed, 4 of 60.
-- Speech: two copies of each check call cut the slowest checks by about a second, but may refuse more true sentences; whole turns next, your money (Needs you 5).
-- Tom's zip jacket: game mesh, maps baked, skinned, posed.
-- The port: who saw the window, and where everyone stands, now shared rules.
+- Tom walks as his MetaHuman on Epic's route in the packaged game; the AI tester's whole route, 15 of 15.
+- That walk caught an internal name in Darren's subtitle ("outfit_man"); fixed, proved by tonight's walk.
+- Last night's build and morning pictures re-run.
+- Two copies of each check call: in whole turns, no more refusals (Needs you 4).
+- The check's wording fix: no fewer false refusals; left off.
+- U3's reaction rules in the shipping engine, not yet wired.
 
-**Act on:** the page, three taps; Needs you 2 and 5.
+**Act on:** tonight's page, three taps.
