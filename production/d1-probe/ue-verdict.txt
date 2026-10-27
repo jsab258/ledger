@@ -1,5 +1,5 @@
-# UE probe verdict 45eec1f @1793022546
+# UE probe verdict b852535 @1793068475
 # Line 1 names the commit this was measured on, as the Unity verdict does.
 
-perceptionRows=57872 perceptionMismatches=0 perceptionUnknownFns=0/FactNull-needs-exceptions perceptionTolerance=1e-09 probeTest=PASS goldenTable=perception-golden.txt
+perceptionRows=57921 perceptionMismatches=0 perceptionUnknownFns=0/FactNull-needs-exceptions perceptionTolerance=1e-09 probeTest=PASS goldenTable=perception-golden.txt
 verdictReached=end
