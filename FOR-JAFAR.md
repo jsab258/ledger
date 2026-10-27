@@ -156,7 +156,7 @@ Your evening answers are recorded (shadows inside the office: yes; $10 for the s
 
 **Done:**
 - Tom's zip jacket: game mesh in budget, maps baked (zip, pockets, rib), skinned and posed; reviewed twice.
-- Rewriting only a refused sentence: 31 of 37 pass; would cut 5-second waits about 26 to 22 in 120.
+- Rewriting only a refused sentence, tried in real turns: 8 of 10 rewritten, no fallbacks, the slowest tenth a second shorter, but 5-second waits not fewer; left off.
 - The port: its test files under the upload limit; two rule sets moved home (face familiarity, who saw the window).
 - The office's shadows at High: passed in the editor.
 
