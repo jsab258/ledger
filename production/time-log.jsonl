@@ -142,3 +142,4 @@
 {"event": "start", "at": "2026-10-27T04:27:00", "task": "27 Oct: the review's fixes: race on the model's beginning, the budget settles stopped streams; records, page data, commit and push", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-27T04:39:00", "note": "from the clock and commit times"}
 {"event": "start", "at": "2026-10-27T04:39:31", "task": "27 Oct: item 4 two copies' verdict test on 87 more sentences; then item 5 the office's import and staff-side gate", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-27T05:37:59", "note": "two copies' verdict test done; the office imported, gated, local exposure in"}

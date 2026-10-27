@@ -19,6 +19,20 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 27 Oct 2026, a room's highlight burn answered by local exposure in its own volume, and a new shadow traced to its light by switching light kinds off
+- Made: two prop placements fixed and passed; local exposure added to a room's own post-process volume from its spec; a new dark patch traced to the light it lost.
+- Method (setting-free):
+  - After moving one prop, re-shoot every view of the room, not only the one the fix was for: the move here cured its own view and opened a shadow in another.
+  - A grown highlight burn from a fixed light, when the light has used its two tries, can be answered in another direction: local exposure in the room's volume lowers highlight and shadow contrast region by region without relighting.
+  - Local exposure does not lift a small dark gap among bright surfaces; it works on regions larger than the gap.
+  - To find which light a shadow belongs to, switch each light kind off in turn and measure the patch and its lit neighbour; rule out screen-space effects the same way before touching geometry.
+  - Have reviewers measure (percentiles, clipped counts, edge profiles) and check for halos and flattening against the bar, not only by eye.
+- Tools: the room recipe and its importer; the game's own photograph mode at the shipped picture level; show-flag and console overrides from the command line; pixel measures; one fresh reviewer per view.
+- Target and check: no new fault in any view against its last good picture; burned-white pixels back below the last good's.
+- Cost (hours): about 1; nothing spent.
+- Failed and why: local exposure did not lift the new shadow (too small a region); its second try is geometric.
+- Evidence: production/research/cab-office-interior-1990/WEAR-2026-10-25.md (the staff side's gate); production/previews/office-staff-local-exposure-2026-10-27.jpg
+
 ### 27 Oct 2026, a slow, uneven model call sent twice at once, the copy the service begins first kept, reviewed and held for the owner's yes
 - Made: a switch that sends each check call twice and keeps the copy the model begins first; a stream signal for that moment; a budget fix for stopped streams; a paired-timing bench mode; tests.
 - Method (setting-free):

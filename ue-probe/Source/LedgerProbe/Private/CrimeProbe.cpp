@@ -4406,6 +4406,21 @@ namespace
 			(*Inside)->TryGetNumberField(TEXT("exposure_z1"), Back);
 			FParse::Value(FCommandLine::Get(), TEXT("OfficePinDay="), PinDay);
 			FParse::Value(FCommandLine::Get(), TEXT("OfficePinNight="), PinNight);
+			// LOCAL EXPOSURE INSIDE (27 October, item 5; LIGHT-2026-10-26.md, the research's third step: Epic's auto-exposure
+			// page sets local exposure up with Lumen). The desk lamp's pool burned the radio and its microphone white, and the
+			// radio's shadow off the riser crushed a gap beside the counter's mug to black: local exposure lowers the contrast
+			// of a room's highlights and shadows, picture region by region, so both come back toward the middle without
+			// relighting the room. The spec's "local_exposure" (highlight and shadow contrast, 1 = none); -OfficeLocalHighlight=
+			// and -OfficeLocalShadow= to try values.
+			double LocalHighlight = 0.0, LocalShadow = 0.0;
+			const TSharedPtr<FJsonObject>* LocalObj = nullptr;
+			if ((*Inside)->TryGetObjectField(TEXT("local_exposure"), LocalObj) && LocalObj && LocalObj->IsValid())
+			{
+				(*LocalObj)->TryGetNumberField(TEXT("highlight_contrast"), LocalHighlight);
+				(*LocalObj)->TryGetNumberField(TEXT("shadow_contrast"), LocalShadow);
+			}
+			FParse::Value(FCommandLine::Get(), TEXT("OfficeLocalHighlight="), LocalHighlight);
+			FParse::Value(FCommandLine::Get(), TEXT("OfficeLocalShadow="), LocalShadow);
 			if (PinDay > 0.0 || PinNight > 0.0)
 			{
 				const FVector Mid((GOffice.X0 + GOffice.X1) * 50.0, (GOffice.Z0 + Back) * 50.0, 150.0);
@@ -4443,7 +4458,7 @@ namespace
 							if (KV.Value.IsValid() && KV.Value->TryGetNumber(Num)) { ShadowInside.Add(TPair<FString, float>(KV.Key, (float)Num)); }
 						}
 					}
-					auto Drive = [Weak, WeakWorld, Rooms, PinDay, PinNight, ShadowInside](float) -> bool
+					auto Drive = [Weak, WeakWorld, Rooms, PinDay, PinNight, ShadowInside, LocalHighlight, LocalShadow](float) -> bool
 					{
 						APostProcessVolume* P = Weak.Get();
 						UWorld* W = WeakWorld.Get();
@@ -4491,11 +4506,15 @@ namespace
 						S.AutoExposureMaxBrightness = (float)Pin;
 						S.bOverride_AutoExposureBias = Pin > 0.0;
 						S.AutoExposureBias = 0.0f;
+						S.bOverride_LocalExposureHighlightContrastScale = LocalHighlight > 0.0;
+						S.LocalExposureHighlightContrastScale = LocalHighlight > 0.0 ? (float)LocalHighlight : 1.0f;
+						S.bOverride_LocalExposureShadowContrastScale = LocalShadow > 0.0;
+						S.LocalExposureShadowContrastScale = LocalShadow > 0.0 ? (float)LocalShadow : 1.0f;
 						return true;
 					};
 					Drive(0.0f);
 					FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateLambda(Drive), 0.0f);
-					UE_LOG(LogTemp, Display, TEXT("LedgerOffice: its own exposure, pinned %.3f by day and %.3f at night, inside x %.2f-%.2f z %.2f-%.2f"), PinDay, PinNight, GOffice.X0, GOffice.X1, GOffice.Z0, Back);
+					UE_LOG(LogTemp, Display, TEXT("LedgerOffice: its own exposure, pinned %.3f by day and %.3f at night, local contrast %.2f highlights %.2f shadows, inside x %.2f-%.2f z %.2f-%.2f"), PinDay, PinNight, LocalHighlight, LocalShadow, GOffice.X0, GOffice.X1, GOffice.Z0, Back);
 				}
 			}
 		}
