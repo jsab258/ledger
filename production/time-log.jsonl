@@ -131,3 +131,14 @@
 {"event": "stop", "at": "2026-10-26T10:15:00", "note": "reviewers in parallel; session time only"}
 {"event": "start", "at": "2026-10-26T10:15:00", "task": "26 Oct: item 5 first wear pass: traced, fixed, exported, imported, reviewed", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-26T11:03:00", "note": "from the clock"}
+{"event": "start", "at": "2026-10-27T02:58:00", "task": "27 Oct: the night's build stopped on F:'s floor; files compressed; asked again; walked the new build; morning pictures retaken", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-27T03:16:00", "note": "from the clock and commit times"}
+{"event": "start", "at": "2026-10-27T03:16:00", "task": "27 Oct: item 4 the check's own time: early looks built and A/B; paired timing; two copies built and A/B", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-27T04:09:00", "note": "from the clock and run logs"}
+{"event": "start", "at": "2026-10-27T04:09:00", "task": "27 Oct: the nightly bench's 60 failures traced and fixed (system prompt from a file); tonight's count run", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-27T04:16:00", "note": "from the clock"}
+{"event": "start", "at": "2026-10-27T04:17:00", "task": "27 Oct: fresh review of two copies (a helper re-ran every scorer)", "phase": "1", "kind": "review"}
+{"event": "stop", "at": "2026-10-27T04:27:00", "note": "the helper's own run time"}
+{"event": "start", "at": "2026-10-27T04:27:00", "task": "27 Oct: the review's fixes: race on the model's beginning, the budget settles stopped streams; records, page data, commit and push", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-27T04:39:00", "note": "from the clock and commit times"}
+{"event": "start", "at": "2026-10-27T04:39:31", "task": "27 Oct: item 4 two copies' verdict test on 87 more sentences; then item 5 the office's import and staff-side gate", "phase": "1", "kind": "production"}

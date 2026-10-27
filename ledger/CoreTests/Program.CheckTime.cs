@@ -290,6 +290,31 @@ namespace Ledger.CoreTests
             Check(stoppedThrew && reservedAt > 0.001 && Math.Abs(settled - used) < 1e-9,
                   "a stream stopped on purpose is settled at what it used, not left at its worst case",
                   $"reserved US${reservedAt:0.000000}, settled US${settled:0.000000}, used US${used:0.000000}");
+
+            // Stopped before the service answered at all (the cancellation arrives as a plain one, with no use to
+            // read): settled at its prompt, counted as read, nothing written; never left at its worst case.
+            var early = new BudgetedClient(new NeverAnswers(), 1.0);
+            var stopEarly = new CancellationTokenSource();
+            var callEarly = early.StreamAsync(req, null, null, stopEarly.Token);
+            stopEarly.Cancel();
+            bool earlyThrew = false;
+            try { callEarly.GetAwaiter().GetResult(); } catch (OperationCanceledException) { earlyThrew = true; }
+            double prompt = (5 / 4.0 * 1.1 + 50) / 1_000_000.0 * 0.10;
+            Check(earlyThrew && early.SpentUsd < reservedAt / 10 && early.SpentUsd > 0,
+                  "a stream stopped before any answer is settled at its prompt, not its worst case",
+                  $"settled US${early.SpentUsd:0.000000} (its prompt US${prompt:0.000000}), worst case US${reservedAt:0.000000}");
+        }
+
+        /// A service that never answers: its stream waits until it is cancelled, and the cancellation is all it says.
+        class NeverAnswers : IStartingLlmClient
+        {
+            public Task<LlmResponse> CompleteAsync(LlmRequest request, CancellationToken ct = default) => throw new InvalidOperationException("not used");
+            public Task<LlmResponse> StreamAsync(LlmRequest request, Action<string> onText, CancellationToken ct = default) => StreamAsync(request, onText, null, ct);
+            public async Task<LlmResponse> StreamAsync(LlmRequest request, Action<string> onText, Action onStart, CancellationToken ct = default)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(30), ct);
+                return null;
+            }
         }
     }
 }

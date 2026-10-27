@@ -189,3 +189,26 @@ beginning now kept; F:/LedgerTools/town-scratch/slow-replies/two-copies/pairs-be
   turn, about $0.002 a turn, roughly $0.30 on a 150-turn friends' evening. An estimate; not measured in play.
 - **Not yet measured:** whole turns on the real path (the voice heard), a larger verdict test of this version, and the
   service's rate limits under doubled traffic. A money change in the game: his yes before it is switched on.
+
+**The verdict test of this version** (27 October, 04:40 to 04:55): the 87 sentences the first A/B never reached, each
+checked with two copies (raced on the model's beginning) and without, alternating; the counter stopped it at 61
+(F:/LedgerTools/town-scratch/slow-replies/two-copies/ab-begin.jsonl).
+
+| Sentences | One copy: median / slowest tenth from | Two copies: median / slowest tenth from | Saved, median per sentence |
+|---|---|---|---|
+| all 61 | 2.35 / 4.04 s | 2.17 / 3.20 s | 0.29 s |
+| the 46 that needed a look | 2.65 / 4.21 s | 2.34 / 3.35 s | 0.42 s |
+
+- **Verdicts:** 52 of 61 the same; invented sentences passed 4 and 4 of 29; true ones 27 with one copy and 22 with two
+  of 32 (6 passed only with one copy, 1 only with two).
+- **Over both A/B runs, 180 sentences:** one copy passed what two copies refused 19 times, the reverse 9 (true sentences
+  12 and 5, invented 7 and 4), where the plain switch of section 2 split 9 and 8. Suggestive, not certain (a sign test,
+  p about 0.09): **two copies may refuse more true sentences.** The race cannot see content; one possible cause is
+  that the copy the service starts first runs on a different kind of its machines. A refused first sentence is what
+  makes a turn slow, so more refusals could eat the check's speed gain: only whole turns can say.
+- **The counter still over-counted:** a copy stopped before the service answered at all arrives as a plain
+  cancellation and was left at its worst case. Fixed: settled at its prompt, counted as read (one more CoreTests check;
+  all 5,116 pass).
+- **Next, with his word (money):** whole turns, the newcomer's 60 questions, two runs with two copies and two without
+  (one run proves nothing: two identical runs gave 17 and 9 slow turns), about $3 beyond his $10 for these tests
+  (the counter says $9.18 of it spent; the real spend is lower).

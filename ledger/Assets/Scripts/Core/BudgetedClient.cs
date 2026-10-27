@@ -52,11 +52,17 @@ namespace Ledger.Core
         public static double WorstCaseUsd(LlmRequest r)
         {
             if (r == null) return 0;
-            long chars = (r.System ?? "").Length;
-            foreach (var m in r.Messages) chars += (m.Content ?? "").Length;
-            double inTokens = chars / 4.0 * 1.1 + 50;
+            double inTokens = PromptTokens(r);
             var rate = RateOf(r.Model);
             return inTokens / 1_000_000.0 * rate.inPerM + Math.Max(0, r.MaxTokens) / 1_000_000.0 * rate.outPerM;
+        }
+
+        // A request's prompt in tokens, generously: four characters a token and a tenth more.
+        static double PromptTokens(LlmRequest r)
+        {
+            long chars = (r.System ?? "").Length;
+            foreach (var m in r.Messages) chars += (m.Content ?? "").Length;
+            return chars / 4.0 * 1.1 + 50;
         }
 
         static (double inPerM, double outPerM) RateOf(string model)
@@ -149,6 +155,13 @@ namespace Ledger.Core
             catch (LlmStreamStoppedException e)
             {
                 Settle(reserved, request, e.SoFar);
+                throw;
+            }
+            // Stopped before the service answered at all: whether its prompt is billed is not known, so it is counted
+            // as read, with nothing written.
+            catch (OperationCanceledException) when (ct.IsCancellationRequested)
+            {
+                Settle(reserved, request, new LlmResponse { InputTokens = (int)PromptTokens(request) });
                 throw;
             }
             Settle(reserved, request, resp);
