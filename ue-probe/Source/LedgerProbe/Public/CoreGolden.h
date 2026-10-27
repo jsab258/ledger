@@ -4628,6 +4628,35 @@ namespace Golden
 				A.Got = Reaction::Name(Reaction::Confront(&View, bResists));
 			}
 		}
+		// THE REACTION LADDER (the sweep's U3, 27 October 2026), answered from Reaction.h:
+		// each decision by its C# name, each severity and loudness as a double.
+		else if (Fn == "ReactDecide" && F.size() >= 8)
+		{
+			A.Known = true;
+			A.Got = Reaction::NameOf(Reaction::Decide(D(F[1]), D(F[2]), D(F[3]), D(F[4]), B(F[5]), B(F[6])));
+		}
+		else if (Fn == "ReactSeverity" && F.size() >= 3)
+		{
+			A.Known = true;
+			if (F[1] == "null")
+			{
+				A.Got = FromDouble(Reaction::Severity(nullptr));
+			}
+			else
+			{
+				Observation View;
+				View.Slots = (Slot)std::atoi(F[1].c_str());
+				A.Got = FromDouble(Reaction::Severity(&View));
+			}
+		}
+		else if (Fn == "ReactLoudness" && F.size() >= 3)
+		{
+			const char* Names[] = { "Ignore", "Notice", "Investigate", "Alarm", "Flee", "Deliver", "FetchTheLaw", "Intervene" };
+			for (int K = 0; K < 8; ++K)
+			{
+				if (F[1] == Names[K]) { A.Known = true; A.Got = FromDouble(Reaction::LoudnessOf((Reaction::Reacted)K)); }
+			}
+		}
 		else if ((Fn == "CataloguesYourCoat" || Fn == "IsPublicEvent") && F.size() >= 3)
 		{
 			Reaction::Lawful O = Reaction::Lawful::NothingToArrest;
@@ -4646,8 +4675,8 @@ namespace Golden
 		}
 		else if (Fn == "ReactionConst" && F.size() >= 3)
 		{
-			A.Known = (F[1] == "ResistPressure");
-			if (A.Known) { A.Got = FromDouble(Reaction::ResistPressure); }
+			A.Known = (F[1] == "ResistPressure" || F[1] == "AlarmLoudness");
+			if (A.Known) { A.Got = FromDouble(F[1] == "ResistPressure" ? Reaction::ResistPressure : Reaction::AlarmLoudness); }
 		}
 		// THE REACTION LADDER AND DECISION 7 (a), answered from StreetVoice.h
 		// (PerceptionGolden EmitStance, 23 September). A stance is compared as

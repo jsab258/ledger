@@ -19,6 +19,18 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 27 Oct 2026, a behaviour ladder ported to the shipping engine as rules first, its wiring held back until the engine can show its rungs
+- Made: the reference rules' reaction ladder (how bad what a witness got was; what their temperament makes them do; which reactions make a noise) in the engine's port, pinned by golden rows; a design note saying why it is not yet wired.
+- Method (setting-free):
+  - Before porting a behaviour, work out what it would do at the moments the game actually has. Here, at a broken window, the ladder's graver rungs are unreachable by its own numbers, so the gap the sweep feared was not there.
+  - Port the rules and pin them even when the engine cannot show every outcome. Wire them only when every rung they can reach has something to show; a rung the engine cannot show would replace today's visible stand-in with nothing.
+  - Pin a decision function at every branch boundary on both sides, plus values outside its range, and a summing function over every combination of its inputs.
+  - Check a stale comment against the data: the rules named a temperament field the data model never had.
+- Tools: the reference rules and their tests; the golden table generator and the port's comparison script.
+- Target and check: the port agrees on every golden row (64,750, none skipped by the new rows); the window's own cases pass in the reference tests.
+- Cost (hours): about 0.4; nothing spent.
+- Evidence: production/audits/sweep-2026-10-05/U3-DESIGN-2026-10-27.md; ue-probe/Source/LedgerProbe/Public/Reaction.h.
+
 ### 27 Oct 2026, a garment's rib cuffs scripted round a wrist in a cloth simulator: a third, researched try, failed and set aside
 - Made: nothing kept. Five drapes and five probe jobs; a measure that finds the wrist on the body and says where each cuff sits.
 - Method (setting-free):

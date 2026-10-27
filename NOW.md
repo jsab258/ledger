@@ -12,7 +12,7 @@ Failed its exit check on 22 Oct (production/audits/phase1-exit/CLOSE-2026-10-22.
 - [ ] 4. Speech: all on Pocket; checker's fourth try designed (LOCAL-CHECKERS); wording A/B running; Common Voice fails consent (voice-latency/COMMON-VOICE).
 - [ ] 5. Mickey's office: staff-side fixes passed; shadow under radio shelf open (cab-office-interior-1990/WEAR).
 - [ ] 6. Phase 1's exit re-run; phase 2?
-- Fallback: phase 3's port; golden in parts, G2 next (sweep-2026-10-05/).
+- Fallback: phase 3's port; U3's rules ported, not wired (sweep-2026-10-05/U3-DESIGN).
 
 ## Studies this week (aaa-reference/STUDY-PLAN.md)
 

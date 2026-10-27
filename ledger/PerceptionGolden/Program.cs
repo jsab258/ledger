@@ -367,6 +367,35 @@ namespace Ledger.PerceptionGolden
         /// A story case is written out in its row - each rumour as
         /// subject:predicate:value:confidence:sensitive:indelible:suppressed,
         /// joined by ';' - so the port builds the same holder from the row.
+        /// THE REACTION LADDER (the 5 October sweep's U3, ported 27 October 2026;
+        /// production/audits/sweep-2026-10-05/U3-DESIGN-2026-10-27.md): Decide over
+        /// every branch's boundary, each side of it (severity at 0.05, 0.2, 0.45,
+        /// 0.5 and 0.75; nerve at 0.25, 0.3, 0.4 and 0.85; dutiful at 0.55;
+        /// willingness at 0.4; and values outside 0..1, which the C# clamps for all
+        /// but willingness), with and without a body and an earlier alarm; Severity
+        /// over every one of the 128 slot sets and the empty and null views;
+        /// LoudnessOf for each reaction; the one constant.
+        static void EmitLadder(StringBuilder sb)
+        {
+            var sevs = new[] { -0.1, 0.0, 0.04, 0.05, 0.19, 0.2, 0.4, 0.44, 0.45, 0.5, 0.51, 0.74, 0.75, 0.89, 0.9, 1.0, 1.2 };
+            var nerves = new[] { -0.1, 0.0, 0.24, 0.25, 0.29, 0.3, 0.4, 0.41, 0.85, 0.86, 1.0, 1.1 };
+            foreach (var sev in sevs)
+                foreach (var nerve in nerves)
+                    foreach (var dutiful in new[] { 0.55, 0.56, 1.3 })
+                        foreach (var will in new[] { 0.4, 0.41 })
+                            foreach (var body in new[] { false, true })
+                                foreach (var alarmed in new[] { false, true })
+                                    Row(sb, "ReactDecide", D(sev), D(nerve), D(dutiful), D(will), Bit(body), Bit(alarmed),
+                                        Reaction.Decide(sev, nerve, dutiful, will, body, alarmed).ToString());
+            for (int slots = 0; slots < 128; slots++)
+                Row(sb, "ReactSeverity", slots.ToString(Inv),
+                    D(Reaction.Severity(new Observation { Slots = (Slot)slots })));
+            Row(sb, "ReactSeverity", "null", D(Reaction.Severity(null)));
+            foreach (Reacted r in Enum.GetValues(typeof(Reacted)))
+                Row(sb, "ReactLoudness", r.ToString(), D(Reaction.LoudnessOf(r)));
+            Row(sb, "ReactionConst", "AlarmLoudness", D(Reaction.AlarmLoudness));
+        }
+
         static void EmitStance(StringBuilder sb)
         {
             var sus = new[] { 0.0, 0.21, 0.22, 0.47, 0.48, 0.4910, 0.5, 0.5455, 0.76, 0.77, 1.0 };
@@ -3130,6 +3159,7 @@ namespace Ledger.PerceptionGolden
                 Row(sb, "SaysWord", Esc(c[0]), Esc(c[1]), Bit(GossipMill.SaysWord(c[0], c[1])));
 
             EmitArrest(sb);
+            EmitLadder(sb);
             EmitStance(sb);
             EmitScenarios(sb);
             EmitSchedule(sb);

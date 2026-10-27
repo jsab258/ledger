@@ -17,9 +17,12 @@
 // by ledger/PerceptionGolden and answered in CoreGolden.h's Evaluate.
 //
 // SCOPE: Lawful, Confront, ResistPressure, CataloguesYourCoat, IsPublicEvent -
-// the arrest section and nothing else. The rest of Reaction.cs (the reaction
-// ladder, loudness, the survivor) is NOT PORTED, and says so here rather than
-// by being absent.
+// the arrest section - and, since 27 October 2026 (the 5 October sweep's U3;
+// production/audits/sweep-2026-10-05/U3-DESIGN-2026-10-27.md), the reaction
+// ladder's rules: Reacted, Decide, Severity, LoudnessOf, AlarmLoudness. The
+// ladder is ported and golden but not yet wired to the window: the game's
+// townspeople cannot walk, so its Investigate rung would show nothing where
+// today they shout. The survivor (AsVictim) is NOT PORTED, and says so here.
 //
 // NO UNREAL TYPE IS IN THIS FILE, as with every Core module in the port: the
 // arithmetic lives where the tests run.
@@ -31,6 +34,82 @@ namespace LedgerCore
 {
 	namespace Reaction
 	{
+		/// WHAT PEOPLE DO ABOUT IT (Reaction.cs, Reacted): graduated per person,
+		/// driven by their own observation and temperament. Order as the C#'s.
+		enum class Reacted
+		{
+			Ignore = 0,
+			Notice,
+			Investigate,
+			Alarm,
+			Flee,
+			Deliver,
+			FetchTheLaw,
+			Intervene,
+		};
+
+		/// A shout is a sound event like any other (Reaction.cs AlarmLoudness).
+		static const double AlarmLoudness = Perception::LoudShout;
+
+		/// What does this person do? (Reaction.cs Decide, every branch in its order.)
+		inline Reacted Decide(double Severity, double Nerve, double Dutiful, double Willingness, bool bSawABody,
+		                      bool bAlreadyAlarmed)
+		{
+			Severity = Clamp01(Severity);
+			Nerve = Clamp01(Nerve);
+			Dutiful = Clamp01(Dutiful);
+
+			if (Severity < 0.05) { return Reacted::Ignore; }
+			if (Severity < 0.2) { return Reacted::Notice; }
+
+			if (bSawABody || Severity >= 0.75)
+			{
+				if (Nerve < 0.3) { return Reacted::Flee; }
+				if (bAlreadyAlarmed && Nerve > 0.85 && Severity >= 0.9) { return Reacted::Intervene; }
+				if (Dutiful > 0.55) { return Reacted::FetchTheLaw; }
+				if (Willingness > 0.4) { return Reacted::Deliver; }
+				return Reacted::Alarm;
+			}
+
+			if (Nerve < 0.25 && Severity > 0.5) { return Reacted::Flee; }
+			if (Severity >= 0.45 && Nerve > 0.4) { return Reacted::Investigate; }
+			if (Severity >= 0.45) { return Reacted::Alarm; }
+			return Reacted::Notice;
+		}
+
+		/// How bad was it, from what they actually got (Reaction.cs Severity), the
+		/// slots summed in the C#'s order so the doubles agree to the last bit.
+		inline double Severity(const Observation* O)
+		{
+			if (O == nullptr || O->Empty()) { return 0; }
+			double S = 0.10;
+			if (O->Has(Slot::Act)) { S += 0.30; }
+			if (O->Has(Slot::Victim)) { S += 0.25; }
+			if (O->Has(Slot::Aftermath)) { S += 0.35; }
+			if (O->Has(Slot::Draw)) { S += 0.20; }
+			if (O->Has(Slot::Flight)) { S += 0.05; }
+			return Clamp01(S);
+		}
+
+		/// Only an alarm makes a noise others can hear (Reaction.cs LoudnessOf).
+		inline double LoudnessOf(Reacted R) { return R == Reacted::Alarm ? AlarmLoudness : 0.0; }
+
+		/// The C# enum's own names, for the golden table.
+		inline const char* NameOf(Reacted R)
+		{
+			switch (R)
+			{
+				case Reacted::Notice:      return "Notice";
+				case Reacted::Investigate: return "Investigate";
+				case Reacted::Alarm:       return "Alarm";
+				case Reacted::Flee:        return "Flee";
+				case Reacted::Deliver:     return "Deliver";
+				case Reacted::FetchTheLaw: return "FetchTheLaw";
+				case Reacted::Intervene:   return "Intervene";
+				default:                   return "Ignore";
+			}
+		}
+
 		enum class Lawful
 		{
 			/// He cannot place you. The escape hatch is social, not athletic.

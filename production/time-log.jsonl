@@ -166,3 +166,6 @@
 {"event": "start", "at": "2026-10-27T14:05:00", "task": "27 Oct: records of his answers; the checker's fourth try designed", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-27T14:12:00", "note": ""}
 {"event": "start", "at": "2026-10-27T14:04:27", "task": "27 Oct: item 4, speech: the wording A/B and the checker's fourth try", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-27T14:35:55", "note": "wording A/B running; fourth try designed; Common Voice read and reviewed; Pocket credited"}
+{"event": "start", "at": "2026-10-27T14:25:00", "task": "27 Oct: fallback, the sweep's U3: the reaction ladder's rules ported, not wired", "phase": "3", "kind": "production"}
+{"event": "stop", "at": "2026-10-27T14:36:00", "note": ""}

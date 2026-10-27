@@ -74,6 +74,38 @@ namespace Ledger.CoreTests
                   "a save this build writes reads back as version 2, so its load trusts the bundle");
         }
 
+        /// U3, THE REACTION LADDER AT A BROKEN WINDOW (ported 27 October 2026; production/audits/sweep-2026-10-05/
+        /// U3-DESIGN-2026-10-27.md): what a witness got decides how bad it was, and their nerve what they do. At a
+        /// window nobody flees, fetches the law or steps in; that needs a body or worse.
+        static void TestReactionAtTheWindow()
+        {
+            Console.WriteLine("The reaction ladder at the window (the sweep's U3):");
+            var noise = new Observation { Slots = Slot.None };
+            var act = new Observation { Slots = Slot.Act };
+            var actAndFlight = new Observation { Slots = Slot.Act | Slot.Flight };
+            Check(Reaction.Severity(noise) == 0 && Reaction.Severity(null) == 0, "nothing got is nothing to react to");
+            Check(Math.Abs(Reaction.Severity(act) - 0.40) < 1e-12 && Math.Abs(Reaction.Severity(actAndFlight) - 0.45) < 1e-12,
+                  "the act alone is 0.40; the act and the flight 0.45", $"{Reaction.Severity(act)} / {Reaction.Severity(actAndFlight)}");
+            Check(Reaction.Decide(0.10, 0.5, 0.5, 0.5, false, false) == Reacted.Notice, "a noise alone turns a head");
+            Check(Reaction.Decide(Reaction.Severity(act), 0.9, 0.9, 0.9, false, false) == Reacted.Notice,
+                  "the act alone, however bold the witness, turns a head");
+            Check(Reaction.Decide(Reaction.Severity(actAndFlight), 0.6, 0.5, 0.5, false, false) == Reacted.Investigate,
+                  "the act and the flight: a bold witness walks toward it");
+            Check(Reaction.Decide(Reaction.Severity(actAndFlight), 0.3, 0.5, 0.5, false, false) == Reacted.Alarm
+                  && Reaction.LoudnessOf(Reacted.Alarm) == Perception.LoudShout,
+                  "a timid one shouts, and the shout is a loud sound others hear");
+            bool anyGraver = false;
+            foreach (var nerve in new[] { 0.0, 0.2, 0.5, 0.9, 1.0 })
+                foreach (var dutiful in new[] { 0.0, 1.0 })
+                {
+                    var r = Reaction.Decide(Reaction.Severity(actAndFlight), nerve, dutiful, 1.0, false, true);
+                    anyGraver |= r == Reacted.Flee || r == Reacted.FetchTheLaw || r == Reacted.Intervene || r == Reacted.Deliver;
+                }
+            Check(!anyGraver, "at a window nobody flees, fetches the law, steps in or goes to tell");
+            Check(Reaction.Decide(1.0, 0.5, 0.9, 0.5, true, false) == Reacted.FetchTheLaw,
+                  "a body with a dutiful witness fetches the law (his ruling keeps Mickey's people below it)");
+        }
+
         /// G1's geography, the second part: WHO STANDS WHERE ON QUAY STREET AT THE HOUR, and which way they look.
         static void TestSightingGeography()
         {

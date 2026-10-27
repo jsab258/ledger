@@ -120,6 +120,7 @@ namespace Ledger.CoreTests
                 TestSighting();
                 TestSightingGeography();
                 TestTownSaveVersion();
+                TestReactionAtTheWindow();
                 TestBudgetedClient();
                 await TestTranscriptRollback();
                 await TestReflection();
