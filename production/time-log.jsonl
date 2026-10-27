@@ -159,3 +159,5 @@
 {"event": "stop", "at": "2026-10-27T07:18:45", "note": "both diagnostics change nothing; a fill light is the researched third try, his word first"}
 {"event": "start", "at": "2026-10-27T07:21:44", "task": "27 Oct: fallback, the sweep's W1: one town save (version 2 carries the hints and what he has heard)", "phase": "3", "kind": "production"}
 {"event": "stop", "at": "2026-10-27T07:27:38", "note": "W1 in code: version 2 bundle carries hints and heard; both targets build"}
+{"event": "start", "at": "2026-10-27T07:34:41", "task": "27 Oct: fallback, the sweep's U1: where a caught claim's verdict lives (design reading)", "phase": "3", "kind": "production"}
+{"event": "stop", "at": "2026-10-27T07:35:28", "note": "U1 read: the game's claims are hearsay by design; the verdict lives in the talk program"}
