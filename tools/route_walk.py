@@ -53,6 +53,11 @@ LINE = "Was it always this quiet and dead round here, Sheila?"   # w, a, s and d
 TOWN_LINE = "Morning. Anything going on round here?"            # the same neutral greeting to each, after the deed
 TOWN_WHO = (("lena", "Sheila"), ("rocco", "Ron"), ("sam", "Darren"))
 WALK_MPS = 1.6                                                  # measured 1 October: 3.2 m in 2 s
+# EPIC'S WALK, packaged since 27 October (SliceCharacter.cpp, the Game Animation Sample's character): it walks at the
+# sample's 2.0 m/s and glides about 0.45 m after the key is let go, where his own clips stopped dead. Read off that
+# afternoon's own path (production/playtest/nightly 2026-10-27, route/verdict.json: a 1.75 s hold went 4.0 m, a 0.77 s
+# hold 1.9 m), where every short leg overshot and the walk swung across Mickey's door for four game hours.
+GASP_MPS, GASP_GLIDE_M = 2.0, 0.45
 ROAD_Z = 1.2                                                    # the road's middle, clear of the cars at the kerb
 
 
@@ -93,6 +98,19 @@ class Route:
     def __init__(self, saved, out):
         self.saved, self.out = saved, out
         self.rows, self.seen, self.pending, self.trace = [], 0, [], []
+
+    def epic_walk(self):
+        """True when the running game logged Epic's walk (SliceCharacter.cpp: "LedgerWalk: Epic's route"), read once
+        from its own log; his own clips otherwise."""
+        if getattr(self, "_epic", None) is None:
+            try:
+                with open(os.path.join(self.saved, "Logs", "LedgerProbe.log"), encoding="utf-8", errors="replace") as fh:
+                    text = fh.read()
+                if "LedgerWalk:" in text:
+                    self._epic = "LedgerWalk: Epic's route" in text
+            except OSError:
+                pass
+        return bool(getattr(self, "_epic", None))
 
     def where(self):
         try:
@@ -172,7 +190,9 @@ class Route:
             if d <= tol:
                 return True
             self.turn_to(bearing(w[0], w[1], x, z))
-            play("walk", "forward", "%.2f" % max(0.25, min(2.0, d / WALK_MPS)))
+            # held for the distance less the glide, at Epic's walk's own pace; the game says which walk it runs
+            hold = (d - GASP_GLIDE_M) / GASP_MPS if self.epic_walk() else d / WALK_MPS
+            play("walk", "forward", "%.2f" % max(0.1 if self.epic_walk() else 0.25, min(2.0, hold)))
             time.sleep(0.3)
             w2 = self.where().get("tom")
             if w2 and math.hypot(w2[0] - w[0], w2[1] - w[1]) < 0.15:

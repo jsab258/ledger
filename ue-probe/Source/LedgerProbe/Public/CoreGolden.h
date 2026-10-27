@@ -5086,7 +5086,7 @@ namespace Golden
 		// through ReadCastFile; the small files are the C#'s own, copied from
 		// Program.cs by script rather than retyped.
 		else if (Fn == "CastFile" || Fn == "CastPlaceOf" || Fn == "CastTogether" || Fn == "CastWeek"
-		         || Fn == "CastTie" || Fn == "CastPerson" || Fn == "CastPlace")
+		         || Fn == "CastTie" || Fn == "CastPerson" || Fn == "CastCalled" || Fn == "CastPlace")
 		{
 			const CastDay* C = CastNamed(F[1]);
 			A.Known = true;
@@ -5136,6 +5136,17 @@ namespace Golden
 				Outs.push_back(Nm.empty() ? std::string("null") : Escape(Nm));
 				Outs.push_back(C->CircleOf(F[2]));
 				Outs.push_back(FromBool(C->NamesHimOnlyOnTrust(F[2])));
+				A.Got = MultiAnswer(F, 3, Outs);
+			}
+			// a person as the street speaks of them in passing, as a local would
+			// describe them, and their role as a neighbour puts it (27 October)
+			else if (Fn == "CastCalled" && F.size() >= 6)
+			{
+				const std::string Rl = C->RoleOf(F[2]);
+				std::vector<std::string> Outs;
+				Outs.push_back(Escape(C->CalledOf(F[2])));
+				Outs.push_back(Escape(C->Described(F[2])));
+				Outs.push_back(Rl.empty() ? std::string("null") : Escape(Rl));
 				A.Got = MultiAnswer(F, 3, Outs);
 			}
 			// a place: what it is called where it is said, and its area

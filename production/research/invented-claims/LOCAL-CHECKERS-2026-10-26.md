@@ -517,7 +517,7 @@ Written down before any of it is run:
 - **Three cut-offs, set on tuning data only** (the 111 tuning details and the kept-out 15% of the near-miss sentences), before the test is run:
   - **strict:** half the lowest score of any invented tuning item (the third try's rule);
   - **middle:** the lowest invented tuning score itself (it clears nothing invented that tuning showed it);
-  - **open:** the score under which 2% of the invented tuning items fall.
+  - **open:** the score under which 2% of the invented tuning items fall (as coded, the 4th-lowest: 1.3%; see the results).
 - **The test, run once per cut-off: the whole game on the 617 held first sentences** (308 invented, 309 true, Gemini's labels).
   - A sentence the checker clears is spoken without Haiku; any other gets Haiku's own verdict from the third try's run of the game's whole check (F:/LedgerTools/checkers/train3/haiku-verdicts.jsonl, unchanged). No new spending.
   - Reported per cut-off: invented sentences through **per 300**, with the checker in front and for Haiku alone, on Gemini's labels.
@@ -548,3 +548,35 @@ Alone on this PC's processor, 2 threads, the 10 closest facts, 238 of the bench'
 The ratio 1.27 is the 17M's own: 0.072 s beside the packaged game (the third try's two runs) against 0.057 s alone.
 
 **The 68M and LettuceDetect base he named do not fit 0.15 s beside the game on this processor, even in 8 bits** (about 0.32 and 0.67 s). On the graphics card they would be faster, but that was not in the design, and it costs the game's frames, which would need their own measure. **The largest that fits is the 32M in 8 bits**, close to the line: trained as fixed beforehand (the same data and split, the 10 closest facts), its time beside the game measured before anything is offered.
+
+## Fourth try: the results (27 October, 19:20; tools/checkers/tradeoff.py)
+
+**The 32M, trained as designed** (75 minutes, three passes, the third kept: practice-split F1 0.82 against 0.55 untrained; F:/LedgerTools/checkers/trained/tinylettuce-32m-try4-2026-10-27), scored in 8 bits with the 10 closest facts. Raw: F:/LedgerTools/checkers/try4 (CUTOFFS, TEST, FIRSTS).
+
+| Cut-off (score) | Held true sentences cleared, of 309 | Invented through per 300: with it / Haiku alone | Real first sentences cleared, of 240 | Seconds saved: per cleared turn / per real question |
+|---|---|---|---|---|
+| strict (0.0018) | 0 | 34.1 / 34.1 | 12 (5%) | 0.91 / 0.05 |
+| middle (0.0036) | 0 | 34.1 / 34.1 | 20 (8%) | 0.91 / 0.09 |
+| open (0.0147) | 2 (0.6%) | 34.1 / 34.1 | 63 (26%) | 1.05 / 0.28 |
+
+**Beside the packaged game** (two runs with it, two without; answers kept only while the game ran; F:/LedgerTools/checkers/beside-game-2026-10-27): its answers took a median 0.132 s, the slowest 1% 0.21 s, and **94 of 554 (17%) took over 0.15 s**. The game's median frame rose from 12.0 and 12.2 ms alone to 13.0 ms with it; one frame of 3,002 went over 16.7 ms (16.8), none over 33.3.
+
+**So the fourth try fails.** The larger checker is safe at every cut-off, but slower than his bar on one answer in six, and it clears less than the smaller one: its scores for true and invented sentences crowd together at the bottom, so cut-offs that clear nothing invented in tuning clear almost nothing true either.
+
+**Added after that result, and said so: the third try's 17M at the same three rules** (cut-offs set the same way on the same tuning data; the same held test, run once per cut-off; full precision; F:/LedgerTools/checkers/try4/17m):
+
+| Cut-off (score) | Held true sentences cleared, of 309 | Invented through per 300: with it / Haiku alone | Real first sentences cleared, of 240 | Seconds saved: per cleared turn / per real question |
+|---|---|---|---|---|
+| strict (0.017) | 9 (3%) | 34.1 / 34.1 | 14 (6%) | 1.04 / 0.06 |
+| middle (0.033) | 28 (9%) | 34.1 / 34.1 | 35 (15%) | 1.24 / 0.18 |
+| open (0.106) | 81 (26%) | 36.0 / 34.1 | 123 (51%) | 1.30 / 0.60 |
+
+Its time beside the game was measured in the third try (10 facts): median 0.072 s, slowest 1% 0.11 to 0.12 s, 4 of 982 answers over 0.15 s (worst 0.24 s), one frame of 3,001 at 19.9 ms. So it misses 0.15 s narrowly (0.4% of answers), where the 32M misses on 17%.
+
+**The blind reading** (the design's rule): at the open cut-off the 17M clears 5 invented sentences, 2 of which Haiku refused. A fresh reader, given each speaker's facts and no labels, read those 2 mixed with 2 cleared true ones (chosen by a fixed seed) and agreed with all four labels: "Hal runs everything worth knowing from that coin shop" and "Nothing much open on this side" are inventions. So the open row's 36.0 stands. The 32M cleared no invented sentence Haiku refused, so it had nothing to read.
+
+**Limits.** 35 against 37 of 308 is within chance; the held sentences come from the same three speakers as the training, with different questions. The seconds saved assume the checker runs alongside Haiku, so a turn it does not clear loses nothing; run before Haiku instead, each such turn would wait about 0.07 s more. They subtract the checker's time measured alone (0.041 s for the 17M, 0.066 s for the 32M), not beside the game (0.072 and 0.132 s), so each cleared turn's saving is high by about 0.03 s (17M) and 0.07 s (32M); the averages per question move by under 0.02 s. The open cut-off as coded is the 4th-lowest invented tuning score, so 3 of 227 (1.3%) fall under it, not the designed 2%: stricter than written, for both models, and left as run since the cut-offs were fixed before the test. Invented through per 300 counts Gemini's labels, as designed; read by hand in the third try, Haiku alone's 35 were 18 to 23 invented. The real first sentences are only those Haiku passed, so how many invented ones the checker would let through in play is measured only on the held 617.
+
+**For his page:** the 17M's three rows, since it alone comes near his 0.15 s (4 answers in 982 over). The middle row is the one that keeps his bar (no more invented through than Haiku alone) while clearing about a seventh of real first sentences (15%), each about 1.2 s sooner. The open row clears half and saves 0.6 s a question on average, at 2 more invented per 617 than Haiku alone.
+
+**Fresh review of the results (27 October, evening): SOUND WITH FIXES.** Every table number matches its raw file; the 32M's times beside the game recounted (94 of about 554 over 0.15 s); the four blind verdicts match the key; the 17M ran under the same rules on the same tuning items. Fixes taken: the 17M's time beside the game was the second try's (corrected to the third try's 0.072 s, 4 of 982 over); "only it meets 0.15 s" softened to "comes near"; the seconds saved subtract the checker's time alone (noted, about 0.03 s per cleared turn for the 17M); the open cut-off clears 1.3% of invented tuning items as coded, not 2% (noted); the page names Gemini's labels and the hand reading of Haiku's leak.

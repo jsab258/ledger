@@ -19,6 +19,35 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 27 Oct 2026, a scripted tester's steering retuned when the character's movement changed, and what its walk then found
+- Made: the automated tester's full route through the shipped game, 15 of 15 stages, after a new movement system made it miss.
+- Method (setting-free):
+  - A tester that steers by holding keys carries a model of the character's pace. When the movement system changes, measure the new pace and its coast after release from the tester's own path log, and hold for the distance less the coast.
+  - Let the game say which movement it runs (its log line) and have the tester read it, so one tester serves both.
+  - Read every picture the tester takes for faults outside its stages. A pass on the stages is not a clean screen.
+  - A display name with no value falls back to what the reference rules say, never to the internal id. When the port lacks the reference rule, port it with golden rows rather than patch the call site.
+- Tools: the tester's key driver, the game's position file and log, the port's golden table.
+- Target and check: every stage passes in the packaged build; the new name rule agrees with the reference on all rows. Met: 15 of 15; 51 new rows agree. The subtitle is proved only by the next packaged walk.
+- Cost (hours): about 0.6.
+- Failed and why: the first walk on the new movement (9 of 13): the tester's pace was the old one's.
+- Evidence: production/playtest/ai-tester/2026-10-27-1926; DECISIONS.md (27 October, 19:38).
+
+### 27 Oct 2026, a small local fact checker scaled up to clear more, and the bigger model found slower and worse; the owner given the trade-off at three cut-offs
+- Made: a fourth try at a fast local checker that clears a character's true sentences before the slow cloud check, judged as the whole game (local first, then cloud) against the cloud check alone.
+- Method (setting-free):
+  - Time every candidate size alone first, in full precision and 8 bits, and scale by the ratio a smaller model showed beside the running game. Only the largest that fits is trained.
+  - Fix the cut-off rules on tuning data before the test (half the lowest invented score, the lowest, the 2% point). Run the held test once per cut-off.
+  - Judge the pair, not the part: count what gets through with the fast check in front against the slow check alone. Measure the saving on real turns: each turn's own wait, less the checker's time.
+  - Time it beside the shipped game, keeping only the answers given while the game ran, with frame times against runs without it.
+  - When the result fails, run the earlier model through the same rules on the same test and say it was added after. A bigger model is not a better one: its scores can crowd together, so a safe cut-off clears nothing.
+  - A fresh reader reads blind every invented sentence the cut-off lets past that the slow check stopped, mixed with as many true ones.
+  - The owner chooses the row; the record recommends the one that keeps the bar.
+- Tools: a small encoder fact checker (trained 75 minutes on this PC), dynamic 8-bit quantisation, the packaged game's frame profiler, a time-stamped call log, one fresh reader.
+- Target and check: 0.15 s beside the game, and no more invented through than the slow check alone. The bigger model failed the speed (1 answer in 6 over) and cleared at most 26% of real first sentences. The smaller one keeps the bar at two of three cut-offs and misses 0.15 s on 4 answers in 982: 15% cleared at the middle, about 1.2 s sooner each.
+- Cost (hours): about 2.5 (training 1.25); nothing spent.
+- Failed and why: the bigger model, too slow on this processor and too unsure at the low end.
+- Evidence: production/research/invented-claims/LOCAL-CHECKERS-2026-10-26.md ("Fourth try: the results"); F:/LedgerTools/checkers/try4.
+
 ### 27 Oct 2026, a feature that only ever ran in the editor: content loaded by name never reached the packaged build
 - Made: the player's character and its movement system (a third party's sample) reached the packaged game three weeks after they were called done in the editor.
 - Method (setting-free):

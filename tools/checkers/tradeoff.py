@@ -15,7 +15,8 @@ per 300 against Haiku alone. I decide the cut-off." The design was written down 
 CUTOFFS, on tuning data only (the bench's tuning details and VAL.json, the near-miss sentences kept out of training):
   strict  half the lowest score any invented tuning item gets (the third try's rule);
   middle  the lowest invented tuning score itself;
-  open    the score under which 2% of the invented tuning items fall.
+  open    the score under which 2% of the invented tuning items fall; as coded, the int(2%)-th lowest, so fewer fall
+          under it (3 of 227, 1.3%, on 27 October), kept so the recorded results reproduce.
 A sentence scoring below the cut-off is cleared and spoken without Haiku.
 
 TEST: each held sentence scored once; at each cut-off the game lets an invented sentence through when the checker clears

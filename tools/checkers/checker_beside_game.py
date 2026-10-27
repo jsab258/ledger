@@ -3,7 +3,7 @@
 read against a run without it.
 
     C:/LedgerTools/chatterbox-nano/env-dml/Scripts/python.exe tools/checkers/checker_beside_game.py MODEL_DIR OUT.json
-        [--top 6] [--threads 2] [--seconds 90] [--calls CALLS.txt]
+        [--top 6] [--threads 2] [--seconds 90] [--calls CALLS.txt] [--int8]
 
 WHY, 26 October 2026. His bar for the fast checker (orders/2026-10-25.md, speech 1): "answers in 0.15 s or less on
 this PC beside the running game without frame stalls". Its times alone are in measure_checkers.py; this runs it
@@ -31,7 +31,7 @@ def main(a):
     import torch
     torch.set_num_threads(int(opt("--threads", "2")))
     tune, held = m.rows()
-    score = m.lettuce_scorer(a[0], int(opt("--top", "6")))
+    score = m.lettuce_scorer(a[0], int(opt("--top", "6")), int8="--int8" in a)
     score(held[0])
     secs, times, t0 = float(opt("--seconds", "90")), [], time.time()
     calls = open(opt("--calls", os.devnull), "w", encoding="utf-8")

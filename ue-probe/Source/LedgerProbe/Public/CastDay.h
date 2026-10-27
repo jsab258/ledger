@@ -368,6 +368,41 @@ namespace LedgerCore
 		// area and a person's circle; empty where the C# gives null ("day"
 		// for the circle, as the C#).
 		std::string NameOf(const std::string& Id) const { return Lookup(Name, Id); }
+		/// CastDay.cs RoleOf: the file's role without the name before its colon or its
+		/// "(canon)" mark, spaces run together, trimmed of spaces, commas and semicolons.
+		std::string RoleOf(const std::string& Id) const
+		{
+			std::map<std::string, std::string>::const_iterator I = Role.find(Id);
+			if (I == Role.end()) return std::string();
+			std::string R = I->second;
+			for (size_t At = R.find("(canon)"); At != std::string::npos; At = R.find("(canon)")) R.replace(At, 7, " ");
+			const size_t Colon = R.find(':');
+			if (Colon != std::string::npos && !NameOf(Id).empty()) R = R.substr(Colon + 1);
+			std::string Out;
+			for (const char Ch : R)
+			{
+				const bool bSpace = Ch == ' ' || Ch == '\t' || Ch == '\n' || Ch == '\r';
+				if (!bSpace) { Out += Ch; }
+				else if (Out.empty() || Out.back() != ' ') { Out += ' '; }
+			}
+			const size_t First = Out.find_first_not_of(" ,;");
+			if (First == std::string::npos) return std::string();
+			return Out.substr(First, Out.find_last_not_of(" ,;") - First + 1);
+		}
+		/// CastDay.cs Described: somebody as another local would describe them, the
+		/// file's "called", else their name and role, else the role, else the id.
+		std::string Described(const std::string& Id) const
+		{
+			const std::string C = Lookup(Called, Id);
+			if (!C.empty()) return C;
+			const std::string N = NameOf(Id), R = RoleOf(Id);
+			return !N.empty() ? (!R.empty() ? N + ", " + R : N) : (!R.empty() ? R : Id);
+		}
+		/// CastDay.cs Called: somebody as another person speaks of them in passing, by
+		/// name or as the street describes them. 27 October: the town's mill took the id
+		/// for anyone with no name, and the AI tester's walk heard Darren say "I heard
+		/// from outfit_man that ..."; 32 of the cast have no name.
+		std::string CalledOf(const std::string& Id) const { const std::string N = NameOf(Id); return !N.empty() ? N : Described(Id); }
 		std::string SaidOf(const std::string& Place) const { return Lookup(Said, Place); }
 		std::string AreaOf(const std::string& Place) const { return Lookup(AreaOfPlace, Place); }
 		/// The C#'s AreaOf with its null kept apart from an area named "":

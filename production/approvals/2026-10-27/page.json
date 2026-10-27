@@ -1,0 +1,72 @@
+{
+ "tab": "Tuesday Night's Decisions",
+ "kicker": "LEDGER · Tuesday 27 October, night · three decisions",
+ "title": "The checker's cut-off, Tom's cuffs and Darren's voice",
+ "how": [
+  "Shortfalls first. The fourth checker failed: the larger one you named is too slow beside the game and clears less, so the rows below are the third try's small checker. Tom's cuffs failed a third time and are set aside. Common Voice cannot give Darren a voice: its speakers never agreed to be cloned.",
+  "Pick one answer in each; the first is recommended. Anything you do not pick carries onto the next page."
+ ],
+ "foot": "Nothing bought or signed up for. Nothing in the game has changed. Your answers of this afternoon are recorded and gone from this page.",
+ "sections": [
+  {
+   "kind": "decide",
+   "key": "checker-cutoff-2026-10-27",
+   "name": "The fast checker: which cut-off?",
+   "options": [
+    [
+     "middle",
+     "Middle: clears 15% of first sentences, 0.18 s saved a question; 34 invented per 300, as Haiku alone (recommended)"
+    ],
+    [
+     "open",
+     "Open: clears 51%, 0.6 s saved a question; 36 invented per 300 against Haiku alone's 34"
+    ],
+    [
+     "strict",
+     "Strict: clears 6%, 0.06 s saved a question; 34 invented per 300, as Haiku alone"
+    ],
+    [
+     "none",
+     "None: keep Haiku alone"
+    ]
+   ],
+   "note": "Your fourth try. The 68M and LettuceDetect base take 0.3 to 0.7 s on this PC, too slow for 0.15 s. The largest that fits, the 32M, was trained: beside the game 1 answer in 6 took over 0.15 s, and it cleared at most 26% of first sentences, so it fails. The rows are the third try's small checker (0.07 s beside the game; 4 answers in 982 over 0.15 s), its three cut-offs fixed on tuning data, each tested once on the 617 held sentences, judged as the whole game (checker first, then Haiku) against Haiku alone. Invented counts use Gemini's labels; read by hand, Haiku alone's 34 were 18 to 23. Cleared: of 240 real newcomer first sentences from the bench. A cleared turn is heard about 1.2 s sooner; the average is over every real question. A fresh reader agreed, blind, that the two sentences the open row lets past are invented (one says Hal runs everything from the coin shop). 34 against 36 per 300 is within chance. Your pick goes in behind a switch and is measured live with the voice before it is on by default."
+  },
+  {
+   "kind": "decide",
+   "key": "cuffs-next-2026-10-27",
+   "name": "Tom's cuffs failed a third time: what next?",
+   "options": [
+    [
+     "sleeve",
+     "Fix the sleeve's end first, then the cuffs, by script: a fourth round (recommended)"
+    ],
+    [
+     "blender",
+     "Build the cuff and the sleeve's end in Blender when the jacket is baked"
+    ],
+    [
+     "hand",
+     "Place them by hand in Marvelous: minutes, but someone sits at the program"
+    ]
+   ],
+   "note": "The third try found how to place the cuffs at the wrist, but the sleeve's own end lies flat past the hand like a flap, with or without cuffs, so no cuff can sit right until the sleeve is fixed. The script route keeps the jacket rebuildable; Blender is certain but new code; by hand is how studios do it, but the drape can then no longer be rebuilt by script. Marvelous is closed (it held the graphics card); whichever you pick that uses it needs your one click to reopen it."
+  },
+  {
+   "kind": "decide",
+   "key": "darren-voice-2026-10-27",
+   "name": "Darren's voice: keep it, or a recording made with consent?",
+   "options": [
+    [
+     "keep",
+     "Keep his present voice (recommended)"
+    ],
+    [
+     "record",
+     "An unpaid north-east man records a lively reference, agreeing in writing to be cloned; I draft the form first"
+    ]
+   ],
+   "note": "Your pick, Common Voice, is ruled out: its volunteers gave their voices for speech recognition, not for a cloned game character, and the voice engine's terms forbid cloning without consent. With no paid voice, a livelier Darren needs someone who agrees in writing. His present voice passes every voice check; your note on it: very robotic and unemotional."
+  }
+ ]
+}

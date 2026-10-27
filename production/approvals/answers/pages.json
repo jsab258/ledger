@@ -399,6 +399,16 @@
     "verdicts"
    ],
    "note": "Darren's delivery heard blind (A/B key: F:/LedgerTools/approvals/darren-delivery-2026-10-26/blind-key-2026-10-27.json); the fast checker after two failed tries (stop, Jev, or a third try); a livelier Darren reference (actor, Common Voice, keep)"
+  },
+  {
+   "id": "GXm8LhpnZRXPScr6GVZtfT",
+   "title": "Tuesday Night's Decisions",
+   "updated": "2026-10-27",
+   "storage": "db",
+   "collections": [
+    "verdicts"
+   ],
+   "note": "the fast checker's cut-off after the fourth try failed (the third try's 17M at strict, middle, open, or none); Tom's cuffs after their third try (sleeve first, Blender, by hand); Darren's voice after Common Voice failed consent (keep, or a consented unpaid recording)"
   }
  ]
 }

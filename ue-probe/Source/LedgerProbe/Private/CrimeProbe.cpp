@@ -5378,7 +5378,9 @@ namespace
 			for (const std::string& P : Cast.People())
 			{
 				if (Street.count(P) || GMill->Get(P)) { continue; }
-				const std::string Name = Cast.NameOf(P);
+				// By name, or as the street describes them (CastDay.cs Called), never the
+				// id: "I heard from outfit_man that ..." reached a subtitle (27 October).
+				const std::string Name = Cast.CalledOf(P);
 				GMill->Add(std::make_shared<Gossiper>(P, Name.empty() ? P : Name, std::shared_ptr<MemoryStore>(),
 					std::shared_ptr<KnowledgeBase>(), Cast.CircleOf(P)));
 				++Joined;

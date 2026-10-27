@@ -175,3 +175,9 @@
 {"event": "stop", "at": "2026-10-27T15:45:00", "note": ""}
 {"event": "start", "at": "2026-10-27T16:35:00", "task": "27 Oct: item 2: the cook's plugin traces re-saved; Tom's MetaHuman packaged and walked", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-27T17:45:00", "note": ""}
+{"event": "start", "at": "2026-10-27T17:45:00", "task": "27 Oct: item 4: the checker's fourth try: sizes timed, the 32M trained and judged at three cut-offs, timed beside the game; the 17M run alike; tonight's page", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-27T19:15:00", "note": ""}
+{"event": "start", "at": "2026-10-27T19:15:00", "task": "27 Oct: fresh review of the fourth try's numbers and the blind reading", "phase": "1", "kind": "review"}
+{"event": "stop", "at": "2026-10-27T19:30:00", "note": ""}
+{"event": "start", "at": "2026-10-27T19:30:00", "task": "27 Oct: item 2: the tester's steering for Epic's walk; route 15 of 15 packaged; the unnamed-id subtitle ported to the core's rule", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-27T19:45:00", "note": ""}

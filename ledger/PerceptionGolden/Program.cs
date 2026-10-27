@@ -2938,6 +2938,10 @@ namespace Ledger.PerceptionGolden
                     Row(sb, "CastTie", name, i.ToString(Inv), cast.Ties[i].a, cast.Ties[i].b, D(cast.Ties[i].w));
                 foreach (var person in cast.People)
                     Row(sb, "CastPerson", name, person, Esc(cast.NameOf(person)), cast.CircleOf(person), Bit(cast.NamesHimOnlyOnTrust(person)));
+                // How the street speaks of somebody in passing, 27 October: the game's town
+                // mill names its people by it, not by their id (CastDay.h CalledOf).
+                foreach (var person in cast.People)
+                    Row(sb, "CastCalled", name, person, Esc(cast.Called(person)), Esc(cast.Described(person)), Esc(cast.RoleOf(person)));
                 foreach (var place in cast.Places)
                     Row(sb, "CastPlace", name, place, Esc(cast.SaidOf(place)), cast.AreaOf(place) ?? "null");
                 foreach (var (a, b, w) in cast.Ties)
