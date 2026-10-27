@@ -1,5 +1,5 @@
 {
-  "updated": "Monday 26 October 2026, 16:45",
+  "updated": "Tuesday 27 October 2026, 4:35",
   "here": 1,
   "friends_eta": "around January",
   "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
@@ -121,7 +121,7 @@
       "start_label": "8 Oct",
       "now_label": "25 Oct, cast voice",
       "state": "fighting",
-      "last": "26 Oct: all three now speak through Pocket on the processor, Darren in the new voice you picked; Sheila and Ron start speaking 0.18 to 0.22 s after the reply in the packaged game (2.2 to 3.1 s on the card before). Slow replies measured: 10 of 30 turns waited 5 s or more, three of them Darren's old card voice. The whole path with the real model is not re-timed yet."
+      "last": "27 Oct: the check that keeps characters to what they know is the slow part: alone about 1.1 s, 2.3 to 2.8 s when it needs its second look. Sending each check call twice and keeping the copy the service starts first takes about a second off the slowest checks (a fresh review's fixes in; off until your word, Needs you 5). The whole path with the real model is not re-timed yet."
     },
     {
       "name": "The Stutter",
@@ -205,7 +205,8 @@
       "2026-10-22",
       "2026-10-23",
       "2026-10-24",
-      "2026-10-26"
+      "2026-10-26",
+      "2026-10-27"
     ],
     "gap_note": "No pictures from 9 to 20 October: the PC was off."
   },
