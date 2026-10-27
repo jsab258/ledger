@@ -73,6 +73,11 @@ bpy.ops.uv.select_all(action="SELECT")
 # the cloth at 1.44 to 1.48 px/mm against the plan's 1.5)
 bpy.ops.uv.pack_islands(rotate=True, margin=MARGIN, shape_method="CONCAVE")
 bpy.ops.object.mode_set(mode="OBJECT")
+# A BORDER ROUND THE SQUARE (drape 6's fresh review: the zip's island touched the texture's left edge, and its detail
+# wrapped round to the far right, where the other maps say cloth): everything drawn in by --border pixels
+BORDER = opt("--border", 8, int) / TEX
+for d in me.uv_layers["UVMap"].data:
+    d.uv = (BORDER + d.uv.x * (1 - 2 * BORDER), BORDER + d.uv.y * (1 - 2 * BORDER))
 
 # THE CHECKS: pixels per millimetre per piece; islands overlapping (each island rasterised at 512, counted)
 bm = bmesh.new()

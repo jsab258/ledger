@@ -42,6 +42,11 @@ CORNER, CURVE = 0, 2
 # the band 0.85 (27 October, the baked jacket's fresh review: at 0.90 the hem band stood off the hips instead of gripping)
 RIB_BAND, RIB_CUFF = 0.85, 0.85
 BAND_H, CUFF_H, COLLAR_H = 55.0, 60.0, 70.0
+# THE CUFF CUT TO THE WRIST, NOT THE SLEEVE (27 October, drape 6's fresh review: cut at 0.85 of the sleeve's 231 mm
+# wrist edge, about 196 mm round, each cuff was as wide as his 197 mm wrist and hung off it as a bell or a flap): cut at
+# 0.85 of his wrist's girth (F:/LedgerTools/bodies/MH_TomL1/measurements.json, "wrist"), it grips the wrist and the
+# sleeve's end gathers into it, as a blouson's rib cuff does
+WRIST_MM, CUFF_OF_WRIST = 197.1, 0.85
 TAPE_W = 12.0
 # a hip welt: its slit's length and its lips' height, its centre this far up from the front's hem and this share of
 # the way from the centre front to the side seam, leaning this many degrees from upright with its top towards the
@@ -146,7 +151,7 @@ def build(brian, sleeve_shorten=0.0):
         band = rect(w, BAND_H, ["bandCfLow" + s, "bandSideLow" + s, "bandSide" + s, "bandCf" + s])
         # each band's centre-front end on the same side as its front's (the right front's is on +x)
         pieces["bandFront" + s] = ccw(mirror_edges(band)) if s == "R" else band
-        w = length(E("sleeve" + s, "wristLeft" + s, "wristRight" + s)) * RIB_CUFF
+        w = WRIST_MM * CUFF_OF_WRIST
         cuff = rect(w, CUFF_H, ["cuffAlow" + s, "cuffBlow" + s, "cuffB" + s, "cuffA" + s])
         # the right cuff mirrored, as the right band is (27 October: cut as drafted beside the drafted right sleeve, it
         # had to turn inside out through itself to be sewn; it draped as a crumpled flap and baked 83% wrong)
@@ -283,6 +288,10 @@ for p in PLAN["pieces"]:
     pattern_api.SetPatternPieceName(idx, p["key"])
     if p["arrange"] in points and idx >= 0:
         pattern_api.SetArrangement(idx, points[p["arrange"]])
+        # THE CUFFS WRAPPED ROUND THE WRIST (27 October, drape 7: placed flat beside the wrist, each cuff closed into a
+        # tube outside the arm and hung below the hand): curved round the wrist's arrangement volume before sewing
+        if p["key"].startswith("cuff"):
+            pattern_api.SetArrangementShapeStyle(idx, "Curved")
 result["made"] = made
 sewn = []
 for s in PLAN["seams"]:

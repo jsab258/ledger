@@ -148,6 +148,7 @@ Your evening answers are recorded (shadows inside the office: yes; $10 for the s
 ## Builder, Monday 26 October (night)
 
 **Failed:**
+- Tom's jacket's cuffs hang off his wrists; two fixes failed; set aside, researched (the jacket waits on them).
 - Haiku's own check, on 617 new test sentences: it lets 18 to 23 invented ones through (one has Sheila deny the second book exists) and refuses 31% of true ones.
 - The fast checker's third try holds your bar but clears only 3% of true sentences.
 - My first bench for the rewrite used only the check's first step; corrected.
@@ -156,6 +157,6 @@ Your evening answers are recorded (shadows inside the office: yes; $10 for the s
 - Rewriting only a refused sentence, measured properly: 31 of 37 pass; next, real turns.
 - The office's small shadows at High, raised only inside: passed in the editor.
 - The port: its test files in pieces under the upload limit; face familiarity now in the rules.
-- Tom's zip jacket: game mesh, maps baked, skinned and posed; next, onto Tom in the game.
+- Tom's zip jacket: game mesh, maps baked, skinned and posed; two reviews passed its body, zip and pockets.
 
 **Act on:** tonight's page, three taps (Needs you 1).

@@ -32,6 +32,23 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 - Failed and why: none of the bars; but the cut-off strict enough to hold the bar clears 3% of true sentences, almost all evasions, so the speed it buys is negligible. The production check itself let 18 to 23 of about 300 invented first sentences through.
 - Evidence: production/research/invented-claims/LOCAL-CHECKERS-2026-10-26.md (Third try; The hand reading); HAIKU-FALSE-REFUSALS-2026-10-26.md
 
+### 27 Oct 2026, a simulated garment of many pattern pieces made into a skinned, baked game mesh by script
+- Made: from a cloth-simulation drape of a 13-piece zip jacket (with its zip tapes sewn in): an importer back onto the true-size pattern; an even quad game mesh within the triangle budget; its texture layout; the zip's teeth, stops and two welt pockets built as floating detail; normal, occlusion and packed maps baked; skinned to the character's skeleton and posed. Not yet in the game.
+- Method (setting-free):
+  - Read the simulator's export for what it is (units, axes, how its UVs are stored) and put each piece back on its known flat outline; check the boundary against the pattern to a hundredth of a millimetre and the openings by count.
+  - Lay a grid per pattern piece through a no-fold map of the piece onto a rectangle; take each piece's four corners from the pattern data and the counts from a small solver (one count per seam run shared by both pieces, opposite sides equal, mirrored runs averaged).
+  - Hold narrow strips (the zip tapes) still in smoothing; count a point on a piece's own edge as clamped, never as a hole.
+  - Make the winding one across the whole mesh before turning it outward; a single flip cannot fix pieces wound both ways.
+  - Bake each piece only from its own piece of the source, with the rays' reach held; measure each piece's share of normals leaning more than 60 degrees: a hit-rate check cannot see rays that hit the wrong surface.
+  - Domed detail bakes relief; flat-topped boxes do not. Bake smooth if it is drawn smooth. Hold a baked part ID to what the low mesh's own part allows.
+  - When one side's piece misbehaves and its mirror does not, suspect the cut: a piece cut unmirrored beside its unmirrored neighbour is sewn inside out and drapes crumpled.
+  - A pose test against a body file without its neck reads a collar as deep inside the body; check the collar on the whole character.
+- Tools: the cloth program's script bridge; Blender scripts for import, grid, layout, floaters, bake, pictures; the September skinning and pose-test chain with two new options.
+- Target and check: 18,000 to 22,000 triangles; texel density per piece; far-off normals per piece under 1%; the parts' areas in the ID within 1% of the layout; a fresh reviewer on the pictures.
+- Cost (hours): about 3 for the chain, from drape to posed (the plan estimated 17).
+- Failed and why: the first review failed the bake (a cuff 80% wrong: the right cuff sewn inside out); fixed by mirroring the cut and re-draping. The second failed the drape: rib cuffs hanging off the wrists; cut to the wrist, then placed curved round it, they still hung: set aside after two tries, researched. Teeth still 5.4 pixels each: a tiling pattern in the material is next.
+- Evidence: production/art/clothing/tom-outfit/BAKE-PLAN-2026-10-27.md; production/previews/tom-zip-jacket-*-2026-10-27.jpg
+
 ### 26 Oct 2026, a rule that lived only in the engine port given its home in the reference rules
 - Made: the reference test suite's 2 MB source cut into partial-class files under the size guard, unchanged; one gameplay rule (how well a person knows the player's face from meetings) moved from the port into the reference rules, ported back from there and pinned by golden rows and tests.
 - Method (setting-free):
