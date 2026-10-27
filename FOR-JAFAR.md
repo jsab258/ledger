@@ -133,7 +133,7 @@ No decision asked: these are for watching the street change.
 2. **Tom's jacket's cuffs, a third try?** Two fixes failed (they hang off his wrists). Research found the cause: the wrist's placement point sits mid-hand, so each cuff closes over the hand. Yes, by the researched route: placed at the arm's wrist end, then drawn in to grip (recommended); or no, the jacket waits.
 3. **Leave Marvelous open with the bridge running** (recommended): Tom's jacket jobs run through it; if it is closed, one click on LEDGER bridge next time.
 4. **Empty F:'s recycle bin** (recommended): it holds 7.2 GB of files you deleted yourself; F: is at its 20 GB floor, and tonight's build and the morning pictures stopped on it. I never empty it.
-5. **Two copies of each speech check** (money): about a second off the slowest checks, but over 180 test sentences it may refuse more true ones (19 against 9, not certain), and refused first sentences are what make turns slow. Test whole turns with and without, about $3 beyond your $10 (recommended); or drop it.
+5. **About $4 more for speech tests** (money; your $10 is nearly spent): whole turns with and without two copies of each check (a second off the slowest checks, but it may refuse more true sentences, 19 against 9 of 180), and the check's wording fix for true sentences it refuses, both against your bar. Yes (recommended); or stop at the $10.
 
 Your evening answers are recorded (shadows inside the office: yes; $10 for the slow-reply tests; the checker trained on Gemini's labels, no letter to Anthropic).
 

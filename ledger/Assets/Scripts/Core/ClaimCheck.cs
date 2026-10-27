@@ -217,6 +217,7 @@ namespace Ledger.Core
                 "and whether it is open now, are habit, never time, and are always listed (\"the cafe shuts at ten\", \"Rita's is shut " +
                 "Wednesday afternoons\", \"it's shut now\"). What they heard other people " +
                 "say is not talk: give it the kind of what it is about, and the item they heard it in.\n" +
+                (WholeDetails ? WholeDetailsRule : "") +
                 "Examples, with M1 \"[D3 21:40] I saw a man put the pawn shop window in and run towards the quay\":\n" +
                 "\"He ran off towards the quay, didn't see his face.\" -> {\"specifics\": [{\"detail\": \"he ran towards the quay\", " +
                 "\"kind\": \"action\", \"source\": \"M1\"}, {\"detail\": \"did not see his face\", \"kind\": \"denial\", \"source\": \"none\"}]}\n" +
@@ -273,6 +274,21 @@ namespace Ledger.Core
         /// that can say when the model begins gets two copies; any other makes its one plain call. The copy not kept is
         /// stopped, and what it used is added to the kept answer's tokens, for the cost.
         public static bool TwoCopies = false;
+
+        /// EACH DETAIL A WHOLE STATEMENT, AS THE LINE SAYS IT: a bench switch, off in the game until measured against his
+        /// bar (27 October 2026; production/research/invented-claims/FALSE-REFUSALS-BY-CAUSE-2026-10-27.md and its blind
+        /// review). Of the 96 true first sentences the check refused on the held test, some were details cut from their
+        /// subject ("three weeks ago", "sitting on the key"), which the second look, never shown the line, cannot place,
+        /// and some were the line misread ("there's June" taken as "June is here"). On, the list is told to write each
+        /// detail whole, with who or what it is about, and to keep to what the line says. Measured on the invented
+        /// sentences first: the list runs on every line, and a looser list lets more through.
+        public static bool WholeDetails = false;
+
+        const string WholeDetailsRule =
+            "Write each specific as a whole statement that can be checked without LINE: who or what it is about and what " +
+            "LINE says of them (\"Mickey died three weeks ago\", not \"three weeks ago\"; \"Sheila is sitting on the key\", " +
+            "not \"sitting on the key\"). Keep to what LINE actually says: naming someone is not saying where they are " +
+            "(\"there's June\" names June; it does not say she is here), and a mention, a question or an aside is not a claim.\n";
 
         /// THE REFUSED SENTENCE REWRITTEN ALONE (ConversationEngine.RepairFirst, a bench switch): the strict rewrite that
         /// passed 31 of 37 refused sentences against the whole check (production/research/voice-latency/

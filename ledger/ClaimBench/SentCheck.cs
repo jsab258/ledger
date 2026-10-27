@@ -13,7 +13,7 @@ using Ledger.Core;
 /// larger test").
 ///
 ///     dotnet run --project ledger/ClaimBench -c Release -- sentcheck --key --task slow-replies-2026-10-26
-///         --from F:/LedgerTools/checkers/train3/TEST3.json [--out OUT.jsonl] [--limit N] [--every N] [--ab early|two]
+///         --from F:/LedgerTools/checkers/train3/TEST3.json [--out OUT.jsonl] [--limit N] [--every N] [--ab early|two|whole] [--whole-details]
 ///
 /// Each sentence (written by Gemini 3.8 Flash from the detail bench's HELD contexts, never trained on) goes through
 /// the check exactly as the game runs it on a first sentence: ClaimCheck.CheckAsync on Haiku 5.5 with the speaker's
@@ -47,9 +47,10 @@ static partial class Program
         // --ab early|two: each sentence checked twice, with a switch and without, the order alternating sentence by
         // sentence, so the service's pace through the night falls on both alike: early, the second looks started as
         // the list is written (ClaimCheck.EarlyLooks); two, every check call sent twice at once and the first to answer
-        // kept (ClaimCheck.TwoCopies). --ab-early is --ab early. --every N takes every Nth sentence.
+        // kept (ClaimCheck.TwoCopies); whole, each detail written whole as the line says it (ClaimCheck.WholeDetails). --ab-early is --ab early. --every N takes every Nth sentence.
         string abSwitch = args.Contains("--ab-early") ? "early" : Arg(args, "--ab", null);
-        if (abSwitch != null && abSwitch != "early" && abSwitch != "two") { Console.WriteLine("refused: --ab takes early or two"); return 2; }
+        if (abSwitch != null && abSwitch != "early" && abSwitch != "two" && abSwitch != "whole") { Console.WriteLine("refused: --ab takes early, two or whole"); return 2; }
+        ClaimCheck.WholeDetails = args.Contains("--whole-details");
         bool ab = abSwitch != null;
         int n = 0;
         foreach (var r in rows)
@@ -67,14 +68,14 @@ static partial class Program
                 {
                     foreach (var early in earlyFirst ? new[] { true, false } : new[] { false, true })
                     {
-                        if (abSwitch == "early") ClaimCheck.EarlyLooks = early; else ClaimCheck.TwoCopies = early;
+                        if (abSwitch == "early") ClaimCheck.EarlyLooks = early; else if (abSwitch == "two") ClaimCheck.TwoCopies = early; else ClaimCheck.WholeDetails = early;
                         var sw = Stopwatch.StartNew();
                         var (invented, calls) = await ClaimCheck.CheckAsync(llm, "claude-haiku-5-5", items, r.sentence, System.Threading.CancellationToken.None);
                         got[early] = (invented != null && invented.Count == 0, invented?.ToList() ?? new List<string> { "(no answer)" }, calls.Count, sw.ElapsedMilliseconds);
                     }
                 }
                 catch (Exception e) { failed++; Console.WriteLine("failed: " + e.Message); continue; }
-                finally { ClaimCheck.EarlyLooks = false; ClaimCheck.TwoCopies = false; }
+                finally { ClaimCheck.EarlyLooks = false; ClaimCheck.TwoCopies = false; ClaimCheck.WholeDetails = false; }
                 outRows.Add(new { r.key, r.sentence, earlyFirst, passedOff = got[false].passed, passedOn = got[true].passed, foundOff = got[false].found,
                                   foundOn = got[true].found, callsOff = got[false].calls, callsOn = got[true].calls, msOff = got[false].ms, msOn = got[true].ms });
                 Console.WriteLine($"{(got[false].passed ? "pass" : "refuse")}/{(got[true].passed ? "pass" : "refuse")} off {got[false].ms} on {got[true].ms} | {r.sentence}");

@@ -111,6 +111,7 @@ namespace Ledger.CoreTests
                 TestClaimCheck();
                 TestEarlyLooks();
                 TestTwoCopies();
+                TestWholeDetails();
                 await TestClaimCheckedReplies();
                 TestCaughtClaimIsNotLearned();
                 TestPortReviewFaults();
