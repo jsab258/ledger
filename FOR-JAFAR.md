@@ -49,13 +49,11 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
 
 **Morning, Tuesday 27 October. Phase 1, Prove the bottlenecks. On: 3. Tom's outfit: zip jacket baked, skinned; cuffs set aside, his word (BAKE-PLAN). Next: 4. Speech: all on Pocket; checker's third try clears 3% (invented-claims/); rewrite, early looks left off; two copies a check call next (voice-latency/CHECK-TIME).**
 
-No morning pictures today: the free-space check refused ({"job": "morning pictures", "drives": "CF", "before": {"C": 211.8, "F": 19.8}, "after": {"C": 211.8, "F": 19.8}, "verdict": "STOP", "needsYou": "morning pictures stopped: C: has 211.8 GB free (needs 40.0), F: 19.8 GB (needs 20.0) after the nightly limits ran. Put this in Needs you and do not retry until there is room."}). Yesterday's stand below.
-
 | | Today, 27 Oct | Yesterday, 26 Oct |
 |---|---|---|
-| The hook camera by day | none | ![The hook camera by day, 2026-10-26](production/previews/morning-hook-day-2026-10-26.jpg) |
-| The reverse view | none | ![The reverse view, 2026-10-26](production/previews/morning-reverse-day-2026-10-26.jpg) |
-| The street at night | none | ![The street at night, 2026-10-26](production/previews/morning-night-2026-10-26.jpg) |
+| The hook camera by day | ![The hook camera by day, 2026-10-27](production/previews/morning-hook-day-2026-10-27.jpg) | ![The hook camera by day, 2026-10-26](production/previews/morning-hook-day-2026-10-26.jpg) |
+| The reverse view | ![The reverse view, 2026-10-27](production/previews/morning-reverse-day-2026-10-27.jpg) | ![The reverse view, 2026-10-26](production/previews/morning-reverse-day-2026-10-26.jpg) |
+| The street at night | ![The street at night, 2026-10-27](production/previews/morning-night-2026-10-27.jpg) | ![The street at night, 2026-10-26](production/previews/morning-night-2026-10-26.jpg) |
 
 The Hook sheet, the bar they are held to: ![The Hook sheet](production/previews/hook-sheet-2026-10-05.jpg)
 
