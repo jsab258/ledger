@@ -155,3 +155,5 @@
 {"event": "stop", "at": "2026-10-27T06:52:29", "note": "G1 closed: geography homed, 1,788 golden rows, port agrees"}
 {"event": "start", "at": "2026-10-27T07:00:12", "task": "27 Oct: fallback, the sweep's W2: the pending plain questions and the line counter kept in the save", "phase": "3", "kind": "production"}
 {"event": "stop", "at": "2026-10-27T07:02:01", "note": "W2 in code; both targets build; round trip checked in tonight's walk"}
+{"event": "start", "at": "2026-10-27T07:14:12", "task": "27 Oct: item 5 the shelf patch, research's two diagnostic photographs (no change)", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-27T07:18:45", "note": "both diagnostics change nothing; a fill light is the researched third try, his word first"}
