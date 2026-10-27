@@ -1,5 +1,5 @@
-# UE probe verdict 30d5629 @1793114405
+# UE probe verdict 1f9e6ee @1793117003
 # Line 1 names the commit this was measured on, as the Unity verdict does.
 
-NO RUN - the probe binary wrote no verdict on this commit; nothing here was measured.
+perceptionRows=64746 perceptionMismatches=0 perceptionUnknownFns=0/FactNull-needs-exceptions perceptionTolerance=1e-09 probeTest=PASS goldenTable=perception-golden.txt
 verdictReached=end
