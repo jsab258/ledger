@@ -60,3 +60,14 @@ The game's whole check (ClaimCheck.CheckAsync, Haiku 5.5) on 617 first sentences
 **Question 2, a lead from the code:** the list step clears an event only when the item it cites is a belief, memory or something they were told (B, M, W items; ClaimCheck.ParseItems). These three speakers' facts are C, H, P and K items, so every event they state goes on to the second look, one call per detail: hence three calls and 2.4 s a sentence, against 1.1 s for the list alone. The second look is where the refusals are decided. Whether H items (what the character knows happened) should count as support at the list step, as B, M and W do, is the next thing to measure: it would cut calls and time, and must be weighed against the leaks.
 
 Read by hand (the fast checker's hand reading, LOCAL-CHECKERS-2026-10-26.md): of the 35 invented sentences Haiku passed, 18 to 23 are truly invented, among them a denial of the story's central secret ("your uncle never kept two sets of books") and two contradictions of where Mickey died and who lives above the office. Gemini's labels erred only on the strict side (12 of 44 read supported). The same strict lean will inflate the 96 refused "true" sentences by little, since Gemini called those true.
+
+## Question 2, measured: the second look on history facts is real safety (27 October, 01:55)
+
+The 617 held sentences through the game's whole check twice, the second time with the cast's H items counted as an event's support at the list (ClaimCheck.HistorySupports, a bench switch, off in the game; ledger/ClaimBench sentcheck --history-supports; $0.47):
+
+| | Invented let through, of 308 | True refused, of 309 | Median | Calls, median | Slowest tenth |
+|---|---|---|---|---|---|
+| The game's check | 35 | 96 | 2.43 s | 3 | 3.58 s |
+| H items counted at the list | **66** | 64 | 1.93 s | 2 | 3.15 s |
+
+Faster by half a second and a third fewer false refusals, but nearly twice the inventions through: 40 newly passed, among them plain contradictions of the facts ("the cafe ... shuts its doors at eleven", "I found him stone cold up in his flat over the office", Ron "shouting at a stranger out back two nights before Mickey died"). The list step cites an H item for details the item does not give; the second look is what catches them. **The switch stays off.** The time lever, if any, is a faster second look, not a skipped one. Data: F:/LedgerTools/checkers/train3/haiku-verdicts-history.jsonl.
