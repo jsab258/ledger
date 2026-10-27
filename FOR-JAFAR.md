@@ -47,19 +47,19 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
 
 <!-- morning pictures: written by tools/morning_pictures.py -->
 
-**Morning, Monday 26 October. Phase 1, Prove the bottlenecks. On: 2. Walk slide and sit-down's look set aside (Needs you 1); turning passes (sit-and-turn/WALK-2026-10-25.md). Next: 3. Tom's outfit in Marvelous Designer (Needs you 3).**
+**Morning, Tuesday 27 October. Phase 1, Prove the bottlenecks. On: 3. Tom's outfit: zip jacket baked, skinned; cuffs set aside, his word (BAKE-PLAN). Next: 4. Speech: all on Pocket; checker's third try clears 3% (invented-claims/); rewrite, early looks left off; two copies a check call next (voice-latency/CHECK-TIME).**
 
-| | Today, 26 Oct | Yesterday, 25 Oct |
+No morning pictures today: the free-space check refused ({"job": "morning pictures", "drives": "CF", "before": {"C": 211.8, "F": 19.8}, "after": {"C": 211.8, "F": 19.8}, "verdict": "STOP", "needsYou": "morning pictures stopped: C: has 211.8 GB free (needs 40.0), F: 19.8 GB (needs 20.0) after the nightly limits ran. Put this in Needs you and do not retry until there is room."}). Yesterday's stand below.
+
+| | Today, 27 Oct | Yesterday, 26 Oct |
 |---|---|---|
-| The hook camera by day | ![The hook camera by day, 2026-10-26](production/previews/morning-hook-day-2026-10-26.jpg) | none |
-| The reverse view | ![The reverse view, 2026-10-26](production/previews/morning-reverse-day-2026-10-26.jpg) | none |
-| The street at night | ![The street at night, 2026-10-26](production/previews/morning-night-2026-10-26.jpg) | none |
+| The hook camera by day | none | ![The hook camera by day, 2026-10-26](production/previews/morning-hook-day-2026-10-26.jpg) |
+| The reverse view | none | ![The reverse view, 2026-10-26](production/previews/morning-reverse-day-2026-10-26.jpg) |
+| The street at night | none | ![The street at night, 2026-10-26](production/previews/morning-night-2026-10-26.jpg) |
 
 The Hook sheet, the bar they are held to: ![The Hook sheet](production/previews/hook-sheet-2026-10-05.jpg)
 
 No decision asked: these are for watching the street change.
-
-**The repository on Monday:** 3.40 GB on GitHub; 3.86 GB packed on this PC (the history was 30.8 GB before 5 October's cleaning; a guard refuses large files before every push).
 
 <!-- /morning pictures -->
 
@@ -133,6 +133,7 @@ No decision asked: these are for watching the street change.
 1. **Tonight's page, three taps** (https://claude.ai/artifact/GmtwhT5o89Ho9huHXYUieX): Darren's delivery A or B, blind; the checker's third try: keep Haiku alone and fix its leaks (recommended); price a north-east actor for Darren (recommended).
 2. **Tom's jacket's cuffs, a third try?** Two fixes failed (they hang off his wrists). Research found the cause: the wrist's placement point sits mid-hand, so each cuff closes over the hand. Yes, by the researched route: placed at the arm's wrist end, then drawn in to grip (recommended); or no, the jacket waits.
 3. **Leave Marvelous open with the bridge running** (recommended): Tom's jacket jobs run through it; if it is closed, one click on LEDGER bridge next time.
+4. **Empty F:'s recycle bin** (recommended): it holds 7.2 GB of files you deleted yourself; F: is at its 20 GB floor, and tonight's build stopped on it once. I never empty it.
 
 Your evening answers are recorded (shadows inside the office: yes; $10 for the slow-reply tests; the checker trained on Gemini's labels, no letter to Anthropic).
 
@@ -149,7 +150,7 @@ Your evening answers are recorded (shadows inside the office: yes; $10 for the s
 ## Builder, Monday 26 October (night)
 
 **Failed:**
-- The night's build request lost a race with my push (walk on yesterday's build); asked again, now retries.
+- The night's build: its request lost a race with my push (now retries); the second ask stopped on F:'s free space. Compressed my own files; asked again at 03:15.
 - Tom's jacket's cuffs hang off his wrists; two fixes failed; researched (Needs you 2).
 - Haiku's check, on 617 test sentences, lets 18 to 23 inventions through (Sheila denies the second book) and refuses 31% of true ones; its second look stays.
 - The fast checker's third try holds your bar but clears only 3%.
