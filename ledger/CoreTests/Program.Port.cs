@@ -60,6 +60,20 @@ namespace Ledger.CoreTests
                   "only somebody who saw it shouts at him");
         }
 
+        /// W1, ONE TOWN SAVE: the bundle's version says whether it carries the game's hints and what he has heard
+        /// (2), or whether a version-1 save left them to the files beside it.
+        static void TestTownSaveVersion()
+        {
+            Console.WriteLine("The town's save, its version (the sweep's W1):");
+            TownSave Read(string json) => TownSave.FromJson(MiniJson.AsObject(MiniJson.Deserialize(json)));
+            Check(TownSave.Version == 2, "the bundle is version 2: the game's saves carry the hints and what he has heard");
+            Check(Read("{\"version\": 1}").ReadVersion == 1, "a version-1 save says so, so its empty hints are not taken for the game's");
+            Check(Read("{\"version\": 2}").ReadVersion == 2 && Read("{}").ReadVersion == TownSave.Version,
+                  "a version-2 save, and one that gives no version, are read as this build's");
+            Check(Read(MiniJson.Serialize(new TownSave().ToJson())).ReadVersion == 2,
+                  "a save this build writes reads back as version 2, so its load trusts the bundle");
+        }
+
         /// G1's geography, the second part: WHO STANDS WHERE ON QUAY STREET AT THE HOUR, and which way they look.
         static void TestSightingGeography()
         {

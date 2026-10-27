@@ -38,8 +38,12 @@ namespace LedgerCore
 	class TownSave
 	{
 	public:
-		/// The bundle's version: a file from a later one is refused.
-		static constexpr int Version = 1;
+		/// The bundle's version: a file from a later one is refused. 2 (27 October 2026, the sweep's W1): the game's
+		/// own saves carry the hints and what he has heard in the bundle; a version-1 save's were left empty and kept
+		/// in hints.json and remarks.json beside it (ReadVersion says which).
+		static constexpr int Version = 2;
+		/// The version the file was written at; this build's when it gave none.
+		int ReadVersion = Version;
 
 		FirstMoments Hints;
 		Arrangement Asks = Arrangement(0);
@@ -110,6 +114,7 @@ namespace LedgerCore
 				Err = "the town's save is version " + ShortestRoundTrip(V->Num) + ", this build reads " + std::to_string(Version);
 				return false;
 			}
+			if (V != nullptr && V->Type == LedgerVignette::T_NUM && V->Num >= 1) T.ReadVersion = (int)V->Num;
 			auto Obj = [&Root](const char* K) -> const Value* {
 				const Value* X = PoliceJson::Last(Root, K);
 				return X != nullptr && X->Type == LedgerVignette::T_OBJ ? X : nullptr;

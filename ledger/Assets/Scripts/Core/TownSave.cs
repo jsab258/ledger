@@ -28,7 +28,13 @@ namespace Ledger.Core
     {
         /// The bundle's version. A file from a later version than this build
         /// knows is refused (SaveIncompatibleException), as the game's own save is.
-        public const int Version = 1;
+        /// 2 (27 October 2026, the sweep's W1): the game's own saves carry the hints and
+        /// what he has heard in the bundle; in a version-1 save the game left both empty
+        /// and kept them in hints.json and remarks.json beside it (ReadVersion says which).
+        public const int Version = 2;
+
+        /// The version the file was written at; this build's when it gave none.
+        public int ReadVersion = Version;
 
         public FirstMoments Hints = new FirstMoments();
         public Arrangement Asks = new Arrangement(0);
@@ -93,6 +99,7 @@ namespace Ledger.Core
             if (saved == null) return t;
             if (saved.TryGetValue("version", out var v) && v is double dv && dv > Version)
                 throw new SaveIncompatibleException(SaveFault.FromTheFuture, $"the town's save is version {dv}, this build reads {Version}");
+            if (saved.TryGetValue("version", out var rv) && rv is double rdv && rdv >= 1) t.ReadVersion = (int)rdv;
             Dictionary<string, object> Obj(string key) => saved.TryGetValue(key, out var o) ? o as Dictionary<string, object> : null;
             t.Hints = FirstMoments.FromJson(Obj("hints"));
             t.Asks = Arrangement.FromJson(Obj("asks"));

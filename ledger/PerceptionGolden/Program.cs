@@ -1224,6 +1224,10 @@ namespace Ledger.PerceptionGolden
             try { TownSave.FromJson(later); refused = "0"; }
             catch (SaveIncompatibleException) { refused = "1"; }
             Row(sb, "TownSaveLaterRefused", "later", refused);
+            // THE VERSION A FILE WAS WRITTEN AT (the sweep's W1, 27 October 2026): a version-1 save's hints and what he
+            // heard are not the game's; a file with none is read as this build's.
+            foreach (var (label, text) in new[] { ("v1", "{\"version\": 1}"), ("v2", "{\"version\": 2}"), ("none", "{}") })
+                Row(sb, "TownSaveReadVersion", label, TownSave.FromJson(MiniJson.AsObject(MiniJson.Deserialize(text))).ReadVersion.ToString(Inv));
             var junk = TownSave.FromJson(MiniJson.AsObject(MiniJson.Deserialize("{\"asks\": 7, \"tea\": \"x\", \"arrests\": [1, 2]}")));
             Row(sb, "TownSaveJunk", "junk", junk.Asks.NextNight.ToString(Inv), junk.Tea == null ? "null" : "tea", junk.Arrests.Count.ToString(Inv));
         }

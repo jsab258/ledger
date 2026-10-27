@@ -2056,11 +2056,23 @@ namespace Golden
 		Ans["TownSaveSame|same"] = { FromBool(Back.ToJson() == Written) };
 		{
 			std::string Later = Written;
-			const std::string V1 = "{\"version\":1,";
-			if (Later.compare(0, V1.size(), V1) == 0) Later.replace(0, V1.size(), "{\"version\":2,");
+			// this build's version and the one after it, never written in (the version went to 2 on 27 October 2026)
+			const std::string Now = "{\"version\":" + std::to_string(TownSave::Version) + ",";
+			if (Later.compare(0, Now.size(), Now) == 0) Later.replace(0, Now.size(), "{\"version\":" + std::to_string(TownSave::Version + 1) + ",");
 			TownSave Refused;
 			std::string E;
 			Ans["TownSaveLaterRefused|later"] = { TownSave::FromJson(Later, Refused, E) ? "0" : "1" };
+		}
+		{
+			// The version a file was written at (the sweep's W1, 27 October 2026).
+			const char* Texts[][2] = { { "v1", "{\"version\": 1}" }, { "v2", "{\"version\": 2}" }, { "none", "{}" } };
+			for (const auto& Tx : Texts)
+			{
+				TownSave Read;
+				std::string E;
+				TownSave::FromJson(Tx[1], Read, E);
+				Ans[std::string("TownSaveReadVersion|") + Tx[0]] = { FromInt(Read.ReadVersion) };
+			}
 		}
 		{
 			TownSave Junk;
@@ -5340,7 +5352,8 @@ namespace Golden
 			A = GossipFuzzRow(F);
 		}
 		// THE TOWN'S ONE SAVE (town list 6bl): TownSave.h.
-		else if (Fn == "TownSaveWritten" || Fn == "TownSaveBack" || Fn == "TownSaveSame" || Fn == "TownSaveLaterRefused" || Fn == "TownSaveJunk")
+		else if (Fn == "TownSaveWritten" || Fn == "TownSaveBack" || Fn == "TownSaveSame" || Fn == "TownSaveLaterRefused" || Fn == "TownSaveJunk"
+		         || Fn == "TownSaveReadVersion")
 		{
 			A = TownSaveRow(F);
 		}

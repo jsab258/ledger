@@ -5417,6 +5417,11 @@ namespace
 	// The plain question each person has just put to him, by card ("deal" in their last reply), or none.
 	std::map<std::string, std::string> GDealAsked;
 
+	// WHAT THE TOWN'S BUNDLE BROUGHT BACK at the last load (the sweep's W1): the hints and what he has heard, when the
+	// save was the game's own version-2 bundle; otherwise not kept, and the files beside it serve.
+	struct TownBundle { bool bKept = false; StreetVoice::RemarkLedger Heard; std::string HintsJson; };
+	TownBundle GTownBundle;
+
 	void TakeClaimsFromReply(const std::string& Line, const std::string& Card)
 	{
 		using namespace LedgerVignette;
@@ -9117,6 +9122,11 @@ namespace
 		if (!bLiveScript)
 		{
 			TownSave T;
+			// ONE TOWN SAVE (27 October 2026, the sweep's W1; the review's C3): the hints and what he has heard travel
+			// in the bundle too, so a save cut between files still loads them whole; hints.json and remarks.json are
+			// still written beside it, for a build that reads only those.
+			T.Hints = GHints;
+			T.Heard = GLive.Remarks;
 			T.Asks = GWeek.Asks;
 			if (GWeek.Tea) { T.Tea.reset(new AdasTea(*GWeek.Tea)); }
 			T.Police = GWeek.Police;
@@ -9227,6 +9237,8 @@ namespace
 				if (FFileHelper::LoadFileToString(Md, *(Dir / FString::Printf(TEXT("memory-%s.md"), *Un(G->Id))))) { G->Memory->LoadFrom(Utf8(Md)); }
 			}
 		}
+		// every load starts with nothing from the bundle, whatever its mode (W1)
+		GTownBundle = TownBundle();
 		// THE CONSEQUENCE (free play), from the town's save; a save without it
 		// (from before) starts the police file empty, never the load.
 		if (!bLiveScript)
@@ -9245,6 +9257,14 @@ namespace
 				GWeek.Hours = T.Hours;
 				GWeek.Week = T.Week;
 				GWaitShown.insert(T.WaitShown.begin(), T.WaitShown.end());
+				// a version-2 bundle is the game's own, its hints and what he heard with it; a version-1 save's were left
+				// empty there, and come from the files beside it (W1)
+				if (T.ReadVersion >= 2)
+				{
+					GTownBundle.bKept = true;
+					GTownBundle.Heard = T.Heard;
+					GTownBundle.HintsJson = T.Hints.ToJson();
+				}
 			}
 		}
 		FString ClockText;
@@ -9298,7 +9318,8 @@ namespace
 		// load took; a save from before they were kept has none, and a damaged
 		// one loses them, never the game.
 		FString RemarksText;
-		GLive.Remarks = Ok && FFileHelper::LoadFileToString(RemarksText, *(Dir / TEXT("remarks.json")))
+		GLive.Remarks = Ok && GTownBundle.bKept ? GTownBundle.Heard
+			: Ok && FFileHelper::LoadFileToString(RemarksText, *(Dir / TEXT("remarks.json")))
 			? StreetVoice::RemarkLedger::FromJson(Utf8(RemarksText)) : StreetVoice::RemarkLedger();
 		// THE TALK COMES BACK TOO, once the talk program is ready (handover 6r).
 		GLive.bTalkLoad = Ok && !GLive.TalkStamp.empty();
@@ -9927,8 +9948,9 @@ namespace
 		if (!bLiveScript && bLoadedFromDisk)
 		{
 			FString Saved;
-			const bool bSaved = FFileHelper::LoadFileToString(Saved, *(EncSaveDir() / TEXT("hints.json")));
-			const std::string SavedJson = Utf8(Saved);
+			// the town's bundle when it kept them (W1), else the file beside it
+			const bool bSaved = GTownBundle.bKept || FFileHelper::LoadFileToString(Saved, *(EncSaveDir() / TEXT("hints.json")));
+			const std::string SavedJson = GTownBundle.bKept ? GTownBundle.HintsJson : Utf8(Saved);
 			bHintsOn = true;
 			bHintsMoved = false;
 			bHintsFromSet = false;

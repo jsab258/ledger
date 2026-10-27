@@ -119,6 +119,7 @@ namespace Ledger.CoreTests
                 TestFamiliarityFromMeetings();
                 TestSighting();
                 TestSightingGeography();
+                TestTownSaveVersion();
                 TestBudgetedClient();
                 await TestTranscriptRollback();
                 await TestReflection();
@@ -6143,7 +6144,7 @@ namespace Ledger.CoreTests
                 var damaged = TownSave.FromJson(MiniJson.AsObject(MiniJson.Deserialize(
                     "{\"version\": 1, \"hints\": 7, \"asks\": {\"first\": 0, \"nights\": [[0, \"did\"]]}, \"tea\": \"x\", \"police\": [], \"news\": [\"a\", 3, \"a\", \"\"]}")));
                 string future = null;
-                try { TownSave.FromJson(MiniJson.AsObject(MiniJson.Deserialize("{\"version\": 2}"))); }
+                try { TownSave.FromJson(MiniJson.AsObject(MiniJson.Deserialize("{\"version\": " + (TownSave.Version + 1) + "}"))); }
                 catch (SaveIncompatibleException futureErr) { future = futureErr.Fault.ToString(); }
                 Check(back.Hints.Done.Contains(Moment.CanTalk) && back.Asks.Nights.Count == 1 && back.Tea != null && back.Tea.State == TeaState.Asked
                       && back.Police.Strongest("player.window_d0") == Known.Statement && back.Heard.Fresh("recognition/ordinary", new[] { "Evening.", "All right." }, 0) == "All right."
