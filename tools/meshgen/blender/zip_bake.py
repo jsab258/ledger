@@ -217,12 +217,140 @@ for poly in low.data.polygons:
 tot = sum(uv_area.values())
 log["checks"]["layoutShares"] = {k: round(v / tot, 4) for k, v in uv_area.items()}
 
-# (3) the normal map, tangent space (OpenGL: green up), then flipped for Unreal
+# (3) THE NORMAL MAP, EACH PIECE FROM ITS OWN PIECE OF THE DRAPE (the first fresh review, 27 October night: one cuff's
+# normals 80% wrong, a black slab over the hand at the game's distance, the other 11%; dark spikes along the deep side
+# folds: rays from one piece met another, the sleeve's end folded over the cuff, a fold's far side). Each piece of the
+# game mesh is baked from the drape's same piece only (the tapes with the teeth and stops, the fronts with their welts),
+# the rays' reach held to --ray, and the pieces put together by the layout's own piece map.
+RAY = opt("--ray", 0.014)
+scn.render.bake.cage_extrusion = opt("--cage-normal", 0.006)
+scn.render.bake.max_ray_distance = RAY
+PLAN_NAMES = ["frontL", "frontR", "back", "sleeveR", "sleeveL", "bandFrontR", "cuffR", "bandFrontL", "cuffL", "bandBack",
+              "collar", "tapeR", "tapeL"]
+# the layout rasterised: each pixel's piece, and its place in the piece's own pattern (for the rib's ridges)
+lay_piece = np.full((TEX, TEX), -1, dtype=np.int32)
+lay_px = np.zeros((TEX, TEX), dtype=np.float32)
+uvl = low.data.uv_layers["UVMap"].data
+pat_l = low.data.uv_layers["pattern"].data
+pattr = low.data.attributes["piece"].data
+for poly in low.data.polygons:
+    li = list(poly.loop_indices)
+    for j in range(1, len(li) - 1):
+        tri = (li[0], li[j], li[j + 1])
+        xs = [uvl[k].uv.x * TEX for k in tri]
+        ys = [uvl[k].uv.y * TEX for k in tri]
+        x0, x1 = max(0, int(min(xs))), min(TEX - 1, int(max(xs)) + 1)
+        y0, y1 = max(0, int(min(ys))), min(TEX - 1, int(max(ys)) + 1)
+        if x1 < x0 or y1 < y0:
+            continue
+        gx, gy = np.meshgrid(np.arange(x0, x1 + 1) + 0.5, np.arange(y0, y1 + 1) + 0.5)
+        d = (ys[1] - ys[2]) * (xs[0] - xs[2]) + (xs[2] - xs[1]) * (ys[0] - ys[2])
+        if abs(d) < 1e-12:
+            continue
+        l1 = ((ys[1] - ys[2]) * (gx - xs[2]) + (xs[2] - xs[1]) * (gy - ys[2])) / d
+        l2 = ((ys[2] - ys[0]) * (gx - xs[2]) + (xs[0] - xs[2]) * (gy - ys[2])) / d
+        l3 = 1 - l1 - l2
+        ins = (l1 >= -1e-4) & (l2 >= -1e-4) & (l3 >= -1e-4)
+        lay_piece[y0:y1 + 1, x0:x1 + 1][ins] = pattr[poly.index].value
+        pxs = [pat_l[k].uv.x for k in tri]
+        lay_px[y0:y1 + 1, x0:x1 + 1][ins] = (l1 * pxs[0] + l2 * pxs[1] + l3 * pxs[2])[ins]
+# the drape cut into its pieces, each with the floaters that lie on it
+dsrc = bmesh.new()
+dsrc.from_mesh(drape.data)
+dpl = dsrc.faces.layers.int["piece"]
+piece_src = {}
+for k, pname in enumerate(PLAN_NAMES):
+    bk = dsrc.copy()
+    kl = bk.faces.layers.int["piece"]
+    bmesh.ops.delete(bk, geom=[f for f in bk.faces if f[kl] != k], context="FACES")
+    me_k = bpy.data.meshes.new("src_" + pname)
+    bk.to_mesh(me_k)
+    bk.free()
+    for m in drape.data.materials:
+        me_k.materials.append(m)
+    o_k = bpy.data.objects.new("src_" + pname, me_k)
+    o_k.matrix_world = drape.matrix_world
+    bpy.context.scene.collection.objects.link(o_k)
+    extra = [floaters[0], floaters[1]] if pname.startswith("tape") else [floaters[2]] if pname.startswith("front") else []
+    parts_ = [o_k]
+    for f_ in extra:
+        c = f_.copy()
+        c.data = f_.data.copy()
+        bpy.context.scene.collection.objects.link(c)
+        parts_.append(c)
+    if len(parts_) > 1:
+        for o in bpy.context.view_layer.objects:
+            o.select_set(False)
+        for p_ in parts_:
+            p_.hide_set(False)
+            p_.select_set(True)
+        bpy.context.view_layer.objects.active = o_k
+        bpy.ops.object.join()
+    o_k.hide_render = True
+    piece_src[k] = o_k
+src.hide_render = True
+nrm = np.zeros((TEX, TEX, 4), dtype=np.float32)
+got = np.zeros((TEX, TEX), dtype=bool)
 nrm_im = target_image("_normal")
-nrm = bake("NORMAL", nrm_im, 4)
+for k, o_k in piece_src.items():
+    o_k.hide_render = False
+    o_k.hide_set(False)
+    scn.cycles.samples = 4
+    for o in bpy.context.view_layer.objects:
+        o.select_set(False)
+    o_k.select_set(True)
+    low.select_set(True)
+    bpy.context.view_layer.objects.active = low
+    bpy.ops.object.bake(type="NORMAL")
+    nk = np.array(nrm_im.pixels[:], dtype=np.float32).reshape(TEX, TEX, 4)
+    sel = lay_piece == k
+    nrm[sel] = nk[sel]
+    got |= sel
+    o_k.hide_render = True
+    o_k.hide_set(True)
+# the margin round each island: filled from the island outward
+for _ in range(8):
+    acc = np.zeros_like(nrm)
+    cnt = np.zeros((TEX, TEX), dtype=np.float32)
+    for dy, dx_ in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+        sh_ok = np.roll(np.roll(got, dy, 0), dx_, 1)
+        acc += np.roll(np.roll(nrm, dy, 0), dx_, 1) * sh_ok[..., None]
+        cnt += sh_ok
+    fill = (~got) & (cnt > 0)
+    nrm[fill] = acc[fill] / cnt[fill][:, None]
+    got |= fill
+nrm[~got] = (0.5, 0.5, 1.0, 1.0)
+# THE RIB'S RIDGES, drawn from the pattern (the drape has none: the review's "rib bakes smooth"): wales 4 mm apart
+# along the piece's own x, 0.4 mm high, their slope laid along that direction in the layout and added to the bake
+RIB_PITCH, RIB_H = opt("--rib-pitch", 0.004), opt("--rib-height", 0.0004)
+rib_ix = [k for k, n in enumerate(PLAN_NAMES) if n.startswith(("band", "cuff"))]
+on_rib_px = np.isin(lay_piece, rib_ix)
+gx_ = np.gradient(lay_px, axis=1)
+gy_ = np.gradient(lay_px, axis=0)
+glen = np.sqrt(gx_ ** 2 + gy_ ** 2) + 1e-12
+slope = -RIB_H * (2 * math.pi / RIB_PITCH) * np.sin(2 * math.pi * lay_px / RIB_PITCH)
+vx, vy = 2 * nrm[..., 0] - 1, 2 * nrm[..., 1] - 1
+vx = np.where(on_rib_px, vx - slope * gx_ / glen, vx)
+vy = np.where(on_rib_px, vy - slope * gy_ / glen, vy)
+vz = 2 * nrm[..., 2] - 1
+ln = np.sqrt(vx ** 2 + vy ** 2 + vz ** 2) + 1e-12
+nrm[..., 0], nrm[..., 1], nrm[..., 2] = (vx / ln + 1) / 2, (vy / ln + 1) / 2, (vz / ln + 1) / 2
+log["checks"]["ribPixels"] = int(on_rib_px.sum())
+# each piece's share of texels whose normal leans more than 60 degrees off the surface (the review's measure)
+offs = {}
+for k, n in enumerate(PLAN_NAMES):
+    sel = lay_piece == k
+    if sel.any():
+        offs[n] = round(float(((2 * nrm[..., 2] - 1)[sel] < 0.5).mean()), 4)
+log["checks"]["normalsOver60PerPiece"] = offs
 gl = nrm.copy()
 dx = nrm.copy()
 dx[:, :, 1] = 1.0 - dx[:, :, 1]
+for o_k in piece_src.values():
+    bpy.data.objects.remove(o_k, do_unlink=True)
+src.hide_render = False
+scn.render.bake.cage_extrusion = CAGE
+scn.render.bake.max_ray_distance = 0.0
 
 # (4) occlusion, the body hidden, from the source onto the low mesh
 ao_im = target_image("_ao")

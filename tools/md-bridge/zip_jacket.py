@@ -39,7 +39,8 @@ import math
 import sys
 
 CORNER, CURVE = 0, 2
-RIB_BAND, RIB_CUFF = 0.90, 0.85
+# the band 0.85 (27 October, the baked jacket's fresh review: at 0.90 the hem band stood off the hips instead of gripping)
+RIB_BAND, RIB_CUFF = 0.85, 0.85
 BAND_H, CUFF_H, COLLAR_H = 55.0, 60.0, 70.0
 TAPE_W = 12.0
 # a hip welt: its slit's length and its lips' height, its centre this far up from the front's hem and this share of
@@ -146,7 +147,10 @@ def build(brian, sleeve_shorten=0.0):
         # each band's centre-front end on the same side as its front's (the right front's is on +x)
         pieces["bandFront" + s] = ccw(mirror_edges(band)) if s == "R" else band
         w = length(E("sleeve" + s, "wristLeft" + s, "wristRight" + s)) * RIB_CUFF
-        pieces["cuff" + s] = rect(w, CUFF_H, ["cuffAlow" + s, "cuffBlow" + s, "cuffB" + s, "cuffA" + s])
+        cuff = rect(w, CUFF_H, ["cuffAlow" + s, "cuffBlow" + s, "cuffB" + s, "cuffA" + s])
+        # the right cuff mirrored, as the right band is (27 October: cut as drafted beside the drafted right sleeve, it
+        # had to turn inside out through itself to be sewn; it draped as a crumpled flap and baked 83% wrong)
+        pieces["cuff" + s] = ccw(mirror_edges(cuff)) if s == "R" else cuff
     w = length(E("back", "hemL", "hemR")) * RIB_BAND
     pieces["bandBack"] = rect(w, BAND_H, ["bandBackLowL", "bandBackLowR", "bandBackR", "bandBackL"])
     # the stand collar along the whole neckline, its neck edge in three lines (right front, back, left front) so each
