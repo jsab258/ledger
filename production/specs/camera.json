@@ -1,0 +1,13 @@
+{
+ "what": "Tom's camera, one row a situation (his page of 28 October 2026, 19:02: \"Between, nudged so his feet are fully in frame. Keep Mafia's idea of the camera changing by situation: closer for talk and low rooms, wider for fights so you see the other man's feet and the people watching.\"; Study 9, its item 2: the modes as rows of one spec, read by the existing arm). Metres and degrees: back along the arm from the pivot, aside (right), up, the pivot above his feet, the lens horizontal. Read by SliceCharacter.cpp at the start; -CamBackM and the rest still override it for pictures.",
+ "reference": "Mafia: The Old Country, read from its files (production/research/aaa-reference/studies/09-camera-controls.md): on foot 1.65 back, 0.45 aside, 0.35 up from a pivot 1.25 m up, 82 degrees; town walking 1.55 and 79; running 1.40 and 85; low rooms 1.20, 0.35 aside, 78; talk with Tom 1.5 m from the speaker, 63 degrees. Ours before: 3.2 back, 0.45 aside, 0.55 up from the hip (0.88), 90.",
+ "street": {
+  "back_m": 2.4,
+  "side_m": 0.45,
+  "up_m": 0.25,
+  "pivot_m": 1.05,
+  "lens_deg": 86,
+  "why": "His pick, the middle of the three shown (2.4 m, 86 degrees, pivot 1.05, 0.45 up), nudged so his feet are fully in frame: at the pictures' 12 degrees down the frame's lower edge met the ground about 2.40 m out, just past his heels at 2.35, so the camera comes down 0.20 m (to 0.25 above the arm), which brings the edge in to about 2.2 m. Checked in the packaged game's pictures before it is kept."
+ },
+ "to_come": "talk (closer, Mafia's 1.5 m and 63 degrees as the start), low rooms (closer, 1.20 and 78), running (1.40 and 85), fights (wider, so the other man's feet and the onlookers are seen; no Mafia number for this, to be found or marked none found): each a row here, each shown to him in the game before it is kept."
+}

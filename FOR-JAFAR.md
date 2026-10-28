@@ -170,12 +170,12 @@ No decision asked: these are for watching the street change.
 ### Needs you
 
 1. **Open Marvelous and click LEDGER bridge** (no page: a click on your PC). The cuff drape by the new garment skill (an elastic rib) is queued and starts on its own.
-2. **Tom's camera: Mafia's 1.65 m and 82 degrees, or ours at 3.2 m and 90?** (Study 9; on its page: https://claude.ai/artifact/4e5QA1UFTEGLacF3Rm4wpE) Mafia's (recommended).
-3. **Mickey's back door, a third try at its panels?** (next page) Chamfered mouldings with shaded corners, or panels sunk into the leaf. Yes (recommended), or leave them.
-4. **Fists able to kill?** (next page; Study 14: Kingdom Come II says no) No (recommended), or yes.
-5. **The animation source test at 6 moves, not the design's 4?** (next page) Yes (recommended), or 4.
+2. **Mickey's back door, a third try at its panels?** (next page) Chamfered mouldings with shaded corners, or panels sunk into the leaf. Yes (recommended), or leave them.
+3. **Fists able to kill?** (next page; Study 14: Kingdom Come II says no) No (recommended), or yes.
+4. **The animation source test at 6 moves, not the design's 4?** (next page) Yes (recommended), or 4.
+5. **May a job ever mark your paper map?** (next page; Study 16) Words only; a pencil ring once someone has told Tom the place (recommended); or an optional marker, off by default.
 
-No page yet for 3 to 5: they go on tomorrow's page, with the map marks (Study 16) and the interface's width (Study 10) after them. Today's page, answered at 12:35: https://claude.ai/artifact/TDpjTLydnfFBFfRPmavGpD
+No page yet for 2 to 5: they go on tomorrow's page, the interface's width (Study 10) after them. Your camera pick of 19:02 is recorded (between, feet in frame, the camera by situation). Today's page, answered at 12:35: https://claude.ai/artifact/TDpjTLydnfFBFfRPmavGpD
 
 Your answers of 28 October morning are recorded and in the game: your new rule, the fallback order, the fast checker on, the wider rule, two copies (your condition met), Marvelous clicked. Your answers of 27 October are recorded: the cuffs' third try (failed), $4 more for speech tests (spent on the wording test and two copies), the bin emptied (the build re-run at 13:34), the checker's fourth try as you set it (failed; the small checker's cut-offs went to your page), no actor for Darren (Common Voice read, and failed), your evening order on invented sentences with its $20 ($17.86 spent), and tonight's page: the checker at the open cut-off (behind a switch until measured live), the cuffs by the sleeve first, Darren's voice kept, the cited instructions into the game.
 
@@ -188,6 +188,23 @@ Your answers of 28 October morning are recorded and in the game: your new rule, 
 - **4. The friends' candidate** (0.50W): on your own account, $5 an evening.
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
+
+## Builder, Wednesday 28 October (evening)
+
+**Failed:**
+- Tom's jacket in the game, twice: first it hid his placeholder shorts (underwear), then it let Epic's white shirt through. Fixed by hiding only the shirt's sections.
+- The jacket's street views: small holes in both cuffs, a step in the back hem, a ragged collar edge. Listed; the cuffs get rebuilt.
+- Mafia's key sat in a helper's settings copy on drive C. Blanked.
+- The night lamps' new bulbs save only 0.2 ms; the big saving was already made on 7 October.
+
+**Done:**
+- Your two orders and release rulings: in the ledger, RULINGS and CLAUDE.md, with a push check for "reference first". The progress page shows the docks, the story, late 2027.
+- 145 study items in the ledger, reviewed.
+- Hints on hesitation, talk to the person Tom faces, bulb lamps: in the packaged game.
+- Seven researches, each reviewed: the garment pipeline (now a skill), a Mafia jacket, sitting, live talk, asset checks, wear and fog, the town kit.
+- Sitting: the bench's clips measured; entries derived from them land on the seat to the centimetre, all ten.
+
+**Act on:** open Marvelous and click LEDGER bridge (no page). Your camera choice: https://claude.ai/artifact/4e5QA1UFTEGLacF3Rm4wpE
 
 ## Builder, Wednesday 28 October (morning; late, my fault: due by 07:00)
 

@@ -283,6 +283,29 @@ void ALedgerSliceCharacter::BeginPlay()
 	{
 		const TCHAR* Cmd = FCommandLine::Get();
 		double V = 0.0;
+		// HIS PICK (his page, 28 October, 19:02): the street row of production/specs/camera.json, the camera's one
+		// home; the switches below still override it for pictures
+		{
+			TArray<FString> Cands;
+			FString Repo, Text;
+			if (FParse::Value(Cmd, TEXT("LedgerRepo="), Repo) && !Repo.IsEmpty()) { Cands.Add(FPaths::Combine(Repo, TEXT("production/specs/camera.json"))); }
+			Cands.Add(FPaths::ConvertRelativePathToFull(FPaths::Combine(FPaths::ProjectDir(), TEXT("../production/specs/camera.json"))));
+			Cands.Add(FPaths::ConvertRelativePathToFull(FPaths::Combine(FPaths::ProjectContentDir(), TEXT("LedgerData/production/specs/camera.json"))));
+			for (const FString& C : Cands) { if (FFileHelper::LoadFileToString(Text, *C)) { break; } }
+			TSharedPtr<FJsonObject> Root;
+			const TSharedPtr<FJsonObject>* Street = nullptr;
+			if (Boom != nullptr && !Text.IsEmpty() && FJsonSerializer::Deserialize(TJsonReaderFactory<>::Create(Text), Root) && Root.IsValid()
+				&& Root->TryGetObjectField(TEXT("street"), Street))
+			{
+				double N = 0.0;
+				if ((*Street)->TryGetNumberField(TEXT("back_m"), N)) { Boom->TargetArmLength = (float)(N * 100.0); }
+				if ((*Street)->TryGetNumberField(TEXT("side_m"), N)) { Boom->SocketOffset.Y = N * 100.0; }
+				if ((*Street)->TryGetNumberField(TEXT("up_m"), N)) { Boom->SocketOffset.Z = N * 100.0; }
+				if ((*Street)->TryGetNumberField(TEXT("pivot_m"), N)) { Boom->SetRelativeLocation(FVector(0.0, 0.0, N * 100.0 - GetCapsuleComponent()->GetScaledCapsuleHalfHeight())); }
+				if (Camera != nullptr && (*Street)->TryGetNumberField(TEXT("lens_deg"), N)) { Camera->SetFieldOfView((float)N); }
+			}
+			else { UE_LOG(LogTemp, Warning, TEXT("LedgerCamera: no camera.json street row; the arm as built")); }
+		}
 		if (Boom != nullptr && FParse::Value(Cmd, TEXT("CamBackM="), V)) { Boom->TargetArmLength = (float)(V * 100.0); }
 		if (Boom != nullptr && FParse::Value(Cmd, TEXT("CamSideM="), V)) { Boom->SocketOffset.Y = V * 100.0; }
 		if (Boom != nullptr && FParse::Value(Cmd, TEXT("CamUpM="), V)) { Boom->SocketOffset.Z = V * 100.0; }
@@ -1323,6 +1346,46 @@ namespace LedgerSit
 		return LoadObject<UAnimMontage>(nullptr, *FString::Printf(TEXT("/Game/Characters/UEFN_Mannequin/Animations/Interactions/Bench/%s.%s"), *Name, *Name));
 	}
 
+	// THE CLIPS AS MEASURED (28 October, the sitting method's step 2; production/specs/seat-clips.json, written by
+	// tools/ue/clip_sheet.py): per clip, the root's pose at its start and end and its warp bone's place at the end, in
+	// the clip's own frame (cm, degrees), from which an entry is derived instead of placed by hand
+	struct FClipPose { bool bOk = false; FTransform RootStart, RootEnd, WarpBoneEnd; };
+	FClipPose ClipPose(const FString& Name)
+	{
+		FClipPose Out;
+		TArray<FString> Cands;
+		FString Repo;
+		if (FParse::Value(FCommandLine::Get(), TEXT("LedgerRepo="), Repo) && !Repo.IsEmpty()) { Cands.Add(FPaths::Combine(Repo, TEXT("production/specs/seat-clips.json"))); }
+		Cands.Add(FPaths::ConvertRelativePathToFull(FPaths::Combine(FPaths::ProjectDir(), TEXT("../production/specs/seat-clips.json"))));
+		Cands.Add(FPaths::ConvertRelativePathToFull(FPaths::Combine(FPaths::ProjectContentDir(), TEXT("LedgerData/production/specs/seat-clips.json"))));
+		FString Text;
+		for (const FString& C : Cands) { if (FFileHelper::LoadFileToString(Text, *C)) { break; } }
+		TSharedPtr<FJsonObject> Root;
+		const TSharedPtr<FJsonObject>* Clips = nullptr;
+		const TSharedPtr<FJsonObject>* Clip = nullptr;
+		if (Text.IsEmpty() || !FJsonSerializer::Deserialize(TJsonReaderFactory<>::Create(Text), Root) || !Root.IsValid()
+			|| !Root->TryGetObjectField(TEXT("clips"), Clips) || !(*Clips)->TryGetObjectField(Name, Clip)) { return Out; }
+		auto Pose = [&](const TCHAR* Key, FTransform& T) -> bool
+		{
+			const TArray<TSharedPtr<FJsonValue>>* A = nullptr;
+			if (!(*Clip)->TryGetArrayField(Key, A) || A->Num() < 3) { return false; }
+			T = FTransform(FRotator(0.0, (*A)[2]->AsNumber(), 0.0), FVector((*A)[0]->AsNumber(), (*A)[1]->AsNumber(), 0.0));
+			return true;
+		};
+		const TArray<TSharedPtr<FJsonValue>>* B = nullptr;
+		double BoneYaw = 0.0;
+		(*Clip)->TryGetNumberField(TEXT("warp_bone_end_yaw_deg"), BoneYaw);
+		if (Pose(TEXT("root_start"), Out.RootStart) && Pose(TEXT("root_end"), Out.RootEnd)
+			&& (*Clip)->TryGetArrayField(TEXT("warp_bone_end_cm"), B) && B->Num() >= 2)
+		{
+			// the warp bone's end: the root's end moved by its measured offset (in the clip's frame) and turned by its yaw
+			Out.WarpBoneEnd = FTransform(FRotator(0.0, Out.RootEnd.Rotator().Yaw + BoneYaw, 0.0),
+				Out.RootEnd.GetLocation() + FVector((*B)[0]->AsNumber(), (*B)[1]->AsNumber(), 0.0));
+			Out.bOk = true;
+		}
+		return Out;
+	}
+
 	// how near E reaches a seat; the seat must be in sight and nobody on it (Ron's evening seat is the middle one)
 	constexpr double ReachCm = 160.0;
 	FCollisionResponseContainer GSavedResponses;
@@ -1425,6 +1488,44 @@ bool ALedgerSliceCharacter::TryStartSit()
 	return true;
 }
 
+// THE ENTRY DERIVED, NEVER PLACED (28 October, the sitting method's step 3): the clip's own frame is carried onto the
+// world so that its warp bone's end lands on the seat's slot (the transform the warp would aim it at); the clip's start
+// frame, carried the same way, is where the mover's mesh must begin. The warp is taken off, so where the bone really
+// lands checks the derivation, not the warp. The mesh's own offset on the mover is undone to place the mover itself.
+bool ALedgerSliceCharacter::StartSitFromEntry(const FString& ClipName)
+{
+	if (GaspMover == nullptr || SitPhase != ESitPhase::None || LedgerSit::Seats().Num() == 0) { return false; }
+	const LedgerSit::FClipPose P = LedgerSit::ClipPose(ClipName);
+	UAnimMontage* Entry = LedgerSit::Clip(ClipName);
+	USkeletalMeshComponent* MM = GaspMover->GetMesh();
+	UAnimInstance* Graph = MM != nullptr ? MM->GetAnimInstance() : nullptr;
+	if (!P.bOk || Entry == nullptr || Graph == nullptr)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("LedgerSit: entry test %s: no measures, clip or graph"), *ClipName);
+		return false;
+	}
+	const LedgerSit::FSeat& S = LedgerSit::Seats()[0];
+	SitSlot = FTransform(FRotator(0.0f, S.Yaw, 0.0f), S.Slot);
+	const FTransform ClipToWorld = P.WarpBoneEnd.Inverse() * SitSlot;
+	const FTransform MeshStart = P.RootStart * ClipToWorld;
+	const FTransform MoverStart = MM->GetRelativeTransform().Inverse() * MeshStart;
+	GaspMover->SetActorLocationAndRotation(MoverStart.GetLocation(), FRotator(0.0f, MoverStart.Rotator().Yaw, 0.0f), false, nullptr, ETeleportType::TeleportPhysics);
+	if (UMotionWarpingComponent* Warp = GaspMover->FindComponentByClass<UMotionWarpingComponent>()) { Warp->RemoveWarpTarget(FName(TEXT("SmartObject"))); }
+	UCapsuleComponent* Cap = GaspMover->GetCapsuleComponent();
+	LedgerSit::GSavedResponses = Cap->GetCollisionResponseToChannels();
+	Cap->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Ignore);
+	Cap->SetCollisionResponseToChannel(ECC_WorldDynamic, ECR_Ignore);
+	GaspMover->GetCharacterMovement()->SetMovementMode(MOVE_Flying);
+	Graph->Montage_Play(Entry, 1.0f, EMontagePlayReturnType::MontageLength, 0.0f);
+	SitMontage = Entry;
+	SitPhase = ESitPhase::Entering;
+	SitPhaseAt = SitClock;
+	bSitWantsUp = false;
+	UE_LOG(LogTemp, Display, TEXT("LedgerSit: entry test %s from (%.0f, %.0f) facing %.0f, %.0f cm from the slot, the warp off"),
+		*ClipName, MoverStart.GetLocation().X, MoverStart.GetLocation().Y, MoverStart.Rotator().Yaw, FVector::Dist2D(MoverStart.GetLocation(), S.Slot));
+	return true;
+}
+
 void ALedgerSliceCharacter::SitTick(float DeltaSeconds)
 {
 	SitClock += DeltaSeconds;
@@ -1479,15 +1580,18 @@ void ALedgerSliceCharacter::SitProofTick(float DeltaSeconds)
 {
 	static const bool bOn = FParse::Param(FCommandLine::Get(), TEXT("TomSitProof"));
 	if (!bOn || GaspMover == nullptr) { return; }
-	static float T = 0.0f, StepAt = 0.0f, Offset = -1.0f, PelvisUp = 0.0f, NextShot = 0.0f;
+	static float T = 0.0f, StepAt = 0.0f, Offset = -1.0f, PelvisUp = 0.0f, NextShot = 0.0f, BoneOff = -1.0f, BoneYawOff = 0.0f;
+	static FString EntryClip;
+	static const bool bEntryTest = FParse::Value(FCommandLine::Get(), TEXT("TomSitEntryTest="), EntryClip) && !EntryClip.IsEmpty();
 	static int32 Step = 0;
 	static TWeakObjectPtr<ACameraActor> Cam;
 	T += DeltaSeconds;
 	const TArray<LedgerSit::FSeat>& Seats = LedgerSit::Seats();
 	auto Done = [&](bool bPass, const TCHAR* Why)
 	{
-		UE_LOG(LogTemp, Display, TEXT("ledgerTomSit=%s %s entered=%d seated=%d stood=%d hipsFromSeatCm=%.1f hipsUpCm=%.1f t=%.1f"), bPass ? TEXT("PASS") : TEXT("FAIL"), Why,
-			Step >= 2 ? 1 : 0, Step >= 3 ? 1 : 0, Step >= 5 ? 1 : 0, Offset, PelvisUp, T);
+		UE_LOG(LogTemp, Display, TEXT("ledgerTomSit=%s %s entered=%d seated=%d stood=%d hipsFromSeatCm=%.1f hipsUpCm=%.1f t=%.1f%s"), bPass ? TEXT("PASS") : TEXT("FAIL"), Why,
+			Step >= 2 ? 1 : 0, Step >= 3 ? 1 : 0, Step >= 5 ? 1 : 0, Offset, PelvisUp, T,
+			bEntryTest ? *FString::Printf(TEXT(" entryTest=%s attachFromSlotCm=%.1f attachYawOffDeg=%.1f"), *EntryClip, BoneOff, BoneYawOff) : TEXT(""));
 		Step = 99;
 		if (FParse::Param(FCommandLine::Get(), TEXT("TomSitProofExit"))) { FPlatformMisc::RequestExit(false); }
 	};
@@ -1500,7 +1604,7 @@ void ALedgerSliceCharacter::SitProofTick(float DeltaSeconds)
 		SetActorLocationAndRotation(S.Slot + Front * 120.0 + FVector(0.0, 0.0, 95.0), FRotator(0.0f, S.Yaw + 180.0f, 0.0f), false, nullptr, ETeleportType::TeleportPhysics);
 		Step = 1; StepAt = T;
 	}
-	else if (Step == 1 && T - StepAt > 1.5f) { if (TryStartSit()) { Step = 2; StepAt = T; } else { Done(false, TEXT("no-start")); return; } }
+	else if (Step == 1 && T - StepAt > 1.5f) { if (bEntryTest ? StartSitFromEntry(EntryClip) : TryStartSit()) { Step = 2; StepAt = T; } else { Done(false, TEXT("no-start")); return; } }
 	else if (Step == 2 && SitPhase == ESitPhase::Seated)
 	{
 		// JUDGED BY HIS HIPS, not his capsule: the seat's point is the one under the seat bone, and the
@@ -1508,6 +1612,18 @@ void ALedgerSliceCharacter::SitProofTick(float DeltaSeconds)
 		const FVector Pelvis = GaspMover->GetMesh()->GetSocketLocation(TEXT("pelvis"));
 		Offset = (float)FVector::Dist2D(Pelvis, S.Slot);
 		PelvisUp = (float)(Pelvis.Z - S.Slot.Z);
+		if (bEntryTest)
+		{
+			// THE ENTRY TEST'S VERDICT (the method's step 3): the warp bone where the warp would have aimed it, the warp
+			// off: within 5 cm and 3 degrees of the slot, the hips at the clip's own seated height (51.8 cm) within 3 cm
+			const FTransform Bone = GaspMover->GetMesh()->GetSocketTransform(TEXT("attach"));
+			BoneOff = (float)FVector::Dist2D(Bone.GetLocation(), S.Slot);
+			BoneYawOff = (float)FRotator::NormalizeAxis(Bone.Rotator().Yaw - SitSlot.Rotator().Yaw);
+			const bool bPass = BoneOff < 5.0f && FMath::Abs(BoneYawOff) < 3.0f && FMath::Abs(PelvisUp - 51.8f) < 3.0f;
+			Step = 3;   // entered and seated
+			Done(bPass, TEXT("entry-test"));
+			return;
+		}
 		Step = 3; StepAt = T;
 	}
 	else if (Step == 3 && T - StepAt > 3.0f) { bSitWantsUp = true; Step = 4; StepAt = T; }

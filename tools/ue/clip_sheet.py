@@ -102,6 +102,8 @@ def measure(name):
     res = {"clip": name, "length": round(length, 3), "bones": len(names), "bones_special": special,
            "warp": warp_notifies(mont) if mont is not None else warp_notifies(seq), "warp_on_sequence": warp_notifies(seq)}
     if r0 and r1:
+        res["root_start"] = [round(r0[0], 1), round(r0[1], 1), round(r0[3], 1)]
+        res["root_end"] = [round(r1[0], 1), round(r1[1], 1), round(r1[3], 1)]
         res["root_travel_cm"] = [round(r1[0] - r0[0], 1), round(r1[1] - r0[1], 1)]
         res["root_turn_deg"] = round(((r1[3] - r0[3] + 180.0) % 360.0) - 180.0, 1)
     end = rows[-1][1]
@@ -110,6 +112,7 @@ def measure(name):
     for b in special:
         if b in end and r1:
             res["end_offset_" + b] = [round(end[b][k] - r1[k], 1) for k in range(3)]
+            res["end_yaw_" + b] = round(((end[b][3] - r1[3] + 180.0) % 360.0) - 180.0, 1)
             if "pelvis" in end:
                 res["pelvis_from_" + b] = [round(end["pelvis"][k] - end[b][k], 1) for k in range(3)]
     if all("head" in r[1] for r in rows):
@@ -158,5 +161,21 @@ for c in clips:
     except Exception as e:
         sheet.append({"clip": c, "error": str(e)[:120]})
 os.makedirs(os.path.dirname(OUT), exist_ok=True)
+# THE SPEC THE GAME READS (production/specs/seat-clips.json, the clips' one home for the sit's step 3): per clip, its
+# length, the root's travel and turn over the whole clip, and where its warp bone ends against the root; all in the
+# clip's own root frame (the mannequin faces +Y), cm and degrees. The full sheet above stays on F: as the evidence.
+spec = {"what": "The bench clips as measured by tools/ue/clip_sheet.py (28 October 2026, his order D10, step 2): per clip, in its own root frame (the mannequin faces +Y), cm and degrees. Read by SliceCharacter.cpp's -SitEntryTest to derive each entry from the slot.",
+        "clips": {}}
+for c in sheet:
+    if "error" in c or "root_travel_cm" not in c:
+        continue
+    w = c.get("warp") if isinstance(c.get("warp"), list) else []
+    bone = next((x.get("warp_point_anim_bone_name") for x in w if x.get("warp_point_anim_bone_name")), None)
+    spec["clips"][c["clip"]] = {"length_s": c["length"], "root_start": c.get("root_start"), "root_end": c.get("root_end"),
+                                "root_travel_cm": c["root_travel_cm"], "root_turn_deg": c.get("root_turn_deg"),
+                                "warp_target": next((x.get("warp_target_name") for x in w if x.get("warp_target_name")), None), "warp_bone": bone,
+                                "warp_bone_end_cm": c.get("end_offset_" + bone) if bone else None, "warp_bone_end_yaw_deg": c.get("end_yaw_" + bone) if bone else None,
+                                "pelvis_from_warp_bone_cm": c.get("pelvis_from_" + bone) if bone else None}
+json.dump(spec, open(os.path.join(REPO, "production", "specs", "seat-clips.json"), "w", encoding="utf-8"), indent=1)
 json.dump({"made": "tools/ue/clip_sheet.py", "clips": sheet, "log": L}, open(OUT, "w", encoding="utf-8"), indent=1)
 unreal.log("ledgerClipSheet clips=%d out=%s" % (len(sheet), OUT))

@@ -1,0 +1,361 @@
+{
+ "what": "The bench clips as measured by tools/ue/clip_sheet.py (28 October 2026, his order D10, step 2): per clip, in its own root frame (the mannequin faces +Y), cm and degrees. Read by SliceCharacter.cpp's -SitEntryTest to derive each entry from the slot.",
+ "clips": {
+  "M_interaction_bench_into_F_Lfoot_Montage": {
+   "length_s": 10.867,
+   "root_start": [
+    0.0,
+    443.2,
+    180.0
+   ],
+   "root_end": [
+    0.0,
+    20.0,
+    0.0
+   ],
+   "root_travel_cm": [
+    0.0,
+    -423.2
+   ],
+   "root_turn_deg": -180.0,
+   "warp_target": "SmartObject",
+   "warp_bone": "attach",
+   "warp_bone_end_cm": [
+    0.0,
+    -20.0,
+    0.0
+   ],
+   "warp_bone_end_yaw_deg": 0.0,
+   "pelvis_from_warp_bone_cm": [
+    3.0,
+    7.5,
+    51.8
+   ]
+  },
+  "M_interaction_bench_into_F_Rfoot_Montage": {
+   "length_s": 10.833,
+   "root_start": [
+    0.0,
+    437.7,
+    -180.0
+   ],
+   "root_end": [
+    0.0,
+    20.0,
+    0.0
+   ],
+   "root_travel_cm": [
+    0.0,
+    -417.7
+   ],
+   "root_turn_deg": -180.0,
+   "warp_target": "SmartObject",
+   "warp_bone": "attach",
+   "warp_bone_end_cm": [
+    0.0,
+    -20.0,
+    0.0
+   ],
+   "warp_bone_end_yaw_deg": 0.0,
+   "pelvis_from_warp_bone_cm": [
+    3.0,
+    7.5,
+    51.8
+   ]
+  },
+  "M_interaction_bench_into_L_090_Lfoot_Montage": {
+   "length_s": 11.067,
+   "root_start": [
+    -464.4,
+    70.0,
+    -90.0
+   ],
+   "root_end": [
+    0.0,
+    20.0,
+    0.0
+   ],
+   "root_travel_cm": [
+    464.4,
+    -50.0
+   ],
+   "root_turn_deg": 90.0,
+   "warp_target": "SmartObject",
+   "warp_bone": "attach",
+   "warp_bone_end_cm": [
+    0.0,
+    -20.0,
+    0.0
+   ],
+   "warp_bone_end_yaw_deg": 0.0,
+   "pelvis_from_warp_bone_cm": [
+    3.0,
+    7.5,
+    51.8
+   ]
+  },
+  "M_interaction_bench_into_L_090_Rfoot_Montage": {
+   "length_s": 11.367,
+   "root_start": [
+    -466.8,
+    70.0,
+    -90.0
+   ],
+   "root_end": [
+    0.0,
+    20.0,
+    0.0
+   ],
+   "root_travel_cm": [
+    466.8,
+    -50.0
+   ],
+   "root_turn_deg": 90.0,
+   "warp_target": "SmartObject",
+   "warp_bone": "attach",
+   "warp_bone_end_cm": [
+    0.0,
+    -20.0,
+    0.0
+   ],
+   "warp_bone_end_yaw_deg": 0.0,
+   "pelvis_from_warp_bone_cm": [
+    3.0,
+    7.5,
+    51.8
+   ]
+  },
+  "M_interaction_bench_into_R_090_Lfoot_Montage": {
+   "length_s": 11.367,
+   "root_start": [
+    449.7,
+    70.0,
+    90.0
+   ],
+   "root_end": [
+    0.0,
+    20.0,
+    0.0
+   ],
+   "root_travel_cm": [
+    -449.7,
+    -50.0
+   ],
+   "root_turn_deg": -90.0,
+   "warp_target": "SmartObject",
+   "warp_bone": "attach",
+   "warp_bone_end_cm": [
+    0.0,
+    -20.0,
+    0.0
+   ],
+   "warp_bone_end_yaw_deg": 0.0,
+   "pelvis_from_warp_bone_cm": [
+    3.0,
+    7.5,
+    51.8
+   ]
+  },
+  "M_interaction_bench_into_R_090_Rfoot_Montage": {
+   "length_s": 11.067,
+   "root_start": [
+    460.7,
+    70.0,
+    90.0
+   ],
+   "root_end": [
+    0.0,
+    20.0,
+    0.0
+   ],
+   "root_travel_cm": [
+    -460.7,
+    -50.0
+   ],
+   "root_turn_deg": -90.0,
+   "warp_target": "SmartObject",
+   "warp_bone": "attach",
+   "warp_bone_end_cm": [
+    0.0,
+    -20.0,
+    0.0
+   ],
+   "warp_bone_end_yaw_deg": 0.0,
+   "pelvis_from_warp_bone_cm": [
+    3.0,
+    7.5,
+    51.8
+   ]
+  },
+  "M_interaction_bench_into_BL_LFoot_Montage": {
+   "length_s": 11.5,
+   "root_start": [
+    -80.0,
+    -411.3,
+    0.0
+   ],
+   "root_end": [
+    0.0,
+    20.0,
+    0.0
+   ],
+   "root_travel_cm": [
+    80.0,
+    431.3
+   ],
+   "root_turn_deg": 0.0,
+   "warp_target": "SmartObject",
+   "warp_bone": "attach",
+   "warp_bone_end_cm": [
+    0.0,
+    -20.0,
+    0.0
+   ],
+   "warp_bone_end_yaw_deg": 0.0,
+   "pelvis_from_warp_bone_cm": [
+    3.0,
+    7.5,
+    51.8
+   ]
+  },
+  "M_interaction_bench_into_BL_RFoot_Montage": {
+   "length_s": 11.467,
+   "root_start": [
+    -80.0,
+    -472.6,
+    0.0
+   ],
+   "root_end": [
+    0.0,
+    20.0,
+    0.0
+   ],
+   "root_travel_cm": [
+    80.0,
+    492.6
+   ],
+   "root_turn_deg": 0.0,
+   "warp_target": "SmartObject",
+   "warp_bone": "attach",
+   "warp_bone_end_cm": [
+    0.0,
+    -20.0,
+    0.0
+   ],
+   "warp_bone_end_yaw_deg": 0.0,
+   "pelvis_from_warp_bone_cm": [
+    3.0,
+    7.5,
+    51.8
+   ]
+  },
+  "M_interaction_bench_into_BR_LFoot_Montage": {
+   "length_s": 12.267,
+   "root_start": [
+    80.0,
+    -489.1,
+    0.0
+   ],
+   "root_end": [
+    0.0,
+    20.0,
+    0.0
+   ],
+   "root_travel_cm": [
+    -80.0,
+    509.1
+   ],
+   "root_turn_deg": 0.0,
+   "warp_target": "SmartObject",
+   "warp_bone": "attach",
+   "warp_bone_end_cm": [
+    0.0,
+    -20.0,
+    0.0
+   ],
+   "warp_bone_end_yaw_deg": 0.0,
+   "pelvis_from_warp_bone_cm": [
+    3.0,
+    7.5,
+    51.8
+   ]
+  },
+  "M_interaction_bench_into_BR_RFoot_Montage": {
+   "length_s": 11.733,
+   "root_start": [
+    80.0,
+    -418.8,
+    0.0
+   ],
+   "root_end": [
+    0.0,
+    20.0,
+    0.0
+   ],
+   "root_travel_cm": [
+    -80.0,
+    438.8
+   ],
+   "root_turn_deg": 0.0,
+   "warp_target": "SmartObject",
+   "warp_bone": "attach",
+   "warp_bone_end_cm": [
+    0.0,
+    -20.0,
+    0.0
+   ],
+   "warp_bone_end_yaw_deg": 0.0,
+   "pelvis_from_warp_bone_cm": [
+    3.0,
+    7.5,
+    51.8
+   ]
+  },
+  "M_interaction_bench_idle_loop_Montage": {
+   "length_s": 25.0,
+   "root_start": [
+    0.0,
+    20.0,
+    0.0
+   ],
+   "root_end": [
+    0.0,
+    20.0,
+    0.0
+   ],
+   "root_travel_cm": [
+    0.0,
+    0.0
+   ],
+   "root_turn_deg": 0.0,
+   "warp_target": null,
+   "warp_bone": null,
+   "warp_bone_end_cm": null,
+   "warp_bone_end_yaw_deg": null,
+   "pelvis_from_warp_bone_cm": null
+  },
+  "M_interaction_bench_out_to_stand_Montage": {
+   "length_s": 6.667,
+   "root_start": [
+    0.0,
+    20.0,
+    0.0
+   ],
+   "root_end": [
+    0.0,
+    78.7,
+    0.0
+   ],
+   "root_travel_cm": [
+    0.0,
+    58.7
+   ],
+   "root_turn_deg": 0.0,
+   "warp_target": null,
+   "warp_bone": null,
+   "warp_bone_end_cm": null,
+   "warp_bone_end_yaw_deg": null,
+   "pelvis_from_warp_bone_cm": null
+  }
+ }
+}

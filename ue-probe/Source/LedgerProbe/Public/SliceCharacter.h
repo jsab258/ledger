@@ -185,6 +185,9 @@ private:
 	float SitClock = 0.0f;
 	bool bSitWantsUp = false;
 	bool TryStartSit();
+	// -TomSitEntryTest=<clip> (28 October, his order D10, the sitting method's step 3): he starts at the entry derived
+	// from the clip's own measures (production/specs/seat-clips.json), the warp off, so where he lands checks the entry
+	bool StartSitFromEntry(const FString& ClipName);
 	void SitTick(float DeltaSeconds);
 	void SitProofTick(float DeltaSeconds);
 	// HIS STOPS CHOSEN KINGDOM COME II'S WAY (his answer of 26 October, the walk's third try; -TomStopChosen): when

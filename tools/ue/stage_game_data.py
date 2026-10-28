@@ -47,6 +47,8 @@ FIXED = [
     "production/specs/kit-materials.json",   # the kit pieces' glowing slots, driven with the lanterns (21 October, VignetteShot.cpp BindKitPiece)
     "production/specs/vignette-scene.json",   # the scene's cameras, for the packaged copy's perf hook and page shots (7 October: P1 found "no cam_hook" and waited all night)
     "production/specs/seats.json",   # where Tom can sit (25 October, item 2; SliceCharacter.cpp TryStartSit)
+    "production/specs/seat-clips.json",   # the bench clips measured, for the sit entry test (28 October, D10 step 3)
+    "production/specs/camera.json",   # Tom's camera, his pick of 28 October (SliceCharacter.cpp BeginPlay)
     "content/dialogue/crime-witness-v1.json",
 ]
 DECAL_ROOT = "ledger/Assets/StreamingAssets/Decals"
