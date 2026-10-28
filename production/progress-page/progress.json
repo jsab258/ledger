@@ -1,9 +1,9 @@
 {
-  "updated": "Wednesday 28 October 2026, 14:10",
+  "updated": "Wednesday 28 October 2026, 16:15",
   "here": 1,
   "friends_eta": "around January",
   "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
-  "sketch_note": "Phases 6 to 10 are a sketch from your earlier stages and design documents. They are not adopted yet.",
+  "sketch_note": "Phases 6 to 10 and the stop after release are a sketch, shaped by your scope rulings of 28 October; the advisor writes the full plan after Monday's audit.",
   "stations": [
     {
       "n": 0,
@@ -66,7 +66,7 @@
     {
       "n": 6,
       "name": "Crime and combat",
-      "get": "The escalation ladder, fists and improvised weapons. Guns rare, and last.",
+      "get": "The escalation ladder: fists, improvised and carried weapons; guns rare, and last.",
       "state": "sketch"
     },
     {
@@ -77,20 +77,26 @@
     },
     {
       "n": 8,
-      "name": "Meridian",
-      "get": "More districts, traffic, the docks.",
+      "name": "The docks",
+      "get": "The docks beside the Hook, and background traffic once convincing fictional 1990 cars pass.",
       "state": "sketch"
     },
     {
       "n": 9,
-      "name": "The story",
-      "get": "Jobs, the main arc and its endings: 30 to 40 hours.",
+      "name": "The story: 15 to 20 hours, one main story, two or three endings",
+      "get": "Jobs, the main story and its endings.",
       "state": "sketch"
     },
     {
       "n": 10,
-      "name": "Release",
-      "get": "Menus, music, polish and testing: the finished game.",
+      "name": "Release, late 2027",
+      "get": "Menus, music, polish and testing: one full release, not early access.",
+      "state": "sketch"
+    },
+    {
+      "n": 11,
+      "name": "After release: more districts, driving yourself",
+      "get": "Updates after release: Meridian's other districts, and driving yourself.",
       "state": "sketch",
       "terminus": true
     }

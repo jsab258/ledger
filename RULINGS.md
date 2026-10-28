@@ -13,8 +13,8 @@ His binding rulings; the later stands; canon.md outranks them.
 - 3 Oct: The proof view is built to the Hook sheet, not cleaned; to his page only beside it. Bars: the wet street dark, glistening, mirroring sky and buildings, its puddles water; the hill built, not hazed (lower, softer, varied, trees, mist); windows with white frames, sash bars, sky in the glass.
 - 4 Oct: The friends' build: his PC and own account, a shortcut, his key capped at five dollars an evening, no relay; the twenty basics; nothing a friend sees unfinished; Sheila's face whole when she talks; no debug text.
 - 29 Sep: No new systems until the slice is worth playing; what was ruled for after the route (townspeople, microphone, the ending's signs, regulars) and the sweep's larger items wait for a place in PLAN.md.
-- 13 Oct: RECIPE.md (repository root) is a notebook, not a project: no lesson we learn is lost, so that one day the process can make a whole AAA game. Every unit that finishes or is set aside adds a few lines to it in the same commit: what was made; the method in setting-free words; the tools; the target and the check; the cost in hours; what failed and why; the evidence file. Anything specific to 1990 or Meridian stays in data, never in the method. No separate recipe work, no recipe tests (CLAUDE.md carries the rule).
-- 25 Oct: Phase 1 is open, not closed: it failed its first exit check on 22 October (production/audits/phase1-exit/CLOSE-2026-10-22.md); fresh reviewers re-run its exit check once the walk, the clothes and speech pass. Phase 2 waits until phase 1 passes; the street's shops stay (22 Oct: Rita's front is the shops' sample). His order of 25 October runs to 2 November 13:00 (production/orders/2026-10-25.md), pushed after every finished piece. 28 Oct: waiting on him or a build, phase 3's simulation port (Study 1's KCD2 findings), phase 5's research, then next week's studies early (STUDY-PLAN's order); never idle till he says stop; no new shops.
+- 13 Oct: RECIPE.md is a notebook, not a project; his rule in full is in CLAUDE.md (Records), its one home.
+- 25 Oct: Phase 1 is open, not closed: it failed its first exit check on 22 October (production/audits/phase1-exit/CLOSE-2026-10-22.md); fresh reviewers re-run its exit check once the walk, the clothes and speech pass. Phase 2 waits until phase 1 passes; the street's shops stay (22 Oct: Rita's front is the shops' sample). His order of 25 October runs to 2 November 13:00 (production/orders/2026-10-25.md). 28 Oct: waiting on him or a build, phase 3's simulation port, phase 5's research; never idle till he says stop; no new shops.
 - 28 Oct: Any message asking him to tap, click or answer ends with its page's full link, or says plainly there is none; results go on his page as they land.
 - 28 Oct: Reference first. Before starting any new item, how Mafia or Kingdom Come II does it is looked up (the studies, then their files on demand) and the item starts from that number or method. Trial and error only where no reference exists, the item's plan then saying "none found". A check fails the push when a new item's plan names neither a reference nor "none found".
 - 25 Oct: Phase 5 is built by generation: kits plus Unreal's procedural tools, sampled checks instead of a gate per instance. Its design is written during phase 2; until then only its research (Study 4, Unreal 5.8's procedural tools).
@@ -31,7 +31,7 @@ His binding rulings; the later stands; canon.md outranks them.
 - Allowed: OFL fonts with their licence; Mixamo on his account; VCTK voices, consent a stated risk; CLO's free CONNECT patterns, the revocable clause re-checked.
 - 2 Oct: Not allowed: CGTrader's licence (no-AI clause); the Gent jacket draft but as a reference.
 - 11 Oct (given 12 Oct), amended 25 Oct: The AAA study opens both games' files, Kingdom Come: Deliverance II and Mafia: The Old Country; he accepts the legal risk. Study only: nothing from either game enters LEDGER or git, only our own words and numbers; no other game. KCD2 is read from its own unpacked files and Warhorse's public wiki; Warhorse's modding tools are left out; the nine third-party mods in his install stay out of the study data, so every finding describes Warhorse's game. Mafia is read from its own files with the published key, kept on F: only, never in git or chat; a method taken from its Unreal 5.4 setup is checked against 5.8 before the builder relies on it. The session finds and enters published keys itself and never asks him to extract one.
-- 25 Oct: The AAA study runs in full (sixteen studies) beside production, front-loaded over two weeks as STUDY-PLAN.md orders; no recordings, no checkpoint stop; what shows only in play comes from public sources or is a blind spot. Sonnet helpers extract, Opus synthesises and reviews; three lines each in his morning summary, numbers to the items needing them; 28 Oct: every extract from either game is capped in size, written only above the drive's floor, and deleted once its numbers are recorded; Mafia's missing numbers are fetched only when an item needs one.
+- 25 Oct: The AAA study runs in full (sixteen studies) beside production; no recordings; what shows only in play comes from public sources or is a blind spot. Sonnet helpers extract, Opus synthesises and reviews, numbers to the items needing them; 28 Oct: every extract from either game is capped in size, written only above the drive's floor, and deleted once its numbers are recorded; Mafia's missing numbers are fetched only when an item needs one.
 - 16 Sep: Purchases and accounts are his alone; nothing bought without his yes, none for the street or cars.
 - 29 Sep: No paid voice service.
 - 29 Sep: No API calls in development. 3 Oct: LEDGER's key serves his play, measurement runs ($1 a day in all, each logged) and his friends' evenings ($5 an evening); nothing else.
@@ -40,7 +40,7 @@ His binding rulings; the later stands; canon.md outranks them.
 
 ## The look and the street
 
-- 1 Oct: Every visual but clothes is judged against the Hook sheet and KCD2 frames; yes only for what would pass in a 2026 game; other games' screenshots never in the repository. 7 Oct: the gate (one view per reviewer) as CLAUDE.md says.
+- 1 Oct: Every visual but clothes is judged against the Hook sheet and KCD2 frames; yes only for what would pass in a 2026 game; other games' screenshots never in the repository. 7 Oct: the gate as CLAUDE.md says.
 - 5 Oct, weather: a grey range (dry overcast, drizzle, rain), the street drying and wetting over time; rain changes who is out, what is heard and what is seen; never sunshine in the friends' build.
 - 30 Sep: His page's pictures are taken at 2560×1440, never enlarged, open full size; films with sound.
 - 21 Sep: The Hook sheet (pass 4) governs mood, palette and composition; dated photographs govern what things looked like, and win; no design copied; references only in production/reference/.
@@ -83,13 +83,13 @@ His binding rulings; the later stands; canon.md outranks them.
 
 - 3 Oct: Clothes are the one exception to the visual bar; tailoring waits for the tools. Their floor: plain, period-plausible, no modern giveaways (contrast-stitched slim jeans, trainers), no clipping or holes, nobody frozen stiff; judged on it, not the Hook sheet: passers-by at eight metres, Tom's talkers close up.
 - 3 Oct: People wear only gated garments from CC0, unmarked CC-BY with credit, or Blender; none bought or commissioned. 25 Oct (after Epic's garments failed): Tom's outfit is made in Marvelous Designer to Study 6's numbers; no trial-made work goes in. 26 Oct: he signed up for one month (Personal, monthly); garments made and exported during it stay in the game after it ends (he will not write to CLO). 26 Oct: Marvelous runs our plug-in (CLO's Python tools), his one click a session, licence judgement his; work batched, clicks asked in Needs you. 8 Oct: the white base layer stays through phase 1, reported failed; the lab's, not this session's.
-- 2 Oct: Stopped: Marvelous draping, procedural tailoring, fitting every garment to six bodies; production/art/clothing/RUBRIC.md is the bar when tailoring resumes; clothing work never opens Unreal. 8 Oct: no more draping of tailored jackets in Blender (drafting by code works); an outfit stays an outfit until the character is assembled (saving bakes it). Garment reviews first count body points showing through; every target is tested against its body or model and its source before building.
+- 2 Oct: Stopped: procedural tailoring, fitting every garment to six bodies; production/art/clothing/RUBRIC.md is the bar when tailoring resumes; clothing work never opens Unreal. 8 Oct: no more draping of tailored jackets in Blender (drafting by code works); an outfit stays an outfit until the character is assembled (saving bakes it). Garment reviews first count body points showing through; every target is tested against its body or model and its source before building.
 - 30 Sep: Game clothes are skinned meshes, only loose parts simulated; shoulders judged in Unreal.
 - 29 Sep: Clothes on people are his to approve, in the game's camera.
 
 ## People and the street's life
 
-- 3 Oct: People's poses come from MetaHuman's movement clips and Mixamo. 13 Oct: the walk is rebuilt on Epic's Game Animation Sample with motion matching. 26 Oct: the walk's third try (stops chosen Kingdom Come II's way) passed his eye on his page: it becomes the default. The sit's third try is set aside.
+- 3 Oct: People's poses come from MetaHuman's movement clips and Mixamo. 13 Oct: the walk is rebuilt on Epic's Game Animation Sample with motion matching. 26 Oct: the walk's third try (stops chosen Kingdom Come II's way) passed his eye on his page: it becomes the default. 28 Oct: sitting reopened (his order).
 - 30 Sep: Townspeople after the route: measure 0, 5, 10 and 20 packaged; fix the walkers' feet; one approved in the game before twenty.
 - 23 Sep: After a deed, near people look, some gather and drift back; witnesses talk quieter for an hour.
 - D25: Everyone perceives, remembers and gossips (owed at stage 2). D29: half-recognition, lying and having heard of Tom show in posture first.
@@ -127,9 +127,18 @@ His binding rulings; the later stands; canon.md outranks them.
 
 ## What the game is
 
+- 28 Oct, for the release:
+  - One full release late in 2027, not early access; a friends' build at the end of every phase from phase 4 on, on his PC as CHARTER.md says.
+  - Length: 15 to 20 hours.
+  - Map: the Hook plus the docks; more districts in updates after release.
+  - Cars: background traffic only, once convincing fictional 1990 cars pass (2 Oct stands); driving himself after release.
+  - Combat: fists, improvised and carried weapons, rare guns (12 Oct).
+  - Story: one main story with two or three endings.
+  - Live talk: every named character if it can be done; the main characters at the very least.
+  - Capacity: today's plan, no extra spend.
 - D27, D30: the end state is the ambition; the narrative is owed.
 - D33, D34, D11: he sees his own position, never other minds; no reputation numbers; no stats, difficulty only as assists.
-- D35, D58: reloading is never stopped, the game says what is permanent; five endings, no redemption, hunted-state endings reachable.
+- D35, D58: reloading is never stopped, the game says what is permanent; no redemption, hunted-state endings reachable.
 - D12, D20, D37: the Ledger is a notebook of people and events; no minimap; a paper map and street signs.
 - 23 Sep, genre: no jump; crew act on orders; fists and improvised weapons, firearms rare; others drive traffic and the firm's cars; boats and buses scenery; few short skippable cutscenes; jobs, no waypoints; coat, pockets, cab-office storage; buying, selling, fencing, no crafting; English only, text out of code; no multiplayer.
 - 23 Sep: Floor: object interaction; optional presentation (photo mode, credits, after the ending); making the game.

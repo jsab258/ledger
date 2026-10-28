@@ -5212,6 +5212,105 @@ namespace Golden
 		return A;
 	}
 
+	// ---- which saves are refused (the sweep's U8, 28 October 2026)
+	//
+	// PerceptionGolden's EmitSaveAdmit. Each row carries the save's text itself,
+	// escaped, so the port reads the very bytes the C#'s Restore was given, and
+	// answers through SaveCodec.h's own Save::Admit and Save::PeekVersion, never
+	// a copy of the C#'s rule: the fault, the clock let in, the version peeked,
+	// and the C#'s words ("unparsed" where the reader itself refused the text,
+	// whose words the two readers put differently).
+	inline Answer SaveAdmitRow(const std::vector<std::string>& F)
+	{
+		Answer A;
+		if (F.size() < 4) return A;
+		const std::string Json = Unescape(F[2]);
+		const Save::Admission Ad = Save::Admit(Json);
+		const bool bIn = Ad.Fault == Save::SaveFault::None;
+		std::vector<std::string> Outs;
+		Outs.push_back(Save::FaultName(Ad.Fault));
+		Outs.push_back(bIn ? FromInt(Ad.Day) : std::string("-"));
+		Outs.push_back(bIn ? FromInt(Ad.Hour) : std::string("-"));
+		Outs.push_back(bIn ? FromInt(Ad.Minute) : std::string("-"));
+		Outs.push_back(FromInt(Save::PeekVersion(Json)));
+		Outs.push_back(bIn ? std::string("-") : !Ad.bParsed ? std::string("unparsed") : Escape(Ad.Message));
+		A.Known = true;
+		A.Got = MultiAnswer(F, 3, Outs);
+		return A;
+	}
+
+	// ---- the shops' hours (the sweep's U2, 28 October 2026)
+	//
+	// PerceptionGolden's EmitCastHours, answered through CastDay.h's own
+	// OpenAt, HoursWords and HoursFor: the committed cast files through
+	// ReadCastFile, the small file (HoursFiles) copied from Program.cs by
+	// script rather than retyped. A CastOpenAt row's answer is "w" and a
+	// letter every quarter hour from midnight: 1 open, 0 shut, n no hours.
+	inline std::string OpenBits(const CastDay& C, const std::string& Name, int Day)
+	{
+		std::string W = "w";
+		for (int Q = 0; Q < 96; ++Q)
+		{
+			bool bOpen = false;
+			W += !C.OpenAt(Name, Day, Q / 4, Q % 4 * 15, bOpen) ? 'n' : bOpen ? '1' : '0';
+		}
+		return W;
+	}
+
+	inline const CastDay* HoursFileCast(const std::string& Name)
+	{
+		static const char* const Files[][2] = {
+			// HOURS-FILES-BEGIN (copied from Program.cs HoursFiles by script)
+				{ "words", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0},\"shop\":{\"x_m\":10,\"z_m\":0}},\"areas\":{"
+				  "\"every\":{\"names\":[\"the corner shop\"],\"hours\":{\"mon\":[9,17.5],\"tue\":[9,17.5],\"wed\":[9,17.5],\"thu\":[9,17.5],\"fri\":[9,17.5],\"sat\":[9,17.5],\"sun\":[9,17.5]}},"
+				  "\"always\":{\"names\":[\"the all-night garage\"],\"hours\":{\"mon\":[0,24],\"tue\":[0,24],\"wed\":[0,24],\"thu\":[0,24],\"fri\":[0,24],\"sat\":[0,24],\"sun\":[0,24]}},"
+				  "\"three\":{\"names\":[\"the market\"],\"hours\":{\"tue\":[8,16],\"fri\":[8,16],\"sat\":[8,16]}},"
+				  "\"threerun\":{\"hours\":{\"mon\":[6.5,13],\"tue\":[6.5,13],\"wed\":[6.5,13]}},"
+				  "\"twogroups\":{\"names\":[\"the chemist\"],\"hours\":{\"mon\":[9,12],\"thu\":[14,20]}},"
+				  "\"differs\":{\"names\":[\"the baker's\"],\"hours\":{\"mon\":[9,17.5],\"tue\":[9,17.5],\"wed\":[9,17.5],\"thu\":[9,17.5],\"fri\":[9,17.5],\"sat\":[10,17.5],\"sun\":[9,13]}},"
+				  "\"spans\":{\"names\":[\"the dairy\"],\"hours\":{\"mon\":[7,19],\"tue\":[7,19],\"wed\":[7,19],\"thu\":[7,19],\"fri\":[8,23]}},"
+				  "\"shutrun\":{\"names\":[\"the tailor's\"],\"hours\":{\"mon\":[9,17],\"tue\":[9,17],\"wed\":[9,17],\"thu\":[9,17]},\"hours_note\":\" by appointment on Fridays \"},"
+				  "\"tie\":{\"names\":[\"the ironmonger's\"],\"hours\":{\"mon\":[9,17],\"tue\":[9,17],\"wed\":[9,17],\"thu\":[10,18],\"fri\":[10,18],\"sat\":[10,18]}},"
+				  "\"breaks\":{\"names\":[\"the post office\"],\"hours\":{\"mon\":[9,18],\"tue\":[9,18],\"wed\":[9,18],\"thu\":[9,18],\"fri\":[9,18],\"sat\":[9,18]},\"hours_breaks\":{\"mon\":[[12,13],[15,15.5]],\"tue\":[12,13],\"wed\":[[12,13]],\"thu\":[[12,13],[13,14]],\"fri\":[12.5,13.5],\"sat\":[[15,16],[11,12]]}},"
+				  "\"late\":{\"names\":[\"the snooker hall\"],\"hours\":{\"mon\":[18,26],\"tue\":[18,26],\"wed\":[18,26],\"thu\":[18,26],\"fri\":[18,26],\"sat\":[18,26],\"sun\":[19,30]},\"hours_breaks\":{\"sat\":[24.5,25]}},"
+				  "\"midnight\":{\"names\":[\"the coffee stall\"],\"hours\":{\"mon\":[0,7],\"tue\":[0.5,12],\"wed\":[7,24],\"thu\":[6.5,24.5],\"fri\":[0.5,7]}},"
+				  "\"noteonly\":{\"names\":[\"the chapel\"],\"hours_note\":\"open for services\"},"
+				  "\"shop\":{\"names\":[\"the shop\"],\"hours\":{\"mon\":[9,17]}},"
+				  "\"street\":{\"names\":[\"the street\"],\"places\":[\"shop\"]}"
+				  "},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+			// HOURS-FILES-END
+		};
+		static std::map<std::string, std::pair<bool, CastDay> > Read;
+		std::map<std::string, std::pair<bool, CastDay> >::iterator It = Read.find(Name);
+		if (It == Read.end())
+		{
+			std::pair<bool, CastDay> E(false, CastDay());
+			std::string Err;
+			for (size_t Q = 0; Q < sizeof(Files) / sizeof(Files[0]); ++Q)
+				if (Name == Files[Q][0]) E.first = CastDay::Parse(Files[Q][1], E.second, Err);
+			It = Read.insert(std::make_pair(Name, E)).first;
+		}
+		return It->second.first ? &It->second.second : 0;
+	}
+
+	inline Answer CastHoursRow(const std::vector<std::string>& F)
+	{
+		Answer A;
+		const std::string& Fn = F[0];
+		const bool bSmall = Fn == "CastOpenAtFile" || Fn == "CastHoursWordsFile" || Fn == "CastHoursForFile" || Fn == "CastOpenAtWrapped";
+		const CastDay* C = bSmall ? HoursFileCast(F[1]) : CastNamed(F[1]);
+		A.Known = true;
+		std::string W;
+		bool bOpen = false;
+		if (C == 0) { A.Got = "cast-file-not-read/" + F[1]; }
+		else if ((Fn == "CastOpenAt" || Fn == "CastOpenAtFile") && F.size() >= 5) { A.Got = OpenBits(*C, F[2], I(F[3])); }
+		else if ((Fn == "CastHoursWords" || Fn == "CastHoursWordsFile") && F.size() >= 4) { A.Got = C->HoursWords(F[2], W) ? Escape(W) : "null"; }
+		else if ((Fn == "CastHoursFor" || Fn == "CastHoursForFile") && F.size() >= 6) { A.Got = C->HoursFor(I(F[2]), I(F[3]), I(F[4]), W) ? Escape(W) : "null"; }
+		else if (Fn == "CastOpenAtWrapped" && F.size() >= 7) { A.Got = C->OpenAt(F[2], I(F[3]), I(F[4]), I(F[5]), bOpen) ? FromBool(bOpen) : "null"; }
+		else { A.Got = "row-too-short"; }
+		return A;
+	}
+
 	inline Answer Evaluate(const std::vector<std::string>& F)
 	{
 		Answer A;
@@ -5920,6 +6019,49 @@ namespace Golden
 				{ "escape-quote", "{\"talk_range_m\":6,\"places\":{\"Rita\\'s\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"off\"]]}],\"ties\":[]}" },
 				{ "accented-ids", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"zo\\u00eb\",\"routine\":[[0,\"a\"]]},{\"id\":\"zo\\u00e9\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
 				{ "no-break-space", "{\xC2\xA0\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				// the shops' hours (28 October 2026, the sweep's U2), copied from Program.cs by script
+				{ "hours-string", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":\"9-5\"}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "hours-empty", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "hours-misspelt-day", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9,17],\"tues\":[9,17]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "hours-close-before-open", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[17,9]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "hours-close-over-30", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[18,30.5]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "hours-quarter", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9.25,17]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "hours-three-numbers", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9,12,17]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "hours-text-numbers", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[\"9\",\"17\"]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "hours-open-24", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[24,26]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "hours-longer-than-a-day", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[5,30]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "breaks-without-hours", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours_breaks\":{\"mon\":[12,13]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "breaks-outside-hours", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9,17]},\"hours_breaks\":{\"mon\":[8,10]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "breaks-overlapping", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9,17]},\"hours_breaks\":{\"mon\":[[12,14],[13,15]]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "hours-null", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":null}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "hours-list", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":[[9,17]]}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "hours-day-not-pair", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":9}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "hours-open-negative", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[-0.5,17]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "hours-close-at-open", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9,9]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "hours-close-30", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[18,30]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "hours-whole-day", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[0,24]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "hours-exactly-24", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[6,30]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "hours-open-half-past-23", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[23.5,24]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "hours-into-next-opening", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[18,27],\"tue\":[2,12]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "hours-to-next-opening", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[18,26],\"tue\":[2,12]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "hours-sunday-into-monday", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"sun\":[18,27],\"mon\":[2,12]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "hours-twice-last-good", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[17,9],\"mon\":[9,17]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "hours-note-only", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours_note\":\"by appointment\"}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "breaks-not-object", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9,17]},\"hours_breaks\":[[12,13]]}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "breaks-misspelt-day", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9,17]},\"hours_breaks\":{\"monday\":[12,13]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "breaks-shut-day", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9,17]},\"hours_breaks\":{\"tue\":[12,13]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "breaks-at-opening", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9,17]},\"hours_breaks\":{\"mon\":[9,10]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "breaks-to-closing", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9,17]},\"hours_breaks\":{\"mon\":[16,17]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "breaks-quarter", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9,17]},\"hours_breaks\":{\"mon\":[12.25,13]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "breaks-backwards", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9,17]},\"hours_breaks\":{\"mon\":[13,12]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "breaks-empty-list", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9,17]},\"hours_breaks\":{\"mon\":[]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "breaks-three-numbers", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9,17]},\"hours_breaks\":{\"mon\":[12,13,14]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "breaks-text-numbers", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9,17]},\"hours_breaks\":{\"mon\":[\"12\",\"13\"]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "breaks-touching", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9,17]},\"hours_breaks\":{\"mon\":[[12,13],[13,14]]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "breaks-unsorted", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9,17]},\"hours_breaks\":{\"mon\":[[15,16],[11,12]]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "breaks-past-midnight", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[18,27]},\"hours_breaks\":{\"mon\":[24.5,25]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "breaks-empty-object", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9,17]},\"hours_breaks\":{}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "breaks-before-hours", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours_breaks\":{\"mon\":[12,13]},\"hours\":{\"mon\":[9,17]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
 			};
 			static const char* const Edge = "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0},\"b\":{\"x_m\":6,\"z_m\":0},\"c\":{\"x_m\":3.6,\"z_m\":4.8},\"d\":{\"x_m\":6.000001,\"z_m\":0}},\"people\":[{\"id\":\"pa\",\"routine\":[[0,\"a\"]]},{\"id\":\"pb\",\"routine\":[[0,\"b\"]]},{\"id\":\"pc\",\"routine\":[[0,\"c\"]]},{\"id\":\"pd\",\"routine\":[[0,\"d\"]]}],\"ties\":[]}";
 			A.Known = true;
@@ -6159,6 +6301,17 @@ namespace Golden
 		else if (Fn == "TownHoursFromSave" || Fn == "AftermathMendedInHour" || Fn == "NotHimGate")
 		{
 			A = UnseenBreakRow(F);
+		}
+		// WHICH SAVES ARE REFUSED (the sweep's U8, 28 October 2026): SaveCodec.h's Save::Admit.
+		else if (Fn == "SaveAdmit")
+		{
+			A = SaveAdmitRow(F);
+		}
+		// THE SHOPS' HOURS (the sweep's U2, 28 October 2026): CastDay.h's OpenAt, HoursWords, HoursFor.
+		else if (Fn == "CastOpenAt" || Fn == "CastHoursWords" || Fn == "CastHoursFor" || Fn == "CastOpenAtFile"
+		         || Fn == "CastHoursWordsFile" || Fn == "CastHoursForFile" || Fn == "CastOpenAtWrapped")
+		{
+			A = CastHoursRow(F);
 		}
 		// THE POLICE FILE ITSELF (town list 6ar): PoliceFile.h, its regression rows.
 		else if (Fn == "PoliceFile" || Fn == "PoliceBadSave" || Fn == "PoliceWouldReport" || Fn == "PoliceWouldReportMiddle" || Fn == "PoliceOnHisSide" || Fn == "CustodyWords" || Fn == "CustodySeenTaken"

@@ -41,9 +41,17 @@
 //     produces one.
 //   - Numbers are read with strtod, which is what the C++ side already does
 //     everywhere else it parses one.
+//   - WHICH SAVES ARE REFUSED (28 October 2026, the 5 October sweep's U8):
+//     the C# Restore's gate, before anything is restored (Admit, at the end
+//     of this file): a newer build's save, one older than this build reads,
+//     no readable day or a day past 100,000, a clock that is not a time. It
+//     reads the whole file the C#'s way (MiniJson.h), not with the scanner
+//     below, since what it must agree on is what the C#'s own reader makes
+//     of the text. The golden table's SaveAdmit rows pin it.
 #pragma once
 
 #include <clocale>
+#include <cmath>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
@@ -51,6 +59,7 @@
 #include <vector>
 
 #include "Gossip.h"
+#include "MiniJson.h"       // the C#'s own reader, for the gate (Admit, U8)
 
 namespace LedgerCore
 {
@@ -902,6 +911,176 @@ namespace Save
 				}
 			}
 		}
+	}
+
+	// ---- WHICH SAVES ARE REFUSED -------------------------------------------
+	//
+	// 28 October 2026, the 5 October sweep's U8. SaveCodec.cs refuses a save
+	// from a newer build, one older than this build can read, one with no
+	// readable day or a day past 100,000, and a clock that is not a time, all
+	// before anything of it is restored; this file had none of it. The game
+	// refuses another build's save by its commit stamp (CrimeProbe.cpp's check
+	// before a load) and TownSave.h only a later bundle, so the rule had no
+	// port. Here it is, in the C#'s order (the version first, then the day,
+	// then the clock), with its words, read the C#'s way (MiniJson.h: a key
+	// written twice keeps its last value, anything after the value is
+	// ignored, a no-break space is whitespace), as SaveCodec.cs Restore and
+	// PeekVersion do. Pinned by the golden table's SaveAdmit rows.
+	//
+	// THE NUMBERS ARE THE C#'s, NOT CHOSEN HERE. MaxPlayableDay is not a game
+	// rule: the C#'s day counter is a loop's int and wraps at int.MaxValue, so
+	// a day past 100,000 (274 years of play) is a corrupt file, not a long one.
+	enum class SaveFault { None, Unreadable, FromTheFuture };
+	const int Version = 2;              // SaveCodec.Version
+	const int MinReadableVersion = 1;   // SaveCodec.MinReadableVersion
+	const int MaxPlayableDay = 100000;  // SaveCodec.MaxPlayableDay
+
+	inline const char* FaultName(SaveFault F)
+	{
+		return F == SaveFault::Unreadable ? "Unreadable" : F == SaveFault::FromTheFuture ? "FromTheFuture" : "None";
+	}
+
+	/// A key's value in a parsed object, or null. MiniJson.h keeps a repeated
+	/// key once, with its last value, as the C#'s dictionary does.
+	inline const LedgerVignette::Value* KeyOf(const LedgerVignette::Value& Obj, const char* Key)
+	{
+		if (Obj.Type != LedgerVignette::T_OBJ) { return nullptr; }
+		const LedgerVignette::Value* Found = nullptr;
+		for (size_t I = 0; I < Obj.Obj.size(); ++I) { if (Obj.Obj[I].first == Key) { Found = &Obj.Obj[I].second; } }
+		return Found;
+	}
+
+	/// MiniJson.GetInt on a parsed value: only a number answers (a quoted one,
+	/// a bool, a null or a missing key read 0), and it SATURATES rather than
+	/// casting, as FieldInt above and MiniJson.cs say why. By the bits, for
+	/// the fast-math reason Perception.h gives.
+	inline int GetIntOf(const LedgerVignette::Value* V)
+	{
+		if (V == nullptr || V->Type != LedgerVignette::T_NUM || IsNaNBits(V->Num)) { return 0; }
+		if (V->Num >= 2147483647.0)  { return 2147483647; }
+		if (V->Num <= -2147483648.0) { return -2147483647 - 1; }
+		return static_cast<int>(V->Num);
+	}
+
+	/// MiniJson.TryGetInt: the same, but false for a key that is not a number,
+	/// or is a NaN or an infinity (a day of 1e999 is no day).
+	inline bool TryGetIntOf(const LedgerVignette::Value* V, int& Out)
+	{
+		Out = 0;
+		if (V == nullptr || V->Type != LedgerVignette::T_NUM || NotFiniteBits(V->Num)) { return false; }
+		Out = GetIntOf(V);
+		return true;
+	}
+
+	/// SaveCodec.PeekVersion: a save's version without loading it, 0 for a
+	/// file that does not read or is not an object (the front end offers
+	/// Continue by it).
+	inline int PeekVersion(const std::string& Json)
+	{
+		LedgerVignette::Value Root;
+		std::string Err;
+		if (!MiniJson::Deserialize(Json, Root, Err) || Root.Type != LedgerVignette::T_OBJ) { return 0; }
+		return GetIntOf(KeyOf(Root, "version"));
+	}
+
+	/// .NET's "00" for an int, as the C#'s message formats the clock: at least
+	/// two digits, a minus before them ("-01"), where printf's %02d gives "-1".
+	inline std::string TwoDigits(int V)
+	{
+		const long long L = V;
+		char Buf[32];
+		std::snprintf(Buf, sizeof(Buf), "%s%02lld", L < 0 ? "-" : "", L < 0 ? -L : L);
+		return Buf;
+	}
+
+	/// A version's refusal, with the C#'s words, or None.
+	inline SaveFault VersionFault(int Saved, std::string& Message)
+	{
+		if (Saved > Version)
+		{
+			Message = "this save was written by a newer build (v" + std::to_string(Saved) + "; this build reads v" + std::to_string(Version) + ")";
+			return SaveFault::FromTheFuture;
+		}
+		if (Saved < MinReadableVersion)
+		{
+			Message = "save version v" + std::to_string(Saved) + " is older than this build can read (v" + std::to_string(MinReadableVersion) + ")";
+			return SaveFault::Unreadable;
+		}
+		return SaveFault::None;
+	}
+
+	/// Whether a day is one play can reach: day 0, the first Monday, to 100,000.
+	inline bool DayPlayable(int Day) { return Day >= 0 && Day <= MaxPlayableDay; }
+
+	/// Whether an hour and minute are a time; the C#'s words when they are not.
+	inline bool ClockIsTime(int Hour, int Minute, std::string& Message)
+	{
+		if (Hour >= 0 && Hour <= 23 && Minute >= 0 && Minute <= 59) { return true; }
+		Message = "the save's clock reads " + TwoDigits(Hour) + ":" + TwoDigits(Minute) + ", which is not a time";
+		return false;
+	}
+
+	/// What the gate made of a save: its fault and the C#'s words for it (the
+	/// SaveIncompatibleException's message), and, when it is let in, the clock
+	/// it carries. bParsed is false when the reader itself refused the text
+	/// (the C# throws inside MiniJson.Deserialize; the words are then the
+	/// reader's, which the two engines put differently).
+	struct Admission
+	{
+		SaveFault Fault;
+		bool bParsed;
+		std::string Message;
+		int ReadVersion, Day, Hour, Minute;
+		Admission() : Fault(SaveFault::None), bParsed(false), ReadVersion(0), Day(0), Hour(0), Minute(0) {}
+	};
+
+	/// SaveCodec.Restore's gate, before anything is restored: the version, the
+	/// day, then the clock, refused exactly where the C# throws a
+	/// SaveIncompatibleException. A save it lets in may still restore nothing
+	/// a key names (the C# skips unknown ids); that is the rest of Restore.
+	inline Admission Admit(const std::string& Json)
+	{
+		Admission Out;
+		LedgerVignette::Value Root;
+		std::string Err;
+		if (!MiniJson::Deserialize(Json, Root, Err))
+		{
+			Out.Fault = SaveFault::Unreadable;
+			Out.Message = Err;
+			return Out;
+		}
+		Out.bParsed = true;
+		if (Root.Type != LedgerVignette::T_OBJ)
+		{
+			Out.Fault = SaveFault::Unreadable;
+			Out.Message = "save file unreadable";
+			return Out;
+		}
+		Out.ReadVersion = GetIntOf(KeyOf(Root, "version"));
+		Out.Fault = VersionFault(Out.ReadVersion, Out.Message);
+		if (Out.Fault != SaveFault::None) { return Out; }
+		// THE DAY IS REQUIRED, a whole number from 0 to 100,000 (SaveCodec.cs:
+		// SaveChaos loaded a save with no day into day 0; 0.5 read as day 0).
+		const LedgerVignette::Value* DayV = KeyOf(Root, "day");
+		int Day = 0;
+		if (!TryGetIntOf(DayV, Day) || !DayPlayable(Day) || DayV->Num != std::floor(DayV->Num))
+		{
+			Out.Fault = SaveFault::Unreadable;
+			Out.Message = "the save has no readable day \xE2\x80\x94 it is truncated or corrupt";
+			return Out;
+		}
+		// A MISSING hour or minute is midnight's (an older save); a present one
+		// that is not a time refuses, never clamped behind the player's back.
+		const int Hour = GetIntOf(KeyOf(Root, "hour")), Minute = GetIntOf(KeyOf(Root, "minute"));
+		if (!ClockIsTime(Hour, Minute, Out.Message))
+		{
+			Out.Fault = SaveFault::Unreadable;
+			return Out;
+		}
+		Out.Day = Day;
+		Out.Hour = Hour;
+		Out.Minute = Minute;
+		return Out;
 	}
 }
 }

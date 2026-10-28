@@ -216,6 +216,12 @@ namespace Ledger.PerceptionGolden
             // The planted breaks of the sweep no row saw (28 October 2026, its section 2: P2, P4 to P10),
             // each driven through the case its rule decides; answered through the port's own code.
             EmitUnseenBreaks(sb);
+            // Which saves are refused (28 October 2026, the sweep's U8): SaveCodec.Restore's gate and PeekVersion,
+            // answered through the port's own SaveCodec.h (Save::Admit, Save::PeekVersion).
+            EmitSaveAdmit(sb);
+            // The shops' hours in the cast file (28 October 2026, the sweep's U2): CastDay's OpenAt, HoursWords and
+            // HoursFor, answered through the port's own CastDay.h; its refusals are CastRefused rows (EmitCastDay).
+            EmitCastHours(sb);
 
             // ROWS AWAITING THE PORT, 28 September: the town session writes the
             // Core and its rows; the builder ports them to StreetVoice.h. Until
@@ -3288,6 +3294,216 @@ namespace Ledger.PerceptionGolden
             }
         }
 
+        /// WHICH SAVES ARE REFUSED (28 October 2026, the 5 October sweep's U8): SaveCodec.Restore's gate, on a fresh
+        /// world each time (a newer build's save, one older than this build reads, no readable day or a day past
+        /// 100,000, a clock that is not a time, in that order), and PeekVersion, which the front end offers Continue by.
+        /// One row a case: its label and the text itself, escaped, so the port reads the same bytes; then the fault, the
+        /// clock let in (day, hour, minute; "-" when refused), what PeekVersion says, and the exception's words ("-" when
+        /// let in; "unparsed" where the reader itself threw, whose words the two engines put differently). The versions
+        /// are this build's own, one below, equal and one above; and the edges the code shows: a fraction read down, a
+        /// number saturated, a key written twice, a quoted number, the day's 99,999 to 100,001 and its whole-number
+        /// rule, the clock's 23:59 against 24 and 60, the reader's depth of 200, and the order of the three refusals.
+        static void EmitSaveAdmit(StringBuilder sb)
+        {
+            int v = SaveCodec.Version, min = SaveCodec.MinReadableVersion, max = SaveCodec.MaxPlayableDay;
+            string N(long n) => n.ToString(Inv);
+            string Save(string version, string day = "3", string hour = "9", string minute = "30")
+            {
+                var parts = new List<string>();
+                if (version != null) parts.Add("\"version\":" + version);
+                if (day != null) parts.Add("\"day\":" + day);
+                if (hour != null) parts.Add("\"hour\":" + hour);
+                if (minute != null) parts.Add("\"minute\":" + minute);
+                return "{" + string.Join(",", parts) + "}";
+            }
+            string V = N(v);
+            string Deep(int n) => "{\"version\":" + V + ",\"day\":3,\"extra\":" + new string('[', n) + new string(']', n) + "}";
+            var captured = SaveCodec.Capture(new GameTime(3, 9, 0), new Wallet(0), new Campaign(), new PlayerKnowledge(), new SecretsBook(),
+                new BeatBook(), new GossipMill(new SocialGraph()), new DebtBook(), new Dictionary<string, object>());
+            foreach (var (label, text) in new (string, string)[]
+            {
+                ("captured", captured),
+                // the version: this build's, one below and one above it, and the oldest it reads
+                ("version-below-oldest", Save(N(min - 1))),
+                ("version-oldest", Save(N(min))),
+                ("version-one-below", Save(N(v - 1))),
+                ("version-equal", Save(V)),
+                ("version-one-above", Save(N(v + 1))),
+                ("version-far-above", Save("99")),
+                ("version-negative", Save("-1")),
+                ("version-missing", Save(null)),
+                ("version-quoted", Save("\"" + V + "\"")),
+                ("version-null", Save("null")),
+                ("version-true", Save("true")),
+                ("version-fraction-reads-down", Save(V + ".5")),
+                ("version-nearly-one-above", Save(V + ".999")),
+                ("version-exponent", Save(V + "e0")),
+                ("version-huge", Save("1e999")),
+                ("version-huge-negative", Save("-1e999")),
+                ("version-twice-last-let-in", "{\"version\":" + N(v + 1) + ",\"version\":" + V + ",\"day\":3}"),
+                ("version-twice-last-refused", "{\"version\":" + V + ",\"version\":" + N(v + 1) + ",\"day\":3}"),
+                // the day: required, whole, from 0 to 100,000
+                ("day-zero", Save(V, "0")),
+                ("day-negative", Save(V, "-1")),
+                ("day-negative-zero", Save(V, "-0")),
+                ("day-99999", Save(V, N(max - 1))),
+                ("day-100000", Save(V, N(max))),
+                ("day-100001", Save(V, N(max + 1))),
+                ("day-max-exponent", Save(V, "1e5")),
+                ("day-max-and-a-half", Save(V, N(max) + ".5")),
+                ("day-missing", Save(V, null)),
+                ("day-quoted", Save(V, "\"3\"")),
+                ("day-null", Save(V, "null")),
+                ("day-true", Save(V, "true")),
+                ("day-object", Save(V, "{}")),
+                ("day-half", Save(V, "0.5")),
+                ("day-minus-half", Save(V, "-0.5")),
+                ("day-two-and-a-half", Save(V, "2.5")),
+                ("day-int-max", Save(V, "2147483647")),
+                ("day-long-max", Save(V, "9223372036854775807")),
+                ("day-infinite", Save(V, "1e999")),
+                ("day-twice-last-refused", "{\"version\":" + V + ",\"day\":3,\"day\":" + N(max + 1) + "}"),
+                // the clock: a missing hour or minute is midnight's, a present one must be a time
+                ("clock-23-59", Save(V, "3", "23", "59")),
+                ("clock-hour-24", Save(V, "3", "24", "0")),
+                ("clock-hour-minus-one", Save(V, "3", "-1", "30")),
+                ("clock-minute-60", Save(V, "3", "9", "60")),
+                ("clock-minute-minus-one", Save(V, "3", "9", "-1")),
+                ("clock-missing", Save(V, "3", null, null)),
+                ("clock-hour-quoted", Save(V, "3", "\"9\"", "30")),
+                ("clock-hour-null", Save(V, "3", "null", "30")),
+                ("clock-hour-fraction-reads-down", Save(V, "3", "23.9", "59.99")),
+                ("clock-hour-minus-half", Save(V, "3", "-0.5", "30")),
+                ("clock-hour-int-max", Save(V, "3", "2147483647", "30")),
+                ("clock-hour-huge", Save(V, "3", "1e999", "30")),
+                ("clock-hour-huge-negative", Save(V, "3", "-1e999", "30")),
+                ("clock-both-wrong", Save(V, "3", "25", "61")),
+                // the order: the version before the day, the day before the clock
+                ("order-newer-before-day", Save(N(v + 1), "-1", "24", "60")),
+                ("order-older-before-day", Save(N(min - 1), "-1", "24", "60")),
+                ("order-day-before-clock", Save(V, N(max + 1), "24", "60")),
+                // the text: what the reader refuses, what is not an object, and what it lets by
+                ("empty", ""),
+                ("spaces", "   "),
+                ("not-json", "{ not a save"),
+                ("cut-off", "{\"version\":" + V + ",\"day\":3"),
+                ("trailing-comma", "{\"version\":" + V + ",\"day\":3,}"),
+                ("bad-escape", "{\"version\":" + V + ",\"day\":3,\"x\":\"\\q\"}"),
+                ("two-points", "{\"version\":" + V + ",\"day\":3.0.1}"),
+                ("array", "[]"),
+                ("number", "5"),
+                ("null", "null"),
+                ("string", "\"save\""),
+                ("nest-200", Deep(200)),
+                ("nest-201", Deep(201)),
+                ("junk-after", Save(V) + " junk"),
+                ("no-break-space", "\u00a0" + Save(V)),
+                ("spaced", "{ \"version\" : " + V + " ,\n\"day\" : 3 }"),
+            })
+            {
+                string fault, day = "-", hour = "-", minute = "-", words = "-";
+                bool parsed = true;
+                try { MiniJson.Deserialize(text); } catch (Exception) { parsed = false; }
+                try
+                {
+                    var now = SaveCodec.Restore(text, new Wallet(0), new Campaign(), new PlayerKnowledge(), new SecretsBook(),
+                        new BeatBook(), new GossipMill(new SocialGraph()), new DebtBook(), out _);
+                    fault = SaveFault.None.ToString();
+                    day = N(now.Day); hour = N(now.Hour); minute = N(now.Minute);
+                }
+                catch (SaveIncompatibleException e) { fault = e.Fault.ToString(); words = parsed ? Esc(e.Message) : "unparsed"; }
+                Row(sb, "SaveAdmit", label, Esc(text), fault, day, hour, minute, N(SaveCodec.PeekVersion(text)), words);
+            }
+        }
+
+        /// THE SHOPS' HOURS, A SMALL FILE (28 October 2026, the sweep's U2) for the words' every branch: every day, day
+        /// and night, three days or fewer (a run and not), the usual hours with the days that open later, shut sooner
+        /// or differ both ways, shut days in a run, a tie for the usual (the earliest wins), breaks grouped by their
+        /// words (two in a day, touching, one pair alone, given out of order), a close past midnight with a break after
+        /// it, midnight and half past it each way, a note with hours and without, and an area named as another area's
+        /// place (which OpenAt reads as that area). Copied to CoreGolden.h by script, never retyped.
+        static readonly string[][] HoursFiles =
+        {
+            new[] { "words", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0},\"shop\":{\"x_m\":10,\"z_m\":0}},\"areas\":{" +
+                "\"every\":{\"names\":[\"the corner shop\"],\"hours\":{\"mon\":[9,17.5],\"tue\":[9,17.5],\"wed\":[9,17.5],\"thu\":[9,17.5],\"fri\":[9,17.5],\"sat\":[9,17.5],\"sun\":[9,17.5]}}," +
+                "\"always\":{\"names\":[\"the all-night garage\"],\"hours\":{\"mon\":[0,24],\"tue\":[0,24],\"wed\":[0,24],\"thu\":[0,24],\"fri\":[0,24],\"sat\":[0,24],\"sun\":[0,24]}}," +
+                "\"three\":{\"names\":[\"the market\"],\"hours\":{\"tue\":[8,16],\"fri\":[8,16],\"sat\":[8,16]}}," +
+                "\"threerun\":{\"hours\":{\"mon\":[6.5,13],\"tue\":[6.5,13],\"wed\":[6.5,13]}}," +
+                "\"twogroups\":{\"names\":[\"the chemist\"],\"hours\":{\"mon\":[9,12],\"thu\":[14,20]}}," +
+                "\"differs\":{\"names\":[\"the baker's\"],\"hours\":{\"mon\":[9,17.5],\"tue\":[9,17.5],\"wed\":[9,17.5],\"thu\":[9,17.5],\"fri\":[9,17.5],\"sat\":[10,17.5],\"sun\":[9,13]}}," +
+                "\"spans\":{\"names\":[\"the dairy\"],\"hours\":{\"mon\":[7,19],\"tue\":[7,19],\"wed\":[7,19],\"thu\":[7,19],\"fri\":[8,23]}}," +
+                "\"shutrun\":{\"names\":[\"the tailor's\"],\"hours\":{\"mon\":[9,17],\"tue\":[9,17],\"wed\":[9,17],\"thu\":[9,17]},\"hours_note\":\" by appointment on Fridays \"}," +
+                "\"tie\":{\"names\":[\"the ironmonger's\"],\"hours\":{\"mon\":[9,17],\"tue\":[9,17],\"wed\":[9,17],\"thu\":[10,18],\"fri\":[10,18],\"sat\":[10,18]}}," +
+                "\"breaks\":{\"names\":[\"the post office\"],\"hours\":{\"mon\":[9,18],\"tue\":[9,18],\"wed\":[9,18],\"thu\":[9,18],\"fri\":[9,18],\"sat\":[9,18]},\"hours_breaks\":{\"mon\":[[12,13],[15,15.5]],\"tue\":[12,13],\"wed\":[[12,13]],\"thu\":[[12,13],[13,14]],\"fri\":[12.5,13.5],\"sat\":[[15,16],[11,12]]}}," +
+                "\"late\":{\"names\":[\"the snooker hall\"],\"hours\":{\"mon\":[18,26],\"tue\":[18,26],\"wed\":[18,26],\"thu\":[18,26],\"fri\":[18,26],\"sat\":[18,26],\"sun\":[19,30]},\"hours_breaks\":{\"sat\":[24.5,25]}}," +
+                "\"midnight\":{\"names\":[\"the coffee stall\"],\"hours\":{\"mon\":[0,7],\"tue\":[0.5,12],\"wed\":[7,24],\"thu\":[6.5,24.5],\"fri\":[0.5,7]}}," +
+                "\"noteonly\":{\"names\":[\"the chapel\"],\"hours_note\":\"open for services\"}," +
+                "\"shop\":{\"names\":[\"the shop\"],\"hours\":{\"mon\":[9,17]}}," +
+                "\"street\":{\"names\":[\"the street\"],\"places\":[\"shop\"]}" +
+                "},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+        };
+
+        /// THE SHOPS' HOURS (28 October 2026, the 5 October sweep's U2): CastDay's OpenAt, HoursWords and HoursFor on the
+        /// hook cast and on HoursFiles. One CastOpenAt row a name and day: "w" and a letter every quarter hour from
+        /// midnight (1 open, 0 shut, n no hours), every area over days -1 to 7 and every place on day 0, so a close past
+        /// midnight, a break and each place's area are all read; one CastHoursWords row an area ("null" for none); one
+        /// CastHoursFor row a moment (the whole line, escaped). The small files' rows carry their file's name, the hook
+        /// cast's its file's; CastOpenAtWrapped asks OpenAt with an hour or minute outside the day, which it wraps.
+        static void EmitCastHours(StringBuilder sb)
+        {
+            string Bits(CastDay c, string name, int day)
+            {
+                var w = new StringBuilder("w");
+                for (int q = 0; q < 96; q++)
+                {
+                    var open = c.OpenAt(name, day, q / 4, q % 4 * 15);
+                    w.Append(open == null ? 'n' : open == true ? '1' : '0');
+                }
+                return w.ToString();
+            }
+            List<string> AreasOf(string json) =>
+                new List<string>((MiniJson.GetObject(MiniJson.AsObject(MiniJson.Deserialize(json)), "areas") ?? new Dictionary<string, object>()).Keys);
+            var moments = new (int day, int hour, int minute)[] { (0, 9, 0), (0, 11, 30), (2, 13, 30), (6, 18, 30), (6, 23, 59), (0, 0, 30), (1, 2, 59), (1, 3, 0), (-1, 12, 0), (5, 7, 29), (5, 7, 30) };
+            foreach (var name in new[] { "hook-cast.json", "quay-cast.json" })
+            {
+                string text = null;
+                for (var dir = new System.IO.DirectoryInfo(AppContext.BaseDirectory); dir != null && text == null; dir = dir.Parent)
+                {
+                    var p = System.IO.Path.Combine(dir.FullName, "production", "specs", name);
+                    if (System.IO.File.Exists(p)) text = System.IO.File.ReadAllText(p);
+                }
+                if (text == null) { Row(sb, "CastHoursFor", name, "missing"); continue; }
+                var cast = CastDay.Parse(text);
+                foreach (var area in AreasOf(text))
+                {
+                    for (int day = -1; day <= 7; day++) Row(sb, "CastOpenAt", name, area, day.ToString(Inv), Bits(cast, area, day));
+                    Row(sb, "CastHoursWords", name, area, Esc(cast.HoursWords(area)));
+                }
+                foreach (var place in cast.Places) Row(sb, "CastOpenAt", name, place, "0", Bits(cast, place, 0));
+                Row(sb, "CastOpenAt", name, "nowhere", "0", Bits(cast, "nowhere", 0));
+                Row(sb, "CastHoursWords", name, "nowhere", Esc(cast.HoursWords("nowhere")));
+                foreach (var (d, h, m) in moments)
+                    Row(sb, "CastHoursFor", name, d.ToString(Inv), h.ToString(Inv), m.ToString(Inv), Esc(cast.HoursFor(d, h, m)));
+            }
+            foreach (var f in HoursFiles)
+            {
+                var cast = CastDay.Parse(f[1]);
+                foreach (var area in AreasOf(f[1]))
+                {
+                    for (int day = -1; day <= 7; day++) Row(sb, "CastOpenAtFile", f[0], area, day.ToString(Inv), Bits(cast, area, day));
+                    Row(sb, "CastHoursWordsFile", f[0], area, Esc(cast.HoursWords(area)));
+                }
+                foreach (var place in cast.Places) Row(sb, "CastOpenAtFile", f[0], place, "0", Bits(cast, place, 0));
+                foreach (var (d, h, m) in new[] { (0, 12, 30), (5, 0, 45), (6, 0, 45), (0, 5, 59), (0, 6, 0) })
+                    Row(sb, "CastHoursForFile", f[0], d.ToString(Inv), h.ToString(Inv), m.ToString(Inv), Esc(cast.HoursFor(d, h, m)));
+                foreach (var (d, h, m) in new[] { (0, 24, 0), (0, -1, 0), (1, 0, -1), (0, 0, 1440), (-8, 9, 0), (0, 49, 30), (7, -30, 45) })
+                {
+                    var open = cast.OpenAt("late", d, h, m);
+                    Row(sb, "CastOpenAtWrapped", f[0], "late", d.ToString(Inv), h.ToString(Inv), m.ToString(Inv), open == null ? "null" : Bit(open.Value));
+                }
+            }
+        }
+
         /// THE BREAKS NO ROW SAW (28 October 2026, section 2 of the 5 October sweep,
         /// production/audits/sweep-2026-10-05/port-vs-core.md). One-line rules the port
         /// shares with the Core that a scratch copy could break with every row still
@@ -3498,6 +3714,50 @@ namespace Ledger.PerceptionGolden
                 new[] { "escape-quote", "{\"talk_range_m\":6,\"places\":{\"Rita\\'s\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"off\"]]}],\"ties\":[]}" },
                 new[] { "accented-ids", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"zo\\u00eb\",\"routine\":[[0,\"a\"]]},{\"id\":\"zo\\u00e9\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
                 new[] { "no-break-space", "{\u00a0\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                // THE SHOPS' HOURS (28 October 2026, the 5 October sweep's U2): the thirteen bad files the port took, then
+                // the edges of CastDay.cs ReadHours and ReadBreaks. Copied to CoreGolden.h by script, never retyped.
+                new[] { "hours-string", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":\"9-5\"}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "hours-empty", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "hours-misspelt-day", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9,17],\"tues\":[9,17]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "hours-close-before-open", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[17,9]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "hours-close-over-30", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[18,30.5]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "hours-quarter", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9.25,17]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "hours-three-numbers", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9,12,17]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "hours-text-numbers", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[\"9\",\"17\"]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "hours-open-24", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[24,26]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "hours-longer-than-a-day", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[5,30]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "breaks-without-hours", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours_breaks\":{\"mon\":[12,13]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "breaks-outside-hours", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9,17]},\"hours_breaks\":{\"mon\":[8,10]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "breaks-overlapping", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9,17]},\"hours_breaks\":{\"mon\":[[12,14],[13,15]]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "hours-null", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":null}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "hours-list", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":[[9,17]]}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "hours-day-not-pair", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":9}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "hours-open-negative", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[-0.5,17]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "hours-close-at-open", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9,9]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "hours-close-30", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[18,30]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "hours-whole-day", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[0,24]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "hours-exactly-24", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[6,30]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "hours-open-half-past-23", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[23.5,24]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "hours-into-next-opening", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[18,27],\"tue\":[2,12]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "hours-to-next-opening", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[18,26],\"tue\":[2,12]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "hours-sunday-into-monday", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"sun\":[18,27],\"mon\":[2,12]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "hours-twice-last-good", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[17,9],\"mon\":[9,17]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "hours-note-only", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours_note\":\"by appointment\"}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "breaks-not-object", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9,17]},\"hours_breaks\":[[12,13]]}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "breaks-misspelt-day", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9,17]},\"hours_breaks\":{\"monday\":[12,13]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "breaks-shut-day", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9,17]},\"hours_breaks\":{\"tue\":[12,13]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "breaks-at-opening", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9,17]},\"hours_breaks\":{\"mon\":[9,10]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "breaks-to-closing", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9,17]},\"hours_breaks\":{\"mon\":[16,17]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "breaks-quarter", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9,17]},\"hours_breaks\":{\"mon\":[12.25,13]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "breaks-backwards", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9,17]},\"hours_breaks\":{\"mon\":[13,12]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "breaks-empty-list", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9,17]},\"hours_breaks\":{\"mon\":[]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "breaks-three-numbers", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9,17]},\"hours_breaks\":{\"mon\":[12,13,14]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "breaks-text-numbers", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9,17]},\"hours_breaks\":{\"mon\":[\"12\",\"13\"]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "breaks-touching", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9,17]},\"hours_breaks\":{\"mon\":[[12,13],[13,14]]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "breaks-unsorted", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9,17]},\"hours_breaks\":{\"mon\":[[15,16],[11,12]]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "breaks-past-midnight", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[18,27]},\"hours_breaks\":{\"mon\":[24.5,25]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "breaks-empty-object", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours\":{\"mon\":[9,17]},\"hours_breaks\":{}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "breaks-before-hours", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"s\":{\"places\":[\"a\"],\"hours_breaks\":{\"mon\":[12,13]},\"hours\":{\"mon\":[9,17]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
             };
             foreach (var r in refused)
             {

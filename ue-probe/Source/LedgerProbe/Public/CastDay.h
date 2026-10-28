@@ -27,8 +27,10 @@
 // circles and "namesHim", read as the C# reads them), PlaceOf, Where, Together,
 // HoursTogetherPerWeek, DaysTogetherPerWeek, FriendsMeetDays, and the few
 // lookups the game reads (NameOf, SaidOf, AreaOf, CircleOf, NeverToPolice,
-// MickeysOwn). NOT HERE: the
-// talk program's own reads (SpokenAreas, Fits, AreaFor, WhoNamed, Described,
+// MickeysOwn); and since 28 October 2026 (the 5 October sweep's U2) the
+// shops' hours: "hours", "hours_note" and "hours_breaks", refused as the C#
+// refuses them, with AreaFor, OpenAt, HoursWords and HoursFor. NOT HERE: the
+// talk program's own reads (SpokenAreas, Fits, WhoNamed,
 // UsualWords, PeopleFor, QuietStance), which run in the C# beside the game.
 //
 // NO UNREAL TYPE IS IN THIS FILE, as every file of the port.
@@ -52,6 +54,13 @@ namespace LedgerCore
 	public:
 		typedef std::vector<std::pair<int, std::string> > Routine;
 		struct Tie { std::string A, B; double W; };
+		// An area's hours on one weekday (the C#'s (open, close)?): bOpen false where
+		// the file leaves the weekday out and it is shut. Open and Close are hours
+		// from that day's midnight, a close past 24 into the next morning.
+		struct DayHours { bool bOpen; double Open, Close; DayHours() : bOpen(false), Open(0.0), Close(0.0) {} };
+		typedef std::vector<DayHours> WeekHours;   // seven, Monday first
+		// An area's breaks on each weekday, [from, to], sorted; empty for none.
+		typedef std::vector<std::vector<std::pair<double, double> > > WeekBreaks;
 
 		double TalkRangeM;
 
@@ -179,6 +188,27 @@ namespace LedgerCore
 						for (size_t J = 0; J < NL->Arr.size(); ++J)
 							if (NL->Arr[J].Type == T_STR && Trim(NL->Arr[J].Str).size() > 0) Names.push_back(Trim(NL->Arr[J].Str));
 					C.AreaNames[Key] = Names;
+					C.AreaOrder.push_back(Key);   // the file's order, which HoursFor says them in (the C#'s dictionary)
+					// THE SHOP'S HOURS AND ITS BREAKS (28 October 2026, the 5 October sweep's U2: this
+					// file read no "hours" at all, so thirteen bad files the C# refuses were taken here),
+					// read and refused as CastDay.cs ReadHours and ReadBreaks do, in its order: the hours,
+					// the note, then the breaks, which need the hours whatever order the file gives them.
+					if (const Value* Hv = Get(A, "hours"))
+					{
+						WeekHours W;
+						if (!ReadHours(Key, *Hv, W, Err)) return false;
+						C.HoursOf[Key] = W;
+					}
+					std::string Note;
+					if (GetString(A, "hours_note", Note) && Trim(Note).size() > 0) C.HoursNoteOf[Key] = Trim(Note);
+					if (const Value* Bv = Get(A, "hours_breaks"))
+					{
+						std::map<std::string, WeekHours>::const_iterator Wk = C.HoursOf.find(Key);
+						if (Wk == C.HoursOf.end()) { Err = "cast file: area " + Key + " has breaks but no hours"; return false; }
+						WeekBreaks B;
+						if (!ReadBreaks(Key, *Bv, Wk->second, B, Err)) return false;
+						C.BreaksOf[Key] = B;
+					}
 					if (const Value* PL = GetList(A, "places"))
 						for (size_t J = 0; J < PL->Arr.size(); ++J)
 						{
@@ -504,6 +534,151 @@ namespace LedgerCore
 			return Best;
 		}
 
+		// ---- OPEN AND SHUT (28 October 2026, the 5 October sweep's U2) ----------
+		//
+		// CastDay.cs AreaFor, OpenAt, HoursWords and HoursFor, transliterated: the
+		// game reads the shops' hours from the same cast file as the talk program
+		// (which runs the C# itself and tells the talk the street's hours), so a
+		// shop the game shows open is one the talk says is open. Pinned by the
+		// golden table's CastOpenAt, CastHoursWords and CastHoursFor rows.
+
+		/// CastDay.cs AreaFor: a known place as the area it is in, else a known
+		/// area as itself; false (the C#'s null) for anything else. A place's area
+		/// comes first, so an area named as another area's place reads as that one.
+		bool AreaFor(const std::string& PlaceOrArea, std::string& Out) const
+		{
+			if (AreaOf(PlaceOrArea, Out)) return true;
+			if (AreaNames.count(PlaceOrArea) == 0) return false;
+			Out = PlaceOrArea;
+			return true;
+		}
+
+		/// CastDay.cs OpenAt: whether a place or area is open at this hour and
+		/// minute of this day (a close past midnight counts on the next morning,
+		/// a break shuts it), in bOpen; false (the C#'s null) when it has no
+		/// hours, being no shop. The hour and minute wrap into the day as PlaceOf
+		/// wraps them.
+		bool OpenAt(const std::string& PlaceOrArea, int Day, int Hour, int Minute, bool& bOpen) const
+		{
+			bOpen = false;
+			std::string Area;
+			if (!AreaFor(PlaceOrArea, Area)) return false;
+			const std::map<std::string, WeekHours>::const_iterator Wk = HoursOf.find(Area);
+			if (Wk == HoursOf.end()) return false;
+			const long long All = ((long long)Day * 24 + Hour) * 60 + Minute;
+			const long long D0 = All >= 0 ? All / 1440 : -((-All + 1439) / 1440);
+			const int D = (int)D0;
+			const double T = (double)(All - D0 * 1440) / 60.0;
+			const std::map<std::string, WeekBreaks>::const_iterator Br = BreaksOf.find(Area);
+			const auto InBreak = [&Br, this](int Wd, double At) {
+				if (Br == BreaksOf.end()) return false;
+				for (const std::pair<double, double>& B : Br->second[Wd]) { if (B.first <= At && At < B.second) return true; }
+				return false;
+			};
+			const DayHours& Today = Wk->second[Weekday(D)];
+			if (Today.bOpen && Today.Open <= T && T < Today.Close) { bOpen = !InBreak(Weekday(D), T); return true; }
+			const DayHours& Before = Wk->second[Weekday(D - 1)];
+			if (Before.bOpen && T + 24 < Before.Close) { bOpen = !InBreak(Weekday(D - 1), T + 24); return true; }
+			return true;
+		}
+
+		/// CastDay.cs HoursWords: an area's hours as people say them, its usual
+		/// hours, the days that differ, its breaks and the days it is shut ("nine
+		/// till half five, on Wednesdays it shuts at one, shut on Sundays"), or by
+		/// its days when it opens three or fewer ("Tuesdays, Fridays and
+		/// Saturdays, eight till four"), then the file's note. False (the C#'s
+		/// null) when it has no hours. Takes the area's own id, as the C# does.
+		bool HoursWords(const std::string& Area, std::string& Out) const
+		{
+			Out.clear();
+			const std::map<std::string, WeekHours>::const_iterator Wk = HoursOf.find(Area);
+			if (Wk == HoursOf.end()) return false;
+			const WeekHours& Week = Wk->second;
+			std::vector<std::pair<DayHours, std::vector<int> > > Groups;
+			std::vector<int> Shut;
+			for (int D = 0; D < 7; ++D)
+			{
+				if (!Week[D].bOpen) { Shut.push_back(D); continue; }
+				size_t G = 0;
+				while (G < Groups.size() && !(Groups[G].first.Open == Week[D].Open && Groups[G].first.Close == Week[D].Close)) ++G;
+				if (G == Groups.size()) Groups.push_back(std::make_pair(Week[D], std::vector<int>(1, D)));
+				else Groups[G].second.push_back(D);
+			}
+			const auto Span = [](const DayHours& H) {
+				return H.Open == 0 && H.Close == 24 ? std::string("day and night") : TimeWords(H.Open, false) + " till " + TimeWords(H.Close, true);
+			};
+			std::vector<std::string> Bits;
+			if (7 - (int)Shut.size() <= 3)
+			{
+				for (size_t G = 0; G < Groups.size(); ++G) Bits.push_back(DaysWords(Groups[G].second) + ", " + Span(Groups[G].first));
+			}
+			else if (!Groups.empty())
+			{
+				// The usual hours: the most days, the earliest first.
+				size_t U = 0;
+				for (size_t G = 1; G < Groups.size(); ++G) if (Groups[G].second.size() > Groups[U].second.size()) U = G;
+				const DayHours Usual = Groups[U].first;
+				Bits.push_back(Span(Usual) + (Groups.size() == 1 && Shut.empty() ? " every day" : ""));
+				for (size_t G = 0; G < Groups.size(); ++G)
+				{
+					if (G == U) continue;
+					const DayHours& H = Groups[G].first;
+					Bits.push_back("on " + DaysWords(Groups[G].second) + (H.Close == Usual.Close ? " it opens at " + TimeWords(H.Open, false)
+					                                                   : H.Open == Usual.Open ? " it shuts at " + TimeWords(H.Close, true)
+					                                                   : " " + Span(H)));
+				}
+				const std::map<std::string, WeekBreaks>::const_iterator Br = BreaksOf.find(Area);
+				if (Br != BreaksOf.end())
+				{
+					std::vector<std::pair<std::string, std::vector<int> > > ByBreak;
+					for (int D = 0; D < 7; ++D)
+					{
+						if (Br->second[D].empty()) continue;
+						std::string Spoken;
+						for (size_t K = 0; K < Br->second[D].size(); ++K)
+							Spoken += (K ? " and " : "") + std::string("from ") + TimeWords(Br->second[D][K].first, true) + " till " + TimeWords(Br->second[D][K].second, false);
+						size_t G = 0;
+						while (G < ByBreak.size() && ByBreak[G].first != Spoken) ++G;
+						if (G == ByBreak.size()) ByBreak.push_back(std::make_pair(Spoken, std::vector<int>(1, D)));
+						else ByBreak[G].second.push_back(D);
+					}
+					for (size_t G = 0; G < ByBreak.size(); ++G) Bits.push_back("on " + DaysWords(ByBreak[G].second) + " shut " + ByBreak[G].first);
+				}
+				if (!Shut.empty()) Bits.push_back("shut on " + DaysWords(Shut));
+			}
+			const std::map<std::string, std::string>::const_iterator Nt = HoursNoteOf.find(Area);
+			if (Nt != HoursNoteOf.end()) Bits.push_back(Nt->second);
+			for (size_t K = 0; K < Bits.size(); ++K) Out += (K ? ", " : "") + Bits[K];
+			return true;
+		}
+
+		/// CastDay.cs HoursFor: every shop's hours and whether it is open at this
+		/// hour and minute, one line for anybody's talk, in the file's order of
+		/// areas; false (the C#'s null) when no area has hours. The first letter
+		/// is raised as char.ToUpperInvariant raises it, for ASCII only: no area's
+		/// first name starts outside it (28 October 2026).
+		bool HoursFor(int Day, int Hour, int Minute, std::string& Out) const
+		{
+			Out.clear();
+			std::vector<std::string> Hours;
+			for (const std::string& Key : AreaOrder)
+			{
+				if (HoursOf.count(Key) == 0) continue;
+				const std::vector<std::string> Names = AreaNamesOf(Key);
+				std::string Label = Names.empty() ? Key : Names[0];
+				if (!Label.empty() && Label[0] >= 'a' && Label[0] <= 'z') Label[0] = (char)(Label[0] - 'a' + 'A');
+				std::string Words;
+				HoursWords(Key, Words);
+				bool bOpen = false;
+				const bool bHas = OpenAt(Key, Day, Hour, Minute, bOpen);
+				Hours.push_back(Label + ": " + Words + "; " + (bHas && bOpen ? "open now." : "shut now."));
+			}
+			if (Hours.empty()) return false;
+			Out = "Opening hours, as everybody on the street knows them.";
+			for (const std::string& H : Hours) Out += " " + H;
+			return true;
+		}
+
 	private:
 		std::map<std::string, std::pair<double, double> > PlaceAt;
 		std::map<std::string, double> BodyXAt;   // the place's optional "body_x_m"
@@ -520,6 +695,123 @@ namespace LedgerCore
 		std::set<std::string> InsidePlaces;
 		std::map<std::string, std::string> KeeperOfArea;
 		std::vector<Tie> TieList;
+		// The shops' hours, their notes and breaks, by area, and the areas in the
+		// file's order (U2, 28 October 2026).
+		std::map<std::string, WeekHours> HoursOf;
+		std::map<std::string, std::string> HoursNoteOf;
+		std::map<std::string, WeekBreaks> BreaksOf;
+		std::vector<std::string> AreaOrder;
+
+		static int WeekdayOf(const std::string& Key)
+		{
+			for (int K = 0; K < 7; ++K) if (Key == WeekdayKeys()[K]) return K;
+			return -1;
+		}
+		static bool WholeOrHalf(double V) { return V * 2 == std::floor(V * 2); }
+
+		// CastDay.cs ReadHours: each weekday it opens, [open, close] in whole or
+		// half hours from that day's midnight, a close past 24 into the next
+		// morning but never round to the next day's opening; a weekday left out
+		// is shut. Refused with the C#'s words, in its order.
+		static bool ReadHours(const std::string& Area, const LedgerVignette::Value& V, WeekHours& Week, std::string& Err)
+		{
+			using namespace LedgerVignette;
+			if (V.Type != T_OBJ) { Err = "cast file: area " + Area + "'s hours must be an object of weekdays"; return false; }
+			if (V.Obj.empty()) { Err = "cast file: area " + Area + "'s hours name no weekday; leave hours out for a place with none"; return false; }
+			Week.assign(7, DayHours());
+			for (size_t I = 0; I < V.Obj.size(); ++I)
+			{
+				const int Wd = WeekdayOf(V.Obj[I].first);
+				if (Wd < 0) { Err = "cast file: area " + Area + "'s hours name no weekday: " + V.Obj[I].first; return false; }
+				const Value& P = V.Obj[I].second;
+				const bool bPair = P.Type == T_ARR && P.Arr.size() == 2 && P.Arr[0].Type == T_NUM && P.Arr[1].Type == T_NUM;
+				const double Open = bPair ? P.Arr[0].Num : 0.0, Close = bPair ? P.Arr[1].Num : 0.0;
+				if (!bPair || Open < 0 || Open >= 24 || Close <= Open || Close > 30 || Close - Open > 24 || !WholeOrHalf(Open) || !WholeOrHalf(Close))
+				{
+					Err = "cast file: area " + Area + "'s hours on " + V.Obj[I].first + " must be [open, close], whole or half hours, open before 24 and close after it, by six the next morning at the latest";
+					return false;
+				}
+				Week[Wd].bOpen = true;
+				Week[Wd].Open = Open;
+				Week[Wd].Close = Close;
+			}
+			// A close past midnight must not run into the next day's opening.
+			for (int Wd = 0; Wd < 7; ++Wd)
+				if (Week[Wd].bOpen && Week[(Wd + 1) % 7].bOpen && Week[Wd].Close - 24 > Week[(Wd + 1) % 7].Open)
+				{
+					Err = "cast file: area " + Area + "'s hours on " + WeekdayKeys()[Wd] + " run past the next day's opening";
+					return false;
+				}
+			return true;
+		}
+
+		// CastDay.cs ReadBreaks (town list 6by): on a weekday, [from, to], or a
+		// list of them, in whole or half hours strictly inside that day's hours,
+		// never overlapping; kept in order of their start.
+		static bool ReadBreaks(const std::string& Area, const LedgerVignette::Value& V, const WeekHours& Week, WeekBreaks& Breaks, std::string& Err)
+		{
+			using namespace LedgerVignette;
+			if (V.Type != T_OBJ) { Err = "cast file: area " + Area + "'s hours_breaks must be an object of weekdays"; return false; }
+			Breaks.assign(7, std::vector<std::pair<double, double> >());
+			for (size_t I = 0; I < V.Obj.size(); ++I)
+			{
+				const std::string& Key = V.Obj[I].first;
+				const int Wd = WeekdayOf(Key);
+				if (Wd < 0) { Err = "cast file: area " + Area + "'s hours_breaks name no weekday: " + Key; return false; }
+				const Value& L = V.Obj[I].second;
+				// a list whose first item is a list is a list of pairs; anything else is one pair
+				std::vector<const Value*> Pairs;
+				if (L.Type == T_ARR && !L.Arr.empty() && L.Arr[0].Type == T_ARR) { for (const Value& X : L.Arr) Pairs.push_back(&X); }
+				else { Pairs.push_back(&L); }
+				std::vector<std::pair<double, double> > Day;
+				for (const Value* X : Pairs)
+				{
+					const bool bPair = X->Type == T_ARR && X->Arr.size() == 2 && X->Arr[0].Type == T_NUM && X->Arr[1].Type == T_NUM;
+					const double From = bPair ? X->Arr[0].Num : 0.0, To = bPair ? X->Arr[1].Num : 0.0;
+					bool bOverlaps = false;
+					for (const std::pair<double, double>& B : Day) { if (From < B.second && B.first < To) bOverlaps = true; }
+					if (!bPair || To <= From || !WholeOrHalf(From) || !WholeOrHalf(To) || !Week[Wd].bOpen || From <= Week[Wd].Open || To >= Week[Wd].Close || bOverlaps)
+					{
+						Err = "cast file: area " + Area + "'s breaks on " + Key + " must be [from, to], whole or half hours, strictly inside that day's hours, never overlapping";
+						return false;
+					}
+					Day.push_back(std::make_pair(From, To));
+				}
+				// never overlapping, so no two start together and the order is the C#'s
+				std::sort(Day.begin(), Day.end(), [](const std::pair<double, double>& A, const std::pair<double, double>& B) { return A.first < B.first; });
+				Breaks[Wd] = Day;
+			}
+			return true;
+		}
+
+		// CastDay.cs TimeWords: a time as a local says it ("half five", "three in
+		// the morning"); closing says a close (till seven in the morning).
+		static std::string TimeWords(double T, bool bClosing)
+		{
+			static const char* const Numbers[12] = { "twelve", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven" };
+			const int H = (int)std::floor(T);
+			const bool bHalf = T - H >= 0.5;
+			const std::string Spoken = std::string(bHalf ? "half " : "") + Numbers[H % 12];
+			if (!bHalf && H % 24 == 0) return "midnight";
+			if (bClosing ? (T > 24 || T <= 7) : T < 7) return Spoken + " in the morning";
+			if (!bClosing && T >= 18) return Spoken + " in the evening";
+			if (bClosing && T >= 20) return Spoken + " at night";
+			return Spoken;
+		}
+
+		// CastDay.cs DaysWords: weekdays as a local says them ("Monday to
+		// Friday", "Tuesdays and Fridays").
+		static std::string DaysWords(std::vector<int> Days)
+		{
+			static const char* const DayNames[7] = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+			std::sort(Days.begin(), Days.end());
+			const bool bRun = Days.size() >= 3 && Days.back() - Days.front() == (int)Days.size() - 1;
+			if (bRun) return std::string(DayNames[Days.front()]) + " to " + DayNames[Days.back()];
+			if (Days.size() == 1) return std::string(DayNames[Days[0]]) + "s";
+			std::string Out;
+			for (size_t K = 0; K + 1 < Days.size(); ++K) Out += (K ? ", " : "") + std::string(DayNames[Days[K]]) + "s";
+			return Out + " and " + DayNames[Days.back()] + "s";
+		}
 
 		static std::string Lookup(const std::map<std::string, std::string>& M, const std::string& K)
 		{

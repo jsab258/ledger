@@ -17,7 +17,112 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
     - Failed and why: ...
     - Evidence: <file>
 
+## Step zero: study two shipped games first
+
+(Owner, 28 Oct.) Before building, study two shipped games of the same kind and turn their numbers into targets. Pick two of the same kind; best if they answer the central question in opposite ways (our lesson from these studies: one stages, one simulates).
+
+- Questions written first.
+- The games' own files only where licence and law allow; public sources read in full. A source not reached is listed, never used.
+- Index first; extract metadata only, capped, outside the repository, one extractor at a time; delete only after the study's fresh review has passed (its re-measure needs them).
+- Every number tagged (measured, read, inferred, name only) and dated.
+- Each finding a target with a check, or a reason to ignore it.
+- A fresh reviewer per study re-measures against the sources.
+
+Tools: the games' archive and container indexes, a package viewer with the published mappings, scripted counts.
+
+Cost here: sixteen studies on two days (25 and 28 October), about 6 hours of wall clock with helpers in parallel (19:42 to 22:05 and 10:25 to 14:08; one earlier helper not timed); the thirteen timed studies' own windows add up to about 9.75 hours; plus an hour indexing both games (25 October, 13:20 to 14:20). Failed: one study's uncapped extract (26 GB) filled the disk and five studies lost part of one game's data (Studies 2, 3, 11, 14, 15); Study 16 lost its raw exports mid-study when they were removed before its review.
+
+Evidence: production/research/aaa-reference/REFERENCE.md and studies/.
+
+Note (owner, 28 Oct.): for a Rome game, the study is Assassin's Creed Origins. Open: whether its files may be read (licence and law first); the second game; what its setting, cities and scale offer a Rome game, read from dated sources before any claim.
+
+## Universal AAA starting values
+
+(28 October 2026, the owner's order E16; drafted from the studies and checked by a fresh reviewer, about 170 numbers, thirteen fixes made.)
+
+The cross-game lessons of the sixteen reference studies (production/research/aaa-reference/studies/), in the owner's order, each with its numbers and a value a new project can start from on day one. Tags as in the studies: M measured, R read, I inferred, N name only; Studies 6, 7 and 12 do not tag each number, marked "untagged". The numbers are the reference games'; the day-one values are starting points to test, not measurements.
+
+**1. Staging over simulation.** Stage what the player only passes through; simulate only what the game's own loop reads back.
+- Staged (Mafia): no schedule, and people loop one of 389 scenes in 478 slots, with no end or cooldown (Study 1, M); nothing kept, no wanted level (Study 1, M, N); time of day set per checkpoint (Study 11, R); dressing on the mission's path: 134 placed actors on the measured street, 6 and 4 on its neighbours (Study 4, M).
+- Simulated (Kingdom Come II): 1,123 behaviours, only 3.4% of schedule links on the clock, the rest chosen by priority (Study 1, M); crimes remembered 1 to 7 days (Study 1, R); a clock at 15 times real time (Study 11, R).
+- When each fits (our reading): staging for a linear story whose choices are not kept; simulation where the player's deeds and the world's memory are the game (our case: it simulates).
+- Day one: stage by default; simulate fully only named characters and what the core loop reads; for the crowd, a few clock windows and priority for the rest.
+
+**2. Kits.** Build streets from a small kit placed many times; hand-make only the hero buildings.
+- Mafia's main-street group: 33,986 placements of 433 meshes, 78.5 uses a mesh, 88% kit; facades of 26 meshes in about 11 house families, each of about 3 stacked floor types; one measured street, about 150 meshes used about 15 times each (Study 4, M). Its hero town's 13 hand-built blocks have about one shape mesh per building (Study 4, M, I).
+- Kingdom Come II builds whole-house meshes with window and door pieces placed on them (Study 4, R): 232 buildings from 77 meshes, about 3 uses each, from a library of 1,873 house meshes (Study 4, M).
+- When each fits (our reading): a kit where streets repeat a building type; whole houses where each must read as its own and the team can model them by the hundred.
+- Day one: one kit family per house type, about 3 stacked floor types; each kit mesh placed about 15 times a street; kit names carry their size (Mafia: 803 names, Study 13, M).
+
+**3. Variety from materials.** Make variety with material values and colourways on few meshes, not with more meshes.
+- Mafia: 1,213 of 1,416 garment materials are children of one layered master; median colourways a mesh 4 to 10; the hat left out by chance, 20 to 80%, in 326 presets (Study 6, untagged). Its main surface master: 307 instances on three textures plus a tint (Study 5, R); wear from 2,461 decals of 180 materials, 40% of them leak stains (Study 5, M).
+- Kingdom Come II: 2,139 garment variants on about 513 meshes, 4 to 6 colourways each, coloured by hue, saturation, brightness, grime and scratch over an ID mask (Study 6, untagged); 135 shared surface materials (Study 5, M).
+- Day one: one main master (colour; packed height, roughness and occlusion; normal; tint); one layered garment master with tint, grime, scratch and wet; 4 to 8 colourways a garment mesh; wear as decals, leak stains about two in five.
+
+**4. Cheap light.** Few lights cast shadows. A lamp is a key spot that makes the pool plus a tiny light for the bulb; a night pool is judged by the ratio of lamp to ambient light, not by exposure.
+- Mafia: two lights a lamp (Study 5, M); the common street lamp a 1.5 cd spot reaching 20 m at 80° and 4500 K, with a 0.45 cd bulb point reaching 1 m, (a multiplier of 3 in the lamp's Blueprint may raise it), and 25 of 39 lamps with shadows off, 14 not stating (the engine's default casts) (Study 5, R, M); none of 135 point lights that state a shadow setting casts one, and no reflection captures or planar reflections in Palermo, its one readable town (Study 5, M).
+- Kingdom Come II: 8 shadow-casting lights a frame (6 in its console performance mode), at most 10, 16 or 32 by quality (Study 12, untagged); reflection probes baked at 11 times of day, about 7.2 GB for two regions (Study 5, M).
+- When each fits (our reading): baked probes trade disk for frame time at a fixed set of hours; dynamic light such as Mafia's software Lumen costs frame time (Epic's page: about 8 ms for GI and reflections at 1080p internal at its top level, for 30 fps consoles; Mafia's PC runs both a level lower; Study 12, untagged). Neither game's own reflection cost was found (Study 5).
+- Day one: small lights cast no shadows; at most 8 shadow-casting lights a frame; each lamp a key spot plus a bulb point.
+
+**5. Effects only on heroes.** Spend costly effects (cloth, full foot rigs, interiors, conversation cameras) on named characters and story places; the crowd and the rest get the cheap version.
+- Mafia: cloth on only 10 meshes, 9 of them named characters' pieces, none on the crowd; coat tails, flaps and holsters on rigid-body bones in 68 of 74 garment animation blueprints; far people as single-mesh puppets (Study 6, untagged); the foot rig at close range only, civilians on a two-bone leg solver (Study 7, untagged); 60 baked interior meshes (Study 4, R); fake rooms 24 in about 8,100 window pieces (Study 4, M).
+- Kingdom Come II: cloth on hems and skirts only (Study 6, untagged); 88 of 166 city houses furnished, 78 shells (Study 4, M); a camera command on 78% of conversation lines and 0.7% of street lines (Study 3, M).
+- Day one: cloth only on named characters' loose parts, tails on a short rigid-body chain; interiors only where the story goes, shells elsewhere, fake rooms rare; the full foot rig at close range only; the camera moves for conversations, never for passing lines.
+
+**6. Performance budgets on day one.** Write the frame, memory, people and animation budgets before the first street is dressed, and test them in a scene fuller than play.
+- Mafia: a 60 fps console profile with dynamic resolution between 40 and 83% (its PC profile has it off); texture pools of 1,200 to 2,000 MB by quality, memory tiers at 3, 7 and 15 GB; a 3 ms animation budget (Study 12, untagged); people unseen for 3 s beyond 70 m freeze, never within 10 m (Study 1, R).
+- Kingdom Come II: 70 people in full detail within 150 m, and a people-update budget of 3.5 (2.5 in performance modes) (Study 1, R; read as ms in Study 12); 4,096 MB of textures on a 6 GB card, a 768 MB mesh pool, a test quest with 1,000 to 2,500 people (Study 12, untagged).
+- Day one: 60 fps with a dynamic-resolution range (our choice); about 3 ms for animation and 3.5 ms for people; a texture pool per memory tier (at a 6 GB card, Mafia 1,500 MB, Kingdom Come II 4,096; Study 12, untagged); freeze-unseen rules from the first crowd; a stress scene with far more people than play needs. Street frame times: only one public test in the studies.
+
+**7. Reliable animation first.** Walk on a state machine of chosen clips (starts, stops and turns, for each foot) before any searched method; fight sliding feet three ways: per-foot clips chosen by distance and stride, play rate kept near authored speed, and a foot rig at close range.
+- Neither game uses motion matching. Mafia: 59 state machines, 239 states and 563 transitions in the 54 classes read, no pose-search asset among 139,791 packages; each standing set holds 12 starts, 6 stops, 4 idle turns and 2 pivots (Study 7, untagged).
+- Kingdom Come II: 842 blend spaces and 94 databases of 22,342 options; a stop picked by remaining distance (walk 0.6 to 2.1 m), angle (5° tolerance) and quarter of the stride, in left- and right-leg versions; turns at 45, 90, 135 and 180°; 622 activity poses, each an In, a Loop and an Out. Both pre-bake every face: 12,802 and 18,449 face files (Study 7, untagged).
+- Day one: per-foot starts and stops chosen by distance and stride quarter; turns in 45° steps; play rate within about 10% faster and 20% slower than authored (a public talk, Study 7); foot slide measured against about 2 cm (our choice; a snippet, unverified, says viewers noticed slides below 21 mm, so some may still see this; Study 7).
+
+**8. Pacing and guidance.** Something new every few minutes, few and short watched scenes, hints fired by the player's own hesitation, and a clear answer to "where next".
+- First 30 minutes: about 10 activities and 10 to 12 prompts in each game, no stretch without something new much past 5 min (Study 2, I); first control at 1.4 min (Mafia) and at least 3.5 min (Kingdom Come II), with 18 to 34% and 28 to 44% watched (Study 2, M, I); Kingdom Come II's first hints appear only after 10 s without moving (20 s for attack, 30 s for the marker) and stay 10 s; combat lessons stay until cleared (Study 2, R).
+- Story: a median shot of 4.7 s (Mafia) and 6.3 s (Kingdom Come II) (Study 16, M; Study 3 measures Mafia's shots pooled at a median 3.3 s, M); 21 to 31% and 8 to 11% of the main story watched (Study 16, I). Kingdom Come II points a marker on 80% of objective starts, and people guide too: 84 walk-up talks, 94 guided tours, 310 notes and items (Study 16, M).
+- Day one: control within 1.5 min; something new every 3 min; no stretch over 3.5 min without control; hints on hesitation, held about 10 s; scenes short and skippable, a cut every 5 to 6 s (Study 16's proposal); without markers, every go-to step names a landmark in words.
+
+**9. Failure that carries on.** A failed step becomes a state the world keeps and later steps read, not a reload. Save on every change of state.
+- Kingdom Come II: 52% of quests can fail (Study 11, M); at least 698 cancelled-step entries in 84% of quests, 36 quests with a part for what follows a failure, 1,158 of 1,202 out ports read elsewhere (Study 16, M); 686 save points, 607 tied to an objective, 31 that block saving in scenes, combat and minigames (Study 11, M).
+- Mafia restarts the checkpoint after a 3 s screen (Study 11, R): about 20 checkpoints in the first 30 min, a failure costing about 1 to 2 min (Study 2, I).
+- Kingdom Come II punishes a caught player and play goes on; Mafia has no arrest, fine or jail, and a failed mission returns to its checkpoint (Study 15, R, M).
+- When each fits (our reading): a restart for a linear story that keeps nothing; carry-on wherever the world keeps state.
+- Day one: job states none, active, done, failed; step states none, started, updated, completed, cancelled (Study 11, R); every failure a named outcome later jobs read; save on every state change, the save waiting (never refused) in a fight or scene; a restart, where used, costs at most 2 min.
+
+**10. Tuning as data.** Every number a designer may tune lives in a table under a schema, one home each, never in code.
+- Mafia: 611 data tables besides 2,453 text tables, 3,748 data assets and 149 curves (Study 13, M); 122 settings in four tables, each row a default, range, step and help text (Study 10, M); difficulty as six tables (Study 13, R); 83 of 116 camera modes picked from one table by the player's state (Study 9).
+- Kingdom Come II: 87,600 rows in 1,243 XML tables under 13 schemas, and one key-value table of 323 values in 93 families (Study 13, M), overridden per perk without touching the base (Study 13, R); every blow timed in data, 221 options (Study 14).
+- Day one: one tuning home per system from the first week, each row a rule and its numbers; a check that fails the build when a tuned number also sits in code; a naming rule with a check (Mafia prefixes 91.7% of its non-map assets, Study 13, M).
+
+## Clothing: one game garment, the professional way
+
+(28 October 2026, the owner's order E17; the method behind the project's garment skill, .claude/skills/game-garment/SKILL.md, in setting-free words. Proven so far: the straight-elbow drape; the rest is the researched method, each step to be proven on its first garment.)
+
+1. **Reference first.** Read one shipped game's comparable garment from its files (pieces, edges, weights, triangles, texel density) and the public pipeline (the cloth tool's documentation, its scripting API, named artists' breakdowns). Copy the method, never the assets.
+2. **Pattern** drafted at the wearer's measures from dated photographs; the cloth tool's own templates only looked at (they are licensed samples).
+3. **Drape straight, pose after.** Drape on a copy of the body with straight elbows, then bend the result back with the body's own skin weights: a sleeve wrapped round one straight guide closes beside a bent forearm.
+4. **Bands and cuffs by elastic:** the band's rest round 0.90 to 0.95 of the body's girth plus its clearance (never below it), elastic on the gathered edge, the band sewn late on a frozen body, fine particles at the band. Check: centred on the limb, small gap, full cover, nothing inside.
+5. **Zips and stitches** only in the high model, from the project's own parts, baked into maps.
+6. **Detail in a free sculpting tool;** thickness last, as an inner wall only where the inside shows; every open end closed by a lip, a facing and a cap.
+7. **Game mesh by the project's own retopology and UVs;** the cloth tool's one-click game export kept as a comparison (it does a remesh, a UV pack and a bake, no topology for skinning, no levels of detail). Targets from the reference game's numbers: triangles, texel density, four levels of detail at about half each.
+8. **Bake and one tinted material** with part IDs; seams, stitch lines and wrinkles in the normal map, the silhouette in the mesh.
+9. **Skin from the body's weights,** at most 8 influences a point at the top levels and 4 below; edges' detail kept to the third level. Check every pose for points inside the body; one fresh reviewer per view through the game's own camera; the packaged walk.
+
+What failed before this method, so it is not repeated: draping with bent elbows (sleeve ends closed beside the arm); asking a cuff below the body's girth through shrinkage (a lump at the seam); hiding a placeholder outfit by its bounds alone (its shirt and shorts were one mesh in two sections: hide sections, not parts).
+
 ## Notebook
+
+### 28 Oct 2026, five bounded research units for one order, each ending in a method with its first use
+- Made: the professional garment pipeline; one shipped jacket read at wrist, collar and hem; interaction spots for sitting; fast, grounded live talk; automatic asset checks before reviewers.
+- Method (setting-free): one helper per question set, public sources and the reference games' files (one extracting helper at a time, capped, its files kept until its fresh review re-measures them, then deleted); every number tagged and dated; each result to one fresh reviewer against its sources before it becomes a method; the reviewer's faults sent back to the author, who has the context.
+- Tools: helpers, web reading, the package viewer on the kept extracts, scripted measures.
+- Target and check: each method a numbered list of steps, each step with a numeric check and a first use with an hour estimate. Reviews: pass with fixes in all five (17, 16, 19 faults and two smaller sets).
+- Cost (hours): about 0.6 to 1.0 of helper clock each, 0.2 to 0.3 per review.
+- Failed and why: a study helper's backup of the package viewer's settings kept a game's file key on the system drive (found and blanked); a reviewer found a past cuff size double-counted and a weighting claim that did not reproduce: numbers from one's own history need the same re-measure as the game's.
+- Evidence: production/research/game-clothing-pipeline/PIPELINE-2026-10-28.md and MAFIA-JACKET-2026-10-28.md; production/research/sit-and-turn/SPOTS-2026-10-28.md; production/research/live-speech-architecture/FAST-GROUNDED-TALK-2026-10-28.md; production/research/asset-checks/CHECKS-2026-10-28.md; each with its review beside it.
 
 ### 28 Oct 2026, every recommendation of a finished study set turned into tracked work, so none is lost
 - Made: 145 lines in the owner's order ledger, one per recommendation of sixteen reference studies, each with its phase, its target and its source.

@@ -16,6 +16,8 @@
 #include "Dom/JsonObject.h"
 #include "Engine/SkeletalMesh.h"
 #include "Materials/MaterialInstanceDynamic.h"
+#include "Rendering/SkeletalMeshRenderData.h"
+#include "Rendering/SkeletalMeshLODRenderData.h"
 #include "GameFramework/Actor.h"
 #include "Misc/CommandLine.h"
 #include "Misc/FileHelper.h"
@@ -159,22 +161,44 @@ namespace LedgerGarments
 					if (C == nullptr || C == Body || C->GetName() == TEXT("Face")) { continue; }
 					const FString Named = (C->GetName() + TEXT(" ") + (C->GetSkeletalMeshAsset() != nullptr ? C->GetSkeletalMeshAsset()->GetName() : FString())).ToLower();
 					const float Top = MeshTop(C);
-					// THE SHORTS ARE NO TOP, 28 October 2026: Epic's default garment,
-					// Tom's shirt and his shorts, report the same bounds (74 to 164 cm),
-					// so his zip jacket hid both and the packaged game showed him in his
-					// underwear. A part whose material names a lower garment is never
-					// a top; his trousers will replace the shorts by name.
-					FString Mats;
+					// THE SHORTS ARE NO TOP, 28 October 2026: Epic's default garment
+					// is one mesh with two sections, a shirt and shorts (Tom's two outfit
+					// parts both carry both), and both parts report the same bounds (74
+					// to 164 cm). Hiding the part whole showed him in his underwear;
+					// keeping it whole showed the shirt through the jacket. So a part
+					// that holds a lower garment's material (short, trouser, pant, skirt)
+					// keeps those sections and loses only the others, at every level of
+					// detail; a part with none is hidden whole, as before.
+					auto IsLower = [](const FString& N) { return N.Contains(TEXT("short")) || N.Contains(TEXT("trouser")) || N.Contains(TEXT("pant")) || N.Contains(TEXT("skirt")); };
+					TArray<FString> MatNames;
+					bool bLower = false;
 					for (int32 I = 0; I < C->GetNumMaterials(); ++I)
 					{
-						if (const UMaterialInterface* Mi = C->GetMaterial(I)) { Mats += Mi->GetName().ToLower() + TEXT(" "); }
+						const UMaterialInterface* Mi = C->GetMaterial(I);
+						MatNames.Add(Mi != nullptr ? Mi->GetName().ToLower() : FString());
+						bLower |= IsLower(MatNames.Last());
 					}
-					const bool bLower = Mats.Contains(TEXT("short")) || Mats.Contains(TEXT("trouser")) || Mats.Contains(TEXT("pant")) || Mats.Contains(TEXT("skirt"));
 					for (const TSharedPtr<FJsonValue>& H : *Hides)
 					{
 						const FString Word = H->AsString().ToLower();
 						const bool bShoes = Word == TEXT("shoes") && Top < 25.0f;
-						const bool bTop = Word == TEXT("top") && Top > 130.0f && MeshBottom(C) > 60.0f && !bLower;
+						const bool bTop = Word == TEXT("top") && Top > 130.0f && MeshBottom(C) > 60.0f;
+						if (bTop && bLower)
+						{
+							int32 Off = 0;
+							const FSkeletalMeshRenderData* RD = C->GetSkeletalMeshAsset() != nullptr ? C->GetSkeletalMeshAsset()->GetResourceForRendering() : nullptr;
+							for (int32 Lod = 0; RD != nullptr && Lod < RD->LODRenderData.Num(); ++Lod)
+							{
+								const TArray<FSkelMeshRenderSection>& Secs = RD->LODRenderData[Lod].RenderSections;
+								for (int32 Sec = 0; Sec < Secs.Num(); ++Sec)
+								{
+									const int32 Mat = Secs[Sec].MaterialIndex;
+									if (MatNames.IsValidIndex(Mat) && !IsLower(MatNames[Mat])) { C->ShowMaterialSection(Mat, Sec, false, Lod); ++Off; }
+								}
+							}
+							Hidden += FString::Printf(TEXT(" %s's top sections (%d, its lower garment kept)"), *C->GetName(), Off);
+							break;
+						}
 						if (bShoes || bTop || (Word != TEXT("shoes") && Word != TEXT("top") && Named.Contains(Word)))
 						{
 							C->SetVisibility(false, true);
