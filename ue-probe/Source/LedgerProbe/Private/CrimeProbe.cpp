@@ -8488,6 +8488,16 @@ namespace
 						const FBoxSphereBounds B = Sk->Bounds;
 						UE_LOG(LogTemp, Display, TEXT("ledgerOfficeLookCamera: body %s at (%.1f, %.1f, %.1f), its mesh's lowest %.1f, %.1f cm from the camera level"),
 							*It->GetName(), It->GetActorLocation().X, It->GetActorLocation().Y, It->GetActorLocation().Z, B.Origin.Z - B.BoxExtent.Z, FVector::Dist2D(Cam, Sk->GetComponentLocation()));
+						// and the level of detail each of its skinned meshes shows (29 October: the garments follow the
+						// body's level; Tom's jacket gained three reduced levels)
+						TArray<USkinnedMeshComponent*> Skins;
+						It->GetComponents(Skins);
+						for (const USkinnedMeshComponent* K : Skins)
+						{
+							if (K == nullptr || K->GetSkinnedAsset() == nullptr || !K->IsVisible()) { continue; }
+							UE_LOG(LogTemp, Display, TEXT("ledgerOfficeLookLod: %s / %s shows level %d of %d"), *It->GetName(), *K->GetSkinnedAsset()->GetName(),
+								K->GetPredictedLODLevel(), K->GetNumLODs());
+						}
 					}
 				}
 			}

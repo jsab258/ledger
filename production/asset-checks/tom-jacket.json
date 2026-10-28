@@ -1,7 +1,7 @@
 {
  "piece": "tom-jacket",
- "line": "assetChecks=FAIL piece=tom-jacket assets=8 errors=4 warnings=0 waived=0 first=names:Rib:Rib/MI_",
- "when": "2026-10-28 22:22:47",
+ "line": "assetChecks=FAIL piece=tom-jacket assets=8 errors=3 warnings=0 waived=0 first=names:Rib:Rib/MI_",
+ "when": "2026-10-29 00:10:11",
  "assets": [
   "/Game/Ledger/MetaHumans/Garments/TomZipJacket/MI_TomZipJacket",
   "/Game/Ledger/MetaHumans/Garments/TomZipJacket/Rib",
@@ -34,10 +34,16 @@
   "SKM_TomZipJacket": {
    "class": "SkeletalMesh",
    "triangles": [
-    18976
+    18976,
+    8917,
+    4458,
+    2229
    ],
    "lod_verts": [
-    10396
+    10396,
+    5106,
+    2697,
+    1447
    ]
   },
   "Tape": {
@@ -90,14 +96,6 @@
    "severity": "error",
    "value": "Shell",
    "limit": "MI_"
-  },
-  {
-   "rule": "lods",
-   "asset": "SKM_TomZipJacket",
-   "message": "1 levels of detail, the garment_jacket kind wants 4",
-   "severity": "error",
-   "value": 1,
-   "limit": 4
   },
   {
    "rule": "names",

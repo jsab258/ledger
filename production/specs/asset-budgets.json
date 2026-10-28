@@ -30,7 +30,8 @@
   "texture_max_global": 4096,
   "texture_max_global_source": "budgets (the trim sheets are 4096 x 2048); epic_textures",
   "kinds": {
-    "garment_jacket": {"triangles": 22000, "lods": 4, "texture_max": 2048, "collision": "none", "source": "study6 (Mafia's median top 21,994; Tom's jacket 18,000-22,000; four levels; textures 2048); collision: budgets (the body's capsule)"},
+    "garment_jacket": {"triangles": 22000, "lods": 4, "texture_max": 2048, "collision": "none", "source": "study6 (Mafia's median top 21,994; Tom's jacket 18,000-22,000; four levels; textures 2048); collision: budgets (the body's capsule)",
+      "lod_keep": [1.0, 0.47, 0.25, 0.09], "lod_screen_size": [1.0, 0.4, 0.15, 0.08], "lod_source": "study6 via production/research/game-clothing-pipeline/PIPELINE-2026-10-28.md section 1: Mafia's vest-jacket 19,131, 8,509, 4,781 and 1,505 triangles, kept 47, 25 and 9 per cent at screen sizes 1.0, 0.4, 0.15 and 0.08 (reference first, 28 October; the engine's default groups keep 25, 12.5 and 6 per cent at 1.0, 0.3, 0.15 and 0.1); tools/ue/import_garments.py sets them"},
     "garment_jumper": {"triangles": 20000, "lods": 4, "texture_max": 2048, "collision": "none", "source": "study6 (jumper 15,000-20,000; four levels; 2048)"},
     "garment_trousers": {"triangles": 10000, "lods": 4, "texture_max": 2048, "collision": "none", "source": "study6 (trousers 8,000-10,000, textures 1024-2048; four levels)"},
     "garment_shoes": {"triangles": 6000, "lods": 4, "texture_max": 1024, "collision": "none", "source": "study6 (shoes about 6,000, textures 512-1024; four levels)"},

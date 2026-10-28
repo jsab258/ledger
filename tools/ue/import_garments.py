@@ -167,6 +167,40 @@ def packed_material(unreal, g, folder, lines):
     return mi
 
 
+BUDGETS = os.path.join(REPO, "production", "specs", "asset-budgets.json")
+
+
+def budget_kind(folder, path=BUDGETS):
+    """The budget spec's kind for a content folder: its longest matching folder prefix (asset_checks.py's rule)."""
+    with open(path, encoding="utf-8") as fh:
+        spec = json.load(fh)
+    best = ""
+    name = None
+    for prefix, kind in spec.get("folders", []):
+        if (folder == prefix or folder.startswith(prefix + "/")) and len(prefix) > len(best):
+            best, name = prefix, kind
+    out = dict(spec.get("kinds", {}).get(name, {})) if name else {}
+    if name:
+        out["name"] = name
+    return out
+
+
+MH_ENGINE_INI = "C:/LedgerTools/mh-assemble/Config/DefaultEngine.ini"
+
+
+def ini_lod_groups(path=MH_ENGINE_INI):
+    """The project's level-of-detail groups as (share, screen size) pairs, or None where the file is not here."""
+    import re
+    if not os.path.isfile(path):
+        return None
+    out = []
+    for line in open(path, encoding="utf-8", errors="replace"):
+        m = re.match(r"\+LODGroups=\(ScreenSize=\(Default=([0-9.]+)\),ReductionSettings=\(NumOfTrianglesPercentage=([0-9.]+)\)\)", line.strip())
+        if m:
+            out.append((float(m.group(2)), float(m.group(1))))
+    return out
+
+
 def garments(path=SPEC):
     with open(path, encoding="utf-8") as fh:
         return json.load(fh)["garments"]
@@ -186,6 +220,16 @@ def selftest():
         ("a garment its own words call held carries a hold",
          all("hold" in x for x in g if "held" in x.get("made", "") or "worn only" in x.get("made", "")),
          str([x["name"] for x in g if ("held" in x.get("made", "") or "worn only" in x.get("made", "")) and "hold" not in x])),
+        # 28 October: each garment's levels of detail come from its budget kind (Mafia's jacket, reference first)
+        ("Tom's jacket finds its budget kind with four levels and their screen sizes",
+         budget_kind(DEST + "/TomZipJacket").get("name") == "garment_jacket"
+         and len(budget_kind(DEST + "/TomZipJacket").get("lod_keep", [])) == 4 == len(budget_kind(DEST + "/TomZipJacket").get("lod_screen_size", [])),
+         str(budget_kind(DEST + "/TomZipJacket"))),
+        # the project's groups are derived from the budget spec, and checked against it where the project is here
+        ("the MetaHuman project's level-of-detail groups match the jacket's budget kind",
+         ini_lod_groups() is None or ini_lod_groups() == list(zip(budget_kind(DEST + "/TomZipJacket").get("lod_keep", []),
+                                                                  budget_kind(DEST + "/TomZipJacket").get("lod_screen_size", []))),
+         str(ini_lod_groups())),
         ("nothing the game wears lives in a scratch folder (tmp is cleared after seven days)",
          all("hold" in x for x in g if "/tmp/" in x["fbx"].replace("\\", "/").lower()),
          str([x["name"] for x in g if "/tmp/" in x["fbx"].replace("\\", "/").lower() and "hold" not in x])),
@@ -249,16 +293,21 @@ def main_after_idle(seconds=20.0):
                                                  [round(x, 1) for x in (b.origin.x, b.origin.y, b.origin.z)]))
         lines.append("  material slots: %s" % [str(m.get_editor_property("material_slot_name")) for m in mesh.get_editor_property("materials")])
         # LEVELS OF DETAIL (28 October 2026, the asset checks' first run on Tom's jacket: one level where the
-        # budget wants four, production/specs/asset-budgets.json): Unreal's own reduction over the engine's default
-        # groups (BaseEngine.ini, [/Script/Engine.SkeletalMeshLODSettings]: 25, 12.5 and 6 per cent of the full
-        # mesh), so no level keeps more than half the one before it (the budget's lod_step_max is 0.6); a new
-        # base after a reimport regenerates the reduced levels (FLODUtilities::RegenerateLOD)
-        want = int(g.get("lods", 4))
+        # budget wants four, production/specs/asset-budgets.json): Unreal's own reduction. Each new level takes
+        # its share of the full mesh and its screen size from the project's level-of-detail groups, which this
+        # project's DefaultEngine.ini sets to the garment kinds' lod_keep and lod_screen_size (Mafia's jacket,
+        # reference first; the selftest compares them): 5.8 shows a skeletal mesh's per-level settings to no
+        # script (29 October: "Failed to find property 'lod_info'"). The reduced levels are dropped first, so
+        # they are made afresh from the groups rather than kept with the settings they were made with.
+        kind = budget_kind(folder)
+        want = len(kind.get("lod_keep") or []) or int(kind.get("lods", g.get("lods", 4)))
         ske = unreal.get_editor_subsystem(unreal.SkeletalMeshEditorSubsystem)
         if want > 1:
+            unreal.SkeletalMeshEditorSubsystem.regenerate_lod(mesh, 1, False, False)
             unreal.SkeletalMeshEditorSubsystem.regenerate_lod(mesh, want, False, False)
         n = ske.get_lod_count(mesh)
-        lines.append("  levels of detail: %d, vertices %s" % (n, [ske.get_num_verts(mesh, i) for i in range(n)]))
+        lines.append("  levels of detail: %d, vertices %s, from the project's groups (the budget kind %s: kept %s at screen sizes %s)" % (
+            n, [ske.get_num_verts(mesh, i) for i in range(n)], kind.get("name", "none"), kind.get("lod_keep"), kind.get("lod_screen_size")))
         if "maps" in g:
             mi = packed_material(unreal, g, folder, lines)
             if mi is not None:
