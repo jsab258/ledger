@@ -1,6 +1,7 @@
 #include "SliceCharacter.h"
 #include "LedgerPaper.h"
 #include "LedgerSettings.h"
+#include "LedgerGarments.h"
 #include "HAL/PlatformMisc.h"
 #include "HAL/IConsoleManager.h"
 #include "Kismet/GameplayStatics.h"
@@ -490,6 +491,17 @@ bool ALedgerSliceCharacter::StartGaspMover(USkeletalMeshComponent* M)
 	Mover->MoveIgnoreActorAdd(Worn);
 	Mover->GetMesh()->SetForcedLOD(1);
 	GaspMover = Mover;
+	// HIS CLOTHES ON HIS METAHUMAN (28 October 2026, his page: the zip jacket worn now with drape 19's cuffs, so the
+	// walk, the light and the bent elbow are judged while baked cuffs are built): the garments list's pieces for "Tom"
+	// follow his body's pose and replace the outfit part they name, as the cast's do (LedgerGarments.h, CrimeProbe.cpp)
+	if (!FParse::Param(FCommandLine::Get(), TEXT("NoTomClothes")))
+	{
+		const int32 Clothes = LedgerGarments::Wear(Worn, TEXT("Tom"));
+		TInlineComponentArray<USkeletalMeshComponent*> Dressed;
+		Worn->GetComponents(Dressed);
+		for (USkeletalMeshComponent* P : Dressed) { P->VisibilityBasedAnimTickOption = EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones; }
+		UE_LOG(LogTemp, Display, TEXT("LedgerWalk: Tom wears %d garment(s) over his MetaHuman"), Clothes);
+	}
 	// HIS OWN BODY AND CAPSULE PUT BY: the stand-in body unseen and still, his capsule riding on the
 	// mover's (no collision of its own, no movement of its own).
 	M->SetVisibility(false, true);

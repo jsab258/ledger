@@ -225,3 +225,5 @@
 {"event": "stop", "at": "2026-10-28T12:38:00", "note": ""}
 {"event": "start", "at": "2026-10-28T12:40:00", "task": "28 Oct: fallback: Studies 8, 9, 10 and 13 handed out; Study 16 checked and recorded; the bake of drape 19 handed out", "phase": "3", "kind": "production"}
 {"event": "stop", "at": "2026-10-28T12:58:00", "note": ""}
+{"event": "start", "at": "2026-10-28T12:58:00", "task": "28 Oct: item 3: the grain's diagnosis (14 settings); drape 19's bake checked; Tom's jacket into the garment path (material, wearer, worn at spawn); both targets built", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-28T13:22:00", "note": ""}

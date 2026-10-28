@@ -53,6 +53,21 @@ for o in bpy.data.objects:
         o.hide_set(True)
 drape.hide_render = False
 axis = sum((drape.matrix_world @ v.co for v in drape.data.vertices), Vector()) / len(drape.data.vertices)
+PLAN_NAMES = ["frontL", "frontR", "back", "sleeveR", "sleeveL", "bandFrontR", "cuffR", "bandFrontL", "cuffL", "bandBack",
+              "collar", "tapeR", "tapeL"]
+# THE CUFFS FACE AWAY FROM THE FOREARM, FACE BY FACE (28 October 2026, drape 19: Marvelous turned each gripped cuff inside
+# out through itself at its seam with the sleeve, so wound on from the sleeve 74 and 75% of each cuff faced the wrist; a
+# one-sided material would cull it in the game, the binder finds no body facing its way, and the bake read the knot's
+# far sides). A tube round the wrist faces away from the forearm's axis (elbow joint to hand joint); the knot itself
+# stays, a listed fault. A drape whose cuffs face out (drape 6) is unchanged.
+arm_ = next((o for o in bpy.data.objects if o.type == "ARMATURE"), None)
+CUFF_AXES = {}
+for cname_, side_ in (("cuffR", "r"), ("cuffL", "l")):
+    if arm_ is not None and "lowerarm_" + side_ in arm_.pose.bones and "hand_" + side_ in arm_.pose.bones:
+        e_ = arm_.matrix_world @ arm_.pose.bones["lowerarm_" + side_].head
+        h_ = arm_.matrix_world @ arm_.pose.bones["hand_" + side_].head
+        CUFF_AXES[PLAN_NAMES.index(cname_)] = (e_, (h_ - e_).normalized())
+cuffs_turned = {}
 
 
 def face_outward(o):
@@ -72,6 +87,20 @@ def face_outward(o):
     flipped = votes < 0
     if flipped:
         bmesh.ops.reverse_faces(bm, faces=bm.faces[:])
+    bm.normal_update()
+    pl_ = bm.faces.layers.int.get("piece")
+    if pl_ is not None and CUFF_AXES:
+        turned = []
+        for f in bm.faces:
+            ax_ = CUFF_AXES.get(f[pl_])
+            if ax_ is None:
+                continue
+            d_ = mw @ f.calc_center_median() - ax_[0]
+            if (mw.to_3x3() @ f.normal).dot(d_ - ax_[1] * d_.dot(ax_[1])) < 0:
+                turned.append(f)
+        if turned:
+            bmesh.ops.reverse_faces(bm, faces=turned)
+        cuffs_turned[o.name] = len(turned)
     bm.to_mesh(o.data)
     bm.free()
     return flipped
@@ -81,6 +110,7 @@ def face_outward(o):
 # and they baked as black slashes), and the game mesh smooth-shaded as the game draws it (baked flat and drawn smooth,
 # the cloth showed its grid as quilting)
 log["flipped"] = {o.name: face_outward(o) for o in [low, drape] + floaters}
+log["cuffFacesTurned"] = cuffs_turned
 for poly in low.data.polygons:
     poly.use_smooth = True
 
@@ -225,8 +255,6 @@ log["checks"]["layoutShares"] = {k: round(v / tot, 4) for k, v in uv_area.items(
 RAY = opt("--ray", 0.014)
 scn.render.bake.cage_extrusion = opt("--cage-normal", 0.006)
 scn.render.bake.max_ray_distance = RAY
-PLAN_NAMES = ["frontL", "frontR", "back", "sleeveR", "sleeveL", "bandFrontR", "cuffR", "bandFrontL", "cuffL", "bandBack",
-              "collar", "tapeR", "tapeL"]
 # the layout rasterised: each pixel's piece, and its place in the piece's own pattern (for the rib's ridges)
 lay_piece = np.full((TEX, TEX), -1, dtype=np.int32)
 lay_px = np.zeros((TEX, TEX), dtype=np.float32)

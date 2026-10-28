@@ -441,6 +441,7 @@ lb = bmesh.new()
 puv = lb.loops.layers.uv.new("pattern")
 pan_layer = lb.faces.layers.int.new("piece")
 missed, shared, holes, npts, edge_miss = 0, {}, set(), 0, 0
+edge_vs = set()
 VG = {}
 for pname, G in grids.items():
     nc, nr = len(G) - 1, len(G[0]) - 1
@@ -450,6 +451,7 @@ for pname, G in grids.items():
             key = keys[pname].get((i, j))
             if key is not None and key in shared:
                 V[i][j] = shared[key]
+                edge_vs.add(V[i][j])
                 continue
             p3, ok = lift(pname, G[i][j])
             npts += 1
@@ -460,6 +462,8 @@ for pname, G in grids.items():
             missed += not ok and not edge_pt
             edge_miss += not ok and edge_pt
             V[i][j] = lb.verts.new(p3)
+            if edge_pt:
+                edge_vs.add(V[i][j])
             if not ok and not edge_pt:
                 holes.add(V[i][j])
             if key is not None:
@@ -479,7 +483,10 @@ for _ in range(opt("--hole-rounds", 60, int)):
 log["checks"]["liftMissedShare"] = round(missed / max(npts, 1), 4)
 log["checks"]["edgePointsClamped"] = edge_miss
 n_before = len(lb.verts)
-bmesh.ops.remove_doubles(lb, verts=lb.verts[:], dist=opt("--weld", 0.0005))
+# THE WELD ON THE PIECES' EDGES ONLY (28 October 2026, drape 19: its right cuff is crumpled cloth, and two points inside
+# that one piece were lifted within 0.5 mm of each other; welding them made a non-manifold edge. Seam partners are
+# already shared by key, so only the pieces' own edges can need it; drape 6 welded 0 either way)
+bmesh.ops.remove_doubles(lb, verts=[v for v in lb.verts if v in edge_vs], dist=opt("--weld", 0.0005))
 log["checks"]["weldedAtSeams"] = n_before - len(lb.verts)
 # THE ZIP'S TAPES HELD in the smoothing, like the openings (the first run: the 24 mm zip came out 27 mm wide)
 held = {v for f in lb.faces if NAMES[f[pan_layer]].startswith("tape") for v in f.verts}
