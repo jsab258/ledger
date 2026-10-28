@@ -188,6 +188,9 @@ private:
 	// -TomSitEntryTest=<clip> (28 October, his order D10, the sitting method's step 3): he starts at the entry derived
 	// from the clip's own measures (production/specs/seat-clips.json), the warp off, so where he lands checks the entry
 	bool StartSitFromEntry(const FString& ClipName);
+	// -TomSitRoomTest (28 October, the sitting method's step 4): every In clip from inside the room, its derived start
+	// and the start envelope's four corners, the warp on; limbs sampled against the room each frame, the bench ignored
+	void SitRoomTestTick(float DeltaSeconds);
 	void SitTick(float DeltaSeconds);
 	void SitProofTick(float DeltaSeconds);
 	// HIS STOPS CHOSEN KINGDOM COME II'S WAY (his answer of 26 October, the walk's third try; -TomStopChosen): when

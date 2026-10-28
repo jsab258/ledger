@@ -42,6 +42,19 @@
      "Keep ours: 3.2 m"
     ]
    ]
+  },
+  {
+   "kind": "look",
+   "key": "camera-result-2026-10-28",
+   "name": "Your pick in the game: between, his feet in frame",
+   "note": "Your pick, now the game's street camera: 2.4 m behind, the 86-degree lens, and lowered a little so his feet stand fully in the frame (34 px above its edge here). Nothing to decide: the talk, low-room, running and fight framings come next, each shown to you in the game first.",
+   "pictures": [
+    {
+     "src": "production/approvals/2026-10-28-camera/camera-your-pick.webp",
+     "alt": "Your pick in the packaged game: 2.4 m behind, lens 86, his feet in frame"
+    }
+   ],
+   "options": []
   }
  ]
 }

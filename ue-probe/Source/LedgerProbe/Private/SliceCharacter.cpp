@@ -15,6 +15,7 @@
 #include "Animation/AnimSequenceBase.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Engine/OverlapResult.h"
 #include "Components/InputComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Engine/SkeletalMesh.h"
@@ -125,6 +126,7 @@ void ALedgerSliceCharacter::Tick(float DeltaSeconds)
 	GaspTick();
 	SitTick(DeltaSeconds);
 	SitProofTick(DeltaSeconds);
+	SitRoomTestTick(DeltaSeconds);
 	if (MotionDriver != nullptr)
 	{
 		// the sample's braking: hard when let go, gentle while still pushed (its CalculateBrakingDeceleration)
@@ -1524,6 +1526,119 @@ bool ALedgerSliceCharacter::StartSitFromEntry(const FString& ClipName)
 	UE_LOG(LogTemp, Display, TEXT("LedgerSit: entry test %s from (%.0f, %.0f) facing %.0f, %.0f cm from the slot, the warp off"),
 		*ClipName, MoverStart.GetLocation().X, MoverStart.GetLocation().Y, MoverStart.Rotator().Yaw, FVector::Dist2D(MoverStart.GetLocation(), S.Slot));
 	return true;
+}
+
+// THE ROOM TEST OF WHAT WILL BE PLAYED (28 October, the sitting method's step 4; Kingdom Come II drops every entry its
+// tests fail). The clips' own starts lie 4.2 to 5.1 m out, beyond the office's walls, so each clip is started where
+// RemainCm of its own travel is left (the start step 6 can choose inside the room), from that derived place and from the
+// envelope's four corners (+-15 cm along, +-10 across, +-20 degrees), the warp on as in play. Each frame the ankles,
+// knees, mid-shins, hips and hands are tested against the world as spheres a centimetre inside the limb, with the seat's
+// own furniture (whatever stands at the seat) and Tom ignored; an entry is kept only with no contact on any of its runs.
+void ALedgerSliceCharacter::SitRoomTestTick(float DeltaSeconds)
+{
+	static const bool bOn = FParse::Param(FCommandLine::Get(), TEXT("TomSitRoomTest"));
+	if (!bOn || GaspMover == nullptr || LedgerSit::Seats().Num() == 0) { return; }
+	static const TCHAR* const Sides[] = { TEXT("F_Lfoot"), TEXT("F_Rfoot"), TEXT("L_090_Lfoot"), TEXT("L_090_Rfoot"), TEXT("R_090_Lfoot"),
+		TEXT("R_090_Rfoot"), TEXT("BL_LFoot"), TEXT("BL_RFoot"), TEXT("BR_LFoot"), TEXT("BR_RFoot") };
+	static const FVector Corner[5] = { FVector(0, 0, 0), FVector(15, 10, 20), FVector(15, -10, -20), FVector(-15, 10, -20), FVector(-15, -10, 20) };
+	static double RemainCm = 150.0;
+	static int32 Run = -1, Contacts = 0, Kept = 0;
+	static float T = 0.0f, RunAt = 0.0f;
+	static FString Worst;
+	static TArray<int32> ClipContacts;
+	static FCollisionQueryParams Q(FName(TEXT("LedgerSitRoom")), false);
+	T += DeltaSeconds;
+	if (Run == -1)
+	{
+		if (T < 4.0f) { return; }
+		FParse::Value(FCommandLine::Get(), TEXT("TomSitRoomRemainCm="), RemainCm);
+		ClipContacts.Init(0, UE_ARRAY_COUNT(Sides));
+		// the seat's own furniture, ignored: whatever stands at the seat a little above the slot
+		const LedgerSit::FSeat& S0 = LedgerSit::Seats()[0];
+		TArray<FOverlapResult> At;
+		GetWorld()->OverlapMultiByChannel(At, S0.Slot + FVector(0.0, 0.0, 30.0), FQuat::Identity, ECC_WorldStatic, FCollisionShape::MakeSphere(15.0f));
+		for (const FOverlapResult& O : At) { if (O.GetComponent() != nullptr) { Q.AddIgnoredComponent(O.GetComponent()); } }
+		Q.AddIgnoredActor(this);
+		Q.AddIgnoredActor(GaspMover);
+		TArray<AActor*> Riders;
+		GaspMover->GetAttachedActors(Riders, true, true);
+		Q.AddIgnoredActors(Riders);
+		UE_LOG(LogTemp, Display, TEXT("LedgerSitRoom: %d furniture part(s) at the seat ignored; starts %.0f cm of travel before the seat"), At.Num(), RemainCm);
+		Run = 0; RunAt = T;
+	}
+	const int32 Runs = UE_ARRAY_COUNT(Sides) * 5;
+	if (Run >= Runs) { return; }
+	const int32 C = Run / 5, K = Run % 5;
+	const FString ClipName = FString::Printf(TEXT("M_interaction_bench_into_%s_Montage"), Sides[C]);
+	USkeletalMeshComponent* MM = GaspMover->GetMesh();
+	UAnimInstance* Graph = MM->GetAnimInstance();
+	auto Finish = [&]()
+	{
+		ClipContacts[C] += Contacts;
+		UE_LOG(LogTemp, Display, TEXT("LedgerSitRoom: %s start %d contacts=%d%s"), Sides[C], K, Contacts, Worst.IsEmpty() ? TEXT("") : *(TEXT(" first=") + Worst));
+		if (Graph != nullptr) { Graph->StopAllMontages(0.0f); }
+		SitPhase = ESitPhase::None; SitMontage = nullptr;
+		Contacts = 0; Worst.Empty();
+		if (K == 4)
+		{
+			Kept += ClipContacts[C] == 0 ? 1 : 0;
+			UE_LOG(LogTemp, Display, TEXT("LedgerSitRoom: %s %s"), Sides[C], ClipContacts[C] == 0 ? TEXT("KEPT") : TEXT("DROPPED"));
+		}
+		++Run; RunAt = T;
+		if (Run >= Runs)
+		{
+			UE_LOG(LogTemp, Display, TEXT("ledgerSitRoom=%s kept=%d of %d entries, starts %.0f cm before the seat"), Kept > 0 ? TEXT("SOME-KEPT") : TEXT("NONE-KEPT"), Kept, (int32)UE_ARRAY_COUNT(Sides), RemainCm);
+			if (FParse::Param(FCommandLine::Get(), TEXT("TomSitProofExit"))) { FPlatformMisc::RequestExit(false); }
+		}
+	};
+	if (SitPhase == ESitPhase::None)
+	{
+		if (T - RunAt < 0.5f) { return; }
+		const LedgerSit::FClipPose P = LedgerSit::ClipPose(ClipName);
+		UAnimMontage* Entry = LedgerSit::Clip(ClipName);
+		if (!P.bOk || Entry == nullptr || Graph == nullptr) { Contacts = -1; Worst = TEXT("no-clip"); Finish(); return; }
+		const LedgerSit::FSeat& S = LedgerSit::Seats()[0];
+		SitSlot = FTransform(FRotator(0.0f, S.Yaw, 0.0f), S.Slot);
+		// the moment where RemainCm of the clip's own travel is left
+		const float Len = Entry->GetPlayLength();
+		float Start = 0.0f, Best = 1e9f;
+		for (float Tm = 0.0f; Tm < Len; Tm += 1.0f / 30.0f)
+		{
+			const float Err = FMath::Abs((float)Entry->ExtractRootMotionFromTrackRange(Tm, Len, FAnimExtractContext()).GetTranslation().Size2D() - (float)RemainCm);
+			if (Err < Best) { Best = Err; Start = Tm; }
+		}
+		// the root's frame at that moment, carried onto the world through the warp bone's end on the slot
+		const FTransform Moved = Entry->ExtractRootMotionFromTrackRange(0.0f, Start, FAnimExtractContext());
+		const FTransform MeshAt = (Moved * P.RootStart) * (P.WarpBoneEnd.Inverse() * SitSlot);
+		FTransform MoverAt = MM->GetRelativeTransform().Inverse() * MeshAt;
+		const FRotator Yaw(0.0f, MoverAt.Rotator().Yaw, 0.0f);
+		const FVector Off = Yaw.RotateVector(FVector(Corner[K].X, Corner[K].Y, 0.0));
+		GaspMover->SetActorLocationAndRotation(MoverAt.GetLocation() + Off, FRotator(0.0f, Yaw.Yaw + Corner[K].Z, 0.0f), false, nullptr, ETeleportType::TeleportPhysics);
+		if (UMotionWarpingComponent* Warp = GaspMover->FindComponentByClass<UMotionWarpingComponent>()) { Warp->AddOrUpdateWarpTargetFromTransform(FName(TEXT("SmartObject")), SitSlot); }
+		UCapsuleComponent* Cap = GaspMover->GetCapsuleComponent();
+		Cap->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Ignore);
+		Cap->SetCollisionResponseToChannel(ECC_WorldDynamic, ECR_Ignore);
+		GaspMover->GetCharacterMovement()->SetMovementMode(MOVE_Flying);
+		Graph->Montage_Play(Entry, 1.0f, EMontagePlayReturnType::MontageLength, Start);
+		SitMontage = Entry;
+		SitPhase = ESitPhase::Entering;   // SitTick takes it on to the loop when the clip ends
+		SitPhaseAt = SitClock;
+		return;
+	}
+	// sampled while the clip carries him in; the run ends once he is seated
+	struct FLimb { const TCHAR* A; const TCHAR* B; float R; };
+	static const FLimb Limbs[] = { { TEXT("foot_l"), nullptr, 3.0f }, { TEXT("foot_r"), nullptr, 3.0f }, { TEXT("calf_l"), nullptr, 5.0f }, { TEXT("calf_r"), nullptr, 5.0f },
+		{ TEXT("calf_l"), TEXT("foot_l"), 4.0f }, { TEXT("calf_r"), TEXT("foot_r"), 4.0f }, { TEXT("pelvis"), nullptr, 11.0f }, { TEXT("hand_l"), nullptr, 3.0f }, { TEXT("hand_r"), nullptr, 3.0f } };
+	for (const FLimb& L : Limbs)
+	{
+		const FVector P = L.B != nullptr ? (MM->GetSocketLocation(L.A) + MM->GetSocketLocation(L.B)) * 0.5 : MM->GetSocketLocation(L.A);
+		if (GetWorld()->OverlapAnyTestByChannel(P, FQuat::Identity, ECC_WorldStatic, FCollisionShape::MakeSphere(L.R), Q))
+		{
+			++Contacts;
+			if (Worst.IsEmpty()) { Worst = FString::Printf(TEXT("%s%s@%.2fs"), L.A, L.B != nullptr ? TEXT("-mid") : TEXT(""), Graph != nullptr && SitMontage != nullptr ? Graph->Montage_GetPosition(SitMontage) : -1.0f); }
+		}
+	}
+	if (SitPhase == ESitPhase::Seated || T - RunAt > 20.0f) { Finish(); }
 }
 
 void ALedgerSliceCharacter::SitTick(float DeltaSeconds)

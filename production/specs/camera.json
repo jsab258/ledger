@@ -4,10 +4,10 @@
  "street": {
   "back_m": 2.4,
   "side_m": 0.45,
-  "up_m": 0.25,
+  "up_m": 0.08,
   "pivot_m": 1.05,
   "lens_deg": 86,
-  "why": "His pick, the middle of the three shown (2.4 m, 86 degrees, pivot 1.05, 0.45 up), nudged so his feet are fully in frame: at the pictures' 12 degrees down the frame's lower edge met the ground about 2.40 m out, just past his heels at 2.35, so the camera comes down 0.20 m (to 0.25 above the arm), which brings the edge in to about 2.2 m. Checked in the packaged game's pictures before it is kept."
+  "why": "His pick, the middle of the three shown (2.4 m, 86 degrees, pivot 1.05, 0.45 up), nudged so his feet are fully in frame: at the pictures' 12 degrees down the frame's lower edge met the ground about 2.40 m out, just past his heels at 2.35, so the camera comes down 0.30 m in two steps: at 0.25 above the arm the packaged game's picture had his toes on the frame's edge (28 October, 19:41), so 0.15 (the reviewer measured 5 px under the near heel, too tight), then 0.08: in the packaged game at 12 degrees down his feet sit 34 px above the frame's edge (28 October, about 20:00, picture pick3); at the game's usual 8 degrees the camera is lower still and the feet further in."
  },
  "to_come": "talk (closer, Mafia's 1.5 m and 63 degrees as the start), low rooms (closer, 1.20 and 78), running (1.40 and 85), fights (wider, so the other man's feet and the onlookers are seen; no Mafia number for this, to be found or marked none found): each a row here, each shown to him in the game before it is kept."
 }
