@@ -108,13 +108,13 @@ def packed_material(unreal, g, folder, lines):
         s = node(unreal.MaterialExpressionSubtract, -1000, y, const_b=value)
         mel.connect_material_expressions(p, "G", s, "A")
         a = node(unreal.MaterialExpressionAbs, -900, y)
-        mel.connect_material_expressions(s, "", a, "Input")
+        mel.connect_material_expressions(s, "", a, "")
         m = node(unreal.MaterialExpressionMultiply, -800, y, const_b=8.0)
         mel.connect_material_expressions(a, "", m, "A")
         o = node(unreal.MaterialExpressionOneMinus, -700, y)
-        mel.connect_material_expressions(m, "", o, "Input")
+        mel.connect_material_expressions(m, "", o, "")
         sat = node(unreal.MaterialExpressionSaturate, -600, y)
-        # Saturate's one pin has no name (28 October: connected as "Input", nothing joined, and the cook failed
+        # one-input nodes (Abs, OneMinus, Saturate) join by an unnamed pin (28 October: connected as "Input", nothing joined, and the cook failed
         # the material: "Missing Saturate input")
         mel.connect_material_expressions(o, "", sat, "")
         return sat
