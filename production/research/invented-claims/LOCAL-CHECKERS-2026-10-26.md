@@ -630,3 +630,9 @@ server (tools/publish-talk-helper.ps1: checker/ beside LedgerTalk.exe) and start
 held: published and started, it was ready at 0.1 s and its checker on at 10.9 s; LEDGER_FAST_CHECKER=0 switches it off,
 and the stand-in (--fake) never starts it. A conversation begun in those first seconds goes to Haiku alone. The night's
 packaged build carries it; the tester's walk then shows it in play.
+- **The shipped settings in real turns (28 October, 11:18 to 11:22; his measuring dollar, $0.45):** the cited facts, the
+  wider name rule, the fast checker at the open cut-off and two copies of each check call, all as the game now ships
+  them (ClaimBench firsts, the game's switches, the first 8 of the newcomer's questions to each speaker; 22 turns
+  answered, 2 stopped by the dollar; the session's scratchpad, shipped-firsts). The first sentence ready at a median
+  2.10 s from the line (27 October: 1.92 s with the checker, 3.08 s without); the checker cleared 9 of 22 (27 October,
+  the same questions: 14 of 24; replies differ run to run, so not a proven fall); 1 first sentence flagged; no brace said.
