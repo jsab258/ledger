@@ -19,6 +19,24 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 28 Oct 2026, research for building a town by generation, ahead of its design
+- Made: a researched method for generating a district from kits with automatic checks, before any design.
+- Method (setting-free): read the engine's own source for what is production-ready, beta or experimental (the docs and the code can disagree; the code wins); read how large productions validated generated worlds (their talks' own numbers); turn the project's measured street targets into rules and checks; label every step sourced or inferred; a fresh reviewer re-reads the claims at their sources and checks the method against the project's real state (here: no saved level yet, hand edits not tracked by the tool).
+- Tools: the engine source, primary talks and papers, the project's own studies.
+- Target and check: every claim traceable; the review's must-fixes taken.
+- Cost (hours): about 0.6 of helpers' time, 0.1 of the session's.
+- Failed and why: the oversized talk PDFs could not be read whole; their figures stay unverified.
+- Evidence: production/research/phase5-procedural/RESEARCH-2026-10-28.md.
+
+### 28 Oct 2026, a rule that lived only in the port given its home in the reference code, so breaking it fails a test
+- Made: the game's hour-by-hour step given a home in the reference simulation, the port compared against it row by row.
+- Method (setting-free): find the rules that exist only in the shipped port (here by planting one-line breaks and seeing which no test catches); write the reference version step for step; prove the reference's own users unchanged (their outputs byte-identical); emit golden rows that drive the rule through the situations each planted break touches; have the port answer them through its real code, never a copy; replant each break to show it now fails rows; a break that still fails nothing is examined, and here it was dead code, pinned rather than hidden.
+- Tools: the reference simulation's golden-row emitter, the port's row answerer compiled standalone, a scratch copy for planted breaks.
+- Target and check: every new row agrees (174 of 174) and each planted break fails rows: two of three; the third is dead code.
+- Cost (hours): about 0.5 of the session's time; a bounded helper did the work.
+- Failed and why: nothing; the third break turned out to change nothing.
+- Evidence: production/audits/sweep-2026-10-05/port-vs-core.md (G4).
+
 ### 28 Oct 2026, a garment's sleeve end that never closed round the forearm: draped on a straightened copy of the body, bent back by its skeleton
 - Made: a jacket's sleeves round the forearm to their ends (before: a flap past the hand the hand came through); its rib cuffs set aside after two tries.
 - Method (setting-free):

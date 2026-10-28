@@ -146,6 +146,73 @@ namespace Ledger.CoreTests
             Check(refused, "a body_x_m that is not a number is refused, as the game's own reading refuses it");
         }
 
+        /// G4, THE GAME'S HOURLY STEP (28 October 2026): TownWeek, which lived only in the port's TownWeek.h and the
+        /// reference week's own loop. The three calls the sweep could remove unseen (P1, P3, P11), each where it shows.
+        static void TestTownWeek()
+        {
+            Console.WriteLine("The town's week, hour by hour (the sweep's G4):");
+
+            GossipMill Landing()
+            {
+                var m = new GossipMill(null);
+                foreach (var id in new[] { Arrangement.Doorman, Arrangement.OutfitMan })
+                    m.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                return m;
+            }
+            string Told(GossipMill m, int night) =>
+                m.Get(Arrangement.OutfitMan).Rumors.Find(r => r.TopicKey == "player.outfit_d" + night)?.Content.Value ?? "none";
+
+            // His no at half past nine: the landing has it when Ron goes down at eleven, as that hour turns (P1).
+            var no = new TownWeek();
+            var noMill = Landing();
+            var told = new List<string>();
+            for (int h = 20; h <= 23; h++)
+            {
+                var now = new GameTime(0, h, 0);
+                no.Six(noMill, now);
+                no.TwentyRon(noMill, now);
+                if (h == 21) no.AnswerAsk(0, NightAnswer.Refused, noMill, new GameTime(0, 21, 30));
+                told.Add(h + ":" + Told(noMill, 0));
+            }
+            Check(string.Join(",", told) == "20:none,21:none,22:none,23:refused",
+                  "his no reaches the landing as eleven turns, through the hour's step", string.Join(",", told));
+
+            // A night he stayed away passes at four, as the hour turns, not at the dawn's six (P1).
+            var away = new TownWeek();
+            var awayMill = Landing();
+            away.TwentyRon(awayMill, new GameTime(0, 20, 0));
+            var passed = new List<string>();
+            for (int h = 1; h <= 6; h++)
+            {
+                away.Six(awayMill, new GameTime(1, h, 0));
+                passed.Add(h + ":" + Told(awayMill, 0));
+            }
+            Check(string.Join(",", passed) == "1:none,2:none,3:none,4:noshow,5:noshow,6:noshow" && away.Asks.Nights[0] == NightAnswer.NoShow,
+                  "a night away passes at four, told to the landing then", string.Join(",", passed));
+
+            // The dawn's own call repeats what TellDue did as the hour turned (the sweep's P11 changes nothing).
+            var dawn = new TownWeek();
+            var dawnMill = Landing();
+            dawn.TwentyRon(dawnMill, new GameTime(0, 20, 0));
+            dawn.Asks.TellDue(dawnMill, new GameTime(1, 6, 0));
+            int heldBefore = dawnMill.Get(Arrangement.OutfitMan).Rumors.Count;
+            dawn.Asks.PassedTo(1, dawnMill, new GameTime(1, 6, 0));
+            Check(dawnMill.Get(Arrangement.OutfitMan).Rumors.Count == heldBefore && dawn.Asks.Nights.Count == 1,
+                  "at six, PassedTo after TellDue in the same hour adds nothing");
+
+            // Ron's envelope is not brought while he is in the cells, and is once he is out (P3).
+            var held = new TownWeek();
+            var heldMill = Landing();
+            held.Police.Report("sam", "player.cut_d0", Offence.Wounding, 4, 0);
+            held.Arrests.Add(held.Police.TakeIn("player.cut_d0", new GameTime(0, 14, 0), false, false));
+            Check(held.Holding(new GameTime(0, 20, 0)) != null && !held.TwentyRon(heldMill, new GameTime(0, 20, 0)) && !held.Asks.WasDelivered(0),
+                  "in the cells at eight, Ron does not bring the envelope");
+            var free = new TownWeek();
+            Check(free.TwentyRon(Landing(), new GameTime(0, 20, 0)) && free.Asks.WasDelivered(0),
+                  "free at eight on an ask night, he does");
+            Check(!new TownWeek().TwentyRon(Landing(), new GameTime(0, 21, 0)), "and only at eight");
+        }
+
         /// THE HARD RULE ON NAMES (his order of 27 October 2026, evening; NameRules, its reference
         /// tools/checkers/name_rule.py): a sentence naming a person, place or event missing from the speaker's facts
         /// never passes, and the check refuses it before any call.

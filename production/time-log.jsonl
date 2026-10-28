@@ -203,3 +203,7 @@
 {"event": "stop", "at": "2026-10-28T10:14:00", "note": ""}
 {"event": "start", "at": "2026-10-28T10:14:00", "task": "28 Oct: item 3: the sleeve record's fresh review and fixes; two cause-separating drapes; his page of the day", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-28T10:40:00", "note": ""}
+{"event": "start", "at": "2026-10-28T10:52:00", "task": "28 Oct: item 5: the door's second try gated (two pass, night fails on panels); the grain's tests begun, stopped by the full drive F", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-28T11:35:00", "note": ""}
+{"event": "start", "at": "2026-10-28T11:35:00", "task": "28 Oct: fallback: the port's G4 checked and built in both targets; the subtitle fix and the tester's check", "phase": "3", "kind": "production"}
+{"event": "stop", "at": "2026-10-28T11:45:00", "note": ""}

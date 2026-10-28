@@ -1,9 +1,9 @@
 {
  "tab": "Wednesday's Decisions",
- "kicker": "LEDGER · Wednesday 28 October · two decisions",
- "title": "Tom's cuffs, and a stray folder",
+ "kicker": "LEDGER · Wednesday 28 October · three decisions",
+ "title": "Drive F is full; Tom's cuffs; a stray folder",
  "how": [
-  "Shortfalls first. Tom's cuffs failed again. They now go round his wrists, but there is a lump where the sleeve meets the cuff, and a little cloth passes through each wrist. They are set aside after two tries, plus a third I should not have made. His sleeve ends are fixed in the drape: each sleeve now goes round the forearm to its end.",
+  "Shortfalls first. Drive F is full (0.27 GB free): a study helper of mine wrote 24 GB of raw extracts there this morning, and tonight's build and walk fail unless room is made. Tom's cuffs failed again: they now go round his wrists, but there is a lump where the sleeve meets the cuff, and a little cloth passes through each wrist. They are set aside after two tries, plus a third I should not have made. His sleeve ends are fixed in the drape: each sleeve now goes round the forearm to its end.",
   "Pick one answer in each; the first is recommended. Anything you do not pick carries onto the next page."
  ],
  "foot": "Nothing bought or signed up for. Your three answers of this morning are in the game (the fast checker, the wider name rule, two copies) and gone from this page. Marvelous is closed until a step needs it.",
@@ -15,19 +15,50 @@
    "note": "Top sheet, before: each sleeve ended as a flap past the hand, and the hand came through it. Bottom sheet, today: round sleeve ends and rib cuffs round the wrist, with a crumpled ring above each cuff and a knotted lump at the seam on the outer wrist. Working pictures from the cloth program, not the game's camera.",
    "detail": "Why the sleeve ends were flaps: Tom's elbows bend 37 degrees, and Marvelous wraps a sleeve round one straight guide per arm, so the narrow end closed beside the forearm. Draped on a copy of his body with straight elbows and then bent back with his own skeleton (the way the game moves clothes), each sleeve is round to its end and no cloth crosses the hand. Two extra drapes showed that the straight elbows did most of it. The cuffs: two tries. The best has both cuffs round the wrist and in place, but cloth crosses the wrist at two points each side, a few points are pulled up to 2 cm inside it, and the left cuff stands a little too far from the skin. A fresh reviewer re-measured everything and named the lump and the crumples. The bent elbow is not yet judged by eye. Record: production/research/game-clothing-pipeline/SLEEVE-END-2026-10-28.md.",
    "pictures": [
-    {"src": "production/previews/tom-wrists-before-2026-10-28.jpg", "alt": "Before: Tom's wrists, each sleeve ending as a flap over the hand"},
-    {"src": "production/previews/tom-wrists-cuffs-try4-2026-10-28.jpg", "alt": "Today: round sleeve ends with rib cuffs, a crumpled ring and a lump at the seam"}
+    {
+     "src": "production/previews/tom-wrists-before-2026-10-28.jpg",
+     "alt": "Before: Tom's wrists, each sleeve ending as a flap over the hand"
+    },
+    {
+     "src": "production/previews/tom-wrists-cuffs-try4-2026-10-28.jpg",
+     "alt": "Today: round sleeve ends with rib cuffs, a crumpled ring and a lump at the seam"
+    }
    ],
    "options": []
+  },
+  {
+   "kind": "decide",
+   "key": "free-f-study-extracts-2026-10-28",
+   "name": "Drive F is full: delete the 24 GB of film-scene extracts my helper wrote this morning?",
+   "options": [
+    [
+     "yes",
+     "Yes, delete them; the study keeps its own numbers (recommended)"
+    ],
+    [
+     "no",
+     "Keep them; I will make room another way"
+    ]
+   ],
+   "note": "2,741 raw files of Mafia's film scenes, written this morning into F:/LedgerTools/aaa-study/mafia/exports/MafiaTheOldCountry/Content/Nero for Study 2's timings. The older extracts there (0.55 GB) stay, and nothing of yours is in them. With 0.27 GB free, tonight's build, walk and morning pictures cannot run. The helpers are told to write nothing more to F. My fault: the brief did not cap their extracts."
   },
   {
    "kind": "decide",
    "key": "cuffs-next-2026-10-28",
    "name": "Tom's cuffs: which way next?",
    "options": [
-    ["bake", "Build them in the bake: a rib band made round each wrist, joined to the round sleeve end (recommended)"],
-    ["md", "Another round in Marvelous at the seam (needs your click)"],
-    ["now", "Dress Tom now with today's cuffs; mend them later"]
+    [
+     "bake",
+     "Build them in the bake: a rib band made round each wrist, joined to the round sleeve end (recommended)"
+    ],
+    [
+     "md",
+     "Another round in Marvelous at the seam (needs your click)"
+    ],
+    [
+     "now",
+     "Dress Tom now with today's cuffs; mend them later"
+    ]
    ],
    "note": "Build them in the bake: each sleeve is cut a little above the wrist, where it is now round. A rib band is made round the wrist's own shape, joined to that end, and moves with the hand and forearm. It is certain and fully controlled, but new code, about half a day. Another round in Marvelous: finer cloth at the seam, a gentler gather and a thicker cuff, two tries, uncertain. Dress Tom now: the jacket goes on him in the game with today's cuffs, the lump listed. Not offered: pushing the caught points out of the skin, which would not mend the lump or the crumples."
   },
@@ -36,8 +67,14 @@
    "key": "delete-stray-talk-2026-10-28",
    "name": "Delete a 66 MB folder I made by mistake this morning?",
    "options": [
-    ["yes", "Yes, delete it (recommended)"],
-    ["no", "Keep it"]
+    [
+     "yes",
+     "Yes, delete it (recommended)"
+    ],
+    [
+     "no",
+     "Keep it"
+    ]
    ],
    "note": "F:\\LedgerToolsscratchtalk-fast: a copy of the talk program written to a misspelt place on drive F while I tested the fast checker. Nothing of yours is in it; the right copy is in F:\\LedgerTools\\scratch\\talk-fast. The safety check needs your named yes before any folder is deleted."
   }

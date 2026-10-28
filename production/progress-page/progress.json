@@ -1,5 +1,5 @@
 {
-  "updated": "Wednesday 28 October 2026, 9:48",
+  "updated": "Wednesday 28 October 2026, 10:58",
   "here": 1,
   "friends_eta": "around January",
   "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
@@ -225,7 +225,7 @@
       {
         "n": 2,
         "name": "The first 30 minutes",
-        "status": "carried over",
+        "status": "open",
         "week": "next week"
       },
       {
@@ -279,7 +279,7 @@
       {
         "n": 11,
         "name": "Systems",
-        "status": "carried over",
+        "status": "open",
         "week": "next week"
       },
       {
@@ -297,13 +297,13 @@
       {
         "n": 14,
         "name": "Combat and violence",
-        "status": "carried over",
+        "status": "open",
         "week": "next week"
       },
       {
         "n": 15,
         "name": "The crime toolkit",
-        "status": "carried over",
+        "status": "open",
         "week": "next week"
       },
       {

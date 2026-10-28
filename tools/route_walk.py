@@ -152,6 +152,19 @@ class Route:
         print("route %-12s %s  %s" % (stage, "PASS" if ok else "FAIL", detail), flush=True)
         return ok
 
+    def said_back(self):
+        """What the game says Tom said last ("LedgerSay: You: ..." in its own log), or None.
+
+        WHY, 28 October 2026: the night's walk typed "Was it always this quiet and dead round here, Sheila?" and the
+        game sent "as it always ... Sheila?W" (the box's cursor sat before the first letter); every stage passed, and
+        only a picture of her answer quoting it showed the fault. A line is now said as typed or its stage fails."""
+        try:
+            with open(os.path.join(self.saved, "Logs", "LedgerProbe.log"), encoding="utf-8", errors="replace") as fh:
+                said = [l.split("LedgerSay: You: ", 1)[1].rstrip("\r\n") for l in fh if "LedgerSay: You: " in l]
+        except OSError:
+            return None
+        return said[-1] if said else None
+
     def expect(self, stage, seconds, need_ok=True):
         c = self.wait_stage(stage, seconds)
         if c is None:
@@ -248,6 +261,17 @@ def greet(r, key, name):
     r.turn_to(bearing(t[0], t[1], w[key][0], w[key][1]))
     w = r.where()
     d = math.hypot(w[key][0] - w["tom"][0], w[key][1] - w["tom"][1])
+    # ONE MORE APPROACH WHEN THE FIRST ENDS SHORT (28 October 2026, the night's walk: Ron missed at 3.7 m against his
+    # 3.5 m reach, the evening after a 15 of 15; Epic's walk glides on after each leg, so a leg can end a little short)
+    if d > w[key][2] and "tom" in w:
+        r.go_to(0, 0, tol=0.4, legs=6,
+                follow=lambda ww: stand_off(ww[key][:2], ww["tom"][:2], 0.9) if key in ww and "tom" in ww else None)
+        w = r.where()
+        if not (w.get("tom") and key in w):
+            return r.record("town-" + name, False, "lost sight of %s" % name)
+        r.turn_to(bearing(w["tom"][0], w["tom"][1], w[key][0], w[key][1]))
+        w = r.where()
+        d = math.hypot(w[key][0] - w["tom"][0], w[key][1] - w["tom"][1])
     if d > w[key][2]:
         return r.record("town-" + name, False, "never in reach of %s (%.1f m away)" % (name, d))
     for st in ("talk-open", "talk-typed", "reply-words", "reply-heard"):
@@ -257,9 +281,11 @@ def greet(r, key, name):
     words = r.wait_stage("reply-words", 40)
     heard = r.wait_stage("reply-heard", 40)
     play("wait", "8")
-    return r.record("town-" + name, bool(opened and words),
-                    "open=%d words=%s heard=%s" % (bool(opened), (words or {}).get("detail", "none"),
-                                                     (heard or {}).get("detail", "none")))
+    said = r.said_back()
+    return r.record("town-" + name, bool(opened and words) and said == TOWN_LINE,
+                    "open=%d words=%s heard=%s%s" % (bool(opened), (words or {}).get("detail", "none"),
+                                                       (heard or {}).get("detail", "none"),
+                                                       "" if said == TOWN_LINE else " said=%r not as typed" % said))
 
 
 def to_next_morning(r, tries=8):
@@ -327,7 +353,10 @@ def walk(editor, out, town=False):
     if near:
         play("say", LINE)
         r.expect("talk-open", 10)
-        r.expect("talk-typed", 10)
+        if r.expect("talk-typed", 10) and r.said_back() != LINE:
+            r.rows[-1]["ok"] = False
+            r.rows[-1]["detail"] += " said=%r not as typed" % r.said_back()
+            print("route talk-typed   FAIL  said not as typed: %r" % r.said_back(), flush=True)
         r.expect("reply-words", 30)
     else:
         r.record("talk-open", False, "never in reach of Sheila (%s)" % (

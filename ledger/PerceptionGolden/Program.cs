@@ -204,6 +204,9 @@ namespace Ledger.PerceptionGolden
             // Ported to Arrangement.h, FirstWeek.h, GameTime.h, Gossip.h, PoliceFile.h, StreetVoice.h, TownNews.h,
             // TownSave.h and Waiting.h on 30 September (the last four of the fourteen and the time-and-state sweep's ten).
             EmitSweepFixes(sb);
+            // The game's hourly step, homed in the Core on 28 October 2026 (TownWeek.cs, the sweep's G4); answered
+            // through the port's own TownWeek.h.
+            EmitTownWeek(sb);
 
             // ROWS AWAITING THE PORT, 28 September: the town session writes the
             // Core and its rows; the builder ports them to StreetVoice.h. Until
@@ -2903,6 +2906,105 @@ namespace Ledger.PerceptionGolden
                 SaveCodec.RestoreMillAgents(json, back);
                 Row(sb, "SuspicionSave", "afterTalk", D(before), D(back.Get("s").Suspicion.Value), D(back.Get("l").Suspicion.Value));
                 Row(sb, "SuspicionSave", "csharpSave", Esc(json), D(back.Get("s").Suspicion.Value), D(back.Get("l").Suspicion.Value));
+            }
+        }
+
+        /// THE GAME'S HOURLY STEP, HOUR BY HOUR (28 October 2026, the 5 October sweep's G4): TownWeek.cs, its
+        /// scheduled steps called in the game's order (CrimeProbe.cpp, ConsequenceHour) once an hour on the hook
+        /// cast, with what he does between them at its own minute. One row an hour: what each step did, then the
+        /// town as the hour leaves it. The sweep found three of the step's calls that no test missed (P1, P3, P11);
+        /// the five runs put each where it shows:
+        ///   no        he tells Ron no at half past nine: it reaches the landing when Ron goes down at eleven (P1);
+        ///   away      Ron brings it and he stays away: the night passes at four, before the dawn's six (P1, P11);
+        ///   held      in the cells from two till ten at night: Ron does not come at eight (P3);
+        ///   days      four ordinary days and nights: the envelope taken, the window, the damage found, the
+        ///             report, DS Ellis, the constable, Ada's tea and a night away;
+        ///   winddown  Sunday's "wind it down": the word reaches the landing at eleven (P1).
+        static void EmitTownWeek(StringBuilder sb)
+        {
+            var cast = CastFileNamed("hook-cast.json");
+            if (cast == null) { Row(sb, "TownWeekHour", "missing", "0", "0", "missing"); return; }
+            foreach (var run in new[] { "no", "away", "held", "days", "winddown" })
+            {
+                var graph = new SocialGraph();
+                foreach (var (a, b, w) in cast.Ties) graph.Link(a, b, w);
+                var mill = new GossipMill(graph);
+                foreach (var p in cast.People) mill.Add(new Gossiper(p, p, new MemoryStore(p), new KnowledgeBase(), new SuspicionTracker(), cast.CircleOf(p)));
+                var town = new TownWeek();
+                int from = run == "held" ? 14 : run == "days" ? 9 : run == "winddown" ? 6 * 24 + 9 : 19;
+                int to = run == "days" ? 5 * 24 : run == "winddown" ? 7 * 24 + 7 : 24 + 7;
+                mill.Age(new GameTime(from / 24, from % 24, 0));
+                if (run == "held")
+                {
+                    // Taken at two for a wounding Darren named him in: eight hours, out at ten at night.
+                    town.Police.Report("sam", "player.cut_d0", Offence.Wounding, 4, 0);
+                    town.Arrests.Add(town.Police.TakeIn("player.cut_d0", new GameTime(0, 14, 0), false, false));
+                }
+                for (int abs = from; abs < to; abs++)
+                {
+                    int day = abs / 24, hod = abs % 24;
+                    var now = new GameTime(day, hod, 0);
+                    town.Six(mill, now);
+                    var found = town.DamageTick(mill, cast, now);
+                    var went = town.NineReports(mill, cast, now);
+                    string why = town.NineEllis(mill, now, cast);
+                    var taken = town.TenConstable(mill, cast, now, "mickeys");
+                    string invite = town.TenTea(now);
+                    bool ron = town.TwentyRon(mill, now);
+                    town.TwentyThreeTea(mill, now);
+                    town.HourEnd(mill, cast, now);
+                    var nights = town.Asks.Nights.OrderBy(kv => kv.Key).Select(kv => kv.Key.ToString(Inv) + "=" + Arrangement.Value(kv.Value));
+                    var outfit = mill.Get(Arrangement.OutfitMan).Rumors.Where(r => r.TopicKey.StartsWith("player.outfit_d", StringComparison.Ordinal))
+                                     .Select(r => r.Content.Predicate + "=" + r.Content.Value);
+                    Row(sb, "TownWeekHour", run, day.ToString(Inv), hod.ToString(Inv),
+                        found.Count == 0 ? "-" : string.Join(",", found.Select(f => f.who + "@" + f.when.TotalMinutes.ToString(Inv))),
+                        went.Count == 0 ? "-" : string.Join(",", went),
+                        why ?? "-",
+                        taken == null ? "-" : taken.End.ToString(),
+                        Bit(invite != null),
+                        Bit(ron),
+                        town.Tea.State.ToString(),
+                        Bit(town.Holding(now) != null),
+                        Esc(town.Asks.NextNight.ToString(Inv) + ";" + string.Join(",", nights) + ";" + (town.Asks.Ended ? town.Asks.EndedWhy : "stands")),
+                        outfit.Any() ? string.Join(",", outfit) : "-",
+                        mill.Agents.Sum(g => g.Rumors.Count).ToString(Inv),
+                        Esc(town.EllisFirst),
+                        Esc(town.TakenFirst));
+                    // What he does in the hour, at its own minute, after the rounds before it (the game's minutes).
+                    if (run == "no" && day == 0 && hod == 21 && town.Asks.WasDelivered(0))
+                    {
+                        town.RoundsTo(mill, cast, new GameTime(0, 21, 29));
+                        town.AnswerAsk(0, NightAnswer.Refused, mill, new GameTime(0, 21, 30));
+                    }
+                    if (run == "days")
+                    {
+                        // The window at half past twelve on the Tuesday, Darren seeing him do it; whoever is there knows at once.
+                        if (day == 1 && hod == 12)
+                        {
+                            var at = new GameTime(1, 12, 30);
+                            town.RoundsTo(mill, cast, at.AddMinutes(-1));
+                            town.Deed(mill, at, "ritas", "rita_window", "somebody put Rita's window in", new List<(string, int)> { ("sam", 4) },
+                                      "window_d1", "the new owner put Rita's window in", 1.0);
+                            town.DamageTick(mill, cast, at);
+                        }
+                        // The tea's evening at Ada's, nine till half past ten, and no landing that night.
+                        if (day == town.Tea.Day && (hod == 21 || hod == 22))
+                            for (int m = 0; m < (hod == 21 ? 60 : 31); m++) town.Tea.WithHer(new GameTime(day, hod, m));
+                        // Any other night Ron brought it, the envelope to the landing at half past ten.
+                        else if (hod == 22 && town.Asks.AsksOn(day) && town.Asks.WasDelivered(day))
+                        {
+                            town.RoundsTo(mill, cast, new GameTime(day, 22, 29));
+                            town.AnswerAsk(day, NightAnswer.Did, mill, new GameTime(day, 22, 30));
+                        }
+                    }
+                    // Sunday at the office: her question at half past ten, and "wind it down".
+                    if (run == "winddown" && day == town.Week.Day && hod == 10 && town.Week.AsksNow(new GameTime(day, 10, 30), true))
+                    {
+                        town.Week.Ask(new GameTime(day, 10, 30), true);
+                        town.RoundsTo(mill, cast, new GameTime(day, 10, 39));
+                        town.Week.Give(WeekAnswer.WindDown, new GameTime(day, 10, 40), mill, cast, town.Asks);
+                    }
+                }
             }
         }
 

@@ -110,15 +110,15 @@ No decision asked: these are for watching the street change.
   - *Mafia:* **the published key was found** on a second search, in a public forum post of August 2025 (source in your study plan), and it opens the files. The first index now names all 139,791 packages and the sound files beside them: 45,898 map pieces, 22,781 animations, 19,396 environment pieces, 8,629 character assets, 595 AI assets. The game's 216 code modules are named too. The file viewer (FModel) runs on Microsoft's .NET 10 runtime on F: and, with the mappings file from TheNaeem's archive, opens every kind of package tried: data tables, animations and montages, a material instance, static and skeletal meshes, and an AI state tree. The file is from the game's December update and the installed game is newer, but it covers all the game's own gameplay classes.
   - *The coverage map:* 31 systems, each with where its logic lives in each game and which study covers it (production/research/aaa-reference/REFERENCE.md). Its open blind spots: Mafia's files are named but not yet read; how KCD2's code runs its tables; anything seen in play, until your recordings.
 
-**The tester's walk (24 October, 02:30 to 03:01; production/playtest/nightly/2026-10-24.md).**
-- The route ran 13 of 15 stages. It failed at Ron (never within reach, 3.7 m away) and at Darren (lost from sight).
-- Nobody the record names saw Rita's window broken. One person, Rocco, showed afterwards that he knew, the same as the night before.
-- Replies were first heard at 0.2 s. That is the stand-in's words with the real voice, not the real path.
-- "That's all I know" was not measured.
+**The tester's walk (28 October, 02:14 to 02:25, the night's build with Epic's walk; production/playtest/nightly/2026-10-28.md).**
+- The route ran 13 of 15 stages, the evening after a 15 of 15. It failed at Ron (never within reach, 3.7 m away) and at Darren (lost from sight): the tester's steering for Epic's walk is not yet reliable.
+- Darren saw Rita's window broken; Rocco showed afterwards that he knew, as the night before.
+- "That's all I know" to a newcomer's sixty first questions: 2 of 60 (the night before, 3).
+- Replies first heard at 0.2 s: the stand-in's words with the real voice, not the real path.
 - What broke the illusion:
-  - townsfolk in the plain white base layer, two of them barefoot, one standing in the road;
-  - people standing stiff in one pose, doing nothing;
-  - Rita beside her smashed window, facing away, taking no notice.
+  - everyone in the plain white base layer and barefoot; Ron and Sheila standing stiff;
+  - a subtitle under Sheila's name reading "round here, Sheila?W": found this morning, the game's own fault (the talk box's cursor sat before a line's first letter, so Tom's words were sent scrambled); fixed in code, proved after the next build; the tester now fails a line not said as typed;
+  - a man standing in the middle of the road, inside Tom.
 
 **Risks, Monday's review (production/research/pre-production/6-RISKS.md).**
 - R3, the street missing the bar: up, 25. The audit finds the visual method unproved: five proof-view steps were set aside, and Mickey's room failed three reviews. Phase 1's binding stop answers it.
@@ -129,8 +129,9 @@ No decision asked: these are for watching the street change.
 
 ### Needs you
 
-1. **Tom's cuffs, the next step:** built in the bake (recommended), another Marvelous round, or Tom dressed now with today's cuffs. Pictures on today's page.
-2. **A stray 66 MB folder I made by mistake: delete?** Yes (recommended). On today's page.
+1. **Drive F is full (0.27 GB free): delete the 24 GB of raw film-scene extracts a study helper of mine wrote this morning?** Yes (recommended); without room tonight's build and walk fail. On today's page.
+2. **Tom's cuffs, the next step:** built in the bake (recommended), another Marvelous round, or Tom dressed now with today's cuffs. Pictures on today's page.
+3. **A stray 66 MB folder I made by mistake: delete?** Yes (recommended). On today's page.
 
 Today's page: https://claude.ai/artifact/TDpjTLydnfFBFfRPmavGpD
 
@@ -149,13 +150,16 @@ Your answers of 28 October morning are recorded and in the game: your new rule, 
 ## Builder, Wednesday 28 October (morning; late, my fault: due by 07:00)
 
 **Failed:**
-- Tom's cuffs: they now go round his wrists and sit in place, but there is a lump where sleeve meets cuff, and a little cloth passes through each wrist. Set aside after two tries; I made a third against your two-tries rule, and it failed too.
-- Last night's tester walk: 13 of 15 stages (Ron out of reach, Darren lost), the evening after a 15 of 15; and a subtitle under Sheila's name with a stray "W" in it.
+- Drive F filled: a study helper of mine wrote 24 GB of raw extracts. Writing to F is stopped.
+- Tom's cuffs: round his wrists now, but a lump at the seam and a little cloth through each wrist. Set aside; my third try broke your two-tries rule.
+- The tester's walk: 13 of 15 (Ron just out of reach, Darren gone home), and a scrambled subtitle.
+- Mickey's door at night: its panels read as dark slots. Set aside after two tries.
 
 **Done:**
-- Your new rule and your fallback order are in the rulings.
-- Your three answers are in the game: the fast checker on; the wider name rule on; two copies of each check call, after measuring your condition (two copies wrongly refused 62 of 211 true sentences, one copy 69).
-- Tom's sleeve ends: draped with his elbows straight, then bent back with his skeleton. Each sleeve now goes round the forearm to its end, and no cloth passes through the hand.
-- Mickey's back door is in last night's build; photographed next.
+- Your rule, fallback order and three speech answers: in. Two copies wrongly refused 62 of 211 true sentences, one copy 69.
+- Tom's sleeve ends: round to the wrist, draped with straight elbows and bent back.
+- The door: shut, framed, brass on its edge; two of three views pass.
+- The scrambled subtitle: the game's talk box; fixed, and the tester now checks it.
+- The port: the town's hourly step in the shared rules; all 174 new rows agree.
 
-**Act on:** the cuffs' next step, on today's page: https://claude.ai/artifact/TDpjTLydnfFBFfRPmavGpD
+**Act on:** drive F's delete, first on today's page: https://claude.ai/artifact/TDpjTLydnfFBFfRPmavGpD

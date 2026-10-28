@@ -320,7 +320,6 @@ static class Program
         missed = 0;
         int miss = 0;
         var people = cast.People;
-        const string window = "player.window_d1";
         foreach (bool takes in new[] { true, false })
             foreach (bool sits in new[] { true, false })
                 // Who sees the window: Sheila, one of Mickey's own, who never goes to the
@@ -334,15 +333,17 @@ static class Program
                     foreach (var (a, b, w) in cast.Ties) graph.Link(a, b, w);
                     var mill = new GossipMill(graph);
                     foreach (var p in people) mill.Add(new Gossiper(p, p, new MemoryStore(p), new KnowledgeBase(), new SuspicionTracker(), cast.CircleOf(p)));
-                    var arrangement = new Arrangement(0);
-                    var tea = AdasTea.For(0, true);
-                    var police = new PoliceFile();
-                    var week = new WeeksEnd();
-                    Custody custody = null;
-                    Aftermath damage = null;
-                    string ellis = "never", taken = "no", trust = "never";
+                    // THE GAME'S HOURLY STEP, FROM THE CORE (28 October 2026, the sweep's G4): the asks, the
+                    // tea, the police file, the week's end, the damage, the arrests and the town's talk are
+                    // TownWeek's pieces, and its scheduled steps run each hour as the game's do; what he does
+                    // comes between them, as before. The week's rows are unchanged by it, byte for byte.
+                    var town = new TownWeek();
+                    var arrangement = town.Asks;
+                    var tea = town.Tea;
+                    var week = town.Week;
+                    string trust = "never";
                     var talkDays = new HashSet<int>();
-                    bool sheSaw = seenBy == "lena", reported = false;
+                    bool sheSaw = seenBy == "lena";
                     int handOverAt = -1;
                     // The wait every evening (WeekWaits): from six till ten the next morning.
                     bool first = takes && sits && seenBy == "lena";
@@ -355,15 +356,14 @@ static class Program
                     // it): what happens on the hour happens first, the rounds run up to
                     // each later event's minute before it, and the rest at the hour's
                     // end (TownHours.RunTo); his no or the winding down reaches the
-                    // landing as each hour turns (Arrangement.TellDue).
-                    var talk = new TownHours();
+                    // landing as each hour turns (TownWeek.Six, Arrangement.TellDue).
                     for (int abs = 9; abs < 24 * 7 + 12; abs++)
                     {
                         int day = abs / 24, hod = abs % 24;
                         var now = new GameTime(day, hod, 0);
                         // The rounds before minute m of this hour.
-                        void Before(int m) => talk.RunTo(mill, cast, now.AddMinutes(m - 1));
-                        arrangement.TellDue(mill, now);
+                        void Before(int m) => town.RoundsTo(mill, cast, now.AddMinutes(m - 1));
+                        town.Six(mill, now);
                         // Every evening from six till ten the next morning; the
                         // Saturday night's till Sunday noon, over Sheila's ten o'clock.
                         bool InWait(int h) => waits != null && h >= 18 && (h % 24 >= 18 || h % 24 < (h / 24 == week.Day ? 12 : 10));
@@ -374,7 +374,7 @@ static class Program
                         {
                             int wakeDay = hod >= 18 ? day + 1 : day;
                             var wake = new GameTime(wakeDay, wakeDay == week.Day ? 12 : 10, 0);
-                            var beats = new WaitBeats { Asks = arrangement, Tea = tea, Police = police, Mill = mill, Week = week, Custody = custody, Shown = shownLines,
+                            var beats = new WaitBeats { Asks = arrangement, Tea = tea, Police = town.Police, Mill = mill, Week = week, Custody = town.Latest(), Shown = shownLines,
                                                         TeaLead = teaLead, LandingLead = landingLead, OfficeLead = officeLead,
                                                         AtAdas = sits && day == tea.Day && (hod - 1 == 21 || hod - 1 == 22) };
                             // Every stop that falls in the hour just waited through.
@@ -395,56 +395,34 @@ static class Program
                             if (waits == "plain" || !stopWhy.Contains(why)) { if (count && waits == "stopping") miss++; return true; }
                             return false;
                         }
-                        if (hod == 6) arrangement.PassedTo(day, mill, now);
-                        // The slice's window, at noon on the Tuesday.
+                        // The slice's window, at noon on the Tuesday, and its damage
+                        // (nobody left out of finding it: the week's own way).
                         if (seenBy != "none" && day == 1 && hod == 12)
-                        {
-                            damage = new Aftermath("ritas", "rita_window", "somebody put Rita's window in", now, Aftermath.DefaultMend(now));
-                            if (seenBy != "nobody")
-                                mill.Witness(seenBy, new Fact("player", "window_d1", "ritas"), "the new owner put Rita's window in", true, now, 1.0);
-                        }
-                        damage?.Tick(mill, cast, now);
+                            town.Deed(mill, now, "ritas", "rita_window", "somebody put Rita's window in",
+                                      seenBy == "nobody" ? new List<(string, int)>() : new List<(string, int)> { (seenBy, -1) },
+                                      "window_d1", "the new owner put Rita's window in", 1.0, witnessesLeftOut: false);
+                        town.DamageTick(mill, cast, now);
                         // Each morning after it, whoever saw it goes to the police once they
                         // would: by Jafar's rulings of 1 October the first morning, unless on
-                        // his side or one of Mickey's own (Ada's tea on day 3 comes after it).
-                        if (!reported && day >= 2 && hod == 9 && seenBy != "nobody" && seenBy != "none"
-                            && PoliceFile.WouldReport(mill.Get(seenBy), Offence.Damage, false, window, cast.NeverToPolice(seenBy)))
-                        {
-                            police.Report(seenBy, window, Offence.Damage, 4, day);
-                            reported = true;
-                        }
-                        if (hod == 9 && day >= 1)
-                        {
-                            string why = police.EllisComes(mill, day);
-                            if (why != null)
-                            {
-                                if (ellis == "never") ellis = $"day {day + 1}, for {why}";
-                                if (why == "talk") police.HearTheStreet(mill, day, t => t.StartsWith("player.window", StringComparison.Ordinal) ? Offence.Damage : Offence.Suspicious, cast, now);
-                                PoliceFile.Asked(mill, PoliceFile.WhoSheAsks(mill, cast, now), why, now);
-                            }
-                        }
-                        if (hod == 10 && custody == null && police.ConstableComes(day, now) is string t)
-                        {
-                            custody = police.TakeIn(t, now, false, false);
-                            if (custody != null)
-                            {
-                                Custody.SeenTaken(mill, cast, "mickeys", now);
-                                taken = $"day {day + 1}, {custody.End}";
-                            }
-                        }
-                        bool held = custody != null && custody.Holds(now);
+                        // his side or one of Mickey's own (Ada's tea on day 3 comes after it);
+                        // what they give is a statement (rung 4).
+                        town.NineReports(mill, cast, now, 4);
+                        town.NineEllis(mill, now, cast);
+                        // Taken in once in the week, where he is in the mornings: Mickey's.
+                        if (hod == 10 && town.Arrests.Count == 0) town.TenConstable(mill, cast, now, "mickeys");
+                        bool held = town.Holding(now) != null;
                         // He talks with Sheila at the office each morning he is free
                         // (not on her Sunday: that is her question).
                         if (hod == 10 && !held && day < week.Day && cast.AreaOf(cast.PlaceOf("lena", day, hod)) == "mickeys")
                             talkDays.Add(day);
                         if (trust == "never" && hod == 11 && TrustsNow(mill, talkDays, sheSaw, day)) trust = $"day {day + 1}";
-                        if (day == tea.Day && hod == 10) tea.SheSeesHim(now, custody != null && custody.Holds(now));
-                        if (hod == 20 && arrangement.AsksOn(day) && !Skip("ron")) arrangement.Delivered(day, mill.Get("rocco"), now);
+                        town.TenTea(now);
+                        if (hod == 20 && arrangement.AsksOn(day) && !Skip("ron")) town.TwentyRon(mill, now);
                         if (sits && day == tea.Day && hod == 21 && !Skip("tea"))
                             for (int m = 0; m < 60; m++) tea.WithHer(new GameTime(day, 21, m));
                         if (sits && day == tea.Day && hod == 22 && !Skip("tea", false))
                             for (int m = 0; m <= 30; m++) tea.WithHer(new GameTime(day, 22, m));
-                        if (day == tea.Day && hod == 23) tea.Close(mill.Get(AdasTea.Ada), now);
+                        town.TwentyThreeTea(mill, now);
                         // Not sitting with her, he sets off at 21:45 and is seen going, in
                         // its own hour, after the rounds before it (the second independent
                         // check: it was filed in hour 22's pass, after rounds that ran without it).
@@ -463,12 +441,12 @@ static class Program
                                 tea.WentToTheLanding(mill, new GameTime(day, 22, 31), forTheAsk: true);
                                 handOverAt = abs + 2;
                             }
-                            else { Before(30); arrangement.Answer(day, answer, mill, new GameTime(day, 22, 30)); }
+                            else { Before(30); town.AnswerAsk(day, answer, mill, new GameTime(day, 22, 30)); }
                         }
                         if (abs == handOverAt && arrangement.AsksOn(tea.Day) && !Skip("landing", false))
                         {
                             Before(45);
-                            arrangement.Answer(tea.Day, NightAnswer.Did, mill, new GameTime(day, hod, 45));
+                            town.AnswerAsk(tea.Day, NightAnswer.Did, mill, new GameTime(day, hod, 45));
                         }
                         // The week's end: her question at half past ten on the Sunday.
                         if (day == week.Day && hod == 10 && week.AsksNow(new GameTime(day, 10, 30), atOffice: true) && !Skip("sheila"))
@@ -477,14 +455,13 @@ static class Program
                             Before(40);
                             week.Give(WeekAnswer.TakeOver, new GameTime(day, 10, 40), mill, cast, arrangement);
                         }
-                        week.Close(now, mill, cast);
-                        // The rest of the hour's rounds.
-                        talk.RunTo(mill, cast, now.AddMinutes(59));
+                        // The week's end closed, and the rest of the hour's rounds.
+                        town.HourEnd(mill, cast, now, now.AddMinutes(59));
                     }
                     int holdAnswer = mill.Agents.Count(a => a.Rumors.Any(WeeksEnd.IsWeekAnswer));
                     string arr = arrangement.Ended ? $"ended ({arrangement.EndedWhy})" : $"stands ({arrangement.Nights.Count} nights)";
                     string book = week.AskedAt == null ? "not asked" : week.RealBook ? "the real book" : "the day-book";
-                    rows.Add($"| {(takes ? "takes it every night" : "tells Ron no")} | {(sits ? "sits with her" : "stands her up")} | {(seenBy == "none" ? "no window" : seenBy == "nobody" ? "nobody" : seenBy)} | {ellis} | {taken} | {trust} | {book} | {arr} | {holdAnswer} of {people.Count} |");
+                    rows.Add($"| {(takes ? "takes it every night" : "tells Ron no")} | {(sits ? "sits with her" : "stands her up")} | {(seenBy == "none" ? "no window" : seenBy == "nobody" ? "nobody" : seenBy)} | {town.EllisFirst} | {town.TakenFirst} | {trust} | {book} | {arr} | {holdAnswer} of {people.Count} |");
                 }
         missed = miss;
         return rows;

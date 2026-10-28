@@ -6276,6 +6276,11 @@ namespace
 			PC->FlushPressedKeys();
 		}
 		FSlateApplication::Get().SetKeyboardFocus(GSayText);
+		// THE CURSOR AFTER WHAT IS ALREADY IN THE BOX (28 October 2026, the night's walk): a line begun on the notice
+		// card opens the box with its first letter in it, and words kept with Esc come back in it, but the cursor sat
+		// before them, so the rest was typed in front: "as it always this quiet ... Sheila?W" was said to her, and her
+		// answer quoted it under her name. The cursor goes to the end, where the next letter belongs.
+		GSayText->GoTo(ETextLocation::EndOfDocument);
 		bSayOpen = true;
 		SubsRebuild();
 		HintSetText(FString());   // the FIRST STEPS slip is done once he talks, and stands where the coupon opens

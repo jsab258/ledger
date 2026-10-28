@@ -131,6 +131,7 @@ namespace Ledger.CoreTests
                 TestFamiliarityFromMeetings();
                 TestSighting();
                 TestSightingGeography();
+                TestTownWeek();
                 TestTownSaveVersion();
                 TestReactionAtTheWindow();
                 TestNameRule();

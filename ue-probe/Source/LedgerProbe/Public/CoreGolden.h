@@ -62,6 +62,7 @@
 #include "Waiting.h"
 #include "TownNews.h"
 #include "TownSave.h"
+#include "TownWeek.h"
 
 #include <cstdio>
 #include <cstdlib>
@@ -4500,6 +4501,135 @@ namespace Golden
 		return A;
 	}
 
+	// ---- the game's hourly step (the sweep's G4, 28 October 2026) --------
+	//
+	// PerceptionGolden's EmitTownWeek, played again here through the game's own
+	// TownWeek.h: its scheduled steps in the game's order (CrimeProbe.cpp,
+	// ConsequenceHour), once an hour on the hook cast, what he does between them
+	// at its own minute; one row an hour, found by its run, day and hour. The
+	// steps are the port's, never copied here, so a call dropped from Six or
+	// TwentyRon reads differently in these rows (the sweep's P1 and P3).
+
+	inline const std::map<std::string, std::vector<std::string> >& TownWeekAnswers()
+	{
+		static std::map<std::string, std::vector<std::string> > Ans;
+		if (!Ans.empty()) return Ans;
+		const CastDay* Cast = CastNamed("hook-cast.json");
+		if (Cast == 0) return Ans;
+		for (const char* RunC : { "no", "away", "held", "days", "winddown" })
+		{
+			const std::string Run = RunC;
+			auto Graph = std::make_shared<SocialGraph>();
+			for (const CastDay::Tie& T : Cast->Ties()) Graph->Link(T.A, T.B, T.W);
+			GossipMill Mill(Graph);
+			for (const std::string& P : Cast->People())
+				Mill.Add(std::make_shared<Gossiper>(P, P, std::make_shared<MemoryStore>(P), std::make_shared<KnowledgeBase>(), Cast->CircleOf(P)));
+			TownWeek W;
+			const int From = Run == "held" ? 14 : Run == "days" ? 9 : Run == "winddown" ? 6 * 24 + 9 : 19;
+			const int To = Run == "days" ? 5 * 24 : Run == "winddown" ? 7 * 24 + 7 : 24 + 7;
+			Mill.Age(GameTime(From / 24, From % 24, 0));
+			if (Run == "held")
+			{
+				// Taken at two for a wounding Darren named him in: eight hours, out at ten at night.
+				const std::string Cut = "player.cut_d0";
+				W.Police.Report("sam", Cut, Offence::Wounding, 4, 0);
+				W.Arrests.push_back(W.Police.TakeIn(&Cut, GameTime(0, 14, 0), false, false));
+			}
+			for (int Abs = From; Abs < To; ++Abs)
+			{
+				const int Day = Abs / 24, Hod = Abs % 24;
+				const GameTime Now(Day, Hod, 0);
+				W.Six(&Mill, Now);
+				const std::vector<std::pair<std::string, GameTime> > Found = W.DamageTick(&Mill, Cast, Now);
+				const std::vector<std::string> Went = W.NineReports(&Mill, Cast, Now);
+				const std::string Why = W.NineEllis(&Mill, Now, Cast);
+				const std::shared_ptr<Custody> Taken = W.TenConstable(&Mill, Cast, Now, "mickeys");
+				std::string Invite;
+				const bool bInvite = W.TenTea(Now, Invite);
+				const bool bRon = W.TwentyRon(&Mill, Now);
+				W.TwentyThreeTea(&Mill, Now);
+				W.HourEnd(&Mill, Cast, Now);
+				std::string FoundS, WentS, Nights, Outfit;
+				for (const auto& Fd : Found) FoundS += (FoundS.empty() ? "" : ",") + Fd.first + "@" + FromInt(Fd.second.TotalMinutes());
+				for (const std::string& Wh : Went) WentS += (WentS.empty() ? "" : ",") + Wh;
+				for (const auto& Kv : W.Asks.Nights()) Nights += (Nights.empty() ? "" : ",") + FromInt(Kv.first) + "=" + Arrangement::Value(Kv.second);
+				const GossiperPtr Man = Mill.Get(Arrangement::OutfitMan);
+				if (Man)
+				{
+					for (const RumorPtr& R : Man->Rumors)
+					{
+						if (R && R->TopicKey().compare(0, 15, "player.outfit_d") == 0) Outfit += (Outfit.empty() ? "" : ",") + R->Content.Predicate + "=" + R->Content.Value;
+					}
+				}
+				long long Stories = 0;
+				for (const GossiperPtr& G : Mill.Agents()) { if (G) Stories += (long long)G->Rumors.size(); }
+				Ans["TownWeekHour|" + Run + "|" + FromInt(Day) + "|" + FromInt(Hod)] = {
+					FoundS.empty() ? "-" : FoundS,
+					WentS.empty() ? "-" : WentS,
+					Why.empty() ? "-" : Why,
+					Taken ? std::string(CustodyEndName(Taken->End())) : std::string("-"),
+					FromBool(bInvite),
+					FromBool(bRon),
+					TeaStateName(W.Tea->State()),
+					FromBool(W.Holding(Now) != nullptr),
+					Escape(FromInt(W.Asks.NextNight()) + ";" + Nights + ";" + (W.Asks.Ended() ? W.Asks.EndedWhy() : std::string("stands"))),
+					Outfit.empty() ? "-" : Outfit,
+					FromInt(Stories),
+					Escape(W.EllisFirst),
+					Escape(W.TakenFirst) };
+				// What he does in the hour, at its own minute, after the rounds before it (the game's minutes).
+				if (Run == "no" && Day == 0 && Hod == 21 && W.Asks.WasDelivered(0))
+				{
+					W.RoundsTo(&Mill, Cast, GameTime(0, 21, 29));
+					W.AnswerAsk(0, NightAnswer::Refused, &Mill, GameTime(0, 21, 30));
+				}
+				if (Run == "days")
+				{
+					// The window at half past twelve on the Tuesday, Darren seeing him do it; whoever is there knows at once.
+					if (Day == 1 && Hod == 12)
+					{
+						const GameTime At(1, 12, 30);
+						W.RoundsTo(&Mill, Cast, At.AddMinutes(-1));
+						W.Deed(&Mill, At, "ritas", "rita_window", "somebody put Rita's window in", { std::make_pair(std::string("sam"), 4) },
+						       "window_d1", "the new owner put Rita's window in", 1.0);
+						W.DamageTick(&Mill, Cast, At);
+					}
+					// The tea's evening at Ada's, nine till half past ten, and no landing that night.
+					if (Day == W.Tea->Day() && (Hod == 21 || Hod == 22))
+					{
+						for (int M = 0; M < (Hod == 21 ? 60 : 31); ++M) W.Tea->WithHer(GameTime(Day, Hod, M));
+					}
+					// Any other night Ron brought it, the envelope to the landing at half past ten.
+					else if (Hod == 22 && W.Asks.AsksOn(Day) && W.Asks.WasDelivered(Day))
+					{
+						W.RoundsTo(&Mill, Cast, GameTime(Day, 22, 29));
+						W.AnswerAsk(Day, NightAnswer::Did, &Mill, GameTime(Day, 22, 30));
+					}
+				}
+				// Sunday at the office: her question at half past ten, and "wind it down".
+				if (Run == "winddown" && Day == W.Week.Day() && Hod == 10 && W.Week.AsksNow(GameTime(Day, 10, 30), true))
+				{
+					W.Week.Ask(GameTime(Day, 10, 30), true);
+					W.RoundsTo(&Mill, Cast, GameTime(Day, 10, 39));
+					W.Week.Give(WeekAnswer::WindDown, GameTime(Day, 10, 40), &Mill, Cast, &W.Asks);
+				}
+			}
+		}
+		return Ans;
+	}
+
+	inline Answer TownWeekRow(const std::vector<std::string>& F)
+	{
+		Answer A;
+		if (F.size() < 5) return A;
+		const auto& Ans = TownWeekAnswers();
+		const auto It = Ans.find(F[0] + "|" + F[1] + "|" + F[2] + "|" + F[3]);
+		if (It == Ans.end()) return A;
+		A.Known = true;
+		A.Got = MultiAnswer(F, 4, It->second);
+		return A;
+	}
+
 	inline Answer Evaluate(const std::vector<std::string>& F)
 	{
 		Answer A;
@@ -5424,6 +5554,11 @@ namespace Golden
 		else if (Fn == "Wait")
 		{
 			A = WaitRow(F);
+		}
+		// THE GAME'S HOURLY STEP (the sweep's G4, 28 October 2026): TownWeek.h.
+		else if (Fn == "TownWeekHour")
+		{
+			A = TownWeekRow(F);
 		}
 		// THE POLICE FILE ITSELF (town list 6ar): PoliceFile.h, its regression rows.
 		else if (Fn == "PoliceFile" || Fn == "PoliceBadSave" || Fn == "PoliceWouldReport" || Fn == "PoliceWouldReportMiddle" || Fn == "PoliceOnHisSide" || Fn == "CustodyWords" || Fn == "CustodySeenTaken"
