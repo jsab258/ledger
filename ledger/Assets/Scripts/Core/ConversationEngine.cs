@@ -219,12 +219,53 @@ namespace Ledger.Core
         /// The first sentence's own allowance: a sentence, never the reply.
         public const int FirstMaxTokens = 80;
 
+        /// THE FASTER FIRST SENTENCE, ITS SECOND TRY (his order of 28 October 2026, D12;
+        /// production/research/live-speech-architecture/FAST-GROUNDED-TALK-2026-10-28.md). Bench switches, off in the game.
+        /// FirstModelOnlyOver: the faster model writes the first sentence only of a turn on this model (the conversation's),
+        /// never of small talk on another (the fresh review: FirstModel alone would also split small talk); null, any turn
+        /// on a model other than FirstModel, as on 7 October.
+        public static string FirstModelOnlyOver = null;
+        /// StrictGoOn: the stricter note for the rest (7 October's fault: whole replies padded with facts nobody asked for
+        /// in 4 of 5), from RelayS2S and the micro language models paper: most replies end with the first sentence, at most
+        /// one short sentence more, a slip put right in a few natural words; the rest held to RestMaxTokens.
+        public static bool StrictGoOn = false;
+        public const int RestMaxTokens = 120;
+        /// ReplyThinkingOff: every draft of a reply sent with thinking "disabled" on a model that accepts it (Sonnet 5 thinks
+        /// unless told not to, and the game sends no thinking field: Anthropic's Sonnet 5.5 migration guide, read 28 October).
+        public static bool ReplyThinkingOff = false;
+
+        /// Whether a model accepts thinking "disabled" (Anthropic's migration guides, read 28 October 2026: Sonnet 5 and the
+        /// Haiku models do; Sonnet 5.5 refuses it with a 400 error, its lowest setting being "between_tools").
+        public static bool AcceptsThinkingOff(string model) =>
+            model == "claude-sonnet-5" || (model != null && model.StartsWith("claude-haiku-", StringComparison.Ordinal));
+
+        static string ReplyThinking(string model) => ReplyThinkingOff && AcceptsThinkingOff(model) ? "disabled" : null;
+
+        /// The last turn's first draft's first sentence, and whether the faster model wrote it (for the bench's readers).
+        public string LastFirstSentence { get; private set; }
+        public bool LastFirstFast { get; private set; }
+
         /// What the turn's own model is told when the first sentence was written
         /// for it: the words already said, to go on from without saying again.
-        internal static string GoOnNote(string first) =>
-            "\n\nYOUR REPLY HAS ALREADY BEGUN. You have just said, aloud: \"" + first + "\"\n"
-            + "Write only what you say next, in the same voice, as the rest of that same reply; never say those words again. "
-            + "If that already says all you would say, write nothing.";
+        internal static string GoOnNote(string first) => StrictGoOn
+            ? "\n\nYOUR REPLY HAS ALREADY BEGUN. You have just said, aloud: \"" + first + "\"\n"
+              + "Most replies end there. Add at most one short sentence, and only if his question still needs a fact that sentence "
+              + "did not give; never add facts nobody asked for. If what you said does not fit what you know, put it right in a few "
+              + "natural words. Never say those words again. If nothing more is needed, write nothing."
+            : "\n\nYOUR REPLY HAS ALREADY BEGUN. You have just said, aloud: \"" + first + "\"\n"
+              + "Write only what you say next, in the same voice, as the rest of that same reply; never say those words again. "
+              + "If that already says all you would say, write nothing.";
+
+        /// A REPLY THAT IS ONE WHOLE SENTENCE AND HAS ENDED (the fresh review of 28 October): FirstSentence waits for text
+        /// after a sentence's end, which a finished one-sentence reply never has, so the faster model's one sentence was
+        /// never taken and the turn's own model wrote it all. Null unless the text is exactly one sentence, ended.
+        internal static string EndedSentence(string text)
+        {
+            var t = (text ?? "").Trim();
+            if (t.Length == 0) return null;
+            var f = FirstSentence(t + " x");
+            return f == t ? f : null;
+        }
 
         /// The first sentence and what the turn's own model wrote after it, as one
         /// reply: the rest's own copy of the first sentence, if it wrote one, left out.
@@ -1672,6 +1713,8 @@ namespace Ledger.Core
             public LlmResponse Response;
             /// Its first sentence, as checked and handed over.
             public string First;
+            /// Whether the faster model (FirstModel) wrote that first sentence.
+            public bool FastWrote;
             /// Whether the first sentence was handed over, and so heard.
             public bool Heard;
             /// What the first sentence's own check found, when it failed.
@@ -1698,6 +1741,12 @@ namespace Ledger.Core
                 try { return (await FirstTask).heard; } catch (Exception) { return false; }
             }
         }
+
+        /// A first sentence that is never spoken early, whatever its check says: the ending mark, a promise, a real-world
+        /// name, or a line the content rule refuses (the same tests DraftAsync makes before a hand-over).
+        bool HeldBackEarly(string said) =>
+            said.IndexOf(DoneMark, StringComparison.OrdinalIgnoreCase) >= 0 || PromisesIn(said).Count > 0 || RealWorld.Find(said).Count > 0
+            || ResponseValidator.IsDeflection(ResponseValidator.Validate(said, Card.Name, Card.AlsoCalled), Card.Name);
 
         static bool Unchecked(IReadOnlyList<string> found) => found.Count == 1 && found[0] == "(unchecked)";
         static bool FailedFirst((bool heard, IReadOnlyList<string> found, LlmResponse cost) r) =>
@@ -1726,7 +1775,9 @@ namespace Ledger.Core
             {
                 try
                 {
-                    void OnText(string text)
+                    void OnText(string text) => OnTextEnded(text, false);
+                    // ended: the stream has finished, so a text of one whole sentence is the first sentence (EndedSentence).
+                    void OnTextEnded(string text, bool ended)
                     {
                         if (d.FirstTask != null) return;
                         // A stage direction said in the first person is never the
@@ -1734,7 +1785,8 @@ namespace Ledger.Core
                         // With the plan first, the first sentence is read after the tag.
                         var spoken = PlanFirst ? AfterPlan(text) : WithoutCites(text);
                         if (spoken == null) return;
-                        var f = FirstSentence(ResponseValidator.WithoutGestures(spoken));
+                        var f = FirstSentence(ResponseValidator.WithoutGestures(spoken))
+                                ?? (ended ? EndedSentence(ResponseValidator.WithoutGestures(spoken)) : null);
                         if (f == null) return;
                         d.First = ValidateReply(f);
                         var said = d.First;
@@ -1784,30 +1836,51 @@ namespace Ledger.Core
                     // sentence, or failed, leaves the turn's own model to write it all.
                     var main = request;
                     string fastFirst = null;
-                    if (FirstModel != null && FirstModel != request.Model && !PlanFirst)
+                    if (FirstModel != null && FirstModel != request.Model && !PlanFirst
+                        && (FirstModelOnlyOver == null || request.Model == FirstModelOnlyOver))
                     {
-                        var fast = new LlmRequest { Model = FirstModel, System = request.System, MaxTokens = FirstMaxTokens };
+                        // Haiku 5.5 thinks unless told not to; a first sentence cannot wait for it (28 October).
+                        var fast = new LlmRequest { Model = FirstModel, System = request.System, MaxTokens = FirstMaxTokens,
+                                                    Thinking = ClaimCheck.ThinksByDefault(FirstModel) ? "disabled" : null };
                         fast.Messages.AddRange(request.Messages);
                         using var fastStop = CancellationTokenSource.CreateLinkedTokenSource(stop.Token);
+                        // A FAST SENTENCE THAT WOULD BE HELD BACK (the ending mark, a promise, a real-world name, a line
+                        // the content rule refuses: never spoken early) is not the reply's start, since the turn's own
+                        // model would be told it was said aloud (the fresh review of 28 October): that model writes it all.
+                        bool fastHeld = false;
+                        void FastText(string text, bool ended)
+                        {
+                            if (fastHeld || d.FirstTask != null) return;
+                            var spoken = WithoutCites(text);
+                            if (spoken == null) return;
+                            var f = FirstSentence(ResponseValidator.WithoutGestures(spoken))
+                                    ?? (ended ? EndedSentence(ResponseValidator.WithoutGestures(spoken)) : null);
+                            if (f == null) return;
+                            if (HeldBackEarly(ValidateReply(f))) { fastHeld = true; try { fastStop.Cancel(); } catch (ObjectDisposedException) { } return; }
+                            OnTextEnded(text, ended);
+                            if (d.FirstTask != null) { try { fastStop.Cancel(); } catch (ObjectDisposedException) { } }
+                        }
                         try
                         {
-                            var whole = await streaming.StreamAsync(fast, text =>
-                            {
-                                OnText(text);
-                                if (d.FirstTask != null) { try { fastStop.Cancel(); } catch (ObjectDisposedException) { } }
-                            }, fastStop.Token);
+                            var whole = await streaming.StreamAsync(fast, text => FastText(text, false), fastStop.Token);
                             _cost?.Record(FirstModel, whole.InputTokens, whole.OutputTokens);
+                            // A faster reply of one whole sentence: its end makes it the first sentence.
+                            FastText(whole.Text, true);
                         }
                         catch (LlmStreamStoppedException s) when (!stop.IsCancellationRequested)
                         {
                             if (s.SoFar != null) _cost?.Record(FirstModel, s.SoFar.InputTokens, s.SoFar.OutputTokens);
                         }
                         catch (Exception) when (!stop.IsCancellationRequested && !ct.IsCancellationRequested) { }
-                        if (d.FirstTask != null)
+                        if (fastHeld) d.Step?.Invoke(d.Prefix + "first-fast-held");
+                        else if (d.FirstTask != null)
                         {
                             fastFirst = d.First;
+                            d.FastWrote = true;
                             d.Step?.Invoke(d.Prefix + "first-fast");
-                            main = new LlmRequest { Model = request.Model, System = request.System + GoOnNote(fastFirst), MaxTokens = request.MaxTokens };
+                            main = new LlmRequest { Model = request.Model, System = request.System + GoOnNote(fastFirst),
+                                                    MaxTokens = StrictGoOn ? Math.Min(request.MaxTokens, RestMaxTokens) : request.MaxTokens,
+                                                    Thinking = request.Thinking };
                             main.Messages.AddRange(request.Messages);
                         }
                     }
@@ -2018,6 +2091,7 @@ namespace Ledger.Core
                 Model = Model,
                 System = system,
                 MaxTokens = 300,
+                Thinking = ReplyThinking(Model),
             };
             request.Messages.AddRange(_transcript);
 
@@ -2040,10 +2114,14 @@ namespace Ledger.Core
             void Step(string name) { lock (LastSteps) LastSteps.Add((name, stepClock.ElapsedMilliseconds)); }
             var ahead = OnFirstWritten;
             var d1 = new Drafted { Step = Step, Ahead = ahead };
+            LastFirstSentence = null;
+            LastFirstFast = false;
             try
             {
                 await DraftAsync(d1, request, streaming, knownEarly, onFirstChecked, null, ct);
                 Step("draft");
+                LastFirstSentence = d1.First;
+                LastFirstFast = d1.FastWrote;
             }
             catch (Exception) // ANY failure (LlmApiException, cancellation, network) must
             {                 // roll back the user turn we just appended, or it leaks.
@@ -2155,7 +2233,7 @@ namespace Ledger.Core
                         string note = (invented.Count > 0 ? ClaimCheck.SecondDraftNote(invented, NarrowRedraft && ChooseFirst) + "\n" : "")
                                     + (promised.Count > 0 ? Promises.SecondDraftNote(promised) + "\n" : "")
                                     + (realNames.Count > 0 ? RealWorld.SecondDraftNote(realNames) + "\n" : "");
-                        var second = new LlmRequest { Model = Model, System = system + note, MaxTokens = 300 };
+                        var second = new LlmRequest { Model = Model, System = system + note, MaxTokens = 300, Thinking = ReplyThinking(Model) };
                         second.Messages.AddRange(_transcript);
                         // The second draft is streamed the same way, its first
                         // sentence handed over as soon as it passes and repeats

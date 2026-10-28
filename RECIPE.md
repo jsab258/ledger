@@ -115,14 +115,14 @@ What failed before this method, so it is not repeated: draping with bent elbows 
 
 ## Notebook
 
-### 28 Oct 2026, five bounded research units for one order, each ending in a method with its first use
-- Made: the professional garment pipeline; one shipped jacket read at wrist, collar and hem; interaction spots for sitting; fast, grounded live talk; automatic asset checks before reviewers.
+### 28 Oct 2026, seven bounded research units for one order, each ending in a method with its first use
+- Made: the professional garment pipeline; one shipped jacket read at wrist, collar and hem; interaction spots for sitting; fast, grounded live talk; automatic asset checks before reviewers; a shipped game's wear, grade and fog; its street kit against a procedural city method.
 - Method (setting-free): one helper per question set, public sources and the reference games' files (one extracting helper at a time, capped, its files kept until its fresh review re-measures them, then deleted); every number tagged and dated; each result to one fresh reviewer against its sources before it becomes a method; the reviewer's faults sent back to the author, who has the context.
 - Tools: helpers, web reading, the package viewer on the kept extracts, scripted measures.
-- Target and check: each method a numbered list of steps, each step with a numeric check and a first use with an hour estimate. Reviews: pass with fixes in all five (17, 16, 19 faults and two smaller sets).
+- Target and check: each method a numbered list of steps, each step with a numeric check and a first use with an hour estimate. Reviews: pass with fixes in all seven (17, 16, 19, 25 and 23 faults, and two smaller sets); the estimates the authors gave grew under review (wear 17 to 25-35 hours, kit 33 to 50-70): an author's first estimate is not a plan.
 - Cost (hours): about 0.6 to 1.0 of helper clock each, 0.2 to 0.3 per review.
 - Failed and why: a study helper's backup of the package viewer's settings kept a game's file key on the system drive (found and blanked); a reviewer found a past cuff size double-counted and a weighting claim that did not reproduce: numbers from one's own history need the same re-measure as the game's.
-- Evidence: production/research/game-clothing-pipeline/PIPELINE-2026-10-28.md and MAFIA-JACKET-2026-10-28.md; production/research/sit-and-turn/SPOTS-2026-10-28.md; production/research/live-speech-architecture/FAST-GROUNDED-TALK-2026-10-28.md; production/research/asset-checks/CHECKS-2026-10-28.md; each with its review beside it.
+- Evidence: production/research/game-clothing-pipeline/PIPELINE-2026-10-28.md and MAFIA-JACKET-2026-10-28.md; production/research/sit-and-turn/SPOTS-2026-10-28.md; production/research/live-speech-architecture/FAST-GROUNDED-TALK-2026-10-28.md; production/research/asset-checks/CHECKS-2026-10-28.md; production/research/street-wear/MAFIA-WEAR-2026-10-28.md; production/research/phase5-procedural/MAFIA-KIT-2026-10-28.md; each with its review beside it.
 
 ### 28 Oct 2026, every recommendation of a finished study set turned into tracked work, so none is lost
 - Made: 145 lines in the owner's order ledger, one per recommendation of sixteen reference studies, each with its phase, its target and its source.

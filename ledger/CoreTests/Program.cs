@@ -123,6 +123,7 @@ namespace Ledger.CoreTests
                 TestClaimCheck();
                 TestEarlyLooks();
                 TestTwoCopies();
+                await TestFastFirstSplit();
                 TestWholeDetails();
                 await TestClaimCheckedReplies();
                 TestCaughtClaimIsNotLearned();

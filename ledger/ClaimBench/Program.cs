@@ -26,6 +26,7 @@ using Ledger.DevTools;
 ///     dotnet run --project ledger/ClaimBench -c Release -- disguise      # inventions hidden in small talk, through the live check
 ///     dotnet run --project ledger/ClaimBench -c Release -- firsts        # a newcomer's first questions, through the real engine
 ///     dotnet run --project ledger/ClaimBench -c Release -- hours         # what is open when, without the street's hours and with them
+///     dotnet run --project ledger/ClaimBench -c Release -- fastfirst --key   # the faster first sentence's bench (FastFirst.cs)
 ///
 /// AGAINST THE REAL ENGINE: every draft comes from ConversationEngine.SayToAsync
 /// with the card, memories and scene the game would send, and what the checker
@@ -130,6 +131,9 @@ static partial class Program
             case "sentcheck": return await SentCheck(args);
             case "source": return await Source(args, parallel);
             case "lookpairs": return await LookPairs(args);
+            // the faster first sentence's second try (FastFirst.cs): three arms, 42 triples, today's measuring dollar
+            case "fastfirst": return await FastFirst(args);
+            case "fastfirst-score": return FfScore(Arg(args, "--out", "F:/LedgerTools/town-scratch/fast-first"), false);
             case "again":
             {
                 // Some turns of the bench's drafts through the live check, each

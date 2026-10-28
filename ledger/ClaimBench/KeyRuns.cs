@@ -33,8 +33,22 @@ static partial class Program
         { "measure-2026-10-28", 1.00 },
     };
     static string KeyTask = "talk-2026-10-07";
-    static double KeyTaskCap => KeyTaskCaps[KeyTask];
-    static string RunsLog => Path.Combine(RepoRoot(), "production", "playtest", "talk-runs.jsonl");
+    static double KeyTaskCap => CapOf(KeyTask);
+
+    /// HIS STANDING MEASURING DOLLAR AS A TASK OF ITS OWN EACH DAY (the faster first sentence's bench, 28 October 2026:
+    /// a bench that runs over several days must not need a code line a day): "measure-YYYY-MM-DD" holds $1.00 for that
+    /// day, its runs logged under it like any task's; the named tasks keep their own caps.
+    static readonly System.Text.RegularExpressions.Regex MeasureTask = new System.Text.RegularExpressions.Regex(@"^measure-\d{4}-\d{2}-\d{2}$");
+    static double CapOf(string task) =>
+        KeyTaskCaps.TryGetValue(task, out var cap) ? cap
+        : MeasureTask.IsMatch(task ?? "") ? 1.00
+        : throw new InvalidOperationException("refused: no cap for the task " + task);
+    /// A run on the key may spend a named task's money, or today's measuring dollar, never another day's.
+    static bool HasCapToday(string task) => KeyTaskCaps.ContainsKey(task) || task == "measure-" + DateTime.Now.ToString("yyyy-MM-dd");
+
+    /// The log a run's line goes to: the repository's, or a dry run's own (never the real one).
+    static string RunsLogOverride;
+    static string RunsLog => RunsLogOverride ?? Path.Combine(RepoRoot(), "production", "playtest", "talk-runs.jsonl");
 
     /// What the task's key runs have spent so far, from the log.
     static double KeyTaskSpent()
@@ -77,7 +91,7 @@ static partial class Program
         string key = File.Exists(path) ? File.ReadAllText(path).Trim() : null;
         if (string.IsNullOrEmpty(key)) throw new InvalidOperationException("no LEDGER key: nothing run");
         string task = Arg(args, "--task", "talk-2026-10-07");
-        if (!KeyTaskCaps.ContainsKey(task)) throw new InvalidOperationException("refused: no cap for the task " + task);
+        if (!HasCapToday(task)) throw new InvalidOperationException("refused: no cap for the task " + task);
         KeyTask = task;
         double left = KeyTaskCap - KeyTaskSpent();
         double cap = double.Parse(Arg(args, "--cap", "1.00"), System.Globalization.CultureInfo.InvariantCulture);
