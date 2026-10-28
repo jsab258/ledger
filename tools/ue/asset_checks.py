@@ -99,6 +99,9 @@ def check_asset(spec, rec, in_piece=True):
         out.append(finding("engine", name, e))
     for w in rec.get("engine_warnings", []):
         out.append(finding("engine", name, w, "warning"))
+    # what the reader could not measure, said and never counted
+    for n in rec.get("notes", []):
+        out.append(finding(n.get("rule", "engine"), name, n.get("message", ""), "note"))
 
     # 4. Nanite off on every static mesh of ours (exempt folders too: the game draws no Nanite)
     if cls == "StaticMesh" and path.startswith("/Game/Ledger/") and rec.get("nanite"):
@@ -130,11 +133,18 @@ def check_asset(spec, rec, in_piece=True):
                 out.append(finding("lods", name, "%d levels of detail, the %s kind wants %d" % (len(tris), kind_name, want),
                                    value=len(tris), limit=want))
             step = spec.get("lod_step_max", 0.6)
+            verts = list(rec.get("lod_verts") or [])
             for i in range(1, len(tris)):
                 a, b = tris[i - 1], tris[i]
-                if a and b and b > step * a:
-                    out.append(finding("lods", name, "LOD%d keeps %d of LOD%d's %d (more than %d%%)" % (
-                        i, b, i - 1, a, round(100 * step)), value=b, limit=int(step * a)))
+                if a and b:
+                    if b > step * a:
+                        out.append(finding("lods", name, "LOD%d keeps %d of LOD%d's %d triangles (more than %d%%)" % (
+                            i, b, i - 1, a, round(100 * step)), value=b, limit=int(step * a)))
+                elif i < len(verts) and verts[i - 1] and verts[i]:
+                    # a skeletal level whose triangles could not be read: its vertices give the step
+                    if verts[i] > step * verts[i - 1]:
+                        out.append(finding("lods", name, "LOD%d keeps %d of LOD%d's %d vertices (more than %d%%)" % (
+                            i, verts[i], i - 1, verts[i - 1], round(100 * step)), value=verts[i], limit=int(step * verts[i - 1])))
         # 7 and 9. the material slots
         glass_words = [w.lower() for w in spec.get("glass_words", [])]
         defaults = set(spec.get("default_materials", []))
@@ -268,8 +278,10 @@ def status_line(piece, records, findings):
 
 
 def report(piece, records, findings, line, when=None):
+    keys = ("class", "triangles", "lod_verts", "size", "compression", "srgb", "source_compression", "collision", "nanite")
     return {"piece": piece, "line": line, "when": when, "assets": [r["path"] for r in records],
             "imports": {r["name"]: (r.get("import") or {}).get("md5") for r in records if r.get("import")},
+            "measures": {r["name"]: {k: r[k] for k in keys if k in r} for r in records},
             "findings": findings}
 
 
@@ -519,6 +531,34 @@ def selftest():
     check("the spec check finds a waiver without its records", any("waiver 0 has no decision" in p for p in p2), str(p2))
     check("the spec check finds an unknown kind", any("no_such_kind" in p for p in p2), str(p2))
 
+    # the first Unreal run's three reader faults (28 October, 22:17), each fixed and held here
+    class FakeSubsystem:
+        """5.8's IsAssetValid as Python sees it: the asset and the use case in; result, errors, warnings out."""
+        def is_asset_valid(self, ad, usecase):
+            return ("INVALID", ["Errors loading asset X", TAG + "lods: ours"], ["a warning", TAG + "names: ours"])
+    errs, warns = epic_checks(FakeSubsystem(), object(), "SCRIPT")
+    check("Epic's checks read with 5.8's two-argument call", errs == ["Errors loading asset X"] and warns == ["a warning"],
+          str((errs, warns)))
+
+    class FakeAssetData:
+        def __init__(self, tags):
+            self.tags = tags
+
+        def get_tag_value(self, tag):
+            return self.tags.get(tag)
+    check("a skeletal mesh's full detail from its Triangles tag", triangles_from_tag(FakeAssetData({"Triangles": "18976"})) == 18976)
+    check("no Triangles tag reads as not measured", triangles_from_tag(FakeAssetData({})) is None)
+    recs = copy.deepcopy(clean)
+    jk = by_name(recs, "SKM_TomZipJacket")
+    jk["triangles"] = [jk["triangles"][0], None, None, None]
+    jk["lod_verts"] = [12000, 6000, 3000, 1200]
+    check("unread skeletal levels step by vertices, and pass", errors_of(recs)[0] == set())
+    jk["lod_verts"] = [12000, 11000, 3000, 1200]
+    check("unread skeletal levels step by vertices, and fail", errors_of(recs)[0] == {"lods"})
+    check("an instance's texture parameters count as sampled textures", texture_count(["T_a", None, "T_b"], [], []) == 2)
+    check("the base graph's texture nodes count", texture_count([], ["T_a"], []) == 1)
+    check("no parameter, node or compiled texture is none", texture_count([None], [], []) == 0)
+
     print("asset_checks selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
 
@@ -566,12 +606,43 @@ def _out(result, n):
     return result
 
 
+def epic_checks(subsystem, ad, usecase):
+    """Rule 1: Epic's IsDataValid and every registered validator on one asset. 5.8's IsAssetValid takes the
+    asset and the use case; its two message lists are outputs only (non-const references without UPARAM(ref):
+    PyUtil.cpp IsInputParameter, lines 584 to 591), returned after the result. Our own messages ("[ledger]")
+    are left out: our rules are counted under their own names."""
+    res = subsystem.is_asset_valid(ad, usecase)
+    errs, warns = _out(res, 2)
+    keep = lambda xs: [str(x) for x in (xs or []) if not str(x).startswith(TAG)]
+    return keep(errs), keep(warns)
+
+
+def triangles_from_tag(ad):
+    """Full-detail triangles of a skeletal mesh from its registry tag "Triangles": LOD0's render data, written
+    when the package is saved (SkeletalMesh.cpp lines 4570 to 4575 and 4619). None if the tag is absent."""
+    try:
+        raw = ad.get_tag_value("Triangles")
+    except Exception:
+        return None
+    raw = str(raw or "").strip()
+    return int(raw) if raw.isdigit() else None
+
+
+def texture_count(param_textures, expression_textures, used_textures):
+    """How many textures a material samples: the texture parameters' values (an instance's own, else the
+    parent's defaults), the base graph's texture nodes, or the compiled list, whichever finds most. The compiled
+    list alone is empty in a commandlet that has compiled no shaders (28 October, the jacket's first run)."""
+    return max(len([t for t in param_textures if t]), len([t for t in expression_textures if t]),
+               len([t for t in used_textures if t]))
+
+
 def material_facts(unreal, mat):
-    """See-through and how many textures a slot's material samples (from its base material)."""
+    """See-through and how many textures a slot's material samples."""
     if mat is None:
         return {"material": None}
     path = mat.get_path_name().split(".")[0]
     facts = {"material": path, "see_through": False, "textures": 1}
+    mel = unreal.MaterialEditingLibrary
     try:
         base = mat.get_base_material()
         bm = base.get_editor_property("blend_mode")
@@ -582,15 +653,27 @@ def material_facts(unreal, mat):
                 facts["see_through"] = True
         except Exception:
             pass
-        facts["textures"] = len(unreal.MaterialEditingLibrary.get_used_textures(base))
+        params = []
+        for pname in (_out(mel.get_texture_parameter_names(mat), 1) or []):
+            if isinstance(mat, unreal.MaterialInstanceConstant):
+                params.append(mel.get_material_instance_texture_parameter_value(mat, pname))
+            else:
+                params.append(mel.get_material_default_texture_parameter_value(base, pname))
+        nodes = []
+        for e in mel.get_material_expressions(base) or []:
+            if isinstance(e, unreal.MaterialExpressionTextureBase):
+                nodes.append(e.get_editor_property("texture"))
+        used = mel.get_material_used_textures(mat) or []
+        facts["textures"] = texture_count(params, nodes, used)
     except Exception as e:
         facts["unread"] = str(e)
     return facts
 
 
 def skeletal_triangles(unreal, mesh, lods):
-    """Triangles per level through Geometry Script (the plugin on the command line); None where it is not there."""
-    out = []
+    """Triangles per level through Geometry Script (the plugin on the command line); None where it fails,
+    with the reason kept as a note."""
+    out, why = [], None
     for i in range(lods):
         try:
             dm = unreal.DynamicMesh()
@@ -599,10 +682,13 @@ def skeletal_triangles(unreal, mesh, lods):
             lod.set_editor_property("lod_index", i)
             res = unreal.GeometryScript_AssetUtils.copy_mesh_from_skeletal_mesh(mesh, dm, opts, lod)
             got = res[0] if isinstance(res, tuple) else res
-            out.append(int(unreal.GeometryScript_MeshQueries.get_num_triangle_ids(got or dm)))
-        except Exception:
+            # UDynamicMesh's own count (UDynamicMesh.h line 160); Geometry Script's GetNumTriangleIDs is a
+            # script method of the mesh, not of GeometryScript_MeshQueries (28 October, the second run)
+            out.append(int((got or dm).get_triangle_count()))
+        except Exception as e:
+            why = why or "%s: %s" % (type(e).__name__, e)
             out.append(None)
-    return out
+    return out, why
 
 
 def editor_record(unreal, ad, subsystem=None):
@@ -619,10 +705,9 @@ def editor_record(unreal, ad, subsystem=None):
         return rec
     if subsystem is not None:
         try:
-            res = subsystem.is_asset_valid(ad, [], [], unreal.DataValidationUsecase.SCRIPT)
-            errs, warns = _out(res, 2)
-            rec["engine_errors"] += [str(e) for e in errs if not str(e).startswith(TAG)]
-            rec["engine_warnings"] += [str(w) for w in warns if not str(w).startswith(TAG)]
+            errs, warns = epic_checks(subsystem, ad, unreal.DataValidationUsecase.SCRIPT)
+            rec["engine_errors"] += errs
+            rec["engine_warnings"] += warns
         except Exception as e:
             rec["engine_warnings"].append("Epic's checks not read: %s" % e)
     imp = import_info(ad)
@@ -638,7 +723,16 @@ def editor_record(unreal, ad, subsystem=None):
                             for m in asset.get_editor_property("static_materials")]
     elif isinstance(asset, unreal.SkeletalMesh):
         ske = unreal.get_editor_subsystem(unreal.SkeletalMeshEditorSubsystem)
-        rec["triangles"] = skeletal_triangles(unreal, asset, ske.get_lod_count(asset))
+        lods = ske.get_lod_count(asset)
+        tris, why = skeletal_triangles(unreal, asset, lods)
+        tagged = triangles_from_tag(ad)
+        if tris and tris[0] is None and tagged is not None:
+            tris[0] = tagged
+        if why:
+            rec.setdefault("notes", []).append({"rule": "triangles", "message": "Geometry Script read no levels (%s); "
+                                                "full detail from the registry tag, the steps from vertices" % why})
+        rec["triangles"] = tris
+        rec["lod_verts"] = [ske.get_num_verts(asset, i) for i in range(lods)]
         rec["materials"] = [dict(slot=str(m.material_slot_name), **material_facts(unreal, m.material_interface))
                             for m in asset.get_editor_property("materials")]
     elif isinstance(asset, unreal.Texture2D):
@@ -676,8 +770,7 @@ def register_validator(unreal, spec):
 
         @unreal.ufunction(override=True)
         def k2_validate_loaded_asset(self, asset):
-            ar = unreal.AssetRegistryHelpers.get_asset_registry()
-            ad = ar.get_asset_by_object_path(asset.get_path_name())
+            ad = unreal.EditorAssetLibrary.find_asset_data(asset.get_path_name())
             fs = check_asset(spec, editor_record(unreal, ad), in_piece=False)
             errs = [f for f in fs if f["severity"] == "error" and not waived(spec, f)]
             for f in fs:

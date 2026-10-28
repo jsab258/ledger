@@ -216,7 +216,9 @@ def main_after_idle(seconds=20.0):
         ui.set_editor_property("import_mesh", True)
         ui.set_editor_property("import_as_skeletal", True)
         ui.set_editor_property("mesh_type_to_import", unreal.FBXImportType.FBXIT_SKELETAL_MESH)
-        ui.set_editor_property("import_materials", True)
+        # a garment baked to maps wears one material on every slot (packed_material), so the FBX's own slot
+        # materials are not made: the asset checks' first run (28 October 2026) found three left behind, unused
+        ui.set_editor_property("import_materials", "maps" not in g)
         ui.set_editor_property("import_textures", False)
         ui.set_editor_property("import_animations", False)
         ui.set_editor_property("create_physics_asset", False)
@@ -246,6 +248,17 @@ def main_after_idle(seconds=20.0):
         lines.append("  size cm %s, centre %s" % ([round(2 * x, 1) for x in (b.box_extent.x, b.box_extent.y, b.box_extent.z)],
                                                  [round(x, 1) for x in (b.origin.x, b.origin.y, b.origin.z)]))
         lines.append("  material slots: %s" % [str(m.get_editor_property("material_slot_name")) for m in mesh.get_editor_property("materials")])
+        # LEVELS OF DETAIL (28 October 2026, the asset checks' first run on Tom's jacket: one level where the
+        # budget wants four, production/specs/asset-budgets.json): Unreal's own reduction over the engine's default
+        # groups (BaseEngine.ini, [/Script/Engine.SkeletalMeshLODSettings]: 25, 12.5 and 6 per cent of the full
+        # mesh), so no level keeps more than half the one before it (the budget's lod_step_max is 0.6); a new
+        # base after a reimport regenerates the reduced levels (FLODUtilities::RegenerateLOD)
+        want = int(g.get("lods", 4))
+        ske = unreal.get_editor_subsystem(unreal.SkeletalMeshEditorSubsystem)
+        if want > 1:
+            unreal.SkeletalMeshEditorSubsystem.regenerate_lod(mesh, want, False, False)
+        n = ske.get_lod_count(mesh)
+        lines.append("  levels of detail: %d, vertices %s" % (n, [ske.get_num_verts(mesh, i) for i in range(n)]))
         if "maps" in g:
             mi = packed_material(unreal, g, folder, lines)
             if mi is not None:

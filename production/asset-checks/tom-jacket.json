@@ -1,0 +1,111 @@
+{
+ "piece": "tom-jacket",
+ "line": "assetChecks=FAIL piece=tom-jacket assets=8 errors=4 warnings=0 waived=0 first=names:Rib:Rib/MI_",
+ "when": "2026-10-28 22:22:47",
+ "assets": [
+  "/Game/Ledger/MetaHumans/Garments/TomZipJacket/MI_TomZipJacket",
+  "/Game/Ledger/MetaHumans/Garments/TomZipJacket/Rib",
+  "/Game/Ledger/MetaHumans/Garments/TomZipJacket/Shell",
+  "/Game/Ledger/MetaHumans/Garments/TomZipJacket/SKM_TomZipJacket",
+  "/Game/Ledger/MetaHumans/Garments/TomZipJacket/Tape",
+  "/Game/Ledger/MetaHumans/Garments/TomZipJacket/T_TomZipJacket_ColourAO",
+  "/Game/Ledger/MetaHumans/Garments/TomZipJacket/T_TomZipJacket_Normal",
+  "/Game/Ledger/MetaHumans/Garments/TomZipJacket/T_TomZipJacket_Packed"
+ ],
+ "imports": {
+  "Rib": "5b7e95879ce29e277f92d2fd4c35e038",
+  "Shell": "5b7e95879ce29e277f92d2fd4c35e038",
+  "SKM_TomZipJacket": "5b7e95879ce29e277f92d2fd4c35e038",
+  "Tape": "5b7e95879ce29e277f92d2fd4c35e038",
+  "T_TomZipJacket_ColourAO": "2397faf52affac502166a6949c3d8d06",
+  "T_TomZipJacket_Normal": "7c34ddd2c62fc8b47c6f12a07fe3c646",
+  "T_TomZipJacket_Packed": "adb77984dd8d6eeba0f249501a616c97"
+ },
+ "measures": {
+  "MI_TomZipJacket": {
+   "class": "MaterialInstanceConstant"
+  },
+  "Rib": {
+   "class": "MaterialInstanceConstant"
+  },
+  "Shell": {
+   "class": "MaterialInstanceConstant"
+  },
+  "SKM_TomZipJacket": {
+   "class": "SkeletalMesh",
+   "triangles": [
+    18976
+   ],
+   "lod_verts": [
+    10396
+   ]
+  },
+  "Tape": {
+   "class": "MaterialInstanceConstant"
+  },
+  "T_TomZipJacket_ColourAO": {
+   "class": "Texture2D",
+   "size": [
+    2048,
+    2048
+   ],
+   "compression": "TC_DEFAULT",
+   "srgb": true,
+   "source_compression": "UE Delta"
+  },
+  "T_TomZipJacket_Normal": {
+   "class": "Texture2D",
+   "size": [
+    2048,
+    2048
+   ],
+   "compression": "TC_NORMALMAP",
+   "srgb": false,
+   "source_compression": "UE Delta"
+  },
+  "T_TomZipJacket_Packed": {
+   "class": "Texture2D",
+   "size": [
+    2048,
+    2048
+   ],
+   "compression": "TC_MASKS",
+   "srgb": false,
+   "source_compression": "UE Delta"
+  }
+ },
+ "findings": [
+  {
+   "rule": "names",
+   "asset": "Rib",
+   "message": "a MaterialInstanceConstant's name starts MI_",
+   "severity": "error",
+   "value": "Rib",
+   "limit": "MI_"
+  },
+  {
+   "rule": "names",
+   "asset": "Shell",
+   "message": "a MaterialInstanceConstant's name starts MI_",
+   "severity": "error",
+   "value": "Shell",
+   "limit": "MI_"
+  },
+  {
+   "rule": "lods",
+   "asset": "SKM_TomZipJacket",
+   "message": "1 levels of detail, the garment_jacket kind wants 4",
+   "severity": "error",
+   "value": 1,
+   "limit": 4
+  },
+  {
+   "rule": "names",
+   "asset": "Tape",
+   "message": "a MaterialInstanceConstant's name starts MI_",
+   "severity": "error",
+   "value": "Tape",
+   "limit": "MI_"
+  }
+ ]
+}

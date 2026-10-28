@@ -8,17 +8,17 @@ Failed its exit on 22 Oct (production/audits/phase1-exit/CLOSE-2026-10-22.md); r
 
 - [x] 1. Health check; the order ledger.
 - [x] 2. The walk: Epic's, Tom's MetaHuman, packaged; tester's route 15 of 15. Sit set aside.
-- [ ] 3. Tom's outfit: jacket in the packaged game; the shorts it hid restored, baked cuffs next (BAKE-PLAN).
-- [ ] 4. Speech: cited facts, wider rule, checker, two copies on; the night's build next (LOCAL-CHECKERS).
-- [ ] 5. Mickey's office: packaged, Epic's camera: back wall passes; door, grainy shadows next (cab-office-interior-1990/WEAR).
+- [ ] 3. Clothes (his order C): skill written; jacket in the game; elastic-rib cuffs await his click (BAKE-PLAN).
+- [ ] 4. Speech: the faster first sentence's second try, bench tomorrow.
+- [ ] 5. Mickey's office: door, grain; the look's calibration scene begun (day a stop bright).
 - [ ] 6. Phase 1's exit re-run; phase 2?
-- Fallback (28 Oct): hints, lamps, facing built; camera page; 145 study items logged.
+- Also (28 Oct): sitting by spots (2 of 10 entries kept), asset checks, the camera (his pick pending).
 
 ## Studies this week (aaa-reference/STUDY-PLAN.md)
 
 Done 16 of 16 (28 Oct: ten early).
 
-STATE (28 Oct 15:15): one packaged build for jacket, hints, lamps, facing, camera pictures.
+STATE (28 Oct 22:25): his camera pick and Marvelous click awaited; the build mended after Epic's Fab update.
 
 ## Handovers
 
