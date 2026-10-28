@@ -341,6 +341,7 @@ OURS = {
     "production/approvals/2026-10-26": "the game filming Tom's walk at its own camera for his page, 26 October",
     "production/approvals/2026-10-22-ritas": "the game filming its own street with Rita's front and lamp post C for his page, 22 October (out of git)",
     "production/approvals/2026-10-28-camera": "the packaged game filming Tom in its own street at three camera distances for his page, 28 October (out of git)",
+    "production/approvals/2026-10-29-look": "the game filming its own street through the player's camera at two exposures for his page, 29 October (out of git)",
     # THE SHOP GLASS BAKED, 21 October (item 6): the game's own street caught in its own windows
     # by the game (tools/glass_bake.py) and imported as cubes (tools/ue/import_glass_bake.py).
     "ue-probe/Content/Ledger/GlassBake": "the game's street caught in its own shop windows, baked by tools/glass_bake.py, 21 October",
