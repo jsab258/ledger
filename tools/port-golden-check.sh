@@ -270,6 +270,17 @@ selftest() {
   out=$( cd "$REPO" && "$bin" "$good" 2>&1 ); rc=$?
   _ok "the claims rows are skipped by name" 0 "SKIPPED scenario=claims"
   _ok "and the count is printed beside them" 0 "skippedTotal=7"
+  # THE ENGINE'S ONE-LINE COUNTS, built in CoreGolden.h and printed here first (28 October
+  # 2026, the 5 October sweep's H3): green shows its denominator, skipped rows by kind.
+  _ok "the counts line names the claims rows among the skipped" 0 "perceptionSkippedClaims=7"
+  _ok "and every row of the table is accounted for" 0 "perceptionAddsUp=yes"
+
+  echo
+  echo "[5b] A ROW TOO SHORT TO COMPARE FAILS, NAMED (28 October 2026, the sweep's H2)"
+  { cat "$good"; echo "FixPoliceOrder|20"; } > "$WORK/tooshort.txt"
+  out=$( cd "$REPO" && "$bin" "$WORK/tooshort.txt" 2>&1 ); rc=$?
+  _ok "a two-field row is red, not dropped" 2 "SHORT-ROW FixPoliceOrder|20"
+  _ok "and the counts line says so" 2 "perceptionTooShort=1"
 
   echo
   echo "[6] DRIFT IS SEEN, IN BOTH DIRECTIONS"

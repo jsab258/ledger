@@ -1823,7 +1823,11 @@ namespace Ledger.PerceptionGolden
                 var reports = new List<object>();
                 for (int k = 0; k < 20; k++) reports.Add(new Dictionary<string, object> { { "who", "w" + k }, { "topic", "mark" + k }, { "offence", "Wounding" }, { "how", "Statement" }, { "day", 1.0 } });
                 var loaded = PoliceFile.FromJson(new Dictionary<string, object> { { "entries", reports }, { "visits", visits } });
-                Row(sb, "FixPoliceOrder", string.Join(",", loaded.Visits.Select(v => v.day + ":" + v.why.Substring(v.why.IndexOf(' ') + 1))));
+                // THE VISITS KEPT, THEN THEIR ORDER (28 October 2026, the 5 October sweep's H2). The row
+                // had two fields and both of the port's readers drop a row under three, so it was compared
+                // by nobody; the count makes it three fields and is itself worth pinning (twenty kept).
+                Row(sb, "FixPoliceOrder", loaded.Visits.Count.ToString(Inv),
+                    string.Join(",", loaded.Visits.Select(v => v.day + ":" + v.why.Substring(v.why.IndexOf(' ') + 1))));
                 var file = new PoliceFile();
                 file.Report("rita", "player.window_d1", Offence.Damage, 4, 1);
                 file.Report("hal", "player.window_d2", Offence.Damage, 4, 2);

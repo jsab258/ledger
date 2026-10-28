@@ -111,7 +111,7 @@ namespace
 	// The commit comes in on the command line rather than being discovered,
 	// because a game binary has no business running git and a sha it guessed
 	// would be a provenance line with no provenance.
-	void WriteVerdict(long Rows, long Bad, long Unknown, const FString& GoldenUsed, double Tol)
+	void WriteVerdict(const LedgerCore::Golden::FGoldenTally& Tally, const FString& GoldenUsed, double Tol)
 	{
 		FString Sha;
 		if (!FParse::Value(FCommandLine::Get(), TEXT("LedgerCommit="), Sha) || Sha.IsEmpty())
@@ -127,7 +127,7 @@ namespace
 		Out.Add(TEXT("# Line 1 names the commit this was measured on, as the Unity verdict does."));
 		Out.Add(TEXT(""));
 
-		if (Rows == 0)
+		if (Tally.Compared == 0)
 		{
 			// NO RUN, said in words. A run that measured nothing must not
 			// leave a file that reads like a clean one.
@@ -136,23 +136,22 @@ namespace
 		else
 		{
 			// The done line: whole-run numbers only, no spaces in any value.
-			// THE REASON RIDES THE KEY ONLY IN THE BUILD THAT CAUSES IT.
-			// If this module was compiled without exceptions the four
-			// FactNull rows are compiled out of the evaluator and count as
-			// Unknown (Suspicion.h says why); in every other build the
-			// suffix is empty, so it can never explain an unknown it did not
-			// cause. A count above four with this suffix means something
-			// ELSE is also unanswered and the number says so.
-#if LEDGER_CORE_EXCEPTIONS
-			const TCHAR* UnknownWhy = TEXT("");
-#else
-			const TCHAR* UnknownWhy = TEXT("/FactNull-needs-exceptions");
-#endif
+			// THE DENOMINATOR RIDES THE LINE (28 October 2026, the 5 October
+			// sweep's H3). It used to print rows compared and 0 unknown, with
+			// a "/FactNull-needs-exceptions" suffix on the unknown count even
+			// though the four FactNull rows had been skipped, not unknown,
+			// since 22 September; the seven claims rows, those four and the
+			// row no reader read appeared nowhere. Now the table's rows and
+			// where each went (CoreGolden.h's TallyLine, run first by
+			// core-port-test): compared, skipped by kind (claims, FactNull,
+			// any other), unanswered, too short, and whether they add up.
+			// probeTest is green only on what golden-result.txt is green on
+			// (it used to look at mismatches alone). The build machine reads
+			// only probeTest= from this file; the older keys keep their names.
 			Out.Add(FString::Printf(
-				TEXT("perceptionRows=%ld perceptionMismatches=%ld perceptionUnknownFns=%ld%s ")
-				TEXT("perceptionTolerance=%g probeTest=%s goldenTable=%s"),
-				Rows, Bad, Unknown, UnknownWhy, Tol,
-				Bad == 0 ? TEXT("PASS") : TEXT("FAIL"),
+				TEXT("%s perceptionTolerance=%g probeTest=%s goldenTable=%s"),
+				UTF8_TO_TCHAR(LedgerCore::Golden::TallyLine(Tally).c_str()), Tol,
+				LedgerCore::Golden::TallyPasses(Tally) ? TEXT("PASS") : TEXT("FAIL"),
 				GoldenUsed.IsEmpty() ? TEXT("NONE-FOUND")
 				                     : *FPaths::GetCleanFilename(GoldenUsed)));
 		}
@@ -679,7 +678,10 @@ namespace
 		TArray<FString> Lines;
 		Contents.ParseIntoArrayLines(Lines);
 
-		long Rows = 0, Bad = 0, Unknown = 0, Skipped = 0;
+		// WHERE EVERY ROW WENT (28 October 2026, the 5 October sweep's H3): the
+		// table's rows, compared, skipped by kind, unanswered, too short; the
+		// same tally and line core-port-test prints and checks (CoreGolden.h).
+		LedgerCore::Golden::FGoldenTally Tally;
 		const double Tol = 1e-9;
 		FString Detail;
 
@@ -687,8 +689,21 @@ namespace
 		{
 			if (Line.IsEmpty() || Line.StartsWith(TEXT("#"))) continue;
 			const std::vector<FString> F = SplitPipe(Line);
-			if (F.size() < 3) continue;
-			++Rows;
+			++Tally.Table;
+			// A ROW TOO SHORT TO COMPARE IS COUNTED, NAMED AND RED (28 October
+			// 2026, the sweep's H2). It was dropped here without a word, and so
+			// FixPoliceOrder (two fields) was read by neither reader while both
+			// said they covered the table. The C# writes no such row now.
+			if (F.size() < LedgerCore::Golden::FewestFields)
+			{
+				++Tally.TooShort;
+				if (Tally.TooShort <= 10)
+				{
+					Detail += FString::Printf(TEXT("  TOO-SHORT %s\n"), *Line);
+				}
+				continue;
+			}
+			++Tally.Compared;
 			const FString& Fn = F[0];
 			double Got = 0.0, Want = 0.0;
 
@@ -729,23 +744,21 @@ namespace
 				// ROW IS NAMED AND FAILS. This reader used to add both to one
 				// Unknown total and pass regardless, while the container's
 				// reader failed on either - the same table, two strictnesses.
-				if (Fields.size() > 1 && Fn == TEXT("Scenario")
-				    && LedgerCore::Golden::IsUnportedScenario(Fields[1]))
+				// Counted under its kind (claims, FactNull) since 28 October
+				// 2026, from CoreGolden.h's SkipKind, which both readers ask.
+				const std::string Kind = LedgerCore::Golden::SkipKind(Fields);
+				if (!Kind.empty())
 				{
-					++Skipped; --Rows; continue;
-				}
-				if (LedgerCore::Golden::IsUnanswerableByThisBuild(Fields[0]))
-				{
-					++Skipped; --Rows; continue;
+					++Tally.Skipped[Kind]; --Tally.Compared; continue;
 				}
 				const LedgerCore::Golden::Answer A = LedgerCore::Golden::Evaluate(Fields);
 				if (!A.Known)
 				{
-					++Unknown; --Rows;
+					++Tally.Unanswered; --Tally.Compared;
 					// NAMED, NOT JUST COUNTED. "11 row(s) named a function
 					// this build does not implement" cost a whole round trip
 					// to this machine to find out WHICH eleven.
-					if (Unknown <= 10)
+					if (Tally.Unanswered <= 10)
 					{
 						Detail += FString::Printf(TEXT("  UNANSWERED %s\n"), *Line);
 					}
@@ -754,8 +767,8 @@ namespace
 				const std::string& WantS = Fields[Fields.size() - 1];
 				if (!LedgerCore::Golden::Agrees(A.Got, WantS, Tol))
 				{
-					++Bad;
-					if (Bad <= 10)
+					++Tally.Mismatched;
+					if (Tally.Mismatched <= 10)
 					{
 						Detail += FString::Printf(TEXT("  MISMATCH %s got=%s want=%s\n"),
 						                          *Fn, UTF8_TO_TCHAR(A.Got.c_str()),
@@ -767,37 +780,45 @@ namespace
 
 			if (FMath::Abs(Got - Want) > Tol)
 			{
-				++Bad;
-				if (Bad <= 10)
+				++Tally.Mismatched;
+				if (Tally.Mismatched <= 10)
 				{
 					Detail += FString::Printf(TEXT("  MISMATCH %s got=%.17g want=%.17g <- %s\n"), *Fn, Got, Want, *Line);
 				}
 			}
 		}
 
-		WriteVerdict(Rows, Bad, Unknown, Found, Tol);
+		WriteVerdict(Tally, Found, Tol);
 
 		FString Result;
 		// A GOLDEN FILE THAT LOADED NOTHING MUST NOT READ AS AGREEMENT.
-		if (Rows == 0)
+		if (Tally.Compared == 0)
 		{
 			Result = FString::Printf(TEXT("perceptionGolden=0 rows read from %s\nprobeTest=FAIL reason=golden-table-empty\n"), *GoldenPath);
 		}
 		else
 		{
 			Result = Detail;
-			if (Unknown > 0)
+			if (Tally.Unanswered > 0)
 			{
-				Result += FString::Printf(TEXT("  note: %ld row(s) named a function this build does not implement\n"), Unknown);
+				Result += FString::Printf(TEXT("  note: %ld row(s) named a function this build does not implement\n"), Tally.Unanswered);
 			}
-			Result += FString::Printf(TEXT("perceptionSkipped=%ld over the unported scenarios named in CoreGolden.h\n"), Skipped);
-			Result += FString::Printf(TEXT("perceptionRows=%ld perceptionMismatches=%ld tolerance=%g\n"), Rows, Bad, Tol);
+			if (Tally.TooShort > 0)
+			{
+				Result += FString::Printf(TEXT("  note: %ld row(s) too short to compare (fewer than three fields)\n"), Tally.TooShort);
+			}
+			// THE SAME COUNTS AS THE VERDICT'S LINE (28 October 2026, the sweep's
+			// H3): perceptionSkipped= is now split by kind beside the rows
+			// compared, where it used to sit alone on a line of its own.
+			Result += FString::Printf(TEXT("%s perceptionTolerance=%g\n"),
+			                          UTF8_TO_TCHAR(LedgerCore::Golden::TallyLine(Tally).c_str()), Tol);
 			// AN UNANSWERED ROW FAILS NOW. It used to be a note beside a PASS,
 			// which meant a hole opening in the port turned the cheap check
 			// red and left this one green - the expensive check, the one that
-			// runs the real engine, being the lenient of the two.
+			// runs the real engine, being the lenient of the two. A too-short
+			// row fails too, and a tally that does not add up (TallyPasses).
 			Result += FString::Printf(TEXT("probeTest=%s\n"),
-			                          (Bad == 0 && Unknown == 0) ? TEXT("PASS") : TEXT("FAIL"));
+			                          LedgerCore::Golden::TallyPasses(Tally) ? TEXT("PASS") : TEXT("FAIL"));
 		}
 		FFileHelper::SaveStringToFile(Result, *OutPath);
 	}

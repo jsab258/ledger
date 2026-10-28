@@ -1057,6 +1057,65 @@ namespace Golden
 		return false;
 	}
 
+	// THE FEWEST FIELDS A ROW CAN HAVE AND BE COMPARED (28 October 2026, the
+	// 5 October sweep's H2): its name, an input or a label, and its answer.
+	// Both readers used to drop a shorter row without a word, so FixPoliceOrder
+	// (two fields) was compared by neither while both said they covered the
+	// table. A shorter row now fails in both readers, named; the C# writes none.
+	const std::vector<std::string>::size_type FewestFields = 3;
+
+	// WHY A ROW IS SKIPPED, BY KIND (28 October 2026, the sweep's H3): the
+	// unported scenario's name ("claims") or the function this build cannot
+	// answer ("FactNull"); empty for a row to compare. One definition for both
+	// readers, so the counts they print cannot disagree about a kind.
+	inline std::string SkipKind(const std::vector<std::string>& F)
+	{
+		if (F.size() > 1 && F[0] == "Scenario" && IsUnportedScenario(F[1])) return F[1];
+		if (!F.empty() && IsUnanswerableByThisBuild(F[0])) return F[0];
+		return std::string();
+	}
+
+	// WHERE EVERY ROW OF THE TABLE WENT, ON ONE LINE (28 October 2026, the
+	// sweep's H3). The engine's one-line verdict said "N rows, 0 unknown" and
+	// the seven claims rows, the four FactNull rows an engine build cannot
+	// answer and the row nobody read appeared nowhere in it: green with no
+	// denominator. Every verdict now carries the table's rows and where each
+	// went (compared, skipped by kind, unanswered, too short), and they must
+	// add up. Keys and integers, no spaces: the build machine reads only
+	// probeTest= from these files, and the older keys keep their names
+	// (perceptionUnknownFns is the unanswered count).
+	struct FGoldenTally
+	{
+		long Table = 0, Compared = 0, Mismatched = 0, Unanswered = 0, TooShort = 0;
+		std::map<std::string, long> Skipped;
+	};
+	inline long SkippedTotal(const FGoldenTally& T)
+	{
+		long N = 0;
+		for (std::map<std::string, long>::const_iterator It = T.Skipped.begin(); It != T.Skipped.end(); ++It) N += It->second;
+		return N;
+	}
+	inline bool TallyAddsUp(const FGoldenTally& T)
+	{
+		return T.Table == T.Compared + T.Unanswered + T.TooShort + SkippedTotal(T);
+	}
+	// Green only when something was compared, nothing disagreed, and every row
+	// was compared or skipped by name: an unanswered or too-short row is red.
+	inline bool TallyPasses(const FGoldenTally& T)
+	{
+		return T.Compared > 0 && T.Mismatched == 0 && T.Unanswered == 0 && T.TooShort == 0 && TallyAddsUp(T);
+	}
+	inline std::string TallyLine(const FGoldenTally& T)
+	{
+		const std::map<std::string, long>::const_iterator C = T.Skipped.find("claims"), N = T.Skipped.find("FactNull");
+		const long Claims = C == T.Skipped.end() ? 0 : C->second, FactNull = N == T.Skipped.end() ? 0 : N->second;
+		return "perceptionTableRows=" + FromInt(T.Table) + " perceptionRows=" + FromInt(T.Compared)
+		     + " perceptionMismatches=" + FromInt(T.Mismatched) + " perceptionUnknownFns=" + FromInt(T.Unanswered)
+		     + " perceptionSkipped=" + FromInt(SkippedTotal(T)) + " perceptionSkippedClaims=" + FromInt(Claims)
+		     + " perceptionSkippedFactNull=" + FromInt(FactNull) + " perceptionSkippedOther=" + FromInt(SkippedTotal(T) - Claims - FactNull)
+		     + " perceptionTooShort=" + FromInt(T.TooShort) + " perceptionAddsUp=" + (TallyAddsUp(T) ? "yes" : "NO");
+	}
+
 	inline const char* ScenarioNames(int Index)
 	{
 		static const char* Names[] = {
@@ -4244,16 +4303,25 @@ namespace Golden
 		}
 		// The police file: one day's visits in the order saved; no call while he is in the cells.
 		{
-			std::string Visits = "{\"visits\":[";
-			for (int K = 0; K < 20; ++K) Visits += (K ? ",[" : "[") + FromInt(K % 2 == 0 ? 6 : 5) + ",\"Wounding mark" + FromInt(K) + "\"]";
-			const PoliceFile Loaded = PoliceFile::FromJson(Visits + "]}");
+			// THE C#'S SAVE, WITH ITS ENTRIES (28 October 2026, the 5 October sweep's H2).
+			// This fixture used to save the visits alone, so every visit failed VisitCouldBe
+			// (no report behind it) and the port would have answered an empty list where the
+			// C# keeps twenty in order; the row, read by nobody, hid it. The twenty reports
+			// are the C#'s: w0..w19 on mark0..mark19, Wounding, by statement, on day 1.
+			std::string Saved = "{\"entries\":[";
+			for (int K = 0; K < 20; ++K)
+				Saved += std::string(K ? "," : "") + "{\"who\":\"w" + FromInt(K) + "\",\"topic\":\"mark" + FromInt(K)
+				       + "\",\"offence\":\"Wounding\",\"how\":\"Statement\",\"day\":1}";
+			Saved += "],\"visits\":[";
+			for (int K = 0; K < 20; ++K) Saved += (K ? ",[" : "[") + FromInt(K % 2 == 0 ? 6 : 5) + ",\"Wounding mark" + FromInt(K) + "\"]";
+			const PoliceFile Loaded = PoliceFile::FromJson(Saved + "]}");
 			std::string Order;
 			for (size_t I = 0; I < Loaded.Visits().size(); ++I)
 			{
 				const std::string& Why = Loaded.Visits()[I].second;
 				Order += (I ? "," : "") + FromInt(Loaded.Visits()[I].first) + ":" + Why.substr(Why.find(' ') + 1);
 			}
-			Ans["FixPoliceOrder"].push_back({ Order });
+			Ans["FixPoliceOrder"].push_back({ FromInt((long long)Loaded.Visits().size()), Order });
 			PoliceFile File;
 			File.Report("rita", "player.window_d1", Offence::Damage, 4, 1);
 			File.Report("hal", "player.window_d2", Offence::Damage, 4, 2);

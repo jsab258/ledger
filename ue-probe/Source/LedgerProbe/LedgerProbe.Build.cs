@@ -102,6 +102,11 @@ public class LedgerProbe : ModuleRules
 		// which the run says in words. Turning exceptions on instead would
 		// change a compile setting for the whole module to keep four rows,
 		// which is the trade the director refused.
+		// HOW THE RUN SAYS IT NOW (28 October 2026, the 5 October sweep's H3):
+		// since 22 September the four are skipped by name, not counted as
+		// Unknown (CoreGolden.h, IsUnanswerableByThisBuild), and the verdict
+		// line names them as perceptionSkippedFactNull=4 beside the claims
+		// rows and the rest of the table's count; the suffix above is gone.
 		PublicDefinitions.Add("LEDGER_CORE_NO_EXCEPTIONS=1");
 	}
 }

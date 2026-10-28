@@ -75,14 +75,16 @@ int main(int argc, char** argv)
 	std::map<std::string, int> Rows, Bad, Unknown;
 	std::vector<std::string> Order;
 	long TotalRows = 0, TotalBad = 0, TotalUnknown = 0, TotalSkipped = 0;
-	// ROWS TOO SHORT TO COMPARE, COUNTED AND NAMED (5 October 2026, phase 0's checks that fail
-	// loudly). Until then a row of fewer than three fields was dropped without a word: the
-	// table's FixPoliceOrder row (a C# fixture with no input) was read by nobody and the
+	// ROWS TOO SHORT TO COMPARE FAIL (5 October 2026, phase 0's checks that fail loudly; no
+	// named exception from 28 October 2026). Until 5 October a row of fewer than three fields
+	// was dropped without a word: the table's FixPoliceOrder row was read by nobody and the
 	// comparison still said it covered the table (production/audits/sweep-2026-10-05/
-	// port-vs-core.md). A short row is now a named hole or a failure, never silence.
+	// port-vs-core.md, H2). It was then named and counted as a hole; since 28 October the C#
+	// writes it with its visit count and the port answers it, so no short row is excused.
 	std::map<std::string, int> Short;
-	long TotalShort = 0, TotalShortUnnamed = 0;
-	const char* const KnownShort[] = { "FixPoliceOrder", 0 };
+	long TotalShort = 0;
+	// Where every row went, the same tally and line the engine's verdict prints (CoreGolden.h).
+	FGoldenTally Tally;
 	std::vector<std::string> Detail;
 
 	// SCENARIOS THIS BUILD DOES NOT IMPLEMENT, NAMED ONE BY ONE.
@@ -111,44 +113,40 @@ int main(int argc, char** argv)
 		if (!Line.empty() && Line[Line.size() - 1] == '\r') { Line.erase(Line.size() - 1); }
 		if (Line.empty() || Line[0] == '#') continue;
 		const std::vector<std::string> F = SplitPipe(Line);
-		if (F.size() < 3)
+		++Tally.Table;
+		if (F.size() < FewestFields)
 		{
-			bool Named = false;
-			for (int K = 0; KnownShort[K] != 0; ++K) { if (F[0] == KnownShort[K]) { Named = true; } }
-			++Short[F[0]]; ++TotalShort;
-			if (!Named) { ++TotalShortUnnamed; if (Detail.size() < 10) { Detail.push_back("SHORT-ROW " + Line); } }
+			++Short[F[0]]; ++TotalShort; ++Tally.TooShort;
+			if (Detail.size() < 10) { Detail.push_back("SHORT-ROW " + Line); }
 			continue;
 		}
 		const std::string& Fn = F[0];
 		if (Rows.find(Fn) == Rows.end()) { Order.push_back(Fn); Rows[Fn] = 0; Bad[Fn] = 0; Unknown[Fn] = 0; }
 
 		// A NAMED HOLE IS SKIPPED AND COUNTED; EVERY OTHER UNKNOWN STILL FAILS.
-		if (Fn == "Scenario")
+		// The unported scenarios by name, and the rows this build cannot answer
+		// because of its compile flags (this binary HAS exceptions, so all four
+		// FactNull rows are answered here; it is the engine's build that cannot).
+		// One definition, SkipKind, so the two readers cannot drift about what a
+		// hole is (28 October 2026: the kind is now what both count it under).
+		const std::string Kind = SkipKind(F);
+		if (!Kind.empty())
 		{
-			if (IsUnportedScenario(F[1])) { ++Skipped[F[1]]; ++TotalSkipped; continue; }
-		}
-		// AND THE ROWS THIS BUILD CANNOT ANSWER BECAUSE OF ITS COMPILE FLAGS.
-		// This binary HAS exceptions, so the call below is false here and all
-		// four FactNull rows are answered; it is the engine's build that
-		// cannot. Asked anyway, from the one definition, so the two readers
-		// cannot drift about what a hole is.
-		if (IsUnanswerableByThisBuild(Fn))
-		{
-			++Skipped[Fn]; ++TotalSkipped; continue;
+			++Skipped[Kind]; ++TotalSkipped; ++Tally.Skipped[Kind]; continue;
 		}
 
 		const Answer A = Evaluate(F);
 		if (!A.Known)
 		{
-			++Unknown[Fn]; ++TotalUnknown;
+			++Unknown[Fn]; ++TotalUnknown; ++Tally.Unanswered;
 			if (Detail.size() < 10) { Detail.push_back("UNKNOWN-ROW " + Line); }
 			continue;
 		}
-		++Rows[Fn]; ++TotalRows;
+		++Rows[Fn]; ++TotalRows; ++Tally.Compared;
 		const std::string& Want = F[F.size() - 1];
 		if (!Agrees(A.Got, Want, Tol))
 		{
-			++Bad[Fn]; ++TotalBad;
+			++Bad[Fn]; ++TotalBad; ++Tally.Mismatched;
 			if (Detail.size() < 10)
 			{
 				Detail.push_back("MISMATCH " + Fn + " got=" + A.Got + " want=" + Want + " <- " + Line);
@@ -198,10 +196,34 @@ int main(int argc, char** argv)
 		{
 			std::printf("    SHORT fn=%s rows=%d (fewer than three fields: not compared)\n", It->first.c_str(), It->second);
 		}
-		std::printf("    shortTotal=%ld unnamed=%ld\n", TotalShort, TotalShortUnnamed);
-		Loud(TotalShortUnnamed == 0, "every row too short to compare is a named hole");
+		std::printf("    shortTotal=%ld\n", TotalShort);
+		Loud(TotalShort == 0, "no row is too short to compare (every reader drops none)");
 		Loud(StillUnported == Listed,
 		     "every scenario on the unported list really is unanswerable here");
+	}
+
+	// THE ENGINE'S ONE-LINE COUNTS, MADE HERE FIRST (28 October 2026, the sweep's H3).
+	// LedgerProbe.cpp prints this same line into ue-verdict.txt and golden-result.txt;
+	// it compiles only with Unreal, so the line is built in CoreGolden.h and run here.
+	std::printf("    counts: %s\n", TallyLine(Tally).c_str());
+	Loud(TallyAddsUp(Tally), "every row of the table is compared, skipped by kind, unanswered or too short");
+	Loud(TallyPasses(Tally) == (TotalRows > 0 && TotalBad == 0 && TotalUnknown == 0 && TotalShort == 0),
+	     "the counts' verdict is this reader's verdict");
+	{
+		// AND THE LINE SAYS WHAT IT IS GIVEN: a planted tally of the engine's
+		// shape (seven claims, four FactNull, one other) and a short row.
+		FGoldenTally E;
+		E.Table = 120; E.Compared = 107; E.Skipped["claims"] = 7; E.Skipped["FactNull"] = 4; E.Skipped["future"] = 1; E.TooShort = 1;
+		const std::string L = TallyLine(E);
+		Loud(L.find("perceptionTableRows=120 perceptionRows=107 ") == 0
+		     && L.find(" perceptionSkipped=12 perceptionSkippedClaims=7 perceptionSkippedFactNull=4 perceptionSkippedOther=1 perceptionTooShort=1 perceptionAddsUp=yes") != std::string::npos
+		     && L.find("  ") == std::string::npos && L.find("= ") == std::string::npos,
+		     "the counts line names compared, each kind skipped and too short, with no empty value");
+		Loud(!TallyPasses(E), "and a too-short row is red even when it all adds up");
+		E.TooShort = 0; E.Table = 119;
+		Loud(TallyPasses(E), "while named skips alone stay green");
+		E.Compared = 106;
+		Loud(!TallyPasses(E) && TallyLine(E).find("perceptionAddsUp=NO") != std::string::npos, "and a row lost from the count is red and says so");
 	}
 
 	// ---- rule 5b: the accepting case is above, and these must REJECT ----

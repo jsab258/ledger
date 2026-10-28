@@ -55,6 +55,15 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 - Failed and why: the oversized talk PDFs could not be read whole; their figures stay unverified.
 - Evidence: production/research/phase5-procedural/RESEARCH-2026-10-28.md.
 
+### 28 Oct 2026, a check's own holes closed: a row nobody compared, and a green verdict with no denominator
+- Made: every golden row read and compared or skipped by name; the one-line verdict showing compared, skipped by kind and unanswered.
+- Method (setting-free): audit the checker itself: scan every row against each reader's minimum fields; make a too-short row fail loudly; give a pass line its denominator and the same pass terms as the full result; test the verdict line itself; replay every downstream reader of the line on mock output before changing it.
+- Tools: the golden parts, the port's standalone test, the build's verdict writer.
+- Target and check: 0 rows silently dropped; the verdict's counts add up (65,047 compared, 11 skipped, 0 unanswered).
+- Cost (hours): about 0.25 of a helper's time.
+- Failed and why: nothing.
+- Evidence: production/audits/sweep-2026-10-05/port-vs-core.md (H2, H3).
+
 ### 28 Oct 2026, the text a game sends to its talk program pinned byte for byte against the reference code
 - Made: the six message shapes that carry a talk reply into the town's memory, given a reference home and compared byte for byte.
 - Method (setting-free): when one side writes text the other reads, the text itself is the contract: write the reference version, emit rows of exact text (with the byte count, since a table cannot carry every control character), have the port answer through its real functions, and check number formatting across languages on a large sample (here 540,022 values agreed, ties included); plant breaks in field names, escapes and boundaries to prove the rows catch them.
