@@ -381,12 +381,17 @@ def build_and_render(argv):
         dark = mat("back_room_lit", (0.13, 0.10, 0.07), rough=0.9)
     if not back_gap:
         box("door_gap", 1.1 + dx, 1.95 + dx, D - 0.02, D + 0.06, 0, 2.0, dark)
+    shut_ = shop["id"] == "mickeys"
+    # THE SHUT DOOR SET IN ITS FRAME (28 October, the door's second try; fresh reviewers of the packaged game: "the door
+    # and frame merge into one flat slab, with no gap and no shadow line", "a board stuck over the doorway"): the shut
+    # leaf stood 25 mm proud of its own frame. Now the frame stands 25 mm proud of the leaf, which sits back in the
+    # opening, as a door hangs in its lining.
     for name, fx0, fx1, fz0, fz1 in (("door_frame_l", 1.02, 1.1, 0, 2.08), ("door_frame_r", 1.95, 2.03, 0, 2.08),
                                      ("door_frame_head", 1.02, 2.03, 2.0, 2.08)):
-        box(name, fx0 + dx, fx1 + dx, D - 0.035, D - 0.005, fz0, fz1, door)
-    shut_ = shop["id"] == "mickeys"
+        box(name, fx0 + dx, fx1 + dx, D - (0.045 if shut_ else 0.035), D - 0.005, fz0, fz1, door)
     # shut, the leaf fills its frame (a 3 cm slit showed the dark behind down its edge, 27 October night)
-    door_leaf = box("door_leaf", 1.1 + dx, (1.95 if shut_ else 1.92) + dx, D - 0.06, D - 0.02, 0, 2.0 if shut_ else 1.98, door)
+    door_leaf = box("door_leaf", 1.1 + dx, (1.95 if shut_ else 1.92) + dx, D - (0.02 if shut_ else 0.06), D + (0.02 if shut_ else -0.02),
+                    0, 2.0 if shut_ else 1.98, door)
     # MICKEY'S BACK DOOR STANDS SHUT (27 October, night). Behind it is Mickey's own room, locked since he died, Sheila
     # keeping the key: her facts and Darren's say so (ClaimCheck's known items, H13 and H12), and the room's collision
     # has always stood it shut (production/specs/mickeys-office.json). Since 8 October it hung half open onto a bare
@@ -395,21 +400,35 @@ def build_and_render(argv):
     # terrace's own age, a smooth brass knob, and a keyhole under it. Other shops keep their half-open back door.
     th_ = math.radians(0 if shut_ else -35)
     door_leaf.rotation_euler[2] = th_
-    brass_ = mat("door_brass", (0.55, 0.40, 0.16), rough=0.3, metal=1.0)
+    # the shut door's brass its own, brighter and broader in its highlight (28 October: the plate read "dull olive",
+    # "not brass"); the other shops' half-open doors keep theirs, as passed
+    brass_ = mat("door_brass_shut" if shut_ else "door_brass", (0.80, 0.62, 0.30) if shut_ else (0.55, 0.40, 0.16),
+                 rough=0.4 if shut_ else 0.3, metal=1.0)
     if shut_:
-        # four sunk panels' raised mouldings on the office side, the leaf's own paint
-        for k_, (pz0, pz1) in enumerate(((0.12, 0.88), (1.08, 1.86))):
-            for j_, (px0, px1) in enumerate(((1.17, 1.48), (1.54, 1.85))):
-                for nm_, a0, a1, b0, b1 in (("l", px0, px0 + 0.025, pz0, pz1), ("r", px1 - 0.025, px1, pz0, pz1),
-                                            ("b", px0, px1, pz0, pz0 + 0.025), ("t", px0, px1, pz1 - 0.025, pz1)):
-                    box("door_panel_%d%d%s" % (k_, j_, nm_), a0 + dx, a1 + dx, D - 0.068, D - 0.06, b0, b1, door)
-        # the keyhole: a brass plate under the knob, a dark slot in it
-        box("door_keyplate", 1.835 + dx, 1.865 + dx, D - 0.066, D - 0.06, 0.86, 0.93, brass_)
-        box("door_keyhole", 1.846 + dx, 1.854 + dx, D - 0.068, D - 0.066, 0.875, 0.905, mat("keyhole", (0.01, 0.01, 0.01), rough=1.0))
+        # FOUR PANELS LAID OUT AS A FOUR-PANEL DOOR IS (28 October, the door's second try; the reviewers: "1-pixel dashed
+        # hairlines", "no moulding or depth", the fittings "across the panel lines"): stiles 100 mm, a muntin 80 mm, a
+        # bottom rail 200 mm, a lock rail 200 mm at the knob's height, a top rail 150 mm; each panel's moulding 35 mm wide
+        # and 18 mm proud of the leaf, so it holds a shadow at the room's distance
+        for k_, (pz0, pz1) in enumerate(((0.20, 0.88), (1.08, 1.85))):
+            for j_, (px0, px1) in enumerate(((1.20, 1.485), (1.565, 1.85))):
+                for nm_, a0, a1, b0, b1 in (("l", px0, px0 + 0.035, pz0, pz1), ("r", px1 - 0.035, px1, pz0, pz1),
+                                            ("b", px0, px1, pz0, pz0 + 0.035), ("t", px0, px1, pz1 - 0.035, pz1)):
+                    box("door_panel_%d%d%s" % (k_, j_, nm_), a0 + dx, a1 + dx, D - 0.038, D - 0.02, b0, b1, door)
+        # the keyhole on the lock stile, under the knob and clear of every panel: a raised brass plate, a keyhole's own
+        # shape in it (a slot and the round above it), dark
+        box("door_keyplate", 1.885 + dx, 1.915 + dx, D - 0.026, D - 0.02, 0.885, 0.95, brass_)
+        hole_ = mat("keyhole", (0.005, 0.005, 0.005), rough=1.0)
+        box("door_keyhole", 1.8975 + dx, 1.9025 + dx, D - 0.027, D - 0.026, 0.898, 0.922, hole_)
+        bpy.ops.mesh.primitive_cylinder_add(vertices=16, radius=0.0045, depth=0.001, location=(1.90 + dx, D - 0.0265, 0.926),
+                                            rotation=(math.radians(90), 0, 0))
+        bpy.context.object.name = "door_keyhole_round"
+        bpy.context.object.data.materials.append(hole_)
     # ITS KNOB, on the open edge, room side (the second review: "the door has no handle"); smooth on the shut door,
-    # whose knob the wider camera sees (27 October: "a faceted knob")
+    # whose knob the wider camera sees (27 October: "a faceted knob"); shut, on the lock stile, its face 45 mm out
     ax_, ay_ = 1.51 + dx + 0.34 * math.cos(th_), D - 0.04 + 0.34 * math.sin(th_)
     nx_, ny_ = math.sin(th_), -math.cos(th_)
+    if shut_:
+        ax_, ay_ = 1.90 + dx, D - 0.02
     bpy.ops.mesh.primitive_uv_sphere_add(segments=32 if shut_ else 12, ring_count=16 if shut_ else 8, radius=0.03,
                                          location=(ax_ + 0.045 * nx_, ay_ + 0.045 * ny_, 1.0))
     bpy.context.object.name = "door_knob"
