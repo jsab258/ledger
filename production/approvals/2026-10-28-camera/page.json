@@ -1,0 +1,47 @@
+{
+ "tab": "Camera distance",
+ "kicker": "LEDGER · Wednesday 28 October · one decision",
+ "title": "How far behind Tom the camera hangs",
+ "how": [
+  "Shortfalls first. Tom's outfit is only the zip jacket so far: below it he still wears placeholder white shorts and bare feet, and the jacket's cuffs carry a known lump and small holes. The street around him is today's street with its own faults, the same in all three pictures and no part of this choice: flat white puddles, a white hairline along a pavement joint, a doormat lying mid-pavement, the phone kiosk's see-through side, two brown patches on the road. The other people are hidden because their clothes are still placeholders.",
+  "The same street, the same moment, three camera distances, through the packaged game's own camera. Pick one; the first is recommended."
+ ],
+ "foot": "Nothing bought or signed up for. The choice sets only where the street camera hangs, its height and its lens; running, rooms and talk get their own framing next, from the same study, each shown in the game first.",
+ "sections": [
+  {
+   "kind": "look",
+   "key": "camera-distance-2026-10-28",
+   "name": "The camera behind Tom: Mafia's 1.65 m, between, or ours at 3.2 m",
+   "note": "The same spot on Quay Street by day, through the packaged game's own camera, at three distances. Mafia's camera hangs 1.65 m behind a pivot 1.25 m above the feet, with an 82-degree lens: Tom fills more of the frame and the street ahead narrows. Ours hangs 3.2 m behind his hip with a 90-degree lens: more street, a smaller Tom. Between: 2.4 m, 86 degrees. The other people are hidden: their clothes are still placeholders.",
+   "detail": "Study 9 read Mafia's camera from its own files: 1.65 m back, 0.45 m aside, 0.35 m up from a pivot 1.25 m above the feet, an 82-degree lens on foot; it closes in a little for calm town walking (79 degrees, 1.55 m), widens for running (85 degrees, 1.40 m back), and has its own framing for low rooms and for talk (Tom placed 1.5 m from the speaker, 63 degrees). Ours: 3.2 m back, 0.45 aside, 0.55 up from his hip (0.88 m), 90 degrees. Your pick sets the street camera now; the run, room and talk framings come after it from the same study, as rows of one settings file, each shown to you in the game before it is kept. The packaged game's camera is known to hang further back than the editor's, so these pictures come from the packaged game only. Each picture passed a fresh reviewer first.",
+   "pictures": [
+    {
+     "src": "production/approvals/2026-10-28-camera/camera-mafia-1.65.webp",
+     "alt": "Mafia's camera: 1.65 m behind, pivot 1.25 m, lens 82 degrees"
+    },
+    {
+     "src": "production/approvals/2026-10-28-camera/camera-between-2.4.webp",
+     "alt": "Between: 2.4 m behind, lens 86 degrees"
+    },
+    {
+     "src": "production/approvals/2026-10-28-camera/camera-ours-3.2.webp",
+     "alt": "Ours today: 3.2 m behind, pivot at the hip, lens 90 degrees"
+    }
+   ],
+   "options": [
+    [
+     "mafia",
+     "Mafia's: 1.65 m behind, a little higher, a narrower lens (recommended)"
+    ],
+    [
+     "between",
+     "Between: 2.4 m"
+    ],
+    [
+     "ours",
+     "Keep ours: 3.2 m"
+    ]
+   ]
+  }
+ ]
+}

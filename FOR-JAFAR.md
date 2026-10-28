@@ -170,7 +170,7 @@ No decision asked: these are for watching the street change.
 ### Needs you
 
 1. **Open Marvelous and click LEDGER bridge** (no page: a click on your PC). The cuff drape by the new garment skill (an elastic rib) is queued and starts on its own.
-2. **Tom's camera: Mafia's 1.65 m and 82 degrees, or ours at 3.2 m and 90?** (a page this evening, with pictures from the packaged game; Study 9) Mafia's (recommended).
+2. **Tom's camera: Mafia's 1.65 m and 82 degrees, or ours at 3.2 m and 90?** (Study 9; on its page: https://claude.ai/artifact/4e5QA1UFTEGLacF3Rm4wpE) Mafia's (recommended).
 3. **Mickey's back door, a third try at its panels?** (next page) Chamfered mouldings with shaded corners, or panels sunk into the leaf. Yes (recommended), or leave them.
 4. **Fists able to kill?** (next page; Study 14: Kingdom Come II says no) No (recommended), or yes.
 5. **The animation source test at 6 moves, not the design's 4?** (next page) Yes (recommended), or 4.
