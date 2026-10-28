@@ -134,8 +134,23 @@ def packed_material(unreal, g, folder, lines):
     mel.connect_material_property(c, "A", unreal.MaterialProperty.MP_AMBIENT_OCCLUSION)
     mel.connect_material_property(n, "RGB", unreal.MaterialProperty.MP_NORMAL)
     base.set_editor_property("used_with_skeletal_mesh", True)
+    # ITS COMPILE READ BACK FROM THE EDITOR'S OWN LOG (28 October: the first graph failed to compile and nothing here
+    # said so; the build cooked it without shaders and Tom wore Unreal's default grey grid): only what the log gains
+    # from the recompile to the save is read, so an older graph's load-time errors are not counted
+    log_dir = unreal.Paths.project_log_dir()
+    logs = [os.path.join(log_dir, f) for f in os.listdir(log_dir) if f.endswith(".log")] if os.path.isdir(log_dir) else []
+    newest = max(logs, key=os.path.getmtime) if logs else None
+    mark = os.path.getsize(newest) if newest else 0
     mel.recompile_material(base)
     unreal.EditorAssetLibrary.save_loaded_asset(base, only_if_is_dirty=False)
+    try:
+        with open(newest, encoding="utf-8", errors="replace") as fh:
+            fh.seek(mark)
+            gained = fh.read()
+        errs = [l.strip() for l in gained.splitlines() if "(Node " in l or ("Failed to compile Material" in l and "LedgerGarmentPacked" in l)]
+        lines.append("  COMPILE ERRORS in %s: %s" % (PACKED_BASE, errs[:6]) if errs else "  %s compiled with no node error (the editor's log)" % PACKED_BASE)
+    except Exception as e:
+        lines.append("  the compile could not be read back: %r" % e)
     mi_name = "MI_" + g["name"]
     path = folder + "/" + mi_name
     mi = unreal.load_asset(path) if unreal.EditorAssetLibrary.does_asset_exist(path) else tools.create_asset(

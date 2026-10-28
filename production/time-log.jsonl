@@ -231,3 +231,5 @@
 {"event": "stop", "at": "2026-10-28T13:31:00", "note": ""}
 {"event": "start", "at": "2026-10-28T13:31:00", "task": "28 Oct: fallback: Studies 9, 10 and 13 checked and recorded (16 of 16); Mafia's key removed from the viewer's settings on C:", "phase": "3", "kind": "production"}
 {"event": "stop", "at": "2026-10-28T14:11:00", "note": ""}
+{"event": "start", "at": "2026-10-28T14:11:00", "task": "28 Oct: item 3: Tom in his jacket, first build: the default material found, its cause in the cook log, fixed, re-imported, a second build asked; the port's G4 remainder handed out", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-28T14:26:00", "note": ""}
