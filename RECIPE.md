@@ -19,6 +19,15 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 28 Oct 2026, how much a believable town says, counted from two shipped games' text and dialogue data
+- Made: line counts by speaker and situation, variants, waits and line lengths, beside the project's own street lines.
+- Method (setting-free): count the dialogue and bark data, never copy it; split lines by situation and speaker type; measure waits from the data's own timers; compare with the project's own counts first, so the gap shown is situations, not volume; proposals that would reopen a closed area go to the owner, not into the plan.
+- Tools: the unpacked text and dialogue tables, scripted counts.
+- Target and check: every number traceable and tagged; a fresh reviewer re-measured about 130 numbers, pass with fixes.
+- Cost (hours): about 0.8 of a helper's time.
+- Failed and why: the second game's bark data was never exported (the disk was full).
+- Evidence: production/research/aaa-reference/studies/03-dialogue-barks.md.
+
 ### 28 Oct 2026, how two shipped games open, reconstructed from their files without a recording
 - Made: a beat timeline of each game's first half hour and its measures, beside the project's thirty-minute goal.
 - Method (setting-free): rebuild the opening from quest steps, scene lengths, hint triggers and interface first appearances in the data; mark every minute as estimated; measure time to first control, watching against playing, the longest stretch with nothing new, saves; compare with the project's own goal; one fresh reviewer recomputes from the raw files.
@@ -54,6 +63,15 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 - Cost (hours): about 0.6 of helpers' time, 0.1 of the session's.
 - Failed and why: the oversized talk PDFs could not be read whole; their figures stay unverified.
 - Evidence: production/research/phase5-procedural/RESEARCH-2026-10-28.md.
+
+### 28 Oct 2026, every one-line break the tests missed made to fail them
+- Made: golden rows that catch each planted one-line break no test noticed (eight of nine; the ninth is dead code, pinned).
+- Method (setting-free): keep the list of planted breaks the checks miss; for each, find the reference code's own counterpart and emit rows that drive exactly that gate; the port answers through its real code; replant each break in a scratch copy to prove it now fails, with an unchanged control copy passing, and against the old table to prove the new rows are what catch it.
+- Tools: the planting script, the golden emitter, the port's standalone answerer.
+- Target and check: each break fails rows; 0 mismatches over 65,087 compared rows.
+- Cost (hours): about 0.3 of a helper's time.
+- Failed and why: nothing.
+- Evidence: production/audits/sweep-2026-10-05/port-vs-core.md (section 2).
 
 ### 28 Oct 2026, a check's own holes closed: a row nobody compared, and a green verdict with no denominator
 - Made: every golden row read and compared or skipped by name; the one-line verdict showing compared, skipped by kind and unanswered.

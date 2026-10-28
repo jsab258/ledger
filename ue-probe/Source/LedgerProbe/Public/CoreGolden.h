@@ -4924,6 +4924,145 @@ namespace Golden
 		return A;
 	}
 
+	// ---- the breaks no row saw (the 5 October sweep's section 2, 28 October 2026)
+	//
+	// PerceptionGolden's EmitUnseenBreaks, played again here through the port's
+	// own TownRounds.h (TownHours::RunTo), TownNews.h (Aftermath::Tick) and
+	// StreetVoice.h (Exchange, RegardFor, ArrivalLine). One-line rules the
+	// sweep could break in a scratch copy with every row still agreeing (its P2,
+	// P4 to P10), because no row drove a case where the rule decides anything;
+	// each family is that case. Never copied here: a rule dropped there reads
+	// differently in these rows.
+
+	inline const std::map<std::string, std::vector<std::string> >& UnseenBreakAnswers()
+	{
+		static std::map<std::string, std::vector<std::string> > Ans;
+		if (!Ans.empty()) return Ans;
+		// P2: only -1 is "no round yet"; a save whose next round falls before day 0
+		// runs on from it (TownRounds.cs RunTo, the 30 September builder's check).
+		for (const char* Saved : { "{\"round\":-1}", "{\"next\":-1}", "{\"round\":-6}", "{\"round\":-60}", "{\"round\":-1440}", "{\"round\":528}" })
+		{
+			CastDay Cast;
+			std::shared_ptr<GossipMill> Mill;
+			if (!TownRoundsWorld(Cast, Mill)) break;
+			TownHours T = TownHours::FromJson(Saved);
+			const int Ran = T.RunTo(Mill.get(), &Cast, GameTime(0, 9, 10));
+			std::string Copies;
+			for (std::vector<std::string>::size_type I = 0; I < Cast.People().size(); ++I)
+			{
+				const std::string& Id = Cast.People()[I];
+				const RumorPtr R = FirstWithPredicate(Mill->Get(Id), "a_row");
+				Copies += (I ? ";" : "") + Id + ":" + (R ? FromDouble(R->Confidence) + ":" + FromInt(R->Hops) : std::string("none"));
+			}
+			Ans["TownHoursFromSave|" + Escape(Saved)] = { FromInt(Ran), FromInt(T.NextRound()), Copies };
+		}
+		// P5: a pane mended within the deed's own hour is still found by whoever was
+		// there (TownNews.cs Aftermath.Tick, the independent check of 30 September);
+		// with it P4, those there saying so, and P6, the keeper's ", at my place".
+		CastDay SmallCast;
+		std::string Err;
+		if (CastDay::Parse(R"({"talk_range_m":6,"places":{"pawn":{"x_m":0,"z_m":0},"quay":{"x_m":50,"z_m":0}},"areas":{"ritas":{"places":["pawn"],"names":["Rita's"],"keeper":"rita"},"quay":{"places":["quay"]}},"people":[{"id":"rita","routine":[[0,"off"],[9,"pawn"],[18,"off"]]},{"id":"hal","routine":[[0,"off"],[10,"pawn"],[12,"quay"]]},{"id":"joey","routine":[[0,"off"],[6,"quay"],[18,"off"]]}],"ties":[]})", SmallCast, Err))
+		{
+			// The last case's words name no place, so the keeper says ", at my place" (the sweep's P6, found
+			// still unpinned while these rows were written; TownNews.h KeeperMemoryOf).
+			struct Pane { const char* Label; const char* Said; GameTime Done, Mended; };
+			const char* const RitasWindow = "somebody put Rita's window in";
+			const Pane Panes[] = {
+				{ "12:05-12:50", RitasWindow, GameTime(0, 12, 5), GameTime(0, 12, 50) },
+				{ "11:10-11:40", RitasWindow, GameTime(0, 11, 10), GameTime(0, 11, 40) },
+				{ "12:05-13:00", RitasWindow, GameTime(0, 12, 5), GameTime(0, 13, 0) },
+				{ "12:05-12:05", RitasWindow, GameTime(0, 12, 5), GameTime(0, 12, 5) },
+				{ "12:05-12:00", RitasWindow, GameTime(0, 12, 5), GameTime(0, 12, 0) },
+				{ "unnamed-11:10-11:40", "the glass went in", GameTime(0, 11, 10), GameTime(0, 11, 40) } };
+			auto Found = [](const std::vector<std::pair<std::string, GameTime> >& V)
+			{
+				std::string J;
+				for (size_t I = 0; I < V.size(); ++I) J += (I ? "," : "") + V[I].first + "@" + FromInt(V[I].second.TotalMinutes());
+				return J.empty() ? std::string("-") : J;
+			};
+			for (const Pane& P : Panes)
+			{
+				GossipMill Am(std::make_shared<SocialGraph>());
+				for (const std::string& Id : SmallCast.People())
+					Am.Add(std::make_shared<Gossiper>(Id, Id, std::make_shared<MemoryStore>(Id), std::make_shared<KnowledgeBase>()));
+				Aftermath Damage;
+				if (!Aftermath::Make("ritas", "rita_window_m", P.Said, P.Done, &P.Mended, nullptr, Damage)) continue;
+				const std::string First = Found(Damage.Tick(&Am, &SmallCast, P.Done.AddMinutes(60)));
+				const std::string Later = Found(Damage.Tick(&Am, &SmallCast, GameTime(0, 16, 0)));
+				std::string Memories;
+				for (size_t I = 0; I < SmallCast.People().size(); ++I)
+				{
+					const GossiperPtr G = Am.Get(SmallCast.People()[I]);
+					std::string Texts;
+					for (size_t E = 0; G && G->Memory && E < G->Memory->Events.size(); ++E) Texts += (E ? " + " : "") + G->Memory->Events[E].Text;
+					Memories += (I ? " / " : "") + SmallCast.People()[I] + ": " + (Texts.empty() ? std::string("none") : Texts);
+				}
+				Ans["AftermathMendedInHour|" + std::string(P.Label)] = { FromInt(Damage.MendedAt().TotalMinutes()), First, Later, Escape(Memories) };
+			}
+		}
+		// P7 to P10: a noise, a shape, a mark or a face is not him (Rumor.NamesHim,
+		// Jafar's ruling on the review's A5), wherever StreetVoice weighs a story of him.
+		for (int Rung : { 0, 1, 2, 3, 4, -1 })
+		{
+			auto Story = [Rung](double Confidence)
+			{
+				RumorPtr R = std::make_shared<Rumor>(Fact("player", "window_d1", "ritas"));
+				R->OriginId = "w"; R->Summary = "somebody put Rita's window in"; R->Confidence = Confidence;
+				R->Sensitive = true; R->Hops = 1; R->OriginRung = Rung;
+				return R;
+			};
+			auto Person = [](const std::string& Id) { return std::make_shared<Gossiper>(Id, Id, std::make_shared<MemoryStore>(Id), std::make_shared<KnowledgeBase>()); };
+			const std::string Key = "NotHimGate|" + FromInt(Rung) + "|";
+			// P7: told between two people, it is the street's news unless it names him.
+			{
+				const GossiperPtr Teller = Person("nf");
+				const RumorPtr Told = Story(0.9);
+				Teller->Rumors.push_back(Told);
+				const std::vector<SpokenLine> Lines = StreetVoice::Exchange(Told, Teller, Person("nt"), 0);
+				Ans[Key + "exchange"] = { FromInt((long long)Lines.size()),
+					Lines.empty() ? std::string("-") : Lines[0].Bank + "~" + FromBool(Lines[0].AboutPlayer) + "~" + Escape(Lines[0].Text),
+					Lines.size() < 2 ? std::string("-") : Lines[1].Bank + "~" + FromBool(Lines[1].AboutPlayer) };
+			}
+			// P8: held under the share floor, half-remembered only if it names him.
+			// P9: held well above it, it weighs on how they stand to him only if it names him.
+			const std::pair<const char*, double> Holds[] = { { "half", 0.1 }, { "held", 0.9 } };
+			for (const auto& H : Holds)
+			{
+				const GossiperPtr Holder = Person(std::string("n") + H.first);
+				Holder->Rumors.push_back(Story(H.second));
+				const StreetVoice::Regard Rg = StreetVoice::RegardFor(Holder.get(), 0.2, false, nullptr, 0.9, false);
+				Ans[Key + H.first] = { StreetVoice::KnowingName(Rg.HowMuch), StreetVoice::StanceName(Rg.Stance), FromBool((bool)Rg.Story),
+					FromBool(Rg.bSpeaks), FromBool(Rg.bFaint) };
+			}
+			// P10: his arrival, said to his face by somebody who saw him come, unless
+			// they hold a story that names him.
+			{
+				const GossiperPtr Saw = Person("na");
+				RumorPtr Arrived = std::make_shared<Rumor>(Fact("player", "arrived", "mickeys"));
+				Arrived->Summary = DayOne::ArrivalSaid; Arrived->Confidence = 1.0; Arrived->Hops = 0;
+				Saw->Rumors.push_back(Arrived);
+				Saw->Rumors.push_back(Story(0.5));
+				StreetVoice::RemarkLedger Ledger;
+				const std::shared_ptr<SpokenLine> Line = StreetVoice::ArrivalLine(Saw.get(), 0.35, &Ledger, 0, 0.0, false, false);
+				Ans[Key + "arrival"] = { Line ? Line->Bank + "~" + Escape(Line->Text) : std::string("null") };
+			}
+		}
+		return Ans;
+	}
+
+	inline Answer UnseenBreakRow(const std::vector<std::string>& F)
+	{
+		Answer A;
+		const bool bGate = F[0] == "NotHimGate";
+		if (F.size() < (bGate ? 4u : 3u)) return A;
+		const auto& Ans = UnseenBreakAnswers();
+		const auto It = Ans.find(F[0] + "|" + F[1] + (bGate ? "|" + F[2] : std::string()));
+		if (It == Ans.end()) return A;
+		A.Known = true;
+		A.Got = MultiAnswer(F, bGate ? 3 : 2, It->second);
+		return A;
+	}
+
 	inline Answer Evaluate(const std::vector<std::string>& F)
 	{
 		Answer A;
@@ -5859,6 +5998,11 @@ namespace Golden
 		         || Fn == "DeedTalkDeedJson" || Fn == "DeedTalkEvidence")
 		{
 			A = DeedTalkRow(F);
+		}
+		// THE BREAKS NO ROW SAW (the sweep's section 2, 28 October 2026): TownRounds.h, TownNews.h, StreetVoice.h.
+		else if (Fn == "TownHoursFromSave" || Fn == "AftermathMendedInHour" || Fn == "NotHimGate")
+		{
+			A = UnseenBreakRow(F);
 		}
 		// THE POLICE FILE ITSELF (town list 6ar): PoliceFile.h, its regression rows.
 		else if (Fn == "PoliceFile" || Fn == "PoliceBadSave" || Fn == "PoliceWouldReport" || Fn == "PoliceWouldReportMiddle" || Fn == "PoliceOnHisSide" || Fn == "CustodyWords" || Fn == "CustodySeenTaken"

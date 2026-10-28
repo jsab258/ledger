@@ -210,6 +210,9 @@ namespace Ledger.PerceptionGolden
             // The deed's stories and the talk's evidence, homed in the Core on 28 October 2026 (DeedTalk.cs, the
             // sweep's G3); answered through the port's own CrimeProbe.h.
             EmitDeedTalk(sb);
+            // The planted breaks of the sweep no row saw (28 October 2026, its section 2: P2, P4 to P10),
+            // each driven through the case its rule decides; answered through the port's own code.
+            EmitUnseenBreaks(sb);
 
             // ROWS AWAITING THE PORT, 28 September: the town session writes the
             // Core and its rows; the builder ports them to StreetVoice.h. Until
@@ -3174,6 +3177,106 @@ namespace Ledger.PerceptionGolden
             {
                 string fields = DeedTalk.EvidenceAccountFields(DeedTalk.EvidenceAccount(Holder(held), free, key), key);
                 Out("DeedTalkEvidence", name, new[] { Esc(fields), Bytes(fields) });
+            }
+        }
+
+        /// THE BREAKS NO ROW SAW (28 October 2026, section 2 of the 5 October sweep,
+        /// production/audits/sweep-2026-10-05/port-vs-core.md). One-line rules the port
+        /// shares with the Core that a scratch copy could break with every row still
+        /// agreeing, because no row drove a case where the rule decides anything. Each
+        /// row family below is that case, played here through the Core and answered by
+        /// the port through its own TownRounds.h, TownNews.h and StreetVoice.h:
+        ///   TownHoursFromSave      P2: only -1 is "no round yet"; a save whose next round
+        ///                          falls before day 0 runs on from it (TownRounds.cs RunTo).
+        ///   AftermathMendedInHour  P5: a pane mended within the deed's own hour is still
+        ///                          found by whoever was there (TownNews.cs Aftermath.Tick);
+        ///                          and with it P4 (those there say so) and P6 (words that
+        ///                          name no place are the keeper's ", at my place").
+        ///   NotHimGate             P7 to P10: a noise, a shape, a mark or a face is not him
+        ///                          (Rumor.NamesHim, Jafar's ruling on the review's A5) in the
+        ///                          exchange's news branch, the half-remembered story, the
+        ///                          strongest story weighed in RegardFor, and what keeps his
+        ///                          arrival unsaid (StreetVoice.cs); rungs 4 and -1 beside them.
+        static void EmitUnseenBreaks(StringBuilder sb)
+        {
+            // P2. The small cast of EmitTownHours, p seeing the row at nine; the hours read
+            // back from a save, then asked to 09:10 on day 0.
+            foreach (var saved in new[] { "{\"round\":-1}", "{\"next\":-1}", "{\"round\":-6}", "{\"round\":-60}", "{\"round\":-1440}", "{\"round\":528}" })
+            {
+                var rc = CastDay.Parse(TownRoundsCastJson);
+                var graph = new SocialGraph();
+                foreach (var (a, b, w) in rc.Ties) graph.Link(a, b, w);
+                var m = new GossipMill(graph);
+                foreach (var id in rc.People) m.Add(Ag(id));
+                m.Witness("p", new Fact(TownNews.Subject, "a_row", "seen"), "somebody had words in the cafe", false, new GameTime(0, 9, 0), 0.9);
+                var t = TownHours.FromJson(MiniJson.Deserialize(saved) as Dictionary<string, object>);
+                int ran = t.RunTo(m, rc, new GameTime(0, 9, 10));
+                Row(sb, "TownHoursFromSave", Esc(saved), ran.ToString(Inv), t.NextRound.ToString(Inv),
+                    string.Join(";", rc.People.Select(id =>
+                    {
+                        var r = m.Get(id).Rumors.Find(x => x.Content.Predicate == "a_row");
+                        return id + ":" + (r == null ? "none" : D(r.Confidence) + ":" + r.Hops.ToString(Inv));
+                    })));
+            }
+
+            // P5. The small cast of the Aftermath rows: Rita keeps the pawnshop nine till six,
+            // Hal is there ten till twelve, Joey on the quay. Each pane found to the next
+            // hour's end, then again later (nobody new: it is mended), and what each finder
+            // remembers.
+            var smallCast = CastDay.Parse(@"{""talk_range_m"":6,""places"":{""pawn"":{""x_m"":0,""z_m"":0},""quay"":{""x_m"":50,""z_m"":0}},""areas"":{""ritas"":{""places"":[""pawn""],""names"":[""Rita's""],""keeper"":""rita""},""quay"":{""places"":[""quay""]}},""people"":[{""id"":""rita"",""routine"":[[0,""off""],[9,""pawn""],[18,""off""]]},{""id"":""hal"",""routine"":[[0,""off""],[10,""pawn""],[12,""quay""]]},{""id"":""joey"",""routine"":[[0,""off""],[6,""quay""],[18,""off""]]}],""ties"":[]}");
+            // Whoever is there in the deed's own hour finds it at its minute and says so (P4); the last case's
+            // words name no place, so the keeper says ", at my place" (P6, found still unpinned while these
+            // rows were written; the Core's KeeperMemoryOf).
+            const string RitasWindow = "somebody put Rita's window in";
+            foreach (var (label, said, done, mended) in new[] {
+                ("12:05-12:50", RitasWindow, new GameTime(0, 12, 5), new GameTime(0, 12, 50)),
+                ("11:10-11:40", RitasWindow, new GameTime(0, 11, 10), new GameTime(0, 11, 40)),
+                ("12:05-13:00", RitasWindow, new GameTime(0, 12, 5), new GameTime(0, 13, 0)),
+                ("12:05-12:05", RitasWindow, new GameTime(0, 12, 5), new GameTime(0, 12, 5)),
+                ("12:05-12:00", RitasWindow, new GameTime(0, 12, 5), new GameTime(0, 12, 0)),
+                ("unnamed-11:10-11:40", "the glass went in", new GameTime(0, 11, 10), new GameTime(0, 11, 40)) })
+            {
+                var am = new GossipMill(null);
+                foreach (var id in smallCast.People) am.Add(Ag(id));
+                var pane = new Aftermath("ritas", "rita_window_m", said, done, mended);
+                string Found(List<(string who, GameTime when)> f) => f.Count == 0 ? "-" : string.Join(",", f.ConvertAll(x => x.who + "@" + x.when.TotalMinutes.ToString(Inv)));
+                string first = Found(pane.Tick(am, smallCast, done.AddMinutes(60)));
+                string later = Found(pane.Tick(am, smallCast, new GameTime(0, 16, 0)));
+                Row(sb, "AftermathMendedInHour", label, pane.MendedAt.TotalMinutes.ToString(Inv), first, later,
+                    Esc(string.Join(" / ", smallCast.People.Select(id => id + ": " + (am.Get(id).Memory.Events.Count == 0 ? "none"
+                        : string.Join(" + ", am.Get(id).Memory.Events.ConvertAll(e => e.Text)))))));
+            }
+
+            // P7 to P10. The window as a story of him, first told at each rung.
+            foreach (int rung in new[] { 0, 1, 2, 3, 4, -1 })
+            {
+                Rumor Story(double confidence) => new Rumor { Content = new Fact("player", "window_d1", "ritas"), OriginId = "w", Summary = "somebody put Rita's window in",
+                                                              Confidence = confidence, Sensitive = true, Hops = 1, OriginRung = rung };
+                string R = rung.ToString(Inv);
+                // P7: told between two people, it is the street's news unless it names him.
+                var teller = Ag("nf");
+                var told = Story(0.9);
+                teller.Rumors.Add(told);
+                var lines = StreetVoice.Exchange(told, teller, Ag("nt"), 0);
+                Row(sb, "NotHimGate", R, "exchange", lines.Count.ToString(Inv),
+                    lines.Count == 0 ? "-" : lines[0].Bank + "~" + Bit(lines[0].AboutPlayer) + "~" + Esc(lines[0].Text),
+                    lines.Count < 2 ? "-" : lines[1].Bank + "~" + Bit(lines[1].AboutPlayer));
+                // P8: held under the share floor, it is half-remembered only if it names him.
+                // P9: held well above it, it weighs on how they stand to him only if it names him.
+                foreach (var (what, confidence) in new[] { ("half", 0.1), ("held", 0.9) })
+                {
+                    var holder = Ag("n" + what);
+                    holder.Rumors.Add(Story(confidence));
+                    var rg = StreetVoice.RegardFor(holder, 0.2, false, null, 0.9, false);
+                    Row(sb, "NotHimGate", R, what, rg.Knowing.ToString(), rg.Stance.ToString(), Bit(rg.Story != null), Bit(rg.Speaks), Bit(rg.Faint));
+                }
+                // P10: his arrival, said to his face by somebody who saw him come, unless
+                // they hold a story that names him.
+                var saw = Ag("na");
+                saw.Rumors.Add(new Rumor { Content = new Fact("player", "arrived", "mickeys"), Summary = DayOne.ArrivalSaid, Confidence = 1.0, Hops = 0 });
+                saw.Rumors.Add(Story(0.5));
+                var arrival = StreetVoice.ArrivalLine(saw, 0.35, new RemarkLedger(), 0, 0.0, false, false);
+                Row(sb, "NotHimGate", R, "arrival", arrival == null ? "null" : arrival.Bank + "~" + Esc(arrival.Text));
             }
         }
 

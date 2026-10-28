@@ -54,10 +54,10 @@ Where: **data** = tables and assets; **script** = behaviour trees, Lua, quest fi
 | Reputation by place and faction | data: reputation tables, faction tree, renown | none seen by name: open blind spot | 11 |KCD2 25 Oct (Study 1); Mafia: none, confirmed 28 Oct (Study 11) |
 | NPC mood and anger | data: angriness, morale, nervousness | code: H13StateLayer 61 (unconfirmed) | 11 |KCD2's rates 28 Oct (Study 11) |
 | Random world events | data: RandomEvent tables, situation frequency | none seen by name | 1 | |
-| Dialogue and choices | data: dialogue-system tables, English text; script: quests | code: H13Lexicon 31; data: text 9,238 (scripted, systemic, handcrafted, cinematic), 2,452 lexicon assets | 3 | |
-| Barks (short lines in the street) | data: dialogue hearing, voice groups | code: H13Bark 79, H13BarkGame 6 | 3 | |
+| Dialogue and choices | data: dialogue-system tables, English text; script: quests | code: H13Lexicon 31; data: text 9,238 (scripted, systemic, handcrafted, cinematic), 2,452 lexicon assets | 3 |both games, data side 28 Oct (Study 3) |
+| Barks (short lines in the street) | data: dialogue hearing, voice groups | code: H13Bark 79, H13BarkGame 6 | 3 |KCD2 from data, Mafia from names only, 28 Oct (Study 3) |
 | Missions, jobs, story | script: 18,691 quest files; data: documents | code: H13MissionSystem 465, H13ChallengeSystem 108 | 16 |states and counts 28 Oct (Study 11); the rest Study 16; openings side 28 Oct (Study 2) |
-| Cutscenes and staging | data: cinematic clips 2,206, cutscene table | code: H13Sequencer 78, H13Cinematic 33 | 16 |opening lengths 28 Oct (Study 2) |
+| Cutscenes and staging | data: cinematic clips 2,206, cutscene table | code: H13Sequencer 78, H13Cinematic 33 | 16 |opening lengths 28 Oct (Study 2); staging (camera, gestures, gaze, shot length) 28 Oct (Study 3) |
 | Melee and close combat | data: 48 combat tables | code: GameFeatureCQCRuntime 215 | 14 |28 Oct, studies/14-combat.md (KCD2's tables; Mafia's fists and names, its close-combat files not exported, F: full) |
 | Guns, cover, aiming | (not in KCD2) | code: H13CoverSystem 115, NeroWeapons 11, H13DynamicTargeting 43, aim assist 34 | 14 |names only 28 Oct (Study 14); guns come last |
 | Damage, hit reactions, health | data: hit reactions, damage types | code: H13DamageReactions 74, H13Impacts 82, H13Health 18, H13PhysicalAnimation 16 | 14 |28 Oct, studies/14-combat.md; Mafia's damage and hit-stop values not read (F: full) |

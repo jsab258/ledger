@@ -16,7 +16,7 @@ Failed its exit check on 22 Oct (production/audits/phase1-exit/CLOSE-2026-10-22.
 
 ## Studies this week (aaa-reference/STUDY-PLAN.md)
 
-Done 10 of 16: 7, 6, 12, 4, 5, 1, 14, 2, 11, 15.
+Done 11 of 16: 7, 6, 12, 4, 5, 1, 14, 2, 3, 11, 15.
 
 STATE (28 Oct 11:43): drive F full, his page; studies early.
 

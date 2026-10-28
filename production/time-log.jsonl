@@ -219,3 +219,7 @@
 {"event": "stop", "at": "2026-10-28T11:53:00", "note": ""}
 {"event": "start", "at": "2026-10-28T11:53:00", "task": "28 Oct: fallback: Study 16 and the port's H2, H3 handed out, checked, both Unreal targets built, recorded", "phase": "3", "kind": "production"}
 {"event": "stop", "at": "2026-10-28T12:12:00", "note": ""}
+{"event": "start", "at": "2026-10-28T12:12:00", "task": "28 Oct: fallback: Study 3 checked and recorded; the port's planted breaks handed out", "phase": "3", "kind": "production"}
+{"event": "stop", "at": "2026-10-28T12:20:00", "note": ""}
+{"event": "start", "at": "2026-10-28T12:20:00", "task": "28 Oct: his page answers read and acted on (F: freed, the stray folder emptied, the extract cap in the rulings); the port's planted breaks checked and built", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-28T12:38:00", "note": ""}

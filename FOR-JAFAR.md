@@ -10,7 +10,7 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
 - **Recorded:** your rulings (RULINGS.md and DECISIONS.md); the study's order for both weeks at the top of the study plan; the order ledger, seeded with everything still open from before (21 and 23 October's leftovers, the cloud week's four questions, the three shops not yet in the street, FINDINGS' twenty faults, your two clicks on the old archive). A new check fails any push where an item has no status or vanishes without being done or dropped.
 - **Done:** the health check (production/audits/health-2026-10-25.md); your progress page now has the studies bar and the 33 carried items.
 
-**The studies (10 of 16 done: this week's six, and Studies 14, 2, 11 and 15 pulled forward on 28 October).**
+**The studies (11 of 16 done: this week's six, and Studies 14, 2, 3, 11 and 15 pulled forward on 28 October).**
 - *Study 7, animation* (production/research/aaa-reference/studies/07-animation.md, passed its fresh review with fixes):
   - Neither game uses motion matching. Mafia walks on a layered state machine of single clips, Kingdom Come II on blend spaces. Both choose their starts, stops and turns rather than search for them: Kingdom Come II by distance, the stride's quarter and which leg.
   - Feet: Mafia traces the ground under each foot and locks a foot only in its duels; Kingdom Come II declares leg IK and a feet lock. The one perception figure found says viewers notice slides under about 2 cm, so our 3 cm bar is lenient.
@@ -43,6 +43,10 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
   - Both games fill their first half hour: something new about every three minutes, a fifth to two-fifths of it watched, one route, and no consequence the player caused. First control at 3.5 minutes (Kingdom Come II) and 1.4 (Mafia); about 3 saves in 30 minutes against about 20.
   - Mafia teaches each control when it is needed and saves every minute or two; Kingdom Come II shows a hint only when the player hesitates.
   - For us: hints on hesitation rather than by the clock, the screen revealed piece by piece, an autosave after every deed, a nudge after a minute idle. LEDGER's own last measure had 11 empty minutes of 30.
+- *Study 3, dialogue and barks* (studies/03-dialogue-barks.md, passed its fresh review with fixes):
+  - Kingdom Come II has about 138,000 written lines, a third said in the street; each crowd line recorded by four or five voices; how people greet him depends on his reputation, their anger, his renown and how he looks. Mafia's street is thin: 14 crowd voices, 2 or 3 lines per situation. Street lines run about 7 words, conversation 12; Kingdom Come II waits a median 32 s between street lines.
+  - For us: our street lines already vary more than either game's (491 shared, 217 own, a 45 s floor). What is missing is situations: greeting Tom by how people see him and how he looks, bumping into people, neighbours greeting each other, talking to oneself at work, rain.
+  - Its targets (about 30 own lines for each future regular, at least 6 lines per crowd situation, waits street-wide and per person) are phase 5 proposals for a later page: your 3 October ruling keeps the talk work closed until then.
 - *Study 11, systems* (studies/11-systems.md, passed its fresh review with fixes):
   - Kingdom Come II has no wanted meter: guards' anger acts 12 hours late and fades in about a day and a half. Shops hold 35 to 1,500 coins and restock weekly; 686 quest save points.
   - For us: save at every job step but never refuse a save; shops run short of cash and restock weekly (we have this); rain drawn from weighted weather types for the weather proof.
@@ -145,11 +149,11 @@ No decision asked: these are for watching the street change.
 
 ### Needs you
 
-1. **Drive F is full (0.27 GB free): delete the 26 GB of raw extracts a study helper of mine wrote this morning?** Yes (recommended); without room tonight's build and walk fail. On today's page.
-2. **Tom's cuffs, the next step:** built in the bake (recommended), another Marvelous round, or Tom dressed now with today's cuffs. Pictures on today's page.
-3. **A stray 66 MB folder I made by mistake: delete?** Yes (recommended). On today's page.
+1. **Mickey's back door, a third try at its panels?** (next page) Chamfered mouldings with shaded corners, or panels sunk into the leaf. Yes (recommended), or leave them.
+2. **Fists able to kill?** (next page; Study 14: Kingdom Come II says no) No (recommended), or yes.
+3. **The animation source test at 6 moves, not the design's 4?** (next page) Yes (recommended), or 4.
 
-Today's page: https://claude.ai/artifact/TDpjTLydnfFBFfRPmavGpD
+No page yet for these: they go on tomorrow's page. Today's page, answered at 12:35: https://claude.ai/artifact/TDpjTLydnfFBFfRPmavGpD
 
 Your answers of 28 October morning are recorded and in the game: your new rule, the fallback order, the fast checker on, the wider rule, two copies (your condition met), Marvelous clicked. Your answers of 27 October are recorded: the cuffs' third try (failed), $4 more for speech tests (spent on the wording test and two copies), the bin emptied (the build re-run at 13:34), the checker's fourth try as you set it (failed; the small checker's cut-offs went to your page), no actor for Darren (Common Voice read, and failed), your evening order on invented sentences with its $20 ($17.86 spent), and tonight's page: the checker at the open cut-off (behind a switch until measured live), the cuffs by the sleeve first, Darren's voice kept, the cited instructions into the game.
 
@@ -166,7 +170,7 @@ Your answers of 28 October morning are recorded and in the game: your new rule, 
 ## Builder, Wednesday 28 October (morning; late, my fault: due by 07:00)
 
 **Failed:**
-- Drive F filled: a study helper of mine wrote 26 GB of raw extracts. Writing to F is stopped.
+- Drive F filled with my helper's 26 GB of extracts; freed on your yes.
 - Tom's cuffs: round his wrists now, but a lump at the seam and a little cloth through each wrist. Set aside; my third try broke your two-tries rule.
 - The tester's walk: 13 of 15 (Ron just out of reach, Darren gone home), and a scrambled subtitle.
 - Mickey's door at night: its panels read as dark slots. Set aside after two tries.
@@ -178,4 +182,4 @@ Your answers of 28 October morning are recorded and in the game: your new rule, 
 - The scrambled subtitle: the game's talk box; fixed, and the tester now checks it.
 - The port: the town's hourly step in the shared rules; all 174 new rows agree.
 
-**Act on:** drive F's delete, first on today's page: https://claude.ai/artifact/TDpjTLydnfFBFfRPmavGpD
+**Act on:** nothing now: your page is answered (drive F freed, the cuffs by the bake, Tom dressed first). No page until tomorrow's.
