@@ -14,7 +14,9 @@ entry its tests fail. This fails when:
   - two anchors are closer than 50 cm (ours);
   - a named clip is not in the project (its .uasset under ue-probe/Content; skipped, and said, where the
     content is not on this machine);
-  - the exit lies outside the room where he may stand ("room").
+  - the exit lies outside the room where he may stand ("room");
+  - a kept entry ("in_kept", written from the room test by tools/seats_kept.py) is not among the seat's In clips,
+    or kept entries carry no word of the test they came from ("in_kept_from").
 """
 import json
 import os
@@ -46,6 +48,16 @@ def check(seats, office, clip_dir=CLIPS):
         for lp in s.get("loops", []):
             if not isinstance(lp, dict) or not isinstance(lp.get("weight"), (int, float)) or lp["weight"] <= 0:
                 faults.append("%s: a Loop without a weight" % n)
+        kept = s.get("in_kept")
+        if kept is not None:
+            stray = [c for c in kept if c not in s.get("in", [])]
+            if stray:
+                faults.append("%s: kept entries not among its In clips: %s" % (n, stray))
+            if not s.get("in_kept_from"):
+                faults.append("%s: kept entries without the test they came from" % n)
+            loose = [c for c in s.get("in_kept_starts_cm", {}) if c not in kept]
+            if loose:
+                faults.append("%s: start distances for entries not kept: %s" % (n, loose))
         clips = list(s.get("in", [])) + [lp.get("clip") for lp in s.get("loops", []) if isinstance(lp, dict)] + list(s.get("out", []))
         if have_clips:
             for c in clips:
@@ -93,6 +105,9 @@ def selftest():
         ("REFUSE anchors under 50 cm apart", [seat, dict(b, z=6.30)], 1),
         ("REFUSE an exit outside the room", [dict(seat, exit={"x": 9.5, "z": 5.92})], 1),
         ("REFUSE no seats: nothing measured", [], 1),
+        ("ACCEPT a kept entry among the In clips, with its test", [dict(seat, in_kept=["i"], in_kept_from="the room test")], 0),
+        ("REFUSE a kept entry not among the In clips", [dict(seat, in_kept=["x"], in_kept_from="the room test")], 1),
+        ("REFUSE kept entries without their test", [dict(seat, in_kept=["i"])], 1),
     ]
     fails = 0
     print("seats-check selftest")

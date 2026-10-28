@@ -168,6 +168,7 @@ real_table() {
     progress-page         "$REPO"                 "$PY tools/progress_page.py --check" \
     seats-check           "$REPO"                 "$PY tools/seats_check.py" \
     seats-check-selftest  "$REPO"                 "$PY tools/seats_check.py --selftest" \
+    seats-kept-selftest   "$REPO"                 "$PY tools/seats_kept.py --selftest" \
     asset-checks-selftest "$REPO"                 "$PY tools/ue/asset_checks.py --selftest" \
     asset-budgets         "$REPO"                 "$PY tools/ue/asset_checks.py --check-spec" \
     timelog-selftest      "$REPO"                 "$PY tools/timelog.py --selftest" \

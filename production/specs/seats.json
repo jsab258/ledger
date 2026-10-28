@@ -45,6 +45,20 @@
    "exit": {
     "x": 7.84,
     "z": 5.92
+   },
+   "in_kept": [
+    "M_interaction_bench_into_BR_LFoot_Montage",
+    "M_interaction_bench_into_BR_RFoot_Montage"
+   ],
+   "in_kept_from": "the room test of 2026-10-28 (sit-room-r2-0.log), every In clip from 150 cm of its travel before the seat and the start envelope's four corners, the warp on: 2 of 10 kept; 2026-10-28 (sit-room-r3-0-100.log): from 100 cm, 1 of 1 kept; 2026-10-28 (sit-room-r3-0-200.log): from 200 cm, 0 of 1 kept; 2026-10-28 (sit-room-r3-0-250.log): from 250 cm, 0 of 1 kept",
+   "in_kept_starts_cm": {
+    "M_interaction_bench_into_BR_LFoot_Montage": [
+     100,
+     150
+    ],
+    "M_interaction_bench_into_BR_RFoot_Montage": [
+     150
+    ]
    }
   },
   {
@@ -83,6 +97,16 @@
    "exit": {
     "x": 7.84,
     "z": 6.455
+   },
+   "in_kept": [
+    "M_interaction_bench_into_R_090_Rfoot_Montage"
+   ],
+   "in_kept_from": "the room test of 2026-10-28 (sit-room-r2-1.log), every In clip from 150 cm of its travel before the seat and the start envelope's four corners, the warp on: 1 of 10 kept; 2026-10-28 (sit-room-r3-1-100.log): from 100 cm, 1 of 1 kept; 2026-10-28 (sit-room-r3-1-200.log): from 200 cm, 0 of 1 kept; 2026-10-28 (sit-room-r3-1-250.log): from 250 cm, 0 of 1 kept",
+   "in_kept_starts_cm": {
+    "M_interaction_bench_into_R_090_Rfoot_Montage": [
+     100,
+     150
+    ]
    }
   },
   {
@@ -121,6 +145,16 @@
    "exit": {
     "x": 7.84,
     "z": 6.99
+   },
+   "in_kept": [
+    "M_interaction_bench_into_R_090_Rfoot_Montage"
+   ],
+   "in_kept_from": "the room test of 2026-10-28 (sit-room-r2-2.log), every In clip from 150 cm of its travel before the seat and the start envelope's four corners, the warp on: 1 of 10 kept; 2026-10-28 (sit-room-r3-2-100.log): from 100 cm, 1 of 1 kept; 2026-10-28 (sit-room-r3-2-200.log): from 200 cm, 0 of 1 kept; 2026-10-28 (sit-room-r3-2-250.log): from 250 cm, 0 of 1 kept",
+   "in_kept_starts_cm": {
+    "M_interaction_bench_into_R_090_Rfoot_Montage": [
+     100,
+     150
+    ]
    }
   }
  ],

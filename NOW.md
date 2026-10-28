@@ -12,13 +12,13 @@ Failed its exit on 22 Oct (production/audits/phase1-exit/CLOSE-2026-10-22.md); r
 - [ ] 4. Speech: the faster first sentence's second try, bench tomorrow.
 - [ ] 5. Mickey's office: door, grain; the look's calibration scene begun (day a stop bright).
 - [ ] 6. Phase 1's exit re-run; phase 2?
-- Also (28 Oct): sitting by spots (2 of 10 entries kept), asset checks, the camera (his pick pending).
+- Also: sitting by spots (fallback start; matched start set aside), asset checks, camera.
 
 ## Studies this week (aaa-reference/STUDY-PLAN.md)
 
 Done 16 of 16 (28 Oct: ten early).
 
-STATE (28 Oct 22:25): his camera pick and Marvelous click awaited; the build mended after Epic's Fab update.
+STATE (28 Oct 23:55): his camera pick and Marvelous click awaited; Tom can walk inside the office again.
 
 ## Handovers
 

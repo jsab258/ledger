@@ -176,7 +176,7 @@ private:
 	// approach clip chosen by the side he comes from and started where its remaining walk matches his
 	// distance, warped onto the seat (Motion Warping, target "SmartObject", as the sample does), then its
 	// sitting loop until he moves, then its stand-up. -TomSitProof walks him through it once and reports.
-	enum class ESitPhase : uint8 { None, Entering, Seated, Leaving };
+	enum class ESitPhase : uint8 { None, Approaching, Entering, Seated, Leaving };
 	ESitPhase SitPhase = ESitPhase::None;
 	FTransform SitSlot;
 	UPROPERTY()
@@ -191,6 +191,17 @@ private:
 	// -TomSitRoomTest (28 October, the sitting method's step 4): every In clip from inside the room, its derived start
 	// and the start envelope's four corners, the warp on; limbs sampled against the room each frame, the bench ignored
 	void SitRoomTestTick(float DeltaSeconds);
+	// THE CHOICE AND THE APPROACH (28 October, the sitting method's steps 5 and 6): E near a seat whose entries were
+	// room-tested (seats.json "in_kept") takes the kept entry whose direction is nearest his heading, steers the mover
+	// onto that clip's path, and starts it Kingdom Come II's way, at a moment of the clip with his planted foot, his
+	// stance within 10 points and his place inside the tested envelope; with none by the entry, the old start
+	bool TryStartSitApproach(int32 SeatIndex);
+	void SitApproachTick(float DeltaSeconds);
+	bool bSitNoApproach = false;
+	FVector SitPush = FVector::ZeroVector;
+	// -TomSitApproachTest: he walks in toward each seat from three places in the room, presses E, and the line says
+	// which entry was chosen, how far off his heading, whether a start was found or the fallback taken, and if he sat
+	void SitApproachTestTick(float DeltaSeconds);
 	void SitTick(float DeltaSeconds);
 	void SitProofTick(float DeltaSeconds);
 	// HIS STOPS CHOSEN KINGDOM COME II'S WAY (his answer of 26 October, the walk's third try; -TomStopChosen): when

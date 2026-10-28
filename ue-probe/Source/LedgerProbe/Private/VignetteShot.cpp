@@ -81,6 +81,7 @@
 #include "Engine/Engine.h"
 #include "Engine/World.h"
 #include "Engine/StaticMesh.h"
+#include "Engine/CollisionProfile.h"
 #include "Engine/StaticMeshActor.h"
 #include "Components/StaticMeshComponent.h"
 // UBodySetup and its AggGeom, for READING BACK how many simple collision
@@ -7607,6 +7608,19 @@ namespace
 		C->MarkRenderStateDirty();
 	}
 
+	// NO COLLISION THAT STAYS (28 October 2026, the sitting approach test: Tom could not take a step inside Mickey's
+	// office, its fittings one solid "block all" shell). A spawned mesh actor's "block all" profile is applied when its
+	// physics state is made, after a plain SetCollisionEnabled(NoCollision) was read as already done (the engine
+	// compares with the body's current setting first), so the rooms kept the profile's collision. Naming the
+	// no-collision profile sets the profile and the setting together. The office's walls and furniture for the body
+	// and the camera's arm are its spec's hidden boxes (CrimeProbe.cpp, BuildMickeysOffice).
+	void RoomNoCollision(UPrimitiveComponent* C)
+	{
+		if (C == nullptr) { return; }
+		C->SetCollisionProfileName(UCollisionProfile::NoCollision_ProfileName);
+		C->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	}
+
 	// -RoomLumensScale=<k> for a trial of the rooms' light without touching the spec.
 	double RoomLumensScale()
 	{
@@ -7642,7 +7656,7 @@ namespace
 				C->SetStaticMesh(Mesh);
 				C->SetCastShadow(true);
 				RoomCastsOwnShadow(C);
-				C->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+				RoomNoCollision(C);
 				C->UpdateBounds();
 				// the tubes' glowing material and the batten's plain one, to put them out by
 				if (FCString::Strcmp(Part, TEXT("fittings")) == 0)
@@ -7671,8 +7685,8 @@ namespace
 					}
 				}
 				const FBox PB = C->Bounds.GetBox();
-				UE_LOG(LogTemp, Display, TEXT("LedgerInteriors: %s's %s stands %.0f..%.0f, %.0f..%.0f, %.0f..%.0f cm"),
-					*Shop, Part, PB.Min.X, PB.Max.X, PB.Min.Y, PB.Max.Y, PB.Min.Z, PB.Max.Z);
+				UE_LOG(LogTemp, Display, TEXT("LedgerInteriors: %s's %s stands %.0f..%.0f, %.0f..%.0f, %.0f..%.0f cm (%s, collision %d)"),
+					*Shop, Part, PB.Min.X, PB.Max.X, PB.Min.Y, PB.Max.Y, PB.Min.Z, PB.Max.Z, *A->GetName(), (int32)C->GetCollisionEnabled());
 			}
 			GBareHide.Add(A);
 			Out.Add(A);
@@ -7737,7 +7751,7 @@ namespace
 			C->SetStaticMesh(Mesh);
 			C->SetCastShadow(true);
 			RoomCastsOwnShadow(C);
-			C->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+			RoomNoCollision(C);
 		}
 		GBareHide.Add(A);
 		Note = FString::Printf(TEXT("display %s at %.0f,%.0f,%.0f cm"), *Stem, At.X, At.Y, At.Z);
