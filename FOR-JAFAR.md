@@ -26,14 +26,12 @@ Disk (10-28 03:30): C: 250.6 GB free, F: 27.4 GB free (tonight's census updates 
 ### Needs you
 
 1. **Open Marvelous and click LEDGER bridge** (no page: a click on your PC). The cuff drape by the new garment skill (an elastic rib) is queued and starts on its own.
-2. **Mickey's back door, a third try at its panels?** (next page) Chamfered mouldings with shaded corners, or panels sunk into the leaf. Yes (recommended), or leave them.
-3. **Fists able to kill?** (next page; Study 14: Kingdom Come II says no) No (recommended), or yes.
-4. **The animation source test at 6 moves, not the design's 4?** (next page) Yes (recommended), or 4.
-5. **May a job ever mark your paper map?** (next page; Study 16) Words only; a pencil ring once someone has told Tom the place (recommended); or an optional marker, off by default.
+2. **Your camera: size or feet?** (its page: https://claude.ai/artifact/4e5QA1UFTEGLacF3Rm4wpE) 3.1 m, feet in, Tom smaller (recommended), or 2.4 m, his size, feet cut. Tilting was tried and does not help.
+3. **Mickey's back door, a third try at its panels?** (next page) Chamfered mouldings with shaded corners, or panels sunk into the leaf. Yes (recommended), or leave them.
+4. **Fists able to kill?** (next page; Study 14: Kingdom Come II says no) No (recommended), or yes.
+5. **The animation source test at 6 moves, not the design's 4?** (next page) Yes (recommended), or 4.
 
-No page yet for 2 to 5: they go on tomorrow's page, the interface's width (Study 10) after them. Your camera pick of 19:02 is recorded (between, feet in frame, the camera by situation). Today's page, answered at 12:35: https://claude.ai/artifact/TDpjTLydnfFBFfRPmavGpD
-
-Your answers of 28 October morning are recorded and in the game: your new rule, the fallback order, the fast checker on, the wider rule, two copies (your condition met), Marvelous clicked. Your answers of 27 October are recorded: the cuffs' third try (failed), $4 more for speech tests (spent on the wording test and two copies), the bin emptied (the build re-run at 13:34), the checker's fourth try as you set it (failed; the small checker's cut-offs went to your page), no actor for Darren (Common Voice read, and failed), your evening order on invented sentences with its $20 ($17.86 spent), and tonight's page: the checker at the open cut-off (behind a switch until measured live), the cuffs by the sleeve first, Darren's voice kept, the cited instructions into the game.
+After these, on later pages: the map marks (Study 16), the interface's width (Study 10), and the day's exposure (the calibration chart reads about a stop bright by day; pictures first).
 
 ### Road to worth playing (PLAN.md)
 
