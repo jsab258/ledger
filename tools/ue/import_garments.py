@@ -75,60 +75,64 @@ def packed_material(unreal, g, folder, lines):
     packed = texture(maps["packed"], "T_%s_Packed" % g["name"], "packed")
     if not (colour and normal and packed):
         return None
+    # THE GRAPH BUILT AFRESH EVERY RUN (28 October: a broken first graph stayed, since a found material was kept as it was)
     if unreal.EditorAssetLibrary.does_asset_exist(PACKED_BASE):
         base = unreal.load_asset(PACKED_BASE)
+        mel.delete_all_material_expressions(base)
     else:
         base = tools.create_asset("M_LedgerGarmentPacked", DEST, unreal.Material, unreal.MaterialFactoryNew())
 
-        def node(cls, x, y, **props):
-            e = mel.create_material_expression(base, cls, x, y)
-            for k, v in props.items():
-                e.set_editor_property(k, v)
-            return e
+    def node(cls, x, y, **props):
+        e = mel.create_material_expression(base, cls, x, y)
+        for k, v in props.items():
+            e.set_editor_property(k, v)
+        return e
 
-        c = node(unreal.MaterialExpressionTextureSampleParameter2D, -1400, -300, parameter_name="ColourMap", texture=colour)
-        p = node(unreal.MaterialExpressionTextureSampleParameter2D, -1400, 100, parameter_name="PackedMap", texture=packed,
-                 sampler_type=unreal.MaterialSamplerType.SAMPLERTYPE_MASKS)
-        n = node(unreal.MaterialExpressionTextureSampleParameter2D, -1400, 500, parameter_name="NormalMap", texture=normal,
-                 sampler_type=unreal.MaterialSamplerType.SAMPLERTYPE_NORMAL)
-        tint = node(unreal.MaterialExpressionVectorParameter, -1000, -500, parameter_name="Tint")
-        tape = node(unreal.MaterialExpressionVectorParameter, -1000, -350, parameter_name="TapeColour")
-        teeth = node(unreal.MaterialExpressionVectorParameter, -600, -500, parameter_name="TeethColour")
-        cloth = node(unreal.MaterialExpressionMultiply, -800, -450)
-        mel.connect_material_expressions(tint, "", cloth, "A")
-        mel.connect_material_expressions(c, "RGB", cloth, "B")
-        tapec = node(unreal.MaterialExpressionMultiply, -800, -300)
-        mel.connect_material_expressions(tape, "", tapec, "A")
-        mel.connect_material_expressions(c, "RGB", tapec, "B")
+    c = node(unreal.MaterialExpressionTextureSampleParameter2D, -1400, -300, parameter_name="ColourMap", texture=colour)
+    p = node(unreal.MaterialExpressionTextureSampleParameter2D, -1400, 100, parameter_name="PackedMap", texture=packed,
+             sampler_type=unreal.MaterialSamplerType.SAMPLERTYPE_MASKS)
+    n = node(unreal.MaterialExpressionTextureSampleParameter2D, -1400, 500, parameter_name="NormalMap", texture=normal,
+             sampler_type=unreal.MaterialSamplerType.SAMPLERTYPE_NORMAL)
+    tint = node(unreal.MaterialExpressionVectorParameter, -1000, -500, parameter_name="Tint")
+    tape = node(unreal.MaterialExpressionVectorParameter, -1000, -350, parameter_name="TapeColour")
+    teeth = node(unreal.MaterialExpressionVectorParameter, -600, -500, parameter_name="TeethColour")
+    cloth = node(unreal.MaterialExpressionMultiply, -800, -450)
+    mel.connect_material_expressions(tint, "", cloth, "A")
+    mel.connect_material_expressions(c, "RGB", cloth, "B")
+    tapec = node(unreal.MaterialExpressionMultiply, -800, -300)
+    mel.connect_material_expressions(tape, "", tapec, "A")
+    mel.connect_material_expressions(c, "RGB", tapec, "B")
 
-        def is_part(value, y):
-            # 1 where the ID is this part's value, 0 an eighth away: saturate(1 - |G - value| * 8)
-            s = node(unreal.MaterialExpressionSubtract, -1000, y, const_b=value)
-            mel.connect_material_expressions(p, "G", s, "A")
-            a = node(unreal.MaterialExpressionAbs, -900, y)
-            mel.connect_material_expressions(s, "", a, "Input")
-            m = node(unreal.MaterialExpressionMultiply, -800, y, const_b=8.0)
-            mel.connect_material_expressions(a, "", m, "A")
-            o = node(unreal.MaterialExpressionOneMinus, -700, y)
-            mel.connect_material_expressions(m, "", o, "Input")
-            sat = node(unreal.MaterialExpressionSaturate, -600, y)
-            mel.connect_material_expressions(o, "", sat, "Input")
-            return sat
+    def is_part(value, y):
+        # 1 where the ID is this part's value, 0 an eighth away: saturate(1 - |G - value| * 8)
+        s = node(unreal.MaterialExpressionSubtract, -1000, y, const_b=value)
+        mel.connect_material_expressions(p, "G", s, "A")
+        a = node(unreal.MaterialExpressionAbs, -900, y)
+        mel.connect_material_expressions(s, "", a, "Input")
+        m = node(unreal.MaterialExpressionMultiply, -800, y, const_b=8.0)
+        mel.connect_material_expressions(a, "", m, "A")
+        o = node(unreal.MaterialExpressionOneMinus, -700, y)
+        mel.connect_material_expressions(m, "", o, "Input")
+        sat = node(unreal.MaterialExpressionSaturate, -600, y)
+        # Saturate's one pin has no name (28 October: connected as "Input", nothing joined, and the cook failed
+        # the material: "Missing Saturate input")
+        mel.connect_material_expressions(o, "", sat, "")
+        return sat
 
-        on_tape, on_teeth = is_part(0.5, -100), is_part(0.75, 0)
-        l1 = node(unreal.MaterialExpressionLinearInterpolate, -400, -350)
-        mel.connect_material_expressions(cloth, "", l1, "A")
-        mel.connect_material_expressions(tapec, "", l1, "B")
-        mel.connect_material_expressions(on_tape, "", l1, "Alpha")
-        l2 = node(unreal.MaterialExpressionLinearInterpolate, -250, -350)
-        mel.connect_material_expressions(l1, "", l2, "A")
-        mel.connect_material_expressions(teeth, "", l2, "B")
-        mel.connect_material_expressions(on_teeth, "", l2, "Alpha")
-        mel.connect_material_property(l2, "", unreal.MaterialProperty.MP_BASE_COLOR)
-        mel.connect_material_property(p, "R", unreal.MaterialProperty.MP_ROUGHNESS)
-        mel.connect_material_property(p, "B", unreal.MaterialProperty.MP_METALLIC)
-        mel.connect_material_property(c, "A", unreal.MaterialProperty.MP_AMBIENT_OCCLUSION)
-        mel.connect_material_property(n, "RGB", unreal.MaterialProperty.MP_NORMAL)
+    on_tape, on_teeth = is_part(0.5, -100), is_part(0.75, 0)
+    l1 = node(unreal.MaterialExpressionLinearInterpolate, -400, -350)
+    mel.connect_material_expressions(cloth, "", l1, "A")
+    mel.connect_material_expressions(tapec, "", l1, "B")
+    mel.connect_material_expressions(on_tape, "", l1, "Alpha")
+    l2 = node(unreal.MaterialExpressionLinearInterpolate, -250, -350)
+    mel.connect_material_expressions(l1, "", l2, "A")
+    mel.connect_material_expressions(teeth, "", l2, "B")
+    mel.connect_material_expressions(on_teeth, "", l2, "Alpha")
+    mel.connect_material_property(l2, "", unreal.MaterialProperty.MP_BASE_COLOR)
+    mel.connect_material_property(p, "R", unreal.MaterialProperty.MP_ROUGHNESS)
+    mel.connect_material_property(p, "B", unreal.MaterialProperty.MP_METALLIC)
+    mel.connect_material_property(c, "A", unreal.MaterialProperty.MP_AMBIENT_OCCLUSION)
+    mel.connect_material_property(n, "RGB", unreal.MaterialProperty.MP_NORMAL)
     base.set_editor_property("used_with_skeletal_mesh", True)
     mel.recompile_material(base)
     unreal.EditorAssetLibrary.save_loaded_asset(base, only_if_is_dirty=False)
