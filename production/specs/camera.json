@@ -2,12 +2,12 @@
  "what": "Tom's camera, one row a situation (his page of 28 October 2026, 19:02: \"Between, nudged so his feet are fully in frame. Keep Mafia's idea of the camera changing by situation: closer for talk and low rooms, wider for fights so you see the other man's feet and the people watching.\"; Study 9, its item 2: the modes as rows of one spec, read by the existing arm). Metres and degrees: back along the arm from the pivot, aside (right), up, the pivot above his feet, the lens horizontal. Read by SliceCharacter.cpp at the start; -CamBackM and the rest still override it for pictures.",
  "reference": "Mafia: The Old Country, read from its files (production/research/aaa-reference/studies/09-camera-controls.md): on foot 1.65 back, 0.45 aside, 0.35 up from a pivot 1.25 m up, 82 degrees; town walking 1.55 and 79; running 1.40 and 85; low rooms 1.20, 0.35 aside, 78; talk with Tom 1.5 m from the speaker, 63 degrees. Ours before: 3.2 back, 0.45 aside, 0.55 up from the hip (0.88), 90.",
  "street": {
-  "back_m": 2.4,
+  "back_m": 3.1,
   "side_m": 0.45,
-  "up_m": 0.08,
+  "up_m": 0.45,
   "pivot_m": 1.05,
   "lens_deg": 86,
-  "why": "His pick, the middle of the three shown (2.4 m, 86 degrees, pivot 1.05, 0.45 up), nudged so his feet are fully in frame: at the pictures' 12 degrees down the frame's lower edge met the ground about 2.40 m out, just past his heels at 2.35, so the camera comes down 0.30 m in two steps: at 0.25 above the arm the packaged game's picture had his toes on the frame's edge (28 October, 19:41), so 0.15 (the reviewer measured 5 px under the near heel, too tight), then 0.08: in the packaged game at 12 degrees down his feet sit 34 px above the frame's edge (28 October, about 20:00, picture pick3); at the game's usual 8 degrees the camera is lower still and the feet further in."
+  "why": "His pick (his page, 19:02): the Between picture (2.4 m, 86 degrees, pivot 1.05, 0.45 up) with his feet fully in frame; his answer of 20:06: not by lowering the camera (0.08 up made him too big and blocked the street's far end) but by pulling back, the Between height kept, his head level with the far end. At that height the feet come fully in only from 3.0 m (11 px to spare) and 3.1 m (28 px), measured in the packaged game at 12 degrees down (28 October, pictures back-2.6 to back-3.1); 2.9 m still cuts the heels. So 3.1 m, shown to him on his page."
  },
  "to_come": "talk (closer, Mafia's 1.5 m and 63 degrees as the start), low rooms (closer, 1.20 and 78), running (1.40 and 85), fights (wider, so the other man's feet and the onlookers are seen; no Mafia number for this, to be found or marked none found): each a row here, each shown to him in the game before it is kept."
 }

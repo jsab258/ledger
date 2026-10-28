@@ -45,7 +45,7 @@ His binding rulings; the later stands; canon.md outranks them.
 - 30 Sep: His page's pictures are taken at 2560×1440, never enlarged, open full size; films with sound.
 - 21 Sep: The Hook sheet (pass 4) governs mood, palette and composition; dated photographs govern what things looked like, and win; no design copied; references only in production/reference/.
 - 30 Sep: Lighting is judged through the game's own camera and exposure.
-- 28 Oct, the camera (his page): the street camera between Mafia's and ours, 2.4 m back with an 86-degree lens, nudged so his feet are fully in frame; and Mafia's idea kept, the camera changing by situation: closer for talk and low rooms, wider for fights so the other man's feet and the people watching are seen.
+- 28 Oct, the camera (his page): the street camera at the Between picture's height (2.4 m back, 86-degree lens) with his head level with the far end of the street, his feet brought fully into frame by pulling back, never by lowering the camera; and Mafia's idea kept, the camera changing by situation: closer for talk and low rooms, wider for fights so the other man's feet and the people watching are seen.
 - 8 Oct: Kit pieces period books draw (windows, doors, shopfronts, railings): a fresh helper, never the builder, writes the target from the source; an automatic check; a fresh reviewer against photographs. Book and photographs disagreeing, the photographs win (windows: 2.5-3 inch frames, 1.68 m).
 - 23 Sep: Blender for shapes and layout; all look development in Unreal, against the sheet.
 - 21 Sep: Grime is the strategy (D53), a seeded wear layer.
