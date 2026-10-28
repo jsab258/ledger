@@ -18,7 +18,12 @@ The statuses: open (the newest order's own work in progress), done (needs "Evide
   - an older order (not the newest) still has an open item;
   - an id in an older order that is not done or dropped is missing from the next order;
   - an id leaves an order's file (against the version being replaced) without having been done or dropped;
-  - the newest order lacks any of the sixteen studies (study-1 to study-16).
+  - the newest order lacks any of the sixteen studies (study-1 to study-16);
+  - an item new against the version being replaced, still to be worked (open or carried over), names
+    no reference: neither "Reference:" (a number or method from Mafia or Kingdom Come II, or "Reference:
+    none found") nor the study it comes from (a path under studies/). Jafar, 28 October 2026, A1: "Before
+    starting any new item, look up how Mafia or Kingdom Come II does it ... Add a check that fails the push
+    when a new item's plan names neither a reference nor 'none found'."
 
   python tools/order_ledger.py              # the files on disk against the last commit (HEAD)
   python tools/order_ledger.py --push       # a pre-push hook: stdin "<lref> <lsha> <rref> <rsha>" lines
@@ -35,6 +40,7 @@ STATUSES = ("open", "done", "set aside", "carried over", "dropped")
 ITEM = re.compile(r"^- `([A-Za-z0-9._-]+)` \*\*([a-z ]+)\*\*(.*)$")
 SECTION = re.compile(r"^## (Items|Studies|Carried)")
 STUDIES = {"study-%d" % i for i in range(1, 17)}
+REFERENCED = re.compile(r"Reference:|studies/")
 ZERO = "0" * 40
 
 
@@ -90,6 +96,16 @@ def check(files, previous=None):
     missing = STUDIES - set(parsed[newest])
     if missing:
         faults.append("%s: studies missing: %s" % (newest, ", ".join(sorted(missing, key=lambda s: int(s[6:])))))
+    if previous is not None:
+        # REFERENCE FIRST (his A1, 28 October): what is new here and still to be worked names its reference.
+        before = set()
+        for text in previous.values():
+            before |= set(parse(text)[0])
+        for f in names:
+            for iid, (status, rest) in parsed[f].items():
+                if iid not in before and status in ("open", "carried over") and not REFERENCED.search(rest):
+                    faults.append("%s: %s is new and names no reference: add 'Reference:' (Mafia's or Kingdom Come II's "
+                                  "number or method, or 'none found') or its study (studies/...)" % (f, iid))
     for f, text in (previous or {}).items():
         if f not in files:
             faults.append("%s: the order file was removed" % f)
@@ -149,6 +165,23 @@ def selftest():
         ("ACCEPT a done item leaving the file", {"2026-10-25.md": good.replace("- `a` **done** x. Evidence: y\n", "")},
          {"2026-10-25.md": good}, 0),
         ("REFUSE an empty ledger: nothing measured", {}, None, 1),
+        ("REFUSE a new open item naming no reference",
+         {"2026-10-25.md": good.replace("- `c` **carried over** x\n", "- `c` **carried over** x\n- `e` **open** new\n")},
+         {"2026-10-25.md": good}, 1),
+        ("ACCEPT a new item naming its reference",
+         {"2026-10-25.md": good.replace("- `c` **carried over** x\n", "- `c` **carried over** x\n- `e` **open** new. Reference: Mafia's 1.65 m\n")},
+         {"2026-10-25.md": good}, 0),
+        ("ACCEPT a new item saying none found",
+         {"2026-10-25.md": good.replace("- `c` **carried over** x\n", "- `c` **carried over** x\n- `e` **open** new. Reference: none found\n")},
+         {"2026-10-25.md": good}, 0),
+        ("ACCEPT a new item citing its study",
+         {"2026-10-25.md": good.replace("- `c` **carried over** x\n", "- `c` **carried over** x\n- `e` **carried over** new (studies/09-camera-controls.md)\n")},
+         {"2026-10-25.md": good}, 0),
+        ("ACCEPT an old item without a reference (the rule is for new items)",
+         {"2026-10-25.md": good}, {"2026-10-25.md": good}, 0),
+        ("ACCEPT a new item already done, its evidence its own record",
+         {"2026-10-25.md": good.replace("- `c` **carried over** x\n", "- `c` **carried over** x\n- `e` **done** new. Evidence: z\n")},
+         {"2026-10-25.md": good}, 0),
     ]
     fails = 0
     print("order-ledger selftest")

@@ -21,6 +21,7 @@ canon.md (outranks everything), CHARTER.md, RULINGS.md, PLAN.md, NOW.md, CATALOG
 - Not a programmer: plain words, short; no paths, hashes, flags or tool output unless asked.
 - Finished work in three lines: what changed; the picture; what next.
 - Ask only about canon, scope or money: one multiple-choice question, recommendation marked; carry on meanwhile.
+- A message asking him for a tap, a click or an answer ends with its page's full link, or says plainly there is none; results reach his page as they land.
 - Wrong: one sentence; move on.
 
 ## Records
@@ -48,6 +49,8 @@ canon.md (outranks everything), CHARTER.md, RULINGS.md, PLAN.md, NOW.md, CATALOG
 - A sample that cannot pass within its capped budget: report the failed capability plainly; never disguise it as another plan.
 - Research first (production/research/): the professional method end to end, dated, before any symptom, before trusting memory or calling anything impossible; on failure, question the method. An unreached source is never evidence.
 - Research method, for every session. Research starts from a written list of questions. Primary sources are read in full, never from search snippets; every number or claim carries its link and the date it was read. Measure rather than trust where possible (photographs, data, code run on it). Anything not confirmed is marked unverified, and what could not be reached is listed. Independent parts run as parallel helpers. Anything that becomes a target, a design or a decision gets one fresh reviewer who checks it against its sources. The deep-research skill may be used for broad first scans of what exists; these rules still apply to its results. (Jafar, 13 October.)
+- Reference first (his rule, 28 October): before any new item, look up how Mafia or Kingdom Come II does it (the studies, then their files on demand) and start from that number or method; trial and error only where none exists, the item's plan saying "none found". tools/order_ledger.py fails the push when a new item names neither.
+- Game extracts: capped in size, written only above the drive's floor, deleted once their numbers are recorded; Mafia's missing numbers fetched only when an item needs one.
 - Two tries, then research; a third failure is set aside, named in the summary and, if the game needs it, in Needs you, with research in another direction.
 - Done means in the packaged release build, walked by the AI tester; a big item is "ready for review" until he passes it. Nothing is multiplied before he approves one complete sample in the assembled game.
 - The gate: your check against references (photographs, approved face, casting sheet, accent by ear), then a fresh reviewer per view, never bundled, its last good picture beside: what changed; is it a fault? Then the Hook sheet, KCD2 frames, clothes' floor; a visible change since he looked. New faults block; known shortfalls are listed, failing nothing alone; narrow, known points pass.
