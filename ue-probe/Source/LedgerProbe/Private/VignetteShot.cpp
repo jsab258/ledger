@@ -10308,6 +10308,14 @@ namespace LedgerVignetteShot
 			// and the day's white balance, as the shot camera's (white_temp_day)
 			S.bOverride_WhiteTemp = C->SunOn && GLook.WhiteTempDay > 0.0;
 			S.WhiteTemp = (C->SunOn && GLook.WhiteTempDay > 0.0) ? (float)GLook.WhiteTempDay : 6500.0f;
+			// -PlayBlackLift=<offset> (29 October, a trial for the look's page, nothing in the look file yet): at the
+			// player's camera the night between lamps was 87% near black; Mafia's grade lifts its blacks by an offset
+			// of 0.008 to 0.0125 through its blended "colour head" (production/research/street-wear/
+			// MAFIA-WEAR-2026-10-28.md), which keeps its gaps readable. The grade's global offset, by night only.
+			double Lift = 0.0;
+			FParse::Value(FCommandLine::Get(), TEXT("PlayBlackLift="), Lift);
+			S.bOverride_ColorOffset = !C->SunOn && Lift > 0.0;
+			S.ColorOffset = FVector4(0.0, 0.0, 0.0, (!C->SunOn && Lift > 0.0) ? Lift : 0.0);
 		}
 		return FString::Printf(TEXT("%s/sun-%s/lanterns-%s/pin-%.3f/bias-%.2f/volume-%s"), UTF8_TO_TCHAR(Id),
 			C->SunOn ? TEXT("on") : TEXT("off"), C->LanternsOn ? TEXT("on") : TEXT("off"),
