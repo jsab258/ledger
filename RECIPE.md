@@ -115,6 +115,15 @@ What failed before this method, so it is not repeated: draping with bent elbows 
 
 ## Notebook
 
+### 28 Oct 2026, a camera distance chosen by the owner from pictures, then fitted to his words by measuring
+- Made: the player camera's street framing, in one spec the camera arm reads, picked by the owner from three pictures and refined twice by his notes.
+- Method (setting-free): show the choices as pictures from the shipped build, the camera's numbers beside each; set what he picks in the camera's one spec file; when his note asks for something (feet in frame), measure each candidate in the shipped build (the lowest point of the character above the frame's edge, in pixels) rather than trusting arithmetic; log the camera's real position from the camera manager before blaming the engine; when the asks cannot all hold at once, show the cost (size, framing) and offer only options that work.
+- Tools: the build's picture mode with camera switches, a pixel measure of the character's lowest point, the camera manager's own log.
+- Target and check: his words (feet fully in frame, head level with the street's far end, his size); each frame checked by a fresh reviewer before his page.
+- Cost (hours): about 2.5 of the session's, four packaged builds' worth of waiting.
+- Failed and why: the arithmetic said 2.7 m would bring the feet in; it took 3.0, because the character stood mid-stride with the near heel behind his origin; lowering the camera made him too big; tilting a boom camera down lifts it too, so the feet stayed cut. Measure the posed body, not its origin.
+- Evidence: production/specs/camera.json; production/approvals/2026-10-28-camera; DECISIONS.md 28 Oct.
+
 ### 28 Oct 2026, seven bounded research units for one order, each ending in a method with its first use
 - Made: the professional garment pipeline; one shipped jacket read at wrist, collar and hem; interaction spots for sitting; fast, grounded live talk; automatic asset checks before reviewers; a shipped game's wear, grade and fog; its street kit against a procedural city method.
 - Method (setting-free): one helper per question set, public sources and the reference games' files (one extracting helper at a time, capped, its files kept until its fresh review re-measures them, then deleted); every number tagged and dated; each result to one fresh reviewer against its sources before it becomes a method; the reviewer's faults sent back to the author, who has the context.

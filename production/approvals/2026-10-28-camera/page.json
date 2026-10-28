@@ -4,7 +4,7 @@
  "title": "Your camera pulled back: what it costs",
  "how": [
   "Shortfalls first. Tom still wears placeholder white shorts and bare feet, and the jacket has its known faults; the street keeps its own small faults (puddles, a pavement joint, the kiosk's see-through side). The other people are hidden: their clothes are placeholders.",
-  "Your answer: back to the Between picture's height, his head level with the far end of the street, the feet in by pulling back. Measured in the packaged game: at that height his feet come fully in only from 3.0 m (at 2.6 to 2.9 m a heel is still off the frame). At 3.1 m Tom is about 77% of his Between size and his head sits below the far end, not level with it: pulling back alone cannot give all three. Pick one; the first is recommended."
+  "Your answer: back to the Between picture's height, his head level with the far end of the street, the feet in by pulling back. Measured in the packaged game: at that height his feet come fully in only from 3.0 m, because in a stride his near heel is about 30 cm behind him (at 2.6 to 2.9 m a heel is still off the frame). At 3.1 m Tom is about 77% of his Between size and his head sits below the far end. Tilting the camera down does not help: on this arm it swings up as it tilts, so at 2.4 m the heels stay cut even at 22 degrees and the street's far end leaves the frame (tried). So it is size or feet. Pick one; the first is recommended."
  ],
  "foot": "Nothing bought or signed up for. The game's camera sits at 3.1 m until you pick. Running, rooms, talk and fights get their own framing after this, each shown to you first.",
  "sections": [
@@ -25,16 +25,12 @@
    ],
    "options": [
     [
-     "tilt",
-     "Keep 2.4 m and tilt the camera a little further down to bring the feet in; show me first (recommended)"
-    ],
-    [
      "3.1",
-     "Keep 3.1 m: feet in, Tom smaller"
+     "Keep 3.1 m: feet fully in, Tom smaller, as you asked (pulled back) (recommended)"
     ],
     [
      "2.4",
-     "Back to 2.4 m as it was, feet cut"
+     "Back to 2.4 m as it was: his size, feet cut at the ankles"
     ]
    ]
   }
