@@ -1,4 +1,4 @@
-# UE material step evidence, sha 878c3133ebfe4149a7bc51ae3daf9e83aaa783dd
+# UE material step evidence, sha ee7e54c439e98f119cff09288a721ee2281a0738
 # Section 1: what the script measured inside the editor.
 # LEDGER material step, /Game/Ledger/M_LedgerSurface
 # compression_settings readback for BaseColorMap: leaf=DEFAULT via=enum-identity srgb=True str=<TextureCompressionSettings.TC_DEFAULT: 0> repr=<TextureCompressionSettings.TC_DEFAULT: 0>
@@ -31,126 +31,126 @@
 # which is where a process exit code is explained. Cap announced.
 # material.log holds 5963 line(s)
 (+5843 earlier line(s) not shown)
-[2026.10.28-18.21.54:110][  0]LogAudio: Display: Chunk stats for (SoundWave /Game/Ledger/Sounds/Steps/step-run-5.step-run-5: Duration=0.20 secs, Channels=1), Settings(FirstChunkSize=4294967295 frames, InlineFirst=false, MaxChunkSize=262144), Chunks=2, Chunk0=28 bytes, Chunk1=2969 bytes, ChunkN=0)
-[2026.10.28-18.21.54:125][  0]LogAudioDerivedData: Display: Building compressed audio format BINKA hash BINKA_SCVER_5028_R4DV_false_SR0_48000.000000_SR1_32000.000000_SR2_24000.000000_SR3_12000.000000_SR4_8000.000000_QMOD_1.000000_CQLT_-1_ASTH_0.000000_INLC_false_LCK1_0.000000_CSZE_65536_LCF_false_ZCS_256_MCSO_-1_END wave step-run-6...
-[2026.10.28-18.21.54:126][  0]LogAudioDerivedData: Display: step-run-6 compressed to 15.85% (from 18KB to 2KB) with BINKA at Quality 80 with Quality Modifier 1.00
-[2026.10.28-18.21.54:126][  0]LogAudio: Display: Chunk stats for (SoundWave /Game/Ledger/Sounds/Steps/step-run-6.step-run-6: Duration=0.20 secs, Channels=1), Settings(FirstChunkSize=4294967295 frames, InlineFirst=false, MaxChunkSize=262144), Chunks=2, Chunk0=28 bytes, Chunk1=3037 bytes, ChunkN=0)
-[2026.10.28-18.21.54:138][  0]LogAudioDerivedData: Display: Building compressed audio format BINKA hash BINKA_SCVER_5028_R4DV_false_SR0_48000.000000_SR1_32000.000000_SR2_24000.000000_SR3_12000.000000_SR4_8000.000000_QMOD_1.000000_CQLT_-1_ASTH_0.000000_INLC_false_LCK1_0.000000_CSZE_65536_LCF_false_ZCS_256_MCSO_-1_END wave step-run-6...
-[2026.10.28-18.21.54:138][  0]LogAudioDerivedData: Display: step-run-6 compressed to 15.85% (from 18KB to 2KB) with BINKA at Quality 80 with Quality Modifier 1.00
-[2026.10.28-18.21.54:139][  0]LogAudio: Display: Chunk stats for (SoundWave /Game/Ledger/Sounds/Steps/step-run-6.step-run-6: Duration=0.20 secs, Channels=1), Settings(FirstChunkSize=4294967295 frames, InlineFirst=false, MaxChunkSize=262144), Chunks=2, Chunk0=28 bytes, Chunk1=3037 bytes, ChunkN=0)
-[2026.10.28-18.21.54:152][  0]LogAudioDerivedData: Display: Building compressed audio format BINKA hash BINKA_SCVER_5028_R4DV_false_SR0_48000.000000_SR1_32000.000000_SR2_24000.000000_SR3_12000.000000_SR4_8000.000000_QMOD_1.000000_CQLT_-1_ASTH_0.000000_INLC_false_LCK1_0.000000_CSZE_65536_LCF_false_ZCS_256_MCSO_-1_END wave step-run-7...
-[2026.10.28-18.21.54:153][  0]LogAudioDerivedData: Display: step-run-7 compressed to 15.01% (from 17KB to 2KB) with BINKA at Quality 80 with Quality Modifier 1.00
-[2026.10.28-18.21.54:153][  0]LogAudio: Display: Chunk stats for (SoundWave /Game/Ledger/Sounds/Steps/step-run-7.step-run-7: Duration=0.19 secs, Channels=1), Settings(FirstChunkSize=4294967295 frames, InlineFirst=false, MaxChunkSize=262144), Chunks=2, Chunk0=28 bytes, Chunk1=2669 bytes, ChunkN=0)
-[2026.10.28-18.21.54:163][  0]LogAudioDerivedData: Display: Building compressed audio format BINKA hash BINKA_SCVER_5028_R4DV_false_SR0_48000.000000_SR1_32000.000000_SR2_24000.000000_SR3_12000.000000_SR4_8000.000000_QMOD_1.000000_CQLT_-1_ASTH_0.000000_INLC_false_LCK1_0.000000_CSZE_65536_LCF_false_ZCS_256_MCSO_-1_END wave step-run-7...
-[2026.10.28-18.21.54:163][  0]LogAudioDerivedData: Display: step-run-7 compressed to 15.01% (from 17KB to 2KB) with BINKA at Quality 80 with Quality Modifier 1.00
-[2026.10.28-18.21.54:164][  0]LogAudio: Display: Chunk stats for (SoundWave /Game/Ledger/Sounds/Steps/step-run-7.step-run-7: Duration=0.19 secs, Channels=1), Settings(FirstChunkSize=4294967295 frames, InlineFirst=false, MaxChunkSize=262144), Chunks=2, Chunk0=28 bytes, Chunk1=2669 bytes, ChunkN=0)
-[2026.10.28-18.21.54:198][  0]LogPythonScriptCommandlet: Display: Python script executed successfully
-[2026.10.28-18.21.54:198][  0]LogInit: Display: 
-[2026.10.28-18.21.54:198][  0]LogInit: Display: Warning/Error Summary (Unique only)
-[2026.10.28-18.21.54:199][  0]LogInit: Display: -----------------------------------
-[2026.10.28-18.21.54:199][  0]LogInit: Display: LogOutputDevice: Error: === Handled ensure: ===
-[2026.10.28-18.21.54:199][  0]LogInit: Display: LogOutputDevice: Error: 
-[2026.10.28-18.21.54:199][  0]LogInit: Display: LogOutputDevice: Error: Ensure condition failed: false  [File:D:\build\++UE5\Sync\Engine\Source\Editor\UnrealEd\Private\ObjectTools.cpp] [Line: 4045] 
-[2026.10.28-18.21.54:199][  0]LogInit: Display: LogOutputDevice: Error: 					Failed to unload all packages during ForceDeleteObjects - 
-[2026.10.28-18.21.54:200][  0]LogInit: Display: LogOutputDevice: Error: 					these packages are likely corrupt. Consider restarting the 
-[2026.10.28-18.21.54:200][  0]LogInit: Display: LogOutputDevice: Error: 					editor, noting which assets remain and then deleting them 
-[2026.10.28-18.21.54:200][  0]LogInit: Display: LogOutputDevice: Error: 					from the file system manually: 
-[2026.10.28-18.21.54:200][  0]LogInit: Display: LogOutputDevice: Error: /Game/Ledger/M_LedgerControlTwin
-[2026.10.28-18.21.54:200][  0]LogInit: Display: LogOutputDevice: Error: Stack: 
-[2026.10.28-18.21.54:201][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffb00d10595 UnrealEditor-UnrealEd.dll!UnknownFunction []
-[2026.10.28-18.21.54:201][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffb002e6dd6 UnrealEditor-UnrealEd.dll!UnknownFunction []
-[2026.10.28-18.21.54:201][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffb00685de5 UnrealEditor-UnrealEd.dll!UnknownFunction []
-[2026.10.28-18.21.54:201][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x000001f4e09666a5 UnrealEditor-EditorScriptingUtilities.dll!UnknownFunction []
-[2026.10.28-18.21.54:201][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffb0c947b2c UnrealEditor-CoreUObject.dll!UnknownFunction []
-[2026.10.28-18.21.54:201][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffb0ccc1992 UnrealEditor-CoreUObject.dll!UnknownFunction []
-[2026.10.28-18.21.54:202][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x000001f4d3535223 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
-[2026.10.28-18.21.54:202][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x000001f4d3583d1e UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
-[2026.10.28-18.21.54:202][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x000001f4d35812c2 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
-[2026.10.28-18.21.54:202][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x000001f4d349937e UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
-[2026.10.28-18.21.54:202][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffae6e41263 python311.dll!UnknownFunction []
-[2026.10.28-18.21.54:202][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffae6e448df python311.dll!UnknownFunction []
-[2026.10.28-18.21.54:202][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffae6e460b2 python311.dll!UnknownFunction []
-[2026.10.28-18.21.54:203][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffae6ea56bf python311.dll!UnknownFunction []
-[2026.10.28-18.21.54:203][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffae6ea70bf python311.dll!UnknownFunction []
-[2026.10.28-18.21.54:203][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x000001f4d351f678 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
-[2026.10.28-18.21.54:203][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x000001f4d354b270 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
-[2026.10.28-18.21.54:203][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x000001f4d351fc88 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
-[2026.10.28-18.21.54:203][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x000001f4d35383f0 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
-[2026.10.28-18.21.54:203][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ff6ba1671bb UnrealEditor-Cmd.exe!UnknownFunction []
-[2026.10.28-18.21.54:204][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ff6ba15c289 UnrealEditor-Cmd.exe!UnknownFunction []
-[2026.10.28-18.21.54:204][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ff6ba15c5ba UnrealEditor-Cmd.exe!UnknownFunction []
-[2026.10.28-18.21.54:204][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ff6ba161256 UnrealEditor-Cmd.exe!UnknownFunction []
-[2026.10.28-18.21.54:204][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ff6ba175c74 UnrealEditor-Cmd.exe!UnknownFunction []
-[2026.10.28-18.21.54:205][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ff6ba17838a UnrealEditor-Cmd.exe!UnknownFunction []
-[2026.10.28-18.21.54:205][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffc3168dda7 KERNEL32.DLL!UnknownFunction []
-[2026.10.28-18.21.54:205][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffc3309ee4c ntdll.dll!UnknownFunction []
-[2026.10.28-18.21.54:205][  0]LogInit: Display: LogObjectTools: Warning: Detected inconsistencies between reference gathering algorithms. Switching 'Editor.UseLegacyGetReferencersForDeletion' on for the remainder of this editor session.
-[2026.10.28-18.21.54:206][  0]LogInit: Display: LogLinker: Warning: [AssetLog] C:\actions-runner-ledger\_work\ledger\ledger\ue-probe\Content\Ledger\T_LedgerDefaultNormal.uasset: Error opening file.
-[2026.10.28-18.21.54:206][  0]LogInit: Display: LogLinker: Warning: [AssetLog] C:\actions-runner-ledger\_work\ledger\ledger\ue-probe\Content\Ledger\T_LedgerDefaultRough.uasset: Error opening file.
-[2026.10.28-18.21.54:206][  0]LogInit: Display: LogObjectTools: Warning: ForceDeleteObject failed to delete M_LedgerControlTwin, this package is now potentially corrupt
-[2026.10.28-18.21.54:206][  0]LogInit: Display: LogOutputDevice: Warning: 
+[2026.10.28-19.45.56:600][  0]LogAudio: Display: Chunk stats for (SoundWave /Game/Ledger/Sounds/Steps/step-run-5.step-run-5: Duration=0.20 secs, Channels=1), Settings(FirstChunkSize=4294967295 frames, InlineFirst=false, MaxChunkSize=262144), Chunks=2, Chunk0=28 bytes, Chunk1=2969 bytes, ChunkN=0)
+[2026.10.28-19.45.56:613][  0]LogAudioDerivedData: Display: Building compressed audio format BINKA hash BINKA_SCVER_5028_R4DV_false_SR0_48000.000000_SR1_32000.000000_SR2_24000.000000_SR3_12000.000000_SR4_8000.000000_QMOD_1.000000_CQLT_-1_ASTH_0.000000_INLC_false_LCK1_0.000000_CSZE_65536_LCF_false_ZCS_256_MCSO_-1_END wave step-run-6...
+[2026.10.28-19.45.56:614][  0]LogAudioDerivedData: Display: step-run-6 compressed to 15.85% (from 18KB to 2KB) with BINKA at Quality 80 with Quality Modifier 1.00
+[2026.10.28-19.45.56:615][  0]LogAudio: Display: Chunk stats for (SoundWave /Game/Ledger/Sounds/Steps/step-run-6.step-run-6: Duration=0.20 secs, Channels=1), Settings(FirstChunkSize=4294967295 frames, InlineFirst=false, MaxChunkSize=262144), Chunks=2, Chunk0=28 bytes, Chunk1=3037 bytes, ChunkN=0)
+[2026.10.28-19.45.56:626][  0]LogAudioDerivedData: Display: Building compressed audio format BINKA hash BINKA_SCVER_5028_R4DV_false_SR0_48000.000000_SR1_32000.000000_SR2_24000.000000_SR3_12000.000000_SR4_8000.000000_QMOD_1.000000_CQLT_-1_ASTH_0.000000_INLC_false_LCK1_0.000000_CSZE_65536_LCF_false_ZCS_256_MCSO_-1_END wave step-run-6...
+[2026.10.28-19.45.56:627][  0]LogAudioDerivedData: Display: step-run-6 compressed to 15.85% (from 18KB to 2KB) with BINKA at Quality 80 with Quality Modifier 1.00
+[2026.10.28-19.45.56:627][  0]LogAudio: Display: Chunk stats for (SoundWave /Game/Ledger/Sounds/Steps/step-run-6.step-run-6: Duration=0.20 secs, Channels=1), Settings(FirstChunkSize=4294967295 frames, InlineFirst=false, MaxChunkSize=262144), Chunks=2, Chunk0=28 bytes, Chunk1=3037 bytes, ChunkN=0)
+[2026.10.28-19.45.56:640][  0]LogAudioDerivedData: Display: Building compressed audio format BINKA hash BINKA_SCVER_5028_R4DV_false_SR0_48000.000000_SR1_32000.000000_SR2_24000.000000_SR3_12000.000000_SR4_8000.000000_QMOD_1.000000_CQLT_-1_ASTH_0.000000_INLC_false_LCK1_0.000000_CSZE_65536_LCF_false_ZCS_256_MCSO_-1_END wave step-run-7...
+[2026.10.28-19.45.56:641][  0]LogAudioDerivedData: Display: step-run-7 compressed to 15.01% (from 17KB to 2KB) with BINKA at Quality 80 with Quality Modifier 1.00
+[2026.10.28-19.45.56:641][  0]LogAudio: Display: Chunk stats for (SoundWave /Game/Ledger/Sounds/Steps/step-run-7.step-run-7: Duration=0.19 secs, Channels=1), Settings(FirstChunkSize=4294967295 frames, InlineFirst=false, MaxChunkSize=262144), Chunks=2, Chunk0=28 bytes, Chunk1=2669 bytes, ChunkN=0)
+[2026.10.28-19.45.56:651][  0]LogAudioDerivedData: Display: Building compressed audio format BINKA hash BINKA_SCVER_5028_R4DV_false_SR0_48000.000000_SR1_32000.000000_SR2_24000.000000_SR3_12000.000000_SR4_8000.000000_QMOD_1.000000_CQLT_-1_ASTH_0.000000_INLC_false_LCK1_0.000000_CSZE_65536_LCF_false_ZCS_256_MCSO_-1_END wave step-run-7...
+[2026.10.28-19.45.56:652][  0]LogAudioDerivedData: Display: step-run-7 compressed to 15.01% (from 17KB to 2KB) with BINKA at Quality 80 with Quality Modifier 1.00
+[2026.10.28-19.45.56:652][  0]LogAudio: Display: Chunk stats for (SoundWave /Game/Ledger/Sounds/Steps/step-run-7.step-run-7: Duration=0.19 secs, Channels=1), Settings(FirstChunkSize=4294967295 frames, InlineFirst=false, MaxChunkSize=262144), Chunks=2, Chunk0=28 bytes, Chunk1=2669 bytes, ChunkN=0)
+[2026.10.28-19.45.56:685][  0]LogPythonScriptCommandlet: Display: Python script executed successfully
+[2026.10.28-19.45.56:685][  0]LogInit: Display: 
+[2026.10.28-19.45.56:685][  0]LogInit: Display: Warning/Error Summary (Unique only)
+[2026.10.28-19.45.56:685][  0]LogInit: Display: -----------------------------------
+[2026.10.28-19.45.56:686][  0]LogInit: Display: LogOutputDevice: Error: === Handled ensure: ===
+[2026.10.28-19.45.56:686][  0]LogInit: Display: LogOutputDevice: Error: 
+[2026.10.28-19.45.56:686][  0]LogInit: Display: LogOutputDevice: Error: Ensure condition failed: false  [File:D:\build\++UE5\Sync\Engine\Source\Editor\UnrealEd\Private\ObjectTools.cpp] [Line: 4045] 
+[2026.10.28-19.45.56:686][  0]LogInit: Display: LogOutputDevice: Error: 					Failed to unload all packages during ForceDeleteObjects - 
+[2026.10.28-19.45.56:687][  0]LogInit: Display: LogOutputDevice: Error: 					these packages are likely corrupt. Consider restarting the 
+[2026.10.28-19.45.56:687][  0]LogInit: Display: LogOutputDevice: Error: 					editor, noting which assets remain and then deleting them 
+[2026.10.28-19.45.56:687][  0]LogInit: Display: LogOutputDevice: Error: 					from the file system manually: 
+[2026.10.28-19.45.56:687][  0]LogInit: Display: LogOutputDevice: Error: /Game/Ledger/M_LedgerControlTwin
+[2026.10.28-19.45.56:688][  0]LogInit: Display: LogOutputDevice: Error: Stack: 
+[2026.10.28-19.45.56:688][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffb08590595 UnrealEditor-UnrealEd.dll!UnknownFunction []
+[2026.10.28-19.45.56:688][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffb07b66dd6 UnrealEditor-UnrealEd.dll!UnknownFunction []
+[2026.10.28-19.45.56:688][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffb07f05de5 UnrealEditor-UnrealEd.dll!UnknownFunction []
+[2026.10.28-19.45.56:688][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffac84f66a5 UnrealEditor-EditorScriptingUtilities.dll!UnknownFunction []
+[2026.10.28-19.45.56:688][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffb0f2a7b2c UnrealEditor-CoreUObject.dll!UnknownFunction []
+[2026.10.28-19.45.56:689][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffb0f621992 UnrealEditor-CoreUObject.dll!UnknownFunction []
+[2026.10.28-19.45.56:689][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffaca375223 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
+[2026.10.28-19.45.56:689][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffaca3c3d1e UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
+[2026.10.28-19.45.56:689][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffaca3c12c2 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
+[2026.10.28-19.45.56:689][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffaca2d937e UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
+[2026.10.28-19.45.56:689][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffae71d1263 python311.dll!UnknownFunction []
+[2026.10.28-19.45.56:690][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffae71d48df python311.dll!UnknownFunction []
+[2026.10.28-19.45.56:690][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffae71d60b2 python311.dll!UnknownFunction []
+[2026.10.28-19.45.56:690][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffae72356bf python311.dll!UnknownFunction []
+[2026.10.28-19.45.56:690][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffae72370bf python311.dll!UnknownFunction []
+[2026.10.28-19.45.56:690][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffaca35f678 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
+[2026.10.28-19.45.56:690][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffaca38b270 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
+[2026.10.28-19.45.56:690][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffaca35fc88 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
+[2026.10.28-19.45.56:690][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffaca3783f0 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
+[2026.10.28-19.45.56:691][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ff6ce0371bb UnrealEditor-Cmd.exe!UnknownFunction []
+[2026.10.28-19.45.56:691][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ff6ce02c289 UnrealEditor-Cmd.exe!UnknownFunction []
+[2026.10.28-19.45.56:691][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ff6ce02c5ba UnrealEditor-Cmd.exe!UnknownFunction []
+[2026.10.28-19.45.56:691][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ff6ce031256 UnrealEditor-Cmd.exe!UnknownFunction []
+[2026.10.28-19.45.56:692][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ff6ce045c74 UnrealEditor-Cmd.exe!UnknownFunction []
+[2026.10.28-19.45.56:692][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ff6ce04838a UnrealEditor-Cmd.exe!UnknownFunction []
+[2026.10.28-19.45.56:692][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffc3168dda7 KERNEL32.DLL!UnknownFunction []
+[2026.10.28-19.45.56:693][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffc3309ee4c ntdll.dll!UnknownFunction []
+[2026.10.28-19.45.56:693][  0]LogInit: Display: LogObjectTools: Warning: Detected inconsistencies between reference gathering algorithms. Switching 'Editor.UseLegacyGetReferencersForDeletion' on for the remainder of this editor session.
+[2026.10.28-19.45.56:693][  0]LogInit: Display: LogLinker: Warning: [AssetLog] C:\actions-runner-ledger\_work\ledger\ledger\ue-probe\Content\Ledger\T_LedgerDefaultNormal.uasset: Error opening file.
+[2026.10.28-19.45.56:693][  0]LogInit: Display: LogLinker: Warning: [AssetLog] C:\actions-runner-ledger\_work\ledger\ledger\ue-probe\Content\Ledger\T_LedgerDefaultRough.uasset: Error opening file.
+[2026.10.28-19.45.56:694][  0]LogInit: Display: LogObjectTools: Warning: ForceDeleteObject failed to delete M_LedgerControlTwin, this package is now potentially corrupt
+[2026.10.28-19.45.56:694][  0]LogInit: Display: LogOutputDevice: Warning: 
 
 Script Stack (1 frames) :
 /Script/EditorScriptingUtilities.EditorAssetLibrary.DeleteAsset
 
-[2026.10.28-18.21.54:206][  0]LogInit: Display: LogInterchangeEngine: Warning: [C:/actions-runner-ledger/_work/ledger/ledger/ledger/Assets/Characters/Michelle.fbx : 'Hips_Skeleton', Skeleton] Imported skeleton has some invalid bind poses. Skeletal mesh skinning has been rebind using the time zero pose.
-[2026.10.28-18.21.54:207][  0]LogInit: Display: LogInterchangeEngine: Warning: [C:/actions-runner-ledger/_work/ledger/ledger/ledger/Assets/Characters/Michelle.fbx : 'SK_michelle', SkeletalMesh] No smoothing group information was found for this mesh 'Mesh' in the FBX file. Please make sure to enable the 'Export Smoothing Groups' option in the FBX Exporter before exporting the file.
-[2026.10.28-18.21.54:207][  0]LogInit: Display: LogInterchangeEngine: Warning: [C:/actions-runner-ledger/_work/ledger/ledger/ledger/Assets/Characters/B/idle_2__Standing Idle 01_2dee24f8-3b49-48af-b735-c6377509eaac.fbx : 'Hips_Skeleton', Skeleton] Imported skeleton has some invalid bind poses. Skeletal mesh skinning has been rebind using the time zero pose.
-[2026.10.28-18.21.54:207][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_asphalt
-[2026.10.28-18.21.54:207][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brass
-[2026.10.28-18.21.54:207][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_grey
-[2026.10.28-18.21.54:208][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_grey_h_east_chandler_bay0
-[2026.10.28-18.21.54:208][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_grey_h_east_chandler_bay_north
-[2026.10.28-18.21.54:208][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_grey_h_west_north_bay0
-[2026.10.28-18.21.54:208][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_grey_h_west_north_bay1
-[2026.10.28-18.21.54:209][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_grey_h_west_north_bay2
-[2026.10.28-18.21.54:209][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_grey_h_west_north_bay_north
-[2026.10.28-18.21.54:209][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_grey_h_west_south_bay0
-[2026.10.28-18.21.54:209][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_grey_h_west_south_bay1
-[2026.10.28-18.21.54:210][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_grey_h_west_south_bay2
-[2026.10.28-18.21.54:210][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_grey_h_west_south_bay_north
-[2026.10.28-18.21.54:210][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_red
-[2026.10.28-18.21.54:210][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_red_h_east_parade_bay0
-[2026.10.28-18.21.54:211][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_red_h_east_parade_bay1
-[2026.10.28-18.21.54:211][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_red_h_east_parade_bay2
-[2026.10.28-18.21.54:211][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_red_h_east_parade_bay3
-[2026.10.28-18.21.54:212][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_red_h_east_parade_bay4
-[2026.10.28-18.21.54:212][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_red_h_east_parade_bay5
-[2026.10.28-18.21.54:212][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_red_h_east_parade_bay_north
-[2026.10.28-18.21.54:213][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_rubbed
-[2026.10.28-18.21.54:213][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_rubbed_h_east_chandler_bay0
-[2026.10.28-18.21.54:213][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_rubbed_h_east_parade_bay0
-[2026.10.28-18.21.54:213][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_rubbed_h_east_parade_bay1
-[2026.10.28-18.21.54:213][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_rubbed_h_east_parade_bay3
-[2026.10.28-18.21.54:214][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_rubbed_h_east_parade_bay4
-[2026.10.28-18.21.54:214][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_rubbed_h_east_parade_bay5
-[2026.10.28-18.21.54:214][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_rubbed_h_west_south_bay0
-[2026.10.28-18.21.54:214][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_rubbed_h_west_south_bay1
-[2026.10.28-18.21.54:215][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_rubbed_h_west_south_bay2
-[2026.10.28-18.21.54:215][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_car_glass
-[2026.10.28-18.21.54:215][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_card_chandler_day
-[2026.10.28-18.21.54:215][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_card_int23_fish
-[2026.10.28-18.21.54:215][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_card_int23_grocer
-[2026.10.28-18.21.54:215][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_card_int23_laundry
-[2026.10.28-18.21.54:215][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_card_int23_pawn
-[2026.10.28-18.21.54:216][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_card_ironmonger_day
-[2026.10.28-18.21.54:216][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_card_net_curtain_a
-[2026.10.28-18.21.54:216][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_card_net_curtain_a_lit
-[2026.10.28-18.21.54:216][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_card_net_curtain_b
-[2026.10.28-18.21.54:217][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_card_net_curtain_b_lit
-[2026.10.28-18.21.54:217][  0]LogInit: Display: NOTE: Only first 50 warnings displayed.
-[2026.10.28-18.21.54:217][  0]LogInit: Display: 
-[2026.10.28-18.21.54:217][  0]LogInit: Display: Failure - 38 error(s), 4803 warning(s)
-[2026.10.28-18.21.54:217][  0]LogInit: Display: 
+[2026.10.28-19.45.56:694][  0]LogInit: Display: LogInterchangeEngine: Warning: [C:/actions-runner-ledger/_work/ledger/ledger/ledger/Assets/Characters/Michelle.fbx : 'Hips_Skeleton', Skeleton] Imported skeleton has some invalid bind poses. Skeletal mesh skinning has been rebind using the time zero pose.
+[2026.10.28-19.45.56:695][  0]LogInit: Display: LogInterchangeEngine: Warning: [C:/actions-runner-ledger/_work/ledger/ledger/ledger/Assets/Characters/Michelle.fbx : 'SK_michelle', SkeletalMesh] No smoothing group information was found for this mesh 'Mesh' in the FBX file. Please make sure to enable the 'Export Smoothing Groups' option in the FBX Exporter before exporting the file.
+[2026.10.28-19.45.56:695][  0]LogInit: Display: LogInterchangeEngine: Warning: [C:/actions-runner-ledger/_work/ledger/ledger/ledger/Assets/Characters/B/idle_2__Standing Idle 01_2dee24f8-3b49-48af-b735-c6377509eaac.fbx : 'Hips_Skeleton', Skeleton] Imported skeleton has some invalid bind poses. Skeletal mesh skinning has been rebind using the time zero pose.
+[2026.10.28-19.45.56:695][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_asphalt
+[2026.10.28-19.45.56:695][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brass
+[2026.10.28-19.45.56:695][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_grey
+[2026.10.28-19.45.56:696][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_grey_h_east_chandler_bay0
+[2026.10.28-19.45.56:696][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_grey_h_east_chandler_bay_north
+[2026.10.28-19.45.56:696][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_grey_h_west_north_bay0
+[2026.10.28-19.45.56:697][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_grey_h_west_north_bay1
+[2026.10.28-19.45.56:697][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_grey_h_west_north_bay2
+[2026.10.28-19.45.56:697][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_grey_h_west_north_bay_north
+[2026.10.28-19.45.56:697][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_grey_h_west_south_bay0
+[2026.10.28-19.45.56:698][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_grey_h_west_south_bay1
+[2026.10.28-19.45.56:698][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_grey_h_west_south_bay2
+[2026.10.28-19.45.56:698][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_grey_h_west_south_bay_north
+[2026.10.28-19.45.56:698][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_red
+[2026.10.28-19.45.56:699][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_red_h_east_parade_bay0
+[2026.10.28-19.45.56:699][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_red_h_east_parade_bay1
+[2026.10.28-19.45.56:699][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_red_h_east_parade_bay2
+[2026.10.28-19.45.56:699][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_red_h_east_parade_bay3
+[2026.10.28-19.45.56:699][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_red_h_east_parade_bay4
+[2026.10.28-19.45.56:700][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_red_h_east_parade_bay5
+[2026.10.28-19.45.56:700][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_red_h_east_parade_bay_north
+[2026.10.28-19.45.56:700][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_rubbed
+[2026.10.28-19.45.56:700][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_rubbed_h_east_chandler_bay0
+[2026.10.28-19.45.56:700][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_rubbed_h_east_parade_bay0
+[2026.10.28-19.45.56:701][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_rubbed_h_east_parade_bay1
+[2026.10.28-19.45.56:701][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_rubbed_h_east_parade_bay3
+[2026.10.28-19.45.56:701][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_rubbed_h_east_parade_bay4
+[2026.10.28-19.45.56:701][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_rubbed_h_east_parade_bay5
+[2026.10.28-19.45.56:701][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_rubbed_h_west_south_bay0
+[2026.10.28-19.45.56:701][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_rubbed_h_west_south_bay1
+[2026.10.28-19.45.56:702][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_rubbed_h_west_south_bay2
+[2026.10.28-19.45.56:702][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_car_glass
+[2026.10.28-19.45.56:702][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_card_chandler_day
+[2026.10.28-19.45.56:702][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_card_int23_fish
+[2026.10.28-19.45.56:702][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_card_int23_grocer
+[2026.10.28-19.45.56:702][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_card_int23_laundry
+[2026.10.28-19.45.56:703][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_card_int23_pawn
+[2026.10.28-19.45.56:703][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_card_ironmonger_day
+[2026.10.28-19.45.56:703][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_card_net_curtain_a
+[2026.10.28-19.45.56:703][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_card_net_curtain_a_lit
+[2026.10.28-19.45.56:703][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_card_net_curtain_b
+[2026.10.28-19.45.56:704][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_card_net_curtain_b_lit
+[2026.10.28-19.45.56:704][  0]LogInit: Display: NOTE: Only first 50 warnings displayed.
+[2026.10.28-19.45.56:704][  0]LogInit: Display: 
+[2026.10.28-19.45.56:704][  0]LogInit: Display: Failure - 38 error(s), 4813 warning(s)
+[2026.10.28-19.45.56:705][  0]LogInit: Display: 
 
-Execution of commandlet took:  6m 48s (408.31 seconds), PeakPhysMemoryMB=11801 MB, PeakVirtMemoryMB=12447 MB
-[2026.10.28-18.21.54:241][  0]LogHairStrands: Display: Waiting for groom bindings to be ready 3/7 (Hair_S_BobLayered_Binding) ...
-[2026.10.28-18.21.57:351][  0]LogHairStrands: Display: Waiting for groom bindings to be ready 6/7 (Hair_M_BobCurly_Binding) ...
-[2026.10.28-18.21.57:550][  0]LogPython: Display: Object '/ControlRig/Python/RigHierarchy/add_controls_for_selected_PY.ControlOutputFormat' was externally referenced when shutting down Python. Forcibly releasing its Python resources!
-[2026.10.28-18.21.57:567][  0]LogAssetRegistry: Display: CleanupOrphanedCacheFiles (PostWrite): 0 .ref files found, 0 referenced binaries
-[2026.10.28-18.21.57:567][  0]LogAssetRegistry: Display: CleanupOrphanedCacheFiles: 0 total binaries, 0 referenced (kept), 0 old-style pre-migration (kept), 0 orphans deleted, 0 orphans locked (kept)
-[2026.10.28-18.21.58:497][  0]LogShaderCompilers: Display: Exiting ShaderCompilingThread
-[2026.10.28-18.21.58:589][  0]LogSourceControl: Display: Uncontrolled Changelist persistency file saved ../../../../../../actions-runner-ledger/_work/ledger/ledger/ue-probe/Saved/SourceControl/UncontrolledChangelists.json
+Execution of commandlet took:  6m 16s (376.62 seconds), PeakPhysMemoryMB=11813 MB, PeakVirtMemoryMB=12473 MB
+[2026.10.28-19.45.56:728][  0]LogHairStrands: Display: Waiting for groom bindings to be ready 2/7 (Hair_S_BobLayered_Binding) ...
+[2026.10.28-19.46.00:114][  0]LogHairStrands: Display: Waiting for groom bindings to be ready 6/7 (Hair_M_BobCurly_Binding) ...
+[2026.10.28-19.46.00:290][  0]LogPython: Display: Object '/ControlRig/Python/RigHierarchy/add_controls_for_selected_PY.ControlOutputFormat' was externally referenced when shutting down Python. Forcibly releasing its Python resources!
+[2026.10.28-19.46.00:297][  0]LogAssetRegistry: Display: CleanupOrphanedCacheFiles (PostWrite): 0 .ref files found, 0 referenced binaries
+[2026.10.28-19.46.00:297][  0]LogAssetRegistry: Display: CleanupOrphanedCacheFiles: 0 total binaries, 0 referenced (kept), 0 old-style pre-migration (kept), 0 orphans deleted, 0 orphans locked (kept)
+[2026.10.28-19.46.01:119][  0]LogShaderCompilers: Display: Exiting ShaderCompilingThread
+[2026.10.28-19.46.01:235][  0]LogSourceControl: Display: Uncontrolled Changelist persistency file saved ../../../../../../actions-runner-ledger/_work/ledger/ledger/ue-probe/Saved/SourceControl/UncontrolledChangelists.json
 
 # Section 3: the editor process stderr, first 60 lines.
 # material.err holds 0 line(s)
