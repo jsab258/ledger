@@ -622,3 +622,11 @@ difference here of one or two sentences is proven.
   running (0.4% without it in the third try). So it misses his 0.15 s narrowly, and stays off for his word on the next
   page, with these numbers: cleared turns heard about a second sooner, fewer true sentences refused, one more invention
   through in 410 on the cited replies.
+
+## On by default (28 October, his answer)
+
+His answer of 28 October: "the fast checker on, at the open cut-off". The talk program as published carries its spec and
+server (tools/publish-talk-helper.ps1: checker/ beside LedgerTalk.exe) and starts it in the background, so the game is not
+held: published and started, it was ready at 0.1 s and its checker on at 10.9 s; LEDGER_FAST_CHECKER=0 switches it off,
+and the stand-in (--fake) never starts it. A conversation begun in those first seconds goes to Haiku alone. The night's
+packaged build carries it; the tester's walk then shows it in play.

@@ -29,6 +29,8 @@ static partial class Program
         { "talk-2026-10-07", 3.00 },
         { "slow-replies-2026-10-26", 14.00 },
         { "invented-source-2026-10-27", 19.50 },
+        // his standing measuring dollar (RULINGS, 3 Oct: "measurement runs ($1 a day in all, each logged)"), one task a day
+        { "measure-2026-10-28", 1.00 },
     };
     static string KeyTask = "talk-2026-10-07";
     static double KeyTaskCap => KeyTaskCaps[KeyTask];

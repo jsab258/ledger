@@ -233,3 +233,19 @@ hand-over plus 0.2 s of Pocket).
 - **The speed gain cannot be read here.** The service's own pace swung more than any switch could. The two one-copy runs, minutes apart and identical, gave medians of 7.0 s and 3.3 s.
   - The sentence-level measure stands: a median 0.29 s saved, the slowest tenth from 3.2 s instead of 4.0.
 - **Verdict: no harm found, the gain as measured by sentence.** Switching it on is a money change in the game, about $0.30 a friends' evening (estimated), so it waits for his yes.
+
+## His condition, measured (28 October, 09:20 to 09:35)
+
+His answer of 28 October: "the two copies only if they do not raise wrong refusals". The 27 October tests left a hint the
+other way (true sentences passed only with one copy 12 times, only with two 5). Measured on sentences those tests never
+saw: the 211 true sentences of the held test outside every third (`sentcheck --ab two --not-every 3 --true-only`, the
+order alternating; F:/LedgerTools/town-scratch/slow-replies/two-copies-true/ab.jsonl; $0.53 of his measuring dollar).
+
+| | One copy | Two copies |
+|---|---|---|
+| true sentences wrongly refused, of 211 | 69 | 62 |
+| passed only this way | 15 | 22 |
+| check time, median / slowest tenth from | 2.51 / 3.63 s | 2.24 / 3.46 s |
+
+- **No rise in wrong refusals** (a sign test, p about 0.32). Over both tests the split is 27 each way; whole turns refused
+  16 first sentences against 20. His condition is met, so ClaimCheck.TwoCopies is on in the game from 28 October.

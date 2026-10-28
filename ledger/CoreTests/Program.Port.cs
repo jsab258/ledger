@@ -152,7 +152,8 @@ namespace Ledger.CoreTests
         static void TestNameRule()
         {
             Console.WriteLine("The hard rule on names:");
-            Check(NameRuleShipped && !ClaimCheck.NameRuleWider, "the game ships with the rule on and its wider form off");
+            Check(NameRuleShipped && NameRuleWiderShipped, "the game ships with the rule on, its wider form too (his answer of 28 October)");
+            Check(TwoCopiesShipped, "the game ships with two copies of each check call (his answer of 28 October)");
             ClaimCheck.NameRule = true;
             var facts = new[] { "C1: Ron Kirby keeps Mickey's door and the rank.", "P17: Hal keeps the coin shop on Quay Street." };
             Check(NameRules.Missing("Hal runs it from the coin shop.", facts).Count == 0, "a name in the facts passes");

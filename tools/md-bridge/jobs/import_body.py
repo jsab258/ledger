@@ -2,8 +2,9 @@
 # project, his MetaHuman body (FBX, Unreal's centimetres, reference A-pose) imported as the avatar with
 # arrangement points, then exported back alone as OBJ, so its size can be measured outside Marvelous
 # before any pattern is drawn (CLO's docs never define the import scale: MD-SCRIPTING-2026-10-26.md).
-BODY = r"F:\LedgerTools\bodies\MH_TomL1\MH_TomL1_FullBody.fbx"
-OUT = r"F:\LedgerTools\garments\tom\avatar-check.obj"
+# a copy run for another body sets BODY, OUT and AVT_OUT above this text (28 October: the straight-elbowed drape body)
+BODY = globals().get("BODY", r"F:\LedgerTools\bodies\MH_TomL1\MH_TomL1_FullBody.fbx")
+OUT = globals().get("OUT", r"F:\LedgerTools\garments\tom\avatar-check.obj")
 import os
 # A WRONG PATH OPENS A BOX IN MARVELOUS THAT ONLY JAFAR CAN CLOSE (26 October: "Failed to initialize FBX
 # Importer", the first try named a file that is not there): every file is checked here first.
@@ -36,5 +37,5 @@ eo.scale = 1.0
 result["exported"] = export_api.ExportOBJ(OUT, eo)
 # THE AVATAR KEPT WITH ITS POINTS, so later jobs load it (ImportAvatar) with no import box to answer
 if isinstance(result.get("arrangementPoints"), int) and result["arrangementPoints"] > 0:
-    result["avatarSaved"] = export_api.ExportAVT(r"F:\LedgerTools\garments\tom\MH_TomL1.avt")
+    result["avatarSaved"] = export_api.ExportAVT(globals().get("AVT_OUT", r"F:\LedgerTools\garments\tom\MH_TomL1.avt"))
 log("body imported and exported for measuring")

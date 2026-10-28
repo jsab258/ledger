@@ -8,17 +8,17 @@ Failed its exit check on 22 Oct (production/audits/phase1-exit/CLOSE-2026-10-22.
 
 - [x] 1. Health check; the order ledger.
 - [x] 2. The walk: Epic's, Tom's MetaHuman, packaged; tester's route 15 of 15. Sit set aside.
-- [ ] 3. Tom's outfit: zip jacket baked, skinned; cuffs' third try failed, his way next (RIB-CUFFS).
-- [ ] 4. Speech: cited facts, name rule in; checker built, off, his word (invented-claims/LOCAL-CHECKERS).
+- [ ] 3. Tom's outfit: sleeve ends fixed; cuffs set aside, his word next (SLEEVE-END).
+- [ ] 4. Speech: cited facts, wider rule, checker, two copies on; the night's build next (LOCAL-CHECKERS).
 - [ ] 5. Mickey's office: packaged, Epic's camera: back wall passes; door, grainy shadows next (cab-office-interior-1990/WEAR).
 - [ ] 6. Phase 1's exit re-run; phase 2?
-- Fallback: phase 3's port; U3's rules ported, not wired (sweep-2026-10-05/U3-DESIGN).
+- Fallback (RULINGS 28 Oct): phase 3's port; phase 5's research; next week's studies early.
 
 ## Studies this week (aaa-reference/STUDY-PLAN.md)
 
 Done 6 of 16: 7, 6, 12, 4, 5, 1 (this week's).
 
-STATE (27 Oct 19:45): walk done; three decisions on his page.
+STATE (28 Oct 10:00): his answers in; cuffs to his page; office photos next.
 
 ## Handovers
 

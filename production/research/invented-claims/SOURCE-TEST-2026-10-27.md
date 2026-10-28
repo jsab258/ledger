@@ -137,3 +137,9 @@ cut-off measured again on what it writes.
   3.03 s against 2.85 s, inside the service's own swing between identical runs (3.3 to 7.0 s). 25 of the 30 first
   sentences passed the check, against 24 of 30 before.
 - Not yet measured: a long run's refusals and wait, and the fast checker's cut-off on what this version writes.
+
+## The wider rule on (28 October, his answer)
+
+His answer of 28 October: "the wider hard rule, yes". ClaimCheck.NameRuleWider is on in the game: numbers, years and the
+short list of places and roles the speaker's facts lack are refused before any call, as measured above (on the 617 it
+stops 8 of Haiku's 35 leaks, all harmful, and refused no true sentence on any test).

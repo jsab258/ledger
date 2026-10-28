@@ -193,3 +193,9 @@
 {"event": "stop", "at": "2026-10-27T22:20:00", "note": ""}
 {"event": "start", "at": "2026-10-27T22:45:00", "task": "27 Oct: item 5: Mickey's back door shut and locked in the room recipe (canon), exported, check render", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-27T23:05:00", "note": ""}
+{"event": "start", "at": "2026-10-28T09:05:00", "task": "28 Oct: his rule and answers recorded; the rulings fitted to the cap", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-28T09:12:00", "note": ""}
+{"event": "start", "at": "2026-10-28T09:12:00", "task": "28 Oct: item 3: Tom's sleeve ends (straight-elbowed drape, bend-back) and cuffs (set aside), measured; record", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-28T09:42:00", "note": ""}
+{"event": "start", "at": "2026-10-28T09:42:00", "task": "28 Oct: item 4: his three speech answers in the game; two copies' wrong refusals measured; records", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-28T10:00:00", "note": ""}

@@ -19,5 +19,12 @@ $cards = Join-Path $Out "cards"
 New-Item -ItemType Directory -Force $cards | Out-Null
 Copy-Item (Join-Path $repo "production\cast\cards\*.md") $cards -Force
 Copy-Item (Join-Path $repo "production\specs\hook-cast.json") (Join-Path $Out "hook-cast.json") -Force
+# THE FAST CHECKER BESIDE IT (his answer of 28 October 2026: on by default, at the open cut-off): its spec and its
+# server, which LedgerTalk starts from checker\ (the model and its Python stay on this PC's drives, as the spec names)
+$checker = Join-Path $Out "checker"
+New-Item -ItemType Directory -Force $checker | Out-Null
+Copy-Item (Join-Path $repo "production\specs\fast-checker.json") $checker -Force
+Copy-Item (Join-Path $repo "tools\checkers\checker_server.py") $checker -Force
+Copy-Item (Join-Path $repo "tools\checkers\measure_checkers.py") $checker -Force
 Get-ChildItem $Out -Filter *.pdb | ForEach-Object { Remove-Item $_.FullName }
 "published to $Out"

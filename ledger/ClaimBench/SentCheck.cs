@@ -32,11 +32,18 @@ static partial class Program
                 known: e.GetProperty("context").EnumerateArray().Select(x => x.GetString()).ToList(),
                 key: e.TryGetProperty("key", out var kk) ? kk.GetString() : "",
                 sentence: e.GetProperty("answer").GetString(),
-                half: e.TryGetProperty("half", out var hh) ? hh.GetString() : "?"))
+                half: e.TryGetProperty("half", out var hh) ? hh.GetString() : "?",
+                supported: e.TryGetProperty("supported", out var su) && su.ValueKind == JsonValueKind.True))
             .ToList();
         if (rows.Any(r => r.half != "held")) { Console.WriteLine("refused: a sentence that is not from the held half"); return 2; }
         int every = int.Parse(Arg(args, "--every", "1"));
         if (every > 1) rows = rows.Where((_, i) => i % every == 0).ToList();
+        // --not-every N: the sentences --every N leaves out (28 October: two copies' wrong refusals, his condition,
+        // measured on sentences the 27 October A/B never saw); --true-only: the true sentences alone (a wrong refusal
+        // can only fall on one)
+        int notEvery = int.Parse(Arg(args, "--not-every", "1"));
+        if (notEvery > 1) rows = rows.Where((_, i) => i % notEvery != 0).ToList();
+        if (args.Contains("--true-only")) rows = rows.Where(r => r.supported).ToList();
         if (limit > 0) rows = rows.Take(limit).ToList();
         // --history-supports: the check's H items count as an event's support at the list (ClaimCheck.HistorySupports)
         ClaimCheck.HistorySupports = args.Contains("--history-supports");

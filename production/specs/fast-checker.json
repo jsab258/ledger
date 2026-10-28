@@ -1,5 +1,5 @@
 {
- "what": "The fast checker in front of Haiku's check on a reply's first sentence (his page pick of 27 October 2026 night: the open cut-off; production/research/invented-claims/LOCAL-CHECKERS-2026-10-26.md). Off unless switched on (LEDGER_FAST_CHECKER=1 for the talk helper, --fast-checker for the bench) until measured live with the voice.",
+ "what": "The fast checker in front of Haiku's check on a reply's first sentence (his page pick of 27 October 2026 night: the open cut-off; production/research/invented-claims/LOCAL-CHECKERS-2026-10-26.md). On by default from his answer of 28 October 2026 (the talk program carries this spec in its checker folder; LEDGER_FAST_CHECKER=0 switches it off); --fast-checker for the bench.",
  "model": "F:/LedgerTools/checkers/trained/tinylettuce-17m-try3-2026-10-26",
  "top": 10,
  "int8": false,

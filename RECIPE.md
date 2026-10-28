@@ -19,6 +19,29 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 28 Oct 2026, a garment's sleeve end that never closed round the forearm: draped on a straightened copy of the body, bent back by its skeleton
+- Made: a jacket's sleeves round the forearm to their ends (before: a flap past the hand the hand came through); its rib cuffs set aside after two tries.
+- Method (setting-free):
+  - Measure the cloth round the limb slab by slab: the share of the circle covered and how far its middle lies off the limb's axis. Measure the placed but undraped piece too: it shows whether the simulation starts with the limb inside.
+  - Separate length from placement by draping shorter versions: if the fault moves with the end, it is not length.
+  - When the cloth tool wraps a piece round one straight volume per limb and the body's joint is bent, drape on a copy of the body with that joint straightened (the tool's own advice: drape in a T- or A-pose, change pose after).
+  - Bring the drape back to the body's real pose with the body's own skin weights (nearest surface point) and the recorded joint turns, the way the game will move it; prove the bend-back by bending the body itself back and comparing it with the original (here within 0.0 mm median, 5 mm at most).
+  - Gate each step on numbers set beforehand: round to the end, the limb's centre line crossing no cloth, the cuff's centre and gap marks.
+- Tools: the cloth program driven by its own script interface; a slab-by-slab wrap measure; a line-through-triangles test; the 3D package for the straightened body and the bend-back.
+- Target and check: cloth round the limb to its end, centre line crossing nothing: met. Cuffs: centre within 30 mm of the wrist and of the axis, gap within 10.5 mm, nothing inside the wrist: missed (a few caught points, a 1.4 mm gap).
+- Cost (hours): about 0.9.
+- Failed and why: the cuffs: placed close to the skin, a few points start inside the collision shell and stay caught; placed farther out, the cuff's side seam no longer closes. The cloth tool's own pose change did not return the arm (one try). A third cuff try broke the two-tries rule.
+- Evidence: production/research/game-clothing-pipeline/SLEEVE-END-2026-10-28.md.
+
+### 28 Oct 2026, the owner's condition on a speed switch tested on fresh data before switching it on
+- Made: two copies of each check call switched on, once shown not to refuse more true sentences.
+- Method (setting-free): the condition named one harm (wrong refusals), so test only items where it can fall (true sentences), only ones earlier tests never saw, each checked both ways with the order alternating; count the discordant pairs and add them to the earlier tests'; switch on only if the harm does not rise.
+- Tools: the bench's paired mode with a true-only filter; a sign test.
+- Target and check: no rise in wrong refusals: 62 against 69 of 211; 27 each way over both tests.
+- Cost (hours): about 0.3; $0.53.
+- Failed and why: nothing.
+- Evidence: production/research/voice-latency/CHECK-TIME-2026-10-27.md ("His condition, measured").
+
 ### 27 Oct 2026, a small fast checker put in front of a slow model check, behind a switch, and measured live with the voice
 - Made: the owner's chosen checker and cut-off in the product's talk path, off by default, with its live numbers.
 - Method (setting-free):

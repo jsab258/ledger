@@ -39,12 +39,17 @@ namespace Ledger.CoreTests
         /// The hard rule on names as the game ships it (on); every other test predates it and scripts the model's
         /// answers around lines that name people their own scripted facts lack, so they run with it off, and only
         /// TestNameRule turns it on.
-        static bool NameRuleShipped;
+        static bool NameRuleShipped, NameRuleWiderShipped, TwoCopiesShipped;
 
         static async Task<int> Main(string[] args)
         {
             NameRuleShipped = ClaimCheck.NameRule;
             ClaimCheck.NameRule = false;
+            // his answers of 28 October: the wider rule and two copies on in the game; the tests keep scripted single
+            // calls, and only TestTwoCopies turns two copies on
+            NameRuleWiderShipped = ClaimCheck.NameRuleWider;
+            TwoCopiesShipped = ClaimCheck.TwoCopies;
+            ClaimCheck.TwoCopies = false;
             if (args != null && Array.IndexOf(args, "--write-vignette-pieces") >= 0)
             {
                 // `--ahead-of-run <sha>` DECLARES that this regeneration puts

@@ -129,12 +129,9 @@ No decision asked: these are for watching the street change.
 
 ### Needs you
 
-1. **Marvelous, one click, when you can:** open it and click LEDGER bridge, for the cuffs' fourth round (the sleeve's end first, your pick).
-2. **Two copies of each check call: switch on?** In whole turns it refuses no more (16 against 20 first sentences of about 120); by the sentence it saves a median 0.29 s and cuts the slowest tenth from 4.0 to 3.2 s. About $0.30 a friends' evening (estimated). Yes (recommended); or leave it off.
-3. **The fast checker on by default?** (tomorrow's page) Built and measured live: the first sentence ready about a second sooner on most turns, fewer true sentences refused, one more invention through in 410; but with the voice speaking, 3 to 4% of its answers take over your 0.15 s (worst 0.37 s), no frame stall. Yes (recommended); or keep it off.
-4. **The wider hard rule** (tomorrow's page): numbers, years and a short list of places and roles the facts lack refused too. On your 617 it stops 8 of Haiku's 35 leaks, all harmful, and refuses nothing true on any test. Yes (recommended); or names only.
+1. **Tom's cuffs, the next step:** on today's page, with pictures (the link follows when it is made this morning).
 
-Your answers of 27 October are recorded: the cuffs' third try (failed), $4 more for speech tests (spent on the wording test and two copies), the bin emptied (the build re-run at 13:34), the checker's fourth try as you set it (failed; the small checker's cut-offs went to your page), no actor for Darren (Common Voice read, and failed), your evening order on invented sentences with its $20 ($17.86 spent), and tonight's page: the checker at the open cut-off (behind a switch until measured live), the cuffs by the sleeve first, Darren's voice kept, the cited instructions into the game.
+Your answers of 28 October morning are recorded and in the game: your new rule, the fallback order, the fast checker on, the wider rule, two copies (your condition met), Marvelous clicked. Your answers of 27 October are recorded: the cuffs' third try (failed), $4 more for speech tests (spent on the wording test and two copies), the bin emptied (the build re-run at 13:34), the checker's fourth try as you set it (failed; the small checker's cut-offs went to your page), no actor for Darren (Common Voice read, and failed), your evening order on invented sentences with its $20 ($17.86 spent), and tonight's page: the checker at the open cut-off (behind a switch until measured live), the cuffs by the sleeve first, Darren's voice kept, the cited instructions into the game.
 
 ### Road to worth playing (PLAN.md)
 
@@ -146,19 +143,16 @@ Your answers of 27 October are recorded: the cuffs' third try (failed), $4 more 
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
 
-## Builder, Tuesday 27 October (night)
+## Builder, Wednesday 28 October (morning; late, my fault: due by 07:00)
 
 **Failed:**
-- The fast checker's fourth try: the larger checker is too slow beside the game and clears less (your pick: the small one, open cut-off).
-- Tom's cuffs, third try: the sleeve's own end lies flat past the hand; set aside (your pick: the sleeve first).
-- Common Voice cannot give Darren a voice: no consent to cloning (your pick: keep his).
-- My fault: Epic's walk and Tom's MetaHuman had never reached the packaged game. Fixed.
-- Mickey's office in the packaged game, through Epic's wider camera: two of three views fail (the back room's bare door, grainy shadow edges); parked for your order.
+- Tom's cuffs: they now go round his wrists and sit in place, but a few points of each are caught inside the wrist. Set aside after two tries; I made a third against your two-tries rule, and it failed too.
+- Last night's tester walk: 13 of 15 stages (Ron out of reach, Darren lost), the evening after a 15 of 15; and a subtitle under Sheila's name with a stray "W" in it.
 
 **Done:**
-- Tom walks as his MetaHuman on Epic's route, packaged; the AI tester's whole route, 15 of 15.
-- That walk caught "outfit_man" in Darren's subtitle; fixed, proved by tonight's walk.
-- Your order on invented sentences: listing a character's facts cuts inventions written by three quarters; your name rule and the cited version are in.
-- Mickey's back door now stands shut on his locked room, as Sheila says; judged after tonight's build.
+- Your new rule and your fallback order are in the rulings.
+- Your three answers are in the game: the fast checker on; the wider name rule on; two copies of each check call, after measuring your condition (two copies wrongly refused 62 of 211 true sentences, one copy 69).
+- Tom's sleeve ends: draped with his elbows straight, then bent back with his skeleton. Each sleeve now goes round the forearm to its end, and no cloth passes through the hand.
+- Mickey's back door is in last night's build; photographed next.
 
-**Act on:** Marvelous, one click (Needs you 1).
+**Act on:** the cuffs' next step, on today's page.

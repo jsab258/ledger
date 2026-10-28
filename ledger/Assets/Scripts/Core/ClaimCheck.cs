@@ -274,11 +274,15 @@ namespace Ledger.Core
         /// (the fresh review: chosen by first words, a look's kept copy is the one that thought least). Only a client
         /// that can say when the model begins gets two copies; any other makes its one plain call. The copy not kept is
         /// stopped, and what it used is added to the kept answer's tokens, for the cost.
-        public static bool TwoCopies = false;
+        /// ON from 28 October 2026, his answer: "the two copies only if they do not raise wrong refusals". On 211 true
+        /// sentences the 27 October test never saw, two copies refused 62 wrongly against one copy's 69 (15 passed only
+        /// with one, 22 only with two; over both tests 27 each way), and whole turns refused 16 first sentences against
+        /// 20 (CHECK-TIME-2026-10-27.md, "His condition, measured").
+        public static bool TwoCopies = true;
         /// The hard rule on names, on (his order of 27 October 2026, evening); its wider form, numbers and a short list
-        /// of places and roles too, off until his word (NameRules).
+        /// of places and roles too, on from his answer of 28 October 2026 (NameRules).
         public static bool NameRule = true;
-        public static bool NameRuleWider = false;
+        public static bool NameRuleWider = true;
 
         /// EACH DETAIL A WHOLE STATEMENT, AS THE LINE SAYS IT: a bench switch, off in the game until measured against his
         /// bar (27 October 2026; production/research/invented-claims/FALSE-REFUSALS-BY-CAUSE-2026-10-27.md and its blind

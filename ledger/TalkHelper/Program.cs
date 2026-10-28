@@ -154,7 +154,7 @@ static class Program
         public Helper(ILlmClient llm, TimeSpan patience) { _llm = llm; _patience = patience; }
         public bool Early;
         /// The fast checker in front of Haiku, when LEDGER_FAST_CHECKER switched it on; null otherwise.
-        public FastChecker Fast;
+        public volatile FastChecker Fast;
         /// THE FIRST SENTENCE AHEAD OF ITS CHECK (--pending; U1, 30 September):
         /// with Early, each first sentence is also written the moment it is
         /// drafted as {"id","to","pending":...,"ms"}, before its check, so the
@@ -1585,16 +1585,34 @@ static class Program
             };
         }
         helper.Early = Array.IndexOf(args, "--early") >= 0;
-        // THE FAST CHECKER, OFF UNLESS SWITCHED ON (his page pick of 27 October 2026 night: the open cut-off, measured live
-        // with the voice before it is on by default): LEDGER_FAST_CHECKER names the repository whose
-        // production/specs/fast-checker.json and tools/checkers/checker_server.py it runs.
+        // THE FAST CHECKER, ON BY DEFAULT (his answer of 28 October 2026: "the fast checker on, at the open cut-off";
+        // measured live 27 October night, production/research/invented-claims/LOCAL-CHECKERS-2026-10-26.md): the talk
+        // program as published carries checker/fast-checker.json and its server beside it (tools/publish-talk-helper.ps1);
+        // LEDGER_FAST_CHECKER names a repository to run from instead, or "0" to switch it off. Started in the background,
+        // so the game is not held while the model loads: a conversation begun before it is ready goes to Haiku alone.
+        // Never with the stand-in (--fake), which checks nothing.
         string fastRoot = Environment.GetEnvironmentVariable("LEDGER_FAST_CHECKER");
-        if (!string.IsNullOrEmpty(fastRoot))
+        string fastSpec = null, fastServer = null;
+        if (fastRoot == "0" || fake) { }
+        else if (!string.IsNullOrEmpty(fastRoot) && fastRoot != "1")
         {
-            helper.Fast = FastChecker.Start(Path.Combine(fastRoot, "production", "specs", "fast-checker.json"),
-                                            Path.Combine(fastRoot, "tools", "checkers", "checker_server.py"), out var fastWhy);
-            Console.Error.WriteLine(helper.Fast != null ? $"talk: the fast checker is on, cut-off {helper.Fast.CutName} {helper.Fast.Cut}"
-                                                        : "talk: the fast checker did not start (" + fastWhy + "); Haiku alone");
+            fastSpec = Path.Combine(fastRoot, "production", "specs", "fast-checker.json");
+            fastServer = Path.Combine(fastRoot, "tools", "checkers", "checker_server.py");
+        }
+        else
+        {
+            fastSpec = Path.Combine(AppContext.BaseDirectory, "checker", "fast-checker.json");
+            fastServer = Path.Combine(AppContext.BaseDirectory, "checker", "checker_server.py");
+        }
+        if (fastSpec != null)
+        {
+            _ = Task.Run(() =>
+            {
+                var fc = FastChecker.Start(fastSpec, fastServer, out var fastWhy);
+                helper.Fast = fc;
+                Console.Error.WriteLine(fc != null ? $"talk: the fast checker is on, cut-off {fc.CutName} {fc.Cut}"
+                                                   : "talk: the fast checker did not start (" + fastWhy + "); Haiku alone");
+            });
         }
         helper.Pending = Array.IndexOf(args, "--pending") >= 0;
         LoadCards(helper, CardsDir(args));

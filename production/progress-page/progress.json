@@ -1,5 +1,5 @@
 {
-  "updated": "Tuesday 27 October 2026, 19:47",
+  "updated": "Wednesday 28 October 2026, 9:48",
   "here": 1,
   "friends_eta": "around January",
   "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
@@ -121,7 +121,7 @@
       "start_label": "8 Oct",
       "now_label": "25 Oct, cast voice",
       "state": "fighting",
-      "last": "27 Oct night: the fast checker's fourth try failed (the larger model too slow beside the game, and it clears less). The small one's cut-offs are on your page: at the middle one, 15% of first sentences heard about 1.2 s sooner, no more inventions through than Haiku alone. Two copies of each check call: no more refusals in whole turns (Needs you 4). The whole path with the real model is not re-timed yet."
+      "last": "28 Oct: your answers in the game: the fast checker clears most first sentences about a second sooner; two copies of each check call (no more wrong refusals, measured); the wider name rule. The night's build carries them."
     },
     {
       "name": "The Stutter",
@@ -144,7 +144,7 @@
       "target": 0,
       "display": "0 of 1 outfit made",
       "state": "fighting",
-      "last": "27 Oct: Tom's zip jacket made by script from the Marvelous drape, 21,448 triangles, its maps baked, skinned to his skeleton. Its cuffs failed a third try (the sleeve's own end lies flat past the hand): your call on the page."
+      "last": "28 Oct: Tom's sleeve ends fixed: draped with his elbows straight, then bent back with his skeleton, each sleeve now goes round the forearm to its end. The rib cuffs go round the wrist too, but a few points of each are caught inside it: set aside, the next step on your page."
     },
     {
       "name": "The Empty Chair",
@@ -206,7 +206,8 @@
       "2026-10-23",
       "2026-10-24",
       "2026-10-26",
-      "2026-10-27"
+      "2026-10-27",
+      "2026-10-28"
     ],
     "gap_note": "No pictures from 9 to 20 October: the PC was off."
   },

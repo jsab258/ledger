@@ -2,6 +2,7 @@
 Designer recognises, for draping; and the record of the turn, so the draped garment can be taken back.
 
     blender -b -P tools/md/pose_body.py -- BODY.fbx OUT.fbx --arms-below 40
+    blender -b -P tools/md/pose_body.py -- BODY.fbx OUT.fbx --keep-arms --straight-elbows   # the arms as they are, elbows straight
 
 WHY, 1 October (the jacket proof): imported in MetaHuman's reference pose, Marvelous said "Arrangement Points were
 not fitted to the avatar. The avatar must be in a T-pose or A-pose" and found no measurements, so it cannot place the
@@ -36,7 +37,7 @@ for o in [o for o in bpy.data.objects if o.type == "MESH" and o is not body]:
 turns = {}
 bpy.context.view_layer.objects.active = arm
 bpy.ops.object.mode_set(mode="POSE")
-for s in "lr":
+for s in ("lr" if "--keep-arms" not in argv else ""):
     pb = arm.pose.bones["upperarm_" + s]
     a = arm.matrix_world @ pb.head
     b = arm.matrix_world @ arm.pose.bones["lowerarm_" + s].head
@@ -54,6 +55,28 @@ for s in "lr":
     d2 = (b2 - a).normalized()
     turns[s] = {"from": round(now, 2), "to": round(math.degrees(math.atan2(-d2.z, math.hypot(d2.x, d2.y))), 2),
                 "turnDeg": round(turn, 2), "axis": [round(c, 6) for c in axis], "shoulder": [round(c, 5) for c in a]}
+# THE ELBOWS STRAIGHTENED, --straight-elbows (28 October 2026, the sleeve's end, fourth round: in the reference pose
+# the elbow bends 36.6 degrees and the forearm points forward, while Marvelous wraps a sleeve round one straight volume
+# per arm; that volume misses the forearm by 47 to 107 mm (tools/md-bridge/sleeve_wrap.py), so the sleeve's narrow end
+# closed beside the arm and the hand came through it; Marvelous's manual drapes in a T- or A-pose and changes pose
+# after). Each forearm is turned about its elbow until it runs on along the upper arm; the turn is recorded so the
+# draped garment can be bent back with the arm.
+if "--straight-elbows" in argv:
+    for s in "lr":
+        pb = arm.pose.bones["lowerarm_" + s]
+        sh = arm.matrix_world @ arm.pose.bones["upperarm_" + s].head
+        e = arm.matrix_world @ pb.head
+        h = arm.matrix_world @ arm.pose.bones["hand_" + s].head
+        up, fore = (e - sh).normalized(), (h - e).normalized()
+        axis = fore.cross(up).normalized()
+        ang = fore.angle(up)
+        R = Matrix.Rotation(ang, 4, axis)
+        pb.matrix = arm.matrix_world.inverted() @ Matrix.Translation(e) @ R @ Matrix.Translation(-e) @ arm.matrix_world @ pb.matrix
+        bpy.context.view_layer.update()
+        h2 = arm.matrix_world @ arm.pose.bones["hand_" + s].head
+        turns.setdefault(s, {})["elbow"] = {"turnDeg": round(math.degrees(ang), 2), "axis": [round(c, 6) for c in axis],
+                                            "elbow": [round(c, 5) for c in e],
+                                            "bendAfterDeg": round(math.degrees((h2 - e).normalized().angle(up)), 3)}
 bpy.ops.object.mode_set(mode="OBJECT")
 # the posed skin made the body's rest shape, and the posed skeleton its rest pose, so the FBX carries the skeleton in
 # the A-pose with the skin bound to it (Marvelous recognises a MetaHuman by its joint names, through its own
