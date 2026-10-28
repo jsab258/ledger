@@ -1,10 +1,128 @@
 {
  "what": "Where Tom can sit (his order of 25 October, item 2: \"Tom sits down in the game as played\"). Street metres as every spec: x along Quay Street, y up, z back from the pavement. Each seat is a slot: the point on the floor under the sitter's seat bone, and the way the sitter faces (toward face_x, face_z). The sit itself is Epic's Game Animation Sample's bench interaction (approach clips from five sides on either foot, an idle loop, a stand-up), warped onto the slot (SliceCharacter.cpp, TryStartSit).",
  "source": "The office's fixed wall bench: production/specs/mickeys-office.json box 'bench' (x 8.14 to 8.65, z 5.65 to 7.26); its three seats 0.535 m apart along z (tools/art-recipes/mickeys-props/bench.py: 1.60 m, three cushions, seat 0.451 m, the sample's bench 0.43 m); the slot 0.30 m behind the seat's front edge, as the sample's bench (its slot 0.31 m behind the front); facing into the room, as Ron's mark on it (face_x 6.0).",
- "room": {"why": "Where he must stand for E to sit him: the office's public side, from the stair strip's wall to the side wall and from the shop front to the counter (mickeys-office.json boxes). A seat is never offered through a wall or the window. (The first try traced a line to the seat, and a static mesh of the room stopped it.)", "x0": 4.19, "x1": 9.0, "z0": 5.12, "z1": 7.5},
+ "room": {
+  "why": "Where he must stand for E to sit him: the office's public side, from the stair strip's wall to the side wall and from the shop front to the counter (mickeys-office.json boxes). A seat is never offered through a wall or the window. (The first try traced a line to the seat, and a static mesh of the room stopped it.)",
+  "x0": 4.19,
+  "x1": 9.0,
+  "z0": 5.12,
+  "z1": 7.5
+ },
  "seats": [
-  {"name": "office bench, door end", "x": 8.44, "y": 0.12, "z": 5.92, "face_x": 6.0, "face_z": 5.92},
-  {"name": "office bench, middle", "x": 8.44, "y": 0.12, "z": 6.455, "face_x": 6.0, "face_z": 6.455},
-  {"name": "office bench, counter end", "x": 8.44, "y": 0.12, "z": 6.99, "face_x": 6.0, "face_z": 6.99}
- ]
+  {
+   "name": "office bench, door end",
+   "x": 8.44,
+   "y": 0.12,
+   "z": 5.92,
+   "face_x": 6.0,
+   "face_z": 5.92,
+   "furniture": "bench",
+   "cap": 1,
+   "users": [
+    "tom"
+   ],
+   "in": [
+    "M_interaction_bench_into_F_Lfoot_Montage",
+    "M_interaction_bench_into_F_Rfoot_Montage",
+    "M_interaction_bench_into_L_090_Lfoot_Montage",
+    "M_interaction_bench_into_L_090_Rfoot_Montage",
+    "M_interaction_bench_into_R_090_Lfoot_Montage",
+    "M_interaction_bench_into_R_090_Rfoot_Montage",
+    "M_interaction_bench_into_BL_LFoot_Montage",
+    "M_interaction_bench_into_BL_RFoot_Montage",
+    "M_interaction_bench_into_BR_LFoot_Montage",
+    "M_interaction_bench_into_BR_RFoot_Montage"
+   ],
+   "loops": [
+    {
+     "clip": "M_interaction_bench_idle_loop_Montage",
+     "weight": 1
+    }
+   ],
+   "out": [
+    "M_interaction_bench_out_to_stand_Montage"
+   ],
+   "exit": {
+    "x": 7.84,
+    "z": 5.92
+   }
+  },
+  {
+   "name": "office bench, middle",
+   "x": 8.44,
+   "y": 0.12,
+   "z": 6.455,
+   "face_x": 6.0,
+   "face_z": 6.455,
+   "furniture": "bench",
+   "cap": 1,
+   "users": [
+    "tom"
+   ],
+   "in": [
+    "M_interaction_bench_into_F_Lfoot_Montage",
+    "M_interaction_bench_into_F_Rfoot_Montage",
+    "M_interaction_bench_into_L_090_Lfoot_Montage",
+    "M_interaction_bench_into_L_090_Rfoot_Montage",
+    "M_interaction_bench_into_R_090_Lfoot_Montage",
+    "M_interaction_bench_into_R_090_Rfoot_Montage",
+    "M_interaction_bench_into_BL_LFoot_Montage",
+    "M_interaction_bench_into_BL_RFoot_Montage",
+    "M_interaction_bench_into_BR_LFoot_Montage",
+    "M_interaction_bench_into_BR_RFoot_Montage"
+   ],
+   "loops": [
+    {
+     "clip": "M_interaction_bench_idle_loop_Montage",
+     "weight": 1
+    }
+   ],
+   "out": [
+    "M_interaction_bench_out_to_stand_Montage"
+   ],
+   "exit": {
+    "x": 7.84,
+    "z": 6.455
+   }
+  },
+  {
+   "name": "office bench, counter end",
+   "x": 8.44,
+   "y": 0.12,
+   "z": 6.99,
+   "face_x": 6.0,
+   "face_z": 6.99,
+   "furniture": "bench",
+   "cap": 1,
+   "users": [
+    "tom"
+   ],
+   "in": [
+    "M_interaction_bench_into_F_Lfoot_Montage",
+    "M_interaction_bench_into_F_Rfoot_Montage",
+    "M_interaction_bench_into_L_090_Lfoot_Montage",
+    "M_interaction_bench_into_L_090_Rfoot_Montage",
+    "M_interaction_bench_into_R_090_Lfoot_Montage",
+    "M_interaction_bench_into_R_090_Rfoot_Montage",
+    "M_interaction_bench_into_BL_LFoot_Montage",
+    "M_interaction_bench_into_BL_RFoot_Montage",
+    "M_interaction_bench_into_BR_LFoot_Montage",
+    "M_interaction_bench_into_BR_RFoot_Montage"
+   ],
+   "loops": [
+    {
+     "clip": "M_interaction_bench_idle_loop_Montage",
+     "weight": 1
+    }
+   ],
+   "out": [
+    "M_interaction_bench_out_to_stand_Montage"
+   ],
+   "exit": {
+    "x": 7.84,
+    "z": 6.99
+   }
+  }
+ ],
+ "spot": "Each seat is a spot's slot (28 October 2026, his order D10; production/research/sit-and-turn/SPOTS-2026-10-28.md, step 1): its furniture (a box of mickeys-office.json), a cap of one, who may use it (the simulation reserves it), its In clips by side and foot (the Game Animation Sample's bench set), weighted Loops, Outs, and the exit point he stands up to, 0.6 m into the room. Checked by tools/seats_check.py. Reference: Mafia's 478 slots on Smart Objects (Study 1), Kingdom Come II's tested entries."
 }

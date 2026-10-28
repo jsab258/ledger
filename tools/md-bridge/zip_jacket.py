@@ -329,8 +329,14 @@ LATE_STEPS = %(late)d
 # --flip-cuff-seam R|L|RL: that side's cuff sewn to its sleeve's end the other way round (a seam sewn against the
 # wrap twists the piece through itself, the manual's twisted seam; the right cuff met it once on 27 October)
 FLIP = %(flip)r
+# --freeze-body (28 October, the elastic rib; the game-garment skill's order): the body draped first with the cuffs
+# frozen and unsewn; then the body frozen, the cuffs freed and sewn, 200 steps Normal, all freed, 100 steps Fitting
+FREEZE = %(freeze)d
+CUFF_SEAMS = [s for s in PLAN["seams"] if s["a"][0].startswith("cuff") or s["b"][0].startswith("cuff")]
 for s in PLAN["seams"]:
     if LATE_STEPS and s.get("late"):
+        continue
+    if FREEZE and s in CUFF_SEAMS:
         continue
     pa, la, fa = s["a"]
     pb, lb, fb = s["b"]
@@ -360,6 +366,41 @@ for p in PLAN["pieces"]:
     # fold round a wrist; a little below the avatar's quad size, only where needed)
     if p["key"].startswith("cuff") and %(cuff_particle)g > 0:
         pattern_api.SetParticleDistanceOfPattern(made[p["key"]], %(cuff_particle)g)
+# THE ELASTIC RIB (his order of 28 October, C9: the cuffs by the game-garment skill, Marvelous's elastic first):
+# the sleeve's wrist edge gathered by elastic at CLO's recommended strength 10 and a ratio of 100 x cuff / sleeve end,
+# so the seam meets near 1:1 and the cuff, cut at 0.90 to 0.95 of the wrist's collision floor, is never asked below
+# it (drapes 9 to 20 shrank it to 0.75 and lumped at the seam). Each call's answer kept, so a wrong signature shows.
+ELASTIC = %(elastic)g
+if ELASTIC > 0:
+    el = {}
+    for s in CUFF_SEAMS:
+        pa, la, fa = s["a"]
+        pb, lb, fb = s["b"]
+        if pa.startswith("cuff") and pb.startswith("sleeve"):
+            try:
+                el[pb] = [pattern_api.SetPatternPieceElastic(made[pb], lb, True),
+                          pattern_api.SetPatternPieceElasticStrength(made[pb], lb, 10.0),
+                          pattern_api.SetPatternPieceElasticStrengthRatio(made[pb], lb, int(round(ELASTIC)))]
+            except Exception as e:
+                el[pb] = "refused: %%s" %% e
+    result["elastic"] = el
+if FREEZE:
+    for p in PLAN["pieces"]:
+        if p["key"].startswith("cuff"):
+            pattern_api.SetPatternFreeze(made[p["key"]], True)
+    result["bodyDraped"] = bool(utility_api.Simulate(%(steps)d))
+    for p in PLAN["pieces"]:
+        pattern_api.SetPatternFreeze(made[p["key"]], not p["key"].startswith(("sleeve", "cuff")))
+    cs = []
+    for s in CUFF_SEAMS:
+        if LATE_STEPS and s.get("late"):
+            continue
+        pa, la, fa = s["a"]
+        pb, lb, fb = s["b"]
+        if pa.startswith("cuff") and pb.startswith("sleeve") and pa[-1] in FLIP:
+            fb = not fb
+        cs.append(bool(pattern_api.AddSeamlinePairGroup(made[pa], la, made[pb], lb, fa, fb)))
+    result["cuffsSewn"] = cs
 if LATE_STEPS:
     result["openSimulated"] = bool(utility_api.Simulate(LATE_STEPS))
     late = []
@@ -369,7 +410,18 @@ if LATE_STEPS:
             pb, lb, fb = s["b"]
             late.append(bool(pattern_api.AddSeamlinePairGroup(made[pa], la, made[pb], lb, fa, fb)))
     result["lateSewn"] = late
-result["simulated"] = bool(utility_api.Simulate(%(steps)d))
+if FREEZE:
+    result["cuffsNormal"] = bool(utility_api.Simulate(200))
+    for p in PLAN["pieces"]:
+        pattern_api.SetPatternFreeze(made[p["key"]], False)
+    # Fitting quality last (utility_api.SetSimulationQuality: 0 Normal, 1 Animation, 2 Fitting, 3 GPU)
+    try:
+        result["fitting"] = utility_api.SetSimulationQuality(2)
+    except Exception as e:
+        result["fitting"] = "refused: %%s" %% e
+    result["simulated"] = bool(utility_api.Simulate(100))
+else:
+    result["simulated"] = bool(utility_api.Simulate(%(steps)d))
 eo = ApiTypes.ImportExportOption()
 eo.bExportGarment = True
 eo.bExportAvatar = True
@@ -408,6 +460,8 @@ def main(argv):
                                                   "steps": int(opt("--steps", 400)), "particle": opt("--particle", 20.0),
                                                   "cuff_particle": opt("--cuff-particle", 6.0), "grip": opt("--grip", 0.0),
                                                   "late": int(opt("--cuff-seam-late", 0)),
+                                                  # --elastic RATIO and --freeze-body (28 October, the elastic rib)
+                                                  "elastic": opt("--elastic", 0.0), "freeze": int("--freeze-body" in argv),
                                                   "flip": argv[argv.index("--flip-cuff-seam") + 1] if "--flip-cuff-seam" in argv else "",
                                                   # --avatar: the body draped on (28 October: the straight-elbowed drape body)
                                                   "avt": argv[argv.index("--avatar") + 1] if "--avatar" in argv else r"F:\LedgerTools\garments\tom\MH_TomL1.avt",

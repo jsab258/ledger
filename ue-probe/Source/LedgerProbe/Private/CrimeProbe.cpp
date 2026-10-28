@@ -8483,6 +8483,22 @@ namespace
 			else { GPawn->SetActorLocationAndRotation(FVector(X * 100.0, Z * 100.0, 12.0 + 96.0), FRotator(0.0, Yaw, 0.0), false, nullptr, ETeleportType::TeleportPhysics); }
 			if (APlayerController* PC = Cast<APlayerController>(GPawn->GetController())) { PC->SetControlRotation(FRotator(-12.0, Yaw, 0.0)); }
 			UE_LOG(LogTemp, Display, TEXT("ledgerOfficeLook: Tom in the office at (%.2f, %.2f) facing %.0f, %s"), X, Z, Yaw, bNight ? TEXT("20:00") : TEXT("by day"));
+			// -OfficeLookNoOthers (28 October, the camera page: his page shows no placeholder, and the cast's base
+			// clothes are an open fault): every person more than 2 m from Tom hidden; his own body, mover and
+			// garments stand where he does, so only he remains
+			if (FParse::Param(FCommandLine::Get(), TEXT("OfficeLookNoOthers")))
+			{
+				int32 Hid = 0;
+				const FVector Tom = GPawn->GetActorLocation();
+				for (TActorIterator<AActor> It(World); It; ++It)
+				{
+					if (*It != GPawn && It->FindComponentByClass<USkeletalMeshComponent>() != nullptr && FVector::Dist2D(It->GetActorLocation(), Tom) > 200.0)
+					{
+						It->SetActorHiddenInGame(true); ++Hid;
+					}
+				}
+				UE_LOG(LogTemp, Display, TEXT("ledgerOfficeLook: %d people hidden, only Tom shown (-OfficeLookNoOthers)"), Hid);
+			}
 			Step = 1; At = Now;
 			return;
 		}

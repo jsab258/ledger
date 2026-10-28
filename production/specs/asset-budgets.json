@@ -1,0 +1,105 @@
+{
+  "what": "The one home for the asset checks' thresholds (his order of 28 October 2026, D13; production/research/asset-checks/CHECKS-2026-10-28.md, Method). tools/ue/asset_checks.py reads it inside the editor after each import and before any reviewer; python tools/ue/asset_checks.py --check-spec checks this file. A changed number needs a DECISIONS line and an edit here, never a code edit. Nanite stays off and meshes carry levels of detail (DECISIONS.md, 3 October). Where Mafia or Kingdom Come II give a number it comes first (his rule); elsewhere LEDGER's provisional allocation (4-BUDGETS.md 4.7).",
+  "sources": {
+    "study6": "production/research/aaa-reference/studies/06-characters-wardrobe.md (Mafia's plain jacket 19,131 triangles, then 8,509, 4,781, 1,505; its levels keep a median 47, 25 and 9%; textures 2048; Tom's target: jacket 18,000-22,000, jumper 15,000-20,000, trousers 8,000-10,000, shoes about 6,000, four levels)",
+    "study5": "production/research/aaa-reference/studies/05-visuals.md section 7 (Mafia's maps: 4096 21%, 2048 36%, 1024 38%)",
+    "study13": "production/research/aaa-reference/studies/13-pipeline.md, adopt 3 (Epic's prefixes for our own new assets, case checked, imports keep their names)",
+    "budgets": "production/research/pre-production/4-BUDGETS.md 4.7 (per-asset budgets, Nanite off; provisional allocations)",
+    "epic_textures": "https://dev.epicgames.com/documentation/en-us/unreal-engine/textures-in-unreal-engine (power-of-two sizes stream; read 28 Oct 2026)",
+    "epic_collision": "https://dev.epicgames.com/documentation/en-us/unreal-engine/simple-versus-complex-collision-in-unreal-engine (complex as simple stops simulation; read 28 Oct 2026)",
+    "nanite_off": "DECISIONS.md 2026-10-03, the proof view's budgets: Nanite and virtual shadows stay off, meshes carry their levels of detail",
+    "ours": "our own choice, recorded in DECISIONS.md when this spec is first committed"
+  },
+  "rules": {
+    "engine": "1. Epic's validators and each asset's IsDataValid: any error fails",
+    "triangles": "2. Full-detail triangles at most the kind's cap; a warning above warn_fraction of it",
+    "lods": "3. At least the kind's count of levels of detail, each at most lod_step_max of the one before",
+    "nanite": "4. Nanite off on every static mesh under /Game/Ledger",
+    "texture_size": "5. Each side a power of two, none over texture_max_global, none over the kind's texture_max",
+    "texture_role": "6. Normal maps: normal-map compression and a source that is not JPEG; packed maps: mask compression, sRGB off; colour maps: sRGB on",
+    "placeholder": "7. No empty material slot, no default or grid material, no texture of one flat colour, no non-glass material sampling no texture (unless listed in untextured_ok)",
+    "parts": "8. Every part the piece lists exists, and each asset's import MD5 equals its source file's",
+    "see_through": "9. Translucent or transmissive materials only on slots whose name holds a glass word, or listed in see_through_ok",
+    "names": "10. The class's prefix (case exact), letters, digits and underscores only, in the gated piece's folders",
+    "collision": "11. Collision by kind; never complex-as-simple"
+  },
+  "warn_fraction": 0.9,
+  "warn_fraction_source": "ours",
+  "lod_step_max": 0.6,
+  "lod_step_max_source": "ours: a tolerance over 4-BUDGETS's 'each LOD about half the last' and Mafia's 47/25/9% (study6)",
+  "texture_max_global": 4096,
+  "texture_max_global_source": "budgets (the trim sheets are 4096 x 2048); epic_textures",
+  "kinds": {
+    "garment_jacket": {"triangles": 22000, "lods": 4, "texture_max": 2048, "collision": "none", "source": "study6 (Mafia's median top 21,994; Tom's jacket 18,000-22,000; four levels; textures 2048); collision: budgets (the body's capsule)"},
+    "garment_jumper": {"triangles": 20000, "lods": 4, "texture_max": 2048, "collision": "none", "source": "study6 (jumper 15,000-20,000; four levels; 2048)"},
+    "garment_trousers": {"triangles": 10000, "lods": 4, "texture_max": 2048, "collision": "none", "source": "study6 (trousers 8,000-10,000, textures 1024-2048; four levels)"},
+    "garment_shoes": {"triangles": 6000, "lods": 4, "texture_max": 1024, "collision": "none", "source": "study6 (shoes about 6,000, textures 512-1024; four levels)"},
+    "crowd_outfit": {"triangles": 8000, "lods": 3, "texture_max": 1024, "collision": "none", "source": "budgets (crowd outfit 8,000, 3 LODs, 1024)"},
+    "accessory": {"triangles": 4000, "lods": 2, "texture_max": 512, "collision": "none", "source": "budgets (accessory: bag, hat, spectacles, watch, 500-4,000, 2 LODs, 512); study6 (Mafia's hats at 512)"},
+    "building_module": {"triangles": 8000, "lods": 3, "texture_max": 4096, "collision": "simple", "max_hulls": 0, "source": "budgets (module 8,000, 3 LODs, shared 4096 x 2048 trim sheets, simple boxes)"},
+    "frontage": {"triangles": 150000, "lods": 3, "texture_max": 4096, "collision": "simple", "max_hulls": 0, "source": "budgets (a whole frontage 150,000, LODs as its modules, shared trims, boxes)"},
+    "real_room": {"triangles": 100000, "lods": 2, "texture_max": 4096, "collision": "none", "source": "budgets (a real room behind glass, not entered: 100,000, 2 LODs, no collision; no per-kind texture size, so the global cap). An entered room needs its own kind at its first use"},
+    "display": {"triangles": 60000, "lods": 2, "texture_max": 2048, "collision": "none", "source": "budgets (window display 60,000, 2 LODs, an atlas at most 2048, no collision)"},
+    "prop_small": {"triangles": 1500, "lods": 2, "texture_max": 512, "collision": "none_or_one_box", "source": "budgets (small prop under 0.5 m: 1,500, 2 LODs, 512, none or one box)"},
+    "prop_medium": {"triangles": 5000, "lods": 3, "texture_max": 1024, "collision": "simple", "max_hulls": 10, "source": "budgets (medium prop 0.5-2 m: 5,000, 3 LODs, 1024, at most 10 convex hulls, most one box)"},
+    "prop_large": {"triangles": 15000, "lods": 3, "texture_max": 2048, "collision": "simple", "max_hulls": 10, "source": "budgets (large prop: 15,000, 3 LODs, 2048, at most 10 hulls)"},
+    "car": {"triangles": 40000, "lods": 4, "texture_max": 2048, "collision": "simple", "max_hulls": 6, "source": "budgets (parked car 40,000, 4 LODs, 2048 trims, one box and the wheel arches, at most 6 hulls)"},
+    "sign": {"triangles": null, "lods": 1, "texture_max": 4096, "collision": "none", "source": "budgets (sign, poster: a plane or a decal, no LODs, no collision; no per-kind size, so the global cap)"},
+    "decal": {"triangles": null, "lods": 1, "texture_max": 2048, "collision": "none", "source": "budgets (wear and decals: 2048 atlas pages, no collision)"},
+    "shared": {"triangles": null, "lods": null, "texture_max": 4096, "collision": null, "source": "ours: shared materials and textures of a family (no mesh may live here; a mesh found here fails rule 2 until its folder has a kind)"},
+    "exempt": {"exempt": true, "source": "study13 (imports keep their names): MetaHuman bodies, Fab, Megascans and Epic's own content run Epic's checks and the Nanite rule only"}
+  },
+  "folders": [
+    ["/Game/Ledger/MetaHumans/Garments/TomZipJacket", "garment_jacket"],
+    ["/Game/Ledger/MetaHumans/Garments", "shared"],
+    ["/Game/Ledger/MetaHumans", "exempt"],
+    ["/Game/MetaHumans", "exempt"],
+    ["/Game/Fab", "exempt"],
+    ["/Game/Megascans", "exempt"],
+    ["/Game/Characters", "exempt"]
+  ],
+  "folders_rule": "The longest matching folder wins, so a garment's own folder is read before the MetaHumans' exemption. A folder with no entry has no kind: its meshes fail rule 2 inside a gated piece and are listed by the nightly sweep.",
+  "pieces": {
+    "tom-jacket": {
+      "folders": ["/Game/Ledger/MetaHumans/Garments/TomZipJacket"],
+      "parts": ["SKM_TomZipJacket", "MI_TomZipJacket", "T_TomZipJacket_ColourAO", "T_TomZipJacket_Normal", "T_TomZipJacket_Packed"],
+      "source": "production/specs/garments.json (TomZipJacket, three maps) and tools/ue/import_garments.py's names"
+    }
+  },
+  "names": {
+    "allowed": "^[A-Za-z0-9_]+$",
+    "prefixes": {
+      "StaticMesh": ["SM_"],
+      "SkeletalMesh": ["SK_", "SKM_"],
+      "Texture2D": ["T_"],
+      "TextureCube": ["T_", "TC_"],
+      "Material": ["M_"],
+      "MaterialInstanceConstant": ["MI_"],
+      "PhysicsAsset": ["PHYS_"],
+      "Skeleton": ["SKEL_"],
+      "Blueprint": ["BP_"],
+      "AnimBlueprint": ["ABP_"],
+      "AnimSequence": ["AS_"],
+      "AnimMontage": ["AM_"],
+      "DataTable": ["DT_"],
+      "DataAsset": ["DA_"],
+      "PrimaryDataAsset": ["DA_"],
+      "NiagaraSystem": ["NS_"]
+    },
+    "source": "study13 adopt 3 (T_, M_, MI_, SM_, SK_, AS_, AM_, BP_, DA_, DT_, NS_); Epic's naming page (PHYS_, SKEL_, ABP_, TC_ for cube textures as the glass bake names them); SKM_ for skeletal meshes as tools/ue/import_garments.py already names them (ours)"
+  },
+  "default_materials": [
+    "/Engine/EngineMaterials/WorldGridMaterial",
+    "/Engine/EngineMaterials/DefaultMaterial",
+    "/Engine/EngineMaterials/DefaultDeferredDecalMaterial"
+  ],
+  "glass_words": ["glass"],
+  "see_through_ok": [],
+  "untextured_ok": [],
+  "texture_roles": {
+    "normal": ["_Normal", "_NormalDX", "_N"],
+    "packed": ["_Packed", "_ORM", "_Masks", "_Mask", "_M"]
+  },
+  "waiver_rule": "A set-aside fault is waived here, never in code: each waiver names the asset (name or path), the rule (one of the rules above), its DECISIONS.md line and its FINDINGS.md entry. A waived error is listed in the report and fails nothing alone (CLAUDE.md, 'The gate': known shortfalls are listed, failing nothing alone).",
+  "waivers": []
+}
