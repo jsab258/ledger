@@ -10,7 +10,7 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
 - **Recorded:** your rulings (RULINGS.md and DECISIONS.md); the study's order for both weeks at the top of the study plan; the order ledger, seeded with everything still open from before (21 and 23 October's leftovers, the cloud week's four questions, the three shops not yet in the street, FINDINGS' twenty faults, your two clicks on the old archive). A new check fails any push where an item has no status or vanishes without being done or dropped.
 - **Done:** the health check (production/audits/health-2026-10-25.md); your progress page now has the studies bar and the 33 carried items.
 
-**The studies (13 of 16 done: this week's six, and Studies 14, 2, 3, 11, 15, 16 and 8 pulled forward on 28 October).**
+**The studies (16 of 16 done: this week's six, and the other ten pulled forward and finished on 28 October).**
 - *Study 7, animation* (production/research/aaa-reference/studies/07-animation.md, passed its fresh review with fixes):
   - Neither game uses motion matching. Mafia walks on a layered state machine of single clips, Kingdom Come II on blend spaces. Both choose their starts, stops and turns rather than search for them: Kingdom Come II by distance, the stride's quarter and which leg.
   - Feet: Mafia traces the ground under each foot and locks a foot only in its duels; Kingdom Come II declares leg IK and a feet lock. The one perception figure found says viewers notice slides under about 2 cm, so our 3 cm bar is lenient.
@@ -55,6 +55,18 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
   - Both games make a street from a few quiet background loops, small sounds scattered around you that thin out at night, and fixed sources (windows, doors, bells, water), each heard within a set distance. Mafia's quiet street holds 0 to 3 distant voices at once through the day; footsteps 8 to 30 takes per set; Kingdom Come II's most-used music playlist is silence.
   - Our Quay Street has the loops; it lacks the scattered sounds, the echo of doorways and rooms, and dawn and evening. A layer-by-layer plan with distances and loudness is ready for the street's sound proof (P13).
   - Neither game's balance of voices, music and noise could be read: it is inside their sound banks, and there are no recordings.
+- *Study 9, camera and controls* (studies/09-camera-controls.md, passed its fresh review with fixes):
+  - Mafia's camera is close: an 82 degree lens 1.65 m behind a point 1.25 m up; it closes in for town walking, low rooms and talk, and a talk places the player 1.5 m from the speaker. Interaction reach 2.5 m (2.0 for talk) within a 60 degree cone.
+  - Tom's camera hangs 3.2 m back with a 90 degree lens and has no talk framing.
+  - For your next page: Tom's camera framing and lens (Mafia's recommended), shown in the game first.
+- *Study 10, interface* (studies/10-interface.md, passed its fresh review with fixes):
+  - Our subtitles are nearly twice Mafia's default size (39 against about 21 units), so ours stay; Mafia has 122 settings and 17 switches for what the screen shows.
+  - Proposed: a choice of screen width (the corners, or 16:9 in the middle) with a 0.8, 1 or 1.2 scale; switches for prompts, hints and street chatter; prompts chosen by facing rather than distance.
+  - For your next page: the width choice (the corners by default recommended).
+- *Study 13, production pipeline* (studies/13-pipeline.md, passed its fresh review with fixes):
+  - Both games keep their tuning in tables (Mafia 611 data tables and 3,748 data assets; Kingdom Come II 1,243 tables, 87,600 rows); 92% of Mafia's assets carry a type prefix in their names, 23% of ours.
+  - Ours is half in specs, half in C++ constants.
+  - Proposed: a tuning row in the catalogue, a naming rule for new Unreal assets with a check, settings as data.
 - *Study 11, systems* (studies/11-systems.md, passed its fresh review with fixes):
   - Kingdom Come II has no wanted meter: guards' anger acts 12 hours late and fades in about a day and a half. Shops hold 35 to 1,500 coins and restock weekly; 686 quest save points.
   - For us: save at every job step but never refuse a save; shops run short of cash and restock weekly (we have this); rain drawn from weighted weather types for the weather proof.
@@ -161,6 +173,8 @@ No decision asked: these are for watching the street change.
 2. **Fists able to kill?** (next page; Study 14: Kingdom Come II says no) No (recommended), or yes.
 3. **The animation source test at 6 moves, not the design's 4?** (next page) Yes (recommended), or 4.
 4. **May a job ever mark your paper map?** (next page; Study 16) Words only; a pencil ring once someone has told Tom the place (recommended); or an optional marker, off by default.
+5. **Tom's camera: Mafia's closer framing and lens?** (a page after it is shown in the game; Study 9) Yes (recommended), or keep ours.
+6. **The interface's width: the screen's corners, or 16:9 in the middle?** (a later page; Study 10) The corners by default (recommended).
 
 No page yet for these: they go on tomorrow's page. Today's page, answered at 12:35: https://claude.ai/artifact/TDpjTLydnfFBFfRPmavGpD
 

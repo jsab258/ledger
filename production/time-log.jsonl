@@ -229,3 +229,5 @@
 {"event": "stop", "at": "2026-10-28T13:22:00", "note": ""}
 {"event": "start", "at": "2026-10-28T13:22:00", "task": "28 Oct: item 3: the jacket imported in the MetaHuman project and a build asked; the grain diagnosis recorded; Study 8 checked and recorded", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-28T13:31:00", "note": ""}
+{"event": "start", "at": "2026-10-28T13:31:00", "task": "28 Oct: fallback: Studies 9, 10 and 13 checked and recorded (16 of 16); Mafia's key removed from the viewer's settings on C:", "phase": "3", "kind": "production"}
+{"event": "stop", "at": "2026-10-28T14:11:00", "note": ""}

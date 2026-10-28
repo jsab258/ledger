@@ -19,6 +19,15 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 28 Oct 2026, three small reference studies (camera, interface, pipeline) run together, extracting only after another study finished
+- Made: camera and input numbers, an interface side-by-side, and a pipeline comparison, each with proposals for the owner.
+- Method (setting-free): work read-only from the indexes first; extract only after the one other extracting study signals done, metadata only, capped; compare with the project's own values before proposing; anything about taste or identity (the camera, the screen's layout) becomes a choice for the owner, shown in the product first.
+- Tools: the asset indexes, the package viewer (its key removed from its settings afterwards), scripted counts.
+- Target and check: every number tagged; one fresh review across the three, pass with fixes; 52 MB extracted.
+- Cost (hours): about 0.9 of a helper's time.
+- Failed and why: one game's input config exported nothing; the cameras' code and our own packaged camera's values were not read.
+- Evidence: production/research/aaa-reference/studies/09-camera-controls.md, 10-interface.md, 13-pipeline.md.
+
 ### 28 Oct 2026, how two shipped games make a street sound alive, read from their sound metadata with a capped extract
 - Made: ambience layers, footstep sets, distances, music states and a layer plan for the project's street.
 - Method (setting-free): export metadata only (cues, classes, volumes, attenuation), never audio; cap the extract and check its size after every batch; count wave files from the index; read layers and distances from the data; mark every balance figure that only the sound banks or play could give as a blind spot; one fresh reviewer re-measures a sample.
