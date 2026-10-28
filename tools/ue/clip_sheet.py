@@ -29,10 +29,11 @@ def seq_of(name):
     return a if isinstance(a, unreal.AnimSequence) else None
 
 
-def bones_of(seq):
+def bones_of(seq, opts):
+    # the bone names from a pose of the clip (5.8's Python has no skeleton bone list; the first pass got none)
     try:
-        sk = seq.get_editor_property("skeleton")
-        return [str(b) for b in unreal.SkeletonLibrary.get_bone_names(sk)] if hasattr(unreal, "SkeletonLibrary") else []
+        pose = unreal.AnimPoseExtensions.get_anim_pose_at_time(seq, 0.0, opts)
+        return [str(b) for b in unreal.AnimPoseExtensions.get_bone_names(pose)]
     except Exception:
         return []
 
@@ -80,7 +81,7 @@ def measure(name):
             opts.set_editor_property(k, v)
         except Exception:
             pass
-    names = bones_of(seq)
+    names = bones_of(seq, opts)
     special = [b for b in names if any(w in b.lower() for w in ("attach", "warp", "interaction", "ik_hand_root", "seat"))]
     want = ["root", "pelvis", "head", "neck_01", "neck_02", "ball_l", "ball_r"] + special
     rows = []
@@ -96,7 +97,10 @@ def measure(name):
                 pass
         rows.append((t, P))
     r0, r1 = rows[0][1].get("root"), rows[-1][1].get("root")
-    res = {"clip": name, "length": round(length, 3), "bones_special": special, "warp": warp_notifies(seq)}
+    # the warp windows live on the montage the seat names, not on its sequence (the first pass found none there)
+    mont = unreal.load_asset(CLIP_DIR + name + "." + name) if name.endswith("_Montage") else None
+    res = {"clip": name, "length": round(length, 3), "bones": len(names), "bones_special": special,
+           "warp": warp_notifies(mont) if mont is not None else warp_notifies(seq), "warp_on_sequence": warp_notifies(seq)}
     if r0 and r1:
         res["root_travel_cm"] = [round(r1[0] - r0[0], 1), round(r1[1] - r0[1], 1)]
         res["root_turn_deg"] = round(((r1[3] - r0[3] + 180.0) % 360.0) - 180.0, 1)
