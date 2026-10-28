@@ -207,6 +207,9 @@ namespace Ledger.PerceptionGolden
             // The game's hourly step, homed in the Core on 28 October 2026 (TownWeek.cs, the sweep's G4); answered
             // through the port's own TownWeek.h.
             EmitTownWeek(sb);
+            // The deed's stories and the talk's evidence, homed in the Core on 28 October 2026 (DeedTalk.cs, the
+            // sweep's G3); answered through the port's own CrimeProbe.h.
+            EmitDeedTalk(sb);
 
             // ROWS AWAITING THE PORT, 28 September: the town session writes the
             // Core and its rows; the builder ports them to StreetVoice.h. Until
@@ -3005,6 +3008,168 @@ namespace Ledger.PerceptionGolden
                         town.Week.Give(WeekAnswer.WindDown, new GameTime(day, 10, 40), mill, cast, town.Asks);
                     }
                 }
+            }
+        }
+
+        /// THE DEED'S STORIES AND THE TALK'S EVIDENCE, SHAPE BY SHAPE (28 October 2026, the 5 October sweep's G3):
+        /// DeedTalk.cs, which the port's CrimeProbe.h follows and whose text the talk program reads. One row a named
+        /// case, built the same way on both sides; its answers are the shape's own fields or text, escaped:
+        ///   DeedTalkSighting   a sighting by rung, by hour (the words' night) and by day, on each kind of deed key;
+        ///   DeedTalkClaim      what he says, by its areas;
+        ///   DeedTalkOwnedUp    owning up, with a place and without, on each kind of deed key;
+        ///   DeedTalkKeepQuiet  keeping quiet agreed (once, twice, two deeds, after another topic) and refused: what is
+        ///                      held back, and the deed still told the talk program, as before;
+        ///   DeedTalkDeedJson   the deed's JSON with a witness and without, by hearsay, a heard sighting, what he said
+        ///                      (which alone tells nobody the deed), and for somebody it has not reached;
+        ///   DeedTalkEvidence   the account by each kind of evidence: none, seen at each rung, heard, heard naming him,
+        ///                      seen and heard naming, the scripted encounter's, the numbers' six decimals;
+        /// each family with special characters (a quote, a backslash, a pipe, a space, a newline, a tab, a carriage
+        /// return). No confidence is an exact tie at six decimals, where two C libraries could round apart.
+        static void EmitDeedTalk(StringBuilder sb)
+        {
+            const string W = DeedTalk.WindowDeedKey;
+            const string Odd = "player.window\"d9\\";
+            // A text's bytes beside it, since the table's escape drops a carriage return: with the count the two sides'
+            // texts are compared byte for byte.
+            string Bytes(string s) => Encoding.UTF8.GetByteCount(s ?? "").ToString(Inv);
+            string[] Story(Rumor r) => new[] { Esc(r.TopicKey), Esc(r.Content.Value), Esc(r.OriginId), r.OriginRung.ToString(Inv),
+                                               r.Hops.ToString(Inv), D(r.Confidence), Bit(r.Sensitive), Esc(r.Summary), Bytes(r.Summary) };
+            void Out(string fn, string name, string[] answers) => Row(sb, new[] { fn, name }.Concat(answers).ToArray());
+            string Json(string s) => s.Length == 0 ? "-" : Esc(s);
+            Rumor Held(string predicate, string value, int hops, double confidence, int rung, string summary, string subject = "player") =>
+                new Rumor { Content = new Fact(subject, predicate, value), Hops = hops, Confidence = confidence, OriginRung = rung, Summary = summary };
+            Gossiper Holder(Rumor[] held)
+            {
+                var g = new Gossiper("w", "w", null, null, null);
+                g.Rumors.AddRange(held);
+                return g;
+            }
+
+            foreach (var (name, key, area, words, day, hour, witness, conf, rung) in new (string, string, string, string, int, int, string, double, int)[]
+            {
+                ("rung-1", W, "fish_market", "the fish market", 1, 23, "w1", 0.2, -1),
+                ("rung0", W, "fish_market", "the fish market", 1, 23, "w1", 0.3, 0),
+                ("rung1", W, "fish_market", "the fish market", 1, 23, "w1", 0.45, 1),
+                ("rung2", W, "fish_market", "the fish market", 1, 23, "w1", 0.6, 2),
+                ("rung3", W, "fish_market", "the fish market", 1, 23, "w1", 0.8, 3),
+                ("rung4", W, "fish_market", "the fish market", 1, 23, "w1", 0.94, 4),
+                ("hour0", "player.window_d2", "quay", "the quay", 2, 0, "sam", 0.8, 3),
+                ("hour5", "player.window_d2", "quay", "the quay", 2, 5, "sam", 0.8, 3),
+                ("hour6", "player.window_d2", "quay", "the quay", 2, 6, "sam", 0.8, 3),
+                ("hour12", "player.window_d2", "quay", "the quay", 2, 12, "sam", 0.8, 3),
+                ("hour17", "player.window_d2", "quay", "the quay", 2, 17, "sam", 0.8, 3),
+                ("hour18", "player.window_d2", "quay", "the quay", 2, 18, "sam", 0.8, 3),
+                ("day-1", "player.window_d0", "ritas", "Rita's", -1, 21, "lena", 0.6, 2),
+                ("day0", "player.window_d0", "ritas", "Rita's", 0, 21, "lena", 0.6, 2),
+                ("day6", "player.window_d6", "ritas", "Rita's", 6, 21, "lena", 0.6, 2),
+                ("day7", "player.window_d7", "ritas", "Rita's", 7, 21, "lena", 0.6, 2),
+                ("day13", "player.window_d13", "ritas", "Rita's", 13, 21, "lena", 0.6, 2),
+                ("story-key", DeedTalk.ScriptedStoryKey, "mickeys_rank", "the rank", 0, 22, "w1", 0.94, 4),
+                ("no-prefix", "window_d4", "chapel", "the chapel", 4, 20, "w2", 0.5, 1),
+                ("uppercase", "player.Window_D3", "Fish_Market", "the Fish Market", 3, 19, "W3", 0.7, 3),
+                ("special", "player.window_d5", "fish market", "the \"Anchor\" | yard\\\n\tback\r", 5, 2, "w|1", 0.55, 2),
+            })
+                Out("DeedTalkSighting", name, Story(DeedTalk.SightingStory(key, area, words, day, hour, witness, conf, rung)));
+
+            foreach (var (name, key, areas, words, told) in new (string, string, string[], string, string)[]
+            {
+                ("one", W, new[] { "chapel" }, "the chapel", "w1"),
+                ("two", W, new[] { "fish_dock", "fish_market" }, "the fish market", "rocco"),
+                ("none", W, new string[0], "nowhere", "lena"),
+                ("empty-area", "player.window_d3", new[] { "chapel", "", "quay" }, "the chapel", "sam"),
+                ("uppercase", "player.window_d3", new[] { "Chapel", "QUAY" }, "the Chapel", "Darren"),
+                ("special", "player.window_d5", new[] { "ritas\"back", "yard\\gate" }, "Rita's \"back\" | the yard\n\t", "w 1"),
+            })
+                Out("DeedTalkClaim", name, Story(DeedTalk.ClaimStory(key, areas, words, told)));
+
+            foreach (var (name, key, told, place, said) in new (string, string, string, string, string)[]
+            {
+                ("window", W, "w1", null, null),
+                ("window-place", W, "lena", "ritas", null),
+                ("free-play", "player.window_d3", "lena", "ritas", "the new owner told me himself that he put Rita's window in"),
+                ("free-play-no-place", "player.window_d3", "sam", null, null),
+                ("story-key", DeedTalk.ScriptedStoryKey, "rocco", null, null),
+                ("no-prefix", "cut_d0", "sam", "sams", "he said he did it"),
+                ("special", "player.window_d5", "w|1", "rita's \"back\"", "he said \"it was me\" \\ ran|off\n\tback"),
+            })
+                Out("DeedTalkOwnedUp", name, Story(DeedTalk.OwnedUpStory(key, told, place, said)));
+
+            // Keeping quiet: the reply's keepsQuiet agreed calls KeepQuiet with its topic; refused, the game files nothing.
+            foreach (var (name, key, calls, before, saw) in new (string, string, string[], string[], string)[]
+            {
+                ("agreed", W, new[] { W }, new string[0], "mickeys_rank"),
+                ("agreed-twice", W, new[] { W, W }, new string[0], "mickeys_rank"),
+                ("refused", W, new string[0], new string[0], "mickeys_rank"),
+                ("agreed-free-play", "player.window_d3", new[] { "player.window_d3" }, new string[0], ""),
+                ("agreed-two-deeds", W, new[] { W, "player.window_d3" }, new string[0], ""),
+                ("agreed-after-another", W, new[] { W }, new[] { "player.outfit_d0" }, ""),
+                ("agreed-special", Odd, new[] { Odd }, new string[0], "rita's \"back\""),
+            })
+            {
+                var g = Holder(new[] { Held(DeedTalk.DeedStem(key), "ritas", 0, 0.94, 4, "somebody put the window in") });
+                foreach (var t in before) g.Suppressed.Add(t);
+                string told = DeedTalk.DeedJson(g, key, 1, 23, saw);
+                foreach (var c in calls) DeedTalk.KeepQuiet(g, c);
+                string after = DeedTalk.DeedJson(g, key, 1, 23, saw);
+                Out("DeedTalkKeepQuiet", name, new[] { g.Suppressed.Count.ToString(Inv),
+                    g.Suppressed.Count == 0 ? "-" : Esc(string.Join(",", g.Suppressed.OrderBy(t => t, StringComparer.Ordinal))),
+                    Json(after), Bytes(after), Bit(after == told), g.Rumors.Count.ToString(Inv) });
+            }
+
+            foreach (var (name, key, day, hour, saw, held) in new (string, string, int, int, string, Rumor[])[]
+            {
+                ("witness-saw-him", W, 1, 23, "mickeys_rank", new[] { Held("broke_a_window", "glass_a", 0, 0.94, 4, "somebody put the window in") }),
+                ("nobody", W, 1, 23, "", new Rumor[0]),
+                ("saw-him-only", W, 1, 23, "ritas_counter", new Rumor[0]),
+                ("free-play-story", "player.window_d3", 3, 14, "", new[] { Held("window_d3", "ritas", 0, 0.8, 3, "somebody put Rita's window in") }),
+                ("hearsay-no-witness", "player.window_d3", 3, 14, "", new[] { Held("window_d3", "ritas", 2, 0.5, 2, "somebody put Rita's window in") }),
+                ("window-near", W, 1, 23, "", new[] { Held(DeedTalk.NearPredicate, "crime_a", 0, 0.6, 2, "a man came through the yard") }),
+                ("heard-sighting-and-claim", W, 1, 23, "", new[] { Held("at_window_d1", "fish_market", 1, 0.8, 4, "the new owner was at the fish market on Tuesday night"),
+                                                                 Held("claim_window_d1", "chapel,quay", 0, 0.9, -1, "the new owner says he was at the chapel") }),
+                ("own-sighting-only", W, 1, 23, "", new[] { Held("at_window_d1", "fish_market", 0, 0.8, 4, "the new owner was at the fish market on Tuesday night") }),
+                ("surest-heard-sighting", "player.window_d3", 3, 14, "", new[] { Held("at_window_d3", "quay", 1, 0.5, 3, "q"), Held("at_window_d3", "chapel", 2, 0.7, 3, "c"),
+                                                                              Held("at_window_d3", "yard", 1, 0.7, 3, "y") }),
+                ("claim-only", W, 1, 23, "", new[] { Held("claim_window_d1", "chapel", 0, 0.9, -1, "the new owner says he was at the chapel") }),
+                ("claims-merged", "player.window_d3", 3, 14, "ritas_counter", new[] { Held("claim_window_d3", "chapel,,quay", 0, 0.9, -1, "a"), Held("window_d3", "ritas", 0, 0.8, 3, "s"),
+                                                                                     Held("claim_window_d3", "quay,fish_dock", 1, 0.8, -1, "b"), Held("claim_window_d3", "chapel", 2, 0.7, -1, "c") }),
+                ("other-deed", "player.window_d3", 3, 14, "", new[] { Held("broke_a_window", "glass_a", 0, 0.94, 4, "x"), Held(DeedTalk.NearPredicate, "crime_a", 0, 0.6, 2, "y"),
+                                                                   Held("at_window_d1", "quay", 1, 0.8, 4, "z") }),
+                ("not-about-him", W, 1, 23, "", new[] { Held("window_d1", "ritas", 0, 0.9, 4, "x", "rita") }),
+                ("night-before-day-0", "player.window_d0", -1, 0, "quay", new Rumor[0]),
+                ("uppercase-key", "player.Window_D3", 3, 14, "", new[] { Held("Window_D3", "ritas", 0, 0.8, 3, "s"), Held("at_Window_D3", "quay", 1, 0.8, 3, "q") }),
+                ("special", Odd, 9, 2, "rita's \"back\"\\ room\n\t", new[] { Held("at_window\"d9\\", "yard\\gate \"b\"", 1, 0.6, 2, "h"),
+                                                                            Held("claim_window\"d9\\", "ritas\"back,yard\\gate", 0, 0.9, -1, "c") }),
+            })
+            {
+                string json = DeedTalk.DeedJson(Holder(held), key, day, hour, saw);
+                Out("DeedTalkDeedJson", name, new[] { Json(json), Bytes(json) });
+            }
+
+            foreach (var (name, free, key, held) in new (string, bool, string, Rumor[])[]
+            {
+                ("nobody", true, "player.window_d3", new Rumor[0]),
+                ("seen-rung0", true, "player.window_d3", new[] { Held("window_d3", "ritas", 0, 0.3, 0, "somebody at Rita's window") }),
+                ("seen-rung1", true, "player.window_d3", new[] { Held("window_d3", "ritas", 0, 0.45, 1, "a shape at Rita's window") }),
+                ("seen-rung2", true, "player.window_d3", new[] { Held("window_d3", "ritas", 0, 0.6, 2, "a man in a long coat at Rita's window") }),
+                ("seen-rung3", true, "player.window_d3", new[] { Held("window_d3", "ritas", 0, 0.8, 3, "a face I'd know again at Rita's window") }),
+                ("seen-rung4", true, "player.window_d3", new[] { Held("window_d3", "ritas", 0, 0.94, 4, "the new owner put Rita's window in") }),
+                ("heard", true, "player.window_d3", new[] { Held("window_d3", "ritas", 1, 0.45, 2, "the man that did the window ran") }),
+                ("heard-no-rung", true, "player.window_d3", new[] { Held("window_d3", "ritas", 1, 0.5, -1, "Rita's window went") }),
+                ("heard-naming", true, "player.window_d3", new[] { Held("window_d3", "ritas", 2, 0.7, 4, "it was the new owner that put the window in") }),
+                ("surest-heard", true, "player.window_d3", new[] { Held("window_d3", "ritas", 1, 0.4, 2, "faint"), Held("window_d3", "ritas", 1, 0.6, 3, "surer") }),
+                ("seen-and-heard-naming", true, "player.window_d3", new[] { Held("window_d3", "ritas", 0, 0.6, 2, "a mark on his coat"),
+                                                                         Held("window_d3", "ritas", 1, 0.5, 4, "it was the new owner") }),
+                ("scripted", false, W, new[] { Held("broke_a_window", "glass_a", 0, 0.9, 4, "he put the glass in") }),
+                ("scripted-deed-story-only", false, W, new[] { Held("window_d1", "ritas", 0, 0.9, 4, "x") }),
+                ("free-play-mill-story-only", true, W, new[] { Held("broke_a_window", "glass_a", 0, 0.9, 4, "x") }),
+                ("six-decimals", true, "player.window_d3", new[] { Held("window_d3", "ritas", 2, 0.9999999, 4, "nearly sure"), Held("window_d3", "ritas", 0, 1.0 / 3, 1, "a shape") }),
+                ("tiny", true, "player.window_d3", new[] { Held("window_d3", "ritas", 1, 1e-7, 4, "barely"), Held("window_d3", "ritas", 0, 2.0 / 3, 3, "a face") }),
+                ("no-summary", true, "player.window_d3", new[] { Held("window_d3", "ritas", 0, 0.5, 2, null) }),
+                ("special", true, Odd, new[] { Held("window\"d9\\", "ritas", 0, 0.55, 3, "he said \"no\" \\ ran|off\n\tback\r") }),
+            })
+            {
+                string fields = DeedTalk.EvidenceAccountFields(DeedTalk.EvidenceAccount(Holder(held), free, key), key);
+                Out("DeedTalkEvidence", name, new[] { Esc(fields), Bytes(fields) });
             }
         }
 

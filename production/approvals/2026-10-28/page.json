@@ -3,7 +3,7 @@
  "kicker": "LEDGER · Wednesday 28 October · three decisions",
  "title": "Drive F is full; Tom's cuffs; a stray folder",
  "how": [
-  "Shortfalls first. Drive F is full (0.27 GB free): a study helper of mine wrote 24 GB of raw extracts there this morning, and tonight's build and walk fail unless room is made. Tom's cuffs failed again: they now go round his wrists, but there is a lump where the sleeve meets the cuff, and a little cloth passes through each wrist. They are set aside after two tries, plus a third I should not have made. His sleeve ends are fixed in the drape: each sleeve now goes round the forearm to its end.",
+  "Shortfalls first. Drive F is full (0.27 GB free): a study helper of mine wrote 26 GB of raw extracts there this morning, and tonight's build and walk fail unless room is made. Tom's cuffs failed again: they now go round his wrists, but there is a lump where the sleeve meets the cuff, and a little cloth passes through each wrist. They are set aside after two tries, plus a third I should not have made. His sleeve ends are fixed in the drape: each sleeve now goes round the forearm to its end.",
   "Pick one answer in each; the first is recommended. Anything you do not pick carries onto the next page."
  ],
  "foot": "Nothing bought or signed up for. Your three answers of this morning are in the game (the fast checker, the wider name rule, two copies) and gone from this page. Marvelous is closed until a step needs it.",
@@ -29,7 +29,7 @@
   {
    "kind": "decide",
    "key": "free-f-study-extracts-2026-10-28",
-   "name": "Drive F is full: delete the 24 GB of film-scene extracts my helper wrote this morning?",
+   "name": "Drive F is full: delete the 26 GB of raw extracts my helper wrote this morning?",
    "options": [
     [
      "yes",
@@ -40,7 +40,7 @@
      "Keep them; I will make room another way"
     ]
    ],
-   "note": "2,741 raw files of Mafia's film scenes, written this morning into F:/LedgerTools/aaa-study/mafia/exports/MafiaTheOldCountry/Content/Nero for Study 2's timings. The older extracts there (0.55 GB) stay, and nothing of yours is in them. With 0.27 GB free, tonight's build, walk and morning pictures cannot run. The helpers are told to write nothing more to F. My fault: the brief did not cap their extracts."
+   "note": "Raw files from Mafia written this morning (22.7 GB of face clips, used only as a cross-check, and 3 GB of film scenes) into F:/LedgerTools/aaa-study/mafia/exports/MafiaTheOldCountry/Content/Nero for Study 2's timings. The older extracts there (0.55 GB) stay, and nothing of yours is in them. With 0.27 GB free, tonight's build, walk and morning pictures cannot run. The helpers are told to write nothing more to F. My fault: the brief did not cap their extracts."
   },
   {
    "kind": "decide",

@@ -213,6 +213,91 @@ namespace Ledger.CoreTests
             Check(!new TownWeek().TwentyRon(Landing(), new GameTime(0, 21, 0)), "and only at eight");
         }
 
+        /// G3, THE DEED'S STORIES AND THE TALK'S EVIDENCE (28 October 2026): DeedTalk, which lived only in the port's
+        /// CrimeProbe.h. The port's own self-test cases (crime-probe-test), the same text here; and what the talk
+        /// program reads back of it, read as it reads it (System.Text.Json), special characters and all.
+        static void TestDeedTalk()
+        {
+            Console.WriteLine("The deed's stories and the talk's evidence (the sweep's G3):");
+            const string W = DeedTalk.WindowDeedKey;
+            Gossiper Holding(params Rumor[] held)
+            {
+                var g = new Gossiper("w1", "w1", null, null, null);
+                g.Rumors.AddRange(held);
+                return g;
+            }
+
+            var saw = Holding(new Rumor { Content = new Fact("player", "broke_a_window", "glass_a") });
+            Check(DeedTalk.DeedJson(saw, W, 1, 23, "mickeys_rank") == ",\"deed\":{\"topic\":\"player.window_d1\",\"day\":1,\"hour\":23,\"sawHimAt\":\"mickeys_rank\"}",
+                  "the deed is told to a witness, with where she saw him", DeedTalk.DeedJson(saw, W, 1, 23, "mickeys_rank"));
+            Check(DeedTalk.DeedJson(Holding(), W, 1, 23, "") == "", "and not to somebody it has not reached");
+
+            var at = DeedTalk.SightingStory(W, "fish_market", "the fish market", 1, 23, "w1", 0.8, 4);
+            Check(at.TopicKey == "player.at_window_d1" && at.Content.Value == "fish_market" && !at.Sensitive && at.OriginRung == 4 && at.Hops == 0,
+                  "a sighting is keyed by the deed, valued by the area, carries its rung");
+            Check(at.Summary == "the new owner was at the fish market on Tuesday night", "and says where and which night", at.Summary);
+            Check(DeedTalk.SightingStory(W, "quay", "the quay", 2, 6, "w1", 0.8, 3).Summary == "the new owner was at the quay on Wednesday",
+                  "six in the morning is no longer the words' night");
+
+            var heard = Holding(new Rumor { Content = at.Content, Hops = 1, Confidence = 0.8, OriginRung = 4, Summary = at.Summary },
+                                DeedTalk.ClaimStory(W, new[] { "chapel", "quay" }, "the chapel", "w1"));
+            Check(DeedTalk.DeedJson(heard, W, 1, 23, "")
+                  == ",\"deed\":{\"topic\":\"player.window_d1\",\"day\":1,\"hour\":23,\"heardHimAt\":\"fish_market\",\"heardHeSaid\":[\"chapel\",\"quay\"]}",
+                  "the deed is told with the sighting heard and what he said", DeedTalk.DeedJson(heard, W, 1, 23, ""));
+            Check(DeedTalk.DeedJson(Holding(at), W, 1, 23, "") == "", "an own sighting goes as sawHimAt, never as heardHimAt");
+            Check(DeedTalk.DeedJson(Holding(DeedTalk.ClaimStory(W, new[] { "chapel" }, "the chapel", "w1")), W, 1, 23, "") == "",
+                  "what he says alone does not tell anybody the deed");
+
+            string before = DeedTalk.DeedJson(saw, W, 1, 23, "mickeys_rank");
+            DeedTalk.KeepQuiet(saw, W);
+            Check(saw.Suppressed.SetEquals(new[] { "player.window_d1", "player.broke_a_window", "player.was_near_the_deed", "player.at_window_d1" }),
+                  "keeping quiet holds back the deed and the sighting", string.Join(",", saw.Suppressed));
+            DeedTalk.KeepQuiet(saw, W);
+            Check(saw.Suppressed.Count == 4 && DeedTalk.DeedJson(saw, W, 1, 23, "mickeys_rank") == before,
+                  "twice adds nothing, and the deed is still told: they remember everything");
+
+            var own = DeedTalk.OwnedUpStory(W, "w1");
+            Check(own.Confidence == 1.0 && DeedTalk.IsDeedStory(own, W) && own.Summary == "the new owner told me himself that he broke Mickey's window",
+                  "owning up gives the deed's own story, certain");
+            var ownFree = DeedTalk.OwnedUpStory("player.window_d3", "lena", "ritas", "the new owner told me himself that he put Rita's window in");
+            Check(ownFree.TopicKey == "player.window_d3" && ownFree.Content.Value == "ritas" && ownFree.Sensitive,
+                  "in free play owning up files the deed's own story, sensitive, in his words");
+
+            // What the talk program reads back: its own reader is System.Text.Json (TalkHelper's Answer).
+            const string Odd = "player.window\"d9\\";
+            var odd = Holding(new Rumor { Content = new Fact("player", "at_window\"d9\\", "yard\\gate"), Hops = 1, Confidence = 0.6, OriginRung = 2 },
+                              DeedTalk.ClaimStory(Odd, new[] { "ritas\"back" }, "Rita's", "w1"));
+            using (var deed = System.Text.Json.JsonDocument.Parse("{" + DeedTalk.DeedJson(odd, Odd, 9, 2, "rita's \"back\"").Substring(1) + "}"))
+            {
+                var d = deed.RootElement.GetProperty("deed");
+                Check(d.GetProperty("topic").GetString() == Odd && d.GetProperty("day").GetInt32() == 9 && d.GetProperty("hour").GetInt32() == 2
+                      && d.GetProperty("sawHimAt").GetString() == "rita's \"back\"" && d.GetProperty("heardHimAt").GetString() == "yard\\gate"
+                      && d.GetProperty("heardHeSaid")[0].GetString() == "ritas\"back",
+                      "the talk program reads back the deed, a quote and a backslash in its ids");
+            }
+            const string Said = "he said \"no\" \\ ran|off\n\tback\r";
+            var acc = DeedTalk.EvidenceAccount(Holding(new Rumor { Content = new Fact("player", "window_d3", "ritas"), Hops = 0, Confidence = 1.0 / 3, OriginRung = 1, Summary = Said },
+                                                       new Rumor { Content = new Fact("player", "window_d3", "ritas"), Hops = 2, Confidence = 0.9999999, OriginRung = 4 }),
+                                               true, "player.window_d3");
+            string fields = DeedTalk.EvidenceAccountFields(acc, "player.window_d3");
+            Check(fields == "\"topic\":\"player.window_d3\",\"held\":true,\"seen\":true,\"rung\":1,\"names\":true,\"confidence\":0.333333,\"namingConfidence\":1.000000,"
+                            + "\"summary\":\"he said \\\"no\\\" \\\\ ran|off\\n\\tback\\r\"", "the account in the port's words and six decimals", fields);
+            using (var ev = System.Text.Json.JsonDocument.Parse("{" + fields + "}"))
+            {
+                var a = ev.RootElement;
+                Check(a.GetProperty("summary").GetString() == Said && a.GetProperty("rung").GetInt32() == 1 && a.GetProperty("names").GetBoolean()
+                      && Math.Abs(a.GetProperty("confidence").GetDouble() - 1.0 / 3) < 1e-6 && a.GetProperty("topic").GetString() == "player.window_d3",
+                      "the talk program reads back the account, its words whole");
+            }
+            Check(DeedTalk.EvidenceAccountFields(DeedTalk.EvidenceAccount(Holding(), true, "player.window_d3"), "player.window_d3") == "\"topic\":\"player.window_d3\",\"held\":false",
+                  "somebody who holds nothing of it holds nothing");
+            var scripted = Holding(new Rumor { Content = new Fact("player", "broke_a_window", "glass_a"), Hops = 0, OriginRung = 4 });
+            Check(DeedTalk.EvidenceAccount(scripted, false, W).Held && !DeedTalk.EvidenceAccount(scripted, true, W).Held,
+                  "the scripted encounter reads the mill's own story, free play the deed's");
+            Check(DeedTalk.EvidenceAccountFields(new DeedAccount { Held = true, Rung = -1, Confidence = 0.0078125 }, W).Contains("\"confidence\":0.007812,"),
+                  "a tie at six decimals goes to even, as the port's std::to_string writes it");
+        }
+
         /// THE HARD RULE ON NAMES (his order of 27 October 2026, evening; NameRules, its reference
         /// tools/checkers/name_rule.py): a sentence naming a person, place or event missing from the speaker's facts
         /// never passes, and the check refuses it before any call.

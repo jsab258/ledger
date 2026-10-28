@@ -10,7 +10,7 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
 - **Recorded:** your rulings (RULINGS.md and DECISIONS.md); the study's order for both weeks at the top of the study plan; the order ledger, seeded with everything still open from before (21 and 23 October's leftovers, the cloud week's four questions, the three shops not yet in the street, FINDINGS' twenty faults, your two clicks on the old archive). A new check fails any push where an item has no status or vanishes without being done or dropped.
 - **Done:** the health check (production/audits/health-2026-10-25.md); your progress page now has the studies bar and the 33 carried items.
 
-**The studies (6 of 16 done: this week's six).**
+**The studies (10 of 16 done: this week's six, and Studies 14, 2, 11 and 15 pulled forward on 28 October).**
 - *Study 7, animation* (production/research/aaa-reference/studies/07-animation.md, passed its fresh review with fixes):
   - Neither game uses motion matching. Mafia walks on a layered state machine of single clips, Kingdom Come II on blend spaces. Both choose their starts, stops and turns rather than search for them: Kingdom Come II by distance, the stride's quarter and which leg.
   - Feet: Mafia traces the ground under each foot and locks a foot only in its duels; Kingdom Come II declares leg IK and a feet lock. The one perception figure found says viewers notice slides under about 2 cm, so our 3 cm bar is lenient.
@@ -35,14 +35,30 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
   - Kingdom Come II simulates its town: 1,354 people with homes, beds and working days; a crime becomes information a witness runs to a guard or a friend, kept 1 to 7 days. Mafia only stages people looping in place, and forgets.
   - LEDGER is already built the simulated way, with something both lack: who told whom, and talk that weakens as it travels.
   - For us: crime memory that lasts by kind (1 to 7 days); show a witness walking to tell someone; benches and beds as places in the routine; spreading only where people meet, as canon says.
+- *Study 14, combat and violence* (studies/14-combat.md, passed its fresh review with fixes):
+  - Kingdom Come II times every blow in its data: an unarmed blow lands about 0.75 s into the swing, which confirms our draft's 0.73 s. A fight ends by flight or surrender when morale falls to 0.2; the town warns, flees, reports and fines in set numbers (assault 1,500 and 5 days; unarmed costs half). Mafia gives the feel of contact: the body slides in to meet the target instead of locking on, a short freeze per kind of blow, a 0.8 s close-in of the camera, layered sounds, and paired moves against walls by height.
+  - For us: the strike timing stays; recovery after a landed blow drops to 0.4 s; hit reactions made by side; the first fight test needs 22 animations; about 14 paired moves against walls, doorways and railings for the street.
+  - Two questions for your next page: should fists be able to kill (Kingdom Come II says no)? Should the animation source test check 6 moves, not the design's 4 (I recommend 6)? Not reached: Mafia's combat files (drive F full).
+- *Study 2, the first 30 minutes* (studies/02-first-30-minutes.md, passed its fresh review with fixes; from the games' files, no recording, so every minute is an estimate):
+  - Both games fill their first half hour: something new about every three minutes, a fifth to two-fifths of it watched, one route, and no consequence the player caused. First control at 3.5 minutes (Kingdom Come II) and 1.4 (Mafia); about 3 saves in 30 minutes against about 20.
+  - Mafia teaches each control when it is needed and saves every minute or two; Kingdom Come II shows a hint only when the player hesitates.
+  - For us: hints on hesitation rather than by the clock, the screen revealed piece by piece, an autosave after every deed, a nudge after a minute idle. LEDGER's own last measure had 11 empty minutes of 30.
+- *Study 11, systems* (studies/11-systems.md, passed its fresh review with fixes):
+  - Kingdom Come II has no wanted meter: guards' anger acts 12 hours late and fades in about a day and a half. Shops hold 35 to 1,500 coins and restock weekly; 686 quest save points.
+  - For us: save at every job step but never refuse a save; shops run short of cash and restock weekly (we have this); rain drawn from weighted weather types for the weather proof.
+  - A constable's beat before Ellis comes would be a new system, so it waits for a place in the plan.
+- *Study 15, the crime toolkit* (studies/15-crime-toolkit.md, passed its fresh review with fixes):
+  - Stolen goods stay marked for 9 minutes (cheap) to 6 days (a treasure), and less far from the theft. Rooms are private by the hour; a watcher warns, then acts within about half a minute. A search: an even chance every 3 minutes, 90 minutes apart.
+  - For us: the hot mark, privacy by the hour and the warning count; the pawnbroker as the fence, paying 0.4 of the value to start. Pillory, branding and jail left out: in 1990 an arrest costs hours.
+  - Kingdom Come II has no findable fence in its files; Mafia has no theft, fence, fine or jail.
 
-**Your items (27 October, afternoon).**
-- *The walk (item 2), reopened (my fault, found 27 October afternoon):* your pass made Epic's walk with Tom's MetaHuman the default, but neither ever reached the packaged game: their files were never copied to the build machine, so every packaged game, the one you and the AI tester play, fell back to the old stand-in. Fixed the same afternoon: the packaged game now logs Epic's walk with his MetaHuman, and the AI tester's pictures show his own face (in the white base layer until his clothes). Done again the same evening: the AI tester's whole route, 15 of 15 stages, once its steering allowed for Epic's walk gliding on after a key is let go. The sit stays set aside. The same walk found an internal name in a subtitle (Darren: "I heard from outfit_man that ..."); fixed in code, proved by tonight's walk.
-- *Clothes (item 3):* Tom's zip jacket, made tonight by script from the Marvelous drape: an even game mesh of 21,448 triangles (budget 18,000 to 22,000), its maps baked (the metal zip and two hip pockets read), skinned to his skeleton and following him arms down, up, walking and sitting (pictures in production/previews, tom-zip-jacket-*). Its cuffs failed a third try this afternoon and are set aside; your pick, the sleeve's end first, waits on Marvelous (Needs you 1); the jacket goes onto Tom in the game once the cuffs' way is chosen. Its colour is yours to choose, with pictures from the game: navy until then.
-- *Speech (item 4):* all three speak through Pocket (first sound about 0.2 s). The fast checker's fourth try failed: the larger checker (the 32M, the largest that fits) took over 0.15 s on 1 answer in 6 beside the game and cleared less. The third try's small checker, run through the same three cut-offs: your pick, the open one, clears about half of real first sentences, each about 1.3 s sooner, at 36 invented per 300 against Haiku alone's 34; it goes in behind a switch, measured live first. Your order of this evening, measured (SOURCE-TEST): told to keep to its listed facts, the game writes three quarters fewer invented first sentences; through the check, per 300, today 10 (6 harmful), facts listed 5 (1), facts cited 4 (1.5), not yet proven; your hard rule on names is in, refuses nothing true, and catches none of these (they describe rather than name). Rewriting a refused sentence: left off (no fewer 5-second waits). The check's own time: each call sent twice and the copy the service starts first kept: in whole turns it refuses no more, your call (Needs you 2). Why Haiku refuses true sentences: about 55 of its 96 refusals looked like a wording fault, but the wording fix, tested on all 617, refused only 4 fewer (noise); it let 31 inventions through against 40, suggestive, not proven. Left off.
-- *Mickey's office (item 5):* the small shadows at High fixed by raising one setting only while you are inside (about 0.2 ms a frame), passed in the editor beside plain High. This morning the staff side's fixes (the radio wholly on its riser, the leaning box file) passed fresh reviewers, and local exposure inside the room took the lamp's burn off the radio (all three views passed). Set aside after two tries: a dark patch under the radio shelf at night (a correct shadow no bounce light reaches); researched another way before a third.
-- *Fallback, the simulation's port:* two of the sweep's rules that lived only in the game's code now live in the shared rules, checked row by row: how well each person knows Tom's face (G2), and who saw the window go, what they file and where everyone stands at each hour (G1, closed this morning; the port agrees on all 59,713 test rows).
-- *The AI tester, tonight's build (03:45):* 13 of 15 stages (Ron lost sight of, Darren not on the street, as on the old build). "That's all I know" to a newcomer's sixty first questions: 4 of 60, the first count ever (the nightly bench had never run). What broke the illusion: townsfolk in underclothes; the quay end dark at night (no lamps there yet); the two missed greetings.
+**Your items (28 October, midday).**
+- *The walk (item 2):* done on 27 October (15 of 15 packaged). Last night's walk made 13 of 15, both misses the tester's own steering (Ron missed by 20 cm, Darren gone home by the time it reached him). The tester now takes one more approach. The same walk found the talk box sending Tom's lines scrambled, its first letter at the end: fixed in the game, and the tester now checks every line.
+- *Clothes (item 3):* Tom's sleeve ends are fixed in the drape. Marvelous wraps a sleeve round one straight guide per arm, and Tom's elbows bend, so his sleeves are now draped with the elbows straight, then bent back with his own skeleton, as the game moves clothes. His cuffs go round the wrist but are not clean (a lump at the seam, a little cloth through each wrist): set aside, your pick on today's page. Marvelous is closed.
+- *Speech (item 4):* your three answers are in the game: the fast checker on, the wider name rule, and two copies of each check call (wrong refusals did not rise: 62 against 69 of 211). Measured together in 22 real turns: the first sentence ready at a median 2.1 s (3.1 s without the checker); no fact number ever said.
+- *Mickey's office (item 5):* the back door is shut as the characters say, set in its frame, its knob and keyhole on its edge. Two of three fresh reviewers pass it; at night its panels read as dark slots, set aside after two tries (a third for your word on the next page). The grainy shadows: researched (Unreal's ordinary shadow blur cannot flicker, so Lumen's bounced light is the likeliest cause); the tests began and stopped when drive F filled.
+- *Fallback work:* the port's hourly step now lives in the shared rules (174 new rows agree; two hidden faults now caught); its next piece, the deed's stories, is under way. Phase 5's research is written and reviewed. Studies 14, 2, 3, 11 and 15 are under way, read-only while drive F is full.
+- *Drive F:* full since late morning (my helper's extracts); its delete is first on today's page.
 
 <!-- retention -->Disk (10-22 04:32): C: 79.9 GB free, F: 48.4 GB free; grew most since 10-21 12:17: C:\actions-runner-ledger\_work\ledger +1.5 GB, F:\LedgerTools\uv\cache +1.4 GB, F:\LedgerTools\bpyenv\Lib +0.9 GB.
 
@@ -129,7 +145,7 @@ No decision asked: these are for watching the street change.
 
 ### Needs you
 
-1. **Drive F is full (0.27 GB free): delete the 24 GB of raw film-scene extracts a study helper of mine wrote this morning?** Yes (recommended); without room tonight's build and walk fail. On today's page.
+1. **Drive F is full (0.27 GB free): delete the 26 GB of raw extracts a study helper of mine wrote this morning?** Yes (recommended); without room tonight's build and walk fail. On today's page.
 2. **Tom's cuffs, the next step:** built in the bake (recommended), another Marvelous round, or Tom dressed now with today's cuffs. Pictures on today's page.
 3. **A stray 66 MB folder I made by mistake: delete?** Yes (recommended). On today's page.
 
@@ -150,7 +166,7 @@ Your answers of 28 October morning are recorded and in the game: your new rule, 
 ## Builder, Wednesday 28 October (morning; late, my fault: due by 07:00)
 
 **Failed:**
-- Drive F filled: a study helper of mine wrote 24 GB of raw extracts. Writing to F is stopped.
+- Drive F filled: a study helper of mine wrote 26 GB of raw extracts. Writing to F is stopped.
 - Tom's cuffs: round his wrists now, but a lump at the seam and a little cloth through each wrist. Set aside; my third try broke your two-tries rule.
 - The tester's walk: 13 of 15 (Ron just out of reach, Darren gone home), and a scrambled subtitle.
 - Mickey's door at night: its panels read as dark slots. Set aside after two tries.

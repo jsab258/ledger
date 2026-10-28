@@ -19,6 +19,33 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 28 Oct 2026, how two shipped games open, reconstructed from their files without a recording
+- Made: a beat timeline of each game's first half hour and its measures, beside the project's thirty-minute goal.
+- Method (setting-free): rebuild the opening from quest steps, scene lengths, hint triggers and interface first appearances in the data; mark every minute as estimated; measure time to first control, watching against playing, the longest stretch with nothing new, saves; compare with the project's own goal; one fresh reviewer recomputes from the raw files.
+- Tools: the unpacked data, scene exports, scripted counts.
+- Target and check: every figure traceable and tagged; the review passed with fixes.
+- Cost (hours): about 1.2 of helpers' time.
+- Failed and why: no real player's clock (no recording); the raw scene and face-clip exports were not capped and filled the shared disk (26 GB), stopping two other studies' exports. Lesson: cap and place every extraction.
+- Evidence: production/research/aaa-reference/studies/02-first-30-minutes.md.
+
+### 28 Oct 2026, a combat reference study read from a shipped game's tables, the other game's files cut short by a full disk
+- Made: blow timings, reactions, morale, the street's response and a first-test animation count, against the project's combat draft.
+- Method (setting-free): read every timing from the data tables, never by eye; check the project's draft numbers against them (here one confirmed, one changed); count the animation designs a first test needs; one fresh reviewer re-measures; questions of violence go to the owner, never decided by the study.
+- Tools: the unpacked game data, scripted counts, the asset index for the second game.
+- Target and check: every number traceable and tagged; the review passed with fixes.
+- Cost (hours): about 1.3 of helpers' time.
+- Failed and why: the second game's combat files were never exported (the shared disk filled with another study's extracts): its freeze lengths, damage, knife timings, parry windows and attacker spacing not reached.
+- Evidence: production/research/aaa-reference/studies/14-combat.md.
+
+### 28 Oct 2026, two reference studies of systems and small crime read from two shipped games' data, in one sitting
+- Made: measured targets for heat, money, saves, missions, time and weather, and for theft, trespass, fencing and getting caught.
+- Method (setting-free): read the games' own tables and scripts for each question; count, never copy; tag every number measured, read, inferred or name only; turn each finding into adopt, adapt or ignore against the project's own rulings and plan; one fresh reviewer per study re-measures a sample of the numbers; tick the coverage map so nothing is studied twice.
+- Tools: the unpacked game data, the asset index, scripted counts.
+- Target and check: every number traceable and tagged; the reviews passed with fixes.
+- Cost (hours): about 1.0 of a helper's time.
+- Failed and why: neither engine's code was read (lockpicking, barter and weather formulas); who fences is not in the data.
+- Evidence: production/research/aaa-reference/studies/11-systems.md, 15-crime-toolkit.md.
+
 ### 28 Oct 2026, research for building a town by generation, ahead of its design
 - Made: a researched method for generating a district from kits with automatic checks, before any design.
 - Method (setting-free): read the engine's own source for what is production-ready, beta or experimental (the docs and the code can disagree; the code wins); read how large productions validated generated worlds (their talks' own numbers); turn the project's measured street targets into rules and checks; label every step sourced or inferred; a fresh reviewer re-reads the claims at their sources and checks the method against the project's real state (here: no saved level yet, hand edits not tracked by the tool).
@@ -27,6 +54,15 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 - Cost (hours): about 0.6 of helpers' time, 0.1 of the session's.
 - Failed and why: the oversized talk PDFs could not be read whole; their figures stay unverified.
 - Evidence: production/research/phase5-procedural/RESEARCH-2026-10-28.md.
+
+### 28 Oct 2026, the text a game sends to its talk program pinned byte for byte against the reference code
+- Made: the six message shapes that carry a talk reply into the town's memory, given a reference home and compared byte for byte.
+- Method (setting-free): when one side writes text the other reads, the text itself is the contract: write the reference version, emit rows of exact text (with the byte count, since a table cannot carry every control character), have the port answer through its real functions, and check number formatting across languages on a large sample (here 540,022 values agreed, ties included); plant breaks in field names, escapes and boundaries to prove the rows catch them.
+- Tools: the golden-row emitter and the port's standalone answerer.
+- Target and check: 0 mismatches over 65,058 rows; five of five planted breaks caught.
+- Cost (hours): about 0.4 of a helper's time; 0.1 of the session's.
+- Failed and why: nothing; a boundary disagreement found (night at 18:00 against 19:00) and listed.
+- Evidence: production/audits/sweep-2026-10-05/port-vs-core.md (G3).
 
 ### 28 Oct 2026, a rule that lived only in the port given its home in the reference code, so breaking it fails a test
 - Made: the game's hour-by-hour step given a home in the reference simulation, the port compared against it row by row.

@@ -119,17 +119,21 @@ drift_check() {
 # push checks live; MSVC on Jafar's PC, which is the toolchain Unreal itself
 # builds the port with. NO COMPILER IS EXIT 3 AND SAYS WHICH ONES IT LOOKED
 # FOR — a comparison that did not run must never read like one that agreed.
+# C++14 EVERYWHERE, 28 October 2026: the table now asks the game's own CrimeProbe.h
+# (the deed's stories and the talk's evidence, the sweep's G3), which crime-probe-test
+# holds to C++14; MSVC here was already /std:c++14, and g++ on the runner must not be
+# the one compiler asked for less.
 build_port() {
   local out="$WORK/core-port-test"
   if command -v g++ >/dev/null 2>&1; then
     echo "portCompiler=g++" >&2
-    ( cd "$REPO" && g++ -std=c++11 -O1 -w -I "$INC_PUBLIC" -I "$INC_SHIM" \
+    ( cd "$REPO" && g++ -std=c++14 -O1 -w -I "$INC_PUBLIC" -I "$INC_SHIM" \
         -o "$out" "$PORT_TEST" "$PORT_SRC" ) >&2 || return 1
     echo "$out"; return 0
   fi
   if command -v clang++ >/dev/null 2>&1; then
     echo "portCompiler=clang++" >&2
-    ( cd "$REPO" && clang++ -std=c++11 -O1 -w -I "$INC_PUBLIC" -I "$INC_SHIM" \
+    ( cd "$REPO" && clang++ -std=c++14 -O1 -w -I "$INC_PUBLIC" -I "$INC_SHIM" \
         -o "$out" "$PORT_TEST" "$PORT_SRC" ) >&2 || return 1
     echo "$out"; return 0
   fi

@@ -209,3 +209,11 @@
 {"event": "stop", "at": "2026-10-28T11:18:00", "note": ""}
 {"event": "start", "at": "2026-10-28T11:18:00", "task": "28 Oct: item 4: the shipped speech settings in 22 real turns (the measuring dollar); records", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-28T11:23:00", "note": ""}
+{"event": "start", "at": "2026-10-28T11:23:00", "task": "28 Oct: fallback: Studies 11 and 15 checked and recorded; Study 3 and the port's G3 handed out; the overview brought to midday", "phase": "3", "kind": "production"}
+{"event": "stop", "at": "2026-10-28T11:41:00", "note": ""}
+{"event": "start", "at": "2026-10-28T11:41:00", "task": "28 Oct: fallback: Study 14 checked and recorded; the port helper's failing checks sent back", "phase": "3", "kind": "production"}
+{"event": "stop", "at": "2026-10-28T11:44:00", "note": ""}
+{"event": "start", "at": "2026-10-28T11:44:00", "task": "28 Oct: fallback: Study 2 checked and recorded; the page's disk note made exact", "phase": "3", "kind": "production"}
+{"event": "stop", "at": "2026-10-28T11:47:00", "note": ""}
+{"event": "start", "at": "2026-10-28T11:47:00", "task": "28 Oct: fallback: the port's G3 checked, both Unreal targets built, recorded", "phase": "3", "kind": "production"}
+{"event": "stop", "at": "2026-10-28T11:53:00", "note": ""}

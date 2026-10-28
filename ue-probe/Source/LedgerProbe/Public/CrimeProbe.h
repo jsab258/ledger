@@ -1625,6 +1625,13 @@ namespace LedgerCrime
 	// carries. A deed is keyed as the session record keys it
 	// ("player.window_d1"); its own stories are the ones the mill already
 	// carries about it (for the window: seen broken, or seen fleeing).
+	//
+	// THEIR HOME IS THE CORE since 28 October 2026 (the 5 October sweep's G3):
+	// EvidenceAccount, EvidenceAccountFields and, below, SightingStory,
+	// ClaimStory, OwnedUpStory, KeepQuiet and DeedJson follow DeedTalk.cs line
+	// for line, and the DeedTalk golden rows ask these very functions for the
+	// Core's text byte for byte (CoreGolden.h), so change the Core first: a
+	// change here alone fails rows.
 
 	inline const char* WindowDeedKey() { return "player.window_d1"; }
 
@@ -2098,6 +2105,7 @@ namespace LedgerCrime
 		return bTalkSaved ? Fresh : Previous;
 	}
 
+	// The deed's stories, from here to DeedJson: DeedTalk.cs (the sweep's G3, 28 October 2026; see above).
 	inline std::string DeedStem(const std::string& DeedKey)
 	{
 		return DeedKey.compare(0, 7, "player.") == 0 ? DeedKey.substr(7) : DeedKey;

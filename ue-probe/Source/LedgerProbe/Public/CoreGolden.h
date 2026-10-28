@@ -63,7 +63,11 @@
 #include "TownNews.h"
 #include "TownSave.h"
 #include "TownWeek.h"
+// The deed's stories and the talk's evidence (the sweep's G3, 28 October 2026) are the game's own functions there:
+// plain C++ over these headers, as crime-probe-test compiles it.
+#include "CrimeProbe.h"
 
+#include <algorithm>
 #include <cstdio>
 #include <cstdlib>
 #include <fstream>
@@ -4630,6 +4634,228 @@ namespace Golden
 		return A;
 	}
 
+	// ---- the deed's stories and the talk's evidence (the sweep's G3, 28 October 2026)
+	//
+	// PerceptionGolden's EmitDeedTalk, built again here case by case and
+	// answered through the game's own CrimeProbe.h (LedgerCrime's SightingStory,
+	// ClaimStory, OwnedUpStory, KeepQuiet, DeedJson, EvidenceAccount and
+	// EvidenceAccountFields), never copied here, so a field renamed, an escape
+	// dropped or a word changed there reads differently in these rows. Their
+	// home is the Core's DeedTalk.cs; the talk program reads the text they write.
+	// One row a case, found by its kind and name.
+
+	inline RumorPtr DeedTalkHeld(const std::string& Predicate, const std::string& Value, int Hops, double Confidence, int Rung,
+	                             const std::string& Summary, const std::string& Subject = "player")
+	{
+		RumorPtr R = std::make_shared<Rumor>(Fact(Subject, Predicate, Value));
+		R->Hops = Hops;
+		R->Confidence = Confidence;
+		R->OriginRung = Rung;
+		R->Summary = Summary;
+		return R;
+	}
+
+	inline std::shared_ptr<Gossiper> DeedTalkHolder(const std::vector<RumorPtr>& Held)
+	{
+		std::shared_ptr<Gossiper> G = std::make_shared<Gossiper>("w", "w", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>());
+		G->Rumors = Held;
+		return G;
+	}
+
+	inline std::vector<std::string> DeedTalkStory(const RumorPtr& R)
+	{
+		std::vector<std::string> Out;
+		Out.push_back(Escape(R->TopicKey()));
+		Out.push_back(Escape(R->Content.Value));
+		Out.push_back(Escape(R->OriginId));
+		Out.push_back(FromInt(R->OriginRung));
+		Out.push_back(FromInt(R->Hops));
+		Out.push_back(FromDouble(R->Confidence));
+		Out.push_back(FromBool(R->Sensitive));
+		Out.push_back(Escape(R->Summary));
+		Out.push_back(FromInt((long long)R->Summary.size()));
+		return Out;
+	}
+
+	// A text's bytes beside it, since the table's escape drops a carriage return:
+	// with the count the two sides' texts are compared byte for byte.
+	inline std::string DeedTalkJson(const std::string& S) { return S.empty() ? std::string("-") : Escape(S); }
+
+	inline const std::map<std::string, std::vector<std::string> >& DeedTalkAnswers()
+	{
+		static std::map<std::string, std::vector<std::string> > Ans;
+		if (!Ans.empty()) return Ans;
+		const std::string W = LedgerCrime::WindowDeedKey();
+		const std::string Odd = "player.window\"d9\\";
+		const std::string StoryKey = "player.broke_a_window";
+		const std::string Near = LedgerCrime::NearPredicate();
+
+		struct SightCase { const char* Name; std::string Key, Area, Words; int Day, Hour; std::string Witness; double Conf; int Rung; };
+		const SightCase Sights[] = {
+			{ "rung-1", W, "fish_market", "the fish market", 1, 23, "w1", 0.2, -1 },
+			{ "rung0", W, "fish_market", "the fish market", 1, 23, "w1", 0.3, 0 },
+			{ "rung1", W, "fish_market", "the fish market", 1, 23, "w1", 0.45, 1 },
+			{ "rung2", W, "fish_market", "the fish market", 1, 23, "w1", 0.6, 2 },
+			{ "rung3", W, "fish_market", "the fish market", 1, 23, "w1", 0.8, 3 },
+			{ "rung4", W, "fish_market", "the fish market", 1, 23, "w1", 0.94, 4 },
+			{ "hour0", "player.window_d2", "quay", "the quay", 2, 0, "sam", 0.8, 3 },
+			{ "hour5", "player.window_d2", "quay", "the quay", 2, 5, "sam", 0.8, 3 },
+			{ "hour6", "player.window_d2", "quay", "the quay", 2, 6, "sam", 0.8, 3 },
+			{ "hour12", "player.window_d2", "quay", "the quay", 2, 12, "sam", 0.8, 3 },
+			{ "hour17", "player.window_d2", "quay", "the quay", 2, 17, "sam", 0.8, 3 },
+			{ "hour18", "player.window_d2", "quay", "the quay", 2, 18, "sam", 0.8, 3 },
+			{ "day-1", "player.window_d0", "ritas", "Rita's", -1, 21, "lena", 0.6, 2 },
+			{ "day0", "player.window_d0", "ritas", "Rita's", 0, 21, "lena", 0.6, 2 },
+			{ "day6", "player.window_d6", "ritas", "Rita's", 6, 21, "lena", 0.6, 2 },
+			{ "day7", "player.window_d7", "ritas", "Rita's", 7, 21, "lena", 0.6, 2 },
+			{ "day13", "player.window_d13", "ritas", "Rita's", 13, 21, "lena", 0.6, 2 },
+			{ "story-key", StoryKey, "mickeys_rank", "the rank", 0, 22, "w1", 0.94, 4 },
+			{ "no-prefix", "window_d4", "chapel", "the chapel", 4, 20, "w2", 0.5, 1 },
+			{ "uppercase", "player.Window_D3", "Fish_Market", "the Fish Market", 3, 19, "W3", 0.7, 3 },
+			{ "special", "player.window_d5", "fish market", "the \"Anchor\" | yard\\\n\tback\r", 5, 2, "w|1", 0.55, 2 },
+		};
+		for (const SightCase& Sc : Sights)
+			Ans[std::string("DeedTalkSighting|") + Sc.Name] = DeedTalkStory(LedgerCrime::SightingStory(Sc.Key, Sc.Area, Sc.Words, Sc.Day, Sc.Hour, Sc.Witness, Sc.Conf, Sc.Rung));
+
+		struct ClaimCase { const char* Name; std::string Key; std::vector<std::string> Areas; std::string Words, Told; };
+		const ClaimCase Claims[] = {
+			{ "one", W, { "chapel" }, "the chapel", "w1" },
+			{ "two", W, { "fish_dock", "fish_market" }, "the fish market", "rocco" },
+			{ "none", W, {}, "nowhere", "lena" },
+			{ "empty-area", "player.window_d3", { "chapel", "", "quay" }, "the chapel", "sam" },
+			{ "uppercase", "player.window_d3", { "Chapel", "QUAY" }, "the Chapel", "Darren" },
+			{ "special", "player.window_d5", { "ritas\"back", "yard\\gate" }, "Rita's \"back\" | the yard\n\t", "w 1" },
+		};
+		for (const ClaimCase& Cc : Claims)
+			Ans[std::string("DeedTalkClaim|") + Cc.Name] = DeedTalkStory(LedgerCrime::ClaimStory(Cc.Key, Cc.Areas, Cc.Words, Cc.Told));
+
+		// No place and no words are the port's defaults, the C#'s nulls.
+		struct OwnCase { const char* Name; std::string Key, Told, Place, Said; };
+		const OwnCase Owns[] = {
+			{ "window", W, "w1", "", "" },
+			{ "window-place", W, "lena", "ritas", "" },
+			{ "free-play", "player.window_d3", "lena", "ritas", "the new owner told me himself that he put Rita's window in" },
+			{ "free-play-no-place", "player.window_d3", "sam", "", "" },
+			{ "story-key", StoryKey, "rocco", "", "" },
+			{ "no-prefix", "cut_d0", "sam", "sams", "he said he did it" },
+			{ "special", "player.window_d5", "w|1", "rita's \"back\"", "he said \"it was me\" \\ ran|off\n\tback" },
+		};
+		for (const OwnCase& Oc : Owns)
+			Ans[std::string("DeedTalkOwnedUp|") + Oc.Name] = DeedTalkStory(LedgerCrime::OwnedUpStory(Oc.Key, Oc.Told, Oc.Place, Oc.Said));
+
+		// Keeping quiet: the reply's keepsQuiet agreed calls KeepQuiet with its topic; refused, the game files nothing.
+		struct QuietCase { const char* Name; std::string Key; std::vector<std::string> Calls, Before; std::string Saw; };
+		const QuietCase Quiets[] = {
+			{ "agreed", W, { W }, {}, "mickeys_rank" },
+			{ "agreed-twice", W, { W, W }, {}, "mickeys_rank" },
+			{ "refused", W, {}, {}, "mickeys_rank" },
+			{ "agreed-free-play", "player.window_d3", { "player.window_d3" }, {}, "" },
+			{ "agreed-two-deeds", W, { W, "player.window_d3" }, {}, "" },
+			{ "agreed-after-another", W, { W }, { "player.outfit_d0" }, "" },
+			{ "agreed-special", Odd, { Odd }, {}, "rita's \"back\"" },
+		};
+		for (const QuietCase& Qc : Quiets)
+		{
+			std::vector<RumorPtr> Held;
+			Held.push_back(DeedTalkHeld(LedgerCrime::DeedStem(Qc.Key), "ritas", 0, 0.94, 4, "somebody put the window in"));
+			const std::shared_ptr<Gossiper> Gq = DeedTalkHolder(Held);
+			for (const std::string& T : Qc.Before) Gq->Suppressed.push_back(T);
+			const std::string Told = LedgerCrime::DeedJson(*Gq, Qc.Key, 1, 23, Qc.Saw);
+			for (const std::string& K : Qc.Calls) LedgerCrime::KeepQuiet(*Gq, K);
+			const std::string After = LedgerCrime::DeedJson(*Gq, Qc.Key, 1, 23, Qc.Saw);
+			std::vector<std::string> Topics = Gq->Suppressed;
+			std::sort(Topics.begin(), Topics.end());
+			std::string Joined;
+			for (std::vector<std::string>::size_type Q = 0; Q < Topics.size(); ++Q) Joined += (Q ? "," : "") + Topics[Q];
+			std::vector<std::string> Out;
+			Out.push_back(FromInt((long long)Gq->Suppressed.size()));
+			Out.push_back(Topics.empty() ? std::string("-") : Escape(Joined));
+			Out.push_back(DeedTalkJson(After));
+			Out.push_back(FromInt((long long)After.size()));
+			Out.push_back(FromBool(After == Told));
+			Out.push_back(FromInt((long long)Gq->Rumors.size()));
+			Ans[std::string("DeedTalkKeepQuiet|") + Qc.Name] = Out;
+		}
+
+		struct JsonCase { const char* Name; std::string Key; int Day, Hour; std::string Saw; std::vector<RumorPtr> Held; };
+		const JsonCase Jsons[] = {
+			{ "witness-saw-him", W, 1, 23, "mickeys_rank", { DeedTalkHeld("broke_a_window", "glass_a", 0, 0.94, 4, "somebody put the window in") } },
+			{ "nobody", W, 1, 23, "", {} },
+			{ "saw-him-only", W, 1, 23, "ritas_counter", {} },
+			{ "free-play-story", "player.window_d3", 3, 14, "", { DeedTalkHeld("window_d3", "ritas", 0, 0.8, 3, "somebody put Rita's window in") } },
+			{ "hearsay-no-witness", "player.window_d3", 3, 14, "", { DeedTalkHeld("window_d3", "ritas", 2, 0.5, 2, "somebody put Rita's window in") } },
+			{ "window-near", W, 1, 23, "", { DeedTalkHeld(Near, "crime_a", 0, 0.6, 2, "a man came through the yard") } },
+			{ "heard-sighting-and-claim", W, 1, 23, "", { DeedTalkHeld("at_window_d1", "fish_market", 1, 0.8, 4, "the new owner was at the fish market on Tuesday night"),
+			                                               DeedTalkHeld("claim_window_d1", "chapel,quay", 0, 0.9, -1, "the new owner says he was at the chapel") } },
+			{ "own-sighting-only", W, 1, 23, "", { DeedTalkHeld("at_window_d1", "fish_market", 0, 0.8, 4, "the new owner was at the fish market on Tuesday night") } },
+			{ "surest-heard-sighting", "player.window_d3", 3, 14, "", { DeedTalkHeld("at_window_d3", "quay", 1, 0.5, 3, "q"), DeedTalkHeld("at_window_d3", "chapel", 2, 0.7, 3, "c"),
+			                                                            DeedTalkHeld("at_window_d3", "yard", 1, 0.7, 3, "y") } },
+			{ "claim-only", W, 1, 23, "", { DeedTalkHeld("claim_window_d1", "chapel", 0, 0.9, -1, "the new owner says he was at the chapel") } },
+			{ "claims-merged", "player.window_d3", 3, 14, "ritas_counter", { DeedTalkHeld("claim_window_d3", "chapel,,quay", 0, 0.9, -1, "a"), DeedTalkHeld("window_d3", "ritas", 0, 0.8, 3, "s"),
+			                                                                 DeedTalkHeld("claim_window_d3", "quay,fish_dock", 1, 0.8, -1, "b"), DeedTalkHeld("claim_window_d3", "chapel", 2, 0.7, -1, "c") } },
+			{ "other-deed", "player.window_d3", 3, 14, "", { DeedTalkHeld("broke_a_window", "glass_a", 0, 0.94, 4, "x"), DeedTalkHeld(Near, "crime_a", 0, 0.6, 2, "y"),
+			                                                 DeedTalkHeld("at_window_d1", "quay", 1, 0.8, 4, "z") } },
+			{ "not-about-him", W, 1, 23, "", { DeedTalkHeld("window_d1", "ritas", 0, 0.9, 4, "x", "rita") } },
+			{ "night-before-day-0", "player.window_d0", -1, 0, "quay", {} },
+			{ "uppercase-key", "player.Window_D3", 3, 14, "", { DeedTalkHeld("Window_D3", "ritas", 0, 0.8, 3, "s"), DeedTalkHeld("at_Window_D3", "quay", 1, 0.8, 3, "q") } },
+			{ "special", Odd, 9, 2, "rita's \"back\"\\ room\n\t", { DeedTalkHeld("at_window\"d9\\", "yard\\gate \"b\"", 1, 0.6, 2, "h"),
+			                                                         DeedTalkHeld("claim_window\"d9\\", "ritas\"back,yard\\gate", 0, 0.9, -1, "c") } },
+		};
+		for (const JsonCase& Jc : Jsons)
+		{
+			const std::string Json = LedgerCrime::DeedJson(*DeedTalkHolder(Jc.Held), Jc.Key, Jc.Day, Jc.Hour, Jc.Saw);
+			std::vector<std::string> Out;
+			Out.push_back(DeedTalkJson(Json));
+			Out.push_back(FromInt((long long)Json.size()));
+			Ans[std::string("DeedTalkDeedJson|") + Jc.Name] = Out;
+		}
+
+		// A summary the C# leaves null is the port's empty string ("no-summary").
+		struct EvidenceCase { const char* Name; bool bFree; std::string Key; std::vector<RumorPtr> Held; };
+		const EvidenceCase Evidences[] = {
+			{ "nobody", true, "player.window_d3", {} },
+			{ "seen-rung0", true, "player.window_d3", { DeedTalkHeld("window_d3", "ritas", 0, 0.3, 0, "somebody at Rita's window") } },
+			{ "seen-rung1", true, "player.window_d3", { DeedTalkHeld("window_d3", "ritas", 0, 0.45, 1, "a shape at Rita's window") } },
+			{ "seen-rung2", true, "player.window_d3", { DeedTalkHeld("window_d3", "ritas", 0, 0.6, 2, "a man in a long coat at Rita's window") } },
+			{ "seen-rung3", true, "player.window_d3", { DeedTalkHeld("window_d3", "ritas", 0, 0.8, 3, "a face I'd know again at Rita's window") } },
+			{ "seen-rung4", true, "player.window_d3", { DeedTalkHeld("window_d3", "ritas", 0, 0.94, 4, "the new owner put Rita's window in") } },
+			{ "heard", true, "player.window_d3", { DeedTalkHeld("window_d3", "ritas", 1, 0.45, 2, "the man that did the window ran") } },
+			{ "heard-no-rung", true, "player.window_d3", { DeedTalkHeld("window_d3", "ritas", 1, 0.5, -1, "Rita's window went") } },
+			{ "heard-naming", true, "player.window_d3", { DeedTalkHeld("window_d3", "ritas", 2, 0.7, 4, "it was the new owner that put the window in") } },
+			{ "surest-heard", true, "player.window_d3", { DeedTalkHeld("window_d3", "ritas", 1, 0.4, 2, "faint"), DeedTalkHeld("window_d3", "ritas", 1, 0.6, 3, "surer") } },
+			{ "seen-and-heard-naming", true, "player.window_d3", { DeedTalkHeld("window_d3", "ritas", 0, 0.6, 2, "a mark on his coat"),
+			                                                       DeedTalkHeld("window_d3", "ritas", 1, 0.5, 4, "it was the new owner") } },
+			{ "scripted", false, W, { DeedTalkHeld("broke_a_window", "glass_a", 0, 0.9, 4, "he put the glass in") } },
+			{ "scripted-deed-story-only", false, W, { DeedTalkHeld("window_d1", "ritas", 0, 0.9, 4, "x") } },
+			{ "free-play-mill-story-only", true, W, { DeedTalkHeld("broke_a_window", "glass_a", 0, 0.9, 4, "x") } },
+			{ "six-decimals", true, "player.window_d3", { DeedTalkHeld("window_d3", "ritas", 2, 0.9999999, 4, "nearly sure"), DeedTalkHeld("window_d3", "ritas", 0, 1.0 / 3, 1, "a shape") } },
+			{ "tiny", true, "player.window_d3", { DeedTalkHeld("window_d3", "ritas", 1, 1e-7, 4, "barely"), DeedTalkHeld("window_d3", "ritas", 0, 2.0 / 3, 3, "a face") } },
+			{ "no-summary", true, "player.window_d3", { DeedTalkHeld("window_d3", "ritas", 0, 0.5, 2, "") } },
+			{ "special", true, Odd, { DeedTalkHeld("window\"d9\\", "ritas", 0, 0.55, 3, "he said \"no\" \\ ran|off\n\tback\r") } },
+		};
+		for (const EvidenceCase& Ec : Evidences)
+		{
+			const std::string Fields = LedgerCrime::EvidenceAccountFields(LedgerCrime::EvidenceAccount(DeedTalkHolder(Ec.Held).get(), Ec.bFree, Ec.Key), Ec.Key);
+			std::vector<std::string> Out;
+			Out.push_back(Escape(Fields));
+			Out.push_back(FromInt((long long)Fields.size()));
+			Ans[std::string("DeedTalkEvidence|") + Ec.Name] = Out;
+		}
+		return Ans;
+	}
+
+	inline Answer DeedTalkRow(const std::vector<std::string>& F)
+	{
+		Answer A;
+		if (F.size() < 3) return A;
+		const auto& Ans = DeedTalkAnswers();
+		const auto It = Ans.find(F[0] + "|" + F[1]);
+		if (It == Ans.end()) return A;
+		A.Known = true;
+		A.Got = MultiAnswer(F, 2, It->second);
+		return A;
+	}
+
 	inline Answer Evaluate(const std::vector<std::string>& F)
 	{
 		Answer A;
@@ -5559,6 +5785,12 @@ namespace Golden
 		else if (Fn == "TownWeekHour")
 		{
 			A = TownWeekRow(F);
+		}
+		// THE DEED'S STORIES AND THE TALK'S EVIDENCE (the sweep's G3, 28 October 2026): CrimeProbe.h.
+		else if (Fn == "DeedTalkSighting" || Fn == "DeedTalkClaim" || Fn == "DeedTalkOwnedUp" || Fn == "DeedTalkKeepQuiet"
+		         || Fn == "DeedTalkDeedJson" || Fn == "DeedTalkEvidence")
+		{
+			A = DeedTalkRow(F);
 		}
 		// THE POLICE FILE ITSELF (town list 6ar): PoliceFile.h, its regression rows.
 		else if (Fn == "PoliceFile" || Fn == "PoliceBadSave" || Fn == "PoliceWouldReport" || Fn == "PoliceWouldReportMiddle" || Fn == "PoliceOnHisSide" || Fn == "CustodyWords" || Fn == "CustodySeenTaken"
