@@ -62,12 +62,12 @@ Where: **data** = tables and assets; **script** = behaviour trees, Lua, quest fi
 | Guns, cover, aiming | (not in KCD2) | code: H13CoverSystem 115, NeroWeapons 11, H13DynamicTargeting 43, aim assist 34 | 14 |names only 28 Oct (Study 14); guns come last |
 | Damage, hit reactions, health | data: hit reactions, damage types | code: H13DamageReactions 74, H13Impacts 82, H13Health 18, H13PhysicalAnimation 16 | 14 |28 Oct, studies/14-combat.md; Mafia's damage and hit-stop values not read (F: full) |
 | Abilities and effects | data: buffs, perks | code: H13GAS 188 (Unreal's ability system) | 11, 14 |punishments as effects 28 Oct (Study 15); melee side 28 Oct (Study 14) |
-| Doors, pick-ups, world interaction | data: door animation sets, picking, smart entities | code: H13InteractionSystem 85, H13WorldInteractions 86, H13EnvironmentInteraction 11 | 4, 7 |animation side 25 Oct (Study 7); the rest Study 4; street side 25 Oct (Study 4); locks 28 Oct (Study 15) |
+| Doors, pick-ups, world interaction | data: door animation sets, picking, smart entities | code: H13InteractionSystem 85, H13WorldInteractions 86, H13EnvironmentInteraction 11 | 4, 7 |animation side 25 Oct (Study 7); the rest Study 4; street side 25 Oct (Study 4); locks 28 Oct (Study 15); doors' sound side 28 Oct (Study 8) |
 | Characters, faces, clothes | data: clothing tables, body layers, clothing presets, blood masks | code: H13OutfitCore 52, DNAFramework 80 (MetaHuman faces), SkeletalMerging 7 | 6 |25 Oct, studies/06-characters-wardrobe.md |
 | Locomotion and animation | data: 752 clips, 777 blend spaces, 94 animation databases, fragment tables | code: H13CapsuleChar 308, H13AnimCore 99, H13CharacterProceduralGround 20 (feet on the ground), H13MovementPrediction 4, H13AnimationSharing 21 | 7 |25 Oct, studies/07-animation.md |
 | Vehicles | (horses only) | code: H13Vehicles 525 | 9-13 | |
 | Animals | script: AI/animal 98 | code: H13Animals 171 | (not LEDGER's) | |
-| Sound and ambience | data: 309 sound banks, music | code: AkAudio 569 (Wwise), H13Audio 162, H13AudioAmbient 69 | 8 | |
+| Sound and ambience | data: 309 sound banks, music | code: AkAudio 569 (Wwise), H13Audio 162, H13AudioAmbient 69 | 8 |both games, data side, 28 Oct (Study 8); bank internals not read |
 | Interface and menus | data: 33 ui tables | code: NeroUI 1,120, NoesisRuntime 119 | 9-13 |first appearances 28 Oct (Study 2); Mafia's marker settings 28 Oct (Study 16) |
 | Saving | code only | code: H13SaveGame 94 | 9-13 |both games 28 Oct (Study 11); opening saves and checkpoints 28 Oct (Study 2) |
 | Streaming the open world, budgets | data: level layers, distant-detail archives | code: H13WorldPartition 28, H13SignificanceSystem 42, H13MemoryBudget 21, H13StreamingAssistant 3 | 4, 5, 12 |budget side 25 Oct, studies/12-tech-budgets.md; streaming side 25 Oct, studies/04-street-world.md |

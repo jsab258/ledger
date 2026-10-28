@@ -1,5 +1,5 @@
 {
-  "updated": "Wednesday 28 October 2026, 12:58",
+  "updated": "Wednesday 28 October 2026, 13:31",
   "here": 1,
   "friends_eta": "around January",
   "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
@@ -212,7 +212,7 @@
     "gap_note": "No pictures from 9 to 20 October: the PC was off."
   },
   "studies": {
-    "done": 12,
+    "done": 13,
     "total": 16,
     "order": "2026-10-25.md",
     "list": [
@@ -261,7 +261,7 @@
       {
         "n": 8,
         "name": "Sound",
-        "status": "open",
+        "status": "done",
         "week": "next week"
       },
       {

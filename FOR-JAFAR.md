@@ -10,7 +10,7 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
 - **Recorded:** your rulings (RULINGS.md and DECISIONS.md); the study's order for both weeks at the top of the study plan; the order ledger, seeded with everything still open from before (21 and 23 October's leftovers, the cloud week's four questions, the three shops not yet in the street, FINDINGS' twenty faults, your two clicks on the old archive). A new check fails any push where an item has no status or vanishes without being done or dropped.
 - **Done:** the health check (production/audits/health-2026-10-25.md); your progress page now has the studies bar and the 33 carried items.
 
-**The studies (12 of 16 done: this week's six, and Studies 14, 2, 3, 11, 15 and 16 pulled forward on 28 October).**
+**The studies (13 of 16 done: this week's six, and Studies 14, 2, 3, 11, 15, 16 and 8 pulled forward on 28 October).**
 - *Study 7, animation* (production/research/aaa-reference/studies/07-animation.md, passed its fresh review with fixes):
   - Neither game uses motion matching. Mafia walks on a layered state machine of single clips, Kingdom Come II on blend spaces. Both choose their starts, stops and turns rather than search for them: Kingdom Come II by distance, the stride's quarter and which leg.
   - Feet: Mafia traces the ground under each foot and locks a foot only in its duels; Kingdom Come II declares leg IK and a feet lock. The one perception figure found says viewers notice slides under about 2 cm, so our 3 cm bar is lenient.
@@ -51,6 +51,10 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
   - Kingdom Come II builds each of its 135 jobs from saved steps, and failing one becomes part of the story (failure entries in 114 jobs); Mafia runs one straight line of 15 chapters and sends you back to the last of 402 checkpoints, no choice saved. Story scenes: a median 97 s against 62 s.
   - Kingdom Come II is not marker-free after all: 8 in 10 of its steps show a marker. So our jobs must say "where" in words: the giver's line, the Ledger, anyone asked on the street.
   - For the builder: a job template; every place named by a landmark and reached unaided within three minutes; cutscenes under a minute. Your question for the next page: may a job ever mark your paper map?
+- *Study 8, sound* (studies/08-sound.md, passed its fresh review with fixes):
+  - Both games make a street from a few quiet background loops, small sounds scattered around you that thin out at night, and fixed sources (windows, doors, bells, water), each heard within a set distance. Mafia's quiet street holds 0 to 3 distant voices at once through the day; footsteps 8 to 30 takes per set; Kingdom Come II's most-used music playlist is silence.
+  - Our Quay Street has the loops; it lacks the scattered sounds, the echo of doorways and rooms, and dawn and evening. A layer-by-layer plan with distances and loudness is ready for the street's sound proof (P13).
+  - Neither game's balance of voices, music and noise could be read: it is inside their sound banks, and there are no recordings.
 - *Study 11, systems* (studies/11-systems.md, passed its fresh review with fixes):
   - Kingdom Come II has no wanted meter: guards' anger acts 12 hours late and fades in about a day and a half. Shops hold 35 to 1,500 coins and restock weekly; 686 quest save points.
   - For us: save at every job step but never refuse a save; shops run short of cash and restock weekly (we have this); rain drawn from weighted weather types for the weather proof.

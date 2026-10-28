@@ -19,6 +19,15 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 28 Oct 2026, how two shipped games make a street sound alive, read from their sound metadata with a capped extract
+- Made: ambience layers, footstep sets, distances, music states and a layer plan for the project's street.
+- Method (setting-free): export metadata only (cues, classes, volumes, attenuation), never audio; cap the extract and check its size after every batch; count wave files from the index; read layers and distances from the data; mark every balance figure that only the sound banks or play could give as a blind spot; one fresh reviewer re-measures a sample.
+- Tools: the asset index, the package viewer pointed at the study's own folder, scripted counts.
+- Target and check: every number tagged; 52 re-measured, 8 fixed; 48 MB extracted against a 1.5 GB cap.
+- Cost (hours): about 0.7 of a helper's time.
+- Failed and why: the sound banks' insides and the played mix were not reachable.
+- Evidence: production/research/aaa-reference/studies/08-sound.md.
+
 ### 28 Oct 2026, how two shipped games build their jobs, fail them and guide the player, counted from their data
 - Made: job counts, step structures, failure entries, marker use and scene lengths, and a job template for the project.
 - Method (setting-free): count steps, branches and failure entries in the quest data; measure how many steps show a marker before believing a game's marker-free reputation (here 8 in 10 did); turn the findings into a template and testable targets (a place named by a landmark, reached unaided within a set time); questions of design scope go to the owner.
