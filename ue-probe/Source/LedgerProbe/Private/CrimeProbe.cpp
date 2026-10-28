@@ -8537,6 +8537,17 @@ namespace
 				}
 				UE_LOG(LogTemp, Display, TEXT("ledgerOfficeLook: %d people hidden, only Tom shown (-OfficeLookNoOthers)"), Hid);
 			}
+			// -OfficeLookNoPeople (29 October, the look's page: the street through his camera and its exposure with
+			// nobody in it, Tom included, while his trousers and shoes are not yet made); his camera stays his
+			if (FParse::Param(FCommandLine::Get(), TEXT("OfficeLookNoPeople")))
+			{
+				int32 Hid = 0;
+				for (TActorIterator<AActor> It(World); It; ++It)
+				{
+					if (It->FindComponentByClass<USkeletalMeshComponent>() != nullptr) { It->SetActorHiddenInGame(true); ++Hid; }
+				}
+				UE_LOG(LogTemp, Display, TEXT("ledgerOfficeLook: %d people hidden, Tom too (-OfficeLookNoPeople)"), Hid);
+			}
 			Step = 1; At = Now;
 			return;
 		}
