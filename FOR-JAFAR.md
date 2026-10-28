@@ -10,7 +10,7 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
 - **Recorded:** your rulings (RULINGS.md and DECISIONS.md); the study's order for both weeks at the top of the study plan; the order ledger, seeded with everything still open from before (21 and 23 October's leftovers, the cloud week's four questions, the three shops not yet in the street, FINDINGS' twenty faults, your two clicks on the old archive). A new check fails any push where an item has no status or vanishes without being done or dropped.
 - **Done:** the health check (production/audits/health-2026-10-25.md); your progress page now has the studies bar and the 33 carried items.
 
-**The studies (11 of 16 done: this week's six, and Studies 14, 2, 3, 11 and 15 pulled forward on 28 October).**
+**The studies (12 of 16 done: this week's six, and Studies 14, 2, 3, 11, 15 and 16 pulled forward on 28 October).**
 - *Study 7, animation* (production/research/aaa-reference/studies/07-animation.md, passed its fresh review with fixes):
   - Neither game uses motion matching. Mafia walks on a layered state machine of single clips, Kingdom Come II on blend spaces. Both choose their starts, stops and turns rather than search for them: Kingdom Come II by distance, the stride's quarter and which leg.
   - Feet: Mafia traces the ground under each foot and locks a foot only in its duels; Kingdom Come II declares leg IK and a feet lock. The one perception figure found says viewers notice slides under about 2 cm, so our 3 cm bar is lenient.
@@ -47,6 +47,10 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
   - Kingdom Come II has about 138,000 written lines, a third said in the street; each crowd line recorded by four or five voices; how people greet him depends on his reputation, their anger, his renown and how he looks. Mafia's street is thin: 14 crowd voices, 2 or 3 lines per situation. Street lines run about 7 words, conversation 12; Kingdom Come II waits a median 32 s between street lines.
   - For us: our street lines already vary more than either game's (491 shared, 217 own, a 45 s floor). What is missing is situations: greeting Tom by how people see him and how he looks, bumping into people, neighbours greeting each other, talking to oneself at work, rain.
   - Its targets (about 30 own lines for each future regular, at least 6 lines per crowd situation, waits street-wide and per person) are phase 5 proposals for a later page: your 3 October ruling keeps the talk work closed until then.
+- *Study 16, jobs and story* (studies/16-jobs-story.md, passed its fresh review with fixes):
+  - Kingdom Come II builds each of its 135 jobs from saved steps, and failing one becomes part of the story (failure entries in 114 jobs); Mafia runs one straight line of 15 chapters and sends you back to the last of 402 checkpoints, no choice saved. Story scenes: a median 97 s against 62 s.
+  - Kingdom Come II is not marker-free after all: 8 in 10 of its steps show a marker. So our jobs must say "where" in words: the giver's line, the Ledger, anyone asked on the street.
+  - For the builder: a job template; every place named by a landmark and reached unaided within three minutes; cutscenes under a minute. Your question for the next page: may a job ever mark your paper map?
 - *Study 11, systems* (studies/11-systems.md, passed its fresh review with fixes):
   - Kingdom Come II has no wanted meter: guards' anger acts 12 hours late and fades in about a day and a half. Shops hold 35 to 1,500 coins and restock weekly; 686 quest save points.
   - For us: save at every job step but never refuse a save; shops run short of cash and restock weekly (we have this); rain drawn from weighted weather types for the weather proof.
@@ -152,6 +156,7 @@ No decision asked: these are for watching the street change.
 1. **Mickey's back door, a third try at its panels?** (next page) Chamfered mouldings with shaded corners, or panels sunk into the leaf. Yes (recommended), or leave them.
 2. **Fists able to kill?** (next page; Study 14: Kingdom Come II says no) No (recommended), or yes.
 3. **The animation source test at 6 moves, not the design's 4?** (next page) Yes (recommended), or 4.
+4. **May a job ever mark your paper map?** (next page; Study 16) Words only; a pencil ring once someone has told Tom the place (recommended); or an optional marker, off by default.
 
 No page yet for these: they go on tomorrow's page. Today's page, answered at 12:35: https://claude.ai/artifact/TDpjTLydnfFBFfRPmavGpD
 

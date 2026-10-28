@@ -86,19 +86,33 @@ for s, t in turns.items():
         bpy.context.view_layer.update()
 bpy.ops.object.mode_set(mode="OBJECT")
 
-# written back as Marvelous's OBJ
+# WRITTEN BACK AS MARVELOUS WROTE IT, only the positions bent (28 October: the bake chain's importer reads the
+# pattern's coordinates from the OBJ's "vt" lines, which a positions-and-faces file lost): every line kept but the
+# "v" lines, each a vertex's new place; the "vn" lines dropped and faces' normal indices with them, since the bend
+# changed the normals (the importer recomputes them)
 dg = bpy.context.evaluated_depsgraph_get()
-out, base = [], 0
-for name, (ob, _) in pieces.items():
+moved = {}
+for name, (ob, used) in pieces.items():
     ev = ob.evaluated_get(dg)
     me = ev.to_mesh()
-    out.append("g %s\n" % name)
-    for v in me.vertices:
-        c = ev.matrix_world @ v.co
-        out.append("v %.4f %.4f %.4f\n" % (c.x * 1000.0, c.z * 1000.0, -c.y * 1000.0))
-    for f in me.polygons:
-        out.append("f " + " ".join(str(base + i + 1) for i in f.vertices) + "\n")
-    base += len(me.vertices)
+    for k, i in enumerate(used):
+        c = ev.matrix_world @ me.vertices[k].co
+        moved[i] = (c.x * 1000.0, c.z * 1000.0, -c.y * 1000.0)
     ev.to_mesh_clear()
+out, vi = [], 0
+for line in open(GARMENT, encoding="utf-8", errors="replace"):
+    if line.startswith("v "):
+        if vi in moved:
+            out.append("v %.4f %.4f %.4f\n" % moved[vi])
+        else:
+            out.append(line)
+        vi += 1
+    elif line.startswith("vn "):
+        continue
+    elif line.startswith("f "):
+        toks = line.split()[1:]
+        out.append("f " + " ".join("/".join(t.split("/")[:2]).rstrip("/") for t in toks) + "\n")
+    else:
+        out.append(line)
 open(OUT, "w", encoding="utf-8").write("".join(out))
 print("UNPOSED", OUT, {n: len(ob.data.vertices) for n, (ob, _) in pieces.items()}, flush=True)

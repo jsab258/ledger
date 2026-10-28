@@ -56,8 +56,8 @@ Where: **data** = tables and assets; **script** = behaviour trees, Lua, quest fi
 | Random world events | data: RandomEvent tables, situation frequency | none seen by name | 1 | |
 | Dialogue and choices | data: dialogue-system tables, English text; script: quests | code: H13Lexicon 31; data: text 9,238 (scripted, systemic, handcrafted, cinematic), 2,452 lexicon assets | 3 |both games, data side 28 Oct (Study 3) |
 | Barks (short lines in the street) | data: dialogue hearing, voice groups | code: H13Bark 79, H13BarkGame 6 | 3 |KCD2 from data, Mafia from names only, 28 Oct (Study 3) |
-| Missions, jobs, story | script: 18,691 quest files; data: documents | code: H13MissionSystem 465, H13ChallengeSystem 108 | 16 |states and counts 28 Oct (Study 11); the rest Study 16; openings side 28 Oct (Study 2) |
-| Cutscenes and staging | data: cinematic clips 2,206, cutscene table | code: H13Sequencer 78, H13Cinematic 33 | 16 |opening lengths 28 Oct (Study 2); staging (camera, gestures, gaze, shot length) 28 Oct (Study 3) |
+| Missions, jobs, story | script: 18,691 quest files; data: documents | code: H13MissionSystem 465, H13ChallengeSystem 108 | 16 |states and counts 28 Oct (Study 11); the rest Study 16; openings side 28 Oct (Study 2); both games 28 Oct (Study 16) |
+| Cutscenes and staging | data: cinematic clips 2,206, cutscene table | code: H13Sequencer 78, H13Cinematic 33 | 16 |opening lengths 28 Oct (Study 2); staging (camera, gestures, gaze, shot length) 28 Oct (Study 3); both games' story scenes 28 Oct (Study 16) |
 | Melee and close combat | data: 48 combat tables | code: GameFeatureCQCRuntime 215 | 14 |28 Oct, studies/14-combat.md (KCD2's tables; Mafia's fists and names, its close-combat files not exported, F: full) |
 | Guns, cover, aiming | (not in KCD2) | code: H13CoverSystem 115, NeroWeapons 11, H13DynamicTargeting 43, aim assist 34 | 14 |names only 28 Oct (Study 14); guns come last |
 | Damage, hit reactions, health | data: hit reactions, damage types | code: H13DamageReactions 74, H13Impacts 82, H13Health 18, H13PhysicalAnimation 16 | 14 |28 Oct, studies/14-combat.md; Mafia's damage and hit-stop values not read (F: full) |
@@ -68,14 +68,14 @@ Where: **data** = tables and assets; **script** = behaviour trees, Lua, quest fi
 | Vehicles | (horses only) | code: H13Vehicles 525 | 9-13 | |
 | Animals | script: AI/animal 98 | code: H13Animals 171 | (not LEDGER's) | |
 | Sound and ambience | data: 309 sound banks, music | code: AkAudio 569 (Wwise), H13Audio 162, H13AudioAmbient 69 | 8 | |
-| Interface and menus | data: 33 ui tables | code: NeroUI 1,120, NoesisRuntime 119 | 9-13 |first appearances 28 Oct (Study 2) |
+| Interface and menus | data: 33 ui tables | code: NeroUI 1,120, NoesisRuntime 119 | 9-13 |first appearances 28 Oct (Study 2); Mafia's marker settings 28 Oct (Study 16) |
 | Saving | code only | code: H13SaveGame 94 | 9-13 |both games 28 Oct (Study 11); opening saves and checkpoints 28 Oct (Study 2) |
 | Streaming the open world, budgets | data: level layers, distant-detail archives | code: H13WorldPartition 28, H13SignificanceSystem 42, H13MemoryBudget 21, H13StreamingAssistant 3 | 4, 5, 12 |budget side 25 Oct, studies/12-tech-budgets.md; streaming side 25 Oct, studies/04-street-world.md |
 | Look: light, weather, post-process | data: engine config (42 files), time-of-day, weather profiles | code: H13RenderParametersDriver 9, H13Upscaler 42; data: lighting 392, TODP assets 104 (by the prefix, time-of-day profiles), materials 3,828 | 5 |settings side 25 Oct, studies/05-visuals.md |
 | Economy and shops | data: shop table, money changes, item tables | none seen by name | 11 |both games 28 Oct (Study 11) |
 | Time and needs (sleep, food) | data: skip-time, sleeping spots, food types, buffs | none seen by name | 11 |time, sleep, weather 28 Oct (Study 11); food not studied |
 | Difficulty | data: game modes | code: H13DifficultySystem 37 | 9-13 | |
-| Automated testing | script: 2,527 test quest files, autotest trees, feature tests | code: H13AutomatedTestSystem 21, NeroATS 21, H13Telemetry 30 | method only | |
+| Automated testing | script: 2,527 test quest files, autotest trees, feature tests | code: H13AutomatedTestSystem 21, NeroATS 21, H13Telemetry 30 | method only |KCD2's skip hooks, method only, 28 Oct (Study 16) |
 | Tutorials and onboarding | data: hint and tutorial tables (Study 2) | data: tutorial assets and prompts (Study 2) | 2 | 28 Oct (Study 2) |
 | Minigames | data: minigame tables | none | not studied (not LEDGER's) | |
 

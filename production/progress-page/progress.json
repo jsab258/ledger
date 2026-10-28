@@ -1,5 +1,5 @@
 {
-  "updated": "Wednesday 28 October 2026, 12:38",
+  "updated": "Wednesday 28 October 2026, 12:58",
   "here": 1,
   "friends_eta": "around January",
   "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
@@ -212,7 +212,7 @@
     "gap_note": "No pictures from 9 to 20 October: the PC was off."
   },
   "studies": {
-    "done": 11,
+    "done": 12,
     "total": 16,
     "order": "2026-10-25.md",
     "list": [
@@ -261,19 +261,19 @@
       {
         "n": 8,
         "name": "Sound",
-        "status": "carried over",
+        "status": "open",
         "week": "next week"
       },
       {
         "n": 9,
         "name": "Camera, controls and feel",
-        "status": "carried over",
+        "status": "open",
         "week": "next week"
       },
       {
         "n": 10,
         "name": "Interface",
-        "status": "carried over",
+        "status": "open",
         "week": "next week"
       },
       {
@@ -291,7 +291,7 @@
       {
         "n": 13,
         "name": "Production pipeline",
-        "status": "carried over",
+        "status": "open",
         "week": "next week"
       },
       {
@@ -309,7 +309,7 @@
       {
         "n": 16,
         "name": "Jobs and story",
-        "status": "open",
+        "status": "done",
         "week": "next week"
       }
     ]

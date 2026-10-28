@@ -19,6 +19,15 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 28 Oct 2026, how two shipped games build their jobs, fail them and guide the player, counted from their data
+- Made: job counts, step structures, failure entries, marker use and scene lengths, and a job template for the project.
+- Method (setting-free): count steps, branches and failure entries in the quest data; measure how many steps show a marker before believing a game's marker-free reputation (here 8 in 10 did); turn the findings into a template and testable targets (a place named by a landmark, reached unaided within a set time); questions of design scope go to the owner.
+- Tools: the unpacked quest data, scene lists, scripted counts.
+- Target and check: every number traceable and tagged; the review passed with fixes.
+- Cost (hours): about 1.0 of a helper's time.
+- Failed and why: the second game's step-level data was not reached.
+- Evidence: production/research/aaa-reference/studies/16-jobs-story.md.
+
 ### 28 Oct 2026, how much a believable town says, counted from two shipped games' text and dialogue data
 - Made: line counts by speaker and situation, variants, waits and line lengths, beside the project's own street lines.
 - Method (setting-free): count the dialogue and bark data, never copy it; split lines by situation and speaker type; measure waits from the data's own timers; compare with the project's own counts first, so the gap shown is situations, not volume; proposals that would reopen a closed area go to the owner, not into the plan.
