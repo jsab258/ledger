@@ -8466,6 +8466,31 @@ namespace
 		static const bool bNight = FParse::Param(FCommandLine::Get(), TEXT("OfficeLookNight"));
 		auto Shot = [&](int32 N)
 		{
+			// THE CAMERA AS IT REALLY IS (28 October: the packaged camera has hung further back than the editor's since 27
+			// October, cause not found, and the feet needed 3.0 m where the arm's numbers said 2.7): where the camera stands
+			// and looks, its lens, and his feet, from the camera manager itself, beside each picture
+			if (APlayerController* PC = GEngine != nullptr && GEngine->GameViewport != nullptr ? GEngine->GameViewport->GetWorld()->GetFirstPlayerController() : nullptr)
+			{
+				if (PC->PlayerCameraManager != nullptr)
+				{
+					const FVector Cam = PC->PlayerCameraManager->GetCameraLocation();
+					const FRotator Rot = PC->PlayerCameraManager->GetCameraRotation();
+					const FVector Feet = GPawn->GetActorLocation() - FVector(0.0, 0.0, 88.0);
+					UE_LOG(LogTemp, Display, TEXT("ledgerOfficeLookCamera: shot %d camera (%.1f, %.1f, %.1f) pitch %.1f yaw %.1f fov %.1f; his feet (%.1f, %.1f, %.1f), %.1f cm away level, camera %.1f cm above them; view target %s"),
+						N, Cam.X, Cam.Y, Cam.Z, Rot.Pitch, Rot.Yaw, PC->PlayerCameraManager->GetFOVAngle(), Feet.X, Feet.Y, Feet.Z, FVector::Dist2D(Cam, Feet), Cam.Z - Feet.Z,
+						PC->GetViewTarget() != nullptr ? *PC->GetViewTarget()->GetName() : TEXT("none"));
+					// and every body within 3 m of him, where it really stands (his visible body rides the mover, a separate
+					// actor; if it stands off the pawn the camera frames him wrong)
+					for (TActorIterator<AActor> It(GPawn->GetWorld()); It; ++It)
+					{
+						USkeletalMeshComponent* Sk = It->FindComponentByClass<USkeletalMeshComponent>();
+						if (Sk == nullptr || It->IsHidden() || FVector::Dist2D(It->GetActorLocation(), GPawn->GetActorLocation()) > 300.0) { continue; }
+						const FBoxSphereBounds B = Sk->Bounds;
+						UE_LOG(LogTemp, Display, TEXT("ledgerOfficeLookCamera: body %s at (%.1f, %.1f, %.1f), its mesh's lowest %.1f, %.1f cm from the camera level"),
+							*It->GetName(), It->GetActorLocation().X, It->GetActorLocation().Y, It->GetActorLocation().Z, B.Origin.Z - B.BoxExtent.Z, FVector::Dist2D(Cam, Sk->GetComponentLocation()));
+					}
+				}
+			}
 			FScreenshotRequest::RequestScreenshot(FPaths::ConvertRelativePathToFull(FPaths::ProjectSavedDir() / TEXT("OfficeLook")
 				/ FString::Printf(TEXT("look-%s-%d.png"), bNight ? TEXT("night") : TEXT("day"), N)), false, false);
 		};
@@ -8481,7 +8506,10 @@ namespace
 			// turned, so the street is seen through his camera at its own ground.
 			if (FParse::Param(FCommandLine::Get(), TEXT("OfficeLookHere"))) { GPawn->SetActorRotation(FRotator(0.0, Yaw, 0.0)); X = GPawn->GetActorLocation().X / 100.0; Z = GPawn->GetActorLocation().Y / 100.0; }
 			else { GPawn->SetActorLocationAndRotation(FVector(X * 100.0, Z * 100.0, 12.0 + 96.0), FRotator(0.0, Yaw, 0.0), false, nullptr, ETeleportType::TeleportPhysics); }
-			if (APlayerController* PC = Cast<APlayerController>(GPawn->GetController())) { PC->SetControlRotation(FRotator(-12.0, Yaw, 0.0)); }
+			// -OfficeLookPitch= (28 October, his camera page: the tilt that brings his feet in at 2.4 m), 12 degrees down by default
+			double Pitch = -12.0;
+			FParse::Value(FCommandLine::Get(), TEXT("OfficeLookPitch="), Pitch);
+			if (APlayerController* PC = Cast<APlayerController>(GPawn->GetController())) { PC->SetControlRotation(FRotator((float)Pitch, Yaw, 0.0)); }
 			UE_LOG(LogTemp, Display, TEXT("ledgerOfficeLook: Tom in the office at (%.2f, %.2f) facing %.0f, %s"), X, Z, Yaw, bNight ? TEXT("20:00") : TEXT("by day"));
 			// -OfficeLookNoOthers (28 October, the camera page: his page shows no placeholder, and the cast's base
 			// clothes are an open fault): every person more than 2 m from Tom hidden; his own body, mover and
