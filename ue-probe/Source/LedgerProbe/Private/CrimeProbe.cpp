@@ -8530,6 +8530,36 @@ namespace
 			Step = 1; At = Now;
 			return;
 		}
+		// -OfficeLookCalibrate (28 October, his order D11, the look method's step 0): Unreal's own calibrator (grey ball,
+		// chrome ball, colour chart) set 1.6 m before the camera, facing it, Tom and everyone hidden, photographed through
+		// the game's camera and exposure; the patches are measured from the picture (tools/calibrate.py)
+		static bool bCalibrated = false;
+		if (Step == 1 && !bCalibrated && FParse::Param(FCommandLine::Get(), TEXT("OfficeLookCalibrate")) && Now - At > 1.5)
+		{
+			bCalibrated = true;
+			APlayerController* PC = World->GetFirstPlayerController();
+			UStaticMesh* Mesh = LoadObject<UStaticMesh>(nullptr, TEXT("/Engine/EditorMeshes/ColorCalibrator/SM_ColorCalibrator.SM_ColorCalibrator"));
+			if (PC != nullptr && PC->PlayerCameraManager != nullptr && Mesh != nullptr)
+			{
+				const FVector Cam = PC->PlayerCameraManager->GetCameraLocation();
+				const FRotator Look = PC->PlayerCameraManager->GetCameraRotation();
+				const FVector Where = Cam + Look.Vector() * 160.0;
+				FActorSpawnParameters SP;
+				SP.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+				if (AStaticMeshActor* C = World->SpawnActor<AStaticMeshActor>(Where, FRotator(0.0f, Look.Yaw + 180.0f, 0.0f), SP))
+				{
+					C->SetMobility(EComponentMobility::Movable);
+					C->GetStaticMeshComponent()->SetStaticMesh(Mesh);
+					C->GetStaticMeshComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+				}
+				for (TActorIterator<AActor> It(World); It; ++It)
+				{
+					if (It->FindComponentByClass<USkeletalMeshComponent>() != nullptr) { It->SetActorHiddenInGame(true); }
+				}
+				UE_LOG(LogTemp, Display, TEXT("ledgerOfficeLook: calibrator at (%.0f, %.0f, %.0f), 160 cm before the camera, people hidden"), Where.X, Where.Y, Where.Z);
+			}
+			else { UE_LOG(LogTemp, Warning, TEXT("ledgerOfficeLook: no calibrator in this copy (engine content not cooked?)")); }
+		}
 		if (Step == 1 && Now - At > 4.0) { Shot(1); Step = 2; At = Now; }
 		else if (Step == 2 && Now - At > 1.5) { Shot(2); Step = 3; At = Now; }
 		else if (Step == 3 && Now - At > 1.0) { Step = 9; FPlatformMisc::RequestExit(false); }

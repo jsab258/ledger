@@ -94,6 +94,10 @@
 		{
 			"Name": "DrawDebugLibrary",
 			"Enabled": true
+		},
+		{
+			"Name": "Fab",
+			"Enabled": false
 		}
 	]
 }
