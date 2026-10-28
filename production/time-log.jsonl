@@ -201,3 +201,5 @@
 {"event": "stop", "at": "2026-10-28T10:00:00", "note": ""}
 {"event": "start", "at": "2026-10-28T10:00:00", "task": "28 Oct: item 5: the back door's gate in the packaged game (three fresh reviewers, failed), its second try, export and check render", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-28T10:14:00", "note": ""}
+{"event": "start", "at": "2026-10-28T10:14:00", "task": "28 Oct: item 3: the sleeve record's fresh review and fixes; two cause-separating drapes; his page of the day", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-28T10:40:00", "note": ""}

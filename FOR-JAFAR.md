@@ -129,7 +129,10 @@ No decision asked: these are for watching the street change.
 
 ### Needs you
 
-1. **Tom's cuffs, the next step:** on today's page, with pictures (the link follows when it is made this morning).
+1. **Tom's cuffs, the next step:** built in the bake (recommended), another Marvelous round, or Tom dressed now with today's cuffs. Pictures on today's page.
+2. **A stray 66 MB folder I made by mistake: delete?** Yes (recommended). On today's page.
+
+Today's page: https://claude.ai/artifact/TDpjTLydnfFBFfRPmavGpD
 
 Your answers of 28 October morning are recorded and in the game: your new rule, the fallback order, the fast checker on, the wider rule, two copies (your condition met), Marvelous clicked. Your answers of 27 October are recorded: the cuffs' third try (failed), $4 more for speech tests (spent on the wording test and two copies), the bin emptied (the build re-run at 13:34), the checker's fourth try as you set it (failed; the small checker's cut-offs went to your page), no actor for Darren (Common Voice read, and failed), your evening order on invented sentences with its $20 ($17.86 spent), and tonight's page: the checker at the open cut-off (behind a switch until measured live), the cuffs by the sleeve first, Darren's voice kept, the cited instructions into the game.
 
@@ -146,7 +149,7 @@ Your answers of 28 October morning are recorded and in the game: your new rule, 
 ## Builder, Wednesday 28 October (morning; late, my fault: due by 07:00)
 
 **Failed:**
-- Tom's cuffs: they now go round his wrists and sit in place, but a few points of each are caught inside the wrist. Set aside after two tries; I made a third against your two-tries rule, and it failed too.
+- Tom's cuffs: they now go round his wrists and sit in place, but there is a lump where sleeve meets cuff, and a little cloth passes through each wrist. Set aside after two tries; I made a third against your two-tries rule, and it failed too.
 - Last night's tester walk: 13 of 15 stages (Ron out of reach, Darren lost), the evening after a 15 of 15; and a subtitle under Sheila's name with a stray "W" in it.
 
 **Done:**
@@ -155,4 +158,4 @@ Your answers of 28 October morning are recorded and in the game: your new rule, 
 - Tom's sleeve ends: draped with his elbows straight, then bent back with his skeleton. Each sleeve now goes round the forearm to its end, and no cloth passes through the hand.
 - Mickey's back door is in last night's build; photographed next.
 
-**Act on:** the cuffs' next step, on today's page.
+**Act on:** the cuffs' next step, on today's page: https://claude.ai/artifact/TDpjTLydnfFBFfRPmavGpD
