@@ -163,6 +163,26 @@ int main(int argc, char** argv)
 	gChecks += S.Checks;
 	gFailed += S.Failed;
 
+	// ---- the one he faces, not the nearest (28 October 2026, his order; Study 9) ----
+	{
+		using LedgerCrime::ChooseFaced;
+		using C = LedgerCrime::FacedCandidate;
+		// Tom at the origin facing +X (yaw 0)
+		const std::vector<C> TwoAhead = { { 2.0, 1.0, true }, { 1.2, -2.2, true } };   // ahead-left 26.6 deg at 2.2 m; right 61 deg at 2.5 m
+		Check(ChooseFaced(0, 0, 0, TwoAhead, 3.5) == 0, "faced: the one ahead is chosen over one off to the side");
+		const std::vector<C> NearBehind = { { -1.0, 0.0, true }, { 3.0, 0.2, true } };  // nearer but behind; farther, ahead
+		Check(ChooseFaced(0, 0, 0, NearBehind, 3.5) == 1, "faced: a farther person ahead beats a nearer one behind");
+		Check(ChooseFaced(0, 0, 180, NearBehind, 3.5) == 0, "faced: turned round, the one now ahead is chosen");
+		const std::vector<C> OnlyBehind = { { -2.0, 0.5, true }, { -1.0, -0.2, true } };
+		Check(ChooseFaced(0, 0, 0, OnlyBehind, 3.5) == 1, "faced: nobody in the arc, the nearest within reach as before");
+		const std::vector<C> Tie = { { 3.0, 0.3, true }, { 1.5, -0.1, true } };          // 5.7 and 3.8 deg: a tie, the nearer
+		Check(ChooseFaced(0, 0, 0, Tie, 3.5) == 1, "faced: two almost dead ahead, the nearer");
+		const std::vector<C> Far = { { 4.0, 0.0, true }, { 1.0, 0.0, false } };
+		Check(ChooseFaced(0, 0, 0, Far, 3.5) == -1, "faced: nobody within reach (one too far, one not on the street)");
+		const std::vector<C> Wrap = { { -2.0, -0.1, true }, { 2.0, 0.0, true } };
+		Check(ChooseFaced(0, 0, 179, Wrap, 3.5) == 0, "faced: a bearing across the 180-degree line is measured the short way");
+	}
+
 	// ---- 2. the overheard beat, on the committed bank --------------------
 	std::ifstream In(BankPath);
 	std::stringstream Buf;

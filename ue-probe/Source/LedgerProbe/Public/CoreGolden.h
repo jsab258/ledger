@@ -3947,6 +3947,53 @@ namespace Golden
 					if (K == "9") { Out = "\t"; return true; }
 					return false; }) + "]"));
 		}
+
+		// ON HESITATION, 28 October (Study 2), as the C# plays it.
+		FirstMoments W;
+		W.Begin(0, true);
+		{ const bool B = W.Due(9.9, H); Ans["HintHesitate|walk at 9.9"] = HintOuts(B, H); }
+		{ const bool B = W.Due(10, H); Ans["HintHesitate|walk at 10"] = HintOuts(B, H); }
+		W.Moved(11);
+		W.Happened(Moment::CanTalk, 30, H);
+		{ const bool B = W.Due(49.9, H); Ans["HintHesitate|talk at 49.9"] = HintOuts(B, H); }
+		{ const bool B = W.Due(50, H); Ans["HintHesitate|talk at 50"] = HintOuts(B, H); }
+		W.Happened(Moment::OverheardAboutHim, 100, H);
+		{ const bool B = W.Due(129.9, H); Ans["HintHesitate|ledger at 129.9"] = HintOuts(B, H); }
+		{ const bool B = W.Due(130, H); Ans["HintHesitate|ledger at 130"] = HintOuts(B, H); }
+		{
+			FirstMoments Due, Past;
+			Due.Begin(0, true); Due.Moved(0); Due.Happened(Moment::CanTalk, 0, H);
+			Past.Begin(0, true); Past.Moved(0); Past.Happened(Moment::CanTalk, 0, H);
+			const bool B1 = Due.Due(65, H);
+			std::vector<std::string> O = HintOuts(B1, H);
+			const bool B2 = Past.Due(65.1, H);
+			const std::vector<std::string> O2 = HintOuts(B2, H);
+			O.insert(O.end(), O2.begin(), O2.end());
+			Ans["HintHesitate|stale counts from due"] = O;
+		}
+		FirstMoments A;
+		A.Begin(0, true);
+		A.Moved(1);
+		A.Happened(Moment::CanTalk, 2, H);
+		A.Acted(Moment::CanTalk, 10);
+		{ const bool B = A.Due(30, H); Ans["HintActed|talked before 20"] = HintOuts(B, H); }
+		A.Happened(Moment::OverheardAboutHim, 40, H);
+		A.Acted(Moment::OverheardAboutHim, 60);
+		{ const bool B = A.Due(80, H); Ans["HintActed|opened before 30"] = HintOuts(B, H); }
+		{ const bool B = A.Happened(Moment::CanTalk, 90, H); Ans["HintActed|again after acting"] = HintOuts(B, H); }
+		A.Acted((Moment)99, 91);
+		{
+			FirstMoments Walked;
+			Walked.Begin(0, true);
+			Walked.Acted(Moment::StandingStill, 1);
+			std::vector<std::string> O;
+			O.push_back(Escape(A.ToJson()));
+			O.push_back(Escape(Walked.ToJson()));
+			const bool B = Walked.Due(20, H);
+			const std::vector<std::string> O2 = HintOuts(B, H);
+			O.insert(O.end(), O2.begin(), O2.end());
+			Ans["HintActed|save"] = O;
+		}
 		return Ans;
 	}
 
@@ -4576,11 +4623,14 @@ namespace Golden
 	// ---- the game's hourly step (the sweep's G4, 28 October 2026) --------
 	//
 	// PerceptionGolden's EmitTownWeek, played again here through the game's own
-	// TownWeek.h: its scheduled steps in the game's order (CrimeProbe.cpp,
-	// ConsequenceHour), once an hour on the hook cast, what he does between them
-	// at its own minute; one row an hour, found by its run, day and hour. The
-	// steps are the port's, never copied here, so a call dropped from Six or
-	// TwentyRon reads differently in these rows (the sweep's P1 and P3).
+	// TownWeek.h: its scheduled steps in the game's order, run by TownWeek::RunHour
+	// (which CrimeProbe.cpp's ConsequenceHour calls since the afternoon of 28
+	// October), once an hour on the hook cast, what he does between them at its
+	// own minute; one row an hour, found by its run, day and hour, and one
+	// TownWeekSteps row a run, the order RunHour ran its steps and the game's calls
+	// in. The steps and their order are the port's, never copied here, so a call
+	// dropped from Six or TwentyRon (the sweep's P1 and P3), or two steps of the
+	// hour swapped, reads differently in these rows.
 
 	inline const std::map<std::string, std::vector<std::string> >& TownWeekAnswers()
 	{
@@ -4588,7 +4638,7 @@ namespace Golden
 		if (!Ans.empty()) return Ans;
 		const CastDay* Cast = CastNamed("hook-cast.json");
 		if (Cast == 0) return Ans;
-		for (const char* RunC : { "no", "away", "held", "days", "winddown" })
+		for (const char* RunC : { "no", "away", "held", "days", "winddown", "teaday" })
 		{
 			const std::string Run = RunC;
 			auto Graph = std::make_shared<SocialGraph>();
@@ -4597,8 +4647,8 @@ namespace Golden
 			for (const std::string& P : Cast->People())
 				Mill.Add(std::make_shared<Gossiper>(P, P, std::make_shared<MemoryStore>(P), std::make_shared<KnowledgeBase>(), Cast->CircleOf(P)));
 			TownWeek W;
-			const int From = Run == "held" ? 14 : Run == "days" ? 9 : Run == "winddown" ? 6 * 24 + 9 : 19;
-			const int To = Run == "days" ? 5 * 24 : Run == "winddown" ? 7 * 24 + 7 : 24 + 7;
+			const int From = Run == "held" ? 14 : Run == "days" || Run == "teaday" ? 9 : Run == "winddown" ? 6 * 24 + 9 : 19;
+			const int To = Run == "days" ? 5 * 24 : Run == "winddown" ? 7 * 24 + 7 : Run == "teaday" ? 2 * 24 + 12 : 24 + 7;
 			Mill.Age(GameTime(From / 24, From % 24, 0));
 			if (Run == "held")
 			{
@@ -4607,20 +4657,32 @@ namespace Golden
 				W.Police.Report("sam", Cut, Offence::Wounding, 4, 0);
 				W.Arrests.push_back(W.Police.TakeIn(&Cut, GameTime(0, 14, 0), false, false));
 			}
+			// The hour's order as TownWeek::RunHour runs it (28 October 2026): each
+			// step's name as it ends, and each of the game's calls where it
+			// comes; one TownWeekSteps row a run, each order it took.
+			std::string Trace;
+			std::vector<std::string> Orders;
+			TownWeek::HourCalls Calls;
+			Calls.Step = [&Trace](const char* S) { Trace += (Trace.empty() ? "" : ",") + std::string(S); };
+			Calls.Found = [&Trace](const TownWeek::HourDone&) { Trace += ":Found"; };
+			Calls.Went = [&Trace](const TownWeek::HourDone&) { Trace += ":Went"; };
+			Calls.Ellis = [&Trace](const TownWeek::HourDone&) { Trace += ":Ellis"; };
+			Calls.Taken = [&Trace](const TownWeek::HourDone&) { Trace += ":Taken"; };
+			Calls.Invited = [&Trace](const TownWeek::HourDone&) { Trace += ":Invited"; };
+			Calls.Ron = [&Trace](const TownWeek::HourDone&) { Trace += ":Ron"; };
 			for (int Abs = From; Abs < To; ++Abs)
 			{
 				const int Day = Abs / 24, Hod = Abs % 24;
 				const GameTime Now(Day, Hod, 0);
-				W.Six(&Mill, Now);
-				const std::vector<std::pair<std::string, GameTime> > Found = W.DamageTick(&Mill, Cast, Now);
-				const std::vector<std::string> Went = W.NineReports(&Mill, Cast, Now);
-				const std::string Why = W.NineEllis(&Mill, Now, Cast);
-				const std::shared_ptr<Custody> Taken = W.TenConstable(&Mill, Cast, Now, "mickeys");
-				std::string Invite;
-				const bool bInvite = W.TenTea(Now, Invite);
-				const bool bRon = W.TwentyRon(&Mill, Now);
-				W.TwentyThreeTea(&Mill, Now);
-				W.HourEnd(&Mill, Cast, Now);
+				Trace.clear();
+				const TownWeek::HourDone Done = W.RunHour(&Mill, Cast, Now, "mickeys", Calls);
+				if (std::find(Orders.begin(), Orders.end(), Trace) == Orders.end()) Orders.push_back(Trace);
+				const std::vector<std::pair<std::string, GameTime> >& Found = Done.Found;
+				const std::vector<std::string>& Went = Done.Went;
+				const std::string& Why = Done.Why;
+				const std::shared_ptr<Custody>& Taken = Done.Taken;
+				const bool bInvite = Done.bInvite;
+				const bool bRon = Done.bRon;
 				std::string FoundS, WentS, Nights, Outfit;
 				for (const auto& Fd : Found) FoundS += (FoundS.empty() ? "" : ",") + Fd.first + "@" + FromInt(Fd.second.TotalMinutes());
 				for (const std::string& Wh : Went) WentS += (WentS.empty() ? "" : ",") + Wh;
@@ -4678,6 +4740,16 @@ namespace Golden
 						W.AnswerAsk(Day, NightAnswer::Did, &Mill, GameTime(Day, 22, 30));
 					}
 				}
+				// The window at half past twelve on the Monday, Darren seeing him do it: his
+				// report on the Tuesday, the constable on the Wednesday at ten, the tea's day.
+				if (Run == "teaday" && Day == 0 && Hod == 12)
+				{
+					const GameTime At(0, 12, 30);
+					W.RoundsTo(&Mill, Cast, At.AddMinutes(-1));
+					W.Deed(&Mill, At, "ritas", "rita_window", "somebody put Rita's window in", { std::make_pair(std::string("sam"), 4) },
+					       "window_d0", "the new owner put Rita's window in", 1.0);
+					W.DamageTick(&Mill, Cast, At);
+				}
 				// Sunday at the office: her question at half past ten, and "wind it down".
 				if (Run == "winddown" && Day == W.Week.Day() && Hod == 10 && W.Week.AsksNow(GameTime(Day, 10, 30), true))
 				{
@@ -4686,19 +4758,96 @@ namespace Golden
 					W.Week.Give(WeekAnswer::WindDown, GameTime(Day, 10, 40), &Mill, Cast, &W.Asks);
 				}
 			}
+			std::string AllOrders;
+			for (const std::string& O : Orders) AllOrders += (AllOrders.empty() ? "" : " / ") + O;
+			Ans["TownWeekSteps|" + Run] = { Escape(AllOrders) };
 		}
 		return Ans;
 	}
 
+	// TownWeekHour rows are found by run, day and hour; TownWeekSteps rows (the
+	// hour's order, 28 October 2026) by run alone.
 	inline Answer TownWeekRow(const std::vector<std::string>& F)
 	{
 		Answer A;
-		if (F.size() < 5) return A;
+		const std::vector<std::string>::size_type Labels = F.size() > 0 && F[0] == "TownWeekSteps" ? 2 : 4;
+		if (F.size() < Labels + 1) return A;
 		const auto& Ans = TownWeekAnswers();
-		const auto It = Ans.find(F[0] + "|" + F[1] + "|" + F[2] + "|" + F[3]);
+		std::string Key = F[0];
+		for (std::vector<std::string>::size_type Q = 1; Q < Labels; ++Q) Key += "|" + F[Q];
+		const auto It = Ans.find(Key);
 		if (It == Ans.end()) return A;
 		A.Known = true;
-		A.Got = MultiAnswer(F, 4, It->second);
+		A.Got = MultiAnswer(F, Labels, It->second);
+		return A;
+	}
+
+	// ---- the wait, hour by hour (the rest of the sweep's G4, 28 October 2026)
+	//
+	// PerceptionGolden's EmitWaitHourByHour, played again here through the
+	// game's own CrimeProbe.h (LedgerCrime::WaitHourByHour, the loop its wait
+	// runs on; its home is the Core's Waiting.HourByHour), never copied here:
+	// the same scripted stops and clocks, one row a case, found by its name.
+	// A stop is (minute, seen once the clock has run to); the finder answers
+	// the first the town shows, wherever it is, so the loop's bounds decide.
+
+	inline const std::map<std::string, std::vector<std::string> >& WaitHourByHourAnswers()
+	{
+		static std::map<std::string, std::vector<std::string> > Ans;
+		if (!Ans.empty()) return Ans;
+		struct HbhStop { long long At, SeenFrom; };
+		struct HbhCase { const char* Name; long long From, Until; std::vector<HbhStop> Stops; long long JumpFrom, JumpTo; };
+		const std::vector<HbhCase> Cases = {
+			{ "loud", 2 * 60, 10 * 60, { { 9 * 60, 6 * 60 } }, -1, -1 },
+			{ "plain", 2 * 60 + 20, 10 * 60 + 20, {}, -1, -1 },
+			{ "underway", 21 * 60 + 15, 29 * 60 + 15, { { 21 * 60 + 15, -1 } }, -1, -1 },
+			{ "cells", 9 * 60, 17 * 60, {}, 10 * 60, 16 * 60 },
+			{ "empty", 5 * 60, 5 * 60, {}, -1, -1 },
+			{ "backwards", 10 * 60, 5 * 60, {}, -1, -1 },
+			{ "atSegmentEnd", 2 * 60 + 10, 6 * 60 + 40, { { 3 * 60, -1 } }, -1, -1 },
+			{ "behind", 2 * 60 + 10, 5 * 60, { { 100, -1 } }, -1, -1 },
+			{ "laterHour", 6 * 60, 12 * 60, { { 7 * 60 + 5, -1 } }, -1, -1 },
+			{ "atUntil", 6 * 60, 8 * 60 + 30, { { 8 * 60 + 30, -1 } }, -1, -1 },
+			{ "pastUntil", 6 * 60, 8 * 60 + 30, { { 8 * 60 + 31, -1 } }, -1, -1 },
+			{ "overMidnight", 21 * 60 + 30, 47 * 60 + 30, {}, -1, -1 },
+			{ "jumpMidWait", 20 * 60, 25 * 60, {}, 22 * 60, 22 * 60 + 30 },
+			{ "stopThenJump", 9 * 60, 17 * 60, { { 10 * 60, -1 } }, 10 * 60, 16 * 60 },
+		};
+		for (const HbhCase& Hc : Cases)
+		{
+			std::vector<std::string> Said;
+			long long RanTo = Hc.From;
+			auto StopAt = [&Said, &RanTo, &Hc](long long From, long long To, long long& At) -> bool
+			{
+				Said.push_back("s" + FromInt(From) + "-" + FromInt(To));
+				for (const HbhStop& S : Hc.Stops) { if (S.SeenFrom < 0 || RanTo >= S.SeenFrom) { At = S.At; return true; } }
+				return false;
+			};
+			auto Advance = [&Said, &RanTo, &Hc](long long To, bool bStop) -> long long
+			{
+				const long long Landed = To == Hc.JumpFrom ? Hc.JumpTo : To;
+				RanTo = Landed;
+				Said.push_back("a" + FromInt(To) + (bStop ? "!" : "") + "=" + FromInt(Landed));
+				return Landed;
+			};
+			bool bStopped = false;
+			const long long Ended = LedgerCrime::WaitHourByHour(Hc.From, Hc.Until, StopAt, Advance, bStopped);
+			std::string All;
+			for (const std::string& K : Said) All += (All.empty() ? "" : ",") + K;
+			Ans[std::string("WaitHourByHour|") + Hc.Name] = { FromInt(Ended), FromBool(bStopped), Escape(All.empty() ? std::string("-") : All) };
+		}
+		return Ans;
+	}
+
+	inline Answer WaitHourByHourRow(const std::vector<std::string>& F)
+	{
+		Answer A;
+		if (F.size() < 3) return A;
+		const auto& Ans = WaitHourByHourAnswers();
+		const auto It = Ans.find(F[0] + "|" + F[1]);
+		if (It == Ans.end()) return A;
+		A.Known = true;
+		A.Got = MultiAnswer(F, 2, It->second);
 		return A;
 	}
 
@@ -5988,10 +6137,17 @@ namespace Golden
 		{
 			A = WaitRow(F);
 		}
-		// THE GAME'S HOURLY STEP (the sweep's G4, 28 October 2026): TownWeek.h.
-		else if (Fn == "TownWeekHour")
+		// THE GAME'S HOURLY STEP (the sweep's G4, 28 October 2026): TownWeek.h,
+		// and since that afternoon the hour's order (TownWeek::RunHour).
+		else if (Fn == "TownWeekHour" || Fn == "TownWeekSteps")
 		{
 			A = TownWeekRow(F);
+		}
+		// THE WAIT, HOUR BY HOUR (the rest of the sweep's G4, 28 October 2026):
+		// CrimeProbe.h's WaitHourByHour, whose home is Waiting.HourByHour.
+		else if (Fn == "WaitHourByHour")
+		{
+			A = WaitHourByHourRow(F);
 		}
 		// THE DEED'S STORIES AND THE TALK'S EVIDENCE (the sweep's G3, 28 October 2026): CrimeProbe.h.
 		else if (Fn == "DeedTalkSighting" || Fn == "DeedTalkClaim" || Fn == "DeedTalkOwnedUp" || Fn == "DeedTalkKeepQuiet"
@@ -6062,7 +6218,8 @@ namespace Golden
 		}
 		// THE HINTS (town list 6y): FirstMoments.h.
 		else if (Fn == "HintDue" || Fn == "HintHappened" || Fn == "HintSave" || Fn == "HintAfterLoad" || Fn == "HintFill"
-		         || Fn == "HintEdge" || Fn == "HintBadSave" || Fn == "HintFillEdge" || Fn == "HintLoadBad" || Fn == "HintFillBlank")
+		         || Fn == "HintEdge" || Fn == "HintBadSave" || Fn == "HintFillEdge" || Fn == "HintLoadBad" || Fn == "HintFillBlank"
+		         || Fn == "HintHesitate" || Fn == "HintActed")
 		{
 			A = HintRow(F);
 		}

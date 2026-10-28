@@ -211,6 +211,31 @@ namespace Ledger.CoreTests
             Check(free.TwentyRon(Landing(), new GameTime(0, 20, 0)) && free.Asks.WasDelivered(0),
                   "free at eight on an ask night, he does");
             Check(!new TownWeek().TwentyRon(Landing(), new GameTime(0, 21, 0)), "and only at eight");
+
+            // The hour's order is one rule (28 October 2026, the rest of G4): RunHour runs the steps as CrimeProbe.cpp's
+            // ConsequenceHour called them, each of the game's own calls right after its step.
+            var steps = new List<string>();
+            var ordered = new TownWeek();
+            var hourDone = ordered.RunHour(Landing(), null, new GameTime(0, 20, 0), "mickeys", new TownWeek.HourCalls
+            {
+                Step = s => steps.Add(s),
+                Ron = d => steps.Add("ron:" + (d.Ron ? "1" : "0")),
+            });
+            Check(string.Join(",", steps) == "Six,DamageTick,NineReports,NineEllis,TenConstable,TenTea,TwentyRon,ron:1,TwentyThreeTea,HourEnd"
+                  && hourDone.Ron && ordered.Asks.WasDelivered(0),
+                  "the hour runs its steps in the game's order, Ron's call right after his step", string.Join(",", steps));
+
+            // The wait's loop (Waiting.HourByHour, homed the same afternoon): the port's own self-test cases. DS Ellis,
+            // whom the dawn's talk brings at nine, stops a wait begun at two there; the cells end a wait where they land.
+            var ran = new List<long>();
+            bool loud = false;
+            long ended = Waiting.HourByHour(2 * 60, 10 * 60,
+                (long f, long t, ref long at) => { if (loud && f < 9 * 60 && 9 * 60 <= t) { at = 9 * 60; return true; } return false; },
+                (to, stop) => { for (long h = (ran.Count == 0 ? 3 : ran[ran.Count - 1] / 60 + 1) * 60; h <= to; h += 60) { ran.Add(h); if (h == 6 * 60) loud = true; } return to; },
+                out bool waitStopped);
+            Check(waitStopped && ended == 9 * 60 && ran[ran.Count - 1] == 9 * 60, "a stop an earlier hour of the wait made stops it, the clock no further");
+            Check(Waiting.HourByHour(9 * 60, 17 * 60, (long f, long t, ref long at) => false, (to, stop) => to == 10 * 60 ? 16 * 60 : to, out bool cellsStopped) == 16 * 60
+                  && !cellsStopped, "a jump past the hour (the cells) ends the wait where it lands");
         }
 
         /// G3, THE DEED'S STORIES AND THE TALK'S EVIDENCE (28 October 2026): DeedTalk, which lived only in the port's

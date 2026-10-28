@@ -2877,31 +2877,31 @@ GossipFuzz|save|1000499|0260cc690a0714d0|6
 GossipFuzz|save|1000500|b8b6fb185a562c60|3
 HintDue|1|none
 HintDue|3.9|none
-HintDue|4|StandingStill|0||{Move}~walks,~{Run}~runs.~People~on~this~street~notice~who's~about.|null
+HintDue|4|none
 HintDue|4.1|none
-HintDue|10|none
+HintDue|10|StandingStill|0||{Move}~walks,~{Run}~runs.~People~on~this~street~notice~who's~about.|null
 HintDue|after moving|none
 HintHappened|CanTalk|none
 HintHappened|CanTalk again|none
-HintDue|21|CanTalk|0|lena|Walk~up~to~anyone~and~press~{Talk}.~What~you~tell~them,~they~remember.|That's~Ron~on~the~rank.~Go~and~say~hello.~Everyone~out~there~wants~a~look~at~you.
+HintDue|21|none
 HintDue|32|none
 HintDue|33|none
 HintHappened|FirstAsk|FirstAsk|1|rocco|{Coat}~puts~the~coat~on~or~takes~it~off:~in~the~dark~it~makes~you~harder~to~recognise.|If~you~go~tonight,~boss,~wear~that.~In~the~dark~nobody~looks~twice~at~a~coat.
 HintHappened|SeenAtDeed|none
 HintDue|613|SeenAtDeed|0||Somebody~saw~that.~What~they~make~of~it~can~go~round.|null
-HintSave|done|{"done":["CanTalk","FirstAsk","SeenAtDeed","StandingStill"]}
+HintSave|done|{"done":["FirstAsk","SeenAtDeed","StandingStill"]}
 HintAfterLoad|CanTalk|none
 HintAfterLoad|OverheardAboutHim|none
 HintFill|keys|Press~E~to~talk,~{Move}~to~walk,~{Coat}~for~the~coat.
 HintEdge|happened at NaN|none
 HintEdge|due at infinity|none
 HintEdge|waits at 100|none
-HintEdge|due at 50 is due at 100|CanTalk|0|lena|Walk~up~to~anyone~and~press~{Talk}.~What~you~tell~them,~they~remember.|That's~Ron~on~the~rank.~Go~and~say~hello.~Everyone~out~there~wants~a~look~at~you.
+HintEdge|due at 50 is due at 100|none
 HintEdge|gap holds backwards|none
 HintEdge|restarted clock, overheard at 5|none
 HintEdge|restarted clock, gap at 5|none
-HintEdge|restarted clock, due at 12|OverheardAboutHim|0||That~was~about~you.~{Ledger}~shows~what~you~believe~the~street~knows.|null
-HintEdge|stale after its moment|none|none
+HintEdge|restarted clock, due at 12|none
+HintEdge|stale after its moment|none|OverheardAboutHim|0||That~was~about~you.~{Ledger}~shows~what~you~believe~the~street~knows.|null
 HintEdge|at once in the gap|LedgerOpened|1||What~you~believe~the~street~now~knows~about~you.|null
 HintBadSave|0|{"done":["CanTalk","FirstAsk"]}
 HintBadSave|1|{"done":["SeenAtDeed"]}
@@ -2926,6 +2926,17 @@ HintFillEdge|1|[{Co-at}~and~{}~and~{Talk]
 HintFillEdge|2|[{E}]
 HintFillEdge|3|[F~{9}]
 HintFillEdge|4|[]
+HintHesitate|walk at 9.9|none
+HintHesitate|walk at 10|StandingStill|0||{Move}~walks,~{Run}~runs.~People~on~this~street~notice~who's~about.|null
+HintHesitate|talk at 49.9|none
+HintHesitate|talk at 50|CanTalk|0|lena|Walk~up~to~anyone~and~press~{Talk}.~What~you~tell~them,~they~remember.|That's~Ron~on~the~rank.~Go~and~say~hello.~Everyone~out~there~wants~a~look~at~you.
+HintHesitate|ledger at 129.9|none
+HintHesitate|ledger at 130|OverheardAboutHim|0||That~was~about~you.~{Ledger}~shows~what~you~believe~the~street~knows.|null
+HintHesitate|stale counts from due|CanTalk|0|lena|Walk~up~to~anyone~and~press~{Talk}.~What~you~tell~them,~they~remember.|That's~Ron~on~the~rank.~Go~and~say~hello.~Everyone~out~there~wants~a~look~at~you.|none
+HintActed|talked before 20|none
+HintActed|opened before 30|none
+HintActed|again after acting|none
+HintActed|save|{"done":["CanTalk","OverheardAboutHim","StandingStill"]}|{"done":["StandingStill"]}|none
 WalkRound|0|door|New~management.~Sheila~Dunn,~I~keep~the~books.~Come~on,~I'll~show~you~round~before~you~start~looking~lost.
 WalkRound|1|office|Phone,~radio,~and~the~fare~book.~Every~fare~goes~in~the~book.~That~was~Mickey's~rule,~and~it's~mine~now.
 WalkRound|2|drivers|One~driver~by~day,~one~by~night,~and~the~radio~in~between.~The~takings~have~been~thin~since~the~docks~laid~men~off.
@@ -5283,6 +5294,7 @@ TownWeekHour|no|1|3|-|-|-|-|0|0|NotAsked|0|-1;0=refused;refused|outfit_d0=refuse
 TownWeekHour|no|1|4|-|-|-|-|0|0|NotAsked|0|-1;0=refused;refused|outfit_d0=refused|1|never|no
 TownWeekHour|no|1|5|-|-|-|-|0|0|NotAsked|0|-1;0=refused;refused|outfit_d0=refused|1|never|no
 TownWeekHour|no|1|6|-|-|-|-|0|0|NotAsked|0|-1;0=refused;refused|outfit_d0=refused|1|never|no
+TownWeekSteps|no|Six,DamageTick:Found,NineReports:Went,NineEllis:Ellis,TenConstable:Taken,TenTea:Invited,TwentyRon:Ron,TwentyThreeTea,HourEnd
 TownWeekHour|away|0|19|-|-|-|-|0|0|NotAsked|0|0;;stands|-|0|never|no
 TownWeekHour|away|0|20|-|-|-|-|0|1|NotAsked|0|0;;stands|-|0|never|no
 TownWeekHour|away|0|21|-|-|-|-|0|0|NotAsked|0|0;;stands|-|0|never|no
@@ -5295,6 +5307,7 @@ TownWeekHour|away|1|3|-|-|-|-|0|0|NotAsked|0|0;;stands|-|0|never|no
 TownWeekHour|away|1|4|-|-|-|-|0|0|NotAsked|0|2;0=noshow;stands|outfit_d0=noshow|1|never|no
 TownWeekHour|away|1|5|-|-|-|-|0|0|NotAsked|0|2;0=noshow;stands|outfit_d0=noshow|1|never|no
 TownWeekHour|away|1|6|-|-|-|-|0|0|NotAsked|0|2;0=noshow;stands|outfit_d0=noshow|1|never|no
+TownWeekSteps|away|Six,DamageTick:Found,NineReports:Went,NineEllis:Ellis,TenConstable:Taken,TenTea:Invited,TwentyRon:Ron,TwentyThreeTea,HourEnd
 TownWeekHour|held|0|14|-|-|-|-|0|0|NotAsked|1|0;;stands|-|0|never|no
 TownWeekHour|held|0|15|-|-|-|-|0|0|NotAsked|1|0;;stands|-|0|never|no
 TownWeekHour|held|0|16|-|-|-|-|0|0|NotAsked|1|0;;stands|-|0|never|no
@@ -5312,6 +5325,7 @@ TownWeekHour|held|1|3|-|-|-|-|0|0|NotAsked|0|0;;stands|-|0|never|no
 TownWeekHour|held|1|4|-|-|-|-|0|0|NotAsked|0|2;0=undelivered;stands|-|0|never|no
 TownWeekHour|held|1|5|-|-|-|-|0|0|NotAsked|0|2;0=undelivered;stands|-|0|never|no
 TownWeekHour|held|1|6|-|-|-|-|0|0|NotAsked|0|2;0=undelivered;stands|-|0|never|no
+TownWeekSteps|held|Six,DamageTick:Found,NineReports:Went,NineEllis:Ellis,TenConstable:Taken,TenTea:Invited,TwentyRon:Ron,TwentyThreeTea,HourEnd
 TownWeekHour|days|0|9|-|-|-|-|0|0|NotAsked|0|0;;stands|-|0|never|no
 TownWeekHour|days|0|10|-|-|-|-|0|0|NotAsked|0|0;;stands|-|0|never|no
 TownWeekHour|days|0|11|-|-|-|-|0|0|NotAsked|0|0;;stands|-|0|never|no
@@ -5423,6 +5437,7 @@ TownWeekHour|days|4|20|-|-|-|-|0|1|Stayed|0|4;0=did,2=noshow;stands|outfit_d0=di
 TownWeekHour|days|4|21|-|-|-|-|0|0|Stayed|0|4;0=did,2=noshow;stands|outfit_d0=did,outfit_d2=noshow|127|day~4,~for~talk|day~4,~Charged
 TownWeekHour|days|4|22|-|-|-|-|0|0|Stayed|0|4;0=did,2=noshow;stands|outfit_d0=did,outfit_d2=noshow|127|day~4,~for~talk|day~4,~Charged
 TownWeekHour|days|4|23|-|-|-|-|0|0|Stayed|0|6;0=did,2=noshow,4=did;stands|outfit_d0=did,outfit_d2=noshow,outfit_d4=did|128|day~4,~for~talk|day~4,~Charged
+TownWeekSteps|days|Six,DamageTick:Found,NineReports:Went,NineEllis:Ellis,TenConstable:Taken,TenTea:Invited,TwentyRon:Ron,TwentyThreeTea,HourEnd
 TownWeekHour|winddown|6|9|-|-|-|-|0|0|NotAsked|0|6;0=undelivered,2=undelivered,4=undelivered;stands|-|0|never|no
 TownWeekHour|winddown|6|10|-|-|-|-|0|0|NotAsked|0|6;0=undelivered,2=undelivered,4=undelivered;stands|-|0|never|no
 TownWeekHour|winddown|6|11|-|-|-|-|0|0|NotAsked|0|-1;0=undelivered,2=undelivered,4=undelivered,6=refused;wound~down|-|2|never|no
@@ -5445,6 +5460,73 @@ TownWeekHour|winddown|7|3|-|-|-|-|0|0|NotAsked|0|-1;0=undelivered,2=undelivered,
 TownWeekHour|winddown|7|4|-|-|-|-|0|0|NotAsked|0|-1;0=undelivered,2=undelivered,4=undelivered,6=refused;wound~down|outfit_d6=wounddown|5|never|no
 TownWeekHour|winddown|7|5|-|-|-|-|0|0|NotAsked|0|-1;0=undelivered,2=undelivered,4=undelivered,6=refused;wound~down|outfit_d6=wounddown|5|never|no
 TownWeekHour|winddown|7|6|-|-|-|-|0|0|NotAsked|0|-1;0=undelivered,2=undelivered,4=undelivered,6=refused;wound~down|outfit_d6=wounddown|5|never|no
+TownWeekSteps|winddown|Six,DamageTick:Found,NineReports:Went,NineEllis:Ellis,TenConstable:Taken,TenTea:Invited,TwentyRon:Ron,TwentyThreeTea,HourEnd
+TownWeekHour|teaday|0|9|-|-|-|-|0|0|NotAsked|0|0;;stands|-|0|never|no
+TownWeekHour|teaday|0|10|-|-|-|-|0|0|NotAsked|0|0;;stands|-|0|never|no
+TownWeekHour|teaday|0|11|-|-|-|-|0|0|NotAsked|0|0;;stands|-|0|never|no
+TownWeekHour|teaday|0|12|-|-|-|-|0|0|NotAsked|0|0;;stands|-|0|never|no
+TownWeekHour|teaday|0|13|-|-|-|-|0|0|NotAsked|0|0;;stands|-|15|never|no
+TownWeekHour|teaday|0|14|-|-|-|-|0|0|NotAsked|0|0;;stands|-|15|never|no
+TownWeekHour|teaday|0|15|-|-|-|-|0|0|NotAsked|0|0;;stands|-|15|never|no
+TownWeekHour|teaday|0|16|-|-|-|-|0|0|NotAsked|0|0;;stands|-|16|never|no
+TownWeekHour|teaday|0|17|lena@1020,joey@1020,tibor@1020|-|-|-|0|0|NotAsked|0|0;;stands|-|28|never|no
+TownWeekHour|teaday|0|18|-|-|-|-|0|0|NotAsked|0|0;;stands|-|28|never|no
+TownWeekHour|teaday|0|19|-|-|-|-|0|0|NotAsked|0|0;;stands|-|30|never|no
+TownWeekHour|teaday|0|20|-|-|-|-|0|1|NotAsked|0|0;;stands|-|33|never|no
+TownWeekHour|teaday|0|21|-|-|-|-|0|0|NotAsked|0|0;;stands|-|33|never|no
+TownWeekHour|teaday|0|22|-|-|-|-|0|0|NotAsked|0|0;;stands|-|33|never|no
+TownWeekHour|teaday|0|23|-|-|-|-|0|0|NotAsked|0|0;;stands|-|33|never|no
+TownWeekHour|teaday|1|0|-|-|-|-|0|0|NotAsked|0|0;;stands|-|33|never|no
+TownWeekHour|teaday|1|1|-|-|-|-|0|0|NotAsked|0|0;;stands|-|33|never|no
+TownWeekHour|teaday|1|2|-|-|-|-|0|0|NotAsked|0|0;;stands|-|33|never|no
+TownWeekHour|teaday|1|3|-|-|-|-|0|0|NotAsked|0|0;;stands|-|33|never|no
+TownWeekHour|teaday|1|4|-|-|-|-|0|0|NotAsked|0|2;0=noshow;stands|outfit_d0=noshow|34|never|no
+TownWeekHour|teaday|1|5|-|-|-|-|0|0|NotAsked|0|2;0=noshow;stands|outfit_d0=noshow|34|never|no
+TownWeekHour|teaday|1|6|-|-|-|-|0|0|NotAsked|0|2;0=noshow;stands|outfit_d0=noshow|34|never|no
+TownWeekHour|teaday|1|7|-|-|-|-|0|0|NotAsked|0|2;0=noshow;stands|outfit_d0=noshow|34|never|no
+TownWeekHour|teaday|1|8|-|-|-|-|0|0|NotAsked|0|2;0=noshow;stands|outfit_d0=noshow|34|never|no
+TownWeekHour|teaday|1|9|-|sam|-|-|0|0|NotAsked|0|2;0=noshow;stands|outfit_d0=noshow|36|never|no
+TownWeekHour|teaday|1|10|-|-|-|-|0|0|NotAsked|0|2;0=noshow;stands|outfit_d0=noshow|39|never|no
+TownWeekHour|teaday|1|11|-|-|-|-|0|0|NotAsked|0|2;0=noshow;stands|outfit_d0=noshow|39|never|no
+TownWeekHour|teaday|1|12|-|-|-|-|0|0|NotAsked|0|2;0=noshow;stands|outfit_d0=noshow|41|never|no
+TownWeekHour|teaday|1|13|-|-|-|-|0|0|NotAsked|0|2;0=noshow;stands|outfit_d0=noshow|42|never|no
+TownWeekHour|teaday|1|14|-|-|-|-|0|0|NotAsked|0|2;0=noshow;stands|outfit_d0=noshow|42|never|no
+TownWeekHour|teaday|1|15|-|-|-|-|0|0|NotAsked|0|2;0=noshow;stands|outfit_d0=noshow|42|never|no
+TownWeekHour|teaday|1|16|-|-|-|-|0|0|NotAsked|0|2;0=noshow;stands|outfit_d0=noshow|42|never|no
+TownWeekHour|teaday|1|17|-|-|-|-|0|0|NotAsked|0|2;0=noshow;stands|outfit_d0=noshow|42|never|no
+TownWeekHour|teaday|1|18|-|-|-|-|0|0|NotAsked|0|2;0=noshow;stands|outfit_d0=noshow|42|never|no
+TownWeekHour|teaday|1|19|-|-|-|-|0|0|NotAsked|0|2;0=noshow;stands|outfit_d0=noshow|42|never|no
+TownWeekHour|teaday|1|20|-|-|-|-|0|0|NotAsked|0|2;0=noshow;stands|outfit_d0=noshow|42|never|no
+TownWeekHour|teaday|1|21|-|-|-|-|0|0|NotAsked|0|2;0=noshow;stands|outfit_d0=noshow|42|never|no
+TownWeekHour|teaday|1|22|-|-|-|-|0|0|NotAsked|0|2;0=noshow;stands|outfit_d0=noshow|42|never|no
+TownWeekHour|teaday|1|23|-|-|-|-|0|0|NotAsked|0|2;0=noshow;stands|outfit_d0=noshow|42|never|no
+TownWeekHour|teaday|2|0|-|-|-|-|0|0|NotAsked|0|2;0=noshow;stands|outfit_d0=noshow|42|never|no
+TownWeekHour|teaday|2|1|-|-|-|-|0|0|NotAsked|0|2;0=noshow;stands|outfit_d0=noshow|42|never|no
+TownWeekHour|teaday|2|2|-|-|-|-|0|0|NotAsked|0|2;0=noshow;stands|outfit_d0=noshow|42|never|no
+TownWeekHour|teaday|2|3|-|-|-|-|0|0|NotAsked|0|2;0=noshow;stands|outfit_d0=noshow|42|never|no
+TownWeekHour|teaday|2|4|-|-|-|-|0|0|NotAsked|0|2;0=noshow;stands|outfit_d0=noshow|42|never|no
+TownWeekHour|teaday|2|5|-|-|-|-|0|0|NotAsked|0|2;0=noshow;stands|outfit_d0=noshow|42|never|no
+TownWeekHour|teaday|2|6|-|-|-|-|0|0|NotAsked|0|2;0=noshow;stands|outfit_d0=noshow|42|never|no
+TownWeekHour|teaday|2|7|-|-|-|-|0|0|NotAsked|0|2;0=noshow;stands|outfit_d0=noshow|42|never|no
+TownWeekHour|teaday|2|8|-|-|-|-|0|0|NotAsked|0|2;0=noshow;stands|outfit_d0=noshow|42|never|no
+TownWeekHour|teaday|2|9|-|-|-|-|0|0|NotAsked|0|2;0=noshow;stands|outfit_d0=noshow|42|never|no
+TownWeekHour|teaday|2|10|-|-|-|Charged|0|0|NotAsked|1|2;0=noshow;stands|outfit_d0=noshow|51|never|day~3,~Charged
+TownWeekHour|teaday|2|11|-|-|-|-|0|0|NotAsked|1|2;0=noshow;stands|outfit_d0=noshow|51|never|day~3,~Charged
+TownWeekSteps|teaday|Six,DamageTick:Found,NineReports:Went,NineEllis:Ellis,TenConstable:Taken,TenTea:Invited,TwentyRon:Ron,TwentyThreeTea,HourEnd
+WaitHourByHour|loud|540|1|s120-180,a180=180,s180-240,a240=240,s240-300,a300=300,s300-360,a360=360,s360-420,a420=420,s420-480,a480=480,s480-540,a540!=540
+WaitHourByHour|plain|620|0|s140-180,a180=180,s180-240,a240=240,s240-300,a300=300,s300-360,a360=360,s360-420,a420=420,s420-480,a480=480,s480-540,a540=540,s540-600,a600=600,s600-620,a620=620
+WaitHourByHour|underway|1275|1|s1275-1320,a1275!=1275
+WaitHourByHour|cells|960|0|s540-600,a600=960
+WaitHourByHour|empty|300|0|-
+WaitHourByHour|backwards|600|0|-
+WaitHourByHour|atSegmentEnd|180|1|s130-180,a180!=180
+WaitHourByHour|behind|300|0|s130-180,a180=180,s180-240,a240=240,s240-300,a300=300
+WaitHourByHour|laterHour|425|1|s360-420,a420=420,s420-480,a425!=425
+WaitHourByHour|atUntil|510|1|s360-420,a420=420,s420-480,a480=480,s480-510,a510!=510
+WaitHourByHour|pastUntil|510|0|s360-420,a420=420,s420-480,a480=480,s480-510,a510=510
+WaitHourByHour|overMidnight|2850|0|s1290-1320,a1320=1320,s1320-1380,a1380=1380,s1380-1440,a1440=1440,s1440-1500,a1500=1500,s1500-1560,a1560=1560,s1560-1620,a1620=1620,s1620-1680,a1680=1680,s1680-1740,a1740=1740,s1740-1800,a1800=1800,s1800-1860,a1860=1860,s1860-1920,a1920=1920,s1920-1980,a1980=1980,s1980-2040,a2040=2040,s2040-2100,a2100=2100,s2100-2160,a2160=2160,s2160-2220,a2220=2220,s2220-2280,a2280=2280,s2280-2340,a2340=2340,s2340-2400,a2400=2400,s2400-2460,a2460=2460,s2460-2520,a2520=2520,s2520-2580,a2580=2580,s2580-2640,a2640=2640,s2640-2700,a2700=2700,s2700-2760,a2760=2760,s2760-2820,a2820=2820,s2820-2850,a2850=2850
+WaitHourByHour|jumpMidWait|1350|0|s1200-1260,a1260=1260,s1260-1320,a1320=1350
+WaitHourByHour|stopThenJump|960|1|s540-600,a600!=960
 DeedTalkSighting|rung-1|player.at_window_d1|fish_market|w1|-1|0|0.2|0|the~new~owner~was~at~the~fish~market~on~Tuesday~night|53
 DeedTalkSighting|rung0|player.at_window_d1|fish_market|w1|0|0|0.3|0|the~new~owner~was~at~the~fish~market~on~Tuesday~night|53
 DeedTalkSighting|rung1|player.at_window_d1|fish_market|w1|1|0|0.45|0|the~new~owner~was~at~the~fish~market~on~Tuesday~night|53

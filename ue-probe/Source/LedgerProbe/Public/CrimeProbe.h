@@ -226,6 +226,36 @@ namespace LedgerCrime
 	// the window to break it and to the lad to talk, and how long "later" is.
 	const double kLiveReachM = 2.2;
 	const double kLiveTalkM = 3.5;
+
+	// THE ONE HE FACES, NOT THE NEAREST (28 October 2026, his order; Study 9, studies/09-camera-controls.md: Mafia
+	// scores whom to act on by facing and view; ours took the nearest, the FINDINGS of 4 October: "T opens the talk
+	// with whoever is nearest, not the one Tom faces"): of those within reach, the one whose bearing lies closest to
+	// the way he faces, within kFacedArcDeg either side; bearings within kFacedTieDeg of the best count as a tie,
+	// which the nearer takes; nobody in the arc, the nearest within reach, as before. Metres, degrees as the
+	// engine's yaw (0 along +X, 90 along +Y). -1 when nobody is within reach.
+	const double kFacedArcDeg = 70.0;
+	const double kFacedTieDeg = 10.0;
+	struct FacedCandidate { double X, Y; bool Here; };
+	inline int ChooseFaced(double TomX, double TomY, double FacingDeg, const std::vector<FacedCandidate>& C, double ReachM)
+	{
+		int Best = -1, Nearest = -1;
+		double BestAng = 1e9, BestDist = 1e9, NearestDist = 1e9;
+		for (int I = 0; I < (int)C.size(); ++I)
+		{
+			if (!C[I].Here) { continue; }
+			const double Dx = C[I].X - TomX, Dy = C[I].Y - TomY;
+			const double D = std::sqrt(Dx * Dx + Dy * Dy);
+			if (D > ReachM) { continue; }
+			if (D < NearestDist) { NearestDist = D; Nearest = I; }
+			const double Ang = D < 1e-6 ? 0.0 : std::fabs(std::remainder(std::atan2(Dy, Dx) * 57.29577951308232 - FacingDeg, 360.0));
+			if (Ang > kFacedArcDeg) { continue; }
+			if (Best < 0 || Ang < BestAng - kFacedTieDeg || (std::fabs(Ang - BestAng) <= kFacedTieDeg && D < BestDist))
+			{
+				Best = I; BestAng = Ang; BestDist = D;
+			}
+		}
+		return Best >= 0 ? Best : Nearest;
+	}
 	const double kLiveLaterSeconds = 40.0;
 
 	// THE CONSTABLE, 22 September. ROADMAP's stage-3 gate asks for the arrest
@@ -1703,7 +1733,10 @@ namespace LedgerCrime
 	/// in (From, To]; Advance(To, bStop) moves the clock there, runs the hours
 	/// crossed and returns where the clock is (later than To when the hours
 	/// took him away, as the cells do; the wait ends there). Times in minutes.
-	/// Returns where the wait ends.
+	/// Returns where the wait ends. Since 28 October 2026 its home is the
+	/// Core's Waiting.HourByHour (the sweep's G4: it lived only here, held by
+	/// the self-test below alone), followed line for line here and pinned by
+	/// the WaitHourByHour golden rows, which this answers.
 	template <class FStopAt, class FAdvance>
 	long long WaitHourByHour(long long FromM, long long UntilM, FStopAt StopAt, FAdvance Advance, bool& bStopped)
 	{

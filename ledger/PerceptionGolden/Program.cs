@@ -207,6 +207,9 @@ namespace Ledger.PerceptionGolden
             // The game's hourly step, homed in the Core on 28 October 2026 (TownWeek.cs, the sweep's G4); answered
             // through the port's own TownWeek.h.
             EmitTownWeek(sb);
+            // The wait's loop, hour by hour, homed in the Core on 28 October 2026 (Waiting.HourByHour, the rest of the
+            // sweep's G4); answered through the port's own CrimeProbe.h (WaitHourByHour).
+            EmitWaitHourByHour(sb);
             // The deed's stories and the talk's evidence, homed in the Core on 28 October 2026 (DeedTalk.cs, the
             // sweep's G3); answered through the port's own CrimeProbe.h.
             EmitDeedTalk(sb);
@@ -1032,6 +1035,37 @@ namespace Ledger.PerceptionGolden
             var fills = new[] { "{Talk}{Talk}", "{Co-at} and {} and {Talk", "{{Talk}}", "{Talk_2} {9}", "" };
             for (int i = 0; i < fills.Length; i++)
                 Row(sb, "HintFillEdge", i.ToString(CultureInfo.InvariantCulture), Esc("[" + FirstMoments.Fill(fills[i], k => k == "Talk" ? "E" : k == "Talk_2" ? "F" : k == "9" ? "\t" : null) + "]"));
+
+            // ON HESITATION, 28 October (his order; Study 2): a hint that teaches waits
+            // for him not to do it, walking 10 s, talking 20, the Ledger 30, and one he
+            // does unprompted never shows. Labels are words: the port's numbers print otherwise.
+            var w = new FirstMoments();
+            w.Begin(0, true);
+            Row(sb, "HintHesitate", "walk at 9.9", H(w.Due(9.9)));
+            Row(sb, "HintHesitate", "walk at 10", H(w.Due(10)));
+            w.Moved(11);
+            w.Happened(Moment.CanTalk, 30);
+            Row(sb, "HintHesitate", "talk at 49.9", H(w.Due(49.9)));
+            Row(sb, "HintHesitate", "talk at 50", H(w.Due(50)));
+            w.Happened(Moment.OverheardAboutHim, 100);
+            Row(sb, "HintHesitate", "ledger at 129.9", H(w.Due(129.9)));
+            Row(sb, "HintHesitate", "ledger at 130", H(w.Due(130)));
+            var due = new FirstMoments(); due.Begin(0, true); due.Moved(0); due.Happened(Moment.CanTalk, 0);
+            var past = new FirstMoments(); past.Begin(0, true); past.Moved(0); past.Happened(Moment.CanTalk, 0);
+            Row(sb, "HintHesitate", "stale counts from due", H(due.Due(65)), H(past.Due(65.1)));
+            var a = new FirstMoments();
+            a.Begin(0, true);
+            a.Moved(1);
+            a.Happened(Moment.CanTalk, 2);
+            a.Acted(Moment.CanTalk, 10);
+            Row(sb, "HintActed", "talked before 20", H(a.Due(30)));
+            a.Happened(Moment.OverheardAboutHim, 40);
+            a.Acted(Moment.OverheardAboutHim, 60);
+            Row(sb, "HintActed", "opened before 30", H(a.Due(80)));
+            Row(sb, "HintActed", "again after acting", H(a.Happened(Moment.CanTalk, 90)));
+            a.Acted((Moment)99, 91);
+            var walked = new FirstMoments(); walked.Begin(0, true); walked.Acted(Moment.StandingStill, 1);
+            Row(sb, "HintActed", "save", Esc(MiniJson.Serialize(a.ToJson())), Esc(MiniJson.Serialize(walked.ToJson())), H(walked.Due(20)));
         }
 
         /// THE OUTFIT'S ASKS (town list 6z, 6bn), ported to Arrangement.h on 30 September:
@@ -2920,29 +2954,34 @@ namespace Ledger.PerceptionGolden
         }
 
         /// THE GAME'S HOURLY STEP, HOUR BY HOUR (28 October 2026, the 5 October sweep's G4): TownWeek.cs, its
-        /// scheduled steps called in the game's order (CrimeProbe.cpp, ConsequenceHour) once an hour on the hook
-        /// cast, with what he does between them at its own minute. One row an hour: what each step did, then the
-        /// town as the hour leaves it. The sweep found three of the step's calls that no test missed (P1, P3, P11);
-        /// the five runs put each where it shows:
+        /// scheduled steps run in the game's order by TownWeek.RunHour (which CrimeProbe.cpp's ConsequenceHour calls
+        /// through the port's TownWeek.h, since the afternoon of 28 October) once an hour on the hook cast, with
+        /// what he does between them at its own minute. One row an hour: what each step did, then the town as the
+        /// hour leaves it; and one TownWeekSteps row a run, the order RunHour ran its steps and the game's calls in,
+        /// so a reordered hour fails a row even where the town would come out the same. The sweep found three of
+        /// the step's calls that no test missed (P1, P3, P11); the first five runs put each where it shows, and the
+        /// sixth one place where the order itself shows in the town:
         ///   no        he tells Ron no at half past nine: it reaches the landing when Ron goes down at eleven (P1);
         ///   away      Ron brings it and he stays away: the night passes at four, before the dawn's six (P1, P11);
         ///   held      in the cells from two till ten at night: Ron does not come at eight (P3);
         ///   days      four ordinary days and nights: the envelope taken, the window, the damage found, the
         ///             report, DS Ellis, the constable, Ada's tea and a night away;
-        ///   winddown  Sunday's "wind it down": the word reaches the landing at eleven (P1).
+        ///   winddown  Sunday's "wind it down": the word reaches the landing at eleven (P1);
+        ///   teaday    the window on the Monday, so the constable comes at ten on the tea's day: taken first, he is not
+        ///             asked to tea (ten's two steps in their order; 28 October 2026, the afternoon).
         static void EmitTownWeek(StringBuilder sb)
         {
             var cast = CastFileNamed("hook-cast.json");
             if (cast == null) { Row(sb, "TownWeekHour", "missing", "0", "0", "missing"); return; }
-            foreach (var run in new[] { "no", "away", "held", "days", "winddown" })
+            foreach (var run in new[] { "no", "away", "held", "days", "winddown", "teaday" })
             {
                 var graph = new SocialGraph();
                 foreach (var (a, b, w) in cast.Ties) graph.Link(a, b, w);
                 var mill = new GossipMill(graph);
                 foreach (var p in cast.People) mill.Add(new Gossiper(p, p, new MemoryStore(p), new KnowledgeBase(), new SuspicionTracker(), cast.CircleOf(p)));
                 var town = new TownWeek();
-                int from = run == "held" ? 14 : run == "days" ? 9 : run == "winddown" ? 6 * 24 + 9 : 19;
-                int to = run == "days" ? 5 * 24 : run == "winddown" ? 7 * 24 + 7 : 24 + 7;
+                int from = run == "held" ? 14 : run == "days" || run == "teaday" ? 9 : run == "winddown" ? 6 * 24 + 9 : 19;
+                int to = run == "days" ? 5 * 24 : run == "winddown" ? 7 * 24 + 7 : run == "teaday" ? 2 * 24 + 12 : 24 + 7;
                 mill.Age(new GameTime(from / 24, from % 24, 0));
                 if (run == "held")
                 {
@@ -2950,19 +2989,29 @@ namespace Ledger.PerceptionGolden
                     town.Police.Report("sam", "player.cut_d0", Offence.Wounding, 4, 0);
                     town.Arrests.Add(town.Police.TakeIn("player.cut_d0", new GameTime(0, 14, 0), false, false));
                 }
+                // The hour's order as TownWeek.RunHour runs it (28 October 2026): each step's name as it ends, and each of
+                // the game's calls where it comes; one TownWeekSteps row a run, each order it took, in first-seen order.
+                var trace = new StringBuilder();
+                var orders = new List<string>();
+                var calls = new TownWeek.HourCalls
+                {
+                    Step = s => trace.Append(trace.Length == 0 ? "" : ",").Append(s),
+                    Found = d => trace.Append(":Found"), Went = d => trace.Append(":Went"), Ellis = d => trace.Append(":Ellis"),
+                    Taken = d => trace.Append(":Taken"), Invited = d => trace.Append(":Invited"), Ron = d => trace.Append(":Ron"),
+                };
                 for (int abs = from; abs < to; abs++)
                 {
                     int day = abs / 24, hod = abs % 24;
                     var now = new GameTime(day, hod, 0);
-                    town.Six(mill, now);
-                    var found = town.DamageTick(mill, cast, now);
-                    var went = town.NineReports(mill, cast, now);
-                    string why = town.NineEllis(mill, now, cast);
-                    var taken = town.TenConstable(mill, cast, now, "mickeys");
-                    string invite = town.TenTea(now);
-                    bool ron = town.TwentyRon(mill, now);
-                    town.TwentyThreeTea(mill, now);
-                    town.HourEnd(mill, cast, now);
+                    trace.Clear();
+                    var done = town.RunHour(mill, cast, now, "mickeys", calls);
+                    if (!orders.Contains(trace.ToString())) orders.Add(trace.ToString());
+                    var found = done.Found;
+                    var went = done.Went;
+                    string why = done.Why;
+                    var taken = done.Taken;
+                    string invite = done.Invite;
+                    bool ron = done.Ron;
                     var nights = town.Asks.Nights.OrderBy(kv => kv.Key).Select(kv => kv.Key.ToString(Inv) + "=" + Arrangement.Value(kv.Value));
                     var outfit = mill.Get(Arrangement.OutfitMan).Rumors.Where(r => r.TopicKey.StartsWith("player.outfit_d", StringComparison.Ordinal))
                                      .Select(r => r.Content.Predicate + "=" + r.Content.Value);
@@ -3007,6 +3056,16 @@ namespace Ledger.PerceptionGolden
                             town.AnswerAsk(day, NightAnswer.Did, mill, new GameTime(day, 22, 30));
                         }
                     }
+                    // The window at half past twelve on the Monday, Darren seeing him do it: his report on the Tuesday,
+                    // the constable on the Wednesday at ten, the tea's day.
+                    if (run == "teaday" && day == 0 && hod == 12)
+                    {
+                        var at = new GameTime(0, 12, 30);
+                        town.RoundsTo(mill, cast, at.AddMinutes(-1));
+                        town.Deed(mill, at, "ritas", "rita_window", "somebody put Rita's window in", new List<(string, int)> { ("sam", 4) },
+                                  "window_d0", "the new owner put Rita's window in", 1.0);
+                        town.DamageTick(mill, cast, at);
+                    }
                     // Sunday at the office: her question at half past ten, and "wind it down".
                     if (run == "winddown" && day == town.Week.Day && hod == 10 && town.Week.AsksNow(new GameTime(day, 10, 30), true))
                     {
@@ -3015,6 +3074,55 @@ namespace Ledger.PerceptionGolden
                         town.Week.Give(WeekAnswer.WindDown, new GameTime(day, 10, 40), mill, cast, town.Asks);
                     }
                 }
+                Row(sb, "TownWeekSteps", run, Esc(string.Join(" / ", orders)));
+            }
+        }
+
+        /// THE WAIT, HOUR BY HOUR (28 October 2026, the rest of the 5 October sweep's G4): Waiting.HourByHour, the loop
+        /// the game's wait runs on (the port's CrimeProbe.h WaitHourByHour), driven by scripted stops and clocks. A
+        /// script's stops are (minute, seen once the clock has run to): its stop finder answers the first stop the town
+        /// shows, wherever it is, so the loop's own bounds decide; its clock moves where it is told, or to a jump's
+        /// landing (the cells). One row a case: where the wait ended, whether a stop ended it, and every call in order
+        /// (s: a stop asked for from-to; a: the clock moved to a minute, ! for a stop, = where it landed). The four of
+        /// the port's self-test (loud: DS Ellis made by the dawn's talk; plain; underway; cells), and the edges.
+        static void EmitWaitHourByHour(StringBuilder sb)
+        {
+            foreach (var (name, from, until, stops, jumpFrom, jumpTo) in new (string, long, long, (long at, long seenFrom)[], long, long)[]
+            {
+                ("loud", 2 * 60, 10 * 60, new[] { (9 * 60L, 6 * 60L) }, -1, -1),
+                ("plain", 2 * 60 + 20, 10 * 60 + 20, new (long, long)[0], -1, -1),
+                ("underway", 21 * 60 + 15, 29 * 60 + 15, new[] { (21 * 60 + 15L, -1L) }, -1, -1),
+                ("cells", 9 * 60, 17 * 60, new (long, long)[0], 10 * 60, 16 * 60),
+                ("empty", 5 * 60, 5 * 60, new (long, long)[0], -1, -1),
+                ("backwards", 10 * 60, 5 * 60, new (long, long)[0], -1, -1),
+                ("atSegmentEnd", 2 * 60 + 10, 6 * 60 + 40, new[] { (3 * 60L, -1L) }, -1, -1),
+                ("behind", 2 * 60 + 10, 5 * 60, new[] { (100L, -1L) }, -1, -1),
+                ("laterHour", 6 * 60, 12 * 60, new[] { (7 * 60 + 5L, -1L) }, -1, -1),
+                ("atUntil", 6 * 60, 8 * 60 + 30, new[] { (8 * 60 + 30L, -1L) }, -1, -1),
+                ("pastUntil", 6 * 60, 8 * 60 + 30, new[] { (8 * 60 + 31L, -1L) }, -1, -1),
+                ("overMidnight", 21 * 60 + 30, 47 * 60 + 30, new (long, long)[0], -1, -1),
+                ("jumpMidWait", 20 * 60, 25 * 60, new (long, long)[0], 22 * 60, 22 * 60 + 30),
+                ("stopThenJump", 9 * 60, 17 * 60, new[] { (10 * 60L, -1L) }, 10 * 60, 16 * 60),
+            })
+            {
+                var calls = new List<string>();
+                long ranTo = from;
+                bool StopAt(long f, long t, ref long at)
+                {
+                    calls.Add("s" + f.ToString(Inv) + "-" + t.ToString(Inv));
+                    foreach (var s in stops)
+                        if (s.seenFrom < 0 || ranTo >= s.seenFrom) { at = s.at; return true; }
+                    return false;
+                }
+                long Advance(long to, bool stop)
+                {
+                    long landed = to == jumpFrom ? jumpTo : to;
+                    ranTo = landed;
+                    calls.Add("a" + to.ToString(Inv) + (stop ? "!" : "") + "=" + landed.ToString(Inv));
+                    return landed;
+                }
+                long ended = Waiting.HourByHour(from, until, StopAt, Advance, out bool stopped);
+                Row(sb, "WaitHourByHour", name, ended.ToString(Inv), Bit(stopped), Esc(calls.Count == 0 ? "-" : string.Join(",", calls)));
             }
         }
 

@@ -159,11 +159,22 @@ namespace LedgerGarments
 					if (C == nullptr || C == Body || C->GetName() == TEXT("Face")) { continue; }
 					const FString Named = (C->GetName() + TEXT(" ") + (C->GetSkeletalMeshAsset() != nullptr ? C->GetSkeletalMeshAsset()->GetName() : FString())).ToLower();
 					const float Top = MeshTop(C);
+					// THE SHORTS ARE NO TOP, 28 October 2026: Epic's default garment,
+					// Tom's shirt and his shorts, report the same bounds (74 to 164 cm),
+					// so his zip jacket hid both and the packaged game showed him in his
+					// underwear. A part whose material names a lower garment is never
+					// a top; his trousers will replace the shorts by name.
+					FString Mats;
+					for (int32 I = 0; I < C->GetNumMaterials(); ++I)
+					{
+						if (const UMaterialInterface* Mi = C->GetMaterial(I)) { Mats += Mi->GetName().ToLower() + TEXT(" "); }
+					}
+					const bool bLower = Mats.Contains(TEXT("short")) || Mats.Contains(TEXT("trouser")) || Mats.Contains(TEXT("pant")) || Mats.Contains(TEXT("skirt"));
 					for (const TSharedPtr<FJsonValue>& H : *Hides)
 					{
 						const FString Word = H->AsString().ToLower();
 						const bool bShoes = Word == TEXT("shoes") && Top < 25.0f;
-						const bool bTop = Word == TEXT("top") && Top > 130.0f && MeshBottom(C) > 60.0f;
+						const bool bTop = Word == TEXT("top") && Top > 130.0f && MeshBottom(C) > 60.0f && !bLower;
 						if (bShoes || bTop || (Word != TEXT("shoes") && Word != TEXT("top") && Named.Contains(Word)))
 						{
 							C->SetVisibility(false, true);

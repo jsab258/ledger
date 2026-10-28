@@ -465,9 +465,13 @@ namespace LedgerStreet
 		// a cut-off lantern throws its light over the road, not back at its own column, which a
 		// straight-down cone 0.78 m out lit to a clipped yellow bar).
 		double LanternPoolTiltDeg;
+		// THE LAMP'S GLOW A BULB, metres it reaches when above zero (28 October 2026, his order: each night lamp a key
+		// spot plus a bulb, as Study 5 read Mafia's: the key spot makes the pool, a point light of about a metre the
+		// bulb's own glow, and no point light casts a shadow); 0 keeps the scene file's reach (18 m)
+		double LanternBulbRadiusM;
 		bool   bLanternRgb;
 		double LanternR, LanternG, LanternB;
-		int    Read;             // how many of the thirty-two the file supplied
+		int    Read;             // how many of its settings the file supplied (fifty since 28 October)
 		bool   bFromFile;
 		Look() : SkySeenGain(1.0), GlowGain(0.10), FogDayR(0.55), FogDayG(0.58), FogDayB(0.62),
 		         FogNightR(0.06), FogNightG(0.05), FogNightB(0.05), RoomGlowGainNight(0.0), NetDayGain(0.0),
@@ -477,7 +481,7 @@ namespace LedgerStreet
 		         GlassCubeStrength(0.0), GlassCubeStrengthNight(-1.0), GlassCubeSpecular(1.0), GlassCubeSize(256), GlassCubeHeroSize(0), SkyDomeYawDeg(0.0), SkyHorizonClampDeg(0.0), SkyTreeClampDeg(0.0), WaterLevelDay(0.0), WaterLevelNight(0.0), WhiteTempDay(0.0), FilmSpecular(0.5),
 		         bStreetInPlay(false), FogCapGainDay(1.0), FogDensityGainNight(1.0), FogDensityGainDay(1.0), FogStartDayM(0.0), FogCutoffDayM(0.0), LocalHighlightContrastDay(1.0), NightExposurePin(0.0),
 		         bStreetCollision(false), LanternLumens(0.0), LanternLightY(0.0),
-		         LanternPoolLumens(0.0), LanternPoolInnerDeg(35.0), LanternPoolOuterDeg(70.0), LanternPoolTiltDeg(0.0), bLanternRgb(false),
+		         LanternPoolLumens(0.0), LanternPoolInnerDeg(35.0), LanternPoolOuterDeg(70.0), LanternPoolTiltDeg(0.0), LanternBulbRadiusM(0.0), bLanternRgb(false),
 		         LanternR(1.0), LanternG(1.0), LanternB(1.0),
 		         Read(0), bFromFile(false) {}
 	};
@@ -943,6 +947,8 @@ namespace LedgerStreet
 		}
 		V = Root.Find("lantern_pool_tilt_deg");
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0 && V->Num <= 45.0) { Out.LanternPoolTiltDeg = V->Num; ++Out.Read; }
+		V = Root.Find("lantern_bulb_radius_m");
+		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0) { Out.LanternBulbRadiusM = V->Num; ++Out.Read; }
 		V = Root.Find("lantern_light_y_m");
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0) { Out.LanternLightY = V->Num; ++Out.Read; }
 		V = Root.Find("lantern_linear_rgb");

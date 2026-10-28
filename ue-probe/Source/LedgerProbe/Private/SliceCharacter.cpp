@@ -275,6 +275,24 @@ bool ALedgerSliceCharacter::SoundStep(int32 F, bool bRunClip, float Speed, const
 void ALedgerSliceCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	// THE CAMERA DISTANCE ON HIS PAGE, 28 October 2026 (his order; Study 9: Mafia's
+	// on-foot camera 1.65 m back, 0.45 aside, 0.35 up from a pivot 1.25 m above the
+	// feet, an 82-degree lens, against this game's 3.2 m and 90): for the page's
+	// pictures only, -CamBackM= -CamSideM= -CamUpM= -CamPivotM= (above the feet)
+	// -CamFov= set the arm at the start; with none given the camera is as it was.
+	{
+		const TCHAR* Cmd = FCommandLine::Get();
+		double V = 0.0;
+		if (Boom != nullptr && FParse::Value(Cmd, TEXT("CamBackM="), V)) { Boom->TargetArmLength = (float)(V * 100.0); }
+		if (Boom != nullptr && FParse::Value(Cmd, TEXT("CamSideM="), V)) { Boom->SocketOffset.Y = V * 100.0; }
+		if (Boom != nullptr && FParse::Value(Cmd, TEXT("CamUpM="), V)) { Boom->SocketOffset.Z = V * 100.0; }
+		// The arm hangs from the capsule's middle, 0.88 m above the feet.
+		if (Boom != nullptr && FParse::Value(Cmd, TEXT("CamPivotM="), V)) { Boom->SetRelativeLocation(FVector(0.0, 0.0, V * 100.0 - GetCapsuleComponent()->GetScaledCapsuleHalfHeight())); }
+		if (Camera != nullptr && FParse::Value(Cmd, TEXT("CamFov="), V)) { Camera->SetFieldOfView((float)V); }
+		if (Boom != nullptr) { UE_LOG(LogTemp, Display, TEXT("LedgerCamera: arm %.2f m back, %.2f aside, %.2f up, pivot %.2f m above the feet, lens %.0f"),
+			Boom->TargetArmLength / 100.0f, Boom->SocketOffset.Y / 100.0, Boom->SocketOffset.Z / 100.0,
+			(Boom->GetRelativeLocation().Z + GetCapsuleComponent()->GetScaledCapsuleHalfHeight()) / 100.0, Camera != nullptr ? Camera->FieldOfView : 0.0f); }
+	}
 	MarkStreetWalkable();
 	CloseStreetEnds();
 	USkeletalMesh* Body = LoadObject<USkeletalMesh>(nullptr, MeshPath());

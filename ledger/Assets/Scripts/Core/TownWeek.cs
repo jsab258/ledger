@@ -9,7 +9,8 @@ namespace Ledger.Core
     /// unseen (the sweep's planted breaks P1, P3 and P11). Its home is here now: TownReach's week runs on it, the
     /// port's TownWeek.h follows it line for line, and the TownWeekHour golden rows drive it hour by hour.
     ///
-    /// The game's clock hands each game hour to the scheduled steps in this order (CrimeProbe.cpp, ConsequenceHour):
+    /// The game's clock hands each game hour to the scheduled steps in this order (RunHour, below, which the port's
+    /// CrimeProbe.cpp ConsequenceHour calls since 28 October 2026):
     /// six o'clock the asks' nights passed; the damage found; nine the witnesses to the police and DS Ellis; ten
     /// the constable and Ada's invitation (never while he is held); eight in the evening Ron at the door on an ask
     /// night (not while he is held); eleven the tea's close; every hour the week's end closed and the town's talk.
@@ -172,6 +173,67 @@ namespace Ledger.Core
         {
             Week.Close(now, mill, cast);
             Hours.RunTo(mill, cast, roundsUpTo ?? now);
+        }
+
+        // ---- the hour: the steps in their order, one rule (28 October 2026) ----
+
+        /// WHAT ONE HOUR'S STEPS DID (RunHour's answer): who found the damage, who went to the police, why DS Ellis came
+        /// (null: she did not), the custody a constable took (null: none), Ada's invitation line (null: none), and
+        /// whether Ron brought the envelope.
+        public sealed class HourDone
+        {
+            public List<(string who, GameTime when)> Found = new List<(string, GameTime)>();
+            public List<string> Went = new List<string>();
+            public string Why;
+            public Custody Taken;
+            public string Invite;
+            public bool Ron;
+        }
+
+        /// WHAT THE GAME DOES BETWEEN THE STEPS (its words on screen, its log, its session file, whom he has met): each
+        /// called right after its own step, every hour, with what the hour has done so far, where ConsequenceHour did
+        /// it between its calls; any may be null. Step, when given, is told each step's name as it ends, before that
+        /// step's own call (the TownWeekSteps golden rows keep the order with it).
+        public sealed class HourCalls
+        {
+            public Action<HourDone> Found, Went, Ellis, Taken, Invited, Ron;
+            public Action<string> Step;
+        }
+
+        /// ONE GAME HOUR, ITS SCHEDULED STEPS IN THE GAME'S ORDER (28 October 2026, what remained of the 5 October
+        /// sweep's G4). The order lived only in the port (CrimeProbe.cpp's ConsequenceHour called the steps one by
+        /// one), so a reordered hour failed no row, though the order decides what the town knows (Ron's envelope
+        /// before the hour's talk, the damage found after the dawn's passing). It is one rule now: the port's
+        /// TownWeek.h RunHour follows this line for line and ConsequenceHour calls it, the TownWeekHour golden rows drive
+        /// it, and the TownWeekSteps rows keep its order. `area`: where he stands, for ten's constable.
+        public HourDone RunHour(GossipMill mill, CastDay cast, GameTime now, string area, HourCalls game = null)
+        {
+            var done = new HourDone();
+            Six(mill, now);
+            game?.Step?.Invoke(nameof(Six));
+            done.Found = DamageTick(mill, cast, now);
+            game?.Step?.Invoke(nameof(DamageTick));
+            game?.Found?.Invoke(done);
+            done.Went = NineReports(mill, cast, now);
+            game?.Step?.Invoke(nameof(NineReports));
+            game?.Went?.Invoke(done);
+            done.Why = NineEllis(mill, now, cast);
+            game?.Step?.Invoke(nameof(NineEllis));
+            game?.Ellis?.Invoke(done);
+            done.Taken = TenConstable(mill, cast, now, area);
+            game?.Step?.Invoke(nameof(TenConstable));
+            game?.Taken?.Invoke(done);
+            done.Invite = TenTea(now);
+            game?.Step?.Invoke(nameof(TenTea));
+            game?.Invited?.Invoke(done);
+            done.Ron = TwentyRon(mill, now);
+            game?.Step?.Invoke(nameof(TwentyRon));
+            game?.Ron?.Invoke(done);
+            TwentyThreeTea(mill, now);
+            game?.Step?.Invoke(nameof(TwentyThreeTea));
+            HourEnd(mill, cast, now);
+            game?.Step?.Invoke(nameof(HourEnd));
+            return done;
         }
 
         // ---- what he does, between them ----

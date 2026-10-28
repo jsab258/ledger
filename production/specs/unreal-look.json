@@ -146,6 +146,8 @@
   0.0
  ],
  "lantern_linear_rgb_note": "29 September. Low-pressure sodium is one colour, about 589 nm: chromaticity (0.569, 0.430), about linear (1.0, 0.25, 0.0) (production/research/evening-light-1990). The scene file's gamma (1, 0.857, 0) is yellower than the lamp.",
+ "lantern_bulb_radius_m": 1.0,
+ "lantern_bulb_radius_m_note": "28 October 2026, his order (Study 5, Mafia's lamps: a key spot for the pool and a bulb point light reaching about 1 m, no point light casting shadows): each lamp's all-round glow (lantern_lumens, 40 lm, no shadows since 7 October) now reaches 1 m, the bulb's own glow, instead of the scene file's 18 m; the pool spot keeps the lamp's shadows. Measured for frame time against the old reach (-LanternBulbRadius=18).",
  "lantern_light_y_m": 4.83,
  "lantern_light_y_m_note": "21 October 2026: 4.78 -> 4.83, 2 cm under the bowl of lamp post C, the cloud's lamp that replaces the Blender street's (its bowl's underside 4.80 m above the footway, which stands 0.053 m above the crown at the column, read off the regenerated pieces). Before: 29 September. The lamp's light, metres above the road's crown: 2 cm under the glass of the Blender street's lamp head (tools/art-recipes/lighting-column.py; its lens spans 4.80 to 4.82 m). At the scene file's box height (4.915 m) the light sat inside the head, above the glass, and the head shaded everything under it: the first sodium night lit the upper storeys and left the pavement under each lamp dark.",
  "lantern_pool_tilt_deg": 0,

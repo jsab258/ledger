@@ -429,7 +429,8 @@ namespace
 	constexpr int kTalkMinutes = 5;
 	void ClockCharge(int Minutes);
 	void ConsequenceHour(const GameTime& H);
-	void ConstableHour(const GameTime& H);
+	std::string ConstableArea();
+	void ConstableHour(const GameTime& H, const std::string& Area, const std::shared_ptr<Custody>& C);
 	bool NearPlace(const char* Place, double Metres);
 	void WindowLook();
 	std::shared_ptr<SocialGraph> GGraph;
@@ -2890,6 +2891,7 @@ namespace
 	// resolver's own rule gives an actor seen fleeing. Filed only if it could
 	// tie the man to anyone (a mark, a face or a name).
 	void HintHappened(LedgerCore::Moment M);   // the hints, below StartLive
+	void HintActed(LedgerCore::Moment M);      // he did what a hint teaches, unprompted (28 October)
 
 	void FileFleeSighting(UWorld* World)
 	{
@@ -6788,7 +6790,12 @@ namespace
 	// where he stands; the street that sees it has it to talk of; the arrest
 	// words, then his rights; the hours in the cells pass (the town's hours
 	// running meanwhile); and he is let go with plain words.
-	void ConstableHour(const GameTime& H)
+	// WHERE HE STANDS (28 October 2026, the hour made one rule, TownWeek::RunHour):
+	// read once before the hour's steps rather than just before ten's, which
+	// is the same reading, since no step moves him or changes the cast; the
+	// constable is TownWeek::RunHour's own step, and ConstableHour what the game
+	// does once he has come.
+	std::string ConstableArea()
 	{
 		std::string Area = "mickeys";
 		if (GPawn != nullptr && bGCast)
@@ -6797,7 +6804,10 @@ namespace
 			const std::string Place = GCast.NearestPlace(At.X, At.Z, 30.0);
 			if (!Place.empty()) { GCast.AreaOf(Place, Area); }
 		}
-		const std::shared_ptr<Custody> C = GWeek.TenConstable(GMill.get(), &GCast, H, Area);
+		return Area;
+	}
+	void ConstableHour(const GameTime& H, const std::string& Area, const std::shared_ptr<Custody>& C)
+	{
 		if (!C) { return; }
 		Say(FString(TEXT("A constable: \"")) + Un(C->ArrestWords()) + TEXT("\""), 14.0f, FColor::White);
 		Say(FString(TEXT("At the station: ")) + Un(std::string(Custody::Rights)), 14.0f, FColor::Yellow);
@@ -6852,42 +6862,62 @@ namespace
 	// witnesses to the police (once each, from the day after it) and DS Ellis,
 	// ten the constable and Ada's invitation, eight in the evening Ron at the
 	// door, eleven the tea's close, then the week's end and the town's talk.
+	// THE ORDER IS ONE RULE (28 October 2026, the 5 October sweep's G4): it
+	// lived only here, the steps called one by one, so a reordered hour failed
+	// no golden row. The steps now run in TownWeek::RunHour (the Core's
+	// TownWeek.RunHour, followed line for line and pinned by the TownWeekHour and
+	// TownWeekSteps rows); what the game does between them (its words, its log,
+	// its session file, whom he has met) is handed in, each called right after
+	// its own step as it was here, so the hour does exactly what it did.
 	void ConsequenceHour(const GameTime& H)
 	{
 		if (bLiveScript || !GMill || !bGCast) { return; }
-		GWeek.Six(GMill.get(), H);
-		for (const auto& Found : GWeek.DamageTick(GMill.get(), &GCast, H))
+		const std::string Area = ConstableArea();
+		TownWeek::HourCalls Game;
+		Game.Found = [](const TownWeek::HourDone& D)
 		{
-			UE_LOG(LogTemp, Display, TEXT("LedgerAfter: %s finds the damage at %s"), *Un(Found.first), *Un(Found.second.ToString()));
-		}
-		for (const std::string& Who : GWeek.NineReports(GMill.get(), &GCast, H))
+			for (const auto& Found : D.Found)
+			{
+				UE_LOG(LogTemp, Display, TEXT("LedgerAfter: %s finds the damage at %s"), *Un(Found.first), *Un(Found.second.ToString()));
+			}
+		};
+		Game.Went = [&H](const TownWeek::HourDone& D)
 		{
-			LedgerSession::Write(TEXT("police"), TEXT("\"who\":") + LedgerSession::Str(Un(Who)) + TEXT(",\"story\":") + LedgerSession::Str(Un(GWeek.DeedTopic)));
-			UE_LOG(LogTemp, Display, TEXT("LedgerAfter: %s goes to the police about %s on day %d"), *Un(Who), *Un(GWeek.DeedTopic), H.Day);
-		}
-		const std::string Why = GWeek.NineEllis(GMill.get(), H, &GCast);
-		if (!Why.empty())
+			for (const std::string& Who : D.Went)
+			{
+				LedgerSession::Write(TEXT("police"), TEXT("\"who\":") + LedgerSession::Str(Un(Who)) + TEXT(",\"story\":") + LedgerSession::Str(Un(GWeek.DeedTopic)));
+				UE_LOG(LogTemp, Display, TEXT("LedgerAfter: %s goes to the police about %s on day %d"), *Un(Who), *Un(GWeek.DeedTopic), H.Day);
+			}
+		};
+		Game.Ellis = [&H](const TownWeek::HourDone& D)
 		{
-			Say(TEXT("DS Ellis is on Quay Street this morning, asking after you."), 8.0f, FColor::Yellow);
-			LedgerSession::Write(TEXT("ellis"), TEXT("\"why\":") + LedgerSession::Str(Un(Why)) + TEXT(",\"day\":") + FString::FromInt(H.Day));
-			UE_LOG(LogTemp, Display, TEXT("LedgerAfter: DS Ellis comes on day %d for %s"), H.Day, *Un(Why));
-		}
-		ConstableHour(H);
-		std::string Invite;
-		if (GWeek.TenTea(H, Invite))
+			if (!D.Why.empty())
+			{
+				Say(TEXT("DS Ellis is on Quay Street this morning, asking after you."), 8.0f, FColor::Yellow);
+				LedgerSession::Write(TEXT("ellis"), TEXT("\"why\":") + LedgerSession::Str(Un(D.Why)) + TEXT(",\"day\":") + FString::FromInt(H.Day));
+				UE_LOG(LogTemp, Display, TEXT("LedgerAfter: DS Ellis comes on day %d for %s"), H.Day, *Un(D.Why));
+			}
+		};
+		Game.Taken = [&H, &Area](const TownWeek::HourDone& D) { ConstableHour(H, Area, D.Taken); };
+		Game.Invited = [&H](const TownWeek::HourDone& D)
 		{
-			Say(FString(TEXT("Ada, from her step: \"")) + Un(Invite) + TEXT("\""), 12.0f, FColor::White);
-			UE_LOG(LogTemp, Display, TEXT("LedgerWeek: Ada asks him in for tea on day %d"), H.Day);
-		}
-		if (GWeek.TwentyRon(GMill.get(), H))
+			if (D.bInvite)
+			{
+				Say(FString(TEXT("Ada, from her step: \"")) + Un(D.Invite) + TEXT("\""), 12.0f, FColor::White);
+				UE_LOG(LogTemp, Display, TEXT("LedgerWeek: Ada asks him in for tea on day %d"), H.Day);
+			}
+		};
+		Game.Ron = [&H](const TownWeek::HourDone& D)
 		{
-			GMet.Met("rocco", H.Day);
-			Say(TEXT("Ron's at the door with an envelope for you: for the ferry landing, after ten tonight, to the man who asks for Mickey's. The way down is past the quay at the bottom of the street."), 14.0f, FColor::Yellow);
-			LedgerSession::Write(TEXT("ask"), TEXT("\"night\":") + FString::FromInt(H.Day));
-			UE_LOG(LogTemp, Display, TEXT("LedgerWeek: Ron brings the envelope on night %d"), H.Day);
-		}
-		GWeek.TwentyThreeTea(GMill.get(), H);
-		GWeek.HourEnd(GMill.get(), &GCast, H);
+			if (D.bRon)
+			{
+				GMet.Met("rocco", H.Day);
+				Say(TEXT("Ron's at the door with an envelope for you: for the ferry landing, after ten tonight, to the man who asks for Mickey's. The way down is past the quay at the bottom of the street."), 14.0f, FColor::Yellow);
+				LedgerSession::Write(TEXT("ask"), TEXT("\"night\":") + FString::FromInt(H.Day));
+				UE_LOG(LogTemp, Display, TEXT("LedgerWeek: Ron brings the envelope on night %d"), H.Day);
+			}
+		};
+		GWeek.RunHour(GMill.get(), &GCast, H, Area, Game);
 		WindowLook();
 	}
 
@@ -8422,7 +8452,7 @@ namespace
 	};
 	FSitProof GSit;
 
-	// -OfficeLook (26 October, item 5): the office as the player sees it, through his own camera, which carries no
+	// -OfficeLook (26 October, item 5; -OfficeLookHere, 28 October, the street where he starts): the office as the player sees it, through his own camera, which carries no
 	// exposure of its own (the page photographs' camera does, so it never shows the office's own exposure): Tom
 	// placed inside the lit office facing in (-OfficeLookX=, -OfficeLookZ=, -OfficeLookYaw= in street metres and
 	// degrees), the clock to 20:00 with -OfficeLookNight; two pictures through his camera (Saved/OfficeLook), then
@@ -8447,7 +8477,10 @@ namespace
 			FParse::Value(FCommandLine::Get(), TEXT("OfficeLookX="), X);
 			FParse::Value(FCommandLine::Get(), TEXT("OfficeLookZ="), Z);
 			FParse::Value(FCommandLine::Get(), TEXT("OfficeLookYaw="), Yaw);
-			GPawn->SetActorLocationAndRotation(FVector(X * 100.0, Z * 100.0, 12.0 + 96.0), FRotator(0.0, Yaw, 0.0), false, nullptr, ETeleportType::TeleportPhysics);
+			// -OfficeLookHere (28 October, the camera page): he stays where the street starts him, only
+			// turned, so the street is seen through his camera at its own ground.
+			if (FParse::Param(FCommandLine::Get(), TEXT("OfficeLookHere"))) { GPawn->SetActorRotation(FRotator(0.0, Yaw, 0.0)); X = GPawn->GetActorLocation().X / 100.0; Z = GPawn->GetActorLocation().Y / 100.0; }
+			else { GPawn->SetActorLocationAndRotation(FVector(X * 100.0, Z * 100.0, 12.0 + 96.0), FRotator(0.0, Yaw, 0.0), false, nullptr, ETeleportType::TeleportPhysics); }
 			if (APlayerController* PC = Cast<APlayerController>(GPawn->GetController())) { PC->SetControlRotation(FRotator(-12.0, Yaw, 0.0)); }
 			UE_LOG(LogTemp, Display, TEXT("ledgerOfficeLook: Tom in the office at (%.2f, %.2f) facing %.0f, %s"), X, Z, Yaw, bNight ? TEXT("20:00") : TEXT("by day"));
 			Step = 1; At = Now;
@@ -8750,14 +8783,21 @@ namespace
 			{ GR3Body, GR3, "rocco", GIdR3.c_str(), TEXT("Ron"), -1 } };
 		const Who* Near = nullptr;
 		const Who* Closest = nullptr;
-		double Best = LedgerCrime::kLiveTalkM, ClosestM = 1e9;
+		double ClosestM = 1e9;
+		// THE ONE HE FACES, not the nearest (28 October 2026, his order; LedgerCrime::ChooseFaced, as the prompt shows)
+		std::vector<LedgerCrime::FacedCandidate> Cands;
+		const FVector TomAt = GPawn->GetActorLocation();
 		for (const Who& P : People)
 		{
-			if (P.Body == nullptr || !P.G) { continue; }
-			const double M = FVector::Dist2D(GPawn->GetActorLocation(), P.Body->GetActorLocation()) / 100.0;
-			if (M <= Best) { Best = M; Near = &P; }
+			const bool Here = P.Body != nullptr && P.G;
+			const FVector At = Here ? P.Body->GetActorLocation() : FVector::ZeroVector;
+			Cands.push_back({ At.X / 100.0, At.Y / 100.0, Here });
+			if (!Here) { continue; }
+			const double M = FVector::Dist2D(TomAt, At) / 100.0;
 			if (M < ClosestM) { ClosestM = M; Closest = &P; }
 		}
+		const int Faced = LedgerCrime::ChooseFaced(TomAt.X / 100.0, TomAt.Y / 100.0, GPawn->GetActorRotation().Yaw, Cands, LedgerCrime::kLiveTalkM);
+		if (Faced >= 0) { Near = &People[Faced]; }
 		if (Near == nullptr)
 		{
 			// SAY WHO IS WHERE: "nobody near" alone sent the tester round in
@@ -8772,6 +8812,7 @@ namespace
 		GTalkTarget.G = Near->G; GTalkTarget.Card = Near->Card; GTalkTarget.Id = Near->Id;
 		GTalkTarget.Rung = Near->Rung; GTalkTarget.Name = FString(Near->Name);
 		GTalkTarget.Body = Near->Body;
+		HintActed(LedgerCore::Moment::CanTalk);   // he has found how to talk: its hint never shows (28 October, on hesitation)
 		// THE FIRST TIME, THE NOTICE'S CARD FIRST (above); going on from it opens the coupon.
 		if (!GLive.bNoticeShown) { bNoticeThenTalk = true; ShowAiNotice(true, GTalkTarget.Name); return true; }
 		OpenSayBox(World);
@@ -9614,13 +9655,18 @@ namespace
 		const Who People[3] = { { GN2Body, &GN2, TEXT("Darren") }, { GW1Body, &GW1, TEXT("Sheila") }, { GR3Body, &GR3, TEXT("Ron") } };
 		const Who* Near = nullptr;
 		double Best = LedgerCrime::kLiveTalkM;
+		// THE ONE HE FACES, not the nearest (28 October 2026, his order; LedgerCrime::ChooseFaced): the prompt names
+		// whom T will talk to
+		std::vector<LedgerCrime::FacedCandidate> Cands;
 		for (const Who& P : People)
 		{
-			if (P.Body == nullptr || !*P.G) { continue; }
-			const double M = FVector::Dist2D(At, P.Body->GetActorLocation()) / 100.0;
-			if (M <= Best) { Best = M; Near = &P; }
+			const bool Here = P.Body != nullptr && *P.G;
+			const FVector Pt = Here ? P.Body->GetActorLocation() : FVector::ZeroVector;
+			Cands.push_back({ Pt.X / 100.0, Pt.Y / 100.0, Here });
 		}
-		// one at a time, the nearest: the window when he is at it, else the person
+		const int Faced = LedgerCrime::ChooseFaced(At.X / 100.0, At.Y / 100.0, GPawn->GetActorRotation().Yaw, Cands, LedgerCrime::kLiveTalkM);
+		if (Faced >= 0) { Near = &People[Faced]; Best = FVector::Dist2D(At, Near->Body->GetActorLocation()) / 100.0; }
+		// one at a time, the window when he is at it, else the person he faces
 		if (bBeforeDeed && !GActAttempted[0] && GGlass[0] != nullptr)
 		{
 			const FVector Glass = GGlass[0]->GetComponentsBoundingBox(true).GetCenter();
@@ -9666,7 +9712,8 @@ namespace
 	TSharedPtr<SWidget> GHintRoot;
 	TWeakObjectPtr<UWorld> GHintWorld;
 	double GHintUntil = -1.0;
-	constexpr double kHintSeconds = 9.0;
+	// About ten seconds up, as KCD2's first prompts (28 October, Study 2; nine until then).
+	constexpr double kHintSeconds = 10.0;
 
 	/// The keys as this game binds them (SliceCharacter.cpp).
 	bool HintKey(const std::string& K, std::string& Out)
@@ -9746,6 +9793,17 @@ namespace
 		}
 		LedgerCore::Hint H;
 		if (GHints.Happened(M, NowS(), H)) { HintShow(H); }
+	}
+
+	// ON HESITATION, 28 October 2026 (his order; Study 2): walking waits ten
+	// seconds standing still, talking twenty without talking to anybody (the
+	// talk key acts on it), the Ledger thirty (its key acts on it once the game
+	// has one). What he does unprompted, he is never told.
+	void HintActed(LedgerCore::Moment M)
+	{
+		if (!bHintsOn) { return; }
+		GHints.Acted(M, NowS());
+		UE_LOG(LogTemp, Display, TEXT("LedgerHints: %s done unprompted, its hint will not show"), *Un(LedgerCore::MomentName(M)));
 	}
 
 	void HintsTick()

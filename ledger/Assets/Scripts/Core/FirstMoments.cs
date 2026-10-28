@@ -20,6 +20,14 @@ namespace Ledger.Core
     /// at once, when the thing happens. The words are for Jafar's approval
     /// (game-design/first-moments-2026-09-29.md); the game fills in the keys as
     /// the player has them bound.
+    ///
+    /// ON HESITATION, 28 October 2026 (his order that afternoon; the AAA study's
+    /// Study 2, "For LEDGER" 2: KCD2 shows the walking hint after 10 s without
+    /// moving and the attack hint after 20, and keeps each up about 10 s). A hint
+    /// that teaches an action waits, after its moment, for him not to do it:
+    /// walking 10 s, talking 20 s, the Ledger 30 s. Done unprompted (Moved,
+    /// Acted), it never shows. A hint about what just happened, and a spoken
+    /// beat or a screen's own line, show as before.
     public enum Moment
     {
         /// He has not moved a few seconds after a new game begins.
@@ -50,13 +58,16 @@ namespace Ledger.Core
         /// Shown at once when the moment happens (a spoken beat, a screen's own
         /// line), never queued behind another.
         public bool AtOnce { get; }
-        /// Real seconds it stays worth showing after its moment; beyond that
-        /// it is dropped unshown.
+        /// Real seconds it stays worth showing once it is due; beyond that it
+        /// is dropped unshown.
         public double StaleAfter { get; }
+        /// Real seconds after its moment without his doing what it teaches
+        /// before it is due (28 October: hints on hesitation, not on the clock).
+        public double Hesitate { get; }
 
-        public Hint(Moment moment, string speaker, string line, string key, bool atOnce, double staleAfter)
+        public Hint(Moment moment, string speaker, string line, string key, bool atOnce, double staleAfter, double hesitate = 0)
         {
-            Moment = moment; Speaker = speaker; Line = line; Key = key; AtOnce = atOnce; StaleAfter = staleAfter;
+            Moment = moment; Speaker = speaker; Line = line; Key = key; AtOnce = atOnce; StaleAfter = staleAfter; Hesitate = hesitate;
         }
     }
 
@@ -64,8 +75,12 @@ namespace Ledger.Core
     {
         /// Real seconds between two hints, so none overlaps another.
         public const double Gap = 12.0;
-        /// Real seconds standing still in a new game before he is told how to walk.
-        public const double StillFor = 4.0;
+        /// Real seconds standing still in a new game before he is told how to
+        /// walk (4 until 28 October; Study 2's 10, KCD2's).
+        public const double StillFor = 10.0;
+        /// Real seconds he has to talk to somebody, and to open the Ledger after
+        /// a remark about him, before he is told how (28 October, Study 2).
+        public const double TalkFor = 20.0, LedgerFor = 30.0;
 
         /// The words, one hint a moment.
         public static readonly IReadOnlyDictionary<Moment, Hint> Words = new Dictionary<Moment, Hint>
@@ -74,14 +89,14 @@ namespace Ledger.Core
                 "{Move} walks, {Run} runs. People on this street notice who's about.", false, double.PositiveInfinity) },
             { Moment.CanTalk, new Hint(Moment.CanTalk, "lena",
                 "That's Ron on the rank. Go and say hello. Everyone out there wants a look at you.",
-                "Walk up to anyone and press {Talk}. What you tell them, they remember.", false, 45) },
+                "Walk up to anyone and press {Talk}. What you tell them, they remember.", false, 45, TalkFor) },
             { Moment.FirstAsk, new Hint(Moment.FirstAsk, "rocco",
                 "If you go tonight, boss, wear that. In the dark nobody looks twice at a coat.",
                 "{Coat} puts the coat on or takes it off: in the dark it makes you harder to recognise.", true, 0) },
             { Moment.SeenAtDeed, new Hint(Moment.SeenAtDeed, null, null,
                 "Somebody saw that. What they make of it can go round.", false, 15) },
             { Moment.OverheardAboutHim, new Hint(Moment.OverheardAboutHim, null, null,
-                "That was about you. {Ledger} shows what you believe the street knows.", false, 15) },
+                "That was about you. {Ledger} shows what you believe the street knows.", false, 15, LedgerFor) },
             { Moment.LedgerOpened, new Hint(Moment.LedgerOpened, null, null,
                 "What you believe the street now knows about you.", true, 0) },
         };
@@ -145,6 +160,17 @@ namespace Ledger.Core
             _waiting.RemoveAll(w => w.m == Moment.StandingStill);
         }
 
+        /// He did what a hint teaches before it showed: talked to somebody
+        /// (CanTalk), opened the Ledger (OverheardAboutHim). It is done without
+        /// its hint, as walking is once he has moved.
+        public void Acted(Moment m, double at)
+        {
+            if (!Enum.IsDefined(typeof(Moment), m)) return;   // as the port: a moment outside the six is nothing
+            if (m == Moment.StandingStill) { Moved(at); return; }
+            _done.Add(m);
+            _waiting.RemoveAll(w => w.m == m);
+        }
+
         /// The moment happened at this real second (the game reports it every
         /// time). A hint shown at once is returned now; any other waits for
         /// Due. Null when there is nothing to show now.
@@ -167,17 +193,20 @@ namespace Ledger.Core
 
         /// The hint to show at this real second, or null: at most one, never
         /// inside the gap after the last, walking before anything else in a new
-        /// game, and nothing that has gone stale.
+        /// game, nothing he has not yet hesitated over, and nothing that has
+        /// gone stale.
         public Hint Due(double at)
         {
             if (!Clock(ref at)) return null;
             bool walkFirst = _fresh && !_moved && !_done.Contains(Moment.StandingStill) && !double.IsNaN(_began);
             if (walkFirst && at - _began >= StillFor && !_waiting.Exists(w => w.m == Moment.StandingStill))
                 _waiting.Insert(0, (Moment.StandingStill, at));
-            _waiting.RemoveAll(w => at - w.since > Words[w.m].StaleAfter);
+            _waiting.RemoveAll(w => at - w.since > Words[w.m].Hesitate + Words[w.m].StaleAfter);
             if (_waiting.Count == 0 || at - _lastShown < Gap) return null;
-            // Until he has walked or been told how, only the walking hint shows.
-            int pick = walkFirst ? _waiting.FindIndex(w => w.m == Moment.StandingStill) : 0;
+            // Until he has walked or been told how, only the walking hint shows;
+            // after that the first he has hesitated over long enough.
+            int pick = walkFirst ? _waiting.FindIndex(w => w.m == Moment.StandingStill)
+                                 : _waiting.FindIndex(w => at - w.since >= Words[w.m].Hesitate);
             if (pick < 0) return null;
             var m = _waiting[pick].m;
             _waiting.RemoveAt(pick);

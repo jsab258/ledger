@@ -4,21 +4,21 @@ Phase 0 done (production/audits/phase0-exit/BUNDLE.md).
 
 ## Phase 1: Prove the bottlenecks (open, not closed)
 
-Failed its exit check on 22 Oct (production/audits/phase1-exit/CLOSE-2026-10-22.md); re-run once the walk, clothes and speech pass. Phase 2 waits.
+Failed its exit on 22 Oct (production/audits/phase1-exit/CLOSE-2026-10-22.md); re-run once walk, clothes and speech pass.
 
 - [x] 1. Health check; the order ledger.
 - [x] 2. The walk: Epic's, Tom's MetaHuman, packaged; tester's route 15 of 15. Sit set aside.
-- [ ] 3. Tom's outfit: sleeve ends fixed; cuffs set aside, his word next (SLEEVE-END).
+- [ ] 3. Tom's outfit: jacket in the packaged game; the shorts it hid restored, baked cuffs next (BAKE-PLAN).
 - [ ] 4. Speech: cited facts, wider rule, checker, two copies on; the night's build next (LOCAL-CHECKERS).
 - [ ] 5. Mickey's office: packaged, Epic's camera: back wall passes; door, grainy shadows next (cab-office-interior-1990/WEAR).
 - [ ] 6. Phase 1's exit re-run; phase 2?
-- Fallback (RULINGS 28 Oct): phase 3's port; phase 5's research; next week's studies early.
+- Fallback (28 Oct): hints, lamps, facing built; camera page; 145 study items logged.
 
 ## Studies this week (aaa-reference/STUDY-PLAN.md)
 
 Done 16 of 16 (28 Oct: ten early).
 
-STATE (28 Oct 12:58): Tom dressed next; studies early.
+STATE (28 Oct 15:15): one packaged build for jacket, hints, lamps, facing, camera pictures.
 
 ## Handovers
 

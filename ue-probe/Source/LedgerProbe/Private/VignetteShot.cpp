@@ -2888,9 +2888,13 @@ namespace
 			const Piece& P = GSpec.Pieces[I];
 			if (!P.Emissive) { continue; }
 			const double LightY = GLook.LanternLightY > 0.0 ? GLook.LanternLightY : P.Y - 0.05;
+			// THE GLOW A BULB (28 October, his order): the look file's bulb reach when set; -LanternBulbRadius=
+			// on the command line wins, for the frame-time measure against the old reach
+			static double BulbM = -1.0;
+			if (BulbM < 0.0) { BulbM = GLook.LanternBulbRadiusM; FParse::Value(FCommandLine::Get(), TEXT("LanternBulbRadius="), BulbM); }
 			APointLight* L = SpawnPointLight(
 				World, FVector(P.X * 100.0, P.Z * 100.0, LightY * 100.0),
-				Lamp, (float)GSpec.Lantern.RangeM,
+				Lamp, (float)(BulbM > 0.0 ? BulbM : GSpec.Lantern.RangeM),
 				(float)GSpec.Lantern.Intensity * kLampGainUnitless, true);
 			if (L != nullptr && LampLumens > 0.0)
 			{

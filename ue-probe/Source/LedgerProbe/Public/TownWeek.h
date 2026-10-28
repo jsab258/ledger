@@ -10,7 +10,10 @@
 // player does (the deed, the envelope or a no, the tea, Sunday's answer) comes
 // between those steps, called by the game when he does it, or by the route's
 // acceptance replay (ue-probe/tests/route-week-test.cpp) at the moments the
-// Core's week has it, which must give the Core's rows.
+// Core's week has it, which must give the Core's rows. Since 28 October 2026
+// the hour's order is itself one rule, RunHour below (the Core's TownWeek.RunHour,
+// its home since the sweep's G4), which CrimeProbe.cpp's ConsequenceHour
+// calls rather than the steps one by one.
 //
 // Keyed by the cast's own ids (ROUTE.md step 0). One owner of the pieces, so
 // the game's save is one TownSave of them.
@@ -201,6 +204,78 @@ namespace LedgerCore
 		{
 			Week.Close(Now, Mill, Cast);
 			Hours.RunTo(Mill, Cast, RoundsUpTo != nullptr ? *RoundsUpTo : Now);
+		}
+
+		// ---- the hour: the steps in their order, one rule (28 October 2026) ----
+
+		/// WHAT ONE HOUR'S STEPS DID (RunHour's answer): who found the damage, who
+		/// went to the police, why DS Ellis came (empty: she did not), the
+		/// custody a constable took (none: nobody), Ada's invitation line, and
+		/// whether Ron brought the envelope.
+		struct HourDone
+		{
+			std::vector<std::pair<std::string, GameTime> > Found;
+			std::vector<std::string> Went;
+			std::string Why;
+			std::shared_ptr<Custody> Taken;
+			bool bInvite = false;
+			std::string Invite;
+			bool bRon = false;
+		};
+
+		/// WHAT THE GAME DOES BETWEEN THE STEPS (its words on screen, its log,
+		/// its session file, whom he has met): each called right after its own
+		/// step, every hour, with what the hour has done so far, where
+		/// ConsequenceHour did it between its calls; any may be empty. Step,
+		/// when given, is told each step's name as it ends, before that step's
+		/// own call (the TownWeekSteps golden rows keep the order with it).
+		struct HourCalls
+		{
+			std::function<void(const HourDone&)> Found, Went, Ellis, Taken, Invited, Ron;
+			std::function<void(const char*)> Step;
+		};
+
+		/// ONE GAME HOUR, ITS SCHEDULED STEPS IN THE GAME'S ORDER (28 October
+		/// 2026, what remained of the 5 October sweep's G4). The order lived
+		/// only here, in CrimeProbe.cpp's ConsequenceHour calling the steps one
+		/// by one, so a reordered hour failed no row, though the order decides
+		/// what the town knows (Ron's envelope before the hour's talk, the
+		/// damage found after the dawn's passing). It is one rule now, the
+		/// Core's TownWeek.RunHour followed line for line; ConsequenceHour calls
+		/// this, the TownWeekHour golden rows drive it and the TownWeekSteps
+		/// rows keep its order. `Area`: where he stands, for ten's constable.
+		HourDone RunHour(GossipMill* Mill, const CastDay* Cast, const GameTime& Now, const std::string& Area)
+		{
+			return RunHour(Mill, Cast, Now, Area, HourCalls());
+		}
+		HourDone RunHour(GossipMill* Mill, const CastDay* Cast, const GameTime& Now, const std::string& Area, const HourCalls& Game)
+		{
+			HourDone Done;
+			Six(Mill, Now);
+			if (Game.Step) Game.Step("Six");
+			Done.Found = DamageTick(Mill, Cast, Now);
+			if (Game.Step) Game.Step("DamageTick");
+			if (Game.Found) Game.Found(Done);
+			Done.Went = NineReports(Mill, Cast, Now);
+			if (Game.Step) Game.Step("NineReports");
+			if (Game.Went) Game.Went(Done);
+			Done.Why = NineEllis(Mill, Now, Cast);
+			if (Game.Step) Game.Step("NineEllis");
+			if (Game.Ellis) Game.Ellis(Done);
+			Done.Taken = TenConstable(Mill, Cast, Now, Area);
+			if (Game.Step) Game.Step("TenConstable");
+			if (Game.Taken) Game.Taken(Done);
+			Done.bInvite = TenTea(Now, Done.Invite);
+			if (Game.Step) Game.Step("TenTea");
+			if (Game.Invited) Game.Invited(Done);
+			Done.bRon = TwentyRon(Mill, Now);
+			if (Game.Step) Game.Step("TwentyRon");
+			if (Game.Ron) Game.Ron(Done);
+			TwentyThreeTea(Mill, Now);
+			if (Game.Step) Game.Step("TwentyThreeTea");
+			HourEnd(Mill, Cast, Now);
+			if (Game.Step) Game.Step("HourEnd");
+			return Done;
 		}
 
 		// ---- what he does, between them ----

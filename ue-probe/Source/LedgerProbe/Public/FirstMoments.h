@@ -10,6 +10,11 @@
 // the town's (game-design/first-moments-2026-09-29.md); the game fills in the
 // keys as the player has them bound (Fill).
 //
+// ON HESITATION, 28 October 2026 (his order; the AAA study's Study 2): a hint
+// that teaches an action waits, after its moment, for him not to do it:
+// walking 10 s, talking 20 s, the Ledger 30 s; done unprompted (Moved, Acted),
+// it never shows. FirstMoments.cs's change, line for line.
+//
 // TRANSLITERATION, NOT REWRITE, as Gossip.h states the method: the same
 // clock that never runs backwards, the same refusals of NaN and infinities,
 // the same save ({"done":[names]}, sorted), read the C#'s way (MiniJson.h: a
@@ -77,7 +82,8 @@ namespace LedgerCore
 		std::string Line;
 		std::string Key;
 		bool AtOnce;
-		double StaleAfter;
+		double StaleAfter;   // real seconds it stays worth showing once due
+		double Hesitate;     // real seconds after its moment without his doing it before it is due
 	};
 
 	class FirstMoments
@@ -85,27 +91,31 @@ namespace LedgerCore
 	public:
 		/// Real seconds between two hints, so none overlaps another.
 		static constexpr double Gap = 12.0;
-		/// Real seconds standing still in a new game before he is told how to walk.
-		static constexpr double StillFor = 4.0;
+		/// Real seconds standing still in a new game before he is told how to
+		/// walk (4 until 28 October; Study 2's 10, KCD2's).
+		static constexpr double StillFor = 10.0;
+		/// Real seconds he has to talk to somebody, and to open the Ledger after
+		/// a remark about him, before he is told how (28 October, Study 2).
+		static constexpr double TalkFor = 20.0, LedgerFor = 30.0;
 
 		/// The words, one hint a moment.
 		static const Hint& Words(Moment M)
 		{
 			static const Hint W[] = {
 				{ Moment::StandingStill, "", false, "",
-				  "{Move} walks, {Run} runs. People on this street notice who's about.", false, std::numeric_limits<double>::infinity() },
+				  "{Move} walks, {Run} runs. People on this street notice who's about.", false, std::numeric_limits<double>::infinity(), 0 },
 				{ Moment::CanTalk, "lena", true,
 				  "That's Ron on the rank. Go and say hello. Everyone out there wants a look at you.",
-				  "Walk up to anyone and press {Talk}. What you tell them, they remember.", false, 45 },
+				  "Walk up to anyone and press {Talk}. What you tell them, they remember.", false, 45, TalkFor },
 				{ Moment::FirstAsk, "rocco", true,
 				  "If you go tonight, boss, wear that. In the dark nobody looks twice at a coat.",
-				  "{Coat} puts the coat on or takes it off: in the dark it makes you harder to recognise.", true, 0 },
+				  "{Coat} puts the coat on or takes it off: in the dark it makes you harder to recognise.", true, 0, 0 },
 				{ Moment::SeenAtDeed, "", false, "",
-				  "Somebody saw that. What they make of it can go round.", false, 15 },
+				  "Somebody saw that. What they make of it can go round.", false, 15, 0 },
 				{ Moment::OverheardAboutHim, "", false, "",
-				  "That was about you. {Ledger} shows what you believe the street knows.", false, 15 },
+				  "That was about you. {Ledger} shows what you believe the street knows.", false, 15, LedgerFor },
 				{ Moment::LedgerOpened, "", false, "",
-				  "What you believe the street now knows about you.", true, 0 },
+				  "What you believe the street now knows about you.", true, 0, 0 },
 			};
 			return W[(int)M];
 		}
@@ -150,6 +160,17 @@ namespace LedgerCore
 			RemoveWaiting(Moment::StandingStill);
 		}
 
+		/// He did what a hint teaches before it showed: talked to somebody
+		/// (CanTalk), opened the Ledger (OverheardAboutHim). It is done without
+		/// its hint, as walking is once he has moved.
+		void Acted(Moment M, double At)
+		{
+			if ((int)M < 0 || (int)M > (int)Moment::LedgerOpened) return;
+			if (M == Moment::StandingStill) { Moved(At); return; }
+			DoneSet.insert(M);
+			RemoveWaiting(M);
+		}
+
 		/// The moment happened at this real second. A hint shown at once is
 		/// returned now (true, into Out); any other waits for Due.
 		bool Happened(Moment M, double At, Hint& Out)
@@ -177,7 +198,8 @@ namespace LedgerCore
 
 		/// The hint to show at this real second (true, into Out), or none: at
 		/// most one, never inside the gap after the last, walking before
-		/// anything else in a new game, and nothing that has gone stale.
+		/// anything else in a new game, nothing he has not yet hesitated over,
+		/// and nothing that has gone stale.
 		bool Due(double At, Hint& Out)
 		{
 			if (!Clock(At)) return false;
@@ -187,17 +209,14 @@ namespace LedgerCore
 				Waiting.insert(Waiting.begin(), std::make_pair(Moment::StandingStill, At));
 			}
 			Waiting.erase(std::remove_if(Waiting.begin(), Waiting.end(),
-				[At](const std::pair<Moment, double>& W) { return At - W.second > Words(W.first).StaleAfter; }), Waiting.end());
+				[At](const std::pair<Moment, double>& W) { return At - W.second > Words(W.first).Hesitate + Words(W.first).StaleAfter; }), Waiting.end());
 			if (Waiting.empty() || At - LastShown < Gap) return false;
-			// Until he has walked or been told how, only the walking hint shows.
-			int Pick = 0;
-			if (bWalkFirst)
+			// Until he has walked or been told how, only the walking hint shows;
+			// after that the first he has hesitated over long enough.
+			int Pick = -1;
+			for (std::vector<std::pair<Moment, double> >::size_type I = 0; I < Waiting.size(); ++I)
 			{
-				Pick = -1;
-				for (std::vector<std::pair<Moment, double> >::size_type I = 0; I < Waiting.size(); ++I)
-				{
-					if (Waiting[I].first == Moment::StandingStill) { Pick = (int)I; break; }
-				}
+				if (bWalkFirst ? Waiting[I].first == Moment::StandingStill : At - Waiting[I].second >= Words(Waiting[I].first).Hesitate) { Pick = (int)I; break; }
 			}
 			if (Pick < 0) return false;
 			const Moment M = Waiting[Pick].first;

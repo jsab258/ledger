@@ -225,5 +225,40 @@ namespace Ledger.Core
             }
             return found;
         }
+
+        /// Where the next stop of a wait is, for HourByHour: the first stop in (from, to], written to `at` (which
+        /// comes in as 0); false when there is none.
+        public delegate bool StopAtFn(long from, long to, ref long at);
+
+        /// THE WAIT, HOUR BY HOUR (the review's B2). Homed here 28 October 2026 (what remained of the 5 October
+        /// sweep's G4): the loop lived only in the port (CrimeProbe.h's WaitHourByHour, which the game's wait runs on),
+        /// held by its own self-test alone; the port follows this line for line and answers the WaitHourByHour golden
+        /// rows through its own. Each hour's stops are read with the town as that hour finds it, after the hours
+        /// before it have run, as the reference week reads them: stopAt finds the first stop in (from, to]; advance(to,
+        /// stop) moves the clock there, runs the hours crossed and returns where the clock is (later than `to` when
+        /// the hours took him away, as the cells do; the wait ends there). A stop at the segment's own start is a beat
+        /// already under way (the second independent check): it stops the wait there, with no time gone; a stop
+        /// outside the segment is not this hour's. Times in minutes; returns where the wait ends. A start before the
+        /// clock's zero on the hour would never move, as in the port; the game's clock never goes below it.
+        public static long HourByHour(long fromM, long untilM, StopAtFn stopAt, Func<long, bool, long> advance, out bool stopped)
+        {
+            stopped = false;
+            long nowM = fromM;
+            while (nowM < untilM)
+            {
+                long hourEnd = (nowM >= 0 ? nowM / 60 + 1 : -((-nowM) / 60)) * 60;
+                long segEnd = hourEnd < untilM ? hourEnd : untilM;
+                long at = 0;
+                if (stopAt(nowM, segEnd, ref at) && at >= nowM && at <= segEnd)
+                {
+                    stopped = true;
+                    return advance(at, true);
+                }
+                long landed = advance(segEnd, false);
+                if (landed > segEnd) return landed;
+                nowM = segEnd;
+            }
+            return nowM;
+        }
     }
 }

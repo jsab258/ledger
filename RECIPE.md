@@ -19,6 +19,15 @@ A notebook, not a project (Jafar, 13 October 2026). Its purpose: no lesson we le
 
 ## Notebook
 
+### 28 Oct 2026, every recommendation of a finished study set turned into tracked work, so none is lost
+- Made: 145 lines in the owner's order ledger, one per recommendation of sixteen reference studies, each with its phase, its target and its source.
+- Method (setting-free): a helper reads each study's recommendation section in full and writes one line per recommendation (a joined adopt-and-ignore split in two), copying only the numbers the study states, marking every phase it had to choose as inferred and every rejection as set aside with its reason; a fresh reviewer then reads the studies again, line by line, for anything missing, a number the study does not state, a phase against the study's own, and changed meaning; the fixes go in before the lines enter the ledger, whose own check then runs.
+- Tools: the ledger's format check (tools/order_ledger.py), a counting script, two helpers.
+- Target and check: no recommendation without a line, no target the study does not state; the review found none missing and fifteen lines to correct (one phase, three targets, labels, words).
+- Cost (hours): about 0.4 of helper time and 0.2 of the session's.
+- Failed and why: the draft invented a band between two numbers that the study gave separately, and moved one item's phase on its own judgement; both caught only by the second reading.
+- Evidence: production/orders/2026-10-25.md (Items from the studies); DECISIONS.md 28 Oct 15:10.
+
 ### 28 Oct 2026, three small reference studies (camera, interface, pipeline) run together, extracting only after another study finished
 - Made: camera and input numbers, an interface side-by-side, and a pipeline comparison, each with proposals for the owner.
 - Method (setting-free): work read-only from the indexes first; extract only after the one other extracting study signals done, metadata only, capped; compare with the project's own values before proposing; anything about taste or identity (the camera, the screen's layout) becomes a choice for the owner, shown in the product first.
