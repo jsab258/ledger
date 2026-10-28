@@ -48,13 +48,13 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
 
 <!-- morning pictures: written by tools/morning_pictures.py -->
 
-**Morning, Tuesday 27 October. Phase 1, Prove the bottlenecks. On: 3. Tom's outfit: zip jacket baked, skinned; cuffs' third try failed, his way next (RIB-CUFFS). Next: 4. Speech: all on Pocket; checker's fourth try designed (LOCAL-CHECKERS); wording A/B running; Common Voice fails consent (voice-latency/COMMON-VOICE).**
+**Morning, Wednesday 28 October. Phase 1, Prove the bottlenecks. On: 3. Tom's outfit: zip jacket baked, skinned; cuffs' third try failed, his way next (RIB-CUFFS). Next: 4. Speech: cited facts, name rule in; checker built, off, his word (invented-claims/LOCAL-CHECKERS).**
 
-| | Today, 27 Oct | Yesterday, 26 Oct |
+| | Today, 28 Oct | Yesterday, 27 Oct |
 |---|---|---|
-| The hook camera by day | ![The hook camera by day, 2026-10-27](production/previews/morning-hook-day-2026-10-27.jpg) | ![The hook camera by day, 2026-10-26](production/previews/morning-hook-day-2026-10-26.jpg) |
-| The reverse view | ![The reverse view, 2026-10-27](production/previews/morning-reverse-day-2026-10-27.jpg) | ![The reverse view, 2026-10-26](production/previews/morning-reverse-day-2026-10-26.jpg) |
-| The street at night | ![The street at night, 2026-10-27](production/previews/morning-night-2026-10-27.jpg) | ![The street at night, 2026-10-26](production/previews/morning-night-2026-10-26.jpg) |
+| The hook camera by day | ![The hook camera by day, 2026-10-28](production/previews/morning-hook-day-2026-10-28.jpg) | ![The hook camera by day, 2026-10-27](production/previews/morning-hook-day-2026-10-27.jpg) |
+| The reverse view | ![The reverse view, 2026-10-28](production/previews/morning-reverse-day-2026-10-28.jpg) | ![The reverse view, 2026-10-27](production/previews/morning-reverse-day-2026-10-27.jpg) |
+| The street at night | ![The street at night, 2026-10-28](production/previews/morning-night-2026-10-28.jpg) | ![The street at night, 2026-10-27](production/previews/morning-night-2026-10-27.jpg) |
 
 The Hook sheet, the bar they are held to: ![The Hook sheet](production/previews/hook-sheet-2026-10-05.jpg)
 
