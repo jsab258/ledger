@@ -175,6 +175,8 @@ real_table() {
     stain-check-selftest  "$REPO"                 "$PY tools/stain_check.py --selftest" \
     surface-values-selftest "$REPO"               "$PY tools/surface_values.py --selftest" \
     cuff-faults-selftest  "$REPO"                 "$PY tools/md-bridge/cuff_faults.py --selftest" \
+    build-cuffs-selftest  "$REPO"                 "$PY tools/md/build_cuffs.py --selftest" \
+    office-look-selftest  "$REPO"                 "$PY tools/office_look.py --selftest" \
     timelog-selftest      "$REPO"                 "$PY tools/timelog.py --selftest" \
     morning-selftest      "$REPO"                 "$PY tools/morning_pictures.py --selftest" \
     page-answers          "$REPO"                 "$PY tools/page_answers.py" \

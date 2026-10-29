@@ -88,6 +88,15 @@ private:
 	// A CONTROLLER'S A, 1 October: whatever the prompt in front of him offers, use or talk.
 	void RequestPadAct();
 public:
+	// THE CAMERA BY SITUATION (his ruling of 28 October: "closer for talk and low rooms, wider for fights"; Study 9:
+	// Mafia's camera picks a row of numbers by the player's state): the encounter says each frame whether a talk is
+	// under way; the office's own camera keeps its room and takes the street's half from here.
+	void SetInTalk(bool bOn) { bInTalk = bOn; }
+	void SetOfficeOwnsArm(bool bOn) { bOfficeOwnsArm = bOn; }
+	// as a talk opens, the camera's yaw eased toward the speaker for 1.5 s (then the mouse is his again)
+	void FaceForTalk(const FVector& Speaker);
+	float SituationArmCm() const { return RowNow.BackCm; }
+	float SituationUpCm() const { return RowNow.UpCm; }
 	int32 ConsumePadActRequests();
 	int32 ConsumeActRequests();
 	int32 ConsumeTalkRequests();
@@ -96,6 +105,13 @@ public:
 	int32 ConsumeWaitRequests();
 
 private:
+	struct FCamRow { float BackCm = 0.0f, SideCm = 0.0f, UpCm = 0.0f, PivotCm = 0.0f, Fov = 0.0f, BlendS = 1.0f; bool bSet = false; };
+	FCamRow RowStreet, RowTalk, RowRun, RowNow;
+	bool bInTalk = false, bOfficeOwnsArm = false, bCamRows = false;
+	double LastInTalk = -1.0e9, TalkFaceUntil = 0.0;
+	FVector TalkFace = FVector::ZeroVector;
+	const TCHAR* RowName = TEXT("street");
+	void CameraRowTick(float DeltaSeconds);
 	int32 ActRequests = 0;
 	int32 TalkRequests = 0;
 	int32 PadActRequests = 0;

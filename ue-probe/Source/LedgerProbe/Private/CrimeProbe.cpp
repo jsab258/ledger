@@ -60,6 +60,7 @@
 // consequences, no save file, no memory loading, and no yard in the street's
 // own JSON.
 #include "Engine/CollisionProfile.h"
+#include "LedgerCollisionAudit.h"
 #include "CrimeProbe.h"
 
 #include "VignetteShot.h"
@@ -978,7 +979,7 @@ namespace
 		// of a person's size blocks the player, and only the player.
 		TArray<UPrimitiveComponent*> Prims;
 		A->GetComponents(Prims);
-		for (UPrimitiveComponent* Pc : Prims) { if (Pc != nullptr) { Pc->SetCollisionEnabled(ECollisionEnabled::NoCollision); } }
+		for (UPrimitiveComponent* Pc : Prims) { if (Pc != nullptr) { Pc->SetCollisionEnabled(ECollisionEnabled::NoCollision); LedgerCollisionAudit::Note(Pc, TEXT("people-metahuman")); } }
 		if (UCapsuleComponent* Cap = NewObject<UCapsuleComponent>(A, TEXT("LiveBodyBlock")))
 		{
 			Cap->InitCapsuleSize(30.0f, 88.0f);
@@ -5061,13 +5062,19 @@ namespace
 			LedgerVignetteShot::SetShopRoomLit(GOffice.Shop.c_str(), true);
 			UE_LOG(LogTemp, Display, TEXT("LedgerOffice: Tom puts the lights on at %.2f,%.2f"), At.X, At.Z);
 		}
-		const float Want = bIn ? (float)GOffice.ArmM * 100.0f : GOffice.StreetArm;
+		// the street's half from the camera's situation row (SliceCharacter.cpp CameraRowTick: talk, run, street), the
+		// office's own numbers inside
+		ALedgerSliceCharacter* RowCam = Cast<ALedgerSliceCharacter>(GPawn);
+		if (RowCam != nullptr) { RowCam->SetOfficeOwnsArm(true); }
+		const float StreetArmNow = RowCam != nullptr && RowCam->SituationArmCm() > 0.0f ? RowCam->SituationArmCm() : GOffice.StreetArm;
+		const float StreetLiftNow = RowCam != nullptr && RowCam->SituationArmCm() > 0.0f ? RowCam->SituationUpCm() : GOffice.StreetLift;
+		const float Want = bIn ? (float)GOffice.ArmM * 100.0f : StreetArmNow;
 		Boom->TargetArmLength = FMath::FInterpTo(Boom->TargetArmLength, Want, Dt, 4.0f);
 		// The pivot up and the arm's end down by as much, so the camera stands as
 		// high as on the street (plus any lift) but sweeps from his chest.
 		const float Pivot = bIn ? (float)GOffice.PivotM * 100.0f : 0.0f;
 		Boom->TargetOffset.Z = FMath::FInterpTo(Boom->TargetOffset.Z, Pivot, Dt, 4.0f);
-		Boom->SocketOffset.Z = FMath::FInterpTo(Boom->SocketOffset.Z, GOffice.StreetLift - Pivot + (bIn ? (float)GOffice.LiftM * 100.0f : 0.0f), Dt, 4.0f);
+		Boom->SocketOffset.Z = FMath::FInterpTo(Boom->SocketOffset.Z, StreetLiftNow - Pivot + (bIn ? (float)GOffice.LiftM * 100.0f : 0.0f), Dt, 4.0f);
 		// -OfficeCamLog (the research's step 0): twice a second inside, the arm's own
 		// sweep repeated, and what it meets, by the spec's box name.
 		static const bool bLog = FParse::Param(FCommandLine::Get(), TEXT("OfficeCamLog"));
@@ -8847,6 +8854,11 @@ namespace
 		AskScriptTick(Now);
 		FaceABTick(Now);
 		RouteWhereTick(World, Now);
+		// THE TALK CAMERA'S CUE (his ruling of 28 October, closer for talk): the say box open, an answer awaited or
+		// one being spoken (SliceCharacter.cpp CameraRowTick holds it 2 s after)
+		if (ALedgerSliceCharacter* TalkCam = Cast<ALedgerSliceCharacter>(GPawn)) { TalkCam->SetInTalk(bSayOpen || GLive.PendingId != 0 || GVoice.Playing.IsValid()); }
+		// -CollisionAudit (FINDINGS.md, 28 October): once, 20 s in, what each "no collision" place really blocks
+		if (LedgerCollisionAudit::On()) { static bool bAudited = false; if (!bAudited && Now > 20.0) { bAudited = true; LedgerCollisionAudit::Report(); } }
 		OfficeCameraTick((float)FApp::GetDeltaTime());
 		PageShotsTick(World, Now);
 		PerfHookTick(World, Now, (float)FApp::GetDeltaTime());
@@ -8926,6 +8938,13 @@ namespace
 		GTalkTarget.G = Near->G; GTalkTarget.Card = Near->Card; GTalkTarget.Id = Near->Id;
 		GTalkTarget.Rung = Near->Rung; GTalkTarget.Name = FString(Near->Name);
 		GTalkTarget.Body = Near->Body;
+		// THE TALK CAMERA TURNS TO THE SPEAKER as the talk opens (camera.json's talk row; Study 9: Mafia frames a talk
+		// on the speaker), so the closer camera over his shoulder finds the face; the mouse is his again 1.5 s later
+		if (ALedgerSliceCharacter* TalkCam = Cast<ALedgerSliceCharacter>(GPawn); TalkCam != nullptr && Near->Body != nullptr)
+		{
+			AActor* Seen = GVisualFor(Near->Body);
+			TalkCam->FaceForTalk((Seen != nullptr ? Seen : Near->Body)->GetActorLocation());
+		}
 		HintActed(LedgerCore::Moment::CanTalk);   // he has found how to talk: its hint never shows (28 October, on hesitation)
 		// THE FIRST TIME, THE NOTICE'S CARD FIRST (above); going on from it opens the coupon.
 		if (!GLive.bNoticeShown) { bNoticeThenTalk = true; ShowAiNotice(true, GTalkTarget.Name); return true; }

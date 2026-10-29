@@ -50,6 +50,7 @@
 // instance are written by that function and by nothing else once BindSurfaces
 // has seeded them, and it is the only caller.
 #include "VignetteShot.h"
+#include "LedgerCollisionAudit.h"
 #include "VignetteSpec.h"
 #include "FrameStats.h"
 #include "SurfaceBind.h"
@@ -2087,6 +2088,7 @@ namespace
 				C->SetMobility(EComponentMobility::Movable);
 				C->SetStaticMesh(M);
 				C->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+				LedgerCollisionAudit::Note(C, TEXT("street-meshes"));
 				C->SetCastShadow(true);
 				// ITS OWN WALLS, only in play and only when the look file
 				// says so. Glass a person can see through - the shop panes
@@ -2246,6 +2248,7 @@ namespace
 			else
 			{
 				C->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+				LedgerCollisionAudit::Note(C, TEXT("bare-pieces"));
 			}
 			GBareHide.Add(A);
 			++GVehiclesSpawned;
@@ -2387,6 +2390,7 @@ namespace
 			C->SetMobility(EComponentMobility::Movable);
 			C->SetSkeletalMeshAsset(Mesh);
 			C->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+			LedgerCollisionAudit::Note(C, TEXT("people-glb"));
 			C->SetCastShadow(true);
 			C->bCastCinematicShadow = true;     // a person's shadow in a shop window's light (SpawnShopSpill)
 			C->VisibilityBasedAnimTickOption = EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones;
@@ -6471,6 +6475,7 @@ namespace
 		// a shadow is a black street. Neither is left to a default: both are
 		// sites this project has already been bitten at.
 		C->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		LedgerCollisionAudit::Note(C, TEXT("sky-dome"));
 		// AND THE WHOLE ACTOR, 24 September: run from the editor (-game, as
 		// every local iteration is) the dome came back with the engine
 		// sphere's own "block all" collision, a 2 km shell every sight line
@@ -6658,6 +6663,7 @@ namespace
 		// is a thing the walk clip can be stopped by and a thing the camera
 		// can be pushed by, and neither is this frame's question.
 		GFigureComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		LedgerCollisionAudit::Note(GFigureComp, TEXT("figure"));
 		// THE SHADOW IS. A backlit figure with no shadow is a sticker.
 		GFigureComp->SetCastShadow(true);
 		// AND THE POSE IS EVALUATED WHETHER OR NOT THE FIGURE IS ON SCREEN,
@@ -7658,6 +7664,7 @@ namespace
 		if (bOld) { return; }
 		C->SetCollisionProfileName(UCollisionProfile::NoCollision_ProfileName);
 		C->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		LedgerCollisionAudit::Note(C, TEXT("rooms-fixed-control"));
 	}
 
 	// -RoomLumensScale=<k> for a trial of the rooms' light without touching the spec.
@@ -9705,6 +9712,7 @@ namespace
 					Comp->SetMobility(EComponentMobility::Movable);
 					Comp->SetStaticMesh(Plane);
 					Comp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+					LedgerCollisionAudit::Note(Comp, TEXT("control-quads"));
 					// A CONTROL CASTS NO SHADOW. It is not part of the street
 					// and a shadow of it falling across the road would be a
 					// change to the frame the street is measured in.

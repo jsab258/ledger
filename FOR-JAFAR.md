@@ -24,16 +24,16 @@ No decision asked: these are for watching the street change.
 Disk (10-29 04:35): C: 242.7 GB free, F: 28.7 GB free.
 
 **Now and next** (your order of 25 October with the two of 28 October; production/orders/2026-10-25.md):
-- **Now, clothes:** Tom's jacket is in the game with Mafia's four levels of detail and passes the new asset checks, except three unused files (your page). The cuffs are rebuilt next by Marvelous's elastic rib, waiting on your click.
+- **Now, clothes:** Marvelous's elastic cuffs failed twice (they bulge or roll off the wrist), so, as you ordered, the cuffs are now built to his wrist's shape; the first built pair passes every measure. Next they go through the bake and into the game. Marvelous is closed for today's packaged build (it holds the graphics card) and reopens for the jumper, jeans and shoes.
 - **Next, sitting:** Tom can walk inside Mickey's office again (it had an invisible solid block). He sits from 7 of 9 walk-ins with a plain start. The two natural starts, Kingdom Come II's table and Epic's own foot search, each tried twice, slid his foot up to 35 cm, so both are set aside: the small office leaves too little room to test where a start can begin. Research on that comes next.
-- **Then, the look:** the day is a stop too bright (your page). At night 87% of your camera's view between the lamps is near black, as your 1 October ruling asks (pools with darkness between); I had begun to treat it as a fault, wrongly, and stopped. Next: Mafia's wear on Mickey's office and one shop front.
+- **Then, the look:** the day is now one stop darker, as you chose. Your note: the street reads too dark against the Hook sheet; the research says road, flags and brick are 2 to 8 times darker than real. I found the day also carries Unreal's own +1 stop by default, which the game's line did not show; the next build's line confirms it, then the surfaces are measured and brought to real values, and you see the street beside the Hook sheet.
 - **Beside them:** the speech bench has run 16 of 42 trials: the small fast model is so far no faster and invents more. The town's rules for a surviving victim are now in the game's code (69,186 checks agree).
-- **Your camera:** 3.1 m in the game until you pick.
+- **Your camera:** 3.1 m, your pick. Closer for talk and low rooms, wider for fights, come next, each shown to you in the game.
 
 **The tester (last night's walk):** 15 of 15 stages. "That's all I know" to 0 of 60 first questions (2 the night before). Ron showed he knew about Rita's window. What broke the illusion: unfinished clothes, people standing frozen like mannequins, and two people overlapping Tom (Sheila at the office door, someone behind him by a lamp post).
 
 **Monday's risks:**
-1. Phase 1's exit waits on the cuffs (your Marvelous click) and on speech; it may not re-run by Monday.
+1. Phase 1's exit waits on the built cuffs reaching the game and on speech; it may not re-run by Monday.
 2. Sitting may ship this week with the plain start only.
 3. The look's next step (Mafia's wear on Mickey's office and one shop front) is 25 to 35 hours; only its start fits this week.
 4. Speech's 2 s bar: the faster first sentence shows no gain so far.
@@ -41,9 +41,8 @@ Disk (10-29 04:35): C: 242.7 GB free, F: 28.7 GB free.
 
 ### Needs you
 
-1. **Click LEDGER bridge in Marvelous, once** (no page: a click on your PC; Marvelous is open since 08:14). Still yours because all three ways round it failed: the bridge stopped when I closed Marvelous for a build on 28 October; no computer-use tools reached this session; Marvelous's start-up argument crashes it, and a script path is ignored. The cuff drape is queued and starts on its own.
-2. **Mickey's back door, a third try at its panels?** (next page) Yes (recommended), or leave them.
-3. **Fists able to kill?** (next page; Study 14: Kingdom Come II says no) No (recommended), or yes.
+1. **Mickey's back door, a third try at its panels?** (next page) Yes (recommended), or leave them.
+2. **Fists able to kill?** (next page; Study 14: Kingdom Come II says no) No (recommended), or yes.
 
 After these, on later pages: the animation source test at 6 moves, the map marks (Study 16), the interface's width (Study 10).
 

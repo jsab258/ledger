@@ -2,7 +2,7 @@
 """THE ROUTE, WALKED WITH REAL KEY PRESSES (item 5, 1 October; production/research/
 packaged-game-testing, step 2: "the audit's missing layer").
 
-    python tools/route_walk.py [--editor] [--town] [--sit] [--out DIR]
+    python tools/route_walk.py [--editor] [--town] [--sit] [--out DIR] [--game-arg -Switch ...]
     python tools/route_walk.py --selftest
 
 A fixed script, no model: the AI tester's own key, mouse and typing commands
@@ -361,6 +361,7 @@ def walk(editor, out, town=False, sit=False):
             pass
     r = Route(saved, out)
     extra = ["-TomSit", "-MickeysInside"] if sit else []          # the office is built only with -MickeysInside (CrimeProbe.cpp)
+    extra += GAME_ARGS                                              # --game-arg X (29 October: -CollisionAudit beside a walk)
     play("close")
     if not start(editor, save_dir, extra):
         r.record("street", False, "the game did not start")
@@ -487,6 +488,9 @@ def selftest():
     check("the door the sit walks through is the office spec's", (door["x"], door["z"]) == OFFICE_DOOR)
     print("route_walk selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
+
+
+GAME_ARGS = [sys.argv[i + 1] for i, x in enumerate(sys.argv[:-1]) if x == "--game-arg"]
 
 
 if __name__ == "__main__":

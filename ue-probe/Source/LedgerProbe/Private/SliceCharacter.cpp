@@ -132,6 +132,7 @@ void ALedgerSliceCharacter::Tick(float DeltaSeconds)
 		         || FMath::Abs(MouseX) + FMath::Abs(MouseY) > 0.5f) { LedgerPaper::SetPadInUse(false); }
 	}
 	GaspTick();
+	CameraRowTick(DeltaSeconds);
 	SitTick(DeltaSeconds);
 	SitProofTick(DeltaSeconds);
 	SitRoomTestTick(DeltaSeconds);
@@ -283,6 +284,58 @@ bool ALedgerSliceCharacter::SoundStep(int32 F, bool bRunClip, float Speed, const
 	return true;
 }
 
+// THE CAMERA BY SITUATION, each frame (his ruling of 28 October; production/specs/camera.json's rows; Study 9): a talk
+// under way, then running, then the street; each row eased in over its own blend (Mafia's 2 s for talk, 0.2 s for
+// running), and a talk held 2 s after its last line so the camera does not swing between an answer and the next ask.
+// Inside the office its own camera owns the arm and lift and takes the street's half from SituationArmCm().
+void ALedgerSliceCharacter::FaceForTalk(const FVector& Speaker)
+{
+	TalkFace = Speaker;
+	TalkFaceUntil = GetWorld() != nullptr ? GetWorld()->GetTimeSeconds() + 1.5 : 0.0;
+}
+
+void ALedgerSliceCharacter::CameraRowTick(float DeltaSeconds)
+{
+	if (!bCamRows || Boom == nullptr || Camera == nullptr || GetWorld() == nullptr) { return; }
+	const double Now = GetWorld()->GetTimeSeconds();
+	if (bInTalk) { LastInTalk = Now; }
+	const bool bTalk = RowTalk.bSet && Now - LastInTalk < 2.0;
+	const bool bRun = RowRun.bSet && GetCharacterMovement() != nullptr && GetCharacterMovement()->MaxWalkSpeed >= RunSpeedCm - 1.0f
+		&& GetVelocity().Size2D() > WalkSpeedCm * 1.1f;
+	const FCamRow& Want = bTalk ? RowTalk : bRun ? RowRun : RowStreet;
+	const TCHAR* Name = bTalk ? TEXT("talk") : bRun ? TEXT("run") : TEXT("street");
+	if (FCString::Strcmp(Name, RowName) != 0)
+	{
+		UE_LOG(LogTemp, Display, TEXT("LedgerCameraRow: %s to %s at %.1f s"), RowName, Name, Now);
+		RowName = Name;
+	}
+	// about 95% of the way in the row's blend time
+	const float Rate = 3.0f / FMath::Max(0.05f, Want.BlendS);
+	RowNow.BackCm = FMath::FInterpTo(RowNow.BackCm, Want.BackCm, DeltaSeconds, Rate);
+	RowNow.SideCm = FMath::FInterpTo(RowNow.SideCm, Want.SideCm, DeltaSeconds, Rate);
+	RowNow.UpCm = FMath::FInterpTo(RowNow.UpCm, Want.UpCm, DeltaSeconds, Rate);
+	RowNow.PivotCm = FMath::FInterpTo(RowNow.PivotCm, Want.PivotCm, DeltaSeconds, Rate);
+	RowNow.Fov = FMath::FInterpTo(RowNow.Fov, Want.Fov, DeltaSeconds, Rate);
+	if (!bOfficeOwnsArm)
+	{
+		Boom->TargetArmLength = RowNow.BackCm;
+		Boom->SocketOffset.Z = RowNow.UpCm;
+	}
+	Boom->SocketOffset.Y = RowNow.SideCm;
+	Boom->SetRelativeLocation(FVector(0.0, 0.0, RowNow.PivotCm - GetCapsuleComponent()->GetScaledCapsuleHalfHeight()));
+	Camera->SetFieldOfView(RowNow.Fov);
+	// the yaw toward the speaker while the talk opens (FaceForTalk), then left to him
+	if (Now < TalkFaceUntil)
+	{
+		if (APlayerController* PC = Cast<APlayerController>(GetController()))
+		{
+			const FRotator R = PC->GetControlRotation();
+			const float Yaw = (TalkFace - GetActorLocation()).Rotation().Yaw;
+			PC->SetControlRotation(FRotator(R.Pitch, FMath::FixedTurn(R.Yaw, Yaw, 120.0f * DeltaSeconds), R.Roll));
+		}
+	}
+}
+
 void ALedgerSliceCharacter::BeginPlay()
 {
 	Super::BeginPlay();
@@ -314,6 +367,23 @@ void ALedgerSliceCharacter::BeginPlay()
 				if ((*Street)->TryGetNumberField(TEXT("up_m"), N)) { Boom->SocketOffset.Z = N * 100.0; }
 				if ((*Street)->TryGetNumberField(TEXT("pivot_m"), N)) { Boom->SetRelativeLocation(FVector(0.0, 0.0, N * 100.0 - GetCapsuleComponent()->GetScaledCapsuleHalfHeight())); }
 				if (Camera != nullptr && (*Street)->TryGetNumberField(TEXT("lens_deg"), N)) { Camera->SetFieldOfView((float)N); }
+				// THE OTHER ROWS (talk, run), each a field the street's where it names none; filled in below once the
+				// street's own numbers, switches included, are known
+				auto ReadRow = [&Root](const TCHAR* Name, FCamRow& Row)
+				{
+					const TSharedPtr<FJsonObject>* R = nullptr;
+					if (!Root->TryGetObjectField(Name, R)) { return; }
+					double M = 0.0;
+					Row.bSet = true;
+					Row.BackCm = (*R)->TryGetNumberField(TEXT("back_m"), M) ? (float)(M * 100.0) : -1.0f;
+					Row.SideCm = (*R)->TryGetNumberField(TEXT("side_m"), M) ? (float)(M * 100.0) : -1.0e6f;
+					Row.UpCm = (*R)->TryGetNumberField(TEXT("up_m"), M) ? (float)(M * 100.0) : -1.0e6f;
+					Row.PivotCm = (*R)->TryGetNumberField(TEXT("pivot_m"), M) ? (float)(M * 100.0) : -1.0f;
+					Row.Fov = (*R)->TryGetNumberField(TEXT("lens_deg"), M) ? (float)M : -1.0f;
+					Row.BlendS = (*R)->TryGetNumberField(TEXT("blend_s"), M) ? (float)M : 1.0f;
+				};
+				ReadRow(TEXT("talk"), RowTalk);
+				ReadRow(TEXT("run"), RowRun);
 			}
 			else { UE_LOG(LogTemp, Warning, TEXT("LedgerCamera: no camera.json street row; the arm as built")); }
 		}
@@ -326,6 +396,34 @@ void ALedgerSliceCharacter::BeginPlay()
 		if (Boom != nullptr) { UE_LOG(LogTemp, Display, TEXT("LedgerCamera: arm %.2f m back, %.2f aside, %.2f up, pivot %.2f m above the feet, lens %.0f"),
 			Boom->TargetArmLength / 100.0f, Boom->SocketOffset.Y / 100.0, Boom->SocketOffset.Z / 100.0,
 			(Boom->GetRelativeLocation().Z + GetCapsuleComponent()->GetScaledCapsuleHalfHeight()) / 100.0, Camera != nullptr ? Camera->FieldOfView : 0.0f); }
+		// THE STREET ROW AS IT STANDS NOW (camera.json and any picture switch), and the talk and run rows completed
+		// from it; a picture switch or -NoCamRows keeps the camera still, as the pictures were taken before rows existed
+		if (Boom != nullptr && Camera != nullptr)
+		{
+			RowStreet.bSet = true;
+			RowStreet.BackCm = Boom->TargetArmLength;
+			RowStreet.SideCm = Boom->SocketOffset.Y;
+			RowStreet.UpCm = Boom->SocketOffset.Z;
+			RowStreet.PivotCm = Boom->GetRelativeLocation().Z + GetCapsuleComponent()->GetScaledCapsuleHalfHeight();
+			RowStreet.Fov = Camera->FieldOfView;
+			RowStreet.BlendS = 1.0f;
+			for (FCamRow* R : { &RowTalk, &RowRun })
+			{
+				if (!R->bSet) { continue; }
+				if (R->BackCm < 0.0f) { R->BackCm = RowStreet.BackCm; }
+				if (R->SideCm < -1.0e5f) { R->SideCm = RowStreet.SideCm; }
+				if (R->UpCm < -1.0e5f) { R->UpCm = RowStreet.UpCm; }
+				if (R->PivotCm < 0.0f) { R->PivotCm = RowStreet.PivotCm; }
+				if (R->Fov < 0.0f) { R->Fov = RowStreet.Fov; }
+			}
+			RowNow = RowStreet;
+			const bool bPictureSwitch = FParse::Value(Cmd, TEXT("CamBackM="), V) || FParse::Value(Cmd, TEXT("CamSideM="), V) || FParse::Value(Cmd, TEXT("CamUpM="), V)
+				|| FParse::Value(Cmd, TEXT("CamPivotM="), V) || FParse::Value(Cmd, TEXT("CamFov="), V);
+			bCamRows = (RowTalk.bSet || RowRun.bSet) && !bPictureSwitch && !FParse::Param(Cmd, TEXT("NoCamRows"));
+			UE_LOG(LogTemp, Display, TEXT("LedgerCameraRows: %s (talk %s, run %s)"), bCamRows ? TEXT("on") : TEXT("off"),
+				RowTalk.bSet ? *FString::Printf(TEXT("%.2f m %.0f deg"), RowTalk.BackCm / 100.0f, RowTalk.Fov) : TEXT("none"),
+				RowRun.bSet ? *FString::Printf(TEXT("%.2f m %.0f deg"), RowRun.BackCm / 100.0f, RowRun.Fov) : TEXT("none"));
+		}
 	}
 	MarkStreetWalkable();
 	CloseStreetEnds();
