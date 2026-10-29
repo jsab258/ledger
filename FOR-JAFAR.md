@@ -46,7 +46,7 @@ After these, on later pages: the map marks (Study 16), the interface's width (St
 ## Builder, Thursday 29 October (night)
 
 **Failed:**
-- Sitting's start on the matching foot: none in two tries. With both feet kept it then fired on 4 of 5 walk-ins, but his planted foot jumps about 80 cm as it starts. Set aside; next is Epic's own foot search.
+- Sitting's start on the matching foot: none in two tries. Epic's own foot search, tried twice, started him on every reachable walk-in but his foot slid up to 35 cm. Set aside: the small office limits where a start can be tested.
 - The night through your camera is 87% black between the lamps. A stop brighter, lifted blacks and a first fill trial did not fix it.
 - The small fast model writing the first sentence: so far no faster, and three invented details (16 of 42 trials).
 

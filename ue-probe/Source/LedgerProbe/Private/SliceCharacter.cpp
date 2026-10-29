@@ -36,6 +36,12 @@
 #include "TimerManager.h"
 #include "AudioMixerBlueprintLibrary.h"
 #include "AlphaBlend.h"
+#include "ChooserFunctionLibrary.h"
+#include "StructUtils/StructView.h"
+#include "StructUtils/UserDefinedStruct.h"
+#include "PoseSearch/PoseSearchLibrary.h"
+#include "PoseSearch/PoseSearchHistory.h"
+#include "PoseSearch/AnimNode_PoseSearchHistoryCollector.h"
 #include "Misc/CommandLine.h"
 #include "Misc/PackageName.h"
 #include "Misc/Paths.h"
@@ -1415,7 +1421,7 @@ namespace LedgerSit
 	constexpr double TestedRemainCm = 150.0;
 	// Windows: the start distances the room test passed for the entry; Path: where the mover stands along the clip
 	// every 10 cm of its travel (PathLeft: the travel left there), carried onto the room through the slot
-	struct FEntry { FString Name; UAnimMontage* Montage = nullptr; float Yaw = 0.0f; FTransform Start; TArray<double> Windows; TArray<FVector> Path; TArray<float> PathLeft; };
+	struct FEntry { FString Name; UAnimMontage* Montage = nullptr; float Yaw = 0.0f; FTransform Start; TArray<double> Windows; TArray<FVector> Path; TArray<float> PathLeft; FClipPose Pose; };
 	// StanceLeft: how long the clip still marks that foot down after this moment, in seconds
 	struct FEntryMoment { int32 Clip = -1; float T = 0.0f; int32 Foot = -1; float Through = -1.0f; float Left = 0.0f; float StanceLeft = 0.0f; FTransform MoverAt; };
 	TArray<FEntry> GEntries;
@@ -1437,6 +1443,9 @@ namespace LedgerSit
 	// until when the started moment's foot is still down by the clip's own table (29 October: read from the graph's
 	// contact curve, the first measure followed the foot through the rest of the walk, 39 to 85 cm)
 	float GSlideUntil = 0.0f;
+	// the chooser's frames on the path, and its best cost there, in a tested band or anywhere
+	int32 GChooserFrames = 0;
+	float GBestCostAny = 100.0f, GBestCostInBand = 100.0f;
 
 	// where the mover stands at moment T of a clip whose warp bone ends on Slot (the derivation of step 3)
 	FTransform MoverAtMoment(UAnimMontage* Entry, const FClipPose& P, const FTransform& Slot, const FTransform& MeshRel, float T)
@@ -1498,6 +1507,96 @@ namespace LedgerSit
 			M.MoverAt = MoverAtMoment(Entry, P, Slot, MeshRel, M.T);
 			GMoments.Add(M);
 		}
+	}
+
+	// THE SAMPLE'S OWN CHOOSER (29 October, sitting's third try; production/research/sit-and-turn/START-CHOOSER-2026-10-29.md,
+	// reviewed and revised): Epic's bench table CHT_SmartObject_BenchAnim, given the side's angle, his root's distance to
+	// the slot and his pose history, returns the In montage and the moment whose feet (positions and velocities) best
+	// match his, with its cost; the sample plays at a cost of at most 1.0 and otherwise tries the next frame. The table
+	// reads its context in this order: the anim instance, SmartObjectSelectionInputs (TargetDistance, TargetAngle,
+	// PoseHistoryNode), SmartObjectSelectionOutputs (StartTime, Cost). Its user-made structs' field names carry suffixes,
+	// so each is found by the start of its name.
+	struct FChooser
+	{
+		const UChooserTable* Table = nullptr;
+		const UUserDefinedStruct* InType = nullptr;
+		const UUserDefinedStruct* OutType = nullptr;
+		FProperty* Distance = nullptr;
+		FProperty* Angle = nullptr;
+		FProperty* History = nullptr;
+		FProperty* StartTime = nullptr;
+		FProperty* Cost = nullptr;
+		TArray<uint8> In, Out;
+		bool bOk = false;
+	};
+	FChooser& TheChooser()
+	{
+		static FChooser C;
+		static bool bTried = false;
+		if (bTried) { return C; }
+		bTried = true;
+		C.Table = LoadObject<UChooserTable>(nullptr, TEXT("/Game/Blueprints/SmartObjects/Bench/CHT_SmartObject_BenchAnim.CHT_SmartObject_BenchAnim"));
+		C.InType = LoadObject<UUserDefinedStruct>(nullptr, TEXT("/Game/Blueprints/SmartObjects/SmartObjectSelectionInputs.SmartObjectSelectionInputs"));
+		C.OutType = LoadObject<UUserDefinedStruct>(nullptr, TEXT("/Game/Blueprints/SmartObjects/SmartObjectSelectionOutputs.SmartObjectSelectionOutputs"));
+		auto Find = [](const UStruct* S, const TCHAR* Prefix) -> FProperty*
+		{
+			for (TFieldIterator<FProperty> It(S); It; ++It) { if (It->GetName().StartsWith(Prefix)) { return *It; } }
+			return nullptr;
+		};
+		if (C.Table != nullptr && C.InType != nullptr && C.OutType != nullptr)
+		{
+			C.Distance = Find(C.InType, TEXT("TargetDistance"));
+			C.Angle = Find(C.InType, TEXT("TargetAngle"));
+			C.History = Find(C.InType, TEXT("PoseHistory"));
+			C.StartTime = Find(C.OutType, TEXT("StartTime"));
+			C.Cost = Find(C.OutType, TEXT("Cost"));
+			C.In.SetNumZeroed(C.InType->GetStructureSize());
+			C.InType->InitializeStruct(C.In.GetData());
+			C.Out.SetNumZeroed(C.OutType->GetStructureSize());
+			C.OutType->InitializeStruct(C.Out.GetData());
+			const FStructProperty* H = CastField<FStructProperty>(C.History);
+			C.bOk = CastField<FNumericProperty>(C.Distance) != nullptr && CastField<FNumericProperty>(C.Angle) != nullptr
+				&& H != nullptr && H->Struct == FPoseHistoryReference::StaticStruct()
+				&& CastField<FNumericProperty>(C.StartTime) != nullptr && CastField<FNumericProperty>(C.Cost) != nullptr;
+		}
+		UE_LOG(LogTemp, Display, TEXT("LedgerSit: the sample's chooser %s (table %d, inputs %d, outputs %d; distance %d, angle %d, history %d, start %d, cost %d)"),
+			C.bOk ? TEXT("ready") : TEXT("NOT READY"), C.Table != nullptr, C.InType != nullptr, C.OutType != nullptr, C.Distance != nullptr, C.Angle != nullptr,
+			C.History != nullptr, C.StartTime != nullptr, C.Cost != nullptr);
+		return C;
+	}
+
+	// the side's angle as the table reads it (degrees; its rows: F -55 to 55, L_090 55 to 120, R_090 -120 to -55,
+	// BL 120 to 180, BR -180 to -120), the middle of the kept entry's range, so the room-tested side is the one searched
+	double SideAngle(const FString& Clip)
+	{
+		if (Clip.Contains(TEXT("_L_090_"))) { return 90.0; }
+		if (Clip.Contains(TEXT("_R_090_"))) { return -90.0; }
+		if (Clip.Contains(TEXT("_BL_"))) { return 150.0; }
+		if (Clip.Contains(TEXT("_BR_"))) { return -150.0; }
+		return 0.0;
+	}
+
+	// One evaluation: the montage the table picks, its moment and cost; nullptr when nothing is picked
+	UAnimMontage* Choose(UAnimInstance* Graph, double DistanceCm, double AngleDeg, float& OutStart, float& OutCost)
+	{
+		FChooser& C = TheChooser();
+		OutStart = 0.0f; OutCost = 100.0f;
+		if (!C.bOk || Graph == nullptr) { return nullptr; }
+		const FAnimNode_PoseSearchHistoryCollector_Base* Node = UPoseSearchLibrary::FindPoseHistoryNode(FName(TEXT("PoseHistory")), Graph);
+		if (Node == nullptr) { return nullptr; }
+		CastField<FNumericProperty>(C.Distance)->SetFloatingPointPropertyValue(C.Distance->ContainerPtrToValuePtr<void>(C.In.GetData()), DistanceCm);
+		CastField<FNumericProperty>(C.Angle)->SetFloatingPointPropertyValue(C.Angle->ContainerPtrToValuePtr<void>(C.In.GetData()), AngleDeg);
+		*C.History->ContainerPtrToValuePtr<FPoseHistoryReference>(C.In.GetData()) = Node->GetPoseHistoryReference();
+		CastField<FNumericProperty>(C.StartTime)->SetFloatingPointPropertyValue(C.StartTime->ContainerPtrToValuePtr<void>(C.Out.GetData()), 0.0);
+		CastField<FNumericProperty>(C.Cost)->SetFloatingPointPropertyValue(C.Cost->ContainerPtrToValuePtr<void>(C.Out.GetData()), 100.0);
+		FChooserEvaluationContext Ctx;
+		Ctx.AddObjectParam(Graph);
+		Ctx.AddStructViewParam(FStructView(C.InType, C.In.GetData()));
+		Ctx.AddStructViewParam(FStructView(C.OutType, C.Out.GetData()));
+		UObject* Got = UChooserFunctionLibrary::EvaluateObjectChooserBase(Ctx, UChooserFunctionLibrary::MakeEvaluateChooser(const_cast<UChooserTable*>(C.Table)), UAnimMontage::StaticClass());
+		OutStart = (float)CastField<FNumericProperty>(C.StartTime)->GetFloatingPointPropertyValue(C.StartTime->ContainerPtrToValuePtr<void>(C.Out.GetData()));
+		OutCost = (float)CastField<FNumericProperty>(C.Cost)->GetFloatingPointPropertyValue(C.Cost->ContainerPtrToValuePtr<void>(C.Out.GetData()));
+		return Cast<UAnimMontage>(Got);
 	}
 
 	// how near E reaches a seat; the seat must be in sight and nobody on it (Ron's evening seat is the middle one)
@@ -1664,6 +1763,7 @@ bool ALedgerSliceCharacter::TryStartSitApproach(int32 SeatIndex)
 	const float Heading = V.Size2D() > 30.0 ? (float)V.Rotation().Yaw : (float)GaspMover->GetActorRotation().Yaw;
 	GEntries.Reset(); GMoments.Reset(); GBest = -1; GStage = 0;
 	GFramesOnLine = GFramesInPlace = GFramesFootToo = 0; GBestGap = 1.0f;
+	GChooserFrames = 0; GBestCostAny = GBestCostInBand = 100.0f;
 	float BestOff = 1e9f;
 	TArray<FClipPose> Poses;
 	for (const FString& Name : S.Kept)
@@ -1677,6 +1777,7 @@ bool ALedgerSliceCharacter::TryStartSitApproach(int32 SeatIndex)
 		E.Start = MoverAtMoment(Entry, P, SitSlot, MeshRel, MomentWithLeft(Entry, TestedRemainCm));
 		E.Yaw = (float)E.Start.Rotator().Yaw;
 		E.Windows = S.KeptStarts.FindRef(Name);
+		E.Pose = P;
 		if (E.Windows.Num() == 0) { E.Windows.Add(TestedRemainCm); }
 		E.Windows.Sort();
 		const int32 I = GEntries.Add(E);
@@ -1744,6 +1845,15 @@ bool ALedgerSliceCharacter::TryStartSitApproach(int32 SeatIndex)
 	return true;
 }
 
+// HIS FOOT AS THE PLAYER SEES IT (29 October: the slide read on the hidden mover's mesh tracked the body's travel, 40 to
+// 158 cm; the visible MetaHuman body is what is judged): the ball of the foot on his worn body, else on the mover
+FVector ALedgerSliceCharacter::SitFootAt(int32 Foot, bool bMover) const
+{
+	const TCHAR* Bone = Foot == 0 ? TEXT("ball_l") : TEXT("ball_r");
+	if (!bMover && WornBody != nullptr && WornBody->DoesSocketExist(FName(Bone))) { return WornBody->GetSocketLocation(FName(Bone)); }
+	return GaspMover->GetMesh()->GetSocketLocation(FName(Bone));
+}
+
 // STEP 6, THE APPROACH AND THE START (Kingdom Come II's way, as his chosen stops): steered to where he joins the clip's
 // path, then along it (60 cm of its walk ahead of the nearest point); on the path each frame looks for a moment of the
 // chosen side's clips with his planted foot, its stance within 10 points of his, and his place within the tested
@@ -1780,6 +1890,62 @@ void ALedgerSliceCharacter::SitApproachTick(float DeltaSeconds)
 		int32 Foot = -1;
 		if (ContactFor[0] > 0.0f && (ContactFor[1] <= 0.0f || ContactFor[0] <= ContactFor[1])) { Foot = 0; }
 		else if (ContactFor[1] > 0.0f) { Foot = 1; }
+		// THE THIRD TRY, THE SAMPLE'S OWN SEARCH (29 October): each frame on the path the bench table picks the clip and
+		// the moment whose feet match his; it plays when the cost is at most 1.0, the clip is one this seat kept, and the
+		// moment's travel left lies inside a distance the room test passed (15 cm either way); else the next frame.
+		// -TomSitTableStart keeps the table start of the first two tries, for comparison.
+		static const bool bTable = FParse::Param(FCommandLine::Get(), TEXT("TomSitTableStart"));
+		UAnimInstance* ChooserGraph = GaspMover->GetMesh()->GetAnimInstance();
+		if (!bTable && TheChooser().bOk && ChooserGraph != nullptr)
+		{
+			const double Dist = FVector::Dist2D(GaspMover->GetMesh()->GetComponentLocation(), SitSlot.GetLocation());
+			float St = 0.0f, Cost = 100.0f;
+			UAnimMontage* Got = Choose(ChooserGraph, Dist, SideAngle(B.Name), St, Cost);
+			++GChooserFrames;
+			GBestCostAny = FMath::Min(GBestCostAny, Cost);
+			int32 Ei = INDEX_NONE;
+			for (int32 I = 0; I < GEntries.Num(); ++I) { if (GEntries[I].Montage == Got) { Ei = I; } }
+			if (Ei != INDEX_NONE)
+			{
+				const float Left = (float)Got->ExtractRootMotionFromTrackRange(St, Got->GetPlayLength(), FAnimExtractContext()).GetTranslation().Size2D();
+				bool bInBand = false;
+				for (const double W : GEntries[Ei].Windows) { bInBand |= FMath::Abs(Left - (float)W) <= 15.0f; }
+				// TRY 2 OF THIS DESIGN (29 October, 03:25: the first try's starts slid 3 to 35 cm, the worst where he stood
+				// 43 cm farther from the seat than the chosen moment's own root stands from its attach bone, a gap the warp
+				// stretches out of his step): his distance must match the moment's own, root to attach bone, within 15 cm
+				const FClipPose& CP = GEntries[Ei].Pose;
+				const FTransform RootAtT = Got->ExtractRootMotionFromTrackRange(0.0f, St, FAnimExtractContext()) * CP.RootStart;
+				const float ClipDist = (float)FVector::Dist2D(RootAtT.GetLocation(), CP.WarpBoneEnd.GetLocation());
+				bInBand = bInBand && CP.bOk && FMath::Abs((float)Dist - ClipDist) <= 15.0f;
+				if (bInBand) { GBestCostInBand = FMath::Min(GBestCostInBand, Cost); }
+				if (bInBand && Cost <= 1.0f)
+				{
+					if (UMotionWarpingComponent* Warp = GaspMover->FindComponentByClass<UMotionWarpingComponent>()) { Warp->AddOrUpdateWarpTargetFromTransform(FName(TEXT("SmartObject")), SitSlot); }
+					UCapsuleComponent* Cap = GaspMover->GetCapsuleComponent();
+					GSavedResponses = Cap->GetCollisionResponseToChannels();
+					Cap->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Ignore);
+					Cap->SetCollisionResponseToChannel(ECC_WorldDynamic, ECR_Ignore);
+					GaspMover->GetCharacterMovement()->SetMovementMode(MOVE_Flying);
+					ChooserGraph->Montage_PlayWithBlendIn(Got, FAlphaBlendArgs(0.25f), 1.0f, EMontagePlayReturnType::MontageLength, St);
+					SitMontage = Got;
+					SitPhase = ESitPhase::Entering;
+					SitPhaseAt = SitClock;
+					GLastApproach = TEXT("started");
+					// the slide over the planted foot's own stance, from the clip's table where it has the moment, else 0.3 s
+					// THE PLANTED FOOT BY ITS PLACE (29 October: the walk's contact reading called a swinging foot planted, one
+					// that travelled 125 cm while the body moved 70): the lower foot at the start, its slide measured while it
+					// stays within 2 cm of that height, for at most 0.4 s
+					GStartFoot = SitFootAt(0).Z <= SitFootAt(1).Z ? 0 : 1;
+					GStartFootAt = SitFootAt(GStartFoot);
+					GSlideCm = 0.0f;
+					GSlideUntil = SitClock + 0.4f;
+					UE_LOG(LogTemp, Display, TEXT("LedgerSit: step 6, started %s at %.2f s by the sample's search (cost %.2f; %.0f cm of its walk left, its root %.0f cm from its attach bone against his %.0f cm from the slot)"),
+						*GEntries[Ei].Name, St, Cost, Left, ClipDist, Dist);
+					return;
+				}
+			}
+		}
+		if (!bTable && TheChooser().bOk) { Foot = -1; }   // the search decides; the table start of the first two tries stays off
 		if (Foot >= 0)
 		{
 			const float Through = FMath::Clamp(ContactFor[Foot] / FMath::Max(StanceSeconds, 0.2f), 0.0f, 1.0f);
@@ -1818,10 +1984,10 @@ void ALedgerSliceCharacter::SitApproachTick(float DeltaSeconds)
 				SitPhase = ESitPhase::Entering;
 				SitPhaseAt = SitClock;
 				GLastApproach = TEXT("started");
-				GStartFoot = Foot;
-				GStartFootAt = GaspMover->GetMesh()->GetSocketLocation(Foot == 0 ? TEXT("ball_l") : TEXT("ball_r"));
+				GStartFoot = SitFootAt(0).Z <= SitFootAt(1).Z ? 0 : 1;
+				GStartFootAt = SitFootAt(GStartFoot);
 				GSlideCm = 0.0f;
-				GSlideUntil = SitClock + Hit->StanceLeft;
+				GSlideUntil = SitClock + 0.4f;
 				UE_LOG(LogTemp, Display, TEXT("LedgerSit: step 6, started %s at %.2f s (foot %s, %.0f%% through its stance against his %.0f%%; %.1f cm along, %.1f across, %.1f degrees off its place then; %.0f cm of its walk left)"),
 					*E.Name, Hit->T, Foot == 0 ? TEXT("left") : TEXT("right"), 100.0f * Hit->Through, 100.0f * Through, HitRel.X, HitRel.Y, HitYaw, Hit->Left);
 				return;
@@ -1832,8 +1998,8 @@ void ALedgerSliceCharacter::SitApproachTick(float DeltaSeconds)
 	if ((GStage == 1 && NearestLeft < (float)B.Windows[0] - 15.0f) || SitClock - SitPhaseAt > 8.0f)
 	{
 		const TCHAR* Why = SitClock - SitPhaseAt > 8.0f ? TEXT("no start in 8 s") : TEXT("past the entry with no start");
-		UE_LOG(LogTemp, Display, TEXT("LedgerSit: step 6 fallback: %s; the old start (on the path %d frames, in some moment's place %d, with his foot too %d, the nearest stance gap there %.0f points; his speed %.0f)"),
-			Why, GFramesOnLine, GFramesInPlace, GFramesFootToo, 100.0f * GBestGap, GaspMover->GetVelocity().Size2D());
+		UE_LOG(LogTemp, Display, TEXT("LedgerSit: step 6 fallback: %s; the old start (on the path %d frames, in some moment's place %d, with his foot too %d, the nearest stance gap there %.0f points; the search %d frames, its best cost %.2f, in a tested band %.2f; his speed %.0f)"),
+			Why, GFramesOnLine, GFramesInPlace, GFramesFootToo, 100.0f * GBestGap, GChooserFrames, GBestCostAny, GBestCostInBand, GaspMover->GetVelocity().Size2D());
 		SitPhase = ESitPhase::None;
 		GLastApproach = FString(TEXT("fallback: ")) + Why;
 		bSitNoApproach = true;
@@ -2105,21 +2271,23 @@ void ALedgerSliceCharacter::SitTick(float DeltaSeconds)
 	SitClock += DeltaSeconds;
 	if (SitPhase == ESitPhase::None || GaspMover == nullptr) { return; }
 	if (SitPhase == ESitPhase::Approaching) { SitApproachTick(DeltaSeconds); return; }
-	// the planted foot's slide after a matched start, for as long as the clip's own table keeps that foot down
+	// the planted foot's slide after a start, while it stays down (within 2 cm of its height at the start), at most 0.4 s
 	if (SitPhase == ESitPhase::Entering && LedgerSit::GStartFoot >= 0)
 	{
-		if (SitClock <= LedgerSit::GSlideUntil)
+		const FVector Now = SitFootAt(LedgerSit::GStartFoot);
+		if (SitClock <= LedgerSit::GSlideUntil && Now.Z <= LedgerSit::GStartFootAt.Z + 2.0)
 		{
-			const FVector Now = GaspMover->GetMesh()->GetSocketLocation(LedgerSit::GStartFoot == 0 ? TEXT("ball_l") : TEXT("ball_r"));
 			LedgerSit::GSlideCm = FMath::Max(LedgerSit::GSlideCm, (float)FVector::Dist2D(Now, LedgerSit::GStartFootAt));
 			// where the foot, the other foot and the root are from the start (29 October: the slide read 39 to 85 cm)
 			static float NextSay = 0.0f;
 			if (SitClock >= NextSay || SitClock - SitPhaseAt < 0.02f)
 			{
 				NextSay = SitClock + 0.1f;
-				const FVector Other = GaspMover->GetMesh()->GetSocketLocation(LedgerSit::GStartFoot == 0 ? TEXT("ball_r") : TEXT("ball_l"));
-				UE_LOG(LogTemp, Display, TEXT("LedgerSitSlide: %.2f s after the start (until %.2f): the planted foot %.1f cm from where it was, %.1f cm above the slot; the other %.1f cm above; the root %.1f cm on; the clip at %.2f s"),
-					SitClock - SitPhaseAt, LedgerSit::GSlideUntil - SitPhaseAt, FVector::Dist2D(Now, LedgerSit::GStartFootAt), Now.Z - SitSlot.GetLocation().Z, Other.Z - SitSlot.GetLocation().Z,
+				const FVector Other = SitFootAt(1 - LedgerSit::GStartFoot);
+				const FVector OnMover = SitFootAt(LedgerSit::GStartFoot, true);
+				UE_LOG(LogTemp, Display, TEXT("LedgerSitSlide: %.2f s after the start (until %.2f): the planted foot %.1f cm from where it was, %.1f cm above the slot (on the hidden mover: at %.0f, %.0f, %.0f against the worn body's %.0f, %.0f, %.0f); the other %.1f cm above; the root %.1f cm on; the clip at %.2f s"),
+					SitClock - SitPhaseAt, LedgerSit::GSlideUntil - SitPhaseAt, FVector::Dist2D(Now, LedgerSit::GStartFootAt), Now.Z - SitSlot.GetLocation().Z,
+					OnMover.X, OnMover.Y, OnMover.Z, Now.X, Now.Y, Now.Z, Other.Z - SitSlot.GetLocation().Z,
 					FVector::Dist2D(GaspMover->GetActorLocation(), LedgerSit::GStartFootAt), SitMontage != nullptr ? GaspMover->GetMesh()->GetAnimInstance()->Montage_GetPosition(SitMontage) : -1.0f);
 			}
 		}

@@ -63,6 +63,9 @@ public class LedgerProbe : ModuleRules
 		PrivateDependencyModuleNames.AddRange(new string[] { "PoseSearch", "BlendStack", "IKRig", "AnimationWarpingRuntime" });
 		// MotionWarping, 25 October (his order, item 2: Tom sits): the sample's bench clips are warped onto the seat.
 		PrivateDependencyModuleNames.Add("MotionWarping");
+		// Chooser, 29 October (sitting's third try): the Game Animation Sample's own bench chooser, called from C++ to
+		// pick the In clip and the moment whose feet match his (production/research/sit-and-turn/START-CHOOSER-2026-10-29.md).
+		PrivateDependencyModuleNames.Add("Chooser");
 		// The editor's graph and compiler, for the one script-made animation blueprint those nodes
 		// need (ULedgerMotionMatchTools; editor builds only).
 		if (Target.bBuildEditor)

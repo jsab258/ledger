@@ -197,6 +197,7 @@ private:
 	// stance within 10 points and his place inside the tested envelope; with none by the entry, the old start
 	bool TryStartSitApproach(int32 SeatIndex);
 	void SitApproachTick(float DeltaSeconds);
+	FVector SitFootAt(int32 Foot, bool bMover = false) const;
 	bool bSitNoApproach = false;
 	FVector SitPush = FVector::ZeroVector;
 	// -TomSitApproachTest: he walks in toward each seat from three places in the room, presses E, and the line says
