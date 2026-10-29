@@ -26,7 +26,7 @@ Disk (10-29 04:35): C: 242.7 GB free, F: 28.7 GB free.
 **Now and next** (your order of 25 October with the two of 28 October; production/orders/2026-10-25.md):
 - **Now, clothes:** Tom's jacket is in the game with Mafia's four levels of detail and passes the new asset checks, except three unused files (your page). The cuffs are rebuilt next by Marvelous's elastic rib, waiting on your click.
 - **Next, sitting:** Tom can walk inside Mickey's office again (it had an invisible solid block). He sits from 7 of 9 walk-ins with a plain start. The two natural starts, Kingdom Come II's table and Epic's own foot search, each tried twice, slid his foot up to 35 cm, so both are set aside: the small office leaves too little room to test where a start can begin. Research on that comes next.
-- **Then, the look:** the day is a stop too bright (your page). At night the street between the lamps is 87% black through your camera; next is a fill light, Mafia's way, shown to you first.
+- **Then, the look:** the day is a stop too bright (your page). At night 87% of your camera's view between the lamps is near black, as your 1 October ruling asks (pools with darkness between); I had begun to treat it as a fault, wrongly, and stopped. Next: Mafia's wear on Mickey's office and one shop front.
 - **Beside them:** the speech bench has run 16 of 42 trials: the small fast model is so far no faster and invents more. The town's rules for a surviving victim are now in the game's code (69,186 checks agree).
 - **Your camera:** 3.1 m in the game until you pick.
 
@@ -35,7 +35,7 @@ Disk (10-29 04:35): C: 242.7 GB free, F: 28.7 GB free.
 **Monday's risks:**
 1. Phase 1's exit waits on the cuffs (your Marvelous click) and on speech; it may not re-run by Monday.
 2. Sitting may ship this week with the plain start only.
-3. The night needs fill light, a look change that waits for your page.
+3. The look's next step (Mafia's wear on Mickey's office and one shop front) is 25 to 35 hours; only its start fits this week.
 4. Speech's 2 s bar: the faster first sentence shows no gain so far.
 5. Eleven other places in the code switch collision off the same broken way; fixing them may move the camera or the walk.
 
@@ -63,7 +63,7 @@ After these, on later pages: the animation source test at 6 moves, the map marks
 
 **Failed:**
 - Sitting's start on the matching foot: none in two tries. Epic's own foot search, tried twice, started him on every reachable walk-in but his foot slid up to 35 cm. Set aside: the small office limits where a start can be tested.
-- The night through your camera is 87% black between the lamps. A stop brighter, lifted blacks and a first fill trial did not fix it.
+- I treated the night's dark gaps as a fault and spent trials on filling them; your 1 October ruling asks for them. Stopped.
 - The small fast model writing the first sentence: so far no faster, and three invented details (16 of 42 trials).
 
 **Done:**

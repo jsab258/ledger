@@ -1,10 +1,10 @@
 {
  "tab": "The street's light",
  "kicker": "LEDGER · Thursday 29 October, morning · two decisions",
- "title": "The day a stop too bright; the night too black",
+ "title": "The day a stop too bright",
  "how": [
-  "Shortfalls first. At night, through your camera, the street between the lamps is nearly black: 87% of the picture is close to pure black, and one stop brighter only makes it 84%. Mafia keeps its gaps readable with a little fog and a cool fill light at night; that is the next work on the look, shown to you before anything changes. No decision on the night today.",
-  "Both pictures are through your camera at the game's own quality, with nobody in the street (Tom's trousers and shoes are not made yet). Unreal's own colour chart, photographed the same way, read about one stop too bright by day: its middle grey at 176 where 110 to 135 is right. One stop darker brings it inside."
+  "Shortfalls first: none new by day. At night, through your camera, 87% of the street between the lamps is close to black; that is your ruling of 1 October (pools of lamp light with darkness between), so nothing is changed there. Tom's trousers and shoes are not made yet, so nobody is in these pictures.",
+  "Both pictures are through your camera at the game's own quality. Unreal's own colour chart, photographed the same way, read about one stop too bright by day: its middle grey at 176 where 110 to 135 is right. One stop darker brings it inside."
  ],
  "foot": "Nothing bought or signed up for. Your camera question from yesterday is still open on its own page.",
  "sections": [
@@ -14,12 +14,24 @@
    "name": "The day, as it is and one stop darker",
    "note": "Top: as it is now. Bottom: one stop darker, the colour chart's middle grey inside its range. Only the camera's exposure differs.",
    "pictures": [
-    {"src": "production/approvals/2026-10-29-look/day-as-it-is.webp", "alt": "The street by day as it is now, a little washed out"},
-    {"src": "production/approvals/2026-10-29-look/day-one-stop-darker.webp", "alt": "The street by day one stop darker, the brick and the wet road richer"}
+    {
+     "src": "production/approvals/2026-10-29-look/day-as-it-is.webp",
+     "alt": "The street by day as it is now, a little washed out"
+    },
+    {
+     "src": "production/approvals/2026-10-29-look/day-one-stop-darker.webp",
+     "alt": "The street by day one stop darker, the brick and the wet road richer"
+    }
    ],
    "options": [
-    ["down1", "One stop darker (recommended)"],
-    ["keep", "Keep it as it is"]
+    [
+     "down1",
+     "One stop darker (recommended)"
+    ],
+    [
+     "keep",
+     "Keep it as it is"
+    ]
    ]
   },
   {
@@ -28,8 +40,14 @@
    "name": "Delete three unused materials left over from importing Tom's jacket?",
    "note": "When the jacket was first brought into Unreal it made three material files (Rib, Shell, Tape) that nothing uses: the jacket wears one baked material instead. The import no longer makes them. They fail the new asset checks only by their names. Deleting them changes nothing you can see.",
    "options": [
-    ["yes", "Delete them (recommended)"],
-    ["no", "Keep them"]
+    [
+     "yes",
+     "Delete them (recommended)"
+    ],
+    [
+     "no",
+     "Keep them"
+    ]
    ]
   }
  ]
