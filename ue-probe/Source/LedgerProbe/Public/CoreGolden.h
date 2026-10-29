@@ -5311,6 +5311,80 @@ namespace Golden
 		return A;
 	}
 
+	// THE LADDER FROM WHAT THEY GOT, AND THE SURVIVOR (the sweep's U3 closed, 29 October
+	// 2026), answered from Reaction.h as PerceptionGolden's EmitLadderEdgesAndSurvivor asks:
+	//   ReactWitness|slots|nerve|dutiful|willingness|body|alarmed|reaction
+	//     Decide(Severity(a view with those slots), ...), so the rung rides on the sum's bits;
+	//   ReactAsVictim|event|actor|victim|drawn|fled|familiarity|survived|field|value
+	//     one field of AsVictim's account ("null" is the C#'s null actor, here the empty
+	//     string, as everywhere in the port's Observation);
+	//   ReactFleeingVictim|slots or null|reaction|bit
+	inline bool ReactedNamed(const std::string& Name, Reaction::Reacted& Out)
+	{
+		const char* Names[] = { "Ignore", "Notice", "Investigate", "Alarm", "Flee", "Deliver", "FetchTheLaw", "Intervene" };
+		for (int K = 0; K < 8; ++K)
+		{
+			if (Name == Names[K]) { Out = (Reaction::Reacted)K; return true; }
+		}
+		return false;
+	}
+
+	inline Answer ReactSurvivorRow(const std::vector<std::string>& F)
+	{
+		Answer A;
+		const std::string& Fn = F[0];
+		if (Fn == "ReactWitness" && F.size() >= 8)
+		{
+			Observation View;
+			View.Slots = (Slot)I(F[1]);
+			A.Known = true;
+			A.Got = Reaction::NameOf(Reaction::Decide(Reaction::Severity(&View), D(F[2]), D(F[3]), D(F[4]), B(F[5]), B(F[6])));
+		}
+		else if (Fn == "ReactAsVictim" && F.size() >= 10)
+		{
+			Deed Dd;
+			Dd.EventId = F[1];
+			Dd.ActorId = F[2] == "null" ? std::string() : Unescape(F[2]);
+			Dd.VictimId = "v1";
+			Dd.WeaponDrawn = B(F[4]);
+			Dd.ActorFled = B(F[5]);
+			const Observation O = Reaction::AsVictim(Dd, Unescape(F[3]), D(F[6]), B(F[7]));
+			const std::string& Field = F[8];
+			A.Known = true;
+			if      (Field == "slots")         A.Got = FromInt((long long)(int)O.Slots);
+			else if (Field == "rung")          A.Got = FromInt(O.Rung);
+			else if (Field == "accused")       A.Got = Escape(O.AccusedId.empty() ? std::string("none") : O.AccusedId);
+			else if (Field == "certainty")     A.Got = FromDouble(O.Certainty);
+			else if (Field == "willingness")   A.Got = FromDouble(O.Willingness);
+			else if (Field == "witnessId")     A.Got = Escape(O.WitnessId);
+			else if (Field == "eventId")       A.Got = Escape(O.EventId);
+			else if (Field == "awareness")     A.Got = FromInt((long long)O.AwarenessState);
+			else if (Field == "retellings")    A.Got = FromInt(O.Retellings);
+			else if (Field == "namesSomebody") A.Got = FromBool(O.NamesSomebody());
+			else if (Field == "empty")         A.Got = FromBool(O.Empty());
+			else if (Field == "label")         A.Got = Escape(O.Label());
+			else if (Field == "severity")      A.Got = FromDouble(Reaction::Severity(&O));
+			else A.Known = false;
+		}
+		else if (Fn == "ReactFleeingVictim" && F.size() >= 4)
+		{
+			Reaction::Reacted What = Reaction::Reacted::Ignore;
+			if (!ReactedNamed(F[2], What)) { return A; }
+			A.Known = true;
+			if (F[1] == "null")
+			{
+				A.Got = FromBool(Reaction::IsFleeingVictim(nullptr, What));
+			}
+			else
+			{
+				Observation View;
+				View.Slots = (Slot)I(F[1]);
+				A.Got = FromBool(Reaction::IsFleeingVictim(&View, What));
+			}
+		}
+		return A;
+	}
+
 	inline Answer Evaluate(const std::vector<std::string>& F)
 	{
 		Answer A;
@@ -5467,6 +5541,11 @@ namespace Golden
 			{
 				if (F[1] == Names[K]) { A.Known = true; A.Got = FromDouble(Reaction::LoudnessOf((Reaction::Reacted)K)); }
 			}
+		}
+		// The ladder from what they got, and the survivor (U3 closed, 29 October 2026).
+		else if (Fn == "ReactWitness" || Fn == "ReactAsVictim" || Fn == "ReactFleeingVictim")
+		{
+			A = ReactSurvivorRow(F);
 		}
 		else if ((Fn == "CataloguesYourCoat" || Fn == "IsPublicEvent") && F.size() >= 3)
 		{

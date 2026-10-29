@@ -13,8 +13,9 @@
 // TRANSLITERATION, NOT REWRITE, by the same rule as every other file here:
 // the C# is the behavioural definition, every constant and branch matches its
 // source, and the golden table is the proof rather than this comment: the
-// Confront, CataloguesYourCoat, IsPublicEvent and ReactionConst rows, emitted
-// by ledger/PerceptionGolden and answered in CoreGolden.h's Evaluate.
+// Confront, CataloguesYourCoat, IsPublicEvent and ReactionConst rows, and the
+// ladder's and the survivor's React* rows, emitted by ledger/PerceptionGolden
+// and answered in CoreGolden.h's Evaluate.
 //
 // SCOPE: Lawful, Confront, ResistPressure, CataloguesYourCoat, IsPublicEvent -
 // the arrest section - and, since 27 October 2026 (the 5 October sweep's U3;
@@ -22,7 +23,9 @@
 // ladder's rules: Reacted, Decide, Severity, LoudnessOf, AlarmLoudness. The
 // ladder is ported and golden but not yet wired to the window: the game's
 // townspeople cannot walk, so its Investigate rung would show nothing where
-// today they shout. The survivor (AsVictim) is NOT PORTED, and says so here.
+// today they shout. Since 29 October 2026 (U3 closed) the survivor too:
+// AsVictim and IsFleeingVictim, so the whole of Reaction.cs is here. The game
+// calls none of the ladder or the survivor yet.
 //
 // NO UNREAL TYPE IS IN THIS FILE, as with every Core module in the port: the
 // arithmetic lives where the tests run.
@@ -167,6 +170,55 @@ namespace LedgerCore
 				case Lawful::ResistedArrest: return "ResistedArrest";
 				default:                     return "NothingToArrest";
 			}
+		}
+
+		// ---------------------------------------------------------------
+		// THE SURVIVOR - spec 15.3 (Reaction.cs AsVictim, IsFleeingVictim;
+		// ported 29 October 2026, the sweep's U3 closed)
+		// ---------------------------------------------------------------
+
+		/// THE MOST DANGEROUS WITNESS IN THE GAME IS THE MAN YOU FAILED TO
+		/// KILL: close, lit, facing you, and with every reason in the world to
+		/// talk. Being attacked guarantees rung 3 and usually rung 4 - he was
+		/// looking right at you - so this returns the victim's own
+		/// observation, biased rather than computed from a vantage.
+		///
+		/// The C#'s two tests of familiarity (the rung, then the name) are kept
+		/// as two, in its order. NULL IS THE EMPTY STRING HERE, as everywhere in
+		/// the port's Observation: the C# writes AccusedId = null, this writes
+		/// "", and both read as "nobody named" through NamesSomebody.
+		inline Observation AsVictim(const Deed& InDeed, const std::string& VictimId,
+		                            double FamiliarityWithActor, bool bSurvived)
+		{
+			Observation O;
+			O.WitnessId = VictimId;
+			O.EventId = InDeed.EventId;
+			O.Slots = Slot::Act | Slot::Victim | Slot::Actor;
+			O.Rung = FamiliarityWithActor >= Perception::RecognitionFamiliarity ? 4 : 3;
+			O.AccusedId = FamiliarityWithActor >= Perception::RecognitionFamiliarity
+			              ? InDeed.ActorId : std::string();
+			O.Certainty = 0.94;
+			// He has every reason to talk, and the only thing that reliably
+			// stops him is fear of the man who just tried it.
+			O.Willingness = 0.9;
+			if (InDeed.WeaponDrawn) { O.Slots |= Slot::Draw; }
+			if (InDeed.ActorFled) { O.Slots |= Slot::Flight; }
+			// A dead man is not a witness. Stated in code because the whole
+			// trade in combat-spec.md 2 turns on it: killing really does
+			// solve the witness, and the second problem is always larger.
+			// (As in the C#, his id, the event and his willingness stay.)
+			if (!bSurvived) { O.Slots = Slot::None; O.Rung = 0; O.AccusedId = std::string(); O.Certainty = 0; }
+			return O;
+		}
+
+		/// A fleeing target is a delivering witness who also happens to be the
+		/// victim - the tensest chase in the design, and it needs no chase
+		/// mechanic at all. He is going somewhere and you know where.
+		/// (Reaction.cs IsFleeingVictim; the C#'s null view is a null pointer.)
+		inline bool IsFleeingVictim(const Observation* VictimView, Reacted What)
+		{
+			return VictimView != nullptr && !VictimView->Empty()
+			       && (What == Reacted::Flee || What == Reacted::Deliver || What == Reacted::FetchTheLaw);
 		}
 	}
 }

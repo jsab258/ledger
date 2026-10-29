@@ -105,6 +105,45 @@ namespace Ledger.CoreTests
             Check(!anyGraver, "at a window nobody flees, fetches the law, steps in or goes to tell");
             Check(Reaction.Decide(1.0, 0.5, 0.9, 0.5, true, false) == Reacted.FetchTheLaw,
                   "a body with a dutiful witness fetches the law (his ruling keeps Mickey's people below it)");
+            // Called from here rather than from Program.cs, which the push guard keeps unedited.
+            TestLadderEdgesAndSurvivor();
+        }
+
+        /// U3 CLOSED (29 October 2026): THE LADDER'S EDGES AND THE SURVIVOR, the cases the port's new golden rows
+        /// (PerceptionGolden EmitLadderEdgesAndSurvivor) turn on, held here on the C# they are copied from.
+        static void TestLadderEdgesAndSurvivor()
+        {
+            Console.WriteLine("The ladder's edges and the survivor (the sweep's U3, closed):");
+            var actAndAftermath = new Observation { Slots = Slot.Act | Slot.Aftermath };
+            Check(Reaction.Severity(actAndAftermath) == 0.75
+                  && Reaction.Decide(Reaction.Severity(actAndAftermath), 0.27, 0.5, 0.3, false, false) == Reacted.Flee,
+                  "the act and the aftermath sum to exactly 0.75, so their witness is on the body's branch without a body",
+                  $"{Reaction.Severity(actAndAftermath):R}");
+            Check(Reaction.Decide(double.NaN, 0.2, 0.6, 0.3, false, true) == Reacted.Notice
+                  && Reaction.Decide(0.45, double.NaN, 0.6, -1.0, false, true) == Reacted.Alarm,
+                  "a severity that is not a number turns a head; a nerve that is not one shouts");
+
+            var deed = new Deed { EventId = "e1", ActorId = "a1", VictimId = "v1", WeaponDrawn = true, ActorFled = true };
+            double rf = Perception.RecognitionFamiliarity;
+            var at = Reaction.AsVictim(deed, "v2", rf, survived: true);
+            var below = Reaction.AsVictim(deed, "v2", Math.BitDecrement(rf), survived: true);
+            Check(at.Rung == 4 && at.AccusedId == "a1" && below.Rung == 3 && below.AccusedId == null,
+                  "the survivor names him from exactly recognition's familiarity, and not a step below it");
+            Check(at.WitnessId == "v2" && at.Slots == (Slot.Act | Slot.Victim | Slot.Actor | Slot.Draw | Slot.Flight)
+                  && at.Certainty == 0.94 && at.Willingness == 0.9,
+                  "his account is his own (the id he is given, not the deed's), every part of it, sure and willing");
+            var dead = Reaction.AsVictim(deed, "v2", 0.8, survived: false);
+            Check(dead.Empty && dead.Rung == 0 && dead.AccusedId == null && dead.Certainty == 0
+                  && dead.WitnessId == "v2" && dead.EventId == "e1" && dead.Willingness == 0.9,
+                  "a dead man's account is emptied, but his id, the event and his willingness stay, as the port keeps them");
+            bool onlyTheThree = true;
+            foreach (Reacted r in Enum.GetValues(typeof(Reacted)))
+            {
+                bool going = r == Reacted.Flee || r == Reacted.Deliver || r == Reacted.FetchTheLaw;
+                onlyTheThree &= Reaction.IsFleeingVictim(at, r) == going && !Reaction.IsFleeingVictim(dead, r)
+                                && !Reaction.IsFleeingVictim(null, r);
+            }
+            Check(onlyTheThree, "a survivor is a fleeing victim when he flees, goes to tell or fetches the law; a dead man and nobody never");
         }
 
         /// G1's geography, the second part: WHO STANDS WHERE ON QUAY STREET AT THE HOUR, and which way they look.

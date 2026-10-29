@@ -414,6 +414,95 @@ namespace Ledger.PerceptionGolden
             Row(sb, "ReactionConst", "AlarmLoudness", D(Reaction.AlarmLoudness));
         }
 
+        /// THE LADDER'S EDGES AND THE SURVIVOR (the sweep's U3 closed, 29 October
+        /// 2026; production/audits/sweep-2026-10-05/port-vs-core.md). Four
+        /// families the grid above does not ask:
+        /// - Decide on numbers that are not numbers or not finite (NaN and both
+        ///   infinities in each argument, willingness outside 0..1): a NaN
+        ///   severity turns a head, a NaN nerve shouts, by the C#'s own tests.
+        /// - ReactWitness, Severity fed straight into Decide for all 128 slot
+        ///   sets and four temperaments in three situations, so the rung rides
+        ///   on the sum's own bits (the act and the aftermath land exactly on
+        ///   0.75), which the Severity rows' tolerance alone would let by.
+        /// - ReactAsVictim, every field of the survivor's account over the
+        ///   recognition boundary (one step below Perception.RecognitionFamiliarity,
+        ///   at it, one above), a drawn weapon, a flight, survived or not, and an
+        ///   actor who is null or empty.
+        /// - ReactFleeingVictim, over a null view, an empty one and four others,
+        ///   for every reaction.
+        static void EmitLadderEdgesAndSurvivor(StringBuilder sb)
+        {
+            double nan = double.NaN, inf = double.PositiveInfinity, ninf = double.NegativeInfinity;
+            foreach (var sev in new[] { nan, inf, ninf, 0.45, 0.95 })
+                foreach (var nerve in new[] { nan, inf, ninf, 0.2, 0.9 })
+                    foreach (var dutiful in new[] { nan, ninf, 0.6 })
+                        foreach (var will in new[] { nan, -1.0, 2.0 })
+                            foreach (var body in new[] { false, true })
+                                Row(sb, "ReactDecide", D(sev), D(nerve), D(dutiful), D(will), Bit(body), Bit(true),
+                                    Reaction.Decide(sev, nerve, dutiful, will, body, true).ToString());
+
+            // Timid; curious and willing; dutiful; bold and unwilling. Then no body
+            // and no alarm, a body, and an alarm already raised without one.
+            var temperaments = new[] { (0.2, 0.3, 0.3), (0.41, 0.5, 0.41), (0.6, 0.56, 0.3), (0.9, 0.5, 0.3) };
+            var situations = new[] { (false, false), (true, false), (false, true) };
+            for (int slots = 0; slots < 128; slots++)
+                foreach (var (nerve, dutiful, will) in temperaments)
+                    foreach (var (body, alarmed) in situations)
+                    {
+                        var view = new Observation { Slots = (Slot)slots };
+                        Row(sb, "ReactWitness", slots.ToString(Inv), D(nerve), D(dutiful), D(will), Bit(body), Bit(alarmed),
+                            Reaction.Decide(Reaction.Severity(view), nerve, dutiful, will, body, alarmed).ToString());
+                    }
+
+            var fields = new[] { "slots", "rung", "accused", "certainty", "willingness", "witnessId", "eventId",
+                                 "awareness", "retellings", "namesSomebody", "empty", "label", "severity" };
+            double rf = Perception.RecognitionFamiliarity;
+            var fams = new[] { ninf, -0.5, 0.0, 0.34, Math.BitDecrement(rf), rf, Math.BitIncrement(rf), 0.8, 1.0, 1.5, inf, nan };
+            void Survivor(string actor, bool drawn, bool fled, double fam, bool survived)
+            {
+                var deed = new Deed { EventId = "e1", ActorId = actor, VictimId = "v1", WeaponDrawn = drawn, ActorFled = fled };
+                // The victim's id is the argument's, not the deed's: "v2" proves which one is read.
+                var o = Reaction.AsVictim(deed, "v2", fam, survived);
+                foreach (var f in fields)
+                {
+                    string got;
+                    switch (f)
+                    {
+                        case "slots": got = ((int)o.Slots).ToString(Inv); break;
+                        case "rung": got = o.Rung.ToString(Inv); break;
+                        case "accused": got = Esc(string.IsNullOrEmpty(o.AccusedId) ? "none" : o.AccusedId); break;
+                        case "certainty": got = D(o.Certainty); break;
+                        case "willingness": got = D(o.Willingness); break;
+                        case "witnessId": got = Esc(o.WitnessId); break;
+                        case "eventId": got = Esc(o.EventId); break;
+                        case "awareness": got = ((int)o.Awareness).ToString(Inv); break;
+                        case "retellings": got = o.Retellings.ToString(Inv); break;
+                        case "namesSomebody": got = Bit(o.NamesSomebody); break;
+                        case "empty": got = Bit(o.Empty); break;
+                        case "label": got = Esc(o.Label()); break;
+                        default: got = D(Reaction.Severity(o)); break;
+                    }
+                    Row(sb, "ReactAsVictim", "e1", Esc(actor), "v2", Bit(drawn), Bit(fled), D(fam), Bit(survived), f, got);
+                }
+            }
+            foreach (var fam in fams)
+                foreach (var drawn in new[] { false, true })
+                    foreach (var fled in new[] { false, true })
+                        foreach (var survived in new[] { true, false })
+                            Survivor("a1", drawn, fled, fam, survived);
+            foreach (var actor in new[] { null, "" })
+                foreach (var fam in new[] { 0.0, rf, 0.8 })
+                    foreach (var survived in new[] { true, false })
+                        Survivor(actor, false, false, fam, survived);
+
+            foreach (var view in new[] { "null", "0", "1", "4", "28", "127" })
+                foreach (Reacted r in Enum.GetValues(typeof(Reacted)))
+                {
+                    var o = view == "null" ? null : new Observation { Slots = (Slot)int.Parse(view, Inv) };
+                    Row(sb, "ReactFleeingVictim", view, r.ToString(), Bit(Reaction.IsFleeingVictim(o, r)));
+                }
+        }
+
         static void EmitStance(StringBuilder sb)
         {
             var sus = new[] { 0.0, 0.21, 0.22, 0.47, 0.48, 0.4910, 0.5, 0.5455, 0.76, 0.77, 1.0 };
@@ -3906,6 +3995,7 @@ namespace Ledger.PerceptionGolden
 
             EmitArrest(sb);
             EmitLadder(sb);
+            EmitLadderEdgesAndSurvivor(sb);
             EmitStance(sb);
             EmitScenarios(sb);
             EmitSchedule(sb);
