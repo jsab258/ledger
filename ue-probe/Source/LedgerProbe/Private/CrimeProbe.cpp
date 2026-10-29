@@ -4534,9 +4534,12 @@ namespace
 						S.LocalExposureHighlightContrastScale = LocalHighlight > 0.0 ? (float)LocalHighlight : 1.0f;
 						S.bOverride_LocalExposureShadowContrastScale = LocalShadow > 0.0;
 						S.LocalExposureShadowContrastScale = LocalShadow > 0.0 ? (float)LocalShadow : 1.0f;
-						S.bOverride_ColorGamma = bGrade;
+						// BY DAY ONLY (29 October, the chart at night: neutral 5 warmed 9 levels, past the check's 3 to 8, and the
+						// black patch's blue fell to 1 of 255): the lit room at night is already warm from its own lamps
+						const bool bGradeNow = bGrade && LedgerVignetteShot::SunOnNow();
+						S.bOverride_ColorGamma = bGradeNow;
 						S.ColorGamma = Gamma;
-						S.bOverride_ColorGammaShadows = bGrade;
+						S.bOverride_ColorGammaShadows = bGradeNow;
 						S.ColorGammaShadows = GammaShadows;
 						return true;
 					};
@@ -5091,7 +5094,14 @@ namespace
 		// the street's half from the camera's situation row (SliceCharacter.cpp CameraRowTick: talk, run, street), the
 		// office's own numbers inside
 		ALedgerSliceCharacter* RowCam = Cast<ALedgerSliceCharacter>(GPawn);
-		if (RowCam != nullptr) { RowCam->SetOfficeOwnsArm(true); }
+		// with the low rooms' row on (-RoomRow), the row has the whole camera inside and the office's pivot eases out
+		const bool bRowInside = RowCam != nullptr && RowCam->RoomRowOn() && bIn;
+		if (RowCam != nullptr) { RowCam->SetInRoom(bIn); RowCam->SetOfficeOwnsArm(!bRowInside); }
+		if (bRowInside)
+		{
+			Boom->TargetOffset.Z = FMath::FInterpTo(Boom->TargetOffset.Z, 0.0f, Dt, 4.0f);
+			return;
+		}
 		const float StreetArmNow = RowCam != nullptr && RowCam->SituationArmCm() > 0.0f ? RowCam->SituationArmCm() : GOffice.StreetArm;
 		const float StreetLiftNow = RowCam != nullptr && RowCam->SituationArmCm() > 0.0f ? RowCam->SituationUpCm() : GOffice.StreetLift;
 		const float Want = bIn ? (float)GOffice.ArmM * 100.0f : StreetArmNow;

@@ -193,11 +193,9 @@ def marks(rng):
     grain = 0.85 + 0.15 * np.clip(smooth_noise(rng, n, (16, 32, 64)) * 1.4 - 0.2, 0.0, 1.0)
     sides = np.clip(np.minimum(xx, 1.0 - xx) / 0.015, 0.0, 1.0)
     smoke = soften(fall * grain, 2) * sides                              # the sides after the blur, or it fills them
-    # A WALL DECAL PRINTS ITS PICTURE'S FIRST ROW AT ITS FOOT (measured 29 October in the office's base-colour view: drawn
-    # full at the top, the smoke darkened the wall least under the ceiling and most at 1.3 m, then stopped in a line), so
-    # the picture is stored the other way up: its last row is the ceiling's edge
-    smoke = smoke[::-1].copy()
-    smoke[:2, :] = 0.0                                                   # nothing at the foot's own row
+    # (29 October: the first prints hung upside down, as every wall mark had; the game's spawner now prints a wall
+    # picture's first row at the mark's top, VignetteShot.cpp SpawnWear, so the smoke is drawn the right way up)
+    smoke[-2:, :] = 0.0                                                  # nothing at the foot's own row
     out["wear_smoke"] = smoke
     return out
 
@@ -287,9 +285,8 @@ def selftest():
     check("a notice's pale patch fades to nothing at every edge", max(pl[0, :].max(), pl[-1, :].max(), pl[:, 0].max(), pl[:, -1].max()) < 0.02)
     check("and is a filled oblong, strong in its middle", pl[SIZE // 2, SIZE // 2] > 0.75 and (pl > 0.5).mean() > 0.45)
     sm = marks(np.random.default_rng(19901006))["wear_smoke"]
-    check("smoke is full under the ceiling (the picture's last rows: a wall decal prints its first row at its foot)",
-          sm[-20:-4, SIZE // 4:3 * SIZE // 4].mean() > 0.7)
-    check("and gives out at its foot", sm[:3, :].max() < 0.05 and sm[SIZE // 4, :].mean() < 0.25)
+    check("smoke is full under the ceiling (the picture's first rows: the mark's top)", sm[4:20, SIZE // 4:3 * SIZE // 4].mean() > 0.7)
+    check("and gives out at its foot", sm[-3:, :].max() < 0.05 and sm[3 * SIZE // 4, :].mean() < 0.25)
     check("its sides fade so the corners show no edge", max(sm[:, 0].max(), sm[:, -1].max()) < 0.1)
     rng = np.random.default_rng(19901002)
     a = puddle(rng)

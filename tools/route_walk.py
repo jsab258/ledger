@@ -451,8 +451,8 @@ def walk(editor, out, town=False, sit=False):
             r.by_road(t[0], ROAD_Z, tol=0.5)
             t = r.where().get("tom") or t
             r.turn_to(bearing(t[0], t[1], t[0] + 10.0, t[1]))
-            filmed("run", "walk", "forward", "2.5", "--run", "--film")
-            filmed("run-stop", "wait", "3", "--film")
+            # the run and its stop in one command (--tail), or the second between two commands drops the stop
+            filmed("run", "walk", "forward", "2.5", "--run", "--film", "--tail", "3")
     # THE DEED: by the road to Rita's window, then up to it, facing it.
     w = r.where()
     if "window" in w and "tom" in w:

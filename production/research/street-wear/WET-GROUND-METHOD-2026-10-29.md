@@ -99,3 +99,11 @@ A fresh reviewer (WET-GROUND-METHOD-REVIEW-2026-10-29.md) passed this file with 
 5. **Step 1: the wet base colour subtracts water's own 0.02**, and the flags' band has one home (FLAGS-BRICK-BANDS-2026-10-29.md, revised), not two.
 6. **Step 5 changes one thing at a time:** the lamps' output alone first, measured by the project's pool_clip.py (clip at or under 2% in the nearest pool, pool to gap 4 to 20); the night's highlight contrast only if that fails.
 The checks of steps 3 and 4 have no project tool yet; each is written before its step is tried.
+
+## Step 3's build, planned (29 October 2026, evening)
+
+- **Where it lives:** a ground-only copy of the street material (asphalt, flags, kerb), so the walls and fronts keep today's cheaper default-lit shading; the game picks it by surface (VignetteShot.cpp's street rows). Reason: a clear coat on the shared material would make every wall pay its cost; the frame-time step measures the copy (I).
+- **The coat's amount c:** the material's existing water mask (the texture's grain and a broad noise against the water level, today on the asphalt only), extended to the flags and kerb with their own level; plus a painted channel along the kerb later (step 3's second half).
+- **The two layers:** coat = c, coat roughness 0.03; the bottom layer's roughness the wet stone's (the look file's wet floor, 0.54 to 0.68 by step 2); the top normal eased from the stone's to flat by c (the review's fix 1) and the bottom normal the stone's, through Unreal's clear-coat bottom-normal output, which needs r.ClearCoatNormal on for the project (one shader permutation more; recorded when set).
+- **Its checks:** tools/wet_ground_check.py road (the sheet's three regions, blue over red, the near lane's relief, the dash) on the hook and reverse day views, at the true exposure, after c is re-derived there (the review's fix 4); then the gate.
+- **Not yet decided:** the flags' level and the painted channel; both measured, not guessed.

@@ -80,14 +80,14 @@
   {
    "who": "Tom",
    "name": "TomZipJacket",
-   "fbx": "F:/LedgerTools/garments/tom/zip_jacket/v28-built19/skinned/zip_jacket_skinned.fbx",
+   "fbx": "F:/LedgerTools/garments/tom/zip_jacket/v19/skinned/zip_jacket_skinned.fbx",
    "hides": [
     "top"
    ],
    "maps": {
-    "colour": "F:/LedgerTools/garments/tom/zip_jacket/v28-built19/baked/zip_jacket_colour_ao.png",
-    "normal": "F:/LedgerTools/garments/tom/zip_jacket/v28-built19/baked/zip_jacket_normal_dx.png",
-    "packed": "F:/LedgerTools/garments/tom/zip_jacket/v28-built19/baked/zip_jacket_packed.png",
+    "colour": "F:/LedgerTools/garments/tom/zip_jacket/v19/baked/zip_jacket_colour_ao.png",
+    "normal": "F:/LedgerTools/garments/tom/zip_jacket/v19/baked/zip_jacket_normal_dx.png",
+    "packed": "F:/LedgerTools/garments/tom/zip_jacket/v19/baked/zip_jacket_packed.png",
     "tint": [
      0.082,
      0.107,
@@ -104,8 +104,8 @@
      0.58
     ]
    },
-   "handed": "2026-10-29",
-   "made": "Tom's zip jacket from Marvelous drape 19 (straight-elbowed drape body, bent back to his reference pose) with its cuffs built round his wrist in the bake (his order C9, the bake route after Marvelous's elastic rib failed twice: tools/md/build_cuffs.py --edge-at-hand --gather; DECISIONS.md, 29 October): the sleeve cut square 18 mm above the wrist and gathered into a 60 mm rib band whose lower edge sits at the hand joint; every cuff mark passes (largest gap 4.6 and 4.8 mm, centres 12 mm past the wrist, full cover, nothing inside); baked and skinned as drape 19 was (BAKE-PLAN-2026-10-27.md). Known faults kept from drape 19: a small opening at the collar's front left of the zip seen standing (29 October, the sit film's review), a bright patch in each elbow's crook, the lowered arms sinking into the sides, a crumple at the left hip, side-fold spikes. Navy (tint linear 0.082, 0.107, 0.247 on the 0.53 grey: about navy cotton) until he chooses its colour."
+   "handed": "2026-10-28",
+   "made": "Tom's zip jacket from Marvelous drape 19 (straight-elbowed drape body, bent back to his reference pose), baked and skinned (BAKE-PLAN-2026-10-27.md; SLEEVE-END-2026-10-28.md). His page of 28 October: worn in the game with these cuffs so the walk, the light and the bent elbow are judged while baked cuffs are built. Known faults: the lump where sleeve meets cuff, cloth inside each wrist, a bright patch in each elbow's crook, the lowered arms sinking into the sides, a crumple at the left hip, the collar notch, side-fold spikes. Navy (tint linear 0.082, 0.107, 0.247 on the 0.53 grey: about navy cotton) until he chooses its colour."
   }
  ]
 }

@@ -8,17 +8,17 @@ Failed its exit on 22 Oct (production/audits/phase1-exit/CLOSE-2026-10-22.md); r
 
 - [x] 1. Health check; the order ledger.
 - [x] 2. The walk: Epic's, Tom's MetaHuman, packaged; tester's route 15 of 15. Sit set aside.
-- [ ] 3. Clothes (his order C): built cuffs pass and are imported; packaged build and gate next.
+- [ ] 3. Clothes (his order C): jacket with built cuffs in the packaged game; jumper's job ready (JUMPER-PLAN), waits for Marvelous.
 - [ ] 4. Speech: faster first sentence, 16 of 42 run, no gain yet (FastFirst.cs).
-- [ ] 5. Mickey's office: door, grain; look: day a stop darker; office marks 18 of 19; streets too dark.
+- [ ] 5. Look (D11): walls pass; office smoke passes, grade by day; wet ground's coat built, to try.
 - [ ] 6. Phase 1's exit re-run; phase 2?
-- Also: sitting by spots (plain start; packaged sit walk next), asset checks, camera 3.1 m.
+- Also: sitting 13 of 13 packaged, seat sharing fixed; camera talk and run rows to show.
 
 ## Studies this week (aaa-reference/STUDY-PLAN.md)
 
 Done 16 of 16.
 
-STATE (29 Oct 14:05): sit walk 13 of 13 packaged; street surfaces measured, third round gating.
+STATE (29 Oct 17:50): build running; then sit and camera films, his page.
 
 ## Handovers
 

@@ -1048,7 +1048,7 @@ namespace
 	// can put it back, and the flat one a film of water leaves.
 	TArray<UTexture2D*> GStreetNormals;
 	UTexture2D* GStreetFlatNormal = nullptr;
-	int32 GStreetGlassHidden = 0, GStreetFilm = 0, GStreetGlassWorn = 0;
+	int32 GStreetGlassHidden = 0, GStreetFilm = 0, GStreetGlassWorn = 0, GStreetCoated = 0;
 	// THE SEE-THROUGH GLASS, made by tools/ue/make_glass_material.py in the
 	// same editor run as the base material. Null when the build lacks it,
 	// and the glass is then left out as before.
@@ -2534,18 +2534,18 @@ namespace
 			(int)GStreetPictures, (int)GStreetPicturesAsked,
 			(int)GStreetTextured, (int)GStreetTexAsked, (int)GStreetDrawn, (int)GStreetGlowing, (int)GStreetWet,
 			GLook.GlowGain);
-		char LookBuf[480];
+		char LookBuf[520];
 		std::snprintf(LookBuf, sizeof(LookBuf),
 			" lookFrom=%s lookRead=%d/20 lookNightPin=%.3f lookFogCapGainDay=%.2f lookStreetInPlay=%s lookWetFloors=%d lookNightBias=%.2f lookSurfaceGains=%d lookSkySeenGain=%.3f lookFogDay=%.3f,%.3f,%.3f lookFogFalloff=%.4f"
 			" lookWetFilmFrom=%.2f lookRoomGain=%.2f lookSunGain=%.3f lookSkyLightGain=%.3f"
-			" streetFilm=%d streetGlassHidden=%d streetGlassWorn=%d/see-through-%s",
+			" streetFilm=%d streetCoated=%d streetGlassHidden=%d streetGlassWorn=%d/see-through-%s",
 			LedgerVignette::NoSpaces(GLookNote).c_str(), GLook.Read, GLook.NightExposurePin, GLook.FogCapGainDay,
 			GLook.bStreetInPlay ? "yes/scene-file-collision-kept" : "no", (int)GLook.WetFloors.size(),
 			GLook.NightExposureBias,
 			(int)GLook.SurfaceGains.size(), GLook.SkySeenGain,
 			GLook.FogDayR, GLook.FogDayG, GLook.FogDayB, GLook.FogFalloff,
 			GLook.WetFilmFrom, GLook.RoomGain, GLook.SunGain, GLook.SkyLightGain,
-			(int)GStreetFilm, (int)GStreetGlassHidden, (int)GStreetGlassWorn,
+			(int)GStreetFilm, (int)GStreetCoated, (int)GStreetGlassHidden, (int)GStreetGlassWorn,
 			!GLook.bGlassSeeThrough ? "no" : (GGlassMaterial != nullptr ? "yes/M_LedgerGlass" : "yes/no-translucent-material-in-this-build/left-out"));
 		char CollBuf[160];
 		std::snprintf(CollBuf, sizeof(CollBuf),
@@ -7319,8 +7319,13 @@ namespace
 					continue;
 				}
 			}
-			UMaterialInstanceDynamic* Mid = UMaterialInstanceDynamic::Create(GBaseMaterial, A);
+			// THE GROUND IN ITS OWN MATERIAL when the look file asks (ground_coat; StreetMeshes.h): the road, flags and
+			// kerb, whose water is a clear coat over wet stone; every other surface keeps M_LedgerSurface
+			static UMaterialInterface* GroundMaterial = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Ledger/M_LedgerGround.M_LedgerGround"));
+			const bool bGround = GLook.bGroundCoat && GroundMaterial != nullptr && LedgerStreet::TakesWater(Rw.Base);
+			UMaterialInstanceDynamic* Mid = UMaterialInstanceDynamic::Create(bGround ? GroundMaterial : GBaseMaterial, A);
 			if (Mid == nullptr) { continue; }
+			if (bGround) { ++GStreetCoated; }
 			UTexture2D* Albedo = nullptr;
 			UTexture2D* NormalMap = nullptr;
 			UTexture2D* RoughMap = nullptr;
@@ -8587,13 +8592,17 @@ namespace
 					{
 						GStreetFlatNormal = MakeFlatTexture(128, 128, 255, false, TEXT("street-flat-normal"));
 					}
-					const bool bFilm = C.Wetness >= GLook.WetFilmFrom;
+					const bool bCoat = GLook.bGroundCoat && GStreetCoated > 0;
+					const bool bFilm = !bCoat && C.Wetness >= GLook.WetFilmFrom;
 					// THE ROAD HOLDS WATER ONLY WHERE IT IS LOW (8 October; production/research/
 					// street-wear/WET-ROAD-2026-10-08.md): the asphalt keeps its relief and takes the
 					// look file's water level, which the material turns into water in its hollows and
 					// dips and wet stone between; the other ground keeps its film.
-					const double Level = (bFilm && Rw.Base == "asphalt")
-						? (C.SunOn ? GLook.WaterLevelDay : GLook.WaterLevelNight) : 0.0;
+					// with the ground's coat (step 3) the level lays water wherever the ground is wet, the road's by day or
+					// night and the flags' and kerb's their own, and no relief is ever swapped flat
+					const double Level = bCoat
+						? (C.Wetness > 0.0 ? (Rw.Base == "asphalt" ? (C.SunOn ? GLook.WaterLevelDay : GLook.WaterLevelNight) : GLook.WaterLevelFlags) : 0.0)
+						: ((bFilm && Rw.Base == "asphalt") ? (C.SunOn ? GLook.WaterLevelDay : GLook.WaterLevelNight) : 0.0);
 					Mid->SetScalarParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::WaterLevelParam())), (float)Level);
 					// AND THE FILM REFLECTS AS A WET CHIPPED ROAD, NOT A POND (8 October; production/lab/
 					// ROAD-NOTES.md): the look file's film_specular on the wet asphalt, 0.5 elsewhere
@@ -8890,7 +8899,13 @@ namespace
 			else
 			{
 				N = FVector(FMath::Sin(A), -FMath::Cos(A), 0.0);   // 0 east walls, 180 west, 270 a gable facing south (2 October)
-				Turn = FRotationMatrix::MakeFromXY(-N, FVector(0.0, 0.0, 1.0)).Rotator();
+				// THE PICTURE THE RIGHT WAY UP (29 October, measured in the office's base-colour view with and without its
+				// marks: a hand smudge drawn darkest above its middle darkened most below it, and the smoke drawn full at the
+				// top printed full at its foot): with its local Y up a decal printed its picture's first row at its foot, so
+				// every wall mark hung upside down (splash bands strongest at their top, sill streaks heaviest away from the
+				// sill). Its local Y now points down, so the picture's top row is the mark's top; the picture is mirrored
+				// side to side by the same turn, which none of the wall masks minds.
+				Turn = FRotationMatrix::MakeFromXY(-N, FVector(0.0, 0.0, -1.0)).Rotator();
 			}
 			FActorSpawnParameters Params;
 			Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;

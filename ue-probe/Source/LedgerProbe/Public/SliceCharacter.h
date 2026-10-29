@@ -93,6 +93,11 @@ public:
 	// under way; the office's own camera keeps its room and takes the street's half from here.
 	void SetInTalk(bool bOn) { bInTalk = bOn; }
 	void SetOfficeOwnsArm(bool bOn) { bOfficeOwnsArm = bOn; }
+	// THE LOW ROOMS' ROW (29 October; camera.json "room", Mafia's 1.20 m, 0.35 aside, 78 degrees): the office says each
+	// frame whether Tom is inside; the row is used only with -RoomRow until he has seen it in the game, and then it
+	// takes the arm from the office's own numbers
+	void SetInRoom(bool bOn) { bTomInRoom = bOn; }
+	bool RoomRowOn() const { return bRoomRow && RowRoom.bSet; }
 	// as a talk opens, the camera's yaw eased toward the speaker for 1.5 s (then the mouse is his again)
 	void FaceForTalk(const FVector& Speaker);
 	float SituationArmCm() const { return RowNow.BackCm; }
@@ -106,8 +111,8 @@ public:
 
 private:
 	struct FCamRow { float BackCm = 0.0f, SideCm = 0.0f, UpCm = 0.0f, PivotCm = 0.0f, Fov = 0.0f, BlendS = 1.0f; bool bSet = false; };
-	FCamRow RowStreet, RowTalk, RowRun, RowNow;
-	bool bInTalk = false, bOfficeOwnsArm = false, bCamRows = false;
+	FCamRow RowStreet, RowTalk, RowRun, RowRoom, RowNow;
+	bool bInTalk = false, bOfficeOwnsArm = false, bCamRows = false, bTomInRoom = false, bRoomRow = false;
 	double LastInTalk = -1.0e9, TalkFaceUntil = 0.0;
 	FVector TalkFace = FVector::ZeroVector;
 	const TCHAR* RowName = TEXT("street");

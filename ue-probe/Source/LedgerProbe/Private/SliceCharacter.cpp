@@ -302,8 +302,9 @@ void ALedgerSliceCharacter::CameraRowTick(float DeltaSeconds)
 	const bool bTalk = RowTalk.bSet && Now - LastInTalk < 2.0;
 	const bool bRun = RowRun.bSet && GetCharacterMovement() != nullptr && GetCharacterMovement()->MaxWalkSpeed >= RunSpeedCm - 1.0f
 		&& GetVelocity().Size2D() > WalkSpeedCm * 1.1f;
-	const FCamRow& Want = bTalk ? RowTalk : bRun ? RowRun : RowStreet;
-	const TCHAR* Name = bTalk ? TEXT("talk") : bRun ? TEXT("run") : TEXT("street");
+	const bool bRoom = bTomInRoom && RoomRowOn();
+	const FCamRow& Want = bTalk ? RowTalk : bRoom ? RowRoom : bRun ? RowRun : RowStreet;
+	const TCHAR* Name = bTalk ? TEXT("talk") : bRoom ? TEXT("room") : bRun ? TEXT("run") : TEXT("street");
 	if (FCString::Strcmp(Name, RowName) != 0)
 	{
 		UE_LOG(LogTemp, Display, TEXT("LedgerCameraRow: %s to %s at %.1f s"), RowName, Name, Now);
@@ -384,6 +385,7 @@ void ALedgerSliceCharacter::BeginPlay()
 				};
 				ReadRow(TEXT("talk"), RowTalk);
 				ReadRow(TEXT("run"), RowRun);
+				ReadRow(TEXT("room"), RowRoom);
 			}
 			else { UE_LOG(LogTemp, Warning, TEXT("LedgerCamera: no camera.json street row; the arm as built")); }
 		}
@@ -407,7 +409,7 @@ void ALedgerSliceCharacter::BeginPlay()
 			RowStreet.PivotCm = Boom->GetRelativeLocation().Z + GetCapsuleComponent()->GetScaledCapsuleHalfHeight();
 			RowStreet.Fov = Camera->FieldOfView;
 			RowStreet.BlendS = 1.0f;
-			for (FCamRow* R : { &RowTalk, &RowRun })
+			for (FCamRow* R : { &RowTalk, &RowRun, &RowRoom })
 			{
 				if (!R->bSet) { continue; }
 				if (R->BackCm < 0.0f) { R->BackCm = RowStreet.BackCm; }
@@ -420,6 +422,7 @@ void ALedgerSliceCharacter::BeginPlay()
 			const bool bPictureSwitch = FParse::Value(Cmd, TEXT("CamBackM="), V) || FParse::Value(Cmd, TEXT("CamSideM="), V) || FParse::Value(Cmd, TEXT("CamUpM="), V)
 				|| FParse::Value(Cmd, TEXT("CamPivotM="), V) || FParse::Value(Cmd, TEXT("CamFov="), V);
 			bCamRows = (RowTalk.bSet || RowRun.bSet) && !bPictureSwitch && !FParse::Param(Cmd, TEXT("NoCamRows"));
+			bRoomRow = RowRoom.bSet && FParse::Param(Cmd, TEXT("RoomRow"));
 			UE_LOG(LogTemp, Display, TEXT("LedgerCameraRows: %s (talk %s, run %s)"), bCamRows ? TEXT("on") : TEXT("off"),
 				RowTalk.bSet ? *FString::Printf(TEXT("%.2f m %.0f deg"), RowTalk.BackCm / 100.0f, RowTalk.Fov) : TEXT("none"),
 				RowRun.bSet ? *FString::Printf(TEXT("%.2f m %.0f deg"), RowRun.BackCm / 100.0f, RowRun.Fov) : TEXT("none"));

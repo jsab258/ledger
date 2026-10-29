@@ -286,6 +286,12 @@ UV_HEAD_NAMES = ["maskU", "maskV"]
 PACKAGE = "/Game/Ledger"
 ASSET = "M_LedgerSurface"
 ASSET_PATH = PACKAGE + "/" + ASSET
+# THE GROUND'S COPY (29 October; production/research/street-wear/WET-GROUND-METHOD-2026-10-29.md, step 3 and its
+# build plan): tools/ue/make_ground_material.py sets these three and calls main(), which builds the same graph as
+# M_LedgerGround with the road's water laid as a clear coat over wet stone (the block after the wired region)
+GROUND = False
+GROUND_COAT_ROUGHNESS = 0.03
+GROUND_STONE_SPECULAR = 0.5
 
 # DEFAULT TEXTURES ARE TRIED IN ORDER AND THE ONE THAT ANSWERED IS NAMED. A
 # texture parameter with no default can fail to compile, and an engine asset
@@ -3487,7 +3493,29 @@ def main():
             return w.record(False, "%s-threw" % what)
         return w.record(ok, "%s-refused" % what)
 
+    # THE GROUND'S COPY TAKES ITS INPUTS THROUGH ONE MATERIAL-ATTRIBUTES NODE (29 October: this engine's Python
+    # MaterialProperty has no clear-coat input, MP_BASE_COLOR to MP_WORLD_POSITION_OFFSET only; Make Material
+    # Attributes has ClearCoat and ClearCoatRoughness pins), so in GROUND every property this graph wires goes to
+    # that node's pin of the same name, and the node alone to the material (the GROUND block after the region)
+    ground_attrs = None
+    if GROUND:
+        try:
+            mat.set_editor_property("use_material_attributes", True)
+            ground_attrs = mel.create_material_expression(mat, unreal.MaterialExpressionMakeMaterialAttributes, 700, 0)
+        except Exception:
+            w.notes.append("ground-attributes-node-refused")
+    ground_pins = {"MP_BASE_COLOR": "BaseColor", "MP_METALLIC": "Metallic", "MP_SPECULAR": "Specular", "MP_ROUGHNESS": "Roughness",
+                   "MP_EMISSIVE_COLOR": "EmissiveColor", "MP_NORMAL": "Normal", "MP_AMBIENT_OCCLUSION": "AmbientOcclusion"}
+
     def connect_prop(a, out, prop, what):
+        pname = getattr(prop, "name", None) or str(prop).split(".")[-1].split(":")[0].strip("<> ")
+        pin = ground_pins.get(pname) if ground_attrs is not None else None
+        if pin is not None:
+            try:
+                ok = bool(mel.connect_material_expressions(a, out, ground_attrs, pin))
+            except Exception:
+                return w.record(False, "%s-threw" % what)
+            return w.record(ok, "%s-refused" % what)
         try:
             ok = bool(mel.connect_material_property(a, out, prop))
         except Exception:
@@ -3970,6 +3998,45 @@ def main():
     connect_prop(emap_mul, "", mp.MP_EMISSIVE_COLOR, "emissivemap-to-emissivecolor")
     # WIRE-PLAN-REGION-END.
 
+    # ---- THE GROUND'S WATER AS A COAT (29 October; WET-GROUND-METHOD-2026-10-29.md, step 3) ----
+    # Only in the ground copy, M_LedgerGround, and outside the counted region above, so M_LedgerSurface's own
+    # ledger is unchanged (its walls and fronts keep the cheaper default-lit shading). Wet is two states: the
+    # stone saturated and still rough (the roughness the wetness lerp gives, the look file's wet floor), and
+    # water over part of it as a clear coat whose amount is the water mask above (wmask, on only when a level is
+    # set); the coat is smooth, its own Fresnel the engine's fixed 0.04, within about 17% of water's at a
+    # street's grazing angles (the method, section 1). One normal for both layers: Lumen lights the diffuse
+    # from the top normal, which eases from the stone's to flat by the water's cover (the review's fix 1), and a
+    # separate bottom normal would need r.ClearCoatNormal on for the whole project (every shader rebuilt).
+    if GROUND:
+        try:
+            mat.set_editor_property("shading_model", unreal.MaterialShadingModel.MSM_CLEAR_COAT)
+            w.notes.append("ground-shading-clear-coat")
+        except Exception:
+            w.notes.append("ground-shading-model-refused")
+        coat_r = expr(unreal.MaterialExpressionConstant, -250, 2700)
+        wear_const(coat_r, "r", GROUND_COAT_ROUGHNESS)
+        stone_spec = expr(unreal.MaterialExpressionConstant, -250, 2800)
+        wear_const(stone_spec, "r", GROUND_STONE_SPECULAR)
+        # WHERE THE WATER STANDS (the method, section 1 and step 3: Lagarde's hollows and margin, "no metre-scale
+        # noise"; 8 October's level read as large blobby pools from the broad noise mixed into the height): the
+        # height is the stone's own grain alone, and the water comes in over a margin of 0.4, not an eighth
+        wear_const(height, "const_alpha", 0.0)
+        wear_const(lvl8, "const_b", 2.5)
+        # the coat's two inputs are Unreal's custom data 0 and 1 in its Python names (29 October: MP_CLEAR_COAT is not
+        # one; the first local run raised on it and saved nothing, the surface material untouched)
+        if ground_attrs is None:
+            w.notes.append("ground-no-attributes-node-so-no-coat")
+        else:
+            connect(w_on, "", ground_attrs, "ClearCoat", "ground-water-to-coat")
+            connect(coat_r, "", ground_attrs, "ClearCoatRoughness", "ground-coat-roughness")
+        connect_prop(rough_lerp, "", mp.MP_ROUGHNESS, "ground-wet-stone-to-roughness")
+        connect_prop(stone_spec, "", mp.MP_SPECULAR, "ground-stone-specular")
+        if ground_attrs is not None:
+            try:
+                w.record(bool(mel.connect_material_property(ground_attrs, "", mp.MP_MATERIAL_ATTRIBUTES)), "ground-attributes-to-material-refused")
+            except Exception:
+                w.record(False, "ground-attributes-to-material-threw")
+
     # ---- THE COMPILE, AND THE EVIDENCE THAT IT HAPPENED ------------------
     # RUN 23 ASKED FOR A RECOMPILE, CAUGHT AN EXCEPTION THAT NEVER CAME AND
     # CALLED THAT SUCCESS. The absence of a raised exception says nothing
@@ -4134,7 +4201,10 @@ def _write(line):
     except Exception:
         root = "."
     path = os.path.join(root, "ue-material.txt")
-    with open(path, "w", encoding="utf-8") as f:
+    # the ground's copy (GROUND, 29 October) runs after the surface material and its chained steps in the same
+    # editor, so it adds its line; written fresh, it wiped the surface material's and the sky's, grime's, wet's and
+    # stain's lines from the build's evidence
+    with open(path, "a" if GROUND else "w", encoding="utf-8") as f:
         f.write(line + "\n")
     print(line)
     try:
@@ -4320,6 +4390,27 @@ if __name__ == "__main__":
                       encoding="utf-8") as _f:
                 _f.write("stainMaterialStatus=RAISED stainMaterialNote=%s\n"
                          % str(_stain_err).replace(" ", "~")[:160])
+    # ---- AND THE GROUND'S COPY, 29 October (WET-GROUND-METHOD, step 3) ----
+    # tools/ue/make_ground_material.py: this graph again as M_LedgerGround, its
+    # water a clear coat over wet stone; the game takes it for the ground only
+    # when the look file asks (ground_coat), so its line here changes nothing
+    # until then. A fresh import of this file, so __main__'s own names stay.
+    if _inside_unreal():
+        try:
+            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+            import make_ground_material
+            make_ground_material.configure()
+            make_ground_material.mbm.main()
+        except Exception as _ground_err:
+            try:
+                import unreal
+                _root = unreal.Paths.project_dir()
+            except Exception:
+                _root = "."
+            with open(os.path.join(_root, "ue-material.txt"), "a",
+                      encoding="utf-8") as _f:
+                _f.write("groundMaterialStatus=RAISED groundMaterialNote=%s\n"
+                         % str(_ground_err).replace(" ", "~")[:160])
     # ---- AND THE STREET FROM BLENDER, 23 September, FOR THE SAME REASON ----
     # tools/ue/import_street.py: the street's geometry becomes static meshes
     # in the editor run this step already starts, and appends its own line to

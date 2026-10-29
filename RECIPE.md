@@ -115,6 +115,19 @@ What failed before this method, so it is not repeated: draping with bent elbows 
 
 ## Notebook
 
+### 29 Oct 2026, a garment's rebuilt cuffs, passing every offline mark, failing in the game: back to the last good
+- Made: a jacket with cuffs built round the wrist's shape, imported and worn in the packaged game; withdrawn the same evening, the game back on the version before.
+- Method (setting-free):
+  - A garment is not handed on until it has been seen in the packaged game at the closest distance the player meets it (seated beside him in a small room, the camera 2 m away), not only at street distance or offline.
+  - Keep the last good version's film of the same walk; when a new version fails, compare the two frame by frame before diagnosing, and put the game back on the last good at once.
+  - Test a face's direction against the body inside it (a ray along its normal meeting the body), not against the garment's centre line, which marks every sleeve's inner side wrong.
+  - The tester's window is small, so the game may draw a reduced level of detail where the editor's large pictures draw the full mesh; judge in the tester's own window.
+- Tools: the tester's film, one fresh reviewer for every frame, the face-direction check, the previous film kept on the drive.
+- Target and check: no hole, poke-through or missing part in any frame; failed (holes over the back and chest, the right sleeve almost gone).
+- Cost (hours): about 1 to find and withdraw.
+- Failed and why: the asset checks and every cuff mark passed while the game drew holes; the skill's own per-pose check of points inside the body had not been run, and the game's reduced levels were never looked at.
+- Evidence: DECISIONS.md, 29 October 18:40; F:/LedgerTools/tmp/ai-tester/film/2026-10-29-1828 against 2026-10-29-1309.
+
 ### 29 Oct 2026, a lived-in room's smoke staining by height, without vertex colour
 - Made: tobacco staining on a room's three walls, full under the ceiling and gone 1.2 m above the floor, and the ceiling's own colour at full stain; one fresh reviewer per view passed it.
 - Method (setting-free):

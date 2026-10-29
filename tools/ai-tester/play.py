@@ -641,6 +641,14 @@ def act(verb, rest):
         running = "--run" in rest
         filming = "--film" in rest
         hold(WALK_KEY.get(direction, "w"), seconds, running, each=(lambda: film_frame(st, hwnd)) if filming else None)
+        # walk ... --film --tail SECONDS (29 October, the run film's review: its stop fell in the second between two
+        # commands, so the camera's ease back out was never seen): filming goes on after the key is let go
+        if filming and "--tail" in rest:
+            i = rest.index("--tail")
+            end = time.time() + min(10.0, max(0.5, float(rest[i + 1]) if len(rest) > i + 1 else 3.0))
+            while time.time() < end:
+                film_frame(st, hwnd)
+                time.sleep(FILM_GAP_S)
         if filming:
             save_state(st)
         label = "walked %s for %.1f s%s%s" % (direction, seconds, " running" if running else "", " (filmed)" if filming else "")

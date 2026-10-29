@@ -420,6 +420,12 @@ namespace LedgerStreet
 		// which stay as the collision - hidden, not removed - so walking,
 		// blocking and every sight line behave exactly as they did.
 		bool   bStreetInPlay;
+		// THE GROUND'S WATER AS A COAT (29 October; production/research/street-wear/WET-GROUND-METHOD-2026-10-29.md,
+		// step 3): "ground_coat" true lays the road, flags and kerb in M_LedgerGround (tools/ue/make_ground_material.py),
+		// their relief kept and the water a clear coat where the level reaches; "water_level_flags" is the flags' and
+		// kerb's own level (0, none, until it is measured)
+		bool   bGroundCoat;
+		double WaterLevelFlags;
 		// THE DAY'S FOG CAP IN THIS ENGINE, a multiplier on the scene file's
 		// fog_max_opacity by day only: the file's 0.100 is in the names of
 		// its fog-series rows and was ruled for another street, and the far
@@ -484,7 +490,7 @@ namespace LedgerStreet
 		         SunGain(1.0), SkyLightGain(1.0), SkySeenGainNight(1.0), SkyLightGainNight(1.0),
 		         NightExposureBias(0.0), GlassOpacity(0.25), GlassRoughness(0.05), GlassSpecularNight(1.0),
 		         GlassCubeStrength(0.0), GlassCubeStrengthNight(-1.0), GlassCubeSpecular(1.0), GlassCubeSize(256), GlassCubeHeroSize(0), SkyDomeYawDeg(0.0), SkyHorizonClampDeg(0.0), SkyTreeClampDeg(0.0), WaterLevelDay(0.0), WaterLevelNight(0.0), WhiteTempDay(0.0), FilmSpecular(0.5),
-		         bStreetInPlay(false), FogCapGainDay(1.0), FogDensityGainNight(1.0), FogDensityGainDay(1.0), FogStartDayM(0.0), FogCutoffDayM(0.0), LocalHighlightContrastDay(1.0), NightExposurePin(0.0),
+		         bStreetInPlay(false), bGroundCoat(false), WaterLevelFlags(0.0), FogCapGainDay(1.0), FogDensityGainNight(1.0), FogDensityGainDay(1.0), FogStartDayM(0.0), FogCutoffDayM(0.0), LocalHighlightContrastDay(1.0), NightExposurePin(0.0),
 		         bStreetCollision(false), LanternLumens(0.0), LanternLightY(0.0),
 		         LanternPoolLumens(0.0), LanternPoolInnerDeg(35.0), LanternPoolOuterDeg(70.0), LanternPoolTiltDeg(0.0), LanternBulbRadiusM(0.0), bLanternRgb(false),
 		         LanternR(1.0), LanternG(1.0), LanternB(1.0),
@@ -976,6 +982,10 @@ namespace LedgerStreet
 		}
 		V = Root.Find("street_in_play");
 		if (V != 0 && V->Type == T_BOOL) { Out.bStreetInPlay = V->Bool; ++Out.Read; }
+		V = Root.Find("ground_coat");
+		if (V != 0 && V->Type == T_BOOL) { Out.bGroundCoat = V->Bool; ++Out.Read; }
+		V = Root.Find("water_level_flags");
+		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0 && V->Num <= 1.0) { Out.WaterLevelFlags = V->Num; ++Out.Read; }
 		V = Root.Find("wet_darken");
 		if (V != 0 && V->Type == T_OBJ)
 		{

@@ -150,7 +150,7 @@
       "target": 0,
       "display": "0 of 1 outfit made",
       "state": "fighting",
-      "last": "29 Oct: Marvelous's elastic cuffs failed twice, so Tom's cuffs were built to his wrist's shape: every measure passes, they bake clean, and the jacket with them passed its asset checks and is in the packaged game. The jumper's pattern and its first Marvelous job are ready; Marvelous reopens for it."
+      "last": "29 Oct: Tom's cuffs built to his wrist's shape passed every measure, but in the packaged game that jacket showed holes and most of a sleeve gone, so the game is back on yesterday's jacket while the cause is found. The jumper's pattern and its first Marvelous job are ready."
     },
     {
       "name": "The Empty Chair",
@@ -158,7 +158,7 @@
       "display": "Sits and stands in the packaged game; one fault found",
       "hp": 100,
       "state": "fighting",
-      "last": "29 Oct: in the packaged game the AI tester walked Tom in, sat him 20 cm from the seat and stood him up without touching anything, 13 of 13. A second run found Tom could sit in a seat Ron was already in, by Ron's evening; fixed tonight, re-tested on the next build."
+      "last": "29 Oct: in the packaged game Tom sits on the office bench and stands touching nothing (13 of 13, then again tonight); nobody can share his seat now. Still to fix: from straight on he bows almost flat as he sits."
     },
     {
       "name": "The Clean Room",
