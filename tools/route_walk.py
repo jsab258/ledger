@@ -432,9 +432,15 @@ def walk(editor, out, town=False, sit=False):
     w = r.where()
     near = "lena" in w and "tom" in w and math.hypot(w["lena"][0] - w["tom"][0], w["lena"][1] - w["tom"][1]) <= w["lena"][2]
     if near:
-        play("say", LINE)
         if CAMERA:      # the talk's camera row blends in from the box's opening (SliceCharacter.cpp CameraRowTick)
-            filmed("talk", "wait", "14", "--film")    # in, held through the answer (6 s after), and out (29 October)
+            # filmed from the T press (30 October, the second talk film's review: the move in was never seen), then
+            # in, held through the answer and her line (6 s after), and out
+            a = film_count()
+            play("say", LINE, "--film")
+            play("wait", "15", "--film")
+            FILM_MARKS["talk"] = [a + 1, film_count()]
+        else:
+            play("say", LINE)
         r.expect("talk-open", 10)
         if r.expect("talk-typed", 10) and r.said_back() != LINE:
             r.rows[-1]["ok"] = False

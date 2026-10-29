@@ -238,3 +238,20 @@
 {"event": "start", "at": "2026-10-29T11:36:41", "task": "1.3 C9 cuffs: diagnostic 24b, second try", "phase": "1", "kind": "production"}
 {"event": "start", "at": "2026-10-29T11:37:00", "task": "1.3 C9 cuffs: diagnostic 24b, try 2 twice, set aside, records", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-29T12:00:00", "note": ""}
+{"event": "start", "at": "2026-10-29T12:00:00", "task": "1.3 C9 cuffs built to the wrist's shape, first pass", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-29T12:15:00", "note": "reconstructed 29 Oct, 23:42, from DECISIONS times"}
+{"event": "start", "at": "2026-10-29T12:15:00", "task": "1.5 camera rows (first two); sitting walk re-runs", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-29T13:05:00", "note": "reconstructed 29 Oct, 23:42, from DECISIONS times"}
+{"event": "start", "at": "2026-10-29T13:05:00", "task": "1.5 D11 exposure and surfaces calibrated; walls and office marks gated", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-29T15:00:00", "note": "reconstructed 29 Oct, 23:42, from DECISIONS times"}
+{"event": "start", "at": "2026-10-29T15:00:00", "task": "1.3 C jumper cut; D11 wet-ground checks written", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-29T16:50:00", "note": "reconstructed 29 Oct, 23:42, from DECISIONS times"}
+{"event": "start", "at": "2026-10-29T16:50:00", "task": "1.5 D11 office smoke and grade; D10 a seat holds one; wet-ground step 3 built", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-29T17:50:00", "note": "reconstructed 29 Oct, 23:42, from DECISIONS times"}
+{"event": "start", "at": "2026-10-29T17:50:00", "task": "1.5 D11 wall marks the right way up; 1.3 jacket withdrawn; D10 Sheila's desk", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-29T19:10:00", "note": "reconstructed 29 Oct, 23:42, from DECISIONS times"}
+{"event": "start", "at": "2026-10-29T19:10:00", "task": "1.5 camera talk and run rows filmed and gated", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-29T21:35:00", "note": "reconstructed 29 Oct, 23:42, from DECISIONS times"}
+{"event": "start", "at": "2026-10-29T21:35:00", "task": "1.5 D11 wet ground: trials, two gate tries, committed", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-29T23:41:30", "note": "reconstructed 29 Oct, 23:42, from DECISIONS times and the commit"}
+{"event": "start", "at": "2026-10-29T23:41:58", "task": "1.5 talk camera exit; night duties", "phase": "1", "kind": "production"}

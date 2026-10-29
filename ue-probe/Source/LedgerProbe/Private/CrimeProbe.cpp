@@ -5904,6 +5904,9 @@ namespace
 	// typing and keeps the words for the next time he speaks.
 	struct FTalkTarget { GossiperPtr G; std::string Card, Id; int Rung = -1; FString Name; AActor* Body = nullptr; };
 	FTalkTarget GTalkTarget;
+	// a talk under way: the box open, an answer awaited or spoken, or a line said in it still on screen (set each
+	// tick beside the talk camera's cue; the prompt to talk steps aside while it holds)
+	bool GTalkOn = false;
 	TSharedPtr<SWidget> GSayBox;
 	TSharedPtr<SMultiLineEditableText> GSayText;
 	bool bSayOpen = false, bSayCommitted = false, bSayCancelled = false;
@@ -8913,7 +8916,19 @@ namespace
 		RouteWhereTick(World, Now);
 		// THE TALK CAMERA'S CUE (his ruling of 28 October, closer for talk): the say box open, an answer awaited or
 		// one being spoken (SliceCharacter.cpp CameraRowTick holds it 2 s after)
-		if (ALedgerSliceCharacter* TalkCam = Cast<ALedgerSliceCharacter>(GPawn)) { TalkCam->SetInTalk(bSayOpen || GLive.PendingId != 0 || GVoice.Playing.IsValid()); }
+		// AND HER LINE STILL UP (29 October, the second talk film's review: the camera went back out while her words
+		// stayed on screen 5 s more, the voice having ended): a speech line begun while the talk went on counts too
+		{
+			static double TalkSignAt = -1.0e9, TalkBeganAt = -1.0e9;
+			const double TNow = NowS();
+			const bool bSign = bSayOpen || GLive.PendingId != 0 || GVoice.Playing.IsValid();
+			if (bSign && TNow - TalkSignAt > 30.0) { TalkBeganAt = TNow; }
+			if (bSign) { TalkSignAt = TNow; }
+			const bool bLineUp = GSubs.ContainsByPredicate([](const FSubLine& L)
+				{ return L.Kind == FSubLine::EKind::Speech && L.Since >= TalkBeganAt - 0.5 && L.Since <= TalkSignAt + 0.5; });
+			GTalkOn = bSign || bLineUp;
+			if (ALedgerSliceCharacter* TalkCam = Cast<ALedgerSliceCharacter>(GPawn)) { TalkCam->SetInTalk(GTalkOn); }
+		}
 		// -CollisionAudit (FINDINGS.md, 28 October): once, 20 s in, what each "no collision" place really blocks
 		if (LedgerCollisionAudit::On()) { static bool bAudited = false; if (!bAudited && Now > 20.0) { bAudited = true; LedgerCollisionAudit::Report(); } }
 		OfficeCameraTick((float)FApp::GetDeltaTime());
@@ -9839,7 +9854,9 @@ namespace
 
 	void LivePromptTick(bool bBeforeDeed)
 	{
-		if (GPawn == nullptr || bSayOpen) { PromptSet(FString(), FString(), nullptr, FVector::ZeroVector, false); return; }
+		// not during a talk either (29 October, the second talk film's review: "Talk to Sheila" sat across her face while
+		// she answered)
+		if (GPawn == nullptr || bSayOpen || GTalkOn) { PromptSet(FString(), FString(), nullptr, FVector::ZeroVector, false); return; }
 		const FVector At = GPawn->GetActorLocation();
 		struct Who { AActor* Body; const GossiperPtr* G; const TCHAR* Name; };
 		const Who People[3] = { { GN2Body, &GN2, TEXT("Darren") }, { GW1Body, &GW1, TEXT("Sheila") }, { GR3Body, &GR3, TEXT("Ron") } };

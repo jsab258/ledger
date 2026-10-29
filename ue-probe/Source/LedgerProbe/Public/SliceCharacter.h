@@ -110,8 +110,14 @@ public:
 	int32 ConsumeWaitRequests();
 
 private:
-	struct FCamRow { float BackCm = 0.0f, SideCm = 0.0f, UpCm = 0.0f, PivotCm = 0.0f, Fov = 0.0f, BlendS = 1.0f, HoldS = 2.0f; bool bSet = false; };
+	struct FCamRow { float BackCm = 0.0f, SideCm = 0.0f, UpCm = 0.0f, PivotCm = 0.0f, Fov = 0.0f, BlendS = 1.0f, HoldS = 2.0f, BlendOutS = -1.0f; bool bSet = false; };
 	FCamRow RowStreet, RowTalk, RowRun, RowRoom, RowNow;
+	// a row left by its own ease out (blend_out_s): where the camera stood as it began, and how far through it is
+	FCamRow RowFrom;
+	float EaseOutT = 0.0f, EaseOutS = 0.0f;
+	// the talk row's close shot (camera.json talk.close) and its usual, far one
+	float TalkCloseUnderCm = -1.0f, TalkCloseBackCm = -1.0f, TalkCloseSideCm = -1.0e6f, TalkFarBackCm = 0.0f, TalkFarSideCm = 0.0f;
+	const FCamRow& RowCalled(const TCHAR* Name) const;
 	bool bInTalk = false, bOfficeOwnsArm = false, bCamRows = false, bTomInRoom = false, bRoomRow = false;
 	double LastInTalk = -1.0e9, TalkFaceUntil = 0.0;
 	FVector TalkFace = FVector::ZeroVector;

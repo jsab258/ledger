@@ -11,7 +11,7 @@
  },
  "to_come": "fights (wider, so the other man's feet and the onlookers are seen; Mafia's fight layer only lowers its camera 15 cm, so no width found: to be measured from his framing), and Tom placed 1.5 m from a speaker; each a row here, each shown to him in the game before it is kept.",
  "talk_held_back": {
-  "held_back_why": "29 October, 21:35: its packaged film failed its fresh review: Sheila hidden behind Tom's head the whole talk (he stands 0.98 m from her; Mafia places the player 1.5 m from the speaker, not built yet), and the camera snapping out in a quarter of a second at the end, with her line still up. Renamed so the game does not read it until the placement and the exit are built; the numbers kept.",
+  "held_back_why": "29 October, 21:35: its packaged film failed its fresh review: Sheila hidden behind Tom's head the whole talk (he stands 0.98 m from her; Mafia places the player 1.5 m from the speaker, not built yet), and the camera snapping out in a quarter of a second at the end, with her line still up. Renamed so the game does not read it until the placement and the exit are built; the numbers kept. 30 October, 00:14: the aim from the camera, the close shot under 1.2 m, a 2 s eased exit and the talk lasting while its line is up are built (SliceCharacter.cpp), each read from the row below once it is named talk again; first, Sheila's figure and the talk's place for her must agree (the third editor film: 0.93 m against 9.6 m).",
   "back_m": 1.2,
   "side_m": 0.25,
   "up_m": 0.1,
@@ -20,7 +20,14 @@
   "blend_s": 2.0,
   "hold_s": 6.0,
   "hold_why": "29 October, the packaged camera film: held 2 s after the talk's last sign, the camera went in, out and in again, because the gap between his line and her voice is longer; a conversation is an exchange, so the row holds 6 s (ours; Mafia's hold was not read).",
-  "why": "Reference first: Mafia's talk camera, read from its files (Study 9): 63 degrees, the pivot 1.50 m up, 1.20 m back and 0.25 aside, eased in and out over 2 s; up 0.10 is ours (Mafia's talk lift was not read), putting the camera at 1.60 m, Mafia's own on-foot camera height (pivot 1.25 + 0.35). On while the say box is open, an answer is awaited or one is spoken, and 2 s after. Not yet: Mafia's placing the player 1.5 m from the speaker. To be shown to him in the game before it is kept (his ruling of 28 October: closer for talk)."
+  "why": "Reference first: Mafia's talk camera, read from its files (Study 9): 63 degrees, the pivot 1.50 m up, 1.20 m back and 0.25 aside, eased in and out over 2 s; up 0.10 is ours (Mafia's talk lift was not read), putting the camera at 1.60 m, Mafia's own on-foot camera height (pivot 1.25 + 0.35). On while the say box is open, an answer is awaited or one is spoken, and 2 s after. Not yet: Mafia's placing the player 1.5 m from the speaker. To be shown to him in the game before it is kept (his ruling of 28 October: closer for talk).",
+  "blend_out_s": 2.0,
+  "close": {
+   "under_m": 1.2,
+   "back_m": 0.8,
+   "side_m": 0.3,
+   "why": "Study 9: Mafia frames a talk close (0.80 m back, 0.30 aside), far (1.20, 0.25) or distant (1.70, 0.45); a speaker nearer than 1.2 m as the talk opens takes the close shot. The 1.2 m is ours: Mafia picks its shot per scene (none found)."
+  }
  },
  "run": {
   "back_m": 2.63,

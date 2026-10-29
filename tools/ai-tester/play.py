@@ -69,6 +69,7 @@ import os
 import subprocess
 import sys
 import tempfile
+import threading
 import time
 
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -674,13 +675,30 @@ def act(verb, rest):
             save_state(st)
             label += " (filmed %.0f s)" % seconds
     elif verb == "say":
-        words = " ".join(rest)[:200]
+        # say WORDS --film (30 October, the second talk film's review: its film began after the line was sent, so the
+        # camera's move in was never seen): frames from the T press on, taken beside the typing
+        filming = bool(rest) and rest[-1] == "--film"
+        words = " ".join(rest[:-1] if filming else rest)[:200]
+        stop = threading.Event()
+        grabber = None
+        if filming:
+            def grab():
+                while not stop.is_set():
+                    film_frame(st, hwnd)
+                    time.sleep(0.125)
+            grabber = threading.Thread(target=grab, daemon=True)
+            grabber.start()
         tap("t")
         time.sleep(0.6)
         type_text(words)
         time.sleep(0.2)
         enter()
-        label = "said: %s" % words
+        if grabber is not None:
+            time.sleep(0.5)
+            stop.set()
+            grabber.join(5)
+            save_state(st)
+        label = "said: %s%s" % (words, " (filmed)" if filming else "")
     elif verb == "wait":
         seconds = min(15.0, max(0.5, float(rest[0]) if rest else 2.0))
         # wait --film (29 October, his order D10: the sit film for his page): the same frames as a filmed walk,

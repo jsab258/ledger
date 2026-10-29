@@ -292,6 +292,24 @@ void ALedgerSliceCharacter::FaceForTalk(const FVector& Speaker)
 {
 	TalkFace = Speaker;
 	TalkFaceUntil = GetWorld() != nullptr ? GetWorld()->GetTimeSeconds() + 1.5 : 0.0;
+	if (RowTalk.bSet && TalkCloseUnderCm > 0.0f)
+	{
+		const float D = FVector::Dist2D(GetActorLocation(), Speaker);
+		const bool bClose = D < TalkCloseUnderCm;
+		RowTalk.BackCm = bClose ? TalkCloseBackCm : TalkFarBackCm;
+		RowTalk.SideCm = bClose ? TalkCloseSideCm : TalkFarSideCm;
+		UE_LOG(LogTemp, Display, TEXT("LedgerCameraRow: talk shot %s, the speaker %.2f m away (%.2f m back, %.2f aside, aimed %.0f deg off his line)"),
+			bClose ? TEXT("close") : TEXT("far"), D / 100.0f, RowTalk.BackCm / 100.0f, RowTalk.SideCm / 100.0f,
+			D > FMath::Abs(RowTalk.SideCm) + 5.0f ? FMath::RadiansToDegrees(FMath::Asin(RowTalk.SideCm / D)) : 0.0f);
+	}
+}
+
+const ALedgerSliceCharacter::FCamRow& ALedgerSliceCharacter::RowCalled(const TCHAR* Name) const
+{
+	if (FCString::Strcmp(Name, TEXT("talk")) == 0) { return RowTalk; }
+	if (FCString::Strcmp(Name, TEXT("room")) == 0) { return RowRoom; }
+	if (FCString::Strcmp(Name, TEXT("run")) == 0) { return RowRun; }
+	return RowStreet;
 }
 
 void ALedgerSliceCharacter::CameraRowTick(float DeltaSeconds)
@@ -309,16 +327,39 @@ void ALedgerSliceCharacter::CameraRowTick(float DeltaSeconds)
 	const TCHAR* Name = bTalk ? TEXT("talk") : bRoom ? TEXT("room") : bRun ? TEXT("run") : TEXT("street");
 	if (FCString::Strcmp(Name, RowName) != 0)
 	{
-		UE_LOG(LogTemp, Display, TEXT("LedgerCameraRow: %s to %s at %.1f s"), RowName, Name, Now);
+		// THE LEAVING ROW'S OWN EASE OUT (29 October, the talk film's review: the camera snapped out in about a quarter
+		// of a second, the street's 1 s catch-up being fastest at its start; Study 9: Mafia's rows ease out over their
+		// own time, its talk over 2 s): a row naming blend_out_s is left over that time, eased at both ends from where
+		// the camera stands; any other change takes the entering row's blend as before
+		const FCamRow& Left = RowCalled(RowName);
+		EaseOutS = Left.BlendOutS > 0.0f ? Left.BlendOutS : 0.0f;
+		EaseOutT = 0.0f;
+		RowFrom = RowNow;
+		UE_LOG(LogTemp, Display, TEXT("LedgerCameraRow: %s to %s at %.1f s%s"), RowName, Name, Now,
+			EaseOutS > 0.0f ? *FString::Printf(TEXT(", eased out over %.1f s"), EaseOutS) : TEXT(""));
 		RowName = Name;
 	}
-	// about 95% of the way in the row's blend time
-	const float Rate = 3.0f / FMath::Max(0.05f, Want.BlendS);
-	RowNow.BackCm = FMath::FInterpTo(RowNow.BackCm, Want.BackCm, DeltaSeconds, Rate);
-	RowNow.SideCm = FMath::FInterpTo(RowNow.SideCm, Want.SideCm, DeltaSeconds, Rate);
-	RowNow.UpCm = FMath::FInterpTo(RowNow.UpCm, Want.UpCm, DeltaSeconds, Rate);
-	RowNow.PivotCm = FMath::FInterpTo(RowNow.PivotCm, Want.PivotCm, DeltaSeconds, Rate);
-	RowNow.Fov = FMath::FInterpTo(RowNow.Fov, Want.Fov, DeltaSeconds, Rate);
+	if (EaseOutS > 0.0f)
+	{
+		EaseOutT += DeltaSeconds;
+		const float A = FMath::SmoothStep(0.0f, 1.0f, FMath::Min(1.0f, EaseOutT / EaseOutS));
+		RowNow.BackCm = FMath::Lerp(RowFrom.BackCm, Want.BackCm, A);
+		RowNow.SideCm = FMath::Lerp(RowFrom.SideCm, Want.SideCm, A);
+		RowNow.UpCm = FMath::Lerp(RowFrom.UpCm, Want.UpCm, A);
+		RowNow.PivotCm = FMath::Lerp(RowFrom.PivotCm, Want.PivotCm, A);
+		RowNow.Fov = FMath::Lerp(RowFrom.Fov, Want.Fov, A);
+		if (EaseOutT >= EaseOutS) { EaseOutS = 0.0f; }
+	}
+	else
+	{
+		// about 95% of the way in the row's blend time
+		const float Rate = 3.0f / FMath::Max(0.05f, Want.BlendS);
+		RowNow.BackCm = FMath::FInterpTo(RowNow.BackCm, Want.BackCm, DeltaSeconds, Rate);
+		RowNow.SideCm = FMath::FInterpTo(RowNow.SideCm, Want.SideCm, DeltaSeconds, Rate);
+		RowNow.UpCm = FMath::FInterpTo(RowNow.UpCm, Want.UpCm, DeltaSeconds, Rate);
+		RowNow.PivotCm = FMath::FInterpTo(RowNow.PivotCm, Want.PivotCm, DeltaSeconds, Rate);
+		RowNow.Fov = FMath::FInterpTo(RowNow.Fov, Want.Fov, DeltaSeconds, Rate);
+	}
 	if (!bOfficeOwnsArm)
 	{
 		Boom->TargetArmLength = RowNow.BackCm;
@@ -333,7 +374,14 @@ void ALedgerSliceCharacter::CameraRowTick(float DeltaSeconds)
 		if (APlayerController* PC = Cast<APlayerController>(GetController()))
 		{
 			const FRotator R = PC->GetControlRotation();
-			const float Yaw = (TalkFace - GetActorLocation()).Rotation().Yaw;
+			// AIMED FROM THE CAMERA, NOT FROM TOM (29 October, the second talk film: with the yaw along Tom's own line to
+			// her, the camera, set aside of him, looked past her and his head stayed in front of her face, 0.13 m off the
+			// line at 0.62 m): turned left by asin(aside / her distance), the camera's line runs through her and passes
+			// Tom's head at the whole aside, the over-the-shoulder shot
+			const float D = FVector::Dist2D(TalkFace, GetActorLocation());
+			const float Aside = RowTalk.bSet ? RowTalk.SideCm : RowNow.SideCm;
+			const float Turn = D > FMath::Abs(Aside) + 5.0f ? FMath::RadiansToDegrees(FMath::Asin(Aside / D)) : 0.0f;
+			const float Yaw = (TalkFace - GetActorLocation()).Rotation().Yaw - Turn;
 			PC->SetControlRotation(FRotator(R.Pitch, FMath::FixedTurn(R.Yaw, Yaw, 120.0f * DeltaSeconds), R.Roll));
 		}
 	}
@@ -385,8 +433,24 @@ void ALedgerSliceCharacter::BeginPlay()
 					Row.Fov = (*R)->TryGetNumberField(TEXT("lens_deg"), M) ? (float)M : -1.0f;
 					Row.BlendS = (*R)->TryGetNumberField(TEXT("blend_s"), M) ? (float)M : 1.0f;
 					Row.HoldS = (*R)->TryGetNumberField(TEXT("hold_s"), M) ? (float)M : 2.0f;
+					Row.BlendOutS = (*R)->TryGetNumberField(TEXT("blend_out_s"), M) ? (float)M : -1.0f;
 				};
 				ReadRow(TEXT("talk"), RowTalk);
+				// THE TALK'S CLOSE SHOT (29 October, the talk film's review: Sheila hidden behind Tom's head, he standing
+				// 0.98 m from her; Study 9: Mafia frames a talk close, far or distant, close 0.80 m back and 0.30 aside):
+				// a speaker nearer than under_m as the talk opens takes it, so the line to her face clears his head
+				{
+					const TSharedPtr<FJsonObject>* T = nullptr;
+					const TSharedPtr<FJsonObject>* C = nullptr;
+					double M = 0.0;
+					if (Root->TryGetObjectField(TEXT("talk"), T) && (*T)->TryGetObjectField(TEXT("close"), C)
+						&& (*C)->TryGetNumberField(TEXT("under_m"), M))
+					{
+						TalkCloseUnderCm = (float)(M * 100.0);
+						TalkCloseBackCm = (*C)->TryGetNumberField(TEXT("back_m"), M) ? (float)(M * 100.0) : -1.0f;
+						TalkCloseSideCm = (*C)->TryGetNumberField(TEXT("side_m"), M) ? (float)(M * 100.0) : -1.0e6f;
+					}
+				}
 				ReadRow(TEXT("run"), RowRun);
 				ReadRow(TEXT("room"), RowRoom);
 			}
@@ -421,6 +485,10 @@ void ALedgerSliceCharacter::BeginPlay()
 				if (R->PivotCm < 0.0f) { R->PivotCm = RowStreet.PivotCm; }
 				if (R->Fov < 0.0f) { R->Fov = RowStreet.Fov; }
 			}
+			TalkFarBackCm = RowTalk.BackCm;
+			TalkFarSideCm = RowTalk.SideCm;
+			if (TalkCloseBackCm < 0.0f) { TalkCloseBackCm = TalkFarBackCm; }
+			if (TalkCloseSideCm < -1.0e5f) { TalkCloseSideCm = TalkFarSideCm; }
 			RowNow = RowStreet;
 			const bool bPictureSwitch = FParse::Value(Cmd, TEXT("CamBackM="), V) || FParse::Value(Cmd, TEXT("CamSideM="), V) || FParse::Value(Cmd, TEXT("CamUpM="), V)
 				|| FParse::Value(Cmd, TEXT("CamPivotM="), V) || FParse::Value(Cmd, TEXT("CamFov="), V);
