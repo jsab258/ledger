@@ -63,13 +63,19 @@ def apply(seats, index, verdict, log_name):
         return None
     if "in_kept" not in s:
         return "a log of some clips before any log of all of them"
+    # an entry passing at any tried distance is kept, with the distances it passed (29 October: R_090_Lfoot fits
+    # the middle and counter-end seats from 100 cm and touches the room from 150, where the full run tried it)
     windows = s.setdefault("in_kept_starts_cm", {})
     for x in kept + dropped:
         clip = full[x][0]
-        if clip not in s["in_kept"]:
-            continue
         have = [d for d in windows.get(clip, []) if d != starts]
         windows[clip] = sorted(have + [starts]) if x in kept else sorted(have)
+        if windows[clip] and clip not in s["in_kept"]:
+            s["in_kept"].append(clip)
+        if not windows[clip]:
+            del windows[clip]
+            if clip in s["in_kept"]:
+                s["in_kept"].remove(clip)
     s["in_kept_from"] += "; %s (%s): from %d cm, %d of %d kept" % (date or "?", log_name, starts, len(kept), len(kept) + len(dropped))
     return None
 
@@ -97,6 +103,16 @@ def selftest():
     check("a log of some clips reads", part is not None and part[3] == 200)
     check("a log of some clips adds its distance", apply(seats, 1, part, "y.log") is None and seats["seats"][1]["in_kept_starts_cm"]["M_interaction_bench_into_BR_LFoot_Montage"] == [150, 200]
           and seats["seats"][1]["in_kept"] == ["M_interaction_bench_into_BR_LFoot_Montage"])
+    other = read_log("\n".join(l for l in log.splitlines() if "BR_LFoot" not in l).replace("F_Lfoot DROPPED", "F_Lfoot KEPT").replace("kept=1 of 2", "kept=1 of 1").replace("starts 150", "starts 100"))
+    check("an entry passing only at another distance becomes kept", other is not None and apply(seats, 1, other, "z.log") is None
+          and "M_interaction_bench_into_F_Lfoot_Montage" in seats["seats"][1]["in_kept"]
+          and seats["seats"][1]["in_kept_starts_cm"]["M_interaction_bench_into_F_Lfoot_Montage"] == [100])
+    br_only = "\n".join(l for l in log.splitlines() if "F_Lfoot" not in l).replace("BR_LFoot KEPT", "BR_LFoot DROPPED").replace("kept=1 of 2", "kept=0 of 1")
+    for d in (150, 200):
+        apply(seats, 1, read_log(br_only.replace("starts 150", "starts %d" % d)), "w.log")
+    check("an entry dropped at every distance it passed leaves in_kept",
+          "M_interaction_bench_into_BR_LFoot_Montage" not in seats["seats"][1]["in_kept"]
+          and "M_interaction_bench_into_BR_LFoot_Montage" not in seats["seats"][1]["in_kept_starts_cm"])
     seats["seats"][1]["in"] = ["M_interaction_bench_into_F_Lfoot_Montage"]
     check("a side not among the In clips refused", apply(seats, 1, v, "x.log") is not None)
     print("seats_kept selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
