@@ -299,7 +299,9 @@ void ALedgerSliceCharacter::CameraRowTick(float DeltaSeconds)
 	if (!bCamRows || Boom == nullptr || Camera == nullptr || GetWorld() == nullptr) { return; }
 	const double Now = GetWorld()->GetTimeSeconds();
 	if (bInTalk) { LastInTalk = Now; }
-	const bool bTalk = RowTalk.bSet && Now - LastInTalk < 2.0;
+	// THE TALK HELD THROUGH ITS GAPS (29 October, the packaged camera film: the camera went in, out after 5 s and in
+	// again, the gap between his line and her voice outlasting a 2 s hold): the talk row's own hold_s, camera.json
+	const bool bTalk = RowTalk.bSet && Now - LastInTalk < (double)RowTalk.HoldS;
 	const bool bRun = RowRun.bSet && GetCharacterMovement() != nullptr && GetCharacterMovement()->MaxWalkSpeed >= RunSpeedCm - 1.0f
 		&& GetVelocity().Size2D() > WalkSpeedCm * 1.1f;
 	const bool bRoom = bTomInRoom && RoomRowOn();
@@ -382,6 +384,7 @@ void ALedgerSliceCharacter::BeginPlay()
 					Row.PivotCm = (*R)->TryGetNumberField(TEXT("pivot_m"), M) ? (float)(M * 100.0) : -1.0f;
 					Row.Fov = (*R)->TryGetNumberField(TEXT("lens_deg"), M) ? (float)M : -1.0f;
 					Row.BlendS = (*R)->TryGetNumberField(TEXT("blend_s"), M) ? (float)M : 1.0f;
+					Row.HoldS = (*R)->TryGetNumberField(TEXT("hold_s"), M) ? (float)M : 2.0f;
 				};
 				ReadRow(TEXT("talk"), RowTalk);
 				ReadRow(TEXT("run"), RowRun);

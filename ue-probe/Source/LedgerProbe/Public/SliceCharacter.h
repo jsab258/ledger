@@ -110,7 +110,7 @@ public:
 	int32 ConsumeWaitRequests();
 
 private:
-	struct FCamRow { float BackCm = 0.0f, SideCm = 0.0f, UpCm = 0.0f, PivotCm = 0.0f, Fov = 0.0f, BlendS = 1.0f; bool bSet = false; };
+	struct FCamRow { float BackCm = 0.0f, SideCm = 0.0f, UpCm = 0.0f, PivotCm = 0.0f, Fov = 0.0f, BlendS = 1.0f, HoldS = 2.0f; bool bSet = false; };
 	FCamRow RowStreet, RowTalk, RowRun, RowRoom, RowNow;
 	bool bInTalk = false, bOfficeOwnsArm = false, bCamRows = false, bTomInRoom = false, bRoomRow = false;
 	double LastInTalk = -1.0e9, TalkFaceUntil = 0.0;
