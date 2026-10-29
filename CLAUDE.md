@@ -65,4 +65,4 @@ canon.md (outranks everything), CHARTER.md, RULINGS.md, PLAN.md, NOW.md, CATALOG
 - Git holds text, small files and previews (JPEG, ~1600 px, under 500 KB) in production/previews/; guards check every commit and push; never --no-verify.
 - Unreal editor tools (Epic's MCP and its Claude Code plugin): commit before every editor session; save before and after any bulk change; never run with permissions bypassed while the plugin is loaded; wait for compiles to finish; read every tool's result and treat anything but an explicit success as a stop; no edits while Play-in-Editor runs.
 - Write only where production/retention.json names; lasting inputs in F:\LedgerTools; nothing large on C:. Before any build or render: `python tools/retention.py space --job "what" --drives CF`; a full disk: stop and wait.
-- Delete only what retention limits cover; else his yes on a page; nothing of his is touched.
+- Delete only what retention limits cover, or what Claude made itself and nothing uses (RULINGS.md, 29 October; each recorded in one line); else his yes on a page; nothing of his is touched.

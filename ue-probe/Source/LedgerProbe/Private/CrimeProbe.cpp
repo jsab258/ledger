@@ -8597,8 +8597,11 @@ namespace
 			GEngine->Exec(World, TEXT("r.BufferVisualizationTarget BaseColor"));
 			Step = 4; At = Now;
 		}
-		else if (Step == 4 && Now - At > 1.5) { Shot(3); GEngine->Exec(World, TEXT("r.BufferVisualizationTarget Roughness")); Step = 5; At = Now; }
-		else if (Step == 5 && Now - At > 1.5) { Shot(4); Step = 3; At = Now; bBufferDone = true; }
+		// (a screenshot is taken at the end of a later frame, so the view changes only after it is written: 29 October, the
+		// first try switched to roughness in the same tick and both pictures came out as roughness)
+		else if (Step == 4 && Now - At > 1.5) { Shot(3); Step = 5; At = Now; }
+		else if (Step == 5 && Now - At > 1.0) { GEngine->Exec(World, TEXT("r.BufferVisualizationTarget Roughness")); Step = 6; At = Now; }
+		else if (Step == 6 && Now - At > 1.5) { Shot(4); Step = 3; At = Now; bBufferDone = true; }
 		else if (Step == 3 && Now - At > 1.0 && (!bBuffers || bBufferDone)) { Step = 9; FPlatformMisc::RequestExit(false); }
 	}
 

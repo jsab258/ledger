@@ -41,11 +41,9 @@ Disk (10-29 04:35): C: 242.7 GB free, F: 28.7 GB free.
 
 ### Needs you
 
-1. **Open Marvelous and click LEDGER bridge** (no page: a click on your PC). The cuff drape is queued and starts on its own.
-2. **Today's page** (https://claude.ai/artifact/SHm9UYFEqDkf8WyH5Lk4mg): the day one stop darker (recommended), and delete three unused jacket files (recommended yes).
-3. **Your camera: size or feet?** (https://claude.ai/artifact/4e5QA1UFTEGLacF3Rm4wpE) 3.1 m, feet in, Tom smaller (recommended), or 2.4 m, his size, feet cut.
-4. **Mickey's back door, a third try at its panels?** (next page) Yes (recommended), or leave them.
-5. **Fists able to kill?** (next page; Study 14: Kingdom Come II says no) No (recommended), or yes.
+1. **Click LEDGER bridge in Marvelous, once** (no page: a click on your PC; Marvelous is open since 08:14). Still yours because all three ways round it failed: the bridge stopped when I closed Marvelous for a build on 28 October; no computer-use tools reached this session; Marvelous's start-up argument crashes it, and a script path is ignored. The cuff drape is queued and starts on its own.
+2. **Mickey's back door, a third try at its panels?** (next page) Yes (recommended), or leave them.
+3. **Fists able to kill?** (next page; Study 14: Kingdom Come II says no) No (recommended), or yes.
 
 After these, on later pages: the animation source test at 6 moves, the map marks (Study 16), the interface's width (Study 10).
 
