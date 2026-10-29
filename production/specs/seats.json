@@ -43,7 +43,7 @@
     "M_interaction_bench_out_to_stand_Montage"
    ],
    "exit": {
-    "x": 7.84,
+    "x": 7.65,
     "z": 5.92
    },
    "in_kept": [
@@ -59,7 +59,8 @@
     "M_interaction_bench_into_BR_RFoot_Montage": [
      150
     ]
-   }
+   },
+   "exit_note": "29 October 2026, the sitting method's step 9: the stand-up (out_to_stand, unwarped) measured in the game ends 0.79 m out from the seat on every seat, touching nothing in the room on 7 of 7 sits (SliceCharacter.cpp, the stand-up's room check); the earlier 0.6 m was an estimate"
   },
   {
    "name": "office bench, middle",
@@ -95,7 +96,7 @@
     "M_interaction_bench_out_to_stand_Montage"
    ],
    "exit": {
-    "x": 7.84,
+    "x": 7.65,
     "z": 6.455
    },
    "in_kept": [
@@ -111,7 +112,8 @@
     "M_interaction_bench_into_R_090_Lfoot_Montage": [
      100
     ]
-   }
+   },
+   "exit_note": "29 October 2026, the sitting method's step 9: the stand-up (out_to_stand, unwarped) measured in the game ends 0.79 m out from the seat on every seat, touching nothing in the room on 7 of 7 sits (SliceCharacter.cpp, the stand-up's room check); the earlier 0.6 m was an estimate"
   },
   {
    "name": "office bench, counter end",
@@ -147,7 +149,7 @@
     "M_interaction_bench_out_to_stand_Montage"
    ],
    "exit": {
-    "x": 7.84,
+    "x": 7.65,
     "z": 6.99
    },
    "in_kept": [
@@ -163,7 +165,8 @@
     "M_interaction_bench_into_R_090_Lfoot_Montage": [
      100
     ]
-   }
+   },
+   "exit_note": "29 October 2026, the sitting method's step 9: the stand-up (out_to_stand, unwarped) measured in the game ends 0.79 m out from the seat on every seat, touching nothing in the room on 7 of 7 sits (SliceCharacter.cpp, the stand-up's room check); the earlier 0.6 m was an estimate"
   }
  ],
  "spot": "Each seat is a spot's slot (28 October 2026, his order D10; production/research/sit-and-turn/SPOTS-2026-10-28.md, step 1): its furniture (a box of mickeys-office.json), a cap of one, who may use it (the simulation reserves it), its In clips by side and foot (the Game Animation Sample's bench set), weighted Loops, Outs, and the exit point he stands up to, 0.6 m into the room. Checked by tools/seats_check.py. Reference: Mafia's 478 slots on Smart Objects (Study 1), Kingdom Come II's tested entries."

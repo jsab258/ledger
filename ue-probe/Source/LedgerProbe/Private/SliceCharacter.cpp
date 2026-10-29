@@ -1443,6 +1443,9 @@ namespace LedgerSit
 	// until when the started moment's foot is still down by the clip's own table (29 October: read from the graph's
 	// contact curve, the first measure followed the foot through the rest of the walk, 39 to 85 cm)
 	float GSlideUntil = 0.0f;
+	// the stand-up's contacts with the room (step 9), this one's and the last one's
+	int32 GOutContacts = 0, GLastOut = -1;
+	FString GOutFirst;
 	// the chooser's frames on the path, and its best cost there, in a tested band or anywhere
 	int32 GChooserFrames = 0;
 	float GBestCostAny = 100.0f, GBestCostInBand = 100.0f;
@@ -1633,10 +1636,12 @@ bool ALedgerSliceCharacter::TryStartSit()
 	}
 	if (Best == nullptr) { UE_LOG(LogTemp, Display, TEXT("LedgerSit: no free seat within %.0f cm of (%.0f, %.0f)"), LedgerSit::ReachCm, At.X, At.Y); return false; }
 	// THE METHOD'S STEPS 5 AND 6 where the seat's entries were room-tested: the kept entry nearest his heading, walked
-	// onto and started on his own foot (TryStartSitApproach); -TomSitOldStart keeps the start below, which is also
+	// onto and started on his own foot (TryStartSitApproach), with -TomSitApproach; the start below is the default and
 	// the approach's fallback
-	static const bool bOldStart = FParse::Param(FCommandLine::Get(), TEXT("TomSitOldStart"));
-	if (!bOldStart && !bSitNoApproach && Best->Kept.Num() > 0) { return TryStartSitApproach((int32)(Best - LedgerSit::Seats().GetData())); }
+	// Since 29 October the approach is set aside after two designs, two tries each (DECISIONS.md): the plain start below
+	// is the default and -TomSitApproach brings the approach back for its tests (-TomSitApproachTest)
+	static const bool bApproach = FParse::Param(FCommandLine::Get(), TEXT("TomSitApproach")) || FParse::Param(FCommandLine::Get(), TEXT("TomSitApproachTest"));
+	if (bApproach && !bSitNoApproach && Best->Kept.Num() > 0) { return TryStartSitApproach((int32)(Best - LedgerSit::Seats().GetData())); }
 	SitSlot =FTransform(FRotator(0.0f, Best->Yaw, 0.0f), Best->Slot);
 	const FVector Rel = SitSlot.InverseTransformPosition(At);
 	const float Angle = (float)FMath::RadiansToDegrees(FMath::Atan2(Rel.Y, Rel.X));
@@ -2046,6 +2051,8 @@ void ALedgerSliceCharacter::SitApproachTestTick(float DeltaSeconds)
 			K == 0 ? TEXT("in front") : (K == 1 ? TEXT("front left") : TEXT("front right")),
 			*LedgerSit::GLastApproach, *EntryName, LedgerSit::GLastHeadingOff, bSat ? TEXT("sat") : Why,
 			LedgerSit::GSlideCm, LedgerSit::GBoneCm, LedgerSit::GBoneYaw, LedgerSit::GHipsCm, LedgerSit::GHipsUpCm);
+		UE_LOG(LogTemp, Display, TEXT("LedgerSitApproach: seat %d, the stand-up touched the room %d times"), SeatI, LedgerSit::GLastOut);
+		LedgerSit::GLastOut = -1;
 		LedgerSit::GSlideCm = LedgerSit::GBoneCm = LedgerSit::GHipsCm = LedgerSit::GHipsUpCm = -1.0f;
 		LedgerSit::GBoneYaw = 0.0f;
 		LedgerSit::GStartFoot = -1;
@@ -2343,7 +2350,44 @@ void ALedgerSliceCharacter::SitTick(float DeltaSeconds)
 		GaspMover->GetCharacterMovement()->SetMovementMode(MOVE_Walking);
 		SitPhase = ESitPhase::None;
 		SitMontage = nullptr;
-		UE_LOG(LogTemp, Display, TEXT("LedgerSit: standing again"));
+		UE_LOG(LogTemp, Display, TEXT("LedgerSit: standing again (the stand-up touched the room %d times%s; he ended %.0f cm from the seat)"),
+			LedgerSit::GOutContacts, LedgerSit::GOutFirst.IsEmpty() ? TEXT("") : *(TEXT(", first ") + LedgerSit::GOutFirst),
+			FVector::Dist2D(GaspMover->GetActorLocation(), SitSlot.GetLocation()));
+		LedgerSit::GLastOut = LedgerSit::GOutContacts;
+		LedgerSit::GOutContacts = 0; LedgerSit::GOutFirst.Empty();
+	}
+	// THE STAND-UP AGAINST THE ROOM (29 October, the sitting method's step 9: the Out unwarped along a tested exit, no
+	// contact): while he stands up, his feet, shins, hips and hands are tested against the world as the room test does,
+	// the seat's own furniture and Tom ignored
+	if (SitPhase == ESitPhase::Leaving)
+	{
+		FCollisionQueryParams Q(FName(TEXT("LedgerSitOut")), false);
+		TArray<FOverlapResult> At;
+		GetWorld()->OverlapMultiByChannel(At, SitSlot.GetLocation() + FVector(0.0, 0.0, 30.0), FQuat::Identity, ECC_WorldStatic, FCollisionShape::MakeSphere(15.0f));
+		for (const FOverlapResult& O : At) { if (O.GetComponent() != nullptr) { Q.AddIgnoredComponent(O.GetComponent()); } }
+		Q.AddIgnoredActor(this);
+		Q.AddIgnoredActor(GaspMover);
+		TArray<AActor*> Riders;
+		GaspMover->GetAttachedActors(Riders, true, true);
+		Q.AddIgnoredActors(Riders);
+		USkeletalMeshComponent* MM = GaspMover->GetMesh();
+		struct FLimb { const TCHAR* A; const TCHAR* B; float R; };
+		static const FLimb Limbs[] = { { TEXT("foot_l"), nullptr, 3.0f }, { TEXT("foot_r"), nullptr, 3.0f }, { TEXT("calf_l"), nullptr, 5.0f }, { TEXT("calf_r"), nullptr, 5.0f },
+			{ TEXT("calf_l"), TEXT("foot_l"), 4.0f }, { TEXT("calf_r"), TEXT("foot_r"), 4.0f }, { TEXT("pelvis"), nullptr, 11.0f }, { TEXT("hand_l"), nullptr, 3.0f }, { TEXT("hand_r"), nullptr, 3.0f } };
+		for (const FLimb& L : Limbs)
+		{
+			const FVector P = L.B != nullptr ? (MM->GetSocketLocation(L.A) + MM->GetSocketLocation(L.B)) * 0.5 : MM->GetSocketLocation(L.A);
+			TArray<FOverlapResult> What;
+			if (GetWorld()->OverlapMultiByChannel(What, P, FQuat::Identity, ECC_WorldStatic, FCollisionShape::MakeSphere(L.R), Q))
+			{
+				++LedgerSit::GOutContacts;
+				if (LedgerSit::GOutFirst.IsEmpty() && What.Num() > 0 && What[0].GetComponent() != nullptr)
+				{
+					const UStaticMeshComponent* HM = Cast<UStaticMeshComponent>(What[0].GetComponent());
+					LedgerSit::GOutFirst = FString::Printf(TEXT("%s on %s at %.2f s"), L.A, HM != nullptr && HM->GetStaticMesh() != nullptr ? *HM->GetStaticMesh()->GetName() : TEXT("?"), Pos);
+				}
+			}
+		}
 	}
 }
 
