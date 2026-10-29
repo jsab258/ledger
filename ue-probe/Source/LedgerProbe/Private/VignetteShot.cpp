@@ -3662,7 +3662,24 @@ namespace
 		// directional light by night only, to see what fill keeps the gaps readable
 		double Moon = 0.0;
 		FParse::Value(FCommandLine::Get(), TEXT("PlayNightMoon="), Moon);
-		if (!C.SunOn && Moon > 0.0) { SetDirectional(GSun, FLinearColor(0.70f, 0.80f, 1.0f, 1.0f), (float)Moon); }
+		if (!C.SunOn && Moon > 0.0)
+		{
+			// cooler than the first trial, which a reviewer measured neutral to warm on the wall (29 October, 05:25)
+			SetDirectional(GSun, FLinearColor(0.50f, 0.65f, 1.0f, 1.0f), (float)Moon);
+			// -PlayNightMoonYaw= and -PlayNightMoonPitch=: where the moon comes from (the first trial's, the day sun's,
+			// lit the street from behind the player and flattened what faces him); trial only, not put back by day. Two
+			// numbers, as the command line's reader stops a value at a comma.
+			double MoonYaw = 0.0, MoonPitch = 0.0;
+			const bool bYaw = FParse::Value(FCommandLine::Get(), TEXT("PlayNightMoonYaw="), MoonYaw);
+			const bool bPitch = FParse::Value(FCommandLine::Get(), TEXT("PlayNightMoonPitch="), MoonPitch);
+			if (GSun != nullptr && (bYaw || bPitch))
+			{
+				// the component's world rotation, stated absolutely, as SpawnDirectional does (the actor's rotation
+				// composes with the component's own tilt)
+				if (ULightComponent* LC = GSun->GetLightComponent()) { LC->SetWorldRotation(FRotator((float)MoonPitch, (float)MoonYaw, 0.0f)); }
+				UE_LOG(LogTemp, Display, TEXT("LedgerLook: a trial moon of %.2f from yaw %.0f, pitch %.0f"), Moon, MoonYaw, MoonPitch);
+			}
+		}
 		// THE FILLS AT ZERO ALSO STOP THEM BEING SUNS. A directional light
 		// is an atmosphere sun light by default in this engine, so three
 		// fills left burning would put up to two extra sun discs in the sky
