@@ -7649,6 +7649,9 @@ namespace
 	void RoomNoCollision(UPrimitiveComponent* C)
 	{
 		if (C == nullptr) { return; }
+		// -RoomsOldCollision: the rooms keep the "block all" they had before 29 October, to compare (the office camera)
+		static const bool bOld = FParse::Param(FCommandLine::Get(), TEXT("RoomsOldCollision"));
+		if (bOld) { return; }
 		C->SetCollisionProfileName(UCollisionProfile::NoCollision_ProfileName);
 		C->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}

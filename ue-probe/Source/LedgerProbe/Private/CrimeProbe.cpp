@@ -59,6 +59,7 @@
 // probe's own count and RungFloor is 0, both printed), no suspicion
 // consequences, no save file, no memory loading, and no yard in the street's
 // own JSON.
+#include "Engine/CollisionProfile.h"
 #include "CrimeProbe.h"
 
 #include "VignetteShot.h"
@@ -8571,6 +8572,9 @@ namespace
 				{
 					C->SetMobility(EComponentMobility::Movable);
 					C->GetStaticMeshComponent()->SetStaticMesh(Mesh);
+					// the no-collision profile named, as the shops' rooms (29 October: the plain switch did not stay off,
+					// and inside Mickey's office the camera's arm hit the chart and folded onto Tom)
+					C->GetStaticMeshComponent()->SetCollisionProfileName(UCollisionProfile::NoCollision_ProfileName);
 					C->GetStaticMeshComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 				}
 				for (TActorIterator<AActor> It(World); It; ++It)
