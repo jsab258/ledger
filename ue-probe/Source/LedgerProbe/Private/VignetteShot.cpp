@@ -8569,7 +8569,7 @@ namespace
 				const LedgerStreet::Grade Gr = (Sk >= 0 && Sk < (int32)GScan.size())
 					? LedgerStreet::Grade{GScan[(size_t)Sk].Match[0], GScan[(size_t)Sk].Match[1], GScan[(size_t)Sk].Match[2]}
 					: (bPhoto ? LedgerStreet::PaletteOverPhoto(Rw) : LedgerStreet::Grade{1.0, 1.0, 1.0});
-				const double D = LedgerStreet::WetDarken(Rw.Base, C.Wetness);
+				const double D = LedgerStreet::WetDarken(Rw.Base, C.Wetness, LedgerStreet::WetDarkenOf(GLook, Rw.Base));
 				const LedgerStreet::Grade Sg = LedgerStreet::SurfaceGainFor(GLook, LedgerStreet::GradeKeyOf(Rw));
 				Mid->SetVectorParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::AlbedoGradeParam())),
 					FLinearColor((float)(Gr.R * D * Sg.R), (float)(Gr.G * D * Sg.G), (float)(Gr.B * D * Sg.B), 1.0f));

@@ -4425,6 +4425,26 @@ namespace
 			}
 			FParse::Value(FCommandLine::Get(), TEXT("OfficeLocalHighlight="), LocalHighlight);
 			FParse::Value(FCommandLine::Get(), TEXT("OfficeLocalShadow="), LocalShadow);
+			// THE ROOM'S GRADE (29 October, his order D11, O4; production/research/street-wear/MAFIA-WEAR-2026-10-28.md,
+			// Mickey's office: "a room volume ... only Mafia's live values: gamma (1, 0.978, 0.976), shadow gamma (1, 0.936,
+			// 0.855)"): the spec's "grade" applied by the same volume while the camera is inside, warming the room's shadows.
+			// Mafia's 2 m blend belongs to a bounded volume the camera passes into; this one is unbound and weighed by the
+			// camera's place in the rooms, eased over the half metre at the door, so no street view is ever graded.
+			// -NoOfficeGrade leaves it out, for the check's before and after.
+			FVector4 Gamma(1.0, 1.0, 1.0, 1.0), GammaShadows(1.0, 1.0, 1.0, 1.0);
+			bool bGrade = false;
+			const TSharedPtr<FJsonObject>* GradeObj = nullptr;
+			if (!FParse::Param(FCommandLine::Get(), TEXT("NoOfficeGrade")) && (*Inside)->TryGetObjectField(TEXT("grade"), GradeObj) && GradeObj && GradeObj->IsValid())
+			{
+				auto Read3 = [&GradeObj](const TCHAR* Key, FVector4& Out) -> bool
+				{
+					const TArray<TSharedPtr<FJsonValue>>* A = nullptr;
+					if (!(*GradeObj)->TryGetArrayField(Key, A) || A == nullptr || A->Num() != 3) { return false; }
+					Out = FVector4((*A)[0]->AsNumber(), (*A)[1]->AsNumber(), (*A)[2]->AsNumber(), 1.0);
+					return true;
+				};
+				bGrade = Read3(TEXT("gamma"), Gamma) | Read3(TEXT("shadow_gamma"), GammaShadows);
+			}
 			if (PinDay > 0.0 || PinNight > 0.0)
 			{
 				const FVector Mid((GOffice.X0 + GOffice.X1) * 50.0, (GOffice.Z0 + Back) * 50.0, 150.0);
@@ -4462,7 +4482,7 @@ namespace
 							if (KV.Value.IsValid() && KV.Value->TryGetNumber(Num)) { ShadowInside.Add(TPair<FString, float>(KV.Key, (float)Num)); }
 						}
 					}
-					auto Drive = [Weak, WeakWorld, Rooms, PinDay, PinNight, ShadowInside, LocalHighlight, LocalShadow](float) -> bool
+					auto Drive = [Weak, WeakWorld, Rooms, PinDay, PinNight, ShadowInside, LocalHighlight, LocalShadow, bGrade, Gamma, GammaShadows](float) -> bool
 					{
 						APostProcessVolume* P = Weak.Get();
 						UWorld* W = WeakWorld.Get();
@@ -4514,11 +4534,17 @@ namespace
 						S.LocalExposureHighlightContrastScale = LocalHighlight > 0.0 ? (float)LocalHighlight : 1.0f;
 						S.bOverride_LocalExposureShadowContrastScale = LocalShadow > 0.0;
 						S.LocalExposureShadowContrastScale = LocalShadow > 0.0 ? (float)LocalShadow : 1.0f;
+						S.bOverride_ColorGamma = bGrade;
+						S.ColorGamma = Gamma;
+						S.bOverride_ColorGammaShadows = bGrade;
+						S.ColorGammaShadows = GammaShadows;
 						return true;
 					};
 					Drive(0.0f);
 					FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateLambda(Drive), 0.0f);
 					UE_LOG(LogTemp, Display, TEXT("LedgerOffice: its own exposure, pinned %.3f by day and %.3f at night, local contrast %.2f highlights %.2f shadows, inside x %.2f-%.2f z %.2f-%.2f"), PinDay, PinNight, LocalHighlight, LocalShadow, GOffice.X0, GOffice.X1, GOffice.Z0, Back);
+					UE_LOG(LogTemp, Display, TEXT("LedgerOffice: its grade %s: gamma %.3f %.3f %.3f, shadow gamma %.3f %.3f %.3f"), bGrade ? TEXT("on") : TEXT("off"),
+						Gamma.X, Gamma.Y, Gamma.Z, GammaShadows.X, GammaShadows.Y, GammaShadows.Z);
 				}
 			}
 		}
@@ -7235,6 +7261,27 @@ namespace
 					X = K.X; Z = K.Z;
 					YawDeg = FMath::RadiansToDegrees(std::atan2(K.FaceZ - K.Z, K.FaceX - K.X));
 					Seat = K.Seated.empty() ? nullptr : &K;
+				}
+			}
+			// NEVER INTO A SEAT TOM IS IN (29 October, the packaged sit walk: Ron's evening seats him on the bench's
+			// middle seat, the one the tester sits Tom on): while Tom or his walking body is within 60 cm of the seat,
+			// whoever's hour it is waits where they are, as a person held back by his view does
+			if (Seat != nullptr)
+			{
+				bool bHis = false;
+				for (TActorIterator<ACharacter> Ch(World); Ch && !bHis; ++Ch)
+				{
+					const LedgerCrime::P3 At = ToStreet(Ch->GetActorLocation());
+					bHis = std::hypot(At.X - Seat->X, At.Z - Seat->Z) < 0.6;
+				}
+				if (bHis)
+				{
+					if (!GHeldBackSince.count(C))
+					{
+						GHeldBackSince[C] = NowS();
+						UE_LOG(LogTemp, Display, TEXT("LedgerDay: %s waits: Tom is in the seat at (%.2f, %.2f)"), UTF8_TO_TCHAR(C), Seat->X, Seat->Z);
+					}
+					continue;
 				}
 			}
 			// NEVER ONTO ANOTHER OF THE THREE, wherever they stand now (placed this

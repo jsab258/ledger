@@ -150,15 +150,15 @@
       "target": 0,
       "display": "0 of 1 outfit made",
       "state": "fighting",
-      "last": "28 Oct: Tom's sleeve ends fixed: draped with his elbows straight, then bent back with his skeleton, each sleeve now goes round the forearm to its end. The rib cuffs go round the wrist too, but a few points of each are caught inside it: set aside, the next step on your page."
+      "last": "29 Oct: Marvelous's elastic cuffs failed twice, so Tom's cuffs were built to his wrist's shape: every measure passes, they bake clean, and the jacket with them passed its asset checks and is in the packaged game. The jumper's pattern and its first Marvelous job are ready; Marvelous reopens for it."
     },
     {
       "name": "The Empty Chair",
       "what": "Someone sits down in the game as you play it.",
-      "display": "Not built yet",
+      "display": "Sits and stands in the packaged game; one fault found",
       "hp": 100,
       "state": "fighting",
-      "last": "26 Oct: the third try (Epic's clip from its own start) set aside: Tom's leg passes through the window sill on Epic's approach. Sitting stays off in play."
+      "last": "29 Oct: in the packaged game the AI tester walked Tom in, sat him 20 cm from the seat and stood him up without touching anything, 13 of 13. A second run found Tom could sit in a seat Ron was already in, by Ron's evening; fixed tonight, re-tested on the next build."
     },
     {
       "name": "The Clean Room",
@@ -166,7 +166,7 @@
       "display": "Wear passed in the editor; packaged faults open",
       "hp": 100,
       "state": "fighting",
-      "last": "26 Oct: two wear passes passed; in the packaged game, at High, small shadows on the counter go and two fixes failed (set aside, your call on the next); the desk under the radio fixed; faults behind the counter listed for tomorrow."
+      "last": "29 Oct: the office's wear marks photographed at the true exposure: two of three views pass, one tea ring on a loose sheet set aside after two tries. Tobacco smoke on the upper walls and ceiling is being gated now."
     },
     {
       "name": "The Memory Hog",

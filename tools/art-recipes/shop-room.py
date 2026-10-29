@@ -346,7 +346,12 @@ def build_and_render(argv):
         wall = texmat("plaster_nicotine", "painted_plaster_wall", 1.5, (0.66, 0.54, 0.34),
                       base=mat("paint_nicotine", (0.38, 0.31, 0.19), rough=0.85, noise=0.3))
         dado = mat("dado_wood_effect", (0.14, 0.085, 0.045), rough=0.45, noise=0.25)
-        ceiling = mat("ceiling_nicotine", (0.46, 0.40, 0.29), rough=0.9, noise=0.2)
+        # THE CEILING AT FULL SMOKE (29 October, his order D11, O1; MAFIA-WEAR-2026-10-28.md: "full at the ceiling ...
+        # yellow-brown"; its check: the ceiling's red over blue at least 1.15 times a pale wall's): the pale patches
+        # where notices hung read 3.5 in the base-colour view (linear), so 4.0 or more; it was (0.46, 0.40, 0.29),
+        # 1.6, the cleanest surface in the room. Now a tan nicotine, luminance 0.25 (was 0.40), red over blue 4.2;
+        # its sheen 0.1 lower, as the smoke's on the walls (tools/street_wear.py office_smoke)
+        ceiling = mat("ceiling_nicotine", (0.36, 0.235, 0.085), rough=0.8, noise=0.2)
     t = 0.12 if EXPORT else 0.05
     if EXPORT:
         box("floor_slab", -W / 2 - t, W / 2 + t, 0, D + t, -0.12, -0.02, floor_lino)

@@ -115,6 +115,42 @@ What failed before this method, so it is not repeated: draping with bent elbows 
 
 ## Notebook
 
+### 29 Oct 2026, a lived-in room's smoke staining by height, without vertex colour
+- Made: tobacco staining on a room's three walls, full under the ceiling and gone 1.2 m above the floor, and the ceiling's own colour at full stain; one fresh reviewer per view passed it.
+- Method (setting-free):
+  - Where the reference game paints a second layer by vertex colour and the export carries none, lay one thin projected mark per wall, its width and from the height the stain starts to the ceiling, with a picture full at the top and wandering at its foot; the ceiling, stained evenly, takes the stain in its own colour.
+  - Never one room-sized projection: it would also tint anyone standing inside.
+  - Check orientation before anything else: a wall projection may print its picture's first row at its foot; profile the darkening down each wall (before over after, row by row) and confirm it is strongest at the top and fades to nothing with no line.
+  - Measure in the base-colour view: the darkest band no more than 40% darker, its sheen about 0.1 less rough; the ceiling's red over blue at least 1.15 times an unstained patch's (where a notice kept the light off).
+- Tools: a mask maker (seeded noise), the wear rules that place marks from the room's plan, the repeatable photograph runner with the buffer views, fresh reviewers.
+- Target and check: walls darkened 34% at most under the ceiling, the band above the picture rail 40%, fading to none by 1.3 m; ceiling 4.06 against 3.52 (1.15); three views passed.
+- Cost (hours): about 1.5.
+- Failed and why: the first picture printed upside down (strongest at its foot, ending in a line); found by profiling, not by eye. Reviewers called the result subtle and the room brown on brown: a taste question for his page.
+- Evidence: DECISIONS.md, 29 October 16:56 and after; F:/LedgerTools/gate/new/office/2026-10-29-smoke.
+
+### 29 Oct 2026, a game street's surfaces calibrated to real reflectances: walls kept, wet ground set aside for a method
+- Made: brick and kerb at measured real values, passing a fresh reviewer per view; road and pavement left as they were after two tries; a reviewed method for the wet ground.
+- Method (setting-free):
+  - Confirm the exposure in force from the game's own run line (an unset bias is the engine's default, not zero), then read a known chart through the player's camera, in the open and beside a wall, before touching any surface.
+  - Validate the engine's base-colour view with the same chart (its patches read their published values) before trusting it as a measure; then measure each surface there in boxes kept beside the pictures, and compare with researched real bands that a fresh reviewer has checked.
+  - Change base colours by the measured factor and photograph again at the true exposure; check what the editor reads (a stale local copy of the scene once held the old exposure for hours).
+  - Judge each view by a fresh reviewer beside its last good picture and the reference; when the faults of two rounds all sit on one kind of surface, keep the rest and take that kind back, then research its whole method (base, wetness, decals, night light together) instead of turning a third setting.
+  - A dark decal laid as a fixed colour turns into a cut-out when the ground under it brightens: darken relative to the ground.
+- Tools: a chart reader, a surface reader over the base-colour and lit views, a repeatable photograph runner (it records its command line and the judged lines), the road's measure against the reference's values, fresh reviewers.
+- Target and check: chart middle grey 110 to 135 (met: 128 and 117); base colours inside the real bands (walls met; road and flags met in two tries but each with a new look fault); the reference's road values within 12 levels (two of three, then none once the wet ground went back).
+- Cost (hours): about 2.5.
+- Failed and why: one uniform water film over real-albedo ground read as a milky sheet and polished tile; a brighter pavement made a night pool burn out and a stain decal stand out. Four of my own slips cost reruns: a guessed time stamp, pictures written to the wrong drive, a missing switch that left a room unlit, and a stale scene copy.
+- Evidence: DECISIONS.md, 29 October 13:39 to 14:48; production/research/street-wear/WET-GROUND-METHOD-2026-10-29.md and its review.
+
+### 29 Oct 2026, wear decals printing onto loose objects on a counter: two moves, set aside
+- Made: one ring moved off two slips (kept); the ring printing on a sheet left as a known shortfall.
+- Method (setting-free): project each decal's centre into the gate's own logged camera and draw it on the picture before moving anything, and read the drawing slowly: the second try moved the wrong ring because the projection was misread.
+- Tools: the camera's logged position and lens, a projection into the frame, the sheen-and-colour check with and without the marks.
+- Target and check: no mark printed onto a loose object; missed in one of three views.
+- Cost (hours): about 0.4.
+- Failed and why: a projected decal prints onto whatever lies on its surface; moving marks around the props is fragile. The next direction: loose objects that take no surface decals at all.
+- Evidence: DECISIONS.md, 29 October 14:43 and 15:00.
+
 ### 29 Oct 2026, a garment's knitted cuffs gathered by the cloth tool's own elastic: two tries, set aside for a built band
 - Made: nothing kept; two tries of rib cuffs in the cloth simulator, judged and set aside, and the route handed to a band built in the 3D package.
 - Method (setting-free):

@@ -199,5 +199,6 @@ production/previews/cloud-week/sound/*.ogg
 ledger/Assets/StreamingAssets/Decals/ours/wear_head/
 ledger/Assets/StreamingAssets/Decals/ours/wear_damp_patch/
 ledger/Assets/StreamingAssets/Decals/ours/wear_pale/
+ledger/Assets/StreamingAssets/Decals/ours/wear_smoke/
 # POCKET-ONLY VOICE REFERENCES, 26 October: audio stays out of git; F:\LedgerTools\game-inputs holds them
 game-design/pocket-voices/

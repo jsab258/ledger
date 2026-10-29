@@ -1724,6 +1724,14 @@ bool ALedgerSliceCharacter::TryStartSit()
 			if (*It == GaspMover || *It == this || It->GetAttachParentActor() == GaspMover || It->GetOwner() == GaspMover) { continue; }
 			if (FVector::Dist2D(It->GetActorLocation(), S.Slot) < 40.0) { bTaken = true; }
 		}
+		// AND THE TOWN'S PEOPLE (29 October, the packaged sit walk: Ron's evenings seat him on the bench's middle seat,
+		// and Tom sat into him there and stood up through his body, 130 contacts): they are MetaHuman actors tagged
+		// LedgerCast over a hidden body, not characters, so the loop above never saw them
+		for (TActorIterator<AActor> It(GetWorld()); It; ++It)
+		{
+			if (!It->ActorHasTag(TEXT("LedgerCast")) || It->GetAttachParentActor() == GaspMover || It->GetOwner() == GaspMover) { continue; }
+			if (FVector::Dist2D(It->GetActorLocation(), S.Slot) < 40.0) { bTaken = true; }
+		}
 		// in the room: he stands on the office's public side (never a seat through a wall or the window; a
 		// line traced to the seat was stopped by the room's own meshes, 25 October)
 		const bool bOutside = LedgerSit::GRoom.bIsValid && !LedgerSit::GRoom.IsInside(FVector2D(At.X, At.Y));

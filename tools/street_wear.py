@@ -269,6 +269,7 @@ def build(pieces):
     decals += room_wear()
     decals += counter_marks()
     decals += office_marks()
+    decals += office_smoke()
     for d in decals:
         if d["on"] == "mickeys_room":
             stain_office(d)
@@ -389,13 +390,44 @@ def office_marks(spec_path=OFFICE):
     return out
 
 
+#: TOBACCO SMOKE ON THE OFFICE'S WALLS, 29 October (his order D11, O1; MAFIA-WEAR-2026-10-28.md, Mickey's office:
+#: "full at the ceiling, none 1.2 m above the floor, yellow-brown, roughness 0.1 lower"). Mafia paints a second layer
+#: by vertex colour, which the room's export does not carry (the research's review), so each wall takes one mark the
+#: wall's width, from 1.2 m up to 2 cm under the ceiling (shop-room.py: 2.9 m), its picture full at the top
+#: (tools/make_wear_masks.py wear_smoke); the ceiling's own colour carries its full smoke (shop-room.py). A tar-brown
+#: deposit laid at about 0.4 at its top (the picture's 0.9 x the stain grey's 0.75 x strength 0.6), so a wall at the
+#: notice wall's (0.156, 0.098, 0.038) darkens about a quarter, under the layer recipe's 40%; its sheen target 0.6 so
+#: the matt paint (0.85) shows about 0.1 less rough at the top. Street metres; 2 cm short of each corner.
+SMOKE = "ours/wear_smoke"
+SMOKE_TINT = [1.0, 0.65, 0.25]
+SMOKE_FROM_M, CEILING_M = 1.2, 2.9
+OFFICE_WALLS = (("notice wall", 8.65, None, 270.0), ("stair strip wall", 4.19, None, 90.0), ("back wall", None, 9.40, 0.0))
+OFFICE_SPAN_X, OFFICE_SPAN_Z = (4.19, 8.65), (5.27, 9.40)
+
+
+def office_smoke():
+    y0, y1 = ROOM_FLOOR_M + SMOKE_FROM_M, ROOM_FLOOR_M + CEILING_M - 0.02
+    out = []
+    for name, x, z, yaw in OFFICE_WALLS:
+        if x is not None:      # a side wall, running along z
+            a, b = OFFICE_SPAN_Z
+            cx, cz = x, (a + b) / 2
+        else:                  # the back wall, running along x
+            a, b = OFFICE_SPAN_X
+            cx, cz = (a + b) / 2, z
+        out.append({"kind": "smoke", "picture": SMOKE, "tint": SMOKE_TINT, "x_m": round(cx, 4), "y_m": round((y0 + y1) / 2, 4),
+                    "z_m": round(cz, 4), "w_m": round(b - a - 0.04, 4), "h_m": round(y1 - y0, 4), "yaw_deg": yaw,
+                    "pitch_deg": 0.0, "strength": 0.6, "on": "mickeys_room", "wall": name})
+    return out
+
+
 #: EACH OFFICE MARK'S SHEEN, 29 October (D11, the layer recipe's step 1: a stain differs from its wall by at least
 #: 0.1 in the roughness view). The decal blends its sheen by the same coverage as its colour, at most about a fifth
 #: to a third of the way at a mark's strongest (its picture's coverage times its strength), so each target stands
 #: well away from its surface: the cream paint and the carpet are near matt (shop-room.py: 0.85, 0.95), and hands,
 #: heads, fresh damp and the trodden pile polish them; paint a notice kept from the light has not chalked; rubber
 #: kicks and dried tea dull a surface, burns char it. First values, fixed by tools/stain_check.py's first run.
-STAIN_ROUGH = {"grime": 0.3, "damp": 0.35, "scuff": 0.95, "kick": 0.95, "pale": 0.55, "path": 0.45}
+STAIN_ROUGH = {"grime": 0.3, "damp": 0.35, "scuff": 0.95, "kick": 0.95, "pale": 0.55, "path": 0.45, "smoke": 0.6}
 STAIN_ROUGH_PICTURE = {RINGS: 0.8, BURNS: 1.0}   # burns 1.0 (29 October): their thin lines read under 0.1 at 0.9
 
 
@@ -570,7 +602,12 @@ def selftest():
     check("the office counter's scuffs read, at FRONT_WEAR or more (7 October)",
           counter and all(d["strength"] >= FRONT_WEAR for d in counter))
     office = [d for d in decals if d["on"] == "mickeys_room"]
-    walls_floor = [d for d in office if d["picture"] not in (RINGS, BURNS) and not (d["kind"] == "scuff" and d["yaw_deg"] == 0.0)]
+    # the smoke is O1's layer, not one of O2's marks
+    walls_floor = [d for d in office if d["picture"] not in (RINGS, BURNS) and d["kind"] != "smoke" and not (d["kind"] == "scuff" and d["yaw_deg"] == 0.0)]
+    smoke = [d for d in office if d["kind"] == "smoke"]
+    check("smoke on each of the office's three walls, from 1.2 m up to the ceiling (O1)",
+          len(smoke) == 3 and len({d["wall"] for d in smoke}) == 3
+          and all(abs(d["y_m"] - d["h_m"] / 2 - (ROOM_FLOOR_M + SMOKE_FROM_M)) < 1e-3 and d["y_m"] + d["h_m"] / 2 <= ROOM_FLOOR_M + CEILING_M for d in smoke))
     check("the office's walls and floor carry 10 to 14 marks (O2), at most 6 a wall",
           10 <= len(walls_floor) <= 14 and max(sum(1 for d in walls_floor if (d["pitch_deg"], d["yaw_deg"], round(d["x_m"], 2) if d["yaw_deg"] in (90.0, 270.0) else round(d["z_m"], 2)) == k)
                                                 for k in {(d["pitch_deg"], d["yaw_deg"], round(d["x_m"], 2) if d["yaw_deg"] in (90.0, 270.0) else round(d["z_m"], 2)) for d in walls_floor if d["pitch_deg"] == 0.0}) <= 6)

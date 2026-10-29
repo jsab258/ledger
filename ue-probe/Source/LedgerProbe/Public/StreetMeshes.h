@@ -294,9 +294,9 @@ namespace LedgerStreet
 		const double V = WetCurve(W) * Share;
 		return V < 0.0 ? 0.0 : (V > 1.0 ? 1.0 : V);
 	}
-	inline double WetDarken(const std::string& Base, double W)
+	inline double WetDarken(const std::string& Base, double W, double FullWet = 0.72)
 	{
-		return TakesWater(Base) ? 1.0 - 0.28 * WetCurve(W) : 1.0;
+		return TakesWater(Base) ? 1.0 - (1.0 - FullWet) * WetCurve(W) : 1.0;
 	}
 
 	// ---- THE LOOK'S OWN SETTINGS, production/specs/unreal-look.json ---------
@@ -410,6 +410,11 @@ namespace LedgerStreet
 		// A WET SURFACE'S ROUGHNESS FLOOR IN THIS ENGINE, by base material,
 		// where it differs from the recipe's (road 0.05, paving 0.46, kerb 0.40).
 		std::vector<std::pair<std::string, double> > WetFloors;
+		// THE WET GROUND'S DARKENING BY SURFACE (29 October; production/research/street-wear/WET-GROUND-METHOD-2026-10-29.md,
+		// step 1, Lagarde's saturated stone: diffuse x lerp(1, 0.2, porosity)): each surface's base colour at full wetness
+		// as a share of its dry colour, the look file's "wet_darken" (asphalt 0.68 to 0.75, flags 0.50 to 0.65 there);
+		// a surface it leaves out keeps the recipe's one 0.72
+		std::vector<std::pair<std::string, double> > WetDarkens;
 		// THE BLENDER STREET IN THE PLAYABLE GAME TOO (the walk, the crime,
 		// a plain launch): shown in place of the scene file's own pieces,
 		// which stay as the collision - hidden, not removed - so walking,
@@ -522,6 +527,16 @@ namespace LedgerStreet
 			if (Lk.WetFloors[I].first == Base) { return Lk.WetFloors[I].second; }
 		}
 		return -1.0;
+	}
+
+	// THE LOOK FILE'S WET DARKENING FOR ONE SURFACE, or the recipe's 0.72.
+	inline double WetDarkenOf(const Look& Lk, const std::string& Base)
+	{
+		for (size_t I = 0; I < Lk.WetDarkens.size(); ++I)
+		{
+			if (Lk.WetDarkens[I].first == Base) { return Lk.WetDarkens[I].second; }
+		}
+		return 0.72;
 	}
 
 	// THE PEOPLE IN THE STREET, 23 September: production/specs/street-people.json,
@@ -961,6 +976,18 @@ namespace LedgerStreet
 		}
 		V = Root.Find("street_in_play");
 		if (V != 0 && V->Type == T_BOOL) { Out.bStreetInPlay = V->Bool; ++Out.Read; }
+		V = Root.Find("wet_darken");
+		if (V != 0 && V->Type == T_OBJ)
+		{
+			for (size_t I = 0; I < V->Obj.size(); ++I)
+			{
+				if (V->Obj[I].second.Type == T_NUM && V->Obj[I].second.Num > 0.0 && V->Obj[I].second.Num <= 1.0)
+				{
+					Out.WetDarkens.push_back(std::make_pair(V->Obj[I].first, V->Obj[I].second.Num));
+				}
+			}
+			++Out.Read;
+		}
 		V = Root.Find("wet_floor");
 		if (V != 0 && V->Type == T_OBJ)
 		{

@@ -181,6 +181,24 @@ def marks(rng):
     for cx, cy in ((inset + 0.04, inset + 0.04), (1 - inset - 0.04, inset + 0.04), (inset + 0.04, 1 - inset - 0.04), (1 - inset - 0.04, 1 - inset - 0.04)):
         oblong = np.maximum(oblong, 0.95 * np.clip(1.0 - np.hypot(xx - cx, yy - cy) / 0.035, 0.0, 1.0))
     out["wear_pale"] = soften(oblong, 2)
+    # TOBACCO SMOKE UNDER THE CEILING, 29 October (his order D11, the office, O1; production/research/street-wear/
+    # MAFIA-WEAR-2026-10-28.md: "full at the ceiling, none 1.2 m above the floor, yellow-brown ... the edge broken by
+    # the plaster's own texture"): the decal spans a wall from 1.2 m up to the ceiling, so the picture's top row is
+    # the ceiling's edge and its bottom row the line where the smoke gives out; full at the top, falling off softly,
+    # the line it gives out at wandering a few centimetres with a broad noise, mottled a little inside; its two
+    # sides fade over their outer 1.5% so the room's corners show no edge
+    wander = (smooth_noise(rng, n, (4, 8)) - 0.5) * 0.16
+    t = np.clip(yy + wander, 0.0, 1.0)
+    fall = np.clip(1.0 - t, 0.0, 1.0) ** 1.6
+    grain = 0.85 + 0.15 * np.clip(smooth_noise(rng, n, (16, 32, 64)) * 1.4 - 0.2, 0.0, 1.0)
+    sides = np.clip(np.minimum(xx, 1.0 - xx) / 0.015, 0.0, 1.0)
+    smoke = soften(fall * grain, 2) * sides                              # the sides after the blur, or it fills them
+    # A WALL DECAL PRINTS ITS PICTURE'S FIRST ROW AT ITS FOOT (measured 29 October in the office's base-colour view: drawn
+    # full at the top, the smoke darkened the wall least under the ceiling and most at 1.3 m, then stopped in a line), so
+    # the picture is stored the other way up: its last row is the ceiling's edge
+    smoke = smoke[::-1].copy()
+    smoke[:2, :] = 0.0                                                   # nothing at the foot's own row
+    out["wear_smoke"] = smoke
     return out
 
 
@@ -268,6 +286,11 @@ def selftest():
     pl = marks(np.random.default_rng(19901006))["wear_pale"]
     check("a notice's pale patch fades to nothing at every edge", max(pl[0, :].max(), pl[-1, :].max(), pl[:, 0].max(), pl[:, -1].max()) < 0.02)
     check("and is a filled oblong, strong in its middle", pl[SIZE // 2, SIZE // 2] > 0.75 and (pl > 0.5).mean() > 0.45)
+    sm = marks(np.random.default_rng(19901006))["wear_smoke"]
+    check("smoke is full under the ceiling (the picture's last rows: a wall decal prints its first row at its foot)",
+          sm[-20:-4, SIZE // 4:3 * SIZE // 4].mean() > 0.7)
+    check("and gives out at its foot", sm[:3, :].max() < 0.05 and sm[SIZE // 4, :].mean() < 0.25)
+    check("its sides fade so the corners show no edge", max(sm[:, 0].max(), sm[:, -1].max()) < 0.1)
     rng = np.random.default_rng(19901002)
     a = puddle(rng)
     check("a puddle stays clear of the decal's edge", a[0, :].max() == 0 and a[-1, :].max() == 0 and a[:, 0].max() == 0 and a[:, -1].max() == 0)

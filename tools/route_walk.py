@@ -80,6 +80,30 @@ def play(*args):
     return out[-1] if out else ""
 
 
+# THE CAMERA'S ROWS ON FILM (29 October, his order D11's camera: talk, low rooms, running and fights, "each shown to
+# him in the game"): --camera films the first talk from its first key and a short run along the road, and every
+# filmed stretch's frames are named in film-marks.json beside the verdict, so the one film the tester stitches can be
+# cut into its parts
+CAMERA = "--camera" in sys.argv
+FILM_MARKS = {}
+
+
+def film_count():
+    try:
+        with open(os.path.join("F:/LedgerTools/tmp/ai-tester", "state.json"), encoding="utf-8") as fh:
+            return int(json.load(fh).get("film_n", 0))
+    except (OSError, ValueError):
+        return 0
+
+
+def filmed(name, *args):
+    """play(*args) with its frames named: FILM_MARKS[name] = [first, last] frame numbers."""
+    a = film_count()
+    out = play(*args)
+    FILM_MARKS[name] = [a + 1, film_count()]
+    return out
+
+
 def parse_where(text):
     """route-where.txt: "tom x z heading clock|window x z reach|lena x z talk|..."."""
     got = {}
@@ -111,6 +135,7 @@ class Route:
     def __init__(self, saved, out):
         self.saved, self.out = saved, out
         self.rows, self.seen, self.pending, self.trace = [], 0, [], []
+        self.detours = 0
 
     def epic_walk(self):
         """True when the running game logged Epic's walk (SliceCharacter.cpp: "LedgerWalk: Epic's route"), read once
@@ -223,6 +248,18 @@ class Route:
             w2 = self.where().get("tom")
             if w2 and math.hypot(w2[0] - w[0], w2[1] - w[1]) < 0.15:
                 play("walk", "right" if _ % 2 == 0 else "left", "0.6")
+            # A LEG THAT SLIDES IS BLOCKED TOO (29 October, the packaged sit walk: stepping out to the road at x 14.7,
+            # a car at the kerb turned every leg into a 2 m slide along it and back, for nine game hours, and the
+            # window was never reached): a leg that brings him no nearer turns him square to his aim and walks him
+            # 2.5 m along the obstacle, the side alternating, before the next leg
+            elif w2 and d > 1.0 and math.hypot(x - w2[0], z - w2[1]) > d - 0.3:      # never in the last metre
+                ux, uz = (x - w2[0]) / max(d, 1e-6), (z - w2[1]) / max(d, 1e-6)
+                side = 1.0 if (self.detours % 2 == 0) else -1.0
+                self.detours += 1
+                tx, tz = w2[0] - uz * side * 2.5, w2[1] + ux * side * 2.5
+                self.turn_to(bearing(w2[0], w2[1], tx, tz))
+                play("walk", "forward", "%.2f" % (1.25 if self.epic_walk() else 1.5))
+                time.sleep(0.3)
         w = self.where().get("tom")
         return bool(w) and math.hypot(x - w[0], z - w[1]) <= tol
 
@@ -240,6 +277,9 @@ class Route:
         verdict = {"passed": sum(r["ok"] for r in self.rows), "stages": len(self.rows), "rows": self.rows, "path": self.trace}
         with open(os.path.join(self.out, "verdict.json"), "w", encoding="utf-8") as fh:
             json.dump(verdict, fh, indent=1)
+        if FILM_MARKS:
+            with open(os.path.join(self.out, "film-marks.json"), "w", encoding="utf-8") as fh:
+                json.dump(FILM_MARKS, fh, indent=1)
         return verdict
 
 
@@ -340,11 +380,11 @@ def sit_round(r):
     # THE SIT FILM (29 October, his order D10: his page shows the sit as a film): the tester's frames while he
     # sits down, sits and stands up, stitched by `play.py film` after the walk; each filmed from the key's own tap
     # (the first film's stand-up fell between two commands, its review found)
-    play("press", "E", "--film", "8")
+    filmed("sit-down", "press", "E", "--film", "8")
     if not r.expect("sit", 20):
         return False
     r.discard("stand")
-    play("press", "E", "--film", "7")
+    filmed("stand-up", "press", "E", "--film", "7")
     return r.expect("stand", 20)
 
 
@@ -393,6 +433,8 @@ def walk(editor, out, town=False, sit=False):
     near = "lena" in w and "tom" in w and math.hypot(w["lena"][0] - w["tom"][0], w["lena"][1] - w["tom"][1]) <= w["lena"][2]
     if near:
         play("say", LINE)
+        if CAMERA:      # the talk's camera row blends in from the box's opening (SliceCharacter.cpp CameraRowTick)
+            filmed("talk", "wait", "6", "--film")
         r.expect("talk-open", 10)
         if r.expect("talk-typed", 10) and r.said_back() != LINE:
             r.rows[-1]["ok"] = False
@@ -403,6 +445,14 @@ def walk(editor, out, town=False, sit=False):
         r.record("talk-open", False, "never in reach of Sheila (%s)" % (
             "she is not on the street" if "lena" not in w else "%.1f m away" % math.hypot(w["lena"][0] - w["tom"][0], w["lena"][1] - w["tom"][1])))
     play("wait", "8")
+    if CAMERA:          # a run along the road's middle, away from the parade: the run row and back
+        t = r.where().get("tom")
+        if t:
+            r.by_road(t[0], ROAD_Z, tol=0.5)
+            t = r.where().get("tom") or t
+            r.turn_to(bearing(t[0], t[1], t[0] + 10.0, t[1]))
+            filmed("run", "walk", "forward", "2.5", "--run", "--film")
+            filmed("run-stop", "wait", "3", "--film")
     # THE DEED: by the road to Rita's window, then up to it, facing it.
     w = r.where()
     if "window" in w and "tom" in w:

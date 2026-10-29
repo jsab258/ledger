@@ -178,6 +178,8 @@ real_table() {
     build-cuffs-selftest  "$REPO"                 "$PY tools/md/build_cuffs.py --selftest" \
     office-look-selftest  "$REPO"                 "$PY tools/office_look.py --selftest" \
     chart-read-selftest   "$REPO"                 "$PY tools/chart_read.py --selftest" \
+    wet-ground-selftest   "$REPO"                 "$PY tools/wet_ground_check.py --selftest" \
+    jumper-selftest       "$REPO"                 "$PY tools/md-bridge/jumper.py --selftest" \
     timelog-selftest      "$REPO"                 "$PY tools/timelog.py --selftest" \
     morning-selftest      "$REPO"                 "$PY tools/morning_pictures.py --selftest" \
     page-answers          "$REPO"                 "$PY tools/page_answers.py" \
