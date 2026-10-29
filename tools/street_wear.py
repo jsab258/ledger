@@ -36,6 +36,7 @@ ledger/Assets/StreamingAssets/Decals/ambientcg) until the free Megascans are in
 Jafar's library; a kind's picture is one line here to change.
 """
 import json
+import math
 import os
 import sys
 import zlib
@@ -267,6 +268,10 @@ def build(pieces):
             d["y_m"] = ground_y(d["z_m"])
     decals += room_wear()
     decals += counter_marks()
+    decals += office_marks()
+    for d in decals:
+        if d["on"] == "mickeys_room":
+            stain_office(d)
     # THE FRONTS' MARKS OF USE ARE NO LONGER DECALS (7 October, evening): projected onto paint they
     # land on nothing (TakesMarks) or streak (the try of that evening); the painted and tiled fronts
     # wear at the foot in their own material (make_base_material.py WEAR_PARAM). frontage_wear
@@ -276,6 +281,7 @@ def build(pieces):
 
 OFFICE = os.path.join(REPO, "production", "specs", "mickeys-office.json")
 ROOM_FLOOR_M = 0.12     # the real room's floor stands 12 cm up (VignetteShot.cpp SpawnShopRoom)
+NOTICE_WALL_X = 8.65    # the notice wall behind the bench (shop-room.py: the room's left wall, 5.3 m wide)
 
 
 def room_wear(spec_path=OFFICE):
@@ -319,7 +325,7 @@ def room_wear(spec_path=OFFICE):
                         "y_m": round(ROOM_FLOOR_M + 1.02 + 0.08 * rnd(s, "y%d" % k), 4),
                         "z_m": round(z, 4), "w_m": round(0.38 + 0.14 * rnd(s, "w%d" % k), 4),
                         "h_m": round(0.32 + 0.12 * rnd(s, "h%d" % k), 4),
-                        "yaw_deg": 270.0, "pitch_deg": 0.0, "strength": round(0.35 + 0.15 * rnd(s, "st%d" % k), 3),
+                        "yaw_deg": 270.0, "pitch_deg": 0.0, "strength": round(0.42 + 0.1 * rnd(s, "st%d" % k), 3),   # 29 October: 0.35 to 0.5 left their sheen under 0.1 (D11)
                         "on": "mickeys_room"})
     d = box.get("the back door, shut")
     if d:   # hands on the wall beside the back door's frame, off the opening itself (8 October, V9:
@@ -329,11 +335,70 @@ def room_wear(spec_path=OFFICE):
                     "strength": 0.6, "on": "mickeys_room"})
         out.append({"kind": "damp", "picture": damp, "x_m": 8.3, "y_m": round(ROOM_FLOOR_M + 2.62, 4),
                     "z_m": d["z0"], "w_m": 0.9, "h_m": 0.6, "yaw_deg": 0.0, "pitch_deg": 0.0,
-                    "strength": 0.6, "on": "mickeys_room"})
+                    "strength": 0.7, "on": "mickeys_room"})   # 29 October: 0.6 left its sheen under 0.1 (D11)
     return out
 
 
 RINGS, BURNS, CHIPS = "ours/wear_rings", "ours/wear_burns", "ours/wear_chips"
+PALE, KICK = "ours/wear_pale", "ours/wear_splash"
+
+
+def office_marks(spec_path=OFFICE):
+    """THE OFFICE'S OTHER MARKS, 29 October (his order D11, the look; production/research/street-wear/
+    MAFIA-WEAR-2026-10-28.md, Mickey's office, O2: 10 to 14 on its four walls and floor, at most 6 a wall):
+    beside the heads, the hands and the damp, two pale oblongs on the notice wall where earlier notices hung
+    and were taken down (clear of the prints now there: shop-room.py's fares, licence, accounts and calendar),
+    two kicks at the foot of the stair-strip wall where people come in past it, and the carpet trodden flat
+    on the way from the door to the counter and under the bench's waiting feet. Street metres (the office
+    spec's: x = 6.0 - room x, z = 5.27 + room y, up = room z + 0.12); the notice wall stands at x 8.65."""
+    if not os.path.isfile(spec_path):
+        return []
+    spec = json.load(open(spec_path, encoding="utf-8"))
+    box = {b["name"]: b for b in spec.get("boxes", [])}
+    door = spec.get("door", {})
+    out = []
+    s = seed_of("mickeys_office_marks")
+    # above the accounts card, and past the calendar toward the counter
+    for k, (z, y, w, h) in enumerate(((5.80, 1.86, 0.25, 0.33), (7.22, 1.60, 0.22, 0.30))):
+        out.append({"kind": "pale", "picture": PALE, "x_m": NOTICE_WALL_X, "y_m": y,
+                    "z_m": round(z, 4), "w_m": w, "h_m": h, "yaw_deg": 270.0, "pitch_deg": 0.0,
+                    "strength": round(0.45 + 0.1 * rnd(s, "pale%d" % k), 3), "on": "mickeys_room"})
+    st = box.get("stair strip wall")
+    if st:   # its room face (x 4.19, facing +x: yaw 90), at a shoe's height
+        for k, z in enumerate((5.75, 6.85)):
+            out.append({"kind": "scuff", "picture": KICK, "x_m": st["x1"], "y_m": round(ROOM_FLOOR_M + 0.13, 4),
+                        "z_m": round(z + 0.2 * (rnd(s, "kz%d" % k) - 0.5), 4), "w_m": round(0.55 + 0.25 * rnd(s, "kw%d" % k), 4),
+                        "h_m": 0.26, "yaw_deg": 90.0, "pitch_deg": 0.0,
+                        "strength": round(FRONT_WEAR + 0.1 * rnd(s, "ks%d" % k), 3), "on": "mickeys_room"})
+    c, b = box.get("counter"), box.get("bench")
+    if door and c:   # from the doorway to the booking place, along the way walked
+        x0, z0, x1, z1 = door["x"], door["z"] + 0.45, 6.0, c["z0"] - 0.25
+        out.append({"kind": "path", "picture": "ours/wear_head", "x_m": round((x0 + x1) / 2, 4), "y_m": ROOM_FLOOR_M,
+                    "z_m": round((z0 + z1) / 2, 4), "w_m": round(math.hypot(x1 - x0, z1 - z0) + 0.6, 4), "h_m": 0.8,
+                    "yaw_deg": round(math.degrees(math.atan2(z1 - z0, x1 - x0)), 1), "pitch_deg": 90.0,
+                    "strength": 0.55, "on": "mickeys_room"})
+    if b:            # where the waiting feet rest, along the bench
+        out.append({"kind": "path", "picture": "ours/wear_head", "x_m": round(b["x0"] - 0.35, 4), "y_m": ROOM_FLOOR_M,
+                    "z_m": round((b["z0"] + b["z1"]) / 2, 4), "w_m": round(b["z1"] - b["z0"] + 0.2, 4), "h_m": 0.55,
+                    "yaw_deg": 90.0, "pitch_deg": 90.0, "strength": 0.5, "on": "mickeys_room"})
+    return out
+
+
+#: EACH OFFICE MARK'S SHEEN, 29 October (D11, the layer recipe's step 1: a stain differs from its wall by at least
+#: 0.1 in the roughness view). The decal blends its sheen by the same coverage as its colour, at most about a fifth
+#: to a third of the way at a mark's strongest (its picture's coverage times its strength), so each target stands
+#: well away from its surface: the cream paint and the carpet are near matt (shop-room.py: 0.85, 0.95), and hands,
+#: heads, fresh damp and the trodden pile polish them; paint a notice kept from the light has not chalked; rubber
+#: kicks and dried tea dull a surface, burns char it. First values, fixed by tools/stain_check.py's first run.
+STAIN_ROUGH = {"grime": 0.3, "damp": 0.35, "scuff": 0.95, "pale": 0.55, "path": 0.45}
+STAIN_ROUGH_PICTURE = {RINGS: 0.8, BURNS: 0.9}
+
+
+def stain_office(d):
+    """The office's marks laid with M_LedgerStain (colour and sheen), the street's with M_LedgerGrime until their own gate."""
+    d["material"] = "stain"
+    d["rough"] = STAIN_ROUGH_PICTURE.get(d["picture"], STAIN_ROUGH.get(d["kind"], 0.6))
+    return d
 #: THE KIT BAY'S FRONT (6 October; tools/art-recipes/terrace-front.py KIT_BAYS, Rita's): its pieces'
 #: faces in street metres, from the kit's layout (the window from the bay's left pier, then the shop
 #: door, then the side door; production/art/shopfront-kit/README.md): the bay's x0, the window's run,
@@ -495,6 +560,18 @@ def selftest():
     counter = [d for d in decals if d["kind"] == "scuff" and d["on"] == "mickeys_room"]
     check("the office counter's scuffs read, at FRONT_WEAR or more (7 October)",
           counter and all(d["strength"] >= FRONT_WEAR for d in counter))
+    office = [d for d in decals if d["on"] == "mickeys_room"]
+    walls_floor = [d for d in office if d["picture"] not in (RINGS, BURNS) and not (d["kind"] == "scuff" and d["yaw_deg"] == 0.0)]
+    check("the office's walls and floor carry 10 to 14 marks (O2), at most 6 a wall",
+          10 <= len(walls_floor) <= 14 and max(sum(1 for d in walls_floor if (d["pitch_deg"], d["yaw_deg"], round(d["x_m"], 2) if d["yaw_deg"] in (90.0, 270.0) else round(d["z_m"], 2)) == k)
+                                                for k in {(d["pitch_deg"], d["yaw_deg"], round(d["x_m"], 2) if d["yaw_deg"] in (90.0, 270.0) else round(d["z_m"], 2)) for d in walls_floor if d["pitch_deg"] == 0.0}) <= 6)
+    check("every office mark is laid with the stain material and a sheen of its own",
+          office and all(d.get("material") == "stain" and 0.0 <= d.get("rough", -1) <= 1.0 for d in office))
+    check("the street's marks keep the grime material until their own gate", not any(d.get("material") for d in decals if d["on"] != "mickeys_room"))
+    pale = [d for d in office if d["kind"] == "pale"]
+    prints = [(6.32, 1.70, 0.30, 0.42), (6.89, 1.82, 0.21, 0.148), (5.75, 1.54, 0.30, 0.10), (6.89, 1.34, 0.30, 0.42)]   # shop-room.py, street metres
+    check("the pale oblongs keep clear of the notices hanging now",
+          len(pale) == 2 and all(abs(d["z_m"] - z) * 2 >= d["w_m"] + w or abs(d["y_m"] - y) * 2 >= d["h_m"] + h for d in pale for z, y, w, h in prints))
     pud = [d for d in decals if d["kind"] == "puddle"]
     check("puddles stand along both gutters", any(d["z_m"] > 2 for d in pud) and any(d["z_m"] < -2 for d in pud))
     print("street_wear selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))

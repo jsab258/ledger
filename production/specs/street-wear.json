@@ -2292,7 +2292,9 @@
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
    "strength": 0.916,
-   "on": "mickeys_room"
+   "on": "mickeys_room",
+   "material": "stain",
+   "rough": 0.95
   },
   {
    "kind": "scuff",
@@ -2305,7 +2307,9 @@
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
    "strength": 0.92,
-   "on": "mickeys_room"
+   "on": "mickeys_room",
+   "material": "stain",
+   "rough": 0.95
   },
   {
    "kind": "scuff",
@@ -2318,7 +2322,9 @@
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
    "strength": 0.924,
-   "on": "mickeys_room"
+   "on": "mickeys_room",
+   "material": "stain",
+   "rough": 0.95
   },
   {
    "kind": "grime",
@@ -2330,8 +2336,10 @@
    "h_m": 0.3977,
    "yaw_deg": 270.0,
    "pitch_deg": 0.0,
-   "strength": 0.38,
-   "on": "mickeys_room"
+   "strength": 0.44,
+   "on": "mickeys_room",
+   "material": "stain",
+   "rough": 0.3
   },
   {
    "kind": "grime",
@@ -2343,8 +2351,10 @@
    "h_m": 0.3962,
    "yaw_deg": 270.0,
    "pitch_deg": 0.0,
-   "strength": 0.381,
-   "on": "mickeys_room"
+   "strength": 0.441,
+   "on": "mickeys_room",
+   "material": "stain",
+   "rough": 0.3
   },
   {
    "kind": "grime",
@@ -2356,8 +2366,10 @@
    "h_m": 0.4005,
    "yaw_deg": 270.0,
    "pitch_deg": 0.0,
-   "strength": 0.385,
-   "on": "mickeys_room"
+   "strength": 0.443,
+   "on": "mickeys_room",
+   "material": "stain",
+   "rough": 0.3
   },
   {
    "kind": "grime",
@@ -2370,7 +2382,9 @@
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
    "strength": 0.6,
-   "on": "mickeys_room"
+   "on": "mickeys_room",
+   "material": "stain",
+   "rough": 0.3
   },
   {
    "kind": "damp",
@@ -2382,8 +2396,10 @@
    "h_m": 0.6,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.6,
-   "on": "mickeys_room"
+   "strength": 0.7,
+   "on": "mickeys_room",
+   "material": "stain",
+   "rough": 0.35
   },
   {
    "kind": "grime",
@@ -2396,7 +2412,9 @@
    "yaw_deg": 128.3,
    "pitch_deg": 90.0,
    "strength": 0.7,
-   "on": "mickeys_room"
+   "on": "mickeys_room",
+   "material": "stain",
+   "rough": 0.8
   },
   {
    "kind": "grime",
@@ -2409,7 +2427,9 @@
    "yaw_deg": 129.4,
    "pitch_deg": 90.0,
    "strength": 0.6,
-   "on": "mickeys_room"
+   "on": "mickeys_room",
+   "material": "stain",
+   "rough": 0.8
   },
   {
    "kind": "grime",
@@ -2422,7 +2442,9 @@
    "yaw_deg": 120.0,
    "pitch_deg": 90.0,
    "strength": 0.65,
-   "on": "mickeys_room"
+   "on": "mickeys_room",
+   "material": "stain",
+   "rough": 0.8
   },
   {
    "kind": "grime",
@@ -2435,7 +2457,9 @@
    "yaw_deg": 115.9,
    "pitch_deg": 90.0,
    "strength": 0.85,
-   "on": "mickeys_room"
+   "on": "mickeys_room",
+   "material": "stain",
+   "rough": 0.9
   },
   {
    "kind": "grime",
@@ -2448,7 +2472,99 @@
    "yaw_deg": 77.3,
    "pitch_deg": 90.0,
    "strength": 0.8,
-   "on": "mickeys_room"
+   "on": "mickeys_room",
+   "material": "stain",
+   "rough": 0.9
+  },
+  {
+   "kind": "pale",
+   "picture": "ours/wear_pale",
+   "x_m": 8.65,
+   "y_m": 1.86,
+   "z_m": 5.8,
+   "w_m": 0.25,
+   "h_m": 0.33,
+   "yaw_deg": 270.0,
+   "pitch_deg": 0.0,
+   "strength": 0.509,
+   "on": "mickeys_room",
+   "material": "stain",
+   "rough": 0.55
+  },
+  {
+   "kind": "pale",
+   "picture": "ours/wear_pale",
+   "x_m": 8.65,
+   "y_m": 1.6,
+   "z_m": 7.22,
+   "w_m": 0.22,
+   "h_m": 0.3,
+   "yaw_deg": 270.0,
+   "pitch_deg": 0.0,
+   "strength": 0.507,
+   "on": "mickeys_room",
+   "material": "stain",
+   "rough": 0.55
+  },
+  {
+   "kind": "scuff",
+   "picture": "ours/wear_splash",
+   "x_m": 4.19,
+   "y_m": 0.25,
+   "z_m": 5.7263,
+   "w_m": 0.753,
+   "h_m": 0.26,
+   "yaw_deg": 90.0,
+   "pitch_deg": 0.0,
+   "strength": 0.914,
+   "on": "mickeys_room",
+   "material": "stain",
+   "rough": 0.95
+  },
+  {
+   "kind": "scuff",
+   "picture": "ours/wear_splash",
+   "x_m": 4.19,
+   "y_m": 0.25,
+   "z_m": 6.8302,
+   "w_m": 0.7462,
+   "h_m": 0.26,
+   "yaw_deg": 90.0,
+   "pitch_deg": 0.0,
+   "strength": 0.914,
+   "on": "mickeys_room",
+   "material": "stain",
+   "rough": 0.95
+  },
+  {
+   "kind": "path",
+   "picture": "ours/wear_head",
+   "x_m": 5.325,
+   "y_m": 0.12,
+   "z_m": 6.35,
+   "w_m": 2.85,
+   "h_m": 0.8,
+   "yaw_deg": 53.1,
+   "pitch_deg": 90.0,
+   "strength": 0.55,
+   "on": "mickeys_room",
+   "material": "stain",
+   "rough": 0.45
+  },
+  {
+   "kind": "path",
+   "picture": "ours/wear_head",
+   "x_m": 7.79,
+   "y_m": 0.12,
+   "z_m": 6.455,
+   "w_m": 1.81,
+   "h_m": 0.55,
+   "yaw_deg": 90.0,
+   "pitch_deg": 90.0,
+   "strength": 0.5,
+   "on": "mickeys_room",
+   "material": "stain",
+   "rough": 0.45
   }
  ],
  "coverage": [

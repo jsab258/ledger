@@ -1307,6 +1307,8 @@ void ALedgerSliceCharacter::BuildStreetNavigation()
 // until he moves or presses E, then its stand-up. The sample's own entry runs through a state tree for a
 // player controller, which the puppet mover has not, so the same steps are taken here; its assets are
 // unchanged.
+// The route's own check lines (CrimeProbe.cpp), so the AI tester's walk can say he sat and stood clear (29 October).
+void LedgerRouteCheck(const TCHAR* Stage, bool bOk, const FString& Detail);
 namespace LedgerSit
 {
 	// Kept: the In clips the room test kept for this seat (seats.json "in_kept", the method's step 4)
@@ -2344,6 +2346,8 @@ void ALedgerSliceCharacter::SitTick(float DeltaSeconds)
 		}
 		UE_LOG(LogTemp, Display, TEXT("LedgerSit: seated, %.1f cm from the seat (out %.1f, along %.1f; pelvis out %.1f, along %.1f, up %.1f)"),
 			FVector::Dist2D(GaspMover->GetActorLocation(), SitSlot.GetLocation()), Rel.X, Rel.Y, Pelvis.X, Pelvis.Y, Pelvis.Z);
+		LedgerRouteCheck(TEXT("sit"), true, FString::Printf(TEXT("seated %.0f cm from the seat, hips %.0f cm up"),
+			FVector::Dist2D(GaspMover->GetActorLocation(), SitSlot.GetLocation()), Pelvis.Z));
 	}
 	else if (SitPhase == ESitPhase::Seated && bSitWantsUp)
 	{
@@ -2365,6 +2369,8 @@ void ALedgerSliceCharacter::SitTick(float DeltaSeconds)
 		UE_LOG(LogTemp, Display, TEXT("LedgerSit: standing again (the stand-up touched the room %d times%s; he ended %.0f cm from the seat)"),
 			LedgerSit::GOutContacts, LedgerSit::GOutFirst.IsEmpty() ? TEXT("") : *(TEXT(", first ") + LedgerSit::GOutFirst),
 			FVector::Dist2D(GaspMover->GetActorLocation(), SitSlot.GetLocation()));
+		LedgerRouteCheck(TEXT("stand"), LedgerSit::GOutContacts == 0, FString::Printf(TEXT("touched the room %d times, ended %.0f cm from the seat"),
+			LedgerSit::GOutContacts, FVector::Dist2D(GaspMover->GetActorLocation(), SitSlot.GetLocation())));
 		LedgerSit::GLastOut = LedgerSit::GOutContacts;
 		LedgerSit::GOutContacts = 0; LedgerSit::GOutFirst.Empty();
 	}

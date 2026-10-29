@@ -8585,9 +8585,21 @@ namespace
 			}
 			else { UE_LOG(LogTemp, Warning, TEXT("ledgerOfficeLook: no calibrator in this copy (engine content not cooked?)")); }
 		}
+		// -OfficeLookBuffers (29 October, his order D11, the layer recipe's check): after the two pictures, the same view in
+		// Unreal's base-colour buffer (3) and roughness buffer (4), so tools/stain_check.py can measure what each mark changes
+		static const bool bBuffers = FParse::Param(FCommandLine::Get(), TEXT("OfficeLookBuffers"));
+		static bool bBufferDone = false;
 		if (Step == 1 && Now - At > 4.0) { Shot(1); Step = 2; At = Now; }
 		else if (Step == 2 && Now - At > 1.5) { Shot(2); Step = 3; At = Now; }
-		else if (Step == 3 && Now - At > 1.0) { Step = 9; FPlatformMisc::RequestExit(false); }
+		else if (Step == 3 && Now - At > 1.0 && bBuffers && !bBufferDone && GEngine != nullptr)
+		{
+			GEngine->Exec(World, TEXT("ShowFlag.VisualizeBuffer 1"));
+			GEngine->Exec(World, TEXT("r.BufferVisualizationTarget BaseColor"));
+			Step = 4; At = Now;
+		}
+		else if (Step == 4 && Now - At > 1.5) { Shot(3); GEngine->Exec(World, TEXT("r.BufferVisualizationTarget Roughness")); Step = 5; At = Now; }
+		else if (Step == 5 && Now - At > 1.5) { Shot(4); Step = 3; At = Now; bBufferDone = true; }
+		else if (Step == 3 && Now - At > 1.0 && (!bBuffers || bBufferDone)) { Step = 9; FPlatformMisc::RequestExit(false); }
 	}
 
 	void SitProofTick(UWorld* World, double Now)
@@ -11049,3 +11061,6 @@ namespace LedgerCrimeProbe
 		GTicker = FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateStatic(&Tick), 0.0f);
 	}
 }
+
+// The route's check lines for the rest of the game (29 October: sitting's "sit" and "stand", SliceCharacter.cpp).
+void LedgerRouteCheck(const TCHAR* Stage, bool bOk, const FString& Detail) { RouteCheck(Stage, bOk, Detail); }

@@ -172,6 +172,7 @@ real_table() {
     asset-checks-selftest "$REPO"                 "$PY tools/ue/asset_checks.py --selftest" \
     asset-budgets         "$REPO"                 "$PY tools/ue/asset_checks.py --check-spec" \
     stain-selftest        "$REPO"                 "$PY tools/ue/make_stain_material.py --selftest" \
+    stain-check-selftest  "$REPO"                 "$PY tools/stain_check.py --selftest" \
     timelog-selftest      "$REPO"                 "$PY tools/timelog.py --selftest" \
     morning-selftest      "$REPO"                 "$PY tools/morning_pictures.py --selftest" \
     page-answers          "$REPO"                 "$PY tools/page_answers.py" \

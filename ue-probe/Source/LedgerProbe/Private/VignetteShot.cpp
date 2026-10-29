@@ -8768,7 +8768,7 @@ namespace
 	// with M_LedgerGrime, the stains' own material, its picture from the decal
 	// root, its strength from the file and its colour by its kind. Nothing is
 	// placed by hand; the town reuses the same rules.
-	int32 GWearStood = 0, GWearAsked = 0;
+	int32 GWearStood = 0, GWearAsked = 0, GWearStained = 0;
 
 	bool ReadStreetSpecFile(const TCHAR* Leaf, FString& Out)
 	{
@@ -8792,7 +8792,7 @@ namespace
 
 	void SpawnWear(UWorld* World)
 	{
-		GWearStood = GWearAsked = 0;
+		GWearStood = GWearAsked = GWearStained = 0;
 		FString Text;
 		if (World == nullptr || GDecalRoot.IsEmpty() || !ReadStreetSpecFile(TEXT("street-wear.json"), Text))
 		{
@@ -8818,14 +8818,21 @@ namespace
 			// paint, and paint chipped to its pale undercoat at edges and handles
 			if (Kind == TEXT("dust")) { return FLinearColor(0.30f, 0.27f, 0.22f); }
 			if (Kind == TEXT("chip")) { return FLinearColor(0.42f, 0.38f, 0.30f); }
+			// the office's cream paint where a notice kept the light off it (29 October, D11's O2; shop-room.py's
+			// paint_cream is 0.55, 0.50, 0.39): a little lighter and less yellow
+			if (Kind == TEXT("pale")) { return FLinearColor(0.66f, 0.61f, 0.50f); }
 			return FLinearColor(0.15f, 0.13f, 0.11f);
 		};
-		auto LightWear = [](const FString& Kind) { return Kind == TEXT("dust") || Kind == TEXT("chip"); };
+		auto LightWear = [](const FString& Kind) { return Kind == TEXT("dust") || Kind == TEXT("chip") || Kind == TEXT("pale"); };
 		TMap<FString, UTexture2D*> Pics;
 		for (const TSharedPtr<FJsonValue>& V : *List)
 		{
 			const TSharedPtr<FJsonObject> D = V->AsObject();
 			if (!D.IsValid()) { continue; }
+			// -NoOfficeWear (29 October, D11's O2): the office without its marks, so a picture with them and one
+			// without show what they change in the base-colour and roughness views (the layer recipe's check)
+			static const bool bNoOfficeWear = FParse::Param(FCommandLine::Get(), TEXT("NoOfficeWear"));
+			if (bNoOfficeWear && D->GetStringField(TEXT("on")) == TEXT("mickeys_room")) { continue; }
 			++GWearAsked;
 			const FString Kind = D->GetStringField(TEXT("kind"));
 			const FString Pic = D->GetStringField(TEXT("picture"));
@@ -8888,12 +8895,34 @@ namespace
 			static UMaterialInterface* WetMaterial = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Ledger/M_LedgerWet.M_LedgerWet"));
 			const bool bWater = Kind == TEXT("puddle");
 			if (bWater && WetMaterial == nullptr) { Decal->Destroy(); continue; }
-			UMaterialInstanceDynamic* M = UMaterialInstanceDynamic::Create(bWater ? WetMaterial : GGrimeMaterial, Decal);
+			// THE LOOK'S STAIN DECAL (29 October, his order D11, the layer recipe's step 1; tools/ue/make_stain_material.py):
+			// a mark marked "material": "stain" changes the surface's sheen as well as its colour ("rough", its
+			// roughness; "spread" and "edge", how far up its picture's height it reaches). The street's stains keep
+			// M_LedgerGrime until their own gate.
+			static UMaterialInterface* StainMaterial = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Ledger/M_LedgerStain.M_LedgerStain"));
+			FString AskedMaterial;
+			const bool bStain = !bWater && D->TryGetStringField(TEXT("material"), AskedMaterial) && AskedMaterial == TEXT("stain") && StainMaterial != nullptr;
+			UMaterialInstanceDynamic* M = UMaterialInstanceDynamic::Create(bWater ? WetMaterial : bStain ? StainMaterial : GGrimeMaterial, Decal);
 			if (M == nullptr) { Decal->Destroy(); continue; }
 			if (bWater)
 			{
 				M->SetTextureParameterValue(FName(TEXT("WetMask")), *Have);
 				M->SetScalarParameterValue(FName(TEXT("WetStrength")), (float)D->GetNumberField(TEXT("strength")));
+			}
+			else if (bStain)
+			{
+				double Rough = 0.85, Spread = 1.0, Edge = 1.0;
+				D->TryGetNumberField(TEXT("rough"), Rough);
+				D->TryGetNumberField(TEXT("spread"), Spread);
+				D->TryGetNumberField(TEXT("edge"), Edge);
+				M->SetTextureParameterValue(FName(TEXT("StainTex")), *Have);
+				M->SetScalarParameterValue(FName(TEXT("StainStrength")), bWearTest ? 1.0f : (float)D->GetNumberField(TEXT("strength")));
+				M->SetVectorParameterValue(FName(TEXT("StainTint")), bWearTest ? FLinearColor(1.0f, 0.0f, 0.0f) : TintOf(Kind));
+				M->SetScalarParameterValue(FName(TEXT("TintOnly")), LightWear(Kind) ? 1.0f : 0.0f);
+				M->SetScalarParameterValue(FName(TEXT("StainRoughness")), (float)Rough);
+				M->SetScalarParameterValue(FName(TEXT("StainSpread")), (float)Spread);
+				M->SetScalarParameterValue(FName(TEXT("StainEdge")), (float)FMath::Max(Edge, 0.01));
+				++GWearStained;
 			}
 			else
 			{
@@ -8926,7 +8955,7 @@ namespace
 #endif
 			++GWearStood;
 		}
-		UE_LOG(LogTemp, Display, TEXT("LedgerWear: %d of %d wear decals stood (street-wear.json, D53)"), GWearStood, GWearAsked);
+		UE_LOG(LogTemp, Display, TEXT("LedgerWear: %d of %d wear decals stood (street-wear.json, D53), %d of them with the stain material"), GWearStood, GWearAsked, GWearStained);
 	}
 
 	// THE KIT FILE'S GLOWS, read once beside the pieces file it is staged

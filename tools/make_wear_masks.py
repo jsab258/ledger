@@ -170,6 +170,17 @@ def marks(rng):
     for off, width, k in ((0.012, 0.022, 1.0), (0.09, 0.016, 0.45), (0.17, 0.014, 0.30)):
         rings = np.maximum(rings, k * np.clip(1.0 - np.abs(field - edge - off) / width, 0.0, 1.0))
     out["wear_damp_patch"] = soften(np.maximum(fill, rings), 2.5)
+    # WHERE A NOTICE HUNG AND WAS TAKEN DOWN, 29 October (his order D11, the office's decals, O2: "pale patches
+    # behind the calendar and notices"): the paint it covered stayed unfaded, so a pale oblong with a soft edge a
+    # centimetre or two wide, a little uneven inside, and the four corners where tape held it a touch stronger;
+    # clear of the decal's edges on every side (laid with M_LedgerStain's TintOnly, so it lightens)
+    inset = 0.10
+    ex = np.clip(np.minimum(xx - inset, 1.0 - inset - xx) / 0.035, 0.0, 1.0)
+    ey = np.clip(np.minimum(yy - inset, 1.0 - inset - yy) / 0.035, 0.0, 1.0)
+    oblong = ex * ey * (0.80 + 0.20 * np.clip(smooth_noise(rng, n, (8, 16, 32)) * 1.4 - 0.2, 0.0, 1.0))
+    for cx, cy in ((inset + 0.04, inset + 0.04), (1 - inset - 0.04, inset + 0.04), (inset + 0.04, 1 - inset - 0.04), (1 - inset - 0.04, 1 - inset - 0.04)):
+        oblong = np.maximum(oblong, 0.95 * np.clip(1.0 - np.hypot(xx - cx, yy - cy) / 0.035, 0.0, 1.0))
+    out["wear_pale"] = soften(oblong, 2)
     return out
 
 
@@ -254,6 +265,9 @@ def selftest():
     dp = marks(np.random.default_rng(19901006))["wear_damp_patch"]
     check("a damp patch fades to nothing at every edge", max(dp[0, :].max(), dp[-1, :].max(), dp[:, 0].max(), dp[:, -1].max()) < 0.02)
     check("its tide line darker than its middle", dp.max() > 0.6 and dp[SIZE // 2, SIZE // 2] < dp.max() * 0.7)
+    pl = marks(np.random.default_rng(19901006))["wear_pale"]
+    check("a notice's pale patch fades to nothing at every edge", max(pl[0, :].max(), pl[-1, :].max(), pl[:, 0].max(), pl[:, -1].max()) < 0.02)
+    check("and is a filled oblong, strong in its middle", pl[SIZE // 2, SIZE // 2] > 0.75 and (pl > 0.5).mean() > 0.45)
     rng = np.random.default_rng(19901002)
     a = puddle(rng)
     check("a puddle stays clear of the decal's edge", a[0, :].max() == 0 and a[-1, :].max() == 0 and a[:, 0].max() == 0 and a[:, -1].max() == 0)

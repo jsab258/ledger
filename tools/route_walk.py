@@ -2,7 +2,7 @@
 """THE ROUTE, WALKED WITH REAL KEY PRESSES (item 5, 1 October; production/research/
 packaged-game-testing, step 2: "the audit's missing layer").
 
-    python tools/route_walk.py [--editor] [--town] [--out DIR]
+    python tools/route_walk.py [--editor] [--town] [--sit] [--out DIR]
     python tools/route_walk.py --selftest
 
 A fixed script, no model: the AI tester's own key, mouse and typing commands
@@ -33,6 +33,12 @@ as a player would, and each greeting's stages (town-<who>) say whether he
 reached them and how long the answer took to be heard. What each showed they
 knew is the game's own session record's (tools/nightly_walk.py reads it).
 
+THE SIT, --sit (his order D10, 29 October: "done" is the packaged game walked by the AI
+tester): back in from Continue and with -TomSit, Tom walks by the road to Mickey's door,
+through it to the office bench's middle seat (production/specs/seats.json), presses E to
+sit and, after a few seconds seated, E to stand (with -MickeysInside, which builds the office). The game's own lines say he sat ("sit",
+how far from the seat) and stood up touching nothing in the room ("stand").
+
 Writes verdict.json (pass or fail per stage, in order) under --out (default
 production/playtest/route-walk/<stamp>) and prints one line a stage. Exits 0
 when every stage passed. Talk uses the stand-in (-TalkFake), never LEDGER's
@@ -59,6 +65,13 @@ WALK_MPS = 1.6                                                  # measured 1 Oct
 # hold 1.9 m), where every short leg overshot and the walk swung across Mickey's door for four game hours.
 GASP_MPS, GASP_GLIDE_M = 2.0, 0.45
 ROAD_Z = 1.2                                                    # the road's middle, clear of the cars at the kerb
+OFFICE_DOOR = (4.65, 5.0)                                       # production/specs/mickeys-office.json "door"
+SIT_FROM_M, SIT_REACH_M = 1.25, 1.6                             # in front of the seat; the game's reach (SliceCharacter.cpp)
+
+
+def SEATS():
+    with open(os.path.join(REPO, "production", "specs", "seats.json"), encoding="utf-8") as fh:
+        return json.load(fh)["seats"]
 
 
 def play(*args):
@@ -230,8 +243,10 @@ class Route:
         return verdict
 
 
-def start(editor, save_dir):
+def start(editor, save_dir, extra=()):
     args = ["start", "--save", save_dir, "--wait", "5", "--game-arg", "-RouteWalk"]
+    for x in extra:
+        args += ["--game-arg", x]
     if editor:
         args.insert(1, "--editor")
     for _ in range(30):
@@ -309,7 +324,29 @@ def town_round(r):
         greet(r, key, name)
 
 
-def walk(editor, out, town=False):
+def sit_round(r):
+    """To the office bench by the road and the door, E to sit, a few seconds seated, E to stand."""
+    seat = next(s for s in SEATS() if "middle" in s["name"])
+    front = [seat["x"] - SIT_FROM_M, seat["z"]]
+    r.by_road(OFFICE_DOOR[0], OFFICE_DOOR[1] - 1.2, tol=0.4)
+    r.go_to(OFFICE_DOOR[0], OFFICE_DOOR[1] + 0.7, tol=0.35)                # through the doorway; it opens as he comes
+    r.go_to(front[0], front[1], tol=0.3)
+    t = r.where().get("tom")
+    if not t or math.hypot(t[0] - seat["x"], t[1] - seat["z"]) > SIT_REACH_M:
+        return r.record("sit", False, "never within reach of the bench's middle seat (%s)" % (
+            "%.1f m away" % math.hypot(t[0] - seat["x"], t[1] - seat["z"]) if t else "not on the street"))
+    r.turn_to(bearing(t[0], t[1], seat["x"], seat["z"]))
+    r.discard("sit")
+    play("press", "E")
+    if not r.expect("sit", 20):
+        return False
+    play("wait", "6")
+    r.discard("stand")
+    play("press", "E")
+    return r.expect("stand", 20)
+
+
+def walk(editor, out, town=False, sit=False):
     saved = EDITOR_SAVED if editor else PACKAGED_SAVED
     stamp = time.strftime("%Y-%m-%d-%H%M")
     save_dir = "F:/LedgerTools/tmp/route-walk/" + stamp
@@ -319,8 +356,9 @@ def walk(editor, out, town=False):
         except OSError:
             pass
     r = Route(saved, out)
+    extra = ["-TomSit", "-MickeysInside"] if sit else []          # the office is built only with -MickeysInside (CrimeProbe.cpp)
     play("close")
-    if not start(editor, save_dir):
+    if not start(editor, save_dir, extra):
         r.record("street", False, "the game did not start")
         return r.write()
     play("press", "Enter")                                          # New game
@@ -405,13 +443,15 @@ def walk(editor, out, town=False):
             os.remove(os.path.join(saved, name))
         except OSError:
             pass
-    if not start(editor, save_dir):
+    if not start(editor, save_dir, extra):
         r.record("street", False, "the game did not start again")
         return r.write()
     play("press", "Enter")                                          # Continue
     c = r.wait_stage("street", 60)
     r.record("street", bool(c) and "continue" in c.get("detail", ""), (c or {}).get("detail", "no street line") + " (saved " + saved_at + ")")
     r.expect("continue", 30)
+    if sit:
+        sit_round(r)
     if town:
         town_round(r)
     play("close")
@@ -435,6 +475,12 @@ def selftest():
     check("a talk spot stands off toward Tom", abs(s[0] - 4.9) < 1e-9 and abs(s[1] - 4.6) < 1e-9)
     check("the town round greets the three who talk, the same line to each",
           [k for k, _ in TOWN_WHO] == ["lena", "rocco", "sam"] and "Morning" in TOWN_LINE)
+    seat = next(s for s in SEATS() if "middle" in s["name"])
+    check("the sit spot is inside the office's public side and within the game's reach of the seat",
+          4.19 < seat["x"] - SIT_FROM_M < 9.0 and 5.12 < seat["z"] < 7.5 and SIT_FROM_M < SIT_REACH_M)
+    with open(os.path.join(REPO, "production", "specs", "mickeys-office.json"), encoding="utf-8") as fh:
+        door = json.load(fh)["door"]
+    check("the door the sit walks through is the office spec's", (door["x"], door["z"]) == OFFICE_DOOR)
     print("route_walk selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
 
@@ -445,6 +491,6 @@ if __name__ == "__main__":
     editor = "--editor" in sys.argv
     out = sys.argv[sys.argv.index("--out") + 1] if "--out" in sys.argv else os.path.join(
         REPO, "production", "playtest", "route-walk", time.strftime("%Y-%m-%d-%H%M"))
-    v = walk(editor, out, town="--town" in sys.argv)
+    v = walk(editor, out, town="--town" in sys.argv, sit="--sit" in sys.argv)
     print("route walk: %d of %d stages passed; %s" % (v["passed"], v["stages"], out))
     sys.exit(0 if v["passed"] == v["stages"] and v["stages"] > 0 else 1)
