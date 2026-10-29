@@ -2925,10 +2925,17 @@ namespace
 							SC->SetWorldRotation(PoolRot);
 							SC->SetIntensityUnits(ELightUnits::Lumens);
 							SC->SetIntensity((float)PoolLumens);
-							SC->SetAttenuationRadius((float)GSpec.Lantern.RangeM * 100.0f);
+							// -LanternPoolInner= / -LanternPoolOuter= (degrees) and -LanternPoolReachM= (29 October, trials for the
+							// night's gaps, nothing in the look file: production/research/street-wear/NIGHT-GAPS-2026-10-29.md,
+							// a 46-degree cone ends 5 m from the lamp's foot and the lantern's own peak is at 60 to 65)
+							double PoolInner = GLook.LanternPoolInnerDeg, PoolOuter = GLook.LanternPoolOuterDeg, PoolReachM = GSpec.Lantern.RangeM;
+							FParse::Value(FCommandLine::Get(), TEXT("LanternPoolInner="), PoolInner);
+							FParse::Value(FCommandLine::Get(), TEXT("LanternPoolOuter="), PoolOuter);
+							FParse::Value(FCommandLine::Get(), TEXT("LanternPoolReachM="), PoolReachM);
+							SC->SetAttenuationRadius((float)PoolReachM * 100.0f);
 							SC->SetLightColor(Lamp);
-							SC->SetInnerConeAngle((float)GLook.LanternPoolInnerDeg);
-							SC->SetOuterConeAngle((float)GLook.LanternPoolOuterDeg);
+							SC->SetInnerConeAngle((float)PoolInner);
+							SC->SetOuterConeAngle((float)PoolOuter);
 							SC->SetCastShadows(true);
 						}
 						GLanternPools.Add(S);
