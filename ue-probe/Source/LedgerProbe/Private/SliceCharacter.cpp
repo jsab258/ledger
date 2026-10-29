@@ -2330,6 +2330,18 @@ void ALedgerSliceCharacter::SitTick(float DeltaSeconds)
 			LedgerSit::GHipsCm = (float)FVector::Dist2D(GaspMover->GetMesh()->GetSocketLocation(TEXT("pelvis")), SitSlot.GetLocation());
 			LedgerSit::GHipsUpCm = (float)(GaspMover->GetMesh()->GetSocketLocation(TEXT("pelvis")).Z - SitSlot.GetLocation().Z);
 		}
+		// AND HIS VISIBLE BODY AGAINST THE MANNEQUIN, seated (29 October: the judged sit showed his far foot on its
+		// toes, heel up, where the mannequin's feet stand flat; the retarget puts his feet on the mannequin's unless
+		// his legs cannot reach): hips, and each foot's ball and heel above the floor, on both bodies
+		if (WornBody != nullptr)
+		{
+			const double Floor = SitSlot.GetLocation().Z;
+			USkeletalMeshComponent* MMx = GaspMover->GetMesh();
+			auto Up = [&](USkeletalMeshComponent* K, const TCHAR* B) { return K->DoesSocketExist(FName(B)) ? K->GetSocketLocation(FName(B)).Z - Floor : -999.0; };
+			UE_LOG(LogTemp, Display, TEXT("LedgerSit: seated bodies: pelvis %.1f on the mannequin, %.1f on Tom; balls l %.1f / %.1f, r %.1f / %.1f; ankles l %.1f / %.1f, r %.1f / %.1f (mannequin / Tom, cm above the floor)"),
+				Up(MMx, TEXT("pelvis")), Up(WornBody, TEXT("pelvis")), Up(MMx, TEXT("ball_l")), Up(WornBody, TEXT("ball_l")), Up(MMx, TEXT("ball_r")), Up(WornBody, TEXT("ball_r")),
+				Up(MMx, TEXT("foot_l")), Up(WornBody, TEXT("foot_l")), Up(MMx, TEXT("foot_r")), Up(WornBody, TEXT("foot_r")));
+		}
 		UE_LOG(LogTemp, Display, TEXT("LedgerSit: seated, %.1f cm from the seat (out %.1f, along %.1f; pelvis out %.1f, along %.1f, up %.1f)"),
 			FVector::Dist2D(GaspMover->GetActorLocation(), SitSlot.GetLocation()), Rel.X, Rel.Y, Pelvis.X, Pelvis.Y, Pelvis.Z);
 	}
@@ -2355,6 +2367,22 @@ void ALedgerSliceCharacter::SitTick(float DeltaSeconds)
 			FVector::Dist2D(GaspMover->GetActorLocation(), SitSlot.GetLocation()));
 		LedgerSit::GLastOut = LedgerSit::GOutContacts;
 		LedgerSit::GOutContacts = 0; LedgerSit::GOutFirst.Empty();
+	}
+	// THE SEATED HOLD, every 1.5 s (29 October: the toe-rest the reviewer saw lasted the whole hold): hips and feet on
+	// his visible body against the mannequin's
+	if (SitPhase == ESitPhase::Seated && WornBody != nullptr)
+	{
+		static float NextHold = 0.0f;
+		if (SitClock >= NextHold)
+		{
+			NextHold = SitClock + 1.5f;
+			const double Floor = SitSlot.GetLocation().Z;
+			USkeletalMeshComponent* MMx = GaspMover->GetMesh();
+			auto Up = [&](USkeletalMeshComponent* K, const TCHAR* B) { return K->DoesSocketExist(FName(B)) ? K->GetSocketLocation(FName(B)).Z - Floor : -999.0; };
+			UE_LOG(LogTemp, Display, TEXT("LedgerSit: holding %.1f s: pelvis %.1f / %.1f; balls l %.1f / %.1f, r %.1f / %.1f; ankles l %.1f / %.1f, r %.1f / %.1f (mannequin / Tom)"),
+				SitClock - SitPhaseAt, Up(MMx, TEXT("pelvis")), Up(WornBody, TEXT("pelvis")), Up(MMx, TEXT("ball_l")), Up(WornBody, TEXT("ball_l")), Up(MMx, TEXT("ball_r")), Up(WornBody, TEXT("ball_r")),
+				Up(MMx, TEXT("foot_l")), Up(WornBody, TEXT("foot_l")), Up(MMx, TEXT("foot_r")), Up(WornBody, TEXT("foot_r")));
+		}
 	}
 	// THE STAND-UP AGAINST THE ROOM (29 October, the sitting method's step 9: the Out unwarped along a tested exit, no
 	// contact): while he stands up, his feet, shins, hips and hands are tested against the world as the room test does,
