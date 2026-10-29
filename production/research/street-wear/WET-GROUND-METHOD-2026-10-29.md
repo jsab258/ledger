@@ -88,3 +88,14 @@ A new direction, not the 8 October water level (one lobe of mixed roughness at t
 
 - **Unverified:** Brinck's zones (secondary); the gloss-to-roughness conversion (a standard approximation, not Lagarde's); coverage on flags and lines; Mafia's master and puddle tint; the clear coat's cost, compile time and how decals reach its bottom layer; its future after Substrate; the lamp divisor; every threshold marked I.
 - **Not reached:** Uncharted 4's slides (13 MB PDF, over the reader's limit); GDC Vault's Remember Me and Far Cry 6 talks (login); any Watch Dogs, Assassin's Creed or Last of Us wet-road talk (none found); Water drop 4b (never written, per its author); real photographs' pixels (the page reader cannot read them).
+
+## Revised after review (29 October 2026, 15:02)
+
+A fresh reviewer (WET-GROUND-METHOD-REVIEW-2026-10-29.md) passed this file with fixes; they stand here and win over the steps above where they differ:
+1. **Step 3: the coat's top normal is not flat everywhere.** Lumen's diffuse reads the top normal, and under an overcast sky that diffuse is nearly all the light, so a flat top would lose the stone's relief again. The top normal blends from the stone's to flat by the water cover c, as Lagarde does.
+2. **Step 2: the roughness check needs a view of c.** Under a clear coat the roughness view shows only the stone; a debug view of the cover (a material switch writing c to emissive) is made before the check is read.
+3. **Step 4: decals cannot write the coat**, so only the route that reads the decal buffer into the surface's own wetness is left.
+4. **Step 3's mean cover (road 0.4 to 0.6, flags 0.2 to 0.35) was set at 8 October's brighter exposure;** at the true exposure it misses 2c's own targets by about 30 levels, so c is re-derived against 2c at the true exposure before it is a target.
+5. **Step 1: the wet base colour subtracts water's own 0.02**, and the flags' band has one home (FLAGS-BRICK-BANDS-2026-10-29.md, revised), not two.
+6. **Step 5 changes one thing at a time:** the lamps' output alone first, measured by the project's pool_clip.py (clip at or under 2% in the nearest pool, pool to gap 4 to 20); the night's highlight contrast only if that fails.
+The checks of steps 3 and 4 have no project tool yet; each is written before its step is tried.
