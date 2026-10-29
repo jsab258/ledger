@@ -115,6 +115,19 @@ What failed before this method, so it is not repeated: draping with bent elbows 
 
 ## Notebook
 
+### 30 Oct 2026, a garment that passed every offline mark and broke in the game: two causes found by comparing with the last good
+- Made: the withdrawn garment mended (one limb's skin weights from the body, its UV layers back in order) and seen whole in the game's editor.
+- Method (setting-free):
+  - Run the per-pose check (points through the body in rest, arms raised and forward, a stride, sitting) on the failing version and the last good one together; a fault that only one shows names its place by the bone that moves the points.
+  - Compare the two versions' weights where the fault sits and the body's own skin there; if the body and the good version agree and the failing one does not, give those points the body's weights at their nearest skin, limited to the limb, and only where a bone has strayed outside it.
+  - Check which UV layer is first in the export: the engine's material reads the first, so a second layout (a flat pattern kept for later work) placed first moves every map and lets an alpha mask cut holes. Put the maps' layout first in the export step itself, for every garment.
+  - Judge the mend by the same check (every pose back to the good version's numbers) and then by the game's own film of the same walk, beside the failing and the good films.
+- Tools: the per-pose check (with the points it finds listed), a limb weight mender, a UV order helper in the export, the tester's sit film, fresh reviewers.
+- Target and check: through and stretch per pose within the good version's (met: 0.0141 / 0.0144 / 0.0056 / 0.0044 against 0.0138 / 0.0145 / 0.0055 / 0.0043); no hole, missing part or wrong map in the film (the editor's film: met, a fresh reviewer's pass).
+- Cost (hours): about 1.
+- Failed and why: one sleeve's binding strayed (cause in the binder not yet found); the layer order differed between two routes through the same chain. Both slipped past every mark because none looked at weights per limb against the body or at the export's layer order.
+- Evidence: production/art/clothing/tom-outfit/BAKE-PLAN-2026-10-27.md, 30 October; F:/LedgerTools/tmp/pose-check-2026-10-30; F:/LedgerTools/tmp/ai-tester/film/2026-10-30-0046 against 2026-10-29-1828 and 1309.
+
 ### 29 Oct 2026, wet ground drawn as two layers, rough wet stone and water as a coat, passing at its second try
 - Made: a street's road, pavement and kerb at real values with their wetness as a separate top layer; three gate views passed.
 - Method (setting-free):

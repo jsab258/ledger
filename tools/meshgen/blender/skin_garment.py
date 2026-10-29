@@ -309,6 +309,10 @@ bpy.ops.object.select_all(action="DESELECT")
 arm.select_set(True)
 g.select_set(True)
 bpy.context.view_layer.objects.active = arm
+# the maps' layout first, the one Unreal's material reads (30 October: uv_order.py)
+sys.path.insert(0, HERE)
+from uv_order import maps_layout_first  # noqa: E402
+log["uvReordered"] = maps_layout_first(g)
 out_fbx = os.path.join(OUT, NAME + "_skinned.fbx")
 bpy.ops.export_scene.fbx(filepath=out_fbx, use_selection=True, object_types={"ARMATURE", "MESH"}, add_leaf_bones=False,
                          mesh_smooth_type="OFF", use_tspace=True, colors_type="LINEAR", bake_anim=False)

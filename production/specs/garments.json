@@ -80,14 +80,14 @@
   {
    "who": "Tom",
    "name": "TomZipJacket",
-   "fbx": "F:/LedgerTools/garments/tom/zip_jacket/v19/skinned/zip_jacket_skinned.fbx",
+   "fbx": "F:/LedgerTools/garments/tom/zip_jacket/v29-mended/skinned2/zip_jacket_skinned.fbx",
    "hides": [
     "top"
    ],
    "maps": {
-    "colour": "F:/LedgerTools/garments/tom/zip_jacket/v19/baked/zip_jacket_colour_ao.png",
-    "normal": "F:/LedgerTools/garments/tom/zip_jacket/v19/baked/zip_jacket_normal_dx.png",
-    "packed": "F:/LedgerTools/garments/tom/zip_jacket/v19/baked/zip_jacket_packed.png",
+    "colour": "F:/LedgerTools/garments/tom/zip_jacket/v28-built19/baked/zip_jacket_colour_ao.png",
+    "normal": "F:/LedgerTools/garments/tom/zip_jacket/v28-built19/baked/zip_jacket_normal_dx.png",
+    "packed": "F:/LedgerTools/garments/tom/zip_jacket/v28-built19/baked/zip_jacket_packed.png",
     "tint": [
      0.082,
      0.107,
@@ -104,8 +104,8 @@
      0.58
     ]
    },
-   "handed": "2026-10-28",
-   "made": "Tom's zip jacket from Marvelous drape 19 (straight-elbowed drape body, bent back to his reference pose), baked and skinned (BAKE-PLAN-2026-10-27.md; SLEEVE-END-2026-10-28.md). His page of 28 October: worn in the game with these cuffs so the walk, the light and the bent elbow are judged while baked cuffs are built. Known faults: the lump where sleeve meets cuff, cloth inside each wrist, a bright patch in each elbow's crook, the lowered arms sinking into the sides, a crumple at the left hip, the collar notch, side-fold spikes. Navy (tint linear 0.082, 0.107, 0.247 on the 0.53 grey: about navy cotton) until he chooses its colour."
+   "handed": "2026-10-30",
+   "made": "Tom's zip jacket from Marvelous drape 19 with its cuffs built round his wrist in the bake (his order C9; tools/md/build_cuffs.py --edge-at-hand --gather; DECISIONS.md, 29 October), its right sleeve's weights mended from the body (30 October, the cuffs' second try in the game): withdrawn on 29 October after holes and a right sleeve almost gone in the packaged game, the per-pose check (garment_pose_check.py) found the whole right sleeve, wrist to shoulder, tied to lowerarm_twist_02_r, where the body's skin, the left sleeve and drape 19's take the arm's own bones; tools/meshgen/blender/mend_limb_weights.py gave those points the body's weights (the forearm all, the upper arm where a lower-arm bone had strayed), and every pose now matches drape 19's (through 0.0056 walking, 0.0044 sitting against 0.0055 and 0.0043; it was 0.0419 and 0.0372). And its UV layers put back in order: the built cuffs' export carried the flat pattern's layout first, so the game read the maps through it and the colour map's alpha cut the holes in the back and chest (tools/meshgen/blender/uv_order.py, now in skin_garment.py's export too); the editor's sit film shows the zip, collar, pockets and both sleeves as drape 19's. Maps from the built cuffs' bake (the mend changes weights and layer order only). Known faults kept from drape 19: a small opening at the collar's front left of the zip seen standing, a bright patch in each elbow's crook, the lowered arms sinking into the sides, a crumple at the left hip, side-fold spikes. Navy (tint linear 0.082, 0.107, 0.247 on the 0.53 grey: about navy cotton) until he chooses its colour."
   }
  ]
 }

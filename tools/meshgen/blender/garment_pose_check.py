@@ -5,7 +5,7 @@ the body coming through it, and its surface stretched or crushed where the
 weights pull two neighbouring points apart (the armpits, the sides, the hips).
 No rendering: numbers only, on the processor, so the graphics card stays free.
 
-    blender -b -P tools/meshgen/blender/garment_pose_check.py -- BODY.fbx BOUND.blend OUT.json [--render DIR] [--sit SIT.fbx]
+    blender -b -P tools/meshgen/blender/garment_pose_check.py -- BODY.fbx BOUND.blend OUT.json [--render DIR] [--sit SIT.fbx] [--garment NAME] [--dump]
 
 --sit takes the sitting pose from the last frame of a sit made on the same
 skeleton (F:/LedgerTools/tmp/drape/ron_sit.fbx, made by sit_anim.py, the one
@@ -45,8 +45,15 @@ BODY, BOUND, OUT = argv[:3]
 RENDER = argv[argv.index("--render") + 1] if "--render" in argv else None
 SIT = argv[argv.index("--sit") + 1] if "--sit" in argv else None
 
+GARMENT = argv[argv.index("--garment") + 1] if "--garment" in argv else None
+# --dump (30 October): each pose's points through, by index, so where they lie can be read
+DUMP = "--dump" in argv
+
 bpy.ops.wm.open_mainfile(filepath=BOUND)
-gar = next(o for o in bpy.data.objects if o.type == "MESH")
+# --garment NAME (30 October: the skinned game files hold the body's mesh first, so the first mesh was the body)
+gar = next(o for o in bpy.data.objects if o.type == "MESH" and (GARMENT is None or o.name == GARMENT))
+for o in [o for o in bpy.data.objects if o.type == "MESH" and o is not gar]:
+    bpy.data.objects.remove(o, do_unlink=True)
 old_arm = next(o for o in bpy.data.objects if o.type == "ARMATURE")
 before = set(bpy.data.objects)
 bpy.ops.import_scene.fbx(filepath=BODY)
@@ -250,6 +257,8 @@ for name in ("rest", "arms raised", "arms forward", "walking stride", "sitting")
         "bodyStretched": round(len(bs) / len(body_len), 4),
         "bodyCrushed": round(len(bc) / len(body_len), 4),
     }
+    if DUMP:
+        report["poses"][name]["throughPoints"] = sorted(i for _, i in inside)
     print("POSE", name, json.dumps(report["poses"][name]), flush=True)
     bb.free()
     g.free()
