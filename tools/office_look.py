@@ -2,7 +2,7 @@
 """THE LOOK'S PICTURES THROUGH HIS CAMERA, IN THE PACKAGED GAME, REPEATABLY (his order D11, the look).
 
     python tools/office_look.py OUT_DIR [--editor] [--here] [--night] [--calibrate] [--buffers] [--no-people] [--no-others]
-        [--x 6.2 --z 6.3 --yaw 30 --pitch -12] [--res 1920x1080] [--game-arg -Switch ...]
+        [--x 6.2 --z 6.3 --yaw 30 --pitch -12] [--res 1920x1080] [--game-arg -Switch ...] [--exec "r.ForceLOD 0"]
     python tools/office_look.py --selftest
 
 WHY. The office's marks, the calibration chart and the street's surfaces are all photographed by the game's own
@@ -43,7 +43,10 @@ NAMES = {1: "lit", 2: "lit-2", 3: "basecolor", 4: "roughness"}
 def command(a):
     args = list(BASE)
     if "--editor" in a:
-        args = [UPROJECT, "-game"] + args + ['-ExecCmds="scalability 2"', "-LedgerRepo=" + REPO]
+        # --exec "cmd,cmd" (29 October, the jacket's levels of detail: r.ForceLOD 0 beside the plain view) joins the
+        # played quality level's own command in the one -ExecCmds Unreal reads
+        extra = ("," + a[a.index("--exec") + 1]) if "--exec" in a else ""
+        args = [UPROJECT, "-game"] + args + ['-ExecCmds="scalability 2%s"' % extra, "-LedgerRepo=" + REPO]
     for k, sw in FLAGS.items():
         if k in a:
             args.append(sw)

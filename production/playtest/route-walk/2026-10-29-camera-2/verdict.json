@@ -1,0 +1,294 @@
+{
+ "passed": 11,
+ "stages": 11,
+ "rows": [
+  {
+   "stage": "street",
+   "ok": true,
+   "detail": "chose=new"
+  },
+  {
+   "stage": "talk-open",
+   "ok": true,
+   "detail": "to=Sheila clock=D0 12:04 tom_to_face_m=0.60 cam_to_face_m=2.51 hfov_deg=86.0"
+  },
+  {
+   "stage": "talk-typed",
+   "ok": true,
+   "detail": "chars=53 moved_cm=0.0"
+  },
+  {
+   "stage": "reply-words",
+   "ok": true,
+   "detail": "seconds=0.20"
+  },
+  {
+   "stage": "deed",
+   "ok": true,
+   "detail": "clock=D0 15:08"
+  },
+  {
+   "stage": "onlookers",
+   "ok": true,
+   "detail": "clock=D0 15:08 measured=rocco,lena,zlata,sam,rita,victor,hal,iva,selma,tanja,katarina,ines,marta"
+  },
+  {
+   "stage": "wait",
+   "ok": true,
+   "detail": "from=D0 15:38 to=D0 20:00 stopped=ron@0"
+  },
+  {
+   "stage": "save",
+   "ok": true,
+   "detail": "clock=D0 20:00 at=18.62,3.91"
+  },
+  {
+   "stage": "quit",
+   "ok": true,
+   "detail": "the game closed from the pause"
+  },
+  {
+   "stage": "street",
+   "ok": true,
+   "detail": "chose=continue (saved clock=D0 20:00 at=18.62,3.91)"
+  },
+  {
+   "stage": "continue",
+   "ok": true,
+   "detail": "clock=D0 20:00 at=18.62,3.91 off_m=0.00"
+  }
+ ],
+ "path": [
+  {
+   "to": [
+    1.0,
+    1.2
+   ],
+   "at": [
+    1.0,
+    4.0
+   ],
+   "clock": "D0 09:14"
+  },
+  {
+   "to": [
+    1.0,
+    1.2
+   ],
+   "at": [
+    0.85,
+    1.21
+   ],
+   "clock": "D0 09:32"
+  },
+  {
+   "to": [
+    7.9,
+    1.2
+   ],
+   "at": [
+    0.85,
+    1.21
+   ],
+   "clock": "D0 09:32"
+  },
+  {
+   "to": [
+    7.9,
+    1.2
+   ],
+   "at": [
+    5.8,
+    1.08
+   ],
+   "clock": "D0 09:52"
+  },
+  {
+   "to": [
+    7.9,
+    1.2
+   ],
+   "at": [
+    8.05,
+    1.03
+   ],
+   "clock": "D0 10:00"
+  },
+  {
+   "to": [
+    7.9,
+    4.6
+   ],
+   "at": [
+    8.05,
+    1.03
+   ],
+   "clock": "D0 10:00"
+  },
+  {
+   "to": [
+    7.9,
+    4.6
+   ],
+   "at": [
+    7.98,
+    2.35
+   ],
+   "clock": "D0 10:19"
+  },
+  {
+   "to": [
+    7.9,
+    4.6
+   ],
+   "at": [
+    10.03,
+    2.39
+   ],
+   "clock": "D0 10:32"
+  },
+  {
+   "to": [
+    7.9,
+    4.6
+   ],
+   "at": [
+    8.45,
+    3.22
+   ],
+   "clock": "D0 10:45"
+  },
+  {
+   "to": [
+    7.9,
+    4.6
+   ],
+   "at": [
+    9.5,
+    3.29
+   ],
+   "clock": "D0 11:02"
+  },
+  {
+   "to": [
+    7.9,
+    4.6
+   ],
+   "at": [
+    8.97,
+    4.25
+   ],
+   "clock": "D0 11:15"
+  },
+  {
+   "to": [
+    7.9,
+    4.6
+   ],
+   "at": [
+    7.53,
+    4.62
+   ],
+   "clock": "D0 11:26"
+  },
+  {
+   "to": [
+    4.85,
+    4.61
+   ],
+   "at": [
+    7.53,
+    4.62
+   ],
+   "clock": "D0 11:26"
+  },
+  {
+   "to": [
+    4.81,
+    4.9
+   ],
+   "at": [
+    4.33,
+    4.76
+   ],
+   "clock": "D0 11:54"
+  },
+  {
+   "to": [
+    4.33,
+    1.2
+   ],
+   "at": [
+    4.33,
+    4.76
+   ],
+   "clock": "D0 13:03"
+  },
+  {
+   "to": [
+    4.33,
+    1.2
+   ],
+   "at": [
+    4.22,
+    1.06
+   ],
+   "clock": "D0 13:16"
+  },
+  {
+   "to": [
+    18.87,
+    3.99
+   ],
+   "at": [
+    15.91,
+    0.81
+   ],
+   "clock": "D0 13:43"
+  },
+  {
+   "to": [
+    18.87,
+    3.99
+   ],
+   "at": [
+    19.26,
+    4.02
+   ],
+   "clock": "D0 13:57"
+  },
+  {
+   "to": [
+    18.87,
+    3.99
+   ],
+   "at": [
+    18.39,
+    3.88
+   ],
+   "clock": "D0 14:13"
+  },
+  {
+   "to": [
+    18.87,
+    3.99
+   ],
+   "at": [
+    19.58,
+    4.0
+   ],
+   "clock": "D0 14:28"
+  },
+  {
+   "to": [
+    18.87,
+    3.99
+   ],
+   "at": [
+    18.62,
+    3.91
+   ],
+   "clock": "D0 14:45"
+  }
+ ]
+}

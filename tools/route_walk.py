@@ -434,7 +434,7 @@ def walk(editor, out, town=False, sit=False):
     if near:
         play("say", LINE)
         if CAMERA:      # the talk's camera row blends in from the box's opening (SliceCharacter.cpp CameraRowTick)
-            filmed("talk", "wait", "6", "--film")
+            filmed("talk", "wait", "14", "--film")    # in, held through the answer (6 s after), and out (29 October)
         r.expect("talk-open", 10)
         if r.expect("talk-typed", 10) and r.said_back() != LINE:
             r.rows[-1]["ok"] = False
