@@ -3,11 +3,11 @@
 The overview first; then the day's summary, under 200 words. Earlier summaries are in git and in
 production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md before that).
 
-## Overview (Wednesday 28 October, evening)
+## Overview (Thursday 29 October, morning)
 
 <!-- morning pictures: written by tools/morning_pictures.py -->
 
-**Morning, Thursday 29 October. Phase 1, Prove the bottlenecks. On: 3. Clothes (his order C): skill written; jacket in the game; elastic-rib cuffs await his click (BAKE-PLAN). Next: 4. Speech: the faster first sentence's second try, bench tomorrow.**
+**Morning, Thursday 29 October. Phase 1, Prove the bottlenecks. On: 3. Clothes (his order C): jacket in the game, Mafia's four detail levels; elastic-rib cuffs await his click (BAKE-PLAN). Next: 4. Speech: faster first sentence, 16 of 42 run, no gain yet (FastFirst.cs).**
 
 | | Today, 29 Oct | Yesterday, 28 Oct |
 |---|---|---|
@@ -21,33 +21,33 @@ No decision asked: these are for watching the street change.
 
 <!-- /morning pictures -->
 
-Disk (10-28 03:30): C: 250.6 GB free, F: 27.4 GB free (tonight's census updates it).
+Disk (10-29 04:35): C: 242.7 GB free, F: 28.7 GB free.
 
 **Now and next** (your order of 25 October with the two of 28 October; production/orders/2026-10-25.md):
-- **Now, clothes the professional way:** the garment skill is written from reviewed research; Tom's jacket is in the game with its faults listed; the cuffs are rebuilt next by Marvelous's elastic rib, waiting on your click.
-- **Next, sitting the interaction-spot way:** steps 1 to 3 done (the bench as data, its clips measured, every derived entry lands on the seat); step 4 tries each entry against the office's walls.
-- **Then, the look:** a calibration scene from Unreal's own grey ball, chrome ball and colour chart, then Mickey's office and the chandler's front.
-- **Beside them:** asset checks before reviewers (step 1 in); the live-talk bench test (runs tomorrow on the day's $1); the town kit (a trial outside the game, no shop).
-- **Your camera:** between, feet in frame, now in the game's camera file; checked on tonight's build, then shown to you.
+- **Now, clothes:** Tom's jacket is in the game with Mafia's four levels of detail and passes the new asset checks, except three unused files (your page). The cuffs are rebuilt next by Marvelous's elastic rib, waiting on your click.
+- **Next, sitting:** Tom can walk inside Mickey's office again (it had an invisible solid block). He sits from 7 of 9 walk-ins with a plain start. The two natural starts, Kingdom Come II's table and Epic's own foot search, each tried twice, slid his foot up to 35 cm, so both are set aside: the small office leaves too little room to test where a start can begin. Research on that comes next.
+- **Then, the look:** the day is a stop too bright (your page). At night the street between the lamps is 87% black through your camera; next is a fill light, Mafia's way, shown to you first.
+- **Beside them:** the speech bench has run 16 of 42 trials: the small fast model is so far no faster and invents more. The town's rules for a surviving victim are now in the game's code (69,186 checks agree).
+- **Your camera:** 3.1 m in the game until you pick.
 
-**The tester (last night's walk):** 13 of 15 stages: Ron stayed just out of reach (3.7 m) and Darren walked out of sight. Darren saw Rita's window broken; Ron showed he knew. "That's all I know" to 2 of 60 first questions. Tonight's walk is the first with the talk key picking whom Tom faces.
+**The tester (last night's walk):** 15 of 15 stages. "That's all I know" to 0 of 60 first questions (2 the night before). Ron showed he knew about Rita's window. What broke the illusion: unfinished clothes, people standing frozen like mannequins, and two people overlapping Tom (Sheila at the office door, someone behind him by a lamp post).
 
 **Monday's risks:**
-1. Phase 1's exit waits on the clothes (the cuffs), the walk and speech; it may not re-run by Monday.
-2. The cuffs depend on Marvelous: two tries, then the bake route.
-3. The office is tight: sitting's room test may drop most entries.
-4. The seven new methods estimate 10 to 70 hours each; only their first uses fit this week.
-5. Speech's 2 s bar is still unmet; tomorrow's bench is the faster first sentence's second try.
+1. Phase 1's exit waits on the cuffs (your Marvelous click) and on speech; it may not re-run by Monday.
+2. Sitting may ship this week with the plain start only.
+3. The night needs fill light, a look change that waits for your page.
+4. Speech's 2 s bar: the faster first sentence shows no gain so far.
+5. Eleven other places in the code switch collision off the same broken way; fixing them may move the camera or the walk.
 
 ### Needs you
 
-1. **Open Marvelous and click LEDGER bridge** (no page: a click on your PC). The cuff drape by the new garment skill (an elastic rib) is queued and starts on its own.
-2. **Your camera: size or feet?** (its page: https://claude.ai/artifact/4e5QA1UFTEGLacF3Rm4wpE) 3.1 m, feet in, Tom smaller (recommended), or 2.4 m, his size, feet cut. Tilting was tried and does not help.
-3. **Mickey's back door, a third try at its panels?** (next page) Chamfered mouldings with shaded corners, or panels sunk into the leaf. Yes (recommended), or leave them.
-4. **Fists able to kill?** (next page; Study 14: Kingdom Come II says no) No (recommended), or yes.
-5. **The animation source test at 6 moves, not the design's 4?** (next page) Yes (recommended), or 4.
+1. **Open Marvelous and click LEDGER bridge** (no page: a click on your PC). The cuff drape is queued and starts on its own.
+2. **Today's page** (https://claude.ai/artifact/SHm9UYFEqDkf8WyH5Lk4mg): the day one stop darker (recommended), and delete three unused jacket files (recommended yes).
+3. **Your camera: size or feet?** (https://claude.ai/artifact/4e5QA1UFTEGLacF3Rm4wpE) 3.1 m, feet in, Tom smaller (recommended), or 2.4 m, his size, feet cut.
+4. **Mickey's back door, a third try at its panels?** (next page) Yes (recommended), or leave them.
+5. **Fists able to kill?** (next page; Study 14: Kingdom Come II says no) No (recommended), or yes.
 
-After these, on later pages: the map marks (Study 16), the interface's width (Study 10), and the day's exposure (the calibration chart reads about a stop bright by day; pictures first).
+After these, on later pages: the animation source test at 6 moves, the map marks (Study 16), the interface's width (Study 10).
 
 ### Road to worth playing (PLAN.md)
 
