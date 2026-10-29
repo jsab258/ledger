@@ -115,6 +115,20 @@ What failed before this method, so it is not repeated: draping with bent elbows 
 
 ## Notebook
 
+### 29 Oct 2026, a garment's knitted cuffs gathered by the cloth tool's own elastic: two tries, set aside for a built band
+- Made: nothing kept; two tries of rib cuffs in the cloth simulator, judged and set aside, and the route handed to a band built in the 3D package.
+- Method (setting-free):
+  - Before judging a run, read back every setting the script asked for; a setter that returns nothing is not proof it failed, nor that it worked.
+  - Export the drape after each stage of its order (body settled, bands placed, bands closed, final settle): it shows when a fault begins rather than only that it exists.
+  - Run the same job twice before trusting one result: a multithreaded solver need not repeat itself, so a design is judged on more than one run.
+  - Measure every mark with a tool and check the tools against each other: a gap measured along an edge's run read as an open seam until the seam was matched along the pattern's own coordinates, where it was closed.
+  - Give the simulator the gather it is built for (elastic on the gathered edge at the vendor's default strength, ratio from the two lengths) and close each band at once while it is still curved round the limb.
+- Tools: the cloth program through its script interface and a file bridge; the 3D package to bend the drape back to the body's pose; numeric checks for place, gap to the skin, cover round the limb, the limb's centre line through the cloth and points inside the body.
+- Target and check: band centre within 30 mm of the limb's axis and of the wrist; gap to the skin at most 10.5 mm; cover 90% or more; no crossing; nothing inside. Met for crossings, inside and centre in every run; missed for the gap on three of four bands in the second try (12.4 to 13.1 mm) and cover on one (83%).
+- Cost (hours): about 0.6.
+- Failed and why: a single-layer knitted band with two free edges bulges or rolls on the wrist; the simulator alone does not hold it flat, whatever the sewing order. The route the owner had already approved as the fallback, a band built to the wrist's own shape, takes over.
+- Evidence: DECISIONS.md, 29 October 11:36 to 11:57; the drapes v24, v24b, v25a and v25b in the garment's working folder.
+
 ### 28 Oct 2026, a character sitting on a seat treated as an interaction spot: entries derived from the clips, tested against the room, chosen by heading; the matched-foot start set aside after two tries
 - Made: three bench seats as spots in one spec (slot, cap, users, clips, exit), a measured clip sheet, entries derived from each clip's own measures, a room test that keeps only entries with no limb contact, a choice by heading among the kept ones, and an approach that walks the character onto the clip's path; the start on a matching foot did not fire, so the plain start stays as the fallback.
 - Method (setting-free): measure every entry clip once (root travel, the warp bone's end, the seated pelvis); derive where the body must start so the clip lands on the slot, and check it with the warp off (bone within 5 cm and 3 degrees); play every entry from inside the room from the derived start and four envelope corners, sampling feet, shins, hips and hands against the world each frame, and keep only those with no contact, written into the seat's spec by a tool from the test's log, never by hand; at use, take the kept entry facing nearest the approach, walk the body onto the clip's own path, and start the clip at a moment with the same planted foot and stance phase inside the tested envelope; else fall back. Write a walk-in test that drives the whole thing from several places and counts starts, fallbacks and sits.

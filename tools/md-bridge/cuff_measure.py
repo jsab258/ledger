@@ -165,6 +165,9 @@ def measure_cuff(cuff, f, verts=None, loops=None):
     # the edge itself (a cuff not yet closed into a ring has one open loop round its whole outline: then 0)
     # Marvelous exports a sewn seam unwelded, so a cuff sewn into a tube still has one open outline: its lower edge is
     # then the longest run of that outline lying in its hand-side half, and the ring is closed across the seam's gap
+    # (29 October: seam_gap is the gap between that run's ends, which also opens when the lower edge TILTS out of the
+    # hand-side half; drapes 24 and 25a read 59 to 76 mm with both side seams 0.0 mm apart along the pattern. Read it
+    # as a seam only beside the pattern-matched seam distance.)
     loop, seam_gap = 0.0, float("nan")
     if loops:
         rings = [l for l in loops if len(l) >= 8]

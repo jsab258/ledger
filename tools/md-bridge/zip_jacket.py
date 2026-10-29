@@ -294,6 +294,17 @@ OUT = %(out)r
 if not os.path.isfile(AVT):
     raise FileNotFoundError(AVT)
 os.makedirs(OUT, exist_ok=True)
+# --stage-exports (29 October, drape 24's cuffs: side seams 61 and 76 mm open after the late sew): an OBJ after each
+# stage of the freeze-body order, in OUT/stage-<name>, to see where a seam stays open; the drape itself is unchanged
+STAGES = %(stages)d
+def stage(name):
+    if not STAGES:
+        return
+    so = ApiTypes.ImportExportOption()
+    so.bExportGarment, so.bExportAvatar, so.bSingleObject, so.scale = True, True, False, 1.0
+    d = os.path.join(OUT, "stage-" + name)
+    os.makedirs(d, exist_ok=True)
+    result.setdefault("stages", {})[name] = export_api.ExportOBJ(os.path.join(d, "zip_jacket.obj"), so)
 utility_api.NewProject()
 result["avatar"] = bool(import_api.ImportAvatar(AVT, ApiTypes.ImportExportOption()))
 points = {p["ArrangementName"]: int(p["ArrangementIndex"]) for p in pattern_api.GetArrangementList()}
@@ -369,7 +380,9 @@ for p in PLAN["pieces"]:
 # THE ELASTIC RIB (his order of 28 October, C9: the cuffs by the game-garment skill, Marvelous's elastic first):
 # the sleeve's wrist edge gathered by elastic at CLO's recommended strength 10 and a ratio of 100 x cuff / sleeve end,
 # so the seam meets near 1:1 and the cuff, cut at 0.90 to 0.95 of the wrist's collision floor, is never asked below
-# it (drapes 9 to 20 shrank it to 0.75 and lumped at the seam). Each call's answer kept, so a wrong signature shows.
+# it (drapes 9 to 20 shrank it to 0.75 and lumped at the seam). The three setters return None (CLO's list.html), so
+# drape 23's [null, null, null] was no answer, not a refusal: each is now kept as its line, strength and ratio once
+# it has run without an error, so a wrong signature still shows.
 ELASTIC = %(elastic)g
 if ELASTIC > 0:
     el = {}
@@ -378,9 +391,10 @@ if ELASTIC > 0:
         pb, lb, fb = s["b"]
         if pa.startswith("cuff") and pb.startswith("sleeve"):
             try:
-                el[pb] = [pattern_api.SetPatternPieceElastic(made[pb], lb, True),
-                          pattern_api.SetPatternPieceElasticStrength(made[pb], lb, 10.0),
-                          pattern_api.SetPatternPieceElasticStrengthRatio(made[pb], lb, int(round(ELASTIC)))]
+                pattern_api.SetPatternPieceElastic(made[pb], lb, True)
+                pattern_api.SetPatternPieceElasticStrength(made[pb], lb, 10.0)
+                pattern_api.SetPatternPieceElasticStrengthRatio(made[pb], lb, int(round(ELASTIC)))
+                el[pb] = {"line": lb, "strength": 10.0, "ratio": int(round(ELASTIC))}
             except Exception as e:
                 el[pb] = "refused: %%s" %% e
     result["elastic"] = el
@@ -389,6 +403,7 @@ if FREEZE:
         if p["key"].startswith("cuff"):
             pattern_api.SetPatternFreeze(made[p["key"]], True)
     result["bodyDraped"] = bool(utility_api.Simulate(%(steps)d))
+    stage("1-body")
     for p in PLAN["pieces"]:
         pattern_api.SetPatternFreeze(made[p["key"]], not p["key"].startswith(("sleeve", "cuff")))
     cs = []
@@ -401,8 +416,10 @@ if FREEZE:
             fb = not fb
         cs.append(bool(pattern_api.AddSeamlinePairGroup(made[pa], la, made[pb], lb, fa, fb)))
     result["cuffsSewn"] = cs
+    stage("2-cuffs-sewn")
 if LATE_STEPS:
     result["openSimulated"] = bool(utility_api.Simulate(LATE_STEPS))
+    stage("3-open")
     late = []
     for s in PLAN["seams"]:
         if s.get("late"):
@@ -412,11 +429,18 @@ if LATE_STEPS:
     result["lateSewn"] = late
 if FREEZE:
     result["cuffsNormal"] = bool(utility_api.Simulate(200))
+    stage("4-late-normal")
     for p in PLAN["pieces"]:
         pattern_api.SetPatternFreeze(made[p["key"]], False)
-    # Fitting quality last (utility_api.SetSimulationQuality: 0 Normal, 1 Animation, 2 Fitting, 3 GPU)
+    # Fitting quality last (utility_api.SetSimulationQuality(quality, mode): quality 0 Normal, 1 Animation, 2 Fitting,
+    # 3 GPU; mode 0 CPU, 1 GPU; drape 23 gave the quality alone and was refused)
     try:
-        result["fitting"] = utility_api.SetSimulationQuality(2)
+        utility_api.SetSimulationQuality(2, 0)
+        result["fitting"] = "set: 2 Fitting, CPU"
+        try:
+            result["fittingRead"] = utility_api.GetSimulationQuality()
+        except Exception as e:
+            result["fittingRead"] = "unread: %%s" %% e
     except Exception as e:
         result["fitting"] = "refused: %%s" %% e
     result["simulated"] = bool(utility_api.Simulate(100))
@@ -462,6 +486,7 @@ def main(argv):
                                                   "late": int(opt("--cuff-seam-late", 0)),
                                                   # --elastic RATIO and --freeze-body (28 October, the elastic rib)
                                                   "elastic": opt("--elastic", 0.0), "freeze": int("--freeze-body" in argv),
+                                                  "stages": int("--stage-exports" in argv),
                                                   "flip": argv[argv.index("--flip-cuff-seam") + 1] if "--flip-cuff-seam" in argv else "",
                                                   # --avatar: the body draped on (28 October: the straight-elbowed drape body)
                                                   "avt": argv[argv.index("--avatar") + 1] if "--avatar" in argv else r"F:\LedgerTools\garments\tom\MH_TomL1.avt",

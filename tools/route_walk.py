@@ -338,11 +338,15 @@ def sit_round(r):
     r.turn_to(bearing(t[0], t[1], seat["x"], seat["z"]))
     r.discard("sit")
     play("press", "E")
+    # THE SIT FILM (29 October, his order D10: his page shows the sit as a film): the tester's frames while he
+    # sits down, sits and stands up, stitched by `play.py film` after the walk
+    play("wait", "5", "--film")
     if not r.expect("sit", 20):
         return False
-    play("wait", "6")
+    play("wait", "3", "--film")
     r.discard("stand")
     play("press", "E")
+    play("wait", "5", "--film")
     return r.expect("stand", 20)
 
 

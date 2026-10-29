@@ -233,3 +233,8 @@
 {"event": "stop", "at": "2026-10-28T14:11:00", "note": ""}
 {"event": "start", "at": "2026-10-28T14:11:00", "task": "28 Oct: item 3: Tom in his jacket, first build: the default material found, its cause in the cook log, fixed, re-imported, a second build asked; the port's G4 remainder handed out", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-28T14:26:00", "note": ""}
+{"event": "start", "at": "2026-10-29T11:28:00", "task": "1.3 C9 cuffs: job mended, drape 24 measured", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-29T11:37:00", "note": ""}
+{"event": "start", "at": "2026-10-29T11:36:41", "task": "1.3 C9 cuffs: diagnostic 24b, second try", "phase": "1", "kind": "production"}
+{"event": "start", "at": "2026-10-29T11:37:00", "task": "1.3 C9 cuffs: diagnostic 24b, try 2 twice, set aside, records", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-29T12:00:00", "note": ""}

@@ -4274,7 +4274,7 @@ namespace
 					TEXT("ppAutoExposureMinBrightness=%.4f ppAutoExposureMaxBrightness=%.4f ")
 					TEXT("ppOverridesMethod/Bias/Min/Max=%d/%d/%d/%d ")
 					TEXT("cvarDefaultAutoExposure=%s cvarDefaultAutoExposureMethod=%s ")
-					TEXT("cvarEyeAdaptationMethodOverride=%s cvarExtendDefaultLuminanceRange=%s ")
+					TEXT("cvarEyeAdaptationMethodOverride=%s cvarExtendDefaultLuminanceRange=%s cvarDefaultAutoExposureBias=%s ")
 					TEXT("ppAutoExposureSpeedUpRead=%.1f ppAutoExposureSpeedDownRead=%.1f ")
 					TEXT("ppOverridesSpeedUp/SpeedDown=%d/%d ppBlendWeightRead=%.3f ")
 					TEXT("tonemapStat=last-camera-placement/one-per-run ")
@@ -4294,6 +4294,10 @@ namespace
 					*CVarIntOrAbsent(TEXT("r.DefaultFeature.AutoExposure.Method")),
 					*CVarIntOrAbsent(TEXT("r.EyeAdaptation.MethodOverride")),
 					*CVarIntOrAbsent(TEXT("r.DefaultFeature.AutoExposure.ExtendDefaultLuminanceRange")),
+					// the bias in force wherever ppOverridesMethod/Bias's second figure is 0 (29 October, the review)
+					IConsoleManager::Get().FindConsoleVariable(TEXT("r.DefaultFeature.AutoExposure.Bias")) != nullptr
+						? *FString::Printf(TEXT("%.3f"), IConsoleManager::Get().FindConsoleVariable(TEXT("r.DefaultFeature.AutoExposure.Bias"))->GetFloat())
+						: TEXT("absent"),
 					PP.AutoExposureSpeedUp, PP.AutoExposureSpeedDown,
 					PP.bOverride_AutoExposureSpeedUp ? 1 : 0,
 					PP.bOverride_AutoExposureSpeedDown ? 1 : 0,
@@ -10392,9 +10396,14 @@ namespace LedgerVignetteShot
 			S.bOverride_ColorOffset = !C->SunOn && Lift > 0.0;
 			S.ColorOffset = FVector4(0.0, 0.0, 0.0, (!C->SunOn && Lift > 0.0) ? Lift : 0.0);
 		}
-		return FString::Printf(TEXT("%s/sun-%s/lanterns-%s/pin-%.3f/bias-%.2f/volume-%s"), UTF8_TO_TCHAR(Id),
+		// THE BIAS IN FORCE (29 October, the wet-overcast review): by day the volume leaves the bias unset, so the
+		// engine's default (r.DefaultFeature.AutoExposure.Bias, 1.0 in SceneView.cpp) applies, not the 0 written
+		// above; the line names which, so a day run's own line says what the street is exposed with.
+		const IConsoleVariable* DefBias = IConsoleManager::Get().FindConsoleVariable(TEXT("r.DefaultFeature.AutoExposure.Bias"));
+		const double InForce = C->SunOn ? (DefBias != nullptr ? (double)DefBias->GetFloat() : -99.0) : Bias;
+		return FString::Printf(TEXT("%s/sun-%s/lanterns-%s/pin-%.3f/bias-%.2f-%s/volume-%s"), UTF8_TO_TCHAR(Id),
 			C->SunOn ? TEXT("on") : TEXT("off"), C->LanternsOn ? TEXT("on") : TEXT("off"),
-			Pin, Bias, PPV != nullptr ? TEXT("moved") : TEXT("none"));
+			Pin, InForce, C->SunOn ? TEXT("engine-default") : TEXT("set"), PPV != nullptr ? TEXT("moved") : TEXT("none"));
 	}
 
 	int32 ControlQuadsSpawnedCount()

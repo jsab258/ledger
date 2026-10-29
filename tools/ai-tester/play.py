@@ -664,8 +664,17 @@ def act(verb, rest):
         label = "said: %s" % words
     elif verb == "wait":
         seconds = min(15.0, max(0.5, float(rest[0]) if rest else 2.0))
-        time.sleep(seconds)
-        label = "waited %.0f s" % seconds
+        # wait --film (29 October, his order D10: the sit film for his page): the same frames as a filmed walk,
+        # about eight a second, while he sits down, sits or stands up with no key held
+        if "--film" in rest:
+            end = time.time() + seconds
+            while time.time() < end:
+                film_frame(st, hwnd)
+                time.sleep(0.125)
+            save_state(st)
+        else:
+            time.sleep(seconds)
+        label = "waited %.0f s%s" % (seconds, " (filmed)" if "--film" in rest else "")
     else:
         print("aiTester status=UNKNOWN-COMMAND %s" % verb)
         return 2

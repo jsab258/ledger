@@ -8,7 +8,7 @@ Failed its exit on 22 Oct (production/audits/phase1-exit/CLOSE-2026-10-22.md); r
 
 - [x] 1. Health check; the order ledger.
 - [x] 2. The walk: Epic's, Tom's MetaHuman, packaged; tester's route 15 of 15. Sit set aside.
-- [ ] 3. Clothes (his order C): jacket in the game, Mafia's four detail levels; drape 23 made, its script to mend.
+- [ ] 3. Clothes (his order C): jacket in the game; Marvelous cuffs set aside (two tries), built in the bake next.
 - [ ] 4. Speech: faster first sentence, 16 of 42 run, no gain yet (FastFirst.cs).
 - [ ] 5. Mickey's office: door, grain; look: day a stop darker; office marks 18 of 19; streets too dark.
 - [ ] 6. Phase 1's exit re-run; phase 2?
@@ -16,9 +16,9 @@ Failed its exit on 22 Oct (production/audits/phase1-exit/CLOSE-2026-10-22.md); r
 
 ## Studies this week (aaa-reference/STUDY-PLAN.md)
 
-Done 16 of 16 (28 Oct: ten early).
+Done 16 of 16.
 
-STATE (29 Oct 09:05): answers applied; bridge running; restart for computer use.
+STATE (29 Oct 12:00): Marvelous closed for a packaged build (sitting, the day's exposure line).
 
 ## Handovers
 
