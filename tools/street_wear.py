@@ -479,7 +479,9 @@ def counter_marks(spec_path=OFFICE):
     s = seed_of("mickeys_counter_top")
     # ON THE BARE LAMINATE (29 October, D11's O2: measured in the base-colour view, the fare book and the papers lie
     # at x 5.3 to 5.8 and 7.1 to 8.0, and two rings and a burn had printed on them): each mark's x where the top is bare
-    for k, (bx, size, pic, strength) in enumerate(((6.05, 0.32, RINGS, 0.7), (6.85, 0.30, RINGS, 0.6), (8.35, 0.34, RINGS, 0.65),
+    # (29 October, the office gate's back view: the first ring, 0.32 m across at x 6.05, reached the papers' edge at 5.8 and
+    # printed onto the sheet beside them; moved to 6.08 and drawn at 0.24 m, nearer a mug's ring, its second and last move)
+    for k, (bx, size, pic, strength) in enumerate(((6.08, 0.24, RINGS, 0.7), (6.85, 0.30, RINGS, 0.6), (8.35, 0.34, RINGS, 0.65),
                                                    (6.30, 0.22, BURNS, 0.85), (6.55, 0.20, BURNS, 0.8))):
         x = bx + 0.06 * (rnd(s, "x%d" % k) - 0.5)
         z = z0 + 0.12 + (z1 - z0 - 0.24) * rnd(s, "z%d" % k) * (0.5 if pic == BURNS else 1.0)

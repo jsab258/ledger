@@ -22,14 +22,14 @@
  "sky_light_gain_note": "The sky light on the street is this times the scene file's sky_intensity, so the seen sky can be bright while the walls stay as dark as the sheet's.",
  "surface_gain": {
   "brick_red": [
-   1.0,
-   0.82,
-   0.68
+   2.1,
+   1.722,
+   1.428
   ],
   "brick_grey": [
-   1.142,
-   1.142,
-   1.142
+   3.117,
+   3.117,
+   3.117
   ],
   "paving": [
    0.42,
@@ -42,9 +42,9 @@
    0.135
   ],
   "kerbstone": [
-   0.35,
-   0.35,
-   0.36
+   0.525,
+   0.525,
+   0.54
   ],
   "paint_yellow": [
    0.3,
@@ -105,9 +105,16 @@
  "glass_cube_strength_night_note": "8 October, Mickey's office at night (the office gate, production/audits/office-2026-10-08): the street caught in the glass at a true reflection at night, not the day's 2.5. The day's multiple answers a lit room behind the glass; at night the office is dark until the key, and the cottage's two lit windows caught at 2.5 glowed brighter than the lamp-lit sill, reading as panels pinned to the back wall.",
  "glass_cube_specular": 0.1,
  "glass_cube_size": 256,
- "glass_cube_heroes": ["street_glass_eg_bay0", "street_glass_eg_bay2", "street_mickeysdoor_glass"],
+ "glass_cube_heroes": [
+  "street_glass_eg_bay0",
+  "street_glass_eg_bay2",
+  "street_mickeysdoor_glass"
+ ],
  "glass_cube_hero_size": 1024,
- "glass_cube_strength_by_mesh": {"street_glass_eg_bay6": 0.4, "street_glass_eg_bay7": 1.0},
+ "glass_cube_strength_by_mesh": {
+  "street_glass_eg_bay6": 0.4,
+  "street_glass_eg_bay7": 1.0
+ },
  "glass_cube_strength_by_mesh_note": "23 October, the chandler's gate across the road: its window (eg_bay6) and its doors' glass (eg_bay7) face the gap past the west row's end, open sky, and at the day's 2.5 they mirrored it as a flat white veil over half the window and the shop door (181 of 255, against 50 in the clear panes). A true reflection by day there; the night's stays the street's. Try 2, the same day: at 1.0 the window (eg_bay6, the whole window and the shop door; eg_bay7 is only the side door's fanlight) still mirrored the overcast sky past the newsagent's gable as an even grey sheet (117 to 133 against 46 to 48 in the panes that mirror the gable), the gable's edge a hard line down the middle pane: open sky outshines a shop kept dim by day, as real glass does, but it hid the goods the design shows. 0.4 there, below a true reflection, as games keep a window's goods readable.",
  "glass_cube_heroes_note": "7 October, the second gate (\"large, flat stair-stepped cut-outs\"): from two metres a 256 texel of the caught street is about ten screen pixels. Mickey's window (eg_bay0, its pane caught at x 6.4) and Rita's (eg_bay2, x 18.0), the two the cameras stand at, are caught at 1024 (50 MB each); the rest stay at 256. (A first try at 1024 that morning went to street_mickeys_glass, the door's glass, and so proved nothing.) 8 October, the office gate (production/audits/office-2026-10-08): Mickey's door glass, its own mesh with a dark hall behind it, showed its 256 catch as a heavy smear beside the window's 512: caught at 512 too. 8 October, 14:50, his order (the lab's GLASS-NOTES.md, step 1): 1024 a face again for the windows the cameras stand at, now that every catch is kept out of the scene textures' size; the stair steps were in the caught picture itself (no anti-aliasing in a Scene Colour capture), five screen pixels a texel at 512.",
  "sky_dome_yaw_deg": -110.0,
@@ -185,5 +192,6 @@
  "wet_floor_note_2_october": "3 October, 00:15: a fresh reviewer put the glossy road (0.15) against the rough one with mirror puddles (0.45) and chose the glossy: it reads wet at a glance, and the sheet's road mirrors the shopfronts, lamp posts and people, so the road goes nearer a mirror, 0.07. Before, 2 October, later still (production/research/aaa-street/PUDDLES-2026-10-02.md): Lagarde's zones, a wet road kept rough (0.45, out of Lumen's weak 0.2 to 0.39 band) and darker, against puddles at 0.02 with an opaque core, water's reflectance and a flat normal. Before: 0.21 read merely damp and the puddles no clearer, so back to 0.15, the road reading wet with its reflections; the puddles reading as mirrors is past the two-tries rule and researched (production/research/aaa-street/PUDDLES-2026-10-02.md). Before: 0.30 left the road satin and pale, wet only in its puddles (contrast 24 levels near the camera against the sheet's 56); 0.15, with the asphalt graded darker (surface_gain asphalt 0.62) so its reflections and its dark read against each other, and the puddles at 0.05 still clearer. Before that, 2 October, evening (his answer to Friday's page: the wet street and its reflections): the asphalt's floor 0.05 -> 0.30, satin as Lagarde's wet asphalt (0.15 to 0.35), so the road is no longer one mirror and the puddles, at 0.05, read as mirrors against it. Earlier: 2 October (stage 1, item 3; the reviewer: both pavements matt and dry where the sheet's glisten): the wet floor of the flags 0.46 -> 0.12 and the kerbs 0.40 -> 0.18, so they take the sky's sheen.",
  "wet_floor_note_3_october": "3 October, evening: back to a near mirror (asphalt 0.06, paving 0.1, kerb 0.15) with the darker road (surface_gain_note_3_october): the road mirrors the pillar box, the facades and the posts, clean at full size, no grain.",
  "wet_floor_note_3_october_late": "23:15, the third try after research (production/research/aaa-street/WET-ROAD-2026-10-03.md): asphalt 0.16 with its relief map kept (wet_film_from 0.95) removed the mirror's seam down the centre line but read as dry grainy asphalt, its reflections gone and the puddles dark blotches again. Back to 0.06 and a flat film (the wet9 frame: reads wet, its fault the seam); step 2.3 set aside by the two-tries rule; the kerb's gain 0.35 kept.",
- "glass_roughness_note": "4 October: 0.05 to 0.02, clean float glass (the dressing research, after Epic's measured values), so the street lies sharper in a shop window"
+ "glass_roughness_note": "4 October: 0.05 to 0.02, clean float glass (the dressing research, after Epic's measured values), so the street lies sharper in a shop window",
+ "surface_gain_note_29_october": "29 October (his note of 29 October, his order D11; production/research/street-wear/WET-OVERCAST-VALUES-2026-10-29.md and FLAGS-BRICK-BANDS-2026-10-29.md, both reviewed): measured in Unreal's base-colour view through his camera at Tom's start (the view validated by the calibrator, neutral 5 at 120 against X-Rite's 122; tools/surface_values.py, F:/LedgerTools/gate/new/look/2026-10-29-street-day-editor), the street's surfaces sat below real ones: wet road 0.016 against 0.05 to 0.06, wet flags 0.021 to 0.041 against 0.11 to 0.20, kerb 0.073 against 0.11 to 0.20, red brick 0.038 against about 0.07 to 0.17. Each gain scaled toward the low middle of its band: asphalt x3.4, paving x4.2, kerbstone x1.5, brick_red x2.4 (before: {\"asphalt\": [0.13, 0.13, 0.135], \"paving\": [0.42, 0.413, 0.399], \"kerbstone\": [0.35, 0.35, 0.36], \"brick_red\": [1.0, 0.82, 0.68]}). The exposure is not touched (his ruling of 29 October): the calibrator reads neutral 5 at 128 by the wall and 117 in the open road, in its 110 to 135 band, with the engine's default +1 bias confirmed by the day's own line. Earlier gains were tuned against frame pixels while the exposure moved, so they absorbed it (surface_gain_note_3_october). Second round, the same day, at the true exposure (the editor had read a stale pin 2.000) against the Hook sheet's own surfaces (brick 103/50/31 to 117/76/61, wet flags 121/105/84, kerb 95, the road near 173 and far 189): asphalt x1.28 more, into its band (0.043 to about 0.055); brick eased to x2.1 of the first gains (lit 128/63/43 against the sheet's 103 to 117, still inside its real band); film_specular 0.115 to 0.25, water's own reflectance (F0 0.02 = 0.08 x Specular), so the wet road mirrors the overcast sky as the photographs and the sheet show (WET-OVERCAST-VALUES-2026-10-29.md, step 3). Third round, after the gate's fresh reviewers (hook day and reverse day each a narrow fail on one fault: the near flags lighter but no longer wet, a dry beige floor beside a soaked road; night a pass): the flags' wet roughness floor 0.10 to 0.06, the road's own, so brighter stone keeps a wet stone's reflections (their brightness already matched the sheet's); brick_grey x2.1 as brick_red ([1.142, 1.142, 1.142] before), since the reverse view's long terrace stayed dark and dull: its gain was never scaled, so the darker day showed on it alone; to be measured in a close view of the terrace. Measured in a close view of the long terrace (F:/LedgerTools/gate/new/look/2026-10-29-terrace-r3): its brick at x2.1 read base 0.051 to 0.063 (band 0.07 to 0.17) and lit 45 to 54 (the photographs' 55 to 130), its wall facing away from the brighter sky; brick_grey x1.3 more ([2.398, 2.398, 2.398] before), its second and last change. Gate, second pass (fresh reviewers, the three views, round 3b): each a NARROW FAIL on the wet ground alone (the middle road a milky sheet with its dashes nearly gone; the flags polished tile; a stain decal a hard grey cut-out on paler flags; one night pool burned out on them and the pools spreading), while the brick was judged nearer the Hook sheet in every round. So the walls keep their real values (brick_red, brick_grey, kerbstone) and the wet ground (asphalt and paving gains, film_specular, the flags' wet floor) goes back to its earlier values: brightened to real values it needs its wetness, decals and night pools re-made together, which two tries of separate settings did not do; researched next (the two-tries rule)."
 }

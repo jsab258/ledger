@@ -337,16 +337,14 @@ def sit_round(r):
             "%.1f m away" % math.hypot(t[0] - seat["x"], t[1] - seat["z"]) if t else "not on the street"))
     r.turn_to(bearing(t[0], t[1], seat["x"], seat["z"]))
     r.discard("sit")
-    play("press", "E")
     # THE SIT FILM (29 October, his order D10: his page shows the sit as a film): the tester's frames while he
-    # sits down, sits and stands up, stitched by `play.py film` after the walk
-    play("wait", "5", "--film")
+    # sits down, sits and stands up, stitched by `play.py film` after the walk; each filmed from the key's own tap
+    # (the first film's stand-up fell between two commands, its review found)
+    play("press", "E", "--film", "8")
     if not r.expect("sit", 20):
         return False
-    play("wait", "3", "--film")
     r.discard("stand")
-    play("press", "E")
-    play("wait", "5", "--film")
+    play("press", "E", "--film", "7")
     return r.expect("stand", 20)
 
 

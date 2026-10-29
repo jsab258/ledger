@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """THE LOOK'S PICTURES THROUGH HIS CAMERA, IN THE PACKAGED GAME, REPEATABLY (his order D11, the look).
 
-    python tools/office_look.py OUT_DIR [--here] [--night] [--calibrate] [--buffers] [--no-people] [--no-others]
+    python tools/office_look.py OUT_DIR [--editor] [--here] [--night] [--calibrate] [--buffers] [--no-people] [--no-others]
         [--x 6.2 --z 6.3 --yaw 30 --pitch -12] [--res 1920x1080] [--game-arg -Switch ...]
     python tools/office_look.py --selftest
 
@@ -24,6 +24,11 @@ import sys
 import time
 
 PLAYED = r"F:\LedgerTools\played-game\Windows"
+REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# --editor (29 October: Unreal's buffer views are not in the packaged build, so base colour is read in the editor's own
+# game run, at the played quality level, as tools/stain_check.py's pictures were)
+EDITOR = r"C:\Program Files\Epic Games\UE_5.8\Engine\Binaries\Win64\UnrealEditor.exe"
+UPROJECT = os.path.join(REPO, "ue-probe", "LedgerProbe.uproject")
 EXE = os.path.join(PLAYED, "LedgerProbe.exe")
 SAVED = os.path.join(PLAYED, "LedgerProbe", "Saved")
 BASE = ["-LedgerSlice", "-LedgerCrime", "-Encounter=live", "-LiveFresh", "-TalkFake", "-NoTitle", "-windowed", "-ForceRes",
@@ -37,29 +42,44 @@ NAMES = {1: "lit", 2: "lit-2", 3: "basecolor", 4: "roughness"}
 
 def command(a):
     args = list(BASE)
+    if "--editor" in a:
+        args = [UPROJECT, "-game"] + args + ['-ExecCmds="scalability 2"', "-LedgerRepo=" + REPO]
     for k, sw in FLAGS.items():
         if k in a:
             args.append(sw)
     for k, sw in VALUES.items():
         if k in a:
             args.append("-%s=%s" % (sw, a[a.index(k) + 1]))
+    # the office is built (its room, lights and own exposure) only with -MickeysInside (CrimeProbe.cpp); 29 October's
+    # first office views without it came out unlit, one black: every view placed by --x/--z gets it
+    if "--here" not in a and "-MickeysInside" not in a:
+        args.append("-MickeysInside")
     w, h = (a[a.index("--res") + 1] if "--res" in a else "1920x1080").split("x")
     args += ["-ResX=" + w, "-ResY=" + h]
     for i, x in enumerate(a):
         if x == "--game-arg":
             args.append(a[i + 1])
-    return [EXE] + args
+    return [EDITOR if "--editor" in a else EXE] + args
 
 
 def run(out, a):
     os.makedirs(out, exist_ok=True)
-    shots = os.path.join(SAVED, "OfficeLook")
+    saved = os.path.join(REPO, "ue-probe", "Saved") if "--editor" in a else SAVED
+    if "--editor" in a:
+        # the editor's game reads the scene's pieces from the project folder's own copy (as tools/morning_pictures.py
+        # refreshes it), not the repository's: on 29 October a stale copy left two editor runs at the old pin 2.000
+        shutil.copyfile(os.path.join(REPO, "production", "specs", "vignette-pieces.json"),
+                        os.path.join(REPO, "ue-probe", "vignette-pieces.json"))
+    shots = os.path.join(saved, "OfficeLook")
     for p in glob.glob(os.path.join(shots, "*.png")):
         os.remove(p)
     cmd = command(a)
-    open(os.path.join(out, "command.txt"), "w", encoding="utf-8").write(" ".join(cmd) + "\n")
+    # one command line, each piece quoted only where it holds a space and no quote of its own, so -ExecCmds="scalability 2"
+    # reaches Unreal as Unreal writes it
+    line = " ".join('"%s"' % x if " " in x and '"' not in x else x for x in cmd)
+    open(os.path.join(out, "command.txt"), "w", encoding="utf-8").write(line + "\n")
     t0 = time.time()
-    g = subprocess.Popen(cmd, stdout=open(os.path.join(out, "game.out"), "w"), stderr=subprocess.STDOUT)
+    g = subprocess.Popen(line, stdout=open(os.path.join(out, "game.out"), "w"), stderr=subprocess.STDOUT)
     try:
         g.wait(timeout=600)
     except subprocess.TimeoutExpired:
@@ -76,7 +96,7 @@ def run(out, a):
         dst = os.path.join(out, NAMES.get(n, "shot-%d" % n) + ".png")
         shutil.copyfile(p, dst)
         got.append(os.path.basename(dst))
-    log = os.path.join(SAVED, "Logs", "LedgerProbe.log")
+    log = os.path.join(saved, "Logs", "LedgerProbe.log")
     lines = []
     if os.path.exists(log):
         shutil.copyfile(log, os.path.join(out, "LedgerProbe.log"))

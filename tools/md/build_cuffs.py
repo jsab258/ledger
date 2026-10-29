@@ -3,7 +3,7 @@
 route he picked on his page of 28 October, after Marvelous's elastic rib failed twice on 29 October).
 
     python tools/md/build_cuffs.py DRAPE_UNPOSED.obj OUT.obj [--clear 4.5] [--height 60] [--blend 0.3]
-        [--edge-at-hand [--edge-past 0] [--reach 60] [--joints J.json]]
+        [--edge-at-hand [--edge-past 0] [--reach 60] [--gather] [--joints J.json]]
     python tools/md/build_cuffs.py --selftest
 
 WHY. Marvelous's cuffs met every mark but the gap: a single-layer rib band with two free edges bulged or rolled on
@@ -84,7 +84,7 @@ def cut_sleeve(V, groups, piece, f, seam_xyz, s_top, reach):
     return out
 
 
-def build(V, T, groups, piece, side, clear, height, blend, top=None, reach=60.0):
+def build(V, T, groups, piece, side, clear, height, blend, top=None, reach=60.0, gather=False):
     """New positions for one cuff's vertices (and, with top, the sleeve's end): {vertex index: xyz}."""
     body = V[sorted({v for v, _ in groups[next(k for k in groups if k.endswith("LOD0"))]})]
     f = cm.forearm(body, side)
@@ -111,6 +111,37 @@ def build(V, T, groups, piece, side, clear, height, blend, top=None, reach=60.0)
         for k in np.where(seam)[0]:
             P[k] = P[k] + f["axis"] * (s_top - float((P[k] - f["centre"]) @ f["axis"]))
             moved[int(vi[k])] = P[k].copy()
+        # --gather (29 October, drape 19's 231 mm sleeve end left the band's top 12.9 mm off the wrist): a sleeve is
+        # gathered into its cuff at that seam, so the seam is drawn in to the band's own top (the skin there plus
+        # clear) and the sleeve's cut end follows it, the pull fading to nothing over the cut's reach
+        if gather:
+            ang_s, dr_s = [], []
+            for k in np.where(seam)[0]:
+                r = P[k] - f["centre"]
+                a = math.atan2(float(r @ f["w"]), float(r @ f["u"]))
+                rad = math.hypot(float(r @ f["u"]), float(r @ f["w"]))
+                skin = cm.skin_radius(f["arm"], f, s_top, a)
+                want = rad if math.isnan(skin) else min(rad, skin + clear)
+                radial = (f["u"] * math.cos(a) + f["w"] * math.sin(a))
+                P[k] = P[k] + radial * (want - rad)
+                moved[int(vi[k])] = P[k].copy()
+                ang_s.append(a)
+                dr_s.append(want - rad)
+            o = np.argsort(ang_s)
+            a_sorted, d_sorted = np.array(ang_s)[o], np.array(dr_s)[o]
+            a_ext = np.r_[a_sorted[-1] - 2 * math.pi, a_sorted, a_sorted[0] + 2 * math.pi]
+            d_ext = np.r_[d_sorted[-1], d_sorted, d_sorted[0]]
+            for idx, p in list(moved.items()):
+                if idx in set(int(x) for x in vi):
+                    continue
+                r = np.asarray(p) - f["centre"]
+                s = float(r @ f["axis"])
+                wgt = float(smoothstep((s - (s_top - reach)) / reach))
+                if wgt <= 0.0:
+                    continue
+                a = math.atan2(float(r @ f["w"]), float(r @ f["u"]))
+                radial = (f["u"] * math.cos(a) + f["w"] * math.sin(a))
+                moved[idx] = np.asarray(p) + radial * float(np.interp(a, a_ext, d_ext)) * wgt
     rel = lambda p: p - f["centre"]  # noqa: E731
     def polar(p):
         r = rel(p)
@@ -191,7 +222,7 @@ def main(a):
     for piece, side in (("cuffL", 1.0), ("cuffR", -1.0)):
         hand = np.array(joints["hand_" + ("l" if side > 0 else "r")])
         top = (lambda f, hand=hand: float((hand - f["centre"]) @ f["axis"]) + past - height) if "--edge-at-hand" in a else None
-        m, info = build(V, T, groups, piece, side, opt("--clear", 4.5), height, opt("--blend", 0.3), top, opt("--reach", 60.0))
+        m, info = build(V, T, groups, piece, side, opt("--clear", 4.5), height, opt("--blend", 0.3), top, opt("--reach", 60.0), "--gather" in a)
         moved.update(m)
         print("built", piece, info)
     write(lines, V, moved, dst)

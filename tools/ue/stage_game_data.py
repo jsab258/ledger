@@ -181,6 +181,13 @@ def stage(copy=True):
         for f in have:
             dst = os.path.join(DEST, f)
             os.makedirs(os.path.dirname(dst), exist_ok=True)
+            # A READ-ONLY SOURCE (29 October: the engine licences are read-only, so copy2 carried the flag onto the
+            # staged copy and the next run could not overwrite it): an identical copy is left alone, a changed one
+            # made writable first
+            if os.path.isfile(dst):
+                if os.path.getsize(dst) == os.path.getsize(src[f]) and open(dst, "rb").read() == open(src[f], "rb").read():
+                    continue
+                os.chmod(dst, 0o644)
             shutil.copy2(src[f], dst)
         # WHICH BUILD THIS IS, for the save's check (the review of 1 October, S5;
         # CrimeProbe.cpp CrimeSha): a packaged copy is given no -LedgerCommit=.

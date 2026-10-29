@@ -27,7 +27,8 @@ BANDS = {
     "road": {"base": (0.05, 0.06), "lit": (100, 186), "note": "aged asphalt, wet; lit 160 to 186 along the street, 100 to 110 looking down"},
     "flags": {"base": (0.11, 0.20), "lit": (100, 150), "note": "concrete flags, wet"},
     "kerb": {"base": (0.11, 0.20), "lit": (100, 150), "note": "as the flags (inferred in the research)"},
-    "brick": {"base": (0.10, 0.20), "lit": (55, 130), "note": "red brick, dry walls; colour about (0.26, 0.10, 0.06)"},
+    # red brick after FLAGS-BRICK-BANDS-2026-10-29.md's review: 0.09 to 0.21 measured total, base colour 0.02 to 0.04 below
+    "brick": {"base": (0.07, 0.17), "lit": (55, 130), "note": "red brick, dry walls; colour about (0.26, 0.10, 0.06)"},
 }
 
 

@@ -654,6 +654,17 @@ def act(verb, rest):
         # ENTER, UP AND DOWN, 30 September: the title.
         tap({"E": "e", "T": "t", "Z": "z", "ESC": "esc", "Q": "q", "ENTER": "enter", "UP": "up", "DOWN": "down"}.get(k, "t"))
         label = "pressed %s" % k
+        # press E --film SECONDS (29 October, the sit film's review: the stand-up fell in the 5 s between two commands):
+        # filming starts the moment the key is tapped, in the same command
+        if "--film" in rest:
+            i = rest.index("--film")
+            seconds = min(15.0, max(0.5, float(rest[i + 1]) if len(rest) > i + 1 else 5.0))
+            end = time.time() + seconds
+            while time.time() < end:
+                film_frame(st, hwnd)
+                time.sleep(0.125)
+            save_state(st)
+            label += " (filmed %.0f s)" % seconds
     elif verb == "say":
         words = " ".join(rest)[:200]
         tap("t")
