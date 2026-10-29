@@ -290,7 +290,10 @@ ASSET_PATH = PACKAGE + "/" + ASSET
 # build plan): tools/ue/make_ground_material.py sets these three and calls main(), which builds the same graph as
 # M_LedgerGround with the road's water laid as a clear coat over wet stone (the block after the wired region)
 GROUND = False
-GROUND_COAT_ROUGHNESS = 0.03
+# 0.03 -> 0.15, 29 October, 23:20 (LUMEN-COAT-REFLECTIONS-2026-10-29.md, its review's test): Lumen traces the coat at
+# the coat's own roughness, at 0.03 in effect a mirror; 0.15, the broader lobe its review asked to test, passed the
+# three gate views with the look file's wet t6 values
+GROUND_COAT_ROUGHNESS = 0.15
 GROUND_STONE_SPECULAR = 0.5
 
 # DEFAULT TEXTURES ARE TRIED IN ORDER AND THE ONE THAT ANSWERED IS NAMED. A

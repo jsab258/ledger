@@ -11,7 +11,9 @@ STEP 3 (the method's own list, each target's source beside it):
     middle 183, sRGB means, each within 12 levels), read with the lab's boxes (production/lab/road/measure_road.py,
     their one home; imported, not copied);
   * the hook's middle road at least as blue as it is red, as the sheet's (185/188/193; the game's round 3b 118/105/98
-    was the "milky" warm sheet);
+    was the "milky" warm sheet). The sheet's values were read in the sheet's own boxes (its middle road x 1440 to 1560,
+    y 760 to 840, its near road x 1100 to 1300, y 980 to 1060, of its 2048x1088), and the sheet is the mirror image of
+    the game's frame (LUMEN-COAT-REFLECTIONS-REVIEW-2026-10-29.md), so they are the game's left-hand road;
   * the near lane's spread, linear p90 over p10, at least the sheet's own near road, 1.71 (measured 29 October on
     production/reference/hook-sheet.png, box 1100-1300 x 980-1060 of its 2048x1088): the stone's relief kept under the
     water;

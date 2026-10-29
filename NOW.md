@@ -10,7 +10,7 @@ Failed its exit on 22 Oct (production/audits/phase1-exit/CLOSE-2026-10-22.md); r
 - [x] 2. The walk: Epic's, Tom's MetaHuman, packaged; tester's route 15 of 15. Sit set aside.
 - [ ] 3. Clothes (his order C): jacket with built cuffs in the packaged game; jumper's job ready (JUMPER-PLAN), waits for Marvelous.
 - [ ] 4. Speech: faster first sentence, 16 of 42 run, no gain yet (FastFirst.cs).
-- [ ] 5. Look (D11): walls pass; office smoke passes, grade by day; wet ground's coat built, to try.
+- [ ] 5. Look (D11): walls pass; office smoke passes, grade by day; wet ground passes, try 2.
 - [ ] 6. Phase 1's exit re-run; phase 2?
 - Also: sitting 13 of 13 packaged, seat sharing fixed; camera talk and run rows to show.
 

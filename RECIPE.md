@@ -115,6 +115,20 @@ What failed before this method, so it is not repeated: draping with bent elbows 
 
 ## Notebook
 
+### 29 Oct 2026, wet ground drawn as two layers, rough wet stone and water as a coat, passing at its second try
+- Made: a street's road, pavement and kerb at real values with their wetness as a separate top layer; three gate views passed.
+- Method (setting-free):
+  - Wet ground is two states, not one surface: saturated stone (its real dry colour darkened by its porosity, rough) with water over part of it as a clear coat; one lobe of mixed roughness over real-valued ground reads as a milky sheet or polished tile.
+  - Give the ground its own copy of the shared surface material with the coat, so walls and fronts keep the cheaper shading; build it from the same graph by a switch, never a second hand-made graph.
+  - Learn how the engine's reflections trace the coat before tuning: here they trace at the coat's own roughness, so a near-mirror coat mirrors whatever stands at the street's end; a broader lobe (0.15) brought the reference's three road regions in together.
+  - Measure trials against the reference's own regions (mirrored where the reference is the frame's mirror image) and change one kind of surface at a time; when a brighter ground takes more light, cut the lamps by the same factor before judging night.
+  - Keep trial values in a scratch file and the committed values untouched until the gate passes, so the morning pictures always show the committed state.
+- Tools: a road measure against the reference (three regions, colour, relief, the lane dash), a pool-burn measure for night, a repeatable editor photograph runner, fresh reviewers one view each.
+- Target and check: the reference's road regions within 12 levels (three of three: 164, 153, 179 against 152, 164, 183); the nearest night pool burned 2% or less (0.0%); no new fault in three views (met). Missed and listed: blue over red, relief 1.31 against 1.71, the near ground damp rather than rain-wet.
+- Cost (hours): about 4, research included.
+- Failed and why: try 1 passed the road and failed the flags and kerbs as dry, pale and chalky, water as blotches: they had been brightened to the top of their band and given too little water; darkened 30% with their water laid wide, they passed.
+- Evidence: DECISIONS.md, 29 October 22:14 to 23:26; production/research/street-wear/WET-GROUND-METHOD-2026-10-29.md; F:/LedgerTools/gate/new/look/2026-10-29-wet-t5-coat0.15 and -wet-t6-coat0.15.
+
 ### 29 Oct 2026, a garment's rebuilt cuffs, passing every offline mark, failing in the game: back to the last good
 - Made: a jacket with cuffs built round the wrist's shape, imported and worn in the packaged game; withdrawn the same evening, the game back on the version before.
 - Method (setting-free):

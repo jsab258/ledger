@@ -21,6 +21,10 @@ ASSET = "M_LedgerGround"
 
 def configure():
     mbm.GROUND = True
+    # LEDGER_COAT_ROUGHNESS (29 October, the reflections review's test: the coat at 0.15 and 0.3, one frame each) for a
+    # trial; the built default stays make_base_material.py's GROUND_COAT_ROUGHNESS
+    if os.environ.get("LEDGER_COAT_ROUGHNESS"):
+        mbm.GROUND_COAT_ROUGHNESS = float(os.environ["LEDGER_COAT_ROUGHNESS"])
     mbm.ASSET = ASSET
     mbm.ASSET_PATH = mbm.PACKAGE + "/" + ASSET
     return mbm
@@ -28,7 +32,8 @@ def configure():
 
 def selftest():
     m = configure()
-    ok = [m.GROUND, m.ASSET_PATH == "/Game/Ledger/M_LedgerGround", 0.0 < m.GROUND_COAT_ROUGHNESS <= 0.05,
+    # the coat's roughness inside Lumen's traced range (max roughness to trace 0.4) and above the 0.03 that mirrored
+    ok = [m.GROUND, m.ASSET_PATH == "/Game/Ledger/M_LedgerGround", 0.05 < m.GROUND_COAT_ROUGHNESS < 0.4,
           "ground-water-to-coat" in open(m.__file__, encoding="utf-8").read()]
     print("make_ground_material selftest: passed=%d/%d failed=%d" % (sum(ok), len(ok), len(ok) - sum(ok)))
     return 0 if all(ok) else 1

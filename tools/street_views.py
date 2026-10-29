@@ -6,7 +6,8 @@
 
 WHY, 29 October 2026 (his order D11, the look): each view's gate needs the same three pictures as the morning's
 (tools/morning_pictures.py film: the editor's -LedgerVignette run), but at the level the game ships at (-ExecCmds
-"scalability 2", as every editor gate picture since 26 October) and from the repository's own files (-LedgerRepo),
+"scalability 2", as every editor gate picture since 26 October) and from the project's staged copy of the repository's
+files, refreshed first,
 and until today each round was started by hand with its command line kept nowhere. This keeps the command line and
 the street's own summary lines beside the pictures. Nothing here runs while the build machine works or Unreal is open.
 """
@@ -24,13 +25,17 @@ KEEP = ("streetStatus=", "LedgerWear", "lookFrom=", "LedgerClock light")
 
 
 def command(extra=()):
+    # NOT -LedgerRepo (29 October: with it the vignette's hook shot came out as Tom seated in the office, where the
+    # morning job's own run, which reads the project's staged copy, shows the street); tools/ue/stage_game_data.py
+    # refreshes that copy first (run())
     return [UE, PROJECT, "-game", "-LedgerVignette", "-NoControlQuads", "-LedgerCommit=gate", "-ResX=2560", "-ResY=1440",
-            "-windowed", "-unattended", "-nosplash", "-nopause", '-ExecCmds="scalability 2"', "-LedgerRepo=" + REPO,
+            "-windowed", "-unattended", "-nosplash", "-nopause", '-ExecCmds="scalability 2"',
             "-log=street-views.log"] + list(extra)
 
 
 def run(out, extra):
     os.makedirs(out, exist_ok=True)
+    subprocess.run([sys.executable, os.path.join(REPO, "tools", "ue", "stage_game_data.py")], cwd=REPO, capture_output=True)
     shutil.copyfile(os.path.join(REPO, "production", "specs", "vignette-pieces.json"), os.path.join(REPO, "ue-probe", "vignette-pieces.json"))
     for s in SHOTS:
         p = os.path.join(REPO, "ue-probe", "ue-%s.png" % s)
@@ -62,7 +67,7 @@ def run(out, extra):
 
 def selftest():
     c = command(["-NoOfficeGrade"])
-    ok = [c[0] == UE, "-LedgerVignette" in c, '-ExecCmds="scalability 2"' in c, any(x.startswith("-LedgerRepo=") for x in c),
+    ok = [c[0] == UE, "-LedgerVignette" in c, '-ExecCmds="scalability 2"' in c, not any(x.startswith("-LedgerRepo=") for x in c),
           c[-1] == "-NoOfficeGrade"]
     print("street_views selftest: passed=%d/%d failed=%d" % (sum(ok), len(ok), len(ok) - sum(ok)))
     return 0 if all(ok) else 1
