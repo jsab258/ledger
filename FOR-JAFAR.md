@@ -5,6 +5,22 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
 
 ## Overview (Wednesday 28 October, evening)
 
+<!-- morning pictures: written by tools/morning_pictures.py -->
+
+**Morning, Thursday 29 October. Phase 1, Prove the bottlenecks. On: 3. Clothes (his order C): skill written; jacket in the game; elastic-rib cuffs await his click (BAKE-PLAN). Next: 4. Speech: the faster first sentence's second try, bench tomorrow.**
+
+| | Today, 29 Oct | Yesterday, 28 Oct |
+|---|---|---|
+| The hook camera by day | ![The hook camera by day, 2026-10-29](production/previews/morning-hook-day-2026-10-29.jpg) | ![The hook camera by day, 2026-10-28](production/previews/morning-hook-day-2026-10-28.jpg) |
+| The reverse view | ![The reverse view, 2026-10-29](production/previews/morning-reverse-day-2026-10-29.jpg) | ![The reverse view, 2026-10-28](production/previews/morning-reverse-day-2026-10-28.jpg) |
+| The street at night | ![The street at night, 2026-10-29](production/previews/morning-night-2026-10-29.jpg) | ![The street at night, 2026-10-28](production/previews/morning-night-2026-10-28.jpg) |
+
+The Hook sheet, the bar they are held to: ![The Hook sheet](production/previews/hook-sheet-2026-10-05.jpg)
+
+No decision asked: these are for watching the street change.
+
+<!-- /morning pictures -->
+
 Disk (10-28 03:30): C: 250.6 GB free, F: 27.4 GB free (tonight's census updates it).
 
 **Now and next** (your order of 25 October with the two of 28 October; production/orders/2026-10-25.md):
