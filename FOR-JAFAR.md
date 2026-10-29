@@ -43,6 +43,22 @@ After these, on later pages: the map marks (Study 16), the interface's width (St
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
 
+## Builder, Thursday 29 October (night)
+
+**Failed:**
+- Sitting's start on the matching foot: none in two tries. With both feet kept it then fired on 4 of 5 walk-ins, but his planted foot jumps about 80 cm as it starts. Set aside; next is Epic's own foot search.
+- The night through your camera is 87% black between the lamps. A stop brighter, lifted blacks and a first fill trial did not fix it.
+- The small fast model writing the first sentence: so far no faster, and three invented details (16 of 42 trials).
+
+**Done:**
+- Tom could not walk inside Mickey's office (its fittings were one solid block). Fixed; he now sits on the bench from 7 of 9 walk-ins.
+- Tom's jacket has Mafia's four levels of detail. The new asset checks pass except three unused files.
+- The colour chart read at night; the day's exposure is on your page.
+- The rules for a surviving victim ported to the game (69,186 checks agree).
+- Night walk: 15 of 15 stages; "that's all I know" 0 of 60. People still stand frozen or overlap Tom.
+
+**Act on:** your page: https://claude.ai/artifact/SHm9UYFEqDkf8WyH5Lk4mg. Open Marvelous and click LEDGER bridge (no page).
+
 ## Builder, Wednesday 28 October (evening)
 
 **Failed:**
