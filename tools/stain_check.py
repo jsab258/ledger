@@ -8,7 +8,11 @@ view and darkens the base colour by at most 40%").
 Two pictures of the same view through the game's camera, one with the marks and one without (-NoOfficeWear), in
 Unreal's roughness and base-colour buffer views. Where the two differ is where a mark lies: each mark found (a
 connected patch of changed pixels, at least MIN_PIXELS) is measured at its strongest tenth, so a mark's soft edge
-does not hide its middle. The roughness view's pixels are read as the base colour's are, sRGB-encoded (Unreal shows
+does not hide its middle. With --camera (the office photograph's logged camera: x,y,z cm, pitch, yaw, lens) each mark
+of the wear file is measured where it lies on screen, the middle of its rectangle, at its strongest fiftieth; the
+broad difference also catches what changes between two runs (the street through the window).
+
+    python tools/stain_check.py WITH_DIR WITHOUT_DIR --camera 491.3,685.0,204.1,-12,0,86 [--wear street-wear.json] The roughness view's pixels are read as the base colour's are, sRGB-encoded (Unreal shows
 its buffers through the same output; unverified for roughness, so the raw difference is printed beside it).
 
 Passes when every mark found changes roughness by at least 0.1 and darkens its base colour by at most 40%
@@ -110,8 +114,10 @@ def measure_marks(rough_with, rough_without, base_with, base_without, cam, marks
         if inside.sum() < min_pixels:
             out.append(dict(row, seen=False, why="%d px on screen" % inside.sum()))
             continue
+        # at its strongest fiftieth: thin marks (rings, burns, a damp patch's tide line) cover a few hundredths of
+        # their rectangle, and a tenth measured mostly bare wall (29 October, the first run)
         strength = np.abs(d_r[inside])
-        top = strength >= np.quantile(strength, 0.9)
+        top = strength >= np.quantile(strength, 0.98)
         dr = float(np.median(d_r[inside][top]))
         darken = float(1.0 - np.median(bw[inside][top] / np.maximum(bo[inside][top], 1e-4)))
         out.append(dict(row, seen=True, pixels=int(inside.sum()), rough_change=round(dr, 3), darkens=round(darken, 3),

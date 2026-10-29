@@ -8824,6 +8824,17 @@ namespace
 			return FLinearColor(0.15f, 0.13f, 0.11f);
 		};
 		auto LightWear = [](const FString& Kind) { return Kind == TEXT("dust") || Kind == TEXT("chip") || Kind == TEXT("pale"); };
+		// A MARK'S OWN TINT (29 October, D11's O2): "tint" [r, g, b] in the wear file, measured from the surface it lies on,
+		// before its kind's (the notice wall's pale oblongs: the kind's cream lightened its smoke-brown paint 227%)
+		auto TintFor = [&TintOf](const TSharedPtr<FJsonObject>& D, const FString& Kind) -> FLinearColor
+		{
+			const TArray<TSharedPtr<FJsonValue>>* T = nullptr;
+			if (D->TryGetArrayField(TEXT("tint"), T) && T != nullptr && T->Num() == 3)
+			{
+				return FLinearColor((float)(*T)[0]->AsNumber(), (float)(*T)[1]->AsNumber(), (float)(*T)[2]->AsNumber());
+			}
+			return TintOf(Kind);
+		};
 		TMap<FString, UTexture2D*> Pics;
 		for (const TSharedPtr<FJsonValue>& V : *List)
 		{
@@ -8917,7 +8928,7 @@ namespace
 				D->TryGetNumberField(TEXT("edge"), Edge);
 				M->SetTextureParameterValue(FName(TEXT("StainTex")), *Have);
 				M->SetScalarParameterValue(FName(TEXT("StainStrength")), bWearTest ? 1.0f : (float)D->GetNumberField(TEXT("strength")));
-				M->SetVectorParameterValue(FName(TEXT("StainTint")), bWearTest ? FLinearColor(1.0f, 0.0f, 0.0f) : TintOf(Kind));
+				M->SetVectorParameterValue(FName(TEXT("StainTint")), bWearTest ? FLinearColor(1.0f, 0.0f, 0.0f) : TintFor(D, Kind));
 				M->SetScalarParameterValue(FName(TEXT("TintOnly")), LightWear(Kind) ? 1.0f : 0.0f);
 				M->SetScalarParameterValue(FName(TEXT("StainRoughness")), (float)Rough);
 				M->SetScalarParameterValue(FName(TEXT("StainSpread")), (float)Spread);

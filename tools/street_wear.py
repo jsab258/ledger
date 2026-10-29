@@ -341,6 +341,10 @@ def room_wear(spec_path=OFFICE):
 
 RINGS, BURNS, CHIPS = "ours/wear_rings", "ours/wear_burns", "ours/wear_chips"
 PALE, KICK = "ours/wear_pale", "ours/wear_splash"
+#: THE NOTICE WALL'S PAINT WHERE A NOTICE KEPT THE SMOKE OFF IT (29 October): the wall reads (0.156, 0.098, 0.038) in
+#: the base-colour view (linear), a smoke-browned tan, so the cleaner paint behind a notice is about three fifths
+#: lighter and a little less yellow; the first tint, 0.66, lightened it 227% (tools/stain_check.py, run 2).
+PALE_TINT = [0.25, 0.165, 0.075]
 
 
 def office_marks(spec_path=OFFICE):
@@ -360,16 +364,17 @@ def office_marks(spec_path=OFFICE):
     s = seed_of("mickeys_office_marks")
     # above the accounts card, and past the calendar toward the counter
     for k, (z, y, w, h) in enumerate(((5.80, 1.86, 0.25, 0.33), (7.22, 1.60, 0.22, 0.30))):
-        out.append({"kind": "pale", "picture": PALE, "x_m": NOTICE_WALL_X, "y_m": y,
+        out.append({"kind": "pale", "picture": PALE, "tint": PALE_TINT, "x_m": NOTICE_WALL_X, "y_m": y,
                     "z_m": round(z, 4), "w_m": w, "h_m": h, "yaw_deg": 270.0, "pitch_deg": 0.0,
                     "strength": round(0.45 + 0.1 * rnd(s, "pale%d" % k), 3), "on": "mickeys_room"})
     st = box.get("stair strip wall")
     if st:   # its room face (x 4.19, facing +x: yaw 90), at a shoe's height
         for k, z in enumerate((5.75, 6.85)):
-            out.append({"kind": "scuff", "picture": KICK, "x_m": st["x1"], "y_m": round(ROOM_FLOOR_M + 0.13, 4),
+            out.append({"kind": "kick", "picture": KICK, "x_m": st["x1"], "y_m": round(ROOM_FLOOR_M + 0.13, 4),
                         "z_m": round(z + 0.2 * (rnd(s, "kz%d" % k) - 0.5), 4), "w_m": round(0.55 + 0.25 * rnd(s, "kw%d" % k), 4),
                         "h_m": 0.26, "yaw_deg": 90.0, "pitch_deg": 0.0,
-                        "strength": round(FRONT_WEAR + 0.1 * rnd(s, "ks%d" % k), 3), "on": "mickeys_room"})
+                        # 0.78 (29 October): at the counter's 0.91 they darkened the stair wall's brown 43%, over the 40%
+                        "strength": round(0.76 + 0.04 * rnd(s, "ks%d" % k), 3), "on": "mickeys_room"})
     c, b = box.get("counter"), box.get("bench")
     if door and c:   # from the doorway to the booking place, along the way walked
         x0, z0, x1, z1 = door["x"], door["z"] + 0.45, 6.0, c["z0"] - 0.25
@@ -390,8 +395,8 @@ def office_marks(spec_path=OFFICE):
 #: well away from its surface: the cream paint and the carpet are near matt (shop-room.py: 0.85, 0.95), and hands,
 #: heads, fresh damp and the trodden pile polish them; paint a notice kept from the light has not chalked; rubber
 #: kicks and dried tea dull a surface, burns char it. First values, fixed by tools/stain_check.py's first run.
-STAIN_ROUGH = {"grime": 0.3, "damp": 0.35, "scuff": 0.95, "pale": 0.55, "path": 0.45}
-STAIN_ROUGH_PICTURE = {RINGS: 0.8, BURNS: 0.9}
+STAIN_ROUGH = {"grime": 0.3, "damp": 0.35, "scuff": 0.95, "kick": 0.95, "pale": 0.55, "path": 0.45}
+STAIN_ROUGH_PICTURE = {RINGS: 0.8, BURNS: 1.0}   # burns 1.0 (29 October): their thin lines read under 0.1 at 0.9
 
 
 def stain_office(d):
@@ -472,9 +477,11 @@ def counter_marks(spec_path=OFFICE):
     z0, z1 = c["z0"], c["z1"]
     out = []
     s = seed_of("mickeys_counter_top")
-    for k, (fx, size, pic, strength) in enumerate(((0.18, 0.32, RINGS, 0.7), (0.47, 0.30, RINGS, 0.6), (0.78, 0.34, RINGS, 0.65),
-                                                   (0.30, 0.22, BURNS, 0.85), (0.62, 0.20, BURNS, 0.8))):
-        x = x0 + (x1 - x0) * fx + 0.1 * (rnd(s, "x%d" % k) - 0.5)
+    # ON THE BARE LAMINATE (29 October, D11's O2: measured in the base-colour view, the fare book and the papers lie
+    # at x 5.3 to 5.8 and 7.1 to 8.0, and two rings and a burn had printed on them): each mark's x where the top is bare
+    for k, (bx, size, pic, strength) in enumerate(((6.05, 0.32, RINGS, 0.7), (6.85, 0.30, RINGS, 0.6), (8.35, 0.34, RINGS, 0.65),
+                                                   (6.30, 0.22, BURNS, 0.85), (6.55, 0.20, BURNS, 0.8))):
+        x = bx + 0.06 * (rnd(s, "x%d" % k) - 0.5)
         z = z0 + 0.12 + (z1 - z0 - 0.24) * rnd(s, "z%d" % k) * (0.5 if pic == BURNS else 1.0)
         out.append({"kind": "grime", "picture": pic, "x_m": round(x, 4), "y_m": round(top, 4), "z_m": round(z, 4),
                     "w_m": size, "h_m": size, "yaw_deg": round(360.0 * rnd(s, "yaw%d" % k), 1), "pitch_deg": 90.0,

@@ -2404,7 +2404,7 @@
   {
    "kind": "grime",
    "picture": "ours/wear_rings",
-   "x_m": 5.7716,
+   "x_m": 6.0204,
    "y_m": 1.107,
    "z_m": 7.6768,
    "w_m": 0.32,
@@ -2419,7 +2419,7 @@
   {
    "kind": "grime",
    "picture": "ours/wear_rings",
-   "x_m": 6.7741,
+   "x_m": 6.8216,
    "y_m": 1.107,
    "z_m": 7.6695,
    "w_m": 0.3,
@@ -2434,7 +2434,7 @@
   {
    "kind": "grime",
    "picture": "ours/wear_rings",
-   "x_m": 7.8472,
+   "x_m": 8.3237,
    "y_m": 1.107,
    "z_m": 7.6785,
    "w_m": 0.34,
@@ -2449,7 +2449,7 @@
   {
    "kind": "grime",
    "picture": "ours/wear_burns",
-   "x_m": 6.1884,
+   "x_m": 6.2721,
    "y_m": 1.107,
    "z_m": 7.6518,
    "w_m": 0.22,
@@ -2459,12 +2459,12 @@
    "strength": 0.85,
    "on": "mickeys_room",
    "material": "stain",
-   "rough": 0.9
+   "rough": 1.0
   },
   {
    "kind": "grime",
    "picture": "ours/wear_burns",
-   "x_m": 7.3313,
+   "x_m": 6.5454,
    "y_m": 1.107,
    "z_m": 7.6658,
    "w_m": 0.2,
@@ -2474,11 +2474,16 @@
    "strength": 0.8,
    "on": "mickeys_room",
    "material": "stain",
-   "rough": 0.9
+   "rough": 1.0
   },
   {
    "kind": "pale",
    "picture": "ours/wear_pale",
+   "tint": [
+    0.25,
+    0.165,
+    0.075
+   ],
    "x_m": 8.65,
    "y_m": 1.86,
    "z_m": 5.8,
@@ -2494,6 +2499,11 @@
   {
    "kind": "pale",
    "picture": "ours/wear_pale",
+   "tint": [
+    0.25,
+    0.165,
+    0.075
+   ],
    "x_m": 8.65,
    "y_m": 1.6,
    "z_m": 7.22,
@@ -2507,7 +2517,7 @@
    "rough": 0.55
   },
   {
-   "kind": "scuff",
+   "kind": "kick",
    "picture": "ours/wear_splash",
    "x_m": 4.19,
    "y_m": 0.25,
@@ -2516,13 +2526,13 @@
    "h_m": 0.26,
    "yaw_deg": 90.0,
    "pitch_deg": 0.0,
-   "strength": 0.914,
+   "strength": 0.785,
    "on": "mickeys_room",
    "material": "stain",
    "rough": 0.95
   },
   {
-   "kind": "scuff",
+   "kind": "kick",
    "picture": "ours/wear_splash",
    "x_m": 4.19,
    "y_m": 0.25,
@@ -2531,7 +2541,7 @@
    "h_m": 0.26,
    "yaw_deg": 90.0,
    "pitch_deg": 0.0,
-   "strength": 0.914,
+   "strength": 0.786,
    "on": "mickeys_room",
    "material": "stain",
    "rough": 0.95
