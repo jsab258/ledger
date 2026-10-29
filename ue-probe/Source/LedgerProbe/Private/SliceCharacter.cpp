@@ -1416,7 +1416,8 @@ namespace LedgerSit
 	// Windows: the start distances the room test passed for the entry; Path: where the mover stands along the clip
 	// every 10 cm of its travel (PathLeft: the travel left there), carried onto the room through the slot
 	struct FEntry { FString Name; UAnimMontage* Montage = nullptr; float Yaw = 0.0f; FTransform Start; TArray<double> Windows; TArray<FVector> Path; TArray<float> PathLeft; };
-	struct FEntryMoment { int32 Clip = -1; float T = 0.0f; int32 Foot = -1; float Through = -1.0f; float Left = 0.0f; FTransform MoverAt; };
+	// StanceLeft: how long the clip still marks that foot down after this moment, in seconds
+	struct FEntryMoment { int32 Clip = -1; float T = 0.0f; int32 Foot = -1; float Through = -1.0f; float Left = 0.0f; float StanceLeft = 0.0f; FTransform MoverAt; };
 	TArray<FEntry> GEntries;
 	TArray<FEntryMoment> GMoments;
 	int32 GBest = -1, GStage = 0;
@@ -1433,6 +1434,9 @@ namespace LedgerSit
 	int32 GStartFoot = -1;
 	FVector GStartFootAt = FVector::ZeroVector;
 	float GSlideCm = -1.0f, GBoneCm = -1.0f, GBoneYaw = 0.0f, GHipsCm = -1.0f, GHipsUpCm = -1.0f;
+	// until when the started moment's foot is still down by the clip's own table (29 October: read from the graph's
+	// contact curve, the first measure followed the foot through the rest of the walk, 39 to 85 cm)
+	float GSlideUntil = 0.0f;
 
 	// where the mover stands at moment T of a clip whose warp bone ends on Slot (the derivation of step 3)
 	FTransform MoverAtMoment(UAnimMontage* Entry, const FClipPose& P, const FTransform& Slot, const FTransform& MeshRel, float T)
@@ -1490,6 +1494,7 @@ namespace LedgerSit
 			int32 Up = 0;
 			for (int32 J = I + 1; J < N && Cv[M.Foot][J] > 0.5f; ++J) { ++Up; }
 			M.Through = (float)Down[M.Foot] / (float)FMath::Max(1, Down[M.Foot] + Up);
+			M.StanceLeft = Up * Step;
 			M.MoverAt = MoverAtMoment(Entry, P, Slot, MeshRel, M.T);
 			GMoments.Add(M);
 		}
@@ -1816,6 +1821,7 @@ void ALedgerSliceCharacter::SitApproachTick(float DeltaSeconds)
 				GStartFoot = Foot;
 				GStartFootAt = GaspMover->GetMesh()->GetSocketLocation(Foot == 0 ? TEXT("ball_l") : TEXT("ball_r"));
 				GSlideCm = 0.0f;
+				GSlideUntil = SitClock + Hit->StanceLeft;
 				UE_LOG(LogTemp, Display, TEXT("LedgerSit: step 6, started %s at %.2f s (foot %s, %.0f%% through its stance against his %.0f%%; %.1f cm along, %.1f across, %.1f degrees off its place then; %.0f cm of its walk left)"),
 					*E.Name, Hit->T, Foot == 0 ? TEXT("left") : TEXT("right"), 100.0f * Hit->Through, 100.0f * Through, HitRel.X, HitRel.Y, HitYaw, Hit->Left);
 				return;
@@ -2099,14 +2105,23 @@ void ALedgerSliceCharacter::SitTick(float DeltaSeconds)
 	SitClock += DeltaSeconds;
 	if (SitPhase == ESitPhase::None || GaspMover == nullptr) { return; }
 	if (SitPhase == ESitPhase::Approaching) { SitApproachTick(DeltaSeconds); return; }
-	// the planted foot's slide after a matched start, while the clip still marks that foot down
+	// the planted foot's slide after a matched start, for as long as the clip's own table keeps that foot down
 	if (SitPhase == ESitPhase::Entering && LedgerSit::GStartFoot >= 0)
 	{
-		UAnimInstance* G = GaspMover->GetMesh()->GetAnimInstance();
-		if (G != nullptr && G->GetCurveValue(FName(LedgerSit::GStartFoot == 0 ? TEXT("contact_l") : TEXT("contact_r"))) > 0.5f)
+		if (SitClock <= LedgerSit::GSlideUntil)
 		{
 			const FVector Now = GaspMover->GetMesh()->GetSocketLocation(LedgerSit::GStartFoot == 0 ? TEXT("ball_l") : TEXT("ball_r"));
 			LedgerSit::GSlideCm = FMath::Max(LedgerSit::GSlideCm, (float)FVector::Dist2D(Now, LedgerSit::GStartFootAt));
+			// where the foot, the other foot and the root are from the start (29 October: the slide read 39 to 85 cm)
+			static float NextSay = 0.0f;
+			if (SitClock >= NextSay || SitClock - SitPhaseAt < 0.02f)
+			{
+				NextSay = SitClock + 0.1f;
+				const FVector Other = GaspMover->GetMesh()->GetSocketLocation(LedgerSit::GStartFoot == 0 ? TEXT("ball_r") : TEXT("ball_l"));
+				UE_LOG(LogTemp, Display, TEXT("LedgerSitSlide: %.2f s after the start (until %.2f): the planted foot %.1f cm from where it was, %.1f cm above the slot; the other %.1f cm above; the root %.1f cm on; the clip at %.2f s"),
+					SitClock - SitPhaseAt, LedgerSit::GSlideUntil - SitPhaseAt, FVector::Dist2D(Now, LedgerSit::GStartFootAt), Now.Z - SitSlot.GetLocation().Z, Other.Z - SitSlot.GetLocation().Z,
+					FVector::Dist2D(GaspMover->GetActorLocation(), LedgerSit::GStartFootAt), SitMontage != nullptr ? GaspMover->GetMesh()->GetAnimInstance()->Montage_GetPosition(SitMontage) : -1.0f);
+			}
 		}
 		else { LedgerSit::GStartFoot = -1; }
 	}
