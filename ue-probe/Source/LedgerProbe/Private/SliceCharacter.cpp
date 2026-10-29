@@ -1428,6 +1428,11 @@ namespace LedgerSit
 	// envelope, of those with his foot, and the smallest stance gap seen with his foot in the envelope
 	int32 GFramesOnLine = 0, GFramesInPlace = 0, GFramesFootToo = 0;
 	float GBestGap = 1.0f;
+	// THE START MEASURED (29 October, the start-chooser review's check): the planted foot's slide while the clip
+	// still marks it down after a matched start, and the attach bone and hips once seated
+	int32 GStartFoot = -1;
+	FVector GStartFootAt = FVector::ZeroVector;
+	float GSlideCm = -1.0f, GBoneCm = -1.0f, GBoneYaw = 0.0f, GHipsCm = -1.0f, GHipsUpCm = -1.0f;
 
 	// where the mover stands at moment T of a clip whose warp bone ends on Slot (the derivation of step 3)
 	FTransform MoverAtMoment(UAnimMontage* Entry, const FClipPose& P, const FTransform& Slot, const FTransform& MeshRel, float T)
@@ -1808,6 +1813,9 @@ void ALedgerSliceCharacter::SitApproachTick(float DeltaSeconds)
 				SitPhase = ESitPhase::Entering;
 				SitPhaseAt = SitClock;
 				GLastApproach = TEXT("started");
+				GStartFoot = Foot;
+				GStartFootAt = GaspMover->GetMesh()->GetSocketLocation(Foot == 0 ? TEXT("ball_l") : TEXT("ball_r"));
+				GSlideCm = 0.0f;
 				UE_LOG(LogTemp, Display, TEXT("LedgerSit: step 6, started %s at %.2f s (foot %s, %.0f%% through its stance against his %.0f%%; %.1f cm along, %.1f across, %.1f degrees off its place then; %.0f cm of its walk left)"),
 					*E.Name, Hit->T, Foot == 0 ? TEXT("left") : TEXT("right"), 100.0f * Hit->Through, 100.0f * Through, HitRel.X, HitRel.Y, HitYaw, Hit->Left);
 				return;
@@ -1862,9 +1870,13 @@ void ALedgerSliceCharacter::SitApproachTestTick(float DeltaSeconds)
 		SatN += bSat ? 1 : 0;
 		Within += (LedgerSit::GLastHeadingOff >= 0.0f && LedgerSit::GLastHeadingOff <= 20.0f) ? 1 : 0;
 		const FString EntryName = LedgerSit::GEntries.IsValidIndex(LedgerSit::GBest) ? LedgerSit::GEntries[LedgerSit::GBest].Name : FString(TEXT("none"));
-		UE_LOG(LogTemp, Display, TEXT("LedgerSitApproach: seat %d from %s: %s; entry %s, heading off %.0f; %s"), SeatI,
+		UE_LOG(LogTemp, Display, TEXT("LedgerSitApproach: seat %d from %s: %s; entry %s, heading off %.0f; %s; slide %.1f cm, attach bone %.1f cm and %.1f degrees off the slot, hips %.1f cm off and %.1f up"), SeatI,
 			K == 0 ? TEXT("in front") : (K == 1 ? TEXT("front left") : TEXT("front right")),
-			*LedgerSit::GLastApproach, *EntryName, LedgerSit::GLastHeadingOff, bSat ? TEXT("sat") : Why);
+			*LedgerSit::GLastApproach, *EntryName, LedgerSit::GLastHeadingOff, bSat ? TEXT("sat") : Why,
+			LedgerSit::GSlideCm, LedgerSit::GBoneCm, LedgerSit::GBoneYaw, LedgerSit::GHipsCm, LedgerSit::GHipsUpCm);
+		LedgerSit::GSlideCm = LedgerSit::GBoneCm = LedgerSit::GHipsCm = LedgerSit::GHipsUpCm = -1.0f;
+		LedgerSit::GBoneYaw = 0.0f;
+		LedgerSit::GStartFoot = -1;
 		LedgerSit::GLastApproach.Empty();
 		LedgerSit::GLastHeadingOff = -1.0f;
 		LedgerSit::GBest = -1;
@@ -1940,6 +1952,15 @@ void ALedgerSliceCharacter::SitApproachTestTick(float DeltaSeconds)
 	}
 	else if (Step == 3 && T - StepAt > 1.0f) { bSitWantsUp = true; Step = 4; StepAt = T; }
 	else if (Step == 4 && (SitPhase == ESitPhase::None || T - StepAt > 10.0f)) { Next(true, TEXT("")); }
+	// -TomSitApproachShots: the sit-down through the player's own camera, ten pictures a second, on the fixed step
+	static const bool bShots = FParse::Param(FCommandLine::Get(), TEXT("TomSitApproachShots"));
+	static float NextShot = 0.0f;
+	if (bShots && (SitPhase == ESitPhase::Entering || SitPhase == ESitPhase::Approaching) && T >= NextShot)
+	{
+		FScreenshotRequest::RequestScreenshot(FPaths::ConvertRelativePathToFull(FPaths::ProjectSavedDir() / TEXT("TomSitApproach")
+			/ FString::Printf(TEXT("case%d-%05.2f.png"), Case, T)), false, false);
+		NextShot = T + 0.1f;
+	}
 }
 
 // THE ROOM TEST OF WHAT WILL BE PLAYED (28 October, the sitting method's step 4; Kingdom Come II drops every entry its
@@ -2078,6 +2099,17 @@ void ALedgerSliceCharacter::SitTick(float DeltaSeconds)
 	SitClock += DeltaSeconds;
 	if (SitPhase == ESitPhase::None || GaspMover == nullptr) { return; }
 	if (SitPhase == ESitPhase::Approaching) { SitApproachTick(DeltaSeconds); return; }
+	// the planted foot's slide after a matched start, while the clip still marks that foot down
+	if (SitPhase == ESitPhase::Entering && LedgerSit::GStartFoot >= 0)
+	{
+		UAnimInstance* G = GaspMover->GetMesh()->GetAnimInstance();
+		if (G != nullptr && G->GetCurveValue(FName(LedgerSit::GStartFoot == 0 ? TEXT("contact_l") : TEXT("contact_r"))) > 0.5f)
+		{
+			const FVector Now = GaspMover->GetMesh()->GetSocketLocation(LedgerSit::GStartFoot == 0 ? TEXT("ball_l") : TEXT("ball_r"));
+			LedgerSit::GSlideCm = FMath::Max(LedgerSit::GSlideCm, (float)FVector::Dist2D(Now, LedgerSit::GStartFootAt));
+		}
+		else { LedgerSit::GStartFoot = -1; }
+	}
 	UAnimInstance* Graph = GaspMover->GetMesh()->GetAnimInstance();
 	if (Graph == nullptr || SitMontage == nullptr) { return; }
 	const float Pos = Graph->Montage_GetPosition(SitMontage);
@@ -2096,6 +2128,13 @@ void ALedgerSliceCharacter::SitTick(float DeltaSeconds)
 		// where he ended in the seat's own frame (X out into the room, Y along the bench), and the pelvis's
 		const FVector Rel = SitSlot.InverseTransformPosition(GaspMover->GetActorLocation());
 		const FVector Pelvis = SitSlot.InverseTransformPosition(GaspMover->GetMesh()->GetSocketLocation(TEXT("pelvis")));
+		{
+			const FTransform Bone = GaspMover->GetMesh()->GetSocketTransform(TEXT("attach"));
+			LedgerSit::GBoneCm = (float)FVector::Dist2D(Bone.GetLocation(), SitSlot.GetLocation());
+			LedgerSit::GBoneYaw = (float)FRotator::NormalizeAxis(Bone.Rotator().Yaw - SitSlot.Rotator().Yaw);
+			LedgerSit::GHipsCm = (float)FVector::Dist2D(GaspMover->GetMesh()->GetSocketLocation(TEXT("pelvis")), SitSlot.GetLocation());
+			LedgerSit::GHipsUpCm = (float)(GaspMover->GetMesh()->GetSocketLocation(TEXT("pelvis")).Z - SitSlot.GetLocation().Z);
+		}
 		UE_LOG(LogTemp, Display, TEXT("LedgerSit: seated, %.1f cm from the seat (out %.1f, along %.1f; pelvis out %.1f, along %.1f, up %.1f)"),
 			FVector::Dist2D(GaspMover->GetActorLocation(), SitSlot.GetLocation()), Rel.X, Rel.Y, Pelvis.X, Pelvis.Y, Pelvis.Z);
 	}
