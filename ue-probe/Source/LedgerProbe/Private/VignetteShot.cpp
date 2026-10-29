@@ -3655,6 +3655,14 @@ namespace
 		// row says.
 		SetDirectional(GSun, FLinearColor(0.95f, 0.96f, 1.0f, 1.0f),
 		               C.SunOn ? (float)(C.SunIntensity * GLook.SunGain) : 0.0f);
+		// -PlayNightMoon=<lux> (29 October, a trial for the look's page; nothing in the look file, and the night above
+		// stays a hard zero by default): through the player's camera 87% of the night was near black between the lamps,
+		// and the night sky's own light adds almost nothing at any gain (a dark night sky). Mafia keeps a faint moon by
+		// night (its sun at 0.026, Study 5; production/research/street-wear/MAFIA-WEAR-2026-10-28.md): a cool, faint
+		// directional light by night only, to see what fill keeps the gaps readable
+		double Moon = 0.0;
+		FParse::Value(FCommandLine::Get(), TEXT("PlayNightMoon="), Moon);
+		if (!C.SunOn && Moon > 0.0) { SetDirectional(GSun, FLinearColor(0.70f, 0.80f, 1.0f, 1.0f), (float)Moon); }
 		// THE FILLS AT ZERO ALSO STOP THEM BEING SUNS. A directional light
 		// is an atmosphere sun light by default in this engine, so three
 		// fills left burning would put up to two extra sun discs in the sky
