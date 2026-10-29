@@ -4302,6 +4302,24 @@ if __name__ == "__main__":
                       encoding="utf-8") as _f:
                 _f.write("wetMaterialStatus=RAISED wetMaterialNote=%s\n"
                          % str(_wet_err).replace(" ", "~")[:160])
+    # ---- AND THE LOOK'S STAIN DECAL, 29 October (his order D11, step 1) ----
+    # tools/ue/make_stain_material.py: colour, roughness and coverage in one
+    # decal, for the office's and the shop fronts' new wear.
+    if _inside_unreal():
+        try:
+            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+            import make_stain_material
+            make_stain_material.main()
+        except Exception as _stain_err:
+            try:
+                import unreal
+                _root = unreal.Paths.project_dir()
+            except Exception:
+                _root = "."
+            with open(os.path.join(_root, "ue-material.txt"), "a",
+                      encoding="utf-8") as _f:
+                _f.write("stainMaterialStatus=RAISED stainMaterialNote=%s\n"
+                         % str(_stain_err).replace(" ", "~")[:160])
     # ---- AND THE STREET FROM BLENDER, 23 September, FOR THE SAME REASON ----
     # tools/ue/import_street.py: the street's geometry becomes static meshes
     # in the editor run this step already starts, and appends its own line to
