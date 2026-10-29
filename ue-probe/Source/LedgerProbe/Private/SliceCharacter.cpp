@@ -2165,7 +2165,8 @@ void ALedgerSliceCharacter::SitRoomTestTick(float DeltaSeconds)
 		FParse::Value(FCommandLine::Get(), TEXT("TomSitRoomSeat="), SeatIdx);
 		SeatIdx = FMath::Clamp(SeatIdx, 0, LedgerSit::Seats().Num() - 1);
 		FString Only;
-		FParse::Value(FCommandLine::Get(), TEXT("TomSitRoomClips="), Only);
+		// the whole list (29 October: the reader stopped at the first comma, so only the first clip was tried)
+		FParse::Value(FCommandLine::Get(), TEXT("TomSitRoomClips="), Only, false);
 		TArray<FString> Wanted;
 		Only.ParseIntoArray(Wanted, TEXT(","));
 		for (const TCHAR* Side : AllSides) { if (Wanted.Num() == 0 || Wanted.Contains(FString(Side))) { Sides.Add(Side); } }
@@ -2258,8 +2259,12 @@ void ALedgerSliceCharacter::SitRoomTestTick(float DeltaSeconds)
 				TArray<FOverlapResult> What;
 				GetWorld()->OverlapMultiByChannel(What, P, FQuat::Identity, ECC_WorldStatic, FCollisionShape::MakeSphere(L.R), Q);
 				const UPrimitiveComponent* Hit = What.Num() > 0 ? What[0].GetComponent() : nullptr;
-				Worst = FString::Printf(TEXT("%s%s@%.2fs-on-%s/%s"), L.A, L.B != nullptr ? TEXT("-mid") : TEXT(""), Graph != nullptr && SitMontage != nullptr ? Graph->Montage_GetPosition(SitMontage) : -1.0f,
-					Hit != nullptr && Hit->GetOwner() != nullptr ? *Hit->GetOwner()->GetName() : TEXT("?"), Hit != nullptr ? *Hit->GetName() : TEXT("?"));
+				// and its mesh, with where it stands (29 October: the actors are unnamed in a packaged or played world)
+				const UStaticMeshComponent* HitMesh = Cast<UStaticMeshComponent>(Hit);
+				const FBox HB = Hit != nullptr ? Hit->Bounds.GetBox() : FBox(ForceInit);
+				Worst = FString::Printf(TEXT("%s%s@%.2fs-on-%s(%s,%.0f..%.0f,%.0f..%.0f,%.0f..%.0f)"), L.A, L.B != nullptr ? TEXT("-mid") : TEXT(""), Graph != nullptr && SitMontage != nullptr ? Graph->Montage_GetPosition(SitMontage) : -1.0f,
+					Hit != nullptr && Hit->GetOwner() != nullptr ? *Hit->GetOwner()->GetName() : TEXT("?"),
+					HitMesh != nullptr && HitMesh->GetStaticMesh() != nullptr ? *HitMesh->GetStaticMesh()->GetName() : TEXT("-"), HB.Min.X, HB.Max.X, HB.Min.Y, HB.Max.Y, HB.Min.Z, HB.Max.Z);
 			}
 		}
 	}
