@@ -10,7 +10,7 @@ Failed its exit on 22 Oct (production/audits/phase1-exit/CLOSE-2026-10-22.md); r
 - [x] 2. The walk: Epic's, Tom's MetaHuman, packaged; tester's route 15 of 15. Sit set aside.
 - [ ] 3. Clothes (his order C): jacket in the game, Mafia's four detail levels; elastic-rib cuffs await his click (BAKE-PLAN).
 - [ ] 4. Speech: faster first sentence, 16 of 42 run, no gain yet (FastFirst.cs).
-- [ ] 5. Mickey's office: door, grain; the look: day a stop bright (his page), night too black.
+- [ ] 5. Mickey's office: door, grain; look: day a stop bright (his page); stain decal made.
 - [ ] 6. Phase 1's exit re-run; phase 2?
 - Also: sitting by spots (plain start; two designs set aside), asset checks, camera.
 
@@ -18,7 +18,7 @@ Failed its exit on 22 Oct (production/audits/phase1-exit/CLOSE-2026-10-22.md); r
 
 Done 16 of 16 (28 Oct: ten early).
 
-STATE (29 Oct 04:35): his page, camera pick and Marvelous click awaited; walk 15 of 15.
+STATE (29 Oct 07:35): his page, camera pick and Marvelous click awaited; walk 15 of 15.
 
 ## Handovers
 
