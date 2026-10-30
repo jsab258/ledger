@@ -7322,7 +7322,12 @@ namespace
 			if ((bSayOpen && GTalkTarget.Card == C) || (GLive.PendingId != 0 && GLive.PendingBody == Body)
 			    || (GTalkOn && GTalkTarget.Card == C) || HeldByTalk(C)) { continue; }
 			const auto It = Here.find(C);
-			const bool bWaitedEnough = GHeldBackSince.count(C) && NowS() - GHeldBackSince[C] >= kPlaceWaitSeconds;
+			// WITHIN EARSHOT THE WAIT HAS NO END (30 October, the packaged sit walk: Ron vanished from the bench beside
+			// Tom in one frame; the talk film: Sheila in front of him): a person he is close to and looking at keeps their
+			// place until he looks away, as nobody vanishes in Mafia or Kingdom Come II; the 12 s cut-off stays for people
+			// farther off, so walking toward someone still sees them go
+			const bool bNearHim = GPawn != nullptr && FVector::Dist2D(GPawn->GetActorLocation(), Body->GetActorLocation()) / 100.0 <= LedgerCrime::kEarshotM;
+			const bool bWaitedEnough = !bNearHim && GHeldBackSince.count(C) && NowS() - GHeldBackSince[C] >= kPlaceWaitSeconds;
 			if (It == Here.end())
 			{
 				if (!bPlaceNow && !bWaitedEnough && !GAway.count(C) && InHisView(World, Body->GetActorLocation()))

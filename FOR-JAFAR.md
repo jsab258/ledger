@@ -61,7 +61,7 @@ After these, on later pages: the animation source test at 6 moves, the map marks
 
 **Failed:**
 - Wet ground, first try: pavement and kerbs read dry; the second passed.
-- The talk camera: two fixes work in the editor, but in one film Sheila was not where the talk took her to be. Held back.
+- The talk camera works in the editor, but Sheila vanished mid-talk. Held back.
 - Faster first sentence (31 of 42 trials): no faster, invents more.
 - One tea ring still prints on an office sheet (two tries, listed).
 - Marvelous's start-up route, set aside on 29 October after two tries.
@@ -72,9 +72,9 @@ After these, on later pages: the animation source test at 6 moves, the map marks
 - Tom's jacket with the new cuffs is back: one sleeve was tied to the wrong bone and its textures read through the wrong layout. Mended; it passed a fresh reviewer.
 - Brick and kerb at real values; road and pavement now wet stone. This morning's three pictures passed a fresh reviewer each.
 - The wall stains, upside down since 2 October, fixed.
-- Sitting: the bow is in Epic's own clips; two routes next.
+- Sitting: the bow is in Epic's own clips.
 
-**Act on:** your page, three taps: https://claude.ai/artifact/YMW4gWcUvWV2i4qoWZDxgs. No computer use yesterday.
+**Act on:** your page, three taps: https://claude.ai/artifact/YMW4gWcUvWV2i4qoWZDxgs. Then open Marvelous and click LEDGER bridge, for the jumper and jeans (no page). No computer use yesterday.
 
 ## Builder, Thursday 29 October (night)
 
