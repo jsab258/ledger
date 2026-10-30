@@ -1,7 +1,7 @@
 {
  "piece": "tom-jacket",
  "line": "assetChecks=PASS piece=tom-jacket assets=5 errors=0 warnings=0 waived=0 first=none",
- "when": "2026-10-29 14:01:25",
+ "when": "2026-10-30 06:09:51",
  "assets": [
   "/Game/Ledger/MetaHumans/Garments/TomZipJacket/MI_TomZipJacket",
   "/Game/Ledger/MetaHumans/Garments/TomZipJacket/SKM_TomZipJacket",
@@ -10,7 +10,7 @@
   "/Game/Ledger/MetaHumans/Garments/TomZipJacket/T_TomZipJacket_Packed"
  ],
  "imports": {
-  "SKM_TomZipJacket": "8c4fb71be0293e29001068de78094565",
+  "SKM_TomZipJacket": "9639ff2727096979ff6d9c32cbfa64c5",
   "T_TomZipJacket_ColourAO": "6e79ccaa144ae5ba02fba55eaa283506",
   "T_TomZipJacket_Normal": "99631560d6984397ecf8e78dc9ef583d",
   "T_TomZipJacket_Packed": "f60f6c95aaa96dd161da37077b683475"
@@ -24,14 +24,14 @@
    "triangles": [
     18586,
     8735,
-    4366,
-    2182
+    4367,
+    2183
    ],
    "lod_verts": [
     10114,
     4915,
     2573,
-    1372
+    1373
    ]
   },
   "T_TomZipJacket_ColourAO": {

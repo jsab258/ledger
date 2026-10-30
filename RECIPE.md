@@ -138,7 +138,7 @@ What failed before this method, so it is not repeated: draping with bent elbows 
 - Tools: a frame reader for clips (per 1/30 s: root, hips, neck line, trunk), the engine's animation pose evaluation in an offline editor run.
 - Target and check: the candidate's head no lower and its neck line under the fold for less time than the faulty clip's (not met: head 84.2 against 89.9 cm, the fold 0.30 against 0.63 s); trunk within 46 +-12 degrees (both met).
 - Cost (hours): about 1, the route's building saved (estimated 3).
-- Failed and why: the route had been chosen on paper from one clip's lean and a reference game's practice; the head was not measured on both before the plan. Lesson: measure the named fault on every candidate first.
+- Failed and why: the route had been chosen on paper from one clip's lean and a reference game's practice; the head was not measured on both before the plan. Lesson: measure the named fault on every candidate first. Corrected the same morning: the measure used (the neck joint's line) was not the fault the eye saw; by the face's own direction the candidate turned the face 28 degrees down against the faulty clip's 75, so it was the better clip and was set aside on the wrong number. Lesson: before comparing candidates, check that the measure reads the fault as seen (a frame where the eye objects must read worst).
 - Evidence: production/research/sit-and-turn/SIT-BOW-2026-10-30.md (route (i) measured); F:/LedgerTools/scratch/sit/clip_frames.json.
 
 ### 30 Oct 2026, a garment that passed every offline mark and broke in the game: two causes found by comparing with the last good

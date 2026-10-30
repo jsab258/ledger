@@ -38,6 +38,12 @@ def frames(path):
         except Exception:
             pass
     length = seq.get_play_length()
+    # THE FACE'S DIRECTION (30 October, after two holds on the neck's place changed nothing seen: a skull turned down
+    # about its own joint does not move the joint): the head bone's local axis that points where the face points in
+    # the reference pose (the skeleton faces +Y there, as Epic's and MetaHuman's do), carried by each frame's head
+    # rotation; its pitch against the horizontal, negative looking down
+    pose0 = unreal.AnimPoseExtensions.get_anim_pose_at_time(seq, 0.0, opts)
+    face_local = unreal.AnimPoseExtensions.get_ref_bone_pose(pose0, "head", unreal.AnimPoseSpaces.WORLD).rotation.unrotate_vector(unreal.Vector(0.0, 1.0, 0.0))
     rows = []
     for i in range(int(length * 30) + 1):
         t = min(length, i / 30.0)
@@ -52,7 +58,9 @@ def frames(path):
         if not all(b in p for b in ("root", "pelvis", "thigh_l", "thigh_r", "neck_01", "head")):
             return {"clip": path, "error": "bones missing at %.2f s: %s" % (t, sorted(p))}
         hips = tuple((p["thigh_l"][k] + p["thigh_r"][k]) / 2.0 for k in range(3))   # the hips by the thighs' midpoint
-        rows.append({"t": round(t, 3), "root": [round(p["root"][k], 1) for k in range(2)], "yaw": round(p["root"][3], 1),
+        face = unreal.AnimPoseExtensions.get_bone_pose(pose, "head", unreal.AnimPoseSpaces.WORLD).rotation.rotate_vector(face_local)
+        pitch = math.degrees(math.asin(max(-1.0, min(1.0, face.z / max(1e-6, (face.x ** 2 + face.y ** 2 + face.z ** 2) ** 0.5)))))
+        rows.append({"t": round(t, 3), "head_pitch": round(pitch, 1), "root": [round(p["root"][k], 1) for k in range(2)], "yaw": round(p["root"][3], 1),
                      "pelvis": [round(p["pelvis"][k], 1) for k in range(2)], "pelvis_z": round(p["pelvis"][2], 1), "head_z": round(p["head"][2], 1),
                      "neck_lean": round(lean(p["neck_01"], p["head"]), 1), "trunk_lean": round(lean(hips, p["neck_01"]), 1)})
     return {"clip": path, "length": round(length, 3), "root_motion": bool(seq.get_editor_property("enable_root_motion")), "rows": rows}

@@ -266,3 +266,7 @@
 {"event": "start", "at": "2026-10-30T04:42:00", "task": "1.5 talk camera's sixth film; the town's move held in a talk; the clock's text", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-30T05:00:00", "note": ""}
 {"event": "start", "at": "2026-10-30T05:00:00", "task": "1.2 D10 sitting: route (i) measured and set aside; route (ii) head held up, editor film", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-30T05:48:00", "note": "route (i) measured and set aside unbuilt; route (ii) two tries, set aside"}
+{"event": "start", "at": "2026-10-30T05:48:00", "task": "1.3 C9 jeans: Titan drafted, Marvelous job written; the night's push", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-30T05:55:00", "note": ""}
+{"event": "start", "at": "2026-10-30T05:55:00", "task": "1.3 C9 jacket packaged sit film (13 of 13), to a reviewer; 1.2 D10 the head's pitch researched and measured", "phase": "1", "kind": "production"}
