@@ -251,6 +251,98 @@ def write_scene_stains():
         print("%s: %dx%d" % (leaf, a.size[0], a.size[1]))
 
 
+#: THE CHANDLER'S NEW MARKS' PICTURES (30 October 2026, his order D11; production/research/street-wear/
+#: MAFIA-WEAR-2026-10-28.md, "One shop front: the chandler", S1): a rust leak under the gutter's end and the grime
+#: trodden onto the footway at its two doors. Drawn here from two CC0 ambientCG maps already staged and credited
+#: (Leaking005's opacity, SurfaceImperfections003's; THIRD-PARTY.md, "Grime and decal textures"), nothing fetched.
+#: They live in production/assets/street-wear/<leaf>/<leaf>.png (the wear file names them by that path; VignetteShot.cpp
+#: SpawnWear reads a "production/" picture from the repository's root, or the packaged copy's staged one).
+STREET_WEAR_DIR = os.path.join(REPO, "production", "assets", "street-wear")
+#: Mafia's rust leak, 2.1 m tall by 0.55 m (the study's sizes, M), at the leak map's own 1,024 rows for its length:
+#: 488 px/m both ways, within 20% of the 512 px/m the method asks outside (C6)
+RUST_SIZE_M = (0.55, 2.1)
+#: the threshold's decal, 1.9 m along the front (both doors, x 43.70 to 45.60) by 0.9 m out from it: 1,024 by 512, 539
+#: and 569 px/m
+THRESHOLD_SIZE_M = (1.9, 0.9)
+#: where each door's middle falls across the threshold picture, from its left column (a ground decal's columns run
+#: toward higher street x and its rows toward the front: measured in the game's roughness view, 30 October): the cloud
+#: front's shop door (x 43.76 to 44.63) and side door (44.73 to 45.55), read off its own pictures (shop-interiors.json:
+#: the doors at the viewer's left, x 43.7 to 46; the piece list's doors at x 40.8 and 41.6 are the old refit's), the
+#: decal's low edge at x 43.70
+THRESHOLD_DOORS = ((0.263, 0.115, 1.0), (0.758, 0.108, 0.6))   # (centre, half its width over the decal's, weight)
+#: rust as it stains brick: a dark iron brown at the run, a little more orange where it spreads (sRGB)
+RUST_CORE, RUST_EDGE = (96, 46, 22), (128, 66, 32)
+
+
+def rust_leak():
+    """(alpha 0..1, rgb 0..255): a run from one point under the gutter's end, narrow at its head and spreading as it
+    falls, strongest at the top and fading out by its foot, its edge and runs the leak map's own."""
+    leak = opacity_map("Leaking005")
+    h = leak.shape[0]
+    w = int(round(h * RUST_SIZE_M[0] / RUST_SIZE_M[1]))
+    # the strip of the leak with the most run in its top third, so the head is a leak and not a blank
+    best, x0 = -1.0, 0
+    for x in range(0, leak.shape[1] - w, 16):
+        s = leak[: h // 3, x:x + w].mean()
+        if s > best:
+            best, x0 = s, x
+    # its upper three fifths, where the map's runs are, drawn the leak's whole length (below them the map is nearly
+    # empty, and the rust runs the whole 2.1 m)
+    m = np.asarray(Image.fromarray((leak[: int(h * 0.6), x0:x0 + w] * 255).astype(np.uint8)).resize((w, h), Image.BICUBIC)).astype(float) / 255.0
+    # each row's runs stretched to its own strongest tenth: the map's leaks thin out in its lower half, and the rust
+    # runs the whole 2.1 m, its fading left to `along`
+    m = np.clip(m / np.maximum(np.percentile(m, 90, axis=1, keepdims=True), 0.2), 0.0, 1.0)
+    t = np.linspace(0.0, 1.0, h)[:, None]
+    u = np.linspace(-0.5, 0.5, w)[None, :]
+    sigma = 0.07 + 0.22 * t                          # narrow at the head, wider at the foot
+    across = np.exp(-0.5 * (u / sigma) ** 2)
+    along = np.clip(t / 0.03, 0.0, 1.0) * (1.0 - 0.8 * t)   # a soft start under the gutter, a third left at its foot
+    core = np.exp(-0.5 * (u / (0.035 + 0.05 * t)) ** 2) * (1.0 - 0.7 * t)
+    a = np.clip((m * 1.2 * across + 0.55 * core * (0.4 + 0.6 * m)) * along, 0.0, 1.0)
+    a *= np.clip((1.0 - t) / 0.06, 0.0, 1.0)         # nothing at the foot's last rows
+    a *= np.clip((0.5 - np.abs(u)) / 0.06, 0.0, 1.0)  # nor at its sides
+    k = np.clip(core * 1.4, 0.0, 1.0)[..., None]
+    rgb = np.array(RUST_EDGE, dtype=float) * (1.0 - k) + np.array(RUST_CORE, dtype=float) * k
+    return a, rgb
+
+
+def threshold():
+    """alpha 0..1: dirt trodden out from two doors onto the footway, strongest at the doors (the picture's last rows),
+    gone a stride out, the shop door's heavier than the side door's, mottled by SurfaceImperfections003."""
+    W, H = 1024, 512
+    g = np.asarray(Image.fromarray((opacity_map("SurfaceImperfections003") * 255).astype(np.uint8)).resize((W, H), Image.BICUBIC)).astype(float) / 255.0
+    u = np.linspace(0.0, 1.0, W)[None, :]
+    v = np.linspace(0.0, 1.0, H)[:, None]
+    lobes = np.zeros((H, W))
+    for c, half, weight in THRESHOLD_DOORS:
+        spread = half * (0.7 + 0.8 * (1.0 - v))     # wider as it goes out from the door, soft-sided
+        lobes = np.maximum(lobes, weight * np.exp(-0.5 * ((u - c) / spread) ** 2))
+    # gone toward the road, full at the door, its outer edge broken by the mottle rather than a line
+    out = np.clip(np.clip((v - 0.05) / 0.95, 0.0, 1.0) ** 1.4 + 0.3 * (g - 0.5), 0.0, 1.0)
+    a = np.clip(lobes * out * (0.45 + 0.75 * g), 0.0, 1.0)
+    a *= np.clip(np.minimum(u, 1.0 - u) / 0.05, 0.0, 1.0) * np.clip(v / 0.12, 0.0, 1.0)   # no edge toward the road
+    return a
+
+
+def street_wear_pictures():
+    """{leaf: (alpha, rgb or None)} for the chandler's new marks."""
+    a, rgb = rust_leak()
+    return {"wear_rust": (a, rgb), "wear_threshold": (threshold(), None)}
+
+
+def write_street_wear(out_dir=STREET_WEAR_DIR):
+    for leaf, (a, rgb) in street_wear_pictures().items():
+        h, w = a.shape
+        px = np.zeros((h, w, 4), dtype=np.uint8)
+        px[..., :3] = STAIN_GREY if rgb is None else np.clip(rgb, 0, 255).astype(np.uint8)
+        px[..., 3] = (np.clip(a, 0, 1) * 255).astype(np.uint8)
+        d = os.path.join(out_dir, leaf)
+        os.makedirs(d, exist_ok=True)
+        p = os.path.join(d, leaf + ".png")
+        Image.fromarray(px, "RGBA").save(p, optimize=True)
+        print("%s: %dx%d, mean mask %.3f, %d KB" % (leaf, w, h, a.mean(), os.path.getsize(p) // 1024))
+
+
 def write():
     rng = np.random.default_rng(19901002)
     for i in range(1, N + 1):
@@ -300,6 +392,21 @@ def selftest():
     check("no stain is empty or solid", all(0.03 < v.mean() < 0.9 for v in st.values()))
     check("the splash band is strongest at its foot", st["wear_splash"][-len(st["wear_splash"]) // 4:].mean() > st["wear_splash"][: len(st["wear_splash"]) // 4].mean())
     check("an oil stain stays clear of its decal's edge", st["wear_oil"][0, :].max() == 0 and st["wear_oil"][:, 0].max() == 0)
+    sw = street_wear_pictures()
+    ra = sw["wear_rust"][0]
+    rh, rw = ra.shape
+    check("the rust leak keeps Mafia's 2.1 by 0.55 m and 512 px/m within 20% both ways",
+          abs(rw / float(rh) - RUST_SIZE_M[0] / RUST_SIZE_M[1]) < 0.01 and all(410 <= n / m <= 615 for n, m in ((rh, RUST_SIZE_M[1]), (rw, RUST_SIZE_M[0]))))
+    check("the rust runs from its head and is fainter at its foot, nothing at its sides or last rows",
+          ra[: rh // 4].mean() > 2.0 * ra[3 * rh // 4:].mean() and ra[-2:, :].max() < 0.01 and max(ra[:, 0].max(), ra[:, -1].max()) < 0.01)
+    check("narrower at its head than its foot", (ra[rh // 10] > 0.05).mean() < (ra[7 * rh // 10] > 0.05).mean())
+    ta = sw["wear_threshold"][0]
+    th, tw = ta.shape
+    check("the threshold is strongest at the doors (its last rows) and gone toward the road", ta[-th // 5:].mean() > 4.0 * ta[: th // 5].mean() + 1e-6)
+    shop, side = (ta[-th // 4:, int(c * tw) - 20:int(c * tw) + 20].mean() for c, _h, _w in THRESHOLD_DOORS)
+    check("the shop door's threshold darker than the side door's", shop > side > 0.05)
+    check("and nothing at its edges but the door's", max(ta[0, :].max(), ta[:, 0].max(), ta[:, -1].max()) < 0.01)
+    check("seeded and drawn the same each run", np.array_equal(ra, street_wear_pictures()["wear_rust"][0]))
     print("make_wear_masks selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
 
@@ -307,4 +414,9 @@ def selftest():
 if __name__ == "__main__":
     if "--selftest" in sys.argv:
         sys.exit(selftest())
+    # --street-wear (30 October): the chandler's two new pictures only, into production/assets/street-wear; the
+    # decal root's own pictures are left as they are
+    if "--street-wear" in sys.argv:
+        write_street_wear()
+        sys.exit(0)
     write()

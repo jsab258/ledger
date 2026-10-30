@@ -126,7 +126,9 @@ def wanted():
     for row in wear.get("decals", []) or []:
         pic = row.get("picture")
         if pic:
-            files.append(DECAL_ROOT + "/" + pic + "/" + pic.split("/")[-1] + ".png")
+            # a picture under production/ from the repository's root (30 October: the chandler's rust and threshold,
+            # production/assets/street-wear; VignetteShot.cpp SpawnWear), else under the decal root
+            files.append((pic if pic.startswith("production/") else DECAL_ROOT + "/" + pic) + "/" + pic.split("/")[-1] + ".png")
     # THE SHOP ROOMS' PICTURES BY NAME, 21 October: Rita's room from the cloud (4096 wide, 5 to 8 MB
     # each) lives on F: under the same path, and the folder walk below sees only the checkout.
     shops = _load("production/specs/shop-interiors.json")

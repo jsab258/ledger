@@ -13,7 +13,11 @@
     0.975,
     0.951
    ],
-   "wear": 0.985
+   "wear": 0.985,
+   "streak": 0.246,
+   "streak_also": [
+    "east_chandler_bay_north"
+   ]
   },
   {
    "bay": "east_parade_bay0",
@@ -160,7 +164,14 @@
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
    "strength": 0.997,
-   "on": "east_chandler_bay0"
+   "on": "east_chandler_bay0",
+   "material": "stain",
+   "rough": 0.6,
+   "tint": [
+    1.52,
+    1.05,
+    0.76
+   ]
   },
   {
    "kind": "wash",
@@ -173,7 +184,14 @@
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
    "strength": 0.795,
-   "on": "east_chandler_bay0"
+   "on": "east_chandler_bay0",
+   "material": "stain",
+   "rough": 0.7,
+   "tint": [
+    1.44,
+    0.87,
+    0.64
+   ]
   },
   {
    "kind": "damp",
@@ -186,7 +204,14 @@
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
    "strength": 0.696,
-   "on": "east_chandler_bay0"
+   "on": "east_chandler_bay0",
+   "material": "stain",
+   "rough": 0.55,
+   "tint": [
+    2.11,
+    0.67,
+    0.35
+   ]
   },
   {
    "kind": "splash",
@@ -667,7 +692,14 @@
    "yaw_deg": 270.0,
    "pitch_deg": 0.0,
    "strength": 0.997,
-   "on": "east_chandler_bay0"
+   "on": "east_chandler_bay0",
+   "material": "stain",
+   "rough": 0.6,
+   "tint": [
+    1.52,
+    1.05,
+    0.76
+   ]
   },
   {
    "kind": "wash",
@@ -680,7 +712,14 @@
    "yaw_deg": 270.0,
    "pitch_deg": 0.0,
    "strength": 0.845,
-   "on": "east_chandler_bay0"
+   "on": "east_chandler_bay0",
+   "material": "stain",
+   "rough": 0.7,
+   "tint": [
+    1.44,
+    0.87,
+    0.64
+   ]
   },
   {
    "kind": "damp",
@@ -693,7 +732,14 @@
    "yaw_deg": 270.0,
    "pitch_deg": 0.0,
    "strength": 0.696,
-   "on": "east_chandler_bay0"
+   "on": "east_chandler_bay0",
+   "material": "stain",
+   "rough": 0.55,
+   "tint": [
+    2.11,
+    0.67,
+    0.35
+   ]
   },
   {
    "kind": "splash",
@@ -1570,27 +1616,41 @@
    "kind": "streak",
    "picture": "ours/wear_streak_c",
    "x_m": 41.497,
-   "y_m": 4.0452,
+   "y_m": 3.3059,
    "z_m": 5.115,
    "w_m": 0.8942,
-   "h_m": 1.1194,
+   "h_m": 2.0783,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.563,
-   "on": "east_chandler_bay0"
+   "strength": 0.789,
+   "on": "east_chandler_bay0",
+   "material": "stain",
+   "rough": 0.65,
+   "tint": [
+    1.0,
+    0.6,
+    0.44
+   ]
   },
   {
    "kind": "streak",
    "picture": "ours/wear_streak",
    "x_m": 44.4733,
-   "y_m": 4.1022,
+   "y_m": 3.4409,
    "z_m": 5.115,
    "w_m": 0.7993,
-   "h_m": 0.8914,
+   "h_m": 1.8082,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.528,
-   "on": "east_chandler_bay0"
+   "strength": 0.768,
+   "on": "east_chandler_bay0",
+   "material": "stain",
+   "rough": 0.65,
+   "tint": [
+    1.0,
+    0.6,
+    0.44
+   ]
   },
   {
    "kind": "oil",
@@ -2280,6 +2340,46 @@
    "pitch_deg": 90.0,
    "strength": 0.8,
    "on": "ground_east_carriageway"
+  },
+  {
+   "kind": "rust",
+   "picture": "production/assets/street-wear/wear_rust",
+   "x_m": 45.7,
+   "y_m": 5.2,
+   "z_m": 5.115,
+   "w_m": 0.55,
+   "h_m": 2.1,
+   "yaw_deg": 0.0,
+   "pitch_deg": 0.0,
+   "strength": 0.897,
+   "on": "east_chandler_bay0",
+   "material": "stain",
+   "rough": 0.7,
+   "tint": [
+    1.38,
+    1.21,
+    1.1
+   ]
+  },
+  {
+   "kind": "threshold",
+   "picture": "production/assets/street-wear/wear_threshold",
+   "x_m": 44.65,
+   "y_m": 0.1,
+   "z_m": 4.845,
+   "w_m": 1.9,
+   "h_m": 0.9,
+   "yaw_deg": 0.0,
+   "pitch_deg": 90.0,
+   "strength": 0.947,
+   "on": "east_chandler_bay0",
+   "material": "stain",
+   "rough": 0.95,
+   "tint": [
+    1.26,
+    1.09,
+    0.91
+   ]
   },
   {
    "kind": "scuff",

@@ -105,6 +105,10 @@ WATCHED = {
     # the body's bones, the loop trimmed, the textures shrunk). A conversion
     # is not authorship: the same corpus and the same obligation.
     "production/assets/people": "Mixamo",
+    # THE CHANDLER'S NEW WEAR PICTURES, 30 October 2026 (his order D11, S1): a rust leak and the dirt trodden at its
+    # doors, drawn by tools/make_wear_masks.py --street-wear from ambientCG's CC0 Leaking005 and SurfaceImperfections003
+    # opacity maps, already credited in THIRD-PARTY.md ("Grime and decal textures"); kept on this PC, not in git.
+    "production/assets/street-wear": "ambientCG",
     "game-design/picked-clips": "VCTK",
     # A CHARACTER RECAST FOR POCKET ALONE (26 October: Darren, VCTK p286, his page's pick): its reference,
     # kept out of git (the game inputs on F: hold it), the same corpus and the same credit

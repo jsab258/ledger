@@ -239,6 +239,23 @@ WATER_PARAM = "WaterLevel"
 FILM_SPEC_PARAM = "FilmSpecular"     # the wet asphalt's own Specular, set by the game (SurfaceBind.h)
 FILM_SPEC_DEFAULT = 0.5
 WATER_PARAM_DEFAULT = 0.0
+# THE BRICK'S STREAKS, 30 October (his order D11; production/research/street-wear/MAFIA-WEAR-2026-10-28.md, "One shop
+# front: the chandler", S3): Mafia's facade masters tint their colour by a world-position noise whose tiling is (10.7,
+# 11.1) on the two level axes and 1 up, so it changes about ten times faster along a wall than up it, and raise it to
+# the power 0.56 (the study, layer 2; R). The wiring and the noise's absolute scale were not read (cooked masters keep
+# no wiring), so the scale is ours (I): StreakScale 0.005 per cm puts the noise's lattice about 19 cm apart along a wall
+# and 2 m up it, so a streak is some 20 to 40 cm across and a storey tall. The
+# colour is multiplied by lerp(1, noise^0.56, StreakAmount), so it darkens where the noise is low and never lightens.
+# OFF BY DEFAULT: StreakAmount 0 leaves every pixel as it was, bit for bit; the game sets it only on the brick rows of a
+# house the wear file gives a "streak" (VignetteShot.cpp PaintStreet; SurfaceBind.h StreakParam).
+STREAK_PARAM = "StreakAmount"
+STREAK_PARAM_DEFAULT = 0.0
+STREAK_SCALE_PARAM = "StreakScale"
+STREAK_SCALE_DEFAULT = 0.005
+STREAK_TILING_PARAM = "StreakTiling"
+STREAK_TILING_DEFAULT = (10.7, 11.1, 1.0, 1.0)
+STREAK_POWER = 0.56
+STREAK_LEVELS = 2
 WEAR_TINT_PARAM = "WearDustTint"         # dried road splash, linear (the decals' dust, darker)
 WEAR_TINT_DEFAULT = (0.040, 0.035, 0.028, 1.0)
 
@@ -1191,6 +1208,7 @@ WIRE_SERIES = (
     (72, "8-october-the-road's-water-level-26-wires"),
     (77, "8-october-a-lit-net-glows-as-its-picture-5-wires"),
     (78, "8-october-the-road's-film-specular-1-wire"),
+    (89, "30-october-the-brick's-streaks-11-wires"),
 )
 
 # The pair of markers that bound the wired region of main(). They are spelled
@@ -1225,6 +1243,7 @@ def wire_plan(texture_params=None):
         ("wear", 26, 26, "one-site-one-connection"),
         ("water", 27, 27, "one-site-one-connection"),
         ("emissivemap", 5, 5, "one-site-one-connection"),
+        ("streaks", 11, 11, "one-site-one-connection"),
     ]
     return rows, sum(r[1] for r in rows), sum(r[2] for r in rows)
 
@@ -2757,6 +2776,14 @@ def selftest():
     if no_sites != -1 or "nothing-measured" not in no_why:
         bad.append("a source carrying no markers counted %d wire(s) instead "
                    "of reporting nothing measured: %s" % (no_sites, no_why))
+    # THE BRICK'S STREAKS (30 October): off unless set, Mafia's tiling and power as read, and the name the game sets
+    # spelled once in the header
+    checks += 1
+    if STREAK_PARAM_DEFAULT != 0.0 or tuple(STREAK_TILING_DEFAULT[:3]) != (10.7, 11.1, 1.0) or STREAK_POWER != 0.56:
+        bad.append("the streaks must default to off (StreakAmount 0) with Mafia's tiling (10.7, 11.1, 1) and power 0.56")
+    checks += 1
+    if 'StreakParam() { return "%s"; }' % STREAK_PARAM not in open(header, "r", encoding="utf-8").read():
+        bad.append("SurfaceBind.h has no StreakParam returning %s, so the game's set site and the material can drift" % STREAK_PARAM)
     print("    %s" % line)
     print("    %s" % good_line)
     print("    %s" % prop_line)
@@ -3831,7 +3858,62 @@ def main():
     # took A, and the pair is what makes the multiply a multiply rather than
     # a node with one input. Its product goes on into the wear's colour lerp.
     connect(grade, "", grade_mul, "B", "albedograde-to-grade")
-    connect(grade_mul, "", col_lerp, "A", "grade-to-wearlerp")
+
+    # ---- THE BRICK'S STREAKS, 30 October (STREAK_PARAM above) ----
+    # factor = lerp(1, saturate(noise(world cm x StreakTiling x StreakScale))^0.56, StreakAmount); the graded colour
+    # times it goes on into the wear's colour lerp. At StreakAmount 0, the default, the factor is 1 exactly.
+    def streak_scalar(name, default, x, y):
+        node = expr(unreal.MaterialExpressionScalarParameter, x, y)
+        try:
+            node.set_editor_property("parameter_name", name)
+            node.set_editor_property("default_value", default)
+        except Exception:
+            w.notes.append("%s-parameter-refused" % name.lower())
+        return node
+
+    streak_amt = streak_scalar(STREAK_PARAM, STREAK_PARAM_DEFAULT, -1200, -1100)
+    streak_scale = streak_scalar(STREAK_SCALE_PARAM, STREAK_SCALE_DEFAULT, -1650, -1000)
+    streak_tiling = expr(unreal.MaterialExpressionVectorParameter, -1650, -1150)
+    try:
+        streak_tiling.set_editor_property("parameter_name", STREAK_TILING_PARAM)
+        streak_tiling.set_editor_property("default_value", unreal.LinearColor(*STREAK_TILING_DEFAULT))
+    except Exception:
+        w.notes.append("streaktiling-parameter-refused")
+    s_wp = expr(unreal.MaterialExpressionWorldPosition, -1850, -1100)
+    s_tile = expr(unreal.MaterialExpressionMultiply, -1500, -1100)
+    s_scale = expr(unreal.MaterialExpressionMultiply, -1350, -1100)
+    s_noise = expr(unreal.MaterialExpressionNoise, -1200, -1000)
+    for prop, value in (("scale", 1.0), ("levels", STREAK_LEVELS), ("output_min", 0.0), ("output_max", 1.0)):
+        try:
+            s_noise.set_editor_property(prop, value)
+        except Exception:
+            w.notes.append("streak-noise-%s-refused" % prop)
+    s_sat = expr(unreal.MaterialExpressionSaturate, -1000, -1000)
+    s_pow = expr(unreal.MaterialExpressionPower, -900, -1100)
+    try:
+        s_pow.set_editor_property("const_exponent", STREAK_POWER)
+    except Exception:
+        w.notes.append("streak-power-refused")
+    s_lerp = expr(unreal.MaterialExpressionLinearInterpolate, -700, -1100)
+    try:
+        s_lerp.set_editor_property("const_a", 1.0)
+    except Exception:
+        w.notes.append("streak-lerp-consta-refused")
+    s_mul = expr(unreal.MaterialExpressionMultiply, 0, -340)
+    connect(s_wp, "", s_tile, "A", "streak-worldpos-to-tiling")
+    connect(streak_tiling, "", s_tile, "B", "streak-tiling-to-tiling")
+    connect(s_tile, "", s_scale, "A", "streak-tiled-to-scale")
+    connect(streak_scale, "", s_scale, "B", "streak-scale-to-scale")
+    # the Noise node's position pin is named "World Position" in this engine (30 October: "Position" was refused;
+    # get_material_expression_input_names reads ["World Position", "FilterWidth"])
+    connect(s_scale, "", s_noise, "World Position", "streak-position-to-noise")
+    connect(s_noise, "", s_sat, "", "streak-noise-to-sat")
+    connect(s_sat, "", s_pow, "Base", "streak-sat-to-power")
+    connect(s_pow, "", s_lerp, "B", "streak-power-to-lerp")
+    connect(streak_amt, "", s_lerp, "Alpha", "streak-amount-to-lerp")
+    connect(grade_mul, "", s_mul, "A", "grade-to-streak")
+    connect(s_lerp, "", s_mul, "B", "streak-factor-to-streak")
+    connect(s_mul, "", col_lerp, "A", "streak-to-wearlerp")
 
     # The other three wires of the wetness lerp. A is the roughness sampler,
     # taken above; B is the wet floor; Alpha is the parameter. THE PIN NAMES

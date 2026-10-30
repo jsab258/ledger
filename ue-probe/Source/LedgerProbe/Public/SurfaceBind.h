@@ -866,6 +866,10 @@ namespace LedgerSurface
 	// A LIT NET OR ROOM GLOWS AS ITS PICTURE, 8 October (tools/ue/make_base_material.py EMISSIVE_MAP_PARAM):
 	// 0, the default, is the flat glow; the game sets 1 on the net and room rows.
 	inline const char* EmissiveFromMapParam() { return "EmissiveFromMap"; }
+	// THE BRICK'S STREAKS, 30 October (tools/ue/make_base_material.py STREAK_PARAM; the chandler's S3): how far the
+	// world-noise streaks darken a brick row's colour; 0, the default, is the material as it was. The game sets it on the
+	// brick rows of a house the wear file gives a "streak" (VignetteShot.cpp BrickStreakFor).
+	inline const char* StreakParam() { return "StreakAmount"; }
 
 	// DRY IS ZERO, AND ZERO IS THE MATERIAL'S DEFAULT. An instance that never
 	// sets this parameter renders exactly what it renders today, bit for bit,

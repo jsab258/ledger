@@ -110,6 +110,11 @@ def build(pieces):
         wear = 0.55 + 0.45 * rnd(s, "wear")
         houses.append({"bay": b["name"], "seed": s, "brick_set": int(rnd(s, "set") * 3) % 3,
                        "tint": [round(0.92 + 0.16 * rnd(s, c), 3) for c in "rgb"], "wear": round(wear, 3)})
+        if b["name"] in BRICK_STREAK_BAYS:
+            # S3 (30 October): the brick's world-noise streaks, as strong as the house is worn, on this house's brick
+            # rows only (VignetteShot.cpp PaintStreet), its tint untouched
+            houses[-1]["streak"] = round(BRICK_STREAK_AMOUNT * wear, 3)
+            houses[-1]["streak_also"] = list(BRICK_STREAK_BAYS[b["name"]])
     house = {h["bay"]: h for h in houses}
 
     def owner_bay(x, block):
@@ -166,6 +171,16 @@ def build(pieces):
             # 2 October: at 0.5 to 1.2 m and half strength the first frame showed none; the sheet's run long
             L = 0.8 + 0.6 * rnd(s, "len") * h["wear"]
             top = p["y_m"] - p["sy_m"] / 2.0
+            if b["name"] == CHANDLER:
+                # THE CHANDLER'S STREAKS LENGTHENED TO ITS FASCIA (30 October, S1): drawn from the sill's own underside
+                # (the picture is the right way up since 29 October, strongest in its first rows) and long enough to
+                # run down to the cloud front's cornice, which takes no street marks, so the run ends there
+                L = STREAK_LEN_M[0] + (STREAK_LEN_M[1] - STREAK_LEN_M[0]) * rnd(s, "len")
+                d = wall_decal("streak", p["x_m"] + 0.08 * (rnd(s, "dx") - 0.5), top + STREAK_TUCK_M - L / 2.0, zf, facing,
+                               p["sx_m"] * (0.8 + 0.3 * rnd(s, "w")), L, CHANDLER_STREAK_STRENGTH[0] + (CHANDLER_STREAK_STRENGTH[1] - CHANDLER_STREAK_STRENGTH[0]) * rnd(s, "st"), b["name"])
+                d["picture"] = STREAK_PICTURES[int(rnd(s, "pic") * 3) % 3]
+                decals.append(d)
+                continue
             # FROM THE SILL'S OWN EDGE (4 October, the first fresh review of 2.4: the streaks began
             # well below the sills): the picture fades in over its top fifth, so it starts a quarter
             # of its length up, on the stone sill, which takes no marks.
@@ -262,10 +277,14 @@ def build(pieces):
                        "yaw_deg": round(-10.0 + 20.0 * rnd(s, "yaw"), 2), "pitch_deg": 90.0,
                        "strength": round(0.7 + 0.2 * rnd(s, "st"), 3),
                        "on": "ground_" + ("east" if cz > 0 else "west") + ("_footway" if abs(cz) > CHANNEL_Z_M + 0.2 else "_carriageway")})
+    decals += chandler_marks(pieces, house)
     # Every ground mark stands at the ground's own height where it lies (ground_y).
     for d in decals:
         if d.get("pitch_deg") == 90.0:
             d["y_m"] = ground_y(d["z_m"])
+    for d in decals:
+        if d["on"] == CHANDLER:
+            stain_chandler(d)
     decals += room_wear()
     decals += counter_marks()
     decals += office_marks()
@@ -435,6 +454,94 @@ def stain_office(d):
     """The office's marks laid with M_LedgerStain (colour and sheen), the street's with M_LedgerGrime until their own gate."""
     d["material"] = "stain"
     d["rough"] = STAIN_ROUGH_PICTURE.get(d["picture"], STAIN_ROUGH.get(d["kind"], 0.6))
+    return d
+
+
+#: ONE SHOP FRONT WORN BY THE LAYER RECIPE: THE CHANDLER'S (30 October 2026, his order D11; production/research/street-wear/
+#: MAFIA-WEAR-2026-10-28.md, "One shop front: the chandler", S1 and S3). Its bay keeps its eight marks (the splash and
+#: damp bands at the foot, the wash from the eaves, on its front and its south gable, and its two sill streaks) and
+#: gains two: one rust leak under the gutter's end (Mafia's 2.1 m by 0.55 m) and the dirt trodden onto the footway at
+#: its two doors. All ten are laid with M_LedgerStain, each with a sheen of its own, so a mark differs from the brick in
+#: roughness as well as colour (the layer recipe's step 1). Ten on the bay, six on its front, three on its gable, one
+#: on the ground; leaks and streaks three of the nine wall marks (Mafia's street: 38%, about two in five; five of nine
+#: if the full-height washes are counted as Mafia's full-height leak stains, which they resemble). The cloud's front
+#: takes no street marks (shop-interiors.json "street_decals": false), so every mark lands on the street's own brick
+#: and paving around it.
+CHANDLER = "east_chandler_bay0"
+CHANDLER_FRONT_Z = 5.295        # shop-interiors.json: the cloud front's wall face, its doors in it
+#: the sill streaks' length: the study's 1.5 to 2.5 m (I), kept to where the streak pictures' 1,024 rows give 512 px/m
+#: within 20% (C6: 427 to 602); each runs from its sill to the cornice, about 0.75 m down, and the rest falls on the
+#: cloud front, which takes none
+STREAK_LEN_M = (1.7, 2.4)
+STREAK_TUCK_M = 0.02            # the mark's top this far up under the sill's nose (concrete: it takes no marks)
+RUST = "production/assets/street-wear/wear_rust"
+THRESHOLD = "production/assets/street-wear/wear_threshold"
+#: Mafia's rust leaks' tint (R; the study, layer 3), over their own picture; ours is CHANDLER_TINT's, over our picture's
+#: own rust brown (tools/make_wear_masks.py), measured against this brick
+RUST_TINT_MAFIA = [0.78, 0.69, 0.64]
+#: the gutter's end the leak hangs from: the gutter runs x 40 to 46 at the eaves (vignette-pieces.json
+#: east_chandler_gutter), and the bay has no downpipe, so it discharges at its end by the alley (x 46)
+RUST_X_M, RUST_TOP_M, RUST_W_M, RUST_H_M = 45.70, 6.25, 0.55, 2.1
+#: the threshold: both of the cloud front's doors (its shop door x 43.76 to 44.63, its side door 44.73 to 45.55, read off
+#: its pictures: the piece list's doors at x 40.8 and 41.6 are the old refit's, and try 2 laid it before the window),
+#: out 0.9 m from the front's face
+THRESHOLD_X_M, THRESHOLD_W_M, THRESHOLD_D_M = 44.65, 1.9, 0.9
+CLOUD_DOORS_X_M = ((43.76, 44.63), (44.73, 45.55))
+#: EACH MARK'S SHEEN (the layer recipe's step 1: at least 0.1 off its wall in the roughness view). Measured in the game's
+#: roughness view before any change (F:/LedgerTools/gate/new/chandler-wear/before/buffers), the bay's brick reads 0.90
+#: (decoded; 0.96 as shown, p10 to p90 0.93 to 0.97) and the paving at its doors 0.58, so no matt mark could stand 0.1
+#: off the brick; on this wet day the marks water lays are wet and the smoother ones: the wash off the eaves, the sill
+#: streaks and the rust run, the splash from the wet road, rising damp the most. The dirt trodden onto the wet flags
+#: is the one matt mark (mud breaks the water's sheen). TRY 2 (30 October, after try 1's measure and its lit picture):
+#: at 0.40 to 0.55 the marks stood 0.26 to 0.40 off the brick, well past the 0.1, and their sheen caught the sky, so in
+#: the lit view the bay read cleaner than before; eased to 0.55 to 0.7, about 0.15 off.
+CHANDLER_ROUGH = {"splash": 0.6, "wash": 0.7, "damp": 0.55, "streak": 0.65, "rust": 0.7, "threshold": 0.95}
+#: EACH MARK'S COLOUR (the layer recipe's step 1: a mark darkens its base colour by at most 40%): a mark lays its picture's
+#: colour (the grey 64 of 255, 0.051 linear, or the rust's own) times its tint over the surface by its coverage, which
+#: the overlapping wash, damp and splash raise to about 0.95 at the wall's foot. The kinds' street tints (VignetteShot.cpp
+#: TintOf, 0.10 to 0.20) are near black over this dark brick (the bay's brick measured (0.19, 0.061, 0.032) linear, mean
+#: 0.094; the paving at the doors (0.138, 0.120, 0.102)): the old wash darkened it about 70% at its strongest. TRY 1 laid
+#: about 0.6 to 0.7 of each surface's mean (tint = colour / 0.051) and measured at the marks' strongest fiftieth: the wash
+#: 27% darker, the sill streaks 10 and 16%, the rust 40%, the threshold 5%, and the bay read clean in the lit view (the
+#: old wash was much darker). TRY 2 aims each at about a third: the wash's grey a seventh darker, the streaks' 0.6 of
+#: try 1's and laid stronger (CHANDLER_STREAK_STRENGTH), the rust a tenth lighter, the threshold's mud 0.72 of try 1's.
+CHANDLER_TINT = {"splash": [1.52, 1.05, 0.76], "wash": [1.44, 0.87, 0.64], "damp": [2.11, 0.67, 0.35],
+                 "streak": [1.0, 0.6, 0.44], "rust": [1.38, 1.21, 1.1], "threshold": [1.26, 1.09, 0.91]}
+#: the chandler's sill streaks laid stronger than the street's (0.35 to 0.75) in try 2: at try 1's 0.53 and 0.56 they
+#: darkened the brick only 10 and 16% where they are strongest, under the wash, and did not read
+CHANDLER_STREAK_STRENGTH = (0.75, 0.9)
+#: S3, THE BRICK'S STREAKS (30 October): Mafia's facade masters tint their colour by a world-position noise, its tiling
+#: (10.7, 11.1) across the two level axes and 1 up, so it varies ten times faster along a wall than up it (streaks),
+#: raised to the power 0.56 (the study, layer 2; R). Here only the chandler's house carries it (nothing is multiplied
+#: before he approves one sample), on its front's and its north wall's brick rows; the amount is the most the streaks
+#: darken, times the house's wear. The shape's scale is tools/ue/make_base_material.py's.
+BRICK_STREAK_BAYS = {CHANDLER: ("east_chandler_bay_north",)}
+BRICK_STREAK_AMOUNT = 0.25
+
+
+def chandler_marks(pieces, house):
+    """The chandler's two new marks (its eight are made with the street's rules, its streaks lengthened in the sill loop)."""
+    by = {p["name"]: p for p in pieces["pieces"]}
+    b = by.get(CHANDLER)
+    if b is None:
+        return []
+    zf, facing = face_of(b)
+    h = house[CHANDLER]
+    out = []
+    rust = wall_decal("streak", RUST_X_M, RUST_TOP_M - RUST_H_M / 2.0, zf, facing, RUST_W_M, RUST_H_M, 0.7 + 0.2 * h["wear"], CHANDLER)
+    rust.update({"kind": "rust", "picture": RUST})
+    out.append(rust)
+    out.append({"kind": "threshold", "picture": THRESHOLD, "x_m": THRESHOLD_X_M, "y_m": 0.0,
+                "z_m": round(CHANDLER_FRONT_Z - THRESHOLD_D_M / 2.0, 4), "w_m": THRESHOLD_W_M, "h_m": THRESHOLD_D_M,
+                "yaw_deg": 0.0, "pitch_deg": 90.0, "strength": round(0.75 + 0.2 * h["wear"], 3), "on": CHANDLER})
+    return out
+
+
+def stain_chandler(d):
+    """The chandler's marks laid with M_LedgerStain, each with its kind's sheen and colour."""
+    d["material"] = "stain"
+    d["rough"] = CHANDLER_ROUGH[d["kind"]]
+    d["tint"] = list(CHANDLER_TINT[d["kind"]])
     return d
 #: THE KIT BAY'S FRONT (6 October; tools/art-recipes/terrace-front.py KIT_BAYS, Rita's): its pieces'
 #: faces in street metres, from the kit's layout (the window from the bay's left pier, then the shop
@@ -613,7 +720,37 @@ def selftest():
                                                 for k in {(d["pitch_deg"], d["yaw_deg"], round(d["x_m"], 2) if d["yaw_deg"] in (90.0, 270.0) else round(d["z_m"], 2)) for d in walls_floor if d["pitch_deg"] == 0.0}) <= 6)
     check("every office mark is laid with the stain material and a sheen of its own",
           office and all(d.get("material") == "stain" and 0.0 <= d.get("rough", -1) <= 1.0 for d in office))
-    check("the street's marks keep the grime material until their own gate", not any(d.get("material") for d in decals if d["on"] != "mickeys_room"))
+    check("the street's marks keep the grime material until their own gate", not any(d.get("material") for d in decals if d["on"] not in ("mickeys_room", CHANDLER)))
+    # THE CHANDLER'S BAY (30 October, S1 and S3)
+    ch = [d for d in decals if d["on"] == CHANDLER]
+    walls = {}
+    for d in ch:
+        if d["pitch_deg"] == 0.0:
+            walls.setdefault(d["yaw_deg"], []).append(d)
+    leaks = [d for d in ch if d["kind"] in ("streak", "rust")]
+    on_walls = sum(len(v) for v in walls.values())
+    check("the chandler's bay carries 8 to 10 marks, at most 6 a wall", 8 <= len(ch) <= 10 and max(len(v) for v in walls.values()) <= 6)
+    check("its leaks and streaks about two in five of its wall marks (a third to a half)", 1 / 3.0 - 1e-9 <= len(leaks) / float(on_walls) <= 0.5)
+    check("its base band kept: a splash and a damp band at the foot of its front and its gable",
+          all(sum(1 for d in v if d["kind"] == k) == 1 for v in walls.values() for k in ("splash", "damp")))
+    st = [d for d in ch if d["kind"] == "streak"]
+    sills = [p for p in pieces["pieces"] if p["bom"] == "C13_sills_lintels" and p["name"].startswith("east_chandler_up") and "_sill" in p["name"]]
+    check("its sill streaks drawn 1.5 to 2.5 m long from their sills' undersides",
+          len(st) == len(sills) == 2 and all(1.5 <= d["h_m"] <= 2.5 for d in st)
+          and all(min(abs(d["y_m"] + d["h_m"] / 2 - STREAK_TUCK_M - (p["y_m"] - p["sy_m"] / 2)) for p in sills) < 1e-3 for d in st))
+    rust = [d for d in ch if d["kind"] == "rust"]
+    check("one rust leak, Mafia's 2.1 by 0.55 m, hanging from the eaves", len(rust) == 1 and (rust[0]["h_m"], rust[0]["w_m"]) == (2.1, 0.55)
+          and abs(rust[0]["y_m"] + rust[0]["h_m"] / 2 - RUST_TOP_M) < 1e-3)
+    thr = [d for d in ch if d["kind"] == "threshold"]
+    check("the threshold's dirt on the footway before both doors, up to the front's face",
+          len(thr) == 1 and thr[0]["pitch_deg"] == 90.0 and abs(thr[0]["y_m"] - FOOTWAY_ABOVE_CROWN_M) < 1e-6
+          and abs(thr[0]["z_m"] + thr[0]["h_m"] / 2 - CHANDLER_FRONT_Z) < 1e-3
+          and thr[0]["x_m"] - thr[0]["w_m"] / 2 <= min(a for a, _b in CLOUD_DOORS_X_M) and thr[0]["x_m"] + thr[0]["w_m"] / 2 >= max(b for _a, b in CLOUD_DOORS_X_M))
+    check("every chandler mark is laid with the stain material, a sheen and a tint of its own",
+          all(d.get("material") == "stain" and 0.0 <= d["rough"] <= 1.0 and len(d.get("tint", [])) == 3 for d in ch))
+    streaked = [h for h in houses if h.get("streak")]
+    check("the brick's streaks on the chandler's house alone, as strong as it is worn (S3)",
+          [h["bay"] for h in streaked] == [CHANDLER] and abs(streaked[0]["streak"] - round(BRICK_STREAK_AMOUNT * streaked[0]["wear"], 3)) < 1e-9)
     pale = [d for d in office if d["kind"] == "pale"]
     prints = [(6.32, 1.70, 0.30, 0.42), (6.89, 1.82, 0.21, 0.148), (5.75, 1.54, 0.30, 0.10), (6.89, 1.34, 0.30, 0.42)]   # shop-room.py, street metres
     check("the pale oblongs keep clear of the notices hanging now",

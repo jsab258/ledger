@@ -7276,6 +7276,53 @@ namespace
 	}
 
 	void ApplyShopInteriors();
+	// THE BRICK'S STREAKS, 30 October 2026 (his order D11, the chandler's S3; production/research/street-wear/
+	// MAFIA-WEAR-2026-10-28.md): M_LedgerSurface's world-noise streak tint (tools/ue/make_base_material.py STREAK_PARAM),
+	// set on the brick rows of a house the wear file gives a "streak" (tools/street_wear.py: the chandler's alone until he
+	// approves the sample), its own rows and those it names in "streak_also"; every other row keeps the material's 0.
+	// -NoBrickStreaks sets none, for the picture without them.
+	bool ReadStreetSpecFile(const TCHAR* Leaf, FString& Out);
+	int32 GBrickStreakRows = 0;
+	float BrickStreakFor(const LedgerStreet::Row& Rw)
+	{
+		static TMap<FString, float> ByHouse;
+		static bool bRead = false;
+		if (!bRead)
+		{
+			bRead = true;
+			FString Text;
+			TSharedPtr<FJsonObject> Root;
+			const TArray<TSharedPtr<FJsonValue>>* Houses = nullptr;
+			if (ReadStreetSpecFile(TEXT("street-wear.json"), Text))
+			{
+				const TSharedRef<TJsonReader<>> R = TJsonReaderFactory<>::Create(Text);
+				if (FJsonSerializer::Deserialize(R, Root) && Root.IsValid() && Root->TryGetArrayField(TEXT("houses"), Houses))
+				{
+					for (const TSharedPtr<FJsonValue>& V : *Houses)
+					{
+						const TSharedPtr<FJsonObject> H = V.IsValid() ? V->AsObject() : nullptr;
+						double S = 0.0;
+						if (!H.IsValid() || !H->TryGetNumberField(TEXT("streak"), S) || S <= 0.0) { continue; }
+						ByHouse.Add(H->GetStringField(TEXT("bay")), (float)S);
+						const TArray<TSharedPtr<FJsonValue>>* Also = nullptr;
+						if (H->TryGetArrayField(TEXT("streak_also"), Also) && Also != nullptr)
+						{
+							for (const TSharedPtr<FJsonValue>& A : *Also) { if (A.IsValid()) { ByHouse.Add(A->AsString(), (float)S); } }
+						}
+					}
+				}
+			}
+		}
+		static const bool bOff = FParse::Param(FCommandLine::Get(), TEXT("NoBrickStreaks"));
+		if (bOff || ByHouse.Num() == 0 || (Rw.Base != "brick_grey" && Rw.Base != "brick_red")) { return 0.0f; }
+		const FString Mesh(UTF8_TO_TCHAR(Rw.Mesh.c_str()));
+		for (const TPair<FString, float>& P : ByHouse)
+		{
+			if (Mesh.EndsWith(TEXT("_h_") + P.Key)) { return P.Value; }
+		}
+		return 0.0f;
+	}
+
 	void PaintStreet()
 	{
 		if (GStreetLoaded == 0 || GBaseMaterial == nullptr) { return; }
@@ -7460,6 +7507,12 @@ namespace
 			Mid->SetVectorParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::AlbedoGradeParam())),
 			                             FLinearColor((float)Gr.R, (float)Gr.G, (float)Gr.B, 1.0f));
 			Mid->SetScalarParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::WetnessParam())), 0.0f);
+			if (const float Streak = BrickStreakFor(Rw); Streak > 0.0f)
+			{
+				Mid->SetScalarParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::StreakParam())), Streak);
+				++GBrickStreakRows;
+				UE_LOG(LogTemp, Display, TEXT("LedgerBrickStreaks: %s streaked at %.3f (street-wear.json houses), %d rows"), UTF8_TO_TCHAR(Rw.Mesh.c_str()), Streak, GBrickStreakRows);
+			}
 			if (GRowWear.Num() < GStreetActors.Num()) { GRowWear.SetNum(GStreetActors.Num()); }
 			GRowWear[I].Tex[0] = Albedo;
 			GRowWear[I].Tex[1] = NormalMap;
@@ -8864,6 +8917,11 @@ namespace
 			// without show what they change in the base-colour and roughness views (the layer recipe's check)
 			static const bool bNoOfficeWear = FParse::Param(FCommandLine::Get(), TEXT("NoOfficeWear"));
 			if (bNoOfficeWear && D->GetStringField(TEXT("on")) == TEXT("mickeys_room")) { continue; }
+			// -NoWearOn=<on> (30 October, the chandler's S1): one owner's marks left out (east_chandler_bay0), so a picture
+			// with them and one without show what they change, as -NoOfficeWear does for the office
+			static FString NoWearOn;
+			static const bool bNoWearOn = FParse::Value(FCommandLine::Get(), TEXT("NoWearOn="), NoWearOn) && !NoWearOn.IsEmpty();
+			if (bNoWearOn && D->GetStringField(TEXT("on")) == NoWearOn) { continue; }
 			++GWearAsked;
 			const FString Kind = D->GetStringField(TEXT("kind"));
 			const FString Pic = D->GetStringField(TEXT("picture"));
@@ -8871,7 +8929,15 @@ namespace
 			if (Have == nullptr)
 			{
 				const FString Leaf = FPaths::GetCleanFilename(Pic);
-				const FString Full = GDecalRoot / Pic / (Leaf + TEXT(".png"));
+				// A PICTURE UNDER production/ (30 October: the chandler's rust and threshold, production/assets/street-wear)
+				// from the repository's root, or the packaged copy's staged one, as the street's own pictures are read
+				// (StreetMeshes.h PictureLeaf); every other one under the decal root
+				FString Full = GDecalRoot / Pic / (Leaf + TEXT(".png"));
+				if (Pic.StartsWith(TEXT("production/")))
+				{
+					Full = FPaths::Combine(GStreetRepoRoot.IsEmpty() ? FPaths::Combine(GDecalRoot, TEXT("../../../..")) : GStreetRepoRoot, Pic, Leaf + TEXT(".png"));
+					FPaths::CollapseRelativeDirectories(Full);
+				}
 				int32 W = 0, H = 0;
 				FString As;
 				Have = &Pics.Add(Pic, IFileManager::Get().FileSize(*Full) > 0 ? ImportTexture(Full, true, W, H, As) : nullptr);

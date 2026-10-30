@@ -95,7 +95,7 @@ def footprint(d, inner=0.6):
     return [tuple(c[i] + sa * hw * along[i] + sb * hh * across[i] for i in range(3)) for sa, sb in ((-1, -1), (1, -1), (1, 1), (-1, 1))]
 
 
-def measure_marks(rough_with, rough_without, base_with, base_without, cam, marks, min_pixels=40):
+def measure_marks(rough_with, rough_without, base_with, base_without, cam, marks, min_pixels=40, inner=0.6):
     """Per mark of the wear file: the pixels inside its projected middle, measured at their strongest tenth."""
     from PIL import Image, ImageDraw
     h, w = rough_with.shape[:2]
@@ -103,7 +103,7 @@ def measure_marks(rough_with, rough_without, base_with, base_without, cam, marks
     bw, bo = srgb_to_linear(base_with).mean(axis=2), srgb_to_linear(base_without).mean(axis=2)
     out = []
     for k, m in enumerate(marks):
-        pts = [project(cam, p, w, h) for p in footprint(m)]
+        pts = [project(cam, p, w, h) for p in footprint(m, inner)]
         row = {"mark": k, "kind": m["kind"], "picture": m["picture"].split("/")[-1], "at": [m["x_m"], m["y_m"], m["z_m"]]}
         if any(p is None for p in pts):
             out.append(dict(row, seen=False, why="behind the camera"))
@@ -125,10 +125,11 @@ def measure_marks(rough_with, rough_without, base_with, base_without, cam, marks
     return out
 
 
-def run_marks(with_dir, without_dir, cam, wear_file, on="mickeys_room"):
+def run_marks(with_dir, without_dir, cam, wear_file, on="mickeys_room", inner=0.6):
     marks = [d for d in json.load(open(wear_file, encoding="utf-8"))["decals"] if d["on"] == on]
     rows = measure_marks(load(os.path.join(with_dir, "roughness.png")), load(os.path.join(without_dir, "roughness.png")),
-                         load(os.path.join(with_dir, "basecolor.png")), load(os.path.join(without_dir, "basecolor.png")), cam, marks)
+                         load(os.path.join(with_dir, "basecolor.png")), load(os.path.join(without_dir, "basecolor.png")), cam, marks,
+                         inner=inner)
     for r in rows:
         if not r["seen"]:
             continue
@@ -207,5 +208,10 @@ if __name__ == "__main__":
         cam = tuple(float(x) for x in sys.argv[sys.argv.index("--camera") + 1].split(","))
         wear = sys.argv[sys.argv.index("--wear") + 1] if "--wear" in sys.argv else os.path.join(
             os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "production", "specs", "street-wear.json")
-        sys.exit(run_marks(sys.argv[1], sys.argv[2], cam, wear))
+        # --on (30 October, the chandler's S1): whose marks to measure, the wear file's "on" (the office's by default)
+        on = sys.argv[sys.argv.index("--on") + 1] if "--on" in sys.argv else "mickeys_room"
+        # --inner (30 October): how much of each mark's rectangle is read, its middle 60% by default; 1.0 for a mark that
+        # lands only on part of its rectangle (the chandler's foot bands reach brick only at its piers)
+        inner = float(sys.argv[sys.argv.index("--inner") + 1]) if "--inner" in sys.argv else 0.6
+        sys.exit(run_marks(sys.argv[1], sys.argv[2], cam, wear, on, inner))
     sys.exit(run(sys.argv[1], sys.argv[2]))
