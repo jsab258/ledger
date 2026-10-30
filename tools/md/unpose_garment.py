@@ -2,6 +2,7 @@
 pose the game's bodies stand in.
 
     blender -b --factory-startup -P tools/md/unpose_garment.py -- DRAPE_BODY.fbx DRAPE_BODY.json GARMENT.obj OUT.obj
+        [--resolve Z0,Z1,XMAX] [--resolve-clear 0.2] [--resolve-rounds 12]     # the crotch put out of the bent-back body
 
 WHY, 28 October 2026 (the sleeve's end, fourth round; production/research/game-clothing-pipeline/SLEEVE-END-2026-10-28.md).
 Tom's elbows bend 36.6 degrees in his reference pose and Marvelous wraps each sleeve round one straight volume per arm,
@@ -13,7 +14,7 @@ drape body's surface, and the skeleton turns each recorded joint back by its rec
 
 HOW. Marvelous's OBJ (millimetres, y up) is read as Blender's (x, -z, y) / 1000; each group ("g name") becomes an
 object; weights by Blender's data transfer (nearest face, interpolated); the elbow turns of DRAPE_BODY.json undone in
-reverse order (the upper arm turns too, if the drape body has them); written back as Marvelous's OBJ, one group per
+reverse order (the upper arm turns too, if the drape body has them, and the thighs about the hips); written back as Marvelous's OBJ, one group per
 piece, faces as read.
 """
 import json
@@ -71,12 +72,14 @@ for name, (ob, _) in pieces.items():
     a = ob.modifiers.new("Armature", "ARMATURE")
     a.object = arm
 
-# the recorded turns undone: the elbows first, then the upper arms (they were made in the other order)
+# the recorded turns undone: the elbows first, then the upper arms (they were made in the other order); the thighs
+# (pose_body.py --thighs-apart, 30 October 2026, the jeans' crotch) on their own chain, about each hip
 bpy.context.view_layer.objects.active = arm
 bpy.ops.object.mode_set(mode="POSE")
 W = arm.matrix_world
 for s, t in turns.items():
-    for bone, rec, pivot_key in (("lowerarm_", t.get("elbow"), "elbow"), ("upperarm_", t if "turnDeg" in t else None, "shoulder")):
+    for bone, rec, pivot_key in (("lowerarm_", t.get("elbow"), "elbow"), ("upperarm_", t if "turnDeg" in t else None, "shoulder"),
+                                 ("thigh_", t.get("thigh"), "hip")):
         if not rec:
             continue
         pb = arm.pose.bones[bone + s]
@@ -91,14 +94,68 @@ bpy.ops.object.mode_set(mode="OBJECT")
 # "v" lines, each a vertex's new place; the "vn" lines dropped and faces' normal indices with them, since the bend
 # changed the normals (the importer recomputes them)
 dg = bpy.context.evaluated_depsgraph_get()
-moved = {}
+world, links = {}, {}
 for name, (ob, used) in pieces.items():
     ev = ob.evaluated_get(dg)
     me = ev.to_mesh()
     for k, i in enumerate(used):
-        c = ev.matrix_world @ me.vertices[k].co
-        moved[i] = (c.x * 1000.0, c.z * 1000.0, -c.y * 1000.0)
+        world[i] = ev.matrix_world @ me.vertices[k].co
+    for e in me.edges:
+        a, b = used[e.vertices[0]], used[e.vertices[1]]
+        links.setdefault(a, []).append(b)
+        links.setdefault(b, []).append(a)
     ev.to_mesh_clear()
+
+# --resolve Z0,Z1,XMAX (30 October 2026, Tom's jeans, drape n3): bent back, the thighs come together again (0 to 5 mm
+# apart below his crotch) and each leg's cloth follows its own thigh into the other: 38 points over 3 mm inside him.
+# Where two surfaces touch, cloth can only lie on the line where they meet, as a real pair of jeans lies pressed there.
+# So inside that box (heights in metres, the middle within XMAX), each garment point inside the bent-back body (the
+# OBJ's own body group) is put out on its surface plus --resolve-clear mm, a few rounds, each followed by one light
+# smoothing of the points moved, the last a push alone. Off by default: every other garment is bent back as before.
+resolved = None
+if "--resolve" in argv:
+    from mathutils.bvhtree import BVHTree
+    z0, z1, xmax = (float(t) for t in argv[argv.index("--resolve") + 1].split(","))
+    clear = float(argv[argv.index("--resolve-clear") + 1]) / 1000.0 if "--resolve-clear" in argv else 0.0002
+    rounds = int(argv[argv.index("--resolve-rounds") + 1]) if "--resolve-rounds" in argv else 12
+    body_name = max(pieces, key=lambda n: (n.endswith("_LOD0"), len(pieces[n][1])))
+    bob, bused = pieces[body_name]
+    bev = bob.evaluated_get(dg)
+    bme = bev.to_mesh()
+    bme.calc_loop_triangles()
+    bvh = BVHTree.FromPolygons([tuple(bev.matrix_world @ v.co) for v in bme.vertices], [tuple(t.vertices) for t in bme.loop_triangles])
+    bev.to_mesh_clear()
+    body_verts = set(bused)
+    zone = [i for i, c in world.items() if i not in body_verts and z0 <= c.z <= z1 and abs(c.x) <= xmax]
+    touched = set()
+
+    def push():
+        n_ = 0
+        for i in zone:
+            loc, nrm, _fi, _d = bvh.find_nearest(world[i])
+            if loc is not None and (world[i] - loc).dot(nrm) < clear:
+                world[i] = loc + nrm * clear
+                touched.add(i)
+                n_ += 1
+        return n_
+    # a seam's two sides are separate points at one place (one group per piece): they move as one
+    twins = {}
+    for i in zone:
+        twins.setdefault(tuple(round(c * 1e5) for c in world[i]), []).append(i)
+    first = push()
+    for _ in range(rounds):
+        new = {i: world[i].lerp(sum((world[j] for j in links.get(i, [])), Vector()) / max(1, len(links.get(i, []))), 0.5)
+               for i in touched if links.get(i)}
+        world.update(new)
+        for grp in twins.values():
+            if len(grp) > 1:
+                m_ = sum((world[i] for i in grp), Vector()) / len(grp)
+                for i in grp:
+                    world[i] = m_.copy()
+        push()
+    resolved = {"zone": [z0, z1, xmax], "zonePoints": len(zone), "insideBefore": first, "moved": len(touched),
+                "insideAfter": sum(1 for i in zone if (lambda r: r[0] is not None and (world[i] - r[0]).dot(r[1]) < 0)(bvh.find_nearest(world[i])))}
+moved = {i: (c.x * 1000.0, c.z * 1000.0, -c.y * 1000.0) for i, c in world.items()}
 out, vi = [], 0
 for line in open(GARMENT, encoding="utf-8", errors="replace"):
     if line.startswith("v "):
@@ -116,3 +173,5 @@ for line in open(GARMENT, encoding="utf-8", errors="replace"):
         out.append(line)
 open(OUT, "w", encoding="utf-8").write("".join(out))
 print("UNPOSED", OUT, {n: len(ob.data.vertices) for n, (ob, _) in pieces.items()}, flush=True)
+if resolved is not None:
+    print("RESOLVED", json.dumps(resolved), flush=True)

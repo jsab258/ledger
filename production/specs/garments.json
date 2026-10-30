@@ -106,6 +106,66 @@
    },
    "handed": "2026-10-30",
    "made": "Tom's zip jacket from Marvelous drape 19 with its cuffs built round his wrist in the bake (his order C9; tools/md/build_cuffs.py --edge-at-hand --gather; DECISIONS.md, 29 October), skinned again on 30 October as the jacket's own recipe says (skin_garment.py --piece-attr none --collar-attr piece:10 --keep-correctives): withdrawn on 29 October after holes and a right sleeve almost gone in the packaged game, it had been skinned without --piece-attr none, so its pattern piece 3, the right sleeve, was taken for a button and all its points given one averaged set of weights, and its export carried the flat pattern's UV layout first, so the game read the maps through it and the colour map's alpha cut holes. skin_garment.py now refuses a 'button' wider than 6 cm and puts the maps' layout first (uv_order.py). Every pose matches drape 19's (garment_pose_check.py); the editor's sit film passed a fresh reviewer. Maps from the built cuffs' bake. Known faults kept from drape 19: a small opening at the collar's front left of the zip seen standing, a bright patch in each elbow's crook, the lowered arms sinking into the sides, a crumple at the left hip, side-fold spikes. Navy (tint linear 0.082, 0.107, 0.247 on the 0.53 grey: about navy cotton) until he chooses its colour."
+  },
+  {
+   "who": "Tom",
+   "name": "TomJeans",
+   "fbx": "F:/LedgerTools/garments/tom/jeans/chain-n2/skinned-try2/jeans_skinned.fbx",
+   "hides": [
+    "lower"
+   ],
+   "maps": {
+    "colour": "F:/LedgerTools/garments/tom/jeans/chain-n2/baked-2048/jeans_colour_ao.png",
+    "normal": "F:/LedgerTools/garments/tom/jeans/chain-n2/baked-2048/jeans_normal_dx.png",
+    "packed": "F:/LedgerTools/garments/tom/jeans/chain-n2/baked-2048/jeans_packed.png",
+    "tint": [
+     0.115,
+     0.2,
+     0.37
+    ],
+    "tapecolour": [
+     0.115,
+     0.2,
+     0.37
+    ],
+    "teethcolour": [
+     0.56,
+     0.56,
+     0.58
+    ]
+   },
+   "hold": "until its editor walk and a fresh reviewer pass (30 October; worn with -WearHeld=TomJeans)",
+   "handed": "2026-10-30",
+   "made": "Tom's 1990 jeans (his order C9): FreeSewing's Titan at his size, draped in Marvelous (drape n2, short settling calls), bent back to his pose, 9,728 triangles, maps at 2048 (1.43 px/mm; 1024 fell under the 0.9 floor), skinned from his body with each leg from its own leg and the crotch faded to the pelvis over 7 cm (skin_garment.py --leg-sides --crotch-fade); the crotch's two layers between his near-touching thighs listed; the seat and crotch stretched sitting (6.0x) and the knees through by up to 16.5 mm in a hand-posed sit, both to be judged in the game. Tint: a faded 1990 mid-blue (sRGB about 95, 125, 165; the first, 72, 98, 140, read as a matched set with the navy jacket to its reviewer), his to approve."
+  },
+  {
+   "who": "Tom",
+   "name": "TomJumper",
+   "fbx": "F:/LedgerTools/garments/tom/jumper/chain-j3d/skin-try1/slots/jumper_skinned.fbx",
+   "hides": [],
+   "maps": {
+    "colour": "F:/LedgerTools/garments/tom/jumper/chain-j3d/baked/jumper_colour_ao.png",
+    "normal": "F:/LedgerTools/garments/tom/jumper/chain-j3d/baked/jumper_normal_dx.png",
+    "packed": "F:/LedgerTools/garments/tom/jumper/chain-j3d/baked/jumper_packed.png",
+    "tint": [
+     0.115,
+     0.115,
+     0.127
+    ],
+    "tapecolour": [
+     0.115,
+     0.115,
+     0.127
+    ],
+    "teethcolour": [
+     0.56,
+     0.56,
+     0.58
+    ]
+   },
+   "hold": "until its editor walk and a fresh reviewer pass (30 October; worn with -WearHeld=TomJumper)",
+   "handed": "2026-10-30",
+   "made": "Tom's plain jumper (his order C9): FreeSewing's Brian re-cut from a body with a neck (shoulder slope 26 degrees, ease 4%, a crew neck 8.5 by 4 in), draped in Marvelous (j3), its cuffs, welt and neckband built from the body pieces' own edges (build_rib_band.py), 19,480 triangles, maps at 2048; slot Shown (neckband, cuffs and 20 mm of the body pieces beside them) drawn, slot Hidden (everything the jacket always covers) not drawn (LedgerGarments.h), as Mafia hides covered parts; the neckband weighted from his full body with no head weight. Tint: a plain mid grey, his to approve."
   }
  ]
 }

@@ -6,6 +6,7 @@ weights pull two neighbouring points apart (the armpits, the sides, the hips).
 No rendering: numbers only, on the processor, so the graphics card stays free.
 
     blender -b -P tools/meshgen/blender/garment_pose_check.py -- BODY.fbx BOUND.blend OUT.json [--render DIR] [--sit SIT.fbx] [--garment NAME] [--dump]
+        [--inside-mm 5] [--with-rest] [--zone Z0,Z1,XMAX] [--zones ZONES.json]
 
 --sit takes the sitting pose from the last frame of a sit made on the same
 skeleton (F:/LedgerTools/tmp/drape/ron_sit.fbx, made by sit_anim.py, the one
@@ -48,6 +49,20 @@ SIT = argv[argv.index("--sit") + 1] if "--sit" in argv else None
 GARMENT = argv[argv.index("--garment") + 1] if "--garment" in argv else None
 # --dump (30 October): each pose's points through, by index, so where they lie can be read
 DUMP = "--dump" in argv
+# 30 October 2026 (Tom's jeans, the crotch): --inside-mm the depth that counts as through (5 mm unless set; the
+# skill's step 9 counts points over 3 mm); --with-rest counts the points inside at rest too (rest is otherwise the
+# baseline); --zone Z0,Z1,XMAX also reports, per pose, inside that box (heights in metres, the middle within XMAX):
+# cloth points over --inside-mm inside the body, body points through the cloth beyond 1 mm (each body point's inward
+# ray to the cloth, 30 mm), and edges over 1.2 times their rest length
+INSIDE = float(argv[argv.index("--inside-mm") + 1]) / 1000.0 if "--inside-mm" in argv else 0.005
+WITH_REST = "--with-rest" in argv
+ZONE = [float(t) for t in argv[argv.index("--zone") + 1].split(",")] if "--zone" in argv else None
+# --zones FILE.json (30 October 2026, Tom's jeans and jumper: the visible parts and the listed ones reported apart):
+# {"zones": {NAME: {"points": [garment vertex indices], "follow": BONE (optional)}}}; per pose and zone: cloth points
+# over --inside-mm inside the body, body points through the zone's cloth beyond 1 mm (each body point's inward ray,
+# 30 mm), the zone's edges (both ends in it) over 1.2 times their rest length and the worst, and with "follow" how far
+# its points stand off that bone's rigid motion (the jumper's welt making a shelf when he sits)
+ZONES = json.load(open(argv[argv.index("--zones") + 1], encoding="utf-8"))["zones"] if "--zones" in argv else None
 
 bpy.ops.wm.open_mainfile(filepath=BOUND)
 # --garment NAME (30 October: the skinned game files hold the body's mesh first, so the first mesh was the body)
@@ -228,6 +243,13 @@ rest_len = [e.calc_length() for e in rest.edges]
 edge_verts = [(e.verts[0].index, e.verts[1].index) for e in rest.edges]
 report = {"body": BODY, "bound": BOUND, "points": len(rest.verts), "edges": len(rest_len), "poses": {}}
 at_rest = None
+if ZONES:
+    zone_sets = {zn: set(z["points"]) for zn, z in ZONES.items()}
+    gpolys = [tuple(p.vertices) for p in gar.data.polygons]
+    face_zones = [[zn for zn, s in zone_sets.items() if all(i in s for i in p)] for p in gpolys]
+    rest_bone = {z["follow"]: (arm.matrix_world @ pb[z["follow"]].matrix).copy() for z in ZONES.values() if z.get("follow")}
+    report["zones"] = {zn: {"points": len(s), "faces": sum(1 for fz in face_zones if zn in fz), "follow": ZONES[zn].get("follow")}
+                       for zn, s in zone_sets.items()}
 
 for name in ("rest", "arms raised", "arms forward", "walking stride", "sitting"):
     pose(name)
@@ -240,11 +262,69 @@ for name in ("rest", "arms raised", "arms forward", "walking stride", "sitting")
     inside = []
     for v in g.verts:
         loc, nrm, fi, d = bvh.find_nearest(v.co)
-        if loc is not None and (v.co - loc).dot(nrm) < 0 and d > 0.005:
+        if loc is not None and (v.co - loc).dot(nrm) < 0 and d > INSIDE:
             inside.append((d, v.index))
     if at_rest is None:
-        at_rest = {i for _, i in inside}
+        at_rest = set() if WITH_REST else {i for _, i in inside}
     inside = [(d, i) for d, i in inside if i not in at_rest]
+    zone = None
+    if ZONE:
+        def in_zone(c):
+            return ZONE[0] <= c.z <= ZONE[1] and abs(c.x) <= ZONE[2]
+        z_in = [(d, i) for d, i in inside if in_zone(rest.verts[i].co)]
+        gt = g.copy()
+        bmesh.ops.triangulate(gt, faces=gt.faces[:])
+        gbvh = BVHTree.FromBMesh(gt)
+        gt.free()
+        bn = evaluated(body)
+        bn.normal_update()
+        thr = []
+        for v in bn.verts:
+            if not in_zone(v.co):
+                continue
+            hit = gbvh.ray_cast(v.co + v.normal * 1e-5, -v.normal, 0.03)
+            if hit[0] is not None and hit[3] > 0.001:
+                thr.append(hit[3])
+        bn.free()
+        g.verts.ensure_lookup_table()
+        zs = [(g.verts[a].co - g.verts[b].co).length / L0 for (a, b), L0 in zip(edge_verts, rest_len)
+              if L0 > 1e-6 and in_zone(rest.verts[a].co)]
+        zone = {"clothInside": len(z_in), "clothInsideWorstMm": round(1000 * max([d for d, _ in z_in] + [0.0]), 1),
+                "bodyThrough1mm": len(thr), "bodyThroughWorstMm": round(1000 * max(thr + [0.0]), 1),
+                "edgesOver1.2": sum(1 for r in zs if r > 1.2), "edgeWorst": round(max(zs + [0.0]), 3)}
+    zones_out = None
+    if ZONES:
+        g.verts.ensure_lookup_table()
+        gco = [v.co.copy() for v in g.verts]
+        gbvh_all = BVHTree.FromPolygons(gco, gpolys)
+        bz = evaluated(body)
+        bz.normal_update()
+        thr_z = {zn: [] for zn in ZONES}
+        for v in bz.verts:
+            hit = gbvh_all.ray_cast(v.co + v.normal * 1e-5, -v.normal, 0.03)
+            if hit[0] is not None and hit[3] > 0.001:
+                for zn in face_zones[hit[2]]:
+                    thr_z[zn].append(hit[3])
+        bz.free()
+        zones_out = {}
+        for zn, s in zone_sets.items():
+            zin = [d for d, i in inside if i in s]
+            ze = [((gco[a] - gco[b]).length / L0, a, b) for (a, b), L0 in zip(edge_verts, rest_len) if L0 > 1e-6 and a in s and b in s]
+            zs = [r for r, _a, _b in ze]
+            zo = {"clothInside": len(zin), "clothInsideWorstMm": round(1000 * max(zin + [0.0]), 1),
+                  "bodyThrough1mm": len(thr_z[zn]), "bodyThroughWorstMm": round(1000 * max(thr_z[zn] + [0.0]), 1),
+                  "edgesOver1.2": sum(1 for r in zs if r > 1.2), "edgeWorst": round(max(zs + [0.0]), 3),
+                  "edgeP99": round(sorted(zs)[int(0.99 * (len(zs) - 1))], 3) if zs else 0.0,
+                  # where the five worst edges lie at rest (metres) and the bone that moves them most
+                  "edgeWorstAt": [[round(r, 2)] + [round(c, 3) for c in (rest.verts[a].co + rest.verts[b].co) / 2] + [dominant[a]]
+                                  for r, a, b in sorted(ze, reverse=True)[:5] if r > 1.2]}
+            fb = ZONES[zn].get("follow")
+            if fb:
+                Tb = (arm.matrix_world @ pb[fb].matrix) @ rest_bone[fb].inverted()
+                off = sorted((gco[i] - Tb @ rest.verts[i].co).length for i in s)
+                zo["offBoneMm"] = {"median": round(1000 * off[len(off) // 2], 1), "p95": round(1000 * off[int(0.95 * (len(off) - 1))], 1),
+                                   "max": round(1000 * off[-1], 1)}
+            zones_out[zn] = zo
     stretched, crushed = strain(g, edge_verts, rest_len)
     worst = sorted(inside, reverse=True)[:1]
     report["poses"][name] = {
@@ -257,6 +337,10 @@ for name in ("rest", "arms raised", "arms forward", "walking stride", "sitting")
         "bodyStretched": round(len(bs) / len(body_len), 4),
         "bodyCrushed": round(len(bc) / len(body_len), 4),
     }
+    if zone is not None:
+        report["poses"][name]["zone"] = zone
+    if zones_out is not None:
+        report["poses"][name]["zones"] = zones_out
     if DUMP:
         report["poses"][name]["throughPoints"] = sorted(i for _, i in inside)
     print("POSE", name, json.dumps(report["poses"][name]), flush=True)

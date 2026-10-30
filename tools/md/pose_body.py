@@ -3,6 +3,7 @@ Designer recognises, for draping; and the record of the turn, so the draped garm
 
     blender -b -P tools/md/pose_body.py -- BODY.fbx OUT.fbx --arms-below 40
     blender -b -P tools/md/pose_body.py -- BODY.fbx OUT.fbx --keep-arms --straight-elbows   # the arms as they are, elbows straight
+    blender -b -P tools/md/pose_body.py -- BODY.fbx OUT.fbx --keep-arms --straight-elbows --thighs-apart 4   # and each thigh 4 degrees out
 
 WHY, 1 October (the jacket proof): imported in MetaHuman's reference pose, Marvelous said "Arrangement Points were
 not fitted to the avatar. The avatar must be in a T-pose or A-pose" and found no measurements, so it cannot place the
@@ -77,6 +78,26 @@ if "--straight-elbows" in argv:
         turns.setdefault(s, {})["elbow"] = {"turnDeg": round(math.degrees(ang), 2), "axis": [round(c, 6) for c in axis],
                                             "elbow": [round(c, 5) for c in e],
                                             "bendAfterDeg": round(math.degrees((h2 - e).normalized().angle(up)), 3)}
+# THE THIGHS DRAWN APART, --thighs-apart DEG (30 October 2026, Tom's jeans, drape n2: his inner thighs come within
+# 0 to 5 mm of each other from 0.83 m to his crotch at 0.906, so the jeans' crotch, which hangs there, could not lie
+# between them at Marvelous's 3 mm skin offset a side, and 8 of its points went more than 3 mm into the body). Each
+# thigh is turned out about its hip joint, square to the thigh and the body's side, by DEG; the calves and feet follow,
+# the skin follows the weights; the turn is recorded so the drape can be bent back with the legs (unpose_garment.py).
+if "--thighs-apart" in argv:
+    APART = opt("--thighs-apart", 0.0)
+    for s, out_x in (("l", 1.0), ("r", -1.0)):
+        pb = arm.pose.bones["thigh_" + s]
+        hip = arm.matrix_world @ pb.head
+        knee = arm.matrix_world @ arm.pose.bones["calf_" + s].head
+        d = (knee - hip).normalized()
+        axis = d.cross(Vector((out_x, 0.0, 0.0))).normalized()
+        R = Matrix.Rotation(math.radians(APART), 4, axis)
+        pb.matrix = arm.matrix_world.inverted() @ Matrix.Translation(hip) @ R @ Matrix.Translation(-hip) @ arm.matrix_world @ pb.matrix
+        bpy.context.view_layer.update()
+        k2 = arm.matrix_world @ arm.pose.bones["calf_" + s].head
+        turns.setdefault(s, {})["thigh"] = {"turnDeg": round(APART, 3), "axis": [round(c, 6) for c in axis],
+                                            "hip": [round(c, 5) for c in hip],
+                                            "kneeOutMm": round(1000 * (k2.x - knee.x) * out_x, 1)}
 bpy.ops.object.mode_set(mode="OBJECT")
 # the posed skin made the body's rest shape, and the posed skeleton its rest pose, so the FBX carries the skeleton in
 # the A-pose with the skin bound to it (Marvelous recognises a MetaHuman by its joint names, through its own

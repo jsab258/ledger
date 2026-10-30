@@ -3,7 +3,7 @@ each draped band's faces deleted and a new band lofted from the shell's ring it 
 
     blender -b --factory-startup -P tools/meshgen/blender/build_rib_band.py -- DRAPE_UNPOSED.obj PLAN.json OUT.obj
         [--bands cuffL,cuffR,welt,neckband] [--clear 4.5] [--row 6] [--cuff-past 8] [--reach 160] [--welt-in 0.90]
-        [--neck-in 0.92] [--weights-body F:/LedgerTools/bodies/MH_TomL1/MH_TomL1_Body.fbx]
+        [--neck-in 0.92] [--weights-body F:/LedgerTools/bodies/MH_TomL1/MH_TomL1_Body.fbx] [--sign-from-reach]
 
 WHY, 30 October 2026 (Tom's jumper, drape j3; the coordinator's ruling of the same day). The plan builds the welt, the
 cuffs and the crew neckband to the body rather than draping them to fit (JUMPER-PLAN-2026-10-29.md). The jacket's
@@ -259,6 +259,22 @@ for cuff in [b for b in BANDS if b.startswith("cuff")]:
     zone = [i for i, q in pat_s.items() if q[1] - y_w <= REACH + 1e-6]
     s_end = [polar(V[i])[0] for i, q in pat_s.items() if abs(q[1] - y_w - REACH) < 6.0]
     s_D = float(np.median(s_end))
+    # --sign-from-reach (30 October 2026, the jumper's bake: fitted on drape j3's crumpled sleeve end, the ring's turn
+    # came out the opposite way round the arm to the sleeve above it, +350 degrees against -354 measured row by row, so
+    # the cuffs and the rebuilt reach were the sleeve's mirror, wound inside out, and the blend passed through itself):
+    # the turn's sign and start fitted instead on the drape's own sleeve at the reach's top, each point's share across
+    # the sleeve's width there (the same share the rebuilt reach takes its angle from), where the sleeve is still a tube
+    if "--sign-from-reach" in argv:
+        top_ = [(i, q) for i, q in pat_s.items() if abs(q[1] - y_w - REACH) < 6.0]
+        t_top = []
+        for i, (x, y) in top_:
+            xl, xr = x_at(left, y), x_at(right, y)
+            t_top.append(min(1.0, max(0.0, (x - xl) / (xr - xl))) if abs(xr - xl) > 1e-6 else 0.0)
+        sgn_ring, conc_ring = sgn, conc
+        sgn, a0_fit, conc = fit_angles([polar(V[i])[1] for i, _q in top_], t_top)
+        ang_at = lambda t: a0_fit + sgn * 2 * math.pi * t  # noqa: E731
+        report.setdefault("signFromReach", {})[cuff] = {"ringSign": sgn_ring, "ringConcentration": round(conc_ring, 3),
+                                                        "reachSign": sgn, "reachConcentration": round(conc, 3), "points": len(top_)}
     clamped = 0
     for i in zone:
         x, y = pat_s[i]

@@ -3,6 +3,7 @@ on the MetaHuman body and armature it was draped on.
 
     blender -b --factory-startup -P tools/meshgen/blender/import_md_drape.py -- DRAPE.obj PLAN.json OUT.blend
         [--body F:/LedgerTools/bodies/MH_TomL1/MH_TomL1_FullBody.fbx] [--gap 0.05]
+        [--object Jacket] [--materials denim:Denim,knit:Knit]   (30 October: any garment; the jacket's defaults kept)
 
 WHY, 27 October 2026 (Tom's zip jacket, the bake chain's step 1: production/art/clothing/tom-outfit/
 BAKE-PLAN-2026-10-27.md). tools/meshgen/blender/retopo_garment.py takes one .blend with the garment as a mesh welded
@@ -34,9 +35,17 @@ BODY = opt("--body", "F:/LedgerTools/bodies/MH_TomL1/MH_TomL1_FullBody.fbx", str
 GAP = opt("--gap", 0.05)            # metres between islands in the pattern layout
 TOL = opt("--tol", 0.05)            # millimetres: a boundary vertex's furthest allowed distance from the plan outline
 WELD = opt("--weld", 0.00001)       # metres (0.01 mm): seam partners sit at the same point
+# ANY GARMENT'S FABRICS (30 October 2026, Tom's jeans and jumper: denim, knit, rib): the jacket's three keep their names;
+# any other fabric's material is its name capitalised ("denim" Denim), or as --materials denim:Denim,knit:Knit says.
+# --object names the welded drape (the jacket's "Jacket", which the later steps look for by default).
 MATS = {"shell": "Shell", "rib": "Rib", "tape": "Tape"}
+if "--materials" in argv:
+    MATS.update(dict(kv.split(":") for kv in argv[argv.index("--materials") + 1].split(",")))
+OBJ_NAME = opt("--object", "Jacket", str)
 
 plan = json.load(open(PLAN, encoding="utf-8"))
+for _p in plan["pieces"]:
+    MATS.setdefault(_p["fabric"], _p["fabric"].capitalize())
 pieces = {p["key"]: p for p in plan["pieces"]}
 log = {"drape": DRAPE, "plan": PLAN, "pieces": {}, "checks": {}}
 
@@ -134,7 +143,9 @@ for o in garment:
 bpy.context.view_layer.objects.active = garment[0]
 bpy.ops.object.join()
 jacket = bpy.context.view_layer.objects.active
-jacket.name = jacket.data.name = "Jacket"
+jacket.name = jacket.data.name = OBJ_NAME
+log["object"] = OBJ_NAME
+log["materials"] = {f: MATS[f] for f in dict.fromkeys(p["fabric"] for p in plan["pieces"])}
 bm = bmesh.new()
 bm.from_mesh(jacket.data)
 before = len(bm.verts)

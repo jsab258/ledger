@@ -1,6 +1,8 @@
 """A game-mesh garment skinned to a MetaHuman's skeleton, its joints corrected, ready for the builder.
 
     blender -b -P tools/meshgen/blender/skin_garment.py -- BODY.fbx GAME.blend OUT_DIR NAME [options]
+        30 October 2026, trousers: [--no-skirt] [--leg-sides 0,2:1,3] [--crotch-fade 0.07 --centre-seam 0,2:1,3]
+        (all off by default)
 
 WHY, 30 September (Jafar, after an outside audit: "one properly skinned jacket: shape, retopology, skinning, joint
 weights corrected, only loose parts simulated"). GAME.blend is retopo_garment.py's (or carry_garment.py's) game
@@ -185,8 +187,11 @@ for p_ in me.polygons:
         fn[vi] += 1
 side_x = fx / np.maximum(fn, 1)
 moved = 0
+# --no-skirt (30 October 2026, Tom's jeans): a garment whose legs are its own takes none of the skirt's rule (it would
+# give each trouser leg the mean of both thighs)
+NO_SKIRT = "--no-skirt" in argv
 for i in range(len(P)):
-    if comp[i] != main or P[i, 2] >= hip_z:
+    if NO_SKIRT or comp[i] != main or P[i, 2] >= hip_z:
         continue
     t = min(1.0, (hip_z - P[i, 2]) / max(1e-6, (hip_z - hem_z) * 0.45))
     t = t * t * (3 - 2 * t)
@@ -212,6 +217,85 @@ for i in range(len(P)):
     W[i] += t * want
     moved += 1
 log["skirt"] = {"hipZ": round(float(hip_z), 3), "hemZ": round(float(hem_z), 3), "backToPelvis": PEL, "points": moved}
+if NO_SKIRT:
+    log["skirt"]["off"] = True
+# THE CROTCH FADED INTO THE PELVIS (30 October 2026, Tom's jeans: his inner thighs are 0 to 5 mm apart at the crotch, so
+# nearest-skin copying gives the crotch's two sides two different thighs and a stride tears the seam; the September
+# trouser zones, production/research/clothing-pipeline/SKINNING-TROUSERS-2026-09-29.md, C.3: "at the centre seam, fade
+# each side's thigh into the pelvis over 6 to 8 cm"). --centre-seam R:L names the right and left pieces by their
+# "piece" attribute (retopo_pieces.py's plan order, e.g. 0,2:1,3); the centre seam is every point shared by a right and
+# a left piece; each point within --crotch-fade metres of it gives that share of its thigh bones' weight (every bone
+# named thigh*, the twists and correctives too) to the pelvis, all of it on the seam, none at the fade's end (smoothstep)
+# EACH LEG FROM ITS OWN LEG (--leg-sides R:L, 30 October 2026, the jeans' second try: where his inner thighs touch, the
+# nearest skin of a trouser leg's inner side can be the other thigh's, so in a stride one edge of that leg follows both
+# legs, 5.3 times its length at the inseam 6 cm under the crotch): on a point of the right pieces only, every bone of the
+# left leg (thigh_l and all under it) gives its weight to the same bone of the right leg, and the other way round; a
+# point shared by both sides (the centre seam) keeps both, for the crotch's fade below
+if "--leg-sides" in argv:
+    _r2, _l2 = argv[argv.index("--leg-sides") + 1].split(":")
+    _R2, _L2 = {int(x) for x in _r2.split(",")}, {int(x) for x in _l2.split(",")}
+
+    def _below(b):
+        out = [b.name]
+        for c_ in b.children:
+            out += _below(c_)
+        return out
+    leg_of = {"l": set(_below(arm.data.bones["thigh_l"])), "r": set(_below(arm.data.bones["thigh_r"]))}
+    _pa2 = me.attributes["piece"]
+    vside = [set() for _ in range(len(P))]
+    for f in bm.faces:
+        k_ = _pa2.data[f.index].value
+        for v in f.verts:
+            vside[v.index].add("r" if k_ in _R2 else "l" if k_ in _L2 else "x")
+    swapped, moved_w = 0, 0.0
+    for own, other in (("r", "l"), ("l", "r")):
+        pairs = [(col[n], ensure(n[:-2] + "_" + own)) for n in list(names) if n in leg_of[other] and n.endswith("_" + other)
+                 and arm.data.bones.get(n[:-2] + "_" + own) is not None]
+        ids_ = [i for i, s_ in enumerate(vside) if s_ == {own}]
+        for i in ids_:
+            w_ = sum(W[i, a_] for a_, _b in pairs)
+            if w_ <= 1e-6:
+                continue
+            for a_, b_ in pairs:
+                W[i, b_] += W[i, a_]
+                W[i, a_] = 0.0
+            swapped += 1
+            moved_w += w_
+    log["legSides"] = {"pointsSwapped": swapped, "meanWeightMoved": round(moved_w / max(swapped, 1), 3)}
+CROTCH = opt("--crotch-fade", 0.0)
+if CROTCH > 0 and "--centre-seam" in argv:
+    _r, _l = argv[argv.index("--centre-seam") + 1].split(":")
+    _R, _L = {int(x) for x in _r.split(",")}, {int(x) for x in _l.split(",")}
+    _pa = me.attributes["piece"]
+    _sides = [set() for _ in range(len(P))]
+    for f in bm.faces:
+        k_ = _pa.data[f.index].value
+        for v in f.verts:
+            _sides[v.index].add("R" if k_ in _R else "L" if k_ in _L else "")
+    seam_ids = [i for i, s_ in enumerate(_sides) if "R" in s_ and "L" in s_]
+    from mathutils.kdtree import KDTree as _KDc
+    kdc = _KDc(len(seam_ids))
+    for j_, i in enumerate(seam_ids):
+        kdc.insert(Vector(tuple(P[i])), j_)
+    kdc.balance()
+    thigh_cols = [col[n] for n in names if n.startswith("thigh")]
+    faded, given = 0, 0.0
+    for i in range(len(P)):
+        _c, _j, d_ = kdc.find(Vector(tuple(P[i])))
+        if d_ is None or d_ >= CROTCH:
+            continue
+        x_ = 1.0 - d_ / CROTCH
+        t_ = x_ * x_ * (3 - 2 * x_)
+        th_ = W[i, thigh_cols].sum()
+        if th_ <= 0:
+            continue
+        W[i, pelvis] += t_ * th_
+        W[i, thigh_cols] *= 1 - t_
+        faded += 1
+        given += t_ * th_
+    log["crotch"] = {"fadeM": CROTCH, "seamPoints": len(seam_ids), "pointsFaded": faded,
+                     "meanThighShareGiven": round(given / max(faded, 1), 3),
+                     "seamZ": [round(float(P[seam_ids, 2].min()), 3), round(float(P[seam_ids, 2].max()), 3)] if seam_ids else None}
 # the collar and the buttons carry no arm (nor Epic's shoulder correctives, which hang under it): they sit at the
 # neck and on the front
 def under(bone):

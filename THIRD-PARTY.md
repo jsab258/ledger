@@ -463,15 +463,12 @@ Attribution not required; recorded anyway under this file's standing rule.
 | **Where** | Patterns drafted to the cast's measurements by the clothing session's scripts in `F:/LedgerTools/freesewing` and `F:/LedgerTools/garments`; shipped as Unreal assets in `ue-probe/Content/Ledger/MetaHumans` (the flat cap, from **Florent**) and `ue-probe/Content/Ledger/Cloth/ron_donkey` (the donkey jacket, from **Brian**) |
 | **Not shipped** | Ron's jacket draped from **Jaeger** in Marvelous Designer's 14-day trial (`ue-probe/Content/Ledger/Cloth/ron_md_jacket`): the trial's terms (section 3.1.1) allow evaluation only and nothing was bought, so `ue-probe/Config/DefaultGame.ini` never cooks it and `tools/attribution-check.py --package` refuses a package that carries it (5 October 2026) |
 
-## Tom's shoes — inciprocal Inc., CC BY 4.0, attribution REQUIRED
+## A scanned shoe, not shipped — inciprocal Inc., CC BY 4.0
 
 | | |
 |---|---|
-| **Source** | **"Old Oxford Shoe"** by **inciprocal Inc.** (Sketchfab user inciprocal), a photo scan of an old brown leather oxford: https://sketchfab.com/3d-models/old-oxford-shoe-29a5ed053eab46a7af308215600985a2, published 9 June 2021; downloaded by Jafar on 30 October 2026 (the "Original format" OBJ zip, 78 MB), kept in `F:/LedgerTools/garments/tom/shoes/` |
-| **Licence** | Creative Commons Attribution 4.0 International (http://creativecommons.org/licenses/by/4.0/), read from Sketchfab's own data on 30 October 2026 ("Author must be credited. Commercial use is allowed.") and stated again in the zip's README ("Copyright (C) 2021 inciprocal Inc. This work is licensed under a Creative Commons Attribution 4.0 International License."); no NoAI mark. Allowed by Jafar's ruling of 30 October 2026 (RULINGS.md, Sources: CC BY 4.0 for clothes and their accessories, credited, brand marks painted out) |
-| **Required attribution, in the shipped credits** | "Tom's shoes: \"Old Oxford Shoe\" by inciprocal Inc., CC BY 4.0 (creativecommons.org/licenses/by/4.0), modified." (production/specs/credits.json, Characters) |
-| **Modified** | The maker's brand marks painted out of every map (the insole's woven label and printed code, the outsole's moulded brand, line name, codes and size badge, and an ink stamp; tools/meshgen/paint_out_marks.py, F:/LedgerTools/garments/tom/shoes/marks.json); the scanner's own moulded name on the outsole painted out with them, its copyright line in the maps' unused corner kept; mirrored for the other foot, refitted to Tom's foot, reduced to a game mesh and baked. |
-| **Where** | Working files in `F:/LedgerTools/garments/tom/shoes/` (not in git); shipped, once imported, as Unreal assets beside Tom's other garments in `ue-probe/Content/Ledger/MetaHumans` |
+| **Source** | "Old Oxford Shoe" by inciprocal Inc. (Sketchfab), https://sketchfab.com/3d-models/old-oxford-shoe-29a5ed053eab46a7af308215600985a2, downloaded by Jafar on 30 October 2026; CC BY 4.0 (read from Sketchfab's data and the zip's README) |
+| **Not shipped** | Fitted for Tom on 30 October and turned down by Jafar the same day (a square-toe slip-on, late-1990s fashion; his foot came through it): Tom wears boots made by this project instead. Its files, the brand marks painted out, stay in `F:/LedgerTools/garments/tom/shoes/`, out of the game; nothing in the game or the repository uses it, so the credits carry no line for it. If it is ever used, its credit goes back: "\"Old Oxford Shoe\" by inciprocal Inc., CC BY 4.0, modified." |
 
 ## What this project made itself
 

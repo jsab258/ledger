@@ -2,7 +2,9 @@
 holding roughness, the parts' ID and metal.
 
     blender -b --factory-startup -P tools/meshgen/blender/zip_bake.py -- LOW.blend OUT_DIR [--name zip_jacket]
-        [--tex 2048] [--cage 0.008] [--ao-samples 64]
+        [--tex 2048] [--cage 0.008] [--ao-samples 64] [--plan PLAN.json] [--object Jacket] [--rib-height 0.0004]
+    (30 October 2026: any garment: --plan names its pieces and its rib pieces by fabric, the floaters are whichever
+    the file holds, --rib-height 0 leaves the rib's wales to the material's tiling normal; the defaults are the jacket's)
 
 WHY, 27 October 2026 (Tom's zip jacket, the bake chain's step 7: production/art/clothing/tom-outfit/
 BAKE-PLAN-2026-10-27.md). The game mesh ("Low", its "UVMap" from uv_pack_low.py) takes the drape's folds and the
@@ -45,16 +47,25 @@ GREY = {0.0: 0.55, 0.25: 0.50, 0.5: 0.45, 0.75: 0.70, 1.0: 0.50}
 
 bpy.ops.wm.open_mainfile(filepath=LOW)
 low = bpy.data.objects["Low"]
-drape = bpy.data.objects["Jacket"]
-floaters = [bpy.data.objects[n] for n in ("Teeth", "Stops", "Welts")]
+# ANY GARMENT (30 October 2026, Tom's jeans and jumper): --object the drape's name (the jacket's "Jacket"); the floaters
+# only those the file holds (a garment with no zip or welts has none); --plan PLAN.json gives the pieces' names in the
+# plan's order and the rib pieces by their fabric, where the jacket's names and its band and cuff prefixes are the default
+DRAPE_NAME = opt("--object", "Jacket", str)
+drape = bpy.data.objects[DRAPE_NAME]
+FLOATER_NAMES = [n for n in ("Teeth", "Stops", "Welts") if n in bpy.data.objects]
+floaters = [bpy.data.objects[n] for n in FLOATER_NAMES]
 for o in bpy.data.objects:
-    if o.type == "MESH" and o.name not in ("Low", "Jacket", "Teeth", "Stops", "Welts"):
+    if o.type == "MESH" and o.name not in ["Low", DRAPE_NAME] + FLOATER_NAMES:
         o.hide_render = True
         o.hide_set(True)
 drape.hide_render = False
 axis = sum((drape.matrix_world @ v.co for v in drape.data.vertices), Vector()) / len(drape.data.vertices)
 PLAN_NAMES = ["frontL", "frontR", "back", "sleeveR", "sleeveL", "bandFrontR", "cuffR", "bandFrontL", "cuffL", "bandBack",
               "collar", "tapeR", "tapeL"]
+PLAN_ = json.load(open(opt("--plan", "", str), encoding="utf-8")) if "--plan" in argv else None
+if PLAN_ is not None:
+    PLAN_NAMES = [p["key"] for p in PLAN_["pieces"]]
+    log["plan"] = opt("--plan", "", str)
 # THE CUFFS FACE AWAY FROM THE FOREARM, FACE BY FACE (28 October 2026, drape 19: Marvelous turned each gripped cuff inside
 # out through itself at its seam with the sleeve, so wound on from the sleeve 74 and 75% of each cuff faced the wrist; a
 # one-sided material would cull it in the game, the binder finds no body facing its way, and the bake read the knot's
@@ -63,7 +74,8 @@ PLAN_NAMES = ["frontL", "frontR", "back", "sleeveR", "sleeveL", "bandFrontR", "c
 arm_ = next((o for o in bpy.data.objects if o.type == "ARMATURE"), None)
 CUFF_AXES = {}
 for cname_, side_ in (("cuffR", "r"), ("cuffL", "l")):
-    if arm_ is not None and "lowerarm_" + side_ in arm_.pose.bones and "hand_" + side_ in arm_.pose.bones:
+    if (cname_ in PLAN_NAMES and arm_ is not None and "lowerarm_" + side_ in arm_.pose.bones
+            and "hand_" + side_ in arm_.pose.bones):
         e_ = arm_.matrix_world @ arm_.pose.bones["lowerarm_" + side_].head
         h_ = arm_.matrix_world @ arm_.pose.bones["hand_" + side_].head
         CUFF_AXES[PLAN_NAMES.index(cname_)] = (e_, (h_ - e_).normalized())
@@ -126,7 +138,8 @@ for o in bpy.context.view_layer.objects:
 for c in srcs:
     c.select_set(True)
 bpy.context.view_layer.objects.active = srcs[0]
-bpy.ops.object.join()
+if len(srcs) > 1:
+    bpy.ops.object.join()
 src = bpy.context.view_layer.objects.active
 src.name = "BakeSource"
 for o in [drape] + floaters:
@@ -299,7 +312,9 @@ for k, pname in enumerate(PLAN_NAMES):
     o_k = bpy.data.objects.new("src_" + pname, me_k)
     o_k.matrix_world = drape.matrix_world
     bpy.context.scene.collection.objects.link(o_k)
-    extra = [floaters[0], floaters[1]] if pname.startswith("tape") else [floaters[2]] if pname.startswith("front") else []
+    fl_ = dict(zip(FLOATER_NAMES, floaters))
+    extra = ([fl_[n] for n in ("Teeth", "Stops") if n in fl_] if pname.startswith("tape")
+             else [fl_["Welts"]] if pname.startswith("front") and "Welts" in fl_ else [])
     parts_ = [o_k]
     for f_ in extra:
         c = f_.copy()
@@ -351,7 +366,8 @@ nrm[~got] = (0.5, 0.5, 1.0, 1.0)
 # THE RIB'S RIDGES, drawn from the pattern (the drape has none: the review's "rib bakes smooth"): wales 4 mm apart
 # along the piece's own x, 0.4 mm high, their slope laid along that direction in the layout and added to the bake
 RIB_PITCH, RIB_H = opt("--rib-pitch", 0.004), opt("--rib-height", 0.0004)
-rib_ix = [k for k, n in enumerate(PLAN_NAMES) if n.startswith(("band", "cuff"))]
+rib_ix = ([k for k, p in enumerate(PLAN_["pieces"]) if p["fabric"] == "rib"] if PLAN_ is not None
+          else [k for k, n in enumerate(PLAN_NAMES) if n.startswith(("band", "cuff"))])
 on_rib_px = np.isin(lay_piece, rib_ix)
 gx_ = np.gradient(lay_px, axis=1)
 gy_ = np.gradient(lay_px, axis=0)

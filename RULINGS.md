@@ -30,7 +30,7 @@ His binding rulings; the later stands; canon.md outranks them.
 
 - 3 Oct, narrowed 13 Oct: Nothing marked NoAI (Fab's "Allows usage with AI: No", such tags elsewhere, a "no AI" licence) is used, even as a reference, except content Epic itself publishes on Fab (the Game Animation Sample, the MetaHuman garments, Quixel Megascans): that may be used inside the game even when tagged NoAI, because our AI only places and sets it up and never trains on it. NoAI-tagged content from any other seller stays excluded. A clause only against AI training (Unreal's, Mixamo's, CLO's) is fine while nothing we send trains a model. Sources and licences in THIRD-PARTY.md. Out: construction presets and any other seller's NoAI content.
 - 3 Oct: Sources in order: free assets that fit (Poly Haven, ambientCG, CC0 Sketchfab scans with his token, unmarked CC-BY with credit); else our own, in Blender from real photographs and generated textures, as kits with variation; buying, commissioning or hiring only by his ruling.
-- 30 Oct: CC BY 4.0 is allowed for clothes and their accessories (shoes, belts, hats, bags), as his ruling of 3 October allowed: each maker credited in the game's credits, any visible brand mark painted out. The first: Tom's shoes from the scanned old oxford (inciprocal, Sketchfab).
+- 30 Oct: CC BY 4.0 is allowed for clothes and their accessories (shoes, belts, hats, bags), as his ruling of 3 October allowed: each maker credited in the game's credits, any visible brand mark painted out.
 - 3 Oct: Every asset family is made by the asset plan (production/research/asset-plan), its kits and sources, never improvised; replacements where a source is out.
 - 24 Sep: Nothing ships off the allowlist; a new tool enters only by a record naming its weights licence; free allowlisted, non-NoAI content downloaded without asking, named in the summary.
 - Allowed: OFL fonts with their licence; Mixamo on his account; VCTK voices, consent a stated risk; CLO's free CONNECT patterns, the revocable clause re-checked.
@@ -93,6 +93,7 @@ His binding rulings; the later stands; canon.md outranks them.
 - 2 Oct: Stopped: procedural tailoring, fitting every garment to six bodies; production/art/clothing/RUBRIC.md is the bar when tailoring resumes; clothing work never opens Unreal. 8 Oct: no more draping of tailored jackets in Blender (drafting by code works); an outfit stays an outfit until the character is assembled (saving bakes it). Garment reviews first count body points showing through; every target is tested against its body or model and its source before building.
 - 30 Sep: Game clothes are skinned meshes, only loose parts simulated; shoulders judged in Unreal.
 - 29 Sep: Clothes on people are his to approve, in the game's camera.
+- 30 Oct: Tom's shoes: no to the scanned shoe (its square toe is late-1990s fashion and his foot came through it); Tom wears the lace-up boots Ron wears in the game, black, with dark laces and sole, under his jeans. The scan's files stay on F:, out of the game.
 
 ## People and the street's life
 

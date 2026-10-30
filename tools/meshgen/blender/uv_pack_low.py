@@ -33,8 +33,10 @@ MARGIN = opt("--margin", 0.008)
 plan = json.load(open(PLAN, encoding="utf-8"))
 imp = json.load(open(IMPORT, encoding="utf-8"))
 NAMES = [p["key"] for p in plan["pieces"]]
-TAPE_W = max(x for n, x, y in plan["corners"]["tapeL"]) / 1000.0     # the left tape's inner edge, plan metres
-TAPE_L = max(y for n, x, y in plan["corners"]["tapeL"]) / 1000.0     # the tapes' length
+# a garment with no zip (30 October 2026, Tom's jeans and jumper) has no tapes to join
+HAS_TAPES = "tapeL" in plan.get("corners", {})
+TAPE_W = max(x for n, x, y in plan["corners"]["tapeL"]) / 1000.0 if HAS_TAPES else 0.0    # the left tape's inner edge
+TAPE_L = max(y for n, x, y in plan["corners"]["tapeL"]) / 1000.0 if HAS_TAPES else 0.0    # the tapes' length
 
 bpy.ops.wm.open_mainfile(filepath=LOW)
 low = bpy.data.objects["Low"]
@@ -111,7 +113,7 @@ ppm = {n: round(math.sqrt(areauv[n] / area3[n]) * TEX / 1000.0, 3) for n in NAME
 R = 512
 cover = np.zeros((R, R), dtype=np.int32)
 # the two tapes are one island (joined at their shared edge), so they are rasterised together
-groups = [[n] for n in NAMES if not n.startswith("tape")] + [[n for n in NAMES if n.startswith("tape")]]
+groups = [[n] for n in NAMES if not n.startswith("tape")] + ([[n for n in NAMES if n.startswith("tape")]] if HAS_TAPES else [])
 for grp in groups:
     mask = np.zeros((R, R), dtype=bool)
     for f in bm.faces:
@@ -145,6 +147,45 @@ overlap = float((cover > 1).sum()) / float((cover > 0).sum())
 res = {"low": LOW, "tex": TEX, "tapeScale": TAPE, "margin": MARGIN, "pxPerMm": ppm,
        "drapedScale": {n_: round(s_, 3) for n_, s_ in DRAPED.items() if s_ > 1.0}, "cover": round(float((cover > 0).sum()) / R / R, 3),
        "overlapShare": round(overlap, 5), "uvsOutsideSquare": out_of_square}
+# THE PADDING, MEASURED AT THE MAP'S OWN SIZE (30 October 2026, the skill's 8 px; the margin is a share of the square,
+# so at 1024 the jacket's 0.008 gives half the pixels it gives at 2048): each piece rasterised at --tex (the joined
+# tapes one), then the nearest pixel of another piece searched ring by ring (square rings, so the distance read is
+# never more than the true one), up to 24 px; and the nearest island pixel to the square's edge
+lab = np.full((TEX, TEX), -1, dtype=np.int16)
+gid = {n: k for k, grp in enumerate(groups) for n in grp}
+for f in bm.faces:
+    us = [lp[uvm].uv for lp in f.loops]
+    xs = [u.x * TEX for u in us]
+    ys = [u.y * TEX for u in us]
+    x0, x1 = max(0, int(min(xs))), min(TEX - 1, int(max(xs)) + 1)
+    y0, y1 = max(0, int(min(ys))), min(TEX - 1, int(max(ys)) + 1)
+    if x1 < x0 or y1 < y0:
+        continue
+    gx, gy = np.meshgrid(np.arange(x0, x1 + 1) + 0.5, np.arange(y0, y1 + 1) + 0.5)
+    inside = np.zeros_like(gx, dtype=bool)
+    for j in range(1, len(us) - 1):
+        ax, ay, bx, by, cx, cy = xs[0], ys[0], xs[j], ys[j], xs[j + 1], ys[j + 1]
+        d = (by - cy) * (ax - cx) + (cx - bx) * (ay - cy)
+        if abs(d) < 1e-12:
+            continue
+        l1 = ((by - cy) * (gx - cx) + (cx - bx) * (gy - cy)) / d
+        l2 = ((cy - ay) * (gx - cx) + (ax - cx) * (gy - cy)) / d
+        inside |= (l1 >= 0) & (l2 >= 0) & (l1 + l2 <= 1)
+    lab[y0:y1 + 1, x0:x1 + 1][inside] = gid[NAMES[f[pl]]]
+gap = None
+for r_ in range(1, 25):
+    offs_ = [(dx_, r_) for dx_ in range(-r_, r_ + 1)] + [(r_, dy_) for dy_ in range(-r_ + 1, r_)]
+    for dx_, dy_ in offs_:
+        A_ = lab[max(0, dy_):TEX + min(0, dy_), max(0, dx_):TEX + min(0, dx_)]
+        B_ = lab[max(0, -dy_):TEX + min(0, -dy_), max(0, -dx_):TEX + min(0, -dx_)]
+        if ((A_ >= 0) & (B_ >= 0) & (A_ != B_)).any():
+            gap = r_
+            break
+    if gap is not None:
+        break
+ys_, xs_ = np.nonzero(lab >= 0)
+res["islandGapPx"] = gap if gap is not None else ">24"
+res["borderPx"] = int(min(xs_.min(), ys_.min(), TEX - 1 - xs_.max(), TEX - 1 - ys_.max())) if len(xs_) else None
 bm.free()
 bpy.ops.wm.save_as_mainfile(filepath=LOW)
 json.dump(res, open(os.path.join(os.path.dirname(LOW), "uvpack.json"), "w", encoding="utf-8"), indent=1)

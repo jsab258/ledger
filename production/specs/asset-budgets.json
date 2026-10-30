@@ -52,6 +52,9 @@
   },
   "folders": [
     ["/Game/Ledger/MetaHumans/Garments/TomZipJacket", "garment_jacket"],
+    ["/Game/Ledger/MetaHumans/Garments/TomJeans", "garment_trousers"],
+    ["/Game/Ledger/MetaHumans/Garments/TomJumper", "garment_jumper"],
+    ["/Game/Ledger/MetaHumans/Garments/TomBoots", "garment_shoes"],
     ["/Game/Ledger/MetaHumans/Garments", "shared"],
     ["/Game/Ledger/MetaHumans", "exempt"],
     ["/Game/MetaHumans", "exempt"],

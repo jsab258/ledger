@@ -3,6 +3,9 @@ piece, every seam sampled alike from both its pieces, lifted onto the drape and 
 
     blender -b --factory-startup -P tools/meshgen/blender/retopo_pieces.py -- SEWN.blend PLAN.json IMPORT.json OUT_DIR
         [--name zip_jacket] [--spacing 0.0115] [--elbow 1.6] [--taubin 12] [--weld 0.0005]
+        [--tris-target N] [--tris-min 18000] [--tris-max 22000] [--object Jacket] [--hold cuffL,cuffR]
+    (30 October 2026: any garment, its pieces and fabrics from the plan; --tris-target solves the spacing for N
+    triangles; every default is the jacket's)
 
 WHY, 27 October 2026 (Tom's zip jacket, the bake chain's steps 2 to 4: production/art/clothing/tom-outfit/
 BAKE-PLAN-2026-10-27.md). tools/meshgen/blender/retopo_garment.py (30 September) does this for a five-piece jacket
@@ -50,7 +53,7 @@ def say(*a):
 
 
 bpy.ops.wm.open_mainfile(filepath=SEWN)
-drape = bpy.data.objects["Jacket"]
+drape = bpy.data.objects[opt("--object", imp.get("object", "Jacket"), str)]
 arm = next(o for o in bpy.data.objects if o.type == "ARMATURE")
 J = lambda n: arm.matrix_world @ arm.pose.bones[n].head  # noqa: E731
 
@@ -195,55 +198,77 @@ def var_of(pname, r):
     return ("seam", frozenset(v.index for v, _u in r["pts"]))
 
 
-target, appears = {}, {}
-cons = []
-for pname, sd in sides.items():
-    for a, b in (("bottom", "top"), ("s1", "s3")):
-        A = [var_of(pname, r) for r in sd[a]]
-        B = [var_of(pname, r) for r in sd[b]]
-        cons.append((pname, a, A, B))
-        for v, r in zip(A + B, sd[a] + sd[b]):
-            target[v] = r["len"] / H
-            appears[v] = appears.get(v, 0) + 1
-seam_vars = [v for v in target if v[0] == "seam"]
-# MIRRORED RUNS ROUNDED ALIKE: the left and right halves' runs are separate seams of nearly the same length; rounded
-# apart, the two zip tapes (sewn to each other) could never both balance. Each run's target is averaged with its
-# mirror's (its midpoint mirrored across x = 0, the nearest run of the same kind within 3 cm and 10% in length).
-mid = {}
-for pname, sd in sides.items():
-    for r in sd["runs"]:
-        mid[var_of(pname, r)] = sum((v.co for v, _u in r["pts"]), Vector()) / len(r["pts"])
-mirrored = 0
-for v, c in mid.items():
-    mc = Vector((-c.x, c.y, c.z))
-    w = min((x for x in mid if x[0] == v[0]), key=lambda x: (mid[x] - mc).length)
-    if w != v and (mid[w] - mc).length < 0.03 and abs(target[w] - target[v]) < 0.1 * max(target[v], 1):
-        target[v] = target[w] = (target[v] + target[w]) / 2
-        mirrored += 1
-log["checks"]["mirroredRuns"] = mirrored
-n_ = {v: max(1, int(round(t))) for v, t in target.items()}
-adjusted = {v: 0 for v in target}
-for v in target:
-    if v[0] == "open" and target[v] * H < 0.02:
-        n_[v] = 2                       # a tape's 12 mm end: two columns
-for _round in range(200):
-    bad = 0
-    for pname, a, A, B in cons:
-        d = sum(n_[v] for v in A) - sum(n_[v] for v in B)
-        if d == 0:
-            continue
-        bad += 1
-        # the most freely changed run: fewest constraints, then the longest (least distorted by one step)
-        cand = sorted(set(A + B), key=lambda v: (appears[v], adjusted[v], -target[v]))
-        for v in cand:
-            want_ = n_[v] - d if v in A else n_[v] + d
-            if want_ >= 1 and not (v[0] == "open" and target[v] * H < 0.02):
-                n_[v] = want_
-                adjusted[v] += 1
-                break
-    if bad == 0:
-        break
-viol = [(p, a) for p, a, A, B in cons if sum(n_[v] for v in A) != sum(n_[v] for v in B)]
+def solve_counts(H):
+    """Every run's count at spacing H (the jacket's solver, unchanged, as a function of H since 30 October)."""
+    target, appears = {}, {}
+    cons = []
+    for pname, sd in sides.items():
+        for a, b in (("bottom", "top"), ("s1", "s3")):
+            A = [var_of(pname, r) for r in sd[a]]
+            B = [var_of(pname, r) for r in sd[b]]
+            cons.append((pname, a, A, B))
+            for v, r in zip(A + B, sd[a] + sd[b]):
+                target[v] = r["len"] / H
+                appears[v] = appears.get(v, 0) + 1
+    seam_vars = [v for v in target if v[0] == "seam"]
+    # MIRRORED RUNS ROUNDED ALIKE: the left and right halves' runs are separate seams of nearly the same length; rounded
+    # apart, the two zip tapes (sewn to each other) could never both balance. Each run's target is averaged with its
+    # mirror's (its midpoint mirrored across x = 0, the nearest run of the same kind within 3 cm and 10% in length).
+    mid = {}
+    for pname, sd in sides.items():
+        for r in sd["runs"]:
+            mid[var_of(pname, r)] = sum((v.co for v, _u in r["pts"]), Vector()) / len(r["pts"])
+    mirrored = 0
+    for v, c in mid.items():
+        mc = Vector((-c.x, c.y, c.z))
+        w = min((x for x in mid if x[0] == v[0]), key=lambda x: (mid[x] - mc).length)
+        if w != v and (mid[w] - mc).length < 0.03 and abs(target[w] - target[v]) < 0.1 * max(target[v], 1):
+            target[v] = target[w] = (target[v] + target[w]) / 2
+            mirrored += 1
+    n_ = {v: max(1, int(round(t))) for v, t in target.items()}
+    adjusted = {v: 0 for v in target}
+    for v in target:
+        if v[0] == "open" and target[v] * H < 0.02:
+            n_[v] = 2                       # a tape's 12 mm end: two columns
+    for _round in range(200):
+        bad = 0
+        for pname, a, A, B in cons:
+            d = sum(n_[v] for v in A) - sum(n_[v] for v in B)
+            if d == 0:
+                continue
+            bad += 1
+            # the most freely changed run: fewest constraints, then the longest (least distorted by one step)
+            cand = sorted(set(A + B), key=lambda v: (appears[v], adjusted[v], -target[v]))
+            for v in cand:
+                want_ = n_[v] - d if v in A else n_[v] + d
+                if want_ >= 1 and not (v[0] == "open" and target[v] * H < 0.02):
+                    n_[v] = want_
+                    adjusted[v] += 1
+                    break
+        if bad == 0:
+            break
+    viol = [(p, a) for p, a, A, B in cons if sum(n_[v] for v in A) != sum(n_[v] for v in B)]
+    tri = sum(2 * sum(n_[var_of(p, r)] for r in sd["bottom"]) * sum(n_[var_of(p, r)] for r in sd["s1"]) for p, sd in sides.items())
+    return {"target": target, "appears": appears, "cons": cons, "seam_vars": seam_vars, "mirrored": mirrored, "n": n_,
+            "rounds": _round + 1, "viol": viol, "tri": tri}
+
+
+# --tris-target N (30 October 2026, Tom's jeans and jumper: Mafia's trousers 9,566, its sweater 19,406): the spacing
+# scaled by the root of predicted over wanted triangles until within 1%, from --spacing as the first guess; without
+# it the jacket's single solve at --spacing, as before
+TRIS_TARGET = opt("--tris-target", 0, int)
+S_ = solve_counts(H)
+if TRIS_TARGET:
+    for _try in range(8):
+        if abs(S_["tri"] - TRIS_TARGET) <= 0.01 * TRIS_TARGET:
+            break
+        H = H * math.sqrt(S_["tri"] / TRIS_TARGET)
+        S_ = solve_counts(H)
+    log["spacing"] = round(H, 6)
+    log["trisTarget"] = TRIS_TARGET
+target, appears, cons, seam_vars, n_ = S_["target"], S_["appears"], S_["cons"], S_["seam_vars"], S_["n"]
+viol, _round = S_["viol"], S_["rounds"] - 1
+log["checks"]["mirroredRuns"] = S_["mirrored"]
 log["checks"]["countRounds"] = _round + 1
 log["checks"]["sidesUnequal"] = viol
 if viol:
@@ -252,9 +277,9 @@ paired = sum(1 for v in seam_vars if appears[v] >= 2)
 log["checks"]["seamsShared"] = paired
 log["checks"]["seamRuns"] = len(seam_vars)
 log["checks"]["worstStretch"] = round(max(abs(n_[v] - target[v]) / max(target[v], 1) for v in target), 3)
-tri_pred = sum(2 * sum(n_[var_of(p, r)] for r in sd["bottom"]) * sum(n_[var_of(p, r)] for r in sd["s1"]) for p, sd in sides.items())
+tri_pred = S_["tri"]
 log["checks"]["trianglesPredicted"] = tri_pred
-say("counts solved in", _round + 1, "rounds; seam runs", len(seam_vars), "shared", paired, "triangles", tri_pred)
+say("counts solved in", _round + 1, "rounds; seam runs", len(seam_vars), "shared", paired, "triangles", tri_pred, "spacing", round(H, 5))
 
 lower, upper, handj = J("lowerarm_l"), J("upperarm_l"), J("hand_l")
 ELBOW_AT = (lower - upper).length / ((lower - upper).length + (handj - lower).length)
@@ -289,6 +314,12 @@ def sample(pname, side, r):
     total = cum[-1]
     seam = var_of(pname, r)
     flip = pts[0][0].index > pts[-1][0].index
+    # A SEAM THAT CLOSES ON ITSELF (30 October 2026, Tom's jumper: a cuff round its sleeve's end) starts and ends at one
+    # point, so its ends cannot say which way it runs, and both pieces read it unflipped: when the two walked it opposite
+    # ways, the cuff's top row was joined to the sleeve's end half a turn round (edges 86 mm across the wrist). Its way
+    # is read from the start's two neighbours instead; two pieces walking it the same way read the same, as before.
+    if pts[0][0].index == pts[-1][0].index and len(pts) > 2:
+        flip = pts[1][0].index > pts[-2][0].index
     out = []
     for k, f in enumerate(fr):
         s = f * total
@@ -490,6 +521,12 @@ bmesh.ops.remove_doubles(lb, verts=[v for v in lb.verts if v in edge_vs], dist=o
 log["checks"]["weldedAtSeams"] = n_before - len(lb.verts)
 # THE ZIP'S TAPES HELD in the smoothing, like the openings (the first run: the 24 mm zip came out 27 mm wide)
 held = {v for f in lb.faces if NAMES[f[pan_layer]].startswith("tape") for v in f.verts}
+# --hold PIECES (30 October 2026, Tom's jumper: its cuffs are lofted bands, already smooth; smoothed with the crumpled
+# sleeve end above them, points of each cuff's top two rows were drawn 12 mm from the forearm's axis, inside the arm):
+# those pieces' points, their seams too, stay where the lift put them, as the tapes do
+HOLD = [h for h in opt("--hold", "", str).split(",") if h]
+held |= {v for f in lb.faces if NAMES[f[pan_layer]] in HOLD for v in f.verts}
+log["held"] = HOLD
 for _ in range(opt("--taubin", 12, int)):
     for lam in (0.5, -0.53):
         new_co = {}
@@ -549,12 +586,18 @@ lb.to_mesh(me)
 lb.free()
 low = bpy.data.objects.new("Low", me)
 bpy.context.scene.collection.objects.link(low)
-mats = {}
-for p in plan["pieces"]:
-    mats.setdefault(p["fabric"], None)
-for name_ in ("Shell", "Rib", "Tape"):
+# THE MATERIALS BY FABRIC: the jacket's three slots (Shell, Rib, Tape) whenever its fabrics are those; any other
+# garment's one slot per fabric in the plan's order, named as the importer named them (import.json "materials")
+fabs_ = list(dict.fromkeys(p["fabric"] for p in plan["pieces"]))
+if set(fabs_) <= {"shell", "rib", "tape"}:
+    fab_names_ = {"shell": "Shell", "rib": "Rib", "tape": "Tape"}
+    fabs_ = ["shell", "rib", "tape"]
+else:
+    fab_names_ = {f: imp.get("materials", {}).get(f, f.capitalize()) for f in fabs_}
+for f_ in fabs_:
+    name_ = fab_names_[f_]
     me.materials.append(bpy.data.materials.get(name_) or bpy.data.materials.new(name_))
-fab_mat = {"shell": 0, "rib": 1, "tape": 2}
+fab_mat = {f_: i for i, f_ in enumerate(fabs_)}
 attr = me.attributes["piece"]
 for poly, a_ in zip(me.polygons, attr.data):
     poly.material_index = fab_mat[plan["pieces"][a_.value]["fabric"]]
@@ -572,7 +615,9 @@ wire.thickness = 0.0008
 wire.use_replace = False
 cam_d = bpy.data.cameras.new("cam")
 cam_d.type = "ORTHO"
-cam_d.ortho_scale = 0.95
+# the jacket's 0.95 m, or 1.1 times a taller garment's height (30 October: the jeans are 1.1 m tall)
+_zs = [(low.matrix_world @ Vector(c)).z for c in low.bound_box]
+cam_d.ortho_scale = max(0.95, 1.1 * (max(_zs) - min(_zs)))
 cam = bpy.data.objects.new("cam", cam_d)
 scn.collection.objects.link(cam)
 scn.camera = cam
@@ -583,7 +628,11 @@ for nm, loc, rot in (("front", (0, -3, cz), (math.pi / 2, 0, 0)), ("back", (0, 3
     scn.render.filepath = os.path.join(OUT, "%s_low_%s.png" % (NAME, nm))
     bpy.ops.render.render(write_still=True)
 
+# the triangle window: the jacket's 18,000 to 22,000, or --tris-min / --tris-max, or 10% either side of --tris-target
+TMIN = opt("--tris-min", int(0.9 * TRIS_TARGET) if TRIS_TARGET else 18000, int)
+TMAX = opt("--tris-max", int(1.1 * TRIS_TARGET) if TRIS_TARGET else 22000, int)
+log["trisWindow"] = [TMIN, TMAX]
 log["ok"] = (not log["checks"]["sidesUnequal"] and log["checks"]["nonManifoldEdges"] == 0
-             and 18000 <= log["checks"]["triangles"] <= 22000 and log["checks"]["liftMissedShare"] < 0.005)
+             and TMIN <= log["checks"]["triangles"] <= TMAX and log["checks"]["liftMissedShare"] < 0.005)
 json.dump(log, open(os.path.join(OUT, "retopo.json"), "w", encoding="utf-8"), indent=1)
 print("RETOPO done", json.dumps(log["checks"]))

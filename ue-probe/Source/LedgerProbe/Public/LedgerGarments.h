@@ -134,6 +134,22 @@ namespace LedgerGarments
 				Piece->SetMaterial(Piece->GetMaterialIndex(Slots[I]), Tint);
 				UE_LOG(LogTemp, Display, TEXT("LedgerGarments: %s's %s slot %s (index %d) glazed"), Who, *Name, *Slots[I].ToString(), Piece->GetMaterialIndex(Slots[I]));
 			}
+			// ITS COVERED PARTS NOT DRAWN (30 October, Tom's jumper under his jacket; Mafia hides a garment's covered
+			// parts by an invisible slot): every section of a slot named "Hidden" is switched off, at every level of detail
+			{
+				const FSkeletalMeshRenderData* RD = Mesh->GetResourceForRendering();
+				int32 Off = 0;
+				for (int32 Lod = 0; RD != nullptr && Lod < RD->LODRenderData.Num(); ++Lod)
+				{
+					const TArray<FSkelMeshRenderSection>& Secs = RD->LODRenderData[Lod].RenderSections;
+					for (int32 Sec = 0; Sec < Secs.Num(); ++Sec)
+					{
+						const int32 Mat = Secs[Sec].MaterialIndex;
+						if (Slots.IsValidIndex(Mat) && Slots[Mat].ToString().Equals(TEXT("Hidden"), ESearchCase::IgnoreCase)) { Piece->ShowMaterialSection(Mat, Sec, false, Lod); ++Off; }
+					}
+				}
+				if (Off > 0) { UE_LOG(LogTemp, Display, TEXT("LedgerGarments: %s's %s draws not its covered parts (%d sections off)"), Who, *Name, Off); }
+			}
 			const TArray<TSharedPtr<FJsonValue>>* Hides = nullptr;
 			FString Hidden;
 			if (G->TryGetArrayField(TEXT("hides"), Hides))
@@ -183,6 +199,24 @@ namespace LedgerGarments
 						const FString Word = H->AsString().ToLower();
 						const bool bShoes = Word == TEXT("shoes") && Top < 25.0f;
 						const bool bTop = Word == TEXT("top") && Top > 130.0f && MeshBottom(C) > 60.0f;
+						// "lower" (30 October, Tom's jeans): the part's lower garment's sections only (the shorts), its
+						// others kept; with a jacket hiding "top", the part is then hidden section by section
+						if (Word == TEXT("lower") && bLower)
+						{
+							int32 Off = 0;
+							const FSkeletalMeshRenderData* RD = C->GetSkeletalMeshAsset() != nullptr ? C->GetSkeletalMeshAsset()->GetResourceForRendering() : nullptr;
+							for (int32 Lod = 0; RD != nullptr && Lod < RD->LODRenderData.Num(); ++Lod)
+							{
+								const TArray<FSkelMeshRenderSection>& Secs = RD->LODRenderData[Lod].RenderSections;
+								for (int32 Sec = 0; Sec < Secs.Num(); ++Sec)
+								{
+									const int32 Mat = Secs[Sec].MaterialIndex;
+									if (MatNames.IsValidIndex(Mat) && IsLower(MatNames[Mat])) { C->ShowMaterialSection(Mat, Sec, false, Lod); ++Off; }
+								}
+							}
+							Hidden += FString::Printf(TEXT(" %s's lower sections (%d)"), *C->GetName(), Off);
+							break;
+						}
 						if (bTop && bLower)
 						{
 							int32 Off = 0;
@@ -199,7 +233,7 @@ namespace LedgerGarments
 							Hidden += FString::Printf(TEXT(" %s's top sections (%d, its lower garment kept)"), *C->GetName(), Off);
 							break;
 						}
-						if (bShoes || bTop || (Word != TEXT("shoes") && Word != TEXT("top") && Named.Contains(Word)))
+						if (bShoes || bTop || (Word != TEXT("shoes") && Word != TEXT("top") && Word != TEXT("lower") && Named.Contains(Word)))
 						{
 							C->SetVisibility(false, true);
 							Hidden += TEXT(" ") + C->GetName();
