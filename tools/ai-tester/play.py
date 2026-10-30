@@ -694,7 +694,10 @@ def act(verb, rest):
         time.sleep(0.2)
         enter()
         if grabber is not None:
-            time.sleep(0.5)
+            # ON PAST THE REPLY (30 October, the eighth talk film: the frames jumped 1.5 s between this command's end and
+            # the next filmed one, and Sheila's 0.93 s turn to him fell in the hole, read by two reviews as a one-frame
+            # snap with her hair changing): filming goes on 3.5 s after Enter, through the reply and her turn
+            time.sleep(3.5)
             stop.set()
             grabber.join(5)
             save_state(st)

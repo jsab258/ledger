@@ -280,3 +280,7 @@
 {"event": "start", "at": "2026-10-30T07:10:00", "task": "1.3 C9 jacket collar: first try (inner facing), filmed, failed; v30 back", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-30T07:37:00", "note": "the fault named: throat skin through the collar's front"}
 {"event": "start", "at": "2026-10-30T07:37:00", "task": "1.3 C9 records and push; the collar's second try next", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-30T08:00:00", "note": "records pushed; shoes researched and put to him"}
+{"event": "start", "at": "2026-10-30T08:00:00", "task": "1.3 C9 shoes plan; records", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-30T08:00:00", "note": "the talk's 'snap' was a hole in the tester's film; fixed in play.py"}
+{"event": "start", "at": "2026-10-30T08:00:00", "task": "1.5 records and push", "phase": "1", "kind": "production"}
