@@ -115,6 +115,20 @@ What failed before this method, so it is not repeated: draping with bent elbows 
 
 ## Notebook
 
+### 30 Oct 2026, a contact shadow under footwear on a coated wet floor, set aside after two tries
+- Made: a projected decal under each half of each sole, riding the foot's two joints, writing no shine there.
+- Method (setting-free):
+  - A software-traced reflection never sees a skinned mesh: where the floor looks up at a sole's underside it shows the sky, a bright band under raised toes.
+  - Measure footprints in terms that need no axis convention (along and across the foot from two joints' heads, outward from the body's middle), so the engine rebuilds the same frame from the same joints.
+  - Before choosing a decal, read the floor's shading: a clear-coat water layer is beyond every decal's reach.
+  - Before choosing a hidden stand-in, read the tracer's cull: small traced parts are dropped by radius.
+  - Photograph with and without in the same build; framing drifts between runs, so judge by eye, not by pixel boxes.
+- Tools: the engine's own shader and renderer source, a Blender measuring script, a decal material made by script, two game runs.
+- Target and check: the band gone in the close view of the boots (not met).
+- Cost (hours): about 0.6.
+- Failed and why: sinking the soles (the band lies under the toe's spring); the decal (the floor's water is a coat).
+- Evidence: the shoes plan's last section; DECISIONS 30 October 17:58; F:/LedgerTools/gate/new/tom-outfit/2026-10-30-contact.
+
 ### 30 Oct 2026, painted joinery chipped to bare wood from one trim sheet, built and held back on a mesh fault
 - Made: a wood trim sheet from a CC0 board texture, a chipped-paint wood material, and a front mesh remapped onto the sheet.
 - Method (setting-free):
@@ -125,7 +139,7 @@ What failed before this method, so it is not repeated: draping with bent elbows 
 - Tools: a trim-sheet maker, a front rebuilder, the stain and calibration checks, buffer comparisons with anti-aliasing and streaming off.
 - Target and check: worn paint 3 to 10% at edges (met, 7.9%); no new fault in any view (not met: a brick strip lit at night on the rebuilt mesh, cause not found in two tries).
 - Cost (hours): about 2.7 (a helper, plus waits).
-- Evidence: DECISIONS 30 October 17:45; F:/LedgerTools/gate/new/chandler-joinery/check.
+- Evidence: DECISIONS 30 October 17:33; F:/LedgerTools/gate/new/chandler-joinery/check.
 
 ### 30 Oct 2026, a character's body cut under its clothes at the build, so no skin shows through any garment
 - Made: a hidden-face map painted from the garments' own coverage on the body's UVs, set on a copy of the base garment's wardrobe item, and the character rebuilt with it.

@@ -150,27 +150,27 @@
       "target": 0,
       "display": "0 of 4 pieces beaten",
       "state": "fighting",
-      "last": "30 Oct: measured by pieces from today, your word: Tom's jacket, jumper, jeans and boots, each beaten when it passes in the packaged game with no open fault.",
+      "last": "30 Oct night: jeans and boots worn by default in tonight's build, his body cut under them; three fresh reviewers passed the outfit in the editor. No piece beaten yet: each has an open fault or waits for the packaged walk.",
       "pieces": [
         {
           "name": "Jacket",
           "state": "fighting",
-          "line": "In the packaged game since this morning; one open fault: his throat shows through the collar's front as he straightens up (two tries set aside; a third would need your yes)."
+          "line": "In the packaged game; one open fault: a patch of his throat shows at the zip (two tries used; a third waits on your yes)."
         },
         {
           "name": "Jumper",
           "state": "fighting",
-          "line": "Made and in the game, held back; only its grey neckband and cuffs show under the jacket; a fresh reviewer passed it in the editor; not yet walked in the packaged game."
+          "line": "Made, and held back: under the zipped jacket it is never seen, and its neckband showed outside the collar."
         },
         {
           "name": "Jeans",
           "state": "fighting",
-          "line": "Made with pockets, seams, a denim weave and a faded blue, passed in the editor; draped again now with the straight 16.5 in hem so they sit over the boots."
+          "line": "The straight 16.5 in cut, faded, worn over his boots in tonight's build; a fresh reviewer passed them in the editor; packaged walk tomorrow."
         },
         {
           "name": "Boots",
           "state": "fighting",
-          "line": "Ron's black boots carried onto Tom's feet; made, not yet in the game; they wait for the jeans to sit over them."
+          "line": "Ron's black lace-up boots on Tom, with leather maps; passed in the editor; open faults: a heavy, almost clog-like toe, and a pale band under the toes on wet paving (two tries each)."
         }
       ]
     },

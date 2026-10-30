@@ -6,12 +6,15 @@
 // was, LedgerJacket.h), keeping the weights it came with; the parts of Epic's
 // outfit it replaces are hidden ("hides": any part whose own name or mesh
 // name holds one of those words); and "raise_mm" lifts the body so soles
-// stand on the ground (MetaHumans stand barefoot on the floor since 5.6).
+// stand on the ground (MetaHumans stand barefoot on the floor since 5.6);
+// "contact" lays a decal under each half of each sole (LayContact).
 //
 // Found where the game finds its other specs: -LedgerRepo, the checkout
 // beside the project, or the game's own staged copy (Content/LedgerData).
 #pragma once
 
+#include "AnimationRuntime.h"
+#include "Components/DecalComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Dom/JsonObject.h"
 #include "Engine/SkeletalMesh.h"
@@ -58,6 +61,72 @@ namespace LedgerGarments
 			Seen += FString::Printf(TEXT(" %s=%s"), *C->GetName(), M != nullptr ? *M->GetName() : TEXT("none"));
 		}
 		UE_LOG(LogTemp, Display, TEXT("LedgerGarments: %s's parts:%s"), Who, *Seen);
+	}
+
+	// THE FLOOR'S SHINE SHUT OFF UNDER A SOLE, 30 October 2026 (his order C9; a fresh reviewer: a pale band under
+	// Tom's soles on the wet paving): software Lumen traces no skinned mesh, so the wet floor under a toe reflects the
+	// sky where it should see the sole's underside (tools/meshgen/blender/sole_footprints.py has the reading). Under
+	// each half of each sole a decal (/Game/Ledger/M_LedgerContact: Specular 0, soft at its rim) rides the foot's or
+	// the ball's joint, so a heel lifted off the floor takes its decal with it out of reach (DEPTH above and below the
+	// sole). Each half's footprint is given along the foot and across it, outward, from the ball joint's head, in the
+	// body's reference pose, so no axis convention is needed: the same two joints give the same frame here.
+	// -NoSoleContact lays none (the before picture).
+	inline int32 LayContact(AActor* A, USkeletalMeshComponent* Body, const TSharedPtr<FJsonObject>& C, const TCHAR* Who, const FString& Name)
+	{
+		UMaterialInterface* M = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Ledger/M_LedgerContact.M_LedgerContact"));
+		const USkeletalMesh* BM = Body->GetSkeletalMeshAsset();
+		if (M == nullptr || BM == nullptr)
+		{
+			UE_LOG(LogTemp, Display, TEXT("LedgerGarments: %s's %s lays no contact (%s)"), Who, *Name, M == nullptr ? TEXT("no contact material in this copy") : TEXT("no body mesh"));
+			return 0;
+		}
+		const FReferenceSkeleton& Ref = BM->GetRefSkeleton();
+		auto RefCS = [&Ref](const FString& Bone, FTransform& Out) {
+			const int32 I = Ref.FindBoneIndex(FName(*Bone));
+			if (I == INDEX_NONE) { return false; }
+			Out = FAnimationRuntime::GetComponentSpaceTransformRefPose(Ref, I);
+			return true; };
+		const double Margin = C->HasField(TEXT("margin_cm")) ? C->GetNumberField(TEXT("margin_cm")) : 1.5;
+		const double Depth = C->HasField(TEXT("depth_cm")) ? C->GetNumberField(TEXT("depth_cm")) : 3.0;
+		int32 Laid = 0;
+		for (const TSharedPtr<FJsonValue>& SV : C->GetArrayField(TEXT("sides")))
+		{
+			const TSharedPtr<FJsonObject> S = SV->AsObject();
+			const double Floor = S->GetNumberField(TEXT("floor_cm"));
+			for (const TSharedPtr<FJsonValue>& PV : S->GetArrayField(TEXT("parts")))
+			{
+				const TSharedPtr<FJsonObject> P = PV->AsObject();
+				const FString Bone = P->GetStringField(TEXT("bone"));
+				FTransform Foot, Ball, At;
+				if (!RefCS(TEXT("foot") + Bone.Right(2), Foot) || !RefCS(TEXT("ball") + Bone.Right(2), Ball) || !RefCS(Bone, At)) { continue; }
+				const TArray<TSharedPtr<FJsonValue>>& Along = P->GetArrayField(TEXT("along_cm"));
+				const TArray<TSharedPtr<FJsonValue>>& Across = P->GetArrayField(TEXT("across_cm"));
+				const double U0 = Along[0]->AsNumber(), U1 = Along[1]->AsNumber(), V0 = Across[0]->AsNumber(), V1 = Across[1]->AsNumber();
+				const FVector B = Ball.GetLocation() * FVector(1.0, 1.0, 0.0);
+				FVector Fw = (Ball.GetLocation() - Foot.GetLocation()) * FVector(1.0, 1.0, 0.0);
+				Fw.Normalize();
+				FVector Ac(-Fw.Y, Fw.X, 0.0);
+				if (FVector::DotProduct(Ac, B) < 0.0) { Ac = -Ac; }
+				FVector Centre = B + Fw * (0.5 * (U0 + U1)) + Ac * (0.5 * (V0 + V1));
+				Centre.Z = Floor;
+				// the decal projects along its X (down here); its Z runs along the foot, its Y across
+				const FTransform DecalCS(FRotationMatrix::MakeFromXZ(FVector(0.0, 0.0, -1.0), Fw).Rotator(), Centre);
+				UDecalComponent* D = NewObject<UDecalComponent>(A, *FString::Printf(TEXT("LedgerContact_%s_%s"), *Name, *Bone));
+				D->SetDecalMaterial(M);
+				D->DecalSize = FVector(Depth, 0.5 * (V1 - V0) + Margin, 0.5 * (U1 - U0) + Margin);
+				D->SetSortOrder(10);   // over the street's puddles
+				D->SetupAttachment(Body, FName(*Bone));
+				D->SetRelativeTransform(DecalCS.GetRelativeTransform(At));
+				D->RegisterComponent();
+				++Laid;
+			}
+		}
+		// the wearer's own clothes take no decal: a boot's welt and a hem stand inside the box
+		TArray<USkeletalMeshComponent*> Parts;
+		A->GetComponents(Parts);
+		for (USkeletalMeshComponent* Pc : Parts) { if (Pc != nullptr && (Pc == Body || Pc->GetName().StartsWith(TEXT("LedgerGarment_")))) { Pc->SetReceivesDecals(false); } }
+		UE_LOG(LogTemp, Display, TEXT("LedgerGarments: %s's %s lays %d contact decals under its soles"), Who, *Name, Laid);
+		return Laid;
 	}
 
 	inline int32 Wear(AActor* A, const TCHAR* Who)
@@ -241,6 +310,11 @@ namespace LedgerGarments
 						}
 					}
 				}
+			}
+			const TSharedPtr<FJsonObject>* Contact = nullptr;
+			if (G->TryGetObjectField(TEXT("contact"), Contact) && !FParse::Param(FCommandLine::Get(), TEXT("NoSoleContact")))
+			{
+				LayContact(A, Body, *Contact, Who, Name);
 			}
 			double Raise = 0.0;
 			if (G->TryGetNumberField(TEXT("raise_mm"), Raise)) { RaiseCm = FMath::Max(RaiseCm, (float)Raise / 10.0f); }

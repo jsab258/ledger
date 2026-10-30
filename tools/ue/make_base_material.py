@@ -4475,6 +4475,24 @@ if __name__ == "__main__":
                       encoding="utf-8") as _f:
                 _f.write("stainMaterialStatus=RAISED stainMaterialNote=%s\n"
                          % str(_stain_err).replace(" ", "~")[:160])
+    # ---- AND THE SOLES' CONTACT DECAL, 30 October (his order C9) ----------
+    # tools/ue/make_contact_material.py: the wet floor's shine shut off under a
+    # sole, where software Lumen would show the sky (LedgerGarments.h lays it).
+    if _inside_unreal():
+        try:
+            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+            import make_contact_material
+            make_contact_material.main()
+        except Exception as _contact_err:
+            try:
+                import unreal
+                _root = unreal.Paths.project_dir()
+            except Exception:
+                _root = "."
+            with open(os.path.join(_root, "ue-material.txt"), "a",
+                      encoding="utf-8") as _f:
+                _f.write("contactMaterialStatus=RAISED contactMaterialNote=%s\n"
+                         % str(_contact_err).replace(" ", "~")[:160])
     # ---- AND THE GROUND'S COPY, 29 October (WET-GROUND-METHOD, step 3) ----
     # tools/ue/make_ground_material.py: this graph again as M_LedgerGround, its
     # water a clear coat over wet stone; the game takes it for the ground only

@@ -37,3 +37,29 @@ Waiting on: his word (Needs you).
 No to the scan: its square toe is a late-1990s fashion, wrong for 1990, and his foot came through it. Tom wears the lace-up boots Ron wears in the game, black with dark laces and sole, under his jeans; the scan's files stay on F:, out of the game, its credit line out. Ron's boots are this project's own (tools/meshgen/blender/model_footwear.py's first version on Ron's foot, passed a blind review on 30 September; F:/LedgerTools/garments/ron_boots), not Epic's: Epic's lace-up boots left the project with the 3 October ruling and would need his Fab sign-in. They are carried onto Tom's feet by the MetaHuman bodies' shared layout (a helper, F:/LedgerTools/garments/tom/boots).
 
 **Why reuse-first missed them:** the search for shoes looked outward (scans, Epic's packs) and read Ron's boots, in this plan's own first section, as the method that failed twice on the others' shoes, not as a finished pair already worn in the game; garments.json, where they are listed, was never searched as a source.
+
+## The pale band under the soles on wet ground (30 October, evening)
+
+A fresh reviewer of the dress pictures (DECISIONS 30 October 15:50, fault 4) saw a pale band on the wet paving under
+both toe tips. Two tries, both failed; set aside.
+
+- **Try 1 (15:50):** Tom's soles set 3 mm into the ground (raise 17 mm). The band stayed: it lies under the toe's
+  spring, not under the flat of the sole.
+- **What it is (read 30 October, Epic's Lumen technical details, dev.epicgames.com, and the engine's 5.8 source):**
+  the street reflects with Lumen in software, which represents "Only Static Meshes, Instanced Static Meshes,
+  Hierarchical Instanced Static Meshes, and Landscape terrain"; a skinned boot is seen only through screen traces,
+  which give up where "the ray passes behind a surface". From the wet floor under a toe the reflected ray meets the
+  sole's underside, which the camera never sees, so it falls back to the scene without the boot: the sky.
+- **Try 2 (17:45 to 18:00, judged by eye with and without):** a deferred decal under each half of each sole writing Specular 0 (the engine's DBuffer
+  carries Specular with Roughness, DBufferDecalShared.ush; tools/ue/make_contact_material.py, LedgerGarments.h
+  LayContact, the footprints by tools/meshgen/blender/sole_footprints.py). Laid in the game (4 a pair), the band
+  unchanged: since 29 October the ground's water is a clear coat (M_LedgerGround, ground_coat), and a decal reaches
+  colour, normal, roughness, metal and specular only, never the coat. Kept in the code, its spec entry renamed
+  contact_held, so it lays nothing.
+- **A third direction, if he says yes:** a stand-in only the light sees, Epic's own switch for this (a hidden static
+  part with Affect Indirect Lighting While Hidden, which Lumen's mesh tracing keeps: LumenMeshSDFCulling.usf), one
+  per half sole, riding the same two joints as the decals. Lumen culls any traced part under 30 cm in radius
+  (r.Lumen.DiffuseIndirect.MeshSDF.RadiusThreshold, 30 by default, LumenMeshSDFCulling.cpp), and half a sole is
+  about 12, so each would carry enlarged bounds (BoundsScale) to pass. Unverified that the enlarged bounds alone pass
+  the cull; first test it on one boot. The other route, the ground material reading the soles' positions, would
+  change a material that passed its gate. Reference: none found (Mafia's and Kingdom Come II's files not read for this).

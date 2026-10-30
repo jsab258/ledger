@@ -307,3 +307,7 @@
 {"event": "stop", "at": "2026-10-30T13:14:00", "note": ""}
 {"event": "start", "at": "2026-10-30T14:20:00", "task": "C9 outfit: boots maps and reshape, reviews, hidden-face body, adoption", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-30T17:25:00", "note": ""}
+{"event": "start", "at": "2026-10-30T17:25:00", "task": "C9 outfit: commit, joinery record, the toe band's second try (contact decal)", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-30T18:00:00", "note": ""}
+{"event": "start", "at": "2026-10-30T17:38:00", "task": "C9 outfit gate: three fresh reviewers, one per view", "phase": "1", "kind": "review"}
+{"event": "stop", "at": "2026-10-30T17:42:00", "note": ""}

@@ -30,7 +30,70 @@
      0.15
     ]
    },
-   "maps_note": "30 October: leather maps (tools/meshgen/blender/footwear_maps.py): UVs cut along a derby's seams, pebbled grain, stitched quarters and welt, the sole edge, scuffs; the weights unchanged (re-exported with UVs, the 30 September file kept)"
+   "maps_note": "30 October: leather maps (tools/meshgen/blender/footwear_maps.py): UVs cut along a derby's seams, pebbled grain, stitched quarters and welt, the sole edge, scuffs; the weights unchanged (re-exported with UVs, the 30 September file kept)",
+   "contact_held": {
+    "made": "tools/meshgen/blender/sole_footprints.py on this garment's fbx (30 October: the wet floor's shine shut off under each sole, LedgerGarments.h LayContact); HELD the same evening: the ground's water is a clear coat, which no decal reaches, so the band stayed (the shoes plan, its last section); renamed back to contact to lay them",
+    "margin_cm": 1.5,
+    "depth_cm": 3.0,
+    "sides": [
+     {
+      "side": "l",
+      "floor_cm": -2.27,
+      "parts": [
+       {
+        "bone": "foot_l",
+        "along_cm": [
+         -22.0,
+         1.0
+        ],
+        "across_cm": [
+         -5.5,
+         7.1
+        ]
+       },
+       {
+        "bone": "ball_l",
+        "along_cm": [
+         -0.8,
+         10.9
+        ],
+        "across_cm": [
+         -5.6,
+         6.9
+        ]
+       }
+      ]
+     },
+     {
+      "side": "r",
+      "floor_cm": -2.27,
+      "parts": [
+       {
+        "bone": "foot_r",
+        "along_cm": [
+         -22.1,
+         1.0
+        ],
+        "across_cm": [
+         -5.5,
+         7.1
+        ]
+       },
+       {
+        "bone": "ball_r",
+        "along_cm": [
+         -0.9,
+         10.8
+        ],
+        "across_cm": [
+         -5.6,
+         6.9
+        ]
+       }
+      ]
+     }
+    ]
+   }
   },
   {
    "who": "Lena",
@@ -224,7 +287,70 @@
     ]
    },
    "held_until": "until his outfit's editor walk and a fresh reviewer pass (30 October; worn with -WearHeld=TomBoots)",
-   "worn_since": "2026-10-30: worn by default with his body cut under the outfit (the MetaHuman hidden-face build, tools/ue/hidden_faces.py); his page next"
+   "worn_since": "2026-10-30: worn by default with his body cut under the outfit (the MetaHuman hidden-face build, tools/ue/hidden_faces.py); his page next",
+   "contact_held": {
+    "made": "tools/meshgen/blender/sole_footprints.py on this garment's fbx (30 October: the wet floor's shine shut off under each sole, LedgerGarments.h LayContact); HELD the same evening: the ground's water is a clear coat, which no decal reaches, so the band stayed (the shoes plan, its last section); renamed back to contact to lay them",
+    "margin_cm": 1.5,
+    "depth_cm": 3.0,
+    "sides": [
+     {
+      "side": "l",
+      "floor_cm": -2.11,
+      "parts": [
+       {
+        "bone": "foot_l",
+        "along_cm": [
+         -22.2,
+         1.0
+        ],
+        "across_cm": [
+         -5.3,
+         7.3
+        ]
+       },
+       {
+        "bone": "ball_l",
+        "along_cm": [
+         -1.0,
+         10.6
+        ],
+        "across_cm": [
+         -5.4,
+         7.3
+        ]
+       }
+      ]
+     },
+     {
+      "side": "r",
+      "floor_cm": -2.11,
+      "parts": [
+       {
+        "bone": "foot_r",
+        "along_cm": [
+         -22.3,
+         0.9
+        ],
+        "across_cm": [
+         -5.3,
+         7.4
+        ]
+       },
+       {
+        "bone": "ball_r",
+        "along_cm": [
+         -1.0,
+         10.5
+        ],
+        "across_cm": [
+         -5.6,
+         7.4
+        ]
+       }
+      ]
+     }
+    ]
+   }
   }
  ]
 }
