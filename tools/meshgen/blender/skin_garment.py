@@ -276,9 +276,19 @@ for _ in range(opt("--collar-smooth", 6, int)):
         if nbrs[i]:
             S[i] = 0.5 * W[i] + 0.5 * W[nbrs[i]].mean(axis=0)
     W = S
-# each button one piece
+# each button one piece; NEVER A PART WIDER THAN A BUTTON (30 October: the built cuffs' jacket was skinned without
+# --piece-attr none, so its pattern piece 3, the right sleeve, was taken for a button and every point of it, wrist to
+# shoulder, given one averaged set of weights; in the game the sleeve all but vanished): a "button" spanning more than
+# --button-max metres keeps its own weights and is named in skin.json
+BUTTON_MAX = opt("--button-max", 0.06)
+log["notButtons"] = []
 for c in np.unique(comp[is_button]):
     ids = np.where((comp == c) & is_button)[0]
+    span = float(np.linalg.norm(P[ids].max(axis=0) - P[ids].min(axis=0)))
+    if span > BUTTON_MAX:
+        log["notButtons"].append({"points": int(len(ids)), "spanM": round(span, 3)})
+        say("NOT A BUTTON: %d points over %.2f m keep their own weights" % (len(ids), span))
+        continue
     W[ids] = W[ids].mean(axis=0)
 # at most N bones a point, normalised
 N = opt("--max-influences", 8, int)
