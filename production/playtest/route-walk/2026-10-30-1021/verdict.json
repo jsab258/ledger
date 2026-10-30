@@ -1,0 +1,557 @@
+{
+ "passed": 13,
+ "stages": 13,
+ "rows": [
+  {
+   "stage": "street",
+   "ok": true,
+   "detail": "chose=new"
+  },
+  {
+   "stage": "talk-open",
+   "ok": true,
+   "detail": "to=Sheila clock=D0 11:05 tom_to_face_m=1.38 cam_to_face_m=3.36 hfov_deg=86.0 figure_flat_m=1.38 figure_rise_m=0.02 in_sight=yes blocker=none"
+  },
+  {
+   "stage": "talk-typed",
+   "ok": true,
+   "detail": "chars=53 moved_cm=0.0"
+  },
+  {
+   "stage": "reply-words",
+   "ok": true,
+   "detail": "seconds=0.20"
+  },
+  {
+   "stage": "deed",
+   "ok": true,
+   "detail": "clock=D0 15:02"
+  },
+  {
+   "stage": "onlookers",
+   "ok": true,
+   "detail": "clock=D0 15:02 measured=rocco,lena,zlata,sam,rita,victor,hal,iva,selma,tanja,katarina,ines,marta"
+  },
+  {
+   "stage": "wait",
+   "ok": true,
+   "detail": "from=D0 15:29 to=D0 20:00 stopped=ron@0"
+  },
+  {
+   "stage": "save",
+   "ok": true,
+   "detail": "clock=D0 20:00 at=19.05,4.00"
+  },
+  {
+   "stage": "quit",
+   "ok": true,
+   "detail": "the game closed from the pause"
+  },
+  {
+   "stage": "street",
+   "ok": true,
+   "detail": "chose=continue (saved clock=D0 20:00 at=19.05,4.00)"
+  },
+  {
+   "stage": "continue",
+   "ok": true,
+   "detail": "clock=D0 20:00 at=19.05,4.00 off_m=0.00"
+  },
+  {
+   "stage": "sit",
+   "ok": true,
+   "detail": "seated 20 cm from the seat, hips 50 cm up; trunk at most 53 deg on the mannequin, 55 on him; upper back 0 past standing as copied, 0 as held; neck 26, 26; face at lowest -70 as copied, -25 as held"
+  },
+  {
+   "stage": "stand",
+   "ok": true,
+   "detail": "touched the room 0 times, ended 79 cm from the seat; trunk at most 51 deg on the mannequin, 53 on him; upper back 0 past standing as copied, 0 as held; neck 20, 20; face at lowest -68 as copied, -25 as held"
+  }
+ ],
+ "path": [
+  {
+   "to": [
+    1.0,
+    1.2
+   ],
+   "at": [
+    1.0,
+    4.0
+   ],
+   "clock": "D0 09:10"
+  },
+  {
+   "to": [
+    1.0,
+    1.2
+   ],
+   "at": [
+    0.81,
+    1.15
+   ],
+   "clock": "D0 09:23"
+  },
+  {
+   "to": [
+    7.9,
+    1.2
+   ],
+   "at": [
+    0.81,
+    1.15
+   ],
+   "clock": "D0 09:23"
+  },
+  {
+   "to": [
+    7.9,
+    1.2
+   ],
+   "at": [
+    5.77,
+    1.09
+   ],
+   "clock": "D0 09:37"
+  },
+  {
+   "to": [
+    7.9,
+    1.2
+   ],
+   "at": [
+    8.04,
+    1.06
+   ],
+   "clock": "D0 09:42"
+  },
+  {
+   "to": [
+    7.9,
+    4.6
+   ],
+   "at": [
+    8.04,
+    1.06
+   ],
+   "clock": "D0 09:42"
+  },
+  {
+   "to": [
+    7.9,
+    4.6
+   ],
+   "at": [
+    7.29,
+    4.52
+   ],
+   "clock": "D0 09:56"
+  },
+  {
+   "to": [
+    7.9,
+    4.6
+   ],
+   "at": [
+    8.65,
+    4.72
+   ],
+   "clock": "D0 10:07"
+  },
+  {
+   "to": [
+    7.9,
+    4.6
+   ],
+   "at": [
+    7.7,
+    4.61
+   ],
+   "clock": "D0 10:18"
+  },
+  {
+   "to": [
+    8.01,
+    7.11
+   ],
+   "at": [
+    7.7,
+    4.61
+   ],
+   "clock": "D0 10:18"
+  },
+  {
+   "to": [
+    7.37,
+    7.42
+   ],
+   "at": [
+    4.75,
+    4.81
+   ],
+   "clock": "D0 10:37"
+  },
+  {
+   "to": [
+    7.22,
+    7.61
+   ],
+   "at": [
+    6.56,
+    7.2
+   ],
+   "clock": "D0 10:51"
+  },
+  {
+   "to": [
+    7.39,
+    7.4
+   ],
+   "at": [
+    7.2,
+    7.2
+   ],
+   "clock": "D0 10:59"
+  },
+  {
+   "to": [
+    7.2,
+    1.2
+   ],
+   "at": [
+    7.2,
+    7.2
+   ],
+   "clock": "D0 11:30"
+  },
+  {
+   "to": [
+    7.2,
+    1.2
+   ],
+   "at": [
+    7.31,
+    5.57
+   ],
+   "clock": "D0 11:51"
+  },
+  {
+   "to": [
+    7.2,
+    1.2
+   ],
+   "at": [
+    5.31,
+    5.57
+   ],
+   "clock": "D0 12:02"
+  },
+  {
+   "to": [
+    7.2,
+    1.2
+   ],
+   "at": [
+    7.3,
+    5.57
+   ],
+   "clock": "D0 12:13"
+  },
+  {
+   "to": [
+    7.2,
+    1.2
+   ],
+   "at": [
+    5.24,
+    5.57
+   ],
+   "clock": "D0 12:28"
+  },
+  {
+   "to": [
+    7.2,
+    1.2
+   ],
+   "at": [
+    7.15,
+    5.57
+   ],
+   "clock": "D0 12:39"
+  },
+  {
+   "to": [
+    7.2,
+    1.2
+   ],
+   "at": [
+    4.49,
+    5.58
+   ],
+   "clock": "D0 13:03"
+  },
+  {
+   "to": [
+    7.2,
+    1.2
+   ],
+   "at": [
+    6.76,
+    1.51
+   ],
+   "clock": "D0 13:18"
+  },
+  {
+   "to": [
+    7.2,
+    1.2
+   ],
+   "at": [
+    7.59,
+    1.02
+   ],
+   "clock": "D0 13:25"
+  },
+  {
+   "to": [
+    7.2,
+    1.2
+   ],
+   "at": [
+    6.43,
+    1.66
+   ],
+   "clock": "D0 13:46"
+  },
+  {
+   "to": [
+    7.2,
+    1.2
+   ],
+   "at": [
+    7.26,
+    1.12
+   ],
+   "clock": "D0 13:58"
+  },
+  {
+   "to": [
+    18.87,
+    1.2
+   ],
+   "at": [
+    7.26,
+    1.12
+   ],
+   "clock": "D0 13:58"
+  },
+  {
+   "to": [
+    18.87,
+    1.2
+   ],
+   "at": [
+    11.74,
+    1.06
+   ],
+   "clock": "D0 14:09"
+  },
+  {
+   "to": [
+    18.87,
+    1.2
+   ],
+   "at": [
+    16.13,
+    1.01
+   ],
+   "clock": "D0 14:17"
+  },
+  {
+   "to": [
+    18.87,
+    1.2
+   ],
+   "at": [
+    19.65,
+    0.96
+   ],
+   "clock": "D0 14:23"
+  },
+  {
+   "to": [
+    18.87,
+    1.2
+   ],
+   "at": [
+    18.81,
+    1.28
+   ],
+   "clock": "D0 14:39"
+  },
+  {
+   "to": [
+    18.87,
+    3.99
+   ],
+   "at": [
+    18.81,
+    1.28
+   ],
+   "clock": "D0 14:39"
+  },
+  {
+   "to": [
+    18.87,
+    3.99
+   ],
+   "at": [
+    19.05,
+    4.0
+   ],
+   "clock": "D0 14:49"
+  },
+  {
+   "to": [
+    19.05,
+    1.2
+   ],
+   "at": [
+    19.05,
+    4.0
+   ],
+   "clock": "D0 20:03"
+  },
+  {
+   "to": [
+    19.05,
+    1.2
+   ],
+   "at": [
+    19.15,
+    1.28
+   ],
+   "clock": "D0 20:17"
+  },
+  {
+   "to": [
+    4.65,
+    1.2
+   ],
+   "at": [
+    19.15,
+    1.28
+   ],
+   "clock": "D0 20:17"
+  },
+  {
+   "to": [
+    4.65,
+    1.2
+   ],
+   "at": [
+    14.3,
+    1.17
+   ],
+   "clock": "D0 20:35"
+  },
+  {
+   "to": [
+    4.65,
+    1.2
+   ],
+   "at": [
+    9.87,
+    1.07
+   ],
+   "clock": "D0 20:44"
+  },
+  {
+   "to": [
+    4.65,
+    1.2
+   ],
+   "at": [
+    5.48,
+    0.97
+   ],
+   "clock": "D0 20:52"
+  },
+  {
+   "to": [
+    4.65,
+    1.2
+   ],
+   "at": [
+    4.72,
+    1.21
+   ],
+   "clock": "D0 21:02"
+  },
+  {
+   "to": [
+    4.65,
+    3.8
+   ],
+   "at": [
+    4.72,
+    1.21
+   ],
+   "clock": "D0 21:02"
+  },
+  {
+   "to": [
+    4.65,
+    3.8
+   ],
+   "at": [
+    4.68,
+    3.87
+   ],
+   "clock": "D0 21:15"
+  },
+  {
+   "to": [
+    4.65,
+    5.7
+   ],
+   "at": [
+    4.68,
+    3.87
+   ],
+   "clock": "D0 21:15"
+  },
+  {
+   "to": [
+    4.65,
+    5.7
+   ],
+   "at": [
+    4.66,
+    5.66
+   ],
+   "clock": "D0 21:20"
+  },
+  {
+   "to": [
+    7.19,
+    6.46
+   ],
+   "at": [
+    4.66,
+    5.66
+   ],
+   "clock": "D0 21:20"
+  },
+  {
+   "to": [
+    7.19,
+    6.46
+   ],
+   "at": [
+    7.14,
+    6.61
+   ],
+   "clock": "D0 21:32"
+  }
+ ]
+}

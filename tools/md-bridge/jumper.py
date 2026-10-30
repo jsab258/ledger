@@ -3,7 +3,7 @@
 into a whole front, a whole back and two sleeves, placed on his avatar's arrangement points, sewn, draped, exported.
 
     python tools/md-bridge/jumper.py BRIAN.json JOB.py [--out DIR] [--steps 400] [--sleeve-shorten 70]
-        [--avatar AVT] [--sleeve-position X,Y,OFFSET] [--cuff-position X,Y,OFFSET]
+        [--neck-depth 80] [--body-length 535] [--avatar AVT] [--sleeve-position X,Y,OFFSET] [--cuff-position X,Y,OFFSET]
     python tools/md-bridge/md_job.py JOB.py          # runs it through the bridge
 
 WHY, 29 October 2026 (his order C9: after the cuffs, the jumper, jeans and shoes by the game-garment skill; the plan,
@@ -87,13 +87,13 @@ def whole(half, names_order):
             ([[-x, y] for x, y in reversed(hb[(hem, arm)])], "armholeL", "hemL")]
 
 
-def build(brian, sleeve_shorten=SLEEVE_SHORTEN):
+def build(brian, sleeve_shorten=SLEEVE_SHORTEN, neck_depth=NECK_DEPTH, body_length=BODY_LENGTH):
     fpts, fn = brian["brian.front"]
     bpts, bn = brian["brian.back"]
     spts, sn = brian["library.sleeve"]
-    fpts, fn = lower_neck(fpts, fn, NECK_DEPTH)
-    fpts, fn = shorten_body(fpts, fn, fn["armhole"][1], fn["cfHem"][1], BODY_LENGTH)
-    bpts, bn = shorten_body(bpts, bn, bn["armhole"][1], bn["cbHem"][1], BODY_LENGTH)
+    fpts, fn = lower_neck(fpts, fn, neck_depth)
+    fpts, fn = shorten_body(fpts, fn, fn["armhole"][1], fn["cfHem"][1], body_length)
+    bpts, bn = shorten_body(bpts, bn, bn["armhole"][1], bn["cbHem"][1], body_length)
     if sleeve_shorten:
         k = 1.0 - sleeve_shorten / -min(y for _, y in spts)
         spts = [[x, y * k if y < 0 else y] for x, y in spts]
@@ -152,8 +152,8 @@ def seams():
     return out
 
 
-def plan(brian, sleeve_shorten=SLEEVE_SHORTEN):
-    pieces = build(brian, sleeve_shorten)
+def plan(brian, sleeve_shorten=SLEEVE_SHORTEN, neck_depth=NECK_DEPTH, body_length=BODY_LENGTH):
+    pieces = build(brian, sleeve_shorten, neck_depth, body_length)
     out_pieces, lines = [], {}
     for key, edges in pieces.items():
         pts = []
@@ -177,7 +177,8 @@ def plan(brian, sleeve_shorten=SLEEVE_SHORTEN):
     for k in ("weltFront", "weltBack"):
         patch[k] = {"bottom": [k + "LowL", k + "LowR"], "top": [k + "R", k + "L"]}
     patch["neckband"] = {"bottom": ["nbFrontL", "nbBackL"], "top": ["nbTopEnd", "nbTopStart"]}
-    built = {"welt_mm": WELT_H, "cuff_mm": CUFF_H, "neckband_mm": NECKBAND_H, "neck_depth_mm": NECK_DEPTH, "body_length_mm": BODY_LENGTH}
+    built = {"welt_mm": WELT_H, "cuff_mm": CUFF_H, "neckband_mm": NECKBAND_H, "neck_depth_mm": neck_depth, "body_length_mm": body_length,
+             "sleeve_shorten_mm": sleeve_shorten}
     return {"pieces": out_pieces, "seams": out_seams, "corners": corners, "patch": patch, "built_edges": built}
 
 
@@ -257,7 +258,11 @@ def main(argv):
     src, job = argv[0], argv[1]
     opt = lambda n, d: float(argv[argv.index(n) + 1]) if n in argv else d  # noqa: E731
     out = argv[argv.index("--out") + 1] if "--out" in argv else r"F:\LedgerTools\garments\tom\jumper\drape"
-    p = plan(load(src), opt("--sleeve-shorten", SLEEVE_SHORTEN))
+    # --neck-depth and --body-length (30 October, drape j2): the cut's two lengths from the shoulder's high point as
+    # flags, for a block drafted with that point measured on the full body (the first block's measures took it from
+    # MH_TomL1_Body.fbx, which has no neck, about 61 mm low: its shoulder slope came out negative, FreeSewing drew the
+    # shoulder flat, and drape j1's front rose to the neck and its armholes sat high)
+    p = plan(load(src), opt("--sleeve-shorten", SLEEVE_SHORTEN), opt("--neck-depth", NECK_DEPTH), opt("--body-length", BODY_LENGTH))
     open(job, "w", encoding="utf-8").write(JOB % {
         "src": src, "plan": json.dumps(p), "out": out, "steps": int(opt("--steps", 400)), "fabric": FABRIC,
         # the straight-elbowed drape body, as the jacket's later drapes (the skill, step 2)

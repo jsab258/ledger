@@ -115,6 +115,30 @@ What failed before this method, so it is not repeated: draping with bent elbows 
 
 ## Notebook
 
+### 30 Oct 2026, a skinned stand collar re-weighted from a body with a neck, set aside after two tries
+- Made: a tool that takes the weights near a garment's collar again from a body that has the neck, blends them into the garment's own below, folds chosen bones onto others and eases the front off the throat.
+- Method (setting-free):
+  - Measure the cause before building: pose the head down and turned on both skeletons and count garment points inside the skin, with a stretch measure on the collar's edge for the turn.
+  - Weights for a garment come from a body with every part it touches; a measuring body cut at the neck makes the collar follow the chest.
+  - A measure that improves offline still needs the film: following the neck fully put the collar's top edge under the jaw (a ring), while the throat still outran the front at the deepest pose.
+- Tools: Blender headless probes (head pitched 0 to 30 degrees, turned 45), the re-weighting tool, the editor's sit walk, one fresh reviewer.
+- Target and check: no skin through the collar standing or straightening, no new fault (not met: worse at the straightening moment and a new ring under the jaw seated).
+- Cost (hours): about 0.6.
+- Failed and why: a skinned collar can follow the trunk or the neck, not both; the throat moves with the upper neck, the collar's base with the trunk, so one set of weights cannot keep both clear. Next direction: the skin under the collar pulled in, a collar joint driven by the neck's pitch only, or a simulated front.
+- Evidence: production/art/clothing/tom-outfit/BAKE-PLAN-2026-10-27.md (the collar, second try); F:/LedgerTools/garments/tom/zip_jacket/v32 to v34.
+
+### 30 Oct 2026, a knitted top's rib bands built from its own shell edges, its hidden sleeve ends set aside after two tries
+- Made: a tool that deletes a draped garment's bands (cuffs, welt, neckband) and lofts new ones from the shell's own open edges to rings sized from the body, sewn edge on the shell's points, UVs as the cut rectangle, weights from the body's nearest skin.
+- Method (setting-free):
+  - When a draped band will not wrap (the simulation left a flat flap), stop repairing the drape: build the band from the shell's edge ring, which is always closed.
+  - Size each band's far ring from the body and the textbook ratio (a cuff to the wrist's girth plus the collision floor, a welt drawn in toward 0.90, a neckband 0.92 of its neckline) and check the head still passes the neck opening at the knit's stretch.
+  - Before chasing a fault, ask whether it can be seen: a part always covered by an outer skinned garment that never rides up is a listed shortfall, not a block.
+  - Measure the pattern's source body first: a body missing its neck put every shoulder line flat and every armhole high, in two garments.
+- Tools: Blender headless, the band tool, a zone check (stretch, body through, cover, centre-line crossings per zone).
+- Target and check: cuffs centred within 30 mm, gap 10.5 mm or less, cover 90%, nothing inside (met); neckband opening over the head at 50% (met); the sleeve's last stretch above the cuff (not met, two tries: folds carried up the forearm; the fix, blending along the limb and round it separately, not made).
+- Cost (hours): about 1 (a helper).
+- Evidence: F:/LedgerTools/garments/tom/jumper/bands-j3-try2; DECISIONS 30 October 10:30.
+
 ### 30 Oct 2026, a desktop program's one menu item started by the operating system's accessibility interface, second try
 - Made: a small script that starts a tool's in-program job runner by invoking one named menu item through the operating system's accessibility interface, with no mouse, keys or window focus; the job sender calls it whenever the runner's heartbeat is stale.
 - Method (setting-free):

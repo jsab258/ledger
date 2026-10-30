@@ -1,7 +1,7 @@
 {
  "piece": "tom-jacket",
  "line": "assetChecks=PASS piece=tom-jacket assets=5 errors=0 warnings=0 waived=0 first=none",
- "when": "2026-10-30 07:35:37",
+ "when": "2026-10-30 10:41:12",
  "assets": [
   "/Game/Ledger/MetaHumans/Garments/TomZipJacket/MI_TomZipJacket",
   "/Game/Ledger/MetaHumans/Garments/TomZipJacket/SKM_TomZipJacket",

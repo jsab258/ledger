@@ -8,17 +8,17 @@ Failed its exit on 22 Oct (production/audits/phase1-exit/CLOSE-2026-10-22.md); r
 
 - [x] 1. Health check; the order ledger.
 - [x] 2. The walk: Epic's, Tom's MetaHuman, packaged; tester's route 15 of 15. Sit set aside.
-- [ ] 3. Clothes (his order C): built-cuff jacket passes packaged; jumper waits for Marvelous; jeans' job ready.
+- [ ] 3. Clothes (his order C): jacket packaged, collar re-weighted; jumper, jeans draping; shoes fitting.
 - [ ] 4. Speech: faster first sentence, 31 of 42 run, still fails (FastFirst.cs).
 - [ ] 5. Look (D11): walls pass; office smoke passes, grade by day; wet ground passes, try 2.
 - [ ] 6. Phase 1's exit re-run; phase 2?
-- Also: sitting packaged; bow set aside. Camera: run row on his page; talk row works, a vanish to clear.
+- Also: sitting's face hold passes the editor; packaged tonight. Back door's third try in tonight's build.
 
 ## Studies this week (aaa-reference/STUDY-PLAN.md)
 
 Done 16 of 16.
 
-STATE (30 Oct 06:30): sit's fault named (face down); third try his word. Next: Marvelous.
+STATE (30 Oct 10:25): Marvelous's bridge starts itself; three helpers on jumper, jeans, shoes.
 
 ## Handovers
 
