@@ -7,13 +7,13 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
 
 <!-- morning pictures: written by tools/morning_pictures.py -->
 
-**Morning, Thursday 29 October. Phase 1, Prove the bottlenecks. On: 3. Clothes (his order C): jacket in the game, Mafia's four detail levels; elastic-rib cuffs await his click (BAKE-PLAN). Next: 4. Speech: faster first sentence, 16 of 42 run, no gain yet (FastFirst.cs).**
+**Morning, Friday 30 October. Phase 1, Prove the bottlenecks. On: 3. Clothes (his order C): built-cuff jacket mended, passes in the editor; jumper's job ready (JUMPER-PLAN), waits for Marvelous. Next: 4. Speech: faster first sentence, 31 of 42 run, still fails (FastFirst.cs).**
 
-| | Today, 29 Oct | Yesterday, 28 Oct |
+| | Today, 30 Oct | Yesterday, 29 Oct |
 |---|---|---|
-| The hook camera by day | ![The hook camera by day, 2026-10-29](production/previews/morning-hook-day-2026-10-29.jpg) | ![The hook camera by day, 2026-10-28](production/previews/morning-hook-day-2026-10-28.jpg) |
-| The reverse view | ![The reverse view, 2026-10-29](production/previews/morning-reverse-day-2026-10-29.jpg) | ![The reverse view, 2026-10-28](production/previews/morning-reverse-day-2026-10-28.jpg) |
-| The street at night | ![The street at night, 2026-10-29](production/previews/morning-night-2026-10-29.jpg) | ![The street at night, 2026-10-28](production/previews/morning-night-2026-10-28.jpg) |
+| The hook camera by day | ![The hook camera by day, 2026-10-30](production/previews/morning-hook-day-2026-10-30.jpg) | ![The hook camera by day, 2026-10-29](production/previews/morning-hook-day-2026-10-29.jpg) |
+| The reverse view | ![The reverse view, 2026-10-30](production/previews/morning-reverse-day-2026-10-30.jpg) | ![The reverse view, 2026-10-29](production/previews/morning-reverse-day-2026-10-29.jpg) |
+| The street at night | ![The street at night, 2026-10-30](production/previews/morning-night-2026-10-30.jpg) | ![The street at night, 2026-10-29](production/previews/morning-night-2026-10-29.jpg) |
 
 The Hook sheet, the bar they are held to: ![The Hook sheet](production/previews/hook-sheet-2026-10-05.jpg)
 
