@@ -171,3 +171,10 @@ The documented, licence-clean route is a plug-in .py that reads a job file from 
 - The 2026.1 API changelog: the developer changelog stops at 2025.1.201.
 - **Not reached:** http://manual.marvelousdesigner.com/display/MD4M/Script (the old manual; the host does not resolve); https://developer.marvelousdesigner.com/py-modindex.html (Access Denied); the pricing page's other FAQ answers (only "Which plan is right for me?" was opened); the "Import and Export Preset" manual article (not read); the CGChannel and Digital Production coverage of 2026.1 (secondary, not needed).
 - **Read only in part:** the Register Accessory article (unit passages only) and the API list's docstrings (only those for the functions named above; all signatures were read).
+
+## 30 October 2026: the bridge started through UI Automation (his ruling of that morning)
+
+- Measured on this PC: Marvelous 2026.1 ships Qt 6 (Qt6Core.dll, qwindows.dll), and its main window (class TitleFrame) exposes its menu bar to UI Automation: every top item (File to Help) carries the Invoke, Value and ExpandCollapse patterns. A closed menu's items are not in the tree.
+- Expanding Plugins shows Plug-in, Plug-in Manager, AI Studio Activation, Python Editor and API Reference; expanding Plug-in shows the registered plug-in as "     LEDGER bridge      " (its title padded with spaces), its popup hung under the Plug-in item inside the main window, not as a separate top window. So the 2026.1 menu path of the Python editor is Plugins > Python Editor (this file's open question, answered).
+- Try 1 (09:32): the exact title not found (the padding). Try 2 (09:32:50): matched trimmed, invoked; the heartbeat began the same second; the window in front unchanged. Then stop.job and md_job.py --start restarted it alone (09:33:50).
+- tools/md-bridge/start_bridge.ps1 holds the one permitted path (Plugins > Plug-in > LEDGER bridge) and starts only when Marvelous runs and answers Windows, no job is running (busy.json) and the heartbeat is over 30 s old or stopped; every start is a line in F:/LedgerTools/md-jobs/starts.jsonl.

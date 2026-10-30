@@ -88,6 +88,15 @@ public:
 	// spine_01 to spine_03 against spine_03 to neck_01, at most standing plus BackUpAllowDeg, turned back at spine_03
 	// and spine_04 before the neck is measured (the study: the thoracic spine extends as the trunk leans)
 	float BackUpAllowDeg = 10.0f;
+	// THE THIRD TRY, HIS FACE KEPT UP (30 October, his yes that morning; SIT-BOW-2026-10-30.md, "the head's own pitch",
+	// design (a)): the fault is the face, which Epic's bench clips turn 75 degrees to the floor where people average
+	// about 10. While the weight is above nil the head bone's face direction is turned up until it is no lower than
+	// FaceFloorDeg below the horizontal: 40% at neck_01, 30% at neck_02, 30% at the head. With FaceFloorDeg above nil the
+	// two holds above are measured only, not applied (both set aside after two tries).
+	float FaceFloorDeg = 25.0f;
+	// the face's pitch against the horizontal (degrees, negative looking down) as copied and as held
+	float FacePitchCopied() const;
+	float FacePitchHeld() const;
 	// the last copied pose's neck and upper back: each bend past standing (degrees), as copied and as held; and the
 	// trunk's lean from the vertical (the thighs' midpoint to neck_01) as copied
 	float NeckBendCopied() const;

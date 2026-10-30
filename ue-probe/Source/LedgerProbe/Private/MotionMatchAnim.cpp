@@ -43,7 +43,11 @@ namespace
 	struct FLedgerHeadUpNode : public FAnimNode_Base
 	{
 		FAnimNode_RetargetPoseFromMesh Retarget;
-		float Weight = 0.0f, AllowDeg = 15.0f, BackAllowDeg = 10.0f;
+		float Weight = 0.0f, AllowDeg = 15.0f, BackAllowDeg = 10.0f, FaceFloorDeg = 25.0f;
+		// the head's face direction in its own frame (the reference pose looks along the component's +Y, as
+		// tools/ue/clip_frames.py measures it), and the face's pitch on the last pose, as copied and as held
+		FVector FaceLocal = FVector(0.0, 1.0, 0.0);
+		float FaceCopied = 0.0f, FaceHeld = 0.0f;
 		FLedgerHold Back = { FBoneReference(TEXT("spine_01")), FBoneReference(TEXT("spine_03")), FBoneReference(TEXT("neck_01")), FBoneReference(TEXT("spine_03")), FBoneReference(TEXT("spine_04")) };
 		FLedgerHold Neck = { FBoneReference(TEXT("spine_05")), FBoneReference(TEXT("neck_01")), FBoneReference(TEXT("head")), FBoneReference(TEXT("neck_01")), FBoneReference(TEXT("neck_02")) };
 		// the trunk's lean from the vertical (the thighs' midpoint to neck_01), on his copied pose
@@ -59,12 +63,13 @@ namespace
 			const FBoneContainer& Bc = Context.AnimInstanceProxy->GetRequiredBones();
 			bBones = ThighL.Initialize(Bc) && ThighR.Initialize(Bc);
 			const FReferenceSkeleton& R = Bc.GetReferenceSkeleton();
-			auto RefCS = [&R](int32 I)
+			auto RefT = [&R](int32 I)
 			{
 				FTransform T = R.GetRefBonePose()[I];
 				for (int32 P = R.GetParentIndex(I); P != INDEX_NONE; P = R.GetParentIndex(P)) { T = T * R.GetRefBonePose()[P]; }
-				return T.GetLocation();
+				return T;
 			};
+			auto RefCS = [&RefT](int32 I) { return RefT(I).GetLocation(); };
 			for (FLedgerHold* H : { &Back, &Neck })
 			{
 				bBones = bBones && H->A.Initialize(Bc) && H->B.Initialize(Bc) && H->C.Initialize(Bc) && H->P1.Initialize(Bc) && H->P2.Initialize(Bc);
@@ -72,6 +77,7 @@ namespace
 				const FVector a = RefCS(H->A.BoneIndex), b = RefCS(H->B.BoneIndex), c = RefCS(H->C.BoneIndex);
 				H->RefBend = FMath::RadiansToDegrees(FMath::Acos(FMath::Clamp(FVector::DotProduct((b - a).GetSafeNormal(), (c - b).GetSafeNormal()), -1.0, 1.0)));
 			}
+			FaceLocal = RefT(Neck.C.BoneIndex).GetRotation().UnrotateVector(FVector(0.0, 1.0, 0.0));
 		}
 		// the hold's bend past standing on this pose, and the axis that straightens it
 		static float BendOf(FCSPose<FCompactPose>& CS, const FBoneContainer& Bc, const FLedgerHold& H, FVector& Axis)
@@ -83,11 +89,45 @@ namespace
 			Axis = FVector::CrossProduct(Up, Lo).GetSafeNormal();
 			return (float)FMath::RadiansToDegrees(FMath::Acos(FMath::Clamp(FVector::DotProduct(Lo, Up), -1.0, 1.0))) - H.RefBend;
 		}
+		// a turn of Deg about Axis (component space) at one bone: its local rotation becomes parent^-1 * Q * its own
+		static void TurnAt(FPoseContext& Output, FCSPose<FCompactPose>& CS, const FBoneReference& Bone, const FVector& Axis, float Deg)
+		{
+			const FBoneContainer& Bc = Output.Pose.GetBoneContainer();
+			const FCompactPoseBoneIndex I = Bone.GetCompactPoseIndex(Bc);
+			const FQuat Q(Axis, FMath::DegreesToRadians(Deg));
+			const FCompactPoseBoneIndex P = Output.Pose.GetParentBoneIndex(I);
+			const FQuat Parent = P != INDEX_NONE ? CS.GetComponentSpaceTransform(P).GetRotation() : FQuat::Identity;
+			const FQuat Now = CS.GetComponentSpaceTransform(I).GetRotation();
+			Output.Pose[I].SetRotation((Parent.Inverse() * Q * Now).GetNormalized());
+			CS.InitPose(Output.Pose);
+		}
+		// the face's pitch against the horizontal on this pose (negative looking down), and its direction
+		float PitchOf(FCSPose<FCompactPose>& CS, const FBoneContainer& Bc, FVector& Face) const
+		{
+			Face = CS.GetComponentSpaceTransform(Neck.C.GetCompactPoseIndex(Bc)).GetRotation().RotateVector(FaceLocal).GetSafeNormal();
+			return (float)FMath::RadiansToDegrees(FMath::Asin(FMath::Clamp(Face.Z, -1.0, 1.0)));
+		}
+		// HIS FACE KEPT UP (the third try): turned about the horizontal across the face (face x up, which takes the face
+		// toward up) until it is no lower than FaceFloorDeg down, as far as the weight asks, by shares down the neck
+		void LiftFace(FPoseContext& Output, FCSPose<FCompactPose>& CS)
+		{
+			const FBoneContainer& Bc = Output.Pose.GetBoneContainer();
+			FVector Face;
+			FaceCopied = FaceHeld = PitchOf(CS, Bc, Face);
+			const float Lift = FMath::Max(0.0f, -FaceFloorDeg - FaceCopied) * FMath::Clamp(Weight, 0.0f, 1.0f);
+			const FVector Axis = FVector::CrossProduct(Face, FVector::UpVector).GetSafeNormal();
+			if (Lift <= 0.01f || Axis.IsNearlyZero()) { return; }
+			TurnAt(Output, CS, Neck.P1, Axis, Lift * 0.4f);
+			TurnAt(Output, CS, Neck.P2, Axis, Lift * 0.3f);
+			TurnAt(Output, CS, Neck.C, Axis, Lift * 0.3f);
+			FaceHeld = PitchOf(CS, Bc, Face);
+		}
 		void Apply(FPoseContext& Output, FCSPose<FCompactPose>& CS, FLedgerHold& H, float Allow)
 		{
 			const FBoneContainer& Bc = Output.Pose.GetBoneContainer();
 			FVector Axis;
 			H.Copied = H.Held = BendOf(CS, Bc, H, Axis);
+			if (FaceFloorDeg > 0.0f) { return; }      // the face's hold instead (measured only)
 			const float Turn = FMath::Max(0.0f, H.Copied - Allow) * FMath::Clamp(Weight, 0.0f, 1.0f);
 			if (Turn <= 0.01f || Axis.IsNearlyZero()) { return; }
 			// a turn of Q in component space at one bone: its local rotation becomes parent^-1 * Q * its own
@@ -115,6 +155,7 @@ namespace
 			TrunkLean = (float)FMath::RadiansToDegrees(FMath::Acos(FMath::Clamp(FVector::DotProduct((Nk - Hips).GetSafeNormal(), FVector::UpVector), -1.0, 1.0)));
 			Apply(Output, CS, Back, BackAllowDeg);
 			Apply(Output, CS, Neck, AllowDeg);
+			if (FaceFloorDeg > 0.0f) { LiftFace(Output, CS); }
 		}
 	};
 
@@ -138,7 +179,7 @@ namespace
 		virtual void PreUpdate(UAnimInstance* InAnimInstance, float DeltaSeconds) override
 		{
 			FAnimInstanceProxy::PreUpdate(InAnimInstance, DeltaSeconds);
-			if (const ULedgerRetargetAnim* A = Cast<ULedgerRetargetAnim>(InAnimInstance)) { Node.Weight = A->HeadUpWeight; Node.AllowDeg = A->HeadUpAllowDeg; Node.BackAllowDeg = A->BackUpAllowDeg; }
+			if (const ULedgerRetargetAnim* A = Cast<ULedgerRetargetAnim>(InAnimInstance)) { Node.Weight = A->HeadUpWeight; Node.AllowDeg = A->HeadUpAllowDeg; Node.BackAllowDeg = A->BackUpAllowDeg; Node.FaceFloorDeg = A->FaceFloorDeg; }
 		}
 
 		virtual FAnimNode_Base* GetCustomRootNode() override { return &Node; }
@@ -291,6 +332,8 @@ float ULedgerRetargetAnim::NeckBendHeld() const { return GetProxyOnGameThread<FL
 float ULedgerRetargetAnim::BackBendCopied() const { return GetProxyOnGameThread<FLedgerRetargetProxy>().Node.Back.Copied; }
 float ULedgerRetargetAnim::BackBendHeld() const { return GetProxyOnGameThread<FLedgerRetargetProxy>().Node.Back.Held; }
 float ULedgerRetargetAnim::TrunkLean() const { return GetProxyOnGameThread<FLedgerRetargetProxy>().Node.TrunkLean; }
+float ULedgerRetargetAnim::FacePitchCopied() const { return GetProxyOnGameThread<FLedgerRetargetProxy>().Node.FaceCopied; }
+float ULedgerRetargetAnim::FacePitchHeld() const { return GetProxyOnGameThread<FLedgerRetargetProxy>().Node.FaceHeld; }
 
 FString ULedgerMotionMatchTools::WireMotionMatchBlueprint(UAnimBlueprint* Blueprint, bool bOffsetRoot)
 {

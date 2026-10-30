@@ -115,6 +115,20 @@ What failed before this method, so it is not repeated: draping with bent elbows 
 
 ## Notebook
 
+### 30 Oct 2026, a desktop program's one menu item started by the operating system's accessibility interface, second try
+- Made: a small script that starts a tool's in-program job runner by invoking one named menu item through the operating system's accessibility interface, with no mouse, keys or window focus; the job sender calls it whenever the runner's heartbeat is stale.
+- Method (setting-free):
+  - Ask first whether the program's own interface toolkit speaks the accessibility interface (here it did, natively); a menu bar then exposes expand and invoke on every item.
+  - A closed menu's items are not in the tree: open each level with expand, look for the next name only under the item just opened, invoke the last; close what was opened if a name is missing.
+  - Read the names from the open tree before matching: the program padded the item's title with spaces, so names are matched trimmed.
+  - Guard the start: only when the program runs, answers the system (a busy thread would queue the menu), runs no job (a marker file the runner writes) and the heartbeat is stale; log every start.
+  - Hard-code the one permitted path in the script so it cannot reach anything else.
+- Tools: the system's managed accessibility client from its built-in shell; the runner's heartbeat and a busy marker.
+- Target and check: the runner beats within 20 s of a stale heartbeat, the window in front unchanged (met: started at the second try, front window unchanged; then stopped and restarted by the job sender alone).
+- Cost (hours): about 0.4.
+- Failed and why: the first try looked for the item's exact title; the program had padded it with spaces.
+- Evidence: production/research/game-clothing-pipeline/MD-SCRIPTING-2026-10-26.md (section of 30 October); tools/md-bridge/start_bridge.ps1.
+
 ### 30 Oct 2026, a visible fault every measure passed: holds on the neck and back, two tries, set aside
 - Made: a native copy class that retargets a driver skeleton's pose onto the visible body and can hold the neck and upper back during chosen moves (off by default); per-frame measures of trunk, back and neck on both skeletons.
 - Method (setting-free):

@@ -54,5 +54,6 @@ Read back: 2026-10-30
 | [Wednesday's Decisions](https://claude.ai/artifact/TDpjTLydnfFBFfRPmavGpD) | 2026-10-28 | 4 | cuffs-next-2026-10-28: bake, 2026-10-28 (Bake route, yes. But first put the jacket on Tom in the game with today's cuffs,); delete-stray-talk-2026-10-28: yes, 2026-10-28; free-f-study-extracts-2026-10-28: yes, 2026-10-28; tom-wrists-2026-10-28: ?, 2026-10-28 |
 | [Camera distance](https://claude.ai/artifact/4e5QA1UFTEGLacF3Rm4wpE) | 2026-10-28 | 3 | camera-distance-2026-10-28: between, 2026-10-28 (Between, nudged so his feet are fully in frame. Keep Mafia's idea of the camera ); camera-pullback-2026-10-28: 3.1, 2026-10-29; camera-result-2026-10-28: ?, 2026-10-28 (Too low and too big now: he blocks the end of the street. Go back to the Between) |
 | [The day a stop too bright](https://claude.ai/artifact/SHm9UYFEqDkf8WyH5Lk4mg) | 2026-10-29 | 2 | delete-jacket-leftovers-2026-10-29: yes, 2026-10-29; look-day-exposure-2026-10-29: down1, 2026-10-29 (Kept one stop darker. But the street is now much darker than the Hook sheet. Don) |
+| [The street at real values, and the camera when he runs](https://claude.ai/artifact/YMW4gWcUvWV2i4qoWZDxgs) | 2026-10-30 | 3 | back-door-third-2026-10-30: yes, 2026-10-30; camera-run-row-2026-10-30: keep, 2026-10-30; look-street-real-values-2026-10-30: keep, 2026-10-30 |
 
-48 pages, 180 answers.
+49 pages, 183 answers.

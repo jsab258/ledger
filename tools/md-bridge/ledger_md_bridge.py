@@ -1,6 +1,7 @@
 """LEDGER's bridge into Marvelous Designer: one click a session, then jobs from a folder.
 
-    In Marvelous Designer: Plugin tab > Plug-in Manager > + ADD > this file (once); then click it once a session.
+    In Marvelous Designer: Plugin tab > Plug-in Manager > + ADD > this file (once). Each session it is started by
+    tools/md-bridge/start_bridge.ps1 through Windows UI Automation (his ruling of 30 October), or by a click.
     From the PC's side: python tools/md-bridge/md_job.py JOB.py   (drops the job, waits for its result)
 
 WHY, 26 October 2026. Jafar's order of 25 October, item 3: Tom's outfit made in Marvelous Designer.
@@ -67,6 +68,8 @@ def run_job(path, state):
     t0 = time.time()
     out = {"job": name, "ok": False, "missingModules": missing}
     buf = io.StringIO()
+    busy = os.path.join(ROOT, "busy.json")       # the heartbeat waits while a job runs: start_bridge.ps1 reads this
+    write_json(busy, {"job": name, "since": time.strftime("%Y-%m-%d %H:%M:%S")})
     try:
         code = open(path, encoding="utf-8").read()
         with contextlib.redirect_stdout(buf):
@@ -78,6 +81,8 @@ def run_job(path, state):
                 "stdout": buf.getvalue()[-4000:]})
     write_json(os.path.join(OUT, name + ".json"), out)
     os.replace(path, os.path.join(DONE, "%s-%d.py" % (name, int(t0))))
+    with contextlib.suppress(OSError):
+        os.remove(busy)
     state["jobs"] += 1
 
 

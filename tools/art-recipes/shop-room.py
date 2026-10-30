@@ -414,11 +414,42 @@ def build_and_render(argv):
         # hairlines", "no moulding or depth", the fittings "across the panel lines"): stiles 100 mm, a muntin 80 mm, a
         # bottom rail 200 mm, a lock rail 200 mm at the knob's height, a top rail 150 mm; each panel's moulding 35 mm wide
         # and 18 mm proud of the leaf, so it holds a shadow at the room's distance
+        # THE THIRD TRY (30 October, his yes on his page): the second's square mouldings took the leaf's own tone under
+        # the room's night light, so their sides read as dark slots ("dark incised slots, not raised mouldings"). Each
+        # panel's moulding is now one mitred frame with chamfered faces (its 35 mm base rising 18 mm to an 11 mm top,
+        # each slope 12 mm across), so a slope faces the light at every angle as a real bolection moulding does, and the
+        # panel's field inside it is a shade darker than the stiles, the shading its recess would hold
+        import bmesh as bmesh_
+        field_ = mat("door_field", (0.22, 0.135, 0.08), rough=0.55, noise=0.1)
+
+        def chamfer_frame_(name, x0, x1, z0, z1, w, c, yb, yt, m):
+            me = bpy.data.meshes.new(name)
+            o = bpy.data.objects.new(name, me)
+            bpy.context.collection.objects.link(o)
+            bm = bmesh_.new()
+
+            def ring(ins, y):
+                return [bm.verts.new((x0 + ins, y, z0 + ins)), bm.verts.new((x1 - ins, y, z0 + ins)),
+                        bm.verts.new((x1 - ins, y, z1 - ins)), bm.verts.new((x0 + ins, y, z1 - ins))]
+            rings = [ring(0.0, yb), ring(c, yt), ring(w - c, yt), ring(w, yb)]
+            for a, b in zip(rings, rings[1:]):
+                for i in range(4):
+                    f = bm.faces.new((a[i], a[(i + 1) % 4], b[(i + 1) % 4], b[i]))
+                    f.normal_update()
+                    if f.normal.y > 0:      # every face toward the room (-y)
+                        f.normal_flip()
+            uv = bm.loops.layers.uv.new("UVMap")
+            for f in bm.faces:
+                for lp in f.loops:
+                    lp[uv].uv = (lp.vert.co.x, lp.vert.co.z)
+            bm.to_mesh(me)
+            bm.free()
+            me.materials.append(m)
+            return o
         for k_, (pz0, pz1) in enumerate(((0.20, 0.88), (1.08, 1.85))):
             for j_, (px0, px1) in enumerate(((1.20, 1.485), (1.565, 1.85))):
-                for nm_, a0, a1, b0, b1 in (("l", px0, px0 + 0.035, pz0, pz1), ("r", px1 - 0.035, px1, pz0, pz1),
-                                            ("b", px0, px1, pz0, pz0 + 0.035), ("t", px0, px1, pz1 - 0.035, pz1)):
-                    box("door_panel_%d%d%s" % (k_, j_, nm_), a0 + dx, a1 + dx, D - 0.038, D - 0.02, b0, b1, door)
+                chamfer_frame_("door_panel_%d%d" % (k_, j_), px0 + dx, px1 + dx, pz0, pz1, 0.035, 0.012, D - 0.02, D - 0.038, door)
+                box("door_field_%d%d" % (k_, j_), px0 + 0.035 + dx, px1 - 0.035 + dx, D - 0.022, D - 0.02, pz0 + 0.035, pz1 - 0.035, field_)
         # the keyhole on the lock stile, under the knob and clear of every panel: a raised brass plate, a keyhole's own
         # shape in it (a slot and the round above it), dark
         box("door_keyplate", 1.885 + dx, 1.915 + dx, D - 0.026, D - 0.02, 0.885, 0.95, brass_)

@@ -3,17 +3,22 @@
 
     python tools/md-bridge/md_job.py JOB.py [--timeout 600]   # prints the result JSON; exit 1 on failure
     python tools/md-bridge/md_job.py --alive                  # is the bridge running? (exit 1 if not)
+    python tools/md-bridge/md_job.py --start                  # start it if Marvelous is open (start_bridge.ps1)
     python tools/md-bridge/md_job.py --selftest
 
 The bridge (tools/md-bridge/ledger_md_bridge.py, started by Jafar's one click a session) runs each .py
 dropped in F:/LedgerTools/md-jobs/inbox on Marvelous's own thread, with CLO's API modules imported and a
 `result` dict and `log()` function in scope, and writes out/<job>.json. A job is copied in whole (written
 beside, then renamed) so the bridge never reads half a file. If the heartbeat is older than 30 s the
-bridge is not running: that needs his click, so this says so and stops (Needs you).
+bridge is not running. Since 30 October (his ruling) it is then started without him: start_bridge.ps1
+invokes Marvelous's Plugins > Plug-in > LEDGER bridge menu item through Windows UI Automation (no mouse, no
+keys), logs the start in starts.jsonl and this waits up to 20 s for the heartbeat; only if Marvelous is closed
+or the start fails does it stop and say so.
 """
 import json
 import os
 import shutil
+import subprocess
 import sys
 import time
 
@@ -35,10 +40,31 @@ def alive(root=ROOT, now=None):
     return True, "alive, %s jobs run" % beat.get("jobs")
 
 
-def submit(job, timeout, root=ROOT):
+def start(root=ROOT, wait_s=20.0):
+    """(True, note) once the bridge beats, started through its menu item if it was not (start_bridge.ps1)."""
     ok, note = alive(root)
+    if ok:
+        return ok, note
+    ps1 = os.path.join(os.path.dirname(os.path.abspath(__file__)), "start_bridge.ps1")
+    env = dict(os.environ, LEDGER_MD_JOBS=root)
+    r = subprocess.run(["powershell.exe", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", ps1],
+                       capture_output=True, text=True, timeout=90, env=env)
+    said = (r.stdout.strip().splitlines() or ["{}"])[-1]
+    if r.returncode != 0:
+        return False, "%s; the start: %s" % (note, said)
+    t0 = time.time()
+    while time.time() - t0 < wait_s:
+        ok, note = alive(root)
+        if ok:
+            return ok, "started: " + note
+        time.sleep(1.0)
+    return False, "invoked, but no heartbeat in %d s: %s" % (wait_s, said)
+
+
+def submit(job, timeout, root=ROOT):
+    ok, note = start(root)
     if not ok:
-        print(json.dumps({"ok": False, "bridge": note, "needsJafar": "open Marvelous and click the LEDGER bridge once"}))
+        print(json.dumps({"ok": False, "bridge": note, "needsJafar": "open Marvelous (the bridge then starts itself)"}))
         return 1
     name = os.path.splitext(os.path.basename(job))[0]
     out = os.path.join(root, "out", name + ".json")
@@ -77,6 +103,10 @@ if __name__ == "__main__":
     a = sys.argv[1:]
     if "--selftest" in a:
         sys.exit(selftest())
+    if "--start" in a:
+        r = start()
+        print(r[1])
+        sys.exit(0 if r[0] else 1)
     if "--alive" in a:
         r = alive()
         print(r[1])
