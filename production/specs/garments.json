@@ -110,14 +110,14 @@
   {
    "who": "Tom",
    "name": "TomJeans",
-   "fbx": "F:/LedgerTools/garments/tom/jeans/chain-n2/skinned-try2/jeans_skinned.fbx",
+   "fbx": "F:/LedgerTools/garments/tom/jeans/chain-n7/skinned/jeans_skinned.fbx",
    "hides": [
     "lower"
    ],
    "maps": {
-    "colour": "F:/LedgerTools/garments/tom/jeans/details/baked-2048/jeans_colour_ao.png",
-    "normal": "F:/LedgerTools/garments/tom/jeans/details/baked-2048/jeans_normal_dx.png",
-    "packed": "F:/LedgerTools/garments/tom/jeans/details/baked-2048/jeans_packed_rough.png",
+    "colour": "F:/LedgerTools/garments/tom/jeans/chain-n7/details/baked-2048/jeans_colour_ao.png",
+    "normal": "F:/LedgerTools/garments/tom/jeans/chain-n7/details/baked-2048/jeans_normal_dx.png",
+    "packed": "F:/LedgerTools/garments/tom/jeans/chain-n7/details/baked-2048/jeans_packed_rough.png",
     "tint": [
      0.115,
      0.2,
@@ -139,7 +139,7 @@
    },
    "hold": "until its editor walk and a fresh reviewer pass (30 October; worn with -WearHeld=TomJeans)",
    "handed": "2026-10-30",
-   "made": "Tom's 1990 jeans (his order C9): FreeSewing's Titan at his size, draped in Marvelous (drape n2, short settling calls), bent back to his pose, 9,728 triangles, maps at 2048 (1.43 px/mm; 1024 fell under the 0.9 floor), skinned from his body with each leg from its own leg and the crotch faded to the pelvis over 7 cm (skin_garment.py --leg-sides --crotch-fade); the crotch's two layers between his near-touching thighs listed; the seat and crotch stretched sitting (6.0x) and the knees through by up to 16.5 mm in a hand-posed sit, both to be judged in the game. Tint: a faded 1990 mid-blue (sRGB about 95, 125, 165; the first, 72, 98, 140, read as a matched set with the navy jacket to its reviewer), his to approve."
+   "made": "Tom's 1990 jeans (his order C9): FreeSewing's Titan at his size, draped in Marvelous over a smoothed hull of his boots (drape n7, short settling calls; the straight 16.5 in hem resting on the boots, its back about 5.3 cm up, his word of 30 October), bent back to his pose, 9,728 triangles, maps at 2048 (1.43 px/mm; 1024 fell under the 0.9 floor), skinned from his body with each leg from its own leg and the crotch faded to the pelvis over 7 cm (skin_garment.py --leg-sides --crotch-fade); the crotch's two layers between his near-touching thighs listed; the seat and crotch stretched sitting (6.0x) and the knees through by up to 16.5 mm in a hand-posed sit, both to be judged in the game. Tint: a faded 1990 mid-blue (sRGB about 95, 125, 165; the first, 72, 98, 140, read as a matched set with the navy jacket to its reviewer), his to approve."
   },
   {
    "who": "Tom",

@@ -109,6 +109,12 @@ h3{font-weight:800;font-size:19px;line-height:1.15}
 .nums .goal dd{color:var(--line)}
 .display{margin:0;font:700 15px/1.3 var(--mono)}
 .last{margin:0;font-size:13.5px;line-height:1.45;border-top:1px dashed var(--rule);padding-top:9px}
+.pieces{list-style:none;margin:0;padding:0;display:grid;gap:5px}
+.pieces li{font-size:13.5px;line-height:1.4;display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 8px;align-items:baseline}
+.pieces .pn{font-weight:700}
+.pieces .ps{font:700 11px/1.2 var(--mono);text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.pieces .ps.beaten{color:var(--ink)}
+.pieces .pl{grid-column:1 / -1;color:var(--ink)}
 .defeated{opacity:.86}
 .defeated h3{text-decoration:line-through;text-decoration-thickness:2px;text-decoration-color:var(--ok)}
 .bosses-count{font:700 14px/1 var(--mono);color:var(--muted)}
@@ -338,6 +344,18 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
         a.append(dl);
       } else if (b.display){
         a.append(el("p", "display", b.display));
+      }
+      // A BOSS MEASURED BY PIECES (30 October, his word for The Tailor): each piece its state and one line
+      if (Array.isArray(b.pieces) && b.pieces.length){
+        const ul = el("ul", "pieces");
+        for (const p of b.pieces){
+          const li = el("li");
+          const head = el("span"); head.append(el("span", "pn", p.name));
+          li.append(head, el("span", "ps" + (p.state === "beaten" ? " beaten" : ""), p.state === "beaten" ? "Beaten" : "Fighting"));
+          li.append(el("span", "pl", p.line));
+          ul.append(li);
+        }
+        a.append(ul);
       }
       if (b.last) a.append(el("p", "last", b.last));
       g.append(a);

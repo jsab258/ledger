@@ -4645,12 +4645,16 @@ namespace
 	// wanted side first, as -MouthFilmWide does.
 	bool DressView(UWorld* World, const FString& Id, FVector& Eye, FVector& Look, float& HFov)
 	{
-		AActor* Body = CardBody(Id.StartsWith(TEXT("ron")) ? "rocco" : "lena");
-		AActor* Who = Body != nullptr ? GVisualFor(Body) : nullptr;
+		// TOM TOO (30 October, his outfit: the office's camera stops at his knees, so his boots need their own picture):
+		// his own pawn, its feet at the capsule's foot, facing its forward
+		const bool bTom = Id.StartsWith(TEXT("tom"));
+		AActor* Body = bTom ? nullptr : CardBody(Id.StartsWith(TEXT("ron")) ? "rocco" : "lena");
+		AActor* Who = bTom ? static_cast<AActor*>(GPawn) : (Body != nullptr ? GVisualFor(Body) : nullptr);
 		if (World == nullptr || Who == nullptr) { return false; }
-		const FVector Feet = Who->GetActorLocation();
-		// A MetaHuman faces its actor's +Y (SyncVisual).
-		const FVector Toward = Who->GetActorRightVector().GetSafeNormal2D();
+		const UCapsuleComponent* Cap = bTom ? Who->FindComponentByClass<UCapsuleComponent>() : nullptr;
+		const FVector Feet = Who->GetActorLocation() - FVector(0.0f, 0.0f, Cap != nullptr ? Cap->GetScaledCapsuleHalfHeight() : 0.0f);
+		// A MetaHuman faces its actor's +Y (SyncVisual); Tom's pawn its own forward.
+		const FVector Toward = (bTom ? Who->GetActorForwardVector() : Who->GetActorRightVector()).GetSafeNormal2D();
 		FVector Prefer = Toward;
 		TArray<float> Dists;
 		float Up = 0.0f;
@@ -4658,7 +4662,7 @@ namespace
 		{
 			Look = Feet + FVector(0.0f, 0.0f, 88.0f); Up = 20.0f; HFov = 70.0f; Dists = { 300.0f, 260.0f, 220.0f };
 		}
-		else if (Id == TEXT("ron-boots"))
+		else if (Id == TEXT("ron-boots") || Id == TEXT("tom-boots"))
 		{
 			Look = Feet + FVector(0.0f, 0.0f, 12.0f); Up = 45.0f; HFov = 45.0f; Dists = { 120.0f, 95.0f };
 			Prefer = Toward.RotateAngleAxis(30.0f, FVector::UpVector);
@@ -4733,7 +4737,7 @@ namespace
 		{
 			if (Mode == TEXT("dress"))
 			{
-				for (const TCHAR* Id : { TEXT("ron-whole"), TEXT("ron-boots"), TEXT("sheila-whole"), TEXT("sheila-handbag") }) { FPageShot S; S.Id = Id; Shots.Add(S); }
+				for (const TCHAR* Id : { TEXT("ron-whole"), TEXT("ron-boots"), TEXT("sheila-whole"), TEXT("sheila-handbag"), TEXT("tom-whole"), TEXT("tom-boots") }) { FPageShot S; S.Id = Id; Shots.Add(S); }
 			}
 			else if (Mode == TEXT("at") || Mode == TEXT("atnight"))
 			{

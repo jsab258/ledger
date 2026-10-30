@@ -1,5 +1,5 @@
 {
-  "updated": "Friday 30 October 2026, 4:36",
+  "updated": "Friday 30 October 2026, 13:54",
   "here": 1,
   "friends_eta": "around January",
   "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
@@ -127,7 +127,7 @@
       "start_label": "8 Oct",
       "now_label": "25 Oct, cast voice",
       "state": "fighting",
-      "last": "28 Oct: your answers in the game: the fast checker clears most first sentences about a second sooner; two copies of each check call (no more wrong refusals, measured); the wider name rule. The night's build carries them."
+      "last": "28 Oct: your answers in the game: the fast checker clears most first sentences about a second sooner; two copies of each check call (no more wrong refusals, measured); the wider name rule. The night's build carries them. 30 Oct: to be measured again on tonight's build with the cast's own voices (its number is from 25 October, before their voices changed)."
     },
     {
       "name": "The Stutter",
@@ -143,14 +143,36 @@
     },
     {
       "name": "The Tailor",
-      "what": "Period clothes on the cast, starting with Tom's outfit.",
-      "unit": "outfits to go",
-      "start": 1,
-      "now": 1,
+      "what": "Period clothes on the cast, counted by pieces, starting with Tom's four. A piece is beaten when it passes in the packaged game with no open fault.",
+      "unit": "pieces to go",
+      "start": 4,
+      "now": 4,
       "target": 0,
-      "display": "0 of 1 outfit made",
+      "display": "0 of 4 pieces beaten",
       "state": "fighting",
-      "last": "30 Oct: the jacket with the new cuffs is back. It had been skinned without one of its own settings, so a rule meant for buttons tied the whole right sleeve to one forearm bone, and its textures were read through the wrong layout. Mended, it passed a fresh reviewer in the editor's sit film; the packaged look comes next. The jumper waits on Marvelous."
+      "last": "30 Oct: measured by pieces from today, your word: Tom's jacket, jumper, jeans and boots, each beaten when it passes in the packaged game with no open fault.",
+      "pieces": [
+        {
+          "name": "Jacket",
+          "state": "fighting",
+          "line": "In the packaged game since this morning; one open fault: his throat shows through the collar's front as he straightens up (two tries set aside; a third would need your yes)."
+        },
+        {
+          "name": "Jumper",
+          "state": "fighting",
+          "line": "Made and in the game, held back; only its grey neckband and cuffs show under the jacket; a fresh reviewer passed it in the editor; not yet walked in the packaged game."
+        },
+        {
+          "name": "Jeans",
+          "state": "fighting",
+          "line": "Made with pockets, seams, a denim weave and a faded blue, passed in the editor; draped again now with the straight 16.5 in hem so they sit over the boots."
+        },
+        {
+          "name": "Boots",
+          "state": "fighting",
+          "line": "Ron's black boots carried onto Tom's feet; made, not yet in the game; they wait for the jeans to sit over them."
+        }
+      ]
     },
     {
       "name": "The Empty Chair",
