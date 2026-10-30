@@ -301,3 +301,5 @@
 {"event": "stop", "at": "2026-10-30T10:41:00", "note": ""}
 {"event": "start", "at": "2026-10-30T09:58:00", "task": "C9 shoes fitted (helper), records", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-30T10:55:00", "note": ""}
+{"event": "start", "at": "2026-10-30T11:30:00", "task": "C9 jeans, jumper, boots: chain, import, review, boots fit, details, set-asides", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-30T13:25:00", "note": ""}

@@ -4,6 +4,7 @@ Designer recognises, for draping; and the record of the turn, so the draped garm
     blender -b -P tools/md/pose_body.py -- BODY.fbx OUT.fbx --arms-below 40
     blender -b -P tools/md/pose_body.py -- BODY.fbx OUT.fbx --keep-arms --straight-elbows   # the arms as they are, elbows straight
     blender -b -P tools/md/pose_body.py -- BODY.fbx OUT.fbx --keep-arms --straight-elbows --thighs-apart 4   # and each thigh 4 degrees out
+    blender -b -P tools/md/pose_body.py -- BODY.fbx OUT.fbx --keep-arms --straight-elbows --with-mesh BOOTS.fbx --raise 20   # shod, soles on the floor
 
 WHY, 1 October (the jacket proof): imported in MetaHuman's reference pose, Marvelous said "Arrangement Points were
 not fitted to the avatar. The avatar must be in a T-pose or A-pose" and found no measurements, so it cannot place the
@@ -35,6 +36,38 @@ arm = next(o for o in bpy.data.objects if o.type == "ARMATURE")
 body = sorted([o for o in bpy.data.objects if o.type == "MESH"], key=lambda o: -len(o.data.vertices))[0]
 for o in [o for o in bpy.data.objects if o.type == "MESH" and o is not body]:
     bpy.data.objects.remove(o, do_unlink=True)
+# THE SHOES WORN FOR THE DRAPE, --with-mesh PATH[,PATH] (30 October 2026, Tom's jeans over his boots, drape n5: drape n2
+# was draped over his bare feet, so with the boots on 29 to 30 of each hem's 32 points sat inside them). Each file's
+# meshes (FBX or OBJ, in the body's own frame, e.g. F:/LedgerTools/garments/tom/boots/tom_boots_skinned.fbx) are joined
+# into the body before any turn, so Marvelous takes one avatar mesh; a mesh skinned to the same skeleton keeps its
+# weights (by bone name) and follows any turn; its own armature is dropped. Off by default.
+with_mesh = []
+if "--with-mesh" in argv:
+    for path in argv[argv.index("--with-mesh") + 1].split(","):
+        before = set(bpy.data.objects)
+        if path.lower().endswith(".obj"):
+            bpy.ops.wm.obj_import(filepath=path)
+        else:
+            bpy.ops.import_scene.fbx(filepath=path)
+        new = [o for o in bpy.data.objects if o not in before]
+        extra = [o for o in new if o.type == "MESH"]
+        for o in extra:
+            mw = o.matrix_world.copy()
+            o.parent = None
+            o.matrix_world = mw
+            for m in list(o.modifiers):
+                o.modifiers.remove(m)
+        for o in new:
+            if o.type != "MESH":
+                bpy.data.objects.remove(o, do_unlink=True)
+        added = sum(len(o.data.vertices) for o in extra)
+        bpy.ops.object.select_all(action="DESELECT")
+        for o in extra:
+            o.select_set(True)
+        body.select_set(True)
+        bpy.context.view_layer.objects.active = body
+        bpy.ops.object.join()
+        with_mesh.append({"path": path, "meshes": len(extra), "points": added})
 turns = {}
 bpy.context.view_layer.objects.active = arm
 bpy.ops.object.mode_set(mode="POSE")
@@ -115,11 +148,26 @@ bpy.ops.pose.armature_apply(selected=False)
 bpy.ops.object.mode_set(mode="OBJECT")
 mod = body.modifiers.new("Armature", "ARMATURE")
 mod.object = arm
+# THE WHOLE RAISED, --raise MM (30 October 2026, drape n5: the boots' soles stand 20 mm under his bare floor, and
+# Marvelous's floor is at the bare floor's height; the game raises him by the same 20 mm): the skin and every bone moved
+# up by MM, after the turns (which stay recorded in his own frame); unpose_garment.py reads raiseMm and takes the drape
+# back down. Off by default.
+RAISE = opt("--raise", 0.0)
+if RAISE:
+    T = Matrix.Translation((0.0, 0.0, RAISE / 1000.0))
+    body.data.transform(body.matrix_world.inverted() @ T @ body.matrix_world, shape_keys=True)
+    arm.data.transform(arm.matrix_world.inverted() @ T @ arm.matrix_world)
+    bpy.context.view_layer.update()
 bpy.ops.object.select_all(action="DESELECT")
 body.select_set(True)
 arm.select_set(True)
 bpy.context.view_layer.objects.active = arm
 bpy.ops.export_scene.fbx(filepath=OUT, use_selection=True, object_types={"ARMATURE", "MESH"}, add_leaf_bones=False,
                          global_scale=1.0, apply_unit_scale=True, bake_anim=False, mesh_smooth_type="FACE")
-json.dump({"source": SRC, "armsBelow": BELOW, "turns": turns}, open(OUT[:-4] + ".json", "w"), indent=1)
+record = {"source": SRC, "armsBelow": BELOW, "turns": turns}
+if with_mesh:
+    record["withMesh"] = with_mesh
+if RAISE:
+    record["raiseMm"] = RAISE
+json.dump(record, open(OUT[:-4] + ".json", "w"), indent=1)
 print("POSED", json.dumps(turns), flush=True)

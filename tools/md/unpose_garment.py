@@ -26,19 +26,28 @@ from mathutils import Matrix, Vector
 
 argv = sys.argv[sys.argv.index("--") + 1:]
 BODY_FBX, BODY_JSON, GARMENT, OUT = argv[:4]
-turns = json.load(open(BODY_JSON, encoding="utf-8"))["turns"]
+_record = json.load(open(BODY_JSON, encoding="utf-8"))
+turns = _record["turns"]
+# A RAISED DRAPE BODY (pose_body.py --raise, 30 October 2026, the jeans over his boots): the body, its skeleton and the
+# drape all come down by raiseMm first, so the recorded turns' pivots (in his own frame) fit and the garment is written
+# back in his own frame, the boots' soles under his bare floor as the game has them. Absent from older records: nothing moves.
+RAISE = float(_record.get("raiseMm", 0.0)) / 1000.0
 
 bpy.ops.wm.read_factory_settings(use_empty=True)
 bpy.ops.import_scene.fbx(filepath=BODY_FBX)
 arm = next(o for o in bpy.data.objects if o.type == "ARMATURE")
 body = sorted([o for o in bpy.data.objects if o.type == "MESH"], key=lambda o: -len(o.data.vertices))[0]
+if RAISE:
+    for o in [o for o in bpy.data.objects if o.parent is None]:
+        o.matrix_world = Matrix.Translation((0.0, 0.0, -RAISE)) @ o.matrix_world
+    bpy.context.view_layer.update()
 
 # the garment, group by group, in Blender's frame
 verts, groups, cur = [], {}, None
 for line in open(GARMENT, encoding="utf-8", errors="replace"):
     if line.startswith("v "):
         x, y, z = (float(t) for t in line.split()[1:4])
-        verts.append((x / 1000.0, -z / 1000.0, y / 1000.0))
+        verts.append((x / 1000.0, -z / 1000.0, y / 1000.0 - RAISE) if RAISE else (x / 1000.0, -z / 1000.0, y / 1000.0))
     elif line.startswith("g "):
         cur = line[2:].strip()
         groups.setdefault(cur, [])
@@ -161,6 +170,9 @@ for line in open(GARMENT, encoding="utf-8", errors="replace"):
     if line.startswith("v "):
         if vi in moved:
             out.append("v %.4f %.4f %.4f\n" % moved[vi])
+        elif RAISE:
+            x, y, z = (float(t) for t in line.split()[1:4])
+            out.append("v %.4f %.4f %.4f\n" % (x, y - RAISE * 1000.0, z))
         else:
             out.append(line)
         vi += 1

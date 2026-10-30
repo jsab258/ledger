@@ -115,6 +115,17 @@ What failed before this method, so it is not repeated: draping with bent elbows 
 
 ## Notebook
 
+### 30 Oct 2026, trousers made for a bare foot put over boots, set aside after three tries
+- Made: a drape avatar with the shoes joined to the body (raised by the sole), two drapes over it, and an offline ease of the lower legs out over the shoes.
+- Method (setting-free):
+  - Choose the shoes before the trousers' hem: a hem cut on a bare foot will not sit on a shoe; measure the ring the hem must pass round the shoe (back at the heel's top, front on the instep) and cut the hem to it plus the drape's offset.
+  - A coarse game mesh moved point by point cannot drape over a laced instep: the laces tear through between points; drape the cloth over the solid instead.
+  - Count tries per fault, not per method: two drapes and one ease are three tries at one fault.
+- Tools: the drape avatar with a merged mesh (pose_body.py --with-mesh, --raise), the bridge, a footwear pose check with the trousers.
+- Target and check: no shoe point through the cloth, the hem front on the instep, the back 1 to 2 cm above the heel's sole (not met: a 16.5 in hem either stretched round the boot or rode 6 cm up at the back; the ease cleared the hem but the laces came through).
+- Cost (hours): about 1.2 (helpers and this session).
+- Evidence: DECISIONS 30 October 13:25; F:/LedgerTools/garments/tom/jeans/n5 and chain-n2/over-boots.
+
 ### 30 Oct 2026, a skinned stand collar re-weighted from a body with a neck, set aside after two tries
 - Made: a tool that takes the weights near a garment's collar again from a body that has the neck, blends them into the garment's own below, folds chosen bones onto others and eases the front off the throat.
 - Method (setting-free):
