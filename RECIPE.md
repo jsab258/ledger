@@ -136,6 +136,7 @@ What failed before this method, so it is not repeated: draping with bent elbows 
   - Chip only each member's outer arrises; nested mouldings all chipping reads as a dotted frame.
   - Check a glTF material's specular on import: its factor arrived as twice the engine's default and darkened the paint 45%.
   - A rebuilt mesh can change lighting where its material did not: test the old material on the new mesh before blaming the new material.
+  - Then compare the two meshes themselves (faces per material, stored normals, sidedness, extra data such as UV sets) before blaming the shape; where they match, look at the engine's own view of what the light traces (its distance fields) at the same camera.
 - Tools: a trim-sheet maker, a front rebuilder, the stain and calibration checks, buffer comparisons with anti-aliasing and streaming off.
 - Target and check: worn paint 3 to 10% at edges (met, 7.9%); no new fault in any view (not met: a brick strip lit at night on the rebuilt mesh, cause not found in two tries).
 - Cost (hours): about 2.7 (a helper, plus waits).

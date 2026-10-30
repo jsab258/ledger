@@ -311,3 +311,5 @@
 {"event": "stop", "at": "2026-10-30T18:00:00", "note": ""}
 {"event": "start", "at": "2026-10-30T17:38:00", "task": "C9 outfit gate: three fresh reviewers, one per view", "phase": "1", "kind": "review"}
 {"event": "stop", "at": "2026-10-30T17:42:00", "note": ""}
+{"event": "start", "at": "2026-10-30T18:12:00", "task": "D11 S2 joinery: the lit pier researched (glb comparison, distance-field views)", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-30T18:29:00", "note": ""}

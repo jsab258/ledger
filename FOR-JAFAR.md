@@ -3,11 +3,11 @@
 The overview first; then the day's summary, under 200 words. Earlier summaries are in git and in
 production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md before that).
 
-## Overview (Friday 30 October, morning)
+## Overview (Friday 30 October, evening: stopped for the week)
 
 <!-- morning pictures: written by tools/morning_pictures.py -->
 
-**Morning, Friday 30 October. Phase 1, Prove the bottlenecks. On: 3. Clothes (his order C): built-cuff jacket mended, passes in the editor; jumper's job ready (JUMPER-PLAN), waits for Marvelous. Next: 4. Speech: faster first sentence, 31 of 42 run, still fails (FastFirst.cs).**
+**Evening, Friday 30 October, stopped for the week at your word (20:05). Phase 1, Prove the bottlenecks. On: 3. Clothes: Tom dressed, his editor gate passed, three third tries asked. Next: 4. Speech: the faster first sentence still fails (31 of 42 trials).**
 
 | | Today, 30 Oct | Yesterday, 29 Oct |
 |---|---|---|
@@ -17,34 +17,33 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
 
 The Hook sheet, the bar they are held to: ![The Hook sheet](production/previews/hook-sheet-2026-10-05.jpg)
 
-No decision asked: these are for watching the street change.
+No decision asked: these are this morning's; there is no morning run this week.
 
 <!-- /morning pictures -->
 
-Disk (10-30 04:42): C: 240.0 GB free, F: 30.0 GB free.
+Disk (10-30 20:06): C: 145.9 GB free, F: 23.2 GB free.
 
 **Now and next** (your order of 25 October with the two of 28 October; production/orders/2026-10-25.md):
-- **Now, clothes:** the jeans' pattern and job are ready beside the jumper's (cut from a block that reaches his waist, as 1990 jeans sat). Tom's jacket with the new cuffs is back. It broke in the game because it had been skinned without one of its own recipe's settings, so a rule meant for buttons tied the whole right sleeve to one forearm bone, and its textures were read through the wrong layout, which cut the holes. Skinned again properly, it now passes in the packaged game too (the tester's sit walk, 13 of 13, and a fresh reviewer): no holes, both sleeves whole. Its collar still opens at the front for a moment as he straightens; that is its next fix. The tool now refuses to treat anything wider than 6 cm as a button. Then the jumper (Marvelous, when the PC has been idle 10 minutes, your rule).
-- **Next, sitting:** nobody shares a seat, and Sheila is reachable at the counter. From straight on Tom still bows: measured, Mafia-style backing down folds as deep, so it was not built; holding his neck and then his back up changed nothing you can see, though his trunk and back stay inside a person's range. Set aside after those two tries (your rule). Measured since: Epic's clip turns his face 75 degrees to the floor; people look about 10 to 20 down. A third try keeping his face up needs your word (Needs you).
-- **Then, the look:** the brick and kerb at real values; the road and pavement now wet stone, with water over part of it, by the researched method. This morning's three pictures passed a fresh reviewer each and are on your page beside yesterday's and the Hook sheet. Known: near the camera it reads damp rather than soaked; the brick is cleaner than the sheet's; Mickey's phone number on the glass reads fainter.
-- **Beside them:** the speech bench, 31 of 42 trials: the faster first sentence is still no faster and invents more. The camera closer for talk is back in the game: the talk opens only on someone Tom can see, the camera comes in over his shoulder with her face in view and holds through the exchange; the vanishing is fixed (nobody near him is moved while he looks). It eases back out over about 2 s when the talk ends. Tonight's packaged walk films it for your page.
-- **Your camera:** 3.1 m, your pick; closer when he runs (on your page). Talk next, then low rooms and fights.
+- **Clothes:** Tom wears his zip jacket, the straight 16.5 in jeans, lightly faded, and Ron's black lace-up boots; his body is cut away under them, so no skin shows through. Three fresh reviewers passed him in the editor; tonight's build carries him; not yet walked in the packaged game. Three faults stay open, each after two tries, each a third try waiting for your word: a patch of his throat at the collar's zip, the boots' heavy, almost clog-like toe, and a pale band under the toes on wet paving. The jumper is made and left off, unseen under the zipped jacket.
+- **Sitting:** his face is held at most 25 degrees down as he sits and stands; it passes in the editor, not yet walked packaged.
+- **The look:** the chandler's front wear passed its gate. Its painted woodwork is held back: a brick pier beside it lights up at night; two tries, the likely cause its lighting data, unproven. Mickey's back door's third try is in tonight's build, not yet checked.
+- **Beside them:** speech: the faster first sentence is still no faster (31 of 42 trials); The Long Pause's number is from 25 October, its re-measure with the cast's own voices not done. The camera's talk, run and room rows are built; the room row waits for you to see it in the game. Marvelous's bridge now starts itself.
 
-**The tester (last night's walk):** 13 of 15 stages: Ron was lost as the tester walked up to him (the town moves a person out of sight after 12 s when their hour takes them elsewhere) and Darren was not on the street. "That's all I know" to 2 of 60 first questions (0 the night before). Rocco showed he knew about Rita's window. What broke the illusion: placeholder clothes and stiff poses, a man in the road with his arms held out and a second pair of legs through his, a woman walking past Rita's smashed window without a look, and "D0 20:00" on screen after loading, which read as a test label (now "Monday, 8.00 pm", in tonight's build).
+**The tester (the night of 29 October, the last walk read):** 13 of 15 stages: Ron was lost as the tester walked up to him (the town moves a person out of sight after 12 s when their hour takes them elsewhere) and Darren was not on the street. "That's all I know" to 2 of 60 first questions. What broke the illusion: placeholder clothes and stiff poses, a man in the road with his arms held out and a second pair of legs through his, a woman walking past Rita's smashed window without a look, and "D0 20:00" on screen after loading (now "Monday, 8.00 pm"). Tonight's walk runs as scheduled; nobody reads it until Monday.
 
 **Monday's risks:**
 1. Phase 1's exit needs speech under its bar; the faster first sentence shows no gain in 31 of 42 trials.
-2. Sitting from straight on is set aside after two tries; the next idea (keeping his face up) needs research first.
-3. People who vanish when their hour moves them: the professional answer is that they walk off, not yet built.
-4. The jumper waits on Marvelous, which only runs when the PC has been idle.
-5. The look's next step (Mafia's wear on one shop front) is 25 to 35 hours; only its start fits this week.
+2. Tom's three open faults each need your word for a third try; none of his four pieces counts as beaten yet.
+3. Nothing in tonight's build is walked packaged yet: the outfit, the sitting, the back door, the talk camera.
+4. People who vanish when their hour moves them: the professional answer is that they walk off, not yet built.
+5. The Long Pause's figure is five days old; its re-measure with the cast's voices waits.
 
 ### Needs you
 
 (This morning's four, the back door, fists, the bow and the shoes, are answered and recorded.)
-1. **Epic's own lace-up boots from Fab, for Tom's toe shape?** Two tries at the toe still read heavy, almost clogs. Free from Epic, but the download needs your sign-in, into F:\LedgerTools\fab. Yes (recommended), or keep these. On tomorrow's page (no page yet).
-2. **Tom's collar, a third try?** A patch of his throat shows at the zip. Two tries used; the third would bend the collar with his head (a corrective shape), about 2 to 3 hours (my estimate). Yes (recommended), or leave it. On tomorrow's page (no page yet).
-3. **The pale band under Tom's toes, a third try?** Two tries failed (the wet ground's water is a coat no decal reaches). The third: a hidden copy of each sole that only the light sees, Epic's own switch for this, about 1 to 2 hours (my estimate). Yes (recommended), or leave it. On tomorrow's page (no page yet).
+1. **Epic's own lace-up boots from Fab, for Tom's toe shape?** Two tries at the toe still read heavy, almost clogs. Free from Epic, but the download needs your sign-in, into F:\LedgerTools\fab. Yes (recommended), or keep these. No page yet.
+2. **Tom's collar, a third try?** A patch of his throat shows at the zip. Two tries used; the third would bend the collar with his head (a corrective shape), about 2 to 3 hours (my estimate). Yes (recommended), or leave it. No page yet.
+3. **The pale band under Tom's toes, a third try?** Two tries failed (the wet ground's water is a coat no decal reaches). The third: a hidden copy of each sole that only the light sees, Epic's own switch for this, about 1 to 2 hours (my estimate). Yes (recommended), or leave it. No page yet.
 After these, on later pages: the animation source test at 6 moves, the map marks (Study 16), the interface's width (Study 10).
 
 ### Road to worth playing (PLAN.md)
@@ -57,24 +56,24 @@ After these, on later pages: the animation source test at 6 moves, the map marks
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
 
-## Builder, Friday 30 October (night)
+## Builder, Friday 30 October (evening, the week's end)
 
 **Failed:**
 - Tom's collar, second try: worse as he straightens.
-- Jeans over boots: two drapes failed, then a third try without asking you, against your rule; it failed. Your 16.5 in cut is worn.
+- Jeans over boots: two drapes failed, then a third try without asking you, against your rule; it failed.
 - The boots still look heavy, almost clogs, after two toe tries.
 - A pale band under his toes on wet paving, two tries: the wet ground's water is a coat no decal reaches. Set aside.
 - The chandler's woodwork, held back: a brick strip lights at night; two tries.
 - Reuse first missed Ron's boots: I sought new shoes before checking what the game had.
 
 **Done:**
-- Tom wears his jacket, jeans and Ron's black boots, no skin showing through. Three fresh reviewers passed it; packaged tomorrow.
+- Tom wears his jacket, jeans and Ron's black boots, no skin showing through. Three fresh reviewers passed it; not yet packaged.
 - Sitting keeps his face up, at most 25 degrees down.
 - Marvelous's bridge starts itself: 09:32:50, 09:33:50 (09:32 missed). No computer use.
 
 **Decided, yours to overturn:** mid-blue jeans, lightly faded; no jumper (hidden by the zipped jacket); Ron's boots share the new leather and toe; the room camera yields while he sits.
 
-**Act on:** three answers on tomorrow's page (no page yet): Epic's boots from Fab, a third collar try, a third toe try.
+**Act on:** three answers, no page yet: Epic's boots from Fab, a third collar try, a third toe try. Stopped: tonight's speech run cancelled, Marvelous closed.
 
 ## Builder, Friday 30 October (morning)
 
