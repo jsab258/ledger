@@ -115,6 +115,19 @@ What failed before this method, so it is not repeated: draping with bent elbows 
 
 ## Notebook
 
+### 30 Oct 2026, one shop front's weathering laid by a studied method, passing its gate with its marks subtle
+- Made: ten decals on one front (sill streaks to the cornice, a rust leak under the gutter's end, grime at the doors) through one stain material, and a world-noise streak in its brick alone.
+- Method (setting-free):
+  - Lay wear by the studied counts (a median of one decal a wall, at most six where the player looks, leaks and streaks about two in five) and measure each mark in the base-colour and roughness buffers, on against off.
+  - Turn anti-aliasing and texture streaming off for buffer comparisons: they drift a few per cent a column and fake a mark's strength.
+  - Check the piece list against the built front before placing marks at doors: one list still had an old refit's doors.
+  - Hold old marks to the same darkening limit as new ones, and expect the front to read cleaner afterwards: a limit taken from a study can take away the wear the eye had accepted.
+  - Brief reviewers from the picture, not the plan: one "square" view turned out to be the shop window straight on, with no wall in it.
+- Tools: the stain check, the calibration chart (C6), shop views, nine fresh reviewers, one a view.
+- Target and check: 8 to 10 marks, each 0.1 off the wall in roughness and at most 40% darker; brick streak 5 to 15% across the bay; no new fault in any view (met but three marks narrowly over or under; the marks subtle by day).
+- Cost (hours): about 2 (a helper and the reviewers).
+- Evidence: DECISIONS 30 October 13:08 and 13:14; F:/LedgerTools/gate/new/chandler-wear.
+
 ### 30 Oct 2026, trousers made for a bare foot put over boots, set aside after three tries
 - Made: a drape avatar with the shoes joined to the body (raised by the sole), two drapes over it, and an offline ease of the lower legs out over the shoes.
 - Method (setting-free):
@@ -124,7 +137,7 @@ What failed before this method, so it is not repeated: draping with bent elbows 
 - Tools: the drape avatar with a merged mesh (pose_body.py --with-mesh, --raise), the bridge, a footwear pose check with the trousers.
 - Target and check: no shoe point through the cloth, the hem front on the instep, the back 1 to 2 cm above the heel's sole (not met: a 16.5 in hem either stretched round the boot or rode 6 cm up at the back; the ease cleared the hem but the laces came through).
 - Cost (hours): about 1.2 (helpers and this session).
-- Evidence: DECISIONS 30 October 13:25; F:/LedgerTools/garments/tom/jeans/n5 and chain-n2/over-boots.
+- Evidence: DECISIONS 30 October 13:02; F:/LedgerTools/garments/tom/jeans/n5 and chain-n2/over-boots.
 
 ### 30 Oct 2026, a skinned stand collar re-weighted from a body with a neck, set aside after two tries
 - Made: a tool that takes the weights near a garment's collar again from a body that has the neck, blends them into the garment's own below, folds chosen bones onto others and eases the front off the throat.

@@ -115,9 +115,9 @@
     "lower"
    ],
    "maps": {
-    "colour": "F:/LedgerTools/garments/tom/jeans/chain-n2/baked-2048/jeans_colour_ao.png",
-    "normal": "F:/LedgerTools/garments/tom/jeans/chain-n2/baked-2048/jeans_normal_dx.png",
-    "packed": "F:/LedgerTools/garments/tom/jeans/chain-n2/baked-2048/jeans_packed.png",
+    "colour": "F:/LedgerTools/garments/tom/jeans/details/baked-2048/jeans_colour_ao.png",
+    "normal": "F:/LedgerTools/garments/tom/jeans/details/baked-2048/jeans_normal_dx.png",
+    "packed": "F:/LedgerTools/garments/tom/jeans/details/baked-2048/jeans_packed_rough.png",
     "tint": [
      0.115,
      0.2,

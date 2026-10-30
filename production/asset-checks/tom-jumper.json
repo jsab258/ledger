@@ -1,0 +1,78 @@
+{
+ "piece": "tom-jumper",
+ "line": "assetChecks=PASS piece=tom-jumper assets=5 errors=0 warnings=1 waived=0 first=none",
+ "when": "2026-10-30 13:17:56",
+ "assets": [
+  "/Game/Ledger/MetaHumans/Garments/TomJumper/MI_TomJumper",
+  "/Game/Ledger/MetaHumans/Garments/TomJumper/SKM_TomJumper",
+  "/Game/Ledger/MetaHumans/Garments/TomJumper/T_TomJumper_ColourAO",
+  "/Game/Ledger/MetaHumans/Garments/TomJumper/T_TomJumper_Normal",
+  "/Game/Ledger/MetaHumans/Garments/TomJumper/T_TomJumper_Packed"
+ ],
+ "imports": {
+  "SKM_TomJumper": "17e79fc3f81e1d619780e214305e31d5",
+  "T_TomJumper_ColourAO": "e21208d8b140bfc1d817256a4df4ac63",
+  "T_TomJumper_Normal": "12a4df9740882513e342ddfef63f317e",
+  "T_TomJumper_Packed": "4c457961e49ef35a60d9d2950c78638d"
+ },
+ "measures": {
+  "MI_TomJumper": {
+   "class": "MaterialInstanceConstant"
+  },
+  "SKM_TomJumper": {
+   "class": "SkeletalMesh",
+   "triangles": [
+    19480,
+    9154,
+    4577,
+    2287
+   ],
+   "lod_verts": [
+    10548,
+    5205,
+    2732,
+    1463
+   ]
+  },
+  "T_TomJumper_ColourAO": {
+   "class": "Texture2D",
+   "size": [
+    2048,
+    2048
+   ],
+   "compression": "TC_DEFAULT",
+   "srgb": true,
+   "source_compression": "UE Delta"
+  },
+  "T_TomJumper_Normal": {
+   "class": "Texture2D",
+   "size": [
+    2048,
+    2048
+   ],
+   "compression": "TC_NORMALMAP",
+   "srgb": false,
+   "source_compression": "UE Delta"
+  },
+  "T_TomJumper_Packed": {
+   "class": "Texture2D",
+   "size": [
+    2048,
+    2048
+   ],
+   "compression": "TC_MASKS",
+   "srgb": false,
+   "source_compression": "UE Delta"
+  }
+ },
+ "findings": [
+  {
+   "rule": "triangles",
+   "asset": "SKM_TomJumper",
+   "message": "19480 triangles, above 90% of the garment_jumper cap",
+   "severity": "warning",
+   "value": 19480,
+   "limit": 20000
+  }
+ ]
+}

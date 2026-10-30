@@ -1,0 +1,90 @@
+{
+ "piece": "tom-jeans",
+ "line": "assetChecks=PASS piece=tom-jeans assets=6 errors=0 warnings=1 waived=0 first=none",
+ "when": "2026-10-30 13:23:24",
+ "assets": [
+  "/Game/Ledger/MetaHumans/Garments/TomJeans/MI_TomJeans",
+  "/Game/Ledger/MetaHumans/Garments/TomJeans/SKM_TomJeans",
+  "/Game/Ledger/MetaHumans/Garments/TomJeans/T_TomJeans_ColourAO",
+  "/Game/Ledger/MetaHumans/Garments/TomJeans/T_TomJeans_Detail_Normal",
+  "/Game/Ledger/MetaHumans/Garments/TomJeans/T_TomJeans_Normal",
+  "/Game/Ledger/MetaHumans/Garments/TomJeans/T_TomJeans_Packed"
+ ],
+ "imports": {
+  "SKM_TomJeans": "2248a59e090e696cecae80aada9c0dd0",
+  "T_TomJeans_ColourAO": "62320bbfb68cee2cd0966af869e416f7",
+  "T_TomJeans_Detail_Normal": "9e01eb952313973e70c5b0d2b42dc6c7",
+  "T_TomJeans_Normal": "a60cc5797c5947e3d9a1286af2dbb058",
+  "T_TomJeans_Packed": "2645a6536fb848192f5a3b304dde82e1"
+ },
+ "measures": {
+  "MI_TomJeans": {
+   "class": "MaterialInstanceConstant"
+  },
+  "SKM_TomJeans": {
+   "class": "SkeletalMesh",
+   "triangles": [
+    9728,
+    4572,
+    2285,
+    1143
+   ],
+   "lod_verts": [
+    5298,
+    2554,
+    1327,
+    697
+   ]
+  },
+  "T_TomJeans_ColourAO": {
+   "class": "Texture2D",
+   "size": [
+    2048,
+    2048
+   ],
+   "compression": "TC_DEFAULT",
+   "srgb": true,
+   "source_compression": "UE Delta"
+  },
+  "T_TomJeans_Detail_Normal": {
+   "class": "Texture2D",
+   "size": [
+    512,
+    512
+   ],
+   "compression": "TC_NORMALMAP",
+   "srgb": false,
+   "source_compression": "UE Delta"
+  },
+  "T_TomJeans_Normal": {
+   "class": "Texture2D",
+   "size": [
+    2048,
+    2048
+   ],
+   "compression": "TC_NORMALMAP",
+   "srgb": false,
+   "source_compression": "UE Delta"
+  },
+  "T_TomJeans_Packed": {
+   "class": "Texture2D",
+   "size": [
+    2048,
+    2048
+   ],
+   "compression": "TC_MASKS",
+   "srgb": false,
+   "source_compression": "UE Delta"
+  }
+ },
+ "findings": [
+  {
+   "rule": "triangles",
+   "asset": "SKM_TomJeans",
+   "message": "9728 triangles, above 90% of the garment_trousers cap",
+   "severity": "warning",
+   "value": 9728,
+   "limit": 10000
+  }
+ ]
+}

@@ -76,7 +76,7 @@ def packed_material(unreal, g, folder, lines):
     # A WEAVE AS A TILING DETAIL NORMAL (30 October, Tom's jeans: their reviewer read "plain blue trousers"; Mafia carries a
     # knit's rib so): "detail" names a small tiling normal map (DirectX), "detail_tiling" its repeats a UV unit and
     # "detail_strength" how much of it is added; without them the strength is nil and the garment is drawn as before
-    detail = texture(maps["detail"], "T_%s_Detail" % g["name"], "normal") if maps.get("detail") else None
+    detail = texture(maps["detail"], "T_%s_Detail_Normal" % g["name"], "normal") if maps.get("detail") else None
     if not (colour and normal and packed):
         return None
     # THE GRAPH BUILT AFRESH EVERY RUN (28 October: a broken first graph stayed, since a found material was kept as it was)

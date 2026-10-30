@@ -68,6 +68,16 @@
       "folders": ["/Game/Ledger/MetaHumans/Garments/TomZipJacket"],
       "parts": ["SKM_TomZipJacket", "MI_TomZipJacket", "T_TomZipJacket_ColourAO", "T_TomZipJacket_Normal", "T_TomZipJacket_Packed"],
       "source": "production/specs/garments.json (TomZipJacket, three maps) and tools/ue/import_garments.py's names"
+    },
+    "tom-jeans": {
+      "folders": ["/Game/Ledger/MetaHumans/Garments/TomJeans"],
+      "parts": ["SKM_TomJeans", "MI_TomJeans", "T_TomJeans_ColourAO", "T_TomJeans_Normal", "T_TomJeans_Packed", "T_TomJeans_Detail_Normal"],
+      "source": "production/specs/garments.json (TomJeans, three maps and the detail weave) and tools/ue/import_garments.py's names"
+    },
+    "tom-jumper": {
+      "folders": ["/Game/Ledger/MetaHumans/Garments/TomJumper"],
+      "parts": ["SKM_TomJumper", "MI_TomJumper", "T_TomJumper_ColourAO", "T_TomJumper_Normal", "T_TomJumper_Packed"],
+      "source": "production/specs/garments.json (TomJumper, three maps) and tools/ue/import_garments.py's names"
     }
   },
   "names": {
