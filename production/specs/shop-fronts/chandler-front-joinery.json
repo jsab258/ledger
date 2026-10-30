@@ -1,0 +1,77 @@
+{
+  "front": "chandler-front-worn",
+  "out": "chandler-front-joinery",
+  "note": "30 October 2026 (his order D11, S2 joinery; production/research/street-wear/MAFIA-WEAR-2026-10-28.md, section 5): the chandler's painted joinery carries Mafia's chipped-paint layer over a wood trim sheet (tools/art-recipes/wood_trim.py, Poly Haven's CC0 kitchen_wood) in the game's own material (tools/ue/make_kit_materials.py make_paint_wood_master), on the worn front's baked paints, which stay its paint colour. Its painted wood is the navy of its pilasters, consoles, cornice and fascia surround (paint_navy), the navy side door (paint_side_door_navy) and the lettered fascia board (fascia_chandler). The rest of the front is not painted wood and keeps its own material: a metal 1980s refit's window frames, transoms and shop door in natural aluminium, its stallriser tiled (chandler-front-wear.json). tools/art-recipes/front_joinery.py adds a UV set onto the trim sheet (UV 2; UV 1 a copy of UV 0 for Unreal's lightmap) and an edge picture per paint on its own first UV (the chips baked as cover: bare wood R, the worn rim G, the edge term B); a board whose first UV repeats (the fascia's lettering) takes its edges from its own box in the material instead.",
+  "paints": {
+    "paint_navy": {
+      "edges": "mask",
+      "mask_px": 4096
+    },
+    "paint_side_door_navy": {
+      "edges": "mask",
+      "mask_px": 4096
+    },
+    "fascia_chandler": {
+      "edges": "box"
+    }
+  },
+  "edge_m": 0.05,
+  "inside_m": 0.03,
+  "sharp_deg": 35.0,
+  "weld_m": 0.0001,
+  "narrow_m": 0.08,
+  "end_dot": 0.75,
+  "handles": {
+    "note": "the side door's brass knob (chandler-front-wear.json lever, -2.178, 0.842 up, 0.03 out, in the front's glTF frame: x across, y up, z out) and the knob's own vertices",
+    "points": [
+      [
+        -2.178,
+        0.842,
+        0.03
+      ]
+    ],
+    "materials": [
+      "brass.001"
+    ],
+    "reach_m": 0.05
+  },
+  "layer": {
+    "note": "Mafia's chipped-paint medians (M_General_1_Layer_Paint_Chipped, 48 instances; the study, section 1): Paint Fade Intensity 0.89, Weathering Opacity 0.66, Weathering Roughness Add 0.98, Dirt Mask Intensity 1.25, Dirt Roughness 0.80, Wood Mask Edge 2.3, Paint Cracks Tiling 3. Their wiring is not readable (the study's 'not read'), so how each acts here is inferred: the edge picture (1 at an arris or the knob, falling straight to 0 at edge_m) is multiplied by Wood Mask Edge and clamped (edge_law), so the band is whole near the arris and thins out to nothing at edge_m; a chip is bare wood where the chip noise (the trim sheet's, tiled Paint Cracks Tiling times) passes 1 - ChipAmount x that; the weathering is the rim round each chip, WornWidth times as wide in the noise, at Weathering Opacity, roughened by its add; the fade is how far that rim's paint has gone toward a chalky grey with the wood showing through; the dirt (its intensity times the sheet's broad noise, at Dirt Roughness) lies in the bare wood only, since the front's own paints already carry their baked dirt (front_wear.py). Ours: WornWidth, ChipSharpness, DirtOpacity, DirtDarken; ChipAmount is found by front_joinery.py from target_seen and written to the made file.",
+    "PaintFadeIntensity": 0.89,
+    "WeatheringOpacity": 0.66,
+    "WeatheringRoughnessAdd": 0.98,
+    "DirtMaskIntensity": 1.25,
+    "DirtRoughness": 0.8,
+    "WoodMaskEdge": 2.3,
+    "PaintCracksTiling": 3.0,
+    "WornWidth": 1.6,
+    "ChipSharpness": 20.0,
+    "DirtOpacity": 0.5,
+    "DirtDarken": 0.5
+  },
+  "use": {
+    "note": "where knocks fall: feet, bins, bicycles and bags below 0.8 m, hands to the knob's height; above 1.8 m only the weather's, 0.6 of it",
+    "full_below_m": 0.8,
+    "upper_from_m": 1.8,
+    "upper": 0.6
+  },
+  "cluster": {
+    "note": "a broad 3D noise about 0.4 m across: chips where it passes 0.38, full by 0.78, so lengths of arris are chipped and others clean",
+    "size_m": 0.4,
+    "from": 0.38,
+    "gain": 2.5,
+    "seed": 13
+  },
+  "target_seen": 0.05,
+  "target_note": "worn and bare paint as a share of the joinery's area as the street sees it (each face by how squarely it faces out): the method's 3 to 10%, aimed at 5% so a view's own mix of faces stays inside it",
+  "edge_law": "gain",
+  "edge_law_note": "Wood Mask Edge read as a gain on the edge picture, clamped (the band whole for its first edge_m / 2.3 = 2.2 cm, nothing past 5 cm); inferred, Mafia's wiring is not readable. 30 October: try 1 read it as a power, and its shortfall (1.0% of the square view's joinery against 3 to 10%) came from the chip noise thresholded after its smaller copies had averaged its extremes away (fixed by baking the chips as cover); once only each member's outer arrises chip (outer_note), the power's thin band could not reach the method's 3% at any amount (2.3% at ChipAmount 1), the gain's can",
+  "outer_m": 0.015,
+  "nested_tol_m": 0.01,
+  "outer_note": "30 October, the first in-game look (square view): every panel moulding of the side door chipped round, a dotted frame (the tea rooms' gate of 23 October: read as a plate, not wear). Only each member's outer arrises chip (within outer_m of two sides of its own bounds), and none of a member nested inside a larger one's bounds (within nested_tol_m): the knocks fall on a door's edges, a pilaster's corners and a cornice's nose, not on its planted mouldings",
+  "front_entry": {
+    "note": "30 October 2026: NOT YET IN THE GAME. The switch the chandler's entry in production/specs/shop-interiors.json takes when the joinery is shipped: its front's glb from chandler-front-worn to this; that file is stamped by the glass bake (tools/ue/import_glass_bake.py STAMPED), so the switch needs python tools/glass_bake.py and its import after it. Held back: with this front the alley-side brick left of the side door reads lit at night (left view at night, its strip x 417 to 496, y 537 to 872 of 2,560 by 1,440: 19.2 levels against 3.1 with the worn front), the same with the worn front's own glTF paints on this mesh, so the mesh's rebuild, not the paint over wood, carries it; cause not found (F:/LedgerTools/gate/new/chandler-joinery/check).",
+    "glb": "chandler-front-joinery",
+    "glb_was": "chandler-front-worn"
+  }
+}

@@ -85,6 +85,9 @@ WATCHED = {
     # (tools/ue/make_kit_materials.py) and four detail maps high-passed from the street's CC0
     # ambientCG photographs (tools/props/make_kit_detail.py; ledger/Assets/StreamingAssets/CityPack).
     "ue-probe/Content/Ledger/Kit": "ambientCG",
+    # and its paint over wood's textures (30 October 2026, tools/ue/import_front_joinery.py): the wood trim sheet from
+    # Poly Haven's CC0 kitchen_wood (tools/art-recipes/wood_trim.py) and the fronts' edge pictures drawn from our models
+    "ue-probe/Content/Ledger/Kit/Joinery": "Poly Haven",
     "ue-probe/Content/Ledger/ShopDisplays": "Poly Haven",
     "ue-probe/Content/Ledger/ShopRooms": "Poly Haven",
     # THE CLOUD'S SHOP FRONTS (21 October 2026, Rita's first): its joinery, fascia and gilt words with
@@ -109,6 +112,10 @@ WATCHED = {
     # doors, drawn by tools/make_wear_masks.py --street-wear from ambientCG's CC0 Leaking005 and SurfaceImperfections003
     # opacity maps, already credited in THIRD-PARTY.md ("Grime and decal textures"); kept on this PC, not in git.
     "production/assets/street-wear": "ambientCG",
+    # THE WOOD TRIM SHEET, 30 October 2026 (his order D11, the chandler's S2 joinery): Poly Haven's CC0 "kitchen_wood"
+    # board (fetched by tools/art-recipes/fetch_polyhaven.py), tiled and cut into strips with drawn end grain by
+    # tools/art-recipes/wood_trim.py; kept on this PC, not in git (F:/LedgerTools/game-inputs under the same path)
+    "production/assets/wood-trim": "Poly Haven",
     "game-design/picked-clips": "VCTK",
     # A CHARACTER RECAST FOR POCKET ALONE (26 October: Darren, VCTK p286, his page's pick): its reference,
     # kept out of git (the game inputs on F: hold it), the same corpus and the same credit

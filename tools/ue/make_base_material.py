@@ -4631,6 +4631,25 @@ if __name__ == "__main__":
                       encoding="utf-8") as _f:
                 _f.write("shopDisplaysImportStatus=RAISED shopDisplaysImportNote=%s\n"
                          % str(_disp_err).replace(" ", "~")[:160])
+    # ---- AND THE FRONTS' PAINT OVER WOOD, 30 October 2026 (his order D11, the chandler's S2) ---
+    # tools/ue/import_front_joinery.py: the wood trim sheet, each joinery front's edge pictures, the kit's
+    # paint-over-wood master and one instance per painted slot, set on the front the step above imported
+    # (so the mesh is not imported twice). Its own line; a fault there prints as a frontJoinery key.
+    if _inside_unreal():
+        try:
+            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+            import import_front_joinery
+            import_front_joinery.main(import_mesh=False)
+        except Exception as _join_err:
+            try:
+                import unreal
+                _root = unreal.Paths.project_dir()
+            except Exception:
+                _root = "."
+            with open(os.path.join(_root, "ue-material.txt"), "a",
+                      encoding="utf-8") as _f:
+                _f.write("frontJoinery=RAISED frontJoineryNote=%s\n"
+                         % str(_join_err).replace(" ", "~")[:160])
     # ---- AND THE SHOP GLASS BAKED, 21 October 2026 (item 6; research note 1d, route A) ---
     # tools/ue/import_glass_bake.py: each window's day and night street, baked by tools/glass_bake.py
     # on F:, as compressed cubes the game only looks up; a stale bake is not imported.

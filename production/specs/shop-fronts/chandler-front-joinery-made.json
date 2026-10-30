@@ -1,0 +1,152 @@
+{
+ "front": "chandler-front-worn",
+ "out": "chandler-front-joinery",
+ "paints": {
+  "paint_navy": {
+   "faces": 28960,
+   "parts": 40,
+   "area_m2": 16.69,
+   "strips_m2": {
+    "boards": 14.591,
+    "narrow": 0.742,
+    "end": 1.357
+   },
+   "density_px_m": {
+    "p5": 487.6,
+    "median": 487.6,
+    "p95": 487.6
+   },
+   "vertices": {
+    "model": 36491,
+    "corners": 86880,
+    "written": 59750
+   },
+   "nested_parts": 28,
+   "convex_edges_all": 8431,
+   "convex_edges": 970,
+   "inside_edges": 2055,
+   "mask_px": 4096,
+   "within_reach_share": 0.4094,
+   "mask_px_per_m_p5": 253.6,
+   "predicted": {
+    "worn_or_bare_all": 0.1227,
+    "worn_or_bare_seen": 0.0589,
+    "bare_all": 0.0734,
+    "outside_reach_texels": 0
+   },
+   "edges_png": "chandler-front-joinery_navy_edges.png",
+   "baked": {
+    "bare_seen": 0.0353,
+    "worn_seen": 0.0234
+   }
+  },
+  "fascia_chandler": {
+   "faces": 76,
+   "parts": 1,
+   "area_m2": 7.446,
+   "strips_m2": {
+    "boards": 7.316,
+    "narrow": 0.0,
+    "end": 0.13
+   },
+   "density_px_m": {
+    "p5": 487.6,
+    "median": 487.6,
+    "p95": 487.6
+   },
+   "vertices": {
+    "model": 135,
+    "corners": 228,
+    "written": 171
+   },
+   "box_cm": {
+    "min": [
+     -270.5,
+     -0.0,
+     285.0
+    ],
+    "max": [
+     270.5,
+     13.2,
+     340.0
+    ]
+   },
+   "box_weight": 0.6,
+   "predicted": {
+    "worn_or_bare_all": 0.0676,
+    "worn_or_bare_seen": 0.0499,
+    "bare_all": 0.0397
+   }
+  },
+  "paint_side_door_navy": {
+   "faces": 3620,
+   "parts": 9,
+   "area_m2": 5.878,
+   "strips_m2": {
+    "boards": 5.556,
+    "narrow": 0.0,
+    "end": 0.322
+   },
+   "density_px_m": {
+    "p5": 487.6,
+    "median": 487.6,
+    "p95": 487.6
+   },
+   "vertices": {
+    "model": 4197,
+    "corners": 10860,
+    "written": 6359
+   },
+   "nested_parts": 8,
+   "convex_edges_all": 697,
+   "convex_edges": 52,
+   "inside_edges": 1007,
+   "mask_px": 4096,
+   "within_reach_share": 0.1459,
+   "mask_px_per_m_p5": 351.7,
+   "predicted": {
+    "worn_or_bare_all": 0.0392,
+    "worn_or_bare_seen": 0.0321,
+    "bare_all": 0.0241,
+    "outside_reach_texels": 0
+   },
+   "edges_png": "chandler-front-joinery_side_door_navy_edges.png",
+   "baked": {
+    "bare_seen": 0.0198,
+    "worn_seen": 0.0123
+   }
+  }
+ },
+ "trim": {
+  "px": 2048,
+  "sheet_m": 4.2,
+  "density_px_m": 487.6,
+  "measured_px_m": {
+   "p5": 487.6,
+   "median": 487.6,
+   "p95": 487.6
+  },
+  "density_ok": true
+ },
+ "layer": {
+  "PaintFadeIntensity": 0.89,
+  "WeatheringOpacity": 0.66,
+  "WeatheringRoughnessAdd": 0.98,
+  "DirtMaskIntensity": 1.25,
+  "DirtRoughness": 0.8,
+  "WoodMaskEdge": 2.3,
+  "PaintCracksTiling": 3.0,
+  "WornWidth": 1.6,
+  "ChipSharpness": 20.0,
+  "DirtOpacity": 0.5,
+  "DirtDarken": 0.5,
+  "ChipAmount": 0.9136,
+  "chip_amount_from": "target_seen 0.050 (front_joinery.py find_amount)"
+ },
+ "predicted": {
+  "all": 0.0926,
+  "seen": 0.05
+ },
+ "glb": "F:/LedgerTools/game-inputs\\production/assets/shop-fronts\\chandler-front-joinery.glb",
+ "seconds": 71.4
+}

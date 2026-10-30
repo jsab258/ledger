@@ -4,12 +4,33 @@
   {
    "who": "Rocco",
    "name": "RonBoots",
-   "fbx": "F:/LedgerTools/garments/ron_boots/ron_boots_skinned.fbx",
+   "fbx": "F:/LedgerTools/garments/ron_boots/maps/ron_boots_skinned_v2.fbx",
    "hides": [
     "shoes"
    ],
    "raise_mm": 20,
-   "handed": "2026-09-30"
+   "handed": "2026-09-30",
+   "maps": {
+    "colour": "F:/LedgerTools/garments/ron_boots/maps/ron_boots_v2_colour_ao.png",
+    "normal": "F:/LedgerTools/garments/ron_boots/maps/ron_boots_v2_normal_dx.png",
+    "packed": "F:/LedgerTools/garments/ron_boots/maps/ron_boots_v2_packed_polished.png",
+    "tint": [
+     0.018,
+     0.018,
+     0.019
+    ],
+    "tapecolour": [
+     0.045,
+     0.045,
+     0.045
+    ],
+    "teethcolour": [
+     0.16,
+     0.155,
+     0.15
+    ]
+   },
+   "maps_note": "30 October: leather maps (tools/meshgen/blender/footwear_maps.py): UVs cut along a derby's seams, pebbled grain, stitched quarters and welt, the sole edge, scuffs; the weights unchanged (re-exported with UVs, the 30 September file kept)"
   },
   {
    "who": "Lena",
@@ -115,18 +136,18 @@
     "lower"
    ],
    "maps": {
-    "colour": "F:/LedgerTools/garments/tom/jeans/chain-n7/details/baked-2048/jeans_colour_ao.png",
-    "normal": "F:/LedgerTools/garments/tom/jeans/chain-n7/details/baked-2048/jeans_normal_dx.png",
-    "packed": "F:/LedgerTools/garments/tom/jeans/chain-n7/details/baked-2048/jeans_packed_rough.png",
+    "colour": "F:/LedgerTools/garments/tom/jeans/chain-n7/fade/jeans_colour_ao.png",
+    "normal": "F:/LedgerTools/garments/tom/jeans/chain-n7/fade/jeans_normal_dx.png",
+    "packed": "F:/LedgerTools/garments/tom/jeans/chain-n7/fade/jeans_packed.png",
     "tint": [
-     0.115,
-     0.2,
-     0.37
+     0.155,
+     0.262,
+     0.456
     ],
     "tapecolour": [
-     0.115,
-     0.2,
-     0.37
+     0.155,
+     0.262,
+     0.456
     ],
     "teethcolour": [
      0.56,
@@ -135,16 +156,17 @@
     ],
     "detail": "F:/LedgerTools/garments/tom/jeans/twill/twill_normal_dx.png",
     "detail_tiling": 71.6,
-    "detail_strength": 0.5
+    "detail_strength": 1.0
    },
-   "hold": "until its editor walk and a fresh reviewer pass (30 October; worn with -WearHeld=TomJeans)",
    "handed": "2026-10-30",
-   "made": "Tom's 1990 jeans (his order C9): FreeSewing's Titan at his size, draped in Marvelous over a smoothed hull of his boots (drape n7, short settling calls; the straight 16.5 in hem resting on the boots, its back about 5.3 cm up, his word of 30 October), bent back to his pose, 9,728 triangles, maps at 2048 (1.43 px/mm; 1024 fell under the 0.9 floor), skinned from his body with each leg from its own leg and the crotch faded to the pelvis over 7 cm (skin_garment.py --leg-sides --crotch-fade); the crotch's two layers between his near-touching thighs listed; the seat and crotch stretched sitting (6.0x) and the knees through by up to 16.5 mm in a hand-posed sit, both to be judged in the game. Tint: a faded 1990 mid-blue (sRGB about 95, 125, 165; the first, 72, 98, 140, read as a matched set with the navy jacket to its reviewer), his to approve."
+   "made": "Tom's 1990 jeans (his order C9): FreeSewing's Titan at his size, draped in Marvelous over a smoothed hull of his boots (drape n7, short settling calls; the straight 16.5 in hem resting on the boots, its back about 5.3 cm up, his word of 30 October), bent back to his pose, 9,728 triangles, maps at 2048 (1.43 px/mm; 1024 fell under the 0.9 floor), skinned from his body with each leg from its own leg and the crotch faded to the pelvis over 7 cm (skin_garment.py --leg-sides --crotch-fade); the crotch's two layers between his near-touching thighs listed; the seat and crotch stretched sitting (6.0x) and the knees through by up to 16.5 mm in a hand-posed sit, both to be judged in the game. Tint: a faded 1990 mid-blue (sRGB about 95, 125, 165; the first, 72, 98, 140, read as a matched set with the navy jacket to its reviewer), his to approve.",
+   "held_until": "until its editor walk and a fresh reviewer pass (30 October; worn with -WearHeld=TomJeans)",
+   "worn_since": "2026-10-30: worn by default with his body cut under the outfit (the MetaHuman hidden-face build, tools/ue/hidden_faces.py); his page next"
   },
   {
    "who": "Tom",
    "name": "TomJumper",
-   "fbx": "F:/LedgerTools/garments/tom/jumper/chain-j3d/skin-try1/slots/jumper_skinned.fbx",
+   "fbx": "F:/LedgerTools/garments/tom/jumper/chain-j3d/skin-try1/slots-neck/jumper_skinned.fbx",
    "hides": [],
    "maps": {
     "colour": "F:/LedgerTools/garments/tom/jumper/chain-j3d/baked/jumper_colour_ao.png",
@@ -166,21 +188,43 @@
      0.58
     ]
    },
-   "hold": "until its editor walk and a fresh reviewer pass (30 October; worn with -WearHeld=TomJumper)",
    "handed": "2026-10-30",
-   "made": "Tom's plain jumper (his order C9): FreeSewing's Brian re-cut from a body with a neck (shoulder slope 26 degrees, ease 4%, a crew neck 8.5 by 4 in), draped in Marvelous (j3), its cuffs, welt and neckband built from the body pieces' own edges (build_rib_band.py), 19,480 triangles, maps at 2048; slot Shown (neckband, cuffs and 20 mm of the body pieces beside them) drawn, slot Hidden (everything the jacket always covers) not drawn (LedgerGarments.h), as Mafia hides covered parts; the neckband weighted from his full body with no head weight. Tint: a plain mid grey, his to approve."
+   "made": "Tom's plain jumper (his order C9): FreeSewing's Brian re-cut from a body with a neck (shoulder slope 26 degrees, ease 4%, a crew neck 8.5 by 4 in), draped in Marvelous (j3), its cuffs, welt and neckband built from the body pieces' own edges (build_rib_band.py), 19,480 triangles, maps at 2048; slot Shown (the neckband alone, since 30 October: its cuffs and the strips beside them poked through the jacket's sleeves and collar) drawn, slot Hidden (everything the jacket always covers) not drawn (LedgerGarments.h), as Mafia hides covered parts; the neckband weighted from his full body with no head weight. Tint: a plain mid grey, his to approve.",
+   "held_until": "until its editor walk and a fresh reviewer pass (30 October; worn with -WearHeld=TomJumper)",
+   "hold": "30 October, 17:20: always under his zipped jacket, so never seen; drawing its neckband put a dark band outside the jacket's collar (the second outfit review), so it is held until the jacket is ever worn open"
   },
   {
    "who": "Tom",
    "name": "TomBoots",
-   "fbx": "F:/LedgerTools/garments/tom/boots/tom_boots_skinned.fbx",
+   "fbx": "F:/LedgerTools/garments/tom/boots/maps/tom_boots_skinned_v2.fbx",
    "hides": [
     "shoes"
    ],
-   "raise_mm": 20,
-   "hold": "until his outfit's editor walk and a fresh reviewer pass (30 October; worn with -WearHeld=TomBoots)",
+   "raise_mm": 17,
    "handed": "2026-10-30",
-   "made": "Tom's black lace-up boots (his ruling of 30 October: the boots Ron wears, black, dark laces and sole, under his jeans): Ron's passed pair (F:/LedgerTools/garments/ron_boots, the footwear script's first version on Ron's foot) carried onto Tom's feet point by point through the two MetaHuman bodies' shared layout (tools/meshgen/blender/carry_footwear.py), Ron's weights kept (foot, ball, calf), the leather set out to 4.5 mm off his skin (Ron's own pair stood 2.7 mm off and its top 2 cm inside his shin); the sole 20 mm under the bare floor, so Tom is raised 20 mm. Listed: a few points at the boot's top edge inside his leg (up to 3.4 mm, one 11 mm at the front edge), under the jeans."
+   "made": "Tom's black lace-up boots (his ruling of 30 October: the boots Ron wears, black, dark laces and sole, under his jeans): Ron's passed pair (F:/LedgerTools/garments/ron_boots, the footwear script's first version on Ron's foot) carried onto Tom's feet point by point through the two MetaHuman bodies' shared layout (tools/meshgen/blender/carry_footwear.py), Ron's weights kept (foot, ball, calf), the leather set out to 4.5 mm off his skin (Ron's own pair stood 2.7 mm off and its top 2 cm inside his shin); the sole 20 mm under the bare floor, so Tom is raised 20 mm. Listed: a few points at the boot's top edge inside his leg (up to 3.4 mm, one 11 mm at the front edge), under the jeans.",
+   "maps": {
+    "colour": "F:/LedgerTools/garments/ron_boots/maps/ron_boots_v2_colour_ao.png",
+    "normal": "F:/LedgerTools/garments/ron_boots/maps/ron_boots_v2_normal_dx.png",
+    "packed": "F:/LedgerTools/garments/ron_boots/maps/ron_boots_v2_packed_polished.png",
+    "tint": [
+     0.018,
+     0.018,
+     0.019
+    ],
+    "tapecolour": [
+     0.045,
+     0.045,
+     0.045
+    ],
+    "teethcolour": [
+     0.16,
+     0.155,
+     0.15
+    ]
+   },
+   "held_until": "until his outfit's editor walk and a fresh reviewer pass (30 October; worn with -WearHeld=TomBoots)",
+   "worn_since": "2026-10-30: worn by default with his body cut under the outfit (the MetaHuman hidden-face build, tools/ue/hidden_faces.py); his page next"
   }
  ]
 }

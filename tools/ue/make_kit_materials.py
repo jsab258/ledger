@@ -20,6 +20,8 @@ WHAT IT MAKES, under /Game/Ledger/Kit:
                     first kit model with that slot carries (glTF baseColorFactor, roughness,
                     metallic); the slot's "overrides" there, if any, win.
 EmissiveColor is black in every instance: the game drives the lamp slots' glow (VignetteShot.cpp).
+AND (30 October 2026) M_LedgerKitPaintWood, the paint-over-wood variant (make_paint_wood_master below), built with its
+instances by tools/ue/import_front_joinery.py, not by this script's main, since its default textures are the joinery's.
 
 The kit models it reads: the file's "pieces", each ledger/Assets/Props/base-mesh/<piece>.glb
 (joined copies of the cloud's, as the street places them, by tools/art-recipes/kit_for_game.py). One line appended to ue-material.txt.
@@ -371,6 +373,244 @@ def _make_master(unreal, name, translucent):
     return mat, n["made"], n["asked"]
 
 
+# THE PAINT OVER WOOD (30 October 2026, his order D11, the chandler's S2 joinery; production/research/street-wear/
+# MAFIA-WEAR-2026-10-28.md, sections 1, 2 and 5): Mafia's painted joinery is one master, M_General_1_Layer_Paint_Chipped,
+# paint over wood from a trim sheet, chipped to the wood at its edges. This is the kit's variant of it: the piece's own
+# paint (its picture on UV 0, with its glTF roughness and metal, so the colour he passed stays the colour) over the wood
+# trim sheet on UV 2 (tools/art-recipes/wood_trim.py; UV 1 is left to Unreal's generated lightmap), chipped where the chip picture says (tools/art-recipes/
+# front_joinery.py: R bare wood, G the worn rim, baked by its law, edge_term and chip_layer), or, with EdgeFromBox 1, by
+# the same law live at the edges of a box given in the mesh's own centimetres. Mafia's medians keep their names; LayerOn 0 is the plain paint.
+PAINT_WOOD = "M_LedgerKitPaintWood"
+PAINT_WOOD_SCALARS = (("ChipAmount", 0.5), ("WornWidth", 1.6), ("ChipSharpness", 20.0), ("WoodMaskEdge", 2.3),
+                      ("PaintCracksTiling", 3.0), ("PaintFadeIntensity", 0.89), ("WeatheringOpacity", 0.66),
+                      ("WeatheringRoughnessAdd", 0.98), ("DirtMaskIntensity", 1.25), ("DirtRoughness", 0.8),
+                      ("DirtOpacity", 0.5), ("DirtDarken", 0.5), ("EdgeFromBox", 0.0),
+                      ("EdgeCm", 5.0), ("EdgeLawGain", 1.0), ("BoxWeight", 0.6), ("ClusterFrom", 0.38), ("ClusterGain", 2.5),
+                      ("RoughnessFactor", 1.0), ("MetallicFactor", 0.0), ("Specular", 0.5), ("LayerOn", 1.0))
+PAINT_WOOD_VECTORS = (("BaseColorFactor", (1.0, 1.0, 1.0)), ("BoxMin", (0.0, 0.0, 0.0)), ("BoxMax", (1.0, 1.0, 1.0)))
+#: (parameter, UV set, sampler, default texture path or None for the joinery folder's own)
+PAINT_WOOD_TEXTURES = (("PaintMap", 0, "COLOR", "/Engine/EngineResources/WhiteSquareTexture.WhiteSquareTexture"),
+                       ("PaintORM", 0, "LINEAR_COLOR", None), ("PaintNormal", 0, "NORMAL", None),
+                       ("EdgeMask", 0, "LINEAR_COLOR", None), ("WoodColour", 2, "COLOR", None),
+                       ("WoodMasks", 2, "MASKS", None), ("WoodNormal", 2, "NORMAL", None))
+JOINERY_PACKAGE = PACKAGE + "/Joinery"
+
+
+def make_paint_wood_master(unreal, defaults=None, name=PAINT_WOOD, two_sided=True, wire_normal=True):
+    """M_LedgerKitPaintWood, rebuilt in place. defaults: {parameter: texture} for the samplers whose default is the
+    joinery folder's own (a texture of the sampler's own kind must stand in each, or the graph does not compile).
+    Returns (material, wired, asked, notes)."""
+    tools = unreal.AssetToolsHelpers.get_asset_tools()
+    mel = unreal.MaterialEditingLibrary
+    path = PACKAGE + "/" + name
+    mat = unreal.EditorAssetLibrary.load_asset(path) if unreal.EditorAssetLibrary.does_asset_exist(path) else None
+    if mat is not None:
+        mel.delete_all_material_expressions(mat)
+    else:
+        mat = tools.create_asset(name, PACKAGE, unreal.Material, unreal.MaterialFactoryNew())
+    if mat is None:
+        return None, 0, 0, ["create-failed"]
+    try:
+        mat.set_editor_property("two_sided", two_sided)      # the glTF paints are double sided
+    except Exception:
+        pass
+    n = {"made": 0, "asked": 0, "notes": []}
+    y = [0]
+
+    def ex(cls, **props):
+        y[0] += 60
+        e = mel.create_material_expression(mat, cls, -1800 + (y[0] // 3000) * 400, y[0] % 3000)
+        for k, v in props.items():
+            try:
+                e.set_editor_property(k, v)
+            except Exception as err:
+                n["notes"].append("%s.%s=%s" % (cls.__name__, k, str(err).split("\n")[0][:40]))
+        return e
+
+    def link(a, ao, b, bi):
+        n["asked"] += 1
+        try:
+            if mel.connect_material_expressions(a, ao, b, bi):
+                n["made"] += 1
+                return
+        except Exception:
+            pass
+        n["notes"].append("link-%s-%s" % (ao or "out", bi or "in"))
+
+    def src(v):
+        return v if isinstance(v, tuple) else (v, "")
+
+    def op(cls, a, b=None, const=None):
+        """A two-input node; a float stands as the node's own constant."""
+        e = ex(cls)
+        for pin, v, ck in (("A", a, "const_a"), ("B", b, "const_b")):
+            if v is None:
+                continue
+            if isinstance(v, (int, float)):
+                try:
+                    e.set_editor_property(ck, float(v))
+                except Exception as err:
+                    n["notes"].append("%s.%s=%s" % (cls.__name__, ck, str(err).split("\n")[0][:30]))
+            else:
+                link(*src(v), e, pin)
+        return e
+
+    def mul(a, b):
+        return op(unreal.MaterialExpressionMultiply, a, b)
+
+    def add(a, b):
+        return op(unreal.MaterialExpressionAdd, a, b)
+
+    def sub(a, b):
+        return op(unreal.MaterialExpressionSubtract, a, b)
+
+    def vmin(a, b):
+        return op(unreal.MaterialExpressionMin, a, b)
+
+    def vmax(a, b):
+        return op(unreal.MaterialExpressionMax, a, b)
+
+    def one(cls, a):
+        e = ex(cls)
+        link(*src(a), e, "")
+        return e
+
+    def sat(a):
+        return one(unreal.MaterialExpressionSaturate, a)
+
+    def lerp(a, b, t):
+        e = ex(unreal.MaterialExpressionLinearInterpolate)
+        for pin, v, ck in (("A", a, "const_a"), ("B", b, "const_b"), ("Alpha", t, "const_alpha")):
+            if isinstance(v, (int, float)):
+                e.set_editor_property(ck, float(v))
+            else:
+                link(*src(v), e, pin)
+        return e
+
+    def power(base, exp):
+        e = ex(unreal.MaterialExpressionPower)
+        link(*src(base), e, "Base")
+        # the exponent's pin is shown as "Exp" (30 October: "Exponent" did not take); each name tried, one counted
+        n["asked"] += 1
+        for pin in ("Exp", "Exponent", "B"):
+            try:
+                if mel.connect_material_expressions(src(exp)[0], src(exp)[1], e, pin):
+                    n["made"] += 1
+                    break
+            except Exception:
+                pass
+        else:
+            n["notes"].append("link-power-exponent")
+        return e
+
+    def chan(a, c):
+        e = ex(unreal.MaterialExpressionComponentMask, r=c == "r", g=c == "g", b=c == "b", a=c == "a")
+        link(*src(a), e, "")
+        return e
+
+    # each channel by a mask on the sample's first output, so no pin is found by its display name
+    P = {}
+    for name, default in PAINT_WOOD_SCALARS:
+        P[name] = ex(unreal.MaterialExpressionScalarParameter, parameter_name=name, default_value=default)
+    for name, default in PAINT_WOOD_VECTORS:
+        vp = ex(unreal.MaterialExpressionVectorParameter, parameter_name=name,
+                default_value=unreal.LinearColor(default[0], default[1], default[2], 1.0))
+        # its three channels only: a vector parameter is four wide, the position and the colours three
+        P[name] = ex(unreal.MaterialExpressionComponentMask, r=True, g=True, b=True, a=False)
+        link(vp, "", P[name], "")
+    uv = {k: ex(unreal.MaterialExpressionTextureCoordinate, coordinate_index=k) for k in (0, 2)}
+    T = {}
+    for name, ch, sampler, default in PAINT_WOOD_TEXTURES:
+        t = ex(unreal.MaterialExpressionTextureSampleParameter2D, parameter_name=name)
+        tex = unreal.load_asset(default) if default else (defaults or {}).get(name)
+        if tex is not None:
+            t.set_editor_property("texture", tex)
+        else:
+            n["notes"].append("no-default-%s" % name)
+        try:
+            t.set_editor_property("sampler_type", getattr(unreal.MaterialSamplerType, "SAMPLERTYPE_" + sampler))
+        except Exception as err:
+            n["notes"].append("sampler-%s=%s" % (name, str(err).split("\n")[0][:30]))
+        link(uv[ch], "", t, "UVs")
+        T[name] = t
+    # the chip noise, the sheet tiled Paint Cracks Tiling times
+    tiled = mul(uv[2], P["PaintCracksTiling"])
+    chip_t = ex(unreal.MaterialExpressionTextureSampleParameter2D, parameter_name="WoodMasks")
+    if T["WoodMasks"].get_editor_property("texture") is not None:
+        chip_t.set_editor_property("texture", T["WoodMasks"].get_editor_property("texture"))
+    try:
+        chip_t.set_editor_property("sampler_type", unreal.MaterialSamplerType.SAMPLERTYPE_MASKS)
+    except Exception:
+        pass
+    link(tiled, "", chip_t, "UVs")
+    noise = chan(chip_t, "g")
+    paint = mul((T["PaintMap"], "RGB"), P["BaseColorFactor"])
+    rough_p = mul(chan(T["PaintORM"], "g"), P["RoughnessFactor"])
+    metal_p = mul(chan(T["PaintORM"], "b"), P["MetallicFactor"])
+    # THE CHIPS. From the picture: its baked cover, R bare wood and G the worn rim (front_joinery.py; 30 October, try 2:
+    # thresholded here, the chip noise's smaller copies lost their extremes and the chips thinned with distance).
+    # From the box (a board whose first UV repeats): the law live, the box's edge nearness ^ Wood Mask Edge times its
+    # weight and the sheet's broad cluster, bare where the noise passes 1 - ChipAmount x that, the rim WornWidth as wide.
+    try:
+        lp = ex(unreal.MaterialExpressionLocalPosition)
+        lpo = (lp, "")
+    except Exception as err:
+        n["notes"].append("localposition=%s" % str(err).split("\n")[0][:40])
+        lpo = (ex(unreal.MaterialExpressionWorldPosition), "")
+    a3 = vmin(sub(lpo, P["BoxMin"]), sub(P["BoxMax"], lpo))
+    ax, ay, az = chan(a3, "r"), chan(a3, "g"), chan(a3, "b")
+    dbox = sub(sub(add(add(ax, ay), az), vmin(vmin(ax, ay), az)), vmax(vmax(ax, ay), az))
+    near_box = sat(sub(1.0, op(unreal.MaterialExpressionDivide, dbox, P["EdgeCm"])))
+    cluster = sat(mul(sub(chan(T["WoodMasks"], "b"), P["ClusterFrom"]), P["ClusterGain"]))
+    # Wood Mask Edge as front_joinery.py's edge_law: a gain, clamped (EdgeLawGain 1), or a power (0)
+    shaped = lerp(power(near_box, P["WoodMaskEdge"]), sat(mul(near_box, P["WoodMaskEdge"])), P["EdgeLawGain"])
+    e_box = mul(mul(shaped, P["BoxWeight"]), cluster)
+    ae = mul(P["ChipAmount"], e_box)
+    bare_box = sat(mul(sub(noise, sub(1.0, ae)), P["ChipSharpness"]))
+    worn_box = sat(sub(sat(mul(sub(noise, sub(1.0, mul(ae, P["WornWidth"]))), P["ChipSharpness"])), bare_box))
+    bare = mul(lerp(chan(T["EdgeMask"], "r"), bare_box, P["EdgeFromBox"]), P["LayerOn"])
+    worn = mul(lerp(chan(T["EdgeMask"], "g"), worn_box, P["EdgeFromBox"]), P["LayerOn"])
+    # THE WOOD, dirty in its chips (Dirt Mask Intensity times the sheet's broad noise, Dirt Roughness)
+    dirt = mul(sat(mul(chan(T["WoodMasks"], "b"), P["DirtMaskIntensity"])), P["DirtOpacity"])
+    wood = mul((T["WoodColour"], "RGB"), lerp(1.0, P["DirtDarken"], dirt))
+    # THE WORN RIM: the paint gone chalky toward grey, the wood showing through, by Paint Fade Intensity
+    lum = ex(unreal.MaterialExpressionConstant3Vector, constant=unreal.LinearColor(0.2126, 0.7152, 0.0722, 1.0))
+    dot = ex(unreal.MaterialExpressionDotProduct)
+    link(*src(paint), dot, "A")
+    link(lum, "", dot, "B")
+    faded = lerp(add(mul(dot, 1.6), 0.01), wood, 0.3)
+    paint_w = lerp(paint, faded, P["PaintFadeIntensity"])
+    c1 = lerp(paint, paint_w, mul(worn, P["WeatheringOpacity"]))
+    c2 = lerp(c1, wood, bare)
+    colour = c2
+    r1 = sat(add(rough_p, mul(mul(worn, P["WeatheringOpacity"]), P["WeatheringRoughnessAdd"])))
+    r_wood = lerp(chan(T["WoodMasks"], "r"), P["DirtRoughness"], dirt)
+    rough = lerp(r1, r_wood, bare)
+    metal = mul(metal_p, sub(1.0, bare))
+    normal = lerp((T["PaintNormal"], "RGB"), (T["WoodNormal"], "RGB"), bare)
+    MP = unreal.MaterialProperty
+    for node, mp in ((colour, MP.MP_BASE_COLOR), (rough, MP.MP_ROUGHNESS), (metal, MP.MP_METALLIC),
+                     (P["Specular"], MP.MP_SPECULAR)) + (((normal, MP.MP_NORMAL),) if wire_normal else ()):
+        n["asked"] += 1
+        try:
+            if mel.connect_material_property(node, "", mp):
+                n["made"] += 1
+                continue
+        except Exception:
+            pass
+        n["notes"].append("prop-%s" % mp)
+    try:
+        mel.layout_material_expressions(mat)
+    except Exception:
+        pass
+    try:
+        mel.recompile_material(mat)
+    except Exception:
+        pass
+    unreal.EditorAssetLibrary.save_asset(path)
+    return mat, n["made"], n["asked"], n["notes"]
+
+
 def _import_detail(unreal, name, png):
     """One detail map imported as /Game/Ledger/Kit/T_KitDetail_<name>, sRGB off (the multiply
     expects 0.5 to mean 'no change'), compressed as masks."""
@@ -547,6 +787,11 @@ def selftest():
     check("a glowing slot casts no shadow (the lamp's glass, its tube, its bowl)",
           all(r.get("shadow", True) is False for r in spec["slots"].values() if r.get("glow")))
     check("the glow is relative to the arc tube, which is 1", spec["slots"].get("arc_tube", {}).get("glow") == 1.0)
+    sc = dict(PAINT_WOOD_SCALARS)
+    check("the paint over wood keeps Mafia's chipped-paint medians (the study, section 1)",
+          (sc["PaintFadeIntensity"], sc["WeatheringOpacity"], sc["WeatheringRoughnessAdd"], sc["DirtMaskIntensity"],
+           sc["DirtRoughness"], sc["WoodMaskEdge"], sc["PaintCracksTiling"]) == (0.89, 0.66, 0.98, 1.25, 0.8, 2.3, 3.0))
+    check("the paint over wood's layer is on unless an instance turns it off", sc["LayerOn"] == 1.0)
     slots, missing = slot_values(spec)
     if os.path.isdir(KIT_DIR):
         check("every slot named is carried by a kit piece in ledger/Assets/Props/base-mesh", not missing, ",".join(missing))

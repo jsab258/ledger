@@ -46,6 +46,20 @@ given for the right side):
             rows?: [{part, in|out: [..]}], clip?: [CURVE...] (a closed region it is cut to), covers?: true}
            a layer laid on the piece (a pocket, a loop, a facing under an opening when its height is negative)
     tack   {curve, width, height}                                 a bar tack: dense thread across
+  WEAR AND FADE (30 October 2026, the jeans' second try at reading as jeans: two reviewers of the game's photographs
+  still read "plain slate-blue trousers"; the colour alone, no height): each adds to a lightness field F, applied to the
+  colour map as 1 + F x "fadeTint" (per channel, so a lighter fade also greys a little, as faded indigo does) where F
+  is positive and 1 + F where it is negative:
+    fade     {centre: POINT, axes: [across, along] (mm, the soft zone's sigma), amount}   a soft zone (a thigh, a knee)
+    fadeBand {curve, width, amount, offset?}                       lighter or darker beside a curve (seams, hems)
+    streak   {curve, width, amount, flank?, zigzag?: [amp, period]} a thin fade line, tapered at its ends, darker beside
+             it by flank x amount (whiskers; a zigzag row of them, honeycombs)
+  and over the whole garment (top level): "mottle": [{amount, sizeMm, seed}] (the stones' uneven fade, smooth in each
+  piece's own place), "relief": {ridge, groove, blurMm} (the drawn detail's raised edges lighter by ridge, its hollows
+  darker by groove, against its own height blurred blurMm: the abraded edge of a seam, a pocket, a hem; the thread kept
+  out of the darkening).
+  POINT also {"bodyZ": z, "fromSide": t}: on the piece where the body is z metres up, t of the way across it from its
+  side seam end (the outline's end nearest x = 0) to its other end.
 """
 import argparse
 import json
@@ -253,6 +267,18 @@ class Ctx:
             return q + self.inward(c0, c1, q) * d if d else q
         if "mid" in ps:
             return (self.P(ps["mid"][0]) + self.P(ps["mid"][1])) / 2
+        if "bodyZ" in ps:
+            pc = self.piece
+            q = getattr(pc, "p0", pc.p)
+            z = POS[pc.idx[0], pc.idx[1], 2]
+            sel = np.abs(z - ps["bodyZ"]) < 0.004
+            if not sel.any():
+                raise ValueError("no texel at body height %r on %s" % (ps["bodyZ"], pc.name))
+            row = q[sel]
+            i_side, i_in = int(np.argmin(np.abs(row[:, 0]))), int(np.argmax(np.abs(row[:, 0])))
+            x = row[i_side, 0] + ps["fromSide"] * (row[i_in, 0] - row[i_side, 0])
+            near_ = np.abs(row[:, 0] - x) < 3.0
+            return np.array([x, float(np.median(row[near_, 1]))])
         if "x" in ps:
             base = self.P(ps["x"])
             c = self.C(ps["yOn"])
@@ -322,6 +348,7 @@ H = np.zeros((TEX, TEX))
 COL = np.ones((TEX, TEX))
 AO = np.ones((TEX, TEX))
 THREAD = np.zeros((TEX, TEX))       # thread coverage (for the record and the colour)
+FADE = np.zeros((TEX, TEX))         # the wear and fade's lightness field (colour only)
 
 
 def near(piece, curve, reach):
@@ -500,6 +527,34 @@ def feature(f, side):
         put(pc, sel, H, h * cov)
         put(pc, sel, THREAD, cov * 0.9, "max")
         touched[sel[cov > 0.1]] = True
+    elif kind == "fade":
+        c0 = ctx.P(f["centre"])
+        ax, ay = f["axes"]
+        q = pc.p - c0
+        g = np.exp(-0.5 * ((q[:, 0] / ax) ** 2 + (q[:, 1] / ay) ** 2))
+        put(pc, np.arange(len(pc.p)), FADE, f["amount"] * g)
+        touched |= g > 0.5
+    elif kind == "fadeBand":
+        c = ctx.C(f["curve"])
+        w, o = f["width"], f.get("offset", 0.0)
+        sel, d, j = near(pc, c, o + 3 * w)
+        end = (j > 0) & (j < len(c.p) - 1) | (d < w)
+        g = np.exp(-0.5 * ((d - o) / w) ** 2) * end
+        put(pc, sel, FADE, f["amount"] * g)
+        touched[sel[g > 0.5]] = True
+    elif kind == "streak":
+        c = ctx.C(f["curve"])
+        if "zigzag" in f:
+            amp, per = f["zigzag"]
+            n_ = np.stack([-c.t[:, 1], c.t[:, 0]], axis=1)
+            c = Curve(c.p + n_ * (amp * np.sin(2 * math.pi * c.s / per))[:, None])
+        w, a, fl = f["width"], f["amount"], f.get("flank", 0.0)
+        sel, d, j = near(pc, c, 4 * w)
+        end = (j > 0) & (j < len(c.p) - 1)
+        taper = np.sin(math.pi * np.clip(c.s[j] / max(c.L, 1e-6), 0, 1)) ** 0.8
+        g = (np.exp(-0.5 * (d / w) ** 2) - fl * np.exp(-0.5 * ((d - 2.2 * w) / w) ** 2)) * taper * end
+        put(pc, sel, FADE, a * g)
+        touched[sel[g > 0.5]] = True
     else:
         raise ValueError(kind)
     feat_masks.append((name, side, pc.name, np.nonzero(touched)[0]))
@@ -518,6 +573,7 @@ for tag, off in (("x+", (DELTA, 0)), ("x-", (-DELTA, 0)), ("y+", (0, DELTA)), ("
     COL[:] = 1
     AO[:] = 1
     THREAD[:] = 0
+    FADE[:] = 0
     feat_masks.clear()
     for pc in PIECES.values():
         pc.p = pc.p0 + np.array(off)
@@ -574,9 +630,44 @@ n_new = tt * (np.sum(tt * uu, axis=2, keepdims=True) / np.maximum(tt[..., 2:3], 
 n_new /= np.linalg.norm(n_new, axis=2, keepdims=True) + 1e-12
 n_out = np.where(inside_any[..., None], n_new, nb)
 
+# the garment-wide wear: the stones' uneven fade, and the drawn detail's raised edges abraded lighter, its hollows darker
+F_ALL = FADE.copy()
+for mo in SPEC.get("mottle", []):
+    for k_, (pname, pc) in enumerate(PIECES.items()):
+        rng = np.random.default_rng(int(mo.get("seed", 1990)) + 97 * k_)
+        acc = np.zeros(len(pc.p0))
+        nwav = 12
+        for _ in range(nwav):
+            ang = rng.uniform(0, math.pi)
+            lam = mo["sizeMm"] * rng.uniform(1.0, 3.0)
+            acc += np.sin(2 * math.pi * (pc.p0[:, 0] * math.cos(ang) + pc.p0[:, 1] * math.sin(ang)) / lam
+                          + rng.uniform(0, 2 * math.pi))
+        acc /= math.sqrt(nwav / 2.0)
+        F_ALL[pc.idx] += mo["amount"] * np.clip(acc, -2.5, 2.5) / 2.5
+RELIEF = SPEC.get("relief")
+if RELIEF:
+    for pname, pc in PIECES.items():
+        m = pc.mask.astype(np.float64)
+        sig = RELIEF.get("blurMm", 3.0) / pc.mm_per_texel
+        hb = ndimage.gaussian_filter(H * m, sig) / np.maximum(ndimage.gaussian_filter(m, sig), 1e-6)
+        rel = (H - hb)[pc.idx]
+        up = RELIEF["ridge"] * np.clip(rel / 0.3, 0, 1)
+        down = RELIEF["groove"] * np.clip(-rel / 0.3, 0, 1) * (1 - np.clip(THREAD[pc.idx], 0, 1))
+        F_ALL[pc.idx] += up + down
+FT = np.array(SPEC.get("fadeTint", [1.0, 1.0, 1.0]))
+fade_fac = np.where(F_ALL[..., None] > 0, 1 + F_ALL[..., None] * FT, 1 + F_ALL[..., None])
+fade_fac = np.maximum(fade_fac, 0.2)
 colour = col0.copy()
 lift = 1 + LIGHTER * np.clip(THREAD, 0, 1)
-colour[..., :3] = np.clip(col0[..., :3] * (COL * lift)[..., None], 0, 1)
+colour[..., :3] = np.clip(col0[..., :3] * (COL * lift)[..., None] * fade_fac, 0, 1)
+if SPEC.get("mottle") or RELIEF or np.any(FADE):
+    lum0 = col0[..., :3].mean(axis=2)
+    lum1 = colour[..., :3].mean(axis=2)
+    log["checks"]["fade"] = {pname: {"meanChange": round(float((lum1[pc.mask] / np.maximum(lum0[pc.mask], 1e-6)).mean() - 1), 4),
+                                     "p5": round(float(np.percentile(lum1[pc.mask] / np.maximum(lum0[pc.mask], 1e-6), 5) - 1), 4),
+                                     "p95": round(float(np.percentile(lum1[pc.mask] / np.maximum(lum0[pc.mask], 1e-6), 95) - 1), 4),
+                                     "max": round(float((lum1[pc.mask] / np.maximum(lum0[pc.mask], 1e-6)).max() - 1), 4)}
+                             for pname, pc in PIECES.items()}
 colour[..., 3] = np.clip(col0[..., 3] * AO, 0, 1)
 
 # the margin: each island's edge carried outward ring by ring, each new texel the mean of its filled neighbours, as

@@ -194,6 +194,9 @@ production/assets/office-print/mickeys/label_*.png
 # the chandler's new wear pictures (30 October, his order D11 S1: the rust leak and the threshold grime, drawn by
 # tools/make_wear_masks.py --street-wear from ambientCG CC0): on F:/LedgerTools/game-inputs under the same path
 production/assets/street-wear/
+# the wood trim sheet for painted joinery (30 October, his order D11 S2: drawn by tools/art-recipes/wood_trim.py from Poly
+# Haven's CC0 kitchen_wood): on F:/LedgerTools/game-inputs under the same path
+production/assets/wood-trim/
 
 # Cloud week 42 (unit 10): the sound set's listening clips are audio, rebuilt by production/cloud-week/sound/make_sound.py; the size guard keeps audio out of git
 production/previews/cloud-week/sound/*.ogg

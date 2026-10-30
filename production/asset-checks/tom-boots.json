@@ -1,0 +1,78 @@
+{
+ "piece": "tom-boots",
+ "line": "assetChecks=PASS piece=tom-boots assets=5 errors=0 warnings=0 waived=1 first=none",
+ "when": "2026-10-30 15:23:13",
+ "assets": [
+  "/Game/Ledger/MetaHumans/Garments/TomBoots/MI_TomBoots",
+  "/Game/Ledger/MetaHumans/Garments/TomBoots/SKM_TomBoots",
+  "/Game/Ledger/MetaHumans/Garments/TomBoots/T_TomBoots_ColourAO",
+  "/Game/Ledger/MetaHumans/Garments/TomBoots/T_TomBoots_Normal",
+  "/Game/Ledger/MetaHumans/Garments/TomBoots/T_TomBoots_Packed"
+ ],
+ "imports": {
+  "SKM_TomBoots": "f30fcfb02338673a132b8df90fcc14ac",
+  "T_TomBoots_ColourAO": "7c82ddfde301e0ec188fc310752b519f",
+  "T_TomBoots_Normal": "097df1477421b5ca717dc24dd7db2d49",
+  "T_TomBoots_Packed": "641ac24307e41dafdee4f33b036b96a4"
+ },
+ "measures": {
+  "MI_TomBoots": {
+   "class": "MaterialInstanceConstant"
+  },
+  "SKM_TomBoots": {
+   "class": "SkeletalMesh",
+   "triangles": [
+    10416,
+    4894,
+    2446,
+    1222
+   ],
+   "lod_verts": [
+    9864,
+    5595,
+    3303,
+    2278
+   ]
+  },
+  "T_TomBoots_ColourAO": {
+   "class": "Texture2D",
+   "size": [
+    1024,
+    1024
+   ],
+   "compression": "TC_DEFAULT",
+   "srgb": true,
+   "source_compression": "UE Delta"
+  },
+  "T_TomBoots_Normal": {
+   "class": "Texture2D",
+   "size": [
+    1024,
+    1024
+   ],
+   "compression": "TC_NORMALMAP",
+   "srgb": false,
+   "source_compression": "UE Delta"
+  },
+  "T_TomBoots_Packed": {
+   "class": "Texture2D",
+   "size": [
+    1024,
+    1024
+   ],
+   "compression": "TC_MASKS",
+   "srgb": false,
+   "source_compression": "UE Delta"
+  }
+ },
+ "findings": [
+  {
+   "rule": "triangles",
+   "asset": "SKM_TomBoots",
+   "message": "10416 triangles over the garment_shoes cap",
+   "severity": "waived",
+   "value": 10416,
+   "limit": 6000
+  }
+ ]
+}

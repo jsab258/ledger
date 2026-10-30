@@ -55,6 +55,7 @@
     ["/Game/Ledger/MetaHumans/Garments/TomJeans", "garment_trousers"],
     ["/Game/Ledger/MetaHumans/Garments/TomJumper", "garment_jumper"],
     ["/Game/Ledger/MetaHumans/Garments/TomBoots", "garment_shoes"],
+    ["/Game/Ledger/MetaHumans/Garments/RonBoots", "garment_shoes"],
     ["/Game/Ledger/MetaHumans/Garments", "shared"],
     ["/Game/Ledger/MetaHumans", "exempt"],
     ["/Game/MetaHumans", "exempt"],
@@ -78,6 +79,11 @@
       "folders": ["/Game/Ledger/MetaHumans/Garments/TomJumper"],
       "parts": ["SKM_TomJumper", "MI_TomJumper", "T_TomJumper_ColourAO", "T_TomJumper_Normal", "T_TomJumper_Packed"],
       "source": "production/specs/garments.json (TomJumper, three maps) and tools/ue/import_garments.py's names"
+    },
+    "tom-boots": {
+      "folders": ["/Game/Ledger/MetaHumans/Garments/TomBoots"],
+      "parts": ["SKM_TomBoots", "MI_TomBoots", "T_TomBoots_ColourAO", "T_TomBoots_Normal", "T_TomBoots_Packed"],
+      "source": "production/specs/garments.json (TomBoots, three maps) and tools/ue/import_garments.py's names"
     }
   },
   "names": {
@@ -115,5 +121,7 @@
     "packed": ["_Packed", "_ORM", "_Masks", "_Mask", "_M"]
   },
   "waiver_rule": "A set-aside fault is waived here, never in code: each waiver names the asset (name or path), the rule (one of the rules above), its DECISIONS.md line and its FINDINGS.md entry. A waived error is listed in the report and fails nothing alone (CLAUDE.md, 'The gate': known shortfalls are listed, failing nothing alone).",
-  "waivers": []
+  "waivers": [
+    {"asset": "SKM_TomBoots", "rule": "triangles", "decision": "DECISIONS.md, 2026-10-30 15:25 (Ron's passed boots carried to Tom: 10,416 triangles a pair, about 5,200 a boot, inside Mafia's footwear spread of 1,780 to 9,964; the cap of 6,000 is for low shoes)", "finding": "FINDINGS.md, Clothes (the boots over their triangle cap)"}
+  ]
 }

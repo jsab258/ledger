@@ -115,6 +115,31 @@ What failed before this method, so it is not repeated: draping with bent elbows 
 
 ## Notebook
 
+### 30 Oct 2026, painted joinery chipped to bare wood from one trim sheet, built and held back on a mesh fault
+- Made: a wood trim sheet from a CC0 board texture, a chipped-paint wood material, and a front mesh remapped onto the sheet.
+- Method (setting-free):
+  - Chips drawn by a noise in the material thin out with distance as the mipmaps lose its extremes: bake the chip coverage into the paint's own UV at a high size instead.
+  - Chip only each member's outer arrises; nested mouldings all chipping reads as a dotted frame.
+  - Check a glTF material's specular on import: its factor arrived as twice the engine's default and darkened the paint 45%.
+  - A rebuilt mesh can change lighting where its material did not: test the old material on the new mesh before blaming the new material.
+- Tools: a trim-sheet maker, a front rebuilder, the stain and calibration checks, buffer comparisons with anti-aliasing and streaming off.
+- Target and check: worn paint 3 to 10% at edges (met, 7.9%); no new fault in any view (not met: a brick strip lit at night on the rebuilt mesh, cause not found in two tries).
+- Cost (hours): about 2.7 (a helper, plus waits).
+- Evidence: DECISIONS 30 October 17:45; F:/LedgerTools/gate/new/chandler-joinery/check.
+
+### 30 Oct 2026, a character's body cut under its clothes at the build, so no skin shows through any garment
+- Made: a hidden-face map painted from the garments' own coverage on the body's UVs, set on a copy of the base garment's wardrobe item, and the character rebuilt with it.
+- Method (setting-free):
+  - Skin through clothes is not fixed garment by garment: the character system's own answer is a map of the body to remove under clothing, applied when the character is built (read the engine source for where it is collected and how maps combine: the darkest wins).
+  - Paint the map from the actual garments, each edge with a margin (about 2 to 3 cm inside each opening), and keep the hands and a band inside each cuff.
+  - Never edit the engine's own item: copy it into the project and swap the copy into the character's selections.
+  - Build first into a side folder and compare everything else (face, skeleton, other parts, textures) against a control build without the map, so a rebuild's own side effects (here, a sharper re-bake) are not blamed on the map.
+  - A cut body makes the clothes compulsory: garments held back for review must be worn once the body under them is gone.
+- Tools: the engine's build through its Python bindings (one property reachable only by its C++ name), Blender for the painting and probes.
+- Target and check: skin through each garment 0 beyond 1 mm in rest, sitting and arms lowered (met); face and skeleton unmoved (met).
+- Cost (hours): about 1.5 (a helper).
+- Evidence: production/research/character-pipeline/HIDDEN-FACES-2026-10-30.md; DECISIONS 30 October 17:25.
+
 ### 30 Oct 2026, one shop front's weathering laid by a studied method, passing its gate with its marks subtle
 - Made: ten decals on one front (sill streaks to the cornice, a rust leak under the gutter's end, grime at the doors) through one stain material, and a world-noise streak in its brick alone.
 - Method (setting-free):
