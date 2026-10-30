@@ -2,7 +2,7 @@
 
 Copied from each page's own database into this folder (pages.json lists the pages). Written by tools/page_answers.py --index; never edited by hand.
 
-Read back: 2026-10-28
+Read back: 2026-10-30
 
 | Page | Updated | Answers | Each answer: pick or verdict, date |
 |---|---|---|---|
@@ -49,8 +49,10 @@ Read back: 2026-10-28
 | [Friday's Decisions](https://claude.ai/artifact/VNFZHnSWBrA72zGKRbwFRn) | 2026-10-23 | 3 | decide-check-model-2026-10-23: no, 2026-10-23; decide-marvelous-2026-10-23: yes, 2026-10-23; decide-walk-next-2026-10-23: yes, 2026-10-23 |
 | [Thursday's Decisions](https://claude.ai/artifact/2yznAYjEwDVv3RvzzKUpBR) | 2026-10-22 | 5 | decide-check-model-2026-10-22: no, 2026-10-22; decide-marvelous-2026-10-22: yes, 2026-10-22; decide-phase2-2026-10-22: hold, 2026-10-22; look-lamp-weathered-2026-10-22: later, 2026-10-22; look-ritas-front-2026-10-22: yes, 2026-10-22 |
 | [Monday's Decisions](https://claude.ai/artifact/8LsucbjBtuCj1QyaRamqpB) | 2026-10-26 | 6 | checker-downloads-2026-10-26: all, 2026-10-26; darren-voice-2026-10-26: A, 2026-10-26 (this is just about the voice, not how real it sounds right? A is ok, but very ro); haiku-labels-2026-10-26: ask, 2026-10-26; listen-pocket-2026-10-26: both, 2026-10-26; prepared-pocket-2026-10-26: move, 2026-10-26; walk-by-eye-2026-10-26: pass, 2026-10-26 |
-| [Monday Night's Decisions](https://claude.ai/artifact/GmtwhT5o89Ho9huHXYUieX) | 2026-10-26 | 1 | checker-next-2026-10-26: third, 2026-10-26 (Third try, broader than stricter alone. Use the 0.1 s of headroom try 2 left: re) |
+| [Monday Night's Decisions](https://claude.ai/artifact/GmtwhT5o89Ho9huHXYUieX) | 2026-10-26 | 4 | checker-next-2026-10-26: third, 2026-10-26 (Third try, broader than stricter alone. Use the 0.1 s of headroom try 2 left: re); checker-third-2026-10-26: more, 2026-10-27 (Third try, broader than stricter alone. Use the 0.1 s of headroom try 2 left: re); darren-delivery-2026-10-26: neither, 2026-10-27; darren-reference-2026-10-26: cv, 2026-10-27 |
 | [Tuesday Night's Decisions](https://claude.ai/artifact/GXm8LhpnZRXPScr6GVZtfT) | 2026-10-27 | 4 | checker-cutoff-2026-10-27: open, 2026-10-27; cuffs-next-2026-10-27: sleeve, 2026-10-27; darren-voice-2026-10-27: keep, 2026-10-27; invented-source-2026-10-27: ?, 2026-10-27 (Facts cited) |
 | [Wednesday's Decisions](https://claude.ai/artifact/TDpjTLydnfFBFfRPmavGpD) | 2026-10-28 | 4 | cuffs-next-2026-10-28: bake, 2026-10-28 (Bake route, yes. But first put the jacket on Tom in the game with today's cuffs,); delete-stray-talk-2026-10-28: yes, 2026-10-28; free-f-study-extracts-2026-10-28: yes, 2026-10-28; tom-wrists-2026-10-28: ?, 2026-10-28 |
+| [Camera distance](https://claude.ai/artifact/4e5QA1UFTEGLacF3Rm4wpE) | 2026-10-28 | 3 | camera-distance-2026-10-28: between, 2026-10-28 (Between, nudged so his feet are fully in frame. Keep Mafia's idea of the camera ); camera-pullback-2026-10-28: 3.1, 2026-10-29; camera-result-2026-10-28: ?, 2026-10-28 (Too low and too big now: he blocks the end of the street. Go back to the Between) |
+| [The day a stop too bright](https://claude.ai/artifact/SHm9UYFEqDkf8WyH5Lk4mg) | 2026-10-29 | 2 | delete-jacket-leftovers-2026-10-29: yes, 2026-10-29; look-day-exposure-2026-10-29: down1, 2026-10-29 (Kept one stop darker. But the street is now much darker than the Hook sheet. Don) |
 
-46 pages, 172 answers.
+48 pages, 180 answers.

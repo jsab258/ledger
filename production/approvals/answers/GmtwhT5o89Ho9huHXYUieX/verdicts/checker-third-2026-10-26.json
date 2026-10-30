@@ -1,0 +1,5 @@
+{
+  "at": "2026-10-27T12:31:02.652Z",
+  "note": "Third try, broader than stricter alone. Use the 0.1 s of headroom try 2 left: read more of the closest facts (for example 10 to 12 instead of 6) and/or a somewhat larger small model, staying at or under 0.15 s beside the game. Add training data aimed at what it missed: near-miss inventions that use the right names with wrong details, and true sentences that paraphrase a fact. Then set the confidence cut-off so it clears only what it is sure of. Enlarge the held-out test with a few hundred more invented and true first sentences, labelled by Gemini and spot-checked, so the bar is not decided by one sentence. The bar stays: no more invented details through than Haiku, on that larger test. Keep working on why Haiku refuses true sentences in parallel.",
+  "pick": "more"
+}

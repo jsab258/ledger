@@ -255,3 +255,8 @@
 {"event": "start", "at": "2026-10-29T21:35:00", "task": "1.5 D11 wet ground: trials, two gate tries, committed", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-29T23:41:30", "note": "reconstructed 29 Oct, 23:42, from DECISIONS times and the commit"}
 {"event": "start", "at": "2026-10-29T23:41:58", "task": "1.5 talk camera exit; night duties", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-30T00:17:00", "note": "talk camera: two fixes shown, the third film blocked by Sheila's placement"}
+{"event": "start", "at": "2026-10-30T00:17:00", "task": "1.3 C9 jacket: per-pose check, weights and UV order mended, editor film passed", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-30T00:55:00", "note": ""}
+{"event": "start", "at": "2026-10-30T00:55:00", "task": "1.3 C9 jacket: root found, skinned again by its recipe, editor film passed", "phase": "1", "kind": "production"}
+{"event": "start", "at": "2026-10-30T01:10:51", "task": "1.5 night: summary, overview, talk-target research", "phase": "1", "kind": "production"}
