@@ -276,3 +276,7 @@
 {"event": "start", "at": "2026-10-30T06:46:00", "task": "1.5 camera: the talk row's seventh film", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-30T07:08:00", "note": "talk row back in the game after the seventh film's review"}
 {"event": "start", "at": "2026-10-30T07:08:00", "task": "1.5 records and push; then the next item", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-30T07:10:00", "note": ""}
+{"event": "start", "at": "2026-10-30T07:10:00", "task": "1.3 C9 jacket collar: first try (inner facing), filmed, failed; v30 back", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-30T07:37:00", "note": "the fault named: throat skin through the collar's front"}
+{"event": "start", "at": "2026-10-30T07:37:00", "task": "1.3 C9 records and push; the collar's second try next", "phase": "1", "kind": "production"}

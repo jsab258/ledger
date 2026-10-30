@@ -438,6 +438,9 @@ def walk(editor, out, town=False, sit=False):
             a = film_count()
             play("say", LINE, "--film")
             play("wait", "15", "--film")
+            # AND ON PAST THE TALK'S END (30 October, the seventh film's review: her line stayed up the whole 15 s, so
+            # the ease out was never filmed): a second filmed 15 s, the line gone and the camera back at the street's
+            play("wait", "15", "--film")
             FILM_MARKS["talk"] = [a + 1, film_count()]
         else:
             play("say", LINE)
