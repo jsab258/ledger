@@ -97,7 +97,10 @@ public:
 	// frame whether Tom is inside; the row is used only with -RoomRow until he has seen it in the game, and then it
 	// takes the arm from the office's own numbers
 	void SetInRoom(bool bOn) { bTomInRoom = bOn; }
-	bool RoomRowOn() const { return bRoomRow && RowRoom.bSet; }
+	// NOT WHILE HE SITS (30 October, the row's first editor film): at the row's standing height 1.2 m off, seated he
+	// sank to the frame's foot against the wall; from his sitting down to his standing up the office's own arm has him
+	// and the bench, as it did before the row
+	bool RoomRowOn() const { return bRoomRow && RowRoom.bSet && SitPhase != ESitPhase::Entering && SitPhase != ESitPhase::Seated && SitPhase != ESitPhase::Leaving; }
 	// as a talk opens, the camera's yaw eased toward the speaker for 1.5 s (then the mouse is his again)
 	void FaceForTalk(const FVector& Speaker);
 	float SituationArmCm() const { return RowNow.BackCm; }
