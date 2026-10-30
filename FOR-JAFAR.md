@@ -3,7 +3,7 @@
 The overview first; then the day's summary, under 200 words. Earlier summaries are in git and in
 production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md before that).
 
-## Overview (Thursday 29 October, morning)
+## Overview (Friday 30 October, morning)
 
 <!-- morning pictures: written by tools/morning_pictures.py -->
 
@@ -21,27 +21,27 @@ No decision asked: these are for watching the street change.
 
 <!-- /morning pictures -->
 
-Disk (10-29 04:35): C: 242.7 GB free, F: 28.7 GB free.
+Disk (10-30 04:42): C: 240.0 GB free, F: 30.0 GB free.
 
 **Now and next** (your order of 25 October with the two of 28 October; production/orders/2026-10-25.md):
-- **Now, clothes:** Marvelous's elastic cuffs failed twice, so, as you ordered, the cuffs are built to his wrist's shape: every measure passes and they bake clean. But in the packaged game that jacket showed holes over the back and chest and most of the right sleeve gone, so the game is back on yesterday's jacket while I find why (first try of two). The jumper's pattern and its first Marvelous job are ready; Marvelous reopens for it when the PC has been idle 10 minutes (your rule).
-- **Next, sitting:** in the packaged game Tom walks in, sits on the bench (20 cm from the seat) and stands without touching anything: 13 of 13 stages. A second run found Tom could take the seat Ron's evening already has him in and stand up through him; fixed (nobody shares a seat). Tonight's film: he sits and stands touching nothing, but from straight on he bows almost flat as he sits (Epic's clip), and Sheila could not be reached in office hours (her desk was in Mickey's locked room; she now keeps the booking side).
-- **Then, the look:** the day's exposure is confirmed right (the colour chart reads true by the wall and in the open road). The street's brick and kerb now sit at real values and passed a fresh reviewer per view; the road and pavement, brightened twice, each time gained a new fault (a milky road, pavement like polished tile), so they wait for a researched wet-ground method, reviewed today. The office's new wear marks pass in two of three views; one tea ring still prints on a loose sheet (two tries, listed). Tobacco staining on the office's upper walls and a smoke-yellowed ceiling are in; Mafia's colour grade for the room is being checked.
-- **Beside them:** the speech bench has run 16 of 42 trials: the small fast model is so far no faster and invents more. The town's rules for a surviving victim are now in the game's code (69,186 checks agree).
-- **Your camera:** 3.1 m, your pick. Closer for talk and low rooms, wider for fights, come next, each shown to you in the game.
+- **Now, clothes:** Tom's jacket with the new cuffs is back. It broke in the game because it had been skinned without one of its own recipe's settings, so a rule meant for buttons tied the whole right sleeve to one forearm bone, and its textures were read through the wrong layout, which cut the holes. Skinned again properly, it passed a fresh reviewer in the editor's sit film; the packaged look is next. The tool now refuses to treat anything wider than 6 cm as a button. Then the jumper (Marvelous, when the PC has been idle 10 minutes, your rule).
+- **Next, sitting:** nobody shares a seat, and Sheila is reachable at the counter. From straight on Tom still bows almost flat. Found last night: the bow is in Epic's own front and right-hand sitting clips, and in this office only those fit (the clean left-hand ones hit the sill or the counter). Next, two tries one at a time: a turn on the spot and a short back-down (how Mafia's sitter ends up), or Epic's clip with his head held up.
+- **Then, the look:** the brick and kerb at real values; the road and pavement now wet stone, with water over part of it, by the researched method. This morning's three pictures passed a fresh reviewer each and are on your page beside yesterday's and the Hook sheet. Known: near the camera it reads damp rather than soaked; the brick is cleaner than the sheet's; Mickey's phone number on the glass reads fainter.
+- **Beside them:** the speech bench, 31 of 42 trials: the faster first sentence is still no faster and invents more. The camera closer for talk now works in the editor: the talk opens only on someone Tom can see, the camera comes in over his shoulder with her face in view, holds through the whole exchange and eases out over 2 s. One fault left: Sheila vanished near the end while her line was still up (the town moving her for the next hour); that move now waits while the talk is on. Filmed again next.
+- **Your camera:** 3.1 m, your pick; closer when he runs (on your page). Talk next, then low rooms and fights.
 
-**The tester (last night's walk):** 15 of 15 stages. "That's all I know" to 0 of 60 first questions (2 the night before). Ron showed he knew about Rita's window. What broke the illusion: unfinished clothes, people standing frozen like mannequins, and two people overlapping Tom (Sheila at the office door, someone behind him by a lamp post).
+**The tester (last night's walk):** 13 of 15 stages: Ron was lost as the tester walked up to him (the town moves a person out of sight after 12 s when their hour takes them elsewhere) and Darren was not on the street. "That's all I know" to 2 of 60 first questions (0 the night before). Rocco showed he knew about Rita's window. What broke the illusion: placeholder clothes and stiff poses, a man in the road with his arms held out and a second pair of legs through his, a woman walking past Rita's smashed window without a look, and "D0 20:00" on screen after loading, which read as a test label (now "Monday, 8.00 pm", in tonight's build).
 
 **Monday's risks:**
-1. Phase 1's exit waits on the built cuffs reaching the game and on speech; it may not re-run by Monday.
-2. Sitting may ship this week with the plain start only.
-3. The look's next step (Mafia's wear on Mickey's office and one shop front) is 25 to 35 hours; only its start fits this week.
-4. Speech's 2 s bar: the faster first sentence shows no gain so far.
-5. Eleven other places in the code switch collision off the same broken way; fixing them may move the camera or the walk.
+1. Phase 1's exit needs speech under its bar; the faster first sentence shows no gain in 31 of 42 trials.
+2. Sitting from straight on needs a new entry (turn, then back down) not yet tried on Tom.
+3. People who vanish when their hour moves them: the professional answer is that they walk off, not yet built.
+4. The jumper waits on Marvelous, which only runs when the PC has been idle.
+5. The look's next step (Mafia's wear on one shop front) is 25 to 35 hours; only its start fits this week.
 
 ### Needs you
 
-1. **Mickey's back door, a third try at its panels?** (next page) Yes (recommended), or leave them.
+1. **Mickey's back door, a third try at its panels?** Yes (recommended), or leave them. On your page: https://claude.ai/artifact/YMW4gWcUvWV2i4qoWZDxgs
 2. **Fists able to kill?** (next page; Study 14: Kingdom Come II says no) No (recommended), or yes.
 
 After these, on later pages: the animation source test at 6 moves, the map marks (Study 16), the interface's width (Study 10).

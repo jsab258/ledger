@@ -211,6 +211,9 @@ private:
 	float SitPhaseAt = 0.0f;
 	float SitClock = 0.0f;
 	bool bSitWantsUp = false;
+	// the neck's greatest bend past standing while he sits down or stands up, as copied and as held (-TomHeadUp)
+	float SitNeckCopiedPeak = 0.0f, SitNeckHeldPeak = 0.0f;
+	float SitBackCopiedPeak = 0.0f, SitBackHeldPeak = 0.0f, SitTrunkPeak = 0.0f, SitMoverTrunkPeak = 0.0f;
 	bool TryStartSit();
 	// -TomSitEntryTest=<clip> (28 October, his order D10, the sitting method's step 3): he starts at the entry derived
 	// from the clip's own measures (production/specs/seat-clips.json), the warp off, so where he lands checks the entry

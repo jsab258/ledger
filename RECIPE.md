@@ -115,6 +115,32 @@ What failed before this method, so it is not repeated: draping with bent elbows 
 
 ## Notebook
 
+### 30 Oct 2026, a visible fault every measure passed: holds on the neck and back, two tries, set aside
+- Made: a native copy class that retargets a driver skeleton's pose onto the visible body and can hold the neck and upper back during chosen moves (off by default); per-frame measures of trunk, back and neck on both skeletons.
+- Method (setting-free):
+  - When a fault is seen, measure it on the visible body and on the driver it is copied from, side by side; that tells whether the copy or the source makes it.
+  - Before building a correction, check that the measure moves with what the eye objects to: a joint's position does not see a head turned about that joint; the face's direction does.
+  - A native animation class built around an engine node must list every node it runs, or the node's own game-thread step (here, reading the source pose) never happens and the body stands in its reference pose.
+  - A line-of-sight rule for conversation must pass see-through surfaces (glass, screens), or a person behind a counter screen can never be spoken to.
+- Tools: an in-game per-move log on both skeletons, the side-camera proof run, the copy class with holds.
+- Target and check: the trunk's lean within a person's band (met, 55 against 46 +-12), the back no more rounded than standing plus 10 (met), the neck no more than standing plus 15 (held to 18); the bow gone by eye (not met).
+- Cost (hours): about 1.
+- Failed and why: both holds corrected things the measures saw and the eye did not object to; the head's pitch, which the eye did see, was unmeasured. Lesson: name the visible fault in a measure that moves with it before designing the fix.
+- Evidence: production/research/sit-and-turn/SIT-BOW-2026-10-30.md (route (ii)); ue-probe/Saved/TomSit.
+
+### 30 Oct 2026, a replacement clip measured against the faulty one on the same skeleton before building, and set aside
+- Made: nothing built; a frame-by-frame measure of candidate clips, and the decision it settled (the planned route would have traded one fault for the same fault).
+- Method (setting-free):
+  - Before building a route around a replacement animation, measure the fault itself (here the head folding to the chest: the neck line from the vertical, the head's lowest point, the trunk's lean) on the faulty clip and the candidate, on the same skeleton and the same way.
+  - Read the trunk from points every clip carries correctly (the thighs' midpoint), not from a bone a retarget may have left empty.
+  - A clip retargeted by a batch tool can leave the pelvis at the root and write the hips' travel into its children; it plays right alone but anything that follows the pelvis (a second retarget, a warp, a measure) gets the hips on the floor. Check the pelvis's height before trusting such a clip; it can be repaired by moving the travel back into the pelvis, every other bone checked unmoved.
+  - When both clips carry the fault and the rest of the motion is within the human reference, fix the faulty part directly (a layer that limits it) instead of swapping the motion.
+- Tools: a frame reader for clips (per 1/30 s: root, hips, neck line, trunk), the engine's animation pose evaluation in an offline editor run.
+- Target and check: the candidate's head no lower and its neck line under the fold for less time than the faulty clip's (not met: head 84.2 against 89.9 cm, the fold 0.30 against 0.63 s); trunk within 46 +-12 degrees (both met).
+- Cost (hours): about 1, the route's building saved (estimated 3).
+- Failed and why: the route had been chosen on paper from one clip's lean and a reference game's practice; the head was not measured on both before the plan. Lesson: measure the named fault on every candidate first.
+- Evidence: production/research/sit-and-turn/SIT-BOW-2026-10-30.md (route (i) measured); F:/LedgerTools/scratch/sit/clip_frames.json.
+
 ### 30 Oct 2026, a garment that passed every offline mark and broke in the game: two causes found by comparing with the last good
 - Made: the withdrawn garment skinned again with its recipe's options and its UV layers in order (a limb weight mend first showed the cause), seen whole in the game's editor.
 - Method (setting-free):

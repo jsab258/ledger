@@ -5,6 +5,7 @@
 #include "Animation/AnimNotifies/AnimNotify.h"
 #include "Animation/AnimTypes.h"
 #include "AnimNodes/AnimNode_RetargetPoseFromMesh.h"
+#include "BonePose.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Misc/Paths.h"
 #include "GameFramework/Character.h"
@@ -26,9 +27,100 @@
 
 namespace
 {
-	struct FLedgerRetargetProxy : public FAnimInstanceProxy
+	// THE COPY, AND HIS BACK AND HEAD HELD UP OVER IT (ULedgerRetargetAnim::HeadUpWeight): the engine's Retarget Pose
+	// From Mesh node, then, while the weight is above nil, two holds in component space, each a bend between two
+	// segments measured past the skeleton's own reference pose (standing) and turned back by as much of its excess
+	// over its allowance as the weight asks, by halves at two joints, about the axis that takes the upper segment
+	// toward the lower's line: first the upper back (spine_01 to spine_03 against spine_03 to neck_01, at spine_03 and
+	// spine_04; the study's thoracic spine extends as the trunk leans), then the neck (spine_05 to neck_01 against
+	// neck_01 to head, at neck_01 and neck_02). The hips and legs are left as the copy has them.
+	struct FLedgerHold
+	{
+		FBoneReference A, B, C, P1, P2;
+		float RefBend = 0.0f, Copied = 0.0f, Held = 0.0f;
+	};
+
+	struct FLedgerHeadUpNode : public FAnimNode_Base
 	{
 		FAnimNode_RetargetPoseFromMesh Retarget;
+		float Weight = 0.0f, AllowDeg = 15.0f, BackAllowDeg = 10.0f;
+		FLedgerHold Back = { FBoneReference(TEXT("spine_01")), FBoneReference(TEXT("spine_03")), FBoneReference(TEXT("neck_01")), FBoneReference(TEXT("spine_03")), FBoneReference(TEXT("spine_04")) };
+		FLedgerHold Neck = { FBoneReference(TEXT("spine_05")), FBoneReference(TEXT("neck_01")), FBoneReference(TEXT("head")), FBoneReference(TEXT("neck_01")), FBoneReference(TEXT("neck_02")) };
+		// the trunk's lean from the vertical (the thighs' midpoint to neck_01), on his copied pose
+		FBoneReference ThighL = FBoneReference(TEXT("thigh_l")), ThighR = FBoneReference(TEXT("thigh_r"));
+		float TrunkLean = 0.0f;
+		bool bBones = false;
+
+		virtual void Initialize_AnyThread(const FAnimationInitializeContext& Context) override { Retarget.Initialize_AnyThread(Context); }
+		virtual void Update_AnyThread(const FAnimationUpdateContext& Context) override { Retarget.Update_AnyThread(Context); }
+		virtual void CacheBones_AnyThread(const FAnimationCacheBonesContext& Context) override
+		{
+			Retarget.CacheBones_AnyThread(Context);
+			const FBoneContainer& Bc = Context.AnimInstanceProxy->GetRequiredBones();
+			bBones = ThighL.Initialize(Bc) && ThighR.Initialize(Bc);
+			const FReferenceSkeleton& R = Bc.GetReferenceSkeleton();
+			auto RefCS = [&R](int32 I)
+			{
+				FTransform T = R.GetRefBonePose()[I];
+				for (int32 P = R.GetParentIndex(I); P != INDEX_NONE; P = R.GetParentIndex(P)) { T = T * R.GetRefBonePose()[P]; }
+				return T.GetLocation();
+			};
+			for (FLedgerHold* H : { &Back, &Neck })
+			{
+				bBones = bBones && H->A.Initialize(Bc) && H->B.Initialize(Bc) && H->C.Initialize(Bc) && H->P1.Initialize(Bc) && H->P2.Initialize(Bc);
+				if (!bBones) { return; }
+				const FVector a = RefCS(H->A.BoneIndex), b = RefCS(H->B.BoneIndex), c = RefCS(H->C.BoneIndex);
+				H->RefBend = FMath::RadiansToDegrees(FMath::Acos(FMath::Clamp(FVector::DotProduct((b - a).GetSafeNormal(), (c - b).GetSafeNormal()), -1.0, 1.0)));
+			}
+		}
+		// the hold's bend past standing on this pose, and the axis that straightens it
+		static float BendOf(FCSPose<FCompactPose>& CS, const FBoneContainer& Bc, const FLedgerHold& H, FVector& Axis)
+		{
+			const FVector a = CS.GetComponentSpaceTransform(H.A.GetCompactPoseIndex(Bc)).GetLocation();
+			const FVector b = CS.GetComponentSpaceTransform(H.B.GetCompactPoseIndex(Bc)).GetLocation();
+			const FVector c = CS.GetComponentSpaceTransform(H.C.GetCompactPoseIndex(Bc)).GetLocation();
+			const FVector Lo = (b - a).GetSafeNormal(), Up = (c - b).GetSafeNormal();
+			Axis = FVector::CrossProduct(Up, Lo).GetSafeNormal();
+			return (float)FMath::RadiansToDegrees(FMath::Acos(FMath::Clamp(FVector::DotProduct(Lo, Up), -1.0, 1.0))) - H.RefBend;
+		}
+		void Apply(FPoseContext& Output, FCSPose<FCompactPose>& CS, FLedgerHold& H, float Allow)
+		{
+			const FBoneContainer& Bc = Output.Pose.GetBoneContainer();
+			FVector Axis;
+			H.Copied = H.Held = BendOf(CS, Bc, H, Axis);
+			const float Turn = FMath::Max(0.0f, H.Copied - Allow) * FMath::Clamp(Weight, 0.0f, 1.0f);
+			if (Turn <= 0.01f || Axis.IsNearlyZero()) { return; }
+			// a turn of Q in component space at one bone: its local rotation becomes parent^-1 * Q * its own
+			for (const FBoneReference* R : { &H.P1, &H.P2 })
+			{
+				const FCompactPoseBoneIndex I = R->GetCompactPoseIndex(Bc);
+				const FQuat Q(Axis, FMath::DegreesToRadians(Turn * 0.5f));
+				const FCompactPoseBoneIndex P = Output.Pose.GetParentBoneIndex(I);
+				const FQuat Parent = P != INDEX_NONE ? CS.GetComponentSpaceTransform(P).GetRotation() : FQuat::Identity;
+				const FQuat Now = CS.GetComponentSpaceTransform(I).GetRotation();
+				Output.Pose[I].SetRotation((Parent.Inverse() * Q * Now).GetNormalized());
+				CS.InitPose(Output.Pose);
+			}
+			H.Held = BendOf(CS, Bc, H, Axis);
+		}
+		virtual void Evaluate_AnyThread(FPoseContext& Output) override
+		{
+			Retarget.Evaluate_AnyThread(Output);
+			if (!bBones) { return; }
+			const FBoneContainer& Bc = Output.Pose.GetBoneContainer();
+			FCSPose<FCompactPose> CS;
+			CS.InitPose(Output.Pose);
+			const FVector Hips = (CS.GetComponentSpaceTransform(ThighL.GetCompactPoseIndex(Bc)).GetLocation() + CS.GetComponentSpaceTransform(ThighR.GetCompactPoseIndex(Bc)).GetLocation()) * 0.5;
+			const FVector Nk = CS.GetComponentSpaceTransform(Neck.B.GetCompactPoseIndex(Bc)).GetLocation();
+			TrunkLean = (float)FMath::RadiansToDegrees(FMath::Acos(FMath::Clamp(FVector::DotProduct((Nk - Hips).GetSafeNormal(), FVector::UpVector), -1.0, 1.0)));
+			Apply(Output, CS, Back, BackAllowDeg);
+			Apply(Output, CS, Neck, AllowDeg);
+		}
+	};
+
+	struct FLedgerRetargetProxy : public FAnimInstanceProxy
+	{
+		FLedgerHeadUpNode Node;
 
 		explicit FLedgerRetargetProxy(UAnimInstance* Instance) : FAnimInstanceProxy(Instance) {}
 
@@ -36,16 +128,24 @@ namespace
 		{
 			if (const ULedgerRetargetAnim* A = Cast<ULedgerRetargetAnim>(InAnimInstance))
 			{
-				Retarget.RetargetFrom = ERetargetSourceMode::CustomSkeletalMeshComponent;
-				Retarget.SourceMeshComponent = A->Source;
-				Retarget.IKRetargeterAsset = A->Retargeter;
+				Node.Retarget.RetargetFrom = ERetargetSourceMode::CustomSkeletalMeshComponent;
+				Node.Retarget.SourceMeshComponent = A->Source;
+				Node.Retarget.IKRetargeterAsset = A->Retargeter;
 			}
 			FAnimInstanceProxy::Initialize(InAnimInstance);
 		}
 
-		virtual FAnimNode_Base* GetCustomRootNode() override { return &Retarget; }
+		virtual void PreUpdate(UAnimInstance* InAnimInstance, float DeltaSeconds) override
+		{
+			FAnimInstanceProxy::PreUpdate(InAnimInstance, DeltaSeconds);
+			if (const ULedgerRetargetAnim* A = Cast<ULedgerRetargetAnim>(InAnimInstance)) { Node.Weight = A->HeadUpWeight; Node.AllowDeg = A->HeadUpAllowDeg; Node.BackAllowDeg = A->BackUpAllowDeg; }
+		}
 
-		virtual void GetCustomNodes(TArray<FAnimNode_Base*>& OutNodes) override { OutNodes.Add(&Retarget); }
+		virtual FAnimNode_Base* GetCustomRootNode() override { return &Node; }
+
+		// BOTH NODES (30 October, the first film: his body stood in its reference pose): the engine's node reads the
+		// mover's pose on the game thread in its own PreUpdate, which runs only for nodes listed here
+		virtual void GetCustomNodes(TArray<FAnimNode_Base*>& OutNodes) override { OutNodes.Add(&Node); OutNodes.Add(&Node.Retarget); }
 	};
 }
 
@@ -185,6 +285,12 @@ void ULedgerRetargetAnim::Setup(USkeletalMeshComponent* InSource, UIKRetargeter*
 	Source = InSource;
 	Retargeter = InRetargeter;
 }
+
+float ULedgerRetargetAnim::NeckBendCopied() const { return GetProxyOnGameThread<FLedgerRetargetProxy>().Node.Neck.Copied; }
+float ULedgerRetargetAnim::NeckBendHeld() const { return GetProxyOnGameThread<FLedgerRetargetProxy>().Node.Neck.Held; }
+float ULedgerRetargetAnim::BackBendCopied() const { return GetProxyOnGameThread<FLedgerRetargetProxy>().Node.Back.Copied; }
+float ULedgerRetargetAnim::BackBendHeld() const { return GetProxyOnGameThread<FLedgerRetargetProxy>().Node.Back.Held; }
+float ULedgerRetargetAnim::TrunkLean() const { return GetProxyOnGameThread<FLedgerRetargetProxy>().Node.TrunkLean; }
 
 FString ULedgerMotionMatchTools::WireMotionMatchBlueprint(UAnimBlueprint* Blueprint, bool bOffsetRoot)
 {

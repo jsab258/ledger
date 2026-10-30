@@ -77,6 +77,25 @@ public:
 	UPROPERTY(Transient)
 	TObjectPtr<UIKRetargeter> Retargeter;
 
+	// HIS HEAD HELD UP WHILE HE SITS AND STANDS (30 October, his order D10; production/research/sit-and-turn/
+	// SIT-BOW-2026-10-30.md, route (ii)): Epic's bench clips lean the trunk as a person does (53 degrees, inside the
+	// study's 46 +-12) but fold the head to the chest. With HeadUpWeight above nil the copied pose's neck is turned back
+	// until the head bends no further forward of the upper back (spine_05 to neck_01) than standing plus
+	// HeadUpAllowDeg, half at neck_01 and half at neck_02; at nil the copy is untouched. Set from the game thread.
+	float HeadUpWeight = 0.0f;
+	float HeadUpAllowDeg = 15.0f;
+	// AND HIS UPPER BACK (30 October, the first film with the neck held: the bow stayed, so it is mostly the back):
+	// spine_01 to spine_03 against spine_03 to neck_01, at most standing plus BackUpAllowDeg, turned back at spine_03
+	// and spine_04 before the neck is measured (the study: the thoracic spine extends as the trunk leans)
+	float BackUpAllowDeg = 10.0f;
+	// the last copied pose's neck and upper back: each bend past standing (degrees), as copied and as held; and the
+	// trunk's lean from the vertical (the thighs' midpoint to neck_01) as copied
+	float NeckBendCopied() const;
+	float NeckBendHeld() const;
+	float BackBendCopied() const;
+	float BackBendHeld() const;
+	float TrunkLean() const;
+
 protected:
 	virtual FAnimInstanceProxy* CreateAnimInstanceProxy() override;
 };

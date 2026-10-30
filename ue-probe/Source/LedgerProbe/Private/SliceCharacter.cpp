@@ -696,7 +696,20 @@ bool ALedgerSliceCharacter::StartGaspMover(USkeletalMeshComponent* M)
 	}
 	WornBody->ComponentTags.AddUnique(FName(TEXT("RTG_UEFN_to_Metahuman_nrw")));
 	WornAnimClass = CopyClass;
-	WornBody->SetAnimInstanceClass(CopyClass);
+	// -TomHeadUp (30 October, his order D10, the sit's head held up while it is tried; SIT-BOW-2026-10-30.md route
+	// (ii)): the same copy through the same retargeter, made by the engine's own node in our native class, which can
+	// hold his head up over it while he sits and stands (MotionMatchAnim.h, HeadUpWeight)
+	static const bool bHeadUp = FParse::Param(FCommandLine::Get(), TEXT("TomHeadUp"));
+	UIKRetargeter* HeadUpRtg = bHeadUp ? LoadObject<UIKRetargeter>(nullptr, TEXT("/Game/MetaHumans/Common/Common/Rigs/RTG_UEFN_to_Metahuman_nrw.RTG_UEFN_to_Metahuman_nrw")) : nullptr;
+	if (HeadUpRtg != nullptr) { WornAnimClass = ULedgerRetargetAnim::StaticClass(); }
+	WornBody->SetAnimInstanceClass(WornAnimClass);
+	if (ULedgerRetargetAnim* R = Cast<ULedgerRetargetAnim>(WornBody->GetAnimInstance()))
+	{
+		R->Setup(Mover->GetMesh(), HeadUpRtg);
+		WornBody->InitAnim(true);
+		UE_LOG(LogTemp, Display, TEXT("LedgerWalk: his body copies the mover through our own class, his head held up while he sits (-TomHeadUp)"));
+	}
+	else if (bHeadUp) { UE_LOG(LogTemp, Warning, TEXT("LedgerWalk: -TomHeadUp asked, but the retargeter %s"), HeadUpRtg == nullptr ? TEXT("did not load") : TEXT("loaded and the class did not take")); }
 	WornBody->AddTickPrerequisiteComponent(Mover->GetMesh());
 	Mover->GetMesh()->SetVisibility(false, false);
 	// -GaspShowMannequin (research, 25 October): the sample's own mannequin is shown, to tell a fault in Epic's
@@ -829,6 +842,11 @@ void ALedgerSliceCharacter::GaspTick()
 	if (WornBody != nullptr && WornAnimClass != nullptr && WornBody->GetAnimClass() != WornAnimClass)
 	{
 		WornBody->SetAnimInstanceClass(WornAnimClass);
+		if (ULedgerRetargetAnim* R = Cast<ULedgerRetargetAnim>(WornBody->GetAnimInstance()))
+		{
+			R->Setup(GaspMover->GetMesh(), LoadObject<UIKRetargeter>(nullptr, TEXT("/Game/MetaHumans/Common/Common/Rigs/RTG_UEFN_to_Metahuman_nrw.RTG_UEFN_to_Metahuman_nrw")));
+			WornBody->InitAnim(true);
+		}
 		UE_LOG(LogTemp, Log, TEXT("LedgerWalk: his MetaHuman's body graph set again to the sample's copy"));
 	}
 }
@@ -2463,6 +2481,34 @@ void ALedgerSliceCharacter::SitRoomTestTick(float DeltaSeconds)
 void ALedgerSliceCharacter::SitTick(float DeltaSeconds)
 {
 	SitClock += DeltaSeconds;
+	// HIS HEAD HELD UP WHILE HE SITS DOWN AND STANDS UP (-TomHeadUp; MotionMatchAnim.h HeadUpWeight): in over a fifth of
+	// a second as a clip starts, out as he settles or stands; the neck's bend past standing logged as copied and as held
+	if (ULedgerRetargetAnim* R = WornBody != nullptr ? Cast<ULedgerRetargetAnim>(WornBody->GetAnimInstance()) : nullptr)
+	{
+		const bool bMoving = SitPhase == ESitPhase::Entering || SitPhase == ESitPhase::Leaving;
+		R->HeadUpWeight = FMath::FInterpConstantTo(R->HeadUpWeight, bMoving ? 1.0f : 0.0f, DeltaSeconds, 5.0f);
+		if (bMoving)
+		{
+			SitNeckCopiedPeak = FMath::Max(SitNeckCopiedPeak, R->NeckBendCopied());
+			SitNeckHeldPeak = FMath::Max(SitNeckHeldPeak, R->NeckBendHeld());
+			SitBackCopiedPeak = FMath::Max(SitBackCopiedPeak, R->BackBendCopied());
+			SitBackHeldPeak = FMath::Max(SitBackHeldPeak, R->BackBendHeld());
+			// the trunk on the hidden mannequin and on him (the sitting note's measurement 3: whether the copy deepens it)
+			USkeletalMeshComponent* Mx = GaspMover != nullptr ? GaspMover->GetMesh() : nullptr;
+			const float MoverLean = Mx != nullptr ? (float)FMath::RadiansToDegrees(FMath::Acos(FMath::Clamp(FVector::DotProduct((Mx->GetSocketLocation(TEXT("neck_01"))
+				- (Mx->GetSocketLocation(TEXT("thigh_l")) + Mx->GetSocketLocation(TEXT("thigh_r"))) * 0.5).GetSafeNormal(), FVector::UpVector), -1.0, 1.0))) : -1.0f;
+			SitTrunkPeak = FMath::Max(SitTrunkPeak, R->TrunkLean());
+			SitMoverTrunkPeak = FMath::Max(SitMoverTrunkPeak, MoverLean);
+			static float NextNeck = 0.0f;
+			if (SitClock >= NextNeck)
+			{
+				NextNeck = SitClock + 0.1f;
+				UE_LOG(LogTemp, Display, TEXT("LedgerSitNeck: %s %.1f s: trunk %.1f deg on the mannequin, %.1f on him; upper back %.1f past standing as copied, %.1f as held; neck %.1f as copied, %.1f as held (weight %.2f)"),
+					SitPhase == ESitPhase::Entering ? TEXT("down") : TEXT("up"), SitClock - SitPhaseAt, MoverLean, R->TrunkLean(), R->BackBendCopied(), R->BackBendHeld(),
+					R->NeckBendCopied(), R->NeckBendHeld(), R->HeadUpWeight);
+			}
+		}
+	}
 	if (SitPhase == ESitPhase::None || GaspMover == nullptr) { return; }
 	if (SitPhase == ESitPhase::Approaching) { SitApproachTick(DeltaSeconds); return; }
 	// the planted foot's slide after a start, while it stays down (within 2 cm of its height at the start), at most 0.4 s
@@ -2526,8 +2572,9 @@ void ALedgerSliceCharacter::SitTick(float DeltaSeconds)
 		}
 		UE_LOG(LogTemp, Display, TEXT("LedgerSit: seated, %.1f cm from the seat (out %.1f, along %.1f; pelvis out %.1f, along %.1f, up %.1f)"),
 			FVector::Dist2D(GaspMover->GetActorLocation(), SitSlot.GetLocation()), Rel.X, Rel.Y, Pelvis.X, Pelvis.Y, Pelvis.Z);
-		LedgerRouteCheck(TEXT("sit"), true, FString::Printf(TEXT("seated %.0f cm from the seat, hips %.0f cm up"),
-			FVector::Dist2D(GaspMover->GetActorLocation(), SitSlot.GetLocation()), Pelvis.Z));
+		LedgerRouteCheck(TEXT("sit"), true, FString::Printf(TEXT("seated %.0f cm from the seat, hips %.0f cm up; trunk at most %.0f deg on the mannequin, %.0f on him; upper back %.0f past standing as copied, %.0f as held; neck %.0f, %.0f"),
+			FVector::Dist2D(GaspMover->GetActorLocation(), SitSlot.GetLocation()), Pelvis.Z, SitMoverTrunkPeak, SitTrunkPeak, SitBackCopiedPeak, SitBackHeldPeak, SitNeckCopiedPeak, SitNeckHeldPeak));
+		SitNeckCopiedPeak = SitNeckHeldPeak = SitBackCopiedPeak = SitBackHeldPeak = SitTrunkPeak = SitMoverTrunkPeak = 0.0f;
 	}
 	else if (SitPhase == ESitPhase::Seated && bSitWantsUp)
 	{
@@ -2549,8 +2596,9 @@ void ALedgerSliceCharacter::SitTick(float DeltaSeconds)
 		UE_LOG(LogTemp, Display, TEXT("LedgerSit: standing again (the stand-up touched the room %d times%s; he ended %.0f cm from the seat)"),
 			LedgerSit::GOutContacts, LedgerSit::GOutFirst.IsEmpty() ? TEXT("") : *(TEXT(", first ") + LedgerSit::GOutFirst),
 			FVector::Dist2D(GaspMover->GetActorLocation(), SitSlot.GetLocation()));
-		LedgerRouteCheck(TEXT("stand"), LedgerSit::GOutContacts == 0, FString::Printf(TEXT("touched the room %d times, ended %.0f cm from the seat"),
-			LedgerSit::GOutContacts, FVector::Dist2D(GaspMover->GetActorLocation(), SitSlot.GetLocation())));
+		LedgerRouteCheck(TEXT("stand"), LedgerSit::GOutContacts == 0, FString::Printf(TEXT("touched the room %d times, ended %.0f cm from the seat; trunk at most %.0f deg on the mannequin, %.0f on him; upper back %.0f past standing as copied, %.0f as held; neck %.0f, %.0f"),
+			LedgerSit::GOutContacts, FVector::Dist2D(GaspMover->GetActorLocation(), SitSlot.GetLocation()), SitMoverTrunkPeak, SitTrunkPeak, SitBackCopiedPeak, SitBackHeldPeak, SitNeckCopiedPeak, SitNeckHeldPeak));
+		SitNeckCopiedPeak = SitNeckHeldPeak = SitBackCopiedPeak = SitBackHeldPeak = SitTrunkPeak = SitMoverTrunkPeak = 0.0f;
 		LedgerSit::GLastOut = LedgerSit::GOutContacts;
 		LedgerSit::GOutContacts = 0; LedgerSit::GOutFirst.Empty();
 	}

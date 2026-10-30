@@ -117,6 +117,8 @@
 #include "Engine/StaticMeshActor.h"
 #include "Engine/StaticMesh.h"
 #include "Components/StaticMeshComponent.h"
+#include "Materials/MaterialInterface.h"
+#include "MaterialShared.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "ProfilingDebugging/CsvProfiler.h"
 #include "Async/Async.h"
@@ -537,6 +539,15 @@ namespace
 	std::string Utf8(const FString& S) { return std::string(TCHAR_TO_UTF8(*S)); }
 	FString Un(const std::string& S)   { return FString(UTF8_TO_TCHAR(S.c_str())); }
 
+	// The clock as the player reads it: "Monday, 8.00 pm". GameTime's own text ("D0 20:00") is the
+	// save's and the logs'; on screen the night walk of 30 October read it as a test label.
+	FString PlayerClock(const GameTime& T)
+	{
+		const int H12 = T.Hour % 12 == 0 ? 12 : T.Hour % 12;
+		return FString::Printf(TEXT("%s, %d.%02d %s"), UTF8_TO_TCHAR(TheLanding::WeekdayName(T.Day)), H12, T.Minute,
+		                       T.Hour < 12 ? TEXT("am") : TEXT("pm"));
+	}
+
 	// ---- the two frames, converted in exactly one place ------------------
 	//
 	// The shared file's frame is x along, y up, z across; the engine's X is
@@ -911,6 +922,62 @@ namespace
 		if (Body == nullptr) { return nullptr; }
 		TWeakObjectPtr<AActor>* V = GVisuals.Find(Body);
 		return (V != nullptr && V->IsValid()) ? V->Get() : Body;
+	}
+
+	// A TALK ONLY WITH SOMEBODY IN SIGHT (30 October, the third talk film: the talk opened with Sheila while nobody
+	// stood in view, Tom facing Mickey's closed door, the talk camera aimed at her figure 0.93 m off and the talk-open
+	// line 9.6 m from her; Study 9: Mafia scores its targets inside the camera's view): her figure's head within
+	// kTalkRiseM of his in height and no wall, door, floor or person between the two heads. Each head 0.7 m above a
+	// body's middle, a figure's 1.6 m above its feet (SyncVisual stands it there).
+	const double kTalkRiseM = 1.5;
+	bool TalkInSight(AActor* Body, double* OutRiseM = nullptr, FString* OutBlocker = nullptr)
+	{
+		if (Body == nullptr || GPawn == nullptr || GPawn->GetWorld() == nullptr) { return false; }
+		AActor* Fig = GVisualFor(Body);
+		const FVector Her = Fig != Body ? Fig->GetActorLocation() + FVector(0.0, 0.0, 160.0) : Body->GetActorLocation() + FVector(0.0, 0.0, 70.0);
+		const FVector His = GPawn->GetActorLocation() + FVector(0.0, 0.0, 70.0);
+		const double Rise = FMath::Abs(Her.Z - His.Z) / 100.0;
+		if (OutRiseM != nullptr) { *OutRiseM = Rise; }
+		if (Rise > kTalkRiseM) { if (OutBlocker != nullptr) { *OutBlocker = TEXT("height"); } return false; }
+		FCollisionQueryParams Params;
+		Params.bTraceComplex = false;
+		Params.AddIgnoredActor(GPawn);
+		Params.AddIgnoredActor(Body);
+		Params.AddIgnoredActor(Fig);
+		// SEEN THROUGH GLASS (30 October, the sit walk: Sheila behind Mickey's counter was out of sight to the rule,
+		// so the talk never opened across it): a hit on a see-through surface (any translucent material on it, or a
+		// mesh named for glass) is passed and the line traced on, up to four times
+		for (int32 Pass = 0; Pass < 4; ++Pass)
+		{
+			FHitResult Hit;
+			if (!GPawn->GetWorld()->LineTraceSingleByChannel(Hit, His, Her, ECC_Visibility, Params)) { return true; }
+			UPrimitiveComponent* C = Hit.GetComponent();
+			bool bClear = false;
+			if (C != nullptr)
+			{
+				for (int32 M = 0; M < C->GetNumMaterials() && !bClear; ++M)
+				{
+					const UMaterialInterface* Mat = C->GetMaterial(M);
+					bClear = Mat != nullptr && IsTranslucentBlendMode(*Mat);
+				}
+				const UStaticMeshComponent* SM = Cast<UStaticMeshComponent>(C);
+				const FString Mesh = SM != nullptr && SM->GetStaticMesh() != nullptr ? SM->GetStaticMesh()->GetName() : C->GetName();
+				bClear = bClear || Mesh.Contains(TEXT("glass")) || Mesh.Contains(TEXT("Glass"));
+				if (!bClear)
+				{
+					if (OutBlocker != nullptr) { *OutBlocker = (Hit.GetActor() != nullptr ? Hit.GetActor()->GetName() : FString(TEXT("something"))) + TEXT("/") + Mesh; }
+					return false;
+				}
+				Params.AddIgnoredComponent(C);
+			}
+			else
+			{
+				if (OutBlocker != nullptr) { *OutBlocker = TEXT("something"); }
+				return false;
+			}
+		}
+		if (OutBlocker != nullptr) { *OutBlocker = TEXT("four see-through surfaces"); }
+		return true;
 	}
 
 	void SyncVisual(AActor* Body)
@@ -4131,9 +4198,16 @@ namespace
 		if (Body == nullptr || GPawn == nullptr || PC == nullptr || PC->PlayerCameraManager == nullptr) { return TEXT("view=unknown"); }
 		const FVector Face = Body->GetActorLocation() + FVector(0.0f, 0.0f, 70.0f);
 		const FVector Cam = PC->PlayerCameraManager->GetCameraLocation();
-		return FString::Printf(TEXT("tom_to_face_m=%.2f cam_to_face_m=%.2f hfov_deg=%.1f"),
+		// AND HER FIGURE (30 October, the third talk film: 9.6 m to her body here while the camera aimed at her figure
+		// 0.93 m off): its flat distance, the heads' difference in height and whether the line between them is clear
+		AActor* Fig = GVisualFor(Body);
+		double Rise = 0.0;
+		FString Blocker = TEXT("none");
+		const bool bSight = TalkInSight(Body, &Rise, &Blocker);
+		return FString::Printf(TEXT("tom_to_face_m=%.2f cam_to_face_m=%.2f hfov_deg=%.1f figure_flat_m=%.2f figure_rise_m=%.2f in_sight=%s blocker=%s"),
 			FVector::Dist(GPawn->GetActorLocation() + FVector(0.0f, 0.0f, 70.0f), Face) / 100.0, FVector::Dist(Cam, Face) / 100.0,
-			PC->PlayerCameraManager->GetFOVAngle());
+			PC->PlayerCameraManager->GetFOVAngle(), Fig != nullptr ? FVector::Dist2D(GPawn->GetActorLocation(), Fig->GetActorLocation()) / 100.0 : -1.0,
+			Rise, bSight ? TEXT("yes") : TEXT("no"), *Blocker.Replace(TEXT(" "), TEXT("~")));
 	}
 
 	void RouteWhereTick(UWorld* World, double Now)
@@ -7241,8 +7315,12 @@ namespace
 			if (GPlacedFor.count(C) && GPlacedFor[C] == Key) { continue; }
 			AActor* Body = CardBody(C);
 			if (Body == nullptr) { GPlacedFor[C] = Key; continue; }
+			// AND WHILE THE TALK WITH THEM IS STILL ON (30 October, the sixth talk film: the line sent and answered, her
+			// reply still on screen, the hour's 30 minutes after it ran out on the fast clock and she vanished in front of
+			// him in one frame): GTalkOn holds while the box is open, a reply is due, the voice plays or the talk's line
+			// is up
 			if ((bSayOpen && GTalkTarget.Card == C) || (GLive.PendingId != 0 && GLive.PendingBody == Body)
-			    || HeldByTalk(C)) { continue; }
+			    || (GTalkOn && GTalkTarget.Card == C) || HeldByTalk(C)) { continue; }
 			const auto It = Here.find(C);
 			const bool bWaitedEnough = GHeldBackSince.count(C) && NowS() - GHeldBackSince[C] >= kPlaceWaitSeconds;
 			if (It == Here.end())
@@ -7597,7 +7675,7 @@ namespace
 			}
 			if (bStop)
 			{
-				Say(FString(TEXT("You wait. ")) + Un(GNow.ToString()) + TEXT("."), 5.0f, FColor::Yellow);
+				Say(FString(TEXT("You wait. ")) + PlayerClock(GNow) + TEXT("."), 5.0f, FColor::Yellow);
 				Say(Un(S.Line), 8.0f, FColor::Yellow);
 				Waiting::Showed(&B, &S);
 				GWaitShown = B.Shown;
@@ -7617,7 +7695,7 @@ namespace
 			bStopped ? *(FString(TEXT(" stopped=")) + Un(S.Key)) : TEXT("")));
 		LedgerSession::Write(TEXT("wait"), TEXT("\"from\":") + LedgerSession::Str(Un(From.ToString())) + TEXT(",\"to\":") + LedgerSession::Str(Un(GNow.ToString())));
 		ClockLight();
-		if (!bStopped) { Say(FString(TEXT("You wait. ")) + Un(GNow.ToString()) + TEXT("."), 5.0f, FColor::Yellow); }
+		if (!bStopped) { Say(FString(TEXT("You wait. ")) + PlayerClock(GNow) + TEXT("."), 5.0f, FColor::Yellow); }
 	}
 
 	// -TalkShot=<dir> (1 October, the interface as drawn): Tom stood three metres
@@ -8987,7 +9065,8 @@ namespace
 		const FVector TomAt = GPawn->GetActorLocation();
 		for (const Who& P : People)
 		{
-			const bool Here = P.Body != nullptr && P.G;
+			// in sight too (TalkInSight, 30 October): never through a door, a wall or a floor
+			const bool Here = P.Body != nullptr && P.G && TalkInSight(P.Body);
 			const FVector At = Here ? P.Body->GetActorLocation() : FVector::ZeroVector;
 			Cands.push_back({ At.X / 100.0, At.Y / 100.0, Here });
 			if (!Here) { continue; }
@@ -9867,7 +9946,7 @@ namespace
 		std::vector<LedgerCrime::FacedCandidate> Cands;
 		for (const Who& P : People)
 		{
-			const bool Here = P.Body != nullptr && *P.G;
+			const bool Here = P.Body != nullptr && *P.G && TalkInSight(P.Body);   // the prompt names only whom T can talk to
 			const FVector Pt = Here ? P.Body->GetActorLocation() : FVector::ZeroVector;
 			Cands.push_back({ Pt.X / 100.0, Pt.Y / 100.0, Here });
 		}
@@ -10157,7 +10236,7 @@ namespace
 					const double Off = std::hypot(Now3.X - GLoadX, Now3.Z - GLoadZ);
 					RouteCheck(TEXT("continue"), Off < 0.5, FString::Printf(TEXT("clock=%s at=%.2f,%.2f off_m=%.2f"), *Un(GNow.ToString()), Now3.X, Now3.Z, Off));
 				}
-				Say(FString(TEXT("The street remembers. ")) + Un(GNow.ToString()) + TEXT("."), 8.0f, FColor::Yellow);
+				Say(FString(TEXT("The street remembers. ")) + PlayerClock(GNow) + TEXT("."), 8.0f, FColor::Yellow);
 			}
 			else if (bLoadedFromDisk)
 			{
