@@ -73,6 +73,10 @@ def packed_material(unreal, g, folder, lines):
     colour = texture(maps["colour"], "T_%s_ColourAO" % g["name"], "colour")
     normal = texture(maps["normal"], "T_%s_Normal" % g["name"], "normal")
     packed = texture(maps["packed"], "T_%s_Packed" % g["name"], "packed")
+    # A WEAVE AS A TILING DETAIL NORMAL (30 October, Tom's jeans: their reviewer read "plain blue trousers"; Mafia carries a
+    # knit's rib so): "detail" names a small tiling normal map (DirectX), "detail_tiling" its repeats a UV unit and
+    # "detail_strength" how much of it is added; without them the strength is nil and the garment is drawn as before
+    detail = texture(maps["detail"], "T_%s_Detail" % g["name"], "normal") if maps.get("detail") else None
     if not (colour and normal and packed):
         return None
     # THE GRAPH BUILT AFRESH EVERY RUN (28 October: a broken first graph stayed, since a found material was kept as it was)
@@ -132,7 +136,34 @@ def packed_material(unreal, g, folder, lines):
     mel.connect_material_property(p, "R", unreal.MaterialProperty.MP_ROUGHNESS)
     mel.connect_material_property(p, "B", unreal.MaterialProperty.MP_METALLIC)
     mel.connect_material_property(c, "A", unreal.MaterialProperty.MP_AMBIENT_OCCLUSION)
-    mel.connect_material_property(n, "RGB", unreal.MaterialProperty.MP_NORMAL)
+    flat = unreal.load_asset("/Engine/EngineMaterials/FlatNormal.FlatNormal")
+    uv = node(unreal.MaterialExpressionTextureCoordinate, -1700, 800)
+    tiling = node(unreal.MaterialExpressionScalarParameter, -1700, 900, parameter_name="DetailTiling", default_value=1.0)
+    uvt = node(unreal.MaterialExpressionMultiply, -1550, 850)
+    mel.connect_material_expressions(uv, "", uvt, "A")
+    mel.connect_material_expressions(tiling, "", uvt, "B")
+    d = node(unreal.MaterialExpressionTextureSampleParameter2D, -1400, 850, parameter_name="DetailNormal", texture=detail or flat,
+             sampler_type=unreal.MaterialSamplerType.SAMPLERTYPE_NORMAL)
+    mel.connect_material_expressions(uvt, "", d, "UVs")
+    strength = node(unreal.MaterialExpressionScalarParameter, -1100, 1000, parameter_name="DetailStrength", default_value=0.0)
+    nrg = node(unreal.MaterialExpressionComponentMask, -1100, 550, r=True, g=True, b=False, a=False)
+    mel.connect_material_expressions(n, "RGB", nrg, "")
+    nb = node(unreal.MaterialExpressionComponentMask, -1100, 650, r=False, g=False, b=True, a=False)
+    mel.connect_material_expressions(n, "RGB", nb, "")
+    drg = node(unreal.MaterialExpressionComponentMask, -1100, 850, r=True, g=True, b=False, a=False)
+    mel.connect_material_expressions(d, "RGB", drg, "")
+    ds = node(unreal.MaterialExpressionMultiply, -950, 900)
+    mel.connect_material_expressions(drg, "", ds, "A")
+    mel.connect_material_expressions(strength, "", ds, "B")
+    sum_ = node(unreal.MaterialExpressionAdd, -800, 600)
+    mel.connect_material_expressions(nrg, "", sum_, "A")
+    mel.connect_material_expressions(ds, "", sum_, "B")
+    app = node(unreal.MaterialExpressionAppendVector, -650, 600)
+    mel.connect_material_expressions(sum_, "", app, "A")
+    mel.connect_material_expressions(nb, "", app, "B")
+    nrm = node(unreal.MaterialExpressionNormalize, -500, 600)
+    mel.connect_material_expressions(app, "", nrm, "")
+    mel.connect_material_property(nrm, "", unreal.MaterialProperty.MP_NORMAL)
     base.set_editor_property("used_with_skeletal_mesh", True)
     # ITS COMPILE READ BACK FROM THE EDITOR'S OWN LOG (28 October: the first graph failed to compile and nothing here
     # said so; the build cooked it without shaders and Tom wore Unreal's default grey grid): only what the log gains
@@ -162,6 +193,11 @@ def packed_material(unreal, g, folder, lines):
     for k in ("Tint", "TapeColour", "TeethColour"):
         r, gr, b = maps[k.lower()]
         mel.set_material_instance_vector_parameter_value(mi, k, unreal.LinearColor(r, gr, b, 1.0))
+    if detail is not None:
+        mel.set_material_instance_texture_parameter_value(mi, "DetailNormal", detail)
+        mel.set_material_instance_scalar_parameter_value(mi, "DetailTiling", float(maps.get("detail_tiling", 1.0)))
+        mel.set_material_instance_scalar_parameter_value(mi, "DetailStrength", float(maps.get("detail_strength", 0.5)))
+        lines.append("  detail normal %s, %s repeats a UV unit, strength %s" % (detail.get_name(), maps.get("detail_tiling", 1.0), maps.get("detail_strength", 0.5)))
     unreal.EditorAssetLibrary.save_loaded_asset(mi, only_if_is_dirty=False)
     lines.append("  material %s on %s: tint %s, tape %s, teeth %s" % (mi_name, PACKED_BASE, maps["tint"], maps["tapecolour"], maps["teethcolour"]))
     return mi

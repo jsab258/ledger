@@ -132,7 +132,10 @@
      0.56,
      0.56,
      0.58
-    ]
+    ],
+    "detail": "F:/LedgerTools/garments/tom/jeans/twill/twill_normal_dx.png",
+    "detail_tiling": 71.6,
+    "detail_strength": 0.5
    },
    "hold": "until its editor walk and a fresh reviewer pass (30 October; worn with -WearHeld=TomJeans)",
    "handed": "2026-10-30",
@@ -166,6 +169,18 @@
    "hold": "until its editor walk and a fresh reviewer pass (30 October; worn with -WearHeld=TomJumper)",
    "handed": "2026-10-30",
    "made": "Tom's plain jumper (his order C9): FreeSewing's Brian re-cut from a body with a neck (shoulder slope 26 degrees, ease 4%, a crew neck 8.5 by 4 in), draped in Marvelous (j3), its cuffs, welt and neckband built from the body pieces' own edges (build_rib_band.py), 19,480 triangles, maps at 2048; slot Shown (neckband, cuffs and 20 mm of the body pieces beside them) drawn, slot Hidden (everything the jacket always covers) not drawn (LedgerGarments.h), as Mafia hides covered parts; the neckband weighted from his full body with no head weight. Tint: a plain mid grey, his to approve."
+  },
+  {
+   "who": "Tom",
+   "name": "TomBoots",
+   "fbx": "F:/LedgerTools/garments/tom/boots/tom_boots_skinned.fbx",
+   "hides": [
+    "shoes"
+   ],
+   "raise_mm": 20,
+   "hold": "until his outfit's editor walk and a fresh reviewer pass (30 October; worn with -WearHeld=TomBoots)",
+   "handed": "2026-10-30",
+   "made": "Tom's black lace-up boots (his ruling of 30 October: the boots Ron wears, black, dark laces and sole, under his jeans): Ron's passed pair (F:/LedgerTools/garments/ron_boots, the footwear script's first version on Ron's foot) carried onto Tom's feet point by point through the two MetaHuman bodies' shared layout (tools/meshgen/blender/carry_footwear.py), Ron's weights kept (foot, ball, calf), the leather set out to 4.5 mm off his skin (Ron's own pair stood 2.7 mm off and its top 2 cm inside his shin); the sole 20 mm under the bare floor, so Tom is raised 20 mm. Listed: a few points at the boot's top edge inside his leg (up to 3.4 mm, one 11 mm at the front edge), under the jeans."
   }
  ]
 }
