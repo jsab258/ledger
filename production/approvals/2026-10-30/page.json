@@ -1,0 +1,80 @@
+{
+ "tab": "Street, camera",
+ "kicker": "LEDGER · Friday 30 October, morning · three decisions",
+ "title": "The street at real values, and the camera when he runs",
+ "how": [
+  "Shortfalls first. Tom's trousers and shoes are not made yet. People in the street still wear placeholder clothes. Near the camera the pavement and kerbs read damp rather than soaked, with no standing water; the brick is cleaner than the Hook sheet's; Mickey's phone number on the window reads fainter now the glass reflects a brighter street. The sitting film is not here: Tom bows almost flat as he sits from straight on, which comes first.",
+  "The street pictures are the game's own morning pictures from this PC; the run film is from the packaged game, through your camera. A fresh reviewer checked every picture and every frame before this page."
+ ],
+ "foot": "Nothing bought or signed up for.",
+ "sections": [
+  {
+   "kind": "look",
+   "key": "look-street-real-values-2026-10-30",
+   "name": "The street at real values, beside the Hook sheet",
+   "note": "Top: yesterday morning. Middle: this morning: the brick and kerb at real brightness, the wall stains the right way up (they had printed upside down since 2 October), and the road and pavement as wet stone with water over part of it, where they were a dark mirror with pale blobs. Bottom: the Hook sheet, the bar (it is the mirror image of this view).",
+   "pictures": [
+    {
+     "src": "production/previews/morning-hook-day-2026-10-29.jpg",
+     "alt": "Yesterday morning: the street from the hook camera, the road a dark mirror with pale blobs, the brick dull brown"
+    },
+    {
+     "src": "production/previews/morning-hook-day-2026-10-30.jpg",
+     "alt": "This morning: the same view, the brick orange-red with mortar showing, the road and flags as damp stone"
+    },
+    {
+     "src": "production/previews/hook-sheet-2026-10-05.jpg",
+     "alt": "The Hook sheet, the painted target, mirrored left to right"
+    }
+   ],
+   "options": [
+    [
+     "keep",
+     "Keep the street like this (recommended)"
+    ],
+    [
+     "back",
+     "Go back"
+    ]
+   ]
+  },
+  {
+   "kind": "look",
+   "key": "camera-run-row-2026-10-30",
+   "name": "The camera when he runs",
+   "note": "Mafia's numbers: when he runs, the camera comes 15% closer and 3 degrees wider within a fifth of a second, and eases back when he stops. Your 3.1 m street camera otherwise.",
+   "pictures": [
+    {
+     "src": "production/approvals/2026-10-30/camera-run.webp",
+     "alt": "Tom runs a few steps and stops: the camera comes a little closer while he runs and eases back when he stops"
+    }
+   ],
+   "options": [
+    [
+     "keep",
+     "Keep it (recommended)"
+    ],
+    [
+     "no",
+     "Not like this"
+    ]
+   ]
+  },
+  {
+   "kind": "decide",
+   "key": "back-door-third-2026-10-30",
+   "name": "Mickey's back door: a third try at its panels?",
+   "note": "Two tries made it a shut four-panel door set in its frame by day; at night under the office light its panel mouldings still read as dark slots. A third try would bevel the mouldings and bake their shading in, about 2 hours. Your rule is two tries, so this needs your word.",
+   "options": [
+    [
+     "yes",
+     "Yes, a third try (recommended)"
+    ],
+    [
+     "leave",
+     "Leave it as it is"
+    ]
+   ]
+  }
+ ]
+}
