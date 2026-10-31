@@ -7,17 +7,17 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
 
 <!-- morning pictures: written by tools/morning_pictures.py -->
 
-**Evening, Friday 30 October, stopped for the week at your word (20:05). Phase 1, Prove the bottlenecks. On: 3. Clothes: Tom dressed, his editor gate passed, three third tries asked. Next: 4. Speech: the faster first sentence still fails (31 of 42 trials).**
+**Morning, Saturday 31 October. Phase 1, Prove the bottlenecks. On: 3. Clothes (C): Tom dressed; editor gate passed; packaged tomorrow. Collar, toe shape, toe band: third tries asked. Next: 4. Speech: faster first sentence, 31 of 42 run, still fails (FastFirst.cs).**
 
-| | Today, 30 Oct | Yesterday, 29 Oct |
+| | Today, 31 Oct | Yesterday, 30 Oct |
 |---|---|---|
-| The hook camera by day | ![The hook camera by day, 2026-10-30](production/previews/morning-hook-day-2026-10-30.jpg) | ![The hook camera by day, 2026-10-29](production/previews/morning-hook-day-2026-10-29.jpg) |
-| The reverse view | ![The reverse view, 2026-10-30](production/previews/morning-reverse-day-2026-10-30.jpg) | ![The reverse view, 2026-10-29](production/previews/morning-reverse-day-2026-10-29.jpg) |
-| The street at night | ![The street at night, 2026-10-30](production/previews/morning-night-2026-10-30.jpg) | ![The street at night, 2026-10-29](production/previews/morning-night-2026-10-29.jpg) |
+| The hook camera by day | ![The hook camera by day, 2026-10-31](production/previews/morning-hook-day-2026-10-31.jpg) | ![The hook camera by day, 2026-10-30](production/previews/morning-hook-day-2026-10-30.jpg) |
+| The reverse view | ![The reverse view, 2026-10-31](production/previews/morning-reverse-day-2026-10-31.jpg) | ![The reverse view, 2026-10-30](production/previews/morning-reverse-day-2026-10-30.jpg) |
+| The street at night | ![The street at night, 2026-10-31](production/previews/morning-night-2026-10-31.jpg) | ![The street at night, 2026-10-30](production/previews/morning-night-2026-10-30.jpg) |
 
 The Hook sheet, the bar they are held to: ![The Hook sheet](production/previews/hook-sheet-2026-10-05.jpg)
 
-No decision asked: these are this morning's; there is no morning run this week.
+No decision asked: these are for watching the street change.
 
 <!-- /morning pictures -->
 
