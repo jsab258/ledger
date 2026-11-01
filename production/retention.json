@@ -279,6 +279,28 @@
     "production/research/voice-in-the-game"
    ],
    "why": "Nano's one-token step as a compiled graph, the first piece of the voice's move into the game"
+  },
+  {
+   "path": "F:/LedgerTools/hf/hub/models--kyutai--pocket-tts",
+   "usedBy": [
+    "tools/voice-live/pocket-server.py",
+    "tools/voice-live/voice-server.py"
+   ],
+   "why": "the cast's Pocket voices in the game (his page of 26 October: Sheila, Ron, Darren); unregistered, the 7-day rule removed the F: copy on 29 October 03:30 and the game fell back to the old card voices unnoticed until 1 November"
+  },
+  {
+   "path": "F:/LedgerTools/hf/hub/models--kyutai--pocket-tts-without-voice-cloning",
+   "usedBy": [
+    "tools/voice-live/pocket-server.py"
+   ],
+   "why": "Pocket's own files beside its weights (pocket_tts loads both)"
+  },
+  {
+   "path": "C:/Users/Jafar/.cache/huggingface/hub/models--kyutai--pocket-tts",
+   "usedBy": [
+    "tools/voice-live/pocket-server.py"
+   ],
+   "why": "the same weights, for tools run without HF_HOME on F:"
   }
  ],
  "holds": []

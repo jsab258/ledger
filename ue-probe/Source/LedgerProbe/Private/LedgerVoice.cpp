@@ -124,7 +124,19 @@ namespace
 			{
 				const std::string L = Buf.substr(0, Nl);
 				Buf.erase(0, Nl + 1);
-				if (L.find("\"ready\"") != std::string::npos) { bReady = true; continue; }
+				if (L.find("\"ready\"") != std::string::npos)
+				{
+					// WHICH VOICES CAME UP, in the log (1 November 2026: the cast's Pocket voices were missing for three
+					// days unnoticed; their model had been cleared from the cache, and the voice program fell back to
+					// the card's older voices without a word): the ready line's own list of Pocket voices, so the
+					// night's walk and its log show it
+					const std::string::size_type Pk = L.find("\"pocket\":");
+					const std::string Pocket = Pk == std::string::npos ? std::string("(not given)") : L.substr(Pk + 9, L.find(']', Pk) == std::string::npos ? 0 : L.find(']', Pk) - Pk - 8);
+					UE_LOG(LogTemp, Display, TEXT("LedgerVoice: ready, Pocket voices %s"), UTF8_TO_TCHAR(Pocket.c_str()));
+					if (Pocket == "[]") { UE_LOG(LogTemp, Warning, TEXT("LedgerVoice: NO POCKET VOICE came up; the cast speaks in the card's older voices")); }
+					bReady = true;
+					continue;
+				}
 				const std::string::size_type At = L.find("\"id\":");
 				if (At == std::string::npos) { continue; }
 				FLedgerVoicePiece P;

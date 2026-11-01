@@ -122,12 +122,12 @@
       "what": "Seconds from the end of your question to the character's first sound.",
       "unit": "s",
       "start": 3.25,
-      "now": 4.14,
+      "now": 1.17,
       "target": 2.0,
       "start_label": "8 Oct",
-      "now_label": "25 Oct, cast voice",
+      "now_label": "1 Nov, packaged, cast voices (median of 20)",
       "state": "fighting",
-      "last": "28 Oct: your answers in the game: the fast checker clears most first sentences about a second sooner; two copies of each check call (no more wrong refusals, measured); the wider name rule. The night's build carries them. 30 Oct: its re-measure with the cast's own voices was not run: stopped for the week at your word. Its number is still the 25 October one."
+      "last": "1 Nov: re-measured beside the packaged game with the cast's own Pocket voices and real replies: median 1.17 s to the first sound, 11 of 20 under 2.0 s, the slowest 6.6 s. Eight one-sentence replies wait for the full check (2.0 to 2.3 s): that is the next fix. One run of 20; a second confirms it before it falls. Found on the way: since 29 Oct the game had lost the cast's Pocket voices (the night cleanup removed their model); mended."
     },
     {
       "name": "The Stutter",

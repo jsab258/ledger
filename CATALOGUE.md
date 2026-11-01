@@ -1,6 +1,6 @@
 # CATALOGUE: what exists, and where each fact lives
 
-Phase 0, item 0.4 (PLAN.md; his edit 9). Search this, canon, the research library and every branch before making anything new (CLAUDE.md). tools/catalogue.py fails the build when a folder of production/art or production/research has no line here. Method: production/research/catalogue-and-homes/NOTE.md. Branches, old repositories and drive folders: production/audits/sweep-2026-10-05/SWEEP.md.
+Phase 0, item 0.4. Search this first; reuse starts at home (CLAUDE.md). tools/catalogue.py fails the build when a folder of production/art or production/research has no line here. Method: production/research/catalogue-and-homes/NOTE.md. Branches, old repositories and drive folders: production/audits/sweep-2026-10-05/SWEEP.md.
 
 ## One home for each kind of fact
 
@@ -22,6 +22,7 @@ Phase 0, item 0.4 (PLAN.md; his edit 9). Search this, canon, the research librar
 | The friends' build's requirements | production/friends-build/MAP.md (every ruling and the twenty basics, each with owner and proof) | PLAN.md's phases 3 and 4 |
 | The plan and the current item | PLAN.md, then NOW.md | the overview's morning line (tools/morning_pictures.py) |
 | Time spent | production/time-log.jsonl | tools/timelog.py week |
+| API spend | production/api-spend.jsonl | the day's summary |
 
 ## Where two versions disagree today
 
@@ -73,10 +74,10 @@ Beside what they approve (*.approval.json; tools/approvals.py): the story outlin
 
 - **The street and its look**: shopfronts, aaa-street, phase5-procedural, asset-plan, asset-coverage, asset-packs, photoreal-on-a-budget, 1990-on-film-stock, evening-light-1990, broken-window-look, chimney-smoke, shop-glass-reflections, street-wear, shop-window-interiors, interior-blockout, cab-office-interior-1990, street-clutter-1990, period-vehicles-and-props, unreal-frame-budget, unreal-cache-cap, hardware-floor, third-person-camera-interiors, footsteps, atlas-01 (the atlas's evidence), south-quay.
 - **The town and its people**: rumour-propagation, small-town-networks, small-town-meetings, eyewitness-testimony, gaze-and-knowing, group-standing-without-a-score, precomputed-day, game-clock, waiting, players-and-a-world-that-remembers, holding-information, detection-legibility, emergent-story-legibility, ending-reading, authored-stories-in-simulation, crime-and-combat-coverage, failure-after-arrest, police-response-1990, british-policing-1988-1992, crime-scene-1990, threats-1990, shop-hours-1990, cab-office-1990, british-crime-fiction-tone, casting, cast-cards, hitman-density.
-- **Talk and voices**: voice-off-card, grounded-dialogue-selection, grounded-replies, invented-claims, conversation-model-capability, local-models, local-writers, llm-inference-economics, prompt-caching, live-speech-architecture, talk-helper, ambient-lines, street-lines-1990, holding-a-large-script, voice-alternatives-2026-09-24, voice-direction, voice-in-the-game, voice-latency, nano-listening-test, tts-licensing-and-consent, runtime-ai-business, ai-npc-demos-hollow, steam-ai-disclosure, player-data-notice.
+- **Talk and voices**: voice-off-card, grounded-dialogue-selection, grounded-replies, invented-claims, conversation-model-capability, local-models, local-writers, llm-inference-economics, prompt-caching, live-speech-architecture, talk-helper, ambient-lines, street-lines-1990, holding-a-large-script, voice-alternatives-2026-09-24, voice-direction, voice-in-the-game, voice-latency, nano-listening-test, tts-licensing-and-consent, runtime-ai-business, ai-npc-demos-hollow, steam-ai-disclosure, player-data-notice, study-a-inzoi.
 - **People on screen**: tom-face, sit-and-turn, character-pipeline, metahuman-audio-driven-animation, lip-sync, talking-face-faults, natural-idles, townspeople-animation, markerless-mocap, clothing-pipeline, clothing-assembly-line, game-clothing-pipeline, plain-1990-clothes, free-garments, wardrobe-at-scale.
 - **Play, testing and players**: baseline-features, feature-coverage, brief-coverage, coverage-audit, coverage-audit-disco-elysium, coverage-audit-hitman, coverage-audit-kcd2, coverage-audit-rdr2, coverage-audit-shadows-of-doubt, aaa-reference, teaching-in-thirty-minutes, meridian-test-administration, packaged-game-testing, shipping-build, engine-notices, ai-tester, ui-design, ethics-and-reception.
-- **How the work is done**: pre-production, frame-headroom, frontier-ai-uses, agentic-studio-attempts, small-team-shipping, systemic-game-postmortems, content-mass-and-judgement, self-audit, asset-checks, checklist-sweep-2026-09-28, checklist-sweep-2026-09-29, claude-code-goal, blender-mcp, graphify-evaluation, egress-allowlist, terms-2026-10-03, catalogue-and-homes, git-history-clean-2026-10-04.md, README.md.
+- **How the work is done**: pre-production, frame-headroom, frontier-ai-uses, agentic-studio-attempts, small-team-shipping, systemic-game-postmortems, content-mass-and-judgement, self-audit, asset-checks, checklist-sweep-2026-09-28, checklist-sweep-2026-09-29, claude-code-goal, blender-mcp, graphify-evaluation, egress-allowlist, terms-2026-10-03, catalogue-and-homes, git-history-clean-2026-10-04.md, README.md, token-audit.
 
 - **Lab**: production/lab, exact-target trials (LAB-REPORT.md).
 

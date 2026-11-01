@@ -7,7 +7,8 @@ key in its environment: this measures the path after the reply (the voice
 and the game's own steps); the model's own time comes from the live talk's
 record while Jafar plays. What follows is how it measured before.
 
-    python tools/voice-live/latency.py --lines 12 [--prewarm] [--early] [--pending] [--voice nano|pocket] [--out F:/.../latency.json]
+    python tools/voice-live/latency.py --lines 12 [--prewarm] [--early] [--pending] [--voice nano|pocket|game] [--out F:/.../latency.json]
+            [--helper PATH] [--settle SECONDS]
     python tools/voice-live/latency.py --selftest
 
 WHY, 26 September. Jafar: "Today about six seconds pass between my line and the
@@ -50,6 +51,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 HELPER = os.path.join(ROOT, "ledger", "TalkHelper", "bin", "Release", "net8.0", "TalkHelper.exe")
 VOICE_PY = r"C:\LedgerTools\chatterbox-nano\env-dml\Scripts\python.exe"
 POCKET_PY = r"F:\LedgerTools\pocket-tts\env\Scripts\python.exe"
+GAME_VOICE = r"F:\LedgerTools\voice-portable"
 FRAME_S = 1 / 60
 PLAY_S = 0.02          # the sound card's start-up buffer for a procedural sound (Unreal's default mixer buffer, 1024 frames at 48 kHz)
 
@@ -133,14 +135,18 @@ def summary(rows, key):
 KEY_FILE = os.path.join(os.environ.get("LOCALAPPDATA", ""), "LEDGER", "live-talk-key.txt")
 
 
-def run(n, prewarm=False, early=False, voice="nano", live=False, checker=None, pending=False):
+def run(n, prewarm=False, early=False, voice="nano", live=False, checker=None, pending=False, helper_path=None, settle=0.0):
     env = dict(os.environ)
     env.pop("ANTHROPIC_API_KEY", None)   # never a key: the stand-in only (29 September)
     # --pending (25 October): the game starts the helper with --early --pending (CrimeProbe.cpp), so the voice
     # makes the first sentence while its check runs and plays it the moment the check passes. Without it this
     # measure spoke only after the check and counted the voice's time the game hides.
     early = early or pending
-    hargs = [HELPER, "--fake"] + (["--early"] if early else []) + (["--pending"] if pending else [])
+    # --helper (1 November 2026, his order of 2 November, 3.1: speech re-measured on the packaged build): the talk
+    # program the packaged copy carries (LedgerTalk\LedgerTalk.exe, its fast checker beside it in checker\) in place of
+    # the repository's build, so the measure runs what the game runs
+    exe = helper_path or HELPER
+    hargs = [exe, "--fake"] + (["--early"] if early else []) + (["--pending"] if pending else [])
     if live:
         # THE REAL PATH ON LEDGER'S KEY (his order of 8 October: Haiku 5.5 against 4.5 for the check,
         # 20 turns each; measurement runs are allowed on the key, $1 a day in all, 3 October): the key
@@ -148,11 +154,16 @@ def run(n, prewarm=False, early=False, voice="nano", live=False, checker=None, p
         # (CrimeProbe.cpp), and is never printed or written.
         with open(KEY_FILE, encoding="utf-8") as fh:
             env["ANTHROPIC_API_KEY"] = fh.read().strip()
-        hargs = [HELPER] + (["--early"] if early else []) + (["--pending"] if pending else [])
+        hargs = [exe] + (["--early"] if early else []) + (["--pending"] if pending else [])
     if checker:
         env["LEDGER_CHECKER_MODEL"] = checker
     if voice == "pocket":
         vargs = [POCKET_PY, os.path.join(ROOT, "tools", "voice-live", "pocket-server.py")]
+    elif voice == "game":
+        # THE GAME'S OWN VOICE PROGRAM (1 November 2026): the portable copy the packaged game runs beside it, its
+        # Python and its voice server, which gives each character to the engine production/specs/voice-engines.json
+        # names (since 26 October Pocket on the processor for all three)
+        vargs = [os.path.join(GAME_VOICE, "python", "python.exe"), os.path.join(GAME_VOICE, "tools", "voice-live", "voice-server.py")]
     else:
         vargs = [VOICE_PY, os.path.join(ROOT, "tools", "voice-live", "voice-server.py")]
     if prewarm:
@@ -169,6 +180,11 @@ def run(n, prewarm=False, early=False, voice="nano", live=False, checker=None, p
         out["error"] = "a helper did not start"
         helper.stop(); voicep.stop()
         return out
+    # --settle: the fast checker loads in the background after the helper is ready, and a line sent before it is
+    # up goes to Haiku alone (TalkHelper Program.cs), which the game's player would not meet a minute in
+    if settle > 0:
+        time.sleep(settle)
+    out["settleS"] = settle
     for i in range(n):
         who, say = LINES[i % len(LINES)]
         rid = 100 + i
@@ -249,6 +265,16 @@ def run(n, prewarm=False, early=False, voice="nano", live=False, checker=None, p
                 row[k] = round(row[k], 2)
         out["lines"].append(row)
         print(json.dumps({k: row.get(k) for k in ("who", "firstWords", "firstSentence", "firstSoundMade", "firstHeard", "helperMs")}), flush=True)
+    # WHAT IT SPENT (rule 12 of his order of 2 November: each day's API spend logged): the helper writes its calls
+    # and dollars, at the game's own price table, when its input closes
+    try:
+        helper.p.stdin.close()
+    except Exception:
+        pass
+    tc, c = helper.wait(lambda d: "usd" in d and "calls" in d, 20)
+    if c is not None:
+        out["spendUsd"] = c.get("usd")
+        out["calls"] = c.get("calls")
     helper.stop()
     voicep.stop()
     ok = [r for r in out["lines"] if "error" not in r]
@@ -283,10 +309,14 @@ if __name__ == "__main__":
     n = int(a[a.index("--lines") + 1]) if "--lines" in a else 12
     voice = a[a.index("--voice") + 1] if "--voice" in a else "nano"
     res = run(n, prewarm="--prewarm" in a, early="--early" in a, voice=voice, live="--live" in a,
-              checker=a[a.index("--checker") + 1] if "--checker" in a else None, pending="--pending" in a)
+              checker=a[a.index("--checker") + 1] if "--checker" in a else None, pending="--pending" in a,
+              helper_path=a[a.index("--helper") + 1] if "--helper" in a else None,
+              settle=float(a[a.index("--settle") + 1]) if "--settle" in a else 0.0)
+    res["helper"] = a[a.index("--helper") + 1] if "--helper" in a else HELPER
     res["pending"] = "--pending" in a
     res["checker"] = a[a.index("--checker") + 1] if "--checker" in a else "default"
     res["live"] = "--live" in a
     if "--out" in a:
         json.dump(res, open(a[a.index("--out") + 1], "w", encoding="utf-8"), indent=1)
     print("SUMMARY " + json.dumps(res.get("summary"), indent=None))
+    print("SPEND " + json.dumps({"usd": res.get("spendUsd"), "calls": res.get("calls")}))

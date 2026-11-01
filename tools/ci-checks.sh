@@ -173,6 +173,7 @@ real_table() {
     asset-budgets         "$REPO"                 "$PY tools/ue/asset_checks.py --check-spec" \
     stain-selftest        "$REPO"                 "$PY tools/ue/make_stain_material.py --selftest" \
     contact-selftest      "$REPO"                 "$PY tools/ue/make_contact_material.py --selftest" \
+    token-audit-selftest  "$REPO"                 "$PY tools/token_audit.py --selftest" \
     stain-check-selftest  "$REPO"                 "$PY tools/stain_check.py --selftest" \
     surface-values-selftest "$REPO"               "$PY tools/surface_values.py --selftest" \
     cuff-faults-selftest  "$REPO"                 "$PY tools/md-bridge/cuff_faults.py --selftest" \

@@ -115,6 +115,17 @@ What failed before this method, so it is not repeated: draping with bent elbows 
 
 ## Notebook
 
+### 1 Nov 2026, a game's voice silently lost to its own disk cleanup, found and mended
+- Made: the voice model restored and registered; the game's log now states which voices came up.
+- Method (setting-free):
+  - A cleanup that removes unregistered large files will, in time, remove a model the game needs: register every model the shipped game loads, by the tool that loads it, the day it is adopted.
+  - A program that falls back quietly hides its own failure: make it say, in the game's log, what came up and what did not, so the nightly walk shows it.
+  - Measure the shipped path, not a tool's own path: the timing tool ran a different voice launcher than the game and failed for a different reason; the game's own program found the real fault.
+- Tools: the cleanup's deletion log, the voice program's ready line, the game's log.
+- Target and check: the game's voice program reports its three voices ready (met).
+- Cost (hours): about 0.3.
+- Evidence: DECISIONS 1 November 20:36; production/retention.json.
+
 ### 30 Oct 2026, a contact shadow under footwear on a coated wet floor, set aside after two tries
 - Made: a projected decal under each half of each sole, riding the foot's two joints, writing no shine there.
 - Method (setting-free):

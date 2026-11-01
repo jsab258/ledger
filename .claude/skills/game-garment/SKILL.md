@@ -28,12 +28,14 @@ Jafar's order of 28 October 2026 (C6, C7): Mafia's own art page says its clothes
 
 ## 2. Avatar and pose: drape straight, pose after
 
+- The wearer's full body, neck and head included (F:/LedgerTools/bodies/MH_<who>/MH_<who>_FullBody.fbx), is the body for everything: the measures the pattern is drafted to (step 1), the drape, pose_body.py's input and the weights (his order of 2 Nov). Tom's jacket was drafted and weighted on a measuring body without a neck, and its collar showed his throat (two tries, 30 Oct).
+- Drape over everything the garment sits on, in the order it is worn: the footwear before the trousers' hem, the shirt or jumper before the jacket. Drape over a smoothed proxy of what is underneath, not its detailed game mesh (for footwear: the laces bridged, set out 3 mm). Tom's jeans, draped over a bare foot, sank into his boots; draped twice over the detailed boots (drape n5), the hem caught on the laces; over a smoothed proxy of the boots they rested on them (30 Oct).
 - The drape body with straight elbows (tools/md/pose_body.py --keep-arms --straight-elbows), skin offset 3 mm; the finished drape bent back to the reference pose with the body's own weights (tools/md/unpose_garment.py).
-- **Check** (tools/md-bridge/sleeve_wrap.py --joints): every sleeve covers 90% or more of the circle to its end; the arm's centre line crosses no cloth.
+- **Check** (tools/md-bridge/sleeve_wrap.py --joints): every sleeve covers 90% or more of the circle to its end; the arm's centre line crosses no cloth. Checked by eye in Marvelous: the body is whole to the crown, and everything the garment sits on is in the scene, under it.
 
 ## 3. Drape
 
-- The bridge job: `python tools/md-bridge/md_job.py JOB.py` drops it in LedgerTools\md-jobs and waits; if the bridge's heartbeat is stale it starts the bridge itself (tools/md-bridge/start_bridge.ps1, his ruling of 30 Oct), so nobody clicks. Marvelous must be open; it is closed for game builds. Particle distance 20 mm while building, then 10 mm on the body and 5 to 6 mm on bands, cuffs, collar and sleeve ends; Fitting quality last.
+- The bridge job: `python tools/md-bridge/md_job.py JOB.py` drops it in LedgerTools\md-jobs and waits; if the bridge's heartbeat is stale it starts the bridge itself (tools/md-bridge/start_bridge.ps1, his ruling of 30 Oct), so nobody clicks. Marvelous stays open between garments (his ruling; it holds about 6 GB of the card): it is closed only for a game build, said so in the chat, and reopened after the build (started again from its program; md_job.py otherwise waits for it to be opened); the bridge then starts itself. Particle distance 20 mm while building, then 10 mm on the body and 5 to 6 mm on bands, cuffs, collar and sleeve ends; Fitting quality last.
 - Seams welded with weldType FULLY_WELDED (2) when the export needs one mesh; never DEFAULT_WELDED (1, deprecated).
 - Marvelous's simulation differs run to run. Keep each job file with its drape number (drape 25a) and its settings in the BAKE-PLAN; judge a change by running the old and the new settings twice each and comparing the measures below, never one lucky run against another. Keep the best drape's exported OBJ: a later run may not reproduce it.
 - **Check:** no edge over 1.2 times its pattern length outside seams (the project's mark, anchored on Marvelous's Fit Maps scale, red at 120%); body through cloth 0 beyond 1 mm; cloth inside the body 0 beyond the skin offset; the silhouette against the reference.
@@ -48,7 +50,7 @@ Jafar's order of 28 October 2026 (C6, C7): Mafia's own art page says its clothes
 
 ## 5. Zipper and topstitch
 
-- The project's own teeth (tools/md-bridge/zip_floaters.py) or Marvelous's Zipper tool with our own OBJ teeth; topstitch by Marvelous's topstitch calls in the project's own style. Both only in the high model, baked into maps. No CLO trim in any shipped file.
+- The project's own teeth (tools/meshgen/blender/zip_floaters.py) or Marvelous's Zipper tool with our own OBJ teeth; topstitch by Marvelous's topstitch calls in the project's own style. Both only in the high model, baked into maps. No CLO trim in any shipped file.
 - **Check:** teeth = length / pitch; 8 px or more per tooth, or a tiling teeth normal.
 
 ## 6. Detail in Blender (in place of ZBrush)
@@ -69,12 +71,29 @@ Jafar's order of 28 October 2026 (C6, C7): Mafia's own art page says its clothes
 ## 9. Skinning, levels of detail, the game
 
 - tools/meshgen/blender/skin_garment.py: the body's weights, at most 8 influences a point at the top two levels of detail and 4 below (Mafia's jacket: up to 8 at LOD0 and LOD1, mean 5.1, on twist and helper joints, 4 below; Unreal's limit is 8); the elbow's weights taken from the body, not widened by hand (Mafia's jacket, re-measured: the crook's blend 4 to 6 cm, the point's 5 to 8). The cuff's and collar's closed edges kept down to the third level of detail (Mafia keeps its cuff detail to LOD2). Levels of detail: LEDGER's target about 50, 25 and 10% (Mafia keeps a median 47, 25 and 9%; its jacket 19,131 down to 1,505). Imported by tools/ue/import_garments.py into the MetaHuman project; listed in production/specs/garments.json with what it hides.
+- **Before the packaged walk:** the skinning run's options compared with the ones the garment's BAKE-PLAN gives, and its skin.json read: notButtons empty (no part over 6 cm treated as a button) and uvReordered recorded (skin_garment.py puts the maps' layout first itself, through uv_order.py). The built-cuff jacket was skinned without --piece-attr none, so a rule meant for buttons tied its whole right sleeve to one forearm bone; and its textures were read through the wrong UV layer, which cut holes (seen 29 Oct, their causes found 30 Oct, only in the game).
 - **Check:** points over 3 mm inside the body counted per pose (rest, arms down, arms up, walking, sitting) and the worst edge stretch; RUBRIC.md lines 9 to 11; one fresh reviewer per view at talk (4.4 m) and street (3 to 28 m) distance, through the packaged game's camera; the AI tester's packaged walk.
+
+## A refit to another body
+
+- Reuse first: a finished garment goes to another MetaHuman before anything is made anew. Footwear carries point for point through the bodies' shared layout (tools/meshgen/blender/carry_footwear.py: Ron's boots onto Tom, 30 Oct), close-fitting pieces likewise (tools/meshgen/blender/carry_garment.py); anything that drapes is re-draped in Marvelous on the new wearer's full body from the same pattern, graded to his measures (SPEC.md).
+- Then only the steps the change touches: the bake chain from step 6 when the shape moved, skinning (step 9) always, from the new body's own weights.
+- **Check:** body through cloth per pose on the new body; the skinning settings and UV order (step 9); the packaged walk.
+
+## Material variants for the crowd
+
+- One mesh, many looks: each variant a set of the garment material's values (tint, tape, teeth, wear, grime), no new bake. Still to be built: a variants field in production/specs/garments.json and import_garments.py making one material instance per variant. Colours from the dated 1990 references, plain and faded, never a brand's.
+- **Check:** each variant under the street's light against the Hook sheet's palette; a fresh reviewer at street distance (3 to 28 m), all variants side by side so none stands out.
+
+## The month-end export
+
+- Before any Marvelous month ends (his ruling of 31 Oct: month to month): every finished and unfinished garment exported to F: (LedgerTools\garments\<who>\<piece>): the project, its pattern, its drape as OBJ and FBX, the bridge job files and settings. CLO's avatars, samples and trims stay out of git and out of the game, as always.
+- **Check:** each export opens again (the OBJ in Blender), and the list of what was exported, in production/art/clothing/LOG.md, matches production/specs/garments.json plus the garments with an open BAKE-PLAN (unfinished ones are not in garments.json).
 
 ## Records, every garment
 
 - DECISIONS.md one line per material choice; the garment's BAKE-PLAN with each try's numbers; RECIPE.md's clothing chapter gains what this garment taught (setting-free).
-- Nothing of Mafia's or CLO's in git or in any shipped file (the licence allowlist's never-ship list: Marvelous's own avatars, sample garments, patterns and trims; zipper parts read as trims); Marvelous closed after each garment session (it holds 6 GB of the card).
+- Nothing of Mafia's or CLO's in git or in any shipped file (the licence allowlist's never-ship list: Marvelous's own avatars, sample garments, patterns and trims; zipper parts read as trims); Marvelous open between garments, closed only for a build (step 3).
 
 ## Checkpoints and measures
 
