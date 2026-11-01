@@ -116,6 +116,16 @@ def task_windows(path=TIMELOG):
     return out
 
 
+def item_near(windows, t, gap_min):
+    """The task whose window ended within GAP_MIN minutes before t (a step after a stop and before the next start is
+    most likely still that work, the time log having missed its stop or its next start): inferred, never logged."""
+    best = None
+    for s, e, task in windows:
+        if e <= t and (t - e).total_seconds() <= gap_min * 60 and (best is None or e > best[0]):
+            best = (e, task)
+    return best[1] if best else None
+
+
 def item_at(windows, t):
     lo, hi = 0, len(windows)
     while lo < hi:
@@ -183,7 +193,7 @@ def read_log(path, helper_desc=None):
     return steps
 
 
-def audit(since=None, until=None, logs=LOGS, timelog=TIMELOG):
+def audit(since=None, until=None, logs=LOGS, timelog=TIMELOG, gap_min=60):
     windows = task_windows(timelog)
     rows = []
     for main in sorted(glob.glob(os.path.join(logs, "*.jsonl"))):
@@ -206,7 +216,7 @@ def audit(since=None, until=None, logs=LOGS, timelog=TIMELOG):
                 rows.append(("helper", sess, meta.get("description", ""), s, hbase))
     out = {"items": defaultdict(lambda: [0.0, 0]), "kinds": defaultdict(lambda: [0.0, 0]), "days": defaultdict(lambda: [0.0, 0]),
            "models": defaultdict(lambda: [0.0, 0]), "history": [0.0, 0.0], "steps": 0, "usd": 0.0,
-           "itemKinds": defaultdict(lambda: defaultdict(float))}
+           "itemKinds": defaultdict(lambda: defaultdict(float)), "itemsFilled": defaultdict(lambda: [0.0, 0]), "gapMin": gap_min}
     for who, sess, desc, s, base in rows:
         t = swiss(s["ts"])
         if since and t < since or until and t >= until:
@@ -218,6 +228,9 @@ def audit(since=None, until=None, logs=LOGS, timelog=TIMELOG):
             out[key][name][0] += usd
             out[key][name][1] += 1
         out["itemKinds"][item][kind] += usd
+        filled = item if item != "not in the time log" else (item_near(windows, t, gap_min) or "not in the time log")
+        out["itemsFilled"][filled][0] += usd
+        out["itemsFilled"][filled][1] += 1
         out["steps"] += 1
         out["usd"] += usd
         # the history: what this step re-read above its session's own start, at the cache-read price
@@ -240,6 +253,11 @@ def report(out, since, until):
     for k, (u, n) in sorted(out["items"].items(), key=lambda kv: -kv[1][0])[:40]:
         big = max(out["itemKinds"][k].items(), key=lambda kv: kv[1])[0] if out["itemKinds"][k] else ""
         lines.append("| %s | %.2f | %.0f%% | %d | %s |" % (k[:90], u, 100 * u / tot, n, big))
+    lines += ["", "## By item, gaps filled (inferred)", "",
+              "A step outside every task window is given to the task that ended within %d minutes before it, the time log having likely missed a stop or a start; still unplaced after that: the last row." % out["gapMin"], "",
+              "| Item | US$ | Share | Steps |", "|---|---|---|---|"]
+    for k, (u, n) in sorted(out["itemsFilled"].items(), key=lambda kv: -kv[1][0])[:25]:
+        lines.append("| %s | %.2f | %.0f%% | %d |" % (k[:90], u, 100 * u / tot, n))
     lines += ["", "## By day (Swiss time)", "", "| Day | US$ | Steps |", "|---|---|---|"]
     for k, (u, n) in sorted(out["days"].items()):
         lines.append("| %s | %.2f | %d |" % (k, u, n))
@@ -273,6 +291,8 @@ def selftest():
     check("a web search is research", kind_of_main([("WebSearch", "")]) == "research")
     check("a reviewer helper is reviewing", kind_of_helper("Gate review: Tom boots view") == "reviewing (helpers)")
     check("an edit of code is building", kind_of_main([("Edit", "C:/x/tools/ue/import_garments.py")]) == "building")
+    check("a step soon after a task's stop is inferred to be that task's", item_near(w, datetime.datetime(2026, 11, 1, 11, 30), 60) == "a")
+    check("but not long after", item_near(w, datetime.datetime(2026, 11, 1, 13, 30), 60) is None)
     print("token_audit selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
 
@@ -290,8 +310,9 @@ def main(a):
     stamp = (since or datetime.datetime(2026, 9, 1)).strftime("%Y-%m-%d") + "_to_" + ((until - datetime.timedelta(days=1)) if until else datetime.datetime.now()).strftime("%Y-%m-%d")
     md = report(out, since, until)
     open(os.path.join(dest, "AUDIT-%s.md" % stamp), "w", encoding="utf-8").write(md)
-    j = {k: (dict(v) if isinstance(v, defaultdict) else v) for k, v in out.items() if k != "itemKinds"}
+    j = {k: (dict(v) if isinstance(v, defaultdict) else v) for k, v in out.items() if k not in ("itemKinds", "itemsFilled")}
     j["itemKinds"] = {k: dict(v) for k, v in out["itemKinds"].items()}
+    j["itemsFilled"] = dict(out["itemsFilled"])
     json.dump(j, open(os.path.join(dest, "audit-%s.json" % stamp), "w", encoding="utf-8"), indent=1)
     print("token-audit steps=%d usd=%.2f history=%.0f%% -> %s" % (out["steps"], out["usd"], 100 * out["history"][0] / (out["usd"] or 1), os.path.join(dest, "AUDIT-%s.md" % stamp)))
     return 0

@@ -292,6 +292,10 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
     if (next) add("Next stop", next.name, next.size || "");
     add("Bosses down", down + " of " + d.bosses.length, null, true);
     add("Friends' evening", d.friends_eta, d.friends_eta_note);
+    if (d.line2027){
+      const w = d.line2027.behind_w;
+      add("Against the plan", (w > 0 ? w + " weeks behind" : w < 0 ? (-w) + " weeks ahead" : "on time"), d.line2027.as_of);
+    }
   }
 
   function renderRoute(d){
@@ -309,6 +313,7 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:13px;color:va
       if (label[0]) meta.append(el("span", "pill " + label[1], label[0]));
       if (s.milestone) meta.append(el("span", "pill", "The big one"));
       if (s.size) meta.append(el("span", "pill", s.size));
+      if (s.actual_w !== undefined && s.planned_w) meta.append(el("span", "pill", s.actual_w + " wk " + (s.actual_note || "") + ", planned " + (s.planned_w[0] === s.planned_w[1] ? s.planned_w[0] : s.planned_w[0] + " to " + s.planned_w[1])));
       b.append(meta);
       if (s.note) b.append(el("p", "note", s.note));
       if (s.arrived && s.arrived.length){

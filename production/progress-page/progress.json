@@ -11,7 +11,13 @@
       "get": "Order in the project: branches, records and checks.",
       "size": "2 to 3 days",
       "state": "passed",
-      "note": "Passed 6 October."
+      "note": "Passed 6 October.",
+      "planned_w": [
+        0.4,
+        0.6
+      ],
+      "actual_w": 0.1,
+      "actual_note": "done"
     },
     {
       "n": 1,
@@ -19,7 +25,13 @@
       "get": "One finished room, one complete Tom who walks, sits and turns, speech under 2 seconds, frame headroom.",
       "size": "1 to 2 weeks",
       "state": "here",
-      "note": "Open, not closed: it failed its first exit check on 22 October. Fresh reviewers re-run that check once the walk, the clothes and speech pass; phase 2 waits for it."
+      "note": "Open, not closed: it failed its first exit check on 22 October. Fresh reviewers re-run that check once the walk, the clothes and speech pass; phase 2 waits for it.",
+      "planned_w": [
+        1.0,
+        2.0
+      ],
+      "actual_w": 3.9,
+      "actual_note": "so far, open"
     },
     {
       "n": 2,
@@ -38,6 +50,10 @@
         "The chandler's",
         "The launderette",
         "The west row's eaves"
+      ],
+      "planned_w": [
+        3.0,
+        4.0
       ]
     },
     {
@@ -45,7 +61,11 @@
       "name": "Thirty minutes that hold",
       "get": "The town remembers what you did: arrivals, deliveries, consequences, the office and the ledger, talk.",
       "size": "1 to 2 weeks",
-      "state": "ahead"
+      "state": "ahead",
+      "planned_w": [
+        1.0,
+        2.0
+      ]
     },
     {
       "n": 4,
@@ -54,14 +74,22 @@
       "size": "About a week",
       "state": "ahead",
       "milestone": true,
-      "note": "Around January if phase 1 passes soon. Low confidence."
+      "note": "Around January if phase 1 passes soon. Low confidence.",
+      "planned_w": [
+        1.0,
+        1.0
+      ]
     },
     {
       "n": 5,
       "name": "The Hook",
       "get": "The district: one more block, then the 14 main characters, about 30 regulars and a crowd.",
       "size": "3 to 6 months",
-      "state": "ahead"
+      "state": "ahead",
+      "planned_w": [
+        13.0,
+        26.0
+      ]
     },
     {
       "n": 6,
@@ -575,5 +603,10 @@
       "text": "The sash windows beyond Mickey's row",
       "his": false
     }
-  ]
+  ],
+  "line2027": {
+    "as_of": "Monday 2 November",
+    "behind_w": 1.4,
+    "how": "Each phase's weeks so far against the top of the plan's own estimate (PLAN.md, adopted 5 October); a positive number is weeks behind. Measured on the calendar, re-measured each Monday."
+  }
 }

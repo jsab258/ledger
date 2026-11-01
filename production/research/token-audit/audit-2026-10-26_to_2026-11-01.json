@@ -1,8 +1,8 @@
 {
  "items": {
   "not in the time log": [
-   933.4615325000018,
-   9537
+   917.398562300001,
+   9383
   ],
   "26 Oct: his answers recorded; walk and sit third tries; listening test and his page": [
    18.36990050000001,
@@ -379,40 +379,48 @@
   "n02 order ledger and the week's rules into RULINGS and CLAUDE": [
    2.9378986,
    20
+  ],
+  "n02-3-1-speech: The Long Pause re-measured packaged with the cast's voices": [
+   50.29540520000003,
+   440
+  ],
+  "n02-3-2-toe-third: the soles' stand-ins for the light": [
+   1.639062,
+   9
   ]
  },
  "kinds": {
   "records and reports": [
-   148.5619315999999,
-   1093
+   152.33268479999995,
+   1115
   ],
   "building": [
-   765.6030736000015,
-   6038
+   779.4722290000016,
+   6116
   ],
   "replies and thinking": [
-   44.19022819999997,
-   306
+   45.19091599999997,
+   312
   ],
   "helpers (briefing and reading)": [
-   28.7087608,
-   171
+   29.0918874,
+   173
   ],
   "research": [
-   89.87545860000004,
-   704
+   92.81456040000005,
+   721
   ],
   "reviewing (helpers)": [
-   301.7951418000006,
-   4363
+   306.44935460000073,
+   4427
   ],
   "building (helpers)": [
-   381.33164289999917,
-   3545
+   382.59487949999914,
+   3563
   ],
   "research (helpers)": [
-   333.64747490000076,
-   4288
+   341.6386977000006,
+   4376
   ]
  },
  "days": {
@@ -437,14 +445,14 @@
    3809
   ],
   "2026-11-01": [
-   26.279560800000006,
-   211
+   62.151057800000025,
+   506
   ]
  },
  "models": {
   "claude-opus-5-5": [
-   2006.444091599989,
-   19032
+   2042.3155885999886,
+   19327
   ],
   "claude-sonnet-5-5": [
    87.26962079999991,
@@ -452,21 +460,22 @@
   ]
  },
  "history": [
-  1104.7244468000024,
-  2093.713712399986
+  1124.7031944000016,
+  2129.585209399983
  ],
- "steps": 20508,
- "usd": 2093.713712399986,
+ "steps": 20803,
+ "usd": 2129.585209399983,
+ "gapMin": 60,
  "itemKinds": {
   "not in the time log": {
-   "records and reports": 68.79167300000002,
-   "building": 343.5219110000001,
+   "records and reports": 68.7101866,
+   "building": 332.73797499999995,
    "replies and thinking": 18.257114600000005,
-   "research": 43.813777200000004,
-   "helpers (briefing and reading)": 12.7450942,
-   "reviewing (helpers)": 161.35650259999966,
-   "building (helpers)": 92.62216209999995,
-   "research (helpers)": 192.35329779999992
+   "research": 42.42363800000001,
+   "helpers (briefing and reading)": 12.4202782,
+   "reviewing (helpers)": 160.30081559999965,
+   "building (helpers)": 93.88539869999997,
+   "research (helpers)": 188.66315559999995
   },
   "26 Oct: his answers recorded; walk and sit third tries; listening test and his page": {
    "building": 11.270442400000004,
@@ -1093,6 +1102,410 @@
   "n02 order ledger and the week's rules into RULINGS and CLAUDE": {
    "building": 1.9235479999999998,
    "records and reports": 1.0143506000000002
+  },
+  "n02-3-1-speech: The Long Pause re-measured packaged with the cast's voices": {
+   "research": 4.329241000000001,
+   "building": 23.542309,
+   "helpers (briefing and reading)": 0.7079426,
+   "records and reports": 3.4916314,
+   "replies and thinking": 0.8330164,
+   "reviewing (helpers)": 5.7098998000000005,
+   "research (helpers)": 11.681365000000007
+  },
+  "n02-3-2-toe-third: the soles' stand-ins for the light": {
+   "building": 1.1107824,
+   "records and reports": 0.36060820000000005,
+   "replies and thinking": 0.16767140000000003
   }
+ },
+ "itemsFilled": {
+  "not in the time log": [
+   704.9731129000016,
+   7070
+  ],
+  "26 Oct: his answers recorded; walk and sit third tries; listening test and his page": [
+   18.36990050000001,
+   153
+  ],
+  "26 Oct: Marvelous licence read; Tom's outfit specified, body exported and measured": [
+   3.4284033999999997,
+   41
+  ],
+  "26 Oct: fresh reviews (sit, walk frames, office views, lamp)": [
+   10.854286000000002,
+   99
+  ],
+  "26 Oct: item 5 the office's light: exposure volume, -OfficeLook, the lamp; fresh reviews": [
+   23.354680900000005,
+   201
+  ],
+  "26 Oct: item 5 first wear pass: traced, fixed, exported, imported, reviewed": [
+   20.60727599999999,
+   170
+  ],
+  "27 Oct: the night's build stopped on F:'s floor; files compressed; asked again; walked the new build; morning pictures retaken": [
+   2.7589540000000006,
+   29
+  ],
+  "27 Oct: item 4 the check's own time: early looks built and A/B; paired timing; two copies built and A/B": [
+   15.128010800000002,
+   181
+  ],
+  "27 Oct: the nightly bench's 60 failures traced and fixed (system prompt from a file); tonight's count run": [
+   4.175341000000001,
+   50
+  ],
+  "27 Oct: fresh review of two copies (a helper re-ran every scorer)": [
+   4.2915268,
+   33
+  ],
+  "27 Oct: the review's fixes: race on the model's beginning, the budget settles stopped streams; records, page data, commit and push": [
+   4.400237799999998,
+   38
+  ],
+  "27 Oct: item 4 two copies' verdict test on 87 more sentences; then item 5 the office's import and staff-side gate": [
+   15.888288600000005,
+   147
+  ],
+  "27 Oct: item 5 the shadow under the radio shelf, second try: geometry measured, then the fix": [
+   7.469899600000001,
+   86
+  ],
+  "27 Oct: item 4 Haiku's false refusals sorted by cause (a helper, existing data)": [
+   3.8425039999999995,
+   34
+  ],
+  "27 Oct: item 5 the shelf patch: distance-field view test before its second try": [
+   3.5454600000000003,
+   22
+  ],
+  "27 Oct: item 5 the riser's wood grain: metre UVs as the recipe's other laminate (try 1)": [
+   5.692749400000002,
+   55
+  ],
+  "27 Oct: fallback, phase 3's port: G1's geography (who stands where at the hour) homed in the Core": [
+   8.689152799999997,
+   50
+  ],
+  "27 Oct: fallback, the sweep's W2: the pending plain questions and the line counter kept in the save": [
+   4.4216918,
+   48
+  ],
+  "27 Oct: item 5 the shelf patch, research's two diagnostic photographs (no change)": [
+   0.40795020000000004,
+   2
+  ],
+  "27 Oct: fallback, the sweep's W1: one town save (version 2 carries the hints and what he has heard)": [
+   5.3738148,
+   28
+  ],
+  "27 Oct: fallback, the sweep's U1: where a caught claim's verdict lives (design reading)": [
+   1.2032794,
+   6
+  ],
+  "27 Oct: item 3, Tom's cuffs, the third try (four drapes; set aside)": [
+   11.012967399999999,
+   140
+  ],
+  "27 Oct: item 4, speech: the wording A/B and the checker's fourth try": [
+   0.6433906,
+   10
+  ],
+  "27 Oct: records of his answers; the checker's fourth try designed": [
+   11.225013400000003,
+   151
+  ],
+  "27 Oct: fallback, the sweep's U3: the reaction ladder's rules ported, not wired": [
+   5.046331800000001,
+   41
+  ],
+  "27 Oct: the frame test's fall traced to Marvelous's card memory; the walk test, pictures and bench re-run": [
+   9.0203068,
+   70
+  ],
+  "27 Oct: item 2 reopened: Tom's MetaHuman and Epic's walk were never packaged; the build's copy and cook fixed": [
+   6.9034594,
+   49
+  ],
+  "27 Oct: item 2: the cook's plugin traces re-saved; Tom's MetaHuman packaged and walked": [
+   4.436284400000001,
+   29
+  ],
+  "27 Oct: item 4: the checker's fourth try: sizes timed, the 32M trained and judged at three cut-offs, timed beside the game; the 17M run alike; tonight's page": [
+   3.5398100000000006,
+   31
+  ],
+  "27 Oct: fresh review of the fourth try's numbers and the blind reading": [
+   4.3991934000000015,
+   66
+  ],
+  "27 Oct: item 2: the tester's steering for Epic's walk; route 15 of 15 packaged; the unnamed-id subtitle ported to the core's rule": [
+   4.680355599999999,
+   70
+  ],
+  "27 Oct: item 5: Mickey's office photographed in the packaged game through Epic's camera, three gate reviews, the grain diagnosed": [
+   16.951699200000004,
+   166
+  ],
+  "27 Oct: blind readers (harm, labels) and a fresh review of the source test": [
+   9.858196600000001,
+   99
+  ],
+  "27 Oct: his page answers recorded; the cited facts into the game's prompt, braces never said; thirty real turns": [
+   6.080683400000002,
+   42
+  ],
+  "27 Oct: the fast checker into the game behind a switch; thirty real turns on and off; beside the packaged game with the voice": [
+   7.6682711999999995,
+   48
+  ],
+  "28 Oct: his rule and answers recorded; the rulings fitted to the cap": [
+   4.487691800000002,
+   67
+  ],
+  "28 Oct: item 3: Tom's sleeve ends (straight-elbowed drape, bend-back) and cuffs (set aside), measured; record": [
+   10.135214999999999,
+   116
+  ],
+  "28 Oct: item 4: his three speech answers in the game; two copies' wrong refusals measured; records": [
+   6.702245800000001,
+   61
+  ],
+  "28 Oct: item 5: the back door's gate in the packaged game (three fresh reviewers, failed), its second try, export and check render": [
+   11.674740600000007,
+   141
+  ],
+  "28 Oct: item 3: the sleeve record's fresh review and fixes; two cause-separating drapes; his page of the day": [
+   54.726302300000015,
+   839
+  ],
+  "28 Oct: item 5: the door's second try gated (two pass, night fails on panels); the grain's tests begun, stopped by the full drive F": [
+   35.87701090000001,
+   495
+  ],
+  "28 Oct: fallback: the port's G4 checked and built in both targets; the subtitle fix and the tester's check": [
+   18.126218600000005,
+   162
+  ],
+  "28 Oct: item 4: the shipped speech settings in 22 real turns (the measuring dollar); records": [
+   7.2588080999999995,
+   58
+  ],
+  "28 Oct: fallback: Studies 11 and 15 checked and recorded; Study 3 and the port's G3 handed out; the overview brought to midday": [
+   45.123267399999975,
+   523
+  ],
+  "28 Oct: fallback: Study 14 checked and recorded; the port helper's failing checks sent back": [
+   6.0109896,
+   45
+  ],
+  "28 Oct: fallback: Study 2 checked and recorded; the page's disk note made exact": [
+   4.404481799999998,
+   45
+  ],
+  "28 Oct: fallback: the port's G3 checked, both Unreal targets built, recorded": [
+   2.2808558,
+   18
+  ],
+  "28 Oct: fallback: Study 16 and the port's H2, H3 handed out, checked, both Unreal targets built, recorded": [
+   23.2015677,
+   383
+  ],
+  "28 Oct: fallback: Study 3 checked and recorded; the port's planted breaks handed out": [
+   15.963528200000002,
+   175
+  ],
+  "28 Oct: his page answers read and acted on (F: freed, the stray folder emptied, the extract cap in the rulings); the port's planted breaks checked and built": [
+   15.784944399999992,
+   150
+  ],
+  "28 Oct: fallback: Studies 8, 9, 10 and 13 handed out; Study 16 checked and recorded; the bake of drape 19 handed out": [
+   19.704393599999996,
+   241
+  ],
+  "28 Oct: item 3: the grain's diagnosis (14 settings); drape 19's bake checked; Tom's jacket into the garment path (material, wearer, worn at spawn); both targets built": [
+   26.804662799999996,
+   360
+  ],
+  "28 Oct: item 3: the jacket imported in the MetaHuman project and a build asked; the grain diagnosis recorded; Study 8 checked and recorded": [
+   9.823107100000007,
+   73
+  ],
+  "28 Oct: fallback: Studies 9, 10 and 13 checked and recorded (16 of 16); Mafia's key removed from the viewer's settings on C:": [
+   23.599268199999987,
+   210
+  ],
+  "28 Oct: item 3: Tom in his jacket, first build: the default material found, its cause in the cook log, fixed, re-imported, a second build asked; the port's G4 remainder handed out": [
+   47.528587599999994,
+   525
+  ],
+  "1.3 C9 cuffs: job mended, drape 24 measured": [
+   4.417786399999999,
+   69
+  ],
+  "1.3 C9 cuffs: diagnostic 24b, second try": [
+   0.2298076,
+   4
+  ],
+  "1.3 C9 cuffs: diagnostic 24b, try 2 twice, set aside, records": [
+   12.4318058,
+   155
+  ],
+  "1.3 C9 cuffs built to the wrist's shape, first pass": [
+   9.5092636,
+   82
+  ],
+  "1.5 camera rows (first two); sitting walk re-runs": [
+   37.903320199999975,
+   387
+  ],
+  "1.5 D11 exposure and surfaces calibrated; walls and office marks gated": [
+   60.02608920000007,
+   547
+  ],
+  "1.3 C jumper cut; D11 wet-ground checks written": [
+   8.347003000000003,
+   94
+  ],
+  "1.5 D11 office smoke and grade; D10 a seat holds one; wet-ground step 3 built": [
+   34.836279999999995,
+   325
+  ],
+  "1.5 D11 wall marks the right way up; 1.3 jacket withdrawn; D10 Sheila's desk": [
+   32.1964474,
+   209
+  ],
+  "1.5 camera talk and run rows filmed and gated": [
+   20.944387399999986,
+   122
+  ],
+  "1.5 D11 wet ground: trials, two gate tries, committed": [
+   32.306424400000004,
+   283
+  ],
+  "1.5 talk camera exit; night duties": [
+   6.887776200000001,
+   92
+  ],
+  "1.3 C9 jacket: per-pose check, weights and UV order mended, editor film passed": [
+   10.808161,
+   118
+  ],
+  "1.3 C9 jacket: root found, skinned again by its recipe, editor film passed": [
+   3.7773491999999997,
+   41
+  ],
+  "1.5 night: summary, overview, talk-target research": [
+   18.925016400000008,
+   142
+  ],
+  "1.5 morning: three views reviewed, his page, the summary and progress page": [
+   3.9935526,
+   59
+  ],
+  "1.5 talk camera's sixth film; the town's move held in a talk; the clock's text": [
+   8.730017800000002,
+   110
+  ],
+  "1.2 D10 sitting: route (i) measured and set aside; route (ii) head held up, editor film": [
+   20.461229399999997,
+   166
+  ],
+  "1.3 C9 jeans: Titan drafted, Marvelous job written; the night's push": [
+   3.1806098,
+   19
+  ],
+  "1.3 C9 jacket packaged sit film (13 of 13), to a reviewer; 1.2 D10 the head's pitch researched and measured": [
+   8.297140800000001,
+   101
+  ],
+  "1.5 town: nobody vanishes within earshot while he looks; the walk to check it": [
+   5.692319600000003,
+   36
+  ],
+  "1.5 camera: the talk row's seventh film": [
+   3.1897069000000005,
+   29
+  ],
+  "1.5 records and push; then the next item": [
+   2.329857,
+   14
+  ],
+  "1.3 C9 jacket collar: first try (inner facing), filmed, failed; v30 back": [
+   8.4426642,
+   46
+  ],
+  "1.3 C9 records and push; the collar's second try next": [
+   10.477829499999997,
+   79
+  ],
+  "1.5 records and push": [
+   7.572578599999999,
+   68
+  ],
+  "C9 the bridge starts itself (UI Automation)": [
+   2.7153079999999994,
+   35
+  ],
+  "C9 jumper drape j1": [
+   1.4299502000000002,
+   20
+  ],
+  "D10 sitting third try: face held up": [
+   4.143907,
+   71
+  ],
+  "O1 back door third try": [
+   5.8898985999999995,
+   69
+  ],
+  "C9 shoes: scan in, marks painted out, credits": [
+   8.509088800000002,
+   99
+  ],
+  "C9 shoes fitted (helper), records": [
+   2.656877999999999,
+   34
+  ],
+  "C9 collar second try (re-weighted), set aside": [
+   54.28598200000001,
+   484
+  ],
+  "D11 chandler's front wear (helper) and its gate (9 reviewers)": [
+   2.7687698,
+   25
+  ],
+  "C9 jeans, jumper, boots: chain, import, review, boots fit, details, set-asides": [
+   107.7129681999999,
+   976
+  ],
+  "C9 outfit: boots maps and reshape, reviews, hidden-face body, adoption": [
+   119.61209600000005,
+   570
+  ],
+  "C9 outfit: commit, joinery record, the toe band's second try (contact decal)": [
+   7.609224200000002,
+   36
+  ],
+  "C9 outfit gate: three fresh reviewers, one per view": [
+   13.249668199999997,
+   189
+  ],
+  "D11 S2 joinery: the lit pier researched (glb comparison, distance-field views)": [
+   6.376107599999999,
+   64
+  ],
+  "n02 order ledger and the week's rules into RULINGS and CLAUDE": [
+   2.9378986,
+   20
+  ],
+  "n02-3-1-speech: The Long Pause re-measured packaged with the cast's voices": [
+   50.29540520000003,
+   440
+  ],
+  "n02-3-2-toe-third: the soles' stand-ins for the light": [
+   3.9172637999999993,
+   32
+  ]
  }
 }
