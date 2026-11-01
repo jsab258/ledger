@@ -21,7 +21,7 @@ canon.md (outranks everything), CHARTER.md, RULINGS.md, PLAN.md, NOW.md, CATALOG
 - Not a programmer: plain words, short; no paths, hashes, flags or tool output unless asked.
 - Updates in the chat: plain, at most ten lines, no files, no promised times; never idle while the goal runs.
 - Ask him only for money, his sign-in or hands, licences outside the list, canon, story or scope, and whole-frame or whole-person looks at their gate; decide the rest (RULINGS 30 Oct). One multiple-choice question, recommendation marked; carry on meanwhile.
-- A message asking him for a tap, a click or an answer ends with its page's full link, or says plainly there is none; results reach his page as they land.
+- Anything needed from him: its own message, sent before any report, starting "NEEDS YOU:" with exactly what to do and every link, nothing else (RULINGS 1 Nov). Reports carry no asks; results reach his page as they land.
 - Wrong: one sentence; move on.
 
 ## Records
