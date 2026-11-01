@@ -69,3 +69,17 @@ Total about 9.75 hours, the pages' 1.0 included.
 - The baked brick bond (BRICK-METHODS-2026-10-04.md, item 1), if the repeat survives.
 - Lamps as Mafia builds them (aaa-s05-03); fake rooms upstairs (aaa-s05-01).
 - Copying the corner along the street, after his yes.
+
+## After its fresh review (1 November, PASS WITH FIXES; CORNER-PLAN-REVIEW-2026-11-02.md), decided
+
+- **The wet ground's two failing readings** (the middle road's blue under red; the near lane's relief 1.33 against 1.71) used both tries on 29 October: known shortfalls on both pages, not worked unless he says yes to a third.
+- **Statement h, no placeholder in frame,** cannot pass while the cast wear the white base layer (phase 1's open fault): named unmet on both pages.
+- **Step 5, the pale line:** the same visible fault had three tries on the boots (one his yes); a further try at the ground's contact, a different method, needs his yes first, asked once with its reason. Until then, step 5 is only the test of other objects on the coat (measurement, not a try).
+- **Step 9, trims:** in the material only (Mickey's front's existing mesh and UVs; the chandler's painted-wood material and trim sheet where they fit), no rebuilt mesh, so the chandler's unsolved lit pier is not reopened; and only after Mickey's office passes packaged (n02-3-3-office).
+- **The C++ in steps 3, 4, 7 and 12** shares phase 1's nightly build: the game target built locally before each push, one piece a commit, any new spec file in stage_game_data.py's list.
+- **Tools:** the 2% clip is tools/pool_clip.py; the night-light ratio (C4) in linear light has no tool yet (made in step 13 or the reading marked unmeasured); decals per wall are counted from vignette-scene.json, not stain_check.py.
+- **Step 13** drops its lamp check (the baseline cleared it: a pool under every lamp).
+- **Brick changes** stay on the corner's houses.
+- **Waiting, and why:** the pole, the bus stop and the bicycle need models and gates beyond the week's hours.
+- **The Mafia street frame:** a public press frame, viewed by the reviewers on the web and never stored (his ruling of 1 October: other games' screenshots never in the repository); no download, so no ask.
+- **Hours and the cut line:** the records run 2 to 4 times the plan's estimates. In order, the line falls after step 7 (people: frozen poses, overlap, walk-off) and step 10 (tier 1 dressing); steps 6, 9, 11 and 12 go as far as the hours allow. Unmet on 9 November, said on the final page: final quality as a whole (statements a to h), the brick's repeat if step 6 is not reached, the wet ground's two readings, the white base layer.

@@ -3361,6 +3361,15 @@ namespace
 	{
 		const TCHAR* Cmd = FCommandLine::Get();
 		int32 AskN = 0;
+		// A MEASURING RUN ON THE REAL PATH (1 November 2026, his order of 2 November, rule 12: the monthly API credit
+		// pays for "the measurement runs"; 3.1: speech re-measured on the packaged build): -AskScript=N with -AskReal
+		// asks its lines down the real talk, and only under a dollar cap the talk program enforces call by call
+		// (LEDGER_TALK_BUDGET_USD, as the tester's real-talk run sets it); without the cap it stays the stand-in.
+		if (FParse::Value(Cmd, TEXT("AskScript="), AskN) && FParse::Param(Cmd, TEXT("AskReal")) && !FParse::Param(Cmd, TEXT("TalkFake"))
+		    && !FPlatformMisc::GetEnvironmentVariable(TEXT("LEDGER_TALK_BUDGET_USD")).IsEmpty())
+		{
+			return true;
+		}
 		return !FParse::Param(Cmd, TEXT("unattended")) && !FParse::Param(Cmd, TEXT("TalkFake"))
 		    && !FParse::Param(Cmd, TEXT("LiveScript")) && !FParse::Param(Cmd, TEXT("AskAfterDeed"))
 		    && !FParse::Param(Cmd, TEXT("LookScript")) && !FParse::Value(Cmd, TEXT("AskScript="), AskN);
