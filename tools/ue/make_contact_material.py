@@ -138,7 +138,45 @@ def main():
         saved = False
     ok = wired == asked and saved and all(f.endswith("=taken") for f in flags)
     _write(contact_line("MADE" if ok else "INCOMPLETE", wired, asked, flags, saved))
-    return 0 if ok else 2
+    stood = make_stand_in()
+    return 0 if ok and stood == 0 else 2
+
+
+STAND_IN = "M_LedgerSoleStandIn"
+STAND_IN_PATH = PACKAGE + "/" + STAND_IN
+STAND_IN_COLOUR = (0.02, 0.02, 0.02)   # a sole's underside: dark rubber, about the boots' own sole (TapeColour 0.045 and below)
+
+
+def stand_in_line(status, saved):
+    return "standInMaterialStatus=%s standInMaterialPath=%s standInMaterialSaved=%s" % (status, STAND_IN_PATH, "yes" if saved else "no")
+
+
+def make_stand_in():
+    """/Game/Ledger/M_LedgerSoleStandIn (1 November 2026, his yes of 31 October, the pale band's third try): the dark
+    surface of the hidden stand-ins under each half sole (LedgerGarments.h LayStandIns), which only Lumen's light sees,
+    so the wet floor under a toe reflects a dark sole, not the sky. Plain, opaque, rough."""
+    import unreal
+    tools = unreal.AssetToolsHelpers.get_asset_tools()
+    mel = unreal.MaterialEditingLibrary
+    if unreal.EditorAssetLibrary.does_asset_exist(STAND_IN_PATH):
+        unreal.EditorAssetLibrary.delete_asset(STAND_IN_PATH)
+    mat = tools.create_asset(STAND_IN, PACKAGE, unreal.Material, unreal.MaterialFactoryNew())
+    if mat is None:
+        _write(stand_in_line("CREATE-FAILED", False))
+        return 2
+    col = mel.create_material_expression(mat, unreal.MaterialExpressionConstant3Vector, -400, 0)
+    col.set_editor_property("constant", unreal.LinearColor(*STAND_IN_COLOUR, 1.0))
+    rough = mel.create_material_expression(mat, unreal.MaterialExpressionConstant, -400, 200)
+    rough.set_editor_property("r", 0.9)
+    ok = bool(mel.connect_material_property(col, "", unreal.MaterialProperty.MP_BASE_COLOR)) and bool(
+        mel.connect_material_property(rough, "", unreal.MaterialProperty.MP_ROUGHNESS))
+    try:
+        mel.recompile_material(mat)
+    except Exception:
+        pass
+    saved = bool(unreal.EditorAssetLibrary.save_asset(STAND_IN_PATH))
+    _write(stand_in_line("MADE" if ok and saved else "INCOMPLETE", saved))
+    return 0 if ok and saved else 2
 
 
 def selftest():
@@ -159,6 +197,8 @@ def selftest():
     check("nothing in a corner (the oblong is rounded, as a sole is)", opacity_at(0.02, 0.02) == 0.0)
     check("still full a little inside the rim", abs(opacity_at(0.5, 0.5 + 0.5 * (1.0 - RIM) - 0.01) - 1.0) < 1e-9)
     check("the floor's shine is shut off, not dulled only (Specular 0: F0 0, no grazing reflection)", SPEC_DEFAULT == 0.0)
+    check("the stand-in's line names the asset the game loads", "standInMaterialPath=/Game/Ledger/M_LedgerSoleStandIn" in stand_in_line("MADE", True))
+    check("the stand-in is as dark as a sole's underside", max(STAND_IN_COLOUR) <= 0.045)
     print("make_contact_material selftest: passed=%d/%d failed=%d" % (passed, passed + failed, failed))
     return 1 if failed else 0
 

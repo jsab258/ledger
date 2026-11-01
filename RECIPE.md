@@ -115,6 +115,30 @@ What failed before this method, so it is not repeated: draping with bent elbows 
 
 ## Notebook
 
+### 1 Nov 2026, a latency fix judged by alternating runs, and set aside when it changed nothing
+- Made: one-sentence replies taken onto the early check; measured against the old path; reverted.
+- Method (setting-free):
+  - When a timing splits into two groups (here about 0.9 s and about 2 s, by which check a sentence needs), a median of 20 jumps with which group gets the eleventh line: judge by the share under the bar and the 75th and 90th, over at least 40 lines an arm.
+  - Alternate the arms in one sitting (old, new, old, new) beside the same running game, so load and the service's pace fall on both alike.
+  - Before building a lever, count which group the target cases fall in: the cases moved here were exactly the ones the fast path refuses, so moving them earlier could not help.
+  - Read the exit's own definition of the bar (here a median) before spending more tries on the tail.
+- Tools: the timing tool driving the shipped talk and voice programs beside the packaged game; real calls on the API credit.
+- Target and check: more replies heard under 2.0 s (not met: 65% against 68%).
+- Cost (hours): about 0.7; US$0.84 of credit.
+- Evidence: production/research/voice-latency/REMEASURE-2026-11-01.md.
+
+### 1 Nov 2026, a reference study of a shipped game's on-device language model, from public sources only
+- Made: a study of how one shipped game runs a small language model on the player's card, and what it means for live speech here.
+- Method (setting-free):
+  - Questions first, written before any search; primary sources read in full; every number with its link and the day it was read.
+  - When the game is not on the machine, say so and study its public record; list what could not be reached.
+  - A fresh reviewer re-reads the sources behind the key numbers; its main finding was not a wrong number but a conclusion judged against the wrong bar: always judge against the project's own recorded bars and measurements, cited by path.
+  - Check the vendor of the player's hardware against the tooling the reference uses before taking its route.
+- Tools: web reading by a helper; a second helper as the reviewer.
+- Target and check: every key number confirmed by the reviewer (59 checked, 1 wrong, 3 unsupported, all mended or kept with a reason).
+- Cost (hours): about 0.6 (helpers).
+- Evidence: production/research/study-a-inzoi/STUDY-A-2026-11-01.md and its review.
+
 ### 1 Nov 2026, a game's voice silently lost to its own disk cleanup, found and mended
 - Made: the voice model restored and registered; the game's log now states which voices came up.
 - Method (setting-free):

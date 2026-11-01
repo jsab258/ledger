@@ -31,8 +31,8 @@
     ]
    },
    "maps_note": "30 October: leather maps (tools/meshgen/blender/footwear_maps.py): UVs cut along a derby's seams, pebbled grain, stitched quarters and welt, the sole edge, scuffs; the weights unchanged (re-exported with UVs, the 30 September file kept)",
-   "contact_held": {
-    "made": "tools/meshgen/blender/sole_footprints.py on this garment's fbx (30 October: the wet floor's shine shut off under each sole, LedgerGarments.h LayContact); HELD the same evening: the ground's water is a clear coat, which no decal reaches, so the band stayed (the shoes plan, its last section); renamed back to contact to lay them",
+   "soles": {
+    "made": "tools/meshgen/blender/sole_footprints.py on this garment's fbx (30 October): each half sole's footprint, along and across the foot from the ball joint, and the sole's floor",
     "margin_cm": 1.5,
     "depth_cm": 3.0,
     "sides": [
@@ -92,7 +92,16 @@
        }
       ]
      }
-    ]
+    ],
+    "decal_held": "30 October: a decal writing no shine under each half sole (LedgerGarments.h LayContact) did nothing on the street: the ground's water is a clear coat, which no decal reaches (the shoes plan, its last section); kept, not laid",
+    "stand_in_held": {
+     "why": "1 November, his yes of 31 October (the toe band's third try): a hidden copy of each half sole that only Lumen's light sees (Affect Indirect Lighting While Hidden), its bounds enlarged past Lumen's 30 cm cull (r.Lumen.DiffuseIndirect.MeshSDF.RadiusThreshold), so the wet floor under a toe reflects the sole, not the sky",
+     "inset_cm": 0.8,
+     "height_cm": 5.0,
+     "bounds_scale": 3.0,
+     "lift_cm": 0.6,
+     "held": "1 November: no change to the band, standing on the floor or lifted 6 mm; and the band shows under a drawn, solid stand-in too, so it belongs to the wet ground's coat at any contact, not to the boots (the shoes plan, its last section); kept, not laid"
+    }
    }
   },
   {
@@ -288,8 +297,8 @@
    },
    "held_until": "until his outfit's editor walk and a fresh reviewer pass (30 October; worn with -WearHeld=TomBoots)",
    "worn_since": "2026-10-30: worn by default with his body cut under the outfit (the MetaHuman hidden-face build, tools/ue/hidden_faces.py); his page next",
-   "contact_held": {
-    "made": "tools/meshgen/blender/sole_footprints.py on this garment's fbx (30 October: the wet floor's shine shut off under each sole, LedgerGarments.h LayContact); HELD the same evening: the ground's water is a clear coat, which no decal reaches, so the band stayed (the shoes plan, its last section); renamed back to contact to lay them",
+   "soles": {
+    "made": "tools/meshgen/blender/sole_footprints.py on this garment's fbx (30 October): each half sole's footprint, along and across the foot from the ball joint, and the sole's floor",
     "margin_cm": 1.5,
     "depth_cm": 3.0,
     "sides": [
@@ -349,7 +358,16 @@
        }
       ]
      }
-    ]
+    ],
+    "decal_held": "30 October: a decal writing no shine under each half sole (LedgerGarments.h LayContact) did nothing on the street: the ground's water is a clear coat, which no decal reaches (the shoes plan, its last section); kept, not laid",
+    "stand_in_held": {
+     "why": "1 November, his yes of 31 October (the toe band's third try): a hidden copy of each half sole that only Lumen's light sees (Affect Indirect Lighting While Hidden), its bounds enlarged past Lumen's 30 cm cull (r.Lumen.DiffuseIndirect.MeshSDF.RadiusThreshold), so the wet floor under a toe reflects the sole, not the sky",
+     "inset_cm": 0.8,
+     "height_cm": 5.0,
+     "bounds_scale": 3.0,
+     "lift_cm": 0.6,
+     "held": "1 November: no change to the band, standing on the floor or lifted 6 mm; and the band shows under a drawn, solid stand-in too, so it belongs to the wet ground's coat at any contact, not to the boots (the shoes plan, its last section); kept, not laid"
+    }
    }
   }
  ]

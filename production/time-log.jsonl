@@ -315,3 +315,6 @@
 {"event": "stop", "at": "2026-10-30T18:29:00", "note": ""}
 {"event": "start", "at": "2026-11-01T20:01:56", "task": "n02 order ledger and the week's rules into RULINGS and CLAUDE", "phase": "1", "kind": "production"}
 {"event": "start", "at": "2026-11-01T20:13:54", "task": "n02-3-1-speech: The Long Pause re-measured packaged with the cast's voices", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-01T21:45:27", "note": "speech re-measured and lever 1 tried (failed, reverted); interleaved: the Pocket voices mended (broken), the garment skill (done), study A and the deep-dive (helpers), the token audit's first pass"}
+{"event": "start", "at": "2026-11-01T21:45:27", "task": "n02-3-2-toe-third: the soles' stand-ins for the light", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-01T21:54:04", "note": "the toe band's third try: failed; the cause is the ground's coat at any contact"}
