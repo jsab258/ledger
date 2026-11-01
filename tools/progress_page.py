@@ -62,9 +62,22 @@ PLAIN = {
     "f-nightly-bench": "The nightly question test measured nothing three nights running",
     "f-licences-three": "Three pieces of code whose licences are not read yet",
     "f-sash-windows": "The sash windows beyond Mickey's row",
+    "o25-2a-walk-slide": "The walk's last slide: the stop's re-step and the run's start, set aside after two tries",
+    "o25-2b-sit": "Tom's first sitting route, set aside after two tries",
+    "o26-sit-third": "The sit's third try, set aside; the face-up sitting replaced it",
+    "o27-invented-source": "Where invented details come from in replies: measured, waiting",
+    "o27-cited-replies": "Replies that cite their facts: in the game, waiting for review",
+    "o26-pocket-flat-delivery": "The cast voices' flat delivery: a choice for your ear, waiting",
+    "o25-4b-voice-frame": "The voice's frame spike, set aside after two tries; worked again as the Stutter",
+    "f-office-shadows-high": "The office's small shadows at High, set aside after two tries",
+    "o25-fallback-sim-port": "The town's rules ported into the game: the fallback work",
+    "o25-progress-page": "This page, kept current every night",
+    "o25-daily": "The daily summary and overview",
+    "o28d-camera-modes": "The camera by situation: the room row waits for you to see it; fights next",
+    "o28c-d13-asset-checks": "Automatic asset checks before reviewers: rounds per piece still to measure",
 }
 CARRIED_SECTION = "## Carried from earlier orders"
-FOLDED = ("now item", "now part of", "worked again as", "worked again in")   # carried into this week's own items, shown there
+FOLDED = ("now item", "now part of", "worked again as", "worked again in", "worked this week as", "on the waiting list as")   # carried into this week's own items or its waiting list, shown there
 
 
 def newest_order():

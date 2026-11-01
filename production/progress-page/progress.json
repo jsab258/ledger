@@ -1,5 +1,5 @@
 {
-  "updated": "Friday 30 October 2026, 20:10 (stopped for the week)",
+  "updated": "Sunday 1 November 2026, 20:10",
   "here": 1,
   "friends_eta": "around January",
   "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
@@ -237,14 +237,16 @@
       "2026-10-27",
       "2026-10-28",
       "2026-10-29",
-      "2026-10-30"
+      "2026-10-30",
+      "2026-10-31",
+      "2026-11-01"
     ],
     "gap_note": "No pictures from 9 to 20 October: the PC was off."
   },
   "studies": {
     "done": 16,
     "total": 16,
-    "order": "2026-10-25.md",
+    "order": "2026-11-02.md",
     "list": [
       {
         "n": 1,
@@ -345,6 +347,84 @@
     ]
   },
   "carried": [
+    {
+      "id": "o25-2a-walk-slide",
+      "status": "set aside",
+      "text": "The walk's last slide: the stop's re-step and the run's start, set aside after two tries",
+      "his": false
+    },
+    {
+      "id": "o25-2b-sit",
+      "status": "set aside",
+      "text": "Tom's first sitting route, set aside after two tries",
+      "his": false
+    },
+    {
+      "id": "o26-sit-third",
+      "status": "set aside",
+      "text": "The sit's third try, set aside; the face-up sitting replaced it",
+      "his": false
+    },
+    {
+      "id": "o27-invented-source",
+      "status": "carried over",
+      "text": "Where invented details come from in replies: measured, waiting",
+      "his": false
+    },
+    {
+      "id": "o27-cited-replies",
+      "status": "carried over",
+      "text": "Replies that cite their facts: in the game, waiting for review",
+      "his": false
+    },
+    {
+      "id": "o26-pocket-flat-delivery",
+      "status": "carried over",
+      "text": "The cast voices' flat delivery: a choice for your ear, waiting",
+      "his": false
+    },
+    {
+      "id": "o25-4b-voice-frame",
+      "status": "set aside",
+      "text": "The voice's frame spike, set aside after two tries; worked again as the Stutter",
+      "his": false
+    },
+    {
+      "id": "f-office-shadows-high",
+      "status": "set aside",
+      "text": "The office's small shadows at High, set aside after two tries",
+      "his": false
+    },
+    {
+      "id": "o25-fallback-sim-port",
+      "status": "carried over",
+      "text": "The town's rules ported into the game: the fallback work",
+      "his": false
+    },
+    {
+      "id": "o25-progress-page",
+      "status": "open",
+      "text": "This page, kept current every night",
+      "his": false
+    },
+    {
+      "id": "o25-daily",
+      "status": "open",
+      "text": "The daily summary and overview",
+      "his": false
+    },
+    {
+      "id": "o28d-camera-modes",
+      "status": "carried over",
+      "text": "The camera by situation: the room row waits for you to see it; fights next",
+      "his": false
+    },
+    {
+      "id": "o28c-d13-asset-checks",
+      "status": "carried over",
+      "text": "Automatic asset checks before reviewers: rounds per piece still to measure",
+      "his": false
+    },
     {
       "id": "shop-empty-unit",
       "status": "carried over",

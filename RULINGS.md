@@ -14,7 +14,21 @@ His binding rulings; the later stands; canon.md outranks them.
 - 4 Oct: The friends' build: his PC and own account, a shortcut, his key capped at five dollars an evening, no relay; the twenty basics; nothing a friend sees unfinished; Sheila's face whole when she talks; no debug text.
 - 29 Sep: No new systems until the slice is worth playing; what was ruled for after the route (townspeople, microphone, the ending's signs, regulars) and the sweep's larger items wait for a place in PLAN.md.
 - 13 Oct: RECIPE.md is a notebook, not a project; his rule in full is in CLAUDE.md (Records), its one home.
-- 25 Oct: Phase 1 is open, not closed: it failed its first exit check on 22 October (production/audits/phase1-exit/CLOSE-2026-10-22.md); fresh reviewers re-run its exit check once the walk, the clothes and speech pass. Phase 2 waits until phase 1 passes; the street's shops stay (22 Oct: Rita's front is the shops' sample). His order of 25 October runs to 2 November 13:00 (production/orders/2026-10-25.md). 28 Oct: waiting on him or a build, phase 3's simulation port, phase 5's research; never idle till he says stop; no new shops.
+- 25 Oct: Phase 1 is open, not closed: it failed its first exit check on 22 October (production/audits/phase1-exit/CLOSE-2026-10-22.md); fresh reviewers re-run its exit check once the walk, the clothes and speech pass. Phase 2 waits until phase 1 passes; the street's shops stay (22 Oct: Rita's front is the shops' sample). His order of 2 November runs to 9 November 13:00 (production/orders/2026-11-02.md), the order of 25 October's open items carried into it. 28 Oct: waiting on him or a build, phase 3's simulation port, phase 5's research; never idle till he says stop; no new shops.
+- 1 Nov, how every week runs (his order of 2 November, section 2; never restated in an order; where an earlier line here says otherwise, these stand):
+  1. Nothing new between Mondays unless something is broken; anything else that comes up, from him, the advisor or the session, goes on the waiting list for the next order, never into the running week.
+  2. Every piece changed in a day is walked by the AI tester in that night's packaged build; a piece passes only there, offline checks are screens.
+  3. Decide it yourself (30 Oct, below) whatever canon, his rulings, the research or the period answer; ask him only for money, his sign-in or hands, licences outside the list, canon, story or scope, and whole-frame or whole-person looks at their gate.
+  4. Two tries means two; a third needs his yes first, asked once with its reason.
+  5. Reuse first starts at home (the garment list, the asset catalogue, the game), then Epic's MetaHuman clothing, then outside; anything fetched is looked at before it is used.
+  6. From a reference game copy the method; take its numbers only after checking they fit our kind of game.
+  7. Computer use only in Marvelous, by the session; helpers never send clicks or keys; the one UI Automation use is the bridge's menu item.
+  8. Updates in the chat, plain, at most ten lines, no files, no promised times; a page's answers read before asking about it; never idle while the goal runs.
+  9. The time log counts helpers' time against their item; the progress page's numbers are re-measured or carry their date.
+  10. Monday's overview opens with the week's visible change, before and after.
+  11. His orders stay small: about 1,200 words at most, rules referenced and not restated, every item with its estimated cost, the total within the week; what does not fit waits.
+  12. API use: under Sources, licences and money (1 Nov).
+- 1 Nov: The friends' evening stays after the whole street.
 - 28 Oct: Any message asking him to tap, click or answer ends with its page's full link, or says plainly there is none; results go on his page as they land.
 - 30 Oct: Before asking him about a page, its answers are read first (ArtifactData), not left for the night's read-back.
 - 30 Oct (replacing 29 Oct's): Decide it yourself, record it in DECISIONS.md and carry on whenever the answer follows from canon, his rulings, the research or the period references, or whenever you would recommend one option and the other differs only in detail: cuts, colours, fits, which reference or method to follow, and retries within the two-tries rule. Ask him only for: money or purchases; anything needing his sign-in or his hands; licences outside the list; canon, story or scope changes; and how a whole street frame or a person looks at its gate. Anything decided that he will see in the game gets one line in the day's summary, so he can overturn it. Before any question reaches him, check it against this ruling; if it fails, decide it. The rule on deleting (Disk, git and backup) still settles deletes.
@@ -40,7 +54,7 @@ His binding rulings; the later stands; canon.md outranks them.
 - 25 Oct: The AAA study runs in full (sixteen studies) beside production; no recordings; what shows only in play comes from public sources or is a blind spot. Sonnet helpers extract, Opus synthesises and reviews, numbers to the items needing them; 28 Oct: every extract from either game is capped in size, written only above the drive's floor, and deleted once its numbers are recorded; Mafia's missing numbers are fetched only when an item needs one.
 - 16 Sep: Purchases and accounts are his alone; nothing bought without his yes, none for the street or cars.
 - 29 Sep: No paid voice service.
-- 29 Sep: No API calls in development. 3 Oct: LEDGER's key serves his play, measurement runs ($1 a day in all, each logged) and his friends' evenings ($5 an evening); nothing else.
+- 1 Nov (his order of 2 November, rule 12, replacing 29 Sep's and 3 Oct's; corrected by him the same evening): his plan's monthly API credit ($200, gone at the end of each month) pays for the game's own calls (his play, the measurement runs, the friends' evenings) and for bulk text work as scripted API calls on the cheapest model that passes, in batches where that works. Never beyond the credit: no bought credits, no automatic reload, a spend limit on LEDGER's workspace at the credit. The day's ceiling is what remains of the month's credit divided by the days left in its billing month, so the credit is used rather than lost (about $20 a day until about 11 November, when this month's credit expires, then about $6.50). Each day's spend logged; the key never printed, copied or committed. If the credit does not reach LEDGER's key, he is told in one line.
 - 24 Sep, provisional: sold once; live calls via our server, the key never shipped; each copy's allowance above a playthrough's measured cost, then a spending stop and written lines; an own-key mode later.
 - 28 Sep: The relay, when friends need it, runs on his Hetzner server.
 
@@ -94,6 +108,7 @@ His binding rulings; the later stands; canon.md outranks them.
 - 2 Oct: Stopped: procedural tailoring, fitting every garment to six bodies; production/art/clothing/RUBRIC.md is the bar when tailoring resumes; clothing work never opens Unreal. 8 Oct: no more draping of tailored jackets in Blender (drafting by code works); an outfit stays an outfit until the character is assembled (saving bakes it). Garment reviews first count body points showing through; every target is tested against its body or model and its source before building.
 - 30 Sep: Game clothes are skinned meshes, only loose parts simulated; shoulders judged in Unreal.
 - 29 Sep: Clothes on people are his to approve, in the game's camera.
+- 31 Oct: Marvelous stays month to month: Tom's four pieces (jacket, jumper, jeans, boots) before the month ends, then the Hook's base garment list by need; everything exported to F: before any month ends. His three yeses: the collar's third try, the toe band's third try, and Epic's boots from Fab (he downloads them, sent the exact link and steps; while he is signed in, Epic's Oxfords, Chelsea boots and loafers for the cast).
 - 30 Oct: Tom's shoes: no to the scanned shoe (its square toe is late-1990s fashion and his foot came through it); Tom wears the lace-up boots Ron wears in the game, black, with dark laces and sole, under his jeans. The scan's files stay on F:, out of the game.
 
 ## People and the street's life
@@ -136,6 +151,7 @@ His binding rulings; the later stands; canon.md outranks them.
 
 ## What the game is
 
+- 30 Oct: Tom rises in position, never in numbers.
 - 28 Oct, for the release:
   - One full release late in 2027, not early access; a friends' build at the end of every phase from phase 4 on, on his PC as CHARTER.md says.
   - Length: 15 to 20 hours.

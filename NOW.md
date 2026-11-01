@@ -1,24 +1,21 @@
-GOAL (to Mon 2 Nov 13:00): his order of 25 October item by item, six studies beside it, every status in production/orders/2026-10-25.md. Through the 13:00 reset (his word, 26 Oct).
+GOAL (to Mon 9 Nov 13:00): his order of 2 November, item by item (production/orders/2026-11-02.md); anything new goes on its waiting list.
 
 Phase 0 done (production/audits/phase0-exit/BUNDLE.md).
 
 ## Phase 1: Prove the bottlenecks (open, not closed)
 
-Failed its exit on 22 Oct (production/audits/phase1-exit/CLOSE-2026-10-22.md); re-run once walk, clothes and speech pass.
+Exit re-check aimed for 9 Nov; what cannot make it is told to him by Wednesday.
 
-- [x] 1. Health check; the order ledger.
-- [x] 2. The walk: Epic's, Tom's MetaHuman, packaged; tester's route 15 of 15. Sit set aside.
-- [ ] 3. Clothes (C): Tom dressed; editor gate passed; packaged tomorrow. Collar, toe shape, toe band: third tries asked.
-- [ ] 4. Speech: faster first sentence, 31 of 42 run, still fails (FastFirst.cs).
-- [ ] 5. Look (D11): walls, office, wet ground, chandler's wear pass; its joinery held.
-- [ ] 6. Phase 1's exit re-run; phase 2?
-- Also: sitting's face hold passes the editor; back door's third try tonight.
+- [ ] 1. Speech: re-measured packaged with the cast's voices, then the levers (n02-3-1-speech).
+- [ ] 2. Tom's four pieces passed packaged; the garment skill, the deep-dive, his three yeses (n02-3-2-*, n02-tom-*).
+- [ ] 3. Sitting, Mickey's office, the Stutter passed packaged (n02-3-3-*).
+- [ ] 4. The exit re-check, its result on his page (n02-3-4-exit).
 
-## Studies this week (aaa-reference/STUDY-PLAN.md)
+## Beside it
 
-Done 16 of 16.
+- [ ] The corner (n02-4-*); study A (study-a-inzoi); efficiency: the token audit by Wednesday (n02-6-*); the 2027 line: unit costs by Wednesday (n02-7-*); study C (study-17).
 
-STATE (30 Oct 20:10): stopped for the week, his word; next order Monday after 13:00.
+STATE (1 Nov 20:05): the order saved, its rules recorded; speech next.
 
 ## Handovers
 

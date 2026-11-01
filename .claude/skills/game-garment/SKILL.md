@@ -1,6 +1,6 @@
 ---
 name: game-garment
-description: Make one game-ready garment for a LEDGER MetaHuman the professional way (Marvelous Designer pattern and drape, detail in Blender, the bake chain, skinned in Unreal), each step checked against Mafia's numbers and the Hook sheet. Use for any new garment or when rebuilding part of one (cuffs, hems, collars), from Tom's jacket on.
+description: The one skill for LEDGER clothing. Make a game-ready garment for a LEDGER MetaHuman the professional way (Marvelous Designer pattern and drape, detail in Blender, the bake chain, skinned in Unreal), each step checked against the reference numbers and the Hook sheet. Use for any new garment or outfit, rebuilding part of one (cuffs, hems, collars, toes), fixing a fault seen in the game, refitting a garment to another body, material variants for the crowd, checking a garment against RUBRIC.md before the packaged walk, planning the Hook's garment list, and exporting everything from Marvelous before the subscription month ends.
 ---
 
 # Game garment
@@ -9,7 +9,17 @@ Jafar's order of 28 October 2026 (C6, C7): Mafia's own art page says its clothes
 
 **Reference first** (RULINGS 28 Oct): every target below starts from Mafia's or Kingdom Come II's number; where none exists the step says "none found".
 
-**Two tries, then research**, per step; the bake route for cuffs (his page, 28 Oct) is the fallback only after the Marvelous rib fails twice (his order C9).
+**Two tries, then ask**, per step: after two failed tries, research and write what failed and why; a third try needs Jafar's yes. The bake route for cuffs (his page, 28 Oct) is the fallback only after the Marvelous rib fails twice (his order C9).
+
+**Always** (his rulings; none of these bends):
+- Check what is already in the game and on F: (LedgerTools\garments, production/specs/garments.json) before making or fetching anything; reuse or refit first.
+- Accurate to Britain in 1990; plain everyday makes, every one fictional; no real brand mark anywhere.
+- Nothing of CLO's ships or enters git: Marvelous's avatars, sample garments, patterns and trims stay on this PC. Nothing of Mafia's or Kingdom Come's either: their published method, never their files.
+- Computer use is for Marvelous only, and only the builder uses it; helpers never click.
+- A garment passes only in the packaged game, walked by the tester; offline checks are necessary, never enough.
+- Whole-person looks go to Jafar at their checkpoint (see "Checkpoints and measures"); a single piece does not.
+
+**Requests this covers**, for example: "make Ron's plain outfit"; "fix Tom's collar so his throat doesn't show"; "refit Tom's jumper to Darren"; "drape the jeans so the hem rests on the boots"; "three material variants of the zip jacket for the crowd"; "check this garment against the rubric before the walk"; "draft a 1990 donkey jacket at Ron's measures"; "list the Hook's basic garments by need, with hours"; "export every finished garment before the month ends". Steps 1 to 9 below make or remake a garment; a refit or variant reruns only the steps it changes.
 
 ## 1. Reference and pattern
 
@@ -23,8 +33,9 @@ Jafar's order of 28 October 2026 (C6, C7): Mafia's own art page says its clothes
 
 ## 3. Drape
 
-- The bridge job (Jafar opens Marvelous and clicks LEDGER bridge; ask with the page's link, RULINGS 28 Oct). Particle distance 20 mm while building, then 10 mm on the body and 5 to 6 mm on bands, cuffs, collar and sleeve ends; Fitting quality last.
+- The bridge job: `python tools/md-bridge/md_job.py JOB.py` drops it in LedgerTools\md-jobs and waits; if the bridge's heartbeat is stale it starts the bridge itself (tools/md-bridge/start_bridge.ps1, his ruling of 30 Oct), so nobody clicks. Marvelous must be open; it is closed for game builds. Particle distance 20 mm while building, then 10 mm on the body and 5 to 6 mm on bands, cuffs, collar and sleeve ends; Fitting quality last.
 - Seams welded with weldType FULLY_WELDED (2) when the export needs one mesh; never DEFAULT_WELDED (1, deprecated).
+- Marvelous's simulation differs run to run. Keep each job file with its drape number (drape 25a) and its settings in the BAKE-PLAN; judge a change by running the old and the new settings twice each and comparing the measures below, never one lucky run against another. Keep the best drape's exported OBJ: a later run may not reproduce it.
 - **Check:** no edge over 1.2 times its pattern length outside seams (the project's mark, anchored on Marvelous's Fit Maps scale, red at 120%); body through cloth 0 beyond 1 mm; cloth inside the body 0 beyond the skin offset; the silhouette against the reference.
 
 ## 4. Rib cuffs, bands and hems (Marvelous's elastic)
@@ -64,3 +75,9 @@ Jafar's order of 28 October 2026 (C6, C7): Mafia's own art page says its clothes
 
 - DECISIONS.md one line per material choice; the garment's BAKE-PLAN with each try's numbers; RECIPE.md's clothing chapter gains what this garment taught (setting-free).
 - Nothing of Mafia's or CLO's in git or in any shipped file (the licence allowlist's never-ship list: Marvelous's own avatars, sample garments, patterns and trims; zipper parts read as trims); Marvelous closed after each garment session (it holds 6 GB of the card).
+
+## Checkpoints and measures
+
+- **Jafar sees** each whole-person look (all of one character's pieces together, in the packaged game's camera at talk and street distance) before it is called done, and any third try. He is not an artist: show pictures side by side with the reference, say in one line what changed, and ask one question.
+- **Fresh reviewers** judge against RUBRIC.md line by line, pass or fail with the frame; the tester walks the packaged game last.
+- **Measures**, one line per garment in production/art/clothing/LOG.md: hours including helpers' time, tries per step, faults first found in the packaged game, whether reviewers passed it first time, and Jafar's verdict. Read the last lines of the log before planning a new garment; the pattern of faults says which checks to add.
