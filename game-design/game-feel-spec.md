@@ -88,6 +88,19 @@ This is where the biggest cheap win in the whole document lives.
   street softens behind the person you are talking to. Cheap, and it does
   more for "cinematic" than any post effect.
 
+**The camera by situation (his ruling of 28 October 2026; added 2 November
+2026, his order of 2 November, n02-7-4-design-docs).** The street camera at
+the Between height and an 86-degree lens, pulled back to 3.1 m so Tom's feet
+are in frame; and Mafia's idea kept, the camera changing by situation:
+closer for talk and low rooms, wider for fights so the other man's feet and
+the people watching are seen (RULINGS.md, The look and the street; DECISIONS.md,
+2026-10-28 19:04 and 20:15). Each situation is one row of one spec read by
+the existing arm, not a new camera system (Study 9, For LEDGER 2): the rows
+and their numbers live in production/specs/camera.json (street, talk, run
+and room so far), and each is shown to him in the game before it is kept
+(his order of 28 October, o28d-camera-modes). Fights are the next row:
+game-design/combat-design.md, "Since 12 October", "The fight camera".
+
 ## 4. Audio feedback **[NOW]**
 
 - **Footsteps by surface** (asphalt / wet asphalt / wood / gravel / interior

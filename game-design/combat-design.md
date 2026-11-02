@@ -1,4 +1,4 @@
-<!-- Imported 21 October 2026 from Jafar's Claude doc "LEDGER Combat: Final State" (12 October 2026, revision 12), https://claude.ai/code/artifact/1320a41f-aa3b-44d2-9e74-4713a3716a15, as his order of 21 October asks. His text unchanged but for one word: "Stanley knife" in the carried-weapons tier reads "utility knife" here, because canon makes every make fictional (the cloud's note of 13 October). It replaces game-design/combat-spec.md, marked replaced at its top. -->
+<!-- Imported 21 October 2026 from Jafar's Claude doc "LEDGER Combat: Final State" (12 October 2026, revision 12), https://claude.ai/code/artifact/1320a41f-aa3b-44d2-9e74-4713a3716a15, as his order of 21 October asks. His text unchanged but for one word: "Stanley knife" in the carried-weapons tier reads "utility knife" here, because canon makes every make fictional (the cloud's note of 13 October). It replaces game-design/combat-spec.md, marked replaced at its top. The last section, "Since 12 October", was added 2 November 2026 for his order of 2 November (item n02-7-4-design-docs); his text above it is unchanged. -->
 
 # LEDGER Combat: Final State
 
@@ -158,3 +158,34 @@ The July spec's consequences survive; its feel, its scope and its setting do not
 | Fighting only had to not look broken (D24) | Fighting must look and feel AAA |
 | Whether Tom can die was not settled | Tom cannot die |
 | Unity and capsules | Unreal, MetaHumans and the game camera |
+
+## Since 12 October (added 2 November 2026)
+
+His later rulings and Studies 14, 9 and 17 fill four parts of the design above. His text above stays as he wrote it; where it differs, the later ruling stands (RULINGS.md: "the later stands"). Design only, no build work (his order of 2 November, n02-7-4-design-docs). Lines marked *inferred here* follow from the cited lines but are not themselves ruled.
+
+### Knock-outs, and the fall that can kill
+
+- **Fists knock a man out and never kill on their own; a fall against a kerb, a wall or a step after a blow can kill, rarely, and the town treats it as a killing** (his ruling of 30 October: RULINGS.md, What the game is; DECISIONS.md, 2026-10-30 09:30). It answers Study 14's question for him (For LEDGER 14: whether fists can kill).
+- **Down from fists means out, not dead.** "Someone goes down" (How fights end) is a knock-out when fists did it. KCD2 works the same way: its punch, hook, kick, throw and push are flagged unable to kill, one unarmed finisher excepted, and its quest knock-out lasts 10 s (Study 14, Before the blows). Its method is copied; its 10 s is taken only once checked to fit LEDGER (RULINGS.md, 1 November, rule 6).
+- **The fall is the one way a fist fight ends in a death:** a blow first (rung 5), then a fall against a kerb, a wall or a step. From that moment it is rung 8, a body, and the aftermath as built carries it (Core/Homicide.cs; The aftermath, above). So a fight beside a kerb, a wall or a step carries a small, real risk, and the cost comes afterwards, as the 12 October ruling wants (*inferred here*).
+- **Never Tom:** he cannot die (12 October). Whether the fall applies to fights Tom is not in ("Other people fight too", above) is open; and whether a shove (rung 4) into a kerb can kill is open (the fresh review of 2 November).
+- **Open:** how rare (no reference found: KCD2's fists cannot kill at all, and Mafia's combat files were not reached, Study 14); whether the quay edge (The street is a weapon) counts, since the ruling names a kerb, a wall or a step; whether a man who is down can be finished with fists alone, which "never kill on their own" suggests not (*inferred here*).
+
+### The fight camera
+
+- **For fights the camera widens, so the other man's feet and the people watching are seen** (his camera pick of 28 October: RULINGS.md, The look and the street; DECISIONS.md, 2026-10-28 19:04). It is later than "The camera closes in a little" (How a fight feels), so it stands.
+- **One more row, next.** Each situation is a row of one camera spec read by the existing arm, not a new camera system and not a combat mode (Study 9, For LEDGER 2). Street, talk, run and room have their rows in production/specs/camera.json; fights are the next row (his order of 2 November, n02-7-4; camera.json, to_come).
+- **No reference width.** Mafia's fight layer only lowers its camera 15 cm over 0.4 s and widens nothing (Study 9, The on-foot camera), so the width is set from his framing and shown to him in the game before it is kept (his order of 28 October, o28d-camera-modes).
+- **A first target** (*inferred here*, unverified): both men's feet and a ring of about 3 m round them in frame, since KCD2's watchers keep 3 m (Study 14, The street's response); KCD2's number not yet checked against our narrower street and crowd (rule 6's fit check, open).
+- **Contact still lands inside the wider row:** a brief close-in of about 0.8 s and a shake from the swing (Study 14, For LEDGER 4, from Mafia's melee camera held 0.8 s); this is what remains of "closes in a little" (*inferred here*). The shake obeys Reduce motion (Study 9, For LEDGER 6).
+
+### The street as a weapon (Study 17)
+
+- **Not Yakuza's frequent random fights** (Study 17, For LEDGER 7, on its finding that Yakuza's random thug fights are frequent, I). The ladder's "most confrontations should end on rungs 1 to 4" stands.
+- **More of the street to use** (Study 17, For LEDGER 7, from Yakuza 0's street objects, finishers and alley moves): kerbs join the places; bins, crates, signs and bicycles join the things at hand, within the content rule as above.
+- **The places, not the finishers.** Yakuza's finishers (a face into a wall or the pavement, through a shop window, off a bridge) are not taken as moves: finishing clips are ignored (Study 14, For LEDGER 13) and canon allows no cruelty as spectacle. Their surfaces become paired moves fitted by height, as Study 14 sets out (For LEDGER 9) (*inferred here*).
+- **Kerbs, walls and steps** are also where the rare killing fall happens (30 October, above).
+
+### Tom's rise
+
+- **Tom rises in position, never in numbers** (his ruling of 30 October: RULINGS.md, What the game is; Study 17, For LEDGER 10). In a fight that is "Tom, the crew and the odds" as written: he never gets better at fighting; his men, his weapons and his name change the odds. The ruling in full: game-design/agency-model.md, "Tom's rise".

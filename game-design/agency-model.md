@@ -5,6 +5,8 @@
 > with the roadmap is out of date about what got built, not about what
 > was intended.
 
+> **Added 2 November 2026** (his order of 2 November, n02-7-4-design-docs): two sections at the end, "Tom's rise" (his ruling of 30 October) and "Study 17's design inputs". The July text is unchanged. Where it differs from his rulings, RULINGS.md wins; lines marked *inferred here* are not ruled and settle nothing: where one meets the July text, both stand and the difference is listed as open (the fresh review of 2 November).
+
 Direction set by the player 2026-07-26 in discussion. This supersedes any
 implicit scoping in the founding doc and drives `roadmap.md` from here on.
 
@@ -275,3 +277,33 @@ merely competitive but categorically different, and the model scored it
 nowhere. The router is the first payment on it. It is worth adding as a
 row the next time this table is revised — and it is the row where our
 target should be 100, because nobody else can reach it.
+
+## Tom's rise (his ruling of 30 October 2026; added 2 November 2026)
+
+**Tom rises in position, never in numbers** (RULINGS.md, What the game is, 30 October). In his words in Study 17: "He starts with nothing and nobody; by the end people step aside" (production/research/aaa-reference/studies/17-yakuza-shenmue.md, For LEDGER 10). Lines marked *inferred here* follow from the cited lines but are not themselves ruled.
+
+What his position is made of, from canon and rulings already in force:
+
+- **What the town calls him:** the new owner, then Nowak, then Tom, then Tommy; the gate is knowing, not liking; Sheila the one exception (canon.md, Premise and cast). The story's spine: "A stranger inherits a position, not a business" (game-design/story-outline-2026-09-28.md, approved 28 September).
+- **Who stands with him:** his power grows through crew, weapons and reputation; he does not get better at fighting (RULINGS.md, 12 October, combat; game-design/combat-design.md, "Tom, the crew and the odds").
+- **How people behave towards him:** by the end, people step aside (Study 17, For LEDGER 10).
+- **How he reads it:** he sees his own position, never other minds; no reputation numbers; no stats; difficulty only as assists (RULINGS.md, What the game is: D33, D34, D11).
+
+What it rules out (*inferred here*): experience points, levels, skill or perk trees, stat bars and reputation meters, shown or earned. The simulation's own values (standing, loyalty, fear in the Core) stay inside it, read by the player only through people (D33, D34).
+
+Open, from the fresh review of 2 November: items 6 and 8 below meet July's refused minigames and its grind test, and July's economy simulated end to end meets canon D24 (not an economy simulation); neither is settled here. Open (*inferred here*): "Character competence" above (July: tracked per domain, unlocking approaches, never numbers that rise) grows Tom's own ability rather than his position; whether it survives the ruling, or becomes approaches opened by who will deal with him, is not settled.
+
+## Study 17's design inputs (added 2 November 2026)
+
+Jafar's Study 17, Yakuza 0 and Shenmue (production/research/aaa-reference/studies/17-yakuza-shenmue.md): his For LEDGER items as "design inputs for the phases 6 to 10 plan ... no build work from them yet". Item 7, the street as a weapon, is in game-design/combat-design.md ("Since 12 October"); item 10 is "Tom's rise" above. The third column holds the rulings each sits within; notes there marked *inferred here* are not ruled.
+
+| Item | Design input (his) | Rests on (Study 17's finding) | Within |
+|---|---|---|---|
+| 1 | Room enough: the Hook plus the docks can carry 15 to 20 hours if packed densely. | Yakuza 0: about 30 h of story in two districts each about 8 min' walk across (I); Shenmue: 20 to 40 h in a few streets and a harbour. | RULINGS.md, 28 October: 15 to 20 hours; the Hook plus the docks, more districts after release. |
+| 2 | An hour budget by activity, as Suzuki planned his 45 hours (film, fighting, searching, moving and talking, training, other), set for LEDGER's 15 to 20. | Suzuki planned Shenmue's 45 h in 11 chapters. | Film stays few short skippable scenes (RULINGS.md, 23 September). *Inferred here:* training gets no hours, since Tom does not get better at fighting (12 October) and rises never in numbers (30 October). |
+| 3 | Side stories found on foot, no markers: about 25 to 40 (scaled from Yakuza; U), many light in tone against the main story. | Yakuza 0's side stories are stumbled into on foot, no markers early on, most comic; about 100 (U). | "Jobs, no waypoints" (RULINGS.md, 23 September); the 25 to 40 wait on his list (order of 2 November, n02-9-side-stories). *Inferred here:* "light" read within canon's tone, dry British wit used sparingly so the noir holds; words carry "where", as Study 16 found. |
+| 4 | Far more named residents than the 30 regulars, each with a daily routine and one private secret; AI writes these cheaply; the cost is faces and clothes, so a variety kit for both; routines carry occupancy limits. | Shenmue: over 300 named characters, each with a routine and backstory; every warehouse worker jammed in one breakfast shop until a door and a limit were added. | The thirty regulars stand as written (RULINGS.md, 30 September); unprompted lines written ahead and checked once (24 September). *Inferred here:* the limits are Study 1's seats with a cap (What to adopt, 3). |
+| 5 | Never force waiting: keep "wait a while"; appointments with a window, not a minute. | Shenmue's most criticised side: waiting for set hours with no way to skip, nightly trips home. | The wait as designed: game-design/waiting-2026-09-29.md. |
+| 6 | A legitimate docks job as an early daily loop and cover, with a small daily competition. | Shenmue's part-time docks job: crates by forklift, forklift races each morning. | *Inferred here:* the competition carries no stake (canon.md, the content rule). |
+| 8 | "Empire as a management game on the street, like Yakuza's real-estate business" (his words; the rest of his line cut under canon's content rule). | Yakuza 0's two business games, called the best part by reviewers. | Canon D24: not an economy simulation; what does not feed perception, memory, gossip or consequence gets the smallest budget. *Inferred here:* run through people on the street, every number a person's circumstance (this document, "Built against this model"). |
+| 9 | Density up and back, not out: upstairs flats, back rooms, yards, alleys, cellars; the districts after release reuse the Hook's kit, as Kamurocho was reused. | Kamurocho reused for about 20 years; a compact, dense district stays memorable; density from going up. | Phase 5 built by generation from kits (RULINGS.md, 25 October). *Inferred here:* Study 4 keeps interiors enterable only where the story goes (For LEDGER 5); the two meet where a side story goes upstairs or out back. |

@@ -2,25 +2,24 @@
 
 The one file a fresh session starts from (his order of 2 November, 6.2: start each day fresh from a handover file, since a long session's history is about half of each step's cost, production/research/token-audit). Rewritten, not appended, at the end of each working stretch. Rules are CLAUDE.md's and RULINGS.md's; the phase's items are NOW.md's; this file holds only what is in flight.
 
-**As of:** Monday 2 November 2026, 12:05 (Swiss time). Rewrite every line below at each stop.
+**As of:** Monday 2 November 2026, 14:36 (Swiss time). Rewrite every line below at each stop.
 
 **The goal:** his order of 2 November (production/orders/2026-11-02.md), item by item, until 13:00 Monday 9 November or until he says stop.
 
 **In flight (check each before acting):**
-- Speech (n02-3-1): inside the packaged game the real talk was 2.40 s (Sonnet 5 on every line: an empty evidence record counted as real conversation). Try 2 (evidence counts only when it carries something) gave 1.86 s, 16 of 30 under 2.0 s, but 5 of 23 replies fell back; the escalation (small talk's second draft on the better model) is measured as run D (F:/LedgerTools/latency/askreal-2026-11-02d). Record: production/research/voice-latency/IN-GAME-2026-11-02.md. Not pushed until ci-checks pass.
-- The collar's third try (n02-tom): the head map cannot fix it (skin above the collar crosses it); the corrective shape is next: a helper builds tools/meshgen/blender/collar_corrective.py and v35-corrective (brief in the session's scratchpad); the game side is written (LedgerGarments.h DriveCorrectives, import_garments.py "correctives") but not compiled.
-- Sitting (n02-3-3): the face hold made the default (SliceCharacter.cpp, -NoTomHeadUp); not compiled; the packaged sit walk follows (tools/route_walk.py --sit).
-- Unit costs (n02-7-1): a helper's draft at production/research/unit-costs/; a fresh review before Wednesday.
-- The fresh-session test (6.2): a one-time scheduled task at 07:50, read-only; its result decides 6.2.
+- Tonight's packaged walk (01:30, runner packages wip 3e6007d56 first) carries: the speakers' fidgets (Epic's breaks v01 to v04, additive, on the arms; PersonAnim.cpp), the clearance test (CrimeProbe.cpp StandBlockedAt, 30 cm), Ron's rank spot at x 8.7, the moustache strands kept to the face's second level, Tom's boots v3, the motion lines (LedgerMotion) and break lines (LedgerBreak). Read its log for LedgerStand, LedgerMotion and the moustache.
+- The clothing deep-dive's trial 2 (Marvelous's own DNA import of Tom): his rig files exported (F:/LedgerTools/bodies/MH_TomL1/dna); the window step File > Import (Add) > DNA waits for 10 minutes of his PC idle (computer use, Marvelous only); then the bridge job tools/md-bridge/jobs/dna_avatar_export.py and the comparison (the scratchpad's avatar_compare.py against F:/LedgerTools/garments/tom/avatar-check.obj; judge as DEEP-DIVE-2026-11-01.md's trial 2 says).
+- Helpers: study C and the design rulings (n02-7-4, study-17); the packaged-walk skill (n02-6-5), with its own reviewer.
+- Walk off, never vanish (the corner's step 7): research first how Epic's MetaHuman face follows the body (DECISIONS 2 November 14:34).
 
-**Uncommitted work:** none (state each time: files changed and not yet pushed, and why).
+**Uncommitted work:** production/art/corner/BASELINE-2026-11-02.md, production/research/token-audit/READING-2026-11-02.md, the order's two closed items, DECISIONS lines, tools/md-bridge/jobs/dna_avatar_export.py: records waiting for the next code commit (no notes-only commits).
 
-**Tries used:** speech 2 of 2 (passed on one run); the collar 3 of 3, a fourth his yes of 11:47 (one, about 2 hours); the pale line's halo 2 of 2 (settled); the Stutter none needed.
+**Tries used:** the fidgets' shop-dummy arms 2 of 2 (passed); Sheila's hand in her hip 1 of 2 (v06 left out, to tonight's walk); Ron's moustache 1 of 2 (5 of 169 frames brown; the second try, his groom colours set at build, waits for the packaged walk); Tom's boots: the toe's third try under his yes (passed the editor gate), a fourth (the sole) asked on his page.
 
-**Reviews:** the gate skill's (13 fixes applied); the unit costs' (13 applied, done); the sit film's (bench fixed, five faults open, DECISIONS 2 November).
+**Reviews:** the idle films' six (F:/LedgerTools/tmp/idle-film, idle-film-4); the boots' two (F:/LedgerTools/gate/new/tom-outfit/2026-11-02-toe3); the build-speed research's note not yet reviewed.
 
-**Next, in order:** compile both targets; the Stutter re-measured packaged with the Pocket voices (tools/p1-packaged.ps1 -Only day-walk -Voice pocket); Mickey's office's packaged pictures; the corner's baseline and people; the token audit for Wednesday.
+**Next, in order:** the DNA trial when idle; the helpers' results checked; tomorrow morning the packaged walk read (sit, office, Stutter, speech's second run, the corner's people), Mickey's office's packaged pictures, the moustache's second try if it shows; the corner's walk-off research; the midweek page (Wednesday 4 November).
 
-**Waiting on him (his page, https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8):** Epic's footwear from Fab; one more try at the pale line; stopping the stuck nightly read-back session.
+**Waiting on him (his page, https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8):** 17 GB on C: for faster builds; a fourth try at Tom's boots (the sole).
 
-**Do not:** start local Unreal 01:15 to 04:30; run two Unreal jobs at once; tail Saved/route-checks.jsonl; print or copy any key; click anything outside Marvelous.
+**Do not:** start local Unreal 01:15 to 04:30; run two Unreal jobs at once; tail Saved/route-checks.jsonl; print or copy any key; click anything outside Marvelous; leave Marvelous open over the night build (it holds 6 GB of the card).
