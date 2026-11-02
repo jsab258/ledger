@@ -44,6 +44,13 @@ EPIC_IDLE = "/Game/Characters/UEFN_Mannequin/Animations/Interactions/Bench/M_int
 EPIC_MESH = "/Game/Characters/UEFN_Mannequin/Meshes/SKM_UEFN_Mannequin"
 EPIC_RTG = "/Game/MetaHumans/Common/Common/Rigs/RTG_UEFN_to_Metahuman_nrw"
 EPIC_OUT = "bench_idle"
+# AND EPIC'S STANDING IDLE WITH ITS FIDGETS (2 November, the corner's people, "no frozen poses": the street's speakers
+# loop one retargeted idle and the tester calls them stiff; Kingdom Come II and Mafia vary idles with breaks): the
+# sample's standing loop and its idle breaks, carried the same way into /Game/Ledger/Anim/Idle as A_<name>_MH.
+EPIC_IDLE_DIR = "/Game/Characters/UEFN_Mannequin/Animations/Idle/"
+EPIC_STANDING = [("M_Neutral_Stand_Idle_Loop", "stand_idle")] + [
+    ("M_Neutral_Stand_Idle_Break_v%02d" % n, "stand_break_v%02d" % n) for n in (1, 2, 3, 4, 6)]
+IDLE_OUT_DIR = "/Game/Ledger/Anim/Idle"
 
 
 # Which Mixamo character's skeleton each clip moves (tools/meshgen/blender/sitting_clips.py CLIPS).
@@ -299,6 +306,8 @@ def main():
             else:
                 notes.append("%s:not-made" % clip)
     notes.append(epic_bench_idle(unreal, lib))
+    for src_leaf, name in EPIC_STANDING:
+        notes.append(epic_clip(unreal, lib, EPIC_IDLE_DIR + src_leaf, name, IDLE_OUT_DIR))
     lib.save_directory(WORK_DIR, only_if_is_dirty=False, recursive=True)
     if lib.does_directory_exist(OUT_DIR):
         lib.save_directory(OUT_DIR, only_if_is_dirty=False, recursive=True)
@@ -339,6 +348,38 @@ def epic_bench_idle(unreal, lib):
         return "bench_idle:RAISED-%s" % str(e)[:60].replace(" ", "~")
 
 
+def epic_clip(unreal, lib, src_path, name, out_dir):
+    """One of Epic's sample clips onto the cast's body skeleton as <out_dir>/A_<name>_MH; one note token, never raises."""
+    try:
+        seq, src, tgt, rtg = (unreal.load_asset(p) for p in (src_path, EPIC_MESH, TARGET_MESH, EPIC_RTG))
+        if None in (seq, src, tgt, rtg):
+            return "%s:missing" % name
+        inputs = unreal.IKRetargetBatchOperationInputs()
+        inputs.set_editor_property("assets_to_retarget", [unreal.AssetRegistryHelpers.create_asset_data(seq)])
+        inputs.set_editor_property("source_mesh", src)
+        inputs.set_editor_property("target_mesh", tgt)
+        inputs.set_editor_property("ik_retarget_asset", rtg)
+        inputs.set_editor_property("suffix", SUFFIX)
+        inputs.set_editor_property("target_path", out_dir)
+        inputs.set_editor_property("include_referenced_assets", False)
+        inputs.set_editor_property("overwrite_existing_files", True)
+        result = unreal.IKRetargetBatchOperation.run_batch_retarget(inputs)
+        names = [str(a.package_name) for a in result] if result else []
+        want = "%s/A_%s%s" % (out_dir, name, SUFFIX)
+        hit = next((n for n in names if n.startswith(out_dir) and src_path.split("/")[-1] in n), None)
+        if hit and hit != want:
+            if lib.does_asset_exist(want):
+                lib.delete_asset(want)
+            lib.rename_asset(hit, want)
+        if not lib.does_asset_exist(want):
+            return "%s:not-made" % name
+        lib.save_directory(out_dir, only_if_is_dirty=False, recursive=True)
+        done = unreal.load_asset(want)
+        return "%s:%.1fs/epic" % (name, done.get_play_length() if done else -1.0)
+    except Exception as e:
+        return "%s:RAISED-%s" % (name, str(e)[:50].replace(" ", "~"))
+
+
 def selftest():
     ok = bad = 0
 
@@ -360,6 +401,7 @@ def selftest():
     check("and its turn in the world", abs(whole[3] - 1.0) < 1e-6 or abs(whole[3] + 1.0) < 1e-6)
     check("a fixed name the game loads", out_path("sit_down") == "/Game/Ledger/Anim/Sit/A_sit_down_MH")
     check("Epic's bench idle under the same folder and name pattern", out_path(EPIC_OUT) == "/Game/Ledger/Anim/Sit/A_bench_idle_MH")
+    check("Epic's standing idle and five breaks", len(EPIC_STANDING) == 6 and EPIC_STANDING[0][1] == "stand_idle")
     check("it lands where the build cooks", out_path("stand_up").startswith("/Game/Ledger/"))
     check("the work stays out of the cook", not WORK_DIR.startswith("/Game/Ledger/"))
     check("the source is a game input on F:", source_fbx("sit_down", r"F:\X").endswith(os.path.join("anim", "sit", "sit_down.fbx")))
