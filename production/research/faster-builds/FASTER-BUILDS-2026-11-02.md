@@ -34,9 +34,9 @@ From `.github/workflows/ledger-probe-unreal.yml`, read in full:
 - **Cooked output.** Saved is deleted at start and end, and the cook discards its previous result anyway: Unreal's default is a full cook (`CookIncrementalDefaultIncremental=false`).
 - **Imports.** The street (156 meshes), people, vehicles, 23 shop displays (3.5 minutes alone), rooms, glass and sounds are re-imported every build, changed or not.
 - **Kept: the derived data cache (DDC)**, Unreal's store of compiled shaders and compressed textures: the Zen server on F: (`F:\LedgerTools\zen\Data`), shared with the editor sessions, capped at 6 GiB (`tools/ue/UserEngine.ini`). Its log today: "5.94G used, 6G soft limit". It is full and trimming.
-- The checkout is not clean: copied folders keep their 22 and 27 October dates.
+- The checkout IS clean (corrected after the fresh review): the workflow's checkout keeps its default cleaning (`git clean -ffdx`), so every untracked folder, compiled code included, is remade each build; the October dates came from the copy step keeping its sources' times (the folders' creation times are 2 November).
 
-**The cache is too small.** Between the 31 October and 2 November builds neither the engine (installed 1 September) nor the project's config changed, yet the cook rebuilt 37 textures and 56 shader maps of Epic's own engine and plugin content, which miss only after eviction. Our content's misses (237 textures, 54 shader maps) may be eviction or the re-imports (unverified which).
+**The cache is likely too small (inferred, not shown).** Between the 31 October and 2 November builds neither the engine (installed 1 September) nor the project's config changed, yet the cook rebuilt 37 textures and 56 shader maps of Epic's own engine and plugin content, which miss only after eviction. Our content's misses (237 textures, 54 shader maps) may be eviction or the re-imports (unverified which).
 
 Unverified: whether the cooked output, which 5.8 keeps in the same Zen server (`bUseZenStore=True` is the engine default, BaseGame.ini line 95), counts against the cap and evicts the cache during every cook.
 
@@ -47,19 +47,19 @@ Unverified: whether the cooked output, which 5.8 keeps in the same Zen server (`
 - **Content cooking** (labelled 5.8, out of date): `-iterate` cooks only out-of-date items. https://dev.epicgames.com/documentation/unreal-engine/cooking-content-in-unreal-engine . The build operations page documents no skip flags: https://dev.epicgames.com/documentation/unreal-engine/build-operations-cooking-packaging-deploying-and-running-projects-in-unreal-engine
 - **Engine source settles the flags** (`AutomationTool/AutomationUtils/ProjectParams.cs`, lines 743 to 1007): `-iterate`, `-iterativecooking` and `-cookincremental` are one switch; `-iterate` also sets `-iterativedeploy`; `-skipcook` and `-skipstage` assume the old output is right; `-nocompileeditor` equals `-skipbuildeditor`. `CookCommand.Automation.cs` line 75 passes the cooker `-iterate`; with Zen on and `LegacyIterative=false` (default), `CookOnTheFlyServer.cpp` lines 10388 to 10590 make it Epic's newer dependency-tracked incremental cook. Read, not run.
 - **BaseEditor.ini [CookSettings]:** only engine classes may be skipped by default; project classes need `+IncrementalClassScriptPackageAllowList=Allow,<ProjectRoot>`; changing `ProjectCookIncrementalVersion` forces one full recook.
-- **Epic's forum** (Matt.Peters for Epic): in 5.5 it gained nothing (May 2025, https://forums.unrealengine.com/t/zenstore-incremental-cook-feedback/2544985); in 5.6 an unchanged recook took 24 of 28 minutes until project classes were allowed, then 5.5 (September 2025, https://forums.unrealengine.com/t/zen-incremental-cook-has-almost-as-long-a-runtime-as-a-clean-cook/2667839); "much more robust" than the old mode, best on 5.7 or later (to February 2026, https://forums.unrealengine.com/t/content-being-re-cooked-every-time-using-latest-modified-dependencies-incremental-cooking-what-is-best-practice-here/2704868). Its checker, IncrementalValidate (https://forums.unrealengine.com/t/incremental-cooking-how-to-make-use-of-incrementalcompare-xml-and-incrementalvalidate-xml/2672636), is absent from this engine.
+- **Epic's forum** (Matt.Peters for Epic): in 5.5 it gained nothing (May 2025, https://forums.unrealengine.com/t/zenstore-incremental-cook-feedback/2544985); in 5.6 an unchanged recook took 24 of 28 minutes until project classes were allowed, then 5.5 (September 2025, https://forums.unrealengine.com/t/zen-incremental-cook-has-almost-as-long-a-runtime-as-a-clean-cook/2667839); "much more robust" than the old mode, best on 5.7 or later (to February 2026, https://forums.unrealengine.com/t/content-being-re-cooked-every-time-using-latest-modified-dependencies-incremental-cooking-what-is-best-practice-here/2704868). Its checker, IncrementalValidate (https://forums.unrealengine.com/t/incremental-cooking-how-to-make-use-of-incrementalcompare-xml-and-incrementalvalidate-xml/2672636), is in this engine (corrected after the fresh review: UE 5.8 has IncrementalValidatePackageWriter and the cooker takes `-IncrementalValidate`).
 - **Pitfalls:** a cook error can stick until a full cook, an open bug (Epic staff, April to June 2026, https://forums.unrealengine.com/t/projectpackagingsettings-busezenstore-true-cookincremental/2736573); a hidden dependency ships stale data.
 - **Shaders:** no Epic page beyond the DDC one found. The engine still cooks a DirectX 11 SM5 set beside SM6 (BaseEngine.ini line 3412): 29% of the 2 November shaders.
 
 ## 4. The two tries
 
 **Try 1: a cache big enough for the game.** First read zenserver.log's "used" lines through one build (does the cook's output fill the cap?), then raise the cap (`tools/ue/UserEngine.ini` and retention.json's line).
-- Expected: cook near 5 minutes nightly; about 10 minutes saved per build on average (0 to 19).
+- Expected: up to about 10 minutes saved per build (0 to 19): an upper bound, from one surviving cook log of a fast night that already had 110 shader-map misses.
 - Measure: five builds' coldCookMinutes and cook-cold.log's counts of "Missing cached shadermap" and "missing streaming mips", against the table.
 - Fall back: restore the number; Zen trims itself.
 - Could go wrong: perhaps 10 GB more is needed (unverified; uncapped, it reached 12.8 GB by 28 September, `production/research/unreal-cache-cap`). F: has 19 GB free, under his 20 GB floor; the cache on C: undoes his 30 September cleanup: the space is his decision. A busy PC would shrink the saving.
 
-**Try 2: keep compiled code.** Stop deleting Intermediate and Binaries; keep clearing Packaged and Saved. Unreal recompiles only changed files.
+**Try 2: keep compiled code.** As written it cannot work (the fresh review): the checkout's cleaning removes the folders first. It needs the checkout's cleaning turned off as well, which also keeps copied and imported content between builds (stale content: to be weighed, with a clean build on demand). Then stop deleting Intermediate and Binaries; keep clearing Packaged and Saved; Unreal recompiles only changed files.
 - Expected: compile from 5.0 to under 1 minute when no C++ changed (about 4 saved); less when it did.
 - Measure: coldBuildMinutes and editorBuildMinutes (renamed) over five builds.
 - Fall back: restore the two deletes.
@@ -72,3 +72,7 @@ Confidence: medium. Minutes measured; eviction causing slow cooks likely, unveri
 ## Not reached
 
 Epic's incremental-cook guide (quoted on the forum, not found); the "Cooked Data Snapshots" page; whether Zen's cap counts cooked output; cook logs before 2 November (overwritten); GitHub Actions logs (need a sign-in).
+
+## After its fresh review (2 November, F:/LedgerTools/gate/new/faster-builds-review.json)
+
+Timings backed (every number in the table matches the runner's logs and the build records at the named commits). Fixed above: the checkout is clean; try 2 needs the checkout's cleaning off; try 1's saving is an upper bound and the cache's cause inferred; incremental validate exists. Added: (a) the disk rules: F: is at its 20 GB floor, so a larger cap on F: would make the workflow's own space check stop every nightly build; his yes of 2 November 14:56 gives 17 GB on C: (a retention line for each, the cache moved to C:); (b) the measuring plan: zenserver.log rotates within about two hours and cook-cold.log is replaced each run, so each build's cache numbers are copied out by the build itself before they go.

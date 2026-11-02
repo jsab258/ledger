@@ -100,8 +100,9 @@ namespace
 				Look.Alpha = 0.0f;
 				Look.LookAtLocation = A->LookTarget;
 			}
-			// THE BREAKS OVER THE LOOP, on the arms from the collarbones out: the face plays its own copy of the
-			// idle, so a break moving the spine or neck would part the head from the body (2 November)
+			// THE BREAKS OVER THE LOOP, on the arms from the collarbones out (2 November; the arms are what passed
+			// review: the face follows the body's spine and neck anyway, through Epic's face post-process,
+			// production/research/character-pipeline/FACE-FOLLOWS-BODY-2026-11-02.md)
 			const USkeletalMeshComponent* Mc = A != nullptr ? A->GetSkelMeshComponent() : nullptr;
 			bHasBreaks = A != nullptr && A->Breaks.Num() > 0 && Mc != nullptr && Mc->GetSkeletalMeshAsset() != nullptr
 			             && Mc->GetSkeletalMeshAsset()->GetRefSkeleton().FindBoneIndex(FName(TEXT("clavicle_l"))) != INDEX_NONE;

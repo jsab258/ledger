@@ -51,8 +51,9 @@ public:
 
 	// THE IDLE'S BREAKS (2 November 2026, the corner's "no frozen poses": the tester calls the street's speakers stiff;
 	// production/research/natural-idles/NOTE.md section 4; Mafia's looping scenes and Kingdom Come II's idle variations):
-	// one of Epic's idle breaks played over the loop on the arms (from the collarbones out: the face plays its own
-	// copy of the idle, so the neck stays the idle's), every BreakEveryMin to BreakEveryMax seconds, faded in and out
+	// one of Epic's idle breaks played over the loop on the arms (from the collarbones out; the face would follow a
+	// spine or neck break too, since Epic's face post-process copies the body's pose each frame, production/research/
+	// character-pipeline/FACE-FOLLOWS-BODY-2026-11-02.md, but the arms are what passed review), every BreakEveryMin to BreakEveryMax seconds, faded in and out
 	// over BreakFade, never while walking, speaking or in a move. Set after Setup, before the instance is
 	// reinitialised; only breaks on the idle's own skeleton are kept, and a part without collarbones takes none.
 	// THE BREAKS ADDED, NOT SWAPPED IN (2 November, the second try: a fresh reviewer saw Sheila's arms held out like
