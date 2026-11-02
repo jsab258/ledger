@@ -743,6 +743,16 @@ bool ALedgerSliceCharacter::StartGaspMover(USkeletalMeshComponent* M)
 		for (USkeletalMeshComponent* P : Dressed) { P->VisibilityBasedAnimTickOption = EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones; }
 		UE_LOG(LogTemp, Display, TEXT("LedgerWalk: Tom wears %d garment(s) over his MetaHuman"), Clothes);
 	}
+	// HIS SHADOW IN THE ROOMS' AND WINDOWS' LIGHT, AS EVERYBODY ELSE'S (2 November, the bench film's review: a hard,
+	// grainy black "ponytail" on the office wall; production/research/cab-office-interior-1990/HAIR-SHADOW-2026-11-02.md):
+	// those lights cast from "cinematic" pieces only, and the cast are marked so (VignetteShot.cpp, the passer-by's
+	// shadow); he was not, so his head and body threw nothing there while his hair's own voxel shadow, which ignores
+	// that rule, threw a black shape alone. Now his body, face, hair and clothes are marked as theirs are.
+	{
+		TInlineComponentArray<UPrimitiveComponent*> Prims;
+		Worn->GetComponents(Prims);
+		for (UPrimitiveComponent* Pc : Prims) { if (Pc != nullptr) { Pc->bCastCinematicShadow = true; Pc->MarkRenderStateDirty(); } }
+	}
 	// HIS OWN BODY AND CAPSULE PUT BY: the stand-in body unseen and still, his capsule riding on the
 	// mover's (no collision of its own, no movement of its own).
 	M->SetVisibility(false, true);

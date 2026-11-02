@@ -9950,15 +9950,39 @@ namespace
 			// to the other side of the speaker's head, and where that covers him too, above both heads
 			FVector2D Him;
 			const float W = FMath::Max(GPromptAt->GetDesiredSize().X, 120.0f), H = FMath::Max(GPromptAt->GetDesiredSize().Y, 36.0f);
+			// THE PLACE KEPT (2 November, the second film's review: deciding afresh each frame, the label flickered between the
+			// screen's edge and above Ron 40 times as the two men's heads swayed): right of the head, left of it, or above
+			// both; a new prompt starts on the right; a place is left only after it has covered him for 0.3 s, never for one
+			// that would leave the screen, and the place chosen is the first of the three that does not cover him.
+			static int32 Side = 0;
+			static double CoveredSince = -1.0;
+			static FString SideFor;
+			if (SideFor != GPromptKey + GPromptVerb) { SideFor = GPromptKey + GPromptVerb; Side = 0; CoveredSince = -1.0; }
+			auto PlaceOf = [&At, W, H](int32 S, const FBox2D* His, float& Lx, float& Ly)
+			{
+				Lx = S == 1 ? (float)At.X - 26.0f - W : S == 2 ? (float)At.X - W * 0.5f : (float)At.X + 26.0f;
+				Ly = S == 2 && His != nullptr ? (float)FMath::Min(At.Y, His->Min.Y) - H - 24.0f : (float)At.Y - 22.0f;
+			};
 			if (GPawn != nullptr && ScreenAt1080(GPawn->GetActorLocation() + FVector(0.0f, 0.0f, GPawn->BaseEyeHeight), Him))
 			{
 				const FBox2D His(FVector2D(Him.X - 110.0, Him.Y - 80.0), FVector2D(Him.X + 110.0, Him.Y + 260.0));
-				auto Covers = [&His, W, H](float Lx, float Ly) { return FBox2D(FVector2D(Lx, Ly), FVector2D(Lx + W, Ly + H)).Intersect(His); };
-				if (Covers(X, Y))
+				auto Fits = [&His, &PlaceOf, W, H](int32 S)
 				{
-					if (!Covers((float)At.X - 26.0f - W, Y)) { X = (float)At.X - 26.0f - W; }
-					else { X = (float)At.X - W * 0.5f; Y = (float)FMath::Min(At.Y, His.Min.Y) - H - 24.0f; }
+					float Lx, Ly;
+					PlaceOf(S, &His, Lx, Ly);
+					return Lx >= 8.0f && Ly >= 8.0f && !FBox2D(FVector2D(Lx, Ly), FVector2D(Lx + W, Ly + H)).Intersect(His);
+				};
+				if (Fits(Side)) { CoveredSince = -1.0; }
+				else
+				{
+					if (CoveredSince < 0.0) { CoveredSince = NowS(); }
+					if (NowS() - CoveredSince >= 0.3)
+					{
+						for (int32 S = 0; S < 3; ++S) { if (Fits(S)) { Side = S; break; } }
+						CoveredSince = -1.0;
+					}
 				}
+				PlaceOf(Side, &His, X, Y);
 			}
 			GPromptAt->SetPadding(FMargin(FMath::Max(X, 8.0f), FMath::Max(Y, 8.0f), 0.0f, 0.0f));
 			const float A = LedgerPaper::ReduceMotion() ? 1.0f : FMath::Clamp((float)((NowS() - GPromptSince) / 0.15), 0.0f, 1.0f);
