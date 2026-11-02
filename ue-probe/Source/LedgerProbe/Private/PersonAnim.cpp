@@ -11,6 +11,7 @@
 #include "AnimationRuntime.h"
 #include "AnimNodes/AnimNode_ModifyCurve.h"
 #include "AnimNodes/AnimNode_TwoWayBlend.h"
+#include "AnimNodes/AnimNode_LayeredBoneBlend.h"
 #include "BoneControllers/AnimNode_LookAt.h"
 #include "BoneControllers/AnimNode_TwoBoneIK.h"
 #include "BoneControllers/AnimNode_ModifyBone.h"
@@ -31,6 +32,11 @@ namespace
 	struct FLedgerPersonProxy : public FAnimInstanceProxy
 	{
 		FAnimNode_SequencePlayer_Standalone Player;
+		// THE IDLE'S BREAKS (SetupBreaks): one of Epic's breaks over the loop, on the arms.
+		FAnimNode_SequencePlayer_Standalone BreakPlayer;
+		FAnimNode_LayeredBoneBlend Upper;
+		bool bHasBreaks = false;
+		int32 BreakSerialSeen = 0;
 		// THE WALK, blended over the idle by how much the person is moving.
 		FAnimNode_SequencePlayer_Standalone WalkPlayer;
 		FAnimNode_TwoWayBlend Moving;
@@ -77,19 +83,46 @@ namespace
 				Look.Alpha = 0.0f;
 				Look.LookAtLocation = A->LookTarget;
 			}
+			// THE BREAKS OVER THE LOOP, on the arms from the collarbones out: the face plays its own copy of the
+			// idle, so a break moving the spine or neck would part the head from the body (2 November)
+			const USkeletalMeshComponent* Mc = A != nullptr ? A->GetSkelMeshComponent() : nullptr;
+			bHasBreaks = A != nullptr && A->Breaks.Num() > 0 && Mc != nullptr && Mc->GetSkeletalMeshAsset() != nullptr
+			             && Mc->GetSkeletalMeshAsset()->GetRefSkeleton().FindBoneIndex(FName(TEXT("clavicle_l"))) != INDEX_NONE;
+			FAnimNode_Base* IdleOut = &Player;
+			if (bHasBreaks)
+			{
+				BreakPlayer.SetSequence(A->Breaks[0]);
+				BreakPlayer.SetLoopAnimation(false);
+				Upper.BasePose.SetLinkNode(&Player);
+				Upper.BlendMode = ELayeredBoneBlendMode::BranchFilter;
+				if (Upper.BlendPoses.Num() == 0) { Upper.AddPose(); }   // Initialize runs again on every InitAnim
+				Upper.BlendPoses[0].SetLinkNode(&BreakPlayer);
+				Upper.LayerSetup[0].BranchFilters.Reset();
+				Upper.InvalidatePerBoneBlendWeights();
+				for (const TCHAR* Arm : { TEXT("clavicle_l"), TEXT("clavicle_r") })
+				{
+					FBranchFilter F;
+					F.BoneName = FName(Arm);
+					F.BlendDepth = 0;
+					Upper.LayerSetup[0].BranchFilters.Add(F);
+				}
+				Upper.BlendWeights[0] = 0.0f;
+				Upper.bMeshSpaceRotationBlend = false;   // the arms follow the idle's own shoulders
+				IdleOut = &Upper;
+			}
 			bHasWalk = A != nullptr && A->WalkSequence != nullptr;
 			if (bHasWalk)
 			{
 				WalkPlayer.SetSequence(A->WalkSequence);
 				WalkPlayer.SetLoopAnimation(true);
-				Moving.A.SetLinkNode(&Player);
+				Moving.A.SetLinkNode(IdleOut);
 				Moving.B.SetLinkNode(&WalkPlayer);
 				Moving.Alpha = 0.0f;
 				Slot.Source.SetLinkNode(&Moving);
 			}
 			else
 			{
-				Slot.Source.SetLinkNode(&Player);
+				Slot.Source.SetLinkNode(IdleOut);
 			}
 			Slot.SlotName = ULedgerPersonAnim::MoveSlot;
 			ToComponent.LocalPose.SetLinkNode(&Slot);
@@ -160,6 +193,8 @@ namespace
 		virtual void GetCustomNodes(TArray<FAnimNode_Base*>& OutNodes) override
 		{
 			OutNodes.Add(&Player);
+			OutNodes.Add(&BreakPlayer);
+			OutNodes.Add(&Upper);
 			OutNodes.Add(&WalkPlayer);
 			OutNodes.Add(&Moving);
 			OutNodes.Add(&Slot);
@@ -188,6 +223,16 @@ namespace
 				Said.Alpha = A->SaidWeight;
 				Said.CurveMap = A->SaidCurves;
 				if (bHasWalk) { Moving.Alpha = A->WalkWeight; }
+				if (bHasBreaks)
+				{
+					if (A->BreakSerial != BreakSerialSeen && A->BreakNow != nullptr)
+					{
+						BreakSerialSeen = A->BreakSerial;
+						BreakPlayer.SetSequence(A->BreakNow);
+						BreakPlayer.SetAccumulatedTime(0.0f);
+					}
+					Upper.BlendWeights[0] = A->BreakWeight;
+				}
 				for (int32 I = 0; I < 2; ++I)
 				{
 					Feet[I].Alpha = A->FootHold[I];
@@ -227,6 +272,45 @@ FAnimInstanceProxy* ULedgerPersonAnim::CreateAnimInstanceProxy()
 }
 
 const FName ULedgerPersonAnim::MoveSlot(TEXT("DefaultSlot"));
+
+void ULedgerPersonAnim::SetupBreaks(const TArray<UAnimSequenceBase*>& InBreaks, float EveryMin, float EveryMax)
+{
+	Breaks.Reset();
+	for (UAnimSequenceBase* B : InBreaks) { if (B != nullptr && (Sequence == nullptr || B->GetSkeleton() == Sequence->GetSkeleton())) { Breaks.Add(B); } }
+	BreakEveryMin = EveryMin;
+	BreakEveryMax = FMath::Max(EveryMax, EveryMin);
+	BreakIn = FMath::FRandRange(BreakEveryMin * 0.5f, BreakEveryMax);   // not all at once at the start
+	BreakLeft = 0.0f;
+	BreakWeight = 0.0f;
+}
+
+void ULedgerPersonAnim::BreakTick(float DeltaSeconds)
+{
+	if (Breaks.Num() == 0) { return; }
+	if (const ULedgerPersonAnim* Lead = BreakLead.Get())
+	{
+		BreakNow = Lead->BreakNow;
+		BreakSerial = Lead->BreakSerial;
+		BreakWeight = Lead->BreakWeight;
+		return;
+	}
+	if (BreakLeft > 0.0f)
+	{
+		BreakLeft -= DeltaSeconds;
+		const float In = (BreakLength - BreakLeft) / BreakFade;
+		const float Out = BreakLeft / BreakFade;
+		BreakWeight = FMath::Clamp(FMath::Min(In, Out), 0.0f, 1.0f);
+		if (BreakLeft <= 0.0f) { BreakWeight = 0.0f; BreakIn = FMath::FRandRange(BreakEveryMin, BreakEveryMax); }
+		return;
+	}
+	BreakIn -= DeltaSeconds;
+	const bool bCalm = WalkWeight < 0.01f && SpeakWeight < 0.01f && SaidWeight < 0.01f && !Montage_IsPlaying(nullptr);
+	if (BreakIn > 0.0f || !bCalm) { return; }
+	BreakNow = Breaks[FMath::RandRange(0, Breaks.Num() - 1)];
+	BreakLength = FMath::Max(BreakNow->GetPlayLength(), BreakFade * 2.0f);
+	BreakLeft = BreakLength;
+	++BreakSerial;
+}
 
 bool ULedgerPersonAnim::PlayMove(UAnimSequenceBase* Clip, float BlendIn, float BlendOut, float Rate)
 {
@@ -365,6 +449,7 @@ void ULedgerPersonAnim::NativeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeUpdateAnimation(DeltaSeconds);
 	SaidTick(DeltaSeconds);
+	BreakTick(DeltaSeconds);
 	// THE WALK (SetupWalk): the owner paces A to B and back; the idle and the
 	// walk blend by how much it is moving, and it sets off and stops over
 	// about half a second rather than sliding at full speed.

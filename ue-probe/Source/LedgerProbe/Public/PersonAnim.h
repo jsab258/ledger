@@ -49,6 +49,26 @@ public:
 	float PlayRate = 1.0f;
 	bool bLook = false;
 
+	// THE IDLE'S BREAKS (2 November 2026, the corner's "no frozen poses": the tester calls the street's speakers stiff;
+	// production/research/natural-idles/NOTE.md section 4; Mafia's looping scenes and Kingdom Come II's idle variations):
+	// one of Epic's idle breaks played over the loop on the arms (from the collarbones out: the face plays its own
+	// copy of the idle, so the neck stays the idle's), every BreakEveryMin to BreakEveryMax seconds, faded in and out
+	// over BreakFade, never while walking, speaking or in a move. Set after Setup, before the instance is
+	// reinitialised; only breaks on the idle's own skeleton are kept, and a part without collarbones takes none.
+	void SetupBreaks(const TArray<UAnimSequenceBase*>& InBreaks, float EveryMin = 9.0f, float EveryMax = 22.0f);
+	UPROPERTY(Transient)
+	TArray<TObjectPtr<UAnimSequenceBase>> Breaks;
+	UPROPERTY(Transient)
+	TObjectPtr<UAnimSequenceBase> BreakNow;
+	float BreakWeight = 0.0f;
+	float BreakEveryMin = 9.0f, BreakEveryMax = 22.0f, BreakIn = 0.0f, BreakLeft = 0.0f, BreakLength = 0.0f;
+	int32 BreakSerial = 0;
+	static constexpr float BreakFade = 0.5f;
+	void BreakTick(float DeltaSeconds);
+	// Another part of the same person playing its own copy of the idle (the clothes) takes the body's breaks as they
+	// come, never its own; its component ticks after the body's (CrimeProbe.cpp), so both start on the same frame.
+	TWeakObjectPtr<ULedgerPersonAnim> BreakLead;
+
 	// THE HEAD, found on the mesh: its bone, and which of its local axes point
 	// forward and up in the reference pose.
 	FName HeadBone;

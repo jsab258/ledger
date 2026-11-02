@@ -150,6 +150,7 @@
 #include "LedgerVoice.h"
 #include "Camera/PlayerCameraManager.h"
 #include "Camera/CameraActor.h"
+#include "Components/LODSyncComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Widgets/Layout/SBorder.h"
 #include "Widgets/Layout/SBox.h"
@@ -1040,6 +1041,28 @@ namespace
 		AActor* A = World->SpawnActor<AActor>(Cls, Body->GetActorLocation(), FRotator::ZeroRotator, P);
 		if (A == nullptr) { return; }
 		A->Tags.Add(TEXT("LedgerCast"));   // the encounter's own cast, for the portrait tool's -PortraitInGame
+		// THE MOUSTACHE KEEPS ITS STRANDS AT ROOM DISTANCE (2 November: Ron's grey moustache turned dark brown beyond
+		// about 2.6 m, production/research/character-pipeline/MOUSTACHE-LOD-2026-11-02.md): the blueprint's level map
+		// sends facial hair to its cards at the face's second level, and the facial-hair cards' material does not keep
+		// the grey; the strands now stay to the face's third level (about 5 m), where the grey mesh level takes over.
+		if (ULODSyncComponent* Sync = A->FindComponentByClass<ULODSyncComponent>())
+		{
+			int32 Kept = 0;
+			for (TPair<FName, FLODMappingData>& M : Sync->CustomLODMapping)
+			{
+				const FString N = M.Key.ToString();
+				if ((N.Contains(TEXT("Mustache")) || N.Contains(TEXT("Beard"))) && M.Value.Mapping.Num() > 1)
+				{
+					M.Value.Mapping[1] = M.Value.Mapping[0];
+					++Kept;
+				}
+			}
+			if (Kept > 0)
+			{
+				Sync->RefreshSyncComponents();
+				UE_LOG(LogTemp, Display, TEXT("LedgerCast: %s's facial hair keeps its strands to the face's second level (%d groom)"), Who, Kept);
+			}
+		}
 		// NOBODY WALKS THROUGH THEM (the AI tester, 24 September: its camera
 		// ended up inside Lena). The MetaHuman's own meshes collide with
 		// nothing, so no sight line in the measured street changes; a capsule
@@ -1061,6 +1084,8 @@ namespace
 		int32 PartsAnimated = 0;
 		TSet<USkeletalMeshComponent*> Done;
 		const bool bStand = FParse::Param(FCommandLine::Get(), TEXT("StandIdle"));
+		ULedgerPersonAnim* BreakLead = nullptr;   // the first part given breaks (the body); the clothes follow it
+		USkeletalMeshComponent* BreakLeadPart = nullptr;
 		for (const TCHAR* IdlePath : kLiveIdles)
 		{
 			if (bStand && FCString::Strstr(IdlePath, TEXT("Technical_Loops/Idle/mhc_mh001_fmn_b")) != nullptr) { continue; }
@@ -1088,6 +1113,28 @@ namespace
 				if (ULedgerPersonAnim* Look = Cast<ULedgerPersonAnim>(C->GetAnimInstance()))
 				{
 					Look->Setup(Idle, Start, Rate, bLooks);
+					// NO FROZEN POSES (2 November, the corner): Epic's idle breaks now and then, on the arms
+					// (PersonAnim.h; made by tools/ue/retarget_sitting.py's EPIC_STANDING); -NoIdleBreaks for none
+					if (!FParse::Param(FCommandLine::Get(), TEXT("NoIdleBreaks")))
+					{
+						TArray<UAnimSequenceBase*> Breaks;
+						for (const TCHAR* B : { TEXT("v01"), TEXT("v02"), TEXT("v03"), TEXT("v04"), TEXT("v06") })
+						{
+							const FString Path = FString::Printf(TEXT("/Game/Ledger/Anim/Idle/A_stand_break_%s_MH.A_stand_break_%s_MH"), B, B);
+							if (UAnimSequenceBase* S = LoadObject<UAnimSequenceBase>(nullptr, *Path)) { Breaks.Add(S); }
+						}
+						Look->SetupBreaks(Breaks);
+						if (Look->Breaks.Num() > 0 && BreakLead == nullptr) { BreakLead = Look; BreakLeadPart = C; }
+						else if (Look->Breaks.Num() > 0)
+						{
+							Look->BreakLead = BreakLead;
+							C->AddTickPrerequisiteComponent(BreakLeadPart);
+						}
+						if (Look->Breaks.Num() > 0)
+						{
+							UE_LOG(LogTemp, Display, TEXT("LedgerCast: %s's %s takes %d idle breaks"), Who, *C->GetName(), Look->Breaks.Num());
+						}
+					}
 					C->InitAnim(true);
 					GLooks.FindOrAdd(Body).Add(Look);
 					++PartsAnimated;
@@ -6589,6 +6636,151 @@ namespace
 	// come through the ledger, so a bank does not repeat itself before he has
 	// heard it through (town list 6k), and the ledger is kept in the save
 	// (6o). NOT YET: the coat (the outfit's ask brings it, town list 6z).
+	// NO FROZEN POSES, MEASURED (2 November, the corner plan's step 3 check: everyone within 30 m moves a head,
+	// hand or chest bone 1 cm in any 4 s, inferred): every 4 s, each of the cast near him and in view, how far the head, the
+	// hands and the chest moved in the body's own space since the last look, in cm; "frozen" when none reached 1.
+	TMap<AActor*, TArray<FVector>> GMotionPrev;
+	double GMotionAt = 0.0;
+	void MotionTick(UWorld* World)
+	{
+		const double Now = World != nullptr ? World->GetTimeSeconds() : 0.0;   // the game's clock: a fixed-step film keeps it
+		if (GPawn == nullptr || World == nullptr || Now - GMotionAt < 4.0) { return; }
+		GMotionAt = Now;
+		static const FName Bones[4] = { FName(TEXT("head")), FName(TEXT("hand_l")), FName(TEXT("hand_r")), FName(TEXT("spine_05")) };
+		const TPair<AActor*, const TCHAR*> People[3] = { { GW1Body, TEXT("Sheila") }, { GN2Body, TEXT("Darren") }, { GR3Body, TEXT("Ron") } };
+		for (const TPair<AActor*, const TCHAR*>& P : People)
+		{
+			TArray<TWeakObjectPtr<ULedgerPersonAnim>>* Parts = P.Key != nullptr ? GLooks.Find(P.Key) : nullptr;
+			if (Parts == nullptr || FVector::Dist(P.Key->GetActorLocation(), GPawn->GetActorLocation()) > 3000.0) { GMotionPrev.Remove(P.Key); continue; }
+			for (const TWeakObjectPtr<ULedgerPersonAnim>& L : *Parts)
+			{
+				USkeletalMeshComponent* C = L.IsValid() ? L->GetSkelMeshComponent() : nullptr;
+				if (C == nullptr || C->GetBoneIndex(Bones[1]) == INDEX_NONE || C->GetBoneIndex(Bones[0]) == INDEX_NONE) { continue; }
+				// Out of view the pose is not updated (the body ticks its pose only when drawn): not judged, and the
+				// next window starts afresh once seen.
+				if (!C->WasRecentlyRendered(0.5f)) { GMotionPrev.Remove(P.Key); break; }
+				TArray<FVector> Now4;
+				for (const FName& B : Bones) { Now4.Add(C->GetBoneLocation(B, EBoneSpaces::ComponentSpace)); }
+				if (TArray<FVector>* Prev = GMotionPrev.Find(P.Key))
+				{
+					const float Head = FVector::Dist((*Prev)[0], Now4[0]);
+					const float Hands = FMath::Max(FVector::Dist((*Prev)[1], Now4[1]), FVector::Dist((*Prev)[2], Now4[2]));
+					const float Chest = FVector::Dist((*Prev)[3], Now4[3]);
+					UE_LOG(LogTemp, Display, TEXT("LedgerMotion: %s head %.1f hands %.1f chest %.1f cm in 4 s, break %.2f, %s"), P.Value,
+					       Head, Hands, Chest, L->BreakWeight, FMath::Max3(Head, Hands, Chest) >= 1.0f ? TEXT("moving") : TEXT("frozen"));
+				}
+				GMotionPrev.Add(P.Key, Now4);
+				break;
+			}
+		}
+		// THE STREET'S OWN PEOPLE too (the corner's check is everyone within 30 m): each standing extra in view, on
+		// its own bones (a MetaHuman's names, or the Mixamo rig's).
+		static const FName Mixamo[4] = { FName(TEXT("mixamorig:Head")), FName(TEXT("mixamorig:LeftHand")), FName(TEXT("mixamorig:RightHand")), FName(TEXT("mixamorig:Spine2")) };
+		for (TActorIterator<ASkeletalMeshActor> It(World); It; ++It)
+		{
+			USkeletalMeshComponent* C = It->GetSkeletalMeshComponent();
+			if (It->IsHidden() || C == nullptr || Cast<ULedgerPersonAnim>(C->GetAnimInstance()) == nullptr
+			    || FVector::Dist(It->GetActorLocation(), GPawn->GetActorLocation()) > 3000.0 || !C->WasRecentlyRendered(0.5f))
+			{
+				GMotionPrev.Remove(*It);
+				continue;
+			}
+			const FName* Names = C->GetBoneIndex(Bones[1]) != INDEX_NONE ? Bones : (C->GetBoneIndex(Mixamo[1]) != INDEX_NONE ? Mixamo : nullptr);
+			if (Names == nullptr) { continue; }
+			TArray<FVector> Now4;
+			for (int32 I = 0; I < 4; ++I) { Now4.Add(C->GetBoneLocation(Names[I], EBoneSpaces::ComponentSpace)); }
+			if (TArray<FVector>* Prev = GMotionPrev.Find(*It))
+			{
+				const float Head = FVector::Dist((*Prev)[0], Now4[0]);
+				const float Hands = FMath::Max(FVector::Dist((*Prev)[1], Now4[1]), FVector::Dist((*Prev)[2], Now4[2]));
+				const float Chest = FVector::Dist((*Prev)[3], Now4[3]);
+				UE_LOG(LogTemp, Display, TEXT("LedgerMotion: %s head %.1f hands %.1f chest %.1f cm in 4 s, extra, %s"), *It->GetName(),
+				       Head, Hands, Chest, FMath::Max3(Head, Hands, Chest) >= 1.0f ? TEXT("moving") : TEXT("frozen"));
+			}
+			GMotionPrev.Add(*It, Now4);
+		}
+	}
+
+	// -IdleFilm=<folder> (2 November, the corner's "no frozen poses" for its gate): each of the cast in turn, the
+	// whole person from 2.6 m (the first way round with nothing between, as -MouthFilmWide finds it), 45 s of the
+	// game's clock, a frame every quarter second (<folder>/<who>/f_000.png on); 20 s to settle first, then the game
+	// closes. Film it on a fixed step (-benchmark -fps=30), with -FilmSize=WxH -RenderOffScreen; frames go to drive F.
+	struct FIdleFilm { TWeakObjectPtr<ACameraActor> Cam; int32 Who = 0; double From = -1.0, Last = -1.0; int32 Frame = 0; };
+	FIdleFilm GIdleFilm;
+	void IdleFilmTick(UWorld* World)
+	{
+		static FString FilmDir;
+		static const bool bWanted = FParse::Value(FCommandLine::Get(), TEXT("IdleFilm="), FilmDir);
+		if (!bWanted || World == nullptr || GPawn == nullptr) { return; }
+		const TPair<AActor*, const TCHAR*> People[3] = { { GW1Body, TEXT("Sheila") }, { GN2Body, TEXT("Darren") }, { GR3Body, TEXT("Ron") } };
+		const double T = World->GetTimeSeconds();
+		if (T < 20.0) { return; }
+		if (GIdleFilm.Who >= 3) { return; }
+		AActor* Body = People[GIdleFilm.Who].Key;
+		AActor* Who = GVisualFor(Body);
+		if (Who == nullptr) { ++GIdleFilm.Who; return; }
+		static bool bSized = false;
+		if (!bSized && GEngine != nullptr)
+		{
+			bSized = true;
+			GEngine->Exec(World, TEXT("r.MotionBlurQuality 0"));
+			FString Size;
+			if (FParse::Value(FCommandLine::Get(), TEXT("FilmSize="), Size)) { GEngine->Exec(World, *FString::Printf(TEXT("r.SetRes %sw"), *Size)); GEngine->Exec(World, TEXT("r.ScreenPercentage 100")); }
+		}
+		const FVector Feet = Who->GetActorLocation();
+		const FVector Look = Feet + FVector(0.0f, 0.0f, 90.0f);
+		const FVector Toward = Who->GetActorRightVector().GetSafeNormal2D();   // a MetaHuman faces its actor's +Y (SyncVisual)
+		FVector Dir = Toward;
+		float Dist = 260.0f;
+		bool bFound = false;
+		for (float Try : { 260.0f, 200.0f, 160.0f })
+		{
+			for (int32 K = 0; K < 12 && !bFound; ++K)
+			{
+				const float Deg = (K % 2 == 0 ? 1.0f : -1.0f) * 30.0f * ((K + 1) / 2);
+				const FVector D = Toward.RotateAngleAxis(Deg, FVector::UpVector);
+				FHitResult Hit;
+				FCollisionQueryParams Q(TEXT("LedgerIdleFilm"), true, Who);
+				Q.AddIgnoredActor(Body);
+				if (!World->SweepSingleByChannel(Hit, Look, Feet + D * Try + FVector(0.0f, 0.0f, 100.0f), FQuat::Identity, ECC_Camera, FCollisionShape::MakeSphere(15.0f), Q))
+				{
+					Dir = D; Dist = Try; bFound = true;
+				}
+			}
+			if (bFound) { break; }
+		}
+		const FVector Eye = Feet + Dir * Dist + FVector(0.0f, 0.0f, 100.0f);
+		if (!GIdleFilm.Cam.IsValid())
+		{
+			FActorSpawnParameters P;
+			P.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+			GIdleFilm.Cam = World->SpawnActor<ACameraActor>(Eye, (Look - Eye).Rotation(), P);
+			if (GIdleFilm.Cam.IsValid()) { GIdleFilm.Cam->GetCameraComponent()->SetConstraintAspectRatio(false); }
+		}
+		if (!GIdleFilm.Cam.IsValid()) { return; }
+		GIdleFilm.Cam->SetActorLocationAndRotation(Eye, (Look - Eye).Rotation());
+		APlayerController* PC = World->GetFirstPlayerController();
+		if (PC != nullptr && PC->GetViewTarget() != GIdleFilm.Cam.Get()) { PC->SetViewTargetWithBlend(GIdleFilm.Cam.Get(), 0.0f); }
+		if (GIdleFilm.From < 0.0) { GIdleFilm.From = T; GIdleFilm.Last = -1.0; GIdleFilm.Frame = 0; return; }
+		if (T - GIdleFilm.From < 2.0) { return; }   // the view settles (hair, exposure) before the first frame
+		if (GIdleFilm.Last < 0.0 || T - GIdleFilm.Last >= 0.25)
+		{
+			GIdleFilm.Last = T;
+			UE_LOG(LogTemp, Display, TEXT("LedgerIdleFilm: %s f_%03d at %.2f s, %.1f m %s"), People[GIdleFilm.Who].Value, GIdleFilm.Frame, T - GIdleFilm.From,
+			       Dist / 100.0f, bFound ? TEXT("clear") : TEXT("blocked"));
+			FScreenshotRequest::RequestScreenshot(FilmDir / People[GIdleFilm.Who].Value / FString::Printf(TEXT("f_%03d.png"), GIdleFilm.Frame++), false, false);
+		}
+		if (T - GIdleFilm.From >= 47.0)
+		{
+			GIdleFilm.From = -1.0;
+			if (++GIdleFilm.Who >= 3)
+			{
+				UE_LOG(LogTemp, Display, TEXT("LedgerIdleFilm: done"));
+				FPlatformMisc::RequestExit(false);
+			}
+		}
+	}
+
 	void RegardTick(UWorld* World, double Now)
 	{
 		if (World == nullptr || GPawn == nullptr || !GMill || Now - GLive.RegardAt < 1.0) { return; }
@@ -9005,6 +9197,8 @@ namespace
 		LiveVoicePump();
 		if (GPawn != nullptr) { LedgerSession::Look(GPawn->GetActorLocation(), bSayOpen); }
 		RegardTick(World, Now);
+		MotionTick(World);
+		IdleFilmTick(World);
 		TownHoursTick();
 		LookScriptTick(World, Now);
 		AskScriptTick(Now);
