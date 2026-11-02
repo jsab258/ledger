@@ -193,6 +193,18 @@ def packed_material(unreal, g, folder, lines):
     for k in ("Tint", "TapeColour", "TeethColour"):
         r, gr, b = maps[k.lower()]
         mel.set_material_instance_vector_parameter_value(mi, k, unreal.LinearColor(r, gr, b, 1.0))
+    # TWO-SIDED WHERE THE CLOTH FOLDS THROUGH ITSELF (2 November, the packaged sit film: a small hole behind Tom's jeans'
+    # knee as he sat, the body cut away under them): "two_sided" draws this garment's back faces too, set on its own
+    # instance (the engine's base property override), so the shared parent and every other garment are unchanged
+    try:
+        ov = mi.get_editor_property("base_property_overrides")
+        ov.set_editor_property("override_two_sided", bool(g.get("two_sided")))
+        ov.set_editor_property("two_sided", bool(g.get("two_sided")))
+        mi.set_editor_property("base_property_overrides", ov)
+        if g.get("two_sided"):
+            lines.append("  two-sided (its own instance's override)")
+    except Exception as e:
+        lines.append("  two-sided override refused: %r" % e)
     if detail is not None:
         mel.set_material_instance_texture_parameter_value(mi, "DetailNormal", detail)
         mel.set_material_instance_scalar_parameter_value(mi, "DetailTiling", float(maps.get("detail_tiling", 1.0)))
