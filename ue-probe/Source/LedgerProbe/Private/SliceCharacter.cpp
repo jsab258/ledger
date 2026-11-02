@@ -1809,6 +1809,10 @@ bool ALedgerSliceCharacter::TryStartSit()
 	const FVector At = GaspMover->GetActorLocation();
 	const LedgerSit::FSeat* Best = nullptr;
 	double BestD = 1e9;
+	// NOT BESIDE SOMEBODY ALREADY SEATED (2 November, the packaged sit film: Ron on the middle seat and Tom on the seat
+	// beside his, 53.5 cm apart, their arms through each other as Tom sat and rose; Epic's sit clips are made for a seat
+	// with room either side): a seat is taken by anyone within 75 cm of it, so the seat next to a sitter is not offered
+	static constexpr double kSeatClearCm = 75.0;
 	for (const LedgerSit::FSeat& S : LedgerSit::Seats())
 	{
 		const double D = FVector::Dist2D(At, S.Slot);
@@ -1818,7 +1822,7 @@ bool ALedgerSliceCharacter::TryStartSit()
 		for (TActorIterator<ACharacter> It(GetWorld()); It; ++It)
 		{
 			if (*It == GaspMover || *It == this || It->GetAttachParentActor() == GaspMover || It->GetOwner() == GaspMover) { continue; }
-			if (FVector::Dist2D(It->GetActorLocation(), S.Slot) < 40.0) { bTaken = true; }
+			if (FVector::Dist2D(It->GetActorLocation(), S.Slot) < kSeatClearCm) { bTaken = true; }
 		}
 		// AND THE TOWN'S PEOPLE (29 October, the packaged sit walk: Ron's evenings seat him on the bench's middle seat,
 		// and Tom sat into him there and stood up through his body, 130 contacts): they are MetaHuman actors tagged
@@ -1826,7 +1830,7 @@ bool ALedgerSliceCharacter::TryStartSit()
 		for (TActorIterator<AActor> It(GetWorld()); It; ++It)
 		{
 			if (!It->ActorHasTag(TEXT("LedgerCast")) || It->GetAttachParentActor() == GaspMover || It->GetOwner() == GaspMover) { continue; }
-			if (FVector::Dist2D(It->GetActorLocation(), S.Slot) < 40.0) { bTaken = true; }
+			if (FVector::Dist2D(It->GetActorLocation(), S.Slot) < kSeatClearCm) { bTaken = true; }
 		}
 		// in the room: he stands on the office's public side (never a seat through a wall or the window; a
 		// line traced to the seat was stopped by the room's own meshes, 25 October)

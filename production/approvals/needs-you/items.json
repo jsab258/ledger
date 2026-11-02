@@ -72,7 +72,8 @@
      "Not yet"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-02 08:48, done (08:15): the stuck nightly session stopped"
   },
   {
    "id": "collar-fourth-try-2026-11-02",
@@ -88,6 +89,24 @@
     [
      "no",
      "No, leave it as it is"
+    ]
+   ],
+   "state": "open"
+  },
+  {
+   "id": "allow-scheduled-reads-2026-11-02",
+   "added": "2026-11-02 08:48",
+   "text": "In the Claude app's Scheduled list, open \"LEDGER: read back page answers (nightly)\", press Run now and allow its page reads always; then open the session \"LEDGER: fresh-session test (once)\" in the sidebar and allow its question, or press Stop.",
+   "links": [],
+   "recommendation": "Allow: both only read. A scheduled run stops at its first question with nobody there; an answer given once is kept for its later runs, so tonight's 04:46 read-back then runs on its own. There is no web link for these; both are in the app.",
+   "options": [
+    [
+     "done",
+     "Done"
+    ],
+    [
+     "later",
+     "Not yet"
     ]
    ],
    "state": "open"

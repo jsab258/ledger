@@ -326,3 +326,6 @@
 {"event": "stop", "at": "2026-11-02T07:05:00", "note": ""}
 {"event": "start", "at": "2026-11-02T07:05:00", "task": "daily: Monday's overview and summary; the answers read back by hand; the progress page's pictures", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-11-02T07:14:00", "note": ""}
+{"event": "start", "at": "2026-11-02T07:15:00", "task": "n02-3-1-speech: the real talk measured inside the packaged game; n02-tom collar third try: the head map's painter and tool begun; unit costs handed out", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-11-02T08:50:48", "note": "speech two tries in the game (1.07 s); his answers; collar's third try closed twice offline; unit costs done"}
+{"event": "start", "at": "2026-11-02T08:50:48", "task": "n02-3-3-sitting packaged walk and its review; the bench fix; n02-tom pale line's try and its four views; the 6.2 test's finding", "phase": "1", "kind": "production"}
