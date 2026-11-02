@@ -4133,10 +4133,14 @@ def main():
                     wear_const(dbr, ch, on)
                 cdiv = wear_const(expr(unreal.MaterialExpressionDivide, -380, 2950), "const_b", CONTACT_COAT_ROUGHNESS)
                 csat = expr(unreal.MaterialExpressionSaturate, -260, 2950)
+                # SQUARED (2 November, the first pictures: at 4 cm the cut read as a dark halo round a boot seen whole;
+                # the line lies within a couple of centimetres of the sole): the cut falls off fast toward the decal's rim
+                csq = wear_const(expr(unreal.MaterialExpressionPower, -200, 3000), "const_exponent", 2.0)
                 cone = expr(unreal.MaterialExpressionOneMinus, -140, 2950)
                 ccut = expr(unreal.MaterialExpressionMultiply, -20, 2900)
                 if (connect(dbc, "", dbr, "", "contact-dbuffer-to-mask") and connect(dbr, "", cdiv, "A", "contact-mask-to-divide")
-                        and connect(cdiv, "", csat, "", "contact-divide-to-saturate") and connect(csat, "", cone, "", "contact-saturate-to-oneminus")
+                        and connect(cdiv, "", csat, "", "contact-divide-to-saturate") and connect(csat, "", csq, "Base", "contact-saturate-to-square")
+                        and connect(csq, "", cone, "", "contact-square-to-oneminus")
                         and connect(w_on, "", ccut, "A", "contact-water-to-cut") and connect(cone, "", ccut, "B", "contact-oneminus-to-cut")):
                     coat_in = ccut
                     w.notes.append("ground-coat-cut-at-contacts")
