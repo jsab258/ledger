@@ -1,6 +1,6 @@
 {
  "tab": "LEDGER: Needs you",
- "kicker": "LEDGER · Needs you · 1 open · updated Monday 2 November, 7:57",
+ "kicker": "LEDGER · Needs you · 1 open · updated Monday 2 November, 8:17",
  "title": "Needs you",
  "how": [
   "Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.",
@@ -11,14 +11,14 @@
   {
    "kind": "need",
    "key": "stop-stuck-readback-2026-11-02",
-   "name": "In the Claude app's sidebar, open the session \"LEDGER: read back page answers (nightly)\" (stuck since 26 October) and press Stop, so the nightly read-back of your answers can run again.",
+   "name": "In the Claude app's sidebar, open the two sessions \"LEDGER: read back page answers (nightly)\" and \"LEDGER: fresh-session test (once)\"; where either waits on a permission question, choose to always allow it; where one shows no question, press Stop.",
    "links": [],
-   "recommendation": "Stop it: it has blocked every nightly run since 27 October; I read your answers by hand meanwhile. There is no web link for a session; it is in the app's sidebar.",
+   "recommendation": "Allow: both only read (your page answers; the project's files). A scheduled session stops at its first question with nobody there, which has blocked the nightly read-back since 26 October; an answer given once is kept for its later runs. There is no web link for a session; both are in the app's sidebar.",
    "added": "2026-11-02 07:12",
    "options": [
     [
      "done",
-     "Done, stopped"
+     "Done"
     ],
     [
      "later",

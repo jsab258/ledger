@@ -311,6 +311,8 @@ GROUND = False
 # the coat's own roughness, at 0.03 in effect a mirror; 0.15, the broader lobe its review asked to test, passed the
 # three gate views with the look file's wet t6 values
 GROUND_COAT_ROUGHNESS = 0.15
+# The contact decal's roughness (tools/ue/make_contact_material.py ROUGH_DEFAULT): the ground reads it back to cut its coat (2 November).
+CONTACT_COAT_ROUGHNESS = 0.6
 GROUND_STONE_SPECULAR = 0.5
 
 # DEFAULT TEXTURES ARE TRIED IN ORDER AND THE ONE THAT ANSWERED IS NAMED. A
@@ -4112,7 +4114,35 @@ def main():
         if ground_attrs is None:
             w.notes.append("ground-no-attributes-node-so-no-coat")
         else:
-            connect(w_on, "", ground_attrs, "ClearCoat", "ground-water-to-coat")
+            # THE COAT CUT WHERE A SOLE TOUCHES (2 November 2026: his yes of 07:54 to one more try at the pale line, in
+            # the ground's material; production/research/street-wear/PALE-LINE-RESEARCH-2026-11-02.md, lever 1): the line
+            # is the coat's own reflection of the sky where its ray aims under a sole the screen never sees, and nothing
+            # in 5.8 occludes a coat's reflection (ClearCoatCommon.ush 59-73; DiffuseIndirectComposite.usf 650). The
+            # contact decal laid under each sole (M_LedgerContact, roughness 0.6) is read back through the decal buffer
+            # (the DBuffer Texture node, whose R is the decals' roughness times their coverage, MaterialTemplate.ush
+            # 3524-3532) and takes the coat away there: coat x (1 - saturate(R / 0.6)). Puddle decals write 0.02.
+            coat_in = w_on
+            try:
+                dbc = expr(unreal.MaterialExpressionDBufferTexture, -650, 2950)
+                try:
+                    dbc.set_editor_property("d_buffer_texture_id", unreal.DBufferTextureId.DBT_C)
+                except Exception:
+                    dbc.set_editor_property("DBufferTextureId", unreal.DBufferTextureId.DBT_C)
+                dbr = expr(unreal.MaterialExpressionComponentMask, -500, 2950)
+                for ch, on in (("r", True), ("g", False), ("b", False), ("a", False)):
+                    wear_const(dbr, ch, on)
+                cdiv = wear_const(expr(unreal.MaterialExpressionDivide, -380, 2950), "const_b", CONTACT_COAT_ROUGHNESS)
+                csat = expr(unreal.MaterialExpressionSaturate, -260, 2950)
+                cone = expr(unreal.MaterialExpressionOneMinus, -140, 2950)
+                ccut = expr(unreal.MaterialExpressionMultiply, -20, 2900)
+                if (connect(dbc, "", dbr, "", "contact-dbuffer-to-mask") and connect(dbr, "", cdiv, "A", "contact-mask-to-divide")
+                        and connect(cdiv, "", csat, "", "contact-divide-to-saturate") and connect(csat, "", cone, "", "contact-saturate-to-oneminus")
+                        and connect(w_on, "", ccut, "A", "contact-water-to-cut") and connect(cone, "", ccut, "B", "contact-oneminus-to-cut")):
+                    coat_in = ccut
+                    w.notes.append("ground-coat-cut-at-contacts")
+            except Exception:
+                w.notes.append("ground-contact-cut-refused")
+            connect(coat_in, "", ground_attrs, "ClearCoat", "ground-water-to-coat")
             connect(coat_r, "", ground_attrs, "ClearCoatRoughness", "ground-coat-roughness")
         connect_prop(rough_lerp, "", mp.MP_ROUGHNESS, "ground-wet-stone-to-roughness")
         connect_prop(stone_spec, "", mp.MP_SPECULAR, "ground-stone-specular")
