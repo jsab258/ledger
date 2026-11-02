@@ -150,12 +150,12 @@
       "what": "Seconds from the end of your question to the character's first sound.",
       "unit": "s",
       "start": 3.25,
-      "now": 1.17,
+      "now": 1.07,
       "target": 2.0,
       "start_label": "8 Oct",
-      "now_label": "1 Nov, packaged, cast voices (median of 20)",
+      "now_label": "2 Nov, inside the packaged game, real talk (median of 30)",
       "state": "fighting",
-      "last": "1 Nov: re-measured beside the packaged game with the cast's own Pocket voices and real replies: median 1.17 s to the first sound, 11 of 20 under 2.0 s, the slowest 6.6 s. Eight one-sentence replies wait for the full check (2.0 to 2.3 s): that is the next fix. One run of 20; a second confirms it before it falls. Found on the way: since 29 Oct the game had lost the cast's Pocket voices (the night cleanup removed their model); mended."
+      "last": "2 Nov: measured inside the packaged game itself on the real talk: 2.40 s as built (every line on the slower model); after two tries 1.07 s, 19 of 30 under 2.0 s, one fallback in 23. The bar is met on one run; tonight's build carries it and a second run confirms. 1 Nov's 1.17 s beside the game was the faster model's, not the game's. The tail stays long: one line in five takes 4 to 9 s."
     },
     {
       "name": "The Stutter",
@@ -178,7 +178,7 @@
       "target": 0,
       "display": "0 of 4 pieces beaten",
       "state": "fighting",
-      "last": "30 Oct evening: Tom wears his jacket, jeans and Ron's boots in tonight's build, his body cut under them; three fresh reviewers passed him in the editor. No piece beaten yet: each has an open fault or waits for the packaged walk; three third tries wait for your word.",
+      "last": "2 Nov: the collar set aside after three tries (a fourth asked on your page); the pale line under the boots gone in four reviewed views with the ground's own fix, its halo tightened; Epic's boots in for the toe. No piece beaten yet.",
       "pieces": [
         {
           "name": "Jacket",
@@ -205,10 +205,10 @@
     {
       "name": "The Empty Chair",
       "what": "Someone sits down in the game as you play it.",
-      "display": "Sits and stands in the packaged game; one fault found",
+      "display": "Sits and stands in the packaged game; new faults found and being fixed",
       "hp": 100,
       "state": "fighting",
-      "last": "30 Oct: the third try, your yes: his face held at most 25 degrees down as he sits and stands; it passes in the editor (a fresh reviewer); not yet walked in the packaged game."
+      "last": "2 Nov: walked in the packaged game, 13 of 13, his face held at most 25 degrees down. Its fresh reviewer found Tom and Ron pressed into each other on the bench: Ron now waits at the door end and a seat beside anyone seated is not offered (the editor walk passes; its review and tonight's packaged walk to come). The jeans catch at the knee when he sits."
     },
     {
       "name": "The Clean Room",
